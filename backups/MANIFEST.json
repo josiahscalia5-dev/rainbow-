@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "41cbabd40446d6a3041133f7b9b44f654666b0b93842f25e9b38e76e78d7f709"
+   "sha256": "bbbbdc06d3e80a8b9bbca6749ef5d4923e1515f946ebd9fed4e954b3e964bfb9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -499,7 +499,7 @@
   {
    "path": "docs/path_graph.md",
    "bytes": 4595,
-   "sha256": "1b5da0a0e515f6c8a78f6139dae060fab7590331dda7ea4babe937794ad5698c"
+   "sha256": "684d2cb7d6578dfc66108a4efbca773ec948fcf47d567b2fbaac6c1a8c12313b"
   },
   {
    "path": "docs/reference_inventory.md",
@@ -733,8 +733,8 @@
   },
   {
    "path": "qa/07_to_08_continuity.md",
-   "bytes": 1521,
-   "sha256": "40d5d4d3f451f3502f726abf47c4bce4b0c32f0cdd1c91e533d1e06cfcb2a841"
+   "bytes": 1526,
+   "sha256": "ee72f46ce36d1f015f3d482c2f5d474558c459f080569c0618377a6ed93a7eb3"
   },
   {
    "path": "qa/08_diff.png",
@@ -858,13 +858,13 @@
   },
   {
    "path": "qa/continuity_report.json",
-   "bytes": 2693,
-   "sha256": "dd3b8086624eb711349ef797df68d7bf630c2674ae8868211c41f6018a0fedc1"
+   "bytes": 2702,
+   "sha256": "425f08eb28c11986dac406f8534a03bc0c62176192989c91a03140fc353c4d1a"
   },
   {
    "path": "qa/gameplay_test.json",
-   "bytes": 14616,
-   "sha256": "58e592583dabc564ea8977a0c2961aef3bba6636b54cea37af93a63c43c0b921"
+   "bytes": 14635,
+   "sha256": "cea1f5426e9a26c19612a12bcebef791a5c88f0dd73936a386074ff25a30b568"
   },
   {
    "path": "qa/glb_validation.txt",
@@ -1777,14 +1777,34 @@
    "sha256": "a9f709fb528491a919e4e88d871558a3cbd2555a00dd3d7a40818852bcdaeeca"
   },
   {
+   "path": "qa/pilot05/wave6/camera_lock/README.md",
+   "bytes": 3866,
+   "sha256": "c012432273ddc541e7b70376f7523bb5e943d32eee2d01e980888951d2025c61"
+  },
+  {
    "path": "qa/pilot05/wave6/camera_lock/camera05.json",
-   "bytes": 1479,
-   "sha256": "c15239f587a810682972b587c42def91d9eccce695aa9d567345a694af11e1dd"
+   "bytes": 1478,
+   "sha256": "06505f704c3877aa0581d8ed4e728dc63b30a2b196a7bb68085bd5098be9d1cd"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/camera_lock_markers.png",
+   "bytes": 763446,
+   "sha256": "914e6ee5c673ff2299ac00d4b07423b64c9d1d7a7bc16f35ff51b088e502feb8"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/camera_lock_overlay.png",
+   "bytes": 1631643,
+   "sha256": "048475d8a88754c6cad334e39978b60966968e81bb9083571f31780707cef1c0"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/camera_lock_render.png",
+   "bytes": 1035105,
+   "sha256": "f4b3cab02b9eb3599a77bdd025f247b0ac4e4dae4c34e66104dcdc5425660886"
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/landmarks.json",
-   "bytes": 18617,
-   "sha256": "263e163db678ec2b5387bc5f5108015199f433bffbdf9a54173cc2a6d812489c"
+   "bytes": 18564,
+   "sha256": "c65532e1b69623999ace23de8293d09a4d79a1a21923d1edf74b162fde6facf9"
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/landmarks_current_px.json",
@@ -1795,6 +1815,31 @@
    "path": "qa/pilot05/wave6/camera_lock/landmarks_ref_px.json",
    "bytes": 67832,
    "sha256": "cedaad480da0880618291ec3fc56ccf74f1567dd47d52e345bdbb0471ea9501a"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/river05_layout.json",
+   "bytes": 47291,
+   "sha256": "1158d80960ec3ffac31719dd419126b39e70e89dc6b911b8ec5c1669fa38b444"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+   "bytes": 445121,
+   "sha256": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+   "bytes": 411754,
+   "sha256": "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/screen05_layout.glb",
+   "bytes": 2773144,
+   "sha256": "8567f56ef76fa3ef6a898e23148111ea4d67fffb6146f04ece9e4b62c565a9ed"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/screen05_layout_cam05.png",
+   "bytes": 371769,
+   "sha256": "792ee7c31d85418315629e9651b7bd2170096f64ce7c94a73e64a98fe682bbb4"
   },
   {
    "path": "qa/pilot05/wave6/coordinator/regress/04.png",
@@ -2237,6 +2282,11 @@
    "sha256": "803d1d2394f6a779e4613b05d2e641ca47f4877e65cf46d28e6eb4e0a0cf630d"
   },
   {
+   "path": "scripts/camera-lock-overlay.py",
+   "bytes": 2406,
+   "sha256": "b3bbcb223c1c7b8b4f773a7258f5990a16f66846bc56a8d41e1654a66a861558"
+  },
+  {
    "path": "scripts/capture.mjs",
    "bytes": 4465,
    "sha256": "c4a345d9b97f9466bde9637f0b1d8b7265e0e2bc8d17addaa15830c095482a67"
@@ -2535,6 +2585,11 @@
    "path": "tools/blender/build_05_river_scene.py",
    "bytes": 7719,
    "sha256": "24b114308b0c9effa8edd4ae3589ecf4679d8fd21a8737f7090ca70305870592"
+  },
+  {
+   "path": "tools/blender/camera_lock_05.py",
+   "bytes": 5798,
+   "sha256": "c01ba63ee862f77d7a868c7b6070b02f1e78aadf1f49fdead82d56f940a36932"
   },
   {
    "path": "tools/blender/import_world_asset.py",

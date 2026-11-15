@@ -2818,3 +2818,131 @@ Converged at amp **2.120304** (length 435.1929 = old 435.192, crest 132.4383 = o
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && timeout 600 node scripts/capture.mjs 05 06 07 --out=qa/pilot05/wave6/coordinator/s03 2>&1 | grep -E \"^0[567]\" ; timeout 600 node scripts/camera-lock-05.mjs 2>&1 | tail -6; python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open(\"$S/ab_old/06.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(\"qa/pilot05/wave6/coordinator/s03/06.png\").convert('RGB')).astype(int)\nd=np.abs(a-b).sum(2); print('06 old-course vs new: mean abs diff', round(d.mean()/3,2), 'px>4 …[+548 chars]`
 
+### 🧑 User — 2026-11-15T23:23:35.303Z
+
+> ↩︎ result: 05 → qa/pilot05/wave6/coordinator/s03/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":633521,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/wave6/coordinator/s03/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":71,"tris":551017,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → qa/pilot05/wave6/coordinator/s03/07.png {"stage":"07","s":273.058,"y":-49.659,"calls":180,"tris":668535,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+>   {"i":0,"ref":[473.9,726.3,96],"game":[488,739,93],"dx":14.1,"dy":12.7,"dd":-3}
+>   {"i":1,"ref":[547.8,661.2,70],"game":[555,662,67],"dx":7.2,"dy":0.8,"dd":-3}
+>   {"i":2,"ref":[482,612.1,56],"game":[478,609,49],"dx":-4,"dy":-3.1,"dd":-7}
+>   {"i":3,"ref":[431.1,574.3,43],"game":[432,578,37],"dx":0.9,"dy":3.7,"dd":-6}
+>   {"i":4,"ref":[465.8,545.7,28],"game":[443,560,29],"dx":-22.8,"dy":14.3,"dd":1}
+>   {"i":5,"ref":[495.1,533,20],"game":[467,550,25],"dx":-28.1,"dy":17,"dd":5}
+> 06 old-course vs new: mean abs diff 18.53 px>40: 15.2 %
+>  "ok": true,
+>    …[+84 chars]
+
+### 🤖 Claude — 2026-11-15T23:23:43.593Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && python3 -I scripts/triptych.py $S/ab06b.png 640 OLDCOURSE=$S/ab_old/06.png NEWCOURSE=qa/pilot05/wave6/coordinator/s03/06.png | tail -1 && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open(\"$S/ab_old/06.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(\"qa/pilot05/wave6/coordinator/s03/06.png\").convert('RGB')).astype(int)\nd=(np.abs(a-b).sum(2)>120)\nfor y0 in range(0,1536,192): print(y0, round(d[y0:y0+192].mean()*100,1), '%')\nEOF", "description": " …[+43 chars]`
+
+### 🧑 User — 2026-11-15T23:23:44.111Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/ab06b.png (744, 682)
+> 0 2.5 %
+> 192 15.4 %
+> 384 21.1 %
+> 576 28.5 %
+> 768 31.2 %
+> 960 14.0 %
+> 1152 3.9 %
+> 1344 4.9 %
+
+### 🤖 Claude — 2026-11-15T23:23:46.663Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/ab06b.png"}`
+
+### 🧑 User — 2026-11-15T23:23:46.696Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:24:00.767Z
+
+> 🔧 **Bash** `{"command": "grep -n \"Cam05\\|camera\\|look\\|fov\\|lens\\|sensor\\|render\\|resolution\\|workbench\\|save_as\\|glb\" tools/blender/build_05_river_scene.py | head -40", "description": "Inspect camera handling in Blender layout builder"}`
+
+### 🧑 User — 2026-11-15T23:24:00.808Z
+
+> ↩︎ result: 8:and cyan-core lateral every 0.25 u, the straight 05 tunnel line + radius, the checkpoint camera).
+> 15:  Cam05        the gameplay camera at the 05 checkpoint (if the layout carries it)
+> 16:Saves screen05_layout.blend, screen05_layout.glb and a Workbench preview from Cam05.
+> 141:    # ---- gameplay camera ----------------------------------------------------------------------------
+> 144:    if cp.get("camera") and cp.get("look"):
+> 145:        cdat = bpy.data.cameras.new("Cam05")
+> 146:        cdat.sensor_fit = "VERTICAL"
+> 147:        cdat.angle_y = math.radians(cp.get("fov") or 62)
+> 148:        cam = bpy.data.objects.new("Cam05", cdat)
+> 150:        cam.location = b(cp["camera"])
+> 152:        cam.rotation_quaternion = (b(cp["look"]) - cam.location).to_track_quat("-Z", "Y")
+> 153:        scn.camera = cam
+> 161:    bpy.ops.wm.save_as_mainfile(filepath=os.path.abspath(blend))
+> 162:    bpy.ops.export_scene.gltf(filepath=os.path.abspath(os.path.join(a.out_dir, "screen05_layout.glb")), export_format="GLB",
+> 163:                              export_cameras=True, export_apply=True)
+> 165:        scn.render.engine = "BLENDER_WORKBENCH"
+> 168:        scn.render.resolution_x, scn.render.resolution_y = 432, 768
+> 169 …[+249 chars]
+
+### 🤖 Claude — 2026-11-15T23:24:28.002Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/blender/camera_lock_05.py", "content": "\"\"\"\nScreen 05 CAMERA LOCK scene in Blender 5.3 (coordinator tool, wave 6).\n\n    npx vite-node scripts/export-river-05.ts -- --cam=X,Y,Z --look=X,Y,Z --fov=62      (river05_layout.json)\n    blender -b --python tools/blender/build_05_river_scene.py -- --layout ... --out-dir OUT\n    blender -b OUT/screen05_layout.blend --python tools/blender/camera_lock_05.py -- \\\n        --camera qa/pilot05/wave6/camera_lock/camera05.json \\\n        --landmarks qa/pilot05/wave6/camera_lock/landmarks.json \\\n        --ref …[+5530 chars]`
+
+### 🧑 User — 2026-11-15T23:24:28.049Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/blender/camera_lock_05.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:24:36.836Z
+
+> 🔧 **Bash** `{"command": "L=qa/pilot05/wave6/camera_lock && read CAM LOOK < <(python3 -c \"\nimport json;d=json.load(open('$L/camera05.json'))['three'];print(','.join('%.5f'%v for v in d['position']), ','.join('%.5f'%v for v in d['target']))\") && echo \"cam $CAM look $LOOK\" && npx vite-node scripts/export-river-05.ts -- --cam=$CAM --look=$LOOK --fov=62 2>&1 | tail -1 && cp qa/worldlabs/05/blender/river05_layout.json $L/river05_layout.json && git checkout -- qa/worldlabs/05/blender/river05_layout.json && (timeout 600 blender -b --python tools/blender/build_05_river_scene.py -- --layout $L/river05_layout.j …[+444 chars]`
+
+### 🧑 User — 2026-11-15T23:24:41.742Z
+
+> ↩︎ result: cam 1.92029,-37.94340,-68.28063 look 0.69136,-44.31210,-91.80273
+> river samples 345 | tunnel {"a":[2,-41.1582,-58.9619],"b":[2,-44.1582,-130.9619],"radius":7.6,"floorDepth":3.3,"s0":114.68830202823246,"s1":188.92391446564386} | checkpoint s 132.44
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> saved qa/pilot05/wave6/camera_lock/screen05_layout.blend river verts 8625 tunnel True camera True
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> CAMERA_LOCK_OK {"blend": "/home/user/rainbow-/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend", "render": "/home/user/rainbow-/qa/pi …[+1001 chars]
+
+### 🤖 Claude — 2026-11-15T23:24:45.123Z
+
+Blender camera-lock scene built (`screen05_camera_lock.blend`, 864×1536, exact game camera). The EGL lines are harmless headless-GPU warnings. Compositing the 50% overlay with your reference:
+
+### 🤖 Claude — 2026-11-15T23:24:54.191Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/camera-lock-overlay.py", "content": "#!/usr/bin/env python3\n\"\"\"50 % overlay of the Blender camera-lock render (tools/blender/camera_lock_05.py) on the approved reference.\n\n    python3 -I scripts/camera-lock-overlay.py [DIR]      (default qa/pilot05/wave6/camera_lock)\n\nWrites DIR/camera_lock_overlay.png: reference at 50 % under the Blender layout render from the locked game\ncamera (river vertex colours: cyan core / pink bands of the GAME geometry), plus the reference coin\nback-projections (gold) and the game coin anchors (cyan) from the marke …[+1996 chars]`
+
+### 🧑 User — 2026-11-15T23:24:54.220Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/camera-lock-overlay.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:24:57.663Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/camera-lock-overlay.py && python3 -c \"\nfrom PIL import Image; im=Image.open('qa/pilot05/wave6/camera_lock/camera_lock_overlay.png'); im.resize((432,768)).save('/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/overlay_small.png')\"", "description": "Composite camera-lock overlay and preview"}`
+
+### 🧑 User — 2026-11-15T23:24:58.703Z
+
+> ↩︎ result: qa/pilot05/wave6/camera_lock/camera_lock_overlay.png
+
+### 🤖 Claude — 2026-11-15T23:25:00.424Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/camera_lock/camera_lock_overlay.png"}`
+
+### 🧑 User — 2026-11-15T23:25:00.464Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:25:21.811Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/camera_lock/README.md", "content": "# Screen 05 CAMERA LOCK (wave 6, coordinator, 2026-11-15)\n\n**Status: LOCKED and verified.** Every specialist works against this camera. Do not change\n`STAGE_CAM['05']` or the `05_crest` checkpoint.\n\n## The lock\n| | Value |\n|---|---|\n| Camera (Three.js world) | position (1.920, −37.943, −68.281), target (0.691, −44.312, −91.803), vFOV 62°, aspect 0.5625 (864×1536) — exact world matrix in `camera05.json` |\n| Checkpoint | `05_crest`, s 132.438 (Benny on the stream's left crest) |\n| Blender | `screen0 …[+3328 chars]`
+
+### 🧑 User — 2026-11-15T23:25:21.844Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave6/camera_lock/README.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:25:24.811Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/tasks/bih1ye75t.output 2>/dev/null | tail -3; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:camera-lock-and-s-curve 2>&1 | grep -E '\"commit\"|skipping|error' ; echo \"local $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/ccr-93add0fa-q17ey6 | cut -c1-7)\"; git status --short | head -5; git lfs ls-files | grep camera_lock", "description": "Check Marble poll and push camera lock work", "timeout": 330000}`
+
