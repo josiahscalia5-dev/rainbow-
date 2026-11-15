@@ -2731,3 +2731,36 @@ Updating the Marble instructions to point at the real-pixels-only reference (the
 
 > 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 240 9 && flock -u 9 && exec 9>&- ; python3 scripts/rainbow-autosave.py --reason manual:task-end --message \"Screen 05: real-pixels geometry reference for Marble, coin flag mask, rejected plates archived, director review started\" 2>&1 | grep -E '\"result\"'; python3 -I scripts/autosave-status.py", "description": "Back up and verify before pausing", "timeout": 400000}`
 
+### 🧑 User — 2026-11-15T20:15:15.215Z
+
+> ↩︎ result: "result": "committed+pushed",
+> AUTOSAVE OK | branch ccr-d4bb0ad3-8ycajb | scheduler daemon | last verified backup 2026-11-15T20:15:09+00:00 (0.1 min ago) | local 49761ac remote 49761ac (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-15T20:15:23.187Z
+
+I tried filling Benny's area and the coin spots three more ways. None came out clean, so I stopped filling pixels, as your point 4 asked. Instead, the Marble reference is now made only of your real pixels.
+
+**The new Marble reference** is in `qa/worldlabs/05/geometry_ref/`:
+- **What it is:** your approved image cropped from just below the HUD to just above Benny's pom-pom. It keeps the purple perforated walls, gold rings, wall fittings, golden glow, foam banks, bubbles and the winding S-bends exactly as approved.
+- **Check:** a script compared it with your original and found it identical pixel for pixel, with 0 invented pixels. Your reference file is unchanged.
+- **What it leaves out:** the HUD, Benny, and the near-camera river.
+- **The coins:** they stay in the image. The mask marks them in red as game objects to delete in Blender after any reconstruction.
+- **The near river:** comes from the game's own 3D river geometry, saved in a Blender file (`qa/worldlabs/05/blender/screen05_layout.blend`).
+
+**The three full-size images you asked for:**
+- `1_original_approved_05.png`: an exact copy of your approved reference.
+- `2_geometry_reference_05.png`: the cleaned environment image, 864×571.
+- `3_mask_05.png`, plus a readable version, `3_mask_overlay_05.png`: shows that nothing was rebuilt and marks the coins.
+
+**The failed fill attempts** are kept in `qa/worldlabs/05/rejected/`, with a note on why each failed and a warning never to upload them. `MARBLE_MANUAL.md` now points only to the new reference.
+
+**Reference Match Director:** it's checking the new reference against your original now. It will give a fit or not-fit verdict and suggest fixes to the Marble prompt. Nothing gets uploaded and no credits are spent until you approve.
+
+**Screen 05 game work:** the five specialists are still working, with their work saved automatically. When they finish, I'll capture the new gameplay screenshot with Playwright and run the 05→06 and 07→08 checks.
+
+Backups are running normally. The latest is `49761ac`, confirmed on GitHub, with nothing left unsaved.
+
+### 🧑 User — 2026-11-15T20:15:24.839Z
+
+Continue
+
