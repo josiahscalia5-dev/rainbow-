@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 3399,
-   "sha256": "57cbc14b16c8f0cd0ec2e62111ae9a990a2d29642c1f6731ba6e6a809accb568"
+   "bytes": 3400,
+   "sha256": "f969d526c581267694c12d873541080b43f757bfbbb29051efd308c8dba19384"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1112,
-   "sha256": "46e8306096680df995f105882b17a876872355087666981d96424b8b455c7938"
+   "bytes": 1104,
+   "sha256": "a113dbcb0f9e39756ca074b1fa82d3c379f1f045b42dd9aa679bdebea50ecf59"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1345,6 +1345,11 @@
    "path": "qa/pilot05/wave3_baseline/11.png",
    "bytes": 1381328,
    "sha256": "491e9a57ebd43f66b7ec022d28ed417598f474dcf3fca5c5f3b81059abecdf16"
+  },
+  {
+   "path": "qa/pilot05/wave4/baseline/05.png",
+   "bytes": 1613064,
+   "sha256": "b52b79ce020976e5630a1dbf62d1fe0aad54abe1fbe8a350686d9254682f09ef"
   },
   {
    "path": "qa/report_metrics.json",
