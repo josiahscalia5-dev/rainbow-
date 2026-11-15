@@ -3265,3 +3265,32 @@ Understood: camera lock and S-curve stay, no World Labs calls or spending until 
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:proof-set 2>&1 | grep -E '\"commit\"|skipping|\"error\"'; echo \"local $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/ccr-93add0fa-q17ey6 | cut -c1-7)\"; git status --short | head -3", "description": "Commit and push the proof set", "timeout": 330000}`
 
+### 🧑 User — 2026-11-15T23:32:53.028Z
+
+> ↩︎ result: "commit": "5ef39592cfbbe71cfea0e9b1a4a8f39f3f9e4d0c",
+> local 5ef3959 remote 5ef3959
+
+### 🤖 Claude — 2026-11-15T23:33:00.592Z
+
+The four proof images are on your screen, and the honest answer is that the playable game is **not close to 90–95% yet**. The camera, the river's S-path and Benny now line up with your image. The rings, walls, water near the bottom and foam still look clearly different.
+
+The four images, all 864×1536 from the same locked camera and checkpoint:
+1. **Your approved Screen 05.**
+2. **The Blender scene on its own,** with no reference image anywhere. It is only a geometry skeleton: the game's real river surface with its S-path, the straight tunnel with ring positions, and coin anchors (shown as spheres). It has no Benny, no foam and none of the game's look, so it proves the layout is right but is not a finished reconstruction.
+3. **The real running game** at the same checkpoint.
+4. **A 50% overlay of 1 and 3.** The full report is in `qa/pilot05/wave6/proof/report/`, with side-by-side, red difference highlight and per-band numbers.
+
+What the measurements say:
+- **Lined up:** the camera's vanishing point is 1.4 px from yours, and the coin trail is within a few pixels after this session's S-curve fix.
+- **Colours roughly right:** hue correlation is 0.81, where 1 would be a perfect match.
+- **Shapes and edges barely match:** edge correlation is 0.12. Overall pixel difference only improved from 65.4 at the start of wave 4 to 59.0 now (lower is better), so recent rounds of small tweaks have barely moved the whole frame.
+
+The Reference Match Director is now measuring each element you named (tunnel rings, purple walls, water boundaries, S-curves, Benny's position, the distant golden light). I'll come back with its three biggest differences and the specific geometry and material fixes before anything changes; no fixes will start until you've seen that.
+
+The Marble polling is stopped, and nothing will be called or spent until a new key passes the free check. The locked camera, the S-curve, the 05→06 continuity and the 07→08 descent stay as they are. All ten specialist definitions are in place. The backup is pushed at `5ef3959` and matches GitHub.
+
+### 🧑 User — 2026-11-15T23:33:02.982Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

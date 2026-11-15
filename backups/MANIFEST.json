@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "bb10655079fdf75a28388bf15795612504a37d73bc1f9ea35f31795468c3594b"
+   "sha256": "48f58bb93c236797441132430287f14c26a1c0ece659576e58576f33052a5664"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1890,6 +1890,16 @@
    "path": "qa/pilot05/wave6/current/05.png",
    "bytes": 1975103,
    "sha256": "2c9a583dcf8eb9d87638e77a393adf6e187b0e846756524c3156ed16bc8a578a"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/lm_game.json",
+   "bytes": 84476,
+   "sha256": "61dca6c98c9cecfc565e89433e0fca8b3b262b95a8a671900ed63c3c0cf32bab"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/lm_ref.json",
+   "bytes": 67823,
+   "sha256": "996c5cd1bd4106a75fb8786a4caa93079e99d75d491f1fe540f42cb8603f1635"
   },
   {
    "path": "qa/pilot05/wave6/environment/NOTES.md",

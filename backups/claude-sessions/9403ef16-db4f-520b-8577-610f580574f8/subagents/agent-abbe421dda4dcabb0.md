@@ -137,3 +137,62 @@ I'll start by reading the coordination docs and the camera lock README.
 > def runs(mask_row: np.ndarray, min_len: int = 6):
 >     out, x, n = [], 0, len(mask_row …[+3812 chars]
 
+### 🤖 Claude — 2026-11-15T23:32:46.993Z
+
+Now let me look at the four images themselves.
+
+### 🤖 Claude — 2026-11-15T23:32:47.493Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png"}`
+
+### 🧑 User — 2026-11-15T23:32:47.510Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:32:47.923Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png"}`
+
+### 🧑 User — 2026-11-15T23:32:47.968Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:32:49.510Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/proof/2_blender_layout.png"}`
+
+### 🧑 User — 2026-11-15T23:32:49.538Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:32:49.964Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/proof/4_overlay_50pct_game.png"}`
+
+### 🧑 User — 2026-11-15T23:32:50.004Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:32:51.208Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/proof/report/05_highlight_GAME.png"}`
+
+### 🧑 User — 2026-11-15T23:32:51.262Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:32:53.241Z
+
+Let me run the landmark tool on both images and set up the crops directory.
+
+### 🤖 Claude — 2026-11-15T23:32:54.798Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/wave6/director/crops && ls qa/pilot05/wave6/director && python3 -I scripts/landmarks05.py qa/pilot05/wave6/proof/1_approved_reference.png qa/pilot05/wave6/director/lm_ref.json && echo && python3 -I scripts/landmarks05.py qa/pilot05/wave6/proof/3_threejs_gameplay.png qa/pilot05/wave6/director/lm_game.json", "description": "Run landmarks05 on reference and game images"}`
+
+### 🧑 User — 2026-11-15T23:32:55.855Z
+
+> ↩︎ result: crops
+> {"vp": {"x": 498.6, "y": 479.4, "px": 115, "w": 17, "h": 12}, "coins": [[473.9, 726.3, 96], [547.8, 661.2, 70], [482.0, 612.1, 56], [431.1, 574.3, 43], [683.2, 560.8, 22], [465.8, 545.7, 28], [495.1, 533.0, 20]], "bands@": [[600, 293, 588], [700, 378, 780], [800, 169, 382], [900, 27, 612], [1000, null, 784], [1100, 547, 831], [1200, null, null], [1300, 187, 635], [1400, null, null], [1500, null, null]], "core@": [[600, 379, 102], [700, 646, 183], [800, 288, 155], [900, 215, 204], [1000, 212, 140], [1100, 715, 179], [1200, 803, 103], [1300, 454, 190], [1400, 430, 373], [1500, 174, 17]]}
+> 
+> {"vp": {"x": 499.1, "y": 478.0, "px": 289, "w": 19, "h": 19}, "coins": [[487.3, 738.6, 93], [554.7, 661.3, 68], [477.1, 608.4, 49], [442.5, 566.1, 66], [580.4, 541.2, 36], [406.0, 535.7, 17], [463.0, 498.2, 28], [534.6, 498.1, 29], [390.0, 494.7, 11], [607.9, 494.1, 12], [574.0, 491.5, 8]], "bands@": [[600, 363, 522], [700, 389, 718], [800, 228, 645], [900, 196, 660], [1000, 163, 546], [1100, null, 93], [1200, 170, 660], [1300, 126, 682], [1400, 75, 715], [1500, 2, 758]], "core@": [[600, 421, 24], [700, 604, 185], [800, 566, 121], [900, 281, 72], [1000, 231, 87], [1100, 50, 78], [1200, 394, 14 …[+58 chars]
+
