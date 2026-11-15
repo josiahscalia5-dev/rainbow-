@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1967,
-   "sha256": "efb663781df71fe7698e091f5925bdd7506a8635d9cfbbc985f237774b7c41d6"
+   "sha256": "89d482993e6c6bd3e6955ac357a3c0a951cea5d967dbc9ccc87c082238ad2686"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -783,13 +783,18 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 10145,
-   "sha256": "1d155f0cdf9fcbf93d028a3d635a8c8ad9bb02c09306032fea7f22b949c3b63b"
+   "bytes": 5127,
+   "sha256": "6a72725779fad841e271c703686fdc6f6f24f1c668da47f8a3a61526e7a9a031"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
    "bytes": 10266,
    "sha256": "81275bfd043598692121efe28a3f8763f584e7f01e0d062077f2f81b064dac47"
+  },
+  {
+   "path": "qa/cinematic_test.json",
+   "bytes": 165,
+   "sha256": "dbac2171a9c8955bc2567135a6e2779b4a2ed66bb5c891a0255247c525700e02"
   },
   {
    "path": "qa/compare_summary.md",
@@ -1032,6 +1037,11 @@
    "sha256": "76fd115add143307d57e4ed8e7094dd073fd2f230042e90e847d74d743d60350"
   },
   {
+   "path": "scripts/cinematic-test.mjs",
+   "bytes": 3410,
+   "sha256": "b1cb9fae217be10292806b0ad4de4b1bae9bacc9b78fcdb0712382213c12f4da"
+  },
+  {
    "path": "scripts/cloud-env-setup.sh",
    "bytes": 1986,
    "sha256": "5d8d863d7c2b1f97c810f0b39ce6c00889cbdf6ba130ae3840bf87998d3e4ef9"
@@ -1158,8 +1168,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 28570,
-   "sha256": "115dac90e73a191b22835f83d6dbb1e9179335dc5cf741963f5130e7dd62349b"
+   "bytes": 29807,
+   "sha256": "38f0048cbd6e7a039685fc3e58191589d1bf42b849e1a1d9d6f9f62741631121"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -1195,6 +1205,11 @@
    "path": "src/render/grade.ts",
    "bytes": 1266,
    "sha256": "f4573a37b5493b836d60cf23604c156f08ab28db60b5a64a34faf60ce321eec8"
+  },
+  {
+   "path": "src/ui/cinematicVideo.ts",
+   "bytes": 4863,
+   "sha256": "4841b63a087c3953c98527cb58dd5f91bc4657293bd7417bf7b077913ec9966e"
   },
   {
    "path": "src/ui/hud.ts",

@@ -18,6 +18,7 @@ import { buildEnvironment } from '../world/environment';
 import { createCandyEnvironment, createRenderer } from '../render/env';
 import { createGradePass } from '../render/grade';
 import { createHud } from '../ui/hud';
+import { findCinematic, playCinematic } from '../ui/cinematicVideo';
 import { createCoins, COIN_VALUE } from '../gameplay/coins';
 import { createInput } from '../gameplay/input';
 import { RideCamera } from './cameraRig';
@@ -376,10 +377,16 @@ export async function startGame(canvas: HTMLCanvasElement) {
   };
 
   // ---------------------------------------------------------------- outro (11)
+  const cinematic = { ending: null as string | null };
   const startOutro = () => {
     st.mode = 'outro';
     st.t = 0;
     setStage('11');
+    if (cinematic.ending) {
+      // optional Flow ending video; the real-time 11 frame (girl holds towel, FINAL SPIN COMPLETE) follows
+      st.paused = true;
+      void playCinematic(cinematic.ending, { onEnding: () => { st.t = Math.max(st.t, O.badge - 0.4); st.paused = false; } });
+    }
   };
   const outroUpdate = (dt: number) => {
     const t = st.t;
@@ -441,6 +448,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
   input.onTap(() => {
     if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }
   });
+
+  // ---------------------------------------------------------------- optional Google Flow cinematics
+  // public/video/intro.mp4 shows 01 (towel loaded, door closed, girl walks away). While it plays, the live
+  // 3D intro is held on that same moment underneath, then revealed by a cross-fade and continued in real
+  // time (02 tumble -> 03 ride). Without a video the real-time 01 cinematic plays. See src/ui/cinematicVideo.ts.
+  const [introVideo, endingVideo] = await Promise.all([findCinematic('intro'), findCinematic('ending')]);
+  cinematic.ending = endingVideo;
+  const playIntroVideo = () => {
+    if (!introVideo) return;
+    st.t = T.cp01;
+    introUpdate(0);
+    st.paused = true;
+    void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
+  };
+  playIntroVideo();
   const togglePause = () => {
     if (st.mode !== 'ride') return;
     st.paused = !st.paused;
@@ -455,6 +477,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
     env.doorC.rotation.y = 0;
     benny.root.visible = true;
+    playIntroVideo();
   };
 
   const stepSim = (dt: number) => {

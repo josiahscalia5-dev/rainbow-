@@ -2712,3 +2712,388 @@ Rerunning `list_projects` (free, read-only), and checking that the setup script 
 >     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
 >     '07c_plunge_bottom': { mode: 'ride', s: course.marks['07_plun …[+1016 chars]
 
+### 🤖 Claude — 2026-11-15T18:35:52.095Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "in_progress", "description": "World Labs pilot prep (masked env-only 05 reference + costed plan, no spend; Atlas account still inactive). Manual 05 improvement via specialists: path-camera (course/camera), washer-environment-modeler (walls/rings), water-fx-specialist (water), benny-character-artist (proportions); reference-match-director writes inventory + comparisons. Wave B: playwright-visual-qa + android-build-performance."}`
+
+### 🧑 User — 2026-11-15T18:35:52.106Z
+
+> ↩︎ result: Updated task #6 description, status
+
+### 🤖 Claude — 2026-11-15T18:36:06.995Z
+
+> 🔧 **Agent** `{"subagent_type": "path-camera-transition-engineer", "description": "Screen 05 path and camera", "run_in_background": true, "prompt": "You are working on RAINBOW, the user's real-time 3D portrait mobile game (Three.js + TypeScript + Vite) in /home/user/rainbow- on git branch `claude/rainbow-3d-recovery-m4v347`. Read CLAUDE.md and the Screen 05 section of Rainbow_Claude_Code_Master_Prompt_11_Screens.md first. Four other specialists are editing the SAME working tree right now in parallel (environment modeler, water FX, Benny artist, reference director), so obey file ownership strictly.\n\nYOUR J …[+2899 chars]`
+
+### 🧑 User — 2026-11-15T18:36:07.021Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ac8112848dd644d86 (internal ID - do not mention to user. Use SendMessage with to: 'ac8112848dd644d86', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/tasks/ac8112848dd644d86.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T18:36:21.596Z
+
+> 🔧 **Agent** `{"subagent_type": "washer-environment-modeler", "description": "Screen 05 walls and rings", "run_in_background": true, "prompt": "You are working on RAINBOW, the user's real-time 3D portrait mobile game (Three.js + TypeScript + Vite) in /home/user/rainbow- on git branch `claude/rainbow-3d-recovery-m4v347`. Read CLAUDE.md and the Screen 05 section of Rainbow_Claude_Code_Master_Prompt_11_Screens.md first. Four other specialists are editing the SAME working tree in parallel (path/camera, water FX, Benny artist, reference director), so obey file ownership strictly.\n\nYOUR JOB: make the Screen 05  …[+3051 chars]`
+
+### 🧑 User — 2026-11-15T18:36:21.617Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: aaba6370f7e7c1b8e (internal ID - do not mention to user. Use SendMessage with to: 'aaba6370f7e7c1b8e', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/tasks/aaba6370f7e7c1b8e.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T18:36:34.297Z
+
+> 🔧 **Agent** `{"subagent_type": "water-fx-specialist", "description": "Screen 05 cyan/pink water", "run_in_background": true, "prompt": "You are working on RAINBOW, the user's real-time 3D portrait mobile game (Three.js + TypeScript + Vite) in /home/user/rainbow- on git branch `claude/rainbow-3d-recovery-m4v347`. Read CLAUDE.md, docs/vfx/water.md and the Screen 05 section of Rainbow_Claude_Code_Master_Prompt_11_Screens.md first. Four other specialists edit the SAME working tree in parallel (path/camera, environment modeler, Benny artist, reference director), so obey file ownership strictly.\n\nYOUR JOB: the …[+2722 chars]`
+
+### 🧑 User — 2026-11-15T18:36:34.314Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ae3c854ad07717142 (internal ID - do not mention to user. Use SendMessage with to: 'ae3c854ad07717142', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/tasks/ae3c854ad07717142.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T18:36:48.100Z
+
+> 🔧 **Agent** `{"subagent_type": "benny-character-artist", "description": "Fix Benny body/beanie proportions", "run_in_background": true, "prompt": "You are working on RAINBOW, the user's real-time 3D portrait mobile game (Three.js + TypeScript + Vite) in /home/user/rainbow- on git branch `claude/rainbow-3d-recovery-m4v347`. Read CLAUDE.md, docs/characters/benny.md and the Benny sections of Rainbow_Claude_Code_Master_Prompt_11_Screens.md first. Other specialists edit the SAME working tree in parallel (path/camera, environment, water, reference director), so obey file ownership strictly.\n\nYOUR JOB: fix Benn …[+2757 chars]`
+
+### 🧑 User — 2026-11-15T18:36:48.122Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: aecab8b770a64ea54 (internal ID - do not mention to user. Use SendMessage with to: 'aecab8b770a64ea54', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/tasks/aecab8b770a64ea54.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T18:36:58.901Z
+
+> 🔧 **Agent** `{"subagent_type": "reference-match-director", "description": "Write reference inventory and comparisons", "run_in_background": true, "prompt": "You are the reference-match-director for RAINBOW, the user's real-time 3D portrait mobile game in /home/user/rainbow- (branch `claude/rainbow-3d-recovery-m4v347`). Read CLAUDE.md, REFERENCE_ORDER.md, VISUAL_QA_CHECKLIST.md and Rainbow_Claude_Code_Master_Prompt_11_Screens.md first. Other specialists are editing code in the same working tree in parallel — you write DOCUMENTS ONLY; do not edit any code, assets or references.\n\nDELIVERABLES (two missing d …[+2454 chars]`
+
+### 🧑 User — 2026-11-15T18:36:58.917Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a9ee02bd616f45378 (internal ID - do not mention to user. Use SendMessage with to: 'a9ee02bd616f45378', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/tasks/a9ee02bd616f45378.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T18:37:20.922Z
+
+> 🔧 **Bash** `{"command": "cat src/main.ts; echo \"---index.html---\"; cat index.html; echo \"---Game intro API---\"; grep -nE \"mode: Mode|type Mode|function (start|goto|setMode)|introT|cp01|cp02|'intro'|'outro'|export (async )?function|return \\{\" src/game/Game.ts | head -40; ls public 2>/dev/null", "description": "Read main.ts, index.html and Game mode/intro API"}`
+
+### 🧑 User — 2026-11-15T18:37:21.012Z
+
+> ↩︎ result: Exit code 2
+> // Entry point — the Game is assembled in src/game/Game.ts.
+> import { startGame } from './game/Game';
+> 
+> // Deterministic randomness for QA captures (?qa or ?seed=N): bubbles, blinks and procedural
+> // textures become reproducible so screenshots can be compared run-to-run.
+> {
+>   const q = new URLSearchParams(location.search);
+>   if (q.has('qa') || q.has('seed')) {
+>     let a = Number(q.get('seed') ?? 20261115) >>> 0;
+>     Math.random = () => {
+>       a = (a + 0x6d2b79f5) >>> 0;
+>       let t = a;
+>       t = Math.imul(t ^ (t >>> 15), t | 1);
+>       t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+>       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+>     };
+>   }
+> }
+> 
+> startGame(document.getElementById('scene') as HTMLCanvasElement).catch((e) => {
+>   console.error(e);
+>   (window as unknown as { __error?: string }).__error = String(e?.stack ?? e);
+> });
+> ---index.html---
+> <!doctype html>
+> <html lang="en">
+>   <head>
+>     <meta charset="UTF-8" />
+>     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+>     <meta name="theme-color" content="#5b1a8c" />
+>     <title>Rainbow</title>
+>     <style>
+>       html, body { margin: 0; height: 100%; background: #2a0b46; o …[+2339 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:22.791Z
+
+> 🔧 **Bash** `{"command": "sed -n 436,470p src/game/Game.ts; sed -n 376,384p src/game/Game.ts; sed -n 420,432p src/game/Game.ts; grep -n \"const O = \" src/game/Game.ts", "description": "Read intro skip/restart logic and outro timing"}`
+
+### 🧑 User — 2026-11-15T18:37:22.904Z
+
+> ↩︎ result: hud.setStage('03');
+>   updateZones();
+>   hud.onPause(() => togglePause());
+>   hud.onReplay(() => resetToIntro());
+>   input.onKey((k) => { if (k === 'p' || k === 'P' || k === 'Escape') togglePause(); });
+>   input.onTap(() => {
+>     if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }
+>   });
+>   const togglePause = () => {
+>     if (st.mode !== 'ride') return;
+>     st.paused = !st.paused;
+>     hud.showPaused(st.paused);
+>   };
+>   const resetToIntro = () => {
+>     st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+>     coins.resetUntil(-1);
+>     hud.setCoins(st.coins); hud.setHearts(5); hud.setVisible(false); hud.showVictory(false); hud.showPaused(false);
+>     st.stage = '01'; updateZones();
+>     env.towel.setTent(0);
+>     env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
+>     env.doorC.rotation.y = 0;
+>     benny.root.visible = true;
+>   };
+> 
+>   const stepSim = (dt: number) => {
+>     if (st.paused) return;
+>     st.t += dt;
+>     if (st.frozen === null) st.clock += dt;
+>     if (st.mode === 'intro') introUpdate(dt);
+>     else if (st.mode === 'ride') rideUpdate …[+969 chars]
+
+### 🤖 Claude — 2026-11-15T18:37:44.319Z
+
+> 🔧 **Bash** `{"command": "cat vite.config.ts; cat capacitor.config.ts | head -20", "description": "Read Vite and Capacitor configs"}`
+
+### 🧑 User — 2026-11-15T18:37:44.352Z
+
+> ↩︎ result: import { defineConfig } from 'vite';
+> import { resolve } from 'node:path';
+> 
+> export default defineConfig({
+>   base: './',
+>   assetsInclude: ['**/*.glb'],
+>   server: { port: 5173, strictPort: false },
+>   build: {
+>     target: 'es2020',
+>     outDir: 'dist',
+>     assetsInlineLimit: 0,
+>     chunkSizeWarningLimit: 2000,
+>     rollupOptions: {
+>       input: {
+>         main: resolve(__dirname, 'index.html'),
+>       },
+>     },
+>   },
+> });
+> import type { CapacitorConfig } from '@capacitor/cli';
+> 
+> const config: CapacitorConfig = {
+>   appId: 'com.rainbow.washergame',
+>   appName: 'Rainbow',
+>   webDir: 'dist',
+>   android: {
+>     backgroundColor: '#2a0b46',
+>   },
+> };
+> 
+> export default config;
+
+### 🤖 Claude — 2026-11-15T18:37:44.980Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 37, "limit": 75}`
+
+### 🧑 User — 2026-11-15T18:37:45.004Z
+
+> ↩︎ result: 37	export async function startGame(canvas: HTMLCanvasElement) {
+> 38	  const qs = new URLSearchParams(location.search);
+> 39	  const qaMode = qs.has('qa');
+> 40	  const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });
+> 41	  const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+> 42	  renderer.setPixelRatio(dpr);
+> 43	  const scene = new THREE.Scene();
+> 44	  scene.environment = createCandyEnvironment(renderer);
+> 45	  scene.background = new THREE.Color('#b23fb4');
+> 46	  const fog = new THREE.FogExp2('#ffbde9', 0.0035);
+> 47	  scene.fog = fog;
+> 48	  scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+> 49	  const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+> 50	  sun.position.set(0.3, 1, 0.45);
+> 51	  scene.add(sun);
+> 52	  scene.add(sun.target);
+> 53	  const fill = new THREE.PointLight('#ffd8ff', 30, 30, 1.6);
+> 54	  scene.add(fill);
+> 55	
+> 56	  const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+> 57	  const composer = new EffectComposer(renderer);
+> 58	  composer.addPass(new RenderPass(scene, camera));
+> 59	  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+> 60	  const useBloom = qs.get('bloo …[+1923 chars]
+
+### 🤖 Claude — 2026-11-15T18:38:21.474Z
+
+> 🔧 **Bash** `{"command": "command -v ffmpeg ffprobe; ffmpeg -hide_banner -encoders 2>/dev/null | grep -E 'libvpx|libx264' | head -3; cd /home/user/rainbow- && grep -n \"requestAnimationFrame\\|__rainbow = \\|ready = true\\|ready: true\" src/game/Game.ts | head -6", "description": "Check ffmpeg encoders; find game loop start"}`
+
+### 🧑 User — 2026-11-15T18:38:21.763Z
+
+> ↩︎ result: /usr/bin/ffmpeg
+> /usr/bin/ffprobe
+>  V....D libx264              libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)
+>  V....D libx264rgb           libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 RGB (codec h264)
+>  V....D libvpx               libvpx VP8 (codec vp8)
+> 491:    requestAnimationFrame(frame);
+> 493:  requestAnimationFrame(frame);
+> 555:    ready: true,
+> 593:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-15T18:38:23.035Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-15T18:38:23.045Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-15T18:38:38.174Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/ui/cinematicVideo.ts", "content": "/**\n * Optional pre-rendered cinematics (the user's Google Flow videos) shown OVER the live 3D game.\n *\n *   public/video/intro.mp4   (or .webm)  — opening: the official cartoon girl loads the towel with Benny,\n *                                          closes the washer door and walks away (replaces real-time 01)\n *   public/video/ending.mp4  (or .webm)  — optional ending, played before the real-time 11 victory frame\n *\n * If a file is missing the real-time 3D cinematic plays instead, so the game always works wi …[+4288 chars]`
+
+### 🧑 User — 2026-11-15T18:38:38.445Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/ui/cinematicVideo.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:38:43.419Z
+
+Fixing one edge case first: if the browser blocks autoplay, the first tap must start the video, not skip it.
+
+### 🤖 Claude — 2026-11-15T18:38:46.486Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/ui/cinematicVideo.ts", "old_string": "    wrap.addEventListener('pointerdown', () => { if (performance.now() - t0 > 600) finish('skipped'); });\n    v.play().catch(() => {\n      // autoplay refused (rare for muted inline video): wait for a tap, then play\n      hint.textContent = 'Tap to play';\n      hint.style.opacity = '0.85';\n      wrap.addEventListener('pointerdown', () => { v.play().catch(() => finish('failed')); }, { once: true });\n    });", "new_string": "    let waitingForTap = false;\n    wrap.addEventListener('pointerdo …[+512 chars]`
+
+### 🧑 User — 2026-11-15T18:38:46.547Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/ui/cinematicVideo.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:38:48.178Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 1, "limit": 25}`
+
+### 🧑 User — 2026-11-15T18:38:48.258Z
+
+> ↩︎ result: 1	/**
+> 2	 * RAINBOW game: one connected 3D world, one continuous route.
+> 3	 *   intro  (01–02)  real-time cinematic: the girl drops the towel bundle (Benny hidden) into Drum A,
+> 4	 *                   closes the door and walks away; Benny peeks, then the spin tumbles him down the drain.
+> 5	 *   ride   (03–10)  interactive: auto-propelled along the course, steer left/right, real coin pickups,
+> 6	 *                   5 hearts (bumping the foam walls costs one), pause/resume.
+> 7	 *   outro  (11)     real-time victory cinematic: Benny is hidden under the towel; the SAME girl opens the
+> 8	 *                   door, folds/holds the towel without ever seeing him; FINAL SPIN COMPLETE.
+> 9	 * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> 10	 */
+> 11	import * as THREE from 'three';
+> 12	import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+> 13	import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+> 14	import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+> 15	import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+> 16	import { Course, StageId, WORLD } from '../world/cou …[+491 chars]
+
+### 🤖 Claude — 2026-11-15T18:38:48.877Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 374, "limit": 12}`
+
+### 🧑 User — 2026-11-15T18:38:48.891Z
+
+> ↩︎ result: 374	    if (st.log.length > 20000) st.log.shift();
+> 375	    if (st.s >= course.stage('11').s0 - 0.01) startOutro();
+> 376	  };
+> 377	
+> 378	  // ---------------------------------------------------------------- outro (11)
+> 379	  const startOutro = () => {
+> 380	    st.mode = 'outro';
+> 381	    st.t = 0;
+> 382	    setStage('11');
+> 383	  };
+> 384	  const outroUpdate = (dt: number) => {
+> 385	    const t = st.t;
+
+### 🤖 Claude — 2026-11-15T18:38:49.528Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 434, "limit": 12}`
+
+### 🧑 User — 2026-11-15T18:38:49.548Z
+
+> ↩︎ result: 434	  hud.setCoins(st.coins);
+> 435	  hud.setHearts(st.hearts);
+> 436	  hud.setStage('03');
+> 437	  updateZones();
+> 438	  hud.onPause(() => togglePause());
+> 439	  hud.onReplay(() => resetToIntro());
+> 440	  input.onKey((k) => { if (k === 'p' || k === 'P' || k === 'Escape') togglePause(); });
+> 441	  input.onTap(() => {
+> 442	    if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }
+> 443	  });
+> 444	  const togglePause = () => {
+> 445	    if (st.mode !== 'ride') return;
+
+### 🤖 Claude — 2026-11-15T18:39:01.149Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "import { createHud } from '../ui/hud';\nimport { createCoins, COIN_VALUE } from '../gameplay/coins';", "new_string": "import { createHud } from '../ui/hud';\nimport { findCinematic, playCinematic } from '../ui/cinematicVideo';\nimport { createCoins, COIN_VALUE } from '../gameplay/coins';"}`
+
+### 🧑 User — 2026-11-15T18:39:01.211Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T18:39:03.732Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  // ---------------------------------------------------------------- outro (11)\n  const startOutro = () => {\n    st.mode = 'outro';\n    st.t = 0;\n    setStage('11');\n  };", "new_string": "  // ---------------------------------------------------------------- outro (11)\n  const cinematic = { ending: null as string | null };\n  const startOutro = () => {\n    st.mode = 'outro';\n    st.t = 0;\n    setStage('11');\n    if (cinematic.ending) {\n      // optional Flow ending video; the real-time 11 fram …[+216 chars]`
+
+### 🧑 User — 2026-11-15T18:39:03.835Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T18:39:07.431Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  input.onTap(() => {\n    if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }\n  });", "new_string": "  input.onTap(() => {\n    if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }\n  });\n\n  // ---------------------------------------------------------------- optional Google Flow cinematics\n  // public/video/intro.mp4 shows 01 (towel loaded, door closed, girl walks away). While it plays, the live\n  //  …[+595 chars]`
+
+### 🧑 User — 2026-11-15T18:39:07.473Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T18:39:08.560Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "    env.doorC.rotation.y = 0;\n    benny.root.visible = true;\n  };", "new_string": "    env.doorC.rotation.y = 0;\n    benny.root.visible = true;\n    playIntroVideo();\n  };"}`
+
+### 🧑 User — 2026-11-15T18:39:08.710Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T18:39:15.417Z
+
+Type-checking, then an automated Playwright test of both paths: with a test video (generated with `ffmpeg` and kept outside the tracked files) and with no video (the real-time fallback).
+
+### 🤖 Claude — 2026-11-15T18:39:18.229Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | grep -E \"cinematic|Game.ts\" | head; echo \"tsc(cinematic/Game) done\"; mkdir -p node_modules/.rainbow-test && ffmpeg -hide_banner -loglevel error -y -f lavfi -i \"color=c=0x8a2be2:s=360x640:d=2.5,drawtext=text='FLOW INTRO TEST':fontcolor=white:fontsize=28:x=(w-text_w)/2:y=(h-text_h)/2\" -c:v libvpx -b:v 300k -an node_modules/.rainbow-test/intro.webm 2>&1 | tail -2; ls -la node_modules/.rainbow-test/", "description": "Typecheck new code; generate silent test clip"}`
+
+### 🧑 User — 2026-11-15T18:39:25.274Z
+
+> ↩︎ result: tsc(cinematic/Game) done
+> total 116
+> drwxr-xr-x   2 root root   4096 Nov 15 18:39 .
+> drwxr-xr-x 104 root root   4096 Nov 15 18:39 ..
+> -rw-r--r--   1 root root 108433 Nov 15 18:39 intro.webm
+
+### 🤖 Claude — 2026-11-15T18:39:37.681Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/cinematic-test.mjs", "content": "#!/usr/bin/env node\n// Verifies the optional Google Flow cinematic hand-off in the REAL game build (headless Chromium):\n//   1. with an intro video: overlay plays, the live 3D intro is held underneath, the overlay fades out and\n//      the game continues in real time from 01 into the 03 ride (no slideshow, no stuck state);\n//   2. without a video: no overlay, the real-time 01 cinematic starts at t = 0 (fallback).\n// Usage: node scripts/cinematic-test.mjs [path-to-test-video-under-project-root]\n// Writes qa/cinema …[+2941 chars]`
+
+### 🧑 User — 2026-11-15T18:39:37.711Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/cinematic-test.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:39:40.134Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/cinematic-test.mjs 2>&1 | tail -5; python3 -I -c \"\nimport json;d=json.load(open('qa/cinematic_test.json'))\nw=d['withVideo'];print('during:',{k:w['during'][k] for k in ('mode','stage','paused')}, '| afterFade:',{k:w['afterFade'][k] for k in ('mode','stage','paused')}, '| later:',{k:w['ride'][k] for k in ('mode','stage')})\nprint('without:',d['withoutVideo'].get('overlay'), {k:d['withoutVideo']['state'][k] for k in ('mode','stage','paused')})\"", "description": "Run the cinematic hand-off test in headless Chromium", "timeout": 660000}`
+
