@@ -4,7 +4,7 @@
 | Integration | State |
 |---|---|
 | claude.ai connector **World Labs Atlas** | installed, `connected`, enabled in this session; 11 tools load (`list_projects`, `create_image_upload`, `import_image`, `images2PosedRGBD`, `atlasGenerate`, `atlasTextToImage`, `atlasChisel`, `posedImages2Splats`, `splats2Mesh`, `get_asset`, `get_operation`). This is the ONE Atlas MCP integration |
-| `list_projects` (free, read-only; run twice) | **error:** `this sign-in has no active Atlas account. Ask the user to open https://atlas.worldlabs.ai and finish signing up, then try again` → no projects or per-project tools can be listed yet |
+| `list_projects` (free, read-only) | ~22:05 UTC: "no active Atlas account". **~22:20 UTC, after the user signed in again: OK** → project "My project" (`proj_ad4fdb076f4a4c80934406cfefc4d30b`, "Personal workspace"), `credits_available: true`, task tools `atlasChisel`, `atlasGenerate`, `atlasTextToImage`, `images2PosedRGBD`, `posedImages2Splats`, `splats2Mesh` |
 | Plugin `worldlabs@worldlabs` 0.2.2 | installed (user scope) for its skills `atlas-blender`, `atlas-splats`, `atlas-flythrough`, `worldlabs-cli`. Its own copy of the Atlas MCP server (`plugin:worldlabs:worldlabs`) is **disabled for this project** so the tools are not duplicated (`scripts/setup-worldlabs-plugin.sh`, run by the environment setup script in every fresh container). Its skills load from the next session |
 | Credits | nothing generated, nothing spent |
 | Marble | not an API; the user builds the washer world at https://marble.worldlabs.ai and hands over the export (below). `.glb`, `.ply` and `.spz` are stored with Git LFS. The Blender import tool reads `.glb` (mesh) and `.ply` (splats); a `.spz`-only export needs a `.ply` or `.glb` export as well |

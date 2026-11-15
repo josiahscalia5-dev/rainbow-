@@ -1072,3 +1072,288 @@ tsc passes. Updating NOTES.md with it02/it03 before capturing it04.
 
 > 🔧 **Bash** `{"command": "timeout 900 node scripts/capture.mjs 03 04 06 07 --out=qa/pilot05/wave5/foam/regress 2>&1 | grep -v \"^\\s*at \" | tail -6", "description": "Regression capture of stages 03 04 06 07", "timeout": 920000}`
 
+### 🧑 User — 2026-11-15T22:14:52.538Z
+
+> ↩︎ result: 03 → qa/pilot05/wave5/foam/regress/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":152,"tris":736696,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → qa/pilot05/wave5/foam/regress/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":154,"tris":736784,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/wave5/foam/regress/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":128,"tris":551701,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → qa/pilot05/wave5/foam/regress/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":237,"tris":669219,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T22:14:54.992Z
+
+Let me compare each with `screenshots/NN.png` side by side, and check the stage boundaries relative to the capture points.
+
+### 🤖 Claude — 2026-11-15T22:14:59.242Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && ls -la --time-style=+%H:%M screenshots/03.png screenshots/04.png screenshots/06.png screenshots/07.png && python3 -I -c \"\nfrom PIL import Image\nids=['03','04','06','07']\nW=300\nrow=[]\no=Image.new('RGB',(4*(2*W+10)+30, 540),(20,20,20))\nfor i,k in enumerate(ids):\n  a=Image.open('screenshots/%s.png'%k).convert('RGB'); b=Image.open('qa/pilot05/wave5/foam/regress/%s.png'%k).convert('RGB')\n  h=int(a.height*W/a.width)\n  o.paste(a.resize((W,h)),(i*(2*W+20),0)); o.paste(b.resize((W,int(b.height* …[+131 chars]`
+
+### 🧑 User — 2026-11-15T22:15:00.054Z
+
+> ↩︎ result: -rw-r--r-- 1 root root  645650 21:41 screenshots/03.png
+> -rw-r--r-- 1 root root  960211 21:41 screenshots/04.png
+> -rw-r--r-- 1 root root 1129448 21:41 screenshots/06.png
+> -rw-r--r-- 1 root root 1492779 21:41 screenshots/07.png
+> (2470, 540)
+
+### 🤖 Claude — 2026-11-15T22:15:03.138Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/regress.png"}`
+
+### 🧑 User — 2026-11-15T22:15:03.301Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T22:15:03.297Z
+
+[Image: original 2470x540, displayed at 2000x437. Multiply coordinates by 1.24 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T22:15:07.068Z
+
+03 matches; 06 and 07 show large wall/material changes from the environment specialist's parallel work. Let me zoom on the foam regions of 04 and 07 to separate my changes from theirs.
+
+### 🤖 Claude — 2026-11-15T22:15:10.869Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && python3 -I -c \"\nfrom PIL import Image\no=Image.new('RGB',(4*432+30,768),(20,20,20))\nx=0\nfor k,box in (('04',(0,500,432,1268)),('07',(432,500,864,1268))):\n  a=Image.open('screenshots/%s.png'%k).convert('RGB').crop(box); b=Image.open('qa/pilot05/wave5/foam/regress/%s.png'%k).convert('RGB').crop(box)\n  o.paste(a,(x,0)); o.paste(b,(x+437,0)); x+=884\no.save('$S/regress_zoom.png')\n\"; grep -n \"stage('04')\\|s0:\" src/world/course.ts | head -3; node -e \"\" ", "description": "Zoom foam areas o …[+25 chars]`
+
+### 🧑 User — 2026-11-15T22:15:11.592Z
+
+> ↩︎ result: 24:  s0: number;
+> 91:  s0: number;
+> 358:    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+
+### 🤖 Claude — 2026-11-15T22:15:13.967Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/regress_zoom.png"}`
+
+### 🧑 User — 2026-11-15T22:15:14.009Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:15:35.066Z
+
+> 🔧 **Bash** `{"command": "git diff --stat 1764258 -- src/ | tail -15; echo; git diff 1764258 -- src/vfx/waterRibbon.ts | grep -n \"^[-+].*\\(hw\\|width\\|EDGE\\|skirt\\|Skirt\\|renderOrder\\|depth\\|polygonOffset\\)\" | head -20", "description": "Diff source changes since wave-5 baseline"}`
+
+### 🧑 User — 2026-11-15T22:15:35.108Z
+
+> ↩︎ result: src/characters/benny/benny-lab.ts |   4 +-
+>  src/characters/benny/build.ts     |  51 +++++++++---
+>  src/characters/benny/runtime.ts   |  19 ++++-
+>  src/characters/benny/textures.ts  |  25 ++++--
+>  src/vfx/foam.ts                   | 117 ++++++++++++++++++++------
+>  src/vfx/waterRibbon.ts            | 114 ++++++++++++++++---------
+>  src/world/environment.ts          | 169 ++++++++++++++++++++++++++++++--------
+>  src/world/materials.ts            |  81 ++++++++++++++++--
+>  src/world/tube.ts                 | 120 +++++++++++++++++++++++++--
+>  9 files changed, 572 insertions(+), 128 deletions(-)
+> 
+> 9:+// polynomial smooth minimum (k = blend width, units)
+> 44:-    offL = min(offL, Mb + hw - wL - 0.5);
+> 45:-    offR = min(offR, hw - wR - 0.5 - Mb);
+> 46:+    float roomL = Mb + hw - 0.5 - offL, roomR = hw - 0.5 - Mb - offR;
+> 49:+    offL = smin(offL, Mb + hw - wL - 0.5, 1.2);
+> 50:+    offR = smin(offR, hw - wR - 0.5 - Mb, 1.2);
+> 126:-    swell = mix(0.5, swell, 1.0 - smoothstep(0.3, 0.7, fwidth(wq * 7.0)));
+> 127:+    swell = mix(0.5, swell, 1.0 - smoothstep(0.3, 0.7, fwidth(wq * 7.0)) * (1.0 - near5));
+
+### 🤖 Claude — 2026-11-15T22:15:44.930Z
+
+> 🔧 **Bash** `{"command": "git diff 1764258 -- src/vfx/foam.ts | grep \"^[-+]\" | grep -v \"^[-+]\\s*//\\|^[-+]\\s*\\*\\|^+++\\|^---\" | head -90", "description": "Audit foam.ts diff since baseline"}`
+
+### 🧑 User — 2026-11-15T22:15:44.958Z
+
+> ↩︎ result: -  qaRafts(): { visible: boolean; puffs: number; shown: number; clumps: { kind: string; ds: number; lat: number; k: number }[] };
+> +  qaRafts(): { visible: boolean; puffs: number; shown: number; clumps: { kind: string; ds: number; lat: number; k: number; y?: number; env?: number; s?: number }[] };
+> -/** inner edge of the bank: px in from the frame edge (fraction of an 864-px wide frame) */
+> -const BANK_PX: [number, number] = [60, 155];
+> +/** inner edge of a clump at its widest: px in from the frame edge (of an 864-px wide frame), L / R */
+> +const BANK_PX: [number, number] = [180, 200];
+> +/** lateral size of a clump (px): a clump whose inner edge lies further in than this floats off the frame
+> +const CLUMP_PX = 135;
+> +/**
+> +const FLANK_SHEET = false;
+> +/**
+> +const BANK_ENV: [number, number, number][] = [[478.345, 0.85, 0.5], [127.503, 0.45, 0.54]];
+> +/**
+> +function bermScale05(course: Course): (s: number) => number {
+> +  const st = course.stage('05');
+> +  const sm = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+> +  return (s) => 1 - 0.6 * sm(st.s0 - 6, st.s0 - 1, s) * (1 - sm(st.s1 - 1, st.s1 + 4, s));
+> +}
+> +/** squash the …[+5402 chars]
+
+### 🤖 Claude — 2026-11-15T22:15:55.499Z
+
+> 🔧 **Bash** `{"command": "grep -n \"CHECKPOINTS\" -A14 src/game/Game.ts | grep -n \"'0[4-7]'\" | head; grep -rn \"stageRanges\\|marks\\[\" src/world/course.ts | head -5; python3 -I -c \"\nimport json; d=json.load(open('qa/capture_log.json'))\nfor s in d['shots']: print(s['id'], json.dumps(s.get('checkpoint'))[:200])\n\"", "description": "Find stage boundaries for 04-07"}`
+
+### 🧑 User — 2026-11-15T22:15:55.569Z
+
+> ↩︎ result: 5:526-    '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+> 6:527-    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+> 7:528-    '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+> 8:529-    '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+> 148:  const mark = (k: string) => (marks[k] = pts.length - 1);
+> 273:  smoothPolyline(pts, marks['03'], 2.2, 3);
+> 276:  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+> 357:    for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+> 358:    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+> 03 {"stage": "03", "s": 48.49515264641385, "y": -13.425452851565133}
+> 04 {"stage": "04", "s": 77.41308465825975, "y": -21.895735537052705}
+> 06 {"stage": "06", "s": 198.9241011105758, "y": -37.451722448012504}
+> 07 {"stage": "07", "s": 273.05708282125045, "y": -49.65895895311968}
+
+### 🤖 Claude — 2026-11-15T22:16:03.987Z
+
+> 🔧 **Bash** `{"command": "sed -n 180,216p src/world/course.ts", "description": "Read 04/05 segment construction in course"}`
+
+### 🧑 User — 2026-11-15T22:16:04.026Z
+
+> ↩︎ result: seg(60, (t) => {
+>     const th = -Math.PI / 2 - Math.PI * 1.5 * (1 - (1 - t) * (1 - t)); // angle eases out → radial finish
+>     const r = 9.6 * Math.pow(1 - t, 0.9);
+>     return V(b.center.x + r * Math.sin(th), funnelY(r) + 0.25, b.center.z + r * Math.cos(th));
+>   });
+>   mark('04');
+>   // ---- 04: five-arrow slide — steep straight drop (≈32°) inside the gold ring pipe ----
+>   const s4 = pts[pts.length - 1].clone();
+>   const pitch4 = THREE.MathUtils.degToRad(32);
+>   const d4 = V(0, -Math.sin(pitch4), -Math.cos(pitch4));
+>   // pull-down arc from the drain lip into the steep slide pitch
+>   const R4a = 9;
+>   seg(7, (t) => {
+>     const a = pitch4 * t;
+>     return s4.clone().add(V(0, -R4a * (1 - Math.cos(a)), -R4a * Math.sin(a)));
+>   });
+>   const s4b = pts[pts.length - 1].clone();
+>   seg(16, (t) => s4b.clone().addScaledVector(d4, 34 * t));
+>   // pull out of the slide into the horizontal current
+>   const s4c = pts[pts.length - 1].clone();
+>   const R4 = 12;
+>   seg(8, (t) => {
+>     const a = -pitch4 + pitch4 * t;
+>     return s4c.clone().add(V(0, R4 * (Math.cos(-pitch4) - Math.cos(a)), R4 * (Math.sin(-pitch4) - Math.sin(a))));
+>   });
+>   mark('05');
+>   // ---- 05: long STRAIGHT perforated current tube (ref 05: concen …[+804 chars]
+
+### 🤖 Claude — 2026-11-15T22:16:12.235Z
+
+> 🔧 **Bash** `{"command": "git diff 1764258 -- src/vfx/waterRibbon.ts | grep \"^@@\" | head -20; git diff 1764258 -- src/world/tube.ts | grep \"^[-+]\" | grep -i \"floor\\|stream\\|water\\|berm\\|foam\" | head -15", "description": "Locate water/tube changes affecting the berm"}`
+
+### 🧑 User — 2026-11-15T22:16:12.274Z
+
+> ↩︎ result: @@ -235,6 +235,12 @@ float meander(float s, float hw) {
+> @@ -320,9 +326,11 @@ void main() {
+> @@ -379,19 +387,42 @@ void main() {
+> @@ -409,24 +440,7 @@ void main() {
+> @@ -529,22 +543,35 @@ void main() {
+> @@ -570,12 +597,16 @@ void main() {
+> @@ -583,10 +614,19 @@ void main() {
+> +   * The virtual tunnel's water surface: a flat chord across the section at `level` (relative to the tube
+> +   * eye rays, this chord sits exactly on the real stream at the section start and rises above it further
+> +   * in, so it takes over from the real water ribbon without a seam. Morph "open": dropped below the
+
+### 🤖 Claude — 2026-11-15T22:16:23.494Z
+
+> 🔧 **Bash** `{"command": "git diff 1764258 -- src/vfx/waterRibbon.ts | grep \"^[-+]\" | grep -n \"discard\\|alpha\\|gl_FragColor\\|transparent\\|edge\\|abs(u)\\|vSkirt\" | head -15", "description": "Look for edge alpha/discard changes in water shader"}`
+
+### 🧑 User — 2026-11-15T22:16:23.529Z
+
+> ↩︎ result: 41:+    // brushed edges: each band edge is combed into pink / cyan strands along the flow (ref 05: the
+> 60:-    // crisp ≈1 px edge (a feathered pink-over-blue edge reads as violet, the "muddy purple" to avoid);
+
+### 🤖 Claude — 2026-11-15T22:16:42.890Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && FOAM_OPEN=3 python3 -I - <<EOF\nimport sys; sys.path.insert(0,'$S')\nimport numpy as np\nexec(open('$S/bankcc.py').read().split('for p in sys.argv[2:]:')[0].replace('sys.path.insert(0, sys.argv[1])',''))\ndef runs(b):\n    out=[];y=None\n    for i,v in enumerate(b):\n        if v and y is None: y=i\n        if not v and y is not None: out.append((y,i-y)); y=None\n    if y is not None: out.append((y,len(b)-y))\n    return out\nfor p in ('references/05_flow_into_the_current.png','qa/pilot05/wave5/ …[+391 chars]`
+
+### 🧑 User — 2026-11-15T22:16:44.990Z
+
+> ↩︎ result: references/05_flow_into_the_current.png
+>    L foam runs (y start, height px): [(700, 115), (1016, 92), (1188, 160)]
+>    R foam runs (y start, height px): [(700, 108), (810, 18), (834, 113), (1223, 131)]
+> qa/pilot05/wave5/baseline/05.png
+>    L foam runs (y start, height px): [(700, 532)]
+>    R foam runs (y start, height px): [(700, 836)]
+> qa/pilot05/wave5/foam/it05/05.png
+>    L foam runs (y start, height px): [(700, 106), (975, 93), (1173, 163), (1469, 46)]
+>    R foam runs (y start, height px): [(700, 22), (770, 176), (1336, 54), (1432, 56)]
+
+### 🤖 Claude — 2026-11-15T22:16:54.835Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"clumps\\|qaRafts\\|rafts\\b\" scripts/ tests/ 2>/dev/null | head -10; npx tsc --noEmit; echo tsc=$?", "description": "Check QA consumers and run tsc", "timeout": 180000}`
+
+### 🧑 User — 2026-11-15T22:16:57.431Z
+
+> ↩︎ result: tsc=0
+
+### 🤖 Claude — 2026-11-15T22:17:15.584Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/pilot05/wave5/foam/NOTES.md'\nt=open(p).read()\nt+=\"\"\"* Result (it05, 11x11 opening; 7x7 in brackets) vs baseline -> it05 (ref):\n  | metric | baseline | it05 | ref |\n  |---|---|---|---|\n  | ROWS (frame-edge wall) L / R | 73.7 / 100 % | 32.3 / 7.7 % (33.9 / 7.7) | 14.1 / 9.7 % |\n  | AREA below y540 L / R | 7.8 / 10.6 % | 4.8 / 4.1 % (5.4 / 4.8) | 2.5 / 1.3 % (3.3 / 2.5) |\n  | NEAR width L mean / max | 64 / 99 px | 88 / 147 px (10.2 / 17.0 %) | 45 / 110 px (83 / 231 at 7x7) |\n  | NEAR width R mean / max | 83 / 129 px | 40 / 86 px (4.7 / 10.0 %) | 53 …[+3600 chars]`
+
+### 🧑 User — 2026-11-15T22:17:16.451Z
+
+> ↩︎ result: qa/pilot05/wave5/foam/it05/triptych.png (1889, 1142)
+> NOTES.md
+> iso_noflank
+> it01
+> it02
+> it03
+> it04
+> it05
+> regress
+> tools
+
+### 🤖 Claude — 2026-11-15T22:17:17.641Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/foam/it05/triptych.png"}`
+
+### 🧑 User — 2026-11-15T22:17:17.909Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:17:36.556Z
+
+The tall white foam walls in Screen 05 are now low, separate clumps of bubbles with water and pink bands between them, and the purple tunnel wall shows above the rim toward the far end. All changes are in `src/vfx/foam.ts`. The spray fan and bubbles were not touched and still meet the targets.
+
+**On the 49 %/44 % figures:** I couldn't reproduce them. My wave-4 notes don't record how they were measured, and no definition I tried gives those numbers on the baseline. Per-row bank width near the camera was actually close to the ref already (65–130 px vs ≈83–85 px). What really separated the baseline from the ref was that the foam ran unbroken up the frame edge and covered more of the image. So I defined repeatable measures and measured the ref and our frames the same way. The scripts and the exact definitions are in `qa/pilot05/wave5/foam/tools/` and NOTES.md.
+
+**Before (baseline) → after (it05), ref in the last column:**
+
+| Measure | Baseline | it05 | Ref |
+|---|---|---|---|
+| Wall test: share of rows y 700–1400 where the outer 40 px are foam, L / R | 73.7 / 100 % | 32.3 / 7.7 % | 14.1 / 9.7 % |
+| Foam area below y 540, L / R | 7.8 / 10.6 % | 4.8 / 4.1 % | 2.5 / 1.3 % |
+| Near-camera bank width (y 950–1400), mean / max | L 64 / 99 px, R 83 / 129 px | L 88 / 147 px (10.2 / 17.0 %), R 40 / 86 px (4.7 / 10.0 %) | L 45 / 110 px, R 53 / 98 px |
+
+The ref numbers in the width row come from the mask setting that ignores the water's new light streaks, and that setting under-counts the ref's finely shaded foam. With the finer setting the ref measures ≈83–85 px mean, and both versions are in NOTES.md.
+
+**Foam heights (y start, height):**
+- Baseline: one unbroken run per side, 532 px on the left and 836 px on the right.
+- Left now: two clumps at (975, 93 px) and (1173, 163 px), against the ref's (1016, 92) and (1188, 160).
+- Right now: the bank at (770, 176 px), against the ref's (834, 113).
+
+**Kept:** the soft spray fan, 19 large bubbles (23–58 px radius) and 12 small ones (4–15 px). None are over Benny or within 10 px of a coin.
+
+**What changed in `src/vfx/foam.ts`:**
+- **Clumps instead of a strip:** the side banks now come and go along the course (`BANK_ENV`, `bankEnv`). In this frame they land where the ref has them, and along the whole of 05 they cover about 40 % of the length.
+- **Flat white sheet removed:** the sheet under the bank read as flat paper with straight cut edges, so it is hidden (`FLANK_SHEET = false`). Denser bubbles (8 per cell instead of 6) now form the clumps.
+- **Wide clumps float off the frame edge** (`CLUMP_PX = 135`), leaving water beyond them.
+- **Foam can come closer behind Benny:** behind him there are no coins, so the clearance there is relaxed. Ahead of him it is unchanged.
+- **Lower, narrower rim toward the far end, 05 only** (`bermScale05`, `squashBerm`): height cut to 0.4, outer side ×0.46, smaller heaps that never stack. The random layout is unchanged, so other stages' foam stays the same.
+
+`npx tsc --noEmit` passes. My changes add about 800 triangles and remove one draw call. The frame's total rose from 121 to 143 calls and from 608k to 634k triangles because of other specialists' parallel work. Today's 05 captures run 143–144 calls, which is over the 130-call budget. I did not commit or push.
+
+**Problem in 04 and 07:** in the regression captures, the foam bank along the stream edge now shows as a broad white sheet, where `screenshots/04.png` and `07.png` showed water. It isn't from foam.ts: outside 05 the bank geometry is the same as at baseline. Something that used to cover it changed, either the water shader (`waterRibbon.ts`, all its new edits are in the fragment shader) or `tube.ts`/`environment.ts`. I had used my capture budget, so I didn't isolate it. I filed a wave5 line in `qa/pilot05/REQUESTS.md` asking for that check.
+
+**What is left:**
+1. The ref's small lower-right clump (x 610–790, y 1217–1300) is missing. In it04 it was too tall (190 px); after the it05 fix it nearly disappeared, because it is shorter along the course than the bank's sampling spacing near the camera. The fix is to sample the clump pattern per bubble instead of per row. That was my fifth 05 capture, so it is not done.
+2. The right bank starts about 60 px higher than the ref's.
+3. The rim toward the far end uses white spheres, where the ref's bubbles have lavender and blue shading.
+
+Files are in `/home/user/rainbow-/qa/pilot05/wave5/foam/`:
+- NOTES.md
+- it05/05.png
+- it05/triptych.png
+- regress/ (03, 04, 06, 07)
+- tools/bankcc.py
+- tools/foammask.py
+

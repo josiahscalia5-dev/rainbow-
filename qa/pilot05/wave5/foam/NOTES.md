@@ -76,3 +76,39 @@ ROWS (wall test) is stable under both.
 ## it05 (23:15) foam.ts
 * `BANK_ENV` right -> [127.503, 0.45, threshold 0.54] (small right lower clump ds -1.25..-0.7, open
   water to ds 2.75, bank ds 3..8.5); per-side threshold in `bankEnv`.
+* Result (it05, 11x11 opening; 7x7 in brackets) vs baseline -> it05 (ref):
+  | metric | baseline | it05 | ref |
+  |---|---|---|---|
+  | ROWS (frame-edge wall) L / R | 73.7 / 100 % | 32.3 / 7.7 % (33.9 / 7.7) | 14.1 / 9.7 % |
+  | AREA below y540 L / R | 7.8 / 10.6 % | 4.8 / 4.1 % (5.4 / 4.8) | 2.5 / 1.3 % (3.3 / 2.5) |
+  | NEAR width L mean / max | 64 / 99 px | 88 / 147 px (10.2 / 17.0 %) | 45 / 110 px (83 / 231 at 7x7) |
+  | NEAR width R mean / max | 83 / 129 px | 40 / 86 px (4.7 / 10.0 %) | 53 / 98 px (85 / 222 at 7x7) |
+  | COVER L / R | 63 / 100 % | 51 / 14 % | 53 / 20 % |
+  Vertical foam runs in the outer 220-px strips (y >= 700, 7x7): baseline L one run 532 px, R 836 px
+  (walls). it05 L (975, 93 px) + (1173, 163 px) vs ref (1016, 92) + (1188, 160); R bank (770, 176 px)
+  vs ref (834, 113); R lower clump missing (ref 1223, 131 px).
+  7x7 NEAR/EXT on live frames are inflated by the water's reflection streaks merging with clumps.
+* Bubbles (probe QA, bubbles.ts untouched): 19 large r 23-58 px, 12 small r 4-15 px; none over Benny's
+  bbox or within 10 px of the 6 visible coins. Spray fan (riderSplash.ts) untouched.
+* Cost: flank sheet hidden (-1 draw call); bank impostors 1236 -> 1648 instances x 2 triangles. Whole-frame
+  calls 143 / tris 634k in this capture come from parallel env/water work (were 121 / 608k at baseline).
+* tsc --noEmit passes.
+
+## Regression 03/04/06/07 (qa/pilot05/wave5/foam/regress vs screenshots/NN.png, 23:25)
+* 03 unchanged apart from Benny's face texture (Benny owner). 06/07 walls changed (environment owner).
+* 04 (left) and 07 (right): the stream-edge berm now shows as a broad white sheet where screenshots/
+  04/07 showed pink water + loose puffs. NOT from foam.ts: outside s in [05.s0-6, 05.s1+4] (05.s0 ~116,
+  05.s1 = 188.9; 04 capture s 77.4, 07 s 273) `bermScale05` = 1, `squashBerm` returns h unchanged,
+  eS = e, `low05` false and the rand() sequence is identical, so the berm mesh/puffs there are the same as
+  at baseline. Something that used to cover the berm's under-water part (e -0.6..0) changed: waterRibbon
+  FRAG (all its wave-5 hunks are in the fragment shader) or tube.ts/environment.ts. Not isolated (capture
+  budget used); request filed in REQUESTS.md.
+
+## Left / next
+1. Right lower clump (ref x 610-790, y 1217-1300): it is ~0.55 u long, shorter than the flank row
+   spacing near the camera (~0.7 u), so the interpolated envelope never reaches full width. Fix: sample
+   `bankEnv` per puff cell (at sC) instead of interpolating `rowEnv`, or a denser row set near ds -2..0.
+2. Right bank (770-946) starts ~60 px higher than the ref's (834-947).
+3. VP rim: berm puffs are white spheres; the ref rim is lavender/blue-shaded small bubbles.
+4. Attribution capture for the 04/07 berm exposure (`--q=waterhide=foamBerm` and a capture with the
+   1764258 water shader) by the coordinator.

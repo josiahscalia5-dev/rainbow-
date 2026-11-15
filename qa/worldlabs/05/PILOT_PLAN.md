@@ -1,5 +1,11 @@
 # Screen 05 — World Labs Atlas pilot plan (NOT RUN — awaiting approval)
 
+> **ATLAS ACTIVE — 2026-11-15 ~22:20 UTC (account 6):** after the user re-signed in, `list_projects` (free) answers:
+> project **"My project"** (`proj_ad4fdb076f4a4c80934406cfefc4d30b`, workspace "Personal workspace"),
+> `credits_available: true`, task tools `atlasChisel`, `atlasGenerate`, `atlasTextToImage`, `images2PosedRGBD`,
+> `posedImages2Splats`, `splats2Mesh`. Still nothing run, nothing spent: every task tool uses credits and needs the
+> user's explicit approval of the named step first.
+
 > **Re-checked 2026-11-15 ~20:10 UTC (account 4):** `list_projects` still answers "no active Atlas account". Nothing run, nothing spent. What is missing, the Marble manual route, the clean environment plate and the Marble prompt: see `MARBLE_MANUAL.md`.
 
 Status 2026-11-15: the claude.ai **World Labs Atlas** connector is attached to the Rainbow session and its

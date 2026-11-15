@@ -389,12 +389,12 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3913,
-   "sha256": "781e1c42c3169f656cd207dd8897bcf25ecc32f0394df007c39b4bf32fdc1282"
+   "sha256": "f97a8a948ac345758042a08dda968d59a047fa244128899de9933568018774ae"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 10217,
-   "sha256": "2bb059ce9779cf8e08dc62a49fe3c7fcc262d413fae66739b109027e70acfcdf"
+   "bytes": 10358,
+   "sha256": "c6fad5912e222a5c2022633c21a6c63f43c48487030409a82cc5b8a854b1709d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 2979,
-   "sha256": "a34ffbf2517d0ac64f33a0c4588d045166b952134246054e45f3e73fcb59deda"
+   "bytes": 3885,
+   "sha256": "b1105000221b303dd02bd2ddacb9d84c3a21369a97c89a6d082af4208eb11a4a"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -908,8 +908,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 4134,
-   "sha256": "d58beaafffffda09b5d803be0a5f1f4f63dafc1d39a810e50093000ffc1c435a"
+   "bytes": 5682,
+   "sha256": "418cb239de583a3e8fb96d426efa66df7a53c6ae60d59582f16f4fb92c73f79a"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -1548,8 +1548,8 @@
   },
   {
    "path": "qa/pilot05/wave5/environment/NOTES.md",
-   "bytes": 6715,
-   "sha256": "6e4cb1c21020395b5b13e9ae24fe4406510cd659f8eff2a68395620b906aafe6"
+   "bytes": 8285,
+   "sha256": "ced17b355da331929baf5c662a30b9d477ecdfabeb89b0ac46581257e106b495"
   },
   {
    "path": "qa/pilot05/wave5/environment/it01/05.png",
@@ -1592,9 +1592,34 @@
    "sha256": "1a7ff158b8ee815ecc14a300620dfab15e3b6a42168f780832fb5474cd939bb6"
   },
   {
+   "path": "qa/pilot05/wave5/environment/ride/ride_150.png",
+   "bytes": 582491,
+   "sha256": "9775a475989c655df9abaa2a01de1512408714982f667860bd315aeb33f08ec3"
+  },
+  {
+   "path": "qa/pilot05/wave5/environment/ride/ride_158.png",
+   "bytes": 551476,
+   "sha256": "893b5bdb15ee6ae0deb4854895ed3e41efb23d19784ac1a9e22af55ab5c300be"
+  },
+  {
+   "path": "qa/pilot05/wave5/environment/ride/ride_164.png",
+   "bytes": 498748,
+   "sha256": "d68d623b4e0d0dfdffbbacb3f5193d641996bbbbdbe9ebaf8df13193b75456ff"
+  },
+  {
+   "path": "qa/pilot05/wave5/environment/ride/ride_172.png",
+   "bytes": 462113,
+   "sha256": "6c381611987cd60b4330966f8ad953cde40874d7955d7cb69adf478a29be1c78"
+  },
+  {
+   "path": "qa/pilot05/wave5/environment/ride/ride_182.png",
+   "bytes": 435334,
+   "sha256": "c255992c1c09fe5fa7dc82234f04b1e84fbacd48f00174461da95f3f79cc6206"
+  },
+  {
    "path": "qa/pilot05/wave5/foam/NOTES.md",
-   "bytes": 5893,
-   "sha256": "b8eccdc9b208466e0ea23a22eec652199f7ec477ac952725b4151aaee06f9178"
+   "bytes": 8754,
+   "sha256": "2c409494150119ad48e46b060b8716378d38b118146c894fa4bdf89360e4a961"
   },
   {
    "path": "qa/pilot05/wave5/foam/iso_noflank/05.png",
@@ -1632,6 +1657,11 @@
    "sha256": "2c9a583dcf8eb9d87638e77a393adf6e187b0e846756524c3156ed16bc8a578a"
   },
   {
+   "path": "qa/pilot05/wave5/foam/it05/triptych.png",
+   "bytes": 3568956,
+   "sha256": "a28b6612ed8e38255929fdd9f12135da66a8e6aa46dda0c0bebd693c6be43cdb"
+  },
+  {
    "path": "qa/pilot05/wave5/foam/regress/03.png",
    "bytes": 689295,
    "sha256": "70d2cb9a169b30fe0058651e1f3a36056fce46af6302bd217f4fa208533478dc"
@@ -1645,6 +1675,11 @@
    "path": "qa/pilot05/wave5/foam/regress/06.png",
    "bytes": 1504918,
    "sha256": "180c0604fa05700d8c433881e475d7b40f6125f389f1fa742850f9105d54345d"
+  },
+  {
+   "path": "qa/pilot05/wave5/foam/regress/07.png",
+   "bytes": 1785767,
+   "sha256": "8645940ebf457193449ef962f3f4f3be55f21058f62c3b54392c6c819a2bfd5b"
   },
   {
    "path": "qa/pilot05/wave5/foam/tools/bankcc.py",
@@ -1738,13 +1773,13 @@
   },
   {
    "path": "qa/worldlabs/05/MARBLE_MANUAL.md",
-   "bytes": 7529,
-   "sha256": "18bcc3d49b4f93f9828e8e74495a4255bb2657a1ce7d94be7be7b5b19c4f6426"
+   "bytes": 7648,
+   "sha256": "e36d4c5db1cf3ed4f44d0f45d75bf966d93c0a58600cc0322eb5e72e090d5b06"
   },
   {
    "path": "qa/worldlabs/05/PILOT_PLAN.md",
-   "bytes": 4257,
-   "sha256": "85ca78154fe4c8ec5e9e8df6734e6cbc35e5c711763b8d501cbc3a3172742748"
+   "bytes": 4759,
+   "sha256": "71cd46d73a3620315da8af409f996760748b7f2db3fe7dc4091c4e6f3b359292"
   },
   {
    "path": "qa/worldlabs/05/blender/river05_layout.json",

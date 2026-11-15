@@ -75,3 +75,21 @@ Captures go to qa/pilot05/wave5/environment/itNN (max 5), regression at the end 
 * VP: core width 16 px (lum≥225), core px 183 (ref 410), warm width on VP row 63 px (baseline 179), warm px 3,726.
 * Ring tops on x=498: 182–215 (ring 1), 264–285 (ring 2 / far-tunnel seam), 350, 390, 410, 423, 431, 438, 444, 454
   → spacing ≈ 76, 86, 40, 20, 13, 8, 7, 6, 10 px (ref 96, 70, 37, 19, 12, 9); 10 rings visible to the VP.
+
+## Regression + ride check (end of wave 5)
+* `regress/04,06,07.png` (calls 154/128/237). screenshots/NN.png are stale (last committed 17:55, before waves 3–4;
+  their 21:41 mtime is only the checkout), so I A/B'd in a temp worktree = current HEAD with ONLY my three files
+  reverted to 1764258: 06 and 07 scene pixels identical (mean abs diff 1.6; every changed pixel is in the top 190 px
+  HUD band, fonts 403 in the worktree). 04: the pipe end shows only the (water-specialist) stream, no far-tunnel artefact.
+* Ride 05→06 (`ride/ride_150…182.png`, real sim steps): far section closed at s 150, iris-opening at s 158 (visible
+  warp: walls stretch radially, rings swell, ≈1.4 s of ride), fully folded away from s 164; the 06 climb is as before.
+* tsc --noEmit passes.
+
+## Left / known limits
+* Rings: hue/median now right (#FF9F38 vs ref #FB984D) but no visible double-contour highlight line (p90 #FFCD6B vs
+  #FFE280); the env light cones did not show at roughness 0.13 — next step: a view-space rim term in the ring shader.
+* Lids: chunky copper pucks, one pair per bay, symmetric; still banded by the strip lights; colour more orange than ref.
+* Far river (chord) reads as a narrow candy-striped strip; real coins beyond depth ≈60 are hidden by the far section
+  (the ref shows ≈9–10 coins to the VP; we show ≈5).
+* Near frame ring in the bottom corners: not built (see it02 note: impossible as a wall ring with the locked camera).
+* Opening warp during the ride (above). A per-frame recalibrated far section (eye = live camera) would remove it.
