@@ -2988,3 +2988,87 @@ Blender camera-lock scene built (`screen05_camera_lock.blend`, 864×1536, exact 
 
 > 🔧 **Bash** `{"command": "sleep 5; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:camera-lock-and-s-curve 2>&1 | grep -E '\"commit\"|skipping|\"error\"' ; echo \"local $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/ccr-93add0fa-q17ey6 | cut -c1-7)\"; python3 -I scripts/autosave-status.py", "description": "Retry push with LFS host allowed", "timeout": 330000}`
 
+### 🧑 User — 2026-11-15T23:27:26.598Z
+
+> ↩︎ result: "commit": "442956ca3ceb6faf4e19c2b861f1a263d30d2618",
+> local 442956c remote 442956c
+> AUTOSAVE OK | branch ccr-93add0fa-q17ey6 | scheduler daemon | last verified backup 2026-11-15T23:27:19+00:00 (0.1 min ago) | local 442956c remote 442956c (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-15T23:27:28.603Z
+
+Pushed: `442956c`, the remote matches, and the LFS files are included. Checking the background Marble auth retry:
+
+### 🤖 Claude — 2026-11-15T23:27:30.454Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/tasks/bih1ye75t.output; curl -sS --max-time 20 -o /dev/null -w 'now: HTTP %{http_code}\\n' https://api.worldlabs.ai/marble/v1/credits", "description": "Check Marble credit poll result"}`
+
+### 🧑 User — 2026-11-15T23:27:30.654Z
+
+> ↩︎ result: now: HTTP 401
+
+### 🤖 Claude — 2026-11-15T23:27:33.421Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed", "description": "LOCKED: VP 1.4 px; Blender screen05_camera_lock.blend with exact game matrix + ref background; S-curve fixed (coin x residuals +14/+7/−4/+1 vs +13/+30/+101/+31); route length preserved; gameplay/continuity identical. qa/pilot05/wave6/camera_lock/README.md"}`
+
+### 🧑 User — 2026-11-15T23:27:33.433Z
+
+> ↩︎ result: Updated task #3 description, status
+
+### 🤖 Claude — 2026-11-15T23:27:35.025Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "in_progress", "description": "Marble World API key saved as network secret (WLT-Api-Key → api.worldlabs.ai) but free /credits check returns 401. Pilot (draft $0.18 + standard $1.26) awaiting valid key + user approval. Atlas connector not on this account."}`
+
+### 🧑 User — 2026-11-15T23:27:35.040Z
+
+> ↩︎ result: Updated task #5 description, status
+
+### 🤖 Claude — 2026-11-15T23:27:42.096Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/triptych.py qa/pilot05/wave6/coordinator/s03/triptych_05.png 1100 APPROVED=references/05_flow_into_the_current.png BEFORE=qa/pilot05/wave6/current/05.png NOW=qa/pilot05/wave6/coordinator/s03/05.png | tail -1", "description": "Build approved/before/now triptych for Screen 05"}`
+
+### 🧑 User — 2026-11-15T23:27:42.717Z
+
+> ↩︎ result: qa/pilot05/wave6/coordinator/s03/triptych_05.png (1889, 1142)
+
+### 🤖 Claude — 2026-11-15T23:27:45.518Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/pilot05/wave6/coordinator/s03/triptych_05.png", "/home/user/rainbow-/qa/pilot05/wave6/camera_lock/camera_lock_overlay.png"], "caption": "Screen 05: approved / before / now (coin S-trail corrected), and the Blender camera-lock overlay (white = your VP, cyan = game VP; short lines = coin residuals).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-15T23:27:46.257Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave6/coordinator/s03/triptych_05.png → file_uuid: 6c96ecd3-52da-4399-8c33-1d31e7a43a35
+>   /home/user/rainbow-/qa/pilot05/wave6/camera_lock/camera_lock_overlay.png → file_uuid: 2b64798d-fe02-4852-9b6e-936a335928a2
+
+### 🤖 Claude — 2026-11-15T23:27:57.317Z
+
+Your key is now stored securely, but World Labs is rejecting it (401 Unauthorized) on the free balance check, so the Marble pilot can't run yet. Nothing has been generated or spent.
+
+**About the key you pasted**
+- From now on, transcript backups redact it (and any key typed after "API key"), and the latest commit is clean.
+- It is still in 3 older backup commits on your private branch: `125d14d`, `82ee965`, `b029c47`.
+- Please revoke it at platform.worldlabs.ai → API keys. That makes every copy useless. If you also want those commits scrubbed, say so; it needs a force-push of the session branch, so I haven't done it.
+- When you create a new key, tell me and I'll reopen the secure form. Don't paste it in chat.
+
+**Why the 401:** the saved key is attached to every World Labs request, so the key itself isn't being accepted. The likely cause is that the form got the same key you then revoked, or a typo/extra space. A balance problem would give a different error.
+
+**Screen 05 progress this turn**
+- **Camera locked in Blender 5.3.** `screen05_camera_lock.blend` uses the game's exact camera with your approved image as its background. The game's vanishing point is 1.4 px from yours, and Benny is unchanged.
+- **The river now winds the way your image does.** Each reference coin was traced back onto the river through that camera, and the S-curve was rebuilt to pass through them. Horizontal coin errors went from +13 / +30 / **+101** / +31 px to **+14 / +7 / −4 / +1 px**.
+- **Nothing else moved.** I kept the route's total length identical, so 06, 07, the 07→08 plunge and 08 are unchanged. The gameplay test gives the same result as before (91 coins, plunge 61.41), continuity passes and 04 is pixel-identical. Saving this to GitHub first failed because the large Blender files were blocked; I allowed that host and it's now pushed (`442956c`, matches the remote).
+
+I've sent you the approved/before/now comparison and the camera-lock overlay. The rings, walls, water near Benny and foam are still clearly different from your image; this turn only fixed the river's path.
+
+**Decision needed from you:** the four Screen 05 specialists were stopped when you interrupted the earlier turn, before they changed anything usable. Their unfinished foam change is saved as a patch rather than left half-working in the game. The biggest remaining gaps are exactly their work:
+- **Environment:** flat orange rings that should be polished yellow-gold, marbled walls, orange slab fittings.
+- **Path-camera:** straight striped far river that should keep winding into the light, and more coins up to it.
+- **Water:** the flat pink side strips near the bottom of the screen.
+- **Foam:** the big white heap on the right.
+
+Reply **"relaunch the specialists"** and I'll restart all four against the new camera lock. Separately, send the new World Labs key through the form and approve the pilot ($1.44: draft $0.18 + full world $1.26), and I'll run it and import the result into this same Blender scene.
+
+### 🧑 User — 2026-11-15T23:28:00.147Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

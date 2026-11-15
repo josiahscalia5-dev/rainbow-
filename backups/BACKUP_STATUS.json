@@ -1,20 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-15T23:25:24+00:00",
+    "time": "2026-11-15T23:27:19+00:00",
     "reason": "manual:camera-lock-and-s-curve",
-    "result": "committed-local-only",
-    "files_staged": 21,
-    "pushed_verified": false,
+    "result": "committed+pushed",
+    "files_staged": 4,
+    "pushed_verified": true,
     "branch": "ccr-93add0fa-q17ey6",
-    "commit": "1097ae79b47752b52c3de753709900f6278b3bd6",
-    "error": "push failed after retries: Post \"https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440/verify\": Forbidden\nPost \"https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8567f56ef76fa3ef6a898e23148111ea4d67fffb6146f04ece9e4b62c565a9ed/verify\": Forbidden\nPost \"https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b/verify\": Forbidden\nerror: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-'",
-    "duration_s": 78
+    "commit": "442956ca3ceb6faf4e19c2b861f1a263d30d2618",
+    "duration_s": 6
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-93add0fa-q17ey6",
-  "last_verified_remote_sha": "82d026329c14bec340c44d88b7e0940e37c58bbc",
-  "last_successful_backup_utc": "2026-11-15T23:23:22+00:00",
-  "consecutive_failures": 1,
+  "last_verified_remote_sha": "442956ca3ceb6faf4e19c2b861f1a263d30d2618",
+  "last_successful_backup_utc": "2026-11-15T23:27:19+00:00",
+  "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=313); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-15T23:30:00+00:00"
 }

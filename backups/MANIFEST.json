@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "587a8d8dc6b5a4195806d0dd341095c5c1a50ca421c8e7d6b4eb30b832e16125"
+   "sha256": "faa63c9978ed7b924b18f30ea56f912bef848b8c490ab06046b07e29de97154b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1880,6 +1880,11 @@
    "path": "qa/pilot05/wave6/coordinator/s03/07.png",
    "bytes": 1786412,
    "sha256": "8d891da424e96e9390df3628b9ccebdea572ca412ae1aafc3ba51e09b5a4ca77"
+  },
+  {
+   "path": "qa/pilot05/wave6/coordinator/s03/triptych_05.png",
+   "bytes": 3454905,
+   "sha256": "764ad4bfe0d2b89b76194ce86f6f177abce831b079b75a03076bd63fccfbf30d"
   },
   {
    "path": "qa/pilot05/wave6/current/05.png",
