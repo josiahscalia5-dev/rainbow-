@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1967,
-   "sha256": "9749514dcc48b3a861e70b1dda6527421e2ccbd1fcbc700331d5389f70e21a35"
+   "sha256": "6279e142357e7d376b56502fffc4c84117e89608fbf837979f32eb4ad9556f5b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -793,8 +793,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 4148,
-   "sha256": "336f511ceeb122ef61978ee9eac655fd03358c97001fecc005d111e5dda8e07f"
+   "bytes": 1173,
+   "sha256": "345ca7ac05c14af7ec6eff0d2e160a6cab80d7a469075656302ff06b36bbd74a"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -860,6 +860,11 @@
    "path": "qa/report_metrics.json",
    "bytes": 1112,
    "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
+  },
+  {
+   "path": "qa/scene_comparisons.md",
+   "bytes": 47733,
+   "sha256": "0d7995e2e128d782177dbe49849c6515a8df1553285c61fdf8b2b82c99daeb4b"
   },
   {
    "path": "qa/worldlabs/05/05_env_mask.png",
