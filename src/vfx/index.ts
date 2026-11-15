@@ -85,9 +85,10 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const crown = createRiderSplash(quality);
   group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh);
 
+  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh };
   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
-  // debug/QA handle (read-only use from Playwright: uniforms of the main parts)
-  if (typeof window !== 'undefined') (window as unknown as { __rainbowWater?: unknown }).__rainbowWater = { ribbon: ribbon.uniforms, crown: crown.uniforms, group };
+  // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
   let focus = 0;
   let curTime = 0;
   const tmpV = new THREE.Vector3();
@@ -120,7 +121,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   return {
     group,
     controls,
-    parts: { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, bubbles: bubbles.group, spray: spray.points, splashCrown: crown.mesh },
+    parts,
     surfaceHeight,
     stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
     update(time, dt, focusS, camera) {
@@ -158,6 +159,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       }
       spray.update(dt, camera);
       crown.update(time, dt);
+      for (const k of qaHide) { const o = parts[k]; if (o) o.visible = false; }
     },
     wake(pos, forward, right, speed, dt) {
       // Benny's arc length / lateral from his actual position (focus lags one frame)

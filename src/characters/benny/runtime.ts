@@ -41,6 +41,12 @@ export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Pro
  * the kicking feet are under the surface. Cinematics (01 peek, 02 tumble, 11 hide) keep the root as placed.
  */
 export const BENNY_RIDE_LIFT = 0.3;
+/** QA A/B hook: `?bennyLift=<units>` overrides the ride lift (e.g. 0 = the game's raw placement) */
+function rideLift(): number {
+  if (typeof location === 'undefined') return BENNY_RIDE_LIFT;
+  const v = parseFloat(new URLSearchParams(location.search).get('bennyLift') ?? '');
+  return Number.isFinite(v) ? THREE.MathUtils.clamp(v, 0, 0.6) : BENNY_RIDE_LIFT;
+}
 
 /** Build the runtime around an already-loaded (or freshly built) Benny scene graph. */
 export function createBennyRuntime(
@@ -109,6 +115,7 @@ export function createBennyRuntime(
   let blinkT = 1.7;
   let lean = 0;
   let lift = 0;
+  const liftMax = rideLift();
   const tmp = new THREE.Vector3();
   const qLean = new THREE.Quaternion();
   const qPom = new THREE.Quaternion();
@@ -128,7 +135,7 @@ export function createBennyRuntime(
     mixer.update(dt);
 
     // ride height (see BENNY_RIDE_LIFT): eased so mode switches never pop
-    const liftTarget = tumble || peek ? 0 : BENNY_RIDE_LIFT * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+    const liftTarget = tumble || peek ? 0 : liftMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
     lift += (liftTarget - lift) * (1 - Math.exp(-dt * 7));
     scene.position.y = lift;
 

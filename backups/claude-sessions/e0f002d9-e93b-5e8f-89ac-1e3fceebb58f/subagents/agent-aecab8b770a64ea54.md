@@ -1225,3 +1225,27 @@ The white jagged band is new. Likely the water wake/spray emitted at `benny.root
 >       crown.place(center, forward, f.up, waterlineR, strength);
 >       // side fans of droplets ( …[+3117 chars]
 
+### 🤖 Claude — 2026-11-15T18:54:32.609Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts", "old_string": "export const BENNY_RIDE_LIFT = 0.3;", "new_string": "export const BENNY_RIDE_LIFT = 0.3;\n/** QA A/B hook: `?bennyLift=<units>` overrides the ride lift (e.g. 0 = the game's raw placement) */\nfunction rideLift(): number {\n  if (typeof location === 'undefined') return BENNY_RIDE_LIFT;\n  const v = parseFloat(new URLSearchParams(location.search).get('bennyLift') ?? '');\n  return Number.isFinite(v) ? THREE.MathUtils.clamp(v, 0, 0.6) : BENNY_RIDE_LIFT;\n}"}`
+
+### 🧑 User — 2026-11-15T18:54:32.657Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/runtime.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:54:33.811Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts", "old_string": "  let lift = 0;\n  const tmp = new THREE.Vector3();", "new_string": "  let lift = 0;\n  const liftMax = rideLift();\n  const tmp = new THREE.Vector3();"}`
+
+### 🧑 User — 2026-11-15T18:54:33.836Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/runtime.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:54:35.226Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts", "old_string": "    const liftTarget = tumble || peek ? 0 : BENNY_RIDE_LIFT * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);", "new_string": "    const liftTarget = tumble || peek ? 0 : liftMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);"}`
+
+### 🧑 User — 2026-11-15T18:54:35.272Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/runtime.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+

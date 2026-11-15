@@ -1022,3 +1022,63 @@ Walls now go magenta → violet like the reference. Let me check the actual ride
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T18:54:16.139Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function\\|beta\\|Y.copy\\|Z.cross\\|X.cross\\|const p = c.clone\" src/world/tube.ts", "description": "Locate lid code in current tube.ts"}`
+
+### 🧑 User — 2026-11-15T18:54:16.169Z
+
+> ↩︎ result: 22:export function courseTubePath(course: Course, radius: (s: number) => number, depth: number | ((s: number) => number) = 0.9): TubePath {
+> 30:export function straightTubePath(
+> 144:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> 166:export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
+> 217:export function collarGeometry(depth = 0.062, lip = 0.016, width = 1.0, segments = 80): THREE.BufferGeometry {
+> 233:export function buildRings(
+> 277:export function buildWallLids(
+> 295:  const beta = THREE.MathUtils.degToRad(opts.face ?? 50);
+> 307:      const p = c.clone().addScaledVector(dir, r * 0.995);
+> 308:      // face: inward, turned back toward the rider (−tan) by `beta`
+> 309:      Y.copy(dir).negate().multiplyScalar(Math.cos(beta)).addScaledVector(f.tan, -Math.sin(beta)).normalize();
+> 310:      Z.crossVectors(f.tan, dir).normalize(); // circumferential (⊥ dir, ⊥ tan → ⊥ Y)
+> 311:      X.crossVectors(Y, Z).normalize();
+> 326:export function buildNozzles(
+> 358:    const p = c.clone().addScaledVector(dir, r * 0.985);
+
+### 🤖 Claude — 2026-11-15T18:54:18.169Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "offset": 270, "limit": 56}`
+
+### 🧑 User — 2026-11-15T18:54:18.189Z
+
+> ↩︎ result: 270	
+> 271	/**
+> 272	 * Washer wall lids (refs 05–07): stubby polished gold caps — a rounded puck with a raised rim lip and a
+> 273	 * slightly recessed face — protruding from BOTH side walls in pairs, one pair per ring bay. Each cap is
+> 274	 * stretched along the tunnel and turned toward the oncoming rider so the camera sees the bright banded
+> 275	 * rim plus the darker face, like the reference. One instanced mesh (1 draw call).
+> 276	 */
+> 277	export function buildWallLids(
+> 278	  path: TubePath,
+> 279	  s0: number,
+> 280	  s1: number,
+> 281	  spacing: number,
+> 282	  material: THREE.Material,
+> 283	  opts: { angleDeg?: number; size?: number; height?: number; stretch?: number; face?: number; stagger?: number } = {},
+> 284	): THREE.InstancedMesh {
+> 285	  const a = 1, h = opts.height ?? 0.5;
+> 286	  const prof: [number, number][] = [
+> 287	    [a * 1.04, -0.6], [a * 1.04, 0], [a, 0.07], [a, h - 0.12], [a * 0.95, h - 0.02], [a * 0.88, h],
+> 288	    [a * 0.8, h], [a * 0.76, h - 0.05], [a * 0.7, h - 0.08], [0, h - 0.08],
+> 289	  ];
+> 290	  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 40);
+> 291	  const n = (Math.floor((s1 - s0) / spacing) + 1) * 2;
+> 292	  const mesh = new THREE.Instanc …[+1732 chars]
+
+### 🤖 Claude — 2026-11-15T18:54:29.817Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/tube.ts'\ns=open(p).read()\nrep=[\n(\"\"\"/**\n * Washer wall lids (refs 05–07): stubby polished gold caps — a rounded puck with a raised rim lip and a\n * slightly recessed face — protruding from BOTH side walls in pairs, one pair per ring bay. Each cap is\n * stretched along the tunnel and turned toward the oncoming rider so the camera sees the bright banded\n * rim plus the darker face, like the reference. One instanced mesh (1 draw call).\n */\"\"\",\n\"\"\"/**\n * Washer wall lids (refs 05–07): stubby polished gold caps — a rounded puck with a  …[+2281 chars]`
+
+### 🧑 User — 2026-11-15T18:54:29.867Z
+
+> ↩︎ result: ok
+

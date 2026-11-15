@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1967,
-   "sha256": "d7fb67113289cee2dcbfe7e04af7bcdf380f9d6b010b4badcbdcd80b61cee921"
+   "sha256": "31d7dd25e5008856f2033ffc67d90e4a836d50148060422404d04e1c2e194cd8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1153,8 +1153,8 @@
   },
   {
    "path": "src/characters/benny/runtime.ts",
-   "bytes": 6868,
-   "sha256": "9d8782d397e9af0f44e1c861fd4f25bb6d229341c89904e12d3b36ab6e2286cf"
+   "bytes": 7253,
+   "sha256": "9e8d285b40e4e29867aff851207cad06b889b38a3a125d8be248c64c94715e49"
   },
   {
    "path": "src/characters/benny/textures.ts",
@@ -1268,8 +1268,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 10296,
-   "sha256": "74d6cf06e357abcd45134ead89b4a1ebcdd4191ef593d11599fe313ad6ce7976"
+   "bytes": 10482,
+   "sha256": "aa4f85f323fe5558df36a91016f9ec82acd2d8f934e74d2707df3ec3f5151423"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -1323,8 +1323,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 17026,
-   "sha256": "842322fd5afb79d1bc2c957f9b558cc12a34278fb24ebba0ffa1efdddb0e6436"
+   "bytes": 17230,
+   "sha256": "ef2bc3b617f51f95f0d577fbafcf863b6aec1e4620ad27c12f82ad74cfa23cd9"
   },
   {
    "path": "tools/model-lab.html",

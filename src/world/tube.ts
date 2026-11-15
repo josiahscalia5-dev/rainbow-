@@ -270,9 +270,10 @@ export function buildRings(
 
 /**
  * Washer wall lids (refs 05–07): stubby polished gold caps — a rounded puck with a raised rim lip and a
- * slightly recessed face — protruding from BOTH side walls in pairs, one pair per ring bay. Each cap is
- * stretched along the tunnel and turned toward the oncoming rider so the camera sees the bright banded
- * rim plus the darker face, like the reference. One instanced mesh (1 draw call).
+ * slightly recessed face — hanging on BOTH upper side walls in pairs, one pair per ring bay, like spray
+ * caps aimed down at the stream: the face looks down (+ a little inward), the puck is stretched along the
+ * tunnel and partly sunk into the wall, so the rider sees a bright banded rim on top and the darker face
+ * below (the reference's "D" silhouette). One instanced mesh (1 draw call).
  */
 export function buildWallLids(
   path: TubePath,
@@ -280,7 +281,7 @@ export function buildWallLids(
   s1: number,
   spacing: number,
   material: THREE.Material,
-  opts: { angleDeg?: number; size?: number; height?: number; stretch?: number; face?: number; stagger?: number } = {},
+  opts: { angleDeg?: number; size?: number; height?: number; stretch?: number; down?: number; sink?: number; stagger?: number } = {},
 ): THREE.InstancedMesh {
   const a = 1, h = opts.height ?? 0.5;
   const prof: [number, number][] = [
@@ -292,7 +293,7 @@ export function buildWallLids(
   const mesh = new THREE.InstancedMesh(geo, material, n);
   const size = opts.size ?? 1.25;
   const ang = THREE.MathUtils.degToRad(opts.angleDeg ?? 14);
-  const beta = THREE.MathUtils.degToRad(opts.face ?? 50);
+  const down = opts.down ?? 0.75;
   const c = new THREE.Vector3(), dir = new THREE.Vector3(), Y = new THREE.Vector3(), X = new THREE.Vector3(), Z = new THREE.Vector3();
   const basis = new THREE.Matrix4(), m = new THREE.Matrix4(), q = new THREE.Quaternion();
   let k = 0;
@@ -304,14 +305,15 @@ export function buildWallLids(
       const r = path.radius(ss);
       tubeCenterAt(path, ss, c);
       dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
-      const p = c.clone().addScaledVector(dir, r * 0.995);
-      // face: inward, turned back toward the rider (−tan) by `beta`
-      Y.copy(dir).negate().multiplyScalar(Math.cos(beta)).addScaledVector(f.tan, -Math.sin(beta)).normalize();
-      Z.crossVectors(f.tan, dir).normalize(); // circumferential (⊥ dir, ⊥ tan → ⊥ Y)
-      X.crossVectors(Y, Z).normalize();
+      const sz = size * (r / 7.6);
+      // face normal: blend of inward (−dir) and straight down (−up)
+      Y.copy(dir).negate().multiplyScalar(1 - down).addScaledVector(f.up, -down).normalize();
+      X.copy(f.tan).addScaledVector(Y, -f.tan.dot(Y)).normalize(); // stretched along the tunnel
+      Z.crossVectors(X, Y).normalize();
       basis.makeBasis(X, Y, Z);
       q.setFromRotationMatrix(basis);
-      const sz = size * (r / 7.6);
+      // centre just inside the wall: `sink` of the cap's radius stays buried in the metal
+      const p = c.clone().addScaledVector(dir, r - sz * 0.9 * (1 - (opts.sink ?? 0.35)));
       m.compose(p, q, new THREE.Vector3(sz * (opts.stretch ?? 1.45), sz, sz * 0.9));
       mesh.setMatrixAt(k++, m);
     }
