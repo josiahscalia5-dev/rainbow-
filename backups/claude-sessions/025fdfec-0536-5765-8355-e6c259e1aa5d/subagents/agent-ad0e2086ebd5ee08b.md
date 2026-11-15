@@ -1496,3 +1496,116 @@ No earlier regression set exists, so I'll quantify the water boxes of 04/06/07 (
 > 07 old cyan 22% pink 36% violet 9.2% | cyanMed #3A93DF pinkMed #F645A9 | lumStd 34.6
 > 07 new cyan 28% pink 49% violet 2.6% | cyanMed #3AADFF pinkMed #FF61EA | lumStd 28.4
 
+### 🤖 Claude — 2026-11-15T22:09:35.682Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; wc -l docs/vfx/water.md; grep -n \"^#\\|05\\b\\|trail\\|sbend\\|wave 4\\|wave4\" docs/vfx/water.md | head -40", "description": "Find 05 sections in water docs"}`
+
+### 🧑 User — 2026-11-15T22:09:35.733Z
+
+> ↩︎ result: 89 docs/vfx/water.md
+> 1:# Rainbow water system (`src/vfx/`)
+> 6:## API (`src/vfx/index.ts`)
+> 26:## Components
+> 44:## Uniforms (main ones)
+> 53:## Measured budgets (water lab, headless Chromium + SwiftShader)
+> 62:| 05 Current | 13 / 148k / 1300 | 13 / 31.1k / 500 |
+> 73:## Lab
+> 80:## Known differences vs references
+
+### 🤖 Claude — 2026-11-15T22:09:37.125Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water.md", "offset": 26, "limit": 64}`
+
+### 🧑 User — 2026-11-15T22:09:37.146Z
+
+> ↩︎ result: 26	## Components
+> 27	
+> 28	| Part | File | Geometry | Shader highlights |
+> 29	|---|---|---|---|
+> 30	| Stream ribbon | `waterRibbon.ts` | rows every 0.4 u (0.7 low) × 18 cols (10 low) + edge skirts, from the Drum A drain (`marks['02_drain']−1`) to the towel; concave trough, edges +0.28 | cyan core / meandering hot-pink bands, two-phase flow-map advection (speed = stage speed, no shear), crisp white streak lines + fine near-detail layer, Fresnel haze, spec, twinkling sparkles, cellular soap-foam fringe, Benny ripple rings + V-wake, **exactly 5 chevrons** on 04 (`s0+8.5`, spacing 3.6), clean foamy hand-over to the whirlpool in 03, outro drain |
+> 31	| Whirlpool | `whirlpool.ts` | polar funnel mesh over `WORLD.basin` (`funnelY`), 56×128 (32×72 low) | bands follow the course's log-spiral (θ − C·ln r, C = 2π/ln(9.6/2.8)) and swirl toward the drain; θ-periodic noise (no seam); drain glow; rim foam; channel opened where the 04 tube leaves |
+> 32	| Drum A water | `drumWater.ts` | 72² grid (36² low) clipped to the drum cylinder; open conical shell for the 02 swirl | analytic wave normals, layered pink/cyan bands, white foam seams + crests, streaks, sparkles; swirl shell with 4 spiralling bands and ra …[+3983 chars]
+
+### 🤖 Claude — 2026-11-15T22:09:38.132Z
+
+Adding a concise 05-river section to the shader docs.
+
+### 🤖 Claude — 2026-11-15T22:09:45.625Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/vfx/water.md", "old_string": "## Measured budgets (water lab, headless Chromium + SwiftShader)", "new_string": "## 05 river (`waterRibbon.ts` FRAG, `sw = 1 − aStyle.w` = 1 on 05 only)\n\nThe 05 current uses its own branch of the same ribbon shader (no extra pass, no extra draw):\n* Channel: cyan core centred on `coreLateral(course, s)` (= `CORE_SWING · offset05 · right.x`, the coins'\n  lateral; exported, unchanged). The two hot-pink bands swing a further `sbend = 1.05·sin(0.31 s − 0.834) +\n  0.18·sin(0.62 s + 0.6)` u about the cor …[+1264 chars]`
+
+### 🧑 User — 2026-11-15T22:09:45.695Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/vfx/water.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:09:48.361Z
+
+Final NOTES update with the regression results, then a last typecheck.
+
+### 🤖 Claude — 2026-11-15T22:09:53.414Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md", "old_string": "(2) near crests p95 217 vs ref 247; mid-field glints 246 vs 409.\n", "new_string": "(2) near crests p95 217 vs ref 247; mid-field glints 246 vs 409.\n\n### Regression 03 04 06 07 (qa/pilot05/wave5/water/regress) — 0 console errors\nCode: every wave-5 change is gated to 05 (`sbend`/`brush` × sw; clamp, near steering, brush inside\n`freeK < 0.5`; near field/stars inside `sw > 0.001`); the 04/06/07 strand path is byte-identical in effect.\nWhole-frame diffs vs screenshots/NN.png (21:41) are l …[+591 chars]`
+
+### 🧑 User — 2026-11-15T22:09:53.449Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T22:09:54.217Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; git status --short | grep -v \"^??\" | head; ls qa/pilot05/wave5/water/", "description": "Final typecheck and status"}`
+
+### 🧑 User — 2026-11-15T22:09:56.948Z
+
+> ↩︎ result: TSC_OK
+>  M docs/vfx/water.md
+>  M qa/pilot05/wave5/water/NOTES.md
+> NOTES.md
+> it01
+> it02
+> it03
+> it04
+> it05
+> regress
+
+### 🤖 Claude — 2026-11-15T22:10:11.756Z
+
+The two pink fins are gone and the bands now run on as soft brushed strips at the bottom-left and bottom-right of the frame. The near water is now glossy, moving cyan, and both pink bands curve in clear S-bends. `tsc` passes and no capture logged a console error, including the low-quality Android build. I used 5 captures of 05 plus one regression capture of 03/04/06/07.
+
+All shader changes are in `src/vfx/waterRibbon.ts` (fragment shader), and only stage 05 uses them. `coreLateral` and the coins are unchanged. It is still one mesh and one draw call, with no extra pass. `src/vfx/glsl.ts` is untouched.
+
+**What changed and the measured numbers (baseline → it05, ref):**
+
+1. **Pink fins.** They came from the 05 wake `trail` term, which I deleted. Behind Benny, the two main bands now slide out to his track ±1.42 u (0.68 u wide), so each band stays one unbroken ribbon. Their edges are broken into pink/cyan strands without a purple blend.
+   - Pink directly behind Benny (x 245–600, y 1200–1360): 0.2 % → 0.0 % (ref 1.1 %).
+   - Pink at y 1200: was the fins at x 208–244 / 573–611; now side strips at 93–177 / 652–755.
+   - Pink at y 1300: 97–128 / 705–732 → 112–138 / 665–751 (ref 124–206 / 613–698).
+   - Pink at y 1500: none → 0–24 / 718–863.
+
+2. **Flat near field (y 1200–1536).** It now has arched swell crests with blue-white highlights, darker troughs, short speed streaks, satin streaks on the pink, and many small 4-point stars clustered on the crests.
+   - Brightness spread (lumStd): 17.4 → 35.8 (ref 40.0).
+   - Brightest 5 % (p95): 164 → 217 (ref 247).
+   - Cyan median at y 1300: #06A5FF → #22A0FF (ref #02A2F7).
+   - Small white glints near / mid: 53 / 163 → 129 / 246 (ref 157 / 409).
+
+3. **S-bands.** I raised the bands' extra sideways swing from 0.45 u to 1.05 u, plus a small second wave, in phase with the route's own bend. Where a band meets the bank it now thins smoothly instead of squeezing the cyan core, which removed a hard corner.
+   - Right band centre x at y 700→980: 769 / 705 / 717 / 739 / 756 → 792 / 676 / ~650 / ~675 / 767. That is about ±70 px of swing, up from about ±25 px (ref 780 / 670 / 650 / 790).
+
+**Regression (03/04/06/07).** Whole frames differ a lot from `screenshots/` because walls, rings, foam, post and the Benny model changed in other specialists' files, and those screenshots are much softer. The code diff can't reach those stages. In the water areas the purple share went down (04 2.5 → 0.2 %, 06 4.6 → 0.4 %, 07 9.2 → 2.6 %), and I saw no water regression.
+
+**What is left:**
+- **Far river.** With the smaller VP glow, the water at about y 480–550 is now visible. That stretch is stage-06 water (s > 185), so it shows diagonal candy stripes with white cross lines instead of the 05 S-bands winding to the VP. I didn't change it because I had no captures left to check a fix. The idea: while Benny is in 05, blend the 05 look into that far water by distance, keyed on Benny's position so the 06 screen is unaffected.
+- **Still short of the ref:** crest brightness (p95 217 vs 247) and mid-field glints (246 vs 409).
+- **Frame totals rose to 125 calls / 634k triangles** between it04 and it05. That came from other specialists' changes; the water mesh is the same size.
+
+I also added a "05 river" section to the shader docs and refreshed the low-quality lab render. I merged its stats into the existing JSON so the other entries were kept.
+
+Files are in `/home/user/rainbow-/`:
+- `src/vfx/waterRibbon.ts`
+- `docs/vfx/water.md`
+- `docs/vfx/water_05_low.png`
+- `docs/vfx/water_stats_low.json`
+- `qa/pilot05/wave5/water/NOTES.md` (per-capture log)
+- `qa/pilot05/wave5/water/it05/05.png`
+- `qa/pilot05/wave5/water/it05/triptych.png` (ref / baseline / now)
+- `qa/pilot05/wave5/water/regress/`
+

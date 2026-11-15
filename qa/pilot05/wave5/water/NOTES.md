@@ -82,3 +82,13 @@ Open (not fixed this wave): (1) the far river at y≈480–550 is stage-06 water
 cross lines instead of the 05 S-bands winding to the VP. Fix idea: while Benny is in 05, blend the 05 river
 look (sw) into water beyond s 185 by distance (uniform keyed on uBenny.x, so the 06 screen is unaffected).
 (2) near crests p95 217 vs ref 247; mid-field glints 246 vs 409.
+
+### Regression 03 04 06 07 (qa/pilot05/wave5/water/regress) — 0 console errors
+Code: every wave-5 change is gated to 05 (`sbend`/`brush` × sw; clamp, near steering, brush inside
+`freeK < 0.5`; near field/stars inside `sw > 0.001`); the 04/06/07 strand path is byte-identical in effect.
+Whole-frame diffs vs screenshots/NN.png (21:41) are large (04 30 %, 06 69 %, 07 67 % px > 40) because walls,
+rings, Benny GLB, foam and post changed in other specialists' files; screenshots/ is also much softer.
+Water boxes (old → new): 04 violet 2.5 → 0.2 %, cyan #0091EC → #00B0FF, pink #FF0BA3 → #FF5BFF;
+06 violet 4.6 → 0.4 %, cyan #3593DB → #51ABFF; 07 violet 9.2 → 2.6 %, cyan #3A93DF → #3AADFF, pink #F645A9 →
+#FF61EA. Visually: crisp glossy cyan + hot-pink bands, no water regression seen. 03 mean abs diff 6.7.
+Docs: docs/vfx/water.md new section "05 river"; docs/vfx/water_05_low.png + water_stats_low.json['05'] refreshed.

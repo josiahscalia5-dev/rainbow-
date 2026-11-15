@@ -120,9 +120,9 @@ function knitStitch(ctx: Ctx, hctx: Ctx, cx: number, cy: number, cw: number, rh:
 const KNIT_WHITE_HI = '#fffaf8';
 const KNIT_WHITE = '#fff6f4';
 const KNIT_WHITE_SHADE = '#c8b2c4';
-const KNIT_PURPLE_HI = '#5a1ccc';
-const KNIT_PURPLE = '#420cb6';
-const KNIT_PURPLE_SHADE = '#1e0562';
+const KNIT_PURPLE_HI = '#8a2cff';
+const KNIT_PURPLE = BENNY_COLORS.purple;
+const KNIT_PURPLE_SHADE = BENNY_COLORS.purpleDark;
 
 export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THREE.CanvasTexture } {
   const W = 1024, Hh = 512;
@@ -133,8 +133,8 @@ export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THRE
     // wave 5 (ref 05 rear, centre column: white 24 / purple 33 / white 19 px, then a purple band around the pom base):
     // wider middle purple, thinner upper white, upper purple band starts lower so it shows beside the pom.
     // Yarn colours: warmer cream white (live 05 white read lavender #FFD8FF vs ref #F3CFE4) and a stitch highlight
-    // with less green (live purple stripe #8658FF vs ref #740FF2); the purple yarn ≈ the cuff's effective albedo
-    // (brim texture × its #7868a0 factor) ÷ the crown factor, so stripes and cuff read as the same deep violet
+    // with less green (live purple stripe #8658FF vs ref #740FF2). A darker yarn (#420cb6, it05) only greyed the stripe
+    // (#6238B6): its green floor comes from the scene light, so the saturated #7a18f0 yarn stays
     [0.0, 0.3, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],
     [0.3, 0.58, KNIT_PURPLE_HI, KNIT_PURPLE, KNIT_PURPLE_SHADE],
     [0.58, 0.73, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],

@@ -62,3 +62,26 @@ under us (other specialists): 125 calls / 634,089 tris (it02: 121 / 608,313) —
 | pom | #8215ED L129 | #9425FF L147 | #901AFF L142 |
 | body | #F549A9 L162 | #FF46B3 L167 | #FF48B4 L169 |
 Next (it05): crown purple yarn ≈ cuff effective albedo (#420cb6 / hi #5a1ccc / shade #1e0562), pomTip #7c28e8.
+
+### it05 (22:08) — crown purple yarn #420cb6 + pomTip #7c28e8
+Purple stripe median #624BC0 L135 (darker but greyer; centre-column avg (104,63,184) vs ref (95,14,234), dist ≈ 71;
+it04 avg (132,63,253), dist ≈ 64). The green floor (~63) is scene light, not albedo → **reverted the crown yarn to
+the it04 colours**; kept pomTip #7c28e8 (pom #8B14FF L137 vs it04 #901AFF L142, ref #8215ED L129).
+Final GLB 22:10 = it04 crown/cuff + it05 pom (both measured in the live game; 5 capture iterations of 05 used, so this
+exact combination has no separate 05 frame — regression capture below exercises the final GLB).
+
+### Regression (22:10) — `capture.mjs 02 03 10 --out=qa/pilot05/wave5/benny/regress`, final GLB (1,126,892 B)
+All three load `assets/models/benny.glb`, no console errors in the log. 02: dizzy face, swirl eyes, stripes, pom intact,
+cuff now deep violet like ref 02. 03: front face/hat intact (a white spray streak beside him is VFX, not the model).
+10 (rear ride, unchanged framing vs screenshots/10.png): hat purple median ref #6905E5 L115 / previous #913DFF L154 /
+now #701DF3 L127; star now front-right on the white band above the cuff at (650, 1154) (previous (648, 1268), low on
+the cuff side). The hide-under-towel sequence logic is untouched (lift/pitch are 0 in peek/tumble as before).
+Triptychs: qa/pilot05/wave5/benny/triptych_it04.png (final crown colours), triptych_it05.png.
+
+## Left / not done
+* Crown purple stripe still lighter than ref (live #7C49FF L149 vs #740FF2 L124): the green floor is scene light +
+  Neutral tone mapping desaturation, not albedo (a darker yarn only greyed it, it05).
+* Cuff band ≈ 10 px taller than ref at the centre column (974–1029 vs 982–1027); bottom edge 1196 vs ref ≈1185
+  (ref's base is cut by water/spray; ours shows the fur tips; the white spray streaks (foam owner) cover the lower sides).
+* Ref fur reads as soft clumped plush; ours is finer shell fur (known shell-fur limitation, docs/characters/benny.md).
+* Final GLB combination (it04 crown + it05 pom) has no separate 05 frame (5-capture budget used).

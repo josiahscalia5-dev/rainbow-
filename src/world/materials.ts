@@ -405,8 +405,25 @@ export function washerTubeEnv(variant: 'wall' | 'gold' | 'gold05' = 'wall'): THR
   // floor, so the bands read yellow-gold with copper only on the shadowed side
   const cBaseTop = variant === 'gold05' ? new THREE.Color(0.95, 0.8, 0.4) : isGold ? new THREE.Color(0.78, 0.56, 0.24) : new THREE.Color(0.5, 0.04, 0.36);
   const cBaseLow = variant === 'gold05' ? new THREE.Color(0.36, 0.15, 0.05) : isGold ? new THREE.Color(0.26, 0.09, 0.04) : new THREE.Color(0.17, 0.035, 0.44);
+  const copper05 = new THREE.Color(0.42, 0.15, 0.035);
   const radiance = (d: THREE.Vector3, out: THREE.Color) => {
     const up = d.y;
+    if (variant === 'gold05') {
+      // saturated gold all round (no dark gaps between the marquee spots), pale yellow toward the light at
+      // the tunnel end (-Z), from above and back toward the rider (the camera-facing slope of every band),
+      // copper only straight down: the shadowed lower side of each band
+      const ahead = Math.max(0, -d.z), behind = Math.max(0, d.z);
+      out.setRGB(0.88, 0.52, 0.1);
+      const lift = Math.pow(ahead, 3) * 0.7 + Math.max(0, up) * 0.25 + Math.pow(behind, 2) * 0.3;
+      // two sharp axis-symmetric light cones (≈57° and ≈53° off the tunnel axis): every band crown and its
+      // thin lip reflect them as a continuous pale-yellow highlight line all the way round (double contour)
+      const cone = 1.5 * Math.exp(-Math.pow((d.z - 0.55) / 0.07, 2)) + 1.1 * Math.exp(-Math.pow((d.z + 0.6) / 0.06, 2));
+      out.r += 0.5 * lift + 0.95 * cone; out.g += 0.55 * lift + 0.85 * cone; out.b += 0.28 * lift + 0.45 * cone;
+      out.lerp(copper05, 0.8 * THREE.MathUtils.smoothstep(-up, 0.45, 0.85));
+      const hot = Math.pow(ahead, 60);
+      out.r += 2.0 * hot; out.g += 1.85 * hot; out.b += 1.1 * hot;
+      return out;
+    }
     // base: magenta above, violet toward the floor
     out.copy(cBaseTop).lerp(cBaseLow, THREE.MathUtils.smoothstep(-up, -0.3, 0.9));
     // gold only: a warm yellow-white core at the very end of the tunnel (-Z) so far bands glow like the VP
@@ -480,7 +497,7 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
         float r = length(vUv - 0.5) * 2.0;
         vec3 c = mix(uRim, uWarm, smoothstep(1.0, 0.6, r));
         c = mix(c, uGold, smoothstep(0.7, 0.3, r));
-        c = mix(c, uCore, smoothstep(0.5, 0.05, r));
+        c = mix(c, uCore, smoothstep(0.6, 0.05, r));
         float a = (1.0 - smoothstep(0.82, 1.0, r)) * vFade * uOpacity;
         if (a < 0.003) discard;
         gl_FragColor = vec4(c, a);
@@ -502,8 +519,8 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
 export function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMaterial {
   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
   const uniforms = {
-    uRivCore: { value: new THREE.Color('#3fd4ff') },
-    uRivBand: { value: new THREE.Color('#f739e5') },
+    uRivCore: { value: new THREE.Color('#0aa2f6') },
+    uRivBand: { value: new THREE.Color('#ee2fd8') },
     uRivEdge: { value: new THREE.Color('#1677e8') },
     uRivFoam: { value: new THREE.Color('#f4eeff') },
     uRivGlow: { value: new THREE.Color(glow.color) },
@@ -523,23 +540,23 @@ uniform vec3 uRivCore; uniform vec3 uRivBand; uniform vec3 uRivEdge; uniform vec
 {
   float x = vRivUv.x * 2.0 - 1.0;
   float u = vRivUv.y;
-  float cx = 0.2 * sin(u * 0.075 + 0.8);            // the cyan core meanders (ref: S-bends to the VP)
+  float cx = 0.3 * sin(u * 0.09 + 0.6) * (1.0 - 0.5 * smoothstep(20.0, 80.0, u));            // the cyan core meanders (ref: S-bends to the VP)
   float t = abs(x - cx);
   vec3 col = uRivCore;
-  col = mix(col, uRivBand, smoothstep(0.1, 0.16, t) * (1.0 - smoothstep(0.3, 0.38, t)));
-  col = mix(col, uRivEdge, smoothstep(0.34, 0.42, t) * 0.6);
+  col = mix(col, uRivBand, smoothstep(0.14, 0.22, t) * (1.0 - smoothstep(0.44, 0.52, t)));
+  col = mix(col, uRivEdge, smoothstep(0.5, 0.6, t) * 0.6);
   float st = pow(0.5 + 0.5 * sin((x - cx) * 46.0), 12.0);   // flow lines along the stream
-  col += vec3(0.6, 0.8, 1.0) * st * 0.3;
+  col += vec3(0.6, 0.8, 1.0) * st * 0.15;
   // cloud-like foam banks on both sides (purple wall above them stays visible)
   float bump = 0.06 * sin(u * 1.3 + x * 7.0) * sin(u * 0.7 - x * 11.0);
-  float foam = smoothstep(0.5 + bump, 0.6 + bump, abs(x));
+  float foam = smoothstep(0.74 + bump, 0.84 + bump, abs(x));
   col = mix(col, uRivFoam * (0.86 + 0.14 * sin(u * 2.1 + x * 19.0)), foam);
   float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
   col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
-  diffuseColor.rgb = col;
+  diffuseColor.rgb = col * 0.88;
 }`);
   };
-  mat.customProgramCacheKey = () => 'far-river-v2';
+  mat.customProgramCacheKey = () => 'far-river-v4';
   return mat;
 }
 

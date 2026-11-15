@@ -929,3 +929,146 @@ Draw calls jumped to 144 (my edits add no meshes, so this is from parallel work;
 
 > ↩︎ result: (Bash completed with no output)
 
+### 🤖 Claude — 2026-11-15T22:09:35.105Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/it03_sides.png"}`
+
+### 🧑 User — 2026-11-15T22:09:35.142Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:10:26.469Z
+
+> 🔧 **Bash** `{"command": "sed -n 246,320p src/vfx/foam.ts | grep -n \"transparent\\|depthWrite\\|discard\\|alpha\\|gl_FragColor\" | head; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nimport json; d=json.load(open('$S/probe1.json'))['bubbles']\nfor k in ('big','small'):\n  v=d[k]; print(k, type(v).__name__, (len(v) if isinstance(v,list) else v if not isinstance(v,dict) else list(v.keys())))\n  if isinstance(v,list) and v: print('  sample', v[0])\n\"", "description": "Check impostor blending and bubble QA data"}`
+
+### 🧑 User — 2026-11-15T22:10:26.532Z
+
+> ↩︎ result: 26:  if (d2 > 1.0) discard;
+> 50:  gl_FragColor = vec4(col, 1.0);
+> big list 19
+>   sample [800, 919, 24]
+> small list 12
+>   sample [649, 1028, 5]
+
+### 🤖 Claude — 2026-11-15T22:10:29.166Z
+
+Impostors are opaque discs with discard (they pile correctly), and the bubble QA still reports 19 large + 12 small. Applying the it04 edits.
+
+### 🤖 Claude — 2026-11-15T22:10:45.477Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/foam.ts'\nt=open(p).read()\ndef rep(old,new):\n    global t\n    assert t.count(old)==1, old[:90]\n    t=t.replace(old,new)\nrep(\"\"\"const BANK_PX: [number, number] = [170, 180];\"\"\",\n\"\"\"const BANK_PX: [number, number] = [180, 200];\n/** lateral size of a clump (px): a clump whose inner edge lies further in than this floats off the frame\n * edge with water beyond it (ref 05 lower clumps x≈50–200 and 610–790) */\nconst CLUMP_PX = 135;\n/**\n * The flank lather SHEET (berm shader) read as flat white paper with straight cut edges at the clump en …[+3557 chars]`
+
+### 🧑 User — 2026-11-15T22:10:49.058Z
+
+> ↩︎ result: 802:          for (let p = 0; p < P; p++) rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0));
+> 815:        for (let p = 0; p < P; p++) {
+> 816:          const [f0, df, r0, dr, lift, prob] = KIND[p];
+> tsc=0
+
+### 🤖 Claude — 2026-11-15T22:10:53.483Z
+
+tsc passes. Updating NOTES.md with it02/it03 before capturing it04.
+
+### 🤖 Claude — 2026-11-15T22:11:02.245Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave5/foam/NOTES.md <<'EOF'\n\nMetric note (22:55): the live water (water-fx, parallel) now has lavender-white reflection streaks near\nthe bottom that merge with foam clumps under a 7x7 opening; an 11x11 opening separates them but\nunder-detects the ref's finely textured blue-shaded foam. Both are reported (FOAM_OPEN=3 -> 7x7, 5 -> 11x11).\nROWS (wall test) is stable under both.\n\n## it02 (22:45) foam.ts\n* `updateRafts`: Benny/coin-path clearances relaxed behind Benny (ds < -0.6, x0.78 / x0.65: no coins\n  there); lather sheet sinks under the water where the e …[+1325 chars]`
+
+### 🧑 User — 2026-11-15T22:11:23.400Z
+
+> ↩︎ result: 05 → qa/pilot05/wave5/foam/it04/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":143,"tris":634205,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> == opening 7
+> qa/pilot05/wave5/foam/it04/05.png
+>    L: EXT(y>700) 432px (50.0%)  NEAR mean 110.8px (12.8%) max 398px (46.1%) COVER  57.8%  ROWS  33.9%  AREA(y>540)  5.4%
+>    R: EXT(y>700) 432px (50.0%)  NEAR mean 110.3px (12.8%) max 382px (44.2%) COVER  61.3%  ROWS  24.1%  AREA(y>540)  7.5%
+> == opening 11
+> qa/pilot05/wave5/foam/it04/05.png
+>    L: EXT(y>700) 256px (29.6%)  NEAR mean  87.5px (10.1%) max 147px (17.0%) COVER  51.3%  ROWS  32.3%  AREA(y>540)  4.8%
+>    R: EXT(y>700) 286px (33.1%)  NEAR mean  91.9px (10.6%) max 178px (20.6%) COVER  52.9%  ROWS  20.6%  AREA(y>540)  6.3%
+
+### 🤖 Claude — 2026-11-15T22:11:24.576Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/foam/it04/05.png"}`
+
+### 🧑 User — 2026-11-15T22:11:24.635Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:11:45.548Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cd $S && python3 - <<'EOF'\nsrc=open('envsearch.py').read().split('best = {}')[0]\nsrc=src.replace(\"return sm(0.42, 0.62,\",\"return sm(T0, 0.62,\").replace(\"S0 = 132.438\",\"S0 = 132.62\").replace(\"want = {\",\"T0 = 0.5\\nwant = {\")\nexec(src)\nwant['R'] = [((-1.45, -0.9), 1), ((3.4, 8.5), 1), ((-3.4, -1.85), 0), ((-0.65, 2.8), 0)]\nres=[]\nfor f in (0.45,0.5,0.55,0.6,0.65,0.75,0.85,0.95,1.05):\n    for si in range(6000):\n        seed=si*0.1371; res.append((score('R',seed,f),seed,f))\nres.so …[+585 chars]`
+
+### 🧑 User — 2026-11-15T22:12:00.078Z
+
+> ↩︎ result: [(0.0263, 574.0377, 0.5), (0.0318, 15.9036, 0.45), (0.0349, 15.7665, 0.45), (0.0352, 574.1748, 0.5), (0.0396, 695.7825, 0.55)]
+> 574.0377 0.5 -2.25:0.00 -2.00:0.00 -1.75:0.00 -1.50:0.04 -1.25:1.00 -1.00:1.00 -0.75:0.83 -0.50:0.00 -0.25:0.00 +0.00:0.00 +0.25:0.48 +0.50:0.76 +0.75:0.36 +1.00:0.13 +1.25:0.07 +1.50:0.07 +1.75:0.00 +2.00:0.00 +2.25:0.00 +2.50:0.00 +2.75:0.42
+>     +3.0:1.00 +3.5:1.00 +4.0:1.00 +4.5:1.00 +5.0:1.00 +5.5:1.00 +6.0:1.00 +6.5:1.00 +7.0:1.00 +7.5:1.00 +8.0:1.00 +8.5:1.00 +9.0:0.00 +9.5:0.00 +10.0:0.00 +10.5:0.00
+>     coverage 0.36 longest gap 12.5
+> 15.9036 0.45 -2.25:0.00 -2.00:0.46 -1.75:1.00 -1.50:1.00 -1.25:1.00 -1.00:1.00 -0.75:0.95 -0.50:0.05 -0.25:0.00 +0.00:0.00 +0.25:0.00 +0.50:0.00 +0.75:0.00 +1.00:0.00 +1.25:0.00 +1.50:0.08 +1.75:0.63 +2.00:0.51 +2.25:0.16 +2.50:0.05 +2.75:0.41
+>     +3.0:1.00 +3.5:1.00 +4.0:1.00 +4.5:1.00 +5.0:1.00 +5.5:0.96 +6.0:0.88 +6.5:0.74 +7.0:1.00 +7.5:1.00 +8.0:1.00 +8.5:0.52 +9.0:0.28 +9.5:0.00 +10.0:0.00 +10.5:0.00
+>     coverage 0.50 longest gap 5.5
+> 15.7665 0.45 -2.25:0.00 -2.00:0.00 -1.75:0.34 -1.50:1.00 -1.25:1.00 -1.00:1.00 -0.75:1.00 -0.50:0.96 -0.25:0.09 +0.00:0.00 +0.25:0.00 +0.50:0.00 +0.75:0.00 +1.00:0.00 +1.25:0.00 +1.50: …[+259 chars]
+
+### 🤖 Claude — 2026-11-15T22:12:14.947Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cd $S && python3 - <<'EOF'\nsrc=open('envsearch.py').read().split('best = {}')[0]\nsrc=src.replace(\"return sm(0.42, 0.62,\",\"return sm(T0, T0 + 0.12,\").replace(\"S0 = 132.438\",\"S0 = 132.62\").replace(\"want = {\",\"T0 = 0.5\\nwant = {\")\nexec(src)\nwant['R'] = [((-1.45, -0.9), 1), ((3.4, 8.5), 1), ((-3.4, -1.85), 0), ((-0.6, 2.8), 0)]\nout=[]\nfor t0 in (0.5,0.54,0.58,0.62):\n    T0=t0\n    res=[]\n    for f in (0.45,0.5,0.55,0.6,0.65,0.75,0.85):\n        for si in range(4000):\n             …[+602 chars]`
+
+### 🧑 User — 2026-11-15T22:12:43.150Z
+
+> ↩︎ result: 0.5 [(0.0303, 15.9036, 0.45), (0.0303, 15.7665, 0.45)]
+> 0.54 [(0.029, 127.503, 0.45), (0.034, 127.6401, 0.45)]
+> 0.58 [(0.0578, 295.5876, 0.5), (0.0608, 127.3659, 0.45)]
+> 0.62 [(0.0959, 295.4505, 0.5), (0.0966, 295.5876, 0.5)]
+> best 0.54 127.503 0.45
+> -2.25:0.00 -2.00:0.00 -1.75:0.00 -1.50:0.00 -1.25:0.28 -1.00:0.63 -0.75:0.40 -0.50:0.06 -0.25:0.00 +0.00:0.00 +0.25:0.00 +0.50:0.01 +0.75:0.15 +1.00:0.16 +1.25:0.03 +1.50:0.00 +1.75:0.00 +2.00:0.00 +2.25:0.00 +2.50:0.00 +2.75:0.10 +3.00:0.77 +3.25:1.00 +3.50:1.00 +3.75:1.00 +4.00:1.00 +4.25:1.00 +4.50:1.00 +4.75:1.00 +5.00:1.00 +5.25:1.00 +5.50:1.00 +5.75:1.00 +6.00:0.99 +6.25:1.00 +6.50:1.00 +6.75:1.00 +7.00:1.00 +7.25:1.00 +7.50:1.00 +7.75:1.00 +8.00:1.00 +8.25:0.93 +8.50:0.58 +8.75:0.43 +9.00:0.07 +9.25:0.00 +9.50:0.00 +9.75:0.00
+> coverage 0.37 longest gap 8.6
+
+### 🤖 Claude — 2026-11-15T22:13:02.402Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/foam.ts'\nt=open(p).read()\ndef rep(old,new):\n    global t\n    assert t.count(old)==1, old[:90]\n    t=t.replace(old,new)\nrep(\"\"\"const BANK_ENV: [number, number][] = [[478.345, 0.85], [15.743, 0.45]];\"\"\",\n\"\"\"const BANK_ENV: [number, number, number][] = [[478.345, 0.85, 0.5], [127.503, 0.45, 0.54]];\"\"\")\nrep(\"\"\" * Wave 5: world-anchored clump envelope per side, [seed, frequency along s]. The near-field bank is a\"\"\",\n\"\"\" * Wave 5: world-anchored clump envelope per side, [seed, frequency along s, threshold]. The near-field bank  …[+1796 chars]`
+
+### 🧑 User — 2026-11-15T22:13:23.699Z
+
+> ↩︎ result: tsc=0
+> 05 → qa/pilot05/wave5/foam/it05/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":143,"tris":634205,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> == opening 7
+> references/05_flow_into_the_current.png
+>    L: EXT(y>700) 309px (35.8%)  NEAR mean  82.7px ( 9.6%) max 231px (26.7%) COVER  57.8%  ROWS  14.3%  AREA(y>540)  3.3%
+>    R: EXT(y>700) 336px (38.9%)  NEAR mean  85.0px ( 9.8%) max 222px (25.7%) COVER  35.6%  ROWS  10.1%  AREA(y>540)  2.5%
+> qa/pilot05/wave5/baseline/05.png
+>    L: EXT(y>700) 255px (29.5%)  NEAR mean  64.6px ( 7.5%) max 101px (11.7%) COVER  63.1%  ROWS  73.7%  AREA(y>540)  7.9%
+>    R: EXT(y>700) 130px (15.0%)  NEAR mean  84.6px ( 9.8%) max 130px (15.0%) COVER 100.0%  ROWS 100.0%  AREA(y>540) 10.8%
+> qa/pilot05/wave5/foam/it05/05.png
+>    L: EXT(y>700) 432px (50.0%)  NEAR mean 110.8px (12.8%) max 398px (46.1%) COVER  57.8%  ROWS  33.9%  AREA(y>540)  5.4%
+>    R: EXT(y>700) 432px (50.0%)  NEAR mean  52.8px ( 6.1%) max 104px (12.0%) COVER  18.0%  ROWS   7.7%  AREA(y>540)  4.8%
+> == opening 11
+> references/05_flow_into_the_current.png
+>    L: EXT(y>700) 263px (30.4%)  NEAR mean  44.5px ( 5.1%) max 110px (12.7%) COVER …[+711 chars]
+
+### 🤖 Claude — 2026-11-15T22:13:24.810Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/foam/it05/05.png"}`
+
+### 🧑 User — 2026-11-15T22:13:24.879Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:13:51.517Z
+
+> 🔧 **Bash** `{"command": "git status --short src/ | head -20; git diff --stat -- src/vfx/foam.ts src/vfx/bubbles.ts src/vfx/riderSplash.ts src/vfx/spray.ts src/vfx/index.ts src/game/Game.ts; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nimport json\nd=json.load(open('$S/probe1.json'))['bubbles']\ncoins=[(487,738,47),(577,660,34),(582,608,22),(462,577,17),(430,561,13),(532,548,12)]\nfor k in ('big','small'):\n  v=d[k]; bad=[]\n  for x,y,r in v:\n    inB = (230-r < x < 612+r) and (768-r < y < 1190+r)\n    nearC = any(((x-cx)**2+(y-cy)**2)**0.5 < r+cr+1 …[+255 chars]`
+
+### 🧑 User — 2026-11-15T22:13:51.598Z
+
+> ↩︎ result: M src/characters/benny/textures.ts
+>  M src/vfx/foam.ts
+>  M src/world/environment.ts
+>  M src/world/materials.ts
+>  M src/world/tube.ts
+>  src/vfx/foam.ts | 45 +++++++++++++++++++++++++++++----------------
+>  1 file changed, 29 insertions(+), 16 deletions(-)
+> big 19 radius px min/max 23 58 overlaps []
+> small 12 radius px min/max 4 15 overlaps []
+
+### 🤖 Claude — 2026-11-15T22:13:57.560Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/capture.mjs 03 04 06 07 --out=qa/pilot05/wave5/foam/regress 2>&1 | grep -v \"^\\s*at \" | tail -6", "description": "Regression capture of stages 03 04 06 07", "timeout": 920000}`
+

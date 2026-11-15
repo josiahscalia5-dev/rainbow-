@@ -352,26 +352,34 @@ const BANK_DS1 = 15;
 /** puffs stop here (further ahead the berm and its own puffs take over) */
 const BANK_PUFF_DS1 = 12.5;
 /** inner edge of a clump at its widest: px in from the frame edge (of an 864-px wide frame), L / R */
-const BANK_PX: [number, number] = [170, 180];
+const BANK_PX: [number, number] = [180, 200];
+/** lateral size of a clump (px): a clump whose inner edge lies further in than this floats off the frame
+ * edge with water beyond it (ref 05 lower clumps x≈50–200 and 610–790) */
+const CLUMP_PX = 135;
 /**
- * Wave 5: world-anchored clump envelope per side, [seed, frequency along s]. The near-field bank is a
+ * The flank lather SHEET (berm shader) read as flat white paper with straight cut edges at the clump ends;
+ * the ref clumps are piled bubbles only, so wave 5 hides it and the impostor bubbles carry the clumps.
+ */
+const FLANK_SHEET = false;
+/**
+ * Wave 5: world-anchored clump envelope per side, [seed, frequency along s, threshold]. The near-field bank is a
  * chain of separate LOW clumps with open water between them (ref 05: left clumps y≈1016–1108 and
  * 1202–1330, right y≈800–950 and 1217–1300), not a continuous strip up the frame edge (wave 4 read as
  * a white wall: the outer 40 px were foam on 74 % / 100 % of the rows y 700–1400). The seeds put the
  * clumps of the QA frame (s≈132.4) where the ref has them; along 05 clumps cover ≈40 % of the length.
  */
-const BANK_ENV: [number, number][] = [[478.345, 0.85], [15.743, 0.45]];
+const BANK_ENV: [number, number, number][] = [[478.345, 0.85, 0.5], [127.503, 0.45, 0.54]];
 const BANK_CLEAR_RIDER = 1.3;
 const BANK_CLEAR_CORE = 1.45;
 
 /**
- * wave 5: 0.5 in 05 (smooth ramps at the stage ends), 1 elsewhere. In 05 the stream-edge rim toward the VP
+ * wave 5: 0.4 in 05 (smooth ramps at the stage ends), 1 elsewhere. In 05 the stream-edge rim toward the VP
  * is a LOW band of piled bubbles (ref ≈40–60 px); the full-height berm read as tall white heaps.
  */
 function bermScale05(course: Course): (s: number) => number {
   const st = course.stage('05');
   const sm = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
-  return (s) => 1 - 0.5 * sm(st.s0 - 6, st.s0 - 1, s) * (1 - sm(st.s1 - 1, st.s1 + 4, s));
+  return (s) => 1 - 0.6 * sm(st.s0 - 6, st.s0 - 1, s) * (1 - sm(st.s1 - 1, st.s1 + 4, s));
 }
 /** squash the part of the bank above the stream's edge water level by k (k = 1: unchanged) */
 const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT + (h - EDGE_LIFT) * k : h);
@@ -632,8 +640,8 @@ export function createFoam(
   const bankLump = (s: number, side: number) => 0.7 * noise1(s * 0.5 + side * 17.3) + 0.3 * noise1(s * 1.15 + side * 5.1);
   /** 0..1 clump envelope (sd 0 = left, 1 = right): 0 = no bank (open water up to the frame edge) */
   const bankEnv = (s: number, sd: number) => {
-    const [seed, f] = BANK_ENV[sd];
-    return sm(0.5, 0.62, 0.65 * noise1(s * f + seed) + 0.35 * noise1(s * f * 2.3 + seed * 1.7 + 11.0));
+    const [seed, f, t0] = BANK_ENV[sd];
+    return sm(t0, t0 + 0.12, 0.65 * noise1(s * f + seed) + 0.35 * noise1(s * f * 2.3 + seed * 1.7 + 11.0));
   };
   const rowEnv = [new Float32Array(R), new Float32Array(R)];
   /** lather apron height above the water: f = 0 inner edge (just under the water) … 1 outer */
@@ -646,7 +654,7 @@ export function createFoam(
   // bubble puffs: camera-facing sphere impostors (2 triangles each), CELL-spaced world cells along s,
   // P puffs per cell, a ring buffer of NC cells per side
   const CELL = quality === 'high' ? 0.16 : 0.3;
-  const P = quality === 'high' ? 6 : 4;
+  const P = quality === 'high' ? 8 : 5;
   const NC = Math.ceil((BANK_PUFF_DS1 - BANK_DS0) / CELL) + 3;
   const nRaft = 2 * NC * P;
   const rr = rng(4242);
@@ -656,7 +664,7 @@ export function createFoam(
   rafts.frustumCulled = false;
   rafts.renderOrder = 1;
   for (let i = 0; i < nRaft; i++) {
-    const kind = i % P; // 0–1 rim, 2–3 body, 4 heap, 5 outer
+    const kind = i % P; // 0–1 rim, 2–3 body, 4 heap, 5 outer, 6–7 body (high) / 4 body (low)
     rafts.setColorAt(i, tmpC.setRGB(kind < 2 ? 0.86 + 0.1 * rr() : 0.8 + 0.2 * rr(), rr(), rr() * 2 - 1));
     rafts.setMatrixAt(i, tmpM.makeScale(0, 0, 0));
   }
@@ -666,8 +674,8 @@ export function createFoam(
   total += nRaft;
   /** per puff kind: across range [f0, f0 + df], radius [r0, r0 + dr], lift (× r above the apron), probability */
   const KIND: [number, number, number, number, number, number][] = quality === 'high'
-    ? [[0.0, 0.08, 0.04, 0.045, 0.1, 1], [0.04, 0.12, 0.05, 0.04, 0.2, 1], [0.12, 0.5, 0.06, 0.06, 0.35, 1], [0.2, 0.55, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.1, 0.06, 0.5, 0.6], [0.6, 0.4, 0.07, 0.05, 0.3, 1]]
-    : [[0.0, 0.1, 0.045, 0.05, 0.15, 1], [0.12, 0.5, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.1, 0.06, 0.5, 0.7], [0.55, 0.45, 0.07, 0.05, 0.3, 1]];
+    ? [[0.0, 0.08, 0.04, 0.045, 0.1, 1], [0.04, 0.12, 0.05, 0.04, 0.2, 1], [0.12, 0.5, 0.06, 0.06, 0.35, 1], [0.2, 0.55, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.6], [0.6, 0.4, 0.07, 0.05, 0.3, 1], [0.05, 0.9, 0.045, 0.04, 0.2, 1], [0.3, 0.65, 0.05, 0.05, 0.25, 1]]
+    : [[0.0, 0.1, 0.045, 0.05, 0.15, 1], [0.12, 0.5, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.7], [0.55, 0.45, 0.07, 0.05, 0.3, 1], [0.1, 0.8, 0.055, 0.05, 0.25, 1]];
 
   const rider = { s: 0, lat: 0, str: 0, target: 0, fed: false };
   const fr = { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
@@ -712,7 +720,7 @@ export function createFoam(
       return;
     }
     rafts.visible = true;
-    flank.visible = true;
+    flank.visible = FLANK_SHEET;
     bub.uniforms.uTime.value = time;
     cam.updateMatrixWorld();
     cam.getWorldPosition(camPos);
@@ -731,8 +739,10 @@ export function createFoam(
         const env = bankEnv(s, sd);
         rowEnv[sd][i] = env;
         const frac = ((2 * BANK_PX[sd]) / 864) * env * (0.72 + 0.28 * lump);
+        const fracOut = frac - (2 * CLUMP_PX) / 864;
         const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);
         const inner = frac > 0.002 ? solveLat(cam, side * (1 - frac), camLat + side * 1.0, edge) : edge;
+        const outer = fracOut > 0.004 ? solveLat(cam, side * (1 - fracOut), inner, edge) : edge;
         // keep clear of Benny (near him) and of the cyan core / coin line; merge into the berm at the edge
         // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax to ≈0.75×
         const behind = sm(-0.5, -1.2, ds);
@@ -740,7 +750,8 @@ export function createFoam(
         const clearC = BANK_CLEAR_CORE * (1 - 0.35 * behind);
         let a = Math.max(side * inner, side * rider.lat + clearR, side * coreLateral(course, s) + clearC);
         a = Math.min(a, hw - 0.3);
-        const outA = Math.max(a + 0.12, Math.min(side * edge + 0.55, hw + 0.15));
+        // outer border: beyond the frame edge, or (wide clump) CLUMP_PX out from its inner edge
+        const outA = Math.max(a + 0.12, Math.min(outer === edge ? side * edge + 0.55 : side * outer, hw + 0.15));
         // fade in/out (stage entry/exit): the bank narrows towards the frame edge instead of sinking
         a = outA - (outA - a) * w;
         rowIn[sd][i] = side * a;
@@ -770,9 +781,11 @@ export function createFoam(
         }
       }
     }
-    bankGeo.attributes.position.needsUpdate = true;
-    bankGeo.attributes.aFoam.needsUpdate = true;
-    bankGeo.computeVertexNormals();
+    if (FLANK_SHEET) {
+      bankGeo.attributes.position.needsUpdate = true;
+      bankGeo.attributes.aFoam.needsUpdate = true;
+      bankGeo.computeVertexNormals();
+    }
     // ---- bubble puffs piled on the apron (world cells along s: the bank stays put, Benny rides past) ----
     const j0 = Math.floor((rider.s + BANK_DS0) / CELL);
     for (let sd = 0; sd < 2; sd++) {

@@ -42,3 +42,36 @@ Captures go to qa/pilot05/wave5/environment/itNN (max 5), regression at the end 
 * Walls non-gold median L #C222B8 R #CE41CC ceil #BE39BE (ref #BF36B4/#CF3DB6/#B2359F); p10 lum 90–104 (ref 77–81).
 * Gold median #FFAF4E p90 #FFD17D (ref #FB984D / #FFE280). Rings flat orange with brown blotches; lids edge-on thin plates;
   far river straight striped lanes. → it02: violet F0 + fat slots, 'gold05' env, thicker tilted lids, narrower river.
+
+## it02 (wall05 lavender F0 + slots [0.32,0.12]; materials.ts washerTubeEnv('gold05'); lids thickness 0.42 droop −26; river narrower)
+* calls 144 (+19 vs it01, from concurrent benny.glb re-export / foam edits — my pass added no meshes), tris 634,317.
+* Walls median L #A326BB R #B742C6 ceil #AF40BA (ref #BF36B4/#CF3DB6/#B2359F); p10 L 46 / R 88 / ceil 79 (ref 77–81);
+  dark<60 0.11/0.07/0.06 (ref 0.07/0.07/0.04). Violet now; left slightly too dark.
+* Gold median #FFAF65 p90 #FFD58B (ref #FB984D/#FFE280): too pale → it03 saturated F0 + dedicated gold05 env.
+* VP: core width 12 px, warm width on VP row 63 px, core px 230 (ref 410). Lids now chunky pucks (salmon, striped).
+* Near frame ring at the bottom corners (priority 5): NOT doable as a tube ring with the locked camera — a ring at D≈10
+  meets the waterline at x = 500 ± 785 px (off screen); its corner arc lies 2.2 u under the stream. Would need a frame
+  standing through the stream at the camera (Benny would clip it). Left for the coordinator.
+
+## it03 (gold05 env saturated + F0 #ffd45c; walls F0 #e49ce8, strips 2.8; lids copper; river chord 0.62 width)
+* calls 143, tris 634,205. Gold median #FF9B3A p90 #FFCE6D (ref #FB984D/#FFE280) ✓ hue; brown patches remain on the
+  camera-facing slope of near bands (behind-below reflections hit copper) → it04: copper only straight down.
+* Walls L #AE20BF R #BE3FCF ceil #BC41BE (ref #BF36B4/#CF3DB6/#B2359F): a bit too blue; p10 84–93 (ref 77–81).
+* VP: core width 12 px, warm width 63 px, warm px in VP window 3,416 (ref 2,208), core px 142.
+* it04: wall F0 #f29ad6 + mid tint #8a30d2 0.45; lids size 1.9; far river meander 0.3·sin(0.17u), deeper cyan.
+
+## it04 (gold05: copper only straight down; wall F0 #f29ad6, mid tint #8a30d2 0.45; lids 1.9; river meander)
+* calls 143, tris 634,205. Walls L #BC1FB5 R #CA3DC8 ceil #C437BE (ref #BF36B4/#CF3DB6/#B2359F); p10 79/95/92.
+* Gold median #FFA538 p90 #FFD36B (ref #FB984D/#FFE280); brown patches gone, but bands flat (no highlight line).
+* VP: core width 12 px, warm width on VP row 63 px, core px 105.
+* it05: gold05 env gets two sharp axis-symmetric light cones (highlight line + lip contour on every band), base a bit
+  darker; VP core region 0.6, disc ×1.35; far-river meander 0.09·u.
+
+## it05 (final 05 capture; 5/5 used)
+* calls 143, tris 634,205. Walls L #BB1EB6 R #CA3DC8 ceil #C437BF (ref #BF36B4/#CF3DB6/#B2359F); p10 79/95/91 (ref 77–81);
+  dark<60 0.09/0.05/0.05 (ref 0.07/0.07/0.04).
+* Gold median #FF9F38 p90 #FFCD6B (ref #FB984D/#FFE280). The light cones gave NO visible highlight line (PMREM blur at
+  roughness 0.13 / grazing angles) — bands still read as smooth orange-gold without a double contour.
+* VP: core width 16 px (lum≥225), core px 183 (ref 410), warm width on VP row 63 px (baseline 179), warm px 3,726.
+* Ring tops on x=498: 182–215 (ring 1), 264–285 (ring 2 / far-tunnel seam), 350, 390, 410, 423, 431, 438, 444, 454
+  → spacing ≈ 76, 86, 40, 20, 13, 8, 7, 6, 10 px (ref 96, 70, 37, 19, 12, 9); 10 rings visible to the VP.

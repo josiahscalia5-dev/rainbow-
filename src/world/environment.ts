@@ -238,15 +238,15 @@ export function buildEnvironment(course: Course): Environment {
   const slotPitch05 = bay05 / 7;
   // ref 05 walls: deep metallic magenta/violet (#CD32AA / #992FC2), black slots, white-pink lengthwise
   // streaks; the warm light only at the very end (virtual depth ≳160 → halo ≲60 px about the VP)
-  const glow05: FarGlow = { color: '#ffd796', near: 160, far: 470, strength: 1.6, mid: { color: '#7a32e6', near: 4, far: 48, amount: 0.5 } };
+  const glow05: FarGlow = { color: '#ffd796', near: 160, far: 470, strength: 1.6, mid: { color: '#8a30d2', near: 4, far: 48, amount: 0.45 } };
   const wall05 = {
     // lavender F0 × the magenta tube environment → violet-magenta metal (ref #992FC2 / #CD32AA)
-    ...wallBase, color: '#d49cf2', emissive: '#2a0446', emissiveIntensity: 0.14, envMapIntensity: 0.66,
+    ...wallBase, color: '#f29ad6', emissive: '#360440', emissiveIntensity: 0.14, envMapIntensity: 0.74,
     rimColor: '#ff4fd8', rimStrength: 0.45, farGlow: glow05,
-    repeatV: 1 / slotPitch05, slotHalf: [0.32, 0.12] as [number, number],
+    repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.1] as [number, number],
     offsetV: 0.5 - ((((rings05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
   };
-  const strips05: TubeStrips = { ...strips, intensity: 2.4 };
+  const strips05: TubeStrips = { ...strips, intensity: 2.8 };
   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
   const addWall = (a0: number, a1: number, mat: THREE.Material) => {
@@ -269,10 +269,10 @@ export function buildEnvironment(course: Course): Environment {
   // strip lights as marquee spots
   const goldEnv05 = washerTubeEnv('gold05');
   const gold05 = (key: string, virtual: boolean) => {
-    const m = withTubeStrips(withFarGlow(gold({ color: '#ffe39a', roughness: 0.13, emissive: 0.1 }), glow05, key, virtual), { ...strips, color: '#fff6dc', intensity: 3.0 }, 'instance', key);
-    m.emissive.set('#e0a018');
+    const m = withTubeStrips(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glow05, key, virtual), { ...strips, color: '#fff2c8', intensity: 2.6, width: 0.016 }, 'instance', key);
+    m.emissive.set('#e08a10');
     m.envMap = goldEnv05;
-    m.envMapIntensity = 1.3;
+    m.envMapIntensity = 1.15;
     return m;
   };
   const ringMat05 = gold05('ring05', false);
@@ -299,10 +299,10 @@ export function buildEnvironment(course: Course): Environment {
   };
   // 05 (ref §5.5): flat round copper-gold lids ('slab' half-disc pucks standing out of the wall, seen from
   // below at an angle), one symmetric pair per bay at mid-bay, ≈12° above the axis on both walls
-  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -26, size: 2.2, thickness: 0.42, stretch: 0.95, sink: 0.1 };
+  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -24, size: 1.9, thickness: 0.42, stretch: 1.0, sink: 0.1 };
   const lidMat05 = (key: string, virtual: boolean) => {
-    const m = withTubeStrips(withFarGlow(gold({ color: '#ffc896', roughness: 0.2, emissive: 0.08 }), glow05, key, virtual), { ...strips, color: '#fff0d0', intensity: 1.5 }, 'instance', key);
-    m.emissive.set('#d07a28');
+    const m = withTubeStrips(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glow05, key, virtual), { ...strips, color: '#fff0d0', intensity: 0.8 }, 'instance', key);
+    m.emissive.set('#c86a18');
     m.envMap = goldEnv05;
     m.envMapIntensity = 1.35;
     return m;
@@ -340,7 +340,7 @@ export function buildEnvironment(course: Course): Environment {
     const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
     // the far stream (flat chord at the real stream level)
     const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
-    const farRiver = new THREE.Mesh(ft.chordGeometry(level, 12, 64), farRiverMaterial(glow05));
+    const farRiver = new THREE.Mesh(ft.chordGeometry(level, 12, 64, 0.62), farRiverMaterial(glow05));
     // rings (one per knot) and lid pairs (mid-bay), low-poly bands: they are small on screen
     const ringItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
     const lidItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
@@ -374,7 +374,7 @@ export function buildEnvironment(course: Course): Environment {
     glow.name = 'tube05_end_glow';
     glow.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(fr0.right, fr0.up, fr0.tan.clone().negate()));
     glow.position.copy(ft.point(zEnd, new THREE.Vector3()));
-    glow.scale.setScalar(perfPath.radius(sF05) * ft.kOf(zEnd) * 1.2);
+    glow.scale.setScalar(perfPath.radius(sF05) * ft.kOf(zEnd) * 1.35);
     const parts = [farWall, farRiver, farRings, farLids, glow];
     for (const p of parts) { p.frustumCulled = false; p.name ||= 'tube05_far'; }
     farWall.name = 'tube05_far_wall'; farRiver.name = 'tube05_far_river';

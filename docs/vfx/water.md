@@ -50,6 +50,25 @@ chevrons intentionally exceed 1.0 (bloom-friendly).
 * drum: `uTime`, `uAgitation`, `uDrumC (x, y, R)`; swirl: `uSwirl`.
 * final wave: `uTime`, `uSpeed`; puddles: `uAmount`.
 
+## 05 river (`waterRibbon.ts` FRAG, `sw = 1 − aStyle.w` = 1 on 05 only)
+
+The 05 current uses its own branch of the same ribbon shader (no extra pass, no extra draw):
+* Channel: cyan core centred on `coreLateral(course, s)` (= `CORE_SWING · offset05 · right.x`, the coins'
+  lateral; exported, unchanged). The two hot-pink bands swing a further `sbend = 1.05·sin(0.31 s − 0.834) +
+  0.18·sin(0.62 s + 0.6)` u about the core (in phase with the course meander: ≈2 S-bends to the VP on the
+  locked view). The band nearest a bank is clamped with a smooth minimum (`smin`) and thins to ≥0.6× instead
+  of collapsing the core.
+* Behind Benny (from 3 u ahead, `uBenny`): both bands glide to his track ±1.42 u (half width 0.34 u), so they
+  run on as broad brushed sweeps at the image sides; the cyan under/behind him stays clean. (Wave 5 removed
+  the separate wake "trail" sweep that drew two hard pink fins.) Band edges are combed into pink / cyan
+  strands only where a strand is ≥ ≈10 px (`brush`), crisp per pixel: no violet pink-over-cyan blend.
+* Surface: braided swell ridges + silk streak lines along the flow coordinate (mid/far); in the near field
+  (`near5`, fwidth(s) < 0.014) bowed "∩" swell crests (λ 0.55 u) with deep azure troughs, blue-white crest
+  highlights, thin wavy speed dashes, silk satin lines on the pink sweeps, crest-weighted 4-point flares
+  (`flB`) and a dense small-star field (`flC`, clustered on crests); `flD` adds small stars in the mid field.
+  `LOW_Q` replaces the flowGlint stars by two hashed sparkle grids.
+* Numbers per capture: `qa/pilot05/wave5/water/NOTES.md`.
+
 ## Measured budgets (water lab, headless Chromium + SwiftShader)
 
 Water system only (no environment/characters), per frame, from `renderer.info`

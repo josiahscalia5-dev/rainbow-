@@ -43,3 +43,36 @@ impostor bank bubbles, 19 large + 12 small bubbles). Nothing from wave 4 is reve
   water + pink bands visible between them. Left lower clump (ref y 1200-1330) missing: the coin-path
   clearance (1.45 u from the cyan core, which swings left behind Benny) pushed it off-screen. Left rim
   toward the VP still a tall flat white ridge (berm sheet crest up to ~0.9 u).
+
+Metric note (22:55): the live water (water-fx, parallel) now has lavender-white reflection streaks near
+the bottom that merge with foam clumps under a 7x7 opening; an 11x11 opening separates them but
+under-detects the ref's finely textured blue-shaded foam. Both are reported (FOAM_OPEN=3 -> 7x7, 5 -> 11x11).
+ROWS (wall test) is stable under both.
+
+## it02 (22:45) foam.ts
+* `updateRafts`: Benny/coin-path clearances relaxed behind Benny (ds < -0.6, x0.78 / x0.65: no coins
+  there); lather sheet sinks under the water where the envelope is low.
+* `bermScale05` + `squashBerm` (new): 05 berm crest above the stream-edge water level x0.5 (mesh + puffs).
+* Result: lower-left clump appears but merges with the upper one into a 270-px strip (ROWS L 65 %).
+
+## it03 (22:58) foam.ts
+* `BANK_ENV` refit with the true rider s (132.62, probe) and threshold 0.5: L [478.345, 0.85],
+  R [15.743, 0.45]; 05 berm outer side laterally compressed (x0.55).
+* Result (7x7 / 11x11): L ROWS 37 / 36 %, R 61 / 61 %; AREA L 5.4 / 4.8 %, R 8.4 / 7.2 %; clumps at
+  L y 980-1060 and 1180-1300 with water between (ref 1016-1108 / 1202-1330), R bank y 760-960 (ref
+  800-950). Left VP rim lower. Still wrong: flank lather sheet reads as flat white paper with straight cut
+  edges; right lower clump ~200 px tall (ref ~85); all clumps glued to the frame edge.
+* Draw calls in this capture 144 (were 121): not from foam (no meshes added); parallel env/water work.
+
+## it04 (23:08) foam.ts
+* `FLANK_SHEET = false`: flank lather sheet hidden (it read as flat paper with straight cut edges); the
+  impostor bubbles carry the clumps: `P` 6 -> 8 per cell (2 more body puffs in `KIND`, low tier 4 -> 5).
+* `CLUMP_PX = 135`: a clump wider than this floats off the frame edge; `BANK_PX` -> [180, 200].
+* `bermScale05`: 05 berm crest x0.4, outer side x0.46.
+* Result 11x11 (7x7): L ROWS 32 % (34), R 21 % (24); AREA L 4.8 % (5.4), R 6.3 % (7.5); NEAR L mean 88 px
+  max 147, R mean 92 px max 178; COVER L 51 %, R 53 %. Clumps are bubble piles, low; purple wall visible
+  above the VP rim. Right lower clump still ~190 px tall (ref ~85).
+
+## it05 (23:15) foam.ts
+* `BANK_ENV` right -> [127.503, 0.45, threshold 0.54] (small right lower clump ds -1.25..-0.7, open
+  water to ds 2.75, bank ds 3..8.5); per-side threshold in `bankEnv`.

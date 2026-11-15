@@ -1431,3 +1431,267 @@ Purple stripe median shifted to #624BC0 (L135): darker but greyer, so the green 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T22:10:09.120Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'EOF'\np='src/characters/benny/textures.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a[:70]\n    s=s.replace(a,b)\nrep(\"\"\"    // with less green (live purple stripe #8658FF vs ref #740FF2); the purple yarn ≈ the cuff's effective albedo\n    // (brim texture × its #7868a0 factor) ÷ the crown factor, so stripes and cuff read as the same deep violet\n\"\"\",\"\"\"    // with less green (live purple stripe #8658FF vs ref #740FF2). A darker yarn (#420cb6, it05) only greyed the stripe\n    // (#6238B6): its green …[+688 chars]`
+
+### 🧑 User — 2026-11-15T22:10:22.538Z
+
+> ↩︎ result: TSC_OK
+> 22:10
+> exported assets/models/benny.glb {"bytes":1126892,"meshes":27,"nodes":39,"clips":["idle(2.40s)","swim(0.60s)","tumble(1.
+> turntable docs/characters/benny_turntable.png {"box":{"min":[-1.0368119659137613,-0.8895217347813645,-0.8139782728548887
+> -rw-r--r-- 1 root root 1126892 Nov 15 22:10 assets/models/benny.glb
+> glTF
+> 3441d9198e - assets/models/benny.glb
+
+### 🤖 Claude — 2026-11-15T22:10:24.828Z
+
+GLB re-exported (1,126,892 B, `glTF`, LFS). Logging it05, then the regression capture of 02, 03, 10.
+
+### 🤖 Claude — 2026-11-15T22:10:28.483Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/wave5/benny/NOTES.md <<'EOF'\n\n### it05 (22:08) — crown purple yarn #420cb6 + pomTip #7c28e8\nPurple stripe median #624BC0 L135 (darker but greyer; centre-column avg (104,63,184) vs ref (95,14,234), dist ≈ 71;\nit04 avg (132,63,253), dist ≈ 64). The green floor (~63) is scene light, not albedo → **reverted the crown yarn to\nthe it04 colours**; kept pomTip #7c28e8 (pom #8B14FF L137 vs it04 #901AFF L142, ref #8215ED L129).\nFinal GLB 22:10 = it04 crown/cuff + it05 pom (both measured in the live game; 5 capture iterations of 05 used, so thi …[+317 chars]`
+
+### 🧑 User — 2026-11-15T22:11:07.812Z
+
+> ↩︎ result: 22:10
+> 02 → qa/pilot05/wave5/benny/regress/02.png {"stage":"02","s":8.756,"y":1.181,"calls":266,"tris":395443,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 03 → qa/pilot05/wave5/benny/regress/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":152,"tris":736696,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 10 → qa/pilot05/wave5/benny/regress/10.png {"stage":"10","s":423.018,"y":-112.84,"calls":282,"tris":400383,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T22:11:12.143Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\nrows=[]\nfor n in ['02','03','10']:\n    ims=[Image.open(p).convert('RGB') for p in ['references/%s'%[f for f in __import__('os').listdir('references') if f.startswith(n)][0],'screenshots/%s.png'%n,'qa/pilot05/wave5/benny/regress/%s.png'%n]]\n    h=560; r=[im.resize((int(im.width*h/im.height),h)) for im in ims]\n    out=Image.new('RGB',(sum(x.width for x in r)+20,h),'white'); x=0\n    for im in r: out.paste(im,(x,0)); x+=im.width+10\ …[+175 chars]`
+
+### 🧑 User — 2026-11-15T22:11:12.959Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1290509 Nov 15 21:41 screenshots/02.png
+> -rw-r--r-- 1 root root  645650 Nov 15 21:41 screenshots/03.png
+> -rw-r--r-- 1 root root 1344162 Nov 15 21:41 screenshots/10.png
+
+### 🤖 Claude — 2026-11-15T22:11:15.239Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/regress_02.png"}`
+
+### 🧑 User — 2026-11-15T22:11:15.288Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:11:15.909Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/regress_03.png"}`
+
+### 🧑 User — 2026-11-15T22:11:15.935Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:11:16.470Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/regress_10.png"}`
+
+### 🧑 User — 2026-11-15T22:11:16.499Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:11:36.372Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\ndef stats(p, box):\n    im=np.asarray(Image.open(p).convert('RGB')).astype(int)[box[1]:box[3],box[0]:box[2]]\n    R,G,B=im[...,0],im[...,1],im[...,2]\n    purple=(B>150)&(R<190)&(G<120)&(B>R+30)\n    yel=(R>200)&(G>150)&(B<110)\n    pk=(R>200)&(G<130)&(B>120)&(B<220)&(R>B+20)\n    ys,xs=np.nonzero(purple); y2,x2=np.nonzero(yel)\n    med=lambda a:'#%02X%02X%02X L%d'%(tuple(np.median(a,0).astype(int))+(int(np.median(a.mean(1))),))\n    return f'purple {med(im[purple])} n{purple.sum()}  star centre x …[+373 chars]`
+
+### 🧑 User — 2026-11-15T22:11:36.733Z
+
+> ↩︎ result: ref10 purple #6B33E8 L129 n75992  star centre x 493 y 1032 (n 3335)  purple x 150-759
+> old10 purple #913EFF L154 n66792  star centre x 421 y 955 (n 21640)  purple x 213-756
+> new10 purple #7C1DFF L134 n49267  star centre x 426 y 963 (n 21695)  purple x 341-759
+
+### 🤖 Claude — 2026-11-15T22:11:43.670Z
+
+The box caught coins and river purple. Narrowing to the cuff/star band of each frame.
+
+### 🤖 Claude — 2026-11-15T22:11:48.877Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\ndef stats(p, box):\n    im=np.asarray(Image.open(p).convert('RGB')).astype(int)[box[1]:box[3],box[0]:box[2]]\n    R,G,B=im[...,0],im[...,1],im[...,2]\n    purple=(B>150)&(R<190)&(G<120)&(B>R+30)\n    yel=(R>200)&(G>150)&(B<110)\n    ys,xs=np.nonzero(purple); y2,x2=np.nonzero(yel)\n    rows=[y for y in range(im.shape[0]) if purple[y].sum()>150]\n    # cuff = widest purple rows\n    w=[(purple[y].sum(),y) for y in range(im.shape[0])]\n    wy=max(w)[1]; cx=np.nonzero(purple[wy])[0]\n    med=lambda a: …[+661 chars]`
+
+### 🧑 User — 2026-11-15T22:11:49.226Z
+
+> ↩︎ result: ref10 purple #6905E5 L115  widest purple row y 1147 x 150-575  star centre (525,1086) n2640 = +0.76 cuff-hw
+> old10 purple #913DFF L154  widest purple row y 1141 x 349-789  star centre (648,1268) n1013 = +0.36 cuff-hw
+> new10 purple #701DF3 L127  widest purple row y 1166 x 358-674  star centre (650,1154) n3234 = +0.85 cuff-hw
+
+### 🤖 Claude — 2026-11-15T22:11:57.544Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 scripts/triptych.py qa/pilot05/wave5/benny/triptych_it04.png 1100 REF=references/05_flow_into_the_current.png PREV=qa/pilot05/wave5/baseline/05.png NOW=qa/pilot05/wave5/benny/it04/05.png 2>&1 | tail -1; python3 scripts/triptych.py qa/pilot05/wave5/benny/triptych_it05.png 1100 REF=references/05_flow_into_the_current.png PREV=qa/pilot05/wave5/baseline/05.png NOW=qa/pilot05/wave5/benny/it05/05.png 2>&1 | tail -1; ls -la qa/pilot05/wave5/benny/", "description": "Create official 05 triptychs"}`
+
+### 🤖 Claude — 2026-11-15T22:11:57.945Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/characters/benny_turntable.png"}`
+
+### 🧑 User — 2026-11-15T22:11:59.160Z
+
+> ↩︎ result: qa/pilot05/wave5/benny/triptych_it04.png (1889, 1142)
+> qa/pilot05/wave5/benny/triptych_it05.png (1889, 1142)
+> total 7004
+> drwxr-xr-x 8 root root    4096 Nov 15 22:11 .
+> drwxr-xr-x 7 root root    4096 Nov 15 21:53 ..
+> -rw-r--r-- 1 root root    5654 Nov 15 22:10 NOTES.md
+> drwxr-xr-x 2 root root    4096 Nov 15 21:53 it01
+> drwxr-xr-x 2 root root    4096 Nov 15 22:02 it02
+> drwxr-xr-x 2 root root    4096 Nov 15 22:05 it03
+> drwxr-xr-x 2 root root    4096 Nov 15 22:07 it04
+> drwxr-xr-x 2 root root    4096 Nov 15 22:09 it05
+> drwxr-xr-x 2 root root    4096 Nov 15 22:11 regress
+> -rw-r--r-- 1 root root 3560413 Nov 15 22:11 triptych_it04.png
+> -rw-r--r-- 1 root root 3566774 Nov 15 22:11 triptych_it05.png
+
+### 🧑 User — 2026-11-15T22:11:59.192Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:12:05.233Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/benny/triptych_it04.png"}`
+
+### 🧑 User — 2026-11-15T22:12:05.519Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:12:09.626Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"^#\\|wave\" docs/characters/benny.md | head -30; tail -15 docs/characters/benny.md", "description": "Inspect benny.md structure"}`
+
+### 🧑 User — 2026-11-15T22:12:09.667Z
+
+> ↩︎ result: 1:# Benny — canonical model, rig & runtime (benny-character-artist)
+> 8:## Contract
+> 13:## Rig (joint nodes, rigid parts parented to joints — not skin-weighted)
+> 17:## Animation clips (in the GLB)
+> 28:## Expressions
+> 33:## Materials / textures (canvas-generated, sRGB)
+> 41:## Shell fur (`src/characters/benny/fur.ts`)
+> 50:## Budgets (measured from the geometry)
+> 60:## Proof images
+> 67:## Known discrepancies (honest)
+> * `docs/characters/benny_turntable_full_glb.png` — fully framed front / ¾ / side / back / rear-high from the GLB.
+> * `docs/characters/benny_turntable_expr_dizzy.png` — dizzy expression (scene 02).
+> * `docs/characters/benny_reference_views_glb.png` — portrait panels framed like ref 05 (rear), 03 (front ¾), 02 (dizzy).
+> * QA page: `/src/characters/benny/benny-lab.html?src=glb&views=refs|turntable`.
+> 
+> ## Known discrepancies (honest)
+> 1. **Star side:** the references are mirror-inconsistent (front views 01–03 show the star image-right = Benny's left;
+>    rear views 04–10 show it image-right = Benny's right). One rig cannot satisfy both; the star is on Benny's
+>    right-rear so the 7 rear gameplay views match, and it appears image-left / mostly hidden in front views.
+> 2. Fur reads slightly stre …[+574 chars]
+
+### 🤖 Claude — 2026-11-15T22:12:11.148Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 30,45p docs/characters/benny.md", "description": "Read materials section of benny.md"}`
+
+### 🧑 User — 2026-11-15T22:12:11.199Z
+
+> ↩︎ result: `eye{L,R}_happy` (violet iris, black pupil, 2 sparkles, outer lashes), `eye{L,R}_dizzy` (purple spirals, scene 02),
+> `mouth_happy` (open smile + tongue), `mouth_dizzy` (round "O" + tongue), `mouth_peek` (small grin, wider eyes).
+> 
+> ## Materials / textures (canvas-generated, sRGB)
+> * Beanie crown: knit "V"-stitch texture + Sobel normal map, stripes bottom→top **white / purple / white / purple**.
+> * Brim: ribbed k2p2 purple cuff texture + normal map.
+> * Gold star: extruded beveled 5-point star, metalness 0.55 + warm emissive, on the brim's top edge at **132° from the
+>   front toward Benny's right (−X)**, so it reads image-right in rear gameplay views 04–10.
+> * Eyes glossy (roughness 0.12); blush = alpha decal; mouths = alpha-tested decals; white soles with pink toe beans on
+>   feet and paw palms.
+> 
+> ## Shell fur (`src/characters/benny/fur.ts`)
+> * Every `fur_*` mesh (fur_body, fur_armL/R, fur_footL/R, fur_pom) carries its parameters in glTF `extras`
+>   (length, density, shells, root/tip colours, gravity, bald/short masks).
+> * Runtime turns each into an `InstancedMesh` of N shells (**one draw call per furry part**); `gl_InstanceID` = layer.
+> * Fragment: jittered 3-D strand grid (8-neighbour search) w …[+60 chars]
+
+### 🤖 Claude — 2026-11-15T22:12:21.703Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'EOF'\np='docs/characters/benny.md'\ns=open(p).read()\na=\"\"\"* Beanie crown: knit \"V\"-stitch texture + Sobel normal map, stripes bottom→top **white / purple / white / purple**.\n* Brim: ribbed k2p2 purple cuff texture + normal map.\n* Gold star: extruded beveled 5-point star, metalness 0.55 + warm emissive, on the brim's top edge at **132° from the\n  front toward Benny's right (−X)**, so it reads image-right in rear gameplay views 04–10.\"\"\"\nb=\"\"\"* Beanie crown: knit \"V\"-stitch texture + Sobel normal map, stripes bottom→top **whi …[+1949 chars]`
+
+### 🧑 User — 2026-11-15T22:12:21.795Z
+
+> ↩︎ result: 176:  const bodyMat = std({ color: C.pinkSkin, roughness: 0.92, metalness: 0 });
+> 226:  const eyeMatHappy = std({ map: eyeTexture('happy'), roughness: 0.12, metalness: 0 });
+> 227:  const eyeMatDizzy = std({ map: eyeTexture('dizzy'), roughness: 0.12, metalness: 0 });
+
+### 🤖 Claude — 2026-11-15T22:12:24.014Z
+
+Final checks: typecheck, NOTES update with the regression numbers, file ownership check, autosave status.
+
+### 🤖 Claude — 2026-11-15T22:12:31.463Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; cat >> qa/pilot05/wave5/benny/NOTES.md <<'EOF'\n\n### Regression (22:10) — `capture.mjs 02 03 10 --out=qa/pilot05/wave5/benny/regress`, final GLB (1,126,892 B)\nAll three load `assets/models/benny.glb`, no console errors in the log. 02: dizzy face, swirl eyes, stripes, pom intact,\ncuff now deep violet like ref 02. 03: front face/hat intact (a white spray streak beside him is VFX, not the model).\n10 (rear ride, unchanged framing vs screenshots/10.png): hat purple median ref #6905E5 L115 / previous #913DFF L154 /\nnow #701DF …[+1209 chars]`
+
+### 🧑 User — 2026-11-15T22:12:34.783Z
+
+> ↩︎ result: TSC_OK
+>  M assets/models/benny.glb
+>  M docs/characters/benny.md
+>  M docs/characters/benny_turntable.png
+>  M docs/vfx/water.md
+>  M qa/capture_log.json
+>  M qa/pilot05/wave5/benny/NOTES.md
+>  M qa/pilot05/wave5/environment/NOTES.md
+>  M qa/pilot05/wave5/foam/NOTES.md
+>  M qa/pilot05/wave5/water/NOTES.md
+>  M src/characters/benny/textures.ts
+>  M src/vfx/foam.ts
+>  M src/world/environment.ts
+>  M src/world/materials.ts
+>  M src/world/tube.ts
+> ?? qa/pilot05/wave5/environment/it03/
+> ?? qa/pilot05/wave5/environment/it04/
+> ?? qa/pilot05/wave5/foam/it04/
+> AUTOSAVE OK | branch claude/rainbow-3d-account-transfer-syorak | scheduler daemon | last verified backup 2026-11-15T22:09:32+00:00 (3.0 min ago) | local ab2725e remote ab2725e (match) | uncommitted 20
+
+### 🤖 Claude — 2026-11-15T22:12:52.722Z
+
+Benny now matches the ref 05 shape: the arms are small round fur nubs (the wide "wings" are gone), the body is a full round ball, and he sits at the ref size and height. One gap: the knit colours. The cuff matches, but the hat's purple stripes are still lighter than the ref. `npx tsc --noEmit` passes, and the GLB is a real binary (1,126,892 B, magic `glTF`, still LFS-tracked).
+
+You were right that the GLB was stale. And the 0.12 ride lift from wave 4 had never been applied: the code still said 0.22.
+
+**Changes (file:function)**
+- `src/characters/benny/runtime.ts`: `BENNY_RIDE_LIFT` 0.22 → 0.12. I also added a test-only URL option, `?bennyTint=`, so hat colours could be compared in the live game.
+- `src/characters/benny/build.ts`:
+  - `deformBody` plus a new `bottomGain` function make the lower body fuller and flatter instead of tapering to a point.
+  - Star moved further toward the side and higher (137° / +0.065 / radius 0.77, was 143° / +0.015 / 0.79).
+  - Cuff colour factor `#7868a0`, mild warm crown colour factor `#eae6d6`.
+- `src/characters/benny/textures.ts`, `knitCrownTextures`: stripes are still white/purple/white/purple/white, but the middle purple is wider and the top purple band now shows beside the pom. Whites are warmer, the purple highlight has less green, and the pom tip is deeper (`#7c28e8`).
+- `src/characters/benny/benny-lab.ts`: `&dims=` lets the lab test shape values against the live 05 camera, so the shape sweeps cost no game captures.
+- Re-exported `assets/models/benny.glb`, the turntable, and the wave-5 notes in `docs/characters/benny.md`.
+
+**05, measured in the live game (flat-colour mask)**
+
+| | Ref | Old GLB, lift 0.12 | Now |
+|---|---|---|---|
+| bbox | x 230–612, y 767–≈1185 | x 231–612, y 766–1188 | x 231–612, y 766–1196 |
+| Hat incl. pom / body | 62 / 38 % | 62.3 / 37.7 % | 61 / 39 % |
+| Body width at y 1129/1149/1159/1169 (px) | 258/228/209/181 | 242/199/169/131 | 257/228/202/178 |
+| Star centre | (519, 953), +0.64 cuff half-widths | (500, 965), +0.57 | (512, 955), +0.65 |
+| Cuff colour | #6B0DEB | #B248FF | #6611EC |
+| White stripes | #F3CFE4 | #FFD8FF | #FFD5EB |
+| Pom | 152×130 px, #8215ED | 149×131, #9425FF | 149×131, #8B14FF |
+
+With the old 0.22 lift the pom top sat at y 748 instead of 766. The pom is still about 10 px left of the ref.
+
+**Regression (02, 03, 10 vs `screenshots/NN.png`)**: Benny still looks right in all three; the 02 dizzy face is intact. In 10 the hat purple went from #913DFF to #701DF3 (ref #6905E5), and the star is now front-right above the cuff. The 10 capture shows him riding, framed the same as the previous screenshot, so it does not reach the towel-hiding moment. Nothing that hides him under the towel changed: the lift and lean switch off in the peek and tumble modes, as before.
+
+**What is left**
+- **Purple stripes**: #7C49FF vs ref #740FF2. Darker yarn only turned them grey, so I went back to the earlier colour. The extra green comes from the scene lighting and tone mapping, not the model.
+- **Final colour combination not captured as one 05 frame**: the shipped GLB uses the it04 crown with the it05 pom, each measured in its own 05 capture. I had used all 5 captures; the 02/03/10 regression does run the final GLB.
+- **Cuff height**: about 10 px taller than the ref at the centre.
+- **Bottom edge**: 1196 vs the ref's ≈1185. The ref's base is cut by water and spray, while the foam team's spray streaks cover our lower sides.
+- **Cuff in neutral light**: in the turntable it looks more indigo than violet; in-game it reads as the ref's violet.
+- **Fur**: the shell fur is finer than the ref's soft clumped plush.
+- **Capture count**: it01 was run twice because my mask script had a bug in its first run.
+
+Other specialists' scene changes landed during the session (draw calls 121 → 144, triangles 608k → 634k). The autosave check is OK and the remote matches local HEAD; nothing committed by me.
+
+Files are in `/home/user/rainbow-/qa/pilot05/wave5/benny/` (open `triptych_it04.png` first):
+- NOTES.md
+- triptych_it04.png
+- triptych_it05.png
+- it01/ … it05/
+- regress/
+

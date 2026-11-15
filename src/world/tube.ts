@@ -589,13 +589,13 @@ export class ForcedTunnel {
    * in, so it takes over from the real water ribbon without a seam. Morph "open": dropped below the
    * real tube bottom.
    */
-  chordGeometry(level: number, cols = 12, steps = 64): THREE.BufferGeometry {
+  chordGeometry(level: number, cols = 12, steps = 64, widthFrac = 1): THREE.BufferGeometry {
     const rows = steps + 1;
     const n = rows * (cols + 1);
     const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);
     const ext = new Float32Array(n), opn = new Float32Array(n * 3);
     const o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
-    const w = Math.sqrt(Math.max(0, this.R * this.R - level * level)) * 0.995;
+    const w = Math.sqrt(Math.max(0, this.R * this.R - level * level)) * 0.995 * widthFrac;
     for (let i = 0; i < rows; i++) {
       const t = i / steps;
       const Dv = 1 / (1 / this.D0 - t * (1 / this.D0 - 1 / (this.D0 + this.zEnd)));
