@@ -33,9 +33,11 @@ yourself in the browser at https://marble.worldlabs.ai and give me the export.
 
 * The first clean plate (v1) was **rejected by the user** (rectangular patches, repeated textures, grey smear).
   It and a failed v2 are kept only as a record in `rejected/`; never upload them.
-* Current candidate: **`plate_v3/05_geometry_reference_v3.png`**, a geometry-focused tunnel reference: the approved
-  image cropped to rows 197–767 (no HUD, no Benny, no invented area behind him); only the gold coins are masked
-  (tight masks) and filled from their own surroundings. The near-camera river comes from the game's own 3D river
+* Current candidate: **`geometry_ref/2_geometry_reference_05.png`**, a geometry-focused tunnel reference made of
+  **real pixels only**: the approved image cropped to rows 197–767 (below the HUD, above Benny's pom-pom), pixel-identical
+  to the original (`geometry_ref/check.json`), **0 invented pixels**. All attempts to invent the river behind Benny or
+  under the coins left artifacts and were stopped (`rejected/README.md`). The coins stay in the image and are flagged in
+  `geometry_ref/3_mask_05.png` for deletion after reconstruction. The near-camera river comes from the game's own 3D river
   geometry in Blender (`blender/screen05_layout.blend`), not from an image fill.
 * Waiting for: the Reference Match Director's check against the original, then **your approval**. No upload and no
   credits before that.

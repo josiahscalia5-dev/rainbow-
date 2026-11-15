@@ -2661,3 +2661,73 @@ Stop hook feedback:
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T20:14:33.037Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/make_env_geometry_ref.py", "content": "#!/usr/bin/env python3\n\"\"\"Screen 05 geometry-focused tunnel reference: REAL PIXELS ONLY (0 invented pixels).\n\nAfter three fill methods failed to give a clean river (v1 copied pieces, v2 procedural repaint, v3 harmonic /\nFSR / exemplar coin fills: see qa/worldlabs/05/rejected/README.md), the Marble/Atlas reference is a straight\ncrop of the approved image: rows 197–767, i.e. below the HUD and above Benny's pom-pom. It keeps the\nperforated magenta-violet walls, gold rings, wall fittings, the golden glow, foam …[+3353 chars]`
+
+### 🧑 User — 2026-11-15T20:14:33.101Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/make_env_geometry_ref.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:14:37.049Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/make_env_geometry_ref.py references/05_flow_into_the_current.png qa/worldlabs/05/geometry_ref && for f in qa/worldlabs/05/plate_v3/*.png; do mv \"$f\" \"qa/worldlabs/05/rejected/v3_$(basename $f)\"; done && rmdir qa/worldlabs/05/plate_v3 && cat >> qa/worldlabs/05/rejected/README.md <<'EOF'\n* `v3_*` (tools/make_env_plate_v3.py): geometry crop + coin-hole fills. Three fill methods tried on the coin holes\n  only, all judged failed by the coordinator: harmonic colour solve (hazy discs), OpenCV FSR (blurry dark-green\n  ghosts), exemplar/Criminisi (blocky patch tiles …[+452 chars]`
+
+### 🧑 User — 2026-11-15T20:14:37.386Z
+
+> ↩︎ result: {"reference": "references/05_flow_into_the_current.png", "reference_sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd", "copy_sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd", "crop_rows": [197, 767], "crop_size": [864, 571], "geometry_reference_pixels_identical_to_original_rows": true, "invented_pixels": 0, "coins_flagged_share_of_strip": 0.0378}
+> 12
+> 1_original_approved_05.png
+> 2_geometry_reference_05.png
+> 3_mask_05.png
+> 3_mask_overlay_05.png
+> check.json
+
+### 🤖 Claude — 2026-11-15T20:14:38.760Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/geometry_ref/3_mask_overlay_05.png"}`
+
+### 🧑 User — 2026-11-15T20:14:38.792Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:14:57.790Z
+
+> 🔧 **Agent** `{"description": "Director reviews background reference", "subagent_type": "reference-match-director", "run_in_background": true, "prompt": "You are the reference-match-director for the Rainbow game (repo /home/user/rainbow-). Five build specialists are editing `src/` for Screen 05 right now — you are READ-ONLY on `src/`, `references/`, `character_references/` and everything under `qa/pilot05/` except your own review file. Do not commit or push (autosave does it). No paid generation (World Labs / Marble / Atlas): nothing may be uploaded or generated.\n\nTASK 1 (now): check the background-only ( …[+3375 chars]`
+
+### 🧑 User — 2026-11-15T20:14:57.822Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a9e561f3d4afd336f (internal ID - do not mention to user. Use SendMessage with to: 'a9e561f3d4afd336f', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/a9e561f3d4afd336f.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T20:14:59.729Z
+
+Updating the Marble instructions to point at the real-pixels-only reference (the earlier pointer named the v3 fill attempt, which has now been archived).
+
+### 🤖 Claude — 2026-11-15T20:15:03.046Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/worldlabs/05/MARBLE_MANUAL.md'; s=open(p).read()\na=s.index(\"* Current candidate:\")\nb=s.index(\"* Waiting for:\")\nnew='''* Current candidate: **`geometry_ref/2_geometry_reference_05.png`**, a geometry-focused tunnel reference made of\n  **real pixels only**: the approved image cropped to rows 197–767 (below the HUD, above Benny's pom-pom), pixel-identical\n  to the original (`geometry_ref/check.json`), **0 invented pixels**. All attempts to invent the river behind Benny or\n  under the coins left artifacts and were stopped (`rejected/README.md`). The c …[+385 chars]`
+
+### 🧑 User — 2026-11-15T20:15:03.096Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T20:15:05.121Z
+
+> 🔧 **Bash** `{"command": "tail -5 qa/pilot05/REQUESTS.md | cut -c1-350; ls qa/pilot05/wave3/*/ ; ls qa/pilot05/wave3/*/NOTES.md 2>/dev/null; python3 -I scripts/autosave-status.py", "description": "Check specialist progress and autosave health"}`
+
+### 🧑 User — 2026-11-15T20:15:05.725Z
+
+> ↩︎ result: - foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under Benny's fur (05, y≈1150–1170) is the `contact` term in `src/vfx/waterRibbon.ts` FRAG, Benny block (`if (rr < rb * 0.25) { … contact = … }` + `col = mix(col, uFoam * 1.2, clamp(contact * k, 0.0, 1.0));`). Evidence: `qa/pilo
+> - water-fx-specialist → foam-bubbles-particles (wave 3, correction 7): DONE 19:58 UTC. Deleted the white `contact` → uFoam mix in waterRibbon.ts FRAG (Benny block); replaced by the faint cyan hint you suggested. Confirmed by my own isolation pair qa/pilot05/wave3/water/it08_iso (rim) vs it08_iso_nowake (no rim). rings/wakeV/band parting kept.
+> - water-fx-specialist → coordinator (FYI, tooling): `scripts/capture.mjs --q=waterhide=a,b` does NOT pass the hide list: the arg parser does `a.slice(2).split('=')` and keeps only the 2nd piece, so the URL gets `&waterhide` with no value (every part stays visible). One-line fix for the owner: `const [k, ...r] = a.slice(2).split('='); return [k, r
+> - coordinator → ALL (20:12 UTC): fixed scripts/capture.mjs and scripts/aspect-test.mjs argument parsing — `--q=waterhide=a,b` now passes the full value to the page.  …[+809 chars]
+
+### 🤖 Claude — 2026-11-15T20:15:09.093Z
+
+> 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 240 9 && flock -u 9 && exec 9>&- ; python3 scripts/rainbow-autosave.py --reason manual:task-end --message \"Screen 05: real-pixels geometry reference for Marble, coin flag mask, rejected plates archived, director review started\" 2>&1 | grep -E '\"result\"'; python3 -I scripts/autosave-status.py", "description": "Back up and verify before pausing", "timeout": 400000}`
+

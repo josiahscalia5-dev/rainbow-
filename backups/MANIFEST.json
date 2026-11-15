@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2920,
-   "sha256": "b97d63f64c920795284dfd3bfeaab36e711bd120639bbb2d3654173c90db868d"
+   "sha256": "64cfe8bebc37c1be348a2d2fb4cfb4a658d7a8d60ebf134eff6701946e57f50d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1373,8 +1373,8 @@
   },
   {
    "path": "qa/worldlabs/05/MARBLE_MANUAL.md",
-   "bytes": 5405,
-   "sha256": "843151e2e76dcad6d6443a48c4654c02e304471f24ffb08d4d3733728895ad49"
+   "bytes": 5663,
+   "sha256": "e599dc67c212a1b8ae4d09093c0ea68a547275388a027b13a839981b11f04bc2"
   },
   {
    "path": "qa/worldlabs/05/PILOT_PLAN.md",
@@ -1397,29 +1397,34 @@
    "sha256": "8cfd5093ede29e763e3a4af0981a11fecd976844506632febe8fe8134c0300f0"
   },
   {
-   "path": "qa/worldlabs/05/plate_v3/05_geometry_coin_trail_zoom_v3.png",
-   "bytes": 953384,
-   "sha256": "d729e688d5797bd648d4680b72554d4f7d709b9ebfbde5074f17928bbf2422b4"
+   "path": "qa/worldlabs/05/geometry_ref/1_original_approved_05.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
   },
   {
-   "path": "qa/worldlabs/05/plate_v3/05_geometry_mask_overlay_v3.png",
-   "bytes": 843101,
-   "sha256": "129aa6d1cc7d02120d0d51640fa53c7b241dd81b5b71ec3abb200a6bb64c92ee"
+   "path": "qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png",
+   "bytes": 1061812,
+   "sha256": "8d55898fb40ad662904f0c0d1f8c9ad79b1cbfecf7735bd22b88a4c4a51b7edf"
   },
   {
-   "path": "qa/worldlabs/05/plate_v3/05_geometry_reconstructed_mask_v3.png",
-   "bytes": 3386,
-   "sha256": "c042e545bbcb6901daded040182e089123985c08a791a2eb4b1f70a992559177"
+   "path": "qa/worldlabs/05/geometry_ref/3_mask_05.png",
+   "bytes": 3040,
+   "sha256": "107bec923dddb97db76156ea885ddf83ff34f1c0bde691c35e61c71ccdcf38d9"
   },
   {
-   "path": "qa/worldlabs/05/plate_v3/05_geometry_reference_v3.png",
-   "bytes": 1055027,
-   "sha256": "f9378c117d0c6258bfd4015fa71368272b4924b955900da755cb25ce2fee0f9d"
+   "path": "qa/worldlabs/05/geometry_ref/3_mask_overlay_05.png",
+   "bytes": 876745,
+   "sha256": "785f939c5d3b6c7fa0439aed19cfec240560492e29cf7506e67f373e9fe27509"
+  },
+  {
+   "path": "qa/worldlabs/05/geometry_ref/check.json",
+   "bytes": 444,
+   "sha256": "352ae401de7b7a1f547328f501fde1ba69e362037eca7bc0ad64c6eedb9fd46a"
   },
   {
    "path": "qa/worldlabs/05/rejected/README.md",
-   "bytes": 765,
-   "sha256": "98ed669a2dedb552838deef7fe45768e400136d0e7617202c7231b54ae33958d"
+   "bytes": 1314,
+   "sha256": "a658ce34f2ee66ab23cfd59e2a0dfba1298fae708c6ed891c7627b60abadb502"
   },
   {
    "path": "qa/worldlabs/05/rejected/v1_05_env_clean_plate.png",
@@ -1455,6 +1460,26 @@
    "path": "qa/worldlabs/05/rejected/v2_05_reconstructed_mask_v2.png",
    "bytes": 6989,
    "sha256": "254cdc9c7eff6cab1b76cf7f9c73c2285e7508ede78a6808a4ae546b6360f844"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v3_05_geometry_coin_trail_zoom_v3.png",
+   "bytes": 953384,
+   "sha256": "d729e688d5797bd648d4680b72554d4f7d709b9ebfbde5074f17928bbf2422b4"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v3_05_geometry_mask_overlay_v3.png",
+   "bytes": 843101,
+   "sha256": "129aa6d1cc7d02120d0d51640fa53c7b241dd81b5b71ec3abb200a6bb64c92ee"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v3_05_geometry_reconstructed_mask_v3.png",
+   "bytes": 3386,
+   "sha256": "c042e545bbcb6901daded040182e089123985c08a791a2eb4b1f70a992559177"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v3_05_geometry_reference_v3.png",
+   "bytes": 1055027,
+   "sha256": "f9378c117d0c6258bfd4015fa71368272b4924b955900da755cb25ce2fee0f9d"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -1950,6 +1975,11 @@
    "path": "tools/blender/make_synthetic_tunnel.py",
    "bytes": 1191,
    "sha256": "07c456cfc39fe57741e4071ca9bf7b46ad14c49de65e02db2b7c538e01905e44"
+  },
+  {
+   "path": "tools/make_env_geometry_ref.py",
+   "bytes": 3755,
+   "sha256": "d2ebc3f4d980db18255dad39ae2fa80e55cbbdacdb38ef52e72afce77c7cd940"
   },
   {
    "path": "tools/make_env_plate.py",
