@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 4396,
-   "sha256": "19e57d7cddf84b3971cdc360a3fc69a28154d20b7593159ab246af83ef7f9923"
+   "bytes": 4397,
+   "sha256": "75fc113d0ef62e268ee1561cebf474ae7de0b0e846f34b8440991152b771132e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1985,6 +1985,16 @@
    "path": "qa/pilot05/wave6/director/lm_ref.json",
    "bytes": 67823,
    "sha256": "996c5cd1bd4106a75fb8786a4caa93079e99d75d491f1fe540f42cb8603f1635"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/measure_review05.py",
+   "bytes": 13684,
+   "sha256": "fbbd7111bce553f5f8d2eeeca485da3b068ada1835ce5e9a66c35da3e8e4111d"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/measurements.json",
+   "bytes": 44478,
+   "sha256": "130a1ea40569fed848199b4a0a30cb96cfe01ea4ff6a5a80b68b2e12e91140e3"
   },
   {
    "path": "qa/pilot05/wave6/environment/NOTES.md",

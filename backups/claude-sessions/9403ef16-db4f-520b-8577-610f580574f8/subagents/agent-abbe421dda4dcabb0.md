@@ -851,3 +851,92 @@ I have most of the numbers. Two quick extra measurements: coin colour (game coin
 > game coin1 face: RGB med [255, 198, 82] hue med 40 S 0.68 V p10/med 1.00/1.00
 > game HUD coin icon centre (476,54) bbox x418-559 y15-88
 
+### 🤖 Claude — 2026-11-15T23:45:55.769Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/director/measure_review05.py", "content": "#!/usr/bin/env python3\n\"\"\"Screen 05 wave-6 director review: reproducible measurements (reference vs live game).\n\n    python3 -I qa/pilot05/wave6/director/measure_review05.py            # from the repo root\n\nInputs  : qa/pilot05/wave6/proof/1_approved_reference.png, 3_threejs_gameplay.png (864x1536)\nOutputs : qa/pilot05/wave6/director/measurements.json  (+ crops/classmap_ref_vs_game.png)\n\nEvery number is a crude colour-threshold / geometry measurement, identical for both images.\nThey locat …[+13686 chars]`
+
+### 🧑 User — 2026-11-15T23:45:55.821Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave6/director/measure_review05.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:45:59.017Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/pilot05/wave6/director/measure_review05.py && python3 -c \"\nimport json;d=json.load(open('qa/pilot05/wave6/director/measurements.json'))\nfor t in ('ref','game'):\n  w=d[t]['walls']\n  for k,v in w.items(): print(t,k,v)\n  print(t,'lids/coins',d[t]['lids_coins'])\n  print(t,'near',d[t]['near_field'])\n  print(t,'benny',{k:v for k,v in d[t]['benny'].items() if k!='x422_profile'})\n\"", "description": "Run consolidated measurement script and print key values"}`
+
+### 🧑 User — 2026-11-15T23:46:00.668Z
+
+> ↩︎ result: {
+> "frame_mean_abs_dRGB_quarter_scale": 60.8,
+> "HUD y<185": {
+> "area_pct": 12.0,
+> "mean_abs_d": 57.0,
+> "share_of_frame_d_pct": 11.2
+> },
+> "tunnel above banks": {
+> "area_pct": 27.1,
+> "mean_abs_d": 65.1,
+> "share_of_frame_d_pct": 29.0
+> },
+> "  tunnel: ring/lid metal in both": {
+> "area_pct": 2.4,
+> "mean_abs_d": 39.8,
+> "share_of_frame_d_pct": 1.6
+> },
+> "  tunnel: ring/lid in game only": {
+> "area_pct": 5.5,
+> "mean_abs_d": 98.7,
+> "share_of_frame_d_pct": 9.0
+> },
+> "  tunnel: ring/lid in ref only": {
+> "area_pct": 4.7,
+> "mean_abs_d": 76.4,
+> "share_of_frame_d_pct": 5.9
+> },
+> "  tunnel: wall in both": {
+> "area_pct": 13.8,
+> "mean_abs_d": 52.8,
+> "share_of_frame_d_pct": 12.0
+> },
+> "river y<1000 excl Benny": {
+> "area_pct": 18.9,
+> "mean_abs_d": 55.6,
+> "share_of_frame_d_pct": 17.3
+> },
+> "Benny box x225-620 y760-1200": {
+> "area_pct": 13.1,
+> "mean_abs_d": 43.8,
+> "share_of_frame_d_pct": 9.5
+> },
+> "near field y>=1000 excl Benny": {
+> "area_pct": 28.9,
+> "mean_abs_d": 69.5,
+> "share_of_frame_d_pct": 33.1
+> },
+> "  near: ref gold frame": {
+> "area_pct": 6.1,
+> "mean_abs_d": 112.7,
+> "share_of_frame_d_pct": 11.3
+> },
+> "  near: game pink where ref not pink": {
+> "area_pct": 2.8,
+> "mean_abs_d": 89.6,
+> "share_of_frame_d_pct": 4.2
+> },
+> "  near: rest (water vs water)": {
+> "area_pct": 1 …[+3696 chars]
+
+### 🤖 Claude — 2026-11-15T23:46:19.253Z
+
+The consolidated script reproduces every number. One last quick measurement is foam colour and coverage in the two bank regions, since foam heaps are on the coordinator's list.
+
+### 🤖 Claude — 2026-11-15T23:46:25.405Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/foam.py <<'EOF'\nimport numpy as np\nfrom PIL import Image\nP={'ref':'/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png','game':'/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'}\nfor tag,p in P.items():\n    im=Image.open(p).convert('RGB'); rgb=np.asarray(im).astype(np.float32)\n    hsv=np.asarray(im.convert('HSV')).astype(np.float32); s=hsv[...,1]/255; v=hsv[...,2]/255\n    for name,(x0,y0,x1,y1) in {'left bank x0-330 y560-800':(0,560,330,800),'right bank x …[+603 chars]`
+
+### 🧑 User — 2026-11-15T23:46:25.788Z
+
+> ↩︎ result: ref left bank x0-330 y560-800: foam(S<.3,V>.75) frac 0.199  RGB med [241, 218, 254]  B-R med 9  V p10 0.95  pure-white(min>235) share 0.27
+> ref right bank x620-864 y560-960: foam(S<.3,V>.75) frac 0.156  RGB med [247, 219, 255]  B-R med 4  V p10 0.96  pure-white(min>235) share 0.28
+> game left bank x0-330 y560-800: foam(S<.3,V>.75) frac 0.263  RGB med [248, 240, 255]  B-R med 5  V p10 0.99  pure-white(min>235) share 0.63
+> game right bank x620-864 y560-960: foam(S<.3,V>.75) frac 0.385  RGB med [245, 237, 255]  B-R med 7  V p10 0.94  pure-white(min>235) share 0.50
+

@@ -3960,3 +3960,113 @@ Before-frames captured. The console errors printed are in the old checkout's log
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/pilot05/wave6/camera_lock/README.md'\ns=open(p).read()\nold=s[s.index('* u 22–72: C¹ Hermite'):s.index('Verified: tsc OK')]\nnew='''* u 22–67: C¹ Hermite through the measured knots (u 26.3 … 55.5); u ≥ 67 to the 06 join: the ORIGINAL curve\n  verbatim (the 06 up-vector smoothing looks ±12 samples back into 05, so the junction must be identical).\n* 05 exit bend u 56–67 (sin², C¹, amplitude 1.3537, solved on Course.length): the route keeps exactly its\n  old length 435.192, because the water wave/flow phase, Benny's float bob, foam and bubbles are keyed on\ …[+2325 chars]`
 
+### 🧑 User — 2026-11-15T23:45:30.614Z
+
+> ↩︎ result: "commit": "2228701dc2727c4d14f413c53e46ce51ef8f559d",
+> local 2228701 remote 2228701
+
+### 🤖 Claude — 2026-11-15T23:45:47.726Z
+
+> 🔧 **Agent** `{"description": "Env: gold rings, walls, lids (wave 6b)", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the washer-environment-modeler for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). Screen 05 \"FLOW INTO THE CURRENT\", wave 6b.\n\nREAD FIRST: `CLAUDE.md`; `qa/pilot05/COORDINATION_WAVE6.md` (method, ownership, rules — binding; read the \"Update ~23:45 UTC\" section at the end); `qa/pilot05/wave6/camera_lock/README.md` (camera + S-curve LOCKED); the END of `qa/pilot05/wave5/environment/NOTES.md` (what you already …[+3579 chars]`
+
+### 🧑 User — 2026-11-15T23:45:47.751Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a6d052e37abb9d977 (internal ID - do not mention to user. Use SendMessage with to: 'a6d052e37abb9d977', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/tasks/a6d052e37abb9d977.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T23:46:01.627Z
+
+> 🔧 **Agent** `{"description": "Path-camera: far S-river + coins (6b)", "subagent_type": "path-camera-transition-engineer", "run_in_background": true, "prompt": "You are the path-camera-transition-engineer for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). Screen 05 \"FLOW INTO THE CURRENT\", wave 6b.\n\nREAD FIRST: `CLAUDE.md`; `qa/pilot05/COORDINATION_WAVE6.md` (binding; read the \"Update ~23:45 UTC\" section); `qa/pilot05/wave6/camera_lock/README.md` (camera LOCKED; the 05 S-curve was refitted to the reference coin trail and is LOCKED — course.ts is coordinator-owned, do n …[+3434 chars]`
+
+### 🧑 User — 2026-11-15T23:46:01.649Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a727bb647d5dd42f7 (internal ID - do not mention to user. Use SendMessage with to: 'a727bb647d5dd42f7', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/tasks/a727bb647d5dd42f7.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T23:46:12.894Z
+
+> 🔧 **Agent** `{"description": "Water FX: near field + S-bands (6b)", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the water-fx-specialist for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). Screen 05 \"FLOW INTO THE CURRENT\", wave 6b.\n\nREAD FIRST: `CLAUDE.md`; `qa/pilot05/COORDINATION_WAVE6.md` (binding; read the \"Update ~23:45 UTC\" section); `qa/pilot05/wave6/camera_lock/README.md` (camera + river S-curve geometry LOCKED: course.ts is coordinator-owned — your job is the water's LOOK on that geometry); your wave-5 notes `qa/pilot0 …[+2819 chars]`
+
+### 🧑 User — 2026-11-15T23:46:12.909Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: abf079a4400ea3090 (internal ID - do not mention to user. Use SendMessage with to: 'abf079a4400ea3090', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/tasks/abf079a4400ea3090.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T23:46:23.685Z
+
+> 🔧 **Agent** `{"description": "Foam: low lavender bank rims (6b)", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "You are the foam-bubbles-particles specialist for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). Screen 05 \"FLOW INTO THE CURRENT\", wave 6b.\n\nREAD FIRST: `CLAUDE.md`; `qa/pilot05/COORDINATION_WAVE6.md` (binding; read the \"Update ~23:45 UTC\" section); `qa/pilot05/wave6/camera_lock/README.md` (camera + river S-curve LOCKED; the river edges moved with the S refit, so bank clumps fitted to older frames may land differently); yo …[+2679 chars]`
+
+### 🧑 User — 2026-11-15T23:46:23.702Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: aad82a7aa47be4dd2 (internal ID - do not mention to user. Use SendMessage with to: 'aad82a7aa47be4dd2', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/tasks/aad82a7aa47be4dd2.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T23:46:26.632Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress", "description": "S-curve refit done + 06/07 stage anchors + exit bend (exact length). Wave 6b specialists running: env (rings/walls/lids), path-camera (far S-river, far coins, no warp), water (near field), foam (bank rims). Director review running."}`
+
+### 🧑 User — 2026-11-15T23:46:26.643Z
+
+> ↩︎ result: Updated task #4 description, status
+
+### 🤖 Claude — 2026-11-15T23:46:28.146Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/pilot05/wave6/regress0408/side_by_side_06.png", "/home/user/rainbow-/qa/pilot05/wave6/regress0408/contact_sheet_04_08.png"], "caption": "Screen 06: approved | session start | now (orange ring regression removed; now = session start). Contact sheet: screens 04–08, approved | session start | now.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-15T23:46:28.982Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave6/regress0408/side_by_side_06.png → file_uuid: e9d5dc4a-84a6-4649-a7cd-3c5c95e2aa41
+>   /home/user/rainbow-/qa/pilot05/wave6/regress0408/contact_sheet_04_08.png → file_uuid: 00ea3dca-22d7-49c4-96c5-4e90f3f5a3d5
+
+### 🤖 Claude — 2026-11-15T23:46:46.178Z
+
+The large orange ring blocking Benny on Screen 06 is gone, and 06 is back to how it looked at the start of this session. The new 05 S-curve and coin positions are kept, and 04, 07 and 08 are pixel-identical below the HUD. I've sent you 06 beside your approved image, plus a 04–08 contact sheet (approved | session start | now).
+
+**Screen 06 and the shared path length**
+- **Cause:** the 06/07 rings, wall fittings and perforation rows were laid out by counting from the start of 05. The new S-curve made 05 0.78 units shorter, so everything after it slid and a ring landed in front of Benny.
+- **Fix 1, stable anchors:** those 06/07 elements now count from the start of 06, set so they land exactly where they were. Changing 05 can no longer slide them.
+- **Fix 2, length:** the water's wave motion, Benny's float bob, foam and bubbles also depend on total path length, so 05 has to keep its original length.
+  - The final stretch of 05 into 06 now uses the original curve unchanged.
+  - Just before it, a gentle bend (1.35 units, about half the earlier version's 2.12) keeps the length identical to the original (435.192). The original course already bent right at that spot. It's smooth, it's in a stretch the 05 checkpoint view doesn't show, and the gameplay test is unchanged.
+- **Tested against a separate checkout of the session-start version (`7ae64c3`):**
+  - 04, 07 and 08 are pixel-identical below the HUD.
+  - 06 has the same content with a ~2 px camera nudge you can't see; it comes from the camera's tunnel-axis smoothing, which reaches into 05.
+  - Continuity is OK, and the 07→08 drop is still 61.19. Gameplay passes exactly as before: 2,139 steps, 91 coins, plunge 61.41, pause and no camera cut.
+
+The honest catch on 06: it never matched your approved image, before this session or now. Your image shows a high view down the curving rainbow arch into a tunnel on the right; the game shows a low close-up of Benny against the tube wall. Fixing that needs a new 06 camera and arch framing, done with the same camera-lock method as 05.
+
+**Decision for you:** should I start that 06 camera-lock and arch framing as the next focused job, after the current 05 round lands?
+
+**World Labs key security**
+- **Revocation:** I can't see whether the exposed key is revoked. Only platform.worldlabs.ai → API keys shows that.
+- **Which key is saved:** I also can't tell. By design I never see the stored value.
+- **Why 401:** the setup matches World Labs' official spec exactly: `https://api.worldlabs.ai`, v1, `GET /marble/v1/credits`, a `WLT-Api-Key` header sent only to that host. Per the spec, a valid key without API access gets 404 and an empty balance gets 402. So 401 means the key itself was rejected, most likely the revoked one or a typo.
+- **Polling:** stopped, and there have been no World Labs requests since.
+- **Next step:** once you've created a fresh key, say so. I'll open the secure form to replace the saved value, run exactly **one** free check, then show you the pilot cost (draft 230 credits/$0.18 + standard 1,580/$1.26, about $1.44) and wait for your approval.
+- **Git history:** not rewritten. The key is still in 3 old commits on your private repo; revoking it makes those copies useless.
+- **Future backups:** transcript backups now redact it, and any key typed after "API key". The current files contain no key.
+
+**Running now:** your four Screen 05 specialists are relaunched on the locked camera and S-curve: environment (gold rings, purple walls, fittings), path-camera (far river winding into the light, more coins, no warp on the ride into 06), water (near field) and foam (bank rims). The Reference Match Director's review is also still running; I'll show you its three biggest differences as soon as it lands. All work is pushed (`2228701`), and the five-minute backup is verified.
+
+### 🧑 User — 2026-11-15T23:46:48.511Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
