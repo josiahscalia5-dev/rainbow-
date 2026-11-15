@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3913,
-   "sha256": "e90002f91544933471e0c5dd6c8a3d8dcdd74ed960a3395a4d775de34b84e477"
+   "sha256": "ef089d70021015d9b53467cbbdb9bd881f99ca965337823476fc81c6d5478eb1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1478,8 +1478,8 @@
   },
   {
    "path": "qa/pilot05/wave5/water/NOTES.md",
-   "bytes": 1100,
-   "sha256": "99246cafce38b67bc62988cbdf5300ecc1607bbd97526ab67992620634871143"
+   "bytes": 2316,
+   "sha256": "de8b7082e9b3004d716dc068f21302e6dacc19c644ccdd3833a5695d9e33cc29"
   },
   {
    "path": "qa/report_metrics.json",
@@ -1913,13 +1913,13 @@
   },
   {
    "path": "src/characters/benny/benny-lab.ts",
-   "bytes": 10001,
-   "sha256": "fe8e8465d636b647ebb053281c597ec6d1b6824de06d15b176446ce73aeb1b4b"
+   "bytes": 10203,
+   "sha256": "8571f4ece727b54b91bf48a465db48f949af809927d5ac4b1c3e29281af5d7b6"
   },
   {
    "path": "src/characters/benny/build.ts",
-   "bytes": 23278,
-   "sha256": "50d37de4fccb315e6527d6eef858e5056ea7f270d71d85be9c4c62f9975c7101"
+   "bytes": 23458,
+   "sha256": "b60788164eb9ee24e59b7f3758dd2cd0ffa6a96a657c5e193d64dbb199939e7f"
   },
   {
    "path": "src/characters/benny/fur.ts",
@@ -2033,8 +2033,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 37303,
-   "sha256": "f0285fb2d2c20e35f3533b00585fc7e16f88732cc75a0ce774bdc65afe13cc3d"
+   "bytes": 38860,
+   "sha256": "2e21cdd1dadd15d903a55f2011057df8030f24c724fb9d822a3b953bdf78e84b"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -2063,8 +2063,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 39875,
-   "sha256": "8b57fb62ba46c756441790c123146f50bedebc7ec47df7ed861fbcc2cb981be7"
+   "bytes": 42590,
+   "sha256": "286715b1e042f4c5cd2a254d4fde285aa6a1d88755fc3b89c4548cba71287f38"
   },
   {
    "path": "src/vfx/whirlpool.ts",

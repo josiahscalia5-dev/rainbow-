@@ -15,3 +15,16 @@ Max 5 captures `qa/pilot05/wave5/water/itNN`; then one regression capture 03 04 
 
 ## Log
 (updated after every capture)
+
+### Facts measured before editing (probe of the locked 05 view, scratch probe.mjs)
+* Benny s 132.44, lat 0, screen (419, 1052). Near rows y 1200–1536 = s 131.9 → 129.8 (0.5–2.6 u BEHIND him);
+  visible lateral at y 1300 = −1.79 … +1.99 (≈222 px/u), y 1000 ≈143 px/u, y 800 ≈91, y 700 ≈58, y 600 ≈33.
+* Baseline fins = `trail` term (FRAG, 05 wake sweep tc 0.5→1.5 u): pink runs y 1200 x 208–244 / 573–611,
+  y 1300 x 97–128 / 705–732 (≈30 px hard bars converging on Benny).
+* Ref near pink (y 1240–1370) = broad brushed sweeps x ≈ 90–265 / 550–770 (runs at y 1300: 124–206, 613–698),
+  cyan between. Ref fins box (x100–750, y1200–1360) pink = 14.1 %, baseline 9.7 %.
+* Baseline near field (x150–700, y1250–1536): lumStd 17.4 (ref 40.0), p95 164 (ref 247), small white glint
+  blobs y 1200–1536: 53 (ref 157), y 700–1200: 163 (ref 409).
+* Band centre x (baseline): L y700 380, y800 200, y900 165, y1000 108; R 769, 713, 739, 760 (R nearly straight).
+  Ref: L 350, 120, 27, off; R 780, 670, 650, 790 (≈±110 px S-swing). Phase of my `sbend` already matches
+  the ref (left at s≈139.5 / y 800, right at s≈149.7 / y 680); amplitude 0.45 u is just too small.

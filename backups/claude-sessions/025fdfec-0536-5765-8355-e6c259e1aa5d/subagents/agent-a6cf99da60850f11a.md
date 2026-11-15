@@ -811,3 +811,106 @@ Re-calling `goto('05')` after the mask toggle re-renders deterministically. Fixi
 > 30-  if (err) throw new Error(err);
 > 31-}
 
+### 🤖 Claude — 2026-11-15T21:57:37.342Z
+
+Now the code edits. First, parametrize the lower-body shape in `build.ts` (keeping defaults identical until tuned), and let the lab override `BENNY_DIMS` via `&dims=`.
+
+### 🤖 Claude — 2026-11-15T21:57:40.945Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  pear: 0.13,\n  /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y < 0) */\n  stretch: 0.1,", "new_string": "  pear: 0.13,\n  /** centre (below the ball centre) and width of that bulge */\n  bulgeY: 0.24,\n  bulgeW: 0.38,\n  /** fuller, flatter bottom (wave 5, ref 05 rear: the plush ball stays ≈ cuff-wide down to the waterline and ends\n   *  in a broad round base, not an egg tip). Lower-half cross-section r_xz = r·(1 − t^p)^(1/p), t = −y/r,\n   *  p = 2 +  …[+195 chars]`
+
+### 🧑 User — 2026-11-15T21:57:40.982Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:57:46.406Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "function deformBody(v: THREE.Vector3, out: THREE.Vector3): THREE.Vector3 {\n  const r = BENNY_DIMS.skin;\n  const zf = THREE.MathUtils.smoothstep(v.z / r, 0.1, 0.75);\n  const k = 1 + BENNY_DIMS.pear * Math.exp(-(((v.y + 0.24) / 0.38) ** 2)) * (1 - 0.8 * zf);\n  const y = v.y < 0 ? v.y * (1 + (BENNY_DIMS.stretch * -v.y) / r) : v.y;\n  return out.set(v.x * k, y, v.z * k);\n}", "new_string": "function deformBody(v: THREE.Vector3, out: THREE.Vector3): THREE.Vector3 {\n  const D = BENNY_DIMS;\n  …[+711 chars]`
+
+### 🧑 User — 2026-11-15T21:57:46.446Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:57:49.812Z
+
+Also parametrize the star placement so the lab can sweep it.
+
+### 🤖 Claude — 2026-11-15T21:57:51.322Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  pomR: 0.31,\n};", "new_string": "  pomR: 0.31,\n  /** star badge: angle around the hat from the front (deg, toward −X = his right), centre height above the cuff\n   *  top, centre radius */\n  starAng: 143,\n  starY: 0.015,\n  starR: 0.79,\n};"}`
+
+### 🧑 User — 2026-11-15T21:57:51.350Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:57:54.381Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const sa = THREE.MathUtils.degToRad(143);\n  // wave 4: centred on the cuff's top edge (ref 05: ≈ 40 % of the star on the cuff, the rest on the white band);\n  // leans back only 12° because the runtime's ride lean (≈ 13°) tips it the rest of the way toward the chase camera\n  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR - 0.01), yt + 0.015, Math.cos(sa) * (D.brimR - 0.01));", "new_string": "  const sa = THREE.MathUtils.degToRad(D.starAng);\n  // wave 4: centred on the cuff's …[+300 chars]`
+
+### 🧑 User — 2026-11-15T21:57:54.413Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:57:56.533Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "const q = new URLSearchParams(location.search);\nconst furQuality = q.get('quality') === 'low' ? 'low' : 'high';", "new_string": "const q = new URLSearchParams(location.search);\nconst furQuality = q.get('quality') === 'low' ? 'low' : 'high';\n// shape A/B: `&dims={\"flat\":0.6,\"stretch\":0.05}` overrides BENNY_DIMS before the procedural build (src=build only)\nif (q.get('dims')) Object.assign(BENNY_DIMS, JSON.parse(q.get('dims')!));"}`
+
+### 🧑 User — 2026-11-15T21:57:56.569Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:57:57.388Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "import { buildBenny } from './build';", "new_string": "import { BENNY_DIMS, buildBenny } from './build';"}`
+
+### 🧑 User — 2026-11-15T21:57:57.439Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:57:58.825Z
+
+Now the lab driver (one Vite, many variants; mask + colour render each).
+
+### 🤖 Claude — 2026-11-15T21:58:08.406Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tools/lab.mjs <<'EOF'\n// node lab.mjs OUTDIR views name1:query1 [name2:query2 ...]  (cwd = repo root). Writes NAME.png and NAME_mask.png\nimport { mkdirSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst [outDir, views, ...vars] = process.argv.slice(2);\nmkdirSync(outDir, { recursive: true });\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5241);\nconst browser = await chromium.launch …[+1524 chars]`
+
+### 🧑 User — 2026-11-15T21:58:46.863Z
+
+> ↩︎ result: 21:58
+> done base
+> done f06
+> done f10
+> == base
+> ALL bbox x 210-596 y 764-1190  (w 387 h 427)
+>   body  x  210- 596 y  994-1190  w 387 h 197 px 42736
+>   pom   x  336- 484 y  764- 893  w 149 h 130 px 12437
+>   cuff  x  260- 551 y  933-1029  w 292 h  97 px 13959
+>   crown x  278- 535 y  867- 974  w 258 h 108 px 18744
+>   star  x  457- 531 y  935-1012  w  75 h  78 px 2860
+> centre col x=406: top 765 cuff 975-1029 bottom 1177
+> HAT incl pom 265 px = 62.1%   BODY below cuff 148 px = 34.7%  of H 427
+> cuff width 292; star centre (494,974) rel cuff-centre x +0.60 half-widths
+> body rows (y: red runs):
+>   1109: 272-536   span 275
+>   1119: 277-279 283-530   span 254
+>   1129: 290-521   span 247
+>   1139: 300-507   span 228
+>   1149: 305-502   span 208
+>   1159: 317-486   span 176
+>   1169: 335-470   span 143
+>   1179: 370-383 389-411 423-426   span 105
+> == f06
+> ALL bbox x 210-596 y 764-1194  (w 387 h 431)
+>   body  x  210- 596 y  994-1194  w 387 h 201 px 45486
+>   pom   x  336- 484 y  764- 893  w 149 h 130 px 12437
+>   cuff  x  260- 551 y  933-1029  w 292 h  97 px 13959
+>   crown x  278- 535 y  867- 974  w 258 h 108 px 18744
+>   star  x  457- 531 y  935-1012  w  75 h  78 px 2860
+> centre col x=406: top 765 cuff 975-1029 bottom 1185
+> HAT incl  …[+1236 chars]
+
+### 🤖 Claude — 2026-11-15T21:59:14.458Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; enc() { python3 -I -c \"import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))\" \"$1\"; }\ntimeout 900 node $S/tools/lab.mjs $S/lab g05 A:bennyLift=0.12\\&dims=$(enc '{\"flat\":0.7,\"pear\":0.09,\"stretch\":0.0}') B:bennyLift=0.12\\&dims=$(enc '{\"flat\":0.9,\"pear\":0.06,\"stretch\":0.0}') C:bennyLift=0.12\\&dims=$(enc '{\"flat\":0.7,\"pear\":0.08,\"stretch\":0.0,\"bulgeY\":0.34}') 2>&1 | tail -1\nfor n in A B C; do echo \"== $n\"; python3 -I $S/tools/measure.py $ …[+154 chars]`
+

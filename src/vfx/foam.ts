@@ -351,8 +351,16 @@ const BANK_DS0 = -3.4;
 const BANK_DS1 = 15;
 /** puffs stop here (further ahead the berm and its own puffs take over) */
 const BANK_PUFF_DS1 = 12.5;
-/** inner edge of the bank: px in from the frame edge (fraction of an 864-px wide frame) */
-const BANK_PX: [number, number] = [60, 155];
+/** inner edge of a clump at its widest: px in from the frame edge (of an 864-px wide frame), L / R */
+const BANK_PX: [number, number] = [170, 180];
+/**
+ * Wave 5: world-anchored clump envelope per side, [seed, frequency along s]. The near-field bank is a
+ * chain of separate LOW clumps with open water between them (ref 05: left clumps y≈1016–1108 and
+ * 1202–1330, right y≈800–950 and 1217–1300), not a continuous strip up the frame edge (wave 4 read as
+ * a white wall: the outer 40 px were foam on 74 % / 100 % of the rows y 700–1400). The seeds put the
+ * clumps of the QA frame (s≈132.4) where the ref has them; along 05 clumps cover ≈40 % of the length.
+ */
+const BANK_ENV: [number, number][] = [[555.849, 0.45], [10.726, 0.85]];
 const BANK_CLEAR_RIDER = 1.3;
 const BANK_CLEAR_CORE = 1.45;
 
@@ -476,6 +484,11 @@ export function createFoam(
 
   // ---- cloud banks of puffs hugging both stream edges (ref 05: 10–40 px white-lavender clumps) ----
   const inSkip = (s: number) => s > skip[0] && s < skip[1];
+  // wave 5: in 05 the stream-edge rim toward the VP is a LOW rim of piled bubbles (ref ≈40–60 px), not
+  // tall heaps: crest puffs × 0.85, heaps × 0.6 and never stacked. Only sizes change, so the shared
+  // rand() sequence (and every other stage's foam) stays identical.
+  const st05b = course.stage('05');
+  const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
   const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
     const ss = Math.min(s1, Math.max(s0, s));
     if (inSkip(ss)) return;
@@ -496,7 +509,7 @@ export function createFoam(
         // crest puffs: the body of the bank
         const nC = quality === 'high' && rand() < 0.55 ? 2 : 1;
         for (let k = 0; k < nC; k++) {
-          const r = 0.11 + rand() * 0.13;
+          const r = (0.11 + rand() * 0.13) * (low05(s) ? 0.85 : 1);
           addPuff(list, s + (rand() - 0.5) * step, -0.32 + rand() * 0.82, side, r, r * (0.05 + rand() * 0.3), 0.8 + 0.2 * rand());
         }
         // small puffs right at the water line (the lacy edge of the bank)
@@ -510,9 +523,10 @@ export function createFoam(
         const side = rand() < 0.5 ? -1 : 1;
         const n = 5 + ((rand() * 6) | 0);
         const ec = -0.1 + rand() * 0.55;
+        const lo = low05(s);
         for (let k = 0; k < n; k++) {
-          const r = 0.15 + rand() * 0.18;
-          const stack = k > 2 && rand() < 0.4 ? r * 0.65 : 0;
+          const r = (0.15 + rand() * 0.18) * (lo ? 0.6 : 1);
+          const stack = k > 2 && rand() < 0.4 && !lo ? r * 0.65 : 0;
           const lift = r * (0.1 + rand() * 0.45) + stack;
           addPuff(list, s + (rand() - 0.5) * 1.8, ec + (rand() - 0.5) * 0.55, side, r, lift, 0.72 + 0.28 * Math.min(1, lift / (r * 0.9)));
         }
@@ -597,6 +611,12 @@ export function createFoam(
   const rowHOut = [new Float32Array(R), new Float32Array(R)];
   /** 0..1 lumpiness of the flank bank (inner-edge width): slow, so the edge never zig-zags between rows */
   const bankLump = (s: number, side: number) => 0.7 * noise1(s * 0.5 + side * 17.3) + 0.3 * noise1(s * 1.15 + side * 5.1);
+  /** 0..1 clump envelope (sd 0 = left, 1 = right): 0 = no bank (open water up to the frame edge) */
+  const bankEnv = (s: number, sd: number) => {
+    const [seed, f] = BANK_ENV[sd];
+    return sm(0.42, 0.62, 0.65 * noise1(s * f + seed) + 0.35 * noise1(s * f * 2.3 + seed * 1.7 + 11.0));
+  };
+  const rowEnv = [new Float32Array(R), new Float32Array(R)];
   /** lather apron height above the water: f = 0 inner edge (just under the water) … 1 outer */
   const bankProf = (f: number, s: number, side: number) => {
     const top = 0.035 + 0.05 * noise1(s * 1.4 + side * 9.1 + 40);
@@ -677,7 +697,6 @@ export function createFoam(
     bub.uniforms.uTime.value = time;
     cam.updateMatrixWorld();
     cam.getWorldPosition(camPos);
-    const frac0 = (2 * BANK_PX[0]) / 864, frac1 = (2 * BANK_PX[1]) / 864;
     // ---- lather apron rows ----
     let k = 0;
     for (let sd = 0; sd < 2; sd++) {
@@ -690,8 +709,11 @@ export function createFoam(
         hBase = heightAt(s, side * 2.5, time);
         const camLat = pv.copy(camPos).sub(fr.pos).dot(fr.right);
         const lump = bankLump(s, side);
+        const env = bankEnv(s, sd);
+        rowEnv[sd][i] = env;
+        const frac = ((2 * BANK_PX[sd]) / 864) * env * (0.72 + 0.28 * lump);
         const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);
-        const inner = solveLat(cam, side * (1 - (frac0 + (frac1 - frac0) * lump)), camLat + side * 1.0, edge);
+        const inner = frac > 0.002 ? solveLat(cam, side * (1 - frac), camLat + side * 1.0, edge) : edge;
         // keep clear of Benny (near him) and of the cyan core / coin line; merge into the berm at the edge
         const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds)));
         let a = Math.max(side * inner, side * rider.lat + clearR, side * coreLateral(course, s) + BANK_CLEAR_CORE);
@@ -749,10 +771,11 @@ export function createFoam(
         const ri = Math.min(R - 2, Math.floor(t)), rf = t - ri;
         const L = (A: Float32Array) => A[ri] + (A[ri + 1] - A[ri]) * rf;
         const lin = L(rowIn[sd]), lout = L(rowOut[sd]), hin = L(rowHIn[sd]), hout = L(rowHOut[sd]);
+        const ev = sm(0.06, 0.45, L(rowEnv[sd]));
         const wid = Math.abs(lout - lin);
         course.sample(sC, fr);
         // bubbles grow with distance so their on-screen size stays ≈10–45 px (ref 05 bank texture)
-        const scale = Math.min(2.0, 0.9 + 0.1 * Math.max(0, ds)) * kFade * Math.min(1, wid / 0.3);
+        const scale = Math.min(2.0, 0.9 + 0.1 * Math.max(0, ds)) * kFade * Math.min(1, wid / 0.3) * ev;
         for (let p = 0; p < P; p++) {
           const [f0, df, r0, dr, lift, prob] = KIND[p];
           if (hh(10 + p) > prob) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }

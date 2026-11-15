@@ -9,7 +9,7 @@
  */
 import * as THREE from 'three';
 import { createCandyEnvironment, createRenderer } from '../../render/env';
-import { buildBenny } from './build';
+import { BENNY_DIMS, buildBenny } from './build';
 import { BENNY_RIDE_LIFT, createBennyRuntime, loadBenny } from './runtime';
 import type { BennyRuntime } from '../types';
 
@@ -17,6 +17,8 @@ declare global { interface Window { __done?: boolean; __error?: string; __info?:
 
 const q = new URLSearchParams(location.search);
 const furQuality = q.get('quality') === 'low' ? 'low' : 'high';
+// shape A/B: `&dims={"flat":0.6,"stretch":0.05}` overrides BENNY_DIMS before the procedural build (src=build only)
+if (q.get('dims')) Object.assign(BENNY_DIMS, JSON.parse(q.get('dims')!));
 
 async function make(): Promise<BennyRuntime> {
   if (q.get('src') === 'glb') return loadBenny({ furQuality });

@@ -54,6 +54,11 @@ export const BENNY_DIMS = {
   crownH: 0.53,
   /** pom-pom core radius; the shell fur adds ≈ 0.1 → ≈ 0.5 × the cuff width (ref 05: ≈ 140–150 px / 295) */
   pomR: 0.31,
+  /** star badge: angle around the hat from the front (deg, toward −X = his right), centre height above the cuff
+   *  top, centre radius */
+  starAng: 143,
+  starY: 0.015,
+  starR: 0.79,
 };
 
 /**
@@ -390,10 +395,10 @@ export function buildBenny(): BuiltModel {
     new THREE.Mesh(starGeo, std({ color: C.gold, metalness: 0.12, roughness: 0.3, emissive: '#ffb800', emissiveIntensity: 0.22 })),
     'hat_star',
   );
-  const sa = THREE.MathUtils.degToRad(143);
+  const sa = THREE.MathUtils.degToRad(D.starAng);
   // wave 4: centred on the cuff's top edge (ref 05: ≈ 40 % of the star on the cuff, the rest on the white band);
   // leans back only 12° because the runtime's ride lean (≈ 13°) tips it the rest of the way toward the chase camera
-  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR - 0.01), yt + 0.015, Math.cos(sa) * (D.brimR - 0.01));
+  const starPos = new THREE.Vector3(-Math.sin(sa) * D.starR, yt + D.starY, Math.cos(sa) * D.starR);
   const na = THREE.MathUtils.degToRad(160), tilt = THREE.MathUtils.degToRad(12);
   const starN = new THREE.Vector3(-Math.sin(na) * Math.cos(tilt), Math.sin(tilt), Math.cos(na) * Math.cos(tilt));
   star.position.copy(starPos);

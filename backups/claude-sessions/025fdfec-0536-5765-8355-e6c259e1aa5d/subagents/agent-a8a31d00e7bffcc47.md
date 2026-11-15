@@ -583,3 +583,43 @@ Now the probe script (scratch, not a capture): loads 05 and dumps the flank-row 
 > const noise1 = (x: number) => { const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f); return hash1(i) * (1 - u) + hash1(i + 1) * u; };
 > /** 0..1 lumpiness of the bank at ( …[+1915 chars]
 
+### 🤖 Claude — 2026-11-15T21:58:01.296Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"bermSurface\\|bermLump\\|bermHeight\\|BERM_IN\\|BERM_OUT\\|EDGE_LIFT\" src --include=*.ts | grep -v \"^src/vfx/foam.ts\" | head; grep -n \"EDGE_LIFT\\|^import\" src/vfx/foam.ts | head", "description": "Find external users of berm helpers"}`
+
+### 🧑 User — 2026-11-15T21:58:01.338Z
+
+> ↩︎ result: src/vfx/bubbles.ts:15:import { BERM_OUT } from './foam';
+> src/vfx/bubbles.ts:313:        if (Math.abs(lat) <= hw + BERM_OUT + 0.3) break;
+> src/vfx/finalWave.ts:8:import { EDGE_LIFT } from './waterRibbon';
+> src/vfx/finalWave.ts:130:    const p0 = new THREE.Vector2(0, EDGE_LIFT);
+> src/vfx/waterRibbon.ts:20:export const EDGE_LIFT = 0.28;
+> src/vfx/waterRibbon.ts:137:  const trough = EDGE_LIFT * au * au * au;
+> src/vfx/waterRibbon.ts:704:    put(-1, -hw * 1.01, EDGE_LIFT - 0.7, 1, nrm.copy(f.right).negate());
+> src/vfx/waterRibbon.ts:707:      const lift = EDGE_LIFT * Math.abs(u) ** 3;
+> src/vfx/waterRibbon.ts:708:      const slope = (EDGE_LIFT * 3 * u * Math.abs(u)) / hw; // d lift / d lateral
+> src/vfx/waterRibbon.ts:712:    put(1, hw * 1.01, EDGE_LIFT - 0.7, 1, nrm.copy(f.right));
+> 15:import * as THREE from 'three';
+> 16:import { type Course, WORLD, funnelY } from '../world/course';
+> 17:import { EDGE_LIFT, coreLateral } from './waterRibbon';
+> 18:import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
+> 19:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+> 52:  const hIn = EDGE_LIFT * uIn * uIn * uIn - 0.07;
+> 54:  const hp = EDGE_LIFT + 0.14 + 0.5 * lump;
+
+### 🤖 Claude — 2026-11-15T21:58:20.252Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/foam.ts'\nt=open(p).read()\ndef rep(old,new):\n    global t\n    assert t.count(old)==1, old[:80]\n    t=t.replace(old,new)\n\n# 1. constants\nrep(\"\"\"/** inner edge of the bank: px in from the frame edge (fraction of an 864-px wide frame) */\nconst BANK_PX: [number, number] = [60, 155];\"\"\",\n\"\"\"/** inner edge of a clump at its widest: px in from the frame edge (of an 864-px wide frame), L / R */\nconst BANK_PX: [number, number] = [170, 180];\n/**\n * Wave 5: world-anchored clump envelope per side, [seed, frequency along s]. The near-field ban …[+4460 chars]`
+
+### 🧑 User — 2026-11-15T21:58:23.820Z
+
+> ↩︎ result: tsc-exit=0
+
+### 🤖 Claude — 2026-11-15T21:58:26.460Z
+
+tsc passes. Capture it01.
+
+### 🤖 Claude — 2026-11-15T21:58:28.614Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/foam/it01 2>&1 | tail -2 && S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && python3 -I $S/bankcc.py $S qa/pilot05/wave5/foam/it01/05.png", "description": "Capture it01 and measure banks", "timeout": 620000}`
+

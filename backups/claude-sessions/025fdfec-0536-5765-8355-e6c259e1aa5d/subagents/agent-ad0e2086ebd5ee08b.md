@@ -560,3 +560,194 @@ The scratchpad is shared with other specialists (someone overwrote measure.py). 
 >       const waterlineR = Math.sqrt(Math.max(BENNY_OUTER_R * BENNY_OUTER_R - above * above, (0.35 * BENNY_OUTER_R) ** 2));
 >       const strength = Math.min(1, sp …[+714 chars]
 
+### 🤖 Claude — 2026-11-15T21:58:14.105Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md", "old_string": "## Log\n(updated after every capture)\n", "new_string": "## Log\n(updated after every capture)\n\n### Facts measured before editing (probe of the locked 05 view, scratch probe.mjs)\n* Benny s 132.44, lat 0, screen (419, 1052). Near rows y 1200–1536 = s 131.9 → 129.8 (0.5–2.6 u BEHIND him);\n  visible lateral at y 1300 = −1.79 … +1.99 (≈222 px/u), y 1000 ≈143 px/u, y 800 ≈91, y 700 ≈58, y 600 ≈33.\n* Baseline fins = `trail` term (FRAG, 05 wake sweep tc 0.5→1.5 u): pink runs y 1200 x 208–244 …[+770 chars]`
+
+### 🧑 User — 2026-11-15T21:58:14.146Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:58:15.762Z
+
+Now the shader edits. First, the S-bend amplitude and the near-band steering (replacing the `trail` fins).
+
+### 🤖 Claude — 2026-11-15T21:58:19.061Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  // 05: the pink bands swing a further ±0.45 u about the core (a stationary λ≈20 u S on top of the\n  // course meander), so they read as clear S-bends; the coins (at coreLateral = M) stay on cyan\n  float sbend = sw * 0.45 * sin(s * 0.31 - 0.834);", "new_string": "  // 05: the pink bands swing a further ±1.05 u about the core (a stationary λ≈20 u S on top of the\n  // course meander, in phase with it: left at s≈139.5 / y≈800, right at s≈149.7 / y≈680 on the locked\n  // view), so they read as ≈2  …[+260 chars]`
+
+### 🧑 User — 2026-11-15T21:58:19.105Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:58:29.166Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  if (freeK < 0.5) {\n    // keep both bands inside the water (the core swing pushes one toward the bank on each bend)\n    float Mb = M + sbend;\n    offL = min(offL, Mb + hw - wL - 0.5);\n    offR = min(offR, hw - wR - 0.5 - Mb);\n  }\n  float sdL = xb + offL + pert;\n  float sdR = xb - offR + pert;\n  float dL = abs(sdL);\n  float dR = abs(sdR);\n  float on = smoothstep(0.02, 0.2, gate);\n  float pL = (1.0 - smoothstep(wL - aaw, wL + aaw, dL)) * on;\n  float pR = (1.0 - smoothstep(wR - aaw, wR + …[+2049 chars]`
+
+### 🧑 User — 2026-11-15T21:58:29.217Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:58:34.640Z
+
+Use the already-computed `fwx` instead of a derivative inside the branch (Android-safe), then remove the trail block.
+
+### 🤖 Claude — 2026-11-15T21:58:36.342Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    brush = sw * (vnoise(vec2(xb * bK, v5 * 0.11 + 5.0)) - 0.5) * (1.0 - smoothstep(0.12, 0.35, fwidth(xb) * bK));", "new_string": "    brush = sw * (vnoise(vec2(xb * bK, v5 * 0.11 + 5.0)) - 0.5) * (1.0 - smoothstep(0.12, 0.35, fwx * bK));"}`
+
+### 🧑 User — 2026-11-15T21:58:36.371Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:58:41.499Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float pinkM = max(max(pL, pR), fil);\n  // 05: the parted bands close in behind Benny as two thin hot-pink wake trails (ref 05 near rows:\n  // pink sweeps at both sides of the spray fan, ≈1 u out from his track, gone again by ≈2 u back)\n  float trail = 0.0, relT = 0.0;\n  if (sw > 0.001 && uBenny.z > 0.0 && vStyle.x > 0.0) {\n    float back = -db;\n    // curved sweep: leaves his flank steeply, then bends back along the flow\n    float tc = 0.5 + 1.0 * (1.0 - exp(-max(back - 0.45, 0.0) * 1.5)); …[+827 chars]`
+
+### 🧑 User — 2026-11-15T21:58:41.532Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:58:42.708Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float relB = trail > max(pL, pR) ? relT : rel;\n    float prof = 1.0 - relB * relB;", "new_string": "    float relB = clamp(rel, -1.0, 1.0);\n    float prof = 1.0 - relB * relB;"}`
+
+### 🧑 User — 2026-11-15T21:58:42.770Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:58:47.559Z
+
+Now the near-field rework in the 05 block. Let me view the current state of that block.
+
+### 🤖 Claude — 2026-11-15T21:58:48.317Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 517, "limit": 80}`
+
+### 🧑 User — 2026-11-15T21:58:48.340Z
+
+> ↩︎ result: 517	    // wide cells so the long horizontal arms are not clipped at the cell border in the mid-ground
+> 518	    float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * 0.42), 0.42, 22.0, 2.4, uTime);
+> 519	    col += vec3(2.0, 2.2, 2.3) * glint * (1.0 - smoothstep(0.3, 0.8, fws));
+> 520	    #endif
+> 521	  }
+> 522	
+> 523	  // =============== 05: thick glossy river (sw = 1) ===============
+> 524	  // The user rejected the 05 water as "a flat blue road with straight stripes". Here the surface is a
+> 525	  // flow-aligned height field: every streak, ridge and flare is laid out in the flow coordinate q
+> 526	  // (-1 on the left band's centre line, +1 on the right one), so they bend with the pink S-bands.
+> 527	  // Depth comes from deep-azure troughs between bright crests, tubular pink ribbons (deep magenta
+> 528	  // edges → hot pink → light satin crest), Fresnel sky tint, sun specular, the tunnel-end glitter
+> 529	  // path and bump normals from the same height field; the near field (right behind Benny, where
+> 530	  // 1 u ≈ 250 px) swaps the along-flow ridges for bowed cross-flow ripple crests and horizontal flares.
+> 531	  if (sw > 0.001) {
+> 532	    float cLc = -offL - pert, cRc = offR - pert; …[+4104 chars]
+
+### 🤖 Claude — 2026-11-15T21:59:00.860Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float rFar = vnoise(vec2(wq * 7.0, v5 * 0.2));\n    float rNear = vnoise(vec2(lat * 2.2 + 0.5 * sin(v5 * 1.1), v5 * 1.3 + 9.0));\n    float swell = mix(rFar, rNear, near5);\n    swell = mix(0.5, swell, 1.0 - smoothstep(0.3, 0.7, fwidth(wq * 7.0)));\n    float silkA = silk(wq, v5, 15.0, 0.0, 0.16);\n    float silkB = 0.0;\n    #ifndef LOW_Q\n    silkB = silk(wq, v5 * 1.35 + 40.0, 38.0, 7.0, 0.1);\n    #endif\n    float silkL = max(silkA, silkB * mix(0.45, 0.8, pinkM)) * (1.0 - near5);\n    float …[+1675 chars]`
+
+### 🧑 User — 2026-11-15T21:59:00.907Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:59:08.889Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    // near field (right behind Benny, 1 u ≈ 250 px): broad soft swells over darker troughs, no thin\n    // lines (thin arcs there read as contour rings, long lines as road stripes); light comes from the\n    // horizontal flares below and from glossy swell crests\n    if (near5 > 0.0) {\n      c5 *= 1.0 - 0.12 * near5 * (1.0 - rNear) * (1.0 - pinkM);\n      c5 += uC5Bright * pow(rNear, 4.0) * 0.32 * near5 * (1.0 - pinkM);\n    }", "new_string": "    // near field (right behind Benny, 1 u ≈ 160–28 …[+716 chars]`
+
+### 🧑 User — 2026-11-15T21:59:08.925Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:59:09.592Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 601, "limit": 16}`
+
+### 🧑 User — 2026-11-15T21:59:09.611Z
+
+> ↩︎ result: 601	      c5 = mix(c5, mix(vec3(0.5, 1.2, 1.9), uP5Light, pinkM), near5 * 0.18 * smoothstep(0.8, 1.6, abs(dlN)));
+> 602	    }
+> 603	
+> 604	    // white 4-point flares carried by the current: along the flow in the mid field, across it near
+> 605	    #ifdef LOW_Q
+> 606	    vec2 g5 = vec2(wq * 6.0, v5 * 0.25);
+> 607	    float hs5 = hash12(floor(g5));
+> 608	    c5 += vec3(1.3) * step(0.88, hs5) * smoothstep(0.22, 0.0, length(fract(g5) - 0.5)) * (0.5 + 0.5 * sin(uTime * 7.0 + hs5 * 40.0));
+> 609	    #else
+> 610	    float flA = flowGlint(vec2(wq * 6.0, v5 * 0.075), 0.75, 18.0, 3.8, 0.0, uTime);
+> 611	    float flB = flowGlint(vec2(lat * 1.6, v5 * 1.4 + 0.5), 0.6, 26.0, 3.2, 1.0, uTime + 2.7);
+> 612	    c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws)) + flB * near5)
+> 613	        * (1.0 - 0.5 * pinkM);
+> 614	    #endif
+> 615	    col = mix(col, c5, sw);
+> 616	  }
+
+### 🤖 Claude — 2026-11-15T21:59:22.465Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    c5 += vec3(1.3) * step(0.88, hs5) * smoothstep(0.22, 0.0, length(fract(g5) - 0.5)) * (0.5 + 0.5 * sin(uTime * 7.0 + hs5 * 40.0));\n    #else\n    float flA = flowGlint(vec2(wq * 6.0, v5 * 0.075), 0.75, 18.0, 3.8, 0.0, uTime);\n    float flB = flowGlint(vec2(lat * 1.6, v5 * 1.4 + 0.5), 0.6, 26.0, 3.2, 1.0, uTime + 2.7);\n    c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws)) + flB * near5)\n        * (1.0 - 0.5 * pinkM);\n    #endif", "new_string": "    c5 += ve …[+1086 chars]`
+
+### 🧑 User — 2026-11-15T21:59:22.528Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:59:25.583Z
+
+Now typecheck and capture iteration 1.
+
+### 🤖 Claude — 2026-11-15T21:59:28.529Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/water/it01 2>&1 | tail -3; python3 -c \"\nimport json; d=json.load(open('qa/capture_log.json')); print('errors', len(d['errors'])); [print(e[:600]) for e in d['errors'][:3]]\"; python3 -I $W/wmeasure.py qa/pilot05/wave5/water/it01/05.png", "description": "Typecheck, capture it01, check errors, measure", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T21:59:30.368Z
+
+> ↩︎ result: Exit code 1
+> src/vfx/waterRibbon.ts(397,50): error TS1005: ',' expected.
+> src/vfx/waterRibbon.ts(397,55): error TS1005: ',' expected.
+> src/vfx/waterRibbon.ts(436,37): error TS1005: ';' expected.
+> errors 0
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/wmeasure.py", line 110, in <module>
+>     main()
+>     ~~~~^^
+>   File "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/wmeasure.py", line 80, in main
+>     a = np.asarray(Image.open(f).convert('RGB'))
+>                    ~~~~~~~~~~^^^
+>   File "/usr/local/lib/python3.13/site-packages/PIL/Image.py", line 3639, in open
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: 'qa/pilot05/wave5/water/it01/05.png'
+
+### 🤖 Claude — 2026-11-15T21:59:31.627Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 395,398p src/vfx/waterRibbon.ts", "description": "Inspect line with TS error"}`
+
+### 🧑 User — 2026-11-15T21:59:31.679Z
+
+> ↩︎ result: // near rows: pink at x≈90–265 / 550–770, glossy cyan between and under him). From ≈3 u ahead of him
+>     // their centres glide to his track ±1.45 u and narrow to ±0.34 u, so each band stays ONE continuous
+>     // ribbon. (This replaces the separate wake `trail` sweep, which drew the two hard pink "fins".)
+>     if (vStyle.x > 0.0 && uBenny.z > 0.0) {
+
+### 🤖 Claude — 2026-11-15T21:59:32.353Z
+
+Backticks inside the GLSL template literal. Fixing.
+
+### 🤖 Claude — 2026-11-15T21:59:33.650Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    // ribbon. (This replaces the separate wake `trail` sweep, which drew the two hard pink \"fins\".)", "new_string": "    // ribbon. (This replaces the separate wake \"trail\" sweep, which drew the two hard pink \"fins\".)"}`
+
+### 🧑 User — 2026-11-15T21:59:33.691Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:59:34.951Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  // (wave 5: the separate 05 wake `trail` sweep is gone; the main bands themselves run on behind Benny)", "new_string": "  // (wave 5: the separate 05 wake \"trail\" sweep is gone; the main bands themselves run on behind Benny)"}`
+
+### 🧑 User — 2026-11-15T21:59:34.998Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:59:37.897Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/water/it01 2>&1 | tail -3; python3 -c \"\nimport json; d=json.load(open('qa/capture_log.json')); print('errors', len(d['errors'])); [print(e[:600]) for e in d['errors'][:3]]\"; python3 -I $W/wmeasure.py qa/pilot05/wave5/water/it01/05.png", "description": "Typecheck, capture it01, check errors, measure", "timeout": 620000}`
+
