@@ -329,7 +329,7 @@ export interface FoamSystem {
   /** camera: needed in 05, where the flank banks are fitted to the frame edges */
   update(time: number, dt: number, focusS: number, outro?: number, camera?: THREE.Camera): void;
   /** QA: current flank-bank placement (kind L/R, row ds, inner-edge lateral, bank width) */
-  qaRafts(): { visible: boolean; puffs: number; shown: number; clumps: { kind: string; ds: number; lat: number; k: number }[] };
+  qaRafts(): { visible: boolean; puffs: number; shown: number; clumps: { kind: string; ds: number; lat: number; k: number; y?: number }[] };
   instanceCount: number;
 }
 
@@ -635,7 +635,7 @@ export function createFoam(
   const pP = new THREE.Vector3();
   const pv = new THREE.Vector3();
   const camPos = new THREE.Vector3();
-  const qa: { kind: string; ds: number; lat: number; k: number }[] = [];
+  const qa: { kind: string; ds: number; lat: number; k: number; y?: number }[] = [];
   let shown = 0;
   let hBase = 0;
   /** NDC x of the water point at `lat` on the current row frame `fr` */
@@ -704,7 +704,11 @@ export function createFoam(
         const hIn = heightAt(s, side * a, time), hOut = heightAt(s, side * outA, time);
         rowHIn[sd][i] = hIn;
         rowHOut[sd][i] = hOut;
-        if (qa.length < 64 && i % 4 === 0) qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2) });
+        if (qa.length < 80 && i % 2 === 0) {
+          // screen y (0 top … 1 bottom) of the bank's inner edge on this row
+          const yN = pv.copy(fr.pos).addScaledVector(fr.right, side * a).addScaledVector(fr.up, hIn).project(cam).y;
+          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2), y: +((1 - yN) / 2).toFixed(3) });
+        }
         for (let j = 0; j < C; j++) {
           const f = Math.pow(j / (C - 1), 0.85);
           // the apron starts a little outside the bank's inner edge: its lip hides behind the rim bubbles

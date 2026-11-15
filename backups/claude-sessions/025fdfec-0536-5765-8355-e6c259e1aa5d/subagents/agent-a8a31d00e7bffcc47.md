@@ -395,3 +395,191 @@ Let me check how `--q` is passed and then do one isolation capture with the flan
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T21:54:09.251Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cat > $S/bankmetrics.py <<'EOF'\n\"\"\"Bank metrics on the opened foam mask of foammask.py (all in px of the 864-wide image, % of 864).\n  EXT  (whole-bank extent, the 'bbox' view): per side, innermost foam x over rows y 540..1536\n       (left: max x of foam in x<432; right: 864 - min x of foam in x>=432).\n  NEAR (near-camera bank width): rows y 950..1400; per row, extent from the frame edge to the innermost\n       foam pixel of that half (0 if the row has no foam); reported = mean over the row …[+1978 chars]`
+
+### 🧑 User — 2026-11-15T21:54:09.869Z
+
+> ↩︎ result: references/05_flow_into_the_current.png
+>   L: EXT  407px  47.1%  NEAR mean 208.5px  24.1%  p90 335.0px  38.8%  ROWS  14.3%  clumps(y,h) [(800, 33), (868, 9), (881, 24), (920, 23), (975, 8), (994, 7), (1016, 92), (1202, 185)]
+>   R: EXT  415px  48.0%  NEAR mean 214.1px  24.8%  p90 334.1px  38.7%  ROWS  13.0%  clumps(y,h) [(800, 148), (953, 39), (1008, 16), (1035, 30), (1122, 24), (1147, 7), (1174, 29), (1217, 179)]
+> qa/pilot05/wave5/baseline/05.png
+>   L: EXT  432px  50.0%  NEAR mean  73.5px   8.5%  p90  94.0px  10.9%  ROWS  74.0%  clumps(y,h) [(800, 437), (1240, 26), (1314, 7)]
+>   R: EXT  432px  50.0%  NEAR mean 113.2px  13.1%  p90 130.0px  15.0%  ROWS 100.0%  clumps(y,h) [(800, 600)]
+> qa/pilot05/wave5/foam/iso_noflank/05.png
+>   L: EXT  432px  50.0%  NEAR mean 166.2px  19.2%  p90   0.0px   0.0%  ROWS  14.1%  clumps(y,h) [(800, 10), (899, 9), (939, 11), (1070, 11), (1228, 9), (1314, 7)]
+>   R: EXT  432px  50.0%  NEAR mean 311.9px  36.1%  p90   0.0px   0.0%  ROWS   2.0%  clumps(y,h) [(827, 7), (891, 12), (930, 9)]
+
+### 🤖 Claude — 2026-11-15T21:54:31.097Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cat > $S/bankcc.py <<'EOF'\n\"\"\"Big-blob foam metrics. mask = foammask.foam_mask (colour R,G,B >= 140,140,200, 7x7 opening, Benny bbox\nand HUD removed). Blobs = 4-connected components with area >= 1200 px (drops glints/streaks/bubble rims).\nPer side (L: x<432, R: x>=432), rows y 950..1400 (near camera):\n  WIDTH(row) = innermost foam x - outermost foam x + 1 of the big-blob mask in that half-row\n  NEAR = mean WIDTH over rows that contain foam, also max; COVER = % of rows with foam\nROWS = % o …[+2577 chars]`
+
+### 🧑 User — 2026-11-15T21:54:33.201Z
+
+> ↩︎ result: references/05_flow_into_the_current.png
+>    L: NEAR mean  82.7px ( 9.6%) max 231px (26.7%) COVER  57.8%  ROWS  14.3%  AREA(y>540)  3.5%
+>    R: NEAR mean  85.0px ( 9.8%) max 222px (25.7%) COVER  35.6%  ROWS  10.1%  AREA(y>540)  2.7%
+> qa/pilot05/wave5/baseline/05.png
+>    L: NEAR mean  64.6px ( 7.5%) max 101px (11.7%) COVER  63.1%  ROWS  73.7%  AREA(y>540)  7.9%
+>    R: NEAR mean  84.6px ( 9.8%) max 130px (15.0%) COVER 100.0%  ROWS 100.0%  AREA(y>540) 10.8%
+> qa/pilot05/wave5/foam/iso_noflank/05.png
+>    L: NEAR mean   0.0px ( 0.0%) max   0px ( 0.0%) COVER   0.0%  ROWS  14.1%  AREA(y>540)  4.2%
+>    R: NEAR mean   0.0px ( 0.0%) max   0px ( 0.0%) COVER   0.0%  ROWS   2.0%  AREA(y>540)  2.0%
+
+### 🤖 Claude — 2026-11-15T21:54:34.825Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/cc3.png"}`
+
+### 🧑 User — 2026-11-15T21:54:34.868Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:55:00.821Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cd /home/user/rainbow- && python3 - <<EOF\np='$S/bankcc.py'\nt=open(p).read()\nt=t.replace(\"\"\"        line.append(f'{side}: NEAR\"\"\",\"\"\"        ext = 0\n        for y in range(540, H):\n            xs = np.where(half[y])[0]\n            if len(xs): ext = max(ext, xs.max() + 1)\n        line.append(f'{side}: EXT(y>540) {ext:3d}px ({100*ext/W:4.1f}%)  NEAR\"\"\")\nopen(p,'w').write(t)\nEOF\npython3 -I $S/bankcc.py $S references/05_flow_into_the_current.png qa/pilot05/wave5/baseline/05.png; g …[+115 chars]`
+
+### 🧑 User — 2026-11-15T21:55:02.240Z
+
+> ↩︎ result: references/05_flow_into_the_current.png
+>    L: EXT(y>540) 407px (47.1%)  NEAR mean  82.7px ( 9.6%) max 231px (26.7%) COVER  57.8%  ROWS  14.3%  AREA(y>540)  3.5%
+>    R: EXT(y>540) 383px (44.3%)  NEAR mean  85.0px ( 9.8%) max 222px (25.7%) COVER  35.6%  ROWS  10.1%  AREA(y>540)  2.7%
+> qa/pilot05/wave5/baseline/05.png
+>    L: EXT(y>540) 432px (50.0%)  NEAR mean  64.6px ( 7.5%) max 101px (11.7%) COVER  63.1%  ROWS  73.7%  AREA(y>540)  7.9%
+>    R: EXT(y>540) 432px (50.0%)  NEAR mean  84.6px ( 9.8%) max 130px (15.0%) COVER 100.0%  ROWS 100.0%  AREA(y>540) 10.8%
+> 3://   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> 52:  writeFileSync(opt.plunge ? 'qa/continuity/capture_log.json' : `qa/capture_log${size ? '_' + size.join('x') : ''}.json`, JSON.stringify(log, null, 2));
+
+### 🤖 Claude — 2026-11-15T21:55:23.133Z
+
+> 🔧 **Bash** `{"command": "sed -n 14,60p scripts/capture.mjs; ls scripts/*.mjs | head -30", "description": "Read capture script body"}`
+
+### 🧑 User — 2026-11-15T21:55:23.170Z
+
+> ↩︎ result: const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'string' ? opt.size.split('x').map(Number) : null;
+> const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> mkdirSync(outDir, { recursive: true });
+> mkdirSync('qa', { recursive: true });
+> 
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5201);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = { when: new Date().toISOString(), renderer: null, shots: [], errors: [] };
+> try {
+>   for (const id of ids) {
+>     const [w, h] = size ?? NATIVE[id] ?? [864, 1536];
+>     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+>     page.on('console', (m) => { if (m.type() === 'error') log.errors.push(`[${id}] ${m.text()}`); });
+>     page.on('pageerror', (e) => log.errors.push(`[${id}] pageerror ${e.message}`));
+>     await page.goto(`${vite.url}/?qa=1&d …[+1898 chars]
+
+### 🤖 Claude — 2026-11-15T21:55:28.384Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,13p scripts/capture.mjs && sed -n 146,200p src/vfx/index.ts | grep -n \"foam\\|qaRafts\\|__waterQA\" ", "description": "Read capture helpers import and QA hook"}`
+
+### 🧑 User — 2026-11-15T21:55:28.412Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> 2:    (window as unknown as { __waterQA: () => unknown }).__waterQA = () => {
+> 6:      return { bubbles: bubbles.qaScreen(cam, w, h), rafts: foam.qaRafts(), fanStrength: crown.uniforms.uStrength.value, waterlineR: ribbon.uniforms.uBennyR.value };
+> 15:    stats: () => ({ instances: foam.inst …[+173 chars]
+
+### 🤖 Claude — 2026-11-15T21:55:37.009Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/foam.ts'\nt=open(p).read()\nold=\"\"\"        if (qa.length < 64 && i % 4 === 0) qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2) });\"\"\"\nnew=\"\"\"        if (qa.length < 80 && i % 2 === 0) {\n          // screen y (0 top … 1 bottom) of the bank's inner edge on this row\n          const yN = pv.copy(fr.pos).addScaledVector(fr.right, side * a).addScaledVector(fr.up, hIn).project(cam).y;\n          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: …[+720 chars]`
+
+### 🧑 User — 2026-11-15T21:55:37.065Z
+
+> ↩︎ result: 52:  const hIn = EDGE_LIFT * uIn * uIn * uIn - 0.07;
+> 704:        const hIn = heightAt(s, side * a, time), hOut = heightAt(s, side * outA, time);
+
+### 🤖 Claude — 2026-11-15T21:55:39.772Z
+
+Now the probe script (scratch, not a capture): loads 05 and dumps the flank-row screen positions and bubble QA.
+
+### 🤖 Claude — 2026-11-15T21:55:46.574Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cat > $S/probe.mjs <<'EOF'\nimport { writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst out = process.argv[2];\nconst q = process.argv[3] ?? '';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5231);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\n  await page.g …[+1111 chars]`
+
+### 🧑 User — 2026-11-15T21:55:58.905Z
+
+> ↩︎ result: ok /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/probe0.json
+> visible True puffs 1236 shown 1095
+> L ds  -3.40 lat  -1.84 k  0.11  y  1742 px
+> L ds  -3.19 lat  -1.85 k  0.11  y  1673 px
+> L ds  -2.80 lat  -1.85 k  0.11  y  1565 px
+> L ds  -2.29 lat  -1.86 k  0.18  y  1452 px
+> L ds  -1.69 lat  -1.89 k  0.37  y  1342 px
+> L ds  -1.01 lat  -1.91 k  0.61  y  1246 px
+> L ds  -0.26 lat  -1.93 k  0.88  y  1164 px
+> L ds   0.56 lat  -2.02 k  1.13  y  1095 px
+> L ds   1.44 lat  -2.52 k  1.04  y  1035 px
+> L ds   2.37 lat  -2.93 k  1.09  y   982 px
+> L ds   3.36 lat  -3.22 k  1.30  y   931 px
+> L ds   4.40 lat  -3.69 k  1.39  y   880 px
+> L ds   5.48 lat  -4.33 k  1.36  y   831 px
+> L ds   6.62 lat  -4.95 k  0.90  y   788 px
+> L ds   7.79 lat  -5.27 k  0.51  y   756 px
+> L ds   9.01 lat  -5.24 k  0.42  y   736 px
+> L ds  10.28 lat  -5.09 k  0.42  y   720 px
+> L ds  11.58 lat  -4.95 k  0.42  y   705 px
+> L ds  12.92 lat  -4.84 k  0.42  y   688 px
+> L ds  14.30 lat  -4.77 k  0.42  y   671 px
+> R ds  -3.40 lat   1.13 k  0.86  y  1736 px
+> R ds  -3.19 lat   1.14 k  0.91  y  1667 px
+> R ds  -2.80 lat   1.28 k  0.88  y  1558 px
+> R ds  -2.29 lat   1.36 k  0.94  y  1441 px
+> R ds  -1.69 lat   1.45 k  1.03  y  1 …[+753 chars]
+
+### 🤖 Claude — 2026-11-15T21:56:51.148Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cat > $S/envsearch.py <<'EOF'\nimport math\ndef hash1(n):\n    x = math.sin(n * 127.1 + 311.7) * 43758.5453\n    return x - math.floor(x)\ndef noise1(x):\n    i = math.floor(x); f = x - i; u = f * f * (3 - 2 * f)\n    return hash1(i) * (1 - u) + hash1(i + 1) * u\ndef sm(a, b, x):\n    t = min(1, max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t)\nS0 = 132.438\nwant = {\n 'L': [((-1.55, -0.65), 1), ((0.45, 1.7), 1), ((-3.4, -2.1), 0), ((-0.35, 0.15), 0), ((2.3, 9.0), 0)],\n 'R': [((-1.45, -0.85 …[+1012 chars]`
+
+### 🧑 User — 2026-11-15T21:57:01.622Z
+
+> ↩︎ result: L [(0.0098, 555.849, 0.45), (0.0204, 478.518, 0.85), (0.037, 478.345, 0.85)]
+> R [(0.0275, 10.726, 0.85), (0.0322, 10.899, 0.85), (0.0448, 10.553, 0.85)]
+> L -3.5:0.00 -3.0:0.00 -2.5:0.00 -2.0:0.35 -1.5:1.00 -1.0:1.00 -0.5:0.89 +0.0:0.11 +0.5:0.98 +1.0:1.00 +1.5:0.96 +2.0:0.12 +2.5:0.24 +3.0:0.10 +3.5:0.00 +4.0:0.00 +4.5:0.00 +5.0:0.00 +5.5:0.00 +6.0:0.00 +6.5:0.00 +7.0:0.00 +7.5:0.00 +8.0:0.00 +8.5:0.00 +9.0:0.00 +9.5:0.00 +10.0:0.00
+> R -3.5:0.00 -3.0:0.00 -2.5:0.00 -2.0:0.00 -1.5:1.00 -1.0:0.90 -0.5:0.00 +0.0:0.00 +0.5:0.15 +1.0:0.15 +1.5:0.01 +2.0:0.42 +2.5:0.00 +3.0:0.00 +3.5:0.60 +4.0:1.00 +4.5:0.99 +5.0:1.00 +5.5:1.00 +6.0:1.00 +6.5:1.00 +7.0:0.67 +7.5:0.83 +8.0:1.00 +8.5:1.00 +9.0:1.00 +9.5:1.00 +10.0:0.00
+
+### 🤖 Claude — 2026-11-15T21:57:35.151Z
+
+> 🔧 **Bash** `{"command": "grep -n \"'05'\\|id: '05'\\|05:\" src/world/course.ts | head -5; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nimport sys; sys.path.insert(0,'$S')\nexec(open('$S/envsearch.py').read().split('best = {}')[0])\nfor side,seed,f in (('L',555.849,0.45),('R',10.726,0.85)):\n  xs=[env(100+i*0.1,seed,f) for i in range(1000)]\n  on=[x>0.5 for x in xs]; frac=sum(on)/len(on)\n  # longest gap\n  g=0;mg=0\n  for o in on:\n    g=0 if o else g+1; mg=max(mg,g)\n  print(side,'fraction of s with clump %.2f, longest bare stretch %.1f u'%(frac,m …[+107 chars]`
+
+### 🧑 User — 2026-11-15T21:57:35.220Z
+
+> ↩︎ result: 16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 53:  '05': 'FLOW INTO THE CURRENT',
+> 205:  mark('05');
+> 206:  // ---- 05: long STRAIGHT perforated current tube (ref 05: concentric rings, ONE vanishing point);
+> 216:  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+> L fraction of s with clump 0.42, longest bare stretch 9.3 u
+> R fraction of s with clump 0.39, longest bare stretch 5.1 u
+> 
+> /** c = (ambient occlusion 0..1, seed 0..1, tint -1..1) → instanceColor (see PUFF_VERT) */
+> interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number }
+> 
+> // ---------------------------------------------------------------------------------- berm profile
+> /** berm spans e ∈ [BERM_IN, BERM_OUT] units outward from the ribbon edge (negative = over the water) */
+> export const BERM_IN = -0.6;
+> export const BERM_OUT = 1.2;
+> const hash1 = (n: number) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+> const noise1 = (x: number) => { const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f); return hash1(i) * (1 - u) + hash1(i + 1) * u; };
+> /** 0..1 lumpiness of the bank at ( …[+1915 chars]
+

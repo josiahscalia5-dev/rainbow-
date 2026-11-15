@@ -28,6 +28,14 @@ export const BENNY_DIMS = {
   /** lower-body bulge (radial gain at its peak): a full round plush ball below the cuff, not a bowl (ref 05 rear:
    *  body ≈ as wide as the cuff from the cuff down to the water) */
   pear: 0.13,
+  /** centre (below the ball centre) and width of that bulge */
+  bulgeY: 0.24,
+  bulgeW: 0.38,
+  /** fuller, flatter bottom (wave 5, ref 05 rear: the plush ball stays ≈ cuff-wide down to the waterline and ends
+   *  in a broad round base, not an egg tip). Lower-half cross-section r_xz = r·(1 − t^p)^(1/p), t = −y/r,
+   *  p = 2 + flat (0 = sphere), radial gain capped at flatCap */
+  flat: 0,
+  flatCap: 1.5,
   /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y < 0) */
   stretch: 0.1,
   /** beanie tilt (rad, about X; + = front down). Wave 4: back to a slight backward tilt so the front brim clears the
@@ -54,11 +62,23 @@ export const BENNY_DIMS = {
  * their places) → a big round plush ball below the beanie.
  */
 function deformBody(v: THREE.Vector3, out: THREE.Vector3): THREE.Vector3 {
-  const r = BENNY_DIMS.skin;
+  const D = BENNY_DIMS;
+  const r = D.skin;
   const zf = THREE.MathUtils.smoothstep(v.z / r, 0.1, 0.75);
-  const k = 1 + BENNY_DIMS.pear * Math.exp(-(((v.y + 0.24) / 0.38) ** 2)) * (1 - 0.8 * zf);
-  const y = v.y < 0 ? v.y * (1 + (BENNY_DIMS.stretch * -v.y) / r) : v.y;
+  const face = 1 - 0.8 * zf;
+  let k = 1 + D.pear * Math.exp(-(((v.y + D.bulgeY) / D.bulgeW) ** 2)) * face;
+  k *= 1 + (bottomGain(-v.y / r) - 1) * face;
+  const y = v.y < 0 ? v.y * (1 + (D.stretch * -v.y) / r) : v.y;
   return out.set(v.x * k, y, v.z * k);
+}
+
+/** radial gain of the flattened lower half at t = −y/r (1 on the upper half / with flat = 0) */
+function bottomGain(t: number): number {
+  const D = BENNY_DIMS;
+  if (D.flat <= 0 || t <= 0) return 1;
+  const tc = Math.min(t, 0.9999);
+  const p = 2 + D.flat;
+  return Math.min(D.flatCap, Math.pow(1 - Math.pow(tc, p), 1 / p) / Math.sqrt(1 - tc * tc));
 }
 
 const FACE_DIR = new THREE.Vector3(0, 0.05, 1).normalize();

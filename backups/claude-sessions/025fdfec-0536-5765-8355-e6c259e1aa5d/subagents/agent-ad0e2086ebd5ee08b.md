@@ -456,3 +456,107 @@ The scratchpad is shared with other specialists (someone overwrote measure.py). 
 > 850 100:(s137.6 l-3.85) 200:(s137.8 l-2.91) 300:(s138.0 l-1.93) 560:(s138.4 l+0.63) 660:(s138.5 l+1.61)  hw 5.66 core -0.15
 > 900 100:(s136.3 l-3.28) 200:(s136.5 l-2.42) 300:(s136.6 l-1.54) 560:(s136.8  …[+2211 chars]
 
+### 🤖 Claude — 2026-11-15T21:54:39.501Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nr.crop((100,1150,764,1400)).resize((1328,500),Image.LANCZOS).save('$W/ref_near_zoom.png')\nr.crop((0,560,864,1000)).save('$W/ref_mid.png')\nb=Image.open('qa/pilot05/wave5/baseline/05.png').convert('RGB')\nb.crop((0,560,864,1000)).save('$W/base_mid.png')\n\"", "description": "Zoom ref near field and mid field crops"}`
+
+### 🧑 User — 2026-11-15T21:54:40.171Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:54:41.716Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/ref_near_zoom.png"}`
+
+### 🧑 User — 2026-11-15T21:54:41.747Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:55:16.809Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/glsl.ts"}`
+
+### 🧑 User — 2026-11-15T21:55:16.830Z
+
+> ↩︎ result: 1	/** Shared GLSL snippets for Rainbow water/foam/bubble shaders (WebGL2, mobile-safe). */
+> 2	import * as THREE from 'three';
+> 3	
+> 4	export const NOISE_GLSL = /* glsl */ `
+> 5	float hash12(vec2 p) {
+> 6	  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+> 7	  p3 += dot(p3, p3.yzx + 33.33);
+> 8	  return fract((p3.x + p3.y) * p3.z);
+> 9	}
+> 10	float vnoise(vec2 p) {
+> 11	  vec2 i = floor(p);
+> 12	  vec2 f = fract(p);
+> 13	  vec2 u = f * f * (3.0 - 2.0 * f);
+> 14	  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15	             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 16	}
+> 17	float fbm3(vec2 p) {
+> 18	  float a = 0.5, s = 0.0;
+> 19	  for (int i = 0; i < 3; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(17.1, 9.2); a *= 0.5; }
+> 20	  return s;
+> 21	}
+> 22	// cheap cellular "soap foam" pattern: 0 at cell centres -> 1 at borders
+> 23	float cells(vec2 p) {
+> 24	  vec2 i = floor(p);
+> 25	  vec2 f = fract(p);
+> 26	  float md = 8.0;
+> 27	  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+> 28	    vec2 g = vec2(float(x), float(y));
+> 29	    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 30	    vec2 r = g + o - f;
+> 31	    md = min(md, dot(r, r));
+> 32	  }
+> 33	  return sqrt(md);
+> 34	}
+> 35	vec3 ir …[+5450 chars]
+
+### 🤖 Claude — 2026-11-15T21:55:18.753Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"uBenny\\|ribbonWake\\|wake(\" src/vfx/index.ts | head -20; grep -n \"water.wake\\|\\.wake(\" src/game/Game.ts | head", "description": "Check how uBenny is fed"}`
+
+### 🧑 User — 2026-11-15T21:55:18.880Z
+
+> ↩︎ result: 8: *   water.wake(bennyBodyCentre, forward, right, speed, dt);   // centre of the (lifted) body, not the root
+> 48:  wake(pos: THREE.Vector3, forward: THREE.Vector3, right: THREE.Vector3, speed: number, dt: number): void;
+> 94:  /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
+> 95:  const qaNoRibbonWake = qaHide.includes('ribbonWake');
+> 151:      return { bubbles: bubbles.qaScreen(cam, w, h), rafts: foam.qaRafts(), fanStrength: crown.uniforms.uStrength.value, waterlineR: ribbon.uniforms.uBennyR.value };
+> 183:      if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+> 201:    wake(pos, forward, right, speed, dt) {
+> 217:        (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);
+> 218:        ribbon.uniforms.uBennyR.value = waterlineR;
+> 162:  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+> 366:    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
+
+### 🤖 Claude — 2026-11-15T21:55:20.074Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 195,225p src/vfx/index.ts", "description": "Read wake implementation"}`
+
+### 🧑 User — 2026-11-15T21:55:20.108Z
+
+> ↩︎ result: }
+>       }
+>       spray.update(dt, camera);
+>       crown.update(time, dt);
+>       for (const k of qaHide) { const o = parts[k]; if (o) o.visible = false; }
+>     },
+>     wake(pos, forward, right, speed, dt) {
+>       // Benny's arc length / lateral from his actual position (focus lags one frame)
+>       const f0 = course.sample(Math.max(0, focus));
+>       const d = tmpV3.copy(pos).sub(f0.pos);
+>       const s = Math.min(course.length, Math.max(0, focus + d.dot(f0.tan)));
+>       const f = course.sample(s);
+>       d.copy(pos).sub(f.pos);
+>       const lateral = d.dot(f.right);
+>       // pos = Benny's real body centre (Game.ts passes it AFTER the runtime's ride lift). The waterline
+>       // radius is the chord of the fluffy ball at the water surface, so the contact foam, the crown and
+>       // the ribbon wake hug his actual footprint. (Deriving the radius from `above / BENNY_RIDE_OFFSET`
+>       // made it grow with the lift and drew a white contact band ~2x wider than the body.)
+>       const above = d.dot(f.up) - surfaceHeight(s, lateral, curTime);
+>       const waterlineR = Math.sqrt(Math.max(BENNY_OUTER_R * BENNY_OUTER_R - above * above, (0.35 * BENNY_OUTER_R) ** 2));
+>       const strength = Math.min(1, sp …[+714 chars]
+

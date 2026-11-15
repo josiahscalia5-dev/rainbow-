@@ -558,3 +558,256 @@ Re-calling `goto('05')` after the mask toggle re-renders deterministically. Fixi
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I - <<EOF\np='$S/tools/cap05.mjs'\ns=open(p).read()\na=\"\"\"    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r()))));\n    await page.waitForTimeout(250);\n    await page.screenshot({ path: \\`\\${outDir}/\\${name}_mask.png\\`\"\"\"\nb=\"\"\"    await page.evaluate(() => window.__rainbow.goto('05'));\n    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));\n    await page.waitForT …[+485 chars]`
 
+### 🧑 User — 2026-11-15T21:54:06.247Z
+
+> ↩︎ result: 21:53
+> L022 {"q":"","calls":121,"tris":608313,"info":{"body":[1.512,-41.102,-74.738],"up":[-0.025,0.999,-0.042],"fwd":[0.004,-0.042,-0.999],"scale":1},"errs":[]}
+> L012 {"q":"bennyLift=0.12","calls":121,"tris":608313,"info":{"body":[1.514,-41.2,-74.734],"up":[-0.025,0.999,-0.042],"fwd":[0.004,-0.042,-0.999],"scale":1},"errs":[]}
+> == L022
+> ALL bbox x 125-713 y 530-1178  (w 589 h 649)
+>   body  x  229- 612 y  983-1178  w 384 h 196 px 44303
+>   pom   x  341- 489 y  748- 876  w 149 h 129 px 12124
+>   cuff  x  272- 563 y  924-1010  w 292 h  87 px 14218
+>   crown x  125- 713 y  530-1013  w 589 h 484 px 17788
+>   star  x  465- 541 y  910- 988  w  77 h  79 px 2951
+> centre col x=418: top 756 cuff 955-1010 bottom 1178
+> HAT incl pom 255 px = 39.3%   BODY below cuff 168 px = 25.9%  of H 649
+> cuff width 292; star centre (503,949) rel cuff-centre x +0.58 half-widths
+> body rows (y: red runs):
+>   990: 546-563   span 283
+>   1000: 277-301 517-594   span 323
+>   1010: 264-269 274-368 439-605   span 349
+>   1020: 239-608   span 370
+>   1030: 232-610   span 379
+>   1040: 234-603   span 370
+>   1050: 234-590   span 362
+>   1060: 245-568   span 328
+>   1070: 275-563   span 289
+>   1080: 280-560   span 290
+>   1090: 278-562   span 285
+>   1100:  …[+1364 chars]
+
+### 🤖 Claude — 2026-11-15T21:54:22.347Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((200,740,660,1220))\nb=Image.open('qa/pilot05/wave5/benny/it01/L012.png').convert('RGB').crop((200,740,660,1220))\nout=Image.new('RGB',(930,480),'white'); out.paste(a,(0,0)); out.paste(b,(470,0)); out=out.resize((1395,720)); out.save('$S/it01_rear.png')\"\npython3 -I - <<EOF\np='$S/tools/measure.py'\ns=open(p).read()\na=\"\"\"hat = parts['pom'] | parts['cuff' …[+529 chars]`
+
+### 🧑 User — 2026-11-15T21:54:23.136Z
+
+> ↩︎ result: ALL bbox x 231-612 y 766-1188  (w 382 h 423)
+>   body  x  231- 612 y 1000-1188  w 382 h 189 px 42842
+>   pom   x  341- 489 y  766- 896  w 149 h 131 px 12148
+>   cuff  x  273- 563 y  941-1029  w 291 h  89 px 14164
+>   crown x  289- 546 y  873- 973  w 258 h 101 px 17944
+>   star  x  466- 541 y  929-1006  w  76 h  78 px 2945
+> centre col x=418: top 777 cuff 974-1029 bottom 1188
+> HAT incl pom 253 px = 59.8%   BODY below cuff 159 px = 37.6%  of H 423
+> cuff width 291; star centre (504,968) rel cuff-centre x +0.59 half-widths
+
+### 🤖 Claude — 2026-11-15T21:54:23.247Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/it01_rear.png"}`
+
+### 🧑 User — 2026-11-15T21:54:23.286Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:54:51.652Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nim=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nR,G,B=im[...,0],im[...,1],im[...,2]\nfor y,x in [(1100,420),(1150,420),(1180,420),(1060,300),(1043,255),(1040,590)]: print('sample',y,x,im[y,x])\nfur=(R>180)&(G<175)&(B>110)&(B<235)&(R>G+60)\nfor y in list(range(1000,1100,10))+list(range(1100,1200,5)):\n    xs=np.nonzero(fur[y,200:660])[0]+200\n    if not len(xs): print(y,'-'); continue\n    # largest connected-ish span around centre 423 allowing gaps< …[+208 chars]`
+
+### 🧑 User — 2026-11-15T21:54:51.852Z
+
+> ↩︎ result: sample 1100 420 [254  54 153]
+> sample 1150 420 [220  59 152]
+> sample 1180 420 [116  35 127]
+> sample 1060 300 [225 106 200]
+> sample 1043 255 [255 111 206]
+> sample 1040 590 [243  79 191]
+> 1000 -
+> 1010 289-303
+> 1020 297-319 537-556
+> 1030 242-354 508-592
+> 1040 238-279 320-603
+> 1050 239-606
+> 1060 239-565 578-604
+> 1070 275-565
+> 1080 275-566
+> 1090 296-563
+> 1100 282-559
+> 1105 287-552
+> 1110 284-557
+> 1115 287-553
+> 1120 295-552
+> 1125 296-548
+> 1130 297-545
+> 1135 298-545
+> 1140 299-541
+> 1145 304-520
+> 1150 306-506
+> 1155 317-494
+> 1160 333-348 363-459
+> 1165 374-434
+> 1170 
+> 1175 -
+> 1180 -
+> 1185 -
+> 1190 -
+> 1195 -
+
+### 🤖 Claude — 2026-11-15T21:54:56.854Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nim=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nR,G,B=im[...,0],im[...,1],im[...,2]\nfur=(R>90)&(R>G+50)&(B<R+40)\nfor y in list(range(1130,1205,5)):\n    xs=np.nonzero(fur[y,240:620])[0]+240\n    if not len(xs): print(y,'-'); continue\n    runs=np.split(xs,np.nonzero(np.diff(xs)>12)[0]+1)\n    big=[r for r in runs if len(r)>8]\n    print(y,' '.join(f'{r[0]}-{r[-1]}' for r in big))\nfor x in range(330,531,25):\n    ys=np.nonzero(fur[1100:1230,x])[0] …[+140 chars]`
+
+### 🧑 User — 2026-11-15T21:54:57.118Z
+
+> ↩︎ result: 1130 292-550
+> 1135 293-544
+> 1140 296-537
+> 1145 297-532
+> 1150 302-530
+> 1155 306-527
+> 1160 313-522
+> 1165 319-519
+> 1170 328-509
+> 1175 339-499
+> 1180 367-474
+> 1185 
+> 1190 -
+> 1195 -
+> 1200 -
+> col 330 last fur y 1171
+> col 355 last fur y 1177
+> col 380 last fur y 1179
+> col 405 last fur y 1181
+> col 430 last fur y 1177
+> col 455 last fur y 1181
+> col 480 last fur y 1179
+> col 505 last fur y 1173
+> col 530 last fur y 1151
+
+### 🤖 Claude — 2026-11-15T21:55:18.737Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts"}`
+
+### 🧑 User — 2026-11-15T21:55:18.782Z
+
+> ↩︎ result: 1	/**
+> 2	 * Benny lab (benny-character-artist QA page).
+> 3	 *   /src/characters/benny/benny-lab.html?src=build|glb&views=refs|turntable|game[&quality=low]
+> 4	 * views=refs      → 3 portrait panels framed like the references: 05 rear (gameplay), 03 front 3/4, 02 dizzy
+> 5	 * views=turntable → front / three-quarter / side / back / rear-high with full framing
+> 6	 * views=game      → the stage-05 ride camera exactly as in Game/cameraRig (back 6.4, up 4.1, look 18 ahead
+> 7	 *                   1.8 up, fov 62, 9:16) + a lower reference-like rear camera + rear 3/4 + front, with an
+> 8	 *                   opaque water plane at the game's ride height (root = water + radius·0.55)
+> 9	 */
+> 10	import * as THREE from 'three';
+> 11	import { createCandyEnvironment, createRenderer } from '../../render/env';
+> 12	import { buildBenny } from './build';
+> 13	import { BENNY_RIDE_LIFT, createBennyRuntime, loadBenny } from './runtime';
+> 14	import type { BennyRuntime } from '../types';
+> 15	
+> 16	declare global { interface Window { __done?: boolean; __error?: string; __info?: unknown } }
+> 17	
+> 18	const q = new URLSearchParams(location.search);
+> 19	const furQuality = q.get('quality') === 'low' ? 'low' : 'high';
+> 20	
+> 21	async functi …[+9350 chars]
+
+### 🤖 Claude — 2026-11-15T21:55:52.479Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"export function knitCrownTextures\" -A60 src/characters/benny/textures.ts | head -80; grep -n \"CROWN_REPEAT\\|BENNY_COLORS\" -A14 src/characters/benny/textures.ts | head -30", "description": "Read knit crown texture code"}`
+
+### 🧑 User — 2026-11-15T21:55:52.522Z
+
+> ↩︎ result: 120:export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THREE.CanvasTexture } {
+> 121-  const W = 1024, Hh = 512;
+> 122-  const [c, ctx] = canvas(W, Hh);
+> 123-  const [hc, hctx] = canvas(W, Hh);
+> 124-  const C = BENNY_COLORS;
+> 125-  const stripes: [number, number, string, string, string][] = [
+> 126-    // [v0, v1, highlight, base, groove]   (v measured from bottom)
+> 127-    [0.0, 0.3, '#ffffff', C.white, C.whiteShade],
+> 128-    [0.3, 0.55, C.purpleLight, C.purple, C.purpleDark],
+> 129-    [0.55, 0.76, '#ffffff', C.white, C.whiteShade],
+> 130-    [0.76, 0.92, C.purpleLight, C.purple, C.purpleDark],
+> 131-    [0.92, 1.0, '#ffffff', C.white, C.whiteShade],
+> 132-  ];
+> 133-  hctx.fillStyle = '#000';
+> 134-  hctx.fillRect(0, 0, W, Hh);
+> 135-  const cols = 36;
+> 136-  const cw = W / cols;
+> 137-  const rowH = 30; // ≈ 0.025 units per stitch row on the 0.42-unit crown (stitches ≈ as tall as wide)
+> 138-  for (const [v0, v1, hi, base, shade] of stripes) {
+> 139-    const y0 = Hh * (1 - v1), y1 = Hh * (1 - v0);
+> 140-    ctx.fillStyle = shade;
+> 141-    ctx.fillRect(0, y0, W, y1 - y0);
+> 142-    const rows = Math.max(1, Math.round((y1 - y0) / rowH));
+> 143-    const rh = (y1 - y0) / rows;
+> 144-    for (le …[+2804 chars]
+
+### 🤖 Claude — 2026-11-15T21:55:55.333Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((260,840,590,1040)).resize((660,400))\nb=Image.open('qa/pilot05/wave5/benny/it01/L012.png').convert('RGB').crop((260,840,590,1040)).resize((660,400))\nout=Image.new('RGB',(1330,400),'white'); out.paste(a,(0,0)); out.paste(b,(670,0)); out.save('$S/hat_cmp.png')\"", "description": "Zoom ref vs game hat side by side"}`
+
+### 🧑 User — 2026-11-15T21:55:55.707Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:55:57.640Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/hat_cmp.png"}`
+
+### 🧑 User — 2026-11-15T21:55:57.674Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:56:21.974Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\ndef col(path, xs, y0=840, y1=1035):\n    im=np.asarray(Image.open(path).convert('RGB')).astype(int)\n    out=[]\n    for y in range(y0,y1):\n        p=im[y,xs[0]:xs[1]].mean(0)\n        R,G,B=p\n        c='W' if (G>170 and R>170) else ('P' if (B>150 and G<120) else ('?'))\n        out.append(c)\n    # run-length\n    s=''.join(out); runs=[]; i=0\n    while i<len(s):\n        j=i\n        while j<len(s) and s[j]==s[i]: j+=1\n        runs.append(f'{s[i]}{y0+i}-{y0+j-1}'); i=j\n    return ' '.join(ru …[+372 chars]`
+
+### 🧑 User — 2026-11-15T21:56:22.294Z
+
+> ↩︎ result: ref c P840-851 ?852-855 P856-859 ?860-869 P870-871 ?872-896 P897-897 ?898-902 W903-921 ?922-922 P923-955 ?956-956 W957-980 ?981-981 P982-1027 ?1028-1034
+> ref L ?840-880 W881-887 ?888-893 P894-894 ?895-897 P898-930 ?931-932 W933-963 ?964-964 P965-1018 ?1019-1028 P1029-1034
+> game c P840-887 ?888-888 W889-914 ?915-915 P916-943 ?944-944 W945-969 P970-980 ?981-981 P982-1034
+> game L ?840-889 W890-914 ?915-915 P916-943 ?944-944 W945-969 P970-971 ?972-973 P974-974 ?975-975 P976-1034
+
+### 🤖 Claude — 2026-11-15T21:56:44.193Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nfor p in ['references/05_flow_into_the_current.png','qa/pilot05/wave5/benny/it01/L012.png']:\n    im=np.asarray(Image.open(p).convert('RGB')).astype(int)\n    R,G,B=im[...,0],im[...,1],im[...,2]\n    y=(R>200)&(G>150)&(B<110)\n    sub=np.zeros_like(y); sub[880:1040,430:600]=y[880:1040,430:600]\n    ys,xs=np.nonzero(sub)\n    print(p.split('/')[-1], 'star x',xs.min(),xs.max(),'y',ys.min(),ys.max(),'centre',round(xs.mean()),round(ys.mean()),'px',len(xs))\n\"\n", "description": "Measure yellow star b …[+21 chars]`
+
+### 🧑 User — 2026-11-15T21:56:44.476Z
+
+> ↩︎ result: 05_flow_into_the_current.png star x 481 552 y 917 982 centre 519 953 px 1922
+> L012.png star x 463 534 y 921 996 centre 500 965 px 2393
+
+### 🤖 Claude — 2026-11-15T21:57:33.324Z
+
+> 🔧 **Bash** `{"command": "cat >> /home/user/rainbow-/qa/pilot05/wave5/benny/NOTES.md <<'EOF'\n### 21:51 re-export (no code change)\n`node scripts/export-models.mjs benny` → assets/models/benny.glb 1,128,212 B, magic `glTF`, LFS-tracked (cf83756b43),\n27 meshes / 39 nodes / clips idle swim tumble peek. Turntable docs/characters/benny_turntable.png shows round arm nubs.\n\n### it01 (21:53) — fresh GLB, game capture 05, lift 0.22 (code) and ?bennyLift=0.12; flat-ID mask measured\n| | ref | baseline (old GLB) | it01 lift 0.22 | it01 lift 0.12 |\n|---|---|---|---|---|\n| bbox | x 230–612 y 767–1185 | arms ≈ x 2 …[+1294 chars]`
+
+### 🧑 User — 2026-11-15T21:57:33.380Z
+
+> ↩︎ result: tools/model-lab.html:13:    <script type="module" src="./model-lab.ts"></script>
+> blender
+> make_env_geometry_ref.py
+> make_env_plate.py
+> make_env_plate_v2.py
+> make_env_plate_v3.py
+> model-lab.html
+> model-lab.ts
+> water-lab.html
+> water-lab.ts
+> 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> --
+> 27:export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+

@@ -1,12 +1,12 @@
 {
   "last_run": {
-    "time": "2026-11-15T21:51:29+00:00",
-    "reason": "daemon",
+    "time": "2026-11-15T21:54:04+00:00",
+    "reason": "hook:Stop",
     "result": "committed-local-only",
-    "files_staged": 14,
+    "files_staged": 22,
     "pushed_verified": false,
     "branch": "claude/rainbow-3d-account-transfer-syorak",
-    "commit": "ff03254edcb44b1cc4cc4538530eaedc58d7e067",
+    "commit": "e4996dfc5f2c3ee5a498fe41a36341d9d97444d5",
     "error": "push failed after retries: Post \"https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8949337b65bc3760351bb0f26c306a99c81dc4b65cec723151e49ee695d7dc29/verify\": Forbidden\nerror: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-'",
     "duration_s": 75
   },
@@ -14,7 +14,7 @@
   "branch": "claude/rainbow-3d-account-transfer-syorak",
   "last_verified_remote_sha": "f72ea4547cc0ed7a4d9857a9a67fccb931065ec3",
   "last_successful_backup_utc": "2026-11-15T21:50:58+00:00",
-  "consecutive_failures": 1,
+  "consecutive_failures": 2,
   "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=312); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-15T21:55:00+00:00"
+  "next_scheduled_utc": "2026-11-15T22:00:00+00:00"
 }
