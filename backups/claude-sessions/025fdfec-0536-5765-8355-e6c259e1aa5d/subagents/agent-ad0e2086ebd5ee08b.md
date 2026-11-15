@@ -1074,3 +1074,29 @@ The right band shows a hard corner at ≈(620, 813) where the bank clamp `min()`
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T22:04:36.337Z
+
+Near field and S-bends look right. Before the last iteration I want to make sure the LOW_Q (Android low-quality) variant also compiles. Let me check how quality is selected.
+
+### 🤖 Claude — 2026-11-15T22:04:37.439Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"quality\" src/vfx/index.ts src/game/Game.ts src/main.ts 2>/dev/null | head -15; head -30 scripts/water-lab.mjs; which glslangValidator glslc 2>/dev/null", "description": "Find quality switch and water-lab script"}`
+
+### 🧑 User — 2026-11-15T22:04:37.482Z
+
+> ↩︎ result: Exit code 1
+> src/vfx/index.ts:4: *   const water = createWater(course, { quality: 'high' });
+> src/vfx/index.ts:63:export function createWater(course: Course, opts: { quality?: 'high' | 'low' } = {}): WaterSystem {
+> src/vfx/index.ts:64:  const quality = opts.quality ?? 'high';
+> src/vfx/index.ts:71:  const ribbon = createRibbon(course, { s0: ribbonS0, s1: course.length, quality });
+> src/vfx/index.ts:80:  const whirl = createWhirlpool(quality, { points: cutPts, radius: Math.max(3.6, course.stage('04').tube * 0.85) });
+> src/vfx/index.ts:81:  const drum = createDrumWater(quality);
+> src/vfx/index.ts:82:  const wave = createFinalWave(course, quality);
+> src/vfx/index.ts:84:  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality, height: (s, lat, t) => ribbon.heightAt(s, lat, t) });
+> src/vfx/index.ts:85:  const bubbles = createBubbles(course, { quality, sStart: ribbonS0 });
+> src/vfx/index.ts:86:  const spray = createSpray(quality);
+> src/vfx/index.ts:87:  const crown = createRiderSplash(quality);
+> src/vfx/index.ts:188:        const n = quality === 'high' ? 3 : 1;
+> src/vfx/index.ts:233:      const rate = (quality === 'high' ? 150 : 55) * strength;
+> src/vfx/index.ts:256:      const n =  …[+1591 chars]
+
