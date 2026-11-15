@@ -98,3 +98,4 @@ error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow
 error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-' |
 | 2026-11-15T21:57:44+00:00 | daemon | committed-local-only | `8ee9b1c76557` | `claude/rainbow-3d-account-transfer-syorak` | 15 | False | push failed after retries: Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8949337b65bc3760351bb0f26c306a99c81dc4b65cec723151e49ee695d7dc29/verify": Forbidden
 error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-' |
+| 2026-11-15T21:59:43+00:00 | manual:lfs-host-fix | committed+pushed | `e2e8b2838702` | `claude/rainbow-3d-account-transfer-syorak` | 17 | True |  |

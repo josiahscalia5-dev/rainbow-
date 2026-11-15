@@ -751,3 +751,34 @@ Backticks inside the GLSL template literal. Fixing.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/water/it01 2>&1 | tail -3; python3 -c \"\nimport json; d=json.load(open('qa/capture_log.json')); print('errors', len(d['errors'])); [print(e[:600]) for e in d['errors'][:3]]\"; python3 -I $W/wmeasure.py qa/pilot05/wave5/water/it01/05.png", "description": "Typecheck, capture it01, check errors, measure", "timeout": 620000}`
 
+### 🧑 User — 2026-11-15T22:00:01.030Z
+
+> ↩︎ result: TSC_OK
+> 05 → qa/pilot05/wave5/water/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":121,"tris":608313,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> errors 0
+> == qa/pilot05/wave5/water/it01/05.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lumStd pinkRuns
+>   560   1.7   0.5  31.3  0.6  18.6 | #7BB8FF  #ED52EB |  37.9  0-7 16-21 64-80 88-131 167-172 174-184 192-200 203-208 231-242 244-255 277-295 310-319 478-485 681-694 711-730 750-755 757-762 770-779 811-821 828-839 842-848
+>   600  10.5   0.7  29.4  0.6  31.8 | #5499F1  #FF5BF2 |  41.3  0-23 98-121 135-141 144-153 184-189 191-207 209-220 329-365 376-386 494-501 503-510 515-524 787-803 805-821 824-829
+>   700  29.2   1.2  20.9  0.6  37.7 | #35A8FF  #FB58ED |  38.0  0-10 326-379 384-463 782-803
+>   800  30.3   0.2  31.2 14.9  21.2 | #1CA7FF  #FB53EF |  39.1  27-84 87-147 149-191 194-228 622-689 694-707
+>   900  26.2   0.2  25.9 20.6  22.4 | #15A8FF  #F752EB |  38.1  0-106 110-116 135-152 156-179 190-195 645-651 655-665 673-706
+>  1000  22.5   0.3  46.3 18.9   8.9 | #13A9FF  #FE58E4 |  29.5  59-179 293-299 475-605 726-829 848-853
+>  1100  28.7   0.2  57.3  0.5  1 …[+863 chars]
+
+### 🤖 Claude — 2026-11-15T22:00:04.251Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 scripts/triptych.py $W/tri01.png 1100 REF=references/05_flow_into_the_current.png PREV=qa/pilot05/wave5/baseline/05.png NOW=qa/pilot05/wave5/water/it01/05.png", "description": "Triptych ref/baseline/it01"}`
+
+### 🧑 User — 2026-11-15T22:00:05.081Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/tri01.png (1889, 1142)
+
+### 🤖 Claude — 2026-11-15T22:00:06.257Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/tri01.png"}`
+
+### 🧑 User — 2026-11-15T22:00:06.495Z
+
+> ↩︎ result: [image]
+

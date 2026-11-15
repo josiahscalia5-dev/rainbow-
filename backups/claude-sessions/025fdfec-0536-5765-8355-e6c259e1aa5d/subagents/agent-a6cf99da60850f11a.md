@@ -914,3 +914,40 @@ Now the lab driver (one Vite, many variants; mask + colour render each).
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; enc() { python3 -I -c \"import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))\" \"$1\"; }\ntimeout 900 node $S/tools/lab.mjs $S/lab g05 A:bennyLift=0.12\\&dims=$(enc '{\"flat\":0.7,\"pear\":0.09,\"stretch\":0.0}') B:bennyLift=0.12\\&dims=$(enc '{\"flat\":0.9,\"pear\":0.06,\"stretch\":0.0}') C:bennyLift=0.12\\&dims=$(enc '{\"flat\":0.7,\"pear\":0.08,\"stretch\":0.0,\"bulgeY\":0.34}') 2>&1 | tail -1\nfor n in A B C; do echo \"== $n\"; python3 -I $S/tools/measure.py $ …[+154 chars]`
 
+### 🧑 User — 2026-11-15T21:59:57.656Z
+
+> ↩︎ result: done C
+> == A
+> centre col x=406: top 765 cuff 975-1029 bottom 1181
+>   1109: 265-539   span 275
+>   1119: 274-531   span 262
+>   1129: 280-526   span 247
+>   1139: 288-517   span 230
+>   1149: 299-509   span 223
+>   1159: 304-491   span 193
+>   1169: 332-336 340-467 471-480   span 162
+>   1179: 365-371 375-382 394-402 406-416 421-432 441-450   span 124
+>   1189:    span 2
+> == B
+> centre col x=406: top 765 cuff 975-1029 bottom 1185
+>   1109: 260-264 268-534   span 279
+>   1119: 273-533   span 265
+>   1129: 277-527   span 251
+>   1139: 290-521   span 239
+>   1149: 296-509 514-517   span 229
+>   1159: 307-493   span 196
+>   1169: 331-477 481-486   span 166
+>   1179: 353-355 359-445 450-453   span 108
+>   1189:    span 52
+> == C
+> centre col x=406: top 765 cuff 975-1029 bottom 1182
+>   1109: 260-540   span 281
+>   1119: 268-535   span 272
+>   1129: 277-526   span 256
+>   1139: 290-521   span 232
+>   1149: 295-509   span 237
+>   1159: 305-494   span 196
+>   1169: 327-343 349-479   span 166
+>   1179: 350-353 358-361 373-426 430-440 444-452   span 118
+>   1189:    span 57
+
