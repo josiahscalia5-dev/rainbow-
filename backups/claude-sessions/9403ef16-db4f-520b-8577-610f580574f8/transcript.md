@@ -3900,3 +3900,63 @@ Before-frames captured. The console errors printed are in the old checkout's log
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && timeout 900 node scripts/capture.mjs 04 05 06 07 08 --out=qa/pilot05/wave6/regress0408/now 2>&1 | grep -E \"^0[4-8]\" | sed 's/,\"modules.*//' && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\nfor n in ['04','05','06','07','08']:\n    a=np.asarray(Image.open(f\"$S/before/{n}.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(f\"qa/pilot05/wave6/regress0408/now/{n}.png\").convert('RGB')).astype(int)\n    d=np.abs(a-b).sum(2); dd=d[230:]  #  …[+962 chars]`
 
+### 🧑 User — 2026-11-15T23:44:09.401Z
+
+> ↩︎ result: TSC_OK
+> 04 → qa/pilot05/wave6/regress0408/now/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":736100
+> 05 → qa/pilot05/wave6/regress0408/now/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":633521
+> 06 → qa/pilot05/wave6/regress0408/now/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":71,"tris":551017
+> 07 → qa/pilot05/wave6/regress0408/now/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":180,"tris":668535
+> 08 → qa/pilot05/wave6/regress0408/now/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":159,"tris":618643
+> 04 vs session start: px changed >40 (whole/below HUD): 1.61 / 0.0 %
+> 05 vs session start: px changed >40 (whole/below HUD): 14.99 / 14.95 %
+> 06 vs session start: px changed >40 (whole/below HUD): 20.23 / 20.93 %
+> 07 vs session start: px changed >40 (whole/below HUD): 1.4 / 0.01 %
+> 08 vs session start: px changed >40 (whole/below HUD): 1.3 / 0.0 %
+> 05 coin dx: [14.1, 7.2, -4, 0.9, -24.8, -25.1]
+>  "ok": true,
+>   "verticalDrop": 61.19,
+> gameplay pass True | coins 1330 -> 2240 | plunge 61.41 | steps 2139 | pause True | camCut True
+
+### 🤖 Claude — 2026-11-15T23:44:23.550Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open(\"$S/before/06.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(\"qa/pilot05/wave6/regress0408/now/06.png\").convert('RGB')).astype(int)\nd=(np.abs(a-b).sum(2)>120)\nImage.fromarray((d*255).astype(np.uint8)).resize((432,768)).save(\"$S/diff06_mask2.png\")\nprint('rows:', [ (y, round(d[y:y+192].mean()*100,1)) for y in range(0,1536,192)])\nEOF\npython3 -I scripts/triptych.py $S/ab06e.png 640 BEFORE=$S/be …[+145 chars]`
+
+### 🧑 User — 2026-11-15T23:44:24.121Z
+
+> ↩︎ result: rows: [(0, np.float64(14.1)), (192, np.float64(23.9)), (384, np.float64(29.1)), (576, np.float64(33.3)), (768, np.float64(34.7)), (960, np.float64(16.3)), (1152, np.float64(4.5)), (1344, np.float64(5.9))]
+> /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/ab06e.png (1112, 682)
+
+### 🤖 Claude — 2026-11-15T23:44:26.090Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/ab06e.png"}`
+
+### 🧑 User — 2026-11-15T23:44:26.128Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:44:46.276Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && O=qa/pilot05/wave6/regress0408 && mkdir -p $O/before && cp $S/before/0[4-8].png $O/before/ && declare -A R=([04]=04_through_the_five_arrows [05]=05_flow_into_the_current [06]=06_crest_the_rinse_arch [07]=07_dive_the_washer_tube [08]=08_final_spin_chamber) && for n in 04 05 06 07 08; do python3 -I scripts/triptych.py $O/side_by_side_$n.png 1000 APPROVED=references/${R[$n]}.png SESSION_START=$O/before/$n.png NOW=$O/now/$n.png | tail -1; done; python3 - <<'EOF'\nfrom PIL import Image\nimport glob\n …[+452 chars]`
+
+### 🧑 User — 2026-11-15T23:44:49.480Z
+
+> ↩︎ result: qa/pilot05/wave6/regress0408/side_by_side_04.png (1718, 1042)
+> qa/pilot05/wave6/regress0408/side_by_side_05.png (1718, 1042)
+> qa/pilot05/wave6/regress0408/side_by_side_06.png (1718, 1042)
+> qa/pilot05/wave6/regress0408/side_by_side_07.png (1718, 1042)
+> qa/pilot05/wave6/regress0408/side_by_side_08.png (1718, 1042)
+> sheet (1718, 5210)
+
+### 🤖 Claude — 2026-11-15T23:44:51.290Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/regress0408/side_by_side_06.png"}`
+
+### 🧑 User — 2026-11-15T23:44:51.464Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:45:20.316Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/pilot05/wave6/camera_lock/README.md'\ns=open(p).read()\nold=s[s.index('* u 22–72: C¹ Hermite'):s.index('Verified: tsc OK')]\nnew='''* u 22–67: C¹ Hermite through the measured knots (u 26.3 … 55.5); u ≥ 67 to the 06 join: the ORIGINAL curve\n  verbatim (the 06 up-vector smoothing looks ±12 samples back into 05, so the junction must be identical).\n* 05 exit bend u 56–67 (sin², C¹, amplitude 1.3537, solved on Course.length): the route keeps exactly its\n  old length 435.192, because the water wave/flow phase, Benny's float bob, foam and bubbles are keyed on\ …[+2325 chars]`
+

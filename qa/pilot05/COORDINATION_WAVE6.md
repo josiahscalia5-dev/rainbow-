@@ -60,3 +60,13 @@ Started 2026-11-15 ~23:05 UTC. Branch `ccr-93add0fa-q17ey6` = `claude/rainbow-3d
 * Do not commit or push (autosave does). Never touch `references/` or `character_references/`.
 * No paid generation (World Labs, Meshy, Rodin), no secrets. Measured numbers only; no invented
   fidelity percentages. Mobile budget: ≤ 130 draw calls, ≤ 650k tris for the whole 05 frame.
+
+## Update ~23:45 UTC (coordinator)
+* The first four wave-6 specialists were stopped (user interrupt) before any capture; the foam partial
+  edit is saved as `qa/pilot05/wave6/foam/partial_soap05_unwired.patch` (foam.ts restored).
+* CAMERA LOCK done: `qa/pilot05/wave6/camera_lock/README.md`. The 05 river S-curve was refitted to the
+  reference coin trail (course.ts, coordinator-owned, LOCKED). New baseline for 05: `qa/pilot05/wave6/regress0408/now/05.png`.
+* STAGE ANCHORS block in `environment.ts` (06/07 ring/lid/row phases from the 06 stage start) is
+  coordinator-owned: do not change it.
+* Regression rule (new): 04/07/08 must stay pixel-identical below the HUD to `qa/pilot05/wave6/regress0408/now/NN.png`
+  unless your change is meant to affect them (shared materials) — then look at them and say so in NOTES.

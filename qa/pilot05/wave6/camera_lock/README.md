@@ -31,12 +31,18 @@ converted to offsets from the tunnel line (u = distance along the line):
 u 21.6 −0.31 · 26.3 +0.60 · 32.2 −0.37 · 43.0 −1.85 · 55.5 −1.28 · 67.0 −0.26 (coin offsets; the course
 offset is ≈ coin / 1.62). The old sine (λ 32) swung right too late and too wide (+1.45 at u≈32).
 * u ≤ 22 (the 04→05 join, Benny's crest, the checkpoint search window, hence this camera): unchanged.
-* u 22–72: C¹ Hermite through the measured knots.
-* u 56–72 (behind the far tunnel at the checkpoint): a right swing solved so the route keeps exactly the
-  old length (435.193): every downstream s (06, 07, plunge, 08) is unchanged to < 0.001 u.
-Verified: tsc OK; continuity ok (drop 61.19, all gaps 0); gameplay test pass, 2139 steps, 91 coins,
-plunge 61.41 (identical to the wave-5 baseline); 04 pixel-identical; 06 same structure (wall-slot
-texture phase only).
+* u 22–67: C¹ Hermite through the measured knots (u 26.3 … 55.5); u ≥ 67 to the 06 join: the ORIGINAL curve
+  verbatim (the 06 up-vector smoothing looks ±12 samples back into 05, so the junction must be identical).
+* 05 exit bend u 56–67 (sin², C¹, amplitude 1.3537, solved on Course.length): the route keeps exactly its
+  old length 435.192, because the water wave/flow phase, Benny's float bob, foam and bubbles are keyed on
+  absolute s. Without it (first attempt) 06 shifted: a gold ring band in front of Benny.
+* STAGE ANCHORS (environment.ts): the 06/07 rings, hood lids and slot rows are laid out from the 06 stage
+  start (phases 5.5644 / 0.96618 reproduce the original layout), not from the 05 start — a safety net so a
+  future 05 change cannot slide them again.
+Verified (final): tsc OK; continuity ok (drop 61.19, all gaps 0); gameplay pass, 2139 steps, 91 coins,
+plunge 61.41 (identical to the wave-5 baseline). Against the session-start commit 7ae64c3 (worktree capture),
+pixels changed below the HUD: 04 0.00 %, 07 0.01 %, 08 0.00 %, 06: same content, ≈2 px uniform camera
+shift (tunnel-axis smoothing window reaches into 05), 05: intended. Side-by-sides: qa/pilot05/wave6/regress0408/.
 
 ## Rebuild
 ```

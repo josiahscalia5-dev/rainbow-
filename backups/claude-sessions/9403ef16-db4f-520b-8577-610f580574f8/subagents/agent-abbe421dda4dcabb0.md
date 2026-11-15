@@ -836,3 +836,18 @@ Ring mismatch is mostly positional: rings overlap on only 2.4 % of the frame. On
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T23:44:52.506Z
+
+I have most of the numbers. Two quick extra measurements: coin colour (game coins look peach-orange in the crops) and the HUD icon offsets, since the HUD carries 11 % of the frame difference.
+
+### 🤖 Claude — 2026-11-15T23:44:59.998Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/coins.py <<'EOF'\nimport numpy as np\nfrom PIL import Image\nP={'ref':('/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png',(474,726,40)),'game':('/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png',(487,739,38))}\nfor tag,(p,(cx,cy,r)) in P.items():\n    im=Image.open(p).convert('RGB'); rgb=np.asarray(im).astype(np.float32)\n    hsv=np.asarray(im.convert('HSV')).astype(np.float32); h=hsv[...,0]*360/255; s=hsv[...,1]/255; v=hsv[...,2]/255\n    yy,xx=np.mgrid[0:15 …[+782 chars]`
+
+### 🧑 User — 2026-11-15T23:45:00.358Z
+
+> ↩︎ result: ref coin1 face: RGB med [252, 214, 15] hue med 49 S 0.94 V p10/med 0.93/0.99
+> ref HUD coin icon centre (419,57) bbox x378-459 y18-95
+> game coin1 face: RGB med [255, 198, 82] hue med 40 S 0.68 V p10/med 1.00/1.00
+> game HUD coin icon centre (476,54) bbox x418-559 y15-88
+
