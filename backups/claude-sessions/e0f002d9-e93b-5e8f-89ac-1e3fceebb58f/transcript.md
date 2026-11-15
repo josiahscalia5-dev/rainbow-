@@ -2516,3 +2516,40 @@ You approved it, and the setup script is now saved on your **"rainbow-"** enviro
 
 > 🔧 **Bash** `{"command": "cp /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/env-setup.sh scripts/cloud-env-setup.sh && sed -i '3a # Saved as the setup script of the claude.ai cloud environment \"rainbow-\" (approved 2026-11-15).\\n# It runs from the folder that holds the checkout, before Claude starts. Re-paste it there if lost.' scripts/cloud-env-setup.sh && head -6 scripts/cloud-env-setup.sh && bash -n scripts/cloud-env-setup.sh && echo syntax-ok && . ~/.rainbow-autosave.env 2>/dev/null; timeout 600 python3 scripts/rainbow-autosave.py --reason manual --message \"recover …[+252 chars]`
 
+### 🧑 User — 2026-11-15T18:33:38.241Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # Rainbow (josiahscalia5-dev/rainbow-) container setup: real LFS assets, Android SDK, Blender 5.3,
+> # World Labs Claude Code plugin. Every step is non-fatal so a session always starts.
+> # Saved as the setup script of the claude.ai cloud environment "rainbow-" (approved 2026-11-15).
+> # It runs from the folder that holds the checkout, before Claude starts. Re-paste it there if lost.
+> if [ -d rainbow- ]; then
+> syntax-ok
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "fc3d2d357238fa58ca0a9e3f748e40062ff56e9e",
+> 81e639e16994713d5f70d0314e796d1c298eeacf	refs/heads/ccr-6f431adf-7h0m8y
+> fc3d2d357238fa58ca0a9e3f748e40062ff56e9e	refs/heads/claude/rainbow-3d-recovery-m4v347
+> [This command modified 1 file you've previously read: backups/CONVERSATION_INDEX.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T18:33:51.289Z
+
+The setup script is approved, saved on your **"rainbow-"** environment, and backed up in the repo.
+
+- **Saved on the environment:** it runs automatically each time a fresh container is built for a Rainbow session. It hasn't run on a fresh container yet, so it's unproven until your next new session. I'll check its results then. This session already has everything installed.
+- **Backed up in the repo:** a copy is in `scripts/cloud-env-setup.sh` and pushed. The recovery branch is now at `fc3d2d3`, and the original `ccr-6f431adf-7h0m8y` is still untouched at `81e639e`.
+- **Each new container gets:** the real models, kit ZIP and APK from Git LFS, the Android SDK (platform 34, build tools 34.0.0), Blender 5.3.0 and the World Labs plugin.
+- **Already handled without the script:** the 10 specialists and the 5-minute autosave live in the repo; Playwright comes with the container; your World Labs connector attaches from claude.ai.
+- **Two limits:**
+  - Blender MCP isn't included because it needs Blender's desktop window; I drive Blender with Python scripts instead.
+  - The script doesn't switch branches, so pick `claude/rainbow-3d-recovery-m4v347` when you start a session.
+
+One other thing: the "rainbow-" environment's network is now **unrestricted**, set in Settings rather than by me, so the earlier host list no longer applies. Tell me if you'd like it limited again.
+
+**Next, unless you say otherwise:** I'll write the 5 missing documents and update the two status notes, then start the manual Screen 05 fixes with before/after screenshots. The World Labs pilot still needs your Atlas account finished at https://atlas.worldlabs.ai. After that, I'll list your projects (free) and give you a costed plan to approve.
+
+### 🧑 User — 2026-11-15T18:33:53.504Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
