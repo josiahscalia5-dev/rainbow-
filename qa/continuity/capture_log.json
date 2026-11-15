@@ -1,5 +1,5 @@
 {
-  "when": "2026-11-15T17:48:04.241Z",
+  "when": "2026-11-15T17:52:07.416Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
@@ -25,13 +25,13 @@
         "bennyY": -51.814,
         "bennyVisible": true,
         "cam": [
-          12.42,
-          -47.38,
-          -230.92
+          12.61,
+          -47.45,
+          -230.88
         ]
       },
       "stats": {
-        "fps": 60.1,
+        "fps": 60.3,
         "calls": 1,
         "triangles": 1,
         "geometries": 163,
@@ -73,7 +73,7 @@
         ]
       },
       "stats": {
-        "fps": 60.2,
+        "fps": 61.4,
         "calls": 1,
         "triangles": 1,
         "geometries": 79,
@@ -109,16 +109,16 @@
         "bennyY": -112.528,
         "bennyVisible": true,
         "cam": [
-          11.73,
-          -106.99,
-          -271.29
+          11.97,
+          -106.66,
+          -272.38
         ]
       },
       "stats": {
-        "fps": 60.8,
+        "fps": 61.5,
         "calls": 1,
         "triangles": 1,
-        "geometries": 140,
+        "geometries": 136,
         "textures": 42,
         "modules": {
           "water": "vfx/index.ts",
@@ -151,13 +151,13 @@
         "bennyY": -112.988,
         "bennyVisible": true,
         "cam": [
-          11.24,
-          -108.81,
-          -273.98
+          11.98,
+          -108.12,
+          -274.44
         ]
       },
       "stats": {
-        "fps": 60.2,
+        "fps": 60.1,
         "calls": 1,
         "triangles": 1,
         "geometries": 155,

@@ -80,7 +80,15 @@ export class RideCamera {
     const anchor = benny.clone().addScaledVector(right, -lat * (1 - p.latFollow));
     // offsets use an 'upright' up: banking only tilts the camera as much as `roll` allows
     const upPos = new THREE.Vector3(0, 1, 0).lerp(up, Math.max(p.roll, Math.abs(dir.y))).normalize();
-    outPos.copy(anchor).addScaledVector(dir, -p.back).addScaledVector(upPos, p.up);
+    // position: ON the curved course behind Benny (stays inside bending/pitching tubes, e.g. the
+    // 07 pull-up arc); aim: along his heading so he stays centred in winding streams
+    const fbk = this.course.sample(Math.max(0, s - p.back));
+    const upB = new THREE.Vector3(0, 1, 0).lerp(fbk.up, Math.max(p.roll, Math.abs(fbk.tan.y))).normalize();
+    const straightPos = anchor.clone().addScaledVector(dir, -p.back).addScaledVector(upPos, p.up);
+    const curvedPos = fbk.pos.clone().addScaledVector(fbk.right, lat * p.latFollow).addScaledVector(upB, p.up);
+    // use the curved position where the path bends in pitch (plunge arcs), straight elsewhere
+    const pitchBend = THREE.MathUtils.clamp(Math.abs(fbk.tan.y - f.tan.y) * 6, 0, 1);
+    outPos.copy(straightPos).lerp(curvedPos, Math.max(pitchBend, 0.35));
     outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(upPos, p.lookUp);
     outUp.set(0, 1, 0).lerp(up, p.roll).normalize();
     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the

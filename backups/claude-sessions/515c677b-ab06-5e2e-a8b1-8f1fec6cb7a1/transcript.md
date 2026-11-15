@@ -3074,3 +3074,102 @@ The continuity test now fails, presumably because the route end moved with the p
 
 > 🔧 **Bash** `{"command": "timeout 1500 node scripts/capture.mjs --plunge 2>&1 | grep \"→\" | cut -c1-140 && timeout 1500 node scripts/capture.mjs 2>&1 | grep -c \"→\" && python3 -I scripts/compare.py | tail -13; tail -2 /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/android-setup.log", "description": "Capture plunge proof frames and final 01-11 set", "timeout": 2400000}`
 
+### 🧑 User — 2026-11-15T17:51:03.085Z
+
+> ↩︎ result: 07a_plunge_top → qa/continuity/07a_plunge_top.png {"stage":"07","s":309.267,"y":-51.814,"calls":1,"tris":1,"modules":{"water":"vfx/index.t
+> 07b_plunge_mid → qa/continuity/07b_plunge_mid.png {"stage":"07","s":349.618,"y":-83.614,"calls":1,"tris":1,"modules":{"water":"vfx/index.t
+> 07c_plunge_bottom → qa/continuity/07c_plunge_bottom.png {"stage":"07","s":385.968,"y":-112.528,"calls":1,"tris":1,"modules":{"water":"vfx/
+> 07d_entering_08 → qa/continuity/07d_entering_08.png {"stage":"08","s":389.259,"y":-112.988,"calls":1,"tris":1,"modules":{"water":"vfx/inde
+> 11
+> | Screen | mad | hue_corr | edge_corr | masked |
+> |---|---|---|---|---|
+> | 01 | 63.0 | 0.548 | 0.054 | girl identity region |
+> | 02 | 70.3 | 0.731 | -0.0 | — |
+> | 03 | 67.0 | 0.585 | 0.011 | phone outline |
+> | 04 | 70.0 | 0.489 | 0.084 | — |
+> | 05 | 78.5 | 0.513 | 0.001 | — |
+> | 06 | 74.0 | 0.738 | -0.044 | — |
+> | 07 | 73.7 | 0.441 | -0.03 | — |
+> | 08 | 73.7 | 0.58 | -0.009 | — |
+> | 09 | 72.5 | 0.803 | -0.036 | — |
+> | 10 | 78.5 | 0.705 | -0.025 | girl identity region |
+> | 11 | 70.3 | 0.765 | 0.098 | girl identity region |
+> SDK_DONE
+
+### 🤖 Claude — 2026-11-15T17:51:10.108Z
+
+SDK is installed. Let me look at the plunge proof frames, then set up the Capacitor Android build:
+
+### 🤖 Claude — 2026-11-15T17:51:13.412Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nids=['07a_plunge_top','07b_plunge_mid','07c_plunge_bottom','07d_entering_08']\nims=[Image.open(f'qa/continuity/{i}.png').convert('RGB').resize((288,512)) for i in ids]\nS=Image.new('RGB',(288*4+24,540),(20,0,40))\nd=ImageDraw.Draw(S)\nf=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',16)\nfor k,(im,i) in enumerate(zip(ims,ids)):\n    S.paste(im,(k*296,26)); d.text((k*296+6,4),i,fill=(255,230,140),font=f)\nS.save('qa/continuity/07_to_08_strip.png'); print('ok')\nEOF\nnpx tsc --noEmit 2>&1 | he …[+85 chars]`
+
+### 🤖 Claude — 2026-11-15T17:51:13.771Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/continuity/07_to_08_strip.png"}`
+
+### 🧑 User — 2026-11-15T17:51:15.944Z
+
+> ↩︎ result: ok
+
+### 🧑 User — 2026-11-15T17:51:15.970Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:51:38.049Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "old_string": "    const upPos = new THREE.Vector3(0, 1, 0).lerp(up, Math.max(p.roll, Math.abs(dir.y))).normalize();\n    outPos.copy(anchor).addScaledVector(dir, -p.back).addScaledVector(upPos, p.up);\n    outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(upPos, p.lookUp);", "new_string": "    const upPos = new THREE.Vector3(0, 1, 0).lerp(up, Math.max(p.roll, Math.abs(dir.y))).normalize();\n    // position: ON the curved course behind Benny (stays inside bending/pitching tubes, e.g. the\n    // …[+814 chars]`
+
+### 🧑 User — 2026-11-15T17:51:38.218Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/cameraRig.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-15T17:51:39.803Z
+
+> 🔧 **Bash** `{"command": "cat > capacitor.config.ts <<'EOF'\nimport type { CapacitorConfig } from '@capacitor/cli';\n\nconst config: CapacitorConfig = {\n  appId: 'com.rainbow.washergame',\n  appName: 'Rainbow',\n  webDir: 'dist',\n  android: {\n    backgroundColor: '#2a0b46',\n  },\n};\n\nexport default config;\nEOF\nnpx tsc --noEmit 2>&1 | head -5 && npx vite build 2>&1 | tail -6", "description": "Add Capacitor config; production web build", "timeout": 300000}`
+
+### 🧑 User — 2026-11-15T17:51:44.265Z
+
+> ↩︎ result: dist/assets/runtime-C7Y4UHjJ.js                               1.72 kB │ gzip:   1.02 kB
+> dist/assets/runtime-Dfu6kEFj.js                               6.39 kB │ gzip:   2.90 kB
+> dist/assets/vfx-lagZ6svK.js                                  45.77 kB │ gzip:  14.70 kB
+> dist/assets/GLTFLoader-BC_cQoIe.js                           46.05 kB │ gzip:  13.67 kB
+> dist/assets/main-B4DQnNZx.js                                668.66 kB │ gzip: 179.52 kB
+> ✓ built in 1.84s
+
+### 🤖 Claude — 2026-11-15T17:51:54.508Z
+
+> 🔧 **Bash** `{"command": "ls -la dist/assets/*.glb 2>/dev/null; npx cap add android 2>&1 | tail -5 && npx cap sync android 2>&1 | tail -3 && ls android/ && cat > /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/gradle-build.sh <<'EOF'\nexport ANDROID_HOME=/opt/android-sdk ANDROID_SDK_ROOT=/opt/android-sdk\ncd /home/user/rainbow-/android\necho \"sdk.dir=/opt/android-sdk\" > local.properties\n./gradlew assembleDebug --no-daemon --console=plain > /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/gradle.log 2>&1\necho \"GRADLE_EXIT=$?\" >> /tmp/c …[+316 chars]`
+
+### 🧑 User — 2026-11-15T17:51:56.533Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1176420 Nov 15 17:51 dist/assets/benny-CpKA1uCB.glb
+> -rw-r--r-- 1 root root 3546480 Nov 15 17:51 dist/assets/rainbow_girl-BGmVI95Z.glb
+> ✔ update android in 15.35ms
+> ✔ Syncing Gradle in 198.46μs
+> [success] android platform added!
+> Follow the Developer Workflow guide to get building:
+> https://capacitorjs.com/docs/basics/workflow
+> ✔ Updating Android plugins in 1.80ms
+> ✔ update android in 25.50ms
+> [info] Sync finished in 0.066s
+> app
+> build.gradle
+> capacitor-cordova-android-plugins
+> capacitor.settings.gradle
+> gradle
+> gradle.properties
+> gradlew
+> gradlew.bat
+> settings.gradle
+> variables.gradle
+> gradle-started
+
+### 🤖 Claude — 2026-11-15T17:52:01.734Z
+
+The Gradle debug build is running in the background. Meanwhile, recapturing with the camera fix, since it touches every ride stage:
+
+### 🤖 Claude — 2026-11-15T17:52:06.808Z
+
+> 🔧 **Bash** `{"command": "timeout 2000 node scripts/capture.mjs --plunge 2>&1 | grep -c \"→\" && timeout 2000 node scripts/capture.mjs 2>&1 | grep -c \"→\" && python3 -I scripts/compare.py > /dev/null && python3 - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nids=['07a_plunge_top','07b_plunge_mid','07c_plunge_bottom','07d_entering_08']\nims=[Image.open(f'qa/continuity/{i}.png').convert('RGB').resize((288,512)) for i in ids]\nS=Image.new('RGB',(288*4+24,540),(20,0,40)); d=ImageDraw.Draw(S)\nf=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',16)\nfor k,(im,i) in enumerate(zip …[+482 chars]`
+
