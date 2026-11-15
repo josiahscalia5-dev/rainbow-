@@ -907,3 +907,19 @@ Noted: hat smaller relative to a rounder, fuller body; check for any white/pale 
 > 120:    const p5 = STAGE_CAM['05'] as CamParams;
 > 121-    const w5 = this.axis ? THREE.MathUtils.smoothstep(s, st5.s0 + 1, st5.s0 + 8) * (1 - THR …[+2442 chars]
 
+### 🤖 Claude — 2026-11-15T20:01:09.986Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/fur.ts", "old_string": "    uTime: { value: 0 },\n    uWind: { value: new THREE.Vector3() },\n  };", "new_string": "    uTime: { value: 0 },\n    uWind: { value: new THREE.Vector3() },\n    /** QA segmentation colour (only compiled in when material.defines.BENNY_MASK is set, see runtime.ts) */\n    uMaskCol: { value: new THREE.Color(1, 0, 0) },\n  };"}`
+
+### 🧑 User — 2026-11-15T20:01:10.077Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/fur.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:01:13.331Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/fur.ts", "old_string": "      .replace(\n        '#include <emissivemap_fragment>',\n        `#include <emissivemap_fragment>\n        totalEmissiveRadiance += diffuseColor.rgb * 0.10 * vLayer;`,\n      );\n  };\n  material.customProgramCacheKey = () => `benny-fur-${shells}`;", "new_string": "      .replace(\n        '#include <emissivemap_fragment>',\n        `#include <emissivemap_fragment>\n        totalEmissiveRadiance += diffuseColor.rgb * 0.10 * vLayer;`,\n      )\n      .replace(\n        '#include <dithering_ …[+411 chars]`
+
+### 🧑 User — 2026-11-15T20:01:13.406Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/fur.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
