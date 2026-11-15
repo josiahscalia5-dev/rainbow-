@@ -45,7 +45,7 @@ export function eyeTexture(): THREE.CanvasTexture {
   ctx.fillStyle = sg;
   ctx.fillRect(0, 0, S, S);
   // iris
-  const R = S * 0.355;
+  const R = S * 0.24;
   const ig = ctx.createRadialGradient(cx, cy + R * 0.25, R * 0.15, cx, cy, R);
   ig.addColorStop(0, '#c98a4a');
   ig.addColorStop(0.45, '#8a4b22');
@@ -224,14 +224,14 @@ export function denimTexture(base = '#5d74b8'): THREE.CanvasTexture {
   ctx.fillRect(0, 0, S, S);
   ctx.lineWidth = 1.2;
   for (let i = -S; i < S * 2; i += 5) {
-    ctx.strokeStyle = r() > 0.5 ? 'rgba(160,180,235,0.22)' : 'rgba(30,40,90,0.22)';
+    ctx.strokeStyle = r() > 0.5 ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.16)';
     ctx.beginPath();
     ctx.moveTo(i, 0);
     ctx.lineTo(i + S, S);
     ctx.stroke();
   }
   for (let i = 0; i < 2500; i++) {
-    ctx.fillStyle = r() > 0.5 ? 'rgba(220,230,255,0.12)' : 'rgba(20,30,70,0.12)';
+    ctx.fillStyle = r() > 0.5 ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.1)';
     ctx.fillRect(r() * S, r() * S, 2, 1);
   }
   return tex(c, { repeat: true });

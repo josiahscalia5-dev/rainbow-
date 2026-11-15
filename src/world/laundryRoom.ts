@@ -34,7 +34,7 @@ export function buildLaundryRoom(o: LaundryRoomOptions): LaundryRoom {
     c.fillStyle = gr;
     c.fillRect(0, 0, w, h);
   });
-  const wallMat = new THREE.MeshStandardMaterial({ map: wallTex, roughness: 0.9, emissive: '#f4e6fb', emissiveIntensity: 0.55 });
+  const wallMat = new THREE.MeshStandardMaterial({ map: wallTex, roughness: 0.9, emissive: '#f4e6fb', emissiveIntensity: 0.25 });
   const floorTex = canvasTexture(512, 512, (c, w, h) => {
     c.fillStyle = '#e9d6ea';
     c.fillRect(0, 0, w, h);

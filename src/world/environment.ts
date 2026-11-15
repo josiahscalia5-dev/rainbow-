@@ -53,7 +53,7 @@ export function buildEnvironment(course: Course): Environment {
   const drumGeo = new THREE.CylinderGeometry(dA.radius, dA.radius, drumLen, 96, 24, true);
   drumGeo.rotateX(Math.PI / 2);
   drumGeo.translate(0, 0, (dA.zDoor + dA.zBack) / 2);
-  const drumMat = perforatedMetal({ color: '#f04fc8', emissive: '#c22aa6', emissiveIntensity: 0.45, slot: 0, repeatU: 54, repeatV: 15, holeSize: 0.44, streaks: 0.15 });
+  const drumMat = perforatedMetal({ color: '#f04fc8', emissive: '#c22aa6', emissiveIntensity: 0.3, slot: 0, repeatU: 54, repeatV: 15, holeSize: 0.44, streaks: 0.15 });
   zones.drumA.add(new THREE.Mesh(drumGeo, drumMat));
   // back wall with the drain opening
   const backShape = new THREE.Shape();
@@ -177,7 +177,7 @@ export function buildEnvironment(course: Course): Environment {
   // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
   // =====================================================================================
   const s08 = course.stage('08').s0;
-  const perfTubeMat = perforatedMetal({ color: '#c73fd9', emissive: '#8a1fb0', emissiveIntensity: 0.5, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.46, streaks: 0.5 });
+  const perfTubeMat = perforatedMetal({ color: '#c73fd9', emissive: '#8a1fb0', emissiveIntensity: 0.3, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.46, streaks: 0.5 });
   // split into chunks so frustum culling works
   const chunk = 40;
   for (let a = s05; a < s08; a += chunk) {
@@ -201,7 +201,7 @@ export function buildEnvironment(course: Course): Environment {
   const chamberGeo = new THREE.CylinderGeometry(C.radius, C.radius, cLen, 120, 30, true);
   chamberGeo.rotateX(Math.PI / 2);
   chamberGeo.translate(C.center.x, C.center.y, (C.zBack + C.zDoor) / 2);
-  const chamberMat = perforatedMetal({ color: '#cf45dc', emissive: '#9a24b8', emissiveIntensity: 0.5, slot: 1, repeatU: 92, repeatV: 22, holeSize: 0.46, streaks: 0.45 });
+  const chamberMat = perforatedMetal({ color: '#cf45dc', emissive: '#9a24b8', emissiveIntensity: 0.3, slot: 1, repeatU: 92, repeatV: 22, holeSize: 0.46, streaks: 0.45 });
   zones.chamber.add(new THREE.Mesh(chamberGeo, chamberMat));
   // back wall with the 07 inlet hole
   const inletC = course.pointAt(s08 - 0.2, 0, course.prop('tube', s08 - 0.2) - 0.9);
@@ -263,7 +263,7 @@ export function buildEnvironment(course: Course): Environment {
   zones.chamber.add(anchorC);
   // platform
   const P = WORLD.platform;
-  const platTopMat = perforatedMetal({ color: '#d556df', emissive: '#a02cb8', emissiveIntensity: 0.45, slot: 0, repeatU: 70, repeatV: 9, holeSize: 0.42, side: THREE.DoubleSide, metalness: 0.8 });
+  const platTopMat = perforatedMetal({ color: '#d556df', emissive: '#a02cb8', emissiveIntensity: 0.3, slot: 0, repeatU: 70, repeatV: 9, holeSize: 0.42, side: THREE.DoubleSide, metalness: 0.8 });
   const platTop = new THREE.Mesh(new THREE.CylinderGeometry(P.radius, P.radius, 0.35, 72, 1, false), platTopMat);
   platTop.position.set(P.center.x, P.topY - 0.18, P.center.z);
   zones.chamber.add(platTop);
@@ -284,7 +284,7 @@ export function buildEnvironment(course: Course): Environment {
   towel.mesh.position.set(P.center.x, P.topY, P.center.z - 0.4);
   zones.chamber.add(towel.mesh);
   // spray spouts on the side walls with pouring water
-  const spoutDome = perforatedMetal({ color: '#e05ad8', slot: 0, repeatU: 26, repeatV: 10, holeSize: 0.4, side: THREE.DoubleSide, emissiveIntensity: 0.5 });
+  const spoutDome = perforatedMetal({ color: '#e05ad8', slot: 0, repeatU: 26, repeatV: 10, holeSize: 0.4, side: THREE.DoubleSide, emissiveIntensity: 0.3 });
   const spoutPositions: [number, number, number][] = [[-1, -287, 1.3], [1, -292, 1.1], [-1, -306, 1.0], [1, -311, 1.15], [1, -320, 1.0]];
   for (const [side, z, scale] of spoutPositions) {
     const ang = THREE.MathUtils.degToRad(side > 0 ? 18 : 162);
@@ -316,7 +316,7 @@ export function buildEnvironment(course: Course): Environment {
 function buildBasinBackdrop(g: THREE.Group, goldMat: THREE.Material, chromeMat: THREE.Material) {
   const B = WORLD.basin;
   const wallZ = B.center.z - 17;
-  const pinkWall = new THREE.MeshStandardMaterial({ color: '#f070d0', metalness: 0.35, roughness: 0.3, emissive: '#d04ab8', emissiveIntensity: 0.45 });
+  const pinkWall = new THREE.MeshStandardMaterial({ color: '#f070d0', metalness: 0.35, roughness: 0.3, emissive: '#d04ab8', emissiveIntensity: 0.3 });
   const wall = new THREE.Mesh(new THREE.PlaneGeometry(80, 60), pinkWall);
   wall.position.set(B.center.x, B.rimY + 26, wallZ);
   g.add(wall);
@@ -354,7 +354,7 @@ function buildBasinBackdrop(g: THREE.Group, goldMat: THREE.Material, chromeMat: 
   hbar.position.copy(port).add(new THREE.Vector3(0, 0.6, 0.2));
   g.add(vbar, hbar);
   // control panel (left) with neon tee-shirt screen + buttons
-  const panel = new THREE.Mesh(new RoundedBoxGeometry(18, 10, 8, 4, 2.2), new THREE.MeshStandardMaterial({ color: '#f689dc', metalness: 0.4, roughness: 0.25, emissive: '#e060c0', emissiveIntensity: 0.45 }));
+  const panel = new THREE.Mesh(new RoundedBoxGeometry(18, 10, 8, 4, 2.2), new THREE.MeshStandardMaterial({ color: '#f689dc', metalness: 0.4, roughness: 0.25, emissive: '#e060c0', emissiveIntensity: 0.3 }));
   panel.position.set(B.center.x - 21, B.rimY + 5.5, wallZ + 7);
   panel.rotation.y = 0.35;
   g.add(panel);

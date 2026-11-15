@@ -16,6 +16,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { Course, StageId, WORLD } from '../world/course';
 import { buildEnvironment } from '../world/environment';
 import { createCandyEnvironment, createRenderer } from '../render/env';
+import { createGradePass } from '../render/grade';
 import { createHud } from '../ui/hud';
 import { createCoins, COIN_VALUE } from '../gameplay/coins';
 import { createInput } from '../gameplay/input';
@@ -29,7 +30,7 @@ const sm = (a: number, b: number, x: number) => THREE.MathUtils.smoothstep(x, a,
 const lerp = THREE.MathUtils.lerp;
 
 /** intro timeline marks (seconds) */
-const T = { dropEnd: 1.6, doorClose0: 1.9, doorClose1: 2.8, walk0: 3.0, peek: 4.4, cp01: 5.8, spin: 7.0, cp02: 9.2, drain: 11.0, rideStart: 13.6 };
+const T = { dropEnd: 1.6, doorClose0: 1.9, doorClose1: 2.8, walk0: 3.0, peek: 4.4, cp01: 5.8, spin: 7.0, cp02: 8.7, drain: 11.0, rideStart: 13.6 };
 /** outro timeline marks */
 const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 3.8, badge: 3.9, cp11: 5.2 };
 
@@ -55,10 +56,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.55, 0.55, 0.82);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.3, 0.4, 0.9);
   const useBloom = qs.get('bloom') !== '0';
   if (useBloom) composer.addPass(bloom);
   composer.addPass(new OutputPass());
+  composer.addPass(createGradePass());
 
   const resize = () => {
     const w = canvas.clientWidth || window.innerWidth;
@@ -209,7 +211,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
       const f = bennyPose(sB, 0, st.clock, pose);
       benny.root.position.copy(pose.pos);
       const tumble = sm(T.rideStart - 1.0, T.rideStart, t);
-      const spinQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(t * 5.1, t * 3.3, t * 4.2));
+      // tumble = rolling cartwheels seen by the camera: face the lens, roll around the view axis
+      const toCam = cam02(benny.root.position).pos.clone().sub(benny.root.position).normalize();
+      const face = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), toCam);
+      const roll = new THREE.Quaternion().setFromAxisAngle(toCam, Math.sin(t * 1.7) * 0.9 + t * 1.1);
+      const wobble = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.sin(t * 2.3) * 0.35, Math.sin(t * 1.9) * 0.4, 0));
+      const spinQ = roll.multiply(face).multiply(wobble);
       benny.root.quaternion.copy(spinQ).slerp(pose.quat, tumble);
       benny.update(dt, { swim: 0.4, steer: 0, speed: 8, time: st.clock, tumble: tumble < 0.99 });
       // towel lags behind and unravels in the drum
@@ -233,20 +240,19 @@ export async function startGame(canvas: HTMLCanvasElement) {
     // --- cameras
     if (t < T.spin + 0.6) {
       // 01: inside the drum looking out through the door, Benny peeking in the foreground
-      camera.position.set(-0.55, -0.95, -5.7);
+      camera.position.set(0.85, -1.05, -6.05);
       camera.up.set(0, 1, 0);
-      camera.lookAt(0.25, -0.35, dA.zDoor);
-      setFov(62);
+      camera.lookAt(-0.05, -0.2, dA.zDoor);
+      setFov(64);
     } else if (t < T.drain) {
-      // 02: tumbling with the swirl; the door ring above
-      const b = benny.root.position;
-      const want = new THREE.Vector3(b.x * 0.35, b.y - 1.6, Math.max(dA.zBack + 0.6, b.z - 3.2));
+      // 02: tumbling with the swirl; the door ring above (deterministic blend from the 01 shot)
+      const c2 = cam02(benny.root.position);
       const k2 = sm(T.spin + 0.6, T.spin + 1.6, t);
-      camera.position.lerp(want, k2 < 1 ? 0.12 : 0.2);
-      const look = b.clone().lerp(new THREE.Vector3(0, 0.6, dA.zDoor), 0.45);
+      const p01 = new THREE.Vector3(0.85, -1.05, -6.05), l01 = new THREE.Vector3(-0.05, -0.2, dA.zDoor);
+      camera.position.copy(p01.lerp(c2.pos, k2));
       camera.up.set(0, 1, 0);
-      camera.lookAt(look);
-      setFov(66);
+      camera.lookAt(l01.lerp(c2.look, k2));
+      setFov(lerp(64, 68, k2));
     } else {
       // chute chase cam, blending into the ride camera framing for 03
       const kk = sm(T.drain, T.rideStart, t);
@@ -260,6 +266,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
       setFov(lerp(66, 64, kk));
     }
     if (t >= T.rideStart) startRide();
+  };
+
+  /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */
+  const cam02 = (b: THREE.Vector3) => {
+    const dA = WORLD.drumA;
+    const pos = new THREE.Vector3(b.x * 0.3, b.y - 0.7, THREE.MathUtils.clamp(b.z - 3.0, dA.zBack + 0.4, dA.zDoor));
+    const look = b.clone().lerp(new THREE.Vector3(0, 0.2, dA.zDoor), 0.38).add(new THREE.Vector3(0, 0.55, 0));
+    return { pos, look };
   };
 
   const setFov = (f: number) => {
@@ -449,7 +463,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let fps = 60;
   let running = !qaMode;
   let dirty = true;
-  const render = () => { if (useBloom) composer.render(); else renderer.render(scene, camera); };
+  const render = () => composer.render();
   const frame = () => {
     const now = performance.now();
     const dt = Math.min(0.05, (now - last) / 1000);

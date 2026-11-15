@@ -112,6 +112,11 @@
    "sha256": "8a7a3268c5f9745832a7e3cf453d4ea12f6b95b2ec84317698ce62968a3048ea"
   },
   {
+   "path": "assets/models/rainbow_girl.glb",
+   "bytes": 3436472,
+   "sha256": "fe57b519e32231adacbd11d68eb9841415f08e2858ba272f37e4f4d4fd5c8c3d"
+  },
+  {
    "path": "backups/AGENTS_STATUS.md",
    "bytes": 2334,
    "sha256": "e9ab86ae2159f0880f3a9599425a3a83f45a09c9fa0cbedfc08dad3dac91847e"
@@ -119,7 +124,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "b6c7f973fa59fb43717694dd40be055a0ae0816e6d230930c6690cc49f2c6afe"
+   "sha256": "924a8dcc2887ab975f290b6d484d87a41b01ea85f0baf7f7248e6b484197c684"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -187,74 +192,124 @@
    "sha256": "c3ae2223d3861b1f5e39bc332b526a3c3f33f9040e8902047890f1060c94c3c4"
   },
   {
+   "path": "docs/characters/girl_turntable.png",
+   "bytes": 427605,
+   "sha256": "db08b941c91f563d1a12996c9d2a2ca258629e5bc2f8fd6fcafa5b0f5d135d7a"
+  },
+  {
+   "path": "docs/characters/girl_turntable_anim_leanReachTowel_t_1_6.png",
+   "bytes": 433389,
+   "sha256": "990e640fdd87f05e7e01571ca2beffd61a09421424362fc8b96608f68a588492"
+  },
+  {
+   "path": "docs/characters/girl_turntable_anim_walk_t_0_3.png",
+   "bytes": 432555,
+   "sha256": "06480cd0f45a26146ecbc2d733d620e5c1542a74ebbc16f4b79f7abfa1fa8c96"
+  },
+  {
    "path": "docs/path_graph.md",
    "bytes": 4605,
    "sha256": "16a7e0136effe382f020fb0d93259f74c8a4aa9a1d634553631400438cf57981"
   },
   {
+   "path": "docs/vfx/water.md",
+   "bytes": 6425,
+   "sha256": "1dee3d0a581f1a919d4db08572eba9a43bd5bd57f400286e18d7cd6f461146a7"
+  },
+  {
    "path": "docs/vfx/water_01.png",
-   "bytes": 217691,
-   "sha256": "41709bb360cdbf1fc5e9b7b0b8f310f5e715eb5047ed6fd5229be86e0633f9e1"
+   "bytes": 207166,
+   "sha256": "04a11c901bdbb00a869a9f4d0db8086f66867e70979dd98f4d9e9c17b094c431"
+  },
+  {
+   "path": "docs/vfx/water_01_low.png",
+   "bytes": 176863,
+   "sha256": "8711ad7aecb64f3b509d8be3525d88636785be5a71184bdf6666fb8989d5d0d5"
   },
   {
    "path": "docs/vfx/water_02.png",
-   "bytes": 213771,
-   "sha256": "58643a17ada39485b683c88629e1cbbf75cf99106e329bb8b6e8edbd457f939a"
+   "bytes": 226248,
+   "sha256": "234432b0e04a064d45b23e186c89a3b1b22a04b6c8b0d7f01c8964467df12537"
   },
   {
    "path": "docs/vfx/water_03.png",
-   "bytes": 313763,
-   "sha256": "21e1bff74aa7d58d2e9387019f34c7ac1faf902c133e9bbf8a31191f3ae6253c"
+   "bytes": 322493,
+   "sha256": "6394aa81db8926a0bd47c34526d6a29db40ce7ea14cf2e03736269cb1ccb9572"
+  },
+  {
+   "path": "docs/vfx/water_03_low.png",
+   "bytes": 303604,
+   "sha256": "a7bac08a9e961d6349abdb1f05f2242329ba9c8ad44ca26dcee5bfcd10eccf53"
   },
   {
    "path": "docs/vfx/water_04.png",
-   "bytes": 249782,
-   "sha256": "b1dee8b85c7bd2676872990873f7fa32f8fb5160e844d2b401d57c8615500f9b"
+   "bytes": 251582,
+   "sha256": "3b75da8115904bea2c36cd7438047f9ef6034e1771d02323ca7e89497fb30870"
+  },
+  {
+   "path": "docs/vfx/water_04_chevrons_topdown.png",
+   "bytes": 200279,
+   "sha256": "67f0ca8389a8ef0590e7c62e5ff43a79309e088a5530bd12bb688c08957c1290"
   },
   {
    "path": "docs/vfx/water_05.png",
-   "bytes": 199338,
-   "sha256": "3fda956414eb9efd8dedd45f31e3556c93bacaa4c253ef7adf9f09b3f259bd9c"
+   "bytes": 210992,
+   "sha256": "cfbd9d22f257d73407ab2033627a91281c32c9a66cf49297a22a06a60bc04a20"
+  },
+  {
+   "path": "docs/vfx/water_05_low.png",
+   "bytes": 193337,
+   "sha256": "7f1eadd15747e2e3c47ef0c5e829ebb6140ca96be088ebd91924c35613f63c74"
   },
   {
    "path": "docs/vfx/water_06.png",
-   "bytes": 122386,
-   "sha256": "efdc83ffb423735efb1765d11572082e71d898b711c3540e25e6a5e5baf2803d"
+   "bytes": 126544,
+   "sha256": "487a79f57fdf29fa63df0e2eccf52ada058dfaa8fc945ba44f075061decc4634"
   },
   {
    "path": "docs/vfx/water_07.png",
-   "bytes": 174270,
-   "sha256": "facb4358e94799676ef718a5d2ca4f2b224d735fae1e0aceb250a254cfb23238"
+   "bytes": 176201,
+   "sha256": "664bf5a7c2532e235ea3b2592ee9c52494d6ead44dec03bcf73b532850648f9f"
   },
   {
    "path": "docs/vfx/water_07mid.png",
-   "bytes": 231170,
-   "sha256": "2dc9ce146651d2a8762b58633008f9adabcd813ed8eb06113a61f0a5e7c4ff81"
+   "bytes": 255232,
+   "sha256": "94d1a3efacce472369115d23a9e525066315242218698af5dfa6dd9a7026e61f"
   },
   {
    "path": "docs/vfx/water_08.png",
-   "bytes": 158836,
-   "sha256": "8cc6f55715d5e8385e59e26f6e81715b9c29d8f4df5ea6d54c7c922ee4e0e9fc"
+   "bytes": 181676,
+   "sha256": "b243dbfa66ee55a9e991e8234ee9d2927f65ecb7e1155a1af96093bad8b6121e"
   },
   {
    "path": "docs/vfx/water_09.png",
-   "bytes": 226484,
-   "sha256": "75f188efa2cf5adb7f0497d6e3368d6de44df6c09664b36b078ed997bc29c9db"
+   "bytes": 228258,
+   "sha256": "9fe80112f5a702e82844e34da245dd83fd5ee7b7d6a37501807600a78cd073e3"
+  },
+  {
+   "path": "docs/vfx/water_09_low.png",
+   "bytes": 215245,
+   "sha256": "2335053e18b990c7ce199af8e91d77401b178cd2a7158cc9b56a21078f81860a"
   },
   {
    "path": "docs/vfx/water_10.png",
-   "bytes": 197667,
-   "sha256": "d6a083587e9477584fa3c49e7aa7883affe33f278836db04e8a9a4ab522b1b7f"
+   "bytes": 188253,
+   "sha256": "48b50bd49f8fdb3aa41d7cc81b7d46ea26497e98cec8c2a708fec2d5014800a7"
   },
   {
    "path": "docs/vfx/water_11.png",
-   "bytes": 110214,
-   "sha256": "fe9c57b6c8a8c327df4f3a405e942b214d02e0e03088c87e501436bab087f3ad"
+   "bytes": 46877,
+   "sha256": "4acf04458476aa8722e9a37f1a4ddb7a7cba432196c3f838ffbe46e999539562"
   },
   {
    "path": "docs/vfx/water_stats.json",
-   "bytes": 1279,
-   "sha256": "c1e402de69bb05face6adec75c1e1ff32d1a01f57733320471de65f435d53664"
+   "bytes": 3096,
+   "sha256": "e6899c84a42693e93b413353bccd2c3b24660c5786c6b4cb983107a1b91c4d1f"
+  },
+  {
+   "path": "docs/vfx/water_stats_low.json",
+   "bytes": 1023,
+   "sha256": "e8de867533b24ae8397af1df9a954d33b3182823eeb616e26f617085febe87e8"
   },
   {
    "path": "index.html",
@@ -273,8 +328,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 2159,
-   "sha256": "3f7486be2735a7d3db7599581c86c7560ef7250ddeb9db247298c6a67585ab86"
+   "bytes": 4061,
+   "sha256": "870d05ca072de52428c5ed4666042121093e4634dd2ab30c879bf7338cb34dae"
   },
   {
    "path": "qa/continuity_report.json",
@@ -357,6 +412,11 @@
    "sha256": "76fd115add143307d57e4ed8e7094dd073fd2f230042e90e847d74d743d60350"
   },
   {
+   "path": "scripts/compare.py",
+   "bytes": 7860,
+   "sha256": "e94bad29cbd65da78eebb1277779b7a5d17a15f1488140ce443c0db79c9cb221"
+  },
+  {
    "path": "scripts/continuity-test.ts",
    "bytes": 4002,
    "sha256": "d5cbd1fac1da2cd1a691b5d691728b51a9cc2deeb920cfecf3eae5a29f1a8a89"
@@ -428,8 +488,8 @@
   },
   {
    "path": "src/characters/girl/build.ts",
-   "bytes": 45863,
-   "sha256": "d7dee1f2c488beb20c69fc982028607666afdd036bcb37f39423beb73a24b7d0"
+   "bytes": 45482,
+   "sha256": "7498105940a2bc66ba8a3cf7e201d04c0849b39365648b8dbf139af262547b67"
   },
   {
    "path": "src/characters/girl/girl-lab.html",
@@ -438,8 +498,8 @@
   },
   {
    "path": "src/characters/girl/girl-lab.ts",
-   "bytes": 4746,
-   "sha256": "8aaa5fa67642b951d11ac4ec5e58877b611518a9b27d36674b2f28adb8630ebb"
+   "bytes": 5207,
+   "sha256": "4be581946af9c9625a6c501748c78bef2742a43d90321e724554a1a9afce6bf1"
   },
   {
    "path": "src/characters/girl/runtime.ts",
@@ -448,8 +508,8 @@
   },
   {
    "path": "src/characters/girl/textures.ts",
-   "bytes": 9922,
-   "sha256": "1cb3f696f16ed36a1e05f6267be2eac2595f4ba27d3c9dce83120ffc7dda101b"
+   "bytes": 9914,
+   "sha256": "ecd30b1986e120fa12e3e848d4c3d031fc6d4199d263adca102e848ff52a33b1"
   },
   {
    "path": "src/characters/types.ts",
@@ -458,13 +518,13 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 25982,
-   "sha256": "dcba09ddb604d3d6f38f2cc63859f378e5ff474c748a8364701e3236e6629542"
+   "bytes": 26917,
+   "sha256": "f3035d138e25a812ce2a7be4318a4c03128320aad1a926cb647b8b7f80be1c55"
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 3882,
-   "sha256": "baa5d646bcba37a635de895045015ae034841aaf7aecb7f6a00fb30fc61ec3f2"
+   "bytes": 4739,
+   "sha256": "83dcb0cf69eac6f9df82a65679802bea980ca001496b5f3644cd037824663ac5"
   },
   {
    "path": "src/game/modules.ts",
@@ -489,7 +549,12 @@
   {
    "path": "src/render/env.ts",
    "bytes": 2743,
-   "sha256": "2af00de4e3d62ee882e06e6d0129c32c0ce90628a3e37885ebedf576b7763a24"
+   "sha256": "c32e65e098cf763156fa6d4003e869bd45854ece6e8628f76ddfb1048aae686e"
+  },
+  {
+   "path": "src/render/grade.ts",
+   "bytes": 1265,
+   "sha256": "80a2f76f6dd5579c12901493c034b94fdebb3ac367e4f9673c1dd8538b410369"
   },
   {
    "path": "src/ui/hud.ts",
@@ -498,13 +563,13 @@
   },
   {
    "path": "src/vfx/bubbles.ts",
-   "bytes": 10187,
-   "sha256": "cc239359b83fd40398a1c8e8ef6ec9277f3fbdc7027cea121d389f78e1f516ba"
+   "bytes": 10400,
+   "sha256": "526946e5e072a148fcc0ee1fc0d1ffca22544ff944c46da2d7a538da04b402d7"
   },
   {
    "path": "src/vfx/drumWater.ts",
-   "bytes": 9343,
-   "sha256": "3a6a5fbb1f87630dc7e36c7b6a7041c2815c2112b571f0572db7754843b5e8bf"
+   "bytes": 9344,
+   "sha256": "41622a2706ea078c4c5a318e816ba29c432dcef3b6e50f45be6beecba8ddfddf"
   },
   {
    "path": "src/vfx/finalWave.ts",
@@ -523,8 +588,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 8961,
-   "sha256": "145c7136fa522e7e30fd9258e65d935c8230236df6ad170e8254dcebbf6b4491"
+   "bytes": 8987,
+   "sha256": "08eaace20441831138f6c592b3a497120c3dca7f1d845cd815557f87c3591d19"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -553,18 +618,18 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 27254,
-   "sha256": "2989b24adb9b9dd5a2d07f23c492a51572d2070940431a30623d5781643583d0"
+   "bytes": 27250,
+   "sha256": "a34a4b4c95c093f16d0d8a7caee23c78c0d3a491fefbe65548b1ff8da6904f1d"
   },
   {
    "path": "src/world/laundryRoom.ts",
    "bytes": 7485,
-   "sha256": "709eda943265531ce654a91386f41bb7b0d81a95cc56d7dab2240974994733d0"
+   "sha256": "a7f63768e740d39d19d75d8e6f8fbbfdcfe4bdcdc23dedaeea49865f8646f6c0"
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 6895,
-   "sha256": "4569a5c7fe3d216e57ab8db42ff920aea1d0f741548852d0809a764dc81c3ca2"
+   "bytes": 6893,
+   "sha256": "59b1696415d6da594c5fa571312fbd984446568a8fc9c51eb97a0094153d5c1b"
   },
   {
    "path": "src/world/towel.ts",
@@ -593,8 +658,8 @@
   },
   {
    "path": "tools/water-lab.ts",
-   "bytes": 6671,
-   "sha256": "dee50a056224ccf4f8ef93f192ee2b461731ee9503002b92cc174bab7d390528"
+   "bytes": 6802,
+   "sha256": "9eadc09abd1f3685bf74f6f5b3ae20c411acade82355b44ffddc8d6ad135c676"
   },
   {
    "path": "tsconfig.json",

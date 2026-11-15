@@ -9,7 +9,7 @@
 import * as THREE from 'three';
 import type { BuiltModel } from '../types';
 import {
-  rng, eyeTexture, faceTexture, FACE_RECT, stripeTexture, ribTexture, denimTexture, hairTexture, curlTexture,
+  rng, eyeTexture, faceTexture, FACE_RECT, stripeTexture, ribTexture, denimTexture, hairTexture,
 } from './textures';
 
 const V = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z);
@@ -193,7 +193,7 @@ export const ANIM_JOINTS = [
 type JointName = (typeof ANIM_JOINTS)[number];
 type Pose = Partial<Record<JointName, [number, number, number]>>;
 
-export const EYELID_REST_X = THREE.MathUtils.degToRad(-22);
+export const EYELID_REST_X = THREE.MathUtils.degToRad(-24);
 export const EYELID_CLOSED_X = THREE.MathUtils.degToRad(84);
 
 export function buildGirl(): BuiltModel {
@@ -230,23 +230,27 @@ export function buildGirl(): BuiltModel {
   // ---------------- materials (colour picks sampled by eye from the official reference)
   const R = rng(1977);
   const stripes = stripeTexture();
+  const hairTex = hairTexture();
+  const denimTex = denimTexture('#ffffff');
+  const ribTex = ribTexture();
   const M = {
     skin: std('#f5b892', 0.6, 0, { emissive: new THREE.Color('#5a1a08'), emissiveIntensity: 0.08 }),
     skinDeep: std('#f0a989', 0.6),
-    hair: std('#8e5c38', 0.45, 0, { map: hairTexture() }),
-    hairLight: std('#b27d4c', 0.42, 0, { map: hairTexture() }),
-    hairDark: std('#54321e', 0.55, 0, { map: hairTexture() }),
-    curl: std('#7a4222', 0.55, 0, { map: curlTexture() }),
+    lid: std('#eeaa86', 0.62),
+    hair: std('#8e5c38', 0.45, 0, { map: hairTex }),
+    hairLight: std('#b27d4c', 0.42, 0, { map: hairTex }),
+    hairDark: std('#54321e', 0.55, 0, { map: hairTex }),
     brow: std('#4a2312', 0.6),
     lash: std('#24100a', 0.5),
     eye: std('#ffffff', 0.08, 0, { map: eyeTexture() }),
     face: new THREE.MeshStandardMaterial({ map: faceTexture(), transparent: true, roughness: 0.55, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }),
     hoodie: std('#ffffff', 0.85, 0, { map: stripes }),
-    rib: std('#ffffff', 0.9, 0, { map: ribTexture() }),
+    rib: std('#ffffff', 0.9, 0, { map: ribTex }),
+    collar: std('#c49cf0', 0.88, 0, { map: ribTex }),
     lining: std('#f3ecfb', 0.85),
     zip: std('#e9e4f2', 0.35, 0.5),
-    denim: std('#ffffff', 0.82, 0, { map: denimTexture('#5d74b8') }),
-    denimLight: std('#ffffff', 0.82, 0, { map: denimTexture('#7d93d0') }),
+    denim: std('#5468ad', 0.82, 0, { map: denimTex }),
+    denimLight: std('#7d90cc', 0.82, 0, { map: denimTex }),
     stitch: std('#e7b55a', 0.7),
     purple: std('#9b4fe0', 0.42, 0, { emissive: new THREE.Color('#3a0a6a'), emissiveIntensity: 0.15 }),
     purpleDeep: std('#7d36c4', 0.45),
@@ -318,10 +322,10 @@ export function buildGirl(): BuiltModel {
   for (const s of [1, -1]) {
     const side = s > 0 ? 'L' : 'R';
     const ex = s * 1.1, ey = -0.2;
-    const ez = surfaceZ(ex, ey) - 0.2;
+    const ez = surfaceZ(ex, ey) - 0.38; // deep + flat: visible opening ≈ 1.35 × 1.6, shallow dome
     const sockW = HEAD_CENTER.clone().add(V(ex, ey, ez));
     const sock = addJoint(`eyeSocket${side}`, 'headCenter', sockW);
-    sock.scale.set(1.0, 1.2, 0.46);
+    sock.scale.set(1.3, 1.55, 0.62);
     sock.rotation.y = s * 0.12; // eyes follow the face curvature slightly
     const eyeJ = new THREE.Object3D();
     eyeJ.name = `eye${side}`;
@@ -341,24 +345,24 @@ export function buildGirl(): BuiltModel {
     lidJ.rotation.x = EYELID_REST_X;
     sock.add(lidJ);
     J[lidJ.name] = lidJ;
-    const lid = new THREE.Mesh(new THREE.SphereGeometry(EYE_R * 1.035, 28, 10, 0, TAU, 0, Math.PI / 2), M.skin);
+    const lid = new THREE.Mesh(new THREE.SphereGeometry(EYE_R * 1.03, 28, 10, 0, TAU, 0, Math.PI / 2), M.lid);
     lid.name = `lid${side}`;
     lidJ.add(lid);
     const lowJ = new THREE.Object3D();
     lowJ.name = `lowerLid${side}`;
     lowJ.rotation.x = THREE.MathUtils.degToRad(34);
     sock.add(lowJ);
-    const low = new THREE.Mesh(new THREE.SphereGeometry(EYE_R * 1.03, 28, 8, 0, TAU, Math.PI / 2, Math.PI / 2), M.skin);
+    const low = new THREE.Mesh(new THREE.SphereGeometry(EYE_R * 1.025, 28, 8, 0, TAU, Math.PI / 2, Math.PI / 2), M.lid);
     low.name = `lowLid${side}`;
     lowJ.add(low);
     // lash line along the lid rim (front half) + outer-corner flicks
-    const rim = EYE_R * 1.1;
+    const rim = EYE_R * 1.06;
     const pts: THREE.Vector3[] = [];
     for (let k = 0; k <= 16; k++) {
       const phi = Math.PI * (0.1 + 0.8 * (k / 16));
       pts.push(V(Math.cos(phi) * rim, 0.02, Math.sin(phi) * rim));
     }
-    const lash = new THREE.Mesh(taperedTube(new THREE.CatmullRomCurve3(pts), 24, 0.095, 6, 0.55), M.lash);
+    const lash = new THREE.Mesh(taperedTube(new THREE.CatmullRomCurve3(pts), 24, 0.07, 6, 0.55), M.lash);
     lash.name = `lash${side}`;
     lidJ.add(lash);
     // outer corner is +X for the left eye, −X for the right eye
@@ -366,9 +370,9 @@ export function buildGirl(): BuiltModel {
       const phi = Math.PI * (s > 0 ? 0.1 + f * 0.1 : 0.9 - f * 0.1);
       const base = V(Math.cos(phi) * rim, 0.02, Math.sin(phi) * rim);
       const out = base.clone().setY(0).normalize();
-      const tip = base.clone().addScaledVector(out, 0.36 - f * 0.1).add(V(0, 0.2 - f * 0.05, 0.05));
+      const tip = base.clone().addScaledVector(out, 0.3 - f * 0.08).add(V(0, 0.15 - f * 0.04, 0.04));
       const mid = base.clone().lerp(tip, 0.5).add(V(0, 0.06, 0)).addScaledVector(out, 0.04);
-      const fl = new THREE.Mesh(taperedTube(new THREE.CatmullRomCurve3([base, mid, tip]), 8, 0.085, 5, 0.15), M.lash);
+      const fl = new THREE.Mesh(taperedTube(new THREE.CatmullRomCurve3([base, mid, tip]), 8, 0.065, 5, 0.15), M.lash);
       lidJ.add(fl);
     }
     // eyebrow (warm dark brown, gently arched)
@@ -385,7 +389,7 @@ export function buildGirl(): BuiltModel {
   // ---------------- HAIR: cap pulled back from a soft, exact hairline (parametric rows hairline → crown)
   {
     // hairline elevation (unit-sphere y) by azimuth φ (0° = front, 90° = her side/ear, 180° = back)
-    const ctl: [number, number][] = [[0, 0.62], [24, 0.6], [46, 0.5], [68, 0.3], [88, 0.12], [106, -0.2], [128, -0.5], [155, -0.66], [180, -0.7]];
+    const ctl: [number, number][] = [[0, 0.64], [18, 0.6], [38, 0.49], [58, 0.34], [76, 0.19], [92, 0.1], [108, -0.2], [128, -0.5], [155, -0.66], [180, -0.7]];
     const thrAt = (deg: number) => {
       const a = Math.abs((((deg + 180) % 360) + 360) % 360 - 180);
       for (let i = 0; i < ctl.length - 1; i++) {
@@ -409,7 +413,7 @@ export function buildGirl(): BuiltModel {
         q.y += 0.05 + 0.24 * Math.max(0, y) * Math.max(0, y) * (z > 0 ? 1 : 0.6) * smoothstep(0, 0.3, f);
         q.z -= 0.03;
         pos.push(q.x, q.y, q.z);
-        uv.push((iu / NU) * 7, f * 1.6);
+        uv.push((iu / NU) * 7 + Math.sin(phi) * f * 0.55, f * 1.6); // strands sweep outward-back
       }
     }
     for (let iu = 0; iu < NU; iu++) {
@@ -426,33 +430,6 @@ export function buildGirl(): BuiltModel {
     const capMat = M.hair.clone();
     capMat.side = THREE.DoubleSide;
     put('headCenter', g, capMat, HEAD_CENTER, undefined, 'hair_cap');
-  }
-  // swept-back locks: clumps from the hairline running OVER the crown into the ponytail tie
-  // (great-circle slerp between unit directions, half embedded in the cap → raised grooves)
-  {
-    const B = V(0, 2.62 / HEAD.b, -1.25 / HEAD.c).normalize();
-    for (let k = 0; k < 11; k++) {
-      const deg = -70 + (140 * k) / 10 + (R() - 0.5) * 5;
-      const phi = THREE.MathUtils.degToRad(deg);
-      const thr = 0.6 - 0.3 * smoothstep(20, 70, Math.abs(deg));
-      const el0 = Math.asin(thr) + 0.02;
-      const A = V(Math.sin(phi) * Math.cos(el0), Math.sin(el0), Math.cos(phi) * Math.cos(el0));
-      const qa = new THREE.Quaternion().setFromUnitVectors(A, B);
-      const qi = new THREE.Quaternion();
-      const pts: THREE.Vector3[] = [];
-      for (let i = 0; i <= 12; i++) {
-        const t = 0.1 + 0.9 * (i / 12); // start just above the hairline so the edge stays smooth
-        qi.identity().slerp(qa, t);
-        const d = A.clone().applyQuaternion(qi);
-        const grow = 0.02 + 0.17 * smoothstep(0, 0.5, t) - 0.06;
-        const q = headPoint(d.x, d.y, d.z, grow);
-        q.y += 0.05 + 0.24 * Math.max(0, d.y) ** 2 * (d.z > 0 ? 1 : 0.6) * smoothstep(0, 0.3, t);
-        q.z -= 0.03;
-        pts.push(q);
-      }
-      const g = taperedTube(new THREE.CatmullRomCurve3(pts), 26, 0.26, 6, 0.6, 0.02);
-      put('headCenter', g, k % 3 === 1 ? M.hairLight : M.hair, HEAD_CENTER, undefined, 'hair_lock');
-    }
   }
   // temple ringlets + baby curls at the hairline
   const ringlet = (joint: string, startW: THREE.Vector3, dir: THREE.Vector3, len: number, droop: number, coil: number, tube: number, mat: THREE.Material, side = V(1, 0, 0)) => {
@@ -535,20 +512,27 @@ export function buildGirl(): BuiltModel {
   // ================================================================== NECK + HOODIE
   put('neck', new THREE.CylinderGeometry(0.72, 0.8, 1.9, 16), M.skin, V(0, 18.1, 0.0), undefined, 'neck_skin');
   const PERIOD = 1.45;
+  // full silhouette profile (used for the zipper/drawstrings) …
   const torsoProfile: [number, number][] = [
     [0.0, 10.25], [2.45, 10.3], [2.62, 10.75], [2.52, 11.6], [2.36, 12.6], [2.34, 13.7], [2.46, 14.9],
     [2.47, 15.8], [2.32, 16.55], [2.0, 17.05], [1.45, 17.45], [0.95, 17.6],
   ];
   {
-    const g = lathe(torsoProfile, 1.13, 0.86, 44);
+    // … split in two so leaning never exposes the waist: upper torso rides the spine joint,
+    // the lower "skirt" (hem) rides the hips and tucks inside the torso above the waist.
+    const upper: [number, number][] = [[1.9, 11.8], [2.36, 12.0], [2.36, 12.6], ...torsoProfile.slice(5)];
+    const g = lathe(upper, 1.13, 0.86, 44);
     stripeUV(g, PERIOD);
     put('spine', g, M.hoodie, V(0, 0, 0), undefined, 'hoodie_torso');
+    const skirt = lathe([[0.0, 10.25], [2.45, 10.3], [2.62, 10.75], [2.54, 11.6], [2.38, 12.3], [2.22, 12.75], [1.9, 12.95]], 1.13, 0.86, 44);
+    stripeUV(skirt, PERIOD);
+    put('hips', skirt, M.hoodie, V(0, 0, 0), undefined, 'hoodie_skirt');
     // ribbed hem
     const hem = new THREE.TorusGeometry(2.5, 0.34, 10, 44);
     hem.rotateX(Math.PI / 2);
     hem.scale(1.13, 1, 0.86);
     scaleUV(hem, 10, 1);
-    put('spine', hem, M.rib, V(0, 10.5, 0), undefined, 'hoodie_hem');
+    put('hips', hem, M.rib, V(0, 10.5, 0), undefined, 'hoodie_hem');
     // zipper + drawstrings following the front surface
     const rAt = (y: number) => {
       for (let i = 1; i < torsoProfile.length; i++) {
@@ -558,8 +542,11 @@ export function buildGirl(): BuiltModel {
       return 1;
     };
     const zp: THREE.Vector3[] = [];
-    for (let y = 10.5; y <= 17.2; y += 0.4) zp.push(V(0, y, rAt(y) * 0.86 + 0.02));
-    put('spine', new THREE.TubeGeometry(new THREE.CatmullRomCurve3(zp), 24, 0.07, 6), M.zip, V(0, 0, 0), undefined, 'zipper');
+    for (let y = 11.9; y <= 17.2; y += 0.4) zp.push(V(0, y, rAt(y) * 0.86 + 0.02));
+    put('spine', new THREE.TubeGeometry(new THREE.CatmullRomCurve3(zp), 20, 0.07, 6), M.zip, V(0, 0, 0), undefined, 'zipper');
+    const zl: THREE.Vector3[] = [];
+    for (let y = 10.5; y <= 12.3; y += 0.3) zl.push(V(0, y, rAt(y) * 0.86 + 0.03));
+    put('hips', new THREE.TubeGeometry(new THREE.CatmullRomCurve3(zl), 8, 0.07, 6), M.zip, V(0, 0, 0), undefined, 'zipper_lower');
     put('spine', padGeo(0.22, 0.5, 0.08, 0.06), M.zip, V(0.0, 15.7, rAt(15.7) * 0.86 + 0.08), undefined, 'zip_pull');
     for (const s of [1, -1]) {
       const dp: THREE.Vector3[] = [];
@@ -572,8 +559,8 @@ export function buildGirl(): BuiltModel {
   {
     const collar = new THREE.TorusGeometry(1.3, 0.42, 12, 32);
     collar.rotateX(Math.PI / 2 - 0.15);
-    stripeUV(collar, PERIOD);
-    put('chest', collar, M.hoodie, V(0, 17.45, -0.15), undefined, 'hood_collar');
+    scaleUV(collar, 12, 1);
+    put('chest', collar, M.collar, V(0, 17.45, -0.15), undefined, 'hood_collar');
     const hood = ellipsoid(2.05, 1.35, 1.15, 28, 18);
     stripeUV(hood, PERIOD, 0.4);
     put('chest', hood, M.hoodie, V(0, 17.2, -1.75), new THREE.Euler(0.25, 0, 0), 'hood');

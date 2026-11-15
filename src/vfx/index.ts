@@ -139,7 +139,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
       foam.update(time, focusS, controls.outro);
-      bubbles.update(time, dt, focusS, camera);
+      bubbles.update(time, dt, focusS, camera, 1 - 0.7 * controls.outro);
       // crest spray off the final wave
       if (wave.mesh.visible && focusS > st09.s0 - 20 && focusS < st09.s1 + 20 && controls.outro < 0.5) {
         const n = quality === 'high' ? 3 : 1;

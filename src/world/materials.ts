@@ -32,9 +32,9 @@ export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMa
     metalness: o.metalness ?? 0.72,
     roughness: o.roughness ?? 0.26,
     emissive: new THREE.Color(o.emissive ?? '#9a1fa8'),
-    emissiveIntensity: o.emissiveIntensity ?? 0.42,
+    emissiveIntensity: o.emissiveIntensity ?? 0.26,
     side: o.side ?? THREE.BackSide,
-    envMapIntensity: 1.25,
+    envMapIntensity: 1.0,
   });
   const uniforms = {
     uHoleColor: { value: new THREE.Color(o.holeColor ?? '#2b0640') },
@@ -154,7 +154,7 @@ export function glass(tint: THREE.ColorRepresentation = '#dfe9ff', opacity = 0.1
 }
 
 /** soft unlit-ish painted material for the laundry room seen through doors (keeps it bright & airy) */
-export function painted(color: THREE.ColorRepresentation, emissive = 0.35, roughness = 0.75): THREE.MeshStandardMaterial {
+export function painted(color: THREE.ColorRepresentation, emissive = 0.2, roughness = 0.75): THREE.MeshStandardMaterial {
   const c = new THREE.Color(color);
   return new THREE.MeshStandardMaterial({ color: c, roughness, metalness: 0, emissive: c, emissiveIntensity: emissive });
 }

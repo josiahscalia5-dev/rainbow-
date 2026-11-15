@@ -55,6 +55,6 @@ export function createRenderer(canvas: HTMLCanvasElement, opts: { preserveDrawin
   });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NeutralToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 0.95;
   return renderer;
 }

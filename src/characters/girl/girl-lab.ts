@@ -59,7 +59,13 @@ const q = new URLSearchParams(location.search);
     const box = new THREE.Box3().setFromObject(root);
     const c = box.getCenter(new THREE.Vector3());
     type View = { pos: THREE.Vector3; look: THREE.Vector3; fov: number; w: number };
-    const views: View[] = q.get('layout') === 'poses'
+    const views: View[] = q.get('layout') === 'face'
+      ? [
+          { pos: hp.clone().add(new THREE.Vector3(0, -1.5, 9)), look: hp.clone().add(new THREE.Vector3(0, -0.4, 0)), fov: 40, w: 1 },
+          { pos: hp.clone().add(new THREE.Vector3(5.5, -0.8, 7)), look: hp.clone().add(new THREE.Vector3(0, -0.3, 0)), fov: 40, w: 1 },
+          { pos: hp.clone().add(new THREE.Vector3(9.5, 0.2, 0.5)), look: hp.clone().add(new THREE.Vector3(0, 0, 0.3)), fov: 40, w: 1 },
+        ]
+      : q.get('layout') === 'poses'
       ? [
           { pos: c.clone().add(new THREE.Vector3(0, 2, 46)), look: c, fov: 38, w: 1 },
           { pos: c.clone().add(new THREE.Vector3(32, 4, 32)), look: c, fov: 38, w: 1 },

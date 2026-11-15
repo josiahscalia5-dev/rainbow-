@@ -67,11 +67,11 @@ void main() {
   cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.35, 0.9, vH) * 0.55);
   vec3 col = mix(cyanCol, mix(uPink, uPinkLight, n), pinkM);
   // foam on the band seams and on crests
-  float seam = 1.0 - smoothstep(0.0, 0.1, abs(field - 0.4) - 0.03 * (vnoise(p * 6.0) - 0.5));
+  float seam = 1.0 - smoothstep(0.04, 0.2, abs(field - 0.38) - 0.06 * (vnoise(p * 6.0) - 0.5));
   float c = cells(p * 3.2 + vec2(uTime * 0.4, 0.0));
-  float crest = smoothstep(0.55, 0.95, vH + (n - 0.5) * 0.5);
-  float foamM = clamp(seam * 0.8 + crest * (0.6 + 0.4 * uAgitation), 0.0, 1.0) * (0.65 + 0.35 * smoothstep(0.15, 0.55, c));
-  col = mix(col, mix(uFoam, vec3(0.93, 0.88, 1.0), c), foamM);
+  float crest = smoothstep(0.42, 0.85, vH + (n - 0.5) * 0.5);
+  float foamM = clamp(seam + crest * (0.85 + 0.15 * uAgitation), 0.0, 1.0) * smoothstep(0.02, 0.32, c + 0.08);
+  col = mix(col, mix(uFoam * 1.15, vec3(0.9, 0.86, 1.0), c * 0.8), foamM);
   // streak highlights
   float ln = vnoise(vec2((p.x * 1.9 + p.y * 1.25) * 4.0 + n * 4.5, (p.y - p.x * 0.6) * 0.9 - uTime * 0.6));
   col += smoothstep(0.8, 0.93, ln) * 1.4;

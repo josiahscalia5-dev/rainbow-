@@ -2192,3 +2192,198 @@ Benny Character Artist has finished: one GLB rig, shell fur, happy/dizzy/peek ex
 
 > 🔧 **Bash** `{"command": "sed -i \"s#const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1' }, logLevel: 'error' });#const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });#\" scripts/lib/pw.mjs && grep -n \"hmr\" scripts/lib/pw.mjs && timeout 900 node scripts/capture.mjs 01 02 03 --out=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots 2>&1 | grep \"→\\|Error\" | head", "description": "Disable HMR for capture server and retry", "timeout" …[+9 chars]`
 
+### 🧑 User — 2026-11-15T17:15:11.277Z
+
+> ↩︎ result: 21:  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 01 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/01.png {"stage":"01","s":0,"y":-2.45,"calls":1,"tris":1,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"STAND-IN"}}
+> 02 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/02.png {"stage":"01","s":12.922,"y":-1.967,"calls":1,"tris":1,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"STAND-IN"}}
+> 03 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/03.png {"stage":"03","s":45.377,"y":-12.789,"calls":1,"tris":1,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"STAND-IN"}}
+>   `[01] [rainbow] girl module failed, using stand-in SyntaxError: Unexpected token '<', "<!doctype "... is not valid JSON\n` +
+>   `[02] [rainbow] girl module failed, using stand-in SyntaxError: Unexpected token '<', "<!doctype "... is not valid JSON\n` +
+>   `[03] [rainbow] girl module failed, using stand-in SyntaxEr …[+166 chars]
+
+### 🤖 Claude — 2026-11-15T17:15:15.714Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/01.png"}`
+
+### 🧑 User — 2026-11-15T17:15:15.752Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:15:16.375Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/02.png"}`
+
+### 🧑 User — 2026-11-15T17:15:16.428Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:15:16.980Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/03.png"}`
+
+### 🧑 User — 2026-11-15T17:15:17.040Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:16:03.707Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/render/grade.ts", "content": "/** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */\nimport * as THREE from 'three';\nimport { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';\n\nexport function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {\n  return new ShaderPass({\n    uniforms: {\n      tDiffuse: { value: null },\n      uSat: { value: opts.saturation ?? 1.28 },\n      uCon: { value: opts.contrast ?? 1.1 },\n      uVig: { value: opts.vigne …[+762 chars]`
+
+### 🧑 User — 2026-11-15T17:16:03.848Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/render/grade.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:16:05.860Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.55, 0.55, 0.82);\n  const useBloom = qs.get('bloom') !== '0';\n  if (useBloom) composer.addPass(bloom);\n  composer.addPass(new OutputPass());", "new_string": "  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.3, 0.4, 0.9);\n  const useBloom = qs.get('bloom') !== '0';\n  if (useBloom) composer.addPass(bloom);\n  composer.addPass(new OutputPass());\n  composer.addPass(createGradePass());"}`
+
+### 🧑 User — 2026-11-15T17:16:06.053Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:16:06.917Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "import { createCandyEnvironment, createRenderer } from '../render/env';", "new_string": "import { createCandyEnvironment, createRenderer } from '../render/env';\nimport { createGradePass } from '../render/grade';"}`
+
+### 🧑 User — 2026-11-15T17:16:07.104Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:16:18.953Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"const render = () => { if (useBloom) composer.render(); else renderer.render(scene, camera); };\",\"const render = () => composer.render();\")\n# 01 camera\ns=s.replace(\"\"\"      camera.position.set(-0.55, -0.95, -5.7);\n      camera.up.set(0, 1, 0);\n      camera.lookAt(0.25, -0.35, dA.zDoor);\n      setFov(62);\"\"\",\"\"\"      camera.position.set(0.85, -1.05, -6.05);\n      camera.up.set(0, 1, 0);\n      camera.lookAt(-0.05, -0.2, dA.zDoor);\n      setFov(64);\"\"\")\nopen(p,'w').write(s)\np= …[+1189 chars]`
+
+### 🧑 User — 2026-11-15T17:16:19.034Z
+
+> ↩︎ result: ok
+> 10
+
+### 🤖 Claude — 2026-11-15T17:16:26.850Z
+
+Now the 02 tumble shot (Benny faces the camera and rolls, with the door ring above) and the 03 whirlpool camera:
+
+### 🤖 Claude — 2026-11-15T17:16:27.348Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 168, "limit": 90}`
+
+### 🧑 User — 2026-11-15T17:16:27.374Z
+
+> ↩︎ result: 168	    if (t < T.walk0) {
+> 169	      placeGirl('A', new THREE.Vector3(1.2, spots.nearDoor.y, 7.6), Math.PI);
+> 170	      girl.play(t < T.dropEnd ? 'dropLoad' : 'closeDoor', { fade: 0.25 });
+> 171	    } else {
+> 172	      const k = THREE.MathUtils.clamp((t - T.walk0 - 0.35) / 3.3, 0, 1);
+> 173	      const from = new THREE.Vector3(1.2, spots.nearDoor.y, 7.6);
+> 174	      const p = from.clone().lerp(spots.exitRight, k);
+> 175	      const dir = spots.exitRight.clone().sub(from);
+> 176	      const yawWalk = Math.atan2(dir.x, dir.z);
+> 177	      const turn = sm(T.walk0, T.walk0 + 0.6, t);
+> 178	      placeGirl('A', p, lerp(Math.PI, yawWalk, turn));
+> 179	      girl.play('walk', { fade: 0.3 });
+> 180	    }
+> 181	    // --- door A
+> 182	    env.doorA.rotation.y = lerp(doorAOpen, 0, sm(T.doorClose0, T.doorClose1, t));
+> 183	    // --- towel bundle flies from her hands into the drum, Benny hidden inside
+> 184	    const handW = girl.handR.getWorldPosition(tmpV).clone();
+> 185	    const k = sm(0.35, T.dropEnd, t);
+> 186	    const towelRest = start.clone().add(new THREE.Vector3(0.1, -0.85, 0.15));
+> 187	    const arc = handW.clone().lerp(towelRest, k);
+> 188	    arc.y += Math.sin(k * Math.PI) * 1.2;
+> 189	    let sB = 0;
+> 190	    if ( …[+4048 chars]
+
+### 🤖 Claude — 2026-11-15T17:16:40.387Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "      const f = bennyPose(sB, 0, st.clock, pose);\n      benny.root.position.copy(pose.pos);\n      const tumble = sm(T.rideStart - 1.0, T.rideStart, t);\n      const spinQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(t * 5.1, t * 3.3, t * 4.2));\n      benny.root.quaternion.copy(spinQ).slerp(pose.quat, tumble);", "new_string": "      const f = bennyPose(sB, 0, st.clock, pose);\n      benny.root.position.copy(pose.pos);\n      const tumble = sm(T.rideStart - 1.0, T.rideStart, t);\n      // tumbl …[+640 chars]`
+
+### 🧑 User — 2026-11-15T17:16:40.567Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T17:16:44.440Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "    } else if (t < T.drain) {\n      // 02: tumbling with the swirl; the door ring above\n      const b = benny.root.position;\n      const want = new THREE.Vector3(b.x * 0.35, b.y - 1.6, Math.max(dA.zBack + 0.6, b.z - 3.2));\n      const k2 = sm(T.spin + 0.6, T.spin + 1.6, t);\n      camera.position.lerp(want, k2 < 1 ? 0.12 : 0.2);\n      const look = b.clone().lerp(new THREE.Vector3(0, 0.6, dA.zDoor), 0.45);\n      camera.up.set(0, 1, 0);\n      camera.lookAt(look);\n      setFov(66);\n    } else {", " …[+522 chars]`
+
+### 🧑 User — 2026-11-15T17:16:44.604Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T17:16:47.140Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  const setFov = (f: number) => {", "new_string": "  /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */\n  const cam02 = (b: THREE.Vector3) => {\n    const dA = WORLD.drumA;\n    const pos = new THREE.Vector3(b.x * 0.3, b.y - 0.7, THREE.MathUtils.clamp(b.z - 3.0, dA.zBack + 0.4, dA.zDoor));\n    const look = b.clone().lerp(new THREE.Vector3(0, 0.2, dA.zDoor), 0.38).add(new THREE.Vector3(0, 0.55, 0));\n    return { pos, look };\n  };\n\n  const setFov = (f: number) …[+7 chars]`
+
+### 🧑 User — 2026-11-15T17:16:47.323Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T17:16:49.243Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/const T = { dropEnd: 1.6, doorClose0: 1.9, doorClose1: 2.8, walk0: 3.0, peek: 4.4, cp01: 5.8, spin: 7.0, cp02: 9.2, drain: 11.0, rideStart: 13.6 };/const T = { dropEnd: 1.6, doorClose0: 1.9, doorClose1: 2.8, walk0: 3.0, peek: 4.4, cp01: 5.8, spin: 7.0, cp02: 8.7, drain: 11.0, rideStart: 13.6 };/' src/game/Game.ts && grep -c \"cp02: 8.7\" src/game/Game.ts", "description": "Move 02 checkpoint earlier in the tumble"}`
+
+### 🧑 User — 2026-11-15T17:16:49.289Z
+
+> ↩︎ result: 1
+> [This command modified 1 file you've previously read: src/game/Game.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T17:17:01.279Z
+
+Now the 03 whirlpool camera: high on the near side looking -Z toward the backdrop and down into the vortex. That puts Benny on the left with the drain lower right, as in the reference.
+
+### 🤖 Claude — 2026-11-15T17:17:07.236Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "old_string": "    outPos.copy(fb.pos).addScaledVector(fb.right, lat * p.latFollow).addScaledVector(fb.up, p.up);\n    outTarget.copy(fa.pos).addScaledVector(fa.right, lat * p.latFollow * 0.5).addScaledVector(fa.up, p.lookUp);\n    outUp.set(0, 1, 0).lerp(fs.up, p.roll).normalize();\n    return p;", "new_string": "    outPos.copy(fb.pos).addScaledVector(fb.right, lat * p.latFollow).addScaledVector(fb.up, p.up);\n    outTarget.copy(fa.pos).addScaledVector(fa.right, lat * p.latFollow * 0.5).addScaledVector(fa.up, p. …[+912 chars]`
+
+### 🧑 User — 2026-11-15T17:17:07.447Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/cameraRig.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:17:10.039Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s#import type { Course, StageId } from '../world/course';#import { WORLD } from '../world/course';\\nimport type { Course, StageId } from '../world/course';#\" src/game/cameraRig.ts && npx tsc --noEmit 2>&1 | grep -v \"src/characters/\\(benny\\|girl\\)\\|src/vfx\\|tools/water-lab\" | head; timeout 900 node scripts/capture.mjs 01 02 03 05 --out=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots 2>&1 | grep \"→\" | cut -c1-120", "description": "Typecheck and re-capture 01, 02, 03, 05", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T17:18:10.429Z
+
+> ↩︎ result: 01 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/01.png {"stage":"01","s":
+> 02 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/02.png {"stage":"01","s":
+> 03 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/03.png {"stage":"03","s":
+> 05 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/05.png {"stage":"05","s":
+> [This command modified 1 file you've previously read: src/game/cameraRig.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T17:18:49.553Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/compare.py", "content": "#!/usr/bin/env python3\n\"\"\"Reference-vs-live comparison for the 11 locked screens.\n\nFor every NN in 01..11 with screenshots/NN.png present:\n  qa/NN_side_by_side.png   reference | live (same height)\n  qa/NN_overlay.png        50 % blend of reference and live (live resized to reference size)\n  qa/NN_diff.png           per-pixel absolute difference heat map (masked areas greyed)\nand qa/report_metrics.json + qa/compare_summary.md with REPRODUCIBLE metrics only:\n  * mad      — mean absolute RGB difference (0–255) on 1/4-s …[+7647 chars]`
+
+### 🧑 User — 2026-11-15T17:18:49.713Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/compare.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:18:51.307Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad && python3 -I scripts/compare.py 01 02 03 05 --live $S/shots --sheet $S/sheet1.png", "description": "Build contact sheet of refs vs live"}`
+
+### 🧑 User — 2026-11-15T17:18:52.149Z
+
+> ↩︎ result: sheet /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet1.png
+
+### 🤖 Claude — 2026-11-15T17:18:56.050Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet1.png"}`
+
+### 🧑 User — 2026-11-15T17:18:56.082Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:19:36.408Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s#  api.goto('01');#  api.goto('03');#\" /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/probe.mjs && timeout 600 node /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/probe.mjs 2>&1 | tail -1 | python3 -c \"import sys,json; d=json.loads(sys.stdin.read()); [print(k, v if k=='st' else [(h['d'],h['obj'][:40],h['p']) for h in v][:3]) for k,v in d.items()]\"", "description": "Probe what the 03 camera sees", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T17:19:44.896Z
+
+> ↩︎ result: st {'mode': 'ride', 'stage': '03', 's': 45.377, 'lat': 0.3, 'coins': 1330, 'hearts': 5, 'paused': False, 'bennyY': -12.789, 'bennyVisible': True, 'cam': [-2.02, -5.6, -12.91]}
+> c [(13.62, 'water_whirlpool<water_system<Scene', [-2.17, -15.09, -22.68]), (14.12, 'Mesh<zone_basin<washer_world<Scene', [-2.18, -15.44, -23.04]), (23.72, 'Mesh<coins<Scene', [-2.28, -22.13, -29.91])]
+> tl [(15.31, 'Mesh<zone_basin<washer_world<Scene', [-5.97, -10.1, -27]), (25.09, 'Mesh<zone_basin<washer_world<Scene', [-8.5, -12.97, -36])]
+> tr [(17.88, 'Mesh<foam_whirlpool<foam_banks<water_sys', [2.09, -10.85, -29.51]), (18.22, 'water_whirlpool<water_system<Scene', [2.16, -10.95, -29.82]), (18.82, 'Mesh<zone_basin<washer_world<Scene', [2.3, -11.13, -30.38])]
+> bl [(2.54, 'Mesh<foam_banks<water_system<Scene', [-2.65, -7.93, -13.71]), (8.98, 'water_whirlpool<water_system<Scene', [-4.25, -13.82, -15.75]), (9.56, 'Mesh<zone_basin<washer_world<Scene', [-4.4, -14.35, -15.93])]
+> br [(5.33, 'Mesh<zone_tubes<washer_world<Scene', [-0.74, -10.48, -14.64]), (7.29, 'Mesh<zone_tubes<washer_world<Scene', [-0.27, -12.28, -15.27]), (12.61, 'water_ribbon<water_system<Scene', [0.99, -17.14, -16.99])]
+

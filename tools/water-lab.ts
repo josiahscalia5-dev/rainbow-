@@ -116,6 +116,7 @@ const quality = (q.get('q') ?? 'high') as 'high' | 'low';
     gl.finish();
     const ms = (performance.now() - t0) / N;
     water.update(T, 0, s, camera);
+    for (const name of (q.get('hide') ?? '').split(',').filter(Boolean)) if (water.parts[name]) water.parts[name].visible = false;
     renderer.render(scene, camera);
     window.__info = {
       preset, s: +s.toFixed(2), stage: course.stageAtS(s).id,

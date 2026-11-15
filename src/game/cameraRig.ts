@@ -3,6 +3,7 @@
  * banked path smoothly — including the 07 plunge), with per-stage framing blended continuously by s.
  */
 import * as THREE from 'three';
+import { WORLD } from '../world/course';
 import type { Course, StageId } from '../world/course';
 
 export interface CamParams {
@@ -62,6 +63,20 @@ export class RideCamera {
     outPos.copy(fb.pos).addScaledVector(fb.right, lat * p.latFollow).addScaledVector(fb.up, p.up);
     outTarget.copy(fa.pos).addScaledVector(fa.right, lat * p.latFollow * 0.5).addScaledVector(fa.up, p.lookUp);
     outUp.set(0, 1, 0).lerp(fs.up, p.roll).normalize();
+    // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
+    // drain and the porthole wall (Benny left, drain lower-right as in the reference)
+    const st3 = this.course.stage('03');
+    const w = THREE.MathUtils.smoothstep(s, st3.s0 - 6, st3.s0 + 2) * (1 - THREE.MathUtils.smoothstep(s, st3.s1 - 5, st3.s1 + 3));
+    if (w > 0) {
+      const B = WORLD.basin;
+      const bp = fs.pos.clone().addScaledVector(fs.right, lat);
+      const wp = bp.clone().add(new THREE.Vector3(3.2, 6.4, 9.8));
+      const drain = new THREE.Vector3(B.center.x, B.drainY, B.center.z);
+      const wt = bp.clone().lerp(drain, 0.42).add(new THREE.Vector3(0, -0.6, -2.5));
+      outPos.lerp(wp, w);
+      outTarget.lerp(wt, w);
+      outUp.lerp(new THREE.Vector3(0, 1, 0), w).normalize();
+    }
     return p;
   }
 

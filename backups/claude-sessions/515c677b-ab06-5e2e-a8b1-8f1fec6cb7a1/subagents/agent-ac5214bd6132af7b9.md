@@ -664,3 +664,210 @@ Typecheck is clean for my files. Running the first lab round on a few presets:
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T17:15:11.851Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        if a not in s: raise SystemExit(f'MISSING in {p}: {a[:70]}')\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/vfx/drumWater.ts',[\n(\"float seam = 1.0 - smoothstep(0.0, 0.1, abs(field - 0.4) - 0.03 * (vnoise(p * 6.0) - 0.5));\",\n \"float seam = 1.0 - smoothstep(0.04, 0.2, abs(field - 0.38) - 0.06 * (vnoise(p * 6.0) - 0.5));\"),\n(\"float crest = smoothstep(0.55, 0.95, vH + (n - 0.5) * 0.5);\",\"float crest = smoothstep(0.42, 0.85, vH + (n - 0.5) * 0.5);\"),\n])\nedit('src/vf …[+1551 chars]`
+
+### 🧑 User — 2026-11-15T17:15:20.711Z
+
+> ↩︎ result: ok
+> {"preset":null,"s":78,"stage":"04","calls":9,"triangles":169816,"points":1300,"avgFrameMsSwiftShader":2.3,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+
+### 🤖 Claude — 2026-11-15T17:15:23.995Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_04_chevrons_topdown.png"}`
+
+### 🧑 User — 2026-11-15T17:15:24.007Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:15:32.887Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/water-lab.ts'\ns=open(p).read()\na=\"\"\"    water.update(T, 0, s, camera);\n    renderer.render(scene, camera);\"\"\"\nb=\"\"\"    water.update(T, 0, s, camera);\n    for (const name of (q.get('hide') ?? '').split(',').filter(Boolean)) if (water.parts[name]) water.parts[name].visible = false;\n    renderer.render(scene, camera);\"\"\"\nassert a in s; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nsed -i 's#benny=0&fov=60`#benny=0\\&fov=60\\&hide=foam,whirlpool,bubbles`#' /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/ch …[+218 chars]`
+
+### 🧑 User — 2026-11-15T17:15:37.978Z
+
+> ↩︎ result: {"preset":null,"s":78,"stage":"04","calls":3,"triangles":42680,"points":600,"avgFrameMsSwiftShader":0.6,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> [This command modified 1 file you've previously read: tools/water-lab.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T17:15:42.131Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_04_chevrons_topdown.png"}`
+
+### 🧑 User — 2026-11-15T17:15:42.151Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:15:49.742Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/water-lab.mjs 01 11 2>&1 | grep -E \"^docs|Error\" ; timeout 900 node scripts/water-lab.mjs 01 03 05 09 --q=low 2>&1 | grep -E \"^docs|Error\"", "description": "Re-render 01/11; run low-quality tier stats", "timeout": 1520000}`
+
+### 🧑 User — 2026-11-15T17:16:07.993Z
+
+> ↩︎ result: docs/vfx/water_01.png {"preset":"01","s":0,"stage":"01","calls":7,"triangles":94680,"points":1300,"avgFrameMsSwiftShader":1.3,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_11.png {"preset":"11","s":438.82,"stage":"11","calls":10,"triangles":81448,"points":1300,"avgFrameMsSwiftShader":0.9,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_01_low.png {"preset":"01","s":0,"stage":"01","calls":7,"triangles":24608,"points":500,"avgFrameMsSwiftShader":0.6,"instances":1219,"bubbles":22,"smallBubbles":280,"sprayCapacity":220}
+> docs/vfx/water_03_low.png {"preset":"03","s":44.88,"stage":"03","calls":12,"triangles":40756,"points":500,"avgFrameMsSwiftShader":0.6,"instances":1219,"bubbles":22,"smallBubbles":280,"sprayCapacity":220}
+> docs/vfx/water_05_low.png {"preset":"05","s":139.73,"stage":"05","calls":13,"triangles":31136,"points":500,"avgFrameMsSwiftShader":0.9,"instances":1219,"bubbles":22,"smallBubbles":280,"sprayCapacity":220}
+> docs/vfx/water_09_low.png {"preset":"09","s":415.77,"stage":"09","calls":11,"triangles":27976,"points":500,"avgFrameMsSwiftShader":0.7,"instances":1219,"bubbles":22,"smallBubbles":280,"sprayCapa …[+10 chars]
+
+### 🤖 Claude — 2026-11-15T17:16:12.085Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_01.png"}`
+
+### 🧑 User — 2026-11-15T17:16:12.098Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:16:12.440Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_11.png"}`
+
+### 🧑 User — 2026-11-15T17:16:12.485Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:16:27.267Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/drum.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nprocess.chdir('/home/user/rainbow-');\nconst vite = await startVite(5208);\nconst b = await chromium.launch({ args: CHROMIUM_ARGS });\nconst p = await b.newPage({ viewport: { width: 864, height: 1536 } });\nawait p.goto(`${vite.url}/tools/water-lab.html?preset=01&w=864&h=1536&hide=bubbles`);\nawait waitDone(p);\nawait p.locator(' …[+644 chars]`
+
+### 🤖 Claude — 2026-11-15T17:16:28.565Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/drum_crop.png"}`
+
+### 🧑 User — 2026-11-15T17:16:32.558Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-15T17:16:32.603Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:16:50.963Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        if a not in s: raise SystemExit(f'MISSING in {p}: {a[:70]}')\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/vfx/drumWater.ts',[\n(\"float foamM = clamp(seam * 0.8 + crest * (0.6 + 0.4 * uAgitation), 0.0, 1.0) * (0.65 + 0.35 * smoothstep(0.15, 0.55, c));\",\n \"float foamM = clamp(seam + crest * (0.85 + 0.15 * uAgitation), 0.0, 1.0) * smoothstep(0.02, 0.32, c + 0.08);\"),\n(\"col = mix(col, mix(uFoam, vec3(0.93, 0.88, 1.0), c), foamM);\",\"col = mix(col, mix(uFoam * 1.15, ve …[+1457 chars]`
+
+### 🤖 Claude — 2026-11-15T17:16:52.221Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/drum_crop.png"}`
+
+### 🧑 User — 2026-11-15T17:16:57.303Z
+
+> ↩︎ result: ok
+
+### 🧑 User — 2026-11-15T17:16:57.313Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:17:01.718Z
+
+Foam seams now read as white lines between the bands. Rendering the final full set and writing the docs:
+
+### 🤖 Claude — 2026-11-15T17:17:02.972Z
+
+> 🔧 **Bash** `{"command": "timeout 1300 node scripts/water-lab.mjs 2>&1 | grep -E \"^docs|Error\" | sed -E 's/\"instances\".*//' ", "description": "Render final water lab set (high quality)", "timeout": 1320000}`
+
+### 🧑 User — 2026-11-15T17:18:10.344Z
+
+> ↩︎ result: docs/vfx/water_01.png {"preset":"01","s":0,"stage":"01","calls":7,"triangles":94680,"points":1300,"avgFrameMsSwiftShader":0.6,
+> docs/vfx/water_02.png {"preset":"02","s":12,"stage":"02","calls":8,"triangles":96408,"points":1300,"avgFrameMsSwiftShader":0.8,
+> docs/vfx/water_03.png {"preset":"03","s":44.88,"stage":"03","calls":12,"triangles":211096,"points":1300,"avgFrameMsSwiftShader":0.9,
+> docs/vfx/water_04.png {"preset":"04","s":75.65,"stage":"04","calls":15,"triangles":213744,"points":1300,"avgFrameMsSwiftShader":2.5,
+> docs/vfx/water_05.png {"preset":"05","s":139.73,"stage":"05","calls":13,"triangles":148448,"points":1300,"avgFrameMsSwiftShader":2.4,
+> docs/vfx/water_06.png {"preset":"06","s":198.31,"stage":"06","calls":11,"triangles":117808,"points":1300,"avgFrameMsSwiftShader":1.8,
+> docs/vfx/water_07.png {"preset":"07","s":262.36,"stage":"07","calls":13,"triangles":150368,"points":1300,"avgFrameMsSwiftShader":1.6,
+> docs/vfx/water_07mid.png {"preset":"07mid","s":355.78,"stage":"07","calls":10,"triangles":108368,"points":1300,"avgFrameMsSwiftShader":2.3,
+> docs/vfx/water_08.png {"preset":"08","s":397.2,"stage":"08","calls":11,"triangles":101648,"points":1300,"avgFrameMsSwiftShader":0.9,
+> docs …[+393 chars]
+
+### 🤖 Claude — 2026-11-15T17:18:41.856Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/vfx/water.md", "content": "# Rainbow water system (`src/vfx/`)\n\nOwner: water-fx-specialist + foam-bubbles-particles. Real-time, traversable 3D geometry with custom\nGLSL; no video, no baked frames. Flow direction follows the master course (`src/world/course.ts`).\n\n## API (`src/vfx/index.ts`)\n\n```ts\nconst water = createWater(course, { quality: 'high' | 'low' });\nscene.add(water.group);\nwater.update(time, dt, bennyS, camera);              // every frame\nwater.wake(bennyPos, forward, right, speed, dt);     // while riding (ripple rings, V-wake, si …[+5947 chars]`
+
+### 🧑 User — 2026-11-15T17:18:42.032Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/vfx/water.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:18:46.421Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p tsconfig.json 2>&1 | grep -E \"src/vfx|tools/water\" | head -5; echo \"tsc-vfx-clean\"; ls src/vfx docs/vfx | head -40; wc -l src/vfx/*.ts | tail -1", "description": "Final typecheck and file listing", "timeout": 180000}`
+
+### 🧑 User — 2026-11-15T17:18:49.059Z
+
+> ↩︎ result: tsc-vfx-clean
+> docs/vfx:
+> water.md
+> water_01.png
+> water_01_low.png
+> water_02.png
+> water_03.png
+> water_03_low.png
+> water_04.png
+> water_04_chevrons_topdown.png
+> water_05.png
+> water_05_low.png
+> water_06.png
+> water_07.png
+> water_07mid.png
+> water_08.png
+> water_09.png
+> water_09_low.png
+> water_10.png
+> water_11.png
+> water_stats.json
+> water_stats_low.json
+> 
+> src/vfx:
+> bubbles.ts
+> drumWater.ts
+> finalWave.ts
+> foam.ts
+> glsl.ts
+> index.ts
+> puddles.ts
+> spray.ts
+> waterRibbon.ts
+> whirlpool.ts
+>  1852 total
+
+### 🤖 Claude — 2026-11-15T17:19:07.157Z
+
+The water system is built and working: the full `createWater` API exists and typechecks cleanly. I checked it over five render rounds against the reference PNGs. Frame times and Android performance were not measured: the lab runs on software rendering and no device was available. I made no git commits (cron autosave covers it).
+
+**What's in it** (`src/vfx/`, about 1,850 lines; `water.parts` lets you hide any piece):
+- **Stream:** the water ribbon runs from the Drum A drain to the towel, with a cyan core, meandering hot-pink bands and thin white streaks. It also has sparkles and bubbly edge foam, plus ripple rings and a V-wake around Benny.
+- **04 slide:** exactly five glowing chevrons pointing downhill. A top-down render (`docs/vfx/water_04_chevrons_topdown.png`) confirms there are five.
+- **03 whirlpool:** a funnel surface whose bands follow the same spiral as the course and swirl into the drain.
+- **Drum A (01/02):** glossy swells with white foam seams and crests, plus a spinning water shell for the 02 tumble.
+- **09 final wave:** a curling wall about 9 units tall on the left of the stream, with a foam crest and spray.
+- **11 outro:** the stream and chamber foam drain away and leftover puddles fade in.
+- **Particles:** foam banks drawn only near Benny, iridescent soap bubbles (big and tiny), and pooled spray droplets.
+
+**How you drive it:**
+- Call `water.update(time, dt, bennyS, camera)` every frame and `water.wake(...)` while Benny rides.
+- Set `water.controls.drumSwirl`, `drumAgitation` and `outro` (each 0–1) during the cinematics.
+- Place Benny at `course.pointAt(s, lateral, water.surfaceHeight(s, lateral, t) + BENNY_RIDE_OFFSET)`, where the offset is 0.55, so he sits on the surface and never sinks.
+
+**Tools and docs:** `tools/water-lab.html`, `scripts/water-lab.mjs`, and `docs/vfx/water.md` (uniforms, budgets, quality tiers). Screenshots for 01, 02, 03, 04, 05, 06, 07, the mid-plunge, 08, 09, 10 and 11 are in `docs/vfx/`, with low-quality versions for 01, 03, 05 and 09.
+
+**Measured cost** (water only, per frame, from the renderer's stats):
+
+| Scene | High: draw calls / triangles | Low: draw calls / triangles |
+|---|---|---|
+| 01 Drum A | 7 / 95k | 7 / 25k |
+| 03 Whirlpool | 12 / 211k | 12 / 41k |
+| 05 Current | 13 / 148k | 13 / 31k |
+| 09 Final wave | 11 / 102k | 11 / 28k |
+
+Foam puffs: 2,532 (high) / 1,219 (low). Particles: 1,300 points (high) / 500 (low).
+
+**Matches the references:** saturated cyan/pink water with white streaks, the chevron slide, the whirlpool spiral, the final wave, bubbles and the plunge sheet. Getting the colours vivid meant keeping base hues below the point where NeutralToneMapping washes them out. Your gold and environment colours will be desaturated the same way if they sit near full brightness.
+
+**Still differs:** Drum A water looks smoother and more satin than the foamy reference. Foam puffs are smooth spheres rather than fine lather. The 03 drain is keyhole-shaped instead of round and centred (see the first change request).
+
+**Change requests:**
+1. **`course.ts` (important):** the whirlpool spiral exits at radius about 2.8, just outside the 2.6 drain hole. The 04 slide then runs up to about 5 units *under* the funnel surface, so the whirlpool water would cover the slide. I worked around it by cutting a channel in the funnel along the slide. The proper fix is to end the spiral at the drain centre so the tube drops straight through the hole.
+2. **03 camera:** with the spiral turning the way it does and the camera facing the 04 slide, Benny is heading away from the camera at the spiral start. The reference shows his face, so the 03 camera or Benny's heading needs a decision.
+3. **Chute water:** the ribbon starts at the Drum A drain, not at the end of stage 02, so the chute between the drum and the basin has water. Drum A water hides once Benny is 12 units into stage 03.
+4. **Puddle height:** puddles sit on the chamber cylinder's floor, about 1 unit below the stream level. If you build a raised floor instead, the puddle height needs to change to match.
+

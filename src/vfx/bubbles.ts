@@ -101,7 +101,7 @@ export interface BubbleSystem {
   group: THREE.Group;
   big: THREE.InstancedMesh;
   small: THREE.Points;
-  update(time: number, dt: number, focusS: number, camera: THREE.Camera): void;
+  update(time: number, dt: number, focusS: number, camera: THREE.Camera, density?: number): void;
   counts: { big: number; small: number };
 }
 
@@ -185,7 +185,7 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
       h = tube > 0 ? rnd(0.4, tube * 1.4) : rnd(0.3, 7);
       b.size = Math.random() < 0.18 ? rnd(0.5, 0.9) : rnd(0.15, 0.42);
     } else {
-      lat = rnd(-hw - 1.2, hw + 1.2);
+      lat = tube > 0 ? rnd(-hw - 1.2, hw + 1.2) : rnd(-hw - 4, hw + 4);
       h = rnd(0.15, 2.6) * (Math.random() < 0.7 ? 0.5 : 1.2);
       b.size = rnd(0.05, 0.17);
     }
@@ -206,7 +206,7 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
     big,
     small,
     counts: { big: nBig, small: nSmall },
-    update(time, dt, focusS, camera) {
+    update(time, dt, focusS, camera, density = 1) {
       bigUniforms.uTime.value = time;
       ptUniforms.uTime.value = time;
       const jump = Math.abs(focusS - lastFocus) > 25;
@@ -227,11 +227,12 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
         b.pos.addScaledVector(b.vel, dt);
         tmp.set(Math.sin(time * 1.3 + b.phase), Math.cos(time * 1.1 + b.phase * 1.7), Math.sin(time * 0.9 + b.phase * 0.6)).multiplyScalar(0.12 * dt);
         b.pos.add(tmp);
-        const behind = !inDrum && b.s < focusS - (isBig ? 6 : 4);
+        // near the route end (outro) keep bubbles anywhere in the last ~30 units
+        const behind = !inDrum && b.s < Math.min(focusS, course.length - 32) - (isBig ? 6 : 4);
         if (behind || b.age > b.life) spawn(b, focusS, isBig, false);
       };
-      const bigLimit = inDrum ? Math.min(nBig, 16) : nBig;
-      const smallLimit = inDrum ? Math.round(nSmall * 0.45) : nSmall;
+      const bigLimit = Math.round((inDrum ? Math.min(nBig, 16) : nBig) * density);
+      const smallLimit = Math.round((inDrum ? nSmall * 0.45 : nSmall) * density);
       for (let i = 0; i < nBig; i++) {
         const b = bigS[i];
         step(b, true);
