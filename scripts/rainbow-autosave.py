@@ -13,7 +13,9 @@ Each run:
      enforces LFS for large binaries
   5. commits with a timestamp when real changes exist (status/log-only changes never commit)
   6. pushes (no force, ever) with retries and verifies the remote branch SHA == local HEAD
-  7. records the result in backups/BACKUP_STATUS.json and backups/BACKUP_LOG.md
+  7. records the result in the LIVE log (backups/.live/, git-ignored). The tracked copies
+     backups/BACKUP_STATUS.json / BACKUP_LOG.md are refreshed from the live copies only inside a real
+     commit, so a run never leaves the working tree dirty (no endless "uncommitted changes" prompts).
 Never force-pushes, hard-resets, deletes files or rewrites history.
 """
 from __future__ import annotations
@@ -34,8 +36,11 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 CFG = json.loads((REPO / "backups" / "autosave.config.json").read_text())
-STATUS = REPO / "backups" / "BACKUP_STATUS.json"
-LOG = REPO / "backups" / "BACKUP_LOG.md"
+TRACKED_STATUS = REPO / "backups" / "BACKUP_STATUS.json"
+TRACKED_LOG = REPO / "backups" / "BACKUP_LOG.md"
+LIVE = REPO / "backups" / ".live"
+STATUS = LIVE / "BACKUP_STATUS.json"
+LOG = LIVE / "BACKUP_LOG.md"
 LOCK = REPO / "backups" / ".autosave.lock"
 TRAILER = "\n\n" + CFG.get("commit_trailer", "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
 SECRET_PATTERNS = [
@@ -63,6 +68,21 @@ def git(*args: str, check: bool = True, timeout: int = 180) -> subprocess.Comple
     if check and p.returncode != 0:
         raise RuntimeError(f"git {' '.join(args)} failed ({p.returncode}): {p.stderr.strip()[:800]}")
     return p
+
+
+def seed_live() -> None:
+    """First run in a fresh checkout: start the live log/status from the tracked copies."""
+    LIVE.mkdir(parents=True, exist_ok=True)
+    for live, tracked in ((STATUS, TRACKED_STATUS), (LOG, TRACKED_LOG)):
+        if not live.exists() and tracked.exists():
+            live.write_text(tracked.read_text())
+
+
+def sync_tracked_from_live() -> None:
+    """Copy the live log/status into the tracked files (called only right before a real commit)."""
+    for live, tracked in ((STATUS, TRACKED_STATUS), (LOG, TRACKED_LOG)):
+        if live.exists():
+            tracked.write_text(live.read_text())
 
 
 def load_status() -> dict:
@@ -194,6 +214,7 @@ def main() -> int:
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
     t0 = now_utc()
+    seed_live()
     st = load_status()
     row = {"time": t0.isoformat(), "reason": args.reason, "result": "error", "files_staged": 0,
            "pushed_verified": False, "branch": CFG["branch"]}
@@ -244,6 +265,9 @@ def main() -> int:
         refresh_manifest()
 
         # ---- 3. stage allow-listed paths ----------------------------------------------
+        # tracked status/log files: start from HEAD; they are refreshed from the live log only when a
+        # real commit is made (below), so status-only runs never leave the tree dirty
+        git("checkout", "--", *CFG["status_only_paths"], check=False)
         files = allowlisted_files()
         if files:
             # add in chunks to stay under arg limits
@@ -265,8 +289,10 @@ def main() -> int:
 
         has_head = git("rev-parse", "--verify", "-q", "HEAD", check=False).returncode == 0
         if not real:
-            # status/log-only diff: don't create a recursive log-only commit
-            git("reset", "-q", "--", *CFG["status_only_paths"], check=False) if has_head else None
+            # nothing but status/log: no commit, and leave the tracked status files exactly as in HEAD
+            if has_head:
+                git("reset", "-q", "--", *CFG["status_only_paths"], check=False)
+                git("checkout", "--", *CFG["status_only_paths"], check=False)
             row["result"] = "no-change"
             row["files_staged"] = 0
             head = git("rev-parse", "HEAD", check=False).stdout.strip() if has_head else ""
@@ -284,6 +310,8 @@ def main() -> int:
                 else:
                     row["pushed_verified"] = True
         else:
+            sync_tracked_from_live()
+            git("add", "--", *CFG["status_only_paths"], check=False)
             stamp = t0.strftime("%Y-%m-%d %H:%M UTC")
             subject = args.message or f"autosave: Rainbow {stamp}"
             body = (f"\n\nAutomated Rainbow backup ({args.reason}). {len(real)} file(s) changed."

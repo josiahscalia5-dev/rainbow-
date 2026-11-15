@@ -63,8 +63,8 @@
   },
   {
    "path": ".gitignore",
-   "bytes": 638,
-   "sha256": "443016b9d2d5412020f501719d00a61c1f6a4bb70735b32d0bb0499188c93402"
+   "bytes": 653,
+   "sha256": "53fed7146b3051bb134991448d2a4d6dabe46bc0aef7bcb7f7ac70327ad68480"
   },
   {
    "path": ".mcp.json.template",
@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2920,
-   "sha256": "10e73673794f370f0288fded0352b499f4676f179b652d4e882feaf2710da4da"
+   "sha256": "3c18254dfde5181935b15e38c438826636748e3d7d1e5db5382617b895d15124"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -408,8 +408,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 1885,
-   "sha256": "cb9b9be2c24d66b2f30a4f5335eda97615cd4b6c2ae2b11b55bdee8ec2cbe23e"
+   "bytes": 2362,
+   "sha256": "063a8f567fe6924295423757859d261585d040cd2c8579ac4ee859ec47e80cff"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -1632,6 +1632,11 @@
    "sha256": "5efb1cc0e60c18fd5e7eb8d6574334e5e87847d55d702eb3957a575a7394d638"
   },
   {
+   "path": "scripts/autosave-status.py",
+   "bytes": 4365,
+   "sha256": "e5f9a0d070bd4c0e1351596b939f59d782a9cd84db6ef30027d00d6360eab4b9"
+  },
+  {
    "path": "scripts/capture.mjs",
    "bytes": 3883,
    "sha256": "4723acbc0f648c46bdb31d793db8629e745b5177ed812e8e4c678c544fb6140d"
@@ -1683,8 +1688,8 @@
   },
   {
    "path": "scripts/rainbow-autosave.py",
-   "bytes": 16538,
-   "sha256": "4482a841400759eed3e5e9952b139edf659e9da3a7db160f16a8ed33fdac0b42"
+   "bytes": 17983,
+   "sha256": "76cf7d1dbccc02917451fd15696acb0003215948311607a38a52cfcf95fed609"
   },
   {
    "path": "scripts/reference.sha256",
