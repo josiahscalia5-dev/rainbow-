@@ -1449,3 +1449,50 @@ The autosave has already committed most of my edits, so I'll diff against the wa
 > +    brush = sw * (vnoise(vec2(xb * bK, v5 * 0.11 + 5.0)) - 0.5) * (1.0 - smoothstep(0.05, 0.12, fwx * bK));
 > -  float pL = (1.0 - smoothstep(wL - aaw …[+3548 chars]
 
+### 🤖 Claude — 2026-11-15T22:09:08.273Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 - <<EOF\nfrom PIL import Image\nW='$W'\nrows=[]\nfor n,box in [('04',(0,700,864,1536)),('06',(0,1050,864,1536)),('07',(0,950,864,1536))]:\n    a=Image.open(f'screenshots/{n}.png').convert('RGB').crop(box); b=Image.open(f'qa/pilot05/wave5/water/regress/{n}.png').convert('RGB').crop(box)\n    s=0.5; a=a.resize((int(a.width*s),int(a.height*s))); b=b.resize((int(b.width*s),int(b.height*s)))\n    im=Image.new('RGB',(a.width*2+6,a.height),'white'); im.paste(a,(0,0) …[+314 chars]`
+
+### 🧑 User — 2026-11-15T22:09:08.864Z
+
+> ↩︎ result: (870, 974)
+
+### 🤖 Claude — 2026-11-15T22:09:11.213Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/regress_water.png"}`
+
+### 🧑 User — 2026-11-15T22:09:11.247Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:09:19.984Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls -d qa/pilot05/wave4/*/regress* qa/pilot05/wave3/*/regress* 2>/dev/null; ls qa/pilot05/wave4/water/ qa/pilot05/wave4/baseline/ 2>/dev/null", "description": "Look for earlier regression captures"}`
+
+### 🧑 User — 2026-11-15T22:09:20.028Z
+
+> ↩︎ result: qa/pilot05/wave4/baseline/:
+> 05.png
+> 
+> qa/pilot05/wave4/water/:
+> it01
+> it02
+> it03
+
+### 🤖 Claude — 2026-11-15T22:09:22.306Z
+
+No earlier regression set exists, so I'll quantify the water boxes of 04/06/07 (old vs new) for violet ("muddy purple") share and cyan/pink medians.
+
+### 🤖 Claude — 2026-11-15T22:09:29.065Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; cat > $W/wbox.py <<'EOF'\nimport sys\nsys.path.insert(0, sys.argv[1])\nfrom wmeasure_lib import classes, hexmed\nEOF\npython3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\ndef hsv(a):\n    a=a.astype(np.float32)/255; r,g,b=a[...,0],a[...,1],a[...,2]; mx=a.max(-1); mn=a.min(-1); d=mx-mn+1e-6\n    h=np.where(mx==r,((g-b)/d)%6,np.where(mx==g,(b-r)/d+2,(r-g)/d+4))*60; return h,d/(mx+1e-6),mx\ndef med(px): return '#%02X%02X%02X'%tuple(np.median(px,0).astype(int)) …[+716 chars]`
+
+### 🧑 User — 2026-11-15T22:09:29.650Z
+
+> ↩︎ result: 04 old cyan 54% pink 28% violet 2.5% | cyanMed #0091EC pinkMed #FF0BA3 | lumStd 34.8
+> 04 new cyan 50% pink 45% violet 0.2% | cyanMed #00B0FF pinkMed #FF5BFF | lumStd 28.7
+> 06 old cyan 35% pink 25% violet 4.6% | cyanMed #3593DB pinkMed #FF42E0 | lumStd 29.1
+> 06 new cyan 41% pink 40% violet 0.4% | cyanMed #51ABFF pinkMed #FF3FC9 | lumStd 24.2
+> 07 old cyan 22% pink 36% violet 9.2% | cyanMed #3A93DF pinkMed #F645A9 | lumStd 34.6
+> 07 new cyan 28% pink 49% violet 2.6% | cyanMed #3AADFF pinkMed #FF61EA | lumStd 28.4
+

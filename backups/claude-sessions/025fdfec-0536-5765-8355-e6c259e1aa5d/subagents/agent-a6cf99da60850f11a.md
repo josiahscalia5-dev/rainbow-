@@ -1384,3 +1384,50 @@ it02 measures on target: star (512, 955) +0.65 hw vs ref (519, 953) +0.64; body 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; cat >> qa/pilot05/wave5/benny/NOTES.md <<'EOF'\n\n### it04 (22:07) — re-export with hat colour factors + yarn colours\nGLB 1,126,332 B `glTF`. Geometry unchanged vs it02 (bbox x 231–612 y 766–1196, star (512,955)). Scene had changed\nunder us (other specialists): 125 calls / 634,089 tris (it02: 121 / 608,313) — measurement scripts now use a Benny ROI.\n| region | ref 05 | it02 | it04 |\n|---|---|---|---|\n| cuff | #6B0DEB L117 | #B248FF L167 | **#6611EC L121** |\n| white stripes | #F3CFE4 L225 | #FFD8FF L241 | #FFD5EB L233 | …[+921 chars]`
 
+### 🧑 User — 2026-11-15T22:09:23.700Z
+
+> ↩︎ result: TSC_OK
+> 22:08
+> exported assets/models/benny.glb {"bytes":1130568,"meshes":27,"nodes":39,"clips":["idle(2.40s)","swim(0.60s)","tumble(1.
+> turntable docs/characters/benny_turntable.png {"box":{"min":[-1.0368119659137613,-0.8895217347813645,-0.8139782728548887
+> -rw-r--r-- 1 root root 1130568 Nov 15 22:08 assets/models/benny.glb
+> glTF
+> 05 {"q":"","calls":144,"tris":634317,"info":{"body":[1.514,-41.2,-74.734],"up":[-0.025,0.999,-0.042],"fwd":[0.004,-0.042,-0.999],"scale":1},
+> ALL bbox x 231-612 y 766-1196  (w 382 h 431)
+>   body  x  231- 612 y  999-1196  w 382 h 198 px 44789
+>   pom   x  341- 489 y  766- 896  w 149 h 131 px 12148
+>   cuff  x  273- 563 y  941-1029  w 291 h  89 px 14796
+>   crown x  289- 546 y  873- 973  w 258 h 101 px 17396
+>   star  x  475- 550 y  917- 993  w  76 h  77 px 2847
+> centre col x=418: top 777 cuff 974-1029 bottom 1186
+> HAT incl pom 253 px = 58.7%   BODY below cuff 157 px = 36.4%  of H 431
+> cuff width 291; star centre (512,955) rel cuff-centre x +0.65 half-widths
+> body rows (y: red runs):
+> cuff    ref #6B0DEB L117   game #6611EC L121
+> white   ref #F3CFE4 L225   game #FFD5EA L233
+> purple  ref #740FF2 L124   game #624BC0 L135
+> body    ref #F549A9 L162   game #FF48B4 L169
+> pom     ref #82 …[+29 chars]
+
+### 🤖 Claude — 2026-11-15T22:09:26.721Z
+
+Purple stripe median shifted to #624BC0 (L135): darker but greyer, so the green is coming from lighting/specular, not the albedo. Let me look at it.
+
+### 🤖 Claude — 2026-11-15T22:09:31.931Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((260,850,590,1040)).resize((495,285))\nb=Image.open('qa/pilot05/wave5/benny/it04/05.png').convert('RGB').crop((260,850,590,1040)).resize((495,285))\nc=Image.open('qa/pilot05/wave5/benny/it05/05.png').convert('RGB').crop((260,850,590,1040)).resize((495,285))\nout=Image.new('RGB',(1505,285),'white'); out.paste(a,(0,0)); out.paste(b,(505,0)); out.paste(c,(1010,0 …[+475 chars]`
+
+### 🧑 User — 2026-11-15T22:09:32.451Z
+
+> ↩︎ result: ref col x418-428 y916-955: #F4D4DD #EFCFE1 #711EE8 #5205EA #6A13EE #6009EF #4F06E2 #843BE7
+> it04 col x418-428 y916-955: #9450FF #843DFD #7F37FB #7F36FD #833BFF #954EFE #FFD6ED #FFD1EC
+> it05 col x418-428 y916-955: #7E52BD #693FB6 #6238B6 #6237B7 #673CB8 #7E50BD #FFD6ED #FFD1EC
+
+### 🤖 Claude — 2026-11-15T22:09:33.229Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/hat_it05.png"}`
+
+### 🧑 User — 2026-11-15T22:09:33.257Z
+
+> ↩︎ result: [image]
+
