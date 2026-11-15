@@ -990,3 +990,86 @@ Adding the same private-term guard to the autosave's pre-commit scan, then runni
 
 > 🔧 **Bash** `{"command": "git status --short | head -50 && echo --- && python3 scripts/rainbow-autosave.py --reason \"initial-backup\" --message \"Rainbow: initial project protection — locked references, kit, specialists, autosave system\" 2>&1 | tail -30", "description": "Run the first real autosave (commit + push + verify)", "timeout": 600000}`
 
+### 🧑 User — 2026-11-15T16:45:02.958Z
+
+> ↩︎ result: ?? .claude/
+> ?? .gitattributes
+> ?? .gitignore
+> ?? .mcp.json.template
+> ?? CLAUDE.md
+> ?? README_FIRST.md
+> ?? REFERENCE_ORDER.md
+> ?? Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> ?? START_HERE_PASTE_TO_CLAUDE.md
+> ?? TOOL_SETUP_AND_VERIFICATION.md
+> ?? VISUAL_QA_CHECKLIST.md
+> ?? backups/
+> ?? character_references/
+> ?? references/
+> ?? scripts/
+> ---
+> {
+>   "time": "2026-11-15T16:44:56+00:00",
+>   "reason": "initial-backup",
+>   "result": "committed+pushed",
+>   "files_staged": 51,
+>   "pushed_verified": true,
+>   "branch": "ccr-6f431adf-7h0m8y",
+>   "commit": "f1c94d0f8e32b9861c50c058fa8686737f91371b",
+>   "duration_s": 6
+> }
+
+### 🤖 Claude — 2026-11-15T16:45:06.909Z
+
+First backup committed, pushed and verified (`f1c94d0`). Now independently verifying the remote contents and LFS object, then installing the scheduler:
+
+### 🤖 Claude — 2026-11-15T16:45:10.569Z
+
+> 🔧 **Bash** `{"command": "git ls-remote origin && git lfs ls-files && git log --show-signature -1 --format='%H %G? %s' | tail -1 && V=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/verify-clone && rm -rf $V && git clone -q --branch ccr-6f431adf-7h0m8y https://github.com/josiahscalia5-dev/rainbow-.git $V 2>&1 | tail -2; cd $V && git lfs pull 2>&1 | tail -1; sha256sum backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip; ls .claude/agents | wc -l; sha256sum references/*.png character_references/*.jpg | cut -c1-16; ls backups backups/claude-sessions/*", "description" …[+89 chars]`
+
+### 🧑 User — 2026-11-15T16:45:12.780Z
+
+> ↩︎ result: f1c94d0f8e32b9861c50c058fa8686737f91371b	HEAD
+> f1c94d0f8e32b9861c50c058fa8686737f91371b	refs/heads/ccr-6f431adf-7h0m8y
+> 982e007c75 * backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip
+> error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
+> error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
+> f1c94d0f8e32b9861c50c058fa8686737f91371b N Rainbow: initial project protection — locked references, kit, specialists, autosave system
+> 982e007c75e95cb0913749e28f763579fddb39825f4dc2bfd5b12c64e478c0f3  backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip
+> 10
+> 99509fb6f6528a7e
+> 50eec332c50b136a
+> 6f298ac5183ededf
+> 1b0ccdacbb4c97e9
+> d3f339d49199598e
+> 3946058c0893e97a
+> 75782e387240d794
+> ab7d0bc5777bc9b2
+> 260e9504b7b10d61
+> c0db71df8dc88c07
+> 4f30ca59a926d6ee
+> 92bbaa61a66c7a4d
+> backups:
+> AGENTS_STATUS.md
+> CONVERSATION_INDEX.md
+> CURRENT_STATE.md
+> MANIFEST.json
+> MCP_SETUP.md
+> RECOVERY.md
+> autosave.config.json
+> claude-sessions
+> source-package
+> 
+> backups/claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1:
+> transcript.md
+> transcript.sanitized.jsonl
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T16:45:18.404Z
+
+Fresh-clone verification passed. The LFS kit ZIP downloads byte-identical, all 10 agents and all 12 locked references are present with matching hashes. Installing the 5-minute cron scheduler:
+
+### 🤖 Claude — 2026-11-15T16:45:19.788Z
+
+> 🔧 **Bash** `{"command": "bash scripts/install-autosave-scheduler.sh; crontab -l; pgrep -a cron; echo ---; python3 scripts/rainbow-autosave.py --reason \"test:no-change\" 2>&1 | tail -12", "description": "Install cron schedule and test a no-change run", "timeout": 300000}`
+
