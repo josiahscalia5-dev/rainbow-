@@ -2568,3 +2568,34 @@ The fill is running but slow (about 1 minute of CPU so far). Waiting for it to f
 
 > 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 240 9 && flock -u 9 && exec 9>&- ; python3 scripts/rainbow-autosave.py --reason manual:task-end --message \"Screen 05: geometry-focused plate v3 tooling, Blender river layout from game geometry, rejected plates archived\" 2>&1 | grep -E '\"result\"' ; python3 -I scripts/autosave-status.py", "description": "Back up work and run autosave health check", "timeout": 400000}`
 
+### 🧑 User — 2026-11-15T20:12:23.438Z
+
+> ↩︎ result: "result": "committed+pushed",
+> AUTOSAVE OK | branch ccr-d4bb0ad3-8ycajb | scheduler daemon | last verified backup 2026-11-15T20:12:15+00:00 (0.1 min ago) | local be69ba2 remote be69ba2 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-15T20:12:32.009Z
+
+The backup system now does what you asked:
+- **Every 5 minutes:** it saves and pushes the whole project, then checks that GitHub has the same commit.
+- **Each new session:** it starts again automatically on that session's own branch.
+- **Protected branches:** it never pushes to your original branch `ccr-6f431adf-7h0m8y` or the recovery branch `claude/rainbow-3d-recovery-m4v347`. The recovery branch is newly added to that protected list.
+- **The repeated "uncommitted changes" prompts:** fixed. The autosave was writing its own log entry after each save, which left the project looking unsaved again. It now stays clean after every run.
+- **Health check:** I run a short check (`scripts/autosave-status.py`) after each major task and before ending a session. If the scheduler stops, a push fails, or there's a gap because the cloud environment was closed, I'll tell you directly.
+- **Future sessions:** these rules are written into `CLAUDE.md`, so new Claude Code sessions follow them without you repeating them.
+
+Latest backup: `be69ba2` on `ccr-d4bb0ad3-8ycajb`, confirmed on GitHub, nothing uncommitted.
+
+**Background image for Marble.** I took your point 4.
+- **Rejected versions:** the version you rejected, plus a second attempt at repainting the whole area behind Benny that also failed, are moved to `qa/worldlabs/05/rejected/` with a note not to upload them.
+- **New version (v3), geometry-focused:** your approved image cropped to just below the HUD and just above Benny's pom-pom, so nothing behind Benny has to be invented. It keeps the walls, gold rings, fittings, golden glow, foam banks, bubbles and the mid-distance S-bends. Only the coins are masked, each tightly, and filled from the water right around them; that fill is still running.
+- **Near-camera river:** comes from the game's own 3D river instead. The Blender scene is built (`qa/worldlabs/05/blender/screen05_layout.blend`) and holds the real Screen 05 river, its cyan core path, the tunnel and the ring positions.
+
+When the coin fill finishes, the Reference Match Director checks it against your original, and then you get the three separate full-size images: original, cleaned, and the mask of rebuilt areas. Nothing goes to Marble or Atlas, and no credits are spent, until you approve.
+
+The five Screen 05 specialists are still working without interruption.
+
+### 🧑 User — 2026-11-15T20:12:33.567Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

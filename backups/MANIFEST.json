@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2920,
-   "sha256": "866071f338f27710919548d9d429ae997c31cee2c3a266f517567b68183c6ad5"
+   "sha256": "7dcdd1aa8817ce7cbdb495a2640436bdfdbf80f58f25b497774216cfa73f342c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1398,13 +1398,13 @@
   },
   {
    "path": "qa/worldlabs/05/plate_v3/05_geometry_coin_trail_zoom_v3.png",
-   "bytes": 948610,
-   "sha256": "8b3b03d9bca7564b341c08c253fddefe8edc1416032061675a46465966c9a23e"
+   "bytes": 936208,
+   "sha256": "17b37bafa4241c48c23e806bf4778413a579ffa32c41856a21dd4d5d8e2bf660"
   },
   {
    "path": "qa/worldlabs/05/plate_v3/05_geometry_mask_overlay_v3.png",
-   "bytes": 841957,
-   "sha256": "9a83e52e291c70fa64f6a4b11a1283f2b5b6a3bc61d20e416c1c516e5a00d29f"
+   "bytes": 838388,
+   "sha256": "64f0baa9045860028eaceec63023e2e740677b17b3b64bb2d398337bab9bcf6c"
   },
   {
    "path": "qa/worldlabs/05/plate_v3/05_geometry_reconstructed_mask_v3.png",
@@ -1413,8 +1413,8 @@
   },
   {
    "path": "qa/worldlabs/05/plate_v3/05_geometry_reference_v3.png",
-   "bytes": 1052708,
-   "sha256": "eeb9edcdccf44b143a7498a77e8240dcc686ad5296d4f2f1a8578e7f564ae71a"
+   "bytes": 1047779,
+   "sha256": "0188af1d0c005062732006691523f96d7bfc48c61ed644f8ec3be1aadbb78908"
   },
   {
    "path": "qa/worldlabs/05/rejected/README.md",
