@@ -440,3 +440,49 @@ Keep the answer compact: a list of facts, each with its URL. Say plainly when so
 > | [`atlasGenerate`](/atlas-generate)              | Explore the same scene from new camera angles. Start with one or more images that have a camera pose and a depth map. |
 > | [`atlasChis …[+998 chars]
 
+### 🤖 Claude — 2026-11-15T19:39:52.479Z
+
+Facts from the official docs, each with its source URL. Where a figure is missing from the pages I read, I say so.
+
+**1. Marble / World API**
+- Base URL: `https://api.worldlabs.ai/marble/v1` (e.g. `POST /marble/v1/worlds:generate`). Source: https://docs.worldlabs.ai/api/index.md
+- Auth: header `WLT-Api-Key: [REDACTED] The docs show no OAuth. Source: https://docs.worldlabs.ai/api/index.md
+- Key creation: sign in at https://platform.worldlabs.ai with a Marble account, add a payment method and buy credits at https://platform.worldlabs.ai/billing, then create the key at https://platform.worldlabs.ai/api-keys. Source: https://docs.worldlabs.ai/api/index.md
+- Models in the examples: `marble-1.1`, `marble-1.1-plus`, and `marble-1.0-draft` (pricing page). The name "0.1-mini" does not appear.
+- MCP / Claude integration for Marble: none in the Marble docs index (https://docs.worldlabs.ai/llms.txt). The only MCP server I found is Atlas's, at `https://api.atlas.worldlabs.ai/mcp`, which runs Atlas tasks. Source: https://docs.atlas.worldlabs.ai/mcp.md
+
+**2. Marble API pricing** (https://docs.worldlabs.ai/api/pricing.md)
+- "$1.00 USD per 1,250 credits"; "The minimum purchase is 6,250 credits or $5.00 USD."
+- "API credits do not expire."
+- Standard models (`marble-1.0`, `marble-1.1`), world generation alone 1,500 credits. Totals: image-as-pano 1,500; text 1,580; non-pano image 1,580; multi-image 1,600; video 1,600.
+- Draft (`marble-1.0-draft`): world generation 150 credits; totals 150 to 250.
+- `marble-1.1-plus`: base world generation 1,500 plus 0 to 1,500 variable. Totals run 1,500 to 3,000 for a pano image and 1,600 to 3,100 for multi-image or video. Observed mean $1.714, median $1.280.
+- Charged per usage event; pano generation adds 80 (text or non-pano image), 100 (multi-image or video), or 0 (pano image).
+- Failed generations: not stated.
+- Free API credits: not stated.
+
+**3. Credit separation**
+- Marble app and API are separate. "Credits purchased for the Marble app at marble.worldlabs.ai CANNOT be used with the API." Source: https://docs.worldlabs.ai/api/pricing.md
+- "Marble and the World API bill separately, and credits are not interchangeable in either direction." Source: https://docs.worldlabs.ai/marble/support/account-billing.md
+- Atlas vs Marble/World API: the Atlas billing page does not mention Marble or the World API, so whether the two are interchangeable is not stated. Its rate (1,000 credits per USD) differs from the World API's 1,250. Source: https://docs.atlas.worldlabs.ai/billing.md
+
+**4. Atlas**
+- Account and key setup: the Atlas quickstart says to open https://atlas.worldlabs.ai/developers, select API keys, and create a key with `tasks.create`, `operations.read`, `assets.create`, `assets.read`. Source: https://docs.atlas.worldlabs.ai/quickstart.md
+- Base URL: `https://api.atlas.worldlabs.ai/api/v2`, with header `WLT-Api-Key`. Source: https://docs.atlas.worldlabs.ai/quickstart.md and https://docs.atlas.worldlabs.ai/api-reference/images2-posed-rgbd.md
+- "no active Atlas account": not found on any page I read. The phrase, and any separate sign-up page, do not appear in https://docs.atlas.worldlabs.ai/llms.txt.
+- Credit price: "1,000 credits per US dollar. Credits purchased for the account do not expire." Minimum purchase: not stated. Source: https://docs.atlas.worldlabs.ai/billing.md
+- Task costs (all six): not published. The billing page says "The task rate card can change. Use the current rate card shown in the platform." Source: https://docs.atlas.worldlabs.ai/billing.md. The task overview page lists no prices either: https://docs.atlas.worldlabs.ai/task-overview.md
+- Failed-task charging: not stated.
+
+**5. Marble exports** (https://docs.worldlabs.ai/marble/export/specs.md, https://docs.worldlabs.ai/marble/export/mesh.md)
+- Splats: SPZ (about 2M splats), low-res SPZ (about 500k), PLY (about 2M), low-res PLY (about 500k).
+- Panorama: "Equirectangular png of 2560 x 1280 pixels."
+- Collider mesh GLB: "100-200k triangles." Included in the Standard plan.
+- High-quality mesh GLB: one about 600k triangles with textures, one about 1M triangles with vertex colors. Pro plan required. Takes up to an hour. Rate limited to "4 generation requests per hour per user." Only on worlds you own.
+- OBJ: not mentioned.
+- API (https://docs.worldlabs.ai/api/index.md): `spz_urls` (100k, 500k, full_res), `collider_mesh_url` (GLB), `hq_mesh_url` and `full_res_mesh_url` (GLB, once exported), `pano_url`. Export via `POST /marble/v1/worlds/{world_id}:export`: `{"asset_type":"splats","format":"ply"}` (free) or `{"asset_type":"mesh","format":"glb"}` (3,500 credits, per https://docs.worldlabs.ai/api/pricing.md).
+
+**URLs read:** https://docs.worldlabs.ai/llms.txt, https://docs.atlas.worldlabs.ai/llms.txt, https://docs.worldlabs.ai/api/index.md, https://docs.worldlabs.ai/api/pricing.md, https://docs.worldlabs.ai/marble/export/mesh.md, https://docs.worldlabs.ai/marble/export/specs.md, https://docs.worldlabs.ai/marble/support/account-billing.md, https://docs.atlas.worldlabs.ai/quickstart.md, https://docs.atlas.worldlabs.ai/billing.md, https://docs.atlas.worldlabs.ai/mcp.md, https://docs.atlas.worldlabs.ai/api-reference/images2-posed-rgbd.md, https://docs.atlas.worldlabs.ai/task-overview.md
+
+Not read: the Marble app pricing page (https://marble.worldlabs.ai/pricing) and the Marble "Create & edit" and "Chisel" pages.
+

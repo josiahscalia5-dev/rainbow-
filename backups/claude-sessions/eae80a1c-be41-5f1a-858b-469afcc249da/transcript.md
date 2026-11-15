@@ -2917,3 +2917,144 @@ Working branch is now `claude/rainbow-3d-recovery-m4v347`. Let me run one autosa
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason \"manual:switch-to-recovery-branch\" 2>&1 | tail -11; echo \"--- independent check ---\"; echo \"local $(git rev-parse --short HEAD)\"; git ls-remote --heads origin | sed 's/\\t/  /'", "description": "Run autosave on recovery branch and verify remote", "timeout": 300000}`
 
+### 🧑 User — 2026-11-15T19:39:48.193Z
+
+> ↩︎ result: {
+>   "time": "2026-11-15T19:39:36+00:00",
+>   "reason": "manual:switch-to-recovery-branch",
+>   "result": "committed+pushed",
+>   "files_staged": 39,
+>   "pushed_verified": true,
+>   "branch": "claude/rainbow-3d-recovery-m4v347",
+>   "commit": "da75045d1f64a49f5cc6d3e40276213c165dbae7",
+>   "duration_s": 11
+> }
+> --- independent check ---
+> local da75045
+> 81e639e16994713d5f70d0314e796d1c298eeacf  refs/heads/ccr-6f431adf-7h0m8y
+> 8a36270c96c27a4495b5b7ec3c36e84cd9578dff  refs/heads/ccr-8b6fc834-7kd55l
+> da75045d1f64a49f5cc6d3e40276213c165dbae7  refs/heads/claude/rainbow-3d-recovery-m4v347
+
+### 🤖 Claude — 2026-11-15T19:39:55.926Z
+
+> 🔧 **mcp__github__update_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 1, "title": "[superseded] Rainbow recovery (account 3): work moved to the recovery branch", "body": "**Superseded.** At the owner's request, work continues directly on `claude/rainbow-3d-recovery-m4v347`. That branch was fast-forwarded from `f2a86ab` to `8a36270` (this branch's head): no history was rewritten and nothing was lost. The 5-minute autosave now pushes there. This PR has no remaining diff and can be closed.\n\nThe original backup `ccr-6f431adf-7h0m8y` (`81e639e`) is untouched.\n\n🤖 Generated with [Claude Code](https:// …[+84 chars]`
+
+### 🧑 User — 2026-11-15T19:39:57.642Z
+
+> ↩︎ result: {"id":"5326189991","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/1"}
+
+### 🤖 Claude — 2026-11-15T19:40:33.079Z
+
+I have the official facts now. Here's the connection status you asked for, all checked live and read-only, with **no credits spent**:
+
+## World Labs connection status
+
+| Check | Actual result |
+|---|---|
+| **World Labs plugin** | ✅ Installed once, v0.2.2, official (`github.com/worldlabsai/skills`, author World Labs). 4 skills: `worldlabs-cli`, `atlas-splats`, `atlas-flythrough`, `atlas-blender`. It was installed during this session, so its skills load **in the next session**; I can follow their instructions now by reading them. Note: it bundles the *same* Atlas MCP endpoint as your claude.ai connector, so I'm using your connector, the one that works in cloud sessions. |
+| **Atlas connector** | ✅ "World Labs Atlas" is connected to this claude.ai account and its 11 tools load. |
+| **Atlas account** | ❌ `list_projects` → *"this sign-in has no active Atlas account. Ask the user to open https://atlas.worldlabs.ai and finish signing up"*. **No projects are visible yet.** |
+| **Marble** | ⚠️ I can't see your Marble account. It's a separate web login with no MCP server or Claude integration (Atlas is the only World Labs MCP). Automating it needs a **World API key** from https://platform.worldlabs.ai/api-keys, sent in the `WLT-Api-Key` header. |
+| **Credit pools** | Three separate pools: Marble app credits **cannot** be used for the API ("not interchangeable in either direction"); World API is $1 per 1,250 credits ($5 minimum); Atlas is $1 per 1,000 credits. |
+
+**What you need to do:**
+1. **Atlas:** finish sign-up at https://atlas.worldlabs.ai (developer page: https://atlas.worldlabs.ai/developers). Then I re-run `list_projects`.
+2. **Marble automation (optional):** create a World API key at platform.worldlabs.ai. When you want it, I'll open the secure credential form and the key goes into the environment's proxy, never into chat or GitHub. Without a key, the manual workflow below works with your Marble web account.
+
+**What costs credits:**
+- **Free:** `list_projects`, uploads, `get_operation`, `get_asset`, and Marble PLY splat export.
+- **Atlas (costs credits):** `images2PosedRGBD`, `atlasGenerate`, `atlasTextToImage`, `atlasChisel`, `splats2Mesh` (prices only on your account's rate card, not published), and `posedImages2Splats` (draft ≈ $0.50, refined ≈ $5.00, per its docs page).
+- **Marble API (costs credits):** draft world 150–250 credits (≈ $0.12–0.20), standard world 1,500–1,600 (≈ $1.20–1.28), plus world up to 3,100 (≈ $2.48), GLB mesh export 3,500 (≈ $2.80).
+
+Now I'll prepare the credit-free part of the Screen 05 pilot: the Marble → Blender → Rainbow import path, tested with a synthetic model so it's proven before anything is bought.
+
+### 🤖 Claude — 2026-11-15T19:40:34.689Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import cv2, numpy; print('opencv', cv2.__version__)\" 2>&1; python3 -c \"import PIL; print('PIL', PIL.__version__)\"; ls tools/ docs/; head -30 skills 2>/dev/null; sed -n 1,80p /root/.claude/plugins/cache/worldlabs/worldlabs/0.2.2/skills/atlas-blender/SKILL.md", "description": "Check imaging libs and read atlas-blender skill"}`
+
+### 🧑 User — 2026-11-15T19:40:34.792Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     import cv2, numpy; print('opencv', cv2.__version__)
+>     ^^^^^^^^^^^^^^^^^
+> ModuleNotFoundError: No module named 'cv2'
+> PIL 12.3.0
+> docs/:
+> FLOW_VIDEO.md
+> characters
+> path_graph.md
+> reference_inventory.md
+> vfx
+> 
+> tools/:
+> model-lab.html
+> model-lab.ts
+> water-lab.html
+> water-lab.ts
+> ---
+> name: atlas-blender
+> description: Use Blender to see and shape Atlas scenes in 3D. Load posed images as cameras and point clouds, place cameras by eye, animate a camera path, view splats, and optionally run Atlas tasks from inside Blender with the Atlas add-on. Use when Blender is installed or the user works in Blender.
+> license: Apache-2.0
+> ---
+> 
+> # Atlas in Blender
+> 
+> Blender is where you and the user can both see an Atlas scene: posed images as cameras with
+> point clouds, cameras placed by eye, a camera path on the timeline, and splats to fly through.
+> It is the preferred place for Atlas work when it is installed.
+> 
+> The method for a video or for splats is in the `atlas-flythrough` and `atlas-splats` skills.
+> This skill is how that work is done in Blender. It needs Blender 5.3 or newer.
+> 
+> ## Agree how to use Blender
+> 
+> How Blender is used is the user's …[+3867 chars]
+
+### 🤖 Claude — 2026-11-15T19:40:45.860Z
+
+> 🔧 **TaskCreate** `{"subject": "Prepare credit-free World Labs → Blender → Rainbow pipeline for Screen 05", "description": "Blender import/align/measure script for Marble GLB/PLY exports, tested on a synthetic tunnel; docs/WORLDLABS.md with status, costs, workflow; update qa/worldlabs/05/PILOT_PLAN.md. No credits.", "activeForm": "Preparing World Labs pipeline"}`
+
+### 🧑 User — 2026-11-15T19:40:45.872Z
+
+> ↩︎ result: Task #9 created successfully: Prepare credit-free World Labs → Blender → Rainbow pipeline for Screen 05
+
+### 🤖 Claude — 2026-11-15T19:40:47.110Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p /root/.claude/plugins/cache/worldlabs/worldlabs/0.2.2/skills/atlas-blender/references/background.md; grep -n -E \"tube:|width:\" src/world/course.ts | sed -n 1,14p", "description": "Read plugin background-Blender guidance and tube radii"}`
+
+### 🧑 User — 2026-11-15T19:40:47.155Z
+
+> ↩︎ result: # Run Atlas in background Blender
+> 
+> Atlas commands work in `blender --background`, with no window and no Blender MCP. This suits a
+> coding agent that drives Blender from a shell. The differences from an open session are below.
+> 
+> ## Start Blender
+> 
+> ```sh
+> WLT_API_KEY=... blender --background --online-mode --python script.py
+> ```
+> 
+> - `--online-mode` allows online access for this run. Without it, posing and generation are
+>   refused unless **Allow Online Access** is already on in Preferences.
+> - Atlas uses the API key from its settings, or `WLT_API_KEY` from the environment when the
+>   settings hold none. Take the key from the environment; never ask for it in chat.
+> - Do not pass `--factory-startup`. It skips the preferences that enable Atlas, and
+>   `bpy.ops.atlas.command` does not exist.
+> - Pass a `.blend` path before `--python` to continue a saved scene.
+> 
+> ## Advance jobs yourself
+> 
+> The timer that advances jobs runs only with a window. In background mode call the Atlas
+> package's `tick()` between status checks:
+> 
+> ```python
+> import sys
+> import time
+> 
+> atlas_package = next(module for name, module in sys.modules.items() if name.split(".")[-1] == "worldlabs_atlas")
+> 
+> def wait(job_id, timeout=1800):
+>     dead …[+2805 chars]
+
