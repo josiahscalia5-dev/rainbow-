@@ -2336,3 +2336,88 @@ The plugin is already installed, so I'll use its built-in MCP connection rather 
 
 > 🔧 **Bash** `{"command": ". ~/.rainbow-autosave.env 2>/dev/null; timeout 600 python3 scripts/rainbow-autosave.py --reason manual --message \"recovery: Android SDK + Blender setup scripts; handoff verification\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"'; echo \"---\"; git log --oneline -6; echo \"---REMOTE---\"; git ls-remote origin; git status --porcelain; tail -4 backups/BACKUP_LOG.md | cut -c1-120", "description": "Run a backup now and verify remote matches local", "timeout": 620000}`
 
+### 🧑 User — 2026-11-15T18:30:04.037Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "339184bd1827e9000e574f3e7be157b778237f83",
+> ---
+> 339184b recovery: Android SDK + Blender setup scripts; handoff verification
+> 0b3ada5 autosave: Rainbow 2026-11-15 18:25 UTC
+> 6d929a7 autosave: Rainbow 2026-11-15 18:20 UTC
+> 5a68d2a autosave: Rainbow 2026-11-15 18:15 UTC
+> 9142ae9 recovery: autosave now targets claude/rainbow-3d-recovery-m4v347; original branch protected
+> c87ad96 Record autosave refusals from recovery session
+> ---REMOTE---
+> 81e639e16994713d5f70d0314e796d1c298eeacf	HEAD
+> 81e639e16994713d5f70d0314e796d1c298eeacf	refs/heads/ccr-6f431adf-7h0m8y
+> 339184bd1827e9000e574f3e7be157b778237f83	refs/heads/claude/rainbow-3d-recovery-m4v347
+>  M backups/BACKUP_LOG.md
+>  M backups/BACKUP_STATUS.json
+> | 2026-11-15T18:15:39+00:00 | daemon | committed+pushed | `5a68d2af7535` | `claude/rainbow-3d-recovery-m4v347` | 6 | Tru
+> | 2026-11-15T18:20:43+00:00 | daemon | committed+pushed | `6d929a7524fa` | `claude/rainbow-3d-recovery-m4v347` | 12 | Tr
+> | 2026-11-15T18:25:47+00:00 | daemon | committed+pushed | `0b3ada566558` | `claude/rainbow-3d-recovery-m4v347` | 6 | Tru
+> | 2026-11-15T18:29:59+00:00 | manual | committed+pushed | `339184bd1827` | ` …[+44 chars]
+
+### 🤖 Claude — 2026-11-15T18:30:31.997Z
+
+World Labs is connected but can't be used yet, because your World Labs sign-in has no active Atlas account. The rest of the recovery checks out.
+
+## World Labs
+- **Connected:** your claude.ai connector works in this session, so no new session is needed. All 10 Atlas tools loaded: list projects, import and upload images, camera/depth estimation, new-view generation, splats, splats to mesh, text to image, plus operation and asset lookups.
+- **Blocked on your account:** `list_projects` returns "this sign-in has no active Atlas account". Please finish signing up at https://atlas.worldlabs.ai with the same login, then tell me. I'll rerun `list_projects` (free) and show you your projects and the tools each one allows.
+- **Nothing spent:** no generation has run and no credits were used.
+- **Plugin:** the official World Labs plugin (v0.2.2) is installed in this container. Your connector covers the same tools.
+
+## Handoff check
+| Item | Status |
+|---|---|
+| Repository | https://github.com/josiahscalia5-dev/rainbow- (private) |
+| Working branch | `claude/rainbow-3d-recovery-m4v347`, started from `81e639e` |
+| Latest pushed commit | `339184b`, confirmed on GitHub |
+| Original branch | `ccr-6f431adf-7h0m8y` is still at `81e639e`; autosave now refuses to ever push to it |
+| 5-minute autosave | working: the timer pushed on its own at 18:15, 18:20 and 18:25, each confirmed on GitHub |
+| Ten specialists | all 10 load, identical to your original kit |
+| GLB models | both real files restored and loaded in the running game with no errors |
+| Android build | **builds successfully**: 7.3 MB debug APK with both models; not tested on a phone or emulator yet |
+
+**Also restored and checked:**
+- the 12 reference images, unchanged
+- all 9 water modules and the 6 world/environment modules
+- the old transcript and its 3 subagent logs
+- your original kit ZIP, prompts, tests and comparison images
+
+**Fixed along the way:**
+- conversation logs from the old account were about to drop out of the backup index; they now stay listed
+- your email is redacted from saved transcripts
+
+## Other tools
+- **Blender 5.3.0:** installed and working headless. Blender MCP isn't available because it needs Blender's desktop window, so I'll drive Blender with Python scripts instead.
+- **Playwright:** working; real game screenshots taken.
+- **GitHub:** working.
+- **Meshy and Hyper3D Rodin:** not connected. They need your accounts, network access and your cost approval; tell me if you want them.
+
+## Backup limits
+- The 5-minute timer only runs while this cloud container is alive. The project's hooks also back up at the end of every turn of mine and restart the timer when a new session opens.
+- You declined the environment setup script, so a new container won't install Blender or the Android SDK on its own. I'd run `scripts/setup-blender.sh` and `scripts/setup-android-sdk.sh` there by hand.
+- GitHub's default branch is still the original. If you start a new session yourself, choose `claude/rainbow-3d-recovery-m4v347`.
+
+## World Labs prices (for your later approval)
+These come from World Labs' official docs:
+- **Atlas:** 1,000 credits = $1. Splat reconstruction costs 5,000 credits ($5) refined or 500 credits ($0.50) as a draft. Prices for the other Atlas tasks aren't published; they're on your account's rate card.
+- **Marble API (billed separately):** a world costs 1,500 credits ($1.20); a high-quality mesh export costs 3,500 credits ($2.80).
+
+**Exact next task:** once your Atlas account is active, I'll list your projects and propose a costed Screen 05 pilot for your approval. Meanwhile, my next work is the 5 missing documents and the updated status notes. After that I'll start the manual Screen 05 fixes (straight perforated tube, evenly spaced gold rings, wide winding cyan-and-pink current, Benny's proportions) with before/after screenshots. The Google Flow intro video support comes after that.
+
+Sources:
+- [World Labs API pricing](https://docs.worldlabs.ai/api/pricing)
+- [Atlas billing](https://docs.atlas.worldlabs.ai/billing.md)
+- [Atlas posed images to splats](https://docs.atlas.worldlabs.ai/posed-images-to-splats.md)
+- [Atlas MCP server](https://docs.atlas.worldlabs.ai/mcp.md)
+- [World Labs skills plugin](https://github.com/worldlabsai/skills)
+
+### 🧑 User — 2026-11-15T18:30:33.891Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
