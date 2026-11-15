@@ -1,30 +1,32 @@
 /**
- * Third-person ride camera: behind/above Benny along the course frame (pitch & roll follow the
- * banked path smoothly — including the 07 plunge), with per-stage framing blended continuously by s.
+ * Third-person ride camera: behind/above Benny, looking along his heading (the course tangent), or
+ * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point
+ * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.
  */
 import * as THREE from 'three';
 import { WORLD } from '../world/course';
 import type { Course, StageId } from '../world/course';
+import type { TubePath } from '../world/tube';
 
 export interface CamParams {
-  back: number; // distance behind Benny along the course (units of s)
-  up: number; // height above the water along the frame up
-  ahead: number; // look-at distance ahead of Benny
+  back: number; // distance behind Benny
+  up: number; // height above Benny's water point
+  ahead: number; // look-at distance ahead
   lookUp: number; // look-at height
   fov: number;
-  latFollow: number; // how much the camera follows Benny's lateral offset
+  latFollow: number; // 1 = camera fully follows Benny's lateral offset
   roll: number; // 0..1 how much of the path bank the camera adopts
 }
 
 export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
   '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
-  '04': { back: 4.6, up: 3.2, ahead: 11, lookUp: -0.2, fov: 70, latFollow: 0.4, roll: 0.6 },
-  '05': { back: 4.4, up: 2.3, ahead: 12, lookUp: 0.6, fov: 70, latFollow: 0.4, roll: 0.6 },
-  '06': { back: 4.4, up: 2.4, ahead: 12, lookUp: 1.5, fov: 70, latFollow: 0.4, roll: 0.5 },
-  '07': { back: 4.4, up: 2.4, ahead: 12, lookUp: 0.8, fov: 70, latFollow: 0.4, roll: 0.7 },
-  '08': { back: 4.0, up: 2.6, ahead: 13, lookUp: 1.0, fov: 72, latFollow: 0.35, roll: 0.4 },
-  '09': { back: 4.0, up: 2.6, ahead: 12, lookUp: 1.4, fov: 72, latFollow: 0.35, roll: 0.4 },
-  '10': { back: 3.8, up: 2.6, ahead: 8, lookUp: 1.2, fov: 70, latFollow: 0.3, roll: 0.3 },
+  '04': { back: 5.0, up: 3.9, ahead: 12, lookUp: -2.2, fov: 66, latFollow: 0.6, roll: 0.5 },
+  '05': { back: 5.6, up: 2.9, ahead: 14, lookUp: 0.6, fov: 64, latFollow: 0.7, roll: 0.5 },
+  '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
+  '07': { back: 5.6, up: 2.9, ahead: 14, lookUp: 0.6, fov: 64, latFollow: 0.7, roll: 0.6 },
+  '08': { back: 5.4, up: 3.0, ahead: 14, lookUp: 1.6, fov: 66, latFollow: 0.8, roll: 0.3 },
+  '09': { back: 5.4, up: 3.0, ahead: 13, lookUp: 1.9, fov: 66, latFollow: 0.8, roll: 0.3 },
+  '10': { back: 5.0, up: 3.0, ahead: 10, lookUp: 1.9, fov: 64, latFollow: 0.8, roll: 0.2 },
 };
 
 const KEYS: (keyof CamParams)[] = ['back', 'up', 'ahead', 'lookUp', 'fov', 'latFollow', 'roll'];
@@ -51,31 +53,46 @@ export class RideCamera {
   readonly up = new THREE.Vector3(0, 1, 0);
   fov = 70;
   private init = false;
+  /** optional straight tunnel axis + the s-range where the camera aligns to it */
+  axis: { path: TubePath; s0: number; s1: number } | null = null;
 
   constructor(private course: Course) {}
 
   /** desired pose for Benny at (s, lateral) */
   desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
     const p = camParamsAt(this.course, s);
-    const fb = this.course.sample(Math.max(0, s - p.back));
-    const fa = this.course.sample(Math.min(this.course.length, s + p.ahead));
-    const fs = this.course.sample(s);
-    outPos.copy(fb.pos).addScaledVector(fb.right, lat * p.latFollow).addScaledVector(fb.up, p.up);
-    outTarget.copy(fa.pos).addScaledVector(fa.right, lat * p.latFollow * 0.5).addScaledVector(fa.up, p.lookUp);
-    outUp.set(0, 1, 0).lerp(fs.up, p.roll).normalize();
+    const f = this.course.sample(s);
+    const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+    const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+    let up = f.up.clone();
+    if (this.axis) {
+      const a = this.axis;
+      const w = THREE.MathUtils.smoothstep(s, a.s0, a.s0 + 10) * (1 - THREE.MathUtils.smoothstep(s, a.s1 - 10, a.s1));
+      if (w > 0) {
+        const af = a.path.frame(s);
+        dir.lerp(af.tan, w).normalize();
+        up.lerp(af.up, w).normalize();
+      }
+    }
+    up.addScaledVector(dir, -up.dot(dir)).normalize();
+    const right = new THREE.Vector3().crossVectors(dir, up).normalize();
+    const benny = f.pos.clone().addScaledVector(f.right, lat);
+    const anchor = benny.clone().addScaledVector(right, -lat * (1 - p.latFollow));
+    outPos.copy(anchor).addScaledVector(dir, -p.back).addScaledVector(up, p.up);
+    outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(up, p.lookUp);
+    outUp.set(0, 1, 0).lerp(up, p.roll).normalize();
     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
     // drain and the porthole wall (Benny left, drain lower-right as in the reference)
     const st3 = this.course.stage('03');
-    const w = THREE.MathUtils.smoothstep(s, st3.s0 - 6, st3.s0 + 2) * (1 - THREE.MathUtils.smoothstep(s, st3.s1 - 5, st3.s1 + 3));
-    if (w > 0) {
+    const w3 = THREE.MathUtils.smoothstep(s, st3.s0 - 6, st3.s0 + 2) * (1 - THREE.MathUtils.smoothstep(s, st3.s1 - 6, st3.s1 + 1));
+    if (w3 > 0) {
       const B = WORLD.basin;
-      const bp = fs.pos.clone().addScaledVector(fs.right, lat);
-      const wp = bp.clone().add(new THREE.Vector3(3.2, 6.4, 9.8));
+      const wp = benny.clone().add(new THREE.Vector3(3.4, 6.6, 10.2));
       const drain = new THREE.Vector3(B.center.x, B.drainY, B.center.z);
-      const wt = bp.clone().lerp(drain, 0.42).add(new THREE.Vector3(0, -0.6, -2.5));
-      outPos.lerp(wp, w);
-      outTarget.lerp(wt, w);
-      outUp.lerp(new THREE.Vector3(0, 1, 0), w).normalize();
+      const wt = benny.clone().lerp(drain, 0.45).add(new THREE.Vector3(0, -0.5, -2.8));
+      outPos.lerp(wp, w3);
+      outTarget.lerp(wt, w3);
+      outUp.lerp(new THREE.Vector3(0, 1, 0), w3).normalize();
     }
     return p;
   }

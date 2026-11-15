@@ -62,7 +62,7 @@ export const STAGE_TITLES: Record<StageId, string> = {
 /** Fixed world anchors shared by environment builders (absolute coordinates). */
 export const WORLD = {
   drumA: { center: new THREE.Vector3(0, 0, 0), radius: 5, zBack: -6.5, zDoor: 3.5, doorRadius: 3.2, waterY: -2.5 },
-  basin: { center: new THREE.Vector3(2, -16, -19), rimRadius: 11.5, rimY: -10.6, drainRadius: 2.6, drainY: -20.2 },
+  basin: { center: new THREE.Vector3(2, -16, -19), rimRadius: 11.5, rimY: -10.6, drainRadius: 4.3, drainY: -20.2 },
   /** Final Spin Chamber (08–11): drum with axis along Z, door at the far (-Z) end */
   chamber: { center: new THREE.Vector3(12, -101.1, 0), radius: 13.5, zBack: -280, zDoor: -332, floorY: -113.6, doorRadius: 6.2 },
   platform: { center: new THREE.Vector3(12, -110.6, -322.5), radius: 6.2, topY: -110.6 },

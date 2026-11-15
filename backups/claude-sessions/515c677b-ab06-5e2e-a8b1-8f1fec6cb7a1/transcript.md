@@ -2525,3 +2525,92 @@ Typecheck is clean. One fix: the pink flow should scroll forward with the curren
 > sheet /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_all.png
 > [This command modified 1 file you've previously read: src/world/environment.ts. Call Read before editing.]
 
+### 🤖 Claude — 2026-11-15T17:25:26.074Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_all.png"}`
+
+### 🧑 User — 2026-11-15T17:25:26.277Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:26:18.472Z
+
+> 🔧 **Bash** `{"command": "ls src/vfx/ && grep -n \"controls\\|export function createWater\\|export interface\\|drumSwirl\\|drumAgitation\\|outro\\|BENNY_RIDE_OFFSET\\|parts\" src/vfx/index.ts | head -40; grep -rn \"drainRadius\" src/vfx/*.ts | head", "description": "Inspect water system API and controls"}`
+
+### 🧑 User — 2026-11-15T17:26:18.515Z
+
+> ↩︎ result: bubbles.ts
+> drumWater.ts
+> finalWave.ts
+> foam.ts
+> glsl.ts
+> index.ts
+> puddles.ts
+> spray.ts
+> waterRibbon.ts
+> whirlpool.ts
+> 9: *   // cinematic controls (0..1): water.controls.drumSwirl / drumAgitation / outro
+> 12: *   course.pointAt(s, lateral, water.surfaceHeight(s, lateral, time) + BENNY_RIDE_OFFSET)
+> 13: * (BENNY_RIDE_OFFSET ≈ 0.55 for a 0.8-radius body: bottom third in the water, splash visible).
+> 27:export const BENNY_RIDE_OFFSET = 0.55;
+> 29:export interface WaterControls {
+> 31:  drumSwirl: number;
+> 33:  drumAgitation: number;
+> 34:  /** 11 outro: stream drains away (0..1) and leftover puddles appear */
+> 35:  outro: number;
+> 38:export interface WaterSystem {
+> 47:  /** cinematic controls */
+> 48:  controls: WaterControls;
+> 50:  parts: Record<string, THREE.Object3D>;
+> 60:export function createWater(course: Course, opts: { quality?: 'high' | 'low' } = {}): WaterSystem {
+> 86:  const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
+> 117:    controls,
+> 118:    parts: { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, bubbles: bubbles.group, spray: spray.points },
+> 127:      drum.uniforms.uAgit …[+738 chars]
+
+### 🤖 Claude — 2026-11-15T17:27:11.635Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "content": "/**\n * Third-person ride camera: behind/above Benny, looking along his heading (the course tangent), or\n * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point\n * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.\n */\nimport * as THREE from 'three';\nimport { WORLD } from '../world/course';\nimport type { Course, StageId } from '../world/course';\nimport type { TubePath } from '../world/tube';\n\nexport interface CamParams {\n  …[+5107 chars]`
+
+### 🧑 User — 2026-11-15T17:27:11.797Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/cameraRig.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:27:25.041Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert a in s, (p, a[:70]); s=s.replace(a,b)\n    open(p,'w').write(s)\n\nedit('src/render/env.ts', [(\"renderer.toneMappingExposure = 0.95;\",\"renderer.toneMappingExposure = 0.86;\")])\nedit('src/render/grade.ts', [(\"opts.saturation ?? 1.28\",\"opts.saturation ?? 1.36\"),(\"opts.contrast ?? 1.1\",\"opts.contrast ?? 1.15\")])\nedit('src/world/course.ts', [(\"basin: { center: new THREE.Vector3(2, -16, -19), rimRadius: 11.5, rimY: -10.6, drainRadius: 2.6, drainY: -20.2 },\",\n   …[+2818 chars]`
+
+### 🧑 User — 2026-11-15T17:27:27.279Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T17:27:36.084Z
+
+Now the Game.ts side: camera axis hookup, fog, girl staging in 01/10/11 (analytic hand placement), towel draw-in during the fold, water cinematic controls, and the 01 peek:
+
+### 🤖 Claude — 2026-11-15T17:27:52.804Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\npairs = [\n(\"  const fog = new THREE.FogExp2('#ffd6f2', 0.006);\",\"  const fog = new THREE.FogExp2('#ffbde9', 0.0035);\"),\n(\"    fog.density = inDrum ? 0.0025 : i >= 7 ? 0.004 : 0.006;\",\"    fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;\"),\n(\"  const rideCam = new RideCamera(course);\",\"  const rideCam = new RideCamera(course);\\n  rideCam.axis = env.tubeAxis;\"),\n# girl walk in intro → exitLeft (reads image-right from inside drum A), normal pace\n(\"      const k = THREE.MathUtils.clamp((t - T.walk0  …[+3994 chars]`
+
+### 🧑 User — 2026-11-15T17:27:55.096Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T17:28:15.030Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert a in s, (p, a[:70]); s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/world/environment.ts', [(\"  towel.mesh.position.set(P.center.x, P.topY, P.center.z - 0.4);\",\"  towel.mesh.position.set(P.center.x, P.topY, P.center.z - 1.0);\")])\nedit('src/ui/hud.ts', [(\"      victory.classList.toggle('pop', v && animate);\\n      $('replay').classList.toggle('hidden', !v);\",\n  \"      victory.classList.toggle('pop', v && animate);\\n      $('replay').classList.add('hidden');\\n       …[+1191 chars]`
+
+### 🧑 User — 2026-11-15T17:29:50.537Z
+
+> ↩︎ result: ok
+> 11
+> sheet /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_all.png
+
+### 🤖 Claude — 2026-11-15T17:29:54.975Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_all.png"}`
+
+### 🧑 User — 2026-11-15T17:29:55.167Z
+
+> ↩︎ result: [image]
+

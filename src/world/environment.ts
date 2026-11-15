@@ -23,6 +23,8 @@ export interface Environment {
   laundry: { sock: THREE.Object3D; shirt: THREE.Object3D };
   /** groups toggled per scene for performance */
   zones: Record<'drumA' | 'basin' | 'tubes' | 'chamber', THREE.Group>;
+  /** straight 05–07 tunnel axis (camera alignment) */
+  tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
 }
 
 const sm = (a: number, b: number, x: number) => {
@@ -165,8 +167,8 @@ export function buildEnvironment(course: Course): Environment {
   const s04 = course.stage('04').s0, s05 = course.stage('05').s0;
   const tubeR = (s: number) => course.prop('tube', s);
   // the pipe mouth is the drain hole itself: narrow at the lip, opening up as it dives
-  const r04 = (s: number) => THREE.MathUtils.lerp(WORLD.basin.drainRadius + 0.2, tubeR(s), sm(s04 - 1, s04 + 9, s));
-  const goldPath = courseTubePath(course, r04, (s) => THREE.MathUtils.lerp(WORLD.basin.drainRadius * 0.75, 0.9, sm(s04, s04 + 9, s)));
+  const r04 = (s: number) => tubeR(s);
+  const goldPath = courseTubePath(course, r04, 0.9);
   const goldPipe = new THREE.Mesh(buildTubeGeometry(goldPath, s04 - 0.6, s05, { radial: 56, step: 0.4 }), goldRibbed(1.25));
   zones.tubes.add(goldPipe);
   zones.tubes.add(buildRings(goldPath, s04 - 0.4, s05 - 1, 1.6, goldMat, { tube: 0.05, inset: 0.02 }));
@@ -262,7 +264,7 @@ export function buildEnvironment(course: Course): Environment {
   hinge2.position.y -= 4.8;
   zones.chamber.add(doorC, hinge, hinge2);
   // laundry room C (beyond the door, toward -Z)
-  const roomC = buildLaundryRoom({ floorDrop: 11.8, palette: 'soft' });
+  const roomC = buildLaundryRoom({ floorDrop: 11.3, palette: 'soft', foldingTable: true });
   const anchorC = new THREE.Group();
   anchorC.position.set(doorCenterC.x, doorCenterC.y, C.zDoor - 1.0);
   anchorC.rotation.y = Math.PI;
@@ -288,7 +290,7 @@ export function buildEnvironment(course: Course): Environment {
   }
   // towel on the platform
   const towel = buildTowel();
-  towel.mesh.position.set(P.center.x, P.topY, P.center.z - 0.4);
+  towel.mesh.position.set(P.center.x, P.topY, P.center.z - 1.0);
   zones.chamber.add(towel.mesh);
   // spray spouts on the side walls with pouring water
   const spoutDome = perforatedMetal({ color: '#e05ad8', slot: 0, repeatU: 26, repeatV: 10, holeSize: 0.4, side: THREE.DoubleSide, emissiveIntensity: 0.3 });
@@ -316,6 +318,7 @@ export function buildEnvironment(course: Course): Environment {
     drumTowel,
     laundry: { sock, shirt },
     zones,
+    tubeAxis: { path: perfPath, s0: s05, s1: course.marks['07_plunge_top'] },
   };
 }
 

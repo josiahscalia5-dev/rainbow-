@@ -11,12 +11,14 @@ export interface LaundryRoomOptions {
   floorDrop: number;
   /** 'warm' = ref 01 (orange towels, white basket), 'soft' = refs 09–11 (lavender towels, wicker) */
   palette: 'warm' | 'soft';
+  /** small folding table mid-room (room C: the girl folds laundry here in 09/10) */
+  foldingTable?: boolean;
 }
 
 export interface LaundryRoom {
   group: THREE.Group;
   /** a good place for the girl to stand/walk (local coords) */
-  spots: Record<'nearDoor' | 'counter' | 'exitRight', THREE.Vector3>;
+  spots: Record<'nearDoor' | 'counter' | 'exitRight' | 'exitLeft' | 'table', THREE.Vector3>;
 }
 
 export function buildLaundryRoom(o: LaundryRoomOptions): LaundryRoom {
@@ -162,12 +164,27 @@ export function buildLaundryRoom(o: LaundryRoomOptions): LaundryRoom {
     g.add(t);
   });
 
+  if (o.foldingTable) {
+    const tbl = new THREE.Mesh(new RoundedBoxGeometry(18, 1.2, 9, 2, 0.4), painted('#fbf6ff', 0.3, 0.5));
+    tbl.position.set(-3, F + 13.2, 36.5);
+    g.add(tbl);
+    for (const [lx, lz] of [[-11, 33], [5, 33], [-11, 40], [5, 40]]) {
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 13, 8), painted('#e6dcef', 0.25));
+      leg.position.set(lx, F + 6.5, lz);
+      g.add(leg);
+    }
+    const pile = new THREE.Mesh(new RoundedBoxGeometry(8, 2.2, 6, 3, 0.9), painted('#d9c2f7', 0.3, 0.9));
+    pile.position.set(-6, F + 14.9, 36.5);
+    g.add(pile);
+  }
   return {
     group: g,
     spots: {
       nearDoor: new THREE.Vector3(2, F, 9),
       counter: new THREE.Vector3(winX - 4, F, D - 22),
       exitRight: new THREE.Vector3(34, F, 58),
+      exitLeft: new THREE.Vector3(-26, F, 62),
+      table: new THREE.Vector3(-3, F, 30),
     },
   };
 }

@@ -126,7 +126,8 @@ export function createHud(): Hud {
     showVictory(v, animate = true) {
       victory.classList.toggle('hidden', !v);
       victory.classList.toggle('pop', v && animate);
-      $('replay').classList.toggle('hidden', !v);
+      $('replay').classList.add('hidden');
+      if (v) setTimeout(() => { if (!victory.classList.contains('hidden')) $('replay').classList.remove('hidden'); }, 2600);
     },
     showPaused(v) { paused.classList.toggle('hidden', !v); },
     showHint(t) { hint.classList.toggle('hidden', !t); hint.textContent = t ?? ''; },

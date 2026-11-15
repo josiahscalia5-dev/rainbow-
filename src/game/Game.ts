@@ -43,7 +43,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const scene = new THREE.Scene();
   scene.environment = createCandyEnvironment(renderer);
   scene.background = new THREE.Color('#b23fb4');
-  const fog = new THREE.FogExp2('#ffd6f2', 0.006);
+  const fog = new THREE.FogExp2('#ffbde9', 0.0035);
   scene.fog = fog;
   scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
   const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
@@ -93,6 +93,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const hud = createHud();
   const input = createInput(canvas);
   const rideCam = new RideCamera(course);
+  rideCam.axis = env.tubeAxis;
 
   // ---------------------------------------------------------------- state
   const st = {
@@ -134,7 +135,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);
     }
     const inDrum = i <= 1;
-    fog.density = inDrum ? 0.0025 : i >= 7 ? 0.004 : 0.006;
+    fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
   };
 
   // girl placement helpers (she lives in laundry-room local frames)
@@ -161,6 +162,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
   // ---------------------------------------------------------------- intro (01–02)
   const introUpdate = (dt: number) => {
     const t = st.t;
+    const wc = (water as unknown as { controls?: { drumSwirl: number; drumAgitation: number; outro: number } }).controls;
+    if (wc) {
+      wc.drumAgitation = 0.35 + 0.65 * sm(T.spin - 0.5, T.spin + 0.8, t);
+      wc.drumSwirl = sm(T.spin, T.spin + 1.2, t) * (1 - sm(T.drain + 0.5, T.rideStart, t));
+      wc.outro = 0;
+    }
     const dA = WORLD.drumA;
     const start = course.sample(0).pos;
     // --- girl: drop the load, close the door, walk away at normal pace (never looks back)
@@ -169,10 +176,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
       placeGirl('A', new THREE.Vector3(1.2, spots.nearDoor.y, 7.6), Math.PI);
       girl.play(t < T.dropEnd ? 'dropLoad' : 'closeDoor', { fade: 0.25 });
     } else {
-      const k = THREE.MathUtils.clamp((t - T.walk0 - 0.35) / 3.3, 0, 1);
+      const k = THREE.MathUtils.clamp((t - T.walk0 - 0.35) / 4.6, 0, 1);
       const from = new THREE.Vector3(1.2, spots.nearDoor.y, 7.6);
-      const p = from.clone().lerp(spots.exitRight, k);
-      const dir = spots.exitRight.clone().sub(from);
+      const p = from.clone().lerp(spots.exitLeft, k);
+      const dir = spots.exitLeft.clone().sub(from);
       const yawWalk = Math.atan2(dir.x, dir.z);
       const turn = sm(T.walk0, T.walk0 + 0.6, t);
       placeGirl('A', p, lerp(Math.PI, yawWalk, turn));
@@ -183,7 +190,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     // --- towel bundle flies from her hands into the drum, Benny hidden inside
     const handW = girl.handR.getWorldPosition(tmpV).clone();
     const k = sm(0.35, T.dropEnd, t);
-    const towelRest = start.clone().add(new THREE.Vector3(0.1, -0.85, 0.15));
+    const towelRest = start.clone().add(new THREE.Vector3(0.15, -1.25, 0.05));
     const arc = handW.clone().lerp(towelRest, k);
     arc.y += Math.sin(k * Math.PI) * 1.2;
     let sB = 0;
@@ -197,7 +204,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       benny.root.visible = peek > 0.02;
       benny.setExpression('peek');
       bennyPose(0, 0, st.clock, pose);
-      benny.root.position.copy(start).add(new THREE.Vector3(0, -1.0 + 0.95 * peek, 0));
+      benny.root.position.copy(start).add(new THREE.Vector3(0, -1.0 + 1.35 * peek, 0));
       benny.root.quaternion.setFromEuler(new THREE.Euler(0, Math.PI + 0.25, 0)); // facing the camera (inside drum)
       benny.update(dt, { swim: 0, steer: 0, speed: 0, time: st.clock });
     } else {
@@ -271,7 +278,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */
   const cam02 = (b: THREE.Vector3) => {
     const dA = WORLD.drumA;
-    const pos = new THREE.Vector3(b.x * 0.3, b.y - 0.7, THREE.MathUtils.clamp(b.z - 3.0, dA.zBack + 0.4, dA.zDoor));
+    const pos = new THREE.Vector3(b.x * 0.3, THREE.MathUtils.clamp(b.y - 0.7, dA.waterY + 1.0, 2.0), THREE.MathUtils.clamp(b.z - 3.0, dA.zBack + 0.4, dA.zDoor));
     const look = b.clone().lerp(new THREE.Vector3(0, 0.2, dA.zDoor), 0.38).add(new THREE.Vector3(0, 0.55, 0));
     return { pos, look };
   };
@@ -344,7 +351,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     env.towel.setTent(sm(course.stage('09').s1 - 6, course.stage('10').s0 + 2, st.s));
     // girl at the counter behind the door glass in 10 (back turned — never sees Benny)
     if (st.stage === '09' || st.stage === '10') {
-      placeGirl('C', env.roomC.spots.counter.clone().add(new THREE.Vector3(-14, 0, 6)), 0.15);
+      placeGirl('C', env.roomC.spots.table.clone(), 0.25);
       girl.play('laundryCounter', { fade: 0.3 });
     }
     env.doorC.rotation.y = 0;
@@ -354,12 +361,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
   };
 
   // ---------------------------------------------------------------- outro (11)
-  let girlLeanOffset: THREE.Vector3 | null = null;
   const startOutro = () => {
     st.mode = 'outro';
     st.t = 0;
     setStage('11');
-    girlLeanOffset = null;
   };
   const outroUpdate = (dt: number) => {
     const t = st.t;
@@ -372,43 +377,37 @@ export async function startGame(canvas: HTMLCanvasElement) {
     benny.update(dt, { swim: 0.2, steer: 0, speed: 2, time: st.clock });
     // door opens outward
     env.doorC.rotation.y = lerp(0, doorCOpen, sm(O.door0, O.door1, t));
-    // girl: from the counter to the door, leans in, hands on the towel, folds/holds it
-    const doorSpot = new THREE.Vector3(0, env.roomC.spots.nearDoor.y, 4.2);
+    // girl: from the folding table to the door, leans in through it with her palms on the towel,
+    // folds it over Benny and draws it toward herself (never sees him — he is inside the fold)
+    const P0 = WORLD.platform;
+    const towelZ = lerp(P0.center.z - 1.0, P0.center.z - 4.0, sm(O.fold0, O.fold1, t));
+    env.towel.mesh.position.set(P0.center.x, P0.topY, towelZ);
+    // palms of 'leanReachTowel' are at (±3.64, 9.8, 4.87) in her frame → feet 4.87 behind the towel
+    const feetW = new THREE.Vector3(P0.center.x, P0.topY + 2.55 - 9.8, P0.center.z - 4.0 - 4.87);
+    const feetL = env.roomC.anchor.worldToLocal(feetW.clone());
     if (t < O.lean0) {
-      const from = env.roomC.spots.counter.clone().add(new THREE.Vector3(-14, 0, 6));
-      const k = sm(0.0, O.lean0 - 0.2, t);
-      placeGirl('C', from.lerp(doorSpot, k), lerp(0.15, Math.PI, sm(0, 0.6, t)));
-      girl.play(k < 0.98 ? 'walk' : 'idle', { fade: 0.3 });
+      const from = env.roomC.spots.table.clone();
+      const k = sm(0.0, O.lean0 - 0.15, t);
+      placeGirl('C', from.lerp(feetL, k), lerp(0.25, Math.PI, sm(0, 0.7, t)));
+      girl.play(k < 0.97 ? 'walk' : 'idle', { fade: 0.3 });
     } else {
-      placeGirl('C', doorSpot, Math.PI);
+      placeGirl('C', feetL, Math.PI);
       girl.play(t < O.hold ? 'leanReachTowel' : 'holdTowel', { fade: 0.35, loop: t >= O.hold });
-      // align her hands onto the towel once the lean pose is reached
-      if (!girlLeanOffset && t > O.lean0 + 0.9) {
-        girl.root.updateMatrixWorld(true);
-        const hl = girl.handL.getWorldPosition(new THREE.Vector3());
-        const hr = girl.handR.getWorldPosition(new THREE.Vector3());
-        const mid = hl.add(hr).multiplyScalar(0.5);
-        const towelTop = env.towel.mesh.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 2.4, 1.2));
-        const delta = towelTop.sub(mid);
-        const inv = env.roomC.anchor.getWorldQuaternion(new THREE.Quaternion()).invert();
-        girlLeanOffset = delta.applyQuaternion(inv);
-        girlLeanOffset.y = 0;
-        girlLeanOffset.clampLength(0, 6);
-      }
-      if (girlLeanOffset) girl.root.position.add(girlLeanOffset.clone().multiplyScalar(sm(O.lean0 + 0.9, O.lean0 + 1.6, t)));
     }
+    const wco = (water as unknown as { controls?: { drumSwirl: number; drumAgitation: number; outro: number } }).controls;
+    if (wco) { wco.outro = sm(0.3, 3.0, t); wco.drumSwirl = 0; }
     env.towel.setTent(1 - sm(O.fold0, O.fold1, t));
     // camera: the 11 composition — inside the drum, platform & towel centre, open door upper-right
     const P = WORLD.platform;
-    const camPos = new THREE.Vector3(P.center.x - 1.2, P.topY + 6.2, P.center.z + 15.5);
-    const camLook = new THREE.Vector3(P.center.x + 1.2, P.topY + 1.2, P.center.z - 3.2);
+    const camPos = new THREE.Vector3(P.center.x - 0.6, P.topY + 7.6, P.center.z + 19.5);
+    const camLook = new THREE.Vector3(P.center.x + 0.9, P.topY + 2.4, P.center.z - 4.5);
     const k = sm(0, 1.4, t);
     const rp = new THREE.Vector3(), rt = new THREE.Vector3(), ru = new THREE.Vector3();
     rideCam.desired(sEnd, 0, rp, rt, ru);
     camera.position.copy(rp.lerp(camPos, k));
     camera.up.set(0, 1, 0);
     camera.lookAt(rt.lerp(camLook, k));
-    setFov(lerp(70, 60, k));
+    setFov(lerp(66, 58, k));
     if (t >= O.badge && st.mode === 'outro') {
       hud.showVictory(true, true);
       st.mode = 'end';
@@ -438,6 +437,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     hud.setCoins(st.coins); hud.setHearts(5); hud.setVisible(false); hud.showVictory(false); hud.showPaused(false);
     st.stage = '01'; updateZones();
     env.towel.setTent(0);
+    env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
     env.doorC.rotation.y = 0;
     benny.root.visible = true;
   };

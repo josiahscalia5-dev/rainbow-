@@ -6,8 +6,8 @@ export function createGradePass(opts: { saturation?: number; contrast?: number; 
   return new ShaderPass({
     uniforms: {
       tDiffuse: { value: null },
-      uSat: { value: opts.saturation ?? 1.28 },
-      uCon: { value: opts.contrast ?? 1.1 },
+      uSat: { value: opts.saturation ?? 1.36 },
+      uCon: { value: opts.contrast ?? 1.15 },
       uVig: { value: opts.vignette ?? 0.18 },
     },
     vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
