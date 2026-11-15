@@ -373,13 +373,13 @@
   },
   {
    "path": "assets/models/benny.glb",
-   "bytes": 1123540,
-   "sha256": "cf83756b4382d864c57546deb55a7d9363c94ee67eada76212017693e271f2be"
+   "bytes": 132,
+   "sha256": "2dbe86f501993f531e4baa54db5f038dcb2582c1d3b4082b4669a43b61274c00"
   },
   {
    "path": "assets/models/rainbow_girl.glb",
-   "bytes": 3546480,
-   "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
+   "bytes": 132,
+   "sha256": "2f7cc8d28c824f010133631ab95bcadb5a716797b2e95d344862e39fd6de116d"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 2446,
-   "sha256": "c03dbae7713efcc604e616445d4d7e1b30b761e9733b02c2657cd9dbbce37777"
+   "bytes": 2700,
+   "sha256": "f4d80c73d29fad05771eab39061f4ec502d3d33616e42fe054feda0e38b27586"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -413,8 +413,8 @@
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
-   "bytes": 5455698,
-   "sha256": "982e007c75e95cb0913749e28f763579fddb39825f4dc2bfd5b12c64e478c0f3"
+   "bytes": 132,
+   "sha256": "36b4f6dac3f4e36a7f9d798b1df19753e2874eca9c28a123e793a3d032a8f4b8"
   },
   {
    "path": "backups/source-package/Rainbow_Claude_Code_Master_Prompt_11_Screens.uploaded.md",
@@ -428,8 +428,8 @@
   },
   {
    "path": "builds/rainbow-debug.apk",
-   "bytes": 7339491,
-   "sha256": "dca8d754b769bad4b8d92e89fcdfc73eaff0e4c55f5cca8ca31c7ef4eaad9b25"
+   "bytes": 132,
+   "sha256": "d192971fc790a2f0554fa19ae3b2c569f0e16a95e87fd9c6cd48250185894f3d"
   },
   {
    "path": "capacitor.config.ts",
