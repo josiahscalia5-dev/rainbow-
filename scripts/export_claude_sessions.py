@@ -43,6 +43,8 @@ REDACTIONS: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"(?i)\b(bearer|basic)\s+[A-Za-z0-9._~+/=\-]{16,}"), r"\1 [REDACTED]"),
     (re.compile(r"(?i)((?:api[_-]?key|secret|token|passw(?:or)?d|client[_-]?secret|access[_-]?key)[\"']?\s*[:=]\s*[\"']?)([^\s\"',}]{8,})"), r"\1[REDACTED]"),
     (re.compile(r"(https?://)[^/\s:@]+:[^/\s@]+@"), r"\1[REDACTED-CREDENTIALS]@"),
+    # a bare key pasted after the words "API key" (e.g. "here is my API key for X <32 chars>")
+    (re.compile(r"(?i)(\bapi[\s_-]*key\b[^\n]{0,60}?)\b([A-Za-z0-9_\-]{24,128})\b"), r"\1[REDACTED-API-KEY]"),
     (re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"), "[REDACTED-EMAIL]"),
 ]
 # commit trailer address is public & harmless; keep it readable

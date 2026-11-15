@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "372fa15a0c65f2a4ff11bca7609ebf93de6d4289a49089aee02bf48e95555c17"
+   "sha256": "ad90eb87d88474a97e1392f858f43ab7908de206bd9dac4e03d1a8b1a6412574"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2228,8 +2228,8 @@
   },
   {
    "path": "scripts/export_claude_sessions.py",
-   "bytes": 13381,
-   "sha256": "9659002b4802b64c679d5f45f3d02d9f851d1dfce2a7f048f7390ca3ea739679"
+   "bytes": 13587,
+   "sha256": "0f3eb5b5280d36f712d3c2b92b6e05da72b08009bff9728b17857f69a2264198"
   },
   {
    "path": "scripts/gameplay-test.mjs",
