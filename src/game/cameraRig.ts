@@ -16,14 +16,19 @@ export interface CamParams {
   fov: number;
   latFollow: number; // 1 = camera fully follows Benny's lateral offset
   roll: number; // 0..1 how much of the path bank the camera adopts
+  /** 05 only: view yaw (deg) to the LEFT of the tunnel axis, i.e. the vanishing point sits right of centre */
+  yaw?: number;
+  /** 05 only: lateral dead zone (units): the camera holds the tunnel axis while Benny is within ~this of it */
+  deadZone?: number;
 }
 
 export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
   '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
   '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
-  // 05: level rear chase down the straight current tube; pitch atan((up-lookUp)/(ahead+back)) ≈ 12°
-  // below the tunnel axis puts the ring vanishing point ~1/3 down the frame (ref 05), Benny low-centre
-  '05': { back: 6.1, up: 3.7, ahead: 18, lookUp: -1.5, fov: 62, latFollow: 0.92, roll: 0 },
+  // 05: level rear chase down the straight current tube, camera ON the tunnel axis (rings concentric).
+  // Ref 05 measured at vFOV 62: VP (498, 479) → view pitched atan((up-lookUp)/(ahead+back)) ≈ 12.7°
+  // below and yawed ≈ 3° left of the axis; Benny's waterline 711 px below the VP → up/back ≈ 0.56.
+  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
   '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
   '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
   '08': { back: 6.2, up: 3.7, ahead: 16, lookUp: 0.2, fov: 62, latFollow: 0.8, roll: 0.3 },
@@ -108,7 +113,9 @@ export class RideCamera {
     }
     // 05 straight current tube: the '05' preset measured in the straight tunnel's own frame — aimed
     // along the tunnel axis (not Benny's S-curve heading) so the gold rings stay concentric on ONE
-    // vanishing point, level (no roll), following Benny's lateral S offset by latFollow.
+    // vanishing point, level (no roll). Laterally the camera rides the tunnel axis while Benny is near
+    // it and eases toward him (latFollow) only as he swings wide (Gaussian dead zone), so the rings
+    // stay concentric on the ref composition and Benny never leaves the frame when steering.
     const st5 = this.course.stage('05');
     const p5 = STAGE_CAM['05'] as CamParams;
     const w5 = this.axis ? THREE.MathUtils.smoothstep(s, st5.s0 + 1, st5.s0 + 8) * (1 - THREE.MathUtils.smoothstep(s, st5.s1 - 9, st5.s1 - 1)) : 0;
@@ -119,9 +126,12 @@ export class RideCamera {
       const Rt = new THREE.Vector3().crossVectors(T, U).normalize();
       const water = f.pos.clone().addScaledVector(f.right, lat); // Benny's point on the stream
       const off = water.clone().sub(af.pos).dot(Rt); // his lateral offset from the tunnel axis
-      const cp = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - p5.latFollow));
+      const dz = p5.deadZone ?? 1;
+      const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
+      const cp = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - follow));
       const pitch = Math.atan2(p5.up - p5.lookUp, p5.ahead + p5.back);
-      const look = T.multiplyScalar(Math.cos(pitch)).addScaledVector(U, -Math.sin(pitch));
+      const yaw = THREE.MathUtils.degToRad(p5.yaw ?? 0);
+      const look = T.clone().multiplyScalar(Math.cos(pitch) * Math.cos(yaw)).addScaledVector(U, -Math.sin(pitch)).addScaledVector(Rt, -Math.cos(pitch) * Math.sin(yaw));
       outPos.lerp(cp, w5);
       outTarget.lerp(cp.clone().addScaledVector(look, p5.ahead + p5.back), w5);
       outUp.lerp(U, w5).normalize();

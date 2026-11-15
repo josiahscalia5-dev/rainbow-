@@ -161,6 +161,8 @@ export interface TubeGeoOptions {
    * full fresnel, un-tinted pale reflections); kept only so the 02 chute / 04 pipe look is unchanged.
    */
   frontNormals?: boolean;
+  /** also store the local tube frame per vertex (`tubeAxis`, `tubeUp`) for withTubeStrips('attribute') */
+  axisAttr?: boolean;
 }
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
@@ -173,6 +175,8 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
   const pos = new Float32Array(rings * (radial + 1) * 3);
   const nor = new Float32Array(rings * (radial + 1) * 3);
   const uv = new Float32Array(rings * (radial + 1) * 2);
+  const ax = o.axisAttr ? new Float32Array(rings * (radial + 1) * 3) : null;
+  const au = o.axisAttr ? new Float32Array(rings * (radial + 1) * 3) : null;
   const c = new THREE.Vector3();
   const d = new THREE.Vector3();
   for (let i = 0; i < rings; i++) {
@@ -184,6 +188,7 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
       const th = -Math.PI / 2 - arc / 2 + (j / radial) * arc; // centred on the bottom
       d.copy(f.right).multiplyScalar(Math.cos(th)).addScaledVector(f.up, Math.sin(th));
       const k = i * (radial + 1) + j;
+      if (ax && au) { f.tan.toArray(ax, k * 3); f.up.toArray(au, k * 3); }
       pos[k * 3] = c.x + d.x * r;
       pos[k * 3 + 1] = c.y + d.y * r;
       pos[k * 3 + 2] = c.z + d.z * r;
@@ -203,6 +208,10 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
   g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   g.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
   g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  if (ax && au) {
+    g.setAttribute('tubeAxis', new THREE.BufferAttribute(ax, 3));
+    g.setAttribute('tubeUp', new THREE.BufferAttribute(au, 3));
+  }
   g.setIndex(idx);
   g.computeBoundingSphere();
   return g;
@@ -281,11 +290,11 @@ export function buildRings(
 }
 
 /**
- * Washer wall lids (refs 05–07): stubby polished gold caps — a rounded puck with a raised rim lip and a
- * slightly recessed face — hanging on BOTH upper side walls in pairs, one pair per ring bay, like spray
- * caps aimed down at the stream: the face looks down (+ a little inward), the puck is stretched along the
- * tunnel and partly sunk into the wall, so the rider sees a bright banded rim on top and the darker face
- * below (the reference's "D" silhouette). One instanced mesh (1 draw call).
+ * Washer wall lids / nozzle caps (ref 05): thick copper "D" plates — a half disc with a softly domed top,
+ * rounded rim and flat underside — sticking straight out of BOTH side walls at ≈3 and 9 o'clock, one
+ * symmetric pair per ring bay, so they shrink toward the vanishing point in two rows. The straight edge of
+ * the D runs along the tube and is sunk into the wall. `skip(s, centre)` drops a lid where the stream runs
+ * too close (06 arch climbs the wall). One instanced mesh (1 draw call).
  */
 export function buildWallLids(
   path: TubePath,
@@ -293,41 +302,39 @@ export function buildWallLids(
   s1: number,
   spacing: number,
   material: THREE.Material,
-  opts: { angleDeg?: number; size?: number; height?: number; stretch?: number; down?: number; sink?: number; stagger?: number } = {},
+  opts: { angleDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number; skip?: (s: number, centre: THREE.Vector3, size: number) => boolean } = {},
 ): THREE.InstancedMesh {
-  const a = 1, h = opts.height ?? 0.5;
-  // closed cap: back disc, short side band, rounded shoulder, raised rim lip, slightly recessed face
+  const h = opts.thickness ?? 0.34;
+  // bottom → top so the lathe normals face outward: flat underside, rounded rim, domed top
   const prof: [number, number][] = [
-    [0, -0.12], [a * 1.03, -0.12], [a * 1.03, 0], [a, 0.06], [a, h - 0.12], [a * 0.95, h - 0.02], [a * 0.88, h],
-    [a * 0.8, h], [a * 0.76, h - 0.05], [a * 0.7, h - 0.08], [0, h - 0.08],
+    [0, 0], [0.86, 0], [0.96, 0.03], [1, h * 0.3], [1, h * 0.55], [0.96, h * 0.82], [0.86, h * 0.96], [0.55, h * 1.06], [0, h * 1.1],
   ];
-  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 40);
+  // half revolution (phi 0..π → local +X): the open cut face lies in the wall plane x = 0
+  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 24, 0, Math.PI);
+  geo.translate(0, -h * 0.55, 0);
   const n = (Math.floor((s1 - s0) / spacing) + 1) * 2;
   const mesh = new THREE.InstancedMesh(geo, material, n);
-  const size = opts.size ?? 1.25;
-  const ang = THREE.MathUtils.degToRad(opts.angleDeg ?? 14);
-  const down = opts.down ?? 0.75;
-  const c = new THREE.Vector3(), dir = new THREE.Vector3(), Y = new THREE.Vector3(), X = new THREE.Vector3(), Z = new THREE.Vector3();
-  const basis = new THREE.Matrix4(), m = new THREE.Matrix4(), q = new THREE.Quaternion();
+  const size = opts.size ?? 1.6;
+  const ang = THREE.MathUtils.degToRad(opts.angleDeg ?? 4);
+  const c = new THREE.Vector3(), dir = new THREE.Vector3(), X = new THREE.Vector3(), Y = new THREE.Vector3(), Z = new THREE.Vector3();
+  const basis = new THREE.Matrix4(), m = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3();
   let k = 0;
   for (let s = s0; s <= s1 + 1e-6; s += spacing) {
     for (const side of [1, -1]) {
-      const ss = s + (side > 0 ? 0 : (opts.stagger ?? 0) * spacing);
-      if (ss > s1) continue;
-      const f = path.frame(ss);
-      const r = path.radius(ss);
-      tubeCenterAt(path, ss, c);
+      const f = path.frame(s);
+      const r = path.radius(s);
+      tubeCenterAt(path, s, c);
       dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
-      const sz = size * (r / 7.6);
-      // face normal: blend of inward (−dir) and straight down (−up)
-      Y.copy(dir).negate().multiplyScalar(1 - down).addScaledVector(f.up, -down).normalize();
-      X.copy(f.tan).addScaledVector(Y, -f.tan.dot(Y)).normalize(); // stretched along the tunnel
+      const sz = size * Math.min(1.4, r / 7.6);
+      // plate lies level in the tube frame: +X points inward (toward the axis), +Y = tube up
+      Y.copy(f.up);
+      X.copy(f.right).multiplyScalar(-side);
       Z.crossVectors(X, Y).normalize();
       basis.makeBasis(X, Y, Z);
       q.setFromRotationMatrix(basis);
-      // centre just inside the wall: `sink` of the cap's radius stays buried in the metal
-      const p = c.clone().addScaledVector(dir, r - sz * 0.9 * (1 - (opts.sink ?? 0.35)));
-      m.compose(p, q, new THREE.Vector3(sz * (opts.stretch ?? 1.45), sz, sz * 0.9));
+      p.copy(c).addScaledVector(dir, r - sz * (opts.sink ?? 0.12));
+      if (opts.skip?.(s, p.clone().addScaledVector(X, sz * 0.5), sz)) continue;
+      m.compose(p, q, new THREE.Vector3(sz, sz, sz * (opts.stretch ?? 1.25)));
       mesh.setMatrixAt(k++, m);
     }
   }

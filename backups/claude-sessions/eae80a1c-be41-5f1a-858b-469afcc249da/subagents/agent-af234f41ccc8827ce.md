@@ -1023,3 +1023,278 @@ Now the ring collar profile (flat band + groove + thin near lip, crisp normals, 
 
 > ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T19:30:21.341Z
+
+Now the lid builder: D-shaped copper half-disc plates at ≈3 and 9 o'clock, one symmetric pair per bay, skipping any spot where the stream comes close (06 arch).
+
+### 🤖 Claude — 2026-11-15T19:30:41.816Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "/**\n * Washer wall lids (refs 05–07): stubby polished gold caps — a rounded puck with a raised rim lip and a\n * slightly recessed face — hanging on BOTH upper side walls in pairs, one pair per ring bay, like spray\n * caps aimed down at the stream: the face looks down (+ a little inward), the puck is stretched along the\n * tunnel and partly sunk into the wall, so the rider sees a bright banded rim on top and the darker face\n * below (the reference's \"D\" silhouette). One instanced mesh (1 draw call …[+5379 chars]`
+
+### 🧑 User — 2026-11-15T19:30:41.861Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:31:05.453Z
+
+Now the 05–07 block in `environment.ts`: new wall parameters, ring spacing and phase, new collar and lid parameters.
+
+### 🤖 Claude — 2026-11-15T19:31:11.203Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const tubeEnv = washerTubeEnv('wall');\n  const goldEnv = washerTubeEnv('gold');\n  const perfTubeMat = perforatedMetal({\n    color: '#f24bd6', emissive: '#4a0866', emissiveIntensity: 0.32, holeColor: '#14001f',\n    slot: 1, repeatU: 42, repeatV: 0.8, holeSize: 0.62, streaks: 0.15, metalness: 0.9, roughness: 0.22,\n    relief: { corrugation: 0.035, bevel: 0.06, bevelWidth: 0.1 }, rimColor: '#ff6fe6', rimStrength: 0.8,\n    envMap: tubeEnv, envMapIntensity: 0.78, farGlow: wallGlow,\n  });", "n …[+818 chars]`
+
+### 🧑 User — 2026-11-15T19:31:11.240Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:31:21.661Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  // thick polished orange-gold ring collars at even spacing (refs 05–07: ~8–10 converging rings)\n  const ringMat = withFarGlow(gold({ color: '#ffc04d', roughness: 0.14, emissive: 0.22 }), tubeGlow, 'ring');\n  ringMat.envMap = goldEnv;\n  ringMat.envMapIntensity = 1.3;\n  const ringSpacing = 7.2;\n  // gold junction collar 04→05 (slightly heavier)\n  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.075, lip: 0.02, width: 1.3 } }));\n  zon …[+2284 chars]`
+
+### 🧑 User — 2026-11-15T19:31:21.696Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:31:23.731Z
+
+> 🔧 **Bash** `{"command": "grep -n \"course.length\\|readonly length\\|widthAt\" src/world/course.ts | head -5; grep -rn \"buildNozzles\\|collarGeometry\\|buildWallLids\\|washerTubeEnv\" src --include=*.ts | grep -v \"^src/world/tube.ts\\|^src/world/materials.ts\"; npx tsc --noEmit 2>&1 | head -20", "description": "Check API usage and run typecheck"}`
+
+### 🧑 User — 2026-11-15T19:31:26.996Z
+
+> ↩︎ result: 272:  readonly length: number;
+> 411:  widthAt(s: number): number {
+> src/world/environment.ts:9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, type FarGlow } from './materials';
+> src/world/environment.ts:10:import { buildTubeGeometry, buildRings, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
+> src/world/environment.ts:200:  const tubeEnv = washerTubeEnv('wall');
+> src/world/environment.ts:201:  const goldEnv = washerTubeEnv('gold');
+> src/world/environment.ts:244:  zones.tubes.add(buildWallLids(perfPath, s05 + ringPhase + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 4, size: 1.7, thickness: 0.36, stretch: 1.3, sink: 0.12, skip: lidClear }));
+
+### 🤖 Claude — 2026-11-15T19:31:28.658Z
+
+Typecheck passes. Capturing iteration 1.
+
+### 🤖 Claude — 2026-11-15T19:31:31.901Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/environment/iter01; node scripts/capture.mjs 05 --out=$O 2>&1 | grep -v \"^$\" | tail -3; python3 -I /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/m05.py $O/05.png; python3 -I /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/rings.py $O/05.png 450 185 480; python3 scripts/triptych.py $O/tri.png 900 \"REF=references/05_flow_into_the_current.png\" \"BEFORE=qa/pilot05/environment/iter00/05.png\" \"NOW=$O/05.png\" >/dev/null", "description": "Capture and measure iteration 1", "timeout": 300000}`
+
+### 🧑 User — 2026-11-15T19:31:49.934Z
+
+> ↩︎ result: 05 → qa/pilot05/environment/iter01/05.png {"stage":"05","s":127.389,"y":-41.182,"calls":112,"tris":579963,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> == qa/pilot05/environment/iter01/05.png
+>   gold%frame         7.6
+>   gold%tube(0-600)   15.8
+>   gold_med_rings     #FFA97A
+>   blowout%           2.9
+>   blowout%tube       1.9
+>   Lwall              #FF96E4 V1.00 S0.44 dark%0 std43 pb%0.1 gold%19
+>   Rwall              #FF9EDA V1.00 S0.43 dark%0 std41 pb%0.0 gold%20
+>   ceil               #FFACE7 V1.00 S0.36 dark%0 std37 pb%0.0 gold%18
+>   VP                 (418,455) L237 #FFF6E5
+> qa/pilot05/environment/iter01/05.png x=450 runs (top,thick): [(192, 9), (206, 2), (255, 7), (265, 4), (293, 5), (300, 3)]
+>   top spacing: [14, 49, 10, 28, 7]
+
+### 🤖 Claude — 2026-11-15T19:31:50.853Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/environment/iter01/tri.png"}`
+
+### 🧑 User — 2026-11-15T19:31:51.045Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:31:56.141Z
+
+Gold fraction dropped from 16.8% to 7.6% (ref 7.9%) and rings are thin, but the walls got paler (S 0.44, V 1.0). Let me zoom in to see why.
+
+### 🤖 Claude — 2026-11-15T19:31:58.892Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/'\nc=Image.open('qa/pilot05/environment/iter01/05.png').convert('RGB')\nboxes=[(0,180,300,480),(560,180,864,480),(300,150,600,420)]\nW=Image.new('RGB',(3*610,600),(0,0,0))\nfor i,b in enumerate(boxes): W.paste(c.crop(b).resize((600,600)),(i*610,0))\nW.save(S+'zoom_it1.png')\n\"", "description": "Zoom wall patches of iteration 1"}`
+
+### 🧑 User — 2026-11-15T19:31:59.337Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:32:01.083Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/zoom_it1.png"}`
+
+### 🧑 User — 2026-11-15T19:32:01.128Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:32:40.303Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/node_modules/three/src/renderers/shaders/ShaderChunk && grep -n \"geometryViewDir\\|geometryNormal\" lights_fragment_begin.glsl.js | head -5; grep -n \"vec3 EnvironmentBRDF\\|struct PhysicalMaterial\" -A3 lights_physical_pars_fragment.glsl.js | head -20; grep -n \"include <lights_fragment_end>\\|include <aomap_fragment>\" ../ShaderLib/meshphysical.glsl.js; cat lights_fragment_maps.glsl.js | head -40", "description": "Look up r170 lighting chunk variable names"}`
+
+### 🧑 User — 2026-11-15T19:32:40.391Z
+
+> ↩︎ result: 17:vec3 geometryNormal = normal;
+> 18:vec3 geometryViewDir = ( isOrthographic ) ? vec3( 0, 0, 1 ) : normalize( vViewPosition );
+> 30:	float dotNVi = saturate( dot( normal, geometryViewDir ) );
+> 74:		RE_Direct( directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight );
+> 122:		RE_Direct( directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight );
+> 3:struct PhysicalMaterial {
+> 4-
+> 5-	vec3 diffuseColor;
+> 6-	float roughness;
+> --
+> 395:vec3 EnvironmentBRDF( const in vec3 normal, const in vec3 viewDir, const in vec3 specularColor, const in float specularF90, const in float roughness ) {
+> 396-
+> 397-	vec2 fab = DFGApprox( normal, viewDir, roughness );
+> 398-
+> 189:	#include <lights_fragment_end>
+> 192:	#include <aomap_fragment>
+> export default /* glsl */`
+> #if defined( RE_IndirectDiffuse )
+> 
+> 	#ifdef USE_LIGHTMAP
+> 
+> 		vec4 lightMapTexel = texture2D( lightMap, vLightMapUv );
+> 		vec3 lightMapIrradiance = lightMapTexel.rgb * lightMapIntensity;
+> 
+> 		irradiance += lightMapIrradiance;
+> 
+> 	#endif
+> 
+> 	#if defined( USE_ENVMAP ) && defined( STANDARD ) && defined( ENVMAP_TYPE_CUBE_UV )
+> 
+> 		iblIrradiance += getIBLIrradiance …[+519 chars]
+
+### 🤖 Claude — 2026-11-15T19:33:37.825Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMaterial {", "new_string": "/**\n * Analytic strip lights for the washer tubes (refs 05–07). Narrow light strips run the full length of\n * the tunnel at evenly spaced angles around its axis. Their radiance depends only on the azimuth of the\n * reflected view ray around the LOCAL tube axis, so (unlike a cube map, whose meridians pinch together\n * and blur at the pole every grazing wall reflection looks into) they stay c …[+3492 chars]`
+
+### 🧑 User — 2026-11-15T19:33:37.872Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:33:43.217Z
+
+Now strip the cube env down to a smooth base (the analytic term supplies the strips), with the warm pole kept only for gold.
+
+### 🤖 Claude — 2026-11-15T19:33:54.421Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  // STRIPS narrow strip lights run the full length of the tunnel at evenly spaced angles around it, so\n  // they converge at ±Z like meridians. A glossy wall at angle θ mirrors azimuth θ+π, so every strip\n  // becomes one lengthwise white-pink streak on the panels, and on every gold band one bright \"marquee\"\n  // spot (ref 05: ≈12–16 spots per visible half-ring → 28 strips).\n  const STRIPS = 28;\n  const pitch = (Math.PI * 2) / STRIPS;\n  const sigma2 = isGold ? 0.0011 : 0.0009;\n  const cBa …[+2645 chars]`
+
+### 🧑 User — 2026-11-15T19:33:54.463Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:33:55.867Z
+
+Now the per-vertex axis attributes in `buildTubeGeometry`.
+
+### 🤖 Claude — 2026-11-15T19:33:57.314Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  frontNormals?: boolean;\n}", "new_string": "  frontNormals?: boolean;\n  /** also store the local tube frame per vertex (`tubeAxis`, `tubeUp`) for withTubeStrips('attribute') */\n  axisAttr?: boolean;\n}"}`
+
+### 🧑 User — 2026-11-15T19:33:57.346Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:02.671Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  const uv = new Float32Array(rings * (radial + 1) * 2);\n  const c = new THREE.Vector3();\n  const d = new THREE.Vector3();\n  for (let i = 0; i < rings; i++) {\n    const s = s0 + ((s1 - s0) * i) / (rings - 1);\n    const f = path.frame(s);\n    const r = path.radius(s) + (o.inset ?? 0);\n    c.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));\n    for (let j = 0; j <= radial; j++) {\n      const th = -Math.PI / 2 - arc / 2 + (j / radial) * arc; // centred on the bottom\n      d.copy( …[+986 chars]`
+
+### 🧑 User — 2026-11-15T19:34:02.705Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:04.421Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));\n  g.setIndex(idx);", "new_string": "  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));\n  if (ax && au) {\n    g.setAttribute('tubeAxis', new THREE.BufferAttribute(ax, 3));\n    g.setAttribute('tubeUp', new THREE.BufferAttribute(au, 3));\n  }\n  g.setIndex(idx);"}`
+
+### 🧑 User — 2026-11-15T19:34:04.454Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:05.512Z
+
+Now wire the strips into the wall, ring and lid materials in `environment.ts`.
+
+### 🤖 Claude — 2026-11-15T19:34:06.163Z
+
+> 🔧 **Bash** `{"command": "sed -n 191,250p src/world/environment.ts", "description": "Show current 05-07 block"}`
+
+### 🧑 User — 2026-11-15T19:34:06.195Z
+
+> ↩︎ result: // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+>   // =====================================================================================
+>   const s08 = course.stage('08').s0;
+>   const pinkFlow = pinkFlowMaterial();
+>   // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+>   // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+>   // hot magenta near → violet mid-tunnel → warm yellow-white core at the vanishing point
+>   const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+>   const wallGlow: FarGlow = { ...tubeGlow, mid: { color: '#8a3cf0', near: 10, far: 42, amount: 0.55 } };
+>   const tubeEnv = washerTubeEnv('wall');
+>   const goldEnv = washerTubeEnv('gold');
+>   // ring bays: evenly spaced gold bands; 4 circumferential slot rows per bay (ref 05: 3–5)
+>   const ringSpacing = 9.0;
+>   const slotRowsPerBay = 4;
+>   // glossy (low roughness → the env strips stay crisp lengthwise streaks instead of a flat clipped sheen)
+>   const perfTubeMat = perforatedMetal({
+>     color: '#e23cc6', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',
+>     slo …[+2968 chars]
+
+### 🤖 Claude — 2026-11-15T19:34:17.118Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/environment.ts'; s=open(p).read()\nrep = [\n(\"import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, type FarGlow } from './materials';\",\n \"import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, type FarGlow, type TubeStrips } from './materials';\"),\n(\"\"\"  // glossy (low roughness → the env strips stay crisp lengthwise streaks instead of a flat clipped sheen)\n  const perfTubeMat = perforatedMetal({\"\"\",\n\"\"\"   …[+2192 chars]`
+
+### 🧑 User — 2026-11-15T19:34:35.179Z
+
+> ↩︎ result: src/game/cameraRig.ts(49,37): error TS2532: Object is possibly 'undefined'.
+> src/vfx/foam.ts(328,15): error TS2552: Cannot find name 'makeMaterial'. Did you mean 'makePuffMaterial'?
+> src/vfx/foam.ts(347,26): error TS2304: Cannot find name 'FOAM_COLORS'.
+> src/vfx/foam.ts(347,41): error TS2339: Property 'c' does not exist on type 'Puff'.
+> src/vfx/foam.ts(347,45): error TS2304: Cannot find name 'FOAM_COLORS'.
+> src/vfx/foam.ts(376,27): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> src/vfx/foam.ts(392,29): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> src/vfx/foam.ts(414,136): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> src/vfx/foam.ts(422,117): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> src/vfx/foam.ts(431,117): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> 05 → qa/pilot05/environment/iter02/05.png {"stage":"05","s":128.564,"y":-41.214,"calls":102,"tris":386069,"modules":{"water":"STAND-IN","benny":"assets …[+603 chars]
+
+### 🤖 Claude — 2026-11-15T19:34:37.548Z
+
+The typecheck errors are in other specialists' files that are mid-edit (`foam.ts`, `cameraRig.ts`), none in mine. The water fell back to a stand-in for this capture. Let me look at the tube.
+
+### 🤖 Claude — 2026-11-15T19:34:37.963Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/environment/iter02/tri.png"}`
+
+### 🧑 User — 2026-11-15T19:34:38.144Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:34:47.347Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/zoom.py <<'EOF'\n# python3 -I zoom.py IMG OUT  -- 3 wall patches (left wall, right wall, ceiling) at 2x, ref on top\nimport sys\nfrom PIL import Image\nc = Image.open(sys.argv[1]).convert('RGB').resize((864, 1536))\nr = Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nboxes = [(0, 180, 300, 480), (560, 180, 864, 480), (300, 150, 600, 420)]\nW = Image.new('RGB', (3 * 610, 1210))\nfor i, b in enumerate(boxes):\n    W.paste(r.crop(b).resize((600, 600)), (i  …[+388 chars]`
+
+### 🧑 User — 2026-11-15T19:34:48.363Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:34:50.076Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/z2.png"}`
+
+### 🧑 User — 2026-11-15T19:34:50.354Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:35:24.283Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nW=Image.new('RGB',(1230,500))\nW.paste(r.crop((50,300,240,440)).resize((500,368),Image.LANCZOS),(0,0))\nW.paste(r.crop((700,390,864,540)).resize((440,402),Image.LANCZOS),(510,0))\nW.paste(r.crop((250,410,340,480)).resize((270,210),Image.LANCZOS),(960,0))\nW.save(S+'lids_ref.png')\n\"", "description": "Zoom reference nozzle lids"}`
+
+### 🧑 User — 2026-11-15T19:35:24.917Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:35:26.748Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/lids_ref.png"}`
+
+### 🧑 User — 2026-11-15T19:35:26.770Z
+
+> ↩︎ result: [image]
+

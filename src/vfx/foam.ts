@@ -13,7 +13,8 @@ import { EDGE_LIFT } from './waterRibbon';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
-interface Puff { p: THREE.Vector3; r: number; c: number }
+/** c = (ambient occlusion 0..1, seed 0..1, tint -1..1) → instanceColor (see PUFF_VERT) */
+interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number }
 
 // ---------------------------------------------------------------------------------- berm profile
 /** berm spans e ∈ [BERM_IN, BERM_OUT] units outward from the ribbon edge (negative = over the water) */
@@ -141,6 +142,70 @@ void main() {
 }
 `;
 
+// ---------------------------------------------------------------------------------- puffs
+/**
+ * Soap-foam puff (ref 05 "cloud banks": white-lavender clumps, #FCF6FF lit tops, soft lavender
+ * undersides and crevices, a few darker pores, faint soap-film rim). instanceColor carries
+ * (x = ambient occlusion 0..1, y = seed, z = tint -1..1), not a colour.
+ */
+const PUFF_VERT = /* glsl */ `
+uniform float uTime;
+varying vec3 vNormalW;
+varying vec3 vPosW;
+varying vec3 vLocal;
+varying vec3 vInst;
+#include <fog_pars_vertex>
+void main() {
+  vInst = instanceColor;
+  float br = 1.0 + 0.035 * sin(uTime * 1.7 + instanceColor.y * 40.0);
+  vec4 wp = modelMatrix * instanceMatrix * vec4(position * br, 1.0);
+  vPosW = wp.xyz;
+  vNormalW = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal);
+  vLocal = normal;
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`;
+const PUFF_FRAG = /* glsl */ `
+uniform vec3 uLightDir;
+varying vec3 vNormalW;
+varying vec3 vPosW;
+varying vec3 vLocal;
+varying vec3 vInst;
+#include <fog_pars_fragment>
+${NOISE_GLSL}
+void main() {
+  vec3 N = normalize(vNormalW);
+  vec3 V = normalize(cameraPosition - vPosW);
+  vec3 L = normalize(uLightDir);
+  float wrap = clamp(dot(N, L) * 0.55 + 0.5, 0.0, 1.0);
+  float upF = clamp(N.y * 0.5 + 0.5, 0.0, 1.0);
+  float lit = smoothstep(0.18, 0.88, wrap * 0.65 + upF * 0.35);
+  vec3 lav = vec3(0.47, 0.44, 0.88);
+  vec3 top = mix(vec3(1.1, 1.04, 1.16), vec3(1.04, 1.06, 1.16), clamp(vInst.z, 0.0, 1.0));
+  top = mix(top, vec3(1.12, 1.02, 1.12), clamp(-vInst.z, 0.0, 1.0));
+  vec3 col = mix(lav, top, lit);
+  #ifndef LOW_Q
+  // pores: small open bubbles on the puff skin (puff-local, two planar projections, no seam)
+  vec3 an = abs(vLocal);
+  vec2 pc = (an.x > an.z ? vLocal.zy : vLocal.xy) * 2.6 + vInst.y * 17.0;
+  float cp = cells(pc);
+  float kp = 1.0 - smoothstep(0.2, 0.45, fwidth(pc.x) + fwidth(pc.y));
+  float pore = (1.0 - smoothstep(0.1, 0.2, cp)) * step(0.6, hash12(floor(pc) + vInst.y * 31.0));
+  col = mix(col, lav * 0.95, pore * kp * 0.6 * lit);
+  #endif
+  // soap-film rim (cool lavender, a touch of pink) + soft glint
+  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.4);
+  col = mix(col, vec3(0.8, 0.68, 1.0), fres * 0.42);
+  float spec = pow(max(dot(reflect(-V, N), L), 0.0), 26.0);
+  col += vec3(1.0) * spec * 0.3;
+  col *= mix(0.68, 1.0, vInst.x);
+  gl_FragColor = vec4(col, 1.0);
+  ${FRAG_TAIL}
+}
+`;
+
 function rng(seed: number) {
   let a = seed >>> 0;
   return () => {
@@ -152,27 +217,29 @@ function rng(seed: number) {
   };
 }
 
-const FOAM_COLORS = ['#ffffff', '#f4f6ff', '#eef0ff', '#ffffff', '#eaf6ff'].map((c) => new THREE.Color(c));
-
-function makeMaterial() {
-  const m = new THREE.MeshStandardMaterial({
-    color: '#ffffff',
-    roughness: 0.4,
-    metalness: 0.0,
-    emissive: new THREE.Color('#eef0ff'),
-    emissiveIntensity: 0.45,
-    envMapIntensity: 1.0,
+function makePuffMaterial(quality: 'high' | 'low') {
+  const uniforms = withFog({
+    uTime: { value: 0 },
+    uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
   });
-  // subtle soap-film rim tint
-  m.onBeforeCompile = (sh) => {
-    sh.fragmentShader = sh.fragmentShader.replace(
-      '#include <emissivemap_fragment>',
-      `#include <emissivemap_fragment>
-       float rimF = pow(1.0 - clamp(dot(normalize(vNormal), normalize(vViewPosition)), 0.0, 1.0), 2.5);
-       totalEmissiveRadiance += vec3(0.55, 0.35, 0.75) * rimF * 0.35;`,
-    );
-  };
-  return m;
+  const mat = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: PUFF_VERT,
+    fragmentShader: PUFF_FRAG,
+    fog: true,
+    defines: quality === 'low' ? { LOW_Q: 1 } : {},
+  });
+  return { mat, uniforms };
+}
+
+/** unit sphere puff with smooth normals (detail 0 icosahedra get flat normals by default) */
+function puffGeometry(detail: number) {
+  const g = new THREE.IcosahedronGeometry(1, detail);
+  const p = g.attributes.position as THREE.BufferAttribute;
+  const n = g.attributes.normal as THREE.BufferAttribute;
+  const v = new THREE.Vector3();
+  for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).normalize(); n.setXYZ(i, v.x, v.y, v.z); }
+  return g;
 }
 
 export interface FoamSystem {
@@ -257,27 +324,32 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
   const { s0, s1, quality } = opts;
   const rand = rng(1337);
   const density = quality === 'high' ? 1 : 0.5;
-  const geo = new THREE.IcosahedronGeometry(1, quality === 'high' ? 1 : 0);
-  const mat = makeMaterial();
+  // LOD: 80-tri puffs in the chunks around Benny, 20-tri puffs further out (low tier: 20-tri only)
+  const geoHi = puffGeometry(quality === 'high' ? 1 : 0);
+  const geoLo = quality === 'high' ? puffGeometry(0) : geoHi;
+  const puff = makePuffMaterial(quality);
+  const mat = puff.mat;
   const group = new THREE.Group();
   group.name = 'foam_banks';
   const st03 = course.stage('03'), st04 = course.stage('04');
-  const chunkLen = 40;
+  const chunkLen = 24;
   const chunks: { mesh: THREE.InstancedMesh; sa: number; sb: number }[] = [];
   let total = 0;
   const tmpM = new THREE.Matrix4();
   const tmpQ = new THREE.Quaternion();
   const tmpS = new THREE.Vector3();
+  const tmpE = new THREE.Euler();
+  const tmpC = new THREE.Color();
 
   const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
     if (!list.length) return;
-    const mesh = new THREE.InstancedMesh(geo, mat, list.length);
+    const mesh = new THREE.InstancedMesh(geoHi, mat, list.length);
     list.forEach((pf, i) => {
-      tmpQ.setFromEuler(new THREE.Euler(rand() * 6, rand() * 6, rand() * 6));
-      tmpS.set(pf.r, pf.r * (0.75 + rand() * 0.25), pf.r);
+      tmpQ.setFromEuler(tmpE.set(rand() * 6, rand() * 6, rand() * 6));
+      tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
       tmpM.compose(pf.p, tmpQ, tmpS);
       mesh.setMatrixAt(i, tmpM);
-      mesh.setColorAt(i, FOAM_COLORS[pf.c % FOAM_COLORS.length]);
+      mesh.setColorAt(i, tmpC.setRGB(pf.ao, rand(), pf.tint));
     });
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
@@ -292,41 +364,51 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
   const berm = createBerm(course, s0, s1, skip, quality);
   group.add(berm.mesh);
 
-  // ---- bubble puffs sitting on the bank crest (silhouette lumps) ----
+  // ---- cloud banks of puffs hugging both stream edges (ref 05: 10–40 px white-lavender clumps) ----
+  const inSkip = (s: number) => s > skip[0] && s < skip[1];
+  const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
+    const ss = Math.min(s1, Math.max(s0, s));
+    if (inSkip(ss)) return;
+    const f = course.sample(ss);
+    const hw = course.widthAt(ss) / 2;
+    const h = bermSurface(ss, e, side, hw) + lift;
+    const p = f.pos.clone().addScaledVector(f.right, side * (hw + e)).addScaledVector(f.up, h);
+    list.push({ p, r, ao, tint: rand() * 2 - 1 });
+  };
+  const step = quality === 'high' ? 0.36 : 0.62;
   for (let sa = s0; sa < s1; sa += chunkLen) {
     const sb = Math.min(s1, sa + chunkLen);
     const list: Puff[] = [];
     // skip most of 03 (the whirlpool has its own foam), keep the chute→rim hand-over
-    for (let s = sa; s < sb; s += 0.5 / density) {
-      if (s > skip[0] && s < skip[1]) continue;
-      const f = course.sample(s);
-      const hw = course.widthAt(s) / 2;
+    for (let s = sa; s < sb; s += step) {
+      if (inSkip(s)) continue;
       for (const side of [-1, 1]) {
-        if (rand() < 0.2) continue;
-        const e = -0.22 + rand() * 0.7;
-        const r = 0.09 + rand() * 0.17;
-        const p = f.pos.clone().addScaledVector(f.right, side * (hw + e)).addScaledVector(f.up, bermSurface(s, e, side, hw) + r * 0.05);
-        list.push({ p, r, c: (rand() * 5) | 0 });
+        // crest puffs: the body of the bank
+        const nC = quality === 'high' && rand() < 0.55 ? 2 : 1;
+        for (let k = 0; k < nC; k++) {
+          const r = 0.11 + rand() * 0.13;
+          addPuff(list, s + (rand() - 0.5) * step, -0.32 + rand() * 0.82, side, r, r * (0.05 + rand() * 0.3), 0.8 + 0.2 * rand());
+        }
+        // small puffs right at the water line (the lacy edge of the bank)
+        if (rand() < 0.65) {
+          const r = 0.06 + rand() * 0.06;
+          addPuff(list, s + (rand() - 0.5) * step, -0.58 + rand() * 0.28, side, r, r * 0.15, 0.9);
+        }
       }
-      // bigger lather lumps on the crest
-      if (rand() < 0.1 * density) {
+      // heaps: clusters of big puffs stacked on the crest → lumpy cloud-bank silhouette
+      if (rand() < (quality === 'high' ? 0.16 : 0.1)) {
         const side = rand() < 0.5 ? -1 : 1;
-        const n = 4 + ((rand() * 7) | 0);
-        const ec = 0.05 + rand() * 0.45;
+        const n = 5 + ((rand() * 6) | 0);
+        const ec = -0.1 + rand() * 0.55;
         for (let k = 0; k < n; k++) {
-          const ss = Math.min(s1, Math.max(s0, s + (rand() - 0.5) * 2.4));
-          if (ss > skip[0] && ss < skip[1]) continue;
-          const f2 = course.sample(ss);
-          const hw2 = course.widthAt(ss) / 2;
-          const e = ec + (rand() - 0.5) * 0.6;
-          const r = 0.17 + rand() * 0.25;
-          const h = bermSurface(ss, e, side, hw2) + r * (0.1 + rand() * 0.35);
-          const p = f2.pos.clone().addScaledVector(f2.right, side * (hw2 + e)).addScaledVector(f2.up, h);
-          list.push({ p, r, c: (rand() * 5) | 0 });
+          const r = 0.15 + rand() * 0.18;
+          const stack = k > 2 && rand() < 0.4 ? r * 0.65 : 0;
+          const lift = r * (0.1 + rand() * 0.45) + stack;
+          addPuff(list, s + (rand() - 0.5) * 1.8, ec + (rand() - 0.5) * 0.55, side, r, lift, 0.72 + 0.28 * Math.min(1, lift / (r * 0.9)));
         }
       }
     }
-    build(list, group, sa - 6, sb + 6);
+    build(list, group, sa - 2, sb + 2);
   }
 
   // ---- whirlpool: rim ring + spiral band foam (rotates with the swirl) ----
@@ -344,7 +426,7 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
       const th = th0 + (rand() - 0.5) * 0.35;
       const r = b.rimRadius - 0.7 + (rand() - 0.4) * 1.3;
       const sz = 0.18 + rand() * 0.42;
-      wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.35 + rand() * 0.55, r * Math.cos(th)), r: sz, c: (rand() * 5) | 0 });
+      wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.35 + rand() * 0.55, r * Math.cos(th)), r: sz, ao: 0.75 + 0.25 * rand(), tint: rand() * 2 - 1 });
     }
   }
   const nRim = Math.round(200 * density);
@@ -352,7 +434,7 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
     const th = rand() * Math.PI * 2;
     const r = b.rimRadius - 0.4 + (rand() - 0.5) * 0.6;
     const sz = 0.1 + rand() * 0.18;
-    wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.3, r * Math.cos(th)), r: sz, c: (rand() * 5) | 0 });
+    wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.3, r * Math.cos(th)), r: sz, ao: 0.85 + 0.15 * rand(), tint: rand() * 2 - 1 });
   }
   // along 3 spiral flow lines (constant th - C ln r) to echo the white foam bands
   const nBand = Math.round(60 * density);
@@ -361,7 +443,7 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
     const r = 3.0 + rand() * (b.rimRadius - 3.6);
     const th = band + SPIRAL_C * Math.log(r) + (rand() - 0.5) * 0.12;
     const sz = 0.07 + rand() * 0.13;
-    wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.3, r * Math.cos(th)), r: sz, c: (rand() * 5) | 0 });
+    wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.3, r * Math.cos(th)), r: sz, ao: 0.85 + 0.15 * rand(), tint: rand() * 2 - 1 });
   }
   const whirlStart = chunks.length;
   build(wl, whirlGroup, st03.s0 - 30, st04.s0 + 25);
@@ -376,9 +458,11 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
       berm.uniforms.uTime.value = time;
       (berm.uniforms.uOutro.value as THREE.Vector2).x = outro;
       const s08 = course.stage('08').s0;
+      puff.uniforms.uTime.value = time;
       for (let i = 0; i < chunks.length; i++) {
         const c = chunks[i];
-        c.mesh.visible = c.sb > focusS - 25 && c.sa < focusS + 140 && !(outro > 0.3 && c.sb > s08 + 8);
+        c.mesh.visible = c.sb > focusS - 12 && c.sa < focusS + 130 && !(outro > 0.3 && c.sb > s08 + 8);
+        if (c.mesh.visible) c.mesh.geometry = c.sb > focusS - 12 && c.sa < focusS + 30 ? geoHi : geoLo;
       }
       // rotate whirlpool foam about the basin axis with the swirl (θ decreasing = course direction)
       whirlGroup.rotation.y = -time * 0.45 * ((Math.PI * 2) / 3);

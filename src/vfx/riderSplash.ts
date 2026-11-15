@@ -1,22 +1,28 @@
 /**
- * Rider splash crown: a thin animated water sheet that flares out of the surface around Benny's
- * waterline (ref 05: white splash/wake fanning out to both sides and backwards).
+ * Rider splash fans (ref 05: two V-shaped spray fans of white/cyan streaks thrown back and outward
+ * from Benny's base, clear water straight behind him).
  *
- * One small mesh (polar grid: angle × radial), shaped and animated entirely in the vertex shader,
- * and drawn with a translucent "finger + lace" fragment shader. It is placed every frame at the
- * computed water surface under Benny (index.ts `wake()`), so it always sits exactly on the stream
- * that carries him. Hidden automatically when wake() stops being called (intro / outro).
+ * One small mesh: two polar strips (left/right fan) of angle × radial, shaped and animated in the
+ * vertex shader, drawn with a translucent "streak + droplet" fragment shader (no lace haze). It is
+ * placed every frame at the computed water surface under Benny's real (lifted) body centre
+ * (index.ts `wake()`), so its root always sits on the stream at his waterline. Hidden automatically
+ * when wake() stops being called (intro / outro).
  */
 import * as THREE from 'three';
 import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
+/** fan angle range from straight behind (0 = towards the chase camera, pi/2 = sideways) */
+const TH0 = 0.32;
+const TH1 = 1.4;
+
 const VERT = /* glsl */ `
-attribute vec2 aPolar;   // x = angle (0 = straight behind Benny, ±pi = in front), y = radial 0..1
+attribute vec2 aPolar;   // x = signed angle (side * th), y = radial 0..1
 uniform float uTime;
-uniform float uR;        // waterline radius of Benny's body (units)
+uniform float uR;        // waterline radius of Benny's body (units): fan root
+uniform float uLen;      // fan length beyond the root (units)
+uniform float uH;        // peak height of the spray sheet (units)
 uniform float uStrength; // 0..1
 varying vec2 vPolar;
-varying float vSide;
 varying vec3 vPosW;
 #include <fog_pars_vertex>
 float h1(float n) { return fract(sin(n) * 43758.5453); }
@@ -25,19 +31,16 @@ void main() {
   float th = aPolar.x;
   float t = aPolar.y;
   float ath = abs(th);
-  // strongest beside Benny and diagonally behind him, low bow wave in front, calm right behind
-  float side = smoothstep(0.55, 1.1, ath) * (1.0 - 0.85 * smoothstep(1.8, 2.5, ath));
-  float wob = n1(th * 4.0 + uTime * 5.0) * 0.5 + n1(th * 9.0 - uTime * 7.0) * 0.5;
-  float reach = mix(1.0, 1.8 + 0.45 * wob, t) * (0.8 + 0.2 * side);
-  float r = uR * mix(0.92, reach, t);
-  // sheet rises steeply out of the water at the body, then arcs back down (crown profile)
-  float lift = uR * (0.55 + 0.25 * wob) * side * uStrength;
-  float y = lift * sin(3.14159 * pow(t, 0.7)) * (1.0 - 0.35 * t) - 0.04 * uR;
+  float wob = n1(ath * 6.0 + uTime * 6.0 + step(0.0, th) * 13.0) * 0.6 + n1(ath * 15.0 - uTime * 9.0) * 0.4;
+  // the fan is longest on its diagonal (~45 deg back), shorter where it turns sideways
+  float diag = 1.0 - 0.35 * smoothstep(0.9, 1.4, ath) - 0.25 * (1.0 - smoothstep(${TH0.toFixed(2)}, 0.6, ath));
+  float r = uR * 0.92 + t * uLen * diag * (0.8 + 0.4 * wob) * (0.55 + 0.45 * uStrength);
+  // sheet leaves the water at the body, arcs up and falls back toward the surface at its tips
+  float y = uH * uStrength * (0.75 + 0.5 * wob) * sin(3.14159 * pow(t, 0.6)) * (1.0 - 0.45 * t) - 0.02;
   vec3 p = vec3(sin(th) * r, y, cos(th) * r);   // local: x = side, y = up, z = backwards
   vec4 wp = modelMatrix * vec4(p, 1.0);
   vPosW = wp.xyz;
   vPolar = aPolar;
-  vSide = side;
   vec4 mvPosition = viewMatrix * wp;
   gl_Position = projectionMatrix * mvPosition;
   #include <fog_vertex>
@@ -48,24 +51,30 @@ const FRAG = /* glsl */ `
 uniform float uTime;
 uniform float uStrength;
 varying vec2 vPolar;
-varying float vSide;
 varying vec3 vPosW;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 void main() {
   float th = vPolar.x;
   float t = vPolar.y;
-  // thin radial fingers streaming outward, laced by a fine soap-foam network
-  float fing = vnoise(vec2(th * 26.0, t * 1.2 - uTime * 4.0));
-  fing = smoothstep(0.52, 0.8, fing);
-  float net = smoothstep(0.3, 0.46, cells(vec2(th * 14.0, t * 7.0 - uTime * 3.0)));
-  float body = 1.0 - smoothstep(0.06, 0.22, t);          // churned rim right at the body
-  float a = max(body * (0.35 + 0.65 * net), fing * (0.45 + 0.55 * net));
-  a *= (1.0 - smoothstep(0.5, 0.92, t)) * vSide * uStrength;
-  if (a < 0.02) discard;
-  vec3 V = normalize(cameraPosition - vPosW);
-  vec3 col = mix(vec3(0.62, 0.92, 1.0), vec3(1.15, 1.18, 1.2), smoothstep(0.2, 0.75, a));
-  gl_FragColor = vec4(col, clamp(a * 0.95, 0.0, 0.95));
+  float ath = abs(th);
+  float seed = step(0.0, th) * 7.3;
+  // fine radial streaks (water jets) racing outward; two scales so they never read as a solid sheet
+  float s1 = vnoise(vec2(ath * 46.0 + seed, t * 2.2 - uTime * 5.0));
+  float s2 = vnoise(vec2(ath * 97.0 + seed * 2.0, t * 3.5 - uTime * 7.0));
+  float streak = max(smoothstep(0.6, 0.86, s1), smoothstep(0.66, 0.9, s2) * 0.8);
+  // droplet beads breaking off the streak tips
+  vec2 g = vec2(ath * 30.0 + seed, t * 9.0 - uTime * 6.0);
+  float cd = cells(g);
+  float beads = (1.0 - smoothstep(0.1, 0.22, cd)) * step(0.55, hash12(floor(g) + seed)) * smoothstep(0.35, 0.7, t);
+  // fan envelope: fade at both angle limits, at the root (hidden under the fur) and toward the tips
+  float env = smoothstep(${TH0.toFixed(2)}, ${(TH0 + 0.2).toFixed(2)}, ath) * (1.0 - smoothstep(${(TH1 - 0.3).toFixed(2)}, ${TH1.toFixed(2)}, ath));
+  float a = (streak * (1.0 - smoothstep(0.45, 0.92, t)) + beads * (1.0 - smoothstep(0.75, 1.0, t))) * env;
+  a *= smoothstep(0.0, 0.06, t) * uStrength;
+  if (a < 0.03) discard;
+  // white cores, cyan translucent edges
+  vec3 col = mix(vec3(0.55, 0.9, 1.0), vec3(1.25, 1.28, 1.3), smoothstep(0.25, 0.8, a));
+  gl_FragColor = vec4(col, clamp(a * 0.95, 0.0, 0.92));
   ${FRAG_TAIL}
 }
 `;
@@ -79,29 +88,36 @@ export interface RiderSplash {
 }
 
 export function createRiderSplash(quality: 'high' | 'low'): RiderSplash {
-  const S = quality === 'high' ? 56 : 28;
-  const R = quality === 'high' ? 7 : 4;
-  const polar = new Float32Array((S + 1) * (R + 1) * 2);
+  const S = quality === 'high' ? 22 : 12; // angular columns per fan
+  const R = quality === 'high' ? 6 : 4;
+  const cols = S + 1, rows = R + 1;
+  const polar = new Float32Array(2 * cols * rows * 2);
   let k = 0;
-  for (let i = 0; i <= S; i++) {
-    for (let j = 0; j <= R; j++) {
-      polar[k++] = -Math.PI + (2 * Math.PI * i) / S;
-      polar[k++] = j / R;
+  for (const side of [-1, 1]) {
+    for (let i = 0; i <= S; i++) {
+      const th = TH0 + ((TH1 - TH0) * i) / S;
+      for (let j = 0; j <= R; j++) {
+        polar[k++] = side * th;
+        polar[k++] = j / R;
+      }
     }
   }
   const idx: number[] = [];
-  for (let i = 0; i < S; i++) {
-    for (let j = 0; j < R; j++) {
-      const a = i * (R + 1) + j, b = a + 1, c = a + R + 1, d = c + 1;
-      idx.push(a, c, b, b, c, d);
+  for (let f = 0; f < 2; f++) {
+    const base = f * cols * rows;
+    for (let i = 0; i < S; i++) {
+      for (let j = 0; j < R; j++) {
+        const a = base + i * rows + j, b = a + 1, c = a + rows, d = c + 1;
+        idx.push(a, c, b, b, c, d);
+      }
     }
   }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('aPolar', new THREE.BufferAttribute(polar, 2));
   // dummy position attribute (positions are generated in the vertex shader)
-  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array((S + 1) * (R + 1) * 3), 3));
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(2 * cols * rows * 3), 3));
   geo.setIndex(idx);
-  const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.7 }, uStrength: { value: 0 } });
+  const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.7 }, uH: { value: 0.32 }, uStrength: { value: 0 } });
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: VERT,

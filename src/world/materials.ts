@@ -95,6 +95,77 @@ ${FAR_GLOW_APPLY()}`,
   return mat;
 }
 
+/**
+ * Analytic strip lights for the washer tubes (refs 05–07). Narrow light strips run the full length of
+ * the tunnel at evenly spaced angles around its axis. Their radiance depends only on the azimuth of the
+ * reflected view ray around the LOCAL tube axis, so (unlike a cube map, whose meridians pinch together
+ * and blur at the pole every grazing wall reflection looks into) they stay crisp at any distance and
+ * follow the tube through the 06 arch and the 07 plunge. The term is added to the IBL radiance, so the
+ * normal PBR BRDF weights it: glossy magenta panels get lengthwise white-pink streaks, every gold band
+ * gets evenly spaced "marquee" spots, and both line up radially like in the reference.
+ * Axis source: 'attribute' = per-vertex `tubeAxis`/`tubeUp` (buildTubeGeometry({ axisAttr: true })),
+ * 'instance' = local Z (axis) / local Y (up) of each instance matrix (rings, lids).
+ */
+export interface TubeStrips {
+  count: number;
+  /** angular half-width of one strip (radians, before roughness widening) */
+  width: number;
+  intensity: number;
+  color: THREE.ColorRepresentation;
+  /** brightness of every other strip (default 0.7) */
+  alt?: number;
+}
+
+export function withTubeStrips<T extends THREE.MeshStandardMaterial>(mat: T, s: TubeStrips, source: 'attribute' | 'instance', key: string): T {
+  const uniforms = {
+    uStripColor: { value: new THREE.Color(s.color).multiplyScalar(s.intensity) },
+    uStripP: { value: new THREE.Vector4(s.count, s.width, 0, s.alt ?? 0.7) },
+  };
+  const prev = mat.onBeforeCompile;
+  mat.onBeforeCompile = (shader, r) => {
+    prev.call(mat, shader, r);
+    Object.assign(shader.uniforms, uniforms);
+    const axis = source === 'instance'
+      ? `vTubeAxis = normalize((viewMatrix * modelMatrix * instanceMatrix * vec4(0.0, 0.0, 1.0, 0.0)).xyz);
+vTubeUp = normalize((viewMatrix * modelMatrix * instanceMatrix * vec4(0.0, 1.0, 0.0, 0.0)).xyz);`
+      : `vTubeAxis = normalize((viewMatrix * modelMatrix * vec4(tubeAxis, 0.0)).xyz);
+vTubeUp = normalize((viewMatrix * modelMatrix * vec4(tubeUp, 0.0)).xyz);`;
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', `#include <common>
+varying vec3 vTubeAxis; varying vec3 vTubeUp;
+${source === 'attribute' ? 'attribute vec3 tubeAxis; attribute vec3 tubeUp;' : ''}`)
+      .replace('#include <project_vertex>', `#include <project_vertex>
+${axis}`);
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <common>', `#include <common>
+varying vec3 vTubeAxis; varying vec3 vTubeUp; uniform vec3 uStripColor; uniform vec4 uStripP;
+vec3 tubeStripRadiance(vec3 V, vec3 N, float rough){
+  vec3 R = reflect(-V, N);
+  vec3 A = normalize(vTubeAxis);
+  vec3 E1 = normalize(vTubeUp - A * dot(vTubeUp, A));
+  vec3 E2 = cross(A, E1);
+  vec3 P = R - A * dot(R, A);
+  float pl = length(P);
+  float t = atan(dot(P, E2), dot(P, E1)) * uStripP.x / 6.2831853; // strip index space
+  float fw = min(fwidth(t), fwidth(fract(t + 0.5)));
+  float w0 = uStripP.y * uStripP.x / 6.2831853;            // half-width in pitch units
+  float w = w0 + rough * rough * 1.5 + fw * 0.6;
+  float dA = fract(t + 0.5) - 0.5;
+  float k = exp(-dA * dA / (w * w)) * mix(1.0, w0 / w, 0.75);
+  k *= mod(floor(t + 0.5), 2.0) > 0.5 ? uStripP.w : 1.0;
+  return uStripColor * k * smoothstep(0.02, 0.12, pl);
+}`)
+      .replace('#include <lights_fragment_maps>', `#include <lights_fragment_maps>
+#if defined( RE_IndirectSpecular )
+radiance += tubeStripRadiance(geometryViewDir, geometryNormal, material.roughness);
+#endif`);
+  };
+  const prevKey = mat.customProgramCacheKey.bind(mat);
+  mat.customProgramCacheKey = () => prevKey() + '|strips-' + source + '-' + key;
+  mat.userData.tubeStrips = uniforms;
+  return mat;
+}
+
 export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMaterial {
   const mat = new THREE.MeshStandardMaterial({
     color: o.color ?? '#d13fd6',
@@ -254,32 +325,23 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
       default: return dir.set(-a, -b, -1);
     }
   };
-  // STRIPS narrow strip lights run the full length of the tunnel at evenly spaced angles around it, so
-  // they converge at ±Z like meridians. A glossy wall at angle θ mirrors azimuth θ+π, so every strip
-  // becomes one lengthwise white-pink streak on the panels, and on every gold band one bright "marquee"
-  // spot (ref 05: ≈12–16 spots per visible half-ring → 28 strips).
-  const STRIPS = 28;
-  const pitch = (Math.PI * 2) / STRIPS;
-  const sigma2 = isGold ? 0.0011 : 0.0009;
-  const cBaseTop = isGold ? new THREE.Color(0.3, 0.1, 0.035) : new THREE.Color(0.2, 0.012, 0.15);
-  const cBaseLow = isGold ? new THREE.Color(0.13, 0.035, 0.03) : new THREE.Color(0.08, 0.02, 0.24);
+  // Smooth base only: the strip lights are analytic (withTubeStrips), because grazing wall reflections all
+  // look almost straight down the tunnel, where a cube map's meridian strips pinch together and blur.
+  const cBaseTop = isGold ? new THREE.Color(0.62, 0.24, 0.07) : new THREE.Color(0.62, 0.05, 0.42);
+  const cBaseLow = isGold ? new THREE.Color(0.3, 0.09, 0.05) : new THREE.Color(0.22, 0.05, 0.55);
   const radiance = (d: THREE.Vector3, out: THREE.Color) => {
-    const ang = Math.atan2(d.y, d.x); // angle around the tunnel axis (Z)
     const up = d.y;
-    // base: deep magenta above, violet toward the floor (dark, so the strips read as crisp streaks)
-    out.copy(cBaseTop).lerp(cBaseLow, THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
-    const t = (ang - 0.11) / pitch;
-    const i = Math.round(t);
-    const dA = (t - i) * pitch;
-    const k = Math.exp(-(dA * dA) / sigma2) * ((i & 1) ? 0.72 : 1.1) * (isGold ? 1 : 1 - Math.abs(d.z) * 0.3);
-    if (isGold) { out.r += 6.0 * k; out.g += 4.6 * k; out.b += 2.6 * k; } else { out.r += 3.0 * k; out.g += 1.8 * k; out.b += 2.9 * k; }
-    // warm yellow-white light at the very end of the tunnel (-Z), violet haze around it, faint pink behind (+Z)
+    // base: magenta above, violet toward the floor
+    out.copy(cBaseTop).lerp(cBaseLow, THREE.MathUtils.smoothstep(-up, -0.3, 0.9));
+    // gold only: a warm yellow-white core at the very end of the tunnel (-Z) so far bands glow like the VP
     const ahead = Math.max(0, -d.z);
-    const hot = Math.pow(ahead, 24), wide = Math.pow(ahead, 3);
-    out.r += 3.6 * hot; out.g += 3.1 * hot; out.b += 1.6 * hot;
-    if (isGold) { out.r += 0.45 * wide; out.g += 0.26 * wide; out.b += 0.08 * wide; } else { out.r += 0.12 * wide; out.g += 0.04 * wide; out.b += 0.36 * wide; }
-    const back = Math.pow(Math.max(0, d.z), 4);
-    out.r += 0.5 * back; out.g += 0.1 * back; out.b += 0.45 * back;
+    if (isGold) {
+      const hot = Math.pow(ahead, 60), wide = Math.pow(ahead, 6);
+      out.r += 2.4 * hot + 0.3 * wide; out.g += 2.0 * hot + 0.16 * wide; out.b += 1.0 * hot + 0.04 * wide;
+    } else {
+      const wide = Math.pow(ahead, 6);
+      out.r += 0.05 * wide; out.g += 0.02 * wide; out.b += 0.25 * wide; // violet haze down the tunnel
+    }
     return out;
   };
   for (let f = 0; f < 6; f++) {

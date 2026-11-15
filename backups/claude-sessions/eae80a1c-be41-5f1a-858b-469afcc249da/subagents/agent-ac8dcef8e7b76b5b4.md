@@ -1349,3 +1349,231 @@ Now a close look at reference bubbles and foam puffs to match their shading.
 > 34	}
 > 35	vec3 ir …[+3176 chars]
 
+### 🤖 Claude — 2026-11-15T19:31:29.958Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "content": "/**\n * Rider splash fans (ref 05: two V-shaped spray fans of white/cyan streaks thrown back and outward\n * from Benny's base, clear water straight behind him).\n *\n * One small mesh: two polar strips (left/right fan) of angle × radial, shaped and animated in the\n * vertex shader, drawn with a translucent \"streak + droplet\" fragment shader (no lace haze). It is\n * placed every frame at the computed water surface under Benny's real (lifted) body centre\n * (index.ts `wake()`), so its root always sits on the stream at  …[+6373 chars]`
+
+### 🧑 User — 2026-11-15T19:31:29.997Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:31:31.937Z
+
+Now `wake()` droplet emission in index.ts: fan directions, inherited measured velocity, no per-frame allocations.
+
+### 🤖 Claude — 2026-11-15T19:31:32.603Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/index.ts", "offset": 90, "limit": 20}`
+
+### 🧑 User — 2026-11-15T19:31:32.657Z
+
+> ↩︎ result: 90	  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh };
+> 91	  const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
+> 92	  // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+> 93	  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+> 94	  /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
+> 95	  const qaNoRibbonWake = qaHide.includes('ribbonWake');
+> 96	  let focus = 0;
+> 97	  let curTime = 0;
+> 98	  const tmpV = new THREE.Vector3();
+> 99	  const tmpV2 = new THREE.Vector3();
+> 100	  const tmpV3 = new THREE.Vector3();
+> 101	  const rnd = (a: number, b: number) => a + Math.random() * (b - a);
+> 102	
+> 103	  /** 0 = ribbon fully shown, 1 = whirlpool surface takes over (mirrors the ribbon vertex shader) */
+> 104	  const wh …[+355 chars]
+
+### 🤖 Claude — 2026-11-15T19:31:35.627Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "  const tmpV3 = new THREE.Vector3();\n  const rnd = (a: number, b: number) => a + Math.random() * (b - a);", "new_string": "  const tmpV3 = new THREE.Vector3();\n  // spray fan scratch (no per-frame allocation)\n  const sprP = new THREE.Vector3();\n  const sprV = new THREE.Vector3();\n  const back = new THREE.Vector3();\n  const lastWake = new THREE.Vector3();\n  const riderVel = new THREE.Vector3();\n  let lastWakeT = -1;\n  const rnd = (a: number, b: number) => a + Math.random() * (b - a);"}`
+
+### 🧑 User — 2026-11-15T19:31:35.681Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:31:44.983Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "      // 3D splash crown flaring out of the surface at the waterline\n      const center = tmpV.copy(pos).addScaledVector(f.up, -above);\n      crown.place(center, forward, f.up, waterlineR, strength);\n      // side fans of droplets (refs 05/07/08/10)\n      const rate = speed * (quality === 'high' ? 6 : 2);\n      const n = Math.floor(rate * dt + Math.random());\n      const up = tmpV2.crossVectors(right, forward).normalize();\n      for (let i = 0; i < n; i++) {\n        const side = Math.random() < 0 …[+2080 chars]`
+
+### 🧑 User — 2026-11-15T19:31:45.027Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:31:47.097Z
+
+Also remove the per-call allocation in `splash()`.
+
+### 🤖 Claude — 2026-11-15T19:31:49.679Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "      for (let i = 0; i < n; i++) {\n        const dir = new THREE.Vector3(rnd(-1, 1), 0, rnd(-1, 1)).normalize().multiplyScalar(rnd(1, 4) * strength);\n        dir.addScaledVector(up, rnd(3, 7) * strength);\n        spray.emit(pos, dir, rnd(0.08, 0.22), rnd(0.5, 1.1));\n      }", "new_string": "      for (let i = 0; i < n; i++) {\n        const dir = sprV.set(rnd(-1, 1), 0, rnd(-1, 1)).normalize().multiplyScalar(rnd(1, 4) * strength);\n        dir.addScaledVector(up, rnd(3, 7) * strength);\n        spra …[+60 chars]`
+
+### 🧑 User — 2026-11-15T19:31:49.716Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:32:02.266Z
+
+Before rewriting bubbles I need to know where the tube wall sits relative to the course frame, so side bubbles don't end up inside the wall.
+
+### 🤖 Claude — 2026-11-15T19:32:03.508Z
+
+> 🔧 **Bash** `{"command": "grep -n \"tube\" src/world/tube.ts | head -30 && grep -n \"'tube'\\|tubeLift\\|axisLift\\|floorDrop\" src/world/course.ts | head -20", "description": "Find how the tube radius relates to the course frame"}`
+
+### 🧑 User — 2026-11-15T19:32:03.546Z
+
+> ↩︎ result: 2: * Tunnel geometry generated from course-aligned "tube paths", so walls, rings and nozzles follow the
+> 4: *  - courseTubePath:   tube centred on the course itself (chute, gold ring pipe)
+> 5: *  - straightTubePath: tube on a low-pass-filtered axis of the course (05–07): the tunnel stays
+> 18:  /** distance from the water point on the axis down to the tube bottom */
+> 58:  // the 04 junction; height/roll/radius/depth return to the 06 arch tube just past its foot (wRun),
+> 93:  // radius/depth so the floor stays below the stream edges, dilated + smoothed for a steady tube
+> 144:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> 159:   * flip this to the inward normal and light the inside of the tube correctly. The legacy default
+> 212: * Washer-tube ring collar (ref 05: "flat gold band with a double contour"): a broad FLAT inner band that
+> 217: * Lathe around local Z; radial values are fractions of the tube radius, axial values are world units
+> 240:  g.rotateX(Math.PI / 2); // lathe axis Y → tube axis Z
+> 244:/** Instanced thick gold ring ribs placed perpendicular to the tube every `spacing` units. */
+> 251:  opts: { tube?: number; double?: boolean; inset?: number; e …[+716 chars]
+
+### 🤖 Claude — 2026-11-15T19:32:04.975Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "offset": 1, "limit": 60}`
+
+### 🧑 User — 2026-11-15T19:32:04.993Z
+
+> ↩︎ result: 1	/**
+> 2	 * Tunnel geometry generated from course-aligned "tube paths", so walls, rings and nozzles follow the
+> 3	 * 04 slide, the 06 arch and the full 07 plunge with no seams.
+> 4	 *  - courseTubePath:   tube centred on the course itself (chute, gold ring pipe)
+> 5	 *  - straightTubePath: tube on a low-pass-filtered axis of the course (05–07): the tunnel stays
+> 6	 *    straight with concentric rings converging to one vanishing point (refs 05/07) while the stream
+> 7	 *    winds inside it. Radius/depth adapt so the floor always stays below the winding stream, and the
+> 8	 *    axis converges exactly onto the course at both ends (04 pipe junction, 08 chamber inlet).
+> 9	 */
+> 10	import * as THREE from 'three';
+> 11	import type { Course } from './course';
+> 12	
+> 13	export interface Frame { pos: THREE.Vector3; tan: THREE.Vector3; up: THREE.Vector3; right: THREE.Vector3 }
+> 14	
+> 15	export interface TubePath {
+> 16	  frame(s: number): Frame;
+> 17	  radius(s: number): number;
+> 18	  /** distance from the water point on the axis down to the tube bottom */
+> 19	  depth(s: number): number;
+> 20	}
+> 21	
+> 22	export function courseTubePath(course: Course, radius: (s: number) => number, depth: number | ((s: number) => number) = 0 …[+1813 chars]
+
+### 🤖 Claude — 2026-11-15T19:33:02.713Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "content": "/**\n * Iridescent soap bubbles.\n *  - big bubbles: instanced camera-facing sphere IMPOSTORS (2 triangles each) with an analytic\n *    thin-film shader: saturated magenta/cyan film, crisp outline, tinted interior, white window\n *    highlights (ref 05). The on-screen diameter is capped (uMaxPx) and bubbles fade out close to the\n *    camera, so a bubble can never become a giant occluding sphere.\n *  - small bubbles: one THREE.Points draw of tiny ring-sprite bubbles.\n * Ride (03–10): bubbles live only at the SIDES of the  …[+13456 chars]`
+
+### 🧑 User — 2026-11-15T19:33:02.752Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/bubbles.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:33:46.461Z
+
+Now foam.ts: a dedicated puff shader plus denser puff banks with heaps, a two-level LOD and tighter chunk culling. I'll keep the berm geometry and functions from wave 1.
+
+### 🤖 Claude — 2026-11-15T19:33:57.910Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "function rng(seed: number) {", "new_string": "// ---------------------------------------------------------------------------------- puffs\n/**\n * Soap-foam puff (ref 05 \"cloud banks\": white-lavender clumps, #FCF6FF lit tops, soft lavender\n * undersides and crevices, a few darker pores, faint soap-film rim). instanceColor carries\n * (x = ambient occlusion 0..1, y = seed, z = tint -1..1), not a colour.\n */\nconst PUFF_VERT = /* glsl */ `\nuniform float uTime;\nvarying vec3 vNormalW;\nvarying vec3 vPos …[+2085 chars]`
+
+### 🧑 User — 2026-11-15T19:33:57.956Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:33:59.583Z
+
+Now replace the old puff material and the placement/LOD logic in `createFoam`.
+
+### 🤖 Claude — 2026-11-15T19:34:05.737Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const FOAM_COLORS = ['#ffffff', '#f4f6ff', '#eef0ff', '#ffffff', '#eaf6ff'].map((c) => new THREE.Color(c));\n\nfunction makeMaterial() {\n  const m = new THREE.MeshStandardMaterial({\n    color: '#ffffff',\n    roughness: 0.4,\n    metalness: 0.0,\n    emissive: new THREE.Color('#eef0ff'),\n    emissiveIntensity: 0.45,\n    envMapIntensity: 1.0,\n  });\n  // subtle soap-film rim tint\n  m.onBeforeCompile = (sh) => {\n    sh.fragmentShader = sh.fragmentShader.replace(\n      '#include <emissivemap_fragment …[+1160 chars]`
+
+### 🧑 User — 2026-11-15T19:34:05.782Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:07.139Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "interface Puff { p: THREE.Vector3; r: number; c: number }", "new_string": "/** c = (ambient occlusion 0..1, seed 0..1, tint -1..1) → instanceColor (see PUFF_VERT) */\ninterface Puff { p: THREE.Vector3; r: number; ao: number; tint: number }"}`
+
+### 🧑 User — 2026-11-15T19:34:07.174Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:07.894Z
+
+Now the `createFoam` body (placement, build, LOD, update).
+
+### 🤖 Claude — 2026-11-15T19:34:08.595Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/foam.ts", "offset": 320, "limit": 140}`
+
+### 🧑 User — 2026-11-15T19:34:08.619Z
+
+> ↩︎ result: 320	  return { mesh, uniforms };
+> 321	}
+> 322	
+> 323	export function createFoam(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): FoamSystem {
+> 324	  const { s0, s1, quality } = opts;
+> 325	  const rand = rng(1337);
+> 326	  const density = quality === 'high' ? 1 : 0.5;
+> 327	  const geo = new THREE.IcosahedronGeometry(1, quality === 'high' ? 1 : 0);
+> 328	  const mat = makeMaterial();
+> 329	  const group = new THREE.Group();
+> 330	  group.name = 'foam_banks';
+> 331	  const st03 = course.stage('03'), st04 = course.stage('04');
+> 332	  const chunkLen = 40;
+> 333	  const chunks: { mesh: THREE.InstancedMesh; sa: number; sb: number }[] = [];
+> 334	  let total = 0;
+> 335	  const tmpM = new THREE.Matrix4();
+> 336	  const tmpQ = new THREE.Quaternion();
+> 337	  const tmpS = new THREE.Vector3();
+> 338	
+> 339	  const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
+> 340	    if (!list.length) return;
+> 341	    const mesh = new THREE.InstancedMesh(geo, mat, list.length);
+> 342	    list.forEach((pf, i) => {
+> 343	      tmpQ.setFromEuler(new THREE.Euler(rand() * 6, rand() * 6, rand() * 6));
+> 344	      tmpS.set(pf.r, pf.r * (0.75 + rand() * 0.25), pf.r);
+> 345	      tmpM.compose(pf.p, tmpQ, …[+5141 chars]
+
+### 🤖 Claude — 2026-11-15T19:34:39.124Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='src/vfx/foam.ts'\ns=open(p).read()\nstart=s.index(\"export function createFoam(\")\nend=s.index(\"  // ---- whirlpool: rim ring + spiral band foam\")\nnew='''export function createFoam(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): FoamSystem {\n  const { s0, s1, quality } = opts;\n  const rand = rng(1337);\n  const density = quality === 'high' ? 1 : 0.5;\n  // LOD: 80-tri puffs in the chunks around Benny, 20-tri puffs further out (low tier: 20-tri only)\n  const geoHi = puffGeometry(quality === 'high' ? 1 : 0);\n  cons …[+4881 chars]`
+
+### 🧑 User — 2026-11-15T19:34:43.184Z
+
+> ↩︎ result: src/game/cameraRig.ts(49,37): error TS2532: Object is possibly 'undefined'.
+
+### 🤖 Claude — 2026-11-15T19:34:44.490Z
+
+My files typecheck; the one error is in `cameraRig.ts`, which the camera engineer is editing. Let me capture 05.
+
+### 🤖 Claude — 2026-11-15T19:34:46.776Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/cap.mjs qa/pilot05/foam/it1 05 \"\" 2>&1 | tail -3", "description": "Capture 05 after the first foam/bubble/splash pass", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T19:35:05.966Z
+
+> ↩︎ result: qa/pilot05/foam/it1/05_base.png {"st":{"mode":"ride","stage":"05","s":127.388,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.183,"bennyVisible":true,"cam":[1.97,-37.73,-63.24]},"b":{"x":0,"y":-0.38,"z":0.986,"visible":true,"cam":[1.97,-37.73,-63.24],"benny":[1.63,-41.18,-69.68]},"calls":113}
+
+### 🤖 Claude — 2026-11-15T19:35:08.991Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/triptych.py /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/it1.png 900 \"REF=references/05_flow_into_the_current.png\" \"BEFORE=qa/pilot05/foam/iso/base/05.png\" \"IT1=qa/pilot05/foam/it1/05_base.png\"", "description": "Build ref/before/it1 triptych"}`
+
+### 🧑 User — 2026-11-15T19:35:09.821Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/it1.png (1550, 942)
+
+### 🤖 Claude — 2026-11-15T19:35:11.133Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/it1.png"}`
+
+### 🧑 User — 2026-11-15T19:35:11.333Z
+
+> ↩︎ result: [image]
+

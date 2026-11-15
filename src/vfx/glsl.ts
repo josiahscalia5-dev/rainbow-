@@ -55,8 +55,9 @@ vec3 bumpNormal(vec3 pos, vec3 n, float h) {
   vec3 grad = sign(det) * (dhx * r1 + dhy * r2);
   return normalize(abs(det) * n - grad);
 }
-// g: cell coordinates (world-anchored); density: probability a cell holds a star; L: arm length px
-float starGlint(vec2 g, float density, float L, float time) {
+// g: cell coordinates (world-anchored); density: probability a cell holds a star; L: arm length px;
+// stretch: horizontal (g.x) arm length relative to the vertical one (ref 05 glints are wide flares)
+float starGlint(vec2 g, float density, float L, float stretch, float time) {
   vec2 gi = floor(g);
   float hs = hash12(gi + 7.31);
   if (hs < 1.0 - density) return 0.0;
@@ -65,11 +66,11 @@ float starGlint(vec2 g, float density, float L, float time) {
   vec2 px = (fract(g) - c) / cpp;                   // offset in pixels
   vec2 lim = 0.24 / cpp;                            // never cross the cell border
   float l = L * (0.55 + 0.9 * fract(hs * 37.0));
-  float ax = exp(-abs(px.y) * 0.8) * max(0.0, 1.0 - abs(px.x) / min(l, lim.x));
-  float ay = exp(-abs(px.x) * 0.8) * max(0.0, 1.0 - abs(px.y) / min(l * 1.15, lim.y));
-  float core = exp(-dot(px, px) * 0.09);
-  float tw = 0.35 + 0.65 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);
-  return (ax * ax + ay * ay + core) * tw;
+  float ax = exp(-abs(px.y) * 0.75) * max(0.0, 1.0 - abs(px.x) / min(l * stretch, lim.x));
+  float ay = exp(-abs(px.x) * 0.8) * max(0.0, 1.0 - abs(px.y) / min(l, lim.y));
+  float core = exp(-dot(px, px) * 0.05) * 1.6;
+  float tw = 0.55 + 0.45 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);
+  return ((ax * ax + ay * ay) * 1.6 + core) * tw;
 }
 `;
 

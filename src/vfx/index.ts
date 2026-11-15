@@ -98,6 +98,13 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const tmpV = new THREE.Vector3();
   const tmpV2 = new THREE.Vector3();
   const tmpV3 = new THREE.Vector3();
+  // spray fan scratch (no per-frame allocation)
+  const sprP = new THREE.Vector3();
+  const sprV = new THREE.Vector3();
+  const back = new THREE.Vector3();
+  const lastWake = new THREE.Vector3();
+  const riderVel = new THREE.Vector3();
+  let lastWakeT = -1;
   const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 
   /** 0 = ribbon fully shown, 1 = whirlpool surface takes over (mirrors the ribbon vertex shader) */
@@ -184,26 +191,37 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
         (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);
         ribbon.uniforms.uBennyR.value = waterlineR;
       }
-      // 3D splash crown flaring out of the surface at the waterline
+      // 3D V spray fans thrown back and outward from the waterline (ref 05)
       const center = tmpV.copy(pos).addScaledVector(f.up, -above);
       crown.place(center, forward, f.up, waterlineR, strength);
-      // side fans of droplets (refs 05/07/08/10)
-      const rate = speed * (quality === 'high' ? 6 : 2);
-      const n = Math.floor(rate * dt + Math.random());
-      const up = tmpV2.crossVectors(right, forward).normalize();
+      // Benny's measured velocity: droplets inherit it so the fan stays attached to him instead of
+      // trailing 4-6 units back toward the chase camera (the old white spots at the frame bottom).
+      // QA checkpoints hold him still, so the measured velocity is 0 there as well.
+      if (lastWakeT >= 0 && dt > 1e-4 && lastWake.distanceToSquared(pos) < 9) riderVel.copy(pos).sub(lastWake).divideScalar(dt);
+      else riderVel.set(0, 0, 0);
+      lastWake.copy(pos);
+      lastWakeT = curTime;
+      // droplets along the two fans: back + outward, a short hop above the surface
+      const rate = (quality === 'high' ? 110 : 40) * strength;
+      const n = Math.min(12, Math.floor(rate * dt + Math.random()));
+      const up = tmpV2.copy(f.up);
+      back.copy(forward).multiplyScalar(-1);
       for (let i = 0; i < n; i++) {
         const side = Math.random() < 0.5 ? -1 : 1;
-        const p = center.clone().addScaledVector(right, side * waterlineR * rnd(1.0, 1.5)).addScaledVector(forward, rnd(-0.5, 0.2)).addScaledVector(up, rnd(0.0, 0.2));
-        const v = right.clone().multiplyScalar(side * rnd(1.2, 3.4)).addScaledVector(up, rnd(1.8, 4.2)).addScaledVector(forward, rnd(-2.0, 0.5));
-        spray.emit(p, v, rnd(0.05, 0.13), rnd(0.35, 0.7));
+        const th = rnd(0.45, 1.25); // from straight back toward sideways
+        const cs = Math.cos(th), sn = Math.sin(th);
+        sprP.copy(center).addScaledVector(right, side * sn * waterlineR * 1.05).addScaledVector(back, cs * waterlineR * 1.05).addScaledVector(up, rnd(0.02, 0.12));
+        const sp = rnd(1.6, 3.6);
+        sprV.copy(riderVel).addScaledVector(right, side * sn * sp).addScaledVector(back, cs * sp).addScaledVector(up, rnd(1.6, 3.4));
+        spray.emit(sprP, sprV, rnd(0.035, 0.085), rnd(0.28, 0.5));
       }
     },
     splash(pos, up, strength) {
       const n = Math.round(30 * strength * (quality === 'high' ? 1 : 0.5));
       for (let i = 0; i < n; i++) {
-        const dir = new THREE.Vector3(rnd(-1, 1), 0, rnd(-1, 1)).normalize().multiplyScalar(rnd(1, 4) * strength);
+        const dir = sprV.set(rnd(-1, 1), 0, rnd(-1, 1)).normalize().multiplyScalar(rnd(1, 4) * strength);
         dir.addScaledVector(up, rnd(3, 7) * strength);
-        spray.emit(pos, dir, rnd(0.08, 0.22), rnd(0.5, 1.1));
+        spray.emit(pos, dir, rnd(0.06, 0.16), rnd(0.5, 1.1));
       }
     },
   };

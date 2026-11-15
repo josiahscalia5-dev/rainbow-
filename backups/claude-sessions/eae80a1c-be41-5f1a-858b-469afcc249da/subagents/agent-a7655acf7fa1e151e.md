@@ -1019,3 +1019,202 @@ I'll keep the lower-body radius unchanged (the foam module hard-codes Benny's wa
 
 > ↩︎ result: The file /home/user/rainbow-/src/characters/benny/textures.ts has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T19:31:20.208Z
+
+Now the model changes in build.ts: wider/chunkier cuff, shorter domed crown with tiled small stitches, sunk round pom, star turned to face rear cameras, arms a little higher and rounder.
+
+### 🤖 Claude — 2026-11-15T19:31:27.505Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "export const BENNY_DIMS = {\n  skin: 0.7,\n  fur: 0.12,\n  radius: 0.8,\n  /** lower-body bulge (radial gain at its peak) — the plush ball is widest below the brim (refs 05/07/10) */\n  pear: 0.09,\n  /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y < 0) */\n  stretch: 0.1,\n  /** front of the beanie raised (rad, about X). Small, so the back brim stays high on the ball in rear views */\n  hatTilt: -0.06,\n  brimBottom: 0.24, // hat-local\n  brimR: 0.74, // …[+1264 chars]`
+
+### 🧑 User — 2026-11-15T19:31:27.547Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:31:28.659Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "import {\n  BENNY_COLORS as C,\n  blushTexture,", "new_string": "import {\n  BENNY_COLORS as C,\n  CROWN_REPEAT,\n  blushTexture,"}`
+
+### 🧑 User — 2026-11-15T19:31:28.694Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:31:32.311Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "function lathe(points: [number, number][], segs: number, v0: number, v1: number): THREE.LatheGeometry {\n  const g = new THREE.LatheGeometry(points.map(([r, y]) => new THREE.Vector2(r, y)), segs);\n  // re-map v to height so stripes are linear in height\n  const p = g.attributes.position as THREE.BufferAttribute;\n  const uv = g.attributes.uv as THREE.BufferAttribute;\n  for (let i = 0; i < p.count; i++) uv.setY(i, (p.getY(i) - v0) / (v1 - v0));\n  return g;\n}", "new_string": "function lath …[+531 chars]`
+
+### 🧑 User — 2026-11-15T19:31:32.356Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:31:33.192Z
+
+Now the arms and the beanie block.
+
+### 🤖 Claude — 2026-11-15T19:31:38.893Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "    // paw tufts stick out left/right at mid-body, just under the brim (rear refs 05/07/10)\n    const a = joint(side > 0 ? 'armL' : 'armR', 0.7 * side, -0.08, 0.03);\n    body.add(a);\n    const phi = 1.0 * side;\n    const dir = new THREE.Vector3(Math.sin(phi), -Math.cos(phi), 0);\n    const g = new THREE.SphereGeometry(0.13, 20, 14);\n    g.scale(1, 1.45, 1);\n    const arm = named(new THREE.Mesh(g, armMat), side > 0 ? 'fur_armL' : 'fur_armR');\n    arm.position.copy(dir).multiplyScalar(0 …[+949 chars]`
+
+### 🧑 User — 2026-11-15T19:31:38.942Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:32:04.647Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const yb = D.brimBottom;\n  const bk = D.brimR / 0.778; // profile scale (profiles were authored for a 0.778 brim)\n  const brimTex = ribbedBrimTextures();\n  const brimMat = std({ map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.88 });\n  // inner lip hugs the skin at the brim height (sphere radius there ≈ 0.68)\n  const lip = Math.sqrt(D.skin * D.skin - yb * yb) + 0.012;\n  const brim = named(\n    new THREE.Mesh(\n      lathe(\n      …[+6820 chars]`
+
+### 🧑 User — 2026-11-15T19:32:04.690Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:32:08.850Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -20; SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && timeout 600 node $SP/lab.mjs $SP/m1_build.png \"src=build&views=measure\" $SP/g1_build.png \"src=build&views=game\" 2>&1 | tail -2 && python3 $SP/measure.py lab $SP/m1_build.png 4 && for i in 0 1 2 3; do python3 $SP/runs.py $SP/m1_build.png $((216+432*i)) 0 768; done", "description": "Typecheck, render lab from build and measure proportions", "timeout": 600000}`
+
+### 🧑 User — 2026-11-15T19:32:38.764Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/m1_build.png {"baseTriangles":14996,"furQuality":"high"} no console errors
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/g1_build.png {"baseTriangles":14996,"furQuality":"high"} no console errors
+> panel0     cx=215 top=133 cuffBottom=388 bottom=538 visibleH=405 hat=63.0% body=37.0% cuffW=266 bodyW=394 fur=#B73F91 cuff=#6932F4 star=(284, 283, 369, 374) #F4CE3E
+> panel1     cx=647 top=137 cuffBottom=405 bottom=538 visibleH=401 hat=66.8% body=33.2% cuffW=226 bodyW=389 fur=#BA4393 cuff=#6831F3 star=(716, 300, 802, 390) #F4CB35
+> panel2     cx=1077 top=145 cuffBottom=421 bottom=539 visibleH=394 hat=70.1% body=29.9% cuffW=218 bodyW=348 fur=#BD4795 cuff=#6833F4 star=(1152, 317, 1236, 406) #F3C931
+> panel3     cx=1510 top=149 cuffBottom=432 bottom=538 visibleH=389 hat=72.8% body=27.2% cuffW=214 bodyW=300 fur=#BF4996 cuff=#6730F3 star=(1585, 330, 1666, 418) #F3C92F
+> .0-132 P133-238 W239-242 P243-264 W265-285 h286-286 P287-388 F389-538 .539-767
+> .0-136 P137-250 W251-254 P255-280 W281-303 h304-304 P305-405 F406-536 .537-537 F538-538 .539-767
+> .0-144 P145-264 W265-269 P270-298 W299-324 P …[+140 chars]
+
+### 🤖 Claude — 2026-11-15T19:32:48.729Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/m1_build.png"}`
+
+### 🧑 User — 2026-11-15T19:32:48.765Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:33:16.701Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && cat > $SP/extent.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\na = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(int)\nn = int(sys.argv[2]); pw = a.shape[1] // n\ngreen = (a[...,1] - np.maximum(a[...,0], a[...,2])) > 60\nfor i in range(n):\n    sub = ~green[:, i*pw+2:(i+1)*pw-2]\n    ys = np.where(sub.any(1))[0]\n    top, bot = ys.min(), ys.max()\n    rows = {}\n    for y in map(int, sys.argv[3:]):\n        yy = top + int(y/100*(bot-top))\n        xs = np.where(sub[yy] …[+529 chars]`
+
+### 🧑 User — 2026-11-15T19:33:17.093Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/extent.py", line 15, in <module>
+>     w = [ (np.where(sub[y])[0].ptp()+1) if sub[y].any() else 0 for y in range(top, bot+1)]
+>            ^^^^^^^^^^^^^^^^^^^^^^^
+> AttributeError: 'numpy.ndarray' object has no attribute 'ptp'
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/extent.py", line 15, in <module>
+>     w = [ (np.where(sub[y])[0].ptp()+1) if sub[y].any() else 0 for y in range(top, bot+1)]
+>            ^^^^^^^^^^^^^^^^^^^^^^^
+> AttributeError: 'numpy.ndarray' object has no attribute 'ptp'
+
+### 🤖 Claude — 2026-11-15T19:33:26.333Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && cat > $SP/extent.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsys.path.insert(0, sys.argv[0].rsplit('/',1)[0])\nfrom measure import classes\na = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(int)\nn = int(sys.argv[2]); pw = a.shape[1] // n\ng, w, p, f, s = classes(a)\ngreen = g\nhat = w | p\nfor i in range(n):\n    sub = ~green[:, i*pw+2:(i+1)*pw-2]\n    ys = np.where(sub.any(1))[0]; top, bot = ys.min(), ys.max()\n    W = lambda y: (lambda xs: int(xs.max()-xs.min()+1) …[+861 chars]`
+
+### 🧑 User — 2026-11-15T19:33:27.101Z
+
+> ↩︎ result: NEW
+> panel0 top=127 cuffBot=388 bottom=550 hat=261 body=162 hat%=61.7 cuffW=393 hat/cuffW=0.66 body/cuffW=0.41 pomW/cuffW=0.38
+> panel1 top=129 cuffBot=405 bottom=550 hat=276 body=145 hat%=65.6 cuffW=394 hat/cuffW=0.70 body/cuffW=0.37 pomW/cuffW=0.38
+> panel2 top=137 cuffBot=422 bottom=548 hat=285 body=126 hat%=69.3 cuffW=399 hat/cuffW=0.71 body/cuffW=0.32 pomW/cuffW=0.39
+> panel3 top=142 cuffBot=432 bottom=548 hat=290 body=116 hat%=71.4 cuffW=399 hat/cuffW=0.73 body/cuffW=0.29 pomW/cuffW=0.40
+> BEFORE
+> panel0 top=100 cuffBot=385 bottom=550 hat=285 body=165 hat%=63.3 cuffW=328 hat/cuffW=0.87 body/cuffW=0.50 pomW/cuffW=0.45
+> panel1 top=106 cuffBot=401 bottom=550 hat=295 body=149 hat%=66.4 cuffW=384 hat/cuffW=0.77 body/cuffW=0.39 pomW/cuffW=0.40
+> panel2 top=110 cuffBot=416 bottom=548 hat=306 body=132 hat%=69.9 cuffW=396 hat/cuffW=0.77 body/cuffW=0.33 pomW/cuffW=0.40
+> panel3 top=119 cuffBot=426 bottom=548 hat=307 body=122 hat%=71.6 cuffW=397 hat/cuffW=0.77 body/cuffW=0.31 pomW/cuffW=0.40
+
+### 🤖 Claude — 2026-11-15T19:33:34.482Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 - <<EOF\nimport re\np='$SP/extent.py'\ns=open(p).read()\ns=s.replace(\"cuffW = max(W(y) for y in range(cuff-40, cuff-5))\",\"\"\"def run(mask, y, c):\n        L=R=c\n        while L>0 and mask[y, L-1]: L-=1\n        while R<mask.shape[1]-1 and mask[y, R+1]: R+=1\n        return R-L+1\n    hs = (hat|s)\n    cuffW = max(run(hs, y, i*pw+cx) for y in range(cuff-30, cuff-10))\"\"\")\nopen(p,'w').write(s)\nEOF\necho NEW; python3 $SP/extent.py $SP/m1_build.png 4; echo BEFORE; python3 $SP/exten …[+95 chars]`
+
+### 🧑 User — 2026-11-15T19:33:35.374Z
+
+> ↩︎ result: NEW
+> panel0 top=127 cuffBot=388 bottom=550 hat=261 body=162 hat%=61.7 cuffW=265 hat/cuffW=0.98 body/cuffW=0.61 pomW/cuffW=0.56
+> panel1 top=129 cuffBot=405 bottom=550 hat=276 body=145 hat%=65.6 cuffW=258 hat/cuffW=1.07 body/cuffW=0.56 pomW/cuffW=0.58
+> panel2 top=137 cuffBot=422 bottom=548 hat=285 body=126 hat%=69.3 cuffW=221 hat/cuffW=1.29 body/cuffW=0.57 pomW/cuffW=0.70
+> panel3 top=142 cuffBot=432 bottom=548 hat=290 body=116 hat%=71.4 cuffW=241 hat/cuffW=1.20 body/cuffW=0.48 pomW/cuffW=0.66
+> BEFORE
+> panel0 top=100 cuffBot=385 bottom=550 hat=285 body=165 hat%=63.3 cuffW=223 hat/cuffW=1.28 body/cuffW=0.74 pomW/cuffW=0.67
+> panel1 top=106 cuffBot=401 bottom=550 hat=295 body=149 hat%=66.4 cuffW=215 hat/cuffW=1.37 body/cuffW=0.69 pomW/cuffW=0.71
+> panel2 top=110 cuffBot=416 bottom=548 hat=306 body=132 hat%=69.9 cuffW=208 hat/cuffW=1.47 body/cuffW=0.63 pomW/cuffW=0.76
+> panel3 top=119 cuffBot=426 bottom=548 hat=307 body=122 hat%=71.6 cuffW=240 hat/cuffW=1.28 body/cuffW=0.51 pomW/cuffW=0.66
+
+### 🤖 Claude — 2026-11-15T19:34:06.300Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/g1_build.png"}`
+
+### 🧑 User — 2026-11-15T19:34:06.326Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:34:12.159Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  crownH: 0.42,", "new_string": "  crownH: 0.47,"}`
+
+### 🧑 User — 2026-11-15T19:34:12.196Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:17.113Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  // crown dome: starts inside the cuff, superellipse profile r = R0·(1 − (y/H)^p)^(1/p) (round shoulders that\n  // taper to the pom-pom; the pom-pom covers the apex). v = height → horizontal knit stripes.\n  const crownY0 = yt - 0.045;\n  const R0 = 0.738 * bk;\n  const crownProfile: [number, number][] = [];\n  for (const t of [0, 0.08, 0.16, 0.25, 0.34, 0.43, 0.52, 0.6, 0.68, 0.75, 0.81, 0.86, 0.9, 0.935, 0.96, 0.98, 0.993, 1]) {\n    const pw = 2.2;\n    crownProfile.push([R0 * Math.pow( …[+696 chars]`
+
+### 🧑 User — 2026-11-15T19:34:17.155Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:19.015Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const sa = THREE.MathUtils.degToRad(142);\n  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR + 0.02), yt - 0.02, Math.cos(sa) * (D.brimR + 0.02));", "new_string": "  const sa = THREE.MathUtils.degToRad(146);\n  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR + 0.02), yt + 0.01, Math.cos(sa) * (D.brimR + 0.02));"}`
+
+### 🧑 User — 2026-11-15T19:34:19.048Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:20.267Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const pom = joint('pom', 0, crownY0 + D.crownH + 0.1, -0.03);", "new_string": "  const pom = joint('pom', 0, crownY0 + D.crownH + 0.05, -0.03);"}`
+
+### 🧑 User — 2026-11-15T19:34:20.301Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:21.516Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/textures.ts", "old_string": "  white: '#fdf8ff',\n  whiteShade: '#9d8cbc',", "new_string": "  white: '#fffaff',\n  whiteShade: '#bcadd0',"}`
+
+### 🧑 User — 2026-11-15T19:34:21.580Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/textures.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:24.174Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/textures.ts", "old_string": "    [0.0, 0.3, '#ffffff', C.white, C.whiteShade],\n    [0.3, 0.5, C.purpleLight, C.purple, C.purpleDark],\n    [0.5, 0.71, '#ffffff', C.white, C.whiteShade],\n    [0.71, 0.88, C.purpleLight, C.purple, C.purpleDark],\n    [0.88, 1.0, '#ffffff', C.white, C.whiteShade],", "new_string": "    [0.0, 0.32, '#ffffff', C.white, C.whiteShade],\n    [0.32, 0.52, C.purpleLight, C.purple, C.purpleDark],\n    [0.52, 0.73, '#ffffff', C.white, C.whiteShade],\n    [0.73, 0.9, C.purpleLight, C.purple, C.pu …[+63 chars]`
+
+### 🧑 User — 2026-11-15T19:34:24.211Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/textures.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:34:29.293Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head; SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && timeout 600 node $SP/lab.mjs $SP/m2.png \"src=build&views=measure\" $SP/g2.png \"src=build&views=game\" $SP/t2.png \"src=build&views=turntable\" 2>&1 | tail -3 && python3 $SP/extent.py $SP/m2.png 4 | sed 's/cuffW=.*//' && for i in 0 1; do python3 $SP/runs.py $SP/m2.png $((216+432*i)) 0 768; done", "description": "Re-render lab views after the crown reshape and measure", "timeout": 600000}`
+
+### 🧑 User — 2026-11-15T19:35:31.763Z
+
+> ↩︎ result: src/game/cameraRig.ts(49,37): error TS2532: Object is possibly 'undefined'.
+> src/vfx/foam.ts(328,15): error TS2552: Cannot find name 'makeMaterial'. Did you mean 'makePuffMaterial'?
+> src/vfx/foam.ts(347,26): error TS2304: Cannot find name 'FOAM_COLORS'.
+> src/vfx/foam.ts(347,41): error TS2339: Property 'c' does not exist on type 'Puff'.
+> src/vfx/foam.ts(347,45): error TS2304: Cannot find name 'FOAM_COLORS'.
+> src/vfx/foam.ts(376,27): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> src/vfx/foam.ts(392,29): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> src/vfx/foam.ts(414,136): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> src/vfx/foam.ts(422,117): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> src/vfx/foam.ts(431,117): error TS2353: Object literal may only specify known properties, and 'c' does not exist in type 'Puff'.
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/m2.png {"baseTriangles":14996,"furQuality":"high"} no console errors
+>  …[+795 chars]
+

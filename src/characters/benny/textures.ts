@@ -60,8 +60,8 @@ export const BENNY_COLORS = {
   purple: '#7a18f0',
   purpleDark: '#36098e',
   purpleLight: '#9d55ff',
-  white: '#fdf8ff',
-  whiteShade: '#9d8cbc',
+  white: '#fffaff',
+  whiteShade: '#bcadd0',
   brim: '#7513ed',
   brimDark: '#330887',
   // hot plush pink of refs 02–10 (ref 05 fur median #F64EB1; the live median read bluer at #FF4CC4)
@@ -124,11 +124,11 @@ export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THRE
   const C = BENNY_COLORS;
   const stripes: [number, number, string, string, string][] = [
     // [v0, v1, highlight, base, groove]   (v measured from bottom)
-    [0.0, 0.3, '#ffffff', C.white, C.whiteShade],
-    [0.3, 0.5, C.purpleLight, C.purple, C.purpleDark],
-    [0.5, 0.71, '#ffffff', C.white, C.whiteShade],
-    [0.71, 0.88, C.purpleLight, C.purple, C.purpleDark],
-    [0.88, 1.0, '#ffffff', C.white, C.whiteShade],
+    [0.0, 0.32, '#ffffff', C.white, C.whiteShade],
+    [0.32, 0.52, C.purpleLight, C.purple, C.purpleDark],
+    [0.52, 0.73, '#ffffff', C.white, C.whiteShade],
+    [0.73, 0.9, C.purpleLight, C.purple, C.purpleDark],
+    [0.9, 1.0, '#ffffff', C.white, C.whiteShade],
   ];
   hctx.fillStyle = '#000';
   hctx.fillRect(0, 0, W, Hh);

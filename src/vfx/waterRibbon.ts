@@ -59,8 +59,8 @@ function bandStyleAt(course: Course, s: number): [number, number, number] {
  */
 const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
 const RIBBON_PAL = {
-  cyanDeep: lin(0.0, 0.17, 0.8),
-  cyan: lin(0.0, 0.37, 1.15),
+  cyanDeep: lin(0.0, 0.15, 0.78),
+  cyan: lin(0.0, 0.31, 1.12),
   cyanBright: lin(0.04, 0.95, 1.55),
   pinkDeep: lin(0.78, 0.02, 0.8),
   pink: lin(1.5, 0.02, 1.3),
@@ -171,6 +171,22 @@ float meander(float s, float hw) {
   return m * min(hw, 4.5);
 }
 
+// Combed flow lines (ref 05: dense thin bright streaks parallel to the flow, 2–4 px apart in the
+// mid-ground). Anti-aliased stripes across the flow (K lines per unit), each line broken into long
+// random streak segments along v; the stripes fade out once they get closer than ≈3 px.
+float combed(float x, float v, float K, float seed) {
+  float p = x * K;
+  float id = floor(p);
+  float fw = fwidth(p);
+  float hs = hash12(vec2(id, seed));
+  // thin bright core with a soft glow; the line wanders a little inside its slot
+  float d = abs(fract(p) - 0.5 - (hs - 0.5) * 0.4);
+  float line = (1.0 - smoothstep(0.03, 0.06 + fw, d)) * 0.75 + (1.0 - smoothstep(0.0, 0.2 + fw, d)) * 0.35;
+  // each line breaks into tapered streak segments of varying brightness
+  float seg = smoothstep(0.5, 0.9, vnoise(vec2(id * 3.7 + seed, v * 0.2 + hs * 9.0)));
+  return line * seg * (0.45 + 0.55 * hs) * (1.0 - smoothstep(0.22, 0.4, fw));
+}
+
 // advected strand texture ("combed" glossy water lines parallel to the flow)
 // x = lateral units relative to the meander centre, v = advected arc length, aa = 0..1 detail fade
 // returns: x = height 0..1 (shading + bump), y = white glint lines, z = mid strands, w = fine strands
@@ -184,9 +200,15 @@ vec4 strands(float x, float v, vec2 aa) {
   #endif
   b = mix(0.5, b, aa.x);
   c = mix(0.5, c, aa.y);
-  float h = a * 0.5 + b * 0.32 + c * 0.18;
+  float h = a * 0.42 + b * 0.34 + c * 0.24;
   h = smoothstep(0.18, 0.82, h);              // more contrast: deep azure troughs, bright crests
   float line = smoothstep(0.72, 0.86, c) * aa.y + smoothstep(0.7, 0.86, b) * aa.x * 0.85;
+  // the combed lines follow the large-scale strand warp so they bend with the flow
+  float xw = x + (a - 0.5) * 0.5;
+  line = max(line, combed(xw, v, 6.0, 0.0) * 0.85);
+  #ifndef LOW_Q
+  line = max(line, combed(xw + (b - 0.5) * 0.12, v * 1.3, 15.0, 11.0) * 0.55);
+  #endif
   return vec4(h, line, b, c);
 }
 
@@ -211,10 +233,12 @@ void main() {
   // detail fade with distance (cells per pixel), keeps far water from shimmering
   float fwx = fwidth(x);
   float fws = fwidth(s);
-  vec2 aa = vec2(1.0 - smoothstep(0.08, 0.2, max(fwx * 7.0, fws * 0.19)),
-                 1.0 - smoothstep(0.05, 0.14, max(fwx * 17.0, fws * 0.42)));
+  // (a noise cell must stay ≳6–8 px wide; the combed lines of ref 05 are 2–4 px apart in the
+  // mid-ground, so fading earlier than this flattens the water into a plain fill)
+  vec2 aa = vec2(1.0 - smoothstep(0.12, 0.26, max(fwx * 7.0, fws * 0.19)),
+                 1.0 - smoothstep(0.09, 0.2, max(fwx * 17.0, fws * 0.42)));
   // hair-fine combed strands for close-up water (refs: dense parallel flow lines)
-  float aaH = 1.0 - smoothstep(0.12, 0.3, fwx * 46.0);
+  float aaH = 1.0 - smoothstep(0.14, 0.3, fwx * 46.0);
   #ifdef LOW_Q
   aa.y = 0.0;
   aaH = 0.0;
@@ -243,8 +267,10 @@ void main() {
   float offR = hw * (vStyle.y + 0.07 * sin(s * 0.11 + 4.2)) + part;
   float wL = hw * vStyle.z * (1.0 + 0.4 * sin(s * 0.19 + 0.4)) * gate;
   float wR = hw * vStyle.z * (1.0 + 0.4 * sin(s * 0.17 + 2.9)) * gate;
-  float dL = abs(x + offL + pert);
-  float dR = abs(x - offR + pert);
+  float sdL = x + offL + pert;
+  float sdR = x - offR + pert;
+  float dL = abs(sdL);
+  float dR = abs(sdR);
   float on = smoothstep(0.02, 0.2, gate);
   float pL = (1.0 - smoothstep(wL - aaw, wL + aaw, dL)) * on;
   float pR = (1.0 - smoothstep(wR - aaw, wR + aaw, dR)) * on;
@@ -279,8 +305,11 @@ void main() {
   // deep azure troughs → electric cyan → light-cyan crests (crests stay a minority of the area)
   vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.62, h));
   cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.64, 0.95, h) * 0.7 + rimOut * 0.45);
-  vec3 pinkCol = mix(uPinkDeep, uPink, smoothstep(0.15, 0.5, h));
-  pinkCol = mix(pinkCol, uPinkLight, smoothstep(0.62, 0.92, h) * 0.75 + rimIn * 0.5);
+  // satin ribbon: a soft light streak runs along each band, off-centre toward the core
+  float rel = pL >= pR ? sdL / max(wL, 1e-3) : -sdR / max(wR, 1e-3);   // -1 outer edge .. +1 core side
+  float satin = exp(-pow((rel - 0.3) * 2.2, 2.0));
+  vec3 pinkCol = mix(uPinkDeep, uPink, smoothstep(0.3, 0.72, h + satin * 0.2));
+  pinkCol = mix(pinkCol, uPinkLight, clamp(smoothstep(0.6, 0.92, h) * 0.7 + satin * 0.35 + rimIn * 0.45, 0.0, 1.0));
   vec3 col = mix(cyanCol, pinkCol, pinkM);
   col *= 0.88 + 0.24 * hair;
   vec3 streakCol = mix(vec3(0.6, 1.25, 1.6), vec3(1.6, 0.8, 1.6), pinkM);
@@ -316,7 +345,7 @@ void main() {
   float nearK = 1.0 - smoothstep(0.02, 0.05, fws);
   if (nearK > 0.0) {
     float ph = s * 5.5 - uTime * 6.0 + 1.3 * sin(lat * 0.8 + s * 0.15) + 2.0 * vnoise(vec2(lat * 0.9, s * 0.5));
-    float crest = pow(0.5 + 0.5 * sin(ph), 12.0) * smoothstep(0.4, 0.75, vnoise(vec2(lat * 1.4, s * 0.9 + 3.0)));
+    float crest = pow(0.5 + 0.5 * sin(ph), 40.0) * smoothstep(0.5, 0.8, vnoise(vec2(lat * 3.2, s * 1.1 + 3.0)));
     col *= 1.0 - 0.14 * nearK * (0.5 - 0.5 * sin(ph));
     col += mix(vec3(0.9, 1.4, 1.7), vec3(1.7, 1.1, 1.7), pinkM) * crest * nearK * 0.9;
   }
@@ -328,8 +357,9 @@ void main() {
   float sparkle = step(0.9, hs) * smoothstep(0.22, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 7.0 + hs * 40.0));
   col += vec3(1.3) * sparkle;
   #else
-  float glint = starGlint(vec2(lat * 1.15, (s - vSpeed * uTime * 0.55) * 0.6), 0.3, 32.0, uTime);
-  col += vec3(1.7) * glint * (1.0 - smoothstep(0.3, 0.8, fws));
+  // wide cells so the long horizontal arms are not clipped at the cell border in the mid-ground
+  float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * 0.42), 0.42, 22.0, 2.4, uTime);
+  col += vec3(2.0, 2.2, 2.3) * glint * (1.0 - smoothstep(0.3, 0.8, fws));
   #endif
 
   // ---- soap-foam lace where the water meets the foam banks ----

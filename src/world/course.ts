@@ -102,6 +102,40 @@ interface RouteData {
   straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
 }
 
+/**
+ * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
+ * lateral (world +X) offset of the course centreline from that line, as a function of the distance
+ * `u` along the line (0 … L05). It is applied to the route AFTER smoothPolyline, so it is exact (the
+ * smoothing would shave ~25 % off the amplitude) and still C¹ at both ends (offset and slope → 0).
+ *
+ * Shape tuned against the reference's cyan core: a small first crest under Benny at the 05
+ * checkpoint (u≈uCrest, offset a0 to the LEFT, heading parallel to the tunnel axis), then crests
+ * that grow toward the far end (screen: Benny → (560,700) → (450,600) → (520,520) → VP).
+ * Coins (gameplay/coins.ts) sit on this centreline (lat 0), so they wind with the same S.
+ */
+export const S05 = {
+  /** length of the straight tunnel line (units) */
+  L: 72,
+  /** wavelength along the line (crest → crest of the same side) */
+  lambda: 32,
+  /** u of the first (left) crest, where Benny rides at the 05 checkpoint */
+  uCrest: 14,
+  /** crest amplitude at uCrest and at uCrest + 1.5 λ (linear growth in between) */
+  a0: 0.45,
+  a1: 1.85,
+  /** half extent of the stream (|offset| + half width) in the current: fills the tube floor */
+  extent: 6.0,
+};
+
+/** lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line */
+export function meander05(u: number): number {
+  const { L, lambda, uCrest, a0, a1 } = S05;
+  if (u <= 0 || u >= L) return 0;
+  const grow = THREE.MathUtils.clamp((u - uCrest) / (1.5 * lambda), 0, 1);
+  const amp = (a0 + (a1 - a0) * grow) * smooth(0, 10, u) * (1 - smooth(L - 12, L, u));
+  return -amp * Math.cos((2 * Math.PI * (u - uCrest)) / lambda);
+}
+
 /** Generates the dense control polyline of the route (absolute coordinates). */
 function buildRoute(): RouteData {
   const pts: THREE.Vector3[] = [];
@@ -170,16 +204,15 @@ function buildRoute(): RouteData {
   });
   mark('05');
   // ---- 05: long STRAIGHT perforated current tube (ref 05: concentric rings, ONE vanishing point);
-  // the wide stream winds in gentle S-curves inside it. Centreline = the straight line s5 → s5+L05
-  // (slight descent); the lateral S-offset and its slope vanish at both ends, so 04 and 06 join it
-  // tangentially and s6 (hence 06/07/plunge/08) is unchanged. tube.ts builds the 05 tunnel on L05.
+  // the wide stream winds in S-curves inside it. Here only the straight line s5 → s5+L05 (slight
+  // descent) is laid; the lateral S-offset meander05(u) is added after smoothing (see the end of
+  // buildRoute). Offset and slope vanish at both ends, so 04 and 06 join tangentially and s6 (hence
+  // 06/07/plunge/08) is unchanged. tube.ts builds the 05 tunnel on the line.
   const s5 = pts[pts.length - 1].clone();
-  const L05 = V(0, -3, -72);
-  const S05 = { amp: 2.0, waves: 2 }; // ≈1.6 after smoothPolyline; λ ≈ 36 units
-  seg(48, (t) => {
-    const env = smooth(0, 0.16, t) * (1 - smooth(0.84, 1, t));
-    return s5.clone().addScaledVector(L05, t).add(V(S05.amp * env * Math.sin(2 * Math.PI * S05.waves * t), 0, 0));
-  });
+  const L05 = V(0, -3, -S05.L);
+  // 48 points (1.5-unit spacing) as before: the junction smoothing, hence the 04/05 and 05/06 stage
+  // boundaries and the 06 checkpoint, stay exactly where they were
+  seg(48, (t) => s5.clone().addScaledVector(L05, t));
   straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
   mark('06');
   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
@@ -238,6 +271,12 @@ function buildRoute(): RouteData {
   );
   mark('11');
   smoothPolyline(pts, marks['03'], 2.2, 3);
+  // 05 meander: exact lateral offset from the straight tunnel line (after smoothing, see S05)
+  const dir05 = L05.clone().normalize();
+  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+    const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
+    pts[i].x += meander05(u);
+  }
   return { points: pts, marks, straight };
 }
 
@@ -274,6 +313,10 @@ export class Course {
   readonly marks: Record<string, number>; // arc-length of named marks
   /** straight tunnel stretches (05 current) — see StraightAxis */
   readonly straightAxes: StraightAxis[];
+  /** world X of the straight 05 tunnel line (the meander is pos.x − line05x) */
+  private readonly line05x: number;
+  private st05!: StageDef;
+  private st10!: StageDef;
   private readonly N: number;
   private readonly ds: number;
   private readonly P: Float32Array;
@@ -313,6 +356,7 @@ export class Course {
     this.marks = {};
     for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
     this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+    this.line05x = route.straight[0].a.x;
 
     // ---- stages ----
     const m = this.marks;
@@ -325,7 +369,8 @@ export class Course {
       def('02', 0.01, m['03'], { width: 5, interactive: false, speed: 9, bank: 0 }),
       def('03', m['03'], m['04'], { width: 7, speed: 9, refCoins: 1330, bank: 2.2 }),
       def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
-      // 05: level current (ref 05 shows no tilt) → weak curvature banking
+      // 05: level current (ref 05 shows no tilt) → weak curvature banking. `width` is the hand-over
+      // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
       def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
       def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
       def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
@@ -380,6 +425,23 @@ export class Course {
       tan[i].toArray(this.T, i * 3);
       sm[i].toArray(this.U, i * 3);
     }
+    this.st05 = this.stage('05');
+    this.st10 = this.stage('10');
+    // '05_crest': the first meander crest (stream furthest left, heading parallel to the tunnel
+    // axis) — the 05 QA checkpoint, where Benny faces the vanishing point down the straight tube
+    let best = this.st05.s0 + S05.uCrest, dMin = Infinity;
+    for (let s = this.st05.s0 + 4; s < this.st05.s0 + S05.uCrest + S05.lambda / 4; s += 0.05) {
+      const d = this.offset05(s);
+      if (d < dMin) { dMin = d; best = s; }
+    }
+    this.marks['05_crest'] = best;
+  }
+
+  /** 05 current: lateral offset (units, +X) of the stream centreline from the straight tunnel line */
+  offset05(s: number): number {
+    const st = this.st05;
+    if (s <= st.s0 || s >= st.s1) return 0;
+    return this.sample(s).pos.x - this.line05x;
   }
 
   stageAtS(s: number): StageDef {
@@ -409,9 +471,19 @@ export class Course {
   }
 
   widthAt(s: number): number {
+    let base = this.prop(s, 'width');
+    // 05 current (ref 05): the water fills the tube floor wall to wall. The centreline winds by
+    // offset05(s), so the half width is S05.extent − |offset| (smooth abs): the outer edge of each bend
+    // stays on the same tube chord (constant tunnel radius/depth in tube.ts) and the inner side of a
+    // bend leaves a narrow bank for the foam, like a river.
+    const st5 = this.st05;
+    const k = smooth(st5.s0 + 0.5, st5.s0 + 10, s) * (1 - smooth(st5.s1 - 10, st5.s1 - 0.5, s));
+    if (k > 0) {
+      const d = this.offset05(s);
+      base += (2 * (S05.extent - Math.sqrt(d * d + 0.09)) - base) * k;
+    }
     // the stream narrows into the towel opening at the very end of 10
-    const st10 = this.stage('10');
-    const base = this.prop(s, 'width');
+    const st10 = this.st10;
     return base * (1 - 0.35 * smooth(st10.s1 - 8, st10.s1, s));
   }
 
