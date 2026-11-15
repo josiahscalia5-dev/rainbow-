@@ -3723,3 +3723,180 @@ Before-frames captured. The console errors printed are in the old checkout's log
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T23:39:22.448Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/course.ts", "old_string": "/**\n * lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line.\n * The refit makes the 05 river ≈0.78 u shorter than the old sine, so every s after 05 is ≈0.78 smaller.\n * That is harmless by design: world positions after 05 are unchanged (the route points are absolute), stages,\n * marks and checkpoints are index/stage-relative, coins are stage-relative, and the 06/07 rings, lids and\n * slot rows are anchored to the 06 stage start (environment.ts …[+1632 chars]`
+
+### 🧑 User — 2026-11-15T23:39:22.497Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T23:39:26.059Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && timeout 900 node scripts/capture.mjs 04 05 06 07 08 --out=qa/pilot05/wave6/regress0408/now 2>&1 | grep -E \"^0[4-8]\" | sed 's/,\"modules.*//' && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\nfor n in ['04','05','06','07','08']:\n    a=np.asarray(Image.open(f\"$S/before/{n}.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(f\"qa/pilot05/wave6/regress0408/now/{n}.png\").convert('RGB')).astype(int)\n    d=np.abs(a-b).sum(2); print(n, 'vs s …[+196 chars]`
+
+### 🧑 User — 2026-11-15T23:40:20.807Z
+
+> ↩︎ result: TSC_OK
+> 04 → qa/pilot05/wave6/regress0408/now/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":736100
+> 05 → qa/pilot05/wave6/regress0408/now/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":633521
+> 06 → qa/pilot05/wave6/regress0408/now/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":71,"tris":551017
+> 07 → qa/pilot05/wave6/regress0408/now/07.png {"stage":"07","s":273.058,"y":-49.659,"calls":180,"tris":668535
+> 08 → qa/pilot05/wave6/regress0408/now/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":159,"tris":618643
+> 04 vs session start: mean abs diff 1.79  px changed >40: 1.61 %
+> 05 vs session start: mean abs diff 16.97  px changed >40: 15.71 %
+> 06 vs session start: mean abs diff 20.08  px changed >40: 16.56 %
+> 07 vs session start: mean abs diff 1.91  px changed >40: 1.44 %
+> 08 vs session start: mean abs diff 1.51  px changed >40: 1.32 %
+
+### 🤖 Claude — 2026-11-15T23:40:32.108Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open(\"$S/before/06.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(\"qa/pilot05/wave6/regress0408/now/06.png\").convert('RGB')).astype(int)\nd=(np.abs(a-b).sum(2)>120)\nprint('rows:', [ (y, round(d[y:y+192].mean()*100,1)) for y in range(0,1536,192)])\nprint('cols:', [ (x, round(d[:,x:x+108].mean()*100,1)) for x in range(0,864,108)])\nm=(d*255).astype(np.uint8); Image.fromarray(m).resize((432,768)).save(\" …[+246 chars]`
+
+### 🧑 User — 2026-11-15T23:40:32.682Z
+
+> ↩︎ result: rows: [(0, np.float64(13.4)), (192, np.float64(15.4)), (384, np.float64(21.1)), (576, np.float64(28.5)), (768, np.float64(31.2)), (960, np.float64(14.0)), (1152, np.float64(3.9)), (1344, np.float64(4.9))]
+> cols: [(0, np.float64(13.5)), (108, np.float64(17.0)), (216, np.float64(15.5)), (324, np.float64(13.1)), (432, np.float64(18.4)), (540, np.float64(20.3)), (648, np.float64(17.0)), (756, np.float64(17.7))]
+> /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/ab06d.png (1112, 682)
+
+### 🤖 Claude — 2026-11-15T23:40:35.152Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/ab06d.png"}`
+
+### 🧑 User — 2026-11-15T23:40:35.181Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:40:50.284Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\ndef g(p): return np.asarray(Image.open(p).convert('L')).astype(float)[220:1500]\na=g(\"$S/before/06.png\"); b=g(\"qa/pilot05/wave6/regress0408/now/06.png\")\nF=np.fft.fft2(a-a.mean())*np.conj(np.fft.fft2(b-b.mean())); R=np.fft.ifft2(F/np.abs(F)+1e-9).real\ny,x=np.unravel_index(R.argmax(),R.shape); H,W=R.shape; y=y-H if y>H//2 else y; x=x-W if x>W//2 else x\nprint('integer shift (dy,dx):',y,x)\nbest=None\nfor dy in np.arange(-2,2.01,0.25 …[+442 chars]`
+
+### 🧑 User — 2026-11-15T23:40:56.706Z
+
+> ↩︎ result: integer shift (dy,dx): -1 2
+> best subpixel shift (np.float64(-1.75), np.float64(2.0)) residual mean abs 12.33 unshifted 19.32
+
+### 🤖 Claude — 2026-11-15T23:41:09.360Z
+
+> 🔧 **Bash** `{"command": "sed -n 405,445p src/world/course.ts | grep -n \"sm\\|smooth\\|window\\|sigma\\|for (\" | head -20", "description": "Inspect frame smoothing window in Course"}`
+
+### 🧑 User — 2026-11-15T23:41:09.393Z
+
+> ↩︎ result: 1:    for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+> 35:    for (let i = 0; i < this.N; i++) {
+> 41:    // up: world-up projected off the tangent + curvature banking, then smoothed
+
+### 🤖 Claude — 2026-11-15T23:41:11.223Z
+
+> 🔧 **Bash** `{"command": "sed -n 436,470p src/world/course.ts", "description": "Read frame computation and smoothing"}`
+
+### 🧑 User — 2026-11-15T23:41:11.263Z
+
+> ↩︎ result: this.U = new Float32Array(this.N * 3);
+>     const pos: THREE.Vector3[] = [];
+>     const tan: THREE.Vector3[] = [];
+>     for (let i = 0; i < this.N; i++) {
+>       const s = Math.min(this.length, i * this.ds);
+>       const u = uAtS(s);
+>       pos.push(this.curve.getPoint(u));
+>       tan.push(this.curve.getTangent(u).normalize());
+>     }
+>     // up: world-up projected off the tangent + curvature banking, then smoothed
+>     const WU = new THREE.Vector3(0, 1, 0);
+>     const ups: THREE.Vector3[] = [];
+>     let prevUp = WU.clone();
+>     for (let i = 0; i < this.N; i++) {
+>       const t = tan[i];
+>       let up = WU.clone().addScaledVector(t, -WU.dot(t));
+>       if (up.lengthSq() < 1e-4) up = prevUp.clone().addScaledVector(t, -prevUp.dot(t));
+>       up.normalize();
+>       // banking from lateral curvature
+>       const i0 = Math.max(0, i - 4), i1 = Math.min(this.N - 1, i + 4);
+>       const k = tan[i1].clone().sub(tan[i0]).divideScalar((i1 - i0) * this.ds);
+>       const right = new THREE.Vector3().crossVectors(t, up).normalize();
+>       const st = this.stageAtS(i * this.ds);
+>       const bankAngle = THREE.MathUtils.clamp(-k.dot(right) * 6 * st.bank, -0.85, 0.85);
+>       up.applyAxisAngle(t, bankAngle);
+>       ups.pus …[+368 chars]
+
+### 🤖 Claude — 2026-11-15T23:41:51.161Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open(\"qa/pilot05/wave6/coordinator/s02/05.png\").convert('RGB')).astype(int)   # knots, no bend\nb=np.asarray(Image.open(\"qa/pilot05/wave6/regress0408/now/05.png\").convert('RGB')).astype(int)  # knots + exit bend\nd=(np.abs(a-b).sum(2)>120)\nprint('05 no-bend vs bend: px changed', round(d.mean()*100,2),'%')\nprint('rows:', [(y, round(d[y:y+64].mean()*100,1)) for y in range(400,1536,64) if d[y:y+64].mean()>0.005])\nEOF", "description": "Measure exit bend visibility in 05 frame"}`
+
+### 🧑 User — 2026-11-15T23:41:51.488Z
+
+> ↩︎ result: 05 no-bend vs bend: px changed 15.2 %
+> rows: [(400, np.float64(49.2)), (464, np.float64(47.2)), (528, np.float64(38.9)), (592, np.float64(15.9)), (656, np.float64(4.9))]
+
+### 🤖 Claude — 2026-11-15T23:41:59.929Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && python3 -c \"\nfrom PIL import Image, ImageDraw\nims=[('REF','references/05_flow_into_the_current.png'),('NO BEND','qa/pilot05/wave6/coordinator/s02/05.png'),('EXIT BEND','qa/pilot05/wave6/regress0408/now/05.png')]\no=Image.new('RGB',(3*432+20,300),'black'); d=ImageDraw.Draw(o)\nfor i,(n,p) in enumerate(ims):\n  c=Image.open(p).convert('RGB').crop((216,380,648,660)); o.paste(c,(i*442,20)); d.text((i*442+4,4),n,fill='white')\no.save('$S/vp_compare.png')\nimport numpy as np\nr=np.asarray(Image.ope …[+317 chars]`
+
+### 🧑 User — 2026-11-15T23:42:00.408Z
+
+> ↩︎ result: NO BEND mad vs ref in VP window 66.1
+> EXIT BEND mad vs ref in VP window 66.0
+
+### 🤖 Claude — 2026-11-15T23:42:02.586Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/vp_compare.png"}`
+
+### 🧑 User — 2026-11-15T23:42:02.619Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:42:17.173Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/course.ts", "offset": 130, "limit": 60}`
+
+### 🧑 User — 2026-11-15T23:42:17.196Z
+
+> ↩︎ result: 130	/**
+> 131	 * 05 meander AHEAD of Benny's crest (u > uCrest): [u, offset] knots fitted to the APPROVED reference (wave 6
+> 132	 * camera lock, qa/pilot05/wave6/camera_lock/landmarks.json). The reference's coin trail was back-projected
+> 133	 * through the live locked 05 camera onto the river (coin height 1.2 u) and converted to offsets from the
+> 134	 * tunnel line; coins sit at (1 + latK·CORE_SWING) ≈ 1.62 × the course offset, so knot = coin offset / 1.62.
+> 135	 * Ref coins (px → u, coin offset): (474,726)→21.6,−0.31 · (548,661)→26.3,+0.60 · (482,612)→32.2,−0.37 ·
+> 136	 * (431,574)→43.0,−1.85 · (466,546)→55.5,−1.28 · (495,533)→67.0,−0.26. The previous sine (λ 32) put the right
+> 137	 * swing at u≈30–33 and +1.45 wide, so the 3rd coin sat ≈100 px right of the reference.
+> 138	 * Interpolation: C¹ cubic Hermite (non-uniform Catmull-Rom tangents), slope 0 at the crest and at L.
+> 139	 */
+> 140	const MEANDER05_KNOTS: [number, number][] = [[26.3, 0.37], [32.2, -0.23], [43, -1.14], [55.5, -0.79], [67, -0.16], [72, 0]];
+> 141	
+> 142	/** the original (wave 1–5) sine meander; kept verbatim up to U05_KEEP so the 04→05 join, the '05_crest'
+> 143	 *  checkpoint search window (u ≤ uCrest + λ/4) and therefore the L …[+2933 chars]
+
+### 🤖 Claude — 2026-11-15T23:42:23.539Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/course.ts", "old_string": "const MEANDER05_KNOTS: [number, number][] = [[26.3, 0.37], [32.2, -0.23], [43, -1.14], [55.5, -0.79], [67, -0.16], [72, 0]];", "new_string": "const MEANDER05_KNOTS: [number, number][] = [[26.3, 0.37], [32.2, -0.23], [43, -1.14], [55.5, -0.79]];"}`
+
+### 🧑 User — 2026-11-15T23:42:23.577Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T23:42:35.345Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/course.ts", "old_string": "const KNOTS05: [number, number][] = [[U05_KEEP, meander05Sine(U05_KEEP)], ...MEANDER05_KNOTS];\nconst SLOPE05_KEEP = (meander05Sine(U05_KEEP + 1e-3) - meander05Sine(U05_KEEP - 1e-3)) / 2e-3;\n\n/**\n * 05 EXIT BEND (u 56–72): the original course already swung right here before the 06 arch (old sine:\n * +1.71 u at u 62); the refit keeps that bend (sin², C¹, zero value and slope at both ends; peak ≈ +1.8 u at\n * u 64) with its amplitude solved so the route keeps EXACTLY its old length (435.193). Why t …[+2886 chars]`
+
+### 🧑 User — 2026-11-15T23:42:35.375Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T23:42:40.747Z
+
+> 🔧 **Bash** `{"command": "cat > scripts/_m_tmp.ts <<'EOF'\nimport { Course } from '../src/world/course';\nconst c = new Course();\nconsole.log(JSON.stringify({ L: +c.length.toFixed(5), crest: +c.marks['05_crest'].toFixed(4), cp06: +(c.stage('06').s0 + 10).toFixed(4) }));\nEOF\nsetA() { sed -i -E \"s/(const EXIT05_BEND = \\{ u0: 56, u1: U05_TAIL, amp: )[0-9.]+( \\};)/\\1$1\\2/\" src/world/course.ts; }\nm() { npx vite-node scripts/_m_tmp.ts 2>/dev/null | tail -1; }\ngetL() { python3 -c \"import json,sys;print(json.loads(sys.argv[1])['L'])\" \"$1\"; }\na0=1.0; setA $a0; r=$(m); L0=$(getL \"$r\"); echo \"A=$a0 …[+581 chars]`
+
+### 🧑 User — 2026-11-15T23:42:46.133Z
+
+> ↩︎ result: A=1.0 {"L":434.96667,"crest":132.2883,"cp06":198.6984}
+> A=2.0 {"L":435.71332,"crest":132.2883,"cp06":199.4451}
+> A=1.30219 {"L":435.15675,"crest":132.4383,"cp06":198.8885}
+> A=1.346761 {"L":435.18753,"crest":132.4383,"cp06":198.9193}
+> A=1.353668 {"L":435.19236,"crest":132.4383,"cp06":198.9241}
+> 180:const EXIT05_BEND = { u0: 56, u1: U05_TAIL, amp: 1.353668 };
+> [This command modified 1 file you've previously read: src/world/course.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T23:42:56.322Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && timeout 900 node scripts/capture.mjs 04 05 06 07 08 --out=qa/pilot05/wave6/regress0408/now 2>&1 | grep -E \"^0[4-8]\" | sed 's/,\"modules.*//' && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\nfor n in ['04','05','06','07','08']:\n    a=np.asarray(Image.open(f\"$S/before/{n}.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(f\"qa/pilot05/wave6/regress0408/now/{n}.png\").convert('RGB')).astype(int)\n    d=np.abs(a-b).sum(2); dd=d[230:]  #  …[+962 chars]`
+

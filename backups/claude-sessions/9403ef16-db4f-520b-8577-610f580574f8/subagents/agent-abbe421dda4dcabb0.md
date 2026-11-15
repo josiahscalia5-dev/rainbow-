@@ -596,3 +596,243 @@ The far section is clear: the reference coin trail curls into the VP with many t
 >    "S_med": 0.73,
 >    "V_med": 0.69 …[+2559 chars]
 
+### 🤖 Claude — 2026-11-15T23:38:46.873Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/vp.py <<'EOF'\nimport numpy as np, json\nfrom PIL import Image\nfrom scipy import ndimage\nS='/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/'\nP={'ref':'/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png','game':'/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'}\nVP={'ref':(498.6,479.4),'game':(499.1,478.0)}\nfor tag,p in P.items():\n    rgb=np.asarray(Image.open(p).convert('RGB')).astype(np.float32)\n    hsv=np.asarray(Imag …[+1426 chars]`
+
+### 🧑 User — 2026-11-15T23:38:48.584Z
+
+> ↩︎ result: ===== ref
+>  r  0-  8: lum 0.97  R-B   37.8  warm 0.18 purple 0.00 hot 0.69  rgb_mean [252, 249, 214]
+>  r  8- 16: lum 0.86  R-B  119.2  warm 0.97 purple 0.00 hot 0.01  rgb_mean [251, 219, 132]
+>  r 16- 24: lum 0.71  R-B  159.6  warm 1.00 purple 0.00 hot 0.00  rgb_mean [248, 169, 89]
+>  r 24- 32: lum 0.60  R-B  167.8  warm 1.00 purple 0.00 hot 0.00  rgb_mean [244, 134, 76]
+>  r 32- 48: lum 0.53  R-B  148.3  warm 0.99 purple 0.00 hot 0.00  rgb_mean [229, 111, 81]
+>  r 48- 64: lum 0.47  R-B  107.1  warm 0.65 purple 0.34 hot 0.01  rgb_mean [211, 94, 103]
+>  r 64- 96: lum 0.37  R-B   26.4  warm 0.20 purple 0.78 hot 0.01  rgb_mean [173, 67, 147]
+>  r 96-128: lum 0.40  R-B   22.6  warm 0.22 purple 0.75 hot 0.02  rgb_mean [180, 72, 158]
+>  r128-192: lum 0.43  R-B   41.2  warm 0.32 purple 0.64 hot 0.03  rgb_mean [190, 80, 149]
+>   glow radius (mean lum < 0.85): 13 px
+>   glow radius (mean lum < 0.75): 20 px
+> ===== game
+>  r  0-  8: lum 0.99  R-B   21.7  warm 0.00 purple 0.00 hot 1.00  rgb_mean [255, 255, 233]
+>  r  8- 16: lum 0.97  R-B   60.0  warm 0.43 purple 0.00 hot 0.15  rgb_mean [255, 250, 195]
+>  r 16- 24: lum 0.87  R-B  115.5  warm 1.00 purple 0.00 hot 0.00  rgb_mean [255, 220, 139]
+>  r 24- 32: lum 0.82  R-B  12 …[+587 chars]
+
+### 🤖 Claude — 2026-11-15T23:38:54.359Z
+
+VP glow numbers are in. Now the S-curve comparison: per-row pink runs, cyan core and band centres from the landmark JSONs.
+
+### 🤖 Claude — 2026-11-15T23:39:00.311Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/scurve.py <<'EOF'\nimport json\nR=json.load(open('/home/user/rainbow-/qa/pilot05/wave6/director/lm_ref.json'))\nG=json.load(open('/home/user/rainbow-/qa/pilot05/wave6/director/lm_game.json'))\ndef rowmap(d): return {r['y']:r for r in d['rows']}\nrr,gr=rowmap(R),rowmap(G)\ndef fmt(runs,minw=10): return ' '.join(f'{a}-{b}' for a,b,c in runs if b-a+1>=minw)\nfor y in [520,540,560,580,600,620,650,700,750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300,1350,1400,1450,1500]:\n    print(f'y{y}\\n   …[+329 chars]`
+
+### 🧑 User — 2026-11-15T23:39:00.380Z
+
+> ↩︎ result: y520
+>   REF  pink[468-485 568-579]  cyan[]
+>   GAME pink[0-25 173-183 440-451 478-490 508-521 546-557 830-841]  cyan[460-476 492-507 523-538]
+> y540
+>   REF  pink[436-446 564-576 737-751]  cyan[388-432 518-547]
+>   GAME pink[9-26 55-67 502-521]  cyan[477-500 523-550]
+> y560
+>   REF  pink[141-157 367-398 504-526 728-740 838-862]  cyan[313-329 334-355 447-465 470-499]
+>   GAME pink[2-17 126-135 463-480 678-688]  cyan[529-570]
+> y580
+>   REF  pink[64-84 293-346 511-524 532-551 751-763 776-792 805-821]  cyan[358-388 454-503 556-575]
+>   GAME pink[6-25 190-202 211-222 385-413 548-559 562-574 750-759 769-779 786-796 808-823]  cyan[500-516 519-541]
+> y600
+>   REF  pink[48-59 112-123 266-320 607-628 830-846]  cyan[329-430 509-563]
+>   GAME pink[119-130 141-153 331-350 518-527]  cyan[410-433 583-598]
+> y620
+>   REF  pink[144-161 247-275 289-322 640-698 756-766]  cyan[340-390 409-453 510-630]
+>   GAME pink[0-9 35-60 122-137 293-318]  cyan[332-454 505-592 608-646]
+> y650
+>   REF  pink[64-79 95-114 283-333 341-383 705-763]  cyan[393-481 584-694]
+>   GAME pink[0-19 50-68 130-141 309-330 588-611 642-698]  cyan[243-291 354-386 411-449 454-522]
+> y700
+>   REF  pink[309-354 371-386 759-802]  cyan[401-433 529-552 555-737]
+>   GAME pink[218-286 …[+3391 chars]
+
+### 🤖 Claude — 2026-11-15T23:39:20.178Z
+
+Mid-field S-curve tracks well; the lower third does not. I'll quantify the far-river shape between y 485 and 570, the centre-x and width of the water per row, to test "winding vs straight".
+
+### 🤖 Claude — 2026-11-15T23:39:30.578Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/far.py <<'EOF'\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage\nP={'ref':'/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png','game':'/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'}\nfor tag,p in P.items():\n    hsv=np.asarray(Image.open(p).convert('HSV')).astype(np.float32)\n    rgb=np.asarray(Image.open(p).convert('RGB')).astype(np.float32)\n    h=hsv[...,0]*360/255; s=hsv[...,1]/255; v=hsv[...,2]/255\n    cyan=(h>=170)&(h<240)&(s>0.3 …[+1422 chars]`
+
+### 🧑 User — 2026-11-15T23:39:31.350Z
+
+> ↩︎ result: ===== ref
+>  y486: no cyan
+>  y492: no cyan
+>  y498: cyan runs [(np.int64(472), np.int64(479)), (np.int64(512), np.int64(519))]  median x 495  extent 472-519
+>  y504: cyan runs [(np.int64(478), np.int64(486)), (np.int64(503), np.int64(507)), (np.int64(520), np.int64(527))]  median x 504  extent 478-527
+>  y510: cyan runs [(np.int64(485), np.int64(506)), (np.int64(518), np.int64(527)), (np.int64(543), np.int64(552))]  median x 505  extent 485-552
+>  y516: cyan runs [(np.int64(463), np.int64(467)), (np.int64(475), np.int64(479)), (np.int64(508), np.int64(520)), (np.int64(540), np.int64(562))]  median x 540  extent 463-562
+>  y522: cyan runs [(np.int64(434), np.int64(449)), (np.int64(499), np.int64(508)), (np.int64(534), np.int64(565)), (np.int64(583), np.int64(586))]  median x 538  extent 434-586
+>  y528: cyan runs [(np.int64(406), np.int64(415)), (np.int64(442), np.int64(485)), (np.int64(505), np.int64(510)), (np.int64(526), np.int64(566))]  median x 484  extent 406-589
+>  y534: cyan runs [(np.int64(383), np.int64(398)), (np.int64(415), np.int64(453)), (np.int64(470), np.int64(483)), (np.int64(506), np.int64(560)), (np.int64(594), np.int64(597))]  median x 480  extent 383-597
+>  y540: cyan runs [(np.in …[+3364 chars]
+
+### 🤖 Claude — 2026-11-15T23:39:45.895Z
+
+Far-river and coin numbers are measured. Now Benny: vertical and horizontal profiles for the pom top, hat/body split, brim width and body width.
+
+### 🤖 Claude — 2026-11-15T23:39:54.643Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/benny.py <<'EOF'\nimport numpy as np, colorsys\nfrom PIL import Image\nP={'ref':'/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png','game':'/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'}\nfor tag,p in P.items():\n    a=np.asarray(Image.open(p).convert('RGB')).astype(int)\n    hsv=np.asarray(Image.open(p).convert('HSV')).astype(np.float32)\n    h=hsv[...,0]*360/255; s=hsv[...,1]/255; v=hsv[...,2]/255\n    print('=====',tag)\n    # vertical profile at x=420. …[+1035 chars]`
+
+### 🧑 User — 2026-11-15T23:39:54.993Z
+
+> ↩︎ result: ===== ref
+> 744:52,200,248 h195  750:2,168,247 h199  756:1,148,234 h202  762:1,162,238 h199  768:89,212,248 h193  774:246,229,248 h292
+> 780:250,168,249 h301  786:249,153,251 h299  792:223,65,244 h293  798:205,88,242 h286  804:209,90,248 h285  810:158,39,246 h275
+> 816:132,38,246 h267  822:79,4,223 h260  828:60,10,176 h258  834:147,50,228 h273  840:127,32,208 h272  846:69,6,199 h260
+> 852:29,1,142 h252  858:58,6,156 h261  864:38,4,110 h260  870:26,4,143 h249  876:17,3,126 h247  882:22,4,100 h252
+> 888:22,2,108 h251  894:56,21,120 h261  900:193,145,190 h304  906:230,192,207 h337  912:243,210,221 h339  918:241,208,228 h324
+> 924:116,41,230 h264  930:77,4,232 h259  936:98,14,237 h263  942:90,8,237 h262  948:72,3,224 h259  954:124,47,228 h265
+> 960:240,211,229 h324  966:242,210,227 h328  972:225,184,202 h333  978:233,206,221 h326  984:158,52,243 h273  990:137,24,248 h270
+> 996:69,4,214 h258  1002:39,2,185 h252  1008:60,2,218 h256  1014:122,29,241 h266  1020:109,21,235 h265  1026:65,4,189 h260
+> 1032:75,3,46 h324  1038:182,28,116 h326  1044:249,77,183 h323  1050:250,85,192 h321  1056:249,99,211 h315  1062:249,109,217 h314
+> 1068:240,52,161 h325  1074:250,98,202 h319  1080:249,124,216 h316  1086:245,85,175  …[+2565 chars]
+
+### 🤖 Claude — 2026-11-15T23:40:03.953Z
+
+Benny's vertical structure matches within about 6–9 px. I'll do a quick horizontal width check at the cuff and the body, plus the near gold frame and lid metrics.
+
+### 🤖 Claude — 2026-11-15T23:40:17.460Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/benny2.py <<'EOF'\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage\nS='/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/'\nP={'ref':'/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png','game':'/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'}\nfor tag,p in P.items():\n    hsv=np.asarray(Image.open(p).convert('HSV')).astype(np.float32)\n    rgb=np.asarray(Image.open(p).convert('RGB')).astype(np.float32)\n    …[+2087 chars]`
+
+### 🧑 User — 2026-11-15T23:40:17.982Z
+
+> ↩︎ result: ===== ref
+>   y1000 cuff (violet): x 290-567 width 278
+>   y1100 body fur (h 310-340, S>0.45): x 292-552 width 261
+>   y1080 body+paws fur: x 276-559 width 284
+>   gold frac BL corner x0-200 y1250-1536: 0.441
+>   gold frac BR corner x664-864 y1250-1536: 0.510
+>   gold frac bottom arc x200-664 y1440-1536: 0.382
+>   lid L1 window x60-220 y300-430: largest gold blob bbox x64-204 y320-399 px 3358  hue med 18  V p10/med/p90 0.83/0.97/1.00  S med 0.70
+>   lid R1 window x700-864 y380-540: largest gold blob bbox x700-863 y380-539 px 5630  hue med 18  V p10/med/p90 0.74/0.95/1.00  S med 0.73
+> ===== game
+>   y1000 cuff (violet): x 275-541 width 267
+>   y1100 body fur (h 310-340, S>0.45): x 272-568 width 297
+>   y1080 body+paws fur: x 255-570 width 316
+>   gold frac BL corner x0-200 y1250-1536: 0.000
+>   gold frac BR corner x664-864 y1250-1536: 0.000
+>   gold frac bottom arc x200-664 y1440-1536: 0.000
+>   lid L1 window x60-220 y300-430: largest gold blob bbox x60-178 y300-429 px 10567  hue med 32  V p10/med/p90 1.00/1.00/1.00  S med 0.88
+>   lid R1 window x700-864 y380-540: largest gold blob bbox x717-825 y380-539 px 7357  hue med 30  V p10/med/p90 1.00/1.00/1.00  S med 0.84
+
+### 🤖 Claude — 2026-11-15T23:40:33.710Z
+
+I'll take clean lid-only colour samples (avoiding ring pixels) and confirm lid bboxes visually on a full-tunnel crop.
+
+### 🤖 Claude — 2026-11-15T23:40:44.165Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/lids.py <<'EOF'\nimport numpy as np\nfrom PIL import Image, ImageDraw\nP={'ref':'/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png','game':'/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'}\nS={'ref':{'L1 lid':(90,345,190,400),'R1 lid':(740,430,850,500)},'game':{'L1 lid':(10,315,100,380),'R1 lid':(745,385,815,418)}}\nims=[]\nfor tag,p in P.items():\n    im=Image.open(p).convert('RGB')\n    rgb=np.asarray(im).astype(np.float32); hsv=np.asarray(im.convert('HSV' …[+1374 chars]`
+
+### 🧑 User — 2026-11-15T23:40:44.629Z
+
+> ↩︎ result: ref L1 lid sample x90-190 y345-400: RGB med [229, 91, 93] hue p10/med/p90 -34/3/47  S med 0.69  V p10/med/p90 0.54/0.90/1.00  V std 0.202
+> ref R1 lid sample x740-850 y430-500: RGB med [246, 130, 114] hue p10/med/p90 -41/13/59  S med 0.58  V p10/med/p90 0.55/0.97/1.00  V std 0.163
+> game L1 lid sample x10-100 y315-380: RGB med [255, 139, 29] hue p10/med/p90 25/28/32  S med 0.89  V p10/med/p90 1.00/1.00/1.00  V std 0.008
+> game R1 lid sample x745-815 y385-418: RGB med [255, 126, 36] hue p10/med/p90 20/24/27  S med 0.86  V p10/med/p90 1.00/1.00/1.00  V std 0.057
+
+### 🤖 Claude — 2026-11-15T23:40:46.011Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/director/crops/lids_ticks_ref_top_game_bottom.png"}`
+
+### 🧑 User — 2026-11-15T23:40:46.045Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:41:35.907Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/impact.py <<'EOF'\nimport numpy as np\nfrom PIL import Image, ImageDraw\nS='/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/'\nR='/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png'\nG='/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'\nW,H=864,1536\ndef zone_masks():\n    z={}\n    bank=Image.new('L',(W,H),0); d=ImageDraw.Draw(bank)\n    poly=[(0,185),(864,185),(864,760),(760,660),(600,540),(498,485),(330,525),(190,600),(0,790 …[+1740 chars]`
+
+### 🧑 User — 2026-11-15T23:41:36.305Z
+
+> ↩︎ result: whole-frame mean|dRGB| at 1/4 scale: 60.8
+> HUD (y<185)                                             area  12.0%  mean|d|  57.0  share of frame |d|  11.2%
+> tunnel above banks (walls+rings+lids+VP)                area  27.1%  mean|d|  65.1  share of frame |d|  29.0%
+> river y<1000 (excl. Benny)                              area  18.9%  mean|d|  55.6  share of frame |d|  17.3%
+> Benny box                                               area  13.1%  mean|d|  43.8  share of frame |d|   9.5%
+> near field y>=1000 (excl. Benny)                        area  28.9%  mean|d|  69.5  share of frame |d|  33.1%
+>   of which: ref ring/lid metal (warm) pixels            area   7.3%  mean|d|  63.5  share of frame |d|   7.6%
+>   of which: ref wall pixels (non-warm)                  area  19.5%  mean|d|  65.8  share of frame |d|  21.1%
+>   near-field gold frame in ref (y>=1150, warm)          area   6.1%  mean|d| 112.7  share of frame |d|  11.3%
+>   far river + VP window x380-640 y470-570               area   1.9%  mean|d|  61.4  share of frame |d|   1.9%
+
+### 🤖 Claude — 2026-11-15T23:41:52.400Z
+
+> 🔧 **Bash** `{"command": "cat >> /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/impact.py <<'EOF'\nprint('--- splits')\nhsvg=np.asarray(Image.open(G).convert('HSV')).astype(np.float32); hg=hsvg[...,0]*360/255; sg=hsvg[...,1]/255; vg=hsvg[...,2]/255\nwarmg=((hg<=62)|(hg>=345))&(sg>0.35)&(vg>0.3)\npinkr=(h>=300)&(h<345)&(s>0.45)&(v>0.6); pinkg=(hg>=300)&(hg<345)&(sg>0.45)&(vg>0.6)\nCg=np.load(S+'cls_game.npy')\nsp={\n 'tunnel: warm metal in BOTH':tunnel&warm&warmg,\n 'tunnel: ring/lid in GAME only (over ref wall)':tunnel&warmg&~warm,\n 'tunnel: ring/lid in REF only (game sh …[+809 chars]`
+
+### 🧑 User — 2026-11-15T23:41:52.948Z
+
+> ↩︎ result: --- splits
+> tunnel: warm metal in BOTH                              area   2.4%  mean|d|  39.8  share   1.6%
+> tunnel: ring/lid in GAME only (over ref wall)           area   5.5%  mean|d|  98.7  share   9.0%
+> tunnel: ring/lid in REF only (game shows wall)          area   4.7%  mean|d|  76.4  share   5.9%
+> tunnel: wall in both                                    area  13.8%  mean|d|  52.8  share  12.0%
+> near y>=1000: ref gold frame                            area   6.1%  mean|d| 112.7  share  11.3%
+> near y>=1000: game pink where ref not pink              area   2.8%  mean|d|  89.6  share   4.2%
+> near y>=1000: rest (water vs water)                     area  19.7%  mean|d|  52.9  share  17.2%
+
+### 🤖 Claude — 2026-11-15T23:41:58.347Z
+
+Ring mismatch is mostly positional: rings overlap on only 2.4 % of the frame. One more check is the near-field water colour itself (water vs water still carries 17 %).
+
+### 🤖 Claude — 2026-11-15T23:42:05.399Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/nearwater.py <<'EOF'\nimport numpy as np\nfrom PIL import Image\nP={'ref':'/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png','game':'/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'}\nfor tag,p in P.items():\n    im=Image.open(p).convert('RGB'); rgb=np.asarray(im).astype(np.float32)\n    hsv=np.asarray(im.convert('HSV')).astype(np.float32); h=hsv[...,0]*360/255; s=hsv[...,1]/255; v=hsv[...,2]/255\n    for name,(x0,y0,x1,y1) in {'centre channel x250-600 y1230 …[+707 chars]`
+
+### 🧑 User — 2026-11-15T23:42:05.773Z
+
+> ↩︎ result: ref centre channel x250-600 y1230-1500: water(cyan/blue) frac 0.78 hue med 200 S 0.99 V 0.96 RGB med [1, 163, 246]  white(S<.25,V>.9) frac 0.099  lum std 37.1
+> ref mid river x100-300 y850-1000: water(cyan/blue) frac 0.85 hue med 199 S 0.99 V 0.98 RGB med [1, 168, 249]  white(S<.25,V>.9) frac 0.063  lum std 31.6
+> game centre channel x250-600 y1230-1500: water(cyan/blue) frac 0.95 hue med 205 S 0.97 V 0.93 RGB med [6, 141, 238]  white(S<.25,V>.9) frac 0.025  lum std 37.1
+> game mid river x100-300 y850-1000: water(cyan/blue) frac 0.46 hue med 200 S 0.94 V 1.00 RGB med [16, 173, 255]  white(S<.25,V>.9) frac 0.025  lum std 28.6
+
+### 🤖 Claude — 2026-11-15T23:42:49.013Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/edgecols.py <<'EOF'\nimport numpy as np\nS='/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/'\nab={0:'o',1:'G',2:'d',3:'W',4:'C',5:'V',6:'M'}\nfor tag in ['ref','game']:\n    C=np.load(S+f'cls_{tag}.npy')\n    for x in (12,850):\n        col=C[600:1250,x-4:x+5]\n        seq=[np.bincount(col[i],minlength=7).argmax() for i in range(col.shape[0])]\n        runs=[];i=0\n        while i<len(seq):\n            k=seq[i];i0=i\n            while i<len(seq) and seq[i]==k …[+317 chars]`
+
+### 🧑 User — 2026-11-15T23:42:49.134Z
+
+> ↩︎ result: ref x12: W600-613 G617-645 o646-674 M675-687 V688-707 M720-732 V733-753 M754-771 W777-797 V815-828 M840-920 W921-928 M929-950 V951-982 C988-1040 W1041-1074 W1082-1100 C1102-1115 C1117-1218 G1219-1249
+> ref x850: M600-607 V608-620 V622-632 o633-640 G654-674 W677-691 V711-723 W724-731 W734-750 W756-768 M771-783 M790-814 V828-861 M862-877 M884-903 V912-929 V934-941 V949-968 M969-1048 W1049-1057 M1068-1088 V1089-1128 C1129-1210 G1211-1249
+> game x12: M600-690 d691-703 M704-728 W729-798 C799-845 M846-976 W977-1013 C1017-1036 W1037-1062 C1066-1101 C1107-1164 C1167-1174 W1175-1202 C1211-1249
+> game x850: G600-621 M622-634 M638-664 W665-678 W680-745 M753-780 W781-812 C813-911 W912-947 C952-961 M962-1033 C1034-1209 W1210-1237 C1239-1249
+
+### 🤖 Claude — 2026-11-15T23:43:15.404Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/blender.py <<'EOF'\nimport numpy as np, colorsys\nfrom PIL import Image\np='/home/user/rainbow-/qa/pilot05/wave6/proof/2_blender_layout.png'\na=np.asarray(Image.open(p).convert('RGB')).astype(int)\n# ring markers are thin tan/peach lines: R>G>B with R-B > 40 and not purple\nout=[]\nfor ang in (90,60,120):\n    th=np.deg2rad(ang); vx,vy=499.8,480.2\n    hits=[]\n    prev=False\n    for r in np.arange(5,500,0.5):\n        x=int(vx+r*np.cos(th)); y=int(vy-r*np.sin(th))\n        if not(0<=x<864 and …[+733 chars]`
+
+### 🧑 User — 2026-11-15T23:43:15.741Z
+
+> ↩︎ result: blender angle 90: ring-line radii [207.5, 267.5, 380.5]
+> blender angle 60: ring-line radii [288.0, 409.0]
+> blender angle 120: ring-line radii [90.5, 216.5, 280.0, 395.5]
+> blender: dark tunnel-end hole radius ~ 5 px
+
+### 🤖 Claude — 2026-11-15T23:43:26.675Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/blcrop.py <<'EOF'\nfrom PIL import Image, ImageDraw\nB='/home/user/rainbow-/qa/pilot05/wave6/proof/2_blender_layout.png'\nG='/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'\nims=[]\nfor p in (B,G):\n    im=Image.open(p).convert('RGB').crop((300,60,700,500)); d=ImageDraw.Draw(im)\n    for y in range(60,500,20): d.line([(0,y-60),(10 if y%100 else 22,y-60)],fill=(255,255,255),width=2); d.text((24,y-66),str(y),fill=(255,255,255))\n    d.line([(199,0),(199,440)],fill=(0,255,0))\n  …[+409 chars]`
+
+### 🧑 User — 2026-11-15T23:43:26.941Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T23:43:28.258Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/director/crops/blender_vs_game_rings_x300-700_y60-500.png"}`
+
+### 🧑 User — 2026-11-15T23:43:28.287Z
+
+> ↩︎ result: [image]
+

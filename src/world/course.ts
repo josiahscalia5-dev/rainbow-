@@ -137,7 +137,7 @@ export const S05 = {
  * swing at u≈30–33 and +1.45 wide, so the 3rd coin sat ≈100 px right of the reference.
  * Interpolation: C¹ cubic Hermite (non-uniform Catmull-Rom tangents), slope 0 at the crest and at L.
  */
-const MEANDER05_KNOTS: [number, number][] = [[26.3, 0.37], [32.2, -0.23], [43, -1.14], [55.5, -0.79], [67, -0.16], [72, 0]];
+const MEANDER05_KNOTS: [number, number][] = [[26.3, 0.37], [32.2, -0.23], [43, -1.14], [55.5, -0.79]];
 
 /** the original (wave 1–5) sine meander; kept verbatim up to U05_KEEP so the 04→05 join, the '05_crest'
  *  checkpoint search window (u ≤ uCrest + λ/4) and therefore the LOCKED 05 camera are bit-identical */
@@ -160,20 +160,32 @@ function hermiteKnots(k: [number, number][], u: number, m0: number, mN = 0): num
   const h = u1 - u0, t = (u - u0) / h, t2 = t * t, t3 = t2 * t;
   return (2 * t3 - 3 * t2 + 1) * p0 + (t3 - 2 * t2 + t) * h * tan(i) + (-2 * t3 + 3 * t2) * p1 + (t3 - t2) * h * tan(i + 1);
 }
-const KNOTS05: [number, number][] = [[U05_KEEP, meander05Sine(U05_KEEP)], ...MEANDER05_KNOTS];
-const SLOPE05_KEEP = (meander05Sine(U05_KEEP + 1e-3) - meander05Sine(U05_KEEP - 1e-3)) / 2e-3;
+/** from U05_TAIL to the 06 join the ORIGINAL curve is used verbatim, so the 05→06 junction (and the 06 up-vector
+ *  smoothing, which looks ±12 samples back into 05) is bit-identical to the approved 06 */
+const U05_TAIL = 67;
+const slopeOf = (f: (u: number) => number, u: number) => (f(u + 1e-3) - f(u - 1e-3)) / 2e-3;
+const KNOTS05: [number, number][] = [[U05_KEEP, meander05Sine(U05_KEEP)], ...MEANDER05_KNOTS, [U05_TAIL, meander05Sine(U05_TAIL)]];
+const SLOPE05_KEEP = slopeOf(meander05Sine, U05_KEEP);
+const SLOPE05_TAIL = slopeOf(meander05Sine, U05_TAIL);
 
 /**
- * lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line.
- * The refit makes the 05 river ≈0.78 u shorter than the old sine, so every s after 05 is ≈0.78 smaller.
- * That is harmless by design: world positions after 05 are unchanged (the route points are absolute), stages,
- * marks and checkpoints are index/stage-relative, coins are stage-relative, and the 06/07 rings, lids and
- * slot rows are anchored to the 06 stage start (environment.ts STAGE ANCHORS). No length-compensating bend.
+ * 05 EXIT BEND (u 56–67, sin², C¹: zero value and slope at both ends): the original course swung right
+ * here before the 06 arch too (old sine +1.71 u at u 62). Its amplitude is solved (secant on Course.length)
+ * so the route keeps EXACTLY its old length 435.193. Why the length must stay: besides geometry, the water
+ * wave/flow phase, Benny's float bob, foam lumps and bubbles are keyed on absolute s, so a shorter 05
+ * (−0.78 u) shifted every later screen (06: Benny 0.034 lower, a ring grazing the frame bottom, different
+ * bubbles/foam). The 06/07 rings, lids and slot rows are additionally anchored to the 06 stage start
+ * (environment.ts STAGE ANCHORS) as a safety net.
  */
+const EXIT05_BEND = { u0: 56, u1: U05_TAIL, amp: 1.353668 };
+
+/** lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line */
 export function meander05(u: number): number {
   if (u <= 0 || u >= S05.L) return 0;
-  if (u <= U05_KEEP) return meander05Sine(u);
-  return hermiteKnots(KNOTS05, u, SLOPE05_KEEP);
+  if (u <= U05_KEEP || u >= U05_TAIL) return meander05Sine(u);
+  const { u0, u1, amp } = EXIT05_BEND;
+  const bend = u > u0 && u < u1 ? amp * Math.sin((Math.PI * (u - u0)) / (u1 - u0)) ** 2 : 0;
+  return hermiteKnots(KNOTS05, u, SLOPE05_KEEP, SLOPE05_TAIL) + bend;
 }
 
 /** Generates the dense control polyline of the route (absolute coordinates). */

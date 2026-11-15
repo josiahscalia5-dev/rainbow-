@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "33d5a35658fcb6825615cb8b5ea5282ce0ecf9abf15b0d9e5e7ab19d7d714872"
+   "sha256": "ff736588ecbe3544e5a811ac21fdb847b9843070f0c9ed24e37be25e3afce5c0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5171,
-   "sha256": "0472803a12f834f0ca761fa0d2075d6331a204a981f7e995baf4e344400853ff"
+   "bytes": 5180,
+   "sha256": "87bdb069422e7f53fcd7e463b869ffe188a614e2c9c72f2f0d12ed6c0e033a5b"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1902,6 +1902,11 @@
    "sha256": "06f832bf5ae3ff9f2659a09aa7761d7243608ba4a0548170e7c856f8d2ac0c04"
   },
   {
+   "path": "qa/pilot05/wave6/director/crops/blender_vs_game_rings_x300-700_y60-500.png",
+   "bytes": 520863,
+   "sha256": "c230351f20049dcf6be7711d36a8785424e6ef39997ed02772e8d366097a3d22"
+  },
+  {
    "path": "qa/pilot05/wave6/director/crops/classmap_ref_vs_game.png",
    "bytes": 279985,
    "sha256": "60393d129e1886fb62a0c5747141504f848685f3c0372de160de4e481239bb8c"
@@ -1925,6 +1930,11 @@
    "path": "qa/pilot05/wave6/director/crops/lid_left_ref_vs_game.png",
    "bytes": 782044,
    "sha256": "047ef106da089c246f764d39156f352ccaefd8712ef569b89d1661e97b3ce427"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/lids_ticks_ref_top_game_bottom.png",
+   "bytes": 969451,
+   "sha256": "80d422b8f622dea9bf17afb0b655af4e294d375160b825f34d34ac990d2be46e"
   },
   {
    "path": "qa/pilot05/wave6/director/crops/mid_river_ref_vs_game.png",
@@ -2083,28 +2093,28 @@
   },
   {
    "path": "qa/pilot05/wave6/regress0408/now/04.png",
-   "bytes": 1010213,
-   "sha256": "17eb365be507810d1ca2d47eaa42ceeab19a728132683f008a92008759f3b4a3"
+   "bytes": 1009708,
+   "sha256": "ff4a4dba999e9b6106e1fbcf5eb1a05be3fa418771f15b593d2fea768e3d6786"
   },
   {
    "path": "qa/pilot05/wave6/regress0408/now/05.png",
-   "bytes": 1977860,
-   "sha256": "f7c0619dda98d8b92144baffa815845ccfc6c8881c3c6e9e2bb229eef516d9f7"
+   "bytes": 1970886,
+   "sha256": "fe88128013f8a1fb98ee74f0f8a12acd615ee434d71cbee07dfbcc323d574335"
   },
   {
    "path": "qa/pilot05/wave6/regress0408/now/06.png",
-   "bytes": 1494603,
-   "sha256": "e9854426ba7fe399c3026130c2dc905f416179fd243981fbcf662e6bb13be948"
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
   },
   {
    "path": "qa/pilot05/wave6/regress0408/now/07.png",
-   "bytes": 1785502,
-   "sha256": "536d6a3a800f75e8697346dce850a2d2c501cd6656e8eaa66263c5afdf118ca1"
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
   },
   {
    "path": "qa/pilot05/wave6/regress0408/now/08.png",
-   "bytes": 1430847,
-   "sha256": "5297e3644c336781270807d9995e59e24b42bed90ce9d3fdfbca5d857cc367fe"
+   "bytes": 1428865,
+   "sha256": "a00b7d95a67c0c392252ec35955a6d880b935100494fd306ed41b44e1d791040"
   },
   {
    "path": "qa/pilot05/wave6/water/NOTES.md",
@@ -2728,8 +2738,8 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 28763,
-   "sha256": "f7c032e47e1d0e2fbdbe2d4a292a3adac4288f94ad1aa9df771da8da1e56293a"
+   "bytes": 29605,
+   "sha256": "d1957d911bf2091e6b4ff13f3dca4e568ae0fc836e0fccdc6b254ea29aaab0af"
   },
   {
    "path": "src/world/environment.ts",
