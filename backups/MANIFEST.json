@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1967,
-   "sha256": "0cb51585206181fb2360f00c0b8e6acd980ac5305e8da92da7426e856b8a4cb3"
+   "sha256": "31f8bee6d840825f00b0058736100200c362b6064a7e9f4545fde36a492a1b37"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1308,8 +1308,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 6893,
-   "sha256": "95face6844b3c8a9d34dd082c32fe23164f1ae2798916d4f3692b62a2f215069"
+   "bytes": 14988,
+   "sha256": "f75f33817003befdf4ee015710ede8f5d6894e22c34ab61072bc628f5982b824"
   },
   {
    "path": "src/world/towel.ts",

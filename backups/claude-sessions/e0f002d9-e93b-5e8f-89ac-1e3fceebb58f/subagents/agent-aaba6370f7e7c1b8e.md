@@ -682,3 +682,11 @@ REPORT (concise): changes (file:line), perf stats before/after, image paths, wha
 > src/world/towel.ts:9:import { canvasTexture } from './materials';
 > src/world/environment.ts:9:import { perforatedMetal, gold, goldRibbed, chrome, glass, pain …[+1395 chars]
 
+### 🤖 Claude — 2026-11-15T18:46:04.637Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  /** bright stripe highlights running along v (tunnel light streaks) */\n  streaks?: number;\n}\n\nexport function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMaterial {\n  const mat = new THREE.MeshStandardMaterial({\n    color: o.color ?? '#d13fd6',\n    metalness: o.metalness ?? 0.72,\n    roughness: o.roughness ?? 0.26,\n    emissive: new THREE.Color(o.emissive ?? '#9a1fa8'),\n    emissiveIntensity: o.emissiveIntensity ?? 0.26,\n    side: o.side ?? THREE.BackSide,\n    envMap …[+13853 chars]`
+
+### 🧑 User — 2026-11-15T18:46:04.696Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+

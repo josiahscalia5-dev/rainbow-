@@ -3339,3 +3339,46 @@ Still "no active Atlas account" on World Labs' side. I'll push a backup now, the
 
 > 🔧 **Bash** `{"command": ". ~/.rainbow-autosave.env 2>/dev/null; timeout 600 python3 scripts/rainbow-autosave.py --reason manual --message \"Flow video hand-off, World Labs 05 pilot package, recovery docs\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"'; git add backups/BACKUP_LOG.md backups/BACKUP_STATUS.json && git commit -q -m \"Record latest autosave status rows\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZtEEqDnwZ7hmojKWUb\" && git push -q origin claude/rainbow-3d-recovery-m4v347 2>&1 | tail -1; git ls-remote origin | gre …[+127 chars]`
 
+### 🧑 User — 2026-11-15T18:45:51.643Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "af80fb1bdd9c82351e21528b15955790b5a984b6",
+> 81e639e16994713d5f70d0314e796d1c298eeacf	refs/heads/ccr-6f431adf-7h0m8y
+> 99f7707fc11e192f8805d6759dc35e90faa52b0d	refs/heads/claude/rainbow-3d-recovery-m4v347
+> 0
+
+### 🤖 Claude — 2026-11-15T18:46:01.944Z
+
+I've done my parts of this round. The Screen 05 specialists are still working, and World Labs still can't be used.
+
+**World Labs:** your connector is attached and all 10 Atlas tools load in this session, so no new session was needed. But `list_projects` still answers **"this sign-in has no active Atlas account"**, both times I've tried since your signup. So I can't list projects or tools yet, and nothing was submitted or charged. To fix it:
+1. Make sure the account you finished at https://atlas.worldlabs.ai uses the same login as the connector.
+2. At https://claude.ai/customize/connectors, disconnect and reconnect "World Labs Atlas".
+3. Tell me, and I'll rerun `list_projects`.
+
+**Setup script:** your approval went through earlier. It's saved on the "rainbow-" environment, with a copy in `scripts/cloud-env-setup.sh`, so there's nothing to offer again.
+
+**Done this round:**
+- **Flow video support:**
+  - Put your opening at `public/video/intro.mp4`. It plays silently, and the live 3D game waits underneath on the moment the girl walks away, then cross-fades in and continues in real time into the 02 tumble and the 03 ride.
+  - An optional `public/video/ending.mp4` plays before the real-time Safely Home victory frame.
+  - With no video file, the real-time cinematic plays as before.
+  - An automated browser test passes both paths. MP4 playback still needs a check on a real Android phone. Details are in `docs/FLOW_VIDEO.md`.
+- **World Labs Screen 05 pilot package** (`qa/worldlabs/05/`):
+  - a mask that keeps only the environment from your approved image (excluding Benny, his splash, the coins and the HUD), plus a preview; your original is unchanged.
+  - `PILOT_PLAN.md` with the costs: draft splats are **$0.50** and refined splats **$5.00**; the other Atlas tasks have no published price and are shown on your account's rate card.
+  - My recommendation is to approve a single depth-and-camera step first, since that gives the measurements needed to calibrate the game.
+- **Handoff notes:** `backups/CURRENT_STATE.md` and `backups/RECOVERY.md` now name the recovery branch, the "rainbow-" environment, the tool status and the open priorities.
+
+**Still running:** five specialists are working in parallel, each on its own files:
+- path-camera: a straight tunnel and correct framing, keeping the 61-unit 07→08 drop
+- environment modeler: magenta perforated walls, evenly spaced gold rings and wall lids
+- water FX: a wide cyan-and-pink current with foam and splash
+- Benny artist: his body-to-beanie proportions
+- reference director: `docs/reference_inventory.md` and `qa/scene_comparisons.md`
+
+When they finish I'll check their before/after screenshots and the continuity test. Then the QA and Android specialists write the last three missing documents (`qa/report.md`, `docs/BUILD_ANDROID.md`, `qa/performance.md`).
+
+**Backups:** the latest push is `99f7707` on the recovery branch, and the original branch is still untouched at `81e639e`.
+
