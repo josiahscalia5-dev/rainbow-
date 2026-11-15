@@ -22,6 +22,7 @@ import { createPuddles } from './puddles';
 import { createFoam } from './foam';
 import { createBubbles } from './bubbles';
 import { createSpray } from './spray';
+import { createRiderSplash } from './riderSplash';
 
 export { PALETTE } from './glsl';
 export const BENNY_RIDE_OFFSET = 0.55;
@@ -81,13 +82,15 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality });
   const bubbles = createBubbles(course, { quality, sStart: ribbonS0 });
   const spray = createSpray(quality);
-  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points);
+  const crown = createRiderSplash(quality);
+  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh);
 
   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
   let focus = 0;
   let curTime = 0;
   const tmpV = new THREE.Vector3();
   const tmpV2 = new THREE.Vector3();
+  const tmpV3 = new THREE.Vector3();
   const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 
   /** 0 = ribbon fully shown, 1 = whirlpool surface takes over (mirrors the ribbon vertex shader) */
@@ -115,7 +118,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   return {
     group,
     controls,
-    parts: { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, bubbles: bubbles.group, spray: spray.points },
+    parts: { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, bubbles: bubbles.group, spray: spray.points, splashCrown: crown.mesh },
     surfaceHeight,
     stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
     update(time, dt, focusS, camera) {
@@ -152,25 +155,38 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
         }
       }
       spray.update(dt, camera);
+      crown.update(time, dt);
     },
     wake(pos, forward, right, speed, dt) {
-      const s = focus;
+      // Benny's arc length / lateral from his actual position (focus lags one frame)
+      const f0 = course.sample(Math.max(0, focus));
+      const d = tmpV3.copy(pos).sub(f0.pos);
+      const s = Math.min(course.length, Math.max(0, focus + d.dot(f0.tan)));
+      const f = course.sample(s);
+      d.copy(pos).sub(f.pos);
+      const lateral = d.dot(f.right);
+      // body radius from the ride offset (centre = surface + BENNY_RIDE_OFFSET · radius)
+      const above = d.dot(f.up) - surfaceHeight(s, lateral, curTime);
+      const bodyR = THREE.MathUtils.clamp(above / BENNY_RIDE_OFFSET, 0.4, 2.0);
+      const waterlineR = bodyR * Math.sqrt(1 - BENNY_RIDE_OFFSET * BENNY_RIDE_OFFSET);
+      const strength = Math.min(1, speed / 8);
       if (s >= ribbonS0 && whirlBlend(s) < 0.5) {
-        const f = course.sample(s);
-        const lateral = tmpV.copy(pos).sub(f.pos).dot(f.right);
-        (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, Math.min(1, speed / 8));
+        (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);
+        ribbon.uniforms.uBennyR.value = waterlineR;
       }
+      // 3D splash crown flaring out of the surface at the waterline
+      const center = tmpV.copy(pos).addScaledVector(f.up, -above);
+      crown.place(center, forward, f.up, waterlineR, strength);
       // side fans of droplets (refs 05/07/08/10)
-      const rate = speed * (quality === 'high' ? 5 : 2);
+      const rate = speed * (quality === 'high' ? 6 : 2);
       const n = Math.floor(rate * dt + Math.random());
       const up = tmpV2.crossVectors(right, forward).normalize();
       for (let i = 0; i < n; i++) {
         const side = Math.random() < 0.5 ? -1 : 1;
-        const p = pos.clone().addScaledVector(right, side * rnd(0.55, 0.85)).addScaledVector(forward, rnd(-0.4, 0.2)).addScaledVector(up, rnd(-0.45, -0.2));
-        const v = right.clone().multiplyScalar(side * rnd(1.2, 3.2)).addScaledVector(up, rnd(2.0, 4.5)).addScaledVector(forward, rnd(-1.5, 1.0));
-        spray.emit(p, v, rnd(0.06, 0.16), rnd(0.35, 0.7));
+        const p = center.clone().addScaledVector(right, side * waterlineR * rnd(1.0, 1.5)).addScaledVector(forward, rnd(-0.5, 0.2)).addScaledVector(up, rnd(0.0, 0.2));
+        const v = right.clone().multiplyScalar(side * rnd(1.2, 3.4)).addScaledVector(up, rnd(1.8, 4.2)).addScaledVector(forward, rnd(-2.0, 0.5));
+        spray.emit(p, v, rnd(0.05, 0.13), rnd(0.35, 0.7));
       }
-      void curTime;
     },
     splash(pos, up, strength) {
       const n = Math.round(30 * strength * (quality === 'high' ? 1 : 0.5));

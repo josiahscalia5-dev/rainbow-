@@ -231,18 +231,19 @@ export function washerTubeEnv(): THREE.CubeTexture {
   const radiance = (d: THREE.Vector3, out: THREE.Color) => {
     const ang = Math.atan2(d.y, d.x); // angle around the tunnel axis (Z)
     const up = d.y;
-    // base: hot magenta above, violet-blue toward the floor
-    out.setRGB(0.62, 0.05, 0.42).lerp(new THREE.Color(0.28, 0.07, 0.72), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
-    // pink-white strip lights running along the tunnel at fixed angles around it
-    for (const a0 of [Math.PI / 2, Math.PI / 2 + 0.75, Math.PI / 2 - 0.75, 0.15, Math.PI - 0.15]) {
+    // base: deep hot magenta above, violet toward the floor (kept dark so the strips give contrast)
+    out.setRGB(0.4, 0.03, 0.3).lerp(new THREE.Color(0.16, 0.05, 0.5), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
+    // pink-white strip lights running along the tunnel at fixed angles around it (8, uneven strength)
+    for (let i = 0; i < 8; i++) {
+      const a0 = 0.2 + (i * Math.PI) / 4;
       const dA = Math.abs(Math.atan2(Math.sin(ang - a0), Math.cos(ang - a0)));
-      const k = Math.exp(-(dA * dA) / 0.012) * (1 - Math.abs(d.z) * 0.5);
-      out.r += 2.4 * k; out.g += 1.15 * k; out.b += 2.3 * k;
+      const k = Math.exp(-(dA * dA) / 0.005) * (1 - Math.abs(d.z) * 0.6) * (i % 2 ? 0.7 : 1.15);
+      out.r += 3.4 * k; out.g += 1.7 * k; out.b += 3.1 * k;
     }
     // warm light far down the tunnel (-Z) and a softer pink glow behind (+Z)
     const ahead = Math.max(0, -d.z);
     const hot = Math.pow(ahead, 10), wide = Math.pow(ahead, 3);
-    out.r += 3.2 * hot + 0.9 * wide; out.g += 2.5 * hot + 0.45 * wide; out.b += 1.2 * hot + 0.12 * wide;
+    out.r += 3.4 * hot + 0.75 * wide; out.g += 2.7 * hot + 0.35 * wide; out.b += 1.3 * hot + 0.08 * wide;
     const back = Math.pow(Math.max(0, d.z), 4);
     out.r += 0.9 * back; out.g += 0.25 * back; out.b += 0.8 * back;
     return out;

@@ -834,3 +834,220 @@ Progress: body and side tufts now visible below the brim. Let me build a side-by
 
 [Image: original 2124x420, displayed at 2000x395. Multiply coordinates by 1.06 to map to original image.]
 
+### 🤖 Claude — 2026-11-15T18:46:50.439Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "export const BENNY_DIMS = {\n  skin: 0.7,\n  fur: 0.15,\n  radius: 0.8,\n  /** lower-body bulge (radial gain at its peak) — the plush ball is widest below the brim (refs 05/07/10) */\n  pear: 0.06,\n  /** front of the beanie raised (rad, about X). Small, so the back brim stays high on the ball in rear views */\n  hatTilt: -0.1,\n  brimBottom: 0.17, // hat-local\n  brimR: 0.79, // brim outer radius (≈ 0.92 × the fluffy body width, as in the rear references)\n  crownH: 0.56, // crown height ab …[+1872 chars]`
+
+### 🧑 User — 2026-11-15T18:46:50.467Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:46:53.696Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "    length: D.fur,\n    density: 58,\n    shells: 20,\n    root: C.pinkRoot,\n    tip: C.pinkTip,\n    // bald under the beanie: dot(normal, hatUp) > brimBottom/skin (+ a little overlap)\n    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.03) / D.skin],\n    short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0.3],\n    gravity: 0.16,", "new_string": "    length: D.fur,\n    density: 64,\n    shells: 20,\n    root: C.pinkRoot,\n    tip: C.pinkTip,\n    // bald under the beanie: dot( …[+214 chars]`
+
+### 🧑 User — 2026-11-15T18:46:53.725Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:46:57.143Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  // a snug knit cap: near-vertical striped sides, then a rounded top that the pom-pom sits on\n  const crownProfile: [number, number][] = [\n    [0.725, 0],\n    [0.748, 0.07],\n    [0.756, 0.17],\n    [0.746, 0.27],\n    [0.712, 0.37],\n    [0.652, 0.46],\n    [0.565, 0.54],\n    [0.45, 0.6],\n    [0.31, 0.635],\n    [0.155, 0.65],\n    [0.0, 0.655],\n  ];", "new_string": "  // a snug knit cap: striped sides that taper into a rounded cone; the big pom-pom covers the top\n  const crownProfi …[+267 chars]`
+
+### 🧑 User — 2026-11-15T18:46:57.171Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:47:00.499Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const pom = joint('pom', 0, crownY0 + D.crownH + 0.16, -0.03);\n  hat.add(pom);\n  const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(0.235, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');\n  pomMesh.userData = furData({ length: 0.115, density: 80, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.15 });", "new_string": "  // big shaggy pom-pom (≈ 0.45 × the beanie width, as in refs 04/05/07/10)\n  const pom = joint('pom', 0, crownY0 + D.crownH + 0.19, -0. …[+282 chars]`
+
+### 🧑 User — 2026-11-15T18:47:00.541Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:47:02.324Z
+
+Now star size, tufts height, and feet (lower body is stretched, so feet move down to match).
+
+### 🤖 Claude — 2026-11-15T18:47:03.444Z
+
+> 🔧 **Bash** `{"command": "grep -n \"joint(side > 0 ? 'armL'\\|joint(side > 0 ? 'footL'\\|starShape(0.19\\|yb + 0.235\\|FOOT_L\\|FOOT_R\" src/characters/benny/build.ts", "description": "Find arm, foot and star lines"}`
+
+### 🧑 User — 2026-11-15T18:47:03.478Z
+
+> ↩︎ result: 243:    const a = joint(side > 0 ? 'armL' : 'armR', 0.64 * side, -0.14, 0.04);
+> 266:    const f = joint(side > 0 ? 'footL' : 'footR', 0.3 * side, -0.6, 0.26);
+> 304:          [0.765 * bk, yb + 0.235],
+> 351:  const starGeo = new THREE.ExtrudeGeometry(starShape(0.19, 0.085), {
+> 365:  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR + 0.01), yb + 0.235, Math.cos(sa) * (D.brimR + 0.01));
+> 400:const FOOT_L: E3 = [0.3, -0.6, 0.26];
+> 401:const FOOT_R: E3 = [-0.3, -0.6, 0.26];
+> 452:  void ARM_L; void ARM_R; void FOOT_L; void FOOT_R;
+
+### 🤖 Claude — 2026-11-15T18:47:18.515Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='src/characters/benny/build.ts'\ns=open(p).read()\ns=s.replace(\"joint(side > 0 ? 'armL' : 'armR', 0.64 * side, -0.14, 0.04)\",\"joint(side > 0 ? 'armL' : 'armR', 0.7 * side, -0.08, 0.03)\")\ns=s.replace(\"joint(side > 0 ? 'footL' : 'footR', 0.3 * side, -0.6, 0.26)\",\"joint(side > 0 ? 'footL' : 'footR', 0.31 * side, -0.65, 0.27)\")\ns=s.replace(\"starShape(0.19, 0.085)\",\"starShape(0.21, 0.094)\")\ns=s.replace(\"const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR + 0.01), yb + 0.235, Math.cos(sa) * (D.brimR + 0.01));\",\"const starPos = new …[+1243 chars]`
+
+### 🧑 User — 2026-11-15T18:47:33.602Z
+
+> ↩︎ result: 243:    const a = joint(side > 0 ? 'armL' : 'armR', 0.7 * side, -0.08, 0.03);
+> 266:    const f = joint(side > 0 ? 'footL' : 'footR', 0.31 * side, -0.65, 0.27);
+> 351:  const starGeo = new THREE.ExtrudeGeometry(starShape(0.21, 0.094), {
+> 365:  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR + 0.01), yb + 0.25, Math.cos(sa) * (D.brimR + 0.01));
+> 398:const ARM_L: E3 = [0.7, -0.08, 0.03];
+> 400:const FOOT_L: E3 = [0.31, -0.65, 0.27];
+> /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_it2_game.png {"baseTriangles":13988,"furQuality":"high"}
+> cmp_it2.png (2126, 420)
+
+### 🤖 Claude — 2026-11-15T18:47:36.127Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_it2_game.png"}`
+
+### 🧑 User — 2026-11-15T18:47:36.156Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:47:36.748Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/cmp_it2.png"}`
+
+### 🧑 User — 2026-11-15T18:47:36.870Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T18:47:36.865Z
+
+[Image: original 2126x420, displayed at 2000x395. Multiply coordinates by 1.06 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T18:47:59.988Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/build.ts'\ns=open(p).read()\nold=\"\"\"    [0.725, 0],\n    [0.742, 0.07],\n    [0.744, 0.15],\n    [0.728, 0.24],\n    [0.69, 0.33],\n    [0.635, 0.42],\n    [0.56, 0.5],\n    [0.465, 0.565],\n    [0.35, 0.615],\n    [0.22, 0.645],\n    [0.1, 0.654],\n    [0.0, 0.655],\"\"\"\nnew=\"\"\"    [0.725, 0],\n    [0.74, 0.07],\n    [0.738, 0.15],\n    [0.715, 0.24],\n    [0.67, 0.33],\n    [0.6, 0.42],\n    [0.51, 0.5],\n    [0.4, 0.565],\n    [0.28, 0.615],\n    [0.16, 0.645],\n    [0.07, 0.654],\n    [0.0, 0.655],\"\"\"\nassert old in s\ns=s. …[+1255 chars]`
+
+### 🧑 User — 2026-11-15T18:48:23.060Z
+
+> ↩︎ result: 35:  crownH: 0.54, // crown height above the brim's top edge
+> 372:  const pom = joint('pom', 0, crownY0 + D.crownH + 0.13, -0.03);
+> 374:  const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(0.29, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
+> 375:  pomMesh.userData = furData({ length: 0.14, density: 70, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.15 });
+> /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_it3_game.png {"baseTriangles":13988,"furQuality":"high"}
+> cmp_it3.png (2126, 420)
+
+### 🤖 Claude — 2026-11-15T18:48:25.165Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/cmp_it3.png"}`
+
+### 🧑 User — 2026-11-15T18:48:25.305Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T18:48:25.299Z
+
+[Image: original 2126x420, displayed at 2000x395. Multiply coordinates by 1.06 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T18:48:33.385Z
+
+Structure now matches the rear refs (big plush ball, tufts, perched beanie, star image-right, big pom). Time to export the GLB and verify in the real game.
+
+### 🤖 Claude — 2026-11-15T18:48:34.388Z
+
+> 🔧 **Bash** `{"command": "timeout 400 node scripts/export-models.mjs benny 2>&1 | tail -5; ls -la assets/models/benny.glb", "description": "Re-export Benny GLB and turntable", "timeout": 420000}`
+
+### 🧑 User — 2026-11-15T18:48:45.655Z
+
+> ↩︎ result: exported assets/models/benny.glb {"bytes":1179640,"meshes":27,"nodes":39,"clips":["idle(2.40s)","swim(0.60s)","tumble(1.00s)","peek(2.00s)"]}
+> turntable docs/characters/benny_turntable.png {"box":{"min":[-1.073358044313916,-0.8503829004677894,-0.8101416575412321],"max":[1.0730330602219997,1.53454022762931,0.780011832957703]}}
+> -rw-r--r-- 1 root root 1179640 Nov 15 18:48 assets/models/benny.glb
+
+### 🤖 Claude — 2026-11-15T18:48:48.423Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 02 10 04 07 --out=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter1 2>&1 | tail -8", "description": "Capture in-game frames with new Benny", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T18:49:57.220Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter1/05.png {"stage":"05","s":144.689,"y":-41.782,"calls":91,"tris":564407,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 02 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter1/02.png {"stage":"02","s":8.756,"y":1.181,"calls":267,"tris":435477,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 10 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter1/10.png {"stage":"10","s":423.18,"y":-112.835,"calls":282,"tris":386881,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter1/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":104,"tris":674802,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad …[+192 chars]
+
+### 🤖 Claude — 2026-11-15T18:49:59.523Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter1/05.png"}`
+
+### 🧑 User — 2026-11-15T18:49:59.578Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:50:00.140Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter1/02.png"}`
+
+### 🧑 User — 2026-11-15T18:50:00.186Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:50:07.437Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny && R=/home/user/rainbow-/references && python3 -I crops.py cmp_game_it1.png 460 iter0/05.png:200,1000,700,1500:game05-before iter1/05.png:150,820,650,1320:game05-after iter0/10.png:280,950,740,1410:game10-before iter1/10.png:250,900,750,1400:game10-after iter1/07.png:150,850,750,1450:game07-after iter1/04.png:150,850,750,1450:game04-after", "description": "Crop before/after in-game Benny views"}`
+
+### 🧑 User — 2026-11-15T18:50:08.175Z
+
+> ↩︎ result: cmp_game_it1.png (2790, 460)
+
+### 🤖 Claude — 2026-11-15T18:50:10.599Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/cmp_game_it1.png"}`
+
+### 🧑 User — 2026-11-15T18:50:10.753Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T18:50:10.749Z
+
+[Image: original 2790x460, displayed at 2000x330. Multiply coordinates by 1.40 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T18:50:12.917Z
+
+Clear before/after improvement in 05 and 10. My 04/07 crops missed Benny; let me check the full frames.
+
+### 🤖 Claude — 2026-11-15T18:50:14.111Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter1/04.png"}`
+
+### 🧑 User — 2026-11-15T18:50:14.146Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:50:14.775Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter1/10.png"}`
+
+### 🧑 User — 2026-11-15T18:50:14.826Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:50:23.116Z
+
+In-game the pink ball now reads clearly under the beanie in 04/05/10. Let me check the front/side turntable from the exported GLB.
+
+### 🤖 Claude — 2026-11-15T18:50:23.465Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/characters/benny_turntable.png"}`
+
+### 🧑 User — 2026-11-15T18:50:23.503Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:50:28.376Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/benny_turntable_before.png"}`
+
+### 🧑 User — 2026-11-15T18:50:28.592Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:50:47.428Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -10; echo \"tsc exit: ${PIPESTATUS[0]}\"; S=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny && timeout 300 node $S/lab.mjs $S/lab_glb_low.png \"src=glb&views=game&quality=low\" 2>&1 | tail -3; timeout 300 node $S/lab.mjs $S/lab_glb_refs.png \"src=glb&views=refs\" 2>&1 | tail -3", "description": "Typecheck and render GLB lab views incl. low tier", "timeout": 620000}`
+

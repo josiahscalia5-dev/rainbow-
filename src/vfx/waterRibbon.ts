@@ -112,7 +112,7 @@ ${FRAG_FX_GLSL}
 // is advected at the local stage speed.
 float meander(float s) {
   float a = s - uTime * 0.9;
-  return 0.25 * sin(a * 0.24) + 0.1 * sin(a * 0.55 + 1.3) + 0.2 * (vnoise(vec2(a * 0.055, 4.7)) - 0.5);
+  return 0.16 * sin(a * 0.24) + 0.07 * sin(a * 0.55 + 1.3) + 0.16 * (vnoise(vec2(a * 0.055, 4.7)) - 0.5);
 }
 
 // advected strand texture ("combed" glossy water lines parallel to the flow)
@@ -128,8 +128,9 @@ vec4 strands(float x, float v, vec2 aa) {
   #endif
   b = mix(0.5, b, aa.x);
   c = mix(0.5, c, aa.y);
-  float h = a * 0.48 + b * 0.32 + c * 0.2;
-  float line = smoothstep(0.74, 0.88, c) * aa.y + smoothstep(0.8, 0.92, b) * aa.x * 0.55;
+  float h = a * 0.5 + b * 0.32 + c * 0.18;
+  h = smoothstep(0.18, 0.82, h);              // more contrast: deep azure troughs, bright crests
+  float line = smoothstep(0.72, 0.86, c) * aa.y + smoothstep(0.78, 0.9, b) * aa.x * 0.6;
   return vec4(h, line, b, c);
 }
 
@@ -156,8 +157,11 @@ void main() {
   float fws = fwidth(s);
   vec2 aa = vec2(1.0 - smoothstep(0.08, 0.2, max(fwx * 7.0, fws * 0.19)),
                  1.0 - smoothstep(0.05, 0.14, max(fwx * 17.0, fws * 0.42)));
+  // hair-fine combed strands for close-up water (refs: dense parallel flow lines)
+  float aaH = 1.0 - smoothstep(0.12, 0.3, fwx * 46.0);
   #ifdef LOW_Q
   aa.y = 0.0;
+  aaH = 0.0;
   #endif
 
   // two-phase flow-map advection of the strands (period 4 s; offset scales with stage speed)
@@ -166,7 +170,7 @@ void main() {
   float w0 = 1.0 - abs(1.0 - 2.0 * ph0);
   vec4 F = mix(strands(x, s - vSpeed * ph1 * 4.0 + 23.0, aa), strands(x, s - vSpeed * ph0 * 4.0, aa), w0);
 
-  float coreW = 0.56 + 0.08 * (vnoise(vec2(s * 0.1, 2.0)) - 0.5);
+  float coreW = 0.6 + 0.08 * (vnoise(vec2(s * 0.1, 2.0)) - 0.5);
   // interleave pink/cyan strands along the band boundary (follows the flow)
   float aq = abs(q) + (F.z - 0.5) * 0.09 + (F.w - 0.5) * 0.05;
   float pinkBand = smoothstep(coreW - 0.035, coreW + 0.035, aq);
@@ -177,11 +181,20 @@ void main() {
   float pinkM = clamp(max(pinkBand, pinkRib) - cyanRib * pinkBand, 0.0, 1.0);
 
   float h = F.x;
-  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.5, h));
-  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.52, 0.78, h));
-  vec3 pinkCol = mix(uPink * 0.82, uPink, smoothstep(0.22, 0.48, h));
-  pinkCol = mix(pinkCol, uPinkLight, smoothstep(0.55, 0.82, h));
+  float hair = 0.5;
+  if (aaH > 0.0) {
+    float sv = s - vSpeed * fract(uTime * 0.5) * 2.0;
+    float hA = vnoise(vec2(x * 46.0 + F.w * 3.0, sv * 0.9));
+    float hB = vnoise(vec2(x * 46.0 + F.w * 3.0, (sv + vSpeed) * 0.9 + 17.0));
+    hair = mix(0.5, mix(hB, hA, 1.0 - abs(1.0 - 2.0 * fract(uTime * 0.5))), aaH);
+  }
+  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.2, 0.5, h));
+  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.55, 0.85, h));
+  vec3 pinkCol = mix(uPink * 0.8, uPink, smoothstep(0.2, 0.48, h));
+  pinkCol = mix(pinkCol, uPinkLight, smoothstep(0.58, 0.88, h));
   vec3 col = mix(cyanCol, pinkCol, pinkM);
+  col *= 0.86 + 0.28 * hair;
+  col += vec3(0.9, 1.0, 1.0) * smoothstep(0.8, 0.92, hair) * 0.35 * aaH;
 
   // ---- glossy lighting ----
   vec3 N0 = normalize(vNormalW);
@@ -213,8 +226,8 @@ void main() {
   float sparkle = step(0.9, hs) * smoothstep(0.22, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 7.0 + hs * 40.0));
   col += vec3(1.3) * sparkle;
   #else
-  float glint = starGlint(vec2(lat * 1.15, (s - vSpeed * uTime * 0.55) * 0.6), 0.16, 18.0, uTime);
-  col += vec3(1.25) * glint * (1.0 - smoothstep(0.25, 0.7, fws));
+  float glint = starGlint(vec2(lat * 1.15, (s - vSpeed * uTime * 0.55) * 0.6), 0.22, 26.0, uTime);
+  col += vec3(1.4) * glint * (1.0 - smoothstep(0.3, 0.8, fws));
   #endif
 
   // ---- soap-foam lace where the water meets the foam banks ----
@@ -241,17 +254,17 @@ void main() {
       float phi = atan(abs(du), -dv);           // 0 = straight behind (camera side), pi/2 = beside
       float rr = max(0.0, d - rb * 0.9);
       // contact ring of churned white water hugging the body
-      float lace = cells(vec2(du * 4.2, (dv + uTime * vSpeed * 0.25) * 4.2));
-      float contact = (1.0 - smoothstep(rb * 0.25, rb * 0.65, rr)) * smoothstep(0.02, 0.3, lace + 0.12);
+      float lace = cells(vec2(du * 5.0, (dv + uTime * vSpeed * 0.25) * 5.0));
+      float contact = (1.0 - smoothstep(rb * 0.12, rb * 0.4, rr)) * smoothstep(0.1, 0.35, lace);
       // radiating lace tendrils fanning sideways/backwards (ref 05 splash at the water line)
-      float fan = smoothstep(2.5, 1.6, phi) * smoothstep(0.35, 0.9, phi);
-      float tend = vnoise(vec2(phi * 9.0, rr * 0.9 - uTime * 3.2));
-      tend = smoothstep(0.42, 0.72, tend) * smoothstep(0.08, 0.32, lace);
-      float tendrils = tend * fan * exp(-rr / (rb * 1.5));
+      float fan = smoothstep(2.5, 1.7, phi) * smoothstep(0.45, 1.0, phi);
+      float tend = vnoise(vec2(phi * 16.0, rr * 0.7 - uTime * 3.2));
+      tend = smoothstep(0.55, 0.8, tend) * smoothstep(0.12, 0.38, lace);
+      float tendrils = tend * fan * exp(-rr / (rb * 1.6));
       // ripple rings + long V wake
-      float rings = smoothstep(0.6, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-d * 0.5) * smoothstep(rb, rb * 1.4, d) * 0.45;
+      float rings = smoothstep(0.7, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-d * 0.6) * smoothstep(rb, rb * 1.4, d) * 0.3;
       float back = clamp(-dv, 0.0, 30.0);
-      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 0.9) * 3.0) * exp(-back * 0.14) * step(dv, 0.0) * smoothstep(0.3, 0.7, lace + 0.3);
+      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 1.1) * 4.0) * exp(-back * 0.14) * step(dv, 0.0) * smoothstep(0.25, 0.5, lace);
       float foamK = clamp((contact + tendrils * 1.1 + rings + wakeV * 0.8) * k, 0.0, 1.0);
       col = mix(col, uFoam * 1.25, foamK);
     }

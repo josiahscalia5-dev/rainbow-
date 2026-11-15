@@ -26,7 +26,7 @@ void main() {
   float t = aPolar.y;
   float ath = abs(th);
   // strongest beside Benny and diagonally behind him, low bow wave in front, calm right behind
-  float side = smoothstep(0.15, 0.95, ath) * (1.0 - 0.75 * smoothstep(1.9, 2.9, ath));
+  float side = smoothstep(0.5, 1.2, ath) * (1.0 - 0.8 * smoothstep(1.9, 2.8, ath));
   float wob = n1(th * 4.0 + uTime * 5.0) * 0.5 + n1(th * 9.0 - uTime * 7.0) * 0.5;
   float reach = mix(1.0, 2.15 + 0.5 * wob, t) * (0.75 + 0.25 * side);
   float r = uR * mix(0.92, reach, t);
@@ -56,12 +56,12 @@ void main() {
   float th = vPolar.x;
   float t = vPolar.y;
   // radial fingers streaming outward, with soap-lace holes
-  float fing = vnoise(vec2(th * 11.0, t * 2.2 - uTime * 4.0));
-  fing = smoothstep(0.3, 0.68, fing);
-  float lace = cells(vec2(th * 8.0, t * 5.0 - uTime * 3.0));
-  float body = 1.0 - smoothstep(0.18, 0.5, t);           // solid churn at the body
-  float a = max(body * smoothstep(0.05, 0.3, lace + 0.1), fing * smoothstep(0.1, 0.35, lace)) ;
-  a *= (1.0 - smoothstep(0.6, 1.0, t)) * vSide * uStrength;
+  float fing = vnoise(vec2(th * 17.0, t * 1.6 - uTime * 4.0));
+  fing = smoothstep(0.5, 0.78, fing);
+  float lace = cells(vec2(th * 10.0, t * 6.0 - uTime * 3.0));
+  float body = 1.0 - smoothstep(0.08, 0.3, t);           // churn right at the body
+  float a = max(body * smoothstep(0.12, 0.35, lace), fing * smoothstep(0.15, 0.4, lace));
+  a *= (1.0 - smoothstep(0.55, 0.95, t)) * vSide * uStrength;
   if (a < 0.02) discard;
   vec3 V = normalize(cameraPosition - vPosW);
   vec3 col = mix(vec3(0.62, 0.92, 1.0), vec3(1.15, 1.18, 1.2), smoothstep(0.2, 0.75, a));

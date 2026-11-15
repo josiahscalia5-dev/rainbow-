@@ -690,3 +690,204 @@ REPORT (concise): changes (file:line), perf stats before/after, image paths, wha
 
 > ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T18:46:39.502Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  /** radius offset (negative = inset toward the axis) */\n  inset?: number;\n}", "new_string": "  /** radius offset (negative = inset toward the axis) */\n  inset?: number;\n  /**\n   * Store the front-face (outward) normal. The faces wind outward, so BackSide/DoubleSide materials\n   * flip this to the inward normal and light the inside of the tube correctly. The legacy default\n   * (false) stores -d, which those materials flip to point AWAY from the viewer (dot(N,V) <= 0 →\n   * full fresnel, un-tin …[+116 chars]`
+
+### 🧑 User — 2026-11-15T18:46:39.533Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:46:41.004Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  const arc = o.arc ?? Math.PI * 2;\n  const rings = Math.max(2, Math.ceil((s1 - s0) / step) + 1);", "new_string": "  const arc = o.arc ?? Math.PI * 2;\n  const ns = o.frontNormals ? 1 : -1;\n  const rings = Math.max(2, Math.ceil((s1 - s0) / step) + 1);"}`
+
+### 🧑 User — 2026-11-15T18:46:41.036Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:46:42.360Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "      nor[k * 3] = -d.x; nor[k * 3 + 1] = -d.y; nor[k * 3 + 2] = -d.z;", "new_string": "      nor[k * 3] = ns * d.x; nor[k * 3 + 1] = ns * d.y; nor[k * 3 + 2] = ns * d.z;"}`
+
+### 🧑 User — 2026-11-15T18:46:42.399Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:47:32.758Z
+
+Now the ring collar profile and the new lid caps in tube.ts.
+
+### 🤖 Claude — 2026-11-15T18:47:41.698Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "/** Instanced thick gold ring ribs placed perpendicular to the tube every `spacing` units. */\nexport function buildRings(\n  path: TubePath,\n  s0: number,\n  s1: number,\n  spacing: number,\n  material: THREE.Material,\n  opts: { tube?: number; double?: boolean; inset?: number; extra?: number } = {},\n): THREE.InstancedMesh {\n  const tube = opts.tube ?? 0.075;\n  const geo = new THREE.TorusGeometry(1, tube, 14, 72);\n  const n = Math.max(1, Math.floor((s1 - s0) / spacing) + 1) * (opts.double ? 2 : 1) …[+1910 chars]`
+
+### 🧑 User — 2026-11-15T18:47:41.730Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:47:43.407Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "      const sc = dbl ? r * 0.985 : r;\n      m.compose(c, q, new THREE.Vector3(sc, sc, sc * (dbl ? 0.6 : 1)));", "new_string": "      const sc = dbl ? r * 0.985 : r;\n      // a collar keeps its axial width in world units; a torus scales uniformly\n      m.compose(c, q, new THREE.Vector3(sc, sc, collar ? 1 : sc * (dbl ? 0.6 : 1)));"}`
+
+### 🧑 User — 2026-11-15T18:47:43.439Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:48:11.008Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "/** Half-dome wall \"lids\"/spray heads mounted on the upper tube walls (refs 05–07). */", "new_string": "/**\n * Washer wall lids (refs 05–07): stubby polished gold caps — a rounded puck with a raised rim lip and a\n * slightly recessed face — protruding from BOTH side walls in pairs, one pair per ring bay. Each cap is\n * stretched along the tunnel and turned toward the oncoming rider so the camera sees the bright banded\n * rim plus the darker face, like the reference. One instanced mesh (1 draw call …[+2363 chars]`
+
+### 🧑 User — 2026-11-15T18:48:11.071Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-15T18:48:12.956Z
+
+> 🔧 **Bash** `{"command": "git diff src/world/tube.ts | head -150", "description": "See concurrent changes in tube.ts"}`
+
+### 🧑 User — 2026-11-15T18:48:13.002Z
+
+> ↩︎ result: diff --git a/src/world/tube.ts b/src/world/tube.ts
+> index 9b2bbe8..6f6a2a4 100644
+> --- a/src/world/tube.ts
+> +++ b/src/world/tube.ts
+> @@ -52,28 +52,66 @@ export function straightTubePath(
+>      }
+>      axis.push(new THREE.Vector3(x / wsum, cp[i].y, z / wsum));
+>    }
+> +  // exact straight stretches (05 current): the axis is pulled onto the course's straight centre line
+> +  // (foot of the perpendicular from the stream point), so the tunnel is truly straight — no yaw
+> +  // wiggle, no roll — and the rings converge on one vanishing point. Blends in over 12 units after
+> +  // the 04 junction and back to the filtered axis just past the 06 arch foot.
+> +  const wRun = new Array<number>(n).fill(0);
+> +  const runDepth = new Array<number>(n).fill(0);
+> +  for (const r of course.straightAxes ?? []) {
+> +    if (r.s1 <= s0 || r.s0 >= s1) continue;
+> +    const ab = r.b.clone().sub(r.a);
+> +    const ab2 = ab.lengthSq();
+> +    for (let i = 0; i < n; i++) {
+> +      const s = S(i);
+> +      const w = THREE.MathUtils.smoothstep(s, r.s0, r.s0 + 12) * (1 - THREE.MathUtils.smoothstep(s, r.s1 - 6, r.s1 + 2));
+> +      if (w <= wRun[i]) continue;
+> +      wRun[i] = w;
+> +      runDepth[i] = r.floorDepth;
+> +      const u = cp[i].clone( …[+6778 chars]
+
+### 🤖 Claude — 2026-11-15T18:48:14.609Z
+
+Now the 05–07 section in environment.ts.
+
+### 🤖 Claude — 2026-11-15T18:48:15.334Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 186, "limit": 30}`
+
+### 🧑 User — 2026-11-15T18:48:15.515Z
+
+> ↩︎ result: 186	    const s = g0 + 0.05 + i * 0.3;
+> 187	    zones.tubes.add(buildRings(goldPath, s, s + 0.01, 1, goldMat, { tube: 0.07, extra: 0.4 + i * 0.22 }));
+> 188	  }
+> 189	
+> 190	  // =====================================================================================
+> 191	  // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+> 192	  // =====================================================================================
+> 193	  const s08 = course.stage('08').s0;
+> 194	  const pinkFlow = pinkFlowMaterial();
+> 195	  const perfTubeMat = perforatedMetal({ color: '#b02ccc', emissive: '#7a14a8', emissiveIntensity: 0.32, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.5, streaks: 0.55, metalness: 0.8, roughness: 0.22 });
+> 196	  // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
+> 197	  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+> 198	  const chunk = 40;
+> 199	  for (let a = s05; a < s08; a += chunk) {
+> 200	    const b = Math.min(s08 + 0.0, a + chunk + 0.6);
+> 201	    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6 }), perfTubeMat));
+> 202	    // glossy magenta flow sheet …[+909 chars]
+
+### 🤖 Claude — 2026-11-15T18:48:46.927Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const s08 = course.stage('08').s0;\n  const pinkFlow = pinkFlowMaterial();\n  const perfTubeMat = perforatedMetal({ color: '#b02ccc', emissive: '#7a14a8', emissiveIntensity: 0.32, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.5, streaks: 0.55, metalness: 0.8, roughness: 0.22 });\n  // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it\n  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });\n  const chunk = 40;\n  for ( …[+3454 chars]`
+
+### 🧑 User — 2026-11-15T18:48:46.957Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T18:48:48.919Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture } from './materials';\nimport { buildTubeGeometry, buildRings, buildNozzles, courseTubePath, straightTubePath, tubeCenterAt } from './tube';", "new_string": "import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, type FarGlow } from './materials';\nimport { buildTubeGeometry, buildRings, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt } from './tu …[+6 chars]`
+
+### 🧑 User — 2026-11-15T18:48:48.959Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T18:48:55.682Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -20; S=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod; node $S/axcap.mjs $S/ax1 \"hide=coins\" 6 20 2>&1 | tail -4", "description": "Typecheck and capture on-axis views", "timeout": 600000}`
+
+### 🧑 User — 2026-11-15T18:49:36.899Z
+
+> ↩︎ result: 6 {"r":7.599999999999998,"depth":3.300087460042023,"center":[2.3,-37,-63.17]} calls 71 tris 548363
+> 20 {"r":7.6,"depth":3.63322648352147,"center":[2,-37.93,-76.75]} calls 54 tris 543295
+
+### 🤖 Claude — 2026-11-15T18:49:39.071Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/ax1/ax_05_6.png"}`
+
+### 🧑 User — 2026-11-15T18:49:39.128Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:50:08.668Z
+
+Big step forward (the path specialist's straight axis has landed too). Let me zoom on the wall detail to judge the relief/slots.
+
+### 🤖 Claude — 2026-11-15T18:50:10.763Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod && python3 -c \"\nfrom PIL import Image\nim=Image.open('ax1/ax_05_6.png').convert('RGB')\nim.crop((0,180,300,560)).resize((600,760)).save('ax1_left.png')\n\"", "description": "Crop wall detail from render"}`
+
+### 🧑 User — 2026-11-15T18:50:11.000Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T18:50:13.045Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/ax1_left.png"}`
+
+### 🧑 User — 2026-11-15T18:50:13.070Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:50:34.245Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "    // base: hot magenta above, violet-blue toward the floor\n    out.setRGB(0.62, 0.05, 0.42).lerp(new THREE.Color(0.28, 0.07, 0.72), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));\n    // pink-white strip lights running along the tunnel at fixed angles around it\n    for (const a0 of [Math.PI / 2, Math.PI / 2 + 0.75, Math.PI / 2 - 0.75, 0.15, Math.PI - 0.15]) {\n      const dA = Math.abs(Math.atan2(Math.sin(ang - a0), Math.cos(ang - a0)));\n      const k = Math.exp(-(dA * dA) / 0.012) * (1 - Math.a …[+1325 chars]`
+
+### 🧑 User — 2026-11-15T18:50:34.285Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:50:38.698Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const tubeGlow: FarGlow = { color: '#ffd49a', near: 26, far: 115, strength: 1.25 };\n  const perfTubeMat = perforatedMetal({\n    color: '#f24bd6', emissive: '#5c0a74', emissiveIntensity: 0.55, holeColor: '#14001f',\n    slot: 1, repeatU: 56, repeatV: 1.0, holeSize: 0.55, streaks: 0.2, metalness: 0.88, roughness: 0.3,\n    relief: { corrugation: 0.035, bevel: 0.05, bevelWidth: 0.1 }, rimColor: '#ff6fe6', rimStrength: 0.9,\n    envMap: washerTubeEnv(), envMapIntensity: 1.0, farGlow: tubeGlow,\n  …[+555 chars]`
+
+### 🧑 User — 2026-11-15T18:50:38.734Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T18:50:40.400Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const ringMat = withFarGlow(gold({ color: '#ffb347', roughness: 0.17, emissive: 0.32 }), tubeGlow, 'ring');", "new_string": "  const ringMat = withFarGlow(gold({ color: '#ffc04d', roughness: 0.14, emissive: 0.22 }), tubeGlow, 'ring');\n  ringMat.envMap = tubeEnv;\n  ringMat.envMapIntensity = 1.5;"}`
+
+### 🧑 User — 2026-11-15T18:50:40.429Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T18:50:43.157Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const lidMat = withFarGlow(gold({ color: '#ff9b52', roughness: 0.2, emissive: 0.3 }), tubeGlow, 'lid');\n  zones.tubes.add(buildWallLids(perfPath, s05 + 3 + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 14, size: 1.25 }));", "new_string": "  const lidMat = withFarGlow(gold({ color: '#ffa65a', roughness: 0.18, emissive: 0.25 }), tubeGlow, 'lid');\n  lidMat.envMap = tubeEnv;\n  lidMat.envMapIntensity = 1.4;\n  zones.tubes.add(buildWallLids(perfPath, s05 + 3 + ringSpacing * 0.5, s08 …[+83 chars]`
+
+### 🧑 User — 2026-11-15T18:50:43.339Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T18:50:48.330Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -20; S=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod; node $S/axcap.mjs $S/ax2 \"hide=coins\" 6 2>&1 | tail -3 && python3 -c \"\nfrom PIL import Image\nim=Image.open('$S/ax2/ax_05_6.png').convert('RGB'); ref=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nout=Image.new('RGB',(1728,1536)); out.paste(ref,(0,0)); out.paste(im,(864,0)); out.resize((1152,1024)).save('$S/ax2_sbs.png')\"", "description": "Typecheck, capture and build side-by-side", "timeout": 600000}`
+

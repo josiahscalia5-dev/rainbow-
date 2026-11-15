@@ -80,7 +80,7 @@ float starGlint(vec2 g, float density, float L, float time) {
  */
 const knee = (hex: string, k = 0.74) => new THREE.Color(hex).multiplyScalar(k);
 export const PALETTE = {
-  cyanDeep: knee('#0080e8', 0.72),
+  cyanDeep: knee('#0a62f0', 0.72),
   cyan: knee('#08c0ff'),
   cyanBright: knee('#56f0ff', 0.8),
   pink: knee('#ff149f'),

@@ -42,13 +42,13 @@ void main() {
   float swirl = vnoise(N.xy * 2.5 + vec2(uTime * 0.3 + vSeed * 10.0, vSeed * 5.0));
   vec3 irid = iridescent(f * 1.6 + swirl * 0.8 + vSeed);
   float rim = pow(f, 2.0);
-  vec3 col = mix(vec3(0.85, 0.9, 1.0), irid, 0.85) * (0.25 + rim * 1.5);
+  vec3 col = mix(vec3(0.85, 0.9, 1.0), irid, 0.9) * (0.3 + rim * 1.8);
   // window-like specular highlights
   vec3 R = reflect(-V, N);
   float spec = pow(clamp(dot(R, normalize(uLightDir)), 0.0, 1.0), 90.0);
   float spec2 = pow(clamp(dot(R, normalize(vec3(-0.6, 0.2, 0.7))), 0.0, 1.0), 40.0) * 0.5;
   col += vec3(1.0) * (spec * 2.4 + spec2);
-  float alpha = clamp(0.05 + rim * 0.7 + spec * 0.9 + spec2 * 0.5, 0.0, 0.95);
+  float alpha = clamp(0.06 + rim * 0.85 + spec * 0.9 + spec2 * 0.5, 0.0, 0.95);
   gl_FragColor = vec4(col, alpha);
   ${FRAG_TAIL}
 }
@@ -59,10 +59,12 @@ attribute float aSize;
 attribute float aSeed;
 uniform float uScale;
 varying float vSeed;
+varying float vPx;
 #include <fog_pars_vertex>
 void main() {
   vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
   gl_PointSize = clamp(aSize * uScale / -mvPosition.z, 1.0, 64.0);
+  vPx = gl_PointSize;
   vSeed = aSeed;
   gl_Position = projectionMatrix * mvPosition;
   #include <fog_vertex>
@@ -71,6 +73,7 @@ void main() {
 const PT_FRAG = /* glsl */ `
 uniform float uTime;
 varying float vSeed;
+varying float vPx;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 void main() {
@@ -81,7 +84,8 @@ void main() {
   vec3 irid = iridescent(d * 0.8 + vSeed + atan(c.y, c.x) * 0.1);
   float hl = smoothstep(0.28, 0.0, length(c - vec2(-0.17, -0.17)));
   vec3 col = mix(vec3(1.0), irid, 0.55) * ring * 1.3 + vec3(1.0) * hl * 1.5;
-  float alpha = clamp(ring * 0.85 + hl + 0.06, 0.0, 1.0);
+  // tiny sprites must not read as solid white dots: fade them, keep only rim + glint when large
+  float alpha = clamp(ring * 0.85 + hl + 0.04, 0.0, 1.0) * (0.25 + 0.75 * smoothstep(3.0, 10.0, vPx));
   gl_FragColor = vec4(col, alpha);
   ${FRAG_TAIL}
 }
@@ -112,7 +116,7 @@ function rnd(a: number, b: number) {
 export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; sStart: number }): BubbleSystem {
   const quality = opts.quality;
   const nBig = quality === 'high' ? 44 : 22;
-  const nSmall = quality === 'high' ? 700 : 280;
+  const nSmall = quality === 'high' ? 360 : 160;
   const group = new THREE.Group();
   group.name = 'bubbles';
   const dA = WORLD.drumA;
@@ -180,10 +184,11 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
     const tube = course.prop(s, 'tube');
     let lat: number, h: number;
     if (isBig) {
-      const latMax = tube > 0 ? tube * 0.8 : hw + 6;
+      // mostly low over the stream and its foam banks (refs 05–07), a few drifting higher
+      const latMax = tube > 0 ? Math.min(tube * 0.8, hw + 2.2) : hw + 6;
       lat = rnd(-latMax, latMax);
-      h = tube > 0 ? rnd(0.4, tube * 1.4) : rnd(0.3, 7);
-      b.size = Math.random() < 0.18 ? rnd(0.5, 0.9) : rnd(0.15, 0.42);
+      h = tube > 0 ? (Math.random() < 0.75 ? rnd(0.5, 3.2) : rnd(3.2, tube * 1.1)) : rnd(0.3, 7);
+      b.size = Math.random() < 0.2 ? rnd(0.45, 0.8) : rnd(0.14, 0.4);
     } else {
       lat = tube > 0 ? rnd(-hw - 1.2, hw + 1.2) : rnd(-hw - 4, hw + 4);
       h = rnd(0.15, 2.6) * (Math.random() < 0.7 ? 0.5 : 1.2);

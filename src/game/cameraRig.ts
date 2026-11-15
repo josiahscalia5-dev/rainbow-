@@ -21,7 +21,9 @@ export interface CamParams {
 export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
   '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
   '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
-  '05': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.5 },
+  // 05: level rear chase down the straight current tube; pitch atan((up-lookUp)/(ahead+back)) ≈ 12°
+  // below the tunnel axis puts the ring vanishing point ~1/3 down the frame (ref 05), Benny low-centre
+  '05': { back: 6.1, up: 3.7, ahead: 18, lookUp: -1.5, fov: 62, latFollow: 0.92, roll: 0 },
   '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
   '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
   '08': { back: 6.2, up: 3.7, ahead: 16, lookUp: 0.2, fov: 62, latFollow: 0.8, roll: 0.3 },
@@ -103,6 +105,26 @@ export class RideCamera {
       outPos.lerp(wp, w3);
       outTarget.lerp(wt, w3);
       outUp.lerp(new THREE.Vector3(0, 1, 0), w3).normalize();
+    }
+    // 05 straight current tube: the '05' preset measured in the straight tunnel's own frame — aimed
+    // along the tunnel axis (not Benny's S-curve heading) so the gold rings stay concentric on ONE
+    // vanishing point, level (no roll), following Benny's lateral S offset by latFollow.
+    const st5 = this.course.stage('05');
+    const p5 = STAGE_CAM['05'] as CamParams;
+    const w5 = this.axis ? THREE.MathUtils.smoothstep(s, st5.s0 + 1, st5.s0 + 8) * (1 - THREE.MathUtils.smoothstep(s, st5.s1 - 9, st5.s1 - 1)) : 0;
+    if (w5 > 0 && this.axis) {
+      const af = this.axis.path.frame(s);
+      const T = af.tan.clone();
+      const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+      const Rt = new THREE.Vector3().crossVectors(T, U).normalize();
+      const water = f.pos.clone().addScaledVector(f.right, lat); // Benny's point on the stream
+      const off = water.clone().sub(af.pos).dot(Rt); // his lateral offset from the tunnel axis
+      const cp = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - p5.latFollow));
+      const pitch = Math.atan2(p5.up - p5.lookUp, p5.ahead + p5.back);
+      const look = T.multiplyScalar(Math.cos(pitch)).addScaledVector(U, -Math.sin(pitch));
+      outPos.lerp(cp, w5);
+      outTarget.lerp(cp.clone().addScaledVector(look, p5.ahead + p5.back), w5);
+      outUp.lerp(U, w5).normalize();
     }
     return p;
   }

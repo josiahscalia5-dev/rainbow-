@@ -6,8 +6,8 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
-import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture } from './materials';
-import { buildTubeGeometry, buildRings, buildNozzles, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
+import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, type FarGlow } from './materials';
+import { buildTubeGeometry, buildRings, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -192,23 +192,38 @@ export function buildEnvironment(course: Course): Environment {
   // =====================================================================================
   const s08 = course.stage('08').s0;
   const pinkFlow = pinkFlowMaterial();
-  const perfTubeMat = perforatedMetal({ color: '#b02ccc', emissive: '#7a14a8', emissiveIntensity: 0.32, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.5, streaks: 0.55, metalness: 0.8, roughness: 0.22 });
+  // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+  // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+  const tubeGlow: FarGlow = { color: '#ffd08a', near: 22, far: 95, strength: 1.6 };
+  const tubeEnv = washerTubeEnv();
+  const perfTubeMat = perforatedMetal({
+    color: '#f24bd6', emissive: '#4a0866', emissiveIntensity: 0.4, holeColor: '#14001f',
+    slot: 1, repeatU: 52, repeatV: 1.0, holeSize: 0.62, streaks: 0.15, metalness: 0.9, roughness: 0.22,
+    relief: { corrugation: 0.035, bevel: 0.06, bevelWidth: 0.1 }, rimColor: '#ff6fe6', rimStrength: 0.9,
+    envMap: tubeEnv, envMapIntensity: 1.0, farGlow: tubeGlow,
+  });
   // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
   const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
   const chunk = 40;
   for (let a = s05; a < s08; a += chunk) {
     const b = Math.min(s08 + 0.0, a + chunk + 0.6);
-    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6 }), perfTubeMat));
+    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true }), perfTubeMat));
     // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
-    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6 }), pinkFlow.material));
+    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
   }
-  // gold junction ring 04→05
-  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, goldMat, { tube: 0.08, inset: 0.2 }));
-  // thick double gold ribs
-  zones.tubes.add(buildRings(perfPath, s05 + 3, s08 - 1, 7, goldMat, { tube: 0.042, double: true }));
-  // wall lids / nozzles
-  const lidMat = gold({ color: '#f0a040', roughness: 0.25, emissive: 0.35 });
-  zones.tubes.add(buildNozzles(perfPath, s05 + 6, s08 - 6, 8.5, lidMat, goldMat, { angleDeg: 34, size: 1.9 }));
+  // thick polished orange-gold ring collars at even spacing (refs 05–07: ~8–10 converging rings)
+  const ringMat = withFarGlow(gold({ color: '#ffc04d', roughness: 0.14, emissive: 0.22 }), tubeGlow, 'ring');
+  ringMat.envMap = tubeEnv;
+  ringMat.envMapIntensity = 1.5;
+  const ringSpacing = 7.2;
+  // gold junction collar 04→05 (slightly heavier)
+  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.075, lip: 0.02, width: 1.3 } }));
+  zones.tubes.add(buildRings(perfPath, s05 + 3, s08 - 1, ringSpacing, ringMat, { inset: 0.02, collar: { depth: 0.062, lip: 0.016, width: 1.0 } }));
+  // wall lids: one pair of polished copper-gold caps per ring bay on the upper side walls
+  const lidMat = withFarGlow(gold({ color: '#ffa65a', roughness: 0.18, emissive: 0.25 }), tubeGlow, 'lid');
+  lidMat.envMap = tubeEnv;
+  lidMat.envMapIntensity = 1.4;
+  zones.tubes.add(buildWallLids(perfPath, s05 + 3 + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 18, size: 1.1, height: 0.62, face: 30 }));
   animated.push(pinkFlow.update);
 
   // =====================================================================================

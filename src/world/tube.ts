@@ -52,28 +52,66 @@ export function straightTubePath(
     }
     axis.push(new THREE.Vector3(x / wsum, cp[i].y, z / wsum));
   }
+  // exact straight stretches (05 current): the axis is pulled onto the course's straight centre line
+  // (foot of the perpendicular from the stream point), so the tunnel is truly straight — no yaw
+  // wiggle, no roll — and the rings converge on one vanishing point. Blends in over 12 units after
+  // the 04 junction and back to the filtered axis just past the 06 arch foot.
+  const wRun = new Array<number>(n).fill(0);
+  const runDepth = new Array<number>(n).fill(0);
+  for (const r of course.straightAxes ?? []) {
+    if (r.s1 <= s0 || r.s0 >= s1) continue;
+    const ab = r.b.clone().sub(r.a);
+    const ab2 = ab.lengthSq();
+    for (let i = 0; i < n; i++) {
+      const s = S(i);
+      const w = THREE.MathUtils.smoothstep(s, r.s0, r.s0 + 12) * (1 - THREE.MathUtils.smoothstep(s, r.s1 - 6, r.s1 + 2));
+      if (w <= wRun[i]) continue;
+      wRun[i] = w;
+      runDepth[i] = r.floorDepth;
+      const u = cp[i].clone().sub(r.a).dot(ab) / ab2;
+      const onLine = r.a.clone().addScaledVector(ab, u);
+      axis[i].lerp(onLine, w);
+    }
+  }
+  const WU = new THREE.Vector3(0, 1, 0);
   const frames: Frame[] = axis.map((p, i) => {
     const a = axis[Math.max(0, i - 2)], b = axis[Math.min(n - 1, i + 2)];
     const tan = b.clone().sub(a).normalize();
-    const cu = course.sample(S(i)).up;
-    const up = cu.clone().addScaledVector(tan, -cu.dot(tan)).normalize();
+    const cu = course.sample(S(i)).up.clone().lerp(WU, wRun[i]); // no banking roll on straight stretches
+    const up = cu.addScaledVector(tan, -cu.dot(tan)).normalize();
     const right = new THREE.Vector3().crossVectors(tan, up).normalize();
     return { pos: p, tan, up, right };
   });
   // radius/depth so the floor stays below the stream edges, dilated + smoothed for a steady tube
-  const rawR: number[] = [], rawD: number[] = [];
+  const rawR: number[] = [], rawD: number[] = [], needR: number[] = [], needD: number[] = [];
   for (let i = 0; i < n; i++) {
     const s = S(i);
-    const d = cp[i].clone().sub(frames[i].pos).dot(frames[i].right);
+    const off = cp[i].clone().sub(frames[i].pos);
+    const d = off.dot(frames[i].right);
     const X = Math.abs(d) + course.widthAt(s) / 2 + 0.25;
     const r = Math.max(opts.baseRadius(s), X + 0.7);
     rawR.push(r);
     rawD.push(Math.max(0.9, r - Math.sqrt(Math.max(0, r * r - X * X)) + 0.2));
+    // straight stretches: also account for the stream's height above/below the (straight) axis point
+    needR.push(X + 0.7);
+    needD.push(r - Math.sqrt(Math.max(0, r * r - X * X)) + 0.2 - off.dot(frames[i].up));
   }
   const dilate = (arr: number[], k: number) => arr.map((_, i) => { let m = -Infinity; for (let j = i - k; j <= i + k; j++) m = Math.max(m, arr[THREE.MathUtils.clamp(j, 0, n - 1)]); return m; });
   const box = (arr: number[], k: number) => arr.map((_, i) => { let a = 0; for (let j = i - k; j <= i + k; j++) a += arr[THREE.MathUtils.clamp(j, 0, n - 1)]; return a / (2 * k + 1); });
   const R = box(dilate(rawR, 30), 16);
   const D = box(dilate(rawD, 30), 16);
+  if (wRun.some((w) => w > 0)) {
+    // on a straight stretch the tunnel keeps its own constant radius (the next stage's wider hall is
+    // not dilated back into it) and the stream sits `floorDepth` above the tunnel bottom (wide current)
+    const nR = box(dilate(needR, 30), 16);
+    const nD = box(dilate(needD, 30), 16);
+    for (let i = 0; i < n; i++) {
+      const w = wRun[i];
+      if (w <= 0) continue;
+      R[i] += (Math.max(opts.baseRadius(S(i)), nR[i]) - R[i]) * w;
+      D[i] += (Math.max(runDepth[i], nD[i], 0.9) - D[i]) * w;
+    }
+  }
   const idx = (s: number) => {
     const x = THREE.MathUtils.clamp((s - s0) / ds, 0, n - 1);
     const i = Math.min(n - 2, Math.floor(x));
@@ -108,6 +146,13 @@ export interface TubeGeoOptions {
   arc?: number;
   /** radius offset (negative = inset toward the axis) */
   inset?: number;
+  /**
+   * Store the front-face (outward) normal. The faces wind outward, so BackSide/DoubleSide materials
+   * flip this to the inward normal and light the inside of the tube correctly. The legacy default
+   * (false) stores -d, which those materials flip to point AWAY from the viewer (dot(N,V) <= 0 →
+   * full fresnel, un-tinted pale reflections); kept only so the 02 chute / 04 pipe look is unchanged.
+   */
+  frontNormals?: boolean;
 }
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
@@ -115,6 +160,7 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
   const step = o.step ?? 0.6;
   const vScale = o.vScale ?? 1;
   const arc = o.arc ?? Math.PI * 2;
+  const ns = o.frontNormals ? 1 : -1;
   const rings = Math.max(2, Math.ceil((s1 - s0) / step) + 1);
   const pos = new Float32Array(rings * (radial + 1) * 3);
   const nor = new Float32Array(rings * (radial + 1) * 3);
@@ -133,7 +179,7 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
       pos[k * 3] = c.x + d.x * r;
       pos[k * 3 + 1] = c.y + d.y * r;
       pos[k * 3 + 2] = c.z + d.z * r;
-      nor[k * 3] = -d.x; nor[k * 3 + 1] = -d.y; nor[k * 3 + 2] = -d.z;
+      nor[k * 3] = ns * d.x; nor[k * 3 + 1] = ns * d.y; nor[k * 3 + 2] = ns * d.z;
       uv[k * 2] = j / radial;
       uv[k * 2 + 1] = s / vScale;
     }
@@ -154,6 +200,27 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
   return g;
 }
 
+/**
+ * Washer-tube ring collar (refs 05–07): a thick flanged gold band hugging the wall with a broad flat
+ * inner face, bevelled shoulders and a raised centre lip — it catches crisp specular lines instead of
+ * reading as a round pipe/helix. Lathe around local Z; radial values are fractions of the tube radius,
+ * axial values are world units (the instance scales z by 1).
+ */
+export function collarGeometry(depth = 0.062, lip = 0.016, width = 1.0, segments = 80): THREE.BufferGeometry {
+  const w = width / 2;
+  const d = depth, L = depth + lip;
+  // traversed from +z to -z so LatheGeometry's faces/normals point INWARD (toward the tunnel axis)
+  const prof: [number, number][] = [
+    [1.03, w], [1 - d * 0.3, w], [1 - d * 0.78, w * 0.96], [1 - d, w * 0.84],
+    [1 - d, w * 0.36], [1 - d - lip * 0.55, w * 0.27], [1 - L, w * 0.16], [1 - L, -w * 0.16],
+    [1 - d - lip * 0.55, -w * 0.27], [1 - d, -w * 0.36], [1 - d, -w * 0.84], [1 - d * 0.78, -w * 0.96],
+    [1 - d * 0.3, -w], [1.03, -w],
+  ];
+  const g = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), segments);
+  g.rotateX(Math.PI / 2); // lathe axis Y → tube axis Z
+  return g;
+}
+
 /** Instanced thick gold ring ribs placed perpendicular to the tube every `spacing` units. */
 export function buildRings(
   path: TubePath,
@@ -161,10 +228,11 @@ export function buildRings(
   s1: number,
   spacing: number,
   material: THREE.Material,
-  opts: { tube?: number; double?: boolean; inset?: number; extra?: number } = {},
+  opts: { tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number } } = {},
 ): THREE.InstancedMesh {
   const tube = opts.tube ?? 0.075;
-  const geo = new THREE.TorusGeometry(1, tube, 14, 72);
+  const collar = opts.collar;
+  const geo = collar ? collarGeometry(collar.depth, collar.lip, collar.width, collar.segments) : new THREE.TorusGeometry(1, tube, 14, 72);
   const n = Math.max(1, Math.floor((s1 - s0) / spacing) + 1) * (opts.double ? 2 : 1);
   const mesh = new THREE.InstancedMesh(geo, material, n);
   const m = new THREE.Matrix4();
@@ -181,7 +249,62 @@ export function buildRings(
       basis.makeBasis(f.right, f.up, f.tan);
       q.setFromRotationMatrix(basis);
       const sc = dbl ? r * 0.985 : r;
-      m.compose(c, q, new THREE.Vector3(sc, sc, sc * (dbl ? 0.6 : 1)));
+      // a collar keeps its axial width in world units; a torus scales uniformly
+      m.compose(c, q, new THREE.Vector3(sc, sc, collar ? 1 : sc * (dbl ? 0.6 : 1)));
+      mesh.setMatrixAt(k++, m);
+    }
+  }
+  mesh.count = k;
+  mesh.instanceMatrix.needsUpdate = true;
+  mesh.frustumCulled = false;
+  return mesh;
+}
+
+/**
+ * Washer wall lids (refs 05–07): stubby polished gold caps — a rounded puck with a raised rim lip and a
+ * slightly recessed face — protruding from BOTH side walls in pairs, one pair per ring bay. Each cap is
+ * stretched along the tunnel and turned toward the oncoming rider so the camera sees the bright banded
+ * rim plus the darker face, like the reference. One instanced mesh (1 draw call).
+ */
+export function buildWallLids(
+  path: TubePath,
+  s0: number,
+  s1: number,
+  spacing: number,
+  material: THREE.Material,
+  opts: { angleDeg?: number; size?: number; height?: number; stretch?: number; face?: number; stagger?: number } = {},
+): THREE.InstancedMesh {
+  const a = 1, h = opts.height ?? 0.5;
+  const prof: [number, number][] = [
+    [a * 1.04, -0.6], [a * 1.04, 0], [a, 0.07], [a, h - 0.12], [a * 0.95, h - 0.02], [a * 0.88, h],
+    [a * 0.8, h], [a * 0.76, h - 0.05], [a * 0.7, h - 0.08], [0, h - 0.08],
+  ];
+  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 40);
+  const n = (Math.floor((s1 - s0) / spacing) + 1) * 2;
+  const mesh = new THREE.InstancedMesh(geo, material, n);
+  const size = opts.size ?? 1.25;
+  const ang = THREE.MathUtils.degToRad(opts.angleDeg ?? 14);
+  const beta = THREE.MathUtils.degToRad(opts.face ?? 50);
+  const c = new THREE.Vector3(), dir = new THREE.Vector3(), Y = new THREE.Vector3(), X = new THREE.Vector3(), Z = new THREE.Vector3();
+  const basis = new THREE.Matrix4(), m = new THREE.Matrix4(), q = new THREE.Quaternion();
+  let k = 0;
+  for (let s = s0; s <= s1 + 1e-6; s += spacing) {
+    for (const side of [1, -1]) {
+      const ss = s + (side > 0 ? 0 : (opts.stagger ?? 0) * spacing);
+      if (ss > s1) continue;
+      const f = path.frame(ss);
+      const r = path.radius(ss);
+      tubeCenterAt(path, ss, c);
+      dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
+      const p = c.clone().addScaledVector(dir, r * 0.995);
+      // face: inward, turned back toward the rider (−tan) by `beta`
+      Y.copy(dir).negate().multiplyScalar(Math.cos(beta)).addScaledVector(f.tan, -Math.sin(beta)).normalize();
+      Z.crossVectors(f.tan, dir).normalize(); // circumferential (⊥ dir, ⊥ tan → ⊥ Y)
+      X.crossVectors(Y, Z).normalize();
+      basis.makeBasis(X, Y, Z);
+      q.setFromRotationMatrix(basis);
+      const sz = size * (r / 7.6);
+      m.compose(p, q, new THREE.Vector3(sz * (opts.stretch ?? 1.45), sz, sz * 0.9));
       mesh.setMatrixAt(k++, m);
     }
   }

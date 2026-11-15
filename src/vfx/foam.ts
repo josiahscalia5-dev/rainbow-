@@ -1,16 +1,145 @@
 /**
- * Foam banks: instanced puffy white/lavender soap-foam clusters.
- *  - a dense fringe of small puffs along both ribbon edges + bigger cloud clusters (refs 03–10)
+ * Foam banks along the stream (refs 03–10) + whirlpool rim foam.
+ *  - berm: ONE continuous lumpy lather bank per side, swept along the course (custom shader:
+ *    two-scale cellular soap bubbles with derivative bump lighting, lavender crevices, pores,
+ *    faint iridescent rim). This is what makes the banks read as continuous foam, not cotton balls.
+ *  - puffs: instanced bubble puffs sitting ON the berm crest (silhouette lumps), in ~40-unit chunks
+ *    so only chunks near Benny are drawn; quality 'low' halves density and uses 20-tri puffs.
  *  - foam rings on the whirlpool rim and along its spiral bands (rotating with the swirl)
- * Puffs are grouped into ~40-unit chunks (separate InstancedMeshes) so only chunks near Benny
- * are drawn; quality 'low' halves density and uses 20-tri puffs.
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
 import { EDGE_LIFT } from './waterRibbon';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
+import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
 interface Puff { p: THREE.Vector3; r: number; c: number }
+
+// ---------------------------------------------------------------------------------- berm profile
+/** berm spans e ∈ [BERM_IN, BERM_OUT] units outward from the ribbon edge (negative = over the water) */
+export const BERM_IN = -0.6;
+export const BERM_OUT = 1.2;
+const hash1 = (n: number) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+const noise1 = (x: number) => { const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f); return hash1(i) * (1 - u) + hash1(i + 1) * u; };
+/** 0..1 lumpiness of the bank at (s, side) — CPU only, baked into the mesh and the puff placement */
+export function bermLump(s: number, side: number): number {
+  return 0.55 * noise1(s * 0.33 + side * 31.7) + 0.45 * noise1(s * 1.05 + side * 7.3);
+}
+/** CPU cellular "bubble dome" field (0..1) so the bank silhouette is a pile of round lumps */
+export function bermDomes(s: number, e: number, side: number): number {
+  const gs = s / 0.95, ge = e / 0.62 + side * 11.3;
+  const i0 = Math.floor(gs), j0 = Math.floor(ge);
+  let best = 0;
+  for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) {
+    const i = i0 + di, j = j0 + dj;
+    const ox = hash1(i * 17.13 + j * 3.71), oy = hash1(i * 5.31 + j * 19.7 + 4.2);
+    const r = 0.45 + 0.4 * hash1(i * 7.7 + j * 13.1 + 9.9);
+    const dx = (i + ox - gs) / r, dy = (j + oy - ge) / r;
+    best = Math.max(best, 1 - (dx * dx + dy * dy));
+  }
+  return Math.max(0, best);
+}
+
+/** height (along course up) of the bank surface at e units outward from the edge */
+export function bermHeight(e: number, hw: number, lump: number): number {
+  const uIn = Math.max(0, (hw + BERM_IN) / hw);
+  const hIn = EDGE_LIFT * uIn * uIn * uIn - 0.07;
+  const ep = 0.08 + 0.22 * lump;
+  const hp = EDGE_LIFT + 0.14 + 0.5 * lump;
+  const hOut = -0.95;
+  if (e <= ep) {
+    const t = Math.min(1, Math.max(0, (e - BERM_IN) / (ep - BERM_IN)));
+    return hIn + (hp - hIn) * (1 - (1 - t) * (1 - t));
+  }
+  const t = Math.min(1, (e - ep) / (BERM_OUT - ep));
+  return hp + (hOut - hp) * t * t;
+}
+
+/** full bank surface height incl. bubble domes (shared by the mesh and the puff placement) */
+export function bermSurface(s: number, e: number, side: number, hw: number): number {
+  const domeK = Math.min(1, Math.max(0, (e + 0.3) / 0.35)) * Math.min(1, Math.max(0, (BERM_OUT - 0.1 - e) / 0.4));
+  return bermHeight(e, hw, bermLump(s, side)) + 0.32 * domeK * Math.sqrt(bermDomes(s, e, side));
+}
+
+const BERM_VERT = /* glsl */ `
+attribute vec3 aFoam;    // x = e (units outward from the stream edge), y = s, z = side (-1 / 1)
+uniform float uTime;
+varying vec3 vFoam;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_vertex>
+void main() {
+  // gentle breathing of the lather (never at the water line)
+  float k = smoothstep(-0.2, 0.3, aFoam.x);
+  vec3 p = position + normal * (0.03 * k * sin(uTime * 1.6 + aFoam.y * 2.1 + aFoam.z * 3.0));
+  vec4 wp = modelMatrix * vec4(p, 1.0);
+  vPosW = wp.xyz;
+  vNormalW = normalize(mat3(modelMatrix) * normal);
+  vFoam = aFoam;
+  vec4 mvPosition = viewMatrix * wp;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`;
+
+const BERM_FRAG = /* glsl */ `
+uniform float uTime;
+uniform vec2 uOutro;     // amount, chamber start s
+uniform vec3 uLightDir;
+varying vec3 vFoam;
+varying vec3 vPosW;
+varying vec3 vNormalW;
+#include <fog_pars_fragment>
+${NOISE_GLSL}
+${FRAG_FX_GLSL}
+void main() {
+  float s = vFoam.y;
+  if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+    float n = vnoise(vec2(vFoam.x * 3.0, s * 0.35)) * 0.7 + 0.3;
+    if (n < uOutro.x * 1.15) discard;
+  }
+  vec2 p = vec2(vFoam.x * vFoam.z * 1.1, s - uTime * 0.25);
+  // detail fade with distance (cells per pixel)
+  float fw = max(fwidth(p.x), fwidth(p.y));
+  float k1 = 1.0 - smoothstep(0.12, 0.3, fw * 1.6);
+  float k2 = 1.0 - smoothstep(0.12, 0.3, fw * 3.8);
+  float c1 = mix(0.45, cells(p * 1.6), k1);
+  #ifdef LOW_Q
+  float c2 = c1;
+  #else
+  float c2 = mix(0.45, cells(p * 3.8 + 11.0), k2);
+  #endif
+  // bubble domes: bright cell centres, deep crevices between bubbles
+  float bub = (1.0 - c1 * c1) * 0.6 + (1.0 - c2 * c2) * 0.4;
+  vec3 N0 = normalize(vNormalW);
+  if (!gl_FrontFacing) N0 = -N0;
+  #ifdef LOW_Q
+  vec3 N = N0;
+  #else
+  vec3 N = bumpNormal(vPosW, N0, bub * 0.16);
+  #endif
+  vec3 L = normalize(uLightDir);
+  vec3 V = normalize(cameraPosition - vPosW);
+  float diff = 0.55 + 0.45 * max(dot(N, L), 0.0);
+  vec3 white = vec3(1.0, 1.0, 1.0);
+  vec3 lav = vec3(0.7, 0.68, 0.98);
+  vec3 col = mix(lav, white, 0.3 + 0.7 * clamp(N.y * 0.5 + 0.5, 0.0, 1.0)) * diff;
+  col = mix(col, lav * 0.8, smoothstep(0.6, 0.95, c1) * 0.7 * k1);
+  col = mix(col, lav * 0.9, smoothstep(0.65, 0.95, c2) * 0.4 * k2);
+  // tiny pores (open bubbles)
+  #ifndef LOW_Q
+  vec2 pp = p * 7.0 + 5.0;
+  float pc = cells(pp);
+  float kp = 1.0 - smoothstep(0.1, 0.25, fw * 7.0);
+  col = mix(col, vec3(0.58, 0.56, 0.88), (1.0 - smoothstep(0.1, 0.2, pc)) * step(0.62, hash12(floor(pp))) * 0.75 * kp);
+  #endif
+  float spec = pow(max(dot(reflect(-V, N), L), 0.0), 28.0);
+  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
+  col += vec3(1.0) * spec * 0.45 + iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.18;
+  gl_FragColor = vec4(col * 0.96, 1.0);
+  ${FRAG_TAIL}
+}
+`;
 
 function rng(seed: number) {
   let a = seed >>> 0;
@@ -23,16 +152,16 @@ function rng(seed: number) {
   };
 }
 
-const FOAM_COLORS = ['#ffffff', '#f6f0ff', '#efe4ff', '#fff2fb', '#e9f6ff'].map((c) => new THREE.Color(c));
+const FOAM_COLORS = ['#ffffff', '#f4f6ff', '#eef0ff', '#ffffff', '#eaf6ff'].map((c) => new THREE.Color(c));
 
 function makeMaterial() {
   const m = new THREE.MeshStandardMaterial({
     color: '#ffffff',
-    roughness: 0.32,
+    roughness: 0.4,
     metalness: 0.0,
-    emissive: new THREE.Color('#ece4ff'),
-    emissiveIntensity: 0.62,
-    envMapIntensity: 1.1,
+    emissive: new THREE.Color('#eef0ff'),
+    emissiveIntensity: 0.45,
+    envMapIntensity: 1.0,
   });
   // subtle soap-film rim tint
   m.onBeforeCompile = (sh) => {
@@ -49,8 +178,79 @@ function makeMaterial() {
 export interface FoamSystem {
   group: THREE.Group;
   whirlGroup: THREE.Group;
+  berm: THREE.Mesh;
   update(time: number, focusS: number, outro?: number): void;
   instanceCount: number;
+}
+
+/** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
+function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
+  const ds = quality === 'high' ? 0.45 : 0.8;
+  const E = quality === 'high' ? [BERM_IN, -0.38, -0.2, -0.05, 0.1, 0.28, 0.5, 0.8, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
+  const rows = Math.ceil((s1 - s0) / ds) + 1;
+  const C = E.length;
+  const n = rows * C * 2;
+  const pos = new Float32Array(n * 3);
+  const foam = new Float32Array(n * 3);
+  const tmp = new THREE.Vector3();
+  let k = 0;
+  const rowS: number[] = [];
+  for (let i = 0; i < rows; i++) {
+    const s = Math.min(s1, s0 + i * ds);
+    rowS.push(s);
+    const f = course.sample(s);
+    const hw = course.widthAt(s) / 2;
+    for (const side of [-1, 1]) {
+      for (let j = 0; j < C; j++) {
+        // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
+        // at the water line (keeps the lace edge flush with the stream)
+        const e = E[j];
+        const h = bermSurface(s, e, side, hw);
+        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + e)).addScaledVector(f.up, h);
+        tmp.toArray(pos, k * 3);
+        foam[k * 3] = e;
+        foam[k * 3 + 1] = s;
+        foam[k * 3 + 2] = side;
+        k++;
+      }
+    }
+  }
+  const idx: number[] = [];
+  const rowStride = C * 2;
+  for (let i = 0; i < rows - 1; i++) {
+    const sa = rowS[i], sb = rowS[i + 1];
+    if (sb > skip[0] && sa < skip[1]) continue;
+    for (let sideI = 0; sideI < 2; sideI++) {
+      for (let j = 0; j < C - 1; j++) {
+        const a = i * rowStride + sideI * C + j, b = a + 1, c = a + rowStride, d = c + 1;
+        // CCW seen from above on both sides (side +1 runs +right, side −1 runs −right)
+        if (sideI === 1) idx.push(a, b, c, b, d, c);
+        else idx.push(a, c, b, b, c, d);
+      }
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
+  geo.setIndex(idx);
+  geo.computeVertexNormals();
+  const uniforms = withFog({
+    uTime: { value: 0 },
+    uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
+    uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+  });
+  const mat = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: BERM_VERT,
+    fragmentShader: BERM_FRAG,
+    fog: true,
+    side: THREE.DoubleSide,
+    defines: quality === 'low' ? { LOW_Q: 1 } : {},
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.name = 'foam_berm';
+  mesh.frustumCulled = false;
+  return { mesh, uniforms };
 }
 
 export function createFoam(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): FoamSystem {
@@ -87,36 +287,41 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
     total += list.length;
   };
 
-  // ---- ribbon edges ----
+  // ---- continuous lather bank (berm) along both edges ----
+  const skip: [number, number] = [st03.s0 + 4, st04.s0 - 6];
+  const berm = createBerm(course, s0, s1, skip, quality);
+  group.add(berm.mesh);
+
+  // ---- bubble puffs sitting on the bank crest (silhouette lumps) ----
   for (let sa = s0; sa < s1; sa += chunkLen) {
     const sb = Math.min(s1, sa + chunkLen);
     const list: Puff[] = [];
     // skip most of 03 (the whirlpool has its own foam), keep the chute→rim hand-over
-    for (let s = sa; s < sb; s += 0.55 / density) {
-      if (s > st03.s0 + 4 && s < st04.s0 - 6) continue;
+    for (let s = sa; s < sb; s += 0.7 / density) {
+      if (s > skip[0] && s < skip[1]) continue;
       const f = course.sample(s);
       const hw = course.widthAt(s) / 2;
-      const tube = course.prop(s, 'tube');
       for (const side of [-1, 1]) {
-        if (rand() < 0.15) continue;
-        const lat = side * (hw - 0.12 + rand() * 0.55);
-        const r = 0.14 + rand() * 0.22;
-        const p = f.pos.clone().addScaledVector(f.right, lat).addScaledVector(f.up, EDGE_LIFT + r * 0.25 + rand() * 0.1);
+        if (rand() < 0.2) continue;
+        const e = -0.22 + rand() * 0.7;
+        const r = 0.09 + rand() * 0.17;
+        const p = f.pos.clone().addScaledVector(f.right, side * (hw + e)).addScaledVector(f.up, bermSurface(s, e, side, hw) + r * 0.05);
         list.push({ p, r, c: (rand() * 5) | 0 });
       }
-      // cloud clusters
-      if (rand() < 0.07 * density) {
+      // bigger lather lumps on the crest
+      if (rand() < 0.1 * density) {
         const side = rand() < 0.5 ? -1 : 1;
-        const maxOut = tube > 0 ? Math.max(0.6, tube * 0.85 - hw) : 2.4;
-        const cl = side * (hw + 0.4 + rand() * Math.min(1.4, maxOut));
-        const n = 7 + ((rand() * 12) | 0);
+        const n = 4 + ((rand() * 7) | 0);
+        const ec = 0.05 + rand() * 0.45;
         for (let k = 0; k < n; k++) {
-          const ds = (rand() - 0.5) * 3.2;
-          const f2 = course.sample(Math.min(s1, Math.max(s0, s + ds)));
-          const lat = cl + (rand() - 0.5) * 1.8;
-          const r = 0.18 + rand() * 0.34;
-          const h = EDGE_LIFT * 0.6 + rand() * 0.9 * (1 - Math.abs(ds) / 2);
-          const p = f2.pos.clone().addScaledVector(f2.right, lat).addScaledVector(f2.up, h);
+          const ss = Math.min(s1, Math.max(s0, s + (rand() - 0.5) * 2.4));
+          if (ss > skip[0] && ss < skip[1]) continue;
+          const f2 = course.sample(ss);
+          const hw2 = course.widthAt(ss) / 2;
+          const e = ec + (rand() - 0.5) * 0.6;
+          const r = 0.17 + rand() * 0.25;
+          const h = bermSurface(ss, e, side, hw2) + r * (0.1 + rand() * 0.35);
+          const p = f2.pos.clone().addScaledVector(f2.right, side * (hw2 + e)).addScaledVector(f2.up, h);
           list.push({ p, r, c: (rand() * 5) | 0 });
         }
       }
@@ -165,8 +370,11 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
   return {
     group,
     whirlGroup,
+    berm: berm.mesh,
     instanceCount: total,
     update(time, focusS, outro = 0) {
+      berm.uniforms.uTime.value = time;
+      (berm.uniforms.uOutro.value as THREE.Vector2).x = outro;
       const s08 = course.stage('08').s0;
       for (let i = 0; i < chunks.length; i++) {
         const c = chunks[i];

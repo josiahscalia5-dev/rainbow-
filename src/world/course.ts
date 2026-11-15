@@ -82,15 +82,31 @@ const smooth = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t);
 };
 
+/**
+ * A stretch whose tunnel axis is an exact straight line a→b (the stream winds inside it). The
+ * course lies on the line at both ends of the stretch; tube.ts aligns the tunnel axis to it.
+ */
+export interface StraightAxis {
+  /** arc-length range of the stretch on the course */
+  s0: number;
+  s1: number;
+  a: THREE.Vector3;
+  b: THREE.Vector3;
+  /** stream-to-tunnel-bottom depth on the line (water sits this high in the tube) */
+  floorDepth: number;
+}
+
 interface RouteData {
   points: THREE.Vector3[];
   marks: Record<string, number>;
+  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
 }
 
 /** Generates the dense control polyline of the route (absolute coordinates). */
 function buildRoute(): RouteData {
   const pts: THREE.Vector3[] = [];
   const marks: Record<string, number> = {};
+  const straight: RouteData['straight'] = [];
   const push = (p: THREE.Vector3) => {
     if (pts.length && p.distanceTo(pts[pts.length - 1]) < 0.25) return;
     pts.push(p);
@@ -153,11 +169,18 @@ function buildRoute(): RouteData {
     return s4c.clone().add(V(0, R4 * (Math.cos(-pitch4) - Math.cos(a)), R4 * (Math.sin(-pitch4) - Math.sin(a))));
   });
   mark('05');
-  // ---- 05: horizontal S-shaped current in the perforated tube ----
+  // ---- 05: long STRAIGHT perforated current tube (ref 05: concentric rings, ONE vanishing point);
+  // the wide stream winds in gentle S-curves inside it. Centreline = the straight line s5 → s5+L05
+  // (slight descent); the lateral S-offset and its slope vanish at both ends, so 04 and 06 join it
+  // tangentially and s6 (hence 06/07/plunge/08) is unchanged. tube.ts builds the 05 tunnel on L05.
   const s5 = pts[pts.length - 1].clone();
-  seg(36, (t) =>
-    V(s5.x + 3.4 * Math.sin(2 * Math.PI * t) * Math.sin(Math.PI * t), s5.y - 3 * t, s5.z - 72 * t),
-  );
+  const L05 = V(0, -3, -72);
+  const S05 = { amp: 2.0, waves: 2 }; // ≈1.6 after smoothPolyline; λ ≈ 36 units
+  seg(48, (t) => {
+    const env = smooth(0, 0.16, t) * (1 - smooth(0.84, 1, t));
+    return s5.clone().addScaledVector(L05, t).add(V(S05.amp * env * Math.sin(2 * Math.PI * S05.waves * t), 0, 0));
+  });
+  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
   mark('06');
   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
   const s6 = pts[pts.length - 1].clone();
@@ -215,7 +238,7 @@ function buildRoute(): RouteData {
   );
   mark('11');
   smoothPolyline(pts, marks['03'], 2.2, 3);
-  return { points: pts, marks };
+  return { points: pts, marks, straight };
 }
 
 /**
@@ -249,6 +272,8 @@ export class Course {
   readonly length: number;
   readonly stages: StageDef[];
   readonly marks: Record<string, number>; // arc-length of named marks
+  /** straight tunnel stretches (05 current) — see StraightAxis */
+  readonly straightAxes: StraightAxis[];
   private readonly N: number;
   private readonly ds: number;
   private readonly P: Float32Array;
@@ -287,6 +312,7 @@ export class Course {
     };
     this.marks = {};
     for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
 
     // ---- stages ----
     const m = this.marks;
@@ -299,7 +325,8 @@ export class Course {
       def('02', 0.01, m['03'], { width: 5, interactive: false, speed: 9, bank: 0 }),
       def('03', m['03'], m['04'], { width: 7, speed: 9, refCoins: 1330, bank: 2.2 }),
       def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
-      def('05', m['05'], m['06'], { width: 6.2, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420 }),
+      // 05: level current (ref 05 shows no tilt) → weak curvature banking
+      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
       def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
       def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
       def('08', m['08'], m['09'], { width: 4.8, speed: 9.5, refCoins: 2040 }),
