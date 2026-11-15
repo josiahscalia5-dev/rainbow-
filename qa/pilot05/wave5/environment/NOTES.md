@@ -93,3 +93,15 @@ Captures go to qa/pilot05/wave5/environment/itNN (max 5), regression at the end 
   (the ref shows ≈9–10 coins to the VP; we show ≈5).
 * Near frame ring in the bottom corners: not built (see it02 note: impossible as a wall ring with the locked camera).
 * Opening warp during the ride (above). A per-frame recalibrated far section (eye = live camera) would remove it.
+
+# wave 5b (coordinator follow-up, 4 fixes) — plan
+1. Opening warp: drop the morph. Re-fit the far tunnel to the LIVE camera every frame (wall/chord in the vertex
+   shader from per-vertex virtual (Z, offset) + eye uniforms; rings/lids/glow/coins CPU instance matrices), then a
+   short alphaHash dissolve (camera 27→20 u before sF05) — no geometry ever moves through the view.
+2. Far river: chord follows an S-swing continuing the near core path; 05 palette (#029AF3 core, #F739E5 bands,
+   glints, low foam rims fading into the wall violet — no grey edges). Same single cheap material.
+3. Far coins: one InstancedMesh of visual-only proxies (coins.ts geometry/material read-only) for untaken coins
+   beyond sF05, mapped into the far tunnel on the far river core; dissolve with the tunnel.
+4. Culling: per-frame hook = scene.onBeforeRender (installed once from the far parts' first render, chained), sets
+   `visible` of all far parts only while the camera is on the 05 stretch before the fade end.
+Budget: ≤ 4 captures (b01…b04) + ride check.
