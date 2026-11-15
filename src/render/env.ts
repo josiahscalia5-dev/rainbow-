@@ -27,7 +27,7 @@ export function createCandyEnvironment(renderer: THREE.WebGLRenderer): THREE.Tex
     scene.add(mesh);
   };
   p('#ffffff', 6, [0, 14, 0], [18, 0.5, 18]); // big soft key from above
-  p('#ffd27a', 4, [-19, 4, 0], [0.5, 10, 26]); // warm gold bounce left
+  p('#ffe08a', 5, [-19, 4, 0], [0.5, 14, 30]); // warm gold bounce left
   p('#ff5fd2', 3.5, [19, 2, 0], [0.5, 12, 26]); // hot pink right
   p('#6ff4ff', 2.6, [0, -2, -19], [24, 8, 0.5]); // cyan water glow from the front
   p('#ffffff', 5, [6, 6, 19], [6, 6, 0.5]); // small hard highlight behind camera

@@ -49,18 +49,18 @@ export function createCoins(course: Course): CoinSystem {
   const defs = coinLayout(course);
   const faceTex = canvasTexture(256, 256, (c, w, h) => {
     const g = c.createRadialGradient(w * 0.38, h * 0.32, 10, w / 2, h / 2, w * 0.55);
-    g.addColorStop(0, '#fff6c0');
-    g.addColorStop(0.5, '#ffc21f');
-    g.addColorStop(1, '#d98200');
+    g.addColorStop(0, '#fffbd8');
+    g.addColorStop(0.5, '#ffdc3a');
+    g.addColorStop(1, '#f0a400');
     c.fillStyle = g;
     c.beginPath(); c.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2); c.fill();
     c.strokeStyle = '#ffe680'; c.lineWidth = 10;
     c.beginPath(); c.arc(w / 2, h / 2, w * 0.38, 0, Math.PI * 2); c.stroke();
     c.font = '800 170px "Baloo 2", Arial Black, sans-serif';
     c.textAlign = 'center'; c.textBaseline = 'middle';
-    c.fillStyle = '#b86400';
+    c.fillStyle = '#c47800';
     c.fillText('$', w / 2 + 4, h / 2 + 12);
-    c.fillStyle = '#ffe58a';
+    c.fillStyle = '#fff1a8';
     c.fillText('$', w / 2 - 2, h / 2 + 6);
   });
   const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.14, 40, 1);

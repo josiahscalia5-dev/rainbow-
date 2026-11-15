@@ -1,0 +1,175 @@
+{
+  "when": "2026-11-15T17:48:04.241Z",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "shots": [
+    {
+      "id": "07a_plunge_top",
+      "file": "qa/continuity/07a_plunge_top.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 309.2669545639457,
+        "y": -51.8138733937031
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 309.267,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -51.814,
+        "bennyVisible": true,
+        "cam": [
+          12.42,
+          -47.38,
+          -230.92
+        ]
+      },
+      "stats": {
+        "fps": 60.1,
+        "calls": 1,
+        "triangles": 1,
+        "geometries": 163,
+        "textures": 42,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.03113435986614
+      }
+    },
+    {
+      "id": "07b_plunge_mid",
+      "file": "qa/continuity/07b_plunge_mid.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 349.6176478434212,
+        "y": -83.61369183005249
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 349.618,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -83.614,
+        "bennyVisible": true,
+        "cam": [
+          12,
+          -75.93,
+          -259.83
+        ]
+      },
+      "stats": {
+        "fps": 60.2,
+        "calls": 1,
+        "triangles": 1,
+        "geometries": 79,
+        "textures": 34,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.03113435986614
+      }
+    },
+    {
+      "id": "07c_plunge_bottom",
+      "file": "qa/continuity/07c_plunge_bottom.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 385.96834112289673,
+        "y": -112.5279864135863
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 385.968,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -112.528,
+        "bennyVisible": true,
+        "cam": [
+          11.73,
+          -106.99,
+          -271.29
+        ]
+      },
+      "stats": {
+        "fps": 60.8,
+        "calls": 1,
+        "triangles": 1,
+        "geometries": 140,
+        "textures": 42,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.03113435986614
+      }
+    },
+    {
+      "id": "07d_entering_08",
+      "file": "qa/continuity/07d_entering_08.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "08",
+        "s": 389.25886918194703,
+        "y": -112.9878864351768
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "08",
+        "s": 389.259,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -112.988,
+        "bennyVisible": true,
+        "cam": [
+          11.24,
+          -108.81,
+          -273.98
+        ]
+      },
+      "stats": {
+        "fps": 60.2,
+        "calls": 1,
+        "triangles": 1,
+        "geometries": 155,
+        "textures": 42,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.03113435986614
+      }
+    }
+  ],
+  "errors": []
+}

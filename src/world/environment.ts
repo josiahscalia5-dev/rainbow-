@@ -192,7 +192,7 @@ export function buildEnvironment(course: Course): Environment {
   // =====================================================================================
   const s08 = course.stage('08').s0;
   const pinkFlow = pinkFlowMaterial();
-  const perfTubeMat = perforatedMetal({ color: '#c73fd9', emissive: '#8a1fb0', emissiveIntensity: 0.3, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.46, streaks: 0.5 });
+  const perfTubeMat = perforatedMetal({ color: '#b02ccc', emissive: '#7a14a8', emissiveIntensity: 0.32, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.5, streaks: 0.55, metalness: 0.8, roughness: 0.22 });
   // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
   const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
   const chunk = 40;
@@ -205,7 +205,7 @@ export function buildEnvironment(course: Course): Environment {
   // gold junction ring 04→05
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, goldMat, { tube: 0.08, inset: 0.2 }));
   // thick double gold ribs
-  zones.tubes.add(buildRings(perfPath, s05 + 3, s08 - 1, 6, goldMat, { tube: 0.055, double: true }));
+  zones.tubes.add(buildRings(perfPath, s05 + 3, s08 - 1, 7, goldMat, { tube: 0.042, double: true }));
   // wall lids / nozzles
   const lidMat = gold({ color: '#f0a040', roughness: 0.25, emissive: 0.35 });
   zones.tubes.add(buildNozzles(perfPath, s05 + 6, s08 - 6, 8.5, lidMat, goldMat, { angleDeg: 34, size: 1.9 }));

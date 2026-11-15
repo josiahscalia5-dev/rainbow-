@@ -124,7 +124,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "b5eaeb79af4108a28a6270be0b92301a88103cde13002b1b5e73d4b017898370"
+   "sha256": "786333121d2bc7161b4a4a31dbaae19188ad96d37a93d679451a40c565563d99"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -442,6 +442,11 @@
    "sha256": "48481beb62b6c5a965ce402198126f80888209d3af7376ff6248aeb9934e7cbe"
   },
   {
+   "path": "qa/07_to_08_continuity.md",
+   "bytes": 1525,
+   "sha256": "d370a63d21420cbfad1206a225bd81c0c5679d71e65c2f5aabce2de6afa78a93"
+  },
+  {
    "path": "qa/08_diff.png",
    "bytes": 203875,
    "sha256": "6c85e8f9b4dfc0096b297e3e9b972295cf5f306416ececfb50c7c76f856cffdd"
@@ -503,8 +508,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 10079,
-   "sha256": "14a3c3f924079226e2eeefa02f942d14b3313300b448be5cbad7e19b411ba504"
+   "bytes": 3119,
+   "sha256": "ff74b711da5b867d51b44f1ba3d79c6d5fd9bf148d4b86953c965661f6d63f86"
   },
   {
    "path": "qa/compare_summary.md",
@@ -512,9 +517,39 @@
    "sha256": "12500bef1b5cdebd565318337656c85cc847b51290a1043f3ac1df628311cfdb"
   },
   {
+   "path": "qa/continuity/07a_plunge_top.png",
+   "bytes": 1181153,
+   "sha256": "12d0e2ccd402f267f27b233cf08d749c8402e90c8a8b919783579367a3ac782b"
+  },
+  {
+   "path": "qa/continuity/07b_plunge_mid.png",
+   "bytes": 1180037,
+   "sha256": "0d3764dabd4f5c7554fafbaa00666177d0b45fad88a6aa55b0dbf853333c4cf1"
+  },
+  {
+   "path": "qa/continuity/07c_plunge_bottom.png",
+   "bytes": 788782,
+   "sha256": "dbf2c0dd59981225917c4bac012a1a81d59373abd10141e6dfabbec6a177ee79"
+  },
+  {
+   "path": "qa/continuity/07d_entering_08.png",
+   "bytes": 1348838,
+   "sha256": "029028324a94e1482f5c3ff7d2e1c55bc021e207e64df89ef7dd11886194d5f0"
+  },
+  {
+   "path": "qa/continuity/capture_log.json",
+   "bytes": 3908,
+   "sha256": "f566357c1e6e0605dd485a6efc4cc55657426efba4ae983aad0d9e3420d5e82e"
+  },
+  {
    "path": "qa/continuity_report.json",
    "bytes": 2673,
    "sha256": "92a2eca67b6f1ea7b3cebc4d6006fae86c7fc39024124bea7f9d4e509bd70a5a"
+  },
+  {
+   "path": "qa/gameplay_test.json",
+   "bytes": 14628,
+   "sha256": "1b8e155935f277b71bb620b5e98d99e130de8e5a9e9837011dcf45add2320331"
   },
   {
    "path": "qa/report_metrics.json",
@@ -578,48 +613,48 @@
   },
   {
    "path": "screenshots/01.png",
-   "bytes": 1038986,
-   "sha256": "d8b2440fad4f11cc5564d787fa35b1d33a24f7a1faa79e504824da8402be5a64"
+   "bytes": 1095912,
+   "sha256": "f05e9b20d6c0f7460f9df9fe0071a6a264d93ba812bd5c81ac02eec44b9c0a59"
   },
   {
    "path": "screenshots/02.png",
-   "bytes": 1233646,
-   "sha256": "0b6deb15187f07d3be45a986db6f45159296ea58b1deaa724a5f11efd2c6ba24"
+   "bytes": 1290509,
+   "sha256": "2a01f98dd0fead6907a9b07be445325f0253451a85be9724a2c2003e274e5849"
   },
   {
    "path": "screenshots/03.png",
-   "bytes": 607471,
-   "sha256": "b603ca355ea0f093b6fecd94c4c651a9a3497637f8e718f4542eb43cc9a5fbd9"
+   "bytes": 645650,
+   "sha256": "19eea5c577a31808498eac40432c9d36d79e75ac6dd1aa921cd53409bad826cc"
   },
   {
    "path": "screenshots/04.png",
-   "bytes": 766157,
-   "sha256": "b0386dee8a2f1f772e5b2209acd4697b602f0fd5783896d0e6fd428517069f38"
+   "bytes": 823704,
+   "sha256": "fd91fb43c4a1b340167cd99e1ad5eda602bde74b1f36671475fe5ab72bc56429"
   },
   {
    "path": "screenshots/05.png",
-   "bytes": 1373971,
-   "sha256": "6845db0d779078711dcc88b425b556ca9a7f78d7665ff9a8605d8f5e1fb98b02"
+   "bytes": 1538377,
+   "sha256": "75636a76ad7791a0b4ca66809dc0862189e3dd486387ee452590de7eccb17883"
   },
   {
    "path": "screenshots/06.png",
-   "bytes": 1038266,
-   "sha256": "1d36c9fbc0cb8159c3db0caf3fb4e353ff21010598a272b6077888c760403ae3"
+   "bytes": 1138675,
+   "sha256": "7e4048042183e69b1339a1baa657aa04b98e0909f641db275fb26f7ecb8d01d3"
   },
   {
    "path": "screenshots/07.png",
-   "bytes": 1362490,
-   "sha256": "366df07153fb24288671359744a66800e3c9ad7a767195df99d994293e25c055"
+   "bytes": 1485029,
+   "sha256": "dc0c33131c6ecdfaec31a62292e942777aa49c1bbc61d421ac06be14d5dbd730"
   },
   {
    "path": "screenshots/08.png",
-   "bytes": 1268765,
-   "sha256": "35995f8030ac532e8dba124008b156da4b7f20b95e532b179b3182c9332b5881"
+   "bytes": 1329372,
+   "sha256": "794c8941762503e8014e72d330b1bbbe5bfaa6a8149e50376a3f4e24a6350951"
   },
   {
    "path": "screenshots/09.png",
-   "bytes": 1336426,
-   "sha256": "379ceaa4cb5b9ea9f201f2f688e84d1bce634bda759ce85f54d49cff5374ffeb"
+   "bytes": 1396206,
+   "sha256": "7f09e651c39265bf5728f1f6374be21dd8d8a1b7afef9ed5621391c0c4b8130d"
   },
   {
    "path": "screenshots/10.png",
@@ -670,6 +705,11 @@
    "path": "scripts/export_claude_sessions.py",
    "bytes": 12417,
    "sha256": "82927c9a3804e5aea8b9b57080c5a4d893e971d745020b06d49123fd0347c83a"
+  },
+  {
+   "path": "scripts/gameplay-test.mjs",
+   "bytes": 7152,
+   "sha256": "af7903c9e51f9a1080bc0e7b11776ebecdc8fb8761df9504b9c8179086dc2647"
   },
   {
    "path": "scripts/install-autosave-scheduler.sh",
@@ -758,13 +798,13 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 28230,
-   "sha256": "dee8063430f80f6524e187c99cddcbf8b13713a24296be6b0b67cf0e49208022"
+   "bytes": 28424,
+   "sha256": "b59cb31c6604e1530711a8e91b9e6aeb33da19a8e16f1abe0f3489416bfd5a52"
   },
   {
    "path": "src/game/cameraRig.ts",
    "bytes": 5722,
-   "sha256": "01beebd51fcd9f14a4a3bfcb0930c99d7cf893b1d4f44eb7b93aa6da0e785b7e"
+   "sha256": "5553cd714fcd2e3ecdfd1df595e83667635b8d2096aeaac72d52d27cecdebe19"
   },
   {
    "path": "src/game/modules.ts",
@@ -774,7 +814,7 @@
   {
    "path": "src/gameplay/coins.ts",
    "bytes": 6299,
-   "sha256": "6c954dc2080455f81ccd037403c67dc1a8f89cffa11037637d3d10f29a41c028"
+   "sha256": "0caba2c2dbfa62439656cfb700083cf67655d97fec5392f7cf7e5c9787b28f67"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -789,7 +829,7 @@
   {
    "path": "src/render/env.ts",
    "bytes": 2743,
-   "sha256": "e90a6296250daab0bc0bb85e9e5166a8df3558a29c95d4ec17b6441dc5272820"
+   "sha256": "e6b4c0e86eb9dd05154e436cea3c3dee5189daed160b6be514bd07524cc372c1"
   },
   {
    "path": "src/render/grade.ts",
@@ -858,8 +898,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 29637,
-   "sha256": "c8856d358ffe2b0e80f455846bf1d33428014c4187a1b549b45d36542ff6f1cb"
+   "bytes": 29671,
+   "sha256": "97f5c88c537041d45678192a35c32c86fa49f0c0f1ccab153ddc6c782cf96d3c"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -869,7 +909,7 @@
   {
    "path": "src/world/materials.ts",
    "bytes": 6893,
-   "sha256": "59b1696415d6da594c5fa571312fbd984446568a8fc9c51eb97a0094153d5c1b"
+   "sha256": "95face6844b3c8a9d34dd082c32fe23164f1ae2798916d4f3692b62a2f215069"
   },
   {
    "path": "src/world/towel.ts",
@@ -878,8 +918,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 9994,
-   "sha256": "5c224daf3b4b400d483bd901b651a9393f34b78a40647a966f3e4e8547847dd0"
+   "bytes": 9993,
+   "sha256": "049680678c960865b2e6cb779596bfa03952d330115ef4f31cab12437a64f054"
   },
   {
    "path": "tools/model-lab.html",

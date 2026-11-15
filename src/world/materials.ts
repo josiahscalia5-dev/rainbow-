@@ -97,10 +97,10 @@ totalEmissiveRadiance = totalEmissiveRadiance * (1.0 - perfHole) + vec3(1.0, 0.8
 
 export function gold(opts: { roughness?: number; emissive?: number; color?: THREE.ColorRepresentation } = {}): THREE.MeshStandardMaterial {
   return new THREE.MeshStandardMaterial({
-    color: opts.color ?? '#ffb83d',
+    color: opts.color ?? '#ffcf4d',
     metalness: 1,
     roughness: opts.roughness ?? 0.2,
-    emissive: new THREE.Color('#b85c00'),
+    emissive: new THREE.Color('#c98a00'),
     emissiveIntensity: opts.emissive ?? 0.38,
     envMapIntensity: 1.6,
   });

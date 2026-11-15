@@ -66,9 +66,9 @@ export function straightTubePath(
     const s = S(i);
     const d = cp[i].clone().sub(frames[i].pos).dot(frames[i].right);
     const X = Math.abs(d) + course.widthAt(s) / 2 + 0.25;
-    const r = Math.max(opts.baseRadius(s), X + 1.2);
+    const r = Math.max(opts.baseRadius(s), X + 0.7);
     rawR.push(r);
-    rawD.push(Math.max(0.9, r - Math.sqrt(Math.max(0, r * r - X * X)) + 0.35));
+    rawD.push(Math.max(0.9, r - Math.sqrt(Math.max(0, r * r - X * X)) + 0.2));
   }
   const dilate = (arr: number[], k: number) => arr.map((_, i) => { let m = -Infinity; for (let j = i - k; j <= i + k; j++) m = Math.max(m, arr[THREE.MathUtils.clamp(j, 0, n - 1)]); return m; });
   const box = (arr: number[], k: number) => arr.map((_, i) => { let a = 0; for (let j = i - k; j <= i + k; j++) a += arr[THREE.MathUtils.clamp(j, 0, n - 1)]; return a / (2 * k + 1); });

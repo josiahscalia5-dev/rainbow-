@@ -56,7 +56,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.3, 0.4, 0.9);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
   const useBloom = qs.get('bloom') !== '0';
   if (useBloom) composer.addPass(bloom);
   composer.addPass(new OutputPass());
@@ -111,6 +111,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     bumpCooldown: 0,
     edgeTime: 0,
     twirl: 0,
+    respawns: 0,
     log: [] as { t: number; s: number; y: number; stage: StageId }[],
   };
 
@@ -320,13 +321,13 @@ export async function startGame(canvas: HTMLCanvasElement) {
     const speed = course.prop('speed', st.s);
     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
     const halfW = course.widthAt(st.s) / 2;
-    const safe = halfW - 1.0;
+    const safe = halfW - 0.75;
     st.vlat += (input.steer * 7.5 - st.vlat) * Math.min(1, dt * 8);
     st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -halfW + 0.55, halfW - 0.55);
     // foam-wall bump → lose a heart (with cooldown), bounce back toward the centre
     st.bumpCooldown = Math.max(0, st.bumpCooldown - dt);
     if (Math.abs(st.lat) > safe) st.edgeTime += dt; else st.edgeTime = 0;
-    if (st.edgeTime > 0.35 && st.bumpCooldown <= 0) {
+    if (st.edgeTime > 0.6 && st.bumpCooldown <= 0) {
       st.hearts = Math.max(0, st.hearts - 1);
       hud.setHearts(st.hearts);
       hud.flashHurt();
@@ -339,6 +340,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
         hud.setHearts(5);
         st.s = stg.s0;
         st.lat = 0;
+        st.respawns++;
       }
     }
     // coins
@@ -564,6 +566,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
     },
     log() { return st.log; },
+    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+    respawns() { return st.respawns; },
     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
     bennyScreen() {
       const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
