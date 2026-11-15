@@ -167,14 +167,16 @@ export function buildEnvironment(course: Course): Environment {
   const s04 = course.stage('04').s0, s05 = course.stage('05').s0;
   const tubeR = (s: number) => course.prop('tube', s);
   // the pipe mouth is the drain hole itself: narrow at the lip, opening up as it dives
-  const r04 = (s: number) => tubeR(s);
+  // the ring tunnel starts just ahead of Benny on the open slide (ref 04), with a flared mouth
+  const g0 = s04 + 5.0;
+  const r04 = (s: number) => tubeR(s) + 1.8 * (1 - sm(g0, g0 + 6, s));
   const goldPath = courseTubePath(course, r04, 0.9);
-  const goldPipe = new THREE.Mesh(buildTubeGeometry(goldPath, s04 - 0.6, s05, { radial: 56, step: 0.4 }), goldRibbed(1.25));
+  const goldPipe = new THREE.Mesh(buildTubeGeometry(goldPath, g0, s05, { radial: 56, step: 0.4 }), goldRibbed(1.25));
   zones.tubes.add(goldPipe);
-  zones.tubes.add(buildRings(goldPath, s04 - 0.4, s05 - 1, 1.6, goldMat, { tube: 0.05, inset: 0.02 }));
+  zones.tubes.add(buildRings(goldPath, g0 + 0.2, s05 - 1, 1.6, goldMat, { tube: 0.05, inset: 0.02 }));
   // big mouth rings at the drain
   for (let i = 0; i < 4; i++) {
-    const s = s04 - 0.5 + i * 0.35;
+    const s = g0 + 0.05 + i * 0.3;
     zones.tubes.add(buildRings(goldPath, s, s + 0.01, 1, goldMat, { tube: 0.07, extra: 0.4 + i * 0.22 }));
   }
 

@@ -65,7 +65,7 @@ export const WORLD = {
   basin: { center: new THREE.Vector3(2, -16, -19), rimRadius: 11.5, rimY: -10.6, drainRadius: 4.3, drainY: -20.2 },
   /** Final Spin Chamber (08–11): drum with axis along Z, door at the far (-Z) end */
   chamber: { center: new THREE.Vector3(12, -101.1, 0), radius: 13.5, zBack: -280, zDoor: -332, floorY: -113.6, doorRadius: 6.2 },
-  platform: { center: new THREE.Vector3(12, -110.6, -322.5), radius: 6.2, topY: -110.6 },
+  platform: { center: new THREE.Vector3(12, -110.6, -325.0), radius: 6.2, topY: -110.6 },
   plunge: { topY: -52, bottomY: -113.6 },
 };
 

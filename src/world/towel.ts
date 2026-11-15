@@ -75,10 +75,11 @@ export function buildTowel(): TowelMesh {
     const v = j / NV; // along depth (z)
     for (let i = 0; i <= NU; i++) {
       const u = i / NU; // around the section / across the sheet
-      // folded loaf
-      const [lx, ly] = loafSection(u, W, H);
-      const bulge = 1 + 0.06 * Math.sin(Math.PI * v);
-      base.push(lx * bulge, ly * (0.94 + 0.08 * Math.sin(Math.PI * v)), (v - 0.5) * DEPTH * (1 + 0.08 * Math.sin(Math.PI * u * 2)));
+      // folded loaf: the sheet's front-to-back direction (v) wraps around a YZ cross-section, the
+      // across direction (u) runs along X — so tent→loaf reads as folding the towel over onto itself
+      const [lz, ly] = loafSection(v, DEPTH, H);
+      const endRound = Math.sin(Math.PI * Math.min(1, Math.min(u, 1 - u) * 6)) * 0.12 + 0.88;
+      base.push((u - 0.5) * W * (1 + 0.03 * Math.sin(Math.PI * v)), ly * endRound, -lz * endRound);
       // tent: sheet across x, draped over an arch whose axis is along z
       const x = (u - 0.5) * tentW;
       const ax = Math.abs(x);

@@ -183,7 +183,7 @@ export function buildLaundryRoom(o: LaundryRoomOptions): LaundryRoom {
       nearDoor: new THREE.Vector3(2, F, 9),
       counter: new THREE.Vector3(winX - 4, F, D - 22),
       exitRight: new THREE.Vector3(34, F, 58),
-      exitLeft: new THREE.Vector3(-26, F, 62),
+      exitLeft: new THREE.Vector3(-15, F, 68),
       table: new THREE.Vector3(-3, F, 30),
     },
   };

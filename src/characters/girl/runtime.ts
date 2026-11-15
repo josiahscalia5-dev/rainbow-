@@ -56,6 +56,7 @@ export async function loadGirl(url = new URL('../../../assets/models/rainbow_gir
       console.warn(`girl: unknown clip ${name}`);
       return;
     }
+    if (current === a) return; // already playing — don't restart every frame
     const fade = opts.fade ?? 0.35;
     const once = opts.loop === false || (opts.loop === undefined && ONCE.has(name));
     a.reset();

@@ -2677,3 +2677,134 @@ The numbers point at the cause. In 02, Benny is at x=+2.25, z=-5.17, but at that
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert a in s, (p, a[:70]); s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/world/environment.ts', [\n (\"  const sChute1 = course.stage('03').s0 + 3;\",\"  const sChute1 = course.stage('03').s0 + 0.3;\"),\n (\"  const doorCenterC = new THREE.Vector3(C.center.x, WORLD.platform.topY + 4.2, C.zDoor);\",\"  const doorCenterC = new THREE.Vector3(C.center.x, WORLD.platform.topY + 7.0, C.zDoor);\"),\n (\"  const roomC = buildLaundryRoom({ floorDrop: 11.3, palette: 'soft', foldingTable: tru …[+1974 chars]`
 
+### 🧑 User — 2026-11-15T17:35:21.507Z
+
+> ↩︎ result: ok
+> 6
+> sheet /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_b.png
+
+### 🤖 Claude — 2026-11-15T17:35:26.421Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_b.png"}`
+
+### 🧑 User — 2026-11-15T17:35:26.458Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:36:09.431Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert a in s, (p, a[:70]); s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/game/Game.ts', [\n (\"const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 3.8, badge: 3.9, cp11: 5.2 };\",\n  \"const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 6.4, badge: 3.9, cp11: 5.2 };\"),\n (\"const T = { dropEnd: 1.6, doorClose0: 1.9, doorClose1: 2.8, walk0: 3.0, peek: 4.4, cp01: 5.8, spin: 7.0, cp02:  …[+1454 chars]`
+
+### 🧑 User — 2026-11-15T17:36:18.312Z
+
+> ↩︎ result: ok
+> 04 {"scr":{"x":0.01,"y":-0.2,"z":0.991,"visible":true,"cam":[3.21,-11.81,-15.23],"benny":[1.99,-20.38,-21.75]},"c":[{"d":6,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[2.32,-16.06,-19.37]},{"d":15.7,"obj":"water_ribbon<water_system<Scene","p":[0.89,-22.93,-26.07]}]}
+> 11 {"scr":{"x":-0.08,"y":-0.34,"z":0.996,"visible":false,"cam":[11.2,-102,-301],"benny":[12,-109.48,-322.29]},"c":[{"d":28.71,"obj":"hoodie_skirt<hips<girl_root<rainbow_girl<AuxScene","p":[12.98,-106.4,-329.31]},{"d":28.9,"obj":"jeans_hips<hips<girl_root<rainbow_girl<AuxScene","p":[12.99,-106.43,-329.5]}]}
+
+### 🤖 Claude — 2026-11-15T17:36:47.544Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert a in s, (p, a[:70]); s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/world/environment.ts', [\n (\"  const r04 = (s: number) => tubeR(s);\\n  const goldPath = courseTubePath(course, r04, 0.9);\\n  const goldPipe = new THREE.Mesh(buildTubeGeometry(goldPath, s04 - 0.6, s05, { radial: 56, step: 0.4 }), goldRibbed(1.25));\",\n  \"  // the ring tunnel starts just ahead of Benny on the open slide (ref 04), with a flared mouth\\n  const g0 = s04 + 5.0;\\n  const r04 = (s: number) =>  …[+911 chars]`
+
+### 🧑 User — 2026-11-15T17:37:36.265Z
+
+> ↩︎ result: ok
+> 5
+> sheet /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_b.png
+
+### 🤖 Claude — 2026-11-15T17:37:41.182Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_b.png"}`
+
+### 🧑 User — 2026-11-15T17:37:41.229Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:37:52.080Z
+
+Before changing more, let me look at 11 at full size:
+
+### 🤖 Claude — 2026-11-15T17:37:53.476Z
+
+> 🔧 **Bash** `{"command": "grep -n \"play(\\|function play\\|play:\" src/characters/girl/runtime.ts | head; sed -n \"$(grep -n 'play(name' src/characters/girl/runtime.ts | head -1 | cut -d: -f1),+22p\" src/characters/girl/runtime.ts", "description": "Inspect girl runtime play() behaviour"}`
+
+### 🧑 User — 2026-11-15T17:37:53.539Z
+
+> ↩︎ result: Exit code 1
+> 53:  const play: GirlRuntime['play'] = (name, opts = {}) => {
+> 68:      a.play();
+> 72:      a.play();
+> sed: -e expression #1, char 1: unknown command: `,'
+
+### 🤖 Claude — 2026-11-15T17:37:54.926Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/11.png"}`
+
+### 🧑 User — 2026-11-15T17:37:54.973Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:38:38.896Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/girl/runtime.ts", "offset": 45, "limit": 45}`
+
+### 🧑 User — 2026-11-15T17:38:38.914Z
+
+> ↩︎ result: 45	  // blink lids are morph-target meshes (behind the eye openings): influence 0 = open, 1 = closed
+> 46	  const lids = ['eyelidL', 'eyelidR']
+> 47	    .map((n) => model.getObjectByName(n) as THREE.Mesh | undefined)
+> 48	    .filter((m): m is THREE.Mesh => !!m && !!m.morphTargetInfluences);
+> 49	  let t = 0;
+> 50	  let nextBlink = 1.2 + Math.random() * 2;
+> 51	  let blinkStart = -10;
+> 52	
+> 53	  const play: GirlRuntime['play'] = (name, opts = {}) => {
+> 54	    const a = actions.get(name);
+> 55	    if (!a) {
+> 56	      console.warn(`girl: unknown clip ${name}`);
+> 57	      return;
+> 58	    }
+> 59	    const fade = opts.fade ?? 0.35;
+> 60	    const once = opts.loop === false || (opts.loop === undefined && ONCE.has(name));
+> 61	    a.reset();
+> 62	    a.setLoop(once ? THREE.LoopOnce : THREE.LoopRepeat, Infinity);
+> 63	    a.clampWhenFinished = once;
+> 64	    a.timeScale = opts.timeScale ?? 1;
+> 65	    a.enabled = true;
+> 66	    a.setEffectiveWeight(1);
+> 67	    if (current && current !== a && fade > 0) {
+> 68	      a.play();
+> 69	      current.crossFadeTo(a, fade, false);
+> 70	    } else {
+> 71	      if (current && current !== a) current.stop();
+> 72	      a.play();
+> 73	    }
+> 74	    current = a;
+> 75	  };
+> 76	
+> 77	  const update = (dt: numbe …[+617 chars]
+
+### 🤖 Claude — 2026-11-15T17:38:46.744Z
+
+> 🔧 **Bash** `{"command": "grep -n \"Math.random\" src/characters/girl/runtime.ts src/characters/benny/runtime.ts src/vfx/*.ts | head -20", "description": "Find non-deterministic randomness in runtimes and VFX"}`
+
+### 🧑 User — 2026-11-15T17:38:46.787Z
+
+> ↩︎ result: src/characters/girl/runtime.ts:50:  let nextBlink = 1.2 + Math.random() * 2;
+> src/characters/girl/runtime.ts:83:      nextBlink = t + 2.2 + Math.random() * 3.2;
+> src/characters/girl/runtime.ts:84:      if (Math.random() < 0.18) nextBlink = t + 0.32; // occasional double blink
+> src/characters/benny/runtime.ts:138:      if (blinkT <= 0) blinkT = 2.2 + Math.random() * 2.6;
+> src/vfx/bubbles.ts:109:  return a + Math.random() * (b - a);
+> src/vfx/bubbles.ts:123:  const seeds = new Float32Array(nBig).map(() => Math.random());
+> src/vfx/bubbles.ts:139:  const sSeed = new Float32Array(nSmall).map(() => Math.random());
+> src/vfx/bubbles.ts:159:    b.phase = Math.random() * 6.28;
+> src/vfx/bubbles.ts:165:      const r = Math.sqrt(Math.random()) * (dA.radius - 0.9);
+> src/vfx/bubbles.ts:172:      b.size = isBig ? (Math.random() < 0.25 ? rnd(0.45, 0.85) : rnd(0.16, 0.42)) : rnd(0.05, 0.16);
+> src/vfx/bubbles.ts:186:      b.size = Math.random() < 0.18 ? rnd(0.5, 0.9) : rnd(0.15, 0.42);
+> src/vfx/bubbles.ts:189:      h = rnd(0.15, 2.6) * (Math.random() < 0.7 ? 0.5 : 1.2);
+> src/vfx/index.ts:91:  const rnd = (a: number, b: number) => a + Math.random() * (b - a);
+> src/vfx/index.ts:147:          const c = wave.crest[(Ma …[+186 chars]
+
+### 🤖 Claude — 2026-11-15T17:39:13.284Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert a in s, (p, a[:70]); s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/main.ts', [(\"// Entry point — the Game is assembled in src/game/Game.ts.\\nimport { startGame } from './game/Game';\",\n\"\"\"// Entry point — the Game is assembled in src/game/Game.ts.\nimport { startGame } from './game/Game';\n\n// Deterministic randomness for QA captures (?qa or ?seed=N): bubbles, blinks and procedural\n// textures become reproducible so screenshots can be compared run-to-run.\n{\n  const …[+3153 chars]`
+

@@ -124,7 +124,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "20331188b9a650bb39dc580395a2ea33bb9a2805836a6dfcfc3cf262f2ffc666"
+   "sha256": "794bb2245b629f5588853372724353fafa9ba99aac3eacd9d3cdd746955f0e83"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -218,8 +218,8 @@
   },
   {
    "path": "docs/path_graph.md",
-   "bytes": 4602,
-   "sha256": "80f11a765d02dce638b26346a914db464a499884a5fbc4e9cbb5c5a2fea7b495"
+   "bytes": 4611,
+   "sha256": "aa251cf68dc91a4d0958ca1e5a8f115f952ea75e0f164a99e97229e9903b1c49"
   },
   {
    "path": "docs/vfx/water.md",
@@ -338,13 +338,13 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 10898,
-   "sha256": "4ff2e570af79e03fd19356ca6a1885e13c88f2d65ee294687610ebab123a2373"
+   "bytes": 5065,
+   "sha256": "671a38daa4b6d52e077365efb961e3773108070528c2c2263e5a40efef599ec9"
   },
   {
    "path": "qa/continuity_report.json",
-   "bytes": 2667,
-   "sha256": "98ef52741487ff330391ab9ee47e34f511d4d5085ec8465aba0381e149700621"
+   "bytes": 2674,
+   "sha256": "a5568a701eaf9c67e83e9105720fd73b4fda8cf690b86ccc4c5e35fce5baed8e"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -513,8 +513,8 @@
   },
   {
    "path": "src/characters/girl/runtime.ts",
-   "bytes": 3710,
-   "sha256": "0b250e57f977178ea454645f3f50724432d8dd3041e9a575694a3c561940e3db"
+   "bytes": 3790,
+   "sha256": "3e06fa933489bca7bc608dcde2485e8aa0f5c81318cbe25758a1361fb56dda7e"
   },
   {
    "path": "src/characters/girl/textures.ts",
@@ -528,8 +528,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 27712,
-   "sha256": "65a81535ff7e374e21a2a4a6753f1ddec54057f91c87658faf7391ee99e31e3a"
+   "bytes": 27932,
+   "sha256": "f0d9e27e9ffee6b6e082cb85c6705872f2c9ed181129c94bfd96921c6fa627a1"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -553,8 +553,8 @@
   },
   {
    "path": "src/main.ts",
-   "bytes": 287,
-   "sha256": "8c5e1d9fb659c45009f1eee92744ca9f2adf1683ba03eb1aa35f75afe101c78b"
+   "bytes": 834,
+   "sha256": "77a2f053b1004e90d468bcce71691313ca9befd45c38f5c8097447515fbe904e"
   },
   {
    "path": "src/render/env.ts",
@@ -624,17 +624,17 @@
   {
    "path": "src/world/course.ts",
    "bytes": 20566,
-   "sha256": "a7fb9745b0f10b71f6ee95b2d24e6778ad82ff8a389832dea0622282e8ad5dc1"
+   "sha256": "07bedc7f1e38eb3fbf1431491ed93e1bc232fbf9138f04edccd8653cbd3a7b03"
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 29072,
-   "sha256": "32de3e806de9d03944423bc995012ad4c1319f8631d5663bc0ab06d156223ea2"
+   "bytes": 29215,
+   "sha256": "6d018ca951a46dbbdab5a6a7f747bd00751757876921fc607656ca4572572447"
   },
   {
    "path": "src/world/laundryRoom.ts",
    "bytes": 8308,
-   "sha256": "8bb2d0756819421527dcf60da556ddf49fbc1177ec2b7061cd00cc5ebc9d48a5"
+   "sha256": "7c3a4cb22741c58f3c589239d07ffcf9097d6c4b8e59c99a72d7d8f689cc7679"
   },
   {
    "path": "src/world/materials.ts",
@@ -643,8 +643,8 @@
   },
   {
    "path": "src/world/towel.ts",
-   "bytes": 6086,
-   "sha256": "eb01772b2727de7e5f119641634e7c1a1e426c53c9debaf6f91a4e93bcb15aa6"
+   "bytes": 6281,
+   "sha256": "c6f65ee435296d6a1c53ff4f56dc7d0ed76917b91dd8c962e20134f91215cee0"
   },
   {
    "path": "src/world/tube.ts",

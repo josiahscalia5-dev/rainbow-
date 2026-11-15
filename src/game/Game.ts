@@ -30,9 +30,9 @@ const sm = (a: number, b: number, x: number) => THREE.MathUtils.smoothstep(x, a,
 const lerp = THREE.MathUtils.lerp;
 
 /** intro timeline marks (seconds) */
-const T = { dropEnd: 1.6, doorClose0: 1.9, doorClose1: 2.8, walk0: 3.0, peek: 4.4, cp01: 5.8, spin: 7.0, cp02: 8.7, drain: 11.0, rideStart: 13.6 };
+const T = { dropEnd: 1.6, doorClose0: 1.9, doorClose1: 2.8, walk0: 3.0, peek: 4.4, cp01: 6.6, spin: 7.4, cp02: 9.1, drain: 11.4, rideStart: 14.0 };
 /** outro timeline marks */
-const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 3.8, badge: 3.9, cp11: 5.2 };
+const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 6.4, badge: 3.9, cp11: 5.2 };
 
 export async function startGame(canvas: HTMLCanvasElement) {
   const qs = new URLSearchParams(location.search);
@@ -124,7 +124,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   };
 
   const zoneRanges: Record<keyof typeof env.zones, [StageId, StageId]> = {
-    drumA: ['01', '03'],
+    drumA: ['01', '02'],
     basin: ['02', '05'],
     tubes: ['03', '09'],
     chamber: ['07', '11'],
@@ -157,7 +157,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
 
   const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
   const tmpV = new THREE.Vector3();
-  const doorAOpen = -1.9, doorCOpen = -1.75;
+  const doorAOpen = -1.9, doorCOpen = -1.95;
 
   // ---------------------------------------------------------------- intro (01–02)
   const introUpdate = (dt: number) => {
@@ -280,8 +280,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
   /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */
   const cam02 = (b: THREE.Vector3) => {
     const dA = WORLD.drumA;
-    const pos = new THREE.Vector3(b.x * 0.3, THREE.MathUtils.clamp(b.y - 0.7, dA.waterY + 1.0, 2.0), THREE.MathUtils.clamp(b.z - 3.0, dA.zBack + 0.4, dA.zDoor));
-    const look = b.clone().lerp(new THREE.Vector3(0, 0.2, dA.zDoor), 0.38).add(new THREE.Vector3(0, 0.55, 0));
+    const door = new THREE.Vector3(0, 0.3, dA.zDoor);
+    const away = b.clone().sub(door).normalize();
+    const pos = b.clone().addScaledVector(away, 3.0).add(new THREE.Vector3(0, 0.35, 0));
+    const rr = Math.hypot(pos.x, pos.y);
+    if (rr > 3.9) { pos.x *= 3.9 / rr; pos.y *= 3.9 / rr; }
+    pos.y = Math.max(pos.y, dA.waterY + 1.0);
+    pos.z = THREE.MathUtils.clamp(pos.z, dA.zBack + 0.4, dA.zDoor - 1);
+    const look = b.clone().lerp(door, 0.22).add(new THREE.Vector3(0, 0.45, 0));
     return { pos, look };
   };
 
@@ -382,10 +388,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
     // girl: from the folding table to the door, leans in through it with her palms on the towel,
     // folds it over Benny and draws it toward herself (never sees him — he is inside the fold)
     const P0 = WORLD.platform;
-    const towelZ = lerp(P0.center.z - 1.0, P0.center.z - 4.0, sm(O.fold0, O.fold1, t));
+    const towelZ = lerp(P0.center.z - 1.0, P0.center.z - 3.4, sm(O.fold0, O.fold1, t));
     env.towel.mesh.position.set(P0.center.x, P0.topY, towelZ);
     // palms of 'leanReachTowel' are at (±3.64, 9.8, 4.87) in her frame → feet 4.87 behind the towel
-    const feetW = new THREE.Vector3(P0.center.x, P0.topY + 2.55 - 9.8, P0.center.z - 4.0 - 4.87);
+    const feetW = new THREE.Vector3(P0.center.x, P0.topY + 2.55 - 9.8, P0.center.z - 3.4 - 4.87);
     const feetL = env.roomC.anchor.worldToLocal(feetW.clone());
     if (t < O.lean0) {
       const from = env.roomC.spots.table.clone();
@@ -401,8 +407,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     env.towel.setTent(1 - sm(O.fold0, O.fold1, t));
     // camera: the 11 composition — inside the drum, platform & towel centre, open door upper-right
     const P = WORLD.platform;
-    const camPos = new THREE.Vector3(P.center.x - 0.8, P.topY + 8.6, P.center.z + 21.5);
-    const camLook = new THREE.Vector3(P.center.x + 0.9, P.topY + 4.4, P.center.z - 5.5);
+    const camPos = new THREE.Vector3(P.center.x - 0.8, P.topY + 11.5, P.center.z + 21.0);
+    const camLook = new THREE.Vector3(P.center.x + 0.9, P.topY + 3.6, P.center.z - 5.0);
     const k = sm(0, 1.4, t);
     const rp = new THREE.Vector3(), rt = new THREE.Vector3(), ru = new THREE.Vector3();
     rideCam.desired(sEnd, 0, rp, rt, ru);
