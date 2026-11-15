@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1967,
-   "sha256": "4df59bfb229dd236828efa4e9a10ea34a214f462545951a3c1bbaee36d996245"
+   "sha256": "9749514dcc48b3a861e70b1dda6527421e2ccbd1fcbc700331d5389f70e21a35"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -793,8 +793,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 8073,
-   "sha256": "e80689fdd3dfc9e67ad5a3bd18df357eb49755337cd6dab24e85747cf33a732a"
+   "bytes": 4148,
+   "sha256": "336f511ceeb122ef61978ee9eac655fd03358c97001fecc005d111e5dda8e07f"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1303,8 +1303,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 31123,
-   "sha256": "1fa39bda59225ffab40d2b30db49d51c0e485c8aeb1879fe150884b644a740b7"
+   "bytes": 31122,
+   "sha256": "6847e3b586f698a9ada14f0e0a7b3e9c7229a8ac5241b84f86ec0d8592298233"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -1313,8 +1313,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 16704,
-   "sha256": "0efd1fca703bb7d5f00000f8cd1b6fe020d6c63a8205797652ac20252a7fda6b"
+   "bytes": 16723,
+   "sha256": "a5b8b3b4274a596cce4356d1726506889511fa5dde4d0cf9da500c679f08ffea"
   },
   {
    "path": "src/world/towel.ts",
@@ -1323,8 +1323,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 17230,
-   "sha256": "ef2bc3b617f51f95f0d577fbafcf863b6aec1e4620ad27c12f82ad74cfa23cd9"
+   "bytes": 17345,
+   "sha256": "a5688ff5c279f6d475066c9a9be3b06f9d5cfed1b4c30fd6dd1ae37443776d64"
   },
   {
    "path": "tools/model-lab.html",

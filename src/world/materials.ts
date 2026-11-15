@@ -227,7 +227,7 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
   const cached = tubeEnvs[variant];
   if (cached) return cached;
   const isGold = variant === 'gold';
-  const N = 64;
+  const N = 128;
   const dir = new THREE.Vector3();
   const col = new THREE.Color();
   const faces: THREE.DataTexture[] = [];
@@ -246,7 +246,7 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
     const ang = Math.atan2(d.y, d.x); // angle around the tunnel axis (Z)
     const up = d.y;
     // base: deep hot magenta above, violet toward the floor (kept dark so the strips give contrast)
-    if (isGold) out.setRGB(0.42, 0.2, 0.12).lerp(new THREE.Color(0.22, 0.08, 0.12), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
+    if (isGold) out.setRGB(0.5, 0.24, 0.12).lerp(new THREE.Color(0.2, 0.07, 0.1), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
     else out.setRGB(0.4, 0.03, 0.3).lerp(new THREE.Color(0.16, 0.05, 0.5), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
     // pink-white strip lights running along the tunnel at fixed angles around it (8, uneven strength)
     for (let i = 0; i < 8; i++) {
@@ -254,8 +254,8 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
       const dA = Math.abs(Math.atan2(Math.sin(ang - a0), Math.cos(ang - a0)));
       // the strips run the whole length of the tunnel, so they converge at ±Z like meridians: rings and
       // grazing walls pick them up as regularly spaced highlight spots/streaks (refs 05–07)
-      const k = Math.exp(-(dA * dA) / 0.005) * (isGold ? 1 : 1 - Math.abs(d.z) * 0.35) * (i % 2 ? 0.7 : 1.15);
-      if (isGold) { out.r += 3.6 * k; out.g += 3.0 * k; out.b += 2.2 * k; } else { out.r += 3.4 * k; out.g += 1.7 * k; out.b += 3.1 * k; }
+      const k = Math.exp(-(dA * dA) / (isGold ? 0.0025 : 0.005)) * (isGold ? 1 : 1 - Math.abs(d.z) * 0.35) * (i % 2 ? 0.7 : 1.15);
+      if (isGold) { out.r += 7.0 * k; out.g += 5.6 * k; out.b += 3.6 * k; } else { out.r += 3.4 * k; out.g += 1.7 * k; out.b += 3.1 * k; }
     }
     // warm light at the very end of the tunnel (-Z), violet haze around it, softer pink glow behind (+Z)
     const ahead = Math.max(0, -d.z);

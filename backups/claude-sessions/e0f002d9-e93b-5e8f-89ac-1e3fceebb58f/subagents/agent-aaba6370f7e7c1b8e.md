@@ -1090,3 +1090,35 @@ Now the gold env strips (full-length, so rings reflect them as highlight spots a
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/materials.ts'\ns=open(p).read()\na=\"\"\"      const k = Math.exp(-(dA * dA) / 0.005) * (1 - Math.abs(d.z) * 0.6) * (i % 2 ? 0.7 : 1.15);\"\"\"\nb=\"\"\"      // the strips run the whole length of the tunnel, so they converge at ±Z like meridians: rings and\n      // grazing walls pick them up as regularly spaced highlight spots/streaks (refs 05–07)\n      const k = Math.exp(-(dA * dA) / 0.005) * (isGold ? 1 : 1 - Math.abs(d.z) * 0.35) * (i % 2 ? 0.7 : 1.15);\"\"\"\nassert a in s\ns=s.replace(a,b)\nopen(p,'w').write(s)\np='src/world/environment.ts'\ …[+928 chars]`
 
+### 🧑 User — 2026-11-15T18:55:20.593Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/iter4/05.png {"stage":"05","s":127.389,"y":-41.182,"calls":108,"tris":604939,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T18:55:22.770Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/iter4_sbs.png"}`
+
+### 🧑 User — 2026-11-15T18:55:22.840Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:55:29.460Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod && python3 -c \"\nfrom PIL import Image\nim=Image.open('iter4/05.png').convert('RGB')\nim.crop((0,180,432,560)).resize((864,760)).save('iter4_crop.png')\"", "description": "Crop ring/lid detail"}`
+
+### 🧑 User — 2026-11-15T18:55:29.820Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T18:55:32.167Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/iter4_crop.png"}`
+
+### 🧑 User — 2026-11-15T18:55:32.197Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:56:07.447Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/materials.ts'\ns=open(p).read()\nrep=[(\"\"\"  const N = 64;\n  const dir = new THREE.Vector3();\"\"\",\"\"\"  const N = 128;\n  const dir = new THREE.Vector3();\"\"\"),\n(\"\"\"      if (isGold) { out.r += 3.6 * k; out.g += 3.0 * k; out.b += 2.2 * k; } else { out.r += 3.4 * k; out.g += 1.7 * k; out.b += 3.1 * k; }\"\"\",\n\"\"\"      if (isGold) { out.r += 7.0 * k; out.g += 5.6 * k; out.b += 3.6 * k; } else { out.r += 3.4 * k; out.g += 1.7 * k; out.b += 3.1 * k; }\"\"\"),\n(\"\"\"    if (isGold) out.setRGB(0.42, 0.2, 0.12).lerp(new THREE.Color(0.22 …[+2091 chars]`
+

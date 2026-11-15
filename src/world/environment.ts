@@ -226,7 +226,7 @@ export function buildEnvironment(course: Course): Environment {
   const lidMat = withFarGlow(gold({ color: '#ffa65a', roughness: 0.18, emissive: 0.25 }), tubeGlow, 'lid');
   lidMat.envMap = goldEnv;
   lidMat.envMapIntensity = 1.25;
-  zones.tubes.add(buildWallLids(perfPath, s05 + 3 + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 20, size: 1.15, height: 0.62, down: 0.7, sink: 0.35 }));
+  zones.tubes.add(buildWallLids(perfPath, s05 + 3 + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 20, size: 1.15, height: 0.42, down: 0.7, sink: 0.3 }));
   animated.push(pinkFlow.update);
 
   // =====================================================================================

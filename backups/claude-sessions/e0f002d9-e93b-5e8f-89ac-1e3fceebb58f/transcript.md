@@ -3490,3 +3490,49 @@ Everything is committed and pushed. Your recovery branch on GitHub matches exact
 
 The Screen 05 specialists are still editing files, so new changes will keep appearing. The 5-minute autosave pushes them automatically. When the specialists finish, I'll push their final work and show you the before/after results.
 
+### 🧑 User — 2026-11-15T18:55:34.399Z
+
+<task-notification>
+<task-id>aecab8b770a64ea54</task-id>
+<tool-use-id>toolu_01DDdz4TLBFeyjCxRggfgEhz</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/tasks/aecab8b770a64ea54.output</output-file>
+<status>failed</status>
+<summary>Agent "Fix Benny body/beanie proportions" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11pm (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5Dsn8k1Nrvo34fGVJHe, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 11pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>The white jagged band is new. Likely the water wake/spray emitted at `benny.root.position` (now 0.3 below his lifted body centre). Let me check how Game feeds the wake.</result>
+</task-notification>
+
+### 🤖 Claude — 2026-11-15T18:55:34.837Z
+
+You've hit your 5-hour limit · resets 11pm (UTC)
+
+### 🧑 User — 2026-11-15T18:55:36.585Z
+
+<system-reminder>
+<tools-used-before-summary>Grep</tools-used-before-summary>
+</system-reminder>
+
+### 🧑 User — 2026-11-15T18:55:36.585Z
+
+<task-notification>
+<task-id>ac8112848dd644d86</task-id>
+<tool-use-id>toolu_01TiR8s5DE9MTvJZr7ctcVZF</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/tasks/ac8112848dd644d86.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 path and camera" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11pm (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5DsxFCKRwyxThCa4HhX, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 11pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>The baseline for my files is commit 81e639e (18:05); the autosave at 18:51 holds my edits. I'll extract the old versions into the scratchpad and run the same sweep on both, printing details.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-15T18:55:46.077Z
+
+<task-notification>
+<task-id>ae3c854ad07717142</task-id>
+<tool-use-id>toolu_01EeQHgGxKMeKMXGWatn9RCJ</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/tasks/ae3c854ad07717142.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 cyan/pink water" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 11pm (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5DtdcKAs84VRfXTS1Hb, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 11pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now the berm: larger bubble cells, CPU-baked bubble domes for a lumpy silhouette, distance fade, whiter puffs.</result>
+</task-notification>
+

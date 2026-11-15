@@ -284,8 +284,9 @@ export function buildWallLids(
   opts: { angleDeg?: number; size?: number; height?: number; stretch?: number; down?: number; sink?: number; stagger?: number } = {},
 ): THREE.InstancedMesh {
   const a = 1, h = opts.height ?? 0.5;
+  // closed cap: back disc, short side band, rounded shoulder, raised rim lip, slightly recessed face
   const prof: [number, number][] = [
-    [a * 1.04, -0.6], [a * 1.04, 0], [a, 0.07], [a, h - 0.12], [a * 0.95, h - 0.02], [a * 0.88, h],
+    [0, -0.12], [a * 1.03, -0.12], [a * 1.03, 0], [a, 0.06], [a, h - 0.12], [a * 0.95, h - 0.02], [a * 0.88, h],
     [a * 0.8, h], [a * 0.76, h - 0.05], [a * 0.7, h - 0.08], [0, h - 0.08],
   ];
   const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 40);
