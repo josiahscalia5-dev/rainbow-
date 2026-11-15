@@ -1087,3 +1087,266 @@ Now the fragment shader: varyings, combed lines in pixel widths, and the band la
 
 > ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T20:04:15.114Z
+
+Now the lighting section: add the downstream glitter reflection, thin ripple arcs, and a finer glint layer.
+
+### 🤖 Claude — 2026-11-15T20:04:24.909Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  col += vec3(1.0) * spec * 1.2 + reflTint * sheen * 0.12;\n  // advected glossy streak lines along the flow\n  col += streakCol * F.y * 0.8;\n\n  // ---- foreground ripple crests across the flow (ref 05 near field: arcs of white crest glints\n  // over deep-azure troughs). Only where s is resolved finely (near the camera).\n  float nearK = 1.0 - smoothstep(0.02, 0.05, fws);\n  if (nearK > 0.0) {\n    float ph = s * 5.5 - uTime * 6.0 + 1.3 * sin(lat * 0.8 + s * 0.15) + 2.0 * vnoise(vec2(lat * 0.9,  …[+1875 chars]`
+
+### 🧑 User — 2026-11-15T20:04:24.982Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:04:29.064Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * 0.42), 0.42, 22.0, 2.4, uTime);\n  col += vec3(2.0, 2.2, 2.3) * glint * (1.0 - smoothstep(0.3, 0.8, fws));\n  #endif", "new_string": "  float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * 0.42), 0.42, 22.0, 2.4, uTime);\n  col += vec3(2.0, 2.2, 2.3) * glint * (1.0 - smoothstep(0.3, 0.8, fws));\n  // finer star layer for the near/mid water (ref 05: dozens of small white 4-point flares on the\n  // cyan around …[+334 chars]`
+
+### 🧑 User — 2026-11-15T20:04:29.149Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:04:33.296Z
+
+Typecheck, then capture iteration 09 (normal + water-only isolation).
+
+### 🤖 Claude — 2026-11-15T20:04:35.943Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit -p . 2>&1 | head -5; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; timeout 600 node $S/wcap.mjs qa/pilot05/wave3/water/it09 \"\" 05 2>&1 | grep -v \"^\\s*at \" | tail -3; python3 -I $S/wm.py IT09=qa/pilot05/wave3/water/it09/05.png", "description": "Typecheck, capture it09 and measure", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T20:04:49.543Z
+
+> ↩︎ result: src/game/cameraRig.ts(49,37): error TS2532: Object is possibly 'undefined'.
+> src/vfx/index.ts(151,33): error TS2339: Property 'qaScreen' does not exist on type 'BubbleSystem'.
+> 05 → qa/pilot05/wave3/water/it09/05.png {"stage":"05","s":132.438,"calls":115,"tris":601103} 
+> == IT09  qa/pilot05/wave3/water/it09/05.png  864x1536
+>   frame(y>=200): cyan 34.7% #18A6FF  pink 11.8%  white 15.7%
+>   y= 520 cyan   0.3% pink   9.0% white  30.3%  cyanMed #72C2FF  cyanSpan   0- -1 (  0 px)  core   0  pink 327-379,520-525
+>   y= 600 cyan   7.1% pink   9.0% white  41.7%  cyanMed #56AFFF  cyanSpan 339-572 (234 px)  core 556  pink 32-49,358-371,503-518
+>   y= 700 cyan  33.4% pink  13.5% white  31.6%  cyanMed #36AEFF  cyanSpan 259-813 (555 px)  core 483  pink 355-393,420-453,721-764
+>   y= 800 cyan  25.6% pink  25.6% white  10.9%  cyanMed #36B0FF  cyanSpan  90-814 (725 px)  core 119  pink 186-246,259-288,293-303,308-318,707-713,729-770,780-790,824-856
+>   y= 900 cyan  17.4% pink  19.2% white  30.7%  cyanMed #0EA9FF  cyanSpan   0-778 (779 px)  core 739  pink 16-76,96-104,162-170,175-217,788-824,858-863
+>   y=1000 cyan  22.8% pink  17.0% white  14.5%  cyanMed #12A9FF  cyanSpan  99-853 (755 px)  core 725  pink 20-38,243 …[+462 chars]
+
+### 🤖 Claude — 2026-11-15T20:04:51.372Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave3/water/it09/05.png"}`
+
+### 🧑 User — 2026-11-15T20:04:51.413Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:05:11.543Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\np=Image.open('qa/pilot05/wave3/water/it09/05.png').convert('RGB')\nW=Image.new('RGB',(1728,1000))\nW.paste(r.crop((0,500,864,1500)),(0,0)); W.paste(p.crop((0,500,864,1500)),(864,0))\nW.resize((1296,750),Image.LANCZOS).save('$S/cmp09.png')\n\"", "description": "Side-by-side crop ref vs it09"}`
+
+### 🧑 User — 2026-11-15T20:05:12.009Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T20:05:12.447Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/cmp09.png"}`
+
+### 🧑 User — 2026-11-15T20:05:12.487Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:05:36.631Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I -c \"\nfrom PIL import Image, ImageDraw\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\np=Image.open('qa/pilot05/wave3/water/it09/05.png').convert('RGB')\nW=Image.new('RGB',(1728,330))\nW.paste(r.crop((0,470,864,800)),(0,0)); W.paste(p.crop((0,470,864,800)),(864,0))\nd=ImageDraw.Draw(W)\nfor y in range(0,330,30): d.line([(0,y),(8,y)],fill=(255,255,0)); d.text((10,y-5),str(470+y),fill=(255,255,0))\nfor x in range(0,864,100): d.line([(x,0), …[+151 chars]`
+
+### 🧑 User — 2026-11-15T20:05:36.959Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T20:05:37.881Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/far09.png"}`
+
+### 🧑 User — 2026-11-15T20:05:37.907Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:06:46.499Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"CAMERA LOCK\\|→ water-fx\\|-> water-fx\" qa/pilot05/REQUESTS.md | cut -c1-300; git status --short src | head", "description": "Check for camera lock and requests to me"}`
+
+### 🧑 User — 2026-11-15T20:06:46.553Z
+
+> ↩︎ result: 1:- foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord sqrt(0.86² − h²) ≈ 0.44 at the default 0.3 ride lift (it was 0.67, derived from the unlifted root,
+> 2:- foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under Benny's fur (05, y≈1150–1170) is the `contact` term in `src/vfx/waterRibbon.ts` FRAG, Benny block (`if (rr < rb * 0.25) { … contact = … }` + `col = mix(col, uFoam * 1.2, 
+>  M src/characters/benny/build.ts
+>  M src/vfx/bubbles.ts
+>  M src/vfx/foam.ts
+>  M src/vfx/index.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/environment.ts
+>  M src/world/materials.ts
+>  M src/world/tube.ts
+
+### 🤖 Claude — 2026-11-15T20:06:48.615Z
+
+No camera lock yet. I'll post my coin/width request to path-camera now so they can fold it into their camera work.
+
+### 🤖 Claude — 2026-11-15T20:06:54.811Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/REQUESTS.md <<'EOF'\n- water-fx-specialist → path-camera-transition-engineer (wave 3, corrections 4 + 9): (a) COINS ON THE CYAN CORE. In 05 the cyan core is no longer free-drifting: its centre is at lateral `coreLateral(course, s)` (exported from `src/vfx/waterRibbon.ts`, = CORE_SWING · offset05(s) · right.x, |value| ≤ ≈1.7 u, 0 outside 05), i.e. it swings with your S05 meander, amplified so the pink bands read as strong S-bends. The 05 coins are now at `1.2·sin(i·0.55)` (coins.ts line 24), a zigzag in a different phase, so they wander tow …[+690 chars]`
+
+### 🧑 User — 2026-11-15T20:06:54.866Z
+
+> ↩︎ result: - water-fx-specialist → path-camera-transition-engineer (wave 3, corrections 4 + 9): (a) COINS ON THE CYAN CORE. In 05 the cyan core is no longer fr
+
+### 🤖 Claude — 2026-11-15T20:06:57.672Z
+
+Now the second shader pass: wider far bands that narrow toward Benny, stronger swing (CORE_SWING 0.9), and swirly strands instead of straight parallel ones in 05.
+
+### 🤖 Claude — 2026-11-15T20:06:59.479Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"CORE_SWING = \\|'05': \\[1\\|≈0.6 · 1.85\\|vec4 strands\\|float a = vnoise(vec2(x \\* 2.4\\|strands(x, s\\|gmin\\|float g05\\|smoothstep(0.64, 0.95, h)\\|vec3 pinkCol\\|pinkCol = mix\" src/vfx/waterRibbon.ts", "description": "Locate lines to edit"}`
+
+### 🧑 User — 2026-11-15T20:06:59.520Z
+
+> ↩︎ result: 39:  '05': [1, 0.5, 0.11, 0],
+> 63: * route's own (ref 05: ±60–120 px). Bounded by CORE_SWING · max|offset05| (≈0.6 · 1.85 = 1.1 u, the far
+> 68:export const CORE_SWING = 0.6;
+> 227:vec4 strands(float x, float v, vec2 aa) {
+> 228:  float a = vnoise(vec2(x * 2.4, v * 0.08));
+> 288:  vec4 F = mix(strands(x, s - vSpeed * ph1 * 4.0 + 23.0, aa), strands(x, s - vSpeed * ph0 * 4.0, aa), w0);
+> 297:    float gmin = mix(0.65, 0.4, freeK);
+> 298:    gate = mix(1.0, gmin + (1.0 - gmin) * smoothstep(0.0, 4.5, db), vStyle.x);
+> 359:  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.64, 0.95, h) * 0.7 + rimOut * 0.45);
+> 363:  vec3 pinkCol = mix(uPinkDeep, uPink, smoothstep(0.3, 0.72, h + satin * 0.2));
+> 364:  pinkCol = mix(pinkCol, uPinkLight, clamp(smoothstep(0.6, 0.92, h) * 0.7 + satin * 0.35 + rimIn * 0.45, 0.0, 1.0));
+
+### 🤖 Claude — 2026-11-15T20:07:01.156Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 30,72p src/vfx/waterRibbon.ts; sed -n 220,250p src/vfx/waterRibbon.ts", "description": "View style table and strands function"}`
+
+### 🧑 User — 2026-11-15T20:07:01.212Z
+
+> ↩︎ result: */
+> type Style = [number, number, number, number];
+> /*  w free: weight of the shader's own drifting channel meander (meander() in FRAG). 0 in 05, where the
+>  *          course itself winds (S05/meander05 in course.ts) and the core is pinned to the route (see
+>  *          coreLateral) so the coins on the route stay on the cyan core. 1 elsewhere (04/06/07 unchanged).
+>  * 05 widths are from ref 05 at the live camera mapping: bands ≈1.1–1.4 u wide (≈100–130 px at y=800,
+>  * 93 px/u), centred ≈2.8 u from the core, i.e. 0.5 / 0.11 of the ≈5.5 u half width. */
+> const BAND_STYLE: Partial<Record<StageId, Style>> = {
+>   '04': [0, 0.6, 0.19, 1],
+>   '05': [1, 0.5, 0.11, 0],
+>   '06': [0.4, 0.48, 0.1, 1],
+>   '07': [0, 0.52, 0.13, 1],
+> };
+> const BAND_DEFAULT: Style = [0, 0.5, 0.12, 1];
+> 
+> function bandStyleAt(course: Course, s: number): Style {
+>   const o: Style = [0, 0, 0, 0];
+>   let w = 0;
+>   for (const st of course.stages) {
+>     const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+>     if (a <= 0) continue;
+>     const v = BAND_STYLE[st.id] ?? BAND_DEFAULT;
+>     for (let i = 0; i < 4; i++) o[i] += v[i] * a;
+>     w += a;
+>   }
+>   if (w <= 0) return [...(BAND_STYLE[course.stageAtS(s).id] ??  …[+2325 chars]
+
+### 🤖 Claude — 2026-11-15T20:07:17.283Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'EOF'\nimport re\np='/home/user/rainbow-/src/vfx/waterRibbon.ts'\nt=open(p).read()\nrep=[\n(\"\"\" * 05 widths are from ref 05 at the live camera mapping: bands ≈1.1–1.4 u wide (≈100–130 px at y=800,\n * 93 px/u), centred ≈2.8 u from the core, i.e. 0.5 / 0.11 of the ≈5.5 u half width. */\"\"\",\n\"\"\" * 05 layout from ref 05 at the live 05 camera (y=600 ≈ 36 px/u, y=700 ≈ 63, y=800 ≈ 93): in the mid/far\n * field each pink band is ≈20 % of the water width, the cyan core ≈45 %, a thin outer cyan strip ≈7 %\n * → band centre 0.62 hw, half widt …[+2495 chars]`
+
+### 🧑 User — 2026-11-15T20:07:17.359Z
+
+> ↩︎ result: ok
+> 269:  // core centre: free drifting meander on 04/06/07 (freeK = 1); on 05 (freeK = 0) pinned to the
+> 271:  float freeK = vStyle.w;
+> 272:  float M = meander(s, hw) * freeK + vCore;
+> 293:  float sw = 1.0 - freeK;
+> 306:    gate = mix(1.0, mix(g05, gOld, freeK), vStyle.x);
+
+### 🤖 Claude — 2026-11-15T20:07:24.295Z
+
+Now deepen the 05 cyan (near-field median measured #0FA3FF–#2AAFFF vs ref #028BE7–#0198F0) while keeping crisp highlights.
+
+### 🤖 Claude — 2026-11-15T20:07:27.340Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.62, h));\n  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.64, 0.95, h) * 0.7 + rimOut * 0.45);", "new_string": "  // (05: deeper base, fewer light-cyan crests; ref 05 near rows median #028BE7–#0198F0, the light\n  // comes from crisp streaks/glints on top, not from a pale wash)\n  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(mix(0.3, 0.22, freeK), mix(0.72, 0.62, freeK), h));\n  cyanCol = mix(cyanCol, uCyanBright, smoothstep(mix(0.7, 0 …[+65 chars]`
+
+### 🧑 User — 2026-11-15T20:07:27.410Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T20:07:29.890Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit -p . 2>&1 | grep -v cameraRig | head -5; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; timeout 600 node $S/wcap.mjs qa/pilot05/wave3/water/it10 \"\" 05 2>&1 | grep -v \"^\\s*at \" | tail -3; python3 -I $S/wm.py IT10=qa/pilot05/wave3/water/it10/05.png", "description": "Typecheck, capture it10 and measure", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T20:07:48.083Z
+
+> ↩︎ result: 05 → qa/pilot05/wave3/water/it10/05.png {"stage":"05","s":132.438,"calls":120,"tris":618395} 
+> == IT10  qa/pilot05/wave3/water/it10/05.png  864x1536
+>   frame(y>=200): cyan 35.7% #12A8FF  pink 17.9%  white  9.9%
+>   y= 520 cyan   0.0% pink  34.3% white   0.6%  cyanMed ------  cyanSpan   0- -1 (  0 px)  core   0  pink 53-67,73-94,99-114,154-159,163-174,180-190,221-229,233-240
+>   y= 600 cyan   5.4% pink  24.7% white  29.2%  cyanMed #36A6FF  cyanSpan 499-582 ( 84 px)  core 555  pink 0-20,99-110,123-141,145-153,192-204,209-214,335-370,503-537
+>   y= 700 cyan  28.0% pink  18.9% white  28.9%  cyanMed #1DA9FF  cyanSpan 257-746 (490 px)  core 675  pink 320-342,346-383,404-423,435-457,748-777,784-812
+>   y= 800 cyan  25.3% pink  27.5% white  11.2%  cyanMed #19B8FF  cyanSpan  90-754 (665 px)  core 313  pink 113-138,148-162,180-262,756-850,853-860
+>   y= 900 cyan  24.5% pink   9.5% white  31.8%  cyanMed #07ACFF  cyanSpan 130-863 (734 px)  core 213  pink 0-5,9-32,56-76,99-128
+>   y=1000 cyan  27.7% pink  13.7% white  14.2%  cyanMed #03A4FF  cyanSpan  20-860 (841 px)  core 143  pink 240-258,266-273,524-609
+>   y=1100 cyan  52.5% pink  26.5% white  12.5%  cyanMed #00A6FF  cyanSpan  37-863 (827 px)  core 169  pi …[+330 chars]
+
+### 🤖 Claude — 2026-11-15T20:07:49.910Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave3/water/it10/05.png"}`
+
+### 🧑 User — 2026-11-15T20:07:49.975Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:08:02.767Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\np=Image.open('qa/pilot05/wave3/water/it10/05.png').convert('RGB')\nW=Image.new('RGB',(1300,360))\nW.paste(r.crop((100,1176,750,1536)),(0,0)); W.paste(p.crop((100,1176,750,1536)),(650,0))\nW.save('$S/near10.png')\n\"", "description": "Crop near field ref vs it10"}`
+
+### 🧑 User — 2026-11-15T20:08:03.065Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T20:08:03.974Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/near10.png"}`
+
+### 🧑 User — 2026-11-15T20:08:04.002Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:08:29.572Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"float hair = 0.5;\" -A 8 src/vfx/waterRibbon.ts; grep -n \"col \\*= 0.88 + 0.24 \\* hair;\" -A3 src/vfx/waterRibbon.ts; grep -n \"col += streakCol \\* F.y \\* 0.8;\" src/vfx/waterRibbon.ts; grep -n \"float nearK\" -A 10 src/vfx/waterRibbon.ts", "description": "Locate hair, streak and crest code"}`
+
+### 🧑 User — 2026-11-15T20:08:29.637Z
+
+> ↩︎ result: 358:  float hair = 0.5;
+> 359-  if (aaH > 0.0) {
+> 360-    float sv = s - vSpeed * fract(uTime * 0.5) * 2.0;
+> 361-    float hA = vnoise(vec2(x * 46.0 + F.w * 3.0, sv * 0.9));
+> 362-    float hB = vnoise(vec2(x * 46.0 + F.w * 3.0, (sv + vSpeed) * 0.9 + 17.0));
+> 363-    hair = mix(0.5, mix(hB, hA, 1.0 - abs(1.0 - 2.0 * fract(uTime * 0.5))), aaH);
+> 364-  }
+> 365-  // deep azure troughs → electric cyan → light-cyan crests (crests stay a minority of the area)
+> 366-  // (05: deeper base, fewer light-cyan crests; ref 05 near rows median #028BE7–#0198F0, the light
+> 376:  col *= 0.88 + 0.24 * hair;
+> 377-  vec3 streakCol = mix(vec3(0.6, 1.25, 1.6), vec3(1.6, 0.8, 1.6), pinkM);
+> 378-  col += streakCol * smoothstep(0.82, 0.94, hair) * 0.3 * aaH;
+> 379-
+> 410:  col += streakCol * F.y * 0.8;
+> 415:  float nearK = 1.0 - smoothstep(0.02, 0.05, fws);
+> 416-  if (nearK > 0.0) {
+> 417-    float ph = s * 4.2 - uTime * 6.0 + 0.2 * x * x + 1.6 * vnoise(vec2(lat * 0.7, s * 0.45));
+> 418-    float q = fract(ph * 0.159155 - 0.25) - 0.5;              // 0 on a crest (sin = 1)
+> 419-    float dpx = abs(q) / max(fwidth(ph * 0.159155), 1e-4);
+> 420-    float crest = (1.0 - smoothstep(0.5, 1.8, dpx)) * smoothstep(0.52, 0.8, vnoise(vec2(lat * …[+282 chars]
+
+### 🧑 User — 2026-11-15T20:08:44.805Z
+
+[Request interrupted by user]
+

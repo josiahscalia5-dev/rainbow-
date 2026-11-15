@@ -32,11 +32,13 @@ type Style = [number, number, number, number];
 /*  w free: weight of the shader's own drifting channel meander (meander() in FRAG). 0 in 05, where the
  *          course itself winds (S05/meander05 in course.ts) and the core is pinned to the route (see
  *          coreLateral) so the coins on the route stay on the cyan core. 1 elsewhere (04/06/07 unchanged).
- * 05 widths are from ref 05 at the live camera mapping: bands ≈1.1–1.4 u wide (≈100–130 px at y=800,
- * 93 px/u), centred ≈2.8 u from the core, i.e. 0.5 / 0.11 of the ≈5.5 u half width. */
+ * 05 layout from ref 05 at the live 05 camera (y=600 ≈ 36 px/u, y=700 ≈ 63, y=800 ≈ 93): in the mid/far
+ * field each pink band is ≈20 % of the water width, the cyan core ≈45 %, a thin outer cyan strip ≈7 %
+ * → band centre 0.62 hw, half width 0.19 hw. Toward Benny the bands taper to half width (gate, FRAG),
+ * which gives the ref's ≈100–130 px bands at y=800 and a pure-cyan near field. */
 const BAND_STYLE: Partial<Record<StageId, Style>> = {
   '04': [0, 0.6, 0.19, 1],
-  '05': [1, 0.5, 0.11, 0],
+  '05': [1, 0.62, 0.19, 0],
   '06': [0.4, 0.48, 0.1, 1],
   '07': [0, 0.52, 0.13, 1],
 };
@@ -60,12 +62,12 @@ function bandStyleAt(course: Course, s: number): Style {
  * 05 current: lateral position (units, ribbon `right` axis, + = right) of the centre of the
  * electric-cyan core relative to the route centreline. The core swings WITH the course meander,
  * amplified by CORE_SWING, so the two pink bands trace S-bends ≈(1 + CORE_SWING)× as strong as the
- * route's own (ref 05: ±60–120 px). Bounded by CORE_SWING · max|offset05| (≈0.6 · 1.85 = 1.1 u, the far
- * crest; ≤0.85 u within 35 u of the 05 checkpoint), well inside the ≈2.2 u core half width, so a coin
- * on the route centre (lat 0) always sits on cyan. 0 outside 05.
+ * route's own (ref 05: ±60–120 px). Bounded by CORE_SWING · max|offset05| (≈0.9 · 1.85 = 1.7 u at the
+ * far crest; ≤1.25 u within 35 u of the 05 checkpoint), inside the ≥2 u core half width, so a coin on
+ * the route centre (lat 0) still sits on cyan. 0 outside 05.
  * gameplay/coins.ts may place the 05 coins at this lateral to put them exactly on the core centre.
  */
-export const CORE_SWING = 0.6;
+export const CORE_SWING = 0.9;
 export function coreLateral(course: Course, s: number): number {
   const st = course.stage('05');
   if (s <= st.s0 || s >= st.s1) return 0;
@@ -224,8 +226,11 @@ float combed(float x, float v, float K, float seed) {
 // advected strand texture ("combed" glossy water lines parallel to the flow)
 // x = lateral units relative to the meander centre, v = advected arc length, aa = 0..1 detail fade
 // returns: x = height 0..1 (shading + bump), y = white glint lines, z = mid strands, w = fine strands
-vec4 strands(float x, float v, vec2 aa) {
-  float a = vnoise(vec2(x * 2.4, v * 0.08));
+// sw = swirl (05): the strands wander laterally and are less stretched, so the water reads as
+// curling glossy flow instead of uniform straight parallel stripes (the user's rejected look)
+vec4 strands(float x, float v, vec2 aa, float sw) {
+  x += sw * 0.9 * (vnoise(vec2(x * 0.45, v * 0.2 + 7.0)) - 0.5);
+  float a = vnoise(vec2(x * 2.4, v * (0.08 + 0.1 * sw)));
   float b = vnoise(vec2(x * 7.0 + a * 1.6, v * 0.19 + 5.0));
   #ifdef LOW_Q
   float c = b;
@@ -285,7 +290,8 @@ void main() {
   float ph0 = fract(uTime * 0.25);
   float ph1 = fract(uTime * 0.25 + 0.5);
   float w0 = 1.0 - abs(1.0 - 2.0 * ph0);
-  vec4 F = mix(strands(x, s - vSpeed * ph1 * 4.0 + 23.0, aa), strands(x, s - vSpeed * ph0 * 4.0, aa), w0);
+  float sw = 1.0 - freeK;
+  vec4 F = mix(strands(x, s - vSpeed * ph1 * 4.0 + 23.0, aa, sw), strands(x, s - vSpeed * ph0 * 4.0, aa, sw), w0);
 
   // Benny parts the bands like a bow wave (vStyle.x, ref 05): just ahead of him they narrow and
   // swing outward, so the water at and behind him (the near field) is pure cyan; behind him they
@@ -294,8 +300,10 @@ void main() {
   float gate = 1.0, part = 0.0;
   if (vStyle.x > 0.0) {
     float db = s - uBenny.x;
-    float gmin = mix(0.65, 0.4, freeK);
-    gate = mix(1.0, gmin + (1.0 - gmin) * smoothstep(0.0, 4.5, db), vStyle.x);
+    // 05: half width at Benny, full width ≈20 u ahead (ref 05 bands widen into the mid/far field)
+    float g05 = 0.5 + 0.5 * smoothstep(1.0, 20.0, db);
+    float gOld = 0.4 + 0.6 * smoothstep(0.0, 4.5, db);
+    gate = mix(1.0, mix(g05, gOld, freeK), vStyle.x);
     part = vStyle.x * hw * mix(0.1, 0.3, freeK) * (1.0 - smoothstep(-1.0, 9.0, db));
   }
   float hwc = min(hw, 4.5);
@@ -355,8 +363,10 @@ void main() {
     hair = mix(0.5, mix(hB, hA, 1.0 - abs(1.0 - 2.0 * fract(uTime * 0.5))), aaH);
   }
   // deep azure troughs → electric cyan → light-cyan crests (crests stay a minority of the area)
-  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.62, h));
-  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.64, 0.95, h) * 0.7 + rimOut * 0.45);
+  // (05: deeper base, fewer light-cyan crests; ref 05 near rows median #028BE7–#0198F0, the light
+  // comes from crisp streaks/glints on top, not from a pale wash)
+  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(mix(0.3, 0.22, freeK), mix(0.72, 0.62, freeK), h));
+  cyanCol = mix(cyanCol, uCyanBright, smoothstep(mix(0.7, 0.64, freeK), 0.95, h) * mix(0.55, 0.7, freeK) + rimOut * 0.45);
   // satin ribbon: a soft light streak runs along each band, off-centre toward the core
   float rel = pL >= pR ? sdL / max(wL, 1e-3) : -sdR / max(wR, 1e-3);   // -1 outer edge .. +1 core side
   float satin = exp(-pow((rel - 0.3) * 2.2, 2.0));
@@ -389,17 +399,27 @@ void main() {
   float spec = pow(clamp(dot(N, H), 0.0, 1.0), 120.0);
   float sheen = pow(clamp(dot(R, L), 0.0, 1.0), 10.0);
   col += vec3(1.0) * spec * 1.2 + reflTint * sheen * 0.12;
+  // glossy white-blue reflection of the bright tunnel end (refs 05–07): the light sits far
+  // downstream, so its mirror image is a glitter path along the river toward the VP, broken into
+  // streaks by the bump normals and the strand crests (never a flat milky sheet)
+  vec3 Lg = normalize(vTanW + N0 * 0.1);
+  float glit = pow(clamp(dot(R, Lg), 0.0, 1.0), 160.0);
+  float glitMask = smoothstep(0.5, 0.88, h) * 0.75 + F.y * 0.6;
+  col += mix(vec3(0.7, 1.1, 1.45), vec3(1.5, 0.85, 1.4), pinkM) * glit * glitMask * mix(0.9, 0.45, freeK);
   // advected glossy streak lines along the flow
   col += streakCol * F.y * 0.8;
 
-  // ---- foreground ripple crests across the flow (ref 05 near field: arcs of white crest glints
-  // over deep-azure troughs). Only where s is resolved finely (near the camera).
+  // ---- foreground ripple crests (ref 05 near field: thin arcs of white crest light over deep-azure
+  // troughs, drifting downstream). Pixel-thin lines bowed upstream around the core, in short
+  // segments, so the near water reads as moving glossy ripples, not soft horizontal bars.
   float nearK = 1.0 - smoothstep(0.02, 0.05, fws);
   if (nearK > 0.0) {
-    float ph = s * 5.5 - uTime * 6.0 + 1.3 * sin(lat * 0.8 + s * 0.15) + 2.0 * vnoise(vec2(lat * 0.9, s * 0.5));
-    float crest = pow(0.5 + 0.5 * sin(ph), 40.0) * smoothstep(0.5, 0.8, vnoise(vec2(lat * 3.2, s * 1.1 + 3.0)));
+    float ph = s * 4.2 - uTime * 6.0 + 0.2 * x * x + 1.6 * vnoise(vec2(lat * 0.7, s * 0.45));
+    float q = fract(ph * 0.159155 - 0.25) - 0.5;              // 0 on a crest (sin = 1)
+    float dpx = abs(q) / max(fwidth(ph * 0.159155), 1e-4);
+    float crest = (1.0 - smoothstep(0.5, 1.8, dpx)) * smoothstep(0.52, 0.8, vnoise(vec2(lat * 2.6, s * 1.1 + 3.0)));
     col *= 1.0 - 0.14 * nearK * (0.5 - 0.5 * sin(ph));
-    col += mix(vec3(0.9, 1.4, 1.7), vec3(1.7, 1.1, 1.7), pinkM) * crest * nearK * 0.9;
+    col += mix(vec3(0.9, 1.4, 1.7), vec3(1.7, 1.1, 1.7), pinkM) * crest * nearK * mix(0.9, 0.6, freeK);
   }
 
   // ---- white star glints (4-point, twinkling, carried by the flow) ----
@@ -412,6 +432,12 @@ void main() {
   // wide cells so the long horizontal arms are not clipped at the cell border in the mid-ground
   float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * 0.42), 0.42, 22.0, 2.4, uTime);
   col += vec3(2.0, 2.2, 2.3) * glint * (1.0 - smoothstep(0.3, 0.8, fws));
+  // finer star layer for the near/mid water (ref 05: dozens of small white 4-point flares on the
+  // cyan around and behind Benny); 05 only (freeK = 0) so 04/06/07 keep their look
+  if (freeK < 0.99) {
+    float glint2 = starGlint(vec2(x * 1.5, (s - vSpeed * uTime * 0.55) * 1.2), 0.3, 13.0, 2.2, uTime + 2.7);
+    col += vec3(1.9, 2.1, 2.3) * glint2 * (1.0 - smoothstep(0.08, 0.3, fws)) * (1.0 - 0.6 * pinkM) * (1.0 - freeK);
+  }
   #endif
 
   // ---- soap-foam lace where the water meets the foam banks ----

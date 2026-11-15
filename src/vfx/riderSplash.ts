@@ -24,11 +24,11 @@ import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
  */
 export const FAN = {
   /** root angle on the body's waterline circle */
-  root0: 1.62,
-  root1: 0.92,
+  root0: 1.6,
+  root1: 0.95,
   /** jet direction */
-  dir0: 1.1,
-  dir1: 0.3,
+  dir0: 0.98,
+  dir1: 0.26,
 } as const;
 
 const VERT = /* glsl */ `
@@ -55,7 +55,7 @@ void main() {
   float len = uLen * (0.72 + 0.28 * sin(3.14159 * a)) * (0.82 + 0.36 * wob) * (0.55 + 0.45 * uStrength);
   vec2 q = root + vec2(sin(phi), cos(phi)) * t * len;
   // the sheet leaves the water at the flank, arcs up and falls back to the surface at its tips
-  float y = uH * uStrength * (0.7 + 0.5 * wob) * sin(3.14159 * pow(t, 0.55)) * (1.0 - 0.5 * t) - 0.015;
+  float y = uH * uStrength * (0.7 + 0.5 * wob) * sin(3.14159 * pow(t, 0.45)) * (1.0 - 0.6 * t) - 0.015;
   vec3 p = vec3(side * q.x, y, q.y);   // local: x = side, y = up, z = backwards
   vec4 wp = modelMatrix * vec4(p, 1.0);
   vFan = aFan;
@@ -75,26 +75,29 @@ void main() {
   float a = vFan.y;
   float t = vFan.z;
   float seed = step(0.0, vFan.x) * 7.3;
-  // jets: a few broad soft water jets plus finer ones, racing outward (never hair-thin lines)
-  float j1 = vnoise(vec2(a * 15.0 + seed, t * 1.6 - uTime * 4.0));
-  float j2 = vnoise(vec2(a * 34.0 + seed * 2.0, t * 2.8 - uTime * 6.0));
-  float jets = smoothstep(0.42, 0.82, j1) * 0.75 + smoothstep(0.55, 0.88, j2) * 0.45;
+  // jets: broad soft water jets plus finer ones racing outward (never hair-thin lines)
+  float j1 = vnoise(vec2(a * 13.0 + seed, t * 1.4 - uTime * 4.0));
+  float j2 = vnoise(vec2(a * 30.0 + seed * 2.0, t * 2.6 - uTime * 6.0));
+  float jets = smoothstep(0.38, 0.78, j1) * 0.8 + smoothstep(0.5, 0.85, j2) * 0.5;
+  // whitewater lace: bubbly white foam inside the jets, densest near the root (ref 05 fan texture)
+  vec2 lg = vec2(a * 18.0 + seed, t * 6.0 - uTime * 3.0);
+  float lc = cells(lg);
+  float lace = (1.0 - smoothstep(0.18, 0.42, lc)) * (1.0 - smoothstep(0.35, 0.8, t)) * smoothstep(0.3, 0.7, j1 + 0.25);
   // the jets break into droplet beads towards the tips
   vec2 g = vec2(a * 22.0 + seed, t * 8.0 - uTime * 6.0);
   float cd = cells(g);
-  float beads = (1.0 - smoothstep(0.12, 0.26, cd)) * step(0.45, hash12(floor(g) + seed)) * smoothstep(0.3, 0.7, t) * (1.0 - smoothstep(0.82, 1.0, t));
-  float breakup = 1.0 - smoothstep(0.45, 0.9, t);
-  // thin translucent water sheet between the jets, densest at the root
-  float sheet = (1.0 - smoothstep(0.05, 0.6, t)) * (0.35 + 0.65 * j1) * 0.3;
-  // envelope: soft across both fan borders, soft at the root (under the fur) — no hard outline
-  float env = smoothstep(0.0, 0.18, a) * (1.0 - smoothstep(0.8, 1.0, a)) * smoothstep(0.0, 0.12, t);
-  float a1 = (jets * breakup + sheet) * env;
-  float a2 = beads * env;
-  float alpha = clamp((a1 * 0.62 + a2 * 0.7) * uStrength, 0.0, 0.72);
+  float beads = (1.0 - smoothstep(0.12, 0.26, cd)) * step(0.45, hash12(floor(g) + seed)) * smoothstep(0.35, 0.7, t) * (1.0 - smoothstep(0.85, 1.0, t));
+  float breakup = 1.0 - smoothstep(0.5, 0.95, t);
+  // thin translucent cyan water sheet between the jets, densest at the root
+  float sheet = (1.0 - smoothstep(0.05, 0.65, t)) * (0.4 + 0.6 * j1) * 0.35;
+  // envelope: soft across both fan borders and at the root (under the fur): no hard outline
+  float env = smoothstep(0.0, 0.2, a) * (1.0 - smoothstep(0.78, 1.0, a)) * smoothstep(0.0, 0.1, t);
+  float white = clamp(jets * breakup + lace * 0.9 + beads, 0.0, 1.0);
+  float alpha = clamp((white * 0.82 + sheet) * env * uStrength, 0.0, 0.85);
   if (alpha < 0.02) discard;
-  // translucent cyan body, white jet cores and beads
-  float w = clamp(jets * breakup * 0.9 + beads, 0.0, 1.0);
-  vec3 col = mix(vec3(0.42, 0.86, 1.0), vec3(1.12, 1.16, 1.2), smoothstep(0.25, 0.85, w));
+  vec3 col = mix(vec3(0.4, 0.84, 1.0), vec3(1.1, 1.13, 1.18), smoothstep(0.2, 0.8, white));
+  // a touch of lavender in the lace crevices (soap foam, like the banks)
+  col = mix(col, vec3(0.86, 0.84, 1.08), lace * smoothstep(0.1, 0.3, lc) * 0.35);
   gl_FragColor = vec4(col, alpha);
   ${FRAG_TAIL}
 }
@@ -138,7 +141,7 @@ export function createRiderSplash(quality: 'high' | 'low'): RiderSplash {
   // dummy position attribute (positions are generated in the vertex shader)
   geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(2 * cols * rows * 3), 3));
   geo.setIndex(idx);
-  const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.15 }, uH: { value: 0.26 }, uStrength: { value: 0 } });
+  const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.45 }, uH: { value: 0.18 }, uStrength: { value: 0 } });
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: VERT,

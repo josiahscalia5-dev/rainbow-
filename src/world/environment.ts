@@ -6,8 +6,9 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
-import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, type FarGlow, type TubeStrips } from './materials';
-import { buildTubeGeometry, buildRings, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
+import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, tunnelEndGlowMaterial, type FarGlow, type TubeStrips } from './materials';
+import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
+import { STAGE_CAM } from '../game/cameraRig';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -199,43 +200,71 @@ export function buildEnvironment(course: Course): Environment {
   const wallGlow: FarGlow = { ...tubeGlow, mid: { color: '#8a3cf0', near: 10, far: 42, amount: 0.55 } };
   const tubeEnv = washerTubeEnv('wall');
   const goldEnv = washerTubeEnv('gold');
-  // ring bays: evenly spaced gold bands; 4 circumferential slot rows per bay (ref 05: 3–5)
+  // 06/07 ring bays (unchanged): gold bands every 9 units, 4 circumferential slot rows per bay
   const ringSpacing = 9.0;
   const slotRowsPerBay = 4;
   // analytic strip lights along the tunnel (28 around: ref 05 shows ≈12–16 marquee spots per half-ring)
-  const strips: TubeStrips = { count: 28, width: 0.022, intensity: 40, color: '#ffd9f6', alt: 0.65 };
+  const strips: TubeStrips = { count: 28, width: 0.022, intensity: 2.6, color: '#ffd9f6', alt: 0.65 };
   // glossy (low roughness → the strips stay crisp lengthwise streaks instead of a flat clipped sheen)
-  const perfTubeMat = perforatedMetal({
+  const wallBase = {
     // pale pink F0: the saturation comes from the magenta/violet tube environment, so white strip lights
     // reflect as white-pink streaks (a saturated F0 turned them into clipped flat magenta)
     color: '#ffa8e8', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',
-    slot: 1, repeatU: 48, repeatV: slotRowsPerBay / ringSpacing, slotHalf: [0.36, 0.12], stagger: false,
+    slot: 1, repeatU: 48, stagger: false,
     streaks: 0, metalness: 0.92, roughness: 0.1,
     relief: { corrugation: 0.05, bevel: 0.05, bevelWidth: 0.12 }, rimColor: '#ff5fe0', rimStrength: 0.9,
     envMap: tubeEnv, envMapIntensity: 1.0, farGlow: wallGlow,
-  });
+  } as const;
+  const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: slotRowsPerBay / ringSpacing, slotHalf: [0.36, 0.12] });
   withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
   // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
   const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+
+  // ---- 05 current (ref 05): EVENLY spaced ring bays anchored to the 05 checkpoint camera ----
+  // The camera rides `back` units behind Benny's checkpoint point; the first band sits `ring05Lead` ahead of
+  // it, then one every `bay05` up to the end of the straight (the tube flares into the 06 hall at ≈ s06 − 6),
+  // so the rings converge concentrically on the tunnel VP with a smooth perspective fall-off. If
+  // path-camera moves the checkpoint or the camera distance, the bays follow automatically.
+  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+  const bay05 = 6.0, ring05Lead = 8.0;
+  const sGlow05 = course.stage('06').s0 - 5.9; // warm "light at the end" just before the flare
+  const rings05: number[] = [];
+  for (let s = sCam05 + ring05Lead - Math.floor((sCam05 + ring05Lead - s05 - 2) / bay05) * bay05; s <= sGlow05 - 0.9; s += bay05) rings05.push(s);
+  // 05 walls: 4 dark capsule-slot rows per 6-unit bay, centred between the bands (rows 1.5 apart),
+  // slots ≈0.7 × 0.25 units laid along the circumference (ref 05 near slots ≈14 × 40 px)
+  const slotPitch05 = bay05 / 4;
+  const perf05Mat = perforatedMetal({
+    ...wallBase, repeatV: 1 / slotPitch05, slotHalf: [0.35, 0.085],
+    offsetV: 0.5 - ((((rings05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+  });
+  withTubeStrips(perf05Mat, strips, 'attribute', 'wall05');
   const chunk = 40;
-  for (let a = s05; a < s08; a += chunk) {
-    const b = Math.min(s08 + 0.0, a + chunk + 0.6);
-    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), perfTubeMat));
-    // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
-    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
-  }
+  const addWall = (a0: number, a1: number, mat: THREE.Material) => {
+    for (let a = a0; a < a1 - 0.01; a += chunk) {
+      const b = Math.min(a1, a + chunk + 0.6);
+      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), mat));
+      // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
+      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+    }
+  };
+  addWall(s05, sGlow05, perf05Mat);
+  addWall(sGlow05, s08, perfTubeMat);
   // flat polished gold-copper ring bands at even spacing (ref 05: ≈10 concentric rings, double contour,
   // marquee highlight spots from the strip lights)
   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
   ringMat.envMap = goldEnv;
   ringMat.envMapIntensity = 1.3;
-  // ring phase: one band sits just ahead of the 05 checkpoint camera so its sides frame the bottom corners
+  // 06/07 ring phase (unchanged positions s05 + 7.8 + 9k)
   const ringPhase = 7.8;
+  const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
   // gold junction collar 04→05 (slightly heavier)
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
-  zones.tubes.add(buildRings(perfPath, s05 + ringPhase, s08 - 1, ringSpacing, ringMat, { inset: 0.02, collar: { depth: 0.022, lip: 0.012, width: 1.1 } }));
-  // copper D-shaped nozzle hoods: one symmetric pair per bay on the side walls a little above eye level,
-  // skipped where the stream climbs the wall (06 arch) so a hood never blocks the ride
+  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat, { inset: 0.02, collar }));
+  const rings0607: number[] = [];
+  for (let s = s05 + ringPhase; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
+  zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
+  // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
+  // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
   const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
   lidMat.envMap = goldEnv;
   lidMat.envMapIntensity = 1.25;
@@ -246,7 +275,26 @@ export function buildEnvironment(course: Course): Environment {
     }
     return false;
   };
-  zones.tubes.add(buildWallLids(perfPath, s05 + ringPhase + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
+  // 05: small round half-dome lids at mid-bay, ≈9° above the axis on both walls (ref 05 §5.5)
+  const lids05 = rings05.map((s) => s + bay05 / 2).filter((s) => s < sGlow05 - 2);
+  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat, { positions: lids05, shape: 'dome', angleDeg: 9, droopDeg: 4, size: 1.1, thickness: 0.6, stretch: 1.0, sink: 0.1 }));
+  // 06/07: legacy hoods, unchanged
+  const lids0607: number[] = [];
+  for (let s = s05 + ringPhase + ringSpacing * 0.5; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
+  zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
+  // warm light at the end of the straight 05 current (ref 05 VP): fills the tube cross-section just before
+  // it flares into the 06 hall, so from 05 the tunnel ends in a golden glow instead of the arch floor; it
+  // fades out as the rider approaches (camera < 30 units) and is invisible from 04 and beyond 06
+  {
+    const f = perfPath.frame(sGlow05);
+    const glow = new THREE.Mesh(new THREE.CircleGeometry(1, 64), tunnelEndGlowMaterial());
+    glow.name = 'tube05_end_glow';
+    const right = f.right.clone(), up = f.up.clone(), back = f.tan.clone().negate();
+    glow.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(right, up, back));
+    glow.position.copy(tubeCenterAt(perfPath, sGlow05));
+    glow.scale.setScalar(perfPath.radius(sGlow05) * 1.02);
+    zones.tubes.add(glow);
+  }
   animated.push(pinkFlow.update);
 
   // =====================================================================================

@@ -250,6 +250,8 @@ export function collarGeometry(depth = 0.022, lip = 0.012, width = 1.1, segments
   return g;
 }
 
+export type RingOpts = { tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number } };
+
 /** Instanced thick gold ring ribs placed perpendicular to the tube every `spacing` units. */
 export function buildRings(
   path: TubePath,
@@ -257,19 +259,26 @@ export function buildRings(
   s1: number,
   spacing: number,
   material: THREE.Material,
-  opts: { tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number } } = {},
+  opts: RingOpts = {},
 ): THREE.InstancedMesh {
+  const list: number[] = [];
+  for (let s = s0; s <= s1 + 1e-6; s += spacing) list.push(s);
+  return buildRingsAt(path, list, material, opts, spacing);
+}
+
+/** Same rings at an explicit list of path positions (e.g. one evenly spaced set per tunnel section). */
+export function buildRingsAt(path: TubePath, list: number[], material: THREE.Material, opts: RingOpts = {}, spacing = 9): THREE.InstancedMesh {
   const tube = opts.tube ?? 0.075;
   const collar = opts.collar;
   const geo = collar ? collarGeometry(collar.depth, collar.lip, collar.width, collar.segments) : new THREE.TorusGeometry(1, tube, 14, 72);
-  const n = Math.max(1, Math.floor((s1 - s0) / spacing) + 1) * (opts.double ? 2 : 1);
+  const n = Math.max(1, list.length) * (opts.double ? 2 : 1);
   const mesh = new THREE.InstancedMesh(geo, material, n);
   const m = new THREE.Matrix4();
   const q = new THREE.Quaternion();
   const basis = new THREE.Matrix4();
   const c = new THREE.Vector3();
   let k = 0;
-  for (let s = s0; s <= s1 + 1e-6 && k < n; s += spacing) {
+  for (const s of list) {
     for (let dbl = 0; dbl < (opts.double ? 2 : 1); dbl++) {
       const ss = s + dbl * spacing * 0.16;
       const f = path.frame(ss);
@@ -304,18 +313,35 @@ export function buildWallLids(
   s1: number,
   spacing: number,
   material: THREE.Material,
-  opts: { angleDeg?: number; droopDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number; skip?: (s: number, centre: THREE.Vector3, size: number) => boolean } = {},
+  opts: {
+    angleDeg?: number; droopDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number;
+    skip?: (s: number, centre: THREE.Vector3, size: number) => boolean;
+    /** explicit lid positions along the path (default: s0, s0 + spacing, … s1) */
+    positions?: number[];
+    /**
+     * 'hood' (legacy 06/07 D-hood) or 'dome' (ref 05 copper half-dome nozzle lid: a round half puck with
+     * a flared foot flange, a tall polished rim band and a rounded dome cap; reads as a compact fitting)
+     */
+    shape?: 'hood' | 'dome';
+  } = {},
 ): THREE.InstancedMesh {
   const h = opts.thickness ?? 0.42;
   // bottom → top so the lathe normals face outward: recessed dish underneath with an inner lip,
   // rounded foot, tall rim band, shoulder, domed top
-  const prof: [number, number][] = [
-    [0, 0.09], [0.74, 0.07], [0.82, 0.0], [0.9, -0.03], [0.97, -0.01], [1, 0.05], [1, h * 0.78], [0.95, h * 0.97], [0.82, h * 1.04], [0, h * 1.08],
-  ];
+  const prof: [number, number][] = opts.shape === 'dome'
+    ? [
+      [0, 0.06], [0.62, 0.05], [0.7, 0.0], [0.86, -0.04], [1.04, -0.05], [1.08, 0.0], [1.0, 0.06],
+      [0.98, h * 0.55], [0.96, h * 0.82], [0.88, h * 1.02], [0.72, h * 1.18], [0.48, h * 1.3], [0.24, h * 1.36], [0, h * 1.38],
+    ]
+    : [
+      [0, 0.09], [0.74, 0.07], [0.82, 0.0], [0.9, -0.03], [0.97, -0.01], [1, 0.05], [1, h * 0.78], [0.95, h * 0.97], [0.82, h * 1.04], [0, h * 1.08],
+    ];
   // half revolution (phi 0..π → local +X): the open cut face lies in the wall plane x = 0
-  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 28, 0, Math.PI);
+  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), opts.shape === 'dome' ? 24 : 28, 0, Math.PI);
   geo.translate(0, -h * 0.5, 0);
-  const n = (Math.floor((s1 - s0) / spacing) + 1) * 2;
+  const list: number[] = opts.positions ?? [];
+  if (!opts.positions) for (let s = s0; s <= s1 + 1e-6; s += spacing) list.push(s);
+  const n = Math.max(1, list.length) * 2;
   const mesh = new THREE.InstancedMesh(geo, material, n);
   const size = opts.size ?? 1.6;
   const ang = THREE.MathUtils.degToRad(opts.angleDeg ?? 18);
@@ -323,7 +349,7 @@ export function buildWallLids(
   const c = new THREE.Vector3(), dir = new THREE.Vector3(), X = new THREE.Vector3(), Y = new THREE.Vector3(), Z = new THREE.Vector3();
   const basis = new THREE.Matrix4(), m = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3();
   let k = 0;
-  for (let s = s0; s <= s1 + 1e-6; s += spacing) {
+  for (const s of list) {
     for (const side of [1, -1]) {
       const f = path.frame(s);
       const r = path.radius(s);

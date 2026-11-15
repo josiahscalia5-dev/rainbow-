@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2920,
-   "sha256": "572fe24f0e626757400a444b3f95937a2d20506adf20275ebac8e16f6398f0cd"
+   "sha256": "10e73673794f370f0288fded0352b499f4676f179b652d4e882feaf2710da4da"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1107,
-   "sha256": "f229a7f4575bf0a6597765b53b6dc041a466597c741168ad5c43d4ad1c112f64"
+   "bytes": 1112,
+   "sha256": "46e8306096680df995f105882b17a876872355087666981d96424b8b455c7938"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -898,8 +898,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 2580,
-   "sha256": "2cf33e7dc2404066b0faeae8ab081c98871cf1af723b2f2507b7eac4fa861823"
+   "bytes": 3715,
+   "sha256": "e548da2a6c206b8ede5d5e697a65d86b28df09213e69c3cbc1dc9bdd3d595abe"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -1217,6 +1217,16 @@
    "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
   },
   {
+   "path": "qa/pilot05/wave3/environment/it01/05.png",
+   "bytes": 1583561,
+   "sha256": "ebb8b471c2e2fa6dffad46366427821bf5be1442e10cc7164b16aa02e542b83e"
+  },
+  {
+   "path": "qa/pilot05/wave3/environment/it01/tri.png",
+   "bytes": 3287736,
+   "sha256": "cedb2a2bc0972fd5de2abe0bb12a0d5d68badcf180d6110fd353562d4e64d4cc"
+  },
+  {
    "path": "qa/pilot05/wave3/foam/iso0/05_noCrownSpray.png",
    "bytes": 1360006,
    "sha256": "f474d66c9d4a85efda45339c2cfa8c4fd42355511f518f4eb6870d2c3b146eaa"
@@ -1232,6 +1242,36 @@
    "sha256": "aea7286663847615a1d5929ab11a52aa129644ee9b5db70d58ea255c31043ece"
   },
   {
+   "path": "qa/pilot05/wave3/foam/it01/05_now.png",
+   "bytes": 1383700,
+   "sha256": "d72413d5fada17c3b5ab83702790205eba65bbdd25ad79edcc6775e07389d7c8"
+  },
+  {
+   "path": "qa/pilot05/wave3/foam/it01/05_now_waterqa.json",
+   "bytes": 2111,
+   "sha256": "66bcc74f88f727b8b5df59c7cde35bbda34006217a7ec7d0be3c57b261e74139"
+  },
+  {
+   "path": "qa/pilot05/wave3/foam/it01/multi_log.json",
+   "bytes": 723,
+   "sha256": "3b26f7ab30ed29d16500cda3ca252f54c79cf4b8a424f04927abc7567855c0dc"
+  },
+  {
+   "path": "qa/pilot05/wave3/foam/it02/05_now.png",
+   "bytes": 1613064,
+   "sha256": "b52b79ce020976e5630a1dbf62d1fe0aad54abe1fbe8a350686d9254682f09ef"
+  },
+  {
+   "path": "qa/pilot05/wave3/foam/it02/05_now_waterqa.json",
+   "bytes": 2203,
+   "sha256": "3006a3ec92e5406054968a929511e58221a8e39de64ffc3fc20f4bea92d81154"
+  },
+  {
+   "path": "qa/pilot05/wave3/foam/it02/multi_log.json",
+   "bytes": 723,
+   "sha256": "268897eeb014a7550e108428f561202ea108adbb272e4fbfc34ab7f5c6ddd004"
+  },
+  {
    "path": "qa/pilot05/wave3/water/it08_base/05.png",
    "bytes": 1403551,
    "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
@@ -1245,6 +1285,16 @@
    "path": "qa/pilot05/wave3/water/it08_iso_nowake/05.png",
    "bytes": 1318597,
    "sha256": "4ced3f7e2be9c59ca5bf375ab3dbb17caf89de4aaa95aafb24f8c50b012a94fc"
+  },
+  {
+   "path": "qa/pilot05/wave3/water/it09/05.png",
+   "bytes": 1385999,
+   "sha256": "d94c36f2cf054c21540e01e8bd713c7b3ca1e2dd522fe4160c924d4be19ca752"
+  },
+  {
+   "path": "qa/pilot05/wave3/water/it10/05.png",
+   "bytes": 1605611,
+   "sha256": "96e78ad2f7b18ea5cda9142408020dc238c6f8316bc247c7a29fd018b1465f66"
   },
   {
    "path": "qa/pilot05/wave3_baseline/01.png",
@@ -1350,6 +1400,41 @@
    "path": "qa/worldlabs/05/PILOT_PLAN.md",
    "bytes": 4257,
    "sha256": "85ca78154fe4c8ec5e9e8df6734e6cbc35e5c711763b8d501cbc3a3172742748"
+  },
+  {
+   "path": "qa/worldlabs/05/plate_v2/05_clean_environment_v2.png",
+   "bytes": 2149285,
+   "sha256": "89188417b7fe535243cd95a677c446870085b1dcb7fde3bb9941764be8e050e8"
+  },
+  {
+   "path": "qa/worldlabs/05/plate_v2/05_reconstructed_mask_overlay_v2.png",
+   "bytes": 1657618,
+   "sha256": "27a322c4930ca449be3b5713fab3319d68789a65542e322d32d54969a63cdacc"
+  },
+  {
+   "path": "qa/worldlabs/05/plate_v2/05_reconstructed_mask_v2.png",
+   "bytes": 6989,
+   "sha256": "254cdc9c7eff6cab1b76cf7f9c73c2285e7508ede78a6808a4ae546b6360f844"
+  },
+  {
+   "path": "qa/worldlabs/05/plate_v3/05_geometry_coin_trail_zoom_v3.png",
+   "bytes": 948610,
+   "sha256": "8b3b03d9bca7564b341c08c253fddefe8edc1416032061675a46465966c9a23e"
+  },
+  {
+   "path": "qa/worldlabs/05/plate_v3/05_geometry_mask_overlay_v3.png",
+   "bytes": 841957,
+   "sha256": "9a83e52e291c70fa64f6a4b11a1283f2b5b6a3bc61d20e416c1c516e5a00d29f"
+  },
+  {
+   "path": "qa/worldlabs/05/plate_v3/05_geometry_reconstructed_mask_v3.png",
+   "bytes": 3210,
+   "sha256": "2526093f0ceb4eeea3cadc4a7252ad64389e3d1a0ce711844a4c8706ce2b03df"
+  },
+  {
+   "path": "qa/worldlabs/05/plate_v3/05_geometry_reference_v3.png",
+   "bytes": 1052708,
+   "sha256": "eeb9edcdccf44b143a7498a77e8240dcc686ad5296d4f2f1a8578e7f564ae71a"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -1638,8 +1723,8 @@
   },
   {
    "path": "src/characters/benny/build.ts",
-   "bytes": 20806,
-   "sha256": "497add2875399957de84324c473d6e92019d03ffaca8ca6e880ef6f8a41657d9"
+   "bytes": 21429,
+   "sha256": "a7d582b890158fbc7f099ca82647f2f554147eb4895b00d5e0195bfcb4410708"
   },
   {
    "path": "src/characters/benny/fur.ts",
@@ -1738,8 +1823,8 @@
   },
   {
    "path": "src/vfx/bubbles.ts",
-   "bytes": 15746,
-   "sha256": "15b0ba3367854221d1e8a917d1c7bfe18347130f39a5da4b253511bb39e78109"
+   "bytes": 20082,
+   "sha256": "9ebc1a05964412eeffdd6599e5203d7ce40ef824ec03269c734c6ccc03b140d4"
   },
   {
    "path": "src/vfx/drumWater.ts",
@@ -1753,8 +1838,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 19621,
-   "sha256": "098be97f7e122aa84e4af470411b3bdfd8f0acc39f30a67bd7c9b756bae29953"
+   "bytes": 27361,
+   "sha256": "98d68c0b56c9aedde5eb46e21745c023215a5e330deb30d40851123bf79e1c12"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -1763,8 +1848,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 13983,
-   "sha256": "d5786d67692831808b8176e3c72815d4bda0c4699c9e9375ee6430024cf1cfcf"
+   "bytes": 13976,
+   "sha256": "8f5f3acff542cdbc93429ae8887c6f8373f77ab53c2a8517368f5f3383f3976d"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -1773,8 +1858,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 7933,
-   "sha256": "05987071f332a966f623eaf74431aae5dfbedf0e0daa4d42151de177d18e6ad1"
+   "bytes": 8275,
+   "sha256": "cdcb0b11584330d921a0b545091f85b79d9c75a59d2d298bdfba925d848b8d80"
   },
   {
    "path": "src/vfx/spray.ts",
@@ -1783,8 +1868,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 28188,
-   "sha256": "ebaaa473cc504c01a3c24e29a3d83de29a2f5f0c77699f4c509abba5338460ba"
+   "bytes": 30320,
+   "sha256": "824328538a62c35a948ec1267b559998ac943cd50a319c9ad89b5f1a46f131b7"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -1798,8 +1883,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 32749,
-   "sha256": "37d34b46be1e2341565cc51f7277b0dc7e243e05e605982a986371316328005b"
+   "bytes": 35931,
+   "sha256": "97eb3883975e3d2d59ea888fe3afc431d289a8a7a9eee2f8adb7a504863da1ea"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -1808,8 +1893,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 20525,
-   "sha256": "66ed24fd98b6042ef5996f0c92084d4b4ce5e48660978fc33494857de8785709"
+   "bytes": 22697,
+   "sha256": "3e3a1cae805a34aeddd70d468e71a25a089746e8be8ad2939aff7e5c4207e1c2"
   },
   {
    "path": "src/world/towel.ts",
@@ -1818,8 +1903,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 18964,
-   "sha256": "f789ab3f9180b73742528477b76434fd398d40cdae8e9ad50304d7536ae0a85b"
+   "bytes": 20118,
+   "sha256": "8c28e5e28627a3956bb8e6e63bda1061a168afa3b7021c3e7b658f42dc87a8e1"
   },
   {
    "path": "tools/blender/import_world_asset.py",
@@ -1835,6 +1920,16 @@
    "path": "tools/make_env_plate.py",
    "bytes": 5380,
    "sha256": "2d6ec31dcf3888fafbf7130c409e2f37b2c60a95c184b62f4600272a7e36bb6a"
+  },
+  {
+   "path": "tools/make_env_plate_v2.py",
+   "bytes": 10957,
+   "sha256": "5828ec2902378358964de257d9b1548f85fc74ee472a11615782f89b71787342"
+  },
+  {
+   "path": "tools/make_env_plate_v3.py",
+   "bytes": 5519,
+   "sha256": "69e57784241cb2b0d88803fb0412eeff021b66339f5e35c58dcb798a917dc70c"
   },
   {
    "path": "tools/model-lab.html",

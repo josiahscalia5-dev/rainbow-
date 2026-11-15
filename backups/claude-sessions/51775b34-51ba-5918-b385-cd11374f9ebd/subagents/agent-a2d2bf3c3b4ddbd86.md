@@ -1015,3 +1015,273 @@ The offline projection works. Before deciding ring spacing, let me look at the r
 > lid dz 47.0 L(308,430) R(701,429) px/unit 27
 > lid dz 53.0 L(328,435) R(677,435) px/unit 24
 
+### 🤖 Claude — 2026-11-15T20:04:18.306Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "/** Instanced thick gold ring ribs placed perpendicular to the tube every `spacing` units. */\nexport function buildRings(\n  path: TubePath,\n  s0: number,\n  s1: number,\n  spacing: number,\n  material: THREE.Material,\n  opts: { tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number } } = {},\n): THREE.InstancedMesh {\n  const tube = opts.tube ?? 0.075;\n  const collar = opts.collar;\n  const geo = collar ? collarGeo …[+1979 chars]`
+
+### 🧑 User — 2026-11-15T20:04:18.387Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:04:19.911Z
+
+Now the lid builder: explicit positions and a rounder "dome" hood profile option (the legacy 06/07 call keeps the old shape).
+
+### 🤖 Claude — 2026-11-15T20:04:30.029Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  opts: { angleDeg?: number; droopDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number; skip?: (s: number, centre: THREE.Vector3, size: number) => boolean } = {},\n): THREE.InstancedMesh {\n  const h = opts.thickness ?? 0.42;\n  // bottom → top so the lathe normals face outward: recessed dish underneath with an inner lip,\n  // rounded foot, tall rim band, shoulder, domed top\n  const prof: [number, number][] = [\n    [0, 0.09], [0.74, 0.07], [0.82, 0.0], [0.9, -0.03], [0.97, …[+2212 chars]`
+
+### 🧑 User — 2026-11-15T20:04:30.109Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:04:32.056Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  let k = 0;\n  for (let s = s0; s <= s1 + 1e-6; s += spacing) {\n    for (const side of [1, -1]) {\n      const f = path.frame(s);", "new_string": "  let k = 0;\n  for (const s of list) {\n    for (const side of [1, -1]) {\n      const f = path.frame(s);"}`
+
+### 🧑 User — 2026-11-15T20:04:32.131Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:04:33.626Z
+
+Now materials.ts: a v-offset for slot rows (so rows sit between rings) and the tunnel-end glow material with distance fade.
+
+### 🤖 Claude — 2026-11-15T20:04:35.035Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  /** stagger every other slot row by half a cell (default true) */\n  stagger?: boolean;", "new_string": "  /** stagger every other slot row by half a cell (default true) */\n  stagger?: boolean;\n  /** pattern offset along v in cells (aligns slot rows between the ring bands) */\n  offsetV?: number;"}`
+
+### 🧑 User — 2026-11-15T20:04:35.117Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:04:36.234Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "    uStagger: { value: o.stagger === false ? 0 : 0.5 },", "new_string": "    uStagger: { value: o.stagger === false ? 0 : 0.5 },\n    uOffsetV: { value: o.offsetV ?? 0 },"}`
+
+### 🧑 User — 2026-11-15T20:04:36.299Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:04:38.739Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "uniform vec3 uRelief; uniform vec3 uRimColor; uniform float uRimStrength; uniform float uStreakN; uniform vec2 uSlotHalf; uniform float uStagger;\n#ifdef PERF_FARGLOW\n${FAR_GLOW_PARS}\n#endif\nvec2 perfCell(vec2 uv){\n  vec2 g = uv * uRepeat;", "new_string": "uniform vec3 uRelief; uniform vec3 uRimColor; uniform float uRimStrength; uniform float uStreakN; uniform vec2 uSlotHalf; uniform float uStagger; uniform float uOffsetV;\n#ifdef PERF_FARGLOW\n${FAR_GLOW_PARS}\n#endif\nvec2 perfCell(vec2 uv){\ …[+47 chars]`
+
+### 🧑 User — 2026-11-15T20:04:38.815Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:04:49.483Z
+
+Now the tunnel-end glow material.
+
+### 🤖 Claude — 2026-11-15T20:04:58.693Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "export function gold(opts: { roughness?: number; emissive?: number; color?: THREE.ColorRepresentation } = {}): THREE.MeshStandardMaterial {", "new_string": "/**\n * \"Light at the end of the tunnel\" (ref 05): a warm radial glow filling the tube cross-section at the end\n * of the straight 05 current. Opaque yellow-white core → gold → warm magenta → transparent rim, HDR so the\n * core blooms a little. It fades with the CAMERA distance to its own centre: full beyond `fade.y`, gone\n * inside `fade. …[+1817 chars]`
+
+### 🧑 User — 2026-11-15T20:04:58.772Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:05:03.296Z
+
+Now environment.ts: the 05 ring/lid/slot layout anchored to the checkpoint camera, the end glow, and the debug intensity revert.
+
+### 🤖 Claude — 2026-11-15T20:05:05.895Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, type FarGlow, type TubeStrips } from './materials';\nimport { buildTubeGeometry, buildRings, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt } from './tube';", "new_string": "import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, tunnelEndGlowMaterial, type FarGlow, type TubeStrips } fro …[+200 chars]`
+
+### 🧑 User — 2026-11-15T20:05:06.083Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:05:52.643Z
+
+Let me check the tube radius profile and stream height near the end of the straight to place the glow precisely.
+
+### 🤖 Claude — 2026-11-15T20:05:57.229Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && cat > $S/rad05.ts <<'EOF'\nimport { Course } from '/home/user/rainbow-/src/world/course.ts';\nimport { straightTubePath, tubeCenterAt } from '/home/user/rainbow-/src/world/tube.ts';\nconst course = new Course();\nconst s05 = course.stage('05').s0, s06 = course.stage('06').s0, s08 = course.stage('08').s0;\nconst p = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: (s) => course.prop('tube', s) });\nconsole.log('s05', s05.toFixed(2), 's06', s06.toFixed(2), 'crest', course.ma …[+473 chars]`
+
+### 🧑 User — 2026-11-15T20:05:58.013Z
+
+> ↩︎ result: s05 114.69 s06 188.92 crest 132.44
+> 166 R 7.60 D 3.49 streamUp -4.11 streamLat -1.25 tanY -0.042
+> 168 R 7.60 D 3.50 streamUp -4.10 streamLat -0.90 tanY -0.042
+> 170 R 7.60 D 3.52 streamUp -4.08 streamLat -0.40 tanY -0.042
+> 172 R 7.60 D 3.53 streamUp -4.07 streamLat 0.20 tanY -0.042
+> 174 R 7.60 D 3.53 streamUp -4.07 streamLat 0.80 tanY -0.042
+> 176 R 7.60 D 3.53 streamUp -4.07 streamLat 1.34 tanY -0.042
+> 178 R 7.60 D 3.53 streamUp -4.07 streamLat 1.72 tanY -0.043
+> 180 R 7.60 D 3.53 streamUp -4.06 streamLat 1.70 tanY -0.043
+> 182 R 7.60 D 3.53 streamUp -4.05 streamLat 1.28 tanY -0.043
+> 184 R 8.14 D 3.53 streamUp -4.54 streamLat 0.81 tanY -0.033
+> 186 R 10.84 D 3.53 streamUp -7.20 streamLat 0.50 tanY 0.038
+> 188 R 13.61 D 3.54 streamUp -10.06 streamLat 0.44 tanY 0.238
+> 190 R 14.89 D 3.53 streamUp -11.60 streamLat 0.45 tanY 0.438
+> 192 R 15.00 D 3.44 streamUp -11.87 streamLat 0.34 tanY 0.494
+
+### 🤖 Claude — 2026-11-15T20:06:08.015Z
+
+The tube stays R=7.6 until s≈182.5 and then flares into the 06 hall, so the glow goes at s≈183 and the last 05 ring at s≈182. Now I'll rewrite the 05–07 block.
+
+### 🤖 Claude — 2026-11-15T20:06:45.485Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  // ring bays: evenly spaced gold bands; 4 circumferential slot rows per bay (ref 05: 3–5)\n  const ringSpacing = 9.0;\n  const slotRowsPerBay = 4;\n  // analytic strip lights along the tunnel (28 around: ref 05 shows ≈12–16 marquee spots per half-ring)\n  const strips: TubeStrips = { count: 28, width: 0.022, intensity: 40, color: '#ffd9f6', alt: 0.65 };\n  // glossy (low roughness → the strips stay crisp lengthwise streaks instead of a flat clipped sheen)\n  const perfTubeMat = perforatedMetal( …[+10348 chars]`
+
+### 🧑 User — 2026-11-15T20:06:45.590Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:06:52.631Z
+
+Typecheck before capturing.
+
+### 🤖 Claude — 2026-11-15T20:06:53.430Z
+
+> 🔧 **Bash** `{"command": "timeout 300 npx tsc --noEmit 2>&1 | head -20; echo EXIT $?", "description": "Run TypeScript typecheck"}`
+
+### 🧑 User — 2026-11-15T20:06:55.893Z
+
+> ↩︎ result: src/game/cameraRig.ts(49,37): error TS2532: Object is possibly 'undefined'.
+> EXIT 0
+
+### 🤖 Claude — 2026-11-15T20:06:57.386Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,60p src/game/cameraRig.ts; git diff --stat -- src/game/cameraRig.ts", "description": "Inspect cameraRig typecheck error (not my file)"}`
+
+### 🧑 User — 2026-11-15T20:06:57.438Z
+
+> ↩︎ result: export function camParamsAt(course: Course, s: number, blend = 8): CamParams {
+>   const acc: CamParams = { back: 0, up: 0, ahead: 0, lookUp: 0, fov: 0, latFollow: 0, roll: 0 };
+>   let w = 0;
+>   for (const st of course.stages) {
+>     const p = STAGE_CAM[st.id];
+>     if (!p) continue;
+>     const a = THREE.MathUtils.smoothstep(s, st.s0 - blend, st.s0 + blend) * (1 - THREE.MathUtils.smoothstep(s, st.s1 - blend, st.s1 + blend));
+>     if (a <= 0) continue;
+>     for (const k of KEYS) acc[k] += p[k] * a;
+>     w += a;
+>   }
+>   if (w === 0) return { ...(STAGE_CAM['03'] as CamParams) };
+>   for (const k of KEYS) acc[k] /= w;
+>   return acc;
+> }
+> 
+> export class RideCamera {
+>   readonly pos = new THREE.Vector3();
+>   readonly target = new THREE.Vector3();
+>   readonly up = new THREE.Vector3(0, 1, 0);
+
+### 🤖 Claude — 2026-11-15T20:06:59.326Z
+
+The only type error is in `cameraRig.ts` (path-camera's file, mid-edit); my files are clean. Capture it01.
+
+### 🤖 Claude — 2026-11-15T20:07:00.472Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave3/environment/it01 2>&1 | grep -v \"^\\s*$\" | tail -5", "description": "Capture screen 05 iteration 01", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T20:07:17.735Z
+
+> ↩︎ result: 05 → qa/pilot05/wave3/environment/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":120,"tris":618395,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T20:07:20.673Z
+
+> 🔧 **Bash** `{"command": "D=qa/pilot05/wave3/environment/it01 && python3 scripts/triptych.py $D/tri.png 1100 REF=references/05_flow_into_the_current.png PREV=qa/screen05_final/previous_specialist/05.png NOW=$D/05.png && python3 -I /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/m05.py $D/05.png", "description": "Build triptych and measure it01"}`
+
+### 🧑 User — 2026-11-15T20:07:21.960Z
+
+> ↩︎ result: qa/pilot05/wave3/environment/it01/tri.png (1889, 1142)
+> == qa/pilot05/wave3/environment/it01/05.png
+>   gold%frame        15.7   median #FFA939  medH 30.4  yellow(H>=40)% of gold 21
+>   gold%tube(200-620) 38.0   median #FF9C3F
+>   pale-yellow hot spots (gold,V>.95,S<.62) % of gold: 32.3  median #FFC570
+>   blowout% 0.1
+>   Lwall  #F744F5  V1.00 S0.73 dark(V<.35)% 4 white% 1 std45 paleblue%0.7 gold%35
+>   Rwall  #EBB3FF  V1.00 S0.37 dark(V<.35)% 0 white%27 std49 paleblue%10.7 gold%17
+>   ceil   #FB65ED  V1.00 S0.60 dark(V<.35)% 0 white% 0 std43 paleblue%0.0 gold%39
+>   VP (blur max) (497,466) L250
+>   ring runs x=498: 182-187 213-221 225-228 246-253 256-259 272-278 280-282 368-429
+>     centre gaps: 33 9 23 8 18 6 117
+
+### 🤖 Claude — 2026-11-15T20:07:23.073Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave3/environment/it01/tri.png"}`
+
+### 🧑 User — 2026-11-15T20:07:23.336Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:07:30.460Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave3/environment/it01/05.png').convert('RGB').crop((0,150,864,700))\nb=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((0,150,864,700))\nc=Image.new('RGB',(864,1100)); c.paste(b,(0,0)); c.paste(a,(0,550)); c.save('$S/z01.png')\"", "description": "Stack reference and it01 tunnel crops"}`
+
+### 🧑 User — 2026-11-15T20:07:30.906Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T20:07:32.695Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/z01.png"}`
+
+### 🧑 User — 2026-11-15T20:07:32.737Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:08:19.121Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && for sp in \"7.5 8\" \"8 8\" \"9 8\" \"7 8.5\"; do echo \"== S d0 = $sp\"; timeout 120 npx vite-node $S/lay05.ts -- $sp 9 2>&1 | grep -v \"^lid\" | tail -9; done", "description": "Compare ring spacings 7–9 for the 05 view"}`
+
+### 🧑 User — 2026-11-15T20:08:26.692Z
+
+> ↩︎ result: == S d0 = 7.5 8
+> ring dz 0.5 top 8728 L -12261 R -356408 rpx -172074
+> ring dz 8.0 top -1255 L -662 R 1810 rpx 1236
+> ring dz 15.5 top -306 L -110 R 1156 rpx 633
+> ring dz 23.0 top -28 L 87 R 937 rpx 425
+> ring dz 30.5 top 104 L 186 R 829 rpx 321
+> ring dz 38.0 top 183 L 248 R 763 rpx 258
+> ring dz 45.5 top 235 L 288 R 720 rpx 216
+> ring dz 53.0 top 270 L 316 R 688 rpx 186
+> top gaps -9982 949 278 132 79 51 35
+> == S d0 = 8 8
+> VP 500 479 sCam 126.04
+> ring dz 8.0 top -1255 L -662 R 1810 rpx 1236
+> ring dz 16.0 top -278 L -91 R 1135 rpx 613
+> ring dz 24.0 top -5 L 104 R 919 rpx 407
+> ring dz 32.0 top 123 L 201 R 813 rpx 306
+> ring dz 40.0 top 199 L 260 R 750 rpx 245
+> ring dz 48.0 top 248 L 299 R 709 rpx 205
+> top gaps 976 274 128 76 48
+> == S d0 = 9 8
+> VP 500 479 sCam 126.04
+> ring dz 8.0 top -1255 L -662 R 1810 rpx 1236
+> ring dz 17.0 top -229 L -57 R 1097 rpx 577
+> ring dz 26.0 top 35 L 134 R 886 rpx 376
+> ring dz 35.0 top 156 L 226 R 786 rpx 280
+> ring dz 44.0 top 226 L 282 R 727 rpx 223
+> ring dz 53.0 top 270 L 316 R 688 rpx 186
+> top gaps 1026 264 120 71 44
+> == S d0 = 7 8.5
+> ring dz 1.5 top 34821 L -5008 R 10552 rpx 7780
+> ring dz 8.5 top -1125 L -595 R 1728 rpx 1162
+> ring dz 15.5 top -306 L -110 R 1156 rpx 633
+> ring dz 22.5 top -40 …[+219 chars]
+
+### 🤖 Claude — 2026-11-15T20:08:37.271Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/REQUESTS.md; ls qa/pilot05/wave3/*/", "description": "Check requests file for camera lock"}`
+
+### 🧑 User — 2026-11-15T20:08:37.302Z
+
+> ↩︎ result: - foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord sqrt(0.86² − h²) ≈ 0.44 at the default 0.3 ride lift (it was 0.67, derived from the unlifted root, which made the contact band ~2× too wide). The bottom-of-frame white haze + blue dot field in 05/03 was the old `wakeV`/`tendrils` × `lace` term; your in-progress rewrite (no lace in wakeV) removes it. Splash fan / crown / spray / foam stay in riderSplash.ts, spray.ts, foam.ts as your comment says.
+> - foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under Benny's fur (05, y≈1150–1170) is the `contact` term in `src/vfx/waterRibbon.ts` FRAG, Benny block (`if (rr < rb * 0.25) { … contact = … }` + `col = mix(col, uFoam * 1.2, clamp(contact * k, 0.0, 1.0));`). Evidence: `qa/pilot05/wave3/foam/iso0/05_noRibbonWake.png` (band gone) vs `05_noCrownSpray.png` (band stays with crown+spray hidden). Please delete that white mix entirely (the fur already hides the waterline; the ref has clear glossy cyan right under him). If you want a hint of contact …[+2662 chars]
+
+### 🤖 Claude — 2026-11-15T20:08:39.055Z
+
+No camera lock yet. I'll post my coordination note to path-camera now, so they know the rings and glow follow their checkpoint.
+
+### 🧑 User — 2026-11-15T20:08:44.795Z
+
+[Request interrupted by user]
+

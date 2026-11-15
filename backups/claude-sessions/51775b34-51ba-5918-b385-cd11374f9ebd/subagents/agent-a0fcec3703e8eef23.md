@@ -1096,3 +1096,104 @@ While waiting for the camera lock, I'll iterate in the lab. Let me make the lab'
 > body widths (rows below the centre cuff bottom): +10:375 +30:314 +50:274 +70:263 +90:224 +110:167 +130:118 
 > arm-nub rows (b …[+1372 chars]
 
+### 🤖 Claude — 2026-11-15T20:05:54.477Z
+
+> 🔧 **Bash** `{"command": "cat >> /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/maskmeasure.py <<'EOF'\n# centre-column class runs (pom / crown / cuff / body) and the same normalised by the cuff width\nruns_ = []\ncur = None\nfor y in range(by0, by1 + 1):\n    c = col[y] if max(px[cx, y]) >= 40 else 'star'\n    if c != cur:\n        runs_.append([c, y, y]); cur = c\n    else:\n        runs_[-1][2] = y\nprint('centre runs:', ' '.join(f'{c}:{a}-{b}({b - a + 1}={(b - a + 1) / cuffW:.3f}Wc)' for c, a, b in runs_ if c and b - a >= 2))\nprint(f'normalised: total h {(by1 - by0 + …[+370 chars]`
+
+### 🧑 User — 2026-11-15T20:05:54.794Z
+
+> ↩︎ result: centre runs: pom:154-265(112=0.378Wc) crown:266-357(92=0.311Wc) cuff:359-409(51=0.172Wc) body:411-539(129=0.436Wc)
+> normalised: total h 1.311 Wc, w 1.274 Wc, hat 0.868 Wc, body 0.439 Wc, pom w 0.507 Wc
+
+### 🤖 Claude — 2026-11-15T20:06:22.262Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/build.ts'\ns=open(p).read()\nrep = [\n(\"\"\"  /** front of the beanie raised (rad, about X). Small, so the back brim stays high on the ball in rear views */\n  hatTilt: -0.06,\n  brimBottom: 0.24, // hat-local\"\"\",\n\"\"\"  /** beanie tipped FORWARD (rad, about X; + = front down): the back of the cuff sits high on the ball so the rear\n   *  ride cameras see the round plush ball below it (ref 05: body ≈ 38 % of the visible height), while the front\n   *  brim stays just above the eyes (refs 02/03) */\n  hatTilt: 0.09,\n  /** hat-local  …[+423 chars]`
+
+### 🧑 User — 2026-11-15T20:06:22.356Z
+
+> ↩︎ result: 35:  hatTilt: 0.09,
+> 37:  brimBottom: 0.4,
+> 44:  crownH: 0.44,
+> 145:  const hatUp = new THREE.Vector3(0, 1, 0).applyAxisAngle(new THREE.Vector3(1, 0, 0), D.hatTilt);
+> 181:    // bald under the beanie: dot(normal, hatUp) > brimBottom/skin (+ a little overlap)
+> 182:    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.03) / D.skin],
+> 299:  hat.rotation.x = D.hatTilt;
+> 301:  const yb = D.brimBottom;
+> 342:    crownProfile.push([R0 * Math.sqrt(Math.max(0, 1 - t * t)), crownY0 + t * D.crownH]);
+> 345:    new THREE.Mesh(lathe(crownProfile, 72, crownY0, crownY0 + D.crownH, CROWN_REPEAT), crownMat),
+
+### 🤖 Claude — 2026-11-15T20:06:39.976Z
+
+Now the arms, pom, and star placement.
+
+### 🤖 Claude — 2026-11-15T20:06:52.174Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/build.ts'\ns=open(p).read()\nrep = [\n(\"\"\"    // round paw nubs stick out left/right just under the cuff (rear refs 05/07/10: centres ≈ 0.15 × the cuff\n    // width below its bottom edge). Kept low enough that the swim paddle (z up to +0.45) clears the cuff.\n    const a = joint(side > 0 ? 'armL' : 'armR', 0.7 * side, -0.01, 0.03);\"\"\",\n\"\"\"    // round paw nubs stick out left/right just under the cuff (rear refs 05/07/10: nub centres ≈ 10 px below the\n    // cuff's bottom edge, rows ≈ −30…+50 px around it on a 283 px cuff). Joi …[+2818 chars]`
+
+### 🧑 User — 2026-11-15T20:06:52.237Z
+
+> ↩︎ result: 43:export const BENNY_RIDE_LIFT = 0.3;
+
+### 🤖 Claude — 2026-11-15T20:06:59.070Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && timeout 600 node $SP/lab.mjs $SP/k1a.png \"src=build&views=measure&elev=12,16,20,24&bennyMask&bennyLift=0\" $SP/k1b.png \"src=build&views=measure&elev=12,16,20,24&bennyMask&bennyLift=0.15\" $SP/n1.png \"src=build&views=measure&elev=12,16,20,24&bennyLift=0.05\" 2>&1 | tail -3 && for f in k1a k1b; do for i in 0 1 2 3; do echo \"== $f panel $i\"; python3 -I $SP/maskmeasure.py $SP/$f.png --crop=$((432*i)),0,$((432*i+432)),768 | grep -E \"hat%|normalised|centre runs|widths|star|arm\"; done; done", " …[+82 chars]`
+
+### 🧑 User — 2026-11-15T20:07:43.552Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/k1a.png {"baseTriangles":15036,"furQuality":"high"} no console errors
+> /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/k1b.png {"baseTriangles":15036,"furQuality":"high"} no console errors
+> /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/n1.png {"baseTriangles":15036,"furQuality":"high"} no console errors
+> == k1a panel 0
+> hat incl pom (bbox top → cuff bottom @centre) = 230 px, body (cuff bottom → bbox bottom) = 170 px, hat% = 57.5
+> body widths (rows below the centre cuff bottom): +10:336 +30:373 +50:368 +70:324 +90:282 +110:275 +130:250 +150:221 
+> arm-nub rows (body span > cuff + 12 px): y 395-467; max span 373
+> star bbox x 276-355 y 289-368, centre (315, 331), offset from Benny centre +99 px (+0.66 cuff half-widths), area 3187 px
+> centre runs: pom:161-264(104=0.359Wc) crown:266-336(71=0.245Wc) cuff:338-391(54=0.186Wc) body:393-560(168=0.579Wc)
+> normalised: total h 1.383 Wc, w 1.286 Wc, hat 0.793 Wc, body 0.586 Wc, pom w 0.503 Wc
+> == k1a panel 1
+> hat incl pom (bbox top → cuff bottom @centre) = 240 px, body (cuff bottom → bbox bottom) = 165 px, h …[+4333 chars]
+
+### 🤖 Claude — 2026-11-15T20:08:01.072Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/n1.png"}`
+
+### 🧑 User — 2026-11-15T20:08:01.122Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:08:08.967Z
+
+The body now reads as a round full ball under the cuff. Next: lift the pom out further, push the arm nubs outward, then do the knit texture and colours.
+
+### 🤖 Claude — 2026-11-15T20:08:13.236Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/build.ts'\ns=open(p).read()\nrep=[(\"const pom = joint('pom', 0, crownY0 + D.crownH + 0.12, -0.07);\",\"const pom = joint('pom', 0, crownY0 + D.crownH + 0.19, -0.09);\"),\n(\"const a = joint(side > 0 ? 'armL' : 'armR', 0.69 * side, 0.1, 0.0);\",\"const a = joint(side > 0 ? 'armL' : 'armR', 0.71 * side, 0.1, 0.0);\"),\n(\"    arm.position.copy(dir).multiplyScalar(0.16);\",\"    arm.position.copy(dir).multiplyScalar(0.2);\"),\n(\"    palm.position.copy(dir).multiplyScalar(0.25).add(\",\"    palm.position.copy(dir).multiplyScalar(0.29).add(\ …[+372 chars]`
+
+### 🧑 User — 2026-11-15T20:08:13.294Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T20:08:17.822Z
+
+Let me look closely at the reference knit to size the stitches.
+
+### 🤖 Claude — 2026-11-15T20:08:20.181Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/'\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((290,880,570,1040))\na.resize((1120,640),Image.NEAREST).save(S+'ref_knit.png')\n\"", "description": "Zoom reference beanie knit region"}`
+
+### 🧑 User — 2026-11-15T20:08:20.333Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T20:08:22.178Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/ref_knit.png"}`
+
+### 🧑 User — 2026-11-15T20:08:22.210Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T20:08:44.795Z
+
+[Request interrupted by user]
+

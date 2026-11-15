@@ -6,6 +6,12 @@
  *  - puffs: instanced bubble puffs sitting ON the berm crest (silhouette lumps), in ~40-unit chunks
  *    so only chunks near Benny are drawn; quality 'low' halves density and uses 20-tri puffs.
  *  - foam rings on the whirlpool rim and along its spiral bands (rotating with the swirl)
+ *  - rafts (05, wave 3): floating foam clumps ON the water. "Flank" rafts continue the two banks down
+ *    both sides of the frame to Benny's level (ref 05: cloud banks hugging BOTH edges y≈540–1300);
+ *    they float with the current alongside the rider, drift slowly forward and merge into the bank
+ *    ahead, and part around Benny when he steers into them. "Wake" rafts are the whitewater shed
+ *    behind the two spray fans (ref 05: foam at x 60–200 / 690–800, y≈1200–1290). One instanced
+ *    draw, fixed pool, no per-frame allocation.
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
@@ -246,9 +252,30 @@ export interface FoamSystem {
   group: THREE.Group;
   whirlGroup: THREE.Group;
   berm: THREE.Mesh;
-  update(time: number, focusS: number, outro?: number): void;
+  /** floating foam rafts (flank banks + wake foam), 05 only */
+  rafts: THREE.InstancedMesh;
+  /** Benny's waterline position on the course (call from water.wake() each riding frame) */
+  rider(s: number, lat: number, strength: number): void;
+  update(time: number, dt: number, focusS: number, outro?: number): void;
+  /** QA: current raft placement */
+  qaRafts(): { visible: boolean; puffs: number; shown: number; clumps: { kind: string; ds: number; lat: number; k: number }[] };
   instanceCount: number;
 }
+
+// ---------------------------------------------------------------------------------- rafts
+/** flank rafts cycle from DS0 (behind the camera) to DS1 (ahead, merged into the bank) relative to Benny */
+const RAFT_DS0 = -2.6;
+const RAFT_DS1 = 8.5;
+/** relative forward drift of the flank rafts (cycles per second over DS0..DS1 ≈ 0.5 units/s) */
+const RAFT_RATE = 0.042;
+/** wake rafts are shed behind the fans: ds from -0.35 to WAKE_DS1, cycles per second */
+const WAKE_DS1 = -3.3;
+const WAKE_RATE = 0.3;
+/** never closer than this to the stream centreline (coin line / cyan core) */
+const RAFT_MIN_LAT = 1.9;
+
+interface RaftPuff { dx: number; dl: number; dh: number; r: number; q: THREE.Quaternion }
+interface Clump { kind: 0 | 1; side: number; phase: number; depth: number; puffs: RaftPuff[]; first: number }
 
 /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
 function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
@@ -320,8 +347,12 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
   return { mesh, uniforms };
 }
 
-export function createFoam(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): FoamSystem {
+export function createFoam(
+  course: Course,
+  opts: { s0: number; s1: number; quality: 'high' | 'low'; height?: (s: number, lat: number, t: number) => number },
+): FoamSystem {
   const { s0, s1, quality } = opts;
+  const heightAt = opts.height ?? (() => 0);
   const rand = rng(1337);
   const density = quality === 'high' ? 1 : 0.5;
   // LOD: 80-tri puffs in the chunks around Benny, 20-tri puffs further out (low tier: 20-tri only)
@@ -449,12 +480,128 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
   build(wl, whirlGroup, st03.s0 - 30, st04.s0 + 25);
   group.add(whirlGroup);
 
+  // ---- floating rafts (05): flank banks + wake foam ----
+  const rr = rng(4242);
+  const clumps: Clump[] = [];
+  let nRaft = 0;
+  const NF = quality === 'high' ? 10 : 6;
+  const NW = quality === 'high' ? 4 : 3;
+  const randQ = () => new THREE.Quaternion().setFromEuler(new THREE.Euler(rr() * 6, rr() * 6, rr() * 6));
+  for (const side of [-1, 1]) {
+    for (let i = 0; i < NF; i++) {
+      // cloud clump (ref 05: 10–40 px soap-bubble puffs packed into a bank): a dome of bigger puffs
+      // in the middle, smaller ones round the rim, a third stacked on top; spacing < puff radius so
+      // the clump reads as one lumpy cloud, not separate cotton balls
+      const P = quality === 'high' ? 13 + ((rr() * 4) | 0) : 7 + ((rr() * 3) | 0);
+      const puffs: RaftPuff[] = [];
+      const len = 0.5 + rr() * 0.35, wid = 0.28 + rr() * 0.16;
+      for (let k = 0; k < P; k++) {
+        const ang = rr() * Math.PI * 2, rad = Math.sqrt(rr());
+        const r = (k < 4 ? 0.12 + rr() * 0.06 : 0.06 + rr() * 0.07) * (1 - 0.35 * rad);
+        const stack = k >= 4 && rad < 0.6 && rr() < 0.4 ? 0.1 + rr() * 0.06 : 0;
+        puffs.push({ dx: Math.cos(ang) * rad * len, dl: Math.sin(ang) * rad * wid, dh: r * (0.1 + rr() * 0.3) + stack * (1 - rad), r, q: randQ() });
+      }
+      clumps.push({ kind: 0, side, phase: (i + rr() * 0.6) / NF, depth: 1.7 + rr() * 1.5, puffs, first: nRaft });
+      nRaft += P;
+    }
+    for (let i = 0; i < NW; i++) {
+      const P = quality === 'high' ? 8 + ((rr() * 3) | 0) : 5;
+      const puffs: RaftPuff[] = [];
+      for (let k = 0; k < P; k++) {
+        const ang = rr() * Math.PI * 2, rad = Math.sqrt(rr());
+        const r = (k < 3 ? 0.08 + rr() * 0.05 : 0.045 + rr() * 0.05) * (1 - 0.3 * rad);
+        puffs.push({ dx: Math.cos(ang) * rad * 0.4, dl: Math.sin(ang) * rad * 0.24, dh: r * (0.05 + rr() * 0.25), r, q: randQ() });
+      }
+      clumps.push({ kind: 1, side, phase: (i + rr() * 0.6) / NW, depth: 1.0 + rr() * 0.2, puffs, first: nRaft });
+      nRaft += P;
+    }
+  }
+  const rafts = new THREE.InstancedMesh(geoHi, mat, nRaft);
+  rafts.name = 'foam_rafts';
+  rafts.frustumCulled = false;
+  for (const c of clumps) {
+    c.puffs.forEach((pf, k) => {
+      // lit tops (ao high) for the big centre domes, a bit more shade on the small rim puffs
+      rafts.setColorAt(c.first + k, tmpC.setRGB(c.kind === 1 ? 0.92 : 0.78 + 0.22 * Math.min(1, pf.r / 0.22), rr(), rr() * 2 - 1));
+      rafts.setMatrixAt(c.first + k, tmpM.makeScale(0, 0, 0));
+    });
+  }
+  if (rafts.instanceColor) rafts.instanceColor.needsUpdate = true;
+  rafts.visible = false;
+  group.add(rafts);
+  total += nRaft;
+  const st05 = course.stage('05');
+  const sm = (a: number, b: number, x: number) => {
+    const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+    return t * t * (3 - 2 * t);
+  };
+  const rider = { s: 0, lat: 0, str: 0, target: 0, fed: false };
+  const fr = { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+  const base = new THREE.Vector3();
+  const pP = new THREE.Vector3();
+  const qa: { kind: string; ds: number; lat: number; k: number }[] = [];
+  let shown = 0;
+
+  const updateRafts = (time: number, dt: number, focusS: number, outro: number) => {
+    if (!rider.fed) rider.target = 0;
+    rider.fed = false;
+    rider.str = dt > 0 ? rider.str + (rider.target - rider.str) * Math.min(1, dt * 4) : rider.target;
+    const w = sm(st05.s0 + 2, st05.s0 + 7, focusS) * (1 - sm(st05.s1 - 7, st05.s1 - 2, focusS)) * rider.str * (1 - outro);
+    qa.length = 0;
+    shown = 0;
+    rafts.visible = w > 0.01;
+    if (!rafts.visible) return;
+    for (const c of clumps) {
+      let ds: number, lat: number, k: number;
+      if (c.kind === 0) {
+        const cyc = (((c.phase + time * RAFT_RATE) % 1) + 1) % 1;
+        ds = RAFT_DS0 + cyc * (RAFT_DS1 - RAFT_DS0);
+        const hw = course.widthAt(rider.s + ds) / 2;
+        // deep in the water next to Benny, pushed out to the bank further ahead
+        const depth = c.depth * (1 - 0.72 * sm(1.5, 7.5, ds));
+        lat = c.side * Math.max(RAFT_MIN_LAT, hw - depth);
+        // part around Benny (he can steer anywhere across the stream)
+        const part = sm(1.35, 2.0, Math.hypot(ds * 0.55, lat - rider.lat));
+        k = sm(RAFT_DS0, RAFT_DS0 + 1.2, ds) * (1 - sm(RAFT_DS1 - 2.5, RAFT_DS1, ds)) * part;
+      } else {
+        const cyc = (((c.phase + time * WAKE_RATE) % 1) + 1) % 1;
+        ds = -0.35 + cyc * (WAKE_DS1 + 0.35);
+        lat = rider.lat + c.side * (c.depth + 0.3 * -ds);
+        k = sm(-0.35, -0.95, ds) * (1 - sm(WAKE_DS1 + 0.9, WAKE_DS1, ds));
+      }
+      k *= w;
+      const s = Math.min(s1, Math.max(s0, rider.s + ds));
+      course.sample(s, fr);
+      base.copy(fr.pos).addScaledVector(fr.right, lat).addScaledVector(fr.up, heightAt(s, lat, time));
+      if (qa.length < 64) qa.push({ kind: c.kind === 0 ? 'flank' : 'wake', ds: +ds.toFixed(2), lat: +lat.toFixed(2), k: +k.toFixed(2) });
+      for (let i = 0; i < c.puffs.length; i++) {
+        const pf = c.puffs[i];
+        const r = pf.r * k * (1 + 0.035 * Math.sin(time * 1.7 + i * 2.3 + c.phase * 20));
+        if (r < 0.004) { rafts.setMatrixAt(c.first + i, tmpM.makeScale(0, 0, 0)); continue; }
+        pP.copy(base).addScaledVector(fr.tan, pf.dx).addScaledVector(fr.right, c.side * pf.dl).addScaledVector(fr.up, pf.dh * k + r * 0.15);
+        tmpS.set(r, r * 0.8, r);
+        tmpM.compose(pP, pf.q, tmpS);
+        rafts.setMatrixAt(c.first + i, tmpM);
+        shown++;
+      }
+    }
+    rafts.instanceMatrix.needsUpdate = true;
+  };
+
   return {
     group,
     whirlGroup,
     berm: berm.mesh,
+    rafts,
     instanceCount: total,
-    update(time, focusS, outro = 0) {
+    rider(s, lat, strength) {
+      rider.s = s;
+      rider.lat = lat;
+      rider.target = strength;
+      rider.fed = true;
+    },
+    qaRafts: () => ({ visible: rafts.visible, puffs: nRaft, shown, clumps: qa.slice() }),
+    update(time, dt, focusS, outro = 0) {
       berm.uniforms.uTime.value = time;
       (berm.uniforms.uOutro.value as THREE.Vector2).x = outro;
       const s08 = course.stage('08').s0;
@@ -467,6 +614,7 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
       // rotate whirlpool foam about the basin axis with the swirl (θ decreasing = course direction)
       whirlGroup.rotation.y = -time * 0.45 * ((Math.PI * 2) / 3);
       void whirlStart;
+      updateRafts(time, dt, focusS, outro);
     },
   };
 }

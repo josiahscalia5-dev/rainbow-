@@ -989,3 +989,254 @@ Now index.ts: flank-rooted droplet emission matching the fan, a seeded RNG (dete
 > 237:        const side = rand() < 0.5 ? -1 : 1;
 > 238:        const a = rand();
 
+### 🤖 Claude — 2026-11-15T20:03:40.667Z
+
+Now foam.ts: add floating foam rafts (flank banks on the water at 05 plus a wake-foam trail behind the fans), sharing the existing puff material.
+
+### 🤖 Claude — 2026-11-15T20:04:16.930Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/src/vfx/foam.ts'\ns=open(p).read()\ns=s.replace(\"\"\" *  - foam rings on the whirlpool rim and along its spiral bands (rotating with the swirl)\n */\"\"\",\"\"\" *  - foam rings on the whirlpool rim and along its spiral bands (rotating with the swirl)\n *  - rafts (05, wave 3): floating foam clumps ON the water. \"Flank\" rafts continue the two banks down\n *    both sides of the frame to Benny's level (ref 05: cloud banks hugging BOTH edges y≈540–1300);\n *    they float with the current alongside the rider, drift slowly forward and merg …[+9455 chars]`
+
+### 🧑 User — 2026-11-15T20:04:17.040Z
+
+> ↩︎ result: src/vfx/foam.ts:572:      course.sample(s, fr);
+> src/world/course.ts:490:  sample(s: number, out?: CourseSample): CourseSample {
+> 40:export interface CourseSample {
+> 41-  s: number;
+> 42-  pos: THREE.Vector3;
+> 43-  tan: THREE.Vector3;
+> 44-  up: THREE.Vector3;
+> 45-  right: THREE.Vector3;
+> 46-}
+
+### 🤖 Claude — 2026-11-15T20:04:32.099Z
+
+Now bubbles.ts: seeded RNG, depth/size chosen from a target on-screen diameter (25–65 px), and a QA screen report.
+
+### 🤖 Claude — 2026-11-15T20:05:00.024Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/src/vfx/bubbles.ts'\ns=open(p).read()\ns=s.replace(\"\"\"export interface BubbleSystem {\n  group: THREE.Group;\n  big: THREE.InstancedMesh;\n  small: THREE.Points;\n  update(time: number, dt: number, focusS: number, camera: THREE.Camera, density?: number): void;\n  counts: { big: number; small: number };\n}\n\nfunction rnd(a: number, b: number) {\n  return a + Math.random() * (b - a);\n}\n\n/** ride counts (visible at once in a 05-like frame) and caps, per quality tier */\nconst RIDE = {\n  high: { big: 26, small: 36 },\n  low: { big: 16, …[+7770 chars]`
+
+### 🧑 User — 2026-11-15T20:05:02.386Z
+
+> ↩︎ result: src/game/cameraRig.ts(49,37): error TS2532: Object is possibly 'undefined'.
+> [This command modified 2 files you've previously read: src/vfx/bubbles.ts, src/vfx/index.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T20:05:07.874Z
+
+Only error is in `cameraRig.ts` (path-camera's file, mid-edit). Let me extend my scratch capture script to also save the `__waterQA()` report, then capture iteration 1.
+
+### 🤖 Claude — 2026-11-15T20:05:11.222Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 - <<'EOF'\np='multi.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"    const bs = await page.evaluate(() => window.__rainbow.bennyScreen());\"\"\",\"\"\"    const bs = await page.evaluate(() => window.__rainbow.bennyScreen());\n    const wq = await page.evaluate(() => (window.__waterQA ? window.__waterQA() : null));\n    writeFileSync(`${outDir}/${id}_${name}_waterqa.json`, JSON.stringify(wq));\"\"\")\nopen(p,'w').write(s)\nEOF\ncd /home/user/rainbow- && grep -n \"CAMERA LOCK\" qa/pilot05/RE …[+96 chars]`
+
+### 🧑 User — 2026-11-15T20:05:11.281Z
+
+> ↩︎ result: 20:05:11 up 23 min,  0 user,  load average: 0.98, 1.06, 0.89
+
+### 🤖 Claude — 2026-11-15T20:05:16.446Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/multi.mjs 05 qa/pilot05/wave3/foam/it01 now= 2>&1 | tail -3 && python3 -I -c \"\nimport json\nd=json.load(open('qa/pilot05/wave3/foam/it01/05_now_waterqa.json'))\nb=d['bubbles']['big']; sm=d['bubbles']['small']\nprint('big n',len(b),'>=25px',sum(1 for x in b if x[2]>=25), sorted(x[2] for x in b))\nprint('small n',len(sm), sorted(x[2] for x in sm))\nr=d['rafts']; print('rafts',r['visible'],r['puffs'],r['shown'])\nfor c in r['clumps']: print(c)\nprint(d['fanStrength'], d['waterlineR']) …[+72 chars]`
+
+### 🧑 User — 2026-11-15T20:05:28.178Z
+
+> ↩︎ result: now → qa/pilot05/wave3/foam/it01/05_now.png {"calls":115,"tris":601099,"s":132.438,"secs":11.035,"errs":0}
+> big n 24 >=25px 19 [16, 17, 20, 24, 24, 25, 25, 26, 26, 27, 29, 31, 34, 37, 37, 43, 47, 48, 49, 50, 50, 53, 53, 55]
+> small n 34 [2, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 11, 14, 15, 16, 16, 17, 17, 18, 18]
+> rafts True 228 228
+> {'kind': 'flank', 'ds': 3.14, 'lat': -3, 'k': 0.94}
+> {'kind': 'flank', 'ds': 4.08, 'lat': -4.26, 'k': 0.94}
+> {'kind': 'flank', 'ds': 5.58, 'lat': -4.88, 'k': 0.94}
+> {'kind': 'flank', 'ds': 6.99, 'lat': -5.24, 'k': 0.61}
+> {'kind': 'flank', 'ds': -3.42, 'lat': -2.91, 'k': 0.06}
+> {'kind': 'flank', 'ds': -2.16, 'lat': -3.66, 'k': 0.94}
+> {'kind': 'flank', 'ds': -1.25, 'lat': -2.84, 'k': 0.94}
+> {'kind': 'flank', 'ds': 0, 'lat': -2.74, 'k': 0.94}
+> {'kind': 'flank', 'ds': 1.46, 'lat': -2.97, 'k': 0.94}
+> {'kind': 'wake', 'ds': -2.15, 'lat': -1.78, 'k': 0.94}
+> {'kind': 'wake', 'ds': -2.94, 'lat': -1.86, 'k': 0.32}
+> {'kind': 'wake', 'ds': -1.07, 'lat': -1.4, 'k': 0.94}
+> {'kind': 'wake', 'ds': -1.82, 'lat': -1.53, 'k': 0.94}
+> {'kind': 'flank', 'ds': 3.09, 'lat': 3.33, 'k': 0.94}
+> {'kind': 'flank', 'ds': 3.97, 'lat': 4.4, 'k': 0.94}
+> {'kind': 'flank …[+615 chars]
+
+### 🤖 Claude — 2026-11-15T20:05:29.821Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave3/foam/it01/05_now.png"}`
+
+### 🧑 User — 2026-11-15T20:05:29.862Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:05:47.855Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 -I -c \"\nfrom PIL import Image\nimport sys\nS=sys.argv[1]\na=Image.open('qa/pilot05/wave3/foam/it01/05_now.png').convert('RGB').crop((150,1020,700,1300)).resize((1100,560),Image.LANCZOS)\nb=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((150,1020,700,1300)).resize((1100,560),Image.LANCZOS)\no=Image.new('RGB',(1100,1120)); o.paste(a,(0,0)); o.paste(b,(0,560)); o.save(S+'/fan1.png')\n\" $S && python3 -I -c \"\nimport json\nd=json.load(open('qa/pilot05/wave3/foam …[+161 chars]`
+
+### 🧑 User — 2026-11-15T20:05:48.312Z
+
+> ↩︎ result: [220, 548, 24]
+> [820, 553, 17]
+> [182, 555, 20]
+> [681, 555, 49]
+> [186, 556, 16]
+> [694, 573, 24]
+> [652, 574, 26]
+> [183, 575, 37]
+> [171, 580, 50]
+> [712, 598, 43]
+> [97, 621, 53]
+> [754, 624, 50]
+> [747, 629, 26]
+> [727, 631, 55]
+> [199, 640, 31]
+> [73, 721, 47]
+> [142, 744, 29]
+> [792, 751, 37]
+> [712, 759, 27]
+> [127, 782, 48]
+> [677, 810, 25]
+> [797, 856, 25]
+> [771, 910, 34]
+> [236, 978, 53]
+
+### 🤖 Claude — 2026-11-15T20:05:50.086Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/fan1.png"}`
+
+### 🧑 User — 2026-11-15T20:05:50.126Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:07:30.409Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/src/vfx/riderSplash.ts'\ns=open(p).read()\nold=s[s.index(\"const FRAG = /* glsl */ `\"):s.index(\"export interface RiderSplash\")]\nnew='''const FRAG = /* glsl */ `\nuniform float uTime;\nuniform float uStrength;\nvarying vec3 vFan;\n#include <fog_pars_fragment>\n${NOISE_GLSL}\nvoid main() {\n  float a = vFan.y;\n  float t = vFan.z;\n  float seed = step(0.0, vFan.x) * 7.3;\n  // jets: broad soft water jets plus finer ones racing outward (never hair-thin lines)\n  float j1 = vnoise(vec2(a * 13.0 + seed, t * 1.4 - uTime * 4.0));\n  float j2  …[+2371 chars]`
+
+### 🧑 User — 2026-11-15T20:07:30.480Z
+
+> ↩︎ result: 27:  root0: 1.6,
+> 30:  dir0: 0.98,
+> 51:  float thR = mix(${FAN.root0.toFixed(3)}, ${FAN.root1.toFixed(3)}, a);
+> 52:  float phi = mix(${FAN.dir0.toFixed(3)}, ${FAN.dir1.toFixed(3)}, a) + (wob - 0.5) * 0.12;
+> 144:  const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.45 }, uH: { value: 0.18 }, uStrength: { value: 0 } });
+
+### 🤖 Claude — 2026-11-15T20:07:32.199Z
+
+Now pack the raft clumps (smaller, denser puffs, more stacking) and fade them before they reach the frame bottom.
+
+### 🤖 Claude — 2026-11-15T20:07:40.909Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/src/vfx/foam.ts'\ns=open(p).read()\nold=s[s.index(\"    for (let i = 0; i < NF; i++) {\"):s.index(\"  const rafts = new THREE.InstancedMesh(geoHi, mat, nRaft);\")]\nnew='''    for (let i = 0; i < NF; i++) {\n      // cloud clump (ref 05: 10–40 px soap-bubble puffs packed into a bank): a dome of bigger puffs\n      // in the middle, smaller ones round the rim, a third stacked on top; spacing < puff radius so\n      // the clump reads as one lumpy cloud, not separate cotton balls\n      const P = quality === 'high' ? 13 + ((rr() * 4) | 0) :  …[+1627 chars]`
+
+### 🧑 User — 2026-11-15T20:07:40.979Z
+
+> ↩︎ result: 267:const RAFT_DS0 = -2.6;
+> 487:  const NF = quality === 'high' ? 10 : 6;
+> 558:        ds = RAFT_DS0 + cyc * (RAFT_DS1 - RAFT_DS0);
+> 565:        k = sm(RAFT_DS0, RAFT_DS0 + 1.2, ds) * (1 - sm(RAFT_DS1 - 2.5, RAFT_DS1, ds)) * part;
+
+### 🤖 Claude — 2026-11-15T20:07:43.805Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "offset": 215, "limit": 80}`
+
+### 🧑 User — 2026-11-15T20:07:43.831Z
+
+> ↩︎ result: 215	
+> 216	  const tmp = new THREE.Vector3();
+> 217	  const tmp2 = new THREE.Vector3();
+> 218	  const tmp3 = new THREE.Vector3();
+> 219	  /** camera basis of the current frame (screen-space placement / exclusion) */
+> 220	  const view = { pos: new THREE.Vector3(), dir: new THREE.Vector3(0, 0, -1), right: new THREE.Vector3(1, 0, 0), tanV: 0.6, tanH: 0.34, inv: new THREE.Matrix4(), ok: false };
+> 221	  /**
+> 222	   * 1 = fine, 0 = in the no-bubble corridor (stream centre: Benny, splash, coin line), -1 = out of
+> 223	   * the frame / too close to the camera. NDC from the camera basis.
+> 224	   */
+> 225	  const allowed = (p: THREE.Vector3): number => {
+> 226	    if (!view.ok) return 1;
+> 227	    const v = tmp3.copy(p).applyMatrix4(view.inv);
+> 228	    const depth = -v.z;
+> 229	    if (depth < 2.5) return -1;
+> 230	    const xn = v.x / (depth * view.tanH), yn = v.y / (depth * view.tanV);
+> 231	    if (Math.abs(xn) > 1.12 || yn < -1.12 || yn > 1.1) return -1;
+> 232	    if (yn > 0.62) return 0; // upper tube / HUD: keep clear (ref 05 has none there)
+> 233	    const corridor = yn < 0.1 ? 0.46 : 0.3;
+> 234	    return Math.abs(xn) < corridor ? 0 : 1;
+> 235	  };
+> 236	  /** pixels per unit at depth 1 and the frame-height scale of the …[+3681 chars]
+
+### 🤖 Claude — 2026-11-15T20:08:09.484Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/src/vfx/bubbles.ts'\ns=open(p).read()\na=s.index(\"  /** camera basis of the current frame (screen-space placement / exclusion) */\")\nb=s.index(\"    } else b.size = rnd(0.06, 0.16); // point-sprite diameter\")\nb=b+len(\"    } else b.size = rnd(0.06, 0.16); // point-sprite diameter\")\nnew='''  /** camera basis of the current frame (screen-space placement / exclusion) */\n  const view = { pos: new THREE.Vector3(), dir: new THREE.Vector3(0, 0, -1), right: new THREE.Vector3(1, 0, 0), up: new THREE.Vector3(0, 1, 0), tanV: 0.6, tanH: 0.34, i …[+6567 chars]`
+
+### 🧑 User — 2026-11-15T20:08:11.990Z
+
+> ↩︎ result: src/game/cameraRig.ts(49,37): error TS2532: Object is possibly 'undefined'.
+> 267:    // (far, small) and grow naturally as Benny rides towards them.
+
+### 🤖 Claude — 2026-11-15T20:08:21.495Z
+
+> 🔧 **Bash** `{"command": "grep -c \"CAMERA LOCK\" qa/pilot05/REQUESTS.md; timeout 600 node /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/multi.mjs 05 qa/pilot05/wave3/foam/it02 now= 2>&1 | tail -3 && python3 -I -c \"\nimport json\nd=json.load(open('qa/pilot05/wave3/foam/it02/05_now_waterqa.json'))\nb=d['bubbles']['big']; sm=d['bubbles']['small']\nprint('big n',len(b),'>=25px',sum(1 for x in b if x[2]>=25))\nfor x in sorted(b,key=lambda v:v[1]): print(x)\nprint('small n',len(sm), sorted(x[2] for x in sm))\nr=d['rafts']; print('rafts',r['visible'],r['puffs'],r['shown'])\n\ …[+56 chars]`
+
+### 🧑 User — 2026-11-15T20:08:36.057Z
+
+> ↩︎ result: 1
+> now → qa/pilot05/wave3/foam/it02/05_now.png {"calls":120,"tris":629035,"s":132.438,"secs":13.685,"errs":0}
+> big n 23 >=25px 18
+> [84, 533, 55]
+> [786, 554, 49]
+> [108, 593, 56]
+> [721, 686, 58]
+> [800, 737, 42]
+> [192, 750, 35]
+> [165, 766, 50]
+> [738, 772, 36]
+> [705, 772, 24]
+> [665, 872, 32]
+> [662, 895, 24]
+> [734, 907, 54]
+> [136, 913, 47]
+> [71, 916, 26]
+> [800, 919, 24]
+> [666, 943, 27]
+> [812, 944, 45]
+> [162, 955, 53]
+> [674, 989, 41]
+> [709, 1019, 23]
+> [172, 1027, 48]
+> [154, 1085, 47]
+> [678, 1085, 21]
+> small n 34 [4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 11, 11, 11, 12, 13, 13, 13, 15, 16, 16]
+> rafts True 361 349
+
+### 🤖 Claude — 2026-11-15T20:08:38.838Z
+
+> 🔧 **Bash** `{"command": "grep -n \"CAMERA LOCK\" -A3 qa/pilot05/REQUESTS.md | cut -c1-600; git log --oneline -3; git status --short src", "description": "Read camera lock note"}`
+
+### 🧑 User — 2026-11-15T20:08:38.873Z
+
+> ↩︎ result: 6:- water-fx-specialist → path-camera-transition-engineer (wave 3, corrections 4 + 9): (a) COINS ON THE CYAN CORE. In 05 the cyan core is no longer free-drifting: its centre is at lateral `coreLateral(course, s)` (exported from `src/vfx/waterRibbon.ts`, = CORE_SWING · offset05(s) · right.x, |value| ≤ ≈1.7 u, 0 outside 05), i.e. it swings with your S05 meander, amplified so the pink bands read as strong S-bends. The 05 coins are now at `1.2·sin(i·0.55)` (coins.ts line 24), a zigzag in a different phase, so they wander toward the band edges (ds≈31.7: coin lat +0.37 vs core −1.2). P
+> 5a19aa6 autosave: Rainbow 2026-11-15 20:03 UTC
+> 3ef4a92 autosave: Rainbow 2026-11-15 20:01 UTC
+> f003293 Record autosave status rows
+>  M src/characters/benny/build.ts
+>  M src/vfx/bubbles.ts
+>  M src/vfx/foam.ts
+>  M src/vfx/index.ts
+>  M src/vfx/riderSplash.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/environment.ts
+>  M src/world/materials.ts
+>  M src/world/tube.ts
+
+### 🤖 Claude — 2026-11-15T20:08:39.268Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave3/foam/it02/05_now.png"}`
+
+### 🧑 User — 2026-11-15T20:08:39.324Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T20:08:44.745Z
+
+[Request interrupted by user]
+

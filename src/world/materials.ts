@@ -33,6 +33,8 @@ export interface PerforatedOptions {
   slotHalf?: [number, number];
   /** stagger every other slot row by half a cell (default true) */
   stagger?: boolean;
+  /** pattern offset along v in cells (aligns slot rows between the ring bands) */
+  offsetV?: number;
   /**
    * Washer-tube upgrade (05–07): pressed-metal corrugation + bevelled slot lips perturb the normal so
    * the glossy metal catches light around every slot (refs 05–07). Height amplitudes in world units.
@@ -187,6 +189,7 @@ export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMa
     uStreakN: { value: o.streakCount ?? 9 },
     uSlotHalf: { value: new THREE.Vector2(o.slotHalf?.[0] ?? -1, o.slotHalf?.[1] ?? -1) },
     uStagger: { value: o.stagger === false ? 0 : 0.5 },
+    uOffsetV: { value: o.offsetV ?? 0 },
     uRelief: { value: new THREE.Vector3(relief?.corrugation ?? 0, relief?.bevel ?? 0, relief?.bevelWidth ?? 0.09) },
     uRimColor: { value: new THREE.Color(o.rimColor ?? '#ffd1ff') },
     uRimStrength: { value: o.rimStrength ?? 0.55 },
@@ -208,12 +211,13 @@ export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMa
         `#include <common>
 varying vec2 vPerfUv;
 uniform vec3 uHoleColor; uniform float uSlot; uniform vec2 uRepeat; uniform float uHoleSize; uniform float uStreaks;
-uniform vec3 uRelief; uniform vec3 uRimColor; uniform float uRimStrength; uniform float uStreakN; uniform vec2 uSlotHalf; uniform float uStagger;
+uniform vec3 uRelief; uniform vec3 uRimColor; uniform float uRimStrength; uniform float uStreakN; uniform vec2 uSlotHalf; uniform float uStagger; uniform float uOffsetV;
 #ifdef PERF_FARGLOW
 ${FAR_GLOW_PARS}
 #endif
 vec2 perfCell(vec2 uv){
   vec2 g = uv * uRepeat;
+  g.y += uOffsetV;
   g.x += mod(floor(g.y), 2.0) * uStagger;   // staggered rows
   return g;
 }
@@ -372,6 +376,47 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
   cube.needsUpdate = true;
   tubeEnvs[variant] = cube;
   return cube;
+}
+
+/**
+ * "Light at the end of the tunnel" (ref 05): a warm radial glow filling the tube cross-section at the end
+ * of the straight 05 current. Opaque yellow-white core → gold → warm magenta → transparent rim, HDR so the
+ * core blooms a little. It fades with the CAMERA distance to its own centre: full beyond `fade.y`, gone
+ * inside `fade.x` (the rider approaching 06 sees the arch hall open up) and again beyond `fade.w` (far
+ * stages never see it). Unit circle in local XY, facing +Z.
+ */
+export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120)): THREE.ShaderMaterial {
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      uFade: { value: fade },
+      uCore: { value: new THREE.Color(3.4, 3.0, 2.0) },
+      uGold: { value: new THREE.Color(2.3, 1.35, 0.32) },
+      uWarm: { value: new THREE.Color(1.05, 0.34, 0.3) },
+      uRim: { value: new THREE.Color(0.36, 0.05, 0.42) },
+    },
+    vertexShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec4 uFade;
+      void main(){
+        vUv = uv;
+        float d = distance(cameraPosition, (modelMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz);
+        vFade = smoothstep(uFade.x, uFade.y, d) * (1.0 - smoothstep(uFade.z, uFade.w, d));
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }`,
+    fragmentShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec3 uCore; uniform vec3 uGold; uniform vec3 uWarm; uniform vec3 uRim;
+      void main(){
+        float r = length(vUv - 0.5) * 2.0;
+        vec3 c = mix(uRim, uWarm, smoothstep(0.92, 0.5, r));
+        c = mix(c, uGold, smoothstep(0.6, 0.18, r));
+        c = mix(c, uCore, smoothstep(0.26, 0.0, r));
+        float a = (1.0 - smoothstep(0.7, 1.0, r)) * vFade;
+        if (a < 0.003) discard;
+        gl_FragColor = vec4(c, a);
+        #include <tonemapping_fragment>
+        #include <colorspace_fragment>
+      }`,
+    transparent: true,
+    depthWrite: false,
+    fog: false,
+  });
 }
 
 export function gold(opts: { roughness?: number; emissive?: number; color?: THREE.ColorRepresentation } = {}): THREE.MeshStandardMaterial {

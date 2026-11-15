@@ -949,3 +949,89 @@ Let me run a baseline capture of the current tree while I measure the reference.
 > 150:    for (let i = skipFirst ? 1 : 0; i <= n; i++) push(f(i / n));
 > 215:  seg(48, (t) => s5.clone().addScaledVector(L05, t));
 
+### 🤖 Claude — 2026-11-15T20:04:03.878Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/probe && cp /home/user/rainbow-/src/world/course.ts course05x.ts && python3 -I - <<'EOF'\np='course05x.ts'\ns=open(p).read()\nold=\"\"\"  const s5 = pts[pts.length - 1].clone();\n  const L05 = V(0, -3, -S05.L);\n  // 48 points (1.5-unit spacing) as before: the junction smoothing, hence the 04/05 and 05/06 stage\n  // boundaries and the 06 checkpoint, stay exactly where they were\n  seg(48, (t) => s5.clone().addScaledVector(L05, t));\n  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clo …[+2389 chars]`
+
+### 🧑 User — 2026-11-15T20:04:03.978Z
+
+> ↩︎ result: // Analytic 05 view probe: camera pose, VP, rings, coins, Benny box, ray-cast visibility at the VP.
+> // usage: npx vite-node probe05.ts -- '{"s":132.4,"cam":{...},"ringSpacing":9,"ringPhase":7.8}'
+> import * as THREE from 'three';
+> const P05 = JSON.parse(process.argv.slice(2).find((a) => a.startsWith('{')) ?? '{}').p05; if (P05) (globalThis as any).__P05 = P05;
+> const { Course } = P05 ? await import('./course05x') : await import('/home/user/rainbow-/src/world/course');
+> import { straightTubePath } from '/home/user/rainbow-/src/world/tube';
+> import { RideCamera, STAGE_CAM } from '/home/user/rainbow-/src/game/cameraRig';
+> import { coinLayout } from '/home/user/rainbow-/src/gameplay/coins';
+> 
+> const arg = JSON.parse(process.argv.slice(2).find((a) => a.startsWith('{')) ?? '{}');
+> const W = 864, H = 1536;
+> const course = new Course();
+
+### 🤖 Claude — 2026-11-15T20:04:11.884Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/probe && cat > show.py <<'EOF'\nimport json,sys\nd=json.loads(sys.stdin.read().strip().splitlines()[-1])\nkeys=sys.argv[1].split(',') if len(sys.argv)>1 else None\nfor k,v in d.items():\n  if keys and k not in keys: continue\n  if k in('rings','coins','stream','grid'):\n    print(k); [print('  ',x) for x in v]\n  else: print(k,v)\nEOF\ncd /home/user/rainbow- && for p in '{\"rise\":4.5,\"Ls\":52}' '{\"rise\":3,\"Ls\":56}' '{\"rise\":6,\"Ls\":50}'; do echo \"=== $p\"; npx vite-node /tmp/claude-0/-ho …[+338 chars]`
+
+### 🧑 User — 2026-11-15T20:04:18.988Z
+
+> ↩︎ result: === {"rise":4.5,"Ls":52}
+> s 132.4
+> s06 190.1
+> vp [499.8, 478.8]
+> rings
+>    {'s': 131.5, 'd': 5.5, 'c': [521.3, 324.1], 'top': -2590.2, 'bot': 1813.6, 'l': -1227.7, 'r': 2549.1}
+>    {'s': 140.5, 'd': 14.4, 'c': [507.7, 423.2], 'top': -396.6, 'bot': 1066.9, 'l': -171.6, 'r': 1225.4}
+>    {'s': 149.5, 'd': 23.4, 'c': [504.6, 446.1], 'top': -30.4, 'bot': 857, 'l': 83.1, 'r': 940.7}
+>    {'s': 158.5, 'd': 32.2, 'c': [502.8, 456.1], 'top': 118.8, 'bot': 759.1, 'l': 195.7, 'r': 817.1}
+>    {'s': 167.5, 'd': 41.2, 'c': [497.8, 453.9], 'top': 185.3, 'bot': 707, 'l': 246.5, 'r': 755.7}
+>    {'s': 176.5, 'd': 52.8, 'c': [533, 439.8], 'top': 181.1, 'bot': 725.4, 'l': 241.8, 'r': 833.9}
+>    {'s': 185.5, 'd': 61.4, 'c': [463.4, 473.5], 'top': 189.1, 'bot': 784, 'l': 145.9, 'r': 774.9}
+>    {'s': 194.5, 'd': 59.9, 'c': [519.9, 461.3], 'top': 102.6, 'bot': 717.8, 'l': 186.3, 'r': 834.5}
+>    {'s': 203.5, 'd': 67.5, 'c': [491.2, 342], 'top': -0.3, 'bot': 591.7, 'l': 190.1, 'r': 786.9}
+>    {'s': 212.5, 'd': 82.4, 'c': [443.8, 280.6], 'top': 11.2, 'bot': 530.8, 'l': 208.1, 'r': 696.1}
+> rayClasses {'T5': 250, 'T6': 1114, 'w6': 80, 'w5': 320}
+> archWaterBox [394, 512, 514, 596]
+> grid
+>    ...................ooooo............... …[+8056 chars]
+
+### 🤖 Claude — 2026-11-15T20:05:46.332Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/probe && sed -i \"s#straight.push({ from: '05', to: '05_bend', a: s5.clone(), b: e.clone(), floorDepth: 3.3 });#straight.push({ from: '05', to: PX.to ?? '05_bend', a: s5.clone(), b: e.clone(), floorDepth: 3.3 });#\" course05x.ts && grep -n \"PX.to\" course05x.ts && cd /home/user/rainbow- && for p in '{\"rise\":3,\"Ls\":56,\"to\":\"06\",\"Lm\":50}' '{\"rise\":4.5,\"Ls\":52,\"to\":\"06\",\"Lm\":46}'; do echo \"=== $p\"; npx vite-node /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f …[+316 chars]`
+
+### 🧑 User — 2026-11-15T20:05:50.844Z
+
+> ↩︎ result: 226:    straight.push({ from: '05', to: PX.to ?? '05_bend', a: s5.clone(), b: e.clone(), floorDepth: 3.3 });
+> === {"rise":3,"Ls":56,"to":"06","Lm":50}
+> s 132.2
+> s06 189
+> vp [499.8, 478.8]
+> rings
+>    {'s': 131.5, 'd': 5.7, 'c': [520.5, 329.7], 'top': -2428.3, 'bot': 1776.7, 'l': -1169.1, 'r': 2469.1}
+>    {'s': 140.5, 'd': 14.6, 'c': [507.6, 423.8], 'top': -383, 'bot': 1059.5, 'l': -162.5, 'r': 1215.1}
+>    {'s': 149.5, 'd': 23.6, 'c': [504.6, 444.9], 'top': -27.5, 'bot': 852.7, 'l': 86.5, 'r': 937}
+>    {'s': 158.5, 'd': 32.4, 'c': [502.9, 483.7], 'top': 152.2, 'bot': 781.8, 'l': 199.7, 'r': 813.6}
+>    {'s': 167.5, 'd': 41.4, 'c': [501.6, 541.8], 'top': 290.3, 'bot': 773.5, 'l': 265.7, 'r': 741.9}
+>    {'s': 176.5, 'd': 50.3, 'c': [499.8, 553.7], 'top': 348.9, 'bot': 745.2, 'l': 304.8, 'r': 696.3}
+>    {'s': 185.5, 'd': 61, 'c': [484.9, 520.6], 'top': 372.5, 'bot': 695.6, 'l': 274.3, 'r': 692.8}
+>    {'s': 194.5, 'd': 60.5, 'c': [514.4, 403.9], 'top': 37.4, 'bot': 661.1, 'l': 180.4, 'r': 830.6}
+>    {'s': 203.5, 'd': 68.7, 'c': [485.7, 285.1], 'top': -66.1, 'bot': 541.1, 'l': 187.4, 'r': 782.8}
+>    {'s': 212.5, 'd': 84.8, 'c': [443.8, 247.1], 'top': -8.1, 'bot': 492.2, 'l': 214.2, 'r': 690.4}
+> rayClasses …[+3561 chars]
+
+### 🤖 Claude — 2026-11-15T20:06:21.707Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/probe && cat > ringell.ts <<'EOF'\nimport * as THREE from 'three';\nimport { Course } from '/home/user/rainbow-/src/world/course';\nimport { straightTubePath } from '/home/user/rainbow-/src/world/tube';\nimport { RideCamera } from '/home/user/rainbow-/src/game/cameraRig';\nconst W = 864, H = 1536;\nconst course = new Course();\nconst s05 = course.stage('05').s0, s06 = course.stage('06').s0, s08 = course.stage('08').s0;\nconst perf = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseR …[+1162 chars]`
+
+### 🧑 User — 2026-11-15T20:06:23.909Z
+
+> ↩︎ result: 176.5 tanY -0.04 R 7.6 0:(704,466) 30:(681,361) 60:(608,282) 90:(504,253) 120:(401,283) 150:(327,362) 180:(303,466) 210:(331,567) 240:(403,639) 270:(500,665) 300:(598,640) 330:(673,568)
+> 185.5 tanY 0.01 R 10.0 0:(721,406) 30:(695,284) 60:(611,192) 90:(492,159) 120:(371,196) 150:(287,291) 180:(262,414) 210:(298,531) 240:(383,611) 270:(494,638) 300:(603,606) 330:(686,523)
+> 194.5 tanY 0.56 R 15.0 0:(850,290) 30:(872,112) 60:(788,-61) 90:(600,-156) 120:(379,-118) 150:(221,31) 180:(172,218) 210:(219,379) 240:(329,485) 270:(470,528) 300:(619,509) 330:(754,428)
+> 203.5 tanY 0.54 R 15.0 0:(801,137) 30:(799,-44) 60:(698,-206) 90:(517,-279) 120:(326,-225) 150:(201,-73) 180:(173,109) 210:(228,263) 240:(336,363) 270:(470,401) 300:(607,374) 330:(727,284)
+> 212.5 tanY -0.02 R 15.0 0:(705,21) 30:(652,-119) 60:(538,-205) 90:(399,-210) 120:(278,-134) 150:(207,-7) 180:(200,137) 210:(255,261) 240:(357,337) 270:(482,348) 300:(601,290) 330:(684,171)
+> 221.5 tanY -0.58 R 15.0 0:(759,210) 30:(742,125) 60:(673,71) 90:(574,60) 120:(472,89) 150:(388,151) 180:(341,232) 210:(344,314) 240:(399,377) 270:(499,401) 300:(616,375) 330:(713,303)
+
+### 🧑 User — 2026-11-15T20:08:44.738Z
+
+[Request interrupted by user]
+

@@ -187,7 +187,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       if (wave.mesh.visible && focusS > st09.s0 - 20 && focusS < st09.s1 + 20 && controls.outro < 0.5) {
         const n = quality === 'high' ? 3 : 1;
         for (let i = 0; i < n; i++) {
-          const c = wave.crest[(Math.random() * wave.crest.length) | 0];
+          const c = wave.crest[(rand() * wave.crest.length) | 0];
           if (!c) break;
           const f = course.sample(Math.min(course.length, Math.max(0, focusS)));
           tmpV2.copy(f.right).multiplyScalar(rnd(1, 3.5)).addScaledVector(f.up, rnd(1.5, 4)).addScaledVector(f.tan, rnd(-1, 2));

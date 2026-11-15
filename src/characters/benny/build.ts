@@ -29,16 +29,19 @@ export const BENNY_DIMS = {
   pear: 0.09,
   /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y < 0) */
   stretch: 0.1,
-  /** front of the beanie raised (rad, about X). Small, so the back brim stays high on the ball in rear views */
-  hatTilt: -0.06,
-  brimBottom: 0.24, // hat-local
+  /** beanie tipped FORWARD (rad, about X; + = front down): the back of the cuff sits high on the ball so the rear
+   *  ride cameras see the round plush ball below it (ref 05: body ≈ 38 % of the visible height), while the front
+   *  brim stays just above the eyes (refs 02/03) */
+  hatTilt: 0.09,
+  /** hat-local cuff bottom: back edge ≈ +0.49, front ≈ +0.33 above the ball centre (wave 3; was 0.24 → 0.19/0.29) */
+  brimBottom: 0.4,
   /** cuff outer radius ≈ the fluffy body half-width (rear refs 05/07/09/10: cuff as wide as the body) */
   brimR: 0.8,
   /** folded cuff band height (ref 05 at ≈12° camera elevation: 51 px band on a 293 px wide cuff ≈ 0.17) */
   cuffH: 0.265,
   /** crown dome height above its base (inside the cuff). Short: in the rear refs the visible crown (W·P·W) is
    *  ≈ 0.27 × the cuff width and the pom-pom sits right on it (the old 0.54 crown showed a big purple cap) */
-  crownH: 0.47,
+  crownH: 0.44,
   /** pom-pom core radius; the shell fur adds ≈ 0.08 visible → ≈ 0.5 × the cuff width (ref 05: 140–150 px / 293) */
   pomR: 0.33,
 };
@@ -247,16 +250,17 @@ export function buildBenny(): BuiltModel {
   const armMat = std({ color: C.pinkSkin, roughness: 0.92 });
   const palmTex = soleTexture('hand');
   for (const side of [1, -1] as const) {
-    // round paw nubs stick out left/right just under the cuff (rear refs 05/07/10: centres ≈ 0.15 × the cuff
-    // width below its bottom edge). Kept low enough that the swim paddle (z up to +0.45) clears the cuff.
-    const a = joint(side > 0 ? 'armL' : 'armR', 0.7 * side, -0.01, 0.03);
+    // round paw nubs stick out left/right just under the cuff (rear refs 05/07/10: nub centres ≈ 10 px below the
+    // cuff's bottom edge, rows ≈ −30…+50 px around it on a 283 px cuff). Joint raised with the perched beanie
+    // (wave 3: −0.01 → +0.1); the swim paddle (z up to +0.45) still clears the cuff.
+    const a = joint(side > 0 ? 'armL' : 'armR', 0.71 * side, 0.1, 0.0);
     body.add(a);
     const phi = 1.15 * side;
     const dir = new THREE.Vector3(Math.sin(phi), -Math.cos(phi), 0);
     const g = new THREE.SphereGeometry(0.135, 20, 14);
     g.scale(1, 1.25, 1);
     const arm = named(new THREE.Mesh(g, armMat), side > 0 ? 'fur_armL' : 'fur_armR');
-    arm.position.copy(dir).multiplyScalar(0.16);
+    arm.position.copy(dir).multiplyScalar(0.2);
     arm.rotation.z = phi;
     arm.userData = furData({ length: 0.08, density: 84, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.15 });
     a.add(arm);
@@ -264,7 +268,7 @@ export function buildBenny(): BuiltModel {
       new THREE.Mesh(new THREE.CircleGeometry(0.07, 24), std({ map: palmTex, roughness: 0.6 })),
       side > 0 ? 'palmL' : 'palmR',
     );
-    palm.position.copy(dir).multiplyScalar(0.25).add(new THREE.Vector3(0, -0.01, 0.105));
+    palm.position.copy(dir).multiplyScalar(0.29).add(new THREE.Vector3(0, -0.01, 0.105));
     palm.rotation.x = -0.25;
     a.add(palm);
   }
@@ -343,32 +347,34 @@ export function buildBenny(): BuiltModel {
     'hat_crown',
   );
   hat.add(crown);
-  // gold star on the cuff's top edge, rear-RIGHT (−X): image-right of centre in the rear gameplay views
-  // (ref 05: star centre at ≈ 0.64 of the cuff half-width → 140° from the front). Its face is turned toward
-  // the back (normal 160° from the front, tilted 12° up) so the ride cameras behind/above see it face-on
-  // instead of edge-on; the inner points tuck into the knit, the outer points stand proud like a sewn badge.
-  const starGeo = new THREE.ExtrudeGeometry(starShape(0.205, 0.1), {
-    depth: 0.04,
+  // puffy gold star badge sewn on the lower white stripe just above the cuff, rear-RIGHT (−X): image-right of
+  // centre in the rear gameplay views (ref 05: centre at ≈ +0.68 of the cuff half-width, ≈ 0.11 × the cuff width
+  // above the cuff's top edge, ≈ 0.27 × the cuff width across, its lower points overlapping the cuff). Its face
+  // is turned toward the back (normal 160° from the front) and leans back against the sloping crown (tilted 25°
+  // up), so the rear ride cameras (10–25° above Benny) see it face-on, never edge-on.
+  const starGeo = new THREE.ExtrudeGeometry(starShape(0.18, 0.09), {
+    depth: 0.02,
     bevelEnabled: true,
-    bevelThickness: 0.03,
-    bevelSize: 0.024,
-    bevelSegments: 3,
+    bevelThickness: 0.045,
+    bevelSize: 0.032,
+    bevelSegments: 4,
   });
   starGeo.center();
   const star = named(
     new THREE.Mesh(starGeo, std({ color: C.gold, metalness: 0.12, roughness: 0.3, emissive: '#ffb800', emissiveIntensity: 0.22 })),
     'hat_star',
   );
-  const sa = THREE.MathUtils.degToRad(146);
-  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR + 0.02), yt + 0.01, Math.cos(sa) * (D.brimR + 0.02));
-  const na = THREE.MathUtils.degToRad(160), tilt = THREE.MathUtils.degToRad(12);
+  const sa = THREE.MathUtils.degToRad(143);
+  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR - 0.01), yt + 0.06, Math.cos(sa) * (D.brimR - 0.01));
+  const na = THREE.MathUtils.degToRad(160), tilt = THREE.MathUtils.degToRad(25);
   const starN = new THREE.Vector3(-Math.sin(na) * Math.cos(tilt), Math.sin(tilt), Math.cos(na) * Math.cos(tilt));
   star.position.copy(starPos);
   star.lookAt(starPos.clone().add(starN));
   star.rotateZ(-0.14);
   hat.add(star);
-  // big fluffy-round pom-pom, sunk onto the crown apex (≈ 0.5 × the cuff width, refs 04/05/07/09/10)
-  const pom = joint('pom', 0, crownY0 + D.crownH + 0.04, -0.03);
+  // big fluffy-round pom-pom sitting ON the crown apex (≈ 0.5 × the cuff width wide and ≈ 0.46 × tall above the
+  // crown in ref 05; wave 3 raised it out of the crown and moved it back over the apex against the forward tilt)
+  const pom = joint('pom', 0, crownY0 + D.crownH + 0.19, -0.09);
   hat.add(pom);
   const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.pomR, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
   // short, dense strands with little droop → a round plush ball rather than a spiky urchin

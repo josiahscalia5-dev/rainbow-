@@ -1,10 +1,10 @@
 {
-  "when": "2026-11-15T19:56:36.412Z",
+  "when": "2026-11-15T20:07:01.151Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
       "id": "05",
-      "file": "qa/pilot05/wave3/camera/it00/05.png",
+      "file": "qa/pilot05/wave3/environment/it01/05.png",
       "size": [
         864,
         1536
@@ -31,10 +31,10 @@
         ]
       },
       "stats": {
-        "fps": 61.2,
-        "calls": 114,
-        "triangles": 582879,
-        "geometries": 91,
+        "fps": 60.4,
+        "calls": 120,
+        "triangles": 618395,
+        "geometries": 96,
         "textures": 36,
         "modules": {
           "water": "vfx/index.ts",
