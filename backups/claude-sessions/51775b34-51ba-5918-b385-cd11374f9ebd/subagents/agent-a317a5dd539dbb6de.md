@@ -979,3 +979,111 @@ The file is valid again (the one tsc error is in `cameraRig.ts`, path-camera's f
 > y= 624 n=19 ds   23.1..  27.6  lat -4.39.. 5.54  hw 5.21 off -0.73  x(lat0)  469  px/unit  43.5  rx 0.98
 > y= 646 n=21 ds   18.7..  21.9  lat -5.23.. 5.44  hw 5.66 off   …[+4149 chars]
 
+### 🤖 Claude — 2026-11-15T20:01:48.338Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I -c \"\nimport json\nd=json.load(open('$S/map05.json'))\nrows={}\nfor p in d['pts']: rows.setdefault(p['y'],[]).append(p)\nfor y in sorted(rows):\n  if y>820: break\n  r=sorted(rows[y],key=lambda p:p['x'])\n  print(y, 'ribbon x %d..%d'%(r[0]['x'],r[-1]['x']), ' '.join('%d:%.1f/%.1f'%(p['x'],p['lat'],p['ds']) for p in r[::3]))\n\"; grep -n \"toneMappingExposure\\|NeutralToneMapping\" src/render/*.ts src/game/*.ts | head", "description": "Print ribbon extents and ch …[+14 chars]`
+
+### 🧑 User — 2026-11-15T20:01:48.401Z
+
+> ↩︎ result: 470 ribbon x 414..534 414:-3.4/62.3 486:0.4/62.7
+> 492 ribbon x 414..582 414:-3.6/60.9 486:0.1/61.0 582:3.5/100.0
+> 514 ribbon x 414..558 414:-3.7/59.2 486:-0.2/59.1 558:3.4/59.1
+> 536 ribbon x 462..558 462:-1.6/56.7 534:1.9/57.0
+> 558 ribbon x 438..606 438:-4.0/43.9 510:0.1/52.6 582:3.0/50.9
+> 580 ribbon x 342..630 342:-5.4/37.5 414:-3.3/39.1 486:-1.1/40.5 558:1.1/42.5
+> 602 ribbon x 318..654 318:-4.3/32.8 390:-2.2/33.4 462:0.2/32.2 534:2.3/30.1 606:4.0/27.9
+> 624 ribbon x 294..726 294:-4.4/27.2 366:-2.5/27.6 438:-0.7/26.8 510:1.0/25.9 582:2.6/25.0 654:4.1/24.1 726:5.5/23.1
+> 646 ribbon x 270..774 270:-5.2/18.7 366:-3.2/21.5 438:-1.6/21.9 510:0.0/21.9 582:1.6/21.8 654:3.2/21.5 726:4.6/20.9
+> 668 ribbon x 270..798 270:-4.8/14.7 342:-3.8/16.2 414:-2.5/17.5 486:-1.1/18.2 558:0.4/18.6 630:1.9/18.9 702:3.3/18.8 774:4.6/18.4
+> 690 ribbon x 222..822 222:-5.1/12.2 294:-4.2/13.2 366:-3.1/14.2 438:-2.0/14.9 510:-0.8/15.5 582:0.5/16.0 654:1.8/16.4 726:3.1/16.5 798:4.3/16.3
+> 712 ribbon x 174..846 174:-5.2/10.5 246:-4.4/11.2 318:-3.5/11.9 390:-2.5/12.6 462:-1.5/13.1 534:-0.4/13.5 606:0.8/14.0 678:1.9/14.3 750:3.1/14.5 822:4.2/14.3
+> 734 ribbon x 126..846 126:-5.4/9.1 198:-4.6/9.7 270:-3.8/10.2 342:-2.9/10.7 414:-1.9 …[+694 chars]
+
+### 🤖 Claude — 2026-11-15T20:02:35.302Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "const BAND_STYLE: Partial<Record<StageId, [number, number, number]>> = {\n  '04': [0, 0.6, 0.19],\n  '05': [1, 0.46, 0.13],\n  '06': [0.4, 0.48, 0.1],\n  '07': [0, 0.52, 0.13],\n};\nconst BAND_DEFAULT: [number, number, number] = [0, 0.5, 0.12];\n\nfunction bandStyleAt(course: Course, s: number): [number, number, number] {\n  const o: [number, number, number] = [0, 0, 0];\n  let w = 0;\n  for (const st of course.stages) {\n    const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1  …[+2525 chars]`
+
+### 🧑 User — 2026-11-15T20:02:35.369Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:36.902Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  const skirt = new Float32Array(n);\n  const style = new Float32Array(n * 3);\n  const tmp = new THREE.Vector3();", "new_string": "  const skirt = new Float32Array(n);\n  const style = new Float32Array(n * 4);\n  const core = new Float32Array(n);\n  const tang = new Float32Array(n * 3);\n  const tmp = new THREE.Vector3();"}`
+
+### 🧑 User — 2026-11-15T20:02:36.965Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:41.255Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    const bs = bandStyleAt(course, s);\n    const put = (u: number, lateral: number, h: number, isSkirt: number, nn: THREE.Vector3) => {\n      tmp.copy(f.pos).addScaledVector(f.right, lateral).addScaledVector(f.up, h);\n      tmp.toArray(pos, k * 3);\n      nn.toArray(nor, k * 3);\n      uv[k * 2] = u;\n      uv[k * 2 + 1] = s;\n      halfW[k] = hw;\n      speed[k] = sp;\n      amp[k] = a;\n      skirt[k] = isSkirt;\n      style[k * 3] = bs[0];\n      style[k * 3 + 1] = bs[1];\n      style[k * 3 + …[+649 chars]`
+
+### 🧑 User — 2026-11-15T20:02:41.325Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:42.759Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 3));", "new_string": "  geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 4));\n  geo.setAttribute('aCore', new THREE.BufferAttribute(core, 1));\n  geo.setAttribute('aTan', new THREE.BufferAttribute(tang, 3));"}`
+
+### 🧑 User — 2026-11-15T20:02:42.831Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:45.259Z
+
+Now the vertex shader.
+
+### 🤖 Claude — 2026-11-15T20:02:49.323Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "attribute vec3 aStyle;   // band layout: gate, offset, half width (see BAND_STYLE)\nuniform float uTime;\nuniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused\nvarying vec2 vUV;\nvarying float vHalfW;\nvarying float vSpeed;\nvarying float vSkirt;\nvarying float vHide;\nvarying vec3 vStyle;\nvarying vec3 vPosW;\nvarying vec3 vNormalW;\n#include <fog_pars_vertex>\nvoid main() {\n  vStyle = aStyle;", "new_string": "attribute vec4 aStyle;   // band layout: gate, offset, half width, free-me …[+610 chars]`
+
+### 🧑 User — 2026-11-15T20:02:49.396Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:51.116Z
+
+Now the fragment shader: varyings, combed lines in pixel widths, and the band layout.
+
+### 🤖 Claude — 2026-11-15T20:02:52.923Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "varying float vHide;\nvarying vec3 vStyle;\nvarying vec3 vPosW;\nvarying vec3 vNormalW;\n#include <fog_pars_fragment>\n${NOISE_GLSL}", "new_string": "varying float vHide;\nvarying vec4 vStyle;\nvarying float vCore;\nvarying vec3 vTanW;\nvarying vec3 vPosW;\nvarying vec3 vNormalW;\n#include <fog_pars_fragment>\n${NOISE_GLSL}"}`
+
+### 🧑 User — 2026-11-15T20:02:52.999Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:03:00.878Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "// Combed flow lines (ref 05: dense thin bright streaks parallel to the flow, 2–4 px apart in the\n// mid-ground). Anti-aliased stripes across the flow (K lines per unit), each line broken into long\n// random streak segments along v; the stripes fade out once they get closer than ≈3 px.\nfloat combed(float x, float v, float K, float seed) {\n  float p = x * K;\n  float id = floor(p);\n  float fw = fwidth(p);\n  float hs = hash12(vec2(id, seed));\n  // thin bright core with a soft glow; the line wa …[+1663 chars]`
+
+### 🧑 User — 2026-11-15T20:03:00.954Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:03:30.787Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float hw = vHalfW;\n  float lat = u * hw;                         // lateral units in the ribbon frame\n  float M = meander(s, hw);\n  float x = lat - M;                          // lateral units in the core's frame", "new_string": "  float hw = vHalfW;\n  float lat = u * hw;                         // lateral units in the ribbon frame\n  // core centre: free drifting meander on 04/06/07 (freeK = 1); on 05 (freeK = 0) pinned to the\n  // course's own S-meander, amplified (vCore = CORE_SWING · off …[+191 chars]`
+
+### 🧑 User — 2026-11-15T20:03:30.877Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:03:41.989Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float gate = 1.0, part = 0.0;\n  if (vStyle.x > 0.0) {\n    float db = s - uBenny.x;\n    gate = mix(1.0, 0.4 + 0.6 * smoothstep(0.0, 4.5, db), vStyle.x);\n    part = vStyle.x * hw * (0.3 - 0.3 * smoothstep(-1.0, 9.0, db));\n  }\n  float hwc = min(hw, 4.5);\n  float aaw = fwidth(lat) * 0.85 + 0.01;      // ≈1 px edges: no lavender cyan/pink blend zone\n  // flowing, combed band edges (the advected strand texture), scaled down on narrow streams\n  float pert = ((F.z - 0.5) * 0.5 + (F.w - 0.5) * 0. …[+2151 chars]`
+
+### 🧑 User — 2026-11-15T20:03:42.070Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:03:44.143Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  fil = (1.0 - smoothstep(0.025 * hwc, 0.025 * hwc + aaw, abs(x - fc + pert * 0.7)))\n      * smoothstep(0.62, 0.78, vnoise(vec2(s * 0.09, 21.0))) * gate * aa.x;", "new_string": "  fil = (1.0 - smoothstep(0.025 * hwc, 0.025 * hwc + aaw, abs(x - fc + pert * 0.7)))\n      * smoothstep(0.62, 0.78, vnoise(vec2(s * 0.09, 21.0))) * gate * aa.x * freeK;   // 05 core: pure cyan"}`
+
+### 🧑 User — 2026-11-15T20:03:44.223Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+

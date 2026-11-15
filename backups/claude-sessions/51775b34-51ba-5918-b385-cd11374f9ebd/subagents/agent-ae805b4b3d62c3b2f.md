@@ -937,3 +937,15 @@ Let me run a baseline capture of the current tree while I measure the reference.
 >    {'s': 203.5, 'd': 68.2, 'c': [489.1, 122.8], 'top': -279.1, 'bot': 400.9, 'l': 173.2, 'r': 801.1}
 >    {'s': 212.5, 'd': 84.2, 'c': [442.3, 81.2], 'top': -209.5, 'bot …[+1589 chars]
 
+### 🤖 Claude — 2026-11-15T20:03:50.452Z
+
+> 🔧 **Bash** `{"command": "npx vite-node -e \"1\" 2>&1 | head -2; node -e \"\n\" ; grep -n \"skipFirst\\|seg(48\" src/world/course.ts", "description": "Check vite-node and seg usage lines"}`
+
+### 🧑 User — 2026-11-15T20:03:50.950Z
+
+> ↩︎ result: No files specified.
+> vite-node/2.1.9
+> 149:  const seg = (n: number, f: (t: number) => THREE.Vector3, skipFirst = true) => {
+> 150:    for (let i = skipFirst ? 1 : 0; i <= n; i++) push(f(i / n));
+> 215:  seg(48, (t) => s5.clone().addScaledVector(L05, t));
+

@@ -28,25 +28,48 @@ export const EDGE_LIFT = 0.28;
  *  z wid:  band half width, fraction of the half width
  * Between the two bands is the electric-cyan core; outside them more cyan, then the foam lace.
  */
-const BAND_STYLE: Partial<Record<StageId, [number, number, number]>> = {
-  '04': [0, 0.6, 0.19],
-  '05': [1, 0.46, 0.13],
-  '06': [0.4, 0.48, 0.1],
-  '07': [0, 0.52, 0.13],
+type Style = [number, number, number, number];
+/*  w free: weight of the shader's own drifting channel meander (meander() in FRAG). 0 in 05, where the
+ *          course itself winds (S05/meander05 in course.ts) and the core is pinned to the route (see
+ *          coreLateral) so the coins on the route stay on the cyan core. 1 elsewhere (04/06/07 unchanged).
+ * 05 widths are from ref 05 at the live camera mapping: bands ≈1.1–1.4 u wide (≈100–130 px at y=800,
+ * 93 px/u), centred ≈2.8 u from the core, i.e. 0.5 / 0.11 of the ≈5.5 u half width. */
+const BAND_STYLE: Partial<Record<StageId, Style>> = {
+  '04': [0, 0.6, 0.19, 1],
+  '05': [1, 0.5, 0.11, 0],
+  '06': [0.4, 0.48, 0.1, 1],
+  '07': [0, 0.52, 0.13, 1],
 };
-const BAND_DEFAULT: [number, number, number] = [0, 0.5, 0.12];
+const BAND_DEFAULT: Style = [0, 0.5, 0.12, 1];
 
-function bandStyleAt(course: Course, s: number): [number, number, number] {
-  const o: [number, number, number] = [0, 0, 0];
+function bandStyleAt(course: Course, s: number): Style {
+  const o: Style = [0, 0, 0, 0];
   let w = 0;
   for (const st of course.stages) {
     const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
     if (a <= 0) continue;
     const v = BAND_STYLE[st.id] ?? BAND_DEFAULT;
-    o[0] += v[0] * a; o[1] += v[1] * a; o[2] += v[2] * a; w += a;
+    for (let i = 0; i < 4; i++) o[i] += v[i] * a;
+    w += a;
   }
   if (w <= 0) return [...(BAND_STYLE[course.stageAtS(s).id] ?? BAND_DEFAULT)];
-  return [o[0] / w, o[1] / w, o[2] / w];
+  return [o[0] / w, o[1] / w, o[2] / w, o[3] / w];
+}
+
+/**
+ * 05 current: lateral position (units, ribbon `right` axis, + = right) of the centre of the
+ * electric-cyan core relative to the route centreline. The core swings WITH the course meander,
+ * amplified by CORE_SWING, so the two pink bands trace S-bends ≈(1 + CORE_SWING)× as strong as the
+ * route's own (ref 05: ±60–120 px). Bounded by CORE_SWING · max|offset05| (≈0.6 · 1.85 = 1.1 u, the far
+ * crest; ≤0.85 u within 35 u of the 05 checkpoint), well inside the ≈2.2 u core half width, so a coin
+ * on the route centre (lat 0) always sits on cyan. 0 outside 05.
+ * gameplay/coins.ts may place the 05 coins at this lateral to put them exactly on the core centre.
+ */
+export const CORE_SWING = 0.6;
+export function coreLateral(course: Course, s: number): number {
+  const st = course.stage('05');
+  if (s <= st.s0 || s >= st.s1) return 0;
+  return CORE_SWING * course.offset05(s) * course.sample(s).right.x;
 }
 
 /**
@@ -99,7 +122,9 @@ attribute float aHalfW;
 attribute float aSpeed;
 attribute float aAmp;
 attribute float aSkirt;  // 0 surface, 1 skirt bottom
-attribute vec3 aStyle;   // band layout: gate, offset, half width (see BAND_STYLE)
+attribute vec4 aStyle;   // band layout: gate, offset, half width, free-meander weight (see BAND_STYLE)
+attribute float aCore;   // 05: core-centre lateral swing (units, see coreLateral)
+attribute vec3 aTan;     // course tangent (downstream)
 uniform float uTime;
 uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
 varying vec2 vUV;
@@ -107,12 +132,16 @@ varying float vHalfW;
 varying float vSpeed;
 varying float vSkirt;
 varying float vHide;
-varying vec3 vStyle;
+varying vec4 vStyle;
+varying float vCore;
+varying vec3 vTanW;
 varying vec3 vPosW;
 varying vec3 vNormalW;
 #include <fog_pars_vertex>
 void main() {
   vStyle = aStyle;
+  vCore = aCore;
+  vTanW = normalize(mat3(modelMatrix) * aTan);
   float u = aUV.x;
   float s = aUV.y;
   float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));
@@ -154,7 +183,9 @@ varying float vHalfW;
 varying float vSpeed;
 varying float vSkirt;
 varying float vHide;
-varying vec3 vStyle;
+varying vec4 vStyle;
+varying float vCore;
+varying vec3 vTanW;
 varying vec3 vPosW;
 varying vec3 vNormalW;
 #include <fog_pars_fragment>
@@ -172,19 +203,21 @@ float meander(float s, float hw) {
   return m * min(hw, 4.5);
 }
 
-// Combed flow lines (ref 05: dense thin bright streaks parallel to the flow, 2–4 px apart in the
-// mid-ground). Anti-aliased stripes across the flow (K lines per unit), each line broken into long
-// random streak segments along v; the stripes fade out once they get closer than ≈3 px.
+// Combed flow lines (ref 05: thin bright streaks along the flow, 2–4 px apart in the mid-ground).
+// Anti-aliased lines across the flow (K slots per unit), each broken into tapered streak segments of
+// varying length/brightness. Line width is in PIXELS (≈1.2 px core + ≈2.5 px glow), so near the camera
+// the slots spread apart into sparse crisp glints instead of wide parallel light stripes (the
+// "flattened stripes" the user rejected); the lines fade once they get closer than ≈3 px.
 float combed(float x, float v, float K, float seed) {
   float p = x * K;
   float id = floor(p);
-  float fw = fwidth(p);
+  float fw = max(fwidth(p), 1e-4);            // slots per pixel
   float hs = hash12(vec2(id, seed));
-  // thin bright core with a soft glow; the line wanders a little inside its slot
-  float d = abs(fract(p) - 0.5 - (hs - 0.5) * 0.4);
-  float line = (1.0 - smoothstep(0.03, 0.06 + fw, d)) * 0.75 + (1.0 - smoothstep(0.0, 0.2 + fw, d)) * 0.35;
-  // each line breaks into tapered streak segments of varying brightness
-  float seg = smoothstep(0.5, 0.9, vnoise(vec2(id * 3.7 + seed, v * 0.2 + hs * 9.0)));
+  float dpx = abs(fract(p) - 0.5 - (hs - 0.5) * 0.5) / fw;   // pixels from the line centre
+  float line = (1.0 - smoothstep(0.4, 1.3, dpx)) * 0.8 + exp(-dpx * 0.45) * 0.3;
+  // each line breaks into tapered streak segments; sparser when the slots are far apart on screen
+  float sparse = smoothstep(0.03, 0.006, fw);
+  float seg = smoothstep(0.5 + 0.15 * sparse, 0.9, vnoise(vec2(id * 3.7 + seed, v * 0.2 + hs * 9.0)));
   return line * seg * (0.45 + 0.55 * hs) * (1.0 - smoothstep(0.22, 0.4, fw));
 }
 
@@ -228,7 +261,10 @@ void main() {
   // ---- channel layout: winding cyan core between two hot-pink S-bands, cyan again outside ----
   float hw = vHalfW;
   float lat = u * hw;                         // lateral units in the ribbon frame
-  float M = meander(s, hw);
+  // core centre: free drifting meander on 04/06/07 (freeK = 1); on 05 (freeK = 0) pinned to the
+  // course's own S-meander, amplified (vCore = CORE_SWING · offset05), so the coins stay on cyan
+  float freeK = vStyle.w;
+  float M = meander(s, hw) * freeK + vCore;
   float x = lat - M;                          // lateral units in the core's frame
 
   // detail fade with distance (cells per pixel), keeps far water from shimmering
@@ -254,20 +290,33 @@ void main() {
   // Benny parts the bands like a bow wave (vStyle.x, ref 05): just ahead of him they narrow and
   // swing outward, so the water at and behind him (the near field) is pure cyan; behind him they
   // continue only as thin streaks pushed out toward the foam banks
+  // (05: the near rows only show lat ±2.3 behind Benny, so a light parting is enough there)
   float gate = 1.0, part = 0.0;
   if (vStyle.x > 0.0) {
     float db = s - uBenny.x;
-    gate = mix(1.0, 0.4 + 0.6 * smoothstep(0.0, 4.5, db), vStyle.x);
-    part = vStyle.x * hw * (0.3 - 0.3 * smoothstep(-1.0, 9.0, db));
+    float gmin = mix(0.65, 0.4, freeK);
+    gate = mix(1.0, gmin + (1.0 - gmin) * smoothstep(0.0, 4.5, db), vStyle.x);
+    part = vStyle.x * hw * mix(0.1, 0.3, freeK) * (1.0 - smoothstep(-1.0, 9.0, db));
   }
   float hwc = min(hw, 4.5);
   float aaw = fwidth(lat) * 0.85 + 0.01;      // ≈1 px edges: no lavender cyan/pink blend zone
-  // flowing, combed band edges (the advected strand texture), scaled down on narrow streams
-  float pert = ((F.z - 0.5) * 0.5 + (F.w - 0.5) * 0.22) * hwc * 0.22;
-  float offL = hw * (vStyle.y + 0.07 * sin(s * 0.13 + 1.7)) + part;
-  float offR = hw * (vStyle.y + 0.07 * sin(s * 0.11 + 4.2)) + part;
-  float wL = hw * vStyle.z * (1.0 + 0.4 * sin(s * 0.19 + 0.4)) * gate;
-  float wR = hw * vStyle.z * (1.0 + 0.4 * sin(s * 0.17 + 2.9)) * gate;
+  // flowing band edges (the advected strand texture). 05: only a soft ripple, so the band edges are
+  // clean S-curves instead of the torn/jagged combed edges of the old slab
+  float pert = mix((F.z - 0.5) * 0.22, (F.z - 0.5) * 0.5 + (F.w - 0.5) * 0.22, freeK) * hwc * 0.22;
+  // 05: the band shapes are carried downstream (a slow travelling wobble), so the pink S-sections
+  // visibly flow and swirl even though the channel itself is fixed to the course meander
+  float tv = s - uTime * vSpeed * 0.3;
+  float wob = (1.0 - freeK) * hwc;
+  float offL = hw * (vStyle.y + mix(0.03, 0.07, freeK) * sin(s * 0.13 + 1.7)) + part + wob * 0.05 * sin(tv * 0.42 + 1.1);
+  float offR = hw * (vStyle.y + mix(0.03, 0.07, freeK) * sin(s * 0.11 + 4.2)) + part + wob * 0.05 * sin(tv * 0.37 + 3.9);
+  float modA = mix(0.15, 0.4, freeK);         // 05: even band width (the ±40 % swell drew the slab)
+  float wL = hw * vStyle.z * (1.0 + modA * sin(s * 0.19 + 0.4) + 0.08 * wob * sin(tv * 0.6)) * gate;
+  float wR = hw * vStyle.z * (1.0 + modA * sin(s * 0.17 + 2.9) + 0.08 * wob * sin(tv * 0.55 + 2.0)) * gate;
+  if (freeK < 0.5) {
+    // keep both bands inside the water (the core swing pushes one toward the bank on each bend)
+    offL = min(offL, M + hw - wL - 0.5);
+    offR = min(offR, hw - wR - 0.5 - M);
+  }
   float sdL = x + offL + pert;
   float sdR = x - offR + pert;
   float dL = abs(sdL);
@@ -289,7 +338,7 @@ void main() {
   #ifndef LOW_Q
   float fc = hw * 0.18 * sin(s * 0.21 + 0.8);
   fil = (1.0 - smoothstep(0.025 * hwc, 0.025 * hwc + aaw, abs(x - fc + pert * 0.7)))
-      * smoothstep(0.62, 0.78, vnoise(vec2(s * 0.09, 21.0))) * gate * aa.x;
+      * smoothstep(0.62, 0.78, vnoise(vec2(s * 0.09, 21.0))) * gate * aa.x * freeK;   // 05 core: pure cyan
   #endif
   float pinkM = max(max(pL, pR), fil);
   // glossy rims: light-pink just inside each band edge, bright cyan just outside it
@@ -443,7 +492,9 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   const speed = new Float32Array(n);
   const amp = new Float32Array(n);
   const skirt = new Float32Array(n);
-  const style = new Float32Array(n * 3);
+  const style = new Float32Array(n * 4);
+  const core = new Float32Array(n);
+  const tang = new Float32Array(n * 3);
   const tmp = new THREE.Vector3();
   const nrm = new THREE.Vector3();
   let k = 0;
@@ -454,19 +505,20 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     const sp = Math.max(3, course.prop(s, 'speed'));
     const a = ampAt(course, s);
     const bs = bandStyleAt(course, s);
+    const cl = coreLateral(course, s);
     const put = (u: number, lateral: number, h: number, isSkirt: number, nn: THREE.Vector3) => {
       tmp.copy(f.pos).addScaledVector(f.right, lateral).addScaledVector(f.up, h);
       tmp.toArray(pos, k * 3);
       nn.toArray(nor, k * 3);
+      f.tan.toArray(tang, k * 3);
       uv[k * 2] = u;
       uv[k * 2 + 1] = s;
       halfW[k] = hw;
       speed[k] = sp;
       amp[k] = a;
       skirt[k] = isSkirt;
-      style[k * 3] = bs[0];
-      style[k * 3 + 1] = bs[1];
-      style[k * 3 + 2] = bs[2];
+      for (let q = 0; q < 4; q++) style[k * 4 + q] = bs[q];
+      core[k] = cl;
       k++;
     };
     // left skirt (below left edge)
@@ -495,7 +547,9 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   geo.setAttribute('aSpeed', new THREE.BufferAttribute(speed, 1));
   geo.setAttribute('aAmp', new THREE.BufferAttribute(amp, 1));
   geo.setAttribute('aSkirt', new THREE.BufferAttribute(skirt, 1));
-  geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 3));
+  geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 4));
+  geo.setAttribute('aCore', new THREE.BufferAttribute(core, 1));
+  geo.setAttribute('aTan', new THREE.BufferAttribute(tang, 3));
   geo.setIndex(idx);
   geo.computeBoundingSphere();
 

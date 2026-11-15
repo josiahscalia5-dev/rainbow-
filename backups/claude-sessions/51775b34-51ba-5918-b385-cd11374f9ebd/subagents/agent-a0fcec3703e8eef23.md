@@ -923,3 +923,176 @@ Noted: hat smaller relative to a rounder, fuller body; check for any white/pale 
 
 > ↩︎ result: The file /home/user/rainbow-/src/characters/benny/fur.ts has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T20:01:16.107Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/fur.ts", "old_string": "  uniforms: { uTime: { value: number }; uWind: { value: THREE.Vector3 } };", "new_string": "  uniforms: { uTime: { value: number }; uWind: { value: THREE.Vector3 }; uMaskCol: { value: THREE.Color } };"}`
+
+### 🧑 User — 2026-11-15T20:01:16.188Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/fur.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:01:27.209Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts", "old_string": "  return { root, setExpression, update, radius: 0.8 };\n}", "new_string": "  // ---- QA segmentation mask (`?bennyMask`, or window.__bennyQA.mask(true) in ?qa pages) ----\n  if (typeof location !== 'undefined') {\n    const qs = new URLSearchParams(location.search);\n    const qa = { mask: (on: boolean) => setMask(scene, furs, on), info: () => qaInfo(root, body) };\n    if (qs.has('qa') || qs.has('bennyMask')) (window as unknown as { __bennyQA?: typeof qa }).__bennyQA = qa;\n    if (qs.has …[+2396 chars]`
+
+### 🧑 User — 2026-11-15T20:01:27.313Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/runtime.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:01:29.542Z
+
+Now a capture script that takes the normal frame and the mask frame from one page load and logs Benny's pose relative to the camera.
+
+### 🤖 Claude — 2026-11-15T20:01:41.350Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/cap2.mjs", "content": "// usage (cwd = repo): node cap2.mjs OUTDIR [ids...] [--q=extra&query]\n// For each id: real game capture (same as scripts/capture.mjs) → OUTDIR/NN.png, then Benny QA mask → OUTDIR/NN_mask.png\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst args = process.argv.slice(2);\nconst out = args[0];\nconst q = (args.find((a) => a.startsWith('--q=')) ?? '').slice(4);\nlet id …[+2812 chars]`
+
+### 🧑 User — 2026-11-15T20:01:41.418Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/cap2.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:03.347Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/maskmeasure.py", "content": "\"\"\"Measure Benny from a QA mask capture (flat ID colours, see runtime.ts setMask).\nusage: python3 -I maskmeasure.py MASK.png [NORMAL.png]\nPrints bbox, hat (crown+cuff+pom+star) vs body heights at the centre column and overall, widths, pom size,\nstar bbox/centre and (with NORMAL) the median colours of fur / cuff / pom / star / crown pixels in the normal frame.\n\"\"\"\nimport sys\nfrom PIL import Image\n\nm = Image.open(sys.argv[1]).convert('RGB')\nW, H = m.size\np …[+4629 chars]`
+
+### 🧑 User — 2026-11-15T20:02:03.448Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/maskmeasure.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:05.318Z
+
+Baseline capture (1 of my ≤8) with the current GLB, using the normal + mask pair.
+
+### 🤖 Claude — 2026-11-15T20:02:07.967Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && mkdir -p qa/pilot05/wave3/benny && timeout 600 node $SP/cap2.mjs qa/pilot05/wave3/benny/it00 05 2>&1 | tail -3 && python3 -I $SP/maskmeasure.py qa/pilot05/wave3/benny/it00/05_mask.png qa/pilot05/wave3/benny/it00/05.png", "description": "Baseline 05 capture with Benny mask and measure", "timeout": 600000}`
+
+### 🧑 User — 2026-11-15T20:02:20.618Z
+
+> ↩︎ result: Exit code 1
+> {"id":"05","state":{"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]},"bennyScreen":{"x":-0.03,"y":-0.37,"z":0.986,"visible":true,"cam":[1.92,-37.94,-68.28],"benny":[1.52,-41.35,-74.73]},"benny":{"body":[1.51,-41.022,-74.741],"up":[-0.025,0.999,-0.042],"fwd":[0.004,-0.042,-0.999],"scale":1,"dist":7.17,"behind":0.918},"elevDeg":22.96,"calls":114,"tris":582879,"errors":[]}
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/maskmeasure.py", line 29, in <module>
+>     bx0, bx1, by0, by1 = xs[cut], xs[-cut - 1], ys[cut], ys[-cut - 1]
+>                          ~~^^^^^
+> IndexError: list index out of range
+
+### 🤖 Claude — 2026-11-15T20:02:25.100Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nm=Image.open('qa/pilot05/wave3/benny/it00/05_mask.png').convert('RGB')\nfor p in [(421,1080),(421,1000),(421,940),(421,830),(300,1050)]: print(p, m.getpixel(p))\nm.crop((200,740,650,1200)).save('/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/mask_crop.png')\n\"", "description": "Inspect mask capture pixel values"}`
+
+### 🧑 User — 2026-11-15T20:02:25.301Z
+
+> ↩︎ result: (421, 1080) (255, 78, 186)
+> (421, 1000) (151, 30, 255)
+> (421, 940) (127, 48, 255)
+> (421, 830) (126, 16, 255)
+> (300, 1050) (255, 108, 166)
+
+### 🤖 Claude — 2026-11-15T20:02:27.185Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/mask_crop.png"}`
+
+### 🧑 User — 2026-11-15T20:02:27.209Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:02:30.073Z
+
+> 🔧 **Bash** `{"command": "grep -n \"requestAnimationFrame\\|composer.render\\|setAnimationLoop\\|frozen\" src/game/Game.ts | head -20", "description": "Find the game render loop"}`
+
+### 🧑 User — 2026-11-15T20:02:30.110Z
+
+> ↩︎ result: 104:    frozen: null as number | null, // QA: freeze shader time
+> 489:    if (st.frozen === null) st.clock += dt;
+> 496:    const time = st.frozen ?? st.clock;
+> 508:  const render = () => { renderer.info.reset(); composer.render(); };
+> 517:    requestAnimationFrame(frame);
+> 519:  requestAnimationFrame(frame);
+> 544:    st.frozen = time;
+> 564:        // settle camera springs without moving Benny: run with speed frozen
+> 585:    unfreeze() { st.frozen = null; input.override = null; },
+
+### 🤖 Claude — 2026-11-15T20:02:31.540Z
+
+> 🔧 **Bash** `{"command": "sed -n 505,600p src/game/Game.ts", "description": "Read the frame loop and QA goto"}`
+
+### 🧑 User — 2026-11-15T20:02:31.575Z
+
+> ↩︎ result: let running = !qaMode;
+>   let dirty = true;
+>   renderer.info.autoReset = false;
+>   const render = () => { renderer.info.reset(); composer.render(); };
+>   const frame = () => {
+>     const now = performance.now();
+>     const dt = Math.min(0.05, (now - last) / 1000);
+>     last = now;
+>     fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;
+>     if (running) stepSim(dt);
+>     // QA mode renders on demand only (software WebGL is slow; frames are deterministic)
+>     if (!qaMode || running || dirty) { render(); dirty = false; }
+>     requestAnimationFrame(frame);
+>   };
+>   requestAnimationFrame(frame);
+> 
+>   // ---------------------------------------------------------------- QA API
+>   const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+>     '01': { mode: 'intro', t: T.cp01 },
+>     '02': { mode: 'intro', t: T.cp02 },
+>     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+>     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+>     '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+>     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+>     '07':  …[+3405 chars]
+
+### 🤖 Claude — 2026-11-15T20:02:34.679Z
+
+QA mode renders on demand only; I'll re-run `goto()` after enabling the mask so the frame re-renders identically.
+
+### 🤖 Claude — 2026-11-15T20:02:38.079Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 - <<'EOF'\np='/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/cap2.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"    await page.evaluate(() => window.__bennyQA?.mask(true));\n    for (let i = 0; i < 3; i++)\"\"\",\"\"\"    await page.evaluate(() => window.__bennyQA?.mask(true));\n    await page.evaluate((cid) => window.__rainbow.goto(cid), id); // QA renders on demand: re-render the same frame\n    for (let i = 0; i < 2; i++)\"\"\")\nopen(p,'w').write(s)\nE …[+104 chars]`
+
+### 🧑 User — 2026-11-15T20:02:38.130Z
+
+> ↩︎ result: 36:    await page.evaluate(() => window.__bennyQA?.mask(true));
+> 37-    await page.evaluate((cid) => window.__rainbow.goto(cid), id); // QA renders on demand: re-render the same frame
+> 38-    for (let i = 0; i < 2; i++) await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+
+### 🤖 Claude — 2026-11-15T20:02:50.953Z
+
+While waiting for the camera lock, I'll iterate in the lab. Let me make the lab's measure view accept elevations and a neutral background for mask mode.
+
+### 🤖 Claude — 2026-11-15T20:02:56.361Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/benny-lab.ts'\ns=open(p).read()\nold=\"\"\"            [12, 18, 24, 28].map((deg) => ({ name: `rear-${deg}`, yaw: Math.PI, pitch: THREE.MathUtils.degToRad(deg), dist: 6.4, expr: 'happy', swim: 1, fov: 36, tumble: false }))\"\"\"\nnew=\"\"\"            // `&elev=12,16,20,24` picks the elevations; `&bennyMask` renders flat ID colours on grey (maskmeasure)\n            (q.get('elev') ?? '12,18,24,28').split(',').map(Number).map((deg) => ({ name: `rear-${deg}`, yaw: Math.PI, pitch: THREE.MathUtils.degToRad(deg), dist: 7.2, expr: 'happy', swim …[+866 chars]`
+
+### 🧑 User — 2026-11-15T20:02:56.423Z
+
+> ↩︎ result: 52:          ? // proportion check: rear views at the ride height (lifted) at 12° / 18° / 24° / 28° camera elevation,
+> 54:            // `&elev=12,16,20,24` picks the elevations; `&bennyMask` renders flat ID colours on grey (maskmeasure)
+> 55:            (q.get('elev') ?? '12,18,24,28').split(',').map(Number).map((deg) => ({ name: `rear-${deg}`, yaw: Math.PI, pitch: THREE.MathUtils.degToRad(deg), dist: 7.2, expr: 'happy', swim: 1, fov: 33, tumble: false }))
+
+### 🤖 Claude — 2026-11-15T20:03:04.695Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/maskmeasure.py'\ns=open(p).read()\ns=s.replace(\"\"\"m = Image.open(sys.argv[1]).convert('RGB')\nW, H = m.size\"\"\",\"\"\"args = [a for a in sys.argv[1:] if not a.startswith('--')]\nopts = dict(a[2:].split('=', 1) for a in sys.argv[1:] if a.startswith('--'))\nm = Image.open(args[0]).convert('RGB')\ncrop = tuple(map(int, opts['crop'].split(','))) if 'crop' in opts else None\nif crop: m = m.crop(crop)\nW, H = m.size\"\"\")\ns=s.replace(\"\"\"if len(sys.argv) > 2:\n    n = Image.o …[+607 chars]`
+
+### 🧑 User — 2026-11-15T20:03:16.350Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/k0.png {"baseTriangles":14996,"furQuality":"high"} no console errors
+> == panel 0
+> bbox x 27-403 y 146-539  (w 377, h 394, centre x 215, bottom 70.2% of frame)
+> centre col x=218: top 142, cuff bottom 388, body bottom 542
+> hat incl pom (bbox top → cuff bottom @centre) = 242 px, body (cuff bottom → bbox bottom) = 151 px, hat% = 61.6
+> cuff width 294, pom width 151 (pom y 146-257, h 112)
+> body widths (rows below the centre cuff bottom): +10:376 +30:361 +50:288 +70:271 +90:244 +110:199 +130:155 +150:96 
+> arm-nub rows (body span > cuff + 12 px): y 360-431; max span 377
+> star bbox x 270-355 y 291-378, centre (311, 338), offset from Benny centre +96 px (+0.63 cuff half-widths), area 3669 px
+> == panel 1
+> bbox x 27-404 y 148-539  (w 378, h 392, centre x 216, bottom 70.2% of frame)
+> centre col x=218: top 149, cuff bottom 398, body bottom 541
+> hat incl pom (bbox top → cuff bottom @centre) = 250 px, body (cuff bottom → bbox bottom) = 141 px, hat% = 63.9
+> cuff width 295, pom width 154 (pom y 148-266, h 119)
+> body widths (rows below the centre cuff bottom): +10:375 +30:314 +50:274 +70:263 +90:224 +110:167 +130:118 
+> arm-nub rows (b …[+1372 chars]
+

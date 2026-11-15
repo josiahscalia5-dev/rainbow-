@@ -989,3 +989,29 @@ The offline projection works. Before deciding ring spacing, let me look at the r
 > ring s 257.5 R 13.2 tan 0.08,-0.06,-1.00 180:488,401 190:485,426 200:487,452 210:493,476
 > ring s 266.5 R 9.0 tan -0.01,-0.06,-1.00 10:703,474 20:702,457 30:698,442 40:691,427 50:683,414 60:671,402 70:658,393 80:644,386 90:628,382 100:612,381 110:596,383 120:581,387 130:566,395 140:553,404 150:541,416  …[+1314 chars]
 
+### 🤖 Claude — 2026-11-15T20:01:57.686Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && cat > $S/lay05.ts <<'EOF'\nimport * as THREE from 'three';\nimport { Course } from '/home/user/rainbow-/src/world/course.ts';\nimport { straightTubePath, tubeCenterAt } from '/home/user/rainbow-/src/world/tube.ts';\nimport { RideCamera, STAGE_CAM } from '/home/user/rainbow-/src/game/cameraRig.ts';\nconst argv = process.argv.slice(2).filter((a) => a !== '--');\nconst S5 = Number(argv[0] ?? 6), d0 = Number(argv[1] ?? 8), lidAng = Number(argv[2] ?? 10);\nconst course = new Course();\nconst s05 = co …[+2263 chars]`
+
+### 🧑 User — 2026-11-15T20:01:59.063Z
+
+> ↩︎ result: VP 500 479 sCam 126.04
+> ring dz 2.0 top -57303 L -3779 R 7145 rpx 5462
+> ring dz 8.0 top -1255 L -662 R 1810 rpx 1236
+> ring dz 14.0 top -402 L -174 R 1229 rpx 701
+> ring dz 20.0 top -112 L 25 R 1005 rpx 490
+> ring dz 26.0 top 35 L 134 R 886 rpx 376
+> ring dz 32.0 top 123 L 201 R 813 rpx 306
+> ring dz 38.0 top 183 L 248 R 763 rpx 258
+> ring dz 44.0 top 226 L 282 R 727 rpx 223
+> ring dz 50.0 top 257 L 307 R 700 rpx 197
+> top gaps 56049 853 290 147 88 60 43 31
+> lid dz 11.0 L(-317,256) R(1399,241) px/unit 116
+> lid dz 17.0 L(-29,335) R(1068,329) px/unit 75
+> lid dz 23.0 L(109,373) R(915,370) px/unit 56
+> lid dz 29.0 L(190,395) R(827,393) px/unit 44
+> lid dz 35.0 L(242,411) R(770,409) px/unit 37
+> lid dz 41.0 L(280,422) R(730,421) px/unit 31
+> lid dz 47.0 L(308,430) R(701,429) px/unit 27
+> lid dz 53.0 L(328,435) R(677,435) px/unit 24
+

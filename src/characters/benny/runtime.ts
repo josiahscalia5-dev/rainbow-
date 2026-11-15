@@ -174,5 +174,62 @@ export function createBennyRuntime(
     }
   };
 
+  // ---- QA segmentation mask (`?bennyMask`, or window.__bennyQA.mask(true) in ?qa pages) ----
+  if (typeof location !== 'undefined') {
+    const qs = new URLSearchParams(location.search);
+    const qa = { mask: (on: boolean) => setMask(scene, furs, on), info: () => qaInfo(root, body) };
+    if (qs.has('qa') || qs.has('bennyMask')) (window as unknown as { __bennyQA?: typeof qa }).__bennyQA = qa;
+    if (qs.has('bennyMask')) qa.mask(true);
+  }
+
   return { root, setExpression, update, radius: 0.8 };
+}
+
+/**
+ * Flat ID colours for pixel measurement in real game captures (no lighting, fog or textures):
+ * body fur / arms / feet / face = red, beanie crown = cyan, ribbed cuff = blue, pom-pom = green, star = black.
+ * Classify the frame with  R>150,G<60,B<60 (body) · G>150,R<60,B<60 (pom) · B>150,R<60,G<60 (cuff) ·
+ * R<60,G>150,B>150,|G−B|<40 (crown) · all<40 inside the hat (star).
+ */
+const MASK_COLS: [RegExp, string][] = [
+  [/^fur_pom/, '#00ff00'],
+  [/^hat_crown/, '#00ffff'],
+  [/^hat_brim/, '#0000ff'],
+  [/^hat_star/, '#000000'],
+];
+function maskColour(name: string): string {
+  for (const [re, c] of MASK_COLS) if (re.test(name)) return c;
+  return '#ff0000';
+}
+function setMask(scene: THREE.Object3D, furs: FurHandle[], on: boolean): void {
+  for (const f of furs) {
+    f.uniforms.uMaskCol.value.set(maskColour(f.mesh.name));
+    const d = f.material.defines ?? (f.material.defines = {});
+    if (on) d.BENNY_MASK = ''; else delete d.BENNY_MASK;
+    f.material.needsUpdate = true;
+  }
+  scene.traverse((o) => {
+    const m = o as THREE.Mesh;
+    if (!m.isMesh || (m as unknown as THREE.InstancedMesh).isInstancedMesh) return;
+    const ud = m.userData as { qaOrig?: THREE.Material | THREE.Material[]; qaVis?: boolean };
+    if (on && !ud.qaOrig) {
+      ud.qaOrig = m.material;
+      ud.qaVis = m.visible;
+      // face decals sit on the red body: hide them so their alpha edges do not leak texture colours
+      if (/^(blush|mouth_)/.test(m.name)) m.visible = false;
+      m.material = new THREE.MeshBasicMaterial({ color: maskColour(m.name), fog: false });
+    } else if (!on && ud.qaOrig) {
+      (m.material as THREE.Material).dispose();
+      m.material = ud.qaOrig;
+      m.visible = ud.qaVis ?? true;
+      delete ud.qaOrig;
+    }
+  });
+}
+function qaInfo(root: THREE.Object3D, body: THREE.Object3D) {
+  const p = body.getWorldPosition(new THREE.Vector3());
+  const up = new THREE.Vector3(0, 1, 0).applyQuaternion(root.getWorldQuaternion(new THREE.Quaternion()));
+  const fwd = new THREE.Vector3(0, 0, 1).applyQuaternion(root.getWorldQuaternion(new THREE.Quaternion()));
+  const r3 = (v: THREE.Vector3) => v.toArray().map((x) => +x.toFixed(3));
+  return { body: r3(p), up: r3(up), fwd: r3(fwd), scale: +root.scale.x.toFixed(3) };
 }

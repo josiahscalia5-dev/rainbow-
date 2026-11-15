@@ -1,19 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-15T20:01:14+00:00",
-    "reason": "manual:stop-hook",
+    "time": "2026-11-15T20:01:24+00:00",
+    "reason": "hook:Stop",
     "result": "committed+pushed",
-    "files_staged": 9,
+    "files_staged": 6,
     "pushed_verified": true,
     "branch": "ccr-d4bb0ad3-8ycajb",
     "note": "following session branch 'ccr-d4bb0ad3-8ycajb' (config branch 'claude/rainbow-3d-recovery-m4v347')",
-    "commit": "2c7bdb8e5319f7b11113cf5cb40be319eadc9c24",
+    "commit": "3ef4a9236088ece8d5ae15a59fcdc89b738842f1",
     "duration_s": 5
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-d4bb0ad3-8ycajb",
-  "last_verified_remote_sha": "2c7bdb8e5319f7b11113cf5cb40be319eadc9c24",
-  "last_successful_backup_utc": "2026-11-15T20:01:14+00:00",
+  "last_verified_remote_sha": "3ef4a9236088ece8d5ae15a59fcdc89b738842f1",
+  "last_successful_backup_utc": "2026-11-15T20:01:24+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=294); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-15T20:05:00+00:00"

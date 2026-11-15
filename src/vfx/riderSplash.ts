@@ -1,46 +1,64 @@
 /**
- * Rider splash fans (ref 05: two V-shaped spray fans of white/cyan streaks thrown back and outward
- * from Benny's base, clear water straight behind him).
+ * Rider splash fans (ref 05: a V-shaped spray of white/cyan droplet streaks thrown BACK and OUTWARD
+ * from Benny's base, one fan per flank, and clear glossy water straight behind him).
  *
- * One small mesh: two polar strips (left/right fan) of angle × radial, shaped and animated in the
- * vertex shader, drawn with a translucent "streak + droplet" fragment shader (no lace haze). It is
- * placed every frame at the computed water surface under Benny's real (lifted) body centre
- * (index.ts `wake()`), so its root always sits on the stream at his waterline. Hidden automatically
- * when wake() stops being called (intro / outro).
+ * Wave 3 rebuild. The old fan was a polar strip centred on Benny's axis (angles 18°–80° from straight
+ * back) drawn with crisp hair-thin white streaks: from the chase camera it read as a white serrated
+ * "whisker" crown around his base. Now each fan is a sheet of jets rooted on the FLANK of the body at
+ * the waterline (root angle 53°–93° from straight back) and aimed back-outward (17°–63°), so the
+ * two fans open into a V towards the camera and leave the water directly behind him clear (ref 05:
+ * fan roots at x≈330 / x≈540, tips at ≈(190, 1250) / ≈(680, 1230)). The fragment shader draws soft,
+ * translucent cyan sheets with white jet cores that break into droplet beads at the tips: no outline,
+ * no white rim against the fur.
+ *
+ * One small mesh (two strips of across × along), shaped and animated in the vertex shader, placed
+ * every frame at the computed water surface under Benny's real (lifted) body centre (index.ts
+ * `wake()`). Hidden automatically when wake() stops being called (intro / outro).
  */
 import * as THREE from 'three';
 import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
-/** fan angle range from straight behind (0 = towards the chase camera, pi/2 = sideways) */
-const TH0 = 0.32;
-const TH1 = 1.4;
+/**
+ * Jet layout shared with the spray droplets (index.ts): across a = 0 (outer, most sideways jet) … 1
+ * (inner, most backward jet). Angles are measured from straight back (towards the chase camera).
+ */
+export const FAN = {
+  /** root angle on the body's waterline circle */
+  root0: 1.62,
+  root1: 0.92,
+  /** jet direction */
+  dir0: 1.1,
+  dir1: 0.3,
+} as const;
 
 const VERT = /* glsl */ `
-attribute vec2 aPolar;   // x = signed angle (side * th), y = radial 0..1
+attribute vec3 aFan;     // x = side (-1 / 1), y = across 0..1 (outer → inner), z = along 0..1 (root → tip)
 uniform float uTime;
-uniform float uR;        // waterline radius of Benny's body (units): fan root
-uniform float uLen;      // fan length beyond the root (units)
+uniform float uR;        // waterline radius of Benny's body (units): jet roots sit on this circle
+uniform float uLen;      // jet length (units)
 uniform float uH;        // peak height of the spray sheet (units)
 uniform float uStrength; // 0..1
-varying vec2 vPolar;
-varying vec3 vPosW;
+varying vec3 vFan;
 #include <fog_pars_vertex>
 float h1(float n) { return fract(sin(n) * 43758.5453); }
 float n1(float x) { float i = floor(x); float f = fract(x); f = f * f * (3.0 - 2.0 * f); return mix(h1(i), h1(i + 1.0), f); }
 void main() {
-  float th = aPolar.x;
-  float t = aPolar.y;
-  float ath = abs(th);
-  float wob = n1(ath * 6.0 + uTime * 6.0 + step(0.0, th) * 13.0) * 0.6 + n1(ath * 15.0 - uTime * 9.0) * 0.4;
-  // the fan is longest on its diagonal (~45 deg back), shorter where it turns sideways
-  float diag = 1.0 - 0.35 * smoothstep(0.9, 1.4, ath) - 0.25 * (1.0 - smoothstep(${TH0.toFixed(2)}, 0.6, ath));
-  float r = uR * 0.92 + t * uLen * diag * (0.8 + 0.4 * wob) * (0.55 + 0.45 * uStrength);
-  // sheet leaves the water at the body, arcs up and falls back toward the surface at its tips
-  float y = uH * uStrength * (0.75 + 0.5 * wob) * sin(3.14159 * pow(t, 0.6)) * (1.0 - 0.45 * t) - 0.02;
-  vec3 p = vec3(sin(th) * r, y, cos(th) * r);   // local: x = side, y = up, z = backwards
+  float side = aFan.x;
+  float a = aFan.y;
+  float t = aFan.z;
+  float seed = step(0.0, side) * 13.0;
+  float wob = n1(a * 5.0 + uTime * 5.0 + seed) * 0.6 + n1(a * 13.0 - uTime * 8.0 + seed) * 0.4;
+  float thR = mix(${FAN.root0.toFixed(3)}, ${FAN.root1.toFixed(3)}, a);
+  float phi = mix(${FAN.dir0.toFixed(3)}, ${FAN.dir1.toFixed(3)}, a) + (wob - 0.5) * 0.12;
+  vec2 root = vec2(sin(thR), cos(thR)) * uR * 0.97;
+  // middle jets are the longest: the fan reads as a rounded wedge, not a rectangle
+  float len = uLen * (0.72 + 0.28 * sin(3.14159 * a)) * (0.82 + 0.36 * wob) * (0.55 + 0.45 * uStrength);
+  vec2 q = root + vec2(sin(phi), cos(phi)) * t * len;
+  // the sheet leaves the water at the flank, arcs up and falls back to the surface at its tips
+  float y = uH * uStrength * (0.7 + 0.5 * wob) * sin(3.14159 * pow(t, 0.55)) * (1.0 - 0.5 * t) - 0.015;
+  vec3 p = vec3(side * q.x, y, q.y);   // local: x = side, y = up, z = backwards
   vec4 wp = modelMatrix * vec4(p, 1.0);
-  vPosW = wp.xyz;
-  vPolar = aPolar;
+  vFan = aFan;
   vec4 mvPosition = viewMatrix * wp;
   gl_Position = projectionMatrix * mvPosition;
   #include <fog_vertex>
@@ -50,31 +68,34 @@ void main() {
 const FRAG = /* glsl */ `
 uniform float uTime;
 uniform float uStrength;
-varying vec2 vPolar;
-varying vec3 vPosW;
+varying vec3 vFan;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 void main() {
-  float th = vPolar.x;
-  float t = vPolar.y;
-  float ath = abs(th);
-  float seed = step(0.0, th) * 7.3;
-  // fine radial streaks (water jets) racing outward; two scales so they never read as a solid sheet
-  float s1 = vnoise(vec2(ath * 46.0 + seed, t * 2.2 - uTime * 5.0));
-  float s2 = vnoise(vec2(ath * 97.0 + seed * 2.0, t * 3.5 - uTime * 7.0));
-  float streak = max(smoothstep(0.6, 0.86, s1), smoothstep(0.66, 0.9, s2) * 0.8);
-  // droplet beads breaking off the streak tips
-  vec2 g = vec2(ath * 30.0 + seed, t * 9.0 - uTime * 6.0);
+  float a = vFan.y;
+  float t = vFan.z;
+  float seed = step(0.0, vFan.x) * 7.3;
+  // jets: a few broad soft water jets plus finer ones, racing outward (never hair-thin lines)
+  float j1 = vnoise(vec2(a * 15.0 + seed, t * 1.6 - uTime * 4.0));
+  float j2 = vnoise(vec2(a * 34.0 + seed * 2.0, t * 2.8 - uTime * 6.0));
+  float jets = smoothstep(0.42, 0.82, j1) * 0.75 + smoothstep(0.55, 0.88, j2) * 0.45;
+  // the jets break into droplet beads towards the tips
+  vec2 g = vec2(a * 22.0 + seed, t * 8.0 - uTime * 6.0);
   float cd = cells(g);
-  float beads = (1.0 - smoothstep(0.1, 0.22, cd)) * step(0.55, hash12(floor(g) + seed)) * smoothstep(0.35, 0.7, t);
-  // fan envelope: fade at both angle limits, at the root (hidden under the fur) and toward the tips
-  float env = smoothstep(${TH0.toFixed(2)}, ${(TH0 + 0.2).toFixed(2)}, ath) * (1.0 - smoothstep(${(TH1 - 0.3).toFixed(2)}, ${TH1.toFixed(2)}, ath));
-  float a = (streak * (1.0 - smoothstep(0.45, 0.92, t)) + beads * (1.0 - smoothstep(0.75, 1.0, t))) * env;
-  a *= smoothstep(0.0, 0.06, t) * uStrength;
-  if (a < 0.03) discard;
-  // white cores, cyan translucent edges
-  vec3 col = mix(vec3(0.55, 0.9, 1.0), vec3(1.25, 1.28, 1.3), smoothstep(0.25, 0.8, a));
-  gl_FragColor = vec4(col, clamp(a * 0.95, 0.0, 0.92));
+  float beads = (1.0 - smoothstep(0.12, 0.26, cd)) * step(0.45, hash12(floor(g) + seed)) * smoothstep(0.3, 0.7, t) * (1.0 - smoothstep(0.82, 1.0, t));
+  float breakup = 1.0 - smoothstep(0.45, 0.9, t);
+  // thin translucent water sheet between the jets, densest at the root
+  float sheet = (1.0 - smoothstep(0.05, 0.6, t)) * (0.35 + 0.65 * j1) * 0.3;
+  // envelope: soft across both fan borders, soft at the root (under the fur) — no hard outline
+  float env = smoothstep(0.0, 0.18, a) * (1.0 - smoothstep(0.8, 1.0, a)) * smoothstep(0.0, 0.12, t);
+  float a1 = (jets * breakup + sheet) * env;
+  float a2 = beads * env;
+  float alpha = clamp((a1 * 0.62 + a2 * 0.7) * uStrength, 0.0, 0.72);
+  if (alpha < 0.02) discard;
+  // translucent cyan body, white jet cores and beads
+  float w = clamp(jets * breakup * 0.9 + beads, 0.0, 1.0);
+  vec3 col = mix(vec3(0.42, 0.86, 1.0), vec3(1.12, 1.16, 1.2), smoothstep(0.25, 0.85, w));
+  gl_FragColor = vec4(col, alpha);
   ${FRAG_TAIL}
 }
 `;
@@ -88,36 +109,36 @@ export interface RiderSplash {
 }
 
 export function createRiderSplash(quality: 'high' | 'low'): RiderSplash {
-  const S = quality === 'high' ? 22 : 12; // angular columns per fan
-  const R = quality === 'high' ? 6 : 4;
-  const cols = S + 1, rows = R + 1;
-  const polar = new Float32Array(2 * cols * rows * 2);
+  const A = quality === 'high' ? 16 : 9; // across
+  const T = quality === 'high' ? 8 : 5; // along
+  const cols = A + 1, rows = T + 1;
+  const fan = new Float32Array(2 * cols * rows * 3);
   let k = 0;
   for (const side of [-1, 1]) {
-    for (let i = 0; i <= S; i++) {
-      const th = TH0 + ((TH1 - TH0) * i) / S;
-      for (let j = 0; j <= R; j++) {
-        polar[k++] = side * th;
-        polar[k++] = j / R;
+    for (let i = 0; i <= A; i++) {
+      for (let j = 0; j <= T; j++) {
+        fan[k++] = side;
+        fan[k++] = i / A;
+        fan[k++] = j / T;
       }
     }
   }
   const idx: number[] = [];
   for (let f = 0; f < 2; f++) {
     const base = f * cols * rows;
-    for (let i = 0; i < S; i++) {
-      for (let j = 0; j < R; j++) {
+    for (let i = 0; i < A; i++) {
+      for (let j = 0; j < T; j++) {
         const a = base + i * rows + j, b = a + 1, c = a + rows, d = c + 1;
         idx.push(a, c, b, b, c, d);
       }
     }
   }
   const geo = new THREE.BufferGeometry();
-  geo.setAttribute('aPolar', new THREE.BufferAttribute(polar, 2));
+  geo.setAttribute('aFan', new THREE.BufferAttribute(fan, 3));
   // dummy position attribute (positions are generated in the vertex shader)
   geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(2 * cols * rows * 3), 3));
   geo.setIndex(idx);
-  const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.7 }, uH: { value: 0.32 }, uStrength: { value: 0 } });
+  const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.15 }, uH: { value: 0.26 }, uStrength: { value: 0 } });
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: VERT,

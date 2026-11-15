@@ -893,3 +893,99 @@ Coordinator update noted: I'll do the final calibration on the locked camera. Le
 >   // ---- Benny: ripple rings and a V wake on the surface ----
 >   // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the wa …[+1186 chars]
 
+### 🤖 Claude — 2026-11-15T20:02:06.587Z
+
+> 🔧 **Bash** `{"command": "cat src/vfx/glsl.ts | head -105", "description": "Read shared GLSL helpers"}`
+
+### 🧑 User — 2026-11-15T20:02:06.621Z
+
+> ↩︎ result: /** Shared GLSL snippets for Rainbow water/foam/bubble shaders (WebGL2, mobile-safe). */
+> import * as THREE from 'three';
+> 
+> export const NOISE_GLSL = /* glsl */ `
+> float hash12(vec2 p) {
+>   vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+>   p3 += dot(p3, p3.yzx + 33.33);
+>   return fract((p3.x + p3.y) * p3.z);
+> }
+> float vnoise(vec2 p) {
+>   vec2 i = floor(p);
+>   vec2 f = fract(p);
+>   vec2 u = f * f * (3.0 - 2.0 * f);
+>   return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+>              mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> }
+> float fbm3(vec2 p) {
+>   float a = 0.5, s = 0.0;
+>   for (int i = 0; i < 3; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(17.1, 9.2); a *= 0.5; }
+>   return s;
+> }
+> // cheap cellular "soap foam" pattern: 0 at cell centres -> 1 at borders
+> float cells(vec2 p) {
+>   vec2 i = floor(p);
+>   vec2 f = fract(p);
+>   float md = 8.0;
+>   for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+>     vec2 g = vec2(float(x), float(y));
+>     vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+>     vec2 r = g + o - f;
+>     md = min(md, dot(r, r));
+>   }
+>   return sqrt(md);
+> }
+> vec3 iridescent(float t) {
+>   return 0.5 + 0.5 * cos(6.28318 * (t + vec3(0.0, 0.33, 0.67)));
+> }
+> `;
+> 
+> /**
+>   …[+2999 chars]
+
+### 🤖 Claude — 2026-11-15T20:02:09.343Z
+
+Now the rewrite of the rider splash fan: flank-rooted V jets, translucent cyan/white streaks breaking into droplets, no rim at the body.
+
+### 🤖 Claude — 2026-11-15T20:02:38.296Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "content": "/**\n * Rider splash fans (ref 05: a V-shaped spray of white/cyan droplet streaks thrown BACK and OUTWARD\n * from Benny's base, one fan per flank, and clear glossy water straight behind him).\n *\n * Wave 3 rebuild. The old fan was a polar strip centred on Benny's axis (angles 18°–80° from straight\n * back) drawn with crisp hair-thin white streaks: from the chase camera it read as a white serrated\n * \"whisker\" crown around his base. Now each fan is a sheet of jets rooted on the FLANK of the body at\n * the waterline ( …[+7561 chars]`
+
+### 🧑 User — 2026-11-15T20:02:38.395Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:40.884Z
+
+Now spray droplets: smaller translucent beads instead of solid white discs.
+
+### 🤖 Claude — 2026-11-15T20:02:46.494Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/spray.ts", "old_string": "const FRAG = /* glsl */ `\nvarying float vAlpha;\n#include <fog_pars_fragment>\nvoid main() {\n  vec2 c = gl_PointCoord - 0.5;\n  float d = length(c) * 2.0;\n  if (d > 1.0) discard;\n  float body = 1.0 - smoothstep(0.6, 1.0, d);\n  float hl = smoothstep(0.35, 0.0, length(c - vec2(-0.15, -0.15)));\n  vec3 col = mix(vec3(0.75, 0.95, 1.0), vec3(1.0), 0.5 + 0.5 * hl) * 1.25;\n  gl_FragColor = vec4(col, body * vAlpha * 0.9);\n  ${FRAG_TAIL}\n}\n`;", "new_string": "// water bead (ref 05 droplets): translucent  …[+689 chars]`
+
+### 🧑 User — 2026-11-15T20:02:46.572Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/spray.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:47.643Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/spray.ts", "old_string": "  gl_PointSize = clamp(aSize * uScale / -mvPosition.z, 1.0, 48.0);", "new_string": "  gl_PointSize = clamp(aSize * uScale / -mvPosition.z, 1.0, 28.0);"}`
+
+### 🧑 User — 2026-11-15T20:02:47.721Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/spray.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:02:50.938Z
+
+Now index.ts: flank-rooted droplet emission matching the fan, a seeded RNG (deterministic QA frames), rider feed to the foam, and a QA report hook.
+
+### 🤖 Claude — 2026-11-15T20:03:09.550Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='/home/user/rainbow-/src/vfx/index.ts'\ns=open(p).read()\ns=s.replace(\"\"\"import { createRiderSplash } from './riderSplash';\n\"\"\",\"\"\"import { createRiderSplash, FAN } from './riderSplash';\n\"\"\")\ns=s.replace(\"\"\"  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality });\n  const bubbles = createBubbles(course, { quality, sStart: ribbonS0 });\"\"\",\"\"\"  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality, height: (s, lat, t) => ribbon.heightAt(s, lat, t) });\n  const bubbles = createBubbles …[+4864 chars]`
+
+### 🧑 User — 2026-11-15T20:03:09.621Z
+
+> ↩︎ result: 118:  const rnd = (a: number, b: number) => a + rand() * (b - a);
+> 190:          const c = wave.crest[(Math.random() * wave.crest.length) | 0];
+> 233:      const n = Math.min(14, Math.floor(rate * dt + rand()));
+> 237:        const side = rand() < 0.5 ? -1 : 1;
+> 238:        const a = rand();
+

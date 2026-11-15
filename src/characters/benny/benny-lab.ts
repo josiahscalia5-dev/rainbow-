@@ -51,7 +51,8 @@ interface Panel {
         : views === 'measure'
           ? // proportion check: rear views at the ride height (lifted) at 12° / 18° / 24° / 28° camera elevation,
             // chroma-green background + water so a colour mask separates Benny (qa/pilot05/benny measure script)
-            [12, 18, 24, 28].map((deg) => ({ name: `rear-${deg}`, yaw: Math.PI, pitch: THREE.MathUtils.degToRad(deg), dist: 6.4, expr: 'happy', swim: 1, fov: 36, tumble: false }))
+            // `&elev=12,16,20,24` picks the elevations; `&bennyMask` renders flat ID colours on grey (maskmeasure)
+            (q.get('elev') ?? '12,18,24,28').split(',').map(Number).map((deg) => ({ name: `rear-${deg}`, yaw: Math.PI, pitch: THREE.MathUtils.degToRad(deg), dist: 7.2, expr: 'happy', swim: 1, fov: 33, tumble: false }))
         : views === 'game'
           ? [
               // stage 05 ride camera (cameraRig STAGE_CAM['05'])
@@ -79,7 +80,8 @@ interface Panel {
     renderer.setScissorTest(true);
     const scene = new THREE.Scene();
     scene.environment = createCandyEnvironment(renderer);
-    scene.background = new THREE.Color(views === 'turntable' ? '#3a1060' : measure ? '#00ff00' : '#c0369c');
+    const maskBg = q.has('bennyMask') ? '#808080' : null;
+    scene.background = new THREE.Color(maskBg ?? (views === 'turntable' ? '#3a1060' : measure ? '#00ff00' : '#c0369c'));
     scene.add(new THREE.HemisphereLight('#ffe9ff', '#7a2a9c', 1.1));
     const key = new THREE.DirectionalLight('#ffffff', 2.2);
     key.position.set(3, 6, 5);
@@ -92,7 +94,7 @@ interface Panel {
       const water = new THREE.Mesh(
         new THREE.CircleGeometry(40, 64),
         measure
-          ? new THREE.MeshBasicMaterial({ color: '#00ff00' })
+          ? new THREE.MeshBasicMaterial({ color: maskBg ?? '#00ff00' })
           : new THREE.MeshStandardMaterial({ color: '#29d8ff', roughness: 0.1, metalness: 0.1, emissive: '#0a6f9a', emissiveIntensity: 0.6 }),
       );
       water.rotation.x = -Math.PI / 2;

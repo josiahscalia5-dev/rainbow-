@@ -22,7 +22,7 @@ import { createPuddles } from './puddles';
 import { createFoam } from './foam';
 import { createBubbles } from './bubbles';
 import { createSpray } from './spray';
-import { createRiderSplash } from './riderSplash';
+import { createRiderSplash, FAN } from './riderSplash';
 
 export { PALETTE } from './glsl';
 export const BENNY_RIDE_OFFSET = 0.55;
@@ -81,13 +81,13 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const drum = createDrumWater(quality);
   const wave = createFinalWave(course, quality);
   const puddles = createPuddles();
-  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality });
+  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality, height: (s, lat, t) => ribbon.heightAt(s, lat, t) });
   const bubbles = createBubbles(course, { quality, sStart: ribbonS0 });
   const spray = createSpray(quality);
   const crown = createRiderSplash(quality);
   group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh);
 
-  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh };
+  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh };
   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
   // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
@@ -105,7 +105,19 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const lastWake = new THREE.Vector3();
   const riderVel = new THREE.Vector3();
   let lastWakeT = -1;
-  const rnd = (a: number, b: number) => a + Math.random() * (b - a);
+  // seeded RNG for the spray: re-seeded whenever Benny jumps (checkpoint / respawn), so QA frames are
+  // deterministic and comparable between runs
+  let seed = 0x5eed;
+  const rand = () => {
+    seed = (seed + 0x6d2b79f5) >>> 0;
+    let t = seed;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const rnd = (a: number, b: number) => a + rand() * (b - a);
+  let lastFocusSeed = -1e9;
+  let qaCamera: THREE.Camera | null = null;
 
   /** 0 = ribbon fully shown, 1 = whirlpool surface takes over (mirrors the ribbon vertex shader) */
   const whirlBlend = (s: number) => smooth(st03.s0 + 0.5, st03.s0 + 3.5, s) * (1 - smooth(st04.s0 - 9, st04.s0 - 1.5, s));
@@ -129,6 +141,17 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
     return hr * (1 - k) + hw * k;
   };
 
+  // QA (?qa=1): window.__waterQA() reports what the VFX put on screen (bubble sizes/positions, foam
+  // rafts) for the capture scripts; read-only, nothing is allocated unless it is called
+  if (typeof window !== 'undefined' && new URLSearchParams(location.search).has('qa')) {
+    (window as unknown as { __waterQA: () => unknown }).__waterQA = () => {
+      const cam = qaCamera as THREE.PerspectiveCamera | null;
+      if (!cam) return null;
+      const w = window.innerWidth, h = window.innerHeight;
+      return { bubbles: bubbles.qaScreen(cam, w, h), rafts: foam.qaRafts(), fanStrength: crown.uniforms.uStrength.value, waterlineR: ribbon.uniforms.uBennyR.value };
+    };
+  }
+
   return {
     group,
     controls,
@@ -136,6 +159,9 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
     surfaceHeight,
     stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
     update(time, dt, focusS, camera) {
+      if (Math.abs(focusS - lastFocusSeed) > 25) seed = 0x5eed ^ Math.round(focusS * 16);
+      lastFocusSeed = focusS;
+      qaCamera = camera;
       focus = focusS;
       curTime = time;
       ribbon.uniforms.uTime.value = time;
@@ -155,7 +181,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       wave.mesh.visible = focusS > st08.s0 - 25;
       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
-      foam.update(time, focusS, controls.outro);
+      foam.update(time, dt, focusS, controls.outro);
       bubbles.update(time, dt, focusS, camera, 1 - 0.7 * controls.outro);
       // crest spray off the final wave
       if (wave.mesh.visible && focusS > st09.s0 - 20 && focusS < st09.s1 + 20 && controls.outro < 0.5) {
@@ -201,20 +227,29 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       else riderVel.set(0, 0, 0);
       lastWake.copy(pos);
       lastWakeT = curTime;
-      // droplets along the two fans: back + outward, a short hop above the surface
-      const rate = (quality === 'high' ? 110 : 40) * strength;
-      const n = Math.min(12, Math.floor(rate * dt + Math.random()));
+      // droplets thrown off the two fan sheets: rooted on the flanks at the waterline and flying
+      // back-outward along the same jet directions as riderSplash.ts (FAN), a short hop above the water
+      const rate = (quality === 'high' ? 130 : 50) * strength;
+      const n = Math.min(14, Math.floor(rate * dt + rand()));
       const up = tmpV2.copy(f.up);
       back.copy(forward).multiplyScalar(-1);
       for (let i = 0; i < n; i++) {
-        const side = Math.random() < 0.5 ? -1 : 1;
-        const th = rnd(0.45, 1.25); // from straight back toward sideways
-        const cs = Math.cos(th), sn = Math.sin(th);
-        sprP.copy(center).addScaledVector(right, side * sn * waterlineR * 1.05).addScaledVector(back, cs * waterlineR * 1.05).addScaledVector(up, rnd(0.02, 0.12));
-        const sp = rnd(1.6, 3.6);
-        sprV.copy(riderVel).addScaledVector(right, side * sn * sp).addScaledVector(back, cs * sp).addScaledVector(up, rnd(1.6, 3.4));
-        spray.emit(sprP, sprV, rnd(0.035, 0.085), rnd(0.28, 0.5));
+        const side = rand() < 0.5 ? -1 : 1;
+        const a = rand();
+        const thR = FAN.root0 + (FAN.root1 - FAN.root0) * a;
+        const phi = FAN.dir0 + (FAN.dir1 - FAN.dir0) * a + rnd(-0.12, 0.12);
+        const t0 = rnd(0.1, 0.5); // leave the sheet part-way along the jet
+        const rootR = waterlineR * 0.97;
+        sprP.copy(center)
+          .addScaledVector(right, side * (Math.sin(thR) * rootR + Math.sin(phi) * t0 * 0.9))
+          .addScaledVector(back, Math.cos(thR) * rootR + Math.cos(phi) * t0 * 0.9)
+          .addScaledVector(up, rnd(0.04, 0.16));
+        const sp = rnd(1.2, 2.8);
+        sprV.copy(riderVel).addScaledVector(right, side * Math.sin(phi) * sp).addScaledVector(back, Math.cos(phi) * sp).addScaledVector(up, rnd(1.0, 2.4));
+        spray.emit(sprP, sprV, rnd(0.016, 0.042), rnd(0.3, 0.55));
       }
+      // floating wake foam behind the fans (foam.ts rafts) follows Benny's real waterline position
+      foam.rider(s, lateral, strength);
     },
     splash(pos, up, strength) {
       const n = Math.round(30 * strength * (quality === 'high' ? 1 : 0.5));

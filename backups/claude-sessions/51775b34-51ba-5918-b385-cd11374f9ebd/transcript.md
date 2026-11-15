@@ -1953,3 +1953,39 @@ I committed and pushed everything. GitHub matches this session at `f003293` on `
 
 That push includes the World Labs status notes, the Marble upload image and prompt, the capture script fix, and the Screen 05 work saved so far. The specialists are still editing files, and the 5-minute autosave will keep pushing their changes.
 
+### 🧑 User — 2026-11-15T20:02:42.150Z
+
+Claude, I reviewed the latest Rainbow Screen 05 background images.
+
+The tunnel looks promising, but I DO NOT APPROVE THE CLEAN BACKGROUND PLATE YET.
+
+The middle of the water contains visible rectangular patches, repeated textures, and distorted geometry.
+
+Do not send that version to World Labs Marble. It could reconstruct the artifacts as real 3D objects.
+
+Please do the following:
+
+1. Let my five existing Screen 05 specialists finish their assigned tasks. Preserve their work and do not interrupt or duplicate their agents.
+
+2. Have the Reference Match Director check the background-only image against my original approved Screen 05.
+
+3. Improve the background plate so the winding cyan-and-pink water follows one continuous, natural S-shaped path. No rectangular patches, gray smears, repeated tunnel pieces, or artificial straight runway patterns.
+
+4. If ordinary inpainting cannot produce a clean result, stop trying to copy and stretch water pixels. Instead, prepare a geometry-focused tunnel reference for Marble and use our existing 3D river geometry in Blender.
+
+5. Preserve the exact deep purple perforated washer walls, reflective gold rings, foam banks, bubbles, and distant golden glow.
+
+6. Give me three separate full-size previews: the original approved reference, the cleaned environment image, and the mask showing which areas were reconstructed.
+
+7. Do not spend Marble or Atlas credits until I approve the clean reference and proposed generation.
+
+8. After the specialists finish, use Playwright to produce a new real gameplay screenshot with Benny, coins, animated water, HUD, and corrected camera.
+
+9. Verify Screen 05 still connects to Screen 06, and preserve the Screen 07-to-08 descent.
+
+10. Continue automatic five-minute backups on my verified working GitHub branch, protecting my original branch.
+
+My priority is getting the actual playable 3D game to look almost identical to my approved reference. I do not want to waste credits reconstructing a defective background image.
+
+Continue the current work and show me the corrected results.
+

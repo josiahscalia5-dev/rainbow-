@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2920,
-   "sha256": "a43155e558782114a18378d75c125a94c458925b4875a3d72efadd368cec89d1"
+   "sha256": "572fe24f0e626757400a444b3f95937a2d20506adf20275ebac8e16f6398f0cd"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1197,6 +1197,21 @@
    "sha256": "a131a03ec3628c550920b69689671ffa1a7847057a4939cd01bb802efa456bfd"
   },
   {
+   "path": "qa/pilot05/wave3/benny/it00/05.png",
+   "bytes": 1403849,
+   "sha256": "b4cc45132d80c16b71c0d6ace67295fc40045436e490cf3c781495f97b03e2fb"
+  },
+  {
+   "path": "qa/pilot05/wave3/benny/it00/05_mask.png",
+   "bytes": 1403849,
+   "sha256": "b4cc45132d80c16b71c0d6ace67295fc40045436e490cf3c781495f97b03e2fb"
+  },
+  {
+   "path": "qa/pilot05/wave3/benny/it00/cap_log.json",
+   "bytes": 926,
+   "sha256": "3fd96ac7aa9d97c2c963d8734c886ab29e4dd2d2f36f20e0af182f89892f8879"
+  },
+  {
    "path": "qa/pilot05/wave3/camera/it00/05.png",
    "bytes": 1403551,
    "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
@@ -1618,8 +1633,8 @@
   },
   {
    "path": "src/characters/benny/benny-lab.ts",
-   "bytes": 7219,
-   "sha256": "0d802866271bf59ab0a6bee4b562fbb409c8bfdce31dd6a135e61d5230e9c9e9"
+   "bytes": 7454,
+   "sha256": "786ed7043feb4198936c3bfe0cb6f8f75a722aaacc409acb0ffab86d54eec72a"
   },
   {
    "path": "src/characters/benny/build.ts",
@@ -1633,8 +1648,8 @@
   },
   {
    "path": "src/characters/benny/runtime.ts",
-   "bytes": 7253,
-   "sha256": "9e8d285b40e4e29867aff851207cad06b889b38a3a125d8be248c64c94715e49"
+   "bytes": 9958,
+   "sha256": "f0e065a77c72152aa0bcf3af005a662a0bf87cbd6848962af8aaeed6472dd447"
   },
   {
    "path": "src/characters/benny/textures.ts",
@@ -1748,8 +1763,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 12104,
-   "sha256": "c30ba62990043b60620360e34a21e6d301b33ecacc09a14e400a90e68e9a2a85"
+   "bytes": 13983,
+   "sha256": "d5786d67692831808b8176e3c72815d4bda0c4699c9e9375ee6430024cf1cfcf"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -1758,18 +1773,18 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 6738,
-   "sha256": "6c242002168c1172efa3a49ff089061cdf8cc080c7e75422240d6661ee790830"
+   "bytes": 7933,
+   "sha256": "05987071f332a966f623eaf74431aae5dfbedf0e0daa4d42151de177d18e6ad1"
   },
   {
    "path": "src/vfx/spray.ts",
-   "bytes": 3454,
-   "sha256": "8f5c1f69b35837260e3bb3867284d9dbd350b3c9f5202c630673e8c15ef0cbaa"
+   "bytes": 3737,
+   "sha256": "79649fa8d284943986414c09989d296805aa799db5da963979e7dfc3e088fd79"
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 24620,
-   "sha256": "ce1d40b2de0a6bae9c9ee4a0539c8fa7577708e36156e3cdcf62c38a94c6d8cf"
+   "bytes": 28188,
+   "sha256": "ebaaa473cc504c01a3c24e29a3d83de29a2f5f0c77699f4c509abba5338460ba"
   },
   {
    "path": "src/vfx/whirlpool.ts",
