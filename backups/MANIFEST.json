@@ -114,7 +114,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "37565263a65d36e924962a113ef727281680cf8ccd3171348e3a6f71e9044b5d"
+   "sha256": "063c06bd0a18e006d542338bb6514c9aad1d83ad04f5862252684f4e9d764edb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -158,8 +158,13 @@
   },
   {
    "path": "docs/path_graph.md",
-   "bytes": 4641,
-   "sha256": "27c7544f00e97deee5fc70568ae57ec9c78b0f432b0007744d471de2915823eb"
+   "bytes": 4605,
+   "sha256": "16a7e0136effe382f020fb0d93259f74c8a4aa9a1d634553631400438cf57981"
+  },
+  {
+   "path": "index.html",
+   "bytes": 644,
+   "sha256": "c5b2a3ec3a58deaa594b4cefc592caf1e919feeb5c566a3e0fffde409a6f394f"
   },
   {
    "path": "package-lock.json",
@@ -173,8 +178,8 @@
   },
   {
    "path": "qa/continuity_report.json",
-   "bytes": 2711,
-   "sha256": "1ccd794cb9c77fb823d7b6a7ddb22998ab9dde81575e3f0138ddabe063e5592f"
+   "bytes": 2672,
+   "sha256": "d38220f3e93c23e7281ee87f2bd912c3b80e1c5b9a1f769765990d4ec994f9c9"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -252,6 +257,11 @@
    "sha256": "d5cbd1fac1da2cd1a691b5d691728b51a9cc2deeb920cfecf3eae5a29f1a8a89"
   },
   {
+   "path": "scripts/export-models.mjs",
+   "bytes": 2120,
+   "sha256": "8cfbf6a5e47b6c42937b42e8424f6e79d002c5e9f2580ea155e0a97bd718df0f"
+  },
+  {
    "path": "scripts/export_claude_sessions.py",
    "bytes": 12417,
    "sha256": "82927c9a3804e5aea8b9b57080c5a4d893e971d745020b06d49123fd0347c83a"
@@ -260,6 +270,11 @@
    "path": "scripts/install-autosave-scheduler.sh",
    "bytes": 2420,
    "sha256": "498295609d28f2b3c8bc9c085a302b6665bcb41bea7bf6838f0c0b1b1b6737b3"
+  },
+  {
+   "path": "scripts/lib/pw.mjs",
+   "bytes": 1377,
+   "sha256": "2b82112e251a30afe19aa195fee2358c8d203b082e7a856c1fe76e454a5ac3c1"
   },
   {
    "path": "scripts/rainbow-autosave.py",
@@ -272,9 +287,44 @@
    "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
   },
   {
+   "path": "src/characters/types.ts",
+   "bytes": 1766,
+   "sha256": "bb0791d2826ed7f4bf11694146e4f20ebffaf26d732a78bafb7fa880a5437b0a"
+  },
+  {
+   "path": "src/main.ts",
+   "bytes": 287,
+   "sha256": "8c5e1d9fb659c45009f1eee92744ca9f2adf1683ba03eb1aa35f75afe101c78b"
+  },
+  {
+   "path": "src/render/env.ts",
+   "bytes": 2743,
+   "sha256": "2af00de4e3d62ee882e06e6d0129c32c0ce90628a3e37885ebedf576b7763a24"
+  },
+  {
    "path": "src/world/course.ts",
-   "bytes": 18561,
-   "sha256": "35dca2aa7f3b04b93b10bdb92a7a897f52c0f2d9aededf0828b59f484a1b6bba"
+   "bytes": 19960,
+   "sha256": "21ce65b325108c88d776407b87b43f893b08be23a4a1bb11ca3cfdfb4f224cff"
+  },
+  {
+   "path": "tools/model-lab.html",
+   "bytes": 344,
+   "sha256": "3a796e0839ba74c5563ff2e3c567b646e9972c787475b344566961977ce1aa32"
+  },
+  {
+   "path": "tools/model-lab.ts",
+   "bytes": 4451,
+   "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tsconfig.json",
+   "bytes": 556,
+   "sha256": "b9988bf1f74a9f5c4cad3b48ad8066c5cfa6ee97bece437229138ed2335cd344"
+  },
+  {
+   "path": "vite.config.ts",
+   "bytes": 416,
+   "sha256": "284b01887422f77073d247a82cf401f20cf3bb6a9f8cc271b183cf32c7c8a37a"
   }
  ]
 }

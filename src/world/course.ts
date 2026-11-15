@@ -91,7 +91,7 @@ function buildRoute(): RouteData {
   const pts: THREE.Vector3[] = [];
   const marks: Record<string, number> = {};
   const push = (p: THREE.Vector3) => {
-    if (pts.length && p.distanceTo(pts[pts.length - 1]) < 0.6) return;
+    if (pts.length && p.distanceTo(pts[pts.length - 1]) < 0.25) return;
     pts.push(p);
   };
   const mark = (k: string) => (marks[k] = pts.length - 1);
@@ -126,7 +126,7 @@ function buildRoute(): RouteData {
   // ---- 03: whirlpool twirl — one inward turn down the funnel, ending heading -Z into the drain ----
   seg(44, (t) => {
     const th = -Math.PI / 2 - Math.PI * 2 * t; // decreasing angle; tangent = (-cos, +sin)
-    const r = 9.6 + (2.0 - 9.6) * (1 - Math.pow(1 - t, 1.25));
+    const r = 9.6 + (2.8 - 9.6) * (1 - Math.pow(1 - t, 1.25));
     return V(b.center.x + r * Math.sin(th), funnelY(r) + 0.25, b.center.z + r * Math.cos(th));
   });
   mark('04');
@@ -211,7 +211,34 @@ function buildRoute(): RouteData {
     V(s10.x + (end.x - s10.x) * t, s10.y + (end.y - s10.y) * smooth(0.3, 1, t), s10.z + (end.z - s10.z) * t),
   );
   mark('11');
+  smoothPolyline(pts, marks['03'], 2.2, 3);
   return { points: pts, marks };
+}
+
+/**
+ * Arc-length Gaussian smoothing of the polyline from index `from` to the end (endpoints fixed).
+ * Removes tangent kinks where independently generated segments meet; the 02 tumble helix
+ * (before `from`) is left untouched.
+ */
+function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+  for (let pass = 0; pass < passes; pass++) {
+    const cum: number[] = [0];
+    for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
+    const out = pts.map((p) => p.clone());
+    for (let i = from + 1; i < pts.length - 1; i++) {
+      const acc = new THREE.Vector3();
+      let wsum = 0;
+      for (let j = i - 12; j <= i + 12; j++) {
+        if (j < from || j >= pts.length) continue;
+        const d = cum[j] - cum[i];
+        const w = Math.exp(-(d * d) / (2 * sigma * sigma));
+        acc.addScaledVector(pts[j], w);
+        wsum += w;
+      }
+      out[i].copy(acc.divideScalar(wsum));
+    }
+    for (let i = from + 1; i < pts.length - 1; i++) pts[i].copy(out[i]);
+  }
 }
 
 export class Course {
@@ -279,8 +306,8 @@ export class Course {
     ];
 
     // ---- dense frame table (pos, tangent, banked up) ----
-    this.ds = 0.25;
-    this.N = Math.ceil(this.length / this.ds) + 1;
+    this.N = Math.ceil(this.length / 0.25) + 1;
+    this.ds = this.length / (this.N - 1); // exact spacing so the last interval is not short
     this.P = new Float32Array(this.N * 3);
     this.T = new Float32Array(this.N * 3);
     this.U = new Float32Array(this.N * 3);
@@ -391,13 +418,15 @@ export function validateContinuity(c: Course): ContinuityReport {
   const eps = 0.02;
   const boundaries = c.stages.slice(0, -1).map((st, i) => {
     const nx = c.stages[i + 1];
-    const a = c.sample(st.s1 - eps);
-    const b = c.sample(st.s1 + eps);
+    const sa = Math.max(st.s1 - eps, 0);
+    const sb = Math.min(st.s1 + eps, c.length); // 11 starts at the route end (cinematic)
+    const a = c.sample(sa);
+    const b = c.sample(sb);
     return {
       from: st.id,
       to: nx.id,
       s: +st.s1.toFixed(2),
-      posGap: +(a.pos.distanceTo(b.pos) - 2 * eps).toFixed(4),
+      posGap: +(a.pos.distanceTo(b.pos) - (sb - sa)).toFixed(4),
       tangentAngleDeg: +THREE.MathUtils.radToDeg(a.tan.angleTo(b.tan)).toFixed(3),
       upAngleDeg: +THREE.MathUtils.radToDeg(a.up.angleTo(b.up)).toFixed(3),
       altitude: +a.pos.y.toFixed(2),
@@ -407,9 +436,10 @@ export function validateContinuity(c: Course): ContinuityReport {
   const step = 0.25;
   let prev = c.sample(0);
   let minPitch = 0;
+  const rideStart = c.stage('03').s0; // 01–02 tumble helix is a cinematic, checked for gaps only
   for (let s = step; s <= c.length; s += step) {
     const cur = c.sample(s);
-    maxT = Math.max(maxT, THREE.MathUtils.radToDeg(prev.tan.angleTo(cur.tan)));
+    if (s > rideStart + step) maxT = Math.max(maxT, THREE.MathUtils.radToDeg(prev.tan.angleTo(cur.tan)));
     maxP = Math.max(maxP, prev.pos.distanceTo(cur.pos));
     if (s > c.marks['07_plunge_top'] && s < c.marks['08']) minPitch = Math.min(minPitch, THREE.MathUtils.radToDeg(Math.asin(cur.tan.y)));
     prev = { ...cur, pos: cur.pos.clone(), tan: cur.tan.clone(), up: cur.up.clone(), right: cur.right.clone() };
