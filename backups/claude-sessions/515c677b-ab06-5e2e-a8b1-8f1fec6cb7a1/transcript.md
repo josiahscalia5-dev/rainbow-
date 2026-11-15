@@ -1799,3 +1799,59 @@ Now the laundry room, used outside both washer doors, and the plush purple towel
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/towel.ts (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T17:00:45.537Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "content": "/**\n * Builds the whole washer world in absolute coordinates around the master course.\n * Drum A (01–02) → chute → whirlpool basin room (03) → gold ring pipe (04) → perforated current tube\n * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).\n */\nimport * as THREE from 'three';\nimport { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';\nimport { Course, WORLD, funnelY } from './course';\nimport { perforatedMetal, gold, goldRibbed, chrome, glass, paint …[+27025 chars]`
+
+### 🧑 User — 2026-11-15T17:00:45.707Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/environment.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:02:29.427Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/ui/hud.ts", "content": "/**\n * DOM HUD overlay (never painted into the 3D world). Sizes use a 9:16 frame unit `--u`\n * (1u = 1% of the portrait frame height) so the layout matches the 864×1536 references.\n */\nimport '@fontsource/baloo-2/700.css';\nimport '@fontsource/baloo-2/800.css';\nimport type { StageId } from '../world/course';\nimport { STAGE_TITLES } from '../world/course';\n\nconst CSS = `\n:root { --u: min(1vh, calc(100vw / 56.25)); }\n#hud { position: fixed; inset: 0; pointer-events: none; font-family: 'Baloo 2', system-ui, sans-serif; z-ind …[+11551 chars]`
+
+### 🧑 User — 2026-11-15T17:02:29.590Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/ui/hud.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:02:54.037Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "content": "/**\n * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against\n * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.\n * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,\n * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).\n */\nimport * as THREE from 'three';\nimport type { Course, StageId } from '../world/course';\nimport { canvasTexture } from '../world/materials';\n\nexport cons …[+5888 chars]`
+
+### 🧑 User — 2026-11-15T17:02:54.206Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/gameplay/coins.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:02:59.232Z
+
+HUD and coins are done (the innerHTML warning is a false positive; it only holds static constants). Now input, the camera rig, and the game state machine with intro/outro cinematics and the QA API.
+
+### 🤖 Claude — 2026-11-15T17:03:05.481Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/gameplay/input.ts", "content": "/** Touch-drag / half-screen press / keyboard steering → steer value in [-1, 1]. */\nexport interface Input {\n  steer: number;\n  /** test/QA override (null = live input) */\n  override: number | null;\n  onTap(cb: () => void): void;\n  onKey(cb: (k: string) => void): void;\n  update(dt: number): void;\n}\n\nexport function createInput(el: HTMLElement): Input {\n  let target = 0;\n  let dragX: number | null = null;\n  let dragStart = 0;\n  let tapCb = () => {};\n  let keyCb = (_k: string) => {};\n  const keys = new Set<str …[+1329 chars]`
+
+### 🧑 User — 2026-11-15T17:03:05.686Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/gameplay/input.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:03:20.136Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "content": "/**\n * Third-person ride camera: behind/above Benny along the course frame (pitch & roll follow the\n * banked path smoothly — including the 07 plunge), with per-stage framing blended continuously by s.\n */\nimport * as THREE from 'three';\nimport type { Course, StageId } from '../world/course';\n\nexport interface CamParams {\n  back: number; // distance behind Benny along the course (units of s)\n  up: number; // height above the water along the frame up\n  ahead: number; // look-at distance ahead of Benny\n  lookUp: nu …[+3436 chars]`
+
+### 🧑 User — 2026-11-15T17:03:20.320Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/game/cameraRig.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:04:21.623Z
+
+Now the optional-module loader with placeholders, so the game runs before the specialists deliver and swaps in their real modules automatically:
+
+### 🤖 Claude — 2026-11-15T17:04:38.620Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/game/modules.ts", "content": "/**\n * Loads the specialist modules (water, Benny, girl) when present; otherwise returns simple stand-ins\n * so the world/gameplay can be developed and tested independently. Stand-ins are logged loudly and\n * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.\n */\nimport * as THREE from 'three';\nimport type { Course } from '../world/course';\nimport type { BennyRuntime, GirlRuntime } from '../characters/types';\n\nexport interface WaterLike {\n  group: THREE.Group;\n  update(time: nu …[+4735 chars]`
+
+### 🧑 User — 2026-11-15T17:04:38.767Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/game/modules.ts (file state is current in your context — no need to Read it back)
+

@@ -170,3 +170,106 @@ Now the whirlpool funnel surface (03):
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/whirlpool.ts (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T17:00:05.282Z
+
+The whirlpool's angular seam would break the noise. Switching to periodic noise there:
+
+### 🤖 Claude — 2026-11-15T17:00:14.538Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/whirlpool.ts'\ns=open(p).read()\ns=s.replace(\"\"\"#include <fog_pars_fragment>\n${NOISE_GLSL}\nvoid main() {\"\"\",\"\"\"#include <fog_pars_fragment>\n${NOISE_GLSL}\n// noise periodic in x with period P (lattice wrap) -> no seam where theta wraps\nfloat pn(vec2 p, float P) {\n  vec2 i = floor(p);\n  vec2 f = fract(p);\n  vec2 u = f * f * (3.0 - 2.0 * f);\n  float x0 = mod(i.x, P), x1 = mod(i.x + 1.0, P);\n  return mix(mix(hash12(vec2(x0, i.y)), hash12(vec2(x1, i.y)), u.x),\n             mix(hash12(vec2(x0, i.y + 1.0)), hash12(vec2(x1, i.y + 1.0)), u. …[+1594 chars]`
+
+### 🧑 User — 2026-11-15T17:00:14.615Z
+
+> ↩︎ result: 55:float pn(vec2 p, float P) {
+> 63:float pfbm(vec2 p, float P) {
+> 66:float pcells(vec2 p, float P) {
+> 89:  float n = pfbm(vec2(sw * 2.0 + uTime * 0.9, along * 0.6), 6.0);
+> 97:  float c = pcells(vec2(sw * 22.0 + floor(uTime * 0.45 * 22.0), along * 2.5), 66.0);
+> 100:  float lines = pow(pn(vec2(sw * 40.0 + uTime * 18.0, along * 1.2), 120.0), 7.0);
+> 111:  float hs = hash12(vec2(mod(floor(g.x), 90.0), floor(g.y)));
+
+### 🤖 Claude — 2026-11-15T17:00:21.554Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/float c = pcells(vec2(sw \\* 22.0 + floor(uTime \\* 0.45 \\* 22.0), along \\* 2.5), 66.0);/float c = pcells(vec2(sw * 22.0 + uTime * 9.9, along * 2.5), 66.0);/' src/vfx/whirlpool.ts && grep -n \"pcells(vec2(sw\" src/vfx/whirlpool.ts", "description": "Use continuous cell animation in whirlpool"}`
+
+### 🧑 User — 2026-11-15T17:00:21.595Z
+
+> ↩︎ result: 97:  float c = pcells(vec2(sw * 22.0 + uTime * 9.9, along * 2.5), 66.0);
+> [This command modified 1 file you've previously read: src/vfx/whirlpool.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T17:00:35.620Z
+
+Now Drum A water (01 waves + 02 swirl sheet):
+
+### 🤖 Claude — 2026-11-15T17:01:10.584Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/drumWater.ts", "content": "/**\n * Drum A water (scenes 01–02).\n *  - surface: glossy swell filling the drum below WORLD.drumA.waterY with layered cyan / hot-pink\n *    bands and foam crests (ref 01); clipped to the drum cylinder in the fragment shader.\n *  - swirl sheet: a translucent spinning water shell hugging the drum wall (ref 02 tumble),\n *    faded in with `swirl` 0..1 by the game during scene 02.\n */\nimport * as THREE from 'three';\nimport { WORLD } from '../world/course';\nimport { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl …[+8295 chars]`
+
+### 🧑 User — 2026-11-15T17:01:10.772Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/drumWater.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:01:15.675Z
+
+Final wave (09) and puddles (11):
+
+### 🤖 Claude — 2026-11-15T17:01:44.824Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/finalWave.ts", "content": "/**\n * Scene 09 \"final wave\": a tall curling wall of blue/pink water rising on the LEFT of the course\n * through the Final Spin Chamber, its foot joined to the stream's left edge, the lip curling back\n * over the stream, rolling along with the flow; white foam crest + spray (spray emitted by index.ts).\n */\nimport * as THREE from 'three';\nimport type { Course } from '../world/course';\nimport { EDGE_LIFT } from './waterRibbon';\nimport { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';\n\nconst VERT = /* glsl  …[+7110 chars]`
+
+### 🧑 User — 2026-11-15T17:01:45.015Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/finalWave.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:02:02.178Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/puddles.ts", "content": "/**\n * Scene 11 leftover puddles: glimmering cyan/blue pools with foam bits on the curved perforated\n * floor of the Final Spin Chamber in front of the towel platform (ref 11). Patches conform to the\n * chamber cylinder (WORLD.chamber); faded in with `amount` (outro).\n */\nimport * as THREE from 'three';\nimport { WORLD } from '../world/course';\nimport { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';\n\nconst VERT = /* glsl */ `\nvarying vec2 vLocal;\nvarying vec3 vPosW;\nattribute vec2 aLocal;\n#include <fog_pa …[+3913 chars]`
+
+### 🧑 User — 2026-11-15T17:02:02.320Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/puddles.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:02:13.427Z
+
+Now foam banks (instanced, chunked LOD):
+
+### 🤖 Claude — 2026-11-15T17:02:38.839Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/foam.ts", "content": "/**\n * Foam banks: instanced puffy white/lavender soap-foam clusters.\n *  - a dense fringe of small puffs along both ribbon edges + bigger cloud clusters (refs 03–10)\n *  - foam rings on the whirlpool rim and along its spiral bands (rotating with the swirl)\n * Puffs are grouped into ~40-unit chunks (separate InstancedMeshes) so only chunks near Benny\n * are drawn; quality 'low' halves density and uses 20-tri puffs.\n */\nimport * as THREE from 'three';\nimport { type Course, WORLD, funnelY } from '../world/course';\nimport { …[+6217 chars]`
+
+### 🧑 User — 2026-11-15T17:02:39.038Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/foam.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:02:45.603Z
+
+Now bubbles (instanced iridescent big ones plus point-sprite small ones) and spray droplets:
+
+### 🤖 Claude — 2026-11-15T17:03:23.167Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "content": "/**\n * Iridescent soap bubbles.\n *  - big bubbles: InstancedMesh spheres with a thin-film shader (rainbow Fresnel rim, white\n *    window highlight, nearly clear centre) — pooled around Benny (focusS) or the Drum A volume\n *  - small bubbles: one THREE.Points draw of hundreds of tiny ring-sprite bubbles hugging the water\n * Bubbles drift with the flow, rise, wobble, and are respawned ahead when left behind.\n */\nimport * as THREE from 'three';\nimport { type Course, WORLD } from '../world/course';\nimport { FRAG_TAIL, NO …[+9657 chars]`
+
+### 🧑 User — 2026-11-15T17:03:23.333Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/bubbles.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:03:35.472Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/spray.ts", "content": "/**\n * Spray droplets: one pooled THREE.Points draw for Benny's wake fans, landing splashes, the\n * final-wave crest spray and spout splashes. Simple ballistic CPU sim (gravity along -Y).\n */\nimport * as THREE from 'three';\nimport { FRAG_TAIL, withFog } from './glsl';\n\nconst VERT = /* glsl */ `\nattribute float aSize;\nattribute float aAlpha;\nuniform float uScale;\nvarying float vAlpha;\n#include <fog_pars_vertex>\nvoid main() {\n  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);\n  gl_PointSize = clamp(aSize * u …[+3015 chars]`
+
+### 🧑 User — 2026-11-15T17:03:35.630Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/spray.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:03:55.906Z
+
+Now the `createWater` system that ties everything together:
+
+### 🤖 Claude — 2026-11-15T17:04:25.070Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/index.ts", "content": "/**\n * Rainbow water system (water-fx-specialist + foam-bubbles-particles).\n *\n *   const water = createWater(course, { quality: 'high' });\n *   scene.add(water.group);\n *   // per frame:\n *   water.update(time, dt, bennyS, camera);\n *   water.wake(bennyPos, forward, right, speed, dt);\n *   // cinematic controls (0..1): water.controls.drumSwirl / drumAgitation / outro\n *\n * Benny rides ON the water: place his body centre at\n *   course.pointAt(s, lateral, water.surfaceHeight(s, lateral, time) + BENNY_RIDE_OFFSET)\n *  …[+8116 chars]`
+
+### 🧑 User — 2026-11-15T17:04:25.260Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/index.ts (file state is current in your context — no need to Read it back)
+

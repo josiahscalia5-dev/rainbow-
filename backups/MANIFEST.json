@@ -114,7 +114,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "a7210ba181b15023ce8c5edcb2d49ce746682c2ac4c7b791eccf49390ea95917"
+   "sha256": "49cf271c08e4a72d01d92fbe7df8c16bdf42d158710d978cfeeac6ca29be6dc1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -297,14 +297,49 @@
    "sha256": "d2a61875037ac789f3fa8f932f3a8a33c268d2326ed05a5719faa8de90b7f07d"
   },
   {
+   "path": "src/characters/benny/runtime.ts",
+   "bytes": 5333,
+   "sha256": "7efb53c21a5b22fe91bf56c7b7d41e0f03cd6e0c98e661e2bdc7fdeeaeb7c7fa"
+  },
+  {
    "path": "src/characters/benny/textures.ts",
    "bytes": 11811,
    "sha256": "e3f3436f39c2d7076da27b256d67244c015e19aee34d576f829a89bb654fe72a"
   },
   {
+   "path": "src/characters/girl/build.ts",
+   "bytes": 43043,
+   "sha256": "a3e183a5bae32b8abd9566f8acdd569dd2a747a4caf206b3f5e7e9f9fefd6952"
+  },
+  {
+   "path": "src/characters/girl/textures.ts",
+   "bytes": 9918,
+   "sha256": "3b59cca94de1c5e6521cd4ea08a181be3db002da7507df13bd76dc5e4aefe2d2"
+  },
+  {
    "path": "src/characters/types.ts",
    "bytes": 1766,
    "sha256": "bb0791d2826ed7f4bf11694146e4f20ebffaf26d732a78bafb7fa880a5437b0a"
+  },
+  {
+   "path": "src/game/cameraRig.ts",
+   "bytes": 3882,
+   "sha256": "baa5d646bcba37a635de895045015ae034841aaf7aecb7f6a00fb30fc61ec3f2"
+  },
+  {
+   "path": "src/game/modules.ts",
+   "bytes": 5141,
+   "sha256": "0830652a3257f8c2468f2c6daa35c72428ade5383a74b302f25f7f606a5fc28a"
+  },
+  {
+   "path": "src/gameplay/coins.ts",
+   "bytes": 6299,
+   "sha256": "d4d27931097719b8cbb041465694b00820c6e66f1bc201312c81208535578445"
+  },
+  {
+   "path": "src/gameplay/input.ts",
+   "bytes": 1805,
+   "sha256": "a932c2ec6ce2979efc6b539cdfe56cca1045d2d012c5a489f85ff2cb19e46eee"
   },
   {
    "path": "src/main.ts",
@@ -317,9 +352,49 @@
    "sha256": "2af00de4e3d62ee882e06e6d0129c32c0ce90628a3e37885ebedf576b7763a24"
   },
   {
+   "path": "src/ui/hud.ts",
+   "bytes": 11678,
+   "sha256": "49736025a2659ace585a9fcd5a8b12d3fcf34b2cda6b412fc5a80d5edaf6a35e"
+  },
+  {
+   "path": "src/vfx/bubbles.ts",
+   "bytes": 9937,
+   "sha256": "d6f878c09e8191b1e046201173a861e4d5759c9fdb9ddc9f9b51404e99d633db"
+  },
+  {
+   "path": "src/vfx/drumWater.ts",
+   "bytes": 8593,
+   "sha256": "afc5b31d6546d8b4983cd732bcef09a10cb31cbf772756d304d3b56fd44d9357"
+  },
+  {
+   "path": "src/vfx/finalWave.ts",
+   "bytes": 7453,
+   "sha256": "4a5d083f49ea939c3f82c7568037d257c41e5e65e28824cf7622f78ade47d130"
+  },
+  {
+   "path": "src/vfx/foam.ts",
+   "bytes": 6588,
+   "sha256": "af95ec410d70fdbbfa1b9d298aef379509d578f272b115977fcd73d91eb4a650"
+  },
+  {
    "path": "src/vfx/glsl.ts",
    "bytes": 2155,
    "sha256": "80f40e184063ab0123c2cda0798e76892ceb56daf63103b1787b45e1afdd929a"
+  },
+  {
+   "path": "src/vfx/index.ts",
+   "bytes": 8474,
+   "sha256": "bc5b599b43913334c98b37caae5256e297337addfd034cb9967805666e42aa55"
+  },
+  {
+   "path": "src/vfx/puddles.ts",
+   "bytes": 4324,
+   "sha256": "f364cdf4a4d7be7ddbaa3b3c2c6c5b8f4f7d4fa853c58fc92f49c90c66adf75d"
+  },
+  {
+   "path": "src/vfx/spray.ts",
+   "bytes": 3454,
+   "sha256": "8f5c1f69b35837260e3bb3867284d9dbd350b3c9f5202c630673e8c15ef0cbaa"
   },
   {
    "path": "src/vfx/waterRibbon.ts",
@@ -328,13 +403,18 @@
   },
   {
    "path": "src/vfx/whirlpool.ts",
-   "bytes": 6613,
-   "sha256": "c09691a247fd5ea713993d8a9048c3eee82a9b017ccbf92e43a800ab8d585c19"
+   "bytes": 7698,
+   "sha256": "a7d6e7a9a269cff3e45665f571db8fe09e60d284ad123d0e7672d9146f27c64c"
   },
   {
    "path": "src/world/course.ts",
    "bytes": 19960,
    "sha256": "21ce65b325108c88d776407b87b43f893b08be23a4a1bb11ca3cfdfb4f224cff"
+  },
+  {
+   "path": "src/world/environment.ts",
+   "bytes": 27068,
+   "sha256": "0cc0e80ae87744f7a0f1f32fb5a722f759c0e21e88e5ff75c7a54cc6ce9f1876"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -365,6 +445,16 @@
    "path": "tools/model-lab.ts",
    "bytes": 4451,
    "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tools/water-lab.html",
+   "bytes": 344,
+   "sha256": "e2758962c2fb8508af5a41526d1ea395c9f20a75682903a3d4b809a2ddf97cae"
+  },
+  {
+   "path": "tools/water-lab.ts",
+   "bytes": 6625,
+   "sha256": "bccca04b59b87b539ad19c55989fbbc7b26feafcc245ca5a8e3e7505c0e50a6b"
   },
   {
    "path": "tsconfig.json",
