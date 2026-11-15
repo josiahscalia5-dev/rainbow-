@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 1619,
-   "sha256": "b55a7c6bd644b91fa4e5946ee4e5cee83cebf60050b85df0407f8cec23441737"
+   "bytes": 2484,
+   "sha256": "138fa88b367cd20614e35e7739ebb23c21ec4c3f69c64177a499b1ab82d3db7d"
   },
   {
    "path": "README_FIRST.md",
@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2920,
-   "sha256": "3c18254dfde5181935b15e38c438826636748e3d7d1e5db5382617b895d15124"
+   "sha256": "866071f338f27710919548d9d429ae997c31cee2c3a266f517567b68183c6ad5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1362,21 +1362,6 @@
    "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
   },
   {
-   "path": "qa/worldlabs/05/05_env_clean_plate.png",
-   "bytes": 2558261,
-   "sha256": "389563659bdce1507d7c30f9d5f8c69b53aa149e187199038256808f2192d97a"
-  },
-  {
-   "path": "qa/worldlabs/05/05_env_clean_plate_cropped.png",
-   "bytes": 2220617,
-   "sha256": "ec7a45f5f6c3af1e6b01e7d084a8edc93d357145f7f824991a22ad8ff8b372cd"
-  },
-  {
-   "path": "qa/worldlabs/05/05_env_fill_mask.png",
-   "bytes": 7654,
-   "sha256": "5958e7384a7f1a7079bd4233ada0f9df77f18feb9c4ff0b30d7e637bcae93cd3"
-  },
-  {
    "path": "qa/worldlabs/05/05_env_mask.png",
    "bytes": 6175,
    "sha256": "11b77364bdeac15614ee648901b4e4b3b2a9cf2bdf8700024cc681dbf56be4a9"
@@ -1387,14 +1372,9 @@
    "sha256": "5418c7667d802bae65efa42055663b86f36cb6e40ab7e0f73fb900905e1968dc"
   },
   {
-   "path": "qa/worldlabs/05/05_env_plate_review.png",
-   "bytes": 7640250,
-   "sha256": "f997604b35a1f4fca4ecfb1e1be3357208eca91a6995890a8a7a3a18971f3ebe"
-  },
-  {
    "path": "qa/worldlabs/05/MARBLE_MANUAL.md",
-   "bytes": 5890,
-   "sha256": "43fd08c5fc6b8a2a7e86d4a039eb7a99ec912c596ed0a86061201711612f2108"
+   "bytes": 5405,
+   "sha256": "843151e2e76dcad6d6443a48c4654c02e304471f24ffb08d4d3733728895ad49"
   },
   {
    "path": "qa/worldlabs/05/PILOT_PLAN.md",
@@ -1402,19 +1382,19 @@
    "sha256": "85ca78154fe4c8ec5e9e8df6734e6cbc35e5c711763b8d501cbc3a3172742748"
   },
   {
-   "path": "qa/worldlabs/05/plate_v2/05_clean_environment_v2.png",
-   "bytes": 2149285,
-   "sha256": "89188417b7fe535243cd95a677c446870085b1dcb7fde3bb9941764be8e050e8"
+   "path": "qa/worldlabs/05/blender/river05_layout.json",
+   "bytes": 47206,
+   "sha256": "26df408463b7d481e28a4774afb4f9c9594fa211951d082eaad7c4507ae7974b"
   },
   {
-   "path": "qa/worldlabs/05/plate_v2/05_reconstructed_mask_overlay_v2.png",
-   "bytes": 1657618,
-   "sha256": "27a322c4930ca449be3b5713fab3319d68789a65542e322d32d54969a63cdacc"
+   "path": "qa/worldlabs/05/blender/screen05_layout.blend",
+   "bytes": 410225,
+   "sha256": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9"
   },
   {
-   "path": "qa/worldlabs/05/plate_v2/05_reconstructed_mask_v2.png",
-   "bytes": 6989,
-   "sha256": "254cdc9c7eff6cab1b76cf7f9c73c2285e7508ede78a6808a4ae546b6360f844"
+   "path": "qa/worldlabs/05/blender/screen05_layout.glb",
+   "bytes": 2773392,
+   "sha256": "8cfd5093ede29e763e3a4af0981a11fecd976844506632febe8fe8134c0300f0"
   },
   {
    "path": "qa/worldlabs/05/plate_v3/05_geometry_coin_trail_zoom_v3.png",
@@ -1435,6 +1415,46 @@
    "path": "qa/worldlabs/05/plate_v3/05_geometry_reference_v3.png",
    "bytes": 1052708,
    "sha256": "eeb9edcdccf44b143a7498a77e8240dcc686ad5296d4f2f1a8578e7f564ae71a"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/README.md",
+   "bytes": 765,
+   "sha256": "98ed669a2dedb552838deef7fe45768e400136d0e7617202c7231b54ae33958d"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v1_05_env_clean_plate.png",
+   "bytes": 2558261,
+   "sha256": "389563659bdce1507d7c30f9d5f8c69b53aa149e187199038256808f2192d97a"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v1_05_env_clean_plate_cropped.png",
+   "bytes": 2220617,
+   "sha256": "ec7a45f5f6c3af1e6b01e7d084a8edc93d357145f7f824991a22ad8ff8b372cd"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v1_05_env_fill_mask.png",
+   "bytes": 7654,
+   "sha256": "5958e7384a7f1a7079bd4233ada0f9df77f18feb9c4ff0b30d7e637bcae93cd3"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v1_05_env_plate_review.png",
+   "bytes": 7640250,
+   "sha256": "f997604b35a1f4fca4ecfb1e1be3357208eca91a6995890a8a7a3a18971f3ebe"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v2_05_clean_environment_v2.png",
+   "bytes": 2149285,
+   "sha256": "89188417b7fe535243cd95a677c446870085b1dcb7fde3bb9941764be8e050e8"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v2_05_reconstructed_mask_overlay_v2.png",
+   "bytes": 1657618,
+   "sha256": "27a322c4930ca449be3b5713fab3319d68789a65542e322d32d54969a63cdacc"
+  },
+  {
+   "path": "qa/worldlabs/05/rejected/v2_05_reconstructed_mask_v2.png",
+   "bytes": 6989,
+   "sha256": "254cdc9c7eff6cab1b76cf7f9c73c2285e7508ede78a6808a4ae546b6360f844"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -1665,6 +1685,11 @@
    "path": "scripts/export-models.mjs",
    "bytes": 2120,
    "sha256": "8cfbf6a5e47b6c42937b42e8424f6e79d002c5e9f2580ea155e0a97bd718df0f"
+  },
+  {
+   "path": "scripts/export-river-05.ts",
+   "bytes": 2629,
+   "sha256": "fbeaf59032b6c672a19ab0f7eeb5fc7882ca31487e29aade7c1179bf11b1ac82"
   },
   {
    "path": "scripts/export_claude_sessions.py",
@@ -1910,6 +1935,11 @@
    "path": "src/world/tube.ts",
    "bytes": 20118,
    "sha256": "8c28e5e28627a3956bb8e6e63bda1061a168afa3b7021c3e7b658f42dc87a8e1"
+  },
+  {
+   "path": "tools/blender/build_05_river_scene.py",
+   "bytes": 7719,
+   "sha256": "24b114308b0c9effa8edd4ae3589ecf4679d8fd21a8737f7090ca70305870592"
   },
   {
    "path": "tools/blender/import_world_asset.py",

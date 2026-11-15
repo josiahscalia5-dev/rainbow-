@@ -2270,3 +2270,301 @@ I only want to be asked when my approval is actually needed, such as paid credit
 
 > 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 240 9 && flock -u 9 && exec 9>&- ; python3 scripts/rainbow-autosave.py --reason manual:autosave-upgrade --message \"Autosave: clean-tree live log, recovery branch protected, health check\" 2>&1 | grep -E '\"result\"|\"error\"|pushed' ; git status --porcelain | head; python3 -I scripts/autosave-status.py", "description": "Run upgraded autosave and the health check", "timeout": 400000}`
 
+### 🧑 User — 2026-11-15T20:10:13.812Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+> AUTOSAVE OK | branch ccr-d4bb0ad3-8ycajb | scheduler daemon | last verified backup 2026-11-15T20:10:08+00:00 (0.1 min ago) | local dc55285 remote dc55285 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-15T20:10:21.162Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "Create/reuse project specialists from `.claude/agents/`", "new_string": "**Backups (user's standing order, 2026-11-15; never ask the user about routine saves):** the five-minute GitHub autosave (`scripts/rainbow-autosave.py`, re-armed by the SessionStart hook) must run in every session on that session's own authorized `ccr-*`/`claude/*` branch. Never push to, force-push or rewrite the protected branches in `backups/autosave.config.json` (`ccr-6f431adf-7h0m8y` original, `claude/rainbow-3d-recovery-m4v347` recove …[+481 chars]`
+
+### 🧑 User — 2026-11-15T20:10:21.252Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T20:10:24.134Z
+
+Backup rules are saved for future sessions. Resuming the Screen 05 plate: running the texture-aware fill on the coin holes in the background.
+
+### 🤖 Claude — 2026-11-15T20:10:25.890Z
+
+> 🔧 **Bash** `{"command": "time timeout 1200 python3 -I tools/make_env_plate_v3.py references/05_flow_into_the_current.png qa/worldlabs/05/plate_v3 && sha256sum -c scripts/reference.sha256 2>&1 | grep -c \": OK\"", "description": "Run FSR coin fill for geometry plate v3", "timeout": 1300000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-15T20:10:25.920Z
+
+> ↩︎ result: Command running in background with ID: brz5g1lex. Output is being written to: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/brz5g1lex.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-15T20:10:26.999Z
+
+> 🔧 **Bash** `{"command": "tail -6 qa/pilot05/REQUESTS.md | cut -c1-500; ls qa/pilot05/wave3/*/ | head -40; ls qa/pilot05/wave3/*/NOTES.md 2>/dev/null", "description": "Check specialist requests and progress"}`
+
+### 🧑 User — 2026-11-15T20:10:27.040Z
+
+> ↩︎ result: Exit code 2
+> - foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord sqrt(0.86² − h²) ≈ 0.44 at the default 0.3 ride lift (it was 0.67, derived from the unlifted root, which made the contact band ~2× too wide). The bottom-of-frame white haze + blue dot field in 05/03 was the old `wakeV`/`tendrils` × `lace` term; your in-progress rewrite (no lace in wakeV) removes i
+> - foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under Benny's fur (05, y≈1150–1170) is the `contact` term in `src/vfx/waterRibbon.ts` FRAG, Benny block (`if (rr < rb * 0.25) { … contact = … }` + `col = mix(col, uFoam * 1.2, clamp(contact * k, 0.0, 1.0));`). Evidence: `qa/pilot05/wave3/foam/iso0/05_noRibbonWake.png` (band gone) vs `05_noCrownSpray.png` (band stays with crown+spray hidden). Please delete that white mix entir
+> - water-fx-specialist → foam-bubbles-particles (wave 3, correction 7): DONE 19:58 UTC. Deleted the white `contact` → uFoam mix in waterRibbon.ts FRAG (Benny block); replaced by the faint cyan hint you sugge …[+1539 chars]
+
+### 🤖 Claude — 2026-11-15T20:10:31.801Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^export\\|^  [a-zA-Z]*(.*).*{$\\|^  get \\|^  readonly\\|^  public\" src/world/course.ts | head -40; grep -n \"^export\" src/vfx/waterRibbon.ts src/world/environment.ts src/world/tube.ts | head -20; cat scripts/continuity-test.ts | head -20", "description": "Inspect course and water exports for geometry export"}`
+
+### 🧑 User — 2026-11-15T20:10:31.851Z
+
+> ↩︎ result: 16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 17:export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
+> 18:export type StageProp = 'width' | 'tube' | 'speed' | 'bank';
+> 20:export interface StageDef {
+> 40:export interface CourseSample {
+> 48:export const STAGE_TITLES: Record<StageId, string> = {
+> 63:export const WORLD = {
+> 73:export function funnelY(r: number): number {
+> 89:export interface StraightAxis {
+> 116:export const S05 = {
+> 131:export function meander05(u: number): number {
+> 161:  seg(26, (t) => {
+> 180:  seg(60, (t) => {
+> 192:  seg(7, (t) => {
+> 201:  seg(8, (t) => {
+> 238:  seg(12, (t) => {
+> 250:  seg(12, (t) => {
+> 309:export class Course {
+> 310:  readonly curve: THREE.CatmullRomCurve3;
+> 311:  readonly length: number;
+> 312:  readonly stages: StageDef[];
+> 313:  readonly marks: Record<string, number>; // arc-length of named marks
+> 315:  readonly straightAxes: StraightAxis[];
+> 326:  constructor() {
+> 447:  stageAtS(s: number): StageDef {
+> 452:  stage(id: StageId): StageDef {
+> 462:  prop(a: number | StageProp, b: number | StageProp, blend = 6): number {
+> 473:  widthAt(s: number): number {
+> 490:  sample(s: number, out?: CourseSample): CourseSample {
+>  …[+3230 chars]
+
+### 🤖 Claude — 2026-11-15T20:10:33.678Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,47p src/world/course.ts; sed -n 89,115p src/world/course.ts; sed -n 470,516p src/world/course.ts; sed -n 60,100p src/vfx/waterRibbon.ts", "description": "Read CourseSample, straight axis, sampling and core lateral"}`
+
+### 🧑 User — 2026-11-15T20:10:33.733Z
+
+> ↩︎ result: export interface CourseSample {
+>   s: number;
+>   pos: THREE.Vector3;
+>   tan: THREE.Vector3;
+>   up: THREE.Vector3;
+>   right: THREE.Vector3;
+> }
+> 
+> export interface StraightAxis {
+>   /** arc-length range of the stretch on the course */
+>   s0: number;
+>   s1: number;
+>   a: THREE.Vector3;
+>   b: THREE.Vector3;
+>   /** stream-to-tunnel-bottom depth on the line (water sits this high in the tube) */
+>   floorDepth: number;
+> }
+> 
+> interface RouteData {
+>   points: THREE.Vector3[];
+>   marks: Record<string, number>;
+>   straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> }
+> 
+> /**
+>  * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
+>  * lateral (world +X) offset of the course centreline from that line, as a function of the distance
+>  * `u` along the line (0 … L05). It is applied to the route AFTER smoothPolyline, so it is exact (the
+>  * smoothing would shave ~25 % off the amplitude) and still C¹ at both ends (offset and slope → 0).
+>  *
+>  * Shape tuned against the reference's cyan core: a small first crest under Benny at the 05
+>  * checkpoint (u≈uCrest, offset a0 to the LEFT, heading parallel to the tunnel axis), then crests
+>  * that gro …[+4409 chars]
+
+### 🤖 Claude — 2026-11-15T20:10:43.358Z
+
+I'll check what camera data the game records at the Screen 05 checkpoint, so the Blender layout can be viewed from the same spot as the gameplay screenshot.
+
+### 🤖 Claude — 2026-11-15T20:10:44.806Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; d=json.load(open('qa/capture_log.json'))\nfor s in d['shots']:\n  if s['id']=='05': print(json.dumps(s['state'])[:800]); print(json.dumps(s['checkpoint'])[:300])\n\"; grep -n \"state()\\|state:\" src/game/Game.ts | head -5", "description": "Inspect capture state fields for camera data"}`
+
+### 🧑 User — 2026-11-15T20:10:44.885Z
+
+> ↩︎ result: {"mode": "ride", "stage": "05", "s": 132.438, "lat": 0, "coins": 1420, "hearts": 5, "paused": false, "bennyY": -41.348, "bennyVisible": true, "cam": [1.92, -37.94, -68.28]}
+> {"stage": "05", "s": 132.4383020282329, "y": -41.348424352736345}
+> 588:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 591:      return api.state();
+> 593:    state() {
+
+### 🤖 Claude — 2026-11-15T20:10:48.775Z
+
+> 🔧 **Bash** `{"command": "sed -n 575,621p src/game/Game.ts", "description": "Read QA API surface in Game.ts"}`
+
+### 🧑 User — 2026-11-15T20:10:48.814Z
+
+> ↩︎ result: render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins …[+1551 chars]
+
+### 🤖 Claude — 2026-11-15T20:10:52.106Z
+
+I'll write the river export now (it only reads the game's course and water code) and run it once the specialists' path changes are final.
+
+### 🤖 Claude — 2026-11-15T20:11:02.887Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/export-river-05.ts", "content": "/**\n * Export the game's OWN Screen 05 river + tunnel layout for Blender (read-only use of the game code).\n *   npx vite-node scripts/export-river-05.ts [-- --cam=x,y,z --look=x,y,z --fov=62]\n * Writes qa/worldlabs/05/blender/river05_layout.json, consumed by tools/blender/build_05_river_scene.py.\n *\n * Contents (world units, Three.js axes: +Y up, the 05 tunnel runs toward −Z):\n *   river[]  every 0.25 u of stage 05 (plus 6 u of 04 and 06 on either side): centre, right, up,\n *            water width (Course.width …[+2143 chars]`
+
+### 🧑 User — 2026-11-15T20:11:02.952Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/export-river-05.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:11:29.611Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/blender/build_05_river_scene.py", "content": "\"\"\"\nBuild the Screen 05 layout scene in Blender from the game's OWN geometry (no World Labs credits).\n\n    blender -b --python tools/blender/build_05_river_scene.py -- \\\n        --layout qa/worldlabs/05/blender/river05_layout.json --out-dir qa/worldlabs/05/blender\n\nInput: river05_layout.json from `npx vite-node scripts/export-river-05.ts` (river centre/right/up/width\nand cyan-core lateral every 0.25 u, the straight 05 tunnel line + radius, the checkpoint camera).\nBuilds, in Three.js axes converte …[+7543 chars]`
+
+### 🧑 User — 2026-11-15T20:11:29.690Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/blender/build_05_river_scene.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:11:33.738Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/brz5g1lex.output; cd /home/user/rainbow- && timeout 120 npx vite-node scripts/export-river-05.ts 2>&1 | tail -3", "description": "Check FSR plate result; test river export", "timeout": 180000}`
+
+### 🧑 User — 2026-11-15T20:11:34.504Z
+
+> ↩︎ result: river samples 345 | tunnel {"a":[2,-41.1582,-58.9619],"b":[2,-44.1582,-130.9619],"radius":7.6,"floorDepth":3.3,"s0":114.68830202823246,"s1":188.92410111057563} | checkpoint s 132.44
+
+### 🤖 Claude — 2026-11-15T20:11:36.264Z
+
+The river export works: 345 samples, and the tunnel line has radius 7.6 and a floor depth of 3.3. Test-building the Blender layout scene now; I'll rebuild it once the specialists finish.
+
+### 🤖 Claude — 2026-11-15T20:11:37.671Z
+
+> 🔧 **Bash** `{"command": "timeout 300 blender -b --python tools/blender/build_05_river_scene.py -- --layout qa/worldlabs/05/blender/river05_layout.json --out-dir qa/worldlabs/05/blender 2>&1 | grep -E \"saved|Error|error|Traceback\" | head; ls -la qa/worldlabs/05/blender/", "description": "Test Blender layout scene build", "timeout": 320000}`
+
+### 🧑 User — 2026-11-15T20:11:40.556Z
+
+> ↩︎ result: saved qa/worldlabs/05/blender/screen05_layout.blend river verts 8625 tunnel True camera False
+> total 3172
+> drwxr-xr-x 2 root root    4096 Nov 15 20:11 .
+> drwxr-xr-x 5 root root    4096 Nov 15 20:11 ..
+> -rw-r--r-- 1 root root   47206 Nov 15 20:11 river05_layout.json
+> -rw-r--r-- 1 root root  410225 Nov 15 20:11 screen05_layout.blend
+> -rw-r--r-- 1 root root 2773392 Nov 15 20:11 screen05_layout.glb
+
+### 🤖 Claude — 2026-11-15T20:11:42.494Z
+
+The Blender scene builds: a `.blend` and a `.glb` containing the game's real 05 river (8,625 vertices), the tunnel and the ring alignment marks. Checking on the coin-hole fill.
+
+### 🤖 Claude — 2026-11-15T20:11:43.252Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep make_env_plate_v3 | grep -v grep | awk '{print $2, $10, $11, $12, $13}'; uptime", "description": "Check FSR process and system load"}`
+
+### 🧑 User — 2026-11-15T20:11:43.299Z
+
+> ↩︎ result: 7421 0:00 timeout 1200 python3
+> 7422 1:17 python3 -I tools/make_env_plate_v3.py
+>  20:11:43 up 29 min,  0 user,  load average: 0.96, 1.23, 1.06
+
+### 🤖 Claude — 2026-11-15T20:11:48.398Z
+
+The fill is running but slow (about 1 minute of CPU so far). Waiting for it to finish before the review.
+
+### 🤖 Claude — 2026-11-15T20:11:48.804Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-15T20:11:48.814Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-15T20:11:51.967Z
+
+> 🔧 **TaskCreate** `{"subject": "Geometry-focused Marble reference + Blender river layout", "description": "Plate v1/v2 rejected. v3: crop rows 197–767 (no Benny/HUD), tight coin masks filled with FSR; three separate full-size previews (original, cleaned, mask); Reference Match Director reviews it; game's own 05 river geometry exported to Blender (.blend/.glb) as alignment base. No credits.", "activeForm": "Building geometry-focused Marble reference"}`
+
+### 🧑 User — 2026-11-15T20:11:51.980Z
+
+> ↩︎ result: Task #7 created successfully: Geometry-focused Marble reference + Blender river layout
+
+### 🤖 Claude — 2026-11-15T20:11:53.122Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-15T20:11:53.133Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-15T20:11:58.765Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/worldlabs/05/rejected && for f in 05_env_clean_plate.png 05_env_clean_plate_cropped.png 05_env_fill_mask.png 05_env_plate_review.png; do [ -f qa/worldlabs/05/$f ] && git mv -k qa/worldlabs/05/$f qa/worldlabs/05/rejected/v1_$f 2>/dev/null || mv qa/worldlabs/05/$f qa/worldlabs/05/rejected/v1_$f 2>/dev/null; done; for f in qa/worldlabs/05/plate_v2/*.png; do mv \"$f\" \"qa/worldlabs/05/rejected/v2_$(basename $f)\"; done; rmdir qa/worldlabs/05/plate_v2; cat > qa/worldlabs/05/rejected/README.md <<'EOF'\n# Rejected Screen 05 environment plates: do NOT upload these to Marble o …[+818 chars]`
+
+### 🧑 User — 2026-11-15T20:11:58.843Z
+
+> ↩︎ result: qa/worldlabs/05:
+> 05_env_mask.png
+> 05_env_only_preview.png
+> MARBLE_MANUAL.md
+> PILOT_PLAN.md
+> blender
+> plate_v3
+> rejected
+> 
+> qa/worldlabs/05/rejected:
+> README.md
+> v1_05_env_clean_plate.png
+> v1_05_env_clean_plate_cropped.png
+> v1_05_env_fill_mask.png
+> v1_05_env_plate_review.png
+> v2_05_clean_environment_v2.png
+> v2_05_reconstructed_mask_overlay_v2.png
+> v2_05_reconstructed_mask_v2.png
+
+### 🤖 Claude — 2026-11-15T20:12:01.558Z
+
+`MARBLE_MANUAL.md` still names the rejected v1 image as the recommended upload, so I'm fixing that now so it can't be uploaded by mistake.
+
+### 🤖 Claude — 2026-11-15T20:12:06.423Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/worldlabs/05/MARBLE_MANUAL.md'; s=open(p).read()\na=s.index(\"### Input image for Marble (prepared, original untouched)\")\nb=s.index(\"### Prompt to paste into Marble\")\nnew='''### Input image for Marble: NOT APPROVED YET\n\n* The first clean plate (v1) was **rejected by the user** (rectangular patches, repeated textures, grey smear).\n  It and a failed v2 are kept only as a record in `rejected/`; never upload them.\n* Current candidate: **`plate_v3/05_geometry_reference_v3.png`**, a geometry-focused tunnel reference: the approved\n  image cropped to row …[+672 chars]`
+
+### 🧑 User — 2026-11-15T20:12:06.475Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T20:12:09.468Z
+
+> 🔧 **Bash** `{"command": "grep -n \"clean_plate\\|env_fill\\|plate_review\" qa/worldlabs/05/MARBLE_MANUAL.md qa/worldlabs/05/PILOT_PLAN.md; ps aux | grep make_env_plate_v3 | grep -v grep | awk '{print $10}'", "description": "Check for stale v1 references; FSR progress"}`
+
+### 🧑 User — 2026-11-15T20:12:09.508Z
+
+> ↩︎ result: 0:00
+> 1:43
+
+### 🤖 Claude — 2026-11-15T20:12:15.258Z
+
+> 🔧 **Bash** `{"command": "exec 9>backups/.autosave.lock && flock -w 240 9 && flock -u 9 && exec 9>&- ; python3 scripts/rainbow-autosave.py --reason manual:task-end --message \"Screen 05: geometry-focused plate v3 tooling, Blender river layout from game geometry, rejected plates archived\" 2>&1 | grep -E '\"result\"' ; python3 -I scripts/autosave-status.py", "description": "Back up work and run autosave health check", "timeout": 400000}`
+

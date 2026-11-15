@@ -29,21 +29,17 @@ The World Labs plugin and connector cover **Atlas only**; neither has a Marble t
 cannot be used through the Atlas API. So Marble is **not** connected to Claude here. You can use it
 yourself in the browser at https://marble.worldlabs.ai and give me the export.
 
-### Input image for Marble (prepared, original untouched)
+### Input image for Marble: NOT APPROVED YET
 
-| File | Use |
-|---|---|
-| `05_env_clean_plate_cropped.png` (864×1339) | **Recommended upload.** The approved image without the HUD rows (cropped at row 197, so the top needs no invented pixels), with Benny, the splash and the coin trail filled with water copied from the reference itself |
-| `05_env_clean_plate.png` (864×1536) | Same at full frame; the HUD rows are filled by rotating real wall pixels about the vanishing point |
-| `05_env_fill_mask.png` | White = pixels that were **invented** by the fill (33.7% of the full frame). Use this to judge anything Marble builds there |
-| `05_env_plate_review.png` | original \| clean plate \| invented pixels tinted green |
-| `05_env_mask.png`, `05_env_only_preview.png` | the earlier keep/remove mask and grey-block preview |
-
-Made with `python3 -I tools/make_env_plate.py references/05_flow_into_the_current.png qa/worldlabs/05/05_env_mask.png qa/worldlabs/05 --vp 498,479`.
-The fill is approximate: the centre of the river behind where Benny stood is a patchwork of real water
-pieces and has a soft grey smear at its lower edge. Treat what Marble builds there as invented. A cleaner
-plate needs a generative fill (Atlas `atlasChisel`, paid, or an image editor you use yourself).
-`references/05_flow_into_the_current.png` is unchanged (SHA-256 `d3f339d4…`, 12/12 references verified).
+* The first clean plate (v1) was **rejected by the user** (rectangular patches, repeated textures, grey smear).
+  It and a failed v2 are kept only as a record in `rejected/`; never upload them.
+* Current candidate: **`plate_v3/05_geometry_reference_v3.png`**, a geometry-focused tunnel reference: the approved
+  image cropped to rows 197–767 (no HUD, no Benny, no invented area behind him); only the gold coins are masked
+  (tight masks) and filled from their own surroundings. The near-camera river comes from the game's own 3D river
+  geometry in Blender (`blender/screen05_layout.blend`), not from an image fill.
+* Waiting for: the Reference Match Director's check against the original, then **your approval**. No upload and no
+  credits before that.
+* `references/05_flow_into_the_current.png` stays unchanged (SHA-256 `d3f339d4…`, 12/12 references verified).
 
 ### Prompt to paste into Marble (image + text)
 
