@@ -381,7 +381,7 @@ void main() {
   // ---- Benny: ripple rings and a V wake on the surface ----
   // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water
   // around and behind him stays glossy electric cyan as in ref 05.) There is deliberately NO white
-  // contact band at the waterline: the old `contact` → uFoam mix drew a white elliptical rim that the
+  // contact band at the waterline: the old contact -> uFoam mix drew a white elliptical rim that the
   // fur fringe turned into the jagged "splash artifact" under Benny (wave-3 correction 7). Only a
   // faint cyan brightening marks the waterline.
   if (uBenny.z > 0.0) {

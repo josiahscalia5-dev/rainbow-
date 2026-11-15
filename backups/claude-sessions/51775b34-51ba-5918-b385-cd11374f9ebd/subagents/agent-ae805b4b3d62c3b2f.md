@@ -794,3 +794,146 @@ Let me run a baseline capture of the current tree while I measure the reference.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T20:00:13.030Z
+
+> 🔧 **Bash** `{"command": "grep -n \"'06'\\|arch\\|s06\\|stage('06')\" src/world/environment.ts | head -30; ls node_modules/.bin | grep -i vite", "description": "Check 06 environment pieces and vite-node"}`
+
+### 🧑 User — 2026-11-15T20:00:13.073Z
+
+> ↩︎ result: 4: * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).
+> 191:  // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+> 218:  // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
+> 238:  // skipped where the stream climbs the wall (06 arch) so a hood never blocks the ride
+> vite
+> vite-node
+
+### 🤖 Claude — 2026-11-15T20:00:54.452Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/probe && cd /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/probe && cat > probe05.ts <<'EOF'\n// Analytic 05 view probe: camera pose, VP, rings, coins, Benny box, ray-cast visibility at the VP.\n// usage: npx vite-node probe05.ts -- '{\"s\":132.4,\"cam\":{...},\"ringSpacing\":9,\"ringPhase\":7.8}'\nimport * as THREE from 'three';\nimport { Course } from '/home/user/rainbow-/src/world/course';\nimport { straightTubePath } from '/home/user/rainbow-/src/world/ …[+6725 chars]`
+
+### 🧑 User — 2026-11-15T20:00:56.652Z
+
+> ↩︎ result: 584.7
+>   ],
+>   [
+>    174.4,
+>    525.9,
+>    578.6
+>   ],
+>   [
+>    177.4,
+>    542.4,
+>    573
+>   ],
+>   [
+>    180.4,
+>    538.5,
+>    567.7
+>   ],
+>   [
+>    183.4,
+>    517.3,
+>    562.2
+>   ],
+>   [
+>    186.4,
+>    501.1,
+>    553.7
+>   ],
+>   [
+>    189.4,
+>    494.7,
+>    535.3
+>   ],
+>   [
+>    192.4,
+>    486.8,
+>    503.6
+>   ],
+>   [
+>    195.4,
+>    477.5,
+>    465.7
+>   ],
+>   [
+>    198.4,
+>    468.4,
+>    426.7
+>   ],
+>   [
+>    201.4,
+>    460,
+>    390.6
+>   ],
+>   [
+>    204.4,
+>    452.7,
+>    360
+>   ],
+>   [
+>    207.4,
+>    447,
+>    337.4
+>   ]
+>  ],
+>  "rayClasses": {
+>   "T5": 762,
+>   "T6": 368,
+>   "w6": 212,
+>   "w5": 422
+>  },
+>  "archWaterBox": [
+>   394,
+>   320,
+>   562,
+>   536
+>  ],
+>  "grid": [
+>   "..........................................",
+>   "..........................................",
+>   "..........................................",
+>   "..........................................",
+>   "..........................................",
+>   "..........................................",
+>   "..........................................",
+>   ".................oooooooo.................",
+>   "...............ooooooooooooo..............",
+>   ".............ooooooooooooooooo............",
+>   "............oooooooWWWooooooooo...........",
+>   "...........oWWWWWWWWWWoooooooooo..........",
+>   "..........ooWWWWWWWWWWoooo …[+1456 chars]
+
+### 🤖 Claude — 2026-11-15T20:01:00.245Z
+
+> 🔧 **Bash** `{"command": "npx vite-node /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/probe/probe05.ts -- '{\"rays\":false}' 2>&1 | python3 -I -c \"\nimport json,sys\nd=json.loads(sys.stdin.read().strip().splitlines()[-1])\nfor k,v in d.items():\n  if k in('rings','coins','stream'):\n    print(k); [print('  ',x) for x in v]\n  else: print(k,v)\"", "description": "Print probe summary for current state"}`
+
+### 🧑 User — 2026-11-15T20:01:01.556Z
+
+> ↩︎ result: s 132.4
+> s05 114.7
+> s06 188.9
+> fov 62
+> f 1278.2
+> cam [1.9, -37.9, -68.3]
+> vp [499.8, 478.8]
+> elevDeg 26
+> camDistBenny 7
+> camOverTubeCentre -0.6
+> R 7.6
+> D 3.4
+> bennyCentre [417.5, 1023.2]
+> bennyTopY 729.7
+> bennyBotY 1156.4
+> bennyX [233.8, 604.2]
+> rings
+>    {'s': 131.5, 'd': 5.5, 'c': [521.3, 324.1], 'top': -2590.2, 'bot': 1813.6, 'l': -1227.7, 'r': 2549.1}
+>    {'s': 140.5, 'd': 14.4, 'c': [507.7, 423.5], 'top': -396.2, 'bot': 1067.1, 'l': -171.6, 'r': 1225.4}
+>    {'s': 149.5, 'd': 23.4, 'c': [504.6, 445.5], 'top': -31.1, 'bot': 856.5, 'l': 83, 'r': 940.8}
+>    {'s': 158.5, 'd': 32.2, 'c': [503.3, 455.7], 'top': 118.5, 'bot': 758.6, 'l': 196.5, 'r': 817.6}
+>    {'s': 167.5, 'd': 41.1, 'c': [502.5, 462.5], 'top': 202.3, 'bot': 701.8, 'l': 262, 'r': 747.7}
+>    {'s': 176.5, 'd': 49.8, 'c': [501.9, 466.1], 'top': 252.9, 'bot': 665, 'l': 302.8, 'r': 704}
+>    {'s': 185.5, 'd': 57.9, 'c': [492.6, 410], 'top': 158.8, 'bot': 637.8, 'l': 261.9, 'r': 721.1}
+>    {'s': 194.5, 'd': 59.9, 'c': [522.1, 255.3], 'top': -155.6, 'bot': 528, 'l': 171.8, 'r': 850.4}
+>    {'s': 203.5, 'd': 68.2, 'c': [489.1, 122.8], 'top': -279.1, 'bot': 400.9, 'l': 173.2, 'r': 801.1}
+>    {'s': 212.5, 'd': 84.2, 'c': [442.3, 81.2], 'top': -209.5, 'bot …[+1589 chars]
+

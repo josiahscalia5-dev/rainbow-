@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2920,
-   "sha256": "8546dd27d4c5e49457727c5c0d256ce124504d0de3c36a757db356681c720f4a"
+   "sha256": "66d2e64736fa28e3d00751302c0436aad841be8b7110b587a99f672a2c637144"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -898,8 +898,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 2331,
-   "sha256": "868aa3c40f74a3251d3f39e74c8ca7620cbbd559b182562e2d60b75c9d36b2c1"
+   "bytes": 2580,
+   "sha256": "2cf33e7dc2404066b0faeae8ab081c98871cf1af723b2f2507b7eac4fa861823"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -1298,8 +1298,13 @@
   },
   {
    "path": "qa/worldlabs/05/05_env_clean_plate.png",
-   "bytes": 2561618,
-   "sha256": "6ee0cc8e91648a7e98a624b780c548cd4d6ff705286d88bd88924625ef37f3ea"
+   "bytes": 2558261,
+   "sha256": "389563659bdce1507d7c30f9d5f8c69b53aa149e187199038256808f2192d97a"
+  },
+  {
+   "path": "qa/worldlabs/05/05_env_clean_plate_cropped.png",
+   "bytes": 2220617,
+   "sha256": "ec7a45f5f6c3af1e6b01e7d084a8edc93d357145f7f824991a22ad8ff8b372cd"
   },
   {
    "path": "qa/worldlabs/05/05_env_fill_mask.png",
@@ -1318,13 +1323,18 @@
   },
   {
    "path": "qa/worldlabs/05/05_env_plate_review.png",
-   "bytes": 7638257,
-   "sha256": "ca9249372b7a93894f8ec313af070edb23606421110c17956dcb0362ea7b5405"
+   "bytes": 7640250,
+   "sha256": "f997604b35a1f4fca4ecfb1e1be3357208eca91a6995890a8a7a3a18971f3ebe"
+  },
+  {
+   "path": "qa/worldlabs/05/MARBLE_MANUAL.md",
+   "bytes": 5890,
+   "sha256": "43fd08c5fc6b8a2a7e86d4a039eb7a99ec912c596ed0a86061201711612f2108"
   },
   {
    "path": "qa/worldlabs/05/PILOT_PLAN.md",
-   "bytes": 4002,
-   "sha256": "ff845ba029b564f7ac5f8a97e30ea85c07f9ae80355b5df05cb02670dec0bdc4"
+   "bytes": 4257,
+   "sha256": "85ca78154fe4c8ec5e9e8df6734e6cbc35e5c711763b8d501cbc3a3172742748"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -1503,8 +1513,8 @@
   },
   {
    "path": "scripts/aspect-test.mjs",
-   "bytes": 6058,
-   "sha256": "315d4bb55529f5cc5959c655a1bf5307b1b4ae4c26432207cb687675cb27bbc5"
+   "bytes": 6081,
+   "sha256": "323e4326f6274c29a204eae359eabb9998d44ae5b91eb76b5f470489df76203a"
   },
   {
    "path": "scripts/autosave-cron.sh",
@@ -1523,8 +1533,8 @@
   },
   {
    "path": "scripts/capture.mjs",
-   "bytes": 3860,
-   "sha256": "76fd115add143307d57e4ed8e7094dd073fd2f230042e90e847d74d743d60350"
+   "bytes": 3883,
+   "sha256": "4723acbc0f648c46bdb31d793db8629e745b5177ed812e8e4c678c544fb6140d"
   },
   {
    "path": "scripts/cinematic-test.mjs",
@@ -1758,8 +1768,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 24623,
-   "sha256": "86bc379269f8f8387178174abcc72fb2d201f4c7b8ed5daf364b0fd55e207eed"
+   "bytes": 24620,
+   "sha256": "ce1d40b2de0a6bae9c9ee4a0539c8fa7577708e36156e3cdcf62c38a94c6d8cf"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -1808,8 +1818,8 @@
   },
   {
    "path": "tools/make_env_plate.py",
-   "bytes": 3975,
-   "sha256": "fc19276fc8f3e7fc5b2eeab6f1dd2e126a30f56c229edf49350a094d69b815ee"
+   "bytes": 5380,
+   "sha256": "2d6ec31dcf3888fafbf7130c409e2f37b2c60a95c184b62f4600272a7e36bb6a"
   },
   {
    "path": "tools/model-lab.html",

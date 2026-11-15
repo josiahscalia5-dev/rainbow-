@@ -868,3 +868,42 @@ Noted: hat smaller relative to a rounder, fuller body; check for any white/pale 
 
 > ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/extent.py (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T19:58:46.598Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 -I $SP/extent.py $SP/m0.png 4", "description": "Measure lab panels of current build"}`
+
+### 🧑 User — 2026-11-15T19:58:46.985Z
+
+> ↩︎ result: panel0 bbox x16-414 y131-550 h=419 w=398 cuffBot=389 hat=258 body=161 hat%=61.6 cuffW=293 bodyW(frac below cuff)={0.15: 390, 0.35: 284, 0.55: 261, 0.75: 184, 0.9: 122}
+> panel1 bbox x17-414 y138-550 h=412 w=397 cuffBot=406 hat=268 body=144 hat%=65.0 cuffW=278 bodyW(frac below cuff)={0.15: 331, 0.35: 275, 0.55: 244, 0.75: 179, 0.9: 102}
+> panel2 bbox x13-413 y142-548 h=406 w=400 cuffBot=423 hat=281 body=125 hat%=69.2 cuffW=264 bodyW(frac below cuff)={0.15: 287, 0.35: 266, 0.55: 225, 0.75: 181, 0.9: 122}
+> panel3 bbox x13-415 y149-548 h=399 w=402 cuffBot=433 hat=284 body=115 hat%=71.2 cuffW=256 bodyW(frac below cuff)={0.15: 282, 0.35: 261, 0.55: 223, 0.75: 161, 0.9: 105}
+
+### 🤖 Claude — 2026-11-15T19:59:32.514Z
+
+> 🔧 **Bash** `{"command": "grep -n \"'05'\" src/game/cameraRig.ts | head; grep -n \"STAGE_CAM\" -A3 src/game/cameraRig.ts | head -40; tail -5 qa/pilot05/REQUESTS.md", "description": "Read stage 05 camera parameters"}`
+
+### 🧑 User — 2026-11-15T19:59:32.569Z
+
+> ↩︎ result: 31:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> 114:    // 05 straight current tube: the '05' preset measured in the straight tunnel's own frame — aimed
+> 119:    const st5 = this.course.stage('05');
+> 120:    const p5 = STAGE_CAM['05'] as CamParams;
+> 25:export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+> 26-  '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+> 27-  '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+> 28-  // 05: level rear chase down the straight current tube, camera ON the tunnel axis (rings concentric).
+> --
+> 45:    const p = STAGE_CAM[st.id];
+> 46-    if (!p) continue;
+> 47-    const a = THREE.MathUtils.smoothstep(s, st.s0 - blend, st.s0 + blend) * (1 - THREE.MathUtils.smoothstep(s, st.s1 - blend, st.s1 + blend));
+> 48-    if (a <= 0) continue;
+> --
+> 52:  if (w === 0) return { ...(STAGE_CAM['03'] as CamParams) };
+> 53-  for (const k of KEYS) acc[k] /= w;
+> 54-  return acc;
+> 55-}
+> --
+> 120:    const p5 = STAGE_CAM['05'] as CamParams;
+> 121-    const w5 = this.axis ? THREE.MathUtils.smoothstep(s, st5.s0 + 1, st5.s0 + 8) * (1 - THR …[+2442 chars]
+

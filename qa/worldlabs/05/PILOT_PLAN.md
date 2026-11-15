@@ -1,5 +1,7 @@
 # Screen 05 — World Labs Atlas pilot plan (NOT RUN — awaiting approval)
 
+> **Re-checked 2026-11-15 ~20:10 UTC (account 4):** `list_projects` still answers "no active Atlas account". Nothing run, nothing spent. What is missing, the Marble manual route, the clean environment plate and the Marble prompt: see `MARBLE_MANUAL.md`.
+
 Status 2026-11-15: the claude.ai **World Labs Atlas** connector is attached to the Rainbow session and its
 10 tools load, but `list_projects` answers "this sign-in has no active Atlas account". Nothing has been
 submitted and **no credits have been spent**. Every step below that uses credits needs the user's

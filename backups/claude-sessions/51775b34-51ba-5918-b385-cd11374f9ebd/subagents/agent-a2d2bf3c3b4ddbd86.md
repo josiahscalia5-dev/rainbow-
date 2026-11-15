@@ -896,3 +896,96 @@ The offline projection works. Before deciding ring spacing, let me look at the r
 > drwxr-xr-x 5 root root 4096 Nov 15 19:56 water
 > 2
 
+### 🤖 Claude — 2026-11-15T19:59:41.662Z
+
+> 🔧 **Bash** `{"command": "grep -n \"transparent\\|depthWrite\\|opacity\\|renderOrder\\|blending\" src/vfx/waterRibbon.ts | head -20", "description": "Check water ribbon blending settings"}`
+
+### 🧑 User — 2026-11-15T19:59:41.695Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:59:47.556Z
+
+> 🔧 **Bash** `{"command": "ls src/vfx/; grep -n \"Material(\" src/vfx/waterRibbon.ts | head; grep -n \"CAMERA LOCK\" qa/pilot05/REQUESTS.md; cat .gitattributes 2>/dev/null", "description": "Check vfx files, camera lock and gitattributes"}`
+
+### 🧑 User — 2026-11-15T19:59:47.600Z
+
+> ↩︎ result: bubbles.ts
+> drumWater.ts
+> finalWave.ts
+> foam.ts
+> glsl.ts
+> index.ts
+> puddles.ts
+> riderSplash.ts
+> spray.ts
+> waterRibbon.ts
+> whirlpool.ts
+> 521:  const mat = new THREE.ShaderMaterial({
+> # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+
+### 🤖 Claude — 2026-11-15T19:59:49.300Z
+
+> 🔧 **Bash** `{"command": "sed -n 515,540p src/vfx/waterRibbon.ts", "description": "Read water ribbon material flags"}`
+
+### 🧑 User — 2026-11-15T19:59:49.336Z
+
+> ↩︎ result: uBenny: { value: new THREE.Vector3(0, 0, 0) },
+>     uBennyR: { value: 0.7 },
+>     uChevron: { value: new THREE.Vector3(st04.s0 + 8.5, 3.6, 1) },
+>     uOutro: { value: new THREE.Vector2(0, st08.s0) },
+>     uHide: { value: new THREE.Vector4(st03.s0, st04.s0, 0, 0) },
+>   });
+>   const mat = new THREE.ShaderMaterial({
+>     uniforms,
+>     vertexShader: VERT,
+>     fragmentShader: FRAG,
+>     fog: true,
+>     side: THREE.DoubleSide,
+>     defines: quality === 'low' ? { LOW_Q: 1 } : {},
+>   });
+>   const mesh = new THREE.Mesh(geo, mat);
+>   mesh.name = 'water_ribbon';
+>   mesh.frustumCulled = false; // one long mesh spanning the whole course
+>   return {
+>     mesh,
+>     uniforms,
+>     s0,
+>     s1,
+>     heightAt(s, lateral, t) {
+>       const hw = course.widthAt(s) / 2;
+>       return ribbonWave(lateral / hw, s, t, ampAt(course, s));
+>     },
+
+### 🤖 Claude — 2026-11-15T20:00:16.753Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && cat > $S/bar05.ts <<'EOF'\nimport * as THREE from 'three';\nimport { Course } from '/home/user/rainbow-/src/world/course.ts';\nimport { straightTubePath, tubeCenterAt } from '/home/user/rainbow-/src/world/tube.ts';\nimport { RideCamera } from '/home/user/rainbow-/src/game/cameraRig.ts';\nconst course = new Course();\nconst s05 = course.stage('05').s0, s08 = course.stage('08').s0;\nconst perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: (s) => course.prop('tube',  …[+1387 chars]`
+
+### 🧑 User — 2026-11-15T20:00:17.837Z
+
+> ↩︎ result: ring s 167.5 R 7.6 tan 0.00,-0.04,-1.00 0:741,462 10:739,420 170:271,421 180:268,463
+> ring s 176.5 R 7.6 tan -0.00,-0.04,-1.00 0:698,466 10:697,431 20:689,396 160:319,397 170:310,432 180:308,466
+> ring s 185.5 R 10.0 tan -0.09,0.01,-1.00 0:715,406 180:268,414 190:274,454 350:710,446
+> ring s 194.5 R 15.0 tan -0.08,0.56,-0.82 220:258,416 230:294,451 240:334,479 320:707,457 330:749,424
+> ring s 203.5 R 15.0 tan -0.04,0.54,-0.84 260:425,389 270:470,394 280:515,392 290:560,384
+> ring s 221.5 R 15.0 tan 0.24,-0.58,-0.78 250:432,385 260:464,393 270:500,396 280:538,393 290:576,384
+> ring s 230.5 R 15.0 tan 0.30,-0.64,-0.71 210:422,390 220:428,413 230:439,434 240:455,452 250:476,467 260:502,478 300:634,475 310:669,462 320:702,444 330:732,423
+> ring s 239.5 R 15.0 tan 0.33,-0.43,-0.84 190:451,395 200:449,423 210:452,450 220:460,476
+> ring s 248.5 R 15.0 tan 0.23,-0.08,-0.97 190:456,402 200:458,433 210:466,462
+> ring s 257.5 R 13.2 tan 0.08,-0.06,-1.00 180:488,401 190:485,426 200:487,452 210:493,476
+> ring s 266.5 R 9.0 tan -0.01,-0.06,-1.00 10:703,474 20:702,457 30:698,442 40:691,427 50:683,414 60:671,402 70:658,393 80:644,386 90:628,382 100:612,381 110:596,383 120:581,387 130:566,395 140:553,404 150:541,416  …[+1314 chars]
+

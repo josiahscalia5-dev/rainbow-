@@ -10,7 +10,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
 
 const args = process.argv.slice(2);
-const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
+const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
 let stages = args.filter((a) => !a.startsWith('--'));
 if (!stages.length) stages = ['05', '11'];
 const outDir = typeof opt.out === 'string' ? opt.out : 'qa/aspect';

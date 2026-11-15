@@ -898,3 +898,84 @@ I'll probe the ribbon through the QA `probe()` raycast on a screen grid at the 0
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; cat > $S/wmap.mjs <<'EOF'\n// node wmap.mjs OUT.json : raycast the 05 water ribbon on a screen grid → (s, lat, hw, off05) per pixel sample\nimport { writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst out = process.argv[2];\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5241);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = aw …[+2195 chars]`
 
+### 🧑 User — 2026-11-15T19:58:56.748Z
+
+> ↩︎ result: 7:58:44 PM [vite] Pre-transform error: Transform failed with 1 error:
+> /home/user/rainbow-/src/vfx/waterRibbon.ts:384:45: ERROR: Expected ";" but found "contact"
+> 7:58:44 PM [vite] Internal server error: Transform failed with 1 error:
+> /home/user/rainbow-/src/vfx/waterRibbon.ts:384:45: ERROR: Expected ";" but found "contact"
+>   Plugin: vite:esbuild
+>   File: /home/user/rainbow-/src/vfx/waterRibbon.ts:384:45
+>   
+>   Expected ";" but found "contact"
+>   382|    // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water
+>   383|    // around and behind him stays glossy electric cyan as in ref 05.) There is deliberately NO white
+>   384|    // contact band at the waterline: the old `contact` → uFoam mix drew a white elliptical rim that the
+>      |                                               ^
+>   385|    // fur fringe turned into the jagged "splash artifact" under Benny (wave-3 correction 7). Only a
+>   386|    // faint cyan brightening marks the waterline.
+>   
+>       at failureErrorWithLog (/home/user/rainbow-/node_modules/esbuild/lib/main.js:1472:15)
+>       at /home/user/rainbow-/node_modules/esbuild/lib/main.js:755:50
+>       at responseCallbacks.<computed> (/home/user/ra …[+1066 chars]
+
+### 🤖 Claude — 2026-11-15T19:58:58.685Z
+
+Backticks in my GLSL comment broke the template literal (this would break everyone's captures). Fixing immediately.
+
+### 🤖 Claude — 2026-11-15T19:58:59.893Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  // contact band at the waterline: the old `contact` → uFoam mix drew a white elliptical rim that the", "new_string": "  // contact band at the waterline: the old contact -> uFoam mix drew a white elliptical rim that the"}`
+
+### 🧑 User — 2026-11-15T19:58:59.996Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:59:00.700Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n '`' src/vfx/waterRibbon.ts | sed -n 1,20p; npx tsc --noEmit -p . 2>&1 | head -5", "description": "Check backticks and typecheck"}`
+
+### 🧑 User — 2026-11-15T19:59:03.134Z
+
+> ↩︎ result: 4: * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> 23: * Per-stage colour-band layout (blended across stage boundaries, baked into `aStyle`):
+> 96:const VERT = /* glsl */ `
+> 134:`;
+> 136:const FRAG = /* glsl */ `
+> 422:`;
+> src/game/cameraRig.ts(49,37): error TS2532: Object is possibly 'undefined'.
+
+### 🤖 Claude — 2026-11-15T19:59:04.775Z
+
+The file is valid again (the one tsc error is in `cameraRig.ts`, path-camera's file). Re-running the map.
+
+### 🤖 Claude — 2026-11-15T19:59:06.671Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; time timeout 900 node $S/wmap.mjs $S/map05.json 2>&1 | grep -v \"^\\s*at \" | tail -5", "description": "Run screen-to-ribbon raycast map", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T19:59:38.910Z
+
+> ↩︎ result: state {"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]} n 1366
+> 
+> real	0m32.207s
+> user	0m1.287s
+> sys	0m0.400s
+
+### 🤖 Claude — 2026-11-15T19:59:45.525Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I -c \"\nimport json\nd=json.load(open('$S/map05.json'))\nprint('benny', d['bs']); print('coins', [(round(c['s']-d['st']['s'],1), round(c['lat'],2)) for c in d['coins']][:12])\nrows={}\nfor p in d['pts']: rows.setdefault(p['y'],[]).append(p)\nfor y in sorted(rows):\n  r=rows[y]\n  # x of lat=0 by interpolation; ds range; px per unit\n  r.sort(key=lambda p:p['x'])\n  ds=[p['ds'] for p in r]; \n  x0=None\n  for a,b in zip(r,r[1:]):\n    if (a['lat']<=0<=b['lat']) and …[+458 chars]`
+
+### 🧑 User — 2026-11-15T19:59:45.583Z
+
+> ↩︎ result: benny {'x': -0.03, 'y': -0.37, 'z': 0.986, 'visible': True, 'cam': [1.92, -37.94, -68.28], 'benny': [1.52, -41.35, -74.73]}
+> coins [(0.6, 1.2), (4.1, 0.97), (7.5, 0.46), (11.0, -0.19), (14.5, -0.78), (17.9, -1.14), (21.4, -1.17), (24.8, -0.85), (28.3, -0.28), (31.7, 0.37), (35.2, 0.91), (38.7, 1.19)]
+> y= 470 n= 6 ds   62.3..  62.7  lat -3.42.. 2.87  hw 3.50 off  0.00  x(lat0)  479  px/unit  19.1  rx 0.97
+> y= 492 n= 7 ds   60.7.. 100.0  lat -3.57.. 3.51  hw 3.55 off  0.00  x(lat0)  484  px/unit  23.7  rx 0.97
+> y= 514 n= 7 ds   58.6..  59.2  lat -3.72.. 3.43  hw 3.70 off  0.00  x(lat0)  489  px/unit  20.1  rx 0.98
+> y= 536 n= 5 ds   56.7..  57.0  lat -1.60.. 3.06  hw 3.94 off  0.00  x(lat0)  495  px/unit  20.6  rx 0.99
+> y= 558 n= 8 ds   43.9..  53.2  lat -4.02.. 3.90  hw 4.84 off  0.45  x(lat0)  507  px/unit  21.2  rx 0.96
+> y= 580 n=12 ds   35.6..  43.7  lat -5.36.. 5.06  hw 5.43 off  0.48  x(lat0)  520  px/unit  27.6  rx 0.95
+> y= 602 n=15 ds   26.6..  33.4  lat -4.30.. 4.95  hw 4.58 off -1.39  x(lat0)  456  px/unit  36.3  rx 1
+> y= 624 n=19 ds   23.1..  27.6  lat -4.39.. 5.54  hw 5.21 off -0.73  x(lat0)  469  px/unit  43.5  rx 0.98
+> y= 646 n=21 ds   18.7..  21.9  lat -5.23.. 5.44  hw 5.66 off   …[+4149 chars]
+
