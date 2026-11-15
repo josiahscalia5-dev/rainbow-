@@ -266,3 +266,193 @@ The scratchpad is shared with other specialists (someone overwrote measure.py). 
 
 > ↩︎ result: (Bash completed with no output)
 
+### 🤖 Claude — 2026-11-15T21:51:38.741Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/wmeasure.py", "content": "\"\"\"Water measurements for 05 (864x1536).\nusage: python3 -I wmeasure.py img [img2 ...]\nrows: class coverage (% of 20 px band, full width), cyan / pink medians, luminance std, pink runs.\nboxes: fins (x100-750,y1200-1360) pink %, side bands (x0-150 / 700-864, y1250-1500) pink %,\nnear field (x150-700, y1250-1536) cyan %, luminance std / p5 / p95, star-glint count.\ntrace: pink-run centres every 40 px from y 540 to 1000 (S-band shape).\"\"\"\nimport sys\nfrom PIL  …[+3601 chars]`
+
+### 🧑 User — 2026-11-15T21:51:38.755Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/wmeasure.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:51:40.044Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 -I $W/wmeasure.py references/05_flow_into_the_current.png qa/pilot05/wave5/baseline/05.png", "description": "Measure ref vs baseline"}`
+
+### 🧑 User — 2026-11-15T21:51:41.180Z
+
+> ↩︎ result: == references/05_flow_into_the_current.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lumStd pinkRuns
+>   560   8.5   4.3  32.3 20.8   8.5 | #4B9EF7  #D242D8 |  44.4  29-37 140-166 201-208 365-397 505-525 581-586 607-619 624-638 710-748 753-765 845-863
+>   600  17.5   4.1  34.1 15.1  11.3 | #1BABF9  #E040E1 |  42.6  41-59 62-72 79-85 111-134 145-154 158-166 168-173 183-196 263-321 584-593 605-628 683-690 700-713 728-737 812-817 828-847
+>   700  28.7   4.9  22.5 11.4  14.9 | #0EA6F8  #F03FE1 |  39.2  4-9 17-25 61-74 96-111 122-127 130-135 311-355 361-366 370-385 755-802
+>   800  26.2   6.1  35.4 15.2   7.9 | #07A4F9  #F547F1 |  32.7  56-151 156-187 376-394 400-408 451-459 598-604 607-618 633-711 832-847 849-861
+>   900  29.5   4.8  23.4 13.8  20.7 | #039EF8  #F744EC |  43.7  0-54 590-631 639-653 657-708 816-838 844-863
+>  1000  40.6   5.3  18.6 31.8   1.8 | #0296F3  #F637E5 |  33.4  711-863
+>  1100  48.8   3.5  33.0  3.7   6.2 | #02A1F7  #F857BB |  33.7  291-319 326-563
+>  1200  74.3   4.0   0.1  0.7  13.0 | #038AE7  #E198F2 |  51.2  
+>  1300  36.0   5.9  16.9  7.9   8.6 | #02A2F7  #F547ED |  35.9  124-164 171-206 613-655 678-698
+>  1400  53.8   0.0   0.0  0.0   6.4 | #0199F0     -    |   …[+2331 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:46.285Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open('qa/pilot05/wave5/baseline/05.png').convert('RGB')\nim=Image.new('RGB',(864*2+10,436),'white')\nim.paste(r.crop((0,1100,864,1536)),(0,0)); im.paste(b.crop((0,1100,864,1536)),(874,0))\nim.save('$W/near_ref_base.png')\n\"", "description": "Crop near-field ref vs baseline"}`
+
+### 🧑 User — 2026-11-15T21:51:46.639Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:51:48.083Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/near_ref_base.png"}`
+
+### 🧑 User — 2026-11-15T21:51:48.119Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:52:08.090Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"__rainbow\" -r src | head -20; grep -n \"waterhide\\|hide\" src/vfx/index.ts | head -30; cat package.json | head -40", "description": "Find QA hooks and waterhide options"}`
+
+### 🧑 User — 2026-11-15T21:52:08.143Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:639:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> 92:  // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+> 93:  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+> 94:  /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
+> {
+>   "name": "rainbow-washer-game",
+>   "private": true,
+>   "version": "0.1.0",
+>   "description": "RAINBOW — 11-screen real-time 3D portrait mobile game (Three.js + TypeScript + Vite + Capacitor)",
+>   "type": "module",
+>   "scripts": {
+>     "dev": "vite --host 0.0.0.0",
+>     "build": "tsc --noEmit && vite build",
+>     "preview": "vite preview --host 0.0.0.0 --port 4173",
+>     "typecheck": "tsc --noEmit",
+>     "test:continuity": "vite-node scripts/continuity-test.ts",
+>     "models:export": "node scripts/export-models.mjs",
+>     "qa:capture": "node scripts/ca …[+652 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:11.124Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 560,645p src/game/Game.ts; grep -n \"'05'\" src/game/cameraRig.ts | head; grep -n \"export\" src/game/cameraRig.ts | head -20", "description": "Inspect QA API and camera rig exports"}`
+
+### 🧑 User — 2026-11-15T21:52:11.167Z
+
+> ↩︎ result: if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.s …[+3867 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:15.009Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,80p scripts/capture.mjs; grep -n \"closest\\|project\\|nearestS\\|sAt\\b\\|locate\" src/world/course.ts | head", "description": "Inspect capture script and course helpers"}`
+
+### 🧑 User — 2026-11-15T21:52:15.047Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+2749 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:21.375Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat scripts/lib/pw.mjs | head -60; grep -n \"offset05\\|widthAt\\|sample(s\" src/world/course.ts | head -20", "description": "Inspect playwright helper and course API"}`
+
+### 🧑 User — 2026-11-15T21:52:21.414Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+888 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:31.672Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/probe.mjs", "content": "// Map screen pixels of the locked 05 view to ribbon (s, lat) coordinates.\n// usage (from repo root): node <this> > out.json\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5231);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor …[+1965 chars]`
+
+### 🧑 User — 2026-11-15T21:52:31.695Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:52:35.126Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; timeout 400 node $W/probe.mjs > $W/probe.json 2>$W/probe.err; echo rc=$?; tail -3 $W/probe.err; python3 -c \"\nimport json; d=json.load(open('$W/probe.json'))\nprint(d['benny'], d['bennyScreen'])\nfrom collections import defaultdict\nrows=defaultdict(list)\nfor p in d['pts']: rows[p['y']].append(p)\nfor y in sorted(rows):\n  print(y, ' '.join('%d:(s%.1f l%+.2f)'%(p['x'],p['s'],p['lat']) for p in rows[y]), ' hw %.2f core %+.2f'%(rows[y][0]['hw'],rows[y][0]['core']))\n …[+78 chars]`
+
+### 🧑 User — 2026-11-15T21:52:47.178Z
+
+> ↩︎ result: rc=0
+> {'mode': 'ride', 'stage': '05', 's': 132.438, 'lat': 0, 'coins': 1420, 'hearts': 5, 'paused': False, 'bennyY': -41.348, 'bennyVisible': True, 'cam': [1.92, -37.94, -68.28]} {'x': -0.03, 'y': -0.37, 'z': 0.986, 'visible': True, 'cam': [1.92, -37.94, -68.28], 'benny': [1.52, -41.35, -74.73]}
+> 560 432:(s175.9 l-4.12) 560:(s183.3 l+1.94)  hw 4.66 core +1.14
+> 600 432:(s165.9 l-0.88) 560:(s162.2 l+2.99) 660:(s170.7 l+5.69)  hw 4.71 core -1.12
+> 650 300:(s150.7 l-4.65) 432:(s153.5 l-1.84) 560:(s153.7 l+1.00) 660:(s153.4 l+3.16) 760:(s152.6 l+5.05)  hw 5.18 core +0.68
+> 700 300:(s145.0 l-3.92) 432:(s146.3 l-2.03) 560:(s147.3 l+0.05) 660:(s147.8 l+1.77) 760:(s148.0 l+3.48) 854:(s147.5 l+4.93)  hw 5.15 core +0.71
+> 750 200:(s141.4 l-4.32) 300:(s142.1 l-3.15) 432:(s142.7 l-1.50) 560:(s143.2 l+0.18) 660:(s143.6 l+1.52) 760:(s143.9 l+2.89)  hw 5.53 core +0.32
+> 800 100:(s139.1 l-4.55) 200:(s139.5 l-3.54) 300:(s139.8 l-2.47) 560:(s140.4 l+0.44) 660:(s140.7 l+1.57) 760:(s140.8 l+2.69)  hw 5.70 core +0.02
+> 850 100:(s137.6 l-3.85) 200:(s137.8 l-2.91) 300:(s138.0 l-1.93) 560:(s138.4 l+0.63) 660:(s138.5 l+1.61)  hw 5.66 core -0.15
+> 900 100:(s136.3 l-3.28) 200:(s136.5 l-2.42) 300:(s136.6 l-1.54) 560:(s136.8  …[+2211 chars]
+

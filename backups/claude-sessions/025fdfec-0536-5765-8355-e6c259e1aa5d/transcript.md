@@ -2021,3 +2021,350 @@ Autosave is healthy: the daemon pushed at 21:46 and remote == local. I'll trigge
 
 > 🔧 **Bash** `{"command": "command -v claude; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cat > $S/env-setup.sh <<'EOF'\n#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-): real Git LFS assets, Blender 5.3.0, Android SDK 34, World Labs plugin.\n# Every step is non-fatal so a session always starts. Copy: scripts/cloud-env-setup.sh\nif [ -d rainbow- ]; then\n  (cd rainbow- && git lfs pull) || echo \"rainbow: git lfs pull failed\"\n  (cd rainbow- && bash scripts/setup-blender.sh) || echo \"rainbow: blender setup failed\"\n  (cd rainbow- && bash scripts/setup-an …[+606 chars]`
 
+### 🧑 User — 2026-11-15T21:51:30.713Z
+
+> ↩︎ result: /opt/node22/bin/claude
+> Blender 5.3.0
+> SDK_DONE /opt/android-sdk
+> 
+> real	0m6.644s
+> user	0m6.434s
+> sys	0m0.482s
+> exit 0
+> Blender 5.3.0
+> android-34
+>   > worldlabs@worldlabs
+>     Version: 0.2.2
+>     Scope: user
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T21:51:33.610Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🧑 User — 2026-11-15T21:51:34.084Z
+
+> ↩︎ result: {"environment_id":"env_01Qhnigux4LnTx4YGgVZ8BqG","name":"rainbow-","description":"Created by Claude (session cse_012NR93QW6kw1gqxbSo348sF): Rainbow game: allow Blender 5.3, Android SDK 34 and World Labs Atlas hosts.","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"limited","allow_mcp_servers":true,"allow_package_managers":true,"allowed_hosts":["download.blender.org","dl.google.com","api.atlas.worldlabs.ai"]},"environment_variable_names":null,"has_setup_script":false,"setup_script":"","repositories":["josiahscalia5-dev/rainbow-"],"network_secrets":[],"is_current":true,"editable_by_you":true,"session_has_repository":true,"note":"Edits made with update_environment change the stored environment; see that tool for when each kind of change takes effect. `setup_script` is returned only for an environment you can edit (`setup_script_withheld` / `description_withheld` mean the organization's compliance settings keep the stored text out of this tool — they refuse a `setup_script`, `new_name` or `new_description` edit too — or that this could not be checked right now, in which case calling again may return  …[+613 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:38.585Z
+
+> 🔧 **mcp__claude-code-remote__update_environment** `{"environment_name": "rainbow-", "applies_to": "my personal environment: all of my future sessions that use it, not only this one", "reason": "Save the Blender, Android SDK, LFS and World Labs setup so new sessions start ready.", "script_change": "adds a setup script", "setup_script": "#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-): real Git LFS assets, Blender 5.3.0, Android SDK 34, World Labs plugin.\n# Every step is non-fatal so a session always starts. Copy: scripts/cloud-env-setup.sh\nif [ -d rainbow- ]; then\n  (cd rainbow- && git lfs pull) || echo \"rainbow: git lfs pull fa …[+477 chars]`
+
+### 🧑 User — 2026-11-15T21:52:12.109Z
+
+> ↩︎ result: {"environment_id":"env_01Qhnigux4LnTx4YGgVZ8BqG","name":"rainbow-","scope":"personal","updated":true,"setup_script_replaced":true,"note":"Saved to the environment. The setup script runs the next time a container is built fresh, not on a normal resume; to use the change now, run its commands in this session, from the directory the script starts in, and tell the user it is unproven until a fresh session starts on this environment."}
+
+### 🤖 Claude — 2026-11-15T21:52:13.689Z
+
+Saved. I'll keep the repo copy identical to what the environment now runs:
+
+### 🤖 Claude — 2026-11-15T21:52:15.341Z
+
+> 🔧 **Bash** `{"command": "cp /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/env-setup.sh scripts/cloud-env-setup.sh && git diff --stat scripts/cloud-env-setup.sh", "description": "Sync the repo copy of the environment setup script"}`
+
+### 🧑 User — 2026-11-15T21:52:15.382Z
+
+> ↩︎ result: scripts/cloud-env-setup.sh | 30 +++++-------------------------
+>  1 file changed, 5 insertions(+), 25 deletions(-)
+
+### 🤖 Claude — 2026-11-15T21:52:19.773Z
+
+The repo copy now matches. While the specialists work, I'll verify the Marble/Atlas import tool in Blender. It's light on CPU. Checking its usage first:
+
+### 🤖 Claude — 2026-11-15T21:52:21.226Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p tools/blender/import_world_asset.py; echo ...; grep -n \"argv\\|def main\\|--\" tools/blender/import_world_asset.py | head -20; echo; sed -n 1,30p qa/worldlabs/05/MARBLE_MANUAL.md", "description": "Read the Marble/Atlas Blender import tool and manual"}`
+
+### 🧑 User — 2026-11-15T21:52:21.273Z
+
+> ↩︎ result: """
+> Import a World Labs export (Marble world GLB mesh / PLY splats, or an Atlas splats2Mesh GLB) into
+> Blender, align it to the Rainbow tube convention, measure it, and write a light underlay for the
+> environment modeler. It costs no World Labs credits: it only reads files you already exported.
+> 
+>     blender -b --python tools/blender/import_world_asset.py -- \
+>         --in path/to/world.glb [--ply path/to/splats.ply] \
+>         --name marble05 [--target-radius 7.6] [--decimate 0.25] [--out-dir qa/worldlabs/05/import]
+> 
+> Outputs (in --out-dir):
+>   <name>_underlay.glb    aligned, scaled, decimated mesh (tunnel axis = -Z, i.e. Three.js forward;
+>                          centre line on the origin; radius scaled to --target-radius)
+>   <name>.blend           the Blender scene (original import kept in its own hidden collection)
+>   <name>_measure.json    axis, length, radius stats, ring-like cross-section peaks, scale applied
+>   <name>_preview.png     Workbench render from the tunnel axis looking down -Z (rear-camera view)
+> 
+> The underlay is a modelling/measurement aid. The playable tube, rings and animated water stay
+> real-time Three.js geometry/shaders (CLAUDE.md: no static substitutes in gameplay).
+> " …[+4341 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:22.772Z
+
+Running a dry-run of the import tool on our own saved Screen 05 GLB, which stands in for a Marble export. Output goes to the scratchpad so nothing in the repo changes:
+
+### 🤖 Claude — 2026-11-15T21:52:25.777Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/import_test && mkdir -p $S && timeout 300 blender -b --python tools/blender/import_world_asset.py -- --in qa/worldlabs/05/blender/screen05_layout.glb --name selftest05 --out-dir $S 2>&1 | grep -v \"^$\" | tail -8; ls -la $S; python3 -c \"import json;d=json.load(open('$S/selftest05_measure.json'));print({k:(v if not isinstance(v,(list,dict)) else type(v).__name__) for k,v in d.items()})\"", "description": "Dry-run the Marble/Atlas import tool on the saved 05 GLB", "timeout": 320000}`
+
+### 🧑 User — 2026-11-15T21:52:29.104Z
+
+> ↩︎ result: EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> 00:02.993  render           | Saved: '/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/import_test/selftest05_preview.png'
+> Info: Saved as "selftest05.blend"
+> IMPORT_OK {"scale_applied": 1.0240711901742463, "triangles": {"before_decimate": 44864, "after_decimate": 11216}, "outputs": {"underlay_glb": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/import_test/selftest05_underlay.glb", "blend": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/import_test/selftest05.blend", "preview": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/import_test/selftest05_preview.png"}}
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+> Ble …[+753 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:33.520Z
+
+> 🔧 **Bash** `{"command": "cat public/video/PUT_FLOW_VIDEOS_HERE.txt; echo; grep -rn \"object-fit\\|objectFit\\|muted\\|intro.mp4\\|ending.mp4\\|playsinline\\|playsInline\" src index.html --include=*.ts --include=*.css --include=*.html | head -15; echo; sed -n 1,25p docs/FLOW_VIDEO.md", "description": "Check the Flow video integration and fill mode"}`
+
+### 🧑 User — 2026-11-15T21:52:33.558Z
+
+> ↩︎ result: Drop the Google Flow clips here: intro.mp4 (required for the video opening) and ending.mp4 (optional).
+> See docs/FLOW_VIDEO.md. Files are stored with Git LFS.
+> 
+> src/ui/cinematicVideo.ts:4: *   public/video/intro.mp4   (or .webm)  — opening: the official cartoon girl loads the towel with Benny,
+> src/ui/cinematicVideo.ts:6: *   public/video/ending.mp4  (or .webm)  — optional ending, played before the real-time 11 victory frame
+> src/ui/cinematicVideo.ts:9: * Videos are always muted (silent) and inline. Gameplay 03–10 is never replaced: the 3D scene keeps
+> src/ui/cinematicVideo.ts:47:    v.muted = true;
+> src/ui/cinematicVideo.ts:87:    v.muted = true;
+> src/ui/cinematicVideo.ts:89:    v.playsInline = true;
+> src/ui/cinematicVideo.ts:90:    v.setAttribute('playsinline', '');
+> src/ui/cinematicVideo.ts:91:    v.setAttribute('webkit-playsinline', '');
+> src/ui/cinematicVideo.ts:93:    v.style.cssText = `position:relative;width:100%;height:100%;object-fit:cover;object-position:${focus};`;
+> src/ui/cinematicVideo.ts:104:      v.style.objectFit = r.fit === 'cover' ? 'cover' : 'contain';
+> src/ui/cinematicVideo.ts:155:      // autoplay refused (rare for muted inline video): the first tap starts playback instea …[+1922 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:39.356Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🤖 Claude — 2026-11-15T21:52:39.361Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-15T21:52:39.368Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🧑 User — 2026-11-15T21:52:39.370Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-15T21:52:39.771Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p scripts/compare.py; ls qa/ | head -40", "description": "Read compare.py header and list QA folder"}`
+
+### 🧑 User — 2026-11-15T21:52:39.809Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Reference-vs-live comparison for the 11 locked screens.
+> 
+> For every NN in 01..11 with screenshots/NN.png present:
+>   qa/NN_side_by_side.png   reference | live (same height)
+>   qa/NN_overlay.png        50 % blend of reference and live (live resized to reference size)
+>   qa/NN_diff.png           per-pixel absolute difference heat map (masked areas greyed)
+> and qa/report_metrics.json + qa/compare_summary.md with REPRODUCIBLE metrics only:
+>   * mad      — mean absolute RGB difference (0–255) on 1/4-scale images, masked
+>   * hue_corr — correlation of 36-bin hue histograms (saturated pixels only), masked
+>   * edge_corr— correlation of Sobel edge-magnitude maps at 1/8 scale, masked
+> These are crude numeric indicators, NOT a "fidelity %"; they are reported as raw values.
+> 
+> Masks (excluded from metrics, drawn grey in the diff):
+>   * 01, 10, 11: the legacy human girl region — intentionally replaced by the official cartoon girl
+>   * 03: the decorative phone outline baked into the reference (outer 4 % border)
+>   * 01–11: nothing else.
+> Usage: python3 -I scripts/compare.py [NN ...] [--sheet OUT.png] [--live DIR]
+> """
+> from __future__ import annotations
+> 
+> import json
+> import sys
+> from pat …[+787 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:45.229Z
+
+> 🔧 **Bash** `{"command": "grep -n \"report_metrics\\|compare_summary\\|--live\\|--out\\|def main\\|argv\" scripts/compare.py | head -20", "description": "Check compare.py output handling"}`
+
+### 🧑 User — 2026-11-15T21:52:45.257Z
+
+> ↩︎ result: 8:and qa/report_metrics.json + qa/compare_summary.md with REPRODUCIBLE metrics only:
+> 18:Usage: python3 -I scripts/compare.py [NN ...] [--sheet OUT.png] [--live DIR]
+> 145:def main(argv: list[str]) -> int:
+> 149:    it = iter(argv)
+> 152:        elif a == "--live": live_dir = Path(next(it))
+> 160:    (ROOT / "qa" / "report_metrics.json").write_text(json.dumps(rows, indent=1))
+> 169:    (ROOT / "qa" / "compare_summary.md").write_text("\n".join(md) + "\n")
+> 175:    sys.exit(main(sys.argv[1:]))
+
+### 🤖 Claude — 2026-11-15T21:52:47.903Z
+
+It overwrites the all-screens metrics files, so I'll call its per-screen function directly instead:
+
+### 🤖 Claude — 2026-11-15T21:52:48.563Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/compare.py", "offset": 60, "limit": 116}`
+
+### 🧑 User — 2026-11-15T21:52:48.583Z
+
+> ↩︎ result: 60	def corr(a: np.ndarray, b: np.ndarray) -> float:
+> 61	    a = a - a.mean(); b = b - b.mean()
+> 62	    d = np.sqrt((a * a).sum() * (b * b).sum())
+> 63	    return float((a * b).sum() / d) if d > 0 else 0.0
+> 64	
+> 65	
+> 66	def edges(img: Image.Image) -> np.ndarray:
+> 67	    g = np.asarray(img.convert("L").filter(ImageFilter.GaussianBlur(1.2))).astype(np.float32)
+> 68	    gx = np.zeros_like(g); gy = np.zeros_like(g)
+> 69	    gx[:, 1:-1] = g[:, 2:] - g[:, :-2]
+> 70	    gy[1:-1, :] = g[2:, :] - g[:-2, :]
+> 71	    return np.hypot(gx, gy)
+> 72	
+> 73	
+> 74	def label(img: Image.Image, text: str) -> Image.Image:
+> 75	    d = ImageDraw.Draw(img)
+> 76	    try:
+> 77	        f = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", max(18, img.width // 28))
+> 78	    except OSError:
+> 79	        f = ImageFont.load_default()
+> 80	    d.rectangle([0, 0, img.width, f.size + 14], fill=(20, 0, 40))
+> 81	    d.text((10, 6), text, fill=(255, 230, 140), font=f)
+> 82	    return img
+> 83	
+> 84	
+> 85	def compare(nn: str, live_dir: Path) -> dict | None:
+> 86	    live_p = live_dir / f"{nn}.png"
+> 87	    if not live_p.exists():
+> 88	        return None
+> 89	    ref = Image.open(ROOT / "references" / REFS[nn]).convert("RGB")
+> 90	    live = Image …[+4365 chars]
+
+### 🤖 Claude — 2026-11-15T21:53:14.310Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/screen_report.py", "content": "#!/usr/bin/env python3\n\"\"\"One-screen reference report: approved reference vs one or more labelled live captures.\n\n    python3 -I scripts/screen_report.py 05 OUT_DIR PREV=qa/.../05.png NOW=qa/.../05.png\n\nWrites into OUT_DIR (nothing else is touched; qa/report_metrics.json stays as it is):\n  NN_side_by_side.png       REFERENCE | each capture (same height, labelled)\n  NN_overlay_<LABEL>.png    50 % blend of the reference and that capture\n  NN_highlight_<LABEL>.png  the capture with a transparent red tint where it …[+4330 chars]`
+
+### 🧑 User — 2026-11-15T21:53:14.329Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/screen_report.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:53:16.607Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^REFS\\|^def mask_for\\|^def hue_hist\\|^ROOT\\|^GIRL_MASK\" scripts/compare.py; python3 -I scripts/screen_report.py 05 /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/report_test WAVE4START=qa/pilot05/wave4/baseline/05.png RECOVERED=qa/pilot05/wave5/baseline/05.png", "description": "Test the report tool on the wave-4 start vs recovered captures"}`
+
+### 🧑 User — 2026-11-15T21:53:26.299Z
+
+> ↩︎ result: 29:ROOT = Path(__file__).resolve().parents[1]
+> 30:REFS = {
+> 37:GIRL_MASK = {"01": (500, 300, 680, 600), "10": (430, 230, 590, 470), "11": (150, 190, 700, 780)}
+> 40:def mask_for(nn: str, w: int, h: int) -> np.ndarray:
+> 53:def hue_hist(a: np.ndarray, m: np.ndarray) -> np.ndarray:
+> # Screen 05: reference vs live captures (raw indicators, not a fidelity %)
+> 
+> mad = mean |ΔRGB| at 1/4 scale (lower = closer); hue_corr / edge_corr = −1…1 (higher = closer).
+> 
+> | Capture | mad | hue_corr | edge_corr | mad hud | mad tunnel+VP | mad river mid | mad Benny+near water |
+> |---|---|---|---|---|---|---|---|
+> | WAVE4START | 65.4 | 0.816 | 0.113 | 57.1 | 66.5 | 66.8 | 67.0 |
+> | RECOVERED | 63.3 | 0.785 | 0.113 | 56.7 | 70.7 | 62.4 | 62.4 |
+
+### 🤖 Claude — 2026-11-15T21:53:27.976Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/report_test/05_highlight_RECOVERED.png"}`
+
+### 🧑 User — 2026-11-15T21:53:28.027Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:53:41.866Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CURRENT_STATE.md", "old_string": "# Rainbow — CURRENT STATE (handoff)\n\n## ▶ Account 5 update", "new_string": "# Rainbow — CURRENT STATE (handoff)\n\n## ▶ Account 6 update (2026-11-15, session `025fdfec…`) — read this first\n| | |\n|---|---|\n| **Working branch** | `claude/rainbow-3d-account-transfer-syorak`, first commit on `3c0fe33` = the newest commit of account 5's `ccr-e033f912-8b40f5` (21:18 UTC autosave, 3 autosaves after `d6ab3a2`). Verified after `git fetch --unshallow`: contains `81e639e`, `b83b7e0`, `8a36270`, `648f53 …[+1892 chars]`
+
+### 🧑 User — 2026-11-15T21:53:41.928Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CURRENT_STATE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:53:45.874Z
+
+Handoff written; the next autosave pushes it. Now I'll check the specialists' progress through their NOTES files (their saved state on disk):
+
+### 🤖 Claude — 2026-11-15T21:53:46.825Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/pilot05/wave5/*/ 2>/dev/null | head -40; grep -n \"wave5\" qa/pilot05/REQUESTS.md; git status --short | head -20", "description": "Check specialist notes, captures and changed files"}`
+
+### 🧑 User — 2026-11-15T21:53:46.868Z
+
+> ↩︎ result: qa/pilot05/wave5/baseline/:
+> total 1628
+> drwxr-xr-x 2 root root    4096 Nov 15 21:49 .
+> drwxr-xr-x 7 root root    4096 Nov 15 21:53 ..
+> -rw-r--r-- 1 root root 1637326 Nov 15 21:46 05.png
+> -rw-r--r-- 1 root root    2696 Nov 15 21:49 continuity_report.json
+> -rw-r--r-- 1 root root   14640 Nov 15 21:49 gameplay_test.json
+> 
+> qa/pilot05/wave5/benny/:
+> total 16
+> drwxr-xr-x 3 root root 4096 Nov 15 21:52 .
+> drwxr-xr-x 7 root root 4096 Nov 15 21:53 ..
+> -rw-r--r-- 1 root root  723 Nov 15 21:50 NOTES.md
+> drwxr-xr-x 2 root root 4096 Nov 15 21:53 it01
+> 
+> qa/pilot05/wave5/environment/:
+> total 12
+> drwxr-xr-x 2 root root 4096 Nov 15 21:50 .
+> drwxr-xr-x 7 root root 4096 Nov 15 21:53 ..
+> -rw-r--r-- 1 root root 1061 Nov 15 21:50 NOTES.md
+> 
+> qa/pilot05/wave5/foam/:
+> total 16
+> drwxr-xr-x 3 root root 4096 Nov 15 21:53 .
+> drwxr-xr-x 7 root root 4096 Nov 15 21:53 ..
+> -rw-r--r-- 1 root root 1124 Nov 15 21:53 NOTES.md
+> drwxr-xr-x 2 root root 4096 Nov 15 21:53 iso_noflank
+> 
+> qa/pilot05/wave5/water/:
+> total 12
+> drwxr-xr-x 2 root root 4096 Nov 15 21:50 .
+> drwxr-xr-x 7 root root 4096 Nov 15 21:53 ..
+> -rw-r--r-- 1 root root 1100 Nov 15 21:50 NOTES.md
+>  M backups/CURRENT_STATE.md
+>  M qa/capture_log.json
+>  M scripts/cloud-env-setup.sh
+> ?? qa/pilot05/ …[+71 chars]
+
+### 🤖 Claude — 2026-11-15T21:54:01.684Z
+
+All four specialists have written their NOTES.md plans and are iterating. The autosave pushes their progress every five minutes, so another cutoff won't lose it. I'll continue automatically as each one finishes.
+
+## Status so far (account 6)
+
+**Recovery is complete and nothing pushed was lost**
+- The real newest commit on `ccr-e033f912-8b40f5` is `3c0fe33` (an autosave at 21:18 UTC), three autosaves after `d6ab3a2`.
+- This session's branch `claude/rainbow-3d-account-transfer-syorak` contains it and every earlier branch: `81e639e` (original), `b83b7e0`, `8a36270`, `648f531`. All of those remain untouched on GitHub.
+- **Gap you should know about:** whatever the old account did after 21:18:54 UTC never reached GitHub. That includes the foam specialist's final report with the 49%/44% numbers. Its saved edits up to that point (the softer spray fan, the continuous foam banks, about 19 large and 12 small bubbles) are in the tree.
+- Real files are in place, with no placeholders:
+  - All 6 large binary files are present and pass their integrity checks: both GLBs, the APK, the kit ZIP, and the `.blend` and `.glb` for Screen 05.
+  - All 12 reference images are byte-identical to the originals.
+  - All 419 files in the project manifest are present.
+
+**Tests on the recovered version (before any edits)**
+- The 03→11 gameplay test passes with the same numbers as before: 2,139 steps, 91 coins, a 61.41-unit plunge, pause/resume, heart loss and the victory at 11. Continuity also passes, with all stage gaps ≈ 0.
+- The Android debug APK builds (7.29 MB, both characters inside). It has not been run on a phone.
+
+**Tools**
+- **Environment:** this account had no network access to the Blender and Android download sites, so I created a personal cloud environment **"rainbow-"** (you approved it). It allows only those plus the Atlas address, and now has a saved setup script. That script only takes effect the next time a fresh session starts.
+- **Blender 5.3.0:** works headless. It opens `screen05_layout.blend`, and the Marble/Atlas import-and-measure tool passed a dry run. Blender MCP isn't used because it needs the desktop app.
+- **Playwright:** browser captures and tests work through the project scripts. No Playwright MCP server is connected on this account.
+- **World Labs Atlas:** the plugin is reinstalled, but the endpoint returns "authentication required" because this account has no Atlas connector, so `list_projects` couldn't run. To fix it, add the connector at https://claude.ai/customize/connectors using `https://api.atlas.worldlabs.ai/mcp`, sign in, then start a new session. Nothing was spent.
+- **Meshy / Rodin:** not connected; both need your own accounts, and their paid credits would need your approval.
+- **Google Flow:** the integration is intact (silent, fills the screen edge-to-edge, cross-fades into 3D), but your real Flow MP4 is not in the repo yet.
+
+**Screen 05**
+I restarted the environment, water, foam and Benny specialists from their exact saved state, each editing only its own files, with measured targets. One thing I found: the game was loading an old `benny.glb` from 19:39, so Benny's later arm and proportion fixes were never visible in the game.
+
+### 🧑 User — 2026-11-15T21:54:04.277Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

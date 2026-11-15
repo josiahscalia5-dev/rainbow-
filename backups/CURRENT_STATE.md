@@ -1,5 +1,20 @@
 # Rainbow — CURRENT STATE (handoff)
 
+## ▶ Account 6 update (2026-11-15, session `025fdfec…`) — read this first
+| | |
+|---|---|
+| **Working branch** | `claude/rainbow-3d-account-transfer-syorak`, first commit on `3c0fe33` = the newest commit of account 5's `ccr-e033f912-8b40f5` (21:18 UTC autosave, 3 autosaves after `d6ab3a2`). Verified after `git fetch --unshallow`: contains `81e639e`, `b83b7e0`, `8a36270`, `648f531`, `3c0fe33`. Nothing pushed was lost |
+| Gap | account 5's work after 21:18:54 UTC never reached GitHub (no autosave between 21:18 and the end of that session). Lost: the four wave-4 specialists' last minutes, incl. the foam specialist's final report (49 %/44 % bank width) and any NOTES.md |
+| Protected (autosave never pushes) | `ccr-6f431adf-7h0m8y`, `claude/rainbow-3d-recovery-m4v347`, `ccr-d4bb0ad3-8ycajb`, `ccr-8b6fc834-7kd55l`, and since account 6 `ccr-e033f912-8b40f5` |
+| Cloud environment (account 6) | personal **"rainbow-"**: limited network + package registries + `download.blender.org`, `dl.google.com`, `api.atlas.worldlabs.ai`. Setup script = `scripts/cloud-env-setup.sh` (LFS pull, Blender, Android SDK, World Labs plugin); saved, unproven until a fresh container starts |
+| Verified here | LFS 6/6 SHA == oid; refs 12/12 SHA OK; manifest 419/419 present; `tsc` OK; continuity ok (drop 61.19, gaps ≈ 0); gameplay test pass (2139 steps, 91 coins, plunge 61.41, pause/resume, heart loss, victory 11); `assembleDebug` BUILD SUCCESSFUL (APK 7.29 MB, both GLBs; not run on a device); Blender 5.3.0 opens `screen05_layout.blend`; `tools/blender/import_world_asset.py` dry run OK |
+| World Labs | plugin 0.2.2 reinstalled; Atlas endpoint answers 401 (no connector on this account) → `list_projects` not run. Nothing spent. Meshy / Rodin: not connected |
+| Flow video | integration intact (`src/ui/cinematicVideo.ts`, muted, cover/fill, no bars); **no real Flow MP4 in the repo yet** |
+| Screen 05 | wave 5 — `qa/pilot05/COORDINATION_WAVE5.md` (measured baseline, owners, rules). Found: the game loads a stale `benny.glb` (19:39) so Benny's later build.ts edits were invisible |
+| QA tool | `scripts/screen_report.py NN OUT LABEL=capture …` → side-by-side, 50 % overlays, red difference-highlight overlays, raw metrics per frame band |
+
+---
+
 ## ▶ Account 5 update (2026-11-15, session `d8784a51…`) — read this first
 | | |
 |---|---|

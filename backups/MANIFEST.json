@@ -389,12 +389,12 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3913,
-   "sha256": "f88dee3f0f6c85662cee199badffe0e65f34ffad91b21e89d7355ae765893db8"
+   "sha256": "a13d660b3f67267348130a707f5d0c88d5222d8852d2f498f7a3a1fe41005ada"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 7717,
-   "sha256": "86768238fcfda768d67253724580e079287776b5c3e3fa2dc31b3b5e21006d76"
+   "bytes": 9969,
+   "sha256": "0a2ec1d92113ab198f422899a765bd2cffe2c975c4237e20c589a87fd16e1cf2"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1104,
-   "sha256": "e895985d624efd148335e0343b6eac606c3d3be96dfdc43719e4b5b15b25e486"
+   "bytes": 1112,
+   "sha256": "e8a9b181bf785fce551bbd8ea0ddb812cc031ed3f45a4c9482a46e870e4c48d0"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1442,9 +1442,39 @@
    "sha256": "f4c7e7084cec4499499be85093d5d6703f8549be5bcb6a3786a0dc540ba0f629"
   },
   {
+   "path": "qa/pilot05/wave5/benny/it01/L012.png",
+   "bytes": 1637859,
+   "sha256": "e98eff15384daa5bcd736974db0cfbc8536bba588d169bc99f30cf876ea62285"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/it01/L012_mask.png",
+   "bytes": 1484226,
+   "sha256": "061b89910985ac412838b9fcd3d229c0fb64d6ddfc0b1a5241755708bc7bd3f0"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/it01/L022.png",
+   "bytes": 1638129,
+   "sha256": "5b37496e24442878dd640e7960f3513caed328d0209bb0ffa353f39d682b6edd"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/it01/L022_mask.png",
+   "bytes": 1481916,
+   "sha256": "c4e7368b114c84f44347dc8027a1d5d7f02f5b47ea17b213b1653b8348e40c5c"
+  },
+  {
    "path": "qa/pilot05/wave5/environment/NOTES.md",
    "bytes": 1061,
    "sha256": "a28be61e0aca361eb7f9674852ea57bafc0a70557db19dadc54e13b1d92c2dcc"
+  },
+  {
+   "path": "qa/pilot05/wave5/foam/NOTES.md",
+   "bytes": 1124,
+   "sha256": "76f927c7e383192a3dcaf5c7a81837ed04bb5b13c8a0d2e8a9b38450dbb340a3"
+  },
+  {
+   "path": "qa/pilot05/wave5/foam/iso_noflank/05.png",
+   "bytes": 1625317,
+   "sha256": "8881bdd2400e217d43450f9bd3234d85f669686019ef16a8fd6fc489f43eb883"
   },
   {
    "path": "qa/pilot05/wave5/water/NOTES.md",
@@ -1798,8 +1828,8 @@
   },
   {
    "path": "scripts/cloud-env-setup.sh",
-   "bytes": 1986,
-   "sha256": "5d8d863d7c2b1f97c810f0b39ce6c00889cbdf6ba130ae3840bf87998d3e4ef9"
+   "bytes": 758,
+   "sha256": "d10bab227ca8d1f99eaeee324b04f30549697a5d71dc4af0cf3ada10c2a73acc"
   },
   {
    "path": "scripts/compare.py",
@@ -1850,6 +1880,11 @@
    "path": "scripts/reference.sha256",
    "bytes": 1290,
    "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
+  },
+  {
+   "path": "scripts/screen_report.py",
+   "bytes": 4678,
+   "sha256": "18240caac44e5b6015065086a9c0c2293715b349b4e6a9dd2842b0f464f96cc6"
   },
   {
    "path": "scripts/setup-android-sdk.sh",

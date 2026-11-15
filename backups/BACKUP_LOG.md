@@ -92,3 +92,5 @@ Newest last. `pushed` = remote SHA verified equal to local HEAD.
 | 2026-11-15T21:41:19+00:00 | daemon | committed+pushed | `176425892b3c` | `claude/rainbow-3d-account-transfer-syorak` | 4 | True |  |
 | 2026-11-15T21:46:24+00:00 | daemon | committed+pushed | `bc65a4d60618` | `claude/rainbow-3d-account-transfer-syorak` | 4 | True |  |
 | 2026-11-15T21:50:58+00:00 | manual:account6-config | committed+pushed | `f72ea4547cc0` | `claude/rainbow-3d-account-transfer-syorak` | 21 | True |  |
+| 2026-11-15T21:51:29+00:00 | daemon | committed-local-only | `ff03254edcb4` | `claude/rainbow-3d-account-transfer-syorak` | 14 | False | push failed after retries: Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8949337b65bc3760351bb0f26c306a99c81dc4b65cec723151e49ee695d7dc29/verify": Forbidden
+error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-' |

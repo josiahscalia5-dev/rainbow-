@@ -347,3 +347,214 @@ The baseline clearly shows the stale GLB (wing arms, flaring skirt). Re-exportin
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T21:51:35.922Z
+
+GLB is a real binary (1,128,212 bytes, magic `glTF`, LFS-tracked) with the round nubs visible in the turntable. Let me check the capture script options (mask support for measurement).
+
+### 🤖 Claude — 2026-11-15T21:51:37.778Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,200p scripts/capture.mjs | grep -n \"q=\\|argv\\|bennyMask\\|mask\\|--\\|query\\|out\" | head -40; ls /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/ 2>/dev/null | head", "description": "Inspect capture.mjs options"}`
+
+### 🧑 User — 2026-11-15T21:51:37.819Z
+
+> ↩︎ result: 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 6://   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 11:const args = process.argv.slice(2);
+> 12:const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> 13:let ids = args.filter((a) => !a.startsWith('--'));
+> 19:const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> 20:mkdirSync(outDir, { recursive: true });
+> 34:    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+> 37:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+> 42:    await page.waitForTimeout(250);
+> 44:    await page.screenshot({ path: `${outDir}/${name …[+311 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:39.274Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,60p scripts/capture.mjs", "description": "Read capture.mjs head"}`
+
+### 🧑 User — 2026-11-15T21:51:39.304Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+2664 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:56.551Z
+
+I'll write a single-session capture script (normal + flat-ID mask per page load, so each load gives both an image and exact measurements) and a measurement script.
+
+### 🤖 Claude — 2026-11-15T21:52:15.167Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tools && cat > /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tools/cap05.mjs <<'EOF'\n// node cap05.mjs OUTDIR name1:query1 [name2:query2 ...]  (run from repo root)\n// One Vite + browser; per variant: load game, goto 05, screenshot NAME.png, Benny ID mask NAME_mask.png\nimport { mkdirSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst [outDir, ...vars] = process.argv.slice(2);\n …[+4122 chars]`
+
+### 🧑 User — 2026-11-15T21:52:15.205Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T21:52:16.564Z
+
+Let me measure the ref's Benny profile (pink fur widths per row) to have exact targets.
+
+### 🤖 Claude — 2026-11-15T21:52:19.812Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nim=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nR,G,B=im[...,0],im[...,1],im[...,2]\n# Benny fur: pink, R high, G mid-low, B < R\npink=(R>170)&(G<150)&(B<215)&(R-G>70)&(R>B+5)\npurple=(B>120)&(R<170)&(G<110)&(B>R+20)\nfor y in range(960,1200,10):\n    xs=np.nonzero(pink[y,180:680])[0]+180\n    if not len(xs): print(y,'-'); continue\n    runs=np.split(xs,np.nonzero(np.diff(xs)>4)[0]+1)\n    print(y,' '.join(f'{r[0]}-{r[-1]}' for r in runs if len(r)>4 …[+62 chars]`
+
+### 🧑 User — 2026-11-15T21:52:20.052Z
+
+> ↩︎ result: 960 
+> 970 
+> 980 536-540
+> 990 -
+> 1000 -
+> 1010 298-304 554-558
+> 1020 298-328 537-548
+> 1030 264-276 309-315 323-354 491-496 507-539 570-579
+> 1040 257-278 321-364 370-516 521-533 542-546 566-601
+> 1050 242-280 314-320 338-356 364-369 386-472 486-509 523-531 565-601
+> 1060 240-265 272-281 318-323 369-376 401-423 439-443 456-490 495-506 514-518 532-539 576-602
+> 1070 248-259 274-288 314-326 340-355 372-376 398-402 411-454 459-524 532-538 545-553
+> 1080 276-280 308-314 322-343 348-382 388-396 402-418 425-461 466-517 525-531
+> 1090 298-302 308-329 336-351 357-368 373-380 387-404 409-488 497-537
+> 1100 303-324 329-540
+> 1110 289-295 302-548
+> 1120 297-534
+> 1130 298-306 312-532
+> 1140 304-511
+> 1150 309-448 453-505
+> 1160 332-466 473-490
+> 1170 402-407
+> 1180 -
+> 1190 -
+
+### 🤖 Claude — 2026-11-15T21:52:24.998Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image, ImageDraw\nim=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((200,740,660,1220))\nim=im.resize((920,960))\nd=ImageDraw.Draw(im)\nfor x in range(200,661,20):\n    X=(x-200)*2; d.line([(X,0),(X,8 if x%100 else 20)],fill='black',width=2)\n    if x%100==0: d.text((X+2,22),str(x),fill='black')\nfor y in range(740,1221,20):\n    Y=(y-740)*2; d.line([(0,Y),(8 if y%100 else 20,Y)],fill='black',width=2)\n    if y%10 …[+125 chars]`
+
+### 🧑 User — 2026-11-15T21:52:25.377Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:52:26.738Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/ref_grid.png"}`
+
+### 🧑 User — 2026-11-15T21:52:26.778Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:52:50.663Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; date -u +%H:%M; timeout 900 node $S/tools/cap05.mjs qa/pilot05/wave5/benny/it01 L022: L012:bennyLift=0.12 2>&1 | grep -v \"^\\s*$\" | tail -5; for n in L022 L012; do echo \"== $n\"; python3 -I $S/tools/measure.py qa/pilot05/wave5/benny/it01/${n}_mask.png; done", "description": "Capture 05 with new GLB at two ride lifts, measure", "timeout": 900000}`
+
+### 🧑 User — 2026-11-15T21:53:15.091Z
+
+> ↩︎ result: Exit code 1
+> 21:52
+> L022 {"q":"","calls":121,"tris":608313,"info":{"body":[1.512,-41.102,-74.738],"up":[-0.025,0.999,-0.042],"fwd":[0.004,-0.042,-0.999],"scale":1},"errs":[]}
+> L012 {"q":"bennyLift=0.12","calls":121,"tris":608313,"info":{"body":[1.514,-41.2,-74.734],"up":[-0.025,0.999,-0.042],"fwd":[0.004,-0.042,-0.999],"scale":1},"errs":[]}
+> == L022
+> ALL bbox x 111-725 y 569-1101  (w 615 h 533)
+>   crown x  111- 725 y  569-1101  w 615 h 533 px 90
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tools/measure.py", line 29, in <module>
+>     cx = int(round((box(parts['cuff'])[0] + box(parts['cuff'])[1]) / 2))
+>                     ~~~~~~~~~~~~~~~~~~^^^
+> TypeError: 'NoneType' object is not subscriptable
+> == L012
+> ALL bbox x 111-725 y 569-1101  (w 615 h 533)
+>   crown x  111- 725 y  569-1101  w 615 h 533 px 90
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tools/measure.py", line 29, in <module>
+>     cx = int(round((box(parts['cuff'])[0] + box(parts['cuff'])[1]) / 2))
+>                     ~~~~~~~~~~~~~~~~~~^^^
+> TypeError: 'NoneType' object is not subscr …[+7 chars]
+
+### 🤖 Claude — 2026-11-15T21:53:19.177Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave5/benny/it01/L022.png').convert('RGB').crop((150,700,700,1260))\nb=Image.open('qa/pilot05/wave5/benny/it01/L022_mask.png').convert('RGB').crop((150,700,700,1260))\nout=Image.new('RGB',(1110,560),'white'); out.paste(a,(0,0)); out.paste(b,(560,0)); out.save('$S/it01_pair.png')\"; grep -n \"render\\|frozen\\|freeze\\|raf\\|requestAnimationFrame\" src/main.ts 2>/dev/null | head; grep -rn \"goto(\" src/game/Ga …[+70 chars]`
+
+### 🧑 User — 2026-11-15T21:53:19.535Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:53:20.024Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/it01_pair.png"}`
+
+### 🧑 User — 2026-11-15T21:53:20.050Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:53:23.906Z
+
+The mask toggle did not trigger a re-render (time is frozen). Let me check the `__rainbow` QA API for a render hook.
+
+### 🤖 Claude — 2026-11-15T21:53:25.073Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"__rainbow\\s*=\\|__rainbow =\" src | head -3; grep -rn \"goto:\\|stats:\\|render:\\|renderOnce\\|frame:\" src/main.ts src/game/*.ts 2>/dev/null | head -20", "description": "Find QA API definitions"}`
+
+### 🧑 User — 2026-11-15T21:53:25.115Z
+
+> ↩︎ result: src/game/Game.ts:639:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/Game.ts:583:    goto: gotoCheckpoint,
+
+### 🤖 Claude — 2026-11-15T21:53:26.795Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 560,640p src/game/Game.ts; grep -n \"function gotoCheckpoint\" -A40 src/game/Game.ts | grep -n \"render\\|frozen\\|freeze\\|step\" | head", "description": "Read QA api in Game.ts"}`
+
+### 🧑 User — 2026-11-15T21:53:26.851Z
+
+> ↩︎ result: if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.s …[+3334 chars]
+
+### 🤖 Claude — 2026-11-15T21:53:32.646Z
+
+Re-calling `goto('05')` after the mask toggle re-renders deterministically. Fixing the script and re-running it01.
+
+### 🤖 Claude — 2026-11-15T21:53:36.607Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I - <<EOF\np='$S/tools/cap05.mjs'\ns=open(p).read()\na=\"\"\"    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r()))));\n    await page.waitForTimeout(250);\n    await page.screenshot({ path: \\`\\${outDir}/\\${name}_mask.png\\`\"\"\"\nb=\"\"\"    await page.evaluate(() => window.__rainbow.goto('05'));\n    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));\n    await page.waitForT …[+485 chars]`
+

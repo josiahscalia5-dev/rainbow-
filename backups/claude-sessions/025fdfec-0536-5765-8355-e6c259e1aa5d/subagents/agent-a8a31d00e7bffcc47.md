@@ -221,3 +221,177 @@ Let me build a foam-mask measurement and test candidate definitions on the ref a
 >   1240   99  11.5%  104  12.0%  ext  330  38.2%  345  39.9%
 >   1280   62   7.2%  108  12. …[+1976 chars]
 
+### 🤖 Claude — 2026-11-15T21:51:33.790Z
+
+The simple mask picks up water glints and streaks, so the "extent" columns are contaminated. Let me check available tools and visualize a blob-filtered mask.
+
+### 🤖 Claude — 2026-11-15T21:51:34.740Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"import scipy, numpy; print(scipy.__version__, numpy.__version__)\"; python3 -I -c \"import cv2; print(cv2.__version__)\" 2>&1 | tail -1", "description": "Check scipy and opencv availability"}`
+
+### 🧑 User — 2026-11-15T21:51:34.838Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     import scipy, numpy; print(scipy.__version__, numpy.__version__)
+>     ^^^^^^^^^^^^^^^^^^^
+> ModuleNotFoundError: No module named 'scipy'
+> ModuleNotFoundError: No module named 'cv2'
+
+### 🤖 Claude — 2026-11-15T21:51:39.077Z
+
+No scipy/cv2, so I'll do a numpy morphological opening (removes thin streaks and glints) and visualize the result.
+
+### 🤖 Claude — 2026-11-15T21:51:51.198Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/foammask.py <<'EOF'\n\"\"\"Foam-bank mask + near-camera width/height metrics (wave 5, foam specialist).\nmask  = pale pixels (min(R,G,B) >= 175 and max-min <= 75), morphologically OPENED with a 9x9 box\n        (drops water glints, thin flow streaks, droplet spray), Benny bbox x230-612 y760-1200 removed.\nwidth(row) per side = number of mask pixels in that half of the row (x<432 left, x>=432 right).\nnear-camera bank width = mean of width(row) over rows y = 900..1400 (Benny level to near bottom …[+2309 chars]`
+
+### 🧑 User — 2026-11-15T21:51:52.100Z
+
+> ↩︎ result: references/05_flow_into_the_current.png: near-camera bank width (mean px-count y900-1400)  L 2.3%  R 2.1%
+>    rows 560-700: L   19.4px   2.2%   R   14.2px   1.6%
+>    rows 700-900: L   29.1px   3.4%   R   22.4px   2.6%
+>    rows 900-1100: L   17.7px   2.0%   R    9.9px   1.1%
+>    rows 1100-1300: L   17.7px   2.0%   R   18.6px   2.2%
+>    rows 1300-1536: L   29.1px   3.4%   R   21.9px   2.5%
+> qa/pilot05/wave5/baseline/05.png: near-camera bank width (mean px-count y900-1400)  L 5.2%  R 9.8%
+>    rows 560-700: L  150.5px  17.4%   R  105.6px  12.2%
+>    rows 700-900: L  112.7px  13.0%   R  105.2px  12.2%
+>    rows 900-1100: L   79.8px   9.2%   R   63.4px   7.3%
+>    rows 1100-1300: L   32.1px   3.7%   R   98.4px  11.4%
+>    rows 1300-1536: L    0.0px   0.0%   R   96.6px  11.2%
+
+### 🤖 Claude — 2026-11-15T21:51:53.485Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/masks_ref_base.png"}`
+
+### 🧑 User — 2026-11-15T21:51:53.521Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:51:57.209Z
+
+The ref foam is blue-lavender shaded and the mask misses most of it, while ring highlights leak in. Let me sample actual foam colors in both images.
+
+### 🤖 Claude — 2026-11-15T21:52:01.573Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nr=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('qa/pilot05/wave5/baseline/05.png').convert('RGB')).astype(int)\ndef show(a,name,boxes):\n  for (x0,y0,x1,y1) in boxes:\n    c=a[y0:y1,x0:x1].reshape(-1,3)\n    q=np.percentile(c,[10,50,90],axis=0).astype(int)\n    print(name,(x0,y0,x1,y1),'p10',q[0],'p50',q[1],'p90',q[2])\nshow(r,'REF foam',[(20,1030,110,1080),(90,1230,180,1290),(740,850,840,900),(650,1250,760,1290),(200,610,280,660),(30,740,120,790)]) …[+276 chars]`
+
+### 🧑 User — 2026-11-15T21:52:01.832Z
+
+> ↩︎ result: REF foam (20, 1030, 110, 1080) p10 [  3 134 231] p50 [155 189 250] p90 [247 247 255]
+> REF foam (90, 1230, 180, 1290) p10 [ 48 119 239] p50 [188 180 251] p90 [255 241 255]
+> REF foam (740, 850, 840, 900) p10 [ 66  45 197] p50 [174 134 244] p90 [250 233 255]
+> REF foam (650, 1250, 760, 1290) p10 [  2 126 230] p50 [177 184 249] p90 [251 248 255]
+> REF foam (200, 610, 280, 660) p10 [ 83  45 203] p50 [175 117 241] p90 [248 223 255]
+> REF foam (30, 740, 120, 790) p10 [136  68 225] p50 [207 176 250] p90 [255 244 255]
+> REF water (300, 1350, 500, 1450) p10 [  0 150 236] p50 [  1 173 250] p90 [ 62 235 255]
+> REF water (100, 900, 200, 950) p10 [  0 135 231] p50 [  1 148 242] p90 [ 78 213 255]
+> REF water (700, 1000, 800, 1100) p10 [  0  51 214] p50 [108 111 237] p90 [249 165 253]
+> REF wall (0, 450, 100, 550) p10 [121  11  47] p50 [192  54 179] p90 [248 104 244]
+> REF wall (780, 550, 860, 650) p10 [111  13 113] p50 [191  72 244] p90 [253 174 255]
+> BASE foam (10, 800, 80, 900) p10 [239 227 255] p50 [249 241 255] p90 [255 246 255]
+> BASE foam (780, 1300, 850, 1400) p10 [189 176 208] p50 [214 212 225] p90 [229 224 242]
+> BASE foam (100, 620, 250, 680) p10 [221 106 143] p50 [254 239 255] p90 [255 248 255]
+
+### 🤖 Claude — 2026-11-15T21:52:11.872Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cd /home/user/rainbow- && python3 - <<EOF\np='$S/foammask.py'\nt=open(p).read()\nt=t.replace(\"\"\"mask  = pale pixels (min(R,G,B) >= 175 and max-min <= 75), morphologically OPENED with a 9x9 box\"\"\",\"\"\"mask  = foam-coloured pixels (R >= 140, G >= 140, B >= 200: white / lavender / blue-lavender soap; cyan water\n        has R < 80, pink bands and walls have G < 110, gold rings have B < 200), morphologically OPENED with a 7x7 box\"\"\")\nt=t.replace(\"\"\"    m = (mn >= 175) & ((mx - mn) <= 75 …[+611 chars]`
+
+### 🧑 User — 2026-11-15T21:52:12.950Z
+
+> ↩︎ result: references/05_flow_into_the_current.png: near-camera bank width (mean px-count y900-1400)  L 4.7%  R 4.3%
+>    rows 560-700: L   50.3px   5.8%   R   38.7px   4.5%
+>    rows 700-900: L   53.4px   6.2%   R   44.8px   5.2%
+>    rows 900-1100: L   30.2px   3.5%   R   23.9px   2.8%
+>    rows 1100-1300: L   49.6px   5.7%   R   46.9px   5.4%
+>    rows 1300-1536: L   34.7px   4.0%   R   28.5px   3.3%
+> qa/pilot05/wave5/baseline/05.png: near-camera bank width (mean px-count y900-1400)  L 5.5%  R 10.1%
+>    rows 560-700: L  156.4px  18.1%   R  119.1px  13.8%
+>    rows 700-900: L  115.7px  13.4%   R  112.4px  13.0%
+>    rows 900-1100: L   83.0px   9.6%   R   66.1px   7.7%
+>    rows 1100-1300: L   34.5px   4.0%   R  100.6px  11.6%
+>    rows 1300-1536: L    0.5px   0.1%   R  101.9px  11.8%
+
+### 🤖 Claude — 2026-11-15T21:52:14.611Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/masks_ref_base.png"}`
+
+### 🧑 User — 2026-11-15T21:52:14.679Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:52:56.978Z
+
+The ref mask now catches its foam reasonably (a few ring highlights leak in). Before deciding the metric, let me check the VFX index (hide keys, how foam is wired) and the capture script options.
+
+### 🤖 Claude — 2026-11-15T21:52:58.471Z
+
+> 🔧 **Bash** `{"command": "grep -n \"waterhide\\|hide\\.\\|has(\" src/vfx/index.ts | head -40 && grep -n \"foam\\|bubbles\\|splash\\|spray\" src/game/Game.ts | head -40 && sed -n 1,60p scripts/capture.mjs | grep -n \"argv\\|q=\\|--\" | head", "description": "Inspect hide keys and Game.ts VFX feed lines"}`
+
+### 🧑 User — 2026-11-15T21:52:58.546Z
+
+> ↩︎ result: 92:  // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+> 93:  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+> 94:  /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
+> 146:  if (typeof window !== 'undefined' && new URLSearchParams(location.search).has('qa')) {
+> 6: *                   5 hearts (bumping the foam walls costs one), pause/resume.
+> 330:    // foam-wall bump → lose a heart (with cooldown), bounce back toward the centre
+> 339:      water.splash(benny.root.position, course.sample(st.s).up, 1);
+> 365:    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+> 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 6://   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 11:const args = process.argv.slice(2);
+> 12:const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2 …[+115 chars]
+
+### 🤖 Claude — 2026-11-15T21:52:59.769Z
+
+> 🔧 **Bash** `{"command": "sed -n 85,145p src/vfx/index.ts", "description": "Read VFX index hide wiring"}`
+
+### 🧑 User — 2026-11-15T21:52:59.802Z
+
+> ↩︎ result: const bubbles = createBubbles(course, { quality, sStart: ribbonS0 });
+>   const spray = createSpray(quality);
+>   const crown = createRiderSplash(quality);
+>   group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh);
+> 
+>   const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh };
+>   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
+>   // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+>   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+>   /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
+>   const qaNoRibbonWake = qaHide.includes('ribbonWake');
+>   let focus = 0;
+>   let curTime = 0;
+>   const tmpV  …[+2089 chars]
+
+### 🤖 Claude — 2026-11-15T21:53:01.605Z
+
+Let me check how `--q` is passed and then do one isolation capture with the flank bank hidden, to see what is behind it (wall vs water) at the frame edges. Meanwhile I'll write NOTES.md first.
+
+### 🤖 Claude — 2026-11-15T21:53:08.223Z
+
+> 🔧 **Bash** `{"command": "grep -n \"opt.q\\|opt\\[.q.\\]\\|\\.q\\b\" scripts/capture.mjs | head; mkdir -p qa/pilot05/wave5/foam && cat > qa/pilot05/wave5/foam/NOTES.md <<'EOF'\n# Screen 05 wave 5: foam-bubbles-particles (foam banks too wide)\n\nStarted 2026-11-15 ~22:10 UTC on top of the wave-4 tree (spray fan FAN.rootMin, flank banks BANK_PX,\nimpostor bank bubbles, 19 large + 12 small bubbles). Nothing from wave 4 is reverted.\n\n## Plan\n1. Define a reproducible bank-width / bank-height metric (script below), measure ref + baseline.\n2. foam.ts `createFoam` → 05 flank bank (`updateRafts`, `BANK_PX`, `ba …[+770 chars]`
+
+### 🧑 User — 2026-11-15T21:53:08.268Z
+
+> ↩︎ result: 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> ok
+
+### 🤖 Claude — 2026-11-15T21:53:10.346Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/foam/iso_noflank --q=waterhide=foamFlank,foamRafts 2>&1 | tail -3", "description": "Isolation capture with flank bank hidden", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T21:53:24.916Z
+
+> ↩︎ result: 05 → qa/pilot05/wave5/foam/iso_noflank/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":119,"tris":604905,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T21:53:25.928Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/foam/iso_noflank/05.png"}`
+
+### 🧑 User — 2026-11-15T21:53:25.973Z
+
+> ↩︎ result: [image]
+
