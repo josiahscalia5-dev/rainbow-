@@ -189,3 +189,35 @@ The 49 %/44 % numbers came from the user's report, not my transcript, so I need 
 > 338	 * In 05 the stream fills the tube floor wall to wall (S05.extent), so from the locked chase camera the
 > 339	 * real stream edges and their berm leave the frame  …[+24561 chars]
 
+### 🤖 Claude — 2026-11-15T21:51:04.747Z
+
+Let me build a foam-mask measurement and test candidate definitions on the ref and the baseline to see which reproduces 49/44 vs 18/15.
+
+### 🤖 Claude — 2026-11-15T21:51:12.003Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && cat > /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/foammeas.py <<'EOF'\nimport sys\nimport numpy as np\nfrom PIL import Image\n\ndef mask(p):\n    a = np.asarray(Image.open(p).convert('RGB')).astype(int)\n    mn = a.min(2); mx = a.max(2)\n    # white / pale-lavender foam: bright and low saturation\n    return (mn >= 185) & ((mx - mn) <= 70), a\n\ndef rows(p, ys):\n    m, a = mask(p)\n    H, W = m.shape\n    out = []\n    for y in ys:\n        band = m[ …[+993 chars]`
+
+### 🧑 User — 2026-11-15T21:51:12.425Z
+
+> ↩︎ result: references/05_flow_into_the_current.png
+>   y   Lcount  Rcount  Lextent Rextent  (px, % of W)
+>    560   43   5.0%   34   3.9%  ext  432  50.0%  318  36.8%
+>    600   89  10.3%   31   3.6%  ext  235  27.2%  387  44.8%
+>    640   17   2.0%   34   3.9%  ext  226  26.2%  318  36.8%
+>    680   55   6.4%   70   8.1%  ext  281  32.5%  407  47.1%
+>    720  160  18.5%   28   3.2%  ext  233  27.0%  216  25.0%
+>    760   71   8.2%   57   6.6%  ext  126  14.6%   69   8.0%
+>    800   26   3.0%   38   4.4%  ext  400  46.3%  404  46.8%
+>    840   16   1.9%   51   5.9%  ext  359  41.6%  366  42.4%
+>    880   43   5.0%  102  11.8%  ext  371  42.9%  373  43.2%
+>    920   73   8.4%   85   9.8%  ext  432  50.0%  432  50.0%
+>    960  115  13.3%   52   6.0%  ext  430  49.8%  432  50.0%
+>   1000    8   0.9%    0   0.0%  ext  288  33.3%    0   0.0%
+>   1040   88  10.2%   38   4.4%  ext  308  35.6%  306  35.4%
+>   1080   16   1.9%    1   0.1%  ext  308  35.6%   44   5.1%
+>   1120   21   2.4%   22   2.5%  ext  292  33.8%  304  35.2%
+>   1160   26   3.0%   33   3.8%  ext  288  33.3%  301  34.8%
+>   1200   56   6.5%   78   9.0%  ext  338  39.1%  335  38.8%
+>   1240   99  11.5%  104  12.0%  ext  330  38.2%  345  39.9%
+>   1280   62   7.2%  108  12. …[+1976 chars]
+

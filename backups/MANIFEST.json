@@ -373,8 +373,8 @@
   },
   {
    "path": "assets/models/benny.glb",
-   "bytes": 1123540,
-   "sha256": "cf83756b4382d864c57546deb55a7d9363c94ee67eada76212017693e271f2be"
+   "bytes": 1128212,
+   "sha256": "8949337b65bc3760351bb0f26c306a99c81dc4b65cec723151e49ee695d7dc29"
   },
   {
    "path": "assets/models/rainbow_girl.glb",
@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3913,
-   "sha256": "9991eac7e64bcb4bd684d79ad9e526b4b0555f32decc70abbd69a2d0b56fd44e"
+   "sha256": "f88dee3f0f6c85662cee199badffe0e65f34ffad91b21e89d7355ae765893db8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -458,8 +458,8 @@
   },
   {
    "path": "docs/characters/benny_turntable.png",
-   "bytes": 1113902,
-   "sha256": "23951eccc7ff0cc1379bfd1828abbba173f50354d51a5d94b85a330df9f404d4"
+   "bytes": 1129622,
+   "sha256": "4af15de26faaa813b0b4db7b19cba81284b95c69ec8c314348ed999894a1a14f"
   },
   {
    "path": "docs/characters/benny_turntable_expr_dizzy.png",

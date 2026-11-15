@@ -201,3 +201,68 @@ Writing the NOTES.md plan first, per the wave-5 rule.
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T21:51:12.126Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/measure.py", "content": "\"\"\"Water measurements for 05 (864x1536).\nusage: python3 -I measure.py img [img2 ...]\nrows: class coverage (% of 20 px band, full width), cyan / pink medians, luminance std, pink runs.\nboxes: fins (x100-750,y1200-1360) pink %, side bands (x0-150 / 700-864, y1250-1500) pink %,\nnear field (x150-700, y1250-1536 minus nothing) luminance std / p95, star-glint count.\ntrace: pink-run centres every 40 px from y 540 to 1000 (S-band shape).\"\"\"\nimport sys\nfrom PIL import I …[+3224 chars]`
+
+### 🧑 User — 2026-11-15T21:51:12.151Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/measure.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:51:13.629Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I $S/measure.py references/05_flow_into_the_current.png qa/pilot05/wave5/baseline/05.png", "description": "Measure ref vs baseline"}`
+
+### 🧑 User — 2026-11-15T21:51:14.011Z
+
+> ↩︎ result: Exit code 1
+> == references/05_flow_into_the_current.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lumStd pinkRuns
+>   560   8.5   4.3  32.3 20.8   8.5 | #4B9EF7  #D242D8 |  44.4  29-37 140-166 201-208 365-397 505-525 581-586 607-619 624-638 710-748 753-765 845-863
+>   600  17.5   4.1  34.1 15.1  11.3 | #1BABF9  #E040E1 |  42.6  41-59 62-72 79-85 111-134 145-154 158-166 168-173 183-196 263-321 584-593 605-628 683-690 700-713 728-737 812-817 828-847
+>   700  28.7   4.9  22.5 11.4  14.9 | #0EA6F8  #F03FE1 |  39.2  4-9 17-25 61-74 96-111 122-127 130-135 311-355 361-366 370-385 755-802
+>   800  26.2   6.1  35.4 15.2   7.9 | #07A4F9  #F547F1 |  32.7  56-151 156-187 376-394 400-408 451-459 598-604 607-618 633-711 832-847 849-861
+>   900  29.5   4.8  23.4 13.8  20.7 | #039EF8  #F744EC |  43.7  0-54 590-631 639-653 657-708 816-838 844-863
+>  1000  40.6   5.3  18.6 31.8   1.8 | #0296F3  #F637E5 |  33.4  711-863
+>  1100  48.8   3.5  33.0  3.7   6.2 | #02A1F7  #F857BB |  33.7  291-319 326-563
+>  1200  74.3   4.0   0.1  0.7  13.0 | #038AE7  #E198F2 |  51.2  
+>  1300  36.0   5.9  16.9  7.9   8.6 | #02A2F7  #F547ED |  35.9  124-164 171-206 613-655 678-698
+>  1400  53.8   0.0   0.0  0.0   6.4 | #0199F0  …[+626 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:19.991Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/measure.py", "old_string": "    from scipy import ndimage\n    sub = a[y0:y1, x0:x1].astype(np.float32)\n    lum = sub.mean(-1)\n    h, s, v = hsv(a[y0:y1, x0:x1])\n    m = (lum > 225) & (s < 0.2)\n    lab, n = ndimage.label(m)\n    if n == 0:\n        return 0\n    sizes = ndimage.sum(m, lab, range(1, n + 1))\n    return int(((sizes >= 3) & (sizes <= 400)).sum())", "new_string": "    sub = a[y0:y1, x0:x1].astype(np.float32)\n    lum = sub.mean(-1)\n    h, s, v = hsv(a[y0:y1,  …[+612 chars]`
+
+### 🧑 User — 2026-11-15T21:51:19.995Z
+
+> ↩︎ result: <tool_use_error>File has been modified since read, either by the user or by a linter. Read it again before attempting to write it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-15T21:51:21.325Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I $S/measure.py references/05_flow_into_the_current.png qa/pilot05/wave5/baseline/05.png", "description": "Measure ref vs baseline"}`
+
+### 🧑 User — 2026-11-15T21:51:21.737Z
+
+> ↩︎ result: references/05_flow_into_the_current.png white(>235) region (np.int64(200), np.int64(699), np.int64(250), np.int64(699)) n 9470
+> references/05_flow_into_the_current.png warm(r>230,g>170) bbox (np.int64(250), np.int64(749), np.int64(250), np.int64(699)) n 24305
+> references/05_flow_into_the_current.png gold runs on x=498 above VP: [(190, 199), (202, 202), (204, 221), (228, 228), (303, 314), (378, 379), (413, 417), (432, 437), (442, 443), (445, 450), (452, 473), (486, 489)]
+> references/05_flow_into_the_current.png Lwall median #BF36B4 dark<60 0.07 p10 77 p90 209 gold% 0.08
+> references/05_flow_into_the_current.png Rwall median #CF3DB6 dark<60 0.07 p10 78 p90 216 gold% 0.12
+> references/05_flow_into_the_current.png ceil median #B2359F dark<60 0.04 p10 81 p90 197 gold% 0.15
+> references/05_flow_into_the_current.png gold pixels median #FB984D p90 #FFE280
+> baseline/05.png white(>235) region (np.int64(200), np.int64(699), np.int64(254), np.int64(699)) n 24576
+> baseline/05.png warm(r>230,g>170) bbox (np.int64(250), np.int64(749), np.int64(250), np.int64(699)) n 117589
+> baseline/05.png gold runs on x=498 above VP: [(182, 186), (213, 228), (246, 258), (272, 277), (280, 282), (285, 285), (287, 289), (292,  …[+290 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:23.414Z
+
+The scratchpad is shared with other specialists (someone overwrote measure.py). I'll keep my scripts in a private subfolder.
+
+### 🤖 Claude — 2026-11-15T21:51:24.412Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5", "description": "Create private scratch subfolder"}`
+
+### 🧑 User — 2026-11-15T21:51:24.458Z
+
+> ↩︎ result: (Bash completed with no output)
+

@@ -191,3 +191,159 @@ Ride lift is still 0.22 in the code (the 0.12 finding was never applied). Let me
 >    42 scripts/export-models.mjs
 >  1454 total
 
+### 🤖 Claude — 2026-11-15T21:50:58.909Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/build.ts"}`
+
+### 🧑 User — 2026-11-15T21:50:58.922Z
+
+> ↩︎ result: 1	/**
+> 2	 * Benny — the ONE canonical mascot model + joint rig (procedural, exported to assets/models/benny.glb).
+> 3	 *
+> 4	 * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70 (lower half bulged
+> 5	 * ~6 % → pear-round plush ball), fur adds ~0.15 (visual half-width ≈ 0.86). The beanie perches on the
+> 6	 * top ~40 % of the ball (brim bottom ≈ +0.10 at the back, +0.24 at the front). Height incl. pom ≈ 2.3.
+> 7	 * Joints: benny_root › body › { hat › pom, eyes › eyeL/eyeR, mouth, armL, armR, footL, footR }.
+> 8	 * Meshes named fur_* receive the runtime shell-fur shader (see fur.ts); their userData carries the
+> 9	 * fur parameters (exported as glTF extras).
+> 10	 */
+> 11	import * as THREE from 'three';
+> 12	import type { BuiltModel } from '../types';
+> 13	import {
+> 14	  BENNY_COLORS as C,
+> 15	  CROWN_REPEAT,
+> 16	  blushTexture,
+> 17	  eyeTexture,
+> 18	  knitCrownTextures,
+> 19	  mouthTexture,
+> 20	  ribbedBrimTextures,
+> 21	  soleTexture,
+> 22	} from './textures';
+> 23	
+> 24	export const BENNY_DIMS = {
+> 25	  skin: 0.7,
+> 26	  fur: 0.12,
+> 27	  radius: 0.8,
+> 28	  /** lower-body bulge (radial gain at its peak): a full round plush ball below the cuff, not a bowl (ref 05 rear:
+> 29	   *  body ≈ as wide …[+22894 chars]
+
+### 🤖 Claude — 2026-11-15T21:50:59.365Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts"}`
+
+### 🧑 User — 2026-11-15T21:50:59.378Z
+
+> ↩︎ result: 1	/**
+> 2	 * Runtime Benny: loads the canonical assets/models/benny.glb, upgrades fur_* meshes to shell fur,
+> 3	 * and drives expressions + procedural secondary motion on top of the GLB clips.
+> 4	 */
+> 5	import * as THREE from 'three';
+> 6	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> 7	import type { BennyRuntime } from '../types';
+> 8	import { makeFur, type FurHandle, type FurParams } from './fur';
+> 9	
+> 10	const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+> 11	
+> 12	let cached: Promise<THREE.Group> | null = null;
+> 13	
+> 14	function loadScene(): Promise<THREE.Group> {
+> 15	  if (!cached) cached = new GLTFLoader().loadAsync(BENNY_URL).then((g) => {
+> 16	    const s = g.scene as THREE.Group;
+> 17	    s.userData.animations = g.animations;
+> 18	    return s;
+> 19	  });
+> 20	  return cached;
+> 21	}
+> 22	
+> 23	/** fur tier: explicit option, else `?quality=low|high`, else low on Android/iOS (same rule as the water) */
+> 24	function defaultFurQuality(): 'high' | 'low' {
+> 25	  if (typeof location === 'undefined') return 'high';
+> 26	  const qp = new URLSearchParams(location.search).get('quality');
+> 27	  const mobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad …[+11213 chars]
+
+### 🤖 Claude — 2026-11-15T21:50:59.651Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/export-models.mjs"}`
+
+### 🧑 User — 2026-11-15T21:50:59.666Z
+
+> ↩︎ result: 1	#!/usr/bin/env node
+> 2	// Builds the canonical character GLBs from the procedural builders and renders turntables.
+> 3	//   node scripts/export-models.mjs [benny] [girl] [--turntable-only] [--anim=walk --t=0.4]
+> 4	import { writeFileSync, mkdirSync } from 'node:fs';
+> 5	import { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from './lib/pw.mjs';
+> 6	
+> 7	const args = process.argv.slice(2);
+> 8	const models = args.filter((a) => !a.startsWith('--'));
+> 9	const list = models.length ? models : ['benny', 'girl'];
+> 10	const turntableOnly = args.includes('--turntable-only');
+> 11	const extra = args.filter((a) => a.startsWith('--') && a.includes('=')).map((a) => a.slice(2)).join('&');
+> 12	const fileName = { benny: 'benny.glb', girl: 'rainbow_girl.glb' };
+> 13	
+> 14	const { chromium } = loadPlaywright();
+> 15	const vite = await startVite();
+> 16	const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> 17	mkdirSync('assets/models', { recursive: true });
+> 18	mkdirSync('docs/characters', { recursive: true });
+> 19	try {
+> 20	  for (const m of list) {
+> 21	    const page = await browser.newPage({ viewport: { width: 1600, height: 560 } });
+> 22	    page.on('console', (msg) => { if (msg.type() === 'error') console.er …[+1039 chars]
+
+### 🤖 Claude — 2026-11-15T21:51:04.144Z
+
+Let me look at the reference and baseline.
+
+### 🤖 Claude — 2026-11-15T21:51:07.127Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; mkdir -p $S; ls qa/pilot05/wave5/baseline/; python3 -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((150,700,700,1260))\nb=Image.open('qa/pilot05/wave5/baseline/05.png').convert('RGB').crop((150,700,700,1260))\nout=Image.new('RGB',(1110,560),'white'); out.paste(a,(0,0)); out.paste(b,(560,0)); out.save('$S/ref_vs_base.png')\"; head -c 4 assets/models/benny.glb | xxd | head -1; grep -n glb .gitattributes", "description …[+39 chars]`
+
+### 🤖 Claude — 2026-11-15T21:51:07.515Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/baseline/05.png"}`
+
+### 🧑 User — 2026-11-15T21:51:07.521Z
+
+> ↩︎ result: 05.png
+> continuity_report.json
+> gameplay_test.json
+> /bin/bash: line 9: xxd: command not found
+> 4:*.glb   filter=lfs diff=lfs merge=lfs -text
+
+### 🧑 User — 2026-11-15T21:51:07.573Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:51:09.101Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/ref_vs_base.png"}`
+
+### 🧑 User — 2026-11-15T21:51:09.132Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:51:15.566Z
+
+The baseline clearly shows the stale GLB (wing arms, flaring skirt). Re-exporting now.
+
+### 🤖 Claude — 2026-11-15T21:51:16.929Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; date -u +%H:%M; timeout 900 node scripts/export-models.mjs benny 2>&1 | tail -5; ls -la assets/models/benny.glb; head -c 4 assets/models/benny.glb; echo; git lfs ls-files 2>/dev/null | grep benny", "description": "Re-export Benny GLB and turntable", "timeout": 900000}`
+
+### 🧑 User — 2026-11-15T21:51:28.719Z
+
+> ↩︎ result: 21:51
+> exported assets/models/benny.glb {"bytes":1128212,"meshes":27,"nodes":39,"clips":["idle(2.40s)","swim(0.60s)","tumble(1.00s)","peek(2.00s)"]}
+> turntable docs/characters/benny_turntable.png {"box":{"min":[-1.0368119659137613,-0.8742703752948459,-0.8139782728548887],"max":[1.044152348032454,1.4737221963999054,0.7986260260677421]}}
+> -rw-r--r-- 1 root root 1128212 Nov 15 21:51 assets/models/benny.glb
+> glTF
+> cf83756b43 - assets/models/benny.glb
+
+### 🤖 Claude — 2026-11-15T21:51:29.675Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/characters/benny_turntable.png"}`
+
+### 🧑 User — 2026-11-15T21:51:29.715Z
+
+> ↩︎ result: [image]
+
