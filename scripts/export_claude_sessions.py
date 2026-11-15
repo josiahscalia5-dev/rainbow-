@@ -233,6 +233,22 @@ def main(repo: Path, projects_glob: str) -> int:
             topics = [w for w in TOPIC_WORDS if w in text_blob]
             index_rows.append((info, sid, sub_count, topics))
 
+    # Keep sessions already archived in the repo (e.g. from an earlier container or Claude account)
+    # whose raw logs are not present on this machine — otherwise they would vanish from the index.
+    live = {sid for _, sid, _, _ in index_rows}
+    if out_root.is_dir():
+        for sdir in sorted(p for p in out_root.iterdir() if p.is_dir() and p.name not in live):
+            jl_path = sdir / "transcript.sanitized.jsonl"
+            if not jl_path.is_file():
+                continue
+            archived = load_jsonl(jl_path)
+            info = summarize(archived)
+            sub_count = len(list((sdir / "subagents").glob("*.sanitized.jsonl"))) if (sdir / "subagents").is_dir() else 0
+            blob = jl_path.read_text(encoding="utf-8", errors="replace").lower()
+            topics = [w for w in TOPIC_WORDS if w in blob]
+            index_rows.append((info, sdir.name, sub_count, topics))
+    index_rows.sort(key=lambda r: r[0].get("first") or "")
+
     lines = [
         "# Rainbow — Claude conversation index",
         "",

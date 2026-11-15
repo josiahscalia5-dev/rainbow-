@@ -3,7 +3,7 @@
   "repo_full_name": "josiahscalia5-dev/rainbow-",
   "remote_name": "origin",
   "remote_url_must_contain": "github.com/josiahscalia5-dev/rainbow-",
-  "branch": "ccr-6f431adf-7h0m8y",
+  "branch": "claude/rainbow-3d-recovery-m4v347",
   "claude_projects_glob": "~/.claude/projects/-home-user-rainbow-*",
   "allowlist": [
     "*.md",
@@ -42,5 +42,9 @@
     "backups/BACKUP_LOG.md"
   ],
   "max_plain_git_file_mb": 49,
-  "push_retries": 4
+  "push_retries": 4,
+  "protected_branches": [
+    "ccr-6f431adf-7h0m8y"
+  ],
+  "original_branch_note": "ccr-6f431adf-7h0m8y = untouched original from the previous Claude account (commit 81e639e); never pushed to."
 }

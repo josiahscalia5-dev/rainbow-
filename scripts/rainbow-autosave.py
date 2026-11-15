@@ -38,7 +38,7 @@ LOG = REPO / "backups" / "BACKUP_LOG.md"
 LOCK = REPO / "backups" / ".autosave.lock"
 TRAILER = (
     "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n"
-    "Claude-Session: https://claude.ai/code/session_018Sg3ATUJvTjfLDpKrpB9di"
+    "Claude-Session: https://claude.ai/code/session_01KS3bZtEEqDnwZ7hmojKWUb"
 )
 SECRET_PATTERNS = [
     re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
@@ -215,6 +215,8 @@ def main() -> int:
         if CFG["remote_url_must_contain"] not in url:
             raise RuntimeError(f"remote URL {url!r} is not the verified Rainbow repo; refusing to back up")
         branch = git("symbolic-ref", "--short", "HEAD").stdout.strip()
+        if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+            raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
         if branch != CFG["branch"]:
             raise RuntimeError(f"current branch {branch!r} != verified branch {CFG['branch']!r}; refusing to push")
         gitdir = REPO / ".git"
@@ -314,7 +316,11 @@ def main() -> int:
         if row["result"] not in ("skipped",):
             st["consecutive_failures"] = 0 if row["result"] in ("no-change", "committed+pushed", "pushed-pending-commits") \
                 else st.get("consecutive_failures", 0) + 1
-        st["schedule"] = "cron */5 * * * * (container-local; see backups/RECOVERY.md for limits)"
+        try:
+            sched = (Path.home() / ".rainbow-autosave-install.log").read_text().strip().splitlines()[-1]
+        except Exception:
+            sched = "unknown"
+        st["schedule"] = f"every 5 min, container-local ({sched}); see backups/RECOVERY.md for limits"
         st["next_scheduled_utc"] = (t1 + dt.timedelta(minutes=5 - t1.minute % 5)).replace(second=0).isoformat()
         write_status(st)
         append_log(row)

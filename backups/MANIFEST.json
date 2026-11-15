@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 1480,
-   "sha256": "05aac03cfc3ae2553b996ca21dd1807bfaa12708989f3cd826737534d0d1778c"
+   "bytes": 1965,
+   "sha256": "d35a8d56b25995228545c15267d7af8360406e157a76bd826ac34dd5605c4a63"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -408,8 +408,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 1041,
-   "sha256": "10de89581f235a82b3e19a74709cb55680dddb36aedca09a0969f7638df9393e"
+   "bytes": 1250,
+   "sha256": "1f17c8cc4ee5d0b91ebc98a9dc7138583c4844c3ffa0ff1e128f0c9fbd743345"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -1048,8 +1048,8 @@
   },
   {
    "path": "scripts/export_claude_sessions.py",
-   "bytes": 12417,
-   "sha256": "82927c9a3804e5aea8b9b57080c5a4d893e971d745020b06d49123fd0347c83a"
+   "bytes": 13381,
+   "sha256": "9659002b4802b64c679d5f45f3d02d9f851d1dfce2a7f048f7390ca3ea739679"
   },
   {
    "path": "scripts/gameplay-test.mjs",
@@ -1068,8 +1068,8 @@
   },
   {
    "path": "scripts/rainbow-autosave.py",
-   "bytes": 15611,
-   "sha256": "b8fa1992e0490110ffab47cfe31a2d6e6c6dcfcd5d20a30d0552f9d1947cc18c"
+   "bytes": 16013,
+   "sha256": "f9222c96960d00ad2810afafbe443e1526e97570d662daa348c5ea81685f7523"
   },
   {
    "path": "scripts/reference.sha256",
