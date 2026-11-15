@@ -1859,3 +1859,569 @@ Now a real test: one manual autosave run that commits and pushes to the new bran
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad; mkdir -p $SP/shots/before $SP/shots/partial; cd $SP/wt_before && time node scripts/capture.mjs 05 --out=$SP/shots/before 2>&1 | tail -3; cd /home/user/rainbow- && time node scripts/capture.mjs 05 --out=$SP/shots/partial 2>&1 | tail -3", "description": "Capture Screen 05 from baseline and current trees", "timeout": 600000}`
 
+### 🧑 User — 2026-11-15T19:15:18.100Z
+
+> ↩︎ result: '[05] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[05] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> 
+> real	0m16.366s
+> user	0m1.731s
+> sys	0m0.515s
+> 05 → /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots/partial/05.png {"stage":"05","s":127.389,"y":-41.182,"calls":112,"tris":610907,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> real	0m13.202s
+> user	0m1.681s
+> sys	0m0.255s
+
+### 🤖 Claude — 2026-11-15T19:15:20.867Z
+
+The Android build finished. The baseline capture hit 403s — likely Vite's file-serving guard rejecting the symlinked `node_modules` outside the worktree. Let me check both.
+
+### 🤖 Claude — 2026-11-15T19:15:23.621Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad; grep -E \"BUILD|EXIT|apk|error:|FAIL\" $SP/logs/android_build.log | tail -8; find /home/user/rainbow-/android -name \"*.apk\" -newer /home/user/rainbow-/package.json -exec ls -la {} \\; ; echo \"---before shot---\"; ls -la $SP/shots/before/ ; cat $SP/wt_before/qa/capture_log.json | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d['errors'][:3], len(d['shots']))\"", "description": "Check Android build result and baseline capture errors"}`
+
+### 🧑 User — 2026-11-15T19:15:23.703Z
+
+> ↩︎ result: BUILD SUCCESSFUL in 1m 30s
+> EXIT=0
+> -rw-r--r-- 1 root root 7357646 Nov 15 19:15 /home/user/rainbow-/android/app/build/outputs/apk/debug/app-debug.apk
+> ---before shot---
+> total 1508
+> drwxr-xr-x 2 root root    4096 Nov 15 19:15 .
+> drwxr-xr-x 4 root root    4096 Nov 15 19:14 ..
+> -rw-r--r-- 1 root root 1534666 Nov 15 19:15 05.png
+> ['[05] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[05] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[05] Failed to load resource: the server responded with a status of 403 (Forbidden)'] 1
+
+### 🤖 Claude — 2026-11-15T19:15:30.181Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad; cd $SP/wt_before && rm node_modules && cp -al /home/user/rainbow-/node_modules node_modules && node scripts/capture.mjs 05 --out=$SP/shots/before 2>&1 | tail -2", "description": "Recapture baseline with real node_modules copy", "timeout": 300000}`
+
+### 🧑 User — 2026-11-15T19:15:41.246Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots/before/05.png {"stage":"05","s":144.179,"y":-41.79,"calls":73,"tris":625575,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T19:15:42.518Z
+
+Clean capture. Now let me build a three-way comparison (reference · original before · specialists' partial state) and look at it.
+
+### 🤖 Claude — 2026-11-15T19:15:48.636Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad; mkdir -p $SP/tools && cat > $SP/tools/triptych.py <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw, ImageFont\n# usage: triptych.py out.png h label1=path1 label2=path2 ...\nout, H = sys.argv[1], int(sys.argv[2])\nitems = [a.split('=',1) for a in sys.argv[3:]]\nims = []\nfor lab, p in items:\n    im = Image.open(p).convert('RGB')\n    w = round(im.width * H / im.height)\n    ims.append((lab, im.resize((w, H), Image.LANCZOS)))\npad, top = 8, 34\nW = sum(i.width for _, i in ims) + pad * (len(im …[+729 chars]`
+
+### 🧑 User — 2026-11-15T19:15:49.442Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots/cmp05_v0.png (1550, 942)
+
+### 🤖 Claude — 2026-11-15T19:15:50.811Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots/cmp05_v0.png"}`
+
+### 🧑 User — 2026-11-15T19:15:51.007Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:16:23.006Z
+
+> 🔧 **Bash** `{"command": "find src -type f | xargs wc -l | sort -n | tail -42; echo; grep -n -iE \"toneMapping|Exposure|bloom|UnrealBloom|fog\" -r src --include=*.ts | head -20", "description": "Map source files and find lighting/post settings"}`
+
+### 🧑 User — 2026-11-15T19:16:23.043Z
+
+> ↩︎ result: 6 src/characters/benny/benny-lab.html
+>     12 src/characters/girl/girl-lab.html
+>     23 src/main.ts
+>     26 src/render/grade.ts
+>     37 src/characters/types.ts
+>     53 src/gameplay/input.ts
+>     60 src/render/env.ts
+>     93 src/vfx/spray.ts
+>    101 src/characters/girl/runtime.ts
+>    104 src/vfx/glsl.ts
+>    106 src/characters/girl/girl-lab.ts
+>    116 src/ui/cinematicVideo.ts
+>    119 src/vfx/puddles.ts
+>    126 src/characters/benny/benny-lab.ts
+>    126 src/game/modules.ts
+>    127 src/characters/benny/fur.ts
+>    133 src/gameplay/coins.ts
+>    138 src/ui/hud.ts
+>    147 src/game/cameraRig.ts
+>    147 src/vfx/riderSplash.ts
+>    151 src/world/towel.ts
+>    178 src/characters/benny/runtime.ts
+>    183 src/vfx/finalWave.ts
+>    190 src/world/laundryRoom.ts
+>    199 src/vfx/whirlpool.ts
+>    204 src/vfx/index.ts
+>    239 src/vfx/drumWater.ts
+>    261 src/vfx/bubbles.ts
+>    288 src/characters/girl/textures.ts
+>    349 src/characters/benny/textures.ts
+>    372 src/world/materials.ts
+>    375 src/world/tube.ts
+>    388 src/vfx/foam.ts
+>    406 src/vfx/waterRibbon.ts
+>    454 src/characters/benny/build.ts
+>    505 src/world/course.ts
+>    568 src/world/environment.ts
+>    618 src/game/Game.ts
+>    950 src/characters/girl/build.ts
+>   8678 total
+> 
+> src/char …[+1841 chars]
+
+### 🤖 Claude — 2026-11-15T19:16:24.234Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-15T19:16:24.244Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-15T19:16:24.733Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-15T19:16:24.741Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-15T19:16:25.880Z
+
+> 🔧 **Bash** `{"command": "cat src/render/grade.ts src/render/env.ts | head -90; grep -n -E \"renderer\\.|toneMapping|outputColorSpace|grade|exposure\" src/game/Game.ts | head -20", "description": "Inspect render grading and renderer settings"}`
+
+### 🧑 User — 2026-11-15T19:16:25.916Z
+
+> ↩︎ result: /** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> import * as THREE from 'three';
+> import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+> 
+> export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+>   return new ShaderPass({
+>     uniforms: {
+>       tDiffuse: { value: null },
+>       uSat: { value: opts.saturation ?? 1.36 },
+>       uCon: { value: opts.contrast ?? 1.15 },
+>       uVig: { value: opts.vignette ?? 0.18 },
+>     },
+>     vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+>     fragmentShader: /* glsl */ `
+>       uniform sampler2D tDiffuse; uniform float uSat; uniform float uCon; uniform float uVig; varying vec2 vUv;
+>       void main(){
+>         vec4 c = texture2D(tDiffuse, vUv);
+>         float l = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
+>         vec3 col = mix(vec3(l), c.rgb, uSat);
+>         col = (col - 0.5) * uCon + 0.5;
+>         vec2 d = vUv - 0.5; d.x *= 0.75;
+>         col *= 1.0 - uVig * smoothstep(0.25, 0.75, length(d));
+>         gl_FragColor = vec4(clamp(col, 0.0, 1.0), c.a …[+3082 chars]
+
+### 🤖 Claude — 2026-11-15T19:16:49.169Z
+
+> 🔧 **Bash** `{"command": "cat scripts/lib/pw.mjs | head -50; echo ----; grep -n -E \"'05'|\\\"05\\\"|stage05|S05|FLOW\" src/world/environment.ts src/world/course.ts src/game/Game.ts src/gameplay/coins.ts src/vfx/index.ts src/world/tube.ts | head -40", "description": "Check capture server port logic and stage-05 hooks"}`
+
+### 🧑 User — 2026-11-15T19:16:49.217Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+1697 chars]
+
+### 🤖 Claude — 2026-11-15T19:16:51.315Z
+
+Ports auto-increment, so parallel captures are safe. Let me read the 05 environment section and coin placement so my briefs are precise.
+
+### 🤖 Claude — 2026-11-15T19:16:52.062Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 160, "limit": 110}`
+
+### 🧑 User — 2026-11-15T19:16:52.077Z
+
+> ↩︎ result: 160	  const deckShape = new THREE.Shape();
+> 161	  deckShape.moveTo(-34, -34); deckShape.lineTo(34, -34); deckShape.lineTo(34, 30); deckShape.lineTo(-34, 30); deckShape.lineTo(-34, -34);
+> 162	  const deckHole = new THREE.Path();
+> 163	  deckHole.absarc(0, 0, B.rimRadius + 0.4, 0, Math.PI * 2, true);
+> 164	  deckShape.holes.push(deckHole);
+> 165	  const deck = new THREE.Mesh(new THREE.ShapeGeometry(deckShape, 64), new THREE.MeshStandardMaterial({ color: '#f36fd6', metalness: 0.5, roughness: 0.2, emissive: '#c43bb0', emissiveIntensity: 0.35, side: THREE.DoubleSide }));
+> 166	  deck.rotation.x = -Math.PI / 2;
+> 167	  deck.position.set(B.center.x, B.rimY + 0.3, B.center.z);
+> 168	  zones.basin.add(deck);
+> 169	  buildBasinBackdrop(zones.basin, goldMat, chromeMat);
+> 170	
+> 171	  // =====================================================================================
+> 172	  // 04 gold ring pipe
+> 173	  // =====================================================================================
+> 174	  const s04 = course.stage('04').s0, s05 = course.stage('05').s0;
+> 175	  const tubeR = (s: number) => course.prop('tube', s);
+> 176	  // the pipe mouth is the drain hole itself: narrow at the lip, opening up as it dives
+> 177 …[+6647 chars]
+
+### 🤖 Claude — 2026-11-15T19:16:52.614Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "limit": 50}`
+
+### 🧑 User — 2026-11-15T19:16:52.633Z
+
+> ↩︎ result: 1	/**
+> 2	 * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 3	 * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+> 4	 * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+> 5	 * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+> 6	 */
+> 7	import * as THREE from 'three';
+> 8	import type { Course, StageId } from '../world/course';
+> 9	import { canvasTexture } from '../world/materials';
+> 10	
+> 11	export const COIN_VALUE = 10;
+> 12	
+> 13	export interface CoinDef { s: number; lat: number; h: number; stage: StageId }
+> 14	
+> 15	export function coinLayout(course: Course): CoinDef[] {
+> 16	  const out: CoinDef[] = [];
+> 17	  const add = (stage: StageId, s: number, lat: number, h = 0.9) => out.push({ s, lat, h, stage });
+> 18	  const st = (id: StageId) => course.stage(id);
+> 19	  // 03 — spiral trail ahead of Benny toward the drain
+> 20	  { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
+> 21	  // 04 — along the left edge of the slide
+> 22	  { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }
+> 2 …[+1702 chars]
+
+### 🤖 Claude — 2026-11-15T19:16:54.798Z
+
+> 🔧 **Bash** `{"command": "tail -15 qa/scene_comparisons.md; echo ...; grep -n \"^## \" qa/scene_comparisons.md | head -20; grep -n \"^## \" docs/reference_inventory.md | head -20", "description": "Check reference-director documents are complete"}`
+
+### 🧑 User — 2026-11-15T19:16:54.830Z
+
+> ↩︎ result: ## 6. Top 3 fixes per screen (summary)
+> 
+> | Screen | 1 | 2 | 3 |
+> |---|---|---|---|
+> | 01 | PCT: pull the camera back and down; door opening centred at 51%/27%, water filling the lower 70% | AGE: Benny peeking from under the towel in frame at lower left; girl ≈16% height, deep right in the room | WFX: glossy cyan/pink wave bands with foam crests |
+> | 02 | PCT: about 2× camera stand-off; Benny ≈34% height, centred, door ring at the top | AGE/BCA: sock, T-shirt and towel in frame; paw pads to the camera | WFX: big spiral swirl with foam lips |
+> | 03 | WEM: whirlpool basin + gold-ringed drain with the slide mouth + backdrop props | WFX: 3-turn cyan/pink spiral surface with foam rims, less white blow-out | AGE: 10-coin spiral including the big foreground coin |
+> | 04 | PCT: close rear camera; Benny 27% height, bottom-centre | WFX: exactly 5 visible glowing chevrons ahead of Benny | WEM: deep 12-ring flat-gold tunnel mouth + 03 backdrop |
+> | 05 | PCT+WEM: straight, level tube, rings concentric on (498, 479); meander only in the water | PCT: lower camera elevation; Benny bbox ≈230–612 × 768–1190 | WEM: flat gold ring bands, magenta-violet slotted walls (no blue), 4 lids per side |
+> | 06 | PCT: ca …[+1902 chars]
+
+### 🤖 Claude — 2026-11-15T19:16:56.437Z
+
+Both reference-director documents completed before the cutoff, so that specialist's work is done. Let me pull its Screen 05 measurements to feed the specialists exact targets.
+
+### 🤖 Claude — 2026-11-15T19:16:57.496Z
+
+> 🔧 **Bash** `{"command": "awk '/^### 05/,/^### 06/' qa/scene_comparisons.md | head -60; echo ======; awk '/^### 05/,/^### 06/' docs/reference_inventory.md | head -45", "description": "Extract Screen 05 targets from director documents"}`
+
+### 🧑 User — 2026-11-15T19:16:57.528Z
+
+> ↩︎ result: ### 05 · FLOW INTO THE CURRENT (interactive): pilot screen, detailed
+> 
+> `references/05_flow_into_the_current.png` vs `screenshots/05.png` (`qa/05_side_by_side.png`). Live state at capture:
+> stage 05, s=144.18, coins 1,420, hearts 5, cam (4.75, −37.93, −79.82). Live rig at `81e639e` (`STAGE_CAM['05']`):
+> back 6.4, up 4.1, ahead 18, lookUp 1.8, vFOV 62, latFollow 0.6, roll 0.5.
+> 
+> Verdict: the HUD values and the general ingredients are right. The geometry reads as a bending spring of orange pipes in a blue-lilac tube, where the reference is a **straight** magenta tube with concentric gold bands and a meandering water floor. Benny sits too low and is seen too steeply.
+> 
+> #### 5.1 Camera, height and vanishing point
+> 
+> | | Reference | Live |
+> |---|---|---|
+> | VP | **(498, 479) = 57.6% x / 31.2% y** (measured). Every ring is concentric about it. | Brightest point (471, 478) lies in a white glare band (y≈500–700). Rings are **not** concentric, so there is no single VP. |
+> | Pitch | Implied at vFOV 62°: view axis ≈12.7° below the tube axis, ≈3° left of it | Stream and coin line **climb** toward the upper centre; the view looks up a rising, bending tube |
+> | Camera height over Benny | Low elevation (esti …[+4260 chars]
+
+### 🤖 Claude — 2026-11-15T19:17:03.431Z
+
+> 🔧 **Bash** `{"command": "awk '/^#### 5.7/,/^### 06/' qa/scene_comparisons.md | head -40", "description": "Extract Screen 05 foam/Benny targets"}`
+
+### 🧑 User — 2026-11-15T19:17:03.467Z
+
+> ↩︎ result: #### 5.7 Foam, bubbles, splash
+> 
+> | | Reference | Live |
+> |---|---|---|
+> | Foam | **Cloud banks** of white-lavender clumps (#FCF6FF, 10–40 px puffs, soft lavender shading) hugging both edges from y≈540 to y≈1300 | Uniform white-pink spheres (≈30–60 px, #FFF0FF) strung along both banks (y≈730–1150) |
+> | Splash | A **V-shaped spray fan** of white/cyan droplets from Benny's base (180–680 × 1080–1260) | No spray fan; white streak particles near the bottom edge |
+> | Bubbles | ≈18 large iridescent bubbles (25–65 px) **at the sides** and ≈25 small; none over the path or Benny | Dozens of tiny 5–15 px bubbles across the whole frame, **including over Benny's hat**; ≈6 large bubbles drawn as faint thin outlines in the upper tube |
+> 
+> #### 5.8 Coins
+> 
+> | | Reference | Live |
+> |---|---|---|
+> | Count / line | ≈9–10, **centred on the stream ahead of Benny**, winding with the cyan core | ≈14 in a line to Benny's **left**, climbing to (≈380, 480) |
+> | Nearest coin | (473, 728), ≈95 px, ≈40 px above the pom-pom | (290, 1085), ≈135 px, overlapping the left edge of the hat |
+> | Orientation | Tilted to face the camera; rim thickness visible | Upright, mostly side-on to the camera |
+> | Colour / glyph | #F4B70F yellow …[+2513 chars]
+
+### 🤖 Claude — 2026-11-15T19:17:20.589Z
+
+> 🔧 **Bash** `{"command": "cat .claude/agents/washer-environment-modeler.md; echo; head -8 .claude/agents/water-fx-specialist.md", "description": "Read specialist agent definition format"}`
+
+### 🧑 User — 2026-11-15T19:17:20.623Z
+
+> ↩︎ result: ---
+> name: washer-environment-modeler
+> description: Detailed Blender environment builder. Use for Rainbow 11-screen game execution only.
+> ---
+> 
+> # washer-environment-modeler
+> 
+> **Scope:** Model magenta perforated drum/washer tunnels, thick concentric orange-gold rings, chrome door, curved machine tubes, washer nozzles, gold perforated shelves/platform and door window. Build actual continuous tube, not backdrops.
+> 
+> **Canonical sources:** `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`, `REFERENCE_ORDER.md`, all `references/*.png`, and `character_references/official_cartoon_girl_original.jpg`.
+> 
+> **Deliverables:** assets/models/washer_*.glb, Blender source files, dimension/path anchor guide.
+> 
+> **Hard test:** Continuous 07 drop into 08, scene 08/09/10/11 architectural continuity, glossy materials matched.
+> 
+> Work only on the fresh Rainbow project. Coordinate with the visual director and path-camera specialist; preserve immutable user images. All gameplay must be real 3D; do not use screenshot-as-game substitutes. Never spend paid credits or expose secrets without authorization. Prove any claimed completion by actual file output and test capture.
+> 
+> ---
+> name: water-fx-specialist
+> description: Real-t …[+416 chars]
+
+### 🤖 Claude — 2026-11-15T19:17:31.954Z
+
+Recovery verification is complete. Here's the brief report you asked for before I spend significant credits; the Screen 05 work starts right after it.
+
+## Recovery report
+
+| # | Item | Verified result |
+|---|---|---|
+| 1 | Repo / latest recovery commit | `josiahscalia5-dev/rainbow-` (private). The recovery branch is at **`f2a86ab`**. That is 4 autosave commits after `f1eb5a4`, pushed by the old container until 19:08 UTC and holding the specialists' last edits. The original backup `ccr-6f431adf-7h0m8y` is untouched at `81e639e`. |
+| 2 | Working branch | **`ccr-8b6fc834-7kd55l`**, created from `f2a86ab`. This environment only lets me push to this branch. The recovery branch and the original branch are both left as they are. Draft PR #1 compares against the recovery branch, never the original. |
+| 3 | Files / assets | 299 tracked files. **12/12 reference images match their SHA-256.** 272/272 manifest files are intact. All 4 Git LFS files are real binaries (Benny GLB, girl GLB, kit ZIP, APK) and `git lfs fsck` passes. |
+| 4 | Ten specialists | All 10 load from `.claude/agents/` and are byte-identical to the original. The reference director's two documents were finished before the cutoff. |
+| 5 | Tools | **Working:** Playwright MCP, GitHub, Blender 5.3.0 (headless, reinstalled), Android SDK 34 (reinstalled), World Labs plugin v0.2.2 (reinstalled; loads next session). **Not connected:** World Labs Atlas (see below), Meshy, Hyper3D Rodin, Blender MCP (needs Blender's desktop window). context7 needs sign-in. |
+| 6 | Android | `tsc` OK, `vite build` OK, **`assembleDebug` BUILD SUCCESSFUL** (APK 7.36 MB). The continuity test passes: 07→08 drop is **61.19 units**, gaps ≈ 0. Not tested on a phone or emulator. |
+| 7 | Autosave | Test commit `ecbd15f` pushed, and the remote matches. The daemon runs every 5 minutes. It now follows each new session's branch, still refuses the original branch, and the old session link in commit messages is fixed. |
+| 8 | Screen 05 left over | Walls too pale (should be deep magenta→violet), rings orange instead of reflective gold, lids, water S-curves, foam, the **white jagged band under Benny**, the coin line, and Benny's hat:body ratio. |
+
+**World Labs:** the Atlas connector belonged to your old account and doesn't carry over. To restore it, add `https://api.atlas.worldlabs.ai/mcp` at https://claude.ai/customize/connectors, sign in with OAuth, then start a new session. No credits have been spent.
+
+Now I'm restarting the specialists. Each one gets its own files so they can't overwrite each other, which is what went wrong last time.
+
+### 🤖 Claude — 2026-11-15T19:17:34.758Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && mkdir -p qa/pilot05/{environment,water,foam,camera,benny,qa} && cp $SP/shots/before/05.png qa/pilot05/05_before_81e639e.png && cp $SP/shots/partial/05.png qa/pilot05/05_partial_f2a86ab.png && cp $SP/shots/cmp05_v0.png qa/pilot05/05_ref_before_partial.png && cp $SP/tools/triptych.py scripts/triptych.py && ls -la qa/pilot05", "description": "Save Screen 05 baseline evidence into the repo"}`
+
+### 🧑 User — 2026-11-15T19:17:34.798Z
+
+> ↩︎ result: total 5428
+> drwxr-xr-x 8 root root    4096 Nov 15 19:17 .
+> drwxr-xr-x 5 root root    4096 Nov 15 19:17 ..
+> -rw-r--r-- 1 root root 1537580 Nov 15 19:17 05_before_81e639e.png
+> -rw-r--r-- 1 root root 1613394 Nov 15 19:17 05_partial_f2a86ab.png
+> -rw-r--r-- 1 root root 2371447 Nov 15 19:17 05_ref_before_partial.png
+> drwxr-xr-x 2 root root    4096 Nov 15 19:17 benny
+> drwxr-xr-x 2 root root    4096 Nov 15 19:17 camera
+> drwxr-xr-x 2 root root    4096 Nov 15 19:17 environment
+> drwxr-xr-x 2 root root    4096 Nov 15 19:17 foam
+> drwxr-xr-x 2 root root    4096 Nov 15 19:17 qa
+> drwxr-xr-x 2 root root    4096 Nov 15 19:17 water
+
+### 🤖 Claude — 2026-11-15T19:17:45.545Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/COORDINATION.md", "content": "# Screen 05 pilot: specialist coordination (wave 2, account 3)\n\nStarted 2026-11-15 ~19:20 UTC on branch `ccr-8b6fc834-7kd55l` (from `f2a86ab`). The coordinator is the main Claude session.\nWave 1 (account 2, 18:36–18:58 UTC) was cut off by the usage limit. Its edits were saved by autosave and are **kept**:\nthe straight 05 tube axis, the wider stream, the new rider splash, the foam berm and Benny's proportions/lift.\n\n## Evidence\n* `05_before_81e639e.png`: live game before any specialist work (original account)\n*  …[+2007 chars]`
+
+### 🧑 User — 2026-11-15T19:17:45.585Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:17:47.034Z
+
+Now dispatching the five Screen 05 specialists in parallel. Each has exclusive file ownership and pixel targets from the director's measurements.
+
+### 🤖 Claude — 2026-11-15T19:18:03.478Z
+
+> 🔧 **Agent** `{"subagent_type": "washer-environment-modeler", "description": "Screen 05 walls, rings, lids", "run_in_background": true, "prompt": "You are the washer-environment-modeler for RAINBOW, the user's real-time 3D portrait mobile game (Three.js r170 + TypeScript + Vite) in /home/user/rainbow- (git branch `ccr-8b6fc834-7kd55l`). You also cover lighting/shader work for the tube; there is no separate lighting agent. This RESUMES your own interrupted work: account 2 ran out of usage at 18:56 UTC while you were adding \"full-length gold env strips so rings reflect highlight spots, and larger, sparser sl …[+3788 chars]`
+
+### 🧑 User — 2026-11-15T19:18:03.513Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: af234f41ccc8827ce (internal ID - do not mention to user. Use SendMessage with to: 'af234f41ccc8827ce', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/tasks/af234f41ccc8827ce.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T19:18:15.931Z
+
+> 🔧 **Agent** `{"subagent_type": "water-fx-specialist", "description": "Screen 05 cyan/pink current", "run_in_background": true, "prompt": "You are the water-fx-specialist for RAINBOW, the user's real-time 3D portrait mobile game (Three.js r170 + TypeScript + Vite) in /home/user/rainbow- (git branch `ccr-8b6fc834-7kd55l`). This RESUMES your own interrupted work. Account 2 ran out of usage at 18:55 UTC. You had already rewritten the ribbon fragment shader (derivative bump, star glints), widened the 05 channel and added the rider splash crown and foam berm. Those edits are saved in the tree. Keep them unless t …[+3065 chars]`
+
+### 🧑 User — 2026-11-15T19:18:15.947Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a589db1976a40894d (internal ID - do not mention to user. Use SendMessage with to: 'a589db1976a40894d', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/tasks/a589db1976a40894d.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T19:18:28.633Z
+
+> 🔧 **Agent** `{"subagent_type": "foam-bubbles-particles", "description": "Screen 05 foam, bubbles, splash", "run_in_background": true, "prompt": "You are the foam-bubbles-particles specialist for RAINBOW, the user's real-time 3D portrait mobile game (Three.js r170 + TypeScript + Vite) in /home/user/rainbow- (git branch `ccr-8b6fc834-7kd55l`). You take over the foam/bubble/splash work that the water-fx-specialist started in wave 1 (cut off at 18:55 UTC while making \"the berm: larger bubble cells, CPU-baked bubble domes for a lumpy silhouette, distance fade, whiter puffs\"). Those edits are saved in src/vfx/ …[+2987 chars]`
+
+### 🧑 User — 2026-11-15T19:18:28.649Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ac8dcef8e7b76b5b4 (internal ID - do not mention to user. Use SendMessage with to: 'ac8dcef8e7b76b5b4', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/tasks/ac8dcef8e7b76b5b4.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T19:18:43.648Z
+
+> 🔧 **Agent** `{"subagent_type": "path-camera-transition-engineer", "description": "Screen 05 path, camera, coins", "run_in_background": true, "prompt": "You are the path-camera-transition-engineer for RAINBOW, the user's real-time 3D portrait mobile game (Three.js r170 + TypeScript + Vite) in /home/user/rainbow- (git branch `ccr-8b6fc834-7kd55l`). This RESUMES your own interrupted work. At 18:47 UTC (account 2) you implemented the 05 segment as a straight centreline with an S-offset that vanishes at both ends (`S05 = { amp: 2.0, waves: 2 }` in src/world/course.ts), a roll-free frame and a straight tube axis …[+3597 chars]`
+
+### 🧑 User — 2026-11-15T19:18:43.674Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a37bba196b0b06729 (internal ID - do not mention to user. Use SendMessage with to: 'a37bba196b0b06729', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/tasks/a37bba196b0b06729.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T19:18:57.284Z
+
+> 🔧 **Agent** `{"subagent_type": "benny-character-artist", "description": "Benny hat/body proportions", "run_in_background": true, "prompt": "You are the benny-character-artist for RAINBOW, the user's real-time 3D portrait mobile game (Three.js r170 + TypeScript + Vite) in /home/user/rainbow- (git branch `ccr-8b6fc834-7kd55l`). This RESUMES your own interrupted work. At 18:48–18:54 UTC (account 2) you rebuilt Benny's rear proportions: a big plush ball, side tufts, a perched beanie, the star image-right, a big pom, a ride-height lift in runtime.ts and a `?quality=low` fur tier. You re-exported assets/models/b …[+2962 chars]`
+
+### 🧑 User — 2026-11-15T19:18:57.299Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a7655acf7fa1e151e (internal ID - do not mention to user. Use SendMessage with to: 'a7655acf7fa1e151e', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/tasks/a7655acf7fa1e151e.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T19:19:12.717Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-15T19:19:12.812Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-15T19:19:14.361Z
+
+> 🔧 **Bash** `{"command": "cat index.html; sed -n 35,80p src/game/Game.ts; grep -n -iE \"safe-area|env\\(safe|100dvh|100vh|object-fit|aspect|viewport-fit\" -r src index.html android/app/src/main/res android/app/src/main/AndroidManifest.xml capacitor.config.ts 2>/dev/null | head -30", "description": "Inspect viewport, resize and safe-area handling"}`
+
+### 🧑 User — 2026-11-15T19:19:14.640Z
+
+> ↩︎ result: <!doctype html>
+> <html lang="en">
+>   <head>
+>     <meta charset="UTF-8" />
+>     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+>     <meta name="theme-color" content="#5b1a8c" />
+>     <title>Rainbow</title>
+>     <style>
+>       html, body { margin: 0; height: 100%; background: #2a0b46; overflow: hidden; touch-action: none; }
+>       #app { position: fixed; inset: 0; }
+>       canvas#scene { display: block; width: 100%; height: 100%; }
+>     </style>
+>   </head>
+>   <body>
+>     <div id="app"><canvas id="scene"></canvas></div>
+>     <script type="module" src="/src/main.ts"></script>
+>   </body>
+> </html>
+> /** outro timeline marks */
+> const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 6.4, badge: 3.9, cp11: 5.2 };
+> 
+> export async function startGame(canvas: HTMLCanvasElement) {
+>   const qs = new URLSearchParams(location.search);
+>   const qaMode = qs.has('qa');
+>   const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });
+>   const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+>   renderer.setPixelRatio(dpr);
+>   const scene = new THREE.Scene();
+>   scene.envi …[+2090 chars]
+
+### 🤖 Claude — 2026-11-15T19:19:25.293Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"fov|aspect|updateProjectionMatrix\" src/game/cameraRig.ts src/game/Game.ts src/ui/*.ts | head -20; sed -n 1,40p src/ui/hud.ts", "description": "Find FOV handling and HUD sizing"}`
+
+### 🧑 User — 2026-11-15T19:19:25.685Z
+
+> ↩︎ result: src/game/cameraRig.ts:16:  fov: number;
+> src/game/cameraRig.ts:22:  '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+> src/game/cameraRig.ts:23:  '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+> src/game/cameraRig.ts:26:  '05': { back: 6.1, up: 3.7, ahead: 18, lookUp: -1.5, fov: 62, latFollow: 0.92, roll: 0 },
+> src/game/cameraRig.ts:27:  '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
+> src/game/cameraRig.ts:28:  '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
+> src/game/cameraRig.ts:29:  '08': { back: 6.2, up: 3.7, ahead: 16, lookUp: 0.2, fov: 62, latFollow: 0.8, roll: 0.3 },
+> src/game/cameraRig.ts:30:  '09': { back: 6.2, up: 3.7, ahead: 15, lookUp: 0.6, fov: 62, latFollow: 0.8, roll: 0.3 },
+> src/game/cameraRig.ts:31:  '10': { back: 5.8, up: 3.4, ahead: 11, lookUp: 1.2, fov: 62, latFollow: 0.8, roll: 0.2 },
+> src/game/cameraRig.ts:34:const KEYS: (keyof CamParams)[] = ['back', 'up', 'ahead', 'lookUp', 'fov', 'latFollow', 'roll'];
+> src/game/cameraRig.ts:37:  const acc: CamParams = { back: 0, up: 0, ahead: 0, lookUp: 0, fov: 0, latF …[+4200 chars]
+
+### 🤖 Claude — 2026-11-15T19:20:02.273Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/aspect-test.mjs", "content": "#!/usr/bin/env node\n// Edge-to-edge check of the REAL running game on Android portrait aspect ratios.\n//   node scripts/aspect-test.mjs                 → qa/aspect/<device>_<stage>.png + qa/aspect/aspect_report.json\n//   node scripts/aspect-test.mjs 05 11           → only those checkpoints\n//   node scripts/aspect-test.mjs --out=DIR\n// Per device it verifies: the canvas covers the whole viewport (no bars / borders), no edge row or\n// column is a flat empty colour, the HUD bar is fully inside the screen below the top …[+5332 chars]`
+
+### 🧑 User — 2026-11-15T19:20:02.303Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/aspect-test.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:20:05.313Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow\" -A30 src/game/Game.ts | grep -E \"^\\S*[0-9]+[-:]\\s+(\\w+)\\s*[:(]\" | head -20; grep -n \"__rainbow\\s*=\" src/game/Game.ts", "description": "List the QA hooks exposed on window.__rainbow"}`
+
+### 🧑 User — 2026-11-15T19:20:05.371Z
+
+> ↩︎ result: 616:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-15T19:20:06.755Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const api\" -A25 src/game/Game.ts | head -30", "description": "Show the QA API object definition"}`
+
+### 🧑 User — 2026-11-15T19:20:06.789Z
+
+> ↩︎ result: 577:  const api = {
+> 578-    ready: true,
+> 579-    checkpoints: Object.keys(CHECKPOINTS),
+> 580-    goto: gotoCheckpoint,
+> 581-    run(v = true) { running = v; last = performance.now(); },
+> 582-    unfreeze() { st.frozen = null; input.override = null; },
+> 583-    setSteer(v: number | null) { input.override = v; },
+> 584-    /** deterministic simulation: advance n steps of dt (no rendering needed) */
+> 585-    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 586-    startRideAt(id: StageId = '03') {
+> 587-      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+> 588-      return api.state();
+> 589-    },
+> 590-    state() {
+> 591-      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+> 592-    },
+> 593-    log() { return st.log; },
+> 594-    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> 59 …[+601 chars]
+
