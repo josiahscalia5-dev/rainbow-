@@ -8,7 +8,10 @@ cat > /dev/null 2>&1   # drain hook JSON from stdin
 case "$EVENT" in
   SessionStart)
     bash "$REPO/scripts/install-autosave-scheduler.sh" > "$HOME/.rainbow-autosave-install.log" 2>&1
-    setsid nohup "$REPO/scripts/autosave-cron.sh" "hook:SessionStart" >/dev/null 2>&1 < /dev/null &
+    # Fresh containers clone LFS files as pointer stubs: fetch the real models/APK/.blend first (bounded),
+    # then take the session-start backup.
+    setsid nohup bash -c "timeout 240 git -C '$REPO' lfs pull >'$HOME/.rainbow-lfs-pull.log' 2>&1; \
+      '$REPO/scripts/autosave-cron.sh' hook:SessionStart" >/dev/null 2>&1 < /dev/null &
     ;;
   Stop)
     setsid nohup "$REPO/scripts/autosave-cron.sh" "hook:Stop" >/dev/null 2>&1 < /dev/null &

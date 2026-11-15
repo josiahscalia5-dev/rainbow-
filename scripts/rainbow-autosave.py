@@ -134,12 +134,26 @@ def refresh_manifest() -> None:
         if not p.is_file() or rel.startswith("backups/claude-sessions/") or rel in CFG["status_only_paths"] \
                 or rel == "backups/MANIFEST.json":
             continue
-        h = hashlib.sha256(p.read_bytes()).hexdigest()
-        rows.append({"path": rel, "bytes": p.stat().st_size, "sha256": h})
+        data = p.read_bytes()
+        lfs = lfs_pointer(data)
+        if lfs:
+            # Content not fetched yet (pointer stub): record the real object's hash/size, not the stub's,
+            # so a backup taken before `git lfs pull` never regresses the manifest.
+            rows.append({"path": rel, "bytes": lfs[1], "sha256": lfs[0], "lfs_pointer_only": True})
+            continue
+        rows.append({"path": rel, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()})
     text = json.dumps({"project": CFG["project"], "files": rows}, indent=1) + "\n"
     mp = REPO / "backups" / "MANIFEST.json"
     if not mp.exists() or mp.read_text() != text:
         mp.write_text(text)
+
+
+def lfs_pointer(data: bytes) -> tuple[str, int] | None:
+    """(oid, size) if `data` is a Git LFS pointer stub, else None."""
+    if len(data) > 1024 or not data.startswith(b"version https://git-lfs.github.com/spec/v1"):
+        return None
+    m = re.search(rb"oid sha256:([0-9a-f]{64})\s+size (\d+)", data)
+    return (m.group(1).decode(), int(m.group(2))) if m else None
 
 
 def allowlisted_files() -> list[str]:
