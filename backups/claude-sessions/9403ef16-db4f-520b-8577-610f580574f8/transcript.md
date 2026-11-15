@@ -3087,3 +3087,52 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "grep -rl \"[REDACTED-PRIVATE]\" backups/ qa/ 2>/dev/null | head; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:stop 2>&1 | grep -E '\"commit\"|skipping|\"error\"'; echo \"local $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/ccr-93add0fa-q17ey6 | cut -c1-7)\"; git status --short | head -5; python3 -I scripts/autosave-status.py", "description": "Verify no secret, then commit and push via autosave", "timeout": 330000}`
 
+### 🧑 User — 2026-11-15T23:28:10.862Z
+
+> ↩︎ result: "commit": "1a64b8003e11aae7afb9320745cb91bb720d2a60",
+> local 1a64b80 remote 1a64b80
+> AUTOSAVE OK | branch ccr-93add0fa-q17ey6 | scheduler daemon | last verified backup 2026-11-15T23:28:05+00:00 (0.1 min ago) | local 1a64b80 remote 1a64b80 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-15T23:28:13.806Z
+
+Everything is committed and pushed. The branch `ccr-93add0fa-q17ey6` is at `1a64b80` and matches GitHub, with nothing left uncommitted. Before committing I checked the updated transcript backups and they don't contain the World Labs key.
+
+The two decisions from my last message are still open:
+1. Do you want me to relaunch the four Screen 05 specialists?
+2. When you have a new World Labs key, I'll reopen the secure form for it. The pilot also needs your approval: draft $0.18 plus standard $1.26.
+
+### 🧑 User — 2026-11-15T23:28:16.472Z
+
+Claude, I reviewed your new Screen 05 Blender camera-lock and overlay.
+
+This is encouraging progress. Please preserve the locked camera and existing corrected S-shaped river.
+
+However, the 50% overlay still contains my approved artwork underneath, so I cannot tell how good the actual reconstructed 3D scene looks.
+
+NEXT PRIORITY: PROVE THE ACTUAL 3D VISUAL MATCH.
+
+Please render four separate full-resolution images:
+
+1. My original approved Screen 05.
+2. The Blender reconstruction by itself, WITHOUT the approved image as a background, overlay, or projected substitute.
+3. The actual running Three.js Screen 05 gameplay screenshot.
+4. A 50% comparison overlay with measurable differences.
+
+Keep the same 864 × 1536 camera and checkpoint for the comparison.
+
+Have the Reference Match Director evaluate the tunnel rings, metallic purple walls, water boundaries, S-curves, Benny's position, and distant golden light.
+
+Then use the Blender Environment Modeler and Water FX Specialist to correct the actual 3D geometry and materials—not merely the appearance of the overlay.
+
+The water must remain genuinely animated and playable.
+
+Do not change the locked camera unnecessarily. Preserve the successful Screen 05-to-06 continuity correction and the deep Screen 07-to-08 descent.
+
+Please show me an honest visual similarity assessment and identify the three biggest remaining differences before making another round of changes.
+
+Keep all ten specialist agents, source files, and five-minute GitHub backups.
+
+Also stop the repeated World Labs Marble authentication polling if the API still returns 401. Do not use an exposed key or spend credits until authentication is safely fixed.
+
+My goal is to get the REAL playable 3D artwork approximately 90–95% close to my approved image, if achievable—not just make two pictures line up.
+
