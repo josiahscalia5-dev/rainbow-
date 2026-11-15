@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4397,
-   "sha256": "de1193b2bbb12e87f6872fff906e2e6acd31c69ca31f84daa1772a944a33e7f3"
+   "sha256": "b7f9c07dbdf1dcf69ac2da62f00b1f719fca80b408a60608c4ecfef328e216a7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5175,
-   "sha256": "78540a68a4be598492ce59beca215a5eb2164e046a65a45f0254378fe0add7fb"
+   "bytes": 1183,
+   "sha256": "2c08455883a5c0e1f5c3128ce6f553c7596d16d6c338d74e57f3eaeeeeea7e44"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1988,13 +1988,13 @@
   },
   {
    "path": "qa/pilot05/wave6/director/measure_review05.py",
-   "bytes": 13684,
-   "sha256": "fbbd7111bce553f5f8d2eeeca485da3b068ada1835ce5e9a66c35da3e8e4111d"
+   "bytes": 16618,
+   "sha256": "b75bb158dfbbef9cae5a1758747520ebe101eb60760bc1b3c71274dc874d2c33"
   },
   {
    "path": "qa/pilot05/wave6/director/measurements.json",
-   "bytes": 44478,
-   "sha256": "130a1ea40569fed848199b4a0a30cb96cfe01ea4ff6a5a80b68b2e12e91140e3"
+   "bytes": 46744,
+   "sha256": "4f8c79b5e9d21efba32cf2a405ef5244327ecb58d0398651b5e3393762e90fe5"
   },
   {
    "path": "qa/pilot05/wave6/environment/NOTES.md",
@@ -2003,8 +2003,13 @@
   },
   {
    "path": "qa/pilot05/wave6/foam/NOTES.md",
-   "bytes": 2383,
-   "sha256": "da32597f3097b4aa48295332d42eab47d6b4e1d17a63cff5f1745a79055a272d"
+   "bytes": 3001,
+   "sha256": "2898106a17374c3850370cf91d161a103ee4b55ad83d6d57b75f50c327961bfd"
+  },
+  {
+   "path": "qa/pilot05/wave6/foam/iso_norafts/05.png",
+   "bytes": 1981335,
+   "sha256": "3366c20bf848fc6087f4f811c802d6cac930a4b8800a20f2a168b0920ad93577"
   },
   {
    "path": "qa/pilot05/wave6/foam/partial_soap05_unwired.patch",

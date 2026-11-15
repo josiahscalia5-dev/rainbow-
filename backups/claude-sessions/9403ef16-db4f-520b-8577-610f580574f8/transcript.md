@@ -4105,3 +4105,73 @@ Do not spend credits yet.
 
 Keep all my existing Rainbow game assets, specialists, and five-minute GitHub backups intact.
 
+### 🤖 Claude — 2026-11-15T23:47:23.494Z
+
+Checking the official World Labs sources for a Marble MCP connector or Claude Code integration first: the World API docs index, the installed World Labs plugin's marketplace, and the MCP registry.
+
+### 🤖 Claude — 2026-11-15T23:47:26.899Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/wl && curl -sS -L --max-time 30 -o docs_llms_full.txt https://docs.worldlabs.ai/llms.txt; grep -n -i \"mcp\\|claude\\|skill\\|agent\\|cursor\\|sdk\\|cli\" docs_llms_full.txt | head -20; echo \"--- atlas docs index:\"; grep -n -i \"mcp\\|claude\\|marble\\|skill\" docs.atlas.worldlabs.ai_llms.txt | head -20; echo \"--- plugin marketplace:\"; cat /root/.claude/plugins/marketplaces/worldlabs/.claude-plugin/marketplace.json 2>/dev/null | head -40; ls /root/.claude/plugins/marketplaces/worldlabs/", "des …[+74 chars]`
+
+### 🧑 User — 2026-11-15T23:47:27.251Z
+
+> ↩︎ result: --- atlas docs index:
+> 5:Coding agents: the World Labs skills hold step-by-step workflows for videos and 3D scenes. See https://docs.atlas.worldlabs.ai/skills-and-plugins.md.
+> 10:- [Skills and plugins](https://docs.atlas.worldlabs.ai/skills-and-plugins.md): Give a coding agent the World Labs skills so it can make videos and 3D scenes with Atlas.
+> 57:- [MCP server](https://docs.atlas.worldlabs.ai/mcp.md): Run Atlas tasks from Claude and other MCP clients by signing in, with no API key.
+> --- plugin marketplace:
+> {
+>   "name": "worldlabs",
+>   "owner": {
+>     "name": "World Labs"
+>   },
+>   "plugins": [
+>     {
+>       "name": "worldlabs",
+>       "source": "./",
+>       "description": "Use World Labs APIs and Atlas for Blender"
+>     }
+>   ],
+>   "description": "Use World Labs APIs and Atlas for Blender"
+> }
+> LICENSE
+> README.md
+> assets
+> mcp.json
+> plugin.json
+> skills
+> tests
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T23:47:31.821Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/wl && wc -c docs_llms_full.txt; grep -c . docs_llms_full.txt; for p in skills-and-plugins.md mcp.md; do curl -sS -L --max-time 30 -o atlas_$p https://docs.atlas.worldlabs.ai/$p; echo \"== $p $(wc -c < atlas_$p)\"; done; grep -v \"^\\s*$\" atlas_skills-and-plugins.md | head -40; echo; grep -v \"^\\s*$\" atlas_mcp.md | head -40; cat /root/.claude/plugins/marketplaces/worldlabs/mcp.json; grep -i -n \"marble\" /root/.claude/plugins/marketplaces/worldlabs/README.md | head", "description": "Read officia …[+32 chars]`
+
+### 🧑 User — 2026-11-15T23:47:32.821Z
+
+> ↩︎ result: 7490 docs_llms_full.txt
+> 59
+> == skills-and-plugins.md 3634
+> == mcp.md 3573
+> # Skills and plugins
+> Give a coding agent the World Labs skills so it can make videos and 3D scenes with Atlas.
+> World Labs publishes [agent skills](https://agentskills.io) for Atlas. A skill
+> is a set of instructions that a coding agent loads when your request matches
+> it. With the skills installed, you can ask for a result, such as "make a video
+> that circles the table in this photo", and the agent knows the steps, the
+> request formats, and the mistakes to avoid.
+> The skills are open source at
+> [worldlabsai/skills](https://github.com/worldlabsai/skills).
+> ## What the skills do
+> | Skill              | Use it for                                                      |
+> | ------------------ | --------------------------------------------------------------- |
+> | `atlas-flythrough` | A camera-move video through a scene, from one or more images.   |
+> | `atlas-splats`     | A 3D scene as Gaussian splats, from one or more images.         |
+> | `atlas-blender`    | The same work inside Blender, with the scene laid out in 3D.    |
+> | `worldlabs-cli`    | Setting up the World Labs CLI and running any other Atlas task. |
+> The video and spl …[+4439 chars]
+
+### 🤖 Claude — 2026-11-15T23:47:55.466Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble World API key (replacement)", "suggested_type": "bearer", "reason": "The saved Marble key is rejected with 401 (the exposed key must not be reused). Save a NEWLY created key from platform.worldlabs.ai so one free credit-balance check can confirm authentication before any paid generation."}`
+

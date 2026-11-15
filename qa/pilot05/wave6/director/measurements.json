@@ -2276,6 +2276,28 @@
     "hue_med": 200.5,
     "white_glint_frac": 0.099
    }
+  },
+  "foam_and_edges": {
+   "foam left bank x0-330 y560-800": {
+    "frac": 0.199,
+    "rgb_med": [
+     241,
+     218,
+     254
+    ],
+    "pure_white_share": 0.27
+   },
+   "foam right bank x620-864 y560-960": {
+    "frac": 0.156,
+    "rgb_med": [
+     247,
+     219,
+     255
+    ],
+    "pure_white_share": 0.28
+   },
+   "edge column x12": "W600-613 G617-645 o646-674 M675-687 V688-707 M720-732 V733-753 M754-771 W777-797 V815-828 M840-920 W921-928 M929-950 V951-982 C988-1040 W1041-1074 W1082-1100 C1102-1115 C1117-1218 G1219-1249",
+   "edge column x850": "M600-607 V608-620 V622-632 o633-640 G654-674 W677-691 V711-723 W724-731 W734-750 W756-768 M771-783 M790-814 V828-861 M862-877 M884-903 V912-929 V934-941 V949-968 M969-1048 W1049-1057 M1068-1088 V1089-1128 C1129-1210 G1211-1249"
   }
  },
  "game": {
@@ -4496,6 +4518,28 @@
     "hue_med": 204.7,
     "white_glint_frac": 0.025
    }
+  },
+  "foam_and_edges": {
+   "foam left bank x0-330 y560-800": {
+    "frac": 0.263,
+    "rgb_med": [
+     248,
+     240,
+     255
+    ],
+    "pure_white_share": 0.63
+   },
+   "foam right bank x620-864 y560-960": {
+    "frac": 0.385,
+    "rgb_med": [
+     245,
+     237,
+     255
+    ],
+    "pure_white_share": 0.5
+   },
+   "edge column x12": "M600-690 d691-703 M704-728 W729-798 C799-845 M846-976 W977-1013 C1017-1036 W1037-1062 C1066-1101 C1107-1164 C1167-1174 W1175-1202 C1211-1249",
+   "edge column x850": "G600-621 M622-634 M638-664 W665-678 W680-745 M753-780 W781-812 C813-911 W912-947 C952-961 M962-1033 C1034-1209 W1210-1237 C1239-1249"
   }
  },
  "impact": {
@@ -4559,6 +4603,43 @@
    "area_pct": 19.7,
    "mean_abs_d": 52.9,
    "share_of_frame_d_pct": 17.2
+  }
+ },
+ "river_decomposition": {
+  "river zone total": {
+   "area_pct": 18.9,
+   "mean_abs_d": 55.6,
+   "share_of_frame_d_pct": 17.3
+  },
+  "game foam where ref not foam": {
+   "area_pct": 3.2,
+   "mean_abs_d": 77.6,
+   "share_of_frame_d_pct": 4.1
+  },
+  "ref foam where game not foam": {
+   "area_pct": 1.5,
+   "mean_abs_d": 64.4,
+   "share_of_frame_d_pct": 1.6
+  },
+  "pink vs cyan mismatch": {
+   "area_pct": 2.5,
+   "mean_abs_d": 95.9,
+   "share_of_frame_d_pct": 4.0
+  },
+  "ref wall/dark where game water/foam/pink": {
+   "area_pct": 3.3,
+   "mean_abs_d": 59.9,
+   "share_of_frame_d_pct": 3.2
+  },
+  "same class both (texture/shade)": {
+   "area_pct": 6.8,
+   "mean_abs_d": 27.8,
+   "share_of_frame_d_pct": 3.1
+  },
+  "far strip x420-580 y480-560": {
+   "area_pct": 0.7,
+   "mean_abs_d": 68.9,
+   "share_of_frame_d_pct": 0.8
   }
  }
 }

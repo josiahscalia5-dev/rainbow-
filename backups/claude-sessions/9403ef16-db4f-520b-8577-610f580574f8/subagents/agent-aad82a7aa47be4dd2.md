@@ -347,3 +347,196 @@ Let me check how capture works (query options) and how index.ts wires the foam, 
 > if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
 > const size = typeof opt.size === 'str …[+5439 chars]
 
+### 🤖 Claude — 2026-11-15T23:47:16.160Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/index.ts", "offset": 80, "limit": 185}`
+
+### 🧑 User — 2026-11-15T23:47:16.173Z
+
+> ↩︎ result: 80	  const whirl = createWhirlpool(quality, { points: cutPts, radius: Math.max(3.6, course.stage('04').tube * 0.85) });
+> 81	  const drum = createDrumWater(quality);
+> 82	  const wave = createFinalWave(course, quality);
+> 83	  const puddles = createPuddles();
+> 84	  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality, height: (s, lat, t) => ribbon.heightAt(s, lat, t) });
+> 85	  const bubbles = createBubbles(course, { quality, sStart: ribbonS0 });
+> 86	  const spray = createSpray(quality);
+> 87	  const crown = createRiderSplash(quality);
+> 88	  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh);
+> 89	
+> 90	  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh };
+> 91	  const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
+> 92	  // QA: ?waterhide=crown,spray …[+9907 chars]
+
+### 🤖 Claude — 2026-11-15T23:47:16.962Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/wave6/foam/tools/probe.mjs && tail -30 qa/pilot05/REQUESTS.md", "description": "Read probe tool and requests"}`
+
+### 🧑 User — 2026-11-15T23:47:16.996Z
+
+> ↩︎ result: // QA probe (no screenshot): goto a checkpoint, dump window.__waterQA() (bubbles + foam raft rows) as JSON.
+> // node qa/pilot05/wave6/foam/tools/probe.mjs 05 > out.json
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../../../../scripts/lib/pw.mjs';
+> const id = process.argv[2] ?? '05';
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5231);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+>   await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+>   const q = await page.evaluate(() => window.__waterQA());
+>   console.log(JSON.stringify(q));
+> } finally {
+>   await browser.close();
+>   await vite.close();
+> }
+> - foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord …[+5408 chars]
+
+### 🤖 Claude — 2026-11-15T23:47:24.479Z
+
+Let me zoom into the reference foam texture closely to understand the individual bubble shading.
+
+### 🤖 Claude — 2026-11-15T23:47:26.977Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && python3 -I $S/crop.py $S/z_ref_r.png 680 820 864 960 3 references/05_flow_into_the_current.png && python3 -I $S/crop.py $S/z_ref_l.png 120 560 330 700 3 references/05_flow_into_the_current.png && python3 -I $S/crop.py $S/z_now_r.png 680 800 864 940 3 qa/pilot05/wave6/regress0408/now/05.png", "description": "Zoom crops of reference and live bubble texture"}`
+
+### 🧑 User — 2026-11-15T23:47:27.471Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T23:47:27.928Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/z_ref_r.png"}`
+
+### 🧑 User — 2026-11-15T23:47:27.941Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:47:28.581Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/z_ref_l.png"}`
+
+### 🧑 User — 2026-11-15T23:47:28.596Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:47:29.139Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/z_now_r.png"}`
+
+### 🧑 User — 2026-11-15T23:47:29.165Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:47:44.668Z
+
+The ref foam has distinctly blue (not grey-lavender) undersides and crevices; live is flat pinkish-white. Let me check my pipeline forward-model tool to pick shader colours.
+
+### 🤖 Claude — 2026-11-15T23:47:48.420Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/wave6/foam/tools/pipe.py && python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')).astype(int)\n# sample shaded underside pixels in ref right rim crop region 680-864, 820-960 : print colour clusters by luminance\nreg=a[820:960,680:864].reshape(-1,3)\n# keep foam-ish: B>200 and R>90 and not pink (R-G<60)\nm=(reg[:,2]>190)&(reg[:,0]>80)&((reg[:,0]-reg[:,1])<50)\npx=reg[m]; lum=px.mean(1)\nfor q in (5,10,20,35,50,70,90):\n    t=np.percentile(lum,q); sel=px[n …[+124 chars]`
+
+### 🧑 User — 2026-11-15T23:47:48.594Z
+
+> ↩︎ result: """Forward model of the 05 display pipeline for a material's linear output colour (no bloom, no vignette):
+> NeutralToneMapping(exposure 0.86) -> sRGB -> grade (saturation 1.36 about Rec.709 luma, contrast 1.15).
+> inv(target sRGB) finds a linear shader colour that lands on the target (coordinate search)."""
+> import sys
+> import numpy as np
+> 
+> def neutral(c):
+>     c = c * 0.86
+>     start, desat = 0.8 - 0.04, 0.15
+>     x = c.min(); off = x - 6.25 * x * x if x < 0.08 else 0.04
+>     c = c - off
+>     peak = c.max()
+>     if peak < start:
+>         return c
+>     d = 1 - start
+>     newPeak = 1 - d * d / (peak + d - start)
+>     c = c * (newPeak / peak)
+>     g = 1 - 1 / (desat * (peak - newPeak) + 1)
+>     return c * (1 - g) + newPeak * g
+> 
+> def srgb(c):
+>     c = np.clip(c, 0, 1)
+>     return np.where(c <= 0.0031308, 12.92 * c, 1.055 * np.power(c, 1 / 2.4) - 0.055)
+> 
+> def grade(c):
+>     l = c @ np.array([0.2126, 0.7152, 0.0722])
+>     c = l + (c - l) * 1.36
+>     c = (c - 0.5) * 1.15 + 0.5
+>     return np.clip(c, 0, 1)
+> 
+> def fwd(lin):
+>     return grade(srgb(neutral(np.asarray(lin, float)))) * 255
+> 
+> def inv(t):
+>     t = np.asarray(t, float); x = np.array([0.5, 0.5, 0.5]); st = 0.25
+>     err = lambda v: np.abs(fwd(v) - t).sum()
+>     e …[+617 chars]
+
+### 🤖 Claude — 2026-11-15T23:47:51.018Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/pilot05/wave6/foam/tools && python3 -I pipe.py 110,103,238 117,143,247 141,168,249 171,184,250 216,212,251 250,243,254", "description": "Invert ref foam colours to linear shader values"}`
+
+### 🧑 User — 2026-11-15T23:47:51.154Z
+
+> ↩︎ result: 110,103,238 -> linear [0.24  0.224 0.682] gives [110 103 238]
+> 117,143,247 -> linear [0.284 0.358 0.779] gives [117 143 247]
+> 141,168,249 -> linear [0.399 0.5   1.114] gives [141 168 255]
+> 171,184,250 -> linear [0.506 0.558 0.873] gives [171 184 250]
+> 216,212,251 -> linear [0.752 0.732 0.938] gives [216 212 251]
+> 250,243,254 -> linear [1.03  0.988 1.053] gives [250 243 254]
+
+### 🤖 Claude — 2026-11-15T23:47:58.045Z
+
+Ramp target established. Now I'll refresh NOTES.md (required first), then run one isolation capture (rafts hidden) to attribute which object makes the right heap and the VP ridge.
+
+### 🤖 Claude — 2026-11-15T23:48:12.197Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/foam/NOTES.md", "content": "# Screen 05 wave 6b: foam-bubbles-particles (foam banks read like the ref)\n\nRestarted 2026-11-15 ~23:55 UTC (wave 6b) on the camera-LOCKED tree with the refitted 05 river S-curve\n(course.ts, coordinator). Baseline = `qa/pilot05/wave6/regress0408/now/05.png`. Files: src/vfx/foam.ts,\nbubbles.ts, riderSplash.ts, spray.ts, index.ts only. 05-only changes gated (flank rafts are 05-only by\nconstruction; berm/puff changes gated by the 05 s-range).\nThe wave-6a partial (`partial_soap05_unwired.patch`, `uSt05` declared  …[+2515 chars]`
+
+### 🧑 User — 2026-11-15T23:48:12.227Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave6/foam/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:48:15.202Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave6/foam/iso_norafts --q=waterhide=foamRafts 2>&1 | tail -3 && timeout 300 node qa/pilot05/wave6/foam/tools/probe.mjs 05 > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/probe0.json 2>/dev/null; python3 -I -c \"\nimport json;q=json.load(open('/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/probe0.json'));r=q['rafts'];print(r['visible'],r['puffs'],r['shown'])\nfor c in r['clumps']: print(c)\n\"", "description": "Isolation capture without rafts and probe ra …[+28 chars]`
+
+### 🧑 User — 2026-11-15T23:48:40.593Z
+
+> ↩︎ result: 05 → qa/pilot05/wave6/foam/iso_norafts/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":85,"tris":630225,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> True 1648 534
+> {'kind': 'L', 'ds': -3.4, 'lat': -1.35, 'k': 0.29, 'y': 1.134, 'env': 0, 's': 129.22}
+> {'kind': 'L', 'ds': -3.19, 'lat': -1.35, 'k': 0.36, 'y': 1.089, 'env': 0, 's': 129.44}
+> {'kind': 'L', 'ds': -2.8, 'lat': -1.37, 'k': 0.49, 'y': 1.018, 'env': 0, 's': 129.83}
+> {'kind': 'L', 'ds': -2.29, 'lat': -1.53, 'k': 0.52, 'y': 0.944, 'env': 0, 's': 130.33}
+> {'kind': 'L', 'ds': -1.69, 'lat': -1.75, 'k': 0.52, 'y': 0.874, 'env': 0, 's': 130.93}
+> {'kind': 'L', 'ds': -1.01, 'lat': -1.48, 'k': 0.43, 'y': 0.811, 'env': 1, 's': 131.61}
+> {'kind': 'L', 'ds': -0.26, 'lat': -2.3, 'k': 0.52, 'y': 0.757, 'env': 0, 's': 132.36}
+> {'kind': 'L', 'ds': 0.56, 'lat': -2.44, 'k': 0.72, 'y': 0.712, 'env': 0.22, 's': 133.18}
+> {'kind': 'L', 'ds': 1.44, 'lat': -2.09, 'k': 0.89, 'y': 0.676, 'env': 1, 's': 134.06}
+> {'kind': 'L', 'ds': 2.37, 'lat': -3.5, 'k': 0.52, 'y': 0.634, 'env': 0, 's': 134.99}
+> {'kind': 'L', 'ds': 3.36, 'lat': -4.01, 'k': 0.52, 'y': 0.6, 'env': 0, 's': 135.98}
+> {'kind': 'L', 'ds …[+2474 chars]
+
+### 🤖 Claude — 2026-11-15T23:48:43.167Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && python3 -I $S/crop.py $S/iso.png 0 450 864 1450 0.6 qa/pilot05/wave6/regress0408/now/05.png qa/pilot05/wave6/foam/iso_norafts/05.png", "description": "Compare baseline vs no-rafts isolation"}`
+
+### 🧑 User — 2026-11-15T23:48:43.484Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T23:48:44.070Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/iso.png"}`
+
+### 🧑 User — 2026-11-15T23:48:44.097Z
+
+> ↩︎ result: [image]
+

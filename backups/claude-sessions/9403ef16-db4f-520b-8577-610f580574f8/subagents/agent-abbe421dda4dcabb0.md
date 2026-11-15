@@ -940,3 +940,67 @@ The consolidated script reproduces every number. One last quick measurement is f
 > game left bank x0-330 y560-800: foam(S<.3,V>.75) frac 0.263  RGB med [248, 240, 255]  B-R med 5  V p10 0.99  pure-white(min>235) share 0.63
 > game right bank x620-864 y560-960: foam(S<.3,V>.75) frac 0.385  RGB med [245, 237, 255]  B-R med 7  V p10 0.94  pure-white(min>235) share 0.50
 
+### 🤖 Claude — 2026-11-15T23:47:19.577Z
+
+Before ranking, I'll decompose the 17.3 % river-zone share so the top-3 ranking is honest about whether any single river defect beats the wall material.
+
+### 🤖 Claude — 2026-11-15T23:47:30.583Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/riverdecomp.py <<'EOF'\nimport numpy as np\nfrom PIL import Image, ImageDraw\nS='/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/'\nR='/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png'; G='/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png'\nW,H=864,1536; YY,XX=np.mgrid[0:H,0:W]\ndef load(p):\n    im=Image.open(p).convert('RGB'); hsv=np.asarray(im.convert('HSV')).astype(np.float32)\n    return np.asarray(im).astype(np.float32), …[+1634 chars]`
+
+### 🧑 User — 2026-11-15T23:47:31.039Z
+
+> ↩︎ result: river zone total                                     area  18.9%  mean|d|  55.6  share  17.3%
+>  game foam where ref not foam                        area   3.2%  mean|d|  77.6  share   4.1%
+>  ref foam where game not foam                        area   1.5%  mean|d|  64.4  share   1.6%
+>  pink vs cyan mismatch (either way)                  area   2.5%  mean|d|  95.9  share   4.0%
+>  ref violet wall/dark where game water/foam/pink     area   3.3%  mean|d|  59.9  share   3.2%
+>  same class both (texture/shade diff)                area   6.8%  mean|d|  27.8  share   3.1%
+>  far strip window x420-580 y480-560                  area   0.7%  mean|d|  68.9  share   0.8%
+
+### 🤖 Claude — 2026-11-15T23:47:50.958Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave6/director/measure_review05.py", "old_string": "def main():\n    data = {\"ref\": load(REF), \"game\": load(GAME)}", "new_string": "def foam_and_edges(rgb, h, s, v, C):\n    out = {}\n    for name, (x0, y0, x1, y1) in {\"left bank x0-330 y560-800\": (0, 560, 330, 800), \"right bank x620-864 y560-960\": (620, 560, 864, 960)}.items():\n        m = np.zeros((H, W), bool)\n        m[y0:y1, x0:x1] = True\n        f = m & (s < 0.30) & (v > 0.75)\n        px = rgb[f]\n        out[f\"foam {name}\"] = dict(frac=round(float(f.sum()  …[+2554 chars]`
+
+### 🧑 User — 2026-11-15T23:47:51.008Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave6/director/measure_review05.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:47:52.909Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave6/director/measure_review05.py", "old_string": "        r[\"near_field\"] = near_field(rgb, h, s, v, C)\n        res[tag] = r\n    res[\"impact\"] = impact(data[\"ref\"], data[\"game\"], Cs[\"ref\"])", "new_string": "        r[\"near_field\"] = near_field(rgb, h, s, v, C)\n        r[\"foam_and_edges\"] = foam_and_edges(rgb, h, s, v, C)\n        res[tag] = r\n    res[\"impact\"] = impact(data[\"ref\"], data[\"game\"], Cs[\"ref\"])\n    res[\"river_decomposition\"] = river_decomp(data[\"ref\"], data[\"game\"])"}`
+
+### 🧑 User — 2026-11-15T23:47:52.946Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave6/director/measure_review05.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:47:56.026Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/pilot05/wave6/director/measure_review05.py >/dev/null && python3 -c \"\nimport json;d=json.load(open('qa/pilot05/wave6/director/measurements.json'))\nfor t in ('ref','game'): print(t, json.dumps(d[t]['foam_and_edges']))\nprint(json.dumps(d['river_decomposition']))\nprint(d['ref']['far_river']['gold_blobs_y476-556']); print(d['game']['far_river']['gold_blobs_y476-556'])\n\" && ls qa/pilot05/wave6/director qa/pilot05/wave6/director/crops && git -C /home/user/rainbow- status --short | head -30", "description": "Re-run script, verify new outputs, list director files"}`
+
+### 🧑 User — 2026-11-15T23:47:57.803Z
+
+> ↩︎ result: ref {"foam left bank x0-330 y560-800": {"frac": 0.199, "rgb_med": [241, 218, 254], "pure_white_share": 0.27}, "foam right bank x620-864 y560-960": {"frac": 0.156, "rgb_med": [247, 219, 255], "pure_white_share": 0.28}, "edge column x12": "W600-613 G617-645 o646-674 M675-687 V688-707 M720-732 V733-753 M754-771 W777-797 V815-828 M840-920 W921-928 M929-950 V951-982 C988-1040 W1041-1074 W1082-1100 C1102-1115 C1117-1218 G1219-1249", "edge column x850": "M600-607 V608-620 V622-632 o633-640 G654-674 W677-691 V711-723 W724-731 W734-750 W756-768 M771-783 M790-814 V828-861 M862-877 M884-903 V912-929 V934-941 V949-968 M969-1048 W1049-1057 M1068-1088 V1089-1128 C1129-1210 G1211-1249"}
+> game {"foam left bank x0-330 y560-800": {"frac": 0.263, "rgb_med": [248, 240, 255], "pure_white_share": 0.63}, "foam right bank x620-864 y560-960": {"frac": 0.385, "rgb_med": [245, 237, 255], "pure_white_share": 0.5}, "edge column x12": "M600-690 d691-703 M704-728 W729-798 C799-845 M846-976 W977-1013 C1017-1036 W1037-1062 C1066-1101 C1107-1164 C1167-1174 W1175-1202 C1211-1249", "edge column x850": "G600-621 M622-634 M638-664 W665-678 W680-745 M753-780 W781-812 C813-911 W912-947 C952-961 M962-1033 C1034-1209 W1210- …[+1744 chars]
+
+### 🤖 Claude — 2026-11-15T23:48:29.692Z
+
+Outputs verified. A quick check of the game HUD coin icon with a tighter window, since my earlier window was contaminated by ring gold.
+
+### 🤖 Claude — 2026-11-15T23:48:32.539Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage\nfor tag,p in [('ref','qa/pilot05/wave6/proof/1_approved_reference.png'),('game','qa/pilot05/wave6/proof/3_threejs_gameplay.png')]:\n    a=np.asarray(Image.open(p).convert('RGB')).astype(int)\n    g=(a[...,0]>200)&(a[...,1]>120)&(a[...,2]<110)\n    w=np.zeros_like(g); w[10:110,350:560]=True\n    lab,n=ndimage.label(g&w); s=ndimage.sum(g&w,lab,range(1,n+1)); k=int(np.argmax(s))+1\n    ys,xs=np.nonzero(lab==k); print(tag,'HUD coin icon bbox x',xs.min(),'-',xs.max(),'y',ys.min(),'-',ys.max(),'centr …[+93 chars]`
+
+### 🧑 User — 2026-11-15T23:48:33.065Z
+
+> ↩︎ result: ref HUD coin icon bbox x 378 - 459 y 27 - 95 centre 418 59
+> game HUD coin icon bbox x 418 - 559 y 10 - 17 centre 495 13
+
+### 🤖 Claude — 2026-11-15T23:48:36.933Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage\na=np.asarray(Image.open('qa/pilot05/wave6/proof/3_threejs_gameplay.png').convert('RGB')).astype(int)\ng=(a[...,0]>200)&(a[...,1]>120)&(a[...,2]<110)\nw=np.zeros_like(g); w[25:105,420:530]=True\nlab,n=ndimage.label(g&w); s=ndimage.sum(g&w,lab,range(1,n+1)); k=int(np.argmax(s))+1\nys,xs=np.nonzero(lab==k); print('game HUD coin icon bbox x',xs.min(),'-',xs.max(),'y',ys.min(),'-',ys.max(),'centre',int(xs.mean()),int(ys.mean()))\n\"", "description": "Locate game HUD coin icon with tighter window"}`
+
+### 🧑 User — 2026-11-15T23:48:37.560Z
+
+> ↩︎ result: game HUD coin icon bbox x 451 - 490 y 43 - 82 centre 472 64
+

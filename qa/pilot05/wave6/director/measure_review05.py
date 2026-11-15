@@ -260,6 +260,59 @@ def impact(ref, game, Cr):
     return out
 
 
+def foam_and_edges(rgb, h, s, v, C):
+    out = {}
+    for name, (x0, y0, x1, y1) in {"left bank x0-330 y560-800": (0, 560, 330, 800), "right bank x620-864 y560-960": (620, 560, 864, 960)}.items():
+        m = np.zeros((H, W), bool)
+        m[y0:y1, x0:x1] = True
+        f = m & (s < 0.30) & (v > 0.75)
+        px = rgb[f]
+        out[f"foam {name}"] = dict(frac=round(float(f.sum() / m.sum()), 3), rgb_med=[int(x) for x in np.median(px, 0)],
+                                   pure_white_share=round(float((px.min(1) > 235).mean()), 2))
+    ab = "oGdWCVM"
+    for x in (12, 850):  # class runs (>= 8 px) down the frame-edge columns, y 600-1249
+        col = C[600:1250, x - 4:x + 5]
+        seq = [int(np.bincount(col[i], minlength=7).argmax()) for i in range(col.shape[0])]
+        runs, i = [], 0
+        while i < len(seq):
+            k, i0 = seq[i], i
+            while i < len(seq) and seq[i] == k:
+                i += 1
+            if i - i0 >= 8:
+                runs.append(f"{ab[k]}{600 + i0}-{600 + i - 1}")
+        out[f"edge column x{x}"] = " ".join(runs)
+    return out
+
+
+def river_decomp(ref, game):
+    rgb_r, hr, sr, vr = ref
+    rgb_g, hg, sg, vg = game
+    zone = Image.new("L", (W, H), 0)
+    ImageDraw.Draw(zone).polygon([(0, 185), (864, 185), (864, 760), (760, 660), (600, 540), (498, 485), (330, 525), (190, 600), (0, 790)], fill=255)
+    tunnel = np.asarray(zone) > 0
+    bennyb = (XX >= 225) & (XX < 620) & (YY >= 760) & (YY < 1200)
+    river = (~tunnel) & (YY >= 185) & (YY < 1000) & ~bennyb
+    fr, fg = (sr < 0.30) & (vr > 0.75), (sg < 0.30) & (vg > 0.75)
+    wr, wg = (hr >= 170) & (hr < 240) & (sr > 0.3), (hg >= 170) & (hg < 240) & (sg > 0.3)
+    pr, pg = (hr >= 292) & (hr < 345) & (sr > 0.35), (hg >= 292) & (hg < 345) & (sg > 0.35)
+    wall_r = ((hr >= 235) & (hr < 292) & (sr > 0.25)) | (vr < 0.3)
+
+    def q(a):
+        return a.reshape(H // 4, 4, W // 4, 4, -1).mean((1, 3))
+    diff = np.abs(q(rgb_r) - q(rgb_g)).mean(-1)
+    tot = diff.sum()
+    parts = {"river zone total": river, "game foam where ref not foam": river & fg & ~fr, "ref foam where game not foam": river & fr & ~fg,
+             "pink vs cyan mismatch": river & ((pg & wr) | (wg & pr)), "ref wall/dark where game water/foam/pink": river & wall_r & (wg | fg | pg),
+             "same class both (texture/shade)": river & ((fr & fg) | (wr & wg) | (pr & pg)),
+             "far strip x420-580 y480-560": river & (XX >= 420) & (XX < 580) & (YY >= 480) & (YY < 560)}
+    out = {}
+    for name, m in parts.items():
+        mq = q(m[..., None].astype(np.float32))[..., 0] > 0.5
+        out[name] = dict(area_pct=round(float(mq.mean() * 100), 1), mean_abs_d=round(float(diff[mq].mean()), 1),
+                         share_of_frame_d_pct=round(float(diff[mq].sum() / tot * 100), 1))
+    return out
+
+
 def main():
     data = {"ref": load(REF), "game": load(GAME)}
     res = {"note": "colour-threshold measurements; not a fidelity score", "vp": VP}
@@ -280,8 +333,10 @@ def main():
         r["benny"] = benny(rgb, h, s, v)
         r["lids_coins"] = lids_coins(rgb, h, s, v, tag)
         r["near_field"] = near_field(rgb, h, s, v, C)
+        r["foam_and_edges"] = foam_and_edges(rgb, h, s, v, C)
         res[tag] = r
     res["impact"] = impact(data["ref"], data["game"], Cs["ref"])
+    res["river_decomposition"] = river_decomp(data["ref"], data["game"])
     Image.fromarray(np.concatenate([maps[0], np.zeros((H, 12, 3), np.uint8), maps[1]], axis=1)).save(os.path.join(OUTD, "crops/classmap_ref_vs_game.png"))
     with open(os.path.join(OUTD, "measurements.json"), "w") as f:
         json.dump(res, f, indent=1)
