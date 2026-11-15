@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3913,
-   "sha256": "f97a8a948ac345758042a08dda968d59a047fa244128899de9933568018774ae"
+   "sha256": "44dbe68c1de9afe0edb1103ae904c1b897288fc1fae5e9f7c5cd049016210a71"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 3885,
-   "sha256": "b1105000221b303dd02bd2ddacb9d84c3a21369a97c89a6d082af4208eb11a4a"
+   "bytes": 2949,
+   "sha256": "ea3f8dd597198c2fce9879a39b761008945ae0e23695b0e712b3c7e59a70b08c"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1547,6 +1547,21 @@
    "sha256": "10bd3dbdb63345a21d2bcdc6cf2b1f961c2f0d1dc04d10a5e99d5d918b68642d"
   },
   {
+   "path": "qa/pilot05/wave5/combined/04.png",
+   "bytes": 1009712,
+   "sha256": "9fa03399074eb30a9f316c5793553a74c25d5d2ad2458022ce530541ec842557"
+  },
+  {
+   "path": "qa/pilot05/wave5/combined/05.png",
+   "bytes": 1975103,
+   "sha256": "2c9a583dcf8eb9d87638e77a393adf6e187b0e846756524c3156ed16bc8a578a"
+  },
+  {
+   "path": "qa/pilot05/wave5/combined/07.png",
+   "bytes": 1785767,
+   "sha256": "8645940ebf457193449ef962f3f4f3be55f21058f62c3b54392c6c819a2bfd5b"
+  },
+  {
    "path": "qa/pilot05/wave5/environment/NOTES.md",
    "bytes": 8285,
    "sha256": "ced17b355da331929baf5c662a30b9d477ecdfabeb89b0ac46581257e106b495"
@@ -2238,8 +2253,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 31406,
-   "sha256": "f4e3676afeb77b70dd79b8761c60c453aba72c524a6e4dec780b0cf7dc053777"
+   "bytes": 32281,
+   "sha256": "d00816b10c9db02746705f5c5fb06e6b65659f878ff4154907222aff8d7e5cc9"
   },
   {
    "path": "src/game/cameraRig.ts",

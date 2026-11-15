@@ -3071,3 +3071,298 @@ It works now. Atlas sees your account:
 
 > 🔧 **Bash** `{"command": "timeout 300 bash -c 'until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 2; done'; timeout 180 python3 scripts/rainbow-autosave.py --reason manual:atlas-active 2>&1 | grep -E '\"pushed_verified\"|skipping'; git fetch -q origin claude/rainbow-3d-account-transfer-syorak; echo \"local $(git rev-parse --short HEAD) remote $(git rev-parse --short origin/claude/rainbow-3d-account-transfer-syorak)\"", "description": "Back up the Atlas status update and verify the push", "timeout": 500000}`
 
+### 🧑 User — 2026-11-15T22:20:12.646Z
+
+> ↩︎ result: "pushed_verified": true,
+> local 9659019 remote 9659019
+
+### 🤖 Claude — 2026-11-15T22:20:25.232Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-15T22:20:25.240Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-15T22:20:25.948Z
+
+> 🔧 **TaskCreate** `{"subject": "Integrate wave 5: draw-call budget, 04/07 foam sheet, far coins, far river", "description": "Combined capture; find +20 draw calls; isolate white foam sheet in 04/07; far coins hidden by ForcedTunnel; far river 06 stripes.", "activeForm": "Integrating wave 5 results"}`
+
+### 🧑 User — 2026-11-15T22:20:25.958Z
+
+> ↩︎ result: Task #9 created successfully: Integrate wave 5: draw-call budget, 04/07 foam sheet, far coins, far river
+
+### 🤖 Claude — 2026-11-15T22:20:27.450Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/REQUESTS.md | grep wave5; npx tsc --noEmit && echo TSC_OK; timeout 900 node scripts/capture.mjs 05 04 07 --out=qa/pilot05/wave5/combined 2>&1 | tail -4", "description": "Typecheck and capture combined 05, 04 and 07", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T22:21:02.425Z
+
+> ↩︎ result: - wave5 foam-bubbles-particles → coordinator + water-fx-specialist + washer-environment-modeler (23:25 UTC): regression capture qa/pilot05/wave5/foam/regress/04.png (left) and 07.png (right) shows the stream-edge berm as a broad white sheet where screenshots/04.png / 07.png (21:41) show pink water + loose puffs. foam.ts is unchanged outside 05 (the wave-5 berm squash/narrowing is gated to s in [05.s0-6, 05.s1+4], identical geometry and rand() sequence elsewhere), so whatever used to cover the berm's under-water inner part (e -0.6..0 below the ribbon edge) changed since 1764258: waterRibbon.ts FRAG hunks or tube.ts/environment.ts. Please isolate (`--q=waterhide=foamBerm` vs the 1764258 shader) and restore the cover; details in qa/pilot05/wave5/foam/NOTES.md.
+> - washer-environment-modeler → coordinator (wave5, 22:30 UTC): 05 now ends in a forced-perspective far tunnel (environment.ts, ForcedTunnel in tube.ts) from sF05 = sCam05 + 54 (depth ≈53 from the checkpoint eye); real objects beyond ≈ depth 60 (coins, bubbles) are hidden behind it at the 05 checkpoint, so ≈5 coins show instead of the ref's ≈9–10. If you want the far coins, they must be placed through the same mapping (ft.point / …[+972 chars]
+
+### 🤖 Claude — 2026-11-15T22:21:05.056Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/triptych.py /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri_combined.png 1300 REF=references/05_flow_into_the_current.png BEFORE=qa/pilot05/wave5/baseline/05.png NOW=qa/pilot05/wave5/combined/05.png", "description": "Side-by-side of ref, baseline and combined 05"}`
+
+### 🧑 User — 2026-11-15T22:21:06.123Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri_combined.png (2225, 1342)
+
+### 🤖 Claude — 2026-11-15T22:21:07.622Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri_combined.png"}`
+
+### 🧑 User — 2026-11-15T22:21:09.598Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T22:21:09.590Z
+
+[Image: original 2225x1342, displayed at 2000x1206. Multiply coordinates by 1.11 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T22:21:23.528Z
+
+> 🔧 **Bash** `{"command": "git log -1 --format=%h -- screenshots/04.png; python3 scripts/triptych.py /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri_0407.png 900 REF04=references/04_through_the_five_arrows.png OLD04=screenshots/04.png NOW04=qa/pilot05/wave5/combined/04.png REF07=references/07_dive_the_washer_tube.png OLD07=screenshots/07.png NOW07=qa/pilot05/wave5/combined/07.png", "description": "Compare 04 and 07 before and after wave 5"}`
+
+### 🧑 User — 2026-11-15T22:21:24.609Z
+
+> ↩︎ result: c2770a4
+> /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri_0407.png (3092, 942)
+
+### 🤖 Claude — 2026-11-15T22:21:25.932Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri_0407.png"}`
+
+### 🧑 User — 2026-11-15T22:21:26.303Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T22:21:26.299Z
+
+[Image: original 3092x942, displayed at 2000x609. Multiply coordinates by 1.55 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T22:21:39.216Z
+
+> 🔧 **Bash** `{"command": "W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/wt && git worktree add -f --detach $W 1764258 2>&1 | tail -1 && cd $W && ln -s /home/user/rainbow-/node_modules node_modules && ls -la assets/models/ && git diff --stat 1764258 /dev/null 2>/dev/null | tail -1; cd /home/user/rainbow- && git diff --stat 1764258 HEAD -- src/ | tail -20", "description": "Create a scratch worktree at the session-start commit", "timeout": 180000}`
+
+### 🧑 User — 2026-11-15T22:21:39.877Z
+
+> ↩︎ result: HEAD is now at 1764258 autosave: Rainbow 2026-11-15 21:41 UTC
+> total 16
+> drwxr-xr-x 2 root root 4096 Nov 15 22:21 .
+> drwxr-xr-x 3 root root 4096 Nov 15 22:21 ..
+> -rw-r--r-- 1 root root  132 Nov 15 22:21 benny.glb
+> -rw-r--r-- 1 root root  132 Nov 15 22:21 rainbow_girl.glb
+>  src/characters/benny/benny-lab.ts |   4 +-
+>  src/characters/benny/build.ts     |  51 +++++++++---
+>  src/characters/benny/runtime.ts   |  19 ++++-
+>  src/characters/benny/textures.ts  |  25 ++++--
+>  src/vfx/foam.ts                   | 117 ++++++++++++++++++++------
+>  src/vfx/waterRibbon.ts            | 114 ++++++++++++++++---------
+>  src/world/environment.ts          | 169 ++++++++++++++++++++++++++++++--------
+>  src/world/materials.ts            |  81 ++++++++++++++++--
+>  src/world/tube.ts                 | 120 +++++++++++++++++++++++++--
+>  9 files changed, 572 insertions(+), 128 deletions(-)
+
+### 🤖 Claude — 2026-11-15T22:21:41.693Z
+
+The worktree got LFS pointer stubs instead of the real GLBs. Filling them in from the local LFS store (no download needed):
+
+### 🤖 Claude — 2026-11-15T22:21:43.797Z
+
+> 🔧 **Bash** `{"command": "W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/wt && cd $W && git lfs checkout assets/models/benny.glb assets/models/rainbow_girl.glb 2>&1 | tail -1; ls -la assets/models/; cd $W && timeout 900 node scripts/capture.mjs 04 07 --out=$W/../iso/base 2>&1 | tail -2", "description": "Restore real GLBs in worktree and capture baseline 04/07", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T22:22:05.783Z
+
+> ↩︎ result: Checking out LFS objects: 100% (2/2), 4.7 MB | 0 B/s, done.
+> total 4572
+> drwxr-xr-x 2 root root    4096 Nov 15 22:21 .
+> drwxr-xr-x 3 root root    4096 Nov 15 22:21 ..
+> -rw-r--r-- 1 root root 1123540 Nov 15 22:21 benny.glb
+> -rw-r--r-- 1 root root 3546480 Nov 15 22:21 rainbow_girl.glb
+>   '[07] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T22:22:08.251Z
+
+> 🔧 **Bash** `{"command": "W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/wt; cd $W && timeout 900 node scripts/capture.mjs 04 07 --out=$W/../iso/base 2>&1 | tail -15; ls $W/../iso/base", "description": "Show baseline worktree capture output", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T22:22:28.335Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 07 → /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/wt/../iso/base/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":213,"tris":643111,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> console errors: [
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[04] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[04] Failed to load resource: the server re …[+456 chars]
+
+### 🤖 Claude — 2026-11-15T22:22:34.241Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 scripts/triptych.py $S/tri_iso.png 800 START04=$S/iso/base/04.png NOW04=qa/pilot05/wave5/combined/04.png START07=$S/iso/base/07.png NOW07=qa/pilot05/wave5/combined/07.png; python3 -c \"import json;d=json.load(open('qa/capture_log.json'));[print(s['id'],s['stats'].get('calls'),s['stats'].get('triangles')) for s in d['shots']]\" 2>&1 | head", "description": "Side-by-side of session-start vs now for 04 and 07"}`
+
+### 🧑 User — 2026-11-15T22:22:34.840Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri_iso.png (1840, 842)
+> 05 143 634205
+> 04 154 736784
+> 07 237 669219
+
+### 🤖 Claude — 2026-11-15T22:22:36.381Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tri_iso.png"}`
+
+### 🧑 User — 2026-11-15T22:22:36.537Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:22:51.762Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cat > $S/glbinfo.py <<'EOF'\nimport json, struct, sys\nfor p in sys.argv[1:]:\n    b = open(p, 'rb').read()\n    n = struct.unpack('<I', b[12:16])[0]\n    j = json.loads(b[20:20+n])\n    prims = sum(len(m['primitives']) for m in j.get('meshes', []))\n    names = sorted(m.get('name','?') for m in j.get('meshes', []))\n    print(p, 'bytes', len(b), 'nodes', len(j.get('nodes',[])), 'meshes', len(j.get('meshes',[])), 'primitives', prims, 'materials', len(j.get('materials',[])))\n    print('   fur mesh …[+284 chars]`
+
+### 🧑 User — 2026-11-15T22:22:51.818Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/wt/assets/models/benny.glb bytes 1123540 nodes 39 meshes 25 primitives 25 materials 18
+>    fur meshes: []
+> assets/models/benny.glb bytes 1126892 nodes 39 meshes 25 primitives 25 materials 18
+>    fur meshes: []
+> 2: * Runtime Benny: loads the canonical assets/models/benny.glb, upgrades fur_* meshes to shell fur,
+> 85:    if (m.isMesh && m.name.startsWith('fur_') && m.userData?.fur) toReplace.push(m);
+> 89:    if (opts.furQuality === 'low') p.shells = Math.max(6, Math.round(p.shells * 0.6));
+> 234:  [/^fur_pom/, '#00ff00'],
+
+### 🤖 Claude — 2026-11-15T22:22:59.571Z
+
+Same structure in both GLBs (25 meshes, 18 materials), so Benny isn't the cause. Next I'll swap the environment specialist's three files into the session-start worktree and count 07's draw calls:
+
+### 🤖 Claude — 2026-11-15T22:23:03.020Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; W=$S/wt; cp src/world/tube.ts src/world/environment.ts src/world/materials.ts $W/src/world/ && cd $W && timeout 600 node scripts/capture.mjs 07 05 --out=$S/iso/env 2>&1 | grep \"→\"; git -C $W checkout -- src/world/; cp /home/user/rainbow-/src/vfx/foam.ts /home/user/rainbow-/src/vfx/waterRibbon.ts $W/src/vfx/ && cd $W && timeout 600 node scripts/capture.mjs 07 05 --out=$S/iso/vfx 2>&1 | grep \"→\"; git -C $W checkout -- src/vfx/", "description": "Isolate draw-call increase: env files vs VFX files" …[+21 chars]`
+
+### 🧑 User — 2026-11-15T22:23:46.167Z
+
+> ↩︎ result: 07 → /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/iso/env/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":237,"tris":669179,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/iso/env/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":144,"tris":634277,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/iso/vfx/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":213,"tris":643111,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/iso/vfx/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":120,"tris":608161,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T22:23:51.667Z
+
+> 🔧 **Bash** `{"command": "grep -n \"frustumCulled\" src/world/tube.ts src/world/environment.ts src/world/materials.ts | head -30; echo; git diff 1764258 HEAD -- src/world/environment.ts | grep -n \"^+.*frustumCulled\\|^+.*new THREE.Mesh\\|^+.*group.add\\|^+.*add(\" | head -30", "description": "Find objects with frustum culling disabled in env code"}`
+
+### 🧑 User — 2026-11-15T22:23:51.726Z
+
+> ↩︎ result: src/world/tube.ts:336:  mesh.frustumCulled = false;
+> src/world/tube.ts:401:  mesh.frustumCulled = false;
+> src/world/tube.ts:708:  imDome.frustumCulled = imRim.frustumCulled = false;
+> src/world/environment.ts:379:    for (const p of parts) { p.frustumCulled = false; p.name ||= 'tube05_far'; }
+> 
+> 96:+  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05 }));
+> 118:+  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
+> 152:+    const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
+> 155:+    const farRiver = new THREE.Mesh(ft.chordGeometry(level, 12, 64, 0.62), farRiverMaterial(glow05));
+> 185:+    const glow = new THREE.Mesh(new THREE.CircleGeometry(1, 48), glowMat);
+> 196:+    for (const p of parts) { p.frustumCulled = false; p.name ||= 'tube05_far'; }
+> 214:+    zones.tubes.add(...parts);
+
+### 🤖 Claude — 2026-11-15T22:23:53.030Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 300, "limit": 110}`
+
+### 🧑 User — 2026-11-15T22:23:53.049Z
+
+> ↩︎ result: 300	  // 05 (ref §5.5): flat round copper-gold lids ('slab' half-disc pucks standing out of the wall, seen from
+> 301	  // below at an angle), one symmetric pair per bay at mid-bay, ≈12° above the axis on both walls
+> 302	  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -24, size: 1.9, thickness: 0.42, stretch: 1.0, sink: 0.1 };
+> 303	  const lidMat05 = (key: string, virtual: boolean) => {
+> 304	    const m = withTubeStrips(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glow05, key, virtual), { ...strips, color: '#fff0d0', intensity: 0.8 }, 'instance', key);
+> 305	    m.emissive.set('#c86a18');
+> 306	    m.envMap = goldEnv05;
+> 307	    m.envMapIntensity = 1.35;
+> 308	    return m;
+> 309	  };
+> 310	  const lids05 = rings05.map((s) => s - bay05 / 2).filter((s) => s > s05 + 4);
+> 311	  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
+> 312	  // 06/07: legacy hoods, unchanged
+> 313	  const lids0607: number[] = [];
+> 314	  for (let s = s05 + ringPhase + ringSpacing * 0.5; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
+> 315	  zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpac …[+6765 chars]
+
+### 🤖 Claude — 2026-11-15T22:24:00.195Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow\\s*=\\|window.__rainbow\\|stats()\\|scene:\" src/game/Game.ts | head -12; grep -n \"export function buildRingsAt\\|export function buildWallLids\" -A12 src/world/tube.ts | grep -n \"InstancedMesh\\|new THREE.Mesh\\|return\\|frustum\" | head", "description": "Find QA scene hook and how rings/lids are built"}`
+
+### 🧑 User — 2026-11-15T22:24:00.233Z
+
+> ↩︎ result: 9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> 633:    stats() {
+> 639:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> 1:309:export function buildRingsAt(path: TubePath, list: number[], material: THREE.Material, opts: RingOpts = {}, spacing = 9): THREE.InstancedMesh {
+> 6:314-  const mesh = new THREE.InstancedMesh(geo, material, n);
+
+### 🤖 Claude — 2026-11-15T22:24:01.612Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 560, "limit": 85}`
+
+### 🧑 User — 2026-11-15T22:24:01.632Z
+
+> ↩︎ result: 560	      if (cp.mode === 'outro') {
+> 561	        startOutro();
+> 562	        settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+> 563	      } else {
+> 564	        // settle camera springs without moving Benny: run with speed frozen
+> 565	        const s0 = st.s;
+> 566	        for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+> 567	        rideCam.update(0, st.s, st.lat, camera, true);
+> 568	      }
+> 569	    }
+> 570	    // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+> 571	    const refId = (id.slice(0, 2) as StageId);
+> 572	    st.coins = course.stage(refId).refCoins || START_COINS;
+> 573	    hud.setCoins(st.coins);
+> 574	    hud.setHearts(5);
+> 575	    render();
+> 576	    dirty = false;
+> 577	    return { stage: st.stage, s: st.s, y: benny.root.position.y };
+> 578	  };
+> 579	
+> 580	  const api = {
+> 581	    ready: true,
+> 582	    checkpoints: Object.keys(CHECKPOINTS),
+> 583	    goto: gotoCheckpoint,
+> 584	    run(v = true) { running = v; last = performance.now(); },
+> 585	    unfreeze() { st.frozen = null; input.override = null; },
+> 586	    setSteer(v: number | null) { input.override = v; },
+> 587	    /** deterministic simulation: advance n steps o …[+3674 chars]
+
+### 🤖 Claude — 2026-11-15T22:24:14.466Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "    togglePause,\n    stats() {", "new_string": "    /** QA: which scene objects issue draw calls in one render (\"parent/name\" → calls), most first */\n    drawList() {\n      const hits = new Map<string, number>();\n      const hooked: [THREE.Object3D, THREE.Object3D['onAfterRender']][] = [];\n      scene.traverse((o) => {\n        if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoints && !(o as THREE.Line).isLine && !(o as THREE.Sprite).isSprite) return;\n        const prev = o.onAfterRender; …[+463 chars]`
+
+### 🧑 User — 2026-11-15T22:24:14.497Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:24:16.313Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC_OK; git diff --quiet 1764258 -- src/game/Game.ts; echo \"Game.ts changed since 1764258 besides my edit? diff lines: $(git diff 1764258 -- src/game/Game.ts | grep -c '^[+-][^+-]')\"", "description": "Typecheck and confirm Game.ts only has the QA hook change", "timeout": 200000}`
+
+### 🧑 User — 2026-11-15T22:24:18.544Z
+
+> ↩︎ result: TSC_OK
+> Game.ts changed since 1764258 besides my edit? diff lines: 15
+
+### 🤖 Claude — 2026-11-15T22:24:21.797Z
+
+Only my 15-line QA hook differs in `Game.ts` since session start, so I can copy it into the worktree and compare the draw lists for 07 and 05 in both trees:
+
+### 🤖 Claude — 2026-11-15T22:24:28.308Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export\" scripts/lib/pw.mjs | head; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cp src/game/Game.ts $S/wt/src/game/Game.ts; cat > $S/drawlist.mjs <<'EOF'\n// usage (cwd = a Rainbow checkout): node drawlist.mjs OUT.json 07 05\nimport { writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(process.cwd() + '/scripts/lib/pw.mjs').href);\nconst [out, ...ids] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = …[+1139 chars]`
+

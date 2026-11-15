@@ -629,6 +629,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
     },
+    /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+    drawList() {
+      const hits = new Map<string, number>();
+      const hooked: [THREE.Object3D, THREE.Object3D['onAfterRender']][] = [];
+      scene.traverse((o) => {
+        if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoints && !(o as THREE.Line).isLine && !(o as THREE.Sprite).isSprite) return;
+        const prev = o.onAfterRender;
+        const key = (o.parent?.name ? o.parent.name + '/' : '') + (o.name || o.type);
+        hooked.push([o, prev]);
+        o.onAfterRender = (...a: Parameters<THREE.Object3D['onAfterRender']>) => { hits.set(key, (hits.get(key) ?? 0) + 1); prev.apply(o, a); };
+      });
+      render();
+      for (const [o, prev] of hooked) o.onAfterRender = prev;
+      return [...hits.entries()].sort((a, b) => b[1] - a[1]);
+    },
     togglePause,
     stats() {
       const i = renderer.info;
