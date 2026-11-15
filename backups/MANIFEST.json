@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2445,
-   "sha256": "de1899ca353513510a6884669793f22f2c57cf46534b5fb350f7fd8c5f9e1b3e"
+   "sha256": "4497ba3f469e1c8e85afc6ef7f47b9b4e86ef644ca9fc6e0a5d18b2e0b022c1d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1685,6 +1685,16 @@
    "path": "src/world/tube.ts",
    "bytes": 18964,
    "sha256": "f789ab3f9180b73742528477b76434fd398d40cdae8e9ad50304d7536ae0a85b"
+  },
+  {
+   "path": "tools/blender/import_world_asset.py",
+   "bytes": 9612,
+   "sha256": "1ca6fa2399c519e520198a7c161ef386883a51665222fb099e1ba25efc72548a"
+  },
+  {
+   "path": "tools/blender/make_synthetic_tunnel.py",
+   "bytes": 1191,
+   "sha256": "07c456cfc39fe57741e4071ca9bf7b46ad14c49de65e02db2b7c538e01905e44"
   },
   {
    "path": "tools/model-lab.html",

@@ -3058,3 +3058,41 @@ Now I'll prepare the credit-free part of the Screen 05 pilot: the Marble → Ble
 > def wait(job_id, timeout=1800):
 >     dead …[+2805 chars]
 
+### 🤖 Claude — 2026-11-15T19:41:22.505Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/blender/import_world_asset.py", "content": "\"\"\"\nImport a World Labs export (Marble world GLB mesh / PLY splats, or an Atlas splats2Mesh GLB) into\nBlender, align it to the Rainbow tube convention, measure it, and write a light underlay for the\nenvironment modeler. It costs no World Labs credits: it only reads files you already exported.\n\n    blender -b --python tools/blender/import_world_asset.py -- \\\n        --in path/to/world.glb [--ply path/to/splats.ply] \\\n        --name marble05 [--target-radius 7.6] [--decimate 0.25] [--out-dir qa/world …[+9491 chars]`
+
+### 🧑 User — 2026-11-15T19:41:22.558Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/blender/import_world_asset.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:41:43.771Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/blender/import_world_asset.py'\ns=open(p).read()\ns=s.replace('''    \"\"\"Matrix taking world points to: axis -> -Y (Blender), which glTF export turns into -Z (Three.js forward).\"\"\"''',\n'''    \"\"\"Matrix taking world points to: axis -> +Y (Blender), which the Y-up glTF export turns into -Z (Three.js forward).\"\"\"''')\ns=s.replace('''    # rows: new X = right, new Y = -fwd ... Blender Z-up; glTF exporter converts +Y(blender)-> -Z(gltf)\n''','')\ns=s.replace('''    ap.add_argument(\"--no-preview\", action=\"store_true\")''','''    ap.add_argument …[+2802 chars]`
+
+### 🧑 User — 2026-11-15T19:41:55.112Z
+
+> ↩︎ result: SYNTH_OK /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/wltest/synthetic_tunnel.glb
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> IMPORT_OK {"scale_applied": 2.5343347302610186, "triangles": {"before_decimate": 345792, "after_decimate": 86448}, "outputs": {"underlay_glb": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/wltest/out/synth_underlay.glb", "blend": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/wltest/out/synth.blend", "preview": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/wltest/out/synth_preview.png"}}
+> radius_median 2.999 (expect ~3.0)
+> length 60.0 (expect ~59)
+> ring spacing 6.0 (expect ~6)
+> rings found 11
+> scale 2.534 (expect 7.6/3 = 2.533)
+> tris {'before …[+44 chars]
+
+### 🧑 User — 2026-11-15T19:41:57.526Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-15T19:41:57.551Z
+
+Save everything into my GitHub.
+
+### 🤖 Claude — 2026-11-15T19:42:00.213Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason \"manual:user-save-request\" --message \"Save all work: World Labs pipeline, Flow video fit, aspect test, Screen 05 specialist progress\" 2>&1 | tail -10; echo \"--- verify ---\"; echo \"local $(git rev-parse HEAD) on $(git branch --show-current)\"; git ls-remote --heads origin | sed 's/\\t/  /'; git status --porcelain | head", "description": "Commit and push all work, verify remote", "timeout": 300000}`
+
