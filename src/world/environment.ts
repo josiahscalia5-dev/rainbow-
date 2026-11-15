@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
 import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture } from './materials';
-import { buildTubeGeometry, buildRings, buildNozzles } from './tube';
+import { buildTubeGeometry, buildRings, buildNozzles, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -119,12 +119,13 @@ export function buildEnvironment(course: Course): Environment {
   let sChute0 = course.marks['02_drain'] - 3;
   while (course.sample(sChute0).pos.z > dA.zBack + 0.3 && sChute0 < course.stage('03').s0) sChute0 += 0.1;
   const sChute1 = course.stage('03').s0 + 3;
+  const chutePath = courseTubePath(course, () => 2.25, 0.55);
   const chute = new THREE.Mesh(
-    buildTubeGeometry(course, sChute0, sChute1, { radius: () => 2.25, depth: 0.55, radial: 36, step: 0.5, vScale: 1 }),
+    buildTubeGeometry(chutePath, sChute0, sChute1, { radial: 36, step: 0.5, vScale: 1 }),
     perforatedMetal({ color: '#e94ad0', slot: 0, repeatU: 22, repeatV: 1.6, holeSize: 0.38 }),
   );
   zones.drumA.add(chute);
-  zones.drumA.add(buildRings(course, sChute0 + 1.5, sChute1 - 1, 3.2, () => 2.25, goldMat, { depth: 0.55, tube: 0.09 }));
+  zones.drumA.add(buildRings(chutePath, sChute0 + 1.5, sChute1 - 1, 3.2, goldMat, { tube: 0.09 }));
 
   // =====================================================================================
   // Whirlpool basin room (03) + backdrop shared with 04
@@ -163,35 +164,41 @@ export function buildEnvironment(course: Course): Environment {
   // =====================================================================================
   const s04 = course.stage('04').s0, s05 = course.stage('05').s0;
   const tubeR = (s: number) => course.prop('tube', s);
-  const r04 = (s: number) => tubeR(s) + 2.6 * (1 - sm(s04 - 3, s04 + 7, s));
-  const goldPipe = new THREE.Mesh(buildTubeGeometry(course, s04 - 3, s05, { radius: r04, depth: 0.9, radial: 56, step: 0.4 }), goldRibbed(1.25));
+  // the pipe mouth is the drain hole itself: narrow at the lip, opening up as it dives
+  const r04 = (s: number) => THREE.MathUtils.lerp(WORLD.basin.drainRadius + 0.2, tubeR(s), sm(s04 - 1, s04 + 9, s));
+  const goldPath = courseTubePath(course, r04, (s) => THREE.MathUtils.lerp(WORLD.basin.drainRadius * 0.75, 0.9, sm(s04, s04 + 9, s)));
+  const goldPipe = new THREE.Mesh(buildTubeGeometry(goldPath, s04 - 0.6, s05, { radial: 56, step: 0.4 }), goldRibbed(1.25));
   zones.tubes.add(goldPipe);
-  zones.tubes.add(buildRings(course, s04 - 2.5, s05 - 1, 1.6, r04, goldMat, { tube: 0.05, inset: 0.02 }));
+  zones.tubes.add(buildRings(goldPath, s04 - 0.4, s05 - 1, 1.6, goldMat, { tube: 0.05, inset: 0.02 }));
   // big mouth rings at the drain
   for (let i = 0; i < 4; i++) {
-    const s = s04 - 2.6 + i * 0.6;
-    zones.tubes.add(buildRings(course, s, s + 0.01, 1, (ss) => r04(ss) + 0.5 + i * 0.25, goldMat, { tube: 0.07 }));
+    const s = s04 - 0.5 + i * 0.35;
+    zones.tubes.add(buildRings(goldPath, s, s + 0.01, 1, goldMat, { tube: 0.07, extra: 0.4 + i * 0.22 }));
   }
 
   // =====================================================================================
   // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
   // =====================================================================================
   const s08 = course.stage('08').s0;
+  const pinkFlow = pinkFlowMaterial();
   const perfTubeMat = perforatedMetal({ color: '#c73fd9', emissive: '#8a1fb0', emissiveIntensity: 0.3, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.46, streaks: 0.5 });
-  // split into chunks so frustum culling works
+  // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
+  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
   const chunk = 40;
   for (let a = s05; a < s08; a += chunk) {
-    const b = Math.min(s08 + 0.6, a + chunk + 0.6);
-    const m = new THREE.Mesh(buildTubeGeometry(course, a, b, { radius: tubeR, depth: 0.9, radial: 64, step: 0.6 }), perfTubeMat);
-    zones.tubes.add(m);
+    const b = Math.min(s08 + 0.0, a + chunk + 0.6);
+    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6 }), perfTubeMat));
+    // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
+    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6 }), pinkFlow.material));
   }
   // gold junction ring 04→05
-  zones.tubes.add(buildRings(course, s05, s05 + 0.01, 1, (s) => tubeR(s) - 0.2, goldMat, { tube: 0.08 }));
+  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, goldMat, { tube: 0.08, inset: 0.2 }));
   // thick double gold ribs
-  zones.tubes.add(buildRings(course, s05 + 3, s08 - 1, 6, tubeR, goldMat, { tube: 0.055, double: true }));
+  zones.tubes.add(buildRings(perfPath, s05 + 3, s08 - 1, 6, goldMat, { tube: 0.055, double: true }));
   // wall lids / nozzles
   const lidMat = gold({ color: '#f0a040', roughness: 0.25, emissive: 0.35 });
-  zones.tubes.add(buildNozzles(course, s05 + 6, s08 - 6, 8.5, tubeR, lidMat, goldMat, { angleDeg: 30, size: 1.9 }));
+  zones.tubes.add(buildNozzles(perfPath, s05 + 6, s08 - 6, 8.5, lidMat, goldMat, { angleDeg: 34, size: 1.9 }));
+  animated.push(pinkFlow.update);
 
   // =====================================================================================
   // Final Spin Chamber (08–11)
@@ -204,8 +211,8 @@ export function buildEnvironment(course: Course): Environment {
   const chamberMat = perforatedMetal({ color: '#cf45dc', emissive: '#9a24b8', emissiveIntensity: 0.3, slot: 1, repeatU: 92, repeatV: 22, holeSize: 0.46, streaks: 0.45 });
   zones.chamber.add(new THREE.Mesh(chamberGeo, chamberMat));
   // back wall with the 07 inlet hole
-  const inletC = course.pointAt(s08 - 0.2, 0, course.prop('tube', s08 - 0.2) - 0.9);
-  const inletR = course.prop('tube', s08 - 0.2);
+  const inletC = tubeCenterAt(perfPath, s08 - 0.05);
+  const inletR = perfPath.radius(s08 - 0.05);
   const cb = new THREE.Shape();
   cb.absarc(C.center.x, C.center.y, C.radius, 0, Math.PI * 2, false);
   const inHole = new THREE.Path();
@@ -510,4 +517,22 @@ function buildShirt(): THREE.Group {
   const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: tex, roughness: 0.85, emissive: '#e03a98', emissiveIntensity: 0.3 }));
   g.add(mesh);
   return g;
+}
+
+/** glossy hot-pink flowing water sheet (scrolling streak texture) for tube floors */
+function pinkFlowMaterial() {
+  const tex = canvasTexture(256, 512, (c, w, h) => {
+    const g = c.createLinearGradient(0, 0, w, 0);
+    g.addColorStop(0, '#c81f9c'); g.addColorStop(0.5, '#ff4fc0'); g.addColorStop(1, '#c81f9c');
+    c.fillStyle = g; c.fillRect(0, 0, w, h);
+    for (let i = 0; i < 260; i++) {
+      const x = Math.random() * w, y = Math.random() * h, l = 20 + Math.random() * 90;
+      c.strokeStyle = Math.random() > 0.35 ? 'rgba(255,190,240,0.55)' : 'rgba(120,230,255,0.45)';
+      c.lineWidth = 1 + Math.random() * 3;
+      c.beginPath(); c.moveTo(x, y); c.bezierCurveTo(x + 8, y + l * 0.3, x - 8, y + l * 0.6, x + 3, y + l); c.stroke();
+    }
+  });
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  const material = new THREE.MeshStandardMaterial({ map: tex, emissiveMap: tex, emissive: '#ff3fb8', emissiveIntensity: 0.35, metalness: 0.2, roughness: 0.12, envMapIntensity: 1.4, side: THREE.DoubleSide });
+  return { material, update: (t: number) => { tex.offset.y = -t * 0.9; } };
 }

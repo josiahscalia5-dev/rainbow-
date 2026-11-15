@@ -45,7 +45,7 @@ export function eyeTexture(): THREE.CanvasTexture {
   ctx.fillStyle = sg;
   ctx.fillRect(0, 0, S, S);
   // iris
-  const R = S * 0.24;
+  const R = S * 0.3;
   const ig = ctx.createRadialGradient(cx, cy + R * 0.25, R * 0.15, cx, cy, R);
   ig.addColorStop(0, '#c98a4a');
   ig.addColorStop(0.45, '#8a4b22');
@@ -73,6 +73,12 @@ export function eyeTexture(): THREE.CanvasTexture {
   ctx.beginPath();
   ctx.arc(cx, cy, R, 0, Math.PI * 2);
   ctx.fill();
+  // soft shadow cast by the upper lid / lashes across the top of the whole eye
+  const ls = ctx.createLinearGradient(0, cy - S * 0.42, 0, cy - S * 0.12);
+  ls.addColorStop(0, 'rgba(60,20,30,0.55)');
+  ls.addColorStop(1, 'rgba(60,20,30,0)');
+  ctx.fillStyle = ls;
+  ctx.fillRect(0, 0, S, cy);
   // pupil
   ctx.fillStyle = '#140703';
   ctx.beginPath();

@@ -7,7 +7,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GirlRuntime } from '../types';
 
 const ONCE = new Set(['dropLoad', 'closeDoor', 'leanReachTowel', 'blink']);
-const EYELID_CLOSED_X = THREE.MathUtils.degToRad(84);
 
 export async function loadGirl(url = new URL('../../../assets/models/rainbow_girl.glb', import.meta.url).href): Promise<GirlRuntime> {
   const gltf = await new GLTFLoader().loadAsync(url);
@@ -25,7 +24,8 @@ export async function loadGirl(url = new URL('../../../assets/models/rainbow_gir
     const mat = m.material as THREE.MeshStandardMaterial;
     if (m.name.startsWith('eyeball')) {
       // glossy wet eyes
-      const phys = new THREE.MeshPhysicalMaterial({ map: mat.map, roughness: 0.05, clearcoat: 1, clearcoatRoughness: 0.03 });
+      // glossy but not mirror-like (a mirror clearcoat picks up big coloured env panels)
+      const phys = new THREE.MeshPhysicalMaterial({ map: mat.map, roughness: 0.42, clearcoat: 0.25, clearcoatRoughness: 0.35, envMapIntensity: 0.15 });
       m.material = phys;
     } else if (m.name === 'face_decal') {
       mat.depthWrite = false;
@@ -42,10 +42,10 @@ export async function loadGirl(url = new URL('../../../assets/models/rainbow_gir
   for (const clip of gltf.animations) actions.set(clip.name, mixer.clipAction(clip));
   let current: THREE.AnimationAction | null = null;
 
-  const lidL = model.getObjectByName('eyelidL')!;
-  const lidR = model.getObjectByName('eyelidR')!;
-  const restL = lidL.rotation.x;
-  const restR = lidR.rotation.x;
+  // blink lids are morph-target meshes (behind the eye openings): influence 0 = open, 1 = closed
+  const lids = ['eyelidL', 'eyelidR']
+    .map((n) => model.getObjectByName(n) as THREE.Mesh | undefined)
+    .filter((m): m is THREE.Mesh => !!m && !!m.morphTargetInfluences);
   let t = 0;
   let nextBlink = 1.2 + Math.random() * 2;
   let blinkStart = -10;
@@ -85,8 +85,8 @@ export async function loadGirl(url = new URL('../../../assets/models/rainbow_gir
     }
     const b = (t - blinkStart) / 0.2;
     const k = b >= 0 && b <= 1 ? Math.sin(Math.PI * b) : 0;
-    lidL.rotation.x = restL + (EYELID_CLOSED_X - restL) * k;
-    lidR.rotation.x = restR + (EYELID_CLOSED_X - restR) * k;
+    // the explicit 'blink' clip drives the morph itself; otherwise blink procedurally
+    if (current?.getClip().name !== 'blink') for (const lid of lids) lid.morphTargetInfluences![0] = k;
   };
 
   return {

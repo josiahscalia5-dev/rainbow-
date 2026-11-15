@@ -124,10 +124,12 @@ function buildRoute(): RouteData {
   seg(14, (t) => chute.getPoint(t));
   push(spiralStart);
   mark('03');
-  // ---- 03: whirlpool twirl — one inward turn down the funnel, ending heading -Z into the drain ----
-  seg(44, (t) => {
-    const th = -Math.PI / 2 - Math.PI * 2 * t; // decreasing angle; tangent = (-cos, +sin)
-    const r = 9.6 + (2.8 - 9.6) * (1 - Math.pow(1 - t, 1.25));
+  // ---- 03: whirlpool twirl — 3/4 inward turn down the funnel that dives into the drain CENTRE ----
+  // decreasing angle from the -X side (θ=-π/2) round the far and right sides to the near (+Z) side;
+  // r shrinks as (1-t)^1.6 so the last stretch heads radially inward = straight -Z into the drain hole.
+  seg(60, (t) => {
+    const th = -Math.PI / 2 - Math.PI * 1.5 * (1 - (1 - t) * (1 - t)); // angle eases out → radial finish
+    const r = 9.6 * Math.pow(1 - t, 0.9);
     return V(b.center.x + r * Math.sin(th), funnelY(r) + 0.25, b.center.z + r * Math.cos(th));
   });
   mark('04');
@@ -154,14 +156,14 @@ function buildRoute(): RouteData {
   // ---- 05: horizontal S-shaped current in the perforated tube ----
   const s5 = pts[pts.length - 1].clone();
   seg(36, (t) =>
-    V(s5.x + 6.5 * Math.sin(2 * Math.PI * t) * Math.sin(Math.PI * t), s5.y - 3 * t, s5.z - 72 * t),
+    V(s5.x + 3.4 * Math.sin(2 * Math.PI * t) * Math.sin(Math.PI * t), s5.y - 3 * t, s5.z - 72 * t),
   );
   mark('06');
   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
   const s6 = pts[pts.length - 1].clone();
   seg(34, (t) =>
     V(
-      s6.x - 4 * Math.sin(Math.PI * t) + 12 * smooth(0.4, 1, t),
+      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),
       s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),
       s6.z - 46 * t,
     ),
@@ -170,7 +172,7 @@ function buildRoute(): RouteData {
   // ---- 07: winding washer tube (the visible stretch) ----
   const s7 = pts[pts.length - 1].clone();
   seg(32, (t) =>
-    V(s7.x + 5.5 * Math.sin(3 * Math.PI * t) * Math.sin(Math.PI * t), s7.y + (WORLD.plunge.topY - s7.y) * t, s7.z - 60 * t),
+    V(s7.x + 3.2 * Math.sin(3 * Math.PI * t) * Math.sin(Math.PI * t), s7.y + (WORLD.plunge.topY - s7.y) * t, s7.z - 60 * t),
   );
   mark('07_plunge_top');
   // ---- 07: THE DEEP PLUNGE — pull-down arc, long -70° straight, pull-up arc into the 08 inlet ----

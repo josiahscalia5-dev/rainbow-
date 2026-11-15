@@ -113,8 +113,8 @@
   },
   {
    "path": "assets/models/rainbow_girl.glb",
-   "bytes": 3436472,
-   "sha256": "fe57b519e32231adacbd11d68eb9841415f08e2858ba272f37e4f4d4fd5c8c3d"
+   "bytes": 3546480,
+   "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -124,7 +124,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "924a8dcc2887ab975f290b6d484d87a41b01ea85f0baf7f7248e6b484197c684"
+   "sha256": "070867911f6ec6cbfaf0a897ee07e2abf57741a0ae3451cf5cc8e75d63703c72"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -192,24 +192,34 @@
    "sha256": "c3ae2223d3861b1f5e39bc332b526a3c3f33f9040e8902047890f1060c94c3c4"
   },
   {
+   "path": "docs/characters/girl.md",
+   "bytes": 6780,
+   "sha256": "01536384192b8fa1caca70f36cdc10709b96dc04d91ea6e0783d3d316629a8f2"
+  },
+  {
+   "path": "docs/characters/girl_face_closeup_lean_glb.png",
+   "bytes": 1004089,
+   "sha256": "4b6f916f40e4bae50bc1dd76b32539bf77b1f46e3b23138fbdfef512f88d8192"
+  },
+  {
    "path": "docs/characters/girl_turntable.png",
-   "bytes": 427605,
-   "sha256": "db08b941c91f563d1a12996c9d2a2ca258629e5bc2f8fd6fcafa5b0f5d135d7a"
+   "bytes": 428088,
+   "sha256": "267966ae0c9b5ac2bc834254df6913365d109d300c573c75426cc57573a8d7aa"
   },
   {
    "path": "docs/characters/girl_turntable_anim_leanReachTowel_t_1_6.png",
-   "bytes": 433389,
-   "sha256": "990e640fdd87f05e7e01571ca2beffd61a09421424362fc8b96608f68a588492"
+   "bytes": 433254,
+   "sha256": "c366c42f29aae262ab43ff191eee915b16ebf1eab4e3933ee42c390df2a80ead"
   },
   {
    "path": "docs/characters/girl_turntable_anim_walk_t_0_3.png",
-   "bytes": 432555,
-   "sha256": "06480cd0f45a26146ecbc2d733d620e5c1542a74ebbc16f4b79f7abfa1fa8c96"
+   "bytes": 432809,
+   "sha256": "7d1f690854d7fe962f12a4b6d36a74e7544507eae6c31b3ea5db83e5f81bc97a"
   },
   {
    "path": "docs/path_graph.md",
-   "bytes": 4605,
-   "sha256": "16a7e0136effe382f020fb0d93259f74c8a4aa9a1d634553631400438cf57981"
+   "bytes": 4602,
+   "sha256": "80f11a765d02dce638b26346a914db464a499884a5fbc4e9cbb5c5a2fea7b495"
   },
   {
    "path": "docs/vfx/water.md",
@@ -328,13 +338,13 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 4061,
-   "sha256": "870d05ca072de52428c5ed4666042121093e4634dd2ab30c879bf7338cb34dae"
+   "bytes": 11129,
+   "sha256": "d7ef314de3f8f2c4e7ba3128c7a1821b53ed54100b6a34c3de52f74268fddf42"
   },
   {
    "path": "qa/continuity_report.json",
-   "bytes": 2672,
-   "sha256": "d38220f3e93c23e7281ee87f2bd912c3b80e1c5b9a1f769765990d4ec994f9c9"
+   "bytes": 2667,
+   "sha256": "98ef52741487ff330391ab9ee47e34f511d4d5085ec8465aba0381e149700621"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -488,8 +498,8 @@
   },
   {
    "path": "src/characters/girl/build.ts",
-   "bytes": 45482,
-   "sha256": "7498105940a2bc66ba8a3cf7e201d04c0849b39365648b8dbf139af262547b67"
+   "bytes": 48574,
+   "sha256": "c749e2b3bbd9cba11ab60a85f8b9681678e951685c25f8fb3f261edb810e1e59"
   },
   {
    "path": "src/characters/girl/girl-lab.html",
@@ -503,13 +513,13 @@
   },
   {
    "path": "src/characters/girl/runtime.ts",
-   "bytes": 3470,
-   "sha256": "a09542561652b6ed848b6fc49e93e190b51f930e6784f2b0fe4ee98057ec6150"
+   "bytes": 3710,
+   "sha256": "0b250e57f977178ea454645f3f50724432d8dd3041e9a575694a3c561940e3db"
   },
   {
    "path": "src/characters/girl/textures.ts",
-   "bytes": 9914,
-   "sha256": "ecd30b1986e120fa12e3e848d4c3d031fc6d4199d263adca102e848ff52a33b1"
+   "bytes": 10206,
+   "sha256": "9398e5103e5b9ffce7f393c6411acf9e06fee7ecc114475a3e76444fd949a531"
   },
   {
    "path": "src/characters/types.ts",
@@ -613,13 +623,13 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 20334,
-   "sha256": "409b67a35db04f88df6259459c53b651e994ecfbc515f9321f81a09aeb0816d0"
+   "bytes": 20566,
+   "sha256": "079813ae7a038aa82c1488c756f835ac0fafbb130921073a8fdc442bdecbc247"
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 27250,
-   "sha256": "a34a4b4c95c093f16d0d8a7caee23c78c0d3a491fefbe65548b1ff8da6904f1d"
+   "bytes": 29001,
+   "sha256": "20b44455beb6f0d453508654eb90ca662b051e706974b9e694ab8043fb5a16af"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -638,8 +648,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 6370,
-   "sha256": "03ce98b290d8907560359d6726f45c902d7057c32393826af5c3dd6f342b5ec1"
+   "bytes": 9994,
+   "sha256": "5c224daf3b4b400d483bd901b651a9393f34b78a40647a966f3e4e8547847dd0"
   },
   {
    "path": "tools/model-lab.html",

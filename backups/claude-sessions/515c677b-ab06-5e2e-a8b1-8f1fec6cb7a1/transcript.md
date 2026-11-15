@@ -2387,3 +2387,141 @@ Now the 03 whirlpool camera: high on the near side looking -Z toward the backdro
 > bl [(2.54, 'Mesh<foam_banks<water_system<Scene', [-2.65, -7.93, -13.71]), (8.98, 'water_whirlpool<water_system<Scene', [-4.25, -13.82, -15.75]), (9.56, 'Mesh<zone_basin<washer_world<Scene', [-4.4, -14.35, -15.93])]
 > br [(5.33, 'Mesh<zone_tubes<washer_world<Scene', [-0.74, -10.48, -14.64]), (7.29, 'Mesh<zone_tubes<washer_world<Scene', [-0.27, -12.28, -15.27]), (12.61, 'water_ribbon<water_system<Scene', [0.99, -17.14, -16.99])]
 
+### 🤖 Claude — 2026-11-15T17:20:52.877Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/course.ts", "offset": 118, "limit": 30}`
+
+### 🧑 User — 2026-11-15T17:20:52.894Z
+
+> ↩︎ result: 118	  // chute from drum A back drain down into the whirlpool basin rim
+> 119	  const b = WORLD.basin;
+> 120	  const spiralStart = V(b.center.x - 9.6, funnelY(9.6) + 0.25, b.center.z);
+> 121	  const c0 = pts[pts.length - 1].clone();
+> 122	  const chuteCtrl = [c0, V(-0.6, -5.6, -7.6), V(-3.2, -7.8, -10.4), V(-6.6, -9.8, -14.2), spiralStart.clone().add(V(0, 0.15, 2.4))];
+> 123	  const chute = new THREE.CatmullRomCurve3(chuteCtrl, false, 'centripetal');
+> 124	  seg(14, (t) => chute.getPoint(t));
+> 125	  push(spiralStart);
+> 126	  mark('03');
+> 127	  // ---- 03: whirlpool twirl — one inward turn down the funnel, ending heading -Z into the drain ----
+> 128	  seg(44, (t) => {
+> 129	    const th = -Math.PI / 2 - Math.PI * 2 * t; // decreasing angle; tangent = (-cos, +sin)
+> 130	    const r = 9.6 + (2.8 - 9.6) * (1 - Math.pow(1 - t, 1.25));
+> 131	    return V(b.center.x + r * Math.sin(th), funnelY(r) + 0.25, b.center.z + r * Math.cos(th));
+> 132	  });
+> 133	  mark('04');
+> 134	  // ---- 04: five-arrow slide — steep straight drop (≈32°) inside the gold ring pipe ----
+> 135	  const s4 = pts[pts.length - 1].clone();
+> 136	  const pitch4 = THREE.MathUtils.degToRad(32);
+> 137	  const d4 = V(0, -Math.sin(pitch4), -Math.cos(pitch4)); …[+451 chars]
+
+### 🤖 Claude — 2026-11-15T17:21:12.718Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"\"\"  // ---- 03: whirlpool twirl — one inward turn down the funnel, ending heading -Z into the drain ----\n  seg(44, (t) => {\n    const th = -Math.PI / 2 - Math.PI * 2 * t; // decreasing angle; tangent = (-cos, +sin)\n    const r = 9.6 + (2.8 - 9.6) * (1 - Math.pow(1 - t, 1.25));\n    return V(b.center.x + r * Math.sin(th), funnelY(r) + 0.25, b.center.z + r * Math.cos(th));\n  });\"\"\"\nnew=\"\"\"  // ---- 03: whirlpool twirl — 3/4 inward turn down the funnel that dives into the drain CENTRE ----\n  // decreasi …[+1576 chars]`
+
+### 🧑 User — 2026-11-15T17:21:14.636Z
+
+> ↩︎ result: ok
+>  "ok": false,
+>   "entryAltitude07": -48.54,
+>    "y": -52.32
+>    "y": -83.58
+>    "y": -113.49
+>    "y": -113.5
+>   "verticalDrop": 61.18,
+>  "maxStepTangentDeg": 28.84,
+> s=41.00 stage=03 dT=8.0
+> s=41.25 stage=03 dT=6.0
+> s=45.00 stage=03 dT=4.0
+> s=56.75 stage=03 dT=4.3
+> s=57.00 stage=03 dT=5.9
+> s=57.25 stage=03 dT=10.1
+> s=57.50 stage=03 dT=15.5
+> s=57.75 stage=03 dT=12.3
+
+### 🤖 Claude — 2026-11-15T17:21:30.108Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"\"\"    const th = -Math.PI / 2 - Math.PI * 1.5 * t;\n    const r = 9.6 * Math.pow(1 - t, 1.6);\"\"\"\nnew=\"\"\"    const th = -Math.PI / 2 - Math.PI * 1.5 * (1 - (1 - t) * (1 - t)); // angle eases out → radial finish\n    const r = 9.6 * Math.pow(1 - t, 0.9);\"\"\"\nassert old in s; s=s.replace(old,new); open(p,'w').write(s); print('ok')\nEOF\nnpx vite-node scripts/continuity-test.ts 2>&1 | grep -E '\"ok\"|maxStep|verticalDrop' | head; npx vite-node /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fe …[+108 chars]`
+
+### 🧑 User — 2026-11-15T17:21:32.898Z
+
+> ↩︎ result: ok
+>  "ok": true,
+>   "verticalDrop": 61.18,
+>  "maxStepTangentDeg": 5.984,
+> s=41.00 stage=03 dT=4.5
+> s=66.00 stage=03 dT=4.0
+> s=66.25 stage=03 dT=4.1
+> s=66.50 stage=03 dT=4.2
+> s=66.75 stage=03 dT=4.3
+> s=67.00 stage=03 dT=4.3
+> s=67.25 stage=03 dT=4.5
+> s=67.50 stage=03 dT=4.8
+
+### 🤖 Claude — 2026-11-15T17:21:49.173Z
+
+Continuity passes again: 5.98° max ride step, 61.2-unit plunge. Now the straight-axis tube system:
+
+### 🤖 Claude — 2026-11-15T17:22:22.950Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "content": "/**\n * Tunnel geometry generated from course-aligned \"tube paths\", so walls, rings and nozzles follow the\n * 04 slide, the 06 arch and the full 07 plunge with no seams.\n *  - courseTubePath:   tube centred on the course itself (chute, gold ring pipe)\n *  - straightTubePath: tube on a low-pass-filtered axis of the course (05–07): the tunnel stays\n *    straight with concentric rings converging to one vanishing point (refs 05/07) while the stream\n *    winds inside it. Radius/depth adapt so the floor always stays below th …[+9702 chars]`
+
+### 🧑 User — 2026-11-15T17:22:23.161Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:22:29.907Z
+
+> 🔧 **Bash** `{"command": "grep -n \"buildTubeGeometry\\|buildRings\\|buildNozzles\\|const tubeR\\|const r04\\|inletC\\|inletR\\|import { buildTube\" src/world/environment.ts", "description": "Locate tube usages in environment.ts"}`
+
+### 🧑 User — 2026-11-15T17:22:29.935Z
+
+> ↩︎ result: 10:import { buildTubeGeometry, buildRings, buildNozzles } from './tube';
+> 123:    buildTubeGeometry(course, sChute0, sChute1, { radius: () => 2.25, depth: 0.55, radial: 36, step: 0.5, vScale: 1 }),
+> 127:  zones.drumA.add(buildRings(course, sChute0 + 1.5, sChute1 - 1, 3.2, () => 2.25, goldMat, { depth: 0.55, tube: 0.09 }));
+> 165:  const tubeR = (s: number) => course.prop('tube', s);
+> 166:  const r04 = (s: number) => tubeR(s) + 2.6 * (1 - sm(s04 - 3, s04 + 7, s));
+> 167:  const goldPipe = new THREE.Mesh(buildTubeGeometry(course, s04 - 3, s05, { radius: r04, depth: 0.9, radial: 56, step: 0.4 }), goldRibbed(1.25));
+> 169:  zones.tubes.add(buildRings(course, s04 - 2.5, s05 - 1, 1.6, r04, goldMat, { tube: 0.05, inset: 0.02 }));
+> 173:    zones.tubes.add(buildRings(course, s, s + 0.01, 1, (ss) => r04(ss) + 0.5 + i * 0.25, goldMat, { tube: 0.07 }));
+> 185:    const m = new THREE.Mesh(buildTubeGeometry(course, a, b, { radius: tubeR, depth: 0.9, radial: 64, step: 0.6 }), perfTubeMat);
+> 189:  zones.tubes.add(buildRings(course, s05, s05 + 0.01, 1, (s) => tubeR(s) - 0.2, goldMat, { tube: 0.08 }));
+> 191:  zones.tubes.add(buildRings(course, s05 + 3, s08 - 1, 6, tubeR, goldMat, { tube: 0.055, double: true }));
+>  …[+580 chars]
+
+### 🤖 Claude — 2026-11-15T17:22:56.709Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/environment.ts'; s=open(p).read()\nrep = [\n(\"import { buildTubeGeometry, buildRings, buildNozzles } from './tube';\",\n \"import { buildTubeGeometry, buildRings, buildNozzles, courseTubePath, straightTubePath, tubeCenterAt } from './tube';\"),\n(\"    buildTubeGeometry(course, sChute0, sChute1, { radius: () => 2.25, depth: 0.55, radial: 36, step: 0.5, vScale: 1 }),\",\n \"    buildTubeGeometry(chutePath, sChute0, sChute1, { radial: 36, step: 0.5, vScale: 1 }),\"),\n(\"  zones.drumA.add(buildRings(course, sChute0 + 1.5, sChute1 - 1, 3.2, () => 2.25 …[+5112 chars]`
+
+### 🧑 User — 2026-11-15T17:22:58.901Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T17:23:04.349Z
+
+Typecheck is clean. One fix: the pink flow should scroll forward with the current. Then a full 11-screen capture:
+
+### 🤖 Claude — 2026-11-15T17:23:07.352Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/update: (t: number) => { tex.offset.y = t \\* 0.9; }/update: (t: number) => { tex.offset.y = -t * 0.9; }/' src/world/environment.ts && grep -c \"offset.y = -t \\* 0.9\" src/world/environment.ts && S=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad && time (timeout 1500 node scripts/capture.mjs --out=$S/shots 2>&1 | grep \"→\" | cut -c1-60) && python3 -I scripts/compare.py --live $S/shots --sheet $S/sheet_all.png", "description": "Capture all 11 checkpoints and build contact sheet", "timeout": 1600000}`
+
+### 🧑 User — 2026-11-15T17:24:58.954Z
+
+> ↩︎ result: 1
+> 01 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 02 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 03 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 04 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 05 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 06 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 07 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 08 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 09 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 10 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 11 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-
+> 
+> real	1m50.359s
+> user	0m7.845s
+> sys	0m1.175s
+> sheet /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_all.png
+> [This command modified 1 file you've previously read: src/world/environment.ts. Call Read before editing.]
+

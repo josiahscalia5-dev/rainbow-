@@ -36,6 +36,20 @@ export function surfaceZ(x: number, y: number): number {
   return q > 0 ? Math.sqrt(q) * HEAD.c * kz(yn) : 0;
 }
 
+// eye openings (head-centre local): almond — rounder top, flatter happy bottom
+export const EYE = { cx: 1.12, cy: -0.22, rx: 0.7, ryT: 0.76, ryB: 0.56, uvHalf: 1.0 };
+function eyeEllipseValue(s: number, x: number, y: number) {
+  const dx = (x - s * EYE.cx) / EYE.rx;
+  const dy = (y - EYE.cy) / (y > EYE.cy ? EYE.ryT : EYE.ryB);
+  return dx * dx + dy * dy;
+}
+/** +1 / −1 if (x, y) lies inside the left / right eye opening, else 0 */
+function eyeOpeningSide(x: number, y: number) {
+  if (eyeEllipseValue(1, x, y) < 1) return 1;
+  if (eyeEllipseValue(-1, x, y) < 1) return -1;
+  return 0;
+}
+
 // ------------------------------------------------------------------ materials
 function std(color: string, rough = 0.6, metal = 0, extra: Partial<THREE.MeshStandardMaterialParameters> = {}) {
   return new THREE.MeshStandardMaterial({ color, roughness: rough, metalness: metal, ...extra });
@@ -193,8 +207,6 @@ export const ANIM_JOINTS = [
 type JointName = (typeof ANIM_JOINTS)[number];
 type Pose = Partial<Record<JointName, [number, number, number]>>;
 
-export const EYELID_REST_X = THREE.MathUtils.degToRad(-24);
-export const EYELID_CLOSED_X = THREE.MathUtils.degToRad(84);
 
 export function buildGirl(): BuiltModel {
   const scene = new THREE.Group();
@@ -242,7 +254,7 @@ export function buildGirl(): BuiltModel {
     hairDark: std('#54321e', 0.55, 0, { map: hairTex }),
     brow: std('#4a2312', 0.6),
     lash: std('#24100a', 0.5),
-    eye: std('#ffffff', 0.08, 0, { map: eyeTexture() }),
+    eye: std('#ffffff', 0.42, 0, { map: eyeTexture() }),
     face: new THREE.MeshStandardMaterial({ map: faceTexture(), transparent: true, roughness: 0.55, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }),
     hoodie: std('#ffffff', 0.85, 0, { map: stripes }),
     rib: std('#ffffff', 0.9, 0, { map: ribTex }),
@@ -267,14 +279,35 @@ export function buildGirl(): BuiltModel {
   // ================================================================== HEAD
   const hc = addJoint('headCenter', 'head', HEAD_CENTER);
   void hc;
-  // skull / face
+  // skull / face — with real almond eye openings (boundary snapped exactly onto the opening curve)
   {
-    const g = new THREE.SphereGeometry(1, 48, 34);
+    const g = new THREE.SphereGeometry(1, 84, 60);
     const p = g.getAttribute('position') as THREE.BufferAttribute;
     for (let i = 0; i < p.count; i++) {
       const q = headPoint(p.getX(i), p.getY(i), p.getZ(i));
       p.setXYZ(i, q.x, q.y, q.z);
     }
+    const index = g.getIndex()!;
+    const keepTri: number[] = [];
+    const usedKeep = new Uint8Array(p.count), usedCut = new Uint8Array(p.count);
+    for (let i = 0; i < index.count; i += 3) {
+      const ia = index.getX(i), ib = index.getX(i + 1), ic = index.getX(i + 2);
+      const cx = (p.getX(ia) + p.getX(ib) + p.getX(ic)) / 3;
+      const cy = (p.getY(ia) + p.getY(ib) + p.getY(ic)) / 3;
+      const cz = (p.getZ(ia) + p.getZ(ib) + p.getZ(ic)) / 3;
+      const cut = cz > 0.8 && eyeOpeningSide(cx, cy) !== 0;
+      for (const v of [ia, ib, ic]) (cut ? usedCut : usedKeep)[v] = 1;
+      if (!cut) keepTri.push(ia, ib, ic);
+    }
+    for (let v = 0; v < p.count; v++) {
+      if (!(usedKeep[v] && usedCut[v])) continue;
+      const x = p.getX(v), y = p.getY(v);
+      const s = Math.sign(x) || 1;
+      const k = 1 / Math.sqrt(eyeEllipseValue(s, x, y));
+      const nx = s * EYE.cx + (x - s * EYE.cx) * k, ny = EYE.cy + (y - EYE.cy) * k;
+      p.setXYZ(v, nx, ny, surfaceZ(nx, ny));
+    }
+    g.setIndex(keepTri);
     g.computeVertexNormals();
     put('headCenter', g, M.skin, HEAD_CENTER, undefined, 'head_skin');
   }
@@ -317,63 +350,89 @@ export function buildGirl(): BuiltModel {
     const hoop = new THREE.TorusGeometry(0.46, 0.085, 10, 32);
     put('headCenter', hoop, M.gold, HEAD_CENTER.clone().add(V(ex + s * 0.18, -1.38, 0.0)), new THREE.Euler(0, Math.PI / 2, 0), s > 0 ? 'hoopL' : 'hoopR');
   }
-  // eyes: socket (non-uniform scale) → eye joint (gaze) → eyeball ; socket → eyelid joint → lid + lashes
-  const EYE_R = 0.8;
+  // eyes: face-conforming eye surface set just behind each opening (planar iris UVs),
+  // blink lid = skin patch behind the opening with a 'blink' morph target, lash line along the top edge
   for (const s of [1, -1]) {
     const side = s > 0 ? 'L' : 'R';
-    const ex = s * 1.1, ey = -0.2;
-    const ez = surfaceZ(ex, ey) - 0.38; // deep + flat: visible opening ≈ 1.35 × 1.6, shallow dome
-    const sockW = HEAD_CENTER.clone().add(V(ex, ey, ez));
-    const sock = addJoint(`eyeSocket${side}`, 'headCenter', sockW);
-    sock.scale.set(1.3, 1.55, 0.62);
-    sock.rotation.y = s * 0.12; // eyes follow the face curvature slightly
-    const eyeJ = new THREE.Object3D();
-    eyeJ.name = `eye${side}`;
-    sock.add(eyeJ);
-    J[eyeJ.name] = eyeJ;
-    // eyeball with planar front UVs
-    const eg = new THREE.SphereGeometry(EYE_R, 32, 24);
-    const ep = eg.getAttribute('position');
-    const euv = eg.getAttribute('uv') as THREE.BufferAttribute;
-    for (let i = 0; i < ep.count; i++) euv.setXY(i, ep.getX(i) / EYE_R / 2 + 0.5, ep.getY(i) / EYE_R / 2 + 0.5);
-    const eye = new THREE.Mesh(eg, M.eye);
-    eye.name = `eyeball${side}`;
-    eyeJ.add(eye);
-    // upper lid: skin hemisphere cap that rotates down to blink
-    const lidJ = new THREE.Object3D();
-    lidJ.name = `eyelid${side}`;
-    lidJ.rotation.x = EYELID_REST_X;
-    sock.add(lidJ);
-    J[lidJ.name] = lidJ;
-    const lid = new THREE.Mesh(new THREE.SphereGeometry(EYE_R * 1.03, 28, 10, 0, TAU, 0, Math.PI / 2), M.lid);
-    lid.name = `lid${side}`;
-    lidJ.add(lid);
-    const lowJ = new THREE.Object3D();
-    lowJ.name = `lowerLid${side}`;
-    lowJ.rotation.x = THREE.MathUtils.degToRad(34);
-    sock.add(lowJ);
-    const low = new THREE.Mesh(new THREE.SphereGeometry(EYE_R * 1.025, 28, 8, 0, TAU, Math.PI / 2, Math.PI / 2), M.lid);
-    low.name = `lowLid${side}`;
-    lowJ.add(low);
-    // lash line along the lid rim (front half) + outer-corner flicks
-    const rim = EYE_R * 1.06;
-    const pts: THREE.Vector3[] = [];
-    for (let k = 0; k <= 16; k++) {
-      const phi = Math.PI * (0.1 + 0.8 * (k / 16));
-      pts.push(V(Math.cos(phi) * rim, 0.02, Math.sin(phi) * rim));
+    const ecx = s * EYE.cx, ecy = EYE.cy;
+    const eyeJ = addJoint(`eye${side}`, 'headCenter', HEAD_CENTER.clone().add(V(ecx, ecy, surfaceZ(ecx, ecy) - 0.07)));
+    // eye surface
+    {
+      const nx = 26, ny = 26, pad = 0.2;
+      const x0 = ecx - EYE.rx - pad, x1 = ecx + EYE.rx + pad, y0 = ecy - EYE.ryB - pad, y1 = ecy + EYE.ryT + pad;
+      const pos: number[] = [], uv: number[] = [], idx: number[] = [];
+      const o = eyeJ.position.clone().add(JW['headCenter']).sub(HEAD_CENTER); // eye joint in head-centre space
+      for (let j = 0; j <= ny; j++) for (let i = 0; i <= nx; i++) {
+        const x = x0 + ((x1 - x0) * i) / nx, y = y0 + ((y1 - y0) * j) / ny;
+        pos.push(x - o.x, y - o.y, surfaceZ(x, y) - 0.07 - o.z);
+        uv.push((x - ecx) / (2 * EYE.uvHalf) + 0.5, (y - ecy - 0.1) / (2 * EYE.uvHalf) + 0.5); // iris centred in the almond
+      }
+      for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+        const a0 = j * (nx + 1) + i;
+        idx.push(a0, a0 + 1, a0 + nx + 2, a0, a0 + nx + 2, a0 + nx + 1);
+      }
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+      g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+      g.setIndex(idx);
+      g.computeVertexNormals();
+      const m = new THREE.Mesh(g, M.eye);
+      m.name = `eyeball${side}`;
+      eyeJ.add(m);
     }
-    const lash = new THREE.Mesh(taperedTube(new THREE.CatmullRomCurve3(pts), 24, 0.07, 6, 0.55), M.lash);
-    lash.name = `lash${side}`;
-    lidJ.add(lash);
-    // outer corner is +X for the left eye, −X for the right eye
-    for (let f = 0; f < 2; f++) {
-      const phi = Math.PI * (s > 0 ? 0.1 + f * 0.1 : 0.9 - f * 0.1);
-      const base = V(Math.cos(phi) * rim, 0.02, Math.sin(phi) * rim);
-      const out = base.clone().setY(0).normalize();
-      const tip = base.clone().addScaledVector(out, 0.3 - f * 0.08).add(V(0, 0.15 - f * 0.04, 0.04));
-      const mid = base.clone().lerp(tip, 0.5).add(V(0, 0.06, 0)).addScaledVector(out, 0.04);
-      const fl = new THREE.Mesh(taperedTube(new THREE.CatmullRomCurve3([base, mid, tip]), 8, 0.065, 5, 0.15), M.lash);
-      lidJ.add(fl);
+    // blink lid (behind the skin, only visible through the opening); base = collapsed at the top edge
+    {
+      const nc = 18, nr = 8, pad = 0.12;
+      const base: number[] = [], closed: number[] = [], idx: number[] = [];
+      const o = eyeJ.position.clone().add(JW['headCenter']).sub(HEAD_CENTER);
+      for (let r = 0; r <= nr; r++) for (let c = 0; c <= nc; c++) {
+        const u = (c / nc) * 2 - 1;
+        const x = ecx + u * (EYE.rx + pad);
+        const w = Math.sqrt(Math.max(0, 1 - Math.min(1, Math.abs(u)) ** 2));
+        const top = ecy + (EYE.ryT + pad) * w + 0.02, bot = ecy - (EYE.ryB + pad) * w - 0.02;
+        const yc = top + (bot - top) * (r / nr);
+        closed.push(x - o.x, yc - o.y, surfaceZ(x, yc) - 0.03 - o.z);
+        base.push(x - o.x, top - o.y, surfaceZ(x, top) - 0.03 - o.z);
+      }
+      for (let r = 0; r < nr; r++) for (let c = 0; c < nc; c++) {
+        const a0 = r * (nc + 1) + c;
+        idx.push(a0, a0 + nc + 1, a0 + 1, a0 + 1, a0 + nc + 1, a0 + nc + 2);
+      }
+      const gc = new THREE.BufferGeometry();
+      gc.setAttribute('position', new THREE.Float32BufferAttribute(closed, 3));
+      gc.setIndex(idx);
+      gc.computeVertexNormals();
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.Float32BufferAttribute(base, 3));
+      g.setAttribute('normal', gc.getAttribute('normal').clone());
+      g.setIndex(idx);
+      g.morphAttributes.position = [new THREE.Float32BufferAttribute(closed, 3)];
+      const lid = new THREE.Mesh(g, M.lid);
+      lid.name = `eyelid${side}`;
+      lid.morphTargetInfluences = [0];
+      lid.morphTargetDictionary = { blink: 0 };
+      eyeJ.add(lid);
+      J[lid.name] = lid;
+    }
+    // lash line along the top edge of the opening (on the skin) + outer-corner flicks
+    {
+      const pts: THREE.Vector3[] = [];
+      for (let k = 0; k <= 18; k++) {
+        const th = THREE.MathUtils.lerp(0.05, Math.PI - 0.05, k / 18);
+        const x = ecx + Math.cos(th) * EYE.rx * 1.02, y = ecy + Math.sin(th) * EYE.ryT * 1.02 + 0.02;
+        pts.push(V(x, y, surfaceZ(x, y) + 0.05));
+      }
+      put('headCenter', taperedTube(new THREE.CatmullRomCurve3(pts), 30, 0.085, 6, 0.6, 0.45), M.lash, HEAD_CENTER, undefined, `lash${side}`);
+      // outer corner: +X end for the left eye, −X end for the right eye
+      for (let f = 0; f < 2; f++) {
+        const th = s > 0 ? 0.12 + f * 0.32 : Math.PI - 0.12 - f * 0.32;
+        const bx = ecx + Math.cos(th) * EYE.rx * 1.02, by = ecy + Math.sin(th) * EYE.ryT * 1.02 + 0.02;
+        const base = V(bx, by, surfaceZ(bx, by) + 0.05);
+        const tx = bx + s * (0.32 - f * 0.1), ty = by + 0.22 - f * 0.04;
+        const tip = V(tx, ty, surfaceZ(tx, ty) + 0.12);
+        const mid = base.clone().lerp(tip, 0.5).add(V(0, -0.03, 0.04));
+        put('headCenter', taperedTube(new THREE.CatmullRomCurve3([base, mid, tip]), 8, 0.075, 5, 0.12, 1), M.lash, HEAD_CENTER, undefined, `lash_flick${side}`);
+      }
     }
     // eyebrow (warm dark brown, gently arched)
     const bp: THREE.Vector3[] = [];
@@ -882,17 +941,10 @@ function buildClips(): THREE.AnimationClip[] {
     };
   }));
 
-  // blink (eyelids only) — runtime also blinks procedurally
-  {
-    const times = [0, 0.07, 0.12, 0.24];
-    const ang = [EYELID_REST_X, EYELID_CLOSED_X, EYELID_CLOSED_X, EYELID_REST_X];
-    const vals: number[] = [];
-    const q = new THREE.Quaternion();
-    for (const a of ang) { q.setFromEuler(new THREE.Euler(a, 0, 0)); vals.push(q.x, q.y, q.z, q.w); }
-    clips.push(new THREE.AnimationClip('blink', 0.24, [
-      new THREE.QuaternionKeyframeTrack('eyelidL.quaternion', times, vals),
-      new THREE.QuaternionKeyframeTrack('eyelidR.quaternion', times, vals),
-    ]));
-  }
+  // blink (eyelid morph targets) — the runtime also blinks procedurally
+  clips.push(new THREE.AnimationClip('blink', 0.24, [
+    new THREE.NumberKeyframeTrack('eyelidL.morphTargetInfluences[blink]', [0, 0.07, 0.12, 0.24], [0, 1, 1, 0]),
+    new THREE.NumberKeyframeTrack('eyelidR.morphTargetInfluences[blink]', [0, 0.07, 0.12, 0.24], [0, 1, 1, 0]),
+  ]));
   return clips;
 }
