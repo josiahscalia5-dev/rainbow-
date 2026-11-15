@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2920,
-   "sha256": "d3916d266d56a75bb4cca90f1623c03a2c52e951818533c0b50a4af517b4cae7"
+   "sha256": "b97d63f64c920795284dfd3bfeaab36e711bd120639bbb2d3654173c90db868d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1398,23 +1398,23 @@
   },
   {
    "path": "qa/worldlabs/05/plate_v3/05_geometry_coin_trail_zoom_v3.png",
-   "bytes": 936208,
-   "sha256": "17b37bafa4241c48c23e806bf4778413a579ffa32c41856a21dd4d5d8e2bf660"
+   "bytes": 953384,
+   "sha256": "d729e688d5797bd648d4680b72554d4f7d709b9ebfbde5074f17928bbf2422b4"
   },
   {
    "path": "qa/worldlabs/05/plate_v3/05_geometry_mask_overlay_v3.png",
-   "bytes": 838388,
-   "sha256": "64f0baa9045860028eaceec63023e2e740677b17b3b64bb2d398337bab9bcf6c"
+   "bytes": 843101,
+   "sha256": "129aa6d1cc7d02120d0d51640fa53c7b241dd81b5b71ec3abb200a6bb64c92ee"
   },
   {
    "path": "qa/worldlabs/05/plate_v3/05_geometry_reconstructed_mask_v3.png",
-   "bytes": 3210,
-   "sha256": "2526093f0ceb4eeea3cadc4a7252ad64389e3d1a0ce711844a4c8706ce2b03df"
+   "bytes": 3386,
+   "sha256": "c042e545bbcb6901daded040182e089123985c08a791a2eb4b1f70a992559177"
   },
   {
    "path": "qa/worldlabs/05/plate_v3/05_geometry_reference_v3.png",
-   "bytes": 1047779,
-   "sha256": "0188af1d0c005062732006691523f96d7bfc48c61ed644f8ec3be1aadbb78908"
+   "bytes": 1055027,
+   "sha256": "f9378c117d0c6258bfd4015fa71368272b4924b955900da755cb25ce2fee0f9d"
   },
   {
    "path": "qa/worldlabs/05/rejected/README.md",
@@ -1963,8 +1963,8 @@
   },
   {
    "path": "tools/make_env_plate_v3.py",
-   "bytes": 5519,
-   "sha256": "69e57784241cb2b0d88803fb0412eeff021b66339f5e35c58dcb798a917dc70c"
+   "bytes": 9377,
+   "sha256": "668c36bbc5326237444e39c8af465cfd382015fc90b69f8362f1e423c30d7c8d"
   },
   {
    "path": "tools/model-lab.html",
