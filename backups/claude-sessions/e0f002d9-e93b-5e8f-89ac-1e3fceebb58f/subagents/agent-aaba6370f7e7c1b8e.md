@@ -1082,3 +1082,11 @@ Walls now go magenta → violet like the reference. Let me check the actual ride
 
 > ↩︎ result: ok
 
+### 🤖 Claude — 2026-11-15T18:54:35.791Z
+
+Now the gold env strips (full-length, so rings reflect them as highlight spots around their circumference) and larger, sparser slots.
+
+### 🤖 Claude — 2026-11-15T18:54:42.705Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/materials.ts'\ns=open(p).read()\na=\"\"\"      const k = Math.exp(-(dA * dA) / 0.005) * (1 - Math.abs(d.z) * 0.6) * (i % 2 ? 0.7 : 1.15);\"\"\"\nb=\"\"\"      // the strips run the whole length of the tunnel, so they converge at ±Z like meridians: rings and\n      // grazing walls pick them up as regularly spaced highlight spots/streaks (refs 05–07)\n      const k = Math.exp(-(dA * dA) / 0.005) * (isGold ? 1 : 1 - Math.abs(d.z) * 0.35) * (i % 2 ? 0.7 : 1.15);\"\"\"\nassert a in s\ns=s.replace(a,b)\nopen(p,'w').write(s)\np='src/world/environment.ts'\ …[+928 chars]`
+

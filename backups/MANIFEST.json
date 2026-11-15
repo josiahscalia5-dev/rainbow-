@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1967,
-   "sha256": "31d7dd25e5008856f2033ffc67d90e4a836d50148060422404d04e1c2e194cd8"
+   "sha256": "4df59bfb229dd236828efa4e9a10ea34a214f462545951a3c1bbaee36d996245"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1303,8 +1303,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 31109,
-   "sha256": "8cbb983f73907742ddf0b283234daf22f343733a683c8d6b350878e6688d482f"
+   "bytes": 31123,
+   "sha256": "1fa39bda59225ffab40d2b30db49d51c0e485c8aeb1879fe150884b644a740b7"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -1313,8 +1313,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 16489,
-   "sha256": "911e4da8e3a965d2ded8ce2b8c6f89b512db6f5f4764e418626939f7897e7411"
+   "bytes": 16704,
+   "sha256": "0efd1fca703bb7d5f00000f8cd1b6fe020d6c63a8205797652ac20252a7fda6b"
   },
   {
    "path": "src/world/towel.ts",
