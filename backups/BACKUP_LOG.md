@@ -23,3 +23,5 @@ Newest last. `pushed` = remote SHA verified equal to local HEAD.
 | 2026-11-15T17:50:01+00:00 | cron | committed+pushed | `45a9f7fc825e` | `ccr-6f431adf-7h0m8y` | 31 | True |  |
 | 2026-11-15T17:55:01+00:00 | cron | committed+pushed | `c2770a4557b2` | `ccr-6f431adf-7h0m8y` | 111 | True |  |
 | 2026-11-15T18:00:01+00:00 | cron | committed+pushed | `f8e4b839b9cf` | `ccr-6f431adf-7h0m8y` | 50 | True |  |
+| 2026-11-15T18:05:39+00:00 | hook:SessionStart | error | `—` | `ccr-6f431adf-7h0m8y` | 0 | False | current branch 'claude/rainbow-3d-recovery-m4v347' != verified branch 'ccr-6f431adf-7h0m8y'; refusing to push |
+| 2026-11-15T18:08:51+00:00 | hook:Stop | error | `—` | `ccr-6f431adf-7h0m8y` | 0 | False | current branch 'claude/rainbow-3d-recovery-m4v347' != verified branch 'ccr-6f431adf-7h0m8y'; refusing to push |
