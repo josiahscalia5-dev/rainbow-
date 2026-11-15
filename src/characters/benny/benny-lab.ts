@@ -53,6 +53,20 @@ interface Panel {
             // chroma-green background + water so a colour mask separates Benny (qa/pilot05/benny measure script)
             // `&elev=12,16,20,24` picks the elevations; `&bennyMask` renders flat ID colours on grey (maskmeasure)
             (q.get('elev') ?? '12,18,24,28').split(',').map(Number).map((deg) => ({ name: `rear-${deg}`, yaw: Math.PI, pitch: THREE.MathUtils.degToRad(deg), dist: 7.2, expr: 'happy', swim: 1, fov: 33, tumble: false }))
+        : views === 'g05'
+          ? // wave 4: ONE full-size 864×1536 frame with the live stage-05 camera relative to Benny's root, taken
+            // from qa/capture_log.json, expressed in Benny's own frame (the tube slopes 2.4° down there): root→cam =
+            // 0.50 to his right, 3.13 up, 6.59 back (25.4° elevation); view pitched 12.7° below his forward axis,
+            // yawed 2.96° left (STAGE_CAM['05']). `&bennyMask` → flat ID colours on grey for pixel measurement.
+            [
+              (() => {
+                const p = Math.atan2(3.6 + 1.92, 18 + 6.4), y = THREE.MathUtils.degToRad(2.96);
+                const pos: [number, number, number] = [-0.5, 3.13, -6.585];
+                const look = [Math.cos(p) * Math.sin(y), -Math.sin(p), Math.cos(p) * Math.cos(y)];
+                const target: [number, number, number] = [pos[0] + look[0] * 24, pos[1] + look[1] * 24, pos[2] + look[2] * 24];
+                return { name: 'g05', yaw: 0, pitch: 0, dist: 0, expr: 'happy', swim: 1, fov: 62, tumble: false, cam: { pos, target } };
+              })(),
+            ]
         : views === 'game'
           ? [
               // stage 05 ride camera (cameraRig STAGE_CAM['05'])
@@ -69,9 +83,10 @@ interface Panel {
               { name: 'back', yaw: Math.PI, pitch: 0.08, dist: 5.4, expr: 'happy', swim: 0, fov: 35, tumble: false },
               { name: 'rear-high', yaw: Math.PI * 0.92, pitch: 0.5, dist: 5.4, expr: 'happy', swim: 0.8, fov: 35, tumble: false },
             ];
-    const measure = views === 'measure';
-    const PW = views === 'refs' || views === 'game' || measure ? 432 : 360;
-    const PH = views === 'refs' || views === 'game' || measure ? 768 : 520;
+    const g05 = views === 'g05';
+    const measure = views === 'measure' || g05;
+    const PW = g05 ? 864 : views === 'refs' || views === 'game' || measure ? 432 : 360;
+    const PH = g05 ? 1536 : views === 'refs' || views === 'game' || measure ? 768 : 520;
     const W = PW * panels.length, H = PH;
     const canvas = document.getElementById('lab') as HTMLCanvasElement;
     const renderer = createRenderer(canvas, { preserveDrawingBuffer: true });
@@ -81,7 +96,7 @@ interface Panel {
     const scene = new THREE.Scene();
     scene.environment = createCandyEnvironment(renderer);
     const maskBg = q.has('bennyMask') ? '#808080' : null;
-    scene.background = new THREE.Color(maskBg ?? (views === 'turntable' ? '#3a1060' : measure ? '#00ff00' : '#c0369c'));
+    scene.background = new THREE.Color(maskBg ?? (views === 'turntable' ? '#3a1060' : g05 ? '#29a8e8' : measure ? '#00ff00' : '#c0369c'));
     scene.add(new THREE.HemisphereLight('#ffe9ff', '#7a2a9c', 1.1));
     const key = new THREE.DirectionalLight('#ffffff', 2.2);
     key.position.set(3, 6, 5);
@@ -94,7 +109,7 @@ interface Panel {
       const water = new THREE.Mesh(
         new THREE.CircleGeometry(40, 64),
         measure
-          ? new THREE.MeshBasicMaterial({ color: maskBg ?? '#00ff00' })
+          ? new THREE.MeshBasicMaterial({ color: maskBg ?? (g05 ? '#2bc4f4' : '#00ff00') })
           : new THREE.MeshStandardMaterial({ color: '#29d8ff', roughness: 0.1, metalness: 0.1, emissive: '#0a6f9a', emissiveIntensity: 0.6 }),
       );
       water.rotation.x = -Math.PI / 2;

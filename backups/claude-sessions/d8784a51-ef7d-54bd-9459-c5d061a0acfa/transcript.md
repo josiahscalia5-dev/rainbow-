@@ -1936,3 +1936,460 @@ Now a probe that loads the live game at the 05 checkpoint, reads the projected c
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T21:03:54.705Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "export const C05 = { first: 5.7, gap0: 3.6, gapGrow: 1.0, gapMax: 9, scale: 0.9, h: 0.75, tilt: 0.55 };", "new_string": "export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 12, scale: 0.9, h: 1.2, tilt: 0.55, preGap: 3.6 };"}`
+
+### 🧑 User — 2026-11-15T21:03:54.733Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:03:56.556Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "  for (let s = sCp + C05.first - C05.gap0; s > a.s0 + 6; s -= C05.gap0) ss.unshift(s);", "new_string": "  // gameplay trail before the checkpoint ends 1 u behind Benny's checkpoint spot (never between him and the camera view)\n  for (let s = sCp - 1; s > a.s0 + 6; s -= C05.preGap) ss.unshift(s);"}`
+
+### 🧑 User — 2026-11-15T21:03:56.590Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:04:01.010Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coinprobe.mjs", "old_string": "  const benny = await page.evaluate(() => window.__rainbow.bennyScreen());\n  console.log(JSON.stringify({ benny, coins: coins.sort((a, b) => b.y - a.y) }));", "new_string": "  const benny = await page.evaluate(() => window.__rainbow.bennyScreen());\n  const meta = await page.evaluate(() => {\n    const c = window.__rainbow.course; const d = window.__rainbow.coinDefs();\n    const stage = (s) => c.stages.find((st) => s >= st.s0 && s < st.s1)?.id; …[+473 chars]`
+
+### 🧑 User — 2026-11-15T21:04:01.032Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coinprobe.mjs has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:04:02.768Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && timeout 600 node /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coinprobe.mjs qa/pilot05/wave4/coins/it02.png 2>&1 | tail -3", "description": "Typecheck and re-probe coins", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T21:04:14.814Z
+
+> ↩︎ result: {"benny":{"x":-0.03,"y":-0.37,"z":0.986,"visible":true,"cam":[1.92,-37.94,-68.28],"benny":[1.52,-41.35,-74.73]},"sCp":132.4383020282329,"s05":[114.68830202823243,188.9241011105758],"coins":[{"i":20,"x":484,"y":739,"d":93,"s":138.14},{"i":21,"x":590,"y":662,"d":68,"s":143.14},{"i":22,"x":595,"y":611,"d":49,"s":149.64},{"i":23,"x":456,"y":579,"d":37,"s":157.64},{"i":24,"x":436,"y":559,"d":28,"s":167.14},{"i":25,"x":587,"y":550,"d":23,"s":178.14}],"other":64}
+
+### 🤖 Claude — 2026-11-15T21:04:45.147Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave4/coins/it02.png').crop((420,680,660,800)).resize((480,240),Image.LANCZOS)\nb=Image.open('references/05_flow_into_the_current.png').crop((410,670,650,790)).resize((480,240),Image.LANCZOS)\nc=Image.new('RGB',(480,490),(20,20,20)); c.paste(b,(0,0)); c.paste(a,(0,250)); c.save('/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coin_crop.png')\"", "description": "Crop nearest coin for glyph check"}`
+
+### 🧑 User — 2026-11-15T21:04:45.338Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:04:47.061Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coin_crop.png"}`
+
+### 🧑 User — 2026-11-15T21:04:47.078Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:05:09.299Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const g = c.createRadialGradient\" -A 4 src/gameplay/coins.ts; grep -n \"const geo = new THREE.CylinderGeometry\" -A 5 src/gameplay/coins.ts; grep -n \"export function canvasTexture\" -A 12 src/world/materials.ts", "description": "View coin material code and canvasTexture"}`
+
+### 🧑 User — 2026-11-15T21:05:09.331Z
+
+> ↩︎ result: 73:    const g = c.createRadialGradient(w * 0.38, h * 0.32, 10, w / 2, h / 2, w * 0.55);
+> 74-    g.addColorStop(0, '#fffbd8');
+> 75-    g.addColorStop(0.5, '#ffdc3a');
+> 76-    g.addColorStop(1, '#f0a400');
+> 77-    c.fillStyle = g;
+> 103:  const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.14, 40, 1);
+> 104-  geo.rotateX(Math.PI / 2); // faces along ±Z
+> 105-  const side = new THREE.MeshStandardMaterial({ color: '#ffd23c', metalness: 0.9, roughness: 0.22, emissive: '#d08a00', emissiveIntensity: 0.55 });
+> 106-  const face = new THREE.MeshStandardMaterial({ map: faceTex, metalness: 0.55, roughness: 0.3, emissive: '#ffffff', emissiveIntensity: 0.55, emissiveMap: faceTex });
+> 107-  const mesh = new THREE.InstancedMesh(geo, [side, face, face], defs.length);
+> 108-  mesh.frustumCulled = false;
+> 487:export function canvasTexture(w: number, h: number, draw: (g: CanvasRenderingContext2D, w: number, h: number) => void, srgb = true): THREE.CanvasTexture {
+> 488-  const c = document.createElement('canvas');
+> 489-  c.width = w; c.height = h;
+> 490-  draw(c.getContext('2d')!, w, h);
+> 491-  const t = new THREE.CanvasTexture(c);
+> 492-  if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+> 493-  t.anisotropy = 4;
+> 494-  return t; …[+6 chars]
+
+### 🤖 Claude — 2026-11-15T21:05:11.821Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "    g.addColorStop(0, '#fffbd8');\n    g.addColorStop(0.5, '#ffdc3a');\n    g.addColorStop(1, '#f0a400');", "new_string": "    g.addColorStop(0, '#fff3b0');\n    g.addColorStop(0.45, '#ffcf2a');\n    g.addColorStop(1, '#e89200');"}`
+
+### 🧑 User — 2026-11-15T21:05:11.854Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:05:17.519Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "  const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.14, 40, 1);\n  geo.rotateX(Math.PI / 2); // faces along ±Z\n  const side = new THREE.MeshStandardMaterial({ color: '#ffd23c', metalness: 0.9, roughness: 0.22, emissive: '#d08a00', emissiveIntensity: 0.55 });\n  const face = new THREE.MeshStandardMaterial({ map: faceTex, metalness: 0.55, roughness: 0.3, emissive: '#ffffff', emissiveIntensity: 0.55, emissiveMap: faceTex });", "new_string": "  // the cylinder cap's UVs run sideways once the coin is s …[+787 chars]`
+
+### 🧑 User — 2026-11-15T21:05:17.546Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:05:19.271Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 12, scale: 0.9, h: 1.2, tilt: 0.55, preGap: 3.6 };", "new_string": "export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };"}`
+
+### 🧑 User — 2026-11-15T21:05:19.304Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:05:21.121Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "  for (const s of ss) add('05', s, coreLateral(course, s), C05.h, extra);", "new_string": "  // latK < 1: the trail winds with the cyan core but stays inside its middle (the core half width is\n  // ≥ 2 u), so the far coins converge on the VP like the ref instead of swinging out to the pink bands\n  for (const s of ss) add('05', s, C05.latK * coreLateral(course, s), C05.h, extra);"}`
+
+### 🧑 User — 2026-11-15T21:05:21.145Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:05:25.172Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && timeout 600 node /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coinprobe.mjs qa/pilot05/wave4/coins/it03.png 2>&1 | tail -2 | cut -c1-900 && python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave4/coins/it03.png').crop((420,680,660,800)).resize((480,240),Image.LANCZOS)\nb=Image.open('references/05_flow_into_the_current.png').crop((410,670,650,790)).resize((480,240),Image.LANCZOS)\nc=Image.new('RGB',(480,490),(20,20,20)); c.paste(b,(0,0)); c.paste(a,(0,250)); c.save('/tmp/claude-0/-home-user-rainbow-/d8784a51-e …[+137 chars]`
+
+### 🧑 User — 2026-11-15T21:05:40.079Z
+
+> ↩︎ result: {"benny":{"x":-0.03,"y":-0.37,"z":0.986,"visible":true,"cam":[1.92,-37.94,-68.28],"benny":[1.52,-41.35,-74.73]},"sCp":132.4383020282329,"s05":[114.68830202823243,188.9241011105758],"coins":[{"i":20,"x":487,"y":739,"d":93,"s":138.14},{"i":21,"x":578,"y":662,"d":68,"s":143.14},{"i":22,"x":583,"y":611,"d":49,"s":149.64},{"i":23,"x":462,"y":578,"d":37,"s":157.64},{"i":24,"x":430,"y":562,"d":29,"s":165.64},{"i":25,"x":532,"y":550,"d":25,"s":173.64},{"i":26,"x":550,"y":539,"d":21,"s":181.64}],"other":64}
+
+### 🤖 Claude — 2026-11-15T21:05:41.602Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coin_crop3.png"}`
+
+### 🧑 User — 2026-11-15T21:05:41.620Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:05:51.276Z
+
+> 🔧 **Bash** `{"command": "grep -n \"fog\\|Fog\" src/game/Game.ts src/world/environment.ts src/render/*.ts | head -12; python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave4/coins/it03.png').convert('RGB'); r=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nprint('live face', a.getpixel((455,725)), a.getpixel((515,745)), 'rim', a.getpixel((487,780)))\nprint('ref face', r.getpixel((445,712)), r.getpixel((500,735)), 'rim', r.getpixel((474,758)))\"", "description": "Sample coin colours and find fog setup"}`
+
+### 🧑 User — 2026-11-15T21:05:51.414Z
+
+> ↩︎ result: src/game/Game.ts:47:  const fog = new THREE.FogExp2('#ffbde9', 0.0035);
+> src/game/Game.ts:48:  scene.fog = fog;
+> src/game/Game.ts:140:    fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
+> live face (255, 219, 137) (255, 236, 143) rim (255, 115, 55)
+> ref face (244, 196, 0) (252, 195, 0) rim (255, 244, 109)
+
+### 🤖 Claude — 2026-11-15T21:06:12.383Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "    g.addColorStop(0, '#fff3b0');", "new_string": "    g.addColorStop(0, '#ffe680');"}`
+
+### 🧑 User — 2026-11-15T21:06:12.416Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:06:18.290Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "    for (let x = 0; x < w; x += 4) { c.fillStyle = (x / 4) % 2 ? '#b86e00' : '#ffd860'; c.fillRect(x, 0, 4, h); }\n  });\n  const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 48, 1);\n  geo.rotateX(Math.PI / 2); // faces along ±Z\n  const side = new THREE.MeshStandardMaterial({ color: '#ffc83a', map: edgeTex, metalness: 0.85, roughness: 0.25, emissive: '#b87000', emissiveIntensity: 0.35 });\n  const face = new THREE.MeshStandardMaterial({ map: faceTex, metalness: 0.5, roughness: 0.3, emissive: '# …[+903 chars]`
+
+### 🧑 User — 2026-11-15T21:06:18.315Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:06:22.593Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && timeout 600 node /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coinprobe.mjs qa/pilot05/wave4/coins/it04.png 2>&1 | tail -1 | cut -c1-200 && python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave4/coins/it04.png').convert('RGB')\nprint('live face', a.getpixel((455,725)), a.getpixel((515,745)), 'rim', a.getpixel((487,780)))\na=a.crop((420,680,660,800)).resize((480,240),Image.LANCZOS)\nb=Image.open('references/05_flow_into_the_current.png').crop((410,670,650,790)).resize((480,240),Image.LANCZOS)\nc=Image.new('RG …[+233 chars]`
+
+### 🧑 User — 2026-11-15T21:06:34.361Z
+
+> ↩︎ result: {"benny":{"x":-0.03,"y":-0.37,"z":0.986,"visible":true,"cam":[1.92,-37.94,-68.28],"benny":[1.52,-41.35,-74.73]},"sCp":132.4383020282329,"s05":[114.68830202823243,188.9241011105758],"coins":[{"i":20,"x
+> live face (255, 186, 85) (255, 204, 87) rim (255, 211, 85)
+
+### 🤖 Claude — 2026-11-15T21:06:36.216Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coin_crop4.png"}`
+
+### 🧑 User — 2026-11-15T21:06:36.238Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:06:47.521Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "    dollar(-3, -3, '#fff6c8', 28);\n    dollar(4, 4, '#9a5a00', 28);\n    dollar(0, 0, '#e39a00', 24);", "new_string": "    dollar(3, 4, '#7a3c00', 32); // drop shadow\n    dollar(0, 0, '#b86400', 30); // dark outline\n    dollar(0, 0, '#ffe55a', 18); // bright raised glyph\n    dollar(-3, -3, '#fff8d0', 6); // top-left bevel highlight"}`
+
+### 🧑 User — 2026-11-15T21:06:47.552Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:06:48.671Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC-OK; ls qa/pilot05/wave4/*/ 2>/dev/null; tail -5 qa/pilot05/REQUESTS.md | cut -c1-300", "description": "Typecheck and check specialist progress"}`
+
+### 🧑 User — 2026-11-15T21:06:50.477Z
+
+> ↩︎ result: TSC-OK
+> qa/pilot05/wave4/baseline/:
+> 05.png
+> 
+> qa/pilot05/wave4/coins/:
+> it01.png
+> it02.png
+> it03.png
+> it04.png
+> 
+> qa/pilot05/wave4/foam/:
+> it01_iso_noCrown
+> - foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under Benny's fur (05, y≈1150–1170) is the `contact` term in `src/vfx/waterRibbon.ts` FRAG, Benny block (`if (rr < rb * 0.25) { … contact = … }` + `col = mix(col, uFoam * 1.2, cl
+> - water-fx-specialist → foam-bubbles-particles (wave 3, correction 7): DONE 19:58 UTC. Deleted the white `contact` → uFoam mix in waterRibbon.ts FRAG (Benny block); replaced by the faint cyan hint you suggested. Confirmed by my own isolation pair qa/pilot05/wave3/water/it08_iso (rim) vs it08_iso
+> - water-fx-specialist → coordinator (FYI, tooling): `scripts/capture.mjs --q=waterhide=a,b` does NOT pass the hide list: the arg parser does `a.slice(2).split('=')` and keeps only the 2nd piece, so the URL gets `&waterhide` with no value (every part stays visible). One-line fix for the owner: `con
+> - coordinator → ALL (20:12 UTC): fixed scripts/capture.mjs and scripts/aspect-test.mjs argument parsing — `--q=waterhide=a,b` now passes the full value to the page. Is …[+372 chars]
+
+### 🤖 Claude — 2026-11-15T21:06:54.280Z
+
+> 🔧 **Bash** `{"command": "timeout 300 npm run -s test:continuity 2>&1 | tail -15", "description": "Run continuity test", "timeout": 320000}`
+
+### 🧑 User — 2026-11-15T21:06:54.757Z
+
+> ↩︎ result: },
+>  "maxStepTangentDeg": 6.241,
+>  "boundaries": [
+>   "01->02 gap=0 dT=0.249 y=-2.4",
+>   "02->03 gap=-0.0001 dT=0.673 y=-11.87",
+>   "03->04 gap=0 dT=0.932 y=-19.41",
+>   "04->05 gap=0 dT=0.246 y=-40.63",
+>   "05->06 gap=0 dT=0.281 y=-43.35",
+>   "06->07 gap=0 dT=0.114 y=-48.53",
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+>   "08->09 gap=0 dT=0.12 y=-113.59",
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+
+### 🤖 Claude — 2026-11-15T21:06:57.134Z
+
+> 🔧 **Bash** `{"command": "echo \"- coordinator → ALL (wave4, $(date -u +%H:%M) UTC): CAMERA LOCKED at current STAGE_CAM['05'] (see COORDINATION_WAVE4.md). 05 coins now sit on C05.latK·coreLateral(course,s) (gameplay/coins.ts coins05): measured nearest coins 93/68/49/37 px at y 739/662/611/578 vs ref 95/64/55/42 at 726/658/613/574; vector \\$ glyph upright; emissive gold. QA hook: window.__rainbow.coinScreen(). Wave-3 request (coins on the cyan core) is DONE.\" >> qa/pilot05/REQUESTS.md; sed -n 1,40p scripts/gameplay-test.mjs | grep -n \"usage\\|//\" | head", "description": "Log camera lock and coin update  …[+13 chars]`
+
+### 🧑 User — 2026-11-15T21:06:57.174Z
+
+> ↩︎ result: 2:// Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> 3:// Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> 4://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> 5://  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> 6://  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> 7://  * real coin pickups update the counter; steering into the foam wall costs a heart
+> 8://  * pause freezes the simulation; resume continues
+> 9://  * the run ends in the 11 victory with Benny hidden under the towel
+> 10:// Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> 29:  // ---- pause / resume
+
+### 🤖 Claude — 2026-11-15T21:06:59.098Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;d=json.load(open('qa/continuity_report.json'));print({k:v for k,v in d.items() if k not in('boundaries',)})\" 2>/dev/null | cut -c1-600", "description": "Show continuity summary values"}`
+
+### 🧑 User — 2026-11-15T21:06:59.142Z
+
+> ↩︎ result: {'length': 435.1923435286776, 'marks': {'10': 420.01756656205885, '11': 435.1923435286776, '01': 0, '02_drain': 22.765736347312888, '03': 40.99515264641385, '04': 70.4130846582597, '05': 114.68830202823246, '06': 188.92410111057563, '07': 247.05708282124988, '07_plunge_top': 310.4102431566044, '07_plunge_mid_end': 373.197422133087, '07_plunge_bottom': 389.129391561641, '08': 389.21993416566943, '09': 404.7896284735047, '05_crest': 132.43830202823293}, 'ok': True, 'maxStepTangentDeg': 6.241, 'maxStepPos': 0.2555, 'plunge': {'entryAltitude07': -48.53, 'plungeTop': {'s': 310.41, 'y': -52.31}, 'pl
+
+### 🤖 Claude — 2026-11-15T21:07:01.409Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;d=json.load(open('qa/continuity_report.json'));print(d['ok'], d['plunge'])\"", "description": "Show plunge continuity values"}`
+
+### 🧑 User — 2026-11-15T21:07:01.453Z
+
+> ↩︎ result: True {'entryAltitude07': -48.53, 'plungeTop': {'s': 310.41, 'y': -52.31}, 'plungeMid': {'s': 349.77, 'y': -83.56}, 'plungeBottom': {'s': 389.13, 'y': -113.49}, 'inlet08': {'s': 389.22, 'y': -113.5}, 'verticalDrop': 61.19, 'minPitchDeg': -70}
+
+### 🤖 Claude — 2026-11-15T21:07:08.897Z
+
+> 🔧 **Bash** `{"command": "ls qa/worldlabs/05/ qa/worldlabs/05/geometry_ref/ qa/worldlabs/05/rejected/ | head -40; cat qa/worldlabs/05/geometry_ref/check.json; sha256sum references/05_flow_into_the_current.png qa/worldlabs/05/geometry_ref/1_original_approved_05.png | cut -c1-16", "description": "Verify Marble prep files and reference copy"}`
+
+### 🧑 User — 2026-11-15T21:07:08.940Z
+
+> ↩︎ result: qa/worldlabs/05/:
+> 05_env_mask.png
+> 05_env_only_preview.png
+> MARBLE_MANUAL.md
+> PILOT_PLAN.md
+> blender
+> geometry_ref
+> rejected
+> 
+> qa/worldlabs/05/geometry_ref/:
+> 1_original_approved_05.png
+> 2_geometry_reference_05.png
+> 3_mask_05.png
+> 3_mask_overlay_05.png
+> check.json
+> 
+> qa/worldlabs/05/rejected/:
+> README.md
+> v1_05_env_clean_plate.png
+> v1_05_env_clean_plate_cropped.png
+> v1_05_env_fill_mask.png
+> v1_05_env_plate_review.png
+> v2_05_clean_environment_v2.png
+> v2_05_reconstructed_mask_overlay_v2.png
+> v2_05_reconstructed_mask_v2.png
+> v3_05_geometry_coin_trail_zoom_v3.png
+> v3_05_geometry_mask_overlay_v3.png
+> v3_05_geometry_reconstructed_mask_v3.png
+> v3_05_geometry_reference_v3.png
+> {
+>   "reference": "references/05_flow_into_the_current.png",
+>   "reference_sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd",
+>   "copy_sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd",
+>   "crop_rows": [
+>     197,
+>     767
+>   ],
+>   "crop_size": [
+>     864,
+>     571
+>   ],
+>   "geometry_reference_pixels_identical_to_original_rows": true,
+>   "invented_pixels": 0,
+>   "coins_flagged_share_of_strip": 0.0378
+> }
+> d3f339d49199598e
+> d3f339d49199598e
+
+### 🤖 Claude — 2026-11-15T21:07:13.058Z
+
+> 🔧 **Bash** `{"command": "cat backups/RECOVERY.md | head -50; cat backups/autosave.config.json | head -30", "description": "Read recovery doc and autosave config"}`
+
+### 🧑 User — 2026-11-15T21:07:13.088Z
+
+> ↩︎ result: # Rainbow — recovery guide
+> 
+> How to restore the RAINBOW 11-screen 3D game on another computer or another Claude Code account.
+> 
+> ## 1. Where the backup lives
+> 
+> | Item | Value |
+> |---|---|
+> | Repository | https://github.com/josiahscalia5-dev/rainbow- (**private**) |
+> | Working branch (continue here) | `claude/rainbow-3d-recovery-m4v347` — recovery branch started 2026-11-15 from commit `81e639e`; the 5-minute autosave pushes here |
+> | Original branch (frozen) | `ccr-6f431adf-7h0m8y` at `81e639e` — everything from the first Claude account; still the repo's default branch. Autosave refuses to push to it (`protected_branches` in `backups/autosave.config.json`) |
+> | Cloud environment | claude.ai environment **"rainbow-"**: its setup script (copy in `scripts/cloud-env-setup.sh`) restores LFS files, Android SDK 34, Blender 5.3.0 and the World Labs plugin in every fresh container |
+> | Live status | `backups/BACKUP_STATUS.json` (last run, last verified remote SHA) |
+> | Run history | `backups/BACKUP_LOG.md` |
+> | Where the project stands | `backups/CURRENT_STATE.md` |
+> | Claude conversations | `backups/CONVERSATION_INDEX.md` → `backups/claude-sessions/<session-id>/` |
+> | Specialist agents | `.claude/agents/ …[+2363 chars]
+
+### 🤖 Claude — 2026-11-15T21:07:18.332Z
+
+The autosave config still names the previous account's branch and session link. Let me check how the script picks its branch before updating the config.
+
+### 🤖 Claude — 2026-11-15T21:07:19.432Z
+
+> 🔧 **Bash** `{"command": "sed -n 30,80p backups/autosave.config.json; grep -n '\"branch\"\\|CFG\\[\"branch\"\\]\\|commit_trailer\\|protected_branches\\|session_branch' scripts/rainbow-autosave.py | head -20", "description": "Inspect branch selection in autosave"}`
+
+### 🧑 User — 2026-11-15T21:07:19.466Z
+
+> ↩︎ result: "src",
+>     "public",
+>     "assets",
+>     "references",
+>     "character_references",
+>     "screenshots",
+>     "qa",
+>     "docs",
+>     "scripts",
+>     "tools",
+>     "tests",
+>     "backups",
+>     "android",
+>     "builds"
+>   ],
+>   "status_only_paths": [
+>     "backups/BACKUP_STATUS.json",
+>     "backups/BACKUP_LOG.md"
+>   ],
+>   "max_plain_git_file_mb": 49,
+>   "push_retries": 4,
+>   "protected_branches": [
+>     "ccr-6f431adf-7h0m8y",
+>     "claude/rainbow-3d-recovery-m4v347"
+>   ],
+>   "original_branch_note": "PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original from the first Claude account (81e639e); claude/rainbow-3d-recovery-m4v347 = recovery backup from accounts 2\u20133 (last 8f869da + autosaves to b83b7e0).",
+>   "branch_history_note": "Account 2 recovery work lives on claude/rainbow-3d-recovery-m4v347. Account 3 started on ccr-8b6fc834-7kd55l (from f2a86ab) and at the user's request (2026-11-15 ~19:40 UTC) fast-forwarded claude/rainbow-3d-recovery-m4v347 to 8a36270 and continues there. New cloud sessions may get a new ccr-* branch; the autosave follows it via session_branch_patterns but never pushes to protected_branches. Account 4 (2026-11-15 ~19:48 UTC) works on ccr-d4bb0ad3-8y …[+836 chars]
+
+### 🤖 Claude — 2026-11-15T21:07:25.700Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/autosave.config.json'\nc=json.load(open(p))\nc['branch']='ccr-e033f912-8b40f5'\nc['commit_trailer']=\"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\\nClaude-Session: https://claude.ai/code/session_01AvQv6VZTPM4iWXyaqG2fdR\"\nfor b in ['ccr-d4bb0ad3-8ycajb','ccr-8b6fc834-7kd55l']:\n    if b not in c['protected_branches']: c['protected_branches'].append(b)\nc['original_branch_note'] += \" Since account 5 (2026-11-15 ~20:53 UTC) the earlier session branches ccr-d4bb0ad3-8ycajb (account 4, last 648f531) and ccr-8b6fc834-7kd55l (a …[+601 chars]`
+
+### 🧑 User — 2026-11-15T21:07:25.745Z
+
+> ↩︎ result: ok ccr-e033f912-8b40f5 ['ccr-6f431adf-7h0m8y', 'claude/rainbow-3d-recovery-m4v347', 'ccr-d4bb0ad3-8ycajb', 'ccr-8b6fc834-7kd55l']
+
+### 🤖 Claude — 2026-11-15T21:07:28.002Z
+
+Now a health check to confirm the autosave still works with the updated config:
+
+### 🤖 Claude — 2026-11-15T21:07:28.752Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py; tail -4 backups/BACKUP_LOG.md", "description": "Run autosave health check"}`
+
+### 🧑 User — 2026-11-15T21:07:29.381Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-e033f912-8b40f5 | scheduler daemon | last verified backup 2026-11-15T21:03:35+00:00 (3.9 min ago) | local af01611 remote af01611 (match) | uncommitted 8
+> | 2026-11-15T20:33:47+00:00 | daemon | committed+pushed | `6f8d56a53db1` | `ccr-d4bb0ad3-8ycajb` | 3 | True |  |
+> | 2026-11-15T20:53:31+00:00 | hook:SessionStart | committed+pushed | `87d7f6aa1979` | `ccr-e033f912-8b40f5` | 4 | True |  |
+> | 2026-11-15T20:55:23+00:00 | manual:recovery | committed+pushed | `a6e21ca78a00` | `ccr-e033f912-8b40f5` | 6 | True |  |
+> | 2026-11-15T20:58:31+00:00 | daemon | committed+pushed | `8a5321ab6286` | `ccr-e033f912-8b40f5` | 6 | True |  |
+
+### 🤖 Claude — 2026-11-15T21:07:32.633Z
+
+Autosave is healthy: the daemon pushes every 5 minutes, last verified at 21:03 with remote == local. While the specialists finish, I'll rewrite the handoff document for this account.
+
+### 🤖 Claude — 2026-11-15T21:07:33.435Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,12p backups/CURRENT_STATE.md | head -3; wc -l backups/CURRENT_STATE.md", "description": "Check current handoff file header"}`
+
+### 🧑 User — 2026-11-15T21:07:33.470Z
+
+> ↩︎ result: # Rainbow — CURRENT STATE (handoff)
+> 
+> _Last updated by Claude: 2026-11-15 ~18:50 UTC, recovery session `e0f002d9…` (second Claude account)._
+> 73 backups/CURRENT_STATE.md
+
+### 🤖 Claude — 2026-11-15T21:07:45.989Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CURRENT_STATE.md", "old_string": "# Rainbow — CURRENT STATE (handoff)\n\n_Last updated by Claude: 2026-11-15 ~18:50 UTC, recovery session `e0f002d9…` (second Claude account)._", "new_string": "# Rainbow — CURRENT STATE (handoff)\n\n## ▶ Account 5 update (2026-11-15, session `d8784a51…`) — read this first\n| | |\n|---|---|\n| **Working branch** | `ccr-e033f912-8b40f5`, created from `648f531` (newest commit of account 4's `ccr-d4bb0ad3-8ycajb`). Verified after `git fetch --unshallow`: it contains the original `81e639e`, recovery `b …[+1791 chars]`
+
+### 🧑 User — 2026-11-15T21:07:46.029Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CURRENT_STATE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:07:53.629Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/gameplay-test.mjs 2>&1 | tail -15", "description": "Run full gameplay test in headless Chromium", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T21:07:58.546Z
+
+> ↩︎ result: "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-15T21:08:00.496Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;d=json.load(open('qa/gameplay_test.json'))\nprint('ok' , d.get('ok'), {k:v for k,v in d.items() if k not in ('plunge','errors','log','samples')})\" | cut -c1-1200", "description": "Summarize gameplay test result"}`
+
+### 🧑 User — 2026-11-15T21:08:00.540Z
+
+> ↩︎ result: ok None {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 341.074, 's1': 341.274, 'stage': '07', 'y0': -75.243, 'y1': -75.433, 't': 26.267}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.027, 'coins': 2240, 'hearts': 5, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}}, 'maxJumpAt': {'s': 341.074, 's1': 341.274, 'stage': '07', 'y0': -75.243, 'y1': -75.433, 't': 26.267}, 'pass': True}
+
+### 🤖 Claude — 2026-11-15T21:08:04.981Z
+
+The gameplay test passes on the real game. Over 2,139 simulation steps Benny travels continuously from 03 to the 11 victory with no teleport and no camera cut. He collects 91 coins (counter 1330 → 2240), loses a heart on a wall bump, pause freezes and resumes, and the live plunge drops 61.41 units.
+
+The four specialists (environment, water, foam, Benny) are still iterating on their own files. I'll pick up as each one reports back, then integrate, re-capture Screen 05, check the other screens for regressions, rebuild Android and push.
+
+### 🧑 User — 2026-11-15T21:08:05.010Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

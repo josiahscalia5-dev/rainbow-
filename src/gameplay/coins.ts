@@ -21,16 +21,19 @@ export interface CoinDef { s: number; lat: number; h: number; stage: StageId; sc
  * so their face reads as a slightly flattened disc with the rim visible underneath, as in the ref.
  * Before the 05 checkpoint the trail keeps a plain C05.gap0 spacing (gameplay only, never in frame).
  */
-export const C05 = { first: 5.7, gap0: 3.6, gapGrow: 1.0, gapMax: 9, scale: 0.9, h: 0.75, tilt: 0.55 };
+export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
 
 function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h?: number, extra?: Partial<CoinDef>) => void) {
   const a = course.stage('05');
   const sCp = course.marks['05_crest'];
   const extra = { scale: C05.scale, tilt: C05.tilt };
   const ss: number[] = [];
-  for (let s = sCp + C05.first - C05.gap0; s > a.s0 + 6; s -= C05.gap0) ss.unshift(s);
+  // gameplay trail before the checkpoint ends 1 u behind Benny's checkpoint spot (never between him and the camera view)
+  for (let s = sCp - 1; s > a.s0 + 6; s -= C05.preGap) ss.unshift(s);
   for (let k = 0, s = sCp + C05.first; s < a.s1 - 3; k++) { ss.push(s); s += Math.min(C05.gapMax, C05.gap0 + k * C05.gapGrow); }
-  for (const s of ss) add('05', s, coreLateral(course, s), C05.h, extra);
+  // latK < 1: the trail winds with the cyan core but stays inside its middle (the core half width is
+  // ≥ 2 u), so the far coins converge on the VP like the ref instead of swinging out to the pink bands
+  for (const s of ss) add('05', s, C05.latK * coreLateral(course, s), C05.h, extra);
 }
 
 export function coinLayout(course: Course): CoinDef[] {
@@ -70,9 +73,9 @@ export function createCoins(course: Course): CoinSystem {
   const defs = coinLayout(course);
   const faceTex = canvasTexture(256, 256, (c, w, h) => {
     const g = c.createRadialGradient(w * 0.38, h * 0.32, 10, w / 2, h / 2, w * 0.55);
-    g.addColorStop(0, '#fffbd8');
-    g.addColorStop(0.5, '#ffdc3a');
-    g.addColorStop(1, '#f0a400');
+    g.addColorStop(0, '#ffe680');
+    g.addColorStop(0.45, '#ffcf2a');
+    g.addColorStop(1, '#e89200');
     c.fillStyle = g;
     c.beginPath(); c.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2); c.fill();
     // raised inner rim: dark groove + bright lip
@@ -95,14 +98,25 @@ export function createCoins(course: Course): CoinSystem {
       c.beginPath(); c.moveTo(128, 50); c.lineTo(128, 206); c.stroke();
       c.restore();
     };
-    dollar(-3, -3, '#fff6c8', 28);
-    dollar(4, 4, '#9a5a00', 28);
-    dollar(0, 0, '#e39a00', 24);
+    dollar(3, 4, '#7a3c00', 32); // drop shadow
+    dollar(0, 0, '#b86400', 30); // dark outline
+    dollar(0, 0, '#ffe55a', 18); // bright raised glyph
+    dollar(-3, -3, '#fff8d0', 6); // top-left bevel highlight
   });
-  const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.14, 40, 1);
+  // the cylinder cap's UVs run sideways once the coin is stood up (rotateX): turn the face art upright
+  faceTex.center.set(0.5, 0.5);
+  faceTex.rotation = -Math.PI / 2;
+  // milled (ridged) gold edge, as on the ref coins
+  const edgeTex = canvasTexture(256, 8, (c, w, h) => {
+    for (let x = 0; x < w; x += 4) { c.fillStyle = (x / 4) % 2 ? '#c08000' : '#ffe070'; c.fillRect(x, 0, 4, h); }
+  });
+  const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 48, 1);
   geo.rotateX(Math.PI / 2); // faces along ±Z
-  const side = new THREE.MeshStandardMaterial({ color: '#ffd23c', metalness: 0.9, roughness: 0.22, emissive: '#d08a00', emissiveIntensity: 0.55 });
-  const face = new THREE.MeshStandardMaterial({ map: faceTex, metalness: 0.55, roughness: 0.3, emissive: '#ffffff', emissiveIntensity: 0.55, emissiveMap: faceTex });
+  // Gold is carried mostly by EMISSIVE art (blue ≈ 0) so the pink-white candy environment and the
+  // Neutral tone mapping cannot wash it to pale peach (ref face ≈ #F4C400); a dark-gold metal base
+  // keeps a reflective sheen on top.
+  const side = new THREE.MeshStandardMaterial({ color: '#6a4a00', metalness: 0.75, roughness: 0.3, emissive: '#ffffff', emissiveMap: edgeTex, emissiveIntensity: 1.0 });
+  const face = new THREE.MeshStandardMaterial({ map: faceTex, color: '#7a5200', metalness: 0.7, roughness: 0.3, emissive: '#ffffff', emissiveMap: faceTex, emissiveIntensity: 1.15 });
   const mesh = new THREE.InstancedMesh(geo, [side, face, face], defs.length);
   mesh.frustumCulled = false;
   const group = new THREE.Group();

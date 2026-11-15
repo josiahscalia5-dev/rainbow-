@@ -1,6 +1,19 @@
 # Rainbow — CURRENT STATE (handoff)
 
-_Last updated by Claude: 2026-11-15 ~18:50 UTC, recovery session `e0f002d9…` (second Claude account)._
+## ▶ Account 5 update (2026-11-15, session `d8784a51…`) — read this first
+| | |
+|---|---|
+| **Working branch** | `ccr-e033f912-8b40f5`, created from `648f531` (newest commit of account 4's `ccr-d4bb0ad3-8ycajb`). Verified after `git fetch --unshallow`: it contains the original `81e639e`, recovery `b83b7e0`, `ccr-8b6fc834-7kd55l` `8a36270` and `ccr-d4bb0ad3-8ycajb` `648f531`. Nothing lost |
+| Protected (autosave never pushes) | `ccr-6f431adf-7h0m8y` (original), `claude/rainbow-3d-recovery-m4v347` (recovery), and since account 5 also `ccr-d4bb0ad3-8ycajb`, `ccr-8b6fc834-7kd55l` |
+| Cloud environment (account 5) | New personal environment **"rainbow-"** on this account (the old one belonged to the previous account). Network: limited + package registries + `download.blender.org`, `dl.google.com`, `api.atlas.worldlabs.ai`. Setup script = `scripts/cloud-env-setup.sh` (saved; unproven until a fresh container starts) |
+| LFS | Fresh clones get pointer stubs; `git lfs pull` restored all 6 binaries (SHA == LFS oid). The SessionStart hook now pulls LFS before its first backup, and the manifest records LFS oids for stubs (a pre-pull backup had written stub hashes into `MANIFEST.json`; fixed) |
+| Tools verified here | Blender 5.3.0 headless (opened `qa/worldlabs/05/blender/screen05_layout.blend`: River05 8 625 verts, CyanCore05 curve, 13 ring markers 6 u apart, Tunnel05, Benny05_marker; no camera). Android SDK 34 + build-tools 34.0.0. Playwright/Chromium (SwiftShader). World Labs plugin 0.2.2 installed |
+| World Labs Atlas | Endpoint reachable but `401 Authentication required`; no World Labs connector on this account, so `list_projects` could not run. Nothing spent |
+| Meshy / Rodin | Not connected on this account. Nothing spent |
+| Screen 05 | Wave 4 (see `qa/pilot05/COORDINATION_WAVE4.md`): camera LOCKED; coordinator rebuilt the 05 coins; four specialists (environment, water, foam, Benny) running with strict file ownership |
+
+---
+_Below: earlier state, last updated by Claude: 2026-11-15 ~18:50 UTC, recovery session `e0f002d9…` (second Claude account)._
 
 ## Where the project lives
 | | |

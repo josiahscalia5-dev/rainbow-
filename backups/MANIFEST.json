@@ -389,12 +389,12 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3400,
-   "sha256": "97a0d085c31f1617e6e2ceaabab80cfd712fe26b39fbaa99dd194e175d40da57"
+   "sha256": "94114d27047c3144aaf480353b88cfe7b99addc9a27ea4de974e6f77c9acebe8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 5736,
-   "sha256": "451f746ecf5b37c92897874806aed26b5811f343ddaec3be4c8c92ea3105ad2e"
+   "bytes": 7717,
+   "sha256": "86768238fcfda768d67253724580e079287776b5c3e3fa2dc31b3b5e21006d76"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -408,8 +408,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 2362,
-   "sha256": "063a8f567fe6924295423757859d261585d040cd2c8579ac4ee859ec47e80cff"
+   "bytes": 2946,
+   "sha256": "ae3862c2c2c1be64836f4050d165bfb5b870c3c43216d4c47564fc393d613fdc"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -733,8 +733,8 @@
   },
   {
    "path": "qa/07_to_08_continuity.md",
-   "bytes": 1525,
-   "sha256": "d370a63d21420cbfad1206a225bd81c0c5679d71e65c2f5aabce2de6afa78a93"
+   "bytes": 1527,
+   "sha256": "9f9ff680a48500390e13b6934bdf3b3ed4081151e8d742337e48c5e056cee93a"
   },
   {
    "path": "qa/08_diff.png",
@@ -863,8 +863,8 @@
   },
   {
    "path": "qa/gameplay_test.json",
-   "bytes": 14628,
-   "sha256": "1b8e155935f277b71bb620b5e98d99e130de8e5a9e9837011dcf45add2320331"
+   "bytes": 14640,
+   "sha256": "9c7d3176ee8f9928c47ba093cd97dda439b591d0f98cfe9eb8605e917486b507"
   },
   {
    "path": "qa/glb_validation.txt",
@@ -903,8 +903,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 3715,
-   "sha256": "e548da2a6c206b8ede5d5e697a65d86b28df09213e69c3cbc1dc9bdd3d595abe"
+   "bytes": 4134,
+   "sha256": "d58beaafffffda09b5d803be0a5f1f4f63dafc1d39a810e50093000ffc1c435a"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -1362,6 +1362,21 @@
    "sha256": "68ac412c9a4b5a9f6ad3db61ba5677f64ceb0148611cf5b8db9c81569778b9fc"
   },
   {
+   "path": "qa/pilot05/wave4/coins/it02.png",
+   "bytes": 1611084,
+   "sha256": "edcdbdfd14a983fffaecd63a82eec28bc080a5c80a2b2e1f8475ab3d307bd77a"
+  },
+  {
+   "path": "qa/pilot05/wave4/coins/it03.png",
+   "bytes": 1611372,
+   "sha256": "db8737fb34f0eca96472745b479945f89958d157d624d61b7ea0d7675ad3271d"
+  },
+  {
+   "path": "qa/pilot05/wave4/coins/it04.png",
+   "bytes": 1612211,
+   "sha256": "c785da4c7676f24c66fd35e5a627899145cab56da14a1fa2bd78d605629708c3"
+  },
+  {
    "path": "qa/pilot05/wave4/foam/it01_iso_noCrown/05.png",
    "bytes": 1600284,
    "sha256": "5ad7e12814cc5c9c0ba449f5bc1fa5b50b5f5201e65075a68c78f3adfdad0e80"
@@ -1672,6 +1687,11 @@
    "sha256": "9d4f922313c565e0e64bdd84ac2ef5da0dee6007641d61bdcad1c767c710c2a8"
   },
   {
+   "path": "scripts/.envprobe05.ts",
+   "bytes": 2114,
+   "sha256": "0a631998c8a0eb42dad4e05a346047aaf9d88874c49feb7f93c9f832b139beda"
+  },
+  {
    "path": "scripts/.tmp_wem_probe.ts",
    "bytes": 1445,
    "sha256": "8889ca34226e63a255af933123df898bb93a0ab6be04b33b51831c1a001589b5"
@@ -1798,8 +1818,8 @@
   },
   {
    "path": "src/characters/benny/benny-lab.ts",
-   "bytes": 7454,
-   "sha256": "786ed7043feb4198936c3bfe0cb6f8f75a722aaacc409acb0ffab86d54eec72a"
+   "bytes": 8659,
+   "sha256": "a1fa1fddc80680c3bc37ae42528b0dba7827fb2d88e455b534fd6ec3e906d62f"
   },
   {
    "path": "src/characters/benny/build.ts",
@@ -1868,8 +1888,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 8617,
-   "sha256": "fac1072a8504bbba06c0d51aed077d5b29d152d4497e48ad5079b59bc1fb4288"
+   "bytes": 9754,
+   "sha256": "ccfa96bb76f993750010813b788e999e441111aa70238b2ccf1d4b12705d3c7a"
   },
   {
    "path": "src/gameplay/input.ts",

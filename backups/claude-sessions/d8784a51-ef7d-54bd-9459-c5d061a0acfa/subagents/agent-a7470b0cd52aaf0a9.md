@@ -489,3 +489,145 @@ The scratchpad is shared with sibling agents (my probe file was overwritten by a
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T21:04:28.902Z
+
+Let me check the render pipeline (tone mapping, bloom, grade) so colour targets can be solved instead of guessed.
+
+### 🤖 Claude — 2026-11-15T21:04:30.001Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"toneMapping\\|Exposure\\|bloom\\|Bloom\\|grade\" src/game/Game.ts src/render/env.ts | head -30; sed -n 1,60p src/render/grade.ts", "description": "Inspect tonemapping, bloom and grade"}`
+
+### 🧑 User — 2026-11-15T21:04:30.064Z
+
+> ↩︎ result: src/game/Game.ts:14:import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+> src/game/Game.ts:19:import { createGradePass } from '../render/grade';
+> src/game/Game.ts:60:  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+> src/game/Game.ts:61:  const useBloom = qs.get('bloom') !== '0';
+> src/game/Game.ts:62:  if (useBloom) composer.addPass(bloom);
+> src/game/Game.ts:71:    bloom.resolution.set(w / 2, h / 2);
+> src/render/env.ts:57:  renderer.toneMapping = THREE.NeutralToneMapping;
+> src/render/env.ts:58:  renderer.toneMappingExposure = 0.86;
+> /** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> import * as THREE from 'three';
+> import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+> 
+> export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+>   return new ShaderPass({
+>     uniforms: {
+>       tDiffuse: { value: null },
+>       uSat: { value: opts.saturation ?? 1.36 },
+>       uCon: { value: opts.contrast ?? 1.15 },
+>       uVig: { value: opts.vignette ?? 0.18 },
+>     },
+>     vertexShader: /* glsl */ `varying vec2 vUv; void main …[+664 chars]
+
+### 🤖 Claude — 2026-11-15T21:04:31.667Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 40,110p src/game/Game.ts", "description": "Read composer setup in Game.ts"}`
+
+### 🧑 User — 2026-11-15T21:04:31.695Z
+
+> ↩︎ result: const qaMode = qs.has('qa');
+>   const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });
+>   const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+>   renderer.setPixelRatio(dpr);
+>   const scene = new THREE.Scene();
+>   scene.environment = createCandyEnvironment(renderer);
+>   scene.background = new THREE.Color('#b23fb4');
+>   const fog = new THREE.FogExp2('#ffbde9', 0.0035);
+>   scene.fog = fog;
+>   scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+>   const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+>   sun.position.set(0.3, 1, 0.45);
+>   scene.add(sun);
+>   scene.add(sun.target);
+>   const fill = new THREE.PointLight('#ffd8ff', 30, 30, 1.6);
+>   scene.add(fill);
+> 
+>   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+>   const composer = new EffectComposer(renderer);
+>   composer.addPass(new RenderPass(scene, camera));
+>   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+>   const useBloom = qs.get('bloom') !== '0';
+>   if (useBloom) composer.addPass(bloom);
+>   composer.addPass(new OutputPass());
+>   composer.addPass(createGradePass());
+> 
+>   const resize = () => {
+>     const w = canvas.clientWi …[+1523 chars]
+
+### 🤖 Claude — 2026-11-15T21:04:46.556Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/tonemodel.py", "content": "\"\"\"Forward model of the Rainbow post chain (no bloom, no vignette):\nlinear HDR -> exposure 0.86 -> Khronos Neutral -> sRGB -> grade (sat 1.36, contrast 1.15).\npython3 -I tonemodel.py r g b [r g b ...]   prints the display hex for each linear triple\npython3 -I tonemodel.py solve #HEX          searches a linear triple that lands on the hex\"\"\"\nimport sys, itertools\n\n\ndef neutral(c, exp=0.86):\n    c = [v * exp for v in c]\n    x = min(c)\n    off = x - 6. …[+1530 chars]`
+
+### 🧑 User — 2026-11-15T21:04:46.569Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/tonemodel.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:04:48.458Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4 && python3 -I tonemodel.py 0 0.15 0.78  0 0.31 1.12  0.04 0.95 1.55  0.9 0.02 0.62  1.55 0.03 1.2  2.2 0.5 1.8", "description": "Evaluate current palette through post chain"}`
+
+### 🧑 User — 2026-11-15T21:04:48.496Z
+
+> ↩︎ result: [0.0, 0.15, 0.78] -> #0066FF
+> [0.0, 0.31, 1.12] -> #0091FF
+> [0.04, 0.95, 1.55] -> #0CDEFF
+> [0.9, 0.02, 0.62] -> #FF00FB
+> [1.55, 0.03, 1.2] -> #FF23FF
+> [2.2, 0.5, 1.8] -> #FF8AFF
+
+### 🤖 Claude — 2026-11-15T21:04:52.636Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4 && for t in F745EE F739E5 C81AB8 FA9AF0 029AF3 048BE8 0A6FD0 18A2F9 3CC8FF 0490F1; do python3 -I tonemodel.py solve $t; done", "description": "Solve linear values for target display colours"}`
+
+### 🧑 User — 2026-11-15T21:05:29.372Z
+
+> ↩︎ result: target F745EE lin (0.725, 0.15, 0.675) -> #F740EC err 5.3
+> target F739E5 lin (0.7, 0.125, 0.625) -> #F533E5 err 6.2
+> target C81AB8 lin (0.45, 0.075, 0.4) -> #C613B8 err 7.1
+> target FA9AF0 lin (0.85, 0.425, 0.8) -> #F997EF err 3.1
+> target 029AF3 lin (0.075, 0.375, 0.725) -> #009BF3 err 2.3
+> target 048BE8 lin (0.075, 0.3, 0.65) -> #0387E8 err 4.3
+> target 0A6FD0 lin (0.075, 0.225, 0.525) -> #096FD0 err 0.8
+> target 18A2F9 lin (0.1, 0.4, 0.775) -> #149FF9 err 5.1
+> target 3CC8FF lin (0.125, 0.9, 1.85) -> #3CC8FF err 0.3
+> target 0490F1 lin (0.075, 0.325, 0.7) -> #018EF1 err 3.6
+
+### 🤖 Claude — 2026-11-15T21:07:38.644Z
+
+Let me look at the course meander (offset05) that drives the core swing, since band S-bends build on it.
+
+### 🤖 Claude — 2026-11-15T21:07:39.392Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 110,160p src/world/course.ts; sed -n 425,490p src/world/course.ts", "description": "Read S05 meander and widthAt"}`
+
+### 🧑 User — 2026-11-15T21:07:39.423Z
+
+> ↩︎ result: *
+>  * Shape tuned against the reference's cyan core: a small first crest under Benny at the 05
+>  * checkpoint (u≈uCrest, offset a0 to the LEFT, heading parallel to the tunnel axis), then crests
+>  * that grow toward the far end (screen: Benny → (560,700) → (450,600) → (520,520) → VP).
+>  * Coins (gameplay/coins.ts) sit on this centreline (lat 0), so they wind with the same S.
+>  */
+> export const S05 = {
+>   /** length of the straight tunnel line (units) */
+>   L: 72,
+>   /** wavelength along the line (crest → crest of the same side) */
+>   lambda: 32,
+>   /** u of the first (left) crest, where Benny rides at the 05 checkpoint */
+>   uCrest: 14,
+>   /** crest amplitude at uCrest and at uCrest + 1.5 λ (linear growth in between) */
+>   a0: 0.45,
+>   a1: 1.85,
+>   /** half extent of the stream (|offset| + half width) in the current: fills the tube floor */
+>   extent: 6.0,
+> };
+> 
+> /** lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line */
+> export function meander05(u: number): number {
+>   const { L, lambda, uCrest, a0, a1 } = S05;
+>   if (u <= 0 || u >= L) return 0;
+>   const grow = THREE.MathUtils.clamp((u - uCrest) / (1.5 * lambda), 0, 1);
+>   const amp = (a0 + (a1 - a0)  …[+3868 chars]
+
