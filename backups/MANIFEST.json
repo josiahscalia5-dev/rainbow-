@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "1f30ddb05cd2b788618a2f6126d023bfa5e295549976c2127d751a01765c99c0"
+   "sha256": "41cbabd40446d6a3041133f7b9b44f654666b0b93842f25e9b38e76e78d7f709"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -733,8 +733,8 @@
   },
   {
    "path": "qa/07_to_08_continuity.md",
-   "bytes": 1527,
-   "sha256": "9f9ff680a48500390e13b6934bdf3b3ed4081151e8d742337e48c5e056cee93a"
+   "bytes": 1521,
+   "sha256": "40d5d4d3f451f3502f726abf47c4bce4b0c32f0cdd1c91e533d1e06cfcb2a841"
   },
   {
    "path": "qa/08_diff.png",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1184,
-   "sha256": "d252ae24bb02d72144a1c3b94849e782eb25246c6f49f8bbc447d93d6c22888e"
+   "bytes": 3181,
+   "sha256": "25426d1a49e77f53fb1a75927fe83fc55929b3831f9a4458753adbd75998e6b2"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -863,8 +863,8 @@
   },
   {
    "path": "qa/gameplay_test.json",
-   "bytes": 14640,
-   "sha256": "9c7d3176ee8f9928c47ba093cd97dda439b591d0f98cfe9eb8605e917486b507"
+   "bytes": 14616,
+   "sha256": "58e592583dabc564ea8977a0c2961aef3bba6636b54cea37af93a63c43c0b921"
   },
   {
    "path": "qa/glb_validation.txt",
@@ -1778,13 +1778,13 @@
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/camera05.json",
-   "bytes": 1485,
-   "sha256": "5367d81685f55328d6fa424c698eddee901e77e8261606c87598553c01be6107"
+   "bytes": 1479,
+   "sha256": "c15239f587a810682972b587c42def91d9eccce695aa9d567345a694af11e1dd"
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/landmarks.json",
-   "bytes": 18998,
-   "sha256": "d6076482554ce9efdf8f6bec0ec1d21ee58726045f4a5391bced5321732a529c"
+   "bytes": 18617,
+   "sha256": "263e163db678ec2b5387bc5f5108015199f433bffbdf9a54173cc2a6d812489c"
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/landmarks_current_px.json",
@@ -1797,9 +1797,44 @@
    "sha256": "cedaad480da0880618291ec3fc56ccf74f1567dd47d52e345bdbb0471ea9501a"
   },
   {
+   "path": "qa/pilot05/wave6/coordinator/regress/04.png",
+   "bytes": 1010213,
+   "sha256": "17eb365be507810d1ca2d47eaa42ceeab19a728132683f008a92008759f3b4a3"
+  },
+  {
+   "path": "qa/pilot05/wave6/coordinator/regress/06.png",
+   "bytes": 1316724,
+   "sha256": "9e8922815e15a1262cb2c6bc05d892ebdfc844a0217a27221748b6e2225d428c"
+  },
+  {
    "path": "qa/pilot05/wave6/coordinator/s01/05.png",
    "bytes": 1963786,
    "sha256": "38e4f6bf2e2db5d0b7b57b5ff482ee2c19c894994daac826fdc11014dd5c120b"
+  },
+  {
+   "path": "qa/pilot05/wave6/coordinator/s02/05.png",
+   "bytes": 1977860,
+   "sha256": "f7c0619dda98d8b92144baffa815845ccfc6c8881c3c6e9e2bb229eef516d9f7"
+  },
+  {
+   "path": "qa/pilot05/wave6/coordinator/s02/triptych.png",
+   "bytes": 3489072,
+   "sha256": "9e6a28d14f2604eff402fda20f28031d1d59d8df626b1ce3fd586546fb89792f"
+  },
+  {
+   "path": "qa/pilot05/wave6/coordinator/s03/05.png",
+   "bytes": 1968512,
+   "sha256": "de9907afcac6518a8653781db3c7c5e3f64d8fa5e8eebd66b78ffe8106d3e7af"
+  },
+  {
+   "path": "qa/pilot05/wave6/coordinator/s03/06.png",
+   "bytes": 1505118,
+   "sha256": "0313e50bc29d36c429b3753ae0c526a6d1dc5c627250cf5e1d78ce0146efef64"
+  },
+  {
+   "path": "qa/pilot05/wave6/coordinator/s03/07.png",
+   "bytes": 1786412,
+   "sha256": "8d891da424e96e9390df3628b9ccebdea572ca412ae1aafc3ba51e09b5a4ca77"
   },
   {
    "path": "qa/pilot05/wave6/current/05.png",
@@ -1815,6 +1850,11 @@
    "path": "qa/pilot05/wave6/foam/NOTES.md",
    "bytes": 2383,
    "sha256": "da32597f3097b4aa48295332d42eab47d6b4e1d17a63cff5f1745a79055a272d"
+  },
+  {
+   "path": "qa/pilot05/wave6/foam/partial_soap05_unwired.patch",
+   "bytes": 4891,
+   "sha256": "88ed41bc1baad4900468577fbb6ca20b8c01d2f6331b2ad26d4c2221de74a1c7"
   },
   {
    "path": "qa/pilot05/wave6/foam/tools/bigblobs.py",
@@ -2423,8 +2463,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 43596,
-   "sha256": "bdbd84374396b013fba800cf32dc7887dc9f5bcb1cbc5f5461965778e12a9050"
+   "bytes": 41319,
+   "sha256": "9dbb4c1f0ecb021a3b45345623872c7c8a29f9add958473457e76983ad910d67"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -2463,8 +2503,8 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 28322,
-   "sha256": "19a9c9b2ec8f0c182f2378ef04b7a502f84750fe70c3e4a522eaf70f3256f261"
+   "bytes": 29093,
+   "sha256": "4f790cea6d15299dfb7fd16010efb553ade346a66c5b24682287321a2d7861b5"
   },
   {
    "path": "src/world/environment.ts",

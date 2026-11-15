@@ -2385,3 +2385,436 @@ Only comments reference it; everything else reads the course directly. Applying 
 
 > 🔧 **Bash** `{"command": "grep -n \"function smooth\\|const smooth\" src/world/course.ts; npx tsc --noEmit && echo TSC_OK; timeout 300 npm run -s test:continuity 2>&1 | grep -E '\"ok\"|verticalDrop|05->06|04->05' ; timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave6/coordinator/s02 2>&1 | tail -1 && timeout 600 node scripts/camera-lock-05.mjs 2>&1 | tail -7", "description": "Verify crest unchanged, continuity, coin residuals", "timeout": 900000}`
 
+### 🧑 User — 2026-11-15T23:18:32.136Z
+
+> ↩︎ result: 80:const smooth = (a: number, b: number, x: number) => {
+> 322:function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+> TSC_OK
+>  "ok": true,
+>   "verticalDrop": 61.19,
+>   "04->05 gap=0 dT=0.252 y=-40.63",
+>   "05->06 gap=0 dT=0.297 y=-43.35",
+> 05 → qa/pilot05/wave6/coordinator/s02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":633025,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> coin residuals (game − ref):
+>   {"i":0,"ref":[473.9,726.3,96],"game":[488,739,93],"dx":14.1,"dy":12.7,"dd":-3}
+>   {"i":1,"ref":[547.8,661.2,70],"game":[555,662,67],"dx":7.2,"dy":0.8,"dd":-3}
+>   {"i":2,"ref":[482,612.1,56],"game":[478,609,49],"dx":-4,"dy":-3.1,"dd":-7}
+>   {"i":3,"ref":[431.1,574.3,43],"game":[432,578,37],"dx":0.9,"dy":3.7,"dd":-6}
+>   {"i":4,"ref":[465.8,545.7,28],"game":[443,560,29],"dx":-22.8,"dy":14.3,"dd":1}
+>   {"i":5,"ref":[495.1,533,20],"game":[468,548,25],"dx":-27.1,"dy":15,"dd":5}
+
+### 🤖 Claude — 2026-11-15T23:18:37.841Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/triptych.py qa/pilot05/wave6/coordinator/s02/triptych.png 1100 REF=references/05_flow_into_the_current.png PREV=qa/pilot05/wave6/current/05.png NOW=qa/pilot05/wave6/coordinator/s02/05.png 2>&1 | tail -1", "description": "Build reference / previous / new triptych"}`
+
+### 🧑 User — 2026-11-15T23:18:38.476Z
+
+> ↩︎ result: qa/pilot05/wave6/coordinator/s02/triptych.png (1889, 1142)
+
+### 🤖 Claude — 2026-11-15T23:18:40.220Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/coordinator/s02/triptych.png"}`
+
+### 🧑 User — 2026-11-15T23:18:40.448Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:18:45.940Z
+
+The coin trail now zig-zags the way your reference does. Telling the four running specialists that the river geometry changed, so they baseline against the new frame:
+
+### 🤖 Claude — 2026-11-15T23:18:46.342Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-15T23:18:46.350Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-15T23:18:51.569Z
+
+> 🔧 **SendMessage** `{"to": "a42dc060fd4b58416", "summary": "Notify water: 05 S-curve geometry changed", "message": "Coordinator: the 05 river S-curve geometry changed (course.ts meander05, ~23:30 UTC) — use the NEW baseline qa/pilot05/wave6/coordinator/s02/05.png instead of qa/pilot05/wave6/current/05.png for PREV.\nWhat changed: up to u = 22 (incl. Benny's crest, the checkpoint s 132.438 and the LOCKED camera) nothing moved. Beyond u 22 the stream centreline now follows knots fitted to the reference coin trail back-projected through the locked camera: offset from the tunnel line u 26.3 +0.37, 32.2 −0.23, 43 −1.1 …[+483 chars]`
+
+### 🧑 User — 2026-11-15T23:18:51.600Z
+
+> ↩︎ result: {"success":false,"message":"Agent a42dc060fd4b58416 was stopped and won't be resumed. Treat its work as cancelled; only launch a new agent if the user explicitly asks."}
+
+### 🤖 Claude — 2026-11-15T23:18:54.471Z
+
+> 🔧 **SendMessage** `{"to": "a0fec9a2c4eda0825", "summary": "Notify foam: 05 S-curve geometry changed", "message": "Coordinator: the 05 river S-curve geometry changed (course.ts meander05, ~23:30 UTC) — use the NEW baseline qa/pilot05/wave6/coordinator/s02/05.png instead of qa/pilot05/wave6/current/05.png for PREV.\nUp to u = 22 (Benny's crest, checkpoint s 132.438, locked camera) nothing moved. Beyond u 22 the stream centreline follows knots fitted to the reference coin trail: offset from the tunnel line u 26.3 +0.37, 32.2 −0.23, 43 −1.14, 55.5 −0.79, 67 −0.16, 72 0. The river edges/banks move with it, so world-a …[+289 chars]`
+
+### 🧑 User — 2026-11-15T23:18:54.493Z
+
+> ↩︎ result: {"success":false,"message":"Agent a0fec9a2c4eda0825 was stopped and won't be resumed. Treat its work as cancelled; only launch a new agent if the user explicitly asks."}
+
+### 🤖 Claude — 2026-11-15T23:18:58.674Z
+
+> 🔧 **SendMessage** `{"to": "a91ff34759140d188", "summary": "Notify path-cam: S-curve change + far coin targets", "message": "Coordinator: the 05 river S-curve geometry changed (course.ts meander05, ~23:30 UTC) — use the NEW baseline qa/pilot05/wave6/coordinator/s02/05.png for PREV.\nUp to u = 22 (Benny's crest, checkpoint s 132.438, locked camera) nothing moved. Beyond u 22 the centreline follows knots fitted to the reference coin trail back-projected through the locked camera (qa/pilot05/wave6/camera_lock/landmarks.json): offset from the tunnel line u 26.3 +0.37, 32.2 −0.23, 43 −1.14, 55.5 −0.79, 67 −0.16, 72 0. …[+546 chars]`
+
+### 🧑 User — 2026-11-15T23:18:58.691Z
+
+> ↩︎ result: {"success":false,"message":"Agent a91ff34759140d188 was stopped and won't be resumed. Treat its work as cancelled; only launch a new agent if the user explicitly asks."}
+
+### 🤖 Claude — 2026-11-15T23:19:00.771Z
+
+> 🔧 **SendMessage** `{"to": "aa2374858e933d896", "summary": "Notify env: new 05 baseline frame", "message": "Coordinator FYI: the 05 river S-curve beyond u 22 changed in course.ts (~23:30 UTC); camera, checkpoint and tunnel are unchanged, so your rings/walls/lids are not affected. Use the new baseline qa/pilot05/wave6/coordinator/s02/05.png for PREV in your reports. Camera-lock check: the game's VP (499.8, 480.2) vs reference (498.6, 479.4) — the lock holds.", "type": "message", "recipient": "aa2374858e933d896", "recipient_kind": "agent", "content": "Coordinator FYI: the 05 river S-curve beyond u 22…"}`
+
+### 🧑 User — 2026-11-15T23:19:00.798Z
+
+> ↩︎ result: {"success":false,"message":"Agent aa2374858e933d896 was stopped and won't be resumed. Treat its work as cancelled; only launch a new agent if the user explicitly asks."}
+
+### 🤖 Claude — 2026-11-15T23:19:08.266Z
+
+All four specialists **were stopped** when you interrupted the earlier turn, before any of them captured a frame. Checking what partial edits they left in the tree:
+
+### 🤖 Claude — 2026-11-15T23:19:09.423Z
+
+> 🔧 **Bash** `{"command": "git log --format='%h %ci' -1 && git diff 7ae64c3 --stat -- src | tail; echo; git diff 7ae64c3 -- src/vfx/foam.ts | head -90", "description": "Inspect partial specialist edits since start"}`
+
+### 🧑 User — 2026-11-15T23:19:09.468Z
+
+> ↩︎ result: e4bfb4f 2026-11-15 23:18:18 +0000
+>  src/game/Game.ts    |  6 ++++++
+>  src/vfx/foam.ts     | 48 +++++++++++++++++++++++++++++++++++++++++++++---
+>  src/world/course.ts | 40 +++++++++++++++++++++++++++++++++++++---
+>  3 files changed, 88 insertions(+), 6 deletions(-)
+> 
+> diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
+> index 05317e4..a114a13 100644
+> --- a/src/vfx/foam.ts
+> +++ b/src/vfx/foam.ts
+> @@ -67,6 +67,23 @@ export function bermSurface(s: number, e: number, side: number, hw: number): num
+>    return bermHeight(e, hw, bermLump(s, side)) + 0.2 * domeK * Math.sqrt(bermDomes(s, e, side));
+>  }
+>  
+> +/**
+> + * wave 6: ref 05 soap colour ramp. Stops = the reference's foam pixels at the 10/25/50/75/90th luminance
+> + * percentiles — blue-violet shade (155,156,240), (179,173,245), lavender (217,195,249), lit (243,226,252), top
+> + * (251,246,253) — inverted through the display pipeline (Neutral tone map ×0.86 → sRGB → grade sat 1.36 /
+> + * contrast 1.15), so only the very tops of the bubbles reach white and the undersides stay blue-violet.
+> + */
+> +const SOAP05_GLSL = /* glsl */ `
+> +const vec3 SOAP_SHADE = vec3(0.40, 0.41, 0.77);
+> +vec3 soap05(float t) {
+> +  t = clamp(t, 0.0, 1.0) * 4.0;
+> +  vec3 c = mix(SOAP_SHADE, vec3 …[+2843 chars]
+
+### 🤖 Claude — 2026-11-15T23:19:14.690Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uSt05\\|vW5\\|q5\\|soap05(\" src/vfx/foam.ts | head -20; git diff 7ae64c3 -- src/vfx/foam.ts | sed -n 90,140p", "description": "Check whether foam partial edit is wired"}`
+
+### 🧑 User — 2026-11-15T23:19:14.732Z
+
+> ↩︎ result: 78:vec3 soap05(float t) {
+> 112:uniform vec4 uSt05;      // 05 soap shading ramps: in s0..s1, out s2..s3 (wave 6)
+> 167:  float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));
+> 170:    vec3 c5 = soap05(t05);
+> 196:varying float vW5;
+> 200:  float q5 = floor(instanceColor.x * 0.5);
+> 201:  vInst = vec3(instanceColor.x - 2.0 * q5, instanceColor.yz);
+> 202:  vW5 = q5 / 8.0;
+> 219:varying float vW5;
+> 235:  col = mix(col, soap05(smoothstep(0.25, 0.97, wrap * 0.6 + upF * 0.4) + 0.06 * vInst.z), vW5);
+> 247:  col = mix(col, mix(vec3(0.8, 0.68, 1.0), SOAP_SHADE * 0.95, vW5), fres * mix(0.42, 0.6, vW5));
+> +${SOAP05_GLSL}
+>  void main() {
+>    vec3 N = normalize(vNormalW);
+>    vec3 V = normalize(cameraPosition - vPosW);
+> @@ -191,6 +231,8 @@ void main() {
+>    vec3 top = mix(vec3(1.1, 1.04, 1.16), vec3(1.04, 1.06, 1.16), clamp(vInst.z, 0.0, 1.0));
+>    top = mix(top, vec3(1.12, 1.02, 1.12), clamp(-vInst.z, 0.0, 1.0));
+>    vec3 col = mix(lav, top, lit);
+> +  // 05 (wave 6): ref soap ramp — white only on the tops, blue-violet undersides
+> +  col = mix(col, soap05(smoothstep(0.25, 0.97, wrap * 0.6 + upF * 0.4) + 0.06 * vInst.z), vW5);
+>    #ifndef LOW_Q
+>    // pores: small open bubbles on the puff s …[+527 chars]
+
+### 🤖 Claude — 2026-11-15T23:19:23.040Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/wave6/foam && git diff 7ae64c3 -- src/vfx/foam.ts > qa/pilot05/wave6/foam/partial_soap05_unwired.patch && git checkout 7ae64c3 -- src/vfx/foam.ts && git diff 7ae64c3 --stat -- src && npx tsc --noEmit && echo TSC_OK && wc -l qa/pilot05/wave6/foam/partial_soap05_unwired.patch", "description": "Save partial foam work as patch, restore foam.ts"}`
+
+### 🧑 User — 2026-11-15T23:19:24.962Z
+
+> ↩︎ result: src/game/Game.ts    |  6 ++++++
+>  src/world/course.ts | 40 +++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 43 insertions(+), 3 deletions(-)
+> TSC_OK
+> 111 qa/pilot05/wave6/foam/partial_soap05_unwired.patch
+
+### 🤖 Claude — 2026-11-15T23:19:27.374Z
+
+Now verifying the S-curve change didn't break gameplay (coins, collisions, pause, the 07→08 plunge, victory):
+
+### 🤖 Claude — 2026-11-15T23:19:28.329Z
+
+> 🔧 **Bash** `{"command": "sed -n 5,20p package.json; (time timeout 900 node scripts/gameplay-test.mjs) 2>&1 | tail -15", "description": "Run the full gameplay regression test", "timeout": 960000}`
+
+### 🧑 User — 2026-11-15T23:19:34.077Z
+
+> ↩︎ result: "description": "RAINBOW — 11-screen real-time 3D portrait mobile game (Three.js + TypeScript + Vite + Capacitor)",
+>   "type": "module",
+>   "scripts": {
+>     "dev": "vite --host 0.0.0.0",
+>     "build": "tsc --noEmit && vite build",
+>     "preview": "vite preview --host 0.0.0.0 --port 4173",
+>     "typecheck": "tsc --noEmit",
+>     "test:continuity": "vite-node scripts/continuity-test.ts",
+>     "models:export": "node scripts/export-models.mjs",
+>     "qa:capture": "node scripts/capture.mjs",
+>     "qa:compare": "python3 scripts/compare.py",
+>     "verify:refs": "sha256sum -c scripts/reference.sha256",
+>     "android:sync": "npm run build && npx cap sync android",
+>     "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+>     "test:cinematic": "node scripts/cinematic-test.mjs"
+>   },
+>   "tTop": 23.633333333333272,
+>   "tBottom": 30.21666666666623,
+>   "t08": 30.21666666666623,
+>   "yTop": -51.882,
+>   "yBottom": -113.245,
+>   "y08": -113.245,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.36
+>  },
+>  "errors": []
+> }
+> 
+> real	0m5.711s
+> user	0m1.001s
+> sys	0m0.209s
+
+### 🤖 Claude — 2026-11-15T23:19:37.430Z
+
+> 🔧 **Bash** `{"command": "ls -t qa/*.json | head -3; python3 -c \"\nimport json;d=json.load(open('qa/gameplay_test.json'))\nkeys=[k for k in d if k not in ('log','trace')]\nprint({k:(d[k] if not isinstance(d[k],(list,dict)) or len(str(d[k]))<200 else '…') for k in keys})\"; python3 -c \"\nimport json;d=json.load(open('qa/pilot05/wave5/baseline/gameplay_test.json'))\nprint('BASELINE', {k:(d[k] if not isinstance(d[k],(list,dict)) or len(str(d[k]))<200 else '…') for k in d if k not in ('log','trace')})\"", "description": "Compare gameplay test with wave-5 baseline"}`
+
+### 🧑 User — 2026-11-15T23:19:37.517Z
+
+> ↩︎ result: qa/gameplay_test.json
+> qa/capture_log.json
+> qa/continuity_report.json
+> {'checks': '…', 'samples': '…', 'plunge': {'tTop': 23.633333333333272, 'tBottom': 30.21666666666623, 't08': 30.21666666666623, 'yTop': -51.882, 'yBottom': -113.245, 'y08': -113.245, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.36}, 'maxJumpAt': {'s': 359.545, 's1': 359.745, 'stage': '07', 'y0': -93.32, 'y1': -93.51, 't': 27.8}, 'errors': [], 'pass': True}
+> BASELINE {'checks': '…', 'samples': '…', 'plunge': {'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'maxJumpAt': {'s': 341.074, 's1': 341.274, 'stage': '07', 'y0': -75.243, 'y1': -75.433, 't': 26.267}, 'errors': [], 'pass': True}
+
+### 🤖 Claude — 2026-11-15T23:19:39.907Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nfor f in ('qa/gameplay_test.json','qa/pilot05/wave5/baseline/gameplay_test.json'):\n  d=json.load(open(f)); c=d['checks']\n  print(f.split('/')[-2], json.dumps(c)[:700])\"", "description": "Compare gameplay check details"}`
+
+### 🧑 User — 2026-11-15T23:19:39.951Z
+
+> ↩︎ result: qa {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2135, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 359.545, "s1": 359.745, "stage": "07", "y0": -93.32, "y1": -93.51, "t": 27.8}}, "plunge": {"pass": true, "tTop": 23.633333333333272, "tBottom": 30.21666666666623, "t08": 30.21666666666623, "yTop": -51.882, "yBottom": -113.245, "y08": -113.245, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.36}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected"
+> baseline {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 341.074, "s1": 341.274, "stage": "07", "y0": -75.243, "y1": -75.433, "t": 26.267}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.283333333332894,  …[+213 chars]
+
+### 🤖 Claude — 2026-11-15T23:19:47.902Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 04 06 --out=qa/pilot05/wave6/coordinator/regress 2>&1 | tail -3 && python3 - <<'EOF'\nfrom PIL import Image, ImageChops\nimport numpy as np\nfor n, old in ((\"04\",\"qa/pilot05/wave5/environment/regress/04.png\"),(\"06\",\"qa/pilot05/wave5/environment/regress/06.png\")):\n    a=np.asarray(Image.open(old).convert('RGB')).astype(int); b=np.asarray(Image.open(f\"qa/pilot05/wave6/coordinator/regress/{n}.png\").convert('RGB')).astype(int)\n    d=np.abs(a-b).sum(2); print(n, 'mean abs diff', round(d.mean()/3,2), 'px>40:', round((d>120).mean()*100,2), …[+91 chars]`
+
+### 🧑 User — 2026-11-15T23:20:09.962Z
+
+> ↩︎ result: 04 → qa/pilot05/wave6/coordinator/regress/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":736964,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/wave6/coordinator/regress/06.png {"stage":"06","s":198.143,"y":-37.486,"calls":72,"tris":581657,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 mean abs diff 0.24 px>40: 0.08 %
+> 06 mean abs diff 63.76 px>40: 60.31 %
+
+### 🤖 Claude — 2026-11-15T23:20:13.227Z
+
+Screen 04 is pixel-identical. Screen 06 differs a lot from the wave-5 frame, but that frame was taken from an older tree. A/B test with only my `course.ts` change reverted, to see if it's mine:
+
+### 🤖 Claude — 2026-11-15T23:20:17.078Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && cp src/world/course.ts $S/course.new.ts && git show 7ae64c3:src/world/course.ts > src/world/course.ts && timeout 600 node scripts/capture.mjs 06 --out=$S/ab_old 2>&1 | tail -1; cp $S/course.new.ts src/world/course.ts && git diff 7ae64c3 --stat -- src/world/course.ts && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open(\"$S/ab_old/06.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(\"qa/pilot05/wave6/coordinator/regress/06.png\").convert('RGB')).astype …[+227 chars]`
+
+### 🧑 User — 2026-11-15T23:20:27.560Z
+
+> ↩︎ result: 06 → /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/ab_old/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":71,"tris":551017,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+>  src/world/course.ts | 40 +++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 37 insertions(+), 3 deletions(-)
+> 06 old-course vs new-course: mean abs diff 63.76 px>40: 60.31 %
+
+### 🤖 Claude — 2026-11-15T23:20:34.868Z
+
+> 🔧 **Bash** `{"command": "sed -n 522,540p src/game/Game.ts; grep -n \"marks\\['06\\|'06_\\|06_\" src/world/course.ts | head", "description": "Inspect checkpoint definitions for 06"}`
+
+### 🧑 User — 2026-11-15T23:20:34.901Z
+
+> ↩︎ result: const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+>     '01': { mode: 'intro', t: T.cp01 },
+>     '02': { mode: 'intro', t: T.cp02 },
+>     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+>     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+>     '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+>     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+>     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+>     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+>     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+>     '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
+>     '11': { mode: 'outro', t: O.cp11 },
+>     '07a_plunge_top': { mode: 'ride', s: course.marks['07_plunge_top'] - 1 },
+>     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
+>     '07c_plunge_bottom': { mode: 'ride', s: course.marks['07_plunge_bottom'] - 3 },
+>     '07d_entering_08': { mode: 'ride', s: course.stage('08').s0 + 0.2 },
+>   };
+> 
+>   const gotoCheckpoint = (id: string …[+79 chars]
+
+### 🤖 Claude — 2026-11-15T23:20:46.478Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && git show 7ae64c3:src/world/course.ts > src/world/course_old_tmp.ts && cat > scripts/_cmp_tmp.ts <<'EOF'\nimport { Course as CN } from '../src/world/course';\nimport { Course as CO } from '../src/world/course_old_tmp';\nfor (const [n, c] of [['old', new CO()], ['new', new CN()]] as const) {\n  const st = (id: any) => c.stage(id);\n  const s06 = st('06').s0 + 10;\n  console.log(n, '05', st('05').s0.toFixed(3), st('05').s1.toFixed(3), '06', st('06').s0.toFixed(3), st('06').s1.toFixed(3), 'mark06',  …[+367 chars]`
+
+### 🧑 User — 2026-11-15T23:20:48.047Z
+
+> ↩︎ result: old 05 114.688 188.924 06 188.924 247.057 mark06 188.924 cp06 s 198.924 pos 0.157,-37.857,-138.115 len 435.192
+> new 05 114.688 188.143 06 188.143 246.276 mark06 188.143 cp06 s 198.143 pos 0.157,-37.857,-138.115 len 434.412
+> M  src/vfx/foam.ts
+
+### 🤖 Claude — 2026-11-15T23:20:57.556Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && python3 -I scripts/triptych.py $S/ab06.png 700 REF=references/06_crest_the_rinse_arch.png OLDCOURSE=$S/ab_old/06.png NEWCOURSE=qa/pilot05/wave6/coordinator/regress/06.png | tail -1", "description": "Side-by-side of 06 with old and new course"}`
+
+### 🧑 User — 2026-11-15T23:20:57.929Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/ab06.png (1214, 742)
+
+### 🤖 Claude — 2026-11-15T23:20:59.639Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/ab06.png"}`
+
+### 🧑 User — 2026-11-15T23:20:59.677Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:21:28.644Z
+
+> 🔧 **Bash** `{"command": "git show 7ae64c3:src/world/course.ts > src/world/course_old_tmp.ts && cat > scripts/_len_tmp.ts <<'EOF'\nimport { meander05 as mNew, S05 } from '../src/world/course';\nimport { meander05 as mOld } from '../src/world/course_old_tmp';\nconst k = Math.hypot(72, 3) / 72;\nconst len = (f: (u: number) => number, a = 0, b = 72, n = 20000) => { let L = 0, px = f(a); for (let i = 1; i <= n; i++) { const u = a + (b - a) * i / n, x = f(u); L += Math.hypot((b - a) / n * k, x - px); px = x; } return L; };\nconst bump = (u: number) => (u <= 56 || u >= 72 ? 0 : Math.sin(Math.PI * (u - 56) / 16)  …[+829 chars]`
+
+### 🧑 User — 2026-11-15T23:21:30.205Z
+
+> ↩︎ result: old 72.9766 new 72.2248 diff 0.7518
+> A (right swing) = 2.20392
+> A (left swing) = -2.29939
+
+### 🤖 Claude — 2026-11-15T23:21:40.359Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/course.ts", "old_string": "/** lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line */\nexport function meander05(u: number): number {\n  if (u <= 0 || u >= S05.L) return 0;\n  if (u <= U05_KEEP) return meander05Sine(u);\n  return hermiteKnots(KNOTS05, u, SLOPE05_KEEP);\n}", "new_string": "/**\n * ARC-LENGTH KEEPER: a right swing over u 56–72 (sin², zero value and slope at both ends). At the 05\n * checkpoint this stretch lies behind the forced-perspective far tunnel (depth  …[+848 chars]`
+
+### 🧑 User — 2026-11-15T23:21:40.402Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T23:21:43.462Z
+
+> 🔧 **Bash** `{"command": "cat > scripts/_cmp_tmp.ts <<'EOF'\nimport { Course } from '../src/world/course';\nconst c = new Course();\nconst s06 = c.stage('06').s0 + 10;\nconsole.log('05', c.stage('05').s0.toFixed(3), c.stage('05').s1.toFixed(3), 'crest', c.marks['05_crest'].toFixed(3), 'cp06', s06.toFixed(3), c.pointAt(s06).toArray().map((v) => v.toFixed(3)).join(','), 'len', c.length.toFixed(3), 'plunge', c.marks['07_plunge_top'].toFixed(3));\nEOF\nnpx vite-node scripts/_cmp_tmp.ts 2>&1 | tail -1; rm -f scripts/_cmp_tmp.ts; echo \"OLD: 05 114.688 188.924 crest 132.438 cp06 198.924 len 435.192\"", "descript …[+76 chars]`
+
+### 🧑 User — 2026-11-15T23:21:45.004Z
+
+> ↩︎ result: 05 114.688 188.981 crest 132.288 cp06 198.981 0.157,-37.858,-138.115 len 435.250 plunge 310.468
+> OLD: 05 114.688 188.924 crest 132.438 cp06 198.924 len 435.192
+
+### 🤖 Claude — 2026-11-15T23:22:01.720Z
+
+> 🔧 **Bash** `{"command": "cat > scripts/_tune_tmp.ts <<'EOF'\nimport * as fs from 'node:fs';\nconst src = fs.readFileSync('src/world/course.ts', 'utf8');\nconst target = 435.192;\nconst measure = async (A: number) => {\n  fs.writeFileSync('src/world/course_tune_tmp.ts', src.replace(/amp: [0-9.]+ \\}/, `amp: ${A} }`));\n  const m = await import('../src/world/course_tune_tmp.ts?A=' + A);\n  const c = new m.Course();\n  return { L: c.length, crest: c.marks['05_crest'], cp06: c.stage('06').s0 + 10 };\n};\nlet lo = 1.9, hi = 2.3;\nfor (let i = 0; i < 18; i++) { const A = (lo + hi) / 2; const r = await measure(A …[+486 chars]`
+
+### 🧑 User — 2026-11-15T23:22:02.201Z
+
+> ↩︎ result: Node.js v22.23.4
+> 4: * Units: 1 unit ≈ 5 cm at Benny's scale (Benny body radius ≈ 0.8). +Y is up (absolute altitude).
+> 62:/** Fixed world anchors shared by environment builders (absolute coordinates). */
+> 184:/** Generates the dense control polyline of the route (absolute coordinates). */
+> 396:    const sAtIndex = (i: number) => {
+> 402:    for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+
+### 🤖 Claude — 2026-11-15T23:22:04.150Z
+
+> 🔧 **Bash** `{"command": "ls src/world/; sed -n 370,410p src/world/course.ts", "description": "Check leftover temp files and the arc-length setup"}`
+
+### 🧑 User — 2026-11-15T23:22:04.189Z
+
+> ↩︎ result: course.ts
+> environment.ts
+> laundryRoom.ts
+> materials.ts
+> towel.ts
+> tube.ts
+> 
+>   constructor() {
+>     const route = buildRoute();
+>     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+>     // arc-length table over curve parameter u
+>     const M = route.points.length * 24;
+>     const us: number[] = [0];
+>     const ls: number[] = [0];
+>     let prev = this.curve.getPoint(0);
+>     for (let i = 1; i <= M; i++) {
+>       const u = i / M;
+>       const p = this.curve.getPoint(u);
+>       ls.push(ls[i - 1] + p.distanceTo(prev));
+>       us.push(u);
+>       prev = p;
+>     }
+>     this.length = ls[M];
+>     const uAtS = (s: number) => {
+>       let lo = 0, hi = M;
+>       while (hi - lo > 1) {
+>         const mid = (lo + hi) >> 1;
+>         if (ls[mid] < s) lo = mid; else hi = mid;
+>       }
+>       const f = (s - ls[lo]) / Math.max(1e-6, ls[hi] - ls[lo]);
+>       return us[lo] + (us[hi] - us[lo]) * f;
+>     };
+>     const sAtIndex = (i: number) => {
+>       const u = i / (route.points.length - 1);
+>       const k = Math.round(u * M);
+>       return ls[k];
+>     };
+>     this.marks = {};
+>     for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+>     this.straightAxes = route.straight.map((r) => ({  …[+420 chars]
+
+### 🤖 Claude — 2026-11-15T23:22:18.277Z
+
+> 🔧 **Bash** `{"command": "cat > scripts/_m_tmp.ts <<'EOF'\nimport { Course } from '../src/world/course';\nconst c = new Course();\nconsole.log(JSON.stringify({ L: +c.length.toFixed(5), crest: +c.marks['05_crest'].toFixed(4), cp06: +(c.stage('06').s0 + 10).toFixed(4), s1: +c.stage('05').s1.toFixed(4) }));\nEOF\nsetA() { sed -i -E \"s/(const LEN05_SWING = \\{ u0: 56, u1: 72, amp: )[0-9.]+( \\};)/\\1$1\\2/\" src/world/course.ts; }\nm() { npx vite-node scripts/_m_tmp.ts 2>/dev/null | tail -1; }\na0=2.0; setA $a0; r0=$(m); L0=$(echo $r0 | python3 -c \"import json,sys;print(json.load(sys.stdin)['L'])\"); echo \" …[+594 chars]`
+
+### 🧑 User — 2026-11-15T23:22:26.020Z
+
+> ↩︎ result: A=2.0 {"L":435.11447,"crest":132.4383,"cp06":198.8456,"s1":188.8456}
+> A=2.20392 {"L":435.2496,"crest":132.2883,"cp06":198.9805,"s1":188.9805}
+> A=2.118356 {"L":435.1916,"crest":132.4383,"cp06":198.9226,"s1":188.9226}
+> A=2.120274 {"L":435.19288,"crest":132.4383,"cp06":198.9239,"s1":188.9239}
+> A=2.120304 {"L":435.1929,"crest":132.4383,"cp06":198.9239,"s1":188.9239}
+> A=2.120304 {"L":435.1929,"crest":132.4383,"cp06":198.9239,"s1":188.9239}
+> Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     a0,a1,L0,L1=2.120304,2.120304,435.1929,435.1929;T=435.19290;print(round(a1+(T-L1)*(a1-a0)/(L1-L0),6))
+>                                                                                ~~~~~~~~~~~~~~^^~~~~~~
+> ZeroDivisionError: float division by zero
+> Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     import json,sys;print(json.load(sys.stdin)['L'])
+>                           ~~~~~~~~~^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/json/__init__.py", line 298, in load
+>     return loads(fp.read(),
+>         cls=cls, object_hook=object_hook,
+>         parse_float=parse_float, parse_int=parse_int,
+>         parse_constant=parse_constant, object_pairs_hook=object_pairs_hoo …[+710 chars]
+
+### 🤖 Claude — 2026-11-15T23:22:28.299Z
+
+Converged at amp **2.120304** (length 435.1929 = old 435.192, crest 132.4383 = old, 06 checkpoint 198.924 = old). My loop's last iteration blanked the value after convergence; restoring it:
+
+### 🤖 Claude — 2026-11-15T23:22:34.809Z
+
+> 🔧 **Bash** `{"command": "sed -i -E \"s/(const LEN05_SWING = \\{ u0: 56, u1: 72, amp: )[0-9.]*( \\};)/\\12.120304\\2/\" src/world/course.ts && grep -n \"LEN05_SWING = \\|old arc length (old\" src/world/course.ts && sed -i 's/approved frame; its amplitude is solved so the 05 river keeps EXACTLY the old arc length (old 72.977 vs/approved frame; its amplitude is solved (secant on Course.length) so the whole route keeps EXACTLY the old length 435.193 (05 line: old 72.977 vs/' src/world/course.ts && npx tsc --noEmit && echo TSC_OK && cat > scripts/_m_tmp.ts <<'EOF'\nimport { Course } from '../src/world/course'; …[+845 chars]`
+
+### 🧑 User — 2026-11-15T23:22:37.450Z
+
+> ↩︎ result: 169: * approved frame; its amplitude is solved so the 05 river keeps EXACTLY the old arc length (old 72.977 vs
+> 173:const LEN05_SWING = { u0: 56, u1: 72, amp: 2.120304 };
+> TSC_OK
+> {"L":435.1929,"crest":132.4383,"cp06":198.9239,"plungeTop":310.4108,"m08":389.2205}
+> old marks: plunge/08 from continuity_report at 7ae64c3:
+> {'05': 114.6883, '06': 188.9241, '07_plunge_top': 310.4102, '08': 389.2199} len 435.1923
+> [This command modified 1 file you've previously read: src/world/course.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T23:22:45.783Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad && timeout 600 node scripts/capture.mjs 05 06 07 --out=qa/pilot05/wave6/coordinator/s03 2>&1 | grep -E \"^0[567]\" ; timeout 600 node scripts/camera-lock-05.mjs 2>&1 | tail -6; python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open(\"$S/ab_old/06.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(\"qa/pilot05/wave6/coordinator/s03/06.png\").convert('RGB')).astype(int)\nd=np.abs(a-b).sum(2); print('06 old-course vs new: mean abs diff', round(d.mean()/3,2), 'px>4 …[+548 chars]`
+
