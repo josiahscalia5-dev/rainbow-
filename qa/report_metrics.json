@@ -22,9 +22,9 @@
  },
  {
   "id": "04",
-  "mad": 70.0,
-  "hue_corr": 0.489,
-  "edge_corr": 0.084,
+  "mad": 72.1,
+  "hue_corr": 0.64,
+  "edge_corr": 0.069,
   "masked": ""
  },
  {
@@ -36,37 +36,37 @@
  },
  {
   "id": "06",
-  "mad": 74.0,
-  "hue_corr": 0.738,
-  "edge_corr": -0.044,
+  "mad": 74.5,
+  "hue_corr": 0.746,
+  "edge_corr": -0.012,
   "masked": ""
  },
  {
   "id": "07",
-  "mad": 73.7,
-  "hue_corr": 0.441,
-  "edge_corr": -0.03,
+  "mad": 75.1,
+  "hue_corr": 0.487,
+  "edge_corr": -0.005,
   "masked": ""
  },
  {
   "id": "08",
-  "mad": 73.7,
-  "hue_corr": 0.58,
-  "edge_corr": -0.009,
+  "mad": 76.5,
+  "hue_corr": 0.553,
+  "edge_corr": -0.013,
   "masked": ""
  },
  {
   "id": "09",
-  "mad": 72.5,
-  "hue_corr": 0.803,
-  "edge_corr": -0.036,
+  "mad": 73.1,
+  "hue_corr": 0.789,
+  "edge_corr": -0.051,
   "masked": ""
  },
  {
   "id": "10",
-  "mad": 78.5,
-  "hue_corr": 0.705,
-  "edge_corr": -0.025,
+  "mad": 79.1,
+  "hue_corr": 0.704,
+  "edge_corr": -0.018,
   "masked": "girl identity region"
  },
  {

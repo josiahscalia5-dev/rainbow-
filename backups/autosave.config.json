@@ -1,5 +1,5 @@
 {
-  "project": "RAINBOW — 11-screen 3D mobile game",
+  "project": "RAINBOW \u2014 11-screen 3D mobile game",
   "repo_full_name": "josiahscalia5-dev/rainbow-",
   "remote_name": "origin",
   "remote_url_must_contain": "github.com/josiahscalia5-dev/rainbow-",
@@ -34,7 +34,8 @@
     "tools",
     "tests",
     "backups",
-    "android"
+    "android",
+    "builds"
   ],
   "status_only_paths": [
     "backups/BACKUP_STATUS.json",

@@ -477,7 +477,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let fps = 60;
   let running = !qaMode;
   let dirty = true;
-  const render = () => composer.render();
+  renderer.info.autoReset = false;
+  const render = () => { renderer.info.reset(); composer.render(); };
   const frame = () => {
     const now = performance.now();
     const dt = Math.min(0.05, (now - last) / 1000);
