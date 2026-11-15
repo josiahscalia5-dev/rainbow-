@@ -239,3 +239,232 @@ Let me build a compact montage of Benny crops from the references to compare con
 
 > ↩︎ result: (Bash completed with no output)
 
+### 🤖 Claude — 2026-11-15T19:54:37.638Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/prev05_benny_zoom.png"}`
+
+### 🧑 User — 2026-11-15T19:54:37.672Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:54:48.401Z
+
+Now the code. Let me check sizes first, then read the Benny sources.
+
+### 🤖 Claude — 2026-11-15T19:54:49.602Z
+
+> 🔧 **Bash** `{"command": "wc -l src/characters/benny/* scripts/export-models.mjs scripts/capture.mjs scripts/triptych.py && ls -la assets/models/ && git lfs ls-files | grep -i benny; grep -rn \"benny\" src --include=*.ts -il | grep -v characters/benny", "description": "Count lines in Benny sources and check LFS"}`
+
+### 🧑 User — 2026-11-15T19:54:49.691Z
+
+> ↩︎ result: 6 src/characters/benny/benny-lab.html
+>   137 src/characters/benny/benny-lab.ts
+>   454 src/characters/benny/build.ts
+>   127 src/characters/benny/fur.ts
+>   178 src/characters/benny/runtime.ts
+>   377 src/characters/benny/textures.ts
+>    42 scripts/export-models.mjs
+>    56 scripts/capture.mjs
+>    21 scripts/triptych.py
+>  1398 total
+> total 4572
+> drwxr-xr-x 2 root root    4096 Nov 15 19:48 .
+> drwxr-xr-x 3 root root    4096 Nov 15 19:48 ..
+> -rw-r--r-- 1 root root 1123540 Nov 15 19:49 benny.glb
+> -rw-r--r-- 1 root root 3546480 Nov 15 19:49 rainbow_girl.glb
+> cf83756b43 * assets/models/benny.glb
+> src/ui/cinematicVideo.ts
+> src/characters/types.ts
+> src/world/towel.ts
+> src/world/environment.ts
+> src/world/course.ts
+> src/vfx/riderSplash.ts
+> src/vfx/bubbles.ts
+> src/vfx/index.ts
+> src/vfx/foam.ts
+> src/vfx/waterRibbon.ts
+> src/vfx/spray.ts
+> src/vfx/whirlpool.ts
+> src/game/cameraRig.ts
+> src/game/Game.ts
+> src/game/modules.ts
+> src/gameplay/coins.ts
+
+### 🤖 Claude — 2026-11-15T19:54:50.857Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/build.ts"}`
+
+### 🧑 User — 2026-11-15T19:54:50.871Z
+
+> ↩︎ result: 1	/**
+> 2	 * Benny — the ONE canonical mascot model + joint rig (procedural, exported to assets/models/benny.glb).
+> 3	 *
+> 4	 * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70 (lower half bulged
+> 5	 * ~6 % → pear-round plush ball), fur adds ~0.15 (visual half-width ≈ 0.86). The beanie perches on the
+> 6	 * top ~40 % of the ball (brim bottom ≈ +0.10 at the back, +0.24 at the front). Height incl. pom ≈ 2.3.
+> 7	 * Joints: benny_root › body › { hat › pom, eyes › eyeL/eyeR, mouth, armL, armR, footL, footR }.
+> 8	 * Meshes named fur_* receive the runtime shell-fur shader (see fur.ts); their userData carries the
+> 9	 * fur parameters (exported as glTF extras).
+> 10	 */
+> 11	import * as THREE from 'three';
+> 12	import type { BuiltModel } from '../types';
+> 13	import {
+> 14	  BENNY_COLORS as C,
+> 15	  CROWN_REPEAT,
+> 16	  blushTexture,
+> 17	  eyeTexture,
+> 18	  knitCrownTextures,
+> 19	  mouthTexture,
+> 20	  ribbedBrimTextures,
+> 21	  soleTexture,
+> 22	} from './textures';
+> 23	
+> 24	export const BENNY_DIMS = {
+> 25	  skin: 0.7,
+> 26	  fur: 0.12,
+> 27	  radius: 0.8,
+> 28	  /** lower-body bulge (radial gain at its peak) — the plush ball is widest below the brim (refs 05/07/10) */
+> 29	  pear: 0.09,
+> 30	  /** lo …[+21227 chars]
+
+### 🤖 Claude — 2026-11-15T19:54:51.256Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/fur.ts"}`
+
+### 🧑 User — 2026-11-15T19:54:51.268Z
+
+> ↩︎ result: 1	/**
+> 2	 * Real-time shell-texturing fur for Benny (mobile-safe, one draw call per furry part).
+> 3	 *
+> 4	 * Each fur_* mesh becomes an InstancedMesh with `shells` instances; gl_InstanceID selects the
+> 5	 * shell layer, which is pushed out along the normal (plus a little gravity droop). A hashed 3-D
+> 6	 * strand grid decides per-fragment whether a strand still exists at that height (tapering strands),
+> 7	 * so the fur keeps a fluffy silhouette from every angle. Built on MeshStandardMaterial via
+> 8	 * onBeforeCompile so scene lighting, IBL and fog all still apply.
+> 9	 */
+> 10	import * as THREE from 'three';
+> 11	
+> 12	export interface FurParams {
+> 13	  length: number;
+> 14	  density: number;
+> 15	  shells: number;
+> 16	  root: string;
+> 17	  tip: string;
+> 18	  gravity?: number;
+> 19	  bald?: [number, number, number, number];
+> 20	  short?: [number, number, number, number, number, number];
+> 21	}
+> 22	
+> 23	export interface FurHandle {
+> 24	  mesh: THREE.InstancedMesh;
+> 25	  material: THREE.MeshStandardMaterial;
+> 26	  uniforms: { uTime: { value: number }; uWind: { value: THREE.Vector3 } };
+> 27	}
+> 28	
+> 29	export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
+> 30	  const shells = Math.max(2, Math.round(p.shells)) …[+4824 chars]
+
+### 🤖 Claude — 2026-11-15T19:54:51.662Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts"}`
+
+### 🧑 User — 2026-11-15T19:54:51.678Z
+
+> ↩︎ result: 1	/**
+> 2	 * Runtime Benny: loads the canonical assets/models/benny.glb, upgrades fur_* meshes to shell fur,
+> 3	 * and drives expressions + procedural secondary motion on top of the GLB clips.
+> 4	 */
+> 5	import * as THREE from 'three';
+> 6	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> 7	import type { BennyRuntime } from '../types';
+> 8	import { makeFur, type FurHandle, type FurParams } from './fur';
+> 9	
+> 10	const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+> 11	
+> 12	let cached: Promise<THREE.Group> | null = null;
+> 13	
+> 14	function loadScene(): Promise<THREE.Group> {
+> 15	  if (!cached) cached = new GLTFLoader().loadAsync(BENNY_URL).then((g) => {
+> 16	    const s = g.scene as THREE.Group;
+> 17	    s.userData.animations = g.animations;
+> 18	    return s;
+> 19	  });
+> 20	  return cached;
+> 21	}
+> 22	
+> 23	/** fur tier: explicit option, else `?quality=low|high`, else low on Android/iOS (same rule as the water) */
+> 24	function defaultFurQuality(): 'high' | 'low' {
+> 25	  if (typeof location === 'undefined') return 'high';
+> 26	  const qp = new URLSearchParams(location.search).get('quality');
+> 27	  const mobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad …[+6649 chars]
+
+### 🤖 Claude — 2026-11-15T19:54:52.915Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/textures.ts"}`
+
+### 🧑 User — 2026-11-15T19:54:52.930Z
+
+> ↩︎ result: 1	/**
+> 2	 * Canvas-generated textures for Benny (no external downloads).
+> 3	 * All colour maps are sRGB; normal maps are derived from height drawings (linear).
+> 4	 */
+> 5	import * as THREE from 'three';
+> 6	
+> 7	type Ctx = CanvasRenderingContext2D;
+> 8	
+> 9	function canvas(w: number, h: number): [HTMLCanvasElement, Ctx] {
+> 10	  const c = document.createElement('canvas');
+> 11	  c.width = w;
+> 12	  c.height = h;
+> 13	  return [c, c.getContext('2d')!];
+> 14	}
+> 15	
+> 16	function colorTex(c: HTMLCanvasElement, wrap = false): THREE.CanvasTexture {
+> 17	  const t = new THREE.CanvasTexture(c);
+> 18	  t.colorSpace = THREE.SRGBColorSpace;
+> 19	  t.anisotropy = 4;
+> 20	  if (wrap) t.wrapS = THREE.RepeatWrapping;
+> 21	  t.needsUpdate = true;
+> 22	  return t;
+> 23	}
+> 24	
+> 25	/** Sobel normal map from a grayscale height canvas */
+> 26	function normalFromHeight(src: HTMLCanvasElement, strength: number, wrap = false): THREE.CanvasTexture {
+> 27	  const w = src.width, h = src.height;
+> 28	  const hd = src.getContext('2d')!.getImageData(0, 0, w, h).data;
+> 29	  const [c, ctx] = canvas(w, h);
+> 30	  const out = ctx.createImageData(w, h);
+> 31	  const H = (x: number, y: number) => {
+> 32	    x = wrap ? (x + w) % w : Math.min(w - 1, Math.max(0, x));
+> 33	   …[+13476 chars]
+
+### 🤖 Claude — 2026-11-15T19:54:53.862Z
+
+> 🔧 **Bash** `{"command": "cat scripts/export-models.mjs scripts/capture.mjs scripts/triptych.py src/characters/benny/benny-lab.html; cat src/characters/benny/benny-lab.ts", "description": "Read export, capture, triptych and lab scripts"}`
+
+### 🧑 User — 2026-11-15T19:54:53.901Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Builds the canonical character GLBs from the procedural builders and renders turntables.
+> //   node scripts/export-models.mjs [benny] [girl] [--turntable-only] [--anim=walk --t=0.4]
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const models = args.filter((a) => !a.startsWith('--'));
+> const list = models.length ? models : ['benny', 'girl'];
+> const turntableOnly = args.includes('--turntable-only');
+> const extra = args.filter((a) => a.startsWith('--') && a.includes('=')).map((a) => a.slice(2)).join('&');
+> const fileName = { benny: 'benny.glb', girl: 'rainbow_girl.glb' };
+> 
+> const { chromium } = loadPlaywright();
+> const vite = await startVite();
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> mkdirSync('assets/models', { recursive: true });
+> mkdirSync('docs/characters', { recursive: true });
+> try {
+>   for (const m of list) {
+>     const page = await browser.newPage({ viewport: { width: 1600, height: 560 } });
+>     page.on('console', (msg) => { if (msg.type() === 'error') console.error(`[${m}] ${msg.text()}`); });
+>     if (!turntableOnly)  …[+13081 chars]
+

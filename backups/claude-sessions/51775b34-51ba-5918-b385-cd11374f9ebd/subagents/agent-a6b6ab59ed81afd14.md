@@ -592,3 +592,69 @@ Now let me look at the images.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T19:54:39.140Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"__rainbow\" src --include=*.ts | head -10", "description": "Find QA API exposure"}`
+
+### 🧑 User — 2026-11-15T19:54:39.171Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:619:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+
+### 🤖 Claude — 2026-11-15T19:54:40.410Z
+
+> 🔧 **Bash** `{"command": "sed -n 480,625p src/game/Game.ts", "description": "Read Game.ts QA API and loop"}`
+
+### 🧑 User — 2026-11-15T19:54:40.446Z
+
+> ↩︎ result: env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
+>     env.doorC.rotation.y = 0;
+>     benny.root.visible = true;
+>     playIntroVideo();
+>   };
+> 
+>   const stepSim = (dt: number) => {
+>     if (st.paused) return;
+>     st.t += dt;
+>     if (st.frozen === null) st.clock += dt;
+>     if (st.mode === 'intro') introUpdate(dt);
+>     else if (st.mode === 'ride') rideUpdate(dt);
+>     else if (st.mode === 'outro' || st.mode === 'end') {
+>       outroUpdate(dt);
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water.update(time, dt, st.s, camera);
+>     fill.position.copy(camera.position);
+>     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+>   };
+> 
+>   let last = performance.now();
+>   let fps = 60;
+>   let running = !qaMode;
+>   let dirty = true;
+>   renderer.info.autoReset = false;
+>   const render = () => { renderer.info.reset(); composer.render(); };
+>   const frame = () => {
+>     const now = performance.now();
+>     const dt = Math.min(0.05, (now - last) / 1000);
+>     last = now;
+>     fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;
+>     if (running) stepSim(dt);
+>     // QA mode renders on demand only …[+5587 chars]
+
+### 🤖 Claude — 2026-11-15T19:54:47.877Z
+
+> 🔧 **Bash** `{"command": "date -u && git status --short src | head && git diff --stat | tail -3; nproc; uptime", "description": "Check time, src changes, load"}`
+
+### 🧑 User — 2026-11-15T19:54:47.935Z
+
+> ↩︎ result: Sun Nov 15 19:54:47 UTC 2026
+>  backups/BACKUP_LOG.md      |  1 +
+>  backups/BACKUP_STATUS.json | 14 +++++++-------
+>  2 files changed, 8 insertions(+), 7 deletions(-)
+> 4
+>  19:54:47 up 12 min,  0 user,  load average: 0.65, 0.98, 0.48
+

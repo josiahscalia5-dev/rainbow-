@@ -542,3 +542,26 @@ Now let me look at my earlier notes and the current code.
 >   return {
 >     frame: (s) => course.sampl …[+5635 chars]
 
+### 🤖 Claude — 2026-11-15T19:54:51.727Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ring\\|Ring\\|spacing\\|05\\|tubeAxis\\|straightTubePath\" src/world/environment.ts | head -80", "description": "Find ring spacing in environment"}`
+
+### 🧑 User — 2026-11-15T19:54:51.761Z
+
+> ↩︎ result: 3: * Drum A (01–02) → chute → whirlpool basin room (03) → gold ring pipe (04) → perforated current tube
+> 4: * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).
+> 10:import { buildTubeGeometry, buildRings, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
+> 26:  /** straight 05–07 tunnel axis (camera alignment) */
+> 27:  tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> 64:  drainHole.absarc(-0.3, -3.05, 1.85, 0, Math.PI * 2, true);
+> 79:  // gold door ring (thick) + chrome inner lip
+> 80:  const ringA = new THREE.Mesh(new THREE.TorusGeometry(dA.doorRadius + 0.35, 0.48, 24, 96), goldMat);
+> 81:  ringA.position.set(0, 0, dA.zDoor - 0.1);
+> 82:  zones.drumA.add(ringA);
+> 83:  const ringA2 = new THREE.Mesh(new THREE.TorusGeometry(dA.doorRadius + 1.15, 0.22, 16, 96), goldSoft);
+> 84:  ringA2.position.set(0, 0, dA.zDoor - 0.15);
+> 85:  zones.drumA.add(ringA2);
+> 100:  const doorRingA = new THREE.Mesh(new THREE.TorusGeometry(dA.doorRadius + 0.2, 0.42, 20, 80), chromeMat);
+> 101:  const doorGlassA = new THREE.Mesh(new THREE.CircleGeometry(dA.doorRadius + 0.05, 48), glass('#e8f0ff', 0.1));
+> 102:  doorAInner.add(doorRingA, doorGlassA …[+4279 chars]
+
