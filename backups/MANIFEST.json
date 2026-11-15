@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3400,
-   "sha256": "f969d526c581267694c12d873541080b43f757bfbbb29051efd308c8dba19384"
+   "sha256": "97a0d085c31f1617e6e2ceaabab80cfd712fe26b39fbaa99dd194e175d40da57"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -897,6 +897,11 @@
    "sha256": "a29299afab0fd00cfda0ac49b075cbef496e9d3aaafc09dadd73a90f746bd5f9"
   },
   {
+   "path": "qa/pilot05/COORDINATION_WAVE4.md",
+   "bytes": 1991,
+   "sha256": "8e477ea433c96e255a62281d78680e534b127e2f373810c6eafef9e51ab383be"
+  },
+  {
    "path": "qa/pilot05/REQUESTS.md",
    "bytes": 3715,
    "sha256": "e548da2a6c206b8ede5d5e697a65d86b28df09213e69c3cbc1dc9bdd3d595abe"
@@ -1350,6 +1355,21 @@
    "path": "qa/pilot05/wave4/baseline/05.png",
    "bytes": 1613064,
    "sha256": "b52b79ce020976e5630a1dbf62d1fe0aad54abe1fbe8a350686d9254682f09ef"
+  },
+  {
+   "path": "qa/pilot05/wave4/coins/it01.png",
+   "bytes": 1612430,
+   "sha256": "68ac412c9a4b5a9f6ad3db61ba5677f64ceb0148611cf5b8db9c81569778b9fc"
+  },
+  {
+   "path": "qa/pilot05/wave4/foam/it01_iso_noCrown/05.png",
+   "bytes": 1600284,
+   "sha256": "5ad7e12814cc5c9c0ba449f5bc1fa5b50b5f5201e65075a68c78f3adfdad0e80"
+  },
+  {
+   "path": "qa/pilot05/wave4/foam/it01_iso_noCrown/probe.json",
+   "bytes": 15140,
+   "sha256": "95d73ad383237912c33f727ecad9e2aa90e0216f1a7d7e2109b602d5e837e315"
   },
   {
    "path": "qa/report_metrics.json",
@@ -1833,13 +1853,13 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 30269,
-   "sha256": "a00a12bdc526610394b4fc432d65be0f73f20b9e01f556a39cb5145ee3a6ce68"
+   "bytes": 31406,
+   "sha256": "f4e3676afeb77b70dd79b8761c60c453aba72c524a6e4dec780b0cf7dc053777"
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 8923,
-   "sha256": "39bbf3abad4a736a2aaa64fbfd6f23ef3aeec0a0dbc37114580cc6e83b339bff"
+   "bytes": 9105,
+   "sha256": "ce017bd50ca169b6f6f868108a176deed47738474d16518225cef9632a2d6806"
   },
   {
    "path": "src/game/modules.ts",
@@ -1848,8 +1868,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 6299,
-   "sha256": "0caba2c2dbfa62439656cfb700083cf67655d97fec5392f7cf7e5c9787b28f67"
+   "bytes": 8617,
+   "sha256": "fac1072a8504bbba06c0d51aed077d5b29d152d4497e48ad5079b59bc1fb4288"
   },
   {
    "path": "src/gameplay/input.ts",

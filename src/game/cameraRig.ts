@@ -36,7 +36,9 @@ export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
   '10': { back: 5.8, up: 3.4, ahead: 11, lookUp: 1.2, fov: 62, latFollow: 0.8, roll: 0.2 },
 };
 
-const KEYS: (keyof CamParams)[] = ['back', 'up', 'ahead', 'lookUp', 'fov', 'latFollow', 'roll'];
+/** the blended (required) numeric keys; 05-only extras (yaw, deadZone) are read directly from STAGE_CAM */
+type BlendKey = 'back' | 'up' | 'ahead' | 'lookUp' | 'fov' | 'latFollow' | 'roll';
+const KEYS: BlendKey[] = ['back', 'up', 'ahead', 'lookUp', 'fov', 'latFollow', 'roll'];
 
 export function camParamsAt(course: Course, s: number, blend = 8): CamParams {
   const acc: CamParams = { back: 0, up: 0, ahead: 0, lookUp: 0, fov: 0, latFollow: 0, roll: 0 };

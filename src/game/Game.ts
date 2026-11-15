@@ -595,6 +595,26 @@ export async function startGame(canvas: HTMLCanvasElement) {
     },
     log() { return st.log; },
     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+    /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+    coinScreen() {
+      const mesh = coins.group.children[0] as THREE.InstancedMesh;
+      const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+      camera.updateMatrixWorld();
+      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+      const out: { i: number; x: number; y: number; d: number }[] = [];
+      coins.defs.forEach((_, i) => {
+        if (coins.collected[i]) return;
+        mesh.getMatrixAt(i, m); m.decompose(p, q, sc);
+        const c = p.clone().project(camera);
+        if (c.z > 1 || c.z < -1) return;
+        const e = p.clone().addScaledVector(right, 0.5 * sc.x).project(camera);
+        const x = ((c.x + 1) / 2) * W, y = ((1 - c.y) / 2) * H;
+        if (x < -50 || x > W + 50 || y < -50 || y > H + 50) return;
+        out.push({ i, x: Math.round(x), y: Math.round(y), d: Math.round((e.x - c.x) * W) });
+      });
+      return out;
+    },
     respawns() { return st.respawns; },
     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
     bennyScreen() {

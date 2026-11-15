@@ -1534,3 +1534,405 @@ Setup script saved; it's unproven until a fresh session starts on this environme
 >   /** u of the first (left) crest, where Benny rides at the 05 checkpoint */
 >   uCrest: 14 …[+3307 chars]
 
+### 🤖 Claude — 2026-11-15T20:58:52.286Z
+
+The Android build is running in the background. Before I lock the camera, I'll measure how far the current framing is from the approved image with a 50% overlay.
+
+### 🤖 Claude — 2026-11-15T20:58:53.085Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p scripts/compare.py | head -40; ls qa/ | head -40", "description": "Check existing compare tooling"}`
+
+### 🧑 User — 2026-11-15T20:58:53.122Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Reference-vs-live comparison for the 11 locked screens.
+> 
+> For every NN in 01..11 with screenshots/NN.png present:
+>   qa/NN_side_by_side.png   reference | live (same height)
+>   qa/NN_overlay.png        50 % blend of reference and live (live resized to reference size)
+>   qa/NN_diff.png           per-pixel absolute difference heat map (masked areas greyed)
+> and qa/report_metrics.json + qa/compare_summary.md with REPRODUCIBLE metrics only:
+>   * mad      — mean absolute RGB difference (0–255) on 1/4-scale images, masked
+>   * hue_corr — correlation of 36-bin hue histograms (saturated pixels only), masked
+>   * edge_corr— correlation of Sobel edge-magnitude maps at 1/8 scale, masked
+> These are crude numeric indicators, NOT a "fidelity %"; they are reported as raw values.
+> 
+> Masks (excluded from metrics, drawn grey in the diff):
+>   * 01, 10, 11: the legacy human girl region — intentionally replaced by the official cartoon girl
+>   * 03: the decorative phone outline baked into the reference (outer 4 % border)
+>   * 01–11: nothing else.
+> Usage: python3 -I scripts/compare.py [NN ...] [--sheet OUT.png] [--live DIR]
+> """
+> from __future__ import annotations
+> 
+> import json
+> import sys
+> from pat …[+1461 chars]
+
+### 🤖 Claude — 2026-11-15T20:58:55.725Z
+
+> 🔧 **Bash** `{"command": "tail -8 /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/android-baseline.log; ls -la /home/user/rainbow-/android/app/build/outputs/apk/debug/ 2>&1", "description": "Check Android build result"}`
+
+### 🧑 User — 2026-11-15T20:58:55.752Z
+
+> ↩︎ result: Exit code 2
+> > npm run build && npx cap sync android
+> 
+> 
+> > rainbow-washer-game@0.1.0 build
+> > tsc --noEmit && vite build
+> 
+> src/game/cameraRig.ts(49,37): error TS2532: Object is possibly 'undefined'.
+> EXIT 2
+> ls: cannot access '/home/user/rainbow-/android/app/build/outputs/apk/debug/': No such file or directory
+
+### 🤖 Claude — 2026-11-15T20:58:59.030Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nref = Image.open('references/05_flow_into_the_current.png').convert('RGB')\nnow = Image.open('qa/pilot05/wave4/baseline/05.png').convert('RGB').resize(ref.size)\nov = Image.blend(ref, now, 0.5)\nd = ImageDraw.Draw(ov)\n# ref landmarks: VP and Benny bbox\nd.ellipse((498-8,479-8,498+8,479+8), outline=(0,255,0), width=3)\nd.rectangle((230,768,612,1190), outline=(0,255,0), width=3)\nov.save('/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/ov_base.png')\nEOF\necho ok", "description": "Make 50% ove …[+31 chars]`
+
+### 🧑 User — 2026-11-15T20:58:59.477Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T20:59:03.788Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/ov_base.png"}`
+
+### 🧑 User — 2026-11-15T20:59:03.842Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:59:27.086Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "old_string": "const KEYS: (keyof CamParams)[] = ['back', 'up', 'ahead', 'lookUp', 'fov', 'latFollow', 'roll'];", "new_string": "/** the blended (required) numeric keys; 05-only extras (yaw, deadZone) are read directly from STAGE_CAM */\ntype BlendKey = 'back' | 'up' | 'ahead' | 'lookUp' | 'fov' | 'latFollow' | 'roll';\nconst KEYS: BlendKey[] = ['back', 'up', 'ahead', 'lookUp', 'fov', 'latFollow', 'roll'];"}`
+
+### 🧑 User — 2026-11-15T20:59:27.142Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T20:59:28.345Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC-OK; grep -rn \"bloom\\|Bloom\\|UnrealBloom\" src --include=*.ts -l; grep -n \"coreLateral\\|CORE_SWING\" src/vfx/waterRibbon.ts | head", "description": "Typecheck and locate bloom and coreLateral"}`
+
+### 🧑 User — 2026-11-15T20:59:30.228Z
+
+> ↩︎ result: TSC-OK
+> src/world/materials.ts
+> src/vfx/glsl.ts
+> src/game/Game.ts
+> 34: *          coreLateral) so the coins on the route stay on the cyan core. 1 elsewhere (04/06/07 unchanged).
+> 64: * amplified by CORE_SWING, so the two pink bands trace S-bends ≈(1 + CORE_SWING)× as strong as the
+> 65: * route's own (ref 05: ±60–120 px). Bounded by CORE_SWING · max|offset05| (≈0.9 · 1.85 = 1.7 u at the
+> 70:export const CORE_SWING = 0.9;
+> 71:export function coreLateral(course: Course, s: number): number {
+> 74:  return CORE_SWING * course.offset05(s) * course.sample(s).right.x;
+> 128:attribute float aCore;   // 05: core-centre lateral swing (units, see coreLateral)
+> 270:  // course's own S-meander, amplified (vCore = CORE_SWING · offset05), so the coins stay on cyan
+> 534:    const cl = coreLateral(course, s);
+
+### 🤖 Claude — 2026-11-15T20:59:32.039Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"bloom\" src/game/Game.ts | head -10; grep -n \"export\" src/render/grade.ts src/render/env.ts | head", "description": "Find bloom setup in Game.ts"}`
+
+### 🧑 User — 2026-11-15T20:59:32.076Z
+
+> ↩︎ result: 14:import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+> 60:  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+> 61:  const useBloom = qs.get('bloom') !== '0';
+> 62:  if (useBloom) composer.addPass(bloom);
+> 71:    bloom.resolution.set(w / 2, h / 2);
+> src/render/grade.ts:5:export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+> src/render/env.ts:8:export function createCandyEnvironment(renderer: THREE.WebGLRenderer): THREE.Texture {
+> src/render/env.ts:48:export function createRenderer(canvas: HTMLCanvasElement, opts: { preserveDrawingBuffer?: boolean } = {}): THREE.WebGLRenderer {
+
+### 🤖 Claude — 2026-11-15T20:59:44.193Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/COORDINATION_WAVE4.md", "content": "# Screen 05: wave 4 (account 5, session branch `ccr-e033f912-8b40f5`)\n\nStarted 2026-11-15 ~21:05 UTC. Waves 1–3 were each cut off by usage limits; every edit they saved is in the\ntree and is **kept** (wave 3's resumed agents never ran: the account hit its limit at 20:17 UTC).\n`COORDINATION_WAVE3.md` still holds: targets 1–10, strict file ownership, rules. This file only adds:\n\n## Baseline for wave 4\n* Approved target: `references/05_flow_into_the_current.png` (immutable).\n* Live game at wave-4 start: `qa/ …[+1494 chars]`
+
+### 🧑 User — 2026-11-15T20:59:44.221Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE4.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T20:59:45.474Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-15T20:59:45.483Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-15T20:59:45.923Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-15T20:59:45.930Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-15T20:59:59.508Z
+
+> 🔧 **Agent** `{"description": "Wave 4: 05 walls, rings, glow", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the washer-environment-modeler for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). This is Screen 05 **wave 4**. Earlier waves were cut off by usage limits; their edits to your files are in the tree. Continue from them, do not revert or start over.\n\nRead first (briefly): `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE4.md`, `qa/pilot05/COORDINATION_WAVE3.md` (targets 1–3, file ownership, rules), lines prefixed for you in `qa/ …[+3153 chars]`
+
+### 🧑 User — 2026-11-15T20:59:59.527Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ab0084779f3629691 (internal ID - do not mention to user. Use SendMessage with to: 'ab0084779f3629691', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/tasks/ab0084779f3629691.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T21:00:11.059Z
+
+> 🔧 **Agent** `{"description": "Wave 4: 05 cyan-pink river", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the water-fx-specialist for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). This is Screen 05 **wave 4**. Earlier waves were cut off by usage limits; their edits to your files are in the tree (e.g. white contact band under Benny removed, `coreLateral`/`CORE_SWING`, palette). Continue from them, do not revert or start over.\n\nRead first (briefly): `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE4.md`, `qa/pilot05/COORDINATION_WAVE3.md` (t …[+2690 chars]`
+
+### 🧑 User — 2026-11-15T21:00:11.071Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a7470b0cd52aaf0a9 (internal ID - do not mention to user. Use SendMessage with to: 'a7470b0cd52aaf0a9', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/tasks/a7470b0cd52aaf0a9.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T21:00:22.209Z
+
+> 🔧 **Agent** `{"description": "Wave 4: 05 foam, bubbles, splash", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "You are the foam-bubbles-particles specialist for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). This is Screen 05 **wave 4**. Earlier waves were cut off by usage limits; their edits to your files are in the tree. Continue from them, do not revert or start over.\n\nRead first (briefly): `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE4.md`, `qa/pilot05/COORDINATION_WAVE3.md` (targets 5 and 7, ownership, rules), lines addressed to you in …[+2606 chars]`
+
+### 🧑 User — 2026-11-15T21:00:22.224Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a552755212d7f7c16 (internal ID - do not mention to user. Use SendMessage with to: 'a552755212d7f7c16', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/tasks/a552755212d7f7c16.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T21:00:33.123Z
+
+> 🔧 **Agent** `{"description": "Wave 4: 05 Benny proportions", "subagent_type": "benny-character-artist", "run_in_background": true, "prompt": "You are the benny-character-artist for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). This is Screen 05 **wave 4**. Earlier waves were cut off by usage limits; their edits (`src/characters/benny/build.ts`, `runtime.ts`, `benny-lab.ts`) are in the tree. Continue from them, do not revert or start over.\n\nRead first (briefly): `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE4.md`, `qa/pilot05/COORDINATION_WAVE3.md` (target 6, ownership, rules …[+2734 chars]`
+
+### 🧑 User — 2026-11-15T21:00:33.136Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a2a473b347c5f9236 (internal ID - do not mention to user. Use SendMessage with to: 'a2a473b347c5f9236', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/tasks/a2a473b347c5f9236.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T21:00:40.092Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage\nim = np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nR,G,B = im[...,0],im[...,1],im[...,2]\ngold = (R>200)&(G>140)&(G<225)&(B<90)&(R-B>150)\ngold[:440]=False; gold[790:]=False\ngold[:, :300]=False; gold[:, 620:]=False\nlab,n = ndimage.label(ndimage.binary_closing(gold, iterations=2))\nobjs=[]\nfor i,sl in enumerate(ndimage.find_objects(lab)):\n    ys,xs=sl; h=ys.stop-ys.start; w=xs.stop-xs.start\n    area=(lab[sl]==i+1).sum()\n    if area<25: co …[+235 chars]`
+
+### 🧑 User — 2026-11-15T21:00:40.216Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "<stdin>", line 3, in <module>
+> ModuleNotFoundError: No module named 'scipy'
+
+### 🤖 Claude — 2026-11-15T21:00:44.141Z
+
+> 🔧 **Bash** `{"command": "pip install -q scipy 2>&1 | tail -1; python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage\nim = np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nR,G,B = im[...,0],im[...,1],im[...,2]\ngold = (R>200)&(G>140)&(G<225)&(B<90)&(R-B>150)\ngold[:440]=False; gold[790:]=False\ngold[:, :300]=False; gold[:, 620:]=False\nlab,n = ndimage.label(ndimage.binary_closing(gold, iterations=2))\nobjs=[]\nfor i,sl in enumerate(ndimage.find_objects(lab)):\n    ys,xs=sl; h=ys.stop-ys.start; w=xs.stop-xs.start\n    area=(la …[+290 chars]`
+
+### 🧑 User — 2026-11-15T21:00:49.802Z
+
+> ↩︎ result: WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+> cx=474 cy=726 w=95 h=73 area=2921
+> cx=546 cy=658 w=64 h=49 area=1528
+> cx=554 cy=650 w=18 h=10 area=97
+> cx=482 cy=613 w=55 h=42 area=1180
+> cx=432 cy=574 w=42 h=29 area=852
+> cx=466 cy=545 w=28 h=18 area=370
+> cx=496 cy=532 w=19 h=15 area=179
+> cx=526 cy=512 w=30 h=35 area=362
+> cx=494 cy=469 w=64 h=28 area=546
+> cx=458 cy=468 w=7 h=15 area=34
+
+### 🤖 Claude — 2026-11-15T21:00:58.496Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow\\s*=\\|__rainbow =\\|window.__rainbow\" -A 25 src/game/Game.ts | grep -n \"goto\\|state\\|stats\\|camera\\|eval\\|:\" | head -30", "description": "Find QA hook API in Game.ts"}`
+
+### 🧑 User — 2026-11-15T21:00:58.551Z
+
+> ↩︎ result: 1:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> 16:24-import { RideCamera } from './cameraRig';
+> 21:29-const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> 22:30-const sm = (a: number, b: number, x: number) => THREE.MathUtils.smoothstep(x, a, b);
+> 26:34-const T = { dropEnd: 1.6, doorClose0: 1.9, doorClose1: 2.8, walk0: 3.0, peek: 4.4, cp01: 6.6, spin: 7.4, cp02: 9.1, drain: 11.4, rideStart: 14.0 };
+> 28:619:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-15T21:00:59.779Z
+
+> 🔧 **Bash** `{"command": "sed -n 575,621p src/game/Game.ts", "description": "Read QA API definition"}`
+
+### 🧑 User — 2026-11-15T21:00:59.805Z
+
+> ↩︎ result: render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins …[+1551 chars]
+
+### 🤖 Claude — 2026-11-15T21:02:00.377Z
+
+> 🔧 **Bash** `{"command": "grep -n \"coins\\b\\|coins\\.\\|createCoins\" src/game/Game.ts | head -20; sed -n 60,80p src/vfx/waterRibbon.ts; head -20 src/vfx/waterRibbon.ts | grep import", "description": "Find coin usage and coreLateral definition"}`
+
+### 🧑 User — 2026-11-15T21:02:00.418Z
+
+> ↩︎ result: 22:import { createCoins, COIN_VALUE } from '../gameplay/coins';
+> 87:  const coins = createCoins(course);
+> 88:  scene.add(coins.group);
+> 89:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> 92:  if (hidden.has('coins')) coins.group.visible = false;
+> 108:    coins: START_COINS,
+> 341:        // restart this stage with full hearts (checkpoint), coins kept
+> 349:    // coins
+> 350:    const got = coins.update(st.clock, dt, st.s, st.lat);
+> 351:    if (got) { st.coins += got * COIN_VALUE; hud.setCoins(st.coins); }
+> 444:  hud.setCoins(st.coins);
+> 475:    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+> 476:    coins.resetUntil(-1);
+> 477:    hud.setCoins(st.coins); hud.setHearts(5); hud.setVisible(false); hud.showVictory(false); hud.showPaused(false);
+> 558:      coins.resetUntil(sTarget + 0.5);
+> 572:    st.coins = course.stage(refId).refCoins || START_COINS;
+> 573:    hud.setCoins(st.coins);
+> 590:      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+> 594:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), co …[+1687 chars]
+
+### 🤖 Claude — 2026-11-15T21:02:02.579Z
+
+Now the coin changes:
+
+### 🤖 Claude — 2026-11-15T21:02:12.024Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "import * as THREE from 'three';\nimport type { Course, StageId } from '../world/course';\nimport { canvasTexture } from '../world/materials';\n\nexport const COIN_VALUE = 10;\n\nexport interface CoinDef { s: number; lat: number; h: number; stage: StageId }\n\nexport function coinLayout(course: Course): CoinDef[] {\n  const out: CoinDef[] = [];\n  const add = (stage: StageId, s: number, lat: number, h = 0.9) => out.push({ s, lat, h, stage });", "new_string": "import * as THREE from 'three';\nimport t …[+1860 chars]`
+
+### 🧑 User — 2026-11-15T21:02:12.053Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:02:13.527Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "  // 05 — snaking centre line\n  { const a = st('05'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 8 + i * ((a.s1 - a.s0 - 12) / n); add('05', s, 1.2 * Math.sin(i * 0.55)); } }", "new_string": "  // 05 — on the winding cyan core (see C05)\n  coins05(course, add);"}`
+
+### 🧑 User — 2026-11-15T21:02:13.557Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:02:14.799Z
+
+Now the vector "$" face, plus per-coin scale and tilt in placement:
+
+### 🤖 Claude — 2026-11-15T21:02:21.652Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "    c.strokeStyle = '#ffe680'; c.lineWidth = 10;\n    c.beginPath(); c.arc(w / 2, h / 2, w * 0.38, 0, Math.PI * 2); c.stroke();\n    c.font = '800 170px \"Baloo 2\", Arial Black, sans-serif';\n    c.textAlign = 'center'; c.textBaseline = 'middle';\n    c.fillStyle = '#c47800';\n    c.fillText('$', w / 2 + 4, h / 2 + 12);\n    c.fillStyle = '#fff1a8';\n    c.fillText('$', w / 2 - 2, h / 2 + 6);\n  });", "new_string": "    // raised inner rim: dark groove + bright lip\n    c.lineWidth = 9;\n    c.stro …[+1068 chars]`
+
+### 🧑 User — 2026-11-15T21:02:21.682Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:02:23.205Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "  const spin = new THREE.Quaternion(), axis = new THREE.Vector3();\n  const back = new THREE.Vector3();", "new_string": "  const spin = new THREE.Quaternion(), axis = new THREE.Vector3();\n  const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);\n  const back = new THREE.Vector3();"}`
+
+### 🧑 User — 2026-11-15T21:02:23.237Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:02:26.058Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/gameplay/coins.ts", "old_string": "      spin.setFromAxisAngle(axis.set(0, 1, 0), 0.35 * Math.sin(time * 2.2 + i * 0.7));\n      q.multiply(spin);\n      m.compose(p, q, sc.setScalar(scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));", "new_string": "      // tilted coins (05) only wobble a little so the face stays toward the camera\n      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));\n      q.multiply(spin);\n      if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.t …[+121 chars]`
+
+### 🧑 User — 2026-11-15T21:02:26.093Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/gameplay/coins.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:02:35.290Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },", "new_string": "    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },\n    /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */\n    coinScreen() {\n      const mesh = coins.group.children[0] as THREE.InstancedMesh;\n      const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Qu …[+890 chars]`
+
+### 🧑 User — 2026-11-15T21:02:35.313Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:02:35.894Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC-OK", "description": "Typecheck after coin changes"}`
+
+### 🧑 User — 2026-11-15T21:02:37.808Z
+
+> ↩︎ result: TSC-OK
+
+### 🤖 Claude — 2026-11-15T21:02:40.381Z
+
+Now a probe that loads the live game at the 05 checkpoint, reads the projected coin positions, and saves a screenshot:
+
+### 🤖 Claude — 2026-11-15T21:02:41.226Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p scripts/lib/pw.mjs | grep -n \"export\\|port\\|cwd\" | head", "description": "Check Playwright helper exports"}`
+
+### 🧑 User — 2026-11-15T21:02:41.252Z
+
+> ↩︎ result: 3:import { createRequire } from 'node:module';
+> 4:import { execSync } from 'node:child_process';
+> 5:import { join } from 'node:path';
+> 7:export function loadPlaywright() {
+> 9:    return createRequire(import.meta.url)('playwright');
+> 16:export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 19:export async function startVite(port = 5199) {
+> 20:  const { createServer } = await import('vite');
+> 21:  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 23:  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+
+### 🤖 Claude — 2026-11-15T21:02:45.928Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coinprobe.mjs", "content": "// usage (from repo root): node <this> OUT.png\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst out = process.argv[2];\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5301);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\n  await page.goto(`${vite.url}/?qa=1&dpr=1` …[+718 chars]`
+
+### 🧑 User — 2026-11-15T21:02:45.943Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coinprobe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:02:47.734Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/wave4/coins && timeout 600 node /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/coinprobe.mjs qa/pilot05/wave4/coins/it01.png 2>&1 | tail -3", "description": "Probe live coin screen positions", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T21:02:57.376Z
+
+> ↩︎ result: {"benny":{"x":-0.03,"y":-0.37,"z":0.986,"visible":true,"cam":[1.92,-37.94,-68.28],"benny":[1.52,-41.35,-74.73]},"coins":[{"i":20,"x":390,"y":903,"d":128},{"i":70,"x":555,"y":866,"d":6},{"i":71,"x":558,"y":860,"d":6},{"i":72,"x":561,"y":858,"d":6},{"i":73,"x":557,"y":854,"d":6},{"i":69,"x":554,"y":851,"d":6},{"i":74,"x":550,"y":851,"d":6},{"i":75,"x":541,"y":850,"d":5},{"i":76,"x":535,"y":848,"d":5},{"i":77,"x":535,"y":841,"d":5},{"i":78,"x":537,"y":836,"d":5},{"i":79,"x":534,"y":834,"d":5},{"i":80,"x":532,"y":833,"d":5},{"i":81,"x":529,"y":833,"d":5},{"i":82,"x":528,"y":831,"d":5},{"i":83,"x":528,"y":828,"d":5},{"i":68,"x":553,"y":827,"d":6},{"i":84,"x":529,"y":824,"d":5},{"i":85,"x":533,"y":820,"d":5},{"i":86,"x":536,"y":817,"d":5},{"i":87,"x":540,"y":814,"d":5},{"i":88,"x":544,"y":813,"d":5},{"i":89,"x":546,"y":809,"d":5},{"i":90,"x":546,"y":804,"d":5},{"i":67,"x":553,"y":800,"d":6},{"i":91,"x":545,"y":799,"d":5},{"i":92,"x":545,"y":794,"d":5},{"i":21,"x":484,"y":776,"d":93},{"i":66,"x":555,"y":771,"d":6},{"i":65,"x":559,"y":742,"d":6},{"i":64,"x":563,"y":712,"d":7},{"i":22,"x":566,"y":710,"d":73},{"i":63,"x":568,"y":681,"d":7},{"i":23,"x":612,"y":663,"d":57},{"i":62,"x":572,"y": …[+1218 chars]
+
+### 🤖 Claude — 2026-11-15T21:03:18.604Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/triptych.py /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/tri_coin1.png 1000 REF=references/05_flow_into_the_current.png NOW=qa/pilot05/wave4/coins/it01.png", "description": "Side-by-side of coin iteration 1"}`
+
+### 🧑 User — 2026-11-15T21:03:19.000Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/tri_coin1.png (1148, 1042)
+
+### 🤖 Claude — 2026-11-15T21:03:20.629Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/tri_coin1.png"}`
+
+### 🧑 User — 2026-11-15T21:03:20.671Z
+
+> ↩︎ result: [image]
+
