@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1966,
-   "sha256": "ca37c24609e14231d8cb9de31d84fe9df5a6ed3b990d15a72c4513646acd6475"
+   "sha256": "c7f4e29ed8369f683ccb703869128dd0b18e5bcdc1e321f91c106832eedfff73"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1075,6 +1075,16 @@
    "path": "scripts/reference.sha256",
    "bytes": 1290,
    "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
+  },
+  {
+   "path": "scripts/setup-android-sdk.sh",
+   "bytes": 943,
+   "sha256": "61a42d0754503b8d59ad87c4a0d9e9d5f293b68d3f0aa221092897fbbed8b188"
+  },
+  {
+   "path": "scripts/setup-blender.sh",
+   "bytes": 969,
+   "sha256": "e3a4e07ec3e8acb7441b407c6119496da18768dd0455c4691e3abad9e29a4038"
   },
   {
    "path": "scripts/water-lab.mjs",
