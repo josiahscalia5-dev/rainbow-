@@ -48,3 +48,4 @@ Newest last. `pushed` = remote SHA verified equal to local HEAD.
 | 2026-11-15T18:54:55+00:00 | hook:Stop | committed+pushed | `428d3fbdea7f` | `claude/rainbow-3d-recovery-m4v347` | 8 | True |  |
 | 2026-11-15T18:56:16+00:00 | daemon | committed+pushed | `ca185227cea0` | `claude/rainbow-3d-recovery-m4v347` | 19 | True |  |
 | 2026-11-15T19:01:23+00:00 | daemon | committed+pushed | `18453dcc84e3` | `claude/rainbow-3d-recovery-m4v347` | 12 | True |  |
+| 2026-11-15T19:10:09+00:00 | daemon | error | `—` | `claude/rainbow-3d-recovery-m4v347` | 0 | False | current branch 'ccr-8b6fc834-7kd55l' != verified branch 'claude/rainbow-3d-recovery-m4v347'; refusing to push |

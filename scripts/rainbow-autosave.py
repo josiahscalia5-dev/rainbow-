@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import fcntl
+import fnmatch
 import hashlib
 import json
 import os
@@ -36,10 +37,7 @@ CFG = json.loads((REPO / "backups" / "autosave.config.json").read_text())
 STATUS = REPO / "backups" / "BACKUP_STATUS.json"
 LOG = REPO / "backups" / "BACKUP_LOG.md"
 LOCK = REPO / "backups" / ".autosave.lock"
-TRAILER = (
-    "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n"
-    "Claude-Session: https://claude.ai/code/session_01KS3bZtEEqDnwZ7hmojKWUb"
-)
+TRAILER = "\n\n" + CFG.get("commit_trailer", "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
 SECRET_PATTERNS = [
     re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
     re.compile(r"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{30,}\b"),
@@ -215,10 +213,17 @@ def main() -> int:
         if CFG["remote_url_must_contain"] not in url:
             raise RuntimeError(f"remote URL {url!r} is not the verified Rainbow repo; refusing to back up")
         branch = git("symbolic-ref", "--short", "HEAD").stdout.strip()
+        row["branch"] = branch
         if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
             raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
         if branch != CFG["branch"]:
-            raise RuntimeError(f"current branch {branch!r} != verified branch {CFG['branch']!r}; refusing to push")
+            # A new cloud session gets a fresh working-branch name. Follow it only when it matches an
+            # explicitly allowed session-branch pattern (protected branches were rejected above).
+            pats = CFG.get("session_branch_patterns", [])
+            if not any(fnmatch.fnmatchcase(branch, p) for p in pats):
+                raise RuntimeError(f"current branch {branch!r} != verified branch {CFG['branch']!r} and matches no "
+                                   f"session_branch_patterns {pats}; refusing to push")
+            row["note"] = f"following session branch {branch!r} (config branch {CFG['branch']!r})"
         gitdir = REPO / ".git"
         for busy in ("index.lock", "MERGE_HEAD", "rebase-merge", "rebase-apply", "CHERRY_PICK_HEAD"):
             if (gitdir / busy).exists():
@@ -309,7 +314,7 @@ def main() -> int:
         row["duration_s"] = int((t1 - t0).total_seconds())
         st["last_run"] = row
         st["repo"] = f"https://github.com/{CFG['repo_full_name']}"
-        st["branch"] = CFG["branch"]
+        st["branch"] = row.get("branch", CFG["branch"])
         if row.get("pushed_verified"):
             st["last_verified_remote_sha"] = row.get("commit")
             st["last_successful_backup_utc"] = row["time"]
