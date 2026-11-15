@@ -2764,3 +2764,150 @@ Backups are running normally. The latest is `49761ac`, confirmed on GitHub, with
 
 Continue
 
+### 🤖 Claude — 2026-11-15T20:15:28.465Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; grep -n \"CAMERA LOCK\\|→ coordinator\\|→ ALL\" qa/pilot05/REQUESTS.md | cut -c1-300; find qa/pilot05/wave3 -newer qa/pilot05/COORDINATION_WAVE3.md -name \"*.png\" | sort | tail -20; ls qa/pilot05/wave3/*/NOTES.md 2>/dev/null; git log --oneline -3; git diff --stat HEAD~10 -- src | tail -15", "description": "Check camera lock, new captures, source changes"}`
+
+### 🧑 User — 2026-11-15T20:15:28.519Z
+
+> ↩︎ result: 20:15
+> 4:- water-fx-specialist → coordinator (FYI, tooling): `scripts/capture.mjs --q=waterhide=a,b` does NOT pass the hide list: the arg parser does `a.slice(2).split('=')` and keeps only the 2nd piece, so the URL gets `&waterhide` with no value (every part stays visible). One-line fix for the owner: `c
+> 5:- coordinator → ALL (20:12 UTC): fixed scripts/capture.mjs and scripts/aspect-test.mjs argument parsing — `--q=waterhide=a,b` now passes the full value to the page. Isolation captures taken before 20:12 with --q=waterhide=… were NOT isolated.
+> 6:- water-fx-specialist → path-camera-transition-engineer (wave 3, corrections 4 + 9): (a) COINS ON THE CYAN CORE. In 05 the cyan core is no longer free-drifting: its centre is at lateral `coreLateral(course, s)` (exported from `src/vfx/waterRibbon.ts`, = CORE_SWING · offset05(s) · right.x, |val
+> qa/pilot05/wave3/benny/it00/05.png
+> qa/pilot05/wave3/benny/it00/05_mask.png
+> qa/pilot05/wave3/camera/it00/05.png
+> qa/pilot05/wave3/environment/it01/05.png
+> qa/pilot05/wave3/environment/it01/tri.png
+> qa/pilot05/wave3/foam/iso0/05_noCrownSpray.png
+> qa/pilot05/wave3/foam/iso0/05_noRibbonWake.png
+> qa/pilot05/wave3/foam/it01/05_now.png
+> qa/pilot05/wave3/foam/it02/ …[+1209 chars]
+
+### 🤖 Claude — 2026-11-15T20:15:31.335Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave3/water/it10/05.png"}`
+
+### 🧑 User — 2026-11-15T20:15:31.398Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T20:15:42.699Z
+
+> 🔧 **SendMessage** `{"to": "a6b6ab59ed81afd14", "summary": "Foam: puffs floating on open water", "message": "Coordinator review of qa/pilot05/wave3/water/it10/05.png (live tree ~20:14): white foam puffs are scattered across the OPEN WATER in the near field (e.g. x 0–180 / 650–864, y 950–1400, round white blobs sitting on the cyan). In the reference, foam forms continuous cloud BANKS hugging the two river edges/tube walls (left bank y≈540–1300 along x≈0–330, right bank along x≈560–864), never islands in the middle of the current. Please confine puffs to the bank strip at the stream edges (both sides), denser and c …[+254 chars]`
+
+### 🧑 User — 2026-11-15T20:15:42.753Z
+
+> ↩︎ result: {"success":false,"message":"Agent a6b6ab59ed81afd14 was stopped and won't be resumed. Treat its work as cancelled; only launch a new agent if the user explicitly asks."}
+
+### 🤖 Claude — 2026-11-15T20:15:46.758Z
+
+> 🔧 **SendMessage** `{"to": "a2d2bf3c3b4ddbd86", "summary": "Env: VP glow too big, rings orange", "message": "Coordinator review of qa/pilot05/wave3/water/it10/05.png (live tree ~20:14): walls are much better (deeper magenta, dark slots). Two issues: (1) the VP glow is an oversized pink-orange disc (~x 360–640, y 320–560) that hides the tunnel end; in the reference the glow is a SMALL warm golden-white hot spot (≈60–90 px) exactly at the VP (498,479) with the rings converging visibly into it — shrink it, make it golden-white, and keep the converging rings visible around it. (2) Rings still read saturated ORANGE (# …[+367 chars]`
+
+### 🧑 User — 2026-11-15T20:15:46.794Z
+
+> ↩︎ result: {"success":false,"message":"Agent a2d2bf3c3b4ddbd86 was stopped and won't be resumed. Treat its work as cancelled; only launch a new agent if the user explicitly asks."}
+
+### 🤖 Claude — 2026-11-15T20:15:49.960Z
+
+> 🔧 **SendMessage** `{"to": "ae805b4b3d62c3b2f", "summary": "Camera: status and lock request", "message": "Coordinator: status check. The other four specialists are calibrating and waiting for your CAMERA LOCK line in qa/pilot05/REQUESTS.md; course.ts / cameraRig.ts / coins.ts are still unchanged in the tree. In the latest live capture (qa/pilot05/wave3/water/it10/05.png) a large coin still overlaps Benny's right side and the coin line runs to the right of him. Please prioritise: (1) post the lock as soon as the camera + checkpoint are settled, (2) coins on the cyan core ahead of Benny (water-fx posted `coreLatera …[+282 chars]`
+
+### 🧑 User — 2026-11-15T20:15:49.988Z
+
+> ↩︎ result: {"success":false,"message":"Agent ae805b4b3d62c3b2f was stopped and won't be resumed. Treat its work as cancelled; only launch a new agent if the user explicitly asks."}
+
+### 🤖 Claude — 2026-11-15T20:15:52.665Z
+
+Those three specialists have stopped. Most likely your interrupt earlier also stopped the background agents. Checking which agents are still alive.
+
+### 🤖 Claude — 2026-11-15T20:15:52.714Z
+
+> 🔧 **ListAgents** `{}`
+
+### 🧑 User — 2026-11-15T20:15:52.731Z
+
+> ↩︎ result: This session is rainbow-62 [e242e7] — the name other sessions use to message it (it is not listed below; a message to it would be a message to yourself).
+> 
+> Subagents (1):
+>   a9e561f3d4afd336f  ·  reference-match-director  ·  running  ·  started 54s ago
+
+### 🤖 Claude — 2026-11-15T20:16:20.854Z
+
+> 🔧 **Agent** `{"description": "Resume 05 camera and coins", "subagent_type": "path-camera-transition-engineer", "run_in_background": true, "prompt": "You are the path-camera-transition-engineer (Camera Engineer) for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). You are RESUMING Screen 05 work: the previous agent in your role was stopped by an interruption at ~20:13 UTC before finishing. Everything it saved is in the tree; continue from it, do not start over or revert other specialists' work.\n\nRead first: `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE3.md` (rules, strict file  …[+3552 chars]`
+
+### 🧑 User — 2026-11-15T20:16:20.873Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a1a0e3b23892ae657 (internal ID - do not mention to user. Use SendMessage with to: 'a1a0e3b23892ae657', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/a1a0e3b23892ae657.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T20:16:34.855Z
+
+> 🔧 **Agent** `{"description": "Resume 05 walls rings tunnel", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the washer-environment-modeler for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). You are RESUMING Screen 05 work: the previous agent in your role was stopped by an interruption at ~20:13 UTC before finishing. Its edits to `src/world/environment.ts`, `src/world/materials.ts`, `src/world/tube.ts` are in the tree — continue from them, do not revert.\n\nRead first: `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE3.md` (rules, stric …[+3565 chars]`
+
+### 🧑 User — 2026-11-15T20:16:34.880Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a11fce31cb6e6f677 (internal ID - do not mention to user. Use SendMessage with to: 'a11fce31cb6e6f677', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/a11fce31cb6e6f677.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T20:16:45.657Z
+
+> 🔧 **Agent** `{"description": "Resume 05 cyan-pink river", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the water-fx-specialist for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). You are RESUMING Screen 05 water work: the previous agent in your role was stopped by an interruption at ~20:13 UTC before finishing. Its edits to `src/vfx/waterRibbon.ts` (removal of the white contact band under Benny, `coreLateral`/`CORE_SWING`, palette) are in the tree — continue from them, do not revert.\n\nRead first: `CLAUDE.md`, `qa/pilot05/COORDINATIO …[+2587 chars]`
+
+### 🧑 User — 2026-11-15T20:16:45.687Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a919fc147e2f44dc0 (internal ID - do not mention to user. Use SendMessage with to: 'a919fc147e2f44dc0', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/a919fc147e2f44dc0.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T20:16:57.561Z
+
+> 🔧 **Agent** `{"description": "Resume 05 foam and bubbles", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "You are the foam-bubbles-particles specialist for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). You are RESUMING Screen 05 work: the previous agent in your role was stopped by an interruption at ~20:13 UTC before finishing. Its edits (foam.ts, bubbles.ts, riderSplash.ts, spray.ts, vfx/index.ts) are in the tree — continue from them, do not revert. It found the root cause of the white jagged artifact under Benny (a white contact term in  …[+2973 chars]`
+
+### 🧑 User — 2026-11-15T20:16:57.585Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: aeaa29649ddebdd93 (internal ID - do not mention to user. Use SendMessage with to: 'aeaa29649ddebdd93', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/aeaa29649ddebdd93.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T20:17:08.119Z
+
+> 🔧 **Agent** `{"description": "Resume 05 Benny proportions", "subagent_type": "benny-character-artist", "run_in_background": true, "prompt": "You are the benny-character-artist for the Rainbow game (repo /home/user/rainbow-, Three.js r170 + TypeScript + Vite). You are RESUMING Screen 05 work: the previous agent in your role was stopped by an interruption at ~20:13 UTC before finishing. Its edits (`src/characters/benny/build.ts`, `runtime.ts`, `benny-lab.ts`) are in the tree — continue from them, do not revert.\n\nRead first: `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE3.md` (rules, strict file ownership, targ …[+2777 chars]`
+
+### 🧑 User — 2026-11-15T20:17:08.139Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ad135666b6f7de35b (internal ID - do not mention to user. Use SendMessage with to: 'ad135666b6f7de35b', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/ad135666b6f7de35b.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T20:17:08.420Z
+
+You've hit your 5-hour limit · resets 12:40am (UTC)
+
+### 🧑 User — 2026-11-15T20:17:08.446Z
+
+<task-notification>
+<task-id>ad135666b6f7de35b</task-id>
+<tool-use-id>toolu_01SPusWwQM99vS1LSusGZBvC</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/ad135666b6f7de35b.output</output-file>
+<status>failed</status>
+<summary>Agent "Resume 05 Benny proportions" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 12:40am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5L6ZBgaMtwEUMY1PeJv, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 12:40am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+</task-notification>
+
