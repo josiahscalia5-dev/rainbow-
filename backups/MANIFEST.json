@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3913,
-   "sha256": "84d37a2b33deeab796a75540bceee3e7957bfd5b60f74f0a57b07f72586f54eb"
+   "sha256": "781e1c42c3169f656cd207dd8897bcf25ecc32f0394df007c39b4bf32fdc1282"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1113,
-   "sha256": "e3bda197981554d68f34922262d777c7bf70ce099d9dc46a1f831d756cc3812a"
+   "bytes": 2979,
+   "sha256": "a34ffbf2517d0ac64f33a0c4588d045166b952134246054e45f3e73fcb59deda"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1587,6 +1587,11 @@
    "sha256": "180c0604fa05700d8c433881e475d7b40f6125f389f1fa742850f9105d54345d"
   },
   {
+   "path": "qa/pilot05/wave5/environment/regress/07.png",
+   "bytes": 1785764,
+   "sha256": "1a7ff158b8ee815ecc14a300620dfab15e3b6a42168f780832fb5474cd939bb6"
+  },
+  {
    "path": "qa/pilot05/wave5/foam/NOTES.md",
    "bytes": 5893,
    "sha256": "b8eccdc9b208466e0ea23a22eec652199f7ec477ac952725b4151aaee06f9178"
@@ -1630,6 +1635,16 @@
    "path": "qa/pilot05/wave5/foam/regress/03.png",
    "bytes": 689295,
    "sha256": "70d2cb9a169b30fe0058651e1f3a36056fce46af6302bd217f4fa208533478dc"
+  },
+  {
+   "path": "qa/pilot05/wave5/foam/regress/04.png",
+   "bytes": 1009712,
+   "sha256": "9fa03399074eb30a9f316c5793553a74c25d5d2ad2458022ce530541ec842557"
+  },
+  {
+   "path": "qa/pilot05/wave5/foam/regress/06.png",
+   "bytes": 1504918,
+   "sha256": "180c0604fa05700d8c433881e475d7b40f6125f389f1fa742850f9105d54345d"
   },
   {
    "path": "qa/pilot05/wave5/foam/tools/bankcc.py",

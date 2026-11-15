@@ -2978,3 +2978,29 @@ Another autosave run, started by the hook itself, is pushing right now (local `a
 
 > 🔧 **Bash** `{"command": "timeout 300 bash -c 'until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 2; done'; git fetch -q origin claude/rainbow-3d-account-transfer-syorak; echo \"local $(git rev-parse --short HEAD) remote $(git rev-parse --short origin/claude/rainbow-3d-account-transfer-syorak)\"; git status --short | head -5; python3 -I scripts/autosave-status.py", "description": "Wait for the running autosave and verify the push", "timeout": 330000}`
 
+### 🧑 User — 2026-11-15T22:14:42.214Z
+
+> ↩︎ result: local 930db52 remote 930db52
+>  M qa/capture_log.json
+> ?? qa/pilot05/wave5/environment/regress/07.png
+> ?? qa/pilot05/wave5/foam/regress/04.png
+> ?? qa/pilot05/wave5/foam/regress/06.png
+> AUTOSAVE OK | branch claude/rainbow-3d-account-transfer-syorak | scheduler daemon | last verified backup 2026-11-15T22:14:17+00:00 (0.4 min ago) | local 930db52 remote 930db52 (match) | uncommitted 4
+
+### 🤖 Claude — 2026-11-15T22:14:49.960Z
+
+Pushed and verified: GitHub matches the local copy at `930db52`. The four new files that appeared since are the environment and foam specialists' regression captures from their final checks; the next 5-minute autosave includes them.
+
+Two specialists have finished:
+- **Water:** the pink fins behind Benny are gone. The near water now has crests, troughs, streaks and star glints; its brightness spread rose from 17.4 to 35.8, against 40.0 in the reference. The pink bands now swing about ±70 px in S-bends, up from about ±25.
+  - Left over: the far stretch of river near the tunnel end is now visible since the glow shrank, and it shows Screen 06's striped water.
+- **Benny:** the GLB is re-exported with round arm nubs and a full round body. It also turned out the 0.12 ride height from wave 4 had never been applied (the code still said 0.22); it's fixed now. His size is within a few pixels of the reference and the hat-to-body ratio is 61/39 (reference 62/38). Screens 02, 03 and 10 still show him correctly. Screen 10 wasn't captured at the moment he hides under the towel, but none of the code that hides him changed.
+  - Left over: the purple stripes are slightly lighter than the reference.
+
+I'm waiting for the environment and foam specialists. Then I'll fix the far-river issue and check the draw-call budget: it rose to 144, above the 130 limit set in an earlier wave.
+
+### 🧑 User — 2026-11-15T22:14:50.034Z
+
+I signed in again with the marble world labs 
+I did it
+
