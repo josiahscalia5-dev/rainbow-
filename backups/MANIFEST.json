@@ -374,14 +374,12 @@
   {
    "path": "assets/models/benny.glb",
    "bytes": 1126892,
-   "sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1",
-   "lfs_pointer_only": true
+   "sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
   },
   {
    "path": "assets/models/rainbow_girl.glb",
    "bytes": 3546480,
-   "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528",
-   "lfs_pointer_only": true
+   "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -390,8 +388,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 4168,
-   "sha256": "45932e0664ea291c0717dfef7ea2c5a4d79cf6b480d7b0226386dba264ffe53c"
+   "bytes": 4395,
+   "sha256": "d3a726b26c59a846c92c1ded9f11cee03572a4d8f6c62d01502cf4fa11d65bbd"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -416,8 +414,7 @@
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
    "bytes": 5455698,
-   "sha256": "982e007c75e95cb0913749e28f763579fddb39825f4dc2bfd5b12c64e478c0f3",
-   "lfs_pointer_only": true
+   "sha256": "982e007c75e95cb0913749e28f763579fddb39825f4dc2bfd5b12c64e478c0f3"
   },
   {
    "path": "backups/source-package/Rainbow_Claude_Code_Master_Prompt_11_Screens.uploaded.md",
@@ -432,8 +429,7 @@
   {
    "path": "builds/rainbow-debug.apk",
    "bytes": 7339491,
-   "sha256": "dca8d754b769bad4b8d92e89fcdfc73eaff0e4c55f5cca8ca31c7ef4eaad9b25",
-   "lfs_pointer_only": true
+   "sha256": "dca8d754b769bad4b8d92e89fcdfc73eaff0e4c55f5cca8ca31c7ef4eaad9b25"
   },
   {
    "path": "capacitor.config.ts",
@@ -1808,14 +1804,12 @@
   {
    "path": "qa/worldlabs/05/blender/screen05_layout.blend",
    "bytes": 410225,
-   "sha256": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9",
-   "lfs_pointer_only": true
+   "sha256": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9"
   },
   {
    "path": "qa/worldlabs/05/blender/screen05_layout.glb",
    "bytes": 2773392,
-   "sha256": "8cfd5093ede29e763e3a4af0981a11fecd976844506632febe8fe8134c0300f0",
-   "lfs_pointer_only": true
+   "sha256": "8cfd5093ede29e763e3a4af0981a11fecd976844506632febe8fe8134c0300f0"
   },
   {
    "path": "qa/worldlabs/05/geometry_ref/1_original_approved_05.png",
