@@ -15,13 +15,25 @@ Tap skips the video (after 0.6 s).
 
 ## Recommended export
 
-* Portrait 9:16 (1080×1920 or 720×1280). Landscape clips are letterboxed, not cropped.
+* Portrait 9:16 (1080×1920 or 720×1280) is best. Any ratio works edge to edge with no black bars and no stretching
+  (`chooseVideoFit` in `src/ui/cinematicVideo.ts`):
+  * **cover**: the clip is cropped to the phone when at least 78% of it stays visible. A 9:16 clip keeps 80% of its
+    width on a 20:9 phone, so keep the girl, the towel and the washer door inside the centre ~80% of the frame.
+    `?videoFocus=50% 40%` (CSS object-position) moves the crop centre for testing.
+  * **fill**: if cropping would lose more (a 16:9 landscape Flow export, or a 9:16 clip on a 21:9 phone), the whole
+    clip is shown over a soft blurred fill made from the same video frames instead of black bars.
 * H.264 MP4 (AAC track optional — it is muted anyway). Keep it short (≈5–10 s) and under ~15 MB:
   the file is bundled into the Android APK.
 * End the intro on the girl walking away from the closed washer door, seen from inside the drum if
   possible, so the cross-fade lands on the matching 3D shot. End the ending video just before the
   "girl holds the towel" pose.
 * `.mp4` files are stored with Git LFS (see `.gitattributes`); the autosave backs them up automatically.
+
+## Status (2026-11-15, account 3)
+
+No Flow video is in the repository yet: `public/video/` holds only a placeholder note, so the game plays the
+real-time 3D 01 opening. When the MP4 is ready, upload it and Claude will copy it to `public/video/intro.mp4`,
+run `npm run test:cinematic`, rebuild the APK and push. No code change is needed.
 
 ## Testing
 
@@ -30,6 +42,8 @@ Tap skips the video (after 0.6 s).
 * `npm run test:cinematic` — headless Chromium test of both paths (with a generated VP8 test clip and
   without any video). Result: `qa/cinematic_test.json`. Last run 2026-11-15: **pass** (overlay shown,
   3D held paused underneath, resumed after the fade and advanced 01 → 02; fallback without video OK).
+  The test also checks edge-to-edge fit on a 20:9 phone (portrait clip → cover, landscape clip → blurred fill,
+  no flat bar rows); screenshots in `qa/aspect/flow_video_*.png`.
   Note: this Chromium build has no H.264, so the automated test uses WebM; MP4 playback must be
   checked on a real Android device.
 

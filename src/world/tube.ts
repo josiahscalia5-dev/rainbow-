@@ -209,22 +209,34 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
 }
 
 /**
- * Washer-tube ring collar (refs 05–07): a thick flanged gold band hugging the wall with a broad flat
- * inner face, bevelled shoulders and a raised centre lip — it catches crisp specular lines instead of
- * reading as a round pipe/helix. Lathe around local Z; radial values are fractions of the tube radius,
- * axial values are world units (the instance scales z by 1).
+ * Washer-tube ring collar (ref 05: "flat gold band with a double contour"): a broad FLAT inner band that
+ * barely stands off the wall, a dark groove, then a thin raised lip on the near edge (−z, the side the
+ * rider looks at) whose small camera-facing side catches a bright line. The protrusion is shallow on
+ * purpose: a deep collar shows a big camera-facing annulus (the old "thick orange pipe" look, 21% gold)
+ * and pokes through the stream where it hugs the wall (06 arch).
+ * Lathe around local Z; radial values are fractions of the tube radius, axial values are world units
+ * (the instance scales z by 1). Interior corners are duplicated so every facet keeps a crisp normal.
  */
-export function collarGeometry(depth = 0.062, lip = 0.016, width = 1.0, segments = 80): THREE.BufferGeometry {
+export function collarGeometry(depth = 0.022, lip = 0.012, width = 1.1, segments = 96): THREE.BufferGeometry {
   const w = width / 2;
-  const d = depth, L = depth + lip;
+  const d = depth;
+  const lipW = Math.min(0.16, width * 0.15), groove = Math.min(0.07, width * 0.06);
   // traversed from +z to -z so LatheGeometry's faces/normals point INWARD (toward the tunnel axis)
   const prof: [number, number][] = [
-    [1.03, w], [1 - d * 0.3, w], [1 - d * 0.78, w * 0.96], [1 - d, w * 0.84],
-    [1 - d, w * 0.36], [1 - d - lip * 0.55, w * 0.27], [1 - L, w * 0.16], [1 - L, -w * 0.16],
-    [1 - d - lip * 0.55, -w * 0.27], [1 - d, -w * 0.36], [1 - d, -w * 0.84], [1 - d * 0.78, -w * 0.96],
-    [1 - d * 0.3, -w], [1.03, -w],
+    [1.03, w], [1 - d * 0.5, w], // far side (hidden from the rider)
+    [1 - d, w - 0.05], // far chamfer
+    [1 - d, -w + lipW + groove + 0.02], // the flat band
+    [1 - d * 0.55, -w + lipW + groove * 0.5], // dark groove (recessed toward the wall)
+    [1 - d - lip, -w + lipW], [1 - d - lip, -w + 0.05], // raised lip
+    [1 - d * 0.35, -w], // lip's camera-facing side → thin bright contour
+    [1.03, -w],
   ];
-  const g = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), segments);
+  const pts: THREE.Vector2[] = [];
+  prof.forEach(([x, y], i) => {
+    pts.push(new THREE.Vector2(x, y));
+    if (i > 0 && i < prof.length - 1) pts.push(new THREE.Vector2(x, y)); // crisp facet normals
+  });
+  const g = new THREE.LatheGeometry(pts, segments);
   g.rotateX(Math.PI / 2); // lathe axis Y → tube axis Z
   return g;
 }

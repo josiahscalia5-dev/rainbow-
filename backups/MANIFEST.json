@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2431,
-   "sha256": "309062809cdc54b18cbd0b4f3533505ee3926d4a03014927722c61d93a0e8088"
+   "sha256": "787653f3ecc9051dde388e5b636e9c53425c5290352c8095700294d5a150f9d9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -443,8 +443,8 @@
   },
   {
    "path": "docs/FLOW_VIDEO.md",
-   "bytes": 2296,
-   "sha256": "0db4077d604f276c9a270a813e846a7af73c0a61ceb0acf3f28f6ae2b03fe8d2"
+   "bytes": 3420,
+   "sha256": "14389b8657a550e1d358c67272effc4e76cde1345b32e60db1b29103b93072f6"
   },
   {
    "path": "docs/characters/benny.md",
@@ -622,6 +622,11 @@
    "sha256": "e8eea97e94cec829c6fe8f74dec0a2fd51e492ee1ff1ad891c21264039ede0df"
   },
   {
+   "path": "public/video/PUT_FLOW_VIDEOS_HERE.txt",
+   "bytes": 158,
+   "sha256": "f7c352f40d08b5d6461a55126324034d200bae01ea69493989f919c9a65c625b"
+  },
+  {
    "path": "qa/01_diff.png",
    "bytes": 198550,
    "sha256": "460fc1276cf0cb34ada628ed7c37ca588f2247a62fe2f654846817d39969c275"
@@ -792,9 +797,19 @@
    "sha256": "78490062b46e681eda47637dfa6e1c771b2a8db90f449f77da61c0434c8a3ef9"
   },
   {
+   "path": "qa/aspect/flow_video_landscape_412x915.png",
+   "bytes": 67389,
+   "sha256": "90a34c87aadd1c71e7c777229e3b75f3222d010ea58a5171b87940c49df183d9"
+  },
+  {
+   "path": "qa/aspect/flow_video_portrait_412x915.png",
+   "bytes": 101783,
+   "sha256": "74faadd777f8089d21638d36a2a80af6df7eb6752128dac28916c8e4f3c545ee"
+  },
+  {
    "path": "qa/capture_log.json",
-   "bytes": 4839,
-   "sha256": "cf0aba48cd16882950c2ff4a93c6c6c50ed4ba11eaa5b4c9d0bb6ac2bfdcf2de"
+   "bytes": 1099,
+   "sha256": "bfc10fe702b36f9d5f45938aff070bfeba25c2bb102960b67c72a35cf288c339"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -803,8 +818,8 @@
   },
   {
    "path": "qa/cinematic_test.json",
-   "bytes": 1386,
-   "sha256": "77ee8f06daf0c98baa16dbef048e134b2777d2814186648d22784e5c55cbc9dd"
+   "bytes": 1820,
+   "sha256": "1a1dac822d16298645c2132afd8b48c25f701a2b2c561035048903634f276a09"
   },
   {
    "path": "qa/compare_summary.md",
@@ -875,6 +890,11 @@
    "path": "qa/pilot05/COORDINATION.md",
    "bytes": 2514,
    "sha256": "417edfa3c39f66c1b9db72374cd7154634c434a5aee6d81949996549d9d8b0a6"
+  },
+  {
+   "path": "qa/pilot05/REQUESTS.md",
+   "bytes": 601,
+   "sha256": "ecf12becc5e74c83c549ec04657d7273cb9fc612b9ded925cca49f9719db02b4"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -977,6 +997,21 @@
    "sha256": "6fe7ada19aea6866a38b82ab06bb694cfba957d2f6bbd7e97cd0d6e951ea20c4"
   },
   {
+   "path": "qa/pilot05/foam/iso/fix1/05_base.png",
+   "bytes": 1608659,
+   "sha256": "62b66398615d275169a91668ba773c11a44ffdf5f865b8fdb589d04e27a63d64"
+  },
+  {
+   "path": "qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake,crown,spray,bubbles,foam.png",
+   "bytes": 1478403,
+   "sha256": "4377800c5e8f6b4df8e36c1fd0a36f9a6813fea4ba38f794298ca2431d4bec14"
+  },
+  {
+   "path": "qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake.png",
+   "bytes": 1521814,
+   "sha256": "facdbe0a45fc477b59484631073dc17a1c0efd380724b76b9719e0c242fb3cec"
+  },
+  {
    "path": "qa/pilot05/foam/iso/no_bubbles/05.png",
    "bytes": 1613369,
    "sha256": "5f65d660e483bd8e0eb384cab13eae07fbeb20cf21767eaac46ba2d818869e63"
@@ -1025,6 +1060,26 @@
    "path": "qa/pilot05/water/before_iso/05.png",
    "bytes": 1571658,
    "sha256": "450e51f847162b6b771bdc8c39a6cd92e198e4dbf617109566b5cb8cb5b81578"
+  },
+  {
+   "path": "qa/pilot05/water/it1/05.png",
+   "bytes": 1359242,
+   "sha256": "538e018ccee1d2994f34b7410630d0c8e9c42abe6f0ba0883d03f11325c80091"
+  },
+  {
+   "path": "qa/pilot05/water/it1_iso/05.png",
+   "bytes": 1315871,
+   "sha256": "7d3a1588047bec16447db9f80a03826e5571f0abe9b763a395475d506d7dafe2"
+  },
+  {
+   "path": "qa/pilot05/water/it2/05.png",
+   "bytes": 1426672,
+   "sha256": "8656cf78221d563ab8409dabea3ab45db9fa4b984576d77ea2bc2818795e7555"
+  },
+  {
+   "path": "qa/pilot05/water/it2_iso/05.png",
+   "bytes": 1386414,
+   "sha256": "f08def17c64dca8ac2c573afe52cfeacb6d80dc1caa7010def10cffa526856c8"
   },
   {
    "path": "qa/report_metrics.json",
@@ -1222,6 +1277,11 @@
    "sha256": "8889ca34226e63a255af933123df898bb93a0ab6be04b33b51831c1a001589b5"
   },
   {
+   "path": "scripts/.tmp_wem_probe2.ts",
+   "bytes": 1181,
+   "sha256": "2eda9bf284029700cfae430f39be8b9ee803c3bcd7d23d6f0008cfe412b75ed1"
+  },
+  {
    "path": "scripts/aspect-test.mjs",
    "bytes": 6058,
    "sha256": "315d4bb55529f5cc5959c655a1bf5307b1b4ae4c26432207cb687675cb27bbc5"
@@ -1348,8 +1408,8 @@
   },
   {
    "path": "src/characters/benny/textures.ts",
-   "bytes": 11922,
-   "sha256": "6c8287fccf7628d5fbe3848e5720eee42bab81856881ba45cd3b61c266a98f95"
+   "bytes": 13295,
+   "sha256": "1885b4df2bdc6152de47b46b5f8b0b31c6e848c9f812c38ed2cae224e1da849b"
   },
   {
    "path": "src/characters/girl/build.ts",
@@ -1458,8 +1518,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 10956,
-   "sha256": "80a8113409e6d44b18eb1593c0ddc47838d71d77b810f178a3681c202f61b14e"
+   "bytes": 11124,
+   "sha256": "725eaf324e0d07416a18b2e8c00d86d4e9b2761ea1b0732afca39b963b54a734"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -1478,8 +1538,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 19522,
-   "sha256": "889b5b7b4e5358251f2ff261466d86f3c809a52327e23328c91c1fb967ff2be7"
+   "bytes": 22546,
+   "sha256": "fd788b6e5c672aaf64969f054c25f928ce3ede151fee6f0bf8d379bded93a4a8"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -1503,8 +1563,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 16723,
-   "sha256": "a5b8b3b4274a596cce4356d1726506889511fa5dde4d0cf9da500c679f08ffea"
+   "bytes": 17606,
+   "sha256": "4191e513520704be71d172ec121ca8882b351482a07932af473d438394905052"
   },
   {
    "path": "src/world/towel.ts",
@@ -1513,8 +1573,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 17345,
-   "sha256": "a5688ff5c279f6d475066c9a9be3b06f9d5cfed1b4c30fd6dd1ae37443776d64"
+   "bytes": 17995,
+   "sha256": "7883d85651e24809caa0fef1874b611908390c2d2f75c2064f6e24b7145de1b1"
   },
   {
    "path": "tools/model-lab.html",

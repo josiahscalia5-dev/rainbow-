@@ -897,3 +897,129 @@ The 05 axis is (0,−3,−72), nearly −Z, so world-Z env strips line up there.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T19:25:24.894Z
+
+The 06 baseline is broken (a big orange surface covers the lower half and hides Benny). Let me check whether that predates wave 1 by comparing with the committed screenshots.
+
+### 🤖 Claude — 2026-11-15T19:25:27.048Z
+
+> 🔧 **Bash** `{"command": "git log --format='%h %ad' --date=iso -1 -- screenshots/06.png && python3 scripts/triptych.py /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots.png 600 \"06=screenshots/06.png\" \"07=screenshots/07.png\" \"08=screenshots/08.png\" \"04=screenshots/04.png\" \"03=screenshots/03.png\"", "description": "Show committed screenshots for 03-08"}`
+
+### 🧑 User — 2026-11-15T19:25:27.775Z
+
+> ↩︎ result: c2770a4 2026-11-15 17:55:06 +0000
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots.png (1684, 642)
+
+### 🤖 Claude — 2026-11-15T19:25:29.130Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots.png"}`
+
+### 🧑 User — 2026-11-15T19:25:29.183Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:25:33.548Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/environment/base_others/06.png"}`
+
+### 🧑 User — 2026-11-15T19:25:33.588Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:25:54.489Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('qa/capture_log.json'))\nfor s in d['shots']: print(s['id'], s['state']['s'], s['state']['cam'], s['state']['bennyY'])\n\" && cat > scripts/.tmp_wem_probe2.ts <<'EOF'\n// temporary probe (washer-environment-modeler); deleted after use\nimport * as THREE from 'three';\nimport { Course } from '../src/world/course';\nimport { straightTubePath, tubeCenterAt } from '../src/world/tube';\nconst c = new Course();\nconst s05 = c.stage('05').s0, s08 = c.stage('08').s0;\nconst p = straightTubePath(c, s05, s08, { window: 30, taper: 14, baseRadius: ( …[+978 chars]`
+
+### 🧑 User — 2026-11-15T19:25:56.350Z
+
+> ↩︎ result: 03 48.495 [-0.36, -8.77, -19.15] -13.425
+> 04 77.413 [0.72, -14.48, -15.82] -21.896
+> 06 199.145 [0.86, -38.76, -132.82] -37.402
+> 07 273.22 [10.93, -45.6, -195.35] -49.668
+> 08 391.383 [12.03, -108.74, -276] -113.124
+> ring s 175.3 r 7.58 inner 6.99 | cam axial 13.50 radial 5.60 | stream(Benny) axial 21.61 radial 2.94
+> ring s 182.5 r 7.58 inner 6.99 | cam axial 6.64 radial 5.20 | stream(Benny) axial 14.70 radial 2.38
+> ring s 189.7 r 14.70 inner 13.55 | cam axial 3.97 radial 4.56 | stream(Benny) axial 9.92 radial 10.23
+> ring s 196.9 r 14.98 inner 13.81 | cam axial -2.19 radial 5.76 | stream(Benny) axial 2.45 radial 12.60
+> ring s 204.1 r 14.98 inner 13.81 | cam axial -10.34 radial 6.75 | stream(Benny) axial -5.19 radial 13.56
+> ring s 211.3 r 14.98 inner 13.81 | cam axial -18.43 radial 13.95 | stream(Benny) axial -10.92 radial 17.84
+> ring s 218.5 r 14.98 inner 13.81 | cam axial -20.24 radial 26.71 | stream(Benny) axial -11.93 radial 25.24
+
+### 🤖 Claude — 2026-11-15T19:26:00.647Z
+
+> 🔧 **Bash** `{"command": "npx vite-node scripts/.tmp_wem_probe2.ts 0.86 -38.76 -132.82 199.145 2>&1 | tail -8", "description": "Recheck ring collar vs actual 06 camera"}`
+
+### 🧑 User — 2026-11-15T19:26:03.006Z
+
+> ↩︎ result: ring s 175.3 r 7.58 inner 6.99 | cam axial 16.30 radial 1.63 | stream(Benny) axial 21.61 radial 2.94
+> ring s 182.5 r 7.58 inner 6.99 | cam axial 9.37 radial 1.22 | stream(Benny) axial 14.70 radial 2.38
+> ring s 189.7 r 14.70 inner 13.55 | cam axial 4.62 radial 8.85 | stream(Benny) axial 9.92 radial 10.23
+> ring s 196.9 r 14.98 inner 13.81 | cam axial -2.46 radial 10.18 | stream(Benny) axial 2.45 radial 12.60
+> ring s 204.1 r 14.98 inner 13.81 | cam axial -10.22 radial 11.51 | stream(Benny) axial -5.19 radial 13.56
+> ring s 211.3 r 14.98 inner 13.81 | cam axial -16.23 radial 18.32 | stream(Benny) axial -10.92 radial 17.84
+> ring s 218.5 r 14.98 inner 13.81 | cam axial -15.83 radial 28.84 | stream(Benny) axial -11.93 radial 25.24
+
+### 🤖 Claude — 2026-11-15T19:29:18.828Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  /** bright stripe highlights running along v (tunnel light streaks) */\n  streaks?: number;", "new_string": "  /** bright stripe highlights running along v (tunnel light streaks) */\n  streaks?: number;\n  /** number of procedural lengthwise streaks around u (default 9) */\n  streakCount?: number;\n  /**\n   * explicit slot half-size in CELL units [along u, along v] (overrides holeSize/slot); the cell is\n   * 1/repeatU of the circumference by 1/repeatV along the tube, so world proportions follow …[+142 chars]`
+
+### 🧑 User — 2026-11-15T19:29:18.856Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:29:20.976Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "    uHoleSize: { value: o.holeSize ?? 0.42 },\n    uStreaks: { value: o.streaks ?? 0.35 },", "new_string": "    uHoleSize: { value: o.holeSize ?? 0.42 },\n    uStreaks: { value: o.streaks ?? 0.35 },\n    uStreakN: { value: o.streakCount ?? 9 },\n    uSlotHalf: { value: new THREE.Vector2(o.slotHalf?.[0] ?? -1, o.slotHalf?.[1] ?? -1) },\n    uStagger: { value: o.stagger === false ? 0 : 0.5 },"}`
+
+### 🧑 User — 2026-11-15T19:29:21.008Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:29:26.078Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "uniform vec3 uHoleColor; uniform float uSlot; uniform vec2 uRepeat; uniform float uHoleSize; uniform float uStreaks;\nuniform vec3 uRelief; uniform vec3 uRimColor; uniform float uRimStrength;\n#ifdef PERF_FARGLOW\n${FAR_GLOW_PARS}\n#endif\nvec2 perfCell(vec2 uv){\n  vec2 g = uv * uRepeat;\n  g.x += mod(floor(g.y), 2.0) * 0.5;   // staggered rows\n  return g;\n}\n// signed distance to the slot/hole (cell units, <0 inside)\nfloat perfSdf(vec2 g){\n  vec2 f = fract(g) - 0.5;\n  vec2 hs = mix(vec2(uHol …[+746 chars]`
+
+### 🧑 User — 2026-11-15T19:29:26.116Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:29:27.627Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "float streak = pow(0.5 + 0.5 * sin(vPerfUv.x * 6.2831 * 9.0 + 1.3), 18.0) * uStreaks;", "new_string": "float streak = pow(0.5 + 0.5 * sin(vPerfUv.x * 6.2831 * uStreakN + 1.3), 18.0) * uStreaks;"}`
+
+### 🧑 User — 2026-11-15T19:29:27.660Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:29:28.933Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  mat.customProgramCacheKey = () => 'perf-v2' + (relief ? '-r' : '') + (o.farGlow ? '-g' : '');", "new_string": "  mat.customProgramCacheKey = () => 'perf-v3' + (relief ? '-r' : '') + (o.farGlow ? '-g' : '');"}`
+
+### 🧑 User — 2026-11-15T19:29:28.988Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:29:35.509Z
+
+Now the reflection environment: parameterized strip count, narrow strips, darker bases so the gaps between streaks read dark.
+
+### 🤖 Claude — 2026-11-15T19:29:49.876Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  const radiance = (d: THREE.Vector3, out: THREE.Color) => {\n    const ang = Math.atan2(d.y, d.x); // angle around the tunnel axis (Z)\n    const up = d.y;\n    // base: deep hot magenta above, violet toward the floor (kept dark so the strips give contrast)\n    if (isGold) out.setRGB(0.5, 0.24, 0.12).lerp(new THREE.Color(0.2, 0.07, 0.1), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));\n    else out.setRGB(0.4, 0.03, 0.3).lerp(new THREE.Color(0.16, 0.05, 0.5), THREE.MathUtils.smoothstep(-up, -0.2, 0. …[+3309 chars]`
+
+### 🧑 User — 2026-11-15T19:29:49.912Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:30:06.294Z
+
+Now the ring collar profile (flat band + groove + thin near lip, crisp normals, shallow protrusion) and the D-shaped wall lids in `tube.ts`.
+
+### 🤖 Claude — 2026-11-15T19:30:17.089Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "/**\n * Washer-tube ring collar (refs 05–07): a thick flanged gold band hugging the wall with a broad flat\n * inner face, bevelled shoulders and a raised centre lip — it catches crisp specular lines instead of\n * reading as a round pipe/helix. Lathe around local Z; radial values are fractions of the tube radius,\n * axial values are world units (the instance scales z by 1).\n */\nexport function collarGeometry(depth = 0.062, lip = 0.016, width = 1.0, segments = 80): THREE.BufferGeometry {\n  const w = …[+2546 chars]`
+
+### 🧑 User — 2026-11-15T19:30:17.130Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+

@@ -91,6 +91,8 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
   // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+  /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
+  const qaNoRibbonWake = qaHide.includes('ribbonWake');
   let focus = 0;
   let curTime = 0;
   const tmpV = new THREE.Vector3();
@@ -178,7 +180,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       const above = d.dot(f.up) - surfaceHeight(s, lateral, curTime);
       const waterlineR = Math.sqrt(Math.max(BENNY_OUTER_R * BENNY_OUTER_R - above * above, (0.35 * BENNY_OUTER_R) ** 2));
       const strength = Math.min(1, speed / 8);
-      if (s >= ribbonS0 && whirlBlend(s) < 0.5) {
+      if (s >= ribbonS0 && whirlBlend(s) < 0.5 && !qaNoRibbonWake) {
         (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);
         ribbon.uniforms.uBennyR.value = waterlineR;
       }

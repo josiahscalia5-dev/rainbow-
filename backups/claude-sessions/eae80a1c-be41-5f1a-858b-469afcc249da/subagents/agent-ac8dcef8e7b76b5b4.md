@@ -1068,3 +1068,284 @@ Also update the doc comment at the top of index.ts so the contract is clear, the
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -20; timeout 900 node /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/cap.mjs qa/pilot05/foam/iso/fix1 05 \"\" 2>&1 | tail -2", "description": "Typecheck and capture 05 after the anchor fix", "timeout": 920000}`
 
+### 🧑 User — 2026-11-15T19:25:25.624Z
+
+> ↩︎ result: qa/pilot05/foam/iso/fix1/05_base.png {"st":{"mode":"ride","stage":"05","s":127.389,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.182,"bennyVisible":true,"cam":[3.24,-37.64,-63.48]},"b":{"x":0.06,"y":-0.46,"z":0.985,"visible":true,"cam":[3.24,-37.64,-63.48],"benny":[3.37,-41.18,-69.62]},"calls":112}
+
+### 🤖 Claude — 2026-11-15T19:25:28.438Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 $S/crops.py $S/fix1.png 0 900 864 1536 0.62 BEFORE=qa/pilot05/foam/iso/base/05.png FIX1=qa/pilot05/foam/iso/fix1/05_base.png", "description": "Compare bottom before vs after the anchor fix"}`
+
+### 🧑 User — 2026-11-15T19:25:28.859Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/fix1.png (1090, 428)
+
+### 🤖 Claude — 2026-11-15T19:25:30.216Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/fix1.png"}`
+
+### 🧑 User — 2026-11-15T19:25:30.285Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:25:39.093Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "      if (s >= ribbonS0 && whirlBlend(s) < 0.5) {\n        (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);", "new_string": "      if (s >= ribbonS0 && whirlBlend(s) < 0.5 && !qaNoRibbonWake) {\n        (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);"}`
+
+### 🧑 User — 2026-11-15T19:25:39.129Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:25:41.209Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];", "new_string": "  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];\n  /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */\n  const qaNoRibbonWake = qaHide.includes('ribbonWake');"}`
+
+### 🧑 User — 2026-11-15T19:25:41.266Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:25:45.793Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/cap.mjs qa/pilot05/foam/iso/fix1 05 \"waterhide=ribbonWake\" \"waterhide=ribbonWake,crown,spray,bubbles,foam\" 2>&1 | tail -2 && S=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 $S/crops.py $S/fix1b.png 0 900 864 1536 0.5 FIX1=qa/pilot05/foam/iso/fix1/05_base.png NO_RIBBON_WAKE=qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake.png RIBBON_ONLY=qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake,crown,spray,bubbles,foam.png", "description": "Ca …[+63 chars]`
+
+### 🧑 User — 2026-11-15T19:26:27.174Z
+
+> ↩︎ result: qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake.png {"st":{"mode":"ride","stage":"05","s":127.389,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.182,"bennyVisible":true,"cam":[3.24,-37.64,-63.48]},"b":{"x":0.06,"y":-0.46,"z":0.985,"visible":true,"cam":[3.24,-37.64,-63.48],"benny":[3.37,-41.18,-69.62]},"calls":112}
+> qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake,crown,spray,bubbles,foam.png {"st":{"mode":"ride","stage":"05","s":127.389,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.182,"bennyVisible":true,"cam":[3.24,-37.64,-63.48]},"b":{"x":0.06,"y":-0.46,"z":0.985,"visible":true,"cam":[3.24,-37.64,-63.48],"benny":[3.37,-41.18,-69.62]},"calls":103}
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/fix1b.png (1320, 352)
+
+### 🤖 Claude — 2026-11-15T19:26:28.452Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/fix1b.png"}`
+
+### 🧑 User — 2026-11-15T19:26:28.472Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:27:10.720Z
+
+> 🔧 **Bash** `{"command": "git diff 81e639e f2a86ab -- src/vfx/waterRibbon.ts | grep -n \"Benny\\|wakeV\\|lace\\|tendril\\|contact\\|rings\\|foamK\\|uBennyR\" ", "description": "Show wave-1 diff lines in the ribbon Benny block"}`
+
+### 🧑 User — 2026-11-15T19:27:10.772Z
+
+> ↩︎ result: 17: uniform vec3 uBenny;      // s, lateral (units), strength
+> 18:+uniform float uBennyR;    // Benny's waterline radius (units)
+> 195:+  // ---- soap-foam lace where the water meets the foam banks ----
+> 209:-  // Benny: ripple rings around him + V wake behind
+> 210:+  // ---- Benny: churned contact foam, lace splash fans to both sides + V wake behind ----
+> 211:   if (uBenny.z > 0.0) {
+> 212:-    float du = u * vHalfW - uBenny.y;
+> 213:+    float du = lat - uBenny.y;
+> 214:     float dv = s - uBenny.x;
+> 216:-    float rings = smoothstep(0.55, 1.0, 0.5 + 0.5 * sin(d * 5.5 - uTime * 9.0)) * exp(-d * 0.7) * smoothstep(0.75, 1.05, d);
+> 218:-    float wakeV = exp(-abs(abs(du) - back * 0.42 - 0.7) * 3.5) * exp(-back * 0.16) * step(dv, 0.0);
+> 219:-    col = mix(col, uFoam, clamp((rings * 0.75 + wakeV * 0.85) * uBenny.z, 0.0, 1.0));
+> 220:+    float rb = uBennyR;
+> 223:+      float k = uBenny.z;
+> 226:+      // contact ring of churned white water hugging the body
+> 227:+      // soap-lace network (white along cell borders, water shows through the cells)
+> 228:+      float lace = smoothstep(0.3, 0.46, cells(vec2(du * 5.5, (dv + uTime * vSpeed * 0.25) * 5.5)));
+> 229:+      float contact = (1.0 - smoothstep(rb * 0.12,  …[+802 chars]
+
+### 🤖 Claude — 2026-11-15T19:27:20.110Z
+
+> 🔧 **Bash** `{"command": "git status --short && git diff --stat && cat qa/pilot05/REQUESTS.md 2>/dev/null; ls -la qa/pilot05/water qa/pilot05/qa", "description": "Check working tree changes and pending requests"}`
+
+### 🧑 User — 2026-11-15T19:27:20.213Z
+
+> ↩︎ result: M backups/BACKUP_LOG.md
+>  M backups/BACKUP_STATUS.json
+>  M src/vfx/index.ts
+>  M src/vfx/waterRibbon.ts
+> ?? qa/aspect/
+> ?? qa/pilot05/foam/iso/fix1/
+> ?? scripts/.tmp_wem_probe2.ts
+>  backups/BACKUP_LOG.md      |   1 +
+>  backups/BACKUP_STATUS.json |  14 ++---
+>  src/vfx/index.ts           |   4 +-
+>  src/vfx/waterRibbon.ts     | 153 +++++++++++++++++++++++++++++----------------
+>  4 files changed, 109 insertions(+), 63 deletions(-)
+> qa/pilot05/qa:
+> total 8
+> drwxr-xr-x 2 root root 4096 Nov 15 19:17 .
+> drwxr-xr-x 8 root root 4096 Nov 15 19:17 ..
+> 
+> qa/pilot05/water:
+> total 20
+> drwxr-xr-x 5 root root 4096 Nov 15 19:27 .
+> drwxr-xr-x 8 root root 4096 Nov 15 19:17 ..
+> drwxr-xr-x 2 root root 4096 Nov 15 19:22 before
+> drwxr-xr-x 2 root root 4096 Nov 15 19:23 before_iso
+> drwxr-xr-x 2 root root 4096 Nov 15 19:27 it1
+
+### 🤖 Claude — 2026-11-15T19:27:23.647Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -3 && grep -n \"wakeAnchor\" src/game/Game.ts && git diff src/vfx/waterRibbon.ts | grep -n \"^[-+].*\\(Benny\\|wakeV\\|lace\\|tendril\\|contact\\|foamK\\)\" | head -30", "description": "Confirm my Game.ts edit persists and check water specialist's ribbon edits"}`
+
+### 🧑 User — 2026-11-15T19:27:23.734Z
+
+> ↩︎ result: d703812 autosave: Rainbow 2026-11-15 19:25 UTC
+> 47bdf36 autosave: Rainbow 2026-11-15 19:20 UTC
+> 4f33276 autosave: Rainbow 2026-11-15 19:15 UTC
+> 162:  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+> 366:    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
+> 72:+  // Benny parts the bands like a bow wave and, where the stage asks for it (vStyle.x, ref 05), they
+> 76:+    float db = s - uBenny.x;
+> 164:-  // ---- Benny: churned contact foam, lace splash fans to both sides + V wake behind ----
+> 165:+  // ---- Benny: thin churned waterline ring, ripple rings and a V wake on the surface ----
+> 167:+  // around and behind him stays glossy electric cyan as in ref 05, not a sheet of white lace)
+> 178:-      // contact ring of churned white water hugging the body
+> 179:-      // soap-lace network (white along cell borders, water shows through the cells)
+> 180:-      float lace = smoothstep(0.3, 0.46, cells(vec2(du * 5.5, (dv + uTime * vSpeed * 0.25) * 5.5)));
+> 181:-      float contact = (1.0 - smoothstep(rb * 0.12, rb * 0.4, rr)) * (0.4 + 0.6 * lace);
+> 182:-      // radiating lace tendrils fanning sideways/ …[+965 chars]
+
+### 🤖 Claude — 2026-11-15T19:27:28.403Z
+
+> 🔧 **Bash** `{"command": "grep -n \"Benny: thin churned\" -A40 src/vfx/waterRibbon.ts | head -50; grep -n \"db = s - uBenny.x\" -B6 -A16 src/vfx/waterRibbon.ts | head -30", "description": "Read the water specialist's in-progress Benny block"}`
+
+### 🧑 User — 2026-11-15T19:27:28.492Z
+
+> ↩︎ result: 337:  // ---- Benny: thin churned waterline ring, ripple rings and a V wake on the surface ----
+> 338-  // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water
+> 339-  // around and behind him stays glossy electric cyan as in ref 05, not a sheet of white lace)
+> 340-  if (uBenny.z > 0.0) {
+> 341-    float du = lat - uBenny.y;
+> 342-    float dv = s - uBenny.x;
+> 343-    float rb = uBennyR;
+> 344-    float d = length(vec2(du, dv));
+> 345-    if (d < rb * 8.0) {
+> 346-      float k = uBenny.z;
+> 347-      float rr = max(0.0, d - rb * 0.92);
+> 348-      float contact = 0.0;
+> 349-      if (rr < rb * 0.25) {
+> 350-        float lace = smoothstep(0.3, 0.46, cells(vec2(du * 6.0, (dv + uTime * vSpeed * 0.25) * 6.0)));
+> 351-        contact = (1.0 - smoothstep(rb * 0.05, rb * 0.22, rr)) * (0.55 + 0.45 * lace);
+> 352-      }
+> 353-      float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothstep(rb, rb * 1.3, d);
+> 354-      float back = max(-dv, 0.0);
+> 355-      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 0.95) * 6.0) * exp(-back * 0.18) * step(dv, 0.0);
+> 356-      col = mix(col, uFoam * 1.2, clamp(contact * k, 0.0, 1.0));
+> 357-      c …[+2368 chars]
+
+### 🤖 Claude — 2026-11-15T19:28:51.381Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/stages.ts <<'EOF'\nimport { Course } from '/home/user/rainbow-/src/world/course';\nconst c = new Course();\nconsole.log('length', c.length.toFixed(1));\nfor (const id of ['03','04','05','06','07','08','09','10','11'] as const) {\n  const st = c.stage(id);\n  const sm = (st.s0 + st.s1) / 2;\n  console.log(id, 's0', st.s0.toFixed(1), 's1', st.s1.toFixed(1), 'width', c.widthAt(sm).toFixed(2), 'tube', c.prop(sm, 'tube'), 'speed', c.prop(sm, 'speed'));\n}\nEOF\nnpx vite-node /tmp/claude-0/-home-user …[+156 chars]`
+
+### 🧑 User — 2026-11-15T19:28:52.239Z
+
+> ↩︎ result: length 435.4
+> 03 s0 41.0 s1 70.4 width 7.00 tube 0 speed 9
+> 04 s0 70.4 s1 114.7 width 4.40 tube 4.8 speed 14
+> 05 s0 114.7 s1 189.1 width 9.00 tube 7.6 speed 11
+> 06 s0 189.1 s1 247.2 width 7.00 tube 15 speed 11
+> 07 s0 247.2 s1 389.4 width 5.60 tube 7.2 speed 12
+> 08 s0 389.4 s1 405.0 width 4.80 tube 0 speed 9.5
+> 09 s0 405.0 s1 420.2 width 6.40 tube 0 speed 9.5
+> 10 s0 420.2 s1 435.4 width 3.79 tube 0 speed 7.5
+> 11 s0 435.4 s1 435.4 width 2.30 tube 0 speed 5
+
+### 🤖 Claude — 2026-11-15T19:28:55.341Z
+
+> 🔧 **Bash** `{"command": "grep -n \"prop(\" src/world/course.ts | head -5 && grep -n \"STAGE_CAM\" -A16 src/game/cameraRig.ts | grep -n \"'05'\\|fov\\|vfov\" | head", "description": "Check course.prop signature and the 05 camera fov"}`
+
+### 🧑 User — 2026-11-15T19:28:55.377Z
+
+> ↩︎ result: 396:   * Accepts either argument order: prop(s, 'width') or prop('width', s).
+> 398:  prop(s: number, key: StageProp, blend?: number): number;
+> 399:  prop(key: StageProp, s: number, blend?: number): number;
+> 400:  prop(a: number | StageProp, b: number | StageProp, blend = 6): number {
+> 414:    const base = this.prop(s, 'width');
+> 2:22-  '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+> 3:23-  '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+> 6:26-  '05': { back: 6.1, up: 3.7, ahead: 18, lookUp: -1.5, fov: 62, latFollow: 0.92, roll: 0 },
+> 7:27-  '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
+> 8:28-  '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
+> 9:29-  '08': { back: 6.2, up: 3.7, ahead: 16, lookUp: 0.2, fov: 62, latFollow: 0.8, roll: 0.3 },
+> 10:30-  '09': { back: 6.2, up: 3.7, ahead: 15, lookUp: 0.6, fov: 62, latFollow: 0.8, roll: 0.3 },
+> 11:31-  '10': { back: 5.8, up: 3.4, ahead: 11, lookUp: 1.2, fov: 62, latFollow: 0.8, roll: 0.2 },
+> 14:34-const KEYS: (keyof CamParams)[] = ['back', 'up', 'ahead', 'lookUp', 'fov', 'latFollow', ' …[+110 chars]
+
+### 🤖 Claude — 2026-11-15T19:28:58.516Z
+
+05 has a 9-unit stream (hw 4.5) inside a 7.6-radius tube, camera fov 62. First the FYI for the water specialist in REQUESTS.md (append only).
+
+### 🤖 Claude — 2026-11-15T19:29:02.023Z
+
+> 🔧 **Bash** `{"command": "test -f qa/pilot05/REQUESTS.md && tail -5 qa/pilot05/REQUESTS.md; printf '%s\\n' \"- foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 \\`water.wake()\\` receives Benny's LIFTED body centre (Game.ts) and feeds \\`uBennyR\\` = the true waterline chord sqrt(0.86² − h²) ≈ 0.44 at the default 0.3 ride lift (it was 0.67, derived from the unlifted root, which made the contact band ~2× too wide). The bottom-of-frame white haze + blue dot field in 05/03 was the old \\`wakeV\\`/\\`tendrils\\` × \\`lace\\` term; your in-progress rewrite (no lace in wakeV) rem …[+237 chars]`
+
+### 🧑 User — 2026-11-15T19:29:02.071Z
+
+> ↩︎ result: - foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord sqrt(0.86² − h²) ≈ 0.44 at the default 0.3 ride lift (it was 0.67, derived from the unlifted root, which made the contact band ~2× too wide). The bottom-of-frame white haze + blue dot field in 05/03 was the old `wakeV`/`tendrils` × `lace` term; your in-progress rewrite (no lace in wakeV) removes it. Splash fan / crown / spray / foam stay in riderSplash.ts, spray.ts, foam.ts as your comment says.
+
+### 🤖 Claude — 2026-11-15T19:29:02.933Z
+
+Now a close look at reference bubbles and foam puffs to match their shading.
+
+### 🤖 Claude — 2026-11-15T19:29:05.828Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 $S/crops.py $S/ref_zoom.png 0 1080 300 1380 1.3 REF_left_bottom=references/05_flow_into_the_current.png && python3 $S/crops.py $S/ref_zoom2.png 580 1050 864 1350 1.3 REF_right_bottom=references/05_flow_into_the_current.png", "description": "Zoom on reference bubbles and foam at the bottom corners"}`
+
+### 🧑 User — 2026-11-15T19:29:06.185Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/ref_zoom.png (402, 424)
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/ref_zoom2.png (381, 424)
+
+### 🤖 Claude — 2026-11-15T19:29:07.761Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/ref_zoom.png"}`
+
+### 🧑 User — 2026-11-15T19:29:07.776Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:29:08.187Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/ref_zoom2.png"}`
+
+### 🧑 User — 2026-11-15T19:29:08.207Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:29:24.825Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/glsl.ts"}`
+
+### 🧑 User — 2026-11-15T19:29:24.852Z
+
+> ↩︎ result: 1	/** Shared GLSL snippets for Rainbow water/foam/bubble shaders (WebGL2, mobile-safe). */
+> 2	import * as THREE from 'three';
+> 3	
+> 4	export const NOISE_GLSL = /* glsl */ `
+> 5	float hash12(vec2 p) {
+> 6	  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+> 7	  p3 += dot(p3, p3.yzx + 33.33);
+> 8	  return fract((p3.x + p3.y) * p3.z);
+> 9	}
+> 10	float vnoise(vec2 p) {
+> 11	  vec2 i = floor(p);
+> 12	  vec2 f = fract(p);
+> 13	  vec2 u = f * f * (3.0 - 2.0 * f);
+> 14	  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15	             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 16	}
+> 17	float fbm3(vec2 p) {
+> 18	  float a = 0.5, s = 0.0;
+> 19	  for (int i = 0; i < 3; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(17.1, 9.2); a *= 0.5; }
+> 20	  return s;
+> 21	}
+> 22	// cheap cellular "soap foam" pattern: 0 at cell centres -> 1 at borders
+> 23	float cells(vec2 p) {
+> 24	  vec2 i = floor(p);
+> 25	  vec2 f = fract(p);
+> 26	  float md = 8.0;
+> 27	  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+> 28	    vec2 g = vec2(float(x), float(y));
+> 29	    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 30	    vec2 r = g + o - f;
+> 31	    md = min(md, dot(r, r));
+> 32	  }
+> 33	  return sqrt(md);
+> 34	}
+> 35	vec3 ir …[+3176 chars]
+

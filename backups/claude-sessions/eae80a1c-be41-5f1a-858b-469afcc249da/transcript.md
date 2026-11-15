@@ -2590,3 +2590,80 @@ The default portrait test clip is a solid colour, which would read as "flat" eve
 
 > 🔧 **Bash** `{"command": "which ffmpeg && npx tsc --noEmit 2>&1 | grep -E \"cinematicVideo|error\" | head -5; echo \"tsc done\"; timeout 500 node scripts/cinematic-test.mjs 2>&1 | tail -3", "description": "Typecheck and run extended cinematic test", "timeout": 600000}`
 
+### 🧑 User — 2026-11-15T19:27:52.658Z
+
+> ↩︎ result: /usr/bin/ffmpeg
+> tsc done
+> {"pass":true,"withVideo":true,"withoutVideo":true,"fit":{"portrait":{"fit":"cover","keep":0.8,"expect":"cover","edgeRowStd":{"top":161.63075878570967,"bottom":116.46249442296991},"pass":true},"landscape":{"fit":"fill","keep":0.253,"expect":"fill","edgeRowStd":{"top":86.80196011447734,"bottom":85.90027235245107},"pass":true}},"errors":[]}
+
+### 🤖 Claude — 2026-11-15T19:27:57.454Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/triptych.py /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots/flowfit.png 640 \"9:16 clip on 20:9 (cover)=qa/aspect/flow_video_portrait_412x915.png\" \"16:9 clip on 20:9 (fill)=qa/aspect/flow_video_landscape_412x915.png\"", "description": "Combine video fit screenshots"}`
+
+### 🧑 User — 2026-11-15T19:27:57.821Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots/flowfit.png (600, 682)
+
+### 🤖 Claude — 2026-11-15T19:27:59.110Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/shots/flowfit.png"}`
+
+### 🧑 User — 2026-11-15T19:27:59.167Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:28:01.615Z
+
+Both fit modes work: no bars, no stretching, and the whole frame stays visible for landscape clips. I'll update the Flow guide and create the drop-in folder for your MP4.
+
+### 🤖 Claude — 2026-11-15T19:28:09.216Z
+
+> 🔧 **Bash** `{"command": "mkdir -p public/video && printf 'Drop the Google Flow clips here: intro.mp4 (required for the video opening) and ending.mp4 (optional).\\nSee docs/FLOW_VIDEO.md. Files are stored with Git LFS.\\n' > public/video/PUT_FLOW_VIDEOS_HERE.txt && grep -n \"mp4\" .gitattributes && python3 - <<'EOF'\np='docs/FLOW_VIDEO.md'\ns=open(p).read()\ns=s.replace(\"\"\"* Portrait 9:16 (1080×1920 or 720×1280). Landscape clips are letterboxed, not cropped.\"\"\",\n\"\"\"* Portrait 9:16 (1080×1920 or 720×1280) is best. Any ratio works edge to edge with no black bars and no stretching\n  (`chooseVideoFi …[+1425 chars]`
+
+### 🧑 User — 2026-11-15T19:28:09.300Z
+
+> ↩︎ result: 10:*.mp4   filter=lfs diff=lfs merge=lfs -text
+> 4:game without a cut. Gameplay (03–10) is always real-time 3D; the videos only cover the cinematics.
+> 20:  * **cover**: the clip is cropped to the phone when at least 78% of it stays visible. A 9:16 clip keeps 80% of its
+> 23:  * **fill**: if cropping would lose more (a 16:9 landscape Flow export, or a 9:16 clip on a 21:9 phone), the whole
+> 24:    clip is shown over a soft blurred fill made from the same video frames instead of black bars.
+> 32:## Status (2026-11-15, account 3)
+> 45:  The test also checks edge-to-edge fit on a 20:9 phone (portrait clip → cover, landscape clip → blurred fill,
+
+### 🤖 Claude — 2026-11-15T19:28:22.972Z
+
+> 🔧 **Bash** `{"command": "cd /home/user && time bash rainbow-/scripts/cloud-env-setup.sh 2>&1 | tail -5; echo \"exit=$?\"; ls /opt/android-sdk/platforms /opt/android-sdk/build-tools; blender --version | head -1; claude plugin list 2>&1 | grep -A2 worldlabs | head -3", "description": "Run saved cloud setup script from checkout parent", "timeout": 900000}`
+
+### 🧑 User — 2026-11-15T19:28:29.230Z
+
+> ↩︎ result: real	0m5.340s
+> user	0m8.557s
+> sys	0m0.670s
+> exit=0
+> /opt/android-sdk/build-tools:
+> 34.0.0
+> 
+> /opt/android-sdk/platforms:
+> android-34
+> Blender 5.3.0
+>   > worldlabs@worldlabs
+>     Version: 0.2.2
+>     Scope: user
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T19:28:32.020Z
+
+The setup script runs cleanly from the parent folder (earlier this session the same steps installed everything from scratch). Re-checking the environment right before proposing:
+
+### 🤖 Claude — 2026-11-15T19:28:32.067Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🧑 User — 2026-11-15T19:28:32.509Z
+
+> ↩︎ result: {"environment_id":"env_01BXqU5xg4mEAG9brMLzVNqf","name":"Default","description":"","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":false,"setup_script":"","network_secrets":[],"is_current":true,"editable_by_you":true,"session_has_repository":true,"note":"Edits made with update_environment change the stored environment; see that tool for when each kind of change takes effect. `setup_script` is returned only for an environment you can edit (`setup_script_withheld` / `description_withheld` mean the organization's compliance settings keep the stored text out of this tool — they refuse a `setup_script`, `new_name` or `new_description` edit too — or that this could not be checked right now, in which case calling again may return it). `other_cloud_environments` lists the user's other cloud environments (`other_cloud_environments_not_shown` counts any left out; the field is absent when they could not be read). create_environment refuses a name already in use, and only after the user has approved, so never propose a new environment under  …[+359 chars]
+
+### 🤖 Claude — 2026-11-15T19:28:52.530Z
+
+> 🔧 **mcp__claude-code-remote__create_environment** `{"name": "rainbow-", "scope": "personal", "reason": "Rainbow game sessions start with Android SDK 34, Blender 5.3 and LFS assets ready.", "switch_session": "none", "repositories": ["josiahscalia5-dev/rainbow-"], "allow_package_managers": true, "allow_mcp_servers": true, "allowed_hosts": ["dl.google.com", "maven.google.com", "download.blender.org", "services.gradle.org", "downloads.gradle.org", "plugins.gradle.org", "repo.maven.apache.org", "github.com", "raw.githubusercontent.com", "objects.githubusercontent.com", "docs.worldlabs.ai", "atlas.worldlabs.ai"], "setup_script": "#!/usr/bin/env bash …[+1869 chars]`
+

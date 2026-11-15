@@ -862,3 +862,160 @@ Baseline captured. Now I'll add a measurement mode to my benny-lab (chroma backg
 > == references/09_ride_the_final_wave.png 425 830 1300
 > P830-850 h851-851 .852-852 W853-864 h865-865 .866-868 h869-869 .870-872 P873-992 h993-993 .994-997 W998-10 …[+825 chars]
 
+### 🤖 Claude — 2026-11-15T19:25:30.229Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && timeout 600 node $SP/lab.mjs $SP/m_before_build.png \"src=build&views=measure\" $SP/m_before_glb.png \"src=glb&views=measure\" 2>&1 | tail -3 && python3 $SP/measure.py lab $SP/m_before_build.png 4 && python3 $SP/measure.py lab $SP/m_before_glb.png 4 && for i in 0 3; do python3 $SP/runs.py $SP/m_before_build.png $((216+432*i)) 0 768; done", "description": "Render measure views and compute proportions", "timeout": 600000}`
+
+### 🧑 User — 2026-11-15T19:26:17.153Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/m_before_build.png {"baseTriangles":13988,"furQuality":"high"} no console errors
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/m_before_glb.png {"baseTriangles":13988,"furQuality":"high"} no console errors
+> panel0     cx=215 top=109 cuffBottom=385 bottom=538 visibleH=429 hat=64.3% body=35.7% cuffW=273 bodyW=397 fur=#BB48A9 cuff=#4F19EB star=(282, 288, 352, 381) #F39558
+> panel1     cx=647 top=112 cuffBottom=401 bottom=538 visibleH=426 hat=67.8% body=32.2% cuffW=228 bodyW=398 fur=#BE4DAC cuff=#4E19EB star=(719, 304, 785, 397) #F4A345
+> panel2     cx=1079 top=118 cuffBottom=416 bottom=539 visibleH=421 hat=70.8% body=29.2% cuffW=215 bodyW=393 fur=#C250AD cuff=#4E1CEB star=(1152, 322, 1216, 414) #EDA637
+> panel3     cx=1510 top=125 cuffBottom=426 bottom=538 visibleH=413 hat=72.9% body=27.1% cuffW=183 bodyW=382 fur=#C553AF cuff=#4E1CEB star=(1588, 334, 1649, 424) #FAC567
+> panel0     cx=215 top=109 cuffBottom=385 bottom=538 visibleH=429 hat=64.3% body=35.7% cuffW=273 bodyW=397 fur=#BB48A9 cuff=#4F1BEB star=(282, 288, 352, 381) #F39558
+> panel1     cx=647 top=112 cuffBottom=401 bott …[+640 chars]
+
+### 🤖 Claude — 2026-11-15T19:26:59.985Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && cat > $SP/widths.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsys.path.insert(0, sys.argv[0].rsplit('/',1)[0])\nfrom measure import classes\npath, cx = sys.argv[1], int(sys.argv[2])\na = np.asarray(Image.open(path).convert('RGB'))\ng, w, p, f, s = classes(a)\nfor y in map(int, sys.argv[3:]):\n    def run(mask):\n        # contiguous run around cx allowing gaps <= 8\n        xs = np.where(mask[y])[0]\n        if not len(xs): return None\n        L = R = cx\n        if not mask[y,  …[+794 chars]`
+
+### 🧑 User — 2026-11-15T19:27:01.697Z
+
+> ↩︎ result: ref05
+> 850 hat (356, 506, 151) fur (np.int64(469), np.int64(469), np.int64(1)) purple (360, 493, 134)
+> 1000 hat (249, 726, 478) fur (np.int64(289), np.int64(289), np.int64(1)) purple (291, 726, 436)
+> 1015 hat (326, 538, 213) fur (np.int64(292), np.int64(317), np.int64(26)) purple (326, 538, 213)
+> 1060 hat (np.int64(447), np.int64(447), np.int64(1)) fur (297, 606, 310) purple (np.int64(607), np.int64(642), np.int64(36))
+> 1100 hat (np.int64(289), np.int64(289), np.int64(1)) fur (281, 559, 279) purple (np.int64(561), np.int64(561), np.int64(1))
+> 1130 hat (np.int64(539), np.int64(579), np.int64(41)) fur (293, 535, 243) purple (np.int64(539), np.int64(557), np.int64(19))
+> ref07
+> 870 hat (207, 536, 330) fur (np.int64(396), np.int64(396), np.int64(1)) purple (359, 536, 178)
+> 1030 hat (0, 643, 644) fur (np.int64(352), np.int64(352), np.int64(1)) purple (283, 636, 354)
+> 1045 hat (333, 555, 223) fur (np.int64(280), np.int64(314), np.int64(35)) purple (333, 555, 223)
+> 1090 hat (np.int64(295), np.int64(315), np.int64(21)) fur (216, 635, 420) purple (np.int64(642), np.int64(667), np.int64(26))
+> 1130 hat (np.int64(568), np.int64(613), np.int64(46)) fur (270, 562, 293) purple (np.int64(568), np.int64(609), n …[+1538 chars]
+
+### 🤖 Claude — 2026-11-15T19:27:18.607Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 $SP/widths.py qa/pilot05/benny/before/05.png 465 830 850 870 1060 1150 && python3 -c \"\nfrom PIL import Image\nim=Image.open('qa/pilot05/benny/before/05.png').convert('RGB')\nim.crop((250,760,700,1260)).save('$SP/live05_before_benny.png')\"", "description": "Measure live pom and cuff widths, crop live Benny"}`
+
+### 🧑 User — 2026-11-15T19:27:19.368Z
+
+> ↩︎ result: 830 hat (405, 540, 136) fur (np.int64(536), np.int64(689), np.int64(154)) purple (405, 540, 136)
+> 850 hat (375, 542, 168) fur (np.int64(388), np.int64(393), np.int64(6)) purple (395, 542, 148)
+> 870 hat (390, 631, 242) fur (np.int64(392), np.int64(404), np.int64(13)) purple (390, 544, 155)
+> 1060 hat (354, 569, 216) fur (np.int64(556), np.int64(639), np.int64(84)) purple (354, 555, 202)
+> 1150 hat (np.int64(314), np.int64(331), np.int64(18)) fur (329, 602, 274) purple (np.int64(268), np.int64(292), np.int64(25))
+
+### 🤖 Claude — 2026-11-15T19:27:21.115Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/live05_before_benny.png"}`
+
+### 🧑 User — 2026-11-15T19:27:21.136Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:27:45.981Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 -c \"\nfrom PIL import Image\nim=Image.open('references/03_whirlpool_twirl.png').convert('RGB'); print(im.size)\nim.crop((0,700,727,1536)).resize((436,502)).save('$SP/ref03_low.png')\nim=Image.open('references/01_inside_washer_girl_and_towel.png').convert('RGB'); print(im.size)\nim.resize((432,768)).save('$SP/ref01_small.png')\nim=Image.open('references/11_safely_home_final_victory.png').convert('RGB'); print(im.size)\n\"", "description": "Prepare reduced crops of refs 03 and 01"}`
+
+### 🧑 User — 2026-11-15T19:27:46.354Z
+
+> ↩︎ result: (727, 1536)
+> (864, 1536)
+> (864, 1536)
+
+### 🤖 Claude — 2026-11-15T19:27:48.330Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/ref03_low.png"}`
+
+### 🧑 User — 2026-11-15T19:27:48.358Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:27:52.478Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 scripts/triptych.py $SP/before_sheet.png 760 01=qa/pilot05/benny/before/01.png 02=qa/pilot05/benny/before/02.png 10=qa/pilot05/benny/before/10.png 11=qa/pilot05/benny/before/11.png", "description": "Contact sheet of baseline 01 02 10 11"}`
+
+### 🧑 User — 2026-11-15T19:27:53.219Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/before_sheet.png (1752, 802)
+
+### 🤖 Claude — 2026-11-15T19:27:54.674Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/before_sheet.png"}`
+
+### 🧑 User — 2026-11-15T19:27:54.744Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:29:32.358Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"BENNY_COLORS\\|BENNY_DIMS\\|characters/benny\" src tools scripts --include=*.ts --include=*.mjs | grep -v \"^src/characters/benny/\" ; grep -n \"uv\\b\\|uv\\.\" src/characters/benny/build.ts | head", "description": "Find external uses of Benny constants"}`
+
+### 🧑 User — 2026-11-15T19:29:32.406Z
+
+> ↩︎ result: src/vfx/index.ts:29:/** Benny's outer (fur) radius near the waterline: skin 0.7 + fur 0.12 + lower-body bulge (benny/build.ts BENNY_DIMS) */
+> src/game/modules.ts:19:const bennyMods = import.meta.glob('../characters/benny/runtime.ts');
+> tools/model-lab.ts:22:  benny: async () => (await import('../src/characters/benny/build')).buildBenny(),
+> tools/model-lab.ts:64:    const { loadBenny } = await import('../src/characters/benny/runtime');
+> 70:  const uv = g.attributes.uv as THREE.BufferAttribute;
+> 71:  for (let i = 0; i < p.count; i++) uv.setXY(i, p.getX(i) / (2 * r) + 0.5, p.getY(i) / (2 * r) + 0.5);
+> 110:  const uv = g.attributes.uv as THREE.BufferAttribute;
+> 111:  for (let i = 0; i < p.count; i++) uv.setY(i, (p.getY(i) - v0) / (v1 - v0));
+
+### 🤖 Claude — 2026-11-15T19:29:33.752Z
+
+> 🔧 **Bash** `{"command": "sed -n 20,45p src/vfx/index.ts", "description": "Read the foam module's Benny radius assumption"}`
+
+### 🧑 User — 2026-11-15T19:29:33.788Z
+
+> ↩︎ result: import { createFinalWave } from './finalWave';
+> import { createPuddles } from './puddles';
+> import { createFoam } from './foam';
+> import { createBubbles } from './bubbles';
+> import { createSpray } from './spray';
+> import { createRiderSplash } from './riderSplash';
+> 
+> export { PALETTE } from './glsl';
+> export const BENNY_RIDE_OFFSET = 0.55;
+> /** Benny's outer (fur) radius near the waterline: skin 0.7 + fur 0.12 + lower-body bulge (benny/build.ts BENNY_DIMS) */
+> const BENNY_OUTER_R = 0.86;
+> 
+> export interface WaterControls {
+>   /** 02 tumble: spinning water shell on the Drum A wall (0..1) */
+>   drumSwirl: number;
+>   /** Drum A swell size: 0 calm (01) .. 1 spin cycle (02) */
+>   drumAgitation: number;
+>   /** 11 outro: stream drains away (0..1) and leftover puddles appear */
+>   outro: number;
+> }
+> 
+> export interface WaterSystem {
+>   group: THREE.Group;
+>   /** call every frame; focusS = Benny's arc-length (for pooling/LOD of bubbles & foam) */
+>   update(time: number, dt: number, focusS: number, camera: THREE.Camera): void;
+>   /** height of the animated water surface above the course centreline frame at (s, lateral) */
+
+### 🤖 Claude — 2026-11-15T19:29:38.255Z
+
+I'll keep the lower-body radius unchanged (the foam module hard-codes Benny's waterline radius 0.86), and widen the cuff instead. Now the texture changes.
+
+### 🤖 Claude — 2026-11-15T19:30:18.467Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/textures.ts", "old_string": "export const BENNY_COLORS = {\n  purple: '#6b2fe0',\n  purpleDark: '#4a1aa8',\n  purpleLight: '#9a63ff',\n  white: '#fffcff',\n  whiteShade: '#e2d9ec',\n  brim: '#6327d6',\n  brimDark: '#3f1597',\n  // hot plush pink of refs 02–10 (live median was brighter/bluer than the refs at ≈ 255/98/213 vs 245/79/180)\n  pinkRoot: '#e84a97',\n  pinkTip: '#ff86bf',\n  pinkSkin: '#ec5fa3',\n  pomRoot: '#5a1fc4',\n  pomTip: '#b07cff',\n  gold: '#ffd23a',\n};\n\n/**\n * Knit crown texture (u = around, v  …[+10299 chars]`
+
+### 🧑 User — 2026-11-15T19:30:18.515Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/textures.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:30:23.078Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/textures.ts", "old_string": "      for (let k = 0; k <= cols; k++) {\n        const cx = k * cw + (r % 2 ? 0 : 0) + cw / 2;\n        knitStitch(ctx, hctx, cx % W, y0 + r * rh + rh / 2, cw, rh, hi, base, shade);\n      }", "new_string": "      for (let k = 0; k < cols; k++) knitStitch(ctx, hctx, k * cw + cw / 2, y0 + r * rh + rh / 2, cw, rh, hi, base, shade);"}`
+
+### 🧑 User — 2026-11-15T19:30:23.116Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/textures.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+

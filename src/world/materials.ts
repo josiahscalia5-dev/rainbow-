@@ -24,6 +24,15 @@ export interface PerforatedOptions {
   side?: THREE.Side;
   /** bright stripe highlights running along v (tunnel light streaks) */
   streaks?: number;
+  /** number of procedural lengthwise streaks around u (default 9) */
+  streakCount?: number;
+  /**
+   * explicit slot half-size in CELL units [along u, along v] (overrides holeSize/slot); the cell is
+   * 1/repeatU of the circumference by 1/repeatV along the tube, so world proportions follow from both
+   */
+  slotHalf?: [number, number];
+  /** stagger every other slot row by half a cell (default true) */
+  stagger?: boolean;
   /**
    * Washer-tube upgrade (05–07): pressed-metal corrugation + bevelled slot lips perturb the normal so
    * the glossy metal catches light around every slot (refs 05–07). Height amplitudes in world units.
@@ -104,6 +113,9 @@ export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMa
     uRepeat: { value: new THREE.Vector2(o.repeatU ?? 64, o.repeatV ?? 1.2) },
     uHoleSize: { value: o.holeSize ?? 0.42 },
     uStreaks: { value: o.streaks ?? 0.35 },
+    uStreakN: { value: o.streakCount ?? 9 },
+    uSlotHalf: { value: new THREE.Vector2(o.slotHalf?.[0] ?? -1, o.slotHalf?.[1] ?? -1) },
+    uStagger: { value: o.stagger === false ? 0 : 0.5 },
     uRelief: { value: new THREE.Vector3(relief?.corrugation ?? 0, relief?.bevel ?? 0, relief?.bevelWidth ?? 0.09) },
     uRimColor: { value: new THREE.Color(o.rimColor ?? '#ffd1ff') },
     uRimStrength: { value: o.rimStrength ?? 0.55 },
@@ -125,19 +137,19 @@ export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMa
         `#include <common>
 varying vec2 vPerfUv;
 uniform vec3 uHoleColor; uniform float uSlot; uniform vec2 uRepeat; uniform float uHoleSize; uniform float uStreaks;
-uniform vec3 uRelief; uniform vec3 uRimColor; uniform float uRimStrength;
+uniform vec3 uRelief; uniform vec3 uRimColor; uniform float uRimStrength; uniform float uStreakN; uniform vec2 uSlotHalf; uniform float uStagger;
 #ifdef PERF_FARGLOW
 ${FAR_GLOW_PARS}
 #endif
 vec2 perfCell(vec2 uv){
   vec2 g = uv * uRepeat;
-  g.x += mod(floor(g.y), 2.0) * 0.5;   // staggered rows
+  g.x += mod(floor(g.y), 2.0) * uStagger;   // staggered rows
   return g;
 }
 // signed distance to the slot/hole (cell units, <0 inside)
 float perfSdf(vec2 g){
   vec2 f = fract(g) - 0.5;
-  vec2 hs = mix(vec2(uHoleSize*0.5), vec2(uHoleSize*0.62, uHoleSize*0.24), uSlot);
+  vec2 hs = uSlotHalf.x > 0.0 ? uSlotHalf : mix(vec2(uHoleSize*0.5), vec2(uHoleSize*0.62, uHoleSize*0.24), uSlot);
   vec2 q = abs(f) - hs + min(hs.x, hs.y);
   return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - min(hs.x, hs.y);
 }
@@ -162,7 +174,7 @@ float perfHeight(vec2 g){
         '#include <color_fragment>',
         `#include <color_fragment>
 float perfRim; float perfHole = perfMask(vPerfUv, perfRim);
-float streak = pow(0.5 + 0.5 * sin(vPerfUv.x * 6.2831 * 9.0 + 1.3), 18.0) * uStreaks;
+float streak = pow(0.5 + 0.5 * sin(vPerfUv.x * 6.2831 * uStreakN + 1.3), 18.0) * uStreaks;
 diffuseColor.rgb = mix(diffuseColor.rgb * (1.0 + streak), uHoleColor, perfHole);`,
       )
       .replace(
@@ -210,7 +222,7 @@ ${FAR_GLOW_APPLY('1.0 - perfHole')}
 #endif`,
       );
   };
-  mat.customProgramCacheKey = () => 'perf-v2' + (relief ? '-r' : '') + (o.farGlow ? '-g' : '');
+  mat.customProgramCacheKey = () => 'perf-v3' + (relief ? '-r' : '') + (o.farGlow ? '-g' : '');
   return mat;
 }
 
@@ -242,28 +254,32 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
       default: return dir.set(-a, -b, -1);
     }
   };
+  // STRIPS narrow strip lights run the full length of the tunnel at evenly spaced angles around it, so
+  // they converge at ±Z like meridians. A glossy wall at angle θ mirrors azimuth θ+π, so every strip
+  // becomes one lengthwise white-pink streak on the panels, and on every gold band one bright "marquee"
+  // spot (ref 05: ≈12–16 spots per visible half-ring → 28 strips).
+  const STRIPS = 28;
+  const pitch = (Math.PI * 2) / STRIPS;
+  const sigma2 = isGold ? 0.0011 : 0.0009;
+  const cBaseTop = isGold ? new THREE.Color(0.3, 0.1, 0.035) : new THREE.Color(0.2, 0.012, 0.15);
+  const cBaseLow = isGold ? new THREE.Color(0.13, 0.035, 0.03) : new THREE.Color(0.08, 0.02, 0.24);
   const radiance = (d: THREE.Vector3, out: THREE.Color) => {
     const ang = Math.atan2(d.y, d.x); // angle around the tunnel axis (Z)
     const up = d.y;
-    // base: deep hot magenta above, violet toward the floor (kept dark so the strips give contrast)
-    if (isGold) out.setRGB(0.5, 0.24, 0.12).lerp(new THREE.Color(0.2, 0.07, 0.1), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
-    else out.setRGB(0.4, 0.03, 0.3).lerp(new THREE.Color(0.16, 0.05, 0.5), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
-    // pink-white strip lights running along the tunnel at fixed angles around it (8, uneven strength)
-    for (let i = 0; i < 8; i++) {
-      const a0 = 0.2 + (i * Math.PI) / 4;
-      const dA = Math.abs(Math.atan2(Math.sin(ang - a0), Math.cos(ang - a0)));
-      // the strips run the whole length of the tunnel, so they converge at ±Z like meridians: rings and
-      // grazing walls pick them up as regularly spaced highlight spots/streaks (refs 05–07)
-      const k = Math.exp(-(dA * dA) / (isGold ? 0.0025 : 0.005)) * (isGold ? 1 : 1 - Math.abs(d.z) * 0.35) * (i % 2 ? 0.7 : 1.15);
-      if (isGold) { out.r += 7.0 * k; out.g += 5.6 * k; out.b += 3.6 * k; } else { out.r += 3.4 * k; out.g += 1.7 * k; out.b += 3.1 * k; }
-    }
-    // warm light at the very end of the tunnel (-Z), violet haze around it, softer pink glow behind (+Z)
+    // base: deep magenta above, violet toward the floor (dark, so the strips read as crisp streaks)
+    out.copy(cBaseTop).lerp(cBaseLow, THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
+    const t = (ang - 0.11) / pitch;
+    const i = Math.round(t);
+    const dA = (t - i) * pitch;
+    const k = Math.exp(-(dA * dA) / sigma2) * ((i & 1) ? 0.72 : 1.1) * (isGold ? 1 : 1 - Math.abs(d.z) * 0.3);
+    if (isGold) { out.r += 6.0 * k; out.g += 4.6 * k; out.b += 2.6 * k; } else { out.r += 3.0 * k; out.g += 1.8 * k; out.b += 2.9 * k; }
+    // warm yellow-white light at the very end of the tunnel (-Z), violet haze around it, faint pink behind (+Z)
     const ahead = Math.max(0, -d.z);
     const hot = Math.pow(ahead, 24), wide = Math.pow(ahead, 3);
-    out.r += 3.6 * hot; out.g += 2.9 * hot; out.b += 1.4 * hot;
-    if (isGold) { out.r += 0.6 * wide; out.g += 0.4 * wide; out.b += 0.15 * wide; } else { out.r += 0.18 * wide; out.g += 0.06 * wide; out.b += 0.5 * wide; }
+    out.r += 3.6 * hot; out.g += 3.1 * hot; out.b += 1.6 * hot;
+    if (isGold) { out.r += 0.45 * wide; out.g += 0.26 * wide; out.b += 0.08 * wide; } else { out.r += 0.12 * wide; out.g += 0.04 * wide; out.b += 0.36 * wide; }
     const back = Math.pow(Math.max(0, d.z), 4);
-    out.r += 0.9 * back; out.g += 0.25 * back; out.b += 0.8 * back;
+    out.r += 0.5 * back; out.g += 0.1 * back; out.b += 0.45 * back;
     return out;
   };
   for (let f = 0; f < 6; f++) {

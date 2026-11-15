@@ -30,7 +30,7 @@ export const EDGE_LIFT = 0.28;
  */
 const BAND_STYLE: Partial<Record<StageId, [number, number, number]>> = {
   '04': [0, 0.6, 0.19],
-  '05': [1, 0.46, 0.085],
+  '05': [1, 0.46, 0.13],
   '06': [0.4, 0.48, 0.1],
   '07': [0, 0.52, 0.13],
 };
@@ -60,7 +60,7 @@ function bandStyleAt(course: Course, s: number): [number, number, number] {
 const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
 const RIBBON_PAL = {
   cyanDeep: lin(0.0, 0.17, 0.8),
-  cyan: lin(0.0, 0.4, 1.18),
+  cyan: lin(0.0, 0.37, 1.15),
   cyanBright: lin(0.04, 0.95, 1.55),
   pinkDeep: lin(0.78, 0.02, 0.8),
   pink: lin(1.5, 0.02, 1.3),
@@ -137,6 +137,7 @@ uniform float uTime;
 uniform vec3 uCyanDeep;
 uniform vec3 uCyan;
 uniform vec3 uCyanBright;
+uniform vec3 uPinkDeep;
 uniform vec3 uPink;
 uniform vec3 uPinkLight;
 uniform vec3 uFoam;
@@ -152,18 +153,22 @@ varying float vHalfW;
 varying float vSpeed;
 varying float vSkirt;
 varying float vHide;
+varying vec3 vStyle;
 varying vec3 vPosW;
 varying vec3 vNormalW;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 ${FRAG_FX_GLSL}
 
-// Stationary channel shape (refs 05–07): u-centre of the electric-cyan core. It only drifts slowly
-// downstream at a constant rate (no shear between stage speeds); the strand texture below is what
-// is advected at the local stage speed.
-float meander(float s) {
-  float a = s - uTime * 0.9;
-  return 0.16 * sin(a * 0.24) + 0.07 * sin(a * 0.55 + 1.3) + 0.16 * (vnoise(vec2(a * 0.055, 4.7)) - 0.5);
+// Stationary channel shape (refs 05–07): lateral offset (units) of the electric-cyan core centre
+// relative to the course centreline. Two incommensurate sines + slow noise so the S-curves do not
+// visibly repeat; λ≈26 u differs from the course's own 05 geometry meander (λ≈36 u), so the two beat
+// rather than cancel. It only drifts slowly downstream (+s) at a constant rate (no shear between
+// stage speeds); the strand texture below is what is advected at the local stage speed.
+float meander(float s, float hw) {
+  float a = s - uTime * 0.7;
+  float m = 0.2 * sin(a * 0.24) + 0.08 * sin(a * 0.53 + 1.3) + 0.12 * (vnoise(vec2(a * 0.05, 4.7)) - 0.5);
+  return m * min(hw, 4.5);
 }
 
 // advected strand texture ("combed" glossy water lines parallel to the flow)
@@ -181,7 +186,7 @@ vec4 strands(float x, float v, vec2 aa) {
   c = mix(0.5, c, aa.y);
   float h = a * 0.5 + b * 0.32 + c * 0.18;
   h = smoothstep(0.18, 0.82, h);              // more contrast: deep azure troughs, bright crests
-  float line = smoothstep(0.72, 0.86, c) * aa.y + smoothstep(0.78, 0.9, b) * aa.x * 0.6;
+  float line = smoothstep(0.72, 0.86, c) * aa.y + smoothstep(0.7, 0.86, b) * aa.x * 0.85;
   return vec4(h, line, b, c);
 }
 
@@ -197,11 +202,11 @@ void main() {
     if (n < uOutro.x * 1.15) discard;
   }
 
-  // ---- channel layout: cyan core winding inside hot-pink side bands ----
-  float M = meander(s);
-  float q = u - M;
-  float x = q * vHalfW;                       // lateral units in the core's frame
-  float lat = u * vHalfW;                     // lateral units in the ribbon frame
+  // ---- channel layout: winding cyan core between two hot-pink S-bands, cyan again outside ----
+  float hw = vHalfW;
+  float lat = u * hw;                         // lateral units in the ribbon frame
+  float M = meander(s, hw);
+  float x = lat - M;                          // lateral units in the core's frame
 
   // detail fade with distance (cells per pixel), keeps far water from shimmering
   float fwx = fwidth(x);
@@ -221,15 +226,47 @@ void main() {
   float w0 = 1.0 - abs(1.0 - 2.0 * ph0);
   vec4 F = mix(strands(x, s - vSpeed * ph1 * 4.0 + 23.0, aa), strands(x, s - vSpeed * ph0 * 4.0, aa), w0);
 
-  float coreW = 0.6 + 0.08 * (vnoise(vec2(s * 0.1, 2.0)) - 0.5);
-  // interleave pink/cyan strands along the band boundary (follows the flow)
-  float aq = abs(q) + (F.z - 0.5) * 0.09 + (F.w - 0.5) * 0.05;
-  float pinkBand = smoothstep(coreW - 0.035, coreW + 0.035, aq);
-  // woven ribbons parallel to the flow: thin pink inside the cyan, thin cyan inside the pink
-  float weave = vnoise(vec2(s * 0.045, 9.0));
-  float pinkRib = (1.0 - smoothstep(0.012, 0.035, abs(aq - coreW * 0.58 - 0.05 * sin(s * 0.31)))) * smoothstep(0.42, 0.62, weave);
-  float cyanRib = (1.0 - smoothstep(0.01, 0.03, abs(aq - coreW - 0.16 - 0.03 * sin(s * 0.4 + 2.0)))) * smoothstep(0.45, 0.65, 1.0 - weave);
-  float pinkM = clamp(max(pinkBand, pinkRib) - cyanRib * pinkBand, 0.0, 1.0);
+  // Benny parts the bands like a bow wave (vStyle.x, ref 05): just ahead of him they narrow and
+  // swing outward, so the water at and behind him (the near field) is pure cyan; behind him they
+  // continue only as thin streaks pushed out toward the foam banks
+  float gate = 1.0, part = 0.0;
+  if (vStyle.x > 0.0) {
+    float db = s - uBenny.x;
+    gate = mix(1.0, 0.4 + 0.6 * smoothstep(0.0, 4.5, db), vStyle.x);
+    part = vStyle.x * hw * (0.3 - 0.3 * smoothstep(-1.0, 9.0, db));
+  }
+  float hwc = min(hw, 4.5);
+  float aaw = fwidth(lat) * 0.85 + 0.01;      // ≈1 px edges: no lavender cyan/pink blend zone
+  // flowing, combed band edges (the advected strand texture), scaled down on narrow streams
+  float pert = ((F.z - 0.5) * 0.5 + (F.w - 0.5) * 0.22) * hwc * 0.22;
+  float offL = hw * (vStyle.y + 0.07 * sin(s * 0.13 + 1.7)) + part;
+  float offR = hw * (vStyle.y + 0.07 * sin(s * 0.11 + 4.2)) + part;
+  float wL = hw * vStyle.z * (1.0 + 0.4 * sin(s * 0.19 + 0.4)) * gate;
+  float wR = hw * vStyle.z * (1.0 + 0.4 * sin(s * 0.17 + 2.9)) * gate;
+  float dL = abs(x + offL + pert);
+  float dR = abs(x - offR + pert);
+  float on = smoothstep(0.02, 0.2, gate);
+  float pL = (1.0 - smoothstep(wL - aaw, wL + aaw, dL)) * on;
+  float pR = (1.0 - smoothstep(wR - aaw, wR + aaw, dR)) * on;
+  // a thin cyan thread splits a band into two streaks along some stretches (ref 05 mid-ground)
+  float rimW = 0.05 * hwc + aaw;
+  float splitOn = smoothstep(0.55, 0.7, vnoise(vec2(s * 0.07, 13.0)));
+  float sL = (1.0 - smoothstep(rimW * 0.5, rimW, abs(x + offL + pert * 1.4 + 0.25 * wL * sin(s * 0.5)))) * splitOn;
+  float sR = (1.0 - smoothstep(rimW * 0.5, rimW, abs(x - offR + pert * 1.4 - 0.25 * wR * sin(s * 0.45 + 1.0)))) * (1.0 - splitOn);
+  pL *= 1.0 - sL * step(rimW * 2.5, wL);
+  pR *= 1.0 - sR * step(rimW * 2.5, wR);
+  // hair-thin pink filaments drifting through the cyan core (mid/far field only)
+  float fil = 0.0;
+  #ifndef LOW_Q
+  float fc = hw * 0.18 * sin(s * 0.21 + 0.8);
+  fil = (1.0 - smoothstep(0.025 * hwc, 0.025 * hwc + aaw, abs(x - fc + pert * 0.7)))
+      * smoothstep(0.62, 0.78, vnoise(vec2(s * 0.09, 21.0))) * gate * aa.x;
+  #endif
+  float pinkM = max(max(pL, pR), fil);
+  // glossy rims: light-pink just inside each band edge, bright cyan just outside it
+  float rimIn = max(pL * smoothstep(wL - rimW, wL - aaw, dL), pR * smoothstep(wR - rimW, wR - aaw, dR));
+  float rimOut = max((1.0 - pL) * (1.0 - smoothstep(wL + aaw, wL + rimW * 1.6, dL)),
+                     (1.0 - pR) * (1.0 - smoothstep(wR + aaw, wR + rimW * 1.6, dR))) * on;
 
   float h = F.x;
   float hair = 0.5;
@@ -239,13 +276,15 @@ void main() {
     float hB = vnoise(vec2(x * 46.0 + F.w * 3.0, (sv + vSpeed) * 0.9 + 17.0));
     hair = mix(0.5, mix(hB, hA, 1.0 - abs(1.0 - 2.0 * fract(uTime * 0.5))), aaH);
   }
-  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.2, 0.5, h));
-  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.55, 0.85, h));
-  vec3 pinkCol = mix(uPink * 0.8, uPink, smoothstep(0.2, 0.48, h));
-  pinkCol = mix(pinkCol, uPinkLight, smoothstep(0.58, 0.88, h));
+  // deep azure troughs → electric cyan → light-cyan crests (crests stay a minority of the area)
+  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.62, h));
+  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.64, 0.95, h) * 0.7 + rimOut * 0.45);
+  vec3 pinkCol = mix(uPinkDeep, uPink, smoothstep(0.15, 0.5, h));
+  pinkCol = mix(pinkCol, uPinkLight, smoothstep(0.62, 0.92, h) * 0.75 + rimIn * 0.5);
   vec3 col = mix(cyanCol, pinkCol, pinkM);
-  col *= 0.86 + 0.28 * hair;
-  col += vec3(0.9, 1.0, 1.0) * smoothstep(0.8, 0.92, hair) * 0.35 * aaH;
+  col *= 0.88 + 0.24 * hair;
+  vec3 streakCol = mix(vec3(0.6, 1.25, 1.6), vec3(1.6, 0.8, 1.6), pinkM);
+  col += streakCol * smoothstep(0.82, 0.94, hair) * 0.3 * aaH;
 
   // ---- glossy lighting ----
   vec3 N0 = normalize(vNormalW);
@@ -260,15 +299,27 @@ void main() {
   float nv = clamp(dot(N, V), 0.0, 1.0);
   float fres = pow(1.0 - nv, 4.0);
   vec3 R = reflect(-V, N);
-  vec3 reflTint = mix(uCyanBright * 1.25, uPinkLight * 1.2, pinkM);
-  vec3 refl = mix(reflTint, vec3(1.1), smoothstep(0.35, 0.95, R.y));
-  col = mix(col, refl, fres * 0.35);
+  // tinted (not white) reflection so the glossy far water stays saturated, not pastel
+  vec3 reflTint = mix(uCyanBright, uPinkLight, pinkM);
+  vec3 refl = mix(reflTint, vec3(1.5), smoothstep(0.6, 1.0, R.y) * 0.5);
+  col = mix(col, refl, fres * 0.22);
   vec3 L = normalize(uLightDir);
   vec3 H = normalize(L + V);
   float spec = pow(clamp(dot(N, H), 0.0, 1.0), 120.0);
   float sheen = pow(clamp(dot(R, L), 0.0, 1.0), 10.0);
-  col += vec3(1.0) * spec * 1.3 + mix(uCyanBright, uPinkLight, pinkM) * sheen * 0.22;
-  col += vec3(0.95, 1.0, 1.0) * F.y * 0.85;
+  col += vec3(1.0) * spec * 1.2 + reflTint * sheen * 0.12;
+  // advected glossy streak lines along the flow
+  col += streakCol * F.y * 0.8;
+
+  // ---- foreground ripple crests across the flow (ref 05 near field: arcs of white crest glints
+  // over deep-azure troughs). Only where s is resolved finely (near the camera).
+  float nearK = 1.0 - smoothstep(0.02, 0.05, fws);
+  if (nearK > 0.0) {
+    float ph = s * 5.5 - uTime * 6.0 + 1.3 * sin(lat * 0.8 + s * 0.15) + 2.0 * vnoise(vec2(lat * 0.9, s * 0.5));
+    float crest = pow(0.5 + 0.5 * sin(ph), 12.0) * smoothstep(0.4, 0.75, vnoise(vec2(lat * 1.4, s * 0.9 + 3.0)));
+    col *= 1.0 - 0.14 * nearK * (0.5 - 0.5 * sin(ph));
+    col += mix(vec3(0.9, 1.4, 1.7), vec3(1.7, 1.1, 1.7), pinkM) * crest * nearK * 0.9;
+  }
 
   // ---- white star glints (4-point, twinkling, carried by the flow) ----
   #ifdef LOW_Q
@@ -277,8 +328,8 @@ void main() {
   float sparkle = step(0.9, hs) * smoothstep(0.22, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 7.0 + hs * 40.0));
   col += vec3(1.3) * sparkle;
   #else
-  float glint = starGlint(vec2(lat * 1.15, (s - vSpeed * uTime * 0.55) * 0.6), 0.22, 26.0, uTime);
-  col += vec3(1.4) * glint * (1.0 - smoothstep(0.3, 0.8, fws));
+  float glint = starGlint(vec2(lat * 1.15, (s - vSpeed * uTime * 0.55) * 0.6), 0.3, 32.0, uTime);
+  col += vec3(1.7) * glint * (1.0 - smoothstep(0.3, 0.8, fws));
   #endif
 
   // ---- soap-foam lace where the water meets the foam banks ----
@@ -294,31 +345,27 @@ void main() {
   float cutC = cells(vec2(u * vHalfW * 4.0, s * 3.6));
   col = mix(col, mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, cutC)), cutFoam);
 
-  // ---- Benny: churned contact foam, lace splash fans to both sides + V wake behind ----
+  // ---- Benny: thin churned waterline ring, ripple rings and a V wake on the surface ----
+  // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water
+  // around and behind him stays glossy electric cyan as in ref 05, not a sheet of white lace)
   if (uBenny.z > 0.0) {
     float du = lat - uBenny.y;
     float dv = s - uBenny.x;
     float rb = uBennyR;
     float d = length(vec2(du, dv));
-    if (d < rb * 9.0) {
+    if (d < rb * 8.0) {
       float k = uBenny.z;
-      float phi = atan(abs(du), -dv);           // 0 = straight behind (camera side), pi/2 = beside
-      float rr = max(0.0, d - rb * 0.9);
-      // contact ring of churned white water hugging the body
-      // soap-lace network (white along cell borders, water shows through the cells)
-      float lace = smoothstep(0.3, 0.46, cells(vec2(du * 5.5, (dv + uTime * vSpeed * 0.25) * 5.5)));
-      float contact = (1.0 - smoothstep(rb * 0.12, rb * 0.4, rr)) * (0.4 + 0.6 * lace);
-      // radiating lace tendrils fanning sideways/backwards (ref 05 splash at the water line)
-      float fan = smoothstep(2.5, 1.7, phi) * smoothstep(0.45, 1.0, phi);
-      float tend = vnoise(vec2(phi * 16.0, rr * 0.7 - uTime * 3.2));
-      tend = smoothstep(0.55, 0.8, tend) * (0.35 + 0.65 * lace);
-      float tendrils = tend * fan * exp(-rr / (rb * 1.6));
-      // ripple rings + long V wake
-      float rings = smoothstep(0.7, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-d * 0.6) * smoothstep(rb, rb * 1.4, d) * 0.3;
-      float back = clamp(-dv, 0.0, 30.0);
-      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 1.1) * 4.0) * exp(-back * 0.14) * step(dv, 0.0) * lace;
-      float foamK = clamp((contact + tendrils * 1.1 + rings + wakeV * 0.8) * k, 0.0, 1.0);
-      col = mix(col, uFoam * 1.25, foamK);
+      float rr = max(0.0, d - rb * 0.92);
+      float contact = 0.0;
+      if (rr < rb * 0.25) {
+        float lace = smoothstep(0.3, 0.46, cells(vec2(du * 6.0, (dv + uTime * vSpeed * 0.25) * 6.0)));
+        contact = (1.0 - smoothstep(rb * 0.05, rb * 0.22, rr)) * (0.55 + 0.45 * lace);
+      }
+      float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothstep(rb, rb * 1.3, d);
+      float back = max(-dv, 0.0);
+      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 0.95) * 6.0) * exp(-back * 0.18) * step(dv, 0.0);
+      col = mix(col, uFoam * 1.2, clamp(contact * k, 0.0, 1.0));
+      col += mix(uCyanBright, vec3(1.3), 0.4) * (rings * 0.22 + wakeV * 0.35) * k * (1.0 - pinkM * 0.5);
     }
   }
 
@@ -365,6 +412,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   const speed = new Float32Array(n);
   const amp = new Float32Array(n);
   const skirt = new Float32Array(n);
+  const style = new Float32Array(n * 3);
   const tmp = new THREE.Vector3();
   const nrm = new THREE.Vector3();
   let k = 0;
@@ -374,6 +422,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     const hw = course.widthAt(s) / 2;
     const sp = Math.max(3, course.prop(s, 'speed'));
     const a = ampAt(course, s);
+    const bs = bandStyleAt(course, s);
     const put = (u: number, lateral: number, h: number, isSkirt: number, nn: THREE.Vector3) => {
       tmp.copy(f.pos).addScaledVector(f.right, lateral).addScaledVector(f.up, h);
       tmp.toArray(pos, k * 3);
@@ -384,6 +433,9 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
       speed[k] = sp;
       amp[k] = a;
       skirt[k] = isSkirt;
+      style[k * 3] = bs[0];
+      style[k * 3 + 1] = bs[1];
+      style[k * 3 + 2] = bs[2];
       k++;
     };
     // left skirt (below left edge)
@@ -412,17 +464,19 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   geo.setAttribute('aSpeed', new THREE.BufferAttribute(speed, 1));
   geo.setAttribute('aAmp', new THREE.BufferAttribute(amp, 1));
   geo.setAttribute('aSkirt', new THREE.BufferAttribute(skirt, 1));
+  geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 3));
   geo.setIndex(idx);
   geo.computeBoundingSphere();
 
   const st03 = course.stage('03'), st04 = course.stage('04'), st08 = course.stage('08');
   const uniforms = withFog({
     uTime: { value: 0 },
-    uCyanDeep: { value: PALETTE.cyanDeep.clone() },
-    uCyan: { value: PALETTE.cyan.clone() },
-    uCyanBright: { value: PALETTE.cyanBright.clone() },
-    uPink: { value: PALETTE.pink.clone() },
-    uPinkLight: { value: PALETTE.pinkLight.clone() },
+    uCyanDeep: { value: RIBBON_PAL.cyanDeep.clone() },
+    uCyan: { value: RIBBON_PAL.cyan.clone() },
+    uCyanBright: { value: RIBBON_PAL.cyanBright.clone() },
+    uPinkDeep: { value: RIBBON_PAL.pinkDeep.clone() },
+    uPink: { value: RIBBON_PAL.pink.clone() },
+    uPinkLight: { value: RIBBON_PAL.pinkLight.clone() },
     uFoam: { value: PALETTE.foam.clone() },
     uFoamLav: { value: PALETTE.foamLav.clone() },
     uHaze: { value: PALETTE.haze.clone() },
