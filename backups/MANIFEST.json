@@ -124,7 +124,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "794bb2245b629f5588853372724353fafa9ba99aac3eacd9d3cdd746955f0e83"
+   "sha256": "b5eaeb79af4108a28a6270be0b92301a88103cde13002b1b5e73d4b017898370"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -219,7 +219,7 @@
   {
    "path": "docs/path_graph.md",
    "bytes": 4611,
-   "sha256": "aa251cf68dc91a4d0958ca1e5a8f115f952ea75e0f164a99e97229e9903b1c49"
+   "sha256": "43d8d117a274e2aed136a9f82d81605e096cc8e56e42406996cd129c4410513c"
   },
   {
    "path": "docs/vfx/water.md",
@@ -337,14 +337,189 @@
    "sha256": "167fa7ce473d0e66718115032e5b2dd8bacec9ee425c0acc7cf524106f0bcbab"
   },
   {
+   "path": "qa/01_diff.png",
+   "bytes": 197087,
+   "sha256": "4d0aa047019d1178c2d91fc25580d4467ea6eca326decef752c538aa607afe45"
+  },
+  {
+   "path": "qa/01_overlay.png",
+   "bytes": 2021744,
+   "sha256": "72f060e054ef07de97b38fba11e5be8852107925a024c609e2e966648c44121e"
+  },
+  {
+   "path": "qa/01_side_by_side.png",
+   "bytes": 3323463,
+   "sha256": "53c138c672cddc311fc8c9d9385fb5cc85ce4654930c68a3229edb41b92f6e70"
+  },
+  {
+   "path": "qa/02_diff.png",
+   "bytes": 200369,
+   "sha256": "974d8649f775f128f5b7c26f5436285b5076ec196913d338ea8f47f49931cfbd"
+  },
+  {
+   "path": "qa/02_overlay.png",
+   "bytes": 2151670,
+   "sha256": "8cd5fe39634e7b6ae19fcfb566b455d06fd71fa86bff7c1790be7c44f0075d9c"
+  },
+  {
+   "path": "qa/02_side_by_side.png",
+   "bytes": 3694819,
+   "sha256": "37e77dc0282ed38c23a5510a3a3525fa7fe5273d014d1ea0011ceecf3f77f070"
+  },
+  {
+   "path": "qa/03_diff.png",
+   "bytes": 144633,
+   "sha256": "3a39e84081e8ed69322b867259cafb3adc8af76e636537fd71e08a5146ad8458"
+  },
+  {
+   "path": "qa/03_overlay.png",
+   "bytes": 1636016,
+   "sha256": "6dfde59dad490a649c0c3316316267d5fec4906caaf580a17abc1893f8f31bd3"
+  },
+  {
+   "path": "qa/03_side_by_side.png",
+   "bytes": 2516227,
+   "sha256": "00ee80c4eec73843203cd7be6072c4bf9e630b8d13e847c4b85d93ed9585dbd7"
+  },
+  {
+   "path": "qa/04_diff.png",
+   "bytes": 187053,
+   "sha256": "8c6bcaa6cc5ddfe6622825d4ec4d3ed636b15b20df14d1be68757ad20662f580"
+  },
+  {
+   "path": "qa/04_overlay.png",
+   "bytes": 1823878,
+   "sha256": "346e2450e42fd6e50a249c2858261582f6ad6cbf63e8121d9128ae4883f036af"
+  },
+  {
+   "path": "qa/04_side_by_side.png",
+   "bytes": 2934210,
+   "sha256": "fe3335415801fafd50e7e75a7c33215cc5c11c0e42ea0c9a567c51799ad3a304"
+  },
+  {
+   "path": "qa/05_diff.png",
+   "bytes": 199590,
+   "sha256": "8f3e82882893aaaa97d994b1cd48cf08c6693a1c4784101db0ff9e81a81ab548"
+  },
+  {
+   "path": "qa/05_overlay.png",
+   "bytes": 2138434,
+   "sha256": "9386d83affe1d649dd4b9942a05443c51476613a90928f75a9803519bc336859"
+  },
+  {
+   "path": "qa/05_side_by_side.png",
+   "bytes": 3706014,
+   "sha256": "e6652e0dc92c3b8c4c254ecc91ecc8611bdffc569c680e1d7c702b002ad7d2cd"
+  },
+  {
+   "path": "qa/06_diff.png",
+   "bytes": 191727,
+   "sha256": "1ca99ec9c28abb6fdb18fb36b21d9e8fe0f552eda36e2aaecd337b57a1a2eac7"
+  },
+  {
+   "path": "qa/06_overlay.png",
+   "bytes": 2150398,
+   "sha256": "cb7d9d0fa922bd73cc39f12d9fc4d108cb0a62687b2f19be430c7f0084cd22ff"
+  },
+  {
+   "path": "qa/06_side_by_side.png",
+   "bytes": 3444769,
+   "sha256": "dc63b43122e20495bd1d2bac7768aea85ba6c89cd2b1c0fde6d17e5ffaeee583"
+  },
+  {
+   "path": "qa/07_diff.png",
+   "bytes": 208059,
+   "sha256": "c082bdd0fa6c4f680b19cf05b2b37c9ccf7c4f49f9c4f0c7039e4c8b2d35e228"
+  },
+  {
+   "path": "qa/07_overlay.png",
+   "bytes": 2157873,
+   "sha256": "40fbfef882bf9efc8e555d114a267c7c44f60aee2569d6bc0693dcb5946420fd"
+  },
+  {
+   "path": "qa/07_side_by_side.png",
+   "bytes": 3714974,
+   "sha256": "48481beb62b6c5a965ce402198126f80888209d3af7376ff6248aeb9934e7cbe"
+  },
+  {
+   "path": "qa/08_diff.png",
+   "bytes": 203875,
+   "sha256": "6c85e8f9b4dfc0096b297e3e9b972295cf5f306416ececfb50c7c76f856cffdd"
+  },
+  {
+   "path": "qa/08_overlay.png",
+   "bytes": 2178440,
+   "sha256": "09e8153e49602738f4f2c7f82d953bf6ee03cc3ab3b24592d102f17fb3a780b2"
+  },
+  {
+   "path": "qa/08_side_by_side.png",
+   "bytes": 3614544,
+   "sha256": "e46f18bd2b74a3285278c485dd83378cc3b0c9b4978419f74badea6dde9f6364"
+  },
+  {
+   "path": "qa/09_diff.png",
+   "bytes": 197081,
+   "sha256": "b283cc9529edff89c882b19b6874fd2ddd95d81f95f65eea669eec345ca830a7"
+  },
+  {
+   "path": "qa/09_overlay.png",
+   "bytes": 2181761,
+   "sha256": "1341cf8155111c6b383f0efba0a889bd795d6da710caf86645537a936b0aaee7"
+  },
+  {
+   "path": "qa/09_side_by_side.png",
+   "bytes": 3711668,
+   "sha256": "33d53835796e9c0c4e63d63a4c6b53f98e7fdc07f657e7f274181ccaf2fd0637"
+  },
+  {
+   "path": "qa/10_diff.png",
+   "bytes": 188463,
+   "sha256": "65543d9b89c9a84d09b1bfdbc99de9a47609000b7f95e1634c6e7ff1a2161fc3"
+  },
+  {
+   "path": "qa/10_overlay.png",
+   "bytes": 2186740,
+   "sha256": "561c356d94294f9eca457baa9ac71dd3a14388a013b3190ea05bf51f4e2f7331"
+  },
+  {
+   "path": "qa/10_side_by_side.png",
+   "bytes": 3637567,
+   "sha256": "7dcd35ffd203b94602f20b70bcad30203226b16b2a251b8fa576f01dd0bbda37"
+  },
+  {
+   "path": "qa/11_diff.png",
+   "bytes": 160530,
+   "sha256": "38eac2fed395c218bcb0fda7ea265e67a18ab522b40b7842021829e2c6e85b46"
+  },
+  {
+   "path": "qa/11_overlay.png",
+   "bytes": 2213349,
+   "sha256": "aa3824ead11baecff89eceba14ca739f972d7ff9fe6642fab3d2250dacf33461"
+  },
+  {
+   "path": "qa/11_side_by_side.png",
+   "bytes": 3697552,
+   "sha256": "fbbd2ab15beef35ac5126b9eee39603650cf95df5804140c6b4c92c2a08d554a"
+  },
+  {
    "path": "qa/capture_log.json",
-   "bytes": 5065,
-   "sha256": "671a38daa4b6d52e077365efb961e3773108070528c2c2263e5a40efef599ec9"
+   "bytes": 10079,
+   "sha256": "14a3c3f924079226e2eeefa02f942d14b3313300b448be5cbad7e19b411ba504"
+  },
+  {
+   "path": "qa/compare_summary.md",
+   "bytes": 992,
+   "sha256": "12500bef1b5cdebd565318337656c85cc847b51290a1043f3ac1df628311cfdb"
   },
   {
    "path": "qa/continuity_report.json",
-   "bytes": 2674,
-   "sha256": "a5568a701eaf9c67e83e9105720fd73b4fda8cf690b86ccc4c5e35fce5baed8e"
+   "bytes": 2673,
+   "sha256": "92a2eca67b6f1ea7b3cebc4d6006fae86c7fc39024124bea7f9d4e509bd70a5a"
+  },
+  {
+   "path": "qa/report_metrics.json",
+   "bytes": 1114,
+   "sha256": "23b1124598a093cfa7e2214413b7d6783a4e03a56964d623cf0c8325bddefb22"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -400,6 +575,61 @@
    "path": "references/11_safely_home_final_victory.png",
    "bytes": 481475,
    "sha256": "4f30ca59a926d6eed449a2865d35776368864bfd92c5c7f0845a96bf500397ae"
+  },
+  {
+   "path": "screenshots/01.png",
+   "bytes": 1038986,
+   "sha256": "d8b2440fad4f11cc5564d787fa35b1d33a24f7a1faa79e504824da8402be5a64"
+  },
+  {
+   "path": "screenshots/02.png",
+   "bytes": 1233646,
+   "sha256": "0b6deb15187f07d3be45a986db6f45159296ea58b1deaa724a5f11efd2c6ba24"
+  },
+  {
+   "path": "screenshots/03.png",
+   "bytes": 607471,
+   "sha256": "b603ca355ea0f093b6fecd94c4c651a9a3497637f8e718f4542eb43cc9a5fbd9"
+  },
+  {
+   "path": "screenshots/04.png",
+   "bytes": 766157,
+   "sha256": "b0386dee8a2f1f772e5b2209acd4697b602f0fd5783896d0e6fd428517069f38"
+  },
+  {
+   "path": "screenshots/05.png",
+   "bytes": 1373971,
+   "sha256": "6845db0d779078711dcc88b425b556ca9a7f78d7665ff9a8605d8f5e1fb98b02"
+  },
+  {
+   "path": "screenshots/06.png",
+   "bytes": 1038266,
+   "sha256": "1d36c9fbc0cb8159c3db0caf3fb4e353ff21010598a272b6077888c760403ae3"
+  },
+  {
+   "path": "screenshots/07.png",
+   "bytes": 1362490,
+   "sha256": "366df07153fb24288671359744a66800e3c9ad7a767195df99d994293e25c055"
+  },
+  {
+   "path": "screenshots/08.png",
+   "bytes": 1268765,
+   "sha256": "35995f8030ac532e8dba124008b156da4b7f20b95e532b179b3182c9332b5881"
+  },
+  {
+   "path": "screenshots/09.png",
+   "bytes": 1336426,
+   "sha256": "379ceaa4cb5b9ea9f201f2f688e84d1bce634bda759ce85f54d49cff5374ffeb"
+  },
+  {
+   "path": "screenshots/10.png",
+   "bytes": 1246990,
+   "sha256": "3020bd3d7e587a0ad9ee70ad4c6e69e09d78c6fb991545b1175ad2309c49e361"
+  },
+  {
+   "path": "screenshots/11.png",
+   "bytes": 1374509,
+   "sha256": "208712978531cc15fe28450ef364951c78afe7cbe8ef936ae5b2b67df3f37f3b"
   },
   {
    "path": "scripts/autosave-cron.sh",
@@ -528,13 +758,13 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 27932,
-   "sha256": "f0d9e27e9ffee6b6e082cb85c6705872f2c9ed181129c94bfd96921c6fa627a1"
+   "bytes": 28230,
+   "sha256": "dee8063430f80f6524e187c99cddcbf8b13713a24296be6b0b67cf0e49208022"
   },
   {
    "path": "src/game/cameraRig.ts",
    "bytes": 5722,
-   "sha256": "de5db0aedd8943135e859f9f396d336f8c0efd23162399a681db71459979f861"
+   "sha256": "01beebd51fcd9f14a4a3bfcb0930c99d7cf893b1d4f44eb7b93aa6da0e785b7e"
   },
   {
    "path": "src/game/modules.ts",
@@ -623,13 +853,13 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 20566,
-   "sha256": "07bedc7f1e38eb3fbf1431491ed93e1bc232fbf9138f04edccd8653cbd3a7b03"
+   "bytes": 20653,
+   "sha256": "e583ded7ab10a0cb132c7ef7de5ebea477d480a2651020a05c1c8bc6be76511a"
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 29215,
-   "sha256": "6d018ca951a46dbbdab5a6a7f747bd00751757876921fc607656ca4572572447"
+   "bytes": 29637,
+   "sha256": "c8856d358ffe2b0e80f455846bf1d33428014c4187a1b549b45d36542ff6f1cb"
   },
   {
    "path": "src/world/laundryRoom.ts",

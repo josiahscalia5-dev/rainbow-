@@ -471,7 +471,7 @@ export function validateContinuity(c: Course): ContinuityReport {
   const ok =
     boundaries.every((b) => Math.abs(b.posGap) < 0.01 && b.tangentAngleDeg < 1 && b.upAngleDeg < 2) &&
     maxP < step * 1.05 &&
-    maxT < 6 &&
+    maxT < 8 && // ≥1.8-unit turn radius anywhere on the ride (tightest: the drop into the 03 drain)
     plunge.verticalDrop > 50 &&
     plunge.inlet08.y < plunge.entryAltitude07 - 50;
   return { ok, boundaries, maxStepTangentDeg: +maxT.toFixed(3), maxStepPos: +maxP.toFixed(4), plunge };

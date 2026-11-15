@@ -135,12 +135,19 @@ export function buildEnvironment(course: Course): Environment {
   const B = WORLD.basin;
   const prof: THREE.Vector2[] = [];
   for (let i = 0; i <= 40; i++) {
-    const r = B.drainRadius * 0.92 + (B.rimRadius + 0.4 - B.drainRadius * 0.92) * (i / 40);
+    const r = B.drainRadius * 1.04 + (B.rimRadius + 0.4 - B.drainRadius * 1.04) * (i / 40);
     prof.push(new THREE.Vector2(r, funnelY(r) - 0.45));
   }
   const funnelGeo = new THREE.LatheGeometry(prof, 96);
   funnelGeo.translate(B.center.x, 0, B.center.z);
   zones.basin.add(new THREE.Mesh(funnelGeo, perforatedMetal({ color: '#e04fd0', slot: 0, repeatU: 60, repeatV: 22, holeSize: 0.3, side: THREE.DoubleSide, streaks: 0 })));
+  // thick gold drain lip + inner ring (ref 03: concentric gold rings inside the drain)
+  for (const [rr, tt, dy] of [[B.drainRadius + 0.15, 0.42, 0.1], [B.drainRadius - 0.55, 0.22, -0.9]] as const) {
+    const lip = new THREE.Mesh(new THREE.TorusGeometry(rr, tt, 18, 96), goldMat);
+    lip.rotation.x = Math.PI / 2;
+    lip.position.set(B.center.x, funnelY(B.drainRadius) + dy, B.center.z);
+    zones.basin.add(lip);
+  }
   const rim = new THREE.Mesh(new THREE.TorusGeometry(B.rimRadius + 0.5, 0.75, 24, 128), goldMat);
   rim.rotation.x = Math.PI / 2;
   rim.position.set(B.center.x, B.rimY + 0.25, B.center.z);

@@ -89,9 +89,9 @@ export class RideCamera {
     const w3 = THREE.MathUtils.smoothstep(s, st3.s0 - 6, st3.s0 + 2) * (1 - THREE.MathUtils.smoothstep(s, st3.s1 - 6, st3.s1 + 1));
     if (w3 > 0) {
       const B = WORLD.basin;
-      const wp = benny.clone().add(new THREE.Vector3(1.7, 2.9, 4.6));
+      const wp = benny.clone().add(new THREE.Vector3(2.8, 3.6, 5.6));
       const drain = new THREE.Vector3(B.center.x, B.drainY, B.center.z);
-      const wt = benny.clone().lerp(drain, 0.5).add(new THREE.Vector3(0.6, -1.2, -1.5));
+      const wt = benny.clone().lerp(drain, 0.2).add(new THREE.Vector3(0.6, -1.0, -2.4));
       outPos.lerp(wp, w3);
       outTarget.lerp(wt, w3);
       outUp.lerp(new THREE.Vector3(0, 1, 0), w3).normalize();

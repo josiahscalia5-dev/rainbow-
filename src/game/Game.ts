@@ -218,7 +218,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
       const f = bennyPose(sB, 0, st.clock, pose);
       // inside Drum A the swirl carries him along the helix itself (no ribbon surface there yet)
       const inDrum = 1 - sm(T.drain - 0.4, T.drain + 0.6, t);
-      benny.root.position.copy(pose.pos).lerp(course.sample(sB).pos, inDrum);
+      // the swirl lifts him toward the middle of the drum while he tumbles (ref 02), then he drops to the drain
+      const hp = course.sample(sB).pos;
+      const toAxis = sm(T.spin, T.spin + 1.0, t) * (1 - sm(T.drain - 1.6, T.drain - 0.2, t)) * 0.45;
+      hp.x *= 1 - toAxis; hp.y = hp.y + (0.2 - hp.y) * toAxis;
+      benny.root.position.copy(pose.pos).lerp(hp, inDrum);
       const tumble = sm(T.rideStart - 1.0, T.rideStart, t);
       // tumble = rolling cartwheels seen by the camera: face the lens, roll around the view axis
       const toCam = cam02(benny.root.position).pos.clone().sub(benny.root.position).normalize();
@@ -284,7 +288,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     const away = b.clone().sub(door).normalize();
     const pos = b.clone().addScaledVector(away, 3.0).add(new THREE.Vector3(0, 0.35, 0));
     const rr = Math.hypot(pos.x, pos.y);
-    if (rr > 3.9) { pos.x *= 3.9 / rr; pos.y *= 3.9 / rr; }
+    if (rr > 2.7) { pos.x *= 2.7 / rr; pos.y *= 2.7 / rr; }
     pos.y = Math.max(pos.y, dA.waterY + 1.0);
     pos.z = THREE.MathUtils.clamp(pos.z, dA.zBack + 0.4, dA.zDoor - 1);
     const look = b.clone().lerp(door, 0.22).add(new THREE.Vector3(0, 0.45, 0));
@@ -489,7 +493,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     '01': { mode: 'intro', t: T.cp01 },
     '02': { mode: 'intro', t: T.cp02 },
     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
-    '04': { mode: 'ride', s: course.stage('04').s0 + 3.5 },
+    '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
     '05': { mode: 'ride', s: course.stage('05').s0 + 30 },
     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
