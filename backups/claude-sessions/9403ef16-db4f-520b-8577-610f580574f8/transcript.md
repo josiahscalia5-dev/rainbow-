@@ -2157,3 +2157,21 @@ You've pasted a live secret into the chat, and this project's own autosave copie
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:redact-secret 2>&1 | tail -3; echo \"--- tree:\"; grep -rl \"[REDACTED-PRIVATE]\" --exclude-dir=node_modules --exclude-dir=.git . | head; echo \"--- HEAD:\"; git grep -l \"[REDACTED-PRIVATE]\" HEAD -- . | head; echo \"local $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/ccr-93add0fa-q17ey6 | cut -c1-7)\"; echo \"--- commits containing it on this branch:\"; for c in $(git rev-list -12 HEAD); do git grep -q \"[REDACTED-PRIVATE]\" $c -- . 2>/dev/null && git log --format='%h %ci' -1 $c; done", "des …[+77 chars]`
 
+### 🧑 User — 2026-11-15T23:12:38.379Z
+
+> ↩︎ result: Exit code 1
+>   "commit": "1fe9a6aa62b3a10b37562a945abd756bb4f18d1d",
+>   "duration_s": 5
+> }
+> --- tree:
+> --- HEAD:
+> local 1fe9a6a remote 1fe9a6a
+> --- commits containing it on this branch:
+> b029c47 2026-11-15 23:11:50 +0000
+> 82ee965 2026-11-15 23:11:41 +0000
+> 125d14d 2026-11-15 23:11:29 +0000
+
+### 🤖 Claude — 2026-11-15T23:12:50.614Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble World API key", "suggested_type": "bearer", "reason": "The Screen 05 Marble pilot calls the World API (credit balance check, then a world generation only after the user approves the cost). The previously pasted key is exposed and should be replaced with a new one entered here."}`
+
