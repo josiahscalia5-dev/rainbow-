@@ -201,7 +201,7 @@ export function buildEnvironment(course: Course): Environment {
   const goldEnv = washerTubeEnv('gold');
   const perfTubeMat = perforatedMetal({
     color: '#f24bd6', emissive: '#4a0866', emissiveIntensity: 0.32, holeColor: '#14001f',
-    slot: 1, repeatU: 52, repeatV: 1.0, holeSize: 0.62, streaks: 0.15, metalness: 0.9, roughness: 0.22,
+    slot: 1, repeatU: 42, repeatV: 0.8, holeSize: 0.62, streaks: 0.15, metalness: 0.9, roughness: 0.22,
     relief: { corrugation: 0.035, bevel: 0.06, bevelWidth: 0.1 }, rimColor: '#ff6fe6', rimStrength: 0.8,
     envMap: tubeEnv, envMapIntensity: 0.78, farGlow: wallGlow,
   });
@@ -226,7 +226,7 @@ export function buildEnvironment(course: Course): Environment {
   const lidMat = withFarGlow(gold({ color: '#ffa65a', roughness: 0.18, emissive: 0.25 }), tubeGlow, 'lid');
   lidMat.envMap = goldEnv;
   lidMat.envMapIntensity = 1.25;
-  zones.tubes.add(buildWallLids(perfPath, s05 + 3 + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 18, size: 1.1, height: 0.62, face: 30 }));
+  zones.tubes.add(buildWallLids(perfPath, s05 + 3 + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 20, size: 1.15, height: 0.62, down: 0.7, sink: 0.35 }));
   animated.push(pinkFlow.update);
 
   // =====================================================================================

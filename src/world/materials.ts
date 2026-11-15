@@ -252,7 +252,9 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
     for (let i = 0; i < 8; i++) {
       const a0 = 0.2 + (i * Math.PI) / 4;
       const dA = Math.abs(Math.atan2(Math.sin(ang - a0), Math.cos(ang - a0)));
-      const k = Math.exp(-(dA * dA) / 0.005) * (1 - Math.abs(d.z) * 0.6) * (i % 2 ? 0.7 : 1.15);
+      // the strips run the whole length of the tunnel, so they converge at ±Z like meridians: rings and
+      // grazing walls pick them up as regularly spaced highlight spots/streaks (refs 05–07)
+      const k = Math.exp(-(dA * dA) / 0.005) * (isGold ? 1 : 1 - Math.abs(d.z) * 0.35) * (i % 2 ? 0.7 : 1.15);
       if (isGold) { out.r += 3.6 * k; out.g += 3.0 * k; out.b += 2.2 * k; } else { out.r += 3.4 * k; out.g += 1.7 * k; out.b += 3.1 * k; }
     }
     // warm light at the very end of the tunnel (-Z), violet haze around it, softer pink glow behind (+Z)
