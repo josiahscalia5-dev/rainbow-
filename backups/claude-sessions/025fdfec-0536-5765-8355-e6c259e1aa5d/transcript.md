@@ -3366,3 +3366,138 @@ Only my 15-line QA hook differs in `Game.ts` since session start, so I can copy 
 
 > 🔧 **Bash** `{"command": "grep -n \"export\" scripts/lib/pw.mjs | head; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cp src/game/Game.ts $S/wt/src/game/Game.ts; cat > $S/drawlist.mjs <<'EOF'\n// usage (cwd = a Rainbow checkout): node drawlist.mjs OUT.json 07 05\nimport { writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(process.cwd() + '/scripts/lib/pw.mjs').href);\nconst [out, ...ids] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = …[+1139 chars]`
 
+### 🧑 User — 2026-11-15T22:25:13.153Z
+
+> ↩︎ result: 7:export function loadPlaywright() {
+> 16:export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 19:export async function startVite(port = 5199) {
+> 27:export async function waitDone(page, timeoutMs = 180000) {
+> 07 objects 40 calls 159
+> 05 objects 37 calls 71
+> 07 objects 36 calls 154
+> 05 objects 35 calls 68
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T22:25:21.044Z
+
+> 🔧 **Bash** `{"command": "grep -n \"autoReset\\|info.reset\\|PMREM\\|CubeCamera\\|fromScene\\|compileEquirect\\|fromEquirect\" src/game/Game.ts src/render/*.ts src/world/materials.ts | head -20; git diff 1764258 -- src/world/materials.ts | grep -n \"^+.*\\(PMREM\\|fromScene\\|CubeCamera\\|renderer\\|washerTubeEnv\\)\" | head", "description": "Check render-info reset and env-map generation"}`
+
+### 🧑 User — 2026-11-15T22:25:21.091Z
+
+> ↩︎ result: src/game/Game.ts:507:  renderer.info.autoReset = false;
+> src/game/Game.ts:508:  const render = () => { renderer.info.reset(); composer.render(); };
+> src/render/env.ts:3: * pink / magenta / gold / white panels baked into a PMREM environment once at load time.
+> src/render/env.ts:36:  const pmrem = new THREE.PMREMGenerator(renderer);
+> src/render/env.ts:37:  const rt = pmrem.fromScene(scene, 0.035);
+> src/world/materials.ts:4: * up the candy PMREM environment, with shader patches for the perforations and glow.
+> src/world/materials.ts:376: * Built from half-float DataTextures; three converts it to PMREM on first use (no renderer needed here).
+> 14:+export function washerTubeEnv(variant: 'wall' | 'gold' | 'gold05' = 'wall'): THREE.CubeTexture {
+
+### 🤖 Claude — 2026-11-15T22:25:37.730Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cat > $S/stats2.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(process.cwd() + '/scripts/lib/pw.mjs').href);\nconst ids = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5233);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  for (const id of ids) {\n    const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScal …[+979 chars]`
+
+### 🧑 User — 2026-11-15T22:26:29.446Z
+
+> ↩︎ result: 05 calls after 1st/2nd/3rd render: 143 86 86
+> 07 calls after 1st/2nd/3rd render: 237 180 180
+> 05 calls after 1st/2nd/3rd render: 121 83 83
+> 07 calls after 1st/2nd/3rd render: 213 175 175
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T22:26:48.428Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/capture.mjs", "old_string": "    const stats = await page.evaluate(() => window.__rainbow.stats());", "new_string": "    const stats = await page.evaluate(() => window.__rainbow.stats());\n    // The first frame after load also counts one-time GPU work (three converts each cube env map to PMREM on\n    // first use). Render once more (after the screenshot) and report that per-frame cost as calls/tris.\n    const firstFrame = { calls: stats.calls, triangles: stats.triangles };\n    await page.evaluate(() => window.__rainbow.drawLi …[+242 chars]`
+
+### 🧑 User — 2026-11-15T22:26:48.457Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/capture.mjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:26:51.283Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nn=Image.open('qa/pilot05/wave5/combined/05.png').convert('RGB'); r=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nbox=(300,330,700,620)\nw=box[2]-box[0]; h=box[3]-box[1]\no=Image.new('RGB',(w*2+10,h)); o.paste(r.crop(box),(0,0)); o.paste(n.crop(box),(w+10,0)); o.resize((o.width*2,o.height*2)).save('/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/vp_zoom.png')\"", "description": "Zoom the vanishing-point area, ref vs now"}`
+
+### 🧑 User — 2026-11-15T22:26:51.711Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:26:53.338Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/vp_zoom.png"}`
+
+### 🧑 User — 2026-11-15T22:26:53.384Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:27:03.641Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/wave5/environment/ride/; F=$(ls qa/pilot05/wave5/environment/ride/*.png | head -6 | tr '\\n' ' '); args=\"\"; for f in $F; do b=$(basename $f .png); args=\"$args $b=$f\"; done; python3 scripts/triptych.py /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/ride.png 700 $args", "description": "Montage the environment specialist's ride-through frames"}`
+
+### 🧑 User — 2026-11-15T22:27:04.223Z
+
+> ↩︎ result: ride_150.png
+> ride_158.png
+> ride_164.png
+> ride_172.png
+> ride_182.png
+> /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/ride.png (2018, 742)
+
+### 🤖 Claude — 2026-11-15T22:27:05.459Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/ride.png"}`
+
+### 🧑 User — 2026-11-15T22:27:05.866Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T22:27:05.862Z
+
+[Image: original 2018x742, displayed at 2000x735. Multiply coordinates by 1.01 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T22:27:33.778Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-15T22:27:33.785Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-15T22:27:35.307Z
+
+> 🔧 **TaskUpdate** `{"taskId": "9", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-15T22:27:35.315Z
+
+> ↩︎ result: Updated task #9 status
+
+### 🤖 Claude — 2026-11-15T22:27:47.235Z
+
+> 🔧 **SendMessage** `{"to": "a52fe238922a756d7", "summary": "Env follow-up: warp, far river, far coins, culling", "message": "Wave 5b follow-up for the washer-environment-modeler: four focused fixes to your ForcedTunnel, coordinator-approved.\n\nContext (coordinator measured):\n- Your far tunnel is a big step toward the ref: ≈10 rings into a small warm VP. Keep it.\n- Draw-call budget is fine. The 143 was a first-frame artifact: three's one-time PMREM conversion of the new gold05 cube env. Steady-state is 05 = 86 calls (start 83) and 07 = 180 (start 175). `scripts/capture.mjs` now logs steady-state `calls` plus `f …[+2748 chars]`
+
+### 🧑 User — 2026-11-15T22:27:47.289Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent a52fe23","resumedAgentId":"a52fe238922a756d7","pin":{"id":"a52fe238922a756d7","name":"a52fe238922a756d7","ref":"587249"}}
+
+### 🤖 Claude — 2026-11-15T22:27:56.436Z
+
+> 🔧 **SendMessage** `{"to": "a8a31d00e7bffcc47", "summary": "Foam follow-up: blocky clump, 04/07 sheet", "message": "Wave 5b follow-up for foam-bubbles-particles: the 04/07 white berm sheet predates this session, plus two 05 rim fixes.\n\nThe coordinator isolated your 04/07 report:\n- A worktree at the session-start commit `1764258` already shows the broad white berm sheet. Left side in 04, right side in 07 (`/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/iso/base/04.png`, `07.png`).\n- So it was introduced in waves 3–4 (after the 17:55 `screenshots/`), not by anyone this session …[+1650 chars]`
+
+### 🧑 User — 2026-11-15T22:27:56.496Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent a8a31d0","resumedAgentId":"a8a31d00e7bffcc47","pin":{"id":"a8a31d00e7bffcc47","name":"a8a31d00e7bffcc47","ref":"1d58be"}}
+
+### 🤖 Claude — 2026-11-15T22:27:57.071Z
+
+You've hit your 5-hour limit · resets 2:40am (UTC)
+
+### 🧑 User — 2026-11-15T22:27:57.087Z
+
+<task-notification>
+<task-id>a8a31d00e7bffcc47</task-id>
+<tool-use-id>toolu_017TtrGcT2o7WpwFtwJvLPMi</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/tasks/a8a31d00e7bffcc47.output</output-file>
+<status>failed</status>
+<summary>Agent "Wave 5: 05 foam bank width" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 2:40am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5W57KKxpcdLDZ2Zgzs3, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 2:40am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+</task-notification>
+

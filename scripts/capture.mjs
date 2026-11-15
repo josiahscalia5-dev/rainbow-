@@ -43,6 +43,12 @@ try {
     const name = /^\d\d$/.test(id) ? `${id}.png` : `${id}.png`;
     await page.screenshot({ path: `${outDir}/${name}`, timeout: 180000 });
     const stats = await page.evaluate(() => window.__rainbow.stats());
+    // The first frame after load also counts one-time GPU work (three converts each cube env map to PMREM on
+    // first use). Render once more (after the screenshot) and report that per-frame cost as calls/tris.
+    const firstFrame = { calls: stats.calls, triangles: stats.triangles };
+    await page.evaluate(() => window.__rainbow.drawList?.());
+    const steady = await page.evaluate(() => window.__rainbow.stats());
+    Object.assign(stats, { calls: steady.calls, triangles: steady.triangles, firstFrameCalls: firstFrame.calls, firstFrameTriangles: firstFrame.triangles });
     const state = await page.evaluate(() => window.__rainbow.state());
     log.shots.push({ id, file: `${outDir}/${name}`, size: [w, h], checkpoint: st, state, stats });
     console.log(id, '→', `${outDir}/${name}`, JSON.stringify({ stage: state.stage, s: state.s, y: state.bennyY, calls: stats.calls, tris: stats.triangles, modules: stats.modules }));

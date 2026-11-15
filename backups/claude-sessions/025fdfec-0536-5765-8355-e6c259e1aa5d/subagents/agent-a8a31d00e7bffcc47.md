@@ -1357,3 +1357,35 @@ Files are in `/home/user/rainbow-/qa/pilot05/wave5/foam/`:
 - tools/bankcc.py
 - tools/foammask.py
 
+### 🧑 User — 2026-11-15T22:27:56.489Z
+
+The coordinator sent a message while you were working:
+Wave 5b follow-up for foam-bubbles-particles: the 04/07 white berm sheet predates this session, plus two 05 rim fixes.
+
+The coordinator isolated your 04/07 report:
+- A worktree at the session-start commit `1764258` already shows the broad white berm sheet. Left side in 04, right side in 07 (`/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/iso/base/04.png`, `07.png`).
+- So it was introduced in waves 3–4 (after the 17:55 `screenshots/`), not by anyone this session. Swapping the current env or VFX files into that worktree does not change it.
+- Draw calls are fine: steady-state 05 = 86 calls. 143 was a first-frame PMREM artifact; `capture.mjs` now logs both.
+
+Please do, in your own files only:
+
+1. **05 right-bank clump.** In `qa/pilot05/wave5/combined/05.png` it reads as a blocky white rectangle (≈ x 735–864, y 600–700). Make it lumpy and round-edged like the ref's piled bubbles, with lavender/blue shading. If cheap, also add the missing small lower-right clump (ref x 610–790, y 1217–1300), using per-bubble pattern sampling as you planned.
+2. **04/07 berm sheet.** Compare `git show 1764258:src/vfx/foam.ts` with the 17:55 version, `git show c2770a4:src/vfx/foam.ts`, and with the waves-3/4 history (`git log --oneline -- src/vfx/foam.ts`).
+   - Find what turned the 04/07 stream-edge berm into a flat white sheet, and restore the earlier look there: pink water plus loose puffs, as in `screenshots/04.png` and `07.png`.
+   - Keep 05 exactly as it is now.
+   - If the cause is in `waterRibbon.ts`, write one `wave5` line in `REQUESTS.md` instead of editing it.
+
+Limits and rules:
+- At most 4 captures total. Use `--out=qa/pilot05/wave5/foam/b01…` and capture 05 04 07 together when needed.
+- `npx tsc --noEmit` must pass.
+- Append results to your NOTES.md after every capture.
+- No commits (autosave handles them). No paid services. Measured numbers only.
+
+Final answer: what changed (file:function), before/after numbers, and what is left.
+
+Address this before completing your current task.
+
+### 🤖 Claude — 2026-11-15T22:27:57.058Z
+
+You've hit your 5-hour limit · resets 2:40am (UTC)
+

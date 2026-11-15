@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 3913,
-   "sha256": "44dbe68c1de9afe0edb1103ae904c1b897288fc1fae5e9f7c5cd049016210a71"
+   "bytes": 3914,
+   "sha256": "05560c83d938d46297039009dc2d9c243d8136a79c8164fb6955e61308faf812"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2098,8 +2098,8 @@
   },
   {
    "path": "scripts/capture.mjs",
-   "bytes": 3883,
-   "sha256": "4723acbc0f648c46bdb31d793db8629e745b5177ed812e8e4c678c544fb6140d"
+   "bytes": 4465,
+   "sha256": "c4a345d9b97f9466bde9637f0b1d8b7265e0e2bc8d17addaa15830c095482a67"
   },
   {
    "path": "scripts/cinematic-test.mjs",
