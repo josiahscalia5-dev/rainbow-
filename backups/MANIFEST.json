@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 3912,
-   "sha256": "66a2abdb9ffbcbe4fbb17e2860908b8bd33d3a64f0f670ae5716e91417429e07"
+   "bytes": 3913,
+   "sha256": "9991eac7e64bcb4bd684d79ad9e526b4b0555f32decc70abbd69a2d0b56fd44e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -408,8 +408,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 2946,
-   "sha256": "ae3862c2c2c1be64836f4050d165bfb5b870c3c43216d4c47564fc393d613fdc"
+   "bytes": 3455,
+   "sha256": "1844ec9353cf556da596679c2f7cebeb4b061cff9c74ad950ea452bc35e3918f"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1105,
-   "sha256": "e9a42a2975ec89fef6886ef883ac750bd1302148fdb4e4707bffa95077fe300c"
+   "bytes": 1104,
+   "sha256": "e895985d624efd148335e0343b6eac606c3d3be96dfdc43719e4b5b15b25e486"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -900,6 +900,11 @@
    "path": "qa/pilot05/COORDINATION_WAVE4.md",
    "bytes": 1991,
    "sha256": "8e477ea433c96e255a62281d78680e534b127e2f373810c6eafef9e51ab383be"
+  },
+  {
+   "path": "qa/pilot05/COORDINATION_WAVE5.md",
+   "bytes": 5768,
+   "sha256": "cf90ecc1b4014b4e71a71189d33272e25b92e482bfa3832318a0a0a5fcc895a4"
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
@@ -1415,6 +1420,36 @@
    "path": "qa/pilot05/wave4/water/it03/05.png",
    "bytes": 1636543,
    "sha256": "5acd6ee2c0c4f133facfdda2144186703fd0309abbeeea5966692bee744acf0f"
+  },
+  {
+   "path": "qa/pilot05/wave5/baseline/05.png",
+   "bytes": 1637326,
+   "sha256": "f4f9d4b95e190f17ae81dbb86be4c63ecdacf9588524e375273d73f2658d6d24"
+  },
+  {
+   "path": "qa/pilot05/wave5/baseline/continuity_report.json",
+   "bytes": 2696,
+   "sha256": "db73c92588cac5c26b824f990c21bb7c54d5c746e1617cc142ed93b4ec9f2b49"
+  },
+  {
+   "path": "qa/pilot05/wave5/baseline/gameplay_test.json",
+   "bytes": 14640,
+   "sha256": "9c7d3176ee8f9928c47ba093cd97dda439b591d0f98cfe9eb8605e917486b507"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/NOTES.md",
+   "bytes": 723,
+   "sha256": "f4c7e7084cec4499499be85093d5d6703f8549be5bcb6a3786a0dc540ba0f629"
+  },
+  {
+   "path": "qa/pilot05/wave5/environment/NOTES.md",
+   "bytes": 1061,
+   "sha256": "a28be61e0aca361eb7f9674852ea57bafc0a70557db19dadc54e13b1d92c2dcc"
+  },
+  {
+   "path": "qa/pilot05/wave5/water/NOTES.md",
+   "bytes": 1100,
+   "sha256": "99246cafce38b67bc62988cbdf5300ecc1607bbd97526ab67992620634871143"
   },
   {
    "path": "qa/report_metrics.json",
