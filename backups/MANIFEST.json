@@ -114,7 +114,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "394ee7c9cba9a97de872921333ff08d2c59201e6d4545314761f49ebd3820f3b"
+   "sha256": "37565263a65d36e924962a113ef727281680cf8ccd3171348e3a6f71e9044b5d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -155,6 +155,26 @@
    "path": "character_references/official_cartoon_girl_original.jpg",
    "bytes": 231475,
    "sha256": "92bbaa61a66c7a4dc16d70730be76a34b9575d3f4484e72d95129ad574460daf"
+  },
+  {
+   "path": "docs/path_graph.md",
+   "bytes": 4641,
+   "sha256": "27c7544f00e97deee5fc70568ae57ec9c78b0f432b0007744d471de2915823eb"
+  },
+  {
+   "path": "package-lock.json",
+   "bytes": 80348,
+   "sha256": "a05bea3166cbc9ba7fbe07eb97323c949ddaf71e58b68472f7eb4d92fb0e19ac"
+  },
+  {
+   "path": "package.json",
+   "bytes": 1146,
+   "sha256": "167fa7ce473d0e66718115032e5b2dd8bacec9ee425c0acc7cf524106f0bcbab"
+  },
+  {
+   "path": "qa/continuity_report.json",
+   "bytes": 2711,
+   "sha256": "1ccd794cb9c77fb823d7b6a7ddb22998ab9dde81575e3f0138ddabe063e5592f"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -227,6 +247,11 @@
    "sha256": "5efb1cc0e60c18fd5e7eb8d6574334e5e87847d55d702eb3957a575a7394d638"
   },
   {
+   "path": "scripts/continuity-test.ts",
+   "bytes": 4002,
+   "sha256": "d5cbd1fac1da2cd1a691b5d691728b51a9cc2deeb920cfecf3eae5a29f1a8a89"
+  },
+  {
    "path": "scripts/export_claude_sessions.py",
    "bytes": 12417,
    "sha256": "82927c9a3804e5aea8b9b57080c5a4d893e971d745020b06d49123fd0347c83a"
@@ -240,6 +265,16 @@
    "path": "scripts/rainbow-autosave.py",
    "bytes": 15611,
    "sha256": "b8fa1992e0490110ffab47cfe31a2d6e6c6dcfcd5d20a30d0552f9d1947cc18c"
+  },
+  {
+   "path": "scripts/reference.sha256",
+   "bytes": 1290,
+   "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
+  },
+  {
+   "path": "src/world/course.ts",
+   "bytes": 18561,
+   "sha256": "35dca2aa7f3b04b93b10bdb92a7a897f52c0f2d9aededf0828b59f484a1b6bba"
   }
  ]
 }

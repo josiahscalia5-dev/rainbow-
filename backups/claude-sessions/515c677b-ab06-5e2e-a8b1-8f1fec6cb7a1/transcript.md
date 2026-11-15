@@ -1094,3 +1094,141 @@ Fresh-clone verification passed. The LFS kit ZIP downloads byte-identical, all 1
 
 > 🔧 **Bash** `{"command": "env -i HOME=/root PATH=/usr/bin:/bin bash scripts/autosave-cron.sh \"test:cron-env-1\"; echo \"exit=$?\"; env -i HOME=/root PATH=/usr/bin:/bin bash scripts/autosave-cron.sh \"test:cron-env-2\"; echo \"exit=$?\"; tail -4 backups/BACKUP_LOG.md; git status --short; git ls-remote origin refs/heads/ccr-6f431adf-7h0m8y; git rev-parse HEAD; git log -3 --format='%h %G? %s'", "description": "Simulate cron env: change run then no-change run", "timeout": 300000}`
 
+### 🧑 User — 2026-11-15T16:45:38.398Z
+
+> ↩︎ result: exit=0
+> exit=0
+> | 2026-11-15T16:44:56+00:00 | initial-backup | committed+pushed | `f1c94d0f8e32` | `ccr-6f431adf-7h0m8y` | 51 | True |  |
+> | 2026-11-15T16:45:19+00:00 | test:no-change | committed+pushed | `b06f9396cdca` | `ccr-6f431adf-7h0m8y` | 6 | True |  |
+> | 2026-11-15T16:45:33+00:00 | test:cron-env-1 | committed+pushed | `543e70350fe2` | `ccr-6f431adf-7h0m8y` | 6 | True |  |
+> | 2026-11-15T16:45:36+00:00 | test:cron-env-2 | no-change | `543e70350fe2` | `ccr-6f431adf-7h0m8y` | 0 | True |  |
+>  M backups/BACKUP_LOG.md
+>  M backups/BACKUP_STATUS.json
+> 543e70350fe29c4024460929aaf858de693c49be	refs/heads/ccr-6f431adf-7h0m8y
+> 543e70350fe29c4024460929aaf858de693c49be
+> error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
+> error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
+> error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
+> 543e703 N autosave: Rainbow 2026-11-15 16:45 UTC
+> b06f939 N autosave: Rainbow 2026-11-15 16:45 UTC
+> f1c94d0 N Rainbow: initial project protection — locked references, kit, specialists, autosave system
+
+### 🤖 Claude — 2026-11-15T16:45:45.397Z
+
+> 🔧 **Bash** `{"command": "for c in f1c94d0 b06f939 543e703; do printf \"%s gpgsig:\" $c; git cat-file commit $c | grep -c '^gpgsig' ; done; date -u +%H:%M:%S", "description": "Check commit signatures; show current time"}`
+
+### 🧑 User — 2026-11-15T16:45:45.433Z
+
+> ↩︎ result: f1c94d0 gpgsig:1
+> b06f939 gpgsig:1
+> 543e703 gpgsig:1
+> 16:45:45
+
+### 🤖 Claude — 2026-11-15T16:45:55.781Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/package.json", "content": "{\n  \"name\": \"rainbow-washer-game\",\n  \"private\": true,\n  \"version\": \"0.1.0\",\n  \"description\": \"RAINBOW — 11-screen real-time 3D portrait mobile game (Three.js + TypeScript + Vite + Capacitor)\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite --host 0.0.0.0\",\n    \"build\": \"tsc --noEmit && vite build\",\n    \"preview\": \"vite preview --host 0.0.0.0 --port 4173\",\n    \"typecheck\": \"tsc --noEmit\",\n    \"test:continuity\": \"vite-node scripts/continuity-test.ts\",\n    \"models:export\": \"no …[+745 chars]`
+
+### 🧑 User — 2026-11-15T16:45:55.919Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/package.json (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:45:58.782Z
+
+> 🔧 **Bash** `{"command": "npm install --no-audit --no-fund 2>&1 | tail -5 && node -e \"console.log(require('three/package.json').version)\" && grep -oE '`[0-9a-f]{64}`' REFERENCE_ORDER.md | tr -d '`' > /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/h.txt; sha256sum references/*.png character_references/*.jpg > scripts/reference.sha256; cat scripts/reference.sha256 | cut -c1-20; pip list 2>/dev/null | grep -iE \"pillow|numpy|opencv|scikit\" ", "description": "Install npm dependencies and write reference checksum file", "timeout": 300000}`
+
+### 🧑 User — 2026-11-15T16:46:09.415Z
+
+> ↩︎ result: npm warn deprecated tar@6.2.1: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting [REDACTED-EMAIL]
+> npm warn deprecated glob@9.3.5: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting [REDACTED-EMAIL]
+> 
+> added 123 packages in 10s
+> node:internal/modules/cjs/loader:671
+>       throw e;
+>       ^
+> 
+> Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './package.json' is not defined by "exports" in /home/user/rainbow-/node_modules/three/package.json
+>     at exportsNotFound (node:internal/modules/esm/resolve:318:10)
+>     at packageExportsResolve (node:internal/modules/esm/resolve:665:9)
+>     at resolveExports (node:internal/modules/cjs/loader:664:36)
+>     at Function._findPath (node:internal/modules/cjs/loader:731:31)
+>     at Function._resolveFilename (node:internal/modules/cjs/loader:1415:27)
+>     at defaultResolveImpl (node:internal/modul …[+668 chars]
+
+### 🤖 Claude — 2026-11-15T16:49:32.100Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/course.ts", "content": "/**\n * RAINBOW master course — ONE continuous route through the washer world.\n *\n * Units: 1 unit ≈ 5 cm at Benny's scale (Benny body radius ≈ 0.8). +Y is up (absolute altitude).\n * The route starts inside Drum A (scene 01/02), drains through a chute into the whirlpool basin (03),\n * drops down the five-arrow slide (04), winds through the perforated current tube (05), crests the\n * rinse arch (06), winds through the washer tube and then PLUNGES ~62 units straight down (07) before\n * the bottom of that same tube flares  …[+18479 chars]`
+
+### 🧑 User — 2026-11-15T16:49:32.365Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/course.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:49:37.151Z
+
+Simplifying the drain→slide entry into a clean pull-down arc, then writing the continuity test:
+
+### 🤖 Claude — 2026-11-15T16:49:39.413Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/course.ts", "old_string": "  seg(6, (t) => {\n    // ease from the drain's shallow descent into the steep pitch\n    const L = 7 * t;\n    const k = smooth(0, 1, t);\n    return s4.clone().add(V(0, -L * (0.25 + 0.75 * k) * Math.sin(pitch4) * 1.0, -L * Math.cos(pitch4 * k)));\n  });", "new_string": "  // pull-down arc from the drain lip into the steep slide pitch\n  const R4a = 9;\n  seg(7, (t) => {\n    const a = pitch4 * t;\n    return s4.clone().add(V(0, -R4a * (1 - Math.cos(a)), -R4a * Math.sin(a)));\n  });"}`
+
+### 🧑 User — 2026-11-15T16:49:39.637Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/course.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:49:54.863Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/continuity-test.ts", "content": "/**\n * Route continuity + altitude test (run: npm run test:continuity).\n * Writes qa/continuity_report.json and docs/path_graph.md (altitude chart), exits 1 on failure.\n */\nimport { writeFileSync, mkdirSync } from 'node:fs';\nimport { Course, validateContinuity, WORLD } from '../src/world/course';\n\nconst c = new Course();\nconst r = validateContinuity(c);\nmkdirSync('qa', { recursive: true });\nmkdirSync('docs', { recursive: true });\nwriteFileSync('qa/continuity_report.json', JSON.stringify({ length: c.length, m …[+3521 chars]`
+
+### 🧑 User — 2026-11-15T16:49:55.025Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/continuity-test.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:49:55.869Z
+
+> 🔧 **Bash** `{"command": "npx vite-node scripts/continuity-test.ts 2>&1 | tail -40; sed -n '1,30p' docs/path_graph.md | tail -18", "description": "Run route continuity test", "timeout": 120000}`
+
+### 🧑 User — 2026-11-15T16:49:56.776Z
+
+> ↩︎ result: {
+>  "ok": false,
+>  "length": 454.3,
+>  "plunge": {
+>   "entryAltitude07": -47.64,
+>   "plungeTop": {
+>    "s": 324.58,
+>    "y": -52
+>   },
+>   "plungeMid": {
+>    "s": 364.66,
+>    "y": -82.8
+>   },
+>   "plungeBottom": {
+>    "s": 404.74,
+>    "y": -113.6
+>   },
+>   "inlet08": {
+>    "s": 405.5,
+>    "y": -113.6
+>   },
+>   "verticalDrop": 61.6,
+>   "minPitchDeg": -70.4
+>  },
+>  "maxStepTangentDeg": 38.464,
+>  "boundaries": [
+>   "01->02 gap=-0.01 dT=0.251 y=-2.4",
+>   "02->03 gap=-0.0001 dT=0.527 y=-11.71",
+>   "03->04 gap=-0.0001 dT=2.108 y=-18.92",
+>   "04->05 gap=0 dT=0.182 y=-40.14",
+>   "05->06 gap=-0.0003 dT=1.691 y=-43.14",
+>   "06->07 gap=-0.0003 dT=0.574 y=-47.64",
+>   "07->08 gap=-0.0001 dT=1.031 y=-113.6",
+>   "08->09 gap=-0.0002 dT=3.203 y=-113.6",
+>   "09->10 gap=-0.0001 dT=2.141 y=-113.5",
+>   "10->11 gap=-0.0313 dT=0.055 y=-110.15"
+>  ]
+> }
+> | 05 | FLOW INTO THE CURRENT | 122.2 → 197.8 | 75.6 | -40.1 → -43.1 | 6.2 | perf r=7.6 | 11 |
+> | 06 | CREST THE RINSE ARCH | 197.8 → 258.7 | 61.0 | -43.1 → -47.6 | 7 | perf r=15 | 11 |
+> | 07 | DIVE THE WASHER TUBE | 258.7 → 405.5 | 146.8 | -47.6 → -113.6 | 5.6 | perf r=7.2 | 12 |
+> | 08 | FINAL SPIN CHAMBER | 405.5 → 424.8 | 19.3 | -113.6 → -113.6 | 4.8 | open | 9.5 |
+> | 09 | RIDE THE FINAL WAVE | 424.8 → …[+695 chars]
+

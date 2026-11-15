@@ -10,7 +10,7 @@ Search tip: `grep -ril "07" backups/claude-sessions/*/transcript.md`
 
 | Session | Title | Branch | First event (UTC) | Last event (UTC) | User msgs | Claude msgs | Subagents | Topics | Files |
 |---|---|---|---|---|---|---|---|---|---|
-| `515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1` | Rainbow 3D mobile game project | `ccr-6f431adf-7h0m8y` | 2026-11-15T16:32:33.845Z | 2026-11-15T16:45:32.944Z | 1 | 102 | 0 | benny, girl, water, 07, 08, plunge, autosave, backup, android, playwright, blender, meshy, screens, towel, hud, coin, shader, agents | [md](claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/transcript.md) · [jsonl](claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/transcript.sanitized.jsonl) |
+| `515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1` | Rainbow 3D mobile game project | `ccr-6f431adf-7h0m8y` | 2026-11-15T16:32:33.845Z | 2026-11-15T16:49:56.776Z | 1 | 117 | 0 | benny, girl, water, 07, 08, plunge, autosave, backup, android, playwright, blender, meshy, screens, towel, hud, coin, shader, agents | [md](claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/transcript.md) · [jsonl](claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/transcript.sanitized.jsonl) |
 
 ## Restore / resume
 
