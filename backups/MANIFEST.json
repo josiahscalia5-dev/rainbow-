@@ -1958,8 +1958,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 8275,
-   "sha256": "cdcb0b11584330d921a0b545091f85b79d9c75a59d2d298bdfba925d848b8d80"
+   "bytes": 9667,
+   "sha256": "ea6e8c10be15ad05ccd7bc537cce4b44aea2f99db2bfc7a690fb6b82875b9db4"
   },
   {
    "path": "src/vfx/spray.ts",
