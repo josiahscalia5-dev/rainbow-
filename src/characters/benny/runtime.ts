@@ -41,8 +41,11 @@ export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Pro
  * kicking feet are under the surface. Cinematics (01 peek, 02 tumble, 11 hide) keep the root as placed.
  * Wave 4: 0.30 → 0.22 together with the ride lean, which shows more of his back: keeps the pom-pom top at the
  * ref-05 height (≈ 765 px, under the first coin) and the cuff bottom where the ref has it.
+ * Wave 5: 0.22 → 0.12. Measured in the live 05 capture with the re-exported GLB (flat-ID mask): 0.22 put the pom top at
+ * 748 and the bottom at 1178; 0.12 gives bbox x 231–612 / y 766–1188, cuff bottom 1029, hat incl. pom 62 % / body 38 %
+ * (ref 05: x 230–612 / y 767–≈1185, cuff bottom ≈ 1028).
  */
-export const BENNY_RIDE_LIFT = 0.22;
+export const BENNY_RIDE_LIFT = 0.12;
 /** QA A/B hook: `?bennyLift=<units>` overrides the ride lift (e.g. 0 = the game's raw placement) */
 function rideLift(): number {
   if (typeof location === 'undefined') return BENNY_RIDE_LIFT;

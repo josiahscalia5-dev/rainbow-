@@ -623,3 +623,75 @@ tsc passes. Capture it01.
 
 > 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/foam/it01 2>&1 | tail -2 && S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && python3 -I $S/bankcc.py $S qa/pilot05/wave5/foam/it01/05.png", "description": "Capture it01 and measure banks", "timeout": 620000}`
 
+### 🧑 User — 2026-11-15T22:02:30.171Z
+
+> ↩︎ result: Exit code 1
+> 
+> Node.js v22.23.4
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/bankcc.py", line 32, in <module>
+>     m, a = foam_mask(p)
+>            ~~~~~~~~~^^^
+>   File "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/foammask.py", line 32, in foam_mask
+>     a = np.asarray(Image.open(p).convert('RGB')).astype(int)
+>                    ~~~~~~~~~~^^^
+>   File "/usr/local/lib/python3.13/site-packages/PIL/Image.py", line 3639, in open
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: 'qa/pilot05/wave5/foam/it01/05.png'
+> 
+> [agent-proxy] While this command ran, 4 connections through the agent proxy failed:
+> - clerk.worldlabs.ai:443 — connect_rejected (the egress proxy refused the connection; a refusal most often means that the host is not allowed for this session)
+> - lfs.github.com:443 — connect_rejected (the egress proxy refused the connection; a refusal most often means that the host is not allowed for this session) ×3
+> For details: curl -sS http://127.0.0.1:40457/__agentproxy/status
+
+### 🤖 Claude — 2026-11-15T22:02:32.189Z
+
+The capture failed (the proxy notes are unrelated background connections; I won't use World Labs, it's a paid service). Let me see the actual error.
+
+### 🤖 Claude — 2026-11-15T22:02:33.349Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/foam/it01 2>&1 | grep -v \"^\\s*at \" | tail -15", "description": "Rerun it01 capture showing errors", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T22:02:45.608Z
+
+> ↩︎ result: 05 → qa/pilot05/wave5/foam/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":121,"tris":608313,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T22:02:46.930Z
+
+It worked on retry (likely another specialist's file was mid-edit). Measure and look.
+
+### 🤖 Claude — 2026-11-15T22:02:49.282Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && python3 -I $S/bankcc.py $S qa/pilot05/wave5/foam/it01/05.png && python3 scripts/triptych.py qa/pilot05/wave5/foam/it01/triptych.png 1100 REF=references/05_flow_into_the_current.png PREV=qa/pilot05/wave5/baseline/05.png NOW=qa/pilot05/wave5/foam/it01/05.png", "description": "Measure it01 and make triptych"}`
+
+### 🧑 User — 2026-11-15T22:02:50.834Z
+
+> ↩︎ result: qa/pilot05/wave5/foam/it01/05.png
+>    L: EXT(y>540) 432px (50.0%)  NEAR mean  82.7px ( 9.6%) max 432px (50.0%) COVER  74.7%  ROWS  44.3%  AREA(y>540)  6.1%
+>    R: EXT(y>540) 432px (50.0%)  NEAR mean 178.3px (20.6%) max 432px (50.0%) COVER  42.7%  ROWS  59.1%  AREA(y>540)  8.0%
+> qa/pilot05/wave5/foam/it01/triptych.png (1889, 1142)
+
+### 🤖 Claude — 2026-11-15T22:02:52.150Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/foam/it01/05.png"}`
+
+### 🧑 User — 2026-11-15T22:02:52.217Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:03:27.820Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && python3 -I -c \"\nfrom PIL import Image\nS='$S'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB'); n=Image.open('qa/pilot05/wave5/foam/it01/05.png').convert('RGB')\ncc=Image.open(S+'/cc_qa_pilot05_wave5_foam_it01_05.png')\ndef pair(box):\n  w=box[2]-box[0]; h=box[3]-box[1]\n  o=Image.new('RGB',(w*2+10,h)); o.paste(r.crop(box),(0,0)); o.paste(n.crop(box),(w+10,0)); return o\na=pair((0,520,432,860)); b=pair((432,520,864,860)); c=pair((0,940,300,1400)); d=pair((564,940,864,140 …[+269 chars]`
+
+### 🧑 User — 2026-11-15T22:03:28.343Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:03:29.992Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/it01_crops.png"}`
+
+### 🧑 User — 2026-11-15T22:03:30.040Z
+
+> ↩︎ result: [image]
+

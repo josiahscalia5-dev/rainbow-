@@ -27,17 +27,19 @@ export const BENNY_DIMS = {
   radius: 0.8,
   /** lower-body bulge (radial gain at its peak): a full round plush ball below the cuff, not a bowl (ref 05 rear:
    *  body ≈ as wide as the cuff from the cuff down to the water) */
-  pear: 0.13,
+  pear: 0.1,
   /** centre (below the ball centre) and width of that bulge */
   bulgeY: 0.24,
   bulgeW: 0.38,
   /** fuller, flatter bottom (wave 5, ref 05 rear: the plush ball stays ≈ cuff-wide down to the waterline and ends
    *  in a broad round base, not an egg tip). Lower-half cross-section r_xz = r·(1 − t^p)^(1/p), t = −y/r,
-   *  p = 2 + flat (0 = sphere), radial gain capped at flatCap */
-  flat: 0,
+   *  p = 2 + flat (0 = sphere), radial gain capped at flatCap. Lab g05 rows 1129/1149/1169: 247/208/143 px (sphere)
+   *  → 259/234/176 (ref 05: 258/228/181) */
+  flat: 0.8,
   flatCap: 1.5,
-  /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y < 0) */
-  stretch: 0.1,
+  /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y < 0). Wave 5: 0.10 → 0.03 with
+   *  the flatter base (keeps the bottom at the ref-05 waterline, ≈ 1185 px) */
+  stretch: 0.03,
   /** beanie tilt (rad, about X; + = front down). Wave 4: back to a slight backward tilt so the front brim clears the
    *  eyes (refs 02/03); the rear ride views get their low, level look from the runtime's ride lean instead
    *  (runtime.ts BENNY_RIDE_PITCH), not from tipping the hat over his face */
@@ -55,10 +57,11 @@ export const BENNY_DIMS = {
   /** pom-pom core radius; the shell fur adds ≈ 0.1 → ≈ 0.5 × the cuff width (ref 05: ≈ 140–150 px / 295) */
   pomR: 0.31,
   /** star badge: angle around the hat from the front (deg, toward −X = his right), centre height above the cuff
-   *  top, centre radius */
-  starAng: 143,
-  starY: 0.015,
-  starR: 0.79,
+   *  top, centre radius. Wave 5: 143° / +0.015 / 0.79 → 137° / +0.065 / 0.77 (live 05: centre (500, 965) = +0.57 cuff
+   *  half-widths; ref 05: (519, 953) = +0.64, lower points on the cuff, the rest on the white band) */
+  starAng: 137,
+  starY: 0.065,
+  starR: 0.77,
 };
 
 /**

@@ -951,3 +951,166 @@ Now the lab driver (one Vite, many variants; mask + colour render each).
 >   1179: 350-353 358-361 373-426 430-440 444-452   span 118
 >   1189:    span 57
 
+### 🤖 Claude — 2026-11-15T22:00:17.762Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave5/benny/it01/L012_mask.png').convert('RGB').crop((200,980,660,1220))\nb=Image.open('$S/lab/f06_mask.png').convert('RGB').crop((187,980,647,1220))\nc=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((200,980,660,1220))\nout=Image.new('RGB',(1400,240),'white'); out.paste(c,(0,0)); out.paste(a,(470,0)); out.paste(b,(940,0)); out.save('$S/bottom_cmp.png')\"", "description": "Compare b …[+46 chars]`
+
+### 🧑 User — 2026-11-15T22:00:18.035Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:00:18.969Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/bottom_cmp.png"}`
+
+### 🧑 User — 2026-11-15T22:00:18.986Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:00:38.308Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; enc() { python3 -I -c \"import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))\" \"$1\"; }\nD=$(enc '{\"flat\":0.8,\"pear\":0.10,\"stretch\":0.03,\"starAng\":134,\"starY\":0.065,\"starR\":0.77}')\ntimeout 900 node $S/tools/lab.mjs $S/lab g05 V1:bennyLift=0.12\\&dims=$D 2>&1 | tail -1\ntimeout 900 node $S/tools/lab.mjs $S/lab cmp V1cmp:bennyLift=0.12\\&dims=$D basecmp:bennyLift=0.12 2>&1 | tail -1\npython3 -I $S/tools/measure.py $S/lab/V1_mask.png | sed -n '1,9p;12,4 …[+109 chars]`
+
+### 🧑 User — 2026-11-15T22:01:24.643Z
+
+> ↩︎ result: done V1
+> done basecmp
+> ALL bbox x 210-596 y 764-1194  (w 387 h 431)
+>   body  x  210- 596 y  991-1194  w 387 h 204 px 45216
+>   pom   x  336- 484 y  764- 893  w 149 h 130 px 12437
+>   cuff  x  260- 551 y  933-1029  w 292 h  97 px 14546
+>   crown x  278- 534 y  867- 974  w 257 h 108 px 18294
+>   star  x  473- 547 y  923- 999  w  75 h  77 px 2722
+> centre col x=406: top 765 cuff 975-1029 bottom 1185
+> HAT incl pom 265 px = 61.5%   BODY below cuff 156 px = 36.2%  of H 431
+> cuff width 292; star centre (510,961) rel cuff-centre x +0.71 half-widths
+>   1109: 263-539   span 288
+>   1119: 264-535   span 272
+>   1129: 274-527   span 259
+>   1139: 282-527   span 254
+>   1149: 289-514   span 234
+>   1159: 310-501   span 196
+>   1169: 317-482   span 176
+>   1179: 355-357 361-431 435-458   span 129
+>   1189:    span 60
+
+### 🤖 Claude — 2026-11-15T22:01:30.489Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('$S/lab/basecmp.png').convert('RGB'); b=Image.open('$S/lab/V1cmp.png').convert('RGB')\nout=Image.new('RGB',(a.width,a.height*2),'white'); out.paste(a,(0,0)); out.paste(b,(0,a.height)); out.resize((out.width//2,out.height//2)).save('$S/cmp_V1.png')\"", "description": "Stack base vs V1 identity panels"}`
+
+### 🧑 User — 2026-11-15T22:01:30.768Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:01:31.590Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/cmp_V1.png"}`
+
+### 🧑 User — 2026-11-15T22:01:31.621Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:01:51.708Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'EOF'\nimport re\np='src/characters/benny/build.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a[:60]\n    s=s.replace(a,b)\nrep(\"\"\"  pear: 0.13,\n  /** centre (below the ball centre) and width of that bulge */\"\"\",\"\"\"  pear: 0.1,\n  /** centre (below the ball centre) and width of that bulge */\"\"\")\nrep(\"\"\"   *  p = 2 + flat (0 = sphere), radial gain capped at flatCap */\n  flat: 0,\"\"\",\"\"\"   *  p = 2 + flat (0 = sphere), radial gain capped at flatCap. Lab g05 rows 1129/1149/1169: 247/208/143  …[+2633 chars]`
+
+### 🧑 User — 2026-11-15T22:01:55.244Z
+
+> ↩︎ result: src/characters/benny/benny-lab.ts:13:import { BENNY_RIDE_LIFT, createBennyRuntime, loadBenny } from './runtime';
+> src/characters/benny/benny-lab.ts:137:      water.position.y = views === 'game' || measure ? -RIDE : -(RIDE + BENNY_RIDE_LIFT);
+> src/characters/benny/runtime.ts:48:export const BENNY_RIDE_LIFT = 0.12;
+> src/characters/benny/runtime.ts:51:  if (typeof location === 'undefined') return BENNY_RIDE_LIFT;
+> src/characters/benny/runtime.ts:53:  return Number.isFinite(v) ? THREE.MathUtils.clamp(v, 0, 0.6) : BENNY_RIDE_LIFT;
+> src/characters/benny/runtime.ts:158:    // ride height (see BENNY_RIDE_LIFT): eased so mode switches never pop
+> TSC_OK
+
+### 🤖 Claude — 2026-11-15T22:01:59.108Z
+
+tsc passes (the on-disk build.ts change is my own scripted edit). Re-exporting the GLB and capturing it02 in the live game.
+
+### 🤖 Claude — 2026-11-15T22:02:02.213Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; date -u +%H:%M; timeout 900 node scripts/export-models.mjs benny 2>&1 | tail -2 | cut -c1-200; ls -l assets/models/benny.glb; head -c 4 assets/models/benny.glb; echo\ntimeout 900 node $S/tools/cap05.mjs qa/pilot05/wave5/benny/it02 05: 2>&1 | tail -1 | cut -c1-200; python3 -I $S/tools/measure.py qa/pilot05/wave5/benny/it02/05_mask.png | grep -v \"^  10[0-4][0-9]\"", "description": "Re-export GLB and capture it02 with mask", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-15T22:02:28.430Z
+
+> ↩︎ result: 22:02
+> exported assets/models/benny.glb {"bytes":1128440,"meshes":27,"nodes":39,"clips":["idle(2.40s)","swim(0.60s)","tumble(1.00s)","peek(2.00s)"]}
+> turntable docs/characters/benny_turntable.png {"box":{"min":[-1.0368119659137613,-0.8895217347813645,-0.8139782728548887],"max":[1.044152348032454,1.4584708369133867,0.7986260260677421]}}
+> -rw-r--r-- 1 root root 1128440 Nov 15 22:02 assets/models/benny.glb
+> glTF
+> 05 {"q":"","calls":121,"tris":608313,"info":{"body":[1.514,-41.2,-74.734],"up":[-0.025,0.999,-0.042],"fwd":[0.004,-0.042,-0.999],"scale":1},"errs":[]}
+> ALL bbox x 231-612 y 766-1196  (w 382 h 431)
+>   body  x  231- 612 y  999-1196  w 382 h 198 px 44909
+>   pom   x  341- 489 y  766- 896  w 149 h 131 px 12148
+>   cuff  x  273- 563 y  941-1029  w 291 h  89 px 14796
+>   crown x  289- 546 y  873- 973  w 258 h 101 px 17396
+>   star  x  475- 550 y  917- 993  w  76 h  77 px 2847
+> centre col x=418: top 777 cuff 974-1029 bottom 1186
+> HAT incl pom 253 px = 58.7%   BODY below cuff 157 px = 36.4%  of H 431
+> cuff width 291; star centre (512,955) rel cuff-centre x +0.65 half-widths
+> body rows (y: red runs):
+>   1059: 237-601   span 369
+>   1069: 240-568   span 345
+>   1079: 246-250 255-568   span 323
+>   1089: 274-568 …[+328 chars]
+
+### 🤖 Claude — 2026-11-15T22:02:33.196Z
+
+it02 measures on target: star (512, 955) +0.65 hw vs ref (519, 953) +0.64; body rows 1129/1149/1159/1169 = 257/228/202/178 vs ref 258/228/209/181 (it01: 242/199/169/131). Let me look at it.
+
+### 🤖 Claude — 2026-11-15T22:02:41.932Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((200,740,660,1220))\nb=Image.open('qa/pilot05/wave5/baseline/05.png').convert('RGB').crop((200,740,660,1220))\nc=Image.open('qa/pilot05/wave5/benny/it02/05.png').convert('RGB').crop((200,740,660,1220))\nout=Image.new('RGB',(1400,480),'white'); out.paste(a,(0,0)); out.paste(b,(470,0)); out.paste(c,(940,0)); out.save('$S/it02_rear.png')\"\ncat >> qa/pilot05/wav …[+1208 chars]`
+
+### 🧑 User — 2026-11-15T22:02:42.331Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T22:02:43.087Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/it02_rear.png"}`
+
+### 🧑 User — 2026-11-15T22:02:43.117Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:03:01.783Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nref=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\ng=np.asarray(Image.open('qa/pilot05/wave5/benny/it02/05.png').convert('RGB')).astype(int)\nm=np.asarray(Image.open('qa/pilot05/wave5/benny/it02/05_mask.png').convert('RGB')).astype(int)\nR,G,B=m[...,0],m[...,1],m[...,2]\ndef med(a): return '#%02X%02X%02X'%tuple(np.median(a,0).astype(int))\ndef lum(a): return int(np.median(a.mean(1)))\n# ref boxes\nrb={'cuff':ref[990:1020,300:540].reshape(-1,3),'white_ …[+780 chars]`
+
+### 🧑 User — 2026-11-15T22:03:02.299Z
+
+> ↩︎ result: cuff       ref #6B0DEB L117   game #B248FF L167
+> white_low  ref #F3CFE4 L225   game #FFD5FF L241
+> purple_mid ref #740FF2 L124   game #883EFF L151
+> white_top  ref #FCE6F3 L241   game #FFDDFF L243
+> body       ref #F549A9 L162   game #FF46B3 L167
+> pom        ref #8215ED L129   game #9425FF L147
+> arm        ref #F856B6 L172   game #FF58AF L172
+
+### 🤖 Claude — 2026-11-15T22:03:33.070Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"toneMapping\\|toneMappingExposure\\|outputColorSpace\" src/render/*.ts src/game/Game.ts | head; grep -rn \"benny\" src/game/Game.ts | grep -in \"light\\|layer\" | head; grep -n \"purple\\b\\|C.purple\\|C.white\\b\\|C.purpleLight\\|C.brim\" src/characters/benny/textures.ts | head -20", "description": "Check tone mapping and colour constant usage"}`
+
+### 🧑 User — 2026-11-15T22:03:33.115Z
+
+> ↩︎ result: src/render/env.ts:56:  renderer.outputColorSpace = THREE.SRGBColorSpace;
+> src/render/env.ts:57:  renderer.toneMapping = THREE.NeutralToneMapping;
+> src/render/env.ts:58:  renderer.toneMappingExposure = 0.86;
+> 59:  // knit purple of refs 04–10 (cuff #7513ED, pom #7F14EC measured in ref 05)
+> 60:  purple: '#7a18f0',
+> 117: * Stripes bottom→top: white, purple, white, purple, white; with the purple cuff that is 3 purple bands
+> 118: * (refs 04–10 rear: cuff · W · P · W, the top purple ring shows around the pom-pom, the white top is under it).
+> 127:    [0.0, 0.3, '#ffffff', C.white, C.whiteShade],
+> 128:    // wave 5 (ref 05 rear, centre column: white 24 / purple 33 / white 19 px, then a purple band around the pom base):
+> 129:    // wider middle purple, thinner upper white, upper purple band starts lower so it shows beside the pom
+> 130:    [0.3, 0.58, C.purpleLight, C.purple, C.purpleDark],
+> 131:    [0.58, 0.73, '#ffffff', C.white, C.whiteShade],
+> 132:    [0.73, 0.92, C.purpleLight, C.purple, C.purpleDark],
+> 133:    [0.92, 1.0, '#ffffff', C.white, C.whiteShade],
+> 169:    g.addColorStop(0, C.brimDark);
+> 170:    g.addColorStop(0.22, C.brim);
+> 171:    g.addColorStop(0.5, C.purpleLight);
+> 172:    g.addColorStop( …[+84 chars]
+

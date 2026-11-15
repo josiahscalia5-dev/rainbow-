@@ -491,6 +491,54 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
   });
 }
 
+/**
+ * Far stream of the 05 forced-perspective tunnel (ForcedTunnel.chordGeometry): the water surface beyond
+ * the real ribbon, seen only as a thin winding band toward the vanishing point — a cyan core meandering
+ * between two hot-pink bands, blue edges, white foam lips, glossy flow streaks, warming into the VP glow
+ * with the virtual depth (`fgExtra`). Unlit (it is tiny on screen); morph "open" handled by three.
+ */
+export function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMaterial {
+  const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+  const uniforms = {
+    uRivCore: { value: new THREE.Color('#3fd4ff') },
+    uRivBand: { value: new THREE.Color('#f739e5') },
+    uRivEdge: { value: new THREE.Color('#1677e8') },
+    uRivFoam: { value: new THREE.Color('#f4eeff') },
+    uRivGlow: { value: new THREE.Color(glow.color) },
+    uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.strength) },
+  };
+  mat.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, uniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', '#include <common>\nattribute float fgExtra; varying float vRivDist; varying vec2 vRivUv;')
+      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvRivUv = uv;')
+      .replace('#include <project_vertex>', '#include <project_vertex>\nvRivDist = length(mvPosition.xyz) + fgExtra;');
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <common>', `#include <common>
+varying float vRivDist; varying vec2 vRivUv;
+uniform vec3 uRivCore; uniform vec3 uRivBand; uniform vec3 uRivEdge; uniform vec3 uRivFoam; uniform vec3 uRivGlow; uniform vec3 uRivGlowR;`)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+{
+  float x = vRivUv.x * 2.0 - 1.0;
+  float u = vRivUv.y;
+  float cx = 0.26 * sin(u * 0.06 + 0.8);           // the cyan core meanders (ref: S-bends to the VP)
+  float t = abs(x - cx);
+  vec3 col = uRivCore;
+  col = mix(col, uRivBand, smoothstep(0.14, 0.22, t) * (1.0 - smoothstep(0.44, 0.54, t)));
+  col = mix(col, uRivEdge, smoothstep(0.5, 0.6, t) * 0.7);
+  float st = pow(0.5 + 0.5 * sin(x * 37.0 + u * 0.9), 10.0);
+  col += vec3(0.55, 0.75, 1.0) * st * 0.35;
+  float foam = smoothstep(0.7, 0.84, abs(x));
+  col = mix(col, uRivFoam, foam);
+  float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
+  col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
+  diffuseColor.rgb = col;
+}`);
+  };
+  mat.customProgramCacheKey = () => 'far-river-v1';
+  return mat;
+}
+
 export function gold(opts: { roughness?: number; emissive?: number; color?: THREE.ColorRepresentation } = {}): THREE.MeshStandardMaterial {
   return new THREE.MeshStandardMaterial({
     color: opts.color ?? '#ffcf4d',

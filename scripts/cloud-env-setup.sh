@@ -5,10 +5,6 @@ if [ -d rainbow- ]; then
   (cd rainbow- && git lfs pull) || echo "rainbow: git lfs pull failed"
   (cd rainbow- && bash scripts/setup-blender.sh) || echo "rainbow: blender setup failed"
   (cd rainbow- && bash scripts/setup-android-sdk.sh) || echo "rainbow: android sdk setup failed"
-fi
-C="$(command -v claude || echo /opt/node22/bin/claude)"
-if [ -x "$C" ]; then
-  "$C" plugin marketplace add worldlabsai/skills > /dev/null 2>&1
-  "$C" plugin install worldlabs@worldlabs > /dev/null 2>&1 || echo "rainbow: worldlabs plugin failed"
+  (cd rainbow- && bash scripts/setup-worldlabs-plugin.sh) || echo "rainbow: worldlabs plugin setup failed"
 fi
 exit 0

@@ -458,7 +458,13 @@ export class ForcedTunnel {
   readonly D0: number;
   /** eye offset from the section's centre line, in the cross-section plane */
   readonly q: THREE.Vector3;
-  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number) {
+  /**
+   * `knots` ([u, Z] pairs, increasing, starting at [0, 0]): the virtual tunnel coordinate u (continues
+   * the real s, so slot rows / ring bays repeat every bay in u) → virtual depth Z, piecewise linear. Ref 05
+   * draws the far bays longer than the near ones (ring radii 288,192,122,85,66,54,45 px): one ring per
+   * knot reproduces that while every bay keeps its slot rows and lid pair. Without knots Z = u.
+   */
+  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = []) {
     const f = path.frame(sF);
     this.c0 = tubeCenterAt(path, sF);
     this.T = f.tan.clone(); this.U = f.up.clone(); this.Rt = f.right.clone();
@@ -466,6 +472,27 @@ export class ForcedTunnel {
     const rel = this.c0.clone().sub(eye);
     this.D0 = rel.dot(this.T);
     this.q = rel.negate().addScaledVector(this.T, this.D0); // eye − c0 minus its axial part
+  }
+  private interp(x: number, a: 0 | 1) {
+    const k = this.knots, b = (1 - a) as 0 | 1;
+    if (k.length < 2) return x;
+    for (let i = 1; i < k.length; i++) {
+      if (x <= k[i][a] || i === k.length - 1) {
+        const t = (x - k[i - 1][a]) / (k[i][a] - k[i - 1][a]);
+        return k[i - 1][b] + t * (k[i][b] - k[i - 1][b]);
+      }
+    }
+    return x;
+  }
+  /** virtual depth Z of tunnel coordinate u (see `knots`) */
+  zOfU(u: number) { return this.interp(u, 0); }
+  /** tunnel coordinate u of virtual depth Z */
+  uOfZ(Z: number) { return this.interp(Z, 1); }
+  /** 0 = forced perspective (closed), 1 = folded away outside the real tube: the rider camera within
+   *  `near`…`far` units (along the axis) of the section start opens it, so the ride into 06 is untouched */
+  openFor(cam: THREE.Vector3, near = 18, far = 34) {
+    const d = this.c0.clone().sub(cam).dot(this.T);
+    return 1 - THREE.MathUtils.smoothstep(d, near, far);
   }
   zOf(Z: number) { return Z / (1 + Z / this.L); }
   kOf(Z: number) { return (this.D0 + this.zOf(Z)) / (this.D0 + Z); }
@@ -522,7 +549,7 @@ export class ForcedTunnel {
         const k = i * (radial + 1) + j;
         p.toArray(pos, k * 3);
         d.toArray(nor, k * 3);
-        uv[k * 2] = j / radial; uv[k * 2 + 1] = this.sF + Z;
+        uv[k * 2] = j / radial; uv[k * 2 + 1] = this.sF + this.uOfZ(Z);
         this.T.toArray(ax, k * 3); this.U.toArray(au, k * 3);
         ext[k] = Z - z;
         // open: just outside the real (flaring) tube wall at the same depth
@@ -548,6 +575,84 @@ export class ForcedTunnel {
     g.setIndex(idx);
     g.computeBoundingSphere();
     return g;
+  }
+
+  /**
+   * The virtual tunnel's water surface: a flat chord across the section at `level` (relative to the tube
+   * centre, along U) — uv.x 0..1 across, uv.y = sF + u. Because the section is a depth compression along
+   * eye rays, this chord sits exactly on the real stream at the section start and rises above it further
+   * in, so it takes over from the real water ribbon without a seam. Morph "open": dropped below the
+   * real tube bottom.
+   */
+  chordGeometry(level: number, cols = 12, steps = 64): THREE.BufferGeometry {
+    const rows = steps + 1;
+    const n = rows * (cols + 1);
+    const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);
+    const ext = new Float32Array(n), opn = new Float32Array(n * 3);
+    const o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
+    const w = Math.sqrt(Math.max(0, this.R * this.R - level * level)) * 0.995;
+    for (let i = 0; i < rows; i++) {
+      const t = i / steps;
+      const Dv = 1 / (1 / this.D0 - t * (1 / this.D0 - 1 / (this.D0 + this.zEnd)));
+      const Z = Math.max(0, Dv - this.D0);
+      const z = this.zOf(Z);
+      const sReal = this.sF + z;
+      const fr = this.path.frame(sReal);
+      tubeCenterAt(this.path, sReal, cr);
+      const rr = this.path.radius(sReal);
+      for (let j = 0; j <= cols; j++) {
+        const x = (j / cols * 2 - 1) * w;
+        o.copy(this.Rt).multiplyScalar(x).addScaledVector(this.U, level);
+        this.point(Z, o, p);
+        const k = i * (cols + 1) + j;
+        p.toArray(pos, k * 3);
+        this.U.toArray(nor, k * 3);
+        uv[k * 2] = j / cols; uv[k * 2 + 1] = this.sF + this.uOfZ(Z);
+        ext[k] = Z - z;
+        o.copy(cr).addScaledVector(fr.right, x * (rr / this.R)).addScaledVector(fr.up, -rr - 0.6);
+        o.toArray(opn, k * 3);
+      }
+    }
+    const idx: number[] = [];
+    for (let i = 0; i < rows - 1; i++) {
+      for (let j = 0; j < cols; j++) {
+        const a = i * (cols + 1) + j, b = a + cols + 1;
+        idx.push(a, a + 1, b, b, a + 1, b + 1);
+      }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+    g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    g.setAttribute('fgExtra', new THREE.BufferAttribute(ext, 1));
+    g.morphAttributes.position = [new THREE.BufferAttribute(opn, 3)];
+    g.setIndex(idx);
+    g.computeBoundingSphere();
+    return g;
+  }
+
+  /**
+   * Lay instanced objects (rings, lids) into the virtual tunnel: item at tunnel coordinate `u`, offset `o`
+   * from the centre line, rotation `basis` (local Z must run along the tube), scale `s`; when open they move
+   * to `openPos` with in-plane scale `openScale`. Writes the instance matrices and the per-instance
+   * `fgExtra` (virtual − real depth) the FG_VIRTUAL glow reads.
+   */
+  placeInstances(mesh: THREE.InstancedMesh, items: { u: number; o: THREE.Vector3; basis: THREE.Matrix4; s: THREE.Vector3; openPos: THREE.Vector3; openScale: number }[], open: number) {
+    const m = new THREE.Matrix4();
+    let ext = mesh.geometry.getAttribute('fgExtra') as THREE.InstancedBufferAttribute | undefined;
+    if (!ext || ext.count < items.length) {
+      ext = new THREE.InstancedBufferAttribute(new Float32Array(Math.max(1, items.length)), 1);
+      mesh.geometry.setAttribute('fgExtra', ext);
+    }
+    items.forEach((it, i) => {
+      const Z = this.zOfU(it.u);
+      this.matrix(Z, it.o, it.basis, it.s, open, it.openPos, it.openScale, m);
+      mesh.setMatrixAt(i, m);
+      ext!.setX(i, (Z - this.zOf(Z)) * (1 - open));
+    });
+    mesh.count = items.length;
+    mesh.instanceMatrix.needsUpdate = true;
+    ext.needsUpdate = true;
   }
 }
 

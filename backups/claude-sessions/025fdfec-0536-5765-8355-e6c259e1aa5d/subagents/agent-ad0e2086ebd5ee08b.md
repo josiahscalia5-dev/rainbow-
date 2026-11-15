@@ -782,3 +782,216 @@ Backticks inside the GLSL template literal. Fixing.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T22:00:15.882Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 -c \"\nfrom PIL import Image\nb=Image.open('qa/pilot05/wave5/water/it01/05.png').convert('RGB')\nb.crop((0,1000,864,1536)).save('$W/it01_near.png')\nb.crop((0,520,864,1000)).save('$W/it01_mid.png')\n\"", "description": "Crop near and mid field of it01"}`
+
+### 🧑 User — 2026-11-15T22:00:16.282Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:00:18.483Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/it01_near.png"}`
+
+### 🧑 User — 2026-11-15T22:00:18.505Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:00:41.488Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/it01_mid.png"}`
+
+### 🧑 User — 2026-11-15T22:00:41.525Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:01:22.835Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md", "old_string": "  the ref (left at s≈139.5 / y 800, right at s≈149.7 / y 680); amplitude 0.45 u is just too small.\n", "new_string": "  the ref (left at s≈139.5 / y 800, right at s≈149.7 / y 680); amplitude 0.45 u is just too small.\n\n### it01 (qa/pilot05/wave5/water/it01/05.png) — tsc ok, 0 console errors, 121 calls, 608,313 tris\nChanges (all `src/vfx/waterRibbon.ts` FRAG): `sbend` 0.45 → 1.05·sin + 0.18·sin(2nd harmonic); band clamp now\nthins the bank-side band (≥0.6×) instead of collapsing the core; …[+878 chars]`
+
+### 🧑 User — 2026-11-15T22:01:22.858Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T22:01:24.535Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    brush = sw * (vnoise(vec2(xb * bK, v5 * 0.11 + 5.0)) - 0.5) * (1.0 - smoothstep(0.12, 0.35, fwx * bK));", "new_string": "    brush = sw * (vnoise(vec2(xb * bK, v5 * 0.11 + 5.0)) - 0.5) * (1.0 - smoothstep(0.05, 0.12, fwx * bK));"}`
+
+### 🧑 User — 2026-11-15T22:01:24.567Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:01:29.490Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float segN = smoothstep(0.3, 0.66, vnoise(vec2(lat * 1.8 + 4.0, floor(phN * 0.159155 + 0.25) * 1.37)));\n    float crestN = (pow(cN, 24.0) + 0.3 * pow(cN, 4.0)) * segN;\n    float troughN = (1.0 - cN) * (1.0 - cN) * (0.65 + 0.35 * vnoise(vec2(lat * 0.7, v5 * 0.9 + 6.0)));\n    // soft broad flow streaks (≈40 px wide, ≈1.5 u long) so the near water also reads as moving along\n    float strN = smoothstep(0.58, 0.86, vnoise(vec2(lat * 5.0 + 0.6 * sin(v5 * 0.8), v5 * 0.65 + 31.0)));\n    float rNea …[+562 chars]`
+
+### 🧑 User — 2026-11-15T22:01:29.519Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:01:31.441Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float silkL = max(silkA, silkB * mix(0.45, 0.8, pinkM)) * (1.0 - near5);", "new_string": "    // (near field: the silk lines stay on the pink sweeps only, as brushed satin; on cyan they read as road lines)\n    float silkL = max(silkA, silkB * mix(0.45, 0.8, pinkM)) * (1.0 - near5 * (1.0 - pinkM));"}`
+
+### 🧑 User — 2026-11-15T22:01:31.471Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:01:32.941Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      c5 += mix(uC5Bright, uP5Light, pinkM) * strN * 0.12 * near5;", "new_string": "      c5 += mix(vec3(0.6, 1.3, 1.9), uP5Streak, pinkM) * strN * 0.45 * near5 * (1.0 - pinkM);"}`
+
+### 🧑 User — 2026-11-15T22:01:32.970Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:01:35.296Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws)) + flB * near5\n        + flC * near5 * 0.75", "new_string": "    // (the big near flares sit mostly on the swell crests: light catching the heaving surface)\n    c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))\n        + flB * near5 * (0.35 + 1.4 * pow(cN, 6.0) * segN) + flC * near5 * 0.75"}`
+
+### 🧑 User — 2026-11-15T22:01:35.333Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:01:39.392Z
+
+Adding a "behind Benny" pink metric (x 245–600, y 1200–1360) to the measurement, then capture it02.
+
+### 🤖 Claude — 2026-11-15T22:01:45.462Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 - <<'EOF'\np='/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/wmeasure.py'\nt=open(p).read()\nt=t.replace(\"        fins = pk[1200:1360, 100:750].mean() * 100\\n\",\"        fins = pk[1200:1360, 100:750].mean() * 100\\n        behind = pk[1200:1360, 245:600].mean() * 100\\n\")\nt=t.replace(\"print(' fins pink %.1f%% | side\",\"print(' fins pink %.1f%% behind %.1f%% | side\")\nt=t.replace(\"            fins, sideL,\",\" …[+834 chars]`
+
+### 🧑 User — 2026-11-15T22:02:04.505Z
+
+> ↩︎ result: fins pink 14.1% behind 1.1% | side pink L 7.8% R 4.8% | near cyan+blue 58.5% lumStd 40.0 p5 106 p95 247 | glints near 157 mid 409
+>  fins pink 9.7% behind 0.2% | side pink L 6.9% R 6.1% | near cyan+blue 98.2% lumStd 17.4 p5 105 p95 164 | glints near 53 mid 163
+>  fins pink 14.2% behind 0.0% | side pink L 51.4% R 57.7% | near cyan+blue 93.5% lumStd 35.6 p5 92 p95 203 | glints near 91 mid 230
+> TSC_OK
+> 05 → qa/pilot05/wave5/water/it02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":121,"tris":608313,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> errors 0
+> == qa/pilot05/wave5/water/it02/05.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lumStd pinkRuns
+>   560   1.7   0.5  31.3  0.6  18.6 | #7BB8FF  #ED52EB |  37.9  0-7 16-21 64-80 88-131 167-172 174-184 192-200 203-208 231-242 244-255 277-295 310-319 478-485 681-694 711-730 750-755 757-762 770-779 811-821 828-839 842-848
+>   600  10.5   0.7  29.4  0.6  31.8 | #5499F1  #FF5BF2 |  41.3  0-23 98-121 135-141 144-153 184-189 191-207 209-220 329-365 376-386 494-501 503-510 515-524 787-803 805-821 824-829
+>   700  29.3   1.1  20.9  0.5  37.7 | #35A9FF  #FB58ED |  38.0  0-10  …[+1261 chars]
+
+### 🤖 Claude — 2026-11-15T22:02:06.474Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/it02_near.png"}`
+
+### 🧑 User — 2026-11-15T22:02:06.489Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:02:14.230Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/it02_mid.png"}`
+
+### 🧑 User — 2026-11-15T22:02:14.261Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:02:29.055Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md", "old_string": "mid field, near pink sweeps flat (no streaks), crest arcs soft.\n", "new_string": "mid field, near pink sweeps flat (no streaks), crest arcs soft.\n\n### it02 — tsc ok, 0 errors, 121 calls, 608,313 tris\nChanges: brush only where strands ≥ ≈10 px (near field); near `strN` = thin wavy speed dashes (silk) instead of\nbroad vnoise bands (removed the blocky look); silk lines kept on the near PINK sweeps (brushed satin); big near\nflares weighted onto swell crests; crest pow 24 → 40.\nMeasured: …[+292 chars]`
+
+### 🧑 User — 2026-11-15T22:02:29.080Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T22:02:30.358Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float crestN = (pow(cN, 40.0) + 0.22 * pow(cN, 6.0)) * segN;", "new_string": "    float crestN = (pow(cN, 40.0) + 0.15 * pow(cN, 6.0)) * segN;"}`
+
+### 🧑 User — 2026-11-15T22:02:30.389Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:02:32.812Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      c5 *= 1.0 - near5 * (0.34 * troughN * (1.0 - 0.5 * pinkM) + 0.06);\n      vec3 crestCol = mix(vec3(0.75, 1.55, 2.2), uP5Streak * 1.2, pinkM);\n      c5 += crestCol * crestN * 0.9 * near5 * (1.0 - 0.45 * pinkM);", "new_string": "      c5 *= 1.0 - near5 * 0.3 * troughN * (1.0 - 0.5 * pinkM);\n      vec3 crestCol = mix(vec3(0.85, 1.65, 2.3), uP5Streak * 1.2, pinkM);\n      c5 += crestCol * crestN * 1.7 * near5 * (1.0 - 0.45 * pinkM);"}`
+
+### 🧑 User — 2026-11-15T22:02:32.845Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:02:37.617Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float flC = flowGlint(vec2(lat * 4.0, v5 * 3.2 + 0.3), 0.5, 7.0, 2.6, 1.0, uTime + 1.3);\n    float flD = flowGlint(vec2(wq * 16.0, v5 * 0.32 + 7.0), 0.35, 6.0, 2.4, 0.3, uTime + 4.1);\n    // (the big near flares sit mostly on the swell crests: light catching the heaving surface)\n    c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))\n        + flB * near5 * (0.35 + 1.4 * pow(cN, 6.0) * segN) + flC * near5 * 0.75 + flD * (1.0 - near5) * (1.0 - smoothstep(0.2, …[+551 chars]`
+
+### 🧑 User — 2026-11-15T22:02:37.651Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:02:43.152Z
+
+Also restoring near-field base brightness (median went #06A5FF → #0C86E7 at y 1300; ref #02A2F7) by narrowing the troughs.
+
+### 🤖 Claude — 2026-11-15T22:02:44.909Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float troughN = (1.0 - cN) * (1.0 - cN) * (0.65 + 0.35 * vnoise(vec2(lat * 0.7, v5 * 0.9 + 6.0)));", "new_string": "    float troughN = pow(1.0 - cN, 3.0) * (0.65 + 0.35 * vnoise(vec2(lat * 0.7, v5 * 0.9 + 6.0)));"}`
+
+### 🧑 User — 2026-11-15T22:02:44.937Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:02:46.264Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float H5 = clamp(swell * 0.8 + silkL * 0.35 + 0.12 * near5, 0.0, 1.0);", "new_string": "    float H5 = clamp(swell * 0.8 + silkL * 0.35 + 0.18 * near5, 0.0, 1.0);"}`
+
+### 🧑 User — 2026-11-15T22:02:46.294Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:02:50.167Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/water/it03 2>&1 | tail -2; python3 -c \"\nimport json; d=json.load(open('qa/capture_log.json')); print('errors', len(d['errors'])); [print(e[:600]) for e in d['errors'][:3]]\"; python3 -I $W/wmeasure.py qa/pilot05/wave5/water/it03/05.png; python3 -c \"\nfrom PIL import Image\nb=Image.open('qa/pilot05/wave5/water/it03/05.png').convert('RGB')\nb.crop((0,1000,864,1536)).sav …[+268 chars]`
+
+### 🧑 User — 2026-11-15T22:03:07.044Z
+
+> ↩︎ result: TSC_OK
+> 05 → qa/pilot05/wave5/water/it03/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":121,"tris":608313,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> errors 0
+> == qa/pilot05/wave5/water/it03/05.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lumStd pinkRuns
+>   560   1.6   0.5  31.2  0.6  18.7 | #7CB9FF  #ED52EB |  37.9  0-7 16-21 64-80 88-131 167-172 174-184 192-200 203-208 231-242 244-255 277-295 310-319 478-485 681-694 711-730 750-755 757-762 770-779 811-821 828-839 842-848
+>   600   9.9   0.6  28.8  0.6  32.7 | #599DF3  #FF5DF3 |  41.3  0-23 98-121 135-141 144-153 184-189 191-207 209-220 329-365 376-386 494-499 515-524 787-803 805-821 824-829
+>   700  26.8   1.1  19.9  0.4  40.5 | #3DABFF  #FC5CEE |  36.8  0-10 338-343 346-379 384-463 782-803
+>   800  32.6   0.2  29.9 12.8  22.0 | #1DA7FF  #FC57F1 |  38.9  25-84 87-146 149-191 201-226 628-689 694-707
+>   900  30.3   0.3  25.1  6.5  33.6 | #19A9FF  #F853EC |  40.8  0-106 110-116 135-152 156-179 655-665 673-706
+>  1000  26.5   0.3  32.1 30.5   8.9 | #12A4FF  #F954EE |  29.5  59-184 540-553 723-829 848-853
+>  1100  25.8   0.3  59.7  0.6  10.6 | #0DA2FF  #FF53C3 | …[+959 chars]
+
+### 🤖 Claude — 2026-11-15T22:03:08.275Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/tri03.png"}`
+
+### 🧑 User — 2026-11-15T22:03:08.539Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:03:13.298Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/it03_near.png"}`
+
+### 🧑 User — 2026-11-15T22:03:13.324Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:03:30.585Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 -c \"\nfrom PIL import Image\nb=Image.open('qa/pilot05/wave5/water/it03/05.png').convert('RGB')\nb.crop((400,560,864,1000)).resize((696,660),Image.LANCZOS).save('$W/it03_midR.png')\"", "description": "Zoom right mid-field of it03"}`
+
+### 🧑 User — 2026-11-15T22:03:30.863Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:03:32.763Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/it03_midR.png"}`
+
+### 🧑 User — 2026-11-15T22:03:32.786Z
+
+> ↩︎ result: [image]
+

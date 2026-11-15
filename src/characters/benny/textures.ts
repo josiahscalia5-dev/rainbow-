@@ -125,9 +125,11 @@ export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THRE
   const stripes: [number, number, string, string, string][] = [
     // [v0, v1, highlight, base, groove]   (v measured from bottom)
     [0.0, 0.3, '#ffffff', C.white, C.whiteShade],
-    [0.3, 0.55, C.purpleLight, C.purple, C.purpleDark],
-    [0.55, 0.76, '#ffffff', C.white, C.whiteShade],
-    [0.76, 0.92, C.purpleLight, C.purple, C.purpleDark],
+    // wave 5 (ref 05 rear, centre column: white 24 / purple 33 / white 19 px, then a purple band around the pom base):
+    // wider middle purple, thinner upper white, upper purple band starts lower so it shows beside the pom
+    [0.3, 0.58, C.purpleLight, C.purple, C.purpleDark],
+    [0.58, 0.73, '#ffffff', C.white, C.whiteShade],
+    [0.73, 0.92, C.purpleLight, C.purple, C.purpleDark],
     [0.92, 1.0, '#ffffff', C.white, C.whiteShade],
   ];
   hctx.fillStyle = '#000';

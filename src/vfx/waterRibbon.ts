@@ -407,7 +407,7 @@ void main() {
     // ribbons fray into light streaks); crisp per-pixel strands, so no violet pink-over-cyan blend.
     // Faded out where a strand would be < ≈3 px wide (no shimmer in the far field)
     float bK = 11.0;
-    brush = sw * (vnoise(vec2(xb * bK, v5 * 0.11 + 5.0)) - 0.5) * (1.0 - smoothstep(0.12, 0.35, fwx * bK));
+    brush = sw * (vnoise(vec2(xb * bK, v5 * 0.11 + 5.0)) - 0.5) * (1.0 - smoothstep(0.05, 0.12, fwx * bK));
   }
   float sdL = xb + offL + pert;
   float sdR = xb - offR + pert;
@@ -544,11 +544,11 @@ void main() {
     float phN = (v5 + 0.2 * dlN * dlN) * 11.4 + 2.4 * vnoise(vec2(lat * 0.9, v5 * 0.7 + 2.0));
     float cN = 0.5 + 0.5 * sin(phN);
     float segN = smoothstep(0.3, 0.66, vnoise(vec2(lat * 1.8 + 4.0, floor(phN * 0.159155 + 0.25) * 1.37)));
-    float crestN = (pow(cN, 24.0) + 0.3 * pow(cN, 4.0)) * segN;
-    float troughN = (1.0 - cN) * (1.0 - cN) * (0.65 + 0.35 * vnoise(vec2(lat * 0.7, v5 * 0.9 + 6.0)));
-    // soft broad flow streaks (≈40 px wide, ≈1.5 u long) so the near water also reads as moving along
-    float strN = smoothstep(0.58, 0.86, vnoise(vec2(lat * 5.0 + 0.6 * sin(v5 * 0.8), v5 * 0.65 + 31.0)));
-    float rNear = 0.42 + 0.42 * crestN - 0.3 * troughN + 0.16 * strN;
+    float crestN = (pow(cN, 40.0) + 0.15 * pow(cN, 6.0)) * segN;
+    float troughN = pow(1.0 - cN, 3.0) * (0.65 + 0.35 * vnoise(vec2(lat * 0.7, v5 * 0.9 + 6.0)));
+    // short thin speed streaks along the current (≈80–100 px dashes, ≈85 px apart, wavy)
+    float strN = silk(lat, v5 * 5.0 + 60.0, 2.6, 21.0, 0.3);
+    float rNear = 0.42 + 0.42 * crestN - 0.3 * troughN;
     float swell = mix(rFar, rNear, near5);
     swell = mix(0.5, swell, 1.0 - smoothstep(0.3, 0.7, fwidth(wq * 7.0)) * (1.0 - near5));
     float silkA = silk(wq, v5, 15.0, 0.0, 0.16);
@@ -556,8 +556,9 @@ void main() {
     #ifndef LOW_Q
     silkB = silk(wq, v5 * 1.35 + 40.0, 38.0, 7.0, 0.1);
     #endif
-    float silkL = max(silkA, silkB * mix(0.45, 0.8, pinkM)) * (1.0 - near5);
-    float H5 = clamp(swell * 0.8 + silkL * 0.35 + 0.12 * near5, 0.0, 1.0);
+    // (near field: the silk lines stay on the pink sweeps only, as brushed satin; on cyan they read as road lines)
+    float silkL = max(silkA, silkB * mix(0.45, 0.8, pinkM)) * (1.0 - near5 * (1.0 - pinkM));
+    float H5 = clamp(swell * 0.8 + silkL * 0.35 + 0.18 * near5, 0.0, 1.0);
 
     // cyan: deep azure troughs -> electric cyan -> bright cyan crests; light seam beside each band
     vec3 cy = mix(uC5Deep, uC5, smoothstep(0.26, 0.74, H5));
@@ -593,10 +594,10 @@ void main() {
     // crests (the reflection of the lit tunnel on the heaving surface; on the pink sweeps a light-pink
     // sheen), soft flow streaks
     if (near5 > 0.0) {
-      c5 *= 1.0 - near5 * (0.34 * troughN * (1.0 - 0.5 * pinkM) + 0.06);
-      vec3 crestCol = mix(vec3(0.75, 1.55, 2.2), uP5Streak * 1.2, pinkM);
-      c5 += crestCol * crestN * 0.9 * near5 * (1.0 - 0.45 * pinkM);
-      c5 += mix(uC5Bright, uP5Light, pinkM) * strN * 0.12 * near5;
+      c5 *= 1.0 - near5 * 0.3 * troughN * (1.0 - 0.5 * pinkM);
+      vec3 crestCol = mix(vec3(0.85, 1.65, 2.3), uP5Streak * 1.2, pinkM);
+      c5 += crestCol * crestN * 1.7 * near5 * (1.0 - 0.45 * pinkM);
+      c5 += mix(vec3(0.6, 1.3, 1.9), uP5Streak, pinkM) * strN * 0.45 * near5 * (1.0 - pinkM);
       // Fresnel-style sheen toward the screen sides (the surface bulges, its flanks face away)
       c5 = mix(c5, mix(vec3(0.5, 1.2, 1.9), uP5Light, pinkM), near5 * 0.18 * smoothstep(0.8, 1.6, abs(dlN)));
     }
@@ -613,10 +614,11 @@ void main() {
     float flA = flowGlint(vec2(wq * 6.0, v5 * 0.075), 0.75, 18.0, 3.8, 0.0, uTime);
     float flB = flowGlint(vec2(lat * 1.6, v5 * 1.4 + 0.5), 0.6, 26.0, 3.2, 1.0, uTime + 2.7);
     // many small twinkling 4-point stars (ref 05: dozens of tiny white glints in the near and mid water)
-    float flC = flowGlint(vec2(lat * 4.0, v5 * 3.2 + 0.3), 0.5, 7.0, 2.6, 1.0, uTime + 1.3);
-    float flD = flowGlint(vec2(wq * 16.0, v5 * 0.32 + 7.0), 0.35, 6.0, 2.4, 0.3, uTime + 4.1);
-    c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws)) + flB * near5
-        + flC * near5 * 0.75 + flD * (1.0 - near5) * (1.0 - smoothstep(0.2, 0.5, fws)) * 0.7)
+    float flC = flowGlint(vec2(lat * 4.0, v5 * 3.2 + 0.3), 0.7, 8.0, 2.6, 1.0, uTime + 1.3);
+    float flD = flowGlint(vec2(wq * 16.0, v5 * 0.32 + 7.0), 0.5, 6.0, 2.4, 0.3, uTime + 4.1);
+    // (the big near flares sit mostly on the swell crests: light catching the heaving surface)
+    c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))
+        + flB * near5 * (0.35 + 1.4 * pow(cN, 6.0) * segN) + flC * near5 + flD * (1.0 - near5) * (1.0 - smoothstep(0.2, 0.5, fws)) * 0.9)
         * (1.0 - 0.5 * pinkM);
     #endif
     col = mix(col, c5, sw);

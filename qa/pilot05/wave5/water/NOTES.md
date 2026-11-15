@@ -28,3 +28,23 @@ Max 5 captures `qa/pilot05/wave5/water/itNN`; then one regression capture 03 04 
 * Band centre x (baseline): L y700 380, y800 200, y900 165, y1000 108; R 769, 713, 739, 760 (R nearly straight).
   Ref: L 350, 120, 27, off; R 780, 670, 650, 790 (≈±110 px S-swing). Phase of my `sbend` already matches
   the ref (left at s≈139.5 / y 800, right at s≈149.7 / y 680); amplitude 0.45 u is just too small.
+
+### it01 (qa/pilot05/wave5/water/it01/05.png) — tsc ok, 0 console errors, 121 calls, 608,313 tris
+Changes (all `src/vfx/waterRibbon.ts` FRAG): `sbend` 0.45 → 1.05·sin + 0.18·sin(2nd harmonic); band clamp now
+thins the bank-side band (≥0.6×) instead of collapsing the core; 05 `trail` block DELETED; new near-band steering
+(main bands glide to Benny ±1.45 u, half width 0.34 u, from 3 u ahead) so each band is one continuous ribbon;
+brushed band edges; near field = bowed "∩" swell crests (λ 0.55 u) + troughs + flare/star field flC/flD.
+Measured (baseline → it01): fins = gone (no pink runs between x 245–640 at y 1200–1300; y1200 runs 46–171 /
+644–761, y1300 0–110 / 679–769, y1500 0–22 / 737–863 = bands at the image sides). Near field lumStd 17.4 → 35.6
+(ref 40.0), p95 164 → 203 (ref 247), p5 105 → 92, glints near 53 → 91 (ref 157), mid 163 → 230 (ref 409).
+Band centres: L y800 200 → ≈130, y900 165 → ≈110; R y800 713 → ≈660, y900 739 → ≈680 (R now swings).
+Problems seen: near field blocky (vertical strN streak bands × trough bands), brushed edges look torn in the
+mid field, near pink sweeps flat (no streaks), crest arcs soft.
+
+### it02 — tsc ok, 0 errors, 121 calls, 608,313 tris
+Changes: brush only where strands ≥ ≈10 px (near field); near `strN` = thin wavy speed dashes (silk) instead of
+broad vnoise bands (removed the blocky look); silk lines kept on the near PINK sweeps (brushed satin); big near
+flares weighted onto swell crests; crest pow 24 → 40.
+Measured: pink behind Benny (x245–600, y1200–1360) 0.0 % (baseline 0.2 %, ref 1.1 %); near lumStd 34.4,
+p95 198, p5 89; glints near 86 / mid 228. Mid-field band edges smooth again; S-bends unchanged from it01.
+Left: crests still soft/dim, too few glints, p5 slightly darker than ref (89 vs 106).

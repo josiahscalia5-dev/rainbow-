@@ -26,3 +26,18 @@
 Crown centre column: ref white 903–921 / purple 923–955 / white 957–980 / cuff 982–1027; game white 889–914 / purple 916–943 / white 945–969 / cuff 970+.
 → Lift 0.12 confirmed in the real game. Left: lower body tapers too fast (16–50 px narrow in the bottom 60 px, 7 px low),
 star 12 px low / 19 px too far in, top white stripe a bit tall vs the purple stripe.
+
+### it02 (22:02) — code changes + re-export, live 05 capture
+* runtime.ts `BENNY_RIDE_LIFT` 0.22 → 0.12 (it01 A/B above).
+* build.ts `deformBody`/new `bottomGain`: fuller, flatter plush base (BENNY_DIMS flat 0 → 0.8, pear 0.13 → 0.10,
+  stretch 0.10 → 0.03; new dims bulgeY/bulgeW/flatCap). Lab g05 sweep (scratch, no game capture) chose it.
+* build.ts star: BENNY_DIMS starAng/starY/starR = 137° / +0.065 / 0.77 (was 143° / +0.015 / 0.79).
+* textures.ts `knitCrownTextures`: stripes W 0–.30 / P .30–.58 / W .58–.73 / P .73–.92 / W (was P .30–.55, W .55–.76, P .76–.92).
+* benny-lab.ts: `&dims=<json>` override for lab sweeps. GLB re-exported 1,128,440 B `glTF`.
+| | ref | it01 (lift 0.12) | it02 |
+|---|---|---|---|
+| bbox | x 230–612 y 767–≈1185 | x 231–612 y 766–1188 | x 231–612 y 766–1196 |
+| hat incl pom / body (bbox) | 62 / 38 % | 62.3 / 37.7 % | 61.0 / 38.7 % |
+| star centre | (519, 953) +0.64 hw | (500, 965) +0.57 | (512, 955) +0.65 |
+| body width y 1129/1149/1159/1169/1179 | 258/228/209/181/107 | 242/199/169/131/61 | 257/228/202/178/147 |
+| pom | 152×130 | 149×131 | 149×131 |

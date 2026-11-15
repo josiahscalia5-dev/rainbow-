@@ -1,5 +1,14 @@
 # Screen 05: World Labs status and the manual Marble route
 
+## ▶ Status on account 6 (2026-11-15 ~22:05 UTC, branch `claude/rainbow-3d-account-transfer-syorak`)
+| Integration | State |
+|---|---|
+| claude.ai connector **World Labs Atlas** | installed, `connected`, enabled in this session; 11 tools load (`list_projects`, `create_image_upload`, `import_image`, `images2PosedRGBD`, `atlasGenerate`, `atlasTextToImage`, `atlasChisel`, `posedImages2Splats`, `splats2Mesh`, `get_asset`, `get_operation`). This is the ONE Atlas MCP integration |
+| `list_projects` (free, read-only; run twice) | **error:** `this sign-in has no active Atlas account. Ask the user to open https://atlas.worldlabs.ai and finish signing up, then try again` → no projects or per-project tools can be listed yet |
+| Plugin `worldlabs@worldlabs` 0.2.2 | installed (user scope) for its skills `atlas-blender`, `atlas-splats`, `atlas-flythrough`, `worldlabs-cli`. Its own copy of the Atlas MCP server (`plugin:worldlabs:worldlabs`) is **disabled for this project** so the tools are not duplicated (`scripts/setup-worldlabs-plugin.sh`, run by the environment setup script in every fresh container). Its skills load from the next session |
+| Credits | nothing generated, nothing spent |
+| Marble | not an API; the user builds the washer world at https://marble.worldlabs.ai and hands over the export (below). `.glb`, `.ply` and `.spz` are stored with Git LFS. The Blender import tool reads `.glb` (mesh) and `.ply` (splats); a `.spz`-only export needs a `.ply` or `.glb` export as well |
+
 Checked 2026-11-15 ~20:10 UTC from the Rainbow cloud session (branch `ccr-d4bb0ad3-8ycajb`). Nothing was
 generated and **no credits were spent**.
 
@@ -60,7 +69,10 @@ yourself in the browser at https://marble.worldlabs.ai and give me the export.
 ### Export and hand-over
 
 1. In Marble, export the world as a **mesh (.glb)** and, if offered, the **splats (.ply)**.
-2. Upload them to this chat (or put them in `qa/worldlabs/05/import/`).
+2. Get them into the project, whichever works for the file size: attach them in the Claude chat if the app accepts
+   the file; or add them to the repo in `qa/worldlabs/05/import/` (GitHub's web upload takes files up to 25 MB;
+   larger files go up with `git` + Git LFS from a computer, already configured for `.glb/.ply/.spz`); or send a
+   direct download link (I then ask your approval to allow that one host in the cloud environment).
 3. I run the saved, credit-free import tool:
    `blender -b --python tools/blender/import_world_asset.py -- --in <world.glb> [--ply <splats.ply>] --name marble05 --target-radius 7.6 --out-dir qa/worldlabs/05/import`
    It aligns the tunnel to the Screen 05 course axis, scales it to the game's tube radius, measures radius, ring
