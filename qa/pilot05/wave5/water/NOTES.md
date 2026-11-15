@@ -48,3 +48,10 @@ flares weighted onto swell crests; crest pow 24 → 40.
 Measured: pink behind Benny (x245–600, y1200–1360) 0.0 % (baseline 0.2 %, ref 1.1 %); near lumStd 34.4,
 p95 198, p5 89; glints near 86 / mid 228. Mid-field band edges smooth again; S-bends unchanged from it01.
 Left: crests still soft/dim, too few glints, p5 slightly darker than ref (89 vs 106).
+
+### it03 — tsc ok, 0 errors, 121 calls, 608,313 tris
+Changes: crest core ×1.7, troughs (1−c)³, flC density 0.7, flD 0.5, near H5 +0.18.
+Measured: near lumStd 34.6, p95 213, p5 99, cyan median y1300 #1F9DFE (ref #02A2F7), y1400 #0B8EF0 (ref #0199F0);
+glints near 113 / mid 245. Right band centre x: y700 792, y780 678, y820 ≈650, y860 ≈660, y900 ≈675, y940 733,
+y980 767 → ±70 px S (baseline ±25 px; ref 780/670/650/790). Left band y740 297 → y780–980 ≈100–150.
+Seen: a hard corner in the right band at ≈(620, 813) = the bank clamp min() → next: smooth min.

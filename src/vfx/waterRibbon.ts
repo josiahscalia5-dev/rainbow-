@@ -235,6 +235,12 @@ float meander(float s, float hw) {
   return m * min(hw, 4.5);
 }
 
+// polynomial smooth minimum (k = blend width, units)
+float smin(float a, float b, float k) {
+  float h = max(k - abs(a - b), 0.0) / k;
+  return min(a, b) - h * h * k * 0.25;
+}
+
 // Combed flow lines (ref 05: thin bright streaks along the flow, 2–4 px apart in the mid-ground).
 // Anti-aliased lines across the flow (K slots per unit), each broken into tapered streak segments of
 // varying length/brightness. Line width is in PIXELS (≈1.2 px core + ≈2.5 px glow), so near the camera
@@ -385,12 +391,13 @@ void main() {
   if (freeK < 0.5) {
     // keep both bands inside the water (the core swing pushes one toward the bank on each bend);
     // the band pressed against the bank thins a little instead of collapsing the cyan core
+    // (smooth minimum: a hard min() put a visible corner in the band where the clamp starts)
     float Mb = M + sbend;
     float roomL = Mb + hw - 0.5 - offL, roomR = hw - 0.5 - Mb - offR;
-    wL = min(wL, max(roomL, 0.6 * wL));
-    wR = min(wR, max(roomR, 0.6 * wR));
-    offL = min(offL, Mb + hw - wL - 0.5);
-    offR = min(offR, hw - wR - 0.5 - Mb);
+    wL = smin(wL, max(roomL, 0.6 * wL), 0.5);
+    wR = smin(wR, max(roomR, 0.6 * wR), 0.5);
+    offL = smin(offL, Mb + hw - wL - 0.5, 1.2);
+    offR = smin(offR, hw - wR - 0.5 - Mb, 1.2);
     // 05 (wave 5): behind Benny both S-bands run on as broad brushed sweeps at the image sides (ref 05
     // near rows: pink at x≈90–265 / 550–770, glossy cyan between and under him). From ≈3 u ahead of him
     // their centres glide to his track ±1.45 u and narrow to ±0.34 u, so each band stays ONE continuous
@@ -544,7 +551,7 @@ void main() {
     float phN = (v5 + 0.2 * dlN * dlN) * 11.4 + 2.4 * vnoise(vec2(lat * 0.9, v5 * 0.7 + 2.0));
     float cN = 0.5 + 0.5 * sin(phN);
     float segN = smoothstep(0.3, 0.66, vnoise(vec2(lat * 1.8 + 4.0, floor(phN * 0.159155 + 0.25) * 1.37)));
-    float crestN = (pow(cN, 40.0) + 0.15 * pow(cN, 6.0)) * segN;
+    float crestN = (pow(cN, 30.0) + 0.15 * pow(cN, 6.0)) * segN;
     float troughN = pow(1.0 - cN, 3.0) * (0.65 + 0.35 * vnoise(vec2(lat * 0.7, v5 * 0.9 + 6.0)));
     // short thin speed streaks along the current (≈80–100 px dashes, ≈85 px apart, wavy)
     float strN = silk(lat, v5 * 5.0 + 60.0, 2.6, 21.0, 0.3);
@@ -596,7 +603,7 @@ void main() {
     if (near5 > 0.0) {
       c5 *= 1.0 - near5 * 0.3 * troughN * (1.0 - 0.5 * pinkM);
       vec3 crestCol = mix(vec3(0.85, 1.65, 2.3), uP5Streak * 1.2, pinkM);
-      c5 += crestCol * crestN * 1.7 * near5 * (1.0 - 0.45 * pinkM);
+      c5 += crestCol * crestN * 2.1 * near5 * (1.0 - 0.45 * pinkM);
       c5 += mix(vec3(0.6, 1.3, 1.9), uP5Streak, pinkM) * strN * 0.45 * near5 * (1.0 - pinkM);
       // Fresnel-style sheen toward the screen sides (the surface bulges, its flanks face away)
       c5 = mix(c5, mix(vec3(0.5, 1.2, 1.9), uP5Light, pinkM), near5 * 0.18 * smoothstep(0.8, 1.6, abs(dlN)));

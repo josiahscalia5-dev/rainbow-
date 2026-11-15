@@ -995,3 +995,51 @@ Also restoring near-field base brightness (median went #06A5FF → #0C86E7 at y 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T22:03:37.406Z
+
+The right band shows a hard corner at ≈(620, 813) where the bank clamp `min()` kicks in. I'll replace it with a smooth min, and push the near crest highlights a bit further.
+
+### 🤖 Claude — 2026-11-15T22:03:40.811Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float Mb = M + sbend;\n    float roomL = Mb + hw - 0.5 - offL, roomR = hw - 0.5 - Mb - offR;\n    wL = min(wL, max(roomL, 0.6 * wL));\n    wR = min(wR, max(roomR, 0.6 * wR));\n    offL = min(offL, Mb + hw - wL - 0.5);\n    offR = min(offR, hw - wR - 0.5 - Mb);", "new_string": "    // (smooth minimum: a hard min() put a visible corner in the band where the clamp starts)\n    float Mb = M + sbend;\n    float roomL = Mb + hw - 0.5 - offL, roomR = hw - 0.5 - Mb - offR;\n    wL = smin(wL, max(roomL, …[+164 chars]`
+
+### 🧑 User — 2026-11-15T22:03:40.873Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:03:42.814Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "// Combed flow lines (ref 05: thin bright streaks along the flow, 2–4 px apart in the mid-ground).", "new_string": "// polynomial smooth minimum (k = blend width, units)\nfloat smin(float a, float b, float k) {\n  float h = max(k - abs(a - b), 0.0) / k;\n  return min(a, b) - h * h * k * 0.25;\n}\n\n// Combed flow lines (ref 05: thin bright streaks along the flow, 2–4 px apart in the mid-ground)."}`
+
+### 🧑 User — 2026-11-15T22:03:42.841Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:03:44.114Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float crestN = (pow(cN, 40.0) + 0.15 * pow(cN, 6.0)) * segN;", "new_string": "    float crestN = (pow(cN, 30.0) + 0.15 * pow(cN, 6.0)) * segN;"}`
+
+### 🧑 User — 2026-11-15T22:03:44.141Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:03:45.368Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      c5 += crestCol * crestN * 1.7 * near5 * (1.0 - 0.45 * pinkM);", "new_string": "      c5 += crestCol * crestN * 2.1 * near5 * (1.0 - 0.45 * pinkM);"}`
+
+### 🧑 User — 2026-11-15T22:03:45.405Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:03:51.932Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md", "old_string": "Left: crests still soft/dim, too few glints, p5 slightly darker than ref (89 vs 106).\n", "new_string": "Left: crests still soft/dim, too few glints, p5 slightly darker than ref (89 vs 106).\n\n### it03 — tsc ok, 0 errors, 121 calls, 608,313 tris\nChanges: crest core ×1.7, troughs (1−c)³, flC density 0.7, flD 0.5, near H5 +0.18.\nMeasured: near lumStd 34.6, p95 213, p5 99, cyan median y1300 #1F9DFE (ref #02A2F7), y1400 #0B8EF0 (ref #0199F0);\nglints near 113 / mid 245. Right band centre x: …[+265 chars]`
+
+### 🧑 User — 2026-11-15T22:03:51.962Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T22:03:55.436Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/water/it04 2>&1 | tail -2; python3 -c \"\nimport json; d=json.load(open('qa/capture_log.json')); print('errors', len(d['errors'])); [print(e[:600]) for e in d['errors'][:3]]\"; python3 -I $W/wmeasure.py qa/pilot05/wave5/water/it04/05.png; python3 -c \"\nfrom PIL import Image\nb=Image.open('qa/pilot05/wave5/water/it04/05.png').convert('RGB')\nb.crop((400,560,864,1000)).re …[+176 chars]`
+

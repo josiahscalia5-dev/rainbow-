@@ -1114,3 +1114,11 @@ it02 measures on target: star (512, 955) +0.65 hw vs ref (519, 953) +0.64; body 
 > 171:    g.addColorStop(0.5, C.purpleLight);
 > 172:    g.addColorStop( …[+84 chars]
 
+### 🤖 Claude — 2026-11-15T22:03:52.377Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts", "old_string": "  const get = (n: string) => scene.getObjectByName(n)!;\n  const body = get('body');", "new_string": "  // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name\n  // starts with the given prefix (the GLB's own factors are the default; materials are shared by every clone)\n  if (typeof location !== 'undefined') {\n    const tint = new URLSearchParams(location.search).get('bennyTint');\n    for (const kv of tint ? tint.split(',') : []) …[+411 chars]`
+
+### 🧑 User — 2026-11-15T22:03:52.419Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/runtime.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+

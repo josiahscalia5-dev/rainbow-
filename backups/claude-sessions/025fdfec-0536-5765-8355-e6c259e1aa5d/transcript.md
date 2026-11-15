@@ -2827,3 +2827,46 @@ Saved. Now the repo side: LFS tracking for Marble splat files, a fix to the MCP 
 
 > 🔧 **Bash** `{"command": "for i in 1 2 3 4; do out=$(timeout 180 python3 scripts/rainbow-autosave.py --reason manual:worldlabs-setup 2>&1); echo \"$out\" | grep -E '\"pushed_verified\"|skipping' | head -2; echo \"$out\" | grep -q skipping || break; sleep 15; done; git fetch -q origin claude/rainbow-3d-account-transfer-syorak; echo \"local $(git rev-parse --short HEAD) remote $(git rev-parse --short origin/claude/rainbow-3d-account-transfer-syorak)\"; git show --stat HEAD | grep -E \"gitattributes|mcp.json|setup-worldlabs|cloud-env|MARBLE|benny.glb\" ; python3 -I scripts/autosave-status.py", "description":  …[+81 chars]`
 
+### 🧑 User — 2026-11-15T22:03:42.630Z
+
+> ↩︎ result: "pushed_verified": true,
+> local eadf7d8 remote eadf7d8
+>  .gitattributes                                     |   2 +
+>  .mcp.json.template                                 |   2 +-
+>  assets/models/benny.glb                            |   4 +-
+>  qa/worldlabs/05/MARBLE_MANUAL.md                   |  14 +-
+>  scripts/cloud-env-setup.sh                         |   6 +-
+>  scripts/setup-worldlabs-plugin.sh                  |  30 +++
+> AUTOSAVE OK | branch claude/rainbow-3d-account-transfer-syorak | scheduler daemon | last verified backup 2026-11-15T22:03:33+00:00 (0.1 min ago) | local eadf7d8 remote eadf7d8 (match) | uncommitted 1
+
+### 🤖 Claude — 2026-11-15T22:03:53.691Z
+
+World Labs is connected once, with no duplicate, but Atlas itself won't run until you finish your Atlas sign-up. Nothing was spent.
+
+**What's installed and signed in**
+
+| Piece | State |
+|---|---|
+| Atlas connector ("World Labs Atlas" in claude.ai) | Connected and signed in, with all 11 Atlas tools loaded in this session. This is your one Atlas connection. |
+| Official World Labs plugin 0.2.2 | Installed and enabled. It's kept for its four skills, which help prepare and import Atlas results for Blender and the game. |
+| Duplicate removed | The plugin also brings its own second copy of the Atlas connection. I turned off only that copy for this project, so the tools don't appear twice. The plugin itself is untouched. |
+| `list_projects` (free, read-only) | Ran twice. Both times it said: **"this sign-in has no active Atlas account."** |
+
+**What you need to do:** open https://atlas.worldlabs.ai with the same World Labs login you used for the connector and finish signing up. Then tell me and I'll run `list_projects` again (free). It will show which projects you have and which of the reconstruction tools each project can run. I'll show you any credit cost and wait for your approval before running anything paid.
+
+**Next session:** the plugin's skills were installed during this session, so they become active in your next session; nothing here needs restarting. The new environment's setup script (named "rainbow-") now reinstalls the plugin with its duplicate copy turned off. It also restores the 3D asset files and installs Blender 5.3.0 and the Android SDK 34. That script hasn't run in a fresh session yet, so it's unproven until then.
+
+**Marble:** the Marble-to-Blender import tool is preserved. I tested it in Blender 5.3.0 on our own Screen 05 model, and it aligned, measured and scaled it correctly. Splat files (`.ply`/`.spz`) can now be stored in the repo the same way as the other large 3D files, which avoids GitHub's 100 MB file limit. The tool reads `.glb` meshes and `.ply` splats, so if Marble gives you only `.spz`, export a `.glb` or `.ply` too. Ways to get the files to me are listed in `qa/worldlabs/05/MARBLE_MANUAL.md`:
+- attach them in the chat,
+- upload them to `qa/worldlabs/05/import/` on GitHub (25 MB per file through the website),
+- or send a download link; I'd then ask your approval to allow that one website.
+
+**Autosave:** pushed and verified at `eadf7d8`, with GitHub matching the local copy. This also needed one fix: the new environment was blocking the host GitHub uses to store large 3D files, so the re-exported Benny model wasn't backing up. I allowed that single host (`lfs.github.com`), and new models now back up normally.
+
+The game wasn't restarted. The environment, water, foam and Benny specialists are still working on Screen 05 from their saved progress, using Blender and the Playwright captures. I'll send the comparisons, test results and final commit when they finish.
+
+### 🧑 User — 2026-11-15T22:03:55.745Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

@@ -93,6 +93,20 @@ export function createBennyRuntime(
     furs.push(h);
   }
 
+  // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name
+  // starts with the given prefix (the GLB's own factors are the default; materials are shared by every clone)
+  if (typeof location !== 'undefined') {
+    const tint = new URLSearchParams(location.search).get('bennyTint');
+    for (const kv of tint ? tint.split(',') : []) {
+      const [prefix, hex] = kv.split(':');
+      if (!prefix || !/^[0-9a-f]{6}$/i.test(hex ?? '')) continue;
+      scene.traverse((o) => {
+        const m = o as THREE.Mesh;
+        if (m.isMesh && m.name.startsWith(prefix)) (m.material as THREE.MeshStandardMaterial).color?.set(`#${hex}`);
+      });
+    }
+  }
+
   const get = (n: string) => scene.getObjectByName(n)!;
   const body = get('body');
   const pom = get('pom');

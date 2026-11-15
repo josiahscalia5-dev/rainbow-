@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3913,
-   "sha256": "a20676c7851ff3142f6a0f5801ffc85a453b0468c81ec36bf5fd6747dea8c59a"
+   "sha256": "8e14bcfbcabfe8437c0479e013e3aada743bb58e38a63917e8cf7f5eb821e4f9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1498,8 +1498,8 @@
   },
   {
    "path": "qa/pilot05/wave5/water/NOTES.md",
-   "bytes": 4152,
-   "sha256": "305140d3efaf7d566dee8e3787e2a2b0329eb6084175c15a6773a40b4ec20bb6"
+   "bytes": 4738,
+   "sha256": "aa7cdf5a3f1513c424b9cddb37d3a5d606ad61b55085b6951d44f1c2ef811f76"
   },
   {
    "path": "qa/pilot05/wave5/water/it01/05.png",
@@ -1968,8 +1968,8 @@
   },
   {
    "path": "src/characters/benny/runtime.ts",
-   "bytes": 11834,
-   "sha256": "17162121d523bb37215a06b934b274ce27d60d033ba6efd9893f00a8697c2abd"
+   "bytes": 12537,
+   "sha256": "21cfc091a4c4b00a95e9886868f30479ba3b3d4a70375a11eb2744f832f2d5f3"
   },
   {
    "path": "src/characters/benny/textures.ts",
@@ -2103,8 +2103,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 42790,
-   "sha256": "95ce27e8dd96509eb19573846c9581d3e908017dcba0abe53123fc835318fd22"
+   "bytes": 43086,
+   "sha256": "1be74e0a28721a89af52b7b2bcbd5d8603e71a71d9986f21035d9828cb3e3d22"
   },
   {
    "path": "src/vfx/whirlpool.ts",
