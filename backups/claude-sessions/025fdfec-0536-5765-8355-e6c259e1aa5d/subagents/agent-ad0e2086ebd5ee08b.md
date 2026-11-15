@@ -1100,3 +1100,352 @@ Near field and S-bends look right. Before the last iteration I want to make sure
 > src/vfx/index.ts:233:      const rate = (quality === 'high' ? 150 : 55) * strength;
 > src/vfx/index.ts:256:      const n =  …[+1591 chars]
 
+### 🤖 Claude — 2026-11-15T22:05:03.653Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      float side = 1.45 + 0.05 * max(-db, 0.0);", "new_string": "      float side = 1.42 + 0.02 * max(-db, 0.0);"}`
+
+### 🧑 User — 2026-11-15T22:05:03.692Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:05:05.799Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float flC = flowGlint(vec2(lat * 4.0, v5 * 3.2 + 0.3), 0.7, 8.0, 2.6, 1.0, uTime + 1.3);", "new_string": "    float flC = flowGlint(vec2(lat * 4.0, v5 * 3.2 + 0.3), 0.8, 8.0, 2.6, 1.0, uTime + 1.3);\n    flC *= 0.4 + 0.9 * pow(cN, 3.0);            // the small stars cluster on the swell crests (not a uniform snow)"}`
+
+### 🧑 User — 2026-11-15T22:05:05.835Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:05:06.505Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 30,60p scripts/water-lab.mjs; git status --short docs/vfx | head", "description": "Read rest of water-lab script"}`
+
+### 🧑 User — 2026-11-15T22:05:06.567Z
+
+> ↩︎ result: } finally {
+>   await browser.close();
+>   await vite.close();
+> }
+> writeFileSync(`docs/vfx/water_stats${qArg === 'low' ? '_low' : ''}.json`, JSON.stringify(stats, null, 2));
+
+### 🤖 Claude — 2026-11-15T22:05:09.070Z
+
+The lab script overwrites the whole stats JSON, so I'll back it up and merge the 05 entry back afterwards.
+
+### 🤖 Claude — 2026-11-15T22:05:12.128Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; npx tsc --noEmit && echo TSC_OK; cp docs/vfx/water_stats_low.json $W/water_stats_low.bak.json; timeout 400 node scripts/water-lab.mjs 05 --q=low 2>&1 | tail -5; python3 - <<EOF\nimport json\nold=json.load(open('$W/water_stats_low.bak.json')); new=json.load(open('docs/vfx/water_stats_low.json'))\nold.update(new); json.dump(old, open('docs/vfx/water_stats_low.json','w'), indent=2)\nprint(sorted(old.keys()), new)\nEOF", "description": "LOW_Q compile check via water lab, …[+33 chars]`
+
+### 🧑 User — 2026-11-15T22:05:21.977Z
+
+> ↩︎ result: TSC_OK
+> docs/vfx/water_05_low.png {"preset":"05","s":139.69,"stage":"05","calls":16,"triangles":47736,"points":300,"avgFrameMsSwiftShader":0.6,"instances":3426,"bubbles":16,"smallBubbles":80,"sprayCapacity":220}
+> ['01', '03', '05', '09'] {'05': {'preset': '05', 's': 139.69, 'stage': '05', 'calls': 16, 'triangles': 47736, 'points': 300, 'avgFrameMsSwiftShader': 0.6, 'instances': 3426, 'bubbles': 16, 'smallBubbles': 80, 'sprayCapacity': 220}}
+
+### 🤖 Claude — 2026-11-15T22:05:23.605Z
+
+No console errors from the LOW_Q build. Quick look at the low-quality render to confirm it draws.
+
+### 🤖 Claude — 2026-11-15T22:05:24.012Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_05_low.png"}`
+
+### 🧑 User — 2026-11-15T22:05:24.035Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:05:28.355Z
+
+LOW_Q compiles and draws. The bottom rows show dense vertical stripes in this lab view; let me check whether those existed before my change (git HEAD version of the same image).
+
+### 🤖 Claude — 2026-11-15T22:05:31.461Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; git show HEAD:docs/vfx/water_05_low.png > $W/water_05_low_HEAD.png; git log -1 --format=%ci -- docs/vfx/water_05_low.png; python3 -c \"\nfrom PIL import Image\na=Image.open('$W/water_05_low_HEAD.png').convert('RGB'); b=Image.open('docs/vfx/water_05_low.png').convert('RGB')\nim=Image.new('RGB',(a.width+b.width+8,max(a.height,b.height)),'white'); im.paste(a,(0,0)); im.paste(b,(a.width+8,0)); im.save('$W/low_cmp.png')\"", "description": "Compare old vs new low-quality l …[+11 chars]`
+
+### 🧑 User — 2026-11-15T22:05:31.672Z
+
+> ↩︎ result: 2026-11-15 17:20:03 +0000
+
+### 🤖 Claude — 2026-11-15T22:05:33.542Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/low_cmp.png"}`
+
+### 🧑 User — 2026-11-15T22:05:33.571Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:05:54.233Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 -c \"\nfrom PIL import Image\nb=Image.open('docs/vfx/water_05_low.png').convert('RGB')\nb.crop((300,600,432,768)).resize((528,672),Image.NEAREST).save('$W/low_zoom.png')\"; grep -n \"wake\\|uBenny\\|quality\\|q=\" tools/water-lab.html 2>/dev/null | head; ls tools/ | head; grep -rn \"water-lab\" src tools --include=*.ts -l 2>/dev/null | head", "description": "Zoom stripes and inspect water lab setup"}`
+
+### 🧑 User — 2026-11-15T22:05:54.408Z
+
+> ↩︎ result: blender
+> make_env_geometry_ref.py
+> make_env_plate.py
+> make_env_plate_v2.py
+> make_env_plate_v3.py
+> model-lab.html
+> model-lab.ts
+> water-lab.html
+> water-lab.ts
+> tools/water-lab.ts
+
+### 🤖 Claude — 2026-11-15T22:05:56.464Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/low_zoom.png"}`
+
+### 🧑 User — 2026-11-15T22:05:56.483Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:05:57.285Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"wake\\|05\\|camera.position\\|fov\\|lookAt\" tools/water-lab.ts | head -30", "description": "Inspect water-lab camera and wake setup"}`
+
+### 🧑 User — 2026-11-15T22:05:57.321Z
+
+> ↩︎ result: 4: *   ?s=<arc-length>&back=4&up=2.5&ahead=10&lookUp=0.6&fov=60   manual chase camera
+> 39:    const camera = new THREE.PerspectiveCamera(Number(q.get('fov') ?? 62), W / H, 0.05, 900);
+> 42:    let s = Number(q.get('s') ?? st('05').s0 + 20);
+> 51:      case '05': s = st('05').s0 + 25; break;
+> 62:      camera.position.copy(custom.pos);
+> 63:      camera.lookAt(custom.look);
+> 65:      camera.position.copy(f.pos).addScaledVector(f.tan, -back).addScaledVector(f.up, up);
+> 67:      camera.lookAt(f.pos.clone().addScaledVector(f.tan, ahead).addScaledVector(f.up, lookUp));
+> 81:    bg.position.copy(camera.position);
+> 93:      hat.position.y = 0.05;
+> 99:      g.lookAt(bp.clone().add(f.tan));
+> 102:      for (let i = 0; i < 40; i++) water.wake(bp, fwd, f.right, course.prop(s, 'speed'), 1 / 30);
+
+### 🤖 Claude — 2026-11-15T22:06:09.817Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/water/it05 2>&1 | tail -2; python3 -c \"\nimport json; d=json.load(open('qa/capture_log.json')); print('errors', len(d['errors'])); [print(e[:600]) for e in d['errors'][:3]]\"; python3 -I $W/wmeasure.py references/05_flow_into_the_current.png qa/pilot05/wave5/baseline/05.png qa/pilot05/wave5/water/it05/05.png; python3 scripts/triptych.py qa/pilot05/wave5/water/it05/triptych.png 1100 REF=references/05_flow …[+179 chars]`
+
+### 🧑 User — 2026-11-15T22:06:26.269Z
+
+> ↩︎ result: 05 → qa/pilot05/wave5/water/it05/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":125,"tris":634089,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> errors 0
+> == references/05_flow_into_the_current.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lumStd pinkRuns
+>   560   8.5   4.3  32.3 20.8   8.5 | #4B9EF7  #D242D8 |  44.4  29-37 140-166 201-208 365-397 505-525 581-586 607-619 624-638 710-748 753-765 845-863
+>   600  17.5   4.1  34.1 15.1  11.3 | #1BABF9  #E040E1 |  42.6  41-59 62-72 79-85 111-134 145-154 158-166 168-173 183-196 263-321 584-593 605-628 683-690 700-713 728-737 812-817 828-847
+>   700  28.7   4.9  22.5 11.4  14.9 | #0EA6F8  #F03FE1 |  39.2  4-9 17-25 61-74 96-111 122-127 130-135 311-355 361-366 370-385 755-802
+>   800  26.2   6.1  35.4 15.2   7.9 | #07A4F9  #F547F1 |  32.7  56-151 156-187 376-394 400-408 451-459 598-604 607-618 633-711 832-847 849-861
+>   900  29.5   4.8  23.4 13.8  20.7 | #039EF8  #F744EC |  43.7  0-54 590-631 639-653 657-708 816-838 844-863
+>  1000  40.6   5.3  18.6 31.8   1.8 | #0296F3  #F637E5 |  33.4  711-863
+>  1100  48.8   3.5  33.0  3.7   6.2 | #02A1F7  #F857BB |  33.7  291-319 3 …[+4472 chars]
+
+### 🤖 Claude — 2026-11-15T22:06:28.962Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/water/it05/triptych.png"}`
+
+### 🧑 User — 2026-11-15T22:06:29.234Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:06:33.593Z
+
+The environment specialist shrank the VP glow, so the far river (y ≈ 380–540) is now visible, and it looks stripy there. Let me zoom in.
+
+### 🤖 Claude — 2026-11-15T22:06:36.302Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; python3 -c \"\nfrom PIL import Image\nb=Image.open('qa/pilot05/wave5/water/it05/05.png').convert('RGB')\nb.crop((330,370,730,620)).resize((800,500),Image.LANCZOS).save('$W/it05_far.png')\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nr.crop((330,440,730,690)).resize((800,500),Image.LANCZOS).save('$W/ref_far.png')\"", "description": "Zoom far field of it05 and ref"}`
+
+### 🧑 User — 2026-11-15T22:06:36.705Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:06:38.817Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/it05_far.png"}`
+
+### 🧑 User — 2026-11-15T22:06:38.840Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:06:39.442Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/ref_far.png"}`
+
+### 🧑 User — 2026-11-15T22:06:39.471Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:06:49.274Z
+
+The far river (now exposed by the smaller glow) shows a different look: diagonal candy stripes with white cross lines. I need to know which stage that water belongs to. Let me check the stage ranges.
+
+### 🤖 Claude — 2026-11-15T22:06:49.930Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"export function\\|export const\\|export class\" src/world/course.ts | head -20", "description": "Find course constructor exports"}`
+
+### 🧑 User — 2026-11-15T22:06:49.973Z
+
+> ↩︎ result: 48:export const STAGE_TITLES: Record<StageId, string> = {
+> 63:export const WORLD = {
+> 73:export function funnelY(r: number): number {
+> 116:export const S05 = {
+> 131:export function meander05(u: number): number {
+> 309:export class Course {
+> 526:export function validateContinuity(c: Course): ContinuityReport {
+
+### 🤖 Claude — 2026-11-15T22:06:53.598Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; sed -n 309,330p src/world/course.ts; cat > $W/stages.ts <<'EOF'\nimport { Course } from '/home/user/rainbow-/src/world/course';\nconst c = new (Course as any)();\nfor (const st of c.stages) console.log(st.id, st.s0.toFixed(1), st.s1.toFixed(1));\nEOF\ncd /home/user/rainbow-; timeout 120 npx vite-node $W/stages.ts 2>&1 | tail -15", "description": "Print stage s ranges via vite-node"}`
+
+### 🧑 User — 2026-11-15T22:06:54.621Z
+
+> ↩︎ result: export class Course {
+>   readonly curve: THREE.CatmullRomCurve3;
+>   readonly length: number;
+>   readonly stages: StageDef[];
+>   readonly marks: Record<string, number>; // arc-length of named marks
+>   /** straight tunnel stretches (05 current) — see StraightAxis */
+>   readonly straightAxes: StraightAxis[];
+>   /** world X of the straight 05 tunnel line (the meander is pos.x − line05x) */
+>   private readonly line05x: number;
+>   private st05!: StageDef;
+>   private st10!: StageDef;
+>   private readonly N: number;
+>   private readonly ds: number;
+>   private readonly P: Float32Array;
+>   private readonly T: Float32Array;
+>   private readonly U: Float32Array;
+> 
+>   constructor() {
+>     const route = buildRoute();
+>     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+>     // arc-length table over curve parameter u
+>     const M = route.points.length * 24;
+> 01 0.0 0.0
+> 02 0.0 41.0
+> 03 41.0 70.4
+> 04 70.4 114.7
+> 05 114.7 188.9
+> 06 188.9 247.1
+> 07 247.1 389.2
+> 08 389.2 404.8
+> 09 404.8 420.0
+> 10 420.0 435.2
+> 11 435.2 435.2
+
+### 🤖 Claude — 2026-11-15T22:07:29.955Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md", "old_string": "Seen: a hard corner in the right band at ≈(620, 813) = the bank clamp min() → next: smooth min.\n", "new_string": "Seen: a hard corner in the right band at ≈(620, 813) = the bank clamp min() → next: smooth min.\n\n### it04 — tsc ok, 0 errors\nChanges: `smin()` (new GLSL helper) for the bank clamp (corner now a rounded elbow); crest pow 30, ×2.1.\nMeasured: near lumStd 35.7, p95 218, p5 101, glints near 124 / mid 243.\n\n### it05 (final 05) — tsc ok, 0 console errors; LOW_Q build compiles ( …[+1719 chars]`
+
+### 🧑 User — 2026-11-15T22:07:30.001Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave5/water/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T22:07:30.976Z
+
+Now the single regression capture of 03 04 06 07.
+
+### 🤖 Claude — 2026-11-15T22:07:32.629Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK && timeout 900 node scripts/capture.mjs 03 04 06 07 --out=qa/pilot05/wave5/water/regress 2>&1 | tail -5; python3 -c \"\nimport json; d=json.load(open('qa/capture_log.json')); print('errors', len(d['errors'])); [print(e[:600]) for e in d['errors'][:3]]\"", "description": "Regression capture 03 04 06 07", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T22:08:32.418Z
+
+> ↩︎ result: TSC_OK
+> 03 → qa/pilot05/wave5/water/regress/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":133,"tris":736468,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → qa/pilot05/wave5/water/regress/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":135,"tris":736556,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/wave5/water/regress/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":109,"tris":551473,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → qa/pilot05/wave5/water/regress/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":218,"tris":668991,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> errors 0
+
+### 🤖 Claude — 2026-11-15T22:08:39.578Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; ls -la screenshots/0{3,4,6,7}.png | awk '{print $6,$7,$8,$9}'; python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\nW='$W'\nims=[]\nfor n in ['03','04','06','07']:\n    a=Image.open(f'screenshots/{n}.png').convert('RGB'); b=Image.open(f'qa/pilot05/wave5/water/regress/{n}.png').convert('RGB')\n    if a.size!=b.size: b=b.resize(a.size)\n    A=np.asarray(a).astype(float); B=np.asarray(b).astype(float)\n    d=np.abs(A-B).mean(-1)\n    ys,xs=np.nonzero(d>40)\n    p …[+597 chars]`
+
+### 🧑 User — 2026-11-15T22:08:41.089Z
+
+> ↩︎ result: Nov 15 21:41 screenshots/03.png
+> Nov 15 21:41 screenshots/04.png
+> Nov 15 21:41 screenshots/06.png
+> Nov 15 21:41 screenshots/07.png
+> 03 (727, 1536) meanAbsDiff 6.7 px>40: 5.4% bbox (np.int64(0), np.int64(0), np.int64(726), np.int64(1535))
+> 04 (864, 1536) meanAbsDiff 27.4 px>40: 30.3% bbox (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> 06 (864, 1536) meanAbsDiff 71.5 px>40: 68.8% bbox (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> 07 (864, 1536) meanAbsDiff 64.3 px>40: 67.4% bbox (np.int64(0), np.int64(0), np.int64(863), np.int64(1535))
+> (2428, 550)
+
+### 🤖 Claude — 2026-11-15T22:08:43.306Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/regress_cmp.png"}`
+
+### 🧑 User — 2026-11-15T22:08:43.535Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T22:08:43.532Z
+
+[Image: original 2428x550, displayed at 2000x453. Multiply coordinates by 1.21 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T22:08:54.506Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git diff --stat; git diff src/vfx/waterRibbon.ts | grep \"^[-+]\" | grep -v \"^[-+]\\s*//\" | head -120", "description": "Show my waterRibbon diff (non-comment lines)"}`
+
+### 🧑 User — 2026-11-15T22:08:54.954Z
+
+> ↩︎ result: assets/models/benny.glb               |   4 ++--
+>  docs/characters/benny_turntable.png   | Bin 1142967 -> 1132189 bytes
+>  docs/vfx/water_05_low.png             | Bin 193337 -> 242090 bytes
+>  docs/vfx/water_stats_low.json         |  16 ++++++-------
+>  qa/capture_log.json                   |  14 ++++++------
+>  qa/pilot05/wave5/benny/NOTES.md       |  21 +++++++++++++++++
+>  qa/pilot05/wave5/environment/NOTES.md |  11 +++++++++
+>  qa/pilot05/wave5/foam/NOTES.md        |  32 ++++++++++++++++++++++++--
+>  qa/pilot05/wave5/water/NOTES.md       |  27 ++++++++++++++++++++++
+>  src/characters/benny/build.ts         |   7 ++++--
+>  src/characters/benny/textures.ts      |  25 ++++++++++++++-------
+>  src/vfx/foam.ts                       |  41 ++++++++++++++++++++++++++--------
+>  src/vfx/waterRibbon.ts                |   5 +++--
+>  src/world/environment.ts              |  36 ++++++++++++++++-------------
+>  src/world/materials.ts                |  32 ++++++++++++++------------
+>  src/world/tube.ts                     |   8 +++++--
+>  16 files changed, 207 insertions(+), 72 deletions(-)
+> --- a/src/vfx/waterRibbon.ts
+> +++ b/src/vfx/waterRibbon.ts
+> -      float side = 1.45 + 0.05 * max(-db, 0.0);
+> +      float side = 1.42 +  …[+326 chars]
+
+### 🤖 Claude — 2026-11-15T22:08:56.624Z
+
+The autosave has already committed most of my edits, so I'll diff against the wave-5 baseline commit `1764258` instead.
+
+### 🤖 Claude — 2026-11-15T22:08:57.671Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git diff 1764258 -- src/vfx/waterRibbon.ts src/vfx/glsl.ts | grep \"^[-+]\" | grep -v \"^[-+]\\s*//\" | grep -v \"^[-+]\\s*$\"", "description": "Diff water shader vs wave-5 baseline commit"}`
+
+### 🧑 User — 2026-11-15T22:08:57.758Z
+
+> ↩︎ result: --- a/src/vfx/waterRibbon.ts
+> +++ b/src/vfx/waterRibbon.ts
+> +float smin(float a, float b, float k) {
+> +  float h = max(k - abs(a - b), 0.0) / k;
+> +  return min(a, b) - h * h * k * 0.25;
+> +}
+> -  float sbend = sw * 0.45 * sin(s * 0.31 - 0.834);
+> +  float sbend = sw * (1.05 * sin(s * 0.31 - 0.834) + 0.18 * sin(s * 0.62 + 0.6));
+> +  float brush = 0.0;
+> -    offL = min(offL, Mb + hw - wL - 0.5);
+> -    offR = min(offR, hw - wR - 0.5 - Mb);
+> +    float roomL = Mb + hw - 0.5 - offL, roomR = hw - 0.5 - Mb - offR;
+> +    wL = smin(wL, max(roomL, 0.6 * wL), 0.5);
+> +    wR = smin(wR, max(roomR, 0.6 * wR), 0.5);
+> +    offL = smin(offL, Mb + hw - wL - 0.5, 1.2);
+> +    offR = smin(offR, hw - wR - 0.5 - Mb, 1.2);
+> +    if (vStyle.x > 0.0 && uBenny.z > 0.0) {
+> +      float nb = sw * vStyle.x * (1.0 - smoothstep(-0.5, 3.0, db));
+> +      float side = 1.42 + 0.02 * max(-db, 0.0);
+> +      offL = mix(offL, Mb - (uBenny.y - side), nb);
+> +      offR = mix(offR, (uBenny.y + side) - Mb, nb);
+> +      wL = mix(wL, 0.34, nb);
+> +      wR = mix(wR, 0.34, nb);
+> +    }
+> +    float bK = 11.0;
+> +    brush = sw * (vnoise(vec2(xb * bK, v5 * 0.11 + 5.0)) - 0.5) * (1.0 - smoothstep(0.05, 0.12, fwx * bK));
+> -  float pL = (1.0 - smoothstep(wL - aaw …[+3548 chars]
+

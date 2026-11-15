@@ -723,3 +723,201 @@ It worked on retry (likely another specialist's file was mid-edit). Measure and 
 > R s  129.83 ds  -2.80 lat   1.64 k  0.52 env 0.00 y  1556
 > R …[+752 chars]
 
+### 🤖 Claude — 2026-11-15T22:05:01.763Z
+
+> 🔧 **Bash** `{"command": "grep -n \"function createBerm\\|const h = bermSurface(s, e, side, hw);\\|const berm = createBerm\\|const h = bermSurface(ss, e, side, hw) + lift;\\|const clearR = \\|let a = Math.max\\|const h = hIn + (hOut - hIn) \\* f + bankProf(f, s, side);\" src/vfx/foam.ts", "description": "Locate lines to edit"}`
+
+### 🧑 User — 2026-11-15T22:05:01.828Z
+
+> ↩︎ result: 368:function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
+> 389:        const h = bermSurface(s, e, side, hw);
+> 482:  const berm = createBerm(course, s0, s1, skip, quality);
+> 497:    const h = bermSurface(ss, e, side, hw) + lift;
+> 718:        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds)));
+> 719:        let a = Math.max(side * inner, side * rider.lat + clearR, side * coreLateral(course, s) + BANK_CLEAR_CORE);
+> 738:          const h = hIn + (hOut - hIn) * f + bankProf(f, s, side);
+
+### 🤖 Claude — 2026-11-15T22:05:18.027Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/foam.ts'\nt=open(p).read()\ndef rep(old,new):\n    global t\n    assert t.count(old)==1, old[:90]\n    t=t.replace(old,new)\n\n# berm height squash (05 only), shared helper\nrep(\"\"\"/** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */\nfunction createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {\"\"\",\n\"\"\"/**\n * wave 5: 0.5 in 05 (smooth ramps at the stage ends), 1 elsewhere. In 05 the stream-edge rim toward the VP\n * is a LOW band of piled bubbles (ref ≈40–60 …[+3652 chars]`
+
+### 🧑 User — 2026-11-15T22:05:24.509Z
+
+> ↩︎ result: tsc=0
+> references/05_flow_into_the_current.png
+>    L: EXT(y>540) 407px (47.1%)  NEAR mean  82.7px ( 9.6%) max 231px (26.7%) COVER  57.8%  ROWS  14.3%  AREA(y>540)  3.5%
+>    R: EXT(y>540) 383px (44.3%)  NEAR mean  85.0px ( 9.8%) max 222px (25.7%) COVER  35.6%  ROWS  10.1%  AREA(y>540)  2.7%
+> qa/pilot05/wave5/baseline/05.png
+>    L: EXT(y>540) 432px (50.0%)  NEAR mean  64.6px ( 7.5%) max 101px (11.7%) COVER  63.1%  ROWS  73.7%  AREA(y>540)  7.9%
+>    R: EXT(y>540) 432px (50.0%)  NEAR mean  84.6px ( 9.8%) max 130px (15.0%) COVER 100.0%  ROWS 100.0%  AREA(y>540) 10.8%
+> qa/pilot05/wave5/foam/it01/05.png
+>    L: EXT(y>540) 432px (50.0%)  NEAR mean  85.9px ( 9.9%) max 249px (28.8%) COVER  59.1%  ROWS  44.3%  AREA(y>540)  5.8%
+>    R: EXT(y>540) 432px (50.0%)  NEAR mean 129.1px (14.9%) max 310px (35.9%) COVER  42.7%  ROWS  59.1%  AREA(y>540)  7.4%
+
+### 🤖 Claude — 2026-11-15T22:05:44.794Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; mkdir -p /home/user/rainbow-/qa/pilot05/wave5/foam/tools && cp $S/foammask.py $S/bankcc.py /home/user/rainbow-/qa/pilot05/wave5/foam/tools/ && sed -i 's/for y in range(540, H):/for y in range(700, H):/; s/EXT(y>540)/EXT(y>700)/' /home/user/rainbow-/qa/pilot05/wave5/foam/tools/bankcc.py && cp /home/user/rainbow-/qa/pilot05/wave5/foam/tools/bankcc.py $S/bankcc.py && cd /home/user/rainbow- && python3 - <<'EOF'\np='qa/pilot05/wave5/foam/NOTES.md'\nt=open(p).read()\nt=t.replace(\"\"\"## Measurement (sc …[+3104 chars]`
+
+### 🧑 User — 2026-11-15T22:06:05.371Z
+
+> ↩︎ result: 05 → qa/pilot05/wave5/foam/it02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":125,"tris":634089,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> references/05_flow_into_the_current.png
+>    L: EXT(y>700) 407px (47.1%)  NEAR mean  82.7px ( 9.6%) max 231px (26.7%) COVER  57.8%  ROWS  14.3%  AREA(y>540)  3.5%
+>    R: EXT(y>700) 383px (44.3%)  NEAR mean  85.0px ( 9.8%) max 222px (25.7%) COVER  35.6%  ROWS  10.1%  AREA(y>540)  2.7%
+> qa/pilot05/wave5/baseline/05.png
+>    L: EXT(y>700) 255px (29.5%)  NEAR mean  64.6px ( 7.5%) max 101px (11.7%) COVER  63.1%  ROWS  73.7%  AREA(y>540)  7.9%
+>    R: EXT(y>700) 130px (15.0%)  NEAR mean  84.6px ( 9.8%) max 130px (15.0%) COVER 100.0%  ROWS 100.0%  AREA(y>540) 10.8%
+> qa/pilot05/wave5/foam/it02/05.png
+>    L: EXT(y>700) 432px (50.0%)  NEAR mean  99.6px (11.5%) max 432px (50.0%) COVER  86.7%  ROWS  64.6%  AREA(y>540)  7.0%
+>    R: EXT(y>700) 432px (50.0%)  NEAR mean 151.7px (17.6%) max 432px (50.0%) COVER  44.0%  ROWS  55.7%  AREA(y>540)  8.0%
+
+### 🤖 Claude — 2026-11-15T22:06:07.851Z
+
+Numbers got worse (L ROWS 44 → 65 %, and a blob spans to the centre), and calls/tris rose to 125/634k, which suggests parallel changes by other specialists. Let me look.
+
+### 🤖 Claude — 2026-11-15T22:06:08.307Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/foam/it02/05.png"}`
+
+### 🧑 User — 2026-11-15T22:06:08.363Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:06:32.486Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && python3 -I -c \"\nfrom PIL import Image\nS='$S'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB'); n=Image.open('qa/pilot05/wave5/foam/it02/05.png').convert('RGB')\ncc=Image.open(S+'/cc_qa_pilot05_wave5_foam_it02_05.png')\nbox=(0,540,360,840)\no=Image.new('RGB',(360*4+30,300+10+533),(30,30,30))\no.paste(r.crop(box).resize((720,600)).crop((0,0,720,300)),(0,0))\no.paste(r.crop(box),(0,0)); o.paste(n.crop(box),(370,0))\no.paste(n.crop(box).resize((720,600)),(740,0))\no.paste(c …[+113 chars]`
+
+### 🧑 User — 2026-11-15T22:06:32.871Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:06:34.620Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/it02_vp.png"}`
+
+### 🧑 User — 2026-11-15T22:06:34.655Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:06:58.096Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cd $S && python3 - <<'EOF'\nsrc=open('envsearch.py').read().split('best = {}')[0]\nsrc=src.replace(\"return sm(0.42, 0.62,\",\"return sm(T0, 0.62,\")\nsrc=src.replace(\"\"\"want = {\"\"\",\"\"\"T0 = 0.5\nwant = {\"\"\")\nexec(src)\nwant['L'] = [((-1.5, -0.75), 1), ((0.45, 1.6), 1), ((-3.4, -1.95), 0), ((-0.55, 0.3), 0), ((2.2, 9.0), 0)]\nwant['R'] = [((-1.45, -0.85), 1), ((3.4, 8.5), 1), ((-3.4, -1.95), 0), ((-0.5, 2.8), 0)]\nbest={}\nfor side in 'LR':\n    res=[]\n    for f in (0.45,0.55,0.65,0.7 …[+658 chars]`
+
+### 🧑 User — 2026-11-15T22:07:14.509Z
+
+> ↩︎ result: L [(0.0093, 555.849, 0.45), (0.0181, 478.518, 0.85), (0.0307, 775.905, 0.55)]
+> R [(0.0239, 15.916, 0.45), (0.0381, 10.899, 0.85), (0.0396, 685.599, 0.45)]
+> L -3.5:0.00 -3.2:0.00 -3.0:0.00 -2.8:0.00 -2.5:0.00 -2.2:0.00 -2.0:0.25 -1.8:0.91 -1.5:1.00 -1.2:1.00 -1.0:1.00 -0.8:0.93 -0.5:0.08 -0.2:0.00 +0.0:0.00 +0.2:0.67 +0.5:1.00 +0.8:1.00 +1.0:1.00 +1.2:1.00 +1.5:0.18 +1.8:0.00 +2.0:0.00 +2.2:0.00 +2.5:0.00 +2.8:0.00 +3.0:0.00 +3.2:0.00 +3.5:0.00 +3.8:0.00 +4.0:0.00 +4.2:0.00 +4.5:0.00 +4.8:0.00 +5.0:0.00 +5.2:0.00 +5.5:0.00 +5.8:0.00 +6.0:0.00 +6.2:0.00 +6.5:0.00 +6.8:0.00 +7.0:0.00 +7.2:0.00 +7.5:0.00 +7.8:0.00 +8.0:0.00 +8.2:0.00 +8.5:0.00 +8.8:0.00 +9.0:0.00 +9.2:0.00 +9.5:0.00 +9.8:0.00
+>   coverage 0.35 longest gap 9.5
+> R -3.5:0.00 -3.2:0.00 -3.0:0.00 -2.8:0.00 -2.5:0.00 -2.2:0.00 -2.0:0.55 -1.8:1.00 -1.5:1.00 -1.2:1.00 -1.0:1.00 -0.8:0.89 -0.5:0.02 -0.2:0.00 +0.0:0.00 +0.2:0.00 +0.5:0.00 +0.8:0.00 +1.0:0.00 +1.2:0.00 +1.5:0.14 +1.8:0.66 +2.0:0.50 +2.2:0.15 +2.5:0.06 +2.8:0.47 +3.0:1.00 +3.2:1.00 +3.5:1.00 +3.8:1.00 +4.0:1.00 +4.2:1.00 +4.5:1.00 +4.8:1.00 +5.0:1.00 +5.2:1.00 +5.5:0.96 +5.8:0.93 +6.0:0.87 +6.2:0.79 +6.5:0.75 +6.8:1.00 +7.0:1.00 +7.2:1.00 +7.5:1.00 +7.8:1.00 +8.0:1.00  …[+101 chars]
+
+### 🤖 Claude — 2026-11-15T22:07:17.517Z
+
+I printed with the true rider s (132.62, from the probe) but scored with 132.44. Re-fitting with the correct value.
+
+### 🤖 Claude — 2026-11-15T22:07:23.072Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; cd $S && python3 - <<'EOF'\nsrc=open('envsearch.py').read().split('best = {}')[0]\nsrc=src.replace(\"return sm(0.42, 0.62,\",\"return sm(T0, 0.62,\").replace(\"S0 = 132.438\",\"S0 = 132.62\").replace(\"want = {\",\"T0 = 0.5\\nwant = {\")\nexec(src)\nwant['L'] = [((-1.5, -0.75), 1), ((0.45, 1.6), 1), ((-3.4, -1.95), 0), ((-0.55, 0.3), 0), ((2.2, 9.0), 0)]\nwant['R'] = [((-1.45, -0.85), 1), ((3.4, 8.5), 1), ((-3.4, -1.95), 0), ((-0.5, 2.8), 0)]\nbest={}\nfor side in 'LR':\n    res=[]\n    for f in ( …[+657 chars]`
+
+### 🧑 User — 2026-11-15T22:07:41.353Z
+
+> ↩︎ result: L [(0.0159, 478.345, 0.85), (0.0181, 555.849, 0.45), (0.0213, 555.676, 0.45)]
+> R [(0.0243, 15.743, 0.45), (0.0281, 15.916, 0.45), (0.0431, 695.806, 0.55)]
+> L -3.5:0.00 -3.2:0.00 -3.0:0.00 -2.8:0.00 -2.5:0.00 -2.2:0.00 -2.0:0.00 -1.8:0.00 -1.5:0.57 -1.2:1.00 -1.0:1.00 -0.8:0.38 -0.5:0.00 -0.2:0.00 +0.0:0.00 +0.2:0.00 +0.5:0.00 +0.8:1.00 +1.0:1.00 +1.2:1.00 +1.5:1.00 +1.8:0.00 +2.0:0.00 +2.2:0.00 +2.5:0.00 +2.8:0.00 +3.0:0.00 +3.2:0.00 +3.5:0.00 +3.8:0.00 +4.0:0.00 +4.2:0.00 +4.5:0.00 +4.8:0.00 +5.0:0.00 +5.2:0.00 +5.5:0.00 +5.8:0.00 +6.0:0.00 +6.2:0.00 +6.5:0.00 +6.8:0.00 +7.0:0.00 +7.2:0.00 +7.5:0.00 +7.8:0.00 +8.0:0.00 +8.2:0.00 +8.5:0.00 +8.8:0.00 +9.0:0.00 +9.2:0.00 +9.5:0.00 +9.8:0.00
+>   coverage 0.29 longest gap 10.9
+> R -3.5:0.00 -3.2:0.00 -3.0:0.00 -2.8:0.00 -2.5:0.00 -2.2:0.00 -2.0:0.00 -1.8:0.17 -1.5:0.99 -1.2:1.00 -1.0:1.00 -0.8:1.00 -0.5:1.00 -0.2:0.22 +0.0:0.00 +0.2:0.00 +0.5:0.00 +0.8:0.00 +1.0:0.00 +1.2:0.00 +1.5:0.00 +1.8:0.00 +2.0:0.43 +2.2:0.32 +2.5:0.04 +2.8:0.00 +3.0:0.24 +3.2:1.00 +3.5:1.00 +3.8:1.00 +4.0:1.00 +4.2:1.00 +4.5:1.00 +4.8:1.00 +5.0:1.00 +5.2:1.00 +5.5:1.00 +5.8:0.96 +6.0:0.94 +6.2:0.89 +6.5:0.81 +6.8:0.75 +7.0:1.00 +7.2:1.00 +7.5:1.00 +7.8:1.00 +8.0:1.00 …[+102 chars]
+
+### 🤖 Claude — 2026-11-15T22:08:02.832Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/foam.ts'\nt=open(p).read()\ndef rep(old,new):\n    global t\n    assert t.count(old)==1, old[:90]\n    t=t.replace(old,new)\nrep(\"const BANK_ENV: [number, number][] = [[555.849, 0.45], [10.726, 0.85]];\",\"const BANK_ENV: [number, number][] = [[478.345, 0.85], [15.743, 0.45]];\")\nrep(\"return sm(0.42, 0.62, 0.65 * noise1(s * f + seed) + 0.35 * noise1(s * f * 2.3 + seed * 1.7 + 11.0));\",\n    \"return sm(0.5, 0.62, 0.65 * noise1(s * f + seed) + 0.35 * noise1(s * f * 2.3 + seed * 1.7 + 11.0));\")\n# berm narrowing in 05 (outer side compressed; same p …[+2388 chars]`
+
+### 🧑 User — 2026-11-15T22:08:09.671Z
+
+> ↩︎ result: tsc=0
+> references/05_flow_into_the_current.png
+>    L: EXT(y>700) 309px (35.8%)  NEAR mean  82.7px ( 9.6%) max 231px (26.7%) COVER  57.8%  ROWS  14.3%  AREA(y>540)  3.3%
+>    R: EXT(y>700) 336px (38.9%)  NEAR mean  85.0px ( 9.8%) max 222px (25.7%) COVER  35.6%  ROWS  10.1%  AREA(y>540)  2.5%
+> qa/pilot05/wave5/baseline/05.png
+>    L: EXT(y>700) 255px (29.5%)  NEAR mean  64.6px ( 7.5%) max 101px (11.7%) COVER  63.1%  ROWS  73.7%  AREA(y>540)  7.9%
+>    R: EXT(y>700) 130px (15.0%)  NEAR mean  84.6px ( 9.8%) max 130px (15.0%) COVER 100.0%  ROWS 100.0%  AREA(y>540) 10.8%
+> qa/pilot05/wave5/foam/it01/05.png
+>    L: EXT(y>700) 255px (29.5%)  NEAR mean  85.9px ( 9.9%) max 249px (28.8%) COVER  59.1%  ROWS  44.3%  AREA(y>540)  5.8%
+>    R: EXT(y>700) 310px (35.9%)  NEAR mean 129.1px (14.9%) max 310px (35.9%) COVER  42.7%  ROWS  59.1%  AREA(y>540)  7.4%
+> qa/pilot05/wave5/foam/it02/05.png
+>    L: EXT(y>700) 432px (50.0%)  NEAR mean  99.6px (11.5%) max 432px (50.0%) COVER  86.7%  ROWS  64.6%  AREA(y>540)  7.0%
+>    R: EXT(y>700) 432px (50.0%)  NEAR mean 151.7px (17.6%) max 432px (50.0%) COVER  44.0%  ROWS  55.7%  AREA(y>540)  8.0%
+
+### 🤖 Claude — 2026-11-15T22:08:12.364Z
+
+it02 still has a blob spanning to the centre. Let me see which blob that is before the next capture.
+
+### 🤖 Claude — 2026-11-15T22:08:16.731Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && python3 -I - <<EOF\nimport sys; sys.path.insert(0,'$S')\nimport numpy as np\nfrom collections import deque\nfrom foammask import foam_mask\nm,a=foam_mask('qa/pilot05/wave5/foam/it02/05.png')\nH,W=m.shape; lab=np.zeros(m.shape,np.int32); cur=0\nys,xs=np.nonzero(m)\nfor y0,x0 in zip(ys,xs):\n    if lab[y0,x0]: continue\n    cur+=1; q=deque([(y0,x0)]); lab[y0,x0]=cur; pts=[]\n    while q:\n        y,x=q.popleft(); pts.append((y,x))\n        for yy,xx in ((y+1,x),(y-1,x),(y,x+1),(y,x-1)):\n          …[+339 chars]`
+
+### 🧑 User — 2026-11-15T22:08:17.718Z
+
+> ↩︎ result: area 26990 bbox x 0 453 y 518 814 col [241 237 252]
+> area 42172 bbox x 560 863 y 518 943 col [242 233 250]
+> area 13030 bbox x 0 131 y 981 1124 col [235 230 251]
+> area 19682 bbox x 0 263 y 1132 1377 col [225 214 244]
+> area 21677 bbox x 409 863 y 1194 1391 col [216 212 241]
+> area 2554 bbox x 363 584 y 1226 1258 col [180 238 255]
+> area 4326 bbox x 35 404 y 1311 1409 col [181 214 254]
+> area 5051 bbox x 445 777 y 1409 1488 col [189 213 254]
+> area 1425 bbox x 0 121 y 1468 1515 col [189 188 248]
+
+### 🤖 Claude — 2026-11-15T22:08:28.171Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && for f in $S/foammask.py qa/pilot05/wave5/foam/tools/foammask.py; do sed -i 's/    m = dilate(erode(m, 3), 3)/    m = dilate(erode(m, 5), 5)/; s/morphologically OPENED with a 7x7 box/morphologically OPENED with an 11x11 box/' $f; done; grep -n \"erode(m\" $S/foammask.py; sed -i 's/7x7 morphological opening/11x11 morphological opening/' qa/pilot05/wave5/foam/NOTES.md; python3 -I $S/bankcc.py $S references/05_flow_into_the_current.png qa/pilot05/wave5/baseline/05.png qa/pilot05/wave5/foam/it01/05.p …[+92 chars]`
+
+### 🧑 User — 2026-11-15T22:08:30.633Z
+
+> ↩︎ result: 13:def erode(m, r):
+> 35:    m = dilate(erode(m, 5), 5)
+> references/05_flow_into_the_current.png
+>    L: EXT(y>700) 263px (30.4%)  NEAR mean  44.5px ( 5.1%) max 110px (12.7%) COVER  52.7%  ROWS  14.1%  AREA(y>540)  2.5%
+>    R: EXT(y>700) 227px (26.3%)  NEAR mean  52.5px ( 6.1%) max  98px (11.3%) COVER  20.4%  ROWS   9.7%  AREA(y>540)  1.3%
+> qa/pilot05/wave5/baseline/05.png
+>    L: EXT(y>700) 255px (29.5%)  NEAR mean  63.6px ( 7.4%) max  99px (11.5%) COVER  63.1%  ROWS  73.7%  AREA(y>540)  7.8%
+>    R: EXT(y>700) 129px (14.9%)  NEAR mean  82.6px ( 9.6%) max 129px (14.9%) COVER 100.0%  ROWS 100.0%  AREA(y>540) 10.6%
+> qa/pilot05/wave5/foam/it01/05.png
+>    L: EXT(y>700) 255px (29.5%)  NEAR mean  64.1px ( 7.4%) max 131px (15.2%) COVER  56.0%  ROWS  44.3%  AREA(y>540)  5.5%
+>    R: EXT(y>700) 161px (18.6%)  NEAR mean  93.4px (10.8%) max 153px (17.7%) COVER  42.4%  ROWS  59.0%  AREA(y>540)  6.9%
+> qa/pilot05/wave5/foam/it02/05.png
+>    L: EXT(y>700) 256px (29.6%)  NEAR mean  81.2px ( 9.4%) max 130px (15.0%) COVER  85.3%  ROWS  64.6%  AREA(y>540)  6.5%
+>    R: EXT(y>700) 286px (33.1%)  NEAR mean 124.0px (14.3%) max 286px (33.1%) COVER  43.3%  ROWS  55.6%  AREA(y>540)  6.9%
+
+### 🤖 Claude — 2026-11-15T22:08:40.962Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad && for f in $S/foammask.py qa/pilot05/wave5/foam/tools/foammask.py; do python3 - \"$f\" <<'EOF'\nimport sys\np=sys.argv[1]; t=open(p).read()\nt=t.replace(\"    m = dilate(erode(m, 5), 5)\",\"    r = int(os.environ.get('FOAM_OPEN', '5'))  # 3 = 7x7 opening, 5 = 11x11\\n    m = dilate(erode(m, r), r)\")\nt=t.replace(\"import sys\\nimport numpy as np\",\"import os\\nimport sys\\nimport numpy as np\")\nopen(p,'w').write(t)\nEOF\ndone; timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/foam/ …[+295 chars]`
+
+### 🧑 User — 2026-11-15T22:09:03.693Z
+
+> ↩︎ result: 05 → qa/pilot05/wave5/foam/it03/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":144,"tris":634317,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> == opening 7
+> references/05_flow_into_the_current.png
+>    L: EXT(y>700) 309px (35.8%)  NEAR mean  82.7px ( 9.6%) max 231px (26.7%) COVER  57.8%  ROWS  14.3%  AREA(y>540)  3.3%
+>    R: EXT(y>700) 336px (38.9%)  NEAR mean  85.0px ( 9.8%) max 222px (25.7%) COVER  35.6%  ROWS  10.1%  AREA(y>540)  2.5%
+> qa/pilot05/wave5/foam/it03/05.png
+>    L: EXT(y>700) 432px (50.0%)  NEAR mean 106.4px (12.3%) max 398px (46.1%) COVER  54.7%  ROWS  37.3%  AREA(y>540)  5.4%
+>    R: EXT(y>700) 432px (50.0%)  NEAR mean 112.5px (13.0%) max 432px (50.0%) COVER  62.7%  ROWS  61.0%  AREA(y>540)  8.4%
+> == opening 11
+> references/05_flow_into_the_current.png
+>    L: EXT(y>700) 263px (30.4%)  NEAR mean  44.5px ( 5.1%) max 110px (12.7%) COVER  52.7%  ROWS  14.1%  AREA(y>540)  2.5%
+>    R: EXT(y>700) 227px (26.3%)  NEAR mean  52.5px ( 6.1%) max  98px (11.3%) COVER  20.4%  ROWS   9.7%  AREA(y>540)  1.3%
+> qa/pilot05/wave5/foam/it03/05.png
+>    L: EXT(y>700) 256px (29.6%)  NEAR mean  87.7px (10.1%) max 132px (15.3%) COVER  44. …[+155 chars]
+
+### 🤖 Claude — 2026-11-15T22:09:06.514Z
+
+Draw calls jumped to 144 (my edits add no meshes, so this is from parallel work; I'll verify my own draw-call count at the end). Let me look at it03.
+
+### 🤖 Claude — 2026-11-15T22:09:06.974Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave5/foam/it03/05.png"}`
+
+### 🧑 User — 2026-11-15T22:09:07.039Z
+
+> ↩︎ result: [image]
+

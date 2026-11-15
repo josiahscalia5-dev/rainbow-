@@ -1126,3 +1126,261 @@ it02 measures on target: star (512, 955) +0.65 hw vs ref (519, 953) +0.64; body 
 
 > 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tools/colors.py <<'EOF'\n# python3 -I colors.py GAME.png GAME_mask.png  -> median colours of Benny regions vs ref 05\nimport sys\nimport numpy as np\nfrom PIL import Image\nref = np.asarray(Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')).astype(int)\ng = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(int)\nm = np.asarray(Image.open(sys.argv[2]).convert('RGB')).astype(int)\nR, G, B = m[..., 0], m[..., 1], m[..., 2]\nmed = lambda a: '#%02X%02X% …[+1676 chars]`
 
+### 🧑 User — 2026-11-15T22:05:11.650Z
+
+> ↩︎ result: cuff    ref #6B0DEB L117   game #B248FF L167
+> white   ref #F3CFE4 L225   game #FFD8FF L241
+> purple  ref #740FF2 L124   game #23A8FF L152
+> body    ref #F549A9 L162   game #FF46B3 L167
+> pom     ref #8215ED L129   game #9425FF L147
+> TSC_OK
+> 22:04
+> T1 {"q":"bennyTint=hat_brim:9888b8,hat_crown:f0e4ec","calls":12
+> T2 {"q":"bennyTint=hat_brim:7868a0,hat_crown:e4d4e4","calls":12
+> T3 {"q":"bennyTint=hat_brim:605088,hat_crown:d8c4dc","calls":12
+> == T1
+> cuff    ref #6B0DEB L117   game #7D13FF L132
+> white   ref #F3CFE4 L225   game #FFCCFF L237
+> purple  ref #740FF2 L124   game #24A7FF L151
+> body    ref #F549A9 L162   game #FF48B4 L169
+> pom     ref #8215ED L129   game #9321FF L145
+> == T2
+> cuff    ref #6B0DEB L117   game #620BEE L118
+> white   ref #F3CFE4 L225   game #FFC1FF L233
+> purple  ref #740FF2 L124   game #24A7FF L151
+> body    ref #F549A9 L162   game #FF48B4 L169
+> pom     ref #8215ED L129   game #9220FF L144
+> == T3
+> cuff    ref #6B0DEB L117   game #5007C9 L 98
+> white   ref #F3CFE4 L225   game #FEB6FF L229
+> purple  ref #740FF2 L124   game #23A7FF L151
+> body    ref #F549A9 L162   game #FF48B4 L168
+> pom     ref #8215ED L129   game #921FFF L142
+
+### 🤖 Claude — 2026-11-15T22:05:24.695Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I - <<EOF\np='$S/tools/colors.py'\ns=open(p).read()\na=\"crownm = (R < 60) & (G > 150) & (B > 150)\\n\"\nb=\"\"\"crownm = (R < 60) & (G > 150) & (B > 150)\ncy, cx = np.nonzero(cuffm); reg = np.zeros_like(crownm); reg[840:cy.max(), cx.min():cx.max() + 1] = True; crownm &= reg\n\"\"\"\nassert s.count(a)==1; s=s.replace(a,b)\ns=s.replace(\"cr = g[crownm]; cr = cr[(np.nonzero(crownm)[0] > 860)]\",\"cr = g[crownm]\")\nopen(p,'w').write(s)\nEOF\nfor t in it02/05 it03/T1  …[+218 chars]`
+
+### 🧑 User — 2026-11-15T22:05:26.106Z
+
+> ↩︎ result: == it02/05
+> white   ref #F3CFE4 L225   game #FFD8FF L241
+> purple  ref #740FF2 L124   game #8658FF L153
+> == it03/T1
+> white   ref #F3CFE4 L225   game #FFCBFF L237
+> purple  ref #740FF2 L124   game #7C47FF L149
+> == it03/T2
+> white   ref #F3CFE4 L225   game #FFC1FF L234
+> purple  ref #740FF2 L124   game #703EFF L145
+> == it03/T3
+> white   ref #F3CFE4 L225   game #FFB5FF L229
+> purple  ref #740FF2 L124   game #6535FF L140
+
+### 🤖 Claude — 2026-11-15T22:06:19.290Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls references/ screenshots/ | head -40", "description": "List references and screenshots"}`
+
+### 🧑 User — 2026-11-15T22:06:19.323Z
+
+> ↩︎ result: references/:
+> 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> 
+> screenshots/:
+> 01.png
+> 02.png
+> 03.png
+> 04.png
+> 05.png
+> 06.png
+> 07.png
+> 08.png
+> 09.png
+> 10.png
+> 1080x1920
+> 11.png
+
+### 🤖 Claude — 2026-11-15T22:06:24.172Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\nims=[Image.open(p).convert('RGB') for p in ['references/03_whirlpool_twirl.png','screenshots/03.png','references/07_dive_the_washer_tube.png','screenshots/07.png']]\nh=600\nrow=[im.resize((int(im.width*h/im.height),h)) for im in ims]\nout=Image.new('RGB',(sum(r.width for r in row)+30,h),'white'); x=0\nfor r in row: out.paste(r,(x,0)); x+=r.width+10\nout.save('$S/scenes_cmp.png')\"; python3 -I -c \"\nfrom PIL import Image; import sys\ …[+224 chars]`
+
+### 🧑 User — 2026-11-15T22:06:24.687Z
+
+> ↩︎ result: references/03_whirlpool_twirl.png (727, 1536)
+> screenshots/03.png (727, 1536)
+> references/07_dive_the_washer_tube.png (864, 1536)
+> screenshots/07.png (864, 1536)
+
+### 🤖 Claude — 2026-11-15T22:06:25.219Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/scenes_cmp.png"}`
+
+### 🧑 User — 2026-11-15T22:06:25.255Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:06:33.575Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"C\\.white\\|C\\.whiteShade\\|C\\.purpleLight\\|C\\.purple\\b\\|C\\.purpleDark\" src/characters/benny/*.ts; sed -n 112,124p src/characters/benny/textures.ts", "description": "Find colour constant usages"}`
+
+### 🧑 User — 2026-11-15T22:06:33.618Z
+
+> ↩︎ result: src/characters/benny/textures.ts:127:    [0.0, 0.3, '#ffffff', C.white, C.whiteShade],
+> src/characters/benny/textures.ts:130:    [0.3, 0.58, C.purpleLight, C.purple, C.purpleDark],
+> src/characters/benny/textures.ts:131:    [0.58, 0.73, '#ffffff', C.white, C.whiteShade],
+> src/characters/benny/textures.ts:132:    [0.73, 0.92, C.purpleLight, C.purple, C.purpleDark],
+> src/characters/benny/textures.ts:133:    [0.92, 1.0, '#ffffff', C.white, C.whiteShade],
+> src/characters/benny/textures.ts:171:    g.addColorStop(0.5, C.purpleLight);
+>   }
+> }
+> 
+> /**
+>  * Knit crown texture (u = around, one of CROWN_REPEAT tiles; v = height 0 bottom → 1 top).
+>  * Stripes bottom→top: white, purple, white, purple, white; with the purple cuff that is 3 purple bands
+>  * (refs 04–10 rear: cuff · W · P · W, the top purple ring shows around the pom-pom, the white top is under it).
+>  */
+> export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THREE.CanvasTexture } {
+>   const W = 1024, Hh = 512;
+>   const [c, ctx] = canvas(W, Hh);
+>   const [hc, hctx] = canvas(W, Hh);
+>   const C = BENNY_COLORS;
+
+### 🤖 Claude — 2026-11-15T22:06:56.951Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'EOF'\np='src/characters/benny/build.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a[:70]\n    s=s.replace(a,b)\nrep(\"\"\"  const brimMat = std({ map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(1.25, 1.25), roughness: 0.86 });\"\"\",\n\"\"\"  // base-colour factors (wave 5): the tone-mapped scene light lifted the knit to lavender (live 05 cuff median #B248FF\n  // L167, ref 05 #6B0DEB L117; refs 03/07 also paint a deep-violet cuff). In-game A/B (?bennyTint): cuff ×#7868a0 →\n  // …[+2462 chars]`
+
+### 🧑 User — 2026-11-15T22:06:59.772Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-15T22:07:08.086Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/wave5/benny/NOTES.md <<'EOF'\n\n### it03 (22:04) — hat colour A/B in the live game via new QA hook `?bennyTint=` (runtime.ts), no GLB change\nRegion medians (ref 05 → it02): cuff #6B0DEB L117 → #B248FF L167; purple stripe #740FF2 L124 → #8658FF L153;\nwhite #F3CFE4 L225 → #FFD8FF L241; pom #8215ED L129 → #9425FF L147; body #F549A9 L162 → #FF46B3 L167 (ok).\nCuff factor #9888b8 → #7D13FF L132; **#7868a0 → #620BEE L118**; #605088 → #5007C9 L98. Crown factors only darken G\n(R/B stay clipped at 255 → lavender). Refs 03/07 also show a deep-vio …[+965 chars]`
+
+### 🧑 User — 2026-11-15T22:07:42.926Z
+
+> ↩︎ result: 22:07
+> exported assets/models/benny.glb {"bytes":1126332,"meshes":27,"nodes":39,"clips":["idle(2.40s)","swim(0.60s)","tumble(1.
+> turntable docs/characters/benny_turntable.png {"box":{"min":[-1.0368119659137613,-0.8895217347813645,-0.8139782728548887
+> -rw-r--r-- 1 root root 1126332 Nov 15 22:07 assets/models/benny.glb
+> glTF
+> 05 {"q":"","calls":125,"tris":634089,"info":{"body":[1.514,-41.2,-74.734],"up":[-0.025,0.999,-0.042],"fwd":[0.004,-0.042
+> ALL bbox x 121-817 y 208-1196  (w 697 h 989)
+>   body  x  231- 817 y  208-1196  w 587 h 989 px 45982
+>   pom   x  341- 489 y  766- 896  w 149 h 131 px 12148
+>   cuff  x  121- 563 y  531-1029  w 443 h 499 px 14798
+>   crown x  186- 546 y  873- 986  w 361 h 114 px 17413
+>   star  x  121- 550 y  622- 993  w 430 h 372 px 2876
+> centre col x=342: top 887 cuff 972-1026 bottom 1179
+> HAT incl pom 140 px = 14.2%   BODY below cuff 153 px = 15.5%  of H 989
+> cuff width 443; star centre (336,808) rel cuff-centre x -0.03 half-widths
+> body rows (y: red runs):
+> cuff    ref #6B0DEB L117   game #6611EC L121
+> white   ref #F3CFE4 L225   game #FFD5EB L233
+> purple  ref #740FF2 L124   game #23A4FF L149
+> body    ref #F549A9 L162   game #FF48B4 L169
+> pom     ref #8215ED L129   game #901AFF L1 …[+2 chars]
+
+### 🤖 Claude — 2026-11-15T22:07:53.288Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; for f in measure.py colors.py; do python3 -I - \"$S/tools/$f\" <<'EOF'\nimport sys\np=sys.argv[1]; s=open(p).read()\na=\"R, G, B = im[..., 0], im[..., 1], im[..., 2]\\n\" if 'measure' in p else \"R, G, B = m[..., 0], m[..., 1], m[..., 2]\\n\"\nroi = \"ROI = np.zeros(R.shape, bool); ROI[700:1260, 190:660] = True\\n\"\nassert s.count(a)==1\ns=s.replace(a, a+roi)\nimport re\nif 'measure' in p:\n    s=s.replace(\"    'body': (R > hi) & (G < lo) & (B < lo),\",\"    'body': (R >  …[+1072 chars]`
+
+### 🧑 User — 2026-11-15T22:07:54.106Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tools/measure.py:5
+> /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/tools/colors.py:2
+> ALL bbox x 231-612 y 766-1196  (w 382 h 431)
+>   body  x  231- 612 y  999-1196  w 382 h 198 px 44788
+>   pom   x  341- 489 y  766- 896  w 149 h 131 px 12148
+>   cuff  x  273- 563 y  941-1029  w 291 h  89 px 14796
+>   crown x  289- 546 y  873- 973  w 258 h 101 px 17396
+>   star  x  475- 550 y  917- 993  w  76 h  77 px 2847
+> centre col x=418: top 777 cuff 974-1029 bottom 1186
+> HAT incl pom 253 px = 58.7%   BODY below cuff 157 px = 36.4%  of H 431
+> cuff width 291; star centre (512,955) rel cuff-centre x +0.65 half-widths
+> body rows (y: red runs):
+>   1009: 278-285 544-560   span 283
+>   1019: 280-305 514-560 565-601   span 322
+>   1029: 252-375 435-609   span 358
+>   1039: 238-607   span 370
+>   1049: 237-608   span 372
+>   1059: 237-601   span 369
+>   1069: 240-568   span 345
+>   1079: 246-250 255-568   span 323
+>   1089: 274-568   span 295
+>   1099: 273-566   span 294
+>   1109: 277-559   span 287
+>   1119: 297-553   span 266
+>   1129: 293-549   span 257
+>   1139: 298-544   span 251
+>   1149: 303-308 318-520 527-530   span 228
+>    …[+353 chars]
+
+### 🤖 Claude — 2026-11-15T22:08:10.033Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((200,740,660,1220))\nc=Image.open('qa/pilot05/wave5/benny/it04/05.png').convert('RGB').crop((200,740,660,1220))\nout=Image.new('RGB',(930,480),'white'); out.paste(a,(0,0)); out.paste(c,(470,0)); out.save('$S/it04_rear.png')\"", "description": "Crop ref vs it04"}`
+
+### 🧑 User — 2026-11-15T22:08:10.383Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T22:08:11.190Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/it04_rear.png"}`
+
+### 🧑 User — 2026-11-15T22:08:11.224Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:08:25.096Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'EOF'\np='src/characters/benny/textures.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a[:70]\n    s=s.replace(a,b)\nrep(\"\"\"    // with less green (live purple stripe #8658FF vs ref #740FF2)\n    [0.0, 0.3, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],\n    [0.3, 0.58, KNIT_PURPLE_HI, C.purple, C.purpleDark],\n    [0.58, 0.73, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],\n    [0.73, 0.92, KNIT_PURPLE_HI, C.purple, C.purpleDark],\"\"\",\"\"\"    // with less green (live purple stripe #8658FF vs ref #740FF2);  …[+1058 chars]`
+
+### 🧑 User — 2026-11-15T22:08:29.200Z
+
+> ↩︎ result: 131:  const C = BENNY_COLORS;
+> 173:  const C = BENNY_COLORS;
+> TSC_OK
+
+### 🤖 Claude — 2026-11-15T22:08:32.341Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 126,165p src/characters/benny/textures.ts | grep -n \"C\\.\" ; grep -n \"noUnused\" tsconfig.json", "description": "Check whether C is still used in crown texture"}`
+
+### 🧑 User — 2026-11-15T22:08:32.513Z
+
+> ↩︎ result: 14:    "noUnusedLocals": false,
+> 15:    "noUnusedParameters": false,
+
+### 🤖 Claude — 2026-11-15T22:08:33.814Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 129,133p src/characters/benny/textures.ts", "description": "Show the crown texture header lines"}`
+
+### 🧑 User — 2026-11-15T22:08:33.854Z
+
+> ↩︎ result: const [c, ctx] = canvas(W, Hh);
+>   const [hc, hctx] = canvas(W, Hh);
+>   const C = BENNY_COLORS;
+>   const stripes: [number, number, string, string, string][] = [
+>     // [v0, v1, highlight, base, groove]   (v measured from bottom)
+
+### 🤖 Claude — 2026-11-15T22:08:35.819Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/textures.ts", "old_string": "  const [hc, hctx] = canvas(W, Hh);\n  const C = BENNY_COLORS;\n  const stripes: [number, number, string, string, string][] = [", "new_string": "  const [hc, hctx] = canvas(W, Hh);\n  const stripes: [number, number, string, string, string][] = ["}`
+
+### 🧑 User — 2026-11-15T22:08:35.858Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/textures.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T22:08:43.785Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; cat >> qa/pilot05/wave5/benny/NOTES.md <<'EOF'\n\n### it04 (22:07) — re-export with hat colour factors + yarn colours\nGLB 1,126,332 B `glTF`. Geometry unchanged vs it02 (bbox x 231–612 y 766–1196, star (512,955)). Scene had changed\nunder us (other specialists): 125 calls / 634,089 tris (it02: 121 / 608,313) — measurement scripts now use a Benny ROI.\n| region | ref 05 | it02 | it04 |\n|---|---|---|---|\n| cuff | #6B0DEB L117 | #B248FF L167 | **#6611EC L121** |\n| white stripes | #F3CFE4 L225 | #FFD8FF L241 | #FFD5EB L233 | …[+921 chars]`
+

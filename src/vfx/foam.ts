@@ -360,12 +360,25 @@ const BANK_PX: [number, number] = [170, 180];
  * a white wall: the outer 40 px were foam on 74 % / 100 % of the rows y 700–1400). The seeds put the
  * clumps of the QA frame (s≈132.4) where the ref has them; along 05 clumps cover ≈40 % of the length.
  */
-const BANK_ENV: [number, number][] = [[555.849, 0.45], [10.726, 0.85]];
+const BANK_ENV: [number, number][] = [[478.345, 0.85], [15.743, 0.45]];
 const BANK_CLEAR_RIDER = 1.3;
 const BANK_CLEAR_CORE = 1.45;
 
+/**
+ * wave 5: 0.5 in 05 (smooth ramps at the stage ends), 1 elsewhere. In 05 the stream-edge rim toward the VP
+ * is a LOW band of piled bubbles (ref ≈40–60 px); the full-height berm read as tall white heaps.
+ */
+function bermScale05(course: Course): (s: number) => number {
+  const st = course.stage('05');
+  const sm = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+  return (s) => 1 - 0.5 * sm(st.s0 - 6, st.s0 - 1, s) * (1 - sm(st.s1 - 1, st.s1 + 4, s));
+}
+/** squash the part of the bank above the stream's edge water level by k (k = 1: unchanged) */
+const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT + (h - EDGE_LIFT) * k : h);
+
 /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
 function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
+  const hk = bermScale05(course);
   const ds = quality === 'high' ? 0.32 : 0.8;
   const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
   const rows = Math.ceil((s1 - s0) / ds) + 1;
@@ -386,8 +399,11 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
         // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
         // at the water line (keeps the lace edge flush with the stream)
         const e = E[j];
-        const h = bermSurface(s, e, side, hw);
-        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + e)).addScaledVector(f.up, h);
+        const k05 = hk(s);
+        const h = squashBerm(bermSurface(s, e, side, hw), k05);
+        // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow band of bubbles
+        const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
         tmp.toArray(pos, k * 3);
         foam[k * 3] = e;
         foam[k * 3 + 1] = s;
@@ -488,14 +504,17 @@ export function createFoam(
   // tall heaps: crest puffs × 0.85, heaps × 0.6 and never stacked. Only sizes change, so the shared
   // rand() sequence (and every other stage's foam) stays identical.
   const st05b = course.stage('05');
+  const bermK = bermScale05(course);
   const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
   const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
     const ss = Math.min(s1, Math.max(s0, s));
     if (inSkip(ss)) return;
     const f = course.sample(ss);
     const hw = course.widthAt(ss) / 2;
-    const h = bermSurface(ss, e, side, hw) + lift;
-    const p = f.pos.clone().addScaledVector(f.right, side * (hw + e)).addScaledVector(f.up, h);
+    const k05 = bermK(ss);
+    const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
+    const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+    const p = f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
     list.push({ p, r, ao, tint: rand() * 2 - 1 });
   };
   const step = quality === 'high' ? 0.36 : 0.62;
@@ -614,7 +633,7 @@ export function createFoam(
   /** 0..1 clump envelope (sd 0 = left, 1 = right): 0 = no bank (open water up to the frame edge) */
   const bankEnv = (s: number, sd: number) => {
     const [seed, f] = BANK_ENV[sd];
-    return sm(0.42, 0.62, 0.65 * noise1(s * f + seed) + 0.35 * noise1(s * f * 2.3 + seed * 1.7 + 11.0));
+    return sm(0.5, 0.62, 0.65 * noise1(s * f + seed) + 0.35 * noise1(s * f * 2.3 + seed * 1.7 + 11.0));
   };
   const rowEnv = [new Float32Array(R), new Float32Array(R)];
   /** lather apron height above the water: f = 0 inner edge (just under the water) … 1 outer */
@@ -715,8 +734,11 @@ export function createFoam(
         const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);
         const inner = frac > 0.002 ? solveLat(cam, side * (1 - frac), camLat + side * 1.0, edge) : edge;
         // keep clear of Benny (near him) and of the cyan core / coin line; merge into the berm at the edge
-        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds)));
-        let a = Math.max(side * inner, side * rider.lat + clearR, side * coreLateral(course, s) + BANK_CLEAR_CORE);
+        // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax to ≈0.75×
+        const behind = sm(-0.5, -1.2, ds);
+        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds))) * (1 - 0.22 * behind);
+        const clearC = BANK_CLEAR_CORE * (1 - 0.35 * behind);
+        let a = Math.max(side * inner, side * rider.lat + clearR, side * coreLateral(course, s) + clearC);
         a = Math.min(a, hw - 0.3);
         const outA = Math.max(a + 0.12, Math.min(side * edge + 0.55, hw + 0.15));
         // fade in/out (stage entry/exit): the bank narrows towards the frame edge instead of sinking
@@ -735,7 +757,8 @@ export function createFoam(
           const f = Math.pow(j / (C - 1), 0.85);
           // the apron starts a little outside the bank's inner edge: its lip hides behind the rim bubbles
           const lat = side * (a + Math.min(0.1, (outA - a) * 0.3) + (outA - a - Math.min(0.1, (outA - a) * 0.3)) * f);
-          const h = hIn + (hOut - hIn) * f + bankProf(f, s, side);
+          const evR = sm(0.06, 0.45, env);
+          const h = hIn + (hOut - hIn) * f + bankProf(f, s, side) * evR - 0.1 * (1 - evR);
           pP.copy(fr.pos).addScaledVector(fr.right, lat).addScaledVector(fr.up, h);
           pP.toArray(bankPos, k * 3);
           // berm-shader coordinates (e across, s along) at twice the berm's density: the near-field

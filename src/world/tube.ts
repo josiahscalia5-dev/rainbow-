@@ -465,10 +465,14 @@ export class ForcedTunnel {
    * draws the far bays longer than the near ones (ring radii 288,192,122,85,66,54,45 px): one ring per
    * knot reproduces that while every bay keeps its slot rows and lid pair. Without knots Z = u.
    */
-  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = []) {
+  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3) {
     const f = path.frame(sF);
     this.c0 = tubeCenterAt(path, sF);
-    this.T = f.tan.clone(); this.U = f.up.clone(); this.Rt = f.right.clone();
+    // `axis`: direction of the straight run the camera looks down (the path's tangent at sF may already
+    // be easing toward the next stage's axis, which would put the far vanishing point off the real one)
+    this.T = (axis ?? f.tan).clone().normalize();
+    this.U = f.up.clone().addScaledVector(this.T, -f.up.dot(this.T)).normalize();
+    this.Rt = new THREE.Vector3().crossVectors(this.T, this.U).normalize();
     this.R = path.radius(sF);
     const rel = this.c0.clone().sub(eye);
     this.D0 = rel.dot(this.T);

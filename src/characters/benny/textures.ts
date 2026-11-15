@@ -69,7 +69,7 @@ export const BENNY_COLORS = {
   pinkTip: '#fd80b4',
   pinkSkin: '#e85498',
   pomRoot: '#4a08b4',
-  pomTip: '#8f3cff',
+  pomTip: '#7c28e8', // wave 5: was #8f3cff (live 05 pom median #9425FF L147, ref #8215ED L129)
   // star: warm yellow #F7BB19 (ref 05), not orange
   gold: '#ffc61c',
 };
@@ -117,20 +117,29 @@ function knitStitch(ctx: Ctx, hctx: Ctx, cx: number, cy: number, cw: number, rh:
  * Stripes bottom→top: white, purple, white, purple, white; with the purple cuff that is 3 purple bands
  * (refs 04–10 rear: cuff · W · P · W, the top purple ring shows around the pom-pom, the white top is under it).
  */
+const KNIT_WHITE_HI = '#fffaf8';
+const KNIT_WHITE = '#fff6f4';
+const KNIT_WHITE_SHADE = '#c8b2c4';
+const KNIT_PURPLE_HI = '#5a1ccc';
+const KNIT_PURPLE = '#420cb6';
+const KNIT_PURPLE_SHADE = '#1e0562';
+
 export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THREE.CanvasTexture } {
   const W = 1024, Hh = 512;
   const [c, ctx] = canvas(W, Hh);
   const [hc, hctx] = canvas(W, Hh);
-  const C = BENNY_COLORS;
   const stripes: [number, number, string, string, string][] = [
     // [v0, v1, highlight, base, groove]   (v measured from bottom)
-    [0.0, 0.3, '#ffffff', C.white, C.whiteShade],
     // wave 5 (ref 05 rear, centre column: white 24 / purple 33 / white 19 px, then a purple band around the pom base):
-    // wider middle purple, thinner upper white, upper purple band starts lower so it shows beside the pom
-    [0.3, 0.58, C.purpleLight, C.purple, C.purpleDark],
-    [0.58, 0.73, '#ffffff', C.white, C.whiteShade],
-    [0.73, 0.92, C.purpleLight, C.purple, C.purpleDark],
-    [0.92, 1.0, '#ffffff', C.white, C.whiteShade],
+    // wider middle purple, thinner upper white, upper purple band starts lower so it shows beside the pom.
+    // Yarn colours: warmer cream white (live 05 white read lavender #FFD8FF vs ref #F3CFE4) and a stitch highlight
+    // with less green (live purple stripe #8658FF vs ref #740FF2); the purple yarn ≈ the cuff's effective albedo
+    // (brim texture × its #7868a0 factor) ÷ the crown factor, so stripes and cuff read as the same deep violet
+    [0.0, 0.3, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],
+    [0.3, 0.58, KNIT_PURPLE_HI, KNIT_PURPLE, KNIT_PURPLE_SHADE],
+    [0.58, 0.73, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],
+    [0.73, 0.92, KNIT_PURPLE_HI, KNIT_PURPLE, KNIT_PURPLE_SHADE],
+    [0.92, 1.0, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],
   ];
   hctx.fillStyle = '#000';
   hctx.fillRect(0, 0, W, Hh);

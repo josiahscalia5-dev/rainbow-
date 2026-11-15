@@ -31,3 +31,14 @@ Captures go to qa/pilot05/wave5/environment/itNN (max 5), regression at the end 
   276,322,374,434 (piecewise-linear u→Z knots, 7 slot rows + 1 lid pair per bay), virtual water chord
   with a painted far river, tiny end glow at D_v≈540 (≈18 px radius). Opens (morph) when the camera
   gets within 34→18 u of sF, so the ride into 06 is unchanged.
+
+## it01 (environment.ts 05 section rewritten; tube.ts ForcedTunnel knots/axis/chord/placeInstances; materials.ts farRiverMaterial)
+* bay05 6 → 14 (rings05 every 14 back from sF05 = sCam05 + 54), band rings (`band05`), slab lids, far tunnel wired.
+* Probe (vite-node, same eye as RideCamera): ring tops on the VP column 191(real) 268(real, sF) 350 390 410 423 432
+  439 445 450 → spacing ≈77, 82, 40, 20, 13, 9, 7, 6, 5 px (ref 96, 70, 37, 19, 12, 9). Far VP (500, 477), end glow r 23 px.
+* Capture: calls 125, tris 634,089 (budget 130 / 650k). No console errors.
+* VP window (180×100 about the VP): warm px 18,000 → 8,056 (ref 2,208, but now mostly ring gold); warm width on the
+  VP row 179 → 43 px; core width 46 → 7 px (ref core px 410 vs 171 now: core a bit small).
+* Walls non-gold median L #C222B8 R #CE41CC ceil #BE39BE (ref #BF36B4/#CF3DB6/#B2359F); p10 lum 90–104 (ref 77–81).
+* Gold median #FFAF4E p90 #FFD17D (ref #FB984D / #FFE280). Rings flat orange with brown blotches; lids edge-on thin plates;
+  far river straight striped lanes. → it02: violet F0 + fat slots, 'gold05' env, thicker tilted lids, narrower river.

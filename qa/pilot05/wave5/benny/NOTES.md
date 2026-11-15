@@ -41,3 +41,24 @@ star 12 px low / 19 px too far in, top white stripe a bit tall vs the purple str
 | star centre | (519, 953) +0.64 hw | (500, 965) +0.57 | (512, 955) +0.65 |
 | body width y 1129/1149/1159/1169/1179 | 258/228/209/181/107 | 242/199/169/131/61 | 257/228/202/178/147 |
 | pom | 152×130 | 149×131 | 149×131 |
+
+### it03 (22:04) — hat colour A/B in the live game via new QA hook `?bennyTint=` (runtime.ts), no GLB change
+Region medians (ref 05 → it02): cuff #6B0DEB L117 → #B248FF L167; purple stripe #740FF2 L124 → #8658FF L153;
+white #F3CFE4 L225 → #FFD8FF L241; pom #8215ED L129 → #9425FF L147; body #F549A9 L162 → #FF46B3 L167 (ok).
+Cuff factor #9888b8 → #7D13FF L132; **#7868a0 → #620BEE L118**; #605088 → #5007C9 L98. Crown factors only darken G
+(R/B stay clipped at 255 → lavender). Refs 03/07 also show a deep-violet cuff → global factor is right.
+Applied: build.ts brimMat color #7868a0, crownMat color #eae6d6 (mild warm; a full unclip would need a greenish
+factor that would look wrong in neutral scenes); textures.ts crown yarn white #fff6f4 / shade #c8b2c4, purple stitch
+highlight #8a2cff (was #9d55ff), pomTip #8530f2 (was #8f3cff).
+
+### it04 (22:07) — re-export with hat colour factors + yarn colours
+GLB 1,126,332 B `glTF`. Geometry unchanged vs it02 (bbox x 231–612 y 766–1196, star (512,955)). Scene had changed
+under us (other specialists): 125 calls / 634,089 tris (it02: 121 / 608,313) — measurement scripts now use a Benny ROI.
+| region | ref 05 | it02 | it04 |
+|---|---|---|---|
+| cuff | #6B0DEB L117 | #B248FF L167 | **#6611EC L121** |
+| white stripes | #F3CFE4 L225 | #FFD8FF L241 | #FFD5EB L233 |
+| purple stripe | #740FF2 L124 | #8658FF L153 | #7C49FF L149 |
+| pom | #8215ED L129 | #9425FF L147 | #901AFF L142 |
+| body | #F549A9 L162 | #FF46B3 L167 | #FF48B4 L169 |
+Next (it05): crown purple yarn ≈ cuff effective albedo (#420cb6 / hi #5a1ccc / shade #1e0562), pomTip #7c28e8.

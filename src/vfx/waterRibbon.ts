@@ -404,7 +404,7 @@ void main() {
     // ribbon. (This replaces the separate wake "trail" sweep, which drew the two hard pink "fins".)
     if (vStyle.x > 0.0 && uBenny.z > 0.0) {
       float nb = sw * vStyle.x * (1.0 - smoothstep(-0.5, 3.0, db));
-      float side = 1.45 + 0.05 * max(-db, 0.0);
+      float side = 1.42 + 0.02 * max(-db, 0.0);
       offL = mix(offL, Mb - (uBenny.y - side), nb);
       offR = mix(offR, (uBenny.y + side) - Mb, nb);
       wL = mix(wL, 0.34, nb);
@@ -621,7 +621,8 @@ void main() {
     float flA = flowGlint(vec2(wq * 6.0, v5 * 0.075), 0.75, 18.0, 3.8, 0.0, uTime);
     float flB = flowGlint(vec2(lat * 1.6, v5 * 1.4 + 0.5), 0.6, 26.0, 3.2, 1.0, uTime + 2.7);
     // many small twinkling 4-point stars (ref 05: dozens of tiny white glints in the near and mid water)
-    float flC = flowGlint(vec2(lat * 4.0, v5 * 3.2 + 0.3), 0.7, 8.0, 2.6, 1.0, uTime + 1.3);
+    float flC = flowGlint(vec2(lat * 4.0, v5 * 3.2 + 0.3), 0.8, 8.0, 2.6, 1.0, uTime + 1.3);
+    flC *= 0.4 + 0.9 * pow(cN, 3.0);            // the small stars cluster on the swell crests (not a uniform snow)
     float flD = flowGlint(vec2(wq * 16.0, v5 * 0.32 + 7.0), 0.5, 6.0, 2.4, 0.3, uTime + 4.1);
     // (the big near flares sit mostly on the swell crests: light catching the heaving surface)
     c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))

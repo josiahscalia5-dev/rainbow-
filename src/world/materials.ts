@@ -375,13 +375,13 @@ ${FAR_GLOW_APPLY('1.0 - perfHole')}
  * walls read rich saturated magenta (the shared candy studio has a cyan panel that turned them sky-blue).
  * Built from half-float DataTextures; three converts it to PMREM on first use (no renderer needed here).
  */
-const tubeEnvs: Partial<Record<'wall' | 'gold', THREE.CubeTexture>> = {};
+const tubeEnvs: Partial<Record<'wall' | 'gold' | 'gold05', THREE.CubeTexture>> = {};
 /** variant 'gold': same tunnel lighting seen by polished gold (warm-white strips, amber base) so rings and
  *  lids read clean orange-gold with yellow-white highlights instead of salmon (gold × magenta). */
-export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeTexture {
+export function washerTubeEnv(variant: 'wall' | 'gold' | 'gold05' = 'wall'): THREE.CubeTexture {
   const cached = tubeEnvs[variant];
   if (cached) return cached;
-  const isGold = variant === 'gold';
+  const isGold = variant !== 'wall';
   const N = 128;
   const dir = new THREE.Vector3();
   const col = new THREE.Color();
@@ -401,8 +401,10 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
   // look almost straight down the tunnel, where a cube map's meridian strips pinch together and blur.
   // gold (wave 4): warm yellow-white above (polished yellow-gold mids/highlights, ref #F4B70F…#FCE082),
   // copper only toward the floor (shadowed side); was amber 0.62/0.24/0.07 → saturated orange rings
-  const cBaseTop = isGold ? new THREE.Color(0.78, 0.56, 0.24) : new THREE.Color(0.5, 0.04, 0.36);
-  const cBaseLow = isGold ? new THREE.Color(0.26, 0.09, 0.04) : new THREE.Color(0.17, 0.035, 0.44);
+  // 'gold05' (wave 5, 05 rings/lids only): brighter pale-yellow sky (ref highlights #FCE082) over a copper
+  // floor, so the bands read yellow-gold with copper only on the shadowed side
+  const cBaseTop = variant === 'gold05' ? new THREE.Color(0.95, 0.8, 0.4) : isGold ? new THREE.Color(0.78, 0.56, 0.24) : new THREE.Color(0.5, 0.04, 0.36);
+  const cBaseLow = variant === 'gold05' ? new THREE.Color(0.36, 0.15, 0.05) : isGold ? new THREE.Color(0.26, 0.09, 0.04) : new THREE.Color(0.17, 0.035, 0.44);
   const radiance = (d: THREE.Vector3, out: THREE.Color) => {
     const up = d.y;
     // base: magenta above, violet toward the floor
@@ -478,7 +480,7 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
         float r = length(vUv - 0.5) * 2.0;
         vec3 c = mix(uRim, uWarm, smoothstep(1.0, 0.6, r));
         c = mix(c, uGold, smoothstep(0.7, 0.3, r));
-        c = mix(c, uCore, smoothstep(0.38, 0.0, r));
+        c = mix(c, uCore, smoothstep(0.5, 0.05, r));
         float a = (1.0 - smoothstep(0.82, 1.0, r)) * vFade * uOpacity;
         if (a < 0.003) discard;
         gl_FragColor = vec4(c, a);
@@ -521,21 +523,23 @@ uniform vec3 uRivCore; uniform vec3 uRivBand; uniform vec3 uRivEdge; uniform vec
 {
   float x = vRivUv.x * 2.0 - 1.0;
   float u = vRivUv.y;
-  float cx = 0.26 * sin(u * 0.06 + 0.8);           // the cyan core meanders (ref: S-bends to the VP)
+  float cx = 0.2 * sin(u * 0.075 + 0.8);            // the cyan core meanders (ref: S-bends to the VP)
   float t = abs(x - cx);
   vec3 col = uRivCore;
-  col = mix(col, uRivBand, smoothstep(0.14, 0.22, t) * (1.0 - smoothstep(0.44, 0.54, t)));
-  col = mix(col, uRivEdge, smoothstep(0.5, 0.6, t) * 0.7);
-  float st = pow(0.5 + 0.5 * sin(x * 37.0 + u * 0.9), 10.0);
-  col += vec3(0.55, 0.75, 1.0) * st * 0.35;
-  float foam = smoothstep(0.7, 0.84, abs(x));
-  col = mix(col, uRivFoam, foam);
+  col = mix(col, uRivBand, smoothstep(0.1, 0.16, t) * (1.0 - smoothstep(0.3, 0.38, t)));
+  col = mix(col, uRivEdge, smoothstep(0.34, 0.42, t) * 0.6);
+  float st = pow(0.5 + 0.5 * sin((x - cx) * 46.0), 12.0);   // flow lines along the stream
+  col += vec3(0.6, 0.8, 1.0) * st * 0.3;
+  // cloud-like foam banks on both sides (purple wall above them stays visible)
+  float bump = 0.06 * sin(u * 1.3 + x * 7.0) * sin(u * 0.7 - x * 11.0);
+  float foam = smoothstep(0.5 + bump, 0.6 + bump, abs(x));
+  col = mix(col, uRivFoam * (0.86 + 0.14 * sin(u * 2.1 + x * 19.0)), foam);
   float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
   col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
   diffuseColor.rgb = col;
 }`);
   };
-  mat.customProgramCacheKey = () => 'far-river-v1';
+  mat.customProgramCacheKey = () => 'far-river-v2';
   return mat;
 }
 

@@ -335,7 +335,10 @@ export function buildBenny(): BuiltModel {
   const yt = yb + D.cuffH; // cuff top
   const bk = D.brimR / 0.778; // profile scale (profiles were authored for a 0.778 brim)
   const brimTex = ribbedBrimTextures();
-  const brimMat = std({ map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(1.25, 1.25), roughness: 0.86 });
+  // base-colour factors (wave 5): the tone-mapped scene light lifted the knit to lavender (live 05 cuff median #B248FF
+  // L167, ref 05 #6B0DEB L117; refs 03/07 also paint a deep-violet cuff). In-game A/B (?bennyTint): cuff ×#7868a0 →
+  // #620BEE L118; the crown gets a milder warm factor so the white stripes stay cream-white in every scene
+  const brimMat = std({ color: '#7868a0', map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(1.25, 1.25), roughness: 0.86 });
   // inner lip hugs the skin at the brim height (sphere radius there ≈ 0.68)
   const lip = Math.sqrt(D.skin * D.skin - yb * yb) + 0.012;
   // chunky rolled cuff: rounded bottom and top edges, slight belly in the middle
@@ -364,7 +367,7 @@ export function buildBenny(): BuiltModel {
   // the brim texture's "v" should run across the band (ribs vertical): lathe u = around ✓
   hat.add(brim);
   const crownTex = knitCrownTextures();
-  const crownMat = std({ map: crownTex.map, normalMap: crownTex.normalMap, normalScale: new THREE.Vector2(1.3, 1.3), roughness: 0.9 });
+  const crownMat = std({ color: '#eae6d6', map: crownTex.map, normalMap: crownTex.normalMap, normalScale: new THREE.Vector2(1.3, 1.3), roughness: 0.9 });
   // crown dome: starts inside the cuff and is narrower than it (the chunky cuff flares out, refs 04–10), with
   // an elliptic profile r = R0·√(1 − (y/H)²) that tapers to the pom-pom (which covers the apex).
   // v = height → horizontal knit stripes.

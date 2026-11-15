@@ -27,15 +27,15 @@
   },
   "05": {
     "preset": "05",
-    "s": 139.73,
+    "s": 139.69,
     "stage": "05",
-    "calls": 13,
-    "triangles": 31136,
-    "points": 500,
-    "avgFrameMsSwiftShader": 0.9,
-    "instances": 1219,
-    "bubbles": 22,
-    "smallBubbles": 280,
+    "calls": 16,
+    "triangles": 47736,
+    "points": 300,
+    "avgFrameMsSwiftShader": 0.6,
+    "instances": 3426,
+    "bubbles": 16,
+    "smallBubbles": 80,
     "sprayCapacity": 220
   },
   "09": {

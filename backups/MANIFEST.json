@@ -373,8 +373,8 @@
   },
   {
    "path": "assets/models/benny.glb",
-   "bytes": 1128440,
-   "sha256": "0e53197f6f77164976f2cb72ba0440e9c1f6d68743bd47f8f2bb96960e98b7fa"
+   "bytes": 1130568,
+   "sha256": "3441d9198ee3c255399fa3a8d6d649e6a6e8f8bc8f35818635777f65c7f6ca19"
   },
   {
    "path": "assets/models/rainbow_girl.glb",
@@ -458,8 +458,8 @@
   },
   {
    "path": "docs/characters/benny_turntable.png",
-   "bytes": 1142967,
-   "sha256": "dc35a41d57e4e67991e340e7e494fd7dc91cac3169f101e6278e174955adeefa"
+   "bytes": 1126223,
+   "sha256": "8c66b3aa6e3214d6cced3e5c654dff3a04e0e62d353d2da3948eb0b862183adb"
   },
   {
    "path": "docs/characters/benny_turntable_expr_dizzy.png",
@@ -553,8 +553,8 @@
   },
   {
    "path": "docs/vfx/water_05_low.png",
-   "bytes": 193337,
-   "sha256": "7f1eadd15747e2e3c47ef0c5e829ebb6140ca96be088ebd91924c35613f63c74"
+   "bytes": 242090,
+   "sha256": "f53ecbb1cb2e9808532a897fbecefaad128abb40d3f8604f2583452083438e55"
   },
   {
    "path": "docs/vfx/water_06.png",
@@ -603,8 +603,8 @@
   },
   {
    "path": "docs/vfx/water_stats_low.json",
-   "bytes": 1023,
-   "sha256": "e8de867533b24ae8397af1df9a954d33b3182823eeb616e26f617085febe87e8"
+   "bytes": 1022,
+   "sha256": "f499ffa9de3d9f5fb3619045940bc63446d59838e529a84593112d85d0076b55"
   },
   {
    "path": "index.html",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1104,
-   "sha256": "f24bb7ebfb287bb028b39e41c714585f255c240a30d6d1310b53abcf70ec588b"
+   "bytes": 1106,
+   "sha256": "0132dec05526eda8aec0b2bac065c859e84b5d333faa466876374b1112ddc395"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1438,8 +1438,8 @@
   },
   {
    "path": "qa/pilot05/wave5/benny/NOTES.md",
-   "bytes": 3408,
-   "sha256": "518f56db9e582d5249e882ec212f3c16411e34da23a972f8ed92b6a58a5a03d6"
+   "bytes": 5036,
+   "sha256": "c12c9881fdb9f6278764e48878e0ab42f388f1fd9b5f1e6573b4712b6e947723"
   },
   {
    "path": "qa/pilot05/wave5/benny/it01/L012.png",
@@ -1482,14 +1482,54 @@
    "sha256": "2206baed07da5005b7291a11ab17e1231de578fb5d42d7d1a0205aecd9370436"
   },
   {
+   "path": "qa/pilot05/wave5/benny/it03/T2.png",
+   "bytes": 1920078,
+   "sha256": "e3f24a27d05bc3000898fdac6865f806c99a45d5c15ab6e3429d0b6075405535"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/it03/T2_mask.png",
+   "bytes": 1759803,
+   "sha256": "2206baed07da5005b7291a11ab17e1231de578fb5d42d7d1a0205aecd9370436"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/it03/T3.png",
+   "bytes": 1923773,
+   "sha256": "eb79a92937f3edf186012d0399708103e8387466fd32fe085977310b4948393f"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/it03/T3_mask.png",
+   "bytes": 1759803,
+   "sha256": "2206baed07da5005b7291a11ab17e1231de578fb5d42d7d1a0205aecd9370436"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/it04/05.png",
+   "bytes": 1970389,
+   "sha256": "fc5fed67f4e839d0b818e716525adc8f3e58cb0cf64dd6cea482e0ec7ac1232b"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/it04/05_mask.png",
+   "bytes": 1804038,
+   "sha256": "91955c47403e03dfe7d14eb400b54fe0f02516cf9eaf19ac627682ea03dee2d7"
+  },
+  {
    "path": "qa/pilot05/wave5/environment/NOTES.md",
-   "bytes": 2514,
-   "sha256": "94cddbcaa236eada3519c267ab9c445d346adb5b2bc5929fd08537bd1a2a14ac"
+   "bytes": 3662,
+   "sha256": "e6497cc9cb432c4ac2de84a171c41c86db8a8ea7dfde8f98bba8682ddedbd05c"
+  },
+  {
+   "path": "qa/pilot05/wave5/environment/it01/05.png",
+   "bytes": 1959553,
+   "sha256": "98873ba56115dc5b3075fe14759dda2eab179a9db4d22a68ca158910f12cfe5f"
+  },
+  {
+   "path": "qa/pilot05/wave5/environment/it02/05.png",
+   "bytes": 1974708,
+   "sha256": "be0cff6443f1fe36a3a15977a0053205c8fa582324da712ee12f43ba2b6b4174"
   },
   {
    "path": "qa/pilot05/wave5/foam/NOTES.md",
-   "bytes": 1124,
-   "sha256": "76f927c7e383192a3dcaf5c7a81837ed04bb5b13c8a0d2e8a9b38450dbb340a3"
+   "bytes": 3594,
+   "sha256": "5216e861f9696864dcb55862a802da9e93be32d245ef08f6e3eab5b5bfd873e5"
   },
   {
    "path": "qa/pilot05/wave5/foam/iso_noflank/05.png",
@@ -1507,9 +1547,29 @@
    "sha256": "4078f0d0ab1ea9ed909e79c4274857d5a51fe86fce12fabf4bbf5cf612b6c0c2"
   },
   {
+   "path": "qa/pilot05/wave5/foam/it02/05.png",
+   "bytes": 1959553,
+   "sha256": "98873ba56115dc5b3075fe14759dda2eab179a9db4d22a68ca158910f12cfe5f"
+  },
+  {
+   "path": "qa/pilot05/wave5/foam/it03/05.png",
+   "bytes": 1974708,
+   "sha256": "be0cff6443f1fe36a3a15977a0053205c8fa582324da712ee12f43ba2b6b4174"
+  },
+  {
+   "path": "qa/pilot05/wave5/foam/tools/bankcc.py",
+   "bytes": 3154,
+   "sha256": "aecdacfab38eb36a6ba26bc687b111a6bb5f6e9f85a85227714ffef969dc55b5"
+  },
+  {
+   "path": "qa/pilot05/wave5/foam/tools/foammask.py",
+   "bytes": 2411,
+   "sha256": "fc74b998bde6451cae2d3c9b721de34df25741ad3028c9ccd31ac478b379a582"
+  },
+  {
    "path": "qa/pilot05/wave5/water/NOTES.md",
-   "bytes": 4738,
-   "sha256": "aa7cdf5a3f1513c424b9cddb37d3a5d606ad61b55085b6951d44f1c2ef811f76"
+   "bytes": 6766,
+   "sha256": "2fc63fc398c4ed5690c4e00aa4adc89e1a9fc9b60f48684783345af5db8b76ef"
   },
   {
    "path": "qa/pilot05/wave5/water/it01/05.png",
@@ -1530,6 +1590,36 @@
    "path": "qa/pilot05/wave5/water/it04/05.png",
    "bytes": 1776435,
    "sha256": "8f003166a9d168838b16e41f55afdbab5edc558d63337975e06c1c6db37d91f5"
+  },
+  {
+   "path": "qa/pilot05/wave5/water/it05/05.png",
+   "bytes": 1959553,
+   "sha256": "98873ba56115dc5b3075fe14759dda2eab179a9db4d22a68ca158910f12cfe5f"
+  },
+  {
+   "path": "qa/pilot05/wave5/water/it05/triptych.png",
+   "bytes": 3556477,
+   "sha256": "71c5a150a3dcb97aed80760f0c956e03356e3a5aa8853c9bc0c32fcd84799d4e"
+  },
+  {
+   "path": "qa/pilot05/wave5/water/regress/03.png",
+   "bytes": 689757,
+   "sha256": "ec19121394c3211506e43081dbf2c3d109f5bf4fe1bfd685b7530a226fee53fb"
+  },
+  {
+   "path": "qa/pilot05/wave5/water/regress/04.png",
+   "bytes": 1009772,
+   "sha256": "25a6b0e4150e156bd27204f56a4cfeaa911bed3d4820bfbc005936b077a92a0c"
+  },
+  {
+   "path": "qa/pilot05/wave5/water/regress/06.png",
+   "bytes": 1505911,
+   "sha256": "173dfeb6255f17bfb344f2d072d0d25cb0af3ccec674edfefb8e52dfdc3ead79"
+  },
+  {
+   "path": "qa/pilot05/wave5/water/regress/07.png",
+   "bytes": 1786287,
+   "sha256": "a9f709fb528491a919e4e88d871558a3cbd2555a00dd3d7a40818852bcdaeeca"
   },
   {
    "path": "qa/report_metrics.json",
@@ -1973,8 +2063,8 @@
   },
   {
    "path": "src/characters/benny/build.ts",
-   "bytes": 23864,
-   "sha256": "f1edbed5771b016b2e3b04b9711f3e4476abf036f92e0493e12154a98874eeb1"
+   "bytes": 24248,
+   "sha256": "7f0cf0e0740197cab5c1cb347d95fe37be3d3f442e27bb07fcee6e9d07c307ad"
   },
   {
    "path": "src/characters/benny/fur.ts",
@@ -1988,8 +2078,8 @@
   },
   {
    "path": "src/characters/benny/textures.ts",
-   "bytes": 13524,
-   "sha256": "c950807c6c2edde2e079cd178d25a96ce11b6e8a5cdb817fdf9cae061c32b338"
+   "bytes": 14173,
+   "sha256": "3becd14c8a39076b2065012cda92737753e7075921dab23940c474718f812735"
   },
   {
    "path": "src/characters/girl/build.ts",
@@ -2088,8 +2178,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 38952,
-   "sha256": "4851ac907186f948fa2a98af39995109bb4e2cb76b3dc0df0970751433305cfd"
+   "bytes": 40365,
+   "sha256": "007da1b911742a7b8e07624593ab3115d9ce6396031c0fa0b84fe8ed84a49c2d"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -2118,8 +2208,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 43086,
-   "sha256": "1be74e0a28721a89af52b7b2bcbd5d8603e71a71d9986f21035d9828cb3e3d22"
+   "bytes": 43202,
+   "sha256": "e2a6649654c16c71e934563f7a0084a11452e9cc6353fec8223cc3b58b040366"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -2133,8 +2223,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 42721,
-   "sha256": "2ea096974285eb5f77cd0678371c62cb11daca05642b40e13c6179e90fcd964d"
+   "bytes": 42947,
+   "sha256": "e829312b89f12dc8a85a89a8e5c1b4e38c47c2268551a19e1387cfb8646f1491"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -2143,8 +2233,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 29499,
-   "sha256": "0f94f9967169957c77d1816770ad7df56a8eecbe18cd4e7aa015474860be59f0"
+   "bytes": 30060,
+   "sha256": "86883f1218f48182eb48b5b89912da9d1d4f6279c9231e24a5d91c7b4c55dc1f"
   },
   {
    "path": "src/world/towel.ts",
@@ -2153,8 +2243,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 35057,
-   "sha256": "cbe3ddc620500016a4961f7da52e8dff65523550b2637ad36b33301325262580"
+   "bytes": 35419,
+   "sha256": "7e5a0a334d5b86d3708173baac019c3beb176cdcde8618772f4a2bee29f1f2e5"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",
