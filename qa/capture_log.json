@@ -1,39 +1,39 @@
 {
-  "when": "2026-11-15T23:00:18.014Z",
+  "when": "2026-11-15T23:17:00.332Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
       "id": "05",
-      "file": "qa/pilot05/wave6/current/05.png",
+      "file": "qa/pilot05/wave6/coordinator/s01/05.png",
       "size": [
         864,
         1536
       ],
       "checkpoint": {
         "stage": "05",
-        "s": 132.4383020282329,
-        "y": -41.348424352736345
+        "s": 130.98830202823257,
+        "y": -41.238537796884884
       },
       "state": {
         "mode": "ride",
         "stage": "05",
-        "s": 132.438,
+        "s": 130.988,
         "lat": 0,
         "coins": 1420,
         "hearts": 5,
         "paused": false,
-        "bennyY": -41.348,
+        "bennyY": -41.239,
         "bennyVisible": true,
         "cam": [
-          1.92,
-          -37.94,
-          -68.28
+          1.93,
+          -37.88,
+          -66.83
         ]
       },
       "stats": {
-        "fps": 60.1,
+        "fps": 60.3,
         "calls": 86,
-        "triangles": 633521,
+        "triangles": 633025,
         "geometries": 101,
         "textures": 41,
         "modules": {
@@ -41,9 +41,9 @@
           "benny": "assets/models/benny.glb",
           "girl": "assets/models/rainbow_girl.glb"
         },
-        "courseLength": 435.1923435286779,
+        "courseLength": 434.41289988173435,
         "firstFrameCalls": 143,
-        "firstFrameTriangles": 634205
+        "firstFrameTriangles": 633709
       }
     }
   ],

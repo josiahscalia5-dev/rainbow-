@@ -127,13 +127,47 @@ export const S05 = {
   extent: 6.0,
 };
 
-/** lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line */
-export function meander05(u: number): number {
+/**
+ * 05 meander AHEAD of Benny's crest (u > uCrest): [u, offset] knots fitted to the APPROVED reference (wave 6
+ * camera lock, qa/pilot05/wave6/camera_lock/landmarks.json). The reference's coin trail was back-projected
+ * through the live locked 05 camera onto the river (coin height 1.2 u) and converted to offsets from the
+ * tunnel line; coins sit at (1 + latK·CORE_SWING) ≈ 1.62 × the course offset, so knot = coin offset / 1.62.
+ * Ref coins (px → u, coin offset): (474,726)→21.6,−0.31 · (548,661)→26.3,+0.60 · (482,612)→32.2,−0.37 ·
+ * (431,574)→43.0,−1.85 · (466,546)→55.5,−1.28 · (495,533)→67.0,−0.26. The previous sine (λ 32) put the right
+ * swing at u≈30–33 and +1.45 wide, so the 3rd coin sat ≈100 px right of the reference.
+ * Interpolation: C¹ cubic Hermite (non-uniform Catmull-Rom tangents), slope 0 at the crest and at L.
+ */
+const MEANDER05_KNOTS: [number, number][] = [[26.3, 0.37], [32.2, -0.23], [43, -1.14], [55.5, -0.79], [67, -0.16], [72, 0]];
+
+/** the original (wave 1–5) sine meander; kept verbatim up to U05_KEEP so the 04→05 join, the '05_crest'
+ *  checkpoint search window (u ≤ uCrest + λ/4) and therefore the LOCKED 05 camera are bit-identical */
+function meander05Sine(u: number): number {
   const { L, lambda, uCrest, a0, a1 } = S05;
-  if (u <= 0 || u >= L) return 0;
   const grow = THREE.MathUtils.clamp((u - uCrest) / (1.5 * lambda), 0, 1);
   const amp = (a0 + (a1 - a0) * grow) * smooth(0, 10, u) * (1 - smooth(L - 12, L, u));
   return -amp * Math.cos((2 * Math.PI * (u - uCrest)) / lambda);
+}
+const U05_KEEP = S05.uCrest + S05.lambda / 4;
+
+/** C¹ cubic Hermite through knots (non-uniform Catmull-Rom tangents; end slopes given) */
+function hermiteKnots(k: [number, number][], u: number, m0: number, mN = 0): number {
+  const n = k.length;
+  if (u >= k[n - 1][0]) return k[n - 1][1];
+  let i = 0;
+  while (u > k[i + 1][0]) i++;
+  const tan = (j: number) => (j === 0 ? m0 : j === n - 1 ? mN : (k[j + 1][1] - k[j - 1][1]) / (k[j + 1][0] - k[j - 1][0]));
+  const [u0, p0] = k[i], [u1, p1] = k[i + 1];
+  const h = u1 - u0, t = (u - u0) / h, t2 = t * t, t3 = t2 * t;
+  return (2 * t3 - 3 * t2 + 1) * p0 + (t3 - 2 * t2 + t) * h * tan(i) + (-2 * t3 + 3 * t2) * p1 + (t3 - t2) * h * tan(i + 1);
+}
+const KNOTS05: [number, number][] = [[U05_KEEP, meander05Sine(U05_KEEP)], ...MEANDER05_KNOTS];
+const SLOPE05_KEEP = (meander05Sine(U05_KEEP + 1e-3) - meander05Sine(U05_KEEP - 1e-3)) / 2e-3;
+
+/** lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line */
+export function meander05(u: number): number {
+  if (u <= 0 || u >= S05.L) return 0;
+  if (u <= U05_KEEP) return meander05Sine(u);
+  return hermiteKnots(KNOTS05, u, SLOPE05_KEEP);
 }
 
 /** Generates the dense control polyline of the route (absolute coordinates). */

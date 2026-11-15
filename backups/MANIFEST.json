@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "d379240d351a641c4948170ec185683b4fe0ddec128508539581f62da860ef74"
+   "sha256": "1f30ddb05cd2b788618a2f6126d023bfa5e295549976c2127d751a01765c99c0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -499,7 +499,7 @@
   {
    "path": "docs/path_graph.md",
    "bytes": 4595,
-   "sha256": "667877a42d21905b642db3699b291322c47fb4dd56454f0c297d0d876df0eca0"
+   "sha256": "1b5da0a0e515f6c8a78f6139dae060fab7590331dda7ea4babe937794ad5698c"
   },
   {
    "path": "docs/reference_inventory.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1174,
-   "sha256": "1571a7c0ba72f68a50643b80d15dc03305032a1101bc17d30d97d01eac582b57"
+   "bytes": 1184,
+   "sha256": "d252ae24bb02d72144a1c3b94849e782eb25246c6f49f8bbc447d93d6c22888e"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -858,8 +858,8 @@
   },
   {
    "path": "qa/continuity_report.json",
-   "bytes": 2696,
-   "sha256": "db73c92588cac5c26b824f990c21bb7c54d5c746e1617cc142ed93b4ec9f2b49"
+   "bytes": 2693,
+   "sha256": "dd3b8086624eb711349ef797df68d7bf630c2674ae8868211c41f6018a0fedc1"
   },
   {
    "path": "qa/gameplay_test.json",
@@ -1778,13 +1778,13 @@
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/camera05.json",
-   "bytes": 1478,
-   "sha256": "cfcf8590d0786d0e3c813233f17ba6c824999c3e46ca8f7a50adc53aef432c24"
+   "bytes": 1485,
+   "sha256": "5367d81685f55328d6fa424c698eddee901e77e8261606c87598553c01be6107"
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/landmarks.json",
-   "bytes": 18787,
-   "sha256": "5304b7d67d6eca3c37513ae5b1e04dfcb94f4347eb42f2ab72bcfaf9e80efad6"
+   "bytes": 18998,
+   "sha256": "d6076482554ce9efdf8f6bec0ec1d21ee58726045f4a5391bced5321732a529c"
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/landmarks_current_px.json",
@@ -1795,6 +1795,11 @@
    "path": "qa/pilot05/wave6/camera_lock/landmarks_ref_px.json",
    "bytes": 67832,
    "sha256": "cedaad480da0880618291ec3fc56ccf74f1567dd47d52e345bdbb0471ea9501a"
+  },
+  {
+   "path": "qa/pilot05/wave6/coordinator/s01/05.png",
+   "bytes": 1963786,
+   "sha256": "38e4f6bf2e2db5d0b7b57b5ff482ee2c19c894994daac826fdc11014dd5c120b"
   },
   {
    "path": "qa/pilot05/wave6/current/05.png",
@@ -2458,8 +2463,8 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 26061,
-   "sha256": "d5d2a15a2b05a65a0dac49133235fc74f12fb28b69a112f595f081cc2c04ee1e"
+   "bytes": 28322,
+   "sha256": "19a9c9b2ec8f0c182f2378ef04b7a502f84750fe70c3e4a522eaf70f3256f261"
   },
   {
    "path": "src/world/environment.ts",
