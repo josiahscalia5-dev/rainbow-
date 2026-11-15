@@ -1855,3 +1855,248 @@ Now the optional-module loader with placeholders, so the game runs before the sp
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/src/game/modules.ts (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T17:04:45.798Z
+
+Now the game itself: renderer, bloom, state machine (intro 01–02 → ride 03–10 → outro 11), steering, hearts, coins, pause, and the deterministic QA API.
+
+### 🤖 Claude — 2026-11-15T17:06:17.227Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "content": "/**\n * RAINBOW game: one connected 3D world, one continuous route.\n *   intro  (01–02)  real-time cinematic: the girl drops the towel bundle (Benny hidden) into Drum A,\n *                   closes the door and walks away; Benny peeks, then the spin tumbles him down the drain.\n *   ride   (03–10)  interactive: auto-propelled along the course, steer left/right, real coin pickups,\n *                   5 hearts (bumping the foam walls costs one), pause/resume.\n *   outro  (11)     real-time victory cinematic: Benny is hidden u …[+24727 chars]`
+
+### 🧑 User — 2026-11-15T17:06:17.439Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/game/Game.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:06:25.189Z
+
+Simplifying one awkward yaw blend, then typechecking:
+
+### 🤖 Claude — 2026-11-15T17:06:26.497Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "      placeGirl('A', p, lerp(Math.PI, yawWalk + Math.PI * 2 * (yawWalk < 0 ? 1 : 0), turn) );", "new_string": "      placeGirl('A', p, lerp(Math.PI, yawWalk, turn));"}`
+
+### 🧑 User — 2026-11-15T17:06:26.654Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:06:27.696Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | grep -v \"src/characters/\\(benny\\|girl\\)\\|src/vfx\\|tools/water-lab\" | head -30", "description": "Typecheck my files (excluding specialists' WIP)", "timeout": 180000}`
+
+### 🧑 User — 2026-11-15T17:06:30.059Z
+
+> ↩︎ result: scripts/continuity-test.ts(5,42): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+> scripts/continuity-test.ts(70,1): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+> src/game/Game.ts(281,31): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+> src/world/environment.ts(163,44): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+> src/world/environment.ts(205,59): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+> src/world/environment.ts(206,30): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+### 🤖 Claude — 2026-11-15T17:06:37.599Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/course.ts", "offset": 362, "limit": 25}`
+
+### 🧑 User — 2026-11-15T17:06:37.618Z
+
+> ↩︎ result: 362	  }
+> 363	
+> 364	  /** smoothly blended per-stage property (blend ±blend units around stage boundaries) */
+> 365	  prop(s: number, key: 'width' | 'tube' | 'speed' | 'bank', blend = 6): number {
+> 366	    let v = 0, w = 0;
+> 367	    for (const st of this.stages) {
+> 368	      const a = smooth(st.s0 - blend, st.s0 + blend, s) * (1 - smooth(st.s1 - blend, st.s1 + blend, s));
+> 369	      if (a > 0) { v += st[key] * a; w += a; }
+> 370	    }
+> 371	    return w > 0 ? v / w : this.stageAtS(s)[key];
+> 372	  }
+> 373	
+> 374	  widthAt(s: number): number {
+> 375	    // the stream narrows into the towel opening at the very end of 10
+> 376	    const st10 = this.stage('10');
+> 377	    const base = this.prop(s, 'width');
+> 378	    return base * (1 - 0.35 * smooth(st10.s1 - 8, st10.s1, s));
+> 379	  }
+> 380	
+> 381	  sample(s: number, out?: CourseSample): CourseSample {
+> 382	    const o = out ?? { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+> 383	    const x = THREE.MathUtils.clamp(s, 0, this.length) / this.ds;
+> 384	    const i = Math.min(this.N - 2, Math.floor(x));
+> 385	    const f = x - i;
+> 386	    const lerp3 = (A: Float32Array, v: THREE.Vector3) =>
+
+### 🤖 Claude — 2026-11-15T17:06:42.949Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/course.ts", "old_string": "  /** smoothly blended per-stage property (blend ±blend units around stage boundaries) */\n  prop(s: number, key: 'width' | 'tube' | 'speed' | 'bank', blend = 6): number {\n    let v = 0, w = 0;", "new_string": "  /**\n   * smoothly blended per-stage property (blend ±blend units around stage boundaries).\n   * Accepts either argument order: prop(s, 'width') or prop('width', s).\n   */\n  prop(s: number, key: StageProp, blend?: number): number;\n  prop(key: StageProp, s: number, blend?: number): number …[+222 chars]`
+
+### 🧑 User — 2026-11-15T17:06:43.119Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T17:06:44.149Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/course.ts", "old_string": "export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';", "new_string": "export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';\nexport type StageProp = 'width' | 'tube' | 'speed' | 'bank';"}`
+
+### 🧑 User — 2026-11-15T17:06:44.343Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T17:06:45.800Z
+
+> 🔧 **Bash** `{"command": "sed -i 's#\"include\": \\[\"src\", \"tools\", \"scripts/continuity-test.ts\"\\]#\"include\": [\"src\", \"tools\"]#' tsconfig.json && npx tsc --noEmit 2>&1 | grep -v \"src/characters/\\(benny\\|girl\\)\\|src/vfx\\|tools/water-lab\" | head -20; npx vite-node scripts/continuity-test.ts > /dev/null 2>&1; echo \"continuity exit=$?\"", "description": "Re-typecheck and re-run continuity test", "timeout": 180000}`
+
+### 🧑 User — 2026-11-15T17:06:48.869Z
+
+> ↩︎ result: continuity exit=0
+> [This command modified 1 file you've previously read: tsconfig.json. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T17:06:54.594Z
+
+Typecheck is clean and continuity still passes. Now the Playwright capture script that renders each checkpoint from the actual running game at the native reference sizes:
+
+### 🤖 Claude — 2026-11-15T17:07:07.491Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/capture.mjs", "content": "#!/usr/bin/env node\n// Playwright capture of the REAL running game (WebGL) at the native reference sizes.\n//   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)\n//   node scripts/capture.mjs 03 07           → only those\n//   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames\n//   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/\n//   node scripts/capture.mjs --out=DIR       → custom output dir …[+3375 chars]`
+
+### 🧑 User — 2026-11-15T17:07:07.641Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/capture.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:07:09.541Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 01 05 --out=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots 2>&1 | tail -15", "description": "First test capture of scenes 01 and 05", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T17:08:16.624Z
+
+> ↩︎ result: Call log:
+> [2m  - taking page screenshot[22m
+> [2m  - waiting for fonts to load...[22m
+> [2m  - fonts loaded[22m
+> 
+>     at /home/user/rainbow-/scripts/capture.mjs:44:16 {
+>   log: [
+>     '  - taking page screenshot',
+>     '  - waiting for fonts to load...',
+>     '  - fonts loaded'
+>   ],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.4
+
+### 🤖 Claude — 2026-11-15T17:08:26.635Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  const qs = new URLSearchParams(location.search);\n  const renderer = createRenderer(canvas);", "new_string": "  const qs = new URLSearchParams(location.search);\n  const qaMode = qs.has('qa');\n  const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });"}`
+
+### 🧑 User — 2026-11-15T17:08:26.790Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:08:30.294Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  let last = performance.now();\n  let fps = 60;\n  let running = !qs.has('qa');\n  const frame = () => {\n    const now = performance.now();\n    const dt = Math.min(0.05, (now - last) / 1000);\n    last = now;\n    fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;\n    if (running) stepSim(dt);\n    if (useBloom) composer.render(); else renderer.render(scene, camera);\n    requestAnimationFrame(frame);\n  };\n  requestAnimationFrame(frame);", "new_string": "  let last = performance.now();\n  let fps = 60;\ …[+591 chars]`
+
+### 🧑 User — 2026-11-15T17:08:30.439Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:08:31.796Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "    hud.setCoins(st.coins);\n    hud.setHearts(5);\n    return { stage: st.stage, s: st.s, y: benny.root.position.y };\n  };", "new_string": "    hud.setCoins(st.coins);\n    hud.setHearts(5);\n    render();\n    dirty = false;\n    return { stage: st.stage, s: st.s, y: benny.root.position.y };\n  };"}`
+
+### 🧑 User — 2026-11-15T17:08:31.943Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:08:35.101Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s#    await page.evaluate(() => new Promise((r) => { let n = 0; const f = () => (++n > 6 ? r() : requestAnimationFrame(f)); requestAnimationFrame(f); }));#    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));#; s#    await page.screenshot({ path: \\`\\${outDir}/\\${name}\\` });#    await page.screenshot({ path: \\`\\${outDir}/\\${name}\\`, timeout: 180000 });#\" scripts/capture.mjs && grep -n \"requestAnimationFrame\\|timeout: 180000\" scripts/capture.mjs && uptime && timeout 900 node scripts/capture.mjs 01 05 --out=/tmp/claude-0/-home-user- …[+155 chars]`
+
+### 🧑 User — 2026-11-15T17:08:56.578Z
+
+> ↩︎ result: 40:    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+> 44:    await page.screenshot({ path: `${outDir}/${name}`, timeout: 180000 });
+>  17:08:35 up 38 min,  0 user,  load average: 3.64, 1.79, 0.70
+>   `[05] [rainbow] girl module failed, using stand-in SyntaxError: Unexpected token '<', "<!doctype "... is not valid JSON\n` +
+>     '    at JSON.parse (<anonymous>)\n' +
+>     '    at GLTFLoader.parse (http://127.0.0.1:5202/node_modules/.vite/deps/three_examples_jsm_loaders_GLTFLoader__js.js?v=b230a0a7:265:21)\n' +
+>     '    at Object.onLoad (http://127.0.0.1:5202/node_modules/.vite/deps/three_examples_jsm_loaders_GLTFLoader__js.js?v=b230a0a7:214:15)\n' +
+>     '    at http://127.0.0.1:5202/node_modules/.vite/deps/chunk-UG26MVNH.js?v=b230a0a7:25899:39'
+> ]
+> [This command modified 1 file you've previously read: scripts/capture.mjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T17:09:00.482Z
+
+The girl runtime exists but her GLB isn't exported yet, so the stand-in correctly took over. Checking the capture results:
+
+### 🤖 Claude — 2026-11-15T17:09:02.682Z
+
+> 🔧 **Bash** `{"command": "ls -la /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/ && python3 -c \"\nimport json; l=json.load(open('qa/capture_log.json')); print(l['renderer']); [print(s['id'], s['state'], s['stats']) for s in l['shots']]; print(len(l['errors']), 'errors'); [print(e[:200]) for e in l['errors'] if 'girl module' not in e][:5]\"", "description": "Inspect capture log and outputs"}`
+
+### 🧑 User — 2026-11-15T17:09:02.771Z
+
+> ↩︎ result: total 1404
+> drwxr-xr-x 2 root root    4096 Nov 15 17:08 .
+> drwx------ 6 root root    4096 Nov 15 17:08 ..
+> -rw-r--r-- 1 root root  282004 Nov 15 17:08 01.png
+> -rw-r--r-- 1 root root 1144608 Nov 15 17:08 05.png
+> ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)
+> 01 {'mode': 'intro', 'stage': '01', 's': 0, 'lat': 0, 'coins': 1330, 'hearts': 5, 'paused': False, 'bennyY': -2.45, 'bennyVisible': True, 'cam': [-0.55, -0.95, -5.7]} {'fps': 61.4, 'calls': 1, 'triangles': 1, 'geometries': 86, 'textures': 28, 'modules': {'water': 'vfx/index.ts', 'benny': 'assets/models/benny.glb', 'girl': 'STAND-IN'}, 'courseLength': 438.82180238743337}
+> 05 {'mode': 'ride', 'stage': '05', 's': 126.728, 'lat': 0, 'coins': 1420, 'hearts': 5, 'paused': False, 'bennyY': -38.964, 'bennyVisible': True, 'cam': [-0.33, -36.94, -64.04]} {'fps': 60.3, 'calls': 1, 'triangles': 1, 'geometries': 73, 'textures': 30, 'modules': {'water': 'vfx/index.ts', 'benny': 'assets/models/benny.glb', 'girl': 'STAND-IN'}, 'courseLength': 438.82180238743337}
+> 2 errors
+
+### 🤖 Claude — 2026-11-15T17:09:06.701Z
+
+Water and Benny modules already load from the specialists' work in progress. Viewing the first two renders:
+
+### 🤖 Claude — 2026-11-15T17:09:07.793Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/01.png"}`
+
+### 🧑 User — 2026-11-15T17:09:07.806Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:09:08.398Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/05.png"}`
+
+### 🧑 User — 2026-11-15T17:09:08.471Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:09:36.158Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  const coins = createCoins(course);\n  scene.add(coins.group);", "new_string": "  const coins = createCoins(course);\n  scene.add(coins.group);\n  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber\n  const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));\n  if (hidden.has('water')) water.group.visible = false;\n  if (hidden.has('coins')) coins.group.visible = false;\n  const zoneHidden = (k: string) => hidden.has(k);"}`
+
+### 🧑 User — 2026-11-15T17:09:36.309Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:09:37.760Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "      env.zones[k as keyof typeof env.zones].visible = i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);", "new_string": "      env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);"}`
+
+### 🧑 User — 2026-11-15T17:09:37.901Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:09:40.620Z
+
+> 🔧 **Bash** `{"command": "sed -i 's#    await page.goto(`${vite.url}/?qa=1&dpr=1`);#    await page.goto(`${vite.url}/?qa=1\\&dpr=1${typeof opt.q === \"string\" ? \"\\&\" + opt.q : \"\"}`);#' scripts/capture.mjs && grep -n \"page.goto\" scripts/capture.mjs && timeout 900 node scripts/capture.mjs 01 --q=hide=water --out=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots_nowater 2>&1 | grep -v \"girl module\\|at \\|^\\s*'\" | tail -3", "description": "Capture 01 with water hidden to debug", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T17:09:50.440Z
+
+> ↩︎ result: 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 01 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots_nowater/01.png {"stage":"01","s":0,"y":-2.45,"calls":1,"tris":1,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"STAND-IN"}}
+> console errors: [
+> ]
+> [This command modified 1 file you've previously read: scripts/capture.mjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T17:09:54.401Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots_nowater/01.png"}`
+
+### 🧑 User — 2026-11-15T17:09:54.429Z
+
+> ↩︎ result: [image]
+

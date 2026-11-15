@@ -81,6 +81,10 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         `#include <color_fragment>
         {
           vec3 q = vBase * uDensity;
+          // clumping: strands lean toward low-frequency tuft centres as they rise → plush tufts
+          vec3 qc = q * 0.2;
+          vec3 cc = (floor(qc) + 0.5 + (fhash3(floor(qc)) - 0.5) * 0.7) / 0.2;
+          q = mix(q, cc, vLayer * 0.42);
           vec3 cell = floor(q);
           float best = 10.0; float hgt = 0.0;
           // nearest strand among this + neighbouring cells (gives round, jittered strands)
@@ -94,8 +98,8 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           float layer = vLayer;
           if (layer > 0.001) {
             if (vLenMask < 0.05) discard;
-            float strandH = 0.45 + 0.55 * hgt;
-            float radius = 0.62 * (1.0 - layer / strandH);
+            float strandH = 0.55 + 0.45 * hgt;
+            float radius = 0.78 * (1.0 - 0.85 * layer / strandH);
             if (layer > strandH || best > radius) discard;
           }
           float ao = mix(0.55, 1.0, smoothstep(0.0, 0.9, layer));

@@ -112,3 +112,103 @@ Export timed out. Diagnosing whether the lab page failed to compile (the girl mo
 
 > 🔧 **Bash** `{"command": "ls src/characters/girl/ 2>&1; cat > /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny-debug.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nprocess.chdir('/home/user/rainbow-');\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5231);\nconst b = await chromium.launch({ args: CHROMIUM_ARGS });\nconst p = await b.newPage();\np.on('console', m => console.log('console', m.type(), m.text().slice(0, 300)));\np.on('pageerror', e => console.log('pageerror', String(e). …[+713 chars]`
 
+### 🧑 User — 2026-11-15T17:05:31.343Z
+
+> ↩︎ result: textures.ts
+>   63 |      root = g.root;
+>       at TransformPluginContext._formatError (file:///home/user/rainbow-/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+>       at TransformPluginContext.error (file:///home/user/rainbow-/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+>       at normalizeUrl (file:///home/user/rainbow-/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+>       at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+>       at async file:///home/user/rainbow-/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+>       at async Promise.all (index 6)
+>       at async TransformPluginContext.transform (file:///home/user/rainbow-/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+>       at async PluginContainer.transform (file:///home/user/rainbow-/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+>       at async loadAndTransform (file:///home/user/rainbow-/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+>       at async viteTransformMiddleware (file:///home/user/rainbow-/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+> console debug [vite] connecting...
+> HTTP 500 http:/ …[+575 chars]
+
+### 🤖 Claude — 2026-11-15T17:05:48.383Z
+
+> 🔧 **Bash** `{"command": "ls src/characters/girl/; timeout 900 node scripts/export-models.mjs benny 2>&1 | grep -v \"normalized normal\" | tail -5", "description": "Run official Benny export and turntable", "timeout": 960000}`
+
+### 🧑 User — 2026-11-15T17:06:05.385Z
+
+> ↩︎ result: build.ts
+> girl-lab.html
+> girl-lab.ts
+> runtime.ts
+> textures.ts
+> exported assets/models/benny.glb {"bytes":1126456,"meshes":27,"nodes":39,"clips":["idle(2.40s)","swim(0.60s)","tumble(1.00s)","peek(2.00s)"]}
+> turntable docs/characters/benny_turntable.png {"box":{"min":[-0.9504705527463947,-0.8460706974663772,-0.9755040800506347],"max":[0.9559914534435223,1.5511818564114552,0.7794204723538264]}}
+
+### 🤖 Claude — 2026-11-15T17:06:11.230Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/characters/benny_turntable.png"}`
+
+### 🧑 User — 2026-11-15T17:06:11.268Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:07:05.399Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='src/characters/benny/build.ts'\ns=open(p).read()\nrep=[\n# fur: thicker, denser plush\n(\"\"\"    length: D.fur,\n    density: 62,\n    shells: 16,\"\"\",\"\"\"    length: D.fur,\n    density: 40,\n    shells: 20,\"\"\"),\n# crown profile: taller dome with upright sides\n(\"\"\"          [0.745, crownY0],\n          [0.775, crownY0 + 0.06],\n          [0.79, crownY0 + 0.15],\n          [0.78, crownY0 + 0.26],\n          [0.745, crownY0 + 0.37],\n          [0.68, crownY0 + 0.47],\n          [0.585, crownY0 + 0.56],\n          [0.46, crownY0 + 0.635] …[+3695 chars]`
+
+### 🧑 User — 2026-11-15T17:07:05.477Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T17:07:19.621Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/runtime.ts'\ns=open(p).read()\na=\"\"\"export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {\n  const src = await loadScene();\n  const clips: THREE.AnimationClip[] = src.userData.animations ?? [];\n  const scene = src.clone(true);\n  const root = new THREE.Group();\"\"\"\nb=\"\"\"export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {\n  const src = await loadScene();\n  const clips: THREE.AnimationClip[] = src.userData.animations ?? [];\n  return …[+835 chars]`
+
+### 🧑 User — 2026-11-15T17:07:19.732Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-15T17:07:36.120Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "content": "/**\n * Benny lab (benny-character-artist QA page).\n *   /src/characters/benny/benny-lab.html?src=build|glb&views=refs|turntable\n * views=refs      → 3 portrait panels framed like the references: 05 rear (gameplay), 03 front 3/4, 02 dizzy\n * views=turntable → front / three-quarter / side / back / rear-high with full framing\n */\nimport * as THREE from 'three';\nimport { createCandyEnvironment, createRenderer } from '../../render/env';\nimport { buildBenny } from './build';\nimport { createBennyRuntime, loadB …[+4059 chars]`
+
+### 🧑 User — 2026-11-15T17:07:36.298Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/characters/benny/benny-lab.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:07:42.273Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny-shot.mjs <<'EOF'\n// usage: node benny-shot.mjs <out.png> <query>\nimport { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nprocess.chdir('/home/user/rainbow-');\nconst [out, query] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5241);\nconst b = await chromium.launch({ args: CHROMIUM_ARGS });\nconst p = await b.newPage({ viewport: { width: 1800, height: 800 } });\np.on('pageerror', e => c …[+811 chars]`
+
+### 🧑 User — 2026-11-15T17:08:08.529Z
+
+> ↩︎ result: ok /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_refs_r2.png 21245 ms {"baseTriangles":13844}
+
+### 🤖 Claude — 2026-11-15T17:08:12.706Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_refs_r2.png"}`
+
+### 🧑 User — 2026-11-15T17:08:12.749Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:09:17.000Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/build.ts'\ns=open(p).read()\nrep=[\n(\"  fur: 0.14,\",\"  fur: 0.115,\"),\n(\"  hatTilt: -0.18, // front of the beanie raised (rad, about X)\",\"  hatTilt: -0.26, // front of the beanie raised (rad, about X)\"),\n(\"\"\"    length: D.fur,\n    density: 40,\n    shells: 20,\"\"\",\"\"\"    length: D.fur,\n    density: 66,\n    shells: 20,\"\"\"),\n(\"const dir = new THREE.Vector3(0.335 * side, 0.075, 0.94).normalize();\",\"const dir = new THREE.Vector3(0.34 * side, -0.005, 0.94).normalize();\"),\n(\"nose.position.copy(new THREE.Vector3(0,  …[+4172 chars]`
+
+### 🧑 User — 2026-11-15T17:09:31.566Z
+
+> ↩︎ result: ok
+> ok /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_refs_r3.png 13774 ms {"baseTriangles":13844}
+
+### 🤖 Claude — 2026-11-15T17:09:36.371Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_refs_r3.png"}`
+
+### 🧑 User — 2026-11-15T17:09:36.401Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:09:54.709Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/benny-lab.ts'\ns=open(p).read()\nfor a,b in [(\"water.position.y = -0.45;\",\"water.position.y = -0.8;\"),\n            (\"{ name: '05-rear', yaw: Math.PI, pitch: 0.42, dist: 4.6,\",\"{ name: '05-rear', yaw: Math.PI, pitch: 0.24, dist: 4.4,\")]:\n    assert a in s; s=s.replace(a,b)\nopen(p,'w').write(s)\np='src/characters/benny/build.ts'\ns=open(p).read()\nfor a,b in [(\"const w = kind === 'dizzy' ? 0.17 : 0.23;\",\"const w = kind === 'dizzy' ? 0.19 : 0.29;\"),\n            (\"    short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0. …[+579 chars]`
+

@@ -63,12 +63,12 @@ export const BENNY_COLORS = {
   whiteShade: '#d9cbe8',
   brim: '#6327d6',
   brimDark: '#3f1597',
-  pinkRoot: '#e2549e',
-  pinkTip: '#ffc0e2',
+  pinkRoot: '#ec58a8',
+  pinkTip: '#ff9ed2',
   pinkSkin: '#f06bb0',
   pomRoot: '#5a1fc4',
   pomTip: '#b07cff',
-  gold: '#ffc22e',
+  gold: '#ffd23a',
 };
 
 /**
@@ -81,14 +81,14 @@ export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THRE
   const [hc, hctx] = canvas(W, Hh);
   const stripes: [number, number, string, string][] = [
     // [v0, v1, base, shade]   (v measured from bottom)
-    [0.0, 0.235, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
-    [0.235, 0.445, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
-    [0.445, 0.655, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
-    [0.655, 1.0, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
+    [0.0, 0.25, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
+    [0.25, 0.47, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
+    [0.47, 0.67, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
+    [0.67, 1.0, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
   ];
   hctx.fillStyle = '#000';
   hctx.fillRect(0, 0, W, Hh);
-  const cols = 56;
+  const cols = 44;
   const cw = W / cols;
   for (const [v0, v1, base, shade] of stripes) {
     const y0 = Hh * (1 - v1), y1 = Hh * (1 - v0);
@@ -136,7 +136,7 @@ export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THRE
       ctx.fillRect(Math.random() * W, y0 + Math.random() * (y1 - y0), 1.5, 1.5);
     }
   }
-  return { map: colorTex(c, true), normalMap: normalFromHeight(hc, 2.2, true) };
+  return { map: colorTex(c, true), normalMap: normalFromHeight(hc, 3.2, true) };
 }
 
 /** Ribbed (k2p2) folded brim / cuff texture, u around, v across the band */
@@ -303,7 +303,7 @@ export function blushTexture(): THREE.CanvasTexture {
   const S = 128;
   const [c, ctx] = canvas(S, S);
   const g = ctx.createRadialGradient(S / 2, S / 2, 4, S / 2, S / 2, S / 2);
-  g.addColorStop(0, 'rgba(255,88,140,0.85)');
+  g.addColorStop(0, 'rgba(255,70,130,0.95)');
   g.addColorStop(0.55, 'rgba(255,100,150,0.45)');
   g.addColorStop(1, 'rgba(255,120,170,0)');
   ctx.fillStyle = g;

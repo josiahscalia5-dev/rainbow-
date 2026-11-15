@@ -229,10 +229,12 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
         const behind = !inDrum && b.s < focusS - (isBig ? 6 : 4);
         if (behind || b.age > b.life) spawn(b, focusS, isBig, false);
       };
+      const bigLimit = inDrum ? Math.min(nBig, 16) : nBig;
+      const smallLimit = inDrum ? Math.round(nSmall * 0.45) : nSmall;
       for (let i = 0; i < nBig; i++) {
         const b = bigS[i];
         step(b, true);
-        const pop = Math.min(1, b.age * 2, (b.life - b.age) * 2);
+        const pop = i < bigLimit ? Math.min(1, b.age * 2, (b.life - b.age) * 2) : 0;
         const sz = b.size * Math.max(0.001, pop) * (1 + 0.04 * Math.sin(time * 4 + b.phase));
         scl.set(sz, sz, sz);
         tmpM.compose(b.pos, one, scl);
@@ -243,7 +245,7 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
         const b = smallS[i];
         step(b, false);
         b.pos.toArray(sPos, i * 3);
-        sSize[i] = b.size * Math.min(1, b.age * 3, (b.life - b.age) * 3);
+        sSize[i] = i < smallLimit ? b.size * Math.min(1, b.age * 3, (b.life - b.age) * 3) : 0;
       }
       (pGeo.attributes.position as THREE.BufferAttribute).needsUpdate = true;
       (pGeo.attributes.aSize as THREE.BufferAttribute).needsUpdate = true;

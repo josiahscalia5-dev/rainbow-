@@ -21,9 +21,9 @@ import {
 
 export const BENNY_DIMS = {
   skin: 0.7,
-  fur: 0.14,
+  fur: 0.115,
   radius: 0.8,
-  hatTilt: -0.18, // front of the beanie raised (rad, about X)
+  hatTilt: -0.26, // front of the beanie raised (rad, about X)
   brimBottom: 0.08, // hat-local
 };
 
@@ -115,20 +115,21 @@ export function buildBenny(): BuiltModel {
   const bodyMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.skin, 48, 36), bodyMat), 'fur_body');
   bodyMesh.userData = furData({
     length: D.fur,
-    density: 62,
-    shells: 16,
+    density: 66,
+    shells: 20,
     root: C.pinkRoot,
     tip: C.pinkTip,
     // bald under the beanie: dot(normal, hatUp) > brimBottom/skin (+ a little overlap)
     bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.035) / D.skin],
     short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0.28],
+    gravity: 0.14,
   });
   body.add(bodyMesh);
 
   // ---------------- face ----------------
   const eyes = joint('eyes');
   body.add(eyes);
-  const eyeR = 0.165;
+  const eyeR = 0.178;
   const eyeGeo = domeGeometry(eyeR, 32, 12);
   eyeGeo.scale(1, 1.06, 0.55);
   const eyeMatHappy = std({ map: eyeTexture('happy'), roughness: 0.12, metalness: 0 });
@@ -136,7 +137,7 @@ export function buildBenny(): BuiltModel {
   const lashMat = std({ color: '#241036', roughness: 0.5 });
   for (const side of [1, -1] as const) {
     // side +1 = Benny's left (+X), −1 = right (−X)
-    const dir = new THREE.Vector3(0.335 * side, 0.075, 0.94).normalize();
+    const dir = new THREE.Vector3(0.34 * side, -0.005, 0.94).normalize();
     const e = joint(side > 0 ? 'eyeL' : 'eyeR');
     e.position.copy(dir).multiplyScalar(0.665);
     e.lookAt(dir.clone().multiplyScalar(5));
@@ -160,21 +161,21 @@ export function buildBenny(): BuiltModel {
   // blush
   const blushMat = std({ map: blushTexture(), transparent: true, depthWrite: false, roughness: 0.8 });
   for (const side of [1, -1]) {
-    const m = named(new THREE.Mesh(sphereDecal(new THREE.Vector3(0.6 * side, -0.16, 0.8), 0.24, 0.15, 0.785), blushMat), side > 0 ? 'blushL' : 'blushR');
+    const m = named(new THREE.Mesh(sphereDecal(new THREE.Vector3(0.6 * side, -0.24, 0.78), 0.3, 0.19, 0.775), blushMat), side > 0 ? 'blushL' : 'blushR');
     m.renderOrder = 2;
     body.add(m);
   }
   // nose
   const nose = named(new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 8), std({ color: '#7d2550', roughness: 0.35 })), 'nose');
-  nose.position.copy(new THREE.Vector3(0, -0.07, 1).normalize().multiplyScalar(0.738));
+  nose.position.copy(new THREE.Vector3(0, -0.13, 1).normalize().multiplyScalar(0.738));
   nose.scale.set(1.3, 0.9, 0.8);
   body.add(nose);
   // mouth decals (alpha-tested)
   const mouth = joint('mouth');
   body.add(mouth);
-  const mouthDir = new THREE.Vector3(0, -0.25, 0.97);
+  const mouthDir = new THREE.Vector3(0, -0.34, 0.94);
   for (const kind of ['happy', 'dizzy', 'peek'] as const) {
-    const w = kind === 'dizzy' ? 0.13 : 0.17;
+    const w = kind === 'dizzy' ? 0.19 : 0.29;
     const m = named(
       new THREE.Mesh(
         sphereDecal(mouthDir, w, w, 0.752, 8),
@@ -199,13 +200,13 @@ export function buildBenny(): BuiltModel {
     const arm = named(new THREE.Mesh(g, armMat), side > 0 ? 'fur_armL' : 'fur_armR');
     arm.position.copy(dir).multiplyScalar(0.16);
     arm.rotation.z = phi;
-    arm.userData = furData({ length: 0.075, density: 70, shells: 10, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.2 });
+    arm.userData = furData({ length: 0.07, density: 90, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.2 });
     a.add(arm);
     const palm = named(
-      new THREE.Mesh(new THREE.CircleGeometry(0.085, 24), std({ map: palmTex, roughness: 0.6 })),
+      new THREE.Mesh(new THREE.CircleGeometry(0.07, 24), std({ map: palmTex, roughness: 0.6 })),
       side > 0 ? 'palmL' : 'palmR',
     );
-    palm.position.copy(dir).multiplyScalar(0.26).add(new THREE.Vector3(0, -0.01, 0.115));
+    palm.position.copy(dir).multiplyScalar(0.25).add(new THREE.Vector3(0, -0.01, 0.105));
     palm.rotation.x = -0.25;
     a.add(palm);
   }
@@ -244,13 +245,13 @@ export function buildBenny(): BuiltModel {
       lathe(
         [
           [0.69, yb + 0.01],
-          [0.75, yb - 0.005],
-          [0.785, yb + 0.03],
-          [0.8, yb + 0.1],
-          [0.8, yb + 0.18],
-          [0.785, yb + 0.235],
-          [0.75, yb + 0.26],
-          [0.7, yb + 0.265],
+          [0.735, yb - 0.005],
+          [0.765, yb + 0.03],
+          [0.778, yb + 0.1],
+          [0.778, yb + 0.18],
+          [0.765, yb + 0.235],
+          [0.735, yb + 0.26],
+          [0.69, yb + 0.265],
         ],
         72,
         yb - 0.01,
@@ -270,21 +271,21 @@ export function buildBenny(): BuiltModel {
     new THREE.Mesh(
       lathe(
         [
-          [0.745, crownY0],
-          [0.775, crownY0 + 0.06],
-          [0.79, crownY0 + 0.15],
-          [0.78, crownY0 + 0.26],
-          [0.745, crownY0 + 0.37],
-          [0.68, crownY0 + 0.47],
-          [0.585, crownY0 + 0.56],
-          [0.46, crownY0 + 0.635],
-          [0.31, crownY0 + 0.685],
-          [0.15, crownY0 + 0.705],
-          [0.0, crownY0 + 0.71],
+          [0.725, crownY0],
+          [0.748, crownY0 + 0.06],
+          [0.757, crownY0 + 0.14],
+          [0.748, crownY0 + 0.23],
+          [0.715, crownY0 + 0.32],
+          [0.66, crownY0 + 0.41],
+          [0.575, crownY0 + 0.48],
+          [0.46, crownY0 + 0.535],
+          [0.32, crownY0 + 0.565],
+          [0.16, crownY0 + 0.578],
+          [0.0, crownY0 + 0.582],
         ],
         72,
         crownY0,
-        crownY1 - 0.24 + 0.0,
+        crownY0 + 0.582,
       ),
       crownMat,
     ),
@@ -292,7 +293,7 @@ export function buildBenny(): BuiltModel {
   );
   hat.add(crown);
   // gold star on Benny's RIGHT side (−X), slightly behind the side
-  const starGeo = new THREE.ExtrudeGeometry(starShape(0.165, 0.075), {
+  const starGeo = new THREE.ExtrudeGeometry(starShape(0.19, 0.085), {
     depth: 0.035,
     bevelEnabled: true,
     bevelThickness: 0.025,
@@ -301,20 +302,20 @@ export function buildBenny(): BuiltModel {
   });
   starGeo.center();
   const star = named(
-    new THREE.Mesh(starGeo, std({ color: C.gold, metalness: 0.85, roughness: 0.22, emissive: '#6a4300', emissiveIntensity: 0.35 })),
+    new THREE.Mesh(starGeo, std({ color: C.gold, metalness: 0.55, roughness: 0.25, emissive: '#ffb000', emissiveIntensity: 0.38 })),
     'hat_star',
   );
-  const sa = THREE.MathUtils.degToRad(104);
-  const starPos = new THREE.Vector3(-Math.sin(sa) * 0.81, yb + 0.2, Math.cos(sa) * 0.81);
+  const sa = THREE.MathUtils.degToRad(132);
+  const starPos = new THREE.Vector3(-Math.sin(sa) * 0.785, yb + 0.235, Math.cos(sa) * 0.785);
   star.position.copy(starPos);
   star.lookAt(starPos.clone().multiply(new THREE.Vector3(2, 1, 2)).add(new THREE.Vector3(0, 0.25, 0)));
   star.rotateZ(0.12);
   hat.add(star);
   // pom-pom
-  const pom = joint('pom', 0, crownY0 + 0.71 + 0.2, -0.02);
+  const pom = joint('pom', 0, crownY0 + 0.582 + 0.17, -0.03);
   hat.add(pom);
-  const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(0.27, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
-  pomMesh.userData = furData({ length: 0.13, density: 58, shells: 14, root: C.pomRoot, tip: C.pomTip, gravity: 0.15 });
+  const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(0.235, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
+  pomMesh.userData = furData({ length: 0.115, density: 80, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.15 });
   pom.add(pomMesh);
 
   const animations = buildClips();

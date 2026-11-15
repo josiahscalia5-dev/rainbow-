@@ -66,7 +66,15 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const st03 = course.stage('03'), st04 = course.stage('04'), st08 = course.stage('08'), st09 = course.stage('09');
   const ribbonS0 = drainMark - 1;
   const ribbon = createRibbon(course, { s0: ribbonS0, s1: course.length, quality });
-  const whirl = createWhirlpool(quality);
+  // open the funnel where the 04 slide tube leaves the basin (the course exits the spiral at
+  // r≈2.8, just outside the drain hole, and the slide then runs beneath the funnel surface)
+  const cutPts: THREE.Vector3[] = [];
+  for (let i = 0; i < 8; i++) {
+    const s = st04.s0 - 3 + (i / 7) * 34;
+    const f = course.sample(s);
+    cutPts.push(f.pos.clone().addScaledVector(f.up, 1.2));
+  }
+  const whirl = createWhirlpool(quality, { points: cutPts, radius: Math.max(3.6, course.stage('04').tube * 0.85) });
   const drum = createDrumWater(quality);
   const wave = createFinalWave(course, quality);
   const puddles = createPuddles();

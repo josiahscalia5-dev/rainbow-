@@ -30,8 +30,8 @@ function makeMaterial() {
     color: '#ffffff',
     roughness: 0.32,
     metalness: 0.0,
-    emissive: new THREE.Color('#d8c8ff'),
-    emissiveIntensity: 0.42,
+    emissive: new THREE.Color('#ece4ff'),
+    emissiveIntensity: 0.62,
     envMapIntensity: 1.1,
   });
   // subtle soap-film rim tint
@@ -114,7 +114,7 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
           const ds = (rand() - 0.5) * 3.2;
           const f2 = course.sample(Math.min(s1, Math.max(s0, s + ds)));
           const lat = cl + (rand() - 0.5) * 1.8;
-          const r = 0.25 + rand() * 0.55;
+          const r = 0.18 + rand() * 0.34;
           const h = EDGE_LIFT * 0.6 + rand() * 0.9 * (1 - Math.abs(ds) / 2);
           const p = f2.pos.clone().addScaledVector(f2.right, lat).addScaledVector(f2.up, h);
           list.push({ p, r, c: (rand() * 5) | 0 });
@@ -130,20 +130,20 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
   const b = WORLD.basin;
   whirlGroup.position.set(b.center.x, 0, b.center.z);
   const wl: Puff[] = [];
-  const nRim = Math.round(170 * density);
+  const nRim = Math.round(320 * density);
   for (let i = 0; i < nRim; i++) {
     const th = rand() * Math.PI * 2;
     const r = b.rimRadius - 0.6 + (rand() - 0.3) * 1.2;
-    const sz = 0.3 + rand() * 0.6;
+    const sz = 0.16 + rand() * 0.34;
     wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.3 + rand() * 0.4, r * Math.cos(th)), r: sz, c: (rand() * 5) | 0 });
   }
   // along 3 spiral flow lines (constant th - C ln r) to echo the white foam bands
-  const nBand = Math.round(150 * density);
+  const nBand = Math.round(420 * density);
   for (let i = 0; i < nBand; i++) {
     const band = ((i % 3) * Math.PI * 2) / 3 + 0.4;
     const r = 3.0 + rand() * (b.rimRadius - 3.6);
     const th = band + SPIRAL_C * Math.log(r) + (rand() - 0.5) * 0.12;
-    const sz = 0.12 + rand() * 0.25;
+    const sz = 0.07 + rand() * 0.13;
     wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.3, r * Math.cos(th)), r: sz, c: (rand() * 5) | 0 });
   }
   const whirlStart = chunks.length;

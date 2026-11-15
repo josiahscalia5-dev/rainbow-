@@ -23,7 +23,15 @@ function loadScene(): Promise<THREE.Group> {
 export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {
   const src = await loadScene();
   const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
-  const scene = src.clone(true);
+  return createBennyRuntime(src.clone(true), clips, opts);
+}
+
+/** Build the runtime around an already-loaded (or freshly built) Benny scene graph. */
+export function createBennyRuntime(
+  scene: THREE.Object3D,
+  clips: THREE.AnimationClip[],
+  opts: { furQuality?: 'high' | 'low' } = {},
+): BennyRuntime {
   const root = new THREE.Group();
   root.name = 'Benny';
   root.add(scene);

@@ -109,15 +109,16 @@ ${NOISE_GLSL}
 // returns: x = pink mask, y = white streaks, z = streak noise (shading), w = pink fine streaks
 vec4 flowLayer(float u, float v) {
   float m = (vnoise(vec2(v * 0.07, 3.1)) - 0.5) * 0.9 + sin(v * 0.19) * 0.16;
-  float core = 0.42 + 0.16 * (vnoise(vec2(v * 0.13, u * 1.3 + 7.0)) - 0.5);
+  float core = 0.54 + 0.16 * (vnoise(vec2(v * 0.13, u * 1.3 + 7.0)) - 0.5);
   float pinkMask = smoothstep(core - 0.07, core + 0.07, abs(u - m * 0.55));
   #ifdef LOW_Q
-  float sn = vnoise(vec2(u * 5.0 + m * 4.0, v * 0.32));
+  float sn = vnoise(vec2(u * 4.0 + m * 4.0, v * 0.28));
   #else
-  float sn = fbm3(vec2(u * 5.0 + m * 4.0, v * 0.32));
+  float sn = fbm3(vec2(u * 4.0 + m * 4.0, v * 0.28));
   #endif
-  float lines = pow(vnoise(vec2(u * 19.0 + m * 6.0, v * 0.55)), 7.0);
-  float streak = smoothstep(0.6, 0.78, sn) * 0.55 + lines * 2.2;
+  // crisp, thin white highlight lines stretched along the flow
+  float ln = vnoise(vec2(u * 15.0 + m * 6.0 + sn * 2.5, v * 0.33));
+  float streak = smoothstep(0.8, 0.93, ln) * 1.5 + smoothstep(0.72, 0.8, sn) * 0.25;
   float fineP = smoothstep(0.7, 0.76, vnoise(vec2(u * 7.0 - m * 3.0, v * 0.21 + 11.0)));
   return vec4(pinkMask, streak, sn, fineP);
 }
@@ -126,7 +127,8 @@ void main() {
   float u = vUV.x;
   float s = vUV.y;
   // dithered hide (03 hand-over)
-  if (vHide < 0.999 && vHide < hash12(gl_FragCoord.xy)) discard;
+  if (vHide < 0.5) discard;
+  float cutFoam = 1.0 - smoothstep(0.5, 0.85, vHide);
   // 11 outro: the stream drains away in the chamber, leaving puddles
   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
     float n = vnoise(vec2(u * 3.0, s * 0.35)) * 0.7 + 0.3;
@@ -141,9 +143,9 @@ void main() {
   vec4 B = flowLayer(u, s - vSpeed * ph1 * 4.0 + 23.0);
   vec4 F = mix(B, A, w0);
 
-  vec3 cyanCol = mix(uCyanDeep, uCyan, 0.55 + 0.45 * F.z);
-  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.55, 0.9, F.z) * 0.6);
-  vec3 pinkCol = mix(uPink, uPinkLight, F.z);
+  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.62, F.z));
+  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.6, 0.82, F.z) * 0.7);
+  vec3 pinkCol = mix(uPink, uPinkLight, F.z * 0.7);
   float pinkM = clamp(F.x + F.w * 0.8, 0.0, 1.0);
   vec3 col = mix(cyanCol, pinkCol, pinkM);
 
@@ -154,10 +156,10 @@ void main() {
   float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
   vec3 R = reflect(-V, N);
   vec3 refl = mix(uHaze, vec3(1.0), smoothstep(0.1, 0.9, R.y));
-  col = mix(col, refl, fres * 0.38);
+  col = mix(col, refl, fres * 0.2);
   vec3 H = normalize(normalize(uLightDir) + V);
   float spec = pow(clamp(dot(N, H), 0.0, 1.0), 80.0);
-  col += vec3(1.0) * (spec * 1.6 + F.y * 0.85);
+  col += vec3(1.0) * (spec * 1.4 + F.y * 0.9);
 
   // twinkling sparkles
   vec2 g = vec2(u * 9.0, (s - vSpeed * uTime * 0.6) * 1.6);
@@ -170,11 +172,12 @@ void main() {
 
   // soap-foam fringe along the edges
   float edgeN = (vnoise(vec2(s * 1.3, u * 2.0)) - 0.5) * 0.16;
-  float edge = smoothstep(0.76, 0.95, abs(u) + edgeN);
+  float edge = smoothstep(0.8, 0.96, abs(u) + edgeN);
   float c = cells(vec2(u * vHalfW * 2.6, (s - vSpeed * uTime * 0.5) * 2.4));
-  vec3 foamCol = mix(uFoam, uFoamLav, smoothstep(0.15, 0.6, c));
-  col = mix(col, foamCol, edge * (0.75 + 0.25 * smoothstep(0.2, 0.5, c)));
+  vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
+  col = mix(col, foamCol, edge * (0.8 + 0.2 * smoothstep(0.2, 0.5, c)));
   col = mix(col, uFoamLav * 0.92, vSkirt);
+  col = mix(col, foamCol, cutFoam);
 
   // Benny: ripple rings around him + V wake behind
   if (uBenny.z > 0.0) {
@@ -292,7 +295,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     uHaze: { value: PALETTE.haze.clone() },
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
     uBenny: { value: new THREE.Vector3(0, 0, 0) },
-    uChevron: { value: new THREE.Vector3(st04.s0 + 7, 4.0, 1) },
+    uChevron: { value: new THREE.Vector3(st04.s0 + 8.5, 3.6, 1) },
     uOutro: { value: new THREE.Vector2(0, st08.s0) },
     uHide: { value: new THREE.Vector4(st03.s0, st04.s0, 0, 0) },
   });

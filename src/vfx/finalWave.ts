@@ -76,7 +76,7 @@ void main() {
   vec3 V = normalize(cameraPosition - vPosW);
   if (dot(N, V) < 0.0) N = -N;
   float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
-  col = mix(col, mix(uHaze, vec3(1.0), 0.5), fres * 0.4);
+  col = mix(col, mix(uHaze, vec3(1.0), 0.5), fres * 0.22);
   vec3 H = normalize(normalize(uLightDir) + V);
   col += pow(clamp(dot(N, H), 0.0, 1.0), 60.0) * 1.5;
   vec2 g = vec2(s * 3.0, p * 18.0);

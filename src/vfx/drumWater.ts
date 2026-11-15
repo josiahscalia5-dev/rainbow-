@@ -14,6 +14,7 @@ uniform float uTime;
 uniform float uAgitation;
 varying vec3 vPosW;
 varying float vH;
+varying vec3 vN;
 #include <fog_pars_vertex>
 float waveH(vec2 p, float t, float amp) {
   return amp * (0.55 * sin(p.x * 1.1 + p.y * 0.6 + t * 1.8)
@@ -24,6 +25,10 @@ void main() {
   vec4 wp = modelMatrix * vec4(position, 1.0);
   float amp = 0.3 + uAgitation * 0.5;
   float h = waveH(wp.xz, uTime, amp);
+  vec2 p = wp.xz; float t = uTime;
+  float dhx = amp * (0.55 * 1.1 * cos(p.x * 1.1 + p.y * 0.6 + t * 1.8) - 0.35 * 0.7 * cos(-p.x * 0.7 + p.y * 1.5 - t * 2.3) + 0.22 * 2.3 * cos(p.x * 2.3 - p.y * 1.9 + t * 3.1));
+  float dhz = amp * (0.55 * 0.6 * cos(p.x * 1.1 + p.y * 0.6 + t * 1.8) + 0.35 * 1.5 * cos(-p.x * 0.7 + p.y * 1.5 - t * 2.3) - 0.22 * 1.9 * cos(p.x * 2.3 - p.y * 1.9 + t * 3.1));
+  vN = normalize(vec3(-dhx, 1.0, -dhz));
   wp.y += h;
   vH = h / amp;
   vPosW = wp.xyz;
@@ -47,6 +52,7 @@ uniform vec3 uHaze;
 uniform vec3 uLightDir;
 varying vec3 vPosW;
 varying float vH;
+varying vec3 vN;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 void main() {
@@ -70,11 +76,10 @@ void main() {
   float lines = pow(vnoise(vec2(p.x * 6.0 + p.y * 3.0, p.y * 1.2 - uTime * 0.8)), 7.0);
   col += lines * 1.8;
   // gloss (normal from the analytic wave slope is approximated by screen derivatives)
-  vec3 N = normalize(cross(dFdx(vPosW), dFdy(vPosW)));
-  if (N.y < 0.0) N = -N;
+  vec3 N = normalize(vN + vec3(n - 0.5, 0.0, 0.5 - n) * 0.25);
   vec3 V = normalize(cameraPosition - vPosW);
   float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
-  col = mix(col, mix(uHaze, vec3(1.0), 0.6), fres * 0.45);
+  col = mix(col, mix(uHaze, vec3(1.0), 0.6), fres * 0.25);
   vec3 H = normalize(normalize(uLightDir) + V);
   col += pow(clamp(dot(N, H), 0.0, 1.0), 60.0) * 1.6;
   vec2 g = p * 4.0;

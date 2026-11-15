@@ -46,10 +46,17 @@ uniform vec3 uPinkLight;
 uniform vec3 uFoam;
 uniform vec3 uHaze;
 uniform vec3 uLightDir;
+uniform vec3 uCut[8];     // 04 slide axis polyline (world); funnel is opened where the tube passes
+uniform float uCutR;
 varying vec2 vPolar;
 varying vec3 vPosW;
 varying vec3 vNormalW;
 #include <fog_pars_fragment>
+float segDist(vec3 p, vec3 a, vec3 b) {
+  vec3 ab = b - a;
+  float t = clamp(dot(p - a, ab) / max(dot(ab, ab), 1e-4), 0.0, 1.0);
+  return length(p - a - ab * t);
+}
 ${NOISE_GLSL}
 // noise periodic in x with period P (lattice wrap) -> no seam where theta wraps
 float pn(vec2 p, float P) {
@@ -79,6 +86,10 @@ float pcells(vec2 p, float P) {
 void main() {
   float r = vPolar.x;
   float th = vPolar.y;
+  float dc = 1e4;
+  for (int i = 0; i < 7; i++) dc = min(dc, segDist(vPosW, uCut[i], uCut[i + 1]));
+  if (dc < uCutR) discard;
+  float lipFoam = 1.0 - smoothstep(uCutR, uCutR + 1.1, dc);
   float lr = log(r);
   // band coordinate is constant along the course flow lines; it rotates with time (swirl)
   float band = th - uSpiralC * lr;
@@ -103,7 +114,7 @@ void main() {
   vec3 N = normalize(vNormalW + vec3(n - 0.5, 0.0, 0.5 - n) * 0.3);
   vec3 V = normalize(cameraPosition - vPosW);
   float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
-  col = mix(col, mix(uHaze, vec3(1.0), 0.5), fres * 0.35);
+  col = mix(col, mix(uHaze, vec3(1.0), 0.5), fres * 0.18);
   vec3 H = normalize(normalize(uLightDir) + V);
   col += pow(clamp(dot(N, H), 0.0, 1.0), 70.0) * 1.4;
   // sparkles
@@ -114,12 +125,13 @@ void main() {
   col = mix(col, vec3(1.6, 1.5, 1.2), smoothstep(uDrain + 1.6, uDrain, r) * 0.55);
   float rimFoam = smoothstep(uRim - 1.4, uRim - 0.2, r + 0.4 * (vnoise(vec2(th * 6.0, uTime)) - 0.5));
   col = mix(col, uFoam, rimFoam * 0.85);
+  col = mix(col, mix(uFoam, vec3(0.93, 0.88, 1.0), c), lipFoam * 0.9);
   gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
 }
 `;
 
-export function createWhirlpool(quality: 'high' | 'low'): { mesh: THREE.Mesh; uniforms: Record<string, THREE.IUniform> } {
+export function createWhirlpool(quality: 'high' | 'low', cut: { points: THREE.Vector3[]; radius: number }): { mesh: THREE.Mesh; uniforms: Record<string, THREE.IUniform> } {
   const b = WORLD.basin;
   const rings = quality === 'high' ? 56 : 32;
   const segs = quality === 'high' ? 128 : 72;
@@ -167,6 +179,8 @@ export function createWhirlpool(quality: 'high' | 'low'): { mesh: THREE.Mesh; un
     uFoam: { value: PALETTE.foam.clone() },
     uHaze: { value: PALETTE.haze.clone() },
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+    uCut: { value: cut.points.slice(0, 8) },
+    uCutR: { value: cut.radius },
   });
   const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: VERT, fragmentShader: FRAG, fog: true, side: THREE.DoubleSide });
   const mesh = new THREE.Mesh(geo, mat);

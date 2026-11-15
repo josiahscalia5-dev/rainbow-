@@ -44,10 +44,10 @@ const quality = (q.get('q') ?? 'high') as 'high' | 'low';
     let custom: { pos: THREE.Vector3; look: THREE.Vector3 } | null = null;
     const pl = WORLD.platform;
     switch (preset) {
-      case '01': s = 0; custom = { pos: new THREE.Vector3(0.7, -1.3, -4.8), look: new THREE.Vector3(-0.3, -0.9, 3.5) }; water.controls.drumAgitation = 0.15; break;
+      case '01': s = 0; custom = { pos: new THREE.Vector3(0.6, -1.5, -5.2), look: new THREE.Vector3(-0.3, -1.2, 3.5) }; water.controls.drumAgitation = 0.15; break;
       case '02': s = 12; custom = { pos: new THREE.Vector3(0.2, -1.8, -5.4), look: new THREE.Vector3(0, 0.9, 3.5) }; water.controls.drumSwirl = 1; water.controls.drumAgitation = 1; break;
-      case '03': s = st('03').s0 + 4; back = 6.5; up = 6.5; ahead = 9; lookUp = -1; break;
-      case '04': s = st('04').s0 + 1.5; back = 4.6; up = 3.4; ahead = 14; lookUp = -1.5; break;
+      case '03': s = st('03').s0 + 4; custom = { pos: new THREE.Vector3(6, -6.0, -8.5), look: new THREE.Vector3(1, -20, -21) }; break;
+      case '04': s = st('04').s0 + 4.5; back = 4.4; up = 3.2; ahead = 14; lookUp = -1.0; break;
       case '05': s = st('05').s0 + 25; break;
       case '06': s = st('06').s0 + 6; ahead = 14; lookUp = 1.5; break;
       case '07': s = st('07').s0 + 12; break;
@@ -75,7 +75,7 @@ const quality = (q.get('q') ?? 'high') as 'high' | 'low';
         side: THREE.BackSide,
         depthWrite: false,
         vertexShader: 'varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
-        fragmentShader: 'varying vec3 vP; void main(){ float t = vP.y*0.5+0.5; vec3 c = mix(vec3(0.45,0.08,0.45), vec3(0.95,0.45,0.85), t); gl_FragColor = vec4(c,1.0); #include <colorspace_fragment> }',
+        fragmentShader: 'varying vec3 vP; void main(){ float t = vP.y*0.5+0.5; vec3 c = mix(vec3(0.45,0.08,0.45), vec3(0.95,0.45,0.85), t); gl_FragColor = vec4(c,1.0);\n#include <colorspace_fragment>\n}',
       }),
     );
     bg.position.copy(camera.position);

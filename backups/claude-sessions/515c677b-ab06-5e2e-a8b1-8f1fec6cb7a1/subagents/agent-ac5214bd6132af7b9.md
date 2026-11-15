@@ -273,3 +273,184 @@ Now the `createWater` system that ties everything together:
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/index.ts (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-15T17:04:35.833Z
+
+Now the water lab page and screenshot script:
+
+### 🤖 Claude — 2026-11-15T17:04:37.387Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/water-lab.html", "content": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Rainbow water lab</title>\n    <style>\n      html, body { margin: 0; background: #2a0b46; }\n      canvas { display: block; }\n    </style>\n  </head>\n  <body>\n    <canvas id=\"lab\"></canvas>\n    <script type=\"module\" src=\"./water-lab.ts\"></script>\n  </body>\n</html>\n"}`
+
+### 🧑 User — 2026-11-15T17:04:37.571Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/water-lab.html (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:05:01.949Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/water-lab.ts", "content": "/**\n * Water lab — preview the Rainbow water system on the master course.\n *   ?preset=01..11|07mid      camera presets per scene\n *   ?s=<arc-length>&back=4&up=2.5&ahead=10&lookUp=0.6&fov=60   manual chase camera\n *   &t=<seconds> &q=high|low &w=432&h=768 &benny=0|1\n * Sets window.__done / window.__info (draw calls, triangles, avg frame ms) for scripts/water-lab.mjs.\n */\nimport * as THREE from 'three';\nimport { Course, WORLD } from '../src/world/course';\nimport { createCandyEnvironment, createRenderer } from '../src/ …[+6219 chars]`
+
+### 🧑 User — 2026-11-15T17:05:02.129Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/water-lab.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:05:07.807Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/water-lab.mjs", "content": "#!/usr/bin/env node\n// Screenshots the water lab at every scene checkpoint into docs/vfx/ (+ stats JSON).\n//   node scripts/water-lab.mjs [01 03 04 ...] [--q=low]\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from './lib/pw.mjs';\n\nconst args = process.argv.slice(2);\nconst presets = args.filter((a) => !a.startsWith('--'));\nconst list = presets.length ? presets : ['01', '02', '03', '04', '05', '06', '07', '07mid', '08', '09', '10', '11'];\nconst qArg  …[+1195 chars]`
+
+### 🧑 User — 2026-11-15T17:05:08.006Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/water-lab.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:05:11.742Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p tsconfig.json 2>&1 | grep -E \"src/vfx|tools/water-lab\" | head -30; echo \"tsc done\"", "description": "Typecheck vfx files", "timeout": 180000}`
+
+### 🧑 User — 2026-11-15T17:05:13.940Z
+
+> ↩︎ result: tsc done
+
+### 🤖 Claude — 2026-11-15T17:05:17.007Z
+
+Typecheck is clean for my files. Running the first lab round on a few presets:
+
+### 🤖 Claude — 2026-11-15T17:05:18.011Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/water-lab.mjs 05 03 01 2>&1 | tail -15", "description": "Render first water lab screenshots", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T17:05:33.380Z
+
+> ↩︎ result: FRAGMENT
+> 
+> ERROR: 0:158: '#' : invalid character
+> ERROR: 0:158: 'include' : undeclared identifier
+> ERROR: 0:158: 'colorspace_fragment' : undeclared identifier
+> ERROR: 0:158: '}' : syntax error
+> 
+>   153: float luminance( const in vec3 rgb ) {
+>   154: 	const vec3 weights = vec3( 0.2126, 0.7152, 0.0722 );
+>   155: 	return dot( weights, rgb );
+>   156: }
+>   157: 
+> > 158: varying vec3 vP; void main(){ float t = vP.y*0.5+0.5; vec3 c = mix(vec3(0.45,0.08,0.45), vec3(0.95,0.45,0.85), t); gl_FragColor = vec4(c,1.0); #include <colorspace_fragment> }
+> docs/vfx/water_01.png {"preset":"01","s":0,"stage":"01","calls":8,"triangles":120280,"points":1300,"avgFrameMsSwiftShader":0.9,"instances":2176,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+
+### 🤖 Claude — 2026-11-15T17:05:39.033Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/water-lab.ts'\ns=open(p).read()\ns=s.replace(\"gl_FragColor = vec4(c,1.0); #include <colorspace_fragment> }'\",\"gl_FragColor = vec4(c,1.0);\\\\n#include <colorspace_fragment>\\\\n}'\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"colorspace_fragment\" tools/water-lab.ts; timeout 600 node scripts/water-lab.mjs 05 03 01 2>&1 | grep -v \"^\\s*[0-9]*:\" | tail -8", "description": "Fix backdrop shader and rerun lab", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T17:05:52.943Z
+
+> ↩︎ result: 78:        fragmentShader: 'varying vec3 vP; void main(){ float t = vP.y*0.5+0.5; vec3 c = mix(vec3(0.45,0.08,0.45), vec3(0.95,0.45,0.85), t); gl_FragColor = vec4(c,1.0);\n#include <colorspace_fragment>\n}',
+> docs/vfx/water_05.png {"preset":"05","s":139.73,"stage":"05","calls":13,"triangles":148448,"points":1300,"avgFrameMsSwiftShader":0.9,"instances":2176,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_03.png {"preset":"03","s":44.88,"stage":"03","calls":13,"triangles":154224,"points":1300,"avgFrameMsSwiftShader":1.2,"instances":2176,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_01.png {"preset":"01","s":0,"stage":"01","calls":8,"triangles":120280,"points":1300,"avgFrameMsSwiftShader":1,"instances":2176,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+
+### 🤖 Claude — 2026-11-15T17:05:56.411Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_05.png"}`
+
+### 🧑 User — 2026-11-15T17:05:56.437Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:05:56.806Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_03.png"}`
+
+### 🧑 User — 2026-11-15T17:05:56.824Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:05:57.157Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_01.png"}`
+
+### 🧑 User — 2026-11-15T17:05:57.180Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:06:54.571Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        if a not in s: raise SystemExit(f'MISSING in {p}: {a[:70]}')\n        s=s.replace(a,b)\n    open(p,'w').write(s)\n\nedit('src/vfx/glsl.ts',[\n(\"cyanDeep: new THREE.Color('#0a9ee8')\",\"cyanDeep: new THREE.Color('#0088e6')\"),\n(\"cyan: new THREE.Color('#19d3ff')\",\"cyan: new THREE.Color('#10c4ff')\"),\n(\"cyanBright: new THREE.Color('#8ff7ff')\",\"cyanBright: new THREE.Color('#5eeeff')\"),\n(\"pink: new THREE.Color('#ff3fb4')\",\"pink: new THREE.Color('#ff1fa6')\"),\n(\"pinkLi …[+4088 chars]`
+
+### 🧑 User — 2026-11-15T17:07:19.660Z
+
+> ↩︎ result: ok
+> docs/vfx/water_01.png {"preset":"01","s":0,"stage":"01","calls":8,"triangles":132280,"points":1300,"avgFrameMsSwiftShader":0.6,"instances":2326,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_02.png {"preset":"02","s":12,"stage":"02","calls":9,"triangles":134008,"points":1300,"avgFrameMsSwiftShader":0.9,"instances":2326,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_03.png {"preset":"03","s":44.88,"stage":"03","calls":13,"triangles":204696,"points":1300,"avgFrameMsSwiftShader":0.6,"instances":2326,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_04.png {"preset":"04","s":72.65,"stage":"04","calls":15,"triangles":197264,"points":1300,"avgFrameMsSwiftShader":1.2,"instances":2326,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_05.png {"preset":"05","s":139.73,"stage":"05","calls":13,"triangles":148448,"points":1300,"avgFrameMsSwiftShader":3.1,"instances":2326,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+
+### 🤖 Claude — 2026-11-15T17:07:31.721Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_05.png"}`
+
+### 🧑 User — 2026-11-15T17:07:31.738Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:07:32.120Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_03.png"}`
+
+### 🧑 User — 2026-11-15T17:07:32.131Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:07:32.477Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_04.png"}`
+
+### 🧑 User — 2026-11-15T17:07:32.500Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:08:17.846Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        if a not in s: raise SystemExit(f'MISSING in {p}: {a[:70]}')\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/vfx/glsl.ts',[\n(\"\"\"/** Rainbow water palette (sRGB hex → linear THREE.Color, ready for uniforms). */\nexport const PALETTE = {\n  cyanDeep: new THREE.Color('#0088e6'),\n  cyan: new THREE.Color('#10c4ff'),\n  cyanBright: new THREE.Color('#5eeeff'),\n  pink: new THREE.Color('#ff1fa6'),\n  pinkLight: new THREE.Color('#ff58c6'),\"\"\",\"\"\"/**\n * Rainbow water palet …[+1884 chars]`
+
+### 🧑 User — 2026-11-15T17:08:38.229Z
+
+> ↩︎ result: ok
+> docs/vfx/water_03.png {"preset":"03","s":44.88,"stage":"03","calls":12,"triangles":194616,"points":1300,"avgFrameMsSwiftShader":1.1,"instances":2326,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_04.png {"preset":"04","s":75.65,"stage":"04","calls":15,"triangles":197264,"points":1300,"avgFrameMsSwiftShader":1.5,"instances":2326,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_05.png {"preset":"05","s":139.73,"stage":"05","calls":13,"triangles":148448,"points":1300,"avgFrameMsSwiftShader":0.7,"instances":2326,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_07.png {"preset":"07","s":262.36,"stage":"07","calls":13,"triangles":150368,"points":1300,"avgFrameMsSwiftShader":0.9,"instances":2326,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+
+### 🤖 Claude — 2026-11-15T17:08:41.382Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_05.png"}`
+
+### 🧑 User — 2026-11-15T17:08:41.398Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:08:41.782Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_04.png"}`
+
+### 🧑 User — 2026-11-15T17:08:41.798Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:08:42.145Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_03.png"}`
+
+### 🧑 User — 2026-11-15T17:08:42.158Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:09:15.690Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_07.png"}`
+
+### 🧑 User — 2026-11-15T17:09:15.710Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:09:52.468Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        if a not in s: raise SystemExit(f'MISSING in {p}: {a[:70]}')\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/vfx/waterRibbon.ts',[\n(\"\"\"  #ifdef LOW_Q\n  float sn = vnoise(vec2(u * 5.0 + m * 4.0, v * 0.32));\n  #else\n  float sn = fbm3(vec2(u * 5.0 + m * 4.0, v * 0.32));\n  #endif\n  float lines = pow(vnoise(vec2(u * 19.0 + m * 6.0, v * 0.55)), 7.0);\n  float streak = smoothstep(0.6, 0.78, sn) * 0.55 + lines * 2.2;\"\"\",\"\"\"  #ifdef LOW_Q\n  float sn = vnoise(vec2(u *  …[+4625 chars]`
+

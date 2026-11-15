@@ -37,13 +37,18 @@ vec3 iridescent(float t) {
 }
 `;
 
-/** Rainbow water palette (sRGB hex → linear THREE.Color, ready for uniforms). */
+/**
+ * Rainbow water palette (sRGB hex → linear THREE.Color, ready for uniforms).
+ * Base hues are scaled below the NeutralToneMapping knee (~0.76 linear) so the renderer does not
+ * desaturate them toward pastel; only highlights/sparkles/foam exceed 1.0 (and feed bloom).
+ */
+const knee = (hex: string, k = 0.74) => new THREE.Color(hex).multiplyScalar(k);
 export const PALETTE = {
-  cyanDeep: new THREE.Color('#0a9ee8'),
-  cyan: new THREE.Color('#19d3ff'),
-  cyanBright: new THREE.Color('#8ff7ff'),
-  pink: new THREE.Color('#ff3fb4'),
-  pinkLight: new THREE.Color('#ff86dc'),
+  cyanDeep: knee('#0080e8', 0.72),
+  cyan: knee('#08c0ff'),
+  cyanBright: knee('#56f0ff', 0.8),
+  pink: knee('#ff149f'),
+  pinkLight: knee('#ff4cc0', 0.78),
   magenta: new THREE.Color('#e01ea0'),
   foam: new THREE.Color('#ffffff'),
   foamLav: new THREE.Color('#efe2ff'),

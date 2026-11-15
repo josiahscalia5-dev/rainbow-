@@ -40,12 +40,12 @@ export function eyeTexture(): THREE.CanvasTexture {
   // sclera with soft cool shading toward the rim
   const sg = ctx.createRadialGradient(cx, cy - 20, 40, cx, cy, S * 0.52);
   sg.addColorStop(0, '#ffffff');
-  sg.addColorStop(0.6, '#fbf8ff');
-  sg.addColorStop(1, '#d9cfe6');
+  sg.addColorStop(0.7, '#fdfbfb');
+  sg.addColorStop(1, '#efe4e2');
   ctx.fillStyle = sg;
   ctx.fillRect(0, 0, S, S);
   // iris
-  const R = S * 0.3;
+  const R = S * 0.355;
   const ig = ctx.createRadialGradient(cx, cy + R * 0.25, R * 0.15, cx, cy, R);
   ig.addColorStop(0, '#c98a4a');
   ig.addColorStop(0.45, '#8a4b22');

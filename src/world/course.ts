@@ -15,6 +15,7 @@ import * as THREE from 'three';
 
 export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
 export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
+export type StageProp = 'width' | 'tube' | 'speed' | 'bank';
 
 export interface StageDef {
   id: StageId;
@@ -361,8 +362,15 @@ export class Course {
     return this.stages.find((s) => s.id === id)!;
   }
 
-  /** smoothly blended per-stage property (blend ±blend units around stage boundaries) */
-  prop(s: number, key: 'width' | 'tube' | 'speed' | 'bank', blend = 6): number {
+  /**
+   * smoothly blended per-stage property (blend ±blend units around stage boundaries).
+   * Accepts either argument order: prop(s, 'width') or prop('width', s).
+   */
+  prop(s: number, key: StageProp, blend?: number): number;
+  prop(key: StageProp, s: number, blend?: number): number;
+  prop(a: number | StageProp, b: number | StageProp, blend = 6): number {
+    const s = (typeof a === 'number' ? a : b) as number;
+    const key = (typeof a === 'string' ? a : b) as StageProp;
     let v = 0, w = 0;
     for (const st of this.stages) {
       const a = smooth(st.s0 - blend, st.s0 + blend, s) * (1 - smooth(st.s1 - blend, st.s1 + blend, s));

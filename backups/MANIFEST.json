@@ -107,6 +107,11 @@
    "sha256": "d4679f3ab028f124f33dc7ac1d581cbbd32918bab4353246f1d94127fb32b7f1"
   },
   {
+   "path": "assets/models/benny.glb",
+   "bytes": 1126456,
+   "sha256": "9c2f9d50b2129f6d8e26368e14811031060ceac89f69a39a6d77bf00007893d7"
+  },
+  {
    "path": "backups/AGENTS_STATUS.md",
    "bytes": 2334,
    "sha256": "e9ab86ae2159f0880f3a9599425a3a83f45a09c9fa0cbedfc08dad3dac91847e"
@@ -114,7 +119,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "49cf271c08e4a72d01d92fbe7df8c16bdf42d158710d978cfeeac6ca29be6dc1"
+   "sha256": "97d0facefa1cf33a1a526148770f83a167aed06993968e2854ada35d8381e8a5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -157,9 +162,49 @@
    "sha256": "92bbaa61a66c7a4dc16d70730be76a34b9575d3f4484e72d95129ad574460daf"
   },
   {
+   "path": "docs/characters/benny_turntable.png",
+   "bytes": 1009975,
+   "sha256": "21ede1e786f9865bb64d1a66380426dea47c945cc3681d789675548459788f0f"
+  },
+  {
    "path": "docs/path_graph.md",
    "bytes": 4605,
    "sha256": "16a7e0136effe382f020fb0d93259f74c8a4aa9a1d634553631400438cf57981"
+  },
+  {
+   "path": "docs/vfx/water_01.png",
+   "bytes": 171577,
+   "sha256": "db6f80526fb467c5f8a0b4e0dbf8a8defcf1ddd42ac3ff04f5d08b22c7712681"
+  },
+  {
+   "path": "docs/vfx/water_02.png",
+   "bytes": 227841,
+   "sha256": "dbf44b5f2de0aab3a8b8703a6c5f5b464a5bd2890b36b7c91a7078da9c17d9e2"
+  },
+  {
+   "path": "docs/vfx/water_03.png",
+   "bytes": 401444,
+   "sha256": "d809c5bd6b0afe4ba68408231d5cfeb7b42c2f1cb945218856dbdb2ba1816e99"
+  },
+  {
+   "path": "docs/vfx/water_04.png",
+   "bytes": 164546,
+   "sha256": "bdb571bb67646f507e0cd9b96e836daad2a4263d54f73b0136ecdd212c6aef07"
+  },
+  {
+   "path": "docs/vfx/water_05.png",
+   "bytes": 217464,
+   "sha256": "18d3e6370e8c1d6290e0c470a9d4c543623901031f970db3b2610800e25ad4c9"
+  },
+  {
+   "path": "docs/vfx/water_07.png",
+   "bytes": 168243,
+   "sha256": "ba987936af7d690f0f07bdb0e5d57d9f89f9252d7a30a8d28d8f7dc85203f4c1"
+  },
+  {
+   "path": "docs/vfx/water_stats.json",
+   "bytes": 1036,
+   "sha256": "01eb16c76820c56fac21823f698413fd5f20ead2f5ac9b48b61e0fc61e00e4cd"
   },
   {
    "path": "index.html",
@@ -175,6 +220,11 @@
    "path": "package.json",
    "bytes": 1146,
    "sha256": "167fa7ce473d0e66718115032e5b2dd8bacec9ee425c0acc7cf524106f0bcbab"
+  },
+  {
+   "path": "qa/capture_log.json",
+   "bytes": 1645,
+   "sha256": "17a26221aacb2455f3c5f632a0495dee1c95b41a06de7f73d4412562409696b3"
   },
   {
    "path": "qa/continuity_report.json",
@@ -252,6 +302,11 @@
    "sha256": "5efb1cc0e60c18fd5e7eb8d6574334e5e87847d55d702eb3957a575a7394d638"
   },
   {
+   "path": "scripts/capture.mjs",
+   "bytes": 3860,
+   "sha256": "76fd115add143307d57e4ed8e7094dd073fd2f230042e90e847d74d743d60350"
+  },
+  {
    "path": "scripts/continuity-test.ts",
    "bytes": 4002,
    "sha256": "d5cbd1fac1da2cd1a691b5d691728b51a9cc2deeb920cfecf3eae5a29f1a8a89"
@@ -287,39 +342,74 @@
    "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
   },
   {
+   "path": "scripts/water-lab.mjs",
+   "bytes": 1688,
+   "sha256": "159849c55c497d467ef8b3b0f2f308dced9b5465f3635e0e0e5edd282b085209"
+  },
+  {
+   "path": "src/characters/benny/benny-lab.html",
+   "bytes": 278,
+   "sha256": "cd43ae8fbb22e2b07e6f88518c08ad92d525fe9d1533438a7a4573964736a054"
+  },
+  {
+   "path": "src/characters/benny/benny-lab.ts",
+   "bytes": 4482,
+   "sha256": "80f7841b81f835419a2cc8b16b7e2942c62d576a39e6d613e34f1b26a78bda47"
+  },
+  {
    "path": "src/characters/benny/build.ts",
-   "bytes": 16116,
-   "sha256": "00ad50968bb6d0251150e33d4552b5591998be245a6b33e4f08a627ee1ce4e8b"
+   "bytes": 16146,
+   "sha256": "a65543425e0eed47f91c406c4ec0e37b2b288c37f0902c4a9635ec438a904015"
   },
   {
    "path": "src/characters/benny/fur.ts",
-   "bytes": 5368,
-   "sha256": "d2a61875037ac789f3fa8f932f3a8a33c268d2326ed05a5719faa8de90b7f07d"
+   "bytes": 5623,
+   "sha256": "ed805f95cb7ef74fdd5e4b57a76a42141cb75072f2adc0c355a7b2897c38124b"
   },
   {
    "path": "src/characters/benny/runtime.ts",
-   "bytes": 5333,
-   "sha256": "7efb53c21a5b22fe91bf56c7b7d41e0f03cd6e0c98e661e2bdc7fdeeaeb7c7fa"
+   "bytes": 5607,
+   "sha256": "bb9cfde312ec9dea181689bbac1f7182b0bb17822a9c871445c97ccf597535bd"
   },
   {
    "path": "src/characters/benny/textures.ts",
-   "bytes": 11811,
-   "sha256": "e3f3436f39c2d7076da27b256d67244c015e19aee34d576f829a89bb654fe72a"
+   "bytes": 11805,
+   "sha256": "e0266dcf58483f46e9472b86c7cbcb5013815e7074eb2fa299213558bc70e119"
   },
   {
    "path": "src/characters/girl/build.ts",
-   "bytes": 43043,
-   "sha256": "a3e183a5bae32b8abd9566f8acdd569dd2a747a4caf206b3f5e7e9f9fefd6952"
+   "bytes": 43846,
+   "sha256": "4b0a24225041afe202baf7836e73e3714e6b16788c5206b351e82b38685dc388"
+  },
+  {
+   "path": "src/characters/girl/girl-lab.html",
+   "bytes": 348,
+   "sha256": "3f027137ab722a5f0f3859140283432c1e516091f1c6ae444e99f73d83041b62"
+  },
+  {
+   "path": "src/characters/girl/girl-lab.ts",
+   "bytes": 4746,
+   "sha256": "8aaa5fa67642b951d11ac4ec5e58877b611518a9b27d36674b2f28adb8630ebb"
+  },
+  {
+   "path": "src/characters/girl/runtime.ts",
+   "bytes": 3470,
+   "sha256": "a09542561652b6ed848b6fc49e93e190b51f930e6784f2b0fe4ee98057ec6150"
   },
   {
    "path": "src/characters/girl/textures.ts",
-   "bytes": 9918,
-   "sha256": "3b59cca94de1c5e6521cd4ea08a181be3db002da7507df13bd76dc5e4aefe2d2"
+   "bytes": 9920,
+   "sha256": "27dedf12338330346989fa812f18244be21128639ae42fc761f5367decac50fe"
   },
   {
    "path": "src/characters/types.ts",
    "bytes": 1766,
    "sha256": "bb0791d2826ed7f4bf11694146e4f20ebffaf26d732a78bafb7fa880a5437b0a"
+  },
+  {
+   "path": "src/game/Game.ts",
+   "bytes": 25309,
+   "sha256": "ff4137987901ce0be7f3ff2a33f1e415f83b382cfd77065028a500e8135d5f6e"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -358,33 +448,33 @@
   },
   {
    "path": "src/vfx/bubbles.ts",
-   "bytes": 9937,
-   "sha256": "d6f878c09e8191b1e046201173a861e4d5759c9fdb9ddc9f9b51404e99d633db"
+   "bytes": 10106,
+   "sha256": "f8784e5f4ed663acb2e06f665ed713ccb5234b8a5f22419091cd18e5b7bfdd70"
   },
   {
    "path": "src/vfx/drumWater.ts",
-   "bytes": 8593,
-   "sha256": "afc5b31d6546d8b4983cd732bcef09a10cb31cbf772756d304d3b56fd44d9357"
+   "bytes": 9042,
+   "sha256": "0afaca9db3837f9f85f88243379fcb40a2e76da18ab2e6b388edd3ed376db2db"
   },
   {
    "path": "src/vfx/finalWave.ts",
-   "bytes": 7453,
-   "sha256": "4a5d083f49ea939c3f82c7568037d257c41e5e65e28824cf7622f78ade47d130"
+   "bytes": 7454,
+   "sha256": "8e730ab1cda3b2c295733d3ab1a1a1cae0f1094dbd5693f2338797f32e1991bb"
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 6588,
-   "sha256": "af95ec410d70fdbbfa1b9d298aef379509d578f272b115977fcd73d91eb4a650"
+   "bytes": 6590,
+   "sha256": "6547b4b8a8d57b5a8cc68ee6afae34477a374c96215a4287882829b687aaee6a"
   },
   {
    "path": "src/vfx/glsl.ts",
-   "bytes": 2155,
-   "sha256": "80f40e184063ab0123c2cda0798e76892ceb56daf63103b1787b45e1afdd929a"
+   "bytes": 2392,
+   "sha256": "d15eda11b112ea0fb16294e7ce3ef3615150629fb3993216bcbc2a303a25a4f1"
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 8474,
-   "sha256": "bc5b599b43913334c98b37caae5256e297337addfd034cb9967805666e42aa55"
+   "bytes": 8945,
+   "sha256": "6336fa95c4c2a66bfad8cb26ba1becb964d8974d0b6d4b416076eff95ddd4f21"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -398,18 +488,18 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 12514,
-   "sha256": "3da73604fc2f02ef3a35471e82ca281a333fbd2dd882bea7b84de73f5dac1346"
+   "bytes": 12677,
+   "sha256": "6f84c36c59181b048759ca8f6a4967f78a9f9efb16f3c8f2e74fca28fca1ed19"
   },
   {
    "path": "src/vfx/whirlpool.ts",
-   "bytes": 7698,
-   "sha256": "a7d6e7a9a269cff3e45665f571db8fe09e60d284ad123d0e7672d9146f27c64c"
+   "bytes": 8370,
+   "sha256": "1e1050a36fd0426251cfa224533a4ebc12d7a47e8df8c239948979e59233d5f9"
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 19960,
-   "sha256": "21ce65b325108c88d776407b87b43f893b08be23a4a1bb11ca3cfdfb4f224cff"
+   "bytes": 20334,
+   "sha256": "409b67a35db04f88df6259459c53b651e994ecfbc515f9321f81a09aeb0816d0"
   },
   {
    "path": "src/world/environment.ts",
@@ -453,13 +543,13 @@
   },
   {
    "path": "tools/water-lab.ts",
-   "bytes": 6625,
-   "sha256": "bccca04b59b87b539ad19c55989fbbc7b26feafcc245ca5a8e3e7505c0e50a6b"
+   "bytes": 6671,
+   "sha256": "dee50a056224ccf4f8ef93f192ee2b461731ee9503002b92cc174bab7d390528"
   },
   {
    "path": "tsconfig.json",
-   "bytes": 556,
-   "sha256": "b9988bf1f74a9f5c4cad3b48ad8066c5cfa6ee97bece437229138ed2335cd344"
+   "bytes": 526,
+   "sha256": "2c88313eda7ae7a287349235f34020081092427b5ee030ad58d747bd46124d4b"
   },
   {
    "path": "vite.config.ts",
