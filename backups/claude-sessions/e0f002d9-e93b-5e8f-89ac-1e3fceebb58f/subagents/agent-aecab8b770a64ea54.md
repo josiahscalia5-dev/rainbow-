@@ -470,3 +470,367 @@ I'll start by reading the project instructions and Benny's docs.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T18:41:07.896Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"quality\\|furQuality\" src/game src/main.ts src/characters 2>/dev/null | head; sed -n 1,44p src/game/modules.ts", "description": "Locate quality flag handling"}`
+
+### 🧑 User — 2026-11-15T18:41:07.939Z
+
+> ↩︎ result: src/game/modules.ts:28:      const m = (await f()) as { createWater: (c: Course, o?: { quality?: 'high' | 'low' }) => WaterLike };
+> src/game/modules.ts:29:      // Android/mobile defaults to the low tier (measured budgets: see qa/performance.md); ?quality= overrides
+> src/game/modules.ts:30:      const qp = new URLSearchParams(location.search).get('quality');
+> src/game/modules.ts:33:      const w = m.createWater(course, { quality: q });
+> src/characters/benny/runtime.ts:23:export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {
+> src/characters/benny/runtime.ts:33:  opts: { furQuality?: 'high' | 'low' } = {},
+> src/characters/benny/runtime.ts:48:    if (opts.furQuality === 'low') p.shells = Math.max(6, Math.round(p.shells * 0.6));
+> /**
+>  * Loads the specialist modules (water, Benny, girl) when present; otherwise returns simple stand-ins
+>  * so the world/gameplay can be developed and tested independently. Stand-ins are logged loudly and
+>  * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+>  */
+> import * as THREE from 'three';
+> import type { Course } from '../world/course';
+> import type { BennyRuntime, GirlRuntime } f …[+1574 chars]
+
+### 🤖 Claude — 2026-11-15T18:41:12.526Z
+
+Now I have a clear picture. Let me add an in-game-matched view to the Benny lab so I can iterate quickly (water plane at the game's ride height, exact stage-05 camera).
+
+### 🤖 Claude — 2026-11-15T18:41:32.953Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "content": "/**\n * Benny lab (benny-character-artist QA page).\n *   /src/characters/benny/benny-lab.html?src=build|glb&views=refs|turntable|game[&quality=low]\n * views=refs      → 3 portrait panels framed like the references: 05 rear (gameplay), 03 front 3/4, 02 dizzy\n * views=turntable → front / three-quarter / side / back / rear-high with full framing\n * views=game      → the stage-05 ride camera exactly as in Game/cameraRig (back 6.4, up 4.1, look 18 ahead\n *                   1.8 up, fov 62, 9:16) + a lower refere …[+5894 chars]`
+
+### 🧑 User — 2026-11-15T18:41:33.032Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:41:35.846Z
+
+Now a scratch script to render lab views quickly.
+
+### 🤖 Claude — 2026-11-15T18:41:40.147Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab.mjs", "content": "// node lab.mjs OUT.png \"src=build&views=game\"\nimport { pathToFileURL } from 'node:url';\nconst root = '/home/user/rainbow-';\nprocess.chdir(root);\nconst { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } = await import(pathToFileURL(root + '/scripts/lib/pw.mjs').href);\nconst [out, query] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5233);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  …[+547 chars]`
+
+### 🧑 User — 2026-11-15T18:41:40.164Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:41:42.000Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny && timeout 300 node $S/lab.mjs $S/lab_before_game.png \"src=build&views=game\" 2>&1 | tail -5", "description": "Render baseline lab game views", "timeout": 320000}`
+
+### 🧑 User — 2026-11-15T18:42:04.399Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_before_game.png {"baseTriangles":13844,"furQuality":"high"}
+
+### 🤖 Claude — 2026-11-15T18:42:06.323Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_before_game.png"}`
+
+### 🧑 User — 2026-11-15T18:42:06.347Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:42:52.736Z
+
+> 🔧 **Bash** `{"command": "grep -n \"stripe\\|export function\\|BENNY_COLORS\\|pink\\|pom\" src/characters/benny/textures.ts | head -40", "description": "Inspect texture stripe and colour definitions"}`
+
+### 🧑 User — 2026-11-15T18:42:52.772Z
+
+> ↩︎ result: 58:export const BENNY_COLORS = {
+> 66:  pinkRoot: '#ec58a8',
+> 67:  pinkTip: '#ff9ed2',
+> 68:  pinkSkin: '#f06bb0',
+> 69:  pomRoot: '#5a1fc4',
+> 70:  pomTip: '#b07cff',
+> 78:export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THREE.CanvasTexture } {
+> 82:  const stripes: [number, number, string, string][] = [
+> 84:    [0.0, 0.25, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
+> 85:    [0.25, 0.47, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
+> 86:    [0.47, 0.67, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
+> 87:    [0.67, 1.0, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
+> 93:  for (const [v0, v1, base, shade] of stripes) {
+> 143:export function ribbedBrimTextures(): { map: THREE.CanvasTexture; normalMap: THREE.CanvasTexture } {
+> 152:    g.addColorStop(0, BENNY_COLORS.brimDark);
+> 153:    g.addColorStop(0.3, BENNY_COLORS.brim);
+> 155:    g.addColorStop(0.7, BENNY_COLORS.brim);
+> 156:    g.addColorStop(1, BENNY_COLORS.brimDark);
+> 183:export function eyeTexture(kind: 'happy' | 'dizzy'): THREE.CanvasTexture {
+> 262:export function mouthTexture(kind: 'happy' | 'dizzy' | 'peek'): THREE.CanvasTexture {
+> 302:export function blushTexture(): THREE.CanvasTexture {
+> 314:/** White paw sole with pink pa …[+121 chars]
+
+### 🤖 Claude — 2026-11-15T18:42:54.369Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/textures.ts", "offset": 55, "limit": 130}`
+
+### 🧑 User — 2026-11-15T18:42:54.390Z
+
+> ↩︎ result: 55	  return t;
+> 56	}
+> 57	
+> 58	export const BENNY_COLORS = {
+> 59	  purple: '#6b2fe0',
+> 60	  purpleDark: '#4a1aa8',
+> 61	  purpleLight: '#9a63ff',
+> 62	  white: '#fffcff',
+> 63	  whiteShade: '#e2d9ec',
+> 64	  brim: '#6327d6',
+> 65	  brimDark: '#3f1597',
+> 66	  pinkRoot: '#ec58a8',
+> 67	  pinkTip: '#ff9ed2',
+> 68	  pinkSkin: '#f06bb0',
+> 69	  pomRoot: '#5a1fc4',
+> 70	  pomTip: '#b07cff',
+> 71	  gold: '#ffd23a',
+> 72	};
+> 73	
+> 74	/**
+> 75	 * Knit crown texture (u = around, v = height 0 bottom → 1 top).
+> 76	 * Stripes bottom→top: white, purple, white, purple (as in the references).
+> 77	 */
+> 78	export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THREE.CanvasTexture } {
+> 79	  const W = 1024, Hh = 512;
+> 80	  const [c, ctx] = canvas(W, Hh);
+> 81	  const [hc, hctx] = canvas(W, Hh);
+> 82	  const stripes: [number, number, string, string][] = [
+> 83	    // [v0, v1, base, shade]   (v measured from bottom)
+> 84	    [0.0, 0.25, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
+> 85	    [0.25, 0.47, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
+> 86	    [0.47, 0.67, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
+> 87	    [0.67, 1.0, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
+> 88	  ];
+> 89	  hctx.fillStyle = '#000';
+> 90	  hctx.fill …[+3881 chars]
+
+### 🤖 Claude — 2026-11-15T18:43:29.951Z
+
+> 🔧 **Bash** `{"command": "grep -n \"goto\" src/game/Game.ts | head; grep -n \"const goto\\|goto(id\\|goto =\" -A30 src/game/Game.ts | head -60", "description": "Inspect QA goto implementation"}`
+
+### 🧑 User — 2026-11-15T18:43:29.990Z
+
+> ↩︎ result: 537:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 580:    goto: gotoCheckpoint,
+> 537:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 538-    const cp = CHECKPOINTS[id];
+> 539-    if (!cp) throw new Error('unknown checkpoint ' + id);
+> 540-    resetToIntro();
+> 541-    st.frozen = time;
+> 542-    st.clock = time;
+> 543-    input.override = 0;
+> 544-    const settle = (n: number, dt: number) => { for (let i = 0; i < n; i++) stepSim(dt); };
+> 545-    if (cp.mode === 'intro') {
+> 546-      // replay the cinematic deterministically up to the checkpoint time
+> 547-      const steps = Math.round((cp.t ?? 0) / (1 / 30));
+> 548-      settle(steps, 1 / 30);
+> 549-    } else {
+> 550-      startRide();
+> 551-      hud.showHint(null);
+> 552-      const sTarget = cp.s ?? course.stage('11').s0;
+> 553-      st.s = sTarget;
+> 554-      st.lat = cp.lat ?? 0;
+> 555-      coins.resetUntil(sTarget + 0.5);
+> 556-      setStage(stageOf(sTarget));
+> 557-      if (cp.mode === 'outro') {
+> 558-        startOutro();
+> 559-        settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+> 560-      } else {
+> 561-        // settle camera springs without moving Benny: run with speed frozen
+> 562-        const s0 = st.s;
+> 563-        for (let i =  …[+255 chars]
+
+### 🤖 Claude — 2026-11-15T18:43:39.778Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": " * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70, fur adds ~0.14\n * (visual body radius ≈ 0.84). Total height incl. beanie + pom-pom ≈ 2.5 units.", "new_string": " * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70 (lower half bulged\n * ~6 % → pear-round plush ball), fur adds ~0.15 (visual half-width ≈ 0.86). The beanie perches on the\n * top ~40 % of the ball (brim bottom ≈ +0.10 at the back, +0.24 at the front). Heigh …[+20 chars]`
+
+### 🧑 User — 2026-11-15T18:43:39.813Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:43:43.953Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "export const BENNY_DIMS = {\n  skin: 0.7,\n  fur: 0.105,\n  radius: 0.8,\n  hatTilt: -0.2, // front of the beanie raised (rad, about X)\n  brimBottom: 0.1, // hat-local\n};", "new_string": "export const BENNY_DIMS = {\n  skin: 0.7,\n  fur: 0.15,\n  radius: 0.8,\n  /** lower-body bulge (radial gain at its peak) — the plush ball is widest below the brim (refs 05/07/10) */\n  pear: 0.06,\n  /** front of the beanie raised (rad, about X). Small, so the back brim stays high on the ball in rear vie …[+445 chars]`
+
+### 🧑 User — 2026-11-15T18:43:44.023Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:43:49.990Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const bodyMat = std({ color: C.pinkSkin, roughness: 0.92, metalness: 0 });\n  const bodyMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.skin, 48, 36), bodyMat), 'fur_body');\n  bodyMesh.userData = furData({\n    length: D.fur,\n    density: 66,\n    shells: 20,\n    root: C.pinkRoot,\n    tip: C.pinkTip,\n    // bald under the beanie: dot(normal, hatUp) > brimBottom/skin (+ a little overlap)\n    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.035) / D.skin],\n    short: [FACE_D …[+1055 chars]`
+
+### 🧑 User — 2026-11-15T18:43:50.051Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:43:56.253Z
+
+The sphere seam would crack the shell fur with `computeVertexNormals`, so I'll compute the deformed normals analytically instead.
+
+### 🤖 Claude — 2026-11-15T18:44:00.404Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "    // pear-round plush ball: radial bulge of the lower half (normals recomputed for the fur push)\n    const p = bodyGeo.attributes.position as THREE.BufferAttribute;\n    for (let i = 0; i < p.count; i++) {\n      const k = pearGain(p.getY(i));\n      p.setXYZ(i, p.getX(i) * k, p.getY(i), p.getZ(i) * k);\n    }\n    bodyGeo.computeVertexNormals();\n  }", "new_string": "    // pear-round plush ball: radial bulge of the lower half. Normals are the analytic gradient of\n    // (x²+z²)/k(y)² + …[+597 chars]`
+
+### 🧑 User — 2026-11-15T18:44:00.444Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:03.321Z
+
+Now the side tufts (arms) and the beanie.
+
+### 🤖 Claude — 2026-11-15T18:44:04.974Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "    const a = joint(side > 0 ? 'armL' : 'armR', 0.58 * side, -0.2, 0.08);", "new_string": "    // paw tufts stick out left/right at mid-body, just under the brim (rear refs 05/07/10)\n    const a = joint(side > 0 ? 'armL' : 'armR', 0.64 * side, -0.14, 0.04);"}`
+
+### 🧑 User — 2026-11-15T18:44:05.013Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:06.536Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "    arm.userData = furData({ length: 0.07, density: 90, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.2 });", "new_string": "    arm.userData = furData({ length: 0.09, density: 80, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.2 });"}`
+
+### 🧑 User — 2026-11-15T18:44:06.567Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:11.732Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const yb = D.brimBottom;\n  const brimTex = ribbedBrimTextures();\n  const brimMat = std({ map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.88 });\n  const brim = named(\n    new THREE.Mesh(\n      lathe(\n        [\n          [0.69, yb + 0.01],\n          [0.735, yb - 0.005],\n          [0.765, yb + 0.03],\n          [0.778, yb + 0.1],\n          [0.778, yb + 0.18],\n          [0.765, yb + 0.235],\n          [0.735, yb + 0.26],\n       …[+849 chars]`
+
+### 🧑 User — 2026-11-15T18:44:11.779Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:18.413Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const crownY0 = yb + 0.24;\n  const crownY1 = yb + 0.95;\n  const crown = named(\n    new THREE.Mesh(\n      lathe(\n        [\n          [0.725, crownY0],\n          [0.748, crownY0 + 0.07],\n          [0.756, crownY0 + 0.17],\n          [0.746, crownY0 + 0.27],\n          [0.712, crownY0 + 0.37],\n          [0.652, crownY0 + 0.46],\n          [0.565, crownY0 + 0.54],\n          [0.45, crownY0 + 0.6],\n          [0.31, crownY0 + 0.635],\n          [0.155, crownY0 + 0.65],\n          [0.0, …[+896 chars]`
+
+### 🧑 User — 2026-11-15T18:44:18.450Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:20.509Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const sa = THREE.MathUtils.degToRad(132);\n  const starPos = new THREE.Vector3(-Math.sin(sa) * 0.785, yb + 0.235, Math.cos(sa) * 0.785);", "new_string": "  // 140° from the front toward Benny's right: image-right of centre in the rear refs (04/05/07/10)\n  const sa = THREE.MathUtils.degToRad(140);\n  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR + 0.01), yb + 0.235, Math.cos(sa) * (D.brimR + 0.01));"}`
+
+### 🧑 User — 2026-11-15T18:44:20.553Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:21.678Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "  const pom = joint('pom', 0, crownY0 + 0.655 + 0.165, -0.03);", "new_string": "  const pom = joint('pom', 0, crownY0 + D.crownH + 0.16, -0.03);"}`
+
+### 🧑 User — 2026-11-15T18:44:21.711Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:42.196Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "/** radial gain of the body skin at height y: bulges the lower half, keeps the top under the beanie round */\nfunction pearGain(y: number): number {\n  return 1 + BENNY_DIMS.pear * Math.exp(-(((y + 0.22) / 0.36) ** 2));\n}", "new_string": "/**\n * Body skin deformation of a point `v` on the r = skin sphere: a radial (xz) bulge of the lower half,\n * strongest at the sides/back and faded out on the face so eyes, blush and mouth keep their places.\n */\nfunction deformBody(v: THREE.Vector3, ou …[+267 chars]`
+
+### 🧑 User — 2026-11-15T18:44:42.227Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:49.811Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "    // pear-round plush ball: radial bulge of the lower half. Normals are the analytic gradient of\n    // (x²+z²)/k(y)² + y² = r² so the UV seam stays closed for the shell-fur push.\n    const p = bodyGeo.attributes.position as THREE.BufferAttribute;\n    const n = bodyGeo.attributes.normal as THREE.BufferAttribute;\n    const g = new THREE.Vector3();\n    for (let i = 0; i < p.count; i++) {\n      const x0 = p.getX(i), y = p.getY(i), z0 = p.getZ(i);\n      const k = pearGain(y);\n      con …[+1617 chars]`
+
+### 🧑 User — 2026-11-15T18:44:49.846Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:52.977Z
+
+Now the runtime: ride-height lift while riding, and the `?quality=low` fur tier defaulting from the URL/mobile UA (the game calls `loadBenny()` with no options).
+
+### 🤖 Claude — 2026-11-15T18:44:58.686Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts", "old_string": "export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {\n  const src = await loadScene();\n  const clips: THREE.AnimationClip[] = src.userData.animations ?? [];\n  return createBennyRuntime(src.clone(true), clips, opts);\n}", "new_string": "/** fur tier: explicit option, else `?quality=low|high`, else low on Android/iOS (same rule as the water) */\nfunction defaultFurQuality(): 'high' | 'low' {\n  if (typeof location === 'undefined') return 'hig …[+1044 chars]`
+
+### 🧑 User — 2026-11-15T18:44:58.726Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/runtime.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:59.786Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts", "old_string": "  let lean = 0;\n  const tmp = new THREE.Vector3();", "new_string": "  let lean = 0;\n  let lift = 0;\n  const tmp = new THREE.Vector3();"}`
+
+### 🧑 User — 2026-11-15T18:44:59.810Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/runtime.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:45:02.293Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/runtime.ts", "old_string": "    if (aSwim) aSwim.timeScale = 0.8 + Math.min(1.2, st.speed / 14);\n    mixer.update(dt);", "new_string": "    if (aSwim) aSwim.timeScale = 0.8 + Math.min(1.2, st.speed / 14);\n    mixer.update(dt);\n\n    // ride height (see BENNY_RIDE_LIFT): eased so mode switches never pop\n    const liftTarget = tumble || peek ? 0 : BENNY_RIDE_LIFT * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);\n    lift += (liftTarget - lift) * (1 - Math.exp(-dt * 7));\n    scene.position.y = lift;"}`
+
+### 🧑 User — 2026-11-15T18:45:02.326Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/runtime.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:45:07.654Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -20; S=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny && timeout 300 node $S/lab.mjs $S/lab_it1_game.png \"src=build&views=game\" 2>&1 | tail -5", "description": "Typecheck and render iteration 1 lab views", "timeout": 320000}`
+
+### 🧑 User — 2026-11-15T18:45:24.567Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts(108,3): error TS2304: Cannot find name 'FRAG_FX_GLSL'.
+> /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_it1_game.png {"baseTriangles":13844,"furQuality":"high"}
+
+### 🤖 Claude — 2026-11-15T18:45:26.179Z
+
+The tsc error is in `src/vfx/waterRibbon.ts` (water specialist's mid-edit, not mine). Let me look at the render.
+
+### 🤖 Claude — 2026-11-15T18:45:27.132Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_it1_game.png"}`
+
+### 🧑 User — 2026-11-15T18:45:27.164Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:45:31.401Z
+
+Progress: body and side tufts now visible below the brim. Let me build a side-by-side crop comparison tool to judge proportions more precisely.
+
+### 🤖 Claude — 2026-11-15T18:45:32.095Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import PIL; print(PIL.__version__)\"; python3 -c \"import numpy; print(numpy.__version__)\"", "description": "Check PIL and numpy availability"}`
+
+### 🧑 User — 2026-11-15T18:45:32.222Z
+
+> ↩︎ result: 12.3.0
+> 2.5.3
+
+### 🤖 Claude — 2026-11-15T18:45:38.083Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/crops.py", "content": "\"\"\"Side-by-side crops: python3 -I crops.py OUT.png H img1:x0,y0,x1,y1:label img2:...\nEach crop is scaled to height H and labelled.\"\"\"\nimport sys\nfrom PIL import Image, ImageDraw\n\nout, H = sys.argv[1], int(sys.argv[2])\ntiles = []\nfor spec in sys.argv[3:]:\n    path, box, label = spec.rsplit(':', 2)\n    x0, y0, x1, y1 = map(int, box.split(','))\n    im = Image.open(path).convert('RGB').crop((x0, y0, x1, y1))\n    w = round(im.width * H / im.height)\n    im = …[+408 chars]`
+
+### 🧑 User — 2026-11-15T18:45:38.096Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/crops.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:45:41.327Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny && R=/home/user/rainbow-/references && python3 -I crops.py cmp_it1.png 420 $R/05_flow_into_the_current.png:180,740,680,1240:ref05 $R/10_slide_into_hiding.png:130,840,690,1400:ref10 $R/07_dive_the_washer_tube.png:170,760,690,1280:ref07 lab_it1_game.png:60,480,330,750:lab-game05 lab_it1_game.png:470,150,830,510:lab-refrear", "description": "Build reference vs lab crop comparison"}`
+
+### 🧑 User — 2026-11-15T18:45:41.701Z
+
+> ↩︎ result: cmp_it1.png (2124, 420)
+
+### 🤖 Claude — 2026-11-15T18:45:43.592Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/cmp_it1.png"}`
+
+### 🧑 User — 2026-11-15T18:45:43.720Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T18:45:43.717Z
+
+[Image: original 2124x420, displayed at 2000x395. Multiply coordinates by 1.06 to map to original image.]
+

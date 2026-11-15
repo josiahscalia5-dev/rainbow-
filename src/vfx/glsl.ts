@@ -38,6 +38,42 @@ vec3 iridescent(float t) {
 `;
 
 /**
+ * Fragment-only helpers (use screen-space derivatives, so never include in a vertex shader).
+ *  - bumpNormal: Mikkelsen-style "bump mapping without tangents" from a scalar height field
+ *  - starGlint:  4-point star glint anchored to a world-space cell grid but sized in PIXELS, so the
+ *                cross stays star-shaped under grazing foreshortening (refs 05–07 white glints)
+ */
+export const FRAG_FX_GLSL = /* glsl */ `
+vec3 bumpNormal(vec3 pos, vec3 n, float h) {
+  vec3 dpx = dFdx(pos);
+  vec3 dpy = dFdy(pos);
+  float dhx = dFdx(h);
+  float dhy = dFdy(h);
+  vec3 r1 = cross(dpy, n);
+  vec3 r2 = cross(n, dpx);
+  float det = dot(dpx, r1);
+  vec3 grad = sign(det) * (dhx * r1 + dhy * r2);
+  return normalize(abs(det) * n - grad);
+}
+// g: cell coordinates (world-anchored); density: probability a cell holds a star; L: arm length px
+float starGlint(vec2 g, float density, float L, float time) {
+  vec2 gi = floor(g);
+  float hs = hash12(gi + 7.31);
+  if (hs < 1.0 - density) return 0.0;
+  vec2 cpp = max(fwidth(g), vec2(1e-4));           // cells per pixel
+  vec2 c = vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.5 + 0.25;
+  vec2 px = (fract(g) - c) / cpp;                   // offset in pixels
+  vec2 lim = 0.24 / cpp;                            // never cross the cell border
+  float l = L * (0.55 + 0.9 * fract(hs * 37.0));
+  float ax = exp(-abs(px.y) * 0.8) * max(0.0, 1.0 - abs(px.x) / min(l, lim.x));
+  float ay = exp(-abs(px.x) * 0.8) * max(0.0, 1.0 - abs(px.y) / min(l * 1.15, lim.y));
+  float core = exp(-dot(px, px) * 0.09);
+  float tw = 0.35 + 0.65 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);
+  return (ax * ax + ay * ay + core) * tw;
+}
+`;
+
+/**
  * Rainbow water palette (sRGB hex → linear THREE.Color, ready for uniforms).
  * Base hues are scaled below the NeutralToneMapping knee (~0.76 linear) so the renderer does not
  * desaturate them toward pastel; only highlights/sparkles/foam exceed 1.0 (and feed bloom).

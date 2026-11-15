@@ -1,8 +1,9 @@
 /**
  * Benny — the ONE canonical mascot model + joint rig (procedural, exported to assets/models/benny.glb).
  *
- * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70, fur adds ~0.14
- * (visual body radius ≈ 0.84). Total height incl. beanie + pom-pom ≈ 2.5 units.
+ * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70 (lower half bulged
+ * ~6 % → pear-round plush ball), fur adds ~0.15 (visual half-width ≈ 0.86). The beanie perches on the
+ * top ~40 % of the ball (brim bottom ≈ +0.10 at the back, +0.24 at the front). Height incl. pom ≈ 2.3.
  * Joints: benny_root › body › { hat › pom, eyes › eyeL/eyeR, mouth, armL, armR, footL, footR }.
  * Meshes named fur_* receive the runtime shell-fur shader (see fur.ts); their userData carries the
  * fur parameters (exported as glTF extras).
@@ -21,11 +22,27 @@ import {
 
 export const BENNY_DIMS = {
   skin: 0.7,
-  fur: 0.105,
+  fur: 0.15,
   radius: 0.8,
-  hatTilt: -0.2, // front of the beanie raised (rad, about X)
-  brimBottom: 0.1, // hat-local
+  /** lower-body bulge (radial gain at its peak) — the plush ball is widest below the brim (refs 05/07/10) */
+  pear: 0.06,
+  /** front of the beanie raised (rad, about X). Small, so the back brim stays high on the ball in rear views */
+  hatTilt: -0.1,
+  brimBottom: 0.17, // hat-local
+  brimR: 0.79, // brim outer radius (≈ 0.92 × the fluffy body width, as in the rear references)
+  crownH: 0.56, // crown height above the brim's top edge
 };
+
+/**
+ * Body skin deformation of a point `v` on the r = skin sphere: a radial (xz) bulge of the lower half,
+ * strongest at the sides/back and faded out on the face so eyes, blush and mouth keep their places.
+ */
+function deformBody(v: THREE.Vector3, out: THREE.Vector3): THREE.Vector3 {
+  const r = BENNY_DIMS.skin;
+  const zf = THREE.MathUtils.smoothstep(v.z / r, 0.1, 0.75);
+  const k = 1 + BENNY_DIMS.pear * Math.exp(-(((v.y + 0.22) / 0.36) ** 2)) * (1 - 0.85 * zf);
+  return out.set(v.x * k, v.y, v.z * k);
+}
 
 const FACE_DIR = new THREE.Vector3(0, 0.05, 1).normalize();
 
@@ -112,17 +129,44 @@ export function buildBenny(): BuiltModel {
   // ---------------- body (fur) ----------------
   const hatUp = new THREE.Vector3(0, 1, 0).applyAxisAngle(new THREE.Vector3(1, 0, 0), D.hatTilt);
   const bodyMat = std({ color: C.pinkSkin, roughness: 0.92, metalness: 0 });
-  const bodyMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.skin, 48, 36), bodyMat), 'fur_body');
+  const bodyGeo = new THREE.SphereGeometry(D.skin, 48, 36);
+  {
+    // pear-round plush ball. Normals come from finite differences of the deformation on the sphere
+    // (position-only, so UV-seam / pole duplicates get identical normals and the shell fur stays closed)
+    const p = bodyGeo.attributes.position as THREE.BufferAttribute;
+    const n = bodyGeo.attributes.normal as THREE.BufferAttribute;
+    const d = new THREE.Vector3(), t1 = new THREE.Vector3(), t2 = new THREE.Vector3();
+    const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3(), e = new THREE.Vector3();
+    const s = new THREE.Vector3(), o = new THREE.Vector3();
+    const eps = 1e-3;
+    for (let i = 0; i < p.count; i++) {
+      d.set(p.getX(i), p.getY(i), p.getZ(i)).normalize();
+      t1.set(0, 1, 0).cross(d);
+      if (t1.lengthSq() < 1e-6) t1.set(1, 0, 0).cross(d);
+      t1.normalize();
+      t2.crossVectors(d, t1).normalize();
+      const at = (u: number, w: number, out: THREE.Vector3) =>
+        deformBody(s.copy(d).addScaledVector(t1, u).addScaledVector(t2, w).setLength(D.skin), out);
+      at(eps, 0, a); at(-eps, 0, b); at(0, eps, c); at(0, -eps, e);
+      a.sub(b); c.sub(e);
+      const nn = o.crossVectors(a, c).normalize();
+      if (nn.dot(d) < 0) nn.negate();
+      n.setXYZ(i, nn.x, nn.y, nn.z);
+      deformBody(s.copy(d).multiplyScalar(D.skin), a);
+      p.setXYZ(i, a.x, a.y, a.z);
+    }
+  }
+  const bodyMesh = named(new THREE.Mesh(bodyGeo, bodyMat), 'fur_body');
   bodyMesh.userData = furData({
     length: D.fur,
-    density: 66,
+    density: 58,
     shells: 20,
     root: C.pinkRoot,
     tip: C.pinkTip,
     // bald under the beanie: dot(normal, hatUp) > brimBottom/skin (+ a little overlap)
-    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.035) / D.skin],
-    short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0.28],
-    gravity: 0.14,
+    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.03) / D.skin],
+    short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0.3],
+    gravity: 0.16,
   });
   body.add(bodyMesh);
 
@@ -191,7 +235,8 @@ export function buildBenny(): BuiltModel {
   const armMat = std({ color: C.pinkSkin, roughness: 0.92 });
   const palmTex = soleTexture('hand');
   for (const side of [1, -1] as const) {
-    const a = joint(side > 0 ? 'armL' : 'armR', 0.58 * side, -0.2, 0.08);
+    // paw tufts stick out left/right at mid-body, just under the brim (rear refs 05/07/10)
+    const a = joint(side > 0 ? 'armL' : 'armR', 0.64 * side, -0.14, 0.04);
     body.add(a);
     const phi = 1.0 * side;
     const dir = new THREE.Vector3(Math.sin(phi), -Math.cos(phi), 0);
@@ -200,7 +245,7 @@ export function buildBenny(): BuiltModel {
     const arm = named(new THREE.Mesh(g, armMat), side > 0 ? 'fur_armL' : 'fur_armR');
     arm.position.copy(dir).multiplyScalar(0.16);
     arm.rotation.z = phi;
-    arm.userData = furData({ length: 0.07, density: 90, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.2 });
+    arm.userData = furData({ length: 0.09, density: 80, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.2 });
     a.add(arm);
     const palm = named(
       new THREE.Mesh(new THREE.CircleGeometry(0.07, 24), std({ map: palmTex, roughness: 0.6 })),
@@ -238,20 +283,23 @@ export function buildBenny(): BuiltModel {
   hat.rotation.x = D.hatTilt;
   body.add(hat);
   const yb = D.brimBottom;
+  const bk = D.brimR / 0.778; // profile scale (profiles were authored for a 0.778 brim)
   const brimTex = ribbedBrimTextures();
   const brimMat = std({ map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.88 });
+  // inner lip hugs the skin at the brim height (sphere radius there ≈ 0.68)
+  const lip = Math.sqrt(D.skin * D.skin - yb * yb) + 0.012;
   const brim = named(
     new THREE.Mesh(
       lathe(
         [
-          [0.69, yb + 0.01],
-          [0.735, yb - 0.005],
-          [0.765, yb + 0.03],
-          [0.778, yb + 0.1],
-          [0.778, yb + 0.18],
-          [0.765, yb + 0.235],
-          [0.735, yb + 0.26],
-          [0.69, yb + 0.265],
+          [lip, yb + 0.01],
+          [0.735 * bk, yb - 0.005],
+          [0.765 * bk, yb + 0.03],
+          [0.778 * bk, yb + 0.1],
+          [0.778 * bk, yb + 0.18],
+          [0.765 * bk, yb + 0.235],
+          [0.735 * bk, yb + 0.26],
+          [0.69 * bk, yb + 0.265],
         ],
         72,
         yb - 0.01,
@@ -266,26 +314,28 @@ export function buildBenny(): BuiltModel {
   const crownTex = knitCrownTextures();
   const crownMat = std({ map: crownTex.map, normalMap: crownTex.normalMap, normalScale: new THREE.Vector2(0.8, 0.8), roughness: 0.9 });
   const crownY0 = yb + 0.24;
-  const crownY1 = yb + 0.95;
+  const ch = D.crownH / 0.655; // profile authored for a 0.655-tall crown
+  // a snug knit cap: near-vertical striped sides, then a rounded top that the pom-pom sits on
+  const crownProfile: [number, number][] = [
+    [0.725, 0],
+    [0.748, 0.07],
+    [0.756, 0.17],
+    [0.746, 0.27],
+    [0.712, 0.37],
+    [0.652, 0.46],
+    [0.565, 0.54],
+    [0.45, 0.6],
+    [0.31, 0.635],
+    [0.155, 0.65],
+    [0.0, 0.655],
+  ];
   const crown = named(
     new THREE.Mesh(
       lathe(
-        [
-          [0.725, crownY0],
-          [0.748, crownY0 + 0.07],
-          [0.756, crownY0 + 0.17],
-          [0.746, crownY0 + 0.27],
-          [0.712, crownY0 + 0.37],
-          [0.652, crownY0 + 0.46],
-          [0.565, crownY0 + 0.54],
-          [0.45, crownY0 + 0.6],
-          [0.31, crownY0 + 0.635],
-          [0.155, crownY0 + 0.65],
-          [0.0, crownY0 + 0.655],
-        ],
+        crownProfile.map(([r, y]) => [r * bk, crownY0 + y * ch] as [number, number]),
         72,
         crownY0,
-        crownY0 + 0.655,
+        crownY0 + D.crownH,
       ),
       crownMat,
     ),
@@ -305,14 +355,15 @@ export function buildBenny(): BuiltModel {
     new THREE.Mesh(starGeo, std({ color: C.gold, metalness: 0.55, roughness: 0.25, emissive: '#ffb000', emissiveIntensity: 0.38 })),
     'hat_star',
   );
-  const sa = THREE.MathUtils.degToRad(132);
-  const starPos = new THREE.Vector3(-Math.sin(sa) * 0.785, yb + 0.235, Math.cos(sa) * 0.785);
+  // 140° from the front toward Benny's right: image-right of centre in the rear refs (04/05/07/10)
+  const sa = THREE.MathUtils.degToRad(140);
+  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR + 0.01), yb + 0.235, Math.cos(sa) * (D.brimR + 0.01));
   star.position.copy(starPos);
   star.lookAt(starPos.clone().multiply(new THREE.Vector3(2, 1, 2)).add(new THREE.Vector3(0, 0.25, 0)));
   star.rotateZ(0.12);
   hat.add(star);
   // pom-pom
-  const pom = joint('pom', 0, crownY0 + 0.655 + 0.165, -0.03);
+  const pom = joint('pom', 0, crownY0 + D.crownH + 0.16, -0.03);
   hat.add(pom);
   const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(0.235, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
   pomMesh.userData = furData({ length: 0.115, density: 80, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.15 });

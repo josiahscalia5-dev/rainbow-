@@ -1,8 +1,79 @@
 {
-  "when": "2026-11-15T18:39:40.792Z",
+  "when": "2026-11-15T18:43:02.195Z",
   "clip": "node_modules/.rainbow-test/intro.webm",
-  "withVideo": {},
-  "withoutVideo": {},
+  "withVideo": {
+    "overlayShown": true,
+    "during": {
+      "mode": "intro",
+      "stage": "01",
+      "s": 0,
+      "lat": 0,
+      "coins": 1330,
+      "hearts": 5,
+      "paused": true,
+      "bennyY": -2.05,
+      "bennyVisible": true,
+      "cam": [
+        0.85,
+        -1.05,
+        -6.05
+      ]
+    },
+    "afterFade": {
+      "mode": "intro",
+      "stage": "01",
+      "s": 0,
+      "lat": 0,
+      "coins": 1330,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -2.05,
+      "bennyVisible": true,
+      "cam": [
+        0.85,
+        -1.05,
+        -6.05
+      ]
+    },
+    "ride": {
+      "mode": "intro",
+      "stage": "02",
+      "s": 0.042,
+      "lat": 0,
+      "coins": 1330,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -2.389,
+      "bennyVisible": true,
+      "cam": [
+        0.85,
+        -1.05,
+        -6.05
+      ]
+    },
+    "advanced": true,
+    "pass": true
+  },
+  "withoutVideo": {
+    "overlay": false,
+    "state": {
+      "mode": "intro",
+      "stage": "01",
+      "s": 0,
+      "lat": 0,
+      "coins": 1330,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -3.4,
+      "bennyVisible": false,
+      "cam": [
+        0.85,
+        -1.05,
+        -6.05
+      ]
+    },
+    "pass": true
+  },
   "errors": [],
-  "pass": false
+  "pass": true
 }

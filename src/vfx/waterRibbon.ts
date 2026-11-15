@@ -11,7 +11,7 @@
  */
 import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
-import { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
 
 /** wave amplitude per stage (units); blended across boundaries */
 const AMP: Partial<Record<StageId, number>> = {
@@ -93,6 +93,7 @@ uniform vec3 uFoamLav;
 uniform vec3 uHaze;
 uniform vec3 uLightDir;
 uniform vec3 uBenny;      // s, lateral (units), strength
+uniform float uBennyR;    // Benny's waterline radius (units)
 uniform vec3 uChevron;    // start s, spacing, enabled
 uniform vec2 uOutro;      // amount, chamber start s
 varying vec2 vUV;
@@ -104,23 +105,32 @@ varying vec3 vPosW;
 varying vec3 vNormalW;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
+${FRAG_FX_GLSL}
 
-// one advected layer of the flow pattern
-// returns: x = pink mask, y = white streaks, z = streak noise (shading), w = pink fine streaks
-vec4 flowLayer(float u, float v) {
-  float m = (vnoise(vec2(v * 0.07, 3.1)) - 0.5) * 0.9 + sin(v * 0.19) * 0.16;
-  float core = 0.54 + 0.16 * (vnoise(vec2(v * 0.13, u * 1.3 + 7.0)) - 0.5);
-  float pinkMask = smoothstep(core - 0.07, core + 0.07, abs(u - m * 0.55));
+// Stationary channel shape (refs 05–07): u-centre of the electric-cyan core. It only drifts slowly
+// downstream at a constant rate (no shear between stage speeds); the strand texture below is what
+// is advected at the local stage speed.
+float meander(float s) {
+  float a = s - uTime * 0.9;
+  return 0.25 * sin(a * 0.24) + 0.1 * sin(a * 0.55 + 1.3) + 0.2 * (vnoise(vec2(a * 0.055, 4.7)) - 0.5);
+}
+
+// advected strand texture ("combed" glossy water lines parallel to the flow)
+// x = lateral units relative to the meander centre, v = advected arc length, aa = 0..1 detail fade
+// returns: x = height 0..1 (shading + bump), y = white glint lines, z = mid strands, w = fine strands
+vec4 strands(float x, float v, vec2 aa) {
+  float a = vnoise(vec2(x * 2.4, v * 0.08));
+  float b = vnoise(vec2(x * 7.0 + a * 1.6, v * 0.19 + 5.0));
   #ifdef LOW_Q
-  float sn = vnoise(vec2(u * 4.0 + m * 4.0, v * 0.28));
+  float c = b;
   #else
-  float sn = fbm3(vec2(u * 4.0 + m * 4.0, v * 0.28));
+  float c = vnoise(vec2(x * 17.0 + b * 2.2, v * 0.42 + 3.0));
   #endif
-  // crisp, thin white highlight lines stretched along the flow
-  float ln = vnoise(vec2(u * 15.0 + m * 6.0 + sn * 2.5, v * 0.33));
-  float streak = smoothstep(0.8, 0.93, ln) * 1.5 + smoothstep(0.72, 0.8, sn) * 0.25;
-  float fineP = smoothstep(0.7, 0.76, vnoise(vec2(u * 7.0 - m * 3.0, v * 0.21 + 11.0)));
-  return vec4(pinkMask, streak, sn, fineP);
+  b = mix(0.5, b, aa.x);
+  c = mix(0.5, c, aa.y);
+  float h = a * 0.48 + b * 0.32 + c * 0.2;
+  float line = smoothstep(0.74, 0.88, c) * aa.y + smoothstep(0.8, 0.92, b) * aa.x * 0.55;
+  return vec4(h, line, b, c);
 }
 
 void main() {
@@ -135,66 +145,116 @@ void main() {
     if (n < uOutro.x * 1.15) discard;
   }
 
-  // two-phase flow-map advection (period 4 s); offset scales with the local stage speed
+  // ---- channel layout: cyan core winding inside hot-pink side bands ----
+  float M = meander(s);
+  float q = u - M;
+  float x = q * vHalfW;                       // lateral units in the core's frame
+  float lat = u * vHalfW;                     // lateral units in the ribbon frame
+
+  // detail fade with distance (cells per pixel), keeps far water from shimmering
+  float fwx = fwidth(x);
+  float fws = fwidth(s);
+  vec2 aa = vec2(1.0 - smoothstep(0.08, 0.2, max(fwx * 7.0, fws * 0.19)),
+                 1.0 - smoothstep(0.05, 0.14, max(fwx * 17.0, fws * 0.42)));
+  #ifdef LOW_Q
+  aa.y = 0.0;
+  #endif
+
+  // two-phase flow-map advection of the strands (period 4 s; offset scales with stage speed)
   float ph0 = fract(uTime * 0.25);
   float ph1 = fract(uTime * 0.25 + 0.5);
   float w0 = 1.0 - abs(1.0 - 2.0 * ph0);
-  vec4 A = flowLayer(u, s - vSpeed * ph0 * 4.0);
-  vec4 B = flowLayer(u, s - vSpeed * ph1 * 4.0 + 23.0);
-  vec4 F = mix(B, A, w0);
-  // fine detail layer (single phase, short period) so close-up water keeps crisp streaks
-  float fineV = s - vSpeed * fract(uTime * 0.5) * 2.0;
-  float fine = vnoise(vec2(u * 34.0 + F.z * 4.0, fineV * 1.1));
-  float fineW = vnoise(vec2(u * 34.0 + F.z * 4.0, (fineV + vSpeed) * 1.1));
-  fine = mix(fineW, fine, 1.0 - abs(1.0 - 2.0 * fract(uTime * 0.5)));
-  F.y += smoothstep(0.84, 0.95, fine) * 0.9;
-  F.z = clamp(F.z + (fine - 0.5) * 0.18, 0.0, 1.0);
+  vec4 F = mix(strands(x, s - vSpeed * ph1 * 4.0 + 23.0, aa), strands(x, s - vSpeed * ph0 * 4.0, aa), w0);
 
-  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.62, F.z));
-  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.6, 0.82, F.z) * 0.7);
-  vec3 pinkCol = mix(uPink, uPinkLight, F.z * 0.7);
-  float pinkM = clamp(F.x + F.w * 0.8, 0.0, 1.0);
+  float coreW = 0.56 + 0.08 * (vnoise(vec2(s * 0.1, 2.0)) - 0.5);
+  // interleave pink/cyan strands along the band boundary (follows the flow)
+  float aq = abs(q) + (F.z - 0.5) * 0.09 + (F.w - 0.5) * 0.05;
+  float pinkBand = smoothstep(coreW - 0.035, coreW + 0.035, aq);
+  // woven ribbons parallel to the flow: thin pink inside the cyan, thin cyan inside the pink
+  float weave = vnoise(vec2(s * 0.045, 9.0));
+  float pinkRib = (1.0 - smoothstep(0.012, 0.035, abs(aq - coreW * 0.58 - 0.05 * sin(s * 0.31)))) * smoothstep(0.42, 0.62, weave);
+  float cyanRib = (1.0 - smoothstep(0.01, 0.03, abs(aq - coreW - 0.16 - 0.03 * sin(s * 0.4 + 2.0)))) * smoothstep(0.45, 0.65, 1.0 - weave);
+  float pinkM = clamp(max(pinkBand, pinkRib) - cyanRib * pinkBand, 0.0, 1.0);
+
+  float h = F.x;
+  vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.5, h));
+  cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.52, 0.78, h));
+  vec3 pinkCol = mix(uPink * 0.82, uPink, smoothstep(0.22, 0.48, h));
+  pinkCol = mix(pinkCol, uPinkLight, smoothstep(0.55, 0.82, h));
   vec3 col = mix(cyanCol, pinkCol, pinkM);
 
-  // perturbed normal from the streak noise for glossy highlights
-  float e = 0.02;
-  vec3 N = normalize(vNormalW + 0.35 * vec3(F.z - 0.5, 0.0, F.y * 0.3 - 0.15));
+  // ---- glossy lighting ----
+  vec3 N0 = normalize(vNormalW);
+  if (!gl_FrontFacing) N0 = -N0;
+  #ifdef LOW_Q
+  vec3 N = normalize(N0 + 0.25 * vec3(h - 0.5, 0.0, F.z - 0.5));
+  #else
+  float bumpAmt = 0.07 * (1.0 - smoothstep(0.1, 0.5, fws));
+  vec3 N = bumpNormal(vPosW, N0, h * bumpAmt);
+  #endif
   vec3 V = normalize(cameraPosition - vPosW);
-  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
+  float nv = clamp(dot(N, V), 0.0, 1.0);
+  float fres = pow(1.0 - nv, 4.0);
   vec3 R = reflect(-V, N);
-  vec3 refl = mix(uHaze, vec3(1.0), smoothstep(0.1, 0.9, R.y));
-  col = mix(col, refl, fres * 0.2);
-  vec3 H = normalize(normalize(uLightDir) + V);
-  float spec = pow(clamp(dot(N, H), 0.0, 1.0), 80.0);
-  col += vec3(1.0) * (spec * 1.4 + F.y * 0.9);
+  vec3 reflTint = mix(uCyanBright * 1.25, uPinkLight * 1.2, pinkM);
+  vec3 refl = mix(reflTint, vec3(1.1), smoothstep(0.35, 0.95, R.y));
+  col = mix(col, refl, fres * 0.35);
+  vec3 L = normalize(uLightDir);
+  vec3 H = normalize(L + V);
+  float spec = pow(clamp(dot(N, H), 0.0, 1.0), 120.0);
+  float sheen = pow(clamp(dot(R, L), 0.0, 1.0), 10.0);
+  col += vec3(1.0) * spec * 1.3 + mix(uCyanBright, uPinkLight, pinkM) * sheen * 0.22;
+  col += vec3(0.95, 1.0, 1.0) * F.y * 0.85;
 
-  // twinkling sparkles
-  vec2 g = vec2(u * 9.0, (s - vSpeed * uTime * 0.6) * 1.6);
-  vec2 gi = floor(g);
-  float hs = hash12(gi);
-  vec2 gf = fract(g) - 0.5;
-  float tw = 0.5 + 0.5 * sin(uTime * 7.0 + hs * 40.0);
-  float sparkle = step(0.93, hs) * smoothstep(0.18, 0.0, length(gf)) * tw;
-  col += vec3(1.2) * sparkle;
+  // ---- white star glints (4-point, twinkling, carried by the flow) ----
+  #ifdef LOW_Q
+  vec2 g = vec2(lat * 1.2, (s - vSpeed * uTime * 0.6) * 0.8);
+  float hs = hash12(floor(g));
+  float sparkle = step(0.9, hs) * smoothstep(0.22, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 7.0 + hs * 40.0));
+  col += vec3(1.3) * sparkle;
+  #else
+  float glint = starGlint(vec2(lat * 1.15, (s - vSpeed * uTime * 0.55) * 0.6), 0.16, 18.0, uTime);
+  col += vec3(1.25) * glint * (1.0 - smoothstep(0.25, 0.7, fws));
+  #endif
 
-  // soap-foam fringe along the edges
-  float edgeN = (vnoise(vec2(s * 1.3, u * 2.0)) - 0.5) * 0.16;
-  float edge = smoothstep(0.86, 0.97, abs(u) + edgeN);
-  float c = cells(vec2(u * vHalfW * 4.0, (s - vSpeed * uTime * 0.5) * 3.6));
-  vec3 foamCol = mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, c));
-  col = mix(col, foamCol, edge * smoothstep(0.08, 0.35, c + 0.15));
+  // ---- soap-foam lace where the water meets the foam banks ----
+  float edgeN = (vnoise(vec2(s * 1.3, u * 2.0)) - 0.5) * 0.1;
+  float eu = abs(lat) - vHalfW;               // units from the edge (negative inside)
+  float edge = smoothstep(-0.75, -0.3, eu + edgeN * vHalfW);
+  if (edge > 0.0) {
+    float c = cells(vec2(lat * 3.2, (s - vSpeed * uTime * 0.35) * 3.2));
+    vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
+    col = mix(col, foamCol, edge * smoothstep(0.05, 0.4, c + edge * 0.3));
+  }
   col = mix(col, uFoamLav * 0.92, vSkirt);
-  col = mix(col, foamCol, cutFoam);
+  float cutC = cells(vec2(u * vHalfW * 4.0, s * 3.6));
+  col = mix(col, mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, cutC)), cutFoam);
 
-  // Benny: ripple rings around him + V wake behind
+  // ---- Benny: churned contact foam, lace splash fans to both sides + V wake behind ----
   if (uBenny.z > 0.0) {
-    float du = u * vHalfW - uBenny.y;
+    float du = lat - uBenny.y;
     float dv = s - uBenny.x;
-    float d = length(vec2(du, dv * 0.8));
-    float rings = smoothstep(0.55, 1.0, 0.5 + 0.5 * sin(d * 5.5 - uTime * 9.0)) * exp(-d * 0.7) * smoothstep(0.75, 1.05, d);
-    float back = clamp(-dv, 0.0, 30.0);
-    float wakeV = exp(-abs(abs(du) - back * 0.42 - 0.7) * 3.5) * exp(-back * 0.16) * step(dv, 0.0);
-    col = mix(col, uFoam, clamp((rings * 0.75 + wakeV * 0.85) * uBenny.z, 0.0, 1.0));
+    float rb = uBennyR;
+    float d = length(vec2(du, dv));
+    if (d < rb * 9.0) {
+      float k = uBenny.z;
+      float phi = atan(abs(du), -dv);           // 0 = straight behind (camera side), pi/2 = beside
+      float rr = max(0.0, d - rb * 0.9);
+      // contact ring of churned white water hugging the body
+      float lace = cells(vec2(du * 4.2, (dv + uTime * vSpeed * 0.25) * 4.2));
+      float contact = (1.0 - smoothstep(rb * 0.25, rb * 0.65, rr)) * smoothstep(0.02, 0.3, lace + 0.12);
+      // radiating lace tendrils fanning sideways/backwards (ref 05 splash at the water line)
+      float fan = smoothstep(2.5, 1.6, phi) * smoothstep(0.35, 0.9, phi);
+      float tend = vnoise(vec2(phi * 9.0, rr * 0.9 - uTime * 3.2));
+      tend = smoothstep(0.42, 0.72, tend) * smoothstep(0.08, 0.32, lace);
+      float tendrils = tend * fan * exp(-rr / (rb * 1.5));
+      // ripple rings + long V wake
+      float rings = smoothstep(0.6, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-d * 0.5) * smoothstep(rb, rb * 1.4, d) * 0.45;
+      float back = clamp(-dv, 0.0, 30.0);
+      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 0.9) * 3.0) * exp(-back * 0.14) * step(dv, 0.0) * smoothstep(0.3, 0.7, lace + 0.3);
+      float foamK = clamp((contact + tendrils * 1.1 + rings + wakeV * 0.8) * k, 0.0, 1.0);
+      col = mix(col, uFoam * 1.25, foamK);
+    }
   }
 
   // 04: exactly five glowing chevrons pointing downhill (direction of travel)
@@ -303,6 +363,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     uHaze: { value: PALETTE.haze.clone() },
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
     uBenny: { value: new THREE.Vector3(0, 0, 0) },
+    uBennyR: { value: 0.7 },
     uChevron: { value: new THREE.Vector3(st04.s0 + 8.5, 3.6, 1) },
     uOutro: { value: new THREE.Vector2(0, st08.s0) },
     uHide: { value: new THREE.Vector4(st03.s0, st04.s0, 0, 0) },

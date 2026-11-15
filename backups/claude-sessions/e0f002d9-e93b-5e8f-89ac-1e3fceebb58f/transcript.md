@@ -3097,3 +3097,245 @@ Type-checking, then an automated Playwright test of both paths: with a test vide
 
 > 🔧 **Bash** `{"command": "timeout 600 node scripts/cinematic-test.mjs 2>&1 | tail -5; python3 -I -c \"\nimport json;d=json.load(open('qa/cinematic_test.json'))\nw=d['withVideo'];print('during:',{k:w['during'][k] for k in ('mode','stage','paused')}, '| afterFade:',{k:w['afterFade'][k] for k in ('mode','stage','paused')}, '| later:',{k:w['ride'][k] for k in ('mode','stage')})\nprint('without:',d['withoutVideo'].get('overlay'), {k:d['withoutVideo']['state'][k] for k in ('mode','stage','paused')})\"", "description": "Run the cinematic hand-off test in headless Chromium", "timeout": 660000}`
 
+### 🧑 User — 2026-11-15T18:41:10.662Z
+
+> ↩︎ result: Exit code 1
+>   log: [],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.4
+> Traceback (most recent call last):
+>   File "<string>", line 3, in <module>
+>     w=d['withVideo'];print('during:',{k:w['during'][k] for k in ('mode','stage','paused')}, '| afterFade:',{k:w['afterFade'][k] for k in ('mode','stage','paused')}, '| later:',{k:w['ride'][k] for k in ('mode','stage')})
+>                                         ~^^^^^^^^^^
+> KeyError: 'during'
+
+### 🤖 Claude — 2026-11-15T18:41:12.825Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/cinematic-test.mjs 2>&1 | grep -E \"TimeoutError|waiting|Error|at .*cinematic-test\" | head -8; cat qa/cinematic_test.json | head -20", "description": "Find which wait timed out in the test", "timeout": 660000}`
+
+### 🧑 User — 2026-11-15T18:42:44.334Z
+
+> ↩︎ result: at /home/user/rainbow-/scripts/cinematic-test.mjs:32:14 {
+>   name: 'TimeoutError'
+> {
+>   "when": "2026-11-15T18:41:13.411Z",
+>   "clip": "node_modules/.rainbow-test/intro.webm",
+>   "withVideo": {},
+>   "withoutVideo": {},
+>   "errors": [],
+>   "pass": false
+> }
+
+### 🤖 Claude — 2026-11-15T18:42:58.786Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/cinematic-test.mjs", "old_string": "  await page.waitForFunction(() => window.__rainbow.state().mode === 'ride', null, { timeout: 60000 });\n  const ride = await page.evaluate(() => window.__rainbow.state());\n  out.withVideo = { overlayShown, during, afterFade, ride, pass: overlayShown && during.paused === true && afterFade.paused === false && ride.mode === 'ride' };", "new_string": "  // the live 3D intro must continue after the fade: 01 -> 02 tumble -> 03 ride (slow under software WebGL)\n  const advanced = await page.waitForF …[+395 chars]`
+
+### 🧑 User — 2026-11-15T18:42:58.817Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/cinematic-test.mjs has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:43:01.589Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/cinematic-test.mjs 2>&1 | tail -2; python3 -I -c \"\nimport json;d=json.load(open('qa/cinematic_test.json'))\nw=d['withVideo'];f=lambda s,ks:{k:s.get(k) for k in ks}\nprint('during:',f(w['during'],('mode','stage','paused')),'| afterFade:',f(w['afterFade'],('mode','stage','paused')),'| later:',f(w['ride'],('mode','stage','s')),'advanced',w['advanced'])\nprint('without video: overlay',d['withoutVideo'].get('overlay'), f(d['withoutVideo']['state'],('mode','stage','paused')), 'PASS' if d['pass'] else 'FAIL')\"", "description": "Re-run cinematic test with toler …[+42 chars]`
+
+### 🧑 User — 2026-11-15T18:43:44.229Z
+
+> ↩︎ result: {"pass":true,"withVideo":true,"withoutVideo":true,"errors":[]}
+> during: {'mode': 'intro', 'stage': '01', 'paused': True} | afterFade: {'mode': 'intro', 'stage': '01', 'paused': False} | later: {'mode': 'intro', 'stage': '02', 's': 0.042} advanced True
+> without video: overlay False {'mode': 'intro', 'stage': '01', 'paused': False} PASS
+
+### 🤖 Claude — 2026-11-15T18:43:50.015Z
+
+> 🔧 **Bash** `{"command": "node -e \"const fs=require('fs');const p=JSON.parse(fs.readFileSync('package.json'));p.scripts['test:cinematic']='node scripts/cinematic-test.mjs';fs.writeFileSync('package.json',JSON.stringify(p,null,2)+'\\n')\" && grep -n cinematic package.json && git diff --stat package.json", "description": "Add test:cinematic npm script"}`
+
+### 🧑 User — 2026-11-15T18:43:50.142Z
+
+> ↩︎ result: 19:    "test:cinematic": "node scripts/cinematic-test.mjs"
+>  package.json | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+
+### 🤖 Claude — 2026-11-15T18:43:59.226Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/FLOW_VIDEO.md", "content": "# Google Flow opening / ending videos\n\nThe game can play the user's Google Flow videos as silent cinematics and hand over to the real-time 3D\ngame without a cut. Gameplay (03–10) is always real-time 3D; the videos only cover the cinematics.\n\n## Where to put the files\n\n| File | Plays | Hand-off |\n|---|---|---|\n| `public/video/intro.mp4` (or `.webm`) | at launch and on Replay, instead of the real-time 01 | the live 3D intro is held at the \"girl walks away\" moment (`T.cp01`) under the video, then revealed by a 0.7 s cr …[+1788 chars]`
+
+### 🧑 User — 2026-11-15T18:43:59.266Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/FLOW_VIDEO.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:08.293Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-15T18:44:08.303Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-15T18:44:13.682Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/worldlabs/05 && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFilter\nref = Image.open('references/05_flow_into_the_current.png').convert('RGB')\nW, H = ref.size\nm = Image.new('L', (W, H), 255)          # 255 = keep (environment), 0 = exclude\nd = ImageDraw.Draw(m)\nd.rectangle([0, 0, W, 196], fill=0)                      # HUD bar + stage label\nd.ellipse([215, 765, 650, 1235], fill=0)                 # Benny body + beanie + ear tufts\nd.ellipse([150, 1020, 715, 1290], fill=0)                # splash/wake at Benny's water line\nd.polygon([(395, 790), ( …[+566 chars]`
+
+### 🧑 User — 2026-11-15T18:44:13.789Z
+
+> ↩︎ result: Exit code 136
+> /bin/bash: line 35:  5884 Floating point exceptionpython3 -I - <<'EOF'
+> from PIL import Image, ImageDraw, ImageFilter
+> ref = Image.open('references/05_flow_into_the_current.png').convert('RGB')
+> W, H = ref.size
+> m = Image.new('L', (W, H), 255)          # 255 = keep (environment), 0 = exclude
+> d = ImageDraw.Draw(m)
+> d.rectangle([0, 0, W, 196], fill=0)                      # HUD bar + stage label
+> d.ellipse([215, 765, 650, 1235], fill=0)                 # Benny body + beanie + ear tufts
+> d.ellipse([150, 1020, 715, 1290], fill=0)                # splash/wake at Benny's water line
+> d.polygon([(395, 790), (430, 470), (560, 470), (600, 790)], fill=0)  # coin trail
+> m = m.filter(ImageFilter.MaxFilter(1))
+> m.save('qa/worldlabs/05/05_env_mask.png')
+> grey = Image.new('RGB', (W, H), (40, 40, 40))
+> prev = Image.composite(ref, grey, m)
+> prev.save('qa/worldlabs/05/05_env_only_preview.png')
+> prev.resize((W//2, H//2)).save('/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/mask_check.png')
+> print(W, H, 'kept fraction', round(sum(1 for p in m.getdata() if p) / (W*H), 3))
+> EOF
+
+### 🤖 Claude — 2026-11-15T18:44:14.861Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/mask_check.png"}`
+
+### 🧑 User — 2026-11-15T18:44:14.880Z
+
+> ↩︎ result: File does not exist. Note: your current working directory is /home/user/rainbow-.
+
+### 🤖 Claude — 2026-11-15T18:44:16.829Z
+
+Python crashed: Pillow's MaxFilter doesn't accept size 1. Dropping that unneeded filter step:
+
+### 🤖 Claude — 2026-11-15T18:44:21.243Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nref = Image.open('references/05_flow_into_the_current.png').convert('RGB')\nW, H = ref.size\nm = Image.new('L', (W, H), 255)          # 255 = keep (environment), 0 = exclude\nd = ImageDraw.Draw(m)\nd.rectangle([0, 0, W, 196], fill=0)                      # HUD bar + stage label\nd.ellipse([215, 765, 650, 1235], fill=0)                 # Benny body + beanie + ear tufts\nd.ellipse([150, 1020, 715, 1290], fill=0)                # splash/wake at Benny's water line\nd.polygon([(395, 790), (430, 470), (560, 470), (600, 790)], fill= …[+497 chars]`
+
+### 🧑 User — 2026-11-15T18:44:21.791Z
+
+> ↩︎ result: <stdin>:14: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+> 864 1536 kept fraction 0.67
+
+### 🤖 Claude — 2026-11-15T18:44:22.240Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/mask_check.png"}`
+
+### 🧑 User — 2026-11-15T18:44:22.259Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:44:30.846Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nref = Image.open('references/05_flow_into_the_current.png').convert('RGB')\nW, H = ref.size\nm = Image.new('L', (W, H), 255)\nd = ImageDraw.Draw(m)\nd.rectangle([0, 0, W, 196], fill=0)\nd.ellipse([215, 765, 650, 1235], fill=0)\nd.ellipse([150, 1020, 715, 1290], fill=0)\nd.polygon([(380, 790), (392, 470), (565, 470), (605, 790)], fill=0)\nm.save('qa/worldlabs/05/05_env_mask.png')\nImage.composite(ref, Image.new('RGB', (W, H), (40, 40, 40)), m).save('qa/worldlabs/05/05_env_only_preview.png')\nEOF\nsha256sum references/05_flow_i …[+161 chars]`
+
+### 🧑 User — 2026-11-15T18:44:31.260Z
+
+> ↩︎ result: d3f339d49199598e
+> 12
+
+### 🤖 Claude — 2026-11-15T18:44:46.650Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/PILOT_PLAN.md", "content": "# Screen 05 — World Labs Atlas pilot plan (NOT RUN — awaiting approval)\n\nStatus 2026-11-15: the claude.ai **World Labs Atlas** connector is attached to the Rainbow session and its\n10 tools load, but `list_projects` answers \"this sign-in has no active Atlas account\". Nothing has been\nsubmitted and **no credits have been spent**. Every step below that uses credits needs the user's\nexplicit approval with the cost shown first.\n\n## Inputs (prepared, originals untouched)\n\n| File | What |\n|---|---|\n| `referenc …[+3507 chars]`
+
+### 🧑 User — 2026-11-15T18:44:46.675Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/worldlabs/05/PILOT_PLAN.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:56.446Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/RECOVERY.md", "old_string": "| Backup branch | `ccr-6f431adf-7h0m8y` (the first branch ever pushed → it is also the repo's default branch) |", "new_string": "| Working branch (continue here) | `claude/rainbow-3d-recovery-m4v347` — recovery branch started 2026-11-15 from commit `81e639e`; the 5-minute autosave pushes here |\n| Original branch (frozen) | `ccr-6f431adf-7h0m8y` at `81e639e` — everything from the first Claude account; still the repo's default branch. Autosave refuses to push to it (`protected_branches` in `backups/aut …[+245 chars]`
+
+### 🧑 User — 2026-11-15T18:44:56.473Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/RECOVERY.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:44:58.658Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/RECOVERY.md", "old_string": "git checkout ccr-6f431adf-7h0m8y\ngit lfs pull            # downloads LFS objects (GLB models, kit ZIP, builds)", "new_string": "git checkout claude/rainbow-3d-recovery-m4v347   # NOT the frozen original ccr-6f431adf-7h0m8y\ngit lfs pull            # downloads LFS objects (GLB models, kit ZIP, builds)\nbash scripts/setup-android-sdk.sh && bash scripts/setup-blender.sh   # if the machine lacks them"}`
+
+### 🧑 User — 2026-11-15T18:44:58.713Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/RECOVERY.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:45:02.057Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/RECOVERY.md", "old_string": "* Nothing is ever force-pushed; if the remote diverges the script merges non-destructively or stops and\n  logs the conflict, keeping the local commit.", "new_string": "* Nothing is ever force-pushed; if the remote diverges the script merges non-destructively or stops and\n  logs the conflict, keeping the local commit.\n* When starting a new cloud session, select the branch `claude/rainbow-3d-recovery-m4v347` (GitHub's\n  default branch is still the frozen original). If the session gets a different br …[+358 chars]`
+
+### 🧑 User — 2026-11-15T18:45:02.093Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/RECOVERY.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:45:04.238Z
+
+Now rewriting `backups/CURRENT_STATE.md`, which still describes the project as unstarted, using only facts verified this session:
+
+### 🤖 Claude — 2026-11-15T18:45:04.689Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-15T18:45:04.698Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-15T18:45:26.390Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/CURRENT_STATE.md", "content": "# Rainbow — CURRENT STATE (handoff)\n\n_Last updated by Claude: 2026-11-15 ~18:50 UTC, recovery session `e0f002d9…` (second Claude account)._\n\n## Where the project lives\n| | |\n|---|---|\n| Repository | https://github.com/josiahscalia5-dev/rainbow- (private) |\n| **Working branch** | `claude/rainbow-3d-recovery-m4v347` — started from `81e639e`; all new work and the 5-minute autosave go here |\n| Original branch | `ccr-6f431adf-7h0m8y` @ `81e639e` — frozen copy of everything from the first account; never pushed to (aut …[+5233 chars]`
+
+### 🧑 User — 2026-11-15T18:45:26.433Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CURRENT_STATE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:45:29.213Z
+
+`CURRENT_STATE.md` is updated. I'll fill in `AGENTS_STATUS.md` once the specialists report back. Meanwhile, a quick check that autosave is picking up everyone's changes:
+
+### 🤖 Claude — 2026-11-15T18:45:30.258Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -5; git ls-remote origin | grep -v HEAD$; tail -3 backups/BACKUP_LOG.md | cut -c1-110; git status --porcelain | head -20", "description": "Check recent autosaves and working tree"}`
+
+### 🧑 User — 2026-11-15T18:45:31.091Z
+
+> ↩︎ result: d8e2683 autosave: Rainbow 2026-11-15 18:40 UTC
+> d2c8f7b autosave: Rainbow 2026-11-15 18:35 UTC
+> 50ed4a7 autosave: Rainbow 2026-11-15 18:34 UTC
+> 2c1e4c3 Record latest autosave status rows
+> 6501f62 autosave: Rainbow 2026-11-15 18:33 UTC
+> 81e639e16994713d5f70d0314e796d1c298eeacf	refs/heads/ccr-6f431adf-7h0m8y
+> d8e2683e1a78d871f3a961fc1e197c58a1a2b11f	refs/heads/claude/rainbow-3d-recovery-m4v347
+> | 2026-11-15T18:34:27+00:00 | hook:Stop | committed+pushed | `50ed4a724486` | `claude/rainbow-3d-recovery-m4v3
+> | 2026-11-15T18:35:53+00:00 | daemon | committed+pushed | `d2c8f7b831f6` | `claude/rainbow-3d-recovery-m4v347`
+> | 2026-11-15T18:40:59+00:00 | daemon | committed+pushed | `d8e2683e1a78` | `claude/rainbow-3d-recovery-m4v347`
+>  M backups/BACKUP_LOG.md
+>  M backups/BACKUP_STATUS.json
+>  M backups/CURRENT_STATE.md
+>  M backups/RECOVERY.md
+>  M package.json
+>  M qa/cinematic_test.json
+>  M scripts/cinematic-test.mjs
+>  M src/characters/benny/benny-lab.ts
+>  M src/characters/benny/build.ts
+>  M src/characters/benny/runtime.ts
+>  M src/vfx/glsl.ts
+>  M src/vfx/waterRibbon.ts
+> ?? docs/FLOW_VIDEO.md
+> ?? qa/worldlabs/
+
+### 🤖 Claude — 2026-11-15T18:45:34.386Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🧑 User — 2026-11-15T18:45:34.868Z
+
+> ↩︎ result: this sign-in has no active Atlas account. Ask the user to open https://atlas.worldlabs.ai and finish signing up, then try again
+
+### 🤖 Claude — 2026-11-15T18:45:39.838Z
+
+Still "no active Atlas account" on World Labs' side. I'll push a backup now, then pause until the specialists report back. Their completion notices will resume me automatically.
+
+### 🤖 Claude — 2026-11-15T18:45:43.047Z
+
+> 🔧 **Bash** `{"command": ". ~/.rainbow-autosave.env 2>/dev/null; timeout 600 python3 scripts/rainbow-autosave.py --reason manual --message \"Flow video hand-off, World Labs 05 pilot package, recovery docs\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"'; git add backups/BACKUP_LOG.md backups/BACKUP_STATUS.json && git commit -q -m \"Record latest autosave status rows\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZtEEqDnwZ7hmojKWUb\" && git push -q origin claude/rainbow-3d-recovery-m4v347 2>&1 | tail -1; git ls-remote origin | gre …[+127 chars]`
+

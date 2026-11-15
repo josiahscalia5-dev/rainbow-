@@ -20,11 +20,27 @@ function loadScene(): Promise<THREE.Group> {
   return cached;
 }
 
+/** fur tier: explicit option, else `?quality=low|high`, else low on Android/iOS (same rule as the water) */
+function defaultFurQuality(): 'high' | 'low' {
+  if (typeof location === 'undefined') return 'high';
+  const qp = new URLSearchParams(location.search).get('quality');
+  const mobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad/i.test(navigator.userAgent);
+  return qp === 'low' || (qp !== 'high' && mobile) ? 'low' : 'high';
+}
+
 export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {
   const src = await loadScene();
   const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
-  return createBennyRuntime(src.clone(true), clips, opts);
+  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality() });
 }
+
+/**
+ * Ride height. The game places the root at water surface + radius·0.55 (≈ 0.44), which buried the lower
+ * third of the plush ball in the opaque stream. While riding (swim ≥ 0.5, not tumbling) the model is
+ * lifted inside the root so he sits ON the water like refs 04–10: only the bottom ≈ 0.1 of the fur and
+ * the kicking feet are under the surface. Cinematics (01 peek, 02 tumble, 11 hide) keep the root as placed.
+ */
+export const BENNY_RIDE_LIFT = 0.3;
 
 /** Build the runtime around an already-loaded (or freshly built) Benny scene graph. */
 export function createBennyRuntime(
@@ -92,6 +108,7 @@ export function createBennyRuntime(
   let lastY = 0, lastVy = 0;
   let blinkT = 1.7;
   let lean = 0;
+  let lift = 0;
   const tmp = new THREE.Vector3();
   const qLean = new THREE.Quaternion();
   const qPom = new THREE.Quaternion();
@@ -109,6 +126,11 @@ export function createBennyRuntime(
     setW(aIdle, tumble || peek ? 0 : 1 - swim);
     if (aSwim) aSwim.timeScale = 0.8 + Math.min(1.2, st.speed / 14);
     mixer.update(dt);
+
+    // ride height (see BENNY_RIDE_LIFT): eased so mode switches never pop
+    const liftTarget = tumble || peek ? 0 : BENNY_RIDE_LIFT * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+    lift += (liftTarget - lift) * (1 - Math.exp(-dt * 7));
+    scene.position.y = lift;
 
     // steering lean (roll) + slight yaw into the turn
     lean += (THREE.MathUtils.clamp(st.steer, -1, 1) * 0.28 - lean) * Math.min(1, dt * 6);

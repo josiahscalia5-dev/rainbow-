@@ -389,12 +389,12 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1967,
-   "sha256": "89d482993e6c6bd3e6955ac357a3c0a951cea5d967dbc9ccc87c082238ad2686"
+   "sha256": "0cb51585206181fb2360f00c0b8e6acd980ac5305e8da92da7426e856b8a4cb3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 3231,
-   "sha256": "37997621df0490cbb9458f5b5f03b7ef0b2e29fbf9b9e5667537b39fbf9fd61f"
+   "bytes": 5736,
+   "sha256": "451f746ecf5b37c92897874806aed26b5811f343ddaec3be4c8c92ea3105ad2e"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -403,8 +403,8 @@
   },
   {
    "path": "backups/RECOVERY.md",
-   "bytes": 4225,
-   "sha256": "d643c9beb635e6eb4dc20f9bf386d84ae5dba044a83f6953c4ba7aa6b461331e"
+   "bytes": 5431,
+   "sha256": "0cfc33b4153da3fe65420f1b59d50b1f882ee5f8d5807541971076c2e1ea90cb"
   },
   {
    "path": "backups/autosave.config.json",
@@ -440,6 +440,11 @@
    "path": "character_references/official_cartoon_girl_original.jpg",
    "bytes": 231475,
    "sha256": "92bbaa61a66c7a4dc16d70730be76a34b9575d3f4484e72d95129ad574460daf"
+  },
+  {
+   "path": "docs/FLOW_VIDEO.md",
+   "bytes": 2296,
+   "sha256": "0db4077d604f276c9a270a813e846a7af73c0a61ceb0acf3f28f6ae2b03fe8d2"
   },
   {
    "path": "docs/characters/benny.md",
@@ -608,8 +613,8 @@
   },
   {
    "path": "package.json",
-   "bytes": 1146,
-   "sha256": "167fa7ce473d0e66718115032e5b2dd8bacec9ee425c0acc7cf524106f0bcbab"
+   "bytes": 1203,
+   "sha256": "e8eea97e94cec829c6fe8f74dec0a2fd51e492ee1ff1ad891c21264039ede0df"
   },
   {
    "path": "qa/01_diff.png",
@@ -793,8 +798,8 @@
   },
   {
    "path": "qa/cinematic_test.json",
-   "bytes": 165,
-   "sha256": "dbac2171a9c8955bc2567135a6e2779b4a2ed66bb5c891a0255247c525700e02"
+   "bytes": 1386,
+   "sha256": "77ee8f06daf0c98baa16dbef048e134b2777d2814186648d22784e5c55cbc9dd"
   },
   {
    "path": "qa/compare_summary.md",
@@ -850,6 +855,21 @@
    "path": "qa/report_metrics.json",
    "bytes": 1112,
    "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
+  },
+  {
+   "path": "qa/worldlabs/05/05_env_mask.png",
+   "bytes": 6175,
+   "sha256": "11b77364bdeac15614ee648901b4e4b3b2a9cf2bdf8700024cc681dbf56be4a9"
+  },
+  {
+   "path": "qa/worldlabs/05/05_env_only_preview.png",
+   "bytes": 1586473,
+   "sha256": "5418c7667d802bae65efa42055663b86f36cb6e40ab7e0f73fb900905e1968dc"
+  },
+  {
+   "path": "qa/worldlabs/05/PILOT_PLAN.md",
+   "bytes": 4002,
+   "sha256": "ff845ba029b564f7ac5f8a97e30ea85c07f9ae80355b5df05cb02670dec0bdc4"
   },
   {
    "path": "references/01_inside_washer_girl_and_towel.png",
@@ -1038,8 +1058,8 @@
   },
   {
    "path": "scripts/cinematic-test.mjs",
-   "bytes": 3410,
-   "sha256": "b1cb9fae217be10292806b0ad4de4b1bae9bacc9b78fcdb0712382213c12f4da"
+   "bytes": 3615,
+   "sha256": "614346d3653429a2770fb6ede541667ec77efb795af1b859a604991fc5ba6d7b"
   },
   {
    "path": "scripts/cloud-env-setup.sh",
@@ -1113,13 +1133,13 @@
   },
   {
    "path": "src/characters/benny/benny-lab.ts",
-   "bytes": 4482,
-   "sha256": "80f7841b81f835419a2cc8b16b7e2942c62d576a39e6d613e34f1b26a78bda47"
+   "bytes": 6292,
+   "sha256": "e31ef47d7b71a00f7e975ec34e5232a014b4791e4916fb414922521042ad6dcb"
   },
   {
    "path": "src/characters/benny/build.ts",
-   "bytes": 16144,
-   "sha256": "3f55fa0225c3189c48a297c7eaaffd466bb1086ab14d7c013a706bc914aa2867"
+   "bytes": 19090,
+   "sha256": "1e13c5fac8d9764bca393df0886039041168e443cbd13e064ca936d6f8ed5d7d"
   },
   {
    "path": "src/characters/benny/fur.ts",
@@ -1128,8 +1148,8 @@
   },
   {
    "path": "src/characters/benny/runtime.ts",
-   "bytes": 5607,
-   "sha256": "bb9cfde312ec9dea181689bbac1f7182b0bb17822a9c871445c97ccf597535bd"
+   "bytes": 6868,
+   "sha256": "9d8782d397e9af0f44e1c861fd4f25bb6d229341c89904e12d3b36ab6e2286cf"
   },
   {
    "path": "src/characters/benny/textures.ts",
@@ -1238,8 +1258,8 @@
   },
   {
    "path": "src/vfx/glsl.ts",
-   "bytes": 2392,
-   "sha256": "d15eda11b112ea0fb16294e7ce3ef3615150629fb3993216bcbc2a303a25a4f1"
+   "bytes": 4069,
+   "sha256": "4242dc0a89b4627ca27046c5242172db533a47a9d1a6fcf052f78771c11a7e77"
   },
   {
    "path": "src/vfx/index.ts",
@@ -1252,14 +1272,19 @@
    "sha256": "f364cdf4a4d7be7ddbaa3b3c2c6c5b8f4f7d4fa853c58fc92f49c90c66adf75d"
   },
   {
+   "path": "src/vfx/riderSplash.ts",
+   "bytes": 5700,
+   "sha256": "6beb46f491c01bae6b384c04ca8006ee10fceb15777b2832ff49353d830ee0d1"
+  },
+  {
    "path": "src/vfx/spray.ts",
    "bytes": 3454,
    "sha256": "8f5c1f69b35837260e3bb3867284d9dbd350b3c9f5202c630673e8c15ef0cbaa"
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 13225,
-   "sha256": "1e7e6ac778593de81f26fb55df4d02d4f5fe3adf28477808d66e7bf86011e5a0"
+   "bytes": 16387,
+   "sha256": "24f4217ca2b4a87cec06f8bfdcc154aba36cf5719c863ae255150b53208f427a"
   },
   {
    "path": "src/vfx/whirlpool.ts",

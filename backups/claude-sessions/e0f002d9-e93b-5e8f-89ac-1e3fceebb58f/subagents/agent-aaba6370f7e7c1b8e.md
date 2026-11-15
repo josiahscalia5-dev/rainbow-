@@ -585,3 +585,100 @@ REPORT (concise): changes (file:line), perf stats before/after, image paths, wha
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T18:41:05.842Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/axcap.mjs", "content": "// scratch: render the tube from a reference-like ON-AXIS camera (independent of the ride camera work).\n// node axcap.mjs OUTDIR \"query\" s1 s2 ...  (cwd = repo). Writes OUTDIR/ax_<s>.png\nimport { mkdirSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst [outDir, q, ...ss] = process.argv.slice(2);\nmkdirSync(outDir, { recursive: true });\nconst { chromium } = loadPlaywright();\nconst vite  …[+2440 chars]`
+
+### 🧑 User — 2026-11-15T18:41:05.877Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/axcap.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:41:08.581Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod; node $S/axcap.mjs $S/ax0 \"hide=coins\" 6 20 2>&1 | tail -4", "description": "Capture on-axis camera views of tube", "timeout": 600000}`
+
+### 🧑 User — 2026-11-15T18:41:34.139Z
+
+> ↩︎ result: 6 {"r":7.599999999999996,"depth":1.5280177176318064,"center":[2.05,-35.19,-63.05]} calls 70 tris 609735
+> 20 {"r":7.599999999999996,"depth":1.7707259727453322,"center":[3.87,-36.09,-76.6]} calls 70 tris 609735
+
+### 🤖 Claude — 2026-11-15T18:41:36.211Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/ax0/ax_05_6.png"}`
+
+### 🧑 User — 2026-11-15T18:41:36.267Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:42:01.989Z
+
+> 🔧 **Bash** `{"command": "ls references/; python3 -c \"\nfrom PIL import Image\nfor n in ['06','07','08']:\n  import glob\n  f=glob.glob('references/%s_*.png'%n)[0]\n  im=Image.open(f).convert('RGB'); im.resize((432,768)).save('/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/ref%s_small.png'%n)\n  print(f, im.size)\n\"", "description": "List refs and make small copies of 06-08"}`
+
+### 🧑 User — 2026-11-15T18:42:02.464Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> references/06_crest_the_rinse_arch.png (864, 1536)
+> references/07_dive_the_washer_tube.png (864, 1536)
+> references/08_final_spin_chamber.png (864, 1536)
+
+### 🤖 Claude — 2026-11-15T18:42:05.675Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod && python3 -c \"\nfrom PIL import Image\na=Image.open('ref06_small.png'); b=Image.open('ref07_small.png'); c=Image.open('ref08_small.png')\nout=Image.new('RGB',(432*3,768)); out.paste(a,(0,0)); out.paste(b,(432,0)); out.paste(c,(864,0)); out.save('ref060708.png')\"", "description": "Combine refs 06-08 side by side"}`
+
+### 🧑 User — 2026-11-15T18:42:06.118Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T18:42:08.178Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/ref060708.png"}`
+
+### 🧑 User — 2026-11-15T18:42:08.232Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:42:21.807Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod && python3 -c \"\nfrom PIL import Image\nim=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\na=im.crop((50,300,230,430)).resize((540,390))\nb=im.crop((700,390,864,540)).resize((492,450))\nc=im.crop((230,400,340,480)).resize((440,320))\nout=Image.new('RGB',(540+492+440,450)); out.paste(a,(0,0)); out.paste(b,(540,0)); out.paste(c,(1032,0)); out.save('lids.png')\"", "description": "Zoom on reference lids"}`
+
+### 🧑 User — 2026-11-15T18:42:22.144Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T18:42:24.217Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/lids.png"}`
+
+### 🧑 User — 2026-11-15T18:42:24.260Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:45:10.953Z
+
+> 🔧 **Bash** `{"command": "grep -n \"flipEnvMap\\|isCubeTextureComplete\\|fromCubemap\" node_modules/three/src/renderers/webgl/WebGLCubeUVMaps.js node_modules/three/src/renderers/webgl/WebGLPrograms.js | head; grep -n \"_setSize\\|fromCubemap( cubemap\" node_modules/three/src/extras/PMREMGenerator.js | head; grep -rn \"perforatedMetal\\|from './materials'\\|from '../world/materials'\" src --include=*.ts | grep -v \"^src/world/materials.ts\" | head", "description": "Check three PMREM cube handling and material users"}`
+
+### 🧑 User — 2026-11-15T18:45:11.041Z
+
+> ↩︎ result: node_modules/three/src/renderers/webgl/WebGLCubeUVMaps.js:31:					renderTarget = isEquirectMap ? pmremGenerator.fromEquirectangular( texture, renderTarget ) : pmremGenerator.fromCubemap( texture, renderTarget );
+> node_modules/three/src/renderers/webgl/WebGLCubeUVMaps.js:48:						if ( ( isEquirectMap && image && image.height > 0 ) || ( isCubeMap && image && isCubeTextureComplete( image ) ) ) {
+> node_modules/three/src/renderers/webgl/WebGLCubeUVMaps.js:52:							renderTarget = isEquirectMap ? pmremGenerator.fromEquirectangular( texture ) : pmremGenerator.fromCubemap( texture );
+> node_modules/three/src/renderers/webgl/WebGLCubeUVMaps.js:81:	function isCubeTextureComplete( image ) {
+> 115:		this._setSize( 256 );
+> 153:	fromCubemap( cubemap, renderTarget = null ) {
+> 205:	_setSize( cubeSize ) {
+> 240:			this._setSize( texture.image.length === 0 ? 16 : ( texture.image[ 0 ].width || texture.image[ 0 ].image.width ) );
+> 244:			this._setSize( texture.image.width / 4 );
+> src/world/laundryRoom.ts:8:import { canvasTexture, painted } from './materials';
+> src/world/towel.ts:9:import { canvasTexture } from './materials';
+> src/world/environment.ts:9:import { perforatedMetal, gold, goldRibbed, chrome, glass, pain …[+1395 chars]
+

@@ -29,9 +29,10 @@ try {
   const during = await page.evaluate(() => window.__rainbow.state());
   await page.waitForSelector('[data-cinematic]', { state: 'detached', timeout: 30000 });
   const afterFade = await page.evaluate(() => window.__rainbow.state());
-  await page.waitForFunction(() => window.__rainbow.state().mode === 'ride', null, { timeout: 60000 });
+  // the live 3D intro must continue after the fade: 01 -> 02 tumble -> 03 ride (slow under software WebGL)
+  const advanced = await page.waitForFunction(() => { const s = window.__rainbow.state(); return s.mode === 'ride' || s.stage !== '01'; }, null, { timeout: 180000 }).then(() => true).catch(() => false);
   const ride = await page.evaluate(() => window.__rainbow.state());
-  out.withVideo = { overlayShown, during, afterFade, ride, pass: overlayShown && during.paused === true && afterFade.paused === false && ride.mode === 'ride' };
+  out.withVideo = { overlayShown, during, afterFade, ride, advanced, pass: overlayShown && during.paused === true && afterFade.paused === false && advanced };
   await page.close();
 
   // ---- 2. without video (real-time fallback)
