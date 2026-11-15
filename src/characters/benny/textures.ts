@@ -59,8 +59,8 @@ export const BENNY_COLORS = {
   purple: '#6b2fe0',
   purpleDark: '#4a1aa8',
   purpleLight: '#9a63ff',
-  white: '#f6f0fb',
-  whiteShade: '#d9cbe8',
+  white: '#fffcff',
+  whiteShade: '#e2d9ec',
   brim: '#6327d6',
   brimDark: '#3f1597',
   pinkRoot: '#ec58a8',
@@ -269,8 +269,8 @@ export function mouthTexture(kind: 'happy' | 'dizzy' | 'peek'): THREE.CanvasText
   if (kind === 'dizzy') {
     ctx.ellipse(m, m, 62, 74, 0, 0, Math.PI * 2);
   } else {
-    const w = kind === 'peek' ? 70 : 84;
-    const d = kind === 'peek' ? 70 : 92;
+    const w = kind === 'peek' ? 86 : 104;
+    const d = kind === 'peek' ? 84 : 104;
     ctx.moveTo(m - w, m - 30);
     ctx.quadraticCurveTo(m, m - 16, m + w, m - 30);
     ctx.bezierCurveTo(m + w * 0.9, m + d * 0.9, m - w * 0.9, m + d * 0.9, m - w, m - 30);

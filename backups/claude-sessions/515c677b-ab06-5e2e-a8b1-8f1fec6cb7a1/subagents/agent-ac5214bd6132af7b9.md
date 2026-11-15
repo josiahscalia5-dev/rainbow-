@@ -454,3 +454,213 @@ Typecheck is clean for my files. Running the first lab round on a few presets:
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        if a not in s: raise SystemExit(f'MISSING in {p}: {a[:70]}')\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/vfx/waterRibbon.ts',[\n(\"\"\"  #ifdef LOW_Q\n  float sn = vnoise(vec2(u * 5.0 + m * 4.0, v * 0.32));\n  #else\n  float sn = fbm3(vec2(u * 5.0 + m * 4.0, v * 0.32));\n  #endif\n  float lines = pow(vnoise(vec2(u * 19.0 + m * 6.0, v * 0.55)), 7.0);\n  float streak = smoothstep(0.6, 0.78, sn) * 0.55 + lines * 2.2;\"\"\",\"\"\"  #ifdef LOW_Q\n  float sn = vnoise(vec2(u *  …[+4625 chars]`
 
+### 🧑 User — 2026-11-15T17:10:19.161Z
+
+> ↩︎ result: ok
+> docs/vfx/water_03.png {"preset":"03","s":44.88,"stage":"03","calls":12,"triangles":216216,"points":1300,"avgFrameMsSwiftShader":1.2,"instances":2596,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_04.png {"preset":"04","s":75.65,"stage":"04","calls":15,"triangles":218864,"points":1300,"avgFrameMsSwiftShader":1.7,"instances":2596,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_07.png {"preset":"07","s":262.36,"stage":"07","calls":13,"triangles":150368,"points":1300,"avgFrameMsSwiftShader":1.7,"instances":2596,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+
+### 🤖 Claude — 2026-11-15T17:10:22.523Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_04.png"}`
+
+### 🧑 User — 2026-11-15T17:10:22.630Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:10:22.972Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_07.png"}`
+
+### 🧑 User — 2026-11-15T17:10:22.984Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:10:23.324Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_03.png"}`
+
+### 🧑 User — 2026-11-15T17:10:23.352Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:11:02.511Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        if a not in s: raise SystemExit(f'MISSING in {p}: {a[:70]}')\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/vfx/waterRibbon.ts',[\n(\"\"\"      if (abs(y) < 1.4 && abs(x) < 1.6) {\n        float dist = abs(y - (0.55 - abs(x) * 0.95)) * 0.72;\n        float arm = step(abs(x), 1.25);\n        float core = smoothstep(0.2, 0.1, dist) * arm;\n        float halo = smoothstep(0.75, 0.0, dist) * smoothstep(1.6, 0.9, abs(x)) * 0.45;\"\"\",\"\"\"      if (abs(y) < 2.4 && abs(x) < 1.6 …[+2828 chars]`
+
+### 🧑 User — 2026-11-15T17:12:09.622Z
+
+> ↩︎ result: ok
+> docs/vfx/water_01.png {"preset":"01","s":0,"stage":"01","calls":7,"triangles":94680,"points":1300,"avgFrameMsSwiftShader":1.3,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_02.png {"preset":"02","s":12,"stage":"02","calls":8,"triangles":96408,"points":1300,"avgFrameMsSwiftShader":1.2,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_03.png {"preset":"03","s":44.88,"stage":"03","calls":12,"triangles":211096,"points":1300,"avgFrameMsSwiftShader":1,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_04.png {"preset":"04","s":75.65,"stage":"04","calls":15,"triangles":213744,"points":1300,"avgFrameMsSwiftShader":2.2,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_05.png {"preset":"05","s":139.73,"stage":"05","calls":13,"triangles":148448,"points":1300,"avgFrameMsSwiftShader":8.9,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_06.png {"preset":"06","s":198.31,"stage":"06","calls":11,"triangles":117808,"points":1300,"avgFrameMsSwiftShader":1.6,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":6 …[+1225 chars]
+
+### 🤖 Claude — 2026-11-15T17:12:12.734Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_01.png"}`
+
+### 🧑 User — 2026-11-15T17:12:12.753Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:12:13.312Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_02.png"}`
+
+### 🧑 User — 2026-11-15T17:12:13.330Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:12:13.533Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_09.png"}`
+
+### 🧑 User — 2026-11-15T17:12:13.548Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:12:13.886Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_11.png"}`
+
+### 🧑 User — 2026-11-15T17:12:13.911Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:12:33.585Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_07mid.png"}`
+
+### 🧑 User — 2026-11-15T17:12:33.597Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:12:33.988Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_10.png"}`
+
+### 🧑 User — 2026-11-15T17:12:34.002Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:12:34.343Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_06.png"}`
+
+### 🧑 User — 2026-11-15T17:12:34.372Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:13:10.303Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        if a not in s: raise SystemExit(f'MISSING in {p}: {a[:70]}')\n        s=s.replace(a,b)\n    open(p,'w').write(s)\n# ribbon: fine near-detail streaks\nedit('src/vfx/waterRibbon.ts',[\n(\"\"\"  vec4 F = mix(B, A, w0);\n\"\"\",\"\"\"  vec4 F = mix(B, A, w0);\n  // fine detail layer (single phase, short period) so close-up water keeps crisp streaks\n  float fineV = s - vSpeed * fract(uTime * 0.5) * 2.0;\n  float fine = vnoise(vec2(u * 34.0 + F.z * 4.0, fineV * 1.1));\n  float fineW = vnoise(ve …[+3776 chars]`
+
+### 🧑 User — 2026-11-15T17:13:38.812Z
+
+> ↩︎ result: ok
+> docs/vfx/water_01.png {"preset":"01","s":0,"stage":"01","calls":7,"triangles":94680,"points":1300,"avgFrameMsSwiftShader":0.9,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_02.png {"preset":"02","s":12,"stage":"02","calls":8,"triangles":96408,"points":1300,"avgFrameMsSwiftShader":0.9,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_09.png {"preset":"09","s":415.77,"stage":"09","calls":11,"triangles":101648,"points":1300,"avgFrameMsSwiftShader":1.2,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_11.png {"preset":"11","s":438.82,"stage":"11","calls":10,"triangles":81448,"points":1300,"avgFrameMsSwiftShader":1,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_07.png {"preset":"07","s":262.36,"stage":"07","calls":13,"triangles":150368,"points":1300,"avgFrameMsSwiftShader":1.3,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+
+### 🤖 Claude — 2026-11-15T17:13:42.035Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_01.png"}`
+
+### 🧑 User — 2026-11-15T17:13:42.051Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:13:42.631Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_02.png"}`
+
+### 🧑 User — 2026-11-15T17:13:42.649Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:13:42.835Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_07.png"}`
+
+### 🧑 User — 2026-11-15T17:13:42.848Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:13:43.186Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_09.png"}`
+
+### 🧑 User — 2026-11-15T17:13:43.211Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:13:51.369Z
+
+> 🔧 **Bash** `{"command": "sed -n '/const SURF_FRAG/,/^`;/p' src/vfx/drumWater.ts | sed -n '20,60p'", "description": "Inspect drum water fragment shader"}`
+
+### 🧑 User — 2026-11-15T17:13:51.414Z
+
+> ↩︎ result: if (dot(d, d) > uDrumC.z * uDrumC.z) discard;
+>   vec2 p = vPosW.xz;
+>   float n = fbm3(p * 0.55 + vec2(uTime * 0.25, -uTime * 0.15));
+>   // layered bands roughly parallel to the wave crests
+>   float field = sin(p.x * 0.85 + p.y * 0.55 + uTime * 0.7 + n * 3.0);
+>   float pinkM = smoothstep(0.32, 0.48, field);
+>   vec3 cyanCol = mix(uCyanDeep, uCyan, 0.45 + 0.55 * n);
+>   cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.35, 0.9, vH) * 0.55);
+>   vec3 col = mix(cyanCol, mix(uPink, uPinkLight, n), pinkM);
+>   // foam on the band seams and on crests
+>   float seam = 1.0 - smoothstep(0.0, 0.1, abs(field - 0.4) - 0.03 * (vnoise(p * 6.0) - 0.5));
+>   float c = cells(p * 3.2 + vec2(uTime * 0.4, 0.0));
+>   float crest = smoothstep(0.55, 0.95, vH + (n - 0.5) * 0.5);
+>   float foamM = clamp(seam * 0.8 + crest * (0.6 + 0.4 * uAgitation), 0.0, 1.0) * (0.65 + 0.35 * smoothstep(0.15, 0.55, c));
+>   col = mix(col, mix(uFoam, vec3(0.93, 0.88, 1.0), c), foamM);
+>   // streak highlights
+>   float ln = vnoise(vec2((p.x * 0.85 + p.y * 0.55) * 7.0 + n * 3.0, (p.y - p.x * 0.4) * 0.9 - uTime * 0.6));
+>   col += smoothstep(0.8, 0.93, ln) * 1.4;
+>   float rip = vnoise(p * 9.0 + vec2(uTime * 1.3, uTime * 0.7));
+>   // gloss (normal from the an …[+677 chars]
+
+### 🤖 Claude — 2026-11-15T17:14:17.819Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        if a not in s: raise SystemExit(f'MISSING in {p}: {a[:70]}')\n        s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/vfx/drumWater.ts',[\n(\"float field = sin(p.x * 0.85 + p.y * 0.55 + uTime * 0.7 + n * 3.0);\\n  float pinkM = smoothstep(0.32, 0.48, field);\",\n \"float field = sin(p.x * 1.9 + p.y * 1.25 + uTime * 1.1 + n * 4.5);\\n  float pinkM = smoothstep(0.3, 0.46, field);\"),\n(\"float ln = vnoise(vec2((p.x * 0.85 + p.y * 0.55) * 7.0 + n * 3.0, (p.y - p.x * 0.4) * 0.9 - uTime * …[+1142 chars]`
+
+### 🧑 User — 2026-11-15T17:14:39.901Z
+
+> ↩︎ result: ok
+> docs/vfx/water_01.png {"preset":"01","s":0,"stage":"01","calls":7,"triangles":94680,"points":1300,"avgFrameMsSwiftShader":1.9,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_02.png {"preset":"02","s":12,"stage":"02","calls":8,"triangles":96408,"points":1300,"avgFrameMsSwiftShader":1.2,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_11.png {"preset":"11","s":438.82,"stage":"11","calls":10,"triangles":81448,"points":1300,"avgFrameMsSwiftShader":1,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_03.png {"preset":"03","s":44.88,"stage":"03","calls":12,"triangles":211096,"points":1300,"avgFrameMsSwiftShader":0.9,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+> docs/vfx/water_04.png {"preset":"04","s":75.65,"stage":"04","calls":15,"triangles":213744,"points":1300,"avgFrameMsSwiftShader":1.2,"instances":2532,"bubbles":44,"smallBubbles":700,"sprayCapacity":600}
+
+### 🤖 Claude — 2026-11-15T17:14:44.268Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_01.png"}`
+
+### 🧑 User — 2026-11-15T17:14:44.279Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:14:44.667Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_04.png"}`
+
+### 🧑 User — 2026-11-15T17:14:44.677Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:14:45.021Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/vfx/water_11.png"}`
+
+### 🧑 User — 2026-11-15T17:14:45.033Z
+
+> ↩︎ result: [image]
+

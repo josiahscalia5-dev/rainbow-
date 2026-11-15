@@ -173,7 +173,8 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
       return;
     }
     const ahead = isBig ? rnd(initial ? -2 : 18, 75) : rnd(initial ? -3 : 8, 45);
-    const s = Math.min(course.length - 0.5, Math.max(opts.sStart, focusS + ahead));
+    let s = Math.max(opts.sStart, focusS + ahead);
+    if (s > course.length - 0.5) s = course.length - rnd(0.5, 30); // near the route end: fill the chamber behind
     const f = course.sample(s);
     const hw = course.widthAt(s) / 2;
     const tube = course.prop(s, 'tube');

@@ -142,6 +142,13 @@ void main() {
   vec4 A = flowLayer(u, s - vSpeed * ph0 * 4.0);
   vec4 B = flowLayer(u, s - vSpeed * ph1 * 4.0 + 23.0);
   vec4 F = mix(B, A, w0);
+  // fine detail layer (single phase, short period) so close-up water keeps crisp streaks
+  float fineV = s - vSpeed * fract(uTime * 0.5) * 2.0;
+  float fine = vnoise(vec2(u * 34.0 + F.z * 4.0, fineV * 1.1));
+  float fineW = vnoise(vec2(u * 34.0 + F.z * 4.0, (fineV + vSpeed) * 1.1));
+  fine = mix(fineW, fine, 1.0 - abs(1.0 - 2.0 * fract(uTime * 0.5)));
+  F.y += smoothstep(0.84, 0.95, fine) * 0.9;
+  F.z = clamp(F.z + (fine - 0.5) * 0.18, 0.0, 1.0);
 
   vec3 cyanCol = mix(uCyanDeep, uCyan, smoothstep(0.22, 0.62, F.z));
   cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.6, 0.82, F.z) * 0.7);
@@ -172,10 +179,10 @@ void main() {
 
   // soap-foam fringe along the edges
   float edgeN = (vnoise(vec2(s * 1.3, u * 2.0)) - 0.5) * 0.16;
-  float edge = smoothstep(0.8, 0.96, abs(u) + edgeN);
-  float c = cells(vec2(u * vHalfW * 2.6, (s - vSpeed * uTime * 0.5) * 2.4));
-  vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
-  col = mix(col, foamCol, edge * (0.8 + 0.2 * smoothstep(0.2, 0.5, c)));
+  float edge = smoothstep(0.86, 0.97, abs(u) + edgeN);
+  float c = cells(vec2(u * vHalfW * 4.0, (s - vSpeed * uTime * 0.5) * 3.6));
+  vec3 foamCol = mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, c));
+  col = mix(col, foamCol, edge * smoothstep(0.08, 0.35, c + 0.15));
   col = mix(col, uFoamLav * 0.92, vSkirt);
   col = mix(col, foamCol, cutFoam);
 
@@ -195,11 +202,12 @@ void main() {
     float x = u * vHalfW;
     for (int k = 0; k < 5; k++) {
       float y = s - (uChevron.x + float(k) * uChevron.y);
-      if (abs(y) < 1.4 && abs(x) < 1.6) {
-        float dist = abs(y - (0.55 - abs(x) * 0.95)) * 0.72;
-        float arm = step(abs(x), 1.25);
-        float core = smoothstep(0.2, 0.1, dist) * arm;
-        float halo = smoothstep(0.75, 0.0, dist) * smoothstep(1.6, 0.9, abs(x)) * 0.45;
+      if (abs(y) < 2.4 && abs(x) < 1.6) {
+        // "^" pointing toward +s: tip at y=+1.0, arms sweep back 1.9 units over ±1.15 lateral
+        float dist = abs(y - (1.0 - abs(x) * 1.65)) * 0.52;
+        float arm = smoothstep(1.2, 1.1, abs(x));
+        float core = smoothstep(0.2, 0.11, dist) * arm;
+        float halo = smoothstep(0.7, 0.0, dist) * smoothstep(1.5, 0.9, abs(x)) * 0.5;
         col = mix(col, vec3(1.0), clamp(halo, 0.0, 1.0));
         col = mix(col, vec3(2.2, 2.4, 2.5), core);
       }

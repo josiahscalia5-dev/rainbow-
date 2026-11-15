@@ -89,7 +89,7 @@ void main() {
   float dc = 1e4;
   for (int i = 0; i < 7; i++) dc = min(dc, segDist(vPosW, uCut[i], uCut[i + 1]));
   if (dc < uCutR) discard;
-  float lipFoam = 1.0 - smoothstep(uCutR, uCutR + 1.1, dc);
+  float lipFoam = 1.0 - smoothstep(uCutR, uCutR + 0.6, dc);
   float lr = log(r);
   // band coordinate is constant along the course flow lines; it rotates with time (swirl)
   float band = th - uSpiralC * lr;

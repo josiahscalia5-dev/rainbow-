@@ -49,7 +49,7 @@ function makeMaterial() {
 export interface FoamSystem {
   group: THREE.Group;
   whirlGroup: THREE.Group;
-  update(time: number, focusS: number): void;
+  update(time: number, focusS: number, outro?: number): void;
   instanceCount: number;
 }
 
@@ -130,15 +130,27 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
   const b = WORLD.basin;
   whirlGroup.position.set(b.center.x, 0, b.center.z);
   const wl: Puff[] = [];
-  const nRim = Math.round(320 * density);
+  // rim: cloud clusters of soap foam with a thin continuous fringe between them
+  const nClusters = Math.round(26 * density);
+  for (let k = 0; k < nClusters; k++) {
+    const th0 = rand() * Math.PI * 2;
+    const n = 10 + ((rand() * 16) | 0);
+    for (let i = 0; i < n; i++) {
+      const th = th0 + (rand() - 0.5) * 0.35;
+      const r = b.rimRadius - 0.7 + (rand() - 0.4) * 1.3;
+      const sz = 0.18 + rand() * 0.42;
+      wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.35 + rand() * 0.55, r * Math.cos(th)), r: sz, c: (rand() * 5) | 0 });
+    }
+  }
+  const nRim = Math.round(200 * density);
   for (let i = 0; i < nRim; i++) {
     const th = rand() * Math.PI * 2;
-    const r = b.rimRadius - 0.6 + (rand() - 0.3) * 1.2;
-    const sz = 0.16 + rand() * 0.34;
-    wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.3 + rand() * 0.4, r * Math.cos(th)), r: sz, c: (rand() * 5) | 0 });
+    const r = b.rimRadius - 0.4 + (rand() - 0.5) * 0.6;
+    const sz = 0.1 + rand() * 0.18;
+    wl.push({ p: new THREE.Vector3(r * Math.sin(th), funnelY(r) + FUNNEL_LIFT + sz * 0.3, r * Math.cos(th)), r: sz, c: (rand() * 5) | 0 });
   }
   // along 3 spiral flow lines (constant th - C ln r) to echo the white foam bands
-  const nBand = Math.round(420 * density);
+  const nBand = Math.round(60 * density);
   for (let i = 0; i < nBand; i++) {
     const band = ((i % 3) * Math.PI * 2) / 3 + 0.4;
     const r = 3.0 + rand() * (b.rimRadius - 3.6);
@@ -154,10 +166,11 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
     group,
     whirlGroup,
     instanceCount: total,
-    update(time, focusS) {
+    update(time, focusS, outro = 0) {
+      const s08 = course.stage('08').s0;
       for (let i = 0; i < chunks.length; i++) {
         const c = chunks[i];
-        c.mesh.visible = c.sb > focusS - 25 && c.sa < focusS + 140;
+        c.mesh.visible = c.sb > focusS - 25 && c.sa < focusS + 140 && !(outro > 0.3 && c.sb > s08 + 8);
       }
       // rotate whirlpool foam about the basin axis with the swirl (θ decreasing = course direction)
       whirlGroup.rotation.y = -time * 0.45 * ((Math.PI * 2) / 3);

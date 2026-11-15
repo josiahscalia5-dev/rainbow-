@@ -116,15 +116,18 @@ function lathe(profile: [number, number][], sx: number, sz: number, seg = 40) {
   return g;
 }
 /** tube with radius taper along its length (tip thinner) */
-function taperedTube(curve: THREE.Curve<THREE.Vector3>, tubular: number, radius: number, radial: number, tipScale = 0.35) {
+function taperedTube(curve: THREE.Curve<THREE.Vector3>, tubular: number, radius: number, radial: number, tipScale = 0.35, rootScale = 0.7) {
   const g = new THREE.TubeGeometry(curve, tubular, radius, radial, false);
+  // strands run along the tube: swap u (along) / v (around)
+  const tuv = g.getAttribute('uv') as THREE.BufferAttribute;
+  for (let i = 0; i < tuv.count; i++) tuv.setXY(i, tuv.getY(i), tuv.getX(i) * Math.max(1, curve.getLength() / 2));
   const p = g.getAttribute('position') as THREE.BufferAttribute;
   const c = new THREE.Vector3(), v = new THREE.Vector3();
   for (let i = 0; i <= tubular; i++) {
     const t = i / tubular;
     curve.getPointAt(t, c);
     const f = 1 - (1 - tipScale) * Math.pow(t, 1.4);
-    const f0 = 0.7 + 0.3 * smoothstep(0, 0.08, t); // slightly thinner root
+    const f0 = rootScale + (1 - rootScale) * smoothstep(0, 0.12, t); // thinner root
     for (let j = 0; j <= radial; j++) {
       const k = i * (radial + 1) + j;
       v.fromBufferAttribute(p, k).sub(c).multiplyScalar(f * f0).add(c);
@@ -190,7 +193,7 @@ export const ANIM_JOINTS = [
 type JointName = (typeof ANIM_JOINTS)[number];
 type Pose = Partial<Record<JointName, [number, number, number]>>;
 
-export const EYELID_REST_X = THREE.MathUtils.degToRad(-17);
+export const EYELID_REST_X = THREE.MathUtils.degToRad(-22);
 export const EYELID_CLOSED_X = THREE.MathUtils.degToRad(84);
 
 export function buildGirl(): BuiltModel {
@@ -230,9 +233,9 @@ export function buildGirl(): BuiltModel {
   const M = {
     skin: std('#f5b892', 0.6, 0, { emissive: new THREE.Color('#5a1a08'), emissiveIntensity: 0.08 }),
     skinDeep: std('#f0a989', 0.6),
-    hair: std('#a35e30', 0.45, 0, { map: hairTexture() }),
-    hairLight: std('#c27a40', 0.42, 0, { map: hairTexture() }),
-    hairDark: std('#6a3519', 0.55, 0, { map: hairTexture() }),
+    hair: std('#8e5c38', 0.45, 0, { map: hairTexture() }),
+    hairLight: std('#b27d4c', 0.42, 0, { map: hairTexture() }),
+    hairDark: std('#54321e', 0.55, 0, { map: hairTexture() }),
     curl: std('#7a4222', 0.55, 0, { map: curlTexture() }),
     brow: std('#4a2312', 0.6),
     lash: std('#24100a', 0.5),
@@ -255,12 +258,14 @@ export function buildGirl(): BuiltModel {
     sock: std('#fbf9ff', 0.8),
   };
 
+  for (const [k, m] of Object.entries(M)) m.name = k;
+
   // ================================================================== HEAD
   const hc = addJoint('headCenter', 'head', HEAD_CENTER);
   void hc;
   // skull / face
   {
-    const g = new THREE.SphereGeometry(1, 56, 40);
+    const g = new THREE.SphereGeometry(1, 48, 34);
     const p = g.getAttribute('position') as THREE.BufferAttribute;
     for (let i = 0; i < p.count; i++) {
       const q = headPoint(p.getX(i), p.getY(i), p.getZ(i));
@@ -313,10 +318,10 @@ export function buildGirl(): BuiltModel {
   for (const s of [1, -1]) {
     const side = s > 0 ? 'L' : 'R';
     const ex = s * 1.1, ey = -0.2;
-    const ez = surfaceZ(ex, ey) - 0.26;
+    const ez = surfaceZ(ex, ey) - 0.2;
     const sockW = HEAD_CENTER.clone().add(V(ex, ey, ez));
     const sock = addJoint(`eyeSocket${side}`, 'headCenter', sockW);
-    sock.scale.set(0.96, 1.16, 0.64);
+    sock.scale.set(1.0, 1.2, 0.46);
     sock.rotation.y = s * 0.12; // eyes follow the face curvature slightly
     const eyeJ = new THREE.Object3D();
     eyeJ.name = `eye${side}`;
@@ -336,9 +341,16 @@ export function buildGirl(): BuiltModel {
     lidJ.rotation.x = EYELID_REST_X;
     sock.add(lidJ);
     J[lidJ.name] = lidJ;
-    const lid = new THREE.Mesh(new THREE.SphereGeometry(EYE_R * 1.06, 32, 12, 0, TAU, 0, Math.PI / 2), M.skin);
+    const lid = new THREE.Mesh(new THREE.SphereGeometry(EYE_R * 1.035, 28, 10, 0, TAU, 0, Math.PI / 2), M.skin);
     lid.name = `lid${side}`;
     lidJ.add(lid);
+    const lowJ = new THREE.Object3D();
+    lowJ.name = `lowerLid${side}`;
+    lowJ.rotation.x = THREE.MathUtils.degToRad(34);
+    sock.add(lowJ);
+    const low = new THREE.Mesh(new THREE.SphereGeometry(EYE_R * 1.03, 28, 8, 0, TAU, Math.PI / 2, Math.PI / 2), M.skin);
+    low.name = `lowLid${side}`;
+    lowJ.add(low);
     // lash line along the lid rim (front half) + outer-corner flicks
     const rim = EYE_R * 1.1;
     const pts: THREE.Vector3[] = [];
@@ -346,17 +358,17 @@ export function buildGirl(): BuiltModel {
       const phi = Math.PI * (0.1 + 0.8 * (k / 16));
       pts.push(V(Math.cos(phi) * rim, 0.02, Math.sin(phi) * rim));
     }
-    const lash = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 24, 0.075, 6, false), M.lash);
+    const lash = new THREE.Mesh(taperedTube(new THREE.CatmullRomCurve3(pts), 24, 0.095, 6, 0.55), M.lash);
     lash.name = `lash${side}`;
     lidJ.add(lash);
     // outer corner is +X for the left eye, −X for the right eye
-    for (let f = 0; f < 3; f++) {
-      const phi = Math.PI * (s > 0 ? 0.12 + f * 0.09 : 0.88 - f * 0.09);
+    for (let f = 0; f < 2; f++) {
+      const phi = Math.PI * (s > 0 ? 0.1 + f * 0.1 : 0.9 - f * 0.1);
       const base = V(Math.cos(phi) * rim, 0.02, Math.sin(phi) * rim);
       const out = base.clone().setY(0).normalize();
-      const tip = base.clone().addScaledVector(out, 0.32 - f * 0.05).add(V(0, 0.26 - f * 0.04, 0));
+      const tip = base.clone().addScaledVector(out, 0.36 - f * 0.1).add(V(0, 0.2 - f * 0.05, 0.05));
       const mid = base.clone().lerp(tip, 0.5).add(V(0, 0.06, 0)).addScaledVector(out, 0.04);
-      const fl = new THREE.Mesh(taperedTube(new THREE.CatmullRomCurve3([base, mid, tip]), 8, 0.06, 5, 0.2), M.lash);
+      const fl = new THREE.Mesh(taperedTube(new THREE.CatmullRomCurve3([base, mid, tip]), 8, 0.085, 5, 0.15), M.lash);
       lidJ.add(fl);
     }
     // eyebrow (warm dark brown, gently arched)
@@ -373,7 +385,7 @@ export function buildGirl(): BuiltModel {
   // ---------------- HAIR: cap pulled back from a soft, exact hairline (parametric rows hairline → crown)
   {
     // hairline elevation (unit-sphere y) by azimuth φ (0° = front, 90° = her side/ear, 180° = back)
-    const ctl: [number, number][] = [[0, 0.45], [28, 0.43], [52, 0.35], [72, 0.2], [90, 0.1], [106, -0.2], [128, -0.5], [155, -0.66], [180, -0.7]];
+    const ctl: [number, number][] = [[0, 0.62], [24, 0.6], [46, 0.5], [68, 0.3], [88, 0.12], [106, -0.2], [128, -0.5], [155, -0.66], [180, -0.7]];
     const thrAt = (deg: number) => {
       const a = Math.abs((((deg + 180) % 360) + 360) % 360 - 180);
       for (let i = 0; i < ctl.length - 1; i++) {
@@ -381,7 +393,7 @@ export function buildGirl(): BuiltModel {
       }
       return ctl[ctl.length - 1][1];
     };
-    const NU = 112, NV = 30;
+    const NU = 96, NV = 26;
     const pos: number[] = [], uv: number[] = [], idx: number[] = [];
     for (let iu = 0; iu <= NU; iu++) {
       const deg = (iu / NU) * 360;
@@ -392,7 +404,7 @@ export function buildGirl(): BuiltModel {
         const el = el0 + (Math.PI / 2 - el0) * (1 - Math.pow(1 - f, 1.35));
         const y = Math.sin(el), rxz = Math.cos(el);
         const x = Math.sin(phi) * rxz, z = Math.cos(phi) * rxz;
-        const grow = 0.035 + 0.17 * smoothstep(0, 0.2, f);
+        const grow = 0.02 + 0.17 * smoothstep(0, 0.5, f);
         const q = headPoint(x, y, z, grow);
         q.y += 0.05 + 0.24 * Math.max(0, y) * Math.max(0, y) * (z > 0 ? 1 : 0.6) * smoothstep(0, 0.3, f);
         q.z -= 0.03;
@@ -415,14 +427,40 @@ export function buildGirl(): BuiltModel {
     capMat.side = THREE.DoubleSide;
     put('headCenter', g, capMat, HEAD_CENTER, undefined, 'hair_cap');
   }
+  // swept-back locks: clumps from the hairline running OVER the crown into the ponytail tie
+  // (great-circle slerp between unit directions, half embedded in the cap → raised grooves)
+  {
+    const B = V(0, 2.62 / HEAD.b, -1.25 / HEAD.c).normalize();
+    for (let k = 0; k < 11; k++) {
+      const deg = -70 + (140 * k) / 10 + (R() - 0.5) * 5;
+      const phi = THREE.MathUtils.degToRad(deg);
+      const thr = 0.6 - 0.3 * smoothstep(20, 70, Math.abs(deg));
+      const el0 = Math.asin(thr) + 0.02;
+      const A = V(Math.sin(phi) * Math.cos(el0), Math.sin(el0), Math.cos(phi) * Math.cos(el0));
+      const qa = new THREE.Quaternion().setFromUnitVectors(A, B);
+      const qi = new THREE.Quaternion();
+      const pts: THREE.Vector3[] = [];
+      for (let i = 0; i <= 12; i++) {
+        const t = 0.1 + 0.9 * (i / 12); // start just above the hairline so the edge stays smooth
+        qi.identity().slerp(qa, t);
+        const d = A.clone().applyQuaternion(qi);
+        const grow = 0.02 + 0.17 * smoothstep(0, 0.5, t) - 0.06;
+        const q = headPoint(d.x, d.y, d.z, grow);
+        q.y += 0.05 + 0.24 * Math.max(0, d.y) ** 2 * (d.z > 0 ? 1 : 0.6) * smoothstep(0, 0.3, t);
+        q.z -= 0.03;
+        pts.push(q);
+      }
+      const g = taperedTube(new THREE.CatmullRomCurve3(pts), 26, 0.26, 6, 0.6, 0.02);
+      put('headCenter', g, k % 3 === 1 ? M.hairLight : M.hair, HEAD_CENTER, undefined, 'hair_lock');
+    }
+  }
   // temple ringlets + baby curls at the hairline
   const ringlet = (joint: string, startW: THREE.Vector3, dir: THREE.Vector3, len: number, droop: number, coil: number, tube: number, mat: THREE.Material, side = V(1, 0, 0)) => {
     const turns = len / 0.62;
     const curve = new RingletCurve(V(0, 0, 0), dir.clone().normalize(), len, droop, coil, turns, R() * TAU, side);
     curve.arcLengthDivisions = 260;
-    const tubular = Math.max(24, Math.ceil(turns * 11));
+    const tubular = Math.max(20, Math.ceil(turns * 8));
     const g = taperedTube(curve, tubular, tube, 5, 0.4);
-    scaleUV(g, 1, 3);
     return put(joint, g, mat, startW, undefined, 'ringlet');
   };
   for (const s of [1, -1]) {
@@ -440,18 +478,15 @@ export function buildGirl(): BuiltModel {
   put('ponytail', new THREE.TorusGeometry(0.55, 0.22, 10, 24), M.purple, tieW.clone().add(V(0, 0.12, -0.05)), new THREE.Euler(-0.55, 0, 0), 'hair_tie');
   const arcDir = V(0, 0.82, -0.58);
   const arc = (d: number, droop = 0.26) => tieW.clone().addScaledVector(arcDir, d).add(V(0, -droop * d * d, 0));
-  // shadowed volume core so gaps between ringlets read as depth, not background
-  for (let i = 0; i < 9; i++) {
-    const d = 0.5 + 5.2 * (i / 8);
-    const c = arc(d).add(V((R() - 0.5) * 0.8, 0, (R() - 0.5) * 0.4));
-    const r = 0.95 + 0.4 * Math.sin((Math.PI * i) / 8);
-    const g = ellipsoid(r * 1.15, r, r * 0.95, 18, 12);
-    scaleUV(g, 3, 2);
-    put(d > 3 ? 'ponytailTip' : 'ponytail', g, M.hairDark, c, new THREE.Euler(R() * 3, R() * 3, R() * 3), 'ponytail_volume');
+  // short dense ringlets bunched at the tie for a full, puffy crown of curls
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 12) * TAU;
+    const dir = V(Math.cos(a) * 0.7, 0.75 + 0.3 * Math.sin(a), -0.35 + Math.sin(a) * 0.45);
+    ringlet(i % 2 ? 'ponytailL' : 'ponytailR', tieW.clone().add(V(Math.cos(a) * 0.35, 0.1, Math.sin(a) * 0.3 - 0.2)), dir, 1.8 + R() * 1.2, 0.32, 0.3, 0.22, i % 3 ? M.hair : M.hairLight, V(Math.cos(a), 0, 0));
   }
   // springy corkscrew ringlets cascading from the tie point
-  for (let i = 0; i < 34; i++) {
-    const sx = (R() - 0.5) * 1.6;
+  for (let i = 0; i < 40; i++) {
+    const sx = (R() - 0.5) * 1.5;
     const dir = V(sx, 0.62 + R() * 0.4, -0.42 - R() * 0.42);
     const len = 3.4 + R() * 3.8;
     const start = tieW.clone().add(V((R() - 0.5) * 0.7, R() * 0.3, -0.1 - R() * 0.35));
@@ -471,10 +506,11 @@ export function buildGirl(): BuiltModel {
     bow.name = 'bow';
     bow.position.copy(bowW).sub(JW['headCenter']);
     bow.rotation.set(-0.42, 0.18, 0.2);
+    bow.scale.setScalar(0.86);
     J['headCenter'].add(bow);
     // puffy satin loops: fat torus so only a narrow fold opening remains
-    const loop = new THREE.TorusGeometry(0.58, 0.44, 14, 28);
-    loop.scale(1.5, 0.92, 0.5);
+    const loop = new THREE.TorusGeometry(0.5, 0.47, 14, 28);
+    loop.scale(1.62, 0.86, 0.5);
     for (const s of [1, -1]) {
       const l = new THREE.Mesh(loop, M.purple);
       l.name = 'bow_loop';

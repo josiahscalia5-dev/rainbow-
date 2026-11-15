@@ -61,30 +61,31 @@ void main() {
   vec2 p = vPosW.xz;
   float n = fbm3(p * 0.55 + vec2(uTime * 0.25, -uTime * 0.15));
   // layered bands roughly parallel to the wave crests
-  float field = sin(p.x * 0.85 + p.y * 0.55 + uTime * 0.7 + n * 3.0);
-  float pinkM = smoothstep(0.15, 0.35, field);
+  float field = sin(p.x * 1.9 + p.y * 1.25 + uTime * 1.1 + n * 4.5);
+  float pinkM = smoothstep(0.3, 0.46, field);
   vec3 cyanCol = mix(uCyanDeep, uCyan, 0.45 + 0.55 * n);
   cyanCol = mix(cyanCol, uCyanBright, smoothstep(0.35, 0.9, vH) * 0.55);
   vec3 col = mix(cyanCol, mix(uPink, uPinkLight, n), pinkM);
   // foam on the band seams and on crests
-  float seam = 1.0 - smoothstep(0.0, 0.12, abs(field - 0.25));
+  float seam = 1.0 - smoothstep(0.0, 0.1, abs(field - 0.4) - 0.03 * (vnoise(p * 6.0) - 0.5));
   float c = cells(p * 3.2 + vec2(uTime * 0.4, 0.0));
   float crest = smoothstep(0.55, 0.95, vH + (n - 0.5) * 0.5);
   float foamM = clamp(seam * 0.8 + crest * (0.6 + 0.4 * uAgitation), 0.0, 1.0) * (0.65 + 0.35 * smoothstep(0.15, 0.55, c));
   col = mix(col, mix(uFoam, vec3(0.93, 0.88, 1.0), c), foamM);
   // streak highlights
-  float lines = pow(vnoise(vec2(p.x * 6.0 + p.y * 3.0, p.y * 1.2 - uTime * 0.8)), 7.0);
-  col += lines * 1.8;
+  float ln = vnoise(vec2((p.x * 1.9 + p.y * 1.25) * 4.0 + n * 4.5, (p.y - p.x * 0.6) * 0.9 - uTime * 0.6));
+  col += smoothstep(0.8, 0.93, ln) * 1.4;
+  float rip = vnoise(p * 9.0 + vec2(uTime * 1.3, uTime * 0.7));
   // gloss (normal from the analytic wave slope is approximated by screen derivatives)
-  vec3 N = normalize(vN + vec3(n - 0.5, 0.0, 0.5 - n) * 0.25);
+  vec3 N = normalize(vN + vec3(n - 0.5 + (rip - 0.5) * 0.6, 0.0, 0.5 - n + (rip - 0.5) * 0.4) * 0.35);
   vec3 V = normalize(cameraPosition - vPosW);
   float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
   col = mix(col, mix(uHaze, vec3(1.0), 0.6), fres * 0.25);
   vec3 H = normalize(normalize(uLightDir) + V);
-  col += pow(clamp(dot(N, H), 0.0, 1.0), 60.0) * 1.6;
-  vec2 g = p * 4.0;
+  col += pow(clamp(dot(N, H), 0.0, 1.0), 90.0) * 2.2;
+  vec2 g = p * 2.6 + vec2(uTime * 0.3, 0.0);
   float hs = hash12(floor(g));
-  col += step(0.95, hs) * smoothstep(0.2, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 6.0 + hs * 50.0)) * 1.4;
+  col += step(0.9, hs) * smoothstep(0.24, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 6.0 + hs * 50.0)) * 1.4;
   gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
 }
@@ -139,9 +140,9 @@ void main() {
   // more water low in the drum, ragged gaps higher up so the perforated wall shows through
   float low = smoothstep(0.35, -0.6, d.y / uDrumC.z);
   float gaps = smoothstep(0.25, 0.55, pn(vec2(a * 6.0 - uTime * 0.6, z * 0.35 + 3.0), 6.0) + low * 0.6);
-  float alpha = uSwirl * clamp(0.18 + 0.7 * gaps + foamM * 0.3, 0.0, 0.92);
-  // fade toward the door so the opening stays readable
-  alpha *= 1.0 - smoothstep(1.2, 3.2, z);
+  float alpha = uSwirl * clamp(0.5 + 0.5 * gaps + foamM * 0.3, 0.0, 0.96);
+  // keep the door opening readable: thin out only right at the door
+  alpha *= 1.0 - 0.7 * smoothstep(1.8, 3.3, z);
   gl_FragColor = vec4(col, alpha);
   ${FRAG_TAIL}
 }
@@ -187,7 +188,8 @@ export function createDrumWater(quality: 'high' | 'low'): DrumWater {
   surface.name = 'water_drumA_surface';
   group.add(surface);
 
-  const swirlGeo = new THREE.CylinderGeometry(dA.radius - 0.3, dA.radius - 0.3, dA.zDoor - dA.zBack - 0.6, quality === 'high' ? 72 : 40, 12, true);
+  // slightly conical (narrower toward the back drain) so the spin reads as a vortex
+  const swirlGeo = new THREE.CylinderGeometry(dA.radius - 0.3, dA.radius - 1.5, dA.zDoor - dA.zBack - 0.6, quality === 'high' ? 72 : 40, 12, true);
   swirlGeo.rotateX(Math.PI / 2);
   swirlGeo.translate(dA.center.x, dA.center.y, (dA.zDoor + dA.zBack) / 2 - 0.1);
   const swirlUniforms = withFog({

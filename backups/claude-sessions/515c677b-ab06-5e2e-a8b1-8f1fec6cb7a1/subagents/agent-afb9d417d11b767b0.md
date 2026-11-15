@@ -212,3 +212,140 @@ Export timed out. Diagnosing whether the lab page failed to compile (the girl mo
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/benny-lab.ts'\ns=open(p).read()\nfor a,b in [(\"water.position.y = -0.45;\",\"water.position.y = -0.8;\"),\n            (\"{ name: '05-rear', yaw: Math.PI, pitch: 0.42, dist: 4.6,\",\"{ name: '05-rear', yaw: Math.PI, pitch: 0.24, dist: 4.4,\")]:\n    assert a in s; s=s.replace(a,b)\nopen(p,'w').write(s)\np='src/characters/benny/build.ts'\ns=open(p).read()\nfor a,b in [(\"const w = kind === 'dizzy' ? 0.17 : 0.23;\",\"const w = kind === 'dizzy' ? 0.19 : 0.29;\"),\n            (\"    short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0. …[+579 chars]`
 
+### 🧑 User — 2026-11-15T17:10:39.867Z
+
+> ↩︎ result: ok
+> ok /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_refs_r4.png 21495 ms {"baseTriangles":13844}
+> ok /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_tt_r4.png 21529 ms {"baseTriangles":13844}
+
+### 🤖 Claude — 2026-11-15T17:10:44.721Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_refs_r4.png"}`
+
+### 🧑 User — 2026-11-15T17:10:44.759Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:10:45.375Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_tt_r4.png"}`
+
+### 🧑 User — 2026-11-15T17:10:45.431Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:11:14.615Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/build.ts'\ns=open(p).read()\nrep=[(\"  fur: 0.115,\",\"  fur: 0.105,\"),\n(\"  hatTilt: -0.26, // front of the beanie raised (rad, about X)\",\"  hatTilt: -0.2, // front of the beanie raised (rad, about X)\"),\n(\"  brimBottom: 0.08, // hat-local\",\"  brimBottom: 0.1, // hat-local\"),\n(\"\"\"          [0.725, crownY0],\n          [0.748, crownY0 + 0.06],\n          [0.757, crownY0 + 0.14],\n          [0.748, crownY0 + 0.23],\n          [0.715, crownY0 + 0.32],\n          [0.66, crownY0 + 0.41],\n          [0.575, crownY0 + 0.48],\n      …[+1596 chars]`
+
+### 🧑 User — 2026-11-15T17:11:43.043Z
+
+> ↩︎ result: ok
+> ok /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_refs_r5.png 27090 ms {"baseTriangles":13844}
+
+### 🤖 Claude — 2026-11-15T17:11:47.470Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/benny_refs_r5.png"}`
+
+### 🧑 User — 2026-11-15T17:11:47.525Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:11:58.045Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad; (timeout 900 node scripts/export-models.mjs benny 2>&1 | grep -v \"normalized normal\" | tail -3) && (timeout 600 node scripts/export-models.mjs benny --turntable-only --expr=dizzy 2>&1 | grep -v \"normalized normal\" | tail -2) && timeout 600 node $S/benny-shot.mjs docs/characters/benny_reference_views_glb.png \"src=glb&views=refs\" 2>&1 | tail -1 && timeout 600 node $S/benny-shot.mjs docs/characters/benny_turntable_full_glb.png \"src=glb&views=turntable\" 2>&1 | tail -1; ls -la assets/models/ben …[+129 chars]`
+
+### 🧑 User — 2026-11-15T17:12:44.956Z
+
+> ↩︎ result: exported assets/models/benny.glb {"bytes":1176420,"meshes":27,"nodes":39,"clips":["idle(2.40s)","swim(0.60s)","tumble(1.00s)","peek(2.00s)"]}
+> turntable docs/characters/benny_turntable.png {"box":{"min":[-0.9504705527463947,-0.8460706974663772,-0.9517274622085741],"max":[0.9559914534435223,1.4360141959815103,0.780011832957703]}}
+> turntable docs/characters/benny_turntable_expr_dizzy.png {"box":{"min":[-0.9504705527463947,-0.8460706974663772,-0.9517274622085741],"max":[0.9559914534435223,1.4360141959815103,0.780011832957703]}}
+> ok docs/characters/benny_reference_views_glb.png 9656 ms {"baseTriangles":13844}
+> ok docs/characters/benny_turntable_full_glb.png 8918 ms {"baseTriangles":13844}
+> -rw-r--r-- 1 root root 1176420 Nov 15 17:12 assets/models/benny.glb
+> -rw-r--r-- 1 root root  928788 Nov 15 17:12 docs/characters/benny_reference_views_glb.png
+> -rw-r--r-- 1 root root  996355 Nov 15 17:12 docs/characters/benny_turntable.png
+> -rw-r--r-- 1 root root  998969 Nov 15 17:12 docs/characters/benny_turntable_expr_dizzy.png
+> -rw-r--r-- 1 root root  639961 Nov 15 17:12 docs/characters/benny_turntable_full_glb.png
+
+### 🤖 Claude — 2026-11-15T17:12:48.509Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/characters/benny_turntable_full_glb.png"}`
+
+### 🧑 User — 2026-11-15T17:12:48.540Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:12:48.928Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/characters/benny_turntable_expr_dizzy.png"}`
+
+### 🧑 User — 2026-11-15T17:12:48.964Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:12:58.936Z
+
+The GLB path renders identically: shell fur is rebuilt at runtime from the glTF extras, and the dizzy turntable works. Final typecheck, then the docs:
+
+### 🤖 Claude — 2026-11-15T17:13:01.681Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . 2>&1 | grep -E \"characters/benny\" ; echo \"tsc-benny-errors=$?(1 means none)\"; python3 -c \"\nimport struct,json\nb=open('assets/models/benny.glb','rb').read()\nL=struct.unpack('<I',b[12:16])[0]; j=json.loads(b[20:20+L])\nprint('nodes',len(j['nodes']),'meshes',len(j['meshes']),'materials',len(j['materials']),'textures',len(j.get('textures',[])),'anims',[a['name'] for a in j['animations']])\nprint('fur extras', [n['name'] for n in j['nodes'] if 'extras' in n and 'fur' in n['extras']])\n\"", "description": "Typecheck Benny code and inspect GLB contents", "ti …[+15 chars]`
+
+### 🧑 User — 2026-11-15T17:13:05.321Z
+
+> ↩︎ result: tsc-benny-errors=1(1 means none)
+> nodes 39 meshes 25 materials 18 textures 12 anims ['idle', 'swim', 'tumble', 'peek']
+> fur extras ['fur_body', 'fur_armL', 'fur_armR', 'fur_footL', 'fur_footR', 'fur_pom']
+
+### 🤖 Claude — 2026-11-15T17:13:29.281Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/characters/benny.md", "content": "# Benny — canonical model, rig & runtime (benny-character-artist)\n\n**One** Benny for every scene: `assets/models/benny.glb` (1.18 MB), built procedurally by\n`src/characters/benny/build.ts` and exported with `node scripts/export-models.mjs benny`\n(Three.js GLTFExporter in headless Chromium). No external assets, no paid generators, no Blender.\nThe game loads it through `loadBenny()` in `src/characters/benny/runtime.ts`.\n\n## Contract\n* Origin = centre of the round body; faces **+Z**, up +Y (so `root.lookAt(pos + tan …[+4663 chars]`
+
+### 🧑 User — 2026-11-15T17:13:29.498Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/characters/benny.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:13:44.437Z
+
+Benny is built: one model and rig, exported to GLB, with shell fur rebuilt at runtime and turntables rendered from the exported GLB. The GLB-loaded path renders identically to the procedural build, and my files typecheck clean. No git commands were run.
+
+**Files created**
+- `src/characters/benny/build.ts` — `buildBenny()`: model, joint rig and clips
+- `src/characters/benny/textures.ts` — canvas textures: knit and ribbed beanie with normal maps, eyes (happy and dizzy), mouths, blush, paw-pad soles
+- `src/characters/benny/fur.ts` — shell-fur shader, one draw call per furry part
+- `src/characters/benny/runtime.ts` — `loadBenny()` and `createBennyRuntime()`: expressions, blend between idle/swim/tumble/peek, steering lean, pom-pom spring, blinks
+- `src/characters/benny/benny-lab.html` and `benny-lab.ts` — QA page with views framed like refs 05/03/02, plus a full turntable
+- `assets/models/benny.glb` — 1.18 MB, 39 nodes, 25 meshes; clips `idle`, `swim`, `tumble`, `peek`; fur settings stored in glTF extras
+- `docs/characters/benny.md` — rig, clips, materials, budgets, known differences
+- Proof images in `docs/characters/`:
+  - `benny_turntable.png`
+  - `benny_turntable_full_glb.png`
+  - `benny_turntable_expr_dizzy.png`
+  - `benny_reference_views_glb.png`
+
+**Contract as built**
+- Origin is the body centre, facing +Z.
+- Visual body radius is about 0.8.
+- Height is about 2.3 units, slightly under the 2.4–2.6 target.
+
+**Triangle counts**
+- Base model, before fur: 13,844.
+- Rendered with full fur: about 120k. The `furQuality: 'low'` option brings that to about 77k.
+- Low is the safer Android default; on-device FPS has not been measured.
+
+**What matches the references**
+- Rear view (ref 05): purple ribbed cuff, then white/purple/white bands and a purple crown, a big fluffy purple pom-pom, and the gold star on the right of the brim's top edge. The lower half is fluffy pink with small side nubs.
+- Front views (refs 02/03): big violet eyes with black pupils, two sparkles and outer lashes; blush; an open smile with tongue; white soles with pink toe beans.
+- Dizzy expression: purple spiral eyes and an open "O" mouth, as in ref 02.
+
+**What still differs**
+1. **Star side.** The references contradict each other: front views put the star on Benny's left, rear views on his right. I placed it on the right-rear so the 7 rear gameplay views match, so it shows on the wrong side or is mostly hidden in front views 01–03.
+2. **Fur texture.** It reads slightly streaky at grazing angles compared with the painted soft plush.
+3. **Hat placement.** It sits between ref 03 (more face visible) and ref 02 (brim touching the eyes).
+4. **Rig type.** Parts are rigidly parented to joints; there is no skin-weighted bending.
+
+**Shared-file change requests (not edited)**
+- `tools/model-lab.ts`: the turntable crops Benny's arms at the side edges because the camera distance is height × 1.55 in 400 px panels. About × 2.1 for Benny would fit him; `benny-lab.ts` already does this.
+- `tools/model-lab.ts` statically names the girl modules, so the page returns a 500 whenever `src/characters/girl/build.ts` is missing. A guarded import, or `/* @vite-ignore */` on a variable path, would stop one character's absence from breaking the other's export.
+

@@ -115,7 +115,9 @@ export function buildEnvironment(course: Course): Environment {
   drumTowel.setBundle(1);
   zones.drumA.add(drumTowel.mesh);
   // chute from drum A drain to the basin rim
-  const sChute0 = course.marks['02_drain'] - 2.5;
+  // the chute begins exactly where the course passes through the drum's back wall
+  let sChute0 = course.marks['02_drain'] - 3;
+  while (course.sample(sChute0).pos.z > dA.zBack + 0.3 && sChute0 < course.stage('03').s0) sChute0 += 0.1;
   const sChute1 = course.stage('03').s0 + 3;
   const chute = new THREE.Mesh(
     buildTubeGeometry(course, sChute0, sChute1, { radius: () => 2.25, depth: 0.55, radial: 36, step: 0.5, vScale: 1 }),

@@ -64,8 +64,8 @@ void main() {
   float pinkM = smoothstep(0.45, 0.55, band) * (1.0 - smoothstep(0.8, 0.9, band));
   vec3 col = mix(mix(uCyanDeep, uCyan, 0.4 + 0.6 * n), mix(uPink, uPinkLight, n), pinkM);
   col = mix(col, uCyanBright, smoothstep(0.55, 0.85, n) * 0.5 * (1.0 - pinkM));
-  float lines = pow(vnoise(vec2(s * 2.5 - uTime * uSpeed * 2.0, p * 30.0)), 7.0);
-  col += lines * 2.0;
+  float ln = vnoise(vec2(s * 0.9 - uTime * uSpeed * 0.7 + n * 2.0, p * 9.0 - uTime * 1.5));
+  col += smoothstep(0.8, 0.93, ln) * 1.5;
   // foam: crest + foot
   float c = cells(vec2(s * 2.0 - uTime * uSpeed * 0.6, p * 14.0 - uTime));
   float crest = smoothstep(0.74, 0.9, p + (n - 0.5) * 0.12);

@@ -129,8 +129,8 @@ export function faceTexture(): THREE.CanvasTexture {
     ctx.fill();
   }
   // big open smile
-  const mx = px(0), my = py(-1.6);
-  const w = u * 1.62, h = u * 0.92;
+  const mx = px(0), my = py(-1.62);
+  const w = u * 1.72, h = u * 1.05;
   const mouth = new Path2D();
   mouth.moveTo(mx - w / 2, my - h * 0.2);
   mouth.bezierCurveTo(mx - w * 0.22, my - h * 0.05, mx + w * 0.22, my - h * 0.05, mx + w / 2, my - h * 0.2);
@@ -243,16 +243,16 @@ export function hairTexture(): THREE.CanvasTexture {
   const { c, ctx } = canvas(W, H);
   const r = rng(21);
   const g = ctx.createLinearGradient(0, 0, W, 0);
-  g.addColorStop(0, '#6a361b');
-  g.addColorStop(0.5, '#7d4321');
-  g.addColorStop(1, '#6a361b');
+  g.addColorStop(0, '#6a3e22');
+  g.addColorStop(0.5, '#7c4b2a');
+  g.addColorStop(1, '#6a3e22');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, W, H);
   for (let i = 0; i < 520; i++) {
     const x = r() * W;
     const light = r();
     ctx.strokeStyle =
-      light > 0.72 ? `rgba(214,140,80,${0.35 + r() * 0.35})` : light > 0.4 ? `rgba(150,82,40,${0.3 + r() * 0.3})` : `rgba(48,20,8,${0.25 + r() * 0.3})`;
+      light > 0.72 ? `rgba(206,150,104,${0.35 + r() * 0.35})` : light > 0.4 ? `rgba(140,88,52,${0.3 + r() * 0.3})` : `rgba(48,20,8,${0.25 + r() * 0.3})`;
     ctx.lineWidth = 1 + r() * 2.2;
     ctx.beginPath();
     ctx.moveTo(x, 0);

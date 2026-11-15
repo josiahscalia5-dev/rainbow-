@@ -538,6 +538,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
     },
     log() { return st.log; },
+    /** debug: what does a ray from the camera through NDC (x,y) hit first? */
+    probe(x = 0, y = 0) {
+      const rc = new THREE.Raycaster();
+      rc.setFromCamera(new THREE.Vector2(x, y), camera);
+      const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+      const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
+      return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+    },
     togglePause,
     stats() {
       const i = renderer.info;

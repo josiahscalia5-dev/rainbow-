@@ -21,10 +21,10 @@ import {
 
 export const BENNY_DIMS = {
   skin: 0.7,
-  fur: 0.115,
+  fur: 0.105,
   radius: 0.8,
-  hatTilt: -0.26, // front of the beanie raised (rad, about X)
-  brimBottom: 0.08, // hat-local
+  hatTilt: -0.2, // front of the beanie raised (rad, about X)
+  brimBottom: 0.1, // hat-local
 };
 
 const FACE_DIR = new THREE.Vector3(0, 0.05, 1).normalize();
@@ -272,20 +272,20 @@ export function buildBenny(): BuiltModel {
       lathe(
         [
           [0.725, crownY0],
-          [0.748, crownY0 + 0.06],
-          [0.757, crownY0 + 0.14],
-          [0.748, crownY0 + 0.23],
-          [0.715, crownY0 + 0.32],
-          [0.66, crownY0 + 0.41],
-          [0.575, crownY0 + 0.48],
-          [0.46, crownY0 + 0.535],
-          [0.32, crownY0 + 0.565],
-          [0.16, crownY0 + 0.578],
-          [0.0, crownY0 + 0.582],
+          [0.748, crownY0 + 0.07],
+          [0.756, crownY0 + 0.17],
+          [0.746, crownY0 + 0.27],
+          [0.712, crownY0 + 0.37],
+          [0.652, crownY0 + 0.46],
+          [0.565, crownY0 + 0.54],
+          [0.45, crownY0 + 0.6],
+          [0.31, crownY0 + 0.635],
+          [0.155, crownY0 + 0.65],
+          [0.0, crownY0 + 0.655],
         ],
         72,
         crownY0,
-        crownY0 + 0.582,
+        crownY0 + 0.655,
       ),
       crownMat,
     ),
@@ -312,7 +312,7 @@ export function buildBenny(): BuiltModel {
   star.rotateZ(0.12);
   hat.add(star);
   // pom-pom
-  const pom = joint('pom', 0, crownY0 + 0.582 + 0.17, -0.03);
+  const pom = joint('pom', 0, crownY0 + 0.655 + 0.165, -0.03);
   hat.add(pom);
   const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(0.235, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
   pomMesh.userData = furData({ length: 0.115, density: 80, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.15 });

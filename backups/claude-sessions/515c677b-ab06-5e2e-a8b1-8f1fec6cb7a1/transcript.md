@@ -2100,3 +2100,95 @@ Water and Benny modules already load from the specialists' work in progress. Vie
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T17:10:14.929Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/probe.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5207);\nconst b = await chromium.launch({ args: CHROMIUM_ARGS });\nconst p = await b.newPage({ viewport: { width: 432, height: 768 } });\nawait p.goto(`${vite.url}/?qa=1&dpr=1`);\nawait p.waitForFunction(() => window.__rainbow?.ready, null, { timeout: 240000 });\nconst r = await p.evaluate(() => {\n  const api …[+446 chars]`
+
+### 🧑 User — 2026-11-15T17:10:15.022Z
+
+> ↩︎ result: 97:    handL: model.getObjectByName('handL')!,
+> 98:    handR: model.getObjectByName('handR')!,
+> assets/models/:
+> total 1112
+> drwxr-xr-x 2 root root    4096 Nov 15 17:05 .
+> drwxr-xr-x 4 root root    4096 Nov 15 16:38 ..
+> -rw-r--r-- 1 root root 1126456 Nov 15 17:05 benny.glb
+> 
+> docs/characters/:
+> total 996
+> drwxr-xr-x 2 root root    4096 Nov 15 17:06 .
+> drwxr-xr-x 4 root root    4096 Nov 15 17:05 ..
+> -rw-r--r-- 1 root root 1009975 Nov 15 17:06 benny_turntable.png
+
+### 🤖 Claude — 2026-11-15T17:10:26.305Z
+
+Adding a small in-page debug probe (raycast from the camera) to identify the occluder, rather than guessing:
+
+### 🤖 Claude — 2026-11-15T17:10:29.462Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "    log() { return st.log; },", "new_string": "    log() { return st.log; },\n    /** debug: what does a ray from the camera through NDC (x,y) hit first? */\n    probe(x = 0, y = 0) {\n      const rc = new THREE.Raycaster();\n      rc.setFromCamera(new THREE.Vector2(x, y), camera);\n      const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);\n      const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | nul …[+250 chars]`
+
+### 🧑 User — 2026-11-15T17:10:29.633Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:10:32.916Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s#  return api.state();#  return { st: api.state(), c: api.probe(0,0), tl: api.probe(-0.8,0.8), tr: api.probe(0.8,0.8), bl: api.probe(-0.8,-0.8), br: api.probe(0.8,-0.8) };#\" /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/probe.mjs && timeout 600 node /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/probe.mjs 2>&1 | tail -3 | python3 -c \"import sys,json; d=json.loads(sys.stdin.read().strip().splitlines()[-1]); [print(k, v) for k,v in d.items()]\"", "description": "Raycast probe to find occluding object  …[+26 chars]`
+
+### 🧑 User — 2026-11-15T17:10:42.410Z
+
+> ↩︎ result: st {'mode': 'intro', 'stage': '01', 's': 0, 'lat': 0, 'coins': 1330, 'hearts': 5, 'paused': False, 'bennyY': -2.45, 'bennyVisible': True, 'cam': [-0.55, -0.95, -5.7]}
+> c [{'d': 1.13, 'obj': 'Mesh<zone_drumA<washer_world<Scene', 'p': [-0.45, -0.88, -4.58]}, {'d': 9.81, 'obj': 'Mesh<Group<doorA_pivot<zone_drumA<washer_world', 'p': [0.3, -0.31, 4.05]}, {'d': 81.04, 'obj': 'Mesh<laundry_room<Group<zone_drumA<washer_world', 'p': [6.46, 4.3, 74.87]}, {'d': 89.52, 'obj': 'Mesh<laundry_room<Group<zone_drumA<washer_world', 'p': [7.19, 4.85, 83.3]}]
+> tl [{'d': 0.2, 'obj': 'Mesh<zone_drumA<washer_world<Scene', 'p': [-0.49, -0.86, -5.54]}, {'d': 0.79, 'obj': 'Mesh<zone_drumA<washer_world<Scene', 'p': [-0.31, -0.58, -5.05]}, {'d': 9, 'obj': 'Mesh<zone_drumA<washer_world<Scene', 'p': [2.23, 3.34, 1.7]}, {'d': 10.73, 'obj': 'Mesh<zone_drumA<washer_world<Scene', 'p': [2.77, 4.16, 3.13]}]
+> tr [{'d': 0.12, 'obj': 'Mesh<zone_drumA<washer_world<Scene', 'p': [-0.57, -0.89, -5.59]}, {'d': 0.64, 'obj': 'Mesh<zone_drumA<washer_world<Scene', 'p': [-0.65, -0.65, -5.15]}, {'d': 10.65, 'obj': 'Mesh<zone_drumA<washer_world<Scene', 'p': [-2.28, 4.13, 3.5]}, {'d': 83.79, 'obj': 'Mesh<laundry_room<Group<zone_drumA<w …[+780 chars]
+
+### 🤖 Claude — 2026-11-15T17:10:51.682Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const sChute0 = course.marks['02_drain'] - 2.5;", "new_string": "  // the chute begins exactly where the course passes through the drum's back wall\n  let sChute0 = course.marks['02_drain'] - 3;\n  while (course.sample(sChute0).pos.z > dA.zBack + 0.3 && sChute0 < course.stage('03').s0) sChute0 += 0.1;"}`
+
+### 🧑 User — 2026-11-15T17:10:51.885Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T17:10:53.483Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/capture.mjs 01 02 03 --out=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots 2>&1 | grep \"→\"", "description": "Re-capture 01, 02, 03", "timeout": 920000}`
+
+### 🧑 User — 2026-11-15T17:13:59.315Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T17:14:04.037Z
+
+Benny Character Artist has finished: one GLB rig, shell fur, happy/dizzy/peek expressions, and turntables. My capture printed nothing, so I'm checking that alongside Benny's proof image:
+
+### 🤖 Claude — 2026-11-15T17:14:06.031Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/capture.mjs 01 02 03 --out=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots 2>&1 | grep -v \"^\\s*at \\|girl module\" | tail -12", "description": "Re-run capture with error output", "timeout": 920000}`
+
+### 🤖 Claude — 2026-11-15T17:14:06.439Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/characters/benny_reference_views_glb.png"}`
+
+### 🧑 User — 2026-11-15T17:14:31.346Z
+
+> ↩︎ result: 01 → /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/01.png {"stage":"01","s":0,"y":-2.45,"calls":1,"tris":1,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"STAND-IN"}}
+> node:internal/modules/run_main:123
+>     triggerUncaughtException(
+>     ^
+> 
+> page.evaluate: TypeError: Cannot read properties of undefined (reading 'stats')
+>   log: []
+> }
+> 
+> Node.js v22.23.4
+
+### 🧑 User — 2026-11-15T17:14:31.382Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:14:41.596Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s#const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1' }, logLevel: 'error' });#const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });#\" scripts/lib/pw.mjs && grep -n \"hmr\" scripts/lib/pw.mjs && timeout 900 node scripts/capture.mjs 01 02 03 --out=/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots 2>&1 | grep \"→\\|Error\" | head", "description": "Disable HMR for capture server and retry", "timeout" …[+9 chars]`
+
