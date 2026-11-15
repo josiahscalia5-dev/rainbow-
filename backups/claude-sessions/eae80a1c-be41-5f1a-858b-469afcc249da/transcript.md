@@ -1667,3 +1667,195 @@ Now a real test: one manual autosave run that commits and pushes to the new bran
 
 > 🔧 **Bash** `{"command": "python3 -I -c \"\nimport fnmatch,json\nc=json.load(open('backups/autosave.config.json'))\nfor b in ['ccr-8b6fc834-7kd55l','ccr-6f431adf-7h0m8y','claude/rainbow-3d-recovery-m4v347','main']:\n    prot = b in c['protected_branches']\n    ok = (not prot) and (b==c['branch'] or any(fnmatch.fnmatchcase(b,p) for p in c['session_branch_patterns']))\n    print(f'{b:40s} protected={prot!s:5s} autosave_may_push={ok}')\n\" && python3 scripts/rainbow-autosave.py --reason \"manual:account3-recovery-test\" --message \"autosave test: account 3 recovery on ccr-8b6fc834-7kd55l\" 2>&1 | tail -20; ec …[+209 chars]`
 
+### 🧑 User — 2026-11-15T19:14:01.615Z
+
+> ↩︎ result: ccr-8b6fc834-7kd55l                      protected=False autosave_may_push=True
+> ccr-6f431adf-7h0m8y                      protected=True  autosave_may_push=False
+> claude/rainbow-3d-recovery-m4v347        protected=False autosave_may_push=True
+> main                                     protected=False autosave_may_push=False
+> {
+>   "time": "2026-11-15T19:13:57+00:00",
+>   "reason": "manual:account3-recovery-test",
+>   "result": "committed+pushed",
+>   "files_staged": 8,
+>   "pushed_verified": true,
+>   "branch": "ccr-8b6fc834-7kd55l",
+>   "commit": "ecbd15f124fb746599aa73ad5b7a4508344e0be0",
+>   "duration_s": 4
+> }
+> --- independent remote check ---
+> local  ecbd15f124fb746599aa73ad5b7a4508344e0be0
+> 81e639e16994713d5f70d0314e796d1c298eeacf	refs/heads/ccr-6f431adf-7h0m8y
+> ecbd15f124fb746599aa73ad5b7a4508344e0be0	refs/heads/ccr-8b6fc834-7kd55l
+> f2a86ab56589861b92de3c50d63593e84cafe6f0	refs/heads/claude/rainbow-3d-recovery-m4v347
+
+### 🤖 Claude — 2026-11-15T19:14:06.405Z
+
+> 🔧 **Bash** `{"command": "git show --stat --format='%h %s%n%b' HEAD | head -25; echo \"--- email leak check ---\"; git grep -c -i \"hoty34\" HEAD -- . 2>/dev/null | head; echo \"(no output above = no email in repo)\"; echo \"--- daemon ---\"; ps aux | grep -v grep | grep autosave-daemon | head -2; cat ~/.rainbow-autosave-install.log", "description": "Review autosave commit contents and check for leaks"}`
+
+### 🧑 User — 2026-11-15T19:14:06.714Z
+
+> ↩︎ result: ecbd15f autosave test: account 3 recovery on ccr-8b6fc834-7kd55l
+> Automated Rainbow backup (manual:account3-recovery-test). 6 file(s) changed.
+> Transcripts: refreshed (repo verified private)
+> 
+> Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+> Claude-Session: https://claude.ai/code/session_01Kbt6BUtaiZsWoM1oN5QmuS
+> 
+> 
+>  backups/BACKUP_LOG.md                              |    1 +
+>  backups/BACKUP_STATUS.json                         |   18 +-
+>  backups/CONVERSATION_INDEX.md                      |    1 +
+>  backups/MANIFEST.json                              |   12 +-
+>  backups/autosave.config.json                       |   10 +-
+>  .../transcript.md                                  | 1669 ++++++++++++++++++++
+>  .../transcript.sanitized.jsonl                     |  296 ++++
+>  scripts/rainbow-autosave.py                        |   17 +-
+>  8 files changed, 2001 insertions(+), 23 deletions(-)
+> --- email leak check ---
+> (no output above = no email in repo)
+> --- daemon ---
+> root       309  0.0  0.0   4344  3536 ?        Ss   19:10   0:00 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> scheduler=daemon status=started pid=309
+
+### 🤖 Claude — 2026-11-15T19:14:13.534Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__create_pull_request,mcp__github__list_pull_requests,mcp__github__update_pull_request", "max_results": 3}`
+
+### 🧑 User — 2026-11-15T19:14:13.544Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-15T19:14:14.311Z
+
+> 🔧 **Bash** `{"command": "ls .github 2>&1; find . -iname \"*pull_request_template*\" -not -path \"./node_modules/*\" 2>/dev/null", "description": "Look for a PR template"}`
+
+### 🧑 User — 2026-11-15T19:14:14.369Z
+
+> ↩︎ result: ls: cannot access '.github': No such file or directory
+
+### 🤖 Claude — 2026-11-15T19:14:16.039Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "state": "all", "fields": ["number", "title", "state", "draft", "head", "base", "html_url"]}`
+
+### 🧑 User — 2026-11-15T19:14:16.839Z
+
+> ↩︎ result: []
+
+### 🤖 Claude — 2026-11-15T19:14:24.888Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "title": "Rainbow recovery (account 3): restore tools + autosave, resume Screen 05", "head": "ccr-8b6fc834-7kd55l", "base": "claude/rainbow-3d-recovery-m4v347", "draft": true, "body": "## What this is\nThis is the third Claude account continuing the Rainbow 3D game. The branch `ccr-8b6fc834-7kd55l` was created from the latest recovery commit `f2a86ab`. That commit comes after `f1eb5a4`: the previous container's autosave pushed three more commits holding the specialists' last edits. This session's cloud environment pushes only to this branch, s …[+1279 chars]`
+
+### 🧑 User — 2026-11-15T19:14:26.737Z
+
+> ↩︎ result: {"id":"5326189991","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/1"}
+
+### 🤖 Claude — 2026-11-15T19:14:28.319Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 1}`
+
+### 🤖 Claude — 2026-11-15T19:14:28.670Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-15T19:14:29.863Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#1. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🧑 User — 2026-11-15T19:14:29.874Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-15T19:14:34.132Z
+
+> 🔧 **Bash** `{"command": "git log --format='%h %ad %s' --date=format:'%H:%M' -3 -- screenshots/05.png; echo; ls screenshots/ screenshots/*/ qa/ | head -60; echo; sed -n 1,60p scripts/capture.mjs", "description": "Check screenshot history and capture script"}`
+
+### 🧑 User — 2026-11-15T19:14:34.221Z
+
+> ↩︎ result: c2770a4 17:55 autosave: Rainbow 2026-11-15 17:55 UTC
+> 45a9f7f 17:50 autosave: Rainbow 2026-11-15 17:50 UTC
+> e798ac5 17:45 autosave: Rainbow 2026-11-15 17:45 UTC
+> 
+> qa/:
+> 01_diff.png
+> 01_overlay.png
+> 01_side_by_side.png
+> 02_diff.png
+> 02_overlay.png
+> 02_side_by_side.png
+> 03_diff.png
+> 03_overlay.png
+> 03_side_by_side.png
+> 04_diff.png
+> 04_overlay.png
+> 04_side_by_side.png
+> 05_diff.png
+> 05_overlay.png
+> 05_side_by_side.png
+> 06_diff.png
+> 06_overlay.png
+> 06_side_by_side.png
+> 07_diff.png
+> 07_overlay.png
+> 07_side_by_side.png
+> 07_to_08_continuity.md
+> 08_diff.png
+> 08_overlay.png
+> 08_side_by_side.png
+> 09_diff.png
+> 09_overlay.png
+> 09_side_by_side.png
+> 10_diff.png
+> 10_overlay.png
+> 10_side_by_side.png
+> 11_diff.png
+> 11_overlay.png
+> 11_side_by_side.png
+> capture_log.json
+> capture_log_1080x1920.json
+> cinematic_test.json
+> compare_summary.md
+> continuity
+> continuity_report.json
+> gameplay_test.json
+> glb_validation.txt
+> report_metrics.json
+> scene_comparisons.md
+> worldlabs
+> 
+> screenshots/:
+> 01.png
+> 02.png
+> 03.png
+> 04.png
+> 05.png
+> 06.png
+> 07.png
+> 08.png
+> 09.png
+> 10.png
+> 1080x1920
+> 11.png
+> 
+> #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ q …[+3655 chars]
+
+### 🤖 Claude — 2026-11-15T19:14:40.784Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && git diff --quiet 81e639e HEAD -- package-lock.json && echo \"lockfile unchanged\" ; git worktree add -f $SP/wt_before 81e639e 2>&1 | tail -1 && cd $SP/wt_before && git lfs pull 2>&1 | tail -1; ln -s /home/user/rainbow-/node_modules node_modules && ls assets/models -la | tail -2", "description": "Create worktree of original commit for baseline capture", "timeout": 300000}`
+
+### 🧑 User — 2026-11-15T19:14:42.009Z
+
+> ↩︎ result: lockfile unchanged
+> HEAD is now at 81e639e autosave: Rainbow 2026-11-15 18:05 UTC
+> -rw-r--r-- 1 root root 1176420 Nov 15 19:14 benny.glb
+> -rw-r--r-- 1 root root 3546480 Nov 15 19:14 rainbow_girl.glb
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-15T19:14:48.453Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad; mkdir -p $SP/shots/before $SP/shots/partial; cd $SP/wt_before && time node scripts/capture.mjs 05 --out=$SP/shots/before 2>&1 | tail -3; cd /home/user/rainbow- && time node scripts/capture.mjs 05 --out=$SP/shots/partial 2>&1 | tail -3", "description": "Capture Screen 05 from baseline and current trees", "timeout": 600000}`
+
