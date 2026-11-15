@@ -5,7 +5,7 @@
  *   scene.add(water.group);
  *   // per frame:
  *   water.update(time, dt, bennyS, camera);
- *   water.wake(bennyPos, forward, right, speed, dt);
+ *   water.wake(bennyBodyCentre, forward, right, speed, dt);   // centre of the (lifted) body, not the root
  *   // cinematic controls (0..1): water.controls.drumSwirl / drumAgitation / outro
  *
  * Benny rides ON the water: place his body centre at
@@ -26,6 +26,8 @@ import { createRiderSplash } from './riderSplash';
 
 export { PALETTE } from './glsl';
 export const BENNY_RIDE_OFFSET = 0.55;
+/** Benny's outer (fur) radius near the waterline: skin 0.7 + fur 0.12 + lower-body bulge (benny/build.ts BENNY_DIMS) */
+const BENNY_OUTER_R = 0.86;
 
 export interface WaterControls {
   /** 02 tumble: spinning water shell on the Drum A wall (0..1) */
@@ -169,10 +171,12 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       const f = course.sample(s);
       d.copy(pos).sub(f.pos);
       const lateral = d.dot(f.right);
-      // body radius from the ride offset (centre = surface + BENNY_RIDE_OFFSET · radius)
+      // pos = Benny's real body centre (Game.ts passes it AFTER the runtime's ride lift). The waterline
+      // radius is the chord of the fluffy ball at the water surface, so the contact foam, the crown and
+      // the ribbon wake hug his actual footprint. (Deriving the radius from `above / BENNY_RIDE_OFFSET`
+      // made it grow with the lift and drew a white contact band ~2x wider than the body.)
       const above = d.dot(f.up) - surfaceHeight(s, lateral, curTime);
-      const bodyR = THREE.MathUtils.clamp(above / BENNY_RIDE_OFFSET, 0.4, 2.0);
-      const waterlineR = bodyR * Math.sqrt(1 - BENNY_RIDE_OFFSET * BENNY_RIDE_OFFSET);
+      const waterlineR = Math.sqrt(Math.max(BENNY_OUTER_R * BENNY_OUTER_R - above * above, (0.35 * BENNY_OUTER_R) ** 2));
       const strength = Math.min(1, speed / 8);
       if (s >= ribbonS0 && whirlBlend(s) < 0.5) {
         (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);

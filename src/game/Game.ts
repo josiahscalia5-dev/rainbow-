@@ -159,6 +159,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
 
   const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
   const tmpV = new THREE.Vector3();
+  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
   const doorAOpen = -1.9, doorCOpen = -1.95;
 
   // ---------------------------------------------------------------- intro (01–02)
@@ -360,7 +361,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
     benny.root.visible = true;
     benny.setExpression('happy');
     benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
-    water.wake(pose.pos, f.tan, f.right, speed, dt);
+    // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),
+    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
     // camera
     rideCam.update(dt, st.s, st.lat, camera);
     // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)

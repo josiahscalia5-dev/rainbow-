@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 2431,
-   "sha256": "bdd4c2d6e8ca24e8bd5bfba4481ae751a7e70ab00513e275de21958345509448"
+   "sha256": "309062809cdc54b18cbd0b4f3533505ee3926d4a03014927722c61d93a0e8088"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -793,8 +793,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1109,
-   "sha256": "533bd99eaba5ec87295263d80e08f78f964ba6b2360c0ff1895524ebc77ebb5a"
+   "bytes": 4839,
+   "sha256": "cf0aba48cd16882950c2ff4a93c6c6c50ed4ba11eaa5b4c9d0bb6ac2bfdcf2de"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -877,9 +877,29 @@
    "sha256": "417edfa3c39f66c1b9db72374cd7154634c434a5aee6d81949996549d9d8b0a6"
   },
   {
+   "path": "qa/pilot05/benny/before/01.png",
+   "bytes": 1097990,
+   "sha256": "a0b3edbf20942c3621765685904b80e345beca04baf4163b19757a254aac0d3a"
+  },
+  {
+   "path": "qa/pilot05/benny/before/02.png",
+   "bytes": 1286327,
+   "sha256": "1a708f34b98636418f43a09f3ef4cbada59a6e8401519010a3251f2eee25fbe4"
+  },
+  {
    "path": "qa/pilot05/benny/before/05.png",
    "bytes": 1613369,
    "sha256": "5f65d660e483bd8e0eb384cab13eae07fbeb20cf21767eaac46ba2d818869e63"
+  },
+  {
+   "path": "qa/pilot05/benny/before/10.png",
+   "bytes": 1384203,
+   "sha256": "8fdbe6a976e78a1fe9188c86bd921c8fd97b515f283e6b560e3d133a4601e1a2"
+  },
+  {
+   "path": "qa/pilot05/benny/before/11.png",
+   "bytes": 1391519,
+   "sha256": "8f19952aaf4959ca162c085cf923ba1231f01074a8b917d728ec8cbfeede6e68"
   },
   {
    "path": "qa/pilot05/camera/iter00/05.png",
@@ -892,6 +912,36 @@
    "sha256": "bff18dcff69eb8087ab5f947cefaa4b633f4b79c7addab896c33add4e16ce835"
   },
   {
+   "path": "qa/pilot05/environment/base_others/03.png",
+   "bytes": 657383,
+   "sha256": "0416db6b2721ad0e002ca82703ac6b340fea10da82640a7c287af90ea11473f8"
+  },
+  {
+   "path": "qa/pilot05/environment/base_others/04.png",
+   "bytes": 994368,
+   "sha256": "726ae6ec2b602c9fc25515f06fed7d87b698b31158bd706899a4747ed7bb791c"
+  },
+  {
+   "path": "qa/pilot05/environment/base_others/06.png",
+   "bytes": 967198,
+   "sha256": "244facef877355269430685eb112edfb111dd913185aa1110502056642d0626a"
+  },
+  {
+   "path": "qa/pilot05/environment/base_others/07.png",
+   "bytes": 1686891,
+   "sha256": "2a4a8cde909c90683e7a4f1678566febc2558bb7cccfe39c6daaf94b26a83603"
+  },
+  {
+   "path": "qa/pilot05/environment/base_others/08.png",
+   "bytes": 1358695,
+   "sha256": "77b7f5667f86f12b078fa999def81cd7e4b87e27fe2759f1447b871ebd600b7a"
+  },
+  {
+   "path": "qa/pilot05/environment/base_others/sheet_0607.png",
+   "bytes": 2054683,
+   "sha256": "80f57357d97ca23d5e4befc0d0dde1e3b0975b9f53f4fd7bd9609d0e051cf042"
+  },
+  {
    "path": "qa/pilot05/environment/iter00/05.png",
    "bytes": 1613394,
    "sha256": "6fe7ada19aea6866a38b82ab06bb694cfba957d2f6bbd7e97cd0d6e951ea20c4"
@@ -900,6 +950,26 @@
    "path": "qa/pilot05/environment/iter00/tri.png",
    "bytes": 1670581,
    "sha256": "bff18dcff69eb8087ab5f947cefaa4b633f4b79c7addab896c33add4e16ce835"
+  },
+  {
+   "path": "qa/pilot05/foam/iso/05_waterhide_crown,spray,bubbles.png",
+   "bytes": 1559681,
+   "sha256": "12fd035329a0d602e33bccf42939f917bce20804a276dcf303f8f2fffaa9cf46"
+  },
+  {
+   "path": "qa/pilot05/foam/iso/05_waterhide_crown.png",
+   "bytes": 1613394,
+   "sha256": "6fe7ada19aea6866a38b82ab06bb694cfba957d2f6bbd7e97cd0d6e951ea20c4"
+  },
+  {
+   "path": "qa/pilot05/foam/iso/05_waterhide_ribbon.png",
+   "bytes": 1562275,
+   "sha256": "78c267f02073b6d27ef3734d7b8880d6a3c381b9bf394451f6456ee82efc7849"
+  },
+  {
+   "path": "qa/pilot05/foam/iso/05_waterhide_spray.png",
+   "bytes": 1610699,
+   "sha256": "1801406de5be658c78c8c264e5e4b62b1b3deced829f126f0afbf3109e18274b"
   },
   {
    "path": "qa/pilot05/foam/iso/base/05.png",
@@ -927,9 +997,34 @@
    "sha256": "6fe7ada19aea6866a38b82ab06bb694cfba957d2f6bbd7e97cd0d6e951ea20c4"
   },
   {
+   "path": "qa/pilot05/water/before/03.png",
+   "bytes": 657383,
+   "sha256": "0416db6b2721ad0e002ca82703ac6b340fea10da82640a7c287af90ea11473f8"
+  },
+  {
+   "path": "qa/pilot05/water/before/04.png",
+   "bytes": 994368,
+   "sha256": "726ae6ec2b602c9fc25515f06fed7d87b698b31158bd706899a4747ed7bb791c"
+  },
+  {
    "path": "qa/pilot05/water/before/05.png",
    "bytes": 1613394,
    "sha256": "6fe7ada19aea6866a38b82ab06bb694cfba957d2f6bbd7e97cd0d6e951ea20c4"
+  },
+  {
+   "path": "qa/pilot05/water/before/06.png",
+   "bytes": 967198,
+   "sha256": "244facef877355269430685eb112edfb111dd913185aa1110502056642d0626a"
+  },
+  {
+   "path": "qa/pilot05/water/before/07.png",
+   "bytes": 1686891,
+   "sha256": "2a4a8cde909c90683e7a4f1678566febc2558bb7cccfe39c6daaf94b26a83603"
+  },
+  {
+   "path": "qa/pilot05/water/before_iso/05.png",
+   "bytes": 1571658,
+   "sha256": "450e51f847162b6b771bdc8c39a6cd92e198e4dbf617109566b5cb8cb5b81578"
   },
   {
    "path": "qa/report_metrics.json",
@@ -1122,9 +1217,14 @@
    "sha256": "9d4f922313c565e0e64bdd84ac2ef5da0dee6007641d61bdcad1c767c710c2a8"
   },
   {
+   "path": "scripts/.tmp_wem_probe.ts",
+   "bytes": 1445,
+   "sha256": "8889ca34226e63a255af933123df898bb93a0ab6be04b33b51831c1a001589b5"
+  },
+  {
    "path": "scripts/aspect-test.mjs",
-   "bytes": 5779,
-   "sha256": "e5a2cd4979d7b8db1ac81bce81bc5be8bbdeecb263bbdcb666775a21ca6cae87"
+   "bytes": 6058,
+   "sha256": "315d4bb55529f5cc5959c655a1bf5307b1b4ae4c26432207cb687675cb27bbc5"
   },
   {
    "path": "scripts/autosave-cron.sh",
@@ -1148,8 +1248,8 @@
   },
   {
    "path": "scripts/cinematic-test.mjs",
-   "bytes": 3615,
-   "sha256": "614346d3653429a2770fb6ede541667ec77efb795af1b859a604991fc5ba6d7b"
+   "bytes": 6059,
+   "sha256": "449136e67bd1ca58a4e02ac628e1b83311e9c5c209fd370805364fe7865c9618"
   },
   {
    "path": "scripts/cloud-env-setup.sh",
@@ -1228,8 +1328,8 @@
   },
   {
    "path": "src/characters/benny/benny-lab.ts",
-   "bytes": 6467,
-   "sha256": "3bc61364a54448c649544502d252a043ee5101da1572166c4ec254b1c8c6033c"
+   "bytes": 7219,
+   "sha256": "0d802866271bf59ab0a6bee4b562fbb409c8bfdce31dd6a135e61d5230e9c9e9"
   },
   {
    "path": "src/characters/benny/build.ts",
@@ -1283,8 +1383,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 29899,
-   "sha256": "d8f4a363be0961577c8416e2365196f15e9bf8f8057c15051545fad827714fc1"
+   "bytes": 30252,
+   "sha256": "01956c3db1742cc9ada502860fd29bde29c0ae98ef2bb06d160e8c76b0f950e8"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -1323,8 +1423,8 @@
   },
   {
    "path": "src/ui/cinematicVideo.ts",
-   "bytes": 4863,
-   "sha256": "4841b63a087c3953c98527cb58dd5f91bc4657293bd7417bf7b077913ec9966e"
+   "bytes": 7727,
+   "sha256": "04a804a4d39389fe968d068cd143311d6478d78cb067b0aea3a807b5d30494eb"
   },
   {
    "path": "src/ui/hud.ts",
@@ -1358,8 +1458,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 10482,
-   "sha256": "aa4f85f323fe5558df36a91016f9ec82acd2d8f934e74d2707df3ec3f5151423"
+   "bytes": 10956,
+   "sha256": "80a8113409e6d44b18eb1593c0ddc47838d71d77b810f178a3681c202f61b14e"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -1378,8 +1478,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 17106,
-   "sha256": "e422837523ac786d46af1a49b47a0ee19d35a54c13cef788f45409264415bde6"
+   "bytes": 19522,
+   "sha256": "889b5b7b4e5358251f2ff261466d86f3c809a52327e23328c91c1fb967ff2be7"
   },
   {
    "path": "src/vfx/whirlpool.ts",

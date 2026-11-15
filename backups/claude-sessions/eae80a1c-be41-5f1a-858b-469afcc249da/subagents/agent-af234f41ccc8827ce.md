@@ -642,3 +642,258 @@ I'll write a measurement script in the scratchpad using the director's exact cla
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T19:20:25.182Z
+
+> 🔧 **Bash** `{"command": "grep -n \"Light(\\|light\\b\\|lights\\|\\.intensity\" src/game/Game.ts | head -30; sed -n 540,568p src/world/environment.ts; grep -rn \"straightAxes\" src/world/course.ts | head", "description": "Find scene lights and the pink flow material"}`
+
+### 🧑 User — 2026-11-15T19:20:25.263Z
+
+> ↩︎ result: 49:  scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+> 50:  const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+> 54:  const fill = new THREE.PointLight('#ffd8ff', 30, 30, 1.6);
+>   shape.lineTo(1.4, 1.75); shape.quadraticCurveTo(0, 1.2, -1.4, 1.75); shape.lineTo(-2.6, 1.1); shape.lineTo(-2.1, 0.2); shape.lineTo(-1.2, 0.7); shape.lineTo(-1.2, -1.6);
+>   const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.3, bevelEnabled: true, bevelThickness: 0.15, bevelSize: 0.15, bevelSegments: 3, curveSegments: 8 });
+>   // planar UVs
+>   const p = geo.getAttribute('position');
+>   const uv = new Float32Array(p.count * 2);
+>   for (let i = 0; i < p.count; i++) { uv[i * 2] = (p.getX(i) + 2.6) / 5.2; uv[i * 2 + 1] = (p.getY(i) + 1.8) / 3.6; }
+>   geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+>   const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: tex, roughness: 0.85, emissive: '#e03a98', emissiveIntensity: 0.3 }));
+>   g.add(mesh);
+>   return g;
+> }
+> 
+> /** glossy hot-pink flowing water sheet (scrolling streak texture) for tube floors */
+> function pinkFlowMaterial() {
+>   const tex = canvasTexture(256, 512, (c, w, h) => {
+>     const g = c.createLinearGradient(0, 0, w, 0);
+>  …[+1064 chars]
+
+### 🤖 Claude — 2026-11-15T19:20:26.891Z
+
+> 🔧 **Bash** `{"command": "sed -n 36,75p src/game/Game.ts; sed -n 120,175p src/game/Game.ts", "description": "Read Game.ts lighting and per-stage setup"}`
+
+### 🧑 User — 2026-11-15T19:20:27.006Z
+
+> ↩︎ result: const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 6.4, badge: 3.9, cp11: 5.2 };
+> 
+> export async function startGame(canvas: HTMLCanvasElement) {
+>   const qs = new URLSearchParams(location.search);
+>   const qaMode = qs.has('qa');
+>   const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });
+>   const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+>   renderer.setPixelRatio(dpr);
+>   const scene = new THREE.Scene();
+>   scene.environment = createCandyEnvironment(renderer);
+>   scene.background = new THREE.Color('#b23fb4');
+>   const fog = new THREE.FogExp2('#ffbde9', 0.0035);
+>   scene.fog = fog;
+>   scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+>   const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+>   sun.position.set(0.3, 1, 0.45);
+>   scene.add(sun);
+>   scene.add(sun.target);
+>   const fill = new THREE.PointLight('#ffd8ff', 30, 30, 1.6);
+>   scene.add(fill);
+> 
+>   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+>   const composer = new EffectComposer(renderer);
+>   composer.addPass(new RenderPass(scene, camera));
+>   const bloom = new UnrealBloomPass(new THREE.Vector2( …[+2858 chars]
+
+### 🤖 Claude — 2026-11-15T19:20:53.617Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nW=Image.new('RGB',(1220,600))\nW.paste(r.crop((40,420,240,620)).resize((600,600),Image.LANCZOS),(0,0))\nW.paste(r.crop((330,190,530,390)).resize((600,600),Image.LANCZOS),(620,0))\nW.save(S+'zoom_ref2.png')\n\"", "description": "Zoom deeper into reference wall and ceiling"}`
+
+### 🧑 User — 2026-11-15T19:20:54.339Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:20:55.746Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/zoom_ref2.png"}`
+
+### 🧑 User — 2026-11-15T19:20:55.784Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:21:44.140Z
+
+Let me check the tube axis orientation in 05/06/07 (the env strips are defined around world Z, which only lines up if the tube runs along Z).
+
+### 🤖 Claude — 2026-11-15T19:21:44.941Z
+
+> 🔧 **Bash** `{"command": "grep -n \"straight\" src/world/course.ts | head -20 && cat package.json | head -30 && ls scripts/lib", "description": "Find straight axis definitions and npm scripts"}`
+
+### 🧑 User — 2026-11-15T19:21:44.997Z
+
+> ↩︎ result: 7: * rinse arch (06), winds through the washer tube and then PLUNGES ~62 units straight down (07) before
+> 86: * A stretch whose tunnel axis is an exact straight line a→b (the stream winds inside it). The
+> 102:  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> 109:  const straight: RouteData['straight'] = [];
+> 145:  // r shrinks as (1-t)^1.6 so the last stretch heads radially inward = straight -Z into the drain hole.
+> 152:  // ---- 04: five-arrow slide — steep straight drop (≈32°) inside the gold ring pipe ----
+> 173:  // the wide stream winds in gentle S-curves inside it. Centreline = the straight line s5 → s5+L05
+> 183:  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+> 201:  // ---- 07: THE DEEP PLUNGE — pull-down arc, long -70° straight, pull-up arc into the 08 inlet ----
+> 211:  // straight length chosen so the bottom lands exactly on the chamber floor altitude
+> 213:  const Lstraight = (drop - 2 * R * (1 - Math.cos(amax))) / Math.sin(amax);
+> 214:  seg(Math.ceil(Lstraight / 2), (t) => p1.clone().addScaledVector(dPl, Lstraight * t));
+> 241:  return { points: pts, marks, straight };
+> 275:  /** straigh …[+1400 chars]
+
+### 🤖 Claude — 2026-11-15T19:21:46.310Z
+
+> 🔧 **Bash** `{"command": "sed -n 165,240p src/world/course.ts", "description": "Read 05-07 course construction"}`
+
+### 🧑 User — 2026-11-15T19:21:46.491Z
+
+> ↩︎ result: const s4c = pts[pts.length - 1].clone();
+>   const R4 = 12;
+>   seg(8, (t) => {
+>     const a = -pitch4 + pitch4 * t;
+>     return s4c.clone().add(V(0, R4 * (Math.cos(-pitch4) - Math.cos(a)), R4 * (Math.sin(-pitch4) - Math.sin(a))));
+>   });
+>   mark('05');
+>   // ---- 05: long STRAIGHT perforated current tube (ref 05: concentric rings, ONE vanishing point);
+>   // the wide stream winds in gentle S-curves inside it. Centreline = the straight line s5 → s5+L05
+>   // (slight descent); the lateral S-offset and its slope vanish at both ends, so 04 and 06 join it
+>   // tangentially and s6 (hence 06/07/plunge/08) is unchanged. tube.ts builds the 05 tunnel on L05.
+>   const s5 = pts[pts.length - 1].clone();
+>   const L05 = V(0, -3, -72);
+>   const S05 = { amp: 2.0, waves: 2 }; // ≈1.6 after smoothPolyline; λ ≈ 36 units
+>   seg(48, (t) => {
+>     const env = smooth(0, 0.16, t) * (1 - smooth(0.84, 1, t));
+>     return s5.clone().addScaledVector(L05, t).add(V(S05.amp * env * Math.sin(2 * Math.PI * S05.waves * t), 0, 0));
+>   });
+>   straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+>   mark('06');
+>   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into  …[+2460 chars]
+
+### 🤖 Claude — 2026-11-15T19:22:36.868Z
+
+The 05 axis is (0,−3,−72), nearly −Z, so world-Z env strips line up there. Let me measure ring-top positions along the VP column in ref vs current, to decide ring spacing and band thickness.
+
+### 🤖 Claude — 2026-11-15T19:22:41.562Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/rings.py", "content": "# python3 -I rings.py IMG X [y0 y1]  -- gold runs (ring bands) down a column, ring-top spacing\nimport sys\nimport numpy as np\nfrom PIL import Image\nsys.path.insert(0, '/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad')\nfrom m05 import hsv, GOLD\n\np, X = sys.argv[1], int(sys.argv[2])\ny0 = int(sys.argv[3]) if len(sys.argv) > 3 else 150\ny1 = int(sys.argv[4]) if len(sys.argv) > 4 else 560\na = np.asarray(Image.open(p).convert('RGB').resize( …[+437 chars]`
+
+### 🧑 User — 2026-11-15T19:22:41.633Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/rings.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:22:43.117Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad; python3 -I $S/rings.py references/05_flow_into_the_current.png 498 185 480; python3 -I $S/rings.py qa/pilot05/environment/iter00/05.png 450 185 480", "description": "Measure ring band runs along VP column"}`
+
+### 🧑 User — 2026-11-15T19:22:44.560Z
+
+> ↩︎ result: Exit code 1
+> == references/05_flow_into_the_current.png
+>   gold%frame         7.9
+>   gold%tube(0-600)   9.1
+>   gold_med_rings     #F99649
+>   blowout%           3.6
+>   blowout%tube       2.0
+>   Lwall              #C435A7 V0.82 S0.75 dark%5 std53 pb%0.1 gold%12
+>   Rwall              #D83DA6 V0.89 S0.73 dark%6 std54 pb%0.1 gold%9
+>   ceil               #C1379F V0.80 S0.73 dark%3 std51 pb%0.0 gold%8
+>   VP                 (498,479) L229 #FEFDE4
+> == 498
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/rings.py", line 6, in <module>
+>     from m05 import hsv, GOLD
+>   File "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/m05.py", line 59, in <module>
+>     for k, v in metrics(p).items():
+>                 ~~~~~~~^^^
+>   File "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/m05.py", line 32, in metrics
+>     im = Image.open(p).convert('RGB').resize((864, 1536), Image.LANCZOS)
+>          ~~~~~~~~~~^^^
+>   File "/usr/local/lib/python3.13/site-packages/PIL/Image.py", line 3639, in open
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: …[+1202 chars]
+
+### 🤖 Claude — 2026-11-15T19:22:49.966Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 - <<'EOF'\np='m05.py'; s=open(p).read()\ns=s.replace(\"\\nfor p in sys.argv[1:]:\\n    print('==', p)\\n    for k, v in metrics(p).items():\\n        print('  %-18s %s' % (k, ('%.1f' % v) if isinstance(v, float) else v))\\n\",\n\"\\nif __name__ == '__main__':\\n  for p in sys.argv[1:]:\\n    print('==', p)\\n    for k, v in metrics(p).items():\\n        print('  %-18s %s' % (k, ('%.1f' % v) if isinstance(v, float) else v))\\n\")\nopen(p,'w').write(s)\nEOF\ncd /home/user/rainbow- && S=/t …[+287 chars]`
+
+### 🧑 User — 2026-11-15T19:22:50.985Z
+
+> ↩︎ result: references/05_flow_into_the_current.png x=498 runs (top,thick): [(203, 19), (433, 2), (446, 4), (455, 17)]
+>   top spacing: [230, 13, 9]
+> qa/pilot05/environment/iter00/05.png x=450 runs (top,thick): [(212, 28), (258, 24), (289, 19), (311, 18), (330, 6), (423, 2), (426, 4)]
+>   top spacing: [46, 31, 22, 19, 93, 3]
+
+### 🤖 Claude — 2026-11-15T19:23:41.858Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('qa/capture_log.json'))\nfor s in d['shots']: print(s['id'], json.dumps(s['state'])[:600]); print(json.dumps(s['checkpoint'])[:400])\n\"; sed -n 1,40p scripts/continuity-test.ts", "description": "Inspect captured camera state and continuity test harness"}`
+
+### 🧑 User — 2026-11-15T19:23:41.911Z
+
+> ↩︎ result: 05 {"mode": "ride", "stage": "05", "s": 127.389, "lat": 0, "coins": 1420, "hearts": 5, "paused": false, "bennyY": -41.182, "bennyVisible": true, "cam": [3.24, -37.64, -63.48]}
+> {"stage": "05", "s": 127.38922295095861, "y": -41.18180775172273}
+> /**
+>  * Route continuity + altitude test (run: npm run test:continuity).
+>  * Writes qa/continuity_report.json and docs/path_graph.md (altitude chart), exits 1 on failure.
+>  */
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { Course, validateContinuity, WORLD } from '../src/world/course';
+> 
+> const c = new Course();
+> const r = validateContinuity(c);
+> mkdirSync('qa', { recursive: true });
+> mkdirSync('docs', { recursive: true });
+> writeFileSync('qa/continuity_report.json', JSON.stringify({ length: c.length, marks: c.marks, ...r }, null, 2));
+> 
+> // altitude chart (ASCII) + per-stage table
+> const rows: string[] = [];
+> rows.push('# Rainbow route graph — absolute altitudes & continuity');
+> rows.push('');
+> rows.push(`Generated by \`npm run test:continuity\`. Route length **${c.length.toFixed(1)} units** (1 unit ≈ 5 cm at Benny scale).`);
+> rows.push('One centripetal Catmull-Rom spline from scene 01 to the towel at the end of 10; scene 11 is the');
+> rows.push( …[+1248 chars]
+
+### 🤖 Claude — 2026-11-15T19:23:49.805Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && cat > /home/user/rainbow-/scripts/.tmp_wem_probe.ts <<'EOF'\n// temporary probe (washer-environment-modeler); deleted after use\nimport * as THREE from 'three';\nimport { Course } from '../src/world/course';\nimport { straightTubePath, tubeCenterAt } from '../src/world/tube';\nconst c = new Course();\nconst s05 = c.stage('05').s0, s06 = c.stage('06').s0, s08 = c.stage('08').s0;\nconst p = straightTubePath(c, s05, s08, { window: 30, taper: 14, baseRadius: (s) => c.prop('tube', s) });\ncons …[+1207 chars]`
+
+### 🧑 User — 2026-11-15T19:23:50.942Z
+
+> ↩︎ result: s05 114.69 s06 189.15 s08 389.38
+> 114.7 ctr 1.81,-36.36,-57.57 R 7.60 D 3.25 tan 0.052,-0.165,-0.985 stream 2.05,-40.64,-56.84
+> 124.7 ctr 2.04,-37.28,-66.98 R 7.60 D 3.40 tan -0.036,-0.044,-0.998 stream 3.17,-41.48,-66.73
+> 127.4 ctr 2.00,-37.46,-69.60 R 7.60 D 3.46 tan -0.000,-0.042,-0.999 stream 3.34,-41.59,-69.43
+> 154.7 ctr 2.00,-38.76,-96.32 R 7.60 D 3.65 tan 0.000,-0.042,-0.999 stream 2.34,-42.71,-96.16
+> 184.1 ctr 1.41,-39.15,-124.94 R 8.06 D 3.30 tan -0.113,-0.035,-0.993 stream 1.10,-43.85,-125.11
+> 189.1 ctr 2.31,-32.88,-125.37 R 14.42 D 3.05 tan -0.108,0.357,-0.928 stream 1.56,-43.34,-130.04
+> 199.1 ctr 1.87,-27.50,-130.73 R 15.00 D 2.16 tan -0.037,0.588,-0.808 stream 0.15,-37.82,-138.16
+> cam nearest s 120.94 offset right 0.95 up -0.62 R 7.60
+
+### 🤖 Claude — 2026-11-15T19:24:08.306Z
+
+> 🔧 **Bash** `{"command": "node scripts/capture.mjs 03 04 06 07 08 --out=qa/pilot05/environment/base_others 2>&1 | tail -6", "description": "Capture regression baseline for other tube screens", "timeout": 500000}`
+
+### 🧑 User — 2026-11-15T19:25:14.745Z
+
+> ↩︎ result: 03 → qa/pilot05/environment/base_others/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":122,"tris":715494,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → qa/pilot05/environment/base_others/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":125,"tris":729542,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/environment/base_others/06.png {"stage":"06","s":199.145,"y":-37.402,"calls":103,"tris":545995,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → qa/pilot05/environment/base_others/07.png {"stage":"07","s":273.22,"y":-49.668,"calls":207,"tris":639577,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 08 → qa/pilot05/environment/base_others/08.png {"stage":"08","s":391.383,"y":-113.124,"calls":187,"tris":573925,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T19:25:16.750Z
+
+> 🔧 **Bash** `{"command": "B=qa/pilot05/environment/base_others; python3 scripts/triptych.py $B/sheet_0607.png 700 \"REF06=references/06_crest_the_rinse_arch.png\" \"NOW06=$B/06.png\" \"REF07=references/07_dive_the_washer_tube.png\" \"NOW07=$B/07.png\"", "description": "Build 06/07 ref vs baseline sheet"}`
+
+### 🧑 User — 2026-11-15T19:25:17.503Z
+
+> ↩︎ result: qa/pilot05/environment/base_others/sheet_0607.png (1616, 742)
+
+### 🤖 Claude — 2026-11-15T19:25:18.665Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/environment/base_others/sheet_0607.png"}`
+
+### 🧑 User — 2026-11-15T19:25:18.865Z
+
+> ↩︎ result: [image]
+

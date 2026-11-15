@@ -2425,3 +2425,168 @@ Now dispatching the five Screen 05 specialists in parallel. Each has exclusive f
 > 594-    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
 > 59 …[+601 chars]
 
+### 🤖 Claude — 2026-11-15T19:20:13.654Z
+
+No camera FOV hook exists yet, so I'll record Benny's projected screen position instead; the crop can be computed analytically from the aspect ratio. Running the test on the current build:
+
+### 🤖 Claude — 2026-11-15T19:20:19.804Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='scripts/aspect-test.mjs'\ns=open(p).read()\ns=s.replace(\"const cam = window.__rainbow.camera?.() ?? null;\",\"const cam = window.__rainbow.camera?.() ?? null;\\n        const benny = window.__rainbow.bennyScreen?.() ?? null;\")\ns=s.replace(\"hudBar: bar && bar.width ? [bar.left, bar.top, bar.width, bar.height] : null, cam };\",\"hudBar: bar && bar.width ? [bar.left, bar.top, bar.width, bar.height] : null, cam, benny };\")\ns=s.replace(\"hudInside, hudBar: m.hudBar, cam: m.cam };\",\"hudInside, hudBar: m.hudBar, cam: m.cam,\\n        refWidthVisib …[+839 chars]`
+
+### 🧑 User — 2026-11-15T19:23:13.226Z
+
+> ↩︎ result: ref_9x16               05 cover=true flatEdges=[] hud=true refWidthVisible=1  benny=0.06,-0.46
+> ref_9x16               11 cover=true flatEdges=[] hud=true refWidthVisible=1  benny=-0.08,-0.31
+> 18x9_360x720           05 cover=true flatEdges=[] hud=true refWidthVisible=0.889  benny=0.07,-0.46
+> 18x9_360x720           11 cover=true flatEdges=[] hud=true refWidthVisible=0.889  benny=-0.09,-0.31
+> 19.5x9_393x851         05 cover=true flatEdges=[] hud=true refWidthVisible=0.821  benny=0.07,-0.46
+> 19.5x9_393x851         11 cover=true flatEdges=[] hud=true refWidthVisible=0.821  benny=-0.1,-0.31
+> 20x9_412x915           05 cover=true flatEdges=[] hud=true refWidthVisible=0.8  benny=0.07,-0.46
+> 20x9_412x915           11 cover=true flatEdges=[] hud=true refWidthVisible=0.8  benny=-0.1,-0.31
+> 21x9_411x960           05 cover=true flatEdges=[] hud=true refWidthVisible=0.761  benny=0.08,-0.46
+> 21x9_411x960           11 cover=true flatEdges=[] hud=true refWidthVisible=0.761  benny=-0.1,-0.31
+> tab_10x16_800x1280     05 cover=true flatEdges=[] hud=true refWidthVisible=1  benny=0.05,-0.46
+> tab_10x16_800x1280     11 cover=true flatEdges=[] hud=true refWidthVisible=1  benny=-0.07,-0.31
+> fold_inner_673x841     05 cov …[+199 chars]
+
+### 🤖 Claude — 2026-11-15T19:23:18.841Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__World_Labs_Atlas__list_projects", "max_results": 1}`
+
+### 🧑 User — 2026-11-15T19:23:18.849Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-15T19:23:19.951Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🧑 User — 2026-11-15T19:23:20.360Z
+
+> ↩︎ result: this sign-in has no active Atlas account. Ask the user to open https://atlas.worldlabs.ai and finish signing up, then try again
+
+### 🤖 Claude — 2026-11-15T19:23:24.687Z
+
+> 🔧 **Bash** `{"command": "cat docs/FLOW_VIDEO.md; echo ======; cat src/ui/cinematicVideo.ts; echo =====; ls -la public public/video 2>&1; grep -n -E \"cinematicVideo|playCinematic|intro\\.mp4|ending\\.mp4|flow\" src/game/Game.ts src/main.ts | head", "description": "Audit Google Flow video integration code and docs"}`
+
+### 🧑 User — 2026-11-15T19:23:24.784Z
+
+> ↩︎ result: # Google Flow opening / ending videos
+> 
+> The game can play the user's Google Flow videos as silent cinematics and hand over to the real-time 3D
+> game without a cut. Gameplay (03–10) is always real-time 3D; the videos only cover the cinematics.
+> 
+> ## Where to put the files
+> 
+> | File | Plays | Hand-off |
+> |---|---|---|
+> | `public/video/intro.mp4` (or `.webm`) | at launch and on Replay, instead of the real-time 01 | the live 3D intro is held at the "girl walks away" moment (`T.cp01`) under the video, then revealed by a 0.7 s cross-fade and continued in real time: 02 Whirlpool Tumble → 03 ride |
+> | `public/video/ending.mp4` (or `.webm`) — optional | when Benny reaches 11, before the victory frame | the real-time 11 frame (the official cartoon girl holds the towel, Benny hidden, **FINAL SPIN COMPLETE**) is revealed by a cross-fade |
+> 
+> If a file is missing, the real-time 3D cinematic plays instead. Videos are always muted and inline.
+> Tap skips the video (after 0.6 s).
+> 
+> ## Recommended export
+> 
+> * Portrait 9:16 (1080×1920 or 720×1280). Landscape clips are letterboxed, not cropped.
+> * H.264 MP4 (AAC track optional — it is muted anyway). Keep it short (≈5–10 s) and under ~15 MB:
+>   the file is bundled into …[+6662 chars]
+
+### 🤖 Claude — 2026-11-15T19:23:45.372Z
+
+> 🔧 **Bash** `{"command": "cat scripts/cinematic-test.mjs; cat qa/cinematic_test.json | head -30", "description": "Read the cinematic video test"}`
+
+### 🧑 User — 2026-11-15T19:23:45.406Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Verifies the optional Google Flow cinematic hand-off in the REAL game build (headless Chromium):
+> //   1. with an intro video: overlay plays, the live 3D intro is held underneath, the overlay fades out and
+> //      the game continues in real time from 01 into the 03 ride (no slideshow, no stuck state);
+> //   2. without a video: no overlay, the real-time 01 cinematic starts at t = 0 (fallback).
+> // Usage: node scripts/cinematic-test.mjs [path-to-test-video-under-project-root]
+> // Writes qa/cinematic_test.json. Chromium here has no H.264, so the default test clip is VP8 WebM.
+> import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+> import { execSync } from 'node:child_process';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const clip = process.argv[2] ?? 'node_modules/.rainbow-test/intro.webm';
+> if (!existsSync(clip)) {
+>   mkdirSync('node_modules/.rainbow-test', { recursive: true });
+>   execSync(`ffmpeg -hide_banner -loglevel error -y -f lavfi -i color=c=0x8a2be2:s=360x640:d=2.5 -c:v libvpx -b:v 300k -an ${clip}`);
+> }
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5203);
+> const browser = await chromium.launch({ args …[+3003 chars]
+
+### 🤖 Claude — 2026-11-15T19:23:52.870Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/ui/cinematicVideo.ts", "old_string": "export type CinematicName = 'intro' | 'ending';\nexport type CinematicResult = 'ended' | 'skipped' | 'failed';", "new_string": "export type CinematicName = 'intro' | 'ending';\nexport type CinematicResult = 'ended' | 'skipped' | 'failed';\n\n/**\n * Edge-to-edge fit (no black bars, no stretching) for any clip on any phone:\n *  - 'cover' when cropping keeps at least COVER_MIN_KEEP of the clip (e.g. a 9:16 clip on a 20:9 phone\n *    keeps 80% of its width). The crop is centred on `focus` (CSS obj …[+851 chars]`
+
+### 🧑 User — 2026-11-15T19:23:52.908Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/ui/cinematicVideo.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:23:55.021Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/ui/cinematicVideo.ts", "old_string": "export function playCinematic(\n  url: string,\n  opts: { onEnding?: (r: CinematicResult) => void; fadeMs?: number } = {},\n): Promise<CinematicResult> {\n  const fadeMs = opts.fadeMs ?? 700;", "new_string": "export function playCinematic(\n  url: string,\n  opts: { onEnding?: (r: CinematicResult) => void; fadeMs?: number; focus?: string } = {},\n): Promise<CinematicResult> {\n  const fadeMs = opts.fadeMs ?? 700;\n  const focus = opts.focus ?? new URLSearchParams(location.search).get('videoFocus' …[+17 chars]`
+
+### 🧑 User — 2026-11-15T19:23:55.051Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/ui/cinematicVideo.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:24:01.972Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/ui/cinematicVideo.ts", "old_string": "    v.preload = 'auto';\n    v.style.cssText = 'width:100%;height:100%;object-fit:cover;';", "new_string": "    v.preload = 'auto';\n    v.style.cssText = `position:relative;width:100%;height:100%;object-fit:cover;object-position:${focus};`;\n    // blurred fill behind a 'fill'-fitted clip (hidden while the clip is cover-fitted)\n    const fillCv = document.createElement('canvas');\n    fillCv.width = 48; fillCv.height = 48;\n    fillCv.setAttribute('data-cinematic-fill', '');\n    fillCv.style.c …[+1336 chars]`
+
+### 🧑 User — 2026-11-15T19:24:01.998Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/ui/cinematicVideo.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:24:03.021Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/ui/cinematicVideo.ts", "old_string": "    wrap.append(v, hint);\n    document.body.append(wrap);", "new_string": "    wrap.append(fillCv, v, hint);\n    document.body.append(wrap);"}`
+
+### 🧑 User — 2026-11-15T19:24:03.048Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/ui/cinematicVideo.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:24:05.880Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/ui/cinematicVideo.ts", "old_string": "      opts.onEnding?.(r);\n      wrap.style.opacity = '0';\n      setTimeout(() => { v.pause(); wrap.remove(); resolve(r); }, fadeMs + 50);\n    };\n    // landscape clips are letterboxed instead of cropped to the portrait screen\n    v.onloadedmetadata = () => { if (v.videoWidth > v.videoHeight) v.style.objectFit = 'contain'; };", "new_string": "      opts.onEnding?.(r);\n      wrap.style.opacity = '0';\n      window.removeEventListener('resize', applyFit);\n      setTimeout(() => { v.pause(); w …[+217 chars]`
+
+### 🧑 User — 2026-11-15T19:24:05.920Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/ui/cinematicVideo.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:24:20.763Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/cinematic-test.mjs", "old_string": "  out.withoutVideo = { overlay: !!overlay, state: st, pass: !overlay && st.mode === 'intro' && st.paused === false };\n} finally {\n  out.pass = !!(out.withVideo.pass && out.withoutVideo.pass && out.errors.length === 0);", "new_string": "  out.withoutVideo = { overlay: !!overlay, state: st, pass: !overlay && st.mode === 'intro' && st.paused === false };\n  await page.close();\n\n  // ---- 3. edge-to-edge fit on a 20:9 phone: portrait clip -> cover crop, landscape clip -> blurred fill\n  const l …[+2297 chars]`
+
+### 🧑 User — 2026-11-15T19:24:20.802Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/cinematic-test.mjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:24:22.370Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/cinematic-test.mjs", "old_string": "console.log(JSON.stringify({ pass: out.pass, withVideo: out.withVideo.pass, withoutVideo: out.withoutVideo.pass, errors: out.errors.slice(0, 5) }));", "new_string": "console.log(JSON.stringify({ pass: out.pass, withVideo: out.withVideo.pass, withoutVideo: out.withoutVideo.pass, fit: out.fit, errors: out.errors.slice(0, 5) }));"}`
+
+### 🧑 User — 2026-11-15T19:24:22.400Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/cinematic-test.mjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:24:25.686Z
+
+The default portrait test clip is a solid colour, which would read as "flat" even when cover-fitted. The fit test needs a patterned portrait clip:
+
+### 🤖 Claude — 2026-11-15T19:24:29.049Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/cinematic-test.mjs", "old_string": "  const land = 'node_modules/.rainbow-test/intro_landscape.webm';\n  if (!existsSync(land)) {\n    execSync(`ffmpeg -hide_banner -loglevel error -y -f lavfi -i testsrc2=s=640x360:d=3 -c:v libvpx -b:v 400k -an ${land}`);\n  }\n  out.fit = {};\n  for (const [name, file, expect] of [['portrait', clip, 'cover'], ['landscape', land, 'fill']]) {", "new_string": "  const land = 'node_modules/.rainbow-test/intro_landscape.webm';\n  const port = 'node_modules/.rainbow-test/intro_portrait_pattern.webm';\ …[+329 chars]`
+
+### 🧑 User — 2026-11-15T19:24:29.077Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/cinematic-test.mjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:24:30.353Z
+
+> 🔧 **Bash** `{"command": "which ffmpeg && npx tsc --noEmit 2>&1 | grep -E \"cinematicVideo|error\" | head -5; echo \"tsc done\"; timeout 500 node scripts/cinematic-test.mjs 2>&1 | tail -3", "description": "Typecheck and run extended cinematic test", "timeout": 600000}`
+

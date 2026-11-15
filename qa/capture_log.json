@@ -1,41 +1,209 @@
 {
-  "when": "2026-11-15T19:19:23.824Z",
+  "when": "2026-11-15T19:24:08.965Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
-      "id": "05",
-      "file": "qa/pilot05/foam/iso/no_bubbles/05.png",
+      "id": "03",
+      "file": "qa/pilot05/environment/base_others/03.png",
+      "size": [
+        727,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "03",
+        "s": 48.49515264641385,
+        "y": -13.425420271961075
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "03",
+        "s": 48.495,
+        "lat": 0.3,
+        "coins": 1330,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -13.425,
+        "bennyVisible": true,
+        "cam": [
+          -0.36,
+          -8.77,
+          -19.15
+        ]
+      },
+      "stats": {
+        "fps": 60.3,
+        "calls": 122,
+        "triangles": 715494,
+        "geometries": 98,
+        "textures": 36,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.3550032422328
+      }
+    },
+    {
+      "id": "04",
+      "file": "qa/pilot05/environment/base_others/04.png",
       "size": [
         864,
         1536
       ],
       "checkpoint": {
-        "stage": "05",
-        "s": 127.38922295095861,
-        "y": -41.18180775172273
+        "stage": "04",
+        "s": 77.41308465825975,
+        "y": -21.89572362879423
       },
       "state": {
         "mode": "ride",
-        "stage": "05",
-        "s": 127.389,
+        "stage": "04",
+        "s": 77.413,
         "lat": 0,
-        "coins": 1420,
+        "coins": 1330,
         "hearts": 5,
         "paused": false,
-        "bennyY": -41.182,
+        "bennyY": -21.896,
         "bennyVisible": true,
         "cam": [
-          3.24,
-          -37.64,
-          -63.48
+          0.72,
+          -14.48,
+          -15.82
         ]
       },
       "stats": {
-        "fps": 63.2,
-        "calls": 112,
-        "triangles": 610907,
-        "geometries": 90,
+        "fps": 60.6,
+        "calls": 125,
+        "triangles": 729542,
+        "geometries": 100,
         "textures": 36,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.3550032422328
+      }
+    },
+    {
+      "id": "06",
+      "file": "qa/pilot05/environment/base_others/06.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "06",
+        "s": 199.14547219130043,
+        "y": -37.401599700953305
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 199.145,
+        "lat": 0,
+        "coins": 1680,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -37.402,
+        "bennyVisible": true,
+        "cam": [
+          0.86,
+          -38.76,
+          -132.82
+        ]
+      },
+      "stats": {
+        "fps": 62.5,
+        "calls": 103,
+        "triangles": 545995,
+        "geometries": 83,
+        "textures": 36,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.3550032422328
+      }
+    },
+    {
+      "id": "07",
+      "file": "qa/pilot05/environment/base_others/07.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 273.21974253480516,
+        "y": -49.667556069906354
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 273.22,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -49.668,
+        "bennyVisible": true,
+        "cam": [
+          10.93,
+          -45.6,
+          -195.35
+        ]
+      },
+      "stats": {
+        "fps": 61.1,
+        "calls": 207,
+        "triangles": 639577,
+        "geometries": 179,
+        "textures": 47,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.3550032422328
+      }
+    },
+    {
+      "id": "08",
+      "file": "qa/pilot05/environment/base_others/08.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "08",
+        "s": 391.3825938792252,
+        "y": -113.12369228889698
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "08",
+        "s": 391.383,
+        "lat": 0,
+        "coins": 2040,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -113.124,
+        "bennyVisible": true,
+        "cam": [
+          12.03,
+          -108.74,
+          -276
+        ]
+      },
+      "stats": {
+        "fps": 78.3,
+        "calls": 187,
+        "triangles": 573925,
+        "geometries": 160,
+        "textures": 46,
         "modules": {
           "water": "vfx/index.ts",
           "benny": "assets/models/benny.glb",

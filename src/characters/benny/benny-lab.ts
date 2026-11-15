@@ -48,6 +48,10 @@ interface Panel {
             { name: '03-front', yaw: 0.55, pitch: 0.12, dist: 4.2, expr: 'happy', swim: 0.3, fov: 40, tumble: false },
             { name: '02-dizzy', yaw: 0.0, pitch: 0.05, dist: 4.2, expr: 'dizzy', swim: 0, fov: 40, tumble: true },
           ]
+        : views === 'measure'
+          ? // proportion check: rear views at the ride height (lifted) at 12° / 18° / 24° / 28° camera elevation,
+            // chroma-green background + water so a colour mask separates Benny (qa/pilot05/benny measure script)
+            [12, 18, 24, 28].map((deg) => ({ name: `rear-${deg}`, yaw: Math.PI, pitch: THREE.MathUtils.degToRad(deg), dist: 6.4, expr: 'happy', swim: 1, fov: 36, tumble: false }))
         : views === 'game'
           ? [
               // stage 05 ride camera (cameraRig STAGE_CAM['05'])
@@ -64,8 +68,9 @@ interface Panel {
               { name: 'back', yaw: Math.PI, pitch: 0.08, dist: 5.4, expr: 'happy', swim: 0, fov: 35, tumble: false },
               { name: 'rear-high', yaw: Math.PI * 0.92, pitch: 0.5, dist: 5.4, expr: 'happy', swim: 0.8, fov: 35, tumble: false },
             ];
-    const PW = views === 'refs' || views === 'game' ? 432 : 360;
-    const PH = views === 'refs' || views === 'game' ? 768 : 520;
+    const measure = views === 'measure';
+    const PW = views === 'refs' || views === 'game' || measure ? 432 : 360;
+    const PH = views === 'refs' || views === 'game' || measure ? 768 : 520;
     const W = PW * panels.length, H = PH;
     const canvas = document.getElementById('lab') as HTMLCanvasElement;
     const renderer = createRenderer(canvas, { preserveDrawingBuffer: true });
@@ -74,7 +79,7 @@ interface Panel {
     renderer.setScissorTest(true);
     const scene = new THREE.Scene();
     scene.environment = createCandyEnvironment(renderer);
-    scene.background = new THREE.Color(views === 'turntable' ? '#3a1060' : '#c0369c');
+    scene.background = new THREE.Color(views === 'turntable' ? '#3a1060' : measure ? '#00ff00' : '#c0369c');
     scene.add(new THREE.HemisphereLight('#ffe9ff', '#7a2a9c', 1.1));
     const key = new THREE.DirectionalLight('#ffffff', 2.2);
     key.position.set(3, 6, 5);
@@ -84,10 +89,16 @@ interface Panel {
     scene.add(rim);
     // an opaque cyan "water" plane at the game's ride height (refs / game views)
     if (views !== 'turntable') {
-      const water = new THREE.Mesh(new THREE.CircleGeometry(40, 64), new THREE.MeshStandardMaterial({ color: '#29d8ff', roughness: 0.1, metalness: 0.1, emissive: '#0a6f9a', emissiveIntensity: 0.6 }));
+      const water = new THREE.Mesh(
+        new THREE.CircleGeometry(40, 64),
+        measure
+          ? new THREE.MeshBasicMaterial({ color: '#00ff00' })
+          : new THREE.MeshStandardMaterial({ color: '#29d8ff', roughness: 0.1, metalness: 0.1, emissive: '#0a6f9a', emissiveIntensity: 0.6 }),
+      );
       water.rotation.x = -Math.PI / 2;
       // game view: exact game placement (the runtime lifts him while swimming); refs view: lifted ride height
-      water.position.y = views === 'game' ? -RIDE : -(RIDE + BENNY_RIDE_LIFT);
+      // (measure: the game's real placement, root = water + RIDE; the runtime adds the ride lift itself)
+      water.position.y = views === 'game' || measure ? -RIDE : -(RIDE + BENNY_RIDE_LIFT);
       scene.add(water);
     }
     let i = 0;

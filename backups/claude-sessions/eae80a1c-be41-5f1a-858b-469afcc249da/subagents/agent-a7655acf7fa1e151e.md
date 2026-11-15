@@ -577,3 +577,288 @@ Let me capture the current baseline (game 05/02/10 and the lab) before changing 
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && timeout 600 node $SP/lab.mjs $SP/before_refs_glb.png \"src=glb&views=refs\" $SP/before_game_glb.png \"src=glb&views=game\" $SP/before_tt_glb.png \"src=glb&views=turntable\" 2>&1 | tail", "description": "Render Benny lab views from the current GLB", "timeout": 600000}`
 
+### 🧑 User — 2026-11-15T19:20:37.328Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/before_refs_glb.png {"baseTriangles":13988,"furQuality":"high"} no console errors
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/before_game_glb.png {"baseTriangles":13988,"furQuality":"high"} no console errors
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/before_tt_glb.png {"baseTriangles":13988,"furQuality":"high"} no console errors
+
+### 🤖 Claude — 2026-11-15T19:20:38.887Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/before_game_glb.png"}`
+
+### 🧑 User — 2026-11-15T19:20:38.955Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:20:49.163Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 -c \"\nfrom PIL import Image\nim=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nim.crop((200,740,640,1220)).resize((660,720)).save('$SP/ref05_benny.png')\nim=Image.open('references/10_slide_into_hiding.png').convert('RGB')\nim.crop((140,840,680,1400)).save('$SP/ref10_benny.png')\n\"", "description": "Crop Benny from references 05 and 10"}`
+
+### 🧑 User — 2026-11-15T19:20:49.913Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:20:51.867Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/ref05_benny.png"}`
+
+### 🧑 User — 2026-11-15T19:20:51.889Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:20:52.698Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/ref10_benny.png"}`
+
+### 🧑 User — 2026-11-15T19:20:53.064Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:22:10.312Z
+
+> 🔧 **Bash** `{"command": "sed -n 80,175p src/game/Game.ts", "description": "Read Game.ts Benny placement section"}`
+
+### 🧑 User — 2026-11-15T19:22:10.339Z
+
+> ↩︎ result: const env = buildEnvironment(course);
+>   scene.add(env.group);
+>   const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+>   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+>   if (hidden.has('water')) water.group.visible = false;
+>   if (hidden.has('coins')) coins.group.visible = false;
+>   const zoneHidden = (k: string) => hidden.has(k);
+>   const hud = createHud();
+>   const input = createInput(canvas);
+>   const rideCam = new RideCamera(course);
+>   rideCam.axis = env.tubeAxis;
+> 
+>   // ---------------------------------------------------------------- state
+>   const st = {
+>     mode: 'intro' as Mode,
+>     t: 0, // time within the current mode
+>     clock: 0, // global animation time (shaders)
+>     frozen: null as number | null, // QA: freeze shader time
+>     s: 0,
+>     lat: 0,
+>     vlat: 0,
+>     coins: START_COINS,
+>     hearts: 5,
+>     paused: false,
+>     stage: '01' as StageId,
+>     bumpCooldown: 0,
+>     edgeTime: 0,
+>     twirl: 0,
+>     respawns: 0,
+>   …[+2452 chars]
+
+### 🤖 Claude — 2026-11-15T19:22:12.527Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/tasks/b844m8w99.output; ls -la /home/user/rainbow-/qa/pilot05/benny/before", "description": "Show baseline capture output"}`
+
+### 🧑 User — 2026-11-15T19:22:12.556Z
+
+> ↩︎ result: 05 → qa/pilot05/benny/before/05.png {"stage":"05","s":127.389,"y":-41.182,"calls":112,"tris":610907,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 02 → qa/pilot05/benny/before/02.png {"stage":"02","s":8.756,"y":1.181,"calls":266,"tris":400365,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 10 → qa/pilot05/benny/before/10.png {"stage":"10","s":423.18,"y":-112.835,"calls":282,"tris":412969,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 01 → qa/pilot05/benny/before/01.png {"stage":"01","s":0,"y":-2.05,"calls":279,"tris":403345,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 11 → qa/pilot05/benny/before/11.png {"stage":"11","s":435.355,"y":-109.565,"calls":273,"tris":276169,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> [exited with code 0]
+> total 6632
+> drwxr-xr-x 2 root root    4096 Nov 15 19:21 .
+> drwxr-xr-x 3 root root    4096 Nov 15 19:19 ..
+> -rw-r--r-- 1 root root 1097990 Nov  …[+219 chars]
+
+### 🤖 Claude — 2026-11-15T19:22:13.577Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/benny/before/05.png"}`
+
+### 🧑 User — 2026-11-15T19:22:13.631Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:22:22.497Z
+
+> 🔧 **Bash** `{"command": "sed -n 575,640p src/game/Game.ts && sed -n 340,366p src/game/Game.ts", "description": "Read Game.ts debug API and ride placement"}`
+
+### 🧑 User — 2026-11-15T19:22:22.526Z
+
+> ↩︎ result: };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+>     respawns() { return st.respawns; },
+>     /** debug: Benny's project …[+2776 chars]
+
+### 🤖 Claude — 2026-11-15T19:22:31.894Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/yaw.mjs", "content": "// For each checkpoint: apparent viewing yaw of Benny (angle between camera→Benny and his heading,\n// measured in his up-plane; + = camera sees his RIGHT (−X) side) and camera elevation over him.\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst ids = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5321);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry { …[+1212 chars]`
+
+### 🧑 User — 2026-11-15T19:22:31.911Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/yaw.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:22:34.243Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/yaw.mjs 04 05 06 07 09 10 2>&1 | tail -8", "description": "Measure Benny's apparent yaw and camera elevation per checkpoint", "timeout": 600000}`
+
+### 🧑 User — 2026-11-15T19:22:56.282Z
+
+> ↩︎ result: {"id":"04","s":77.413,"lat":0,"screen":[0.21,-0.02],"yawDeg":6.5,"elevDeg":12.3,"dist":11.85}
+> {"id":"05","s":127.389,"lat":0,"screen":[0.06,-0.46],"yawDeg":3.7,"elevDeg":27.4,"dist":7.09}
+> {"id":"06","s":199.145,"lat":0,"screen":[-0.14,-0.7],"yawDeg":5.6,"elevDeg":24.9,"dist":5.45}
+> {"id":"07","s":273.22,"lat":0,"screen":[-0.34,-0.73],"yawDeg":3.8,"elevDeg":30.9,"dist":7.53}
+> {"id":"09","s":407.452,"lat":0,"screen":[0.13,-0.58],"yawDeg":9.8,"elevDeg":26.5,"dist":7.17}
+> {"id":"10","s":423.18,"lat":0,"screen":[0.14,-0.61],"yawDeg":11.6,"elevDeg":27.7,"dist":6.57}
+
+### 🤖 Claude — 2026-11-15T19:23:08.625Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/pilot05/*/ && cat qa/pilot05/REQUESTS.md 2>/dev/null; cat qa/pilot05/camera/NOTES.md 2>/dev/null | head -40; git diff --stat src/game/cameraRig.ts src/game/Game.ts | tail -3", "description": "Check other specialists' notes and requests"}`
+
+### 🧑 User — 2026-11-15T19:23:08.661Z
+
+> ↩︎ result: qa/pilot05/benny/:
+> total 12
+> drwxr-xr-x 3 root root 4096 Nov 15 19:19 .
+> drwxr-xr-x 8 root root 4096 Nov 15 19:17 ..
+> drwxr-xr-x 2 root root 4096 Nov 15 19:21 before
+> 
+> qa/pilot05/camera/:
+> total 12
+> drwxr-xr-x 3 root root 4096 Nov 15 19:19 .
+> drwxr-xr-x 8 root root 4096 Nov 15 19:17 ..
+> drwxr-xr-x 2 root root 4096 Nov 15 19:19 iter00
+> 
+> qa/pilot05/environment/:
+> total 12
+> drwxr-xr-x 3 root root 4096 Nov 15 19:18 .
+> drwxr-xr-x 8 root root 4096 Nov 15 19:17 ..
+> drwxr-xr-x 2 root root 4096 Nov 15 19:18 iter00
+> 
+> qa/pilot05/foam/:
+> total 12
+> drwxr-xr-x 3 root root 4096 Nov 15 19:19 .
+> drwxr-xr-x 8 root root 4096 Nov 15 19:17 ..
+> drwxr-xr-x 7 root root 4096 Nov 15 19:22 iso
+> 
+> qa/pilot05/qa/:
+> total 8
+> drwxr-xr-x 2 root root 4096 Nov 15 19:17 .
+> drwxr-xr-x 8 root root 4096 Nov 15 19:17 ..
+> 
+> qa/pilot05/water/:
+> total 16
+> drwxr-xr-x 4 root root 4096 Nov 15 19:22 .
+> drwxr-xr-x 8 root root 4096 Nov 15 19:17 ..
+> drwxr-xr-x 2 root root 4096 Nov 15 19:22 before
+> drwxr-xr-x 2 root root 4096 Nov 15 19:23 before_iso
+
+### 🤖 Claude — 2026-11-15T19:23:54.761Z
+
+Baseline captured. Now I'll add a measurement mode to my benny-lab (chroma background, rear cameras at several elevations) so the hat:body ratio can be measured cleanly.
+
+### 🤖 Claude — 2026-11-15T19:23:57.507Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "        : views === 'game'\n          ? [", "new_string": "        : views === 'measure'\n          ? // proportion check: rear views at the ride height (lifted) at 12° / 18° / 24° / 28° camera elevation,\n            // chroma-green background + water so a colour mask separates Benny (qa/pilot05/benny measure script)\n            [12, 18, 24, 28].map((deg) => ({ name: `rear-${deg}`, yaw: Math.PI, pitch: THREE.MathUtils.degToRad(deg), dist: 6.4, expr: 'happy', swim: 1, fov: 36, tumble: f …[+53 chars]`
+
+### 🧑 User — 2026-11-15T19:23:57.532Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:23:59.059Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "    const PW = views === 'refs' || views === 'game' ? 432 : 360;\n    const PH = views === 'refs' || views === 'game' ? 768 : 520;", "new_string": "    const measure = views === 'measure';\n    const PW = views === 'refs' || views === 'game' || measure ? 432 : 360;\n    const PH = views === 'refs' || views === 'game' || measure ? 768 : 520;"}`
+
+### 🧑 User — 2026-11-15T19:23:59.088Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:24:00.411Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "    scene.background = new THREE.Color(views === 'turntable' ? '#3a1060' : '#c0369c');", "new_string": "    scene.background = new THREE.Color(views === 'turntable' ? '#3a1060' : measure ? '#00ff00' : '#c0369c');"}`
+
+### 🧑 User — 2026-11-15T19:24:00.440Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:24:02.817Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "      const water = new THREE.Mesh(new THREE.CircleGeometry(40, 64), new THREE.MeshStandardMaterial({ color: '#29d8ff', roughness: 0.1, metalness: 0.1, emissive: '#0a6f9a', emissiveIntensity: 0.6 }));", "new_string": "      const water = new THREE.Mesh(\n        new THREE.CircleGeometry(40, 64),\n        measure\n          ? new THREE.MeshBasicMaterial({ color: '#00ff00' })\n          : new THREE.MeshStandardMaterial({ color: '#29d8ff', roughness: 0.1, metalness: 0.1, emissive: '#0a6f9a' …[+40 chars]`
+
+### 🧑 User — 2026-11-15T19:24:02.848Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:24:09.782Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny-lab.ts", "old_string": "      water.position.y = views === 'game' ? -RIDE : -(RIDE + BENNY_RIDE_LIFT);", "new_string": "      // (measure: the game's real placement, root = water + RIDE; the runtime adds the ride lift itself)\n      water.position.y = views === 'game' || measure ? -RIDE : -(RIDE + BENNY_RIDE_LIFT);"}`
+
+### 🧑 User — 2026-11-15T19:24:09.816Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny-lab.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:24:35.000Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/measure.py", "content": "\"\"\"Benny hat:body proportion measurement by colour mask.\n\nlab  <png> <panels>                 chroma-green lab strip (benny-lab views=measure)\nbox  <png> x0 y0 x1 y1 [cx]         reference / game frame: Benny search box (+ optional centre column)\n\nClasses: hat = violet/purple (B > R) or knit white (bright, low saturation); fur = pink (R > B, G low);\nstar = yellow. top = first row (from the top of the box) whose centre band is hat; cuff bottom = last row\nwhere the  …[+3778 chars]`
+
+### 🧑 User — 2026-11-15T19:24:35.026Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/measure.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:24:39.631Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 $SP/measure.py box references/05_flow_into_the_current.png 200 740 650 1230 421 ref05; python3 $SP/measure.py box references/10_slide_into_hiding.png 150 840 690 1400 410 ref10; python3 $SP/measure.py box references/07_dive_the_washer_tube.png 180 760 660 1230 425 ref07; python3 $SP/measure.py box references/09_ride_the_final_wave.png 200 840 650 1290 425 ref09; python3 $SP/measure.py box references/04_through_the_five_arrows.png 180 960 620 1420 395 ref04; python3 $SP/measure.py box qa …[+145 chars]`
+
+### 🧑 User — 2026-11-15T19:24:42.656Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/measure.py", line 102, in <module>
+>     analyse(a, x0, y0, x1, y1, cx=cx, label=sys.argv[8] if len(sys.argv) > 8 else 'box')
+>     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/measure.py", line 74, in analyse
+>     body_w = max(width(fur, y) for y in range(cuff + 1, bot))
+> ValueError: max() iterable argument is empty
+> ref10      cx=410 top=840 cuffBottom=872 bottom=878 visibleH=38 hat=84.2% body=15.8% cuffW=540 bodyW=477 fur=#FA6BF6 cuff=#43ABF8 star=(366, 840, 559, 1126) #FCDE09
+> ref07      cx=425 top=764 cuffBottom=794 bottom=799 visibleH=35 hat=85.7% body=14.3% cuffW=480 bodyW=480 fur=#F280F0 cuff=#3AA8F6 star=(180, 760, 658, 1006) #FBCD11
+> ref09      cx=425 top=840 cuffBottom=1116 bottom=1258 visibleH=418 hat=66.0% body=34.0% cuffW=450 bodyW=387 fur=#FB4BB2 cuff=#6004EF star=(200, 840, 548, 1069) #FBD00F
+> ref04      cx=395 top=960 cuffBottom=1273 bottom=1376 visibleH=416 hat=75.2% body=24.8% cuffW=440 bodyW=362 fur=#E24997 cuff=#6410C5 s …[+203 chars]
+
+### 🤖 Claude — 2026-11-15T19:24:50.883Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && cat > $SP/runs.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsys.path.insert(0, sys.argv[0].rsplit('/',1)[0])\nfrom measure import classes\npath, cx, y0, y1 = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4])\nband = int(sys.argv[5]) if len(sys.argv) > 5 else 12\na = np.asarray(Image.open(path).convert('RGB'))\ng, w, p, f, s = classes(a)\nlab = []\nfor y in range(y0, y1):\n    sl = slice(cx-band, cx+band)\n    n = 2*band\n    hw, hp, hf, hs = w[y,sl].sum()/n, p[y,s …[+861 chars]`
+
+### 🧑 User — 2026-11-15T19:24:53.296Z
+
+> ↩︎ result: == references/05_flow_into_the_current.png 421 740 1230
+> .740-748 P749-766 .767-771 W772-779 h780-780 F781-781 .782-790 P791-897 h898-898 .899-900 W901-920 P921-955 W956-979 P980-1030 .1031-1035 F1036-1169 .1170-1175 P1176-1229
+> == references/10_slide_into_hiding.png 410 840 1420
+> P840-846 .847-855 W856-869 h870-870 W871-871 h872-872 .873-877 F878-878 .879-883 h884-884 P885-887 .888-888 P889-894 h895-895 P896-1035 .1036-1040 W1041-1041 .1042-1045 W1046-1058 h1059-1059 P1060-1097 h1098-1098 W1099-1106 .1107-1109 W1110-1113 F1114-1115 W1116-1117 .1118-1118 F1119-1121 .1122-1123 F1124-1124 .1125-1126 h1127-1127 P1128-1188 .1189-1194 F1195-1371 .1372-1374 P1375-1407 h1408-1409 P1410-1419
+> == references/07_dive_the_washer_tube.png 425 760 1240
+> .760-763 P764-778 h779-780 W781-793 h794-794 .795-798 F799-799 .800-801 h802-805 P806-806 h807-807 P808-812 h813-813 P814-924 .925-929 W930-949 P950-980 W981-1002 h1003-1005 P1006-1056 .1057-1061 F1062-1206 .1207-1215 P1216-1227 .1228-1229 h1230-1230 P1231-1236 h1237-1237 .1238-1238 P1239-1239
+> == references/09_ride_the_final_wave.png 425 830 1300
+> P830-850 h851-851 .852-852 W853-864 h865-865 .866-868 h869-869 .870-872 P873-992 h993-993 .994-997 W998-10 …[+825 chars]
+

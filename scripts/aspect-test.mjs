@@ -48,8 +48,9 @@ try {
         const c = document.querySelector('canvas#scene').getBoundingClientRect();
         const bar = document.querySelector('#hud .bar')?.getBoundingClientRect();
         const cam = window.__rainbow.camera?.() ?? null;
+        const benny = window.__rainbow.bennyScreen?.() ?? null;
         return { vw: innerWidth, vh: innerHeight, canvas: [c.left, c.top, c.width, c.height],
-          hudBar: bar && bar.width ? [bar.left, bar.top, bar.width, bar.height] : null, cam };
+          hudBar: bar && bar.width ? [bar.left, bar.top, bar.width, bar.height] : null, cam, benny };
       });
       // edge analysis on the screenshot pixels (flat rows/cols = bars or empty borders)
       const edges = await page.evaluate(async (src) => {
@@ -66,9 +67,10 @@ try {
       const fullCover = Math.abs(m.canvas[0]) < 1 && Math.abs(m.canvas[1]) < 1 && Math.abs(m.canvas[2] - m.vw) < 1 && Math.abs(m.canvas[3] - m.vh) < 1;
       const flatEdges = Object.entries(edges).filter(([, s]) => s < 2).map(([k]) => k);
       const hudInside = m.hudBar ? m.hudBar[0] >= 0 && m.hudBar[0] + m.hudBar[2] <= m.vw && m.hudBar[1] >= 0 : null;
-      const row = { device: d.id, note: d.note, stage: st, file, aspect: +(d.w / d.h).toFixed(4), fullCover, flatEdges, edgeStd: edges, hudInside, hudBar: m.hudBar, cam: m.cam };
+      const row = { device: d.id, note: d.note, stage: st, file, aspect: +(d.w / d.h).toFixed(4), fullCover, flatEdges, edgeStd: edges, hudInside, hudBar: m.hudBar, cam: m.cam,
+        refWidthVisible: m.cam?.refWidthVisible ?? +Math.min(1, (d.w / d.h) / (9 / 16)).toFixed(3), benny: m.benny };
       report.devices.push(row);
-      console.log(`${d.id.padEnd(22)} ${st} cover=${fullCover} flatEdges=[${flatEdges}] hud=${hudInside} ${m.cam ? `vfov=${m.cam.vfov?.toFixed(1)} hfov=${m.cam.hfov?.toFixed(1)}` : ''}`);
+      console.log(`${d.id.padEnd(22)} ${st} cover=${fullCover} flatEdges=[${flatEdges}] hud=${hudInside} refWidthVisible=${row.refWidthVisible} ${m.cam ? `vfov=${m.cam.vfov?.toFixed(1)} hfov=${m.cam.hfov?.toFixed(1)}` : ''} benny=${m.benny ? m.benny.x + ',' + m.benny.y : '-'}`);
       await page.close();
     }
   }

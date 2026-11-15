@@ -564,3 +564,507 @@ Let me compose the bottom halves of all five side by side for comparison.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T19:20:16.422Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"__rainbow\" src --include=*.ts | head -20 && sed -n 1,60p scripts/lib/pw.mjs", "description": "Find the QA hook API and Playwright helper"}`
+
+### 🧑 User — 2026-11-15T19:20:16.575Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:616:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, str …[+520 chars]
+
+### 🤖 Claude — 2026-11-15T19:20:17.780Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 470, "limit": 150}`
+
+### 🧑 User — 2026-11-15T19:20:17.809Z
+
+> ↩︎ result: 470	  };
+> 471	  const resetToIntro = () => {
+> 472	    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+> 473	    coins.resetUntil(-1);
+> 474	    hud.setCoins(st.coins); hud.setHearts(5); hud.setVisible(false); hud.showVictory(false); hud.showPaused(false);
+> 475	    st.stage = '01'; updateZones();
+> 476	    env.towel.setTent(0);
+> 477	    env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
+> 478	    env.doorC.rotation.y = 0;
+> 479	    benny.root.visible = true;
+> 480	    playIntroVideo();
+> 481	  };
+> 482	
+> 483	  const stepSim = (dt: number) => {
+> 484	    if (st.paused) return;
+> 485	    st.t += dt;
+> 486	    if (st.frozen === null) st.clock += dt;
+> 487	    if (st.mode === 'intro') introUpdate(dt);
+> 488	    else if (st.mode === 'ride') rideUpdate(dt);
+> 489	    else if (st.mode === 'outro' || st.mode === 'end') {
+> 490	      outroUpdate(dt);
+> 491	    }
+> 492	    girl.update(dt);
+> 493	    const time = st.frozen ?? st.clock;
+> 494	    env.update(time, dt);
+> 495	    water.update(time, dt, st.s, camera);
+> 496	    fill.position.copy(camera.position);
+> 497	    sun.target.position.copy(camera.position).add(new THREE.Ve …[+6527 chars]
+
+### 🤖 Claude — 2026-11-15T19:20:19.875Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 60, "limit": 70}`
+
+### 🧑 User — 2026-11-15T19:20:19.923Z
+
+> ↩︎ result: 60	  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+> 61	  const useBloom = qs.get('bloom') !== '0';
+> 62	  if (useBloom) composer.addPass(bloom);
+> 63	  composer.addPass(new OutputPass());
+> 64	  composer.addPass(createGradePass());
+> 65	
+> 66	  const resize = () => {
+> 67	    const w = canvas.clientWidth || window.innerWidth;
+> 68	    const h = canvas.clientHeight || window.innerHeight;
+> 69	    renderer.setSize(w, h, false);
+> 70	    composer.setSize(w, h);
+> 71	    bloom.resolution.set(w / 2, h / 2);
+> 72	    camera.aspect = w / h;
+> 73	    camera.updateProjectionMatrix();
+> 74	  };
+> 75	  window.addEventListener('resize', resize);
+> 76	  resize();
+> 77	
+> 78	  // ---------------------------------------------------------------- world
+> 79	  const course = new Course();
+> 80	  const env = buildEnvironment(course);
+> 81	  scene.add(env.group);
+> 82	  const water = await loadWater(course);
+> 83	  scene.add(water.group);
+> 84	  const benny = await loadBennyRuntime();
+> 85	  scene.add(benny.root);
+> 86	  const girl = await loadGirlRuntime();
+> 87	  const coins = createCoins(course);
+> 88	  scene.add(coins.group);
+> 89	  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> 90	  const hidden = new Set …[+1339 chars]
+
+### 🤖 Claude — 2026-11-15T19:20:28.395Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/cap.mjs <<'EOF'\n// scratch capture: node cap.mjs OUTDIR ID \"query1\" \"query2\" ...   (each query → OUTDIR/<ID>_<n>.png)\nimport { mkdirSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst [outDir, id, ...qs] = process.argv.slice(2);\nmkdirSync(outDir, { recursive: true });\nprocess.chdir('/home/user/rainbow-');\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5301);\nconst browser = await chromi …[+1469 chars]`
+
+### 🧑 User — 2026-11-15T19:22:05.381Z
+
+> ↩︎ result: qa/pilot05/foam/iso/05_waterhide_crown.png {"st":{"mode":"ride","stage":"05","s":127.389,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.182,"bennyVisible":true,"cam":[3.24,-37.64,-63.48]},"b":{"x":0.06,"y":-0.46,"z":0.985,"visible":true,"cam":[3.24,-37.64,-63.48],"benny":[3.37,-41.18,-69.62]},"calls":112}
+> qa/pilot05/foam/iso/05_waterhide_spray.png {"st":{"mode":"ride","stage":"05","s":127.389,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.182,"bennyVisible":true,"cam":[3.24,-37.64,-63.48]},"b":{"x":0.06,"y":-0.46,"z":0.985,"visible":true,"cam":[3.24,-37.64,-63.48],"benny":[3.37,-41.18,-69.62]},"calls":111}
+> qa/pilot05/foam/iso/05_waterhide_ribbon.png {"st":{"mode":"ride","stage":"05","s":127.389,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.182,"bennyVisible":true,"cam":[3.24,-37.64,-63.48]},"b":{"x":0.06,"y":-0.46,"z":0.985,"visible":true,"cam":[3.24,-37.64,-63.48],"benny":[3.37,-41.18,-69.62]},"calls":111}
+> qa/pilot05/foam/iso/05_waterhide_crown,spray,bubbles.png {"st":{"mode":"ride","stage":"05","s":127.389,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.182,"bennyVisible":true,"cam":[3.24,-37.64,-63.48]},"b":{"x":0.06,"y":-0.46, …[+94 chars]
+
+### 🤖 Claude — 2026-11-15T19:22:08.734Z
+
+> 🔧 **Bash** `{"command": "D=qa/pilot05/foam/iso && python3 /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/crops.py /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/iso_bottom2.png 0 950 864 1536 0.42 base=$D/base/05.png no_crown=$D/05_waterhide_crown.png no_spray=$D/05_waterhide_spray.png no_ribbon=$D/05_waterhide_ribbon.png no_crown_spray_bub=$D/05_waterhide_crown,spray,bubbles.png", "description": "Build bottom-third comparison strip of isolation captures"}`
+
+### 🧑 User — 2026-11-15T19:22:09.268Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/iso_bottom2.png (1851, 280)
+
+### 🤖 Claude — 2026-11-15T19:22:10.361Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/iso_bottom2.png"}`
+
+### 🧑 User — 2026-11-15T19:22:10.376Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:22:15.295Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 90, "limit": 230}`
+
+### 🧑 User — 2026-11-15T19:22:15.312Z
+
+> ↩︎ result: 90	uniform vec3 uPinkLight;
+> 91	uniform vec3 uFoam;
+> 92	uniform vec3 uFoamLav;
+> 93	uniform vec3 uHaze;
+> 94	uniform vec3 uLightDir;
+> 95	uniform vec3 uBenny;      // s, lateral (units), strength
+> 96	uniform float uBennyR;    // Benny's waterline radius (units)
+> 97	uniform vec3 uChevron;    // start s, spacing, enabled
+> 98	uniform vec2 uOutro;      // amount, chamber start s
+> 99	varying vec2 vUV;
+> 100	varying float vHalfW;
+> 101	varying float vSpeed;
+> 102	varying float vSkirt;
+> 103	varying float vHide;
+> 104	varying vec3 vPosW;
+> 105	varying vec3 vNormalW;
+> 106	#include <fog_pars_fragment>
+> 107	${NOISE_GLSL}
+> 108	${FRAG_FX_GLSL}
+> 109	
+> 110	// Stationary channel shape (refs 05–07): u-centre of the electric-cyan core. It only drifts slowly
+> 111	// downstream at a constant rate (no shear between stage speeds); the strand texture below is what
+> 112	// is advected at the local stage speed.
+> 113	float meander(float s) {
+> 114	  float a = s - uTime * 0.9;
+> 115	  return 0.16 * sin(a * 0.24) + 0.07 * sin(a * 0.55 + 1.3) + 0.16 * (vnoise(vec2(a * 0.055, 4.7)) - 0.5);
+> 116	}
+> 117	
+> 118	// advected strand texture ("combed" glossy water lines parallel to the flow)
+> 119	// x = lateral units relative to the meander centre, v = adve …[+9935 chars]
+
+### 🤖 Claude — 2026-11-15T19:22:34.882Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -8 -- src/vfx/waterRibbon.ts src/vfx/index.ts src/vfx/riderSplash.ts src/characters/benny/runtime.ts && git diff 81e639e f2a86ab --stat -- src/vfx src/characters/benny src/game && grep -n \"radius\" src/characters/benny/runtime.ts | head", "description": "Check history of ribbon/wake files and Benny radius"}`
+
+### 🧑 User — 2026-11-15T19:22:34.933Z
+
+> ↩︎ result: 70b100d autosave: Rainbow 2026-11-15 18:54 UTC
+> fc70e56 full snapshot: game, design agents, specialist work in progress, docs, transcripts
+> 0719fd3 autosave: Rainbow 2026-11-15 18:51 UTC
+> af80fb1 Flow video hand-off, World Labs 05 pilot package, recovery docs
+> ed710db autosave: Rainbow 2026-11-15 17:20 UTC
+> cd85ef3 autosave: Rainbow 2026-11-15 17:15 UTC
+> e1af619 autosave: Rainbow 2026-11-15 17:10 UTC
+> f6f4777 autosave: Rainbow 2026-11-15 17:05 UTC
+>  src/characters/benny/benny-lab.ts |  81 ++++++++----
+>  src/characters/benny/build.ts     | 149 ++++++++++++++-------
+>  src/characters/benny/runtime.ts   |  31 ++++-
+>  src/characters/benny/textures.ts  |   7 +-
+>  src/game/Game.ts                  |  25 +++-
+>  src/game/cameraRig.ts             |  24 +++-
+>  src/vfx/bubbles.ts                |  19 ++-
+>  src/vfx/foam.ts                   | 264 ++++++++++++++++++++++++++++++++++----
+>  src/vfx/glsl.ts                   |  38 +++++-
+>  src/vfx/index.ts                  |  42 ++++--
+>  src/vfx/riderSplash.ts            | 147 +++++++++++++++++++++
+>  src/vfx/waterRibbon.ts            | 195 +++++++++++++++++++---------
+>  12 files changed, 839 insertions(+), 183 deletions(-)
+> 38: * Ride height. The game places the root at …[+120 chars]
+
+### 🤖 Claude — 2026-11-15T19:22:36.366Z
+
+> 🔧 **Bash** `{"command": "git diff 81e639e f2a86ab -- src/vfx/index.ts src/game/Game.ts | head -150", "description": "Show wave-1 changes to index.ts and Game.ts"}`
+
+### 🧑 User — 2026-11-15T19:22:36.413Z
+
+> ↩︎ result: diff --git a/src/game/Game.ts b/src/game/Game.ts
+> index ea9843a..f42580c 100644
+> --- a/src/game/Game.ts
+> +++ b/src/game/Game.ts
+> @@ -18,6 +18,7 @@ import { buildEnvironment } from '../world/environment';
+>  import { createCandyEnvironment, createRenderer } from '../render/env';
+>  import { createGradePass } from '../render/grade';
+>  import { createHud } from '../ui/hud';
+> +import { findCinematic, playCinematic } from '../ui/cinematicVideo';
+>  import { createCoins, COIN_VALUE } from '../gameplay/coins';
+>  import { createInput } from '../gameplay/input';
+>  import { RideCamera } from './cameraRig';
+> @@ -376,10 +377,16 @@ export async function startGame(canvas: HTMLCanvasElement) {
+>    };
+>  
+>    // ---------------------------------------------------------------- outro (11)
+> +  const cinematic = { ending: null as string | null };
+>    const startOutro = () => {
+>      st.mode = 'outro';
+>      st.t = 0;
+>      setStage('11');
+> +    if (cinematic.ending) {
+> +      // optional Flow ending video; the real-time 11 frame (girl holds towel, FINAL SPIN COMPLETE) follows
+> +      st.paused = true;
+> +      void playCinematic(cinematic.ending, { onEnding: () => { st.t = Math.max(st.t, O.badge - 0.4); st.paused = false; } });
+> + …[+7211 chars]
+
+### 🤖 Claude — 2026-11-15T19:23:08.255Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p src/characters/benny/runtime.ts && sed -n 160,180p src/characters/benny/runtime.ts && grep -n \"radius\\|furLen\\|length:\\|shellLen\\|'body'\" src/characters/benny/build.ts | head -30 && grep -n \"loadBennyRuntime\" -A12 src/game/modules.ts | head -30", "description": "Inspect Benny runtime interface, body radius and fur length"}`
+
+### 🧑 User — 2026-11-15T19:23:08.299Z
+
+> ↩︎ result: /**
+>  * Runtime Benny: loads the canonical assets/models/benny.glb, upgrades fur_* meshes to shell fur,
+>  * and drives expressions + procedural secondary motion on top of the GLB clips.
+>  */
+> import * as THREE from 'three';
+> import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> import type { BennyRuntime } from '../types';
+> import { makeFur, type FurHandle, type FurParams } from './fur';
+> 
+> const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+> 
+> let cached: Promise<THREE.Group> | null = null;
+> 
+> function loadScene(): Promise<THREE.Group> {
+>   if (!cached) cached = new GLTFLoader().loadAsync(BENNY_URL).then((g) => {
+>     const s = g.scene as THREE.Group;
+>     s.userData.animations = g.animations;
+>     return s;
+>   });
+>   return cached;
+> }
+> 
+> /** fur tier: explicit option, else `?quality=low|high`, else low on Android/iOS (same rule as the water) */
+> function defaultFurQuality(): 'high' | 'low' {
+>   if (typeof location === 'undefined') return 'high';
+>   const qp = new URLSearchParams(location.search).get('quality');
+>   const mobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad/i.test(navigator.userAgent);
+>   return qp === 'low' || (qp !== 'high' && …[+2755 chars]
+
+### 🤖 Claude — 2026-11-15T19:23:09.815Z
+
+> 🔧 **Bash** `{"command": "sed -n 20,40p src/characters/benny/build.ts && grep -n \"interface BennyRuntime\" -A12 src/characters/types.ts", "description": "Read Benny build dims and runtime type"}`
+
+### 🧑 User — 2026-11-15T19:23:09.870Z
+
+> ↩︎ result: soleTexture,
+> } from './textures';
+> 
+> export const BENNY_DIMS = {
+>   skin: 0.7,
+>   fur: 0.12,
+>   radius: 0.8,
+>   /** lower-body bulge (radial gain at its peak) — the plush ball is widest below the brim (refs 05/07/10) */
+>   pear: 0.09,
+>   /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y < 0) */
+>   stretch: 0.1,
+>   /** front of the beanie raised (rad, about X). Small, so the back brim stays high on the ball in rear views */
+>   hatTilt: -0.06,
+>   brimBottom: 0.24, // hat-local
+>   brimR: 0.74, // brim outer radius (≈ 0.85 × the fluffy body width, as in the rear references)
+>   crownH: 0.54, // crown height above the brim's top edge
+> };
+> 
+> /**
+>  * Body skin deformation of a point `v` on the r = skin sphere: the lower half is stretched down a little
+>  * and bulged radially (strongest at the sides/back, faded out on the face so eyes, blush and mouth keep
+> 12:export interface BennyRuntime {
+> 13-  /** origin = centre of the round body; faces +Z (camera behind him looks toward -Z… see docs) */
+> 14-  root: THREE.Group;
+> 15-  /** 'happy' (default, open smile), 'dizzy' (spiral eyes, scene 02), 'peek' (01, wide eyes) */
+> 16-  setExpression(e: 'happy' | 'dizzy' | 'peek'): void;
+> 17-  /* …[+423 chars]
+
+### 🤖 Claude — 2026-11-15T19:23:43.572Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nim=Image.open('references/05_flow_into_the_current.png'); print(im.size, im.mode)\nim2=Image.open('qa/pilot05/foam/iso/base/05.png'); print(im2.size)\n\" && S=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 $S/crops.py $S/ref_bottom.png 0 900 864 1536 1.0 REF=references/05_flow_into_the_current.png", "description": "Check reference size and crop its bottom section"}`
+
+### 🧑 User — 2026-11-15T19:23:43.970Z
+
+> ↩︎ result: (864, 1536) RGB
+> (864, 1536)
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/ref_bottom.png (876, 670)
+
+### 🤖 Claude — 2026-11-15T19:23:45.332Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/ref_bottom.png"}`
+
+### 🧑 User — 2026-11-15T19:23:45.358Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:23:52.368Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 $S/crops.py $S/mid.png 0 300 864 950 0.62 REF=references/05_flow_into_the_current.png NOW=qa/pilot05/foam/iso/base/05.png", "description": "Crop the mid section of reference vs current"}`
+
+### 🧑 User — 2026-11-15T19:23:52.686Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/mid.png (1090, 437)
+
+### 🤖 Claude — 2026-11-15T19:23:53.864Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/mid.png"}`
+
+### 🧑 User — 2026-11-15T19:23:53.900Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:23:59.489Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 $S/crops.py $S/banks_now.png 440 520 864 900 1.0 NOW_right=qa/pilot05/foam/iso/base/05.png && python3 $S/crops.py $S/banks_ref.png 560 560 864 940 1.0 REF_right=references/05_flow_into_the_current.png", "description": "Zoom on right foam bank in current and reference"}`
+
+### 🧑 User — 2026-11-15T19:23:59.790Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/banks_now.png (436, 414)
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/banks_ref.png (316, 414)
+
+### 🤖 Claude — 2026-11-15T19:24:01.201Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/banks_now.png"}`
+
+### 🧑 User — 2026-11-15T19:24:01.214Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:24:01.593Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/banks_ref.png"}`
+
+### 🧑 User — 2026-11-15T19:24:01.604Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:24:17.891Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"benny.root.add\\|root.add(\\|root.children\" src --include=*.ts | head; grep -n \"length\\b\\|get length\" src/world/course.ts | head -5", "description": "Check children added to Benny root and course length"}`
+
+### 🧑 User — 2026-11-15T19:24:17.949Z
+
+> ↩︎ result: src/characters/girl/runtime.ts:16:  root.add(model);
+> src/characters/benny/runtime.ts:59:  root.add(scene);
+> src/characters/benny/build.ts:131:  root.add(body);
+> src/world/environment.ts:44:  Object.entries(zones).forEach(([k, g]) => { g.name = 'zone_' + k; root.add(g); });
+> src/game/modules.ts:108:  root.add(body, hat, pom);
+> src/game/modules.ts:119:  root.add(body, head);
+> src/game/modules.ts:123:  root.add(handL, handR);
+> 11: * Every stage is a range of arc-length `s` on a single centripetal Catmull-Rom spline, so position
+> 23:  /** arc-length range on the course */
+> 90:  /** arc-length range of the stretch on the course */
+> 111:    if (pts.length && p.distanceTo(pts[pts.length - 1]) < 0.25) return;
+> 114:  const mark = (k: string) => (marks[k] = pts.length - 1);
+
+### 🤖 Claude — 2026-11-15T19:24:20.804Z
+
+> 🔧 **Bash** `{"command": "sed -n 95,112p src/game/modules.ts", "description": "Read stand-in Benny construction"}`
+
+### 🧑 User — 2026-11-15T19:24:20.835Z
+
+> ↩︎ result: const mesh = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: '#29d6ff', emissive: '#19a6ff', emissiveIntensity: 0.5, roughness: 0.1, metalness: 0.1, side: THREE.DoubleSide }));
+>   const group = new THREE.Group();
+>   group.add(mesh);
+>   return { group, update() {}, surfaceHeight: () => 0, wake() {}, splash() {} };
+> }
+> 
+> function standInBenny(): BennyRuntime {
+>   const root = new THREE.Group();
+>   const body = new THREE.Mesh(new THREE.SphereGeometry(0.8, 32, 24), new THREE.MeshStandardMaterial({ color: '#ff7ec4', roughness: 0.9 }));
+>   const hat = new THREE.Mesh(new THREE.SphereGeometry(0.84, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#7d3ff0' }));
+>   hat.position.y = 0.12;
+>   const pom = new THREE.Mesh(new THREE.SphereGeometry(0.38, 20, 16), new THREE.MeshStandardMaterial({ color: '#7a2de0' }));
+>   pom.position.y = 1.15;
+>   root.add(body, hat, pom);
+>   return { root, radius: 0.8, setExpression() {}, update() {} };
+> }
+> 
+> function standInGirl(): GirlRuntime {
+
+### 🤖 Claude — 2026-11-15T19:24:30.631Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"wake(\" src --include=*.ts | grep -v \"^src/vfx/waterRibbon\" ; grep -n \"loadWater\" -A6 src/game/modules.ts | head -20; grep -n \"WaterSystem\\|wake\" src/characters/types.ts src/types.ts 2>/dev/null", "description": "Find wake() declarations and water loader typing"}`
+
+### 🧑 User — 2026-11-15T19:24:30.679Z
+
+> ↩︎ result: Exit code 2
+> src/vfx/riderSplash.ts:7: * computed water surface under Benny (index.ts `wake()`), so it always sits exactly on the stream
+> src/vfx/riderSplash.ts:8: * that carries him. Hidden automatically when wake() stops being called (intro / outro).
+> src/vfx/index.ts:8: *   water.wake(bennyPos, forward, right, speed, dt);
+> src/vfx/index.ts:46:  wake(pos: THREE.Vector3, forward: THREE.Vector3, right: THREE.Vector3, speed: number, dt: number): void;
+> src/vfx/index.ts:164:    wake(pos, forward, right, speed, dt) {
+> src/game/Game.ts:363:    water.wake(pose.pos, f.tan, f.right, speed, dt);
+> src/game/modules.ts:14:  wake(pos: THREE.Vector3, forward: THREE.Vector3, right: THREE.Vector3, speed: number, dt: number): void;
+> src/game/modules.ts:98:  return { group, update() {}, surfaceHeight: () => 0, wake() {}, splash() {} };
+> 24:export async function loadWater(course: Course): Promise<WaterLike> {
+> 25-  const f = Object.values(vfxMods)[0];
+> 26-  if (f) {
+> 27-    try {
+> 28-      const m = (await f()) as { createWater: (c: Course, o?: { quality?: 'high' | 'low' }) => WaterLike };
+> 29-      // Android/mobile defaults to the low tier (measured budgets: see qa/performance.md); ?quality= overrides
+> 30-       …[+63 chars]
+
+### 🤖 Claude — 2026-11-15T19:24:38.335Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"BENNY_RIDE_OFFSET\" src scripts tests 2>/dev/null | grep -v \"^src/vfx/index.ts\"; ls tests 2>/dev/null | head; grep -n \"\\\"test\\|typecheck\\|continuity\" package.json", "description": "Find BENNY_RIDE_OFFSET users and test scripts"}`
+
+### 🧑 User — 2026-11-15T19:24:38.417Z
+
+> ↩︎ result: 11:    "typecheck": "tsc --noEmit",
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 19:    "test:cinematic": "node scripts/cinematic-test.mjs"
+
+### 🤖 Claude — 2026-11-15T19:24:44.760Z
+
+> 🔧 **Bash** `{"command": "sed -n 158,162p src/game/Game.ts && sed -n 360,364p src/game/Game.ts && git diff --stat src/game/Game.ts", "description": "Re-read Game.ts wake lines before editing"}`
+
+### 🧑 User — 2026-11-15T19:24:44.817Z
+
+> ↩︎ result: };
+> 
+>   const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
+>   const tmpV = new THREE.Vector3();
+>   const doorAOpen = -1.9, doorCOpen = -1.95;
+>     benny.root.visible = true;
+>     benny.setExpression('happy');
+>     benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
+>     water.wake(pose.pos, f.tan, f.right, speed, dt);
+>     // camera
+
+### 🤖 Claude — 2026-11-15T19:24:47.446Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "    water.wake(pose.pos, f.tan, f.right, speed, dt);\n    // camera", "new_string": "    // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),\n    // so the wake/splash footprint matches the real waterline instead of the unlifted root\n    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);\n    // camera"}`
+
+### 🧑 User — 2026-11-15T19:24:47.485Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:24:48.960Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  const tmpV = new THREE.Vector3();\n  const doorAOpen = -1.9, doorCOpen = -1.95;", "new_string": "  const tmpV = new THREE.Vector3();\n  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()\n  const doorAOpen = -1.9, doorCOpen = -1.95;"}`
+
+### 🧑 User — 2026-11-15T19:24:49.000Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T19:24:49.739Z
+
+Now `wake()` in index.ts: real waterline radius from the body-centre height.
+
+### 🤖 Claude — 2026-11-15T19:24:54.086Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "      // body radius from the ride offset (centre = surface + BENNY_RIDE_OFFSET · radius)\n      const above = d.dot(f.up) - surfaceHeight(s, lateral, curTime);\n      const bodyR = THREE.MathUtils.clamp(above / BENNY_RIDE_OFFSET, 0.4, 2.0);\n      const waterlineR = bodyR * Math.sqrt(1 - BENNY_RIDE_OFFSET * BENNY_RIDE_OFFSET);\n      const strength = Math.min(1, speed / 8);", "new_string": "      // pos = Benny's real body centre (Game.ts passes it AFTER the runtime's ride lift). The waterline\n      // …[+539 chars]`
+
+### 🧑 User — 2026-11-15T19:24:54.125Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:24:55.543Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "export const BENNY_RIDE_OFFSET = 0.55;", "new_string": "export const BENNY_RIDE_OFFSET = 0.55;\n/** Benny's outer (fur) radius near the waterline: skin 0.7 + fur 0.12 + lower-body bulge (benny/build.ts BENNY_DIMS) */\nconst BENNY_OUTER_R = 0.86;"}`
+
+### 🧑 User — 2026-11-15T19:24:55.609Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:24:56.384Z
+
+Also update the doc comment at the top of index.ts so the contract is clear, then capture.
+
+### 🤖 Claude — 2026-11-15T19:24:57.592Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": " *   water.wake(bennyPos, forward, right, speed, dt);", "new_string": " *   water.wake(bennyBodyCentre, forward, right, speed, dt);   // centre of the (lifted) body, not the root"}`
+
+### 🧑 User — 2026-11-15T19:24:57.638Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:24:59.537Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -20; timeout 900 node /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/cap.mjs qa/pilot05/foam/iso/fix1 05 \"\" 2>&1 | tail -2", "description": "Typecheck and capture 05 after the anchor fix", "timeout": 920000}`
+

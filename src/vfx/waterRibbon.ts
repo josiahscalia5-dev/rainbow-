@@ -19,6 +19,54 @@ const AMP: Partial<Record<StageId, number>> = {
 };
 export const EDGE_LIFT = 0.28;
 
+/**
+ * Per-stage colour-band layout (blended across stage boundaries, baked into `aStyle`):
+ *  x gate: 1 = pink bands taper off and part around Benny so the water at and behind him is pure
+ *          cyan (ref 05: rows y=1200/1400 are 0% pink); 0 = bands run right past him (refs 04/06/07
+ *          keep pink at the sides near the camera)
+ *  y off:  band-centre offset from the meandering core centre, fraction of the half width
+ *  z wid:  band half width, fraction of the half width
+ * Between the two bands is the electric-cyan core; outside them more cyan, then the foam lace.
+ */
+const BAND_STYLE: Partial<Record<StageId, [number, number, number]>> = {
+  '04': [0, 0.6, 0.19],
+  '05': [1, 0.46, 0.085],
+  '06': [0.4, 0.48, 0.1],
+  '07': [0, 0.52, 0.13],
+};
+const BAND_DEFAULT: [number, number, number] = [0, 0.5, 0.12];
+
+function bandStyleAt(course: Course, s: number): [number, number, number] {
+  const o: [number, number, number] = [0, 0, 0];
+  let w = 0;
+  for (const st of course.stages) {
+    const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+    if (a <= 0) continue;
+    const v = BAND_STYLE[st.id] ?? BAND_DEFAULT;
+    o[0] += v[0] * a; o[1] += v[1] * a; o[2] += v[2] * a; w += a;
+  }
+  if (w <= 0) return [...(BAND_STYLE[course.stageAtS(s).id] ?? BAND_DEFAULT)];
+  return [o[0] / w, o[1] / w, o[2] / w];
+}
+
+/**
+ * Ribbon colours in shader (pre-tonemap, linear) space. NeutralToneMapping desaturates anything
+ * whose peak channel passes ≈0.76·exposure, so these were solved by inverting Neutral at the game's
+ * exposure 0.86 (src/render/env.ts) to land on the reference 05 hexes after tone mapping:
+ *   cyan → ≈#1E97F1 (ref median #029AF3/#039FF6), cyanDeep → ≈#0070DA, pink → ≈#F53DE6 (ref #F739E5)
+ * Crests/highlights are allowed to desaturate toward white (that is how the ref highlights look).
+ * The shared PALETTE in glsl.ts is untouched (whirlpool, drum and final wave use it).
+ */
+const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+const RIBBON_PAL = {
+  cyanDeep: lin(0.0, 0.17, 0.8),
+  cyan: lin(0.0, 0.4, 1.18),
+  cyanBright: lin(0.04, 0.95, 1.55),
+  pinkDeep: lin(0.78, 0.02, 0.8),
+  pink: lin(1.5, 0.02, 1.3),
+  pinkLight: lin(2.1, 0.5, 1.95),
+};
+
 export function ampAt(course: Course, s: number): number {
   let v = 0, w = 0;
   for (const st of course.stages) {
@@ -50,6 +98,7 @@ attribute float aHalfW;
 attribute float aSpeed;
 attribute float aAmp;
 attribute float aSkirt;  // 0 surface, 1 skirt bottom
+attribute vec3 aStyle;   // band layout: gate, offset, half width (see BAND_STYLE)
 uniform float uTime;
 uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
 varying vec2 vUV;
@@ -57,10 +106,12 @@ varying float vHalfW;
 varying float vSpeed;
 varying float vSkirt;
 varying float vHide;
+varying vec3 vStyle;
 varying vec3 vPosW;
 varying vec3 vNormalW;
 #include <fog_pars_vertex>
 void main() {
+  vStyle = aStyle;
   float u = aUV.x;
   float s = aUV.y;
   float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));
