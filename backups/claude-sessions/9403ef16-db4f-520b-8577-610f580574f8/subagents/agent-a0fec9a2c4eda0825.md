@@ -474,3 +474,93 @@ Writing the plan first.
 > 
 > export async function  …[+1053 chars]
 
+### 🤖 Claude — 2026-11-15T23:08:08.496Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/qa/pilot05/wave6/foam/tools/probe.mjs <<'EOF'\n// QA probe (no screenshot): goto a checkpoint, dump window.__waterQA() (bubbles + foam raft rows) as JSON.\n// node qa/pilot05/wave6/foam/tools/probe.mjs 05 > out.json\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../../../../scripts/lib/pw.mjs';\nconst id = process.argv[2] ?? '05';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5231);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864,  …[+1106 chars]`
+
+### 🧑 User — 2026-11-15T23:08:19.725Z
+
+> ↩︎ result: visible True puffs 1648 shown 534
+> {'kind': 'L', 'ds': -3.4, 'lat': -1.35, 'k': 0.29, 'y': 1.134, 'env': 0, 's': 129.22}
+> {'kind': 'L', 'ds': -3.19, 'lat': -1.35, 'k': 0.36, 'y': 1.089, 'env': 0, 's': 129.44}
+> {'kind': 'L', 'ds': -2.8, 'lat': -1.37, 'k': 0.49, 'y': 1.018, 'env': 0, 's': 129.83}
+> {'kind': 'L', 'ds': -2.29, 'lat': -1.53, 'k': 0.52, 'y': 0.944, 'env': 0, 's': 130.33}
+> {'kind': 'L', 'ds': -1.69, 'lat': -1.75, 'k': 0.52, 'y': 0.874, 'env': 0, 's': 130.93}
+> {'kind': 'L', 'ds': -1.01, 'lat': -1.48, 'k': 0.43, 'y': 0.811, 'env': 1, 's': 131.61}
+> {'kind': 'L', 'ds': -0.26, 'lat': -2.3, 'k': 0.52, 'y': 0.757, 'env': 0, 's': 132.36}
+> {'kind': 'L', 'ds': 0.56, 'lat': -2.44, 'k': 0.72, 'y': 0.712, 'env': 0.22, 's': 133.18}
+> {'kind': 'L', 'ds': 1.44, 'lat': -2.09, 'k': 0.89, 'y': 0.676, 'env': 1, 's': 134.06}
+> {'kind': 'L', 'ds': 2.37, 'lat': -3.5, 'k': 0.52, 'y': 0.634, 'env': 0, 's': 134.99}
+> {'kind': 'L', 'ds': 3.36, 'lat': -4.01, 'k': 0.52, 'y': 0.6, 'env': 0, 's': 135.98}
+> {'kind': 'L', 'ds': 4.4, 'lat': -4.57, 'k': 0.52, 'y': 0.567, 'env': 0, 's': 137.02}
+> {'kind': 'L', 'ds': 5.48, 'lat': -5.17, 'k': 0.52, 'y': 0.535, 'env': 0, 's': 138.1}
+> {'kind': 'L', 'ds': 6.62, 'lat': -5.43, 'k': 0 …[+2301 chars]
+
+### 🤖 Claude — 2026-11-15T23:09:11.674Z
+
+Baseline measured. Now implementing iteration 1: 05-gated soap shading (ramp fitted to the ref's foam colour percentiles via a pipeline model), narrower right heap, placed right-lower clump.
+
+### 🤖 Claude — 2026-11-15T23:09:18.620Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave6/foam/NOTES.md <<'EOF'\n\n## Measurement (tools in qa/pilot05/wave6/foam/tools/, reuse wave-5 mask; 7x7 opening)\n* `foamcol.py IMG...`: per region (L/R far y520-1000, L/R near y1000-1400) foam px, mean RGB, WHITE% (min ch >= 235),\n  SHADE% (B-R >= 30), and the right-heap test (x640-864 y700-1000: foam %, max vertical run).\n* `rowprof.py IMG...`: per 20-px row band, foam x-extent + mean px/row per side. `pipe.py`: forward model of the\n  display pipeline (Neutral tone map x0.86 -> sRGB -> grade sat 1.36 / con 1.15) to invert ref colours to shader values.\n …[+863 chars]`
+
+### 🧑 User — 2026-11-15T23:09:18.652Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T23:09:19.376Z
+
+Now the shader edits.
+
+### 🤖 Claude — 2026-11-15T23:09:24.023Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const BERM_VERT = /* glsl */ `", "new_string": "/**\n * wave 6: ref 05 soap colour ramp. Stops = the reference's foam pixels at the 10/25/50/75/90th luminance\n * percentiles — blue-violet shade (155,156,240), (179,173,245), lavender (217,195,249), lit (243,226,252), top\n * (251,246,253) — inverted through the display pipeline (Neutral tone map ×0.86 → sRGB → grade sat 1.36 /\n * contrast 1.15), so only the very tops of the bubbles reach white and the undersides stay blue-violet.\n */\nconst SOAP05_GLSL  …[+435 chars]`
+
+### 🧑 User — 2026-11-15T23:09:24.049Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:09:26.824Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "uniform vec2 uOutro;     // amount, chamber start s\nuniform vec3 uLightDir;\nvarying vec3 vFoam;\nvarying vec3 vPosW;\nvarying vec3 vNormalW;\n#include <fog_pars_fragment>\n${NOISE_GLSL}\n${FRAG_FX_GLSL}\nvoid main() {", "new_string": "uniform vec2 uOutro;     // amount, chamber start s\nuniform vec3 uLightDir;\nuniform vec4 uSt05;      // 05 soap shading ramps: in s0..s1, out s2..s3 (wave 6)\nvarying vec3 vFoam;\nvarying vec3 vPosW;\nvarying vec3 vNormalW;\n#include <fog_pars_fragment>\n${NOISE_GLSL}\n$ …[+47 chars]`
+
+### 🧑 User — 2026-11-15T23:09:26.854Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:09:33.431Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float spec = pow(max(dot(reflect(-V, N), L), 0.0), 28.0);\n  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);\n  col += vec3(1.0) * spec * 0.45 + iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.18;\n  gl_FragColor = vec4(col * 0.96, 1.0);", "new_string": "  float spec = pow(max(dot(reflect(-V, N), L), 0.0), 28.0);\n  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);\n  col += vec3(1.0) * spec * 0.45 + iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.18;\n  col *= 0.96;\n  // 05 (wave 6): small p …[+853 chars]`
+
+### 🧑 User — 2026-11-15T23:09:33.482Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:09:37.877Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "varying vec3 vInst;\n#include <fog_pars_vertex>\nvoid main() {\n  vInst = instanceColor;\n  float br = 1.0 + 0.035 * sin(uTime * 1.7 + instanceColor.y * 40.0);", "new_string": "varying vec3 vInst;\nvarying float vW5;\n#include <fog_pars_vertex>\nvoid main() {\n  // instanceColor.x = ao + 2 q, q = 0..8 = 05 soap-shading weight × 8 (wave 6; ao < 1 so floor(x / 2) = q)\n  float q5 = floor(instanceColor.x * 0.5);\n  vInst = vec3(instanceColor.x - 2.0 * q5, instanceColor.yz);\n  vW5 = q5 / 8.0;\n  float br = 1 …[+57 chars]`
+
+### 🧑 User — 2026-11-15T23:09:37.906Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:09:44.379Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "varying vec3 vLocal;\nvarying vec3 vInst;\n#include <fog_pars_fragment>\n${NOISE_GLSL}\nvoid main() {\n  vec3 N = normalize(vNormalW);\n  vec3 V = normalize(cameraPosition - vPosW);\n  vec3 L = normalize(uLightDir);\n  float wrap = clamp(dot(N, L) * 0.55 + 0.5, 0.0, 1.0);\n  float upF = clamp(N.y * 0.5 + 0.5, 0.0, 1.0);\n  float lit = smoothstep(0.18, 0.88, wrap * 0.65 + upF * 0.35);\n  vec3 lav = vec3(0.47, 0.44, 0.88);\n  vec3 top = mix(vec3(1.1, 1.04, 1.16), vec3(1.04, 1.06, 1.16), clamp(vInst.z, 0.0,  …[+965 chars]`
+
+### 🧑 User — 2026-11-15T23:09:44.406Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:09:47.330Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.4);\n  col = mix(col, vec3(0.8, 0.68, 1.0), fres * 0.42);\n  float spec = pow(max(dot(reflect(-V, N), L), 0.0), 26.0);\n  col += vec3(1.0) * spec * 0.3;\n  col *= mix(0.68, 1.0, vInst.x);", "new_string": "  float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.4);\n  col = mix(col, mix(vec3(0.8, 0.68, 1.0), SOAP_SHADE * 0.95, vW5), fres * mix(0.42, 0.6, vW5));\n  float spec = pow(max(dot(reflect(-V, N), L), 0.0), 26.0);\n  col += vec3(1.0) * spec * 0.3 …[+38 chars]`
+
+### 🧑 User — 2026-11-15T23:09:47.355Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🧑 User — 2026-11-15T23:09:52.109Z
+
+[Request interrupted by user]
+

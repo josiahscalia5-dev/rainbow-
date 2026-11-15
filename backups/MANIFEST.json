@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "8c1290bbc4f0d9afeca6dc569d0270fac84db9178187e588e0123b0a9d9510c3"
+   "sha256": "de0c067eab27154c2fdf90615fec9c4a28853524e7dcd54add2f5a77ff5d025d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1808,8 +1808,8 @@
   },
   {
    "path": "qa/pilot05/wave6/foam/NOTES.md",
-   "bytes": 1056,
-   "sha256": "7157baab7a20e08f8d1f1007ee01331f59fbc1f986e1a63762115c1b16af8e05"
+   "bytes": 2383,
+   "sha256": "da32597f3097b4aa48295332d42eab47d6b4e1d17a63cff5f1745a79055a272d"
   },
   {
    "path": "qa/pilot05/wave6/foam/tools/bigblobs.py",
@@ -1825,6 +1825,11 @@
    "path": "qa/pilot05/wave6/foam/tools/pipe.py",
    "bytes": 1679,
    "sha256": "16e4c3bd9080d94672da26e9e79df431c13b22539c722dec28b182c243de0f81"
+  },
+  {
+   "path": "qa/pilot05/wave6/foam/tools/probe.mjs",
+   "bytes": 1009,
+   "sha256": "7681b2dc81e3d6db937b39698d3dc46e6962fe1e5b80f237ecac6558be75b5bd"
   },
   {
    "path": "qa/pilot05/wave6/foam/tools/rowprof.py",
@@ -1865,6 +1870,11 @@
    "path": "qa/worldlabs/05/05_env_only_preview.png",
    "bytes": 1586473,
    "sha256": "5418c7667d802bae65efa42055663b86f36cb6e40ab7e0f73fb900905e1968dc"
+  },
+  {
+   "path": "qa/worldlabs/05/ACCOUNT7_STATUS.md",
+   "bytes": 3299,
+   "sha256": "ecc70501c11a1103ae67e14532042841544cde8eb5c8406427fde13ea5e8c673"
   },
   {
    "path": "qa/worldlabs/05/MARBLE_MANUAL.md",
@@ -2408,8 +2418,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 41319,
-   "sha256": "9dbb4c1f0ecb021a3b45345623872c7c8a29f9add958473457e76983ad910d67"
+   "bytes": 43596,
+   "sha256": "bdbd84374396b013fba800cf32dc7887dc9f5bcb1cbc5f5461965778e12a9050"
   },
   {
    "path": "src/vfx/glsl.ts",

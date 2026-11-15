@@ -1669,3 +1669,379 @@ Writing the landmark extractor (VP, coins, pink-band and cyan-core centre lines 
 >   {"i":4,"ref":[465.8,545.7,28],"game":[430,562,29],"dx":-35.8,"dy":16.3,"dd":1}
 >   {"i":5,"ref":[495.1,533,20],"game":[532,550,25],"dx":36.9,"dy":17,"dd":5}
 
+### 🤖 Claude — 2026-11-15T23:08:31.895Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/axisoff.ts <<'EOF'\nimport { readFileSync } from 'node:fs';\nimport { Course, S05, meander05 } from '../../../../../home/user/rainbow-/src/world/course';\nimport { coreLateral } from '../../../../../home/user/rainbow-/src/vfx/waterRibbon';\nimport { C05 } from '../../../../../home/user/rainbow-/src/gameplay/coins';\nconst L = JSON.parse(readFileSync('/home/user/rainbow-/qa/pilot05/wave6/camera_lock/landmarks.json', 'utf8'));\nconst c = new Course(); const st = c.stage('05'); const ax = c.straig …[+1601 chars]`
+
+### 🧑 User — 2026-11-15T23:08:33.528Z
+
+> ↩︎ result: stage05 s0 114.69 s1 188.92 crest 132.44 axis a [ '2.00', '-41.16', '-58.96' ] b [ '2.00', '-44.16', '-130.96' ]
+> REF coins: s, lat(course) → u, offset from axis (world x − axis x); game course meander at u; game core
+> [ 473.9, 726.3 ] s 138.534 u 21.6 refOff -0.31 meander -0.05 coinLatGame -0.03 gameCoinOff -0.08
+> [ 547.8, 661.2 ] s 143.293 u 26.3 refOff 0.60 meander 0.61 coinLatGame 0.38 gameCoinOff 0.99
+> [ 482, 612.1 ] s 149.173 u 32.2 refOff -0.37 meander 0.89 coinLatGame 0.56 gameCoinOff 1.45
+> [ 431.1, 574.3 ] s 160.207 u 43.0 refOff -1.85 meander -1.08 coinLatGame -0.67 gameCoinOff -1.76
+> [ 465.8, 545.7 ] s 172.89 u 55.5 refOff -1.28 meander 0.47 coinLatGame 0.28 gameCoinOff 0.75
+> [ 495.1, 533 ] s 184.774 u 67.0 refOff -0.26 meander 0.39 coinLatGame 0.22 gameCoinOff 0.61
+> GAME coin defs (05):
+>  s 124.24 u 7.4 lat -0.06 off -0.16
+>  s 127.84 u 11.0 lat -0.23 off -0.61
+>  s 131.44 u 14.6 lat -0.29 off -0.76
+>  s 138.14 u 21.2 lat -0.06 off -0.16
+>  s 143.14 u 26.2 lat 0.37 off 0.96
+>  s 149.64 u 32.7 lat 0.54 off 1.40
+>  s 157.64 u 40.5 lat -0.36 off -0.94
+>  s 165.64 u 48.4 lat -0.81 off -2.10
+>  s 173.64 u 56.2 lat 0.42 off 1.11
+>  s 181.64 u 64.0 lat 0.76 off 2.03
+> S05 {"L":72,"lambda":32,"uCrest":14," …[+137 chars]
+
+### 🤖 Claude — 2026-11-15T23:09:22.199Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/course.ts", "offset": 1, "limit": 15}`
+
+### 🧑 User — 2026-11-15T23:09:22.211Z
+
+> ↩︎ result: 1	/**
+> 2	 * RAINBOW master course — ONE continuous route through the washer world.
+> 3	 *
+> 4	 * Units: 1 unit ≈ 5 cm at Benny's scale (Benny body radius ≈ 0.8). +Y is up (absolute altitude).
+> 5	 * The route starts inside Drum A (scene 01/02), drains through a chute into the whirlpool basin (03),
+> 6	 * drops down the five-arrow slide (04), winds through the perforated current tube (05), crests the
+> 7	 * rinse arch (06), winds through the washer tube and then PLUNGES ~62 units straight down (07) before
+> 8	 * the bottom of that same tube flares into the Final Spin Chamber inlet (08). 08–10 stay in that same
+> 9	 * chamber; the route ends under the purple towel on the platform, where the 11 cinematic plays.
+> 10	 *
+> 11	 * Every stage is a range of arc-length `s` on a single centripetal Catmull-Rom spline, so position
+> 12	 * and tangent are continuous by construction; `validateContinuity()` measures it anyway.
+> 13	 */
+> 14	import * as THREE from 'three';
+> 15
+
+### 🤖 Claude — 2026-11-15T23:09:22.812Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/course.ts", "offset": 425, "limit": 25}`
+
+### 🧑 User — 2026-11-15T23:09:22.828Z
+
+> ↩︎ result: 425	      tan[i].toArray(this.T, i * 3);
+> 426	      sm[i].toArray(this.U, i * 3);
+> 427	    }
+> 428	    this.st05 = this.stage('05');
+> 429	    this.st10 = this.stage('10');
+> 430	    // '05_crest': the first meander crest (stream furthest left, heading parallel to the tunnel
+> 431	    // axis) — the 05 QA checkpoint, where Benny faces the vanishing point down the straight tube
+> 432	    let best = this.st05.s0 + S05.uCrest, dMin = Infinity;
+> 433	    for (let s = this.st05.s0 + 4; s < this.st05.s0 + S05.uCrest + S05.lambda / 4; s += 0.05) {
+> 434	      const d = this.offset05(s);
+> 435	      if (d < dMin) { dMin = d; best = s; }
+> 436	    }
+> 437	    this.marks['05_crest'] = best;
+> 438	  }
+> 439	
+> 440	  /** 05 current: lateral offset (units, +X) of the stream centreline from the straight tunnel line */
+> 441	  offset05(s: number): number {
+> 442	    const st = this.st05;
+> 443	    if (s <= st.s0 || s >= st.s1) return 0;
+> 444	    return this.sample(s).pos.x - this.line05x;
+> 445	  }
+> 446	
+> 447	  stageAtS(s: number): StageDef {
+> 448	    for (const st of this.stages) if (s < st.s1) return st;
+> 449	    return this.stages[this.stages.length - 1];
+
+### 🧑 User — 2026-11-15T23:09:52.053Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-15T23:09:52.142Z
+
+Claude, please check whether World Labs Marble and World Labs Atlas are installed, connected, authenticated, and working on my NEW Claude account.
+
+1. Check my installed plugins, connectors, MCP servers, and available World Labs tools.
+2. Confirm whether you can access Marble at marble.worldlabs.ai directly through Claude.
+3. Check whether the World Labs Atlas connector is authenticated and can list my projects.
+4. If anything is missing, tell me exactly how to connect or install it on this new account.
+5. Check whether you can generate a 3D washing-machine environment from my approved Rainbow 3D Screen 05 reference and export it for Blender.
+6. Explain which service would work best for reaching 90–95% visual similarity to my approved screen.
+
+Do not generate anything or spend any credits yet.
+
+Please report separately:
+
+- Marble: Connected / Not connected / Not available
+- Atlas: Connected / Not connected / Not available
+- World Labs plugin: Installed / Not installed
+- Blender import: Ready / Not ready
+
+If anything requires me to sign in, authorize access, or pay, tell me exactly what I need to do.
+RAINBOW — USE WORLD LABS MARBLE TO REBUILD MY APPROVED SCREEN 05
+
+Claude, I want you to actively use World Labs Marble or Atlas to help reconstruct my approved Rainbow Screen 05 — FLOW INTO THE CURRENT.
+
+IMPORTANT: I do not just want the World Labs plugin installed. I want you to use its 3D reconstruction capabilities to help make my actual game look like my approved screenshot.
+
+My goal is approximately 90–95% visual similarity, if achievable, while preserving real playable 3D Android gameplay.
+
+1. USE MY EXACT APPROVED IMAGE
+
+Use my original approved Screen 05 as the primary visual target.
+
+Preserve:
+
+- Deep metallic purple-magenta washing-machine tunnel.
+- Reflective yellow-gold circular rings.
+- Dark perforated tunnel walls.
+- Thick, winding electric-blue and hot-pink S-shaped water.
+- Beautiful foam, bubbles, splashes, and reflections.
+- Long tunnel perspective with a small distant golden glow.
+- Benny's exact approved appearance.
+
+Do not creatively redesign the environment.
+
+2. USE WORLD LABS FOR ACTUAL 3D RECONSTRUCTION
+
+First check whether Marble or Atlas generation is available through an authenticated integration on this Claude account.
+
+If direct Marble generation is supported, prepare a reconstruction using my approved reference and the existing Blender tunnel layout.
+
+If Marble is only available through its website, give me the exact upload image and prompt so I can generate the world myself at marble.worldlabs.ai.
+
+Then use the exported 3D assets in Blender.
+
+Do not stop after checking whether World Labs is connected. Complete the available preparation and tell me the exact next action needed to generate and import the 3D environment.
+
+3. USE BLENDER TO MAKE IT ACCURATE
+
+Use Blender's existing Screen 05 layout and camera-matching workflow.
+
+Compare the generated World Labs geometry against the approved image.
+
+Correct the tunnel size, perspective, gold rings, and water path.
+
+Use my Water FX Specialist to create genuinely animated 3D water rather than a static image.
+
+Use the actual generated geometry only if it improves the current game.
+
+4. KEEP MY EXISTING GAME
+
+Do not restart Rainbow.
+
+Preserve all eleven screens, Benny, the cartoon girl, all ten design specialists, gameplay, controls, coins, Android project, and Google Flow integration.
+
+Continue from my existing GitHub project:
+
+"josiahscalia5-dev/rainbow-"
+
+Recovery source branch:
+
+"claude/rainbow-3d-account-transfer-syorak"
+
+Verify the newest saved commit before continuing.
+
+Keep automatic five-minute backups active on the current authorized working branch.
+
+5. WORK FASTER BUT ACCURATELY
+
+I want you to stop making endless small changes that barely improve the complete screenshot.
+
+Use one focused World Labs Screen 05 pilot to determine whether it can improve the geometry faster than our current approach.
+
+Show me the estimated external credit cost before generation. My Claude account credits do not automatically pay for World Labs.
+
+Ask for my approval before spending paid World Labs credits.
+
+6. SHOW ME ACTUAL PROOF
+
+After the reconstruction, show me:
+
+1. My original approved Screen 05.
+2. The World Labs reconstructed environment.
+3. The improved real playable 3D game screenshot.
+4. A comparison of the differences.
+
+Do not call the work finished unless the actual game looks substantially closer to my approved image.
+
+My priority is to use World Labs Marble together with Blender and my existing design specialists to get as close as possible to my approved Screen 05—faster, accurately, and without losing any existing work.
+
+Start with the best available reconstruction workflow and tell me which World Labs generation step needs my approval.
+
+### 🤖 Claude — 2026-11-15T23:09:58.171Z
+
+Pausing the S-curve edit (nothing in `course.ts` was changed yet) to answer your World Labs check first. Running the last two checks now: MCP server list and a Blender import dry run.
+
+### 🤖 Claude — 2026-11-15T23:09:59.323Z
+
+> 🔧 **Bash** `{"command": "timeout 60 claude mcp list 2>&1 | head -20; echo ---; grep -n \"dry\\|argparse\\|add_argument\" tools/blender/import_world_asset.py | head -12", "description": "List MCP servers and inspect import tool options", "timeout": 90000}`
+
+### 🧑 User — 2026-11-15T23:10:01.787Z
+
+> ↩︎ result: Checking MCP server health…
+> 
+> plugin:design:slack: https://mcp.slack.com/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:figma: https://mcp.figma.com/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:linear: https://mcp.linear.app/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:asana: https://mcp.asana.com/v2/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:atlassian: https://mcp.atlassian.com/v1/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:notion: https://mcp.notion.com/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:intercom: https://mcp.intercom.com/mcp (HTTP) - × Failed to connect — ERR_PROXY_TUNNEL: Proxy refused to open a tunnel: 403 Forbidden
+> plugin:design:google calendar:  (HTTP) - - Not configured
+> plugin:design:gmail:  (HTTP) - - Not configured
+> plugin:playwright:playwright: npx @playwright/m …[+1164 chars]
+
+### 🤖 Claude — 2026-11-15T23:10:06.224Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/blendtest && mkdir -p $S && head -12 tools/blender/make_synthetic_tunnel.py | grep -i \"blender\\|--\" ; (timeout 300 blender -b --python tools/blender/make_synthetic_tunnel.py -- --out $S/synthetic_tunnel.glb 2>&1 | tail -3) && ls -la $S && (timeout 300 blender -b --python tools/blender/import_world_asset.py -- --in $S/synthetic_tunnel.glb --name drytest --out-dir $S/import --no-preview 2>&1 | grep -v \"^$\" | tail -8); ls $S/import 2>/dev/null", "description": "Blender import dry run on a synthet …[+34 chars]`
+
+### 🧑 User — 2026-11-15T23:10:09.230Z
+
+> ↩︎ result: deliberately rotated/offset, so tools/blender/import_world_asset.py can be verified without any credits.
+>     blender -b --python tools/blender/make_synthetic_tunnel.py -- OUT.glb"""
+> out = sys.argv[sys.argv.index("--") + 1]
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+> 
+> Blender quit
+> total 8
+> drwxr-xr-x 2 root root 4096 Nov 15 23:10 .
+> drwx------ 4 root root 4096 Nov 15 23:10 ..
+>     objs = import_mesh(a.inp)
+>   File "/home/user/rainbow-/tools/blender/import_world_asset.py", line 55, in import_mesh
+>     bpy.ops.import_scene.gltf(filepath=path)
+>     ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+> RuntimeError: Error: Please select a file
+> Error: Please select a file
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+> Blender quit
+
+### 🤖 Claude — 2026-11-15T23:10:10.192Z
+
+Wrong argument form for the synthetic-tunnel maker (it takes the output path positionally). Re-running:
+
+### 🤖 Claude — 2026-11-15T23:10:12.944Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/blendtest && (timeout 300 blender -b --python tools/blender/make_synthetic_tunnel.py -- $S/synthetic_tunnel.glb 2>&1 | tail -2) && ls -la $S/*.glb && (timeout 300 blender -b --python tools/blender/import_world_asset.py -- --in $S/synthetic_tunnel.glb --name drytest --out-dir $S/import --no-preview 2>&1 | grep -v \"^$\" | tail -6); ls $S/import; head -c 600 $S/import/drytest_measure.json 2>/dev/null", "description": "Retry Blender import dry run with positional output", "timeout": 660000}`
+
+### 🧑 User — 2026-11-15T23:10:18.666Z
+
+> ↩︎ result: Blender quit
+> -rw-r--r-- 1 root root 12509868 Nov 15 23:10 /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/blendtest/synthetic_tunnel.glb
+> 23:10:18 | INFO: Primitives created: 1
+> 23:10:18 | INFO: Finished glTF 2.0 export in 0.09596824645996094 s
+> Info: Saved as "drytest.blend"
+> IMPORT_OK {"scale_applied": 2.5343347302610186, "triangles": {"before_decimate": 345792, "after_decimate": 86448}, "outputs": {"underlay_glb": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/blendtest/import/drytest_underlay.glb", "blend": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/blendtest/import/drytest.blend", "preview": null}}
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+> Blender quit
+> drytest.blend
+> drytest_measure.json
+> drytest_underlay.glb
+> {
+>   "input": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/blendtest/synthetic_tunnel.glb",
+>   "ply": null,
+>   "objects": [
+>     "Cylinder"
+>   ],
+>   "centre": [
+>     3.9656205670893216,
+>     -6.922661138742764,
+>     2.3979412008415397
+>   ],
+>   "axis": [
+>     -0.25929751927681,
+>     0.5833078017648093,
+>     -0.7697511317933855
+>    …[+246 chars]
+
+### 🤖 Claude — 2026-11-15T23:10:25.747Z
+
+> 🔧 **ToolSearch** `{"query": "select:SearchMcpRegistry,SuggestConnectors", "max_results": 2}`
+
+### 🧑 User — 2026-11-15T23:10:25.778Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-15T23:10:26.863Z
+
+> 🔧 **SearchMcpRegistry** `{"keywords": ["world labs", "atlas", "marble", "3d world generation"]}`
+
+### 🧑 User — 2026-11-15T23:10:27.162Z
+
+> ↩︎ result: {"results":[{"name":"Atlassian MCP","description":"Search, read and update Jira, Confluence, Bitbucket, Loom and other Atlassian apps with your existing Atlassian permissions.","directoryUuid":"11ba10d9-477b-4988-bd1c-90a7fa680dc1","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["atlassianUserInfo","getAccessibleAtlassianResources","discover","executeRead","executeWrite","executeDestructive","getJiraIssue","createJiraIssue","+13 more"],"connected":false,"enabledInChat":false},{"name":"MongoDB Atlas","description":"Manage MongoDB Atlas resources and read & write cluster data","directoryUuid":"c700435a-e86b-41f6-a377-ee226164a909","installedServerId":null,"customOAuthClientId":null,"installState":"not_installed","isAuthless":false,"tools":["aggregate","aggregate-db","atlas-create-access-list","atlas-create-cluster","atlas-create-db-user","atlas-create-free-cluster","atlas-create-project","atlas-get-performance-advisor","+33 more"],"connected":false,"enabledInChat":false},{"name":"atlasFindings","description":"Search, investigate, and act on Atlas data","directoryUuid":"bba82bdc-96fe-45b7-adea-e24ffe392326","installedServe …[+3668 chars]
+
+### 🤖 Claude — 2026-11-15T23:10:45.414Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png"}`
+
+### 🧑 User — 2026-11-15T23:10:45.448Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:11:00.642Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/ACCOUNT7_STATUS.md", "content": "# World Labs on account 7 (2026-11-15 ~23:15 UTC, branch `ccr-93add0fa-q17ey6`) — nothing generated, nothing spent\n\n| Item | State | Evidence |\n|---|---|---|\n| **Marble** | **Not connected.** marble.worldlabs.ai is a browser app signed in with the user's own login; Claude has no Marble connector. The programmatic route is the **Marble World API** (`https://api.worldlabs.ai/marble/v1`, header `WLT-Api-Key`): available, but no API key is configured in this environment | docs.worldlabs.ai/api (read 23:05 UTC); …[+2797 chars]`
+
+### 🧑 User — 2026-11-15T23:11:00.666Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/worldlabs/05/ACCOUNT7_STATUS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:11:02.708Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png"], "caption": "Proposed World Labs input: real pixels of your approved Screen 05 (rows 197–767, no HUD, no Benny, nothing invented). Approve this before any generation.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-15T23:11:03.183Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png → file_uuid: fcf548f7-c1b7-4c42-b936-9f20cbe3186c
+
+### 🤖 Claude — 2026-11-15T23:11:24.853Z
+
+Nothing has been generated or spent with World Labs. Three of the four checks are fine. The gaps are that Marble and Atlas need sign-in and payment on your side, and Atlas also needs its connector added to this new Claude account.
+
+**Status on this new account**
+- **Marble: Not connected.** The marble.worldlabs.ai website runs in your browser under your own login; Claude has no Marble connector, so I can't use the site for you. Marble does have an official API (the "World API") that I can call from this session, but there is no API key set up yet.
+- **Atlas: Not connected.** This Claude account has no "World Labs Atlas" connector (the only connector listed is Context7). The Atlas server rejects requests without sign-in, so I can't list your projects. Your previous account had it connected, with a project called "My project" that had credits.
+- **World Labs plugin: Installed.** Version 0.2.2, with its four skills. Its own built-in Atlas connection is switched off on purpose so it won't duplicate the connector.
+- **Blender import: Ready.** Blender 5.3.0 is installed. I tested the import tool on a dummy tunnel file: it imported, measured the radius correctly (3.0) and saved a `.blend` plus a lighter preview model. It reads mesh files (`.glb`) and splat files (`.ply`); the API exports `.ply` for free.
+
+**Can it build your washer tunnel from Screen 05 and hand it to Blender?** Yes, through the Marble API. One image gives a 3D world made of splats (a point-based 3D format), a simplified collision mesh (`.glb`) and a 360° panorama. A higher-quality mesh can be ordered separately. Prices are from World Labs' official docs, read today. This billing is separate from Claude and from the Marble website (1,250 credits = $1, minimum purchase $5):
+
+| Step | Cost |
+|---|---|
+| Quick draft world from the image | 230 credits ($0.18) |
+| Full world: splats, collision mesh, panorama | 1,580 credits ($1.26) |
+| `.ply` splat export | free |
+| High-quality mesh, optional | 3,500 credits ($2.80) |
+
+The pilot I'd run is the draft, then the full world: **$1.44 in total, or $4.24 if we also take the high-quality mesh.** The input would be the crop I just sent you. It is real pixels from your approved image only, with no HUD, no Benny and nothing invented. Please approve that image too.
+
+**What you need to do**
+1. **For Marble (recommended):**
+   - Sign in at platform.worldlabs.ai and buy the $5 minimum of API credits. Credits from the Marble website plan don't work for the API.
+   - Create an API key on that site's API keys page.
+   - Tell me when it's ready and I'll open a secure form to store the key. Don't paste it into the chat.
+2. **For Atlas (optional):**
+   - In claude.ai, go to Settings → Connectors and add "World Labs Atlas". If it isn't in the list, add a custom connector with the address `https://api.atlas.worldlabs.ai/mcp`.
+   - Sign in with the same World Labs account as before.
+   - I'll then list your projects (free) before anything else.
+3. Reply **"approve Marble pilot: draft + standard ($1.44)"**, or include the high-quality mesh, when you want it run.
+
+**Which service gets closest to your screen:** Marble is the better fit for one clean pilot, because it rebuilds a world straight from your image and its files open in Blender. Atlas is better for measuring the camera and depth of the image, but I've largely done that for free:
+- The game's camera now hits your image's vanishing point within 1.5 pixels.
+- The coin sizes match within 3–7 pixels.
+- The real geometry error I found is the river's S-curve: it bends the wrong way. The 3rd coin is about 100 px right of where your image has it.
+
+Neither service will deliver 90–95% on its own. The world it makes doesn't move, is too heavy for Android, and it has to guess the parts of the tunnel your painting doesn't show. So I'd use it as a 3D guide in Blender for the tunnel size, ring spacing and fittings. The water stays genuinely animated, from the Water FX specialist. The rest of the gap is materials, the shape of the river, and foam.
+
+**Still running:** four specialists are working on Screen 05 in the background:
+- Environment: gold rings, walls, fittings.
+- Far river: S-bends right into the light, plus more coins.
+- Water: the area near Benny.
+- Foam banks.
+
+The repo is safe: your source branch (`7ae64c3`) is protected and the five-minute GitHub backup is running and verified. Unless you say otherwise, I'll next fix the S-curve with the camera kept exactly where it is; that costs nothing. The full status and prices are saved in `qa/worldlabs/05/ACCOUNT7_STATUS.md`.
+
+### 🧑 User — 2026-11-15T23:11:26.699Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

@@ -67,6 +67,23 @@ export function bermSurface(s: number, e: number, side: number, hw: number): num
   return bermHeight(e, hw, bermLump(s, side)) + 0.2 * domeK * Math.sqrt(bermDomes(s, e, side));
 }
 
+/**
+ * wave 6: ref 05 soap colour ramp. Stops = the reference's foam pixels at the 10/25/50/75/90th luminance
+ * percentiles — blue-violet shade (155,156,240), (179,173,245), lavender (217,195,249), lit (243,226,252), top
+ * (251,246,253) — inverted through the display pipeline (Neutral tone map ×0.86 → sRGB → grade sat 1.36 /
+ * contrast 1.15), so only the very tops of the bubbles reach white and the undersides stay blue-violet.
+ */
+const SOAP05_GLSL = /* glsl */ `
+const vec3 SOAP_SHADE = vec3(0.40, 0.41, 0.77);
+vec3 soap05(float t) {
+  t = clamp(t, 0.0, 1.0) * 4.0;
+  vec3 c = mix(SOAP_SHADE, vec3(0.53, 0.50, 0.83), clamp(t, 0.0, 1.0));
+  c = mix(c, vec3(0.735, 0.63, 0.90), clamp(t - 1.0, 0.0, 1.0));
+  c = mix(c, vec3(0.99, 0.89, 1.10), clamp(t - 2.0, 0.0, 1.0));
+  return mix(c, vec3(1.05, 1.02, 1.06), clamp(t - 3.0, 0.0, 1.0));
+}
+`;
+
 const BERM_VERT = /* glsl */ `
 attribute vec3 aFoam;    // x = e (units outward from the stream edge), y = s, z = side (-1 / 1)
 uniform float uTime;
@@ -92,12 +109,14 @@ const BERM_FRAG = /* glsl */ `
 uniform float uTime;
 uniform vec2 uOutro;     // amount, chamber start s
 uniform vec3 uLightDir;
+uniform vec4 uSt05;      // 05 soap shading ramps: in s0..s1, out s2..s3 (wave 6)
 varying vec3 vFoam;
 varying vec3 vPosW;
 varying vec3 vNormalW;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 ${FRAG_FX_GLSL}
+${SOAP05_GLSL}
 void main() {
   float s = vFoam.y;
   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
@@ -142,7 +161,22 @@ void main() {
   float spec = pow(max(dot(reflect(-V, N), L), 0.0), 28.0);
   float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
   col += vec3(1.0) * spec * 0.45 + iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.18;
-  gl_FragColor = vec4(col * 0.96, 1.0);
+  col *= 0.96;
+  // 05 (wave 6): small piled bubbles — blue-violet crevices and undersides, lavender bodies, white only on
+  // the bubble tops (ref 05 rim), instead of a flat white lather sheet
+  float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));
+  if (k05 > 0.0) {
+    float t05 = 0.08 + 0.42 * clamp(N.y * 0.5 + 0.5, 0.0, 1.0) * diff + 0.5 * mix(0.45, bub, max(k1, 0.35));
+    vec3 c5 = soap05(t05);
+    c5 = mix(c5, SOAP_SHADE * 0.9, smoothstep(0.55, 0.95, c1) * 0.75 * k1);
+    c5 = mix(c5, SOAP_SHADE, smoothstep(0.62, 0.95, c2) * 0.45 * k2);
+    #ifndef LOW_Q
+    c5 = mix(c5, SOAP_SHADE * 0.72, (1.0 - smoothstep(0.1, 0.2, pc)) * step(0.62, hash12(floor(pp))) * 0.8 * kp);
+    #endif
+    c5 += vec3(1.0) * spec * 0.3 + iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.12;
+    col = mix(col, c5, k05);
+  }
+  gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
 }
 `;
@@ -159,9 +193,13 @@ varying vec3 vNormalW;
 varying vec3 vPosW;
 varying vec3 vLocal;
 varying vec3 vInst;
+varying float vW5;
 #include <fog_pars_vertex>
 void main() {
-  vInst = instanceColor;
+  // instanceColor.x = ao + 2 q, q = 0..8 = 05 soap-shading weight × 8 (wave 6; ao < 1 so floor(x / 2) = q)
+  float q5 = floor(instanceColor.x * 0.5);
+  vInst = vec3(instanceColor.x - 2.0 * q5, instanceColor.yz);
+  vW5 = q5 / 8.0;
   float br = 1.0 + 0.035 * sin(uTime * 1.7 + instanceColor.y * 40.0);
   vec4 wp = modelMatrix * instanceMatrix * vec4(position * br, 1.0);
   vPosW = wp.xyz;
@@ -178,8 +216,10 @@ varying vec3 vNormalW;
 varying vec3 vPosW;
 varying vec3 vLocal;
 varying vec3 vInst;
+varying float vW5;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
+${SOAP05_GLSL}
 void main() {
   vec3 N = normalize(vNormalW);
   vec3 V = normalize(cameraPosition - vPosW);
@@ -191,6 +231,8 @@ void main() {
   vec3 top = mix(vec3(1.1, 1.04, 1.16), vec3(1.04, 1.06, 1.16), clamp(vInst.z, 0.0, 1.0));
   top = mix(top, vec3(1.12, 1.02, 1.12), clamp(-vInst.z, 0.0, 1.0));
   vec3 col = mix(lav, top, lit);
+  // 05 (wave 6): ref soap ramp — white only on the tops, blue-violet undersides
+  col = mix(col, soap05(smoothstep(0.25, 0.97, wrap * 0.6 + upF * 0.4) + 0.06 * vInst.z), vW5);
   #ifndef LOW_Q
   // pores: small open bubbles on the puff skin (puff-local, two planar projections, no seam)
   vec3 an = abs(vLocal);
@@ -202,7 +244,7 @@ void main() {
   #endif
   // soap-film rim (cool lavender, a touch of pink) + soft glint
   float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.4);
-  col = mix(col, vec3(0.8, 0.68, 1.0), fres * 0.42);
+  col = mix(col, mix(vec3(0.8, 0.68, 1.0), SOAP_SHADE * 0.95, vW5), fres * mix(0.42, 0.6, vW5));
   float spec = pow(max(dot(reflect(-V, N), L), 0.0), 26.0);
   col += vec3(1.0) * spec * 0.3;
   col *= mix(0.68, 1.0, vInst.x);
