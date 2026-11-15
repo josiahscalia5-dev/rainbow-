@@ -3294,3 +3294,86 @@ The Marble polling is stopped, and nothing will be called or spent until a new k
 Stop hook feedback:
 [command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
 
+### 🤖 Claude — 2026-11-15T23:33:06.363Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -10; grep -rl \"[REDACTED-PRIVATE]\" backups/ qa/ 2>/dev/null | head -3; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:stop 2>&1 | grep -E '\"commit\"|skipping|\"error\"'; echo \"local $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/ccr-93add0fa-q17ey6 | cut -c1-7)\"; git status --short | head -3", "description": "Commit and push remaining untracked files", "timeout": 330000}`
+
+### 🧑 User — 2026-11-15T23:33:07.136Z
+
+> ↩︎ result: another autosave is running; skipping
+> local e638e03 remote 5ef3959
+
+### 🤖 Claude — 2026-11-15T23:33:08.930Z
+
+The daemon is mid-push (local `e638e03` is ahead of the remote). Waiting for it to finish:
+
+### 🤖 Claude — 2026-11-15T23:33:10.885Z
+
+> 🔧 **Bash** `{"command": "for i in $(seq 1 12); do r=$(git ls-remote origin refs/heads/ccr-93add0fa-q17ey6 | cut -c1-7); l=$(git rev-parse --short HEAD); [ \"$r\" = \"$l\" ] && [ -z \"$(git status --short)\" ] && break; sleep 5; done; echo \"local $l remote $r\"; git status --short | head -3; python3 -I scripts/autosave-status.py", "description": "Wait until remote matches local and tree is clean", "timeout": 120000}`
+
+### 🧑 User — 2026-11-15T23:33:11.498Z
+
+> ↩︎ result: local e638e03 remote e638e03
+> AUTOSAVE OK | branch ccr-93add0fa-q17ey6 | scheduler daemon | last verified backup 2026-11-15T23:33:03+00:00 (0.1 min ago) | local e638e03 remote e638e03 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-15T23:33:13.918Z
+
+Everything is committed and pushed. The branch `ccr-93add0fa-q17ey6` is at `e638e03` on both this machine and GitHub, with nothing uncommitted, and the backup health check reports OK.
+
+The Reference Match Director is still running. When it reports, I'll show you its three biggest differences before any changes start.
+
+### 🧑 User — 2026-11-15T23:33:15.375Z
+
+Claude, I saw your latest Rainbow and World Labs reports.
+
+IMPORTANT: Please prioritize API-key security before using Marble.
+
+1. The original World Labs API key appeared in three older GitHub backup commits. Confirm whether I have revoked that exposed key. Do not reveal either key.
+
+2. If the replacement key is already saved through your secure credential form, verify that you are testing the replacement, not the exposed key.
+
+3. Investigate the 401 Unauthorized error. Check the official API version, endpoint, project permissions, and required "WLT-Api-Key" authentication header.
+
+4. Stop repeatedly polling with an exposed or invalid key. Use one free authentication test after the setup is corrected.
+
+5. Do not rewrite GitHub history or force-push without protecting all current branches and explaining the risks. Make sure future conversation backups redact credentials.
+
+6. Do not generate anything or spend World Labs credits until authentication succeeds and I approve the specific generation.
+
+7. Meanwhile, keep my four Screen 05 specialists working. Continue correcting the river's S-curve to match my approved image, keeping the camera locked.
+
+8. Preserve my entire existing Rainbow game, Blender assets, all ten specialist configurations, and automatic five-minute GitHub backups.
+
+Once Marble authentication works, prepare our Screen 05 draft-and-standard reconstruction pilot and confirm the current cost before generation.
+
+My priority remains getting my actual playable game as close as possible to my approved screenshot.
+Claude, I reviewed the latest Rainbow Screen 05 and Screen 06 screenshots.
+
+I see that correcting Screen 05's S-curve caused a visual regression in Screen 06.
+
+My priority is to preserve the improvements to Screen 05 WITHOUT damaging the other approved screens.
+
+Please fix the following:
+
+1. Remove the large orange ring blocking Benny and the bottom of Screen 06.
+
+2. Preserve Screen 05's improved S-shaped water and corrected gold coin positions.
+
+3. Make sure Screen 06's camera, tunnel, and water geometry match my approved Screen 06 image, especially the raised curved rinse arch.
+
+4. Investigate the shared path-length and checkpoint calculations. If possible, give each screen stable stage-relative geometry and camera anchors so changing one river does not unintentionally shift the next stage.
+
+5. Do not add artificial bends simply to preserve total length unless they maintain smooth, physically continuous gameplay and introduce no visual regressions.
+
+6. Keep the 05-to-06 transition seamless and preserve the verified 07-to-08 deep descent.
+
+7. Run side-by-side Playwright comparisons for Screens 04, 05, 06, 07 and 08.
+
+8. Preserve all completed specialist work, the existing project, and automatic GitHub backups.
+
+9. Do not spend World Labs credits while its API authentication is failing. Stop polling with any exposed or revoked API key.
+
+My main goal is still 90–95% visual similarity to my approved screens, where achievable. Please focus on the overall scenery and gameplay continuity instead of repeatedly fixing one screen at the expense of another.
+
+Show me the corrected real gameplay Screen 06 beside my approved reference after testing.
+
