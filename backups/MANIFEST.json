@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 4395,
-   "sha256": "7fb98b02cb38be38550bd863e0906452e2732b2719ebeea8468c5e7d98bfb983"
+   "bytes": 4396,
+   "sha256": "8c1290bbc4f0d9afeca6dc569d0270fac84db9178187e588e0123b0a9d9510c3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1707,6 +1707,16 @@
    "sha256": "aecdacfab38eb36a6ba26bc687b111a6bb5f6e9f85a85227714ffef969dc55b5"
   },
   {
+   "path": "qa/pilot05/wave5/foam/tools/cc_qa_pilot05_wave6_current_05.png",
+   "bytes": 597423,
+   "sha256": "343949c6243c2305ef81083aa2dca1b4253c6c62a919b58d1c84ea9b18616dea"
+  },
+  {
+   "path": "qa/pilot05/wave5/foam/tools/cc_references_05_flow_into_the_current.png",
+   "bytes": 692416,
+   "sha256": "3aa0c29890d62371f6abe44d6de159ed9c4308d160d3e4dd1963bf02e16792f8"
+  },
+  {
    "path": "qa/pilot05/wave5/foam/tools/foammask.py",
    "bytes": 2411,
    "sha256": "fc74b998bde6451cae2d3c9b721de34df25741ad3028c9ccd31ac478b379a582"
@@ -1767,9 +1777,69 @@
    "sha256": "a9f709fb528491a919e4e88d871558a3cbd2555a00dd3d7a40818852bcdaeeca"
   },
   {
+   "path": "qa/pilot05/wave6/camera_lock/camera05.json",
+   "bytes": 1478,
+   "sha256": "cfcf8590d0786d0e3c813233f17ba6c824999c3e46ca8f7a50adc53aef432c24"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/landmarks.json",
+   "bytes": 18787,
+   "sha256": "5304b7d67d6eca3c37513ae5b1e04dfcb94f4347eb42f2ab72bcfaf9e80efad6"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/landmarks_current_px.json",
+   "bytes": 82996,
+   "sha256": "60fe31ae370ef594b4b4489a391c4924392f391c4015e42b60c5fb838ec6a4e3"
+  },
+  {
+   "path": "qa/pilot05/wave6/camera_lock/landmarks_ref_px.json",
+   "bytes": 67832,
+   "sha256": "cedaad480da0880618291ec3fc56ccf74f1567dd47d52e345bdbb0471ea9501a"
+  },
+  {
    "path": "qa/pilot05/wave6/current/05.png",
    "bytes": 1975103,
    "sha256": "2c9a583dcf8eb9d87638e77a393adf6e187b0e846756524c3156ed16bc8a578a"
+  },
+  {
+   "path": "qa/pilot05/wave6/environment/NOTES.md",
+   "bytes": 934,
+   "sha256": "dc2a274caa535565e9206a507b7eac1ba8a850249ff3a44b1dae135fde43516d"
+  },
+  {
+   "path": "qa/pilot05/wave6/foam/NOTES.md",
+   "bytes": 1056,
+   "sha256": "7157baab7a20e08f8d1f1007ee01331f59fbc1f986e1a63762115c1b16af8e05"
+  },
+  {
+   "path": "qa/pilot05/wave6/foam/tools/bigblobs.py",
+   "bytes": 1084,
+   "sha256": "d7c0e6caa868928389251c222d6d8d96b653571232dbda291f48a4513fa9defc"
+  },
+  {
+   "path": "qa/pilot05/wave6/foam/tools/foamcol.py",
+   "bytes": 1925,
+   "sha256": "def7828da391e07b6469774113a884cf7b20322b71b9c27034e574e146fa2784"
+  },
+  {
+   "path": "qa/pilot05/wave6/foam/tools/pipe.py",
+   "bytes": 1679,
+   "sha256": "16e4c3bd9080d94672da26e9e79df431c13b22539c722dec28b182c243de0f81"
+  },
+  {
+   "path": "qa/pilot05/wave6/foam/tools/rowprof.py",
+   "bytes": 1030,
+   "sha256": "e3194a2c16a85a36a897fd229fa0fc519e1f5b41eabc893877ccedd4ac8bc05c"
+  },
+  {
+   "path": "qa/pilot05/wave6/pathcam/NOTES.md",
+   "bytes": 1199,
+   "sha256": "c65cb86acdd1f187f29fc03b842cbcc091d70c0b65c842de5a61d9f6432c522e"
+  },
+  {
+   "path": "qa/pilot05/wave6/water/NOTES.md",
+   "bytes": 1266,
+   "sha256": "64869aaf738eaaa9bb07806c42afb2d58396634ac00124308627af7a036ae348"
   },
   {
    "path": "qa/report_metrics.json",
@@ -2107,6 +2177,11 @@
    "sha256": "e5f9a0d070bd4c0e1351596b939f59d782a9cd84db6ef30027d00d6360eab4b9"
   },
   {
+   "path": "scripts/camera-lock-05.mjs",
+   "bytes": 8242,
+   "sha256": "803d1d2394f6a779e4613b05d2e641ca47f4877e65cf46d28e6eb4e0a0cf630d"
+  },
+  {
    "path": "scripts/capture.mjs",
    "bytes": 4465,
    "sha256": "c4a345d9b97f9466bde9637f0b1d8b7265e0e2bc8d17addaa15830c095482a67"
@@ -2155,6 +2230,11 @@
    "path": "scripts/install-autosave-scheduler.sh",
    "bytes": 2420,
    "sha256": "498295609d28f2b3c8bc9c085a302b6665bcb41bea7bf6838f0c0b1b1b6737b3"
+  },
+  {
+   "path": "scripts/landmarks05.py",
+   "bytes": 5015,
+   "sha256": "0663a360e3d6a86abc3324a2ebd0e0327e6e87cf927526de701844e2b4b31f4c"
   },
   {
    "path": "scripts/lib/pw.mjs",
@@ -2263,8 +2343,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 32281,
-   "sha256": "d00816b10c9db02746705f5c5fb06e6b65659f878ff4154907222aff8d7e5cc9"
+   "bytes": 32768,
+   "sha256": "57133c4a0f1937f8b78165a6834a4583b25718e429bd788dad729aed500e9e49"
   },
   {
    "path": "src/game/cameraRig.ts",

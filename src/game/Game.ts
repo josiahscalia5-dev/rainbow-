@@ -616,6 +616,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
       return out;
     },
     respawns() { return st.respawns; },
+    /** QA (camera lock): the live render camera — world matrix (column-major), vertical fov, aspect, near/far */
+    camera() {
+      camera.updateMatrixWorld();
+      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+      return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam.target.toArray() };
+    },
     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
     bennyScreen() {
       const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
