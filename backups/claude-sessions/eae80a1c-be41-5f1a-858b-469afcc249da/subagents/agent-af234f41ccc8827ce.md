@@ -1298,3 +1298,197 @@ The typecheck errors are in other specialists' files that are mid-edit (`foam.ts
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T19:36:21.309Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "/**\n * Washer wall lids / nozzle caps (ref 05): thick copper \"D\" plates — a half disc with a softly domed top,\n * rounded rim and flat underside — sticking straight out of BOTH side walls at ≈3 and 9 o'clock, one\n * symmetric pair per ring bay, so they shrink toward the vanishing point in two rows. The straight edge of\n * the D runs along the tube and is sunk into the wall. `skip(s, centre)` drops a lid where the stream runs\n * too close (06 arch climbs the wall). One instanced mesh (1 draw call) …[+4922 chars]`
+
+### 🧑 User — 2026-11-15T19:36:21.354Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:36:22.113Z
+
+> 🔧 **Bash** `{"command": "sed -n 195,250p src/world/environment.ts", "description": "Re-read current 05-07 block after external change notice"}`
+
+### 🧑 User — 2026-11-15T19:36:22.153Z
+
+> ↩︎ result: // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+>   // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+>   // hot magenta near → violet mid-tunnel → warm yellow-white core at the vanishing point
+>   const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+>   const wallGlow: FarGlow = { ...tubeGlow, mid: { color: '#8a3cf0', near: 10, far: 42, amount: 0.55 } };
+>   const tubeEnv = washerTubeEnv('wall');
+>   const goldEnv = washerTubeEnv('gold');
+>   // ring bays: evenly spaced gold bands; 4 circumferential slot rows per bay (ref 05: 3–5)
+>   const ringSpacing = 9.0;
+>   const slotRowsPerBay = 4;
+>   // analytic strip lights along the tunnel (28 around: ref 05 shows ≈12–16 marquee spots per half-ring)
+>   const strips: TubeStrips = { count: 28, width: 0.022, intensity: 2.6, color: '#ffd9f6', alt: 0.65 };
+>   // glossy (low roughness → the strips stay crisp lengthwise streaks instead of a flat clipped sheen)
+>   const perfTubeMat = perforatedMetal({
+>     color: '#e23cc6', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',
+>     slot: 1, repeatU: 48, repeatV: slotRowsPer …[+3021 chars]
+
+### 🤖 Claude — 2026-11-15T19:36:24.096Z
+
+The file matches my python edit. Now apply the paler F0 tints and the new lid placement.
+
+### 🤖 Claude — 2026-11-15T19:36:32.014Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/environment.ts'; s=open(p).read()\nrep = [\n(\"    color: '#e23cc6', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',\",\n \"    // pale pink F0: the saturation comes from the magenta/violet tube environment, so white strip lights\\n    // reflect as white-pink streaks (a saturated F0 turned them into clipped flat magenta)\\n    color: '#ffa8e8', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',\"),\n(\"gold({ color: '#ffa44a', roughness: 0.12, emissive: 0.16 })\", \"gold({ color: '#ffc890', roughness: 0.12, emissi …[+1495 chars]`
+
+### 🧑 User — 2026-11-15T19:36:59.418Z
+
+> ↩︎ result: 05 → qa/pilot05/environment/iter03/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":114,"tris":581871,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> == qa/pilot05/environment/iter03/05.png
+>   gold%frame         10.8
+>   gold%tube(0-600)   22.9
+>   gold_med_rings     #FF9436
+>   blowout%           3.2
+>   blowout%tube       2.9
+>   Lwall              #E71CEF V0.95 S0.88 dark%10 std47 pb%0.0 gold%33
+>   Rwall              #E53AF3 V0.97 S0.75 dark%6 std53 pb%0.2 gold%26
+>   ceil               #F052F1 V1.00 S0.66 dark%4 std55 pb%0.6 gold%26
+>   VP                 (507,432) L237 #FFE7EC
+
+### 🤖 Claude — 2026-11-15T19:37:00.575Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/environment/iter03/tri.png"}`
+
+### 🧑 User — 2026-11-15T19:37:00.783Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:37:00.976Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/environment/iter03/zoom.png"}`
+
+### 🧑 User — 2026-11-15T19:37:01.381Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:37:17.631Z
+
+Still no streaks or marquee spots, so the analytic term looks inert. I'll check that the injection points exist in the r170 physical shader.
+
+### 🤖 Claude — 2026-11-15T19:37:19.432Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/node_modules/three/src/renderers/shaders && grep -n \"lights_fragment_maps\\|project_vertex\\|lights_fragment_begin\" ShaderLib/meshphysical.glsl.js; grep -n \"RE_IndirectSpecular\" ShaderChunk/lights_physical_pars_fragment.glsl.js | head -3; grep -n \"radiance\" ShaderChunk/lights_fragment_begin.glsl.js ShaderChunk/lights_fragment_end.glsl.js | head", "description": "Verify chunk names exist in the physical shader"}`
+
+### 🧑 User — 2026-11-15T19:37:19.486Z
+
+> ↩︎ result: 44:	#include <project_vertex>
+> 187:	#include <lights_fragment_begin>
+> 188:	#include <lights_fragment_maps>
+> 512:void RE_IndirectSpecular_Physical( const in vec3 radiance, const in vec3 irradiance, const in vec3 clearcoatRadiance, const in vec3 geometryPosition, const in vec3 geometryNormal, const in vec3 geometryViewDir, const in vec3 geometryClearcoatNormal, const in PhysicalMaterial material, inout ReflectedLight reflectedLight) {
+> 555:#define RE_IndirectSpecular		RE_IndirectSpecular_Physical
+> ShaderChunk/lights_fragment_begin.glsl.js:13: * - Add diffuse light probe (irradiance cubemap) support.
+> ShaderChunk/lights_fragment_begin.glsl.js:172:	vec3 iblIrradiance = vec3( 0.0 );
+> ShaderChunk/lights_fragment_begin.glsl.js:174:	vec3 irradiance = getAmbientLightIrradiance( ambientLightColor );
+> ShaderChunk/lights_fragment_begin.glsl.js:178:		irradiance += getLightProbeIrradiance( lightProbe, geometryNormal );
+> ShaderChunk/lights_fragment_begin.glsl.js:187:			irradiance += getHemisphereLightIrradiance( hemisphereLights[ i ], geometryNormal );
+> ShaderChunk/lights_fragment_begin.glsl.js:198:	vec3 radiance = vec3( 0.0 );
+> ShaderChunk/lights_fragment_end.glsl.js:4:	RE_IndirectDiffuse( irradiance, geom …[+312 chars]
+
+### 🤖 Claude — 2026-11-15T19:37:22.284Z
+
+The chunks exist. To debug quickly without a rebuild per tweak, I'll check what the QA hook exposes so I can adjust uniforms live in a Playwright page.
+
+### 🤖 Claude — 2026-11-15T19:37:23.179Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow\" -A3 src/game/Game.ts | head -40; sed -n 1,60p scripts/lib/pw.mjs", "description": "Inspect QA hook and playwright helper"}`
+
+### 🧑 User — 2026-11-15T19:37:23.243Z
+
+> ↩︎ result: 9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> 10- */
+> 11-import * as THREE from 'three';
+> 12-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+> --
+> 619:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> 620-  return api;
+> 621-}
+> // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { …[+530 chars]
+
+### 🤖 Claude — 2026-11-15T19:37:24.689Z
+
+> 🔧 **Bash** `{"command": "sed -n 560,621p src/game/Game.ts", "description": "Read QA API object in Game.ts"}`
+
+### 🧑 User — 2026-11-15T19:37:24.725Z
+
+> ↩︎ result: if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.s …[+2199 chars]
+
+### 🤖 Claude — 2026-11-15T19:37:28.974Z
+
+The QA API doesn't expose materials. First a blunt test: crank the strip intensity to 40 and capture, to confirm whether the term reaches the screen.
+
+### 🤖 Claude — 2026-11-15T19:37:31.680Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/const strips: TubeStrips = { count: 28, width: 0.022, intensity: 2.6,/const strips: TubeStrips = { count: 28, width: 0.022, intensity: 40,/\" src/world/environment.ts && grep -n \"intensity: 40\" src/world/environment.ts && O=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/dbg1; node scripts/capture.mjs 05 --out=$O 2>&1 | grep \"→\\|rror\" | tail -3", "description": "Debug capture with very bright strips", "timeout": 300000}`
+
+### 🧑 User — 2026-11-15T19:37:47.484Z
+
+> ↩︎ result: 206:  const strips: TubeStrips = { count: 28, width: 0.022, intensity: 40, color: '#ffd9f6', alt: 0.65 };
+> 05 → /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/dbg1/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":114,"tris":582879,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> [This command modified 1 file you've previously read: src/world/environment.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-15T19:37:49.326Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/dbg1/05.png"}`
+
+### 🧑 User — 2026-11-15T19:37:49.383Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T19:38:11.154Z
+
+[Request interrupted by user]
+

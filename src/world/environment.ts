@@ -203,10 +203,12 @@ export function buildEnvironment(course: Course): Environment {
   const ringSpacing = 9.0;
   const slotRowsPerBay = 4;
   // analytic strip lights along the tunnel (28 around: ref 05 shows ≈12–16 marquee spots per half-ring)
-  const strips: TubeStrips = { count: 28, width: 0.022, intensity: 2.6, color: '#ffd9f6', alt: 0.65 };
+  const strips: TubeStrips = { count: 28, width: 0.022, intensity: 40, color: '#ffd9f6', alt: 0.65 };
   // glossy (low roughness → the strips stay crisp lengthwise streaks instead of a flat clipped sheen)
   const perfTubeMat = perforatedMetal({
-    color: '#e23cc6', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',
+    // pale pink F0: the saturation comes from the magenta/violet tube environment, so white strip lights
+    // reflect as white-pink streaks (a saturated F0 turned them into clipped flat magenta)
+    color: '#ffa8e8', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',
     slot: 1, repeatU: 48, repeatV: slotRowsPerBay / ringSpacing, slotHalf: [0.36, 0.12], stagger: false,
     streaks: 0, metalness: 0.92, roughness: 0.1,
     relief: { corrugation: 0.05, bevel: 0.05, bevelWidth: 0.12 }, rimColor: '#ff5fe0', rimStrength: 0.9,
@@ -224,7 +226,7 @@ export function buildEnvironment(course: Course): Environment {
   }
   // flat polished gold-copper ring bands at even spacing (ref 05: ≈10 concentric rings, double contour,
   // marquee highlight spots from the strip lights)
-  const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffa44a', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+  const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
   ringMat.envMap = goldEnv;
   ringMat.envMapIntensity = 1.3;
   // ring phase: one band sits just ahead of the 05 checkpoint camera so its sides frame the bottom corners
@@ -232,9 +234,9 @@ export function buildEnvironment(course: Course): Environment {
   // gold junction collar 04→05 (slightly heavier)
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
   zones.tubes.add(buildRings(perfPath, s05 + ringPhase, s08 - 1, ringSpacing, ringMat, { inset: 0.02, collar: { depth: 0.022, lip: 0.012, width: 1.1 } }));
-  // copper D-shaped nozzle lids: one symmetric pair per bay at ≈3 and 9 o'clock, skipped where the stream
-  // climbs the wall (06 arch) so a lid never blocks the ride
-  const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ff9550', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
+  // copper D-shaped nozzle hoods: one symmetric pair per bay on the side walls a little above eye level,
+  // skipped where the stream climbs the wall (06 arch) so a hood never blocks the ride
+  const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
   lidMat.envMap = goldEnv;
   lidMat.envMapIntensity = 1.25;
   const lidClear = (s: number, centre: THREE.Vector3, size: number) => {
@@ -244,7 +246,7 @@ export function buildEnvironment(course: Course): Environment {
     }
     return false;
   };
-  zones.tubes.add(buildWallLids(perfPath, s05 + ringPhase + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 4, size: 1.7, thickness: 0.36, stretch: 1.3, sink: 0.12, skip: lidClear }));
+  zones.tubes.add(buildWallLids(perfPath, s05 + ringPhase + ringSpacing * 0.5, s08 - 6, ringSpacing, lidMat, { angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
   animated.push(pinkFlow.update);
 
   // =====================================================================================

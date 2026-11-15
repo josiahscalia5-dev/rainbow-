@@ -290,11 +290,13 @@ export function buildRings(
 }
 
 /**
- * Washer wall lids / nozzle caps (ref 05): thick copper "D" plates — a half disc with a softly domed top,
- * rounded rim and flat underside — sticking straight out of BOTH side walls at ≈3 and 9 o'clock, one
- * symmetric pair per ring bay, so they shrink toward the vanishing point in two rows. The straight edge of
- * the D runs along the tube and is sunk into the wall. `skip(s, centre)` drops a lid where the stream runs
- * too close (06 arch climbs the wall). One instanced mesh (1 draw call).
+ * Washer wall lids / nozzle hoods (ref 05): copper "D" hoods — a half disc with a tall polished rim band,
+ * a softly domed top and a recessed underside with an inner lip — sticking out of BOTH side walls a bit
+ * above eye level (≈2 and 10 o'clock seen from the rider), one symmetric pair per ring bay, so they
+ * shrink toward the vanishing point in two rows and the rider sees the bright rim band and the dish
+ * underneath. The straight edge of the D runs along the tube and is sunk into the wall; the hood droops
+ * toward the stream like a spray nozzle. `skip(s, centre)` drops a lid where the stream runs too close
+ * (06 arch climbs the wall). One instanced mesh (1 draw call).
  */
 export function buildWallLids(
   path: TubePath,
@@ -302,20 +304,22 @@ export function buildWallLids(
   s1: number,
   spacing: number,
   material: THREE.Material,
-  opts: { angleDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number; skip?: (s: number, centre: THREE.Vector3, size: number) => boolean } = {},
+  opts: { angleDeg?: number; droopDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number; skip?: (s: number, centre: THREE.Vector3, size: number) => boolean } = {},
 ): THREE.InstancedMesh {
-  const h = opts.thickness ?? 0.34;
-  // bottom → top so the lathe normals face outward: flat underside, rounded rim, domed top
+  const h = opts.thickness ?? 0.42;
+  // bottom → top so the lathe normals face outward: recessed dish underneath with an inner lip,
+  // rounded foot, tall rim band, shoulder, domed top
   const prof: [number, number][] = [
-    [0, 0], [0.86, 0], [0.96, 0.03], [1, h * 0.3], [1, h * 0.55], [0.96, h * 0.82], [0.86, h * 0.96], [0.55, h * 1.06], [0, h * 1.1],
+    [0, 0.09], [0.74, 0.07], [0.82, 0.0], [0.9, -0.03], [0.97, -0.01], [1, 0.05], [1, h * 0.78], [0.95, h * 0.97], [0.82, h * 1.04], [0, h * 1.08],
   ];
   // half revolution (phi 0..π → local +X): the open cut face lies in the wall plane x = 0
-  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 24, 0, Math.PI);
-  geo.translate(0, -h * 0.55, 0);
+  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 28, 0, Math.PI);
+  geo.translate(0, -h * 0.5, 0);
   const n = (Math.floor((s1 - s0) / spacing) + 1) * 2;
   const mesh = new THREE.InstancedMesh(geo, material, n);
   const size = opts.size ?? 1.6;
-  const ang = THREE.MathUtils.degToRad(opts.angleDeg ?? 4);
+  const ang = THREE.MathUtils.degToRad(opts.angleDeg ?? 18);
+  const tilt = ang + THREE.MathUtils.degToRad(opts.droopDeg ?? 20);
   const c = new THREE.Vector3(), dir = new THREE.Vector3(), X = new THREE.Vector3(), Y = new THREE.Vector3(), Z = new THREE.Vector3();
   const basis = new THREE.Matrix4(), m = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3();
   let k = 0;
@@ -326,9 +330,10 @@ export function buildWallLids(
       tubeCenterAt(path, s, c);
       dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
       const sz = size * Math.min(1.4, r / 7.6);
-      // plate lies level in the tube frame: +X points inward (toward the axis), +Y = tube up
-      Y.copy(f.up);
-      X.copy(f.right).multiplyScalar(-side);
+      // in the cross-section: +X points inward (radially, then drooped toward the stream), +Y is the
+      // hood's top normal, +Z runs along the tube (the D's straight edge)
+      X.copy(f.right).multiplyScalar(-Math.cos(tilt) * side).addScaledVector(f.up, -Math.sin(tilt)).normalize();
+      Y.copy(f.right).multiplyScalar(-Math.sin(tilt) * side).addScaledVector(f.up, Math.cos(tilt)).normalize();
       Z.crossVectors(X, Y).normalize();
       basis.makeBasis(X, Y, Z);
       q.setFromRotationMatrix(basis);

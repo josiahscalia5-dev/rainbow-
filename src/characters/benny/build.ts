@@ -34,13 +34,13 @@ export const BENNY_DIMS = {
   brimBottom: 0.24, // hat-local
   /** cuff outer radius ≈ the fluffy body half-width (rear refs 05/07/09/10: cuff as wide as the body) */
   brimR: 0.8,
-  /** chunky folded cuff: ≈ 0.19 × the cuff width tall (ref 05: 51 px band on a 293 px cuff, ≈ 0.17–0.21) */
-  cuffH: 0.305,
+  /** folded cuff band height (ref 05 at ≈12° camera elevation: 51 px band on a 293 px wide cuff ≈ 0.17) */
+  cuffH: 0.265,
   /** crown dome height above its base (inside the cuff). Short: in the rear refs the visible crown (W·P·W) is
    *  ≈ 0.27 × the cuff width and the pom-pom sits right on it (the old 0.54 crown showed a big purple cap) */
   crownH: 0.47,
   /** pom-pom core radius; the shell fur adds ≈ 0.08 visible → ≈ 0.5 × the cuff width (ref 05: 140–150 px / 293) */
-  pomR: 0.31,
+  pomR: 0.33,
 };
 
 /**
@@ -368,7 +368,7 @@ export function buildBenny(): BuiltModel {
   star.rotateZ(-0.14);
   hat.add(star);
   // big fluffy-round pom-pom, sunk onto the crown apex (≈ 0.5 × the cuff width, refs 04/05/07/09/10)
-  const pom = joint('pom', 0, crownY0 + D.crownH + 0.05, -0.03);
+  const pom = joint('pom', 0, crownY0 + D.crownH + 0.04, -0.03);
   hat.add(pom);
   const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.pomR, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
   // short, dense strands with little droop → a round plush ball rather than a spiky urchin

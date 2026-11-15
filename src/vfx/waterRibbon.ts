@@ -52,8 +52,9 @@ function bandStyleAt(course: Course, s: number): [number, number, number] {
 /**
  * Ribbon colours in shader (pre-tonemap, linear) space. NeutralToneMapping desaturates anything
  * whose peak channel passes ≈0.76·exposure, so these were solved by inverting Neutral at the game's
- * exposure 0.86 (src/render/env.ts) to land on the reference 05 hexes after tone mapping:
- *   cyan → ≈#1E97F1 (ref median #029AF3/#039FF6), cyanDeep → ≈#0070DA, pink → ≈#F53DE6 (ref #F739E5)
+ * exposure 0.86 (src/render/env.ts). Flat values after tone mapping: cyanDeep #0065D6, cyan #1D89F0,
+ * cyanBright #42C8F7, pinkDeep #E206BE, pink #F741DD (H 308°, not violet), pinkLight #FA93E7. The
+ * streaks/crests/glints added on top lift the rendered cyan median to ≈#06A7FF (ref 05 #039FF6).
  * Crests/highlights are allowed to desaturate toward white (that is how the ref highlights look).
  * The shared PALETTE in glsl.ts is untouched (whirlpool, drum and final wave use it).
  */
@@ -62,9 +63,9 @@ const RIBBON_PAL = {
   cyanDeep: lin(0.0, 0.15, 0.78),
   cyan: lin(0.0, 0.31, 1.12),
   cyanBright: lin(0.04, 0.95, 1.55),
-  pinkDeep: lin(0.78, 0.02, 0.8),
-  pink: lin(1.5, 0.02, 1.3),
-  pinkLight: lin(2.1, 0.5, 1.95),
+  pinkDeep: lin(0.9, 0.02, 0.62),
+  pink: lin(1.55, 0.03, 1.2),
+  pinkLight: lin(2.2, 0.5, 1.8),
 };
 
 export function ampAt(course: Course, s: number): number {
@@ -276,11 +277,13 @@ void main() {
   float pR = (1.0 - smoothstep(wR - aaw, wR + aaw, dR)) * on;
   // a thin cyan thread splits a band into two streaks along some stretches (ref 05 mid-ground)
   float rimW = 0.05 * hwc + aaw;
+  float thrW = 0.028 * hwc;
   float splitOn = smoothstep(0.55, 0.7, vnoise(vec2(s * 0.07, 13.0)));
-  float sL = (1.0 - smoothstep(rimW * 0.5, rimW, abs(x + offL + pert * 1.4 + 0.25 * wL * sin(s * 0.5)))) * splitOn;
-  float sR = (1.0 - smoothstep(rimW * 0.5, rimW, abs(x - offR + pert * 1.4 - 0.25 * wR * sin(s * 0.45 + 1.0)))) * (1.0 - splitOn);
-  pL *= 1.0 - sL * step(rimW * 2.5, wL);
-  pR *= 1.0 - sR * step(rimW * 2.5, wR);
+  float sL = (1.0 - smoothstep(thrW, thrW + aaw, abs(x + offL + pert * 1.4 + 0.25 * wL * sin(s * 0.5)))) * splitOn;
+  float sR = (1.0 - smoothstep(thrW, thrW + aaw, abs(x - offR + pert * 1.4 - 0.25 * wR * sin(s * 0.45 + 1.0)))) * (1.0 - splitOn);
+  // only split bands that are wide enough (smooth ramp: a hard step cut the band across the flow)
+  pL *= 1.0 - sL * smoothstep(rimW * 1.8, rimW * 2.8, wL);
+  pR *= 1.0 - sR * smoothstep(rimW * 1.8, rimW * 2.8, wR);
   // hair-thin pink filaments drifting through the cyan core (mid/far field only)
   float fil = 0.0;
   #ifndef LOW_Q

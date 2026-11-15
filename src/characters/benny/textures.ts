@@ -65,9 +65,9 @@ export const BENNY_COLORS = {
   brim: '#7513ed',
   brimDark: '#330887',
   // hot plush pink of refs 02–10 (ref 05 fur median #F64EB1; the live median read bluer at #FF4CC4)
-  pinkRoot: '#e2447f',
-  pinkTip: '#fb7aa8',
-  pinkSkin: '#e5528c',
+  pinkRoot: '#e6468c',
+  pinkTip: '#fd80b4',
+  pinkSkin: '#e85498',
   pomRoot: '#4a08b4',
   pomTip: '#8f3cff',
   // star: warm yellow #F7BB19 (ref 05), not orange
@@ -124,11 +124,11 @@ export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THRE
   const C = BENNY_COLORS;
   const stripes: [number, number, string, string, string][] = [
     // [v0, v1, highlight, base, groove]   (v measured from bottom)
-    [0.0, 0.32, '#ffffff', C.white, C.whiteShade],
-    [0.32, 0.52, C.purpleLight, C.purple, C.purpleDark],
-    [0.52, 0.73, '#ffffff', C.white, C.whiteShade],
-    [0.73, 0.9, C.purpleLight, C.purple, C.purpleDark],
-    [0.9, 1.0, '#ffffff', C.white, C.whiteShade],
+    [0.0, 0.3, '#ffffff', C.white, C.whiteShade],
+    [0.3, 0.55, C.purpleLight, C.purple, C.purpleDark],
+    [0.55, 0.76, '#ffffff', C.white, C.whiteShade],
+    [0.76, 0.92, C.purpleLight, C.purple, C.purpleDark],
+    [0.92, 1.0, '#ffffff', C.white, C.whiteShade],
   ];
   hctx.fillStyle = '#000';
   hctx.fillRect(0, 0, W, Hh);

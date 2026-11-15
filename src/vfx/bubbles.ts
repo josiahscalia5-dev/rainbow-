@@ -201,6 +201,25 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
   const smallS: BubbleState[] = Array.from({ length: nSmall }, mk);
 
   const tmp = new THREE.Vector3();
+  const tmp2 = new THREE.Vector3();
+  const tmp3 = new THREE.Vector3();
+  /** camera basis of the current frame (screen-space placement / exclusion) */
+  const view = { pos: new THREE.Vector3(), dir: new THREE.Vector3(0, 0, -1), right: new THREE.Vector3(1, 0, 0), tanV: 0.6, tanH: 0.34, inv: new THREE.Matrix4(), ok: false };
+  /**
+   * 1 = fine, 0 = in the no-bubble corridor (stream centre: Benny, splash, coin line), -1 = out of
+   * the frame / too close to the camera. NDC from the camera basis.
+   */
+  const allowed = (p: THREE.Vector3): number => {
+    if (!view.ok) return 1;
+    const v = tmp3.copy(p).applyMatrix4(view.inv);
+    const depth = -v.z;
+    if (depth < 2.5) return -1;
+    const xn = v.x / (depth * view.tanH), yn = v.y / (depth * view.tanV);
+    if (Math.abs(xn) > 1.12 || yn < -1.12 || yn > 1.1) return -1;
+    if (yn > 0.62) return 0; // upper tube / HUD: keep clear (ref 05 has none there)
+    const corridor = yn < 0.1 ? 0.46 : 0.3;
+    return Math.abs(xn) < corridor ? 0 : 1;
+  };
   const spawn = (b: BubbleState, focusS: number, isBig: boolean, initial: boolean) => {
     b.phase = Math.random() * 6.28;
     b.age = initial ? rnd(0.5, 3) : 0;
@@ -218,35 +237,38 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
       b.size = isBig ? (Math.random() < 0.25 ? rnd(0.45, 0.85) : rnd(0.16, 0.42)) : rnd(0.05, 0.16);
       return;
     }
-    // ---- ride: at the SIDES only (over the foam banks / lower walls), never over the stream ----
-    // distance ahead of Benny: biased near so the frame holds mostly 25–65 px bubbles; respawns
-    // either grow out of the foam near the camera's view or appear far ahead
-    let ahead: number;
-    if (initial) ahead = isBig ? -1 + 55 * Math.pow(Math.random(), 1.35) : -1 + 42 * Math.pow(Math.random(), 1.2);
-    else ahead = Math.random() < 0.45 ? rnd(6, 22) : rnd(22, isBig ? 56 : 44);
-    let s = Math.max(opts.sStart, focusS + ahead);
-    if (s > course.length - 0.5) s = course.length - rnd(0.5, 30); // near the route end: fill the chamber behind
-    const f = course.sample(s);
-    const hw = course.widthAt(s) / 2;
-    const tube = course.prop(s, 'tube');
+    // ---- ride: at the SIDES of the frame only (over the foam banks / outer water), never over the
+    // stream corridor where Benny, his splash and the coin line are (ref 05). Placement is done in
+    // screen space so it holds for any camera / stream width: pick a depth and a side screen x, find
+    // that view ray's course position, then sit the bubble just above the water or the bank.
+    let D: number;
+    if (initial) D = isBig ? 6 + 40 * Math.pow(Math.random(), 1.4) : 5 + 32 * Math.pow(Math.random(), 1.2);
+    else D = Math.random() < 0.45 ? rnd(7, 18) : rnd(18, isBig ? 46 : 38);
     const side = Math.random() < 0.5 ? -1 : 1;
-    let e: number, h: number;
-    if (isBig) {
-      e = rnd(-0.3, BERM_OUT + 0.6);
-      h = Math.random() < 0.8 ? rnd(0.5, 2.1) : rnd(2.1, 3.4);
-      // world radius 0.12–0.36 → ≈25–65 px over the typical 8–30 unit viewing distance (capped)
-      b.size = Math.random() < 0.3 ? rnd(0.26, 0.36) : rnd(0.12, 0.26);
-    } else {
-      e = rnd(-0.6, BERM_OUT + 0.4);
-      h = rnd(0.25, 1.5);
-      b.size = rnd(0.06, 0.16); // point-sprite diameter
+    for (let attempt = 0; attempt < 4; attempt++) {
+      const xn = side * rnd(0.52, 0.95);
+      tmp.copy(view.pos).addScaledVector(view.dir, D).addScaledVector(view.right, xn * D * view.tanH);
+      // course coordinates of that point (two Newton steps on the arc length)
+      let s = focusS;
+      for (let it = 0; it < 2; it++) {
+        const fi = course.sample(Math.min(course.length, Math.max(opts.sStart, s)));
+        s += tmp2.copy(tmp).sub(fi.pos).dot(fi.tan);
+      }
+      s = Math.min(course.length - 0.3, Math.max(opts.sStart, s));
+      const f = course.sample(s);
+      const hw = course.widthAt(s) / 2;
+      let lat = tmp2.copy(tmp).sub(f.pos).dot(f.right);
+      lat = THREE.MathUtils.clamp(lat, -(hw + BERM_OUT + 0.4), hw + BERM_OUT + 0.4);
+      const onBank = Math.abs(lat) > hw - 0.5;
+      const h = (isBig ? (Math.random() < 0.8 ? rnd(0.35, 1.7) : rnd(1.7, 2.8)) : rnd(0.2, 1.2)) + (onBank ? 0.45 : 0.05);
+      b.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h);
+      b.s = s;
+      const flow = course.prop(s, 'speed') * (isBig ? 0.1 : 0.2);
+      b.vel.copy(f.tan).multiplyScalar(flow).addScaledVector(f.up, rnd(0.04, 0.2));
+      if (allowed(b.pos) > 0) break;
     }
-    let lat = side * (hw + e);
-    if (tube > 0) lat = THREE.MathUtils.clamp(lat, -tube * 0.85, tube * 0.85);
-    b.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h);
-    b.s = s;
-    const flow = course.prop(s, 'speed') * (isBig ? 0.1 : 0.2);
-    b.vel.copy(f.tan).multiplyScalar(flow).addScaledVector(f.up, rnd(0.04, 0.22)).addScaledVector(f.right, side * rnd(0, 0.12));
+    if (isBig) b.size = Math.random() < 0.3 ? rnd(0.26, 0.36) : rnd(0.12, 0.26); // ≈25–65 px over 8–30 units
+    else b.size = rnd(0.06, 0.16); // point-sprite diameter
   };
 
   let lastFocus = -1e9;
@@ -262,6 +284,17 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
     update(time, dt, focusS, camera, density = 1) {
       bigUniforms.uTime.value = time;
       ptUniforms.uTime.value = time;
+      const persp = camera as THREE.PerspectiveCamera;
+      view.ok = !!persp.isPerspectiveCamera;
+      if (view.ok) {
+        camera.updateMatrixWorld();
+        view.inv.copy(camera.matrixWorldInverse);
+        camera.getWorldPosition(view.pos);
+        camera.getWorldDirection(view.dir);
+        view.right.setFromMatrixColumn(camera.matrixWorld, 0).normalize();
+        view.tanV = Math.tan(THREE.MathUtils.degToRad(persp.fov) / 2);
+        view.tanH = view.tanV * persp.aspect;
+      }
       const jump = Math.abs(focusS - lastFocus) > 25;
       const crossedDrum = (lastFocus < drumEnd) !== (focusS < drumEnd);
       if (jump || crossedDrum) {
@@ -270,7 +303,6 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
       }
       lastFocus = focusS;
       // pixel scale for impostors and point sprites
-      const persp = camera as THREE.PerspectiveCamera;
       const vh = (typeof window !== 'undefined' ? window.innerHeight : 800) * (typeof window !== 'undefined' ? Math.min(2, window.devicePixelRatio || 1) : 1);
       const focal = persp.isPerspectiveCamera ? vh / (2 * Math.tan(THREE.MathUtils.degToRad(persp.fov) / 2)) : 600;
       const pxK = vh / 1536; // caps are authored for the 864×1536 reference frame
@@ -285,9 +317,15 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
         b.pos.addScaledVector(b.vel, dt);
         tmp.set(Math.sin(time * 1.3 + b.phase), Math.cos(time * 1.1 + b.phase * 1.7), Math.sin(time * 0.9 + b.phase * 0.6)).multiplyScalar(0.12 * dt);
         b.pos.add(tmp);
-        // near the route end (outro) keep bubbles anywhere in the last ~30 units
-        const behind = !inDrum && b.s < Math.min(focusS, course.length - 32) - (isBig ? 3 : 2);
-        if (behind || b.age > b.life) spawn(b, focusS, isBig, false);
+        if (inDrum) {
+          if (b.age > b.life) spawn(b, focusS, isBig, false);
+          return;
+        }
+        // ride: recycle when passed / out of frame; pop (fast shrink) when drifting into the corridor
+        const behind = b.s < Math.min(focusS, course.length - 32) - (isBig ? 3 : 2);
+        const a = allowed(b.pos);
+        if (behind || a < 0 || b.age > b.life) spawn(b, focusS, isBig, false);
+        else if (a === 0) b.life = Math.min(b.life, b.age + 0.25);
       };
       const bigLimit = Math.round((inDrum ? Math.min(nBig, 16) : ride.big) * density);
       const smallLimit = Math.round((inDrum ? nSmall * 0.95 : ride.small) * density);

@@ -1,51 +1,49 @@
 {
-  "when": "2026-11-15T19:34:21.552Z",
+  "when": "2026-11-15T19:37:47.278Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
       "id": "05",
-      "file": "qa/pilot05/environment/iter02/05.png",
+      "file": "qa/pilot05/benny/iter1/05.png",
       "size": [
         864,
         1536
       ],
       "checkpoint": {
         "stage": "05",
-        "s": 128.56403815508457,
-        "y": -41.21376673638833
+        "s": 132.4383020282329,
+        "y": -41.348424352736345
       },
       "state": {
         "mode": "ride",
         "stage": "05",
-        "s": 128.564,
+        "s": 132.438,
         "lat": 0,
         "coins": 1420,
         "hearts": 5,
         "paused": false,
-        "bennyY": -41.214,
+        "bennyY": -41.348,
         "bennyVisible": true,
         "cam": [
-          1.95,
-          -37.78,
-          -64.42
+          1.92,
+          -37.94,
+          -68.28
         ]
       },
       "stats": {
-        "fps": 60.1,
-        "calls": 102,
-        "triangles": 386069,
-        "geometries": 75,
+        "fps": 60.4,
+        "calls": 114,
+        "triangles": 582879,
+        "geometries": 91,
         "textures": 36,
         "modules": {
-          "water": "STAND-IN",
+          "water": "vfx/index.ts",
           "benny": "assets/models/benny.glb",
           "girl": "assets/models/rainbow_girl.glb"
         },
-        "courseLength": 435.17113684699393
+        "courseLength": 435.1923435286779
       }
     }
   ],
-  "errors": [
-    "[05] [rainbow] water module failed, using stand-in ReferenceError: makeMaterial is not defined\n    at createFoam (http://127.0.0.1:5201/src/vfx/foam.ts:301:15)\n    at Module.createWater (http://127.0.0.1:5201/src/vfx/index.ts:37:16)\n    at loadWater (http://127.0.0.1:5201/src/game/modules.ts:14:19)\n    at async startGame (http://127.0.0.1:5201/src/game/Game.ts:62:17)"
-  ]
+  "errors": []
 }

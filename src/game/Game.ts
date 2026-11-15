@@ -524,7 +524,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     '02': { mode: 'intro', t: T.cp02 },
     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
-    '05': { mode: 'ride', s: course.stage('05').s0 + 12.7 }, // first S-curve crest: Benny faces the vanishing point, ~60 units of straight tube ahead
+    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },

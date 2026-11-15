@@ -1577,3 +1577,103 @@ My files typecheck; the one error is in `cameraRig.ts`, which the camera enginee
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T19:36:00.322Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s#page.on('pageerror', (e) => console.error('pageerror', e.message));#page.on('pageerror', (e) => console.error('pageerror', e.message)); page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.error('[console]', m.text().slice(0, 300)); });#\" /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/cap.mjs && grep -c \"console'\" /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/cap.mjs", "description": "Make scratch capture print console errors and warnings"}`
+
+### 🧑 User — 2026-11-15T19:36:00.533Z
+
+> ↩︎ result: 1
+
+### 🤖 Claude — 2026-11-15T19:36:00.816Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/foam/it1/05_base.png"}`
+
+### 🧑 User — 2026-11-15T19:36:01.222Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:36:12.121Z
+
+Splash fans now read as streaks from the base, foam banks show puffs, but bubbles only appear tiny at the far right edge, as predicted. Let me zoom on the banks and the splash.
+
+### 🤖 Claude — 2026-11-15T19:36:15.029Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && python3 $S/crops.py $S/it1_banks.png 0 500 864 820 1.0 IT1=qa/pilot05/foam/it1/05_base.png && python3 $S/crops.py $S/it1_splash.png 150 1050 750 1350 1.0 IT1_splash=qa/pilot05/foam/it1/05_base.png REF_splash=references/05_flow_into_the_current.png", "description": "Zoom on it1 foam banks and splash vs ref"}`
+
+### 🧑 User — 2026-11-15T19:36:15.510Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/it1_banks.png (876, 354)
+> /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/it1_splash.png (1218, 334)
+
+### 🤖 Claude — 2026-11-15T19:36:17.743Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/it1_banks.png"}`
+
+### 🧑 User — 2026-11-15T19:36:17.855Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:36:18.126Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/it1_splash.png"}`
+
+### 🧑 User — 2026-11-15T19:36:18.178Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:36:38.125Z
+
+> 🔧 **Bash** `{"command": "grep -n \"wakeAnchor\\|water.wake\\|water.splash\" src/game/Game.ts", "description": "Verify my Game.ts VFX lines after external edit"}`
+
+### 🧑 User — 2026-11-15T19:36:38.174Z
+
+> ↩︎ result: 162:  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+> 339:      water.splash(benny.root.position, course.sample(st.s).up, 1);
+> 366:    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
+
+### 🤖 Claude — 2026-11-15T19:37:47.845Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/bubbles.ts'\ns=open(p).read()\nold_start=s.index(\"    // ---- ride: at the SIDES only\")\nold_end=s.index(\"  let lastFocus = -1e9;\")\nnew='''    // ---- ride: at the SIDES of the frame only (over the foam banks / outer water), never over the\n    // stream corridor where Benny, his splash and the coin line are (ref 05). Placement is done in\n    // screen space so it holds for any camera / stream width: pick a depth and a side screen x, find\n    // that view ray's course position, then sit the bubble just above the water or the bank.\n    let D: n …[+5042 chars]`
+
+### 🧑 User — 2026-11-15T19:37:51.415Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:37:53.080Z
+
+That change was my own scripted edit. Let me read the result to verify it.
+
+### 🤖 Claude — 2026-11-15T19:37:53.738Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "offset": 185, "limit": 150}`
+
+### 🧑 User — 2026-11-15T19:37:53.749Z
+
+> ↩︎ result: 185	  const pGeo = new THREE.BufferGeometry();
+> 186	  pGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3).setUsage(THREE.DynamicDrawUsage));
+> 187	  pGeo.setAttribute('aSize', new THREE.BufferAttribute(sSize, 1).setUsage(THREE.DynamicDrawUsage));
+> 188	  pGeo.setAttribute('aSeed', new THREE.BufferAttribute(sSeed, 1));
+> 189	  const ptUniforms = withFog({ uTime: { value: 0 }, uScale: { value: 600 }, uMaxPx: { value: MAX_PX_SMALL } });
+> 190	  const small = new THREE.Points(
+> 191	    pGeo,
+> 192	    new THREE.ShaderMaterial({ uniforms: ptUniforms, vertexShader: PT_VERT, fragmentShader: PT_FRAG, fog: true, transparent: true, depthWrite: false }),
+> 193	  );
+> 194	  small.name = 'bubbles_small';
+> 195	  small.frustumCulled = false;
+> 196	  small.renderOrder = 4;
+> 197	  group.add(small);
+> 198	
+> 199	  const mk = (): BubbleState => ({ s: 0, pos: new THREE.Vector3(), vel: new THREE.Vector3(), size: 1, phase: 0, age: 0, life: 1 });
+> 200	  const bigS: BubbleState[] = Array.from({ length: nBig }, mk);
+> 201	  const smallS: BubbleState[] = Array.from({ length: nSmall }, mk);
+> 202	
+> 203	  const tmp = new THREE.Vector3();
+> 204	  const tmp2 = new THREE.Vector3();
+> 205	  const tmp3 = new THREE.Vector3();
+> 206	  /** …[+7257 chars]
+
+### 🧑 User — 2026-11-15T19:38:11.266Z
+
+[Request interrupted by user]
+
