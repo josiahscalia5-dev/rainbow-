@@ -216,7 +216,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
       benny.root.visible = true;
       benny.setExpression(t < T.drain + 1.2 ? 'dizzy' : 'happy');
       const f = bennyPose(sB, 0, st.clock, pose);
-      benny.root.position.copy(pose.pos);
+      // inside Drum A the swirl carries him along the helix itself (no ribbon surface there yet)
+      const inDrum = 1 - sm(T.drain - 0.4, T.drain + 0.6, t);
+      benny.root.position.copy(pose.pos).lerp(course.sample(sB).pos, inDrum);
       const tumble = sm(T.rideStart - 1.0, T.rideStart, t);
       // tumble = rolling cartwheels seen by the camera: face the lens, roll around the view axis
       const toCam = cam02(benny.root.position).pos.clone().sub(benny.root.position).normalize();
@@ -399,8 +401,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     env.towel.setTent(1 - sm(O.fold0, O.fold1, t));
     // camera: the 11 composition — inside the drum, platform & towel centre, open door upper-right
     const P = WORLD.platform;
-    const camPos = new THREE.Vector3(P.center.x - 0.6, P.topY + 7.6, P.center.z + 19.5);
-    const camLook = new THREE.Vector3(P.center.x + 0.9, P.topY + 2.4, P.center.z - 4.5);
+    const camPos = new THREE.Vector3(P.center.x - 0.8, P.topY + 8.6, P.center.z + 21.5);
+    const camLook = new THREE.Vector3(P.center.x + 0.9, P.topY + 4.4, P.center.z - 5.5);
     const k = sm(0, 1.4, t);
     const rp = new THREE.Vector3(), rt = new THREE.Vector3(), ru = new THREE.Vector3();
     rideCam.desired(sEnd, 0, rp, rt, ru);
@@ -480,11 +482,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
     '01': { mode: 'intro', t: T.cp01 },
     '02': { mode: 'intro', t: T.cp02 },
-    '03': { mode: 'ride', s: course.stage('03').s0 + 4.5, lat: 0.3 },
+    '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
     '04': { mode: 'ride', s: course.stage('04').s0 + 3.5 },
-    '05': { mode: 'ride', s: course.stage('05').s0 + 12 },
+    '05': { mode: 'ride', s: course.stage('05').s0 + 30 },
     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
-    '07': { mode: 'ride', s: course.stage('07').s0 + 9 },
+    '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
     '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
@@ -552,6 +554,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
     },
     log() { return st.log; },
+    /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
+    bennyScreen() {
+      const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
+      return { x: +v.x.toFixed(2), y: +v.y.toFixed(2), z: +v.z.toFixed(3), visible: benny.root.visible, cam: camera.position.toArray().map((q) => +q.toFixed(2)), benny: benny.root.position.toArray().map((q) => +q.toFixed(2)) };
+    },
     /** debug: what does a ray from the camera through NDC (x,y) hit first? */
     probe(x = 0, y = 0) {
       const rc = new THREE.Raycaster();

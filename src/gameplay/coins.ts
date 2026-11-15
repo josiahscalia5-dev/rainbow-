@@ -63,10 +63,10 @@ export function createCoins(course: Course): CoinSystem {
     c.fillStyle = '#ffe58a';
     c.fillText('$', w / 2 - 2, h / 2 + 6);
   });
-  const geo = new THREE.CylinderGeometry(0.62, 0.62, 0.16, 40, 1);
+  const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.14, 40, 1);
   geo.rotateX(Math.PI / 2); // faces along ±Z
-  const side = new THREE.MeshStandardMaterial({ color: '#ffb52a', metalness: 1, roughness: 0.25, emissive: '#a85a00', emissiveIntensity: 0.45 });
-  const face = new THREE.MeshStandardMaterial({ map: faceTex, metalness: 0.75, roughness: 0.28, emissive: '#c07000', emissiveIntensity: 0.3, emissiveMap: faceTex });
+  const side = new THREE.MeshStandardMaterial({ color: '#ffd23c', metalness: 0.9, roughness: 0.22, emissive: '#d08a00', emissiveIntensity: 0.55 });
+  const face = new THREE.MeshStandardMaterial({ map: faceTex, metalness: 0.55, roughness: 0.3, emissive: '#ffffff', emissiveIntensity: 0.55, emissiveMap: faceTex });
   const mesh = new THREE.InstancedMesh(geo, [side, face, face], defs.length);
   mesh.frustumCulled = false;
   const group = new THREE.Group();

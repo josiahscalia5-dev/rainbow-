@@ -20,13 +20,13 @@ export interface CamParams {
 
 export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
   '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
-  '04': { back: 5.0, up: 3.9, ahead: 12, lookUp: -2.2, fov: 66, latFollow: 0.6, roll: 0.5 },
-  '05': { back: 5.6, up: 2.9, ahead: 14, lookUp: 0.6, fov: 64, latFollow: 0.7, roll: 0.5 },
+  '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+  '05': { back: 6.0, up: 3.1, ahead: 16, lookUp: 0.9, fov: 62, latFollow: 0.7, roll: 0.5 },
   '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
-  '07': { back: 5.6, up: 2.9, ahead: 14, lookUp: 0.6, fov: 64, latFollow: 0.7, roll: 0.6 },
-  '08': { back: 5.4, up: 3.0, ahead: 14, lookUp: 1.6, fov: 66, latFollow: 0.8, roll: 0.3 },
-  '09': { back: 5.4, up: 3.0, ahead: 13, lookUp: 1.9, fov: 66, latFollow: 0.8, roll: 0.3 },
-  '10': { back: 5.0, up: 3.0, ahead: 10, lookUp: 1.9, fov: 64, latFollow: 0.8, roll: 0.2 },
+  '07': { back: 6.0, up: 3.1, ahead: 16, lookUp: 0.9, fov: 62, latFollow: 0.7, roll: 0.6 },
+  '08': { back: 6.2, up: 3.7, ahead: 16, lookUp: 0.2, fov: 62, latFollow: 0.8, roll: 0.3 },
+  '09': { back: 6.2, up: 3.7, ahead: 15, lookUp: 0.6, fov: 62, latFollow: 0.8, roll: 0.3 },
+  '10': { back: 5.8, up: 3.4, ahead: 11, lookUp: 1.2, fov: 62, latFollow: 0.8, roll: 0.2 },
 };
 
 const KEYS: (keyof CamParams)[] = ['back', 'up', 'ahead', 'lookUp', 'fov', 'latFollow', 'roll'];
@@ -78,8 +78,10 @@ export class RideCamera {
     const right = new THREE.Vector3().crossVectors(dir, up).normalize();
     const benny = f.pos.clone().addScaledVector(f.right, lat);
     const anchor = benny.clone().addScaledVector(right, -lat * (1 - p.latFollow));
-    outPos.copy(anchor).addScaledVector(dir, -p.back).addScaledVector(up, p.up);
-    outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(up, p.lookUp);
+    // offsets use an 'upright' up: banking only tilts the camera as much as `roll` allows
+    const upPos = new THREE.Vector3(0, 1, 0).lerp(up, Math.max(p.roll, Math.abs(dir.y))).normalize();
+    outPos.copy(anchor).addScaledVector(dir, -p.back).addScaledVector(upPos, p.up);
+    outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(upPos, p.lookUp);
     outUp.set(0, 1, 0).lerp(up, p.roll).normalize();
     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
     // drain and the porthole wall (Benny left, drain lower-right as in the reference)
@@ -87,9 +89,9 @@ export class RideCamera {
     const w3 = THREE.MathUtils.smoothstep(s, st3.s0 - 6, st3.s0 + 2) * (1 - THREE.MathUtils.smoothstep(s, st3.s1 - 6, st3.s1 + 1));
     if (w3 > 0) {
       const B = WORLD.basin;
-      const wp = benny.clone().add(new THREE.Vector3(3.4, 6.6, 10.2));
+      const wp = benny.clone().add(new THREE.Vector3(1.7, 2.9, 4.6));
       const drain = new THREE.Vector3(B.center.x, B.drainY, B.center.z);
-      const wt = benny.clone().lerp(drain, 0.45).add(new THREE.Vector3(0, -0.5, -2.8));
+      const wt = benny.clone().lerp(drain, 0.5).add(new THREE.Vector3(0.6, -1.2, -1.5));
       outPos.lerp(wp, w3);
       outTarget.lerp(wt, w3);
       outUp.lerp(new THREE.Vector3(0, 1, 0), w3).normalize();

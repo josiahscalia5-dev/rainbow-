@@ -124,7 +124,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "a8d71f78c5cfb2d5a2e0cfb97c13869bdd54470d69d550fbcebed7f7b9c07386"
+   "sha256": "20331188b9a650bb39dc580395a2ea33bb9a2805836a6dfcfc3cf262f2ffc666"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -338,8 +338,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 10906,
-   "sha256": "26b2b2402ab860f1e668d355c73ce9434ef224eb2a8998f353bf32116096a27c"
+   "bytes": 10898,
+   "sha256": "4ff2e570af79e03fd19356ca6a1885e13c88f2d65ee294687610ebab123a2373"
   },
   {
    "path": "qa/continuity_report.json",
@@ -528,13 +528,13 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 27088,
-   "sha256": "5a29305dda8e7d2b7777d6a48a42ee63c921a8f5522dc5f310655e25d2057161"
+   "bytes": 27712,
+   "sha256": "65a81535ff7e374e21a2a4a6753f1ddec54057f91c87658faf7391ee99e31e3a"
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 5523,
-   "sha256": "e43b32b69fdceb974d8f1d3987cf5668ab1a357aa5db96bfc62cbefa2cfbd583"
+   "bytes": 5722,
+   "sha256": "de5db0aedd8943135e859f9f396d336f8c0efd23162399a681db71459979f861"
   },
   {
    "path": "src/game/modules.ts",
@@ -544,7 +544,7 @@
   {
    "path": "src/gameplay/coins.ts",
    "bytes": 6299,
-   "sha256": "d4d27931097719b8cbb041465694b00820c6e66f1bc201312c81208535578445"
+   "sha256": "6c954dc2080455f81ccd037403c67dc1a8f89cffa11037637d3d10f29a41c028"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -628,8 +628,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 29069,
-   "sha256": "f5bf833375f3f69c433a87b0fc83242c8110ec3a1fb68ebcc2201d85b525ad98"
+   "bytes": 29072,
+   "sha256": "32de3e806de9d03944423bc995012ad4c1319f8631d5663bc0ab06d156223ea2"
   },
   {
    "path": "src/world/laundryRoom.ts",

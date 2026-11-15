@@ -120,7 +120,7 @@ export function buildEnvironment(course: Course): Environment {
   // the chute begins exactly where the course passes through the drum's back wall
   let sChute0 = course.marks['02_drain'] - 3;
   while (course.sample(sChute0).pos.z > dA.zBack + 0.3 && sChute0 < course.stage('03').s0) sChute0 += 0.1;
-  const sChute1 = course.stage('03').s0 + 3;
+  const sChute1 = course.stage('03').s0 + 0.3;
   const chutePath = courseTubePath(course, () => 2.25, 0.55);
   const chute = new THREE.Mesh(
     buildTubeGeometry(chutePath, sChute0, sChute1, { radial: 36, step: 0.5, vScale: 1 }),
@@ -229,7 +229,7 @@ export function buildEnvironment(course: Course): Environment {
     zones.chamber.add(ring);
   }
   // front wall with the round door
-  const doorCenterC = new THREE.Vector3(C.center.x, WORLD.platform.topY + 4.2, C.zDoor);
+  const doorCenterC = new THREE.Vector3(C.center.x, WORLD.platform.topY + 7.0, C.zDoor);
   const cf = new THREE.Shape();
   cf.absarc(C.center.x, C.center.y, C.radius, 0, Math.PI * 2, false);
   const dHole = new THREE.Path();
@@ -264,7 +264,7 @@ export function buildEnvironment(course: Course): Environment {
   hinge2.position.y -= 4.8;
   zones.chamber.add(doorC, hinge, hinge2);
   // laundry room C (beyond the door, toward -Z)
-  const roomC = buildLaundryRoom({ floorDrop: 11.3, palette: 'soft', foldingTable: true });
+  const roomC = buildLaundryRoom({ floorDrop: 14.25, palette: 'soft', foldingTable: true });
   const anchorC = new THREE.Group();
   anchorC.position.set(doorCenterC.x, doorCenterC.y, C.zDoor - 1.0);
   anchorC.rotation.y = Math.PI;

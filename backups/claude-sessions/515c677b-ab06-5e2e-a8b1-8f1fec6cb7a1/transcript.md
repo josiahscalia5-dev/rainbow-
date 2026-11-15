@@ -2614,3 +2614,66 @@ Now the Game.ts side: camera axis hookup, fog, girl staging in 01/10/11 (analyti
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T17:30:15.125Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/shots/08.png"}`
+
+### 🧑 User — 2026-11-15T17:30:15.161Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:30:39.962Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\na=\"    /** debug: what does a ray from the camera through NDC (x,y) hit first? */\"\nb=\"\"\"    /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */\n    bennyScreen() {\n      const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);\n      return { x: +v.x.toFixed(2), y: +v.y.toFixed(2), z: +v.z.toFixed(3), visible: benny.root.visible, cam: camera.position.toArray().map((q) => +q.toFixed(2)), benny: benny.root.position.toArray().map((q) => +q.toFixed(2)) };\n    },\n   …[+1238 chars]`
+
+### 🧑 User — 2026-11-15T17:30:47.435Z
+
+> ↩︎ result: 02 {"scr":{"x":-3.55,"y":-1.66,"z":0.904,"visible":true,"cam":[0.68,-1.5,-6.1],"benny":[2.25,-2.52,-5.17]},"c":[{"d":10.39,"obj":"Mesh<Group<doorA_pivot<zone_drumA<washer_world","p":[2.41,-0.14,4.05]},{"d":80.22,"obj":"Mesh<laundry_room<Group<zone_drumA<washer_world","p":[14.06,9.01,72.3]}]}
+> 03 {"scr":{"x":-0.61,"y":0.17,"z":0.992,"visible":true,"cam":[-1.96,-5.46,-12.62],"benny":[-4.63,-12.93,-22.28]},"c":[{"d":14.52,"obj":"water_whirlpool<water_system<Scene","p":[-2.04,-15.49,-23.13]},{"d":14.98,"obj":"Mesh<zone_basin<washer_world<Scene","p":[-2.05,-15.81,-23.47]}]}
+> 04 {"scr":{"x":0.12,"y":-0.38,"z":0.985,"visible":true,"cam":[1.5,-14.78,-17.92],"benny":[1.99,-20.38,-21.75]},"c":[{"d":13.56,"obj":"water_ribbon<water_system<Scene","p":[1.36,-23.95,-27.91]},{"d":14.02,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[1.35,-24.26,-28.25]}]}
+
+### 🤖 Claude — 2026-11-15T17:31:04.773Z
+
+The numbers point at the cause. In 02, Benny is at x=+2.25, z=-5.17, but at that moment the helix should put him near x≈-2.6, z≈-3.4. Checking the course samples directly:
+
+### 🤖 Claude — 2026-11-15T17:31:09.069Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/helix.ts <<'EOF'\nimport { Course } from '/home/user/rainbow-/src/world/course';\nconst c = new Course();\nfor (const s of [0, 2, 4, 6, 8.8, 12, 16, 20, 22.7, 30, 40.8]) { const p = c.sample(s).pos; console.log(s, p.toArray().map((v) => v.toFixed(2)).join(',')); }\nconsole.log('marks', JSON.stringify(c.marks));\nEOF\nnpx vite-node /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/helix.ts", "description": "Print course positions along the 02 helix", "timeout": 12 …[+5 chars]`
+
+### 🧑 User — 2026-11-15T17:31:09.784Z
+
+> ↩︎ result: 0 1.60,-2.40,-2.20
+> 2 -0.23,-2.99,-2.55
+> 4 -2.01,-2.24,-2.89
+> 6 -2.88,-0.51,-3.22
+> 8.8 -1.99,2.01,-3.64
+> 12 0.93,2.88,-4.08
+> 16 3.63,0.26,-4.59
+> 20 2.50,-3.35,-5.08
+> 22.7 0.05,-4.28,-5.38
+> 30 -3.31,-7.87,-10.51
+> 40.8 -7.64,-11.86,-18.81
+> marks {"10":420.59666017359865,"11":432.5969902417786,"01":0,"02_drain":22.763760332664976,"03":40.98291788769169,"04":70.41043282842979,"05":114.17875622128749,"06":189.6947253330286,"07":246.91544208417056,"07_plunge_top":310.2669545639459,"07_plunge_mid_end":373.0449436108661,"07_plunge_bottom":388.9683411228984,"08":389.0588691819486,"09":404.6313115852909}
+
+### 🤖 Claude — 2026-11-15T17:31:55.372Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert a in s, (p, a[:70]); s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/game/Game.ts', [\n (\"      const f = bennyPose(sB, 0, st.clock, pose);\\n      benny.root.position.copy(pose.pos);\\n      const tumble\",\n  \"      const f = bennyPose(sB, 0, st.clock, pose);\\n      // inside Drum A the swirl carries him along the helix itself (no ribbon surface there yet)\\n      const inDrum = 1 - sm(T.drain - 0.4, T.drain + 0.6, t);\\n      benny.root.position.copy(pose.pos).lerp(cours …[+3102 chars]`
+
+### 🧑 User — 2026-11-15T17:33:34.482Z
+
+> ↩︎ result: ok
+> 11
+> sheet /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_all.png
+
+### 🤖 Claude — 2026-11-15T17:33:39.059Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/scratchpad/sheet_all.png"}`
+
+### 🧑 User — 2026-11-15T17:33:39.274Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T17:34:26.045Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert a in s, (p, a[:70]); s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/world/environment.ts', [\n (\"  const sChute1 = course.stage('03').s0 + 3;\",\"  const sChute1 = course.stage('03').s0 + 0.3;\"),\n (\"  const doorCenterC = new THREE.Vector3(C.center.x, WORLD.platform.topY + 4.2, C.zDoor);\",\"  const doorCenterC = new THREE.Vector3(C.center.x, WORLD.platform.topY + 7.0, C.zDoor);\"),\n (\"  const roomC = buildLaundryRoom({ floorDrop: 11.3, palette: 'soft', foldingTable: tru …[+1974 chars]`
+
