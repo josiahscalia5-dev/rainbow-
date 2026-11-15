@@ -695,3 +695,7 @@ It worked on retry (likely another specialist's file was mid-edit). Measure and 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T22:04:03.708Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/foam.ts'\nt=open(p).read()\nold=\"\"\"          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2), y: +((1 - yN) / 2).toFixed(3) });\"\"\"\nnew=\"\"\"          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2), y: +((1 - yN) / 2).toFixed(3), env: +env.toFixed(2), s: +s.toFixed(2) });\"\"\"\nassert t.count(old)==1; t=t.replace(old,new)\nt=t.replace(\"clumps: { kind: string; ds: number; lat: number; k: number; y?: number }[] };\" …[+851 chars]`
+

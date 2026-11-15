@@ -2073,8 +2073,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 38860,
-   "sha256": "2e21cdd1dadd15d903a55f2011057df8030f24c724fb9d822a3b953bdf78e84b"
+   "bytes": 38952,
+   "sha256": "4851ac907186f948fa2a98af39995109bb4e2cb76b3dc0df0970751433305cfd"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -2118,8 +2118,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 35931,
-   "sha256": "97eb3883975e3d2d59ea888fe3afc431d289a8a7a9eee2f8adb7a504863da1ea"
+   "bytes": 42721,
+   "sha256": "2ea096974285eb5f77cd0678371c62cb11daca05642b40e13c6179e90fcd964d"
   },
   {
    "path": "src/world/laundryRoom.ts",
