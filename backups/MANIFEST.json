@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "af55aae0783fc99d1d2827b8ebf07f86564b6cbbf2bbaf96c228bdf19d0c9e4b"
+   "sha256": "f297dba3eac4cc396a4ba9b851b642349caf05183521a1ea542dfe7e355d94e6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1890,6 +1890,56 @@
    "path": "qa/pilot05/wave6/current/05.png",
    "bytes": 1975103,
    "sha256": "2c9a583dcf8eb9d87638e77a393adf6e187b0e846756524c3156ed16bc8a578a"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/benny_ref_vs_game.png",
+   "bytes": 775866,
+   "sha256": "06f832bf5ae3ff9f2659a09aa7761d7243608ba4a0548170e7c856f8d2ac0c04"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/corner_bl_ref_vs_game.png",
+   "bytes": 901787,
+   "sha256": "076e980bd9dbab96a5a90a6a0f0c2ad7171942099d69e392b3117cea6efaa3ca"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/far_river_ref_vs_game.png",
+   "bytes": 1214569,
+   "sha256": "5f320679b621c092d5d06bcf14a69e08a9b119bce6d7fac153bc4804012d581e"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/left_wall_ref_vs_game.png",
+   "bytes": 2288281,
+   "sha256": "50b54fe055c495118147ac726782b84699b4a16a3a03323899f698e384d4af0c"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/lid_left_ref_vs_game.png",
+   "bytes": 782044,
+   "sha256": "047ef106da089c246f764d39156f352ccaefd8712ef569b89d1661e97b3ce427"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/mid_river_ref_vs_game.png",
+   "bytes": 1310762,
+   "sha256": "5eda663ec63b69e4082ad7bcf6f5d7a82b7d37af993740b4e5f07cda0fd73d00"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/near_field_ref_vs_game.png",
+   "bytes": 1025777,
+   "sha256": "537ff00f064f36d1908e68a6354efbc78ca52e97a61d66b0ce92a7e0b7c1861c"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/right_wall_ref_vs_game.png",
+   "bytes": 2198251,
+   "sha256": "3dc657eb7c1ac15e467278c70e94c04373c07c95f0238bb2358397cb1876aeb7"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/tunnel_upper_ref_vs_game.png",
+   "bytes": 1564761,
+   "sha256": "cf83312a790d014ecb86ac462b9c3ad73129891d700f20cd6cfb3a18028592b8"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/vp_rings_ref_vs_game.png",
+   "bytes": 1629777,
+   "sha256": "a80a0638d822768c687bbc8803964f8a3c6fa99969f046b7fb70edf305a33bf0"
   },
   {
    "path": "qa/pilot05/wave6/director/lm_game.json",
