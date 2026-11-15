@@ -3136,3 +3136,132 @@ Also stop the repeated World Labs Marble authentication polling if the API still
 
 My goal is to get the REAL playable 3D artwork approximately 90–95% close to my approved image, if achievable—not just make two pictures line up.
 
+### 🤖 Claude — 2026-11-15T23:28:33.954Z
+
+Understood: camera lock and S-curve stay, no World Labs calls or spending until authentication is fixed safely. First, stopping the background Marble poll (it's still getting 401):
+
+### 🤖 Claude — 2026-11-15T23:28:34.362Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskStop", "max_results": 1}`
+
+### 🧑 User — 2026-11-15T23:28:34.372Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-15T23:28:35.939Z
+
+> 🔧 **TaskStop** `{"task_id": "bih1ye75t"}`
+
+### 🧑 User — 2026-11-15T23:28:35.954Z
+
+> ↩︎ result: {"message":"Successfully stopped task: bih1ye75t (O=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/wl/credits_poll.json; end=$(( $(date +%s) + 1200 )); until [ $(date +%s) -ge $end ]; do code=$(curl -sS --max-time 20 -o $O -w '%{http_code}' https://api.worldlabs.ai/marble/v1/credits); if [ \"$code\" = \"200\" ]; then echo \"AUTH OK at $(date -u +%H:%M:%S)\"; cat $O; exit 0; fi; sleep 30; done; echo \"still $code after 20 min\"; cat $O)","task_id":"bih1ye75t","task_type":"local_bash","command":"O=/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/wl/credits_poll.json; end=$(( $(date +%s) + 1200 )); until [ $(date +%s) -ge $end ]; do code=$(curl -sS --max-time 20 -o $O -w '%{http_code}' https://api.worldlabs.ai/marble/v1/credits); if [ \"$code\" = \"200\" ]; then echo \"AUTH OK at $(date -u +%H:%M:%S)\"; cat $O; exit 0; fi; sleep 30; done; echo \"still $code after 20 min\"; cat $O"}
+
+### 🤖 Claude — 2026-11-15T23:28:36.788Z
+
+> 🔧 **Bash** `{"command": "pgrep -af \"marble/v1/credits\" | head; echo \"remaining pollers: $(pgrep -fc 'marble/v1/credits')\"", "description": "Confirm no Marble polling processes remain"}`
+
+### 🧑 User — 2026-11-15T23:28:36.843Z
+
+> ↩︎ result: remaining pollers: 0
+
+### 🤖 Claude — 2026-11-15T23:29:01.322Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/blender/render_05_proof.py", "content": "\"\"\"\nScreen 05 proof render: the Blender camera-lock LAYOUT by itself (no reference image anywhere).\n\n    blender -b qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend --python tools/blender/render_05_proof.py -- \\\n        --out qa/pilot05/wave6/proof/2_blender_layout.png [--samples 48]\n\nWhat it shows (honestly labelled \"geometry layout\"): the game's own 05 river surface (River05, vertex\ncolours = cyan core / pink bands from the game's coreLateral), the straight 05 tunnel cylinder (Tunnel05)\nwit …[+4352 chars]`
+
+### 🧑 User — 2026-11-15T23:29:01.398Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/blender/render_05_proof.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:29:03.977Z
+
+> 🔧 **Bash** `{"command": "P=qa/pilot05/wave6/proof && mkdir -p $P && cp references/05_flow_into_the_current.png $P/1_approved_reference.png && (time timeout 1200 blender -b qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend --python tools/blender/render_05_proof.py -- --out $P/2_blender_layout.png --samples 48 2>&1 | grep -E \"PROOF_RENDER_OK|Error|Traceback\" | tail -4) 2>&1 | tail -6; timeout 600 node scripts/capture.mjs 05 --out=$P/game 2>&1 | grep \"^05\" && cp $P/game/05.png $P/3_threejs_gameplay.png && ls -la $P", "description": "Render Blender layout proof and capture live game", "timeout": 190 …[+5 chars]`
+
+### 🧑 User — 2026-11-15T23:31:32.983Z
+
+> ↩︎ result: PROOF_RENDER_OK /home/user/rainbow-/qa/pilot05/wave6/proof/2_blender_layout.png 864 1536
+> 
+> real	2m15.999s
+> user	8m57.519s
+> sys	0m0.766s
+> 05 → qa/pilot05/wave6/proof/game/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":633521,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> total 3796
+> drwxr-xr-x  3 root root    4096 Nov 15 23:31 .
+> drwxr-xr-x 10 root root    4096 Nov 15 23:29 ..
+> -rw-r--r--  1 root root  484196 Nov 15 23:29 1_approved_reference.png
+> -rw-r--r--  1 root root 1415755 Nov 15 23:31 2_blender_layout.png
+> -rw-r--r--  1 root root 1968512 Nov 15 23:31 3_threejs_gameplay.png
+> drwxr-xr-x  2 root root    4096 Nov 15 23:31 game
+
+### 🤖 Claude — 2026-11-15T23:31:34.581Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/proof/2_blender_layout.png"}`
+
+### 🧑 User — 2026-11-15T23:31:34.626Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:31:42.996Z
+
+> 🔧 **Bash** `{"command": "P=qa/pilot05/wave6/proof && python3 -I scripts/screen_report.py 05 $P/report GAME=$P/3_threejs_gameplay.png BLENDER=$P/2_blender_layout.png 2>&1 | tail -3 && ls $P/report && cp $P/report/05_overlay_GAME.png $P/4_overlay_50pct_game.png && cat $P/report/metrics.md | head -40", "description": "Build overlay, highlight and band metrics report"}`
+
+### 🧑 User — 2026-11-15T23:31:53.024Z
+
+> ↩︎ result: |---|---|---|---|---|---|---|---|
+> | GAME | 59.0 | 0.809 | 0.119 | 54.3 | 62.3 | 53.0 | 63.8 |
+> | BLENDER | 73.3 | 0.199 | -0.006 | 74.0 | 66.7 | 63.4 | 85.2 |
+> 05_highlight_BLENDER.png
+> 05_highlight_GAME.png
+> 05_overlay_BLENDER.png
+> 05_overlay_GAME.png
+> 05_side_by_side.png
+> metrics.json
+> metrics.md
+> # Screen 05: reference vs live captures (raw indicators, not a fidelity %)
+> 
+> mad = mean |ΔRGB| at 1/4 scale (lower = closer); hue_corr / edge_corr = −1…1 (higher = closer).
+> 
+> | Capture | mad | hue_corr | edge_corr | mad hud | mad tunnel+VP | mad river mid | mad Benny+near water |
+> |---|---|---|---|---|---|---|---|
+> | GAME | 59.0 | 0.809 | 0.119 | 54.3 | 62.3 | 53.0 | 63.8 |
+> | BLENDER | 73.3 | 0.199 | -0.006 | 74.0 | 66.7 | 63.4 | 85.2 |
+
+### 🤖 Claude — 2026-11-15T23:31:57.713Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/screen_report.py 05 /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/hist W4START=qa/pilot05/wave4/baseline/05.png W5START=qa/pilot05/wave5/baseline/05.png W6START=qa/pilot05/wave6/current/05.png NOW=qa/pilot05/wave6/proof/3_threejs_gameplay.png 2>&1 | grep -E \"^\\| (W|NOW)\"", "description": "Compare metrics across waves for context"}`
+
+### 🧑 User — 2026-11-15T23:32:11.707Z
+
+> ↩︎ result: | W4START | 65.4 | 0.816 | 0.113 | 57.1 | 66.5 | 66.8 | 67.0 |
+> | W5START | 63.3 | 0.785 | 0.113 | 56.7 | 70.7 | 62.4 | 62.4 |
+> | W6START | 59.6 | 0.81 | 0.132 | 54.6 | 62.8 | 54.7 | 63.8 |
+> | NOW | 59.0 | 0.809 | 0.119 | 54.3 | 62.3 | 53.0 | 63.8 |
+
+### 🤖 Claude — 2026-11-15T23:32:36.689Z
+
+> 🔧 **Agent** `{"description": "Director: honest 05 visual review", "subagent_type": "reference-match-director", "run_in_background": true, "prompt": "You are the Reference Match Director for the Rainbow game (repo /home/user/rainbow-). Task: an HONEST, MEASURED evaluation of Screen 05 \"FLOW INTO THE CURRENT\" — review only, NO source-code changes.\n\nREAD: `CLAUDE.md`, `qa/pilot05/COORDINATION_WAVE6.md`, `qa/pilot05/wave6/camera_lock/README.md` (the camera is LOCKED and verified: VP within 1.4 px; the river S-curve was just refitted to the reference coin trail).\n\nLOOK AT these four full-resolution 864×15 …[+3321 chars]`
+
+### 🧑 User — 2026-11-15T23:32:36.709Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: abbe421dda4dcabb0 (internal ID - do not mention to user. Use SendMessage with to: 'abbe421dda4dcabb0', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/tasks/abbe421dda4dcabb0.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-15T23:32:40.137Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png", "/home/user/rainbow-/qa/pilot05/wave6/proof/2_blender_layout.png", "/home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png", "/home/user/rainbow-/qa/pilot05/wave6/proof/4_overlay_50pct_game.png"], "caption": "Screen 05 proof set, 864×1536, same locked camera and checkpoint: 1 approved · 2 Blender layout alone (geometry only, no reference image) · 3 real Three.js gameplay · 4 50% overlay of 1+3.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-15T23:32:41.199Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave6/proof/1_approved_reference.png → file_uuid: 7d9192dc-0626-4376-b569-aaf123a6b759
+>   /home/user/rainbow-/qa/pilot05/wave6/proof/2_blender_layout.png → file_uuid: f58c9834-49aa-49be-997b-443f16a1fa79
+>   /home/user/rainbow-/qa/pilot05/wave6/proof/3_threejs_gameplay.png → file_uuid: 385ab884-2b18-41b2-bd3d-ac69f9294fde
+>   /home/user/rainbow-/qa/pilot05/wave6/proof/4_overlay_50pct_game.png → file_uuid: c95a1983-3509-4c2d-bc52-2fc5a88385b2
+
+### 🤖 Claude — 2026-11-15T23:32:46.344Z
+
+> 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:proof-set 2>&1 | grep -E '\"commit\"|skipping|\"error\"'; echo \"local $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/ccr-93add0fa-q17ey6 | cut -c1-7)\"; git status --short | head -3", "description": "Commit and push the proof set", "timeout": 330000}`
+

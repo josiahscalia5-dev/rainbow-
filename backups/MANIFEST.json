@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "f4ef0400dc5734d67c37c118c8822e4dd9b148e7f1f9aec6e483f13473182347"
+   "sha256": "bb10655079fdf75a28388bf15795612504a37d73bc1f9ea35f31795468c3594b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 3181,
-   "sha256": "25426d1a49e77f53fb1a75927fe83fc55929b3831f9a4458753adbd75998e6b2"
+   "bytes": 1176,
+   "sha256": "e7fcac31191eb3bac563c5d2ff7b667bc526d517eead536143815b628d8e5dcb"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1937,6 +1937,66 @@
    "sha256": "c65cb86acdd1f187f29fc03b842cbcc091d70c0b65c842de5a61d9f6432c522e"
   },
   {
+   "path": "qa/pilot05/wave6/proof/1_approved_reference.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/2_blender_layout.png",
+   "bytes": 1415755,
+   "sha256": "fab4833dec3a8d0b7e1498640a93aa687495ff5985d0c0c25e84627504fe577c"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/3_threejs_gameplay.png",
+   "bytes": 1968512,
+   "sha256": "de9907afcac6518a8653781db3c7c5e3f64d8fa5e8eebd66b78ffe8106d3e7af"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/4_overlay_50pct_game.png",
+   "bytes": 2318337,
+   "sha256": "f49babc0940b4f562f1b008c057d5f815af152bb31bf683e9f2b3dddf058c018"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/game/05.png",
+   "bytes": 1968512,
+   "sha256": "de9907afcac6518a8653781db3c7c5e3f64d8fa5e8eebd66b78ffe8106d3e7af"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/report/05_highlight_BLENDER.png",
+   "bytes": 1164030,
+   "sha256": "8dab8837c77e101ea2f174fff24da560c34808fa0a002fddd18aaded81abda48"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/report/05_highlight_GAME.png",
+   "bytes": 2001370,
+   "sha256": "df3b73474d0fab56d9ee1b99eb76df5ff261bf08fb2454c3fd8ed640117f3cdf"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/report/05_overlay_BLENDER.png",
+   "bytes": 1996541,
+   "sha256": "0f3403d1d3c4996f59cdcb5f120f9f2b65685e03e462623c203ce57beae99fca"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/report/05_overlay_GAME.png",
+   "bytes": 2318337,
+   "sha256": "f49babc0940b4f562f1b008c057d5f815af152bb31bf683e9f2b3dddf058c018"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/report/05_side_by_side.png",
+   "bytes": 5286055,
+   "sha256": "bd3b73ce3404abef6e61275466461fc00c07af3c61400e26066edb6d5380729d"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/report/metrics.json",
+   "bytes": 479,
+   "sha256": "73f5f111f43d00df15207f32c2196fe28cd11c7000f8b3e075beece49363e0d4"
+  },
+  {
+   "path": "qa/pilot05/wave6/proof/report/metrics.md",
+   "bytes": 442,
+   "sha256": "6aa1cadf7691059b46f08019256c3151c900bca51ab3793f0600ed558406e128"
+  },
+  {
    "path": "qa/pilot05/wave6/water/NOTES.md",
    "bytes": 1266,
    "sha256": "64869aaf738eaaa9bb07806c42afb2d58396634ac00124308627af7a036ae348"
@@ -2605,6 +2665,11 @@
    "path": "tools/blender/make_synthetic_tunnel.py",
    "bytes": 1191,
    "sha256": "07c456cfc39fe57741e4071ca9bf7b46ad14c49de65e02db2b7c538e01905e44"
+  },
+  {
+   "path": "tools/blender/render_05_proof.py",
+   "bytes": 4679,
+   "sha256": "06e8869bc701026514d5a31e49197017fe2451bbf88029cbfa767fb17df1285f"
   },
   {
    "path": "tools/make_env_geometry_ref.py",
