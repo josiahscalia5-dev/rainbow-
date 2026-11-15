@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1966,
-   "sha256": "7f6da5c277d54c0adec32a5be3779410eeb07ba2584eee61de973986bd03d972"
+   "sha256": "b845bfcd42277b6048d3678d943c625e009234f610426fe61d9129463dc71765"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1030,6 +1030,11 @@
    "path": "scripts/capture.mjs",
    "bytes": 3860,
    "sha256": "76fd115add143307d57e4ed8e7094dd073fd2f230042e90e847d74d743d60350"
+  },
+  {
+   "path": "scripts/cloud-env-setup.sh",
+   "bytes": 1986,
+   "sha256": "5d8d863d7c2b1f97c810f0b39ce6c00889cbdf6ba130ae3840bf87998d3e4ef9"
   },
   {
    "path": "scripts/compare.py",

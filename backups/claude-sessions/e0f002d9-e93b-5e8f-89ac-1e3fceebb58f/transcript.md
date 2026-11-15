@@ -2449,3 +2449,70 @@ The project's autosave adds a new line to those two log files every 5 minutes an
 
 Waiting on you: finish signing up at https://atlas.worldlabs.ai, then tell me. I'll check your World Labs projects (free) before proposing a costed Screen 05 test.
 
+### 🧑 User — 2026-11-15T18:31:45.820Z
+
+Claude, IMPORTANT CORRECTION!
+
+I accidentally clicked Decline on your Rainbow environment setup script. That was a mistake. I did NOT intend to reject it.
+
+YES, I APPROVE THE SETUP SCRIPT. PLEASE OFFER IT TO ME AGAIN.
+
+Please disregard my accidental decline and resubmit the environment setup proposal so I can approve it properly.
+
+I want the setup to automatically restore and configure:
+
+- All Rainbow project files and Git LFS assets.
+- Android SDK Platform 34 and build tools.
+- Blender 5.3.0 and the Blender integration.
+- The installed World Labs plugin and its connection configuration.
+- All ten Rainbow specialist agents.
+- Playwright and the visual testing tools.
+- The existing GitHub recovery branch and five-minute autosave system.
+
+Use the existing tested setup script. Do not rebuild my Rainbow project or overwrite my saved files.
+
+If the environment setup proposal cannot be offered again, explain how to submit a new setup request using the same verified script.
+
+Please offer the setup for approval again. I want to accept it this time.
+
+### 🤖 Claude — 2026-11-15T18:31:54.654Z
+
+I'll re-offer the same script you saw, unchanged. It's already been run end-to-end here, and every step skips anything already installed, so it never rebuilds or overwrites your project files.
+
+What it does and doesn't cover:
+- **Installs:** the real Git LFS files (the 2 GLB models, the kit ZIP and the APK), Android SDK platform 34 with build tools 34.0.0, Blender 5.3.0, and the World Labs plugin.
+- **Already handled without it:**
+  - The 10 specialists and the autosave system live in the repo.
+  - Playwright and Chromium come with the container.
+  - Your World Labs connector is attached from claude.ai.
+  - The project's own startup hook restarts the 5-minute autosave in every new session.
+- **Not covered:**
+  - Blender MCP needs Blender's desktop window, so I drive Blender with Python scripts instead.
+  - The script doesn't switch branches. When you start a new session, pick `claude/rainbow-3d-recovery-m4v347`.
+
+Checking the environment's current state, then proposing the script again:
+
+### 🤖 Claude — 2026-11-15T18:31:54.709Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🧑 User — 2026-11-15T18:31:55.235Z
+
+> ↩︎ result: {"environment_id":"env_01FyZzgXX4jXDQx4THkh99d4","name":"rainbow-","description":"","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":false,"setup_script":"","repositories":["josiahscalia5-dev/rainbow-"],"network_secrets":[],"is_current":true,"editable_by_you":true,"session_has_repository":true,"note":"Edits made with update_environment change the stored environment; see that tool for when each kind of change takes effect. `setup_script` is returned only for an environment you can edit (`setup_script_withheld` / `description_withheld` mean the organization's compliance settings keep the stored text out of this tool — they refuse a `setup_script`, `new_name` or `new_description` edit too — or that this could not be checked right now, in which case calling again may return it). `other_cloud_environments` lists the user's other cloud environments (`other_cloud_environments_not_shown` counts any left out; the field is absent when they could not be read). create_environment refuses a name already in use, and only after the user has appr …[+348 chars]
+
+### 🤖 Claude — 2026-11-15T18:32:05.113Z
+
+> 🔧 **mcp__claude-code-remote__update_environment** `{"environment_name": "rainbow-", "applies_to": "my personal environment: all of my future sessions that use it, not only this one", "reason": "Save Rainbow setup: real LFS files, Android SDK, Blender 5.3 and World Labs plugin.", "script_change": "adds a setup script", "setup_script": "#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-) container setup: real LFS assets, Android SDK, Blender 5.3,\n# World Labs Claude Code plugin. Every step is non-fatal so a session always starts.\nif [ -d rainbow- ]; then\n  (cd rainbow- && git lfs pull) || echo \"rainbow: git lfs pull failed\"\nfi\nSDK …[+1556 chars]`
+
+### 🧑 User — 2026-11-15T18:33:26.655Z
+
+> ↩︎ result: {"environment_id":"env_01FyZzgXX4jXDQx4THkh99d4","name":"rainbow-","scope":"personal","updated":true,"setup_script_replaced":true,"note":"Saved to the environment. The setup script runs the next time a container is built fresh, not on a normal resume; to use the change now, run its commands in this session, from the directory the script starts in, and tell the user it is unproven until a fresh session starts on this environment."}
+
+### 🤖 Claude — 2026-11-15T18:33:29.622Z
+
+You approved it, and the setup script is now saved on your **"rainbow-"** environment. I'll also keep a copy in the repo, so the script can be restored if the environment is ever lost:
+
+### 🤖 Claude — 2026-11-15T18:33:33.674Z
+
+> 🔧 **Bash** `{"command": "cp /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/env-setup.sh scripts/cloud-env-setup.sh && sed -i '3a # Saved as the setup script of the claude.ai cloud environment \"rainbow-\" (approved 2026-11-15).\\n# It runs from the folder that holds the checkout, before Claude starts. Re-paste it there if lost.' scripts/cloud-env-setup.sh && head -6 scripts/cloud-env-setup.sh && bash -n scripts/cloud-env-setup.sh && echo syntax-ok && . ~/.rainbow-autosave.env 2>/dev/null; timeout 600 python3 scripts/rainbow-autosave.py --reason manual --message \"recover …[+252 chars]`
+
