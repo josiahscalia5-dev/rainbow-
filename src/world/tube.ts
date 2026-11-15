@@ -55,8 +55,11 @@ export function straightTubePath(
   // exact straight stretches (05 current): the axis is pulled onto the course's straight centre line
   // (foot of the perpendicular from the stream point), so the tunnel is truly straight — no yaw
   // wiggle, no roll — and the rings converge on one vanishing point. Blends in over 12 units after
-  // the 04 junction and back to the filtered axis just past the 06 arch foot.
+  // the 04 junction; height/roll/radius/depth return to the 06 arch tube just past its foot (wRun),
+  // the lateral position over the last ~20 units of the stretch (wXZ) so the hand-over to the
+  // filtered 06 axis has no yaw kink and 06 itself is unchanged.
   const wRun = new Array<number>(n).fill(0);
+  const wXZ = new Array<number>(n).fill(0);
   const runDepth = new Array<number>(n).fill(0);
   for (const r of course.straightAxes ?? []) {
     if (r.s1 <= s0 || r.s0 >= s1) continue;
@@ -64,13 +67,18 @@ export function straightTubePath(
     const ab2 = ab.lengthSq();
     for (let i = 0; i < n; i++) {
       const s = S(i);
-      const w = THREE.MathUtils.smoothstep(s, r.s0, r.s0 + 12) * (1 - THREE.MathUtils.smoothstep(s, r.s1 - 6, r.s1 + 2));
-      if (w <= wRun[i]) continue;
+      const wIn = THREE.MathUtils.smoothstep(s, r.s0, r.s0 + 12);
+      const w = wIn * (1 - THREE.MathUtils.smoothstep(s, r.s1 - 6, r.s1 + 2));
+      const wl = wIn * (1 - THREE.MathUtils.smoothstep(s, r.s1 - 18, r.s1 + 2));
+      if (wl <= wXZ[i]) continue;
+      wXZ[i] = wl;
       wRun[i] = w;
       runDepth[i] = r.floorDepth;
       const u = cp[i].clone().sub(r.a).dot(ab) / ab2;
       const onLine = r.a.clone().addScaledVector(ab, u);
-      axis[i].lerp(onLine, w);
+      axis[i].x += (onLine.x - axis[i].x) * wl;
+      axis[i].z += (onLine.z - axis[i].z) * wl;
+      axis[i].y += (onLine.y - axis[i].y) * w;
     }
   }
   const WU = new THREE.Vector3(0, 1, 0);

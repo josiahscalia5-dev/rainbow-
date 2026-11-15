@@ -1051,3 +1051,177 @@ In-game the pink ball now reads clearly under the beanie in 04/05/10. Let me che
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -10; echo \"tsc exit: ${PIPESTATUS[0]}\"; S=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny && timeout 300 node $S/lab.mjs $S/lab_glb_low.png \"src=glb&views=game&quality=low\" 2>&1 | tail -3; timeout 300 node $S/lab.mjs $S/lab_glb_refs.png \"src=glb&views=refs\" 2>&1 | tail -3", "description": "Typecheck and render GLB lab views incl. low tier", "timeout": 620000}`
 
+### 🧑 User — 2026-11-15T18:51:15.178Z
+
+> ↩︎ result: tsc exit: 0
+> /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_glb_low.png {"baseTriangles":13988,"furQuality":"low"}
+> /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_glb_refs.png {"baseTriangles":13988,"furQuality":"high"}
+
+### 🤖 Claude — 2026-11-15T18:51:17.649Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_glb_low.png"}`
+
+### 🧑 User — 2026-11-15T18:51:17.677Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:51:18.313Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/lab_glb_refs.png"}`
+
+### 🧑 User — 2026-11-15T18:51:18.347Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:51:29.060Z
+
+Low tier works and the GLB rear view now resembles ref 05 closely. Let me compare the body pink numerically (ref vs in-game), since the live fur reads more pastel.
+
+### 🤖 Claude — 2026-11-15T18:51:34.182Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny && python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\ndef stats(path, box, name):\n    a = np.asarray(Image.open(path).convert('RGB').crop(box)).reshape(-1,3).astype(float)\n    # pink-ish pixels: r high, g low-ish\n    m = (a[:,0] > 150) & (a[:,0] - a[:,1] > 50) & (a[:,2] > 80)\n    p = a[m]\n    print(name, 'n=%d'%len(p), 'median', np.median(p,axis=0).astype(int), 'p25', np.percentile(p,25,axis=0).astype(int), 'p75', np.percentile(p,75,axis=0).astype(int))\nR='/home/user/rain …[+409 chars]`
+
+### 🧑 User — 2026-11-15T18:51:34.589Z
+
+> ↩︎ result: ref05 body n=29149 median [245  79 180] p25 [227  57 155] p75 [255 107 209]
+> ref10 body n=47224 median [242  64 175] p25 [219  43 148] p75 [254  88 201]
+> ref07 body n=32436 median [246  79 183] p25 [231  56 159] p75 [255 105 208]
+> live05 body n=20808 median [255  98 213] p25 [255  80 204] p75 [255 117 222]
+> live10 body n=21775 median [255 102 206] p25 [255  84 196] p75 [255 120 215]
+
+### 🤖 Claude — 2026-11-15T18:51:47.175Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/textures.ts'\ns=open(p).read()\nold=\"\"\"  pinkRoot: '#ec58a8',\n  pinkTip: '#ff9ed2',\n  pinkSkin: '#f06bb0',\"\"\"\nnew=\"\"\"  // hot plush pink of refs 02–10 (live median was brighter/bluer than the refs at ≈ 255/98/213 vs 245/79/180)\n  pinkRoot: '#e84a97',\n  pinkTip: '#ff86bf',\n  pinkSkin: '#ec5fa3',\"\"\"\nassert old in s\ns=s.replace(old,new)\nopen(p,'w').write(s)\np='src/characters/benny/benny-lab.ts'\ns=open(p).read()\ns=s.replace(\"import { createBennyRuntime, loadBenny } from './runtime';\",\"import { BENNY_RIDE_LIFT, creat …[+482 chars]`
+
+### 🧑 User — 2026-11-15T18:51:49.446Z
+
+> ↩︎ result: tsc=0
+
+### 🤖 Claude — 2026-11-15T18:51:51.779Z
+
+Re-exporting and capturing the full set of Benny scenes (incl. 01/03/11 to confirm cinematics are unaffected by the lift).
+
+### 🤖 Claude — 2026-11-15T18:51:54.187Z
+
+> 🔧 **Bash** `{"command": "timeout 400 node scripts/export-models.mjs benny 2>&1 | tail -3 && ls -la assets/models/benny.glb && timeout 900 node scripts/capture.mjs 05 02 10 04 07 01 03 09 --out=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter2 2>&1 | tail -9", "description": "Re-export GLB and capture iteration 2 scenes", "timeout": 1300000}`
+
+### 🧑 User — 2026-11-15T18:53:43.345Z
+
+> ↩︎ result: exported assets/models/benny.glb {"bytes":1180392,"meshes":27,"nodes":39,"clips":["idle(2.40s)","swim(0.60s)","tumble(1.00s)","peek(2.00s)"]}
+> turntable docs/characters/benny_turntable.png {"box":{"min":[-1.073358044313916,-0.8503829004677894,-0.8101416575412321],"max":[1.0730330602219997,1.53454022762931,0.780011832957703]}}
+> -rw-r--r-- 1 root root 1180392 Nov 15 18:51 assets/models/benny.glb
+> 05 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter2/05.png {"stage":"05","s":127.389,"y":-41.182,"calls":91,"tris":564407,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 02 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter2/02.png {"stage":"02","s":8.756,"y":1.181,"calls":267,"tris":435477,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 10 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter2/10.png {"stage":"10","s":423.18,"y":-112.835,"calls":282,"tris":386881,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"asse …[+1419 chars]
+
+### 🤖 Claude — 2026-11-15T18:53:46.412Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter2/05.png"}`
+
+### 🧑 User — 2026-11-15T18:53:46.460Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:53:47.116Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter2/03.png"}`
+
+### 🧑 User — 2026-11-15T18:53:47.148Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:53:47.719Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/iter2/01.png"}`
+
+### 🧑 User — 2026-11-15T18:53:47.766Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:53:53.634Z
+
+05 reads as a full plush ball now. In 03 there's a white band cutting across his lower body; let me check whether that predates my change (existing screenshots/03.png).
+
+### 🤖 Claude — 2026-11-15T18:53:56.243Z
+
+> 🔧 **Bash** `{"command": "ls -la screenshots/0[13].png qa/03_side_by_side.png; cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny && python3 -I crops.py cmp_03.png 500 /home/user/rainbow-/screenshots/03.png:0,400,420,1000:shot03-prev iter2/03.png:0,400,420,1000:iter2-03", "description": "Compare previous and current scene 03 crops"}`
+
+### 🧑 User — 2026-11-15T18:53:56.466Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 2556716 Nov 15 18:05 qa/03_side_by_side.png
+> -rw-r--r-- 1 root root 1096049 Nov 15 18:05 screenshots/01.png
+> -rw-r--r-- 1 root root  645650 Nov 15 18:05 screenshots/03.png
+> cmp_03.png (706, 500)
+
+### 🤖 Claude — 2026-11-15T18:53:58.748Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/benny/cmp_03.png"}`
+
+### 🧑 User — 2026-11-15T18:53:58.779Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:54:03.297Z
+
+The white jagged band is new. Likely the water wake/spray emitted at `benny.root.position` (now 0.3 below his lifted body centre). Let me check how Game feeds the wake.
+
+### 🤖 Claude — 2026-11-15T18:54:04.448Z
+
+> 🔧 **Bash** `{"command": "grep -n \"wake(\\|splash(\" src/game/Game.ts; grep -n \"wake(pos\\|wake =\\|wake(\" -A25 src/vfx/index.ts | sed -n 1,60p", "description": "Inspect wake/spray emission code"}`
+
+### 🧑 User — 2026-11-15T18:54:04.500Z
+
+> ↩︎ result: 338:      water.splash(benny.root.position, course.sample(st.s).up, 1);
+> 363:    water.wake(pose.pos, f.tan, f.right, speed, dt);
+> 8: *   water.wake(bennyPos, forward, right, speed, dt);
+> 9- *   // cinematic controls (0..1): water.controls.drumSwirl / drumAgitation / outro
+> 10- *
+> 11- * Benny rides ON the water: place his body centre at
+> 12- *   course.pointAt(s, lateral, water.surfaceHeight(s, lateral, time) + BENNY_RIDE_OFFSET)
+> 13- * (BENNY_RIDE_OFFSET ≈ 0.55 for a 0.8-radius body: bottom third in the water, splash visible).
+> 14- */
+> 15-import * as THREE from 'three';
+> 16-import { type Course, WORLD, funnelY } from '../world/course';
+> 17-import { createRibbon } from './waterRibbon';
+> 18-import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
+> 19-import { createDrumWater } from './drumWater';
+> 20-import { createFinalWave } from './finalWave';
+> 21-import { createPuddles } from './puddles';
+> 22-import { createFoam } from './foam';
+> 23-import { createBubbles } from './bubbles';
+> 24-import { createSpray } from './spray';
+> 25-import { createRiderSplash } from './riderSplash';
+> 26-
+> 27-export { PALETTE } from './glsl';
+> 28-export const BENNY_RIDE_OFFSET = 0.55;
+> 29-
+> 30-export interface W …[+1942 chars]
+
+### 🤖 Claude — 2026-11-15T18:54:06.798Z
+
+> 🔧 **Bash** `{"command": "sed -n 162,215p src/vfx/index.ts; sed -n 1,40p src/vfx/riderSplash.ts", "description": "Read wake implementation and rider splash"}`
+
+### 🧑 User — 2026-11-15T18:54:06.830Z
+
+> ↩︎ result: wake(pos, forward, right, speed, dt) {
+>       // Benny's arc length / lateral from his actual position (focus lags one frame)
+>       const f0 = course.sample(Math.max(0, focus));
+>       const d = tmpV3.copy(pos).sub(f0.pos);
+>       const s = Math.min(course.length, Math.max(0, focus + d.dot(f0.tan)));
+>       const f = course.sample(s);
+>       d.copy(pos).sub(f.pos);
+>       const lateral = d.dot(f.right);
+>       // body radius from the ride offset (centre = surface + BENNY_RIDE_OFFSET · radius)
+>       const above = d.dot(f.up) - surfaceHeight(s, lateral, curTime);
+>       const bodyR = THREE.MathUtils.clamp(above / BENNY_RIDE_OFFSET, 0.4, 2.0);
+>       const waterlineR = bodyR * Math.sqrt(1 - BENNY_RIDE_OFFSET * BENNY_RIDE_OFFSET);
+>       const strength = Math.min(1, speed / 8);
+>       if (s >= ribbonS0 && whirlBlend(s) < 0.5) {
+>         (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);
+>         ribbon.uniforms.uBennyR.value = waterlineR;
+>       }
+>       // 3D splash crown flaring out of the surface at the waterline
+>       const center = tmpV.copy(pos).addScaledVector(f.up, -above);
+>       crown.place(center, forward, f.up, waterlineR, strength);
+>       // side fans of droplets ( …[+3117 chars]
+

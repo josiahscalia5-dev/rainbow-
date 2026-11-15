@@ -373,8 +373,8 @@
   },
   {
    "path": "assets/models/benny.glb",
-   "bytes": 1179640,
-   "sha256": "89522bedbcaa4c0c510d8cf22b026b069f1560b298a7cbd338eeb503ec67e959"
+   "bytes": 1180392,
+   "sha256": "a6f946615b07e12d4d5b81c179385a4979db2cb7c122c89677090b866fea252c"
   },
   {
    "path": "assets/models/rainbow_girl.glb",
@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1967,
-   "sha256": "31f8bee6d840825f00b0058736100200c362b6064a7e9f4545fde36a492a1b37"
+   "sha256": "d7fb67113289cee2dcbfe7e04af7bcdf380f9d6b010b4badcbdcd80b61cee921"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -458,8 +458,8 @@
   },
   {
    "path": "docs/characters/benny_turntable.png",
-   "bytes": 1067584,
-   "sha256": "7355494b66bc2066cd4bf6fd51a46b0cc5d6ca14a17e5bd461d3baea63b50622"
+   "bytes": 1063174,
+   "sha256": "926759c1ef9aafb8af5d761035138809aa485abb6a099ea42c19b3ad74bb24e1"
   },
   {
    "path": "docs/characters/benny_turntable_expr_dizzy.png",
@@ -500,6 +500,11 @@
    "path": "docs/path_graph.md",
    "bytes": 4599,
    "sha256": "c54738dbd8b22ee33d0a28062084937216bc2ee2f426e93841c4db009ca58697"
+  },
+  {
+   "path": "docs/reference_inventory.md",
+   "bytes": 38282,
+   "sha256": "81aeabbb63f8358222ec281fdbda0edf5cb80689ac5b40e04443311ff8a8f2cc"
   },
   {
    "path": "docs/vfx/water.md",
@@ -788,8 +793,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1173,
-   "sha256": "1be7cc5dbe67e718343b59cb7a6891f0c601c5b4eafe13537450780e076dfcd5"
+   "bytes": 8073,
+   "sha256": "e80689fdd3dfc9e67ad5a3bd18df357eb49755337cd6dab24e85747cf33a732a"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1133,8 +1138,8 @@
   },
   {
    "path": "src/characters/benny/benny-lab.ts",
-   "bytes": 6292,
-   "sha256": "e31ef47d7b71a00f7e975ec34e5232a014b4791e4916fb414922521042ad6dcb"
+   "bytes": 6467,
+   "sha256": "3bc61364a54448c649544502d252a043ee5101da1572166c4ec254b1c8c6033c"
   },
   {
    "path": "src/characters/benny/build.ts",
@@ -1153,8 +1158,8 @@
   },
   {
    "path": "src/characters/benny/textures.ts",
-   "bytes": 11807,
-   "sha256": "801058a231d5e23177727fa1205e4f759319337d182b4040eab6e2d851c0d3c3"
+   "bytes": 11922,
+   "sha256": "6c8287fccf7628d5fbe3848e5720eee42bab81856881ba45cd3b61c266a98f95"
   },
   {
    "path": "src/characters/girl/build.ts",
@@ -1253,8 +1258,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 15844,
-   "sha256": "14ba6cb228a03de2ebaf9ebf79516b763dc26f4cc81b360592f146c9d79ffc54"
+   "bytes": 15856,
+   "sha256": "9dfbd3ab43e1d5310ed699a5e6429eda9fd3a4f2df401bfa494bd5d488a0cc6a"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -1263,8 +1268,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 10050,
-   "sha256": "07e7b586c86a8abd47a09c54d0236fa5019cc77ede670f744d9df76a8e1e31cd"
+   "bytes": 10296,
+   "sha256": "74d6cf06e357abcd45134ead89b4a1ebcdd4191ef593d11599fe313ad6ce7976"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -1273,8 +1278,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 5694,
-   "sha256": "41198a9e579b46b7b53d0bb2ac63cbd0d89ee37daefdbad5d5062050aa6dd00e"
+   "bytes": 5722,
+   "sha256": "f4940528c9da278fa28e301f30bb82816b67a17e4021b16cb50e556574fbd8c7"
   },
   {
    "path": "src/vfx/spray.ts",
@@ -1283,8 +1288,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 17038,
-   "sha256": "ff2c57e09b3962723a7eff9e1e3e4929e35cac8cbe49a1795d5b4b503a710f2c"
+   "bytes": 17106,
+   "sha256": "e422837523ac786d46af1a49b47a0ee19d35a54c13cef788f45409264415bde6"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -1298,8 +1303,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 30859,
-   "sha256": "113724094cd93e8cd383b41bd26a0d24221ca9b471d08d7f0fb0dd6bea811b5a"
+   "bytes": 31109,
+   "sha256": "8cbb983f73907742ddf0b283234daf22f343733a683c8d6b350878e6688d482f"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -1308,8 +1313,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 15045,
-   "sha256": "08f30caec02f26810ee111037224e20508c07d7419755f6e36867d9730844adc"
+   "bytes": 16489,
+   "sha256": "911e4da8e3a965d2ded8ce2b8c6f89b512db6f5f4764e418626939f7897e7411"
   },
   {
    "path": "src/world/towel.ts",
@@ -1318,8 +1323,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 16564,
-   "sha256": "e5b359c5a10c91e6e373b81e15e249af4b441c542306cf615a4e6317e2fdd46a"
+   "bytes": 17026,
+   "sha256": "842322fd5afb79d1bc2c957f9b558cc12a34278fb24ebba0ffa1efdddb0e6436"
   },
   {
    "path": "tools/model-lab.html",

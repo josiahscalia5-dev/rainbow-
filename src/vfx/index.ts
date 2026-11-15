@@ -86,6 +86,8 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh);
 
   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
+  // debug/QA handle (read-only use from Playwright: uniforms of the main parts)
+  if (typeof window !== 'undefined') (window as unknown as { __rainbowWater?: unknown }).__rainbowWater = { ribbon: ribbon.uniforms, crown: crown.uniforms, group };
   let focus = 0;
   let curTime = 0;
   const tmpV = new THREE.Vector3();

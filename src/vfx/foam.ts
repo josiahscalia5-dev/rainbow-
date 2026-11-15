@@ -58,7 +58,7 @@ export function bermHeight(e: number, hw: number, lump: number): number {
 /** full bank surface height incl. bubble domes (shared by the mesh and the puff placement) */
 export function bermSurface(s: number, e: number, side: number, hw: number): number {
   const domeK = Math.min(1, Math.max(0, (e + 0.3) / 0.35)) * Math.min(1, Math.max(0, (BERM_OUT - 0.1 - e) / 0.4));
-  return bermHeight(e, hw, bermLump(s, side)) + 0.32 * domeK * Math.sqrt(bermDomes(s, e, side));
+  return bermHeight(e, hw, bermLump(s, side)) + 0.2 * domeK * Math.sqrt(bermDomes(s, e, side));
 }
 
 const BERM_VERT = /* glsl */ `
@@ -116,7 +116,7 @@ void main() {
   #ifdef LOW_Q
   vec3 N = N0;
   #else
-  vec3 N = bumpNormal(vPosW, N0, bub * 0.16);
+  vec3 N = bumpNormal(vPosW, N0, bub * 0.1);
   #endif
   vec3 L = normalize(uLightDir);
   vec3 V = normalize(cameraPosition - vPosW);
@@ -185,8 +185,8 @@ export interface FoamSystem {
 
 /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
 function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
-  const ds = quality === 'high' ? 0.45 : 0.8;
-  const E = quality === 'high' ? [BERM_IN, -0.38, -0.2, -0.05, 0.1, 0.28, 0.5, 0.8, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
+  const ds = quality === 'high' ? 0.32 : 0.8;
+  const E = quality === 'high' ? [BERM_IN, -0.4, -0.25, -0.1, 0.04, 0.18, 0.34, 0.52, 0.75, 0.98, BERM_OUT] : [BERM_IN, -0.2, 0.15, 0.55, BERM_OUT];
   const rows = Math.ceil((s1 - s0) / ds) + 1;
   const C = E.length;
   const n = rows * C * 2;
@@ -297,7 +297,7 @@ export function createFoam(course: Course, opts: { s0: number; s1: number; quali
     const sb = Math.min(s1, sa + chunkLen);
     const list: Puff[] = [];
     // skip most of 03 (the whirlpool has its own foam), keep the chute→rim hand-over
-    for (let s = sa; s < sb; s += 0.7 / density) {
+    for (let s = sa; s < sb; s += 0.5 / density) {
       if (s > skip[0] && s < skip[1]) continue;
       const f = course.sample(s);
       const hw = course.widthAt(s) / 2;

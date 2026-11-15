@@ -63,9 +63,10 @@ export const BENNY_COLORS = {
   whiteShade: '#e2d9ec',
   brim: '#6327d6',
   brimDark: '#3f1597',
-  pinkRoot: '#ec58a8',
-  pinkTip: '#ff9ed2',
-  pinkSkin: '#f06bb0',
+  // hot plush pink of refs 02–10 (live median was brighter/bluer than the refs at ≈ 255/98/213 vs 245/79/180)
+  pinkRoot: '#e84a97',
+  pinkTip: '#ff86bf',
+  pinkSkin: '#ec5fa3',
   pomRoot: '#5a1fc4',
   pomTip: '#b07cff',
   gold: '#ffd23a',

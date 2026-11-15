@@ -10,7 +10,7 @@
 import * as THREE from 'three';
 import { createCandyEnvironment, createRenderer } from '../../render/env';
 import { buildBenny } from './build';
-import { createBennyRuntime, loadBenny } from './runtime';
+import { BENNY_RIDE_LIFT, createBennyRuntime, loadBenny } from './runtime';
 import type { BennyRuntime } from '../types';
 
 declare global { interface Window { __done?: boolean; __error?: string; __info?: unknown } }
@@ -86,7 +86,8 @@ interface Panel {
     if (views !== 'turntable') {
       const water = new THREE.Mesh(new THREE.CircleGeometry(40, 64), new THREE.MeshStandardMaterial({ color: '#29d8ff', roughness: 0.1, metalness: 0.1, emissive: '#0a6f9a', emissiveIntensity: 0.6 }));
       water.rotation.x = -Math.PI / 2;
-      water.position.y = -RIDE;
+      // game view: exact game placement (the runtime lifts him while swimming); refs view: lifted ride height
+      water.position.y = views === 'game' ? -RIDE : -(RIDE + BENNY_RIDE_LIFT);
       scene.add(water);
     }
     let i = 0;

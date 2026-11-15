@@ -891,3 +891,134 @@ Big step forward (the path specialist's straight axis has landed too). Let me zo
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -20; S=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod; node $S/axcap.mjs $S/ax2 \"hide=coins\" 6 2>&1 | tail -3 && python3 -c \"\nfrom PIL import Image\nim=Image.open('$S/ax2/ax_05_6.png').convert('RGB'); ref=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nout=Image.new('RGB',(1728,1536)); out.paste(ref,(0,0)); out.paste(im,(864,0)); out.resize((1152,1024)).save('$S/ax2_sbs.png')\"", "description": "Typecheck, capture and build side-by-side", "timeout": 600000}`
 
+### 🧑 User — 2026-11-15T18:51:12.217Z
+
+> ↩︎ result: 6 {"r":7.599999999999998,"depth":3.300087460042023,"center":[2.3,-37,-63.17]} calls 71 tris 548363
+
+### 🤖 Claude — 2026-11-15T18:51:14.537Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/ax2_sbs.png"}`
+
+### 🧑 User — 2026-11-15T18:51:14.602Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:51:27.735Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod && python3 -c \"\nfrom PIL import Image\nfor f in ['/home/user/rainbow-/references/05_flow_into_the_current.png','ax2/ax_05_6.png']:\n  im=Image.open(f).convert('RGB')\n  def stats(box,name):\n    c=im.crop(box); px=list(c.getdata()); n=len(px)\n    avg=tuple(sum(p[i] for p in px)//n for i in range(3))\n    s=sorted(px,key=lambda p:sum(p)); print(' ',name,'avg',avg,'p10',s[n//10],'med',s[n//2],'p90',s[9*n//10])\n  print(f)\n  stats((560,200,700,260),'upper wall')\n  stats((330,300,420,360), …[+160 chars]`
+
+### 🧑 User — 2026-11-15T18:51:27.920Z
+
+> ↩︎ result: /home/user/rainbow-/references/05_flow_into_the_current.png
+>   upper wall avg (214, 84, 142) p10 (198, 10, 69) med (222, 48, 159) p90 (255, 137, 251)
+>   inner wall avg (188, 71, 172) p10 (133, 35, 120) med (174, 45, 200) p90 (245, 120, 240)
+>   left wall avg (210, 65, 177) p10 (121, 8, 90) med (233, 46, 185) p90 (245, 130, 249)
+>   vanish avg (225, 132, 117) p10 (165, 47, 135) med (238, 108, 106) p90 (235, 182, 228)
+> ax2/ax_05_6.png
+>   upper wall avg (236, 83, 150) p10 (166, 26, 106) med (255, 17, 229) p90 (255, 165, 188)
+>   inner wall avg (246, 113, 132) p10 (250, 85, 43) med (255, 131, 99) p90 (255, 186, 194)
+>   left wall avg (240, 85, 144) p10 (167, 26, 103) med (255, 20, 203) p90 (255, 165, 186)
+>   vanish avg (254, 155, 158) p10 (255, 152, 100) med (255, 170, 144) p90 (255, 198, 186)
+
+### 🤖 Claude — 2026-11-15T18:51:53.260Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "export interface FarGlow { color: THREE.ColorRepresentation; near: number; far: number; strength: number }\n\n/** GLSL for the distance glow, shared by the tube wall, rings and lids */\nconst FAR_GLOW_PARS = `uniform vec3 uFarGlowColor; uniform vec3 uFarGlowRange;\nfloat farGlowK(){ return uFarGlowRange.z * smoothstep(uFarGlowRange.x, uFarGlowRange.y, length(vViewPosition)); }`;\n\nfunction farGlowUniforms(g: FarGlow) {\n  return {\n    uFarGlowColor: { value: new THREE.Color(g.color) },\n    uFarG …[+1492 chars]`
+
+### 🧑 User — 2026-11-15T18:51:53.303Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:51:54.908Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "        `#include <emissivemap_fragment>\n{ float fg = farGlowK(); diffuseColor.rgb = mix(diffuseColor.rgb, uFarGlowColor, fg * 0.5); totalEmissiveRadiance += uFarGlowColor * fg; }`,\n      );\n  };", "new_string": "        `#include <emissivemap_fragment>\n${FAR_GLOW_APPLY}`,\n      );\n  };"}`
+
+### 🧑 User — 2026-11-15T18:51:54.942Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:51:56.409Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "#ifdef PERF_FARGLOW\n{ float fg = farGlowK(); diffuseColor.rgb = mix(diffuseColor.rgb, uFarGlowColor, fg * 0.5); totalEmissiveRadiance += uFarGlowColor * fg; }\n#endif`,", "new_string": "#ifdef PERF_FARGLOW\n${FAR_GLOW_APPLY}\n#endif`,"}`
+
+### 🧑 User — 2026-11-15T18:51:56.450Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T18:52:04.986Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/materials.ts'\ns=open(p).read()\nold=\"\"\"const FAR_GLOW_APPLY = `{ float mt = midTintK(); diffuseColor.rgb = mix(diffuseColor.rgb, uMidTint, mt); totalEmissiveRadiance *= 1.0 - mt * 0.5;\n  float fg = farGlowK(); diffuseColor.rgb = mix(diffuseColor.rgb, uFarGlowColor, min(1.0, fg * 0.5)); totalEmissiveRadiance += uFarGlowColor * fg; }`;\"\"\"\nnew=\"\"\"/** `solid` = 0 inside perforation holes (they stay dark), 1 on metal */\nconst FAR_GLOW_APPLY = (solid = '1.0') => `{ float sol = ${solid}; float mt = midTintK() * sol; diffuseColor.rgb = mix(diff …[+728 chars]`
+
+### 🧑 User — 2026-11-15T18:52:05.035Z
+
+> ↩︎ result: 53:const FAR_GLOW_APPLY = (solid = '1.0') => `{ float sol = ${solid}; float mt = midTintK() * sol; diffuseColor.rgb = mix(diffuseColor.rgb, uMidTint, mt); totalEmissiveRadiance *= 1.0 - mt * 0.5;
+> 80:${FAR_GLOW_APPLY()}`,
+> 209:${FAR_GLOW_APPLY('1.0 - perfHole')}
+
+### 🤖 Claude — 2026-11-15T18:52:06.648Z
+
+Now the gold variant of the tube environment.
+
+### 🤖 Claude — 2026-11-15T18:52:16.296Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/materials.ts'\ns=open(p).read()\nrep=[\n(\"\"\"let tubeEnv: THREE.CubeTexture | null = null;\nexport function washerTubeEnv(): THREE.CubeTexture {\n  if (tubeEnv) return tubeEnv;\"\"\",\n\"\"\"const tubeEnvs: Partial<Record<'wall' | 'gold', THREE.CubeTexture>> = {};\n/** variant 'gold': same tunnel lighting seen by polished gold (warm-white strips, amber base) so rings and\n *  lids read clean orange-gold with yellow-white highlights instead of salmon (gold × magenta). */\nexport function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeT …[+2003 chars]`
+
+### 🧑 User — 2026-11-15T18:52:16.358Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T18:52:17.476Z
+
+Now update the environment section to use the gold env, the mid tint, and dimmer walls.
+
+### 🤖 Claude — 2026-11-15T18:52:27.040Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\nrep=[\n(\"\"\"  const tubeGlow: FarGlow = { color: '#ffd08a', near: 22, far: 95, strength: 1.6 };\n  const tubeEnv = washerTubeEnv();\n  const perfTubeMat = perforatedMetal({\n    color: '#f24bd6', emissive: '#4a0866', emissiveIntensity: 0.4, holeColor: '#14001f',\n    slot: 1, repeatU: 52, repeatV: 1.0, holeSize: 0.62, streaks: 0.15, metalness: 0.9, roughness: 0.22,\n    relief: { corrugation: 0.035, bevel: 0.06, bevelWidth: 0.1 }, rimColor: '#ff6fe6', rimStrength: 0.9,\n    envMap: tubeEnv, envMapIntensity: 1.0,  …[+1796 chars]`
+
+### 🧑 User — 2026-11-15T18:52:50.064Z
+
+> ↩︎ result: 6 {"r":7.599999999999998,"depth":3.300087460042023,"center":[2.3,-37,-63.17]} calls 71 tris 548363
+
+### 🤖 Claude — 2026-11-15T18:52:52.405Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/ax3_sbs.png"}`
+
+### 🧑 User — 2026-11-15T18:52:52.458Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:53:08.035Z
+
+Walls now go magenta → violet like the reference. Let me check the actual ride-camera capture now, since the path/camera specialist has been changing things.
+
+### 🤖 Claude — 2026-11-15T18:53:11.088Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod; node scripts/capture.mjs 05 --out=$S/iter3 2>&1 | tail -2; python3 -c \"\nfrom PIL import Image\nim=Image.open('$S/iter3/05.png').convert('RGB'); ref=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nout=Image.new('RGB',(1728,1536)); out.paste(ref,(0,0)); out.paste(im,(864,0)); out.resize((1152,1024)).save('$S/iter3_sbs.png')\"", "description": "Capture real ride camera scene 05", "timeout": 600000}`
+
+### 🧑 User — 2026-11-15T18:53:34.812Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/iter3/05.png {"stage":"05","s":127.389,"y":-41.182,"calls":108,"tris":604939,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T18:53:36.942Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/iter3_sbs.png"}`
+
+### 🧑 User — 2026-11-15T18:53:36.994Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T18:53:50.289Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod && python3 -c \"\nfrom PIL import Image\nim=Image.open('iter3/05.png').convert('RGB')\na=im.crop((0,250,330,520)).resize((660,540))\nb=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB').crop((0,250,330,520)).resize((660,540))\nout=Image.new('RGB',(1320,540)); out.paste(b,(0,0)); out.paste(a,(660,0)); out.save('lidcmp.png')\"", "description": "Compare lid crops ref vs render"}`
+
+### 🧑 User — 2026-11-15T18:53:50.685Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T18:53:52.863Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/scratchpad/envmod/lidcmp.png"}`
+
+### 🧑 User — 2026-11-15T18:53:52.913Z
+
+> ↩︎ result: [image]
+

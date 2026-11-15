@@ -254,17 +254,18 @@ void main() {
       float phi = atan(abs(du), -dv);           // 0 = straight behind (camera side), pi/2 = beside
       float rr = max(0.0, d - rb * 0.9);
       // contact ring of churned white water hugging the body
-      float lace = cells(vec2(du * 5.0, (dv + uTime * vSpeed * 0.25) * 5.0));
-      float contact = (1.0 - smoothstep(rb * 0.12, rb * 0.4, rr)) * smoothstep(0.1, 0.35, lace);
+      // soap-lace network (white along cell borders, water shows through the cells)
+      float lace = smoothstep(0.3, 0.46, cells(vec2(du * 5.5, (dv + uTime * vSpeed * 0.25) * 5.5)));
+      float contact = (1.0 - smoothstep(rb * 0.12, rb * 0.4, rr)) * (0.4 + 0.6 * lace);
       // radiating lace tendrils fanning sideways/backwards (ref 05 splash at the water line)
       float fan = smoothstep(2.5, 1.7, phi) * smoothstep(0.45, 1.0, phi);
       float tend = vnoise(vec2(phi * 16.0, rr * 0.7 - uTime * 3.2));
-      tend = smoothstep(0.55, 0.8, tend) * smoothstep(0.12, 0.38, lace);
+      tend = smoothstep(0.55, 0.8, tend) * (0.35 + 0.65 * lace);
       float tendrils = tend * fan * exp(-rr / (rb * 1.6));
       // ripple rings + long V wake
       float rings = smoothstep(0.7, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-d * 0.6) * smoothstep(rb, rb * 1.4, d) * 0.3;
       float back = clamp(-dv, 0.0, 30.0);
-      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 1.1) * 4.0) * exp(-back * 0.14) * step(dv, 0.0) * smoothstep(0.25, 0.5, lace);
+      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 1.1) * 4.0) * exp(-back * 0.14) * step(dv, 0.0) * lace;
       float foamK = clamp((contact + tendrils * 1.1 + rings + wakeV * 0.8) * k, 0.0, 1.0);
       col = mix(col, uFoam * 1.25, foamK);
     }

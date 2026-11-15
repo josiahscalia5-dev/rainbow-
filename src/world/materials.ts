@@ -39,16 +39,26 @@ export interface PerforatedOptions {
   envMapIntensity?: number;
 }
 
-export interface FarGlow { color: THREE.ColorRepresentation; near: number; far: number; strength: number }
+export interface FarGlow {
+  color: THREE.ColorRepresentation; near: number; far: number; strength: number;
+  /** optional mid-distance tint of the metal colour (refs: walls turn violet deeper in the tunnel) */
+  mid?: { color: THREE.ColorRepresentation; near: number; far: number; amount: number };
+}
 
 /** GLSL for the distance glow, shared by the tube wall, rings and lids */
-const FAR_GLOW_PARS = `uniform vec3 uFarGlowColor; uniform vec3 uFarGlowRange;
-float farGlowK(){ return uFarGlowRange.z * smoothstep(uFarGlowRange.x, uFarGlowRange.y, length(vViewPosition)); }`;
+const FAR_GLOW_PARS = `uniform vec3 uFarGlowColor; uniform vec3 uFarGlowRange; uniform vec3 uMidTint; uniform vec3 uMidRange;
+float farGlowK(){ return uFarGlowRange.z * smoothstep(uFarGlowRange.x, uFarGlowRange.y, length(vViewPosition)); }
+float midTintK(){ return uMidRange.z * smoothstep(uMidRange.x, uMidRange.y, length(vViewPosition)); }`;
+/** `solid` = 0 inside perforation holes (they stay dark), 1 on metal */
+const FAR_GLOW_APPLY = (solid = '1.0') => `{ float sol = ${solid}; float mt = midTintK() * sol; diffuseColor.rgb = mix(diffuseColor.rgb, uMidTint, mt); totalEmissiveRadiance *= 1.0 - mt * 0.5;
+  float fg = farGlowK(); diffuseColor.rgb = mix(diffuseColor.rgb, uFarGlowColor, min(1.0, fg * 0.5) * sol); totalEmissiveRadiance += uFarGlowColor * fg * mix(0.35, 1.0, sol); }`;
 
 function farGlowUniforms(g: FarGlow) {
   return {
     uFarGlowColor: { value: new THREE.Color(g.color) },
     uFarGlowRange: { value: new THREE.Vector3(g.near, g.far, g.strength) },
+    uMidTint: { value: new THREE.Color(g.mid?.color ?? '#ffffff') },
+    uMidRange: { value: new THREE.Vector3(g.mid?.near ?? 0, g.mid?.far ?? 1, g.mid?.amount ?? 0) },
   };
 }
 
@@ -67,7 +77,7 @@ export function withFarGlow<T extends THREE.MeshStandardMaterial>(mat: T, g: Far
       .replace(
         '#include <emissivemap_fragment>',
         `#include <emissivemap_fragment>
-{ float fg = farGlowK(); diffuseColor.rgb = mix(diffuseColor.rgb, uFarGlowColor, fg * 0.5); totalEmissiveRadiance += uFarGlowColor * fg; }`,
+${FAR_GLOW_APPLY()}`,
       );
   };
   const prevKey = mat.customProgramCacheKey.bind(mat);
@@ -196,7 +206,7 @@ roughnessFactor = mix(roughnessFactor, 0.9, perfHole);`,
         `#include <emissivemap_fragment>
 totalEmissiveRadiance = totalEmissiveRadiance * (1.0 - perfHole) + uRimColor * perfRim * uRimStrength * (1.0 - perfHole) + vec3(1.0,0.9,1.0) * streak * 0.6;
 #ifdef PERF_FARGLOW
-{ float fg = farGlowK(); diffuseColor.rgb = mix(diffuseColor.rgb, uFarGlowColor, fg * 0.5); totalEmissiveRadiance += uFarGlowColor * fg; }
+${FAR_GLOW_APPLY('1.0 - perfHole')}
 #endif`,
       );
   };
@@ -210,9 +220,13 @@ totalEmissiveRadiance = totalEmissiveRadiance * (1.0 - perfHole) + uRimColor * p
  * walls read rich saturated magenta (the shared candy studio has a cyan panel that turned them sky-blue).
  * Built from half-float DataTextures; three converts it to PMREM on first use (no renderer needed here).
  */
-let tubeEnv: THREE.CubeTexture | null = null;
-export function washerTubeEnv(): THREE.CubeTexture {
-  if (tubeEnv) return tubeEnv;
+const tubeEnvs: Partial<Record<'wall' | 'gold', THREE.CubeTexture>> = {};
+/** variant 'gold': same tunnel lighting seen by polished gold (warm-white strips, amber base) so rings and
+ *  lids read clean orange-gold with yellow-white highlights instead of salmon (gold × magenta). */
+export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeTexture {
+  const cached = tubeEnvs[variant];
+  if (cached) return cached;
+  const isGold = variant === 'gold';
   const N = 64;
   const dir = new THREE.Vector3();
   const col = new THREE.Color();
@@ -232,18 +246,20 @@ export function washerTubeEnv(): THREE.CubeTexture {
     const ang = Math.atan2(d.y, d.x); // angle around the tunnel axis (Z)
     const up = d.y;
     // base: deep hot magenta above, violet toward the floor (kept dark so the strips give contrast)
-    out.setRGB(0.4, 0.03, 0.3).lerp(new THREE.Color(0.16, 0.05, 0.5), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
+    if (isGold) out.setRGB(0.42, 0.2, 0.12).lerp(new THREE.Color(0.22, 0.08, 0.12), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
+    else out.setRGB(0.4, 0.03, 0.3).lerp(new THREE.Color(0.16, 0.05, 0.5), THREE.MathUtils.smoothstep(-up, -0.2, 0.9));
     // pink-white strip lights running along the tunnel at fixed angles around it (8, uneven strength)
     for (let i = 0; i < 8; i++) {
       const a0 = 0.2 + (i * Math.PI) / 4;
       const dA = Math.abs(Math.atan2(Math.sin(ang - a0), Math.cos(ang - a0)));
       const k = Math.exp(-(dA * dA) / 0.005) * (1 - Math.abs(d.z) * 0.6) * (i % 2 ? 0.7 : 1.15);
-      out.r += 3.4 * k; out.g += 1.7 * k; out.b += 3.1 * k;
+      if (isGold) { out.r += 3.6 * k; out.g += 3.0 * k; out.b += 2.2 * k; } else { out.r += 3.4 * k; out.g += 1.7 * k; out.b += 3.1 * k; }
     }
-    // warm light far down the tunnel (-Z) and a softer pink glow behind (+Z)
+    // warm light at the very end of the tunnel (-Z), violet haze around it, softer pink glow behind (+Z)
     const ahead = Math.max(0, -d.z);
-    const hot = Math.pow(ahead, 10), wide = Math.pow(ahead, 3);
-    out.r += 3.4 * hot + 0.75 * wide; out.g += 2.7 * hot + 0.35 * wide; out.b += 1.3 * hot + 0.08 * wide;
+    const hot = Math.pow(ahead, 24), wide = Math.pow(ahead, 3);
+    out.r += 3.6 * hot; out.g += 2.9 * hot; out.b += 1.4 * hot;
+    if (isGold) { out.r += 0.6 * wide; out.g += 0.4 * wide; out.b += 0.15 * wide; } else { out.r += 0.18 * wide; out.g += 0.06 * wide; out.b += 0.5 * wide; }
     const back = Math.pow(Math.max(0, d.z), 4);
     out.r += 0.9 * back; out.g += 0.25 * back; out.b += 0.8 * back;
     return out;
@@ -274,7 +290,7 @@ export function washerTubeEnv(): THREE.CubeTexture {
   cube.magFilter = THREE.LinearFilter;
   cube.generateMipmaps = false;
   cube.needsUpdate = true;
-  tubeEnv = cube;
+  tubeEnvs[variant] = cube;
   return cube;
 }
 

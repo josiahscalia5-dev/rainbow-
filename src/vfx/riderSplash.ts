@@ -26,9 +26,9 @@ void main() {
   float t = aPolar.y;
   float ath = abs(th);
   // strongest beside Benny and diagonally behind him, low bow wave in front, calm right behind
-  float side = smoothstep(0.5, 1.2, ath) * (1.0 - 0.8 * smoothstep(1.9, 2.8, ath));
+  float side = smoothstep(0.55, 1.1, ath) * (1.0 - 0.85 * smoothstep(1.8, 2.5, ath));
   float wob = n1(th * 4.0 + uTime * 5.0) * 0.5 + n1(th * 9.0 - uTime * 7.0) * 0.5;
-  float reach = mix(1.0, 2.15 + 0.5 * wob, t) * (0.75 + 0.25 * side);
+  float reach = mix(1.0, 1.8 + 0.45 * wob, t) * (0.8 + 0.2 * side);
   float r = uR * mix(0.92, reach, t);
   // sheet rises steeply out of the water at the body, then arcs back down (crown profile)
   float lift = uR * (0.55 + 0.25 * wob) * side * uStrength;
@@ -55,13 +55,13 @@ ${NOISE_GLSL}
 void main() {
   float th = vPolar.x;
   float t = vPolar.y;
-  // radial fingers streaming outward, with soap-lace holes
-  float fing = vnoise(vec2(th * 17.0, t * 1.6 - uTime * 4.0));
-  fing = smoothstep(0.5, 0.78, fing);
-  float lace = cells(vec2(th * 10.0, t * 6.0 - uTime * 3.0));
-  float body = 1.0 - smoothstep(0.08, 0.3, t);           // churn right at the body
-  float a = max(body * smoothstep(0.12, 0.35, lace), fing * smoothstep(0.15, 0.4, lace));
-  a *= (1.0 - smoothstep(0.55, 0.95, t)) * vSide * uStrength;
+  // thin radial fingers streaming outward, laced by a fine soap-foam network
+  float fing = vnoise(vec2(th * 26.0, t * 1.2 - uTime * 4.0));
+  fing = smoothstep(0.52, 0.8, fing);
+  float net = smoothstep(0.3, 0.46, cells(vec2(th * 14.0, t * 7.0 - uTime * 3.0)));
+  float body = 1.0 - smoothstep(0.06, 0.22, t);          // churned rim right at the body
+  float a = max(body * (0.35 + 0.65 * net), fing * (0.45 + 0.55 * net));
+  a *= (1.0 - smoothstep(0.5, 0.92, t)) * vSide * uStrength;
   if (a < 0.02) discard;
   vec3 V = normalize(cameraPosition - vPosW);
   vec3 col = mix(vec3(0.62, 0.92, 1.0), vec3(1.15, 1.18, 1.2), smoothstep(0.2, 0.75, a));
