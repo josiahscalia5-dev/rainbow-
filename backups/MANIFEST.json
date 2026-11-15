@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4397,
-   "sha256": "b7f9c07dbdf1dcf69ac2da62f00b1f719fca80b408a60608c4ecfef328e216a7"
+   "sha256": "c173793a990ef77ef71d1e1a859d91b8fb89f8a9d2d667ef7c49c4a32d54d2b0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1892,6 +1892,11 @@
    "sha256": "2c9a583dcf8eb9d87638e77a393adf6e187b0e846756524c3156ed16bc8a578a"
   },
   {
+   "path": "qa/pilot05/wave6/director/REVIEW.md",
+   "bytes": 24661,
+   "sha256": "5853eaf227c216b668539fae53df42f2d52d8554d3fdab946896e7ccb7150357"
+  },
+  {
    "path": "qa/pilot05/wave6/director/crops/banks_ref_vs_game.png",
    "bytes": 4399826,
    "sha256": "b04b78ffc4a81627661155cc900ccf693b83b33309e4abdfb09091137c584577"
@@ -1998,8 +2003,8 @@
   },
   {
    "path": "qa/pilot05/wave6/environment/NOTES.md",
-   "bytes": 934,
-   "sha256": "dc2a274caa535565e9206a507b7eac1ba8a850249ff3a44b1dae135fde43516d"
+   "bytes": 2145,
+   "sha256": "24adb7b76be5f3b92d713083baa4fcf7e58fad221af824381c53f4b4ded2f5b7"
   },
   {
    "path": "qa/pilot05/wave6/foam/NOTES.md",

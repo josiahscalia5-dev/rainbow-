@@ -598,3 +598,48 @@ Now the environment.ts far tunnel block.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T23:49:38.535Z
+
+> 🔧 **Bash** `{"command": "cat package.json | head -40; ls scripts/ | head -80"}`
+
+### 🧑 User — 2026-11-15T23:49:38.561Z
+
+> ↩︎ result: {
+>   "name": "rainbow-washer-game",
+>   "private": true,
+>   "version": "0.1.0",
+>   "description": "RAINBOW — 11-screen real-time 3D portrait mobile game (Three.js + TypeScript + Vite + Capacitor)",
+>   "type": "module",
+>   "scripts": {
+>     "dev": "vite --host 0.0.0.0",
+>     "build": "tsc --noEmit && vite build",
+>     "preview": "vite preview --host 0.0.0.0 --port 4173",
+>     "typecheck": "tsc --noEmit",
+>     "test:continuity": "vite-node scripts/continuity-test.ts",
+>     "models:export": "node scripts/export-models.mjs",
+>     "qa:capture": "node scripts/capture.mjs",
+>     "qa:compare": "python3 scripts/compare.py",
+>     "verify:refs": "sha256sum -c scripts/reference.sha256",
+>     "android:sync": "npm run build && npx cap sync android",
+>     "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+>     "test:cinematic": "node scripts/cinematic-test.mjs"
+>   },
+>   "dependencies": {
+>     "@capacitor/android": "^6.2.0",
+>     "@capacitor/core": "^6.2.0",
+>     "@fontsource/baloo-2": "^5.1.0",
+>     "three": "^0.170.0"
+>   },
+>   "devDependencies": {
+>     "@capacitor/cli": "^6.2.0",
+>     "@types/three": "^0.170.0",
+>     "typescript": "^5.6.3",
+>     "vite": "^5.4.11",
+>     "vite-node": "^2.1.5"
+>   }
+> } …[+496 chars]
+
+### 🤖 Claude — 2026-11-15T23:49:38.795Z
+
+You've hit your 5-hour limit · resets 3:50am (UTC)
+

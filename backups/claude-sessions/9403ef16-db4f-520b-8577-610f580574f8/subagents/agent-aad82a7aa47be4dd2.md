@@ -540,3 +540,32 @@ Ramp target established. Now I'll refresh NOTES.md (required first), then run on
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T23:49:48.570Z
+
+> 🔧 **Bash** `{"command": "grep -n \"FRAG_TAIL\\|export const NOISE_GLSL\\|export function withFog\\|cells(\\|hash12\\|iridescent\" src/vfx/glsl.ts | head -20 && grep -n \"FRAG_TAIL =\" -A 8 src/vfx/glsl.ts", "description": "Look up shared GLSL helpers"}`
+
+### 🧑 User — 2026-11-15T23:49:48.608Z
+
+> ↩︎ result: 4:export const NOISE_GLSL = /* glsl */ `
+> 5:float hash12(vec2 p) {
+> 14:  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15:             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 23:float cells(vec2 p) {
+> 29:    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 35:vec3 iridescent(float t) {
+> 62:  float hs = hash12(gi + 7.31);
+> 65:  vec2 c = vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.5 + 0.25;
+> 86:  float hs = hash12(gi + 7.31);
+> 89:  vec2 dg = fract(g) - (vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.2 + 0.4);
+> 127:export function withFog<T extends Record<string, THREE.IUniform>>(u: T): T & typeof THREE.UniformsLib.fog {
+> 132:export const FRAG_TAIL = /* glsl */ `
+> 132:export const FRAG_TAIL = /* glsl */ `
+> 133-  #include <tonemapping_fragment>
+> 134-  #include <colorspace_fragment>
+> 135-  #include <fog_fragment>
+> 136-`;
+
+### 🤖 Claude — 2026-11-15T23:49:48.895Z
+
+You've hit your 5-hour limit · resets 3:50am (UTC)
+

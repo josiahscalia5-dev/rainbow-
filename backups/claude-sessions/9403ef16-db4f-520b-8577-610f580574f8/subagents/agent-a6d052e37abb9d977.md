@@ -403,3 +403,97 @@ Let me look at a few director crops for the walls, rings and lids up close.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T23:49:01.322Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/director/crops/vp_rings_ref_vs_game.png"}`
+
+### 🧑 User — 2026-11-15T23:49:01.353Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:49:01.829Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave6/director/crops/right_wall_ref_vs_game.png"}`
+
+### 🧑 User — 2026-11-15T23:49:01.873Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T23:49:09.351Z
+
+Clear picture now. Let me write the plan into NOTES first.
+
+### 🤖 Claude — 2026-11-15T23:49:15.502Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave6/environment/NOTES.md <<'EOF'\n\n# wave 6b (restart ~23:50 UTC; the 23:10 plan above was never executed — stopped before any capture)\nBaseline = `qa/pilot05/wave6/regress0408/now/05.png` (S-curve refit, camera LOCKED). No director REVIEW.md yet.\n1. RINGS (materials.ts new `withBandShading`, applied in environment.ts `gold05`): stylised analytic polished-gold\n   shading independent of env maps — N·V ramp (copper edge → amber → yellow → white-yellow highlight line), dark\n   amber contour where each half-round meets the wall (local lathe radius), strip \"ma …[+781 chars]`
+
+### 🧑 User — 2026-11-15T23:49:15.540Z
+
+> ↩︎ result: __pycache__
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> cinematic-test.mjs
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export-river-05.ts
+> export_claude_sessions.py
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> landmarks05.py
+> lib
+> rainbow-autosave.py
+> reference.sha256
+> screen_report.py
+> setup-android-sdk.sh
+> setup-blender.sh
+> setup-worldlabs-plugin.sh
+> triptych.py
+> water-lab.mjs
+> 4
+
+### 🤖 Claude — 2026-11-15T23:49:19.695Z
+
+Now a small measurement script (scratchpad) for gold/wall/lid stats so each iteration has numbers.
+
+### 🤖 Claude — 2026-11-15T23:49:30.305Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/m05.py", "content": "#!/usr/bin/env python3\n\"\"\"Screen 05 environment stats: gold (rings/lids) and wall pixel stats per region, ref vs captures.\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\n\n\ndef hsv(a):\n    a = a.astype(np.float32) / 255.0\n    mx = a.max(2); mn = a.min(2); d = mx - mn + 1e-6\n    r, g, b = a[..., 0], a[..., 1], a[..., 2]\n    h = np.where(mx == r, ((g - b) / d) % 6, np.where(mx == g, (b - r) / d + 2, (r - g) / d + 4)) * 60\n    s = np.where(mx > 0, (mx - mn …[+1871 chars]`
+
+### 🧑 User — 2026-11-15T23:49:30.322Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/m05.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T23:49:31.660Z
+
+> 🔧 **Bash** `{"command": "python3 -I /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/m05.py references/05_flow_into_the_current.png qa/pilot05/wave6/regress0408/now/05.png", "description": "Measure baseline gold/wall stats ref vs live"}`
+
+### 🧑 User — 2026-11-15T23:49:32.209Z
+
+> ↩︎ result: == references/05_flow_into_the_current.png
+>   top    {'gold_frac': 0.146, 'gold_med': '#F7843F', 'gold_L_p10/50/90': [111, 152, 207], 'gold_hue_med': 22, 'gold_white_frac': 0.0, 'wall_med': '#C12CAE', 'wall_L_p10/50/90': [39, 84, 133], 'wall_hue_med': 308, 'lap': 21.5}
+>   left   {'gold_frac': 0.153, 'gold_med': '#F8813D', 'gold_L_p10/50/90': [103, 149, 208], 'gold_hue_med': 22, 'gold_white_frac': 0.0, 'wall_med': '#B531B9', 'wall_L_p10/50/90': [38, 87, 146], 'wall_hue_med': 301, 'lap': 18.9}
+>   right  {'gold_frac': 0.116, 'gold_med': '#F98E4E', 'gold_L_p10/50/90': [112, 159, 208], 'gold_hue_med': 22, 'gold_white_frac': 0.0, 'wall_med': '#C635C0', 'wall_L_p10/50/90': [41, 95, 147], 'wall_hue_med': 302, 'lap': 20.3}
+>   vp     {'gold_frac': 0.123, 'gold_med': '#FAA45C', 'gold_L_p10/50/90': [143, 177, 221], 'gold_hue_med': 25, 'gold_white_frac': 0.0, 'wall_med': '#9E31A8', 'wall_L_p10/50/90': [59, 80, 144], 'wall_hue_med': 294, 'lap': 22.7}
+> == qa/pilot05/wave6/regress0408/now/05.png
+>   top    {'gold_frac': 0.315, 'gold_med': '#FF9013', 'gold_L_p10/50/90': [130, 158, 185], 'gold_hue_med': 30, 'gold_white_frac': 0.0, 'wall_med': '#B61CBC', 'wall_L_p10/50/90': [36, 71, 160], 'wall_hue_med': 29 …[+693 chars]
+
+### 🤖 Claude — 2026-11-15T23:49:46.872Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad/mask.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsys.path.insert(0, '/tmp/claude-0/-home-user-rainbow-/9403ef16-db4f-520b-8577-610f580574f8/scratchpad')\nfrom m05 import hsv\nims = []\nfor p in sys.argv[2:]:\n    im = np.asarray(Image.open(p).convert('RGB'))\n    h, s, v = hsv(im)\n    gold = (h > 15) & (h < 60) & (s > 0.35) & (v > 0.35)\n    hl = (v > 0.86) & (s < 0.45) & ((h < 70) | (h > 330))  # pale highlight\n    o = (im * 0.25).astype(np.uint8)\n    o[gold] = [255, 150, 0] …[+568 chars]`
+
+### 🧑 User — 2026-11-15T23:49:47.663Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T23:49:47.895Z
+
+You've hit your 5-hour limit · resets 3:50am (UTC)
+
