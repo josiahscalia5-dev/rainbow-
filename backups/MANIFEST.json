@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 3913,
-   "sha256": "791884b68e73003d2538ede1cedea6f571d3aca74279aa35aa6134ef5b7744aa"
+   "sha256": "d6e03adb74fbac2956b8b80b2856be0e78081ecce27f62fac4c2163b407806dc"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1106,
-   "sha256": "c53b0842e17f7a77010dd55d37cd1b5dd1dcab24aa1fd705ea999703f0ea5463"
+   "bytes": 1104,
+   "sha256": "f24bb7ebfb287bb028b39e41c714585f255c240a30d6d1310b53abcf70ec588b"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1472,6 +1472,16 @@
    "sha256": "db58f1de52ab3699231c2e20549f8872650d8dee4fe15451c9b89f10b866c07b"
   },
   {
+   "path": "qa/pilot05/wave5/benny/it03/T1.png",
+   "bytes": 1916412,
+   "sha256": "ce0e28b890a7dbf2a88cb6ebf894e9d9dfb8b8344e8ce6c255abdea87b852999"
+  },
+  {
+   "path": "qa/pilot05/wave5/benny/it03/T1_mask.png",
+   "bytes": 1759803,
+   "sha256": "2206baed07da5005b7291a11ab17e1231de578fb5d42d7d1a0205aecd9370436"
+  },
+  {
    "path": "qa/pilot05/wave5/environment/NOTES.md",
    "bytes": 2514,
    "sha256": "94cddbcaa236eada3519c267ab9c445d346adb5b2bc5929fd08537bd1a2a14ac"
@@ -1515,6 +1525,11 @@
    "path": "qa/pilot05/wave5/water/it03/05.png",
    "bytes": 1773851,
    "sha256": "65bf2dae71f12b046ca66a154d9cd134c464530083548747efd9c2363b1088b6"
+  },
+  {
+   "path": "qa/pilot05/wave5/water/it04/05.png",
+   "bytes": 1776435,
+   "sha256": "8f003166a9d168838b16e41f55afdbab5edc558d63337975e06c1c6db37d91f5"
   },
   {
    "path": "qa/report_metrics.json",
@@ -2138,8 +2153,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 34964,
-   "sha256": "da6dd340d3e7bb87aaaec1405a508d0967ff399600f0c5157247621dde9dd2a8"
+   "bytes": 35057,
+   "sha256": "cbe3ddc620500016a4961f7da52e8dff65523550b2637ad36b33301325262580"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

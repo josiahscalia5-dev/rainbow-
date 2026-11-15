@@ -699,3 +699,27 @@ It worked on retry (likely another specialist's file was mid-edit). Measure and 
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/foam.ts'\nt=open(p).read()\nold=\"\"\"          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2), y: +((1 - yN) / 2).toFixed(3) });\"\"\"\nnew=\"\"\"          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2), y: +((1 - yN) / 2).toFixed(3), env: +env.toFixed(2), s: +s.toFixed(2) });\"\"\"\nassert t.count(old)==1; t=t.replace(old,new)\nt=t.replace(\"clumps: { kind: string; ds: number; lat: number; k: number; y?: number }[] };\" …[+851 chars]`
 
+### 🧑 User — 2026-11-15T22:04:30.064Z
+
+> ↩︎ result: ok /tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/probe1.json
+> L s  129.22 ds  -3.40 lat  -1.84 k  0.11 env 0.00 y  1742
+> L s  129.44 ds  -3.19 lat  -1.85 k  0.11 env 0.00 y  1673
+> L s  129.83 ds  -2.80 lat  -1.85 k  0.11 env 0.00 y  1565
+> L s  130.33 ds  -2.29 lat  -1.86 k  0.18 env 0.18 y  1452
+> L s  130.93 ds  -1.69 lat  -1.89 k  0.37 env 1.00 y  1342
+> L s  131.61 ds  -1.01 lat  -1.91 k  0.61 env 1.00 y  1246
+> L s  132.36 ds  -0.26 lat  -2.19 k  0.62 env 0.14 y  1163
+> L s  133.18 ds   0.56 lat  -1.95 k  1.21 env 1.00 y  1097
+> L s  134.06 ds   1.44 lat  -2.40 k  1.16 env 0.74 y  1037
+> L s  134.99 ds   2.37 lat  -3.24 k  0.78 env 0.27 y   977
+> L s  135.98 ds   3.36 lat  -4.01 k  0.52 env 0.00 y   922
+> L s  137.02 ds   4.40 lat  -4.57 k  0.52 env 0.00 y   871
+> L s  138.10 ds   5.48 lat  -5.17 k  0.52 env 0.00 y   822
+> L s  139.24 ds   6.62 lat  -5.43 k  0.42 env 0.00 y   782
+> L s  140.41 ds   7.79 lat  -5.36 k  0.42 env 0.00 y   754
+> L s  141.64 ds   9.01 lat  -5.24 k  0.42 env 0.00 y   736
+> R s  129.22 ds  -3.40 lat   1.47 k  0.52 env 0.00 y  1736
+> R s  129.44 ds  -3.19 lat   1.53 k  0.52 env 0.00 y  1667
+> R s  129.83 ds  -2.80 lat   1.64 k  0.52 env 0.00 y  1556
+> R …[+752 chars]
+

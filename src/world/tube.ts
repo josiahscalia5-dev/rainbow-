@@ -414,8 +414,9 @@ export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segm
       ? [
         // flat underside with a shallow recess and an inner ring, rounded lower edge, straight rim band,
         // rounded upper edge, flat (very slightly crowned) top
-        [0, 0.03], [0.55, 0.03], [0.62, 0.0], [0.86, 0.0], [0.95, 0.025], [0.995, 0.08], [1.0, 0.13],
-        [1.0, h - 0.13], [0.995, h - 0.08], [0.95, h - 0.025], [0.86, h], [0.45, h + 0.015], [0, h + 0.02],
+        // (edge rounding scales with the thickness so thin pucks stay valid)
+        [0, 0.15 * h], [0.55, 0.15 * h], [0.62, 0.0], [0.86, 0.0], [0.95, 0.12 * h], [0.995, 0.3 * h], [1.0, 0.42 * h],
+        [1.0, 0.58 * h], [0.995, 0.7 * h], [0.95, 0.88 * h], [0.86, h], [0.45, h * 1.06], [0, h * 1.08],
       ]
       : [
         [0, 0.09], [0.74, 0.07], [0.82, 0.0], [0.9, -0.03], [0.97, -0.01], [1, 0.05], [1, h * 0.78], [0.95, h * 0.97], [0.82, h * 1.04], [0, h * 1.08],

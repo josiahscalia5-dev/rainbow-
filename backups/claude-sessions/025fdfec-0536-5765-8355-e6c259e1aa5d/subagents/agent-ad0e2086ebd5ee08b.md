@@ -1043,3 +1043,34 @@ The right band shows a hard corner at ≈(620, 813) where the bank clamp `min()`
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5; npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave5/water/it04 2>&1 | tail -2; python3 -c \"\nimport json; d=json.load(open('qa/capture_log.json')); print('errors', len(d['errors'])); [print(e[:600]) for e in d['errors'][:3]]\"; python3 -I $W/wmeasure.py qa/pilot05/wave5/water/it04/05.png; python3 -c \"\nfrom PIL import Image\nb=Image.open('qa/pilot05/wave5/water/it04/05.png').convert('RGB')\nb.crop((400,560,864,1000)).re …[+176 chars]`
 
+### 🧑 User — 2026-11-15T22:04:20.309Z
+
+> ↩︎ result: TSC_OK
+> 05 → qa/pilot05/wave5/water/it04/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":121,"tris":608313,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> errors 0
+> == qa/pilot05/wave5/water/it04/05.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lumStd pinkRuns
+>   560   1.7   0.4  31.2  0.6  18.6 | #7DBBFF  #ED52EB |  37.9  0-7 16-21 64-80 88-131 167-172 174-184 192-200 203-208 231-242 244-255 277-295 310-319 681-694 711-730 750-755 757-762 770-779 811-821 828-839 842-848
+>   600   9.6   0.6  28.7  0.7  32.8 | #5A9EF4  #FF5DF3 |  41.2  0-23 98-121 135-141 144-153 184-189 191-207 209-220 338-375 385-393 494-499 514-524 787-803 805-821 824-829
+>   700  26.7   1.2  19.7  0.4  40.5 | #3DACFF  #FC5CEE |  36.6  0-10 347-380 385-463 781-803
+>   800  35.4   0.3  26.0 12.8  22.5 | #1EA8FF  #FC58F1 |  39.0  69-109 113-168 170-211 213-236 628-690 694-707
+>   900  28.5   0.3  27.0  6.5  33.4 | #1BAAFF  #F64EEB |  39.9  0-116 135-152 156-179 189-202 655-665 673-706
+>  1000  26.4   0.3  32.2 30.6   8.9 | #13A4FF  #F954EE |  29.5  59-185 540-553 723-828 848-853
+>  1100  25.8   0.3  59.7  0.6  10.6 | #0EA2FF  #FF53C3 |  31.0  90-95  …[+850 chars]
+
+### 🤖 Claude — 2026-11-15T22:04:22.227Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/it04_midR.png"}`
+
+### 🧑 User — 2026-11-15T22:04:22.261Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T22:04:26.480Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/025fdfec-0536-5765-8355-e6c259e1aa5d/scratchpad/water5/it04_near.png"}`
+
+### 🧑 User — 2026-11-15T22:04:26.519Z
+
+> ↩︎ result: [image]
+
