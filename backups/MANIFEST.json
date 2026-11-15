@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 2919,
-   "sha256": "72bb6d37022b5d47e16a77017556d04797d04b0598f95b8c0302b69a3a2bd16f"
+   "bytes": 2920,
+   "sha256": "8546dd27d4c5e49457727c5c0d256ce124504d0de3c36a757db356681c720f4a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 9373,
-   "sha256": "e87054ec2cd2d00780de68ccca63b1e5ed9bfc02d290de4998e5acbbfe3a2ee2"
+   "bytes": 1107,
+   "sha256": "f229a7f4575bf0a6597765b53b6dc041a466597c741168ad5c43d4ad1c112f64"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -898,8 +898,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 601,
-   "sha256": "ecf12becc5e74c83c549ec04657d7273cb9fc612b9ded925cca49f9719db02b4"
+   "bytes": 2331,
+   "sha256": "868aa3c40f74a3251d3f39e74c8ca7620cbbd559b182562e2d60b75c9d36b2c1"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -1197,6 +1197,41 @@
    "sha256": "a131a03ec3628c550920b69689671ffa1a7847057a4939cd01bb802efa456bfd"
   },
   {
+   "path": "qa/pilot05/wave3/camera/it00/05.png",
+   "bytes": 1403551,
+   "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
+  },
+  {
+   "path": "qa/pilot05/wave3/foam/iso0/05_noCrownSpray.png",
+   "bytes": 1360006,
+   "sha256": "f474d66c9d4a85efda45339c2cfa8c4fd42355511f518f4eb6870d2c3b146eaa"
+  },
+  {
+   "path": "qa/pilot05/wave3/foam/iso0/05_noRibbonWake.png",
+   "bytes": 1392777,
+   "sha256": "0ae95b3f622539f9c7d31fe377e4bb2e8aa66e1c1ae679c80d877283cefa4ef7"
+  },
+  {
+   "path": "qa/pilot05/wave3/foam/iso0/multi_log.json",
+   "bytes": 1527,
+   "sha256": "aea7286663847615a1d5929ab11a52aa129644ee9b5db70d58ea255c31043ece"
+  },
+  {
+   "path": "qa/pilot05/wave3/water/it08_base/05.png",
+   "bytes": 1403551,
+   "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
+  },
+  {
+   "path": "qa/pilot05/wave3/water/it08_iso/05.png",
+   "bytes": 1331008,
+   "sha256": "89074d008e58620cf02a6f2b681bb914ca703c78745a1fcd26f745e709f285d3"
+  },
+  {
+   "path": "qa/pilot05/wave3/water/it08_iso_nowake/05.png",
+   "bytes": 1318597,
+   "sha256": "4ced3f7e2be9c59ca5bf375ab3dbb17caf89de4aaa95aafb24f8c50b012a94fc"
+  },
+  {
    "path": "qa/pilot05/wave3_baseline/01.png",
    "bytes": 1065667,
    "sha256": "31d3a9792a3a4edc07ceb3d57986059d081f2e21ae1023fc4184121667c0f313"
@@ -1262,6 +1297,16 @@
    "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
   },
   {
+   "path": "qa/worldlabs/05/05_env_clean_plate.png",
+   "bytes": 2561618,
+   "sha256": "6ee0cc8e91648a7e98a624b780c548cd4d6ff705286d88bd88924625ef37f3ea"
+  },
+  {
+   "path": "qa/worldlabs/05/05_env_fill_mask.png",
+   "bytes": 7654,
+   "sha256": "5958e7384a7f1a7079bd4233ada0f9df77f18feb9c4ff0b30d7e637bcae93cd3"
+  },
+  {
    "path": "qa/worldlabs/05/05_env_mask.png",
    "bytes": 6175,
    "sha256": "11b77364bdeac15614ee648901b4e4b3b2a9cf2bdf8700024cc681dbf56be4a9"
@@ -1270,6 +1315,11 @@
    "path": "qa/worldlabs/05/05_env_only_preview.png",
    "bytes": 1586473,
    "sha256": "5418c7667d802bae65efa42055663b86f36cb6e40ab7e0f73fb900905e1968dc"
+  },
+  {
+   "path": "qa/worldlabs/05/05_env_plate_review.png",
+   "bytes": 7638257,
+   "sha256": "ca9249372b7a93894f8ec313af070edb23606421110c17956dcb0362ea7b5405"
   },
   {
    "path": "qa/worldlabs/05/PILOT_PLAN.md",
@@ -1708,8 +1758,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 24635,
-   "sha256": "aa7b1c905b7f383cf2d62d26c713b4d4b461c136d3954a2da5047489a4961e39"
+   "bytes": 24623,
+   "sha256": "86bc379269f8f8387178174abcc72fb2d201f4c7b8ed5daf364b0fd55e207eed"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -1755,6 +1805,11 @@
    "path": "tools/blender/make_synthetic_tunnel.py",
    "bytes": 1191,
    "sha256": "07c456cfc39fe57741e4071ca9bf7b46ad14c49de65e02db2b7c538e01905e44"
+  },
+  {
+   "path": "tools/make_env_plate.py",
+   "bytes": 3975,
+   "sha256": "fc19276fc8f3e7fc5b2eeab6f1dd2e126a30f56c229edf49350a094d69b815ee"
   },
   {
    "path": "tools/model-lab.html",

@@ -658,3 +658,210 @@ Now let me look at the images.
 > 4
 >  19:54:47 up 12 min,  0 user,  load average: 0.65, 0.98, 0.48
 
+### 🤖 Claude — 2026-11-15T19:54:58.212Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/multi.mjs", "content": "#!/usr/bin/env node\n// Scratch: capture one checkpoint with several query-string variants using ONE vite + ONE browser.\n//   node multi.mjs <id> <outDir> <name1>=<query1> <name2>=<query2> ...   (query may be empty: base=)\n// Must be run with cwd = project root.\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nimport { resolve } from 'node:path';\n\nconst root = process.cwd();\nconst { loadPlaywright, CHROMIUM_ARGS, startVite …[+2181 chars]`
+
+### 🧑 User — 2026-11-15T19:54:58.292Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/multi.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:55:00.762Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/multi.mjs 05 qa/pilot05/wave3/foam/iso0 noRibbonWake=waterhide=ribbonWake noCrownSpray=waterhide=splashCrown,spray 2>&1 | tail -5", "description": "Run isolation captures (ribbon wake, crown+spray hidden)", "run_in_background": true}`
+
+### 🧑 User — 2026-11-15T19:55:00.789Z
+
+> ↩︎ result: Command running in background with ID: bp4w4huri. Output is being written to: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/bp4w4huri.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-15T19:55:15.465Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/measure.py", "content": "\"\"\"Measure foam / white / bubble metrics on 864x1536 Screen 05 frames.\nusage: python3 -I measure.py label=path [label=path ...]\n\"\"\"\nimport sys\nfrom PIL import Image\nimport numpy as np\n\n\ndef load(p):\n    return np.asarray(Image.open(p).convert('RGB')).astype(np.int32)\n\n\ndef classes(a):\n    r, g, b = a[..., 0], a[..., 1], a[..., 2]\n    mx = np.maximum(np.maximum(r, g), b)\n    mn = np.minimum(np.minimum(r, g), b)\n    white = (mn > 225) & (mx - mn < 40)    …[+1477 chars]`
+
+### 🧑 User — 2026-11-15T19:55:15.540Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/measure.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:55:16.975Z
+
+> 🔧 **Bash** `{"command": "python3 -I /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/measure.py REF=references/05_flow_into_the_current.png PREV=qa/screen05_final/previous_specialist/05.png", "description": "Measure ref vs previous specialist capture"}`
+
+### 🧑 User — 2026-11-15T19:55:17.445Z
+
+> ↩︎ result: REF
+>    white_rim_band(260-600x1135-1180) 0.0271
+>    white_fanbox(180-680x1080-1260) 0.0563
+>    foam_fanbox 0.1433
+>    foamL(0-260x540-1300) 0.1662
+>    foamR(604-864x540-1300) 0.1407
+>    foam_rows(y0,L,R) [(540, 0.199, 0.116), (730, 0.14, 0.192), (920, 0.138, 0.08), (1110, 0.188, 0.174)]
+>    cyan_frame 0.2364
+>    foam_frame 0.0939
+> PREV
+>    white_rim_band(260-600x1135-1180) 0.1177
+>    white_fanbox(180-680x1080-1260) 0.0359
+>    foam_fanbox 0.096
+>    foamL(0-260x540-1300) 0.2092
+>    foamR(604-864x540-1300) 0.1202
+>    foam_rows(y0,L,R) [(540, 0.642, 0.441), (730, 0.144, 0.019), (920, 0.025, 0.001), (1110, 0.026, 0.02)]
+>    cyan_frame 0.3342
+>    foam_frame 0.161
+
+### 🤖 Claude — 2026-11-15T19:55:30.804Z
+
+> 🔧 **Bash** `{"command": "grep -n \"widthAt\\|05_crest\\|'05'\\|tube:\" src/world/course.ts | head -30", "description": "Find course width and 05 settings"}`
+
+### 🧑 User — 2026-11-15T19:55:30.846Z
+
+> ↩︎ result: 16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 29:  tube: number;
+> 53:  '05': 'FLOW INTO THE CURRENT',
+> 205:  mark('05');
+> 216:  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+> 276:  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+> 364:      id, title: STAGE_TITLES[id], s0, s1, width: 5, tube: 0, tubeKind: 'none', speed: 11, refCoins: 0,
+> 371:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 373:      // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
+> 374:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+> 375:      def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
+> 376:      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
+> 428:    this.st05 = this.stage('05');
+> 430:    // '05_crest': the first meander crest (stream furthest left, heading parallel to the tunnel
+> 437:    this.marks['05_crest'] = best;
+> 473:   …[+28 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:32.670Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/bp4w4huri.output; sed -n 465,500p src/world/course.ts", "description": "Show iso results and widthAt"}`
+
+### 🧑 User — 2026-11-15T19:55:32.719Z
+
+> ↩︎ result: noRibbonWake → qa/pilot05/wave3/foam/iso0/05_noRibbonWake.png {"calls":114,"tris":582879,"s":132.438,"secs":11.063,"errs":0}
+> noCrownSpray → qa/pilot05/wave3/foam/iso0/05_noCrownSpray.png {"calls":112,"tris":582351,"s":132.438,"secs":10.477,"errs":0}
+> 
+> [exited with code 0]
+>     let v = 0, w = 0;
+>     for (const st of this.stages) {
+>       const a = smooth(st.s0 - blend, st.s0 + blend, s) * (1 - smooth(st.s1 - blend, st.s1 + blend, s));
+>       if (a > 0) { v += st[key] * a; w += a; }
+>     }
+>     return w > 0 ? v / w : this.stageAtS(s)[key];
+>   }
+> 
+>   widthAt(s: number): number {
+>     let base = this.prop(s, 'width');
+>     // 05 current (ref 05): the water fills the tube floor wall to wall. The centreline winds by
+>     // offset05(s), so the half width is S05.extent − |offset| (smooth abs): the outer edge of each bend
+>     // stays on the same tube chord (constant tunnel radius/depth in tube.ts) and the inner side of a
+>     // bend leaves a narrow bank for the foam, like a river.
+>     const st5 = this.st05;
+>     const k = smooth(st5.s0 + 0.5, st5.s0 + 10, s) * (1 - smooth(st5.s1 - 10, st5.s1 - 0.5, s));
+>     if (k > 0) {
+>       const d = this.offset05(s);
+>       base += (2 * (S05.extent - Math.sqrt(d * d …[+771 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:38.116Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 -I -c \"\nfrom PIL import Image\nimport sys\nS=sys.argv[1]\nfs=['qa/screen05_final/previous_specialist/05.png','qa/pilot05/wave3/foam/iso0/05_noRibbonWake.png','qa/pilot05/wave3/foam/iso0/05_noCrownSpray.png']\nW=500;H=200\nout=Image.new('RGB',(W*2,H*2*len(fs)))\nfor i,f in enumerate(fs):\n  im=Image.open(f).convert('RGB').crop((180,1060,680,1260)).resize((W*2,H*2),Image.NEAREST)\n  out.paste(im,(0,i*H*2))\nout.save(S+'/iso0.png')\n\" $S && python3 -I $S/measure.py PREV=qa/screen05_final …[+230 chars]`
+
+### 🧑 User — 2026-11-15T19:55:38.818Z
+
+> ↩︎ result: PREV
+>    white_rim_band(260-600x1135-1180) 0.1177
+>    white_fanbox(180-680x1080-1260) 0.0359
+> NOWAKE
+>    white_rim_band(260-600x1135-1180) 0.0965
+>    white_fanbox(180-680x1080-1260) 0.0359
+> NOCROWN
+>    white_rim_band(260-600x1135-1180) 0.0503
+>    white_fanbox(180-680x1080-1260) 0.0092
+
+### 🤖 Claude — 2026-11-15T19:55:40.271Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/iso0.png"}`
+
+### 🧑 User — 2026-11-15T19:55:40.309Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:56:09.691Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/REQUESTS.md | tail -5 && cat >> qa/pilot05/REQUESTS.md <<'EOF'\n- foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under Benny's fur (05, y≈1150–1170) is the `contact` term in `src/vfx/waterRibbon.ts` FRAG, Benny block (`if (rr < rb * 0.25) { … contact = … }` + `col = mix(col, uFoam * 1.2, clamp(contact * k, 0.0, 1.0));`). Evidence: `qa/pilot05/wave3/foam/iso0/05_noRibbonWake.png` (band gone) vs `05_noCrownSpray.png` (band stays with crown+spray hidden). Please delete that white mix entirely (the fur alrea …[+517 chars]`
+
+### 🧑 User — 2026-11-15T19:56:09.738Z
+
+> ↩︎ result: - foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord sqrt(0.86² − h²) ≈ 0.44 at the default 0.3 ride lift (it was 0.67, derived from the unlifted root, which made the contact band ~2× too wide). The bottom-of-frame white haze + blue dot field in 05/03 was the old `wakeV`/`tendrils` × `lace` term; your in-progress rewrite (no lace in wakeV) removes it. Splash fan / crown / spray / foam stay in riderSplash.ts, spray.ts, foam.ts as your comment says.
+> - foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord sqrt(0
+> - foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under Benny's fur (05, y≈1150–1170) is the `contact` term in `src/vfx/waterRibbon.
+
+### 🤖 Claude — 2026-11-15T19:56:22.049Z
+
+Now let me probe the 05 view geometry (where the stream edges and banks fall on screen) with raycasts; this needs no screenshot.
+
+### 🤖 Claude — 2026-11-15T19:56:30.991Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/probe.mjs", "content": "#!/usr/bin/env node\n// Scratch: raycast a screen grid on checkpoint 05 and map hits to course (s, lateral, edge distance).\nimport { pathToFileURL } from 'node:url';\nimport { resolve } from 'node:path';\nimport { writeFileSync } from 'node:fs';\nconst root = process.cwd();\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(resolve(root, 'scripts/lib/pw.mjs')).href);\nconst id = process.argv[2] ?? '05';\nconst q = process.argv[3] ?? '';\nconst  …[+1988 chars]`
+
+### 🧑 User — 2026-11-15T19:56:31.049Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:56:33.595Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && timeout 600 node $S/probe.mjs 05 \"\" $S/probe05.json 2>&1 | tail -3 && python3 -I -c \"\nimport json,sys\nd=json.load(open(sys.argv[1]))\nrows={}\nfor g in d['grid']:\n  rows.setdefault(g['py'],[]).append(g)\nfor py in sorted(rows):\n  line=[]\n  for g in rows[py]:\n    o=(g['obj'] or '-')[:6]\n    cc=g['cc']\n    line.append(f\\\"{o}:{cc['e']:+.1f}\\\" if cc else o)\n  print(py,' '.join(line))\n\" $S/probe05.json", "description": "Probe 05 screen grid to course coords"}`
+
+### 🧑 User — 2026-11-15T19:56:52.398Z
+
+> ↩︎ result: {"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]} {"x":-0.03,"y":-0.37,"z":0.986,"visible":true,"cam":[1.92,-37.94,-68.28],"benny":[1.52,-41.35,-74.73]}
+> 500 Mesh:+3.2 Mesh:+3.6 Mesh:+3.2 Mesh:+2.1 Mesh:+1.6 Mesh:+1.3 Mesh:+1.8 Mesh:+3.8 Mesh:+1.2 water_:-0.8 water_:-3.3 water_:-1.4 Mesh:+0.5 Mesh:+4.0 Mesh:+5.8 Mesh:+1.7 Mesh:+4.5 Mesh:+2.3 Mesh:+1.6
+> 550 Mesh:+3.0 Mesh:+3.4 Mesh:+3.2 Mesh:+2.2 Mesh:+1.4 Mesh:+1.1 Mesh:+0.9 Mesh:+3.2 Mesh:+0.2 foam_b:-0.3 water_:-3.4 Mesh:-4.6 Mesh:-3.2 Mesh:+0.2 Mesh:+0.7 Mesh:+2.2 Mesh:+3.7 Mesh:+1.8 Mesh:+1.4
+> 600 Mesh:+2.6 Mesh:+3.0 Mesh:+3.1 Mesh:+2.4 Mesh:+1.2 Mesh:+0.1 Mesh:-0.1 water_:-0.8 water_:-2.2 Mesh:-4.2 Mesh:-4.8 water_:-2.4 water_:-1.3 foam_b:-0.5 foam_b:-0.2 Mesh:-0.2 Mesh:+0.1 Mesh:+1.1 Mesh:+1.1
+> 650 Mesh:+2.2 Mesh:+2.5 Mesh:+2.7 Mesh:-0.1 Mesh:+0.2 Mesh:-0.3 Mesh:-0.4 water_:-1.4 water_:-2.6 water_:-3.7 Mesh:-3.9 Mesh:-5.0 water_:-4.2 water_:-3.2 water_:-2.1 water_:-1.1 foam_b:-0.4 Mesh:-0.1 Mesh:+0.5
+> 700 Mesh:+0.2 Mesh:+0.0 Mesh:-0.1 foam_b:-0.2 foam_b:-0.3 water_:-0.5 water_:-1.1 water_:-1.7 water_:-2.3 water_:-3.0 water_:-3.8 M …[+3779 chars]
+
+### 🤖 Claude — 2026-11-15T19:57:23.700Z
+
+> 🔧 **Bash** `{"command": "grep -n \"st.lat\\b\\|st.lat =\\|maxLat\\|latMax\\|clamp(st.lat\" src/game/Game.ts | head -20; grep -n \"offset05\\|S05 =\\|S05\\b\" src/world/course.ts | head -10", "description": "Check Benny lateral steering range"}`
+
+### 🧑 User — 2026-11-15T19:57:23.755Z
+
+> ↩︎ result: 310:    st.lat = 0;
+> 329:    st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -halfW + 0.55, halfW - 0.55);
+> 332:    if (Math.abs(st.lat) > safe) st.edgeTime += dt; else st.edgeTime = 0;
+> 338:      st.vlat = -Math.sign(st.lat) * 9;
+> 345:        st.lat = 0;
+> 350:    const got = coins.update(st.clock, dt, st.s, st.lat);
+> 354:    const f = bennyPose(st.s, st.lat, st.clock, pose);
+> 368:    rideCam.update(dt, st.s, st.lat, camera);
+> 475:    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+> 557:      st.lat = cp.lat ?? 0;
+> 566:        for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+> 567:        rideCam.update(0, st.s, st.lat, camera, true);
+> 594:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+> 116:export const S05 = {
+> 132:  const { L, lambda, uCrest, a0, a1 } = S05;
+> 212:  const L05 = V(0, -3, -S05.L);
+> 274:  // 05 meander: exact lateral offset from the straight tunnel li …[+453 chars]
+
+### 🤖 Claude — 2026-11-15T19:58:10.350Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 -I -c \"\nimport json,sys\nd=json.load(open(sys.argv[1]))\nfor g in d['grid']:\n  if g['px'] in (0,144,240,336,432,528,624,720,864) and g['py']>=1000 and g['cc']:\n    print(g['py'],g['px'],g['obj'][:8],g['cc'])\n\" $S/probe05.json | head -80", "description": "Show s/lat mapping near Benny's base"}`
+
+### 🧑 User — 2026-11-15T19:58:10.414Z
+
+> ↩︎ result: 1000 0 water_ri {'s': 134.3, 'lat': -3.18, 'up': 0.06, 'hw': 5.48, 'e': -2.29}
+> 1000 144 water_ri {'s': 134.41, 'lat': -2.17, 'up': 0.02, 'hw': 5.48, 'e': -3.31}
+> 1000 240 water_ri {'s': 134.45, 'lat': -1.47, 'up': 0.01, 'hw': 5.48, 'e': -4.01}
+> 1000 336 hat_brim {'s': 131.87, 'lat': -0.36, 'up': 1.11, 'hw': 5.44, 'e': -5.09}
+> 1000 432 hat_brim {'s': 131.8, 'lat': 0.11, 'up': 1.14, 'hw': 5.44, 'e': -5.33}
+> 1000 528 fur_body {'s': 132.24, 'lat': 0.59, 'up': 0.96, 'hw': 5.44, 'e': -4.85}
+> 1000 624 Mesh {'s': 132.98, 'lat': 1.16, 'up': 0.64, 'hw': 5.44, 'e': -4.29}
+> 1000 720 water_ri {'s': 134.53, 'lat': 1.91, 'up': 0.01, 'hw': 5.48, 'e': -3.57}
+> 1000 864 water_ri {'s': 134.48, 'lat': 2.87, 'up': 0.04, 'hw': 5.48, 'e': -2.61}
+> 1050 0 water_ri {'s': 133.55, 'lat': -2.84, 'up': 0.04, 'hw': 5.45, 'e': -2.61}
+> 1050 144 water_ri {'s': 133.62, 'lat': -1.91, 'up': 0.01, 'hw': 5.46, 'e': -3.55}
+> 1050 240 water_ri {'s': 133.65, 'lat': -1.28, 'up': 0.01, 'hw': 5.46, 'e': -4.18}
+> 1050 336 fur_body {'s': 131.99, 'lat': -0.38, 'up': 0.8, 'hw': 5.44, 'e': -5.06}
+> 1050 432 fur_body {'s': 131.9, 'lat': 0.11, 'up': 0.84, 'hw': 5.44, 'e': -5.33}
+> 1050 528 fur_body {'s': 132.16, 'lat': 0.59, 'up': 0.71, 'hw': 5.44, ' …[+5134 chars]
+

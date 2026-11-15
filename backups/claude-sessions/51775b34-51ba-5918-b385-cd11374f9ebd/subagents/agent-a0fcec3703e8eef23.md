@@ -468,3 +468,403 @@ Now the code. Let me check sizes first, then read the Benny sources.
 >     page.on('console', (msg) => { if (msg.type() === 'error') console.error(`[${m}] ${msg.text()}`); });
 >     if (!turntableOnly)  …[+13081 chars]
 
+### 🤖 Claude — 2026-11-15T19:54:58.418Z
+
+> 🔧 **Bash** `{"command": "git log --format='%h %ad %s' --date=format:'%H:%M' -- src/characters/benny assets/models/benny.glb | head -15; echo; git log -3 --format='%h %ad' --date=format:'%H:%M' -- assets/models/benny.glb; git show --stat HEAD~0 | head -5; ls backups/claude-sessions/ | head; ls tools/", "description": "Check git history of Benny files"}`
+
+### 🧑 User — 2026-11-15T19:54:58.496Z
+
+> ↩︎ result: da75045 19:39 autosave: Rainbow 2026-11-15 19:39 UTC
+> 8a36270 19:35 autosave: Rainbow 2026-11-15 19:35 UTC
+> 470c27d 19:30 autosave: Rainbow 2026-11-15 19:30 UTC
+> d703812 19:25 autosave: Rainbow 2026-11-15 19:25 UTC
+> 70b100d 18:54 autosave: Rainbow 2026-11-15 18:54 UTC
+> fc70e56 18:54 full snapshot: game, design agents, specialist work in progress, docs, transcripts
+> 0719fd3 18:51 autosave: Rainbow 2026-11-15 18:51 UTC
+> af80fb1 18:45 Flow video hand-off, World Labs 05 pilot package, recovery docs
+> ed710db 17:20 autosave: Rainbow 2026-11-15 17:20 UTC
+> 
+> da75045 19:39
+> fc70e56 18:54
+> 0719fd3 18:51
+> commit 66e859dc5bc2bf7cd4805f5c261be4ce1022c7cc
+> Author: Claude <noreply@anthropic.com>
+> Date:   Sun Nov 15 19:54:58 2026 +0000
+> 
+>     autosave: Rainbow 2026-11-15 19:54 UTC
+> 515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1
+> 51775b34-51ba-5918-b385-cd11374f9ebd
+> e0f002d9-e93b-5e8f-89ac-1e3fceebb58f
+> eae80a1c-be41-5f1a-858b-469afcc249da
+> blender
+> model-lab.html
+> model-lab.ts
+> water-lab.html
+> water-lab.ts
+
+### 🤖 Claude — 2026-11-15T19:55:00.283Z
+
+> 🔧 **Bash** `{"command": "git log --format='%h %ad' --date=format:'%H:%M' --name-only -- src/characters/benny assets/models/benny.glb | head -40; git diff da75045 HEAD --stat -- src/characters/benny assets/models/benny.glb", "description": "Check which Benny files changed in each autosave"}`
+
+### 🧑 User — 2026-11-15T19:55:00.331Z
+
+> ↩︎ result: da75045 19:39
+> 
+> assets/models/benny.glb
+> src/characters/benny/build.ts
+> src/characters/benny/textures.ts
+> 8a36270 19:35
+> 
+> src/characters/benny/build.ts
+> src/characters/benny/textures.ts
+> 470c27d 19:30
+> 
+> src/characters/benny/textures.ts
+> d703812 19:25
+> 
+> src/characters/benny/benny-lab.ts
+> 70b100d 18:54
+> 
+> src/characters/benny/runtime.ts
+> fc70e56 18:54
+> 
+> assets/models/benny.glb
+> src/characters/benny/benny-lab.ts
+> src/characters/benny/textures.ts
+> 0719fd3 18:51
+> 
+> assets/models/benny.glb
+> src/characters/benny/build.ts
+> af80fb1 18:45
+> 
+> src/characters/benny/benny-lab.ts
+> src/characters/benny/build.ts
+> src/characters/benny/runtime.ts
+> ed710db 17:20
+> 
+> assets/models/benny.glb
+> src/characters/benny/benny-lab.html
+> src/characters/benny/benny-lab.ts
+> src/characters/benny/build.ts
+> src/characters/benny/fur.ts
+> src/characters/benny/runtime.ts
+
+### 🤖 Claude — 2026-11-15T19:55:04.149Z
+
+> 🔧 **Bash** `{"command": "ls -la backups/claude-sessions/*/ | head -40; grep -l \"benny-character-artist\" -r backups/claude-sessions 2>/dev/null | head", "description": "Find prior Benny specialist transcripts"}`
+
+### 🧑 User — 2026-11-15T19:55:04.193Z
+
+> ↩︎ result: backups/claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/:
+> total 3816
+> drwxr-xr-x 3 root root    4096 Nov 15 19:48 .
+> drwxr-xr-x 6 root root    4096 Nov 15 19:48 ..
+> drwxr-xr-x 2 root root    4096 Nov 15 19:48 subagents
+> -rw-r--r-- 1 root root  224890 Nov 15 19:48 transcript.md
+> -rw-r--r-- 1 root root 3666472 Nov 15 19:48 transcript.sanitized.jsonl
+> 
+> backups/claude-sessions/51775b34-51ba-5918-b385-cd11374f9ebd/:
+> total 1212
+> drwxr-xr-x 3 root root    4096 Nov 15 19:54 .
+> drwxr-xr-x 6 root root    4096 Nov 15 19:48 ..
+> drwxr-xr-x 2 root root    4096 Nov 15 19:54 subagents
+> -rw-r--r-- 1 root root   73808 Nov 15 19:54 transcript.md
+> -rw-r--r-- 1 root root 1147337 Nov 15 19:54 transcript.sanitized.jsonl
+> 
+> backups/claude-sessions/e0f002d9-e93b-5e8f-89ac-1e3fceebb58f/:
+> total 2580
+> drwxr-xr-x 3 root root    4096 Nov 15 19:48 .
+> drwxr-xr-x 6 root root    4096 Nov 15 19:48 ..
+> drwxr-xr-x 2 root root    4096 Nov 15 19:48 subagents
+> -rw-r--r-- 1 root root  235925 Nov 15 19:48 transcript.md
+> -rw-r--r-- 1 root root 2391246 Nov 15 19:48 transcript.sanitized.jsonl
+> 
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/:
+> total 2336
+> drwxr-xr-x 3 root root    4096 Nov 15 19:48 .
+> drwxr-xr-x 6 root root    4 …[+1227 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:06.502Z
+
+> 🔧 **Bash** `{"command": "for f in backups/claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/subagents/*.md backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/*.md; do echo \"== $f\"; wc -c $f; head -c 600 $f; echo; done 2>/dev/null | head -80", "description": "Peek at prior subagent transcripts"}`
+
+### 🧑 User — 2026-11-15T19:55:06.607Z
+
+> ↩︎ result: == backups/claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/subagents/agent-a580f77e550e42d39.md
+> 52414 backups/claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/subagents/agent-a580f77e550e42d39.md
+> # Subagent agent-a580f77e550e42d39 — session 515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1
+> 
+> ### 🤖 Claude — 2026-11-15T16:54:14.369Z
+> 
+> > 🔧 **Agent** `{"description": "Cartoon girl character artist", "subagent_type": "fork", "prompt": "You are now acting as the **cartoon-girl-character-artist** specialist (see .claude/agents/cartoon-girl-character-artist.md). Build the ONE official cartoon girl model + rig (identity = `character_references/official_cartoon_girl_original.jpg`, NOT the realistic girls in refs 01/10/11), exported to GLB, used in scene 01 (walking away), 10 (visible through the door
+> == backups/claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/subagents/agent-ac5214bd6132af7b9.md
+> 57419 backups/claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/subagents/agent-ac5214bd6132af7b9.md
+> # Subagent agent-ac5214bd6132af7b9 — session 515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1
+> 
+> ### 🤖 Claude — 2026-11-15T16:54:34.819Z
+> 
+> > 🔧 **Agent** `{"description": "Water FX + foam/bubbles specialist", "subag …[+5974 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:08.859Z
+
+> 🔧 **Bash** `{"command": "f=backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a7655acf7fa1e151e.md; grep -n \"^### \" $f | tail -30; tail -c 9000 $f", "description": "Read end of wave-2 Benny transcript"}`
+
+### 🧑 User — 2026-11-15T19:55:08.903Z
+
+> ↩︎ result: 1178:### 🤖 Claude — 2026-11-15T19:34:20.267Z
+> 1182:### 🧑 User — 2026-11-15T19:34:20.301Z
+> 1186:### 🤖 Claude — 2026-11-15T19:34:21.516Z
+> 1190:### 🧑 User — 2026-11-15T19:34:21.580Z
+> 1194:### 🤖 Claude — 2026-11-15T19:34:24.174Z
+> 1198:### 🧑 User — 2026-11-15T19:34:24.211Z
+> 1202:### 🤖 Claude — 2026-11-15T19:34:29.293Z
+> 1206:### 🧑 User — 2026-11-15T19:35:31.763Z
+> 1221:### 🤖 Claude — 2026-11-15T19:35:42.835Z
+> 1225:### 🤖 Claude — 2026-11-15T19:35:44.029Z
+> 1229:### 🧑 User — 2026-11-15T19:35:44.072Z
+> 1233:### 🤖 Claude — 2026-11-15T19:35:55.587Z
+> 1237:### 🧑 User — 2026-11-15T19:35:55.688Z
+> 1244:### 🤖 Claude — 2026-11-15T19:36:00.077Z
+> 1248:### 🧑 User — 2026-11-15T19:37:04.583Z
+> 1262:### 🤖 Claude — 2026-11-15T19:37:07.876Z
+> 1266:### 🧑 User — 2026-11-15T19:37:08.012Z
+> 1270:### 🤖 Claude — 2026-11-15T19:37:08.428Z
+> 1274:### 🧑 User — 2026-11-15T19:37:08.469Z
+> 1278:### 🤖 Claude — 2026-11-15T19:37:23.800Z
+> 1282:### 🧑 User — 2026-11-15T19:37:23.828Z
+> 1286:### 🤖 Claude — 2026-11-15T19:37:24.805Z
+> 1290:### 🧑 User — 2026-11-15T19:37:41.467Z
+> 1296:### 🤖 Claude — 2026-11-15T19:37:46.582Z
+> 1300:### 🧑 User — 2026-11-15T19:38:00.804Z
+> 1305:### 🤖 Claude — 2026-11-15T19:38:02.669Z
+> 1309:### 🧑 User — 2026-11-15T19:38:02.707Z
+> 1313:### 🤖  …[+8877 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:12.422Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/claude-0/-home-user-rainbow-/ 2>/dev/null; ls /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad 2>/dev/null | head; cd /home/user/rainbow- && grep -n \"lab.mjs\" backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a7655acf7fa1e151e.md | head -3", "description": "Check whether prior lab scripts survive"}`
+
+### 🧑 User — 2026-11-15T19:55:12.470Z
+
+> ↩︎ result: 1398fb38-7571-4d37-aa76-b2d6b3107acd
+> 4967809a-69e1-4c02-b0e7-a327e794b752
+> 51775b34-51ba-5918-b385-cd11374f9ebd
+> 8077272e-7003-446a-be94-6e8a6cda16ed
+> 9b0e7c6e-2a10-4e44-b2a8-ed29af69f01e
+> 570:> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/lab.mjs", "content": "// usage (cwd = repo): node <this> out.png \"src=build&views=refs\" [more query sets: out2.png \"q2\" ...]\nimport { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst a = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5311);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  for (let i = 0; i < a.length; i += 2) {\n    const [out, q] = [a[i], a[i + 1]] …[+681 chars]`
+> 574:> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad/lab.mjs (file state is current in your context — no need to Read it back)
+> 578:> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/eae80a1c-be41-5f1a-858b-469afcc249da/scratchpad && timeout 600 node $SP/lab.mjs $SP/before_refs_glb.png \"src …[+210 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:17.025Z
+
+> 🔧 **Bash** `{"command": "cat scripts/lib/pw.mjs | head -60; grep -n \"waterhide\\|get('\\|searchParams\\|URLSearchParams\" src/game/*.ts src/vfx/index.ts src/main.ts 2>/dev/null | head -30", "description": "Read Playwright helper and QA URL params"}`
+
+### 🧑 User — 2026-11-15T19:55:17.146Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+1192 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:18.701Z
+
+> 🔧 **Bash** `{"command": "sed -n 80,130p src/game/Game.ts; grep -n \"benny\" src/game/Game.ts | head -40", "description": "Read Game.ts hide option and Benny usage"}`
+
+### 🧑 User — 2026-11-15T19:55:18.744Z
+
+> ↩︎ result: const env = buildEnvironment(course);
+>   scene.add(env.group);
+>   const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+>   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+>   if (hidden.has('water')) water.group.visible = false;
+>   if (hidden.has('coins')) coins.group.visible = false;
+>   const zoneHidden = (k: string) => hidden.has(k);
+>   const hud = createHud();
+>   const input = createInput(canvas);
+>   const rideCam = new RideCamera(course);
+>   rideCam.axis = env.tubeAxis;
+> 
+>   // ---------------------------------------------------------------- state
+>   const st = {
+>     mode: 'intro' as Mode,
+>     t: 0, // time within the current mode
+>     clock: 0, // global animation time (shaders)
+>     frozen: null as number | null, // QA: freeze shader time
+>     s: 0,
+>     lat: 0,
+>     vlat: 0,
+>     coins: START_COINS,
+>     hearts: 5,
+>     paused: false,
+>     stage: '01' as StageId,
+>     bumpCooldown: 0,
+>     edgeTime: 0,
+>     twirl: 0,
+>     respawns: 0,
+>   …[+3394 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:39.452Z
+
+> 🔧 **Bash** `{"command": "sed -n 36,79p src/game/Game.ts; ls src/render; grep -n \"toneMapping\\|OutputPass\\|ShaderPass\\|grade\" src/game/Game.ts src/render/*.ts | head -20", "description": "Inspect render pipeline setup"}`
+
+### 🧑 User — 2026-11-15T19:55:39.494Z
+
+> ↩︎ result: const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 6.4, badge: 3.9, cp11: 5.2 };
+> 
+> export async function startGame(canvas: HTMLCanvasElement) {
+>   const qs = new URLSearchParams(location.search);
+>   const qaMode = qs.has('qa');
+>   const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });
+>   const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+>   renderer.setPixelRatio(dpr);
+>   const scene = new THREE.Scene();
+>   scene.environment = createCandyEnvironment(renderer);
+>   scene.background = new THREE.Color('#b23fb4');
+>   const fog = new THREE.FogExp2('#ffbde9', 0.0035);
+>   scene.fog = fog;
+>   scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+>   const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+>   sun.position.set(0.3, 1, 0.45);
+>   scene.add(sun);
+>   scene.add(sun.target);
+>   const fill = new THREE.PointLight('#ffd8ff', 30, 30, 1.6);
+>   scene.add(fill);
+> 
+>   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+>   const composer = new EffectComposer(renderer);
+>   composer.addPass(new RenderPass(scene, camera));
+>   const bloom = new UnrealBloomPass(new THREE.Vector2( …[+1313 chars]
+
+### 🤖 Claude — 2026-11-15T19:56:37.579Z
+
+Let me write a pixel classifier and measure the reference and current Benny precisely.
+
+### 🤖 Claude — 2026-11-15T19:56:44.359Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/runs.py", "content": "\"\"\"Column / row colour-class runs through Benny.\nusage: python3 -I runs.py IMG col X Y0 Y1      (vertical scan at x=X)\n       python3 -I runs.py IMG row Y X0 X1      (horizontal scan at y=Y)\nclasses: P purple/violet knit, W white knit, F pink fur, Y star yellow, C cyan water, G gold coin/ring, . other\n\"\"\"\nimport sys, colorsys\nfrom PIL import Image\n\n\ndef cls(rgb):\n    r, g, b = [c / 255 for c in rgb]\n    h, s, v = colorsys.rgb_to_hsv(r, g, b)\n    h *= 360\n    …[+1050 chars]`
+
+### 🧑 User — 2026-11-15T19:56:44.452Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/runs.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:56:47.343Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; R=references/05_flow_into_the_current.png; P=qa/screen05_final/previous_specialist/05.png; for x in 380 421 460; do echo \"REF col $x\"; python3 -I $SP/runs.py $R col $x 740 1220; done; for y in 900 960 1000 1040 1080 1120 1160; do echo \"REF row $y\"; python3 -I $SP/runs.py $R row $y 200 650; done", "description": "Scan reference Benny colour runs"}`
+
+### 🧑 User — 2026-11-15T19:56:48.314Z
+
+> ↩︎ result: REF col 380
+> C740-786 W787-790 F791-797 .798-798 F799-799 .800-803 W804-806 .807-810 W811-811 .812-813 P814-820 .821-824 P825-834 .835-836 P837-886 .887-888 W889-892 .893-893 F894-895 .896-896 W897-911 P912-948 .949-949 W950-970 .971-971 F972-976 P977-1010 W1011-1011 .1012-1012 P1013-1029 .1030-1031 F1032-1071 .1072-1072 F1073-1174 .1175-1178 P1179-1187 .1188-1195 C1196-1219
+> REF col 421
+> C740-770 .771-771 W772-780 .781-788 F789-790 .791-792 P793-798 .799-799 F800-800 .801-803 F804-804 .805-805 P806-825 .826-827 P828-835 F836-836 .837-837 P838-840 .841-841 P842-849 .850-850 P851-865 .866-869 P870-876 .877-879 P880-881 .882-884 P885-896 .897-900 W901-908 .909-918 W919-921 .922-922 P923-956 .957-957 W958-980 .981-981 P982-1029 .1030-1034 F1035-1176 .1177-1181 P1182-1190 .1191-1199 C1200-1219
+> REF col 460
+> G740-742 Y743-759 G760-769 .770-771 C772-776 .777-777 W778-781 .782-789 W790-793 .794-794 F795-796 .797-797 F798-799 P800-802 W803-804 .805-805 P806-807 .808-809 F810-810 P811-832 .833-833 P834-837 .838-838 P839-851 .852-852 P853-892 .893-893 F894-895 .896-897 W898-914 .915-920 P921-955 .956-959 W960-970 .971-973 W974-974 .975-978 P979-1012 .1013-1014 P1015-1028 .1029-1032 F1033-1172 .11 …[+2815 chars]
+
+### 🤖 Claude — 2026-11-15T19:57:11.482Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; P=qa/screen05_final/previous_specialist/05.png; for x in 380 421 440; do echo \"PREV col $x\"; python3 -I $SP/runs.py $P col $x 740 1220; done; for y in 950 1000 1040 1080 1120 1150; do echo \"PREV row $y\"; python3 -I $SP/runs.py $P row $y 200 650; done", "description": "Scan current live Benny colour runs"}`
+
+### 🧑 User — 2026-11-15T19:57:12.497Z
+
+> ↩︎ result: PREV col 380
+> F740-768 P769-893 .894-894 W895-923 .924-924 P925-953 .954-955 W956-959 .960-962 W963-964 .965-969 W970-970 .971-974 P975-1026 F1027-1143 W1144-1145 F1146-1146 .1147-1152 W1153-1161 .1162-1162 C1163-1219
+> PREV col 421
+> F740-766 P767-891 .892-892 W893-921 .922-922 P923-951 .952-954 W955-957 .958-962 W963-963 .964-972 P973-1025 F1026-1153 .1154-1156 F1157-1157 .1158-1158 F1159-1159 W1160-1160 F1161-1161 W1162-1165 .1166-1166 C1167-1219
+> PREV col 440
+> F740-745 P746-746 C747-775 P776-776 C777-779 P780-888 .889-889 W890-918 P919-948 .949-950 W951-954 .955-959 W960-961 .962-966 W967-967 .968-969 P970-1022 F1023-1150 W1151-1154 .1155-1164 C1165-1219
+> PREV row 950
+> C200-264 P265-287 W288-326 .327-327 W328-335 .336-336 W337-338 .339-340 P341-429 .430-436 W437-437 .438-445 W446-447 .448-450 W451-454 .455-455 W456-463 .464-466 W467-467 .468-483 Y484-486 .487-488 Y489-509 .510-522 Y523-532 .533-538 P539-560 Y561-596 G597-599 .600-611 Y612-627 .628-628 Y629-630 G631-632 .633-649
+> PREV row 1000
+> C200-233 F234-286 P287-467 Y468-485 G486-486 .487-487 F488-488 P489-509 F510-510 G511-513 Y514-515 G516-517 Y518-521 G522-523 F524-609 Y610-649
+> PREV row 1040
+> C200-248 F249-252 C253-253 F254-256 C257 …[+1396 chars]
+
+### 🤖 Claude — 2026-11-15T19:57:31.001Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/lab.mjs", "content": "// usage (cwd = repo): node <this> out.png \"src=build&views=refs\" [out2.png \"q2\" ...]\nimport { loadPlaywright, CHROMIUM_ARGS, startVite, waitDone } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst a = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5321);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  for (let i = 0; i < a.length; i += 2) {\n    const [out, q] = [a[i], a[i + 1]];\n    const page …[+708 chars]`
+
+### 🧑 User — 2026-11-15T19:57:31.058Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/lab.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:57:32.876Z
+
+Noted: hat smaller relative to a rounder, fuller body; check for any white/pale fringe at Benny's base; final measurement after CAMERA LOCK. Let me render the current build in the lab.
+
+### 🤖 Claude — 2026-11-15T19:57:34.583Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && timeout 600 node $SP/lab.mjs $SP/m0.png \"src=build&views=measure\" $SP/g0.png \"src=build&views=game\" 2>&1 | tail -3", "description": "Render lab measure and game views of current build", "timeout": 600000}`
+
+### 🧑 User — 2026-11-15T19:58:00.467Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/m0.png {"baseTriangles":14996,"furQuality":"high"} no console errors
+> /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/g0.png {"baseTriangles":14996,"furQuality":"high"} no console errors
+
+### 🤖 Claude — 2026-11-15T19:58:01.669Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/m0.png"}`
+
+### 🧑 User — 2026-11-15T19:58:01.704Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:58:30.808Z
+
+> 🔧 **Bash** `{"command": "grep -n \"concave\\|cross\\|profile\\|curl\\|lift\\|bowl\\|dip\\|sag\" src/vfx/waterRibbon.ts | head -30; grep -n \"radius \\* 0.55\\|bennyPose\" -A6 src/game/Game.ts | sed -n 1,12p", "description": "Check water cross-section and Benny placement"}`
+
+### 🧑 User — 2026-11-15T19:58:30.855Z
+
+> ↩︎ result: 4: * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> 5: * concave trough with raised frothy edges plus a short skirt under each edge (thickness).
+> 16:/** wave amplitude per stage (units); blended across boundaries */
+> 23: * Per-stage colour-band layout (blended across stage boundaries, baked into `aStyle`):
+> 57: * streaks/crests/glints added on top lift the rendered cyan median to ≈#06A7FF (ref 05 #039FF6).
+> 97:attribute vec2 aUV;      // x = u (-1..1 across), y = s (arc length)
+> 176:// mid-ground). Anti-aliased stripes across the flow (K lines per unit), each line broken into long
+> 284:  // only split bands that are wide enough (smooth ramp: a hard step cut the band across the flow)
+> 346:  // ---- foreground ripple crests across the flow (ref 05 near field: arcs of white crest glints
+> 476:      const lift = EDGE_LIFT * Math.abs(u) ** 3;
+> 477:      const slope = (EDGE_LIFT * 3 * u * Math.abs(u)) / hw; // d lift / d lateral
+> 479:      put(u, u * hw, lift, 0, nrm);
+> 151:  const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+> 152-    const f = course.sample(s);
+> 153-    const h = water.surfaceH …[+447 chars]
+
+### 🤖 Claude — 2026-11-15T19:58:44.391Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/extent.py", "content": "\"\"\"Measure Benny in chroma-green lab panels (views=measure).\nusage: python3 -I extent.py IMG NPANELS\nPer panel: bbox, cuff-bottom row at centre column (last purple run before the fur), hat %, body widths.\n\"\"\"\nimport sys\nfrom PIL import Image\nsys.path.insert(0, __file__.rsplit('/', 1)[0])\nfrom runs import cls  # noqa: E402\n\nim = Image.open(sys.argv[1]).convert('RGB')\nn = int(sys.argv[2])\nW, H = im.size\npw = W // n\npx = im.load()\n\n\ndef green(c):\n    r, g …[+1636 chars]`
+
+### 🧑 User — 2026-11-15T19:58:44.478Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/extent.py (file state is current in your context — no need to Read it back)
+

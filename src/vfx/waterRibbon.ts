@@ -378,9 +378,12 @@ void main() {
   float cutC = cells(vec2(u * vHalfW * 4.0, s * 3.6));
   col = mix(col, mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, cutC)), cutFoam);
 
-  // ---- Benny: thin churned waterline ring, ripple rings and a V wake on the surface ----
+  // ---- Benny: ripple rings and a V wake on the surface ----
   // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water
-  // around and behind him stays glossy electric cyan as in ref 05, not a sheet of white lace)
+  // around and behind him stays glossy electric cyan as in ref 05.) There is deliberately NO white
+  // contact band at the waterline: the old `contact` → uFoam mix drew a white elliptical rim that the
+  // fur fringe turned into the jagged "splash artifact" under Benny (wave-3 correction 7). Only a
+  // faint cyan brightening marks the waterline.
   if (uBenny.z > 0.0) {
     float du = lat - uBenny.y;
     float dv = s - uBenny.x;
@@ -389,15 +392,10 @@ void main() {
     if (d < rb * 8.0) {
       float k = uBenny.z;
       float rr = max(0.0, d - rb * 0.92);
-      float contact = 0.0;
-      if (rr < rb * 0.25) {
-        float lace = smoothstep(0.3, 0.46, cells(vec2(du * 6.0, (dv + uTime * vSpeed * 0.25) * 6.0)));
-        contact = (1.0 - smoothstep(rb * 0.05, rb * 0.22, rr)) * (0.55 + 0.45 * lace);
-      }
       float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothstep(rb, rb * 1.3, d);
       float back = max(-dv, 0.0);
       float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 0.95) * 6.0) * exp(-back * 0.18) * step(dv, 0.0);
-      col = mix(col, uFoam * 1.2, clamp(contact * k, 0.0, 1.0));
+      col += uCyanBright * 0.18 * (1.0 - smoothstep(0.0, rb * 0.3, rr)) * k;
       col += mix(uCyanBright, vec3(1.3), 0.4) * (rings * 0.22 + wakeV * 0.35) * k * (1.0 - pinkM * 0.5);
     }
   }

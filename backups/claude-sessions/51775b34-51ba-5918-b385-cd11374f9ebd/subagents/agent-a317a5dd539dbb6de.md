@@ -569,3 +569,332 @@ Let me build a measurement script (the wave-2 one lived in a deleted scratchpad)
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T19:55:13.520Z
+
+Let me capture the current live state (other specialists are mid-wave) as my wave-3 starting point, plus a water-only isolation render in the same run.
+
+### 🤖 Claude — 2026-11-15T19:55:14.852Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat scripts/lib/pw.mjs | head -60; grep -n \"waterhide\\|qaHide\" src/vfx/index.ts | head; grep -rn \"waterhide\\|URLSearchParams\" src --include=*.ts | grep -v \"src/vfx/index.ts\" | head", "description": "Inspect playwright helper and QA hide params"}`
+
+### 🧑 User — 2026-11-15T19:55:14.928Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+1533 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:16.350Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 140,228p src/vfx/index.ts; sed -n 35,60p src/game/Game.ts", "description": "Read vfx update/wake code and Game qs flags"}`
+
+### 🧑 User — 2026-11-15T19:55:16.414Z
+
+> ↩︎ result: curTime = time;
+>       ribbon.uniforms.uTime.value = time;
+>       whirl.uniforms.uTime.value = time;
+>       drum.uniforms.uTime.value = time;
+>       drum.uniforms.uAgitation.value = controls.drumAgitation;
+>       drum.swirlUniforms.uSwirl.value = controls.drumSwirl;
+>       drum.swirl.visible = controls.drumSwirl > 0.001;
+>       wave.uniforms.uTime.value = time;
+>       puddles.uniforms.uTime.value = time;
+>       puddles.uniforms.uAmount.value = controls.outro;
+>       (ribbon.uniforms.uOutro.value as THREE.Vector2).x = controls.outro;
+>       puddles.group.visible = controls.outro > 0.001;
+>       // region visibility (perf): only what the camera around focusS can see
+>       drum.group.visible = focusS < st03.s0 + 12;
+>       whirl.mesh.visible = focusS > drainMark - 8 && focusS < st04.s0 + 45;
+>       wave.mesh.visible = focusS > st08.s0 - 25;
+>       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
+>       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+>       foam.update(time, focusS, controls.outro);
+>       bubbles.update(time, dt, focusS, camera, 1 - 0.7 * controls.outro);
+>       // crest spray off the final wave
+>       if (wave.m …[+5251 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:21.663Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; time (timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave3/water/it08_base 2>&1 | tail -3)", "description": "Capture current live 05 baseline", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T19:55:34.022Z
+
+> ↩︎ result: 05 → qa/pilot05/wave3/water/it08_base/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":114,"tris":582879,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> real	0m12.313s
+> user	0m1.559s
+> sys	0m0.250s
+
+### 🤖 Claude — 2026-11-15T19:55:35.413Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave3/water/it08_base/05.png"}`
+
+### 🧑 User — 2026-11-15T19:55:35.468Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:55:42.774Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I -c \"\nfrom PIL import Image\np=Image.open('qa/pilot05/wave3/water/it08_base/05.png').convert('RGB')\np.crop((180,1040,700,1260)).resize((1040,440),Image.LANCZOS).save('$S/base_zoom.png')\n\"", "description": "Zoom Benny base region"}`
+
+### 🧑 User — 2026-11-15T19:55:43.045Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:55:43.526Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/base_zoom.png"}`
+
+### 🧑 User — 2026-11-15T19:55:43.548Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:55:50.010Z
+
+The white rim under Benny is visible. Let me isolate its source: ribbon only (no crown/spray/foam/bubbles) vs ribbon with its wake block off.
+
+### 🤖 Claude — 2026-11-15T19:55:53.752Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave3/water/it08_iso --q=waterhide=splashCrown,spray,bubbles,foam,foamBerm 2>&1 | tail -1; timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave3/water/it08_iso_nowake --q=waterhide=splashCrown,spray,bubbles,foam,foamBerm,ribbonWake 2>&1 | tail -1; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave3/water/it08_iso/05.png').convert('RGB').crop((180,1040,700,1260))\nb=Image.open('qa/pilot05/w …[+287 chars]`
+
+### 🤖 Claude — 2026-11-15T19:55:54.557Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/iso_zoom.png"}`
+
+### 🧑 User — 2026-11-15T19:56:17.626Z
+
+> ↩︎ result: 05 → qa/pilot05/wave3/water/it08_iso/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":114,"tris":582879,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → qa/pilot05/wave3/water/it08_iso_nowake/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":114,"tris":582879,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🧑 User — 2026-11-15T19:56:17.728Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T19:56:17.723Z
+
+[Image: original 2080x880, displayed at 2000x846. Multiply coordinates by 1.04 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T19:56:24.732Z
+
+Both variants still show the white rim and the spray lines, so the waterhide list does not cover the source. Let me find what draws them.
+
+### 🤖 Claude — 2026-11-15T19:56:26.132Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"splash\\|Splash\\|spray\\|wakeRing\\|contactRing\\|foamRing\" src --include=*.ts | grep -v \"^src/vfx/index.ts\\|^src/vfx/spray.ts\\|^src/vfx/riderSplash.ts\" | head -30; git diff --stat HEAD -- src | tail -5", "description": "Find other splash/spray sources"}`
+
+### 🧑 User — 2026-11-15T19:56:26.186Z
+
+> ↩︎ result: src/characters/types.ts:19:   * splash/pom bounce, tumble=true lets the caller spin root freely (scene 02)
+> src/world/environment.ts:342:  // spray spouts on the side walls with pouring water
+> src/world/tube.ts:298: * toward the stream like a spray nozzle. `skip(s, centre)` drops a lid where the stream runs too close
+> src/world/tube.ts:352:/** Half-dome wall "lids"/spray heads mounted on the upper tube walls (refs 05–07). */
+> src/vfx/bubbles.ts:209:   * 1 = fine, 0 = in the no-bubble corridor (stream centre: Benny, splash, coin line), -1 = out of
+> src/vfx/bubbles.ts:241:    // stream corridor where Benny, his splash and the coin line are (ref 05). Placement is done in
+> src/vfx/finalWave.ts:4: * over the stream, rolling along with the flow; white foam crest + spray (spray emitted by index.ts).
+> src/vfx/finalWave.ts:104:  /** world positions along the curling lip (for spray emission) */
+> src/vfx/waterRibbon.ts:382:  // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water
+> src/game/Game.ts:339:      water.splash(benny.root.position, course.sample(st.s).up, 1);
+> src/game/Game.ts:365:    // so the wake/splash footprint matches the real waterline instead of the …[+214 chars]
+
+### 🤖 Claude — 2026-11-15T19:56:42.777Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; cat > $S/wcap.mjs <<'EOF'\n// node wcap.mjs OUTDIR \"query\" id [id...]   (same steps as scripts/capture.mjs; query passed verbatim)\nimport { mkdirSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst [out, q, ...ids] = process.argv.slice(2);\nmkdirSync(out, { recursive: true });\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5231);\nconst browser = await chromium.launch({ ar …[+1943 chars]`
+
+### 🧑 User — 2026-11-15T19:57:11.055Z
+
+> ↩︎ result: 05 → qa/pilot05/wave3/water/it08_iso/05.png {"stage":"05","s":132.438,"calls":102,"tris":433379} 
+> 05 → qa/pilot05/wave3/water/it08_iso_nowake/05.png {"stage":"05","s":132.438,"calls":102,"tris":433379}
+
+### 🤖 Claude — 2026-11-15T19:57:14.669Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave3/water/it08_iso/05.png').convert('RGB').crop((180,1040,700,1260))\nb=Image.open('qa/pilot05/wave3/water/it08_iso_nowake/05.png').convert('RGB').crop((180,1040,700,1260))\nW=Image.new('RGB',(1040,220)); W.paste(a,(0,0)); W.paste(b,(520,0)); W=W.resize((2080,440)); W.save('$S/iso_zoom.png')\n\"", "description": "Zoom isolation captures side by side"}`
+
+### 🧑 User — 2026-11-15T19:57:14.952Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:57:15.471Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/iso_zoom.png"}`
+
+### 🧑 User — 2026-11-15T19:57:15.603Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-15T19:57:15.598Z
+
+[Image: original 2080x440, displayed at 2000x423. Multiply coordinates by 1.04 to map to original image.]
+
+### 🤖 Claude — 2026-11-15T19:57:45.063Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"lateral\\|lat\\b\\|'05'\\|05_crest\\|meander\\|offset05\" src/gameplay/coins.ts | head -30; grep -n \"05_crest\\|CHECKPOINTS\\|'05'\" src/game/Game.ts | head -12", "description": "Check coin lateral placement and 05 checkpoint"}`
+
+### 🧑 User — 2026-11-15T19:57:45.114Z
+
+> ↩︎ result: 2: * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 13:export interface CoinDef { s: number; lat: number; h: number; stage: StageId }
+> 17:  const add = (stage: StageId, s: number, lat: number, h = 0.9) => out.push({ s, lat, h, stage });
+> 24:  { const a = st('05'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 8 + i * ((a.s1 - a.s0 - 12) / n); add('05', s, 1.2 * Math.sin(i * 0.55)); } }
+> 91:        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
+> 93:        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
+> 112:    update(time, _dt, s, lat) {
+> 119:        if (Math.abs(ds) < 1.0 && Math.abs(d.lat - lat) < 1.25) {
+> 29:const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> 130:    basin: ['02', '05'],
+> 522:  const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+> 527:    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+> 541:    const cp = CHECKPOINTS[i …[+50 chars]
+
+### 🤖 Claude — 2026-11-15T19:57:46.624Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat qa/pilot05/REQUESTS.md", "description": "Re-read REQUESTS.md for new requests"}`
+
+### 🧑 User — 2026-11-15T19:57:46.653Z
+
+> ↩︎ result: - foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord sqrt(0.86² − h²) ≈ 0.44 at the default 0.3 ride lift (it was 0.67, derived from the unlifted root, which made the contact band ~2× too wide). The bottom-of-frame white haze + blue dot field in 05/03 was the old `wakeV`/`tendrils` × `lace` term; your in-progress rewrite (no lace in wakeV) removes it. Splash fan / crown / spray / foam stay in riderSplash.ts, spray.ts, foam.ts as your comment says.
+> - foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under Benny's fur (05, y≈1150–1170) is the `contact` term in `src/vfx/waterRibbon.ts` FRAG, Benny block (`if (rr < rb * 0.25) { … contact = … }` + `col = mix(col, uFoam * 1.2, clamp(contact * k, 0.0, 1.0));`). Evidence: `qa/pilot05/wave3/foam/iso0/05_noRibbonWake.png` (band gone) vs `05_noCrownSpray.png` (band stays with crown+spray hidden). Please delete that white mix entirely (the fur already hides the waterline; the ref has clear glossy cyan right under him). If you want a hint of contact …[+302 chars]
+
+### 🤖 Claude — 2026-11-15T19:57:48.229Z
+
+Acting on that now: removing the white `contact` mix.
+
+### 🤖 Claude — 2026-11-15T19:57:57.388Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  // ---- Benny: thin churned waterline ring, ripple rings and a V wake on the surface ----\n  // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water\n  // around and behind him stays glossy electric cyan as in ref 05, not a sheet of white lace)\n  if (uBenny.z > 0.0) {\n    float du = lat - uBenny.y;\n    float dv = s - uBenny.x;\n    float rb = uBennyR;\n    float d = length(vec2(du, dv));\n    if (d < rb * 8.0) {\n      float k = uBenny.z;\n      float rr =  …[+1993 chars]`
+
+### 🧑 User — 2026-11-15T19:57:57.473Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:58:01.987Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; echo \"- water-fx-specialist → foam-bubbles-particles (wave 3, correction 7): DONE $(date -u +%H:%M) UTC. Deleted the white \\`contact\\` → uFoam mix in waterRibbon.ts FRAG (Benny block); replaced by the faint cyan hint you suggested. Confirmed by my own isolation pair qa/pilot05/wave3/water/it08_iso (rim) vs it08_iso_nowake (no rim). rings/wakeV/band parting kept.\n- water-fx-specialist → coordinator (FYI, tooling): \\`scripts/capture.mjs --q=waterhide=a,b\\` does NOT pass the hide list: the arg parser does \\`a.slice(2).split('=')\\` and keeps only the 2n …[+417 chars]`
+
+### 🧑 User — 2026-11-15T19:58:02.041Z
+
+> ↩︎ result: - foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under 
+> - water-fx-specialist → foam-bubbles-particles (wave 3, correction 7): DONE 19:58 UTC. Deleted the white `contact` →
+> - water-fx-specialist → coordinator (FYI, tooling): `scripts/capture.mjs --q=waterhide=a,b` does NOT pass the hide lis
+
+### 🤖 Claude — 2026-11-15T19:58:13.357Z
+
+Now the main river redesign. First I want the exact screen mapping of the route at the 05 checkpoint, so I can size the S-bends in pixels rather than guessing. Let me see what the QA hook exposes.
+
+### 🤖 Claude — 2026-11-15T19:58:15.514Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"__rainbow\\s*=\\|window.__rainbow\\|__rainbow = \" src -r | head; sed -n \"$(grep -n '__rainbow = ' src/game/Game.ts | head -1 | cut -d: -f2 | xargs -I{} echo 1),+0p\" /dev/null; grep -n \"goto\\b\\|goto(\\|state()\\|stats()\\|camera\\b\" src/game/Game.ts | sed -n 1,40p | grep -n \"window\\|__rainbow\\|expose\" ", "description": "Find QA hook exposure in Game.ts"}`
+
+### 🧑 User — 2026-11-15T19:58:15.589Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:619:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+
+### 🤖 Claude — 2026-11-15T19:58:16.907Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 560,620p src/game/Game.ts", "description": "Read QA api object"}`
+
+### 🧑 User — 2026-11-15T19:58:16.941Z
+
+> ↩︎ result: if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.s …[+2197 chars]
+
+### 🤖 Claude — 2026-11-15T19:58:21.366Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"^  [a-zA-Z_]*(.*{$\\|^  [a-zA-Z_]*(.*): .* {$\\|^  get \\|^  readonly\\|^  [a-z][A-Za-z0-9]*: \" src/world/course.ts | sed -n 1,60p", "description": "List Course class methods"}`
+
+### 🧑 User — 2026-11-15T19:58:21.411Z
+
+> ↩︎ result: 21:  id: StageId;
+> 22:  title: string;
+> 24:  s0: number;
+> 25:  s1: number;
+> 27:  width: number;
+> 29:  tube: number;
+> 30:  tubeKind: TubeKind;
+> 32:  speed: number;
+> 34:  refCoins: number;
+> 35:  interactive: boolean;
+> 37:  bank: number;
+> 41:  s: number;
+> 42:  pos: THREE.Vector3;
+> 43:  tan: THREE.Vector3;
+> 44:  up: THREE.Vector3;
+> 45:  right: THREE.Vector3;
+> 64:  drumA: { center: new THREE.Vector3(0, 0, 0), radius: 5, zBack: -6.5, zDoor: 3.5, doorRadius: 3.2, waterY: -2.5 },
+> 65:  basin: { center: new THREE.Vector3(2, -16, -19), rimRadius: 11.5, rimY: -10.6, drainRadius: 4.3, drainY: -20.2 },
+> 67:  chamber: { center: new THREE.Vector3(12, -101.1, 0), radius: 13.5, zBack: -280, zDoor: -332, floorY: -113.6, doorRadius: 6.2 },
+> 68:  platform: { center: new THREE.Vector3(12, -110.6, -325.0), radius: 6.2, topY: -110.6 },
+> 69:  plunge: { topY: -52, bottomY: -113.6 },
+> 91:  s0: number;
+> 92:  s1: number;
+> 93:  a: THREE.Vector3;
+> 94:  b: THREE.Vector3;
+> 96:  floorDepth: number;
+> 100:  points: THREE.Vector3[];
+> 101:  marks: Record<string, number>;
+> 102:  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> 120:  lambda: 32,
+> 122:  uCrest: 14,
+> 124:  a0: 0.45,
+> 125:  a1: 1.85,
+> 127: …[+1201 chars]
+
+### 🤖 Claude — 2026-11-15T19:58:32.220Z
+
+I'll probe the ribbon through the QA `probe()` raycast on a screen grid at the 05 checkpoint, then convert hits to (s, lateral) to get the exact pixel mapping.
+
+### 🤖 Claude — 2026-11-15T19:58:42.983Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; cat > $S/wmap.mjs <<'EOF'\n// node wmap.mjs OUT.json : raycast the 05 water ribbon on a screen grid → (s, lat, hw, off05) per pixel sample\nimport { writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst out = process.argv[2];\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5241);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = aw …[+2195 chars]`
+

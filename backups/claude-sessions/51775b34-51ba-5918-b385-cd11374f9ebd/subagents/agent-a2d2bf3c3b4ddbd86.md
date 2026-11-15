@@ -702,3 +702,197 @@ Now I'll write a measurement script (in scratchpad) and measure the reference an
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T19:55:03.933Z
+
+> 🔧 **Bash** `{"command": "cat package.json | head -40; python3 -I -c \"\nimport json;d=json.load(open('qa/capture_log.json'));\nfor s in d['shots']: print(s['id'], json.dumps(s['state'])[:600], s['stats'])\n\"", "description": "Check package scripts and last capture log"}`
+
+### 🧑 User — 2026-11-15T19:55:03.993Z
+
+> ↩︎ result: {
+>   "name": "rainbow-washer-game",
+>   "private": true,
+>   "version": "0.1.0",
+>   "description": "RAINBOW — 11-screen real-time 3D portrait mobile game (Three.js + TypeScript + Vite + Capacitor)",
+>   "type": "module",
+>   "scripts": {
+>     "dev": "vite --host 0.0.0.0",
+>     "build": "tsc --noEmit && vite build",
+>     "preview": "vite preview --host 0.0.0.0 --port 4173",
+>     "typecheck": "tsc --noEmit",
+>     "test:continuity": "vite-node scripts/continuity-test.ts",
+>     "models:export": "node scripts/export-models.mjs",
+>     "qa:capture": "node scripts/capture.mjs",
+>     "qa:compare": "python3 scripts/compare.py",
+>     "verify:refs": "sha256sum -c scripts/reference.sha256",
+>     "android:sync": "npm run build && npx cap sync android",
+>     "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+>     "test:cinematic": "node scripts/cinematic-test.mjs"
+>   },
+>   "dependencies": {
+>     "@capacitor/android": "^6.2.0",
+>     "@capacitor/core": "^6.2.0",
+>     "@fontsource/baloo-2": "^5.1.0",
+>     "three": "^0.170.0"
+>   },
+>   "devDependencies": {
+>     "@capacitor/cli": "^6.2.0",
+>     "@types/three": "^0.170.0",
+>     "typescript": "^5.6.3",
+>     "vite": "^5.4.11",
+>     "vite-node": "^2.1.5"
+>   }
+> } …[+4098 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:07.415Z
+
+> 🔧 **Bash** `{"command": "sed -n 578,640p src/game/Game.ts", "description": "Read the QA API in Game.ts"}`
+
+### 🧑 User — 2026-11-15T19:55:07.451Z
+
+> ↩︎ result: };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+>     respawns() { return st.respawns; },
+>     /** debug: Benny's project …[+1453 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:11.695Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p src/game/cameraRig.ts; grep -n \"^export\\|constructor\\|update(\" src/game/cameraRig.ts; grep -n \"rideCam = \\|new RideCamera\\|createRideCam\" src/game/Game.ts; head -30 scripts/continuity-test.ts", "description": "Inspect cameraRig API for offline projection"}`
+
+### 🧑 User — 2026-11-15T19:55:11.753Z
+
+> ↩︎ result: /**
+>  * Third-person ride camera: behind/above Benny, looking along his heading (the course tangent), or
+>  * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point
+>  * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.
+>  */
+> import * as THREE from 'three';
+> import { WORLD } from '../world/course';
+> import type { Course, StageId } from '../world/course';
+> import type { TubePath } from '../world/tube';
+> 
+> export interface CamParams {
+>   back: number; // distance behind Benny
+>   up: number; // height above Benny's water point
+>   ahead: number; // look-at distance ahead
+>   lookUp: number; // look-at height
+>   fov: number;
+>   latFollow: number; // 1 = camera fully follows Benny's lateral offset
+>   roll: number; // 0..1 how much of the path bank the camera adopts
+>   /** 05 only: view yaw (deg) to the LEFT of the tunnel axis, i.e. the vanishing point sits right of centre */
+>   yaw?: number;
+>   /** 05 only: lateral dead zone (units): the camera holds the tunnel axis while Benny is within ~this of it */
+>   deadZone?: number;
+> }
+> 
+> export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+>   '03': { back: 6.5, up: 6.5, a …[+2497 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:13.328Z
+
+> 🔧 **Bash** `{"command": "sed -n 25,180p src/game/cameraRig.ts; grep -n \"rideCam\\.\" src/game/Game.ts | head", "description": "Read camera rig details for 05"}`
+
+### 🧑 User — 2026-11-15T19:55:13.385Z
+
+> ↩︎ result: export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+>   '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+>   '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+>   // 05: level rear chase down the straight current tube, camera ON the tunnel axis (rings concentric).
+>   // Ref 05 measured at vFOV 62: VP (498, 479) → view pitched atan((up-lookUp)/(ahead+back)) ≈ 12.7°
+>   // below and yawed ≈ 3° left of the axis; Benny's waterline 711 px below the VP → up/back ≈ 0.56.
+>   '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+>   '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
+>   '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
+>   '08': { back: 6.2, up: 3.7, ahead: 16, lookUp: 0.2, fov: 62, latFollow: 0.8, roll: 0.3 },
+>   '09': { back: 6.2, up: 3.7, ahead: 15, lookUp: 0.6, fov: 62, latFollow: 0.8, roll: 0.3 },
+>   '10': { back: 5.8, up: 3.4, ahead: 11, lookUp: 1.2, fov: 62, latFollow: 0.8, roll: 0.2 },
+> };
+> 
+> const KEYS: (keyof CamParams)[] = ['back', 'up', 'ahead', 'look …[+7060 chars]
+
+### 🤖 Claude — 2026-11-15T19:55:19.343Z
+
+The camera rig only depends on the course and tube path, so I can project ring and lid positions offline with vite-node instead of spending captures.
+
+### 🤖 Claude — 2026-11-15T19:55:39.031Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/proj05.ts", "content": "// offline projection of the 05 tunnel rings/lids for the 05 checkpoint camera (864x1536)\n// run: cd /home/user/rainbow- && npx vite-node <this file> -- [spacing] [phase] [n]\nimport * as THREE from 'three';\nimport { Course } from '/home/user/rainbow-/src/world/course.ts';\nimport { straightTubePath, tubeCenterAt } from '/home/user/rainbow-/src/world/tube.ts';\nimport { RideCamera } from '/home/user/rainbow-/src/game/cameraRig.ts';\n\nconst argv = process.argv.slice(2).fil …[+4449 chars]`
+
+### 🧑 User — 2026-11-15T19:55:39.099Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/proj05.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:55:41.318Z
+
+> 🔧 **Bash** `{"command": "timeout 120 npx vite-node /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/proj05.ts -- 9 7.8 2>&1 | tail -30", "description": "Project current ring layout for the 05 camera"}`
+
+### 🧑 User — 2026-11-15T19:55:42.509Z
+
+> ↩︎ result: s05 114.69 s06 188.92 sBenny 132.44 cam 1.92,-37.94,-68.28 fov 62
+> axis VP 500,478
+> camera s 126.02 height above axis -0.63 lat -0.08 R 7.60 depth 3.37
+> s=131.5 dz=5.5 R=7.60 top=-2496 bot=1789 L=-1192,334 R=2501,312 ctr=521,324 z=0.972
+> s=140.5 dz=14.5 R=7.60 top=-376 bot=1054 L=-157,425 R=1209,422 ctr=508,423 z=0.992
+> s=149.5 dz=23.5 R=7.60 top=-20 bot=848 L=92,446 R=931,445 ctr=505,446 z=0.995
+> s=158.5 dz=32.5 R=7.60 top=126 bot=752 L=203,456 R=811,455 ctr=503,456 z=0.997
+> s=167.5 dz=41.5 R=7.60 top=208 bot=697 L=267,463 R=742,462 ctr=503,462 z=0.997
+> s=176.5 dz=50.5 R=7.60 top=258 bot=661 L=307,466 R=699,466 ctr=502,466 z=0.998
+> s=185.5 dz=59.5 R=10.04 top=165 bot=633 L=267,414 R=716,406 ctr=493,410 z=0.998
+> s=194.5 dz=68.5 R=15.00 top=-144 bot=523 L=180,219 R=843,290 ctr=522,255 z=0.998
+> near ring s 131.49 dz 5.47 0:2501,312 15:2621,-277 30:2581,-925 45:2340,-1567 60:1888,-2104 75:1265,-2437 90:563,-2496 105:-107,-2284 120:-652,-1860 135:-1024,-1314 150:-1222,-731 165:-1267,-170 180:-1192,334 195:-1026,767 210:-793,1122 225:-513,1400 240:-198,1603 255:142,1733 270:500,1789 285:869,1769 300:1243,1668 315:1612,1480 330:1960,1195 345:2267,806
+> lids @18deg: dz1 L(-12415,-5158) R(-324370,13754 …[+210 chars]
+
+### 🤖 Claude — 2026-11-15T19:56:03.393Z
+
+The offline projection works. Before deciding ring spacing, let me look at the reference's gold mask to see the ring shapes (ellipse aspect, centres).
+
+### 🤖 Claude — 2026-11-15T19:56:10.191Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image, ImageDraw\nimport sys\nsys.path.insert(0,'$S')\n\" ; python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image, ImageDraw\nS='/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad'\na=np.asarray(Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')).astype(np.float32)/255\nr,g,b=a[...,0],a[...,1],a[...,2]\nmx=a.max(-1);mn=a.min(-1);d=mx-mn\nh=np.zeros_like(mx);m=d>1e- …[+698 chars]`
+
+### 🧑 User — 2026-11-15T19:56:10.919Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:56:12.452Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/ref_goldmask.png"}`
+
+### 🧑 User — 2026-11-15T19:56:12.472Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:56:35.700Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -3 && git diff --stat HEAD -- src/ | tail -20; ls -la qa/pilot05/wave3/ 2>/dev/null; cat qa/pilot05/REQUESTS.md | wc -l", "description": "Check what other specialists changed so far"}`
+
+### 🧑 User — 2026-11-15T19:56:35.781Z
+
+> ↩︎ result: 66e859d autosave: Rainbow 2026-11-15 19:54 UTC
+> 789e73b Record autosave status rows
+> aaf20f7 autosave: Rainbow 2026-11-15 19:54 UTC
+> total 20
+> drwxr-xr-x 5 root root 4096 Nov 15 19:56 .
+> drwxr-xr-x 9 root root 4096 Nov 15 19:55 ..
+> drwxr-xr-x 2 root root 4096 Nov 15 19:56 camera
+> drwxr-xr-x 3 root root 4096 Nov 15 19:55 foam
+> drwxr-xr-x 5 root root 4096 Nov 15 19:56 water
+> 2
+

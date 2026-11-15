@@ -565,3 +565,232 @@ Now let me look at my earlier notes and the current code.
 > 101:  const doorGlassA = new THREE.Mesh(new THREE.CircleGeometry(dA.doorRadius + 0.05, 48), glass('#e8f0ff', 0.1));
 > 102:  doorAInner.add(doorRingA, doorGlassA …[+4279 chars]
 
+### 🤖 Claude — 2026-11-15T19:56:02.604Z
+
+> 🔧 **Bash** `{"command": "sed -n 80,130p src/game/Game.ts && sed -n 300,380p src/game/Game.ts && sed -n 500,621p src/game/Game.ts", "description": "Read Game.ts ride update and checkpoints"}`
+
+### 🧑 User — 2026-11-15T19:56:02.671Z
+
+> ↩︎ result: const env = buildEnvironment(course);
+>   scene.add(env.group);
+>   const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+>   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+>   if (hidden.has('water')) water.group.visible = false;
+>   if (hidden.has('coins')) coins.group.visible = false;
+>   const zoneHidden = (k: string) => hidden.has(k);
+>   const hud = createHud();
+>   const input = createInput(canvas);
+>   const rideCam = new RideCamera(course);
+>   rideCam.axis = env.tubeAxis;
+> 
+>   // ---------------------------------------------------------------- state
+>   const st = {
+>     mode: 'intro' as Mode,
+>     t: 0, // time within the current mode
+>     clock: 0, // global animation time (shaders)
+>     frozen: null as number | null, // QA: freeze shader time
+>     s: 0,
+>     lat: 0,
+>     vlat: 0,
+>     coins: START_COINS,
+>     hearts: 5,
+>     paused: false,
+>     stage: '01' as StageId,
+>     bumpCooldown: 0,
+>     edgeTime: 0,
+>     twirl: 0,
+>     respawns: 0,
+>   …[+10317 chars]
+
+### 🤖 Claude — 2026-11-15T19:56:05.414Z
+
+> 🔧 **Bash** `{"command": "grep -n \"bennyPose\" -A 25 src/game/Game.ts | head -40; sed -n 1,80p scripts/capture.mjs", "description": "Read bennyPose and capture script"}`
+
+### 🧑 User — 2026-11-15T19:56:05.453Z
+
+> ↩︎ result: 151:  const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+> 152-    const f = course.sample(s);
+> 153-    const h = water.surfaceHeight(s, lat, time);
+> 154-    out.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h + benny.radius * 0.55);
+> 155-    const m = new THREE.Matrix4().makeBasis(new THREE.Vector3().crossVectors(f.up, f.tan).normalize(), f.up, f.tan);
+> 156-    out.quat.setFromRotationMatrix(m);
+> 157-    return f;
+> 158-  };
+> 159-
+> 160-  const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
+> 161-  const tmpV = new THREE.Vector3();
+> 162-  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+> 163-  const doorAOpen = -1.9, doorCOpen = -1.95;
+> 164-
+> 165-  // ---------------------------------------------------------------- intro (01–02)
+> 166-  const introUpdate = (dt: number) => {
+> 167-    const t = st.t;
+> 168-    const wc = (water as unknown as { controls?: { drumSwirl: number; drumAgitation: number; outro: number } }).controls;
+> 169-    if (wc) {
+> 170-      wc.drumAgitation = 0.35 + 0.65 * sm(T.spin - 0.5, T.spin + 0.8, t);
+> 171-      wc.drumSwirl = sm(T.spin,  …[+4904 chars]
+
+### 🤖 Claude — 2026-11-15T19:56:29.259Z
+
+> 🔧 **Bash** `{"command": "sed -n 186,262p src/world/environment.ts; grep -n \"export function buildRings\" -A 40 src/world/tube.ts | head -60", "description": "Read tube ring construction details"}`
+
+### 🧑 User — 2026-11-15T19:56:29.303Z
+
+> ↩︎ result: const s = g0 + 0.05 + i * 0.3;
+>     zones.tubes.add(buildRings(goldPath, s, s + 0.01, 1, goldMat, { tube: 0.07, extra: 0.4 + i * 0.22 }));
+>   }
+> 
+>   // =====================================================================================
+>   // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+>   // =====================================================================================
+>   const s08 = course.stage('08').s0;
+>   const pinkFlow = pinkFlowMaterial();
+>   // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+>   // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+>   // hot magenta near → violet mid-tunnel → warm yellow-white core at the vanishing point
+>   const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+>   const wallGlow: FarGlow = { ...tubeGlow, mid: { color: '#8a3cf0', near: 10, far: 42, amount: 0.55 } };
+>   const tubeEnv = washerTubeEnv('wall');
+>   const goldEnv = washerTubeEnv('gold');
+>   // ring bays: evenly spaced gold bands; 4 circumferential slot rows per bay (ref 05: 3–5)
+>   const ringSpacing = 9.0;
+>   const slotRowsPerBay = 4;
+>   // an …[+6360 chars]
+
+### 🤖 Claude — 2026-11-15T19:56:33.632Z
+
+> 🔧 **Bash** `{"command": "grep -n \"tubeR\\b\\|const tubeR\\|tubeR =\" src/world/environment.ts | head -5; grep -n \"radius\\b\\|lift\\|rideLift\" src/characters/benny/*.ts | head -20; nproc; uptime", "description": "Find tubeR and Benny radius/lift"}`
+
+### 🧑 User — 2026-11-15T19:56:33.675Z
+
+> ↩︎ result: 175:  const tubeR = (s: number) => course.prop('tube', s);
+> 179:  const r04 = (s: number) => tubeR(s) + 1.8 * (1 - sm(g0, g0 + 6, s));
+> 219:  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+> src/characters/benny/benny-lab.ts:8: *                   opaque water plane at the game's ride height (root = water + radius·0.55)
+> src/characters/benny/benny-lab.ts:43:    const RIDE = 0.8 * 0.55; // Game.ts: root = water surface + benny.radius * 0.55
+> src/characters/benny/benny-lab.ts:52:          ? // proportion check: rear views at the ride height (lifted) at 12° / 18° / 24° / 28° camera elevation,
+> src/characters/benny/benny-lab.ts:99:      // game view: exact game placement (the runtime lifts him while swimming); refs view: lifted ride height
+> src/characters/benny/benny-lab.ts:100:      // (measure: the game's real placement, root = water + RIDE; the runtime adds the ride lift itself)
+> src/characters/benny/build.ts:27:  radius: 0.8,
+> src/characters/benny/build.ts:35:  /** cuff outer radius ≈ the fluffy body half-width (rear refs 05/07/09/10: cuff as wide as the body) */
+> src/characters/benny/build.ts:42:  /** pom-pom core radius; the shell fur adds …[+1425 chars]
+
+### 🤖 Claude — 2026-11-15T19:56:34.496Z
+
+Let me run a baseline capture of the current tree while I measure the reference.
+
+### 🤖 Claude — 2026-11-15T19:56:35.691Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/wave3/camera && (time timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave3/camera/it00) 2>&1 | tail -8", "description": "Capture baseline 05 screenshot", "run_in_background": true}`
+
+### 🧑 User — 2026-11-15T19:56:35.749Z
+
+> ↩︎ result: Command running in background with ID: bo3v5o643. Output is being written to: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/bo3v5o643.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-15T19:56:45.407Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && cd /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && cat > coins_ref.py <<'EOF'\nimport sys\nfrom PIL import Image\nimport numpy as np\nfrom scipy import ndimage\nim = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(float)/255\nH,W,_=im.shape\nmx=im.max(2); mn=im.min(2); d=mx-mn\ns=np.where(mx>0,d/np.maximum(mx,1e-6),0)\nr,g,b=im[...,0],im[...,1],im[...,2]\nh=np.zeros_like(mx)\nm=d>1e-6\nrc=(mx==r)&m; gc=(mx==g)&m&~rc; bc=m&~rc&~gc\nh[rc]=((g-b …[+1002 chars]`
+
+### 🧑 User — 2026-11-15T19:56:45.677Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/coins_ref.py", line 4, in <module>
+>     from scipy import ndimage
+> ModuleNotFoundError: No module named 'scipy'
+
+### 🤖 Claude — 2026-11-15T19:56:57.894Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && cat > imgutil.py <<'EOF'\nimport numpy as np\nfrom PIL import Image\nfrom collections import deque\ndef load(p):\n    return np.asarray(Image.open(p).convert('RGB')).astype(float)/255\ndef hsv(im):\n    mx=im.max(2); mn=im.min(2); d=mx-mn\n    s=np.where(mx>0,d/np.maximum(mx,1e-6),0)\n    r,g,b=im[...,0],im[...,1],im[...,2]\n    h=np.zeros_like(mx); m=d>1e-6\n    rc=(mx==r)&m; gc=(mx==g)&m&~rc; bc=m&~rc&~gc\n    h[rc]=((g-b)[rc]/d[rc])%6; h[gc]=((b-r)[gc]/d[gc])+2; h[bc]=((r-g)[bc]/d[bc])+4\n   …[+1754 chars]`
+
+### 🧑 User — 2026-11-15T19:56:58.485Z
+
+> ↩︎ result: x 510-541 y 494-530 centre (525,512) w 32 h 37 n 426 med #F3CF3D
+> x 486-505 y 525-539 centre (495,532) w 20 h 15 n 214 med #F3CD28
+> x 452-479 y 535-555 centre (465,545) w 28 h 21 n 412 med #F7CF1F
+> x 410-452 y 559-591 centre (431,575) w 43 h 33 n 963 med #F7CB15
+> x 454-509 y 591-632 centre (481,611) w 56 h 42 n 1469 med #FAD112
+> x 514-583 y 632-683 centre (548,657) w 70 h 52 n 2173 med #FBD112
+> x 426-521 y 688-762 centre (473,725) w 96 h 75 n 3782 med #FCCC0D
+
+### 🤖 Claude — 2026-11-15T19:57:04.806Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/tasks/bo3v5o643.output", "description": "Show baseline capture output"}`
+
+### 🧑 User — 2026-11-15T19:57:04.842Z
+
+> ↩︎ result: 05 → qa/pilot05/wave3/camera/it00/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":114,"tris":582879,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> real	0m17.479s
+> user	0m1.636s
+> sys	0m0.302s
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-15T19:57:05.797Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave3/camera/it00/05.png"}`
+
+### 🧑 User — 2026-11-15T19:57:05.860Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:57:39.180Z
+
+> 🔧 **Bash** `{"command": "sed -n 30,60p src/characters/benny/runtime.ts; sed -n 110,130p src/characters/benny/runtime.ts; sed -n 20,60p src/characters/benny/build.ts", "description": "Read Benny runtime lift and dimensions"}`
+
+### 🧑 User — 2026-11-15T19:57:39.226Z
+
+> ↩︎ result: export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {
+>   const src = await loadScene();
+>   const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
+>   return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality() });
+> }
+> 
+> /**
+>  * Ride height. The game places the root at water surface + radius·0.55 (≈ 0.44), which buried the lower
+>  * third of the plush ball in the opaque stream. While riding (swim ≥ 0.5, not tumbling) the model is
+>  * lifted inside the root so he sits ON the water like refs 04–10: only the bottom ≈ 0.1 of the fur and
+>  * the kicking feet are under the surface. Cinematics (01 peek, 02 tumble, 11 hide) keep the root as placed.
+>  */
+> export const BENNY_RIDE_LIFT = 0.3;
+> /** QA A/B hook: `?bennyLift=<units>` overrides the ride lift (e.g. 0 = the game's raw placement) */
+> function rideLift(): number {
+>   if (typeof location === 'undefined') return BENNY_RIDE_LIFT;
+>   const v = parseFloat(new URLSearchParams(location.search).get('bennyLift') ?? '');
+>   return Number.isFinite(v) ? THREE.MathUtils.clamp(v, 0, 0.6) : BENNY_RIDE_LIFT;
+> }
+> 
+> /** Build the runtime around an already-loaded (or fresh …[+2803 chars]
+
+### 🤖 Claude — 2026-11-15T19:58:37.720Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nim.crop((250,180,750,560)).resize((1000,760)).save('ref_vp.png')\nim2=Image.open('/home/user/rainbow-/qa/pilot05/wave3/camera/it00/05.png').convert('RGB')\nim2.crop((250,180,750,560)).resize((1000,760)).save('it00_vp.png')\n\"", "description": "Crop VP regions for inspection"}`
+
+### 🧑 User — 2026-11-15T19:58:38.329Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:58:38.720Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/ref_vp.png"}`
+
+### 🧑 User — 2026-11-15T19:58:38.753Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:58:39.277Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/it00_vp.png"}`
+
+### 🧑 User — 2026-11-15T19:58:39.304Z
+
+> ↩︎ result: [image]
+

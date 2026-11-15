@@ -1346,3 +1346,337 @@ I committed and pushed everything. GitHub now matches this session at `789e73b` 
 
 The five Screen 05 specialists are still editing files. The 5-minute autosave will keep pushing their work to the same branch while they run.
 
+### 🧑 User — 2026-11-15T19:56:21.002Z
+
+RAINBOW — SCREEN 05 EXACT RECONSTRUCTION
+
+WORLD LABS ATLAS / MARBLE + BLENDER + SPECIALISTS
+
+Claude, I am NOT approving our current Screen 05 yet.
+
+I have compared the latest real 3D screenshot with my original approved "05 · FLOW INTO THE CURRENT" reference.
+
+The latest version is improving, but it still does not match the quality, geometry, color depth, water, lighting, and camera composition of my approved image.
+
+I want you to fix the existing playable 3D scene, not generate another unrelated picture.
+
+PROTECT MY PROJECT
+
+Continue in my existing Rainbow GitHub repository:
+
+"josiahscalia5-dev/rainbow-"
+
+Use the current authorized working branch and verify its latest commit.
+
+Keep the original and recovery branches protected.
+
+Preserve all eleven connected gameplay stages, Benny, my cartoon girl, the Google Flow video integration, and all existing functionality.
+
+Maintain the five-minute GitHub backup while the development environment is active.
+
+1. USE MY APPROVED SCREEN 05 AS THE ONLY DESIGN TARGET
+
+Open the approved Screen 05 reference and the latest actual game screenshot at full resolution.
+
+Match the reference's:
+
+Tunnel architecture: Deep metallic magenta-violet cylindrical drum, regular dark perforations, evenly spaced circular polished gold rings, small gold machinery fittings along the walls, and a deep illuminated tunnel extending into the distance.
+
+Water: One broad, thick electric-cyan river with hot-pink swirling sections, strongly curved S-bends, glossy white-blue reflections, beautiful foam, and many transparent iridescent bubbles.
+
+Perspective: Third-person camera directly behind Benny, slightly elevated, looking forward down the river. Benny is in the lower foreground with the water and tunnel stretching far ahead.
+
+Benny: Exactly the same pink fluffy mascot, with proper round body size, striped purple-white beanie, gold star, and purple pom-pom. Correct the oversized hat and unnatural white splash artifact beneath him.
+
+Collectibles: Rich metallic gold dollar coins following the river bends, scaled correctly and diminishing naturally toward the distance.
+
+Lighting: Strong contrast, reflective gold, deep purple walls, luminous blue water, subtle bloom, and a warm golden glow far down the tunnel.
+
+Do not create oversized orange loops, floating crossbars, pale pink walls, flattened water stripes, giant coins, or an unrelated waterfall at the end.
+
+2. CHECK WORLD LABS ATLAS FIRST
+
+My World Labs connector is supposed to be connected to Claude.
+
+Use the existing authenticated Atlas MCP tools.
+
+Run "list_projects" first. Confirm whether the account has an active Atlas project and identify the tools available.
+
+If the account is not active, tell me precisely what is missing. Continue improving Screen 05 with Blender rather than stopping work.
+
+If Atlas is available, investigate using:
+
+- "images2PosedRGBD" for camera and depth estimation.
+- "atlasGenerate" for additional consistent viewpoints.
+- "posedImages2Splats" for a 3D reconstruction.
+- "splats2Mesh" to obtain editable geometry.
+
+Do not run paid generation tasks until I approve a specific estimated cost.
+
+3. USE MARBLE IF IT IS MORE SUITABLE
+
+Check whether an official supported Marble integration is available in this Claude environment.
+
+If so, explain how you will use it for my exact approved washer environment.
+
+If Marble is only available through my browser account, do not claim it is directly connected.
+
+Instead, prepare an environment-only reference image and a generation prompt I can use manually at marble.worldlabs.ai.
+
+I will then export the generated 3D world for you to import.
+
+4. PREPARE THE ENVIRONMENT RECONSTRUCTION
+
+Create a working copy of my approved reference image.
+
+Keep the original untouched.
+
+Make a separate environment-only reference by removing or masking Benny, the HUD, coins, and other foreground game elements.
+
+Preserve the tunnel geometry, wall pattern, gold rings, water route, depth, and lighting as reference information.
+
+Use the cleaned reference and existing measured 3D tunnel geometry to guide reconstruction.
+
+Avoid inventing a different level when generating unseen areas.
+
+5. IMPORT INTO BLENDER
+
+Use our previously saved World Labs-to-Blender import tool.
+
+Import a Marble or Atlas export when available.
+
+Align it with the existing Screen 05 course.
+
+Measure tunnel diameter, ring spacing, water-channel width, camera position, and the path centerline.
+
+Correct any incorrect geometry using Blender 5.3 and Python.
+
+Save the refined Blender source and export suitable optimized assets for our Three.js Android game.
+
+The World Labs output should accelerate modeling, not replace the playable scene with static imagery.
+
+6. ASSIGN OUR EXISTING SPECIALISTS
+
+Coordinate the saved specialists without giving them conflicting file ownership.
+
+The Environment Modeler fixes the tunnel and gold rings.
+
+The Water FX Specialist rebuilds the moving cyan-and-pink current, wave shapes, reflections, and flowing surface.
+
+The Foam and Bubble Specialist corrects the foam density, small bubbles, splashes, and iridescence.
+
+The Camera Engineer matches the approved camera and tunnel depth.
+
+The Benny Character Artist corrects Benny's proportions and white splash artifact.
+
+The Reference Match Director checks the original image.
+
+The Playwright Visual QA Specialist tests the real running game.
+
+Use the other saved specialists wherever necessary.
+
+Do not recreate my agents from scratch.
+
+7. DO THE WORK IN THE RIGHT ORDER
+
+First fix the tunnel geometry and camera.
+
+Then correct the gold-ring materials and wall colors.
+
+Next fix the shape, movement, thickness, and colors of the water.
+
+Then correct Benny, foam, bubbles, coins, and detailed lighting.
+
+Use Playwright to render a new actual 3D game screenshot after each major correction.
+
+Match the same camera and gameplay moment for comparison.
+
+Do not use generated concept pictures as proof of actual gameplay.
+
+8. GIVE ME VISUAL PROOF
+
+Show the approved Screen 05 image and the updated actual game render side by side.
+
+Also provide a transparent overlay comparison.
+
+Check the geometry, perspective, colors, water shape, Benny proportions, and collectible positions.
+
+Tell me which visual differences remain.
+
+Do not claim 90–95% fidelity unless the actual screenshots support it.
+
+Verify that the game is still playable, Screen 05 connects to Screen 06, and the existing Screen 07-to-08 deep descent is not broken.
+
+9. PROTECT AND SAVE EVERYTHING
+
+Commit the corrected scene, Blender source, World Labs assets (if generated), water shaders, specialist work, Playwright screenshots, QA reports, and updated progress notes.
+
+Push to the verified current GitHub working branch.
+
+Do not change the original approved images.
+
+Do not spend external paid service credits without my approval.
+
+START NOW: Verify World Labs access, complete the free preparation and comparison steps, and continue fixing my real 3D Screen 05 using the available tools.
+
+I want my actual mobile game to look as close as possible to the approved artwork, not simply look colorful.
+
+### 🤖 Claude — 2026-11-15T19:56:39.814Z
+
+You've asked for a lot here and some of it is already running, so first I'll check what already exists for World Labs and Marble, then update the running specialists on the work order you set.
+
+### 🤖 Claude — 2026-11-15T19:56:41.189Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/worldlabs/05/; head -80 qa/worldlabs/05/PILOT_PLAN.md 2>/dev/null; cat qa/pilot05/REQUESTS.md | tail -10; ls qa/pilot05/wave3/*/ 2>/dev/null", "description": "Inspect World Labs 05 prep and specialist progress"}`
+
+### 🧑 User — 2026-11-15T19:56:41.281Z
+
+> ↩︎ result: total 1572
+> drwxr-xr-x 2 root root    4096 Nov 15 19:48 .
+> drwxr-xr-x 3 root root    4096 Nov 15 19:48 ..
+> -rw-r--r-- 1 root root    6175 Nov 15 19:48 05_env_mask.png
+> -rw-r--r-- 1 root root 1586473 Nov 15 19:48 05_env_only_preview.png
+> -rw-r--r-- 1 root root    4002 Nov 15 19:48 PILOT_PLAN.md
+> # Screen 05 — World Labs Atlas pilot plan (NOT RUN — awaiting approval)
+> 
+> Status 2026-11-15: the claude.ai **World Labs Atlas** connector is attached to the Rainbow session and its
+> 10 tools load, but `list_projects` answers "this sign-in has no active Atlas account". Nothing has been
+> submitted and **no credits have been spent**. Every step below that uses credits needs the user's
+> explicit approval with the cost shown first.
+> 
+> ## Inputs (prepared, originals untouched)
+> 
+> | File | What |
+> |---|---|
+> | `references/05_flow_into_the_current.png` | approved original, 864×1536, SHA-256 `d3f339d4…` (verified unchanged) |
+> | `qa/worldlabs/05/05_env_mask.png` | 8-bit mask on the same grid: 255 = keep (tunnel, rings, lids, water, foam, bubbles), 0 = exclude (HUD bar + stage label, Benny + splash, coin trail). 67 % of pixels kept |
+> | `qa/worldlabs/05/05_env_only_preview.png` | review image: the original with exclude …[+4684 chars]
+
+### 🤖 Claude — 2026-11-15T19:56:45.257Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/05_env_only_preview.png"}`
+
+### 🧑 User — 2026-11-15T19:56:45.319Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:57:15.026Z
+
+> 🔧 **SendMessage** `{"to": "ae805b4b3d62c3b2f", "summary": "Camera engineer: lock camera first, user order", "message": "Coordinator update from the user (new instructions, priority order): FIRST tunnel geometry + camera, THEN ring/wall materials, THEN water, THEN Benny/foam/bubbles/coins/lighting. You are first in line. Please (1) settle the 05 camera + checkpoint + what is visible at the VP as soon as possible, then append a line `path-camera → ALL: CAMERA LOCK <time>: checkpoint s=…, STAGE_CAM['05']={…}, VP measured at (x,y), Benny bbox …` to qa/pilot05/REQUESTS.md so the others calibrate their final numbers o …[+910 chars]`
+
+### 🧑 User — 2026-11-15T19:57:15.049Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to ae805b4b3d62c3b2f at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"ae805b4b3d62c3b2f","name":"ae805b4b3d62c3b2f","ref":"16efc0"}}
+
+### 🤖 Claude — 2026-11-15T19:57:20.627Z
+
+> 🔧 **SendMessage** `{"to": "a2d2bf3c3b4ddbd86", "summary": "Env modeler: user order, rejects, Blender source", "message": "Coordinator update from the user (new instructions). Work order: FIRST tunnel geometry (+ camera, which path-camera-transition-engineer will lock and announce in qa/pilot05/REQUESTS.md as \"CAMERA LOCK\"), THEN ring and wall materials. Calibrate your final measurements on the locked camera. The user explicitly rejects: oversized orange loops, floating crossbars (there is a horizontal gold bar across the tunnel end at y≈430 in qa/screen05_final/previous_specialist/05.png — if it is your geomet …[+1153 chars]`
+
+### 🧑 User — 2026-11-15T19:57:20.645Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a2d2bf3c3b4ddbd86 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a2d2bf3c3b4ddbd86","name":"a2d2bf3c3b4ddbd86","ref":"011d04"}}
+
+### 🤖 Claude — 2026-11-15T19:57:23.827Z
+
+> 🔧 **SendMessage** `{"to": "a317a5dd539dbb6de", "summary": "Water: user order, contact term, S-bends", "message": "Coordinator update from the user (new instructions). Work order: geometry/camera first (path-camera-transition-engineer will post \"CAMERA LOCK\" in qa/pilot05/REQUESTS.md), materials second, WATER third — so do your final calibration/measurement on the locked camera. Please act now on the foam specialist's request in REQUESTS.md: delete the white `contact` → uFoam mix under Benny in waterRibbon.ts (root cause of the white jagged artifact the user rejects). The user wants: ONE broad, thick electric-c …[+441 chars]`
+
+### 🧑 User — 2026-11-15T19:57:23.843Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a317a5dd539dbb6de at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a317a5dd539dbb6de","name":"a317a5dd539dbb6de","ref":"a19862"}}
+
+### 🤖 Claude — 2026-11-15T19:57:26.579Z
+
+> 🔧 **SendMessage** `{"to": "a6b6ab59ed81afd14", "summary": "Foam: user order, density and iridescence", "message": "Coordinator update from the user (new instructions). Thanks for finding the contact-term root cause — water-fx-specialist has been told to remove it. Work order: geometry/camera first (path-camera-transition-engineer will post \"CAMERA LOCK\" in qa/pilot05/REQUESTS.md), materials, water, then foam/bubbles/splash — so do your final calibration on the locked camera. The user wants \"beautiful foam\" (dense cloud banks on BOTH edges), MANY transparent iridescent bubbles (large and small, at the sides), …[+369 chars]`
+
+### 🧑 User — 2026-11-15T19:57:26.591Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a6b6ab59ed81afd14 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a6b6ab59ed81afd14","name":"a6b6ab59ed81afd14","ref":"8f9269"}}
+
+### 🤖 Claude — 2026-11-15T19:57:30.695Z
+
+> 🔧 **SendMessage** `{"to": "a0fcec3703e8eef23", "summary": "Benny: oversized hat, white fringe check", "message": "Coordinator update from the user (new instructions). The user says Benny's HAT IS OVERSIZED relative to his body: they want \"exactly the same pink fluffy mascot, with proper round body size, striped purple-white beanie, gold star, and purple pom-pom\". So reduce the hat relative to a rounder, fuller body (target from the reference: hat incl. pom ≈62% of visible height, body ≈38%, body as wide as the cuff with a round bottom, arm nubs visible). The user also assigned you a share of the \"unnatural wh …[+720 chars]`
+
+### 🧑 User — 2026-11-15T19:57:30.708Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a0fcec3703e8eef23 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a0fcec3703e8eef23","name":"a0fcec3703e8eef23","ref":"e6e3b0"}}
+
+### 🤖 Claude — 2026-11-15T19:57:33.038Z
+
+> 🔧 **TaskCreate** `{"subject": "World Labs / Marble free prep for Screen 05", "description": "list_projects (done: no active Atlas account); check Marble integration; make cleaned environment-only plate (original untouched) + fill mask + Marble prompt; doc in qa/worldlabs/05/. No credits.", "activeForm": "Preparing World Labs / Marble inputs"}`
+
+### 🧑 User — 2026-11-15T19:57:33.050Z
+
+> ↩︎ result: Task #6 created successfully: World Labs / Marble free prep for Screen 05
+
+### 🤖 Claude — 2026-11-15T19:57:34.948Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import cv2, numpy, PIL; print(cv2.__version__)\" 2>&1; python3 -I -c \"\nfrom PIL import Image; import numpy as np\nm=np.array(Image.open('qa/worldlabs/05/05_env_mask.png')); print(m.shape, m.dtype, np.unique(m)[:5], (m==0).mean())\n\"; sha256sum references/05_flow_into_the_current.png; grep 05_flow scripts/reference.sha256; cat .gitattributes", "description": "Check OpenCV availability, mask format, reference hash"}`
+
+### 🧑 User — 2026-11-15T19:57:35.186Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     import cv2, numpy, PIL; print(cv2.__version__)
+>     ^^^^^^^^^^^^^^^^^^^^^^
+> ModuleNotFoundError: No module named 'cv2'
+> (1536, 864) uint8 [  0 255] 0.33689823857060186
+> d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd  references/05_flow_into_the_current.png
+> d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd  references/05_flow_into_the_current.png
+> # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+
+### 🤖 Claude — 2026-11-15T19:58:11.692Z
+
+> 🔧 **Bash** `{"command": "pip install -q opencv-python-headless 2>&1 | tail -1; python3 -c \"import cv2; print(cv2.__version__)\"", "description": "Install headless OpenCV for inpainting", "timeout": 180000}`
+
+### 🧑 User — 2026-11-15T19:58:17.200Z
+
+> ↩︎ result: WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+> 5.0.0
+
+### 🤖 Claude — 2026-11-15T19:58:34.732Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/make_env_plate.py", "content": "#!/usr/bin/env python3\n\"\"\"Environment-only clean plate of an approved Rainbow reference (for Marble / Atlas input).\n\nThe original reference is only READ, never written. Output goes to a separate folder.\n\n    python3 -I tools/make_env_plate.py references/05_flow_into_the_current.png \\\n        qa/worldlabs/05/05_env_mask.png qa/worldlabs/05 --vp 498,479\n\nmask: 255 = keep (real reference pixels), 0 = remove (HUD, Benny + splash, coins).\nFill strategy (everything filled is INVENTED and marked in *_fill_mask.png): …[+3772 chars]`
+
+### 🧑 User — 2026-11-15T19:58:34.802Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/make_env_plate.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:58:39.328Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/make_env_plate.py", "old_string": "    seam = cv2.dilate(hole.astype(np.uint8), np.ones((7, 7), np.uint8)) & cv2.erode(\n        (~hole).astype(np.uint8) * 0 + hole.astype(np.uint8), np.ones((1, 1), np.uint8))\n    border = cv2.dilate(hole.astype(np.uint8), np.ones((5, 5), np.uint8)) - cv2.erode(hole.astype(np.uint8), np.ones((5, 5), np.uint8))\n    left = (hole & ~filled).astype(np.uint8)\n    out = cv2.inpaint(out, np.clip(border + left, 0, 1).astype(np.uint8) * 255, 4, cv2.INPAINT_TELEA)\n    del seam", "new_string": "    h8 = h …[+270 chars]`
+
+### 🧑 User — 2026-11-15T19:58:39.397Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/make_env_plate.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:58:40.571Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/make_env_plate.py references/05_flow_into_the_current.png qa/worldlabs/05/05_env_mask.png qa/worldlabs/05 --vp 498,479 && sha256sum -c scripts/reference.sha256 2>&1 | grep -c OK", "description": "Build clean environment plate; verify references unchanged"}`
+
+### 🧑 User — 2026-11-15T19:58:41.783Z
+
+> ↩︎ result: invented share: 0.3369 rotation-filled: 0.087
+> 12
+
+### 🤖 Claude — 2026-11-15T19:58:42.999Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/05_env_clean_plate.png"}`
+
+### 🧑 User — 2026-11-15T19:58:43.052Z
+
+> ↩︎ result: [image]
+
