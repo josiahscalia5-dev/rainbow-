@@ -3260,3 +3260,214 @@ Gradle **BUILD SUCCESSFUL**. Checking the APK and the updated renders:
 
 > 🔧 **Bash** `{"command": "mkdir -p builds && cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug.apk && python3 - <<'EOF'\nimport json\np='backups/autosave.config.json'; c=json.load(open(p))\nif 'builds' not in c['allowlist']: c['allowlist'].append('builds')\njson.dump(c, open(p,'w'), indent=2); open(p,'a').write('\\n'); print('allowlist ok')\nEOF\ntimeout 2000 node scripts/capture.mjs 2>&1 | grep \"→\" | sed -E 's/.*\"stage\":\"([0-9]+)\".*\"calls\":([0-9]+),\"tris\":([0-9]+).*/\\1 calls=\\2 tris=\\3/' && python3 -I scripts/compare.py > /dev/null && timeout 2400 node scripts/capture. …[+135 chars]`
 
+### 🧑 User — 2026-11-15T18:00:50.336Z
+
+> ↩︎ result: allowlist ok
+> 01 calls=279 tris=412761
+> 01 calls=265 tris=353701
+> 03 calls=84 tris=724522
+> 04 calls=86 tris=740386
+> 05 calls=73 tris=625575
+> 06 calls=64 tris=560679
+> 07 calls=168 tris=658645
+> 08 calls=148 tris=594593
+> 09 calls=299 tris=625733
+> 10 calls=280 tris=361841
+> 11 calls=272 tris=226929
+> 11
+
+### 🤖 Claude — 2026-11-15T18:01:04.249Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export async function loadBenny\\|furQuality\" src/characters/benny/runtime.ts | head -5 && python3 - <<'EOF'\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert a in s, (p, a[:70]); s=s.replace(a,b)\n    open(p,'w').write(s)\nedit('src/game/modules.ts', [\n (\"      const q = new URLSearchParams(location.search).get('quality') === 'low' ? 'low' : 'high';\",\n  \"      // Android/mobile defaults to the low tier (measured budgets: see qa/performance.md); ?quality= overrides\\n      const qp = new URLSearchParams(location.search).get('quality' …[+510 chars]`
+
+### 🧑 User — 2026-11-15T18:01:06.607Z
+
+> ↩︎ result: 23:export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {
+> 33:  opts: { furQuality?: 'high' | 'low' } = {},
+> 48:    if (opts.furQuality === 'low') p.shells = Math.max(6, Math.round(p.shells * 0.6));
+> ok
+
+### 🤖 Claude — 2026-11-15T18:01:06.904Z
+
+You've hit your 5-hour limit · resets 9:30pm (UTC)
+
+### 🧑 User — 2026-11-15T18:01:06.941Z
+
+RAINBOW — WORLD LABS MARBLE + ATLAS ACCELERATION UPDATE
+
+Claude, I want to improve our existing Rainbow 11-screen 3D mobile game by using World Labs Marble, the newer World Labs Atlas tools, Blender MCP, and our specialist agents together.
+
+My goal is to build my approved game environments MUCH FASTER while maintaining the highest possible accuracy.
+
+Do not start a new project. Do not erase or redesign anything. Continue working in my current Rainbow repository and verified branch.
+
+1. CONNECT WORLD LABS
+
+First, investigate and install the official World Labs plugin for Claude Code:
+
+"claude plugin marketplace add worldlabsai/skills"
+
+"claude plugin install worldlabs@worldlabs"
+
+Verify the plugin, World Labs MCP connection, supported image-to-3D tools, account access, and available credits.
+
+Use "/worldlabs:atlas-blender" and "/worldlabs:atlas-splats" where appropriate.
+
+If Marble is available through my account, compare its image-to-world capabilities with Atlas and select whichever provides the best reconstruction for the relevant screenshot.
+
+Check Blender compatibility and install the official Atlas Blender extension if supported.
+
+Do not claim success before verifying the connection. Get my authorization before incurring new paid generation charges.
+
+2. USE MY ORIGINAL APPROVED IMAGES
+
+All 11 uploaded Rainbow screenshots are FINAL APPROVED ARTWORK.
+
+Use the actual uploaded images as the source for 3D reconstruction.
+
+Preserve their original versions unchanged.
+
+Create temporary environment-only reference images when necessary by masking Benny, the girl, HUD, and floating collectibles. Never erase these elements from my original files.
+
+Reconstruct the geometry and appearance of the environments, especially:
+
+- Glossy magenta metallic washer drum walls.
+- Perforated washing-machine surfaces.
+- Bright reflective gold tunnel rings.
+- Curved washer water channels.
+- Gold mechanical structures.
+- Realistic depth, perspective, and scale.
+- Purple laundry-room backgrounds.
+- The final spin chamber and towel platform.
+
+Do not ask World Labs to invent a different washing-machine world.
+
+Reconstruct MY approved world.
+
+3. USE MARBLE/ATLAS FOR SPEED
+
+Use World Labs to generate an initial 3D reconstruction of the relevant environment.
+
+Where needed, generate additional consistent viewing angles so Blender can reconstruct the geometry more accurately.
+
+Use Blender to correct:
+
+- Tunnel diameters and curves.
+- Ring positions and metallic materials.
+- Scale and proportions.
+- Lighting and reflections.
+- Camera angles.
+- The complete physical route.
+
+Export optimized game-ready geometry and assets.
+
+Use Gaussian splats as reference or supplemental visuals where beneficial, but do not mistake a static reconstructed scene for finished playable game geometry.
+
+4. KEEP THE WATER SPECIALIST IN CONTROL
+
+My animated pink-and-cyan water is extremely important.
+
+World Labs may help reconstruct the visual shape and surroundings of the water, but the Water FX Specialist must build the actual moving water.
+
+Use animated geometry and custom shaders for:
+
+- Thick glowing cyan currents.
+- Hot-pink flowing borders.
+- Iridescent reflections.
+- Moving waves and water crests.
+- White foam.
+- Small and large bubbles.
+- Natural splashes around Benny.
+
+The water must physically carry Benny along the connected route.
+
+Do not replace animated water with static Gaussian splats or a background video.
+
+5. KEEP THE CHARACTERS EXACT
+
+Benny remains unchanged.
+
+Use my official new cartoon girl, with her purple bow headband, curly ponytail, striped hoodie, star-patch jeans, and purple sneakers.
+
+The same girl must appear in the opening and final Screen 11.
+
+Use proper rigged, animated 3D character models rather than characters baked into generated environments.
+
+6. ALL ELEVEN SCREENS MUST CONNECT
+
+Use the existing approved Rainbow order, Screens 01–11.
+
+Reconstruct the environments in connected sections, not eleven unrelated worlds.
+
+Critical: Screen 07 must descend a long distance downward into Screen 08's Final Spin Chamber.
+
+Preserve real elevation changes, continuous water flow, and smooth camera motion.
+
+Screens 08, 09, 10 and 11 must also transition naturally into the final hiding and Safely Home ending.
+
+7. TEST WHETHER WORLD LABS IS ACTUALLY FASTER
+
+Before generating all the environments, use Screen 05, FLOW INTO THE CURRENT, as the first reconstruction test.
+
+Compare:
+
+A. A World Labs-assisted reconstruction refined in Blender.
+
+B. Our current Blender/manual modeling approach.
+
+Use the same camera angle, mobile resolution, and approved reference image.
+
+Use Playwright to capture real screenshots from the running game.
+
+Evaluate geometry accuracy, visual similarity, scene continuity, Android performance, time required, and amount of correction needed.
+
+Choose the approach that gets us closest to my approved image with the least work.
+
+If World Labs improves the results, use it on the remaining appropriate sections. If it distorts the scenery or introduces unusable geometry, retain our existing approach.
+
+8. VISUAL MATCHING
+
+Use my approved screenshots as the ground truth.
+
+Match camera position, perspective, metallic materials, water color, lighting, bubbles, foam, reflections, and proportions.
+
+Aim for 90–95% visual fidelity or better where feasible, without claiming an unverified exact match.
+
+Show me full-size screenshots of the actual game for each checkpoint.
+
+Do not generate attractive but unrelated artwork.
+
+9. PRESERVE ALL SPECIALISTS AND AUTOSAVES
+
+Keep all ten Rainbow specialists working.
+
+Coordinate the Environment Modeler, Water FX Specialist, Camera Engineer, Lighting/Shader work, and Playwright Visual QA Specialist with the World Labs reconstruction workflow.
+
+Preserve the existing GitHub five-minute automatic backup requirements.
+
+Verify the repository and branch associated with "ccr-6f431adf-7h0m8y".
+
+Continue committing and pushing safely every five minutes using the configured persistent scheduler, and report any failed or unavailable backups.
+
+Save World Labs output assets, Blender files, source images, intermediate references, agent configurations, code, and accessible project conversation logs.
+
+10. START THE IMPROVEMENT
+
+Connect and verify World Labs.
+
+Perform the Screen 05 pilot reconstruction.
+
+Compare it against the exact approved screenshot.
+
+Correct the differences in Blender.
+
+Once the approach is proven, apply it to the other Rainbow environments without changing their approved designs.
+
+My priority is faster production AND excellent visual accuracy. Not faster production at the expense of quality.
+
+Do the actual work and show me the verified results, not just another planning document.
+
+### 🤖 Claude — 2026-11-15T18:01:07.998Z
+
+You've hit your 5-hour limit · resets 9:30pm (UTC)
+

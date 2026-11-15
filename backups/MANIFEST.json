@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "b8f62a82a1ac0b0ee1dc7d947ca95aa8fa3dc8736a32cd5fbae506feeee92700"
+   "sha256": "05aac03cfc3ae2553b996ca21dd1807bfaa12708989f3cd826737534d0d1778c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -787,6 +787,11 @@
    "sha256": "1d155f0cdf9fcbf93d028a3d635a8c8ad9bb02c09306032fea7f22b949c3b63b"
   },
   {
+   "path": "qa/capture_log_1080x1920.json",
+   "bytes": 10266,
+   "sha256": "81275bfd043598692121efe28a3f8763f584e7f01e0d062077f2f81b064dac47"
+  },
+  {
    "path": "qa/compare_summary.md",
    "bytes": 990,
    "sha256": "a01551c904c943af152e02ad4ac34e31ccfbb43199b7848831db1d65d1cae95b"
@@ -977,6 +982,31 @@
    "sha256": "728fba90be7d590400fc4a91265f08db1da14f859a2f9317a0f76bfc4c5984e3"
   },
   {
+   "path": "screenshots/1080x1920/07.png",
+   "bytes": 2141580,
+   "sha256": "8f5e2ea0d005837b1bc411524ddd1648a17213e584a962480237656bc8661e62"
+  },
+  {
+   "path": "screenshots/1080x1920/08.png",
+   "bytes": 1938470,
+   "sha256": "0380e077f19a396d1a179d00dd954adf9ab88c98e82d5d5b0a65e2c9c7ba5547"
+  },
+  {
+   "path": "screenshots/1080x1920/09.png",
+   "bytes": 2029035,
+   "sha256": "b8e5f48db668b71af9f1463d0e25235ebd47005b66f0c7a18c84db73cbbf57c6"
+  },
+  {
+   "path": "screenshots/1080x1920/10.png",
+   "bytes": 1942077,
+   "sha256": "477fb0f6d2a5afa07071573c941ee25c0eb7fc242b8af5372bd1d39b259d30a7"
+  },
+  {
+   "path": "screenshots/1080x1920/11.png",
+   "bytes": 1998620,
+   "sha256": "946427810a7fe93414452e90be7abdc5f76e9ef2424adaad8dda3b9e40f0d1a8"
+  },
+  {
    "path": "screenshots/11.png",
    "bytes": 1394922,
    "sha256": "9d4f922313c565e0e64bdd84ac2ef5da0dee6007641d61bdcad1c767c710c2a8"
@@ -1113,8 +1143,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 28487,
-   "sha256": "43bba4636f966ea9176c1003272adc6e0edc456f44c5839e3473c8e15a9564d8"
+   "bytes": 28570,
+   "sha256": "115dac90e73a191b22835f83d6dbb1e9179335dc5cf741963f5130e7dd62349b"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -1123,8 +1153,8 @@
   },
   {
    "path": "src/game/modules.ts",
-   "bytes": 5141,
-   "sha256": "0830652a3257f8c2468f2c6daa35c72428ade5383a74b302f25f7f606a5fc28a"
+   "bytes": 5374,
+   "sha256": "d9f4bc92b8ddaa143f6f99b80663a5e37ae06453f2603106cff9bcfc52fb68e4"
   },
   {
    "path": "src/gameplay/coins.ts",

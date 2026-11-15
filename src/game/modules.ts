@@ -26,7 +26,10 @@ export async function loadWater(course: Course): Promise<WaterLike> {
   if (f) {
     try {
       const m = (await f()) as { createWater: (c: Course, o?: { quality?: 'high' | 'low' }) => WaterLike };
-      const q = new URLSearchParams(location.search).get('quality') === 'low' ? 'low' : 'high';
+      // Android/mobile defaults to the low tier (measured budgets: see qa/performance.md); ?quality= overrides
+      const qp = new URLSearchParams(location.search).get('quality');
+      const mobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+      const q = qp === 'low' || (qp !== 'high' && mobile) ? 'low' : 'high';
       const w = m.createWater(course, { quality: q });
       moduleStatus.water = 'vfx/index.ts';
       return w;

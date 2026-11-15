@@ -195,6 +195,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     const arc = handW.clone().lerp(towelRest, k);
     arc.y += Math.sin(k * Math.PI) * 1.2;
     let sB = 0;
+    if (t >= T.spin && st.stage === '01') { st.stage = '02'; hud.setStage('02'); }
     if (t < T.spin) {
       env.drumTowel.mesh.position.copy(t < 0.35 ? handW : arc);
       env.drumTowel.mesh.rotation.set(0, 0.4, 0);
