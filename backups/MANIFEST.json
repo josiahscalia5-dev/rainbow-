@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4395,
-   "sha256": "d3a726b26c59a846c92c1ded9f11cee03572a4d8f6c62d01502cf4fa11d65bbd"
+   "sha256": "7fb98b02cb38be38550bd863e0906452e2732b2719ebeea8468c5e7d98bfb983"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -408,8 +408,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 3455,
-   "sha256": "1844ec9353cf556da596679c2f7cebeb4b061cff9c74ad950ea452bc35e3918f"
+   "bytes": 3876,
+   "sha256": "ed82493241bd82b376283c27b892be50747b0874a70ce25ded25ccec50439136"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 2949,
-   "sha256": "ea3f8dd597198c2fce9879a39b761008945ae0e23695b0e712b3c7e59a70b08c"
+   "bytes": 1174,
+   "sha256": "1571a7c0ba72f68a50643b80d15dc03305032a1101bc17d30d97d01eac582b57"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -905,6 +905,11 @@
    "path": "qa/pilot05/COORDINATION_WAVE5.md",
    "bytes": 5768,
    "sha256": "cf90ecc1b4014b4e71a71189d33272e25b92e482bfa3832318a0a0a5fcc895a4"
+  },
+  {
+   "path": "qa/pilot05/COORDINATION_WAVE6.md",
+   "bytes": 6667,
+   "sha256": "317e450c134967ff7e75b0ff7d54792e9655cf480691fab9076a4a7f84108c01"
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
@@ -1760,6 +1765,11 @@
    "path": "qa/pilot05/wave5/water/regress/07.png",
    "bytes": 1786287,
    "sha256": "a9f709fb528491a919e4e88d871558a3cbd2555a00dd3d7a40818852bcdaeeca"
+  },
+  {
+   "path": "qa/pilot05/wave6/current/05.png",
+   "bytes": 1975103,
+   "sha256": "2c9a583dcf8eb9d87638e77a393adf6e187b0e846756524c3156ed16bc8a578a"
   },
   {
    "path": "qa/report_metrics.json",
