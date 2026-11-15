@@ -215,7 +215,16 @@ export function buildEnvironment(course: Course): Environment {
     relief: { corrugation: 0.05, bevel: 0.05, bevelWidth: 0.12 }, rimColor: '#ff5fe0', rimStrength: 0.9,
     envMap: tubeEnv, envMapIntensity: 1.0, farGlow: wallGlow,
   } as const;
-  const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: slotRowsPerBay / ringSpacing, slotHalf: [0.36, 0.12] });
+  // STAGE ANCHORS (wave 6): the 06/07 ring bays, hood lids and slot rows are laid out from the 06 STAGE
+  // START, not from the 05 start, so reshaping the 05 river (which changes its arc length) never slides the
+  // 06/07 rings, lids or slot rows along the tube. The phases reproduce the pre-wave-6 layout exactly
+  // (measured on that course: first 06/07 ring 5.5644 u after the 06 start; slot-row phase 0.96618 there).
+  const s06 = course.stage('06').s0;
+  const RING06_PHASE = 5.5643876;
+  const ROW06_PHASE = 0.9661842;
+  const rowRepeat0607 = slotRowsPerBay / ringSpacing;
+  const rowOffset0607 = (((ROW06_PHASE - s06 * rowRepeat0607) % 1) + 1) % 1;
+  const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: rowRepeat0607, offsetV: rowOffset0607, slotHalf: [0.36, 0.12] });
   withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
   // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
   const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
@@ -276,14 +285,13 @@ export function buildEnvironment(course: Course): Environment {
     return m;
   };
   const ringMat05 = gold05('ring05', false);
-  const ringPhase = 7.8;
   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
   const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
   // gold junction collar 04→05 (slightly heavier)
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
   zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05 }));
   const rings0607: number[] = [];
-  for (let s = s05 + ringPhase; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
+  for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
   zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
   // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
   // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
@@ -311,7 +319,7 @@ export function buildEnvironment(course: Course): Environment {
   zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];
-  for (let s = s05 + ringPhase + ringSpacing * 0.5; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
+  for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
   zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
 
   // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----

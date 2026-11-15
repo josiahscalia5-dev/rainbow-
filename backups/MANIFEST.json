@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4396,
-   "sha256": "f297dba3eac4cc396a4ba9b851b642349caf05183521a1ea542dfe7e355d94e6"
+   "sha256": "33d5a35658fcb6825615cb8b5ea5282ce0ecf9abf15b0d9e5e7ab19d7d714872"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1176,
-   "sha256": "e7fcac31191eb3bac563c5d2ff7b667bc526d517eead536143815b628d8e5dcb"
+   "bytes": 5171,
+   "sha256": "0472803a12f834f0ca761fa0d2075d6331a204a981f7e995baf4e344400853ff"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1892,9 +1892,19 @@
    "sha256": "2c9a583dcf8eb9d87638e77a393adf6e187b0e846756524c3156ed16bc8a578a"
   },
   {
+   "path": "qa/pilot05/wave6/director/crops/banks_ref_vs_game.png",
+   "bytes": 4399826,
+   "sha256": "b04b78ffc4a81627661155cc900ccf693b83b33309e4abdfb09091137c584577"
+  },
+  {
    "path": "qa/pilot05/wave6/director/crops/benny_ref_vs_game.png",
    "bytes": 775866,
    "sha256": "06f832bf5ae3ff9f2659a09aa7761d7243608ba4a0548170e7c856f8d2ac0c04"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/classmap_ref_vs_game.png",
+   "bytes": 279985,
+   "sha256": "60393d129e1886fb62a0c5747141504f848685f3c0372de160de4e481239bb8c"
   },
   {
    "path": "qa/pilot05/wave6/director/crops/corner_bl_ref_vs_game.png",
@@ -1932,9 +1942,24 @@
    "sha256": "3dc657eb7c1ac15e467278c70e94c04373c07c95f0238bb2358397cb1876aeb7"
   },
   {
+   "path": "qa/pilot05/wave6/director/crops/row_strips_ref_vs_game.png",
+   "bytes": 1436672,
+   "sha256": "ded718687278d7c209f3947e547c6889e16b4b3463e1f6c4385eca4ae99283ab"
+  },
+  {
    "path": "qa/pilot05/wave6/director/crops/tunnel_upper_ref_vs_game.png",
    "bytes": 1564761,
    "sha256": "cf83312a790d014ecb86ac462b9c3ad73129891d700f20cd6cfb3a18028592b8"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/vp_coins_x4_ref_vs_game.png",
+   "bytes": 929738,
+   "sha256": "c1fd6888a86732f4ca28682fb6e4f09e0bf63fea3a4c804b2e11e236972ecf33"
+  },
+  {
+   "path": "qa/pilot05/wave6/director/crops/vp_core_x6_ref_vs_game.png",
+   "bytes": 495962,
+   "sha256": "fbe475f2aef6200b50423361c61f307b9edb83e5f187ba025dc0ef2589c0d58c"
   },
   {
    "path": "qa/pilot05/wave6/director/crops/vp_rings_ref_vs_game.png",
@@ -2055,6 +2080,31 @@
    "path": "qa/pilot05/wave6/proof/report/metrics.md",
    "bytes": 442,
    "sha256": "6aa1cadf7691059b46f08019256c3151c900bca51ab3793f0600ed558406e128"
+  },
+  {
+   "path": "qa/pilot05/wave6/regress0408/now/04.png",
+   "bytes": 1010213,
+   "sha256": "17eb365be507810d1ca2d47eaa42ceeab19a728132683f008a92008759f3b4a3"
+  },
+  {
+   "path": "qa/pilot05/wave6/regress0408/now/05.png",
+   "bytes": 1977860,
+   "sha256": "f7c0619dda98d8b92144baffa815845ccfc6c8881c3c6e9e2bb229eef516d9f7"
+  },
+  {
+   "path": "qa/pilot05/wave6/regress0408/now/06.png",
+   "bytes": 1494603,
+   "sha256": "e9854426ba7fe399c3026130c2dc905f416179fd243981fbcf662e6bb13be948"
+  },
+  {
+   "path": "qa/pilot05/wave6/regress0408/now/07.png",
+   "bytes": 1785502,
+   "sha256": "536d6a3a800f75e8697346dce850a2d2c501cd6656e8eaa66263c5afdf118ca1"
+  },
+  {
+   "path": "qa/pilot05/wave6/regress0408/now/08.png",
+   "bytes": 1430847,
+   "sha256": "5297e3644c336781270807d9995e59e24b42bed90ce9d3fdfbca5d857cc367fe"
   },
   {
    "path": "qa/pilot05/wave6/water/NOTES.md",
@@ -2678,13 +2728,13 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 29093,
-   "sha256": "4f790cea6d15299dfb7fd16010efb553ade346a66c5b24682287321a2d7861b5"
+   "bytes": 28763,
+   "sha256": "f7c032e47e1d0e2fbdbe2d4a292a3adac4288f94ad1aa9df771da8da1e56293a"
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 42968,
-   "sha256": "ddd8c1508675fc91d598076c465352c7ff30db81ca38d27f472b618155e78e1c"
+   "bytes": 43654,
+   "sha256": "792608a585c338cdd693126ebfd502c58cd86e40813d191f561348118a277925"
   },
   {
    "path": "src/world/laundryRoom.ts",

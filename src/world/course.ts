@@ -164,21 +164,16 @@ const KNOTS05: [number, number][] = [[U05_KEEP, meander05Sine(U05_KEEP)], ...MEA
 const SLOPE05_KEEP = (meander05Sine(U05_KEEP + 1e-3) - meander05Sine(U05_KEEP - 1e-3)) / 2e-3;
 
 /**
- * ARC-LENGTH KEEPER: a right swing over u 56–72 (sin², zero value and slope at both ends). At the 05
- * checkpoint this stretch lies behind the forced-perspective far tunnel (depth > 54), so it is not in the
- * approved frame; its amplitude is solved (secant on Course.length) so the whole route keeps EXACTLY the old length 435.193 (05 line: old 72.977 vs
- * knots-only 72.225 along the line). Without it every downstream s (06/07/plunge/08 rings, coins, water
- * phase) would slide by 0.75 u — e.g. a gold ring band jumped in front of Benny in the 06 frame.
+ * lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line.
+ * The refit makes the 05 river ≈0.78 u shorter than the old sine, so every s after 05 is ≈0.78 smaller.
+ * That is harmless by design: world positions after 05 are unchanged (the route points are absolute), stages,
+ * marks and checkpoints are index/stage-relative, coins are stage-relative, and the 06/07 rings, lids and
+ * slot rows are anchored to the 06 stage start (environment.ts STAGE ANCHORS). No length-compensating bend.
  */
-const LEN05_SWING = { u0: 56, u1: 72, amp: 2.120304 };
-
-/** lateral offset (units, + = world +X = rider's right when heading -Z) of the 05 stream from its tunnel line */
 export function meander05(u: number): number {
   if (u <= 0 || u >= S05.L) return 0;
   if (u <= U05_KEEP) return meander05Sine(u);
-  const { u0, u1, amp } = LEN05_SWING;
-  const swing = u > u0 && u < u1 ? amp * Math.sin((Math.PI * (u - u0)) / (u1 - u0)) ** 2 : 0;
-  return hermiteKnots(KNOTS05, u, SLOPE05_KEEP) + swing;
+  return hermiteKnots(KNOTS05, u, SLOPE05_KEEP);
 }
 
 /** Generates the dense control polyline of the route (absolute coordinates). */
