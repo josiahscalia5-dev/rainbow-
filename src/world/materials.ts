@@ -48,6 +48,17 @@ export interface PerforatedOptions {
   /** dedicated reflection environment (e.g. washerTubeEnv()) instead of scene.environment */
   envMap?: THREE.Texture | null;
   envMapIntensity?: number;
+  /**
+   * forced-perspective section (05 far tunnel): the geometry carries a per-vertex `fgExtra` attribute =
+   * virtual minus real depth, so the distance glow / mid tint behave as if the tunnel ran on for hundreds
+   * of units (see buildForcedTunnel in tube.ts)
+   */
+  virtualDepth?: boolean;
+  /**
+   * paint a far stream on the tunnel floor (forced-perspective section only): band centred on the
+   * bottom (uv.x = 0.5), half width in uv.x, visible beyond `from` virtual units
+   */
+  river?: { halfWidth: number; from: number; core: THREE.ColorRepresentation; band: THREE.ColorRepresentation; foam: THREE.ColorRepresentation };
 }
 
 export interface FarGlow {
@@ -56,10 +67,24 @@ export interface FarGlow {
   mid?: { color: THREE.ColorRepresentation; near: number; far: number; amount: number };
 }
 
-/** GLSL for the distance glow, shared by the tube wall, rings and lids */
+/** GLSL for the distance glow, shared by the tube wall, rings and lids. With FG_VIRTUAL the distance is the
+ *  forced-perspective (virtual) depth: real view distance + the per-vertex/per-instance `fgExtra`. */
 const FAR_GLOW_PARS = `uniform vec3 uFarGlowColor; uniform vec3 uFarGlowRange; uniform vec3 uMidTint; uniform vec3 uMidRange;
-float farGlowK(){ return uFarGlowRange.z * smoothstep(uFarGlowRange.x, uFarGlowRange.y, length(vViewPosition)); }
-float midTintK(){ return uMidRange.z * smoothstep(uMidRange.x, uMidRange.y, length(vViewPosition)); }`;
+#ifdef FG_VIRTUAL
+varying float vFgExtra;
+float fgDist(){ return length(vViewPosition) + vFgExtra; }
+#else
+float fgDist(){ return length(vViewPosition); }
+#endif
+float farGlowK(){ float k = smoothstep(uFarGlowRange.x, uFarGlowRange.y, fgDist()); return uFarGlowRange.z * k * k; }
+float midTintK(){ return uMidRange.z * smoothstep(uMidRange.x, uMidRange.y, fgDist()); }`;
+/** vertex side of FG_VIRTUAL: `fgExtra` is a plain attribute on tube geometry, an instanced one on rings/lids */
+const FG_VIRTUAL_VERT_PARS = `#ifdef FG_VIRTUAL
+attribute float fgExtra; varying float vFgExtra;
+#endif`;
+const FG_VIRTUAL_VERT = `#ifdef FG_VIRTUAL
+vFgExtra = fgExtra;
+#endif`;
 /** `solid` = 0 inside perforation holes (they stay dark), 1 on metal */
 const FAR_GLOW_APPLY = (solid = '1.0') => `{ float sol = ${solid}; float mt = midTintK() * sol; diffuseColor.rgb = mix(diffuseColor.rgb, uMidTint, mt); totalEmissiveRadiance *= 1.0 - mt * 0.5;
   float fg = farGlowK(); diffuseColor.rgb = mix(diffuseColor.rgb, uFarGlowColor, min(1.0, fg * 0.5) * sol); totalEmissiveRadiance += uFarGlowColor * fg * mix(0.35, 1.0, sol); }`;
@@ -77,12 +102,18 @@ function farGlowUniforms(g: FarGlow) {
  * Adds the warm distance glow to any MeshStandardMaterial (rings, lids). The far end of the tube melts
  * into a bright warm vanishing point like refs 05/07 without adding scene lights (mobile-friendly).
  */
-export function withFarGlow<T extends THREE.MeshStandardMaterial>(mat: T, g: FarGlow, key: string): T {
+export function withFarGlow<T extends THREE.MeshStandardMaterial>(mat: T, g: FarGlow, key: string, virtualDepth = false): T {
   const uniforms = farGlowUniforms(g);
   const prev = mat.onBeforeCompile;
+  if (virtualDepth) mat.defines = { ...(mat.defines ?? {}), FG_VIRTUAL: '' };
   mat.onBeforeCompile = (shader, r) => {
     prev.call(mat, shader, r);
     Object.assign(shader.uniforms, uniforms);
+    if (virtualDepth) {
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\n' + FG_VIRTUAL_VERT_PARS)
+        .replace('#include <project_vertex>', '#include <project_vertex>\n' + FG_VIRTUAL_VERT);
+    }
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', '#include <common>\n' + FAR_GLOW_PARS)
       .replace(
@@ -92,7 +123,7 @@ ${FAR_GLOW_APPLY()}`,
       );
   };
   const prevKey = mat.customProgramCacheKey.bind(mat);
-  mat.customProgramCacheKey = () => prevKey() + '|fg-' + key;
+  mat.customProgramCacheKey = () => prevKey() + '|fg2-' + key + (virtualDepth ? '-v' : '');
   mat.userData.farGlow = uniforms;
   return mat;
 }
@@ -180,6 +211,12 @@ export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMa
   });
   if (o.envMap) mat.envMap = o.envMap;
   const relief = o.relief;
+  // mean hole coverage of one cell (capsule area / cell area): sub-pixel slot rows fade to this instead
+  // of aliasing into moiré stripes down the tunnel
+  const hs = o.slotHalf ?? [((o.holeSize ?? 0.42) * ((o.slot ?? 1) ? 0.62 : 0.5)), ((o.holeSize ?? 0.42) * ((o.slot ?? 1) ? 0.24 : 0.5))];
+  const rr = Math.min(hs[0], hs[1]);
+  const holeCover = THREE.MathUtils.clamp(4 * hs[0] * hs[1] - (4 - Math.PI) * rr * rr, 0, 1);
+  const river = o.river;
   const uniforms = {
     uHoleColor: { value: new THREE.Color(o.holeColor ?? '#2b0640') },
     uSlot: { value: o.slot ?? 1 },
@@ -193,18 +230,25 @@ export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMa
     uRelief: { value: new THREE.Vector3(relief?.corrugation ?? 0, relief?.bevel ?? 0, relief?.bevelWidth ?? 0.09) },
     uRimColor: { value: new THREE.Color(o.rimColor ?? '#ffd1ff') },
     uRimStrength: { value: o.rimStrength ?? 0.55 },
+    uHoleCover: { value: holeCover },
+    uRiver: { value: new THREE.Vector2(river?.halfWidth ?? 0, river?.from ?? 0) },
+    uRiverCore: { value: new THREE.Color(river?.core ?? '#000000') },
+    uRiverBand: { value: new THREE.Color(river?.band ?? '#000000') },
+    uRiverFoam: { value: new THREE.Color(river?.foam ?? '#000000') },
     ...(o.farGlow ? farGlowUniforms(o.farGlow) : {}),
   };
   const defines: Record<string, string> = {};
   if (relief) defines.PERF_RELIEF = '';
   if (o.farGlow) defines.PERF_FARGLOW = '';
+  if (o.farGlow && o.virtualDepth) defines.FG_VIRTUAL = '';
+  if (river && o.farGlow && o.virtualDepth) defines.PERF_RIVER = '';
   mat.defines = defines;
   mat.userData.perfUniforms = uniforms;
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec2 vPerfUv;')
-      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvPerfUv = uv;');
+      .replace('#include <common>', '#include <common>\nvarying vec2 vPerfUv;\n' + FG_VIRTUAL_VERT_PARS)
+      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvPerfUv = uv;\n' + FG_VIRTUAL_VERT);
     shader.fragmentShader = shader.fragmentShader
       .replace(
         '#include <common>',
@@ -212,6 +256,7 @@ export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMa
 varying vec2 vPerfUv;
 uniform vec3 uHoleColor; uniform float uSlot; uniform vec2 uRepeat; uniform float uHoleSize; uniform float uStreaks;
 uniform vec3 uRelief; uniform vec3 uRimColor; uniform float uRimStrength; uniform float uStreakN; uniform vec2 uSlotHalf; uniform float uStagger; uniform float uOffsetV;
+uniform float uHoleCover; uniform vec2 uRiver; uniform vec3 uRiverCore; uniform vec3 uRiverBand; uniform vec3 uRiverFoam;
 #ifdef PERF_FARGLOW
 ${FAR_GLOW_PARS}
 #endif
@@ -249,6 +294,13 @@ float perfHeight(vec2 g){
         '#include <color_fragment>',
         `#include <color_fragment>
 float perfRim; float perfHole = perfMask(vPerfUv, perfRim);
+#ifdef PERF_RELIEF
+{ // washer tubes: once a slot cell gets sub-pixel, settle to the mean coverage (no moiré down the tunnel)
+  float cpx = length(fwidth(perfCell(vPerfUv)));
+  perfHole = mix(perfHole, uHoleCover, smoothstep(0.3, 0.85, cpx));
+  perfRim *= 1.0 - smoothstep(0.2, 0.6, cpx);
+}
+#endif
 float streak = pow(0.5 + 0.5 * sin(vPerfUv.x * 6.2831 * uStreakN + 1.3), 18.0) * uStreaks;
 diffuseColor.rgb = mix(diffuseColor.rgb * (1.0 + streak), uHoleColor, perfHole);`,
       )
@@ -294,10 +346,26 @@ roughnessFactor = mix(roughnessFactor, 0.9, perfHole);`,
 totalEmissiveRadiance = totalEmissiveRadiance * (1.0 - perfHole) + uRimColor * perfRim * uRimStrength * (1.0 - perfHole) + vec3(1.0,0.9,1.0) * streak * 0.6;
 #ifdef PERF_FARGLOW
 ${FAR_GLOW_APPLY('1.0 - perfHole')}
+#endif
+#ifdef PERF_RIVER
+{ // far stream painted on the floor of the forced-perspective section: thin winding cyan core, hot-pink
+  // bands, white foam lips, warming into the vanishing-point glow
+  float du = vPerfUv.x - 0.5 - 0.022 * sin(vPerfUv.y * 0.045 + 1.1);
+  float t = abs(du) / uRiver.x;
+  float on = (1.0 - smoothstep(0.9, 1.0, t)) * smoothstep(uRiver.y, uRiver.y + 8.0, vPerfUv.y);
+  vec3 rc = mix(uRiverCore, uRiverBand, smoothstep(0.3, 0.46, t));
+  rc = mix(rc, uRiverFoam, smoothstep(0.72, 0.84, t));
+  float rfg = farGlowK();
+  rc = mix(rc, uFarGlowColor, min(0.85, rfg * 0.5));
+  diffuseColor.rgb = mix(diffuseColor.rgb, rc * 0.35, on);
+  metalnessFactor = mix(metalnessFactor, 0.0, on);
+  roughnessFactor = mix(roughnessFactor, 0.3, on);
+  totalEmissiveRadiance = mix(totalEmissiveRadiance, rc * 0.8, on);
+}
 #endif`,
       );
   };
-  mat.customProgramCacheKey = () => 'perf-v3' + (relief ? '-r' : '') + (o.farGlow ? '-g' : '');
+  mat.customProgramCacheKey = () => 'perf-v4' + (relief ? '-r' : '') + (o.farGlow ? '-g' : '') + (o.farGlow && o.virtualDepth ? '-v' : '') + (river && o.farGlow && o.virtualDepth ? '-w' : '');
   return mat;
 }
 
@@ -331,8 +399,10 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
   };
   // Smooth base only: the strip lights are analytic (withTubeStrips), because grazing wall reflections all
   // look almost straight down the tunnel, where a cube map's meridian strips pinch together and blur.
-  const cBaseTop = isGold ? new THREE.Color(0.62, 0.24, 0.07) : new THREE.Color(0.62, 0.05, 0.42);
-  const cBaseLow = isGold ? new THREE.Color(0.3, 0.09, 0.05) : new THREE.Color(0.22, 0.05, 0.55);
+  // gold (wave 4): warm yellow-white above (polished yellow-gold mids/highlights, ref #F4B70F…#FCE082),
+  // copper only toward the floor (shadowed side); was amber 0.62/0.24/0.07 → saturated orange rings
+  const cBaseTop = isGold ? new THREE.Color(0.78, 0.56, 0.24) : new THREE.Color(0.5, 0.04, 0.36);
+  const cBaseLow = isGold ? new THREE.Color(0.26, 0.09, 0.04) : new THREE.Color(0.17, 0.035, 0.44);
   const radiance = (d: THREE.Vector3, out: THREE.Color) => {
     const up = d.y;
     // base: magenta above, violet toward the floor
@@ -341,10 +411,10 @@ export function washerTubeEnv(variant: 'wall' | 'gold' = 'wall'): THREE.CubeText
     const ahead = Math.max(0, -d.z);
     if (isGold) {
       const hot = Math.pow(ahead, 60), wide = Math.pow(ahead, 6);
-      out.r += 2.4 * hot + 0.3 * wide; out.g += 2.0 * hot + 0.16 * wide; out.b += 1.0 * hot + 0.04 * wide;
+      out.r += 2.0 * hot + 0.16 * wide; out.g += 1.85 * hot + 0.12 * wide; out.b += 1.1 * hot + 0.04 * wide;
     } else {
       const wide = Math.pow(ahead, 6);
-      out.r += 0.05 * wide; out.g += 0.02 * wide; out.b += 0.25 * wide; // violet haze down the tunnel
+      out.r += 0.04 * wide; out.g += 0.015 * wide; out.b += 0.2 * wide; // violet haze down the tunnel
     }
     return out;
   };
@@ -389,10 +459,12 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
   return new THREE.ShaderMaterial({
     uniforms: {
       uFade: { value: fade },
-      uCore: { value: new THREE.Color(3.4, 3.0, 2.0) },
-      uGold: { value: new THREE.Color(2.3, 1.35, 0.32) },
-      uWarm: { value: new THREE.Color(1.05, 0.34, 0.3) },
-      uRim: { value: new THREE.Color(0.36, 0.05, 0.42) },
+      uOpacity: { value: 1 },
+      // wave 4: small golden-white hot spot (ref 05 VP), no pink-orange disc
+      uCore: { value: new THREE.Color(3.2, 3.05, 2.5) },
+      uGold: { value: new THREE.Color(2.5, 1.95, 0.85) },
+      uWarm: { value: new THREE.Color(1.5, 0.95, 0.42) },
+      uRim: { value: new THREE.Color(0.9, 0.5, 0.36) },
     },
     vertexShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec4 uFade;
       void main(){
@@ -401,13 +473,13 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
         vFade = smoothstep(uFade.x, uFade.y, d) * (1.0 - smoothstep(uFade.z, uFade.w, d));
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }`,
-    fragmentShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec3 uCore; uniform vec3 uGold; uniform vec3 uWarm; uniform vec3 uRim;
+    fragmentShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec3 uCore; uniform vec3 uGold; uniform vec3 uWarm; uniform vec3 uRim; uniform float uOpacity;
       void main(){
         float r = length(vUv - 0.5) * 2.0;
-        vec3 c = mix(uRim, uWarm, smoothstep(0.92, 0.5, r));
-        c = mix(c, uGold, smoothstep(0.6, 0.18, r));
-        c = mix(c, uCore, smoothstep(0.26, 0.0, r));
-        float a = (1.0 - smoothstep(0.7, 1.0, r)) * vFade;
+        vec3 c = mix(uRim, uWarm, smoothstep(1.0, 0.6, r));
+        c = mix(c, uGold, smoothstep(0.7, 0.3, r));
+        c = mix(c, uCore, smoothstep(0.38, 0.0, r));
+        float a = (1.0 - smoothstep(0.82, 1.0, r)) * vFade * uOpacity;
         if (a < 0.003) discard;
         gl_FragColor = vec4(c, a);
         #include <tonemapping_fragment>

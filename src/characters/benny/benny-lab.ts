@@ -83,10 +83,27 @@ interface Panel {
               { name: 'back', yaw: Math.PI, pitch: 0.08, dist: 5.4, expr: 'happy', swim: 0, fov: 35, tumble: false },
               { name: 'rear-high', yaw: Math.PI * 0.92, pitch: 0.5, dist: 5.4, expr: 'happy', swim: 0.8, fov: 35, tumble: false },
             ];
+    if (views === 'cmp') {
+      // wave 4 identity check, 432×768 each: live 05 rear camera (as g05) · 03-like front ¾ from 30° above WHILE
+      // riding (ride lean active) · front at rest (lean off) · side at rest · 02 dizzy tumble
+      const g = (() => {
+        const p = Math.atan2(3.6 + 1.92, 18 + 6.4), y = THREE.MathUtils.degToRad(2.96);
+        const pos: [number, number, number] = [-0.5, 3.13, -6.585];
+        const look = [Math.cos(p) * Math.sin(y), -Math.sin(p), Math.cos(p) * Math.cos(y)];
+        return { pos, target: [pos[0] + look[0] * 24, pos[1] + look[1] * 24, pos[2] + look[2] * 24] as [number, number, number] };
+      })();
+      panels.splice(0, panels.length,
+        { name: 'g05', yaw: 0, pitch: 0, dist: 0, expr: 'happy', swim: 1, fov: 62, tumble: false, cam: g },
+        { name: '03-ride', yaw: 0.55, pitch: 0.52, dist: 4.6, expr: 'happy', swim: 1, fov: 40, tumble: false },
+        { name: 'front', yaw: 0.2, pitch: 0.1, dist: 4.6, expr: 'happy', swim: 0, fov: 40, tumble: false },
+        { name: 'side', yaw: -Math.PI / 2, pitch: 0.1, dist: 4.6, expr: 'happy', swim: 0, fov: 40, tumble: false },
+        { name: '02-dizzy', yaw: 0.0, pitch: 0.05, dist: 4.4, expr: 'dizzy', swim: 0, fov: 40, tumble: true },
+      );
+    }
     const g05 = views === 'g05';
     const measure = views === 'measure' || g05;
-    const PW = g05 ? 864 : views === 'refs' || views === 'game' || measure ? 432 : 360;
-    const PH = g05 ? 1536 : views === 'refs' || views === 'game' || measure ? 768 : 520;
+    const PW = g05 ? 864 : views === 'refs' || views === 'game' || views === 'cmp' || measure ? 432 : 360;
+    const PH = g05 ? 1536 : views === 'refs' || views === 'game' || views === 'cmp' || measure ? 768 : 520;
     const W = PW * panels.length, H = PH;
     const canvas = document.getElementById('lab') as HTMLCanvasElement;
     const renderer = createRenderer(canvas, { preserveDrawingBuffer: true });
@@ -96,7 +113,7 @@ interface Panel {
     const scene = new THREE.Scene();
     scene.environment = createCandyEnvironment(renderer);
     const maskBg = q.has('bennyMask') ? '#808080' : null;
-    scene.background = new THREE.Color(maskBg ?? (views === 'turntable' ? '#3a1060' : g05 ? '#29a8e8' : measure ? '#00ff00' : '#c0369c'));
+    scene.background = new THREE.Color(maskBg ?? (views === 'turntable' ? '#3a1060' : g05 || views === 'cmp' ? '#29a8e8' : measure ? '#00ff00' : '#c0369c'));
     scene.add(new THREE.HemisphereLight('#ffe9ff', '#7a2a9c', 1.1));
     const key = new THREE.DirectionalLight('#ffffff', 2.2);
     key.position.set(3, 6, 5);
@@ -105,7 +122,7 @@ interface Panel {
     rim.position.set(-4, 2, -5);
     scene.add(rim);
     // an opaque cyan "water" plane at the game's ride height (refs / game views)
-    if (views !== 'turntable') {
+    if (views !== 'turntable' && views !== 'cmp') {
       const water = new THREE.Mesh(
         new THREE.CircleGeometry(40, 64),
         measure

@@ -25,25 +25,27 @@ export const BENNY_DIMS = {
   skin: 0.7,
   fur: 0.12,
   radius: 0.8,
-  /** lower-body bulge (radial gain at its peak) — the plush ball is widest below the brim (refs 05/07/10) */
-  pear: 0.09,
+  /** lower-body bulge (radial gain at its peak): a full round plush ball below the cuff, not a bowl (ref 05 rear:
+   *  body ≈ as wide as the cuff from the cuff down to the water) */
+  pear: 0.13,
   /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y < 0) */
   stretch: 0.1,
-  /** beanie tipped FORWARD (rad, about X; + = front down): the back of the cuff sits high on the ball so the rear
-   *  ride cameras see the round plush ball below it (ref 05: body ≈ 38 % of the visible height), while the front
-   *  brim stays just above the eyes (refs 02/03) */
-  hatTilt: 0.09,
-  /** hat-local cuff bottom: back edge ≈ +0.49, front ≈ +0.33 above the ball centre (wave 3; was 0.24 → 0.19/0.29) */
-  brimBottom: 0.4,
+  /** beanie tilt (rad, about X; + = front down). Wave 4: back to a slight backward tilt so the front brim clears the
+   *  eyes (refs 02/03); the rear ride views get their low, level look from the runtime's ride lean instead
+   *  (runtime.ts BENNY_RIDE_PITCH), not from tipping the hat over his face */
+  hatTilt: -0.04,
+  /** hat-local cuff bottom (front ≈ +0.25, back ≈ +0.19 above the ball centre). Wave 4: the beanie sits DOWN on the
+   *  head again (wave 3's 0.40 perched it like a small cap and pushed the pom 60 px above the ref) */
+  brimBottom: 0.22,
   /** cuff outer radius ≈ the fluffy body half-width (rear refs 05/07/09/10: cuff as wide as the body) */
   brimR: 0.8,
-  /** folded cuff band height (ref 05 at ≈12° camera elevation: 51 px band on a 293 px wide cuff ≈ 0.17) */
+  /** folded cuff band height (ref 05: 55 px band on a 295 px wide cuff) */
   cuffH: 0.265,
-  /** crown dome height above its base (inside the cuff). Short: in the rear refs the visible crown (W·P·W) is
-   *  ≈ 0.27 × the cuff width and the pom-pom sits right on it (the old 0.54 crown showed a big purple cap) */
-  crownH: 0.44,
-  /** pom-pom core radius; the shell fur adds ≈ 0.08 visible → ≈ 0.5 × the cuff width (ref 05: 140–150 px / 293) */
-  pomR: 0.33,
+  /** crown dome height above its base (inside the cuff). Wave 4: taller rounded dome (ref 05 rear: ≈ 95 px of knit
+   *  between the cuff and the pom, the old 0.44 showed 76 px) */
+  crownH: 0.53,
+  /** pom-pom core radius; the shell fur adds ≈ 0.1 → ≈ 0.5 × the cuff width (ref 05: ≈ 140–150 px / 295) */
+  pomR: 0.31,
 };
 
 /**
@@ -179,7 +181,9 @@ export function buildBenny(): BuiltModel {
     root: C.pinkRoot,
     tip: C.pinkTip,
     // bald under the beanie: dot(normal, hatUp) > brimBottom/skin (+ a little overlap)
-    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.03) / D.skin],
+    // (wave 4: +0.07 → full-length fur tucks under the cuff edge; +0.03 left a bare pink collar under the cuff once
+    // the ride lean shows the back of the ball)
+    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.07) / D.skin],
     short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0.26],
     gravity: 0.1,
   });
@@ -250,25 +254,25 @@ export function buildBenny(): BuiltModel {
   const armMat = std({ color: C.pinkSkin, roughness: 0.92 });
   const palmTex = soleTexture('hand');
   for (const side of [1, -1] as const) {
-    // round paw nubs stick out left/right just under the cuff (rear refs 05/07/10: nub centres ≈ 10 px below the
-    // cuff's bottom edge, rows ≈ −30…+50 px around it on a 283 px cuff). Joint raised with the perched beanie
-    // (wave 3: −0.01 → +0.1); the swim paddle (z up to +0.45) still clears the cuff.
-    const a = joint(side > 0 ? 'armL' : 'armR', 0.71 * side, 0.1, 0.0);
+    // round paw nubs stick out left/right just under the cuff (rear ref 05: ≈ 53 px round balls, centres ≈ 35 px
+    // below the cuff's side corners and ≈ 0.92 cuff-half-widths out). Wave 4: a near-sphere with short dense fur
+    // (was a 1.25× elongated ellipsoid with long drooping fur that read as fuzzy wings from behind).
+    const a = joint(side > 0 ? 'armL' : 'armR', 0.71 * side, -0.06, 0.0);
     body.add(a);
-    const phi = 1.15 * side;
+    const phi = 1.3 * side;
     const dir = new THREE.Vector3(Math.sin(phi), -Math.cos(phi), 0);
-    const g = new THREE.SphereGeometry(0.135, 20, 14);
-    g.scale(1, 1.25, 1);
+    const g = new THREE.SphereGeometry(0.13, 20, 14);
+    g.scale(1, 1.06, 1);
     const arm = named(new THREE.Mesh(g, armMat), side > 0 ? 'fur_armL' : 'fur_armR');
-    arm.position.copy(dir).multiplyScalar(0.2);
+    arm.position.copy(dir).multiplyScalar(0.18);
     arm.rotation.z = phi;
-    arm.userData = furData({ length: 0.08, density: 84, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.15 });
+    arm.userData = furData({ length: 0.055, density: 96, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.04 });
     a.add(arm);
     const palm = named(
       new THREE.Mesh(new THREE.CircleGeometry(0.07, 24), std({ map: palmTex, roughness: 0.6 })),
       side > 0 ? 'palmL' : 'palmR',
     );
-    palm.position.copy(dir).multiplyScalar(0.29).add(new THREE.Vector3(0, -0.01, 0.105));
+    palm.position.copy(dir).multiplyScalar(0.24).add(new THREE.Vector3(0, -0.01, 0.1));
     palm.rotation.x = -0.25;
     a.add(palm);
   }
@@ -340,7 +344,9 @@ export function buildBenny(): BuiltModel {
   const R0 = 0.705 * bk;
   const crownProfile: [number, number][] = [];
   for (const t of [0, 0.08, 0.16, 0.25, 0.34, 0.43, 0.52, 0.6, 0.68, 0.75, 0.81, 0.86, 0.9, 0.935, 0.96, 0.98, 0.993, 1]) {
-    crownProfile.push([R0 * Math.sqrt(Math.max(0, 1 - t * t)), crownY0 + t * D.crownH]);
+    // wave 4: × (1 − 0.18 t) tapers the shoulders (ref 05 rear: dome half-width ≈ 0.85 / 0.77 / 0.66 / 0.54 of the
+    // cuff's at 0 / 0.11 / 0.27 / 0.38 above the cuff top: a rounded beehive, not a flat-topped mushroom)
+    crownProfile.push([R0 * Math.sqrt(Math.max(0, 1 - t * t)) * (1 - 0.18 * t), crownY0 + t * D.crownH]);
   }
   const crown = named(
     new THREE.Mesh(lathe(crownProfile, 72, crownY0, crownY0 + D.crownH, CROWN_REPEAT), crownMat),
@@ -352,7 +358,7 @@ export function buildBenny(): BuiltModel {
   // above the cuff's top edge, ≈ 0.27 × the cuff width across, its lower points overlapping the cuff). Its face
   // is turned toward the back (normal 160° from the front) and leans back against the sloping crown (tilted 25°
   // up), so the rear ride cameras (10–25° above Benny) see it face-on, never edge-on.
-  const starGeo = new THREE.ExtrudeGeometry(starShape(0.18, 0.09), {
+  const starGeo = new THREE.ExtrudeGeometry(starShape(0.165, 0.083), {
     depth: 0.02,
     bevelEnabled: true,
     bevelThickness: 0.045,
@@ -365,8 +371,10 @@ export function buildBenny(): BuiltModel {
     'hat_star',
   );
   const sa = THREE.MathUtils.degToRad(143);
-  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR - 0.01), yt + 0.06, Math.cos(sa) * (D.brimR - 0.01));
-  const na = THREE.MathUtils.degToRad(160), tilt = THREE.MathUtils.degToRad(25);
+  // wave 4: centred on the cuff's top edge (ref 05: ≈ 40 % of the star on the cuff, the rest on the white band);
+  // leans back only 12° because the runtime's ride lean (≈ 13°) tips it the rest of the way toward the chase camera
+  const starPos = new THREE.Vector3(-Math.sin(sa) * (D.brimR - 0.01), yt + 0.015, Math.cos(sa) * (D.brimR - 0.01));
+  const na = THREE.MathUtils.degToRad(160), tilt = THREE.MathUtils.degToRad(12);
   const starN = new THREE.Vector3(-Math.sin(na) * Math.cos(tilt), Math.sin(tilt), Math.cos(na) * Math.cos(tilt));
   star.position.copy(starPos);
   star.lookAt(starPos.clone().add(starN));
@@ -374,11 +382,13 @@ export function buildBenny(): BuiltModel {
   hat.add(star);
   // big fluffy-round pom-pom sitting ON the crown apex (≈ 0.5 × the cuff width wide and ≈ 0.46 × tall above the
   // crown in ref 05; wave 3 raised it out of the crown and moved it back over the apex against the forward tilt)
-  const pom = joint('pom', 0, crownY0 + D.crownH + 0.19, -0.09);
+  // wave 4: core centre 0.12 above the dome apex → the lower third of the pom nests in the dome (ref 05: the top purple
+  // band shows around its base), slightly to the back so the ride lean keeps it centred over the dome
+  const pom = joint('pom', 0, crownY0 + D.crownH + 0.12, -0.05);
   hat.add(pom);
   const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.pomR, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
   // short, dense strands with little droop → a round plush ball rather than a spiky urchin
-  pomMesh.userData = furData({ length: 0.1, density: 96, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.05 });
+  pomMesh.userData = furData({ length: 0.12, density: 88, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.05 });
   pom.add(pomMesh);
 
   const animations = buildClips();

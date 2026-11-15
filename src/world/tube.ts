@@ -250,7 +250,46 @@ export function collarGeometry(depth = 0.022, lip = 0.012, width = 1.1, segments
   return g;
 }
 
-export type RingOpts = { tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number } };
+/**
+ * Ref 05 ring (wave 4): a ROUNDED gold band with a double contour — a thick half-round main band (the
+ * camera-facing body catches a bright highlight on its crown and falls to copper in its shadowed lower
+ * half) and, on the camera side (−z), a thin half-round lip separated by a narrow dark groove. Radial
+ * values are fractions of the ring radius (1 = wall), axial values world units. Lathe around local Z,
+ * traversed +z → −z so the faces point inward.
+ */
+export function roundBandGeometry(height = 0.095, width = 0.78, lipHeight = 0.045, lipWidth = 0.26, groove = 0.07, segments = 96): THREE.BufferGeometry {
+  const w = (width + groove + lipWidth) / 2;
+  const yc = w - width / 2, a = width / 2;
+  const yl = -w + lipWidth / 2, al = lipWidth / 2;
+  const pts: THREE.Vector2[] = [];
+  const dup = (x: number, y: number) => { pts.push(new THREE.Vector2(x, y), new THREE.Vector2(x, y)); };
+  pts.push(new THREE.Vector2(1.03, w));
+  dup(1.0, w);
+  for (let i = 1; i < 12; i++) {
+    const f = (i / 12) * Math.PI;
+    pts.push(new THREE.Vector2(1 - height * Math.sin(f), yc + a * Math.cos(f)));
+  }
+  dup(1.0, yc - a);
+  pts.push(new THREE.Vector2(1.0 - height * 0.04, yc - a - groove * 0.5));
+  dup(1.0, yl + al);
+  for (let i = 1; i < 7; i++) {
+    const f = (i / 7) * Math.PI;
+    pts.push(new THREE.Vector2(1 - lipHeight * Math.sin(f), yl + al * Math.cos(f)));
+  }
+  dup(1.0, -w);
+  pts.push(new THREE.Vector2(1.03, -w));
+  const g = new THREE.LatheGeometry(pts, segments);
+  g.rotateX(Math.PI / 2); // lathe axis Y → tube axis Z
+  return g;
+}
+
+export type BandOpts = { height?: number; width?: number; lipHeight?: number; lipWidth?: number; groove?: number; segments?: number };
+
+export type RingOpts = { tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number }; band?: BandOpts };
+
+export function bandGeometry(b: BandOpts): THREE.BufferGeometry {
+  return roundBandGeometry(b.height, b.width, b.lipHeight, b.lipWidth, b.groove, b.segments);
+}
 
 /** Instanced thick gold ring ribs placed perpendicular to the tube every `spacing` units. */
 export function buildRings(
@@ -269,8 +308,8 @@ export function buildRings(
 /** Same rings at an explicit list of path positions (e.g. one evenly spaced set per tunnel section). */
 export function buildRingsAt(path: TubePath, list: number[], material: THREE.Material, opts: RingOpts = {}, spacing = 9): THREE.InstancedMesh {
   const tube = opts.tube ?? 0.075;
-  const collar = opts.collar;
-  const geo = collar ? collarGeometry(collar.depth, collar.lip, collar.width, collar.segments) : new THREE.TorusGeometry(1, tube, 14, 72);
+  const collar = opts.band ?? opts.collar;
+  const geo = opts.band ? bandGeometry(opts.band) : opts.collar ? collarGeometry(opts.collar.depth, opts.collar.lip, opts.collar.width, opts.collar.segments) : new THREE.TorusGeometry(1, tube, 14, 72);
   const n = Math.max(1, list.length) * (opts.double ? 2 : 1);
   const mesh = new THREE.InstancedMesh(geo, material, n);
   const m = new THREE.Matrix4();
@@ -319,26 +358,14 @@ export function buildWallLids(
     /** explicit lid positions along the path (default: s0, s0 + spacing, … s1) */
     positions?: number[];
     /**
-     * 'hood' (legacy 06/07 D-hood) or 'dome' (ref 05 copper half-dome nozzle lid: a round half puck with
-     * a flared foot flange, a tall polished rim band and a rounded dome cap; reads as a compact fitting)
+     * 'hood' (legacy 06/07 D-hood), 'dome' (half puck with a domed cap) or 'slab' (ref 05 wave 4: a flat
+     * copper-gold half-disc lid standing out of the wall — flat underside, rounded edges, a straight
+     * polished rim band and a flat top, like the ref's wall-mounted nozzle lids)
      */
-    shape?: 'hood' | 'dome';
+    shape?: 'hood' | 'dome' | 'slab';
   } = {},
 ): THREE.InstancedMesh {
-  const h = opts.thickness ?? 0.42;
-  // bottom → top so the lathe normals face outward: recessed dish underneath with an inner lip,
-  // rounded foot, tall rim band, shoulder, domed top
-  const prof: [number, number][] = opts.shape === 'dome'
-    ? [
-      [0, 0.06], [0.62, 0.05], [0.7, 0.0], [0.86, -0.04], [1.04, -0.05], [1.08, 0.0], [1.0, 0.06],
-      [0.98, h * 0.55], [0.96, h * 0.82], [0.88, h * 1.02], [0.72, h * 1.18], [0.48, h * 1.3], [0.24, h * 1.36], [0, h * 1.38],
-    ]
-    : [
-      [0, 0.09], [0.74, 0.07], [0.82, 0.0], [0.9, -0.03], [0.97, -0.01], [1, 0.05], [1, h * 0.78], [0.95, h * 0.97], [0.82, h * 1.04], [0, h * 1.08],
-    ];
-  // half revolution (phi 0..π → local +X): the open cut face lies in the wall plane x = 0
-  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), opts.shape === 'dome' ? 24 : 28, 0, Math.PI);
-  geo.translate(0, -h * 0.5, 0);
+  const geo = wallLidGeometry(opts.shape ?? 'hood', opts.thickness ?? 0.42);
   const list: number[] = opts.positions ?? [];
   if (!opts.positions) for (let s = s0; s <= s1 + 1e-6; s += spacing) list.push(s);
   const n = Math.max(1, list.length) * 2;
@@ -373,6 +400,155 @@ export function buildWallLids(
   mesh.instanceMatrix.needsUpdate = true;
   mesh.frustumCulled = false;
   return mesh;
+}
+
+/** Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness. */
+export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segments?: number): THREE.BufferGeometry {
+  // bottom → top so the lathe normals face outward
+  const prof: [number, number][] = shape === 'dome'
+    ? [
+      [0, 0.06], [0.62, 0.05], [0.7, 0.0], [0.86, -0.04], [1.04, -0.05], [1.08, 0.0], [1.0, 0.06],
+      [0.98, h * 0.55], [0.96, h * 0.82], [0.88, h * 1.02], [0.72, h * 1.18], [0.48, h * 1.3], [0.24, h * 1.36], [0, h * 1.38],
+    ]
+    : shape === 'slab'
+      ? [
+        // flat underside with a shallow recess and an inner ring, rounded lower edge, straight rim band,
+        // rounded upper edge, flat (very slightly crowned) top
+        [0, 0.03], [0.55, 0.03], [0.62, 0.0], [0.86, 0.0], [0.95, 0.025], [0.995, 0.08], [1.0, 0.13],
+        [1.0, h - 0.13], [0.995, h - 0.08], [0.95, h - 0.025], [0.86, h], [0.45, h + 0.015], [0, h + 0.02],
+      ]
+      : [
+        [0, 0.09], [0.74, 0.07], [0.82, 0.0], [0.9, -0.03], [0.97, -0.01], [1, 0.05], [1, h * 0.78], [0.95, h * 0.97], [0.82, h * 1.04], [0, h * 1.08],
+      ];
+  // half revolution (phi 0..π → local +X): the open cut face lies in the wall plane x = 0
+  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), segments ?? (shape === 'hood' ? 28 : 24), 0, Math.PI);
+  geo.translate(0, -h * 0.5, 0);
+  return geo;
+}
+
+/** Orientation of a wall lid in a tube cross-section (see buildWallLids): radial direction to the wall
+ *  point, inward X (drooped), top normal Y, Z along the tube. */
+export function wallLidBasis(f: Frame, side: number, angDeg: number, droopDeg: number) {
+  const ang = THREE.MathUtils.degToRad(angDeg);
+  const tilt = ang + THREE.MathUtils.degToRad(droopDeg);
+  const dir = f.right.clone().multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
+  const X = f.right.clone().multiplyScalar(-Math.cos(tilt) * side).addScaledVector(f.up, -Math.sin(tilt)).normalize();
+  const Y = f.right.clone().multiplyScalar(-Math.sin(tilt) * side).addScaledVector(f.up, Math.cos(tilt)).normalize();
+  const Z = new THREE.Vector3().crossVectors(X, Y).normalize();
+  return { dir, X, Y, Z };
+}
+
+/**
+ * Forced-perspective far section of the straight 05 tunnel (ref 05: ≈10 concentric rings converging on
+ * one small hot spot — far more tunnel than the 72-unit straight holds before the 06 hall). A short real
+ * funnel, calibrated for the locked 05 checkpoint camera `eye`, reproduces what a straight tunnel of the
+ * same radius running on for `zEnd` more units would look like from there: a virtual depth Z maps to the
+ * real depth z = Z / (1 + Z/L) and every cross-section is scaled by k(Z) = (D0 + z)/(D0 + Z) about the
+ * eye's line of sight, so walls, slots, rings and lids project where the long tunnel would put them.
+ * Normals stay those of the straight cylinder, so it shades like the real tube. A `fgExtra` attribute
+ * (Z − z) lets the distance glow use the virtual depth. Morph target 0 ("open") moves every vertex just
+ * outside the real tube wall at the same depth: the section opens like an iris as the rider arrives.
+ */
+export class ForcedTunnel {
+  readonly c0: THREE.Vector3;
+  readonly T: THREE.Vector3;
+  readonly U: THREE.Vector3;
+  readonly Rt: THREE.Vector3;
+  readonly R: number;
+  readonly D0: number;
+  /** eye offset from the section's centre line, in the cross-section plane */
+  readonly q: THREE.Vector3;
+  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number) {
+    const f = path.frame(sF);
+    this.c0 = tubeCenterAt(path, sF);
+    this.T = f.tan.clone(); this.U = f.up.clone(); this.Rt = f.right.clone();
+    this.R = path.radius(sF);
+    const rel = this.c0.clone().sub(eye);
+    this.D0 = rel.dot(this.T);
+    this.q = rel.negate().addScaledVector(this.T, this.D0); // eye − c0 minus its axial part
+  }
+  zOf(Z: number) { return Z / (1 + Z / this.L); }
+  kOf(Z: number) { return (this.D0 + this.zOf(Z)) / (this.D0 + Z); }
+  /** dz/dZ: axial compression of small objects at virtual depth Z */
+  cOf(Z: number) { const a = 1 + Z / this.L; return 1 / (a * a); }
+  /** real position of the virtual point (depth Z, cross-section offset o from the tube centre line) */
+  point(Z: number, o: THREE.Vector3, out = new THREE.Vector3()) {
+    const k = this.kOf(Z);
+    return out.copy(this.c0).addScaledVector(this.T, this.zOf(Z)).add(this.q).addScaledVector(o.clone().sub(this.q), k);
+  }
+  /** virtual depth Z at which the projected radius equals `frac` of the section start's */
+  zForScreen(frac: number) { return this.D0 / frac - this.D0; }
+  /**
+   * Instance matrix for an object placed in the virtual straight tunnel (depth Z, offset o, rotation
+   * basis X/Y/Z, scale s), blended toward its `open` placement (`openPos`, `openScale` multiplier).
+   */
+  matrix(Z: number, o: THREE.Vector3, basis: THREE.Matrix4, s: THREE.Vector3, open: number, openPos: THREE.Vector3, openScale: number, out = new THREE.Matrix4()) {
+    const k = THREE.MathUtils.lerp(this.kOf(Z), openScale, open);
+    const c = THREE.MathUtils.lerp(this.cOf(Z), 1, open);
+    const p = this.point(Z, o).lerp(openPos, open);
+    // A = k·I + (c − k)·T Tᵀ : in-plane scale k, axial scale c
+    const T = this.T;
+    const A = new THREE.Matrix4().set(
+      k + (c - k) * T.x * T.x, (c - k) * T.x * T.y, (c - k) * T.x * T.z, 0,
+      (c - k) * T.y * T.x, k + (c - k) * T.y * T.y, (c - k) * T.y * T.z, 0,
+      (c - k) * T.z * T.x, (c - k) * T.z * T.y, k + (c - k) * T.z * T.z, 0,
+      0, 0, 0, 1,
+    );
+    return out.copy(A).multiply(basis).multiply(new THREE.Matrix4().makeScale(s.x, s.y, s.z)).setPosition(p);
+  }
+  /** wall geometry: uv.y = sF + Z (virtual s, so slot rows continue), radial normals, morph target "open" */
+  geometry(radial = 72, steps = 72, inset = 0.004): THREE.BufferGeometry {
+    const rows = steps + 1;
+    const n = rows * (radial + 1);
+    const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);
+    const ax = new Float32Array(n * 3), au = new Float32Array(n * 3), ext = new Float32Array(n), opn = new Float32Array(n * 3);
+    const d = new THREE.Vector3(), o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
+    const r0 = this.R * (1 - inset);
+    for (let i = 0; i < rows; i++) {
+      // uniform in projected radius (1/D): dense near the vanishing point where the rings crowd
+      const t = i / steps;
+      const Dv = 1 / (1 / this.D0 - t * (1 / this.D0 - 1 / (this.D0 + this.zEnd)));
+      const Z = Math.max(0, Dv - this.D0);
+      const z = this.zOf(Z);
+      const sReal = this.sF + z;
+      const fr = this.path.frame(sReal);
+      tubeCenterAt(this.path, sReal, cr);
+      const rOpen = this.path.radius(sReal) * 1.1 + 0.4;
+      for (let j = 0; j <= radial; j++) {
+        const th = -1.5 * Math.PI + (j / radial) * Math.PI * 2;
+        d.copy(this.Rt).multiplyScalar(Math.cos(th)).addScaledVector(this.U, Math.sin(th));
+        o.copy(d).multiplyScalar(r0);
+        this.point(Z, o, p);
+        const k = i * (radial + 1) + j;
+        p.toArray(pos, k * 3);
+        d.toArray(nor, k * 3);
+        uv[k * 2] = j / radial; uv[k * 2 + 1] = this.sF + Z;
+        this.T.toArray(ax, k * 3); this.U.toArray(au, k * 3);
+        ext[k] = Z - z;
+        // open: just outside the real (flaring) tube wall at the same depth
+        o.copy(fr.right).multiplyScalar(Math.cos(th)).addScaledVector(fr.up, Math.sin(th)).multiplyScalar(rOpen).add(cr);
+        o.toArray(opn, k * 3);
+      }
+    }
+    const idx: number[] = [];
+    for (let i = 0; i < rows - 1; i++) {
+      for (let j = 0; j < radial; j++) {
+        const a = i * (radial + 1) + j, b = a + radial + 1;
+        idx.push(a, b, a + 1, b, b + 1, a + 1);
+      }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+    g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    g.setAttribute('tubeAxis', new THREE.BufferAttribute(ax, 3));
+    g.setAttribute('tubeUp', new THREE.BufferAttribute(au, 3));
+    g.setAttribute('fgExtra', new THREE.BufferAttribute(ext, 1));
+    g.morphAttributes.position = [new THREE.BufferAttribute(opn, 3)];
+    g.setIndex(idx);
+    g.computeBoundingSphere();
+    return g;
+  }
 }
 
 /** Half-dome wall "lids"/spray heads mounted on the upper tube walls (refs 05–07). */

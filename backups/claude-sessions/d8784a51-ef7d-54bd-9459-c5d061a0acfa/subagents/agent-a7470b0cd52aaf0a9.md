@@ -815,3 +815,350 @@ Typecheck passes. GLSL only compiles at runtime, so capture iteration 1 (also ca
 > 1400   90.9   0.0   0.0  0.0   4.4 | #0088E7     -    |  13.4  
 > 1500   90.6   0.0   0.0  0.0   3.1 | #0084E1     -    |  12.6
 
+### 🤖 Claude — 2026-11-15T21:13:48.778Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/it01_mid.png"}`
+
+### 🧑 User — 2026-11-15T21:13:48.791Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:13:49.385Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/it01_near.png"}`
+
+### 🧑 User — 2026-11-15T21:13:49.404Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:15:07.609Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 340, "limit": 25}`
+
+### 🧑 User — 2026-11-15T21:15:07.626Z
+
+> ↩︎ result: 340	
+> 341	  // two-phase flow-map advection of the strands (period 4 s; offset scales with stage speed)
+> 342	  float ph0 = fract(uTime * 0.25);
+> 343	  float ph1 = fract(uTime * 0.25 + 0.5);
+> 344	  float w0 = 1.0 - abs(1.0 - 2.0 * ph0);
+> 345	  // (04/06/07 strand texture; 05 has its own silk/swell field below)
+> 346	  vec4 F = vec4(0.5, 0.0, 0.5, 0.5);
+> 347	  if (freeK > 0.001) F = mix(strands(x, s - vSpeed * ph1 * 4.0 + 23.0, aa, sw), strands(x, s - vSpeed * ph0 * 4.0, aa, sw), w0);
+> 348	  float v5 = s - uTime * uFlow05;             // 05 advected arc length (one constant speed: no shear)
+> 349	
+> 350	  // Benny parts the bands like a bow wave (vStyle.x, ref 05): just ahead of him they narrow and
+> 351	  // swing outward, so the water at and behind him (the near field) is pure cyan; behind him they
+> 352	  // continue only as thin streaks pushed out toward the foam banks
+> 353	  // (05: the near rows only show lat ±2.3 behind Benny, so a light parting is enough there)
+> 354	  float gate = 1.0, part = 0.0;
+> 355	  float db = s - uBenny.x;
+> 356	  if (vStyle.x > 0.0) {
+> 357	    // 05: half width at Benny, full width ≈20 u ahead (ref 05 bands widen into the mid/far field)
+> 358	    float g05 = 0.5 + 0.5 * smooth …[+365 chars]
+
+### 🤖 Claude — 2026-11-15T21:15:13.843Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float gate = 1.0, part = 0.0;\n  float db = s - uBenny.x;\n  if (vStyle.x > 0.0) {\n    // 05: half width at Benny, full width ≈20 u ahead (ref 05 bands widen into the mid/far field)\n    float g05 = 0.5 + 0.5 * smoothstep(1.0, 20.0, db);\n    float gOld = 0.4 + 0.6 * smoothstep(0.0, 4.5, db);\n    gate = mix(1.0, mix(g05, gOld, freeK), vStyle.x);\n    part = vStyle.x * hw * mix(0.1, 0.3, freeK) * (1.0 - smoothstep(-1.0, 9.0, db));\n  }", "new_string": "  float gate = 1.0, part = 0.0, near05 = 1. …[+662 chars]`
+
+### 🧑 User — 2026-11-15T21:15:13.869Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:15:14.546Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"float offL = \\|float offR = \" src/vfx/waterRibbon.ts", "description": "Locate band offset lines"}`
+
+### 🧑 User — 2026-11-15T21:15:14.574Z
+
+> ↩︎ result: 376:  float offL = hw * (vStyle.y + mix(0.03, 0.07, freeK) * sin(s * 0.13 + 1.7)) + part + wob * 0.05 * sin(tv * 0.42 + 1.1);
+> 377:  float offR = hw * (vStyle.y + mix(0.03, 0.07, freeK) * sin(s * 0.11 + 4.2)) + part + wob * 0.05 * sin(tv * 0.37 + 3.9);
+
+### 🤖 Claude — 2026-11-15T21:15:17.842Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float offL = hw * (vStyle.y + mix(0.03, 0.07, freeK) * sin(s * 0.13 + 1.7)) + part + wob * 0.05 * sin(tv * 0.42 + 1.1);\n  float offR = hw * (vStyle.y + mix(0.03, 0.07, freeK) * sin(s * 0.11 + 4.2)) + part + wob * 0.05 * sin(tv * 0.37 + 3.9);", "new_string": "  float offL = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.13 + 1.7)) + part + wob * 0.05 * sin(tv * 0.42 + 1.1);\n  float offR = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.11 + 4.2)) + part + wob * 0.05 *  …[+23 chars]`
+
+### 🧑 User — 2026-11-15T21:15:17.890Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:15:34.044Z
+
+Now the trail shape (curved, feathered, shorter) and the 05 colour/near-field/flare adjustments.
+
+### 🤖 Claude — 2026-11-15T21:15:38.391Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float back = -db;\n    float tc = 0.55 + 0.75 * max(back - 0.5, 0.0);\n    float tw = 0.075 + 0.06 * smoothstep(0.5, 1.6, back);\n    float dT = abs(lat - uBenny.y) - tc + 0.05 * sin(v5 * 3.0 + lat);\n    relT = dT / tw;\n    trail = (1.0 - smoothstep(tw - aaw, tw + aaw, abs(dT)))\n          * smoothstep(0.45, 0.9, back) * (1.0 - smoothstep(1.45, 2.1, back)) * uBenny.z * sw * vStyle.x;", "new_string": "    float back = -db;\n    // curved sweep: leaves his flank steeply, then bends back along t …[+504 chars]`
+
+### 🧑 User — 2026-11-15T21:15:38.425Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:15:47.396Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float silkL = max(silkA, silkB * 0.65) * (1.0 - 0.75 * near5);\n    float H5 = clamp(swell * 0.75 + silkL * 0.4, 0.0, 1.0);\n\n    // cyan: deep azure troughs -> electric cyan -> bright cyan crests; light seam beside each band\n    vec3 cy = mix(uC5Deep, uC5, smoothstep(0.18, 0.66, H5));\n    cy = mix(cy, uC5Bright, clamp(smoothstep(0.7, 0.98, H5) * 0.55 + rimOut * 0.55, 0.0, 1.0));\n    cy *= 1.0 - 0.1 * near5;                  // ref 05 near rows are a deeper azure than the mid field\n    //  …[+1801 chars]`
+
+### 🧑 User — 2026-11-15T21:15:47.426Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:15:56.349Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    c5 = mix(c5, mix(uC5Bright, uP5Light, pinkM), pow(1.0 - nv5, 3.0) * 0.18);\n    c5 += vec3(1.0) * pow(clamp(dot(N5, Hv), 0.0, 1.0), 90.0) * 1.1;\n    float gl5 = pow(clamp(dot(R5, Lg), 0.0, 1.0), 90.0);\n    c5 += mix(vec3(0.6, 1.2, 1.6), vec3(1.4, 0.7, 1.3), pinkM) * gl5 * (smoothstep(0.55, 0.9, H5) * 0.6 + silkL * 0.6);\n\n    // near field: bowed cross-flow ripple crests over darker troughs (ref 05 rows 1250–1500)\n    if (near5 > 0.0) {\n      float dl = lat - uBenny.y;\n      float phN = ( …[+1448 chars]`
+
+### 🧑 User — 2026-11-15T21:15:56.382Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:15:58.648Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float flA = flowGlint(vec2(wq * 6.0, v5 * 0.2), 0.45, 12.0, 3.2, 0.0, uTime);\n    float flB = flowGlint(vec2(lat * 1.8, v5 * 1.5 + 0.5), 0.35, 16.0, 3.0, 1.0, uTime + 2.7);", "new_string": "    float flA = flowGlint(vec2(wq * 6.0, v5 * 0.13), 0.5, 13.0, 3.6, 0.0, uTime);\n    float flB = flowGlint(vec2(lat * 1.6, v5 * 1.4 + 0.5), 0.5, 20.0, 3.2, 1.0, uTime + 2.7);"}`
+
+### 🧑 User — 2026-11-15T21:15:58.678Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:16:00.098Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/glsl.ts", "old_string": "  vec2 dg = fract(g) - (vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.5 + 0.25);", "new_string": "  vec2 dg = fract(g) - (vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.2 + 0.4);"}`
+
+### 🧑 User — 2026-11-15T21:16:00.125Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/glsl.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:16:01.749Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/glsl.ts", "old_string": "  float la = 0.24 / max(max(abs(ca.x), abs(ca.y)), 1e-6);\n  float lb = 0.24 / max(max(abs(cb.x), abs(cb.y)), 1e-6);", "new_string": "  float la = 0.38 / max(max(abs(ca.x), abs(ca.y)), 1e-6);\n  float lb = 0.38 / max(max(abs(cb.x), abs(cb.y)), 1e-6);"}`
+
+### 🧑 User — 2026-11-15T21:16:01.773Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/glsl.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:16:05.051Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "const RIVER05_PAL = {\n  cyanDeep: lin(0.05, 0.19, 0.5),\n  cyan: lin(0.06, 0.37, 0.74),\n  cyanBright: lin(0.1, 0.8, 1.8),\n  cyanStreak: lin(0.62, 1.4, 2.1),\n  pinkDeep: lin(0.42, 0.07, 0.36),\n  pink: lin(0.72, 0.13, 0.66),\n  pinkLight: lin(0.88, 0.45, 0.83),\n  pinkStreak: lin(1.05, 0.62, 0.98),\n};", "new_string": "const RIVER05_PAL = {\n  cyanDeep: lin(0.04, 0.16, 0.46),\n  cyan: lin(0.06, 0.37, 0.74),\n  cyanBright: lin(0.1, 0.8, 1.8),\n  cyanStreak: lin(0.62, 1.4, 2.1),\n  pinkDeep: lin(0 …[+126 chars]`
+
+### 🧑 User — 2026-11-15T21:16:05.085Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:16:11.999Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave4/water/it02 2>&1 | tail -3 && python3 -I /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/measure.py qa/pilot05/wave4/water/it02/05.png", "description": "Typecheck, capture iteration 2, measure", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T21:16:24.171Z
+
+> ↩︎ result: TSC_OK
+> 05 → qa/pilot05/wave4/water/it02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":121,"tris":608273,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> == qa/pilot05/wave4/water/it02/05.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lum-std  pinkRuns
+>  560    3.8   0.3  31.5  0.7  19.9 | #7FAFFA  #EF54E9 |  20.6  64-80 88-132 231-242 244-255 277-295 683-694
+>  600   13.4   0.4  31.6  0.5  31.7 | #4B96F0  #FE5DEC |  19.5  0-23 98-113 191-207 329-364 367-397 470-527
+>  700   29.3   0.8  24.2  0.5  38.3 | #39A7FF  #FA59E9 |  22.9  305-337 352-463 750-789
+>  800   35.2   0.2  28.2 14.7  21.7 | #24AAFF  #F856EB |  21.9  113-283 678-750
+>  900   23.3   1.0  19.2 24.5  26.1 | #1CACFF  #F25AE6 |  23.1  88-116 135-151 156-179 189-238 734-749
+> 1000   22.2   0.4  58.2  3.7  14.4 | #0CA1FF  #FF5DB9 |  19.6  70-143 237-268 270-609 728-744 746-800
+> 1100   45.9   0.2  33.8  0.4  18.6 | #078BF1  #FF3EBE |  21.5  310-522 733-780
+> 1200   69.7   0.8   4.7  2.0  21.6 | #0C87E6  #EC69F1 |  25.2  220-238
+> 1300   74.6   9.8   0.1  1.7  13.0 | #2195F7  #CD5CCC |  23.5  
+> 1400   88.4   0.0   0.0  0.0   9.6 | #0074CE     -    |  15.7  
+> 150 …[+58 chars]
+
+### 🤖 Claude — 2026-11-15T21:16:25.349Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave4/water/it02/05.png"}`
+
+### 🧑 User — 2026-11-15T21:16:25.393Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:16:37.295Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4; python3 -c \"\nfrom PIL import Image\nim=Image.open('qa/pilot05/wave4/water/it02/05.png').convert('RGB')\nim.crop((0,1050,864,1536)).save('$S/it02_near.png'); im.crop((0,600,432,960)).resize((864,720),Image.LANCZOS).save('$S/it02_zoomL.png')\"", "description": "Crop it02 near field and zoom left"}`
+
+### 🧑 User — 2026-11-15T21:16:37.645Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:16:39.491Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/it02_near.png"}`
+
+### 🧑 User — 2026-11-15T21:16:39.505Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:16:40.107Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/it02_zoomL.png"}`
+
+### 🧑 User — 2026-11-15T21:16:40.141Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:17:12.815Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"float rings = \\|col += mix(uCyanBright, vec3(1.3), 0.4)\" src/vfx/waterRibbon.ts", "description": "Locate Benny ring lines"}`
+
+### 🧑 User — 2026-11-15T21:17:12.845Z
+
+> ↩︎ result: 616:      float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothstep(rb, rb * 1.3, d);
+> 620:      col += mix(uCyanBright, vec3(1.3), 0.4) * (rings * 0.22 + wakeV * 0.35) * k * (1.0 - pinkM * 0.5);
+
+### 🤖 Claude — 2026-11-15T21:17:16.498Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothstep(rb, rb * 1.3, d);", "new_string": "      float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothstep(rb, rb * 1.3, d);\n      // 05: the magnified near field turned full rings into contour arcs; keep broken ripple fragments\n      rings *= mix(1.0, 0.45 * smoothstep(0.45, 0.8, vnoise(vec2(atan(du, dv) * 3.0, d * 2.0))), sw);"}`
+
+### 🧑 User — 2026-11-15T21:17:16.522Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:17:19.996Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float fe = aaw + tw * 0.4;                  // feathered edge: a soft glowing sweep, not a rigid bar\n    trail = (1.0 - smoothstep(tw - fe, tw + aaw, abs(dT)))\n          * smoothstep(0.4, 0.85, back) * (1.0 - smoothstep(1.25, 1.95, back)) * uBenny.z * sw * vStyle.x;", "new_string": "    // crisp ≈1 px edge (a feathered pink-over-blue edge reads as violet, the \"muddy purple\" to avoid);\n    // the sweep instead narrows to nothing at both ends\n    float taper = smoothstep(0.4, 0.85, back) *  …[+227 chars]`
+
+### 🧑 User — 2026-11-15T21:17:20.022Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:17:21.848Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float silkL = max(silkA, silkB * 0.45) * (1.0 - 0.9 * near5);\n    float H5 = clamp(swell * 0.8 + silkL * 0.35, 0.0, 1.0);", "new_string": "    float silkL = max(silkA, silkB * mix(0.3, 0.6, pinkM)) * (1.0 - near5);\n    float H5 = clamp(swell * 0.8 + silkL * 0.35 + 0.1 * near5, 0.0, 1.0);"}`
+
+### 🧑 User — 2026-11-15T21:17:21.870Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:17:25.748Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float satin5 = exp(-pow((relB - 0.25) * 2.8, 2.0));\n    vec3 pk = mix(uP5Deep, uP5, smoothstep(0.0, 0.6, prof) * (0.62 + 0.55 * H5));\n    pk = mix(pk, uP5Light, clamp(satin5 * 0.28 + smoothstep(0.78, 0.98, H5) * 0.25 + rimIn * 0.35, 0.0, 1.0));", "new_string": "    float satin5 = exp(-pow((relB - 0.3) * 3.2, 2.0));\n    vec3 pk = mix(uP5Deep, uP5, smoothstep(0.0, 0.6, prof) * (0.62 + 0.55 * H5));\n    pk = mix(pk, uP5Light, clamp(satin5 * 0.4 + smoothstep(0.78, 0.98, H5) * 0.25 + rimIn * 0.35 …[+208 chars]`
+
+### 🧑 User — 2026-11-15T21:17:25.776Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:17:28.549Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    if (near5 > 0.0) {\n      float phN = (s - 0.12 * (lat - uBenny.y) * (lat - uBenny.y)) * 4.0 - uTime * 5.0 + 2.2 * vnoise(vec2(lat * 0.9, s * 0.7));\n      float sN = 0.5 + 0.5 * sin(phN);\n      c5 *= 1.0 - 0.2 * near5 * (1.0 - sN) * (1.0 - pinkM);\n      c5 += uC5Bright * pow(sN * rNear, 3.0) * 0.35 * near5 * (1.0 - pinkM);\n    }", "new_string": "    if (near5 > 0.0) {\n      c5 *= 1.0 - 0.12 * near5 * (1.0 - rNear) * (1.0 - pinkM);\n      c5 += uC5Bright * pow(rNear, 4.0) * 0.32 * near5 * ( …[+22 chars]`
+
+### 🧑 User — 2026-11-15T21:17:28.575Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:17:30.550Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  cyanStreak: lin(0.62, 1.4, 2.1),\n  pinkDeep: lin(0.36, 0.04, 0.3),\n  pink: lin(0.7, 0.1, 0.64),\n  pinkLight: lin(0.92, 0.34, 0.88),", "new_string": "  cyanStreak: lin(0.36, 1.25, 2.1),\n  pinkDeep: lin(0.36, 0.04, 0.3),\n  pink: lin(0.7, 0.08, 0.64),\n  pinkLight: lin(0.92, 0.3, 0.88),"}`
+
+### 🧑 User — 2026-11-15T21:17:30.577Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:17:36.369Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave4/water/it03 2>&1 | tail -3 && python3 -I /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/measure.py qa/pilot05/wave4/water/it03/05.png", "description": "Typecheck, capture iteration 3, measure", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T21:17:48.545Z
+
+> ↩︎ result: TSC_OK
+> 05 → qa/pilot05/wave4/water/it03/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":121,"tris":608273,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> == qa/pilot05/wave4/water/it03/05.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lum-std  pinkRuns
+>  560    3.8   0.3  31.5  0.7  19.9 | #7FAFFA  #EF54EA |  20.6  64-80 88-132 231-242 244-255 277-295 683-694
+>  600   13.4   0.4  31.6  0.5  31.7 | #4A95F0  #FF58EE |  19.1  0-23 98-113 191-207 329-364 367-397 470-527
+>  700   29.3   0.8  24.3  0.5  38.3 | #32A5FF  #FC54EC |  21.7  305-337 352-463 749-789
+>  800   35.2   0.2  28.2 14.7  21.7 | #1DA8FF  #FA54EE |  19.3  113-283 678-750
+>  900   23.4   0.9  19.2 24.5  26.1 | #17AAFF  #F558E8 |  22.5  88-116 135-151 156-179 189-238 734-749
+> 1000   22.2   0.4  58.3  3.7  14.3 | #07A0FF  #FF5BB9 |  18.3  70-143 237-268 270-609 728-744 746-800
+> 1100   45.9   0.2  33.8  0.4  18.5 | #0183ED  #FF3EBE |  18.8  310-522 733-780
+> 1200   69.1   0.3   7.2  0.9  21.5 | #0793F5  #F45DF5 |  24.3  220-240 588-599
+> 1300   77.9   0.6   7.2  0.6  13.0 | #0198F9  #EF49EB |  22.0  97-128 705-732
+> 1400   88.4   0.0   0.0  0.0   9.6 | #0088E4  …[+80 chars]
+
+### 🤖 Claude — 2026-11-15T21:17:51.653Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4; python3 scripts/triptych.py $S/tri03.png 1100 REF=references/05_flow_into_the_current.png BASE=qa/pilot05/wave4/baseline/05.png NOW=qa/pilot05/wave4/water/it03/05.png", "description": "Make triptych ref/base/it03"}`
+
+### 🧑 User — 2026-11-15T21:17:52.357Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/tri03.png (1889, 1142)
+
+### 🤖 Claude — 2026-11-15T21:17:53.931Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/tri03.png"}`
+
+### 🧑 User — 2026-11-15T21:17:54.156Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:18:14.964Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4; python3 -c \"\nfrom PIL import Image\nim=Image.open('qa/pilot05/wave4/water/it03/05.png').convert('RGB')\nim.crop((432,620,864,980)).resize((864,720),Image.LANCZOS).save('$S/it03_zoomR.png')\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nr.crop((432,620,864,980)).resize((864,720),Image.LANCZOS).save('$S/ref_zoomR2.png')\"", "description": "Zoom right mid-field of it03 and ref"}`
+
+### 🧑 User — 2026-11-15T21:18:15.409Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T21:18:17.437Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/it03_zoomR.png"}`
+
+### 🧑 User — 2026-11-15T21:18:17.458Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:18:18.104Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/ref_zoomR2.png"}`
+
+### 🧑 User — 2026-11-15T21:18:18.130Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:18:37.835Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float n = vnoise(vec2(id * 3.1 + seed, v * 0.15 + hs * 17.0));\n  float seg = smoothstep(0.42, 0.8, n);\n  return line * seg * (0.45 + 0.55 * hs) * (1.0 - smoothstep(0.22, 0.42, fw));", "new_string": "  // short tapered brush dashes (≈1–2 u: ref 05 speed streaks are 30–80 px in the mid field)\n  float n = vnoise(vec2(id * 3.1 + seed, v * 0.42 + hs * 17.0));\n  float seg = smoothstep(0.5, 0.86, n);\n  return line * seg * (0.5 + 0.7 * hs) * (1.0 - smoothstep(0.22, 0.42, fw));"}`
+
+### 🧑 User — 2026-11-15T21:18:37.895Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:18:40.484Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float silkA = silk(wq, v5, 12.0, 0.0, 0.16);\n    float silkB = 0.0;\n    #ifndef LOW_Q\n    silkB = silk(wq, v5 * 1.35 + 40.0, 34.0, 7.0, 0.1);\n    #endif\n    float silkL = max(silkA, silkB * mix(0.3, 0.6, pinkM)) * (1.0 - near5);", "new_string": "    float silkA = silk(wq, v5, 15.0, 0.0, 0.16);\n    float silkB = 0.0;\n    #ifndef LOW_Q\n    silkB = silk(wq, v5 * 1.35 + 40.0, 38.0, 7.0, 0.1);\n    #endif\n    float silkL = max(silkA, silkB * mix(0.45, 0.8, pinkM)) * (1.0 - near5);"}`
+
+### 🧑 User — 2026-11-15T21:18:40.516Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:18:43.287Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    // silk streak light: light cyan-white on cyan, light pink on pink (the ribbons are combed silk)\n    c5 = mix(c5, mix(uC5Streak, uP5Streak, pinkM), clamp(silkL * mix(0.85, 1.0, pinkM), 0.0, 1.0));", "new_string": "    // silk streak light: light cyan-white on cyan, light pink on pink (the ribbons are combed silk);\n    // the strongest dashes burn to near-white (ref 05 streak heads)\n    c5 = mix(c5, mix(uC5Streak, uP5Streak, pinkM), clamp(silkL * mix(0.9, 1.05, pinkM), 0.0, 1.0));\n    c5 +=  …[+59 chars]`
+
+### 🧑 User — 2026-11-15T21:18:43.315Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:18:45.689Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float flA = flowGlint(vec2(wq * 6.0, v5 * 0.13), 0.5, 13.0, 3.6, 0.0, uTime);\n    float flB = flowGlint(vec2(lat * 1.6, v5 * 1.4 + 0.5), 0.5, 20.0, 3.2, 1.0, uTime + 2.7);", "new_string": "    float flA = flowGlint(vec2(wq * 6.0, v5 * 0.075), 0.75, 18.0, 3.8, 0.0, uTime);\n    float flB = flowGlint(vec2(lat * 1.6, v5 * 1.4 + 0.5), 0.6, 26.0, 3.2, 1.0, uTime + 2.7);"}`
+
+### 🧑 User — 2026-11-15T21:18:45.716Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:18:47.189Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float H5 = clamp(swell * 0.8 + silkL * 0.35 + 0.1 * near5, 0.0, 1.0);", "new_string": "    float H5 = clamp(swell * 0.8 + silkL * 0.35 + 0.2 * near5, 0.0, 1.0);"}`
+
+### 🧑 User — 2026-11-15T21:18:47.214Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:18:48.247Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    cy *= 1.0 - 0.08 * near5;                 // ref 05 near rows are a deeper azure than the mid field\n", "new_string": ""}`
+
+### 🧑 User — 2026-11-15T21:18:48.395Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+

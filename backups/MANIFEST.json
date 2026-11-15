@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1104,
-   "sha256": "699de8cb98f28539c6b54b1bf7e0a0227bcf50464ffe0ab63fdba31fac305e38"
+   "bytes": 1105,
+   "sha256": "e9a42a2975ec89fef6886ef883ac750bd1302148fdb4e4707bffa95077fe300c"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1392,9 +1392,29 @@
    "sha256": "9fd2620b383635f9cbc130206888d40f4409c7976ef366b4dfeaf5fb7e8fa8b1"
   },
   {
+   "path": "qa/pilot05/wave4/foam/it03/05.png",
+   "bytes": 1662862,
+   "sha256": "07a701e39fe95b16fb1f3ca9de337efbfe45cf1707d1f09b495a329a9d173a5b"
+  },
+  {
+   "path": "qa/pilot05/wave4/foam/it04/05.png",
+   "bytes": 1628308,
+   "sha256": "4415920a0e5d8a3c95cbadcd13f5ee368d1cafb3947d9277d5bbfbdc3c5b6932"
+  },
+  {
    "path": "qa/pilot05/wave4/water/it01/05.png",
    "bytes": 1654112,
    "sha256": "caaaac5c60889bff3644a429a7857dd2c440382eff4f202e02f2c15516495018"
+  },
+  {
+   "path": "qa/pilot05/wave4/water/it02/05.png",
+   "bytes": 1670715,
+   "sha256": "5c7631a5c76dc6ec7035d3ce928027cc93f516a320ea6bcd648491ced92a08cc"
+  },
+  {
+   "path": "qa/pilot05/wave4/water/it03/05.png",
+   "bytes": 1636543,
+   "sha256": "5acd6ee2c0c4f133facfdda2144186703fd0309abbeeea5966692bee744acf0f"
   },
   {
    "path": "qa/report_metrics.json",
@@ -1697,11 +1717,6 @@
    "sha256": "9d4f922313c565e0e64bdd84ac2ef5da0dee6007641d61bdcad1c767c710c2a8"
   },
   {
-   "path": "scripts/.envprobe05.ts",
-   "bytes": 2114,
-   "sha256": "0a631998c8a0eb42dad4e05a346047aaf9d88874c49feb7f93c9f832b139beda"
-  },
-  {
    "path": "scripts/.tmp_wem_probe.ts",
    "bytes": 1445,
    "sha256": "8889ca34226e63a255af933123df898bb93a0ab6be04b33b51831c1a001589b5"
@@ -1828,13 +1843,13 @@
   },
   {
    "path": "src/characters/benny/benny-lab.ts",
-   "bytes": 8659,
-   "sha256": "a1fa1fddc80680c3bc37ae42528b0dba7827fb2d88e455b534fd6ec3e906d62f"
+   "bytes": 10001,
+   "sha256": "fe8e8465d636b647ebb053281c597ec6d1b6824de06d15b176446ce73aeb1b4b"
   },
   {
    "path": "src/characters/benny/build.ts",
-   "bytes": 21429,
-   "sha256": "a7d582b890158fbc7f099ca82647f2f554147eb4895b00d5e0195bfcb4410708"
+   "bytes": 22435,
+   "sha256": "cfe795c0ecfd35551bb18e83e960fa52843c8a8818e1d1bd6c596e39d8a306bf"
   },
   {
    "path": "src/characters/benny/fur.ts",
@@ -1843,8 +1858,8 @@
   },
   {
    "path": "src/characters/benny/runtime.ts",
-   "bytes": 11056,
-   "sha256": "14e49a69e128009cacde92b9cd2ddd3a9b820daaefc948f0aeb33bf4fde05293"
+   "bytes": 11521,
+   "sha256": "a9930d184dc86b41a56736919c185bd39b0645234ac39a22a4107968217cf8a3"
   },
   {
    "path": "src/characters/benny/textures.ts",
@@ -1948,18 +1963,18 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 33264,
-   "sha256": "e8e426bea715638616b8ea031a764dc43d78aeb860f730946e771090192bc9de"
+   "bytes": 37029,
+   "sha256": "1d9a8ef70722dc637e21d1e932861f6aecf6a05e750fa1b09a493371f02d6ea6"
   },
   {
    "path": "src/vfx/glsl.ts",
-   "bytes": 6216,
-   "sha256": "3a2b6f35ef95d10b4109d574590762448bd1e6462d9acd6d6a8b323f0feb1e3d"
+   "bytes": 6215,
+   "sha256": "1bce2db658732f43b3b3d2c453645cf07c5151ebda9a36f782ef4dab7d5ce8f5"
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 14078,
-   "sha256": "fc1c461d053aaae3b8a194a4b8beef6925a36298a3d80583e5a547f90255bc2d"
+   "bytes": 14101,
+   "sha256": "329b779d660018049cb77c1103e8b4211c55ba69307ca8c251cfca33a741a65a"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -1968,8 +1983,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 9667,
-   "sha256": "ea6e8c10be15ad05ccd7bc537cce4b44aea2f99db2bfc7a690fb6b82875b9db4"
+   "bytes": 10069,
+   "sha256": "cfc2a9a33019398c4e6e35c7da5cf40e9eba62112cb7913b97c35f506057fb19"
   },
   {
    "path": "src/vfx/spray.ts",
@@ -1978,8 +1993,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 38819,
-   "sha256": "9240ee2230795ba83b184f274b0ee3cfb3faa2dc1e0b419b6bfb4edbd9567b17"
+   "bytes": 39875,
+   "sha256": "8b57fb62ba46c756441790c123146f50bedebc7ec47df7ed861fbcc2cb981be7"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -2003,8 +2018,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 22697,
-   "sha256": "3e3a1cae805a34aeddd70d468e71a25a089746e8be8ad2939aff7e5c4207e1c2"
+   "bytes": 26961,
+   "sha256": "4183c66d24b32893b60ffd380ce2bd36c695d74a1fb938d4df3f4cbec64347aa"
   },
   {
    "path": "src/world/towel.ts",
@@ -2013,8 +2028,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 20118,
-   "sha256": "8c28e5e28627a3956bb8e6e63bda1061a168afa3b7021c3e7b658f42dc87a8e1"
+   "bytes": 29778,
+   "sha256": "4ed3b715a0fd62179564595d071db56c5928e5215a798580c383251a81712127"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

@@ -37,10 +37,12 @@ export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Pro
 /**
  * Ride height. The game places the root at water surface + radius·0.55 (≈ 0.44), which buried the lower
  * third of the plush ball in the opaque stream. While riding (swim ≥ 0.5, not tumbling) the model is
- * lifted inside the root so he sits ON the water like refs 04–10: only the bottom ≈ 0.1 of the fur and
- * the kicking feet are under the surface. Cinematics (01 peek, 02 tumble, 11 hide) keep the root as placed.
+ * lifted inside the root so he sits ON the water like refs 04–10: only the bottom of the fur and the
+ * kicking feet are under the surface. Cinematics (01 peek, 02 tumble, 11 hide) keep the root as placed.
+ * Wave 4: 0.30 → 0.22 together with the ride lean, which shows more of his back: keeps the pom-pom top at the
+ * ref-05 height (≈ 765 px, under the first coin) and the cuff bottom where the ref has it.
  */
-export const BENNY_RIDE_LIFT = 0.3;
+export const BENNY_RIDE_LIFT = 0.22;
 /** QA A/B hook: `?bennyLift=<units>` overrides the ride lift (e.g. 0 = the game's raw placement) */
 function rideLift(): number {
   if (typeof location === 'undefined') return BENNY_RIDE_LIFT;
@@ -52,9 +54,10 @@ function rideLift(): number {
  * Ride lean (rad, about his X axis, + = top forward). While riding he leans into the current like a swimmer, so the
  * rear chase cameras (04–10: ≈ 25° above him) see the beanie and the plush back the way the references paint
  * them (≈ 10–12° above: knit stripes and cuff read as level bands, the dome as a tall cap, not a flat disc).
- * Eased in with the ride lift; cinematics (01 peek, 02 tumble, 11 hide) and the 03 twirl keep him upright.
+ * Eased in with the ride lift; cinematics (01 peek, 02 tumble, 11 hide) keep him upright. The game can scale it
+ * per shot with `benny.root.userData.ridePitch` (0…1, default 1), e.g. 0 in the 03 twirl where he faces the camera.
  */
-export const BENNY_RIDE_PITCH = 0.2;
+export const BENNY_RIDE_PITCH = 0.22;
 function ridePitch(): number {
   if (typeof location === 'undefined') return BENNY_RIDE_PITCH;
   const v = parseFloat(new URLSearchParams(location.search).get('bennyPitch') ?? '');
@@ -154,7 +157,8 @@ export function createBennyRuntime(
     lift += (liftTarget - lift) * (1 - Math.exp(-dt * 7));
     scene.position.y = lift;
     // ride lean into the current (see BENNY_RIDE_PITCH), on the same ease as the lift
-    const pitchTarget = tumble || peek ? 0 : pitchMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+    const pitchScale = typeof root.userData.ridePitch === 'number' ? THREE.MathUtils.clamp(root.userData.ridePitch, 0, 1) : 1;
+    const pitchTarget = tumble || peek ? 0 : pitchMax * pitchScale * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
     pitch += (pitchTarget - pitch) * (1 - Math.exp(-dt * 7));
 
     // steering lean (roll) + slight yaw into the turn

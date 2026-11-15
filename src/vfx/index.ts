@@ -240,7 +240,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
         const thR = FAN.root0 + (FAN.root1 - FAN.root0) * a;
         const phi = FAN.dir0 + (FAN.dir1 - FAN.dir0) * a + rnd(-0.12, 0.12);
         const t0 = rnd(0.1, 0.55); // leave the jet part-way along it
-        const rootR = waterlineR * 0.97;
+        const rootR = Math.max(waterlineR, FAN.rootMin) * 0.95;
         sprP.copy(center)
           .addScaledVector(right, side * (Math.sin(thR) * rootR + Math.sin(phi) * t0 * 0.9))
           .addScaledVector(back, Math.cos(thR) * rootR + Math.cos(phi) * t0 * 0.9)

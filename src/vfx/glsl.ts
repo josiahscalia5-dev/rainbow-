@@ -86,7 +86,7 @@ float flowGlint(vec2 g, float density, float L, float stretch, float horiz, floa
   float hs = hash12(gi + 7.31);
   float det = gx.x * gy.y - gy.x * gx.y;
   if (hs < 1.0 - density || abs(det) < 1e-12) return 0.0;
-  vec2 dg = fract(g) - (vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.5 + 0.25);
+  vec2 dg = fract(g) - (vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.2 + 0.4);
   vec2 p = vec2(gy.y * dg.x - gy.x * dg.y, gx.x * dg.y - gx.y * dg.x) / det;   // pixels
   vec2 f = vec2(-gy.x, gx.x);                    // screen direction of +g.y (unnormalised, sign-free)
   f *= sign(f.x + 1e-6) / max(length(f), 1e-9);
@@ -94,8 +94,8 @@ float flowGlint(vec2 g, float density, float L, float stretch, float horiz, floa
   vec2 b = vec2(-a.y, a.x);
   float pa = dot(p, a), pb = dot(p, b);
   vec2 ca = a.x * gx + a.y * gy, cb = b.x * gx + b.y * gy;   // cell units per pixel along a / b
-  float la = 0.24 / max(max(abs(ca.x), abs(ca.y)), 1e-6);
-  float lb = 0.24 / max(max(abs(cb.x), abs(cb.y)), 1e-6);
+  float la = 0.38 / max(max(abs(ca.x), abs(ca.y)), 1e-6);
+  float lb = 0.38 / max(max(abs(cb.x), abs(cb.y)), 1e-6);
   float l = L * (0.55 + 0.9 * fract(hs * 37.0));
   float armA = exp(-abs(pb) * 0.85) * max(0.0, 1.0 - abs(pa) / min(l * stretch, la));
   float armB = exp(-abs(pa) * 0.85) * max(0.0, 1.0 - abs(pb) / min(l, lb));
