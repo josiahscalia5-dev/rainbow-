@@ -318,3 +318,32 @@ Let me produce zoomed crops comparing ref and live in the foam regions.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-15T23:47:11.247Z
+
+Let me check how capture works (query options) and how index.ts wires the foam, plus any director notes.
+
+### 🤖 Claude — 2026-11-15T23:47:12.299Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p scripts/capture.mjs | head -100 && grep -n \"foam\\|Foam\" src/vfx/index.ts | head -40 && grep -rn \"waterhide\\|hide=\" src --include=*.ts | head -20", "description": "Inspect capture script and foam wiring"}`
+
+### 🧑 User — 2026-11-15T23:47:12.341Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+5439 chars]
+
