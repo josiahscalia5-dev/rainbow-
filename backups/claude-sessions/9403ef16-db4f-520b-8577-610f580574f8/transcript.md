@@ -4175,3 +4175,11 @@ Checking the official World Labs sources for a Marble MCP connector or Claude Co
 
 > 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble World API key (replacement)", "suggested_type": "bearer", "reason": "The saved Marble key is rejected with 401 (the exposed key must not be reused). Save a NEWLY created key from platform.worldlabs.ai so one free credit-balance check can confirm authentication before any paid generation."}`
 
+### 🧑 User — 2026-11-15T23:55:56.282Z
+
+> ↩︎ result: Denied by user
+
+### 🤖 Claude — 2026-11-15T23:55:56.864Z
+
+You've hit your 5-hour limit · resets 3:50am (UTC)
+
