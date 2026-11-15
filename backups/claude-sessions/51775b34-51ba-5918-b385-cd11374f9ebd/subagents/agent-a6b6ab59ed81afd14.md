@@ -865,3 +865,31 @@ Now let me probe the 05 view geometry (where the stream edges and banks fall on 
 > 1050 432 fur_body {'s': 131.9, 'lat': 0.11, 'up': 0.84, 'hw': 5.44, 'e': -5.33}
 > 1050 528 fur_body {'s': 132.16, 'lat': 0.59, 'up': 0.71, 'hw': 5.44, ' …[+5134 chars]
 
+### 🤖 Claude — 2026-11-15T20:01:17.912Z
+
+Coordinator update noted: I'll do the final calibration on the locked camera. Let me check the current state of REQUESTS.md and which files others have touched.
+
+### 🤖 Claude — 2026-11-15T20:01:18.936Z
+
+> 🔧 **Bash** `{"command": "date -u && git status --short src | head -20 && grep -n \"CAMERA LOCK\\|→ foam\\|foam-bubbles\" qa/pilot05/REQUESTS.md | cut -c1-250", "description": "Check camera lock and src changes"}`
+
+### 🧑 User — 2026-11-15T20:01:18.998Z
+
+> ↩︎ result: Sun Nov 15 20:01:18 UTC 2026
+> 1:- foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord sqrt(0.86² − h²) ≈ 0.44 at the default 0.3 ride 
+> 2:- foam-bubbles-particles → water-fx-specialist (wave 3, correction 7, ACTION NEEDED): the white elliptical band under Benny's fur (05, y≈1150–1170) is the `contact` term in `src/vfx/waterRibbon.ts` FRAG, Benny block (`if (rr < rb * 0.25) { �
+> 3:- water-fx-specialist → foam-bubbles-particles (wave 3, correction 7): DONE 19:58 UTC. Deleted the white `contact` → uFoam mix in waterRibbon.ts FRAG (Benny block); replaced by the faint cyan hint you suggested. Confirmed by my own isolation pa
+
+### 🤖 Claude — 2026-11-15T20:01:20.739Z
+
+> 🔧 **Bash** `{"command": "sed -n 3,20p qa/pilot05/REQUESTS.md; git diff --stat src; sed -n 380,405p src/vfx/waterRibbon.ts", "description": "Read water-fx reply and diff"}`
+
+### 🧑 User — 2026-11-15T20:01:20.785Z
+
+> ↩︎ result: - water-fx-specialist → foam-bubbles-particles (wave 3, correction 7): DONE 19:58 UTC. Deleted the white `contact` → uFoam mix in waterRibbon.ts FRAG (Benny block); replaced by the faint cyan hint you suggested. Confirmed by my own isolation pair qa/pilot05/wave3/water/it08_iso (rim) vs it08_iso_nowake (no rim). rings/wakeV/band parting kept.
+> - water-fx-specialist → coordinator (FYI, tooling): `scripts/capture.mjs --q=waterhide=a,b` does NOT pass the hide list: the arg parser does `a.slice(2).split('=')` and keeps only the 2nd piece, so the URL gets `&waterhide` with no value (every part stays visible). One-line fix for the owner: `const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true];`. Until then isolation captures made with --q=waterhide=... are not isolated.
+> - coordinator → ALL (20:12 UTC): fixed scripts/capture.mjs and scripts/aspect-test.mjs argument parsing — `--q=waterhide=a,b` now passes the full value to the page. Isolation captures taken before 20:12 with --q=waterhide=… were NOT isolated.
+> 
+>   // ---- Benny: ripple rings and a V wake on the surface ----
+>   // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the wa …[+1186 chars]
+
