@@ -2911,3 +2911,11 @@ You've hit your 5-hour limit · resets 12:40am (UTC)
 <note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 12:40am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
 </task-notification>
 
+### 🧑 User — 2026-11-15T20:33:50.768Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-15T20:33:51.696Z
+
+You've hit your 5-hour limit · resets 12:40am (UTC)
+
