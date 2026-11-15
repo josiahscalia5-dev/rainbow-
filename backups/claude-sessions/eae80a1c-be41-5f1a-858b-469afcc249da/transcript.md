@@ -3096,3 +3096,44 @@ Save everything into my GitHub.
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason \"manual:user-save-request\" --message \"Save all work: World Labs pipeline, Flow video fit, aspect test, Screen 05 specialist progress\" 2>&1 | tail -10; echo \"--- verify ---\"; echo \"local $(git rev-parse HEAD) on $(git branch --show-current)\"; git ls-remote --heads origin | sed 's/\\t/  /'; git status --porcelain | head", "description": "Commit and push all work, verify remote", "timeout": 300000}`
 
+### 🧑 User — 2026-11-15T19:42:07.447Z
+
+> ↩︎ result: {
+>   "time": "2026-11-15T19:42:00+00:00",
+>   "reason": "manual:user-save-request",
+>   "result": "committed+pushed",
+>   "files_staged": 8,
+>   "pushed_verified": true,
+>   "branch": "claude/rainbow-3d-recovery-m4v347",
+>   "commit": "8f869daa366b6dd325d3a76454d7ddd95a7dcde3",
+>   "duration_s": 6
+> }
+> --- verify ---
+> local 8f869daa366b6dd325d3a76454d7ddd95a7dcde3 on claude/rainbow-3d-recovery-m4v347
+> 81e639e16994713d5f70d0314e796d1c298eeacf  refs/heads/ccr-6f431adf-7h0m8y
+> 8a36270c96c27a4495b5b7ec3c36e84cd9578dff  refs/heads/ccr-8b6fc834-7kd55l
+> 8f869daa366b6dd325d3a76454d7ddd95a7dcde3  refs/heads/claude/rainbow-3d-recovery-m4v347
+>  M backups/BACKUP_LOG.md
+>  M backups/BACKUP_STATUS.json
+
+### 🤖 Claude — 2026-11-15T19:42:14.839Z
+
+Everything is saved to GitHub. Your recovery branch `claude/rainbow-3d-recovery-m4v347` is at commit `8f869da`, and I checked that GitHub matches it exactly. The only file left uncommitted is the backup log entry for this save; it goes up with the next 5-minute autosave. Your original backup branch `ccr-6f431adf-7h0m8y` is still untouched at `81e639e`.
+
+**What this save contains:**
+- **Screen 05 specialists:** everything the five of them have written so far (walls and rings, water, foam, camera and coins, Benny). They are still working, so this is a partial state and they have not finished their before/after screenshots yet.
+- **World Labs import tool for Blender:** it brings a Marble or Atlas export into Blender, lines it up with the Screen 05 tube and measures it. I tested it on a made-up tunnel with known sizes and it measured them correctly (radius 3.0, length 60, rings every 6 units). It spent no credits.
+- **Google Flow video:** your clip now fills the phone screen without black bars or stretching, including a landscape 16:9 export. The video test passes. Your MP4 isn't uploaded yet; put it at `public/video/intro.mp4` or send it to me.
+- **Phone screen test:** a new Playwright test across 7 Android screen sizes. None show black bars and the top bar stays on screen. Tall phones still lose up to 12% of the picture's width on each side. I'll fix that once the camera specialist finishes with its files.
+
+**World Labs status (nothing has been generated or spent):**
+- **Atlas:** connected to this Claude account, but World Labs still answers "no active Atlas account". Finish signing up at https://atlas.worldlabs.ai and I'll check again.
+- **Marble:** I can't see your Marble account from here. Automating it needs a separate World API key from platform.worldlabs.ai. Marble app credits can't be used for the API.
+
+The 5-minute autosave is running on the recovery branch and will keep saving the specialists' work as they finish.
+
+### 🧑 User — 2026-11-15T19:42:17.053Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
