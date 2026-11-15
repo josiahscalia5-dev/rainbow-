@@ -2581,3 +2581,134 @@ This will keep recurring: the project's autosave adds a log line at the end of e
 
 Next is the same as before: the 5 missing documents and the status notes, then the Screen 05 fixes. The World Labs check waits until your Atlas account is active.
 
+### 🧑 User — 2026-11-15T18:34:40.222Z
+
+Claude, I have completed my World Labs Atlas account signup.
+
+Please rerun "list_projects" through my existing authenticated World Labs connector.
+
+If it works, show me which Atlas projects and reconstruction tools are available.
+
+Then prepare our Screen 05 — FLOW INTO THE CURRENT — reconstruction test using my exact approved image.
+
+Use World Labs for the 3D environment, Blender for accurate geometry, and my Water FX Specialist for the animated cyan-and-pink water.
+
+Do not spend any World Labs credits until you show me the estimated cost and I approve it.
+
+Meanwhile, continue improving my existing Rainbow game and finishing the missing documents. Do not stop all development just because Atlas was unavailable.
+
+Also, I accidentally declined the Rainbow environment setup script earlier. I want that setup enabled for future sessions. Please offer the verified setup again if possible.
+
+Keep all ten specialists active, protect my original GitHub branch, and continue the five-minute backups on my recovery branch.
+
+### 🤖 Claude — 2026-11-15T18:34:41.904Z
+
+Rerunning `list_projects` (free, read-only), and checking that the setup script you approved earlier is still saved:
+
+### 🤖 Claude — 2026-11-15T18:34:42.154Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🤖 Claude — 2026-11-15T18:34:42.204Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🧑 User — 2026-11-15T18:34:42.558Z
+
+> ↩︎ result: this sign-in has no active Atlas account. Ask the user to open https://atlas.worldlabs.ai and finish signing up, then try again
+
+### 🧑 User — 2026-11-15T18:34:42.645Z
+
+> ↩︎ result: {"environment_id":"env_01FyZzgXX4jXDQx4THkh99d4","name":"rainbow-","description":"","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":true,"setup_script":"#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-) container setup: real LFS assets, Android SDK, Blender 5.3,\n# World Labs Claude Code plugin. Every step is non-fatal so a session always starts.\nif [ -d rainbow- ]; then\n  (cd rainbow- \u0026\u0026 git lfs pull) || echo \"rainbow: git lfs pull failed\"\nfi\nSDK=/opt/android-sdk\nif [ ! -x \"$SDK/cmdline-tools/latest/bin/sdkmanager\" ]; then\n  mkdir -p \"$SDK\" \u0026\u0026 cd \"$SDK\" \\\n    \u0026\u0026 curl -sSL -o clt.zip https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip \\\n    \u0026\u0026 unzip -q -o clt.zip -d tmp \u0026\u0026 mkdir -p cmdline-tools \u0026\u0026 rm -rf cmdline-tools/latest \\\n    \u0026\u0026 mv tmp/cmdline-tools cmdline-tools/latest \u0026\u0026 rm -rf tmp clt.zip; cd - \u003e /dev/null\nfi\nif [ -x \"$SDK/cmdline-tools/latest/bin/sdkmanager\" ]; then\n  ye …[+2415 chars]
+
+### 🤖 Claude — 2026-11-15T18:35:06.299Z
+
+> 🔧 **Bash** `{"command": "wc -l src/world/*.ts src/vfx/waterRibbon.ts src/game/*.ts src/characters/benny/*.ts | sort -n | tail -14; echo \"---stage 05 refs---\"; grep -n \"'05'\\|\\\"05\\\"\\|stage05\\|S05\\|05:\" src/world/course.ts src/world/tube.ts src/world/environment.ts src/game/cameraRig.ts src/vfx/waterRibbon.ts src/game/Game.ts | head -40", "description": "Map file sizes and where stage 05 is configured"}`
+
+### 🧑 User — 2026-11-15T18:35:06.383Z
+
+> ↩︎ result: 126 src/game/modules.ts
+>    127 src/characters/benny/fur.ts
+>    149 src/characters/benny/runtime.ts
+>    151 src/world/towel.ts
+>    171 src/world/materials.ts
+>    190 src/world/laundryRoom.ts
+>    241 src/world/tube.ts
+>    331 src/vfx/waterRibbon.ts
+>    348 src/characters/benny/textures.ts
+>    397 src/characters/benny/build.ts
+>    478 src/world/course.ts
+>    550 src/world/environment.ts
+>    595 src/game/Game.ts
+>   4072 total
+> ---stage 05 refs---
+> src/world/course.ts:16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> src/world/course.ts:53:  '05': 'FLOW INTO THE CURRENT',
+> src/world/course.ts:155:  mark('05');
+> src/world/course.ts:156:  // ---- 05: horizontal S-shaped current in the perforated tube ----
+> src/world/course.ts:301:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> src/world/course.ts:302:      def('05', m['05'], m['06'], { width: 6.2, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420 }),
+> src/world/environment.ts:174:  const s04 = course.stage('04').s0, s05 = course.stage('05').s0;
+> src/game/cameraRig.ts:24:  '05': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0 …[+406 chars]
+
+### 🤖 Claude — 2026-11-15T18:35:08.409Z
+
+> 🔧 **Bash** `{"command": "sed -n 150,175p src/world/course.ts; echo \"---environment 05---\"; sed -n 165,215p src/world/environment.ts; echo \"---tube.ts header---\"; sed -n 1,40p src/world/tube.ts", "description": "Read stage 05 path, environment and tube code"}`
+
+### 🧑 User — 2026-11-15T18:35:08.455Z
+
+> ↩︎ result: const R4 = 12;
+>   seg(8, (t) => {
+>     const a = -pitch4 + pitch4 * t;
+>     return s4c.clone().add(V(0, R4 * (Math.cos(-pitch4) - Math.cos(a)), R4 * (Math.sin(-pitch4) - Math.sin(a))));
+>   });
+>   mark('05');
+>   // ---- 05: horizontal S-shaped current in the perforated tube ----
+>   const s5 = pts[pts.length - 1].clone();
+>   seg(36, (t) =>
+>     V(s5.x + 3.4 * Math.sin(2 * Math.PI * t) * Math.sin(Math.PI * t), s5.y - 3 * t, s5.z - 72 * t),
+>   );
+>   mark('06');
+>   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
+>   const s6 = pts[pts.length - 1].clone();
+>   seg(34, (t) =>
+>     V(
+>       s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),
+>       s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),
+>       s6.z - 46 * t,
+>     ),
+>   );
+>   mark('07');
+>   // ---- 07: winding washer tube (the visible stretch) ----
+>   const s7 = pts[pts.length - 1].clone();
+>   seg(32, (t) =>
+>     V(s7.x + 3.2 * Math.sin(3 * Math.PI * t) * Math.sin(Math.PI * t), s7.y + (WORLD.plunge.topY - s7.y) * t, s7.z - 60 * t),
+> ---environment 05---
+>   const deck = new THREE.Mesh(new THREE.ShapeGeometry(deckShape, 64), …[+4959 chars]
+
+### 🤖 Claude — 2026-11-15T18:35:33.365Z
+
+> 🔧 **Bash** `{"command": "nproc; free -g | head -2; cd /home/user/rainbow- && sed -n 495,510p src/game/Game.ts; sed -n 15,30p src/game/cameraRig.ts", "description": "Check CPU/RAM; read 05 checkpoint and camera presets"}`
+
+### 🧑 User — 2026-11-15T18:35:33.412Z
+
+> ↩︎ result: 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0          14           0           0          15
+>   // ---------------------------------------------------------------- QA API
+>   const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+>     '01': { mode: 'intro', t: T.cp01 },
+>     '02': { mode: 'intro', t: T.cp02 },
+>     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+>     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+>     '05': { mode: 'ride', s: course.stage('05').s0 + 30 },
+>     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+>     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+>     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+>     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+>     '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
+>     '11': { mode: 'outro', t: O.cp11 },
+>     '07a_plunge_top': { mode: 'ride', s: course.marks['07_plunge_top'] - 1 },
+>     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
+>     '07c_plunge_bottom': { mode: 'ride', s: course.marks['07_plun …[+1016 chars]
+
