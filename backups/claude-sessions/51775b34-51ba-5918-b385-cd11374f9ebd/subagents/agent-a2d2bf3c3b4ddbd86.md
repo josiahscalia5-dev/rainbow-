@@ -578,3 +578,127 @@ Let me inspect how the renderer, bloom, lights and the 05 checkpoint/camera are 
 > 374:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
 > 375:      def('06', m['06 …[+204 chars]
 
+### 🤖 Claude — 2026-11-15T19:53:47.708Z
+
+> 🔧 **Bash** `{"command": "ls scripts/ qa/*.py 2>/dev/null; grep -ln \"gold\" scripts/*.py scripts/*.mjs 2>/dev/null; sed -n 69,84p qa/scene_comparisons.md", "description": "Find colour-class definitions in QA scripts"}`
+
+### 🧑 User — 2026-11-15T19:53:47.746Z
+
+> ↩︎ result: scripts/:
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> capture.mjs
+> cinematic-test.mjs
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export_claude_sessions.py
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> lib
+> rainbow-autosave.py
+> reference.sha256
+> setup-android-sdk.sh
+> setup-blender.sh
+> triptych.py
+> water-lab.mjs
+> ## 2. Additional reproducible indicators (this review)
+> 
+> These come from the method in `docs/reference_inventory.md`, Appendix A. They are indicators, not scores.
+> 
+> ### 2a. Colour-class coverage (% of frame below the HUD band; 01/02 full frame) and class median
+> 
+> | NN | src | gold/copper | cyan water | violet | magenta/hot-pink | white/foam |
+> |---|---|---|---|---|---|---|
+> | 01 | ref | 4% #E9923F | 11% #1AAEF2 | 16% #9F42DF | 30% #DB4AB0 | 11% #F9E8FB |
+> | 01 | live | 14% #E97903 | 7% #349EEB | 12% #A661FF | 20% #F335CB | 26% #EAECFF |
+> | 02 | ref | 3% #EA9246 | 14% #09A4EB | 16% #9737E5 | 31% #E548B9 | 12% #FBEBFD |
+> | 02 | live | 8% #EF7910 | 12% #20B0E5 | 20% #A968FF | 26% #FF5BCB | 14% #FFE8FF |
+> | 03 | ref | 9% #EA9E48 | 18% #249DDC | 7% #9A53D1 | 22% #D752A8 | 15% #F9EAFC |
+> | 03 | live | 12% #FF9625 | 7% #57B2F9 | 3% #AC75FF | 11% #FF …[+184 chars]
+
+### 🤖 Claude — 2026-11-15T19:53:49.388Z
+
+> 🔧 **Bash** `{"command": "grep -n -A40 \"Appendix A\" docs/reference_inventory.md | head -70", "description": "Read colour-class method in Appendix A"}`
+
+### 🧑 User — 2026-11-15T19:53:49.409Z
+
+> ↩︎ result: 48:Every value here can be reproduced with Pillow and numpy. The snippet is in Appendix A.
+> 49-
+> 50-| Quantity | Method | Confidence |
+> 51-|---|---|---|
+> 52:| Colour **class coverage** (% of frame) and **class median hex** | Pixels are classified in HSV (thresholds in Appendix A). The class median is taken over all pixels of that class in the frame. Screens 03–11 skip the top 13% of the frame (the HUD band). | Reproducible |
+> 53-| **Material hex** (e.g. "Benny fur") | Median of the pixels that belong to the material's class **inside a hand-chosen box** (box listed in Appendix B). | Reproducible. The box is a judgement call. |
+> 54-| **Vanishing point (VP)** | For tube screens, the luminance maximum after an 8 px Gaussian blur, inside a hand-chosen window around the tunnel end. Door screens use the visual centre of the door opening. | ±15 px for the measured ones, ±30 px for the visual ones |
+> 55-| **Benny bbox** | Union of the hat-purple mask (H 250–292°, S>0.55) and the fur-pink mask (H 312–350°, S 0.30–0.85, V>0.75) inside a window, cross-checked by eye on a 50 px grid. Where the two disagree, the visual box is given. | ±20 px |
+> 56-| **Landmark boxes, counts** | Read by eye from the full …[+4995 chars]
+
+### 🤖 Claude — 2026-11-15T19:53:54.468Z
+
+Now I'll write a measurement script (in scratchpad) and measure the reference and the previous-specialist capture.
+
+### 🤖 Claude — 2026-11-15T19:54:09.838Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/m05.py", "content": "# python3 -I m05.py IMG [IMG...]   (reads only)\nimport sys\nimport numpy as np\nfrom PIL import Image, ImageFilter\n\n\ndef hsv(a):\n    a = a.astype(np.float32) / 255.; r, g, b = a[..., 0], a[..., 1], a[..., 2]\n    mx, mn = a.max(-1), a.min(-1); d = mx - mn; h = np.zeros_like(mx); m = d > 1e-6\n    rr = m & (mx == r); gg = m & (mx == g) & ~rr; bb = m & ~rr & ~gg\n    h[rr] = (60 * ((g - b)[rr] / d[rr])) % 360; h[gg] = 60 * ((b - r)[gg] / d[gg]) + 120\n    h[bb] = 60 * ((r -  …[+2905 chars]`
+
+### 🧑 User — 2026-11-15T19:54:09.905Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/m05.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:54:12.088Z
+
+> 🔧 **Bash** `{"command": "python3 -I /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/m05.py references/05_flow_into_the_current.png qa/screen05_final/previous_specialist/05.png qa/pilot05/05_before_81e639e.png", "description": "Measure reference, previous and original 05"}`
+
+### 🧑 User — 2026-11-15T19:54:13.238Z
+
+> ↩︎ result: == references/05_flow_into_the_current.png
+>   gold%frame        8.1   median #F78B2F  medH 25.5  yellow(H>=40)% of gold 16
+>   gold%tube(200-620) 8.7   median #FA9749
+>   pale-yellow hot spots (gold,V>.95,S<.62) % of gold: 12.8  median #FEC770
+>   blowout% 1.2
+>   Lwall  #B635BF  V0.81 S0.74 dark(V<.35)% 7 white% 3 std47 paleblue%0.2 gold% 2
+>   Rwall  #BF46ED  V0.94 S0.70 dark(V<.35)% 5 white% 8 std52 paleblue%1.0 gold% 0
+>   ceil   #C237A8  V0.80 S0.74 dark(V<.35)% 2 white% 5 std54 paleblue%0.2 gold% 8
+>   VP (blur max) (498,479) L229
+>   ring runs x=498: 203-222 433-435 446-450 455-470
+>     centre gaps: 222 14 14
+> == qa/screen05_final/previous_specialist/05.png
+>   gold%frame        4.2   median #FFBE39  medH 41.2  yellow(H>=40)% of gold 58
+>   gold%tube(200-620) 2.3   median #FFB66C
+>   pale-yellow hot spots (gold,V>.95,S<.62) % of gold: 26.7  median #FFD36B
+>   blowout% 0.2
+>   Lwall  #FFA6FF  V1.00 S0.36 dark(V<.35)% 0 white%33 std28 paleblue%0.2 gold% 0
+>   Rwall  #FFD0FF  V1.00 S0.19 dark(V<.35)% 0 white%56 std29 paleblue%8.4 gold% 0
+>   ceil   #FFC2FF  V1.00 S0.31 dark(V<.35)% 0 white%37 std24 paleblue%0.1 gold% 0
+>   VP (blur max) (636,569) L244
+>   ring runs x=498: 182-185 450-456
+>     centre gaps: 270
+> == qa …[+617 chars]
+
+### 🤖 Claude — 2026-11-15T19:54:21.237Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nim.crop((0,150,864,700)).save('$S/ref_tunnel.png')\np=Image.open('qa/screen05_final/previous_specialist/05.png').convert('RGB')\np.crop((0,150,864,700)).save('$S/prev_tunnel.png')\n\"", "description": "Crop tunnel regions for close viewing"}`
+
+### 🧑 User — 2026-11-15T19:54:21.733Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:54:23.315Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/ref_tunnel.png"}`
+
+### 🧑 User — 2026-11-15T19:54:23.365Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T19:54:31.424Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/prev_tunnel.png"}`
+
+### 🧑 User — 2026-11-15T19:54:31.459Z
+
+> ↩︎ result: [image]
+

@@ -524,3 +524,48 @@ Now my last iterations and the source.
 > if (opt.plunge) ids = plunge;
 > if (!ids.length) ids = ['01', '02', '0 …[+2754 chars]
 
+### 🤖 Claude — 2026-11-15T19:53:54.663Z
+
+Let me build a measurement script (the wave-2 one lived in a deleted scratchpad) and calibrate it on the reference.
+
+### 🤖 Claude — 2026-11-15T19:54:06.417Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/wm.py", "content": "\"\"\"Water metrics for screen 05 captures.  python3 -I wm.py NAME=path [NAME=path ...]\nClasses (sRGB HSV):\n  cyan  : H 180-222, S>=0.55, V>=0.55     (ref core #029AF3 = H 203 S .99 V .95)\n  pink  : H 288-335, S>=0.45, V>=0.80     (ref band #F739E5 = H 305 S .77 V .97; walls are darker V<.8)\n  white : S<0.18, V>=0.85\nRows: share of each class, median cyan colour, cyan span (first..last run>=4 px) = water width proxy,\npink runs, cyan-core centre (centroid of the longest cya …[+2502 chars]`
+
+### 🧑 User — 2026-11-15T19:54:06.483Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/wm.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T19:54:07.820Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I $S/wm.py REF=references/05_flow_into_the_current.png PREV=qa/screen05_final/previous_specialist/05.png IT7=qa/pilot05/water/it7/05.png", "description": "Measure reference, previous, it7 water metrics"}`
+
+### 🧑 User — 2026-11-15T19:54:08.304Z
+
+> ↩︎ result: == REF  references/05_flow_into_the_current.png  864x1536
+>   frame(y>=200): cyan 26.2% #029EF5  pink 16.1%  white  7.1%
+>   y= 520 cyan   2.0% pink   5.3% white   1.9%  cyanMed #49B5F9  cyanSpan 539-562 ( 24 px)  core 542  pink 469-485,568-578
+>   y= 600 cyan  17.8% pink  20.9% white   9.7%  cyanMed #0FB2FB  cyanSpan 243-653 (411 px)  core 382  pink 42-59,112-123,189-195,266-320,585-592,607-627,701-706,831-846
+>   y= 700 cyan  26.9% pink  15.0% white  12.2%  cyanMed #03ACF8  cyanSpan  48-736 (689 px)  core 665  pink 105-111,312-354,371-384,756-801
+>   y= 800 cyan  26.3% pink  30.6% white   3.9%  cyanMed #03ABFB  cyanSpan 222-576 (355 px)  core 315  pink 57-73,75-150,156-185,377-393,598-604,608-617,635-653,656-695
+>   y= 900 cyan  30.4% pink  20.8% white  14.5%  cyanMed #029FF8  cyanSpan  86-757 (672 px)  core 216  pink 0-54,595-630,640-651,658-706,846-862
+>   y=1000 cyan  41.2% pink  17.7% white   1.2%  cyanMed #0199F3  cyanSpan   9-675 (667 px)  core 212  pink 715-863
+>   y=1100 cyan  51.0% pink  30.4% white   3.7%  cyanMed #02A2F6  cyanSpan  28-807 (780 px)  core 717  pink 300-318,327-365,367-393,395-536,538-555
+>   y=1200 cyan  73.7% pink   0.0% white   9.1%  cyanMed #028BE7  cyanSpan   4-853 (8 …[+3214 chars]
+
+### 🤖 Claude — 2026-11-15T19:54:17.129Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad; python3 -I -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\np=Image.open('qa/screen05_final/previous_specialist/05.png').convert('RGB')\nW=Image.new('RGB',(1728,700))\nW.paste(r.crop((0,450,864,1150)),(0,0)); W.paste(p.crop((0,450,864,1150)),(864,0))\nW.save('$S/mid.png')\n\"", "description": "Crop mid-ground of reference vs previous"}`
+
+### 🧑 User — 2026-11-15T19:54:17.607Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:54:17.781Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/mid.png"}`
+
+### 🧑 User — 2026-11-15T19:54:17.828Z
+
+> ↩︎ result: [image]
+

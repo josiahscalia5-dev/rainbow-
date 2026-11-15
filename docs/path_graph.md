@@ -9,10 +9,10 @@ victory cinematic at the route end. Result: **PASS**.
 | 01 | INSIDE THE WASHING MACHINE | 0.0 → 0.0 | 0.0 | -2.4 → -2.4 | 6 | open | 0 |
 | 02 | WHIRLPOOL TUMBLE | 0.0 → 41.0 | 41.0 | -2.4 → -11.9 | 5 | open | 9 |
 | 03 | WHIRLPOOL TWIRL | 41.0 → 70.4 | 29.4 | -11.9 → -19.4 | 7 | open | 9 |
-| 04 | THROUGH THE FIVE ARROWS | 70.4 → 115.9 | 45.5 | -19.4 → -40.8 | 4.4 | gold r=4.8 | 14 |
-| 05 | FLOW INTO THE CURRENT | 115.9 → 187.7 | 71.9 | -40.8 → -43.6 | 9 | perf r=7.6 | 11 |
-| 06 | CREST THE RINSE ARCH | 187.7 → 247.1 | 59.3 | -43.6 → -48.5 | 7 | perf r=15 | 11 |
-| 07 | DIVE THE WASHER TUBE | 247.1 → 389.2 | 142.1 | -48.5 → -113.5 | 5.6 | perf r=7.2 | 12 |
+| 04 | THROUGH THE FIVE ARROWS | 70.4 → 114.7 | 44.3 | -19.4 → -40.6 | 4.4 | gold r=4.8 | 14 |
+| 05 | FLOW INTO THE CURRENT | 114.7 → 188.9 | 74.2 | -40.6 → -43.3 | 9 | perf r=7.6 | 11 |
+| 06 | CREST THE RINSE ARCH | 188.9 → 247.1 | 58.1 | -43.3 → -48.5 | 7 | perf r=15 | 11 |
+| 07 | DIVE THE WASHER TUBE | 247.1 → 389.2 | 142.2 | -48.5 → -113.5 | 5.6 | perf r=7.2 | 12 |
 | 08 | FINAL SPIN CHAMBER | 389.2 → 404.8 | 15.6 | -113.5 → -113.6 | 4.8 | open | 9.5 |
 | 09 | RIDE THE FINAL WAVE | 404.8 → 420.0 | 15.2 | -113.6 → -113.5 | 6.4 | open | 9.5 |
 | 10 | SLIDE INTO HIDING | 420.0 → 435.2 | 15.2 | -113.5 → -110.2 | 3.8 | open | 7.5 |
@@ -22,27 +22,27 @@ victory cinematic at the route end. Result: **PASS**.
 
 | From → To | s | position gap | tangent Δ° | up Δ° | altitude |
 |---|---|---|---|---|---|
-| 01 → 02 | 0.01 | 0 | 0.247 | 0.247 | -2.4 |
-| 02 → 03 | 41.02 | 0.0004 | 0.644 | 0.44 | -11.87 |
-| 03 → 04 | 70.41 | 0 | 0.93 | 0.577 | -19.41 |
-| 04 → 05 | 115.86 | 0 | 0.073 | 0.071 | -40.8 |
-| 05 → 06 | 187.75 | 0 | 0.226 | 0.169 | -43.65 |
-| 06 → 07 | 247.06 | 0 | 0.113 | 0.032 | -48.54 |
-| 07 → 08 | 389.2 | 0 | 0.351 | 0.312 | -113.5 |
-| 08 → 09 | 404.76 | 0 | 0.119 | 0.195 | -113.59 |
-| 09 → 10 | 419.99 | 0 | 0.08 | 0.13 | -113.47 |
-| 10 → 11 | 435.17 | 0 | 0.003 | 0.003 | -110.16 |
+| 01 → 02 | 0.01 | 0 | 0.249 | 0.249 | -2.4 |
+| 02 → 03 | 41 | -0.0001 | 0.673 | 0.544 | -11.87 |
+| 03 → 04 | 70.41 | 0 | 0.932 | 0.576 | -19.41 |
+| 04 → 05 | 114.69 | 0 | 0.246 | 0.246 | -40.63 |
+| 05 → 06 | 188.92 | 0 | 0.281 | 0.256 | -43.35 |
+| 06 → 07 | 247.06 | 0 | 0.114 | 0.031 | -48.53 |
+| 07 → 08 | 389.22 | 0 | 0.339 | 0.307 | -113.5 |
+| 08 → 09 | 404.79 | 0 | 0.12 | 0.195 | -113.59 |
+| 09 → 10 | 420.02 | 0 | 0.08 | 0.13 | -113.47 |
+| 10 → 11 | 435.19 | 0 | 0.003 | 0.003 | -110.16 |
 
-Max tangent change per 0.25-unit step: **6.238°**; max position step: **0.2561** (no jumps).
+Max tangent change per 0.25-unit step: **6.241°**; max position step: **0.2555** (no jumps).
 
 ## 07 → 08 deep plunge
 
-* 07 entry altitude: **-48.54**
-* plunge top (end of visible winding stretch): s=310.43, y=**-52.32**
-* plunge middle: s=349.77, y=**-83.58**
-* plunge bottom (pull-up complete): s=389.11, y=**-113.49**
-* 08 inlet (chamber back wall z=-280): s=389.2, y=**-113.5**
-* total vertical drop top→inlet: **61.18 units (≈3.06 m at Benny scale)**, steepest pitch -70°
+* 07 entry altitude: **-48.53**
+* plunge top (end of visible winding stretch): s=310.41, y=**-52.31**
+* plunge middle: s=349.77, y=**-83.56**
+* plunge bottom (pull-up complete): s=389.13, y=**-113.49**
+* 08 inlet (chamber back wall z=-280): s=389.22, y=**-113.5**
+* total vertical drop top→inlet: **61.19 units (≈3.06 m at Benny scale)**, steepest pitch -70°
 
 ## Altitude profile (y vs s)
 

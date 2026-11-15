@@ -379,3 +379,216 @@ Now let me look at the images.
 > 20	uniform float uFocal;   // pixels per unit at depth 1 (viewport height / (2 tan(fov/2)))
 > 21	uniform float uMaxPx …[+15830 chars]
 
+### 🤖 Claude — 2026-11-15T19:53:39.687Z
+
+> 🔧 **Bash** `{"command": "grep -n \"wake\\|splash\\|water\\.\\|bennyLift\\|BENNY_RIDE\\|waterhide\\|rideLift\\|lift\" src/game/Game.ts | head -60", "description": "Find VFX-feeding lines in Game.ts"}`
+
+### 🧑 User — 2026-11-15T19:53:39.718Z
+
+> ↩︎ result: 83:  scene.add(water.group);
+> 91:  if (hidden.has('water')) water.group.visible = false;
+> 153:    const h = water.surfaceHeight(s, lat, time);
+> 162:  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+> 225:      // the swirl lifts him toward the middle of the drum while he tumbles (ref 02), then he drops to the drain
+> 339:      water.splash(benny.root.position, course.sample(st.s).up, 1);
+> 364:    // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),
+> 365:    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+> 366:    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
+> 369:    // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)
+> 498:    water.update(time, dt, st.s, camera);
+
+### 🤖 Claude — 2026-11-15T19:53:40.686Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uBenny\\|wake\\|contact\\|Benny\\|lace\\|EDGE_LIFT\" src/vfx/waterRibbon.ts | head -60", "description": "Find Benny wake terms in waterRibbon"}`
+
+### 🧑 User — 2026-11-15T19:53:40.726Z
+
+> ↩︎ result: 2: * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.
+> 8: * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+> 20:export const EDGE_LIFT = 0.28;
+> 24: *  x gate: 1 = pink bands taper off and part around Benny so the water at and behind him is pure
+> 29: * Between the two bands is the electric-cyan core; outside them more cyan, then the foam lace.
+> 89:/** CPU mirror of the vertex displacement (keep in sync with VERT). */
+> 92:  const trough = EDGE_LIFT * au * au * au;
+> 148:uniform vec3 uBenny;      // s, lateral (units), strength
+> 149:uniform float uBennyR;    // Benny's waterline radius (units)
+> 254:  // Benny parts the bands like a bow wave (vStyle.x, ref 05): just ahead of him they narrow and
+> 259:    float db = s - uBenny.x;
+> 368:  // ---- soap-foam lace where the water meets the foam banks ----
+> 381:  // ---- Benny: thin churned waterline ring, ripple rings and a V wake on the surface ----
+> 383:  // around and behind him stays glossy electric cyan as in ref 05, not a sheet of white lace)
+> 384:  if (uBenny.z > 0.0) {
+> 385:    float du = lat - uBenny.y;
+> 386:    float dv = s - uBenny.x;
+> 387:    float rb = uBenny …[+921 chars]
+
+### 🤖 Claude — 2026-11-15T19:53:42.345Z
+
+> 🔧 **Bash** `{"command": "sed -n 360,410p src/vfx/waterRibbon.ts && sed -n 140,175p src/game/Game.ts && sed -n 345,372p src/game/Game.ts", "description": "Read ribbon Benny contact block and Game.ts wake lines"}`
+
+### 🧑 User — 2026-11-15T19:53:42.396Z
+
+> ↩︎ result: float sparkle = step(0.9, hs) * smoothstep(0.22, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 7.0 + hs * 40.0));
+>   col += vec3(1.3) * sparkle;
+>   #else
+>   // wide cells so the long horizontal arms are not clipped at the cell border in the mid-ground
+>   float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * 0.42), 0.42, 22.0, 2.4, uTime);
+>   col += vec3(2.0, 2.2, 2.3) * glint * (1.0 - smoothstep(0.3, 0.8, fws));
+>   #endif
+> 
+>   // ---- soap-foam lace where the water meets the foam banks ----
+>   float edgeN = (vnoise(vec2(s * 1.3, u * 2.0)) - 0.5) * 0.1;
+>   float eu = abs(lat) - vHalfW;               // units from the edge (negative inside)
+>   float edge = smoothstep(-0.75, -0.3, eu + edgeN * vHalfW);
+>   if (edge > 0.0) {
+>     float c = cells(vec2(lat * 3.2, (s - vSpeed * uTime * 0.35) * 3.2));
+>     vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
+>     col = mix(col, foamCol, edge * smoothstep(0.05, 0.4, c + edge * 0.3));
+>   }
+>   col = mix(col, uFoamLav * 0.92, vSkirt);
+>   float cutC = cells(vec2(u * vHalfW * 4.0, s * 3.6));
+>   col = mix(col, mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, cutC)), cutFoam);
+> 
+>   // ---- Benny: thin churned wat …[+4813 chars]
+
+### 🤖 Claude — 2026-11-15T19:53:45.307Z
+
+> 🔧 **Bash** `{"command": "ls backups/claude-sessions/ | tail -20; ls qa/pilot05/water/ | head -30; cat qa/pilot05/COORDINATION.md | head -40", "description": "List sessions backups and water dir"}`
+
+### 🧑 User — 2026-11-15T19:53:45.345Z
+
+> ↩︎ result: 515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1
+> 51775b34-51ba-5918-b385-cd11374f9ebd
+> e0f002d9-e93b-5e8f-89ac-1e3fceebb58f
+> eae80a1c-be41-5f1a-858b-469afcc249da
+> before
+> before_iso
+> it1
+> it1_iso
+> it2
+> it2_iso
+> it3
+> it3_iso
+> it4_iso
+> it5
+> it5_iso
+> it6
+> it7
+> it7_iso
+> # Screen 05 pilot: specialist coordination (wave 2, account 3)
+> 
+> Started 2026-11-15 ~19:20 UTC on branch `ccr-8b6fc834-7kd55l` (from `f2a86ab`). The coordinator is the main Claude session.
+> Wave 1 (account 2, 18:36–18:58 UTC) was cut off by the usage limit. Its edits were saved by autosave and are **kept**:
+> the straight 05 tube axis, the wider stream, the new rider splash, the foam berm and Benny's proportions/lift.
+> 
+> ## Evidence
+> * `05_before_81e639e.png`: live game before any specialist work (original account)
+> * `05_partial_f2a86ab.png`: live game with wave-1 partial work (this wave's starting point)
+> * `05_ref_before_partial.png`: reference | before | partial side by side
+> * Targets with pixel measurements: `qa/scene_comparisons.md` §05 (5.1–5.11) and `docs/reference_inventory.md`
+> 
+> ## File ownership (strict: edit ONLY your own files; read anything)
+> | Specialist | Owns |
+> |---|---|
+> | washer-environment-modeler (also lighting/shader for the tube) | `src/ …[+1536 chars]
+
+### 🤖 Claude — 2026-11-15T19:53:48.310Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,200p scripts/capture.mjs", "description": "Read capture script"}`
+
+### 🧑 User — 2026-11-15T19:53:48.349Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'string' ? opt.size.split(' …[+2641 chars]
+
+### 🤖 Claude — 2026-11-15T19:53:52.623Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"bennyLift\\|waterhide\\|hide=\" src --include=*.ts | grep -v \"^src/vfx/index.ts\" | head -20; cat scripts/lib/pw.mjs | head -60", "description": "Find bennyLift and query params"}`
+
+### 🧑 User — 2026-11-15T19:53:52.671Z
+
+> ↩︎ result: src/characters/benny/runtime.ts:44:/** QA A/B hook: `?bennyLift=<units>` overrides the ride lift (e.g. 0 = the game's raw placement) */
+> src/characters/benny/runtime.ts:47:  const v = parseFloat(new URLSearchParams(location.search).get('bennyLift') ?? '');
+> src/game/Game.ts:89:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = awai …[+556 chars]
+
+### 🤖 Claude — 2026-11-15T19:53:54.163Z
+
+> 🔧 **Bash** `{"command": "sed -n 30,80p src/characters/benny/runtime.ts; sed -n 85,95p src/game/Game.ts", "description": "Read Benny runtime lift and hide param"}`
+
+### 🧑 User — 2026-11-15T19:53:54.211Z
+
+> ↩︎ result: export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {
+>   const src = await loadScene();
+>   const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
+>   return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality() });
+> }
+> 
+> /**
+>  * Ride height. The game places the root at water surface + radius·0.55 (≈ 0.44), which buried the lower
+>  * third of the plush ball in the opaque stream. While riding (swim ≥ 0.5, not tumbling) the model is
+>  * lifted inside the root so he sits ON the water like refs 04–10: only the bottom ≈ 0.1 of the fur and
+>  * the kicking feet are under the surface. Cinematics (01 peek, 02 tumble, 11 hide) keep the root as placed.
+>  */
+> export const BENNY_RIDE_LIFT = 0.3;
+> /** QA A/B hook: `?bennyLift=<units>` overrides the ride lift (e.g. 0 = the game's raw placement) */
+> function rideLift(): number {
+>   if (typeof location === 'undefined') return BENNY_RIDE_LIFT;
+>   const v = parseFloat(new URLSearchParams(location.search).get('bennyLift') ?? '');
+>   return Number.isFinite(v) ? THREE.MathUtils.clamp(v, 0, 0.6) : BENNY_RIDE_LIFT;
+> }
+> 
+> /** Build the runtime around an already-loaded (or fresh …[+1416 chars]
+
+### 🤖 Claude — 2026-11-15T19:54:00.492Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad && python3 -I -c \"\nfrom PIL import Image\nimport sys\nS=sys.argv[1]\nfs=['qa/pilot05/foam/iso/fix1/05_base.png','qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake.png','qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake,crown,spray,bubbles,foam.png','qa/screen05_final/previous_specialist/05.png']\nW=550;H=260\nout=Image.new('RGB',(W,H*len(fs)))\nfor i,f in enumerate(fs):\n  im=Image.open(f).convert('RGB').crop((150,1020,700,1280))\n  out.paste(im,(0,i*H))\nout.save(S+'/iso_old.png')\n\" $S", "descri …[+36 chars]`
+
+### 🧑 User — 2026-11-15T19:54:00.937Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-15T19:54:02.222Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/51775b34-51ba-5918-b385-cd11374f9ebd/scratchpad/iso_old.png"}`
+
+### 🧑 User — 2026-11-15T19:54:02.255Z
+
+> ↩︎ result: [image]
+
