@@ -6,16 +6,15 @@
  *  - puffs: instanced bubble puffs sitting ON the berm crest (silhouette lumps), in ~40-unit chunks
  *    so only chunks near Benny are drawn; quality 'low' halves density and uses 20-tri puffs.
  *  - foam rings on the whirlpool rim and along its spiral bands (rotating with the swirl)
- *  - rafts (05, wave 3): floating foam clumps ON the water. "Flank" rafts continue the two banks down
- *    both sides of the frame to Benny's level (ref 05: cloud banks hugging BOTH edges y≈540–1300);
- *    they float with the current alongside the rider, drift slowly forward and merge into the bank
- *    ahead, and part around Benny when he steers into them. "Wake" rafts are the whitewater shed
- *    behind the two spray fans (ref 05: foam at x 60–200 / 690–800, y≈1200–1290). One instanced
- *    draw, fixed pool, no per-frame allocation.
+ *  - flank banks (05, wave 4): one CONTINUOUS cloud bank per side that continues the berm down both
+ *    sides of the frame to Benny's level (ref 05: banks hugging BOTH edges y≈540–1300): a lather sheet
+ *    (berm shader, 1 draw) + world-anchored instanced puffs (1 draw), fitted to the frame edges from
+ *    the camera each frame. Replaces wave 3's floating "flank"/"wake" raft clumps, which read as round
+ *    islands on open water. Fixed pools, no per-frame allocation.
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { EDGE_LIFT } from './waterRibbon';
+import { EDGE_LIFT, coreLateral } from './waterRibbon';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
@@ -252,30 +251,41 @@ export interface FoamSystem {
   group: THREE.Group;
   whirlGroup: THREE.Group;
   berm: THREE.Mesh;
-  /** floating foam rafts (flank banks + wake foam), 05 only */
+  /** 05 flank-bank puffs (instanced, on top of `flank`) */
   rafts: THREE.InstancedMesh;
+  /** 05 flank-bank lather sheet (shares the berm material) */
+  flank: THREE.Mesh;
   /** Benny's waterline position on the course (call from water.wake() each riding frame) */
   rider(s: number, lat: number, strength: number): void;
-  update(time: number, dt: number, focusS: number, outro?: number): void;
-  /** QA: current raft placement */
+  /** camera: needed in 05, where the flank banks are fitted to the frame edges */
+  update(time: number, dt: number, focusS: number, outro?: number, camera?: THREE.Camera): void;
+  /** QA: current flank-bank placement (kind L/R, row ds, inner-edge lateral, bank width) */
   qaRafts(): { visible: boolean; puffs: number; shown: number; clumps: { kind: string; ds: number; lat: number; k: number }[] };
   instanceCount: number;
 }
 
-// ---------------------------------------------------------------------------------- rafts
-/** flank rafts cycle from DS0 (behind the camera) to DS1 (ahead, merged into the bank) relative to Benny */
-const RAFT_DS0 = -2.6;
-const RAFT_DS1 = 8.5;
-/** relative forward drift of the flank rafts (cycles per second over DS0..DS1 ≈ 0.5 units/s) */
-const RAFT_RATE = 0.042;
-/** wake rafts are shed behind the fans: ds from -0.35 to WAKE_DS1, cycles per second */
-const WAKE_DS1 = -3.3;
-const WAKE_RATE = 0.3;
-/** never closer than this to the stream centreline (coin line / cyan core) */
-const RAFT_MIN_LAT = 1.9;
-
-interface RaftPuff { dx: number; dl: number; dh: number; r: number; q: THREE.Quaternion }
-interface Clump { kind: 0 | 1; side: number; phase: number; depth: number; puffs: RaftPuff[]; first: number }
+// ---------------------------------------------------------------------------------- flank banks (05)
+/**
+ * In 05 the stream fills the tube floor wall to wall (S05.extent), so from the locked chase camera the
+ * real stream edges and their berm leave the frame below y≈800 and the near field shows only open water.
+ * Ref 05 has white cloud banks hugging BOTH sides all the way down to Benny's level (left x≈0–330 over
+ * y≈540–1300, right x≈560–864). Wave 4: one continuous bank per side, fitted to the frame edges each
+ * frame from the camera (so it holds for any device aspect), not floating islands:
+ *  - a lather sheet (berm shader) from just below the frame bottom (ds −3.4) up the side of the frame
+ *    until it merges into the berm (ds +15); its inner edge sits BANK_PX px in from the frame edge
+ *    (lumpy, slow noise along s) and dips just under the water so the stream cuts a natural waterline;
+ *  - instanced puffs (rim, crest, heaps) anchored to world cells along s, so the bank stays put on the
+ *    water like the berm and Benny rides past it; they give the lumpy cloud silhouette.
+ * Never closer than BANK_CLEAR_RIDER to Benny (near him) or BANK_CLEAR_CORE to the cyan core / coin line.
+ */
+const BANK_DS0 = -3.4;
+const BANK_DS1 = 15;
+/** puffs stop here (further ahead the berm and its own puffs take over) */
+const BANK_PUFF_DS1 = 12.5;
+/** inner edge of the bank: px in from the frame edge (fraction of an 864-px wide frame) */
+const BANK_PX: [number, number] = [62, 168];
+const BANK_CLEAR_RIDER = 1.3;
+const BANK_CLEAR_CORE = 1.45;
 
 /** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
 function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
@@ -480,109 +490,205 @@ export function createFoam(
   build(wl, whirlGroup, st03.s0 - 30, st04.s0 + 25);
   group.add(whirlGroup);
 
-  // ---- floating rafts (05): flank banks + wake foam ----
-  const rr = rng(4242);
-  const clumps: Clump[] = [];
-  let nRaft = 0;
-  const NF = quality === 'high' ? 10 : 6;
-  const NW = quality === 'high' ? 4 : 3;
-  const randQ = () => new THREE.Quaternion().setFromEuler(new THREE.Euler(rr() * 6, rr() * 6, rr() * 6));
-  for (const side of [-1, 1]) {
-    for (let i = 0; i < NF; i++) {
-      // cloud clump (ref 05: 10–40 px soap-bubble puffs packed into a bank): a dome of bigger puffs
-      // in the middle, smaller ones round the rim, a third stacked on top; spacing < puff radius so
-      // the clump reads as one lumpy cloud, not separate cotton balls
-      const P = quality === 'high' ? 13 + ((rr() * 4) | 0) : 7 + ((rr() * 3) | 0);
-      const puffs: RaftPuff[] = [];
-      const len = 0.5 + rr() * 0.35, wid = 0.28 + rr() * 0.16;
-      for (let k = 0; k < P; k++) {
-        const ang = rr() * Math.PI * 2, rad = Math.sqrt(rr());
-        const r = (k < 4 ? 0.12 + rr() * 0.06 : 0.06 + rr() * 0.07) * (1 - 0.35 * rad);
-        const stack = k >= 4 && rad < 0.6 && rr() < 0.4 ? 0.1 + rr() * 0.06 : 0;
-        puffs.push({ dx: Math.cos(ang) * rad * len, dl: Math.sin(ang) * rad * wid, dh: r * (0.1 + rr() * 0.3) + stack * (1 - rad), r, q: randQ() });
-      }
-      clumps.push({ kind: 0, side, phase: (i + rr() * 0.6) / NF, depth: 1.7 + rr() * 1.5, puffs, first: nRaft });
-      nRaft += P;
-    }
-    for (let i = 0; i < NW; i++) {
-      const P = quality === 'high' ? 8 + ((rr() * 3) | 0) : 5;
-      const puffs: RaftPuff[] = [];
-      for (let k = 0; k < P; k++) {
-        const ang = rr() * Math.PI * 2, rad = Math.sqrt(rr());
-        const r = (k < 3 ? 0.08 + rr() * 0.05 : 0.045 + rr() * 0.05) * (1 - 0.3 * rad);
-        puffs.push({ dx: Math.cos(ang) * rad * 0.4, dl: Math.sin(ang) * rad * 0.24, dh: r * (0.05 + rr() * 0.25), r, q: randQ() });
-      }
-      clumps.push({ kind: 1, side, phase: (i + rr() * 0.6) / NW, depth: 1.0 + rr() * 0.2, puffs, first: nRaft });
-      nRaft += P;
-    }
-  }
-  const rafts = new THREE.InstancedMesh(geoHi, mat, nRaft);
-  rafts.name = 'foam_rafts';
-  rafts.frustumCulled = false;
-  for (const c of clumps) {
-    c.puffs.forEach((pf, k) => {
-      // lit tops (ao high) for the big centre domes, a bit more shade on the small rim puffs
-      rafts.setColorAt(c.first + k, tmpC.setRGB(c.kind === 1 ? 0.92 : 0.78 + 0.22 * Math.min(1, pf.r / 0.22), rr(), rr() * 2 - 1));
-      rafts.setMatrixAt(c.first + k, tmpM.makeScale(0, 0, 0));
-    });
-  }
-  if (rafts.instanceColor) rafts.instanceColor.needsUpdate = true;
-  rafts.visible = false;
-  group.add(rafts);
-  total += nRaft;
+  // ---- 05 flank banks: lather sheet + world-anchored puffs fitted to the frame edges ----
   const st05 = course.stage('05');
   const sm = (a: number, b: number, x: number) => {
     const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
     return t * t * (3 - 2 * t);
   };
+  const R = quality === 'high' ? 30 : 18; // sheet rows per side
+  const C = quality === 'high' ? 7 : 5; // sheet columns (inner edge → beyond the frame edge)
+  const bankPos = new Float32Array(2 * R * C * 3);
+  const bankFoam = new Float32Array(2 * R * C * 3);
+  const bankIdx: number[] = [];
+  for (let sd = 0; sd < 2; sd++) {
+    for (let i = 0; i < R - 1; i++) {
+      for (let j = 0; j < C - 1; j++) {
+        const a = (sd * R + i) * C + j, b = a + 1, c = a + C, d = c + 1;
+        idx3(bankIdx, sd, a, b, c, d);
+      }
+    }
+  }
+  const bankGeo = new THREE.BufferGeometry();
+  bankGeo.setAttribute('position', new THREE.BufferAttribute(bankPos, 3).setUsage(THREE.DynamicDrawUsage));
+  bankGeo.setAttribute('aFoam', new THREE.BufferAttribute(bankFoam, 3).setUsage(THREE.DynamicDrawUsage));
+  bankGeo.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(2 * R * C * 3), 3).setUsage(THREE.DynamicDrawUsage));
+  bankGeo.setIndex(bankIdx);
+  const flank = new THREE.Mesh(bankGeo, berm.mesh.material);
+  flank.name = 'foam_flank';
+  flank.frustumCulled = false;
+  flank.visible = false;
+  group.add(flank);
+  /** row data per side (signed laterals), used to place the puffs between rows */
+  const rowDs = new Float32Array(R);
+  for (let i = 0; i < R; i++) rowDs[i] = BANK_DS0 + (BANK_DS1 - BANK_DS0) * Math.pow(i / (R - 1), 1.5);
+  const rowIn = [new Float32Array(R), new Float32Array(R)];
+  const rowOut = [new Float32Array(R), new Float32Array(R)];
+  /** 0..1 lumpiness of the flank bank (inner-edge width, crest height) */
+  const bankLump = (s: number, side: number) => 0.62 * noise1(s * 0.72 + side * 17.3) + 0.38 * noise1(s * 2.3 + side * 5.1);
+  /** sheet height above the water across the bank: f = 0 inner edge (just under the water) … 1 outer */
+  const bankProf = (f: number, s: number, side: number) => {
+    const top = 0.07 + 0.1 * noise1(s * 1.4 + side * 9.1 + 40);
+    const u = Math.min(1, f / 0.38);
+    return -0.05 + (0.05 + top) * (1 - (1 - u) * (1 - u));
+  };
+
+  // puffs: CELL-spaced world cells along s, P puffs per cell, a ring buffer of NC cells per side
+  const CELL = quality === 'high' ? 0.26 : 0.42;
+  const P = quality === 'high' ? 3 : 2;
+  const NC = Math.ceil((BANK_PUFF_DS1 - BANK_DS0) / CELL) + 3;
+  const nRaft = 2 * NC * P;
+  const rr = rng(4242);
+  const slotQ: THREE.Quaternion[] = [];
+  const rafts = new THREE.InstancedMesh(geoHi, mat, nRaft);
+  rafts.name = 'foam_rafts';
+  rafts.frustumCulled = false;
+  for (let i = 0; i < nRaft; i++) {
+    slotQ.push(new THREE.Quaternion().setFromEuler(new THREE.Euler(rr() * 6, rr() * 6, rr() * 6)));
+    const kind = i % P; // 0 rim, 1 crest, 2 heap
+    rafts.setColorAt(i, tmpC.setRGB(kind === 0 ? 0.9 : 0.8 + 0.2 * rr(), rr(), rr() * 2 - 1));
+    rafts.setMatrixAt(i, tmpM.makeScale(0, 0, 0));
+  }
+  if (rafts.instanceColor) rafts.instanceColor.needsUpdate = true;
+  rafts.visible = false;
+  group.add(rafts);
+  total += nRaft;
+
   const rider = { s: 0, lat: 0, str: 0, target: 0, fed: false };
   const fr = { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
-  const base = new THREE.Vector3();
   const pP = new THREE.Vector3();
+  const pv = new THREE.Vector3();
+  const camPos = new THREE.Vector3();
   const qa: { kind: string; ds: number; lat: number; k: number }[] = [];
   let shown = 0;
+  let hBase = 0;
+  /** NDC x of the water point at `lat` on the current row frame `fr` */
+  const ndcX = (cam: THREE.Camera, lat: number) => pv.copy(fr.pos).addScaledVector(fr.right, lat).addScaledVector(fr.up, hBase).project(cam).x;
+  /** lateral on the current row whose water point projects to NDC x = target (secant; the map is ~linear) */
+  const solveLat = (cam: THREE.Camera, target: number, l0: number, l1: number) => {
+    let x0 = ndcX(cam, l0) - target, x1 = ndcX(cam, l1) - target;
+    for (let it = 0; it < 5 && Math.abs(x1) > 1e-4; it++) {
+      const d = x1 - x0;
+      if (Math.abs(d) < 1e-7) break;
+      const l2 = Math.max(-14, Math.min(14, l1 - (x1 * (l1 - l0)) / d));
+      l0 = l1; x0 = x1;
+      l1 = l2; x1 = ndcX(cam, l1) - target;
+    }
+    return l1;
+  };
+  const hideRafts = () => {
+    for (let i = 0; i < nRaft; i++) rafts.setMatrixAt(i, tmpM.makeScale(0, 0, 0));
+    rafts.instanceMatrix.needsUpdate = true;
+  };
 
-  const updateRafts = (time: number, dt: number, focusS: number, outro: number) => {
+  const updateRafts = (time: number, dt: number, focusS: number, outro: number, camera?: THREE.Camera) => {
     if (!rider.fed) rider.target = 0;
     rider.fed = false;
     rider.str = dt > 0 ? rider.str + (rider.target - rider.str) * Math.min(1, dt * 4) : rider.target;
     const w = sm(st05.s0 + 2, st05.s0 + 7, focusS) * (1 - sm(st05.s1 - 7, st05.s1 - 2, focusS)) * rider.str * (1 - outro);
     qa.length = 0;
     shown = 0;
-    rafts.visible = w > 0.01;
-    if (!rafts.visible) return;
-    for (const c of clumps) {
-      let ds: number, lat: number, k: number;
-      if (c.kind === 0) {
-        const cyc = (((c.phase + time * RAFT_RATE) % 1) + 1) % 1;
-        ds = RAFT_DS0 + cyc * (RAFT_DS1 - RAFT_DS0);
-        const hw = course.widthAt(rider.s + ds) / 2;
-        // deep in the water next to Benny, pushed out to the bank further ahead
-        const depth = c.depth * (1 - 0.72 * sm(1.5, 7.5, ds));
-        lat = c.side * Math.max(RAFT_MIN_LAT, hw - depth);
-        // part around Benny (he can steer anywhere across the stream)
-        const part = sm(1.35, 2.0, Math.hypot(ds * 0.55, lat - rider.lat));
-        k = sm(RAFT_DS0, RAFT_DS0 + 1.2, ds) * (1 - sm(RAFT_DS1 - 2.5, RAFT_DS1, ds)) * part;
-      } else {
-        const cyc = (((c.phase + time * WAKE_RATE) % 1) + 1) % 1;
-        ds = -0.35 + cyc * (WAKE_DS1 + 0.35);
-        lat = rider.lat + c.side * (c.depth + 0.3 * -ds);
-        k = sm(-0.35, -0.95, ds) * (1 - sm(WAKE_DS1 + 0.9, WAKE_DS1, ds));
+    const cam = camera as THREE.PerspectiveCamera | undefined;
+    const on = w > 0.01 && !!cam && cam.isPerspectiveCamera;
+    if (!on) {
+      if (rafts.visible) hideRafts();
+      rafts.visible = false;
+      flank.visible = false;
+      return;
+    }
+    rafts.visible = true;
+    flank.visible = true;
+    cam.updateMatrixWorld();
+    cam.getWorldPosition(camPos);
+    const frac0 = (2 * BANK_PX[0]) / 864, frac1 = (2 * BANK_PX[1]) / 864;
+    // ---- sheet rows ----
+    let k = 0;
+    for (let sd = 0; sd < 2; sd++) {
+      const side = sd === 0 ? -1 : 1;
+      for (let i = 0; i < R; i++) {
+        const ds = rowDs[i];
+        const s = Math.min(s1, Math.max(s0, rider.s + ds));
+        course.sample(s, fr);
+        const hw = course.widthAt(s) / 2;
+        hBase = heightAt(s, side * 2.5, time);
+        const camLat = pv.copy(camPos).sub(fr.pos).dot(fr.right);
+        const lump = bankLump(s, side);
+        const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);
+        let inner = solveLat(cam, side * (1 - (frac0 + (frac1 - frac0) * lump)), camLat + side * 1.0, edge);
+        // keep clear of Benny (near him) and of the cyan core / coin line; merge into the berm at the edge
+        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds)));
+        let a = side * inner;
+        a = Math.max(a, side * rider.lat + clearR, side * coreLateral(course, s) + BANK_CLEAR_CORE);
+        a = Math.min(a, hw - 0.3);
+        inner = side * a;
+        const outA = Math.max(a + 0.12, Math.min(side * edge + 0.55, hw + 0.15));
+        // fade in/out (stage entry/exit): the bank narrows towards the frame edge instead of sinking
+        a = outA - (outA - a) * w;
+        inner = side * a;
+        rowIn[sd][i] = inner;
+        rowOut[sd][i] = side * outA;
+        if (qa.length < 64 && (i % 3 === 0)) qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +inner.toFixed(2), k: +(outA - a).toFixed(2) });
+        for (let j = 0; j < C; j++) {
+          const f = Math.pow(j / (C - 1), 0.85);
+          const lat = side * (a + (outA - a) * f);
+          const h = heightAt(s, lat, time) + bankProf(f, s, side);
+          pP.copy(fr.pos).addScaledVector(fr.right, lat).addScaledVector(fr.up, h);
+          pP.toArray(bankPos, k * 3);
+          // berm-shader coordinates (e across, s along) at twice the berm's density: the near-field
+          // bank is seen ≈5× closer than the berm, so its soap cells must be smaller
+          bankFoam[k * 3] = 2 * ((f - 0.3) * (outA - a));
+          bankFoam[k * 3 + 1] = 2 * s;
+          bankFoam[k * 3 + 2] = side;
+          k++;
+        }
       }
-      k *= w;
-      const s = Math.min(s1, Math.max(s0, rider.s + ds));
-      course.sample(s, fr);
-      base.copy(fr.pos).addScaledVector(fr.right, lat).addScaledVector(fr.up, heightAt(s, lat, time));
-      if (qa.length < 64) qa.push({ kind: c.kind === 0 ? 'flank' : 'wake', ds: +ds.toFixed(2), lat: +lat.toFixed(2), k: +k.toFixed(2) });
-      for (let i = 0; i < c.puffs.length; i++) {
-        const pf = c.puffs[i];
-        const r = pf.r * k * (1 + 0.035 * Math.sin(time * 1.7 + i * 2.3 + c.phase * 20));
-        if (r < 0.004) { rafts.setMatrixAt(c.first + i, tmpM.makeScale(0, 0, 0)); continue; }
-        pP.copy(base).addScaledVector(fr.tan, pf.dx).addScaledVector(fr.right, c.side * pf.dl).addScaledVector(fr.up, pf.dh * k + r * 0.15);
-        tmpS.set(r, r * 0.8, r);
-        tmpM.compose(pP, pf.q, tmpS);
-        rafts.setMatrixAt(c.first + i, tmpM);
-        shown++;
+    }
+    bankGeo.attributes.position.needsUpdate = true;
+    bankGeo.attributes.aFoam.needsUpdate = true;
+    bankGeo.computeVertexNormals();
+    // ---- puffs on the sheet (world cells along s) ----
+    const rowAt = (ds: number) => {
+      const t = Math.pow(Math.min(1, Math.max(0, (ds - BANK_DS0) / (BANK_DS1 - BANK_DS0))), 1 / 1.5) * (R - 1);
+      const i = Math.min(R - 2, Math.floor(t));
+      return [i, t - i] as const;
+    };
+    const j0 = Math.floor((rider.s + BANK_DS0) / CELL);
+    for (let sd = 0; sd < 2; sd++) {
+      const side = sd === 0 ? -1 : 1;
+      for (let c = 0; c < NC; c++) {
+        const j = j0 + c;
+        const slot = ((j % NC) + NC) % NC;
+        const hh = (q: number) => hash1(j * 7.13 + side * 3.7 + q * 1.31);
+        const sC = (j + 0.5 + (hh(0) - 0.5) * 0.6) * CELL;
+        const ds = sC - rider.s;
+        const base = (sd * NC + slot) * P;
+        const kFade = w * (1 - sm(BANK_PUFF_DS1 - 1.5, BANK_PUFF_DS1, ds)) * sm(BANK_DS0, BANK_DS0 + 0.3, ds);
+        if (kFade < 0.02 || sC < s0 || sC > s1) {
+          for (let p = 0; p < P; p++) rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0));
+          continue;
+        }
+        const [ri, rf] = rowAt(ds);
+        const lin = rowIn[sd][ri] + (rowIn[sd][ri + 1] - rowIn[sd][ri]) * rf;
+        const lout = rowOut[sd][ri] + (rowOut[sd][ri + 1] - rowOut[sd][ri]) * rf;
+        const wid = Math.abs(lout - lin);
+        course.sample(sC, fr);
+        const scale = Math.min(1.7, 0.85 + 0.075 * Math.max(0, ds)) * kFade * Math.min(1, wid / 0.3);
+        for (let p = 0; p < P; p++) {
+          let f: number, r: number, lift: number;
+          if (p === 0) { f = 0.02 + 0.1 * hh(1); r = 0.05 + 0.04 * hh(2); lift = 0.1; }
+          else if (p === 1) { f = 0.2 + 0.45 * hh(3); r = 0.07 + 0.06 * hh(4); lift = 0.3; }
+          else if (hh(5) < 0.55) { f = 0.12 + 0.5 * hh(6); r = 0.09 + 0.06 * hh(7); lift = 0.45; }
+          else { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
+          r *= scale * (1 + 0.035 * Math.sin(time * 1.7 + j * 2.3 + p));
+          if (r < 0.004) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
+          const lat = lin + (lout - lin) * f;
+          const h = heightAt(sC, lat, time) + bankProf(f, sC, side) + r * lift + (p === 2 ? 0.035 * scale : 0);
+          pP.copy(fr.pos).addScaledVector(fr.right, lat).addScaledVector(fr.up, h);
+          tmpS.set(r, r * 0.8, r);
+          tmpM.compose(pP, slotQ[base + p], tmpS);
+          rafts.setMatrixAt(base + p, tmpM);
+          shown++;
+        }
       }
     }
     rafts.instanceMatrix.needsUpdate = true;
@@ -593,6 +699,7 @@ export function createFoam(
     whirlGroup,
     berm: berm.mesh,
     rafts,
+    flank,
     instanceCount: total,
     rider(s, lat, strength) {
       rider.s = s;
@@ -601,7 +708,7 @@ export function createFoam(
       rider.fed = true;
     },
     qaRafts: () => ({ visible: rafts.visible, puffs: nRaft, shown, clumps: qa.slice() }),
-    update(time, dt, focusS, outro = 0) {
+    update(time, dt, focusS, outro = 0, camera) {
       berm.uniforms.uTime.value = time;
       (berm.uniforms.uOutro.value as THREE.Vector2).x = outro;
       const s08 = course.stage('08').s0;
@@ -614,7 +721,13 @@ export function createFoam(
       // rotate whirlpool foam about the basin axis with the swirl (θ decreasing = course direction)
       whirlGroup.rotation.y = -time * 0.45 * ((Math.PI * 2) / 3);
       void whirlStart;
-      updateRafts(time, dt, focusS, outro);
+      updateRafts(time, dt, focusS, outro, camera);
     },
   };
+}
+
+/** two triangles of a bank quad, wound CCW seen from above on both sides */
+function idx3(out: number[], sideIndex: number, a: number, b: number, c: number, d: number) {
+  if (sideIndex === 1) out.push(a, b, c, b, d, c);
+  else out.push(a, c, b, b, c, d);
 }

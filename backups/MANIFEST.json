@@ -809,7 +809,7 @@
   {
    "path": "qa/capture_log.json",
    "bytes": 1104,
-   "sha256": "a113dbcb0f9e39756ca074b1fa82d3c379f1f045b42dd9aa679bdebea50ecf59"
+   "sha256": "699de8cb98f28539c6b54b1bf7e0a0227bcf50464ffe0ab63fdba31fac305e38"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1387,6 +1387,16 @@
    "sha256": "95d73ad383237912c33f727ecad9e2aa90e0216f1a7d7e2109b602d5e837e315"
   },
   {
+   "path": "qa/pilot05/wave4/foam/it02/05.png",
+   "bytes": 1639058,
+   "sha256": "9fd2620b383635f9cbc130206888d40f4409c7976ef366b4dfeaf5fb7e8fa8b1"
+  },
+  {
+   "path": "qa/pilot05/wave4/water/it01/05.png",
+   "bytes": 1654112,
+   "sha256": "caaaac5c60889bff3644a429a7857dd2c440382eff4f202e02f2c15516495018"
+  },
+  {
    "path": "qa/report_metrics.json",
    "bytes": 1112,
    "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
@@ -1833,8 +1843,8 @@
   },
   {
    "path": "src/characters/benny/runtime.ts",
-   "bytes": 9958,
-   "sha256": "f0e065a77c72152aa0bcf3af005a662a0bf87cbd6848962af8aaeed6472dd447"
+   "bytes": 11056,
+   "sha256": "14e49a69e128009cacde92b9cd2ddd3a9b820daaefc948f0aeb33bf4fde05293"
   },
   {
    "path": "src/characters/benny/textures.ts",
@@ -1923,8 +1933,8 @@
   },
   {
    "path": "src/vfx/bubbles.ts",
-   "bytes": 20082,
-   "sha256": "9ebc1a05964412eeffdd6599e5203d7ce40ef824ec03269c734c6ccc03b140d4"
+   "bytes": 21923,
+   "sha256": "398d9959920a8daddbd30972f509dfe98d688cbda8ea7a56412ff1fadee99b6d"
   },
   {
    "path": "src/vfx/drumWater.ts",
@@ -1938,18 +1948,18 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 27361,
-   "sha256": "98d68c0b56c9aedde5eb46e21745c023215a5e330deb30d40851123bf79e1c12"
+   "bytes": 33264,
+   "sha256": "e8e426bea715638616b8ea031a764dc43d78aeb860f730946e771090192bc9de"
   },
   {
    "path": "src/vfx/glsl.ts",
-   "bytes": 4204,
-   "sha256": "630bd47d54fe4022f3163196699362796bff572958ef81e18e7d89dc2bfa3275"
+   "bytes": 6216,
+   "sha256": "3a2b6f35ef95d10b4109d574590762448bd1e6462d9acd6d6a8b323f0feb1e3d"
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 13976,
-   "sha256": "8f5f3acff542cdbc93429ae8887c6f8373f77ab53c2a8517368f5f3383f3976d"
+   "bytes": 14078,
+   "sha256": "fc1c461d053aaae3b8a194a4b8beef6925a36298a3d80583e5a547f90255bc2d"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -1968,8 +1978,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 30320,
-   "sha256": "824328538a62c35a948ec1267b559998ac943cd50a319c9ad89b5f1a46f131b7"
+   "bytes": 38819,
+   "sha256": "9240ee2230795ba83b184f274b0ee3cfb3faa2dc1e0b419b6bfb4edbd9567b17"
   },
   {
    "path": "src/vfx/whirlpool.ts",

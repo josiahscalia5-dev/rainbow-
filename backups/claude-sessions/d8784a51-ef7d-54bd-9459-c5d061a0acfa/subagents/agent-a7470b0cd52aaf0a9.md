@@ -631,3 +631,187 @@ Let me look at the course meander (offset05) that drives the core swing, since b
 >   const grow = THREE.MathUtils.clamp((u - uCrest) / (1.5 * lambda), 0, 1);
 >   const amp = (a0 + (a1 - a0)  …[+3868 chars]
 
+### 🤖 Claude — 2026-11-15T21:10:35.842Z
+
+I now have a clear plan. Let me solve the linear shader values for the 05 palette targets (deep troughs, core, crests, streak colours).
+
+### 🤖 Claude — 2026-11-15T21:10:39.041Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4 && for t in 0660CC 0A78DC 038FEE 2BB8FF 8FE6FF D2F6FF B8139F FCB8F4 FF7AF0; do python3 -I tonemodel.py solve $t; done; grep -n \"speed\" /home/user/rainbow-/src/world/course.ts | grep -n \"'05'\\|id: '0\" | head", "description": "Solve more palette targets, find 05 speed"}`
+
+### 🧑 User — 2026-11-15T21:11:11.767Z
+
+> ↩︎ result: target 0660CC lin (0.05, 0.175, 0.475) -> #0060CB err 6.1
+> target 0A78DC lin (0.075, 0.25, 0.575) -> #0777DA err 3.4
+> target 038FEE lin (0.0, 0.275, 0.625) -> #0090EE err 3.3
+> target 2BB8FF lin (0.05, 0.725, 1.825) -> #2BB8FF err 0.3
+> target 8FE6FF lin (0.625, 1.45, 2.175) -> #8FE6FF err 0.1
+> target D2F6FF lin (1.0, 1.275, 1.5) -> #D2F6FF err 0.1
+> target B8139F lin (0.4, 0.075, 0.325) -> #B914A1 err 2.7
+> target FCB8F4 lin (0.925, 0.575, 0.875) -> #FEB6F5 err 2.5
+> target FF7AF0 lin (2.55, 0.325, 1.55) -> #FF7AF0 err 0.1
+> 8:371:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 9:374:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+
+### 🤖 Claude — 2026-11-15T21:11:22.236Z
+
+05 stage speed is 11. Let me check who else includes `FRAG_FX_GLSL` before adding a helper there.
+
+### 🤖 Claude — 2026-11-15T21:11:23.244Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"FRAG_FX_GLSL\\|starGlint\\|from './glsl'\\|from '../vfx/glsl'\" src | grep -v \"^src/vfx/glsl.ts\" ", "description": "Find users of shared GLSL snippets"}`
+
+### 🧑 User — 2026-11-15T21:11:23.294Z
+
+> ↩︎ result: src/vfx/riderSplash.ts:19:import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+> src/vfx/bubbles.ts:16:import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+> src/vfx/index.ts:27:export { PALETTE } from './glsl';
+> src/vfx/finalWave.ts:9:import { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> src/vfx/drumWater.ts:10:import { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> src/vfx/foam.ts:19:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+> src/vfx/foam.ts:100:${FRAG_FX_GLSL}
+> src/vfx/waterRibbon.ts:14:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> src/vfx/waterRibbon.ts:195:${FRAG_FX_GLSL}
+> src/vfx/waterRibbon.ts:433:  float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * 0.42), 0.42, 22.0, 2.4, uTime);
+> src/vfx/waterRibbon.ts:438:    float glint2 = starGlint(vec2(x * 1.5, (s - vSpeed * uTime * 0.55) * 1.2), 0.3, 13.0, 2.2, uTime + 2.7);
+> src/vfx/spray.ts:6:import { FRAG_TAIL, withFog } from './glsl';
+> src/vfx/puddles.ts:8:import { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> src/vfx/whirlpool.ts:8:import { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+
+### 🤖 Claude — 2026-11-15T21:11:25.200Z
+
+Adding the flow-aligned flare helper to `glsl.ts` (fragment-only snippet; foam.ts also includes it, an unused function is harmless there).
+
+### 🤖 Claude — 2026-11-15T21:11:34.850Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/glsl.ts", "old_string": "  float tw = 0.55 + 0.45 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);\n  return ((ax * ax + ay * ay) * 1.6 + core) * tw;\n}\n`;", "new_string": "  float tw = 0.55 + 0.45 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);\n  return ((ax * ax + ay * ay) * 1.6 + core) * tw;\n}\n// 4-point flare on a FLOW-aligned cell grid g = (across-flow, along-flow) cell coordinates (world-anchored,\n// advected). The pixel offset from the star centre is solved through the screen Jacobian of g, and the\n// long a …[+1823 chars]`
+
+### 🧑 User — 2026-11-15T21:11:34.884Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/glsl.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:11:40.882Z
+
+Now the main shader rewrite in `waterRibbon.ts`. First the new uniforms and the `silk()` streak helper.
+
+### 🤖 Claude — 2026-11-15T21:11:43.587Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "uniform vec3 uChevron;    // start s, spacing, enabled\nuniform vec2 uOutro;      // amount, chamber start s\nvarying vec2 vUV;", "new_string": "uniform vec3 uChevron;    // start s, spacing, enabled\nuniform vec2 uOutro;      // amount, chamber start s\n// 05 river palette (see RIVER05_PAL) + its one constant advection speed (no stage-speed shear)\nuniform vec3 uC5Deep;\nuniform vec3 uC5;\nuniform vec3 uC5Bright;\nuniform vec3 uC5Streak;\nuniform vec3 uP5Deep;\nuniform vec3 uP5;\nuniform vec3 uP5L …[+75 chars]`
+
+### 🧑 User — 2026-11-15T21:11:43.635Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:11:48.042Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  return vec4(h, line, b, c);\n}\n\nvoid main() {", "new_string": "  return vec4(h, line, b, c);\n}\n\n// 05 silk streaks: anti-aliased light lines along the FLOW coordinate q (band-relative, so they bend\n// with the pink S-bands instead of running as straight parallel road stripes). Each line wanders\n// slowly (wig, slot fraction) so neighbours braid, and breaks into advected tapered segments of\n// varying brightness. Width in pixels; the lines fade once they crowd closer than ≈3 px.\nfloat sil …[+587 chars]`
+
+### 🧑 User — 2026-11-15T21:11:48.083Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:11:50.029Z
+
+Now the body of `main()`: band layout with the 05 S-swing and wake trails, the old path wrapped for 04/06/07, and the new 05 river block.
+
+### 🤖 Claude — 2026-11-15T21:11:50.834Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"channel layout: winding\\|soap-foam lace where\" src/vfx/waterRibbon.ts", "description": "Locate block boundaries for replacement"}`
+
+### 🧑 User — 2026-11-15T21:11:50.885Z
+
+> ↩︎ result: 293:  // ---- channel layout: winding cyan core between two hot-pink S-bands, cyan again outside ----
+> 470:  // ---- soap-foam lace where the water meets the foam banks ----
+
+### 🤖 Claude — 2026-11-15T21:12:53.760Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/main_block.glsl", "content": "  // ---- channel layout: winding cyan core between two hot-pink S-bands, cyan again outside ----\n  float hw = vHalfW;\n  float lat = u * hw;                         // lateral units in the ribbon frame\n  // core centre: free drifting meander on 04/06/07 (freeK = 1); on 05 (freeK = 0) pinned to the\n  // course's own S-meander, amplified (vCore = CORE_SWING · offset05), so the coins stay on cyan\n  float freeK = vStyle.w;\n  float sw = 1.0 - freeK;             …[+16010 chars]`
+
+### 🧑 User — 2026-11-15T21:12:53.781Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/main_block.glsl (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T21:12:56.673Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\nL=open(p).read().split('\\n')\nblk=open('/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4/main_block.glsl').read().rstrip('\\n').split('\\n')\na=[i for i,l in enumerate(L) if 'channel layout: winding cyan core' in l][0]\nb=[i for i,l in enumerate(L) if 'soap-foam lace where the water meets' in l][0]\nL=L[:a]+blk+L[b:]\nopen(p,'w').write('\\n'.join(L))\nprint(a,b)\nEOF\ngrep -n \"soap-foam lace\\|=============== 05\" src/vfx/waterRibbon.ts", "description": "Splice new main …[+28 chars]`
+
+### 🧑 User — 2026-11-15T21:12:56.721Z
+
+> ↩︎ result: 292 469
+> 487:  // =============== 05: thick glossy river (sw = 1) ===============
+> 565:  // ---- soap-foam lace where the water meets the foam banks ----
+
+### 🤖 Claude — 2026-11-15T21:13:04.288Z
+
+Now the JS side: the 05 palette uniforms and the constant advection speed.
+
+### 🤖 Claude — 2026-11-15T21:13:09.840Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  pinkLight: lin(2.2, 0.5, 1.8),\n};\n", "new_string": "  pinkLight: lin(2.2, 0.5, 1.8),\n};\n/**\n * 05 river palette (wave 4), shader-space linear values solved through the full post chain\n * (exposure 0.86 → Neutral → sRGB → grade.ts saturation 1.36 / contrast 1.15; bloom ignored) so the\n * flat colours land on the ref 05 samples instead of clipping: cyan deep ≈#0466CF (troughs),\n * cyan ≈#029AF3 (ref core), bright ≈#33C0FF, streak ≈#8FE6FF; pink deep ≈#BC16A8, pink ≈#F73DEA\n * (ref #F739E5  …[+619 chars]`
+
+### 🧑 User — 2026-11-15T21:13:09.869Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:13:12.842Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    uHide: { value: new THREE.Vector4(st03.s0, st04.s0, 0, 0) },\n  });", "new_string": "    uHide: { value: new THREE.Vector4(st03.s0, st04.s0, 0, 0) },\n    uC5Deep: { value: RIVER05_PAL.cyanDeep.clone() },\n    uC5: { value: RIVER05_PAL.cyan.clone() },\n    uC5Bright: { value: RIVER05_PAL.cyanBright.clone() },\n    uC5Streak: { value: RIVER05_PAL.cyanStreak.clone() },\n    uP5Deep: { value: RIVER05_PAL.pinkDeep.clone() },\n    uP5: { value: RIVER05_PAL.pink.clone() },\n    uP5Light: { value: RIV …[+157 chars]`
+
+### 🧑 User — 2026-11-15T21:13:12.872Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-15T21:13:13.755Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git diff --stat src/vfx/; npx tsc --noEmit 2>&1 | tail -5; echo tsc-exit=$?", "description": "Check diff stat and typecheck"}`
+
+### 🧑 User — 2026-11-15T21:13:15.658Z
+
+> ↩︎ result: src/vfx/bubbles.ts     |  41 +++++-
+>  src/vfx/foam.ts        | 323 ++++++++++++++++++++++++++++++++---------------
+>  src/vfx/glsl.ts        |  31 +++++
+>  src/vfx/index.ts       |  19 +--
+>  src/vfx/waterRibbon.ts | 337 +++++++++++++++++++++++++++++++++++--------------
+>  5 files changed, 541 insertions(+), 210 deletions(-)
+> tsc-exit=0
+
+### 🤖 Claude — 2026-11-15T21:13:19.042Z
+
+Typecheck passes. GLSL only compiles at runtime, so capture iteration 1 (also catches shader errors in the console log).
+
+### 🤖 Claude — 2026-11-15T21:13:20.102Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave4/water/it01 2>&1 | tail -8", "description": "Capture iteration 1 of stage 05", "timeout": 620000}`
+
+### 🧑 User — 2026-11-15T21:13:30.056Z
+
+> ↩︎ result: 05 → qa/pilot05/wave4/water/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":121,"tris":636041,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-15T21:13:31.225Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave4/water/it01/05.png"}`
+
+### 🧑 User — 2026-11-15T21:13:31.265Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-15T21:13:42.288Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/d8784a51-ef7d-54bd-9459-c5d061a0acfa/scratchpad/water4; python3 -I $S/measure.py qa/pilot05/wave4/water/it01/05.png; python3 -c \"\nfrom PIL import Image\nim=Image.open('qa/pilot05/wave4/water/it01/05.png').convert('RGB')\nim.crop((0,560,864,1000)).save('$S/it01_mid.png'); im.crop((0,1000,864,1536)).save('$S/it01_near.png')\"", "description": "Measure it01 and crop regions"}`
+
+### 🧑 User — 2026-11-15T21:13:42.746Z
+
+> ↩︎ result: == qa/pilot05/wave4/water/it01/05.png
+>  row   cyan  blue  pink viol white | cyanMed  pinkMed  | lum-std  pinkRuns
+>  560    4.0   0.4  34.3  0.8  19.5 | #5BAEFF  #F953F1 |  17.9  64-80 88-132 187-200 231-255 277-295 579-599
+>  600   12.2   0.3  32.6  0.5  32.7 | #41A5FF  #FD68EE |  17.7  0-35 98-121 184-214 330-387 470-510 783-829
+>  700   30.8   0.8  23.5  0.4  38.0 | #34B1FF  #F770E8 |  18.0  310-463 751-781
+>  800   43.1   0.1  14.5 14.6  27.4 | #23B1FF  #F876ED |  18.5  128-222 729-766
+>  900   37.6   0.9   1.6 24.3  29.4 | #13AEFF  #FF97FF |  16.9  
+> 1000   34.7   0.3  40.2  3.5  20.2 | #11A8FF  #FF5CB0 |  14.6  237-268 270-609
+> 1100   47.5   0.1  26.5  0.3  24.6 | #03A7FF  #FF30B8 |  16.0  310-522
+> 1200   79.4   0.5   2.3  2.7  13.7 | #0E98F9  #EE87FB |  16.9  
+> 1300   77.8   0.7   5.4  7.7   7.0 | #1B9FFD  #CF64DA |  16.7  78-119
+> 1400   90.9   0.0   0.0  0.0   4.4 | #0088E7     -    |  13.4  
+> 1500   90.6   0.0   0.0  0.0   3.1 | #0084E1     -    |  12.6
+

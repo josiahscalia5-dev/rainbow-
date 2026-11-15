@@ -87,7 +87,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const crown = createRiderSplash(quality);
   group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh);
 
-  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh };
+  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh };
   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
   // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
@@ -181,7 +181,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       wave.mesh.visible = focusS > st08.s0 - 25;
       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
-      foam.update(time, dt, focusS, controls.outro);
+      foam.update(time, dt, focusS, controls.outro, camera);
       bubbles.update(time, dt, focusS, camera, 1 - 0.7 * controls.outro);
       // crest spray off the final wave
       if (wave.mesh.visible && focusS > st09.s0 - 20 && focusS < st09.s1 + 20 && controls.outro < 0.5) {
@@ -227,9 +227,10 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       else riderVel.set(0, 0, 0);
       lastWake.copy(pos);
       lastWakeT = curTime;
-      // droplets thrown off the two fan sheets: rooted on the flanks at the waterline and flying
+      // droplets thrown off the two streak fans: rooted on the flanks at the waterline and flying
       // back-outward along the same jet directions as riderSplash.ts (FAN), a short hop above the water
-      const rate = (quality === 'high' ? 130 : 50) * strength;
+      // (ref 05: fine 3–12 px droplets all round the fans, a few flung up beside the body)
+      const rate = (quality === 'high' ? 150 : 55) * strength;
       const n = Math.min(14, Math.floor(rate * dt + rand()));
       const up = tmpV2.copy(f.up);
       back.copy(forward).multiplyScalar(-1);
@@ -238,17 +239,17 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
         const a = rand();
         const thR = FAN.root0 + (FAN.root1 - FAN.root0) * a;
         const phi = FAN.dir0 + (FAN.dir1 - FAN.dir0) * a + rnd(-0.12, 0.12);
-        const t0 = rnd(0.1, 0.5); // leave the sheet part-way along the jet
+        const t0 = rnd(0.1, 0.55); // leave the jet part-way along it
         const rootR = waterlineR * 0.97;
         sprP.copy(center)
           .addScaledVector(right, side * (Math.sin(thR) * rootR + Math.sin(phi) * t0 * 0.9))
           .addScaledVector(back, Math.cos(thR) * rootR + Math.cos(phi) * t0 * 0.9)
           .addScaledVector(up, rnd(0.04, 0.16));
-        const sp = rnd(1.2, 2.8);
-        sprV.copy(riderVel).addScaledVector(right, side * Math.sin(phi) * sp).addScaledVector(back, Math.cos(phi) * sp).addScaledVector(up, rnd(1.0, 2.4));
-        spray.emit(sprP, sprV, rnd(0.016, 0.042), rnd(0.3, 0.55));
+        const sp = rnd(1.1, 2.6);
+        sprV.copy(riderVel).addScaledVector(right, side * Math.sin(phi) * sp).addScaledVector(back, Math.cos(phi) * sp).addScaledVector(up, rnd(1.2, 3.0));
+        spray.emit(sprP, sprV, rnd(0.018, 0.05), rnd(0.3, 0.6));
       }
-      // floating wake foam behind the fans (foam.ts rafts) follows Benny's real waterline position
+      // the 05 flank banks (foam.ts) keep clear of Benny's real waterline position
       foam.rider(s, lateral, strength);
     },
     splash(pos, up, strength) {

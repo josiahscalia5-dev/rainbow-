@@ -48,6 +48,19 @@ function rideLift(): number {
   return Number.isFinite(v) ? THREE.MathUtils.clamp(v, 0, 0.6) : BENNY_RIDE_LIFT;
 }
 
+/**
+ * Ride lean (rad, about his X axis, + = top forward). While riding he leans into the current like a swimmer, so the
+ * rear chase cameras (04–10: ≈ 25° above him) see the beanie and the plush back the way the references paint
+ * them (≈ 10–12° above: knit stripes and cuff read as level bands, the dome as a tall cap, not a flat disc).
+ * Eased in with the ride lift; cinematics (01 peek, 02 tumble, 11 hide) and the 03 twirl keep him upright.
+ */
+export const BENNY_RIDE_PITCH = 0.2;
+function ridePitch(): number {
+  if (typeof location === 'undefined') return BENNY_RIDE_PITCH;
+  const v = parseFloat(new URLSearchParams(location.search).get('bennyPitch') ?? '');
+  return Number.isFinite(v) ? THREE.MathUtils.clamp(THREE.MathUtils.degToRad(v), -0.5, 0.5) : BENNY_RIDE_PITCH;
+}
+
 /** Build the runtime around an already-loaded (or freshly built) Benny scene graph. */
 export function createBennyRuntime(
   scene: THREE.Object3D,
@@ -116,6 +129,8 @@ export function createBennyRuntime(
   let lean = 0;
   let lift = 0;
   const liftMax = rideLift();
+  let pitch = 0;
+  const pitchMax = ridePitch();
   const tmp = new THREE.Vector3();
   const qLean = new THREE.Quaternion();
   const qPom = new THREE.Quaternion();
@@ -138,10 +153,13 @@ export function createBennyRuntime(
     const liftTarget = tumble || peek ? 0 : liftMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
     lift += (liftTarget - lift) * (1 - Math.exp(-dt * 7));
     scene.position.y = lift;
+    // ride lean into the current (see BENNY_RIDE_PITCH), on the same ease as the lift
+    const pitchTarget = tumble || peek ? 0 : pitchMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+    pitch += (pitchTarget - pitch) * (1 - Math.exp(-dt * 7));
 
     // steering lean (roll) + slight yaw into the turn
     lean += (THREE.MathUtils.clamp(st.steer, -1, 1) * 0.28 - lean) * Math.min(1, dt * 6);
-    qLean.setFromEuler(eAxis.set(0, -lean * 0.6, -lean));
+    qLean.setFromEuler(eAxis.set(pitch, -lean * 0.6, -lean));
     body.quaternion.multiply(qLean);
 
     // pom-pom spring: driven by vertical acceleration, steering and speed jitter

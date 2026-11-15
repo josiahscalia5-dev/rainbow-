@@ -72,6 +72,37 @@ float starGlint(vec2 g, float density, float L, float stretch, float time) {
   float tw = 0.55 + 0.45 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);
   return ((ax * ax + ay * ay) * 1.6 + core) * tw;
 }
+// 4-point flare on a FLOW-aligned cell grid g = (across-flow, along-flow) cell coordinates (world-anchored,
+// advected). The pixel offset from the star centre is solved through the screen Jacobian of g, and the
+// long arm is laid along the SCREEN direction of +g.y (the current), so the flares streak with the flow
+// on every bend (ref 05 mid-field) instead of collapsing into horizontal dashes under grazing
+// foreshortening. horiz 0..1 turns the long arm toward screen-horizontal (ref 05 near-field flares lie
+// across the flow). Arms taper to zero before the cell border (no clipped arms). Derivatives are taken
+// before any early-out (Android-safe).
+float flowGlint(vec2 g, float density, float L, float stretch, float horiz, float time) {
+  vec2 gx = dFdx(g);
+  vec2 gy = dFdy(g);
+  vec2 gi = floor(g);
+  float hs = hash12(gi + 7.31);
+  float det = gx.x * gy.y - gy.x * gx.y;
+  if (hs < 1.0 - density || abs(det) < 1e-12) return 0.0;
+  vec2 dg = fract(g) - (vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.5 + 0.25);
+  vec2 p = vec2(gy.y * dg.x - gy.x * dg.y, gx.x * dg.y - gx.y * dg.x) / det;   // pixels
+  vec2 f = vec2(-gy.x, gx.x);                    // screen direction of +g.y (unnormalised, sign-free)
+  f *= sign(f.x + 1e-6) / max(length(f), 1e-9);
+  vec2 a = normalize(mix(f, vec2(1.0, 0.0), horiz) + vec2(1e-5, 0.0));
+  vec2 b = vec2(-a.y, a.x);
+  float pa = dot(p, a), pb = dot(p, b);
+  vec2 ca = a.x * gx + a.y * gy, cb = b.x * gx + b.y * gy;   // cell units per pixel along a / b
+  float la = 0.24 / max(max(abs(ca.x), abs(ca.y)), 1e-6);
+  float lb = 0.24 / max(max(abs(cb.x), abs(cb.y)), 1e-6);
+  float l = L * (0.55 + 0.9 * fract(hs * 37.0));
+  float armA = exp(-abs(pb) * 0.85) * max(0.0, 1.0 - abs(pa) / min(l * stretch, la));
+  float armB = exp(-abs(pa) * 0.85) * max(0.0, 1.0 - abs(pb) / min(l, lb));
+  float core = exp(-dot(p, p) * 0.06) * 1.5;
+  float tw = 0.55 + 0.45 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);
+  return ((armA * armA + armB * armB) * 1.6 + core) * tw;
+}
 `;
 
 /**

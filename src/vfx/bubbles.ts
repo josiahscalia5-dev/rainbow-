@@ -13,6 +13,7 @@
 import * as THREE from 'three';
 import { type Course, WORLD } from '../world/course';
 import { BERM_OUT } from './foam';
+import { coreLateral } from './waterRibbon';
 import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
 const BIG_VERT = /* glsl */ `
@@ -156,9 +157,13 @@ function rnd(a: number, b: number) {
 
 /** ride counts (visible at once in a 05-like frame) and caps, per quality tier */
 const RIDE = {
-  high: { big: 24, small: 34 },
-  low: { big: 16, small: 20 },
+  // wave 4 (user): ≈15–20 larger soap bubbles at the sides, only a few small ones
+  high: { big: 19, small: 12 },
+  low: { big: 14, small: 8 },
 };
+/** half width (NDC x) of the no-bubble lane around the projected cyan core / coin line */
+const CORE_LANE = 0.19;
+const CORE_N = 24;
 /** ride big bubbles: target on-screen diameter range (px in the 864×1536 frame), ref 05 ≈25–65 px */
 const BIG_PX: [number, number] = [25, 65];
 /** max on-screen diameters (px at the capture/device resolution) */
@@ -233,8 +238,21 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
     if (yn > 0.62) return 0; // upper tube / HUD: keep clear (ref 05 has none there)
     const rN = r / (depth * view.tanH);
     const corridor = yn < 0.1 ? 0.47 : 0.3;
-    return Math.abs(xn) - rN < corridor ? 0 : 1;
+    if (Math.abs(xn) - rN < corridor) return 0;
+    // the route ahead (cyan core + coin line) winds off the screen centre in 05: keep a lane clear
+    // around its projection at this screen row (the nearest coin sits at x≈640 in the 05 frame)
+    if (coreN > 1 && yn <= coreY[coreN - 1] && yn >= coreY[0] - 0.4) {
+      let i = 0;
+      while (i < coreN - 2 && coreY[i + 1] < yn) i++;
+      const t = Math.min(1, Math.max(0, (yn - coreY[i]) / Math.max(1e-4, coreY[i + 1] - coreY[i])));
+      const xc = coreX[i] + (coreX[i + 1] - coreX[i]) * t;
+      if (Math.abs(xn - xc) - rN < CORE_LANE) return 0;
+    }
+    return 1;
   };
+  /** projected core line (NDC), sorted by screen y (bottom → top), rebuilt every frame in update() */
+  const coreX = new Float32Array(CORE_N), coreY = new Float32Array(CORE_N);
+  let coreN = 0;
   /** pixels per unit at depth 1 and the frame-height scale of the current frame (set in update) */
   let focalNow = 1000;
   let pxKNow = 1;
@@ -369,6 +387,23 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
         view.up.setFromMatrixColumn(camera.matrixWorld, 1).normalize();
         view.tanV = Math.tan(THREE.MathUtils.degToRad(persp.fov) / 2);
         view.tanH = view.tanV * persp.aspect;
+      }
+      // projected route centre (core lateral at water level) from just ahead of Benny to the far field
+      coreN = 0;
+      if (view.ok && focusS >= drumEnd) {
+        for (let k = 0; k < CORE_N; k++) {
+          const s = Math.min(course.length, focusS + 1 + k * k * 0.06 + k * 0.5);
+          course.sample(s, fi);
+          tmp2.copy(fi.pos).addScaledVector(fi.right, coreLateral(course, s)).addScaledVector(fi.up, 0.05);
+          const v = tmp2.applyMatrix4(view.inv);
+          const depth = -v.z;
+          if (depth < 1) continue;
+          const yn = v.y / (depth * view.tanV);
+          if (coreN > 0 && yn <= coreY[coreN - 1]) continue; // keep it monotonic in screen y
+          coreX[coreN] = v.x / (depth * view.tanH);
+          coreY[coreN] = yn;
+          coreN++;
+        }
       }
       // pixel scale for impostors and point sprites
       const vh = (typeof window !== 'undefined' ? window.innerHeight : 800) * (typeof window !== 'undefined' ? Math.min(2, window.devicePixelRatio || 1) : 1);
