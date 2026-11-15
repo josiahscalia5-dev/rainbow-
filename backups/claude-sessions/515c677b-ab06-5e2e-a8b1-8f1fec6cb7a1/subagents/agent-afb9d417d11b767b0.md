@@ -35,3 +35,39 @@ DELIVERABLES
 
 Keep total triangles reasonable for mobile (≈ <40k before shells). Final report (short): files created, GLB size, tri count, what matches, what still differs, any shared-file change requests.
 
+### 🤖 Claude — 2026-11-15T16:57:00.503Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/characters/benny/textures.ts", "content": "/**\n * Canvas-generated textures for Benny (no external downloads).\n * All colour maps are sRGB; normal maps are derived from height drawings (linear).\n */\nimport * as THREE from 'three';\n\ntype Ctx = CanvasRenderingContext2D;\n\nfunction canvas(w: number, h: number): [HTMLCanvasElement, Ctx] {\n  const c = document.createElement('canvas');\n  c.width = w;\n  c.height = h;\n  return [c, c.getContext('2d')!];\n}\n\nfunction colorTex(c: HTMLCanvasElement, wrap = false): THREE.CanvasTexture {\n  const t = new T …[+11643 chars]`
+
+### 🧑 User — 2026-11-15T16:57:00.653Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/characters/benny/textures.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:59:04.065Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "content": "/**\n * Benny — the ONE canonical mascot model + joint rig (procedural, exported to assets/models/benny.glb).\n *\n * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70, fur adds ~0.14\n * (visual body radius ≈ 0.84). Total height incl. beanie + pom-pom ≈ 2.5 units.\n * Joints: benny_root › body › { hat › pom, eyes › eyeL/eyeR, mouth, armL, armR, footL, footR }.\n * Meshes named fur_* receive the runtime shell-fur shader (see fur.ts); their userData carries the\n * fur parameters (exp …[+15955 chars]`
+
+### 🧑 User — 2026-11-15T16:59:04.224Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/characters/benny/build.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:59:20.792Z
+
+Fixing the sole orientation (lookAt must run in parent-local space before parenting), then the fur shader and runtime:
+
+### 🤖 Claude — 2026-11-15T16:59:22.948Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "old_string": "    sole.position.set(0, -0.085, 0.235);\n    sole.rotation.x = 0.58; // faces forward and a little down\n    sole.lookAt(new THREE.Vector3(0, -0.085 - 0.55, 0.235 + 0.83).add(f.position).sub(f.position));\n    f.add(sole);", "new_string": "    sole.position.set(0, -0.085, 0.235);\n    // faces forward and a little down (lookAt in foot-local space: sole has no parent yet)\n    sole.lookAt(sole.position.clone().add(new THREE.Vector3(0, -0.55, 0.83)));\n    f.add(sole);"}`
+
+### 🧑 User — 2026-11-15T16:59:23.102Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/build.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:59:42.711Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/characters/benny/fur.ts", "content": "/**\n * Real-time shell-texturing fur for Benny (mobile-safe, one draw call per furry part).\n *\n * Each fur_* mesh becomes an InstancedMesh with `shells` instances; gl_InstanceID selects the\n * shell layer, which is pushed out along the normal (plus a little gravity droop). A hashed 3-D\n * strand grid decides per-fragment whether a strand still exists at that height (tapering strands),\n * so the fur keeps a fluffy silhouette from every angle. Built on MeshStandardMaterial via\n * onBeforeCompile so scene lighting …[+5049 chars]`
+
+### 🧑 User — 2026-11-15T16:59:42.857Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/characters/benny/fur.ts (file state is current in your context — no need to Read it back)
+

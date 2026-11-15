@@ -1719,3 +1719,83 @@ Harness is ready. Marking the autosave task done, since cron is verified firing 
 > output_file: /tmp/claude-0/-home-user-rainbow-/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/tasks/ac5214bd6132af7b9.output
 > Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
 
+### 🤖 Claude — 2026-11-15T16:55:27.054Z
+
+Three specialists are running. Now my part, starting with the washer environment materials: a procedural perforated-metal shader, thick reflective gold, and chrome.
+
+### 🤖 Claude — 2026-11-15T16:55:53.703Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/materials.ts", "content": "/**\n * Washer-world materials: procedural perforated magenta metal (round holes for drums, circumferential\n * slots for tunnels), thick reflective gold, chrome, glass — all PBR (MeshStandardMaterial) so they pick\n * up the candy PMREM environment, with shader patches for the perforations and glow.\n */\nimport * as THREE from 'three';\n\nexport interface PerforatedOptions {\n  /** base metal colour */\n  color?: THREE.ColorRepresentation;\n  /** colour of the hole interiors */\n  holeColor?: THREE.ColorRepresentation;\n …[+6596 chars]`
+
+### 🧑 User — 2026-11-15T16:55:53.868Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/materials.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:56:00.496Z
+
+The ribbed-gold normal tweak mixes coordinate spaces, so I'm replacing it with banded colour/emissive. Real ring geometry will carry the 3D ribs.
+
+### 🤖 Claude — 2026-11-15T16:56:02.946Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "      .replace(\n        '#include <normal_fragment_maps>',\n        `#include <normal_fragment_maps>\nfloat rp = fract(vRibUv.y * uRibs);\nfloat bump = sin(rp * 6.2831);\nnormal = normalize(normal + vec3(0.0, 0.0, 1.0) * 0.0 + (vec3(0.0, 1.0, 0.0) * bump * 0.55));`,\n      )", "new_string": "      .replace(\n        '#include <color_fragment>',\n        `#include <color_fragment>\nfloat rp = fract(vRibUv.y * uRibs);\ndiffuseColor.rgb *= 0.72 + 0.42 * smoothstep(0.0, 0.5, rp) * smoothstep(1.0, 0.5, …[+18 chars]`
+
+### 🧑 User — 2026-11-15T16:56:03.112Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:56:31.047Z
+
+Now the tube/ring/nozzle builder that generates real traversable tunnel geometry along the course:
+
+### 🤖 Claude — 2026-11-15T16:56:54.261Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "content": "/**\n * Tunnel geometry generated directly from the master course frames, so walls, rings and nozzles\n * follow every bend, the 06 arch and the full 07 plunge with no seams.\n */\nimport * as THREE from 'three';\nimport type { Course } from './course';\n\nexport interface TubeOptions {\n  radius: (s: number) => number;\n  /** how far the tube bottom sits below the water surface (course centreline) */\n  depth?: number;\n  radial?: number;\n  step?: number;\n  /** world units per 1.0 of v texture coordinate */\n  vScale?: numbe …[+5992 chars]`
+
+### 🧑 User — 2026-11-15T16:56:54.467Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/tube.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:56:57.960Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-15T16:56:57.973Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-15T16:56:58.706Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress", "owner": "benny-character-artist + cartoon-girl-character-artist (forks)"}`
+
+### 🧑 User — 2026-11-15T16:56:58.716Z
+
+> ↩︎ result: Updated task #3 owner, status
+
+### 🤖 Claude — 2026-11-15T16:56:59.259Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress", "owner": "water-fx-specialist (fork)"}`
+
+### 🧑 User — 2026-11-15T16:56:59.277Z
+
+> ↩︎ result: Updated task #4 owner, status
+
+### 🤖 Claude — 2026-11-15T16:57:11.601Z
+
+Now the laundry room, used outside both washer doors, and the plush purple towel. The towel morphs between a folded loaf and the tent shape Benny hides under.
+
+### 🤖 Claude — 2026-11-15T16:57:45.217Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/laundryRoom.ts", "content": "/**\n * The bright laundry room seen through a washer door (01, 09–11). Human scale: 1 unit ≈ 5 cm, so the\n * room is ~48 units tall. Local origin = washer door centre; the room extends toward local +Z,\n * floor at y = -floorDrop.\n */\nimport * as THREE from 'three';\nimport { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';\nimport { canvasTexture, painted } from './materials';\n\nexport interface LaundryRoomOptions {\n  floorDrop: number;\n  /** 'warm' = ref 01 (orange towels, white b …[+7128 chars]`
+
+### 🧑 User — 2026-11-15T16:57:45.396Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/laundryRoom.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:58:10.375Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/towel.ts", "content": "/**\n * The plush purple towel. One mesh with morph targets:\n *   base     = folded loaf (08, 09, 11 — Benny hidden inside in 11)\n *   morph 0  = tent draped over the platform with an arched opening facing the incoming stream (10)\n *   morph 1  = loose bundle (01/02 — wrapped around Benny in the drum)\n * Local frame: centre of the platform top, the stream arrives from +Z, the washer door is at -Z.\n */\nimport * as THREE from 'three';\nimport { canvasTexture } from './materials';\n\nconst NU = 48, NV = 36;\n\nfunction terr …[+5702 chars]`
+
+### 🧑 User — 2026-11-15T16:58:10.532Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/towel.ts (file state is current in your context — no need to Read it back)
+

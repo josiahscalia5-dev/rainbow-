@@ -114,7 +114,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 1480,
-   "sha256": "063c06bd0a18e006d542338bb6514c9aad1d83ad04f5862252684f4e9d764edb"
+   "sha256": "a7210ba181b15023ce8c5edcb2d49ce746682c2ac4c7b791eccf49390ea95917"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -287,6 +287,21 @@
    "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
   },
   {
+   "path": "src/characters/benny/build.ts",
+   "bytes": 16116,
+   "sha256": "00ad50968bb6d0251150e33d4552b5591998be245a6b33e4f08a627ee1ce4e8b"
+  },
+  {
+   "path": "src/characters/benny/fur.ts",
+   "bytes": 5368,
+   "sha256": "d2a61875037ac789f3fa8f932f3a8a33c268d2326ed05a5719faa8de90b7f07d"
+  },
+  {
+   "path": "src/characters/benny/textures.ts",
+   "bytes": 11811,
+   "sha256": "e3f3436f39c2d7076da27b256d67244c015e19aee34d576f829a89bb654fe72a"
+  },
+  {
    "path": "src/characters/types.ts",
    "bytes": 1766,
    "sha256": "bb0791d2826ed7f4bf11694146e4f20ebffaf26d732a78bafb7fa880a5437b0a"
@@ -302,9 +317,44 @@
    "sha256": "2af00de4e3d62ee882e06e6d0129c32c0ce90628a3e37885ebedf576b7763a24"
   },
   {
+   "path": "src/vfx/glsl.ts",
+   "bytes": 2155,
+   "sha256": "80f40e184063ab0123c2cda0798e76892ceb56daf63103b1787b45e1afdd929a"
+  },
+  {
+   "path": "src/vfx/waterRibbon.ts",
+   "bytes": 12514,
+   "sha256": "3da73604fc2f02ef3a35471e82ca281a333fbd2dd882bea7b84de73f5dac1346"
+  },
+  {
+   "path": "src/vfx/whirlpool.ts",
+   "bytes": 6613,
+   "sha256": "c09691a247fd5ea713993d8a9048c3eee82a9b017ccbf92e43a800ab8d585c19"
+  },
+  {
    "path": "src/world/course.ts",
    "bytes": 19960,
    "sha256": "21ce65b325108c88d776407b87b43f893b08be23a4a1bb11ca3cfdfb4f224cff"
+  },
+  {
+   "path": "src/world/laundryRoom.ts",
+   "bytes": 7485,
+   "sha256": "709eda943265531ce654a91386f41bb7b0d81a95cc56d7dab2240974994733d0"
+  },
+  {
+   "path": "src/world/materials.ts",
+   "bytes": 6895,
+   "sha256": "4569a5c7fe3d216e57ab8db42ff920aea1d0f741548852d0809a764dc81c3ca2"
+  },
+  {
+   "path": "src/world/towel.ts",
+   "bytes": 6086,
+   "sha256": "eb01772b2727de7e5f119641634e7c1a1e426c53c9debaf6f91a4e93bcb15aa6"
+  },
+  {
+   "path": "src/world/tube.ts",
+   "bytes": 6370,
+   "sha256": "03ce98b290d8907560359d6726f45c902d7057c32393826af5c3dd6f342b5ec1"
   },
   {
    "path": "tools/model-lab.html",

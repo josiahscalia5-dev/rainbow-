@@ -86,3 +86,87 @@ Task: build Rainbow's real-time water system (ribbon, whirlpool, drum water, fin
 > 21	  title: string;
 > 22	  /** arc- …[+2649 chars]
 
+### 🤖 Claude — 2026-11-15T16:57:28.860Z
+
+> 🔧 **Bash** `{"command": "ls src src/* tools scripts docs 2>/dev/null; grep -n \"marks\\[\" src/world/course.ts | head -5; grep -n \"prop(s\" src/world/course.ts | head", "description": "Check current repo layout and course API"}`
+
+### 🧑 User — 2026-11-15T16:57:28.915Z
+
+> ↩︎ result: src/main.ts
+> 
+> docs:
+> path_graph.md
+> 
+> scripts:
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> continuity-test.ts
+> export-models.mjs
+> export_claude_sessions.py
+> install-autosave-scheduler.sh
+> lib
+> rainbow-autosave.py
+> reference.sha256
+> 
+> src:
+> characters
+> main.ts
+> render
+> world
+> 
+> src/characters:
+> benny
+> types.ts
+> 
+> src/render:
+> env.ts
+> 
+> src/world:
+> course.ts
+> materials.ts
+> tube.ts
+> 
+> tools:
+> model-lab.html
+> model-lab.ts
+> 97:  const mark = (k: string) => (marks[k] = pts.length - 1);
+> 214:  smoothPolyline(pts, marks['03'], 2.2, 3);
+> 286:    for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+> 444:    if (s > c.marks['07_plunge_top'] && s < c.marks['08']) minPitch = Math.min(minPitch, THREE.MathUtils.radToDeg(Math.asin(cur.tan.y)));
+> 448:  const top = c.marks['07_plunge_top'];
+> 365:  prop(s: number, key: 'width' | 'tube' | 'speed' | 'bank', blend = 6): number {
+> 377:    const base = this.prop(s, 'width');
+
+### 🤖 Claude — 2026-11-15T16:57:38.072Z
+
+Writing the shared GLSL noise and the spline water ribbon first.
+
+### 🤖 Claude — 2026-11-15T16:57:47.475Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/glsl.ts", "content": "/** Shared GLSL snippets for Rainbow water/foam/bubble shaders (WebGL2, mobile-safe). */\nimport * as THREE from 'three';\n\nexport const NOISE_GLSL = /* glsl */ `\nfloat hash12(vec2 p) {\n  vec3 p3 = fract(vec3(p.xyx) * 0.1031);\n  p3 += dot(p3, p3.yzx + 33.33);\n  return fract((p3.x + p3.y) * p3.z);\n}\nfloat vnoise(vec2 p) {\n  vec2 i = floor(p);\n  vec2 f = fract(p);\n  vec2 u = f * f * (3.0 - 2.0 * f);\n  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),\n             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2 …[+1685 chars]`
+
+### 🧑 User — 2026-11-15T16:57:47.668Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/glsl.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:59:17.125Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "content": "/**\n * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.\n *\n * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly\n * concave trough with raised frothy edges plus a short skirt under each edge (thickness).\n * Shader: electric-cyan core with meandering hot-pink flow bands, advected white streaks and\n * sparkles (two-phase flow-map advection so per-stage speeds never shear), Fresnel/haze\n * reflection, specular glints, cellular soap-foam …[+12306 chars]`
+
+### 🧑 User — 2026-11-15T16:59:17.289Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/waterRibbon.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-15T16:59:23.777Z
+
+Now the whirlpool funnel surface (03):
+
+### 🤖 Claude — 2026-11-15T16:59:50.485Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/whirlpool.ts", "content": "/**\n * Scene 03 whirlpool: a funnel-shaped water surface over the basin (WORLD.basin / funnelY) whose\n * cyan / hot-pink / white bands follow the SAME logarithmic spiral as Benny's course through the\n * basin (θ decreasing as r shrinks, ~1 turn from r≈9.6 to r≈2.8) and swirl toward the drain.\n */\nimport * as THREE from 'three';\nimport { WORLD, funnelY } from '../world/course';\nimport { FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';\n\n/** spiral pitch: θ change per ln(r) along the course spiral: 2π / ln(9.6/ …[+6231 chars]`
+
+### 🧑 User — 2026-11-15T16:59:50.639Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/whirlpool.ts (file state is current in your context — no need to Read it back)
+
