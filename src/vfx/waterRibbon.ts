@@ -1705,7 +1705,7 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   // still, and `projflowmix05` (share of the picture that travels; default 0.5, 1 = all) keeps the rest of the approved
   // picture fixed where it is painted — measured (qa/pilot05/proj/flow2/NOTES.md): similarity to the unflowed design
   // over a cycle 0.72 (old flow) -> 0.93, never below 0.90; direction toward the camera in every tracked frame pair.
-  const FLOW2 = qs.get('projflow05') === '2';
+  const FLOW2 = qs.get('projflow05') === '2' || (MATCH05 && qs.get('projflow05') === null);   // master switch: streamline flow
   u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };
   u.uPjWN = { value: empty }; u.uPjWT = { value: empty };
   u.uPjFlow2 = { value: new THREE.Vector4(0, 2, 4.8, THREE.MathUtils.clamp(qn('projflowmix05', 0.5), 0, 1)) };
@@ -1719,7 +1719,7 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   // (pixel-identical locked picture). `projneardetail05` = share of the fine-streak detail layer kept on T2: default 1
   // (measured on ride frames at 8 / 17 / 35 u: 0 left the stretch where the tile's source is soft — 8 u — softer than
   // before; 1 is sharper than before in every band and showed no grain; 0 and 0.5 stay available for comparison).
-  const NEAR = qs.get('projnear05') === '1';
+  const NEAR = on05('projnear05');
   u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 1), 0, 1), 0, 0) };
   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
   u.uPjT2S = { value: new THREE.Vector2(0, 1) };

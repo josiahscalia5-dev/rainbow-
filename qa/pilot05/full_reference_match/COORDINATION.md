@@ -61,3 +61,40 @@ plus `references/water/05_water_isolated_original.png`. Never modify these (13 h
 | animation-and-gameplay-engineer | `hud05`, `coins05` | `src/ui/hud.ts` (+ its CSS), `src/gameplay/coins.ts`, folders `hud/`, `coins/` | 13, 10 |
 | foam-bubbles-particles (wave 2) | `splash05m`, `bub05` | `src/vfx/riderSplash.ts`, `bubbles.ts`, `foam.ts`, `spray.ts`, folder `splash_bubbles/` | 8 (wake), 11 |
 | android-build-performance (last) | — | `builds/`, folder `android/` | 18 (Android), 19 |
+
+---
+## RESUMED 2026-11-16 ~23:40 UTC — new session, branch `claude/approved-screen-implementation-g3loqu` (contains every other branch)
+The session that wrote the text above closed at 23:20 with nothing but the masks, the BEFORE numbers and `benny/bennyseg.py`.
+Its specialists are INTERRUPTED; this session is the coordinator now. Everything above still applies, plus:
+
+* **The stack to build on = everything already baked from the approved picture** (the earlier account's tunnel bake was
+  missing from the table above):
+  `STACK = proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1`
+  `?match05=1` now turns on all of STACK **and** every `on05('<switch>')` part. Your A/B:
+  BEFORE = `node scripts/capture.mjs 05 --q='<STACK>' --out=DIR` · NEW = `--q='<STACK>&<your switch>=1'` (or `match05=1`
+  to see everybody's parts together).
+* **Numbers of the stack today** (`stack_2340/`, `python3 -I tools/match05/metrics.py`): whole frame mean |ΔRGB| 34.1,
+  within 20 levels 51.6 % (the user's BEFORE `?proj05=1`: 40.9 / 43.2 %; default game: 55.4 / 18.5 %).
+  | region | px | mean abs | ≤20 |
+  |---|---:|---:|---:|
+  | purple walls | 312,706 | 53.8 | 21 % |
+  | HUD + text | 125,488 | 62.2 | 13 % |
+  | gold rings + front frame | 125,730 | 37.7 | 50 % |
+  | Benny + hat | 93,061 | 49.7 | 24 % |
+  | wake / splash | 83,491 | 42.6 | 38 % |
+  | coins | 27,437 | 54.0 | 18 % |
+  | bubbles | 29,304 | 30.0 | 62 % |
+  | side fittings | 13,776 | 26.9 | 60 % |
+  | distant tunnel + glow | 6,513 | 29.8 | 45 % |
+  | water | 480,736 | 9.4 | 88 % |
+  | foam banks | 28,862 | 8.4 | 93 % |
+* **Render slots:** `scripts/lib/pw.mjs` lets only 2 game renders run at once on this machine (all agents share 4 cores);
+  a capture may wait a few minutes for a slot — that is normal, do not kill it and do not start a second one meanwhile.
+  The pixel-identity checks (default, protected BEFORE) are only valid from a run that was not interrupted.
+* **Ownership additions:** washer-environment-modeler also owns `src/vfx/proj05Tunnel.ts`, `tools/proj05/tunnel_*.py`,
+  `frame_bake.py`, `lid_*.py`, `scripts/proj05-tunnel-probe.mjs`, `scripts/proj05-lid-*.mjs`, `assets/textures/tunnel05/**`,
+  `assets/models/lids05.glb`, `qa/pilot05/proj/tunnel/**`. Coordinator: `waterRibbon.ts`, `proj05Apron.ts`,
+  `tools/proj05/bake.py` + `near_*` + `flow_*`, `assets/textures/water05/**`, `scripts/lib/pw.mjs`, `scripts/capture.mjs`.
+* Keep every source file syntactically valid at every moment (one broken module breaks everybody's captures).
+* A specialist cannot ask the user anything: decide by the order (`ORDER_USER_VERBATIM.md`) and the measurements, write
+  open questions in your `NOTES.md` under "REQUESTS", and keep working.

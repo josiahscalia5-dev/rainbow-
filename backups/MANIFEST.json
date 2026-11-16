@@ -468,8 +468,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_T2.png",
-   "bytes": 1435441,
-   "sha256": "b49d37f3cec02ea0c66e5cc554707e55f93ba2c740aa9b661f0b7f3742cbddc6"
+   "bytes": 740534,
+   "sha256": "cc5429b78e5a6f897cb159416f6bd4d63bb39c6dfa7604a857a4ea9e246454e2"
   },
   {
    "path": "assets/textures/water05/proj05_WN.png",
@@ -483,8 +483,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_WT2.png",
-   "bytes": 3823,
-   "sha256": "c86895cc9a30cc94c714fbbefb7f5108285ea736002bbfc053328fbf250ac63a"
+   "bytes": 3820,
+   "sha256": "c747eac734536d62b3c6802c198c7bd1b403add2c011f3f95dcd9ae87218bcc7"
   },
   {
    "path": "assets/textures/water05/proj05_flow.json",
@@ -499,12 +499,12 @@
   {
    "path": "assets/textures/water05/proj05_near.json",
    "bytes": 1270,
-   "sha256": "9a9e204846184628cd7e62510ea9b79f2342a44613cc4e62db0248872e00201a"
+   "sha256": "8342db775bc523175ca4f52dc25cc4efdd6b6af5830c2139b3c2ad41e4f1e996"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 11869,
-   "sha256": "b84ef8caea1d0bea69c718c7dc03f660e454b89c7d9a94fe8cdf7db768313bd1"
+   "bytes": 14349,
+   "sha256": "456553a86ccf16e33b45a93460d82a6e7ee0c52b15f02cc102c5f1caa99b7d0d"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -523,8 +523,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10203,
-   "sha256": "dbcab3f02f411884bdca61a3966c0d9f67fc8f86bd034e7fd8f1472a89551119"
+   "bytes": 10204,
+   "sha256": "2ac724937a5f53190f03d27afcce26fc1f3b5f13a915de22315ca1ff2f51456e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1293,8 +1293,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/COORDINATION.md",
-   "bytes": 5762,
-   "sha256": "fc7a1fb9b206a9f2db2655914343120446cf8ea41f7c285eec2468e6de89f548"
+   "bytes": 8524,
+   "sha256": "51bd487829b62b8ff220d6cd0fdecc28046d0aeea02723e99a87a76420811d7a"
   },
   {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md",
@@ -1390,6 +1390,21 @@
    "path": "qa/pilot05/full_reference_match/masks/water.png",
    "bytes": 17337,
    "sha256": "d59d19bd0eef41064c2ab5d7733f671e826a9ebce9370995f0379df5ccf29731"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/stack_2340/05_match05.png",
+   "bytes": 2180494,
+   "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/stack_2340/FULL_FRAME_METRICS.json",
+   "bytes": 461,
+   "sha256": "39a280e79a067474ef11c083f888eb07cff62af472f89c9120dbdeb09b3fbf93"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/stack_2340/REGION_METRICS.json",
+   "bytes": 2566,
+   "sha256": "048c17a57c24dd21313fac77c0ecc09952da9d1b1978e4fc0c0a31e81e09db3d"
   },
   {
    "path": "qa/pilot05/marble_feas/NOTES.md",
@@ -2005,6 +2020,21 @@
    "path": "qa/pilot05/proj/near/tools/uniform_probe.mjs",
    "bytes": 1294,
    "sha256": "bffcd3262ab9089b3dfb74a5acafaa07ad92f1d757a6a9225394fbd6ef72e463"
+  },
+  {
+   "path": "qa/pilot05/proj/near/wide_tile_test/NEW_2048_17u.png",
+   "bytes": 1968452,
+   "sha256": "dcc7d08f93b32c259e97089ad566bf379ec5bce31b71b6af70af1ed65bbf7570"
+  },
+  {
+   "path": "qa/pilot05/proj/near/wide_tile_test/crop_17u_1024_left_2048_right_full_res.png",
+   "bytes": 435936,
+   "sha256": "4d8c54c5592def9f26eabb56529f366937b591a2980a8e57046d001984a34471"
+  },
+  {
+   "path": "qa/pilot05/proj/near/wide_tile_test/metrics_1024_vs_2048.json",
+   "bytes": 3447,
+   "sha256": "b6bddae00e56757a13960ec08cdd7a654dc7bb6f298e76c024266a2f46055df7"
   },
   {
    "path": "qa/pilot05/proj/probe/camera.json",
@@ -7523,8 +7553,8 @@
   },
   {
    "path": "scripts/lib/pw.mjs",
-   "bytes": 1419,
-   "sha256": "67b5cb7270b3c5860146edc38b2ef454d05ba3c76100addd77f34316e56f7e61"
+   "bytes": 3159,
+   "sha256": "87e3efae8431b854dc50908046152bd90c894a789b8e9476c4eaf75e98f55649"
   },
   {
    "path": "scripts/perf05.mjs",
@@ -7763,8 +7793,8 @@
   },
   {
    "path": "src/vfx/proj05Tunnel.ts",
-   "bytes": 17639,
-   "sha256": "6ab3d981834277b6a920d243d220a45fbbd20a202d07ef5c64a7a5602b0b57fb"
+   "bytes": 17736,
+   "sha256": "263df89b9492b146e6551aaca3ca5007d5bc77ed207fb1d771cb06c9657d4dba"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -7783,8 +7813,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 104397,
-   "sha256": "c7fce7a93e1c5d9c0a9624e5d7d4b548d272b63ab4e02609895aafcccf2b7f56"
+   "bytes": 104469,
+   "sha256": "34e24f8ed995ba209dc8adad36941f5432280d745802cc16ea7908e67e54d681"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -7983,8 +8013,8 @@
   },
   {
    "path": "tools/proj05/near_bake.py",
-   "bytes": 19094,
-   "sha256": "74e3215f816f7962ba7d2646279525c4fccd760988d83b81d0ce8b4a6c4c04a1"
+   "bytes": 20005,
+   "sha256": "aa1fcefad6241644ee85cf7930ae78caaa02c6dc65cf6c1b2a3a7ed220189ef8"
   },
   {
    "path": "tools/proj05/near_bubbles.json",

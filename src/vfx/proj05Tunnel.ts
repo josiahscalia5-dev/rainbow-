@@ -14,7 +14,9 @@
  * materials are wrapped only when a switch is on, every default shader program is unchanged.
  */
 import * as THREE from 'three';
-import { PROJ05_INVERSE, flag05, proj05Pending } from './waterRibbon';
+import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';
+// the tunnel bake follows its own switches OR the master `?match05=1` (on05)
+const flag05 = on05;
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export const PROJWALL05: boolean = flag05('projwall05');
