@@ -18,9 +18,11 @@ import { buildEnvironment } from '../world/environment';
 import { createCandyEnvironment, createRenderer } from '../render/env';
 import { createGradePass } from '../render/grade';
 import { createHud } from '../ui/hud';
+import { findCinematic, playCinematic } from '../ui/cinematicVideo';
 import { createCoins, COIN_VALUE } from '../gameplay/coins';
 import { createInput } from '../gameplay/input';
 import { RideCamera } from './cameraRig';
+import { flag05 } from '../vfx/waterRibbon';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -56,7 +58,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+  // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
+  // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
+  // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear
+  // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
+  const glow05 = flag05('glow05');
+  const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+  // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
+  // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', glow05 ? 1.0 : 0.2), qn('bloomR', glow05 ? 0.4 : 0.35), qn('bloomT', glow05 ? 2.6 : 0.94));
+  // Tone-mapping test TM1 (same message: "use NoToneMapping or lower the exposure"): `?tone05=none` → NoToneMapping,
+  // `?tone05=0.75` → Neutral at that exposure. The OutputPass tone-maps the whole frame (not per material), so this is
+  // global by nature. Off: Neutral 0.86 (src/render/env.ts), unchanged.
+  const tone05 = qs.get('tone05');
+  if (tone05 === 'none') renderer.toneMapping = THREE.NoToneMapping;
+  else if (tone05 !== null && tone05 !== '' && isFinite(+tone05) && +tone05 > 0) renderer.toneMappingExposure = +tone05;
   const useBloom = qs.get('bloom') !== '0';
   if (useBloom) composer.addPass(bloom);
   composer.addPass(new OutputPass());
@@ -158,6 +174,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
 
   const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
   const tmpV = new THREE.Vector3();
+  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
   const doorAOpen = -1.9, doorCOpen = -1.95;
 
   // ---------------------------------------------------------------- intro (01–02)
@@ -359,7 +376,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
     benny.root.visible = true;
     benny.setExpression('happy');
     benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
-    water.wake(pose.pos, f.tan, f.right, speed, dt);
+    // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),
+    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
     // camera
     rideCam.update(dt, st.s, st.lat, camera);
     // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)
@@ -376,10 +395,16 @@ export async function startGame(canvas: HTMLCanvasElement) {
   };
 
   // ---------------------------------------------------------------- outro (11)
+  const cinematic = { ending: null as string | null };
   const startOutro = () => {
     st.mode = 'outro';
     st.t = 0;
     setStage('11');
+    if (cinematic.ending) {
+      // optional Flow ending video; the real-time 11 frame (girl holds towel, FINAL SPIN COMPLETE) follows
+      st.paused = true;
+      void playCinematic(cinematic.ending, { onEnding: () => { st.t = Math.max(st.t, O.badge - 0.4); st.paused = false; } });
+    }
   };
   const outroUpdate = (dt: number) => {
     const t = st.t;
@@ -441,6 +466,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
   input.onTap(() => {
     if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }
   });
+
+  // ---------------------------------------------------------------- optional Google Flow cinematics
+  // public/video/intro.mp4 shows 01 (towel loaded, door closed, girl walks away). While it plays, the live
+  // 3D intro is held on that same moment underneath, then revealed by a cross-fade and continued in real
+  // time (02 tumble -> 03 ride). Without a video the real-time 01 cinematic plays. See src/ui/cinematicVideo.ts.
+  const [introVideo, endingVideo] = await Promise.all([findCinematic('intro'), findCinematic('ending')]);
+  cinematic.ending = endingVideo;
+  const playIntroVideo = () => {
+    if (!introVideo) return;
+    st.t = T.cp01;
+    introUpdate(0);
+    st.paused = true;
+    void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
+  };
+  playIntroVideo();
   const togglePause = () => {
     if (st.mode !== 'ride') return;
     st.paused = !st.paused;
@@ -455,6 +495,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
     env.doorC.rotation.y = 0;
     benny.root.visible = true;
+    playIntroVideo();
   };
 
   const stepSim = (dt: number) => {
@@ -479,7 +520,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let running = !qaMode;
   let dirty = true;
   renderer.info.autoReset = false;
-  const render = () => { renderer.info.reset(); composer.render(); };
+  // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the
+  // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins
+  const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
+  const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
+  const st05 = course.stage('05');
+  const render = () => {
+    if (glow05) {
+      const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+      bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
+      bloom.radius = bloomBase.r + (bloom05.r - bloomBase.r) * w;
+      bloom.threshold = bloomBase.t + (bloom05.t - bloomBase.t) * w;
+    }
+    renderer.info.reset();
+    composer.render();
+  };
   const frame = () => {
     const now = performance.now();
     const dt = Math.min(0.05, (now - last) / 1000);
@@ -498,7 +553,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     '02': { mode: 'intro', t: T.cp02 },
     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
-    '05': { mode: 'ride', s: course.stage('05').s0 + 30 },
+    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
@@ -569,7 +624,33 @@ export async function startGame(canvas: HTMLCanvasElement) {
     },
     log() { return st.log; },
     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+    /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+    coinScreen() {
+      const mesh = coins.group.children[0] as THREE.InstancedMesh;
+      const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+      camera.updateMatrixWorld();
+      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+      const out: { i: number; x: number; y: number; d: number }[] = [];
+      coins.defs.forEach((_, i) => {
+        if (coins.collected[i]) return;
+        mesh.getMatrixAt(i, m); m.decompose(p, q, sc);
+        const c = p.clone().project(camera);
+        if (c.z > 1 || c.z < -1) return;
+        const e = p.clone().addScaledVector(right, 0.5 * sc.x).project(camera);
+        const x = ((c.x + 1) / 2) * W, y = ((1 - c.y) / 2) * H;
+        if (x < -50 || x > W + 50 || y < -50 || y > H + 50) return;
+        out.push({ i, x: Math.round(x), y: Math.round(y), d: Math.round((e.x - c.x) * W) });
+      });
+      return out;
+    },
     respawns() { return st.respawns; },
+    /** QA (camera lock): the live render camera — world matrix (column-major), vertical fov, aspect, near/far */
+    camera() {
+      camera.updateMatrixWorld();
+      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+      return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam.target.toArray() };
+    },
     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
     bennyScreen() {
       const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
@@ -582,6 +663,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+    },
+    /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+    drawList() {
+      const hits = new Map<string, number>();
+      const hooked: [THREE.Object3D, THREE.Object3D['onAfterRender']][] = [];
+      scene.traverse((o) => {
+        if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoints && !(o as THREE.Line).isLine && !(o as THREE.Sprite).isSprite) return;
+        const prev = o.onAfterRender;
+        const key = (o.parent?.name ? o.parent.name + '/' : '') + (o.name || o.type);
+        hooked.push([o, prev]);
+        o.onAfterRender = (...a: Parameters<THREE.Object3D['onAfterRender']>) => { hits.set(key, (hits.get(key) ?? 0) + 1); prev.apply(o, a); };
+      });
+      render();
+      for (const [o, prev] of hooked) o.onAfterRender = prev;
+      return [...hits.entries()].sort((a, b) => b[1] - a[1]);
     },
     togglePause,
     stats() {
