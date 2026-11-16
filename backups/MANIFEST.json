@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 3081,
-   "sha256": "5030f2bc2ee7f124de9fea22dc44ead61b4b372bfcab0581bb6d550ea2a9bb3b"
+   "bytes": 2709,
+   "sha256": "45afe71bea9c960b1ce3beeb007400bb70963a2d914d5de7349a3f535e409eaa"
   },
   {
    "path": "README_FIRST.md",
@@ -383,23 +383,23 @@
   },
   {
    "path": "backups/AGENTS_STATUS.md",
-   "bytes": 5368,
-   "sha256": "8d8c31b1c1b020df1bfb56718ab25ffe1627cb7439554dfb0ccf8b5b2e752e91"
+   "bytes": 4809,
+   "sha256": "4b912c40a499ef0d280b256a8aac1cbf36a75bc20738931e1298c855c57de1fd"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 22107,
-   "sha256": "a9b5f0403641f9f90b479f926c4057e96a9e3661650aaa6fd57fd34f461bf95f"
+   "bytes": 12109,
+   "sha256": "4ea1481cc1d34bfcd77edb7984894a1116d15ab4dbce563535fe9254fe955ea7"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 5348,
-   "sha256": "bb3d417e1ec3704b6385af361076cadef9c1db4d458cde4fbb8c2755abde54cc"
+   "bytes": 4875,
+   "sha256": "2946f6f12bdd128814b97538665c82ef615a950ae9b76440cf005526daae509b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 12857,
-   "sha256": "ec51349d08232d8ad8469fc645c98a566a1b341d27c903690d20157d0fdbb377"
+   "bytes": 12091,
+   "sha256": "64f800c5aa50c1b467bc3c02408d5982be9828fe369f53ca2cb2da32697fc11d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -413,13 +413,13 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 2486,
-   "sha256": "876bb050b6ac54de2f3f0734416d4797036aaf3906d14c55f664584d3b1c8eaf"
+   "bytes": 2173,
+   "sha256": "8dfc5837327a5665cf30c39b75ac5e8ca6be36a94b488813b69194b4eef6cdd6"
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 4905,
-   "sha256": "fcc35b848737e821f6ceecf721e4bcaf487b26eb68ca16341f89e89d573a2dbb"
+   "bytes": 4053,
+   "sha256": "fce64cb341eede3e5e2e68d24da41f573a3c6048263baf622e41c508adb8e606"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -818,8 +818,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5199,
-   "sha256": "805dbeec44801a9d6e32e64bc2873b6be0ffe9aded9f7a67be8298c1a2742219"
+   "bytes": 1172,
+   "sha256": "7e58a94207651404900a4c6b2e93e270f73b69c1c7013c8deed26f612ea655b4"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -2827,6 +2827,16 @@
    "sha256": "c4b1c6630258042f7d33ee3eb0c4dbfe631d33b468dcaa65bd57ff5ac7caf831"
   },
   {
+   "path": "qa/pilot05/wave7/handoff/04.png",
+   "bytes": 1009749,
+   "sha256": "94e19bf636490f6bfff75b9e22a30d237bbd825c1794ae53eaa0715c93271505"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/04_diff_vs_wave6.png",
+   "bytes": 746200,
+   "sha256": "205d83cd25b1cb50495f2b74bf614f3e76ecfdb168f210c42168cd4ffd5ea7b8"
+  },
+  {
    "path": "qa/pilot05/wave7/handoff/05.png",
    "bytes": 1825075,
    "sha256": "1c2547f339dcc3b99108e7766777de6b53386ea484e1172683f6ffb44441254e"
@@ -3333,8 +3343,8 @@
   },
   {
    "path": "qa/worldlabs/05/pilot/LEDGER.md",
-   "bytes": 5248,
-   "sha256": "7f8561c82e9601e68a5ba745b992b66caae3338c27c0d24336962011ead54913"
+   "bytes": 4648,
+   "sha256": "e3fc65576de73dd9012e1924d3ee03cd7b121573879b4bde3699f8c39d7c8a16"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/analysis/bay_coverage.png",
@@ -3392,11 +3402,6 @@
    "sha256": "2db735245b519816d19c147b81c1d32ef187e9f4e91530fdb15c1d0c17e34dff"
   },
   {
-   "path": "qa/worldlabs/05/pilot/draft/pano.png",
-   "bytes": 4468330,
-   "sha256": "e524cf6c2f2e2d6ae07e97bd8687548f6cae70405a648b5a66e80652ba3c98d5"
-  },
-  {
    "path": "qa/worldlabs/05/pilot/draft/splats_100k.spz",
    "bytes": 1262623,
    "sha256": "fba5764073f1e1bfdda46fbfa04b808fcf474496c8870d66416302f3313cc663"
@@ -3430,11 +3435,6 @@
    "path": "qa/worldlabs/05/pilot/draft/world.json",
    "bytes": 1746,
    "sha256": "ab4d9f347a39124ee0bffbf01c8e74a700537d01fab58610f6a61bc7a00ae3bd"
-  },
-  {
-   "path": "qa/worldlabs/05/pilot/draft/world_refresh_2026-11-16.json",
-   "bytes": 5069,
-   "sha256": "18441f2c258a81d0be66af5580fff5f57c5caa3981d210647e7f808b01b43885"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/analysis/bay_coverage.png",
@@ -3535,11 +3535,6 @@
    "path": "qa/worldlabs/05/pilot/full/thumbnail.webp",
    "bytes": 74396,
    "sha256": "20f144ba223bfa1d21b89cd4e56ca0864ee4fd11153afdb784e0562d235e1c46"
-  },
-  {
-   "path": "qa/worldlabs/05/pilot/full/world_refresh_2026-11-16.json",
-   "bytes": 5317,
-   "sha256": "e12da8cd32e7c2aae85907759653bff54179e62092f74e116ffd0ea46bd02a6a"
   },
   {
    "path": "qa/worldlabs/05/pilot/prompt_05.txt",
@@ -3885,11 +3880,6 @@
    "path": "scripts/reference.sha256",
    "bytes": 1290,
    "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
-  },
-  {
-   "path": "scripts/resume-newest-work.sh",
-   "bytes": 5251,
-   "sha256": "019f51be58a41042cf0ed9dc6ce6a2bd7b29705a9029acf244052292d4f92c87"
   },
   {
    "path": "scripts/screen_report.py",

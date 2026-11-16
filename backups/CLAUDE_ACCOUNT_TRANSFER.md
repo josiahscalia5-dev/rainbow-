@@ -95,7 +95,7 @@ Playwright/Chromium are preinstalled in Claude cloud containers (`require('playw
 |---|---|
 | 01 Inside the Washing Machine, 02 Whirlpool Tumble | real-time cinematics (girl + Benny). Optional Google Flow intro video plays silently, then hands over to live 3D (`src/ui/cinematicVideo.ts`, `docs/FLOW_VIDEO.md`); **no real Flow MP4 committed yet** |
 | 03 Whirlpool Twirl, 04 Through the Five Arrows | playable; visually still clearly different from the references |
-| **05 Flow Into the Current** | **active work** — camera LOCKED, S-curve refit (wave 6); wave 7 water + foam done, environment running (see §6) |
+| **05 Flow Into the Current** | **active work** — camera LOCKED, S-curve refit (wave 6); wave 7 environment + water + foam DONE (see §6) |
 | 06 Crest the Rinse Arch | playable; next after 05: rebuild the raised water arch to its reference; keep the 05→06 join and stage anchors |
 | 07 Dive the Washer Tube → 08 Final Spin Chamber | real continuous plunge (verticalDrop 61.41, gaps 0) — must be preserved |
 | 09 Ride the Final Wave, 10 Slide Into Hiding | playable; visual work pending |
@@ -110,13 +110,19 @@ translucent bubbles, Benny exactly as approved, correct camera framing and premi
 screenshot beats the Marble world. Keep the finished gameplay systems and the locked camera; do not redo work the
 specialists already finished (wave-7 water/foam DONE). Report measured differences, never invented percentages.
 Wave-7 baseline `qa/pilot05/wave7/baseline/05.png`; ranked difference table in `qa/pilot05/COORDINATION_WAVE6.md`.
-Items 1–4 got a first full pass in wave 7 (environment DONE, it06 kept); what remains is the "Left undone" list in
-`qa/pilot05/wave7/environment/NOTES.md`:
-1. Walls: swirl removed, slot rows + streaks done — now overshoot to violet (70–80 % vs ref 29–46 %) → warmer F0 / magenta lit panels.
-2. Rings: band shading + 20 spots done — far rings at wrong virtual depths (path-camera block, `qa/pilot05/REQUESTS.md`).
-   Ring spacing follows the approved image (≈1.75 R bays), not the Marble 0.87–0.93 R.
-3. Lids: rose-copper pucks done — shading flatter than ref (V std 0.15 vs 0.22); far lids stay mid-bay.
-4. Near gold frame corners: done as real 3D (gold share 32/33/43 % vs ref 43/50/45 %). VP core now too small/orange.
+Wave 7 result (water, foam and environment specialists all DONE): `qa/pilot05/wave7/handoff/05_side_by_side.png`
+(approved | before | now); whole-frame mad 59.0 → 51.2, hue_corr 0.809 → 0.856, edge_corr 0.117 → 0.177, near band
+63.8 → 46.7, tunnel band 62.6 → 61.0 (lower mad / higher corr = closer). Gameplay test pass after the wave (account 8
+and transfer session). Remaining items, from the environment "Left undone" list in `qa/pilot05/wave7/environment/NOTES.md`:
+1. Walls: swirl removed, slot rows + streaks done — but too VIOLET (70–80 % vs ref 29–46 %) → pinker magenta metal /
+   warmer F0; more white-pink lengthwise streaks (2.0–3.6 % vs ref 5.1 %) (environment).
+2. Rings: band shading + 20 spots done; colour reads rose/salmon — make the bands more YELLOW-gold with a brighter
+   highlight; ring 2 at y198 vs ref 170 and one extra far ring (virtual depths in path-camera's far block,
+   `qa/pilot05/REQUESTS.md`) (environment + path-camera). Ring spacing follows the approved image (≈1.75 R bays),
+   not the Marble 0.87–0.93 R.
+3. Lids: rose-copper round pucks done — shading flatter than ref (V std 0.15 vs 0.22); far lids stay mid-bay (environment).
+4. Near gold frame corners: DONE as real 3D (05 only); tune its gold share (32/33/43 % vs ref 43/50/45 %). VP core now
+   too small/orange.
 5. Far river at the VP (y 470–560) still straight 06-style stripes → keep winding S-bends + coins into the light;
    far foam rims (path-camera-transition-engineer, `class ForcedTunnel` / `// ---- 05 far tunnel` block).
 6. Water polish: brighter near highlights (p95 225 → 247), ~2× glints, sweep starts (water-fx).
@@ -169,7 +175,8 @@ key through the secure credential form on that account's **Default** environment
 so the key belongs to the same World Labs platform account. The user had first pasted a key in chat: it was never
 used in a command, is redacted in the exported transcripts (`[REDACTED-PRIVATE]`) and is in no git commit (checked on
 all branches). **Advice given: delete that pasted key at platform.worldlabs.ai and use a fresh one** via the form
-on the next account. Credentials never travel through GitHub — the next account must enter the key in its own form. Atlas connector `list_projects` OK (project "My project", Personal workspace,
+on the next account. Credentials never travel through GitHub — the next account must enter the key in its own form.
+Atlas connector `list_projects` OK (project "My project", Personal workspace,
 `credits_available: true`, nothing run). GitHub MCP + git proxy pushes OK. Plugins seen: superpowers,
 parallax-threejs (playwright-mcp, chrome-devtools-mcp, threejs-devtools-mcp connected; **spector failed to
 connect**), playwright, context7 (**needs sign-in**), feature-dev, code-review, frontend-design,
@@ -209,9 +216,10 @@ Tracked: `*.glb *.ply *.spz *.blend *.fbx *.hdr *.exr *.ktx2 *.psd *.mp4` + the 
 ## 12. Exact next tasks
 1. Run §2 (`resume-newest-work.sh`), check §9/§10, then read `backups/AGENTS_STATUS.md` and
    `qa/pilot05/wave7/*/NOTES.md`. Give the user a short recovery report.
-2. washer-environment-modeler finished wave 7 (it06 kept). Next environment wave = its "Left undone" list
-   (warmer wall F0, VP core, lid shading) — after step 3, since far rings depend on the path-camera block.
-3. Launch path-camera-transition-engineer for the far river/VP strip (§6 item 5).
+2. Launch path-camera-transition-engineer for the far river/VP strip, far ring positions and far foam rims
+   (§6 items 2 and 5, `qa/pilot05/REQUESTS.md`).
+3. Second washer-environment-modeler pass on its "Left undone" list (§6 items 1–4: pinker wall metal, yellower ring
+   gold, lid shading, VP core) — can run alongside step 2 with strict file ownership; far rings belong to step 2.
 4. Water + foam polish passes (§6 items 6–7), then reference-match-director + playwright-visual-qa report with
    approved vs before (`qa/pilot05/wave7/baseline/05.png`) vs after at 864×1536.
 5. Marble: Blender render of the full splats from the locked 05 camera; decide on HQ mesh (ask the user).
