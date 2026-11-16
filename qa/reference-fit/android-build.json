@@ -1,0 +1,134 @@
+{
+  "started_utc": "2026-11-16T16:50:03.345470+00:00",
+  "branch": "codex/screen05-reference-fit-20261116",
+  "source_commit": "60bfd8cf7f51a8e174768f52492c210e0331e0fa",
+  "build_switch": "VITE_RAINBOW_Q05=fit05=1",
+  "tools": {
+    "jdk": "Eclipse Temurin 17.0.21+9",
+    "gradle": "8.2.1",
+    "compile_sdk": 34,
+    "target_sdk": 34,
+    "build_tools": "34.0.0"
+  },
+  "physical_device_or_emulator_tested": false,
+  "physical_device_performance_tested": false,
+  "source_sha256": {
+    "assets/models/benny.glb": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1",
+    "assets/models/rainbow_girl.glb": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528",
+    "assets/textures/fit05-sheen.png": "b1cc43ffea2b93c8b55639ac0a195520202411020256f366bcab15bb20aa00f1",
+    "assets/textures/marble05_env_1024.jpg": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416",
+    "capacitor.config.ts": "7f432dc1ede121105cce2fa8280d5e64c50ea38d77cdecd87aebb9f63010aeb6",
+    "index.html": "c5b2a3ec3a58deaa594b4cefc592caf1e919feeb5c566a3e0fffde409a6f394f",
+    "package-lock.json": "a05bea3166cbc9ba7fbe07eb97323c949ddaf71e58b68472f7eb4d92fb0e19ac",
+    "package.json": "e8eea97e94cec829c6fe8f74dec0a2fd51e492ee1ff1ad891c21264039ede0df",
+    "public/video/PUT_FLOW_VIDEOS_HERE.txt": "f7c352f40d08b5d6461a55126324034d200bae01ea69493989f919c9a65c625b",
+    "src/characters/benny/benny-lab.html": "cd43ae8fbb22e2b07e6f88518c08ad92d525fe9d1533438a7a4573964736a054",
+    "src/characters/benny/benny-lab.ts": "8571f4ece727b54b91bf48a465db48f949af809927d5ac4b1c3e29281af5d7b6",
+    "src/characters/benny/build.ts": "7f0cf0e0740197cab5c1cb347d95fe37be3d3f442e27bb07fcee6e9d07c307ad",
+    "src/characters/benny/fur.ts": "8fd897055b834224cb3dcf3ec4d9406041835130bfdd9ed3718f41157ffc161e",
+    "src/characters/benny/runtime.ts": "21cfc091a4c4b00a95e9886868f30479ba3b3d4a70375a11eb2744f832f2d5f3",
+    "src/characters/benny/textures.ts": "3af300f15af918ff77018a9fda81e965ede8bc7c6b877eec302c2216ceeb7e48",
+    "src/characters/girl/build.ts": "c749e2b3bbd9cba11ab60a85f8b9681678e951685c25f8fb3f261edb810e1e59",
+    "src/characters/girl/girl-lab.html": "3f027137ab722a5f0f3859140283432c1e516091f1c6ae444e99f73d83041b62",
+    "src/characters/girl/girl-lab.ts": "4be581946af9c9625a6c501748c78bef2742a43d90321e724554a1a9afce6bf1",
+    "src/characters/girl/runtime.ts": "3e06fa933489bca7bc608dcde2485e8aa0f5c81318cbe25758a1361fb56dda7e",
+    "src/characters/girl/textures.ts": "9398e5103e5b9ffce7f393c6411acf9e06fee7ecc114475a3e76444fd949a531",
+    "src/characters/types.ts": "bb0791d2826ed7f4bf11694146e4f20ebffaf26d732a78bafb7fa880a5437b0a",
+    "src/game/Game.ts": "57133c4a0f1937f8b78165a6834a4583b25718e429bd788dad729aed500e9e49",
+    "src/game/cameraRig.ts": "ce017bd50ca169b6f6f868108a176deed47738474d16518225cef9632a2d6806",
+    "src/game/modules.ts": "d9f4bc92b8ddaa143f6f99b80663a5e37ae06453f2603106cff9bcfc52fb68e4",
+    "src/gameplay/coins.ts": "ccfa96bb76f993750010813b788e999e441111aa70238b2ccf1d4b12705d3c7a",
+    "src/gameplay/input.ts": "a932c2ec6ce2979efc6b539cdfe56cca1045d2d012c5a489f85ff2cb19e46eee",
+    "src/main.ts": "77a2f053b1004e90d468bcce71691313ca9befd45c38f5c8097447515fbe904e",
+    "src/render/env.ts": "e6b4c0e86eb9dd05154e436cea3c3dee5189daed160b6be514bd07524cc372c1",
+    "src/render/grade.ts": "f4573a37b5493b836d60cf23604c156f08ab28db60b5a64a34faf60ce321eec8",
+    "src/ui/cinematicVideo.ts": "04a804a4d39389fe968d068cd143311d6478d78cb067b0aea3a807b5d30494eb",
+    "src/ui/hud.ts": "8f276df29ad1047573d7bf00e2e1308cdd0a74a93b25890700a672f915229bbe",
+    "src/vfx/bubbles.ts": "42821ec0e90c60d5ea2683c36232099efdba3301dc88aa2d81e27345086470cb",
+    "src/vfx/drumWater.ts": "41622a2706ea078c4c5a318e816ba29c432dcef3b6e50f45be6beecba8ddfddf",
+    "src/vfx/finalWave.ts": "12a07f4e9e342b2e876af760f97e1c4f50df03bbe07646fd589e6d32fa03a39a",
+    "src/vfx/fit05-data.json": "674e5a5173f49fc386968d59a44ebbd79f7f035b10dd8cb3d8d3cef238ba7003",
+    "src/vfx/fit05.ts": "82c0d861911e6c0876b2678cb143808ad9799ab4ddc7bb54a9d0131fad4de532",
+    "src/vfx/fit05Glints.ts": "b9d864c72b75050eee593e4982503454b41b5267e716c0569e56cf669fb44e77",
+    "src/vfx/flow05.ts": "76ad51b59e596f1904fc48bb295fae5a388f5a04f304a20efd217010bd8a948b",
+    "src/vfx/foam.ts": "498dac76b7f5287564b6953a3c27e233b93a0dc567a5c84ad864c8951d8f4bce",
+    "src/vfx/foam05Options.ts": "a9ebc3c286e9a419f398d2f69de2d19c16c9c483dfcbcdfa4e40936a043deb29",
+    "src/vfx/glsl.ts": "1e1a135f0aff44d43643b48c9dc438f98bf9dde76b85e59cec48420dc514ae20",
+    "src/vfx/index.ts": "ac0e674dabd79b9078592b8efacfe0ea4762359dd2258a61682ab9bde8d5bf22",
+    "src/vfx/liquid05.ts": "8a74bca534074a2a9559ef3fd54bf7d157b1e2f6a06ad3cde9e3f8fef72ecd0d",
+    "src/vfx/puddles.ts": "f364cdf4a4d7be7ddbaa3b3c2c6c5b8f4f7d4fa853c58fc92f49c90c66adf75d",
+    "src/vfx/reference05.ts": "3b56d3f4fb2eeaf5e9bb19a25c4c4a47047d67846063debbd3f79967925b58d1",
+    "src/vfx/reference05Geometry.ts": "d8e9661ce065fdd0a0739d5356491bb527f2f2b19879fcfe084a15cdc669fead",
+    "src/vfx/riderSplash.ts": "72c66581f8261ebcc56d7564c2a63b261777334c9f71915ed100282b1c53a4a0",
+    "src/vfx/spray.ts": "79649fa8d284943986414c09989d296805aa799db5da963979e7dfc3e088fd79",
+    "src/vfx/waterRibbon.ts": "f2c0e8754fb37064dc618795c06f23e4b656c4f30d8bca514ad9301647bde725",
+    "src/vfx/whirlpool.ts": "d574e2cea4b81cdd608ed58b3a98b0793906a092e70a0b4ff90f207cba144ff4",
+    "src/world/course.ts": "d1957d911bf2091e6b4ff13f3dca4e568ae0fc836e0fccdc6b254ea29aaab0af",
+    "src/world/environment.ts": "f8a9592a9edb9352a4d7814afb9a44f067d2c58cf0ef6042660c7bb20ea86d5c",
+    "src/world/far05.ts": "c33f5fdd3cadf537f1564d3a813f37d25c51d03e6b23ea9dea039c85d47c53ac",
+    "src/world/laundryRoom.ts": "7c3a4cb22741c58f3c589239d07ffcf9097d6c4b8e59c99a72d7d8f689cc7679",
+    "src/world/materials.ts": "c53c57a01a2c99ffcbda253360859a593bb3a75ad5a8766487613499ecedb516",
+    "src/world/towel.ts": "c6f65ee435296d6a1c53ff4f56dc7d0ed76917b91dd8c962e20134f91215cee0",
+    "src/world/tube.ts": "256dabe69e3b802ce73f1c67825c390b5ae2a6fe71832ac54b5b3bc4542a42ab",
+    "tsconfig.json": "2c88313eda7ae7a287349235f34020081092427b5ee030ad58d747bd46124d4b",
+    "vite.config.ts": "284b01887422f77073d247a82cf401f20cf3bb6a9f8cc271b183cf32c7c8a37a"
+  },
+  "steps": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 9.783
+    },
+    {
+      "command": [
+        "npx",
+        "cap",
+        "sync",
+        "android"
+      ],
+      "exit_code": 0,
+      "seconds": 2.356
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/rainbow-gradle.py",
+        "assembleDebug",
+        "--no-daemon",
+        "--max-workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 37.141
+    }
+  ],
+  "status": "PASS",
+  "artifact": {
+    "path": "/workspace/artifacts/rainbow-reference-fit.apk",
+    "bytes": 8027820,
+    "sha256": "2a878e5cfebe73287e9c992372b71da51c74c61971ff73d05c1ae11ca7204571"
+  },
+  "signature_validation": {
+    "exit_code": 0,
+    "output": "Verifies\nVerified using v1 scheme (JAR signing): true\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): false\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nWARNING: META-INF/com/android/build/gradle/app-metadata.properties not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.activity_activity.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.annotation_annotation-experimental.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.appcompat_appcompat-resources.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.appcompat_appcompat.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.arch.core_core-runtime.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.coordinatorlayout_coordinatorlayout.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.core_core-ktx.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.core_core-splashscreen.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.core_core.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.cursoradapter_cursoradapter.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.customview_customview.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.drawerlayout_drawerlayout.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.emoji2_emoji2-views-helper.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.emoji2_emoji2.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.fragment_fragment.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.interpolator_interpolator.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.lifecycle_lifecycle-livedata-core.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.lifecycle_lifecycle-livedata.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.lifecycle_lifecycle-process.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.lifecycle_lifecycle-runtime.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.lifecycle_lifecycle-viewmodel-savedstate.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.lifecycle_lifecycle-viewmodel.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.loader_loader.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.profileinstaller_profileinstaller.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.savedstate_savedstate.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.startup_startup-runtime.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.tracing_tracing.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.vectordrawable_vectordrawable-animated.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.vectordrawable_vectordrawable.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.versionedparcelable_versionedparcelable.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.viewpager_viewpager.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/androidx.webkit_webkit.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/kotlinx_coroutines_android.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/kotlinx_coroutines_core.version not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/services/kotlinx.coroutines.CoroutineExceptionHandler not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\nWARNING: META-INF/services/kotlinx.coroutines.internal.MainDispatcherFactory not protected by signature. Unauthorized modifications to this JAR entry will not be detected. Delete or move the entry outside of META-INF/.\n"
+  },
+  "manifest": [
+    "package: name='com.rainbow.washergame' versionCode='1' versionName='1.0' platformBuildVersionName='14' platformBuildVersionCode='34' compileSdkVersion='34' compileSdkVersionCodename='14'",
+    "sdkVersion:'22'",
+    "targetSdkVersion:'34'",
+    "application-debuggable",
+    "launchable-activity: name='com.rainbow.washergame.MainActivity'  label='Rainbow' icon=''"
+  ],
+  "baked_switch_files": [
+    "assets/public/assets/main-CX8zcbcz.js"
+  ],
+  "source_unchanged_through_build": true,
+  "restored_tracked_android_files": [],
+  "protected_file_mismatches": [],
+  "tracked_android_builds_assets_preserved": true,
+  "finished_utc": "2026-11-16T16:50:54.560364+00:00",
+  "source_still_matches": true
+}

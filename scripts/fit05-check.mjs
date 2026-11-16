@@ -124,6 +124,14 @@ try {
     && report.fitResources.drawList.some(([name, calls]) => name.includes('water_ribbon') && calls > 0)
     && report.fitResources.drawList.some(([name, calls]) => name.includes('fit05_authored_glints') && calls > 0),
     { resources: report.fitResources.resources, drawList: report.fitResources.drawList, note: 'Counts and actual mesh draws only; not performance timing or an aesthetic approval.' });
+  // Match the clean default page history. goto() does not reset every steering/velocity field,
+  // so this comparison must precede real input tests rather than inherit their residual state.
+  report.fitRide = await ride(page, true);
+  const segments = report.fitRide.segments, end = segments.at(-1)?.state;
+  check('screen05To06Continuity', end?.stage === '06' && segments.every((s) => s.nonMonotonic === 0 && s.maxCameraStep < 1.5 && s.maxBennyYStep < 1),
+    { finalState: end, segments: segments.map(({ samples, ...s }) => s), note: 'Sampled live simulation and rendered seam captures; not a claim of pixel-perfect geometry continuity.' });
+  check('gameplayMatchesDefault', JSON.stringify(report.defaultRide) === JSON.stringify(report.fitRide),
+    { samples: segments.reduce((n, s) => n + s.samples.length, 0), compared: 'All sampled states, coins, hearts, camera positions, Benny height and segment extrema from the same deterministic 05→06 route.' });
   const setup = () => page.evaluate(() => { const a = window.__rainbow; a.run(false); a.goto('05', 12); a.setSteer(null); return a.state(); });
   const step = (n) => page.evaluate((count) => window.__rainbow.step(count, 1 / 60), n);
   const keyboard = [];
@@ -143,12 +151,6 @@ try {
   await page.keyboard.press('p'); const keyPaused = await step(20); await page.keyboard.press('Escape'); const keyResumed = await step(10);
   check('keyboardPauseResume', keyPaused.paused && keyPaused.s === resumed.s && !keyResumed.paused && keyResumed.s > keyPaused.s,
     { paused: keyPaused, resumed: keyResumed });
-  report.fitRide = await ride(page, true);
-  const segments = report.fitRide.segments, end = segments.at(-1)?.state;
-  check('screen05To06Continuity', end?.stage === '06' && segments.every((s) => s.nonMonotonic === 0 && s.maxCameraStep < 1.5 && s.maxBennyYStep < 1),
-    { finalState: end, segments: segments.map(({ samples, ...s }) => s), note: 'Sampled live simulation and rendered seam captures; not a claim of pixel-perfect geometry continuity.' });
-  check('gameplayMatchesDefault', JSON.stringify(report.defaultRide) === JSON.stringify(report.fitRide),
-    { samples: segments.reduce((n, s) => n + s.samples.length, 0), compared: 'All sampled states, coins, hearts, camera positions, Benny height and segment extrema from the same deterministic 05→06 route.' });
   await page.close();
   if (flags.has('--low-quality')) {
     const lowQuery = new URLSearchParams(query); lowQuery.set('quality', 'low');
