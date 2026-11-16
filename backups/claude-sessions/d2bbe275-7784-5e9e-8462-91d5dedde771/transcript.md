@@ -169,3 +169,308 @@ Show me one full-size camera-locked comparison before spending credits on new wo
 >   screen: a real textured, continuous 3D river that can be viewed and animated in gameplay. If the geometry prevents an
 >   accurate match, explain why  …[+5196 chars]
 
+### 🤖 Claude — 2026-11-16T16:52:28.480Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nimport glob\nfor f in ['references/05_flow_into_the_current.png','references/water/05_water_isolated_original.png','qa/worldlabs/05/geometry_ref/1_original_approved_05.png','qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png','qa/worldlabs/05/pilot/full/pano.png','qa/worldlabs/05/pilot/full/thumbnail.png','qa/worldlabs/05/pilot/draft/thumbnail.png','qa/pilot05/current_default_05.png','qa/pilot05/proj/align/artwork_aligned_864x1536.png']:\n  im=Image.open(f); print(f, im.size, im.mode)\n\"; cat qa/worldlabs/05/geometry_ref/check.json | he …[+268 chars]`
+
+### 🧑 User — 2026-11-16T16:52:28.681Z
+
+> ↩︎ result: references/05_flow_into_the_current.png (864, 1536) RGB
+> references/water/05_water_isolated_original.png (941, 1672) RGBA
+> qa/worldlabs/05/geometry_ref/1_original_approved_05.png (864, 1536) RGB
+> qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png (864, 571) RGB
+> qa/worldlabs/05/pilot/full/pano.png (4608, 2304) RGB
+> qa/worldlabs/05/pilot/full/thumbnail.png (720, 480) RGB
+> qa/worldlabs/05/pilot/draft/thumbnail.png (720, 480) RGB
+> qa/pilot05/current_default_05.png (864, 1536) RGB
+> qa/pilot05/proj/align/artwork_aligned_864x1536.png (864, 1536) RGBA
+> {
+>   "reference": "references/05_flow_into_the_current.png",
+>   "reference_sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd",
+>   "copy_sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd",
+>   "crop_rows": [
+>     197,
+>     767
+>   ],
+>   "crop_size": [
+>     864,
+>     571
+>   ],
+>   "geometry_reference_pixels_identical_to_original_rows": true,
+>   "invented_pixels": 0,
+>   "coins_flagged_share_of_strip": 0.0378
+> }
+> Reconstruct exactly the environment in this image, without redesigning it. It is the inside of a long, straight, cylindrical washing-machine drum tunnel seen from inside, looking straight down its axis to on …[+2737 chars]
+
+### 🤖 Claude — 2026-11-16T16:52:31.444Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-16T16:52:31.469Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T16:52:31.716Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/water/05_water_isolated_original.png"}`
+
+### 🧑 User — 2026-11-16T16:52:31.758Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T16:52:32.217Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/pilot/full/thumbnail.png"}`
+
+### 🧑 User — 2026-11-16T16:52:32.239Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T16:52:32.676Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/pilot/full/import/full05_preview.png"}`
+
+### 🧑 User — 2026-11-16T16:52:32.703Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T16:52:55.124Z
+
+> 🔧 **Bash** `{"command": "ls tools/worldlabs/ tools/blender/ scripts/ | head -100; cat qa/worldlabs/05/pilot/full/import/full05_measure.json; cat qa/worldlabs/05/pilot/full/analysis/splat_measure.json", "description": "List tools and read Marble measurement JSON"}`
+
+### 🧑 User — 2026-11-16T16:52:55.180Z
+
+> ↩︎ result: scripts/:
+> apk-web-check.mjs
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> cinematic-test.mjs
+> claude-bootstrap.sh
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export-river-05.ts
+> export_claude_sessions.py
+> flow05-dump.ts
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> landmarks05.py
+> lib
+> perf05.mjs
+> proj05-probe.mjs
+> rainbow-autosave.py
+> reference.sha256
+> resume-newest-work.sh
+> screen_report.py
+> setup-android-sdk.sh
+> setup-blender.sh
+> setup-worldlabs-plugin.sh
+> triptych.py
+> verify-assets.py
+> water-lab.mjs
+> 
+> tools/blender/:
+> build_05_river_scene.py
+> camera_lock_05.py
+> import_world_asset.py
+> make_synthetic_tunnel.py
+> render_05_proof.py
+> 
+> tools/worldlabs/:
+> analyze_splats.py
+> bay_texture.py
+> marble_pilot.py
+> {
+>   "input": "qa/worldlabs/05/pilot/full/collider.glb",
+>   "ply": "qa/worldlabs/05/pilot/full/splats_500k.ply",
+>   "objects": [
+>     "geometry_0"
+>   ],
+>   "centre": [
+>     0.6411785477919439,
+>     0.24372496595549967,
+>     -0.8798801545159867
+>   ],
+>   "axis": [
+>     0.009684230304696433,
+>     0.999155688323464,
+>     0.039926509668021026
+>   ],
+>   "singular_values": [
+>     1104.8252674091057,
+>     143.3936856 …[+4631 chars]
+
+### 🤖 Claude — 2026-11-16T16:52:58.231Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p tools/worldlabs/analyze_splats.py; head -c 1500 qa/worldlabs/05/pilot/full/splats_500k.ply | strings | head -40", "description": "Inspect splat analysis script and PLY header"}`
+
+### 🧑 User — 2026-11-16T16:52:58.293Z
+
+> ↩︎ result: """Measure a Marble tunnel splat PLY: axis, wall radius, ring spacing, lids, river width, and an
+> unrolled wall image.  usage: analyze_splats.py <splats.ply> <out_dir>"""
+> import json, os, sys
+> import numpy as np
+> from PIL import Image
+> 
+> ply, out = sys.argv[1], sys.argv[2]
+> os.makedirs(out, exist_ok=True)
+> raw = open(ply, "rb").read()
+> hdr_end = raw.index(b"end_header\n") + len(b"end_header\n")
+> hdr = raw[:hdr_end].decode()
+> n = int([l for l in hdr.splitlines() if l.startswith("element vertex")][0].split()[-1])
+> props = [l.split()[-1] for l in hdr.splitlines() if l.startswith("property")]
+> a = np.frombuffer(raw, dtype="<f4", offset=hdr_end, count=n * len(props)).reshape(n, len(props))
+> P = {k: a[:, i] for i, k in enumerate(props)}
+> xyz = np.stack([P["x"], P["y"], P["z"]], 1).astype(np.float64)
+> rgb = np.clip(0.5 + 0.28209479 * np.stack([P["f_dc_0"], P["f_dc_1"], P["f_dc_2"]], 1), 0, 1)
+> alpha = 1 / (1 + np.exp(-P["opacity"]))
+> keep = alpha > 0.3
+> xyz, rgb = xyz[keep], rgb[keep]
+> 
+> # robust centre line: PCA on the points, axis = largest component, oriented away from the origin (camera)
+> c = np.median(xyz, 0)
+> u, s, vt = np.linalg.svd(xyz - c, full_matrices=False)
+> ax = vt[0]
+> if np.dot(ax, c) < 0:  # make  …[+2814 chars]
+
+### 🤖 Claude — 2026-11-16T16:53:22.302Z
+
+> 🔧 **Bash** `{"command": "node -e \"console.log(require('./node_modules/three/package.json').version)\"; ls node_modules | grep -i -E \"spark|splat|gauss\" ; npm view @sparkjsdev/spark versions --json 2>&1 | tail -15; python3 -c \"import torch\" 2>&1 | tail -1; nproc; free -g | head -2", "description": "Check three.js version, splat libs and npm reachability"}`
+
+### 🧑 User — 2026-11-16T16:53:22.863Z
+
+> ↩︎ result: 0.170.0
+>   "0.1.3",
+>   "0.1.4",
+>   "0.1.5",
+>   "0.1.6",
+>   "0.1.7",
+>   "0.1.8",
+>   "0.1.9",
+>   "0.1.10",
+>   "2.0.0",
+>   "2.1.0",
+>   "2.2.0",
+>   "2.3.0",
+>   "2.3.1",
+>   "2.4.0"
+> ]
+> ModuleNotFoundError: No module named 'torch'
+> 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0           8           0           6          14
+
+### 🤖 Claude — 2026-11-16T16:54:01.369Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/feasibility/footprint_overlay.png"}`
+
+### 🧑 User — 2026-11-16T16:54:01.422Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T16:54:25.868Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/marble_feas /home/user/rainbow-/tools/marble05 && cd /home/user/rainbow- && cat > tools/marble05/splatlib.py <<'EOF'\n\"\"\"Shared helpers for the Screen 05 Marble feasibility test (read-only on the Marble assets).\"\"\"\nimport numpy as np\n\ndef load_ply(path, min_alpha=0.0):\n    raw = open(path, \"rb\").read()\n    he = raw.index(b\"end_header\\n\") + len(b\"end_header\\n\")\n    hdr = raw[:he].decode()\n    n = int([l for l in hdr.splitlines() if l.startswith(\"element vertex\")][0].split()[-1])\n    props = [l.split()[-1] for l in hdr. …[+4772 chars]`
+
+### 🧑 User — 2026-11-16T16:54:45.915Z
+
+> ↩︎ result: /home/user/rainbow-/tools/marble05/splatlib.py:22: RuntimeWarning: divide by zero encountered in divide
+>   u = f * xyz[:, 0] / z + cx
+> /home/user/rainbow-/tools/marble05/splatlib.py:23: RuntimeWarning: divide by zero encountered in divide
+>   v = f * xyz[:, 1] / z + cy
+> {
+>  "world_dir": "qa/worldlabs/05/pilot/full",
+>  "image": "qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png",
+>  "image_size": [
+>   864,
+>   571
+>  ],
+>  "convention": "OpenCV pinhole at the PLY origin, +x right, +y down, +z forward (Marble splat frame)",
+>  "f_px": 880.0,
+>  "cx": 408.0,
+>  "cy": 309.5,
+>  "ncc": 0.3407239052223115,
+>  "hfov_deg": 52.29368247116179,
+>  "vfov_deg_crop": 35.94942466053209,
+>  "splats_used": 458043,
+>  "splats_total": 500000,
+>  "full_frame": {
+>   "size": [
+>    864,
+>    1536
+>   ],
+>   "f_px": 880.0,
+>   "cx": 408.0,
+>   "cy": 506.5,
+>   "vfov_deg": 79.40007315632192
+>  }
+> }
+> [1]-  Done                    python3 -I tools/marble05/fit_camera.py qa/worldlabs/05/pilot/$w qa/pilot05/marble_feas/camera_fit_$w.json
+> {
+>  "world_dir": "qa/worldlabs/05/pilot/draft",
+>  "image": "qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png",
+>  "image_size": [
+>   864,
+>   571
+>  ],
+>  "convention": "OpenCV pinhole at the PLY origin, +x right, +y down,  …[+495 chars]
+
+### 🤖 Claude — 2026-11-16T16:54:48.884Z
+
+Fitting Marble's origin camera to your approved image (first pass was too noisy — refining it now).
+
+### 🤖 Claude — 2026-11-16T16:54:55.847Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nfor w in ['full','draft']:\n  d=json.load(open(f'qa/pilot05/marble_feas/camera_fit_{w}.json'))\n  print(w, ' '.join(f'{f:.0f}:{n:.2f}/{c:.2f}' for f,n,c in d['coarse_scan']))\n\"\nmkdir -p /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf && cat > /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/viz.py <<'EOF'\nimport sys, numpy as np\nsys.path.insert(0,'tools/marble05')\nfrom splatlib import load_ply, zbuffer\nfrom PIL import Image\nout='/tmp/claude-0/-home-user-rainbow-/d2bbe275-77 …[+815 chars]`
+
+### 🧑 User — 2026-11-16T16:54:56.789Z
+
+> ↩︎ result: full 300:0.19/0.70 325:0.20/0.70 350:0.19/0.70 375:0.19/0.69 400:0.19/0.68 425:0.18/0.67 450:0.18/0.65 475:0.17/0.63 500:0.17/0.61 525:0.16/0.59 550:0.15/0.56 575:0.14/0.54 600:0.14/0.52 625:0.14/0.50 650:0.13/0.48 675:0.13/0.46 700:0.14/0.44 725:0.16/0.42 750:0.18/0.40 775:0.19/0.39 800:0.21/0.37 825:0.24/0.35 850:0.26/0.34 875:0.28/0.32 900:0.30/0.30 925:-9.00/0.29 950:-9.00/0.28 975:-9.00/0.26 1000:-9.00/0.25 1025:-9.00/0.24 1050:-9.00/0.23 1075:-9.00/0.22 1100:-9.00/0.21 1125:-9.00/0.20 1150:-9.00/0.20 1175:-9.00/0.19 1200:-9.00/0.18 1225:-9.00/0.17 1250:-9.00/0.17 1275:-9.00/0.16 1300:-9.00/0.15
+> draft 300:0.23/0.78 325:0.23/0.70 350:0.23/0.62 375:0.22/0.56 400:0.21/0.51 425:0.20/0.45 450:0.20/0.39 475:0.20/0.35 500:0.19/0.32 525:-9.00/0.29 550:-9.00/0.26 575:-9.00/0.24 600:-9.00/0.22 625:-9.00/0.20 650:-9.00/0.19 675:-9.00/0.17 700:-9.00/0.16 725:-9.00/0.15 750:-9.00/0.14 775:-9.00/0.13 800:-9.00/0.12 825:-9.00/0.12 850:-9.00/0.11 875:-9.00/0.10 900:-9.00/0.10 925:-9.00/0.09 950:-9.00/0.09 975:-9.00/0.08 1000:-9.00/0.08 1025:-9.00/0.08 1050:-9.00/0.07 1075:-9.00/0.07 1100:-9.00/0.07 1125:-9.00/0.06 1150:-9.00/0.06 1175:-9.00/0.06 1200:-9.00/0.06 1225:-9.00/0.05 1250:-9.00/0.05 …[+313 chars]
+
+### 🤖 Claude — 2026-11-16T16:55:00.393Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/viz_full.png"}`
+
+### 🧑 User — 2026-11-16T16:55:00.434Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T16:55:29.160Z
+
+> 🔧 **Bash** `{"command": "cat > tools/marble05/pano_fit.py <<'EOF'\n\"\"\"Find where/how Marble placed the input image in its panorama (equirect): focal length, yaw, pitch.\nusage: python3 -I tools/marble05/pano_fit.py <pano.png> <out.json> [preview.png]\"\"\"\nimport json, sys\nimport numpy as np\nfrom PIL import Image, ImageFilter\n\npano_p, outp = sys.argv[1], sys.argv[2]\npano = np.asarray(Image.open(pano_p).convert(\"RGB\"), float) / 255\nPH, PW = pano.shape[:2]\nref_im = Image.open(\"qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png\").convert(\"RGB\")\nW0, H0 = ref_im.size\nk = 4\nW, H = W0 / …[+2729 chars]`
+
+### 🧑 User — 2026-11-16T16:56:00.863Z
+
+> ↩︎ result: {"pano": "qa/worldlabs/05/pilot/draft/pano.png", "pano_size": [2304, 1152], "image_size": [864, 571], "f_px": 701.0, "hfov_deg": 63.28794047375449, "yaw_deg": 0.0, "pitch_deg": 6.000000000000001, "ncc_blurred_quarter_res": 0.6107008664276738}
+> {"pano": "qa/worldlabs/05/pilot/full/pano.png", "pano_size": [4608, 2304], "image_size": [864, 571], "f_px": 701.0, "hfov_deg": 63.28794047375449, "yaw_deg": 0.0, "pitch_deg": 6.000000000000001, "ncc_blurred_quarter_res": 0.6038027520025907}
+> [1]-  Done                    python3 -I tools/marble05/pano_fit.py qa/worldlabs/05/pilot/full/pano.png qa/pilot05/marble_feas/pano_fit_full.json $SP/pano_full.png
+> [2]+  Done                    python3 -I tools/marble05/pano_fit.py qa/worldlabs/05/pilot/draft/pano.png qa/pilot05/marble_feas/pano_fit_draft.json $SP/pano_draft.png
+
+### 🤖 Claude — 2026-11-16T16:56:02.690Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/pano_full.png"}`
+
+### 🧑 User — 2026-11-16T16:56:02.743Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T16:56:20.445Z
+
+> 🔧 **TaskCreate** `{"subject": "Marble 05 feasibility: camera fit, river geometry, projection comparison", "description": "1) fit Marble origin camera to approved crop (pano + splats) 2) extract Marble river 3D surface, depth/S-curve vs game river 3) Blender camera projection of artwork onto Marble river, full-size camera-locked comparison 4) NOTES + commit/push + backup report", "activeForm": "Running Marble feasibility test"}`
+
+### 🧑 User — 2026-11-16T16:56:20.458Z
+
+> ↩︎ result: Task #1 created successfully: Marble 05 feasibility: camera fit, river geometry, projection comparison
+
+### 🤖 Claude — 2026-11-16T16:56:36.715Z
+
+> 🔧 **Bash** `{"command": "cat > tools/marble05/splat_fit.py <<'EOF'\n\"\"\"Fit Marble's origin camera to the input image using the SPLATS (not the pano): focal, yaw, pitch.\nPoint render at quarter resolution + blur, NCC against the input image.\nusage: python3 -I tools/marble05/splat_fit.py <world_dir> <out.json> [preview.png]\"\"\"\nimport json, sys, os\nimport numpy as np\nfrom PIL import Image, ImageFilter\nsys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))\nfrom splatlib import load_ply\n\nwd, outp = sys.argv[1], sys.argv[2]\nS = load_ply(os.path.join(wd, \"splats_500k.ply\"), min_alpha=0. …[+3583 chars]`
+

@@ -398,8 +398,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4107,
-   "sha256": "78cf6a6fa4a40bdc76864fe5bbfbebf30a0da418639309f9a86779e8a9f64909"
+   "bytes": 4065,
+   "sha256": "c527f8362fba1466b6dfa205dfd12ba323c9773eaabf2f554bf6a8578ee4f741"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8264,
-   "sha256": "231790ae17609450c758b85e7780346869597294890797d3ac55dcc769432b5e"
+   "sha256": "6280cabc8a85d1003eec12e3ecf2faef4811791217f2d79615e943b132e56da6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1165,6 +1165,26 @@
    "path": "qa/pilot05/foam/it1/05_base.png",
    "bytes": 1549652,
    "sha256": "2d3ec03255cc763bb7469756e8de4afb3512ac40045d07a38cc3374b3343b619"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/camera_fit_draft.json",
+   "bytes": 2818,
+   "sha256": "8febec81fdd5eef3445888db685dd08298147aa28dce556af83e7fe1027b614c"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/camera_fit_full.json",
+   "bytes": 3041,
+   "sha256": "f776d5c82f508ddf918034f216ef54f439b2ab15b5fb42d4eefdc81e8f892d51"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/pano_fit_draft.json",
+   "bytes": 266,
+   "sha256": "405710bd8122ca8c780d1699ff7919bf641a9fdfc04b69388250d3d99c89cea1"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/pano_fit_full.json",
+   "bytes": 265,
+   "sha256": "b196dfe7a8b3706217d6174fbda849745b1ad86062fadeeadb5e386758882f21"
   },
   {
    "path": "qa/pilot05/proj/BRIEF_SPECIALIST1.md",
@@ -6760,6 +6780,26 @@
    "path": "tools/make_env_plate_v3.py",
    "bytes": 9377,
    "sha256": "668c36bbc5326237444e39c8af465cfd382015fc90b69f8362f1e423c30d7c8d"
+  },
+  {
+   "path": "tools/marble05/fit_camera.py",
+   "bytes": 2575,
+   "sha256": "458e310caf448dfcb48cb6f028ca13d271d3ccb36ed1cbddfd7d6c7446d020b7"
+  },
+  {
+   "path": "tools/marble05/pano_fit.py",
+   "bytes": 2739,
+   "sha256": "be841a140df8095c2318db9db50379c738fd7814849bcbbf01e280643694f761"
+  },
+  {
+   "path": "tools/marble05/splat_fit.py",
+   "bytes": 3575,
+   "sha256": "9643f8d9e8ab840f8aaf2aa388e05316d10fd3caa99329667621aba725019963"
+  },
+  {
+   "path": "tools/marble05/splatlib.py",
+   "bytes": 2143,
+   "sha256": "0178be7c3b018276a03d0ec94ea000b021dafdbe782e9ac815f225f6bda64abd"
   },
   {
    "path": "tools/model-lab.html",
