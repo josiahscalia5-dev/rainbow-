@@ -393,8 +393,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.md",
-   "bytes": 11221,
-   "sha256": "5b69d9f52dd4c54fa2f144594d3d8955a01d4ce0f817b643eab3705257e94049"
+   "bytes": 11648,
+   "sha256": "182726263325ba946194332a87845b8ba2cd137b493a426f8c8e56d7608b54eb"
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
@@ -403,33 +403,33 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 33034,
-   "sha256": "6faf69ae2df7f2c13f845581c210f15e6aa67fb5bcbf428e3c65dfdf40d3d57f"
+   "bytes": 39934,
+   "sha256": "a378857ac1bfbfad7ab2a6606c86dfae356669ae1b62ec12c7c13494255f6af2"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "a79f98a0076aa6fde88541734e59157e5e8dc756cd61576e391bef08d3b92890"
+   "sha256": "01e6dd62b6e381866975c8d27405453d669137bdc3880eec9962bb9af4e88ed5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 12867,
-   "sha256": "51c37ad8eeb72180c557d134557592c6c9ca1cd3f2c3b2164671b6f3d7037ebe"
+   "bytes": 13213,
+   "sha256": "33581981c6c7c666b714050f719402bf358d0ed96f8e168fa89ceea8fa69e12e"
   },
   {
    "path": "backups/MCP_SETUP.md",
-   "bytes": 5899,
-   "sha256": "fa8b3503202ff558bd6329b9319c486f82476aa70dfe73f6fdc9b6decc47845b"
+   "bytes": 7240,
+   "sha256": "decc1b02c62920e62191fca97ff674cdcd7a51498c5988b579f3e62b18758e5c"
   },
   {
    "path": "backups/RECOVERY.md",
-   "bytes": 5431,
-   "sha256": "0cfc33b4153da3fe65420f1b59d50b1f882ee5f8d5807541971076c2e1ea90cb"
+   "bytes": 5744,
+   "sha256": "44e7aeb8fc38574a3f820fea3c5d9d36bbcaa932212786d0c50a8385a227dfbe"
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 3520,
-   "sha256": "7ca8d60ccce439f31609aa05a9a7364a5b4e28366b6dd840e2020810d3406ae0"
+   "bytes": 4226,
+   "sha256": "99526c926f96566ba043c47676d4e69c70be0be4103942588217752363df5599"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",

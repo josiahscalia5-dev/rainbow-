@@ -1,5 +1,10 @@
 # Rainbow specialists — roster, responsibilities and status
 
+**Machine-readable roster: `backups/AGENTS_STATUS.json`** (name, file, SHA-256, state, unfinished work, next
+assignment) — `scripts/claude-bootstrap.sh` checks it at every session start. Update the JSON whenever a specialist's
+state changes. Check 2026-11-16 ~11:05 UTC (session `01Kbt6BT`, branch `ccr-251ed97c-ty2xvp`): 10/10 definitions
+present, SHA-256 unchanged, none running; assignments unchanged from wave 9b below.
+
 ## ▶ NOW: wave 9b (2026-11-16 from ~09:50 UTC, session `012NR93N`, branch `ccr-44f84024-ii5iih`) — read `qa/pilot05/COORDINATION_WAVE9B.md`
 **User decisions 2026-11-16 ~10:20 UTC:** (1) Google Flow videos cover the opening and ending — do not rebuild 01 / 02 / 11
 as detailed 3D; (2) specialists work on PLAYABLE screens 03–09: Screen 05 first, then 03, 04, 06, 07, 08, 09;

@@ -1,5 +1,20 @@
 # Rainbow — tool / MCP reconnection (no secrets stored)
 
+Machine-readable list of every tool, plugin, MCP server, hook, host and credential (names only):
+**`backups/TOOL_MANIFEST.json`**. `scripts/claude-bootstrap.sh` checks and installs what is missing at session start.
+
+## Newest check — session 01Kbt6BT (branch `ccr-251ed97c-ty2xvp`, 2026-11-16 10:40–11:20 UTC, `Default` environment, unrestricted)
+| Tool | Tested result | On the next account |
+|---|---|---|
+| GitHub (git proxy) | pushes verified (remote SHA == local) | connect GitHub + Claude GitHub App |
+| Git LFS 3.4.1 | 24/24 real; all 24 confirmed + downloaded fresh from GitHub LFS (SHA-256 match) | automatic (hook) |
+| Blender 5.3.0, Android SDK 34 + build-tools 34.0.0 | installed by the bootstrap (≈ 60 s, parallel), headless bpy test OK | automatic (bootstrap) |
+| Playwright plugin MCP + Chromium 153 | `claude mcp list` → connected; WebGL2 smoke test OK | enable the `playwright` plugin if missing |
+| World Labs Atlas connector | `list_projects` OK ("My project", credits available); nothing run | re-add + sign in |
+| Marble World API key | network secret on this account's **Default** environment; free `GET /credits` → 5,190 | `request_credential` only if needed |
+| worldlabs@worldlabs plugin | installed by the bootstrap | automatic (bootstrap) |
+| context7 plugin | needs authentication; not used | ignore |
+
 ## Newest check — session 012NR93N (branch `ccr-44f84024-ii5iih`, 2026-11-16 03:10–10:35 UTC)
 | Tool | Tested result | On the next account |
 |---|---|---|

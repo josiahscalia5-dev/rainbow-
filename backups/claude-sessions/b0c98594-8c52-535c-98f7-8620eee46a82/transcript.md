@@ -1018,7 +1018,7 @@ Saved and verified: `d72ed52` is on GitHub. Now the audit: tool versions, instal
 >       2 import math
 >       2 import hashlib
 >       2 import fnmatch
->       1 …[+3047 chars]
+>       1 …[+3061 chars]
 
 ### 🤖 Claude — 2026-11-16T10:48:31.277Z
 
@@ -1940,4 +1940,183 @@ Shellcheck is clean. Moving to validation. **Test A:** a second full run must sk
 ### 🧑 User — 2026-11-16T11:06:16.180Z
 
 > ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🤖 Claude — 2026-11-16T11:06:18.974Z
+
+Atlas connector is connected ("My project", credits available). Nothing was run. Now the transfer guide gets a new top section for this session, and the previous "NEWEST" section becomes history.
+
+### 🤖 Claude — 2026-11-16T11:06:47.927Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "old_string": "# Rainbow — Claude account transfer guide (newest: session 012NR93N on branch `ccr-44f84024-ii5iih`, 2026-11-16 ~10:35 UTC)\n\nRainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.\n\n## ▶ NEWEST — session `012NR93N` (2026-11-16 03:10–10:35 UTC), branch `ccr-44f84024-ii5iih` — READ THIS FIRST\n**Start the next account from branch `ccr-44f84024-ii5iih`** (prompt: `backups/START_NEW_CLAUDE_ACCOUNT.md`). It contains", "new_string": "# Rainbow — Claude account transf …[+7348 chars]`
+
+### 🧑 User — 2026-11-16T11:06:47.978Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:06:51.216Z
+
+Now the ready-to-paste prompt for a new account:
+
+### 🤖 Claude — 2026-11-16T11:07:05.619Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "content": "# Paste this into Claude Code on the next Claude account\n\n## Before you paste (one-time, on the new account — these never travel through GitHub)\n1. claude.ai → connect **GitHub** to the new Claude account and install the **Claude GitHub App** on\n   `josiahscalia5-dev/rainbow-`.\n2. claude.ai → Settings → Connectors: add **World Labs Atlas** and sign in (only needed for new World Labs tasks).\n   Enable the **playwright** plugin if it is not already on.\n3. Optional, makes every session start faster: Claude …[+3728 chars]`
+
+### 🧑 User — 2026-11-16T11:07:05.661Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:07:07.307Z
+
+Now pointer lines at the top of the other status docs, so no session follows stale instructions:
+
+### 🤖 Claude — 2026-11-16T11:07:09.735Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/AGENTS_STATUS.md", "old_string": "# Rainbow specialists — roster, responsibilities and status\n", "new_string": "# Rainbow specialists — roster, responsibilities and status\n\n**Machine-readable roster: `backups/AGENTS_STATUS.json`** (name, file, SHA-256, state, unfinished work, next\nassignment) — `scripts/claude-bootstrap.sh` checks it at every session start. Update the JSON whenever a specialist's\nstate changes. Check 2026-11-16 ~11:05 UTC (session `01Kbt6BT`, branch `ccr-251ed97c-ty2xvp`): 10/10 definitions\npresent, SHA-256 …[+71 chars]`
+
+### 🧑 User — 2026-11-16T11:07:09.771Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/AGENTS_STATUS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:07:15.235Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/MCP_SETUP.md", "old_string": "# Rainbow — tool / MCP reconnection (no secrets stored)\n", "new_string": "# Rainbow — tool / MCP reconnection (no secrets stored)\n\nMachine-readable list of every tool, plugin, MCP server, hook, host and credential (names only):\n**`backups/TOOL_MANIFEST.json`**. `scripts/claude-bootstrap.sh` checks and installs what is missing at session start.\n\n## Newest check — session 01Kbt6BT (branch `ccr-251ed97c-ty2xvp`, 2026-11-16 10:40–11:20 UTC, `Default` environment, unrestricted)\n| Tool | Tested resu …[+977 chars]`
+
+### 🧑 User — 2026-11-16T11:07:15.274Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/MCP_SETUP.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:07:17.437Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CURRENT_STATE.md", "old_string": "# Rainbow — CURRENT STATE (handoff)\n", "new_string": "# Rainbow — CURRENT STATE (handoff)\n\n> **Newest (2026-11-16 ~11:15 UTC, session `01Kbt6BT`, branch `ccr-251ed97c-ty2xvp`):** permanent recovery + backup\n> system — `scripts/claude-bootstrap.sh` runs at every session start. Current state, tests and next tasks:\n> `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section) and `backups/BOOTSTRAP_REPORT.md`. The sections below are history.\n"}`
+
+### 🧑 User — 2026-11-16T11:07:17.476Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CURRENT_STATE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:07:19.237Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/RECOVERY.md", "old_string": "# Rainbow — recovery guide\n", "new_string": "# Rainbow — recovery guide\n\n> **Newest procedure (2026-11-16):** one command, `bash scripts/claude-bootstrap.sh` — it also runs automatically\n> at every Claude session start. See `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section). The branch names below are\n> historical; the bootstrap always merges the newest `ccr-*`/`claude/*` branch.\n"}`
+
+### 🧑 User — 2026-11-16T11:07:19.277Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/RECOVERY.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:07:21.545Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T11:07:21.556Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-16T11:07:21.994Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T11:07:22.003Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-16T11:07:22.444Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T11:07:22.451Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-16T11:07:25.781Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad; git status --short; echo \"--- secret scan of changed/new files\"; git diff --name-only HEAD; git ls-files --others --exclude-standard; for f in $(git diff --name-only HEAD; git ls-files --others --exclude-standard); do grep -nEH \"(gh[pousr]_[A-Za-z0-9]{30,}|github_pat_|sk-ant-|AKIA[0-9A-Z]{16}|BEGIN [A-Z ]*PRIVATE KEY|WLT-Api-Key: [REDACTED],}|[REDACTED-PRIVATE])\" \"$f\"; done; echo \"scan done\"", "description": "List pending changes and scan them for secrets/private da …[+4 chars]`
+
+### 🧑 User — 2026-11-16T11:07:25.857Z
+
+> ↩︎ result: M backups/AGENTS_STATUS.md
+>  M backups/CLAUDE_ACCOUNT_TRANSFER.md
+>  M backups/CURRENT_STATE.md
+>  M backups/MCP_SETUP.md
+>  M backups/RECOVERY.md
+>  M backups/START_NEW_CLAUDE_ACCOUNT.md
+> --- secret scan of changed/new files
+> backups/AGENTS_STATUS.md
+> backups/CLAUDE_ACCOUNT_TRANSFER.md
+> backups/CURRENT_STATE.md
+> backups/MCP_SETUP.md
+> backups/RECOVERY.md
+> backups/START_NEW_CLAUDE_ACCOUNT.md
+> scan done
+
+### 🤖 Claude — 2026-11-16T11:07:34.251Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls backups/claude-sessions/ | tail -3; d=backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82; ls -la $d 2>&1; grep -c \"[REDACTED-PRIVATE]\" $d/* 2>/dev/null; grep -rlE \"[REDACTED-PRIVATE]|outlook\\.com\" backups/ | head; git log --all -p -S\"[REDACTED-PRIVATE]\" --format=%h -- . 2>/dev/null | head -3; echo \"---\"; grep -c \"REDACTED\" $d/transcript.md 2>/dev/null; grep -oE \"\\[REDACTED[^]]*\\]\" $d/transcript.md | sort | uniq -c | head", "description": "Check exported transcripts and git history for the user's email"}`
+
+### 🧑 User — 2026-11-16T11:07:44.113Z
+
+> ↩︎ result: d8784a51-ef7d-54bd-9459-c5d061a0acfa
+> e0f002d9-e93b-5e8f-89ac-1e3fceebb58f
+> eae80a1c-be41-5f1a-858b-469afcc249da
+> total 2344
+> drwxr-xr-x  2 root root    4096 Nov 16 11:06 .
+> drwxr-xr-x 14 root root    4096 Nov 16 10:40 ..
+> -rw-r--r--  1 root root  121438 Nov 16 11:06 transcript.md
+> -rw-r--r--  1 root root 2267839 Nov 16 11:06 transcript.sanitized.jsonl
+> backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82/transcript.md:0
+> backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82/transcript.sanitized.jsonl:0
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.sanitized.jsonl
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md
+> 4f33276
+> 
+> diff --git a/backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md b/backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md
+> ---
+> 1
+>       1 [REDACTED-JWT]
+
+### 🤖 Claude — 2026-11-16T11:07:46.718Z
+
+This session's transcript has 0 hits, so the exporter redacted it. But an **older** session's transcript (`eae80a1c`) matches. Checking what it contains:
+
+### 🤖 Claude — 2026-11-16T11:07:49.268Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; f=backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md; grep -noE \".{0,60}([REDACTED-PRIVATE]|outlook\\.com).{0,40}\" $f | head -5; grep -cE \"[REDACTED-PRIVATE]@outlook\\.com\" $f backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.sanitized.jsonl; git log --format='%h %cd %s' --date=iso -1 4f33276; git branch -r --contains 4f33276 | head -3; grep -n \"email\\|EMAIL\\|@\" scripts/export_claude_sessions.py | head -12", "description": "Inspect the email match in the older transcript and exporter rules"}`
+
+### 🧑 User — 2026-11-16T11:07:49.330Z
+
+> ↩︎ result: 1694:ad -25; echo \"--- email leak check ---\"; git grep -c -i \"[REDACTED-PRIVATE]\" HEAD -- . 2>/dev/null | head; echo \"
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md:0
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.sanitized.jsonl:0
+> 4f33276 2026-11-15 19:15:10 +0000 autosave: Rainbow 2026-11-15 19:15 UTC
+>   origin/ccr-251ed97c-ty2xvp
+>   origin/ccr-44f84024-ii5iih
+>   origin/ccr-4f6c3e0e-5kxgr0
+> 45:    (re.compile(r"(https?://)[^/\s:@]+:[^/\s@]+@"), r"\1[REDACTED-CREDENTIALS]@"),
+> 48:    (re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"), "[REDACTED-EMAIL]"),
+> 51:KEEP_EMAILS = {"noreply@anthropic.com"}
+> 67:    for i, e in enumerate(KEEP_EMAILS):
+
+### 🤖 Claude — 2026-11-16T11:07:58.523Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 30,80p scripts/export_claude_sessions.py", "description": "Read the transcript exporter's redaction rules"}`
+
+### 🧑 User — 2026-11-16T11:07:58.558Z
+
+> ↩︎ result: from pathlib import Path
+> 
+> REDACTIONS: list[tuple[re.Pattern[str], str]] = [
+>     (re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----.*?-----END [A-Z ]*PRIVATE KEY-----", re.S), "[REDACTED-PRIVATE-KEY]"),
+>     (re.compile(r"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{20,}\b"), "[REDACTED-GITHUB-TOKEN]"),
+>     (re.compile(r"\bgithub_pat_[A-Za-z0-9_]{20,}\b"), "[REDACTED-GITHUB-TOKEN]"),
+>     (re.compile(r"\bsk-ant-[A-Za-z0-9_\-]{10,}"), "[REDACTED-ANTHROPIC-KEY]"),
+>     (re.compile(r"\bsk-[A-Za-z0-9]{20,}\b"), "[REDACTED-API-KEY]"),
+>     (re.compile(r"\bmsy_[A-Za-z0-9_\-]{10,}"), "[REDACTED-MESHY-KEY]"),
+>     (re.compile(r"\bAKIA[0-9A-Z]{16}\b"), "[REDACTED-AWS-KEY]"),
+>     (re.compile(r"\bxox[abposr]-[A-Za-z0-9\-]{10,}"), "[REDACTED-SLACK-TOKEN]"),
+>     (re.compile(r"\bAIza[0-9A-Za-z_\-]{30,}"), "[REDACTED-GOOGLE-KEY]"),
+>     (re.compile(r"\beyJ[A-Za-z0-9_\-]{8,}\.eyJ[A-Za-z0-9_\-]{8,}\.[A-Za-z0-9_\-]{8,}"), "[REDACTED-JWT]"),
+>     (re.compile(r"(?i)\b(bearer|basic)\s+[A-Za-z0-9._~+/=\-]{16,}"), r"\1 [REDACTED]"),
+>     (re.compile(r"(?i)((?:api[_-]?key|secret|token|passw(?:or)?d|client[_-]?secret|access[_-]?key)[\"']?\s*[:=]\s*[\"']?)([^\s\"',}]{8,})"), r"\1[REDACTED]"),
+>     (re.compile(r"(https?://)[^/ …[+1468 chars]
+
+### 🤖 Claude — 2026-11-16T11:08:09.328Z
+
+> 🔧 **Bash** `{"command": "umask 077; printf '%s\\n' \"[REDACTED-PRIVATE]\" >> ~/.rainbow-autosave.private-terms; sort -u -o ~/.rainbow-autosave.private-terms ~/.rainbow-autosave.private-terms; ls -l ~/.rainbow-autosave.private-terms | cut -c1-10; cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:docs 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|warn'; grep -c \"[REDACTED-PRIVATE]\" backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82/transcript.md backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82/transcript.sanitized.jsonl; git grep -c \"[REDACTED …[+225 chars]`
 

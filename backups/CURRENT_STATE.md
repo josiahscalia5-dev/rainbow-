@@ -1,5 +1,9 @@
 # Rainbow — CURRENT STATE (handoff)
 
+> **Newest (2026-11-16 ~11:15 UTC, session `01Kbt6BT`, branch `ccr-251ed97c-ty2xvp`):** permanent recovery + backup
+> system — `scripts/claude-bootstrap.sh` runs at every session start. Current state, tests and next tasks:
+> `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section) and `backups/BOOTSTRAP_REPORT.md`. The sections below are history.
+
 ## ▶ Account-transfer backup (2026-11-16 ~01:30 UTC, session `94cf04e3`) — read this first
 | | |
 |---|---|

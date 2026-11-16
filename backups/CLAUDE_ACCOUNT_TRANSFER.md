@@ -1,8 +1,77 @@
-# Rainbow — Claude account transfer guide (newest: session 012NR93N on branch `ccr-44f84024-ii5iih`, 2026-11-16 ~10:35 UTC)
+# Rainbow — Claude account transfer guide (newest: session 01Kbt6BT on branch `ccr-251ed97c-ty2xvp`, 2026-11-16 ~11:15 UTC)
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
 
-## ▶ NEWEST — session `012NR93N` (2026-11-16 03:10–10:35 UTC), branch `ccr-44f84024-ii5iih` — READ THIS FIRST
+## ▶ NEWEST — permanent recovery + backup system (session `01Kbt6BT`, 2026-11-16 10:40–11:20 UTC), branch `ccr-251ed97c-ty2xvp` — READ THIS FIRST
+This section wins over everything below it (history). Prompt for a new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`.
+
+### One command — recovery is automatic now
+| When | What runs |
+|---|---|
+| Every session start (automatic) | SessionStart hook → `scripts/autosave-hook.sh` → **`scripts/claude-bootstrap.sh --hook`**: fetch all branches (unshallow), merge every newer `ccr-*`/`claude/*` branch, `git lfs pull`, re-arm the five-minute autosave (≈ 9 s), then the full bootstrap in the background. Its summary appears in Claude's context |
+| By hand, any time | `bash scripts/claude-bootstrap.sh` (`--check` report only · `--full` + gameplay test, Screen 05 BEFORE pixel check, fresh LFS download · `--status` last report) |
+| From an old branch / brand-new account | `git fetch origin ccr-251ed97c-ty2xvp && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh` |
+| Old prompts | `bash scripts/resume-newest-work.sh --tools` → runs the bootstrap (also from the old default branch: it takes the bootstrap from the newest remote branch) |
+| Cloud environment setup script | `scripts/cloud-env-setup.sh` → `claude-bootstrap.sh --env-setup` (tools only, never git) |
+Result: `backups/BOOTSTRAP_REPORT.md` (tracked, committed by the autosave) + `backups/.live/BOOTSTRAP_REPORT.json`.
+
+### What the bootstrap checks / restores (each step checks first; nothing working is reinstalled)
+1. Repository + branch (refuses protected branches) · newest work merged (normal merges; a conflicting merge is
+   **aborted** and reported, never left half-done; uncommitted edits are autosaved before any merge) · if the merge
+   brought a newer bootstrap it continues with that one.
+2. Backup gap: previous save on GitHub, whether the previous session made an end-of-session backup, gaps > 10 min in
+   the autosave log (honest report — backups cannot run while an environment is closed).
+3. Git LFS: 24/24 real files + `git lfs fsck`; every object confirmed on GitHub through the LFS batch API
+   (`--full`: downloaded fresh, SHA-256 compared). Approved references 12/12 (`scripts/reference.sha256`). 11 screens.
+4. Ten specialists (`backups/AGENTS_STATUS.json`: present + SHA-256 + state + next assignment). Both Marble worlds:
+   49 files checked against `backups/MANIFEST.json`, World Labs key (free credit read), worldlabs plugin.
+5. Tools: Node ≥ 20, `npm ci` only when `package*.json` changed (hash in `node_modules/.rainbow-bootstrap.sha256`),
+   Python numpy/Pillow (+ cv2/scipy), Playwright + Chromium WebGL2 smoke test (never `playwright install`),
+   Blender 5.3.0 + headless bpy test, Android SDK 34 + build-tools 34.0.0 + Java 17+ + `android/local.properties`
+   (Blender and SDK download in parallel), ffmpeg / ImageMagick, hooks + plugins + Playwright MCP.
+6. Tests: `tsc`, continuity (`--full`: browser gameplay test + Screen 05 capture vs BEFORE). 7. Autosave: scheduler
+   re-armed, one verified backup, `autosave-status.py`.
+Versions, install commands, hosts, plugins, MCP servers, credentials (names only), Marble IDs: **`backups/TOOL_MANIFEST.json`**.
+
+### Verified in this session (2026-11-16, container `Default` environment, unrestricted network)
+| Test | Result |
+|---|---|
+| Save before any change | 10:45 manual autosave `d72ed52`, remote == local |
+| First bootstrap run (fresh container: no Blender, no SDK, empty `node_modules`) | BOOTSTRAP OK in ≈ 60 s: installed Blender 5.3.0, Android SDK 34, npm (99 packages), opencv + scipy, worldlabs plugin |
+| Second run | 24.5 s, every install skipped ("present", "npm ci skipped") |
+| Changed npm fingerprint | `npm ci` ran again, new hashes verify |
+| SessionStart hook, `source=startup` | 8.8 s synchronous summary, background bootstrap finished OK; `source=resume` ≈ 1 s (autosave re-armed only) |
+| **New-account simulation**: fresh GitHub clone of the OLD default branch `ccr-6f431adf-7h0m8y` (LFS skipped like a new container) + the one-liner / the legacy `resume-newest-work.sh --tools` | merged all 11 newer branches, 24/24 LFS from GitHub, npm ci, tests OK → BOOTSTRAP OK (only warning: the deliberate test-branch name). Found + fixed one bug (gap check ran before the merge) |
+| `--full` | 24/24 LFS objects **downloaded fresh from GitHub, SHA-256 match** (17 Marble/World Labs); gameplay test pass (plunge 61.41, errors []); Screen 05 capture **pixel-identical** to the BEFORE baseline (max diff 0) |
+| Environment setup script, run from the parent folder as root | OK, 3.7 s when everything is present |
+| World Labs (free reads only) | API key works on this account's Default environment: **5,190 credits** (unchanged); both worlds HTTP 200; Atlas connector `list_projects` OK ("My project"); worldlabs plugin installed. **No credits spent** |
+| shellcheck (warnings), `py_compile` | clean |
+
+### Things found and fixed
+* Autosave 10:40:49 error = the first daemon run raced the session-start `git lfs pull` (index lock). Now the
+  bootstrap holds the autosave lock during merges / LFS, and `git` retries once on `index.lock`; the log now shows
+  git's error text first.
+* The previous session (`012NR93N`) ended WITHOUT an end-of-session backup (last save 10:38 automatic, `98ffd8e`;
+  this session started 10:40). Autosave log gaps > 10 min in the last 72 h: 7, longest 03:22 → 09:28 UTC (6.1 h,
+  environment idle/closed). Nothing can be saved while an environment is closed.
+* The commit trailer's `Claude-Session:` line now follows the running session automatically.
+* `README_FIRST.md` / `START_HERE_PASTE_TO_CLAUDE.md` (original kit, "brand-new project") got a do-not-paste banner.
+
+### Exact project state (unchanged game code)
+* `src/` = the user's accepted BEFORE baseline for Screen 05 (commit `aa35c8a`), verified pixel-identical again.
+  T1 (`?ringa=20`, front ring closer) still waits for the user's yes/no — see the 012NR93N section below and
+  `qa/pilot05/COORDINATION_WAVE9B.md`. Rejected forever: oval tunnel, enlarged "big tunnel".
+* No specialist running; unfinished wave-9 work as patches in `qa/pilot05/wave9b/not_merged/`.
+* No Google Flow video in the repo yet (`public/video/` placeholder) — ask the user for `intro.mp4` / `ending.mp4`.
+
+### What cannot travel through GitHub (re-connect on a new Claude account)
+Claude login · GitHub connection + Claude GitHub App on the repo · World Labs Atlas connector sign-in · the Marble
+World API key (network secret on the environment; secure form `request_credential`, host `api.worldlabs.ai`, header
+`WLT-Api-Key`, only if new API calls are needed) · cloud-environment settings (setup script = `scripts/cloud-env-setup.sh`)
+· account-level plugins (enable `playwright`) · running processes (the hook restarts the autosave; specialists are
+relaunched from their notes).
+
+## Earlier: session `012NR93N` (2026-11-16 03:10–10:35 UTC), branch `ccr-44f84024-ii5iih`
 **Start the next account from branch `ccr-44f84024-ii5iih`** (prompt: `backups/START_NEW_CLAUDE_ACCOUNT.md`). It contains
 every other `ccr-*` / `claude/*` branch (all 11 checked with `git merge-base --is-ancestor`, 10:29 UTC). Draft PR #5
 ("DO NOT MERGE") points at it. Where this section and older sections (§5, §6, §12, "wave 9") disagree, this one wins.

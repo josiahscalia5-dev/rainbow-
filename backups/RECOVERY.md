@@ -1,5 +1,9 @@
 # Rainbow — recovery guide
 
+> **Newest procedure (2026-11-16):** one command, `bash scripts/claude-bootstrap.sh` — it also runs automatically
+> at every Claude session start. See `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section). The branch names below are
+> historical; the bootstrap always merges the newest `ccr-*`/`claude/*` branch.
+
 How to restore the RAINBOW 11-screen 3D game on another computer or another Claude Code account.
 
 ## 1. Where the backup lives
