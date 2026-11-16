@@ -17,7 +17,7 @@ import * as THREE from 'three';
 import type { Course } from './course';
 import type { ForcedTunnel } from './tube';
 import { tubeCenterAt } from './tube';
-import { coreLateral, EDGE_LIFT } from '../vfx/waterRibbon';
+import { coreLateral, coreShiftW10, EDGE_LIFT, WATER05 } from '../vfx/waterRibbon';
 
 /** QA only: the far block publishes its tunnel + river path here (read by qa scripts via dynamic import) */
 export const far05Debug: Record<string, unknown> = {};
@@ -118,6 +118,31 @@ function designFromXB(xB: number, Z: number): FarRiverRow {
 }
 
 /**
+ * W10 (?water05=1) far path: lateral of the visible cyan core (units along ft.Rt). Starts where the W10 ribbon hands
+ * over at the seam (core held at −0.3 u, see coreShiftW10) and climbs smoothly up-right like the approved river
+ * (core ≈ 504 px at y 540, ≈ 523 at y 522, ≈ 535 at y 510 → Z ≈ 24 / 55 / 100 at the locked eye), then swings back
+ * left into the vanishing point (as FAR05_CORE beyond Z 140).
+ */
+export const FAR05_CORE_W10: [number, number][] = [
+  [0, -0.3], [8, 0.2], [16, 0.75], [24, 1.25], [32, 1.8], [43, 2.45], [60, 3.1], [88, 3.7], [110, 4.05], [140, 4.3],
+  [175, 4.0], [212, 2.6], [260, 0.8], [310, -1.4], [350, -2.2], [400, -2.5],
+];
+
+/**
+ * W10 far design row: the water body spans the whole floor chord (foam rim at the wall), the two satin bands run
+ * BESIDE the winding core (approved far field: bands ≈ 20 px wide, 120 px apart at y 540, deep violet water between
+ * each band and its bank) instead of as thin lines on the banks of a narrow body hugging the outer wall.
+ */
+function designW10(Z: number, chord: number): FarRiverRow {
+  const hw = chord - 0.35;
+  const core = Math.max(-hw + 1.2, Math.min(hw - 1.2, hermite(FAR05_CORE_W10, Z)));
+  const sep = 3.4 - 0.8 * smoothstep(60, 260, Z);
+  const w = 0.62 - 0.22 * smoothstep(40, 250, Z);
+  const cL = Math.max(-hw + w + 0.3, core - sep), cR = Math.min(hw - w - 0.3, core + sep);
+  return { xB: 0, hw, cL, wL: w, cR, wR: w, core };
+}
+
+/**
  * Layout of the far river at virtual depth Z. For small Z it is the REAL ribbon exactly as the eye would see it
  * there without the far section: at the seam the route is in its exit bend (heading ≈26° off the axis), so a
  * screen row cuts the ribbon diagonally — each band centre / bank edge curve l(s) of the real ribbon is intersected
@@ -131,7 +156,7 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
     return { ax: q.dot(ft.T), x: q.dot(ft.Rt), rx: f.right.dot(ft.Rt) };
   };
   // the real ribbon's band layout at s, relative to the route centre (ribbon frame, vCore = coreLateral)
-  const relLay = (s: number) => bandLayout(0, course.widthAt(s) / 2, coreLateral(course, s), sbend05(s), s);
+  const relLay = (s: number) => bandLayout(0, course.widthAt(s) / 2, coreLateral(course, s) + coreShiftW10(course, s), sbend05(s), s);
   const cross = (Z: number, lOf: (s: number) => number) => {
     let a = ft.sF - 8, b = ft.sF + 16;
     for (let i = 0; i < 36; i++) { const m = 0.5 * (a + b); if (at(m, lOf(m)).ax < Z) a = m; else b = m; }
@@ -144,7 +169,9 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
     const wL = relLay(bl.s).wL / bl.rx, wR = relLay(br.s).wR / br.rx;
     return { xB: 0.5 * (eL.x + eR.x), hw: 0.5 * (eR.x - eL.x), cL: bl.x, wL, cR: br.x, wR, core: 0.5 * (bl.x + wL + br.x - wR) };
   };
+  const chordW10 = Math.sqrt(Math.max(0, ft.R * ft.R - level * level)) * 0.995;
   const designRow = (Z: number): FarRiverRow => {
+    if (WATER05) return designW10(Z, chordW10);
     const target = hermite(FAR05_CORE, Z);
     let a = -5, b = 5;
     for (let i = 0; i < 36; i++) { const m = 0.5 * (a + b); if (designFromXB(m, Z).core < target) a = m; else b = m; }

@@ -74,6 +74,28 @@ export function coreLateral(course: Course, s: number): number {
   return CORE_SWING * course.offset05(s) * course.sample(s).right.x;
 }
 
+/** the ribbon shader's 05 band S (`sbend` in FRAG), CPU copy */
+export const sbend05 = (s: number) => 1.05 * Math.sin(s * 0.31 - 0.834) + 0.18 * Math.sin(s * 0.62 + 0.6);
+
+/**
+ * W10 (?water05=1 only, else exactly 0): extra lateral shift (ribbon units) of the 05 core + band pair near the exit
+ * bend just before the far-block seam. The route jogs ≈1.7 u right there (s 174–181), which drew the visible cyan
+ * core 478 → 547 px across only 18 screen rows (y 587 → 569) — the right-hand "blob" at the vanishing point. The
+ * approved river keeps climbing smoothly up-right there, so the VISIBLE core (route + core swing + band S) is held at
+ * T(s) relative to the tunnel line (−0.67 u at s 172 → −0.3 u at the seam), then hands back to the normal layout by
+ * s 189 (hidden behind the far block at the checkpoint; 06 unchanged). Coins (gameplay/coins.ts) are NOT moved: the
+ * s 173.6 coin stays on the cyan core, the s 181.6 one lies over the far block.
+ */
+export function coreShiftW10(course: Course, s: number): number {
+  if (!WATER05) return 0;
+  const w = smooth(171, 175, s) * (1 - smooth(182, 189, s));
+  if (w <= 0) return 0;
+  const rx = Math.max(0.5, course.sample(s).right.x);
+  const visible = course.offset05(s) + (coreLateral(course, s) + sbend05(s)) * rx;
+  const target = -0.67 + 0.37 * smooth(172, 180, s);
+  return (w * (target - visible)) / rx;
+}
+
 /**
  * Ribbon colours in shader (pre-tonemap, linear) space. NeutralToneMapping desaturates anything
  * whose peak channel passes ≈0.76·exposure, so these were solved by inverting Neutral at the game's
@@ -979,8 +1001,8 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     const sp = Math.max(3, course.prop(s, 'speed'));
     const a = ampAt(course, s);
     const bs = bandStyleAt(course, s);
-    const cl = coreLateral(course, s);
-    const put = (u: number, lateral: number, h: number, isSkirt: number, nn: THREE.Vector3) => {
+    const cl = coreLateral(course, s) + coreShiftW10(course, s);
+    const put =(u: number, lateral: number, h: number, isSkirt: number, nn: THREE.Vector3) => {
       tmp.copy(f.pos).addScaledVector(f.right, lateral).addScaledVector(f.up, h);
       tmp.toArray(pos, k * 3);
       nn.toArray(nor, k * 3);

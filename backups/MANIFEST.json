@@ -6073,8 +6073,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 59638,
-   "sha256": "f0cf2015e56a3790eccf2edc30a1896b263ff9747a4342100c2597175a97e418"
+   "bytes": 61051,
+   "sha256": "1f1588ec1fd08b99cab59c90c463dbb41aec95b5b547918331cbfccf11bc89c7"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -6093,8 +6093,8 @@
   },
   {
    "path": "src/world/far05.ts",
-   "bytes": 12690,
-   "sha256": "4340a4b81f9cb3d68c66057dc33f083149e36aa66b4436b19a7380323b5f8a7a"
+   "bytes": 14311,
+   "sha256": "822ab28aa05f9af24fb208da3ca5cf1ef105d72ee6c54cb6c9bea85f3aa053e3"
   },
   {
    "path": "src/world/laundryRoom.ts",
