@@ -508,8 +508,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 9700,
-   "sha256": "183cd820e04a2ebb87acb363b44b81bd90ebbe434759e0b54e51e41c921d5906"
+   "bytes": 9707,
+   "sha256": "848641fae151bb31ec21d50005b51f375d1517bf370717e91d37ff5f0be8edee"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -948,8 +948,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1236,
-   "sha256": "4c425d49a09b30db06ddb94a041e07a830dd4abdb829be0bb8d6e3fdd988827f"
+   "bytes": 1247,
+   "sha256": "cf3545dc9f6dd95ebba55160290246efb896787dabbf318c4be586a68360de13"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -7608,13 +7608,18 @@
   },
   {
    "path": "tools/proj05/near_bake.py",
-   "bytes": 12297,
-   "sha256": "f8c1519913e483b5e375471aa007ef885ef831259ced18ebca5f0c4e6a7cf311"
+   "bytes": 12806,
+   "sha256": "196f97f3cbe6b3dbee30a544634b8966587718f3f2f6622548da64030fbec514"
   },
   {
    "path": "tools/proj05/near_bubbles.json",
    "bytes": 1573,
    "sha256": "cb3b0e244c0e95aa26c667b31419efb4041f9d29a89478b3127ff0cfd39d9641"
+  },
+  {
+   "path": "tools/proj05/near_metrics.py",
+   "bytes": 3699,
+   "sha256": "2e1c5b77c0b22b3ef4d3ef87a2fe69f851cf0380b2cec133d4617baee9267e1a"
   },
   {
    "path": "tools/proj05/residual.py",

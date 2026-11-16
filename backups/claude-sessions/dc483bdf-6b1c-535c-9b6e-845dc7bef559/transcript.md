@@ -2551,3 +2551,172 @@ Nothing needs your attention on the draft pull request (#12). Your repository ha
 
 Everything from my last message still holds. Blender is working, and your game and work are saved on GitHub at commit `411fafe`, which matches what's here. The blur fix is still paused at the check you interrupted. Say "go" and I'll continue from there.
 
+### 🧑 User — 2026-11-16T22:59:56.329Z
+
+Yes, GO AHEAD and continue exactly where you stopped.
+
+First, rerun the interrupted shader regression check to confirm the approved locked-camera view, original default game and protected BEFORE remain unchanged.
+
+Then compare the three proposed fine-streak overlay settings and fix the remaining softness at eight units forward without losing the improved sharpness at 17 and 35 units.
+
+Preserve my new high-resolution water, Blender paddles, purple tunnel, gold rings, Benny and all gameplay.
+
+Render separate full-size actual-game screenshots at 0, 8, 17 and 35 units, plus a moving gameplay video.
+
+Run all eight gameplay tests and continuity checks.
+
+Do not make the experimental version my default until I approve the visuals.
+
+Save everything to my current GitHub working branch and verify the remote commit.
+
+Continue the actual work. Do not restart the project.
+
+### 🤖 Claude — 2026-11-16T22:59:59.057Z
+
+Continuing exactly where I stopped. First a quick state check after the session resume (branch, HEAD, tools and scratch files still present).
+
+### 🤖 Claude — 2026-11-16T23:00:01.473Z
+
+> 🔧 **Bash** `{"command": "git status --short | head; git log --oneline -3; echo \"remote: $(timeout 60 git ls-remote origin refs/heads/ccr-8c4acadc-iybw0n | cut -f1)\"; blender --version 2>/dev/null | head -1; ls node_modules/three >/dev/null && echo node_modules ok; ls /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ 2>&1 | head; pgrep -af autosave-daemon | head -1", "description": "Check repo, tools, scratch state after resume"}`
+
+### 🧑 User — 2026-11-16T23:00:35.755Z
+
+> ↩︎ result: 5cf74ff autosave: Rainbow 2026-11-16 22:57 UTC
+> f28a649 autosave: Rainbow 2026-11-16 22:46 UTC
+> e452946 autosave: Rainbow 2026-11-16 22:46 UTC
+> remote: 5cf74ff624c4d9e72d3dc5a31449613221cadce0
+> Blender 5.3.0
+> node_modules ok
+> T2_v2.png
+> T2_v3.png
+> T2_v4.png
+> T2_v5.png
+> blend_check.py
+> blender
+> bootstrap.log
+> locked_diff.png
+> lut_before.json
+> near_metrics.json
+> 161 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+
+### 🤖 Claude — 2026-11-16T23:00:51.364Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride4 && rm -rf $SP && mkdir -p $SP && FULL0='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && FULL=\"$FULL0&projflow05=2\" && \\\n( node scripts/capture.mjs 05 --out=$SP/reg_default > $SP/A.log 2>&1; \\\n  node scripts/capture.mjs 05 --out=$SP/reg_before \"--q=ringa=26&nearfloor05=0\" >> $SP/A.log 2>&1; \\\n  node scripts/capture.mjs 05 --out=$SP/reg_full \"--q=$FULL0\" >> $SP/A.log 2>&1; \\\n  node scripts/capture.mjs 05 --out=$SP/reg_flow2 \"--q=$FULL\" >> $SP/A.log 2>&1; \\\n   …[+789 chars]`
+
+### 🧑 User — 2026-11-16T23:00:51.426Z
+
+> ↩︎ result: Command running in background with ID: bbylu3ojd. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/bbylu3ojd.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T23:01:02.870Z
+
+While that runs (several minutes on this CPU-only renderer), I'll turn my ad-hoc sharpness measurement into a saved, reusable QA tool and check how the existing script records moving clips.
+
+### 🤖 Claude — 2026-11-16T23:01:03.526Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,120p scripts/proj05-move.mjs", "description": "Read clip-recording part of move script"}`
+
+### 🧑 User — 2026-11-16T23:01:03.610Z
+
+> ↩︎ result: }
+>   if (opt.still) {
+>     mkdirSync(`${OUT}/still`, { recursive: true });
+>     const n = Math.round(Number(opt.still) * fps);
+>     await page.evaluate(() => window.__rainbow.goto('05'));
+>     for (let i = 0; i < n; i++) {
+>       await page.evaluate(([t]) => { const R = window.__rainbow; R.freezeAt(t); R.step(1, 1e-4); }, [12 + i / fps]);
+>       await shot(`${OUT}/still/${String(i).padStart(4, '0')}.png`, { t: 12 + i / fps });
+>     }
+>     console.log('still frames', n);
+>   }
+>   if (opt.steer) {
+>     // Benny steers from the locked checkpoint: hold left / right, frames at 0.25 / 0.5 / 0.8 s (real simulation)
+>     for (const dir of String(opt.steer).split(',').map(Number)) {
+>       await page.evaluate(() => window.__rainbow.goto('05'));
+>       let tPrev = 0;
+>       for (const t of [0.25, 0.5, 0.8]) {
+>         await page.evaluate(([dir, n]) => { const R = window.__rainbow; R.setSteer(dir); R.step(n, 1 / 60); }, [dir, Math.round((t - tPrev) * 60)]);
+>         tPrev = t;
+>         await shot(`${OUT}/steer_${dir < 0 ? 'L' : 'R'}_${String(Math.round(t * 100)).padStart(3, '0')}.png`, { steer: dir, t });
+>         console.log('steer', dir, t, JSON.stringify(log.frames.at(-1).lat));
+>       }
+>     }
+>   }
+>   if (opt.zig …[+1430 chars]
+
+### 🤖 Claude — 2026-11-16T23:01:09.778Z
+
+The existing `--clip` mode rides forward from the locked checkpoint with the water clock running, so one clip covers the whole 0→35-unit stretch where the blur happened. Now the measurement tool:
+
+### 🤖 Claude — 2026-11-16T23:01:23.486Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/proj05/near_metrics.py", "content": "\"\"\"Screen 05 riding-water sharpness (`?projnear05` work, 2026-11-16) — measured on REAL game captures, never a score.\nFor each ride distance d (frames from scripts/proj05-move.mjs --d=…) and each screen band of the river, reports:\n  grad    mean Sobel gradient magnitude of luminance (0-255 scale): edge / streak crispness — higher = sharper\n  lapstd  standard deviation of the Laplacian: fine detail (glints, thin streaks)\n  sat     mean HSV saturation in %: the electric-blue / hot-pink colour strength (a pastel  …[+3308 chars]`
+
+### 🧑 User — 2026-11-16T23:01:23.822Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/proj05/near_metrics.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T23:01:36.344Z
+
+Let me check on the batch.
+
+### 🤖 Claude — 2026-11-16T23:01:37.878Z
+
+> 🔧 **Bash** `{"command": "sleep 240; SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride4; ls $SP $SP/*/ 2>/dev/null | head -60", "description": "Check batch progress", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T23:01:37.892Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 240 followed by: SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride4 ls $SP $SP/*/ head -60. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-16T23:01:46.454Z
+
+> 🔧 **Bash** `{"command": "N2=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/near2048 && mkdir -p $N2 && cp assets/textures/water05/proj05_E.png assets/textures/water05/proj05_lut.json $N2/ && python3 -I tools/proj05/near_bake.py $N2 --w=2048 --h=1024 | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d['texels_per_world_unit'], d['share_filled_along_flow'], d['holes_cloned'])\"; ls -la $N2", "description": "Bake 2048x1024 near tile candidate in scratch", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T23:02:07.102Z
+
+> ↩︎ result: {'along': 146.3, 'across': 213.3, 'old_N_T_along': 24.0, 'old_T_across': 53.3} 0.0895 31
+> total 3824
+> drwxr-xr-x  2 root root    4096 Nov 16 23:02 .
+> drwx------ 10 root root    4096 Nov 16 23:01 ..
+> -rw-r--r--  1 root root 2029538 Nov 16 23:01 proj05_E.png
+> -rw-r--r--  1 root root 1835952 Nov 16 23:02 proj05_T2.png
+> -rw-r--r--  1 root root    3755 Nov 16 23:02 proj05_WT2.png
+> -rw-r--r--  1 root root   27503 Nov 16 23:01 proj05_lut.json
+> -rw-r--r--  1 root root    1119 Nov 16 23:02 proj05_near.json
+
+### 🤖 Claude — 2026-11-16T23:02:18.396Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "old_string": "  proj05_T2.png   W x H RGB, u -1..1 across (columns), s in [A, A + L] along (rows, row 0 = s A); loaded with\n                  MirroredRepeatWrapping along s (seamless, period 2 L) + mipmaps; outside each row's visible u-range the\n                  row is reflected (ping-pong) about its visible edges.", "new_string": "  proj05_T2.png   W x H RGB, u -1..1 across (columns), s in [A, A + L] along (rows, row 0 = s A); loaded with\n                  MirroredRepeatWrapping along s (seamless, period …[+643 chars]`
+
+### 🧑 User — 2026-11-16T23:02:18.478Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/near_bake.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T23:02:19.982Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-16T23:02:20.084Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-16T23:02:22.444Z
+
+The batch notifies me when it finishes. I'll also get an early notice when the five regression captures are done, so I can check them first.
+
+### 🤖 Claude — 2026-11-16T23:02:24.790Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride4; until [ -f $SP/reg_near/05.png ] || grep -qi \"error\" $SP/A.log 2>/dev/null; do sleep 3; done; ls $SP/reg_*/05.png; grep -i error $SP/A.log | head -3", "description": "Wait for the five regression captures", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T23:02:24.823Z
+
+> ↩︎ result: Command running in background with ID: b5ceklm3w. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/b5ceklm3w.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T23:02:29.743Z
+
+The regression captures and the three overlay variants are rendering (CPU-only WebGL, a few minutes). I'll pick up as soon as the first results land.
+
+### 🧑 User — 2026-11-16T23:02:30.967Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

@@ -7,8 +7,12 @@ water of the locked view (E: 230-280 rows per unit at s 130, 53 at s 137.5). Thi
 E (through its LUT, no new artwork, no invented texture) into a tile that the shader repeats along the river.
 
   proj05_T2.png   W x H RGB, u -1..1 across (columns), s in [A, A + L] along (rows, row 0 = s A); loaded with
-                  MirroredRepeatWrapping along s (seamless, period 2 L) + mipmaps; outside each row's visible u-range the
-                  row is reflected (ping-pong) about its visible edges.
+                  MirroredRepeatWrapping along s (seamless, period 2 L) + mipmaps. Each column reads REAL visible
+                  approved water: the river centre from s A on (the crisp nearest water), the sides from the first s
+                  where the locked view sees them (smooth per-column shift along s). A first version that bounced the
+                  narrow visible strip back and forth across the river (ping-pong) gave a kaleidoscope: rejected.
+                  The approved bubbles + Benny's splash foam (tools/proj05/near_bubbles.json) are removed and refilled
+                  with water from further along the same columns (OpenCV seamlessClone), so nothing repeats as a bubble.
   proj05_WT2.png  flow map of T2 (tools/proj05/flow_bake.py flow_of: R = 0.5 + du/ds * scale, G = flow mask, B = 1);
                   the shader flips the slope on mirrored periods.
   proj05_near.json  extents + resolution report.
