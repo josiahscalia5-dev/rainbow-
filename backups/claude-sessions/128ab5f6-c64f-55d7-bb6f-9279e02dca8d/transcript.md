@@ -3803,3 +3803,54 @@ No file by an obvious name. I'll search the whole repository by content hash and
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:projection-branch --message \"Screen 05 projection test: separate branch claude/rainbow-05-water-projection (ccr-451ea8c7-3nqlis protected as the current working version); user's isolated water artwork stored byte-for-byte in references/water/\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"|\"note\"'; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-05-water-projection | cut -f1)\"; echo \"working branch untouched: $(git ls-remote origin refs/heads/ccr-451 …[+137 chars]`
 
+### 🧑 User — 2026-11-16T15:44:56.711Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "3404010546ebb4fdfb87bce98e908657cd3d9010",
+> local  3404010546ebb4fdfb87bce98e908657cd3d9010
+> remote 3404010546ebb4fdfb87bce98e908657cd3d9010
+> working branch untouched: 97dda283bba4
+> AUTOSAVE OK | branch claude/rainbow-05-water-projection | scheduler daemon | last verified backup 2026-11-16T15:44:45+00:00 (0.2 min ago) | local 3404010 remote 3404010 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-16T15:46:04.868Z
+
+> 🔧 **Agent** `{"description": "Specialist 1: texture-projection feasibility", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are SPECIALIST 1 for the Rainbow game (repo /home/user/rainbow-, branch `claude/rainbow-05-water-projection` — already checked out; stay on it). Role for this assignment: **Blender texture-projection and UV-mapping artist** for Screen 05's water. Read `CLAUDE.md` first (rules: never delete work, never touch protected branches, no paid credits, no secrets, references are immutable).\n\n## What the user wants (their words, 2026-11-16)\n\"STOP re …[+8901 chars]`
+
+### 🧑 User — 2026-11-16T15:46:04.906Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a402eb7fdaf675cab (internal ID - do not mention to user. Use SendMessage with to: 'a402eb7fdaf675cab', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/tasks/a402eb7fdaf675cab.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-16T15:46:07.255Z
+
+Specialist 1 is running. In case this session closes mid-task, I'll record the assignment in `backups/AGENTS_STATUS.json` so it can be relaunched from notes.
+
+### 🤖 Claude — 2026-11-16T15:46:15.453Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\nt=open(p).read(); d=json.loads(t)\nold_run=json.dumps(d['running_now'],ensure_ascii=False)\nrun=[{\"name\":\"washer-environment-modeler\",\"as\":\"SPECIALIST 1 — Blender texture-projection and UV-mapping artist (user request 2026-11-16 ~15:40 UTC)\",\n      \"branch\":\"claude/rainbow-05-water-projection\",\"started_utc\":\"2026-11-16T15:47:00+00:00\",\n      \"task\":\"Screen 05 texture-projection FEASIBILITY test, then a camera-matched projected / baked texture of the user's original water (references/water/05_water …[+1766 chars]`
+
+### 🧑 User — 2026-11-16T15:46:15.524Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T15:46:17.362Z
+
+I'll also save the full brief in the repository, so a future session can relaunch the specialist with exactly the same instructions:
+
+### 🤖 Claude — 2026-11-16T15:46:31.731Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/BRIEF_SPECIALIST1.md", "content": "# Brief — SPECIALIST 1 (agent `washer-environment-modeler`, role: Blender texture-projection and UV-mapping artist)\n\nLaunched 2026-11-16 ~15:47 UTC on branch `claude/rainbow-05-water-projection` (session `013VHsJB`). Saved here so a new\nsession can relaunch the same assignment (`backups/AGENTS_STATUS.json` → `running_now`).\n\n## The user's request (2026-11-16 ~15:40 UTC, summarised faithfully)\n* STOP recreating the approved water with new procedural patterns, random shader adjustments and more bloom; rep …[+3728 chars]`
+
+### 🧑 User — 2026-11-16T15:46:31.761Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/proj/BRIEF_SPECIALIST1.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T15:46:33.878Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:specialist1-launched --message \"Screen 05 projection: Specialist 1 (washer-environment-modeler as texture-projection artist) launched; brief + agent status saved\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"'; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-05-water-projection | cut -c1-12) local $(git rev-parse --short=12 HEAD)\"", "description": "Save brief and status to GitHub", "timeout": 300000}`
+

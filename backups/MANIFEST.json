@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 7857,
-   "sha256": "c1737eeca3a6af605adea2f9cdfdb05ef0ecf58f3d9b1a70fe9e67df38ed1727"
+   "bytes": 8844,
+   "sha256": "0da972e6205efdd5a93f210461ece61d5e042e2837780f847b3148be609797de"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7795,
-   "sha256": "920445a8123c4dd8aa11ba4c2fe559a149e6bd5644f7956fb51c001e0ebc6e00"
+   "sha256": "f40e157bf5b1dcc75935eaf3d7bd35a19a6815f83f5aa7fa5ab7b1f72c0fd178"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1165,6 +1165,11 @@
    "path": "qa/pilot05/foam/it1/05_base.png",
    "bytes": 1549652,
    "sha256": "2d3ec03255cc763bb7469756e8de4afb3512ac40045d07a38cc3374b3343b619"
+  },
+  {
+   "path": "qa/pilot05/proj/BRIEF_SPECIALIST1.md",
+   "bytes": 4212,
+   "sha256": "9bb84b234323cc9bc02ee4a8587ed437af040bc077411ee82113d96eb579ab90"
   },
   {
    "path": "qa/pilot05/water/before/03.png",
