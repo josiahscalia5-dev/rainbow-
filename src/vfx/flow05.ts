@@ -19,7 +19,7 @@
  *
  * RIPPLE MAP (rippleMap05): tileable 128² normal (RG) + height (B) + crest (A) texture, a deterministic sum of
  * integer-frequency waves (exactly periodic, mip-mapped). The same data can be replaced later by an authored map
- * (Blender bake, JangaFX IlluGen export): `tools/qa/flow05_dump.ts` writes both textures as PNG.
+ * (Blender bake, JangaFX IlluGen export): `scripts/flow05-dump.ts` writes both textures as PNG.
  *
  * Nothing here runs unless the switch is on (FLOWMAP05), so the default build is untouched.
  */
@@ -50,7 +50,7 @@ const smooth = (a: number, b: number, x: number) => {
 
 export interface FlowField05 {
   /** RGBA8, FLOW_W × FLOW_H, row 0 = s0 */
-  data: Uint8Array;
+  data: Uint8Array<ArrayBuffer>;
   /** arc length of the first row and the covered length (v = (s − s0) / len) */
   s0: number;
   len: number;
@@ -60,7 +60,7 @@ export interface FlowField05 {
 export function flowField05(course: Course): FlowField05 {
   const st = course.stage('05');
   const s0 = st.s0 - 2, len = st.s1 + 6 - s0;
-  const data = new Uint8Array(FLOW_W * FLOW_H * 4);
+  const data = new Uint8Array(new ArrayBuffer(FLOW_W * FLOW_H * 4));
   const rnd = mulberry32(0x05f10a);
   // low-frequency phase noise lattice (bilinear), 5 × 33 knots
   const NX = 5, NY = 33;
@@ -120,16 +120,17 @@ export function flowField05(course: Course): FlowField05 {
 }
 
 /** tileable ripple map: RG = normal xy (0.5 + 0.5 n), B = height 0..1, A = crest mask (sharp bright wave tops) */
-export function rippleData05(N = RIPPLE_N): Uint8Array {
+export function rippleData05(N = RIPPLE_N): Uint8Array<ArrayBuffer> {
   const rnd = mulberry32(0x21b6e5);
   const waves: { kx: number; ky: number; a: number; ph: number; sharp: number }[] = [];
-  // 26 waves, |k| 2 … 12 cycles per tile; a few more waves run ACROSS the flow axis (x) than along it, so after the
-  // 4:1 stretch along the river the crests read as long streaks with shorter cross ripples riding on them
-  while (waves.length < 26) {
-    const kx = Math.round((rnd() * 2 - 1) * 12), ky = Math.round((rnd() * 2 - 1) * 9);
+  // 20 smooth waves, |k| 2 … 8 cycles per tile, more of them ACROSS the flow axis (x) than along it. The shaders
+  // stretch the tile ≈26:1 along the river (2.4 u × 62 u), so the crests read as long satin streaks (approved image:
+  // streaks ≈0.15 u wide and 7–20 u long) — no fine grain, which read as static on the first W11 render
+  while (waves.length < 20) {
+    const kx = Math.round((rnd() * 2 - 1) * 8), ky = Math.round((rnd() * 2 - 1) * 4);
     const kk = Math.hypot(kx, ky);
-    if (kk < 2 || kk > 12.5) continue;
-    waves.push({ kx, ky, a: 1 / Math.pow(kk, 1.15), ph: rnd() * Math.PI * 2, sharp: 1.4 + rnd() * 1.6 });
+    if (kk < 2 || kk > 8.5 || kx === 0) continue;
+    waves.push({ kx, ky, a: 1 / Math.pow(kk, 1.3), ph: rnd() * Math.PI * 2, sharp: 1.3 + rnd() * 1.4 });
   }
   const h = new Float32Array(N * N);
   let lo = Infinity, hi = -Infinity;
@@ -145,20 +146,20 @@ export function rippleData05(N = RIPPLE_N): Uint8Array {
       if (v > hi) hi = v;
     }
   }
-  const out = new Uint8Array(N * N * 4);
+  const out = new Uint8Array(new ArrayBuffer(N * N * 4));
   const at = (x: number, y: number) => (h[((y + N) % N) * N + ((x + N) % N)] - lo) / (hi - lo);
   for (let y = 0; y < N; y++) {
     for (let x = 0; x < N; x++) {
       const v = at(x, y);
       const gx = (at(x + 1, y) - at(x - 1, y)) * 0.5 * N, gy = (at(x, y + 1) - at(x, y - 1)) * 0.5 * N;
-      // slopes are ≈ ±12 per tile: 0.045 keeps |n.xy| mostly under 0.6
-      const nx = -gx * 0.045, ny = -gy * 0.045;
+      // slopes are ≈ ±8 per tile: 0.07 keeps |n.xy| mostly under 0.6
+      const nx = -gx * 0.07, ny = -gy * 0.07;
       const il = 1 / Math.hypot(nx, ny, 1);
       const k = (y * N + x) * 4;
       out[k] = Math.round(255 * (0.5 + 0.5 * nx * il));
       out[k + 1] = Math.round(255 * (0.5 + 0.5 * ny * il));
       out[k + 2] = Math.round(255 * v);
-      out[k + 3] = Math.round(255 * smooth(0.56, 0.86, v));
+      out[k + 3] = Math.round(255 * smooth(0.66, 0.9, v));
     }
   }
   return out;

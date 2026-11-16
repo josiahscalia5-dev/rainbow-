@@ -12,6 +12,7 @@
 import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
 
 /** wave amplitude per stage (units); blended across boundaries */
 const AMP: Partial<Record<StageId, number>> = {
@@ -293,6 +294,15 @@ uniform vec3 uP5;
 uniform vec3 uP5Light;
 uniform vec3 uP5Streak;
 uniform float uFlow05;
+#ifdef FLOWMAP05
+// W11 (?flow05=1): flow map from the river's curves + tileable ripple map (flow05.ts), Marble panorama reflection
+uniform sampler2D uFlowMap;
+uniform sampler2D uRipple;
+uniform vec2 uFlowS;       // flow-map v = (s - x) * y
+uniform sampler2D uPano;
+uniform mat3 uPanoRot;     // world direction -> panorama lookup direction
+uniform float uPanoK;      // strength of the mirrored highlights
+#endif
 varying vec2 vUV;
 varying float vHalfW;
 varying float vSpeed;
@@ -309,6 +319,9 @@ varying vec2 vChan;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 ${FRAG_FX_GLSL}
+#ifdef FLOWMAP05
+${FLOW05_GLSL}
+#endif
 
 // Stationary channel shape (refs 05–07): lateral offset (units) of the electric-cyan core centre
 // relative to the course centreline. Two incommensurate sines + slow noise so the S-curves do not
@@ -807,7 +820,13 @@ void main() {
 #ifdef WATER05
   // ---- W10 (?water05=1): satin S-ribbons + electric cyan, hue-ramped like the approved image ----
   if (sw > 0.001) {
+    #ifdef FLOWMAP05
+    // (W11: wider hand-over between the mid-field satin and the near swells — the narrow one drew a hard line
+    // across the river ≈1.5 u behind Benny)
+    float near5 = 1.0 - smoothstep(0.006, 0.024, fws);
+    #else
     float near5 = 1.0 - smoothstep(0.0075, 0.014, fws);
+    #endif
     float mid5 = 1.0 - near5;
     vec4 B5 = brush05(X, v5, fwX5, fws, uTime * 0.35);
     // near the camera the brushed lines stay faint (the approved near water is smooth glossy swells, no fanning rays)
@@ -815,6 +834,28 @@ void main() {
     float bcore = B5.z * (1.0 - 0.8 * near5);
     float bglow = B5.w * (1.0 - 0.8 * near5);
     float lane5 = B5.x * (1.0 - 0.6 * near5);
+    #ifdef FLOWMAP05
+    // ---- W11 flow map: the local flow of the river, baked from its own curves (flow05.ts), carries the ripple map
+    // downstream in two cross-faded phases (three.js Water2). The ripple uv lies in the river's streamline frame
+    // (X follows the S-bands on every bend and fans out behind Benny), so the long ripple crests stay parallel to
+    // the current; the flow map gives each streamline its own speed (fast core, slow banks, quicker outside of a
+    // bend — the shear a single scrolling texture cannot do), its turbulence and its phase. (Sliding the stretched
+    // map sideways by the map's direction channel cross-hatched the streaks: tested and dropped, it01 / it02.)
+    vec4 fm = texture2D(uFlowMap, vec2(u * 0.5 + 0.5, (s - uFlowS.x) * uFlowS.y));
+    const vec2 RSC = vec2(0.42, 0.016);                        // ripple tile = 2.4 u across x 62 u along the river
+    vec2 uvR = vec2(X, s) * RSC;
+    vec2 advR = vec2(0.0, fm.g * uFlow05 * 1.25 * RSC.y);      // uv travelled during one 1.25 s cycle
+    float cycR = uTime * 0.8 + fm.a;
+    vec4 rp = flowRipple(uRipple, uvR, advR, cycR);
+    #ifndef LOW_Q
+    vec4 rp2 = flowRipple(uRipple, uvR * vec2(2.3, 2.9) + 0.19, advR * 2.9 * 1.15, cycR + 0.31);
+    rp = vec4(rp.rg + (rp2.rg - 0.5) * 0.4, rp.b * 0.72 + rp2.b * 0.28, max(rp.a, rp2.a * 0.7));
+    #endif
+    // the ripples shade the satin (long light / dark liquid lanes along the flow) and add sparse crisp crests,
+    // a little busier where the flow map marks shear and bends; the band edges keep their clean brushed line
+    lane5 += (rp.b - 0.5) * (0.5 + 0.25 * fm.b) * (1.0 - 0.35 * near5);
+    bcore = max(bcore, rp.a * (0.4 + 0.35 * fm.b) * (1.0 - 0.6 * near5));
+    #endif
     // band coordinate of the nearer band: -1 = bank-side edge .. +1 = core-side edge, |t| > 1 outside the band
     float tL5 = sdL / max(wL, 1e-3), tR5 = -sdR / max(wR, 1e-3);
     float tb = abs(tL5) < abs(tR5) ? tL5 : tR5;
@@ -886,7 +927,13 @@ void main() {
     // glossy lighting from the brushed height field: aqua / pink-white sun glints, the tunnel-end glitter path
     // (a faint SAME-hue Fresnel only: a whitish Fresnel turned the whole river pastel)
     float H5 = clamp(h5 * 0.7 + bcore * 0.3, 0.0, 1.0);
-    #ifdef LOW_Q
+    #if defined(FLOWMAP05)
+    // W11: the surface normal comes from the flow-advected ripple map (tangent frame: across the river / along it;
+    // the map is stretched 26:1 along the river, so its downstream slope is that much flatter)
+    vec3 Rw5 = normalize(cross(vTanW, N0));
+    vec2 nr5 = (rp.rg - 0.5) * 2.0;
+    vec3 N5 = normalize(N0 + (Rw5 * nr5.x + vTanW * (nr5.y * 0.04)) * 0.38);
+    #elif defined(LOW_Q)
     vec3 N5 = normalize(N0 + 0.3 * vec3(H5 - 0.5, 0.0, br - 0.5));
     #else
     vec3 N5 = bumpNormal(vPosW, N0, H5 * 0.09 * (1.0 - smoothstep(0.1, 0.5, fws)));
@@ -898,6 +945,17 @@ void main() {
     c5 += glintC * pow(clamp(dot(N5, Hv), 0.0, 1.0), 90.0) * 0.6;
     float gl5 = pow(clamp(dot(R5, Lg), 0.0, 1.0), 90.0);
     c5 += glintC * gl5 * (smoothstep(0.6, 0.92, H5) * 0.5 + bcore * 0.6);
+    #ifdef FLOWMAP05
+    // the tunnel mirrored in the ripples: the Marble panorama (World Labs world built from the approved 05 image).
+    // Only its bright part — ring lamps, wall streaks, the golden light at the end — is added, as glossy
+    // highlights that travel with the ripples; the water keeps its own cyan / magenta body colour
+    vec3 pd5 = uPanoRot * R5;
+    vec2 puv5 = vec2(atan(pd5.z, pd5.x) * 0.15915494 + 0.5, asin(clamp(pd5.y, -1.0, 1.0)) * 0.31830989 + 0.5);
+    vec3 pano5 = texture2D(uPano, puv5).rgb;
+    float plum5 = max(pano5.r, max(pano5.g, pano5.b));
+    float fres5 = 0.06 + 0.94 * pow(1.0 - nv5, 5.0);
+    c5 += mix(pano5, vec3(plum5), 0.55) * smoothstep(0.5, 0.95, plum5) * fres5 * uPanoK;
+    #endif
     #ifndef LOW_Q
     // long glossy flares carried by the current (approved mid field: elongated white star streaks along the flow)
     float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.85, 34.0, 4.8, 0.0, uTime);
@@ -1209,13 +1267,26 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     uP5Streak: { value: RIVER05_PAL.pinkStreak.clone() },
     uFlow05: { value: course.stage('05').speed * FLOW05 },
   });
+  if (FLOWMAP05) {
+    // W11: textures / shared uniforms are attached AFTER the merge above (UniformsUtils.merge would clone them)
+    const f5 = flow05Textures(course);
+    const u5 = uniforms as Record<string, THREE.IUniform>;
+    u5.uTime = flow05Shared.uTime;                       // the far river (environment.ts) runs on the same clock
+    u5.uFlowMap = { value: f5.flowMap };
+    u5.uRipple = { value: f5.ripple };
+    u5.uFlowS = { value: f5.sRange };
+    u5.uPano = flow05Shared.uPano;
+    u5.uPanoRot = flow05Shared.uPanoRot;
+    const pk = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('panok') : null;   // QA: ?panok=0 isolates the reflection
+    u5.uPanoK = { value: pk !== null && isFinite(+pk) ? +pk : 0.9 };
+  }
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: VERT,
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'water_ribbon';

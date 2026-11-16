@@ -1901,3 +1901,152 @@ Geometry step looks right. Now the flow-map step: a new module that generates th
 >   Type 'Uint8Array<ArrayBufferLike>' is not assignable to type 'ArrayBufferView<ArrayBuffer>'.
 >     Types of property 'buffer' are incompatible.
 
+### 🤖 Claude — 2026-11-16T13:11:48.588Z
+
+Wiring the flow map into the playable ribbon's shader now (the far river and shared textures are connected); first render of the flow test comes next.
+
+### 🤖 Claude — 2026-11-16T13:12:20.892Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/flow05.ts'; s=open(p).read()\ndef rep(old,new,count=1):\n    global s\n    assert s.count(old)==count, (old[:70], s.count(old))\n    s=s.replace(old,new)\nrep(\"  data: Uint8Array;\\n\",\"  data: Uint8Array<ArrayBuffer>;\\n\")\nrep(\"  const data = new Uint8Array(FLOW_W * FLOW_H * 4);\",\"  const data = new Uint8Array(new ArrayBuffer(FLOW_W * FLOW_H * 4));\")\nrep(\"export function rippleData05(N = RIPPLE_N): Uint8Array {\",\"export function rippleData05(N = RIPPLE_N): Uint8Array<ArrayBuffer> {\")\nrep(\"  const out = new Uint8Array(N * N * 4);\",\"   …[+7240 chars]`
+
+### 🧑 User — 2026-11-16T13:12:55.250Z
+
+> ↩︎ result: flow {"calls":86,"tris":567415,"errors":0}
+> river {"calls":86,"tris":567415,"errors":0}
+
+### 🤖 Claude — 2026-11-16T13:12:57.170Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/f1/river.png"}`
+
+### 🧑 User — 2026-11-16T13:12:57.232Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:13:11.449Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').resize((864,1536), Image.LANCZOS).crop((0,600,864,1010))\nb=Image.open('$S/g1/water.png').crop((0,600,864,1010))\nc=Image.open('$S/f1/flow.png').crop((0,600,864,1010))\no=Image.new('RGB',(864,410*3+20),'black'); o.paste(a,(0,0)); o.paste(b,(0,420)); o.paste(c,(0,840)); o.save('$S/f1_mid.png')\"", "description": "Stack mid-field crops: approved, water05, flow05"}`
+
+### 🧑 User — 2026-11-16T13:13:12.018Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:13:12.734Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/f1_mid.png"}`
+
+### 🧑 User — 2026-11-16T13:13:12.803Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:13:59.122Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/flow05.ts'; s=open(p).read()\ndef rep(old,new,count=1):\n    global s\n    assert s.count(old)==count, (old[:70], s.count(old))\n    s=s.replace(old,new)\nrep(\"\"\"  // 26 waves, |k| 2 … 12 cycles per tile; a few more waves run ACROSS the flow axis (x) than along it, so after the\n  // 4:1 stretch along the river the crests read as long streaks with shorter cross ripples riding on them\n  while (waves.length < 26) {\n    const kx = Math.round((rnd() * 2 - 1) * 12), ky = Math.round((rnd() * 2 - 1) * 9);\n    const kk = Math.hypot(kx, ky);\n    if (kk  …[+4242 chars]`
+
+### 🧑 User — 2026-11-16T13:14:18.863Z
+
+> ↩︎ result: flow {"calls":86,"tris":567415,"errors":0}
+> [This command modified 3 files you've previously read: src/vfx/waterRibbon.ts, src/vfx/flow05.ts, src/world/materials.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T13:14:20.954Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/f2_mid.png"}`
+
+### 🧑 User — 2026-11-16T13:14:21.004Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:14:58.706Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\na=s.index(\"    #ifdef FLOWMAP05\\n    // ---- W11 flow map: the local flow\")\nb=s.index(\"    #endif\\n    // band coordinate of the nearer band\")\nnew=\"\"\"    #ifdef FLOWMAP05\n    // ---- W11 flow map: the local flow of the river, baked from its own curves (flow05.ts), carries the ripple map\n    // downstream in two cross-faded phases (three.js Water2). The ripple uv lies in the river's streamline frame\n    // (X follows the S-bands on every bend and fans out behind Benny), so the long ripple crests stay par …[+2866 chars]`
+
+### 🧑 User — 2026-11-16T13:15:33.074Z
+
+> ↩︎ result: flow {"calls":86,"tris":567415,"errors":0}
+> nopano {"calls":86,"tris":567415,"errors":0}
+> [This command modified 1 file you've previously read: src/vfx/waterRibbon.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T13:15:34.458Z
+
+Third flow-map iteration rendered: the ripples now run in the river's own streamline direction, and I've isolated the Marble reflection so I can judge each part separately. Checking the result.
+
+### 🤖 Claude — 2026-11-16T13:15:35.683Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/f3_mid.png"}`
+
+### 🧑 User — 2026-11-16T13:15:35.736Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:15:42.191Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && node $S/cap.mjs $S/f4 river=river05=1 2>&1 | tail -2", "description": "Capture combined river05 demonstration", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T13:15:59.387Z
+
+> ↩︎ result: river {"calls":86,"tris":567415,"errors":0}
+
+### 🤖 Claude — 2026-11-16T13:16:01.309Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/f4/river.png"}`
+
+### 🧑 User — 2026-11-16T13:16:01.437Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:16:38.823Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold=\"\"\"    float near5 = 1.0 - smoothstep(0.0075, 0.014, fws);\n    float mid5 = 1.0 - near5;\n    vec4 B5 = brush05(X, v5, fwX5, fws, uTime * 0.35);\"\"\"\nassert s.count(old)==1\nnew=\"\"\"    #ifdef FLOWMAP05\n    // (W11: wider hand-over between the mid-field satin and the near swells — the narrow one drew a hard line\n    // across the river ≈1.5 u behind Benny)\n    float near5 = 1.0 - smoothstep(0.006, 0.024, fws);\n    #else\n    float near5 = 1.0 - smoothstep(0.0075, 0.014, fws);\n    #endif\n    float mi …[+3964 chars]`
+
+### 🧑 User — 2026-11-16T13:16:42.959Z
+
+> ↩︎ result: tools/qa/flow05_dump.ts(9,42): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+> tools/qa/flow05_dump.ts(10,29): error TS2307: Cannot find module 'node:zlib' or its corresponding type declarations.
+> tools/qa/flow05_dump.ts(14,14): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+> tools/qa/flow05_dump.ts(14,33): error TS7006: Parameter 'a' implicitly has an 'any' type.
+> tools/qa/flow05_dump.ts(19,55): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+> {"out":"qa/pilot05/wave11/flowmap","flowMap":[32,256],"s0":112.69,"len":82.24,"maxLateral":0.496,"meanSpeed":0.817,"ripple":128}
+
+### 🤖 Claude — 2026-11-16T13:16:45.649Z
+
+The flow map now generates and exports as an inspectable image. I'm fixing a type-check complaint in the new export tool, then running the regression and performance tests.
+
+### 🤖 Claude — 2026-11-16T13:16:46.524Z
+
+> 🔧 **Bash** `{"command": "cat tsconfig.json | head -30; head -12 tools/qa/axis05.ts; ls tools/qa | head -30", "description": "Check tsconfig scope and existing QA tool conventions"}`
+
+### 🧑 User — 2026-11-16T13:16:46.574Z
+
+> ↩︎ result: {
+>   "compilerOptions": {
+>     "target": "ES2022",
+>     "useDefineForClassFields": true,
+>     "module": "ESNext",
+>     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+>     "skipLibCheck": true,
+>     "moduleResolution": "bundler",
+>     "allowImportingTsExtensions": false,
+>     "resolveJsonModule": true,
+>     "isolatedModules": true,
+>     "noEmit": true,
+>     "strict": true,
+>     "noUnusedLocals": false,
+>     "noUnusedParameters": false,
+>     "noFallthroughCasesInSwitch": true,
+>     "types": ["vite/client"]
+>   },
+>   "include": ["src", "tools"]
+> }
+> // Screen 05 geometry probe (read-only): where the LOCKED checkpoint eye sits relative to the 05 tunnel axis.
+> //   npx vite-node tools/qa/axis05.ts [floorDelta]
+> // Prints, for depths ahead of the eye, the tunnel radius R, floor depth D (stream above tunnel bottom), the
+> // tunnel-centre offset from the eye in the tube frame (right / up, in units and in R), and the predicted
+> // projected ring-centre offset ratio (offset / ring radius) = what tools/qa/ring_fit05.py measures in pixels.
+> // floorDelta (optional) adds to the 05 straight's floorDepth exactly like the ?floor05= URL switch.
+> import * as THREE from 'three';
+> import { Course } from '../../src/world/course';
+> impor …[+268 chars]
+
+### 🤖 Claude — 2026-11-16T13:16:52.282Z
+
+> 🔧 **Bash** `{"command": "git mv -f tools/qa/flow05_dump.ts scripts/flow05-dump.ts 2>/dev/null || mv tools/qa/flow05_dump.ts scripts/flow05-dump.ts; sed -i \"s|npx vite-node tools/qa/flow05_dump.ts|npx vite-node scripts/flow05-dump.ts|; s|from '../../src/world/course'|from '../src/world/course'|; s|from '../../src/vfx/flow05'|from '../src/vfx/flow05'|\" scripts/flow05-dump.ts && sed -i 's|`tools/qa/flow05_dump.ts` writes both textures as PNG|`scripts/flow05-dump.ts` writes both textures as PNG|' src/vfx/flow05.ts && npx tsc --noEmit 2>&1 | head -5; npx vite-node scripts/flow05-dump.ts 2>&1 | tail -2; ls -l …[+121 chars]`
+

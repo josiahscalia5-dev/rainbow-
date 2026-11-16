@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7292,
-   "sha256": "132e5f50d0075caef53b7b739f9397242d51159ffc7a761888c616a4daa0778c"
+   "sha256": "fae5cb30744d58cd4d01fe9a35cf81d4ff3c78c7eee9e4478656def9d9bac68f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1385,6 +1385,26 @@
    "path": "qa/pilot05/wave10/water/tests/gameplay_water05_stdout.txt",
    "bytes": 468,
    "sha256": "52b271a1958dc12a4be09c310103f9c2b4abf1cba9fc98a58fad3cae2cdb3f69"
+  },
+  {
+   "path": "qa/pilot05/wave11/flowmap/flowmap05.png",
+   "bytes": 32510,
+   "sha256": "8bdd0443e73e80b120d0fac22c599d6b7b65aada5ddd54df73a24f77f7892ab4"
+  },
+  {
+   "path": "qa/pilot05/wave11/flowmap/flowmap05_view.png",
+   "bytes": 38259,
+   "sha256": "5d202a37308121e54abc5583e91f4c47eaa03e47a79538317ef3656d92f0bd6d"
+  },
+  {
+   "path": "qa/pilot05/wave11/flowmap/ripple05.png",
+   "bytes": 51173,
+   "sha256": "ad700c03189f75f4ae5e3f1862831b28dbe92e0c8770d1d6da3cfb153ac2cda9"
+  },
+  {
+   "path": "qa/pilot05/wave11/flowmap/ripple05_height.png",
+   "bytes": 20270,
+   "sha256": "641b13d5b37ad8dcb948f415406ddc2b245c97e4b078fad2704fc201e67baef5"
   },
   {
    "path": "qa/pilot05/wave3/benny/it00/05.png",
@@ -5952,6 +5972,11 @@
    "sha256": "2fe7387111c016dbd09d47ca2691c2a16429fb752c9a3b12c42ca24b9e2b2473"
   },
   {
+   "path": "scripts/flow05-dump.ts",
+   "bytes": 3536,
+   "sha256": "62874f1104ff337d34f4ced87e5b50d6c05aefb543c5b404b98ef0947b84e480"
+  },
+  {
    "path": "scripts/gameplay-test.mjs",
    "bytes": 7152,
    "sha256": "af7903c9e51f9a1080bc0e7b11776ebecdc8fb8761df9504b9c8179086dc2647"
@@ -6153,8 +6178,8 @@
   },
   {
    "path": "src/vfx/flow05.ts",
-   "bytes": 11195,
-   "sha256": "1439a62a0dce7f263bc489467b10f612e5e6d947665d2dc9dee7b44641053f09"
+   "bytes": 11380,
+   "sha256": "76ad51b59e596f1904fc48bb295fae5a388f5a04f304a20efd217010bd8a948b"
   },
   {
    "path": "src/vfx/foam.ts",
@@ -6188,8 +6213,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 69490,
-   "sha256": "fb85a8e3f6bd7eb615e0f7c4fd06306f62d612668917671c73f558e94f7e5472"
+   "bytes": 73952,
+   "sha256": "e0baee339cae4f7a59ee2590e9dd37af0f2f593ff6050ebfe1d08d99f0173936"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -6218,8 +6243,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 65356,
-   "sha256": "87e975fdd498aaa75e5e5e620edc47a381b449a96cf4f27dc94ecbb9d99b6fe3"
+   "bytes": 65354,
+   "sha256": "23d2eebfdfe1eff13ff185a64abd413b10dada0e237a5b176a8aa1cf5639e8dc"
   },
   {
    "path": "src/world/towel.ts",

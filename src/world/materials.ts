@@ -954,10 +954,10 @@ float rivCells(vec2 p) {
   // W11 flow: the ripple map rides the winding core (streamline coordinates xq / s), fast in the core and slower
   // toward the banks, two-phase advected like the near ribbon (flow05.ts) — the far river is animated
   float spdF = mix(1.0, 0.46, smoothstep(0.25, 1.0, abs(lat - xB) / max(hw, 0.5)));
-  vec4 rf = flowRipple(uRivRipple, vec2(xq, s) * vec2(0.42, 0.105), vec2(0.0, spdF * uRivFlow * 1.25 * 0.105),
+  vec4 rf = flowRipple(uRivRipple, vec2(xq, s) * vec2(0.42, 0.016), vec2(0.0, spdF * uRivFlow * 1.25 * 0.016),
                        uRivTime * 0.8 + rivNoise(vec2(lat * 0.6, s * 0.17)));
-  brv = clamp(brv + (rf.b - 0.5) * 0.85, 0.0, 1.0);
-  bco = max(bco, rf.a * 0.75);
+  brv = clamp(brv + (rf.b - 0.5) * 0.7, 0.0, 1.0);
+  bco = max(bco, rf.a * 0.6);
 #endif
   // band coordinate of the nearer band: -1 bank-side edge .. +1 core-side edge
   float tLb = (lat - cL) / max(wL, 1e-3), tRb = (cR - lat) / max(wR, 1e-3);
