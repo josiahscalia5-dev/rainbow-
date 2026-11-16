@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7780,
-   "sha256": "ffeb3aa91103338657d7f9502a074419e2c395863562951ad9fc2d79002c3a4b"
+   "sha256": "4c40c2dc51b145d634dff149135af35c478fd42b47b8fe7515261f0e11c4f974"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -455,6 +455,11 @@
    "path": "backups/source-package/Rainbow_GitHub_Autosave_5_Minute_Claude_Prompt.md",
    "bytes": 11339,
    "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
+  },
+  {
+   "path": "builds/rainbow-debug-T2-default.apk",
+   "bytes": 7664976,
+   "sha256": "7f89d6ba94642ea7bab42c889ea3586bb0c4b1cbef0cd0818fbd3567213d2969"
   },
   {
    "path": "builds/rainbow-debug-w12-water.apk",
@@ -1517,9 +1522,39 @@
    "sha256": "e07492b09a0397ac6bd250e6880f279cd5e337a149d737571e85c1f8d2c38477"
   },
   {
+   "path": "qa/pilot05/wave12/android/NOTES.md",
+   "bytes": 2546,
+   "sha256": "90cebd762da548a9a664881c60d38c654d7b080dcb4af18fc817b61fb4c069da"
+  },
+  {
+   "path": "qa/pilot05/wave12/android/apk_default_web_05.json",
+   "bytes": 334,
+   "sha256": "5baa4985bc8e4cd5f0c4932e2a5cd2b9583dff94366023c5058c5b77e2a50897"
+  },
+  {
+   "path": "qa/pilot05/wave12/android/apk_default_web_05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/wave12/android/apk_pixel_checks.json",
+   "bytes": 107,
+   "sha256": "cf1115574e0d731ff9224109dfe8dda3f3f94c1bc08c4873a2c546d7b3a45963"
+  },
+  {
+   "path": "qa/pilot05/wave12/android/apk_w12_web_05.json",
+   "bytes": 333,
+   "sha256": "48db6a67a138359bdb64f761dbc7c1601897bbdc3ccb2dd07c437be12f78902c"
+  },
+  {
+   "path": "qa/pilot05/wave12/android/apk_w12_web_05.png",
+   "bytes": 1755937,
+   "sha256": "dea968c0a55a2ecde9d540740d0c3385fc4d61220f4c79bc6693720b19f686ef"
+  },
+  {
    "path": "qa/pilot05/wave12/android/build_default_log.txt",
-   "bytes": 2362,
-   "sha256": "dc2f8a3a5d1b1e2969892718852a3c1ee5172cf8407772d487b51b386dac320f"
+   "bytes": 10115,
+   "sha256": "8dc8d8f543c95dfbdad664cb7a999f35a95545480f24a6c344f948f939ca3f82"
   },
   {
    "path": "qa/pilot05/wave12/android/build_w12_log.txt",
@@ -6235,6 +6270,11 @@
    "path": "scripts/.tmp_wem_probe2.ts",
    "bytes": 1181,
    "sha256": "2eda9bf284029700cfae430f39be8b9ee803c3bcd7d23d6f0008cfe412b75ed1"
+  },
+  {
+   "path": "scripts/apk-web-check.mjs",
+   "bytes": 3127,
+   "sha256": "82a0c2be2ebbbff8eda6de95cc085110a845a00821d530df35f2b5f11fa856a7"
   },
   {
    "path": "scripts/aspect-test.mjs",

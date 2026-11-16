@@ -3137,3 +3137,142 @@ Gradle is configuring and its dependencies resolved. While it builds, I'll add t
 >     const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
 >     // …[+1645 chars]
 
+### 🤖 Claude — 2026-11-16T14:33:42.013Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/apk-web-check.mjs", "content": "#!/usr/bin/env node\n// Runs the web bundle packed INSIDE an Android APK (assets/public) in headless Chromium + WebGL2 and captures one\n// checkpoint — proves what the APK will render without a phone (no device fps: SwiftShader is a CPU rasteriser).\n//   node scripts/apk-web-check.mjs builds/rainbow-debug-w12-water.apk OUT.png [checkpoint=05]\n// The APK has no URL query: any Screen 05 switches must be baked in at build time (VITE_RAINBOW_Q05).\nimport { execFileSync } from 'node:child_process';\nimport { mkdtempSync, …[+2653 chars]`
+
+### 🧑 User — 2026-11-16T14:33:42.054Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/apk-web-check.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T14:33:45.147Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/wave12/android && node scripts/apk-web-check.mjs builds/rainbow-debug-w12-water.apk $O/apk_w12_web_05.png 05 2>&1 | tail -2 | cut -c1-400; python3 -I /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/pix.py \"{\\\"apk_w12_bundle_vs_dev_W12_full\\\": [\\\"$O/apk_w12_web_05.png\\\", \\\"qa/pilot05/wave12/factors/W12_full/05.png\\\"], \\\"apk_w12_bundle_vs_default_T2\\\": [\\\"$O/apk_w12_web_05.png\\\", \\\"qa/pilot05/current_default_05.png\\\"]}\"", "description": "Run the APK's web bundle and compare captures", "timeout": 400000}`
+
+### 🧑 User — 2026-11-16T14:33:58.253Z
+
+> ↩︎ result: {"apk":"builds/rainbow-debug-w12-water.apk","checkpoint":"05","state":{"stage":"05","s":132.4383020282329,"y":-41.348424102617486},"calls":164,"triangles":568351,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"},"errors":[]}
+> {
+>  "apk_w12_bundle_vs_dev_W12_full": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "apk_w12_bundle_vs_default_T2": {
+>   "max_pixel_difference": 255,
+>   "differing_pixels": 1263254
+>  }
+> }
+
+### 🤖 Claude — 2026-11-16T14:34:05.465Z
+
+> 🔧 **Bash** `{"command": "tail -3 qa/pilot05/wave12/android/build_default_log.txt && cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug-T2-default.apk && O=qa/pilot05/wave12/android && echo \"baked switch in default APK: $(unzip -p builds/rainbow-debug-T2-default.apk 'assets/public/assets/*.js' | grep -c 'silk05=1&puff05=1')\" && node scripts/apk-web-check.mjs builds/rainbow-debug-T2-default.apk $O/apk_default_web_05.png 05 2>&1 | tail -1 | cut -c1-200 && python3 -I /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/pix.py \"{\\\"apk_default_bundle_vs_c …[+288 chars]`
+
+### 🧑 User — 2026-11-16T14:34:17.817Z
+
+> ↩︎ result: user	0m10.211s
+> sys	0m0.669s
+> exit 0
+> baked switch in default APK: 0
+> {"apk":"builds/rainbow-debug-T2-default.apk","checkpoint":"05","state":{"stage":"05","s":132.4383020282329,"y":-41.348424102617486},"calls":164,"triangles":568351,"modules":{"water":"vfx/index.ts","be
+> {
+>  "apk_default_bundle_vs_current_default_T2": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  }
+> }
+> total 21884
+> drwxr-xr-x  2 root root    4096 Nov 16 14:34 .
+> drwxr-xr-x 19 root root    4096 Nov 16 14:33 ..
+> -rw-r--r--  1 root root 7664976 Nov 16 14:34 rainbow-debug-T2-default.apk
+> -rw-r--r--  1 root root 7391867 Nov 16 14:33 rainbow-debug-w12-water.apk
+> -rw-r--r--  1 root root 7339491 Nov 16 13:42 rainbow-debug.apk
+> 7f89d6ba94642ea7bab42c889ea3586bb0c4b1cbef0cd0818fbd3567213d2969  builds/rainbow-debug-T2-default.apk
+> fdbf9c695e1ef8550c61f51b4dace45c59bdcd69be917c0e280a5a3abe808211  builds/rainbow-debug-w12-water.apk
+> dca8d754b769bad4b8d92e89fcdfc73eaff0e4c55f5cca8ca31c7ef4eaad9b25  builds/rainbow-debug.apk
+>  M qa/pilot05/wave12/android/build_default_log.txt
+> ?? builds/rainbow-debug-T2-default.apk
+> ?? qa/pilot05/wave12/android/apk_default_web_05.json
+> ?? qa/pilot05/wave12/android/apk_default_web_05.png
+> ?? qa/pilot05/wave12 …[+156 chars]
+
+### 🤖 Claude — 2026-11-16T14:34:22.928Z
+
+> 🔧 **Bash** `{"command": "diff <(unzip -l builds/rainbow-debug-w12-water.apk | awk '{print $1, $4}' | sort -k2) <(unzip -l builds/rainbow-debug-T2-default.apk | awk '{print $1, $4}' | sort -k2) | head -20", "description": "Compare APK file lists and sizes"}`
+
+### 🧑 User — 2026-11-16T14:34:22.985Z
+
+> ↩︎ result: 2c2
+> < 14529917 
+> ---
+> > 14529916 
+> 51c51
+> < 46063 assets/public/assets/GLTFLoader-ChhDQ2Jz.js
+> ---
+> > 46063 assets/public/assets/GLTFLoader-BgvsrxKA.js
+> 68a69
+> > 814882 assets/public/assets/main-BMXdsHac.js
+> 70d70
+> < 814883 assets/public/assets/main-n7k4agCV.js
+> 73,75c73,75
+> < 9144 assets/public/assets/runtime-BJcD5pMq.js
+> < 1718 assets/public/assets/runtime-DDqcyr5q.js
+> < 80389 assets/public/assets/vfx-R5IIh2XQ.js
+> ---
+> > 9144 assets/public/assets/runtime-BN0mX_fX.js
+> > 1718 assets/public/assets/runtime-BTF47cZ2.js
+> > 80389 assets/public/assets/vfx-D1Z6l9bH.js
+
+### 🤖 Claude — 2026-11-16T14:34:25.646Z
+
+The packaged contents differ by 1 byte; only the hashed file names and the baked string change. The 270 KB is just zip compression and alignment, so it's harmless. Now the Android notes:
+
+### 🤖 Claude — 2026-11-16T14:34:35.951Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave12/android/NOTES.md", "content": "# Android builds for wave 12 (2026-11-16 ~14:35 UTC, session `013VHsJB`, branch `ccr-451ea8c7-3nqlis`)\n\n| APK (Git LFS) | built with | SHA-256 | Screen 05 shows |\n|---|---|---|---|\n| `builds/rainbow-debug-w12-water.apk` (7.39 MB) | `VITE_RAINBOW_Q05='silk05=1&puff05=1&glow05=1&flowcam05=1' npm run android:debug` | `fdbf9c69…a3abe808211` | the W12 water experiment (switches baked in: Android has no URL query) |\n| `builds/rainbow-debug-T2-default.apk` (7.66 MB) | `npm run android:debug` | `7f89d6ba…13d2969`  …[+2047 chars]`
+
+### 🧑 User — 2026-11-16T14:34:35.980Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave12/android/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T14:34:36.402Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T14:34:36.411Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-16T14:34:37.408Z
+
+> 🔧 **Bash** `{"command": "grep -n \"apk\\|APK\" CLAUDE.md backups/START_NEW_CLAUDE_ACCOUNT.md | head; python3 -I scripts/autosave-status.py; git status --short | wc -l", "description": "Check doc APK references and autosave state"}`
+
+### 🧑 User — 2026-11-16T14:34:38.097Z
+
+> ↩︎ result: CLAUDE.md:86:`qa/pilot05/wave12/NOTES.md`; experiment APK via `VITE_RAINBOW_Q05`). The user's **BEFORE stays protected**:
+> backups/START_NEW_CLAUDE_ACCOUNT.md:25:1. The hook (≈ 10 s) merged every newer `ccr-*` / `claude/*` branch, restored the 24 Git LFS binaries (models, APK,
+> backups/START_NEW_CLAUDE_ACCOUNT.md:42:   cyan, bubbly foam banks — newest; `qa/pilot05/wave12/`). Experiment APK: `builds/rainbow-debug-w12-water.apk`
+> AUTOSAVE OK | branch ccr-451ea8c7-3nqlis | scheduler daemon | last verified backup 2026-11-16T14:33:32+00:00 (1.1 min ago) | local 061a4d2 remote 061a4d2 (match) | uncommitted 9
+> 9
+
+### 🤖 Claude — 2026-11-16T14:34:40.547Z
+
+The two new APKs bring the LFS binaries from 24 to 26. I'll check whether the bootstrap hard-codes the count or expects a manifest list, so the next session doesn't report a false problem.
+
+### 🤖 Claude — 2026-11-16T14:34:41.588Z
+
+> 🔧 **Bash** `{"command": "grep -n \"24\\b\\|lfs ls-files\\|MANIFEST.json\" scripts/claude-bootstrap.sh | head -15; grep -n \"apk\" backups/MANIFEST.json | head -5", "description": "Check bootstrap LFS count logic"}`
+
+### 🧑 User — 2026-11-16T14:34:41.629Z
+
+> ↩︎ result: 65:print(" ".join(d) if isinstance(d,list) else d)' "$ROOT/backups/TOOL_MANIFEST.json" "$1" 2>/dev/null; }
+> 106:AUTO_THEIRS=" backups/MANIFEST.json backups/BACKUP_STATUS.json backups/CONVERSATION_INDEX.md qa/capture_log.json backups/BOOTSTRAP_REPORT.md "
+> 187:  [ "$(git lfs ls-files | awk '$2=="-"' | wc -l)" = 0 ] && return 0
+> 196:  total=$(git lfs ls-files | wc -l); stubs=$(git lfs ls-files | awk '$2=="-"' | wc -l)
+> 426:      echo "  LFS binaries: $(git lfs ls-files | awk '$2=="-"' | wc -l) pointer stubs left (0 = all restored)"
+> 460:   "path": "builds/rainbow-debug-w12-water.apk",
+> 465:   "path": "builds/rainbow-debug.apk",
+
+### 🤖 Claude — 2026-11-16T14:34:49.122Z
+
+> 🔧 **Bash** `{"command": "git diff --stat HEAD -- src | tail -6; python3 scripts/rainbow-autosave.py --reason manual:wave12-checkpoint --message \"Screen 05 wave 12: smooth silky water (?silk05=1), bubbly foam banks (?puff05=1), Screen-05 highlight bloom (?glow05=1), flow toward camera (?flowcam05=1); W11 write-up; experiment + default APKs validated; recovery docs updated\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"|warn' ; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-451ea8c7-3nqlis | cut -f1)\"; git status --short | wc -l; git log -1 …[+105 chars]`
+
