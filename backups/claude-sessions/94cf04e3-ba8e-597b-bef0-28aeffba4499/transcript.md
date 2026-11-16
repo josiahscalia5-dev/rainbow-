@@ -3154,3 +3154,55 @@ Committed and pushed the specialists' work so far as `20884e7`. GitHub matches, 
 
 While the four specialists are working they change files constantly, so this check may flag uncommitted changes again between saves. The five-minute autosave picks those up.
 
+### 🧑 User — 2026-11-16T02:08:23.545Z
+
+<task-notification>
+<task-id>a6b59dcbe34541ab3</task-id>
+<tool-use-id>toolu_01TExDttc6xJ1YFcnZSL5y6i</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/tasks/a6b59dcbe34541ab3.output</output-file>
+<status>failed</status>
+<summary>Agent "Wave 8: far river, coins, far rings" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 6:10am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5nt6Cn4iDD3hT9PfVJE, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 6:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>The band code matches my replication, so let me check what object actually renders at y≈571 (it may not be the ribbon row I assumed).</result>
+</task-notification>
+
+### 🤖 Claude — 2026-11-16T02:08:23.944Z
+
+You've hit your 5-hour limit · resets 6:10am (UTC)
+
+### 🧑 User — 2026-11-16T02:08:39.630Z
+
+<task-notification>
+<task-id>a98a34c02aaff8fbd</task-id>
+<tool-use-id>toolu_01WiBu9H1V2fDbGdutRNJ1di</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/tasks/a98a34c02aaff8fbd.output</output-file>
+<status>failed</status>
+<summary>Agent "Wave 8b: 05 foam, bubbles, splash" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 6:10am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5nuHB7SdtVPXDYgmGRx, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 6:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Lnear/Rnear include the splash and the ribbon's new white flow lines, so I'll measure foam colour only inside the clump boxes (no splash there).</result>
+</task-notification>
+
+### 🧑 User — 2026-11-16T02:08:42.377Z
+
+<task-notification>
+<task-id>ae5de932c09c31983</task-id>
+<tool-use-id>toolu_0113ytDJZkEQ6G1vEragx6R7</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/tasks/ae5de932c09c31983.output</output-file>
+<status>failed</status>
+<summary>Agent "Wave 8: rings, walls, lids, VP" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 6:10am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5nuUq6NPSAA7T7GvZfh, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 6:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>it02: whole-frame mad 50.7 (best so far), tunnel+VP 58.7 (baseline 61.0). Lid V std 0.139 → 0.188 (ref 0.216). Let me zoom in.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-16T02:09:33.626Z
+
+<task-notification>
+<task-id>a26af93432e804bae</task-id>
+<tool-use-id>toolu_01WUuPtKo8fRfZT9KpWWgiKZ</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/tasks/a26af93432e804bae.output</output-file>
+<status>failed</status>
+<summary>Agent "Wave 8b: 05 near/mid water" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 6:10am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5nyGAhTSaEd7muwMSxc, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 6:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now the lighting, near field and glints segments.</result>
+</task-notification>
+

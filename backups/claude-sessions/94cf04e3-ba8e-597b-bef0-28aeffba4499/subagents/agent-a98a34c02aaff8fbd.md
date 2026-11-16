@@ -1418,3 +1418,22 @@ Lnear/Rnear include the splash and the ribbon's new white flow lines, so I'll me
 
 > 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave8/foam/NOTES.md <<'EOF'\n* it05 (86 calls, 567,415 tris): tone curve smoothstep(0.3, 1.0), white lift only t > 0.75; crown jets = small\n  translucent cyan beads. Seen: splash strands with water between them, beads no longer flakes; foam still whiter than\n  the ref. New clean metric `tools/clumpcol.py` (clump / rim boxes only, no splash; W = white, S = B-R >= 30, B = B-R\n  >= 60): ref Lclump W25 S56 B35, LLclump W28 S38 B23, LRclump W28 S44 B26, Lrim W22 S41 B22; baseline W35/13/18/19\n  S36/30/31/45; it03 W37/16/21/18 S47/49/43/44 (closest numbers); it04 W …[+955 chars]`
 
+### 🧑 User — 2026-11-16T02:08:39.370Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/foam/it06/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> it06 Lclump 5550 W32 S50 B26 | LLclump 10873 W12 S47 B26 | LRclump 12239 W14 S49 B28 | Lrim 18687 W17 S46 B21
+> qa/pilot05/wave8/foam/it06/05.png
+>   Lfar     6773 px  mean RGB [217 221 255]  WHITE  25.5%  SHADE(B-R>=30)  46.8%  lum 230.9
+>   Rfar     5982 px  mean RGB [224 228 255]  WHITE  51.4%  SHADE(B-R>=30)  38.4%  lum 235.9
+>   Lnear   13218 px  mean RGB [221 222 241]  WHITE  20.5%  SHADE(B-R>=30)  32.9%  lum 227.9
+>   Rnear    8707 px  mean RGB [221 223 237]  WHITE  14.4%  SHADE(B-R>=30)  31.2%  lum 227.0
+>   heapR x640-864 y700-1000: foam   8.5%  max vertical run 84 px  mean run(cols with foam) 36 px
+> qa/pilot05/wave8/foam/it06/05.png L 19.8% x 150-431 ylow 1329 | R 21.4% x 432-719 ylow 1328
+
+### 🤖 Claude — 2026-11-16T02:08:39.567Z
+
+You've hit your 5-hour limit · resets 6:10am (UTC)
+

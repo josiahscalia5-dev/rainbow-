@@ -39,3 +39,16 @@ Whole-frame/band mads also move with the water + foam specialists' parallel wave
   0.856 → 0.88, edge_corr 0.177 → 0.189, **tunnel+VP 61.0 → 58.7**. measure05.py on it02: lid L1 V std 0.188 (ref 0.216), upper-wall
   violet share 25.4 % (ref 40.0), left wall 4.0 % (ref 50.9), VP core px 723 (ref 1306). Side-by-side: walls magenta-pink with dark
   slots, rings orange-salmon, lids still read as long copper planks jutting out (shape, not shading, is the mismatch). = wave-9 baseline.
+* it02 (03:25) — LIDS: tube.ts `wallLidGeometry('slab')` → rounded barrel rim (radius 0.95 → 1.04 → 0.95, rounded edges, domed top; the
+  far lids use the same shape); materials.ts `withLidShading` v2 — palette re-sampled on ref L1 (x 100/140/175): orange near end
+  (250,119,38), peach top edge → orange-gold → pale yellow → white low on the bulge → orange-red bottom edge (228,83,88), peach tip
+  side, DARK plum underside (150,40,92) (wave 7 had it lighter than the rim: inverted); "near end" taken from the view (the lathe Z flips
+  between the left and right walls). A lid projection (scratch lidproj.ts with the locked camera matrix) showed the live L1 layout already
+  matched the ref (band 43–52 px over x 55–211, underside below it): the plank look was the straight band + flat shading.
+  WALLS: Marble env pre-blurred 6 px (asset now 51 KB), F0 '#dc9ef0', mid tint back to '#8a30d2' 0.45 @8–50.
+  Report: mad **50.7** (it01 52.7, base 51.2), **tunnel+VP 58.7**, river mid 48.0, near 46.6. Lid L1 V std 0.139 → **0.188** (ref 0.216),
+  gold share 8.9 → 26.5 % (ref 18.7), rose 57 → 13 % (ref 18). Walls: blotches gone; upper violet share 25 % (ref 40), left wall 4 % (ref 51) —
+  now uniformly deep magenta, near-wall streaks faint (white 4.0 % vs 6.3). VP r64–90 (195,66,147) vs ref (171,63,150) (it01 (221,109,146)).
+  Kept. 86 calls / 567,415 tris.
+* Tunnel perspective (user priority 1), measured: ref rings are OVALS, aspect ≈1.7–1.8 (ring #1 half-axes ≈490×270 px, #2 284×170,
+  #3 184×102); live rings are circles (ring B at depth 40: top y 198 = ref ring #1 top, but sides at x 255/755 vs ref ≈10/≈855).
