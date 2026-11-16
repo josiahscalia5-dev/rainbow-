@@ -8,8 +8,12 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
-import { Course } from '../src/world/course';
-import { FLOW_H, FLOW_W, RIPPLE_N, flowField05, rippleData05 } from '../src/vfx/flow05';
+
+// the switches are read from location.search when the game modules load: dump the map of the W11 demonstration
+// (foam shelves included) unless --default is given
+if (!process.argv.includes('--default')) (globalThis as unknown as { location: { search: string } }).location = { search: '?river05=1' };
+const { Course } = await import('../src/world/course');
+const { FLOW_H, FLOW_W, RIPPLE_N, flowField05, rippleData05 } = await import('../src/vfx/flow05');
 
 const out = (process.argv.find((a) => a.startsWith('--out=')) ?? '--out=qa/pilot05/wave11/flowmap').slice(6);
 mkdirSync(out, { recursive: true });

@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7292,
-   "sha256": "fae5cb30744d58cd4d01fe9a35cf81d4ff3c78c7eee9e4478656def9d9bac68f"
+   "sha256": "eaeddedc5a9911e10a0f18131877c552375c6d9616ae1096d826401ecac01d15"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1388,13 +1388,13 @@
   },
   {
    "path": "qa/pilot05/wave11/flowmap/flowmap05.png",
-   "bytes": 32510,
-   "sha256": "8bdd0443e73e80b120d0fac22c599d6b7b65aada5ddd54df73a24f77f7892ab4"
+   "bytes": 32039,
+   "sha256": "027fee146e06efd12a914281474e03a1b4962c9e923e4fcc3e43d28d54acae0c"
   },
   {
    "path": "qa/pilot05/wave11/flowmap/flowmap05_view.png",
-   "bytes": 38259,
-   "sha256": "5d202a37308121e54abc5583e91f4c47eaa03e47a79538317ef3656d92f0bd6d"
+   "bytes": 36439,
+   "sha256": "22b9c68a78c5a5522a56cea8455199c1f63e389137e375814c52ff3ec12c92d1"
   },
   {
    "path": "qa/pilot05/wave11/flowmap/ripple05.png",
@@ -5973,8 +5973,8 @@
   },
   {
    "path": "scripts/flow05-dump.ts",
-   "bytes": 3536,
-   "sha256": "62874f1104ff337d34f4ced87e5b50d6c05aefb543c5b404b98ef0947b84e480"
+   "bytes": 3860,
+   "sha256": "a3dd007474a54e9dc8b628cc8e53cd814b19162a35c67ff19917fb60c512ea41"
   },
   {
    "path": "scripts/gameplay-test.mjs",

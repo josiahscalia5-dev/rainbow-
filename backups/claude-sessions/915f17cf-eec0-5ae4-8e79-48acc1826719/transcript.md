@@ -2050,3 +2050,131 @@ The flow map now generates and exports as an inspectable image. I'm fixing a typ
 
 > 🔧 **Bash** `{"command": "git mv -f tools/qa/flow05_dump.ts scripts/flow05-dump.ts 2>/dev/null || mv tools/qa/flow05_dump.ts scripts/flow05-dump.ts; sed -i \"s|npx vite-node tools/qa/flow05_dump.ts|npx vite-node scripts/flow05-dump.ts|; s|from '../../src/world/course'|from '../src/world/course'|; s|from '../../src/vfx/flow05'|from '../src/vfx/flow05'|\" scripts/flow05-dump.ts && sed -i 's|`tools/qa/flow05_dump.ts` writes both textures as PNG|`scripts/flow05-dump.ts` writes both textures as PNG|' src/vfx/flow05.ts && npx tsc --noEmit 2>&1 | head -5; npx vite-node scripts/flow05-dump.ts 2>&1 | tail -2; ls -l …[+121 chars]`
 
+### 🧑 User — 2026-11-16T13:16:56.758Z
+
+> ↩︎ result: {"out":"qa/pilot05/wave11/flowmap","flowMap":[32,256],"s0":112.69,"len":82.24,"maxLateral":0.496,"meanSpeed":0.817,"ripple":128}
+> total 152
+> drwxr-xr-x 2 root root  4096 Nov 16 13:16 .
+> drwxr-xr-x 3 root root  4096 Nov 16 13:16 ..
+> -rw-r--r-- 1 root root 32510 Nov 16 13:16 flowmap05.png
+> -rw-r--r-- 1 root root 38259 Nov 16 13:16 flowmap05_view.png
+> -rw-r--r-- 1 root root 51173 Nov 16 13:16 ripple05.png
+> -rw-r--r-- 1 root root 20270 Nov 16 13:16 ripple05_height.png
+> [This command modified 1 file you've previously read: src/vfx/flow05.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T13:17:03.970Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='scripts/flow05-dump.ts'; s=open(p).read()\nold=\"\"\"import { Course } from '../src/world/course';\nimport { FLOW_H, FLOW_W, RIPPLE_N, flowField05, rippleData05 } from '../src/vfx/flow05';\n\"\"\"\nassert s.count(old)==1\ns=s.replace(old,\"\"\"\n// the switches are read from location.search when the game modules load: dump the map of the W11 demonstration\n// (foam shelves included) unless --default is given\nif (!process.argv.includes('--default')) (globalThis as unknown as { location: { search: string } }).location = { search: '?river05=1' };\nconst { Cours …[+311 chars]`
+
+### 🧑 User — 2026-11-16T13:17:05.128Z
+
+> ↩︎ result: {"out":"qa/pilot05/wave11/flowmap","flowMap":[32,256],"s0":112.69,"len":82.24,"maxLateral":0.6,"meanSpeed":0.75,"ripple":128}
+
+### 🤖 Claude — 2026-11-16T13:17:10.329Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && python3 -I -c \"\nfrom PIL import Image\nv=Image.open('qa/pilot05/wave11/flowmap/flowmap05_view.png').convert('RGB')\nr=Image.open('qa/pilot05/wave11/flowmap/ripple05.png').convert('RGB').resize((256,256), Image.NEAREST)\nh=Image.open('qa/pilot05/wave11/flowmap/ripple05_height.png').convert('RGB').resize((256,256), Image.NEAREST)\n# rotate the flow view so downstream runs to the right, for a compact look\nv2=v.rotate(-90, expand=True).resize((1024,128))\no=Image.new('RGB',(1024,128+10+256),'blac …[+159 chars]`
+
+### 🧑 User — 2026-11-16T13:17:10.469Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:17:11.423Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/flowview.png"}`
+
+### 🧑 User — 2026-11-16T13:17:11.436Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:17:26.560Z
+
+The flow map clearly shows the fast core and both foam shelves. Now the regression batch: default and BEFORE pixel checks, neighbouring screens, low quality and animation.
+
+### 🤖 Claude — 2026-11-16T13:17:30.468Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && rm -rf $S/t && (node $S/cap.mjs $S/t/05 default= before=ringa=26\\&nearfloor05=0 water=water05=1 farw=farw05=1 flow=flow05=1 river=river05=1 low=river05=1\\&quality=low lowdef=quality=low && node $S/cap.mjs $S/t/04 --id=04 default= river=river05=1 && node $S/cap.mjs $S/t/06 --id=06 default= river=river05=1 && node $S/cap.mjs $S/t/07 --id=07 default= river=river05=1 && node $S/cap.mjs $S/t/05b --t=12.6 river=river05=1 water=water05=1) 2>&1 | grep -v \"^$\" | tail -24", "description": "Run the Scr …[+52 chars]`
+
+### 🧑 User — 2026-11-16T13:21:40.654Z
+
+> ↩︎ result: default {"calls":86,"tris":567415,"errors":0}
+> before {"calls":86,"tris":567415,"errors":0}
+> water {"calls":86,"tris":567415,"errors":0}
+> farw {"calls":86,"tris":567415,"errors":0}
+> flow {"calls":86,"tris":567415,"errors":0}
+> river {"calls":86,"tris":567415,"errors":0}
+> low {"calls":86,"tris":425525,"errors":0}
+> lowdef {"calls":86,"tris":425525,"errors":0}
+> default {"calls":97,"tris":712274,"errors":0}
+> river {"calls":97,"tris":712274,"errors":0}
+> default {"calls":72,"tris":543081,"errors":0}
+> river {"calls":72,"tris":543081,"errors":0}
+> default {"calls":181,"tris":660599,"errors":0}
+> river {"calls":181,"tris":660599,"errors":0}
+> river {"calls":86,"tris":567415,"errors":0}
+> water {"calls":86,"tris":567415,"errors":0}
+
+### 🤖 Claude — 2026-11-16T13:21:41.964Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T13:21:41.981Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T13:21:42.432Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T13:21:42.443Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-16T13:21:42.906Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T13:21:42.919Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-16T13:21:51.075Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && python3 -I - \"$S\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nS=sys.argv[1]\ndef L(p): return np.asarray(Image.open(p).convert('RGB')).astype(int)\ndef cmp(n,a,b,box=None):\n    A,B=L(a),L(b)\n    d=np.abs(A-B).max(-1)\n    ys,xs=np.where(d>0)\n    bb=(int(xs.min()),int(xs.max()),int(ys.min()),int(ys.max())) if len(ys) else None\n    # split HUD (y<200) vs scene\n    scene=d[200:]; hud=d[:200]\n    print(f'{n}: max {d.max()} | differing px {len(ys)} | bbox {bb} | scene(y>=200) px  …[+1088 chars]`
+
+### 🧑 User — 2026-11-16T13:21:52.742Z
+
+> ↩︎ result: DEFAULT vs current_default_05: max 0 | differing px 0 | bbox None | scene(y>=200) px 0 max 0 | HUD px 0
+> BEFORE (?ringa=26&nearfloor05=0) vs wave9 baseline: max 0 | differing px 0 | bbox None | scene(y>=200) px 0 max 0 | HUD px 0
+> water05 vs it04 05_NEW: max 0 | differing px 0 | bbox None | scene(y>=200) px 0 max 0 | HUD px 0
+> 04 river05 vs default: max 169 | differing px 70552 | bbox (0, 863, 1, 1112) | scene(y>=200) px 70260 max 169 | HUD px 292
+> 06 river05 vs default: max 0 | differing px 0 | bbox None | scene(y>=200) px 0 max 0 | HUD px 0
+> 07 river05 vs default: max 0 | differing px 0 | bbox None | scene(y>=200) px 0 max 0 | HUD px 0
+> river05 t=12.6 vs t=12.0 (animation): max 255 | differing px 801602 | bbox (0, 863, 87, 1535) | scene(y>=200) px 801260 max 255 | HUD px 342
+>   far block rows 485-560, x 400-620: changed px 2893 of 16500
+>   (water05 it04, same rows: changed px 1532 )
+
+### 🤖 Claude — 2026-11-16T13:22:00.918Z
+
+> 🔧 **Bash** `{"command": "grep -n \"goto(\\|qa=1\\|writeFileSync\\|process.argv\" scripts/gameplay-test.mjs | head -12; cat package.json | python3 -c \"import json,sys; print(json.dumps(json.load(sys.stdin)['scripts'],indent=1))\"", "description": "Inspect gameplay test and npm scripts"}`
+
+### 🧑 User — 2026-11-16T13:22:01.013Z
+
+> ↩︎ result: 11:import { writeFileSync, mkdirSync } from 'node:fs';
+> 21:await page.goto(`${vite.url}/?qa=1&dpr=1&bloom=0`);
+> 99:writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
+> 125:writeFileSync('qa/07_to_08_continuity.md', md.join('\n') + '\n');
+> {
+>  "dev": "vite --host 0.0.0.0",
+>  "build": "tsc --noEmit && vite build",
+>  "preview": "vite preview --host 0.0.0.0 --port 4173",
+>  "typecheck": "tsc --noEmit",
+>  "test:continuity": "vite-node scripts/continuity-test.ts",
+>  "models:export": "node scripts/export-models.mjs",
+>  "qa:capture": "node scripts/capture.mjs",
+>  "qa:compare": "python3 scripts/compare.py",
+>  "verify:refs": "sha256sum -c scripts/reference.sha256",
+>  "android:sync": "npm run build && npx cap sync android",
+>  "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+>  "test:cinematic": "node scripts/cinematic-test.mjs"
+> }
+
