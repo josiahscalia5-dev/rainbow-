@@ -3374,3 +3374,43 @@ The locked-camera clip came out static. My clock hook only took effect on the ne
 
 > 🔧 **Bash** `{"command": "sed -i \"s|      await page.evaluate((\\[t\\]) => window.__rainbow.freezeAt(t), \\[12 + i / fps\\]);|      await page.evaluate(([t]) => { const R = window.__rainbow; R.freezeAt(t); R.step(1, 0); }, [12 + i / fps]);|\" scripts/proj05-move.mjs && grep -n \"R.step(1, 0)\" scripts/proj05-move.mjs && SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && rm -rf $SP/clip/still && node scripts/proj05-move.mjs --q='proj05=1' --out=$SP/clip --still=3 --fps=24 2>&1 | tail -1 && ffmpeg -y -loglevel error -framerate 24 -i $SP/clip/still/%04d.png -vf \"scale=43 …[+1126 chars]`
 
+### 🧑 User — 2026-11-16T18:22:27.787Z
+
+> ↩︎ result: 46:      await page.evaluate(([t]) => { const R = window.__rainbow; R.freezeAt(t); R.step(1, 0); }, [12 + i / fps]);
+> still frames 72
+> total 2980
+> drwxr-xr-x 2 root root    4096 Nov 16 18:18 .
+> drwxr-xr-x 9 root root    4096 Nov 16 18:18 ..
+> -rw-r--r-- 1 root root 1065892 Nov 16 18:22 proj05_locked_flow_3s.mp4
+> -rw-r--r-- 1 root root 1972153 Nov 16 18:18 proj05_ride_4s.mp4
+> near confident 71 /71  median dy px/frame 0.17  share toward camera (dy>0): 0.61  share away: 0.31
+> mid confident 71 /71  median dy px/frame 0.38  share toward camera (dy>0): 1.0  share away: 0.0
+
+### 🤖 Claude — 2026-11-16T18:22:38.615Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('$SP/clip/still/0000.png').crop((0,600,864,1536)); b=Image.open('$SP/clip/still/0011.png').crop((0,600,864,1536))\nc=Image.new('RGB',(864*2+10,936)); c.paste(a,(0,0)); c.paste(b,(874,0)); c.resize((870,468)).save('$SP/mf/flow_phase.png')\"", "description": "Compare flow phase 0 vs worst crossfade frame"}`
+
+### 🧑 User — 2026-11-16T18:22:38.985Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T18:22:39.916Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/flow_phase.png"}`
+
+### 🧑 User — 2026-11-16T18:22:39.958Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:22:51.762Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s|R.freezeAt(t); R.step(1, 0); }|R.freezeAt(t); R.step(1, 1e-4); }|\" scripts/proj05-move.mjs && grep -c \"R.step(1, 1e-4)\" scripts/proj05-move.mjs && SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && rm -rf $SP/clip/still && node scripts/proj05-move.mjs --q='proj05=1' --out=$SP/clip --still=3 --fps=24 2>&1 | tail -1 && ffmpeg -y -loglevel error -framerate 24 -i $SP/clip/still/%04d.png -vf \"scale=432:768\" -c:v libx264 -pix_fmt yuv420p -crf 20 qa/pilot05/proj/clips/proj05_locked_flow_3s.mp4 && python3 -c \"\nfrom PIL import Image\na …[+319 chars]`
+
+### 🤖 Claude — 2026-11-16T18:22:53.060Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/f11.png"}`
+
+### 🤖 Claude — 2026-11-16T18:22:53.664Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/ride48.png"}`
+

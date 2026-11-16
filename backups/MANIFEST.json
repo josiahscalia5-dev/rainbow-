@@ -439,7 +439,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "b9e079cfb0ba59237ff468f7902488f2e2fd1a7d1afaaf2da73a549bdb66269f"
+   "sha256": "eaf7342dc5ba75263a69acd916526568be438d7d4114d02ea500ec3d4b2b1914"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1403,8 +1403,8 @@
   },
   {
    "path": "qa/pilot05/proj/clips/proj05_locked_flow_3s.mp4",
-   "bytes": 147368,
-   "sha256": "1d9e5ed9777d10c4cf507fb30ff4c9fdb36bd25c9480de5da121ef5cd8cb6f01"
+   "bytes": 1065892,
+   "sha256": "02904783e5937307fe95e10ea7fb69e6016b9e700babef283e9ba4e8f799a480"
   },
   {
    "path": "qa/pilot05/proj/clips/proj05_ride_4s.mp4",
@@ -6728,8 +6728,8 @@
   },
   {
    "path": "scripts/proj05-move.mjs",
-   "bytes": 3818,
-   "sha256": "b84fefd0d975d94937103e990dddeddc08c8cb584249c7241e839fa9d44953b4"
+   "bytes": 3821,
+   "sha256": "974dea5b20ed5bd64b4f58ee6674a61cd85a68b9bcbfb036a45839489d7a56fc"
   },
   {
    "path": "scripts/proj05-probe.mjs",

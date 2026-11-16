@@ -43,7 +43,7 @@ try {
     const n = Math.round(Number(opt.still) * fps);
     await page.evaluate(() => window.__rainbow.goto('05'));
     for (let i = 0; i < n; i++) {
-      await page.evaluate(([t]) => { const R = window.__rainbow; R.freezeAt(t); R.step(1, 0); }, [12 + i / fps]);
+      await page.evaluate(([t]) => { const R = window.__rainbow; R.freezeAt(t); R.step(1, 1e-4); }, [12 + i / fps]);
       await shot(`${OUT}/still/${String(i).padStart(4, '0')}.png`, { t: 12 + i / fps });
     }
     console.log('still frames', n);
