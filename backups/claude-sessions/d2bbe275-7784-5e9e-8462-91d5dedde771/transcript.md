@@ -2237,3 +2237,201 @@ Let me first read the existing river code and the probe data Specialist 1 alread
 > s  196.0 px      18 rows/unit    12.3 u +0.32..+0.42
 > max s in water 196.27914
 
+### 🤖 Claude — 2026-11-16T17:45:20.642Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/assets/textures/water05 && cd /home/user/rainbow- && cat > tools/proj05/bake.py <<'EOF'\n\"\"\"Screen 05 proj05 — bake the TARGET water image (tools/proj05/make_target.py) onto the REAL game river, in the\nriver's own coordinates (u across -1..1, s = arc length), using the live game's per-pixel river coordinates from the\nlocked 05 camera (scripts/proj05-probe.mjs -> uv_river.f32). Everything is anchored to the river, not to the camera.\n\nusage: python3 -I tools/proj05/bake.py <probe_dir> <target_dir> <out_dir>\noutputs (out_dir, default assets/textur …[+10979 chars]`
+
+### 🧑 User — 2026-11-16T17:45:27.942Z
+
+> ↩︎ result: {"E": [1024, 1241], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.0, "N_valid": 0.63876953125, "samples": 772877, "coin_pixels": 21493, "sE": [129.71197937011718, 180.97108032226564]}
+> 
+> real	0m7.231s
+> user	0m7.061s
+> sys	0m0.818s
+> total 2548
+> drwxr-xr-x 2 root root    4096 Nov 16 17:45 .
+> drwxr-xr-x 3 root root    4096 Nov 16 17:45 ..
+> -rw-r--r-- 1 root root   93760 Nov 16 17:45 proj05_D.png
+> -rw-r--r-- 1 root root 1682769 Nov 16 17:45 proj05_E.png
+> -rw-r--r-- 1 root root  608643 Nov 16 17:45 proj05_N.png
+> -rw-r--r-- 1 root root  180923 Nov 16 17:45 proj05_T.png
+> -rw-r--r-- 1 root root   27220 Nov 16 17:45 proj05_lut.json
+
+### 🤖 Claude — 2026-11-16T17:45:41.489Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/bake.py'\ns=open(p).read()\ns=s.replace(\"\"\"accE, wtE = splat(xE, yE, np.where(scoin[:, None], 0, sc), WE, NE)\n_, holeE = splat(xE, yE, scoin[:, None].astype(float), WE, NE)\nwtE_nc, _ = splat(xE, yE, (~scoin)[:, None].astype(float), WE, NE)\nE, validE = finish(accE, wtE_nc[..., 0], holeE, max_gap=int(NE * 0.35))\"\"\",\"\"\"accE, _ = splat(xE, yE, np.where(scoin[:, None], 0, sc), WE, NE)\nholeE, _ = splat(xE, yE, scoin[:, None].astype(float), WE, NE)\nwtE, _ = splat(xE, yE, (~scoin)[:, None].astype(float), WE, NE)\nE, validE = finish(accE, wt …[+1423 chars]`
+
+### 🤖 Claude — 2026-11-16T17:45:42.688Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/bake_v1.png"}`
+
+### 🧑 User — 2026-11-16T17:45:50.131Z
+
+> ↩︎ result: {"E": [1024, 1241], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.904443241337631, "N_valid": 0.63876953125, "samples": 772877, "coin_pixels": 21493, "sE": [129.71197937011718, 180.97108032226564]}
+
+### 🧑 User — 2026-11-16T17:45:50.158Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:46:07.533Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/detail_v1.png"}`
+
+### 🧑 User — 2026-11-16T17:46:07.556Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:46:32.743Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/make_target.py'\ns=open(p).read()\ns=s.replace(\"hole = benny & ~hud          #\",\"ringb = (af[..., 0] > 0.55) & (af[..., 1] > 0.30) & (af[..., 2] < 0.50) & (af[..., 0] - af[..., 2] > 0.22) & (rows > 1100)\\nringb = binary_dilation(binary_closing(ringb, iterations=4), iterations=8)   # the approved's bottom gold ring arcs\\nhole = (benny | ringb) & ~hud          #\")\ns=s.replace(\"  * under Benny + splash: the user's\",\"  * under Benny + splash and the bottom gold ring arcs: the user's\")\ns=s.replace(\"rep = dict(note=\",\"rep = dict(ring_px= …[+2889 chars]`
+
+### 🤖 Claude — 2026-11-16T17:46:33.843Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/bake_v2.png"}`
+
+### 🧑 User — 2026-11-16T17:46:48.459Z
+
+> ↩︎ result: "ring_px": 91448,
+>  "fill_px": 311090,
+> {"E": [1024, 1241], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9044440282534246, "N_valid": 0.6797709147135417, "samples": 772872, "coin_pixels": 21493, "sE": [129.71197937011718, 180.97108032226564]}
+
+### 🧑 User — 2026-11-16T17:46:48.484Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:47:13.165Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/N_, validN = finish(accN, wtN\\[..., 0\\], holeN\\[..., 0\\], fill_sigma=1.5, max_gap=int(6 \\* dN), fill_all=True)/N_, validN = finish(accN, wtN[..., 0], holeN[..., 0], fill_sigma=1.5, max_gap=int(12 * dN), fill_all=True)/; s/du0, du1, ds0, ds1 = -0.78, -0.33, 133.6, 137.0/du0, du1, ds0, ds1 = -0.30, 0.30, 131.0, 134.4/; s/# streaky, glinting water left of Benny (pink band + cyan): s in \\[133.6, 137.0\\], u in \\[-0.78, -0.33\\]/# streaky, glinting water under Benny (the user'\"'\"'s isolated artwork, no bubbles or coins): s in [131.0, 134.4], u in [-0.3, 0.3]/' tools/ …[+1002 chars]`
+
+### 🤖 Claude — 2026-11-16T17:47:14.319Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/bake_v3.png"}`
+
+### 🧑 User — 2026-11-16T17:47:21.313Z
+
+> ↩︎ result: 132:N_, validN = finish(accN, wtN[..., 0], holeN[..., 0], fill_sigma=1.5, max_gap=int(12 * dN), fill_all=True)
+> 164:du0, du1, ds0, ds1 = -0.30, 0.30, 131.0, 134.4
+> {"E": [1024, 1241], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9044440282534246, "N_valid": 0.7301615397135417, "samples": 772872, "coin_pixels": 21493, "sE": [129.71197937011718, 180.97108032226564]}
+
+### 🧑 User — 2026-11-16T17:47:21.327Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:48:00.776Z
+
+> 🔧 **Bash** `{"command": "grep -n \"resolveJsonModule\\|\\\"types\\\"\\|vite/client\" tsconfig.json; sed -n 60,100p src/vfx/index.ts; grep -n \"speed\" src/world/course.ts | head -5", "description": "Check tsconfig and where ribbon is awaited in loadWater"}`
+
+### 🧑 User — 2026-11-16T17:48:00.827Z
+
+> ↩︎ result: 10:    "resolveJsonModule": true,
+> 17:    "types": ["vite/client"]
+>   return t * t * (3 - 2 * t);
+> };
+> 
+> export function createWater(course: Course, opts: { quality?: 'high' | 'low' } = {}): WaterSystem {
+>   const quality = opts.quality ?? 'high';
+>   const group = new THREE.Group();
+>   group.name = 'water_system';
+> 
+>   const drainMark = course.marks['02_drain'] ?? course.stage('02').s1 - 2;
+>   const st03 = course.stage('03'), st04 = course.stage('04'), st08 = course.stage('08'), st09 = course.stage('09');
+>   const ribbonS0 = drainMark - 1;
+>   const ribbon = createRibbon(course, { s0: ribbonS0, s1: course.length, quality });
+>   // open the funnel where the 04 slide tube leaves the basin (the course exits the spiral at
+>   // r≈2.8, just outside the drain hole, and the slide then runs beneath the funnel surface)
+>   const cutPts: THREE.Vector3[] = [];
+>   for (let i = 0; i < 8; i++) {
+>     const s = st04.s0 - 3 + (i / 7) * 34;
+>     const f = course.sample(s);
+>     cutPts.push(f.pos.clone().addScaledVector(f.up, 1.2));
+>   }
+>   const whirl = createWhirlpool(quality, { points: cutPts, radius: Math.max(3.6, course.stage('04').tube * 0.85) });
+>   const drum = createDrumWater(quality);
+>   const wave = createFinalWav …[+2031 chars]
+
+### 🤖 Claude — 2026-11-16T17:48:03.849Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export async function loadWater\\|export function loadWater\\|loadWater\" -A8 src/vfx/index.ts | head -20; grep -n \"hide=\\|'hide'\\|get('hide')\" src/game/Game.ts | head", "description": "Find loadWater async wrapper"}`
+
+### 🧑 User — 2026-11-16T17:48:03.893Z
+
+> ↩︎ result: 104:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> 105:  const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+
+### 🤖 Claude — 2026-11-16T17:48:05.845Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"loadWater\" src | head; grep -n \"export\" src/vfx/index.ts | head", "description": "Locate loadWater definition"}`
+
+### 🧑 User — 2026-11-16T17:48:05.906Z
+
+> ↩︎ result: src/game/Game.ts:26:import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+> src/game/Game.ts:97:  const water = await loadWater(course);
+> src/game/modules.ts:24:export async function loadWater(course: Course): Promise<WaterLike> {
+> 27:export { PALETTE } from './glsl';
+> 28:export const BENNY_RIDE_OFFSET = 0.55;
+> 32:export interface WaterControls {
+> 41:export interface WaterSystem {
+> 63:export function createWater(course: Course, opts: { quality?: 'high' | 'low' } = {}): WaterSystem {
+
+### 🤖 Claude — 2026-11-16T17:48:07.967Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p src/game/modules.ts", "description": "Read modules.ts loadWater"}`
+
+### 🧑 User — 2026-11-16T17:48:08.009Z
+
+> ↩︎ result: /**
+>  * Loads the specialist modules (water, Benny, girl) when present; otherwise returns simple stand-ins
+>  * so the world/gameplay can be developed and tested independently. Stand-ins are logged loudly and
+>  * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+>  */
+> import * as THREE from 'three';
+> import type { Course } from '../world/course';
+> import type { BennyRuntime, GirlRuntime } from '../characters/types';
+> 
+> export interface WaterLike {
+>   group: THREE.Group;
+>   update(time: number, dt: number, focusS: number, camera: THREE.Camera): void;
+>   surfaceHeight(s: number, lateral: number, time: number): number;
+>   wake(pos: THREE.Vector3, forward: THREE.Vector3, right: THREE.Vector3, speed: number, dt: number): void;
+>   splash(pos: THREE.Vector3, up: THREE.Vector3, strength: number): void;
+> }
+> 
+> const vfxMods = import.meta.glob('../vfx/index.ts');
+> const bennyMods = import.meta.glob('../characters/benny/runtime.ts');
+> const girlMods = import.meta.glob('../characters/girl/runtime.ts');
+> 
+> export const moduleStatus: Record<string, string> = {};
+> 
+> export async function loadWater(course: Course): Promise<WaterLike> {
+>   const f = Object.values(vfxMods)[0];
+>   if (f)  …[+1270 chars]
+
+### 🤖 Claude — 2026-11-16T17:48:12.312Z
+
+> 🔧 **Bash** `{"command": "awk 'NR>=63 && /^  return \\{/ {print NR\": \"$0}' src/vfx/index.ts | head -3; sed -n 41,62p src/vfx/index.ts", "description": "Find createWater return object and interface"}`
+
+### 🧑 User — 2026-11-16T17:48:12.356Z
+
+> ↩︎ result: 159:   return {
+> export interface WaterSystem {
+>   group: THREE.Group;
+>   /** call every frame; focusS = Benny's arc-length (for pooling/LOD of bubbles & foam) */
+>   update(time: number, dt: number, focusS: number, camera: THREE.Camera): void;
+>   /** height of the animated water surface above the course centreline frame at (s, lateral) */
+>   surfaceHeight(s: number, lateral: number, time: number): number;
+>   /** spray/wake at Benny: call each frame while riding */
+>   wake(pos: THREE.Vector3, forward: THREE.Vector3, right: THREE.Vector3, speed: number, dt: number): void;
+>   splash(pos: THREE.Vector3, up: THREE.Vector3, strength: number): void;
+>   /** cinematic controls */
+>   controls: WaterControls;
+>   /** sub-systems (for visibility overrides / debugging) */
+>   parts: Record<string, THREE.Object3D>;
+>   /** live stats for perf reporting */
+>   stats(): { instances: number; bubbles: number; smallBubbles: number; sprayCapacity: number };
+> }
+> 
+> const smooth = (a: number, b: number, x: number) => {
+>   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+>   return t * t * (3 - 2 * t);
+> };
+

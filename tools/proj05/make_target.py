@@ -1,6 +1,6 @@
 """Screen 05 proj05 — TARGET water image in the approved frame (864x1536, sRGB), from the user's own pictures only:
   * where the approved picture shows its water (not hidden by Benny + splash, coins, HUD): the APPROVED pixels;
-  * under Benny + splash: the user's ORIGINAL isolated water artwork, registered onto the approved water with dense
+  * under Benny + splash and the bottom gold ring arcs: the user's ORIGINAL isolated water artwork, registered onto the approved water with dense
     optical flow (banks / bands line up), colour-matched and blended in with a soft edge (no invented texture);
   * coins: flagged in coin_mask.png and filled later in river space along the flow direction (tools/proj05/bake.py).
 usage: python3 -I tools/proj05/make_target.py <out_dir>
@@ -33,7 +33,9 @@ for i in range(1, n + 1):
     if m.sum() >= 40: coins |= m
 coins = binary_dilation(coins & (rows < 800) & (rows > 470) & binary_dilation(A0, iterations=4), iterations=10) & A0
 hud = rows < 196
-hole = benny & ~hud          # Benny + splash: filled from the artwork here; coins: filled along the flow in the bake (coin_mask.png)
+ringb = (af[..., 0] > 0.55) & (af[..., 1] > 0.30) & (af[..., 2] < 0.50) & (af[..., 0] - af[..., 2] > 0.22) & (rows > 1100)
+ringb = binary_dilation(binary_closing(ringb, iterations=4), iterations=8)   # the approved's bottom gold ring arcs
+hole = (benny | ringb) & ~hud          # Benny + splash: filled from the artwork here; coins: filled along the flow in the bake (coin_mask.png)
 
 # ---- dense registration artwork -> approved (large-scale flow, smoothed, interpolated across the holes)
 def gray(x):
@@ -76,7 +78,7 @@ Image.fromarray((Aw * 255).astype(np.uint8)).save(os.path.join(out, "water_mask.
 Image.fromarray((hole * 255).astype(np.uint8)).save(os.path.join(out, "fill_mask.png"))
 Image.fromarray((coins * 255).astype(np.uint8)).save(os.path.join(out, "coin_mask.png"))
 Image.fromarray(artw).save(os.path.join(out, "art_registered.png"))
-rep = dict(note="target = approved water where visible; registered + colour-matched + Poisson-blended original artwork in the holes",
+rep = dict(ring_px=int(ringb.sum()), note="target = approved water where visible; registered + colour-matched + Poisson-blended original artwork in the holes",
            water_px=int(Aw.sum()), fill_px=int((hole & Aw).sum()), coins_px=int(coins.sum()), benny_px=int(benny.sum()),
            flow_px_median=float(np.median(np.hypot(fs[..., 0], fs[..., 1])[A0])), flow_px_p95=float(np.percentile(np.hypot(fs[..., 0], fs[..., 1])[A0], 95)),
            approved_vs_artwork_registered_mean_abs_visible_water=float(np.abs(appr.astype(float) - artw[..., :3].astype(float))[Aw & ~hole].mean()),
