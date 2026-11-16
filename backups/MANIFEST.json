@@ -452,6 +452,11 @@
    "sha256": "88c1c11eba2ab561e87b65cd7dd72dbe69207c0f754a03b589071754d296770a"
   },
   {
+   "path": "assets/textures/water05/proj05_T2.png",
+   "bytes": 992246,
+   "sha256": "0a80771ab369b7641bad992fa0aea653c0ce2fa6d259594881e951d13f63ab33"
+  },
+  {
    "path": "assets/textures/water05/proj05_WN.png",
    "bytes": 16503,
    "sha256": "8797a53143be9a389c761c787b6e4b05b5e7485b9ba1c4f220d0ac3c33a48ffa"
@@ -462,6 +467,11 @@
    "sha256": "deace5099a807c8a266e1e2e1ca7ad96464fa8334ef18a4493c5d094dfa30a39"
   },
   {
+   "path": "assets/textures/water05/proj05_WT2.png",
+   "bytes": 4484,
+   "sha256": "f9e20745a2b2ca0dd425fe7b653aa1100af1ecc23d8897d21e978929807520ee"
+  },
+  {
    "path": "assets/textures/water05/proj05_flow.json",
    "bytes": 288,
    "sha256": "b329550db97fe8167f8d06f9837723c03dfb19de4fe27c6e6f98dbc3ffab6a3e"
@@ -470,6 +480,11 @@
    "path": "assets/textures/water05/proj05_lut.json",
    "bytes": 27503,
    "sha256": "a91d9e565b409f2fb7a74c4d6e8ec7b3826992906f610f331fb23cec08851c91"
+  },
+  {
+   "path": "assets/textures/water05/proj05_near.json",
+   "bytes": 841,
+   "sha256": "7b20a5d555cd2918d1e26b19b5f820b8e84a360d42a9a0a078be9a1f270ddde8"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -493,8 +508,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 9699,
-   "sha256": "6099165811d4a1e3739f97c585b35c3277915a271778647d662567d557d4c067"
+   "bytes": 9700,
+   "sha256": "251cdc48821be16a5631986325ea8eb69996eb13f2e0dc424a7679182c77a02f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1635,6 +1650,11 @@
    "path": "qa/pilot05/proj/move/move_log.json",
    "bytes": 1573,
    "sha256": "1a2c8237bc1971681d6fa9b079ceab343626f1adc631f1635f46ac941b7f38a9"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tests/gameplay_recovered_full_flow2.json",
+   "bytes": 14720,
+   "sha256": "c965d0a4127a019b96f7c8be89d2d5005fa6d9d40c58d085f83d52010c273363"
   },
   {
    "path": "qa/pilot05/proj/probe/camera.json",
@@ -7122,6 +7142,11 @@
    "sha256": "c91043485dad22712bb2ef03ef2b3c8902449416137053619458265cc0565127"
   },
   {
+   "path": "scripts/proj05-ride-probe.mjs",
+   "bytes": 5830,
+   "sha256": "305ca3e096a58417bee212ee9240fa2fed6c98a01ed9f562863ae918fca0953f"
+  },
+  {
    "path": "scripts/proj05-tunnel-probe.mjs",
    "bytes": 9356,
    "sha256": "a34f93a2de1455179b702b2b11cbf06702b3171540602198b6a8e9d2f962202d"
@@ -7535,6 +7560,11 @@
    "path": "tools/proj05/match_metrics.py",
    "bytes": 2001,
    "sha256": "8f2530ac64a0f692ec495382b769784cf5ab6f0986145b0643018274b2205dcc"
+  },
+  {
+   "path": "tools/proj05/near_bake.py",
+   "bytes": 6422,
+   "sha256": "79f42e2f809b915e3f51886e2c7de89fc3c040c33fc75e835973c0f2423b7a85"
   },
   {
    "path": "tools/proj05/residual.py",

@@ -1033,3 +1033,442 @@ I now have the full picture of the projection pipeline (E exact / N near / T til
 > 5704dfcd8f * qa/worldlabs/05/pilot/full/import/full05.blend
 > f1e40d63fd * qa/ …[+50 chars]
 
+### 🤖 Claude — 2026-11-16T22:23:55.977Z
+
+Remote == local (`1ce3da8`), daemon running, 34/34 LFS real files (0 pointer stubs). Now a real Blender check: open every saved `.blend` and import the paddle and Benny GLBs headless.
+
+### 🤖 Claude — 2026-11-16T22:24:01.875Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/blend_check.py <<'EOF'\nimport bpy, sys, glob, os\nroot = \"/home/user/rainbow-\"\nfor f in sorted(glob.glob(root + \"/**/*.blend\", recursive=True)):\n    if \"/node_modules/\" in f: continue\n    bpy.ops.wm.open_mainfile(filepath=f)\n    meshes = [o for o in bpy.data.objects if o.type == \"MESH\"]\n    tris = sum(len(o.data.polygons) for o in meshes)\n    print(f\"BLEND OK  {os.path.relpath(f, root)}: {len(bpy.data.objects)} objects, {len(meshes)} meshes, {tris} faces\")\nfor g in [\"assets/m …[+665 chars]`
+
+### 🧑 User — 2026-11-16T22:24:03.991Z
+
+> ↩︎ result: Blender 5.3.0
+> BLEND OK  qa/pilot05/marble_feas/blender/marble05_projection.blend: 4 objects, 2 meshes, 400788 faces
+> BLEND OK  qa/pilot05/proj/tunnel/lid/lids05.blend: 7 objects, 6 meshes, 7149 faces
+> BLEND OK  qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend: 32 objects, 29 meshes, 20096 faces
+> BLEND OK  qa/pilot05/wave6/camera_lock/screen05_layout.blend: 18 objects, 15 meshes, 18304 faces
+> BLEND OK  qa/worldlabs/05/blender/screen05_layout.blend: 17 objects, 15 meshes, 18304 faces
+> BLEND OK  qa/worldlabs/05/pilot/draft/import/draft05.blend: 5 objects, 2 meshes, 44743 faces
+> BLEND OK  qa/worldlabs/05/pilot/full/import/full05.blend: 5 objects, 2 meshes, 51254 faces
+> GLB OK    assets/models/lids05.glb: 6 meshes: ['lid05_L1', 'lid05_L2', 'lid05_L3', 'lid05_R1', 'lid05_R2', 'lid05_R3']
+> GLB OK    assets/models/benny.glb: 27 meshes: ['blushL', 'blushR', 'eyeL_dizzy', 'eyeL_happy', 'eyeR_dizzy', 'eyeR_happy', 'fur_armL', 'fur_armR']
+> GLB OK    assets/models/rainbow_girl.glb: 165 meshes: ['back_pocket', 'back_pocket.001', 'bow_knot', 'bow_loop', 'bow_loop.001', 'bow_star', 'bow_tail', 'bow_tail.001']
+
+### 🤖 Claude — 2026-11-16T22:24:07.901Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_pull_requests,mcp__World_Labs_Atlas__list_projects,TaskCreate,TaskUpdate", "max_results": 4}`
+
+### 🧑 User — 2026-11-16T22:24:07.915Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-16T22:24:09.888Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "state": "open", "fields": ["number", "title", "draft", "head"], "perPage": 10}`
+
+### 🤖 Claude — 2026-11-16T22:24:10.039Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🧑 User — 2026-11-16T22:24:10.546Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🧑 User — 2026-11-16T22:24:10.839Z
+
+> ↩︎ result: [{"draft":true,"head":{"ref":"ccr-61131b9d-uj0oqb","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"aea7e77469e4744f97fa3576c97bb952c76f1705"},"number":11,"title":"Screen 05 tunnel: near gold frame, Blender paddles, game-vs-approved region metrics"},{"draft":true,"head":{"ref":"ccr-57af22a4-lsg7y7","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"e27c6fa0eac82a394f230d6e07e11bd529bbd666"},"number":10,"title":"DO NOT MERGE — Rainbow session ccr-57af22a4 (continues Screen 05 ?proj05=1 work)"},{"draft":true,"head":{"ref":"ccr-e546a360-cxmton","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"b2d88543fb14aa60bad429d5f05e0ffb5473e7dc"},"number":9,"title":"DO NOT MERGE — Screen 05: Marble feasibility test + ?proj05=1 approved water on the game river"},{"draft":true,"head":{"ref":"ccr-451ea8c7-3nqlis","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"97dda283bba47b647eabaf84595eecc11672ea1e"},"number":8,"title":"DO NOT MERGE — Rainbow newest work (account switch recovery, Screen 05 water wave 12)"},{"draft":true,"head":{"ref":"claude/rainbow-3d-account-recovery-hfb8p0","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"088dd3fc77c0cf18f1e853ffb27a0945e2 …[+1448 chars]
+
+### 🤖 Claude — 2026-11-16T22:24:11.386Z
+
+> 🔧 **TaskCreate** `{"subject": "Verify recovered game renders (default, BEFORE, proj05 + flow2)", "description": "Default 05 capture pixel-identical to baseline; protected BEFORE; proj05 locked capture vs saved; gameplay test with projflow05=2.", "activeForm": "Verifying recovered game renders"}`
+
+### 🧑 User — 2026-11-16T22:24:11.397Z
+
+> ↩︎ result: Task #1 created successfully: Verify recovered game renders (default, BEFORE, proj05 + flow2)
+
+### 🤖 Claude — 2026-11-16T22:24:12.735Z
+
+> 🔧 **TaskCreate** `{"subject": "Build ?projnear05=1 high-res near-water tile", "description": "Bake T2 from E via LUT (u -1..1 x s 130.5..137.5), mirrored repeat, gate N by mE, flow map W2 with mirrored slope sign; behind switch.", "activeForm": "Building high-res near-water tile"}`
+
+### 🧑 User — 2026-11-16T22:24:12.749Z
+
+> ↩︎ result: Task #2 created successfully: Build ?projnear05=1 high-res near-water tile
+
+### 🤖 Claude — 2026-11-16T22:24:14.234Z
+
+> 🔧 **TaskCreate** `{"subject": "Measure + capture riding frames 0/8/17/35u, clips, regression", "description": "Full-size captures BEFORE vs NEW, detail contrast numbers, ride clip mp4, locked-view pixel check, gameplay 8/8, default unchanged.", "activeForm": "Measuring and capturing ride evidence"}`
+
+### 🧑 User — 2026-11-16T22:24:14.247Z
+
+> ↩︎ result: Task #3 created successfully: Measure + capture riding frames 0/8/17/35u, clips, regression
+
+### 🤖 Claude — 2026-11-16T22:24:15.434Z
+
+> 🔧 **TaskCreate** `{"subject": "Save evidence + notes to GitHub, report to user", "description": "NOTES.md in qa/pilot05/proj/near/, transfer doc update, commit, push, verify remote, draft PR.", "activeForm": "Saving evidence to GitHub"}`
+
+### 🧑 User — 2026-11-16T22:24:15.456Z
+
+> ↩︎ result: Task #4 created successfully: Save evidence + notes to GitHub, report to user
+
+### 🤖 Claude — 2026-11-16T22:24:20.787Z
+
+> 🔧 **Bash** `{"command": "head -40 scripts/proj05-move.mjs; echo ----; head -25 scripts/capture.mjs; echo ----; ls qa/pilot05/*.png qa/pilot05/proj/compare/ qa/pilot05/proj/caps 2>/dev/null | head -40; cat package.json | grep -A15 '\"scripts\"'", "description": "Read capture/move script headers, list baselines"}`
+
+### 🧑 User — 2026-11-16T22:24:20.839Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 projection test — MOVING CAMERA (2026-11-16). Starts at the locked 05 checkpoint and rides forward with
+> // the real game simulation (Benny + camera rig + course unchanged), capturing full-size frames.
+> //   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> // --d: distances ahead of the checkpoint (units of s) → DIR/move_<d>.png (shader clock frozen at 12: shows layout only)
+> // --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> // --still=SECONDS: water animation at the LOCKED camera (clock runs, camera still) → DIR/still/0000.png …
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const Q = typeof opt.q === 'string' ? opt.q : '';
+> const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/move';
+> const D = typeof opt.d === 'string' ? opt.d.split(',').map(Number) : [];
+>  …[+4195 chars]
+
+### 🤖 Claude — 2026-11-16T22:24:24.552Z
+
+> 🔧 **Bash** `{"command": "grep -rl \"projlid05\" --include=*.md --include=*.json qa backups | head; echo ---; ls qa/pilot05/proj/tunnel/ | head -30", "description": "Find docs referencing paddle switch"}`
+
+### 🧑 User — 2026-11-16T22:24:24.603Z
+
+> ↩︎ result: qa/pilot05/proj/tunnel/NOTES.md
+> qa/pilot05/proj/tunnel/lid/REGION_METRICS.json
+> qa/pilot05/proj/tunnel/lid/tests/gameplay_projlid05.json
+> qa/pilot05/proj/tunnel/lid/move/move_log.json
+> qa/pilot05/proj/flow2/tests/gameplay_projflow05_2.json
+> backups/claude-sessions/e47fc047-26b4-5efa-bfda-db0784968866/transcript.md
+> backups/claude-sessions/dc483bdf-6b1c-535c-9b6e-845dc7bef559/transcript.md
+> backups/MANIFEST.json
+> ---
+> NOTES.md
+> frame
+> lid
+> model
+> probe
+
+### 🤖 Claude — 2026-11-16T22:24:27.113Z
+
+> 🔧 **Bash** `{"command": "grep -n \"projlid05\\|projwall05\\|projring05\\|projframe05\\|full stack\\|all switches\" qa/pilot05/proj/tunnel/NOTES.md | head -20; cat qa/pilot05/proj/flow2/tests/gameplay_projflow05_2.json | head -30; ls qa/pilot05/proj/tunnel/lid/", "description": "Find the full switch stack used for 05"}`
+
+### 🧑 User — 2026-11-16T22:24:27.148Z
+
+> ↩︎ result: 10:| `?projwall05=1` | purple perforated walls, one atlas row per bay AB…GX | `assets/textures/tunnel05/wall05.png` | `tools/proj05/tunnel_rings.py` → `tunnel_bake.py` |
+> 11:| `?projring05=1` | gold rings (approved ring B band on every 05 ring) | `assets/textures/tunnel05/ring05.png` | `tunnel_bake.py` |
+> 12:| `?projframe05=1` | near gold frame: bottom corners + bottom lip (`tube05_near_frame`) | `assets/textures/tunnel05/frame05.png` | `tools/proj05/frame_bake.py` |
+> 13:| `?projlid05=1` | the 6 wall paddles L1 L2 L3 / R1 R2 R3 as Blender-built trays (default pucks + far pucks off) | `assets/models/lids05.glb` (texture `lid05.png` inside) | `lid_mesh2d.py` → `scripts/proj05-lid-raycast.mjs` → Blender `lid_blender.py` |
+> 15:Full test URL: `?proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1`. Shader wrappers: `src/vfx/proj05Tunnel.ts`.
+> 19:  then re-run `tunnel_bake.py … correction.npz`. Coordinates: `node scripts/proj05-tunnel-probe.mjs --coords --all --q='projwall05=1&projring05=1' --raw=<scratch>`.
+> 23:* Near frame: `python3 -I tools/proj05/frame_bake.py assets/textures/tunnel05 3 --capture=<05.png with projframe05> [--reset=1]`
+> 30:| mean abs diff (levels), share within 20 |  …[+1483 chars]
+
+### 🤖 Claude — 2026-11-16T22:24:29.635Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "offset": 350, "limit": 40}`
+
+### 🧑 User — 2026-11-16T22:24:29.654Z
+
+> ↩︎ result: 350	    out="$(python3 -I -c 'import json; d=json.load(open("qa/continuity_report.json")); print(d["ok"], round(d["plunge"]["verticalDrop"],2))' 2>/dev/null)"
+> 351	  fi
+> 352	  if [ "${out%% *}" = True ]; then
+> 353	    rec tests "Build + game tests" ok "tsc OK; continuity OK (all stage joins gap 0, 07->08 drop ${out##* })" "$t"
+> 354	  else rec tests "Build + game tests" fail "tsc OK; continuity test failed (backups/.live/continuity.log)" "$t"; fi
+> 355	  [ "$FULL_TESTS" = 1 ] || return 0
+> 356	  t=$(now)
+> 357	  if timeout 900 node scripts/gameplay-test.mjs > "$LIVE/gameplay.log" 2>&1; then
+> 358	    drop="$(python3 -I -c 'import json; d=json.load(open("qa/gameplay_test.json")); p=d.get("plunge") or {}; print(p.get("verticalDrop", p) if isinstance(p,dict) else p)' 2>/dev/null)"
+> 359	    rec gameplay "Browser gameplay test" ok "pass: all checks (coins, hearts, pause, steering, no camera cut, victory), 07->08 plunge $drop, errors []" "$t"
+> 360	  else rec gameplay "Browser gameplay test" fail "node scripts/gameplay-test.mjs failed (backups/.live/gameplay.log)" "$t"; fi
+> 361	  # Screen 05: the default build must equal the current accepted picture (qa/pilot05/current_default_05.png),
+> 362	  # and the us …[+2200 chars]
+
+### 🤖 Claude — 2026-11-16T22:24:33.890Z
+
+I'll check whether the capture tools can run in parallel (port handling) before launching the verification captures.
+
+### 🤖 Claude — 2026-11-16T22:24:34.856Z
+
+> 🔧 **Bash** `{"command": "grep -n \"startVite\" -A12 scripts/lib/pw.mjs | head -30; grep -n \"startVite\\|--q\" scripts/gameplay-test.mjs | head", "description": "Check vite port handling in capture lib"}`
+
+### 🧑 User — 2026-11-16T22:24:34.898Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 20:const vite = await startVite(5213);
+
+### 🤖 Claude — 2026-11-16T22:24:40.891Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/verify && mkdir -p $SP && FULL='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && \\\nnode scripts/capture.mjs 05 --out=$SP/default > $SP/log.txt 2>&1; \\\nnode scripts/capture.mjs 05 --out=$SP/before \"--q=ringa=26&nearfloor05=0\" >> $SP/log.txt 2>&1; \\\nnode scripts/capture.mjs 05 --out=$SP/full \"--q=$FULL\" >> $SP/log.txt 2>&1; \\\nnode scripts/capture.mjs 05 --out=$SP/full_flow2 \"--q=$FULL&projflow05=2\" >> $SP/log.txt 2>&1; \\\ngit checkout -q -- qa/capture_log.json; ls $SP/ …[+117 chars]`
+
+### 🧑 User — 2026-11-16T22:24:40.921Z
+
+> ↩︎ result: Command running in background with ID: bm122w00x. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/bm122w00x.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T22:24:42.699Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/proj/near/tests && node scripts/gameplay-test.mjs '--q=proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2' --out=qa/pilot05/proj/near/tests/gameplay_recovered_full_flow2.json 2>&1 | tail -5", "description": "Gameplay test on recovered full stack + flow2", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T22:24:42.771Z
+
+> ↩︎ result: Command running in background with ID: bsjdbnhjl. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/bsjdbnhjl.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T22:24:44.774Z
+
+While those run, let me look at the saved blur evidence from the previous session to see exactly what we're fixing.
+
+### 🤖 Claude — 2026-11-16T22:24:45.383Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/flow2/ride/layer_map_0_8_17u_green_exact_blue_near_red_tile.png"}`
+
+### 🧑 User — 2026-11-16T22:24:45.435Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:24:54.320Z
+
+> 🔧 **Bash** `{"command": "TaskUpdate() { :; }; python3 -I - <<'EOF'\nimport json, numpy as np\nfrom PIL import Image\nA=\"assets/textures/water05/\"\nL=json.load(open(A+\"proj05_lut.json\"))\nE=L[\"E\"]; print(\"E\", E[\"s0\"], E[\"s1\"], E[\"width\"], E[\"height\"], \"n\", E[\"n\"]); print(\"N\", L[\"N\"], \"T\", L[\"T\"], \"D\", L[\"D\"])\ns=np.linspace(E[\"s0\"],E[\"s1\"],E[\"n\"]); V=np.array(E[\"V\"]); c=np.array(E[\"c\"]); w=np.array(E[\"w\"])\ndVds=np.gradient(V,s)*E[\"height\"]\nfor sv in [129.5,130,130.5,131,132,133,134,135,136,137,137.5,138,140,142,145,150,160,170,180]:\n    i=np.argmin(abs(s-sv) …[+342 chars]`
+
+### 🧑 User — 2026-11-16T22:24:54.589Z
+
+> ↩︎ result: E 129.71197937011718 180.97108032226564 1024 1458 n 1024
+> N {'s0': 126.0, 's1': 166.0, 'width': 512, 'height': 960} T {'a': 134.0, 'L': 14.0, 'width': 512, 'height': 336} D {'u0': -0.18, 'u1': 0.18, 's0': 131.5, 's1': 134.3, 'size': 512, 'lum_gain': 1.0}
+> s  129.5: rows/u  301.5  u-range [-0.287,+0.335]  cols/u(across, per u-unit)  1646.5
+> s  130.0: rows/u  281.6  u-range [-0.300,+0.345]  cols/u(across, per u-unit)  1586.2
+> s  130.5: rows/u  228.7  u-range [-0.334,+0.372]  cols/u(across, per u-unit)  1449.5
+> s  131.0: rows/u  185.6  u-range [-0.369,+0.399]  cols/u(across, per u-unit)  1333.4
+> s  132.0: rows/u  124.8  u-range [-0.441,+0.450]  cols/u(across, per u-unit)  1149.4
+> s  133.0: rows/u   90.5  u-range [-0.518,+0.495]  cols/u(across, per u-unit)  1010.9
+> s  134.0: rows/u   74.4  u-range [-0.599,+0.533]  cols/u(across, per u-unit)   904.5
+> s  135.0: rows/u   66.6  u-range [-0.683,+0.564]  cols/u(across, per u-unit)   820.8
+> s  136.0: rows/u   61.3  u-range [-0.765,+0.589]  cols/u(across, per u-unit)   756.3
+> s  137.0: rows/u   55.9  u-range [-0.853,+0.583]  cols/u(across, per u-unit)   713.0
+> s  137.5: rows/u   52.8  u-range [-0.899,+0.555]  cols/u(across, per u-unit)   704.5
+> s  138.0: r …[+773 chars]
+
+### 🤖 Claude — 2026-11-16T22:25:25.063Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/bsjdbnhjl.output; python3 -I -c \"\nimport json; d=json.load(open('qa/pilot05/proj/near/tests/gameplay_recovered_full_flow2.json'))\nprint({k:v.get('pass') for k,v in d['checks'].items()}); print('errors', d.get('errors')); print('plunge', d.get('plunge'))\"", "description": "Read gameplay test results"}`
+
+### 🧑 User — 2026-11-16T22:25:25.135Z
+
+> ↩︎ result: "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+> 
+> [exited with code 0]
+> {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> errors []
+> plunge {'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}
+
+### 🤖 Claude — 2026-11-16T22:26:40.372Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "content": "\"\"\"Screen 05 `?proj05=1&projnear05=1` — HIGH-RESOLUTION NEAR TILE (plan in qa/pilot05/proj/flow2/NOTES.md, part 2).\n\nWhy: while riding, the near water switches from the exact layer E (sharp only from the locked camera) to the near layer N\nand the tile T, both stored at 24 texels per world unit along the river, while the screen near Benny needs 100+ -> the\napproved swirls turn into a pastel smear 8-17 u into the ride. The crisp approved detail that exists is the NEAREST\nwater of the locked view (E: 230-280 rows p …[+6101 chars]`
+
+### 🧑 User — 2026-11-16T22:26:40.408Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/proj05/near_bake.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:26:41.669Z
+
+The verification captures finished. Comparing each against its saved reference pixel-for-pixel:
+
+### 🤖 Claude — 2026-11-16T22:26:46.427Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/verify; tail -3 $SP/log.txt; git status --short | head; python3 -I - \"$SP\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsp=sys.argv[1]\ndef cmp(a,b,label):\n    A=np.asarray(Image.open(a).convert(\"RGB\")).astype(int); B=np.asarray(Image.open(b).convert(\"RGB\")).astype(int)\n    if A.shape!=B.shape: print(label,\"SIZE MISMATCH\",A.shape,B.shape); return\n    d=np.abs(A-B).max(-1); print(f\"{label}: max diff {d.max()}, pixels differing {int((d>0).sum())}, >2 levels {int((d>2).sum())} …[+536 chars]`
+
+### 🧑 User — 2026-11-16T22:26:47.264Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/verify/before/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/verify/full/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":553869,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/verify/full_flow2/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":553869,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> ?? qa/pilot05/proj/near/
+> ?? tools/proj05/near_bake.py
+> default 05 vs saved current_default_05: max diff 0, pixels differing 0, >2 levels 0
+> protected BEFORE vs saved baseline: max diff 0, pixels differing 0, >2 levels 0
+> full stack vs saved paddles capture: max diff 0, pixels differing 0, >2 levels 0
+> full+projflow05=2 (frozen clock) vs full: max diff 1, pi …[+30 chars]
+
+### 🤖 Claude — 2026-11-16T22:26:50.915Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T22:26:50.923Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-16T22:26:51.348Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T22:26:51.356Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T22:26:54.388Z
+
+> 🔧 **Bash** `{"command": "cp assets/textures/water05/proj05_lut.json /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/lut_before.json && sha256sum assets/textures/water05/* > /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/water05_before.sha && time python3 -I tools/proj05/near_bake.py assets/textures/water05 && sha256sum -c /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/water05_before.sha | grep -v ': OK' ; ls -la assets/textures/water05/", "description": "Run near tile bake, confirm existing textures unt …[+27 chars]`
+
+### 🧑 User — 2026-11-16T22:26:56.921Z
+
+> ↩︎ result: {
+>  "note": "proj05 near tile (tools/proj05/near_bake.py); shader: ?proj05=1&projnear05=1 (src/vfx/waterRibbon.ts)",
+>  "T2": {
+>   "a": 130.5,
+>   "L": 7.0,
+>   "width": 1024,
+>   "height": 768,
+>   "wrapT": "mirrored",
+>   "period": 14.0
+>  },
+>  "texels_per_world_unit": {
+>   "along": 109.7,
+>   "across": 106.7,
+>   "old_N_T_along": 24.0,
+>   "old_T_across": 53.3
+>  },
+>  "source_rows_per_world_unit": {
+>   "130.5": 230.0,
+>   "132.0": 125.6,
+>   "134.0": 74.6,
+>   "136.0": 61.2,
+>   "137.5": 52.6
+>  },
+>  "visible_u_range": {
+>   "130.5": [
+>    -0.28,
+>    0.323
+>   ],
+>   "132.0": [
+>    -0.384,
+>    0.402
+>   ],
+>   "134.0": [
+>    -0.537,
+>    0.488
+>   ],
+>   "136.0": [
+>    -0.705,
+>    0.55
+>   ],
+>   "137.5": [
+>    -0.836,
+>    0.512
+>   ]
+>  },
+>  "share_of_texels_from_visible_water": 0.506,
+>  "flow": {
+>   "file": "proj05_WT2.png",
+>   "height": 56,
+>   "mean_abs_slope_world": 0.459,
+>   "flow_area": 0.905
+>  }
+> }
+> 
+> real	0m2.472s
+> user	0m3.083s
+> sys	0m0.280s
+> total 4188
+> drwxr-xr-x 2 root root    4096 Nov 16 22:26 .
+> drwxr-xr-x 4 root root    4096 Nov 16 22:21 ..
+> -rw-r--r-- 1 root root   85585 Nov 16 22:21 proj05_A.png
+> -rw-r--r-- 1 root root   59068 Nov 16 22:21 proj05_D.png
+> -rw-r--r-- 1 root root 2029538 Nov 16 22:21 proj05_E.png
+> -rw-r--r-- 1 root root  229896 Nov 16 22: …[+544 chars]
+
+### 🤖 Claude — 2026-11-16T22:27:04.111Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I - \"$SP\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsp=sys.argv[1]; A=\"assets/textures/water05/\"\nT2=Image.open(A+\"proj05_T2.png\").convert(\"RGB\")           # s 130.5..137.5, 1024x768\nT=Image.open(A+\"proj05_T.png\").convert(\"RGB\")             # s 134..148, 512x336 (24/u)\n# old T, s 134..141 (rows 0..168), shown at T2 scale 1024x768\nTc=T.crop((0,0,512,168)).resize((1024,768), Image.BILINEAR)\n# flip vertically so far (larger s) is at top, like the screen\ncan …[+290 chars]`
+
+### 🧑 User — 2026-11-16T22:27:04.630Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T22:27:06.171Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/tiles_old_left_new_right.png"}`
+
+### 🧑 User — 2026-11-16T22:27:06.495Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T22:27:06.491Z
+
+[Image: original 2068x768, displayed at 2000x743. Multiply coordinates by 1.03 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T22:28:32.939Z
+
+> 🔧 **Bash** `{"command": "head -30 scripts/proj05-probe.mjs; grep -n \"qa3d\\|probe\" src/game/Game.ts | head -20", "description": "Inspect probe script and QA hook"}`
+
+### 🧑 User — 2026-11-16T22:28:32.990Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 texture-projection probe (Specialist 1, 2026-11-16) — exact, read-only measurements of the REAL game.
+> //   node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe] [--raw=DIR for the float maps]
+> // Opens the game at the locked 05 checkpoint (time frozen, as scripts/capture.mjs) and writes into OUT:
+> //   camera.json      the live render camera (world matrix, projection matrix, vFOV, size) + uTime + stage numbers
+> //   uv_river.f32     864×1536×4 float32 (top row first): per pixel the river surface the camera sees when ONLY the
+> //                    river (+ the far tunnel wall as occluder) is drawn — ribbon: (u, s, 1 + skirt, 1);
+> //                    far block: (uv.x across the floor chord, Z virtual depth, 3, lateral units); else 0
+> //   uv_scene.f32     the same, but every other static object of the scene (walls, rings, lids, far wall, glow)
+> //                    occludes — Benny, coins, bubbles, foam, splash and spray hidden (not part of the water layer)
+> //   uv_foam.f32      only the game's 3D foam (berm / rafts / rim / flank) drawn as id 4 over the scene depth
+> //   river05_mesh.json  the river meshes exactly as rendered at thi …[+1388 chars]
+
+### 🤖 Claude — 2026-11-16T22:28:34.386Z
+
+> 🔧 **Bash** `{"command": "sed -n 30,140p scripts/proj05-probe.mjs", "description": "Read probe script body"}`
+
+### 🧑 User — 2026-11-16T22:28:34.417Z
+
+> ↩︎ result: try {
+>   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   page.on('console', (m) => { if (m.type() === 'error') console.error('console', m.text()); });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&hide=benny,coins&waterhide=crown,spray,bubbles,splash05,splashCrown${Q ? '&' + Q : ''}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   const meta = await page.evaluate(async () => {
+>     const R = window.__rainbow;
+>     R.goto('05');
+>     const { scene, camera, renderer, composer } = R.qa3d();
+>     const ribbon = scene.getObjectByName('water_ribbon');
+>     const far = scene.getObjectByName('tube05_far_river');
+>     const farWall = scene.getObjectByName('tube05_far_wall');
+>     const apron = scene.getObjectByName('proj05_apron');   // ?proj05=1: visual-only bank strip (id 5: t·side, s)
+>     // the game's own THREE classes, taken from live objects (no second three.js instance)
+>     const T3 = { FloatType: 1015, RGBAFormat: 1023, DoubleSide: 2 };
+>     const RT = composer.renderTarget1.constructor, SM = ribbon.materi …[+6126 chars]
+
+### 🤖 Claude — 2026-11-16T22:28:58.148Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/proj05-ride-probe.mjs", "content": "#!/usr/bin/env node\n// Screen 05 RIDE probe (2026-11-16, `?projnear05` work) — read-only: which river coordinates (u across −1..1, s along)\n// each screen pixel shows while Benny rides forward from the locked 05 checkpoint with the REAL simulation, and how\n// many screen pixels one world unit of river covers there (the texel density a water texture needs to stay sharp).\n//   node scripts/proj05-ride-probe.mjs [--q='switches'] --out=DIR [--d=0,8,17,35]\n// DIR/ride_<d>.f32: 864×1536×4 float32 (top row first): (u, …[+5386 chars]`
+
+### 🧑 User — 2026-11-16T22:28:58.184Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/proj05-ride-probe.mjs (file state is current in your context — no need to Read it back)
+
