@@ -763,3 +763,106 @@ I'll track this as a task list, since it has several separate parts.
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:session-start-before-setup 2>&1 | tail -15; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1)\"", "description": "Run a manual verified autosave and compare remote vs local SHA"}`
 
+### 🧑 User — 2026-11-16T10:45:27.629Z
+
+> ↩︎ result: {
+>   "time": "2026-11-16T10:45:19+00:00",
+>   "reason": "manual:session-start-before-setup",
+>   "result": "committed+pushed",
+>   "files_staged": 4,
+>   "pushed_verified": true,
+>   "branch": "ccr-251ed97c-ty2xvp",
+>   "note": "following session branch 'ccr-251ed97c-ty2xvp' (config branch 'ccr-44f84024-ii5iih')",
+>   "commit": "d72ed52ebb6b42c89cbfbae3ff0382de9c2de7d0",
+>   "duration_s": 8
+> }
+> local  d72ed52ebb6b42c89cbfbae3ff0382de9c2de7d0
+> remote d72ed52ebb6b42c89cbfbae3ff0382de9c2de7d0
+
+### 🤖 Claude — 2026-11-16T10:45:31.282Z
+
+Saved and verified: `d72ed52` is on GitHub. Now the audit: tool versions, installed state, LFS, the cloud environment and the remaining docs.
+
+### 🤖 Claude — 2026-11-16T10:45:31.732Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T10:45:31.748Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-16T10:45:32.184Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T10:45:32.192Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T10:45:35.435Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; for c in node npm npx python3 git git-lfs java javac gradle blender cron crontab claude unzip curl xz convert ffmpeg; do printf '%-10s ' \"$c\"; p=$(command -v $c) && echo \"$p\" || echo MISSING; done; echo; node -v; npm -v; git --version; git lfs version; java -version 2>&1 | head -1; blender --version 2>/dev/null | head -1; ls /opt/android-sdk 2>&1 | head; ls /opt/pw-browsers 2>&1; node -e \"console.log('playwright', require('playwright/package.json').version)\" 2>&1; ls node_modules 2>/dev/null | wc -l; python3 -c \"import PIL, numpy; print('PIL', PIL.__ …[+188 chars]`
+
+### 🧑 User — 2026-11-16T10:45:35.965Z
+
+> ↩︎ result: node       /opt/node22/bin/node
+> npm        /opt/node22/bin/npm
+> npx        /opt/node22/bin/npx
+> python3    /usr/local/bin/python3
+> git        /usr/bin/git
+> git-lfs    /usr/bin/git-lfs
+> java       /usr/bin/java
+> javac      /usr/bin/javac
+> gradle     /opt/gradle/bin/gradle
+> blender    MISSING
+> cron       MISSING
+> crontab    MISSING
+> claude     /opt/node22/bin/claude
+> unzip      /usr/bin/unzip
+> curl       /usr/bin/curl
+> xz         /usr/bin/xz
+> convert    /usr/bin/convert
+> ffmpeg     /usr/bin/ffmpeg
+> 
+> v22.23.4
+> 10.9.9
+> git version 2.43.0
+> git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+> Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=40267 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|1 …[+393 chars]
+
+### 🤖 Claude — 2026-11-16T10:45:37.237Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git lfs ls-files | wc -l; git lfs ls-files | awk '$2==\"-\"' | wc -l; git lfs ls-files -s | head -30; echo; cat .gitattributes; echo; cat .gitignore; echo; python3 -c \"import json;d=json.load(open('package.json'));print(json.dumps(d.get('scripts'),indent=1));print(d.get('dependencies'),d.get('devDependencies'))\"", "description": "List LFS files, stub count, attributes, ignores, npm scripts"}`
+
+### 🤖 Claude — 2026-11-16T10:45:37.291Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🧑 User — 2026-11-16T10:45:37.604Z
+
+> ↩︎ result: 24
+> 0
+> 40633fdd02 * assets/models/benny.glb (1.1 MB)
+> fa846773af * assets/models/rainbow_girl.glb (3.5 MB)
+> 982e007c75 * backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip (5.5 MB)
+> dca8d754b7 * builds/rainbow-debug.apk (7.3 MB)
+> 25baa89f89 * qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend (445 KB)
+> 90e43977de * qa/pilot05/wave6/camera_lock/screen05_layout.blend (412 KB)
+> 8567f56ef7 * qa/pilot05/wave6/camera_lock/screen05_layout.glb (2.8 MB)
+> b1a21d0843 * qa/worldlabs/05/blender/screen05_layout.blend (410 KB)
+> 8cfd5093ed * qa/worldlabs/05/blender/screen05_layout.glb (2.8 MB)
+> cdaf62b116 * qa/worldlabs/05/pilot/draft/collider.glb (942 KB)
+> 915423cf00 * qa/worldlabs/05/pilot/draft/import/draft05.blend (11 MB)
+> 3aabf9f058 * qa/worldlabs/05/pilot/draft/import/draft05_underlay.glb (225 KB)
+> fba5764073 * qa/worldlabs/05/pilot/draft/splats_100k.spz (1.3 MB)
+> 11d359d5bc * qa/worldlabs/05/pilot/draft/splats_500k.ply (28 MB)
+> 18e9dfe4d4 * qa/worldlabs/05/pilot/draft/splats_500k.spz (5.9 MB)
+> 6cbc1d15a7 * qa/worldlabs/05/pilot/draft/splats_full_res.spz (26 MB)
+> d7e952d0e5 * qa/worldlabs/05/pilot/full/collider.glb (1.1 MB)
+> 5704dfcd8f * qa/worldlabs/05/pilot/full/import/full05.blend (16 MB)
+> f1e …[+2708 chars]
+
+### 🧑 User — 2026-11-16T10:45:47.478Z
+
+> ↩︎ result: {"environment_id":"env_01BXqU5xg4mEAG9brMLzVNqf","name":"Default","description":"","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":false,"setup_script":"","network_secrets":[{"hosts":["api.worldlabs.ai"],"header_names":["WLT-Api-Key"],"name":"api.worldlabs.ai"}],"is_current":true,"editable_by_you":true,"session_has_repository":true,"note":"Edits made with update_environment change the stored environment; see that tool for when each kind of change takes effect. `setup_script` is returned only for an environment you can edit (`setup_script_withheld` / `description_withheld` mean the organization's compliance settings keep the stored text out of this tool — they refuse a `setup_script`, `new_name` or `new_description` edit too — or that this could not be checked right now, in which case calling again may return it). `other_cloud_environments` lists the user's other cloud environments (`other_cloud_environments_not_shown` counts any left out; the field is absent when they could not be read). create_environment refuses a name already  …[+792 chars]
+
