@@ -163,7 +163,19 @@ const q05 = (key: string): boolean => {
  *               animated ripples, glossy highlights and the Marble panorama's reflection follow the S-curves.
  * All off (default): every shader program and geometry attribute is the previous one (pixel-identical build).
  */
-export const RIVER05: boolean = q05('river05');
+/**
+ * Screen 05 test W12 (2026-11-16, qa/pilot05/wave12/NOTES.md), two more single factors on top of `?river05=1` (each
+ * switch turns river05 on; default build untouched):
+ *  `?silk05=1`  WATER MATERIAL: the user found river05 "too grainy" — one broad ripple octave on a longer tile, the fine
+ *               brushed cores / ripple crests / second flare set mostly removed, highlights and panorama reflections
+ *               keep the water's own cyan / magenta hue (only the strongest burn white): long, smooth, flow-aligned
+ *               satin lanes and a deep electric cyan instead of a pastel sheet of hair lines.
+ *  `?puff05=1`  FOAM BANKS: where the puff cells of the W11 foam shelves get too small they fall back to a coarser
+ *               cell layer (round mounds at every distance) instead of the flat lavender fill that drew hard wedges.
+ */
+export const SILK05: boolean = q05('silk05');
+export const PUFF05: boolean = q05('puff05');
+export const RIVER05: boolean = SILK05 || PUFF05 || q05('river05');
 export const FARW05: boolean = RIVER05 || q05('farw05');
 export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
 export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
@@ -831,7 +843,13 @@ void main() {
     vec4 B5 = brush05(X, v5, fwX5, fws, uTime * 0.35);
     // near the camera the brushed lines stay faint (the approved near water is smooth glossy swells, no fanning rays)
     float br = mix(B5.y, 0.5 + (B5.y - 0.5) * 0.3, near5);
+    #ifdef SILK05
+    // W12: the brushed noise only tints the satin (its fine octaves read as grain); the crisp lens cores mostly go
+    br = 0.5 + (br - 0.5) * 0.45;
+    float bcore = B5.z * 0.3 * (1.0 - 0.8 * near5);
+    #else
     float bcore = B5.z * (1.0 - 0.8 * near5);
+    #endif
     float bglow = B5.w * (1.0 - 0.8 * near5);
     float lane5 = B5.x * (1.0 - 0.6 * near5);
     #ifdef FLOWMAP05
@@ -842,19 +860,32 @@ void main() {
     // bend — the shear a single scrolling texture cannot do), its turbulence and its phase. (Sliding the stretched
     // map sideways by the map's direction channel cross-hatched the streaks: tested and dropped, it01 / it02.)
     vec4 fm = texture2D(uFlowMap, vec2(u * 0.5 + 0.5, (s - uFlowS.x) * uFlowS.y));
+    #ifdef SILK05
+    const vec2 RSC = vec2(0.3, 0.011);                         // W12: broader, longer tile (3.3 u across x 90 u along)
+    #else
     const vec2 RSC = vec2(0.42, 0.016);                        // ripple tile = 2.4 u across x 62 u along the river
+    #endif
     vec2 uvR = vec2(X, s) * RSC;
     vec2 advR = vec2(0.0, fm.g * uFlow05 * 1.25 * RSC.y);      // uv travelled during one 1.25 s cycle
     float cycR = uTime * 0.8 + fm.a;
     vec4 rp = flowRipple(uRipple, uvR, advR, cycR);
-    #ifndef LOW_Q
+    #if !defined(LOW_Q) && !defined(SILK05)
     vec4 rp2 = flowRipple(uRipple, uvR * vec2(2.3, 2.9) + 0.19, advR * 2.9 * 1.15, cycR + 0.31);
     rp = vec4(rp.rg + (rp2.rg - 0.5) * 0.4, rp.b * 0.72 + rp2.b * 0.28, max(rp.a, rp2.a * 0.7));
     #endif
+    #ifdef SILK05
+    // W12 silk: the one broad ripple octave carries the shading as long liquid lanes; the crests are no longer drawn
+    // as crisp lines, they become soft saturated highlight lanes along each swell (bglow), only the very top stays crisp
+    lane5 += (rp.b - 0.5) * (0.8 + 0.2 * fm.b) * (1.0 - 0.3 * near5);
+    float silkHi = smoothstep(0.7, 0.96, rp.b) * (1.0 - 0.5 * near5);
+    bglow = max(bglow, silkHi * 0.85);
+    bcore = max(bcore, rp.a * rp.a * 0.22 * (1.0 - 0.7 * near5));
+    #else
     // the ripples shade the satin (long light / dark liquid lanes along the flow) and add sparse crisp crests,
     // a little busier where the flow map marks shear and bends; the band edges keep their clean brushed line
     lane5 += (rp.b - 0.5) * (0.5 + 0.25 * fm.b) * (1.0 - 0.35 * near5);
     bcore = max(bcore, rp.a * (0.4 + 0.35 * fm.b) * (1.0 - 0.6 * near5));
+    #endif
     #endif
     // band coordinate of the nearer band: -1 = bank-side edge .. +1 = core-side edge, |t| > 1 outside the band
     float tL5 = sdL / max(wL, 1e-3), tR5 = -sdR / max(wR, 1e-3);
@@ -872,9 +903,16 @@ void main() {
     vec3 cy = mix(W5_CDEEP, W5_CDEEP2, smoothstep(0.0, 0.22, h5));
     cy = mix(cy, W5_CMID, smoothstep(0.22, 0.45, h5));
     cy = mix(cy, W5_CBRIGHT, smoothstep(0.5, 0.76, h5) * 0.85);
+    #ifdef SILK05
+    // W12: highlights stay saturated aqua (approved cyan pixels: S ≈ 0.99), only the rare strongest cores go white
+    cy = mix(cy, W5_CAQUA, bglow * 0.6);
+    cy = mix(cy, W5_CAQUA, bcore * 0.8);
+    cy += vec3(0.5, 0.9, 0.9) * bcore * bcore * bcore * 0.8;
+    #else
     cy = mix(cy, W5_CAQUA, bglow * 0.55);
     cy = mix(cy, W5_CAQUAW, bcore * 0.85);
     cy += vec3(0.9, 1.1, 1.1) * bcore * bcore * 0.9;   // (it04) whiter streak cores
+    #endif
     // near field: thick glossy swells rolling past Benny, bowed around his track (approved: ∩ highlight arcs
     // ≈60–100 px apart behind him), bright glossy cyan body, crisp aqua-white crest lines broken into segments
     float crestN = 0.0, phN = 0.0;
@@ -892,9 +930,15 @@ void main() {
       float seg = smoothstep(0.3, 0.58, vnoise(vec2(dlN * 1.4 + 9.0, v5 * 1.3)));
       float sp = max(0.0, sin(ph + 1.0));
       crestN = (pow(sp, 36.0) + 0.5 * pow(sp, 7.0)) * seg;
+      #ifdef SILK05
+      // W12: broad glossy swell tops (aqua sheen) instead of pixel-thin white crest lines
+      nb = mix(nb, W5_CAQUA, clamp(0.65 * pow(sp, 5.0) * seg, 0.0, 1.0));
+      nb = mix(nb, W5_CAQUAW, clamp(pow(sp, 22.0) * seg, 0.0, 1.0) * 0.5);
+      #else
       nb = mix(nb, W5_CAQUA, clamp(0.5 * pow(sp, 7.0) * seg, 0.0, 1.0));
       nb = mix(nb, W5_CAQUAW, clamp(pow(sp, 36.0) * seg, 0.0, 1.0) * 0.95);
       nb += vec3(0.6, 0.9, 0.9) * pow(sp, 140.0) * seg * 1.4;
+      #endif
       cy = mix(cy, nb, near5);
     }
     // deep blue / blue-violet water between a band and its bank
@@ -954,12 +998,25 @@ void main() {
     vec3 pano5 = texture2D(uPano, puv5).rgb;
     float plum5 = max(pano5.r, max(pano5.g, pano5.b));
     float fres5 = 0.06 + 0.94 * pow(1.0 - nv5, 5.0);
+    #ifdef SILK05
+    // W12: the mirrored lamps keep the water's hue (glossy, not milky); only the brightest ones burn white
+    vec3 reflHue5 = mix(W5_CAQUA, W5_PLIGHT, pk5) * plum5 * 1.35;
+    c5 += mix(reflHue5, vec3(plum5), smoothstep(0.9, 1.0, plum5) * 0.6) * smoothstep(0.62, 0.97, plum5) * fres5 * uPanoK;
+    // long smooth satin sheen along the crest of each broad swell (mid field), same hue as the water under it
+    c5 = mix(c5, mix(W5_CAQUAW, W5_PPALE, pk5), silkHi * mid5 * 0.28);
+    #else
     c5 += mix(pano5, vec3(plum5), 0.55) * smoothstep(0.5, 0.95, plum5) * fres5 * uPanoK;
+    #endif
     #endif
     #ifndef LOW_Q
     // long glossy flares carried by the current (approved mid field: elongated white star streaks along the flow)
+    #ifdef SILK05
+    // W12: one sparse set of longer flares (selective white highlights) instead of two dense sets
+    float flA = flowGlint(vec2(X * 1.6, v5 * 0.12), 0.6, 48.0, 4.6, 0.0, uTime);
+    #else
     float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.85, 34.0, 4.8, 0.0, uTime);
     flA = max(flA, 0.85 * flowGlint(vec2(X * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.6, 18.0, 4.4, 0.0, uTime + 1.9));
+    #endif
     // near: big flares lying across the flow on the swell crests + lens flares (white core, aqua glow)
     float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.8, 56.0, 5.0, 0.85, uTime + 2.7);
     // (it03) jagged lightning flares replace the flat lens pills (two cell sets so they never line up)
@@ -967,8 +1024,10 @@ void main() {
     // like the approved, smaller cells across (it03 drew only ≈2 bolts in the near field)
     float gC = (phN - 0.571) / 6.2832 + 0.5;
     vec2 bz = bolt05(vec2(X * 2.4 + 0.3 * sin(gC * 2.1), gC), 0.7, 64.0, 6.5, 4.17);
+    #ifndef SILK05
     vec2 bz2 = bolt05(vec2(X * 1.1 + 0.41, v5 * 2.0 + 0.7 * sin(X * 4.7 + 2.2)), 0.3, 40.0, 4.0, 9.31);
     bz = max(bz, bz2 * 0.8);
+    #endif
     float boltN = near5 * (1.0 - pk5);
     c5 = mix(c5, W5_CAQUA, clamp(bz.y * 0.55, 0.0, 1.0) * boltN);
     c5 += vec3(2.0, 2.3, 2.4) * bz.x * boltN;
@@ -1082,6 +1141,14 @@ void main() {
       float c1u = cells(pc + vec2(0.0, 0.16));
       float c2 = cells(vec2(lat * 4.6 + 5.3, s * 1.05));
       float f1 = 1.0 - smoothstep(0.1, 0.3, fl2 * 1.6), f2 = 1.0 - smoothstep(0.1, 0.3, fl2 * 4.6);
+      #ifdef PUFF05
+      // W12: where the puffs get too small, 2.4x larger mounds take over (round foam at every distance, no flat fill)
+      vec2 pc0 = pc * 0.42 + 3.1;
+      float c0 = cells(pc0), c0u = cells(pc0 + vec2(0.0, 0.16));
+      c1 = mix(c0, c1, f1);
+      c1u = mix(c0u, c1u, f1);
+      f1 = max(f1, 1.0 - smoothstep(0.1, 0.3, fl2 * 0.67));
+      #endif
       float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.55 * f1) * shOn;   // the waterline bulges round each puff
       float dome = 1.0 - smoothstep(0.15, 0.78, c1);
       float lit = clamp((c1u - c1) * 3.2 + 0.55, 0.0, 1.0);                 // top of each puff catches the light
@@ -1286,7 +1353,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'water_ribbon';

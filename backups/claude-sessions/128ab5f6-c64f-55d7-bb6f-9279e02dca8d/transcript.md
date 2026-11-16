@@ -936,3 +936,716 @@ You declined the setup-script change, so I won't propose it again; the SessionSt
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T13:47:22.504Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && wc -l src/vfx/waterRibbon.ts src/vfx/flow05.ts src/world/far05.ts src/world/materials.ts src/vfx/glsl.ts && grep -n \"export\\|WATER05\\|FLOW05\\|RIVER05\\|FARW05\\|q05(\" src/vfx/waterRibbon.ts | head -60", "description": "Survey water source files and switches"}`
+
+### 🧑 User — 2026-11-16T13:47:22.568Z
+
+> ↩︎ result: 1304 src/vfx/waterRibbon.ts
+>    231 src/vfx/flow05.ts
+>    321 src/world/far05.ts
+>   1157 src/world/materials.ts
+>    168 src/vfx/glsl.ts
+>   3181 total
+> 15:import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> 21:export const EDGE_LIFT = 0.28;
+> 71:export const CORE_SWING = 0.9;
+> 72:export function coreLateral(course: Course, s: number): number {
+> 79:export const sbend05 = (s: number) => 1.05 * Math.sin(s * 0.31 - 0.834) + 0.18 * Math.sin(s * 0.62 + 0.6);
+> 90:export function coreShiftW10(course: Course, s: number): number {
+> 91:  if (!WATER05) return 0;
+> 126:const RIVER05_PAL = {
+> 137:const FLOW05 = 1.3;
+> 145: * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+> 166:export const RIVER05: boolean = q05('river05');
+> 167:export const FARW05: boolean = RIVER05 || q05('farw05');
+> 168:export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+> 169:export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
+> 180:export function channel05(course: Course, s: number): { c: number; hw: number } {
+> 182:  if (!FARW05) return { c: 0, hw };
+> 193:export function ampAt(course: Course, s: number): number {
+> 212:export function ribbonWave …[+1277 chars]
+
+### 🤖 Claude — 2026-11-16T13:47:23.872Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/flow05.ts"}`
+
+### 🧑 User — 2026-11-16T13:47:23.884Z
+
+> ↩︎ result: 1	/**
+> 2	 * Screen 05 test W11, material factor (`?flow05=1` / `?river05=1`): flow map + ripple map for the 05 river.
+> 3	 *
+> 4	 * FLOW MAP "from curves" (flowField05): a small RGBA8 texture over the river's own (u, s) domain — u across the
+> 5	 * ribbon (−1 … 1 = bank to bank), s along the master course through stage 05 — generated at load time from the SAME
+> 6	 * curves the game rides and draws: the course spline (course.ts meander05), the visible channel (channel05), the
+> 7	 * cyan-core swing (coreLateral + coreShiftW10) and the magenta bands' S (sbend05). Every texel holds the local flow:
+> 8	 *   R  lateral flow per unit travelled downstream (± FLOW_LAT_RANGE): the streamline through the texel keeps its
+> 9	 *      fraction between the core line and the bank, so the flow bends with every S-curve and squeezes through
+> 10	 *      the narrows beside a foam shelf
+> 11	 *   G  speed (0 … 1): fast in the core, slower toward the banks, a little faster on the outside of a bend,
+> 12	 *      almost still on a foam shelf
+> 13	 *   B  turbulence (0 … 1): bank shear + bends (brighter, busier ripples)
+> 14	 *   A  phase noise (0 … 1): de-synchronises the two-phase cycle from place to place (no visible pulse)
+> 1 …[+10947 chars]
+
+### 🤖 Claude — 2026-11-16T13:47:24.474Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 100, "limit": 230}`
+
+### 🧑 User — 2026-11-16T13:47:24.494Z
+
+> ↩︎ result: 100	/**
+> 101	 * Ribbon colours in shader (pre-tonemap, linear) space. NeutralToneMapping desaturates anything
+> 102	 * whose peak channel passes ≈0.76·exposure, so these were solved by inverting Neutral at the game's
+> 103	 * exposure 0.86 (src/render/env.ts). Flat values after tone mapping: cyanDeep #0065D6, cyan #1D89F0,
+> 104	 * cyanBright #42C8F7, pinkDeep #E206BE, pink #F741DD (H 308°, not violet), pinkLight #FA93E7. The
+> 105	 * streaks/crests/glints added on top lift the rendered cyan median to ≈#06A7FF (ref 05 #039FF6).
+> 106	 * Crests/highlights are allowed to desaturate toward white (that is how the ref highlights look).
+> 107	 * The shared PALETTE in glsl.ts is untouched (whirlpool, drum and final wave use it).
+> 108	 */
+> 109	const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+> 110	const RIBBON_PAL = {
+> 111	  cyanDeep: lin(0.0, 0.15, 0.78),
+> 112	  cyan: lin(0.0, 0.31, 1.12),
+> 113	  cyanBright: lin(0.04, 0.95, 1.55),
+> 114	  pinkDeep: lin(0.9, 0.02, 0.62),
+> 115	  pink: lin(1.55, 0.03, 1.2),
+> 116	  pinkLight: lin(2.2, 0.5, 1.8),
+> 117	};
+> 118	/**
+> 119	 * 05 river palette (wave 4), shader-space linear values solved through the full post chain …[+10271 chars]
+
+### 🤖 Claude — 2026-11-16T13:47:35.636Z
+
+> 🔧 **Bash** `{"command": "git log --format='%h %ad' --date=format:'%H:%M' -- src/vfx/flow05.ts | head -5; echo; git log --format='%h %ad' --date=format:'%H:%M' -- qa/pilot05/wave11/compare/3_NEW_river05_05.png | head -3; cat qa/pilot05/wave11/tests/capture_05_log.json; S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v; cd qa/pilot05/wave11/compare && for f in 1_APPROVED_05 2_CURRENT_T2_05 3_NEW_river05_05; do convert $f.png -crop 560x420+150+820 +repage $S/crop_$f.png; done; convert $S/crop_1_APPROVED_05.png $S/crop_2_CURRENT_T2_05.png $S/crop_3_NEW_river05_05.png -appen …[+96 chars]`
+
+### 🧑 User — 2026-11-16T13:47:36.138Z
+
+> ↩︎ result: 511545c 13:16
+> fe76bf8 13:11
+> 
+> 2046013 13:32
+> [
+>   {
+>     "name": "default",
+>     "q": "",
+>     "calls": 86,
+>     "tris": 567415,
+>     "errors": []
+>   },
+>   {
+>     "name": "before",
+>     "q": "ringa=26&nearfloor05=0",
+>     "calls": 86,
+>     "tris": 567415,
+>     "errors": []
+>   },
+>   {
+>     "name": "water",
+>     "q": "water05=1",
+>     "calls": 86,
+>     "tris": 567415,
+>     "errors": []
+>   },
+>   {
+>     "name": "farw",
+>     "q": "farw05=1",
+>     "calls": 86,
+>     "tris": 567415,
+>     "errors": []
+>   },
+>   {
+>     "name": "flow",
+>     "q": "flow05=1",
+>     "calls": 86,
+>     "tris": 567415,
+>     "errors": []
+>   },
+>   {
+>     "name": "river",
+>     "q": "river05=1",
+>     "calls": 86,
+>     "tris": 567415,
+>     "errors": []
+>   },
+>   {
+>     "name": "low",
+>     "q": "river05=1&quality=low",
+>     "calls": 86,
+>     "tris": 425525,
+>     "errors": []
+>   },
+>   {
+>     "name": "lowdef",
+>     "q": "quality=low",
+>     "calls": 86,
+>     "tris": 425525,
+>     "errors": []
+>   }
+> ]
+
+### 🤖 Claude — 2026-11-16T13:47:37.784Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/crops.jpg"}`
+
+### 🧑 User — 2026-11-16T13:47:37.801Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:47:45.444Z
+
+The crops are too small to judge texture; the triptych and far zoom already show the gaps. Next I'm reading the river-05 fragment shader section, where the streaks and highlights are generated.
+
+### 🤖 Claude — 2026-11-16T13:47:46.148Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 440, "limit": 390}`
+
+### 🧑 User — 2026-11-16T13:47:46.168Z
+
+> ↩︎ result: 440	    fine = mix(fine, n, a);
+> 441	    nPrev = n;
+> 442	    kx *= 2.3; kv *= 1.85; amp *= 0.62;
+> 443	  }
+> 444	  return vec3(lane, dash, fine);
+> 445	}
+> 446	
+> 447	#ifdef WATER05
+> 448	// ---- W10 (?water05=1): approved-image palette, shader-linear values solved through exposure 0.86 → Neutral →
+> 449	// sRGB → grade (sat 1.36 / con 1.15), bloom ignored. Cyan has R ≈ 0 and aqua (G ≈ B) highlights like the approved;
+> 450	// the bands ramp hot pink → violet → periwinkle → cyan on the core side and → deep blue toward the banks.
+> 451	const vec3 W5_CDEEP = vec3(0.058, 0.197, 0.379);   // #0068AD
+> 452	const vec3 W5_CDEEP2 = vec3(0.062, 0.290, 0.572);  // #0086D8
+> 453	const vec3 W5_CMID = vec3(0.066, 0.424, 0.747);    // #00A8F5
+> 454	const vec3 W5_CBRIGHT = vec3(0.088, 0.567, 0.825); // #00C4FB
+> 455	const vec3 W5_CAQUA = vec3(0.142, 0.787, 0.882);   // #20E8FA
+> 456	const vec3 W5_CAQUAW = vec3(0.39, 0.942, 0.947);   // #7DF9FA
+> 457	const vec3 W5_PDEEP = vec3(0.465, 0.086, 0.376);   // #C81CAE
+> 458	const vec3 W5_PBODY = vec3(0.698, 0.112, 0.545);   // #F72BD4
+> 459	const vec3 W5_PLIGHT = vec3(0.779, 0.204, 0.769);  // #FB57F9
+> 460	const vec3 W5_PPALE = vec3(0.835, 0.534, 0.872);   // #F0AFF7
+> 461	const vec3 W5_PWHIT …[+23972 chars]
+
+### 🤖 Claude — 2026-11-16T13:47:47.656Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 829, "limit": 330}`
+
+### 🧑 User — 2026-11-16T13:47:47.672Z
+
+> ↩︎ result: 829	    #endif
+> 830	    float mid5 = 1.0 - near5;
+> 831	    vec4 B5 = brush05(X, v5, fwX5, fws, uTime * 0.35);
+> 832	    // near the camera the brushed lines stay faint (the approved near water is smooth glossy swells, no fanning rays)
+> 833	    float br = mix(B5.y, 0.5 + (B5.y - 0.5) * 0.3, near5);
+> 834	    float bcore = B5.z * (1.0 - 0.8 * near5);
+> 835	    float bglow = B5.w * (1.0 - 0.8 * near5);
+> 836	    float lane5 = B5.x * (1.0 - 0.6 * near5);
+> 837	    #ifdef FLOWMAP05
+> 838	    // ---- W11 flow map: the local flow of the river, baked from its own curves (flow05.ts), carries the ripple map
+> 839	    // downstream in two cross-faded phases (three.js Water2). The ripple uv lies in the river's streamline frame
+> 840	    // (X follows the S-bands on every bend and fans out behind Benny), so the long ripple crests stay parallel to
+> 841	    // the current; the flow map gives each streamline its own speed (fast core, slow banks, quicker outside of a
+> 842	    // bend — the shear a single scrolling texture cannot do), its turbulence and its phase. (Sliding the stretched
+> 843	    // map sideways by the map's direction channel cross-hatched the streaks: tested and dropped, it01 / it02.)
+> 844	    vec4 fm = t …[+21414 chars]
+
+### 🤖 Claude — 2026-11-16T13:47:57.498Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && ls tools/qa/ scripts/ | head -80; grep -ln \"white %\\|V p95\\|S-swing\" tools/qa/* scripts/* 2>/dev/null", "description": "List QA tools and find stats script"}`
+
+### 🧑 User — 2026-11-16T13:47:57.538Z
+
+> ↩︎ result: Exit code 2
+> scripts/:
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> cinematic-test.mjs
+> claude-bootstrap.sh
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export-river-05.ts
+> export_claude_sessions.py
+> flow05-dump.ts
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> landmarks05.py
+> lib
+> perf05.mjs
+> rainbow-autosave.py
+> reference.sha256
+> resume-newest-work.sh
+> screen_report.py
+> setup-android-sdk.sh
+> setup-blender.sh
+> setup-worldlabs-plugin.sh
+> triptych.py
+> verify-assets.py
+> water-lab.mjs
+> 
+> tools/qa/:
+> axis05.ts
+> diff05.py
+> gold05.py
+> ring_fit05.py
+> tools/qa/diff05.py
+
+### 🤖 Claude — 2026-11-16T13:47:59.695Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && sed -n 1,40p tools/qa/diff05.py; echo ...; grep -n \"argv\\|argparse\\|def main\\|add_argument\" tools/qa/diff05.py | head; echo; sed -n 1,30p scripts/capture.mjs | head -40; grep -n \"argv\\|--q\\|--out\" scripts/capture.mjs | head", "description": "Read diff05 and capture tool usage"}`
+
+### 🧑 User — 2026-11-16T13:47:59.775Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Screen 05: measured differences between the approved image and live captures, for the three priority areas
+> (gold rings + purple tunnel; cyan/pink S-river into the light; lighting, foam, splashes).
+> 
+>     python3 -I tools/qa/diff05.py OUT.md LABEL=image ...   (first image = the reference, e.g. APPROVED=references/...)
+> 
+> Per horizontal band (864x1536 frame): share of gold, cyan water, pink, white foam/highlight and dark wall-slot
+> pixels, plus brightness p95 and mean saturation. River: the highest row (smallest y) where a 40-px-wide window
+> around the river centre is still mostly water, and the centre's lateral swing (S-curve amplitude) per band.
+> Colour classes are simple HSV rules: crude, reproducible indicators — NOT a fidelity percentage.
+> """
+> import sys
+> import numpy as np
+> from PIL import Image
+> 
+> W, H = 864, 1536
+> BANDS = [("tunnel top 150-470", 150, 470), ("VP + far river 470-640", 470, 640), ("mid river 640-1000", 640, 1000),
+>          ("Benny + near water 1000-1536", 1000, 1536)]
+> 
+> 
+> def hsv(a):
+>     a = a.astype(np.float32) / 255
+>     r, g, b = a[..., 0], a[..., 1], a[..., 2]
+>     mx, mn = a.max(-1), a.min(-1)
+>     d = mx - mn + 1e-6
+>     h = np.where(mx == r, (g - b …[+2578 chars]
+
+### 🤖 Claude — 2026-11-16T13:48:00.698Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/wave10/FAR_RIVER_ANALYSIS.md | head -50; grep -n \"Left undone\" -A 12 qa/pilot05/wave10/water/NOTES.md", "description": "Read far-river analysis and water notes"}`
+
+### 🧑 User — 2026-11-16T13:48:00.744Z
+
+> ↩︎ result: # Screen 05 far river — does it need geometry or shader work? (2026-11-16 ~12:25 UTC, session `01Kbt6BT`)
+> 
+> User: "The far river still needs to wind in continuous, beautiful S-curves all the way into the golden light.
+> Determine whether fixing this requires 3D river path or surface geometry changes rather than more shader adjustments."
+> 
+> ## How the far river is built
+> * The real (rideable) 05 river = `course.ts` meander05 (gameplay path: coins, steering, camera follow). It runs only
+>   ≈54 u ahead of the locked checkpoint eye before the straight flares into the 06 hall.
+> * Beyond that seam the river is a separate 3D surface: `src/world/far05.ts` lays it in the ForcedTunnel's virtual
+>   straight tunnel (depth Z) along the designed lateral path `FAR05_CORE` and maps it into the last few real units.
+>   Visual only — the player never rides it as gameplay geometry.
+> * `FAR05_CORE` has ONE swing: +0.55 u (Z 8) → +4.45 u (Z 140) → −2.8 u (Z 400). Its comment says the reference's left
+>   dip at y≈550 was deliberately not chased (it sits where the real course has its exit bend; a wiggle at the seam).
+> 
+> ## Measured centreline (cyan-core median per row; back-projected with f 1278 px, VP y 479, eye 3.56  …[+2716 chars]
+
+### 🤖 Claude — 2026-11-16T13:48:02.165Z
+
+I'll measure APPROVED, CURRENT T2 and river05 with `diff05.py` to get baseline numbers.
+
+### 🤖 Claude — 2026-11-16T13:48:04.747Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; C=qa/pilot05/wave11/compare; python3 -I tools/qa/diff05.py $S/base_stats.md APPROVED=$C/1_APPROVED_05.png T2=$C/2_CURRENT_T2_05.png RIVER05=$C/3_NEW_river05_05.png >/dev/null && cat $S/base_stats.md", "description": "Measure band stats for baseline images"}`
+
+### 🧑 User — 2026-11-16T13:48:06.205Z
+
+> ↩︎ result: | image | band | gold % | cyan % | pink % | white % | dark % | V p95 | mean S |
+> |---|---|---|---|---|---|---|---|---|
+> | APPROVED | tunnel top 150-470 | 5.5 | 0.0 | 36.9 | 3.8 | 1.2 | 1.00 | 0.70 |
+> | APPROVED | VP + far river 470-640 | 4.6 | 8.5 | 19.1 | 5.3 | 1.1 | 1.00 | 0.64 |
+> | APPROVED | mid river 640-1000 | 2.4 | 23.3 | 20.4 | 9.3 | 0.3 | 1.00 | 0.68 |
+> | APPROVED | Benny + near water 1000-1536 | 5.6 | 32.1 | 12.7 | 8.1 | 0.0 | 1.00 | 0.72 |
+> | T2 | tunnel top 150-470 | 9.0 | 0.0 | 47.1 | 1.1 | 0.9 | 1.00 | 0.65 |
+> | T2 | VP + far river 470-640 | 9.6 | 7.4 | 43.5 | 6.7 | 0.4 | 1.00 | 0.60 |
+> | T2 | mid river 640-1000 | 4.4 | 38.7 | 25.2 | 8.1 | 0.1 | 1.00 | 0.66 |
+> | T2 | Benny + near water 1000-1536 | 7.8 | 49.1 | 15.6 | 10.3 | 0.0 | 1.00 | 0.69 |
+> | RIVER05 | tunnel top 150-470 | 9.0 | 0.0 | 47.1 | 1.1 | 0.9 | 1.00 | 0.65 |
+> | RIVER05 | VP + far river 470-640 | 9.6 | 5.1 | 42.7 | 8.6 | 0.4 | 1.00 | 0.57 |
+> | RIVER05 | mid river 640-1000 | 4.5 | 28.3 | 21.7 | 9.7 | 0.1 | 1.00 | 0.58 |
+> | RIVER05 | Benny + near water 1000-1536 | 7.8 | 42.7 | 15.0 | 9.8 | 0.0 | 1.00 | 0.64 |
+> 
+> | image | river visible up to y (smaller = further into the light) | S-swing px per band (far → near) |
+> |---|--- …[+181 chars]
+
+### 🤖 Claude — 2026-11-16T13:48:29.096Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/qa/water05_grain.py", "content": "#!/usr/bin/env python3\n\"\"\"Screen 05 water texture indicators (water pixels only), for the W12 \"silk\" test.\n\n    python3 -I tools/qa/water05_grain.py OUT.md LABEL=image ...   (first image = the reference, e.g. APPROVED=...)\n\nWater pixels = cyan (hue 170-215) or magenta-pink (hue 290-345) with saturation > 0.3 and value > 0.35, inside the\nriver area of the 864x1536 frame (rows 560-1536), Benny's body box excluded. Per band it reports:\n  * cyan S / V median, pink S / V median          colour depth (rich electri …[+3443 chars]`
+
+### 🧑 User — 2026-11-16T13:48:29.125Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/qa/water05_grain.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T13:48:31.446Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; C=qa/pilot05/wave11/compare; python3 -I tools/qa/water05_grain.py $S/grain_base.md APPROVED=$C/1_APPROVED_05.png T2=$C/2_CURRENT_T2_05.png RIVER05=$C/3_NEW_river05_05.png W10=qa/pilot05/wave11/factors/0_baseline_water05_it04.png", "description": "Run water grain metric on baseline images"}`
+
+### 🧑 User — 2026-11-16T13:48:33.252Z
+
+> ↩︎ result: | image | band | cyan S | cyan V | pink S | pink V | fine grain | broad flow | grain ratio | thin white % |
+> |---|---|---|---|---|---|---|---|---|---|
+> | APPROVED | far river 560-700 | 0.917 | 0.980 | 0.711 | 0.953 | 0.029 | 0.060 | 0.476 | 6.80 |
+> | APPROVED | mid river 700-1000 | 0.988 | 0.976 | 0.752 | 0.973 | 0.018 | 0.043 | 0.429 | 4.80 |
+> | APPROVED | near water 1000-1536 | 0.991 | 0.949 | 0.682 | 0.969 | 0.015 | 0.043 | 0.359 | 4.94 |
+> | T2 | far river 560-700 | 0.718 | 1.000 | 0.696 | 0.855 | 0.028 | 0.069 | 0.406 | 12.13 |
+> | T2 | mid river 700-1000 | 0.871 | 1.000 | 0.701 | 0.969 | 0.016 | 0.036 | 0.442 | 3.58 |
+> | T2 | near water 1000-1536 | 0.922 | 1.000 | 0.674 | 0.922 | 0.014 | 0.032 | 0.443 | 2.90 |
+> | RIVER05 | far river 560-700 | 0.669 | 1.000 | 0.680 | 0.824 | 0.031 | 0.075 | 0.411 | 14.68 |
+> | RIVER05 | mid river 700-1000 | 0.753 | 1.000 | 0.654 | 0.976 | 0.017 | 0.042 | 0.419 | 5.73 |
+> | RIVER05 | near water 1000-1536 | 0.789 | 0.933 | 0.718 | 0.925 | 0.020 | 0.044 | 0.456 | 4.13 |
+> | W10 | far river 560-700 | 0.694 | 1.000 | 0.688 | 0.863 | 0.029 | 0.074 | 0.392 | 14.95 |
+> | W10 | mid river 700-1000 | 0.788 | 1.000 | 0.687 | 0.973 | 0.015 | 0.041 | 0.355 | 5.47 |
+> | W10 | n …[+84 chars]
+
+### 🤖 Claude — 2026-11-16T13:48:52.738Z
+
+> 🔧 **Bash** `{"command": "grep -n \"FARW05\\|FLOWMAP05\\|WATER05\\|farRiverMaterial\\|#ifdef\\|#endif\\|#else\\|uPanoK\" src/world/materials.ts | sed -n 1,80p", "description": "Locate far-river material switches"}`
+
+### 🧑 User — 2026-11-16T13:48:52.774Z
+
+> ↩︎ result: 7:import { FARW05, WATER05 } from '../vfx/waterRibbon';
+> 77:#ifdef FG_VIRTUAL
+> 80:#else
+> 82:#endif
+> 86:const FG_VIRTUAL_VERT_PARS = `#ifdef FG_VIRTUAL
+> 88:#endif`;
+> 89:const FG_VIRTUAL_VERT = `#ifdef FG_VIRTUAL
+> 91:#endif`;
+> 198:#endif`);
+> 267:#ifdef USE_INSTANCING
+> 269:#else
+> 271:#endif`);
+> 379:#ifdef USE_INSTANCING
+> 381:#else
+> 383:#endif`);
+> 493:#ifdef PERF_FARGLOW
+> 495:#endif
+> 517:#ifdef PERF_RELIEF
+> 524:#endif`,
+> 530:#ifdef PERF_RELIEF
+> 536:#endif
+> 543:#ifdef PERF_RELIEF
+> 564:#endif`,
+> 580:#ifdef PERF_FARGLOW
+> 582:#endif
+> 583:#ifdef PERF_RIVER
+> 598:#endif`,
+> 861:export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+> 897:#ifdef FARW05
+> 899:#endif
+> 900:#ifdef FLOWMAP05
+> 903:#endif
+> 931:#ifndef FARW05
+> 933:#endif
+> 934:#ifdef WATER05
+> 953:#ifdef FLOWMAP05
+> 961:#endif
+> 990:#ifdef FARW05
+> 1019:#else
+> 1022:#endif
+> 1033:#else
+> 1069:#endif
+> 1075:  if (WATER05) {
+> 1076:    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}) };
+> 1077:    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '');
+
+### 🤖 Claude — 2026-11-16T13:48:53.926Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/materials.ts", "offset": 861, "limit": 225}`
+
+### 🧑 User — 2026-11-16T13:48:53.944Z
+
+> ↩︎ result: 861	export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+> 862	  const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+> 863	  // wins the depth test against the real ribbon's continuation it covers just behind the seam
+> 864	  mat.polygonOffset = true;
+> 865	  mat.polygonOffsetFactor = -1;
+> 866	  mat.polygonOffsetUnits = -2;
+> 867	  const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+> 868	  const uniforms = {
+> 869	    uRivCyanLo: { value: lin(0.02, 0.22, 0.62) },
+> 870	    uRivCyan: { value: lin(0.03, 0.42, 0.95) },
+> 871	    uRivCyanHi: { value: lin(0.25, 0.95, 1.6) },
+> 872	    uRivPinkLo: { value: lin(0.45, 0.03, 0.42) },
+> 873	    uRivPink: { value: lin(0.85, 0.07, 0.75) },
+> 874	    uRivPinkHi: { value: lin(1.05, 0.42, 1.0) },
+> 875	    uRivFoam: { value: lin(0.95, 0.92, 1.05) },
+> 876	    uRivFoamLav: { value: lin(0.62, 0.52, 0.95) },
+> 877	    uRivFoamBlue: { value: lin(0.32, 0.36, 0.9) },
+> 878	    uRivGlow: { value: new THREE.Color(glow.color) },
+> 879	    uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.st …[+13378 chars]
+
+### 🤖 Claude — 2026-11-16T13:49:11.438Z
+
+> 🔧 **Bash** `{"command": "grep -n \"opt.q\\|\\.q\\b\\|search\\|goto\\|waitFor\\|checkpoint\\|t=\" scripts/capture.mjs | head -20; grep -n \"flow05Textures\\|farRiverMaterial(\" src -r | head", "description": "Check capture query option and texture wiring"}`
+
+### 🧑 User — 2026-11-16T13:49:11.476Z
+
+> ↩︎ result: 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 34:    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+> 38:    const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+> 42:    await page.waitForTimeout(250);
+> 53:    log.shots.push({ id, file: `${outDir}/${name}`, size: [w, h], checkpoint: st, state, stats });
+> src/world/environment.ts:14:import { flow05Shared, flow05Textures } from '../vfx/flow05';
+> src/world/environment.ts:436:    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * 1.3 } : undefined));
+> src/world/materials.ts:861:export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+> src/vfx/waterRibbon.ts:15:import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> src/vfx/waterRibbon.ts:1272:    const f5 = fl …[+100 chars]
+
+### 🤖 Claude — 2026-11-16T13:49:12.766Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T13:49:12.775Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T13:49:13.418Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 1255, "limit": 50}`
+
+### 🧑 User — 2026-11-16T13:49:13.436Z
+
+> ↩︎ result: 1255	    uBenny: { value: new THREE.Vector3(0, 0, 0) },
+> 1256	    uBennyR: { value: 0.7 },
+> 1257	    uChevron: { value: new THREE.Vector3(st04.s0 + 8.5, 3.6, 1) },
+> 1258	    uOutro: { value: new THREE.Vector2(0, st08.s0) },
+> 1259	    uHide: { value: new THREE.Vector4(st03.s0, st04.s0, 0, 0) },
+> 1260	    uC5Deep: { value: RIVER05_PAL.cyanDeep.clone() },
+> 1261	    uC5: { value: RIVER05_PAL.cyan.clone() },
+> 1262	    uC5Bright: { value: RIVER05_PAL.cyanBright.clone() },
+> 1263	    uC5Streak: { value: RIVER05_PAL.cyanStreak.clone() },
+> 1264	    uP5Deep: { value: RIVER05_PAL.pinkDeep.clone() },
+> 1265	    uP5: { value: RIVER05_PAL.pink.clone() },
+> 1266	    uP5Light: { value: RIVER05_PAL.pinkLight.clone() },
+> 1267	    uP5Streak: { value: RIVER05_PAL.pinkStreak.clone() },
+> 1268	    uFlow05: { value: course.stage('05').speed * FLOW05 },
+> 1269	  });
+> 1270	  if (FLOWMAP05) {
+> 1271	    // W11: textures / shared uniforms are attached AFTER the merge above (UniformsUtils.merge would clone them)
+> 1272	    const f5 = flow05Textures(course);
+> 1273	    const u5 = uniforms as Record<string, THREE.IUniform>;
+> 1274	    u5.uTime = flow05Shared.uTime;                       // the far river (environment.ts) runs on the same c …[+1237 chars]
+
+### 🤖 Claude — 2026-11-16T13:49:49.769Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "export const RIVER05: boolean = q05('river05');", "new_string": "/**\n * Screen 05 test W12 (2026-11-16, qa/pilot05/wave12/NOTES.md), two more single factors on top of `?river05=1` (each\n * switch turns river05 on; default build untouched):\n *  `?silk05=1`  WATER MATERIAL: the user found river05 \"too grainy\" — one broad ripple octave on a longer tile, the fine\n *               brushed cores / ripple crests / second flare set mostly removed, highlights and panorama reflections\n *               …[+602 chars]`
+
+### 🧑 User — 2026-11-16T13:49:49.805Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:49:52.220Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}) },", "new_string": "    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}) },"}`
+
+### 🧑 User — 2026-11-16T13:49:52.261Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:49:55.772Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    vec4 B5 = brush05(X, v5, fwX5, fws, uTime * 0.35);\n    // near the camera the brushed lines stay faint (the approved near water is smooth glossy swells, no fanning rays)\n    float br = mix(B5.y, 0.5 + (B5.y - 0.5) * 0.3, near5);\n    float bcore = B5.z * (1.0 - 0.8 * near5);", "new_string": "    vec4 B5 = brush05(X, v5, fwX5, fws, uTime * 0.35);\n    // near the camera the brushed lines stay faint (the approved near water is smooth glossy swells, no fanning rays)\n    float br = mix(B5.y, 0.5 …[+326 chars]`
+
+### 🧑 User — 2026-11-16T13:49:55.804Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:06.627Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    vec4 fm = texture2D(uFlowMap, vec2(u * 0.5 + 0.5, (s - uFlowS.x) * uFlowS.y));\n    const vec2 RSC = vec2(0.42, 0.016);                        // ripple tile = 2.4 u across x 62 u along the river\n    vec2 uvR = vec2(X, s) * RSC;\n    vec2 advR = vec2(0.0, fm.g * uFlow05 * 1.25 * RSC.y);      // uv travelled during one 1.25 s cycle\n    float cycR = uTime * 0.8 + fm.a;\n    vec4 rp = flowRipple(uRipple, uvR, advR, cycR);\n    #ifndef LOW_Q\n    vec4 rp2 = flowRipple(uRipple, uvR * vec2(2.3, 2.9 …[+2317 chars]`
+
+### 🧑 User — 2026-11-16T13:50:06.668Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:08.815Z
+
+Next come the cyan whitening, the near swell crests, the panorama reflection and the flares:
+
+### 🤖 Claude — 2026-11-16T13:50:12.303Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    cy = mix(cy, W5_CAQUA, bglow * 0.55);\n    cy = mix(cy, W5_CAQUAW, bcore * 0.85);\n    cy += vec3(0.9, 1.1, 1.1) * bcore * bcore * 0.9;   // (it04) whiter streak cores", "new_string": "    #ifdef SILK05\n    // W12: highlights stay saturated aqua (approved cyan pixels: S ≈ 0.99), only the rare strongest cores go white\n    cy = mix(cy, W5_CAQUA, bglow * 0.6);\n    cy = mix(cy, W5_CAQUA, bcore * 0.8);\n    cy += vec3(0.5, 0.9, 0.9) * bcore * bcore * bcore * 0.8;\n    #else\n    cy = mix(cy, W5_C …[+164 chars]`
+
+### 🧑 User — 2026-11-16T13:50:12.335Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:16.676Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      crestN = (pow(sp, 36.0) + 0.5 * pow(sp, 7.0)) * seg;\n      nb = mix(nb, W5_CAQUA, clamp(0.5 * pow(sp, 7.0) * seg, 0.0, 1.0));\n      nb = mix(nb, W5_CAQUAW, clamp(pow(sp, 36.0) * seg, 0.0, 1.0) * 0.95);\n      nb += vec3(0.6, 0.9, 0.9) * pow(sp, 140.0) * seg * 1.4;", "new_string": "      crestN = (pow(sp, 36.0) + 0.5 * pow(sp, 7.0)) * seg;\n      #ifdef SILK05\n      // W12: broad glossy swell tops (aqua sheen) instead of pixel-thin white crest lines\n      nb = mix(nb, W5_CAQUA, clamp(0.65  …[+352 chars]`
+
+### 🧑 User — 2026-11-16T13:50:16.712Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:23.877Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float fres5 = 0.06 + 0.94 * pow(1.0 - nv5, 5.0);\n    c5 += mix(pano5, vec3(plum5), 0.55) * smoothstep(0.5, 0.95, plum5) * fres5 * uPanoK;\n    #endif\n    #ifndef LOW_Q\n    // long glossy flares carried by the current (approved mid field: elongated white star streaks along the flow)\n    float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.85, 34.0, 4.8, 0.0, uTime);\n    flA = max(flA, 0.85 * flowGlint(vec2(X * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.6, 18.0, 4.4, 0.0, uTime + 1.9));", "new_string": "  …[+1234 chars]`
+
+### 🧑 User — 2026-11-16T13:50:23.908Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:26.031Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    vec2 bz2 = bolt05(vec2(X * 1.1 + 0.41, v5 * 2.0 + 0.7 * sin(X * 4.7 + 2.2)), 0.3, 40.0, 4.0, 9.31);\n    bz = max(bz, bz2 * 0.8);", "new_string": "    #ifndef SILK05\n    vec2 bz2 = bolt05(vec2(X * 1.1 + 0.41, v5 * 2.0 + 0.7 * sin(X * 4.7 + 2.2)), 0.3, 40.0, 4.0, 9.31);\n    bz = max(bz, bz2 * 0.8);\n    #endif"}`
+
+### 🧑 User — 2026-11-16T13:50:26.070Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:28.797Z
+
+Now the foam-shelf fallback for `?puff05=1`, on the near ribbon's shelf and in the far-river material:
+
+### 🤖 Claude — 2026-11-16T13:50:32.799Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      float c1 = cells(pc);\n      float c1u = cells(pc + vec2(0.0, 0.16));\n      float c2 = cells(vec2(lat * 4.6 + 5.3, s * 1.05));\n      float f1 = 1.0 - smoothstep(0.1, 0.3, fl2 * 1.6), f2 = 1.0 - smoothstep(0.1, 0.3, fl2 * 4.6);", "new_string": "      float c1 = cells(pc);\n      float c1u = cells(pc + vec2(0.0, 0.16));\n      float c2 = cells(vec2(lat * 4.6 + 5.3, s * 1.05));\n      float f1 = 1.0 - smoothstep(0.1, 0.3, fl2 * 1.6), f2 = 1.0 - smoothstep(0.1, 0.3, fl2 * 4.6);\n      #ifdef PU …[+363 chars]`
+
+### 🧑 User — 2026-11-16T13:50:32.832Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:37.048Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "    float c1 = rivCells(pc);\n    float c1u = rivCells(pc + vec2(0.0, 0.16));\n    float c2 = rivCells(vec2(lat * 3.6 + 5.3, ld * 3.6));\n    float f1 = 1.0 - smoothstep(0.1, 0.3, fl * 1.3), f2 = 1.0 - smoothstep(0.1, 0.3, fl * 3.6);", "new_string": "    float c1 = rivCells(pc);\n    float c1u = rivCells(pc + vec2(0.0, 0.16));\n    float c2 = rivCells(vec2(lat * 3.6 + 5.3, ld * 3.6));\n    float f1 = 1.0 - smoothstep(0.1, 0.3, fl * 1.3), f2 = 1.0 - smoothstep(0.1, 0.3, fl * 3.6);\n#ifdef PUFF05\n   …[+434 chars]`
+
+### 🧑 User — 2026-11-16T13:50:37.082Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:42.448Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  float spdF = mix(1.0, 0.46, smoothstep(0.25, 1.0, abs(lat - xB) / max(hw, 0.5)));\n  vec4 rf = flowRipple(uRivRipple, vec2(xq, s) * vec2(0.42, 0.016), vec2(0.0, spdF * uRivFlow * 1.25 * 0.016),\n                       uRivTime * 0.8 + rivNoise(vec2(lat * 0.6, s * 0.17)));\n  brv = clamp(brv + (rf.b - 0.5) * 0.7, 0.0, 1.0);\n  bco = max(bco, rf.a * 0.6);\n#endif", "new_string": "  float spdF = mix(1.0, 0.46, smoothstep(0.25, 1.0, abs(lat - xB) / max(hw, 0.5)));\n#ifdef SILK05\n  // W12 (?silk05=1) …[+638 chars]`
+
+### 🧑 User — 2026-11-16T13:50:42.484Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:44.500Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  cy = mix(cy, C_BRIGHT, smoothstep(0.5, 0.78, h5) * 0.85);\n  cy = mix(cy, C_AQUAW, bco * 0.8);", "new_string": "  cy = mix(cy, C_BRIGHT, smoothstep(0.5, 0.78, h5) * 0.85);\n#ifdef SILK05\n  cy = mix(cy, C_AQUA, bco * 0.8);                       // W12: saturated aqua highlights, not white hair lines\n#else\n  cy = mix(cy, C_AQUAW, bco * 0.8);\n#endif"}`
+
+### 🧑 User — 2026-11-16T13:50:44.533Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:47.350Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}) };\n    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '');", "new_string": "    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}) };\n    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : …[+59 chars]`
+
+### 🧑 User — 2026-11-16T13:50:47.388Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:48.351Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "import { FARW05, WATER05 } from '../vfx/waterRibbon';", "new_string": "import { FARW05, PUFF05, SILK05, WATER05 } from '../vfx/waterRibbon';"}`
+
+### 🧑 User — 2026-11-16T13:50:48.389Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:50:52.066Z
+
+Next I'll typecheck and capture the combined variant to see the result.
+
+### 🤖 Claude — 2026-11-16T13:50:54.367Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . 2>&1 | tail -5 && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && time node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=$S/w12a 2>&1 | tail -5", "description": "Typecheck and capture silk+puff variant", "timeout": 400000}`
+
+### 🧑 User — 2026-11-16T13:51:13.410Z
+
+> ↩︎ result: TSC_OK
+> 05 → /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/w12a/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> real	0m16.283s
+> user	0m1.566s
+> sys	0m0.381s
+
+### 🤖 Claude — 2026-11-16T13:51:17.620Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; C=qa/pilot05/wave11/compare; node -e \"\nconst fs=require('fs');const e=JSON.parse(fs.readFileSync('qa/capture_log.json','utf8')); console.log('errors',JSON.stringify(e.errors))\" 2>/dev/null; python3 -I tools/qa/water05_grain.py $S/g1.md APPROVED=$C/1_APPROVED_05.png RIVER05=$C/3_NEW_river05_05.png W12a=$S/w12a/05.png | tail -9; convert $C/1_APPROVED_05.png $C/3_NEW_river05_05.png $S/w12a/05.png -resize 360x640 +append $S/v/tri_w12a.jpg", "description": "Measure W12a and build comparison strip"}`
+
+### 🧑 User — 2026-11-16T13:51:19.364Z
+
+> ↩︎ result: errors []
+> | APPROVED | mid river 700-1000 | 0.988 | 0.976 | 0.752 | 0.973 | 0.018 | 0.043 | 0.429 | 4.80 |
+> | APPROVED | near water 1000-1536 | 0.991 | 0.949 | 0.682 | 0.969 | 0.015 | 0.043 | 0.359 | 4.94 |
+> | RIVER05 | far river 560-700 | 0.669 | 1.000 | 0.680 | 0.824 | 0.031 | 0.075 | 0.411 | 14.68 |
+> | RIVER05 | mid river 700-1000 | 0.753 | 1.000 | 0.654 | 0.976 | 0.017 | 0.042 | 0.419 | 5.73 |
+> | RIVER05 | near water 1000-1536 | 0.789 | 0.933 | 0.718 | 0.925 | 0.020 | 0.044 | 0.456 | 4.13 |
+> | W12a | far river 560-700 | 0.807 | 0.976 | 0.735 | 0.855 | 0.024 | 0.069 | 0.350 | 10.28 |
+> | W12a | mid river 700-1000 | 0.888 | 0.980 | 0.752 | 0.957 | 0.009 | 0.029 | 0.321 | 2.88 |
+> | W12a | near water 1000-1536 | 0.924 | 0.922 | 0.730 | 0.922 | 0.016 | 0.039 | 0.413 | 3.33 |
+
+### 🤖 Claude — 2026-11-16T13:51:21.062Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/tri_w12a.jpg"}`
+
+### 🧑 User — 2026-11-16T13:51:21.083Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:51:30.566Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; C=qa/pilot05/wave11/compare; for f in $C/1_APPROVED_05.png $C/3_NEW_river05_05.png $S/w12a/05.png; do convert $f -crop 864x420+0+1000 +repage miff:-; done | convert - -append -resize 60% $S/v/near_w12a.jpg", "description": "Crop near water for three versions"}`
+
+### 🧑 User — 2026-11-16T13:51:30.832Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:51:32.549Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/near_w12a.jpg"}`
+
+### 🧑 User — 2026-11-16T13:51:32.572Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:51:42.612Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; C=qa/pilot05/wave11/compare; for f in $C/1_APPROVED_05.png $C/3_NEW_river05_05.png $S/w12a/05.png; do convert $f -crop 864x380+0+560 +repage miff:-; done | convert - -append -resize 60% $S/v/mid_w12a.jpg", "description": "Crop mid/far water for three versions"}`
+
+### 🧑 User — 2026-11-16T13:51:42.838Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:51:44.629Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/mid_w12a.jpg"}`
+
+### 🧑 User — 2026-11-16T13:51:44.650Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:52:02.268Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; C=qa/pilot05/wave11/compare; for f in $C/1_APPROVED_05.png $C/3_NEW_river05_05.png $S/w12a/05.png; do convert $f -crop 432x200+0+520 +repage miff:-; done | convert - +append $S/v/wedge.jpg", "description": "Crop far-left wedge region"}`
+
+### 🧑 User — 2026-11-16T13:52:02.436Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:52:04.232Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/wedge.jpg"}`
+
+### 🧑 User — 2026-11-16T13:52:04.250Z
+
+> ↩︎ result: [image]
+

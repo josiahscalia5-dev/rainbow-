@@ -4,7 +4,7 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, WATER05 } from '../vfx/waterRibbon';
+import { FARW05, PUFF05, SILK05, WATER05 } from '../vfx/waterRibbon';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
@@ -954,10 +954,21 @@ float rivCells(vec2 p) {
   // W11 flow: the ripple map rides the winding core (streamline coordinates xq / s), fast in the core and slower
   // toward the banks, two-phase advected like the near ribbon (flow05.ts) — the far river is animated
   float spdF = mix(1.0, 0.46, smoothstep(0.25, 1.0, abs(lat - xB) / max(hw, 0.5)));
-  vec4 rf = flowRipple(uRivRipple, vec2(xq, s) * vec2(0.42, 0.016), vec2(0.0, spdF * uRivFlow * 1.25 * 0.016),
+#ifdef SILK05
+  // W12 (?silk05=1): the near ribbon's broader, longer ripple tile; soft lanes, few crisp crests, finer octave muted
+  const vec2 RSF = vec2(0.3, 0.011);
+#else
+  const vec2 RSF = vec2(0.42, 0.016);
+#endif
+  vec4 rf = flowRipple(uRivRipple, vec2(xq, s) * RSF, vec2(0.0, spdF * uRivFlow * 1.25 * RSF.y),
                        uRivTime * 0.8 + rivNoise(vec2(lat * 0.6, s * 0.17)));
+#ifdef SILK05
+  brv = clamp(0.5 + (n1 - 0.5) * a1 * 1.1 + (rf.b - 0.5) * 0.9, 0.0, 1.0);
+  bco = max(smoothstep(0.62, 0.88, n1) * a1 * 0.3, rf.a * rf.a * 0.25);
+#else
   brv = clamp(brv + (rf.b - 0.5) * 0.7, 0.0, 1.0);
   bco = max(bco, rf.a * 0.6);
+#endif
 #endif
   // band coordinate of the nearer band: -1 bank-side edge .. +1 core-side edge
   float tLb = (lat - cL) / max(wL, 1e-3), tRb = (cR - lat) / max(wR, 1e-3);
@@ -967,7 +978,11 @@ float rivCells(vec2 p) {
   float h5 = clamp(0.5 + (brv - 0.5) * 0.9, 0.0, 1.0);
   vec3 cy = mix(C_DEEP2, C_MID, smoothstep(0.1, 0.45, h5));
   cy = mix(cy, C_BRIGHT, smoothstep(0.5, 0.78, h5) * 0.85);
+#ifdef SILK05
+  cy = mix(cy, C_AQUA, bco * 0.8);                       // W12: saturated aqua highlights, not white hair lines
+#else
   cy = mix(cy, C_AQUAW, bco * 0.8);
+#endif
   // (it04) the approved far outer water is darker purple-violet (#7A2AD8 … #9837C3), not periwinkle
   vec3 ow = mix(vec3(0.232, 0.099, 0.521), mix(V_OUT, O_BLUE, 0.4), smoothstep(0.3, 0.75, h5));
   vec3 pk = mix(P_DEEP, P_BODY, smoothstep(0.1, 0.45, h5));
@@ -1004,6 +1019,15 @@ float rivCells(vec2 p) {
     float c1u = rivCells(pc + vec2(0.0, 0.16));
     float c2 = rivCells(vec2(lat * 3.6 + 5.3, ld * 3.6));
     float f1 = 1.0 - smoothstep(0.1, 0.3, fl * 1.3), f2 = 1.0 - smoothstep(0.1, 0.3, fl * 3.6);
+#ifdef PUFF05
+    // W12 (?puff05=1): where the puffs get too small, 2.4x larger mounds take over — round foam banks at every
+    // distance instead of the flat lavender fill (the hard pale wedges beside the far channel)
+    vec2 pc0 = pc * 0.42 + 3.1;
+    float c0 = rivCells(pc0), c0u = rivCells(pc0 + vec2(0.0, 0.16));
+    c1 = mix(c0, c1, f1);
+    c1u = mix(c0u, c1u, f1);
+    f1 = max(f1, 1.0 - smoothstep(0.1, 0.3, fl * 0.55));
+#endif
     if (e2 - rimW + (c1 - 0.5) * 0.8 * f1 > 0.0) discard;
     float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.55 * f1);
     float dome = 1.0 - smoothstep(0.15, 0.78, c1);
@@ -1073,8 +1097,8 @@ float rivCells(vec2 p) {
 }`);
   };
   if (WATER05) {
-    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}) };
-    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '');
+    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}) };
+    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '') + (SILK05 ? '-w12s' : '') + (PUFF05 ? '-w12p' : '');
   } else {
     mat.customProgramCacheKey = () => 'far-river-w8';
   }
