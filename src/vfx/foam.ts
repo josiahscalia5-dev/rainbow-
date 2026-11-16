@@ -438,7 +438,7 @@ const BANK_ENV: [number, number, number][] = [[58.457, 0.835, 0.581], [607.242, 
  * (px) by row ds. The right bank ahead of Benny is a NARROW rim hugging the river edge (ref y 700-940: inner edge
  * 30 -> 158 -> 70 px, 20-66 px per row), not the wave-5 heap (124-179 px per row). The ref's near clumps: left x 0-125
  * (ds 0.4-1.9), lower left x 57-214 and lower right x 630-800 (behind Benny, ds -0.5..-1.5). The envelope seeds
- * (BANK_ENV, searched) open/close the clumps at those rows of the QA frame; along 05 clumps cover 40 % / 59 %.
+ * (BANK_ENV, searched; [2] = right side beside / behind Benny) open/close the clumps at those rows of the QA frame.
  */
 const RIM_R: [number, number][] = [[2.6, 60], [3.4, 70], [4.4, 105], [5.5, 140], [6.6, 158], [7.8, 153], [9.0, 135], [10.3, 104], [11.6, 70], [12.9, 30]];
 const RIM_R_PX = 80;
@@ -851,8 +851,8 @@ export function createFoam(
         const inner = frac > 0.002 ? solveLat(cam, side * (1 - frac), camLat + side * 1.0, edge) : edge;
         const outer = fracOut > 0.004 ? solveLat(cam, side * (1 - fracOut), inner, edge) : edge;
         // keep clear of Benny (near him) and of the cyan core / coin line; merge into the berm at the edge
-        // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax (wave 7: to ≈0.5×,
-        // the ref's lower clumps sit right beside the fan, x 57-214 / 630-800)
+        // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax (wave 7: rider ×0.32,
+        // core ×0.25 at ds ≤ −1.2; the ref's lower clumps sit right beside the fan, x 60-230 / 650-800)
         const behind = sm(-0.5, -1.2, ds);
         const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds))) * (1 - 0.68 * behind);
         const clearC = BANK_CLEAR_CORE * (1 - 0.75 * behind);

@@ -3808,8 +3808,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 48561,
-   "sha256": "3d260e0a624723d008a0372019dc662beb6827ac5e7ba44762944215f77760ec"
+   "bytes": 48597,
+   "sha256": "9114625af65a3f05427ac3a53b2e44ea933d4c4c0af228ab5dce32258b564ade"
   },
   {
    "path": "src/vfx/glsl.ts",
