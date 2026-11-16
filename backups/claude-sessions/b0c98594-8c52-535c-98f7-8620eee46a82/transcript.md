@@ -1643,3 +1643,31 @@ Shellcheck is clean. Moving to validation. **Test A:** a second full run must sk
 
 > 🔧 **Bash** `{"command": "time bash scripts/claude-bootstrap.sh 2>&1 | grep -E \"^  (OK|WARN|FAIL|SKIP)|BOOTSTRAP\"; echo \"exit=${PIPESTATUS[0]}\"", "description": "Second full bootstrap run to confirm installs are skipped", "timeout": 900000}`
 
+### 🧑 User — 2026-11-16T10:59:48.800Z
+
+> ↩︎ result: RAINBOW BOOTSTRAP (full) 2026-11-16 10:59 UTC - /home/user/rainbow-
+>   OK   Repository + branch            josiahscalia5-dev/rainbow- on ccr-251ed97c-ty2xvp @ c11f8c9 (session started from ccr-44f84024-ii5iih)
+>   OK   Backup gap since last session  previous save on GitHub: 98ffd8e 2026-11-16 10:38 UTC (daemon) on ccr-251ed97c-ty2xvp, ccr-44f84024-ii5iih; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 7 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-16 03:22-09:28 UTC (6.1 h)
+>   OK   Resume newest work             12/12 remote ccr-*/claude/* branches contained in HEAD 4c35fc5
+>   OK   Git LFS binaries (local)       24/24 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK
+>   OK   Git LFS on GitHub              24/24 LFS objects (184 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+>   OK   Approved references            12/12 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference)
+>   OK   Game: 11 screens + code        11 approved screen references 01-11, source tree src/ (40 files), Android project android/, characters assets/models/*.glb
+>   OK   Speci …[+2165 chars]
+
+### 🤖 Claude — 2026-11-16T10:59:57.413Z
+
+> 🔧 **Bash** `{"command": "cp node_modules/.rainbow-bootstrap.sha256 /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/h.bak && sed -i '1s/^./0/' node_modules/.rainbow-bootstrap.sha256 && bash scripts/claude-bootstrap.sh --skip-resume --no-autosave 2>&1 | grep -E \"npm dependencies|BOOTSTRAP\"; sha256sum --check node_modules/.rainbow-bootstrap.sha256", "description": "Corrupt the npm hash and verify npm ci reruns", "timeout": 900000}`
+
+### 🧑 User — 2026-11-16T11:00:13.274Z
+
+> ↩︎ result: RAINBOW BOOTSTRAP (full) 2026-11-16 10:59 UTC - /home/user/rainbow-
+>   OK   npm dependencies               npm ci done (99 packages; cache ~/.npm reused)
+> BOOTSTRAP OK | branch ccr-251ed97c-ty2xvp | HEAD 4c35fc5e1916 | written: backups/BOOTSTRAP_REPORT.md
+> package.json: OK
+> package-lock.json: OK
+
+### 🤖 Claude — 2026-11-16T11:00:18.230Z
+
+> 🔧 **Bash** `{"command": "time (echo '{\"session_id\":\"test\",\"source\":\"startup\",\"hook_event_name\":\"SessionStart\"}' | CLAUDE_PROJECT_DIR=$PWD bash scripts/autosave-hook.sh SessionStart; echo \"hook exit=$?\"); sleep 1; pgrep -af \"claude-bootstrap.sh --background\" | head -2", "description": "Run the SessionStart hook with source=startup", "timeout": 700000}`
+
