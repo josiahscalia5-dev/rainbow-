@@ -1,3 +1,6 @@
+> ⚠ **HISTORICAL KIT FILE — DO NOT PASTE.** The Rainbow game already exists and must never be restarted. For a new
+> Claude account or session use `backups/START_NEW_CLAUDE_ACCOUNT.md` and follow `CLAUDE.md`. (Original kit: `backups/source-package/`.)
+
 # Paste this into Claude Code in the NEW Rainbow folder
 
 I'm starting **a brand-new separate game project called Rainbow**, not editing any older game. Please **read and execute `Rainbow_Claude_Code_Master_Prompt_11_Screens.md` completely**, with `README_FIRST.md`, `REFERENCE_ORDER.md`, `TOOL_SETUP_AND_VERIFICATION.md`, `VISUAL_QA_CHECKLIST.md`, all **11 exact PNG screenshots in `references/`**, and **the official cartoon girl image in `character_references/`** as the only approved visual sources.

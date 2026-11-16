@@ -73,13 +73,13 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 4307,
-   "sha256": "a3b13d556f6cfb301bfb42a9b0c8f3a5cf6dc35a79efb15330bbd248a28ef799"
+   "bytes": 8015,
+   "sha256": "e49ac3eea4cc7903facf3b89e93bec9fa788a6f22a94467384650e0a35a1995a"
   },
   {
    "path": "README_FIRST.md",
-   "bytes": 2742,
-   "sha256": "28789789281c30c64204116673e9da5d32017a74dce1194803b757a47d75e8a3"
+   "bytes": 2982,
+   "sha256": "a09f3e016328868292a347f9d71ca5805d8c5a385b9a67d11e4ef8d473a69575"
   },
   {
    "path": "REFERENCE_ORDER.md",
@@ -93,8 +93,8 @@
   },
   {
    "path": "START_HERE_PASTE_TO_CLAUDE.md",
-   "bytes": 1970,
-   "sha256": "a630c4dd49f05bf7b45ac4575b0e1514cbbfa38c38ce8093820f59b0032d4ee6"
+   "bytes": 2227,
+   "sha256": "cd69f780f399a4eca052d7918a992ae94559a972fe16bd196d357f4bef55ec73"
   },
   {
    "path": "TOOL_SETUP_AND_VERIFICATION.md",
@@ -398,8 +398,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3748,
-   "sha256": "dee1b9ab4197d982157adf07d72b3ce9cef56ebbf27a04c2c3176f77b2dc0560"
+   "bytes": 4067,
+   "sha256": "b2016947d74447a76fe4c6516e8b28628f36d7b63303572c332401c71b0ea268"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "6144949e6616ad1a8aef149a7b2844dafeaa096948667d2af2a70c8b918eb4d2"
+   "sha256": "a79f98a0076aa6fde88541734e59157e5e8dc756cd61576e391bef08d3b92890"
   },
   {
    "path": "backups/CURRENT_STATE.md",

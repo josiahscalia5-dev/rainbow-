@@ -1863,3 +1863,81 @@ Shellcheck is clean. Moving to validation. **Test A:** a second full run must sk
 > - There are **11** numbered scenes. `11 · SAFELY HOME` is the **real final ending**.
 > - The new cartoon girl is **ONE official character** for the opening and ending, and rep …[+4080 chars]
 
+### 🤖 Claude — 2026-11-16T11:05:44.701Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/CLAUDE.md", "content": "# RAINBOW — permanent rules for Claude Code\n\nThis is an EXISTING, playable 11-screen 3D game. **Never restart it, never start from scratch, never delete work.**\n\n## 1. Every new session or new Claude account — recovery is automatic\nThe SessionStart hook (`.claude/settings.json` → `scripts/autosave-hook.sh` → **`scripts/claude-bootstrap.sh --hook`**)\nalready ran before your first turn: it fetched every branch, merged any newer `ccr-*`/`claude/*` branch (normal merges\nonly; a conflicting merge is aborted and reported), restored th …[+7525 chars]`
+
+### 🧑 User — 2026-11-16T11:05:44.738Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:05:46.701Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/START_HERE_PASTE_TO_CLAUDE.md", "old_string": "# Paste this into Claude Code in the NEW Rainbow folder\n", "new_string": "> ⚠ **HISTORICAL KIT FILE — DO NOT PASTE.** The Rainbow game already exists and must never be restarted. For a new\n> Claude account or session use `backups/START_NEW_CLAUDE_ACCOUNT.md` and follow `CLAUDE.md`. (Original kit: `backups/source-package/`.)\n\n# Paste this into Claude Code in the NEW Rainbow folder\n"}`
+
+### 🧑 User — 2026-11-16T11:05:46.743Z
+
+> ↩︎ result: The file /home/user/rainbow-/START_HERE_PASTE_TO_CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:05:48.455Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/README_FIRST.md", "old_string": "# Rainbow NEW 11-screen Claude Code kit — START HERE\n", "new_string": "> ⚠ **HISTORICAL KIT FILE.** The Rainbow game already exists and must never be restarted. For a new Claude account or\n> session use `backups/START_NEW_CLAUDE_ACCOUNT.md` and follow `CLAUDE.md`. (Original kit: `backups/source-package/`.)\n\n# Rainbow NEW 11-screen Claude Code kit — START HERE\n"}`
+
+### 🧑 User — 2026-11-16T11:05:48.514Z
+
+> ↩︎ result: The file /home/user/rainbow-/README_FIRST.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:05:52.154Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -E \"^  (OK|WARN|FAIL|SKIP)|BOOTSTRAP\" /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/bootstrap-full.log | cut -c1-260; cat /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/tasks/bmj16g29t.output | tail -4; git status --short | head", "description": "Show results of the full-test bootstrap run"}`
+
+### 🧑 User — 2026-11-16T11:05:52.219Z
+
+> ↩︎ result: RAINBOW BOOTSTRAP (full) 2026-11-16 11:04 UTC - /home/user/rainbow-
+>   OK   Repository + branch            josiahscalia5-dev/rainbow- on ccr-251ed97c-ty2xvp @ 3d6ed23 (session started from ccr-44f84024-ii5iih)
+>   OK   Resume newest work             12/12 remote ccr-*/claude/* branches contained in HEAD 3d6ed23
+>   OK   Backup gap since last session  previous save on GitHub: 98ffd8e 2026-11-16 10:38 UTC (daemon) on ccr-251ed97c-ty2xvp, ccr-44f84024-ii5iih; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 7 gap(s)
+>   OK   Git LFS binaries (local)       24/24 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK
+>   OK   Git LFS on GitHub              24/24 LFS objects (184 MB, 17 Marble/World Labs) confirmed on GitHub LFS, 24/24 downloaded fresh from GitHub with matching SHA-256
+>   OK   Approved references            12/12 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference)
+>   OK   Game: 11 screens + code        11 approved screen references 01-11, source tree src/ (40 files), Android project android/, characters assets/models/*.glb
+>   OK   Specialist agents              1 …[+2445 chars]
+
+### 🤖 Claude — 2026-11-16T11:05:58.413Z
+
+> 🔧 **Bash** `{"command": "cd /home/user && time bash rainbow-/scripts/cloud-env-setup.sh 2>&1 | grep -E \"^  (OK|WARN|FAIL|SKIP)|==|rainbow:\"; echo \"exit=${PIPESTATUS[0]}\"", "description": "Run the cloud environment setup script from the parent dir", "timeout": 900000}`
+
+### 🧑 User — 2026-11-16T11:06:02.174Z
+
+> ↩︎ result: == Rainbow env-setup: tools (/home/user/rainbow-)
+>   OK   Node.js                        v22.23.4, npm 10.9.9
+>   OK   npm dependencies               node_modules up to date with package-lock.json (npm ci skipped)
+>   OK   Python QA libraries            Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK
+>   OK   Playwright + Chromium          headless Chromium 153.0.8010.12 with WebGL2 (SwiftShader); preinstalled, never reinstall
+>   OK   ffmpeg / ImageMagick           ffmpeg 6.1.1-3ubuntu5, ImageMagick 6.9.12-98 (Flow video + image checks)
+>   OK   Blender                        Blender 5.3.0 (present) at /usr/local/bin/blender; headless bpy test OK
+>   OK   Android build tools            Android SDK platform 34 + build-tools 34.0.0 + platform-tools (present, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug
+>   OK   World Labs integration         Marble API key works on this environment (free read: 5190 credits left); plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started
+> 
+> real	0m3.724s
+> user	0m2.136s
+> sys	0m0.571s
+> exit=0
+> Shell cwd was reset to /home/user/rainbow …[+1 chars]
+
+### 🤖 Claude — 2026-11-16T11:06:14.136Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__World_Labs_Atlas__list_projects", "max_results": 1}`
+
+### 🧑 User — 2026-11-16T11:06:14.142Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-16T11:06:15.580Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🧑 User — 2026-11-16T11:06:16.180Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
