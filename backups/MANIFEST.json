@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 11277,
-   "sha256": "5c7afb19cc4b509f75a3e56026bfbb6cc2dd7b3146d179b8103eb100b3aaa79f"
+   "bytes": 11306,
+   "sha256": "8fcd981af9b77685dad9efebb27fb15a5806033cb1edacff3838907bda860ff1"
   },
   {
    "path": "README_FIRST.md",
@@ -479,7 +479,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "5516bd17e55a04931df10f9134ebdaf2dd49f7ccf725902116402f551649d671"
+   "sha256": "51dac9834d4f7a4291e43f7d5799be04a86e5916bf5e1d559d664b9bfc5c031c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1633,8 +1633,8 @@
   },
   {
    "path": "qa/pilot05/proj/tunnel/NOTES.md",
-   "bytes": 5369,
-   "sha256": "baa729a7f40ef519cf83864052a5edf58d3e7c0dd920a3911ecdd023461837c1"
+   "bytes": 8322,
+   "sha256": "cec27437a6decbd902b4ad04377ae20d407fc579b9b895b2439f53a4f331ce19"
   },
   {
    "path": "qa/pilot05/proj/tunnel/frame/0_DEFAULT_T2_unchanged.png",
@@ -1667,6 +1667,31 @@
    "sha256": "ebdff4afad73f700b3e701673155d0f00f42856db224a0cb201964065f17f5df"
   },
   {
+   "path": "qa/pilot05/proj/tunnel/lid/1_APPROVED.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/2_BEFORE_paddles_projframe05.png",
+   "bytes": 2155825,
+   "sha256": "2eaf4ca8050246807cc309d3618411537492d2f51ebec2e3f171619fd6a63e87"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/3_NEW_projlid05_blender_paddles.png",
+   "bytes": 2163643,
+   "sha256": "10184aee4dd29c974cb672f4bea2cd026fb65c035ab87ee902ad389862392f03"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/4_PADDLES_closeup_approved_top_new_bottom.png",
+   "bytes": 1575461,
+   "sha256": "fc1de8489bbd431856d4639f404024e96639c97af00cdfa978eb3ba055041b3b"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/REGION_METRICS.json",
+   "bytes": 4045,
+   "sha256": "5f05c1d4cd9bba0192dd73732d5518125a3a719dd87e22c99ff40be6041709f9"
+  },
+  {
    "path": "qa/pilot05/proj/tunnel/lid/fit.json",
    "bytes": 1514,
    "sha256": "51bcabe00701981812ec864e0df52df93c8484f245b95a4caf0e9f2f957ee2d5"
@@ -1680,6 +1705,26 @@
    "path": "qa/pilot05/proj/tunnel/lid/mesh2d.json",
    "bytes": 87605,
    "sha256": "6bc292d9fa7f5e626168a8789ee5b3eb717a916e0fd2d2ce19a735ce22e0072d"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/move/move_00.png",
+   "bytes": 2150331,
+   "sha256": "885081562015bb855cddb4ec3bdac7ae17c4403e0f76927d6b52b981dba8b23a"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/move/move_06.png",
+   "bytes": 1900578,
+   "sha256": "891583841b1f8cb944e64b5e65b8f1bb6fe1c7aa041b246c88a771cc30f62dcb"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/move/move_14.png",
+   "bytes": 1849555,
+   "sha256": "36202f3a409a16759a812a17c813497d1ac6f52bc141ff49f66d2bd8d17b0345"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/move/move_log.json",
+   "bytes": 616,
+   "sha256": "7866dfe63638164107a95adafe2413fa374c718af6018ab7cb540a371e13293f"
   },
   {
    "path": "qa/pilot05/proj/tunnel/lid/raycast.json",
