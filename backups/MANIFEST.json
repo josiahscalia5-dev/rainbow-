@@ -398,8 +398,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3775,
-   "sha256": "3366a6e2a93c3aba9cb405994dedbe99f1c0704a02e05ad7747ac0d34b237008"
+   "bytes": 3909,
+   "sha256": "7cd2a59f574653f0d313543ddaaf64c616fa7c6e10298c0503b0fc5eb4f5d695"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7291,
-   "sha256": "cf025c6bd1c0243caf26820d6d6b52d5ad8eedaa25155ed31c2fc074761a667e"
+   "sha256": "15f6b47ce1fbb2ab535f30965d9ee8eaa5f140b5396c9b4e7ed6d4abfa241e6c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -438,8 +438,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 5976,
-   "sha256": "2f5e71aaf710709411f5dcb783e38bf23b6aba5b9eea689d1488ffd5f6a8f81f"
+   "bytes": 6025,
+   "sha256": "9872180e9a15d72c92d05ba4375b4133bcaa096e7e8139a35b3606eaea2ae9c5"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",

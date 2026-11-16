@@ -595,3 +595,482 @@ No Blender MCP tools are loaded in this session. I'll search the connector regis
 
 > ↩︎ result: [{"name":"World Labs Atlas","description":"","directoryUuid":"414312ee-8b91-4b54-a5e6-7e46287ccd15","installedServerId":"414312ee-8b91-4b54-a5e6-7e46287ccd15","customOAuthClientId":null,"installState":"connected","isAuthless":false,"connected":true,"enabledInChat":true}]
 
+### 🤖 Claude — 2026-11-16T12:46:56.294Z
+
+> 🔧 **SearchPlugins** `{"keywords": ["blender", "3d", "water shader"]}`
+
+### 🧑 User — 2026-11-16T12:46:56.771Z
+
+> ↩︎ result: {"results":[{"id":"plugin_01QxSpx84CVL2k7PuVF6xPWz","name":"ce73d409-4e8b-43c4-8557-51be58f5fb42","display_name":"MCPBinder","description":"Read project context and manage tasks in MCPBinder, with access you control.","enabled":false,"presents_as":null,"installation_preference":"available","created_at":"2026-10-03T23:54:09.248754Z","updated_at":"2026-10-05T04:56:29.622452Z","partition_by":"marketplace","marketplace_id":"marketplace_01VNB7JgJyYTuJiDfXSABKm3","marketplace_name":"anthropic-plugin-directory","marketplace_display_name":"Anthropic Directory","marketplace_kind":"other_catalog","author":{"name":"Reed Stories, LLC","email":null,"url":null},"publisher":{"tier":"community","name":null,"basis":"directory_review"},"content_scan":null,"components":[{"type":"skill","name":"ce73d409-4e8b-43c4-8557-51be58f5fb42:get-started","description":null,"origin":null},{"type":"skill","name":"ce73d409-4e8b-43c4-8557-51be58f5fb42:log-decision","description":null,"origin":null},{"type":"skill","name":"ce73d409-4e8b-43c4-8557-51be58f5fb42:plan-tasks","description":null,"origin":null},{"type":"skill","name":"ce73d409-4e8b-43c4-8557-51be58f5fb42:project-update","description":null,"origin":null},{"t …[+40595 chars]
+
+### 🤖 Claude — 2026-11-16T12:46:57.739Z
+
+> 🔧 **TaskCreate** `{"subject": "Finish recovery checks + backup report", "description": "Wait for background bootstrap, autosave config (branch, protected ccr-251ed97c-ty2xvp), connectors (Atlas, GitHub, Playwright, Blender MCP), World Labs key check, report.", "activeForm": "Finishing recovery checks"}`
+
+### 🧑 User — 2026-11-16T12:46:57.749Z
+
+> ↩︎ result: Task #1 created successfully: Finish recovery checks + backup report
+
+### 🤖 Claude — 2026-11-16T12:46:58.989Z
+
+> 🔧 **TaskCreate** `{"subject": "Far river: narrower width + strong alternating S-curves (visual-only far05.ts)", "description": "Behind a URL switch; rideable course.ts untouched; seam continuity kept.", "activeForm": "Reshaping the far river"}`
+
+### 🧑 User — 2026-11-16T12:46:58.999Z
+
+> ↩︎ result: Task #2 created successfully: Far river: narrower width + strong alternating S-curves (visual-only far05.ts)
+
+### 🤖 Claude — 2026-11-16T12:47:00.341Z
+
+> 🔧 **TaskCreate** `{"subject": "Flow map along river curves + animated normal maps in water shader", "description": "Generate flow map from course spline (Blender/python or in-code), use Water2-style two-phase flow sampling with normal map; behind same switch.", "activeForm": "Building the flow-map water shader"}`
+
+### 🧑 User — 2026-11-16T12:47:00.358Z
+
+> ↩︎ result: Task #3 created successfully: Flow map along river curves + animated normal maps in water shader
+
+### 🤖 Claude — 2026-11-16T12:47:01.740Z
+
+> 🔧 **TaskCreate** `{"subject": "Test: APPROVED | CURRENT | NEW full-size, regression, perf (WebGL2 low/high)", "description": "Default pixel-identical; BEFORE pixel-identical; gameplay 8/8; continuity; draw calls/tris; frame timings; save + report.", "activeForm": "Testing and comparing"}`
+
+### 🧑 User — 2026-11-16T12:47:01.752Z
+
+> ↩︎ result: Task #4 created successfully: Test: APPROVED | CURRENT | NEW full-size, regression, perf (WebGL2 low/high)
+
+### 🤖 Claude — 2026-11-16T12:47:10.668Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nc=json.load(open('backups/autosave.config.json'))\nprint(c['protected_branches'])\nprint([k for k in c])\nEOF\ngit merge-base --is-ancestor origin/ccr-251ed97c-ty2xvp HEAD && echo \"ccr-251ed97c-ty2xvp contained in HEAD\"; tail -25 backups/.live/bootstrap.log", "description": "Show protected branches and bootstrap progress"}`
+
+### 🧑 User — 2026-11-16T12:47:10.732Z
+
+> ↩︎ result: ['ccr-6f431adf-7h0m8y', 'claude/rainbow-3d-recovery-m4v347', 'ccr-d4bb0ad3-8ycajb', 'ccr-8b6fc834-7kd55l', 'ccr-e033f912-8b40f5', 'claude/rainbow-3d-account-transfer-syorak', 'ccr-93add0fa-q17ey6', 'ccr-4f6c3e0e-5kxgr0', 'ccr-937c7fbb-htsrgt', 'claude/rainbow-3d-account-recovery-xex5hc', 'ccr-44f84024-ii5iih']
+> ['project', 'repo_full_name', 'remote_name', 'remote_url_must_contain', 'branch', 'session_branch_patterns', 'commit_trailer', 'claude_projects_glob', 'allowlist', 'status_only_paths', 'max_plain_git_file_mb', 'push_retries', 'protected_branches', 'original_branch_note', 'branch_history_note']
+> ccr-251ed97c-ty2xvp contained in HEAD
+>   OK   Specialist agents              10/10 specialist definitions present; all SHA-256 unchanged; running: none (relaunch from notes when needed)
+>         draft world 5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f (marble-1.0-draft): 7 LFS + 13 files
+>         full  world c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9 (marble-1.1): 8 LFS + 13 files
+>         qa/worldlabs: 71 tracked files; ledger, prompt, input reference and 5 scripts checked
+>   OK   Marble World Labs assets       both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 …[+2053 chars]
+
+### 🤖 Claude — 2026-11-16T12:47:17.721Z
+
+> 🔧 **Bash** `{"command": "flock -w 120 backups/.autosave.lock python3 - <<'EOF'\nimport json, re\np='backups/autosave.config.json'\nraw=open(p).read()\nc=json.loads(raw)\nc['branch']='claude/rainbow-3d-account-recovery-hfb8p0'\nc['commit_trailer']='Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\\nClaude-Session: https://claude.ai/code/session_01VCMXoZdcyzCFdBum9wN5EU'\nif 'ccr-251ed97c-ty2xvp' not in c['protected_branches']:\n    c['protected_branches'].append('ccr-251ed97c-ty2xvp')\nindent = 2\nopen(p,'w').write(json.dumps(c, indent=indent, ensure_ascii=False)+'\\n')\nEOF\ngit diff --stat backups …[+174 chars]`
+
+### 🧑 User — 2026-11-16T12:47:17.808Z
+
+> ↩︎ result: backups/autosave.config.json | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> -  "branch": "ccr-251ed97c-ty2xvp",
+> +  "branch": "claude/rainbow-3d-account-recovery-hfb8p0",
+> -  "commit_trailer": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Kbt6BTutLARq2w7hhXopgC",
+> +  "commit_trailer": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoZdcyzCFdBum9wN5EU",
+> -    "ccr-44f84024-ii5iih"
+> +    "ccr-44f84024-ii5iih",
+> +    "ccr-251ed97c-ty2xvp"
+
+### 🤖 Claude — 2026-11-16T12:47:19.869Z
+
+Config updated with a minimal diff. Next I'll check the Atlas connector with its free `list_projects` read, and the GitHub connector by listing this branch's open pull requests.
+
+### 🤖 Claude — 2026-11-16T12:47:20.527Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__World_Labs_Atlas__list_projects,mcp__github__list_pull_requests,mcp__github__create_pull_request", "max_results": 3}`
+
+### 🧑 User — 2026-11-16T12:47:20.539Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-16T12:47:21.816Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🤖 Claude — 2026-11-16T12:47:22.562Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "state": "open", "fields": ["number", "title", "draft", "head", "base"]}`
+
+### 🧑 User — 2026-11-16T12:47:23.513Z
+
+> ↩︎ result: [{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"draft":true,"head":{"ref":"ccr-251ed97c-ty2xvp","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"84298d6be05dc03c89945511a43c9ce275608100"},"number":6,"title":"DO NOT MERGE — Rainbow newest work: permanent one-command recovery + five-minute backup system"},{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"draft":true,"head":{"ref":"ccr-44f84024-ii5iih","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"98ffd8e20fabf69f361faac1a57d315627d9da09"},"number":5,"title":"DO NOT MERGE — Rainbow newest work (Screen 05 wave 9b: BEFORE baseline restored, controlled test T1)"},{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"draft":true,"head":{"ref":"claude/rainbow-3d-account-recovery-xex5hc","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"6faf1a2bf1a8ef0cbb0c145b7d932ab04ff835c6"},"number":4,"title":"DO NOT MERGE — Rainbow 3D account recovery (newest work, Sc …[+808 chars]
+
+### 🧑 User — 2026-11-16T12:47:32.119Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🤖 Claude — 2026-11-16T12:47:35.986Z
+
+> 🔧 **Glob** `{"pattern": "{.github/pull_request_template.md,.github/PULL_REQUEST_TEMPLATE/*,pull_request_template.md,docs/pull_request_template.md}"}`
+
+### 🧑 User — 2026-11-16T12:47:36.037Z
+
+> ↩︎ result: No files found
+
+### 🤖 Claude — 2026-11-16T12:47:43.434Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "claude/rainbow-3d-account-recovery-hfb8p0", "base": "ccr-6f431adf-7h0m8y", "draft": true, "title": "DO NOT MERGE — Rainbow newest work (account recovery hfb8p0, Screen 05 water / far river)", "body": "Backup pull request for the newest Rainbow session branch. **Do not merge**: it exists so the newest work is easy to find. The session autosave pushes here every five minutes.\n\n## What this branch is\n- It continues `ccr-251ed97c-ty2xvp`, which is now on the autosave's protected list and contains every other `ccr-*` / `claude/*` branch …[+822 chars]`
+
+### 🧑 User — 2026-11-16T12:47:47.215Z
+
+> ↩︎ result: {"id":"5337262826","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/7"}
+
+### 🤖 Claude — 2026-11-16T12:47:49.322Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 7}`
+
+### 🧑 User — 2026-11-16T12:47:51.194Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#7. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🤖 Claude — 2026-11-16T12:47:53.401Z
+
+The recovery checks pass. Now the water work. First I'll map the water code: the playable ribbon, the far-river material and how the far block is built.
+
+### 🤖 Claude — 2026-11-16T12:47:55.315Z
+
+> 🔧 **Bash** `{"command": "wc -l src/vfx/waterRibbon.ts src/world/materials.ts src/world/environment.ts src/world/course.ts src/vfx/riderSplash.ts src/world/tube.ts && grep -n \"farRiver\\|far05\\|FARS05\\|farRiverMaterial\\|farRiverGeometry\\|farRiverLayout\" src/world/environment.ts src/world/materials.ts | head -40 && cat docs/vfx/water.md | sed -n 1,200p | grep -n \"W10\\|flow\" | head", "description": "Locate far-river and water code"}`
+
+### 🧑 User — 2026-11-16T12:47:55.377Z
+
+> ↩︎ result: 1145 src/vfx/waterRibbon.ts
+>   1096 src/world/materials.ts
+>    864 src/world/environment.ts
+>    629 src/world/course.ts
+>    463 src/vfx/riderSplash.ts
+>    785 src/world/tube.ts
+>   4982 total
+> src/world/environment.ts:9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
+> src/world/environment.ts:12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> src/world/environment.ts:426:    // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP
+> src/world/environment.ts:428:    const farLay = farRiverLayout(course, ft, level);
+> src/world/environment.ts:429:    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05));
+> src/world/environment.ts:430:    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay });
+> src/world/environment.ts:468:    con …[+2152 chars]
+
+### 🤖 Claude — 2026-11-16T12:47:57.711Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T12:47:57.722Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-16T12:47:58.154Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T12:47:58.165Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T12:47:58.855Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/materials.ts", "offset": 835, "limit": 262}`
+
+### 🧑 User — 2026-11-16T12:47:58.871Z
+
+> ↩︎ result: 835	        #include <colorspace_fragment>
+> 836	      }`,
+> 837	    transparent: true,
+> 838	    depthWrite: false,
+> 839	    fog: false,
+> 840	  });
+> 841	}
+> 842	
+> 843	/**
+> 844	 * Far stream of the 05 forced-perspective tunnel (far05.ts farRiverGeometry, wave 8): the water surface beyond
+> 845	 * the real ribbon, laid out by the real ribbon's own band rules (per-row attributes aRivA/aRivB: route centre,
+> 846	 * half width, pink band centres/widths, cyan core), so the cyan core and its two hot-pink bands keep WINDING
+> 847	 * into the vanishing point (ref 05) instead of running straight (the old chord read as Screen 06). Flow lines
+> 848	 * follow the winding core; fine lavender/blue-shaded foam rims along both banks; beyond the rim (inner bank of
+> 849	 * a far bend) the fragment is dropped so the far wall shows down to the foam, as in the ref. Warms into the VP
+> 850	 * glow with the virtual depth (`fgExtra`). Unlit (it is small on screen); morph "open" handled by three.
+> 851	 */
+> 852	export function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMaterial {
+> 853	  const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+> 854	  // wins the depth test against the real ribbon's continuation i …[+14065 chars]
+
+### 🤖 Claude — 2026-11-16T12:47:59.511Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 360, "limit": 140}`
+
+### 🧑 User — 2026-11-16T12:47:59.532Z
+
+> ↩︎ result: 360	  // gold junction collar 04→05 (slightly heavier)
+> 361	  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
+> 362	  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
+> 363	  const rings0607: number[] = [];
+> 364	  for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
+> 365	  zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
+> 366	  // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
+> 367	  // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
+> 368	  const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
+> 369	  lidMat.envMap = goldEnv;
+> 370	  lidMat.envMapIntensity = 1.25;
+> 371	  const lidClear = (s: number, centre: THREE.Vector3, size: number) => {
+> 372	    for (let ds = -6; ds <= 6; ds += 1.5) {
+> 373	      const ss = THREE.MathUtils.clamp(s + ds,  …[+9212 chars]
+
+### 🤖 Claude — 2026-11-16T12:48:02.405Z
+
+Now I'll see where the visuals stand. First the current default (T2) and water iteration 4.
+
+### 🤖 Claude — 2026-11-16T12:48:02.908Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/current_default_05.png"}`
+
+### 🧑 User — 2026-11-16T12:48:02.967Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:48:03.324Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave10/water/05_NEW.png"}`
+
+### 🧑 User — 2026-11-16T12:48:03.387Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:48:17.218Z
+
+To compare the far river properly, I'll crop the approved and current images to the far-river region (y 440–720) and enlarge them.
+
+### 🤖 Claude — 2026-11-16T12:48:20.572Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && mkdir -p $S && python3 -I - \"$S\" <<'EOF'\nimport sys\nfrom PIL import Image\nS=sys.argv[1]\na=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nc=Image.open('qa/pilot05/current_default_05.png').convert('RGB')\nprint(a.size,c.size)\nbox=(150,440,850,720)\nA=a.resize((864,1536)).crop(box).resize((1050,420))\nC=c.crop(box).resize((1050,420))\nout=Image.new('RGB',(1050,850),'black'); out.paste(A,(0,0)); out.paste(C,(0,430)); out.save(S+'/far_crop.png')\nEOF", "description": "Cr …[+41 chars]`
+
+### 🧑 User — 2026-11-16T12:48:21.220Z
+
+> ↩︎ result: (864, 1536) (864, 1536)
+
+### 🤖 Claude — 2026-11-16T12:48:22.924Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/far_crop.png"}`
+
+### 🧑 User — 2026-11-16T12:48:22.967Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:48:49.230Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p scripts/capture.mjs | head -80; grep -n \"argv\\|--q\\|--out\\|bloom\\|server\\|vite\\|preview\" scripts/capture.mjs | head -30", "description": "Read capture script usage"}`
+
+### 🧑 User — 2026-11-16T12:48:49.274Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3527 chars]
+
+### 🤖 Claude — 2026-11-16T12:48:52.916Z
+
+The capture script starts one game server per run, so I'll write a small scratch wrapper that captures several URL variants with a single server and browser.
+
+### 🤖 Claude — 2026-11-16T12:48:53.618Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p scripts/lib/pw.mjs", "description": "Read Playwright helper library"}`
+
+### 🧑 User — 2026-11-16T12:48:53.657Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+218 chars]
+
+### 🤖 Claude — 2026-11-16T12:49:05.427Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/cap.mjs", "content": "// Scratch: capture Screen 05 (or another id) for several URL variants with ONE vite server + browser.\n// usage (from the repo root): node cap.mjs OUTDIR [--id=05] [--size=864x1536] name=query name2=query2 ...\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\n\nconst args = process.argv.slice(2);\nconst out = args.shift();\nconst opt = Object.fromEntries(args.filter((a) =>  …[+2259 chars]`
+
+### 🧑 User — 2026-11-16T12:49:05.489Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/cap.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T12:49:06.483Z
+
+> 🔧 **Bash** `{"command": "grep -n \"setTime\\|goto\\|stats()\\|drawList\\|__rainbow = \\|__rainbow\\.\" src/*.ts src/**/*.ts | head -30", "description": "Find QA hooks exposed on window.__rainbow"}`
+
+### 🧑 User — 2026-11-16T12:49:06.529Z
+
+> ↩︎ result: src/game/Game.ts:317:    setTimeout(() => hud.showHint(null), 3500);
+> src/game/Game.ts:540:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> src/game/Game.ts:583:    goto: gotoCheckpoint,
+> src/game/Game.ts:639:    drawList() {
+> src/game/Game.ts:654:    stats() {
+> src/game/Game.ts:660:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> src/ui/cinematicVideo.ts:50:    setTimeout(() => finish(false), timeoutMs);
+> src/ui/cinematicVideo.ts:137:      setTimeout(() => { v.pause(); wrap.remove(); resolve(r); }, fadeMs + 50);
+> src/ui/cinematicVideo.ts:143:    setTimeout(() => { hint.style.opacity = '0.85'; }, 600);
+> src/ui/hud.ts:130:      if (v) setTimeout(() => { if (!victory.classList.contains('hidden')) $('replay').classList.remove('hidden'); }, 2600);
+> src/ui/hud.ts:134:    flashHurt() { flash.style.background = 'rgba(255,80,140,0.35)'; setTimeout(() => (flash.style.background = 'rgba(255,80,140,0)'), 180); },
+> src/vfx/index.ts:55:  stats(): { instances: number; bubbles: number; smallBubbles: number; sprayCapacity: number };
+
+### 🤖 Claude — 2026-11-16T12:49:07.745Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 530, "limit": 135}`
+
+### 🧑 User — 2026-11-16T12:49:07.766Z
+
+> ↩︎ result: 530	    '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+> 531	    '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+> 532	    '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
+> 533	    '11': { mode: 'outro', t: O.cp11 },
+> 534	    '07a_plunge_top': { mode: 'ride', s: course.marks['07_plunge_top'] - 1 },
+> 535	    '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
+> 536	    '07c_plunge_bottom': { mode: 'ride', s: course.marks['07_plunge_bottom'] - 3 },
+> 537	    '07d_entering_08': { mode: 'ride', s: course.stage('08').s0 + 0.2 },
+> 538	  };
+> 539	
+> 540	  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 541	    const cp = CHECKPOINTS[id];
+> 542	    if (!cp) throw new Error('unknown checkpoint ' + id);
+> 543	    resetToIntro();
+> 544	    st.frozen = time;
+> 545	    st.clock = time;
+> 546	    input.override = 0;
+> 547	    const settle = (n: number, dt: number) => { for (let i = 0; i < n; i++) stepSim(dt); };
+> 548	    if (cp.mode === 'intro') {
+> 549	      // replay the cinematic deterministically up to the checkpoint time
+> 550	      const steps = Math.round((cp.t ?? 0) / (1 / 30));
+> 551	      settle(steps, 1 / 30);
+> 552	    } else {
+> 553	 …[+6561 chars]
+
+### 🤖 Claude — 2026-11-16T12:49:13.533Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && sed -i \"s|    await page.evaluate((cid) => window.__rainbow.goto(cid), id);\\n||\" $S/cap.mjs && python3 - \"$S/cap.mjs\" <<'EOF'\nimport sys\np=sys.argv[1]; s=open(p).read()\ns=s.replace(\"\"\"    await page.evaluate((cid) => window.__rainbow.goto(cid), id);\n    if (opt.t) await page.evaluate((t) => window.__rainbow.setTime?.(Number(t)), opt.t);\"\"\",\"\"\"    await page.evaluate(([cid, t]) => (t ? window.__rainbow.goto(cid, Number(t)) : window.__rainbow.goto(cid)), [id, opt.t]);\"\"\")\nope …[+227 chars]`
+
+### 🧑 User — 2026-11-16T12:50:12.425Z
+
+> ↩︎ result: default {"calls":86,"tris":567415,"errors":0}
+> fars {"calls":86,"tris":567415,"errors":0}
+> water {"calls":86,"tris":567415,"errors":0}
+> both {"calls":86,"tris":567415,"errors":0}
+> 
+> real	0m58.800s
+> user	0m3.893s
+> sys	0m0.818s
+> [This command modified 1 file you've previously read: ../../../tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/cap.mjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T12:50:20.359Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && cat > $S/farstrip.py <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw\n# usage: farstrip.py OUT box(x0,y0,x1,y1) scale name=path ...\nout=sys.argv[1]; box=tuple(map(int,sys.argv[2].split(','))); sc=float(sys.argv[3])\nitems=[a.split('=',1) for a in sys.argv[4:]]\nw=int((box[2]-box[0])*sc); h=int((box[3]-box[1])*sc)\nimg=Image.new('RGB',(w,(h+28)*len(items)),'black'); d=ImageDraw.Draw(img)\nfor i,(n,p) in enumerate(items):\n    im=Image.open(p).convert('RGB')\n    if im.size!=(864,1536): im= …[+726 chars]`
+
+### 🧑 User — 2026-11-16T12:50:21.426Z
+
+> ↩︎ result: default vs current_default_05 max diff 0
+
+### 🤖 Claude — 2026-11-16T12:50:23.257Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/strip_base.png"}`
+
+### 🧑 User — 2026-11-16T12:50:23.450Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:50:54.951Z
+
+> 🔧 **Bash** `{"command": "grep -n \"05\\b\\|'05'\\|MEANDER05\\|widthAt\\|U05_TAIL\\|meander05\\|exit\" src/world/course.ts | head -60", "description": "Find 05 course width and meander definitions"}`
+
+### 🧑 User — 2026-11-16T12:50:54.992Z
+
+> ↩︎ result: 6: * drops down the five-arrow slide (04), winds through the perforated current tube (05), crests the
+> 16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 53:  '05': 'FLOW INTO THE CURRENT',
+> 106: * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
+> 108: * `u` along the line (0 … L05). It is applied to the route AFTER smoothPolyline, so it is exact (the
+> 111: * Shape tuned against the reference's cyan core: a small first crest under Benny at the 05
+> 116:export const S05 = {
+> 121:  /** u of the first (left) crest, where Benny rides at the 05 checkpoint */
+> 131: * 05 meander AHEAD of Benny's crest (u > uCrest): [u, offset] knots fitted to the APPROVED reference (wave 6
+> 132: * camera lock, qa/pilot05/wave6/camera_lock/landmarks.json). The reference's coin trail was back-projected
+> 133: * through the live locked 05 camera onto the river (coin height 1.2 u) and converted to offsets from the
+> 140:const MEANDER05_KNOTS: [number, number][] = [[26.3, 0.37], [32.2, -0.23], [43, -1.14], [55.5, -0.79]];
+> 142:/** the original (wave 1–5) sine meander; kept verbatim up to U05_KEEP so the 04→05 join, the '05_cr …[+3558 chars]
+
+### 🤖 Claude — 2026-11-16T12:50:56.555Z
+
+> 🔧 **Bash** `{"command": "sed -n 100,200p src/world/course.ts; grep -n \"widthAt\" -A30 src/world/course.ts | sed -n 1,60p", "description": "Read 05 meander and widthAt code"}`
+
+### 🧑 User — 2026-11-16T12:50:56.601Z
+
+> ↩︎ result: points: THREE.Vector3[];
+>   marks: Record<string, number>;
+>   straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> }
+> 
+> /**
+>  * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
+>  * lateral (world +X) offset of the course centreline from that line, as a function of the distance
+>  * `u` along the line (0 … L05). It is applied to the route AFTER smoothPolyline, so it is exact (the
+>  * smoothing would shave ~25 % off the amplitude) and still C¹ at both ends (offset and slope → 0).
+>  *
+>  * Shape tuned against the reference's cyan core: a small first crest under Benny at the 05
+>  * checkpoint (u≈uCrest, offset a0 to the LEFT, heading parallel to the tunnel axis), then crests
+>  * that grow toward the far end (screen: Benny → (560,700) → (450,600) → (520,520) → VP).
+>  * Coins (gameplay/coins.ts) sit on this centreline (lat 0), so they wind with the same S.
+>  */
+> export const S05 = {
+>   /** length of the straight tunnel line (units) */
+>   L: 72,
+>   /** wavelength along the line (crest → crest of the same side) */
+>   lambda: 32,
+>   /** u of the first (left) crest, where Benny rides at the 05 checkpoint */
+>   uCrest: 14 …[+8001 chars]
+
+### 🤖 Claude — 2026-11-16T12:51:05.106Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"widthAt\" src --include=*.ts | grep -v \"^src/world/course.ts\" | head -30", "description": "Find widthAt consumers"}`
+
+### 🧑 User — 2026-11-16T12:51:05.162Z
+
+> ↩︎ result: src/world/environment.ts:374:      if (course.sample(ss).pos.distanceTo(centre) < size * 1.2 + course.widthAt(ss) / 2 + 1.0) return true;
+> src/world/tube.ts:99:    const X = Math.abs(d) + course.widthAt(s) / 2 + 0.25;
+> src/world/far05.ts:184:  const relLay = (s: number) => bandLayout(0, course.widthAt(s) / 2, coreLateral(course, s) + coreShiftW10(course, s), sbend05(s), s);
+> src/world/far05.ts:192:    const eL = cross(Z, (s) => -course.widthAt(s) / 2), eR = cross(Z, (s) => course.widthAt(s) / 2);
+> src/vfx/bubbles.ts:313:        const hw = course.widthAt(s) / 2;
+> src/vfx/finalWave.ts:123:    const hw = course.widthAt(s) / 2;
+> src/vfx/foam.ts:559:    const hw = course.widthAt(s) / 2;
+> src/vfx/foam.ts:689:    const hw = course.widthAt(ss) / 2;
+> src/vfx/foam.ts:955:        const hw = course.widthAt(s) / 2;
+> src/vfx/waterRibbon.ts:4: * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> src/vfx/waterRibbon.ts:1044:    const hw = course.widthAt(s) / 2;
+> src/vfx/waterRibbon.ts:1141:      const hw = course.widthAt(s) / 2;
+> src/game/Game.ts:326:    const halfW = course.widthAt(st.s) / 2;
+> src/game/modules.ts:84:    const w = course.widthAt(s) / 2;
+
