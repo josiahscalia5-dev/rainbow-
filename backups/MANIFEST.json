@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9700,
-   "sha256": "2fdc3d05af135b5631c47f8e139e0894e5a64c5e62fe86b5c9b3b56f24247de2"
+   "sha256": "c15388156dfde207a26cddda1b0138aab7e3cac93fd414f12cbc012648a00383"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6455,6 +6455,51 @@
    "path": "qa/screen05_final/previous_specialist/05.png",
    "bytes": 1403551,
    "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
+  },
+  {
+   "path": "qa/tools_check/blender_2026-11-16/REPORT.md",
+   "bytes": 2543,
+   "sha256": "4c3269018c4a115deee479f24a51a13e3e7985be2c93eff065cd9bf48f47e53f"
+  },
+  {
+   "path": "qa/tools_check/blender_2026-11-16/blend_check.py",
+   "bytes": 797,
+   "sha256": "b0f7aef527b9b560e9eaaec24c0b1594b6fd54477277a783bbbbba381ba85779"
+  },
+  {
+   "path": "qa/tools_check/blender_2026-11-16/inspect.py",
+   "bytes": 920,
+   "sha256": "b7f0964e04817bee3e916a49d561b170d1d14dfe09a7fcc7e76432d5a4541f62"
+  },
+  {
+   "path": "qa/tools_check/blender_2026-11-16/paddles.py",
+   "bytes": 1438,
+   "sha256": "3ab23cdbc2bc60362814ec15e920221b173c9d8df20e0cfddc4fba7b5e048576"
+  },
+  {
+   "path": "qa/tools_check/blender_2026-11-16/paddles_cycles_lit.png",
+   "bytes": 263634,
+   "sha256": "7485b585e583ac73c7815064b3261741027350fd159b4e1003cb77b0ce2f7805"
+  },
+  {
+   "path": "qa/tools_check/blender_2026-11-16/paddles_workbench_texture.png",
+   "bytes": 191818,
+   "sha256": "72573655e90f81fab20c44c820c2a87347a8dcb653971af38659fce8a2ae6482"
+  },
+  {
+   "path": "qa/tools_check/blender_2026-11-16/render_test.py",
+   "bytes": 2427,
+   "sha256": "25e6910d61680a7fe82153363816083b3a6d930fbb62918abd2c920e96ad7394"
+  },
+  {
+   "path": "qa/tools_check/blender_2026-11-16/screen05_camera_lock_BLENDER_EEVEE.png",
+   "bytes": 131314,
+   "sha256": "a1879ba024176d944300bb39118e678daab8f6820b51f516d69f5d14803d23ae"
+  },
+  {
+   "path": "qa/tools_check/blender_2026-11-16/screen05_camera_lock_CYCLES.png",
+   "bytes": 856391,
+   "sha256": "2b628c15b730337cbf2cee894bc93075953d250638884cb17b42f02fa0169156"
   },
   {
    "path": "qa/worldlabs/05/05_env_mask.png",

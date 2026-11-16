@@ -2323,3 +2323,48 @@ Understood — I'll pause the water work and make sure Blender is fully working 
 >   back  = the approved outline lifted onto the real 05 wall (raycast.json, step B), 0.02 u off the wall
 >   front = the same ra …[+1310 chars]
 
+### 🤖 Claude — 2026-11-16T22:44:29.597Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/blender && cat > $SP/paddles.py <<'EOF'\nimport bpy, os, sys, time\nout = sys.argv[sys.argv.index(\"--\") + 1]\nbpy.ops.wm.open_mainfile(filepath=\"/home/user/rainbow-/qa/pilot05/proj/tunnel/lid/lids05.blend\")\nsc = bpy.context.scene\nfor im in bpy.data.images:\n    ok = im.has_data or (im.packed_file is not None) or os.path.exists(bpy.path.abspath(im.filepath))\n    print(\"IMAGE\", im.name, \"packed\" if im.packed_file else bpy.path.abspath(im.filepath), \"size\", tuple(im.size), \"found\" if o …[+1790 chars]`
+
+### 🧑 User — 2026-11-16T22:44:33.253Z
+
+> ↩︎ result: IMAGE 05_flow_into_the_current.png /home/user/rainbow-/qa/pilot05/proj/tunnel/lid/../../../../../references/05_flow_into_the_current.png size (864, 1536) found
+> IMAGE lid05.png /home/user/rainbow-/qa/pilot05/proj/tunnel/lid/../../../../../assets/textures/tunnel05/lid05.png size (806, 221) found
+> RENDER OK paddles_workbench_texture 2.0s
+> RENDER OK paddles_cycles_lit 0.8s
+> paddles_workbench_texture.png (768, 432, 3) mean 59.5 std 13.1
+> paddles_cycles_lit.png (768, 432, 3) mean 201.5 std 7.8
+
+### 🤖 Claude — 2026-11-16T22:44:35.814Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/blender/paddles_pair.png"}`
+
+### 🧑 User — 2026-11-16T22:44:35.840Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:44:53.303Z
+
+> 🔧 **Bash** `{"command": "grep -n \"setup-blender\\|step_blender\\|blender\" scripts/claude-bootstrap.sh | head -12; grep -n \"background\\|--background\" scripts/claude-bootstrap.sh | sed -n 1,8p", "description": "Confirm session-start hook installs Blender"}`
+
+### 🧑 User — 2026-11-16T22:44:53.344Z
+
+> ↩︎ result: 279:blender_ok() { blender --version 2>/dev/null | head -1 | grep -q "Blender $(manifest tools.blender.version)"; }
+> 284:  if ! blender_ok; then
+> 285:    ( BLENDER_VERSION="$(manifest tools.blender.version)" bash scripts/setup-blender.sh > "$LIVE/blender-setup.log" 2>&1 ) & BL_PID=$!
+> 290:step_blender() {
+> 293:  if blender_ok; then
+> 294:    v="$(blender --version 2>/dev/null | head -1)"
+> 295:    if timeout 180 blender -b --factory-startup --python-expr "import bpy; print('BPY_OK', bpy.app.version_string)" 2>/dev/null | grep -q BPY_OK; then
+> 296:      rec blender "Blender" ok "$v ($was) at $(command -v blender); headless bpy test OK" "$t"
+> 297:    else rec blender "Blender" fail "$v installed but the headless bpy test failed" "$t"; fi
+> 298:  elif [ "$DO_TOOLS" = 1 ]; then rec blender "Blender" fail "install failed (needs download.blender.org) - backups/.live/blender-setup.log" "$t"
+> 299:  else rec blender "Blender" warn "Blender $(manifest tools.blender.version) not installed (run without --check / --no-tools)" "$t"; fi
+> 443:  step_node; step_npm; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+> 12:#   internal: --hook (SessionStart hook)  --background (rest of the ho …[+653 chars]
+
+### 🤖 Claude — 2026-11-16T22:45:11.867Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/blender && D=qa/tools_check/blender_2026-11-16 && mkdir -p $D && cp $SP/paddles_workbench_texture.png $SP/paddles_cycles_lit.png $SP/screen05_camera_lock_CYCLES.png $SP/screen05_camera_lock_BLENDER_EEVEE.png $D/ && cp $SP/render_test.py $SP/paddles.py $SP/inspect.py $D/ && cp /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/blend_check.py $D/ && cat > $D/REPORT.md <<'EOF'\n# Blender check — new Claude account, session 01KS3bZt (2026-11-16 ~22:40 UTC)\n\nUser: \"Mak …[+2793 chars]`
+
