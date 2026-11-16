@@ -4183,3 +4183,7 @@ Checking the official World Labs sources for a Marble MCP connector or Claude Co
 
 You've hit your 5-hour limit · resets 3:50am (UTC)
 
+### 🧑 User — 2026-11-16T00:02:09.384Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
