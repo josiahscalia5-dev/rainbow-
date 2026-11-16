@@ -1803,3 +1803,101 @@ First geometry render is done, and the default build's 3D scene is unchanged (a 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T13:07:03.048Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('$S/g1/farw.png').crop((0,560,864,900)); im.save('$S/farw_mid.png')\"", "description": "Crop mid-field of the geometry test"}`
+
+### 🧑 User — 2026-11-16T13:07:03.252Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:07:04.175Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/farw_mid.png"}`
+
+### 🧑 User — 2026-11-16T13:07:04.201Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:07:13.430Z
+
+The far river now winds as a narrow S-channel into the light. The foam banks still render as flat white smears, so I'm reworking them into rounded, shaded puffs before the flow-map step.
+
+### 🤖 Claude — 2026-11-16T13:07:38.303Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\na=s.index(\"  #ifdef FARW05\\n  // ---- W11 foam shelf (point bar)\")\nb=s.index(\"  // ---- soap-foam lace where the water meets the foam banks ----\")\nnew = \"\"\"  #ifdef FARW05\n  // ---- W11 foam shelf (point bar) between the visible channel and the bank: soap-foam puffs (cells ≈0.6 u wide,\n  // 4.5× longer along the river so they read round from the ride camera), lit from above, lavender / blue creases,\n  // a scalloped bubbly waterline and a soft blue contact shadow on the water beside it ----\n  {\n    flo …[+5471 chars]`
+
+### 🧑 User — 2026-11-16T13:07:58.874Z
+
+> ↩︎ result: farw {"calls":86,"tris":567415,"errors":0}
+
+### 🤖 Claude — 2026-11-16T13:08:00.974Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/g2_far.png"}`
+
+### 🧑 User — 2026-11-16T13:08:01.002Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:08:01.571Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/g2_mid.png"}`
+
+### 🧑 User — 2026-11-16T13:08:01.602Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:09:41.562Z
+
+Geometry step looks right. Now the flow-map step: a new module that generates the flow map from the river's own curves plus a tileable ripple map, sampled with the Water2 two-phase technique.
+
+### 🤖 Claude — 2026-11-16T13:10:25.626Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/flow05.ts", "content": "/**\n * Screen 05 test W11, material factor (`?flow05=1` / `?river05=1`): flow map + ripple map for the 05 river.\n *\n * FLOW MAP \"from curves\" (flowField05): a small RGBA8 texture over the river's own (u, s) domain — u across the\n * ribbon (−1 … 1 = bank to bank), s along the master course through stage 05 — generated at load time from the SAME\n * curves the game rides and draws: the course spline (course.ts meander05), the visible channel (channel05), the\n * cyan-core swing (coreLateral + coreShiftW10) and the magenta b …[+10298 chars]`
+
+### 🧑 User — 2026-11-16T13:10:25.730Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/flow05.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T13:11:00.334Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function withFog\" -A8 src/vfx/glsl.ts; sed -n 300,320p src/world/environment.ts; grep -n \"sCam05\" src/world/environment.ts | head -5; grep -n \"straightAxes\" src/world/course.ts | head -5", "description": "Check fog uniform helper and pano hookup site"}`
+
+### 🧑 User — 2026-11-16T13:11:00.397Z
+
+> ↩︎ result: 159:export function withFog<T extends Record<string, THREE.IUniform>>(u: T): T & typeof THREE.UniformsLib.fog {
+> 160-  return THREE.UniformsUtils.merge([THREE.UniformsLib.fog, u]) as T & typeof THREE.UniformsLib.fog;
+> 161-}
+> 162-
+> 163-/** standard tail: tonemapping + colour space + fog (call with gl_FragColor already set) */
+> 164-export const FRAG_TAIL = /* glsl */ `
+> 165-  #include <tonemapping_fragment>
+> 166-  #include <colorspace_fragment>
+> 167-  #include <fog_fragment>
+>   const wall05 = {
+>     // lavender F0 × the magenta tube environment → violet-magenta metal (ref #992FC2 / #CD32AA)
+>     // wave 7: no pressed-metal corrugation (its bent normals turned the strip reflections into the "marbled
+>     // swirl"), only a faint bevel; shaded slot lips instead of the bright pink dotted outline; shorter, plumper
+>     // capsules (ref median slot 25 px², elongation 4.3; live was 40 px², 8.8); bluer violet F0 (ref wall
+>     // medians (171,44,177) / (188,51,205) / (154,46,166))
+>     // wave 8: luminous magenta-pink instead of violet (ref left wall mean (192,76,167), violet share of
+>     // violet+magenta 40–51 %; it06 (159,47,178), 91–93 %): warmer F0 between '#d49cf4' and '#f29ad6', softer
+>     // and l …[+1836 chars]
+
+### 🤖 Claude — 2026-11-16T13:11:41.657Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/flow05.ts'; s=open(p).read()\nold=\"\"\"/**\n * GLSL (fragment): two-phase flow-map sampling\"\"\"\nnew=\"\"\"/**\n * Uniform objects shared between the ribbon (vfx) and the 05 tunnel (world): the game clock the ribbon is driven\n * with (so the far river animates in step), and the Marble panorama (set by environment.ts, which owns it).\n */\nexport const flow05Shared = {\n  uTime: { value: 0 } as THREE.IUniform<number>,\n  uPano: { value: null } as THREE.IUniform<THREE.Texture | null>,\n  /** world direction → panorama lookup direction (materials.ts  …[+6086 chars]`
+
+### 🧑 User — 2026-11-16T13:11:44.641Z
+
+> ↩︎ result: src/vfx/flow05.ts(183,37): error TS2345: Argument of type 'Uint8Array<ArrayBufferLike>' is not assignable to parameter of type 'BufferSource | null | undefined'.
+>   Type 'Uint8Array<ArrayBufferLike>' is not assignable to type 'ArrayBufferView<ArrayBuffer>'.
+>     Types of property 'buffer' are incompatible.
+>       Type 'ArrayBufferLike' is not assignable to type 'ArrayBuffer'.
+>         Type 'SharedArrayBuffer' is not assignable to type 'ArrayBuffer'.
+>           Types of property '[Symbol.toStringTag]' are incompatible.
+>             Type '"SharedArrayBuffer"' is not assignable to type '"ArrayBuffer"'.
+> src/vfx/flow05.ts(184,36): error TS2345: Argument of type 'Uint8Array<ArrayBufferLike>' is not assignable to parameter of type 'BufferSource | null | undefined'.
+>   Type 'Uint8Array<ArrayBufferLike>' is not assignable to type 'ArrayBufferView<ArrayBuffer>'.
+>     Types of property 'buffer' are incompatible.
+

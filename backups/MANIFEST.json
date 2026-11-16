@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7292,
-   "sha256": "ddda0661d33193db2908b99ccea0671eecf187731c8620f611e72d86c4d08d98"
+   "sha256": "132e5f50d0075caef53b7b739f9397242d51159ffc7a761888c616a4daa0778c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6152,6 +6152,11 @@
    "sha256": "12a07f4e9e342b2e876af760f97e1c4f50df03bbe07646fd589e6d32fa03a39a"
   },
   {
+   "path": "src/vfx/flow05.ts",
+   "bytes": 11195,
+   "sha256": "1439a62a0dce7f263bc489467b10f612e5e6d947665d2dc9dee7b44641053f09"
+  },
+  {
    "path": "src/vfx/foam.ts",
    "bytes": 55913,
    "sha256": "063a2e34b1aa82008c0e2d5de3122d5d6421f936c0cda243154f2e17e70d49ed"
@@ -6183,8 +6188,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 69246,
-   "sha256": "93e115ff66194cae79409b4a620cccc67ce928494af5c38936004aef72c39d00"
+   "bytes": 69490,
+   "sha256": "fb85a8e3f6bd7eb615e0f7c4fd06306f62d612668917671c73f558e94f7e5472"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -6198,8 +6203,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 54222,
-   "sha256": "2a4d3193e07dd3d195fb6481524ad73c068f48f08693f32d0d745a001dfd7fdf"
+   "bytes": 54797,
+   "sha256": "f8a9592a9edb9352a4d7814afb9a44f067d2c58cf0ef6042660c7bb20ea86d5c"
   },
   {
    "path": "src/world/far05.ts",
@@ -6213,8 +6218,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 63282,
-   "sha256": "ce4fb7960851168ff023d5a9e90835725b94ebcab444fb387891aa20f092a4de"
+   "bytes": 65356,
+   "sha256": "87e975fdd498aaa75e5e5e620edc47a381b449a96cf4f27dc94ecbb9d99b6fe3"
   },
   {
    "path": "src/world/towel.ts",

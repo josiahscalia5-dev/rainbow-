@@ -4,7 +4,8 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, WATER05 } from '../vfx/waterRibbon'; // Screen 05 water test W10 (?water05=1): far river look only
+import { FARW05, WATER05 } from '../vfx/waterRibbon';
+import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
   /** base metal colour */
@@ -730,7 +731,7 @@ export function marblePano05(): THREE.Texture {
 }
 /** envMapRotation that puts the pano's vanishing point (u 0.514, v 0.542 in three's equirect uv) on the
  *  tunnel direction `tan` (and the pano's up on world up) */
-export function marblePanoRotation05(tan: THREE.Vector3): THREE.Euler {
+function marblePanoLookup05(tan: THREE.Vector3): THREE.Matrix4 {
   const az = (0.514 - 0.5) * Math.PI * 2, el = (0.542 - 0.5) * Math.PI;
   const P = new THREE.Vector3(Math.cos(el) * Math.cos(az), Math.sin(el), Math.cos(el) * Math.sin(az));
   const basis = (f: THREE.Vector3) => {
@@ -738,7 +739,15 @@ export function marblePanoRotation05(tan: THREE.Vector3): THREE.Euler {
     return new THREE.Matrix4().makeBasis(f.clone().normalize(), u, new THREE.Vector3().crossVectors(f, u).normalize());
   };
   const W = basis(tan), Q = basis(P);
-  const M = Q.multiply(W.transpose()); // world direction → pano lookup direction
+  return Q.multiply(W.transpose()); // world direction → pano lookup direction
+}
+/** W11 (?flow05=1): the same world direction → pano lookup rotation as a matrix, for a direct equirect lookup of
+ *  the Marble panorama in the water shader (reflection of the tunnel in the river) */
+export function marblePanoMatrix05(tan: THREE.Vector3): THREE.Matrix3 {
+  return new THREE.Matrix3().setFromMatrix4(marblePanoLookup05(tan));
+}
+export function marblePanoRotation05(tan: THREE.Vector3): THREE.Euler {
+  const M = marblePanoLookup05(tan);
   const e = new THREE.Euler().setFromRotationMatrix(M, 'XYZ');
   // three applies makeRotationFromEuler(−rotation) to the lookup vector (WebGLMaterials, PMREM env)
   return new THREE.Euler(-e.x, -e.y, -e.z, 'XYZ');
@@ -849,7 +858,7 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
  * a far bend) the fragment is dropped so the far wall shows down to the foam, as in the ref. Warms into the VP
  * glow with the virtual depth (`fgExtra`). Unlit (it is small on screen); morph "open" handled by three.
  */
-export function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMaterial {
+export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
   // wins the depth test against the real ribbon's continuation it covers just behind the seam
   mat.polygonOffset = true;
@@ -868,6 +877,9 @@ export function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMaterial {
     uRivFoamBlue: { value: lin(0.32, 0.36, 0.9) },
     uRivGlow: { value: new THREE.Color(glow.color) },
     uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.strength) },
+    /** W11: depth of the seam from the locked 05 eye (ForcedTunnel.D0) — screen-isotropic foam cells */
+    uRivD0: { value: d0 },
+    ...(flow ? { uRivRipple: { value: flow.ripple }, uRivTime: flow.time, uRivFlow: { value: flow.speed } } : {}),
   };
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
@@ -882,6 +894,13 @@ varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4
 varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB;
 uniform vec3 uRivCyanLo; uniform vec3 uRivCyan; uniform vec3 uRivCyanHi; uniform vec3 uRivPinkLo; uniform vec3 uRivPink; uniform vec3 uRivPinkHi;
 uniform vec3 uRivFoam; uniform vec3 uRivFoamLav; uniform vec3 uRivFoamBlue; uniform vec3 uRivGlow; uniform vec3 uRivGlowR;
+#ifdef FARW05
+uniform float uRivD0;
+#endif
+#ifdef FLOWMAP05
+uniform sampler2D uRivRipple; uniform float uRivTime; uniform float uRivFlow;
+${FLOW05_GLSL}
+#endif
 float rivHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float rivNoise(vec2 p) {
   vec2 i = floor(p), f = fract(p); vec2 w = f * f * (3.0 - 2.0 * f);
@@ -931,6 +950,15 @@ float rivCells(vec2 p) {
   float n2 = rivNoise(vec2(xq * 6.6 + 7.1, s * 0.034 + 3.7));
   float brv = clamp(0.5 + ((n1 - 0.5) * a1 + (n2 - 0.5) * a2 * 0.8) * 1.1, 0.0, 1.0);
   float bco = max(smoothstep(0.62, 0.88, n1) * a1 * 0.55, smoothstep(0.7, 0.88, n2) * a2);
+#ifdef FLOWMAP05
+  // W11 flow: the ripple map rides the winding core (streamline coordinates xq / s), fast in the core and slower
+  // toward the banks, two-phase advected like the near ribbon (flow05.ts) — the far river is animated
+  float spdF = mix(1.0, 0.46, smoothstep(0.25, 1.0, abs(lat - xB) / max(hw, 0.5)));
+  vec4 rf = flowRipple(uRivRipple, vec2(xq, s) * vec2(0.42, 0.105), vec2(0.0, spdF * uRivFlow * 1.25 * 0.105),
+                       uRivTime * 0.8 + rivNoise(vec2(lat * 0.6, s * 0.17)));
+  brv = clamp(brv + (rf.b - 0.5) * 0.85, 0.0, 1.0);
+  bco = max(bco, rf.a * 0.75);
+#endif
   // band coordinate of the nearer band: -1 bank-side edge .. +1 core-side edge
   float tLb = (lat - cL) / max(wL, 1e-3), tRb = (cR - lat) / max(wR, 1e-3);
   float tb = abs(tLb) < abs(tRb) ? tLb : tRb;
@@ -960,25 +988,30 @@ float rivCells(vec2 p) {
   // (it03) beyond the bank the floor reads as deep violet water, not as a flat pale foam sheet (the lavender wedge
   // left of the seam); only a narrow bubbly foam rim (puff cells ≥ ≈6 px, lavender / blue shading) lines each bank
 #ifdef FARW05
-  // ---- W11 (?farw05=1): the channel winds between puffy foam banks (same puff cells / shading as the ribbon's foam
-  // shelf, so the bank runs through the seam); right behind the seam the foam covers the whole floor (the real
-  // ribbon's continuation lies under it), further in it is a rim ≈1.2 u wide with a scalloped outer edge and the
-  // tunnel wall shows beyond it ----
+  // ---- W11 (?farw05=1): the channel winds between puffy foam banks. The far block is drawn for the locked eye, so
+  // the puff cells are laid in (lateral, ln depth) — round on screen and shrinking with distance like 3D mounds —
+  // lit from above with lavender / blue creases. Right behind the seam the foam covers the whole floor (the real
+  // ribbon's continuation lies under it; the approved image has its big foam bank there), further in it is a rim
+  // ≈1.3 u wide with a scalloped outer edge and the tunnel wall shows beyond it ----
   {
-    float rimW = mix(9.0, 1.2, smoothstep(5.0, 24.0, Zv));
+    float rimW = mix(9.0, 1.3, smoothstep(5.0, 24.0, Zv));
     float sgn = lat > xB ? 1.0 : -1.0;
-    float wl = (rivNoise(vec2(s * 0.55, sgn * 7.0)) - 0.5) * 0.9 + (rivNoise(vec2(s * 1.9, sgn * 3.0 + 11.0)) - 0.5) * 0.35;
+    float ld = log(uRivD0 + Zv) * 3.69;                    // ln depth × eye height: isotropic cells on screen
+    float wl = (rivNoise(vec2(ld * 1.1, sgn * 7.0)) - 0.5) * 0.7;
     float e2 = e + wl * 0.6;
-    float c1 = rivCells(vec2(lat * 1.15 + 1.7, s * 1.15));
-    float c2 = rivCells(vec2(lat * 3.1 + 5.3, s * 3.1));
-    float f1 = 1.0 - smoothstep(0.1, 0.3, fl * 1.15), f2 = 1.0 - smoothstep(0.1, 0.3, fl * 3.1);
-    if (e2 - rimW + (c1 - 0.45) * 0.7 * f1 > 0.0) discard;
-    float shelf = smoothstep(-0.12, 0.1, e2 + (0.45 - c1) * 0.5 * f1);
-    float puff = mix(0.6, 1.0 - smoothstep(0.1, 0.8, c1), f1);
-    vec3 fo = mix(uRivFoamLav * 0.9, uRivFoam, puff);
-    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.04, 0.22, c2)) * f2 * 0.35);
-    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.0, 0.35, e2)) * 0.4);          // shaded waterline
-    fo = mix(fo, uRivFoamBlue * 0.8, smoothstep(0.55, 1.0, e2 / max(rimW, 0.3)) * 0.5 * smoothstep(8.0, 26.0, Zv));  // shaded outer edge
+    vec2 pc = vec2(lat * 1.3 + 1.7, ld * 1.3);
+    float c1 = rivCells(pc);
+    float c1u = rivCells(pc + vec2(0.0, 0.16));
+    float c2 = rivCells(vec2(lat * 3.6 + 5.3, ld * 3.6));
+    float f1 = 1.0 - smoothstep(0.1, 0.3, fl * 1.3), f2 = 1.0 - smoothstep(0.1, 0.3, fl * 3.6);
+    if (e2 - rimW + (c1 - 0.5) * 0.8 * f1 > 0.0) discard;
+    float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.55 * f1);
+    float dome = 1.0 - smoothstep(0.15, 0.78, c1);
+    float lit = clamp((c1u - c1) * 3.2 + 0.55, 0.0, 1.0);
+    vec3 fo = mix(uRivFoamLav * 0.8, uRivFoam * 1.06, mix(0.62, dome * (0.45 + 0.55 * lit) + 0.25 * lit, f1));
+    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.25);
+    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.0, 0.3, e2)) * 0.4);            // shaded waterline
+    fo = mix(fo, uRivFoamBlue * 0.85, smoothstep(0.6, 1.0, e2 / max(rimW, 0.3)) * 0.45 * smoothstep(8.0, 26.0, Zv));
     col = mix(col, col * vec3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * (1.0 - shelf));
     col = mix(col, fo, shelf);
   }
@@ -1040,8 +1073,8 @@ float rivCells(vec2 p) {
 }`);
   };
   if (WATER05) {
-    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}) };
-    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '');
+    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}) };
+    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '');
   } else {
     mat.customProgramCacheKey = () => 'far-river-w8';
   }

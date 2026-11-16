@@ -1007,26 +1007,29 @@ void main() {
   }
 #endif
   #ifdef FARW05
-  // ---- W11 foam shelf (point bar) between the visible channel and the bank: puffy soap foam with a bubbly
-  // waterline, lavender / blue shading between the puffs, a soft blue contact shadow on the water beside it ----
+  // ---- W11 foam shelf (point bar) between the visible channel and the bank: soap-foam puffs (cells ≈0.6 u wide,
+  // 4.5× longer along the river so they read round from the ride camera), lit from above, lavender / blue creases,
+  // a scalloped bubbly waterline and a soft blue contact shadow on the water beside it ----
   {
     float sideW = lat > chC ? vHalfW - chC - hw : chC - hw + vHalfW;      // shelf width on this side (units)
     float shOn = smoothstep(0.08, 0.6, sideW);
     if (shOn > 0.0) {
       float eC = abs(lat - chC) - hw;                                       // > 0 on the shelf
       float sgn = lat > chC ? 1.0 : -1.0;
-      float wl = (vnoise(vec2(s * 0.55, sgn * 7.0)) - 0.5) * 0.9 + (vnoise(vec2(s * 1.9, sgn * 3.0 + 11.0)) - 0.5) * 0.35;
+      float wl = (vnoise(vec2(s * 0.5, sgn * 7.0)) - 0.5) * 0.7;
       float e2 = eC + wl * min(1.0, sideW);
       float fl2 = fwidth(lat) + 1e-4;
-      float c1 = cells(vec2(lat * 1.15 + 1.7, s * 1.15));
-      float c2 = cells(vec2(lat * 3.1 + 5.3, s * 3.1));
-      float f1 = 1.0 - smoothstep(0.1, 0.3, fl2 * 1.15), f2 = 1.0 - smoothstep(0.1, 0.3, fl2 * 3.1);
-      // puffs: the waterline bulges out around each big cell
-      float shelf = smoothstep(-0.12, 0.1, e2 + (0.45 - c1) * 0.5 * f1) * shOn;
-      float puff = mix(0.6, 1.0 - smoothstep(0.1, 0.8, c1), f1);
-      vec3 fo = mix(uFoamLav * 0.78, uFoam * 1.12, puff);
-      fo = mix(fo, vec3(0.42, 0.5, 1.05), (1.0 - smoothstep(0.04, 0.22, c2)) * f2 * 0.3);
-      fo = mix(fo, vec3(0.36, 0.42, 0.98), (1.0 - smoothstep(0.0, 0.35, e2)) * 0.45);         // shaded waterline
+      vec2 pc = vec2(lat * 1.6 + 1.7, s * 0.36);
+      float c1 = cells(pc);
+      float c1u = cells(pc + vec2(0.0, 0.16));
+      float c2 = cells(vec2(lat * 4.6 + 5.3, s * 1.05));
+      float f1 = 1.0 - smoothstep(0.1, 0.3, fl2 * 1.6), f2 = 1.0 - smoothstep(0.1, 0.3, fl2 * 4.6);
+      float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.55 * f1) * shOn;   // the waterline bulges round each puff
+      float dome = 1.0 - smoothstep(0.15, 0.78, c1);
+      float lit = clamp((c1u - c1) * 3.2 + 0.55, 0.0, 1.0);                 // top of each puff catches the light
+      vec3 fo = mix(uFoamLav * 0.7, uFoam * 1.14, mix(0.62, dome * (0.45 + 0.55 * lit) + 0.25 * lit, f1));
+      fo = mix(fo, vec3(0.5, 0.56, 1.05), (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.22);
+      fo = mix(fo, vec3(0.36, 0.42, 0.98), (1.0 - smoothstep(0.0, 0.3, e2)) * 0.4);            // shaded waterline
       col = mix(col, col * vec3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * shOn * (1.0 - shelf));
       col = mix(col, fo, shelf);
     }
