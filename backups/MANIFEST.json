@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7292,
-   "sha256": "ff39525215b3fa3572063ff1b7c6d95eef7daeb827a61a59769204e4ff47a009"
+   "sha256": "ddda0661d33193db2908b99ccea0671eecf187731c8620f611e72d86c4d08d98"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6183,8 +6183,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 64007,
-   "sha256": "28c337fdb97a60cac6e9148d597419a308eef27dcd4c5765e6b300c888642f36"
+   "bytes": 69246,
+   "sha256": "93e115ff66194cae79409b4a620cccc67ce928494af5c38936004aef72c39d00"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -6203,8 +6203,8 @@
   },
   {
    "path": "src/world/far05.ts",
-   "bytes": 15860,
-   "sha256": "18c7dba71bf436bad7b887f96bf5ea42c75d53c09280925eed8c6e6f4e992bf9"
+   "bytes": 17902,
+   "sha256": "5653b60dee144e1433924e12760806d82f617fd540bcb9a0d79168742d683b65"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -6213,8 +6213,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 61583,
-   "sha256": "03a71b0e946d12eccc5aea20f16db0d8e17f24a8e45c7231f1882af6b97ab89f"
+   "bytes": 63282,
+   "sha256": "ce4fb7960851168ff023d5a9e90835725b94ebcab444fb387891aa20f092a4de"
   },
   {
    "path": "src/world/towel.ts",

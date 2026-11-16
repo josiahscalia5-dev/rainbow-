@@ -144,13 +144,50 @@ const FLOW05 = 1.3;
  * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
  * Guarded read: false in vite-node / workers (no `location`).
  */
-export const WATER05: boolean = (() => {
+const q05 = (key: string): boolean => {
   try {
-    return typeof location !== 'undefined' && new URLSearchParams(location.search).get('water05') === '1';
+    return typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1';
   } catch {
     return false;
   }
-})();
+};
+/**
+ * Screen 05 test W11 (2026-11-16, qa/pilot05/wave11/NOTES.md) — ONE reversible demonstration `?river05=1` made of two
+ * factors that can also be switched on separately (each on top of the W10 palette, so `?water05=1` is their baseline):
+ *  `?farw05=1`  GEOMETRY: the distant river is a narrower channel that winds between foam shelves (point bars on the
+ *               inside of each bend) — far block (far05.ts) + the last stretch of the real ribbon before the seam
+ *               (channel05 below). Visual only: course.ts, widthAt(), steering, coins and collisions are untouched.
+ *  `?flow05=1`  MATERIAL: a flow map generated from the river's own curves (flow05.ts) drives two-phase advection of
+ *               a tileable ripple normal / height map (the three.js Water2 technique, without its render passes) —
+ *               animated ripples, glossy highlights and the Marble panorama's reflection follow the S-curves.
+ * All off (default): every shader program and geometry attribute is the previous one (pixel-identical build).
+ */
+export const RIVER05: boolean = q05('river05');
+export const FARW05: boolean = RIVER05 || q05('farw05');
+export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
+
+/**
+ * W11 geometry (`?farw05=1`, else the full width): the VISIBLE water channel of the 05 river at arc length s, in the
+ * ribbon frame — centre `c` (units along `right`) and half width `hw`. Between the channel and the bank lies a foam
+ * shelf (drawn by the ribbon shader on the same surface; Benny can still ride over it — widthAt() and the steering
+ * range are unchanged). Approved image, banks traced through the locked 05 eye: a left shelf ≈1.3 u wide at
+ * y 640–720 (s ≈ 145–155) and a right shelf that grows to ≈3.9 u at the seam (y 560–590, the big foam bank at
+ * x 546–592) and continues into the far block; it hands back to the full width behind the seam (s 183–191, hidden
+ * by the far block at the checkpoint, the ride into 06 is the normal river).
+ */
+export function channel05(course: Course, s: number): { c: number; hw: number } {
+  const hw = course.widthAt(s) / 2;
+  if (!FARW05) return { c: 0, hw };
+  const st = course.stage('05');
+  if (s <= st.s0 || s >= st.s1 + 4) return { c: 0, hw };
+  const o = s - st.s0;                              // 05-relative arc length (the checkpoint is at o ≈ 17.75)
+  const shL = 1.35 * smooth(25, 32, o) * (1 - smooth(39.5, 47, o));
+  const shR = 3.7 * smooth(52, 65, o) * (1 - smooth(68.5, 76.5, o));
+  const k = Math.min(1, (hw - 2.4) / Math.max(1e-3, (shL + shR) / 2));   // never narrower than 2.4 u half width
+  const a = shL * Math.max(0, k), b = shR * Math.max(0, k);
+  return { c: (a - b) / 2, hw: hw - (a + b) / 2 };
+}
 
 export function ampAt(course: Course, s: number): number {
   let v = 0, w = 0;
@@ -186,6 +223,10 @@ attribute float aSkirt;  // 0 surface, 1 skirt bottom
 attribute vec4 aStyle;   // band layout: gate, offset, half width, free-meander weight (see BAND_STYLE)
 attribute float aCore;   // 05: core-centre lateral swing (units, see coreLateral)
 attribute vec3 aTan;     // course tangent (downstream)
+#ifdef FARW05
+attribute vec2 aChan;    // W11: visible channel centre / half width (units, see channel05)
+varying vec2 vChan;
+#endif
 uniform float uTime;
 uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
 varying vec2 vUV;
@@ -202,6 +243,9 @@ varying vec3 vNormalW;
 void main() {
   vStyle = aStyle;
   vCore = aCore;
+  #ifdef FARW05
+  vChan = aChan;
+  #endif
   vTanW = normalize(mat3(modelMatrix) * aTan);
   float u = aUV.x;
   float s = aUV.y;
@@ -259,6 +303,9 @@ varying float vCore;
 varying vec3 vTanW;
 varying vec3 vPosW;
 varying vec3 vNormalW;
+#ifdef FARW05
+varying vec2 vChan;
+#endif
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 ${FRAG_FX_GLSL}
@@ -478,6 +525,11 @@ void main() {
   // ---- channel layout: winding cyan core between two hot-pink S-bands, cyan again outside ----
   float hw = vHalfW;
   float lat = u * hw;                         // lateral units in the ribbon frame
+  #ifdef FARW05
+  // W11: the band layout lives in the visible channel (narrower than the ribbon where a foam shelf lines the bank)
+  float chC = vChan.x;
+  hw = vChan.y;
+  #endif
   // core centre: free drifting meander on 04/06/07 (freeK = 1); on 05 (freeK = 0) pinned to the
   // course's own S-meander, amplified (vCore = CORE_SWING · offset05), so the coins stay on cyan
   float freeK = vStyle.w;
@@ -548,6 +600,9 @@ void main() {
   float brush = 0.0;
   if (freeK < 0.5) {
     float Mb = M + sbend;
+    #ifdef FARW05
+    Mb -= chC;                                // core position relative to the channel centre (band clamps below)
+    #endif
     // 05 (wave 7) channel shape fitted to ref 05 (band centres back-projected through the locked camera,
     // lateral from the core): the river widens at s≈148–166 (the right band runs along the right bank at
     // s≈152–157, the left band bulges toward the core at s≈145–152 and swings out at s≈158–166), and the
@@ -951,6 +1006,32 @@ void main() {
     col = mix(col, c5, sw);
   }
 #endif
+  #ifdef FARW05
+  // ---- W11 foam shelf (point bar) between the visible channel and the bank: puffy soap foam with a bubbly
+  // waterline, lavender / blue shading between the puffs, a soft blue contact shadow on the water beside it ----
+  {
+    float sideW = lat > chC ? vHalfW - chC - hw : chC - hw + vHalfW;      // shelf width on this side (units)
+    float shOn = smoothstep(0.08, 0.6, sideW);
+    if (shOn > 0.0) {
+      float eC = abs(lat - chC) - hw;                                       // > 0 on the shelf
+      float sgn = lat > chC ? 1.0 : -1.0;
+      float wl = (vnoise(vec2(s * 0.55, sgn * 7.0)) - 0.5) * 0.9 + (vnoise(vec2(s * 1.9, sgn * 3.0 + 11.0)) - 0.5) * 0.35;
+      float e2 = eC + wl * min(1.0, sideW);
+      float fl2 = fwidth(lat) + 1e-4;
+      float c1 = cells(vec2(lat * 1.15 + 1.7, s * 1.15));
+      float c2 = cells(vec2(lat * 3.1 + 5.3, s * 3.1));
+      float f1 = 1.0 - smoothstep(0.1, 0.3, fl2 * 1.15), f2 = 1.0 - smoothstep(0.1, 0.3, fl2 * 3.1);
+      // puffs: the waterline bulges out around each big cell
+      float shelf = smoothstep(-0.12, 0.1, e2 + (0.45 - c1) * 0.5 * f1) * shOn;
+      float puff = mix(0.6, 1.0 - smoothstep(0.1, 0.8, c1), f1);
+      vec3 fo = mix(uFoamLav * 0.78, uFoam * 1.12, puff);
+      fo = mix(fo, vec3(0.42, 0.5, 1.05), (1.0 - smoothstep(0.04, 0.22, c2)) * f2 * 0.3);
+      fo = mix(fo, vec3(0.36, 0.42, 0.98), (1.0 - smoothstep(0.0, 0.35, e2)) * 0.45);         // shaded waterline
+      col = mix(col, col * vec3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * shOn * (1.0 - shelf));
+      col = mix(col, fo, shelf);
+    }
+  }
+  #endif
   // ---- soap-foam lace where the water meets the foam banks ----
   float edgeN = (vnoise(vec2(s * 1.3, u * 2.0)) - 0.5) * 0.1;
   float eu = abs(lat) - vHalfW;               // units from the edge (negative inside)
@@ -1034,6 +1115,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   const skirt = new Float32Array(n);
   const style = new Float32Array(n * 4);
   const core = new Float32Array(n);
+  const chan = FARW05 ? new Float32Array(n * 2) : null;
   const tang = new Float32Array(n * 3);
   const tmp = new THREE.Vector3();
   const nrm = new THREE.Vector3();
@@ -1046,6 +1128,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     const a = ampAt(course, s);
     const bs = bandStyleAt(course, s);
     const cl = coreLateral(course, s) + coreShiftW10(course, s);
+    const ch = chan ? channel05(course, s) : null;
     const put =(u: number, lateral: number, h: number, isSkirt: number, nn: THREE.Vector3) => {
       tmp.copy(f.pos).addScaledVector(f.right, lateral).addScaledVector(f.up, h);
       tmp.toArray(pos, k * 3);
@@ -1059,6 +1142,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
       skirt[k] = isSkirt;
       for (let q = 0; q < 4; q++) style[k * 4 + q] = bs[q];
       core[k] = cl;
+      if (chan && ch) { chan[k * 2] = ch.c; chan[k * 2 + 1] = ch.hw; }
       k++;
     };
     // left skirt (below left edge)
@@ -1089,6 +1173,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   geo.setAttribute('aSkirt', new THREE.BufferAttribute(skirt, 1));
   geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 4));
   geo.setAttribute('aCore', new THREE.BufferAttribute(core, 1));
+  if (chan) geo.setAttribute('aChan', new THREE.BufferAttribute(chan, 2));
   geo.setAttribute('aTan', new THREE.BufferAttribute(tang, 3));
   geo.setIndex(idx);
   geo.computeBoundingSphere();
@@ -1127,7 +1212,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'water_ribbon';

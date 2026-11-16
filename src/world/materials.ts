@@ -4,7 +4,7 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { WATER05 } from '../vfx/waterRibbon'; // Screen 05 water test W10 (?water05=1): far river look only
+import { FARW05, WATER05 } from '../vfx/waterRibbon'; // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
   /** base metal colour */
@@ -909,7 +909,9 @@ float rivCells(vec2 p) {
   // beyond the foam rim (inner bank of a far bend) the far wall shows down to the foam (ref 05); right behind
   // the seam the surface covers the whole floor (the real ribbon's continuation lies under it)
   float bankW = mix(9.0, 1.3, smoothstep(10.0, 22.0, Zv));
+#ifndef FARW05
   if (e > bankW + bankN * 2.0) discard;
+#endif
 #ifdef WATER05
   // ---- W10 (?water05=1): the near ribbon's approved-image palette and hue ramp (waterRibbon.ts W5_*): electric cyan
   // core with flow-aligned brushed streaks and aqua cores, hot-pink satin bands ramping through violet / periwinkle,
@@ -957,8 +959,34 @@ float rivCells(vec2 p) {
   }
   // (it03) beyond the bank the floor reads as deep violet water, not as a flat pale foam sheet (the lavender wedge
   // left of the seam); only a narrow bubbly foam rim (puff cells ≥ ≈6 px, lavender / blue shading) lines each bank
+#ifdef FARW05
+  // ---- W11 (?farw05=1): the channel winds between puffy foam banks (same puff cells / shading as the ribbon's foam
+  // shelf, so the bank runs through the seam); right behind the seam the foam covers the whole floor (the real
+  // ribbon's continuation lies under it), further in it is a rim ≈1.2 u wide with a scalloped outer edge and the
+  // tunnel wall shows beyond it ----
+  {
+    float rimW = mix(9.0, 1.2, smoothstep(5.0, 24.0, Zv));
+    float sgn = lat > xB ? 1.0 : -1.0;
+    float wl = (rivNoise(vec2(s * 0.55, sgn * 7.0)) - 0.5) * 0.9 + (rivNoise(vec2(s * 1.9, sgn * 3.0 + 11.0)) - 0.5) * 0.35;
+    float e2 = e + wl * 0.6;
+    float c1 = rivCells(vec2(lat * 1.15 + 1.7, s * 1.15));
+    float c2 = rivCells(vec2(lat * 3.1 + 5.3, s * 3.1));
+    float f1 = 1.0 - smoothstep(0.1, 0.3, fl * 1.15), f2 = 1.0 - smoothstep(0.1, 0.3, fl * 3.1);
+    if (e2 - rimW + (c1 - 0.45) * 0.7 * f1 > 0.0) discard;
+    float shelf = smoothstep(-0.12, 0.1, e2 + (0.45 - c1) * 0.5 * f1);
+    float puff = mix(0.6, 1.0 - smoothstep(0.1, 0.8, c1), f1);
+    vec3 fo = mix(uRivFoamLav * 0.9, uRivFoam, puff);
+    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.04, 0.22, c2)) * f2 * 0.35);
+    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.0, 0.35, e2)) * 0.4);          // shaded waterline
+    fo = mix(fo, uRivFoamBlue * 0.8, smoothstep(0.55, 1.0, e2 / max(rimW, 0.3)) * 0.5 * smoothstep(8.0, 26.0, Zv));  // shaded outer edge
+    col = mix(col, col * vec3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * (1.0 - shelf));
+    col = mix(col, fo, shelf);
+  }
+  float foamIn = 0.0;
+#else
   col = mix(col, vec3(0.2, 0.08, 0.45), smoothstep(0.15, 0.6, e));
   float foamIn = smoothstep(-0.42, -0.12, e + bankN) * (1.0 - smoothstep(0.25, 0.55, e + bankN));
+#endif
   if (foamIn > 0.0) {
     float c = rivCells(vec2(lat * 2.4, s * 0.9 + lat * 0.7));
     float c2 = rivCells(vec2(lat * 5.0 + 3.1, s * 1.9 - lat * 0.5));
@@ -1012,8 +1040,8 @@ float rivCells(vec2 p) {
 }`);
   };
   if (WATER05) {
-    mat.defines = { WATER05: 1 };
-    mat.customProgramCacheKey = () => 'far-river-w8-w10';
+    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}) };
+    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '');
   } else {
     mat.customProgramCacheKey = () => 'far-river-w8';
   }

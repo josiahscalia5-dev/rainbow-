@@ -17,7 +17,7 @@ import * as THREE from 'three';
 import type { Course } from './course';
 import type { ForcedTunnel } from './tube';
 import { tubeCenterAt } from './tube';
-import { coreLateral, coreShiftW10, EDGE_LIFT, WATER05 } from '../vfx/waterRibbon';
+import { channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, WATER05 } from '../vfx/waterRibbon';
 
 /** QA only: the far block publishes its tunnel + river path here (read by qa scripts via dynamic import) */
 export const far05Debug: Record<string, unknown> = {};
@@ -168,6 +168,29 @@ function designW10(Z: number, chord: number): FarRiverRow {
 }
 
 /**
+ * W11 (?farw05=1, user 2026-11-16: "make the distant river narrower, with strong alternating S-curves and natural
+ * foam banks"). The far water BODY is a channel about half as wide as the tube floor ([Z, centre, half width], units
+ * along ft.Rt; floor half chord ≈ 6.53) that swings from wall to wall: it leaves the seam where the real ribbon's
+ * visible channel arrives (channel05: centre ≈ 0, half width ≈ 2.3 — the neck beside the big right-hand foam bank of
+ * the approved image, x 546–592 / y 553–581), dips LEFT (approved core 431 px at y 572 → 465 at y 545), swings hard
+ * RIGHT (approved 517–536 px at y 523–508), then back left and once more right as it shrinks into the golden light.
+ * Screen swing at the locked eye ≈ −45 / +30 / −14 / +4 px. The same layout rule as the real ribbon (bands at
+ * ±0.62 hw, half width 0.19 hw) keeps the cyan core + two magenta bands continuous across the seam; a puffy foam
+ * rim follows both banks (farRiverMaterial), beyond it the tunnel wall shows.
+ */
+export const FAR05_BODY_W11: [number, number, number][] = [
+  [0, -0.1, 2.3], [7, -1.0, 2.7], [16, -2.3, 3.2], [27, -1.6, 3.4], [40, 0.6, 3.4], [56, 2.3, 3.4], [76, 2.9, 3.3],
+  [100, 2.5, 3.3], [130, 0.9, 3.3], [165, -1.3, 3.3], [205, -2.7, 3.3], [250, -2.5, 3.3], [300, -1.0, 3.3],
+  [350, 0.7, 3.2], [400, 1.2, 3.2],
+];
+function designW11(Z: number, chord: number): FarRiverRow {
+  const c = hermite(FAR05_BODY_W11.map(([z, v]) => [z, v] as [number, number]), Z);
+  const hw = Math.min(hermite(FAR05_BODY_W11.map(([z, , h]) => [z, h] as [number, number]), Z), chord - 0.7 - Math.abs(c));
+  const off = 0.62 * hw, w = 0.19 * hw;
+  return { xB: c, hw, cL: c - off, wL: w, cR: c + off, wR: w, core: c };
+}
+
+/**
  * Layout of the far river at virtual depth Z. For small Z it is the REAL ribbon exactly as the eye would see it
  * there without the far section: at the seam the route is in its exit bend (heading ≈26° off the axis), so a
  * screen row cuts the ribbon diagonally — each band centre / bank edge curve l(s) of the real ribbon is intersected
@@ -181,7 +204,11 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
     return { ax: q.dot(ft.T), x: q.dot(ft.Rt), rx: f.right.dot(ft.Rt) };
   };
   // the real ribbon's band layout at s, relative to the route centre (ribbon frame, vCore = coreLateral)
-  const relLay = (s: number) => bandLayout(0, course.widthAt(s) / 2, coreLateral(course, s) + coreShiftW10(course, s), sbend05(s), s);
+  // (W11: the visible channel — channel05 returns centre 0 / the full half width unless ?farw05=1)
+  const relLay = (s: number) => {
+    const ch = channel05(course, s);
+    return bandLayout(ch.c, ch.hw, coreLateral(course, s) + coreShiftW10(course, s) - ch.c, sbend05(s), s);
+  };
   const cross = (Z: number, lOf: (s: number) => number) => {
     let a = ft.sF - 8, b = ft.sF + 16;
     for (let i = 0; i < 36; i++) { const m = 0.5 * (a + b); if (at(m, lOf(m)).ax < Z) a = m; else b = m; }
@@ -189,13 +216,15 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
     return { s, x: p.x, rx: Math.max(0.3, p.rx) };
   };
   const realRow = (Z: number): FarRiverRow => {
-    const eL = cross(Z, (s) => -course.widthAt(s) / 2), eR = cross(Z, (s) => course.widthAt(s) / 2);
+    const eL = cross(Z, (s) => { const ch = channel05(course, s); return ch.c - ch.hw; });
+    const eR = cross(Z, (s) => { const ch = channel05(course, s); return ch.c + ch.hw; });
     const bl = cross(Z, (s) => relLay(s).cL), br = cross(Z, (s) => relLay(s).cR);
     const wL = relLay(bl.s).wL / bl.rx, wR = relLay(br.s).wR / br.rx;
     return { xB: 0.5 * (eL.x + eR.x), hw: 0.5 * (eR.x - eL.x), cL: bl.x, wL, cR: br.x, wR, core: 0.5 * (bl.x + wL + br.x - wR) };
   };
   const chordW10 = Math.sqrt(Math.max(0, ft.R * ft.R - level * level)) * 0.995;
   const designRow = (Z: number): FarRiverRow => {
+    if (FARW05) return designW11(Z, chordW10);
     if (WATER05) return designW10(Z, chordW10);
     const target = hermite(FARS05 ? FAR05_CORE_S : FAR05_CORE, Z);
     let a = -5, b = 5;

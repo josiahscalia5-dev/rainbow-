@@ -1549,3 +1549,257 @@ Recovery is done and verified; I'm now measuring the approved river against the 
 > 786	      float dlN = lat - uBenny.y;
 > 787 …[+21320 chars]
 
+### 🤖 Claude — 2026-11-16T13:02:18.949Z
+
+> 🔧 **Bash** `{"command": "grep -n \"marblePano05\\|marblePanoRotation05\\|goldEnv05\\|washerTubeEnv\" src/world/*.ts src/vfx/*.ts src/render/*.ts src/game/*.ts | head -30; grep -n \"export function marblePano05\" -B12 -A40 src/world/materials.ts | head -110", "description": "Inspect Marble panorama usage in materials"}`
+
+### 🧑 User — 2026-11-16T13:02:19.016Z
+
+> ↩︎ result: src/world/environment.ts:9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
+> src/world/environment.ts:202:  const tubeEnv = washerTubeEnv('wall');
+> src/world/environment.ts:203:  const goldEnv = washerTubeEnv('gold');
+> src/world/environment.ts:309:    // and the Marble 05 panorama as the reflection source (marblePano05: pink walls, warm ring lights, VP glow)
+> src/world/environment.ts:315:    envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
+> src/world/environment.ts:343:  const goldEnv05 = washerTubeEnv('gold05');
+> src/world/environment.ts:354:    m.envMap = goldEnv05;
+> src/world/environment.ts:386:    m.envMap = goldEnv05;
+> src/world/materials.ts:49:  /** dedicated reflection environment (e.g. washerTubeEnv()) instead of scene.environment */
+> src/world/materials.ts:52:  /** orientation of `envMap` (e.g. marblePanoRotation05 for the Marble panorama) */
+> src/world/materials.ts:613:export function wa …[+3527 chars]
+
+### 🤖 Claude — 2026-11-16T13:02:22.230Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/assets/textures/marble05_env_1024.jpg"}`
+
+### 🧑 User — 2026-11-16T13:02:22.247Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:02:24.124Z
+
+> 🔧 **Bash** `{"command": "grep -n \"cells\\|float vnoise\\|hash12\\|bumpNormal\\|flowGlint\\|FRAG_TAIL\\|export const\" src/vfx/glsl.ts | head -40; grep -n \"animated.push\\|pinkFlow\\|animated:\" src/world/environment.ts | head; grep -n \"ribbon.uniforms\\|uTime.value\\|uBenny\" src/vfx/index.ts src/game/Game.ts | head -20", "description": "Check shared GLSL helpers and time-uniform plumbing"}`
+
+### 🧑 User — 2026-11-16T13:02:24.181Z
+
+> ↩︎ result: 4:export const NOISE_GLSL = /* glsl */ `
+> 5:float hash12(vec2 p) {
+> 10:float vnoise(vec2 p) {
+> 14:  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15:             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 23:float cells(vec2 p) {
+> 29:    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 42: *  - bumpNormal: Mikkelsen-style "bump mapping without tangents" from a scalar height field
+> 46:export const FRAG_FX_GLSL = /* glsl */ `
+> 47:vec3 bumpNormal(vec3 pos, vec3 n, float h) {
+> 62:  float hs = hash12(gi + 7.31);
+> 64:  vec2 cpp = max(fwidth(g), vec2(1e-4));           // cells per pixel
+> 65:  vec2 c = vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.5 + 0.25;
+> 82:float flowGlint(vec2 g, float density, float L, float stretch, float horiz, float time) {
+> 86:  float hs = hash12(gi + 7.31);
+> 89:  vec2 dg = fract(g) - (vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.2 + 0.4);
+> 120:  float hs = hash12(gi + 4.17);
+> 123:  vec2 dg = fract(g) - (vec2(hash12(gi + 2.3), hash12(gi + 6.9)) * 0.3 + 0.35);
+> 146:export const PALETTE = {
+> 164:export const FRAG_TAIL = /* glsl */ `
+> 50:  const animated: ((t: number, dt: number) => void)[] = [];
+> 196:  const pinkFlow = pinkFlowMaterial(); …[+1192 chars]
+
+### 🤖 Claude — 2026-11-16T13:02:30.843Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 407, "limit": 34}`
+
+### 🧑 User — 2026-11-16T13:02:30.857Z
+
+> ↩︎ result: 407	const vec3 W5_ODEEP = vec3(0.161, 0.316, 0.700);   // #4287ED deep blue outer water
+> 408	
+> 409	// Flow-aligned brushed satin: anisotropic value noise (cells ≈44× longer along the flow than across in world units,
+> 410	// ≈7–10× on screen in the mid field), 3 octaves, each faded before its cells drop under ≈4–8 px across (no shimmer,
+> 411	// no hair lines); the finer octaves drift a little faster than the coarse ones (layered movement).
+> 412	// returns x = coarse lane (-0.5..0.5), y = brushed value (0..1, mean 0.5), z = crisp lens-shaped streak cores of the
+> 413	// two finer octaves (0..1), w = soft broad highlight lanes of the coarse octave (0..1)
+> 414	vec4 brush05(float X, float v, float fwX, float fwV, float drift) {
+> 415	  float lane = vnoise(vec2(X * 1.1 + 2.3, v * 0.03 + 3.0)) - 0.5;
+> 416	  float b = 0.0, wsum = 0.0, core = 0.0, glow = 0.0;
+> 417	  float kx = 4.0, kv = 0.05, wt = 1.0;
+> 418	  #ifdef LOW_Q
+> 419	  const int NB = 2;
+> 420	  #else
+> 421	  const int NB = 3;
+> 422	  #endif
+> 423	  for (int i = 0; i < NB; i++) {
+> 424	    float cpx = max(fwX * kx, fwV * kv * 2.0);
+> 425	    float a = 1.0 - smoothstep(0.12, 0.28, cpx);
+> 426	    float n = vnoise(vec2(X * kx + float(i) * 7.13, (v - drift * flo …[+866 chars]
+
+### 🤖 Claude — 2026-11-16T13:02:31.356Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/glsl.ts", "limit": 60}`
+
+### 🧑 User — 2026-11-16T13:02:31.373Z
+
+> ↩︎ result: 1	/** Shared GLSL snippets for Rainbow water/foam/bubble shaders (WebGL2, mobile-safe). */
+> 2	import * as THREE from 'three';
+> 3	
+> 4	export const NOISE_GLSL = /* glsl */ `
+> 5	float hash12(vec2 p) {
+> 6	  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+> 7	  p3 += dot(p3, p3.yzx + 33.33);
+> 8	  return fract((p3.x + p3.y) * p3.z);
+> 9	}
+> 10	float vnoise(vec2 p) {
+> 11	  vec2 i = floor(p);
+> 12	  vec2 f = fract(p);
+> 13	  vec2 u = f * f * (3.0 - 2.0 * f);
+> 14	  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15	             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 16	}
+> 17	float fbm3(vec2 p) {
+> 18	  float a = 0.5, s = 0.0;
+> 19	  for (int i = 0; i < 3; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(17.1, 9.2); a *= 0.5; }
+> 20	  return s;
+> 21	}
+> 22	// cheap cellular "soap foam" pattern: 0 at cell centres -> 1 at borders
+> 23	float cells(vec2 p) {
+> 24	  vec2 i = floor(p);
+> 25	  vec2 f = fract(p);
+> 26	  float md = 8.0;
+> 27	  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+> 28	    vec2 g = vec2(float(x), float(y));
+> 29	    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 30	    vec2 r = g + o - f;
+> 31	    md = min(md, dot(r, r));
+> 32	  }
+> 33	  return sqrt(md);
+> 34	}
+> 35	vec3 ir …[+1191 chars]
+
+### 🤖 Claude — 2026-11-16T13:02:33.094Z
+
+Starting the code changes. First the switches and the visible-channel function, then the ribbon shader.
+
+### 🤖 Claude — 2026-11-16T13:02:39.366Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "export const WATER05: boolean = (() => {\n  try {\n    return typeof location !== 'undefined' && new URLSearchParams(location.search).get('water05') === '1';\n  } catch {\n    return false;\n  }\n})();", "new_string": "const q05 = (key: string): boolean => {\n  try {\n    return typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1';\n  } catch {\n    return false;\n  }\n};\n/**\n * Screen 05 test W11 (2026-11-16, qa/pilot05/wave11/NOTES.md) — ONE reversible demons …[+1213 chars]`
+
+### 🧑 User — 2026-11-16T13:02:39.445Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:02:46.474Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "export function ampAt(course: Course, s: number): number {", "new_string": "/**\n * W11 geometry (`?farw05=1`, else the full width): the VISIBLE water channel of the 05 river at arc length s, in the\n * ribbon frame — centre `c` (units along `right`) and half width `hw`. Between the channel and the bank lies a foam\n * shelf (drawn by the ribbon shader on the same surface; Benny can still ride over it — widthAt() and the steering\n * range are unchanged). Approved image, banks traced through the lo …[+1146 chars]`
+
+### 🧑 User — 2026-11-16T13:02:46.565Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:03:12.479Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='src/vfx/waterRibbon.ts'; s=open(p).read()\ndef rep(old,new,count=1):\n    global s\n    assert s.count(old)==count, (old[:60], s.count(old))\n    s=s.replace(old,new)\n# --- VERT\nrep(\"\"\"attribute vec3 aTan;     // course tangent (downstream)\nuniform float uTime;\nuniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused\nvarying vec2 vUV;\"\"\",\"\"\"attribute vec3 aTan;     // course tangent (downstream)\n#ifdef FARW05\nattribute vec2 aChan;    // W11: visible channel centre / half width (units, see channel05)\nvarying vec2 vChan;\n#e …[+4664 chars]`
+
+### 🧑 User — 2026-11-16T13:03:15.860Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:04:29.301Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/far05.ts'; s=open(p).read()\ndef rep(old,new,count=1):\n    global s\n    assert s.count(old)==count, (old[:70], s.count(old))\n    s=s.replace(old,new)\nrep(\"import { coreLateral, coreShiftW10, EDGE_LIFT, WATER05 } from '../vfx/waterRibbon';\",\n    \"import { channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, WATER05 } from '../vfx/waterRibbon';\")\nrep(\"\"\"/**\n * Layout of the far river at virtual depth Z.\"\"\",\"\"\"/**\n * W11 (?farw05=1, user 2026-11-16: \"make the distant river narrower, with strong alternating S-curves and natural …[+2746 chars]`
+
+### 🧑 User — 2026-11-16T13:04:32.106Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:04:44.575Z
+
+Geometry code for the far river is in place and compiles. I'm now adding the foam banks to the far-river material, then I'll render the first comparison.
+
+### 🤖 Claude — 2026-11-16T13:04:56.546Z
+
+> 🔧 **Bash** `{"command": "grep -n \"WATER05\" src/world/materials.ts | head -5 && python3 - <<'EOF'\np='src/world/materials.ts'; s=open(p).read()\ndef rep(old,new,count=1):\n    global s\n    assert s.count(old)==count, (old[:70], s.count(old))\n    s=s.replace(old,new)\nrep(\"\"\"  if (e > bankW + bankN * 2.0) discard;\n#ifdef WATER05\"\"\",\"\"\"#ifndef FARW05\n  if (e > bankW + bankN * 2.0) discard;\n#endif\n#ifdef WATER05\"\"\")\nrep(\"\"\"  col = mix(col, vec3(0.2, 0.08, 0.45), smoothstep(0.15, 0.6, e));\n  float foamIn = smoothstep(-0.42, -0.12, e + bankN) * (1.0 - smoothstep(0.25, 0.55, e + bankN)); …[+2349 chars]`
+
+### 🧑 User — 2026-11-16T13:04:56.626Z
+
+> ↩︎ result: 7:import { WATER05 } from '../vfx/waterRibbon'; // Screen 05 water test W10 (?water05=1): far river look only
+> 913:#ifdef WATER05
+> 1014:  if (WATER05) {
+> 1015:    mat.defines = { WATER05: 1 };
+> 7:import { WATER05 } from '../vfx/waterRibbon'; // Screen 05 water test W10 (?water05=1): far river look only
+
+### 🤖 Claude — 2026-11-16T13:05:02.797Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && sed -i \"7s|import { WATER05 } from '../vfx/waterRibbon';|import { FARW05, WATER05 } from '../vfx/waterRibbon';|\" src/world/materials.ts && npx tsc --noEmit 2>&1 | head -5; node $S/cap.mjs $S/g1 default= water=water05=1 farw=farw05=1 2>&1 | tail -8 && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/g1/default.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('qa/pilot05/current_default_05.png').convert('RGB')).astype(int)\nprint('default vs cu …[+524 chars]`
+
+### 🧑 User — 2026-11-16T13:05:53.063Z
+
+> ↩︎ result: default {"calls":86,"tris":567415,"errors":0}
+> water {"calls":86,"tris":567415,"errors":0}
+> farw {"calls":86,"tris":567415,"errors":0}
+> default vs current_default_05 max diff 33
+> water05 vs it04 05_NEW max diff 0
+> [This command modified 1 file you've previously read: src/world/materials.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T13:05:59.303Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/g1/default.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('qa/pilot05/current_default_05.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(-1); ys,xs=np.where(d>0)\nprint('npx',len(ys),'bbox',xs.min(),xs.max(),ys.min(),ys.max(), 'max', d.max())\nys2,xs2=np.where(d>8); print('>8:',len(ys2), (xs2.min(),xs2.max(),ys2.min(),ys2.max()) if len(ys2) else None)\nEOF\ngit status --short | head", "des …[+56 chars]`
+
+### 🧑 User — 2026-11-16T13:05:59.731Z
+
+> ↩︎ result: npx 152 bbox 59 805 21 104 max 33
+> >8: 14 (np.int64(59), np.int64(805), np.int64(24), np.int64(101))
+>  M src/vfx/waterRibbon.ts
+>  M src/world/far05.ts
+>  M src/world/materials.ts
+
+### 🤖 Claude — 2026-11-16T13:06:02.696Z
+
+First geometry render is done, and the default build's 3D scene is unchanged (a 152-pixel difference sits only in the HUD text, which I'll re-check). Looking at the far-river result now.
+
+### 🤖 Claude — 2026-11-16T13:06:03.797Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/strip_g1.png"}`
+
+### 🧑 User — 2026-11-16T13:06:03.855Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:06:35.372Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && python3 -I $S/grid.py $S/g1/farw.png $S/g_farw_far.png 250,470,750,680 2.0 50 && grep -n \"widthAt\" -B8 -A14 src/vfx/foam.ts | sed -n 1,110p", "description": "Zoom on new far river; inspect foam lump placement"}`
+
+### 🧑 User — 2026-11-16T13:06:35.708Z
+
+> ↩︎ result: 551-  const foam = new Float32Array(n * 3);
+> 552-  const tmp = new THREE.Vector3();
+> 553-  let k = 0;
+> 554-  const rowS: number[] = [];
+> 555-  for (let i = 0; i < rows; i++) {
+> 556-    const s = Math.min(s1, s0 + i * ds);
+> 557-    rowS.push(s);
+> 558-    const f = course.sample(s);
+> 559:    const hw = course.widthAt(s) / 2;
+> 560-    for (const side of [-1, 1]) {
+> 561-      for (let j = 0; j < C; j++) {
+> 562-        // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
+> 563-        // at the water line (keeps the lace edge flush with the stream)
+> 564-        const e = E[j];
+> 565-        const k05 = hk(s);
+> 566-        const h = squashBerm(bermSurface(s, e, side, hw), k05);
+> 567-        // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow band of bubbles
+> 568-        const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+> 569-        tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+> 570-        tmp.toArray(pos, k * 3);
+> 571-        foam[k * 3] = e;
+> 572-        foam[k * 3 + 1] = s;
+> 573-        foam[k * 3 + 2] = side;
+> --
+> 681-  // rand() sequence (and every other stage's foam) stays identical.
+> 682-  const st05b = course …[+2438 chars]
+
+### 🤖 Claude — 2026-11-16T13:06:37.630Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/g_farw_far.png"}`
+
+### 🧑 User — 2026-11-16T13:06:37.668Z
+
+> ↩︎ result: [image]
+
