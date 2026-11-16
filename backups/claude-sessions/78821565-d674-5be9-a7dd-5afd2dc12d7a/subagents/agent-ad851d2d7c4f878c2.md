@@ -193,3 +193,156 @@ I'll start by reading the coordination file and my previous notes.
 > 15	import * as THREE from 'three';
 > 16	 …[+41014 chars]
 
+### 🤖 Claude — 2026-11-16T02:20:56.626Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/foam.ts", "offset": 817, "limit": 300}`
+
+### 🧑 User — 2026-11-16T02:20:56.641Z
+
+> ↩︎ result: 817	        const a = (sd * R + i) * C + j, b = a + 1, c = a + C, d = c + 1;
+> 818	        quadIdx(bankIdx, sd, a, b, c, d);
+> 819	      }
+> 820	    }
+> 821	  }
+> 822	  const bankGeo = new THREE.BufferGeometry();
+> 823	  bankGeo.setAttribute('position', new THREE.BufferAttribute(bankPos, 3).setUsage(THREE.DynamicDrawUsage));
+> 824	  bankGeo.setAttribute('aFoam', new THREE.BufferAttribute(bankFoam, 3).setUsage(THREE.DynamicDrawUsage));
+> 825	  bankGeo.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(2 * R * C * 3), 3).setUsage(THREE.DynamicDrawUsage));
+> 826	  bankGeo.setIndex(bankIdx);
+> 827	  const flank = new THREE.Mesh(bankGeo, berm.mesh.material);
+> 828	  flank.name = 'foam_flank';
+> 829	  flank.frustumCulled = false;
+> 830	  flank.visible = false;
+> 831	  group.add(flank);
+> 832	  /** row data per side (signed laterals + water heights at both bank borders), for the puffs between rows */
+> 833	  const rowDs = new Float32Array(R);
+> 834	  for (let i = 0; i < R; i++) rowDs[i] = BANK_DS0 + (BANK_DS1 - BANK_DS0) * Math.pow(i / (R - 1), 1.5);
+> 835	  const rowIn = [new Float32Array(R), new Float32Array(R)];
+> 836	  const rowOut = [new Float32Array(R), new Float32Array(R)];
+> 837	  const rowHIn = [new Floa …[+16868 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:57.845Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts"}`
+
+### 🧑 User — 2026-11-16T02:20:57.858Z
+
+> ↩︎ result: 1	/**
+> 2	 * Rider splash (ref 05: a V of fine white/cyan droplet streaks thrown BACK and OUTWARD from Benny's
+> 3	 * base, one fan per flank, frothy lace at the roots, clear glossy water straight behind him).
+> 4	 *
+> 5	 * Wave 4 rebuild. The wave-3 fan was one continuous mesh sheet per flank (16 × 8 quads) whose straight
+> 6	 * borders and long noise jets rendered as translucent white wedges / spikes beside Benny. Now the fan is
+> 7	 * made of many INDEPENDENT streaks: each instance is a short, thin, camera-facing ribbon that rides along
+> 8	 * its own ballistic jet path (rooted on the waterline circle under the fur, aimed back-outward, arcing up
+> 9	 * and falling back to the water), tapers at its tail and breaks into droplet beads late in its flight.
+> 10	 * A quarter of the instances are wider, short-lived "froth" puffs of white lace near the roots. Nothing
+> 11	 * has a hard outline, so the fan reads as spray, not geometry. The ballistic droplets in spray.ts
+> 12	 * (index.ts `wake()`) share the same jet layout (FAN).
+> 13	 *
+> 14	 * One instanced draw (2 × N streaks of 6 segments), shaped and animated entirely in the vertex shader
+> 15	 * (no per-frame CPU work besides placement), placed every frame at …[+20942 chars]
+
+### 🤖 Claude — 2026-11-16T02:20:58.501Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/index.ts", "offset": 60, "limit": 215}`
+
+### 🧑 User — 2026-11-16T02:20:58.520Z
+
+> ↩︎ result: 60	  return t * t * (3 - 2 * t);
+> 61	};
+> 62	
+> 63	export function createWater(course: Course, opts: { quality?: 'high' | 'low' } = {}): WaterSystem {
+> 64	  const quality = opts.quality ?? 'high';
+> 65	  const group = new THREE.Group();
+> 66	  group.name = 'water_system';
+> 67	
+> 68	  const drainMark = course.marks['02_drain'] ?? course.stage('02').s1 - 2;
+> 69	  const st03 = course.stage('03'), st04 = course.stage('04'), st08 = course.stage('08'), st09 = course.stage('09');
+> 70	  const ribbonS0 = drainMark - 1;
+> 71	  const ribbon = createRibbon(course, { s0: ribbonS0, s1: course.length, quality });
+> 72	  // open the funnel where the 04 slide tube leaves the basin (the course exits the spiral at
+> 73	  // r≈2.8, just outside the drain hole, and the slide then runs beneath the funnel surface)
+> 74	  const cutPts: THREE.Vector3[] = [];
+> 75	  for (let i = 0; i < 8; i++) {
+> 76	    const s = st04.s0 - 3 + (i / 7) * 34;
+> 77	    const f = course.sample(s);
+> 78	    cutPts.push(f.pos.clone().addScaledVector(f.up, 1.2));
+> 79	  }
+> 80	  const whirl = createWhirlpool(quality, { points: cutPts, radius: Math.max(3.6, course.stage('04').tube * 0.85) });
+> 81	  const drum = createDrumWater(quality);
+> 82	  const wave = createFinal …[+11968 chars]
+
+### 🤖 Claude — 2026-11-16T02:21:08.754Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nR=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nB=Image.open('qa/pilot05/wave9/baseline/05.png').convert('RGB')\ndef pair(box,name,s=2):\n  w=box[2]-box[0];h=box[3]-box[1]\n  o=Image.new('RGB',(2*w+6,h),'black')\n  o.paste(R.crop(box),(0,0));o.paste(B.crop(box),(w+6,0))\n  o=o.resize((int(o.width*s),int(o.height*s)),Image.LANCZOS)\n  o.save('/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/'+name+'.png')\npair((0,1150,420,1400),'ll',1.6)\npair((520,1130,864,1400), …[+99 chars]`
+
+### 🧑 User — 2026-11-16T02:21:09.386Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:21:10.958Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ll.png"}`
+
+### 🧑 User — 2026-11-16T02:21:10.986Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:21:11.605Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/lr.png"}`
+
+### 🧑 User — 2026-11-16T02:21:11.629Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:21:12.159Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/spl.png"}`
+
+### 🧑 User — 2026-11-16T02:21:12.198Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:22:16.559Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nR=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nS='/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/'\nR.crop((60,1180,330,1320)).resize((270*4,140*4),Image.LANCZOS).save(S+'ref_ll4.png')\nR.crop((620,1190,820,1330)).resize((200*4,140*4),Image.LANCZOS).save(S+'ref_lr4.png')\nR.crop((0,990,170,1120)).resize((170*4,130*4),Image.LANCZOS).save(S+'ref_l4.png')\n\"\n", "description": "Make 4x crops of ref foam clumps"}`
+
+### 🧑 User — 2026-11-16T02:22:17.118Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:22:17.358Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ref_ll4.png"}`
+
+### 🧑 User — 2026-11-16T02:22:17.383Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:22:18.058Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ref_lr4.png"}`
+
+### 🧑 User — 2026-11-16T02:22:18.071Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:22:18.616Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ref_l4.png"}`
+
+### 🧑 User — 2026-11-16T02:22:18.654Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:22:32.596Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/wave9/foam/tools/clumptone.py <<'EOF'\n\"\"\"wave 9: tone of the foam px inside the clump boxes (same mask as clumpcol.py): luminance percentiles p10/p50/p90 and\nmedian RGB of the darkest / middle / brightest thirds. Usage: python3 -I clumptone.py IMG...\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nBOX = {'Lclump': (0, 1000, 150, 1120), 'LLclump': (0, 1200, 240, 1345), 'LRclump': (620, 1200, 864, 1345), 'Lrim': (0, 600, 300, 830)}\nfor p in sys.argv[1:]:\n    a = np.asarray(Image.open(p).convert('RGB')).astype(int)\n    ou …[+919 chars]`
+
+### 🧑 User — 2026-11-16T02:22:33.040Z
+
+> ↩︎ result: references Lclump L181/221/251 A6B9FA D6D9FC F8FAFF | LLclump L180/223/252 B3ABFA E8D7FF FDFBFF | LRclump L183/224/253 AFB7FA DEDCFF FCFCFF | Lrim L177/214/250 B4A9FA E4CAFD FDF3FF
+> baseline Lclump L189/228/243 B2C3FF DEE1FE F2EFFE | LLclump L186/226/238 B4BEFC DCE2F7 EEEAF6 | LRclump L187/225/239 AEC1FD DCE1F8 EFEAF9 | Lrim L189/218/244 BFABFF D7D7FF EEEDFF
+

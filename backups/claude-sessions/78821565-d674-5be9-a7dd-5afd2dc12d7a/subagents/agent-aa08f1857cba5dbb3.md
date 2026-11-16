@@ -414,3 +414,90 @@ Let me look closely at the lids/rings region in both images.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T02:21:03.111Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 355,470p src/world/tube.ts", "description": "Read buildWallLids and wallLidGeometry"}`
+
+### 🧑 User — 2026-11-16T02:21:03.148Z
+
+> ↩︎ result: /**
+>  * Washer wall lids / nozzle hoods (ref 05): copper "D" hoods — a half disc with a tall polished rim band,
+>  * a softly domed top and a recessed underside with an inner lip — sticking out of BOTH side walls a bit
+>  * above eye level (≈2 and 10 o'clock seen from the rider), one symmetric pair per ring bay, so they
+>  * shrink toward the vanishing point in two rows and the rider sees the bright rim band and the dish
+>  * underneath. The straight edge of the D runs along the tube and is sunk into the wall; the hood droops
+>  * toward the stream like a spray nozzle. `skip(s, centre)` drops a lid where the stream runs too close
+>  * (06 arch climbs the wall). One instanced mesh (1 draw call).
+>  */
+> export function buildWallLids(
+>   path: TubePath,
+>   s0: number,
+>   s1: number,
+>   spacing: number,
+>   material: THREE.Material,
+>   opts: {
+>     angleDeg?: number; droopDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number;
+>     skip?: (s: number, centre: THREE.Vector3, size: number) => boolean;
+>     /** explicit lid positions along the path (default: s0, s0 + spacing, … s1) */
+>     positions?: number[];
+>     /**
+>      * 'hood' (legacy 06/07 D-hood), 'dome' (half puck with a domed cap) …[+5799 chars]
+
+### 🤖 Claude — 2026-11-16T02:21:40.527Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\ncrops=[(40,295,240,440),(230,400,350,480),(690,380,864,540),(610,390,710,480)]\nims=[r.crop(c).resize(((c[2]-c[0])*3,(c[3]-c[1])*3),Image.LANCZOS) for c in crops]\nW=sum(i.width for i in ims)+30; H=max(i.height for i in ims)\nw=Image.new('RGB',(W,H)); x=0\nfor i in ims: w.paste(i,(x,0)); x+=i.width+10\nw.save(S+'reflids.png'); print(w.size)\n\"", "descripti …[+42 chars]`
+
+### 🧑 User — 2026-11-16T02:21:40.870Z
+
+> ↩︎ result: (1812, 480)
+
+### 🤖 Claude — 2026-11-16T02:21:42.791Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/reflids.png"}`
+
+### 🧑 User — 2026-11-16T02:21:42.824Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:22:22.630Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,80p scripts/capture.mjs; ls scripts | head -50", "description": "Inspect capture script and scripts list"}`
+
+### 🧑 User — 2026-11-16T02:22:22.677Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3764 chars]
+
+### 🤖 Claude — 2026-11-16T02:22:24.600Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n '/^\\* it02/,$p' qa/pilot05/wave8/environment/NOTES.md", "description": "Read updated wave8 notes tail"}`
+
+### 🧑 User — 2026-11-16T02:22:24.635Z
+
+> ↩︎ result: * it02 (RECOVERED in wave 9 from the evidence — the wave-8 account ran out of credits before logging it; changes read from the
+>   autosave diff 64b9e5e → aa35c8a): `assets/textures/marble05_env_1024.jpg` pre-blurred ≈6 px (183 → 51 KB) so the pano's sharp ring
+>   arcs no longer smear into red-orange blotches; wall05 F0 '#eaa2ea' → '#dc9ef0' and mid tint '#8a30d2' 0.45 @8–50 (violet back with
+>   depth); `withLidShading` v2 palette sampled on ref L1 (orange near end, peach → orange-gold → pale yellow → white → orange-red band,
+>   dark plum underside, view-side-aware lathe azimuth); tube.ts `wallLidGeometry('slab')` barrel rim (0.95 → 1.04 → 0.95) + domed top;
+>   unused `oval` option added to buildTubeGeometry/buildRingsAt/buildWallLids. Report (it02/metrics.md): mad 51.2 → 50.7, hue_corr
+>   0.856 → 0.88, edge_corr 0.177 → 0.189, **tunnel+VP 61.0 → 58.7**. measure05.py on it02: lid L1 V std 0.188 (ref 0.216), upper-wall
+>   violet share 25.4 % (ref 40.0), left wall 4.0 % (ref 50.9), VP core px 723 (ref 1306). Side-by-side: walls magenta-pink with dark
+>   slots, rings orange-salmon, lids still read as long copper planks jutting out (shape, not shading, is the mismatch). = wave-9 baseline.
+> * it0 …[+1615 chars]
+

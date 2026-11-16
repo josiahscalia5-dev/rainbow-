@@ -327,3 +327,418 @@ Now the farRiverMaterial in materials.ts (read only, it is environment-owned).
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T02:21:08.594Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad && cat > rowclass.py <<'EOF'\nimport sys\nfrom PIL import Image\nimport colorsys\ndef cls(p):\n    r,g,b=p\n    h,l,s=colorsys.rgb_to_hls(r/255,g/255,b/255)\n    h*=360\n    if l>0.86: return 'W'      # white / foam top / glow\n    if s<0.25: return '.'\n    if 170<=h<=215: return 'c'  # cyan\n    if 215<h<=255: return 'b'  # blue / periwinkle (foam shade)\n    if 255<h<=290: return 'v'  # violet\n    if 290<h<=335: return 'p'  # pink/magenta\n    if 335<h or h<20: return 'r'\n    if 20<=h<70: ret …[+669 chars]`
+
+### 🧑 User — 2026-11-16T02:21:08.849Z
+
+> ↩︎ result: REF
+>  486 pvvppppprrrrpppvvvvpppppprrrpvvvppprypWypvWWyWyyyyyWWWWWyyrrrrryrpppprrpvvvvvvvvvrrrrpvvvvvvvvvvvvvr
+>  490 vvvpvppprrrrrppvvvvvvpvpprrrpvvvppprrpprppppvvWWWyyyyWyWWrryrprrrppprWrppvvvvvvvprrrrpvvvvvvvvvvvppr
+>  494 vvvpvpppprrrrppvvvpvpvppprrrpvvvpppprpvprvbvrppvvvWWc.yWyyvWrprrpvpprrpvvvvvWvWWWyyrrppvvvvvvvpvvppr
+>  498 vvvpvvppprrrrpvvvvvvvvvvvprrrvvvvvvprrvvrpvbbbprpvbWpWccyyyvvWppWppprrpvvvvvvvvpWWWrrppvvvvvvvpvvpWy
+>  502 vpvvvvpvpprrrpvvvvvvvvvvvprrrpvvvvvpprrvvppvbbcvrWvbvppccyyyrvvvvvvrrrvvvvvvvvvvyryrrppvvvvvvvvvppWy
+>  506 vpvvpvpvpprrrrpvWvvvvvvvvvWrrpvvvvvvpprrvrrpbbbWWWWcbppbccyyybvpvvWrrpvvvvvvvvvprrrrpvvvvvvvvvpvppWy
+>  510 vvpvpvvvvprrrrpvvvvvvvvvvvprrrpvvvvvvvrrWrpWWWbbbbbbWpvccWyyyccbppvWWWvvvvvvvvvrrrrrvvvvvvvvvvvpppWW
+>  514 vvvvvpvvvvprrrrvbWvvvvvvvvvprrrvvvpvvvpWWWWWbbbbvppppvbcWyyyccccbvppvbWvvvvvvvprrrrpvpvvvvvvvvvpppyy
+>  518 vvpvvvvvvvvprrrpvvvvvvvvvvvprrWpvvWWWWbbbbbvvpppppvbcWyyyyyycccccbbppvbWWvvvvvrprrppvvvvvvvvpvvppryy
+>  522 vvvvvvvvvWprrrrrvvvvvvvvvvvvvbWWWWbbbbvvppppppvvvbcccyyyyyycccccccbvpppbWvvvpprrrppppvvvvpvvvvvppryy
+>  526 pvvvvvvvvvprrrrrrvvWvWWvvbWWWbWbvvvvvvvvvvvvbbcWyyy?cyyyycccccccccbvpppvWWbvvWrrrppvvvvvvvvpvvpvpryy
+>  530 vvvvvvvvvvvprrWWrpvbvbWWb …[+3684 chars]
+
+### 🤖 Claude — 2026-11-16T02:21:49.460Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; wc -l src/gameplay/coins.ts src/world/course*.ts; grep -n \"05\" src/gameplay/coins.ts | head -60", "description": "Inspect coins.ts for 05 coin logic"}`
+
+### 🧑 User — 2026-11-16T02:21:49.502Z
+
+> ↩︎ result: 186 src/gameplay/coins.ts
+>   629 src/world/course.ts
+>   815 total
+> 5: * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+> 18: * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+> 20: * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+> 22: * Before the 05 checkpoint the trail keeps a plain C05.gap0 spacing (gameplay only, never in frame).
+> 24:export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+> 26:function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h?: number, extra?: Partial<CoinDef>) => void) {
+> 27:  const a = course.stage('05');
+> 28:  const sCp = course.marks['05_crest'];
+> 29:  const extra = { scale: C05.scale, tilt: C05.tilt };
+> 32:  for (let s = sCp - 1; s > a.s0 + 6; s -= C05.preGap) ss.unshift(s);
+> 33:  for (let k = 0, s = sCp + C05.first; s < a.s1 - 3; k++) { ss.push(s); s += Math.min(C05.gapMax, C05.gap0 + k * C05.gapGrow); }
+> 36:  for (const s of ss) add('05', s, C05.latK * coreLateral(course, s), C05.h, extra);
+> 47:  // 05 — on the winding cyan core (see C05)
+> 48:  …[+110 chars]
+
+### 🤖 Claude — 2026-11-16T02:21:50.502Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/gameplay/coins.ts"}`
+
+### 🧑 User — 2026-11-16T02:21:50.522Z
+
+> ↩︎ result: 1	/**
+> 2	 * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 3	 * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+> 4	 * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+> 5	 * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+> 6	 */
+> 7	import * as THREE from 'three';
+> 8	import type { Course, StageId } from '../world/course';
+> 9	import { canvasTexture } from '../world/materials';
+> 10	import { coreLateral } from '../vfx/waterRibbon';
+> 11	
+> 12	export const COIN_VALUE = 10;
+> 13	
+> 14	/** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> 15	export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number }
+> 16	
+> 17	/**
+> 18	 * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+> 19	 * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+> 20	 * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+> 21	 * so their face re …[+9155 chars]
+
+### 🤖 Claude — 2026-11-16T02:21:55.275Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat package.json; ls qa/pilot05/ ; ls qa/pilot05/wave8/", "description": "Show package.json and pilot05 dirs"}`
+
+### 🧑 User — 2026-11-16T02:21:55.315Z
+
+> ↩︎ result: {
+>   "name": "rainbow-washer-game",
+>   "private": true,
+>   "version": "0.1.0",
+>   "description": "RAINBOW — 11-screen real-time 3D portrait mobile game (Three.js + TypeScript + Vite + Capacitor)",
+>   "type": "module",
+>   "scripts": {
+>     "dev": "vite --host 0.0.0.0",
+>     "build": "tsc --noEmit && vite build",
+>     "preview": "vite preview --host 0.0.0.0 --port 4173",
+>     "typecheck": "tsc --noEmit",
+>     "test:continuity": "vite-node scripts/continuity-test.ts",
+>     "models:export": "node scripts/export-models.mjs",
+>     "qa:capture": "node scripts/capture.mjs",
+>     "qa:compare": "python3 scripts/compare.py",
+>     "verify:refs": "sha256sum -c scripts/reference.sha256",
+>     "android:sync": "npm run build && npx cap sync android",
+>     "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+>     "test:cinematic": "node scripts/cinematic-test.mjs"
+>   },
+>   "dependencies": {
+>     "@capacitor/android": "^6.2.0",
+>     "@capacitor/core": "^6.2.0",
+>     "@fontsource/baloo-2": "^5.1.0",
+>     "three": "^0.170.0"
+>   },
+>   "devDependencies": {
+>     "@capacitor/cli": "^6.2.0",
+>     "@types/three": "^0.170.0",
+>     "typescript": "^5.6.3",
+>     "vite": "^5.4.11",
+>     "vite-node": "^2.1.5"
+>   }
+> } …[+390 chars]
+
+### 🤖 Claude — 2026-11-16T02:21:58.138Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rln \"far05Debug\\|far05\" --include=*.ts --include=*.mjs --include=*.js --include=*.py . 2>/dev/null | grep -v node_modules | head; ls qa/pilot05/camera qa/pilot05/wave7 2>/dev/null | head -30", "description": "Find QA scripts using far05Debug"}`
+
+### 🧑 User — 2026-11-16T02:21:58.265Z
+
+> ↩︎ result: ./src/world/environment.ts
+> ./src/world/materials.ts
+> ./src/world/far05.ts
+> qa/pilot05/camera:
+> iter00
+> iter01
+> 
+> qa/pilot05/wave7:
+> baseline
+> environment
+> foam
+> handoff
+> water
+
+### 🤖 Claude — 2026-11-16T02:22:00.667Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; head -40 scripts/continuity-test.ts; grep -n \"export function\\|export const\\|marks\\[\" src/world/course.ts | head -40", "description": "See how continuity test builds the course"}`
+
+### 🧑 User — 2026-11-16T02:22:00.717Z
+
+> ↩︎ result: /**
+>  * Route continuity + altitude test (run: npm run test:continuity).
+>  * Writes qa/continuity_report.json and docs/path_graph.md (altitude chart), exits 1 on failure.
+>  */
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { Course, validateContinuity, WORLD } from '../src/world/course';
+> 
+> const c = new Course();
+> const r = validateContinuity(c);
+> mkdirSync('qa', { recursive: true });
+> mkdirSync('docs', { recursive: true });
+> writeFileSync('qa/continuity_report.json', JSON.stringify({ length: c.length, marks: c.marks, ...r }, null, 2));
+> 
+> // altitude chart (ASCII) + per-stage table
+> const rows: string[] = [];
+> rows.push('# Rainbow route graph — absolute altitudes & continuity');
+> rows.push('');
+> rows.push(`Generated by \`npm run test:continuity\`. Route length **${c.length.toFixed(1)} units** (1 unit ≈ 5 cm at Benny scale).`);
+> rows.push('One centripetal Catmull-Rom spline from scene 01 to the towel at the end of 10; scene 11 is the');
+> rows.push('victory cinematic at the route end. Result: **' + (r.ok ? 'PASS' : 'FAIL') + '**.');
+> rows.push('');
+> rows.push('| Stage | Title | s0 → s1 | length | altitude in → out | width | tube | speed |');
+> rows.push('|---|---|---|---|---|---|---|---|'); …[+2001 chars]
+
+### 🤖 Claude — 2026-11-16T02:22:04.107Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"export const STAGE_CAM\" src; grep -n \"'05'\" src/camera/*.ts | head -20; head -30 src/world/environment.ts | grep import", "description": "Locate STAGE_CAM and 05 camera config"}`
+
+### 🧑 User — 2026-11-16T02:22:04.157Z
+
+> ↩︎ result: src/game/cameraRig.ts:25:export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+> grep: src/camera/*.ts: No such file or directory
+> import * as THREE from 'three';
+> import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+> import { Course, WORLD, funnelY } from './course';
+> import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
+> import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> import { STAGE_CAM } from '../game/cameraRig';
+> import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
+> import { buildTowel, TowelMesh } from './towel';
+>   tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+
+### 🤖 Claude — 2026-11-16T02:22:08.940Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,80p src/game/cameraRig.ts", "description": "Read camera rig STAGE_CAM definitions"}`
+
+### 🧑 User — 2026-11-16T02:22:08.974Z
+
+> ↩︎ result: /**
+>  * Third-person ride camera: behind/above Benny, looking along his heading (the course tangent), or
+>  * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point
+>  * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.
+>  */
+> import * as THREE from 'three';
+> import { WORLD } from '../world/course';
+> import type { Course, StageId } from '../world/course';
+> import type { TubePath } from '../world/tube';
+> 
+> export interface CamParams {
+>   back: number; // distance behind Benny
+>   up: number; // height above Benny's water point
+>   ahead: number; // look-at distance ahead
+>   lookUp: number; // look-at height
+>   fov: number;
+>   latFollow: number; // 1 = camera fully follows Benny's lateral offset
+>   roll: number; // 0..1 how much of the path bank the camera adopts
+>   /** 05 only: view yaw (deg) to the LEFT of the tunnel axis, i.e. the vanishing point sits right of centre */
+>   yaw?: number;
+>   /** 05 only: lateral dead zone (units): the camera holds the tunnel axis while Benny is within ~this of it */
+>   deadZone?: number;
+> }
+> 
+> export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+>   '03': { back: 6.5, up: 6.5, a …[+2934 chars]
+
+### 🤖 Claude — 2026-11-16T02:22:11.912Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"__rainbow\" -r src | head -20; grep -n \"__rainbow = \\|window.__rainbow\\b\" -A40 src/Game.ts | grep -n \":\" | head -60", "description": "Find the __rainbow QA API surface"}`
+
+### 🧑 User — 2026-11-16T02:22:11.974Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:660:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> grep: src/Game.ts: No such file or directory
+
+### 🤖 Claude — 2026-11-16T02:22:13.185Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 560,662p src/game/Game.ts", "description": "Read the QA API object in Game.ts"}`
+
+### 🧑 User — 2026-11-16T02:22:13.220Z
+
+> ↩︎ result: if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.s …[+4694 chars]
+
+### 🤖 Claude — 2026-11-16T02:22:16.710Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat scripts/lib/pw.mjs | head -60; grep -n \"'05'\" src/game/Game.ts | head; grep -n \"05\" src/game/checkpoints.ts 2>/dev/null | head", "description": "Read Playwright helper and 05 checkpoint"}`
+
+### 🧑 User — 2026-11-16T02:22:16.757Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+521 chars]
+
+### 🤖 Claude — 2026-11-16T02:22:29.641Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe && cd /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe && cat > probe.mjs <<'EOF'\n// usage: node probe.mjs <evalfile.js> [checkpoint]  (run with cwd = project root)\nimport { readFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst [file, cp = '05'] = process.argv.slice(2);\nconst body = readFileSync(file, 'utf8');\nconst { chromium } = loadPlaywright();\nconst vite  …[+1816 chars]`
+
+### 🧑 User — 2026-11-16T02:22:33.689Z
+
+> ↩︎ result: Command was moved to the background (ID: b7z56bz3w) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/b7z56bz3w.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-16T02:22:39.141Z
+
+While the probe runs, I'll add the recovered log entry to the wave-8 notes (from the it01/it02 evidence) before changing any code.
+
+### 🤖 Claude — 2026-11-16T02:22:46.886Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/wave8/path-camera/NOTES.md", "old_string": "## Log\n", "new_string": "## Log\n* **it01 / it02 — RECOVERED entry (written in wave 9, session 01Kbt6BV, from the evidence only; the wave-8 account ran out of\n  credits before logging).** Code state = `src/world/far05.ts` (240 lines: `FAR05_CORE` designed far core path,\n  `bandLayout`/`farRiverLayout` real-ribbon continuation blended Z 2→10 into the design, `farRiverGeometry` per-row\n  aRivA/aRivB attributes) + `farRiverMaterial` (materials.ts, winding core/bands, foam rims, glow …[+1082 chars]`
+
+### 🧑 User — 2026-11-16T02:22:46.949Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/wave8/path-camera/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:22:47.892Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cat /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/b7z56bz3w.output", "description": "Wait and read probe output"}`
+
+### 🧑 User — 2026-11-16T02:22:47.897Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/b7z56bz3w.output. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-16T02:22:49.927Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/b7z56bz3w.output"}`
+
+### 🧑 User — 2026-11-16T02:22:49.953Z
+
+> ↩︎ result: 1	   "d": 5
+> 2	  },
+> 3	  {
+> 4	   "i": 87,
+> 5	   "x": 546,
+> 6	   "y": 809,
+> 7	   "d": 5
+> 8	  },
+> 9	  {
+> 10	   "i": 88,
+> 11	   "x": 546,
+> 12	   "y": 805,
+> 13	   "d": 5
+> 14	  },
+> 15	  {
+> 16	   "i": 89,
+> 17	   "x": 545,
+> 18	   "y": 800,
+> 19	   "d": 5
+> 20	  },
+> 21	  {
+> 22	   "i": 90,
+> 23	   "x": 545,
+> 24	   "y": 794,
+> 25	   "d": 5
+> 26	  }
+> 27	 ],
+> 28	 "coins05": [
+> 29	  {
+> 30	   "i": 17,
+> 31	   "s": 124.24,
+> 32	   "lat": -0.06
+> 33	  },
+> 34	  {
+> 35	   "i": 18,
+> 36	   "s": 127.84,
+> 37	   "lat": -0.23
+> 38	  },
+> 39	  {
+> 40	   "i": 19,
+> 41	   "s": 131.44,
+> 42	   "lat": -0.29
+> 43	  },
+> 44	  {
+> 45	   "i": 20,
+> 46	   "s": 138.14,
+> 47	   "lat": -0.06
+> 48	  },
+> 49	  {
+> 50	   "i": 21,
+> 51	   "s": 143.14,
+> 52	   "lat": 0.23
+> 53	  },
+> 54	  {
+> 55	   "i": 22,
+> 56	   "s": 149.64,
+> 57	   "lat": -0.17
+> 58	  },
+> 59	  {
+> 60	   "i": 23,
+> 61	   "s": 157.64,
+> 62	   "lat": -0.65
+> 63	  },
+> 64	  {
+> 65	   "i": 24,
+> 66	   "s": 165.64,
+> 67	   "lat": -0.71
+> 68	  },
+> 69	  {
+> 70	   "i": 25,
+> 71	   "s": 173.64,
+> 72	   "lat": -0.38
+> 73	  },
+> 74	  {
+> 75	   "i": 26,
+> 76	   "s": 181.64,
+> 77	   "lat": 0.81
+> 78	  }
+> 79	 ]
+> 80	}
+> 81	
+> 82	[exited with code 0]
+> 83
+

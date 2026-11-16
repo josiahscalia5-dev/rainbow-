@@ -398,8 +398,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 5833,
-   "sha256": "250f3656ac52d9e977afd85ebebec46848a4c82696e1e8c0a578fea51ada1d5b"
+   "bytes": 5834,
+   "sha256": "2e31f7121b838be1e760871dab8343eddf7c8a886e7176dba6486b7f732f3ce3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -3293,8 +3293,8 @@
   },
   {
    "path": "qa/pilot05/wave8/environment/NOTES.md",
-   "bytes": 4668,
-   "sha256": "ad0a90aa178d1b472acc23ef8d208e6219a8de44c5b08f7bdf61993a095b8cae"
+   "bytes": 6336,
+   "sha256": "b7f777e5c0257c2b1082721891568a0f91268d0e3c1434f82e4ed373d8b8fd5c"
   },
   {
    "path": "qa/pilot05/wave8/environment/it01/05.png",
@@ -3722,6 +3722,71 @@
    "sha256": "94e228131eabf483fcc38ed4e3ac9581def44e0e306b9a470e44be0789b0e6f1"
   },
   {
+   "path": "qa/pilot05/wave8/foam/it06/05.png",
+   "bytes": 1750841,
+   "sha256": "dc8155f9ac7bccd80601245de6344de821ba9c966d89734da2236cb980bb1c07"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/05_highlight_NOW.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/05_highlight_PREV.png",
+   "bytes": 1934638,
+   "sha256": "0c3b78591eff8ffd7fd9019b713169c1912e889a7ceaf22f6ae85c03b115a838"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/05_overlay_NOW.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/05_overlay_PREV.png",
+   "bytes": 2289406,
+   "sha256": "c5c19c5d0cea588302d1b407c194985e46abe12d81cee4ab5cec45fa9f38c728"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/05_side_by_side.png",
+   "bytes": 5767417,
+   "sha256": "f52fcbb51cc66a32b7375e90fc95076422bfca103506336ba23b2de04de2f41e"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/crop_leftnear.png",
+   "bytes": 804580,
+   "sha256": "edaa74917a9ab28393cde3e04141a773333da6e26ff4998a82ed92c0dcb7b33c"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/crop_leftrim.png",
+   "bytes": 830346,
+   "sha256": "bd01026059b3efe5f38c10c61bb204d74e8a0a034f3f73cfd10bfdf4990b08f8"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/crop_rightnear.png",
+   "bytes": 638775,
+   "sha256": "975c6b3ef4a9999da20f0e2521e03e64f1727fc01ac23a89cf8eee8e25b493f0"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/crop_rightrim.png",
+   "bytes": 1119595,
+   "sha256": "d98013e053e3c5003845a3888bc5fcb0444bddd0d0957a705eb8c3839a218c25"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/crop_splash.png",
+   "bytes": 932826,
+   "sha256": "699a7c209f8d7b5d00d24d844fb1bf288782f0ea3790982c026bd813ea4f481c"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/metrics.json",
+   "bytes": 451,
+   "sha256": "8c5e16afd3a7eb2aca530fa16d5b735413d620844f6ebb38bcfe14daf8a5acd6"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it06/metrics.md",
+   "bytes": 437,
+   "sha256": "c412c38822af7d2c86ba0abcd5c38f3034cdc8299e36dbe98829bddcda1223f6"
+  },
+  {
    "path": "qa/pilot05/wave8/foam/pre/03.png",
    "bytes": 689327,
    "sha256": "70b33b54649c5640c5f8310b2ea33d10b30ad0547bfe6f386890370d9cb1084c"
@@ -3748,8 +3813,8 @@
   },
   {
    "path": "qa/pilot05/wave8/path-camera/NOTES.md",
-   "bytes": 937,
-   "sha256": "94bc53c626a508fb58761a87b13e822a9d9d5c5db075be0905f34d6831d0be9b"
+   "bytes": 2480,
+   "sha256": "694b4a6bf960b2b8c8f91a09cfa33167b7e4bf1699ff301b4db8f2084f0caa4b"
   },
   {
    "path": "qa/pilot05/wave8/path-camera/it01/05.png",
@@ -3833,8 +3898,8 @@
   },
   {
    "path": "qa/pilot05/wave8/water/NOTES.md",
-   "bytes": 7531,
-   "sha256": "58c7be5d17021351d1b13976c89a216df21043bf3061fc0c629c2cfd1ba038ee"
+   "bytes": 8383,
+   "sha256": "b62dec77f7465050bec9e92540b1988bcd1ddbbc23f8260352fdb4f8a0a296b3"
   },
   {
    "path": "qa/pilot05/wave8/water/it00/03.png",
@@ -4087,6 +4152,31 @@
    "sha256": "94e228131eabf483fcc38ed4e3ac9581def44e0e306b9a470e44be0789b0e6f1"
   },
   {
+   "path": "qa/pilot05/wave8/water/regress/03.png",
+   "bytes": 689406,
+   "sha256": "6aecd4934e7072007439f16bb6eb9535a596321ce19d0a1093196943208c8011"
+  },
+  {
+   "path": "qa/pilot05/wave8/water/regress/04.png",
+   "bytes": 1006397,
+   "sha256": "b4e5263b929f11c9d83028201adad2d66e7aedbede19a3deef0b6d282e2fcd14"
+  },
+  {
+   "path": "qa/pilot05/wave8/water/regress/06.png",
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+  },
+  {
+   "path": "qa/pilot05/wave8/water/regress/07.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/pilot05/wave8/water/regress/08.png",
+   "bytes": 1428957,
+   "sha256": "4c5b9d985376ce5cccac3fa0e7594b661264446dc06bc88e40d2e56d8bae40ff"
+  },
+  {
    "path": "qa/pilot05/wave9/baseline/03.png",
    "bytes": 689327,
    "sha256": "70b33b54649c5640c5f8310b2ea33d10b30ad0547bfe6f386890370d9cb1084c"
@@ -4145,6 +4235,11 @@
    "path": "qa/pilot05/wave9/foam/tools/clumpcol.py",
    "bytes": 1114,
    "sha256": "4afce443fd4903e6cc9c0557d1425e4826f8da1ffb62c3f5ca0ab5382fb30fa8"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/tools/clumptone.py",
+   "bytes": 1218,
+   "sha256": "c8c90f235fdbd268b3e888dc131fe3786f2a5c92148b61d7e11f7eeed431d90f"
   },
   {
    "path": "qa/pilot05/wave9/foam/tools/crops.py",
