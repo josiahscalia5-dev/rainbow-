@@ -9,7 +9,7 @@ export const ROUNDFOAM05 = (() => {
 /** New reference-led study. This does not enable or alter the earlier roundfoam05 variant. */
 export const REFERENCEFOAM05 = (() => {
   try {
-    return (typeof location !== 'undefined' && new URLSearchParams(location.search).get('reference05') === '1')
-      || new URLSearchParams(import.meta.env?.VITE_RAINBOW_Q05 ?? '').get('reference05') === '1';
+    return (typeof location !== 'undefined' && ['reference05', 'fit05'].some((key) => new URLSearchParams(location.search).get(key) === '1'))
+      || ['reference05', 'fit05'].some((key) => new URLSearchParams(import.meta.env?.VITE_RAINBOW_Q05 ?? '').get(key) === '1');
   } catch { return false; }
 })();

@@ -15,6 +15,8 @@ import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
 import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
 import { LIQUID05_GLSL } from './liquid05';
 import { REFERENCE05_GLSL } from './reference05';
+import { FIT05_GLSL, fit05Uniforms } from './fit05';
+import { createFit05Glints } from './fit05Glints';
 import { REFERENCE05_FRAME_GLSL, reference05Shared, reference05TargetFrame } from './reference05Geometry';
 import { ROUNDFOAM05, REFERENCEFOAM05 } from './foam05Options';
 
@@ -172,7 +174,8 @@ const q05 = (key: string): boolean => {
  * All off (default): every shader program and geometry attribute is the previous one (pixel-identical build).
  */
 /** New, reversible experiment. Existing water05 / river05 programs and the default are preserved. */
-export const REFERENCE05: boolean = q05('reference05');
+export const FIT05: boolean = q05('fit05');
+export const REFERENCE05: boolean = FIT05 || q05('reference05');
 export const LIQUID05: boolean = REFERENCE05 || q05('liquid05');
 export const RIVER05: boolean = LIQUID05 || q05('river05');
 export const FARW05: boolean = RIVER05 || q05('farw05');
@@ -363,6 +366,9 @@ ${LIQUID05_GLSL}
 #endif
 #ifdef REFERENCE05
 ${REFERENCE05_GLSL}
+#endif
+#ifdef FIT05
+${FIT05_GLSL}
 #endif
 
 // Stationary channel shape (refs 05–07): lateral offset (units) of the electric-cyan core centre
@@ -906,6 +912,9 @@ void main() {
     vec3 panoRef = texture2D(uPano, vec2(atan(reflRef.z, reflRef.x) * 0.15915494 + 0.5,
       asin(clamp(reflRef.y, -1.0, 1.0)) * 0.31830989 + 0.5)).rgb;
     cRef += cRef * smoothstep(0.72, 0.98, max(panoRef.r, max(panoRef.g, panoRef.b))) * uPanoK * 0.04;
+    #ifdef FIT05
+    cRef = fit05Color(lat, s, cRef);
+    #endif
     col = mix(col, cRef, sw);
     #else
     // The new study is a separate material path: no old brushed grain or stacked flare grids.
@@ -1441,6 +1450,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   });
   // UniformsUtils.merge in withFog clones values; retain the focus shared with far water and foam.
   if (REFERENCE05) uniforms.uBenny = reference05Shared.uBenny;
+  if (FIT05) Object.assign(uniforms, fit05Uniforms('near'));
   if (FLOWMAP05) {
     // W11: textures / shared uniforms are attached AFTER the merge above (UniformsUtils.merge would clone them)
     const f5 = flow05Textures(course);
@@ -1460,11 +1470,12 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(REFERENCE05 ? { REFERENCE05: 1 } : {}), ...((ROUNDFOAM05 || REFERENCEFOAM05) ? { ROUND_FOAM05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(REFERENCE05 ? { REFERENCE05: 1 } : {}), ...(FIT05 ? { FIT05: 1 } : {}), ...((ROUNDFOAM05 || REFERENCEFOAM05) ? { ROUND_FOAM05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'water_ribbon';
   mesh.frustumCulled = false; // one long mesh spanning the whole course
+  if (FIT05) mesh.add(createFit05Glints(course, uniforms.uTime, uniforms.uBenny, { ampAt, edgeLift: EDGE_LIFT, quality }));
   return {
     mesh,
     uniforms,

@@ -4,9 +4,10 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, WATER05, LIQUID05, REFERENCE05 } from '../vfx/waterRibbon';
+import { FARW05, WATER05, LIQUID05, REFERENCE05, FIT05 } from '../vfx/waterRibbon';
 import { LIQUID05_GLSL } from '../vfx/liquid05';
 import { REFERENCE05_GLSL } from '../vfx/reference05';
+import { FIT05_GLSL, fit05Uniforms } from '../vfx/fit05';
 import { REFERENCE05_FRAME_GLSL, reference05Shared } from '../vfx/reference05Geometry';
 import { ROUNDFOAM05, REFERENCEFOAM05 } from '../vfx/foam05Options';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
@@ -885,6 +886,7 @@ export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THR
     uRivD0: { value: d0 },
     ...(flow ? { uRivRipple: { value: flow.ripple }, uRivTime: flow.time, uRivFlow: { value: flow.speed } } : {}),
     ...(REFERENCE05 ? { uRefBenny: reference05Shared.uBenny } : {}),
+    ...(FIT05 ? fit05Uniforms('far') : {}),
   };
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
@@ -947,6 +949,9 @@ ${LIQUID05_GLSL}
 #endif
 #ifdef REFERENCE05
 ${REFERENCE05_GLSL}
+#endif
+#ifdef FIT05
+${FIT05_GLSL}
 #endif
 float rivHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float rivNoise(vec2 p) {
@@ -1041,6 +1046,9 @@ float rivCells(vec2 p) {
   lb = mix(lb, vRivSeamFlow.y, vRivSeam.w);
   #ifdef REFERENCE05
   col = reference05Color(lx, s, uRivTime, uRivFlow, lb, 0.0, 0.0, 0.0);
+  #ifdef FIT05
+  col = fit05Color(lat, s, col);
+  #endif
   #else
   float lv = s - uRivTime * uRivFlow;
   lx += 0.05 * sin(lv * 0.21 + lx * 1.1);
@@ -1155,8 +1163,8 @@ float rivCells(vec2 p) {
 }`);
   };
   if (WATER05) {
-    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(REFERENCE05 ? { REFERENCE05: 1 } : {}), ...((ROUNDFOAM05 || REFERENCEFOAM05) ? { ROUND_FOAM05: 1 } : {}) };
-    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '') + (LIQUID05 ? '-liquid05' : '') + (REFERENCE05 ? '-reference05' : '') + ((ROUNDFOAM05 || REFERENCEFOAM05) ? '-roundfoam05' : '');
+    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(REFERENCE05 ? { REFERENCE05: 1 } : {}), ...(FIT05 ? { FIT05: 1 } : {}), ...((ROUNDFOAM05 || REFERENCEFOAM05) ? { ROUND_FOAM05: 1 } : {}) };
+    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '') + (LIQUID05 ? '-liquid05' : '') + (REFERENCE05 ? '-reference05' : '') + (FIT05 ? '-fit05' : '') + ((ROUNDFOAM05 || REFERENCEFOAM05) ? '-roundfoam05' : '');
   } else {
     mat.customProgramCacheKey = () => 'far-river-w8';
   }
