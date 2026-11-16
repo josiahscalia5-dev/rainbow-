@@ -674,3 +674,7 @@ Probes take ~14 s. Now let me write the wave-9 plan in NOTES before changing any
 > 121:    const st5 = this.course.stage('05');
 > 122:    const p5 = STAGE_CAM['05'] as CamParams;
 
+### 🤖 Claude — 2026-11-16T02:24:47.227Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/tools/lidproj.ts <<'EOF'\n// scratch: project the 05 lid pair nearest the camera (L1/R1) and the near ring for candidate lid params\nimport * as THREE from 'three';\nimport { readFileSync, writeFileSync } from 'node:fs';\nimport { Course } from '/home/user/rainbow-/src/world/course';\nimport { straightTubePath, buildWallLids, tubeCenterAt } from '/home/user/rainbow-/src/world/tube';\nimport { STAGE_CAM } from '/home/user/rainbow-/src/game/cameraRig';\n\nconst S = '/tmp/claude-0/-home-user-ra …[+3871 chars]`
+
