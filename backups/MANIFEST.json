@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6783,
-   "sha256": "a69712a8fc1c2ad52a40207dda5f155a60028fe1d1ab49b842c326fb7c863b12"
+   "sha256": "5294831d427f2faf556d6ac16b9c198d1721f5beb340b12c92a9a9ffaa918701"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1267,6 +1267,11 @@
    "sha256": "a131a03ec3628c550920b69689671ffa1a7847057a4939cd01bb802efa456bfd"
   },
   {
+   "path": "qa/pilot05/wave10/FAR_RIVER_ANALYSIS.md",
+   "bytes": 2911,
+   "sha256": "73fb506973a1c6e77c9e41cbfacc4396edcd055259dbad37b3eccdbb432579a0"
+  },
+  {
    "path": "qa/pilot05/wave10/water/it01/05.png",
    "bytes": 1712268,
    "sha256": "1c8cdccd602f25ae5df2bc7b955c788bfcd04c7c214adf4a23a88295f5466801"
@@ -1305,6 +1310,11 @@
    "path": "qa/pilot05/wave10/water/it04/diff05.md",
    "bytes": 1389,
    "sha256": "5834c6a2cbe36c759ddb2ae7b6c6a92ecd359819ab7dbf72bc747f293eb812af"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/it04_low/05.png",
+   "bytes": 1610882,
+   "sha256": "1da4417cd8d7b4b83789562b25d314f13fb3ef943e6bcc8a9b114327f8d4655c"
   },
   {
    "path": "qa/pilot05/wave3/benny/it00/05.png",

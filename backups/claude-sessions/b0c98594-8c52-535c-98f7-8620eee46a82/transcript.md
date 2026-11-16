@@ -4410,3 +4410,129 @@ The water specialist is still working: it's on its fourth and final iteration, a
 
 The five-minute autosave keeps saving the specialist's work to GitHub in the meantime.
 
+### 🧑 User — 2026-11-16T12:21:16.206Z
+
+Claude, please finish Water iteration 4 and show me APPROVED, T2 CURRENT, and the BEST WATER VERSION at full size.
+
+Keep only the water improvements that genuinely look closer to my approved Screen 05.
+
+IMPORTANT: The far river still needs to wind in continuous, beautiful S-curves all the way into the golden light. Please determine whether fixing this requires 3D river path or surface geometry changes rather than more shader adjustments.
+
+Keep the brilliant cyan-blue water, rich magenta ribbons, intense white reflections and natural splashes around Benny.
+
+Do not break gameplay or the Screen 05-to-06 transition.
+
+After the water comparison, identify the biggest remaining visual difference and address that next. I want meaningful progress toward finishing Screen 05, not repeated tiny changes.
+
+Save and verify everything on GitHub every five minutes, including the specialists and Marble assets.
+
+### 🤖 Claude — 2026-11-16T12:21:19.136Z
+
+I'll check where the water specialist is. If it's still running, I'll wait for its report rather than duplicate its work:
+
+### 🤖 Claude — 2026-11-16T12:21:20.595Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; date -u +%H:%M; ls -la qa/pilot05/wave10/water/ qa/pilot05/wave10/water/it04 2>&1 | head -20; test -f qa/pilot05/wave10/water/NOTES.md && head -30 qa/pilot05/wave10/water/NOTES.md; git status --short | head; git log -1 --format='%h %cd' --date=format:%H:%M", "description": "Check the water specialist's iteration 4 and notes"}`
+
+### 🧑 User — 2026-11-16T12:21:20.665Z
+
+> ↩︎ result: 12:21
+> qa/pilot05/wave10/water/:
+> total 28
+> drwxr-xr-x 7 root root 4096 Nov 16 12:21 .
+> drwxr-xr-x 3 root root 4096 Nov 16 12:02 ..
+> drwxr-xr-x 2 root root 4096 Nov 16 12:02 it01
+> drwxr-xr-x 2 root root 4096 Nov 16 12:12 it02
+> drwxr-xr-x 2 root root 4096 Nov 16 12:15 it03
+> drwxr-xr-x 2 root root 4096 Nov 16 12:17 it04
+> drwxr-xr-x 2 root root 4096 Nov 16 12:21 it04_low
+> 
+> qa/pilot05/wave10/water/it04:
+> total 1736
+> drwxr-xr-x 2 root root    4096 Nov 16 12:17 .
+> drwxr-xr-x 7 root root    4096 Nov 16 12:21 ..
+> -rw-r--r-- 1 root root 1761447 Nov 16 12:17 05.png
+> -rw-r--r-- 1 root root    1389 Nov 16 12:17 diff05.md
+> 02d3989 12:18
+
+### 🤖 Claude — 2026-11-16T12:21:27.414Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,40p src/world/far05.ts | grep -E \"^ \\*|^//|^/\\*\\*\" | head -30; grep -n \"export function sbend05\\|function coreLateral\\|export function bandLayout\\|meander05\\|offset05\\|S05\\b\\|S05 =\" src/world/far05.ts src/world/course.ts | head -20", "description": "Read the far-river module header and S-bend functions"}`
+
+### 🧑 User — 2026-11-16T12:21:27.480Z
+
+> ↩︎ result: /**
+>  * Screen 05 far section (path-camera-transition-engineer, wave 8): helpers for the forced-perspective far tunnel
+>  * built in environment.ts (`// ---- 05 far tunnel`). Everything here is laid in the ForcedTunnel's VIRTUAL
+>  * straight tunnel (depth Z beyond the section start sF, offset o in the cross-section) and mapped to real
+>  * geometry with ft.point(), so it continues the real near/mid tunnel without a seam at the locked 05 eye.
+>  *
+>  * FAR RIVER (ref 05, approved image): beyond the seam the river keeps winding: the cyan core with its two
+>  * hot-pink bands swings RIGHT (core ≈ x 530–547 at y 538–526, ≈ 535 at y 508) and then back LEFT into the
+>  * vanishing point (≈ 505 at y 496, ≈ 490 at y 490). The live far chord ran straight into the VP (06-style
+>  * candy stripes). The layout model here is the real ribbon's own (waterRibbon.ts, 05 block): route centre
+>  * xB, half width hw = extent − |xB|, core swing M = CORE_SWING·xB, band offsets 0.62·hw / widths 0.19·hw with
+>  * the same smooth clamps against the banks. For the first few virtual units it follows the REAL course
+>  * (s = sF + axial), so the far surface lands exactly on the real ribbon at the seam and covers the real
+>  * ribbon …[+2797 chars]
+
+### 🤖 Claude — 2026-11-16T12:21:41.444Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"KNOTS\\|knots\\|const FAR\\|export function farCore\\|function designed\\|Z≈\\|\\[\\s*[0-9.]*,\\s*-\\?[0-9.]*\\s*\\]\" src/world/far05.ts | head -20; n=$(grep -n \"Designed far path\" src/world/far05.ts | cut -d: -f1); sed -n \"$((n+9)),$((n+30))p\" src/world/far05.ts", "description": "Read the designed far-river path knots"}`
+
+### 🧑 User — 2026-11-16T12:21:41.488Z
+
+> ↩︎ result: 31: * (f 1278 px, VP (500,479), eye 3.56 u above the far water plane): y 538 → core x 506–553 (Z≈24), 532 → 525–560
+> 32: * (Z≈32), 526 → 529–565 (Z≈43), 511 → 513–561 (Z≈88), 508 → 518–555 (Z≈103), then back left into the VP:
+> 33: * coins/core ≈505 at y 496 (Z≈215), ≈490 at y 490 (Z≈330). The first knots continue the real exit bend
+> 34: * (route lateral ≈0.3 at Z≈6) straight into the right swing (the reference's dip to the left at y≈550 sits where
+> 37:export const FAR05_CORE: [number, number][] = [
+> 38:  [8, 0.55], [12, 0.75], [17, 1.0], [24, 1.8], [32, 2.75], [43, 3.4], [60, 3.6], [88, 4.0], [110, 4.35], [140, 4.45],
+> 39:  [175, 4.1], [212, 2.6], [260, 0.8], [310, -1.6], [350, -2.5], [400, -2.8],
+> 51:/** C¹ monotone-free cubic Hermite through knots (Catmull-Rom tangents, flat ends) */
+> 126:export const FAR05_CORE_W10: [number, number][] = [
+> 127:  [0, -0.3], [8, 0.2], [16, 0.75], [24, 1.25], [32, 1.8], [43, 2.45], [60, 3.1], [88, 3.7], [110, 4.05], [140, 4.3],
+> 128:  [175, 4.0], [212, 2.6], [260, 0.8], [310, -1.4], [350, -2.2], [400, -2.5],
+>   [8, 0.55], [12, 0.75], [17, 1.0], [24, 1.8], [32, 2.75], [43, 3.4], [60, 3.6], [88, 4.0], [110, 4.35], [140, 4.45],
+>   [175, 4.1], [212, 2.6], [260, 0. …[+833 chars]
+
+### 🤖 Claude — 2026-11-16T12:22:01.592Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\nimport numpy as np\nfrom PIL import Image\nF, VPY, H = 1278.0, 479.0, 3.56\ndef centreline(p):\n    a = np.asarray(Image.open(p).convert(\"RGB\").resize((864, 1536))).astype(np.float32) / 255\n    r, g, b = a[..., 0], a[..., 1], a[..., 2]\n    mx, mn = a.max(-1), a.min(-1); s = (mx - mn) / (mx + 1e-6)\n    hue = np.degrees(np.arctan2(np.sqrt(3) * (g - b), 2 * r - g - b)) % 360\n    cyan = (hue > 170) & (hue < 205) & (s > 0.35) & (mx > 0.5)\n    out = {}\n    for y in range(484, 720, 6):\n        xs = np.nonzero(cyan[y, 150:714])[0]\n    …[+990 chars]`
+
+### 🧑 User — 2026-11-16T12:22:02.479Z
+
+> ↩︎ result: row | depth Z | APPROVED core x  lateral u | GAME core x  lateral u
+>  502 |  197.8 far  |    -       -         |   527   +4.18
+>  508 |  156.9 far  |    -       -         |   532   +3.87
+>  514 |  130.0 far  |   546   +4.63       |   532   +3.20
+>  520 |  111.0 far  |   545   +3.91       |   536   +3.08
+>  526 |   96.8 far  |   544   +3.29       |   540   +2.99
+>  532 |   85.8 far  |   510   +0.71       |   538   +2.55
+>  538 |   77.1 far  |   508   +0.48       |   528   +1.69
+>  544 |   70.0 far  |   486   -0.79       |   522   +1.18
+>  550 |   64.1 far  |   450   -2.53       |   523   +1.15
+>  556 |   59.1 far  |   446   -2.47       |   526   +1.23
+>  562 |   54.8 far  |   472   -1.20       |   546   +1.95
+>  568 |   51.1 real |   462   -1.52       |   516   +0.66
+>  574 |   47.9 real |   408   -3.45       |   502   +0.06
+>  580 |   45.0 real |   456   -1.57       |   508   +0.26
+>  586 |   42.5 real |   406   -3.14       |   500   -0.02
+>  592 |   40.3 real |   400   -3.13       |   512   +0.36
+>  598 |   38.2 real |   414   -2.57       |   416   -2.50
+>  604 |   36.4 real |   418   -2.32       |   400   -2.85
+>  610 |   34.7 real |   424   -2.08       |   412   -2.39
+>  616 |   33.2 real |   446   -1.42       |   51 …[+1068 chars]
+
+### 🤖 Claude — 2026-11-16T12:22:36.259Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave10/FAR_RIVER_ANALYSIS.md", "content": "# Screen 05 far river — does it need geometry or shader work? (2026-11-16 ~12:25 UTC, session `01Kbt6BT`)\n\nUser: \"The far river still needs to wind in continuous, beautiful S-curves all the way into the golden light.\nDetermine whether fixing this requires 3D river path or surface geometry changes rather than more shader adjustments.\"\n\n## How the far river is built\n* The real (rideable) 05 river = `course.ts` meander05 (gameplay path: coins, steering, camera follow). It runs only\n  ≈54 u ahead of t …[+2345 chars]`
+
+### 🧑 User — 2026-11-16T12:22:36.289Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave10/FAR_RIVER_ANALYSIS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T12:22:37.968Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 scripts/rainbow-autosave.py --reason manual:far-river-analysis 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"'; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1); [ \"$L\" = \"$R\" ] && echo \"REMOTE == LOCAL ($L)\"; python3 -I scripts/autosave-status.py | head -1", "description": "Save the far-river analysis and verify on GitHub"}`
+
