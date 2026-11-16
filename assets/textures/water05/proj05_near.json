@@ -1,16 +1,29 @@
 {
  "note": "proj05 near tile (tools/proj05/near_bake.py); shader: ?proj05=1&projnear05=1 (src/vfx/waterRibbon.ts)",
  "T2": {
-  "a": 130.5,
-  "L": 7.0,
+  "a": 130.185,
+  "L": 7.565,
   "width": 1024,
   "height": 768,
   "wrapT": "mirrored",
-  "period": 14.0
+  "period": 15.13
+ },
+ "source": {
+  "a": 130.5,
+  "L": 7.0,
+  "ease_near": [
+   0.3,
+   0.9
+  ],
+  "ease_far": [
+   0.5,
+   1.0
+  ],
+  "seam_heal_zone_texels": 32189
  },
  "locked_focus_s": 132.438,
  "texels_per_world_unit": {
-  "along": 109.7,
+  "along": 101.5,
   "across": 106.7,
   "old_N_T_along": 24.0,
   "old_T_across": 53.3
@@ -44,10 +57,10 @@
    0.512
   ]
  },
- "share_of_texels_from_visible_water": 0.931,
- "share_filled_along_flow": 0.1001,
+ "share_of_texels_from_visible_water": 0.932,
+ "share_filled_along_flow": 0.1076,
  "bubbles_removed": 15,
- "holes_cloned": 19,
+ "holes_cloned": 18,
  "column_shift_s": {
   "-0.9": 8.4,
   "-0.7": 5.87,
@@ -61,8 +74,8 @@
  },
  "flow": {
   "file": "proj05_WT2.png",
-  "height": 56,
-  "mean_abs_slope_world": 0.13,
-  "flow_area": 0.835
+  "height": 61,
+  "mean_abs_slope_world": 0.114,
+  "flow_area": 0.828
  }
 }

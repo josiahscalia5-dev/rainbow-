@@ -17,7 +17,9 @@ E (through its LUT, no new artwork, no invented texture) into a tile that the sh
                   the shader flips the slope on mirrored periods.
   proj05_near.json  extents + resolution report.
 usage: python3 -I tools/proj05/near_bake.py <assets/textures/water05> [--w=1024] [--h=768] [--a=130.5] [--l=7]
-                  [--ss=3] (supersampling per axis) [--margin=0.015] (u kept away from the visible edge)"""
+                  [--ss=3] (supersampling per axis) [--margin=0.015] (u kept away from the visible edge)
+                  [--ease_near=k,b] [--ease_far=k,b] (slope k at the mirror line, back to 1 over b units; 1,0 = off)
+                  [--heal=0] (skip the artwork-fill seam heal)"""
 import json, os, sys
 import numpy as np
 from PIL import Image
@@ -30,6 +32,27 @@ W, H = int(opt.get("w", 1024)), int(opt.get("h", 768))
 A, L = float(opt.get("a", 130.5)), float(opt.get("l", 7.0))
 SS = int(opt.get("ss", 3))
 MARGIN = float(opt.get("margin", 0.015))
+# EASING at the two mirror lines (the tile is repeated mirrored along s): a straight mirror turns every slanted ribbon
+# into a sharp "V". Near each end the tile advances through the source more slowly (slope k at the end, back to 1 over
+# b units), so the streaks' slope du/ds falls to k x at the mirror line and the ribbon BENDS back instead of kinking.
+# near end = the crisp start of the source (230 rows / unit: stretching it costs nothing visible); far end = the softer
+# source (53 rows / unit): eased less. The tile gets longer by the two eased stretches: Lt = L + cn + cf.
+KN, BN = [float(v) for v in opt.get("ease_near", "0.3,0.9").split(",")]
+KF, BF = [float(v) for v in opt.get("ease_far", "0.5,1.0").split(",")]
+_ss = lambda x: np.clip(x, 0, 1) ** 2 * (3 - 2 * np.clip(x, 0, 1))
+CN, CF = (1 - KN) * BN / 2, (1 - KF) * BF / 2
+LT = L + CN + CF
+_tg = np.linspace(0, LT, 8001)
+_pg = (KN + (1 - KN) * _ss(_tg / max(BN, 1e-6))) * (KF + (1 - KF) * _ss((LT - _tg) / max(BF, 1e-6)))
+_gg = np.concatenate([[0], np.cumsum((_pg[1:] + _pg[:-1]) / 2 * np.diff(_tg))])
+_gg *= L / _gg[-1]                                   # exact source length (the two zones do not overlap: factor ~1)
+A_TILE = A - CN                                      # past the near easing the tile shows source s at world s
+
+
+def src_off(t):
+    """tile position t (0..LT, world units from the tile start) -> offset into the source (0..L)"""
+    return np.interp(t, _tg, _gg)
+
 
 lut = json.load(open(os.path.join(DIR, "proj05_lut.json")))
 Ej = lut["E"]
@@ -109,7 +132,7 @@ acc = np.zeros((H, W, 3), np.float64); real = np.zeros((H, W), np.float64); wsum
 for oy in range(SS):
     for ox in range(SS):
         uu = -1 + (np.arange(W) + (ox + 0.5) / SS) / W * 2
-        ss_ = A + (np.arange(H) + (oy + 0.5) / SS) / H * L
+        ss_ = A + src_off((np.arange(H) + (oy + 0.5) / SS) / H * LT)
         U, S = np.meshgrid(uu, ss_)
         col, inside, a = sample(U.ravel(), S.ravel())
         a = a.reshape(H, W)
@@ -123,7 +146,7 @@ real /= SS * SS
 # (u, s of the approved picture: centre u, centre s, radius u, radius s), so they stay valid if the tile is re-cut.
 BUBBLES = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "near_bubbles.json")))["bubbles"]
 uu_c = -1 + (np.arange(W) + 0.5) / W * 2
-ss_c = A + (np.arange(H) + 0.5) / H * L
+ss_c = A + src_off((np.arange(H) + 0.5) / H * LT)
 Uc, Sc = np.meshgrid(uu_c, ss_c)
 Ssrc = Sc + shift_of(Uc)
 hole = cover < 0.6
@@ -178,6 +201,63 @@ for k, sl in enumerate(_find(lab), 1):
         big = cv2.seamlessClone(src, big, m8, (int(cx), int(cy)), cv2.NORMAL_CLONE)
         cloned += 1; done = True
         break
+# SEAM of the artwork fill (2026-11-16): inside the approved Benny's footprint the proj05 water is the user's isolated
+# artwork, outside it the approved picture; where they meet there is a colour step with a stair-stepped outline. Behind
+# Benny at the locked camera nobody sees it — in the repeating tile it showed as a torn dark edge beside Benny 17 u into
+# the ride. Heal: keep the artwork's own streaks inside (its gradients), re-solve its colours so they meet the approved
+# water at the outline (Poisson / gradient-domain blend, cv2.seamlessClone), over a 5-texel band of propagated outside
+# colour. Outline in source coordinates: tools/proj05/near_fillmask.py -> near_fillmask_src.png.
+healed = 0
+FM = os.path.join(os.path.dirname(os.path.abspath(__file__)), "near_fillmask_src.png")
+if os.path.exists(FM) and opt.get("heal", "1") != "0":
+    fmk = np.asarray(Image.open(FM).convert("L")).astype(np.float32) / 255.0
+    F_S0, F_DENS = 129.5, 64.0
+    fy = np.clip((Ssrc - F_S0) * F_DENS - 0.5, 0, fmk.shape[0] - 1)
+    fx = np.clip((Uc + 1) / 2 * fmk.shape[1] - 0.5, 0, fmk.shape[1] - 1)
+    tm = map_coordinates(fmk, [fy, fx], order=1, mode="nearest") > 0.5
+    Mb = np.pad(tm, ((PADY, PADY), (PADX, PADX)), mode="symmetric")
+    # the visible stair-step lies 3-5 texels INSIDE the outline (the artwork was blended inside the footprint). So:
+    #  1. a band from EB_OUT texels outside to EB_IN + FE texels inside the outline is repainted with REAL water: the
+    #     texture just outside, reflected across the band's outer edge (no blur, no flat strip);
+    #  2. the artwork inside keeps its own streaks, but its COLOUR is shifted to meet that water: the low-frequency colour
+    #     difference measured along the band is spread inwards (multi-scale normalised convolution) and fades out over
+    #     DECAY texels, so the deep interior stays exactly the artwork;
+    #  3. the two textures cross-fade over the last FE texels of the band.
+    # (cv2.seamlessClone was tried first for 2.: with a region this large it left the interior unchanged.)
+    sc_ = W / 1024.0
+    EB_IN, EB_OUT, FE, DECAY = int(round(10 * sc_)), int(round(2 * sc_)), int(round(10 * sc_)), 45.0 * sc_
+    from scipy.ndimage import distance_transform_edt as _edt
+    el = lambda r: cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * r + 1, 2 * r + 1))
+    outer = cv2.erode((~Mb).astype(np.uint8), el(EB_OUT)).astype(bool)
+    d_in, (qy, qx) = _edt(~outer, return_indices=True)       # distance to / index of the nearest outside texel
+    d_in = d_in - EB_OUT                                      # ~ texels inside the outline
+    refl = (~outer) & (d_in < EB_IN + FE)
+    yy_, xx_ = np.nonzero(refl)
+    ry = np.clip(2 * qy[yy_, xx_] - yy_, 0, big.shape[0] - 1); rx = np.clip(2 * qx[yy_, xx_] - xx_, 0, big.shape[1] - 1)
+    bad = ~outer[ry, rx]                                      # reflection left the outside (concave corner): nearest q
+    ry[bad], rx[bad] = qy[yy_, xx_][bad], qx[yy_, xx_][bad]
+    bf = big.astype(np.float32)
+    Rtex = bf.copy()
+    Rtex[yy_, xx_] = bf[ry, rx]
+    Rtex[yy_, xx_] = cv2.GaussianBlur(Rtex, (0, 0), 1.5 * sc_)[yy_, xx_]
+    inside = (~outer) & (d_in >= EB_IN)
+    zone = inside & (d_in < EB_IN + FE)                       # where both textures exist: measure the colour difference
+    nb = lambda img, m, sg_: cv2.GaussianBlur(img * m[..., None].astype(np.float32), (0, 0), sg_) / np.maximum(cv2.GaussianBlur(m.astype(np.float32), (0, 0), sg_), 1e-4)[..., None]
+    c_refl = nb(Rtex, refl | outer, 5.0 * sc_)
+    c_in = nb(bf, inside, 5.0 * sc_)
+    delta_z = (c_refl - c_in) * zone[..., None]
+    num = np.zeros_like(bf); den = np.zeros(bf.shape[:2], np.float32)
+    for sg_ in (3, 6, 12, 24, 48, 96):
+        wgt = 1.0 / (sg_ * sg_)
+        num += wgt * cv2.GaussianBlur(delta_z, (0, 0), sg_ * sc_); den += wgt * cv2.GaussianBlur(zone.astype(np.float32), (0, 0), sg_ * sc_)
+    delta = num / np.maximum(den, 1e-7)[..., None]
+    fade = np.exp(-np.clip(d_in - EB_IN, 0, None) / DECAY)
+    Itex = bf + delta * (fade * inside)[..., None]
+    wI = np.clip((d_in - EB_IN) / max(FE, 1), 0, 1); wI = wI * wI * (3 - 2 * wI)
+    out_ = np.where(outer[..., None], bf, Rtex * (1 - wI)[..., None] + Itex * wI[..., None])
+    out_ = np.where((inside & (d_in >= EB_IN + FE))[..., None], Itex, out_)
+    big = np.clip(out_ + 0.5, 0, 255).astype(np.uint8)
+    healed = int(zone.sum())
 T2 = big[PADY:PADY + H, PADX:PADX + W].astype(np.float64) / 255.0
 hole_share = float(hole.mean())
 Image.fromarray(np.clip(T2 * 255 + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(DIR, "proj05_T2.png"), optimize=True)
@@ -189,8 +269,8 @@ argv0 = sys.argv
 sys.argv = ["flow_bake.py", DIR]
 exec(compile(src.split("\nrep = {}")[0], "flow_bake.py", "exec"), ns)
 sys.argv = argv0
-m, mask, coh, _ = ns["flow_of"]((T2 * 255).astype(np.float32), np.ones((H, W), np.float32), L, wrap=False)
-out_h = int(round(L * 8))
+m, mask, coh, _ = ns["flow_of"]((T2 * 255).astype(np.float32), np.ones((H, W), np.float32), LT, wrap=False)
+out_h = int(round(LT * 8))
 ns["save"]("proj05_WT2.png", m, mask, coh, out_h)
 
 # resolution report: texels per world unit (s is in world units, u = 1 is the river half width)
@@ -198,11 +278,13 @@ hw = ns["HW"]
 dens_src = np.gradient(np.interp(sg, sg, Vg), sg) * NE
 rep = dict(
     note="proj05 near tile (tools/proj05/near_bake.py); shader: ?proj05=1&projnear05=1 (src/vfx/waterRibbon.ts)",
-    T2=dict(a=A, L=L, width=W, height=H, wrapT="mirrored", period=2 * L),
+    # a, L = what the shader uses (world s of the tile start, tile length; mirrored repeat: period 2 L)
+    T2=dict(a=round(A_TILE, 4), L=round(LT, 4), width=W, height=H, wrapT="mirrored", period=round(2 * LT, 4)),
+    source=dict(a=A, L=L, ease_near=[KN, BN], ease_far=[KF, BF], seam_heal_zone_texels=healed),
     # Benny's s at the locked 05 checkpoint (scripts/capture.mjs 05 log: s 132.438): the shader's hand-over compares
     # each point with the locked view's density at the same distance from Benny
     locked_focus_s=float(opt.get("lock", 132.438)),
-    texels_per_world_unit=dict(along=round(H / L, 1), across=round(W / (2 * hw), 1), old_N_T_along=24.0,
+    texels_per_world_unit=dict(along=round(H / LT, 1), across=round(W / (2 * hw), 1), old_N_T_along=24.0,
                               old_T_across=round(512 / (2 * hw), 1)),
     source_rows_per_world_unit={f"{s:.1f}": round(float(np.interp(s, sg, dens_src)), 1) for s in (130.5, 132, 134, 136, 137.5)},
     visible_u_range={f"{s:.1f}": [round(float(np.interp(s, s_row, ulo)), 3), round(float(np.interp(s, s_row, uhi)), 3)]

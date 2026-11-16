@@ -453,8 +453,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_T2.png",
-   "bytes": 775413,
-   "sha256": "3d648962331da2e7aa0915c5622a72206334d6bd792ac614b4894c38541204ea"
+   "bytes": 791038,
+   "sha256": "ac316878dbdad6a5f83b4b04b9153929e089fea9f8a5a01e433500d2460d8ce6"
   },
   {
    "path": "assets/textures/water05/proj05_WN.png",
@@ -468,8 +468,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_WT2.png",
-   "bytes": 3761,
-   "sha256": "508d4ab86ee16fd891ef7bb4b103fee0be761ea9bab5df5cf86ce62faeda6265"
+   "bytes": 3980,
+   "sha256": "ba120dcabc5c29ebffad12d546e3d022d1fe83496c487b3ae3aff69fc0a63937"
   },
   {
    "path": "assets/textures/water05/proj05_flow.json",
@@ -483,8 +483,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_near.json",
-   "bytes": 1117,
-   "sha256": "b235d1d1cff2644f7d2bd6b981e076b703ec6652bea7880ab5ed56fd0a235e31"
+   "bytes": 1272,
+   "sha256": "2dab65a706fea0aa8f90cee20924da17d9a7baf052d6068ebc132e9f7281ea6f"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9708,
-   "sha256": "1c30b66ed8eea04a09605eeb2186dcc25199068528fc6c594adc0254d7364135"
+   "sha256": "a05bcbd81be8545f2e296f8430ba0acc9ce4c67b49252e70dd13a2c825387f33"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7608,13 +7608,23 @@
   },
   {
    "path": "tools/proj05/near_bake.py",
-   "bytes": 12806,
-   "sha256": "196f97f3cbe6b3dbee30a544634b8966587718f3f2f6622548da64030fbec514"
+   "bytes": 19096,
+   "sha256": "c5fe4807cb5e4438a24441b4dfdaf3457f315ffbd7a638b5d521de4e0a25003f"
   },
   {
    "path": "tools/proj05/near_bubbles.json",
    "bytes": 1573,
    "sha256": "cb3b0e244c0e95aa26c667b31419efb4041f9d29a89478b3127ff0cfd39d9641"
+  },
+  {
+   "path": "tools/proj05/near_fillmask.py",
+   "bytes": 1938,
+   "sha256": "181d83773fd14898b2b15ee512b6ce108d8ed359b7baadff213c8a49a8ad2461"
+  },
+  {
+   "path": "tools/proj05/near_fillmask_src.png",
+   "bytes": 5448,
+   "sha256": "22f716738a5e0a021c985c85415bd1e2a031ca19e112cd3513fb32011e080297"
   },
   {
    "path": "tools/proj05/near_metrics.py",
