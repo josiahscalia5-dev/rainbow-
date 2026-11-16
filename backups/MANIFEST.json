@@ -469,7 +469,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9219,
-   "sha256": "4dd9cdbbe56aa150c0c84ec3655ddad4756a4d106f8c8682d7efa801b20976ff"
+   "sha256": "bcd9025de81819ebd302e96091aa20d0fcdfc82a2ee6619cbeda3a33ac9fe453"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6943,8 +6943,8 @@
   },
   {
    "path": "scripts/proj05-lid-fit.mjs",
-   "bytes": 10485,
-   "sha256": "a7687b1a6113d7d1f86afc2ffcc33d5ce518d823bac02889e80f9dd326c0cb05"
+   "bytes": 10747,
+   "sha256": "723f600a4e8d5fbdd0462d2c46dc2b0413b205a74a5ce7f9142a25e15f9297cf"
   },
   {
    "path": "scripts/proj05-move.mjs",
@@ -7163,8 +7163,8 @@
   },
   {
    "path": "src/vfx/proj05Tunnel.ts",
-   "bytes": 15558,
-   "sha256": "524c3dcb7168a8af10c96befab6e01457fe7c28a1d489a91cf4bc5d144a0e97b"
+   "bytes": 16717,
+   "sha256": "f4f06525177a3e655b5e386d1a1f4c8b729392ea8acd0d3216093dd6398cc664"
   },
   {
    "path": "src/vfx/puddles.ts",

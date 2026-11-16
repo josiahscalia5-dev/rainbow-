@@ -2122,3 +2122,15 @@ Imports are clean, with no circular dependency. Now I'll hook the switch into th
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T21:11:09.149Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "/** the fitted 05 paddles as one InstancedMesh (same geometry family as the default 05 lids, 'slab') */", "new_string": "/**\n * The approved paddle is a D-shaped TRAY (studied at 4× zoom: a thick polished gold rim whose INNER face shows above a\n * lavender floor, a thin straight lip along the bottom). Half lathe toward local +X like wallLidGeometry: the D's\n * straight edge lies on local Z (along the tube); the open side faces −Y (the camera / the stream), the closed back +Y\n * (into the wall) …[+898 chars]`
+
+### 🧑 User — 2026-11-16T21:11:09.230Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T21:11:20.705Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-lid-fit.mjs'; s=open(p).read()\n# use the tray geometry, depth TRAY_H; droop near -90 (D flat on the wall, straight edge low), stretch along the tube\ns=s.replace(\"\"\"    const { wallLidMatrix, wallLidGeometry } = await import('/src/world/tube.ts');\"\"\",\"\"\"    const { wallLidMatrix } = await import('/src/world/tube.ts');\n    const { trayLidGeometry } = await import('/src/vfx/proj05Tunnel.ts');\"\"\")\ns=s.replace(\"\"\"    const geo = wallLidGeometry('slab', 0.36, 16);\"\"\",\"\"\"    const TRAY_H = 0.45, SINK = 0.2;\n    const geo = …[+2828 chars]`
+

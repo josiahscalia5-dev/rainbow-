@@ -39,6 +39,24 @@ export const LIDS05_FIT = [
   { name: 'R2', side: 1, ds: 50.5, ang: 19, droop: 22.5, size: 2.45 },
 ] as const;
 
+/**
+ * The approved paddle is a D-shaped TRAY (studied at 4× zoom: a thick polished gold rim whose INNER face shows above a
+ * lavender floor, a thin straight lip along the bottom). Half lathe toward local +X like wallLidGeometry: the D's
+ * straight edge lies on local Z (along the tube); the open side faces −Y (the camera / the stream), the closed back +Y
+ * (into the wall). Thickness h = tray depth (fraction of the size), centred on its thickness like the wall lids.
+ */
+export function trayLidGeometry(h: number, segments = 28): THREE.BufferGeometry {
+  const prof: [number, number][] = [
+    [0, 0.68 * h], [0.78, 0.68 * h], [0.84, 0.62 * h],         // floor (recessed from the open side), fillet
+    [0.855, 0.3 * h], [0.865, 0.06 * h], [0.9, 0.0],            // inner rim face down to the lip
+    [0.965, 0.0], [1.0, 0.06 * h], [1.025, 0.4 * h],            // rounded lip, outer bulge
+    [1.0, 0.85 * h], [0.95, h], [0, h],                          // closed back against the wall
+  ];
+  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), segments, 0, Math.PI);
+  geo.translate(0, -h * 0.5, 0);
+  return geo;
+}
+
 /** the fitted 05 paddles as one InstancedMesh (same geometry family as the default 05 lids, 'slab') */
 export function buildLids05Fit(path: TubePath, sCam05: number, thickness: number, material: THREE.Material): THREE.InstancedMesh {
   const mesh = new THREE.InstancedMesh(wallLidGeometry('slab', thickness), material, LIDS05_FIT.length);

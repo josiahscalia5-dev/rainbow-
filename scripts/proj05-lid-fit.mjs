@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Screen 05 paddles (`?projlid05=1`): fit each of the approved picture's six wall lids (tools/proj05/tunnel_common.py
 // LIDS: L1 L2 L3 left, R1 R2 R3 right) with one real 3D lid on the real 05 wall, seen from the locked 05 camera.
-// Grid search over (s along the tube, angle above the axis, droop, size) with the real lid geometry projected by the real
+// Lid = the approved D-shaped TRAY (src/vfx/proj05Tunnel.ts trayLidGeometry), lying on the wall (droop ≈ −90°).
+// Grid search over (s along the tube, angle above the axis, droop, size, stretch along the tube) with the real lid geometry projected by the real
 // camera; score = raster IoU of the projected silhouette (convex hull) with the approved outline polygon (bounding-box
 // IoU >= 0.55 as a prefilter); a lid may not cross a gold ring band, and the camera must see its underside.
 // Read-only: nothing in the game changes.   node scripts/proj05-lid-fit.mjs [--out=qa/pilot05/proj/tunnel/lid/fit.json]
@@ -37,20 +38,23 @@ try {
     const { camera } = R.qa3d();
     camera.updateMatrixWorld();
     const THREE = await import('/node_modules/.vite/deps/three.js');
-    const { wallLidMatrix, wallLidGeometry } = await import('/src/world/tube.ts');
+    const { wallLidMatrix } = await import('/src/world/tube.ts');
+    const { trayLidGeometry } = await import('/src/vfx/proj05Tunnel.ts');
     const { far05Debug: D } = await import('/src/world/far05.ts');
     const path = D.perfPath;
-    const geo = wallLidGeometry('slab', 0.36, 16);
+    const TRAY_H = 0.45, SINK = 0.2;
+    const geo = trayLidGeometry(TRAY_H, 16);
     const P = geo.attributes.position;
     const verts = []; for (let i = 0; i < P.count; i++) verts.push(new THREE.Vector3(P.getX(i), P.getY(i), P.getZ(i)));
     const vp = new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
     const M = new THREE.Matrix4(), MV = new THREE.Matrix4(), v = new THREE.Vector4();
     const r05 = path.radius(D.sCam05);
+    let st = 1.0;
     const bandHalf = (D.band05?.width ?? 1.2) / 2;
     const ringsAhead = D.rings05.map((x) => x - D.sCam05);
     const pts = [];
     const project = (s, side, ang, droop, size) => {
-      wallLidMatrix(path, s, side, ang, droop, size, 1.0, 0.1, M);
+      wallLidMatrix(path, s, side, ang, droop, size, st, SINK, M);
       MV.multiplyMatrices(vp, M);
       pts.length = 0;
       for (const p of verts) {
@@ -92,15 +96,15 @@ try {
     const camP = new THREE.Vector3().setFromMatrixPosition(camera.matrixWorld);
     const lp = new THREE.Vector3(), ly = new THREE.Vector3();
     const seenFromBelow = (s, side, ang, droop, size) => {
-      wallLidMatrix(path, s, side, ang, droop, size, 1.0, 0.1, M);
+      wallLidMatrix(path, s, side, ang, droop, size, st, SINK, M);
       lp.setFromMatrixPosition(M);
       ly.setFromMatrixColumn(M, 1).normalize();
       const d = camP.clone().sub(lp);
       return ly.dot(d) < -0.12 * d.length();
     };
-    const clearOfRings = (ds, size) => ringsAhead.every((r) => Math.abs(ds - r) > size + bandHalf + 0.15);
+    const clearOfRings = (ds, size) => ringsAhead.every((r) => Math.abs(ds - r) > size * st + bandHalf + 0.15);
     const box = (s, side, ang, droop, size) => {
-      wallLidMatrix(path, s, side, ang, droop, size, 1.0, 0.1, M);
+      wallLidMatrix(path, s, side, ang, droop, size, st, SINK, M);
       MV.multiplyMatrices(vp, M);
       let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
       for (const p of verts) {
@@ -123,17 +127,18 @@ try {
       for (const side of [1, -1]) {
         for (let s = D.sCam05 + 1; s <= D.sCam05 + 50; s += 0.5) {
           for (let ang = -16; ang <= 70; ang += 2) {
-            for (let droop = -50; droop <= 40; droop += 7.5) {
-              for (let size = 1.2; size <= 4.01; size += 0.2) {
+            for (let droop = -105; droop <= -60; droop += 7.5) {
+              for (const stv of [0.8, 1.0, 1.25, 1.5]) { st = stv;
+              for (let size = 1.0; size <= 4.01; size += 0.2) {
                 const szw = size * Math.min(1.4, r05 / 7.6);
                 if (!clearOfRings(s - D.sCam05, szw)) continue;
-                if (!seenFromBelow(s, side, ang, droop, szw)) continue;
                 const b = box(s, side, ang, droop, szw);
                 if (!b || b[2] <= b[0] || b[3] <= b[1]) continue;
                 const bi = iou(b, T);
                 if (bi < 0.55) continue;
                 const sc = shapeIoU(hull(project(s, side, ang, droop, szw)), T, POLYS[name]);
-                if (!best || sc > best.iou) best = { iou: sc, boxIoU: bi, side, s, ds: s - D.sCam05, ang, droop, size, box: b.map((x) => Math.round(x)) };
+                if (!best || sc > best.iou) best = { iou: sc, boxIoU: bi, side, s, ds: s - D.sCam05, ang, droop, size, stretch: st, box: b.map((x) => Math.round(x)) };
+              }
               }
             }
           }
@@ -141,18 +146,17 @@ try {
       }
       // refine around the best: finer steps
       if (!best) { out[name] = { target: T, none: true }; continue; }
-      const b0 = best;
+      const b0 = best; st = b0.stretch;
       for (let s = b0.s - 0.5; s <= b0.s + 0.5; s += 0.125) for (let ang = b0.ang - 2; ang <= b0.ang + 2; ang += 0.5)
         for (let droop = b0.droop - 10; droop <= b0.droop + 10; droop += 2.5) for (let size = b0.size - 0.2; size <= b0.size + 0.2; size += 0.05) {
           const szw = size * Math.min(1.4, r05 / 7.6);
           if (!clearOfRings(s - D.sCam05, szw)) continue;
-          if (!seenFromBelow(s, b0.side, ang, droop, szw)) continue;
           const b = box(s, b0.side, ang, droop, szw);
           if (!b || b[2] <= b[0] || b[3] <= b[1]) continue;
           const bi = iou(b, T);
           if (bi < 0.55) continue;
           const sc = shapeIoU(hull(project(s, b0.side, ang, droop, szw)), T, POLYS[name]);
-          if (sc > best.iou) best = { iou: sc, boxIoU: bi, side: b0.side, s, ds: s - D.sCam05, ang, droop, size, box: b.map((x) => Math.round(x)) };
+          if (sc > best.iou) best = { iou: sc, boxIoU: bi, side: b0.side, s, ds: s - D.sCam05, ang, droop, size, stretch: st, box: b.map((x) => Math.round(x)) };
         }
       out[name] = { target: T, ...best };
     }
@@ -160,6 +164,6 @@ try {
   }, [TARGETS, POLYS]);
   mkdirSync(dirname(OUT), { recursive: true });
   writeFileSync(OUT, JSON.stringify(res, null, 1));
-  for (const [k, f] of Object.entries(res.fit)) if (!f.none) console.log(k, 'shapeIoU', f.iou.toFixed(3), 'boxIoU', f.boxIoU.toFixed(3), 'side', f.side, 'ds', f.ds.toFixed(2), 'ang', f.ang, 'droop', f.droop, 'size', f.size.toFixed(2), 'box', JSON.stringify(f.box), 'target', JSON.stringify(f.target));
+  for (const [k, f] of Object.entries(res.fit)) if (!f.none) console.log(k, 'shapeIoU', f.iou.toFixed(3), 'boxIoU', f.boxIoU.toFixed(3), 'side', f.side, 'ds', f.ds.toFixed(2), 'ang', f.ang, 'droop', f.droop, 'size', f.size.toFixed(2), 'stretch', f.stretch, 'box', JSON.stringify(f.box), 'target', JSON.stringify(f.target));
   console.log('rings05', JSON.stringify(res.rings05), 'sCam05', res.sCam05, 'r05', res.r05);
 } finally { await browser.close(); await vite.close(); }
