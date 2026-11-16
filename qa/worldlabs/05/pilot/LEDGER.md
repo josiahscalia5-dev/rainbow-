@@ -19,6 +19,8 @@ account-7 key was not reused.
 | 01:35 | `GET /worlds/5fd3d7a7…`, `GET /worlds/c0c9dc57…` (free reads) → `*/world_refresh_2026-11-16.json` | 200, both worlds present, assets unchanged except the draft now lists a pano | 5,190 → 5,190 | 1,810 |
 | 01:36 | CDN download of the draft pano → `draft/pano.png` (2304×1152, sha256 `e524cf6c…98d5`) | 200 (free) | 5,190 → 5,190 | 1,810 |
 
+| 17:00–17:35 | Screen 05 feasibility test on the two EXISTING worlds (local files only: splats, pano; `qa/pilot05/marble_feas/`) — no API call (the API host was refused by this session's network policy anyway) | local | 5,190 (last verified 01:35) → unchanged | 1,810 |
+
 **Balance reported by the API at hand-off: 5,190 credits (re-read 01:35 UTC by the transfer session). Spent 1,810 of the 6,250-credit (US$5) cap.
 Remaining approved budget: 4,440 credits.** Not yet bought: HQ mesh export (3,500 credits, US$2.80) — only if
 it materially helps the playable game; ask the user first.

@@ -2,6 +2,16 @@
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
 
+## ▶ NEWEST (2026-11-16 ~17:35 UTC, session `012NR93Q…`, branch `ccr-e546a360-cxmton`) — Marble feasibility test DONE
+User asked: inspect the two existing Marble worlds; can Marble reproduce the approved river's exact S-curve geometry and
+perspective? Marble = 3D reconstruction only, Blender camera projection + the original artwork for the look; one full-size
+camera-locked comparison BEFORE any credits; game untouched; separate branch. Result: `qa/pilot05/marble_feas/NOTES.md`
+(perspective yes from Marble's input camera; exact geometry no — far collapse, rising far river, invented near half;
+recommendation: no new world, project onto the game's own river mesh instead). Pictures `qa/pilot05/marble_feas/compare/`.
+No credits, no API call. Specialist 1 (game-mesh projection) is still INTERRUPTED — relaunch only when the user wants it.
+`api.worldlabs.ai` is refused by the `rainbow-` environment's network policy and the environment holds no World Labs key
+(only needed for an approved paid job; then `request_credential`, which also allows the host).
+
 ## ▶ NEWEST — URGENT BACKUP during the Screen 05 water-PROJECTION experiment (2026-11-16 ~15:50–16:00 UTC) — READ THIS FIRST
 Rainbow is an EXISTING game. Do not start a new one. This section wins over everything below.
 
