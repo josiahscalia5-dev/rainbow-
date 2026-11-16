@@ -10,8 +10,9 @@ untouched (verified pixel-identical, below). Nothing here is promoted: the user 
 | `?projwall05=1` | purple perforated walls, one atlas row per bay AB…GX | `assets/textures/tunnel05/wall05.png` | `tools/proj05/tunnel_rings.py` → `tunnel_bake.py` |
 | `?projring05=1` | gold rings (approved ring B band on every 05 ring) | `assets/textures/tunnel05/ring05.png` | `tunnel_bake.py` |
 | `?projframe05=1` | near gold frame: bottom corners + bottom lip (`tube05_near_frame`) | `assets/textures/tunnel05/frame05.png` | `tools/proj05/frame_bake.py` |
+| `?projlid05=1` | the 6 wall paddles L1 L2 L3 / R1 R2 R3 as Blender-built trays (default pucks + far pucks off) | `assets/models/lids05.glb` (texture `lid05.png` inside) | `lid_mesh2d.py` → `scripts/proj05-lid-raycast.mjs` → Blender `lid_blender.py` |
 
-Full test URL: `?proj05=1&projwall05=1&projring05=1&projframe05=1`. Shader wrappers: `src/vfx/proj05Tunnel.ts`.
+Full test URL: `?proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1`. Shader wrappers: `src/vfx/proj05Tunnel.ts`.
 
 ## Colour feedback (bloom spill the shader cannot undo)
 * Walls / rings: `tools/proj05/tunnel_residual.py <capture> <tunnel_coords_all.f32> assets/textures/tunnel05 qa/pilot05/proj/tunnel/model/correction.npz`
@@ -57,7 +58,39 @@ user rule), so per-pixel error there is mostly position, not colour.
 * `node scripts/gameplay-test.mjs --q='proj05=1&projwall05=1&projring05=1&projframe05=1'` → all 8 checks pass
   (`frame/tests/gameplay_projframe05.json`); `npm run test:continuity` OK; `tsc` OK.
 
-## Remaining (next, one factor at a time)
+## `?projlid05=1` — the paddles, built in Blender (2026-11-16 ~21:45 UTC)
+User: "they're facing the wrong way … they're down, not up … different texture". At 4× zoom the approved paddle is a
+D-shaped gold TRAY seen from below: thick polished rim on top, lavender underside, straight lip low. The default 'slab'
+pucks sit at eye level so the camera sees their tops. Blind fitting of a lathe lid (`scripts/proj05-lid-fit.mjs`,
+`lid/fit.json`) could not reproduce the painted shape (the painting draws them longer than real perspective allows), so
+the Blender camera-projection method was used instead:
+1. `python3 -I tools/proj05/lid_mesh2d.py` — each approved outline (tunnel_common.LIDS) as a 2D triangle mesh (4 px).
+2. `node scripts/proj05-lid-raycast.mjs` — every vertex lifted onto the REAL 05 wall through the REAL locked 05 camera
+   (L2 / R2 deep ends and L3 / R3 on the forced-perspective far wall).
+3. `blender -b --factory-startup -P tools/proj05/lid_blender.py -- qa/pilot05/proj/tunnel/lid assets/textures/tunnel05/lid05.png 58,311,864,532 assets/models/lids05.glb 0.35`
+   — trays: back 0.02 u off the wall, front 0.35 u (radially) closer to the axis along the same camera rays, sides along
+   the rays → from the checkpoint the outline is exactly the approved one, riding on they show real depth; UVs = the
+   approved pixels (camera projection). Saves `lid/lids05.blend` (game camera + approved picture as its background).
+4. The game loads the GLB under the switch (`src/vfx/proj05Tunnel.ts` lids05Group) and shows the texels through pjInverse.
+
+| vs approved | before (`projframe05`) | `projlid05` |
+|---|---|---|
+| LID region mean abs / within 10 / SSIM | 62.6 / 2.2 % / 0.195 | **19.3 / 74.3 % / 0.731** |
+| TUNNEL within 20 | 29.0 % | 33.8 % |
+| FRAME (below HUD) mean abs / within 20 | 32.2 / 55.0 % | 31.1 / 56.8 % |
+| FULL screen mean abs / within 20 | 35.9 / 49.7 % | 34.8 / 51.2 % |
+
+Motion: `node scripts/proj05-move.mjs --q=… --at=0,6,14` → `lid/move/` (paddles stay solid trays on the walls).
+Checks: default 0 px changed, protected BEFORE 0 px, `projframe05` result 0 px; gameplay 8/8 (`lid/tests/`); continuity OK.
+Known: the game's ring A band covers the left end of L1 (ring position differs from the painting; rings not moved);
+the trays are static on the far wall, so L3 / R3 do not follow the far section's "open" morph near the end of 05.
+
+## Next
+1. Water in motion: the approved swirl smears as Benny rides on (motion frames `lid/move/move_14.png`) → Specialist 2's
+   `?projflow05=1` (flow the SAME approved design down the S-curves).
+2. Ring A position vs L1; river-bank apron edges; Benny (fur, hat); splash.
+
+## Remaining before the paddles (kept for the record)
 1. LID / side fittings: still flat salmon-orange, approved is polished copper-gold (62.6 levels) → `?projlid05=1`.
 2. River-bank apron of `?proj05=1` (`src/vfx/proj05Apron.ts`, `proj05_A.png`): hard jagged polygon edge with stray
    speckles on the wall above both banks; now clashes with the projected wall perforations.

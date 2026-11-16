@@ -87,7 +87,7 @@ kept only when clearly closer; never the oval / enlarged "big tunnel" (`qa/pilot
 Current default = **T2** (front ring A at 20 u + near tunnel 2 u lower, promoted 2026-11-16 under the user's rule
 "only if genuinely closer"; picture `qa/pilot05/current_default_05.png`) — **PROVISIONAL until the user approves the
 visual result** (user, 2026-11-16 ~11:50). Candidates waiting for the user: W2 `?wall05=1`, G1b `?gold05=1`, W10 `?water05=1`, S1 `?fars05=1`, W11 `?river05=1`
-(user: "too grainy"), **tunnel bake `?projwall05=1&projring05=1&projframe05=1`** (walls, rings, near gold frame; with `proj05=1`;
+(user: "too grainy"), **tunnel bake `?projwall05=1&projring05=1&projframe05=1&projlid05=1`** (walls, rings, near gold frame, Blender paddles; with `proj05=1`;
 `qa/pilot05/proj/tunnel/NOTES.md`, 2026-11-16 ~20:50), **P1 `?proj05=1`** (the approved water itself baked onto the game river; `qa/pilot05/proj/NOTES.md`, 2026-11-16 ~18:45), **W12 `?silk05=1&puff05=1`** (newest water: smooth long streaks, deep cyan, bubbly foam banks;
 `qa/pilot05/wave12/NOTES.md`; experiment APK via `VITE_RAINBOW_Q05`). The user's **BEFORE stays protected**:
 `?ringa=26&nearfloor05=0` reproduces `qa/pilot05/wave9/baseline/05.png` pixel-for-pixel (`claude-bootstrap.sh --full`
