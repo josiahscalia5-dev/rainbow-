@@ -358,17 +358,23 @@ step_tests() {
     drop="$(python3 -I -c 'import json; d=json.load(open("qa/gameplay_test.json")); p=d.get("plunge") or {}; print(p.get("verticalDrop", p) if isinstance(p,dict) else p)' 2>/dev/null)"
     rec gameplay "Browser gameplay test" ok "pass: all checks (coins, hearts, pause, steering, no camera cut, victory), 07->08 plunge $drop, errors []" "$t"
   else rec gameplay "Browser gameplay test" fail "node scripts/gameplay-test.mjs failed (backups/.live/gameplay.log)" "$t"; fi
+  # Screen 05: the default build must equal the current accepted picture (qa/pilot05/current_default_05.png),
+  # and the user's protected BEFORE must still be reproducible through its URL switches
+  local cur=qa/pilot05/current_default_05.png before=qa/pilot05/wave9/baseline/05.png bq="ringa=26&nearfloor05=0" d1 d2
   t=$(now)
-  rm -rf "$LIVE/capture05"
-  if timeout 600 node scripts/capture.mjs 05 --out="$LIVE/capture05" > "$LIVE/capture05.log" 2>&1 && [ -f "$LIVE/capture05/05.png" ]; then
-    out="$(python3 -I -c 'import sys; from PIL import Image, ImageChops
-a=Image.open(sys.argv[1]).convert("RGB"); b=Image.open(sys.argv[2]).convert("RGB")
-print("size" if a.size!=b.size else max(c[1] for c in ImageChops.difference(a,b).getextrema()))' "$LIVE/capture05/05.png" qa/pilot05/wave9/baseline/05.png 2>/dev/null)"
+  rm -rf "$LIVE/capture05" "$LIVE/capture05b"
+  if timeout 600 node scripts/capture.mjs 05 --out="$LIVE/capture05" > "$LIVE/capture05.log" 2>&1 && [ -f "$LIVE/capture05/05.png" ] \
+     && timeout 600 node scripts/capture.mjs 05 --out="$LIVE/capture05b" "--q=$bq" >> "$LIVE/capture05.log" 2>&1 && [ -f "$LIVE/capture05b/05.png" ]; then
     git checkout -q -- qa/capture_log.json 2>/dev/null   # capture log is regenerated: keep the committed one
-    if [ "$out" = 0 ]; then rec screen05 "Screen 05 = accepted BEFORE" ok "fresh capture pixel-identical to qa/pilot05/wave9/baseline/05.png (max diff 0)" "$t"
-    else rec screen05 "Screen 05 = accepted BEFORE" warn "fresh capture differs from the BEFORE baseline (max channel diff $out) - check before any new test" "$t"; fi
-  else rec screen05 "Screen 05 = accepted BEFORE" fail "capture failed (backups/.live/capture05.log)" "$t"; fi
+    d1="$(maxdiff "$LIVE/capture05/05.png" "$cur")"; d2="$(maxdiff "$LIVE/capture05b/05.png" "$before")"
+    if [ "$d1" = 0 ] && [ "$d2" = 0 ]; then
+      rec screen05 "Screen 05 default + BEFORE" ok "default capture pixel-identical to $cur; BEFORE (?$bq) pixel-identical to $before" "$t"
+    else rec screen05 "Screen 05 default + BEFORE" warn "max diff default vs $cur = $d1, BEFORE switch vs $before = $d2 - check before any new test" "$t"; fi
+  else rec screen05 "Screen 05 default + BEFORE" fail "capture failed (backups/.live/capture05.log)" "$t"; fi
 }
+maxdiff() { python3 -I -c 'import sys; from PIL import Image, ImageChops
+a=Image.open(sys.argv[1]).convert("RGB"); b=Image.open(sys.argv[2]).convert("RGB")
+print("size" if a.size!=b.size else max(c[1] for c in ImageChops.difference(a,b).getextrema()))' "$1" "$2" 2>/dev/null; }
 
 step_autosave() {
   local t out rc; t=$(now)

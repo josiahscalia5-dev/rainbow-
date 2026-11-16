@@ -88,6 +88,24 @@ axis. Ring fits (`qa/pilot05/wave9b/T2/rings_*.json`, dy/r = centre below VP ÷ 
 * Code removed from the game; patch `not_merged/T2_nearfloor05_REJECTED.patch`; full-size picture
   `T2/05_APPROVED_BEFORE_T2best_fullsize.png`. **User 2026-11-16 ~11:20: no more endless tunnel positioning.**
 
+## T2 on top of T1 — PROMOTED to the default (2026-11-16 ~11:45 UTC, user: "keep T1 as a saved experiment …
+## perform T2 … only promote T2 if it is genuinely closer")
+T2 = T1 (ring A at 20 u) + the near tunnel lowered up to ring A (blends back before ring B), tested at 0 / 1.2 /
+1.6 / 2.0 / 2.4 u (`T2b/rings.json`, `T2b/approved_before_T1_T2variants.jpg`, `T2b/upper_right_arc_comparison.jpg`):
+| ring A | centre | r | top y | meets right edge at y |
+|---|---|---|---|---|
+| APPROVED | (474, 529) | 492 | 37 | 229 |
+| BEFORE | (505, 426) | 374 | 52 | 321 |
+| T1 | (486, 414) | 460 | −46 | 153 |
+| **T2 2.0 u (promoted)** | (502, 478) | 433 | 45 | 241 |
+| T2 2.4 u | (505, 503) | 430 | 73 | 266 |
+Rings B, C, D identical to BEFORE in every variant; camera, river (course), Benny untouched; 06 and 07 captures
+pixel-identical; 04 changes only 672 px (the 05 wall seen through the 04 exit); gameplay test 8/8 pass, plunge 61.41;
+continuity OK. Default now = `RING_A05_DEPTH` 20 + `NEAR_FLOOR05` 2.0; **BEFORE = `?ringa=26&nearfloor05=0`, verified
+pixel-identical to `wave9/baseline/05.png`**. Current default picture: `qa/pilot05/current_default_05.png`. Separate
+full-size screenshots: `T2b/1_APPROVED_05.png`, `T2b/2_BEFORE_05.png`, `T2b/3_T2_05.png`. Remaining ring-A gap:
+radius −12 %, centre 51 px above the approved. No further tunnel-position tests (user).
+
 ## Biggest visible differences (user priority order, measured by `tools/qa/diff05.py` → `wave9b/DIFF05_APPROVED_vs_BEFORE.md`)
 1. Glossy gold rings + PURPLE-metallic tunnel: BEFORE walls too pink (tunnel band pink 50 % vs 37 %), too few white
    light streaks (0.9 % vs 3.8 %), gold packed around the vanishing point (11.7 % vs 4.6 % in the VP band).

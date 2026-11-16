@@ -76,10 +76,14 @@ real-time victory, with `FINAL SPIN COMPLETE`, girl lifts/holds towel while Benn
 Benny) and the ending (girl retrieves the towel) — preserve the video hand-over (`docs/FLOW_VIDEO.md`), make
 intro → gameplay and gameplay → ending seamless, and do NOT spend credits rebuilding 01 / 02 / 11 as detailed 3D
 artwork. Specialists work on the PLAYABLE screens 03–09: Screen 05 first (approved artwork as closely as possible,
-ideally 90–95 %), then 03, 04, 06, 07, 08, 09. Screen 05 visual changes are controlled tests against the user's
-accepted BEFORE baseline (`qa/pilot05/wave9/baseline/05.png`) — one factor at a time, a URL switch, default build
-unchanged, shown approved | BEFORE | NEW, kept only when clearly closer; never the oval / enlarged "big tunnel"
-(`qa/pilot05/COORDINATION_WAVE9B.md`). Show separate full-size comparisons against the approved gameplay screens.
+ideally 90–95 %), then 03, 04, 06, 07, 08, 09. Screen 05 visual changes are controlled tests — one factor at a
+time, a URL switch, default build unchanged, shown approved | BEFORE | NEW as separate full-size pictures (no grid),
+kept only when clearly closer; never the oval / enlarged "big tunnel" (`qa/pilot05/COORDINATION_WAVE9B.md`).
+Current default = **T2** (front ring A at 20 u + near tunnel 2 u lower, promoted 2026-11-16 under the user's rule
+"only if genuinely closer"; picture `qa/pilot05/current_default_05.png`). The user's **BEFORE stays protected**:
+`?ringa=26&nearfloor05=0` reproduces `qa/pilot05/wave9/baseline/05.png` pixel-for-pixel (`claude-bootstrap.sh --full`
+checks both). No more tunnel-position experiments (user, 2026-11-16): next are the rings' polished gold, the purple
+metal walls, the thick cyan-and-pink S-river and premium lighting. Report branch + commit SHA at major checkpoints.
 
 Real 3D interactive mobile portrait gameplay; 01–02 real-time cinematics; 03–10 interactive ride; 11 victory
 cinematic. No wallpaper/collage/slideshow/video as interactive substitute. Water must run along contiguous spline

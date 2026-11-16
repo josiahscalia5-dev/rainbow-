@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 8341,
-   "sha256": "fd1524a4ad9732b9c2fed503bb5a5c74eb52da1a24855cb23f249e74008b9919"
+   "bytes": 8803,
+   "sha256": "2df39f68318c217396a107f3ee28432df4f052bf199e36b49efda548493b4c68"
   },
   {
    "path": "README_FIRST.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "a18934b9707dd9175cf68fe4231faeb9a76008a9a4f31ccbb7663872a51f56a3"
+   "sha256": "fc04532c95322cef39fead8fca9c0bcc8fc0fc3628a4b1a562d2dc2153fc5b77"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -958,8 +958,8 @@
   },
   {
    "path": "qa/pilot05/COORDINATION_WAVE9B.md",
-   "bytes": 10324,
-   "sha256": "28307bf98ff2b94e5cbc58bb650b2ac9b71ed869cb109d55c7734d1654746d9a"
+   "bytes": 11699,
+   "sha256": "71f10ae2a1e1409f2186af52d74083644688c584ba774030372d4fdec288a44b"
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
@@ -1010,6 +1010,11 @@
    "path": "qa/pilot05/camera/iter01/05.png",
    "bytes": 1552953,
    "sha256": "d0b6f86643475fe6556b5e18a655713cdfbb1b3c4a17ef391fb77facb73b265a"
+  },
+  {
+   "path": "qa/pilot05/current_default_05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
   },
   {
    "path": "qa/pilot05/environment/base_others/03.png",
@@ -5072,6 +5077,36 @@
    "sha256": "4597b8ff81ecec7d9596fd320095fc0119a756093264fa478211ca561eb549f3"
   },
   {
+   "path": "qa/pilot05/wave9b/T2b/1_APPROVED_05.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T2b/2_BEFORE_05.png",
+   "bytes": 1750841,
+   "sha256": "dc8155f9ac7bccd80601245de6344de821ba9c966d89734da2236cb980bb1c07"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T2b/3_T2_05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T2b/approved_before_T1_T2variants.jpg",
+   "bytes": 678484,
+   "sha256": "a6b9089c36504076c5b440df8cd12ef27610e7d794acd834553d66ffe38f17cc"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T2b/rings.json",
+   "bytes": 4054,
+   "sha256": "a29fc7238e74a853d522a11aaaacd4c69b9b774bdd6303a528b5e2252252467e"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T2b/upper_right_arc_comparison.jpg",
+   "bytes": 419280,
+   "sha256": "a87d7924e806c7bcb46edfd1c4ba6dc6676eb9d5b6d6ea109eef0bf65c583a1a"
+  },
+  {
    "path": "qa/pilot05/wave9b/W2/05_APPROVED_BEFORE_W2_fullsize.png",
    "bytes": 5162990,
    "sha256": "2be99cdbf35ea95ceb3967a5041509c9cfac3a3793564f5e57ebb38cf63c4b69"
@@ -5748,8 +5783,8 @@
   },
   {
    "path": "scripts/claude-bootstrap.sh",
-   "bytes": 29558,
-   "sha256": "bc54c111e6c9f98202a323db5ad502376bf7918ec07644fbd2950e2adbe3d872"
+   "bytes": 30119,
+   "sha256": "ec3d99fa255dab72b6232dc426d480328957b6cc94634bb03ba5b9a75ef086c7"
   },
   {
    "path": "scripts/cloud-env-setup.sh",

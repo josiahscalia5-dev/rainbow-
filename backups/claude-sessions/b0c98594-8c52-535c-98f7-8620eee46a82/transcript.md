@@ -3748,3 +3748,94 @@ Screens 06 and 07 are pixel-identical. On 04, 0.05 % of the pixels changed. Let 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\np = \"src/world/environment.ts\"; s = open(p).read()\nrep = [\n (\"  // ring B onward, the far block, camera, river and gameplay are untouched. Default 0 = BEFORE (pixel-identical).\\n\",\n  \"  // ring B onward, the far block, camera, river and gameplay are untouched.\\n\"\n  \"  // PROMOTED 2026-11-16 ~11:45 UTC together with T1 (user: \\\"only promote T2 if it is genuinely closer\\\"): default 2.0 u\\n\"\n  \"  // with ring A at 20 u = ring A centre (502,478) r 433 vs approved (474,529) r 492 (BEFORE (505,426) r 374), its arc\\n\"\n  …[+1617 chars]`
 
+### 🧑 User — 2026-11-16T11:37:30.675Z
+
+> ↩︎ result: edited
+> TSC_OK
+> new default vs T2 2.0 test capture: max diff 0
+> ?ringa=26&nearfloor05=0 vs BEFORE baseline: max diff 0
+
+### 🤖 Claude — 2026-11-16T11:37:33.600Z
+
+Both verified: the new default is exactly the T2 picture, and `?ringa=26&nearfloor05=0` reproduces BEFORE pixel-for-pixel. Now the gameplay test on the promoted default, plus continuity:
+
+### 🤖 Claude — 2026-11-16T11:37:35.853Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 900 node scripts/gameplay-test.mjs > /dev/null 2>&1; python3 -I -c \"import json; d=json.load(open('qa/gameplay_test.json')); print('gameplay pass:', d['pass'], '| checks:', {k: v['pass'] for k, v in d['checks'].items()}, '| plunge:', (d.get('plunge') or {}).get('verticalDrop'))\"; npm run -s test:continuity > /dev/null 2>&1; python3 -I -c \"import json; d=json.load(open('qa/continuity_report.json')); print('continuity ok:', d['ok'], 'drop', round(d['plunge']['verticalDrop'],2))\"", "description": "Run gameplay and continuity tests on the promoted d …[+28 chars]`
+
+### 🧑 User — 2026-11-16T11:37:44.970Z
+
+> ↩︎ result: gameplay pass: True | checks: {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True} | plunge: 61.41
+> continuity ok: True drop 61.19
+
+### 🤖 Claude — 2026-11-16T11:37:57.646Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b; D=qa/pilot05/wave9b/T2b; mkdir -p $D; cp references/05_flow_into_the_current.png $D/1_APPROVED_05.png; cp qa/pilot05/wave9/baseline/05.png $D/2_BEFORE_05.png; cp $S/prom_default/05.png $D/3_T2_05.png; cp $S/prom_default/05.png qa/pilot05/current_default_05.png; cp $S/fit/rings.json $D/rings.json; cp $S/six.jpg $D/approved_before_T1_T2variants.jpg; cp $S/upright.jpg $D/upper_right_arc_comparison.jpg; cmp -s $D/1_APPROVED_05.png references/05_flow_into_the_current.png &&  …[+295 chars]`
+
+### 🧑 User — 2026-11-16T11:37:57.718Z
+
+> ↩︎ result: approved copy identical
+> refs 12/12 OK
+> 366:print("size" if a.size!=b.size else max(c[1] for c in ImageChops.difference(a,b).getextrema()))' "$LIVE/capture05/05.png" qa/pilot05/wave9/baseline/05.png 2>/dev/null)"
+> 368:    if [ "$out" = 0 ]; then rec screen05 "Screen 05 = accepted BEFORE" ok "fresh capture pixel-identical to qa/pilot05/wave9/baseline/05.png (max diff 0)" "$t"
+> 369:    else rec screen05 "Screen 05 = accepted BEFORE" warn "fresh capture differs from the BEFORE baseline (max channel diff $out) - check before any new test" "$t"; fi
+> 370:  else rec screen05 "Screen 05 = accepted BEFORE" fail "capture failed (backups/.live/capture05.log)" "$t"; fi
+
+### 🤖 Claude — 2026-11-16T11:38:02.071Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "offset": 360, "limit": 12}`
+
+### 🧑 User — 2026-11-16T11:38:02.094Z
+
+> ↩︎ result: 360	  else rec gameplay "Browser gameplay test" fail "node scripts/gameplay-test.mjs failed (backups/.live/gameplay.log)" "$t"; fi
+> 361	  t=$(now)
+> 362	  rm -rf "$LIVE/capture05"
+> 363	  if timeout 600 node scripts/capture.mjs 05 --out="$LIVE/capture05" > "$LIVE/capture05.log" 2>&1 && [ -f "$LIVE/capture05/05.png" ]; then
+> 364	    out="$(python3 -I -c 'import sys; from PIL import Image, ImageChops
+> 365	a=Image.open(sys.argv[1]).convert("RGB"); b=Image.open(sys.argv[2]).convert("RGB")
+> 366	print("size" if a.size!=b.size else max(c[1] for c in ImageChops.difference(a,b).getextrema()))' "$LIVE/capture05/05.png" qa/pilot05/wave9/baseline/05.png 2>/dev/null)"
+> 367	    git checkout -q -- qa/capture_log.json 2>/dev/null   # capture log is regenerated: keep the committed one
+> 368	    if [ "$out" = 0 ]; then rec screen05 "Screen 05 = accepted BEFORE" ok "fresh capture pixel-identical to qa/pilot05/wave9/baseline/05.png (max diff 0)" "$t"
+> 369	    else rec screen05 "Screen 05 = accepted BEFORE" warn "fresh capture differs from the BEFORE baseline (max channel diff $out) - check before any new test" "$t"; fi
+> 370	  else rec screen05 "Screen 05 = accepted BEFORE" fail "capture failed (backups/.live/captu …[+25 chars]
+
+### 🤖 Claude — 2026-11-16T11:38:15.656Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "old_string": "  t=$(now)\n  rm -rf \"$LIVE/capture05\"\n  if timeout 600 node scripts/capture.mjs 05 --out=\"$LIVE/capture05\" > \"$LIVE/capture05.log\" 2>&1 && [ -f \"$LIVE/capture05/05.png\" ]; then\n    out=\"$(python3 -I -c 'import sys; from PIL import Image, ImageChops\na=Image.open(sys.argv[1]).convert(\"RGB\"); b=Image.open(sys.argv[2]).convert(\"RGB\")\nprint(\"size\" if a.size!=b.size else max(c[1] for c in ImageChops.difference(a,b).getextrema()))' \"$LIVE/capture05/05.png\" qa/pilot05/wave9/basel …[+2312 chars]`
+
+### 🧑 User — 2026-11-16T11:38:15.719Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/claude-bootstrap.sh has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:38:16.508Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; bash -n scripts/claude-bootstrap.sh && shellcheck -S warning scripts/claude-bootstrap.sh && echo CLEAN", "description": "Lint the updated bootstrap"}`
+
+### 🧑 User — 2026-11-16T11:38:17.406Z
+
+> ↩︎ result: CLEAN
+
+### 🤖 Claude — 2026-11-16T11:38:22.048Z
+
+Now `CLAUDE.md` and the Screen 05 brief, so every future session knows the promoted T2 is the default and BEFORE is the protected fallback:
+
+### 🤖 Claude — 2026-11-16T11:38:26.996Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "ideally 90–95 %), then 03, 04, 06, 07, 08, 09. Screen 05 visual changes are controlled tests against the user's\naccepted BEFORE baseline (`qa/pilot05/wave9/baseline/05.png`) — one factor at a time, a URL switch, default build\nunchanged, shown approved | BEFORE | NEW, kept only when clearly closer; never the oval / enlarged \"big tunnel\"\n(`qa/pilot05/COORDINATION_WAVE9B.md`). Show separate full-size comparisons against the approved gameplay screens.", "new_string": "ideally 90–95 %), then 03, 04, 06, 07, 08, …[+884 chars]`
+
+### 🧑 User — 2026-11-16T11:38:27.041Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:38:33.647Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9B.md", "old_string": "## Biggest visible differences (user priority order", "new_string": "## T2 on top of T1 — PROMOTED to the default (2026-11-16 ~11:45 UTC, user: \"keep T1 as a saved experiment …\n## perform T2 … only promote T2 if it is genuinely closer\")\nT2 = T1 (ring A at 20 u) + the near tunnel lowered up to ring A (blends back before ring B), tested at 0 / 1.2 /\n1.6 / 2.0 / 2.4 u (`T2b/rings.json`, `T2b/approved_before_T1_T2variants.jpg`, `T2b/upper_right_arc_comparison.jpg`):\n| ring A | centre | …[+1015 chars]`
+
+### 🧑 User — 2026-11-16T11:38:33.689Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9B.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:38:36.549Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 scripts/rainbow-autosave.py --reason \"manual:screen05-T2-promoted\" --message \"Screen 05: promote T2 (front ring A 20 u + near tunnel 2 u lower); BEFORE kept via ?ringa=26&nearfloor05=0\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"'; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1); echo \"local  $L\"; echo \"remote $R\"; [ \"$L\" = \"$R\" ] && echo \"REMOTE == LOCAL\"; python3 -I scripts/autosave-status.py | head -2", "description": "Checkpoint save of the T2 promotion and verify  …[+11 chars]`
+
