@@ -596,4 +596,315 @@ For each approved surface:
 
 For the tunnel, rings, a
 
-[— the message ends here: cut off in transmission —]
+[— the first message ended here, cut off in transmission; the user then sent the continuation below (received
+2026-11-16 ~19:45 UTC): "CLAUDIA — CONTINUATION OF MY FINAL MASTER COMMAND / SCREEN 05 — PARTS 14 THROUGH 22 / THIS
+CONTINUES MY PREVIOUS MESSAGE. DO NOT TREAT IT AS A NEW OR SEPARATE PROJECT." —]
+
+For the tunnel, rings, and metal details, use calibrated texture projection, baked material maps, or controlled 3D rendering where that achieves better fidelity.
+
+Reuse the actual approved artwork wherever it helps.
+
+If procedural reconstruction cannot reproduce a stationary visual detail accurately, investigate 2.5D camera-projected detail layers attached to legitimate 3D geometry.
+
+But:
+
+DO NOT turn Screen 05 into a single static wallpaper, a video, or a slideshow.
+
+The result must remain real, depth-correct, playable Three.js gameplay.
+
+Do not permit foreground layers to cover interactive objects incorrectly.
+
+Do not use texture projection in a way that looks correct only in one screenshot but visibly tears when Benny moves.
+
+Prioritize the approved gameplay-camera appearance over unnecessary artistic redesign.
+
+---
+
+PART 15 — EXECUTION ORDER
+
+Carry out the corrections in this order:
+
+PHASE A — COMPLETE VISUAL AUDIT
+
+Take the approved artwork and latest game render at the exact same 864 × 1536 resolution, camera, seed, checkpoint and rendering conditions.
+
+Produce a comprehensive discrepancy report covering every major object and effect described above.
+
+Identify which 3–5 mismatches create the largest visible whole-screen differences.
+
+Do not stop at the audit. Immediately use it to guide implementation.
+
+PHASE B — GOLDEN RINGS AND PURPLE TUNNEL
+
+Correct gold materials, purple metal, rings, perforations, side fittings, reflections, geometry appearance and tunnel depth.
+
+Preserve the improved water.
+
+PHASE C — FOREGROUND RING AND WATER EDGES
+
+Correct the front ring's visible silhouette only if it improves the full picture.
+
+Preserve the improved reference-projected water and far-bank foam.
+
+Remove visible seams and problematic occlusions.
+
+PHASE D — BENNY AND SPLASH
+
+Match the character silhouette, knit detail, hat, pom-pom, fur, body position and water wake.
+
+PHASE E — COINS AND BUBBLES
+
+Match exact approved checkpoint positions, sizes, lighting and appearance.
+
+Keep these as functional game elements where applicable.
+
+PHASE F — FINAL LIGHTING AND HUD
+
+Correct remaining color-processing differences, gold-to-purple balance, composition, typography and overlay alignment.
+
+PHASE G — WHOLE-SCREEN REFINEMENT
+
+Perform final measured reference-matching passes against the complete screen.
+
+Each pass must target an identified mismatch and show actual improvement.
+
+Do not run unlimited blind parameter sweeps.
+
+Do not declare the task finished because one measurement reaches 95%.
+
+---
+
+PART 16 — MANDATORY FULL-SCREEN QUALITY MEASUREMENT
+
+Create comparison masks for at least:
+
+1. Gold rings and front gold frame.
+2. Purple tunnel walls and perforations.
+3. Metallic side fittings.
+4. Water.
+5. Foam banks.
+6. Benny and his hat.
+7. Benny's wake and splash.
+8. Coins.
+9. Bubbles.
+10. HUD and text.
+11. Distant tunnel and end glow.
+12. The entire composite frame.
+
+Record:
+
+- Screen-space alignment.
+- Object boundary and silhouette differences.
+- Pixel color error.
+- Percentage of pixels within 10 and 20 RGB levels.
+- Structural similarity (SSIM), where appropriate.
+- Missing or incorrectly covered pixels.
+- Major mismatched shapes.
+- Color contamination from lighting.
+- Clearly visible artifacts.
+
+Also calculate whole-frame comparison metrics.
+
+Never confuse a water-only measurement with whole-screen similarity.
+
+Never present "pixels within 20 color levels" as though it were a universal visual quality percentage.
+
+The 95% goal is an aspiration for the complete visual result, not permission to manipulate masks, exclude difficult regions, or redefine what counts.
+
+Report all exclusions clearly.
+
+---
+
+PART 17 — MANDATORY VISUAL PROOF
+
+I do not want tiny collages as the main proof.
+
+Show these as FOUR SEPARATE, FULL-SIZE, CLEARLY LABELED IMAGES:
+
+IMAGE 1 — ORIGINAL APPROVED SCREEN 05
+
+The original image, unchanged.
+
+IMAGE 2 — BEFORE
+
+The actual latest playable game capture before these full-screen corrections, with "?proj05=1".
+
+IMAGE 3 — NEW
+
+The actual rendered result from the same checkpoint, camera and resolution.
+
+IMAGE 4 — DIFFERENCE
+
+A clearly labeled difference visualization showing remaining mismatches, with a short legend.
+
+Also save a transparent 50/50 overlay for alignment inspection.
+
+The approved, before and new screenshots must be direct images from the source or real Three.js render—not AI-generated replacements or screenshots edited to make the result look better.
+
+Do not present crops or grids as substitutes for the full-size proof.
+
+Do not ask me to approve results based only on a technical summary or thumbnail.
+
+---
+
+PART 18 — REAL GAME MOVEMENT
+
+After the locked-camera artwork is visually close, test the scene during gameplay.
+
+Use the same established Screen 05 path and camera system.
+
+Test:
+
+- Stationary checkpoint.
+- Forward movement.
+- Steering left.
+- Steering right.
+- Return to center.
+- Coins passing the camera.
+- Water flowing toward the viewer.
+- Foam passing along the edges.
+- Continuous tunnel rings and metal surfaces.
+- Screen 04 → 05 transition.
+- Screen 05 → 06 transition.
+
+Produce real moving-game captures and short clips.
+
+Benny must not detach from the water.
+
+The tunnel must not transform into an unrelated pink environment during Screen 05 unless that transition is actually part of the approved level sequence.
+
+No broken geometry, sudden texture changes, flat card-like surfaces, missing water, or obvious repeating patterns.
+
+All changes must remain within Screen 05, except unavoidable properly blended boundary views.
+
+The screen must remain playable on Android.
+
+---
+
+PART 19 — BACKUP AND SAFETY RULES
+
+Keep my game safe.
+
+- Do not start a new game.
+- Do not rebuild the repository from scratch.
+- Do not delete earlier assets or completed work.
+- Do not overwrite approved reference images.
+- Do not force-push, reset, rebase or rewrite protected history.
+- Do not merge draft pull request #9 automatically.
+- Do not promote experiments to the default build without my explicit visual approval.
+- Keep the working T2 and original BEFORE versions recoverable.
+- Use reversible Screen-05-only switches.
+- Preserve the existing "?proj05=1" work.
+- Keep the five-minute autosave active while the environment is running.
+- Verify saved commits actually reach GitHub.
+- Confirm Git LFS asset availability.
+- Preserve the ten existing specialist definitions.
+
+Run reference-hash verification, baseline screenshot regression checks, gameplay tests, continuity tests, and relevant performance tests.
+
+A technical test passing is necessary for safety but is NOT visual approval.
+
+Do not pretend external services or background agents are running if they are not.
+
+---
+
+PART 20 — USE THE AVAILABLE SPECIALISTS CORRECTLY
+
+Reuse the existing project specialists where relevant:
+
+- "reference-match-director": Own the whole-screen reference audit and ensure all visual corrections serve the approved image.
+- "washer-environment-modeler": Gold rings, purple tube geometry, metal panels, fittings and calibrated textures.
+- "water-fx-specialist": Preserve and refine the approved projected water, flow and highlights.
+- "benny-character-artist": Benny, hat, pom-pom, star, fur and silhouette.
+- "foam-bubbles-particles": Foam, approved bubble arrangement and Benny's splash.
+- "playwright-visual-qa": Locked-camera screenshots, masks, overlays, metrics and moving-frame proof.
+- "animation-and-gameplay-engineer" and "android-build-performance": Preserve playable behavior and performance.
+
+Coordinate the specialists so they do not overwrite each other's changes.
+
+Do not recreate specialist definitions that already exist.
+
+If multiple agents cannot run, perform the work sequentially yourself.
+
+---
+
+PART 21 — WHAT I WILL NOT ACCEPT
+
+I will not consider Screen 05 finished because:
+
+- The water metric is high.
+- All eight gameplay tests pass.
+- The tunnel looks generally purple and gold.
+- The result looks attractive but different.
+- A new shader looks more realistic.
+- The scene contains the right categories of objects.
+- Another generated image looks similar.
+- You produced a video instead of gameplay.
+- You achieved a good result only by hiding the regions that differ.
+- You showed tiny comparison images that conceal defects.
+- You reported unverified percentages.
+- You completed one component but ignored the others.
+
+If any major object still differs significantly from the approved image, identify it and continue the targeted correction process.
+
+If an important feature cannot be reproduced accurately, report the exact technical limitation and demonstrate it rather than making promises.
+
+---
+
+PART 22 — EXACT FINAL DELIVERABLES
+
+Save your work under a clearly named folder such as:
+
+"qa/pilot05/full_reference_match/"
+
+Include:
+
+- "01_APPROVED.png"
+- "02_BEFORE.png"
+- "03_NEW.png"
+- "04_DIFFERENCE.png"
+- "05_OVERLAY.png"
+- "VISUAL_AUDIT.md"
+- "REGION_METRICS.json"
+- "FULL_FRAME_METRICS.json"
+- "REMAINING_DIFFERENCES.md"
+- "IMPLEMENTATION_NOTES.md"
+- Moving-game frames and clips
+- Gameplay and continuity test results
+- GitHub branch, full commit SHA and remote-push verification
+
+Use the actual real-game capture script, "scripts/capture.mjs", and the existing projection/QA utilities as appropriate.
+
+Do not create fabricated before-and-after images.
+
+Give me a clear final report explaining:
+
+1. Which parts now match my approved image closely.
+2. Which parts remain different.
+3. What you changed in the actual game.
+4. What the whole-screen measurements say.
+5. Whether Screen 05 still functions properly.
+6. Whether the default and original working versions remain protected.
+7. The exact files and full-size previews I should inspect.
+
+DO NOT MERGE OR PROMOTE ANYTHING UNTIL I APPROVE THE FINAL VISUAL.
+
+---
+
+FINAL INSTRUCTION
+
+This is my final, authoritative specification for Screen 05.
+
+I do not want another generic plan, another unnecessary software recommendation, another Marble reconstruction, or another series of questions about whether I want stricter instructions.
+
+I WANT THE ACTUAL EXISTING GAME SCENE MODIFIED UNTIL IT REPRODUCES MY APPROVED SCREEN 05 AS FAITHFULLY AS POSSIBLE.
+
+Take responsibility for the detailed comparison. Do not expect me to repeatedly point out the same mismatches.
+
+Use my approved artwork as the source of truth.
+
+Make actual changes, verify the improvements, and present full-size evidence.
+
+The completed result must be recognizable as MY EXACT APPROVED SCREEN 05—not Claudia's artistic interpretation of it.
+
+EXECUTE THIS INSTRUCTION. DO THE WORK. PROTECT MY ORIGINAL GAME. SHOW ME THE REAL RESULTS.

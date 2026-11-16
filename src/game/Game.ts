@@ -22,7 +22,7 @@ import { findCinematic, playCinematic } from '../ui/cinematicVideo';
 import { createCoins, COIN_VALUE } from '../gameplay/coins';
 import { createInput } from '../gameplay/input';
 import { RideCamera } from './cameraRig';
-import { flag05 } from '../vfx/waterRibbon';
+import { flag05, on05 } from '../vfx/waterRibbon';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -525,7 +525,16 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
   const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
   const st05 = course.stage('05');
+  // `?proj05=1` / `?match05=1` (`post05`): on Screen 05 the reference-baked surfaces already carry the approved picture's
+  // own glow, and the bloom pass only adds a pink veil over the pure cyan (measured: +10 red on the water) — so the bloom
+  // fades out over the last 6 u of 04 and back in over the first 6 u of 06. Off (default): nothing here runs.
+  const post05 = on05('post05') || on05('proj05');
   const render = () => {
+    if (post05 && !glow05) {
+      const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+      bloom.strength = bloomBase.s * (1 - w);
+      bloom.enabled = bloom.strength > 0.002;
+    }
     if (glow05) {
       const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
       bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
