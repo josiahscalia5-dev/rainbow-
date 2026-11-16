@@ -3414,3 +3414,44 @@ The locked-camera clip came out static. My clock hook only took effect on the ne
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/ride48.png"}`
 
+### 🧑 User — 2026-11-16T18:26:22.984Z
+
+> ↩︎ result: 1
+> still frames 72
+
+### 🧑 User — 2026-11-16T18:26:23.009Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T18:26:23.015Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:26:44.342Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/bake.py'\ns=open(p).read()\nold=\"\"\"covN = gaussian_filter(validN.astype(float), 3.0)\nalphaN = np.clip((covN - 0.35) / 0.5, 0, 1)\"\"\"\nassert old in s\ns=s.replace(old,\"\"\"covN = gaussian_filter(validN.astype(float), 3.0)\nalphaN = np.clip((covN - 0.35) / 0.5, 0, 1)\n# where the locked eye saw the river only at low density (far rows) the near layer would be a blurred copy: the\n# crisp tile takes over there (rows weighted by the locked view's own density, < 6 rows / unit -> 0, > 14 -> 1)\nsrow = sN0 + (np.arange(NN) + 0.5) / dN\nalphaN *=  …[+1327 chars]`
+
+### 🤖 Claude — 2026-11-16T18:26:45.593Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/T_v5.png"}`
+
+### 🧑 User — 2026-11-16T18:26:53.414Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-16T18:26:53.430Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:26:57.004Z
+
+The tile now carries hot-pink S-ribbons on both sides, a glossy cyan core and foam edges. Re-rendering the locked view, the moving frames and the ride clip.
+
+### 🤖 Claude — 2026-11-16T18:27:02.644Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/capture.mjs 05 --q=proj05=1 --out=$SP/cap/final6 2>&1 | grep -c \"→\"; git checkout qa/capture_log.json; python3 -I tools/proj05/frame_metrics.py references/05_flow_into_the_current.png $SP/cap/final6/05.png | python3 -c \"import json,sys; d=json.load(sys.stdin); [print(v['WATER']) for k,v in d.items()]\"; rm -rf $SP/move/proj $SP/clip/clip && node scripts/proj05-move.mjs --q='proj05=1' --out=$SP/move/proj --d=0,2,5,10,20,35,50 2>&1 | grep -c \"^move\"; node scripts/proj05-move.mjs …[+665 chars]`
+
+### 🤖 Claude — 2026-11-16T18:27:03.747Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/sheet_final.png"}`
+

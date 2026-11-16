@@ -140,12 +140,16 @@ realN = validN & ~finish.filled                    # texels that saw real approv
 # fill the remaining (unseen) gaps inside N by a wide normalised blur, but keep them flagged as weak
 covN = gaussian_filter(validN.astype(float), 3.0)
 alphaN = np.clip((covN - 0.35) / 0.5, 0, 1)
+# where the locked eye saw the river only at low density (far rows) the near layer would be a blurred copy: the
+# crisp tile takes over there (rows weighted by the locked view's own density, < 6 rows / unit -> 0, > 14 -> 1)
+srow = sN0 + (np.arange(NN) + 0.5) / dN
+alphaN *= np.clip((np.interp(srow, sg, dens) - 6.0) / 8.0, 0, 1)[:, None]
 
 # ---------------------------------------------------------------- T (periodic tile) layer
-# full-width mid river (s 145-159 is visible bank to bank from the locked eye), as LAYOUT only (the detail layer adds the
-# fine streaks): rows interpolated, invalid texels filled with smooth weights (mirror of the other bank, then the
-# column mean), so there are no hard fill edges; periodic with a 3-unit crossfade at the wrap
-a_s, L, b = 145.0, 14.0, 3.0
+# the crisp near river (s 134-151: hot-pink ribbons and cyan core at high locked density), as LAYOUT (the detail layer
+# adds the fine streaks): rows interpolated; the bank the locked eye does not see is the mirror of the other bank, then
+# the column mean, with smooth weights (no hard fill edges); periodic with a 3-unit crossfade at the wrap
+a_s, L, b = 134.0, 14.0, 3.0
 NT = int(L * dN)
 def rows_at(img, s_):
     y = np.clip((s_ - sN0) * dN - 0.5, 0, NN - 1.001); y0 = np.floor(y).astype(int); f = (y - y0)[:, None]

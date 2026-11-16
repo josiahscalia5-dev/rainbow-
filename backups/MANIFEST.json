@@ -403,18 +403,18 @@
   },
   {
    "path": "assets/textures/water05/proj05_N.png",
-   "bytes": 598880,
-   "sha256": "6b9ba9a390d3862872cce9e5d45ef9e39a71f11da552c03b5fddca28c6429ab4"
+   "bytes": 597571,
+   "sha256": "f948453b49a21004a2470281d1951eabc412932074255ab0c3ebed8fc235bc5b"
   },
   {
    "path": "assets/textures/water05/proj05_T.png",
-   "bytes": 155465,
-   "sha256": "cfb4e01094dd6f511055ec6d5b77a540a3323751e24a400e8b1e87b80a760e2d"
+   "bytes": 176920,
+   "sha256": "e4fca2c2f3d3379fe22d64295c0c1279c2931546e5062983cf30f827b8820c73"
   },
   {
    "path": "assets/textures/water05/proj05_lut.json",
    "bytes": 27351,
-   "sha256": "e25e67119576ba03944da34c51c287db27c86a219a69b32df27523e13115c4e1"
+   "sha256": "30a09d1fdb0e6913083f3cd26ca1fa5f491ff0f5d1bfe4400cb4fd2d8a26d14d"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -439,7 +439,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "eaf7342dc5ba75263a69acd916526568be438d7d4114d02ea500ec3d4b2b1914"
+   "sha256": "6c1f457d8f0451c07dcc3787c6f33c0eea2c62ded28a1b20b877f64c58319610"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1403,8 +1403,8 @@
   },
   {
    "path": "qa/pilot05/proj/clips/proj05_locked_flow_3s.mp4",
-   "bytes": 1065892,
-   "sha256": "02904783e5937307fe95e10ea7fb69e6016b9e700babef283e9ba4e8f799a480"
+   "bytes": 838039,
+   "sha256": "655318040b906e9a888c7768d8e44473af5b27afc7bcbd1adcb6fcfab0c24294"
   },
   {
    "path": "qa/pilot05/proj/clips/proj05_ride_4s.mp4",
@@ -7098,8 +7098,8 @@
   },
   {
    "path": "tools/proj05/bake.py",
-   "bytes": 13582,
-   "sha256": "e8498af0eef27414ff3e08445b97f1e2126bff5064ab1bebf3c9a7b09fb25415"
+   "bytes": 13935,
+   "sha256": "fc6706e684ecc8bce253ea7760aa688be57ae16e4c75e97c31454867b7f345ed"
   },
   {
    "path": "tools/proj05/frame_metrics.py",
