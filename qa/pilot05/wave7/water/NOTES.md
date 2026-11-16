@@ -72,3 +72,35 @@ Changes: lens cells wider (kNw·1.8, density 0.8, 90 px) + 2nd set (kNw·3.1, 0.
 Measured: report mad 55.8 (mid 47.6, near 57.6); near lumStd/p5/p95 28.8/131.3/222.3; cyan y1300 #06A9FF;
 glints near 61 / mid 309. Seen: ≈8 lens flares now in the near field but thin dim slivers (ref: thick bright
 haloed flares); darker lanes visible.
+
+### it06 (FINAL, kept) — 0 console errors, 86 calls, 632,561 tris; LOW_Q 05 capture ok (it06_low, 0 errors)
+Changes: lensFlare thicker core (th·0.6) + wider glow ×0.7; near lenses ×1.6; mid-field lens sparkles `lzM`
+(wq·1.2 × v5·0.5, 30 px) on core and pink, faded by fwidth(s). Measured: report mad 55.4 / hue 0.868 / edge 0.171
+(best of all iterations; mid 47.2, near 56.9); near lumStd/p5/p95 29.6/132.3/225.0; cyan y1300 #12B0FF,
+y1400 #02A3FF; glints near 88 / mid 318. Seen: near water now glossy with ≈10 thick white lens flares, mid core glitters.
+
+| metric (864×1536) | baseline | it06 | ref |
+|---|---|---|---|
+| screen_report mad / hue_corr / edge_corr | 59.0 / 0.809 / 0.117 | 55.4 / 0.868 / 0.171 | — |
+| mad river mid / Benny+near water | 53.0 / 63.8 | 47.2 / 56.9 | — |
+| pink runs y1280 | 61–146, 661–791 (sheets) | ≈154–252, 593–697 (diagonal) | 134–238, 586–669 |
+| pink runs y1440 / y1500 | 0–63, 698–852 / 0–24, 717–863 | sweeps leave the frame at the corners | (gold ring) |
+| pink y1000–1200 beside Benny (left) | x 85–210 (in-glide) | none (bands exit) | none |
+| pink near y1000–1536 | 34.1 % | 19.7 % | 15.1 % |
+| pink behind Benny x245–600 y1200–1360 | 0.0 % | 5.0 % (sweep roots) | 1.84 % |
+| near lumStd / p5 / p95 | 35.8 / 100.3 / 216.7 | 29.6 / 132.3 / 225.0 | 40.0 / 105.7 / 247 |
+| cyan median y1300 / y1400 | #18A1FF / #1A9EFE | #12B0FF / #02A3FF | #01ACF8 / #019AF2 |
+| white glints y1200–1536 / y700–1200 | 62 / 256 | 88 / 318 | 166 / 352 |
+(the tunnel/HUD bands of the report also move with the environment specialist's concurrent edits)
+
+### Ride check 05→06 (scratch ride.mjs, steer 0, frames at s 134/145/160/175/184/187/190/194 + 1-frame pairs)
+`qa/pilot05/wave7/water/ride/` — 0 errors; wake sweeps follow Benny in every 05 frame; 05→06 hand-over continuous;
+pairs at 187/190 show only motion edges (ride_pairs_187_190.png), no layout pop or warp.
+
+### Regression 03 04 06 07 (`qa/pilot05/wave7/water/regress`, 0 console errors)
+vs `qa/pilot05/wave6/regress0408/now`: 06 and 07 pixel-identical below the HUD (0.00 %); 04 1.11 % inside x 303–550,
+y 445–672 = the 05 river seen in the distance through the drum exit (05-gated change, intended: crisper star crosses,
+band shift); 03 (ribbon hidden in the whirlpool) looks normal (contact_03_04_06_07.png). tsc OK.
+Open: near p95 225 vs 247 and glints 88 vs 166 (ref has more/bigger flares); pink-behind-Benny 5.0 % vs 1.84 %
+(sweep roots at y 1240–1280 sit ≈20 px inside the box); far river at the VP (y≈470–560) is the 06 section
+(path-camera owner); gold ring corners (environment).

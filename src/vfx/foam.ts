@@ -527,7 +527,8 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     uTime: { value: 0 },
     uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
-    uSt05: { value: new THREE.Vector4(st05.s0 - 6, st05.s0 - 1, st05.s1 - 1, st05.s1 + 4) },
+    // colour starts at the 05 stage start (not s0 - 6 like the squash) so the 04 frame keeps its own foam colours
+    uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
   });
   const mat = new THREE.ShaderMaterial({
     uniforms,
@@ -609,8 +610,11 @@ export function createFoam(
     const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
     const p = f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
-    list.push({ p, r, ao, tint: rand() * 2 - 1, w5: (1 - k05) / 0.6 });
+    list.push({ p, r, ao, tint: rand() * 2 - 1, w5: soap05W(ss) });
   };
+  const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+  /** 05 soap-shading weight of a puff (same ramp as the berm's uSt05) */
+  const soap05W = (s: number) => smw(st05b.s0 - 1, st05b.s0 + 2, s) * (1 - smw(st05b.s1 - 1, st05b.s1 + 4, s));
   const step = quality === 'high' ? 0.36 : 0.62;
   for (let sa = s0; sa < s1; sa += chunkLen) {
     const sb = Math.min(s1, sa + chunkLen);

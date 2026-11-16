@@ -53,3 +53,9 @@ Tools: `qa/pilot05/wave6/foam/tools/{foamcol,rowprof}.py` (measurements), ref fo
   39.5 / 37.2 (ref 22.8/44.2), Lnear 24.5 / 35.5, Rnear 19.8 / 34.4; mad 55.2. Probe: 672 raft puffs shown, 22 small
   + 19 big bubbles. iso_noberm (waterhide=foamBerm): the pale lavender slope between the right rim puffs and the
   wall (and the wedge at the far end, x 600-650 y 540-600) is the berm's outer slope.
+* it06 (86 calls, 632,561 tris) = FINAL: BERM_FRAG in 05 discards the bank beyond a scalloped cell edge just past
+  its crest (raw e > 0.3 + 0.45 (1 - c1); threshold 9.0 = never outside 05), so the wall shows right above the rim
+  instead of the berm's pale outer slope. Seen: right rim band narrower, purple wall directly above it (x 760-864,
+  y 640-690); left rim unchanged; everything else as it05. foamcol Lfar WHITE 24.5 % SHADE 48.6 %, Rfar 39.5 / 35.0,
+  Lnear 24.6 / 35.7, Rnear 19.8 / 35.7; heapR 21.3 % / max run 129 px (baseline 35.1 % / 160, ref 14.0 % / 65).
+  screen_report mad 59.0 (baseline) -> 54.8 (whole frame; includes the other specialists' concurrent edits).

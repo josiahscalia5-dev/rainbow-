@@ -1751,3 +1751,174 @@ Now add the varying to the fragment shader and bump the small bubble count near 
 
 > 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave7/foam/NOTES.md <<'EOF'\n* it05 (86 calls, 632,561 tris): BANK_ENV re-searched on the gridded ref clump rows (L [58.457, 0.835, 0.581]: 1 for\n  ds -1.45..-0.95 and 0.5..1.5; right near [267.601, 1.094, 0.563]: 1 for ds -1.6..-1.15), right near clump inner\n  214 px / 150 px wide, BANK_PX L 170, near r x1.05, mound lift 0.12. Seen: left near clump x 0-130 y 1010-1110 (ref\n  0-130 / 1020-1110), lower right x 660-820 y 1210-1340 (ref 650-800 / 1260-1330), lower left x 0-170 y 1230-1340\n  (ref 60-230 / 1220-1300; row env 0.76). Best so far. foamcol Lfar WHITE  …[+1049 chars]`
 
+### 🧑 User — 2026-11-16T01:04:16.366Z
+
+> ↩︎ result: 05 → qa/pilot05/wave7/foam/it06/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":632561,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> |---|---|---|---|---|---|---|---|
+> | PREV | 59.0 | 0.809 | 0.117 | 54.4 | 62.6 | 53.0 | 63.8 |
+> | NOW | 54.8 | 0.86 | 0.172 | 55.4 | 61.0 | 47.2 | 56.9 |
+> qa/pilot05/wave7/foam/it06/05.png
+>   Lfar    10946 px  mean RGB [220 224 254]  WHITE  24.5%  SHADE(B-R>=30)  48.6%  lum 232.8
+>   Rfar    23545 px  mean RGB [228 228 254]  WHITE  39.5%  SHADE(B-R>=30)  35.0%  lum 236.7
+>   Lnear   17028 px  mean RGB [219 222 248]  WHITE  24.6%  SHADE(B-R>=30)  35.7%  lum 229.5
+>   Rnear   13957 px  mean RGB [217 220 247]  WHITE  19.8%  SHADE(B-R>=30)  35.7%  lum 227.9
+>   heapR x640-864 y700-1000: foam  21.3%  max vertical run 129 px  mean run(cols with foam) 59 px
+
+### 🤖 Claude — 2026-11-16T01:04:18.752Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it06_far.png"}`
+
+### 🧑 User — 2026-11-16T01:04:18.908Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T01:04:18.901Z
+
+[Image: original 2089x272, displayed at 2000x260. Multiply coordinates by 1.04 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T01:04:23.340Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/it06_r.png 540 510 864 740 1.3 references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it05/05.png qa/pilot05/wave7/foam/it06/05.png && python3 -I $S/crop.py $S/c/it06_l.png 0 520 440 800 1.0 references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it05/05.png qa/pilot05/wave7/foam/it06/05.png", "description": "Zoom right and left rims for it05 vs it06"}`
+
+### 🧑 User — 2026-11-16T01:04:23.844Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:04:26.239Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it06_r.png"}`
+
+### 🧑 User — 2026-11-16T01:04:26.272Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:04:26.858Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it06_l.png"}`
+
+### 🧑 User — 2026-11-16T01:04:26.914Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:04:40.459Z
+
+it06 keeps everything from it05 and additionally shows the purple wall directly above the right rim (narrower pale slope). That is the final state. Now the regression capture of 03 04 06 07 08.
+
+### 🤖 Claude — 2026-11-16T01:04:44.815Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave7/foam/NOTES.md <<'EOF'\n* it06 (86 calls, 632,561 tris) = FINAL: BERM_FRAG in 05 discards the bank beyond a scalloped cell edge just past\n  its crest (raw e > 0.3 + 0.45 (1 - c1); threshold 9.0 = never outside 05), so the wall shows right above the rim\n  instead of the berm's pale outer slope. Seen: right rim band narrower, purple wall directly above it (x 760-864,\n  y 640-690); left rim unchanged; everything else as it05. foamcol Lfar WHITE 24.5 % SHADE 48.6 %, Rfar 39.5 / 35.0,\n  Lnear 24.6 / 35.7, Rnear 19.8 / 35.7; heapR 21.3 % / max run 129 px (base …[+411 chars]`
+
+### 🧑 User — 2026-11-16T01:06:30.769Z
+
+> ↩︎ result: 03 → qa/pilot05/wave7/foam/regress/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":95,"tris":735052,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → qa/pilot05/wave7/foam/regress/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":735140,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/wave7/foam/regress/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":71,"tris":550057,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → qa/pilot05/wave7/foam/regress/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":180,"tris":667575,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 08 → qa/pilot05/wave7/foam/regress/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":159,"tris":617683,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> errors []
+
+### 🤖 Claude — 2026-11-16T01:06:36.086Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/wave6/regress0408/now/ && python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nimport os\nfor n in ['03','04','06','07','08']:\n    a='/home/user/rainbow-/qa/pilot05/wave6/regress0408/now/%s.png'%n; b='/home/user/rainbow-/qa/pilot05/wave7/foam/regress/%s.png'%n\n    if not os.path.exists(a): print(n,'no wave6 ref'); continue\n    A=np.asarray(Image.open(a).convert('RGB')).astype(int); B=np.asarray(Image.open(b).convert('RGB')).astype(int)\n    if A.shape!=B.shape: print(n,'shape',A.shape,B.shape); continue\n    d=np.abs(A-B).max(2); d[:240]=0\n    ys,xs=n …[+222 chars]`
+
+### 🧑 User — 2026-11-16T01:06:36.845Z
+
+> ↩︎ result: 04.png
+> 05.png
+> 06.png
+> 07.png
+> 08.png
+> 03 no wave6 ref
+> 04 diff px (>8) below HUD: 12541 bbox (np.int64(303), np.int64(445), np.int64(550), np.int64(672)) frac 0.009
+> 06 diff px (>8) below HUD: 0 bbox None frac 0.000
+> 07 diff px (>8) below HUD: 0 bbox None frac 0.000
+> 08 diff px (>8) below HUD: 0 bbox None frac 0.000
+
+### 🤖 Claude — 2026-11-16T01:06:41.272Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/r04.png 280 420 580 700 2.0 qa/pilot05/wave6/regress0408/now/04.png qa/pilot05/wave7/foam/regress/04.png", "description": "Zoom the 04 diff region old vs new"}`
+
+### 🧑 User — 2026-11-16T01:06:41.575Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:06:43.707Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/r04.png"}`
+
+### 🧑 User — 2026-11-16T01:06:43.736Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:06:57.033Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nA=np.asarray(Image.open('/home/user/rainbow-/qa/pilot05/wave6/regress0408/now/04.png').convert('RGB')).astype(int)\nB=np.asarray(Image.open('/home/user/rainbow-/qa/pilot05/wave7/foam/regress/04.png').convert('RGB')).astype(int)\nd=np.abs(A-B).max(2); d[:240]=0\nfoamA=(A.min(2)>=170)&(A[...,2]>=200)\nm=(d>8)&foamA\nys,xs=np.nonzero(m)\nprint('diff px on old-foam-coloured px:',m.sum(),'bbox',(xs.min(),ys.min(),xs.max(),ys.max()) if len(ys) else None)\nprint('mean old',A[m].mean(0).round(),'new',B[m].mean(0).round())\nE …[+63 chars]`
+
+### 🧑 User — 2026-11-16T01:06:57.471Z
+
+> ↩︎ result: diff px on old-foam-coloured px: 5875 bbox (np.int64(304), np.int64(448), np.int64(549), np.int64(667))
+> mean old [231. 227. 251.] new [205. 199. 253.]
+
+### 🤖 Claude — 2026-11-16T01:07:11.690Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "    uSt05: { value: new THREE.Vector4(st05.s0 - 6, st05.s0 - 1, st05.s1 - 1, st05.s1 + 4) },", "new_string": "    // colour starts at the 05 stage start (not s0 - 6 like the squash) so the 04 frame keeps its own foam colours\n    uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },"}`
+
+### 🧑 User — 2026-11-16T01:07:11.720Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:07:13.795Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "    list.push({ p, r, ao, tint: rand() * 2 - 1, w5: (1 - k05) / 0.6 });\n  };", "new_string": "    list.push({ p, r, ao, tint: rand() * 2 - 1, w5: soap05W(ss) });\n  };\n  /** 05 soap-shading weight of a puff (same ramp as the berm's uSt05) */\n  const soap05W = (s: number) => smw(st05b.s0 - 1, st05b.s0 + 2, s) * (1 - smw(st05b.s1 - 1, st05b.s1 + 4, s));"}`
+
+### 🧑 User — 2026-11-16T01:07:13.852Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:07:18.399Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  /** 05 soap-shading weight of a puff (same ramp as the berm's uSt05) */\n  const soap05W", "new_string": "  const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };\n  /** 05 soap-shading weight of a puff (same ramp as the berm's uSt05) */\n  const soap05W"}`
+
+### 🧑 User — 2026-11-16T01:07:18.436Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:07:25.535Z
+
+> 🔧 **Bash** `{"command": "timeout 300 npx tsc --noEmit 2>&1 | head && echo TSC_OK && timeout 900 node scripts/capture.mjs 04 05 --out=qa/pilot05/wave7/foam/regress_fix 2>&1 | tail -2 && python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\ndef L(p): return np.asarray(Image.open(p).convert('RGB')).astype(int)\nA=L('/home/user/rainbow-/qa/pilot05/wave6/regress0408/now/04.png'); B=L('/home/user/rainbow-/qa/pilot05/wave7/foam/regress_fix/04.png'); C=L('/home/user/rainbow-/qa/pilot05/wave7/foam/regress/04.png')\nfor nm,X in (('regress',C),('regress_fix',B)):\n    d=np.abs(A-X).max(2); d[:240]=0\n     …[+581 chars]`
+
+### 🧑 User — 2026-11-16T01:08:07.389Z
+
+> ↩︎ result: TSC_OK
+> 04 → qa/pilot05/wave7/foam/regress_fix/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":735140,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → qa/pilot05/wave7/foam/regress_fix/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":632561,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> regress 04 diff px 12541 on old-foam px 5875 mean old [231. 227. 251.] new [205. 199. 253.]
+> regress_fix 04 diff px 12514 on old-foam px 5852 mean old [231. 227. 251.] new [205. 199. 253.]
+> 05 it06 vs regress_fix diff px 0 None
+
+### 🤖 Claude — 2026-11-16T01:08:12.152Z
+
+> 🔧 **Bash** `{"command": "git status --short src/ | head -20 && git diff --stat HEAD -- src/ | tail -12", "description": "Show which source files changed in the tree"}`
+
+### 🧑 User — 2026-11-16T01:08:12.192Z
+
+> ↩︎ result: M src/vfx/foam.ts
+>  src/vfx/foam.ts | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+
+### 🤖 Claude — 2026-11-16T01:08:15.143Z
+
+> 🔧 **Bash** `{"command": "git log --oneline d25db2f..HEAD | wc -l && git diff --stat d25db2f -- src/ | tail -12", "description": "Files changed since the wave 7 start commit"}`
+
+### 🧑 User — 2026-11-16T01:08:15.185Z
+
+> ↩︎ result: 9
+>  src/vfx/bubbles.ts       |  11 ++-
+>  src/vfx/foam.ts          | 192 ++++++++++++++++++++++++++++++++++++---------
+>  src/vfx/glsl.ts          |  30 ++++++-
+>  src/vfx/waterRibbon.ts   | 157 ++++++++++++++++++++++++++-----------
+>  src/world/environment.ts |  37 ++++++---
+>  src/world/materials.ts   | 199 +++++++++++++++++++++++++++++++++++++++++++++--
+>  src/world/tube.ts        |  11 ++-
+>  7 files changed, 528 insertions(+), 109 deletions(-)
+
