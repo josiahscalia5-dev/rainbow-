@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "0a6e9813afefd471dd987f5f523afcbb5cf0c0194f69005688ee54e3c872d950"
+   "sha256": "8bd49708fa8f7dbc747ec4414ddc2db0998dc0db27a3e4f9f0f96941012f678e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -5963,13 +5963,13 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 30552,
-   "sha256": "8e94e4f94a0ea00aa5862fb74b23c4ffb0c82161ef68090dd1ecf8050efd13d5"
+   "bytes": 29605,
+   "sha256": "d1957d911bf2091e6b4ff13f3dca4e568ae0fc836e0fccdc6b254ea29aaab0af"
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 51276,
-   "sha256": "0a2ae4ac7f06fb8334daa2a0acc75052027ac4bcced2958e95a51fff46c460da"
+   "bytes": 52567,
+   "sha256": "0f77f72df7228bb3a7f3ec765fae01b46abfdcda0b45f68e43699be2236e64b2"
   },
   {
    "path": "src/world/far05.ts",
@@ -5993,8 +5993,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 39856,
-   "sha256": "7698afd9d871b648a8eef26026b2f49555475d89d45d672d53cf27c2e07a8f22"
+   "bytes": 40171,
+   "sha256": "256dabe69e3b802ce73f1c67825c390b5ae2a6fe71832ac54b5b3bc4542a42ab"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",
@@ -6053,8 +6053,8 @@
   },
   {
    "path": "tools/qa/axis05.ts",
-   "bytes": 2276,
-   "sha256": "627733d752be0468fdd0aef9b9f630cda2ffa318ecd5091cc425f0d12eb9a301"
+   "bytes": 2366,
+   "sha256": "7457d41d9a54e9ba0b9adb5f7b36e66feccd300242c0895534bc42e0fb194b39"
   },
   {
    "path": "tools/qa/ring_fit05.py",

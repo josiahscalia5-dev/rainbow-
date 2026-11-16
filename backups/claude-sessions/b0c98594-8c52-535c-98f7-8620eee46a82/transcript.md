@@ -2817,3 +2817,206 @@ I'll confirm that in the code again, tighten the Marble key handling so you're o
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2; rm -rf $S; mkdir -p $S; for d in 0 1 1.5 2; do timeout 600 node scripts/capture.mjs 05 --out=$S/d$d --q=floor05=$d > $S/cap_$d.log 2>&1 || echo \"capture $d failed\"; done; git checkout -q -- qa/capture_log.json 2>/dev/null; python3 -I -c \"\nimport sys; from PIL import Image, ImageChops\na=Image.open(sys.argv[1]).convert('RGB'); b=Image.open(sys.argv[2]).convert('RGB')\nprint('default build (floor05=0) vs BEFORE baseline: max diff', max( …[+211 chars]`
 
+### 🧑 User — 2026-11-16T11:17:19.896Z
+
+> ↩︎ result: tools/qa/axis05.ts(12,22): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+> default build (floor05=0) vs BEFORE baseline: max diff 0
+> /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2/d0/:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2/d1.5/:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2/d1/:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2/d2/:
+> 05.png
+
+### 🤖 Claude — 2026-11-16T11:17:27.069Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/qa/axis05.ts", "old_string": "import { STAGE_CAM } from '../../src/game/cameraRig';\n", "new_string": "import { STAGE_CAM } from '../../src/game/cameraRig';\n\ndeclare const process: { argv: string[] }; // vite-node (no @types/node in this project)\n"}`
+
+### 🧑 User — 2026-11-16T11:17:27.107Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/qa/axis05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:17:28.222Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; grep -nE \"argv|def main|__main__|usage|out\" tools/qa/ring_fit05.py | head -20", "description": "Re-run typecheck and read ring-fit tool CLI"}`
+
+### 🧑 User — 2026-11-16T11:17:31.326Z
+
+> ↩︎ result: TSC_OK
+> 8:banner and everything outside the frame are skipped). Each ring starts from a rough guess and is refined by an
+> 65:def main(argv):
+> 66:    out = Path(argv[0]); out.mkdir(parents=True, exist_ok=True)
+> 68:    for spec in argv[1:]:
+> 75:        gfile = out / f'guess_{label}.json'
+> 87:            d.ellipse([cx - 4, cy - 4, cx + 4, cy + 4], outline=(255, 255, 255), fill=(0, 0, 0))
+> 89:        ov.crop((0, 0, W, 900)).save(out / f'overlay_{label}.png')
+> 90:    (out / 'rings.json').write_text(json.dumps(res, indent=1))
+> 98:    (out / 'rings.md').write_text('\n'.join(lines) + '\n')
+> 101:if __name__ == '__main__':
+> 102:    main(sys.argv[1:])
+
+### 🤖 Claude — 2026-11-16T11:17:34.521Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,20p tools/qa/ring_fit05.py; sed -n 65,80p tools/qa/ring_fit05.py; ls qa/pilot05/wave9b/rings/; python3 -c \"import json; d=json.load(open('qa/pilot05/wave9b/rings/rings.json')); print(type(d), list(d)[:3] if isinstance(d,dict) else d[0])\"", "description": "Read ring-fit tool docs, argument format and guess files"}`
+
+### 🧑 User — 2026-11-16T11:17:34.615Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Screen 05: measure the projected gold rings (centre, radius, band thickness) in the approved image and in live
+> captures, by fitting circles to the gold pixels of each ring's upper arc.
+> 
+>     python3 -I tools/qa/ring_fit05.py OUT_DIR LABEL=image[:guessfile] ...
+> 
+> A circle (cx, cy, r) is scored by the share of gold pixels on its arc above its own centre line (HUD bar, title
+> banner and everything outside the frame are skipped). Each ring starts from a rough guess and is refined by an
+> exhaustive local search; the radius reported is the middle of the gold band, `thick` its radial thickness.
+> Writes OUT_DIR/rings.json, rings.md and one overlay PNG per image (fitted circles drawn on the picture) so the
+> fit can be checked by eye. Raw geometry only — not a fidelity score.
+> """
+> import json, math, sys
+> from pathlib import Path
+> import numpy as np
+> from PIL import Image, ImageDraw
+> 
+> W, H = 864, 1536
+> GUESS = {
+>     # rough starting circles (cx, cy, r, search half-ranges dx, dy, dr)
+> def main(argv):
+>     out = Path(argv[0]); out.mkdir(parents=True, exist_ok=True)
+>     res = {}
+>     for spec in argv[1:]:
+>         label, path = spec.split('=', 1)
+>         im = Image.open(path).convert(' …[+622 chars]
+
+### 🤖 Claude — 2026-11-16T11:17:41.645Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2; python3 -I tools/qa/ring_fit05.py $S/fit APPROVED=references/05_flow_into_the_current.png BEFORE=qa/pilot05/wave9/baseline/05.png D1=$S/d1/05.png D15=$S/d1.5/05.png D2=$S/d2/05.png >/dev/null && python3 -I - \"$S/fit/rings.json\" <<'PY'\nimport json, sys\nd = json.load(open(sys.argv[1]))\nVP = (500, 470)\nprint(\"image     ring  cx   cy    r     (cx-VPx)/r  (cy-VPy)/r   r vs approved\")\nfor lab in d:\n    for k in \"ABCD\":\n        f = d[lab][k]; cx, cy, r = f[\"cx\"], …[+313 chars]`
+
+### 🧑 User — 2026-11-16T11:18:02.053Z
+
+> ↩︎ result: image     ring  cx   cy    r     (cx-VPx)/r  (cy-VPy)/r   r vs approved
+> APPROVED  A    474   529  492.5   -0.053     +0.120      +0%
+> APPROVED  B    477   447  239.5   -0.096     -0.096      +0%
+> APPROVED  C    491   458  150.0   -0.060     -0.080      +0%
+> APPROVED  D    493   464   88.5   -0.079     -0.068      +0%
+> 
+> BEFORE    A    505   426  374.0   +0.013     -0.118      -24%
+> BEFORE    B    506   440  227.5   +0.026     -0.132      -5%
+> BEFORE    C    502   455  153.0   +0.013     -0.098      +2%
+> BEFORE    D    500   470   96.5   +0.000     +0.000      +9%
+> 
+> D1        A    508   432  344.5   +0.023     -0.110      -30%
+> D1        B    508   474  234.5   +0.034     +0.017      -2%
+> D1        C    501   472  155.5   +0.006     +0.013      +4%
+> D1        D    499   481   98.5   -0.010     +0.112      +11%
+> 
+> D15       A    509   462  342.5   +0.026     -0.023      -30%
+> D15       B    505   493  234.5   +0.021     +0.098      -2%
+> D15       C    499   484  156.0   -0.006     +0.090      +4%
+> D15       D    500   483   94.5   +0.000     +0.138      +7%
+> 
+> D2        A    509   497  343.5   +0.026     +0.079      -30%
+> D2        B    504   504  228.5   +0.018     +0.149      -5%
+> D2        C    499    …[+100 chars]
+
+### 🤖 Claude — 2026-11-16T11:18:30.529Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2; python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('$S/fit/overlay_%s.png'%k) for k in ('APPROVED','BEFORE','D15','D2')]\nw=sum(i.width for i in ims)+30; h=max(i.height for i in ims)\no=Image.new('RGB',(w,h),(20,20,20)); x=0\nfor i in ims: o.paste(i,(x,0)); x+=i.width+10\no.thumbnail((1800,900)); o.save('$S/overlays.jpg', quality=85); print(o.size)\"", "description": "Combine ring-fit overlays into one image"}`
+
+### 🧑 User — 2026-11-16T11:18:30.845Z
+
+> ↩︎ result: (1800, 465)
+
+### 🤖 Claude — 2026-11-16T11:18:31.430Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2/overlays.jpg"}`
+
+### 🧑 User — 2026-11-16T11:18:31.459Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T11:19:00.337Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/course.ts", "old_string": "  // wave 9b controlled test T2 (user-directed 2026-11-16: BEFORE is the baseline, ONE geometric factor per test):\n  // the HEIGHT of the 05 tunnel relative to the locked eye. BEFORE puts the tunnel centre 0.6 u (0.08 R) ABOVE\n  // the eye (tools/qa/axis05.ts); the approved image (ring centres below the vanishing point,\n  // tools/qa/ring_fit05.py) and the Marble world built from it (qa/worldlabs/05/pilot/full/analysis/\n  // splat_measure.json: eye ≈ 0.05 R above the axis) put it BELOW. ?floor05=< …[+664 chars]`
+
+### 🧑 User — 2026-11-16T11:19:00.373Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:19:01.588Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  opts: { window: number; taper: number; baseRadius: (s: number) => number },\n): TubePath {", "new_string": "  opts: { window: number; taper: number; baseRadius: (s: number) => number; floorExtra?: (s: number) => number },\n): TubePath {"}`
+
+### 🧑 User — 2026-11-16T11:19:01.622Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:19:04.191Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "      R[i] += (Math.max(opts.baseRadius(S(i)), nR[i]) - R[i]) * w;\n      D[i] += (Math.max(runDepth[i], nD[i], 0.9) - D[i]) * w;\n    }\n  }", "new_string": "      R[i] += (Math.max(opts.baseRadius(S(i)), nR[i]) - R[i]) * w;\n      D[i] += (Math.max(runDepth[i], nD[i], 0.9) - D[i]) * w;\n    }\n  }\n  // optional extra floor depth (Screen 05 controlled test T2): lowers the tunnel centre by floorExtra(s)\n  // without touching the radius, the stream or the frames; undefined = unchanged geometry\n  if (o …[+76 chars]`
+
+### 🧑 User — 2026-11-16T11:19:04.228Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:19:09.947Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });", "new_string": "  // wave 9b controlled test T2 (user-directed 2026-11-16: BEFORE is the baseline, ONE geometric factor per test):\n  // the HEIGHT of the NEAR 05 tunnel around the front ring A. Measured (tools/qa/ring_fit05.py, tools/qa/axis05.ts,\n  // qa/pilot05/wave9b/T2/): the approved ring A centre is 59 px BELOW the vanishing point, BEFORE's 44 px ABOVE,\n  // while rings B, C, D already s …[+1020 chars]`
+
+### 🧑 User — 2026-11-16T11:19:10.002Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:19:15.855Z
+
+Now the checks. The default must still be pixel-identical to BEFORE. I'll also scan three strengths of the near-tunnel lowering (1.2, 1.6, 2.0 u) and measure the rings in each:
+
+### 🤖 Claude — 2026-11-16T11:19:22.852Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; npx vite-node -e \"import {Course} from './src/world/course'; const c=new Course(); console.log('s05', c.stage('05').s0.toFixed(1), 'crest', c.marks['05_crest'].toFixed(1), 's06', c.stage('06').s0.toFixed(1))\" 2>&1 | tail -1; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2n; rm -rf $S; mkdir -p $S; for d in 0 1.2 1.6 2; do timeout 600 node scripts/capture.mjs 05 --out=$S/n$d --q=nearfloor05=$d > $S/cap_$d.log 2>&1 || echo \"capture $d failed\"; done; git checkout -q -- qa/capture_log.j …[+1068 chars]`
+
+### 🧑 User — 2026-11-16T11:20:59.305Z
+
+> ↩︎ result: TSC_OK
+>   -v, --version        Display version number 
+> default (nearfloor05=0) vs BEFORE: max diff 0
+> image  ring  cx   cy     r    dx/r    dy/r   (approved dy/r)
+> APPROVEDA   474   529  492.5  -0.053  +0.120   (+0.120)
+> APPROVEDB   477   447  239.5  -0.096  -0.096   (-0.096)
+> APPROVEDC   491   458  150.0  -0.060  -0.080   (-0.080)
+> APPROVEDD   493   464   88.5  -0.079  -0.068   (-0.068)
+> BEFORE  A   505   426  374.0  +0.013  -0.118   (+0.120)
+> BEFORE  B   506   440  227.5  +0.026  -0.132   (-0.096)
+> BEFORE  C   502   455  153.0  +0.013  -0.098   (-0.080)
+> BEFORE  D   500   470   96.5  +0.000  +0.000   (-0.068)
+> N12     A   508   460  348.0  +0.023  -0.029   (+0.120)
+> N12     B   506   440  227.0  +0.026  -0.132   (-0.096)
+> N12     C   502   455  153.0  +0.013  -0.098   (-0.080)
+> N12     D   500   470   96.5  +0.000  +0.000   (-0.068)
+> N16     A   509   482  346.5  +0.026  +0.035   (+0.120)
+> N16     B   506   440  227.5  +0.026  -0.132   (-0.096)
+> N16     C   502   455  153.0  +0.013  -0.098   (-0.080)
+> N16     D   500   470   96.5  +0.000  +0.000   (-0.068)
+> N20     A   513   507  345.0  +0.038  +0.107   (+0.120)
+> N20     B   505   440  229.5  +0.022  -0.131   (-0.096)
+> N20     C   502   455  153.0  + …[+80 chars]
+
+### 🤖 Claude — 2026-11-16T11:21:15.542Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,25p scripts/triptych.py | grep -E \"^#|usage|argv|Usage|\\\"\\\"\\\"\" | head -8; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2n; timeout 600 node scripts/capture.mjs 05 --out=$S/n2.3 --q=nearfloor05=2.3 > $S/cap_2.3.log 2>&1; git checkout -q -- qa/capture_log.json; python3 -I tools/qa/ring_fit05.py $S/fit23 APPROVED=references/05_flow_into_the_current.png N23=$S/n2.3/05.png >/dev/null && python3 -I -c \"\nimport json; d=json.load(open('$S/fit23/rings.json'))\nfor k in 'ABCD':\n    f=d['N23'][k]; print('N23' …[+188 chars]`
+
+### 🧑 User — 2026-11-16T11:21:42.895Z
+
+> ↩︎ result: # usage: triptych.py out.png h label1=path1 label2=path2 ...
+> out, H = sys.argv[1], int(sys.argv[2])
+> items = [a.split('=',1) for a in sys.argv[3:]]
+> N23 A 508 494 321.0 dy/r +0.075
+> N23 B 506 447 255.0 dy/r -0.090
+> N23 C 502 455 153.0 dy/r -0.098
+> N23 D 500 470 96.5 dy/r +0.000
+

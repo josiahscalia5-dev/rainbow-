@@ -265,16 +265,7 @@ function buildRoute(): RouteData {
   // 48 points (1.5-unit spacing) as before: the junction smoothing, hence the 04/05 and 05/06 stage
   // boundaries and the 06 checkpoint, stay exactly where they were
   seg(48, (t) => s5.clone().addScaledVector(L05, t));
-  // wave 9b controlled test T2 (user-directed 2026-11-16: BEFORE is the baseline, ONE geometric factor per test):
-  // the HEIGHT of the 05 tunnel relative to the locked eye. BEFORE puts the tunnel centre 0.6 u (0.08 R) ABOVE
-  // the eye (tools/qa/axis05.ts); the approved image (ring centres below the vanishing point,
-  // tools/qa/ring_fit05.py) and the Marble world built from it (qa/worldlabs/05/pilot/full/analysis/
-  // splat_measure.json: eye ≈ 0.05 R above the axis) put it BELOW. ?floor05=<d> deepens the tunnel floor under
-  // the stream by d units = lowers walls, rings, lids and the far block by d; radius 7.6, ring depths and
-  // spacing, camera, river and gameplay are untouched. Default 0 = BEFORE (pixel-identical).
-  const qaFloor05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('floor05') ?? 0) : 0;
-  const FLOOR05_DELTA = Number.isFinite(qaFloor05) ? qaFloor05 : 0;
-  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 + FLOOR05_DELTA });
+  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
   mark('06');
   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
   const s6 = pts[pts.length - 1].clone();

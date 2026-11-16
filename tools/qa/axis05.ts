@@ -9,6 +9,8 @@ import { Course } from '../../src/world/course';
 import { straightTubePath, tubeCenterAt } from '../../src/world/tube';
 import { STAGE_CAM } from '../../src/game/cameraRig';
 
+declare const process: { argv: string[] }; // vite-node (no @types/node in this project)
+
 const delta = Number(process.argv[2] ?? 0);
 const course = new Course();
 if (delta) for (const r of course.straightAxes) r.floorDepth += delta;
