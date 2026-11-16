@@ -383,23 +383,23 @@
   },
   {
    "path": "backups/AGENTS_STATUS.md",
-   "bytes": 4492,
-   "sha256": "b9ee04d4fe2860501bad1d62bf653ab90dc58e9ea5828890a95a6059d902bef7"
+   "bytes": 4809,
+   "sha256": "4b912c40a499ef0d280b256a8aac1cbf36a75bc20738931e1298c855c57de1fd"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 11579,
-   "sha256": "69647e650475e7943f6b67bc922d4b17372fb1a4f8efe9ba02e9a605dc044c3e"
+   "bytes": 12109,
+   "sha256": "4ea1481cc1d34bfcd77edb7984894a1116d15ab4dbce563535fe9254fe955ea7"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4874,
-   "sha256": "4471c8964c0dbe8b5b11b268389271e1424e7cc106458e8286aec899b4a5a1be"
+   "sha256": "0ba38ba964c3894a45c80e837d9baa625b98dc6ccac99a63ece198fab4792d8f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 12081,
-   "sha256": "b3d3ee8406c36e865baf447fca913343b04b8a90269c8244d9727733f142695a"
+   "bytes": 12091,
+   "sha256": "64f800c5aa50c1b467bc3c02408d5982be9828fe369f53ca2cb2da32697fc11d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -818,8 +818,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5199,
-   "sha256": "805dbeec44801a9d6e32e64bc2873b6be0ffe9aded9f7a67be8298c1a2742219"
+   "bytes": 1172,
+   "sha256": "7e58a94207651404900a4c6b2e93e270f73b69c1c7013c8deed26f612ea655b4"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -2825,6 +2825,16 @@
    "path": "qa/pilot05/wave7/foam/regress_fix/05.png",
    "bytes": 1838056,
    "sha256": "c4b1c6630258042f7d33ee3eb0c4dbfe631d33b468dcaa65bd57ff5ac7caf831"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/04.png",
+   "bytes": 1009749,
+   "sha256": "94e19bf636490f6bfff75b9e22a30d237bbd825c1794ae53eaa0715c93271505"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/04_diff_vs_wave6.png",
+   "bytes": 746200,
+   "sha256": "205d83cd25b1cb50495f2b74bf614f3e76ecfdb168f210c42168cd4ffd5ea7b8"
   },
   {
    "path": "qa/pilot05/wave7/handoff/05.png",

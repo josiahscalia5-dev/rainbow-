@@ -8,7 +8,7 @@
 | Cloud environment (account 8) | personal "rainbow-", **unrestricted** network, setup script saved, **no network secrets** (the exposed account-7 Marble key is not here) |
 | Verified here | LFS 9/9 (fsck OK) after clearing a stale `lfs.<url>.access=basic` (fixed in `scripts/autosave-hook.sh`); refs 12/12; `npm ci` + `tsc` OK; gameplay test pass (victory, heart loss, plunge 61.41, errors []); continuity gaps 0; Blender 5.3.0; 10 agents present |
 | World Labs | Atlas connector connected (`list_projects` OK, nothing run). Marble: see `qa/worldlabs/05/MARBLE_ACCESS_2026-11-16.md` — web-app world not reachable without a new World API key + world ID, and API support for web-made worlds is unconfirmed. User's Marble screenshot stored in `qa/worldlabs/05/marble_user_world/` |
-| Screen 05 | wave 7 = execution of the wave-6b plans: `qa/pilot05/COORDINATION_WAVE7.md`, baseline `qa/pilot05/wave7/baseline/05.png`. Water DONE, foam DONE, environment running at hand-off (`backups/AGENTS_STATUS.md`) |
+| Screen 05 | wave 7 = execution of the wave-6b plans: `qa/pilot05/COORDINATION_WAVE7.md`, baseline `qa/pilot05/wave7/baseline/05.png`. Environment, water and foam DONE (whole-frame mad 59.0 → 51.2) (`backups/AGENTS_STATUS.md`) |
 | Marble pilot (user-approved, max US$5) | website world 404 via API; generated draft + full world from the approved 05 image; 1,810 credits spent, balance 5,190; all assets in `qa/worldlabs/05/pilot/` (LFS) |
 | **Hand-off** | **`backups/CLAUDE_ACCOUNT_TRANSFER.md`** + paste prompt `backups/START_NEW_CLAUDE_ACCOUNT.md` |
 
