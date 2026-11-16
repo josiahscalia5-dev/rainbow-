@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8264,
-   "sha256": "1fcfe0cd805c36a49cd25d7c1790c73643e8440409dcdece454afa67130526a7"
+   "sha256": "9a5cacb9d556c69e975559d7c9668e7fb711664cc910f85a0a3c1cd9b803570e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1177,9 +1177,24 @@
    "sha256": "f776d5c82f508ddf918034f216ef54f439b2ab15b5fb42d4eefdc81e8f892d51"
   },
   {
+   "path": "qa/pilot05/marble_feas/geometry/depth_draft.png",
+   "bytes": 26571,
+   "sha256": "6b4cbff3aa1a1270c0a2ca3e85fc9d8f8f896c19b2b07046d11ccaae616e6432"
+  },
+  {
    "path": "qa/pilot05/marble_feas/geometry/depth_full.png",
    "bytes": 33150,
    "sha256": "407a3b70b97be8e4c3e182f270b71c3b627e1549fb53fa5b1af2a45478d0c8f2"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/geometry/geometry_draft.json",
+   "bytes": 15518,
+   "sha256": "f7e69dd924417ea66a43d4633b4b69c17b0b10b546301e8203fc897796261e00"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/geometry/geometry_draft.npz",
+   "bytes": 3991577,
+   "sha256": "91922eaa02d2844e4f296d5a78fbf57e3a5f53673d10974f05434cbc23b0a553"
   },
   {
    "path": "qa/pilot05/marble_feas/geometry/geometry_full.json",
@@ -1190,6 +1205,16 @@
    "path": "qa/pilot05/marble_feas/geometry/geometry_full.npz",
    "bytes": 4209835,
    "sha256": "cf8321ee4ebec743c7831d204502057a980d4196e004e02976e91f90f2596ebb"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/geometry/plan_draft_flatfloor.png",
+   "bytes": 96095,
+   "sha256": "ed8af3c1086bcd0875d43e5332c54ff7e5b6d59c92310a5d8766d904446035f5"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/geometry/plan_draft_marble.png",
+   "bytes": 97294,
+   "sha256": "9ff4cdb02cd7246ffcde14532d52bf35b4275cdb70784e4256be65d9580dbe33"
   },
   {
    "path": "qa/pilot05/marble_feas/geometry/plan_full_flatfloor.png",
@@ -6853,13 +6878,13 @@
   },
   {
    "path": "tools/marble05/spark/render.html",
-   "bytes": 2094,
-   "sha256": "1d7136c4962139d66990eee5816448a87403c1e23622cc39fb91769c5a4e3091"
+   "bytes": 2856,
+   "sha256": "aa5dc25b8d1254c0c476ccf52686ff8be29c552ebff4b731df931c472bea8067"
   },
   {
    "path": "tools/marble05/spark/render.mjs",
-   "bytes": 1720,
-   "sha256": "d1261a186963c288902df16907703c4c9f81b4f783cf862b9abe880c2313ae88"
+   "bytes": 1879,
+   "sha256": "b6bc0f3397954a0c0a7c2510610ff2671efadfff1e093c4295c02b5de1f89384"
   },
   {
    "path": "tools/marble05/splat_fit.py",

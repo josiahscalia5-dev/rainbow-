@@ -835,3 +835,99 @@ Building the Blender camera-projection scene now (your artwork projected from th
 
 > 🔧 **Bash** `{"command": "sed -i 's#let n = 0;#let n = 0; const t0 = performance.now(); console.log(\"initialized\", (t0/1000).toFixed(1));#; s#renderer.setAnimationLoop(() => { renderer.render(scene, cam); if (++n === 90) window.__done = true; });#renderer.setAnimationLoop(() => { renderer.render(scene, cam); n++; if (n % 2 === 0) console.log(\"frame\", n, ((performance.now() - t0) / 1000).toFixed(1)); if (n === +(q.get(\"frames\") || 12)) window.__done = true; });#' tools/marble05/spark/render.html && sed -i 's#if (m.type() === \"error\") console.log(\"console:\", m.text());#console.log(\"console:\", m.t …[+503 chars]`
 
+### 🧑 User — 2026-11-16T17:18:59.910Z
+
+> ↩︎ result: console: log frame 62 150.2
+> console: log frame 64 172.7
+> node:internal/modules/run_main:123
+> 
+> locator.screenshot: Timeout 29968.130999999994ms exceeded.
+> Call log:
+> [2m  - taking element screenshot[22m
+> [2m  - waiting for fonts to load...[22m
+> [2m  - fonts loaded[22m
+> [2m  - attempting scroll into view action[22m
+> [2m    - waiting for element to be stable[22m
+> 
+> }
+> 
+> Node.js v22.23.4
+> 
+> real	2m53.615s
+> user	0m0.634s
+> sys	0m0.094s
+
+### 🤖 Claude — 2026-11-16T17:19:10.910Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/marble05/spark/render.html'\ns=open(p).read()\ns=s.replace('if (n === +(q.get(\"frames\") || 12)) window.__done = true; });','if (n === +(q.get(\"frames\") || 6)) { renderer.setAnimationLoop(null); window.__png = renderer.domElement.toDataURL(\"image/png\"); window.__done = true; } });')\nopen(p,'w').write(s)\np='tools/marble05/spark/render.mjs'\ns=open(p).read()\ns=s.replace('await page.locator(\"canvas\").screenshot({ path: out });','const durl = await page.evaluate(() => window.__png);\\nfs.writeFileSync(out, Buffer.from(durl.split(\",\")[1], \"base6 …[+887 chars]`
+
+### 🧑 User — 2026-11-16T17:19:12.365Z
+
+> ↩︎ result: console: log initialized 0.5
+> wrote /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/spark_full500k_locked.png
+> 
+> real	0m1.393s
+> user	0m0.601s
+> sys	0m0.224s
+
+### 🤖 Claude — 2026-11-16T17:19:15.272Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/spark_full500k_locked.png"}`
+
+### 🧑 User — 2026-11-16T17:19:15.293Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:19:27.054Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/marble05/spark/render.html'\ns=open(p).read()\nstart=s.index('let n = 0;')\nend=s.index('</script></body>')\ns=s[:start]+'''let n = 0; const t0 = performance.now(); console.log(\"initialized\", (t0 / 1000).toFixed(1));\n// done when the picture is non-empty and stable over 3 consecutive frames (Spark sorts splats in a worker)\nconst probe = document.createElement(\"canvas\"); probe.width = 108; probe.height = 192;\nconst pctx = probe.getContext(\"2d\", { willReadFrequently: true });\nlet last = -1, stable = 0;\nrenderer.setAnimationLoop(() => {\n  rende …[+1324 chars]`
+
+### 🧑 User — 2026-11-16T17:20:00.571Z
+
+> ↩︎ result: console: log frame 5 0.4 0.00
+> console: log frame 6 0.4 0.00
+> console: log frame 7 0.5 0.00
+> console: log frame 8 8.4 149.00
+> console: log frame 9 16.2 149.00
+> console: log frame 10 24.1 149.00
+> console: log frame 11 32.1 149.00
+> wrote /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/spark_full500k_locked.png
+> 
+> real	0m33.449s
+> user	0m0.938s
+> sys	0m0.220s
+
+### 🤖 Claude — 2026-11-16T17:20:02.597Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/spark_full500k_locked.png"}`
+
+### 🧑 User — 2026-11-16T17:20:02.680Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:20:18.012Z
+
+The Marble world renders correctly from your locked camera (full portrait frame). Now rendering the moved-camera view and the draft world, and running the same depth test on the draft.
+
+### 🤖 Claude — 2026-11-16T17:20:22.063Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json;print(*json.load(open('qa/pilot05/marble_feas/scene/scene.json'))['cameras']['moved']['position'])\"; SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad; read PX PY PZ < <(python3 -c \"import json;print(*json.load(open('qa/pilot05/marble_feas/scene/scene.json'))['cameras']['moved']['position'])\"); (node tools/marble05/spark/render.mjs $SP/sparkr full_500k.spz $SP/mf/spark_full500k_moved1R.png $PX $PY $PZ 2>&1 | tail -1; node tools/marble05/spark/render.mjs $SP/sparkr draft_full_res.spz $SP/mf/spark_draft_locked.png 2>&1 | …[+270 chars]`
+
+### 🧑 User — 2026-11-16T17:22:25.118Z
+
+> ↩︎ result: 0.11531849830234378 0.1266158227495332 -1.1803332199080612
+>  "tunnel_radius": 1.1627901549638833,
+>  "floor_below_axis": 0.7871108176878027,
+>  "camera_offset_from_axis": {
+>   "right": 0.14065536026743855,
+> --
+>  "footprint": {
+>   "iou_inside_input_rows": 0.718517250235425,
+>   "iou_below_input_rows": 0.5091386959876543,
+>   "iou_full_frame": 0.5551521080653962
+> --
+>  "max_river_depth_marble": 17.009519777289785,
+>  "max_river_depth_flat_floor": 4.301629047163604
+> }
+> rows: [(560, 3.1, 4.3, True), (576, 2.76, 3.6, True), (592, 2.5, 3.09, True), (608, 2.3, 2.7, True), (624, 2.14, 2.41, True), (640, 2.0, 2.18, True), (656, 1.88, 1.98, True), (672, 1.77, 1.82, True), (688, 1.7, 1.68, True), (704, 1.64, 1.56, True), (720, 1.56, 1.45, True), (736, 1.5, 1.35, True), (752, 1.44, 1.27, True), (768, 1.38, 1.2, False), (784, 1.32, 1.13, False), (800, 1.26, 1.07, False), (816, 1.21, 1.02, False), (832, 1.16, 0.97, False), (848, 1.11, 0.93, False), (864, 1.07, 0.89, False), (880, 1.04, 0.86, False), (896, 1.0, 0.82, False), (912, 0.98, 0.8, False), (928, 0.94, 0.77, False), (944, 0.92, 0.74, False), (960, 0.89, 0.72, False), (976, 0.87, 0.69, False), (992, 0.85, 0.67, False), (1008, 0.82, 0.65, False), (1024, 0.8,  …[+1579 chars]
+
