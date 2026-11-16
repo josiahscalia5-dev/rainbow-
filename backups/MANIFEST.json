@@ -444,7 +444,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "d2a7b8eae638db3db810202a189e89658b55ec78418cf52d02b558d0b6ad8427"
+   "sha256": "73a71b7ede4bce1a4a9370345bf537427f0d623398d8184fe0fc599258241a56"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1428,8 +1428,8 @@
   },
   {
    "path": "qa/pilot05/proj/clips/proj05_ride_4s.mp4",
-   "bytes": 2007272,
-   "sha256": "a60a8d5329972e7f5efd540b40a06d9c2ea3b544feb613eb55a587a56e1f9c03"
+   "bytes": 1950538,
+   "sha256": "1c7a65501c322a0c9c1ae1661b3039f7a8bbf5d56fed979ea640a82f17496006"
   },
   {
    "path": "qa/pilot05/proj/compare/1_APPROVED.png",
@@ -1468,28 +1468,28 @@
   },
   {
    "path": "qa/pilot05/proj/move/NEW_proj05_forward_05.png",
-   "bytes": 1731068,
-   "sha256": "5a74f88332fe5c4b3d305243f43ba69442cc9e8439f70bb8dd5cf21e1e5de387"
+   "bytes": 1739536,
+   "sha256": "013212a09999619abc2605b8acc30992b65b4a56e15f6370de55fc6670719e77"
   },
   {
    "path": "qa/pilot05/proj/move/NEW_proj05_forward_10.png",
-   "bytes": 1719552,
-   "sha256": "d5d445dbc31b71b229b1412f82f80fa90ac588711c38e4e56991c256de17ae9b"
+   "bytes": 1737207,
+   "sha256": "b43c11b89b1d4dacfdb2fabc10c100a6c20d3d722fdb576bb9d6479a758f3db6"
   },
   {
    "path": "qa/pilot05/proj/move/NEW_proj05_forward_20.png",
-   "bytes": 1649623,
-   "sha256": "f36b511ad707b31bfdc392e42f2f594d34ad10605c529d201405af4ce23416a8"
+   "bytes": 1666729,
+   "sha256": "8769735808fc6949a97310e4c7ec5cbe25396d310138112bc09f4a78250bd479"
   },
   {
    "path": "qa/pilot05/proj/move/NEW_proj05_forward_35.png",
-   "bytes": 1480947,
-   "sha256": "ca7899e7d573f98408524015d7437444fa790de584b816524ae09fb51c94d9a1"
+   "bytes": 1484874,
+   "sha256": "f5075421aa673860c003dcfe0cc635aa000db78701add885edebfb69ae64aced"
   },
   {
    "path": "qa/pilot05/proj/move/contact_sheet_BEFORE_top_NEW_bottom.png",
-   "bytes": 2174221,
-   "sha256": "718de67ebbe175eb7d1903dc2eb18e1e3defd187239cd77963736734fa783288"
+   "bytes": 2171622,
+   "sha256": "f3365c1cbd7318df6c2c3f54d99b67cc983c75c1b8f8bca16fd33fd045fb0ca8"
   },
   {
    "path": "qa/pilot05/proj/move/layer_map_with_before.png",
@@ -1498,8 +1498,8 @@
   },
   {
    "path": "qa/pilot05/proj/move/move_log.json",
-   "bytes": 1566,
-   "sha256": "5264d614ac718c7b4c5772b56b2162fa23cc75ab278d1a673ec8cec87ccc554b"
+   "bytes": 1573,
+   "sha256": "1a2c8237bc1971681d6fa9b079ceab343626f1adc631f1635f46ac941b7f38a9"
   },
   {
    "path": "qa/pilot05/proj/probe/camera.json",
