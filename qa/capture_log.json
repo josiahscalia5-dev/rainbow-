@@ -1,5 +1,5 @@
 {
-  "when": "2026-11-16T01:14:58.755Z",
+  "when": "2026-11-16T01:19:26.501Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
@@ -31,7 +31,7 @@
         ]
       },
       "stats": {
-        "fps": 60.1,
+        "fps": 60.3,
         "calls": 98,
         "triangles": 737540,
         "geometries": 111,
@@ -75,7 +75,7 @@
         ]
       },
       "stats": {
-        "fps": 61.4,
+        "fps": 60.7,
         "calls": 87,
         "triangles": 634961,
         "geometries": 102,
@@ -119,7 +119,7 @@
         ]
       },
       "stats": {
-        "fps": 60.6,
+        "fps": 62.6,
         "calls": 72,
         "triangles": 552457,
         "geometries": 91,
@@ -163,7 +163,7 @@
         ]
       },
       "stats": {
-        "fps": 60.6,
+        "fps": 60.1,
         "calls": 181,
         "triangles": 669975,
         "geometries": 190,
@@ -207,7 +207,7 @@
         ]
       },
       "stats": {
-        "fps": 60.9,
+        "fps": 60.6,
         "calls": 160,
         "triangles": 620083,
         "geometries": 171,
