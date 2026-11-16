@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 10620,
-   "sha256": "7a5954bbc90734b68de4d4a4770aad2afd2f86eead87d559529fd3ebeaf2fc9a"
+   "bytes": 11023,
+   "sha256": "a0410ccd8e50dddb2b780158f584c9fcae49a1aed7b6c0c4a6e3e881c3f7a195"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -403,13 +403,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 49207,
-   "sha256": "fec70d15e242d419e99c4ebf84a2a8171ef69c2a6011f39dd6ec3f6a227e37e7"
+   "bytes": 50278,
+   "sha256": "1be43a3a04743fa652cda0df57c21ce9e86a6e9bf9db18af0c80e9266faaff3c"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8265,
-   "sha256": "422ca6a560678f0673fdf6a8034ec4689ccf02e3334cdb8acbec09e20550321d"
+   "sha256": "ee0cc6b26203aafa3a10fdab9c09c081fa3a9deafbe72c6d2a00b2f708cbd66f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6048,8 +6048,8 @@
   },
   {
    "path": "qa/worldlabs/05/pilot/LEDGER.md",
-   "bytes": 5248,
-   "sha256": "7f8561c82e9601e68a5ba745b992b66caae3338c27c0d24336962011ead54913"
+   "bytes": 5526,
+   "sha256": "41828e673477fdcbd0757428f9161b97695e21f1f47ea22ec9eafd22f1eaa254"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/analysis/bay_coverage.png",

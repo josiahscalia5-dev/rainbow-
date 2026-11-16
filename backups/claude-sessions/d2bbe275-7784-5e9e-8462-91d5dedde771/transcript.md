@@ -1212,3 +1212,42 @@ Writing up the results and saving everything to GitHub now (game code untouched,
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/marble_feas/NOTES.md (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-16T17:27:49.387Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json, datetime\np='backups/AGENTS_STATUS.json'\nd=json.load(open(p))\nd['updated_utc']='2026-11-16T17:35:00Z'\nd['updated_by_session']='012NR93QX82e3JqBGArAa4BD (branch ccr-e546a360-cxmton)'\nd['marble_feasibility_05']={\n \"status\":\"done 2026-11-16 ~17:35 UTC by the main session (no specialist launched, no credits, no API call)\",\n \"branch\":\"ccr-e546a360-cxmton\",\n \"notes\":\"qa/pilot05/marble_feas/NOTES.md\",\n \"verdict\":\"Marble reproduces the approved perspective from its input camera (f 700 px, pitch 6 deg, both worlds) but NOT the exact S- …[+3000 chars]`
+
+### 🧑 User — 2026-11-16T17:27:49.540Z
+
+> ↩︎ result: M  backups/AGENTS_STATUS.json
+> M  backups/CLAUDE_ACCOUNT_TRANSFER.md
+> M  qa/worldlabs/05/pilot/LEDGER.md
+> Objects not staged for commit:
+
+### 🤖 Claude — 2026-11-16T17:27:55.000Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -4 && git ls-files qa/pilot05/marble_feas | wc -l && git lfs ls-files | grep marble05 ; git check-attr filter qa/pilot05/marble_feas/blender/marble05_projection.blend; git ls-files tools/marble05 tools/blender/marble05_projection.py", "description": "Check autosave already committed experiment files and LFS"}`
+
+### 🧑 User — 2026-11-16T17:27:55.102Z
+
+> ↩︎ result: 48feb83 autosave: Rainbow 2026-11-16 17:27 UTC
+> 115e26f autosave: Rainbow 2026-11-16 17:22 UTC
+> 910c01f autosave: Rainbow 2026-11-16 17:17 UTC
+> b3cfe2f autosave: Rainbow 2026-11-16 17:12 UTC
+> 35
+> 9a33cdf35c * qa/pilot05/marble_feas/blender/marble05_projection.blend
+> qa/pilot05/marble_feas/blender/marble05_projection.blend: filter: lfs
+> tools/blender/marble05_projection.py
+> tools/marble05/build_meshes.py
+> tools/marble05/compose.py
+> tools/marble05/depth_ratio_map.py
+> tools/marble05/pano_fit.py
+> tools/marble05/river_geometry.py
+> tools/marble05/spark/render.html
+> tools/marble05/spark/render.mjs
+> tools/marble05/splat_fit.py
+> tools/marble05/splatlib.py
+
+### 🤖 Claude — 2026-11-16T17:27:59.696Z
+
+> 🔧 **Bash** `{"command": "git add -A qa/pilot05/marble_feas tools/marble05 && git commit -q -m \"Screen 05: Marble feasibility test on the two existing worlds (no credits)\n\nCamera fit of Marble's input view (f 700 px, pitch 6 deg, both worlds), ring and\nriver depth vs the approved perspective, Blender camera projection of the original\nwater artwork onto Marble's river surface, full-size camera-locked comparison and\nmoved-camera check. Game code untouched; results in qa/pilot05/marble_feas/NOTES.md.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/sessi …[+303 chars]`
+
