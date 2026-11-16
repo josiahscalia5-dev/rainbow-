@@ -398,8 +398,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 5841,
-   "sha256": "1ea28bb8f747e2c380833dc5662cc4cf2ced5ba471057374fd30bcd68dc04709"
+   "bytes": 5842,
+   "sha256": "ba3502daae256a8e3c535344780f74210d0028b7ebdac4f64f80ab3e1bbb4639"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -943,8 +943,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 14014,
-   "sha256": "7a21cdccb8611a468fcf9e8f6f246b90c611f1f4025b3d846edb57dfe48e44ab"
+   "bytes": 14536,
+   "sha256": "e986fc02108919fb8d1a1a734e39331ea3a07428e2ca10db3e71554390c9062f"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -4213,8 +4213,38 @@
   },
   {
    "path": "qa/pilot05/wave9/foam/NOTES.md",
-   "bytes": 8969,
-   "sha256": "96d1e60e4c7db33d0732f22639b5d259ab4970eb6b96e22767da69e11b27c102"
+   "bytes": 10949,
+   "sha256": "858019c7771f268d7958cf3aff9f9cc3c62b95f9b233ad197873b43f9ae4b685"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/ab/04_A_foam_baseline.png",
+   "bytes": 1008119,
+   "sha256": "014147be429ba6d268d56452ad70d24e585c7920198000302962fecd1b633cf7"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/ab/04_B_foam_it06.png",
+   "bytes": 1007886,
+   "sha256": "c7aad425ea4a53554271bc11464c95c9ce0a30b33e8dfe2c256f9b57a8a2a9bf"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/ab/05_A_foam_baseline.png",
+   "bytes": 1756781,
+   "sha256": "03f8dbac33daf03484d77954c7a2041bdb45018885b268552d52bba59d348119"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/ab/05_B_foam_it06.png",
+   "bytes": 1734261,
+   "sha256": "5bbfbb3b343d998773e4c3d41da50d7377267a46aa823f77bcf3d8a0be83a19c"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/ab/08_A_foam_baseline.png",
+   "bytes": 1428043,
+   "sha256": "316f731ecd6cb3cc1465a8a6dcfdd062474288f8aebf37a2f4642641743b511c"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/ab/08_B_foam_it06.png",
+   "bytes": 1428043,
+   "sha256": "316f731ecd6cb3cc1465a8a6dcfdd062474288f8aebf37a2f4642641743b511c"
   },
   {
    "path": "qa/pilot05/wave9/foam/it01/05.png",
@@ -4290,11 +4320,6 @@
    "path": "qa/pilot05/wave9/foam/it02/05.png",
    "bytes": 1690045,
    "sha256": "13c4c9e20b783d67347687c89f39da864f152ea624967fcbfffce072ea57e866"
-  },
-  {
-   "path": "qa/pilot05/wave9/foam/it02/05_ctrl.png",
-   "bytes": 1653241,
-   "sha256": "4810906c973d07365441f6d9ff4e09db0798c17b4e4f4da0f1f30535ffe391a3"
   },
   {
    "path": "qa/pilot05/wave9/foam/it02/05_highlight_NOW.png",
@@ -4580,16 +4605,6 @@
    "path": "qa/pilot05/wave9/foam/it06/05.png",
    "bytes": 1714821,
    "sha256": "feea16e6fa082747eb2a2d603e1e52a657bf321b06c0c6c4d232662dfbff6206"
-  },
-  {
-   "path": "qa/pilot05/wave9/foam/it06/05_ctrlA_baseline_foam.png",
-   "bytes": 1756781,
-   "sha256": "03f8dbac33daf03484d77954c7a2041bdb45018885b268552d52bba59d348119"
-  },
-  {
-   "path": "qa/pilot05/wave9/foam/it06/05_ctrlB_it06_foam.png",
-   "bytes": 1734261,
-   "sha256": "5bbfbb3b343d998773e4c3d41da50d7377267a46aa823f77bcf3d8a0be83a19c"
   },
   {
    "path": "qa/pilot05/wave9/foam/it06/05_highlight_NOW.png",

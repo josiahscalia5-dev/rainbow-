@@ -2117,3 +2117,103 @@ The specialists' latest edits are now committed and pushed. Nothing is left unco
 
 The four specialists are still editing, so new changes will keep appearing between saves; the 5-minute autosave picks them up.
 
+### 🧑 User — 2026-11-16T02:44:59.928Z
+
+<task-notification>
+<task-id>a0121e9c440afc1e5</task-id>
+<tool-use-id>toolu_015hRGTTx1vbJ1zATc65in43</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/a0121e9c440afc1e5.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 wave 9 far river" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 7:10am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5qfzT1beTYy12EF5QaH, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 7:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now revert the `floorAt` plumbing in my ForcedTunnel class (keep only `aspect`/`floorY`).</result>
+</task-notification>
+
+### 🤖 Claude — 2026-11-16T02:45:00.143Z
+
+You've hit your 5-hour limit · resets 7:10am (UTC)
+
+### 🧑 User — 2026-11-16T02:45:06.175Z
+
+<task-notification>
+<task-id>aa08f1857cba5dbb3</task-id>
+<tool-use-id>toolu_01LZk654UV131oQtcCZzyTa3</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/aa08f1857cba5dbb3.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 wave 9 environment" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 7:10am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5qgTFpjXEv4JdUSDb7J, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 7:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>tsc is clean. Filing the shift request for path-camera's far block.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-16T02:45:16.505Z
+
+<task-notification>
+<task-id>ad851d2d7c4f878c2</task-id>
+<tool-use-id>toolu_01TpvJNBdyxcxPSzgTpWsB7F</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/ad851d2d7c4f878c2.output</output-file>
+<status>completed</status>
+<summary>Agent "Screen 05 wave 9 foam" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I kept it06. The near foam banks and the splash look clearly closer to the approved image. The overall frame metrics barely moved (mad 51.2 → 51.3 in a clean A/B), and the splash measure did not drop toward the ref's 13.6/12.8 %.
+
+**Files changed:** `/home/user/rainbow-/src/vfx/foam.ts` and `/home/user/rainbow-/src/vfx/riderSplash.ts`. `bubbles.ts`, `spray.ts` and `index.ts` are unchanged; I tried a bubble placement change in it05, it did nothing visible, so I reverted it.
+
+**What changed (05 only):**
+- **Foam banks:** the round sphere heaps behind Benny are now two narrow, continuous wake bands. They trail back and outward along the pink bands, stay outside the splash strands, and stop at least 64 px from the frame edge, so the lower-left bank no longer touches it.
+- **Foam colour:** new colour scale with cool near-white tops, periwinkle bodies and small saturated blue holes on the lower two-thirds. The wave-8 clumps read grey. My it01–it03 colours came out pink because my colour tool was counting pink-band pixels; I fixed the tool and re-measured from foam pixels only.
+- **Splash:** the two feather wings are now a fringe of 34 lacy white strands with holes, steeper, with water visible between them. Crown droplets are scattered beads instead of flakes. Splash instances went from 200 to 168.
+
+**Measurements:** the river and walls changed under me between captures because of other specialists' edits, so numbers against the wave-9 baseline are mixed up with theirs. I ran a clean A/B: two copies of the same current tree, differing only in my two files (wave-8 versions vs it06).
+
+| Measure | Wave-8 foam (A) | it06 (B) | Ref |
+|---|---|---|---|
+| mad (lower is closer) | 51.2 | 51.3 | – |
+| hue_corr | 0.865 | 0.871 | – |
+| edge_corr | 0.191 | 0.194 | – |
+| Benny+near band | 47.4 | 47.5 | – |
+| clumpcol white % (Lclump / LL / LR / Lrim) | 32/11/14/15 | 49/31/34/22 | 25/28/28/22 |
+| clumpcol shade % (same boxes) | 49/48/47/39 | 39/41/38/35 | 56/38/44/41 |
+| splashext L/R % | 18.8/18.4 | 20.5/21.8 | 13.6/12.8 |
+
+- **Brightness:** lower-left and lower-right foam brightness (median/top) is now close to the ref (LL 231/249 vs ref 233/253).
+- **Splash numbers:** the splashext box now also contains the new foam bands and the river's white flow lines. In tighter boxes around the strands only, it06 measures 21.3/25.5 % against the ref's 15.4/14.9 %.
+- **Against the wave-9 baseline (mixed with others' edits):** mad 50.6 → 51.7, hue_corr 0.875 → 0.832, edge_corr 0.195 → 0.198, Benny+near 46.5 → 48.6.
+
+**Checks:**
+- **Type check and budget:** `npx tsc --noEmit` passes. Screen 05 renders 89 draw calls and 568,247 tris, within the 130 / 650k budget.
+- **Gameplay test:** passes, 8/8 checks, plunge 61.41, no errors.
+- **Regression vs `wave9/baseline`:** 03, 06 and 07 are pixel-identical below the HUD, so 06 keeps its stage anchors.
+  - **04 and 08 differ** (about 13k and 12k px). The A/B shows only 670 px of 04 is mine (max delta 20, intended): screen 04 looks through its far opening at the 05 rim foam, which now has the new colours. 0 px of 08 is mine; the rest comes from the other specialists' concurrent edits.
+
+**Still open:**
+- The foam clump beside Benny on the left (x 0–150, y 1000–1110) is too bright: median 238 vs ref 219, white share 49 % vs 25 %.
+- The splash fringe is narrower and shorter than the ref's.
+- There are no soap bubbles over the lower corners where the ref has two large ones.
+- The far foam rims beyond the seam belong to path-camera and still use the old colours. I posted the new colour values for them in `qa/pilot05/REQUESTS.md`.
+
+Autosave status reports OK (local and remote at the same commit). My log is in `/home/user/rainbow-/qa/pilot05/wave9/foam/NOTES.md`; captures are in `it01`–`it06`, `ab` and `regress` under `/home/user/rainbow-/qa/pilot05/wave9/foam/`.</result>
+<usage><subagent_tokens>315579</subagent_tokens><tool_uses>130</tool_uses><duration_ms>1489954</duration_ms></usage>
+</task-notification>
+
+### 🤖 Claude — 2026-11-16T02:45:16.769Z
+
+You've hit your 5-hour limit · resets 7:10am (UTC)
+
+### 🧑 User — 2026-11-16T02:45:19.301Z
+
+<system-reminder>
+<tools-used-before-summary>Grep</tools-used-before-summary>
+</system-reminder>
+
+### 🧑 User — 2026-11-16T02:45:19.301Z
+
+<task-notification>
+<task-id>af51923537e86162d</task-id>
+<tool-use-id>toolu_01W2NVCNw3T6QdRZ9rH2Mqp4</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/af51923537e86162d.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 wave 9 water" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 7:10am (UTC) (error type rate_limit, HTTP 429, request id req_011Ch5qhQsykJiUBCXDZbn1u, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 7:10am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>The lanes don't show as deep areas at all. Let me check whether exposure or the grade is changed per stage at runtime, which would break my chain model.</result>
+</task-notification>
+

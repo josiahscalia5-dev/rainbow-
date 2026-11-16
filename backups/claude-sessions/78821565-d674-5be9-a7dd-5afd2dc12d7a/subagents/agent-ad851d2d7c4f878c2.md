@@ -1733,3 +1733,56 @@ The A/B is clean: 08 identical, 05 differs as intended, and 04 differs in only 6
 > {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.026, 'coins': 2240, 'hearts': 5, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}}, 'pass': True}
 > 40:  out.checks.pauseFreezes = { pass: Math.abs(sPaused - sBefore) < 1e-6 && sAfter > sPaused, sBefore …[+497 chars]
 
+### 🤖 Claude — 2026-11-16T02:44:43.631Z
+
+Gameplay test passes (all 8 checks, plunge 61.41, errors []). Let me finish the notes, post the FYI for path-camera's far rims, and check autosave status.
+
+### 🤖 Claude — 2026-11-16T02:44:57.888Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; SP=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad; mkdir -p qa/pilot05/wave9/foam/ab; for n in 04 05 08; do cp $SP/ctrlA/out/$n.png qa/pilot05/wave9/foam/ab/${n}_A_foam_baseline.png; cp $SP/ctrlB/out/$n.png qa/pilot05/wave9/foam/ab/${n}_B_foam_it06.png; done; rm -f qa/pilot05/wave9/foam/it06/05_ctrlA_baseline_foam.png qa/pilot05/wave9/foam/it06/05_ctrlB_it06_foam.png qa/pilot05/wave9/foam/it02/05_ctrl.png; cat >> qa/pilot05/wave9/foam/NOTES.md <<'EOF'\n\n## End checks (it06 kept)\n* `npx tsc --noEmit` OK. Budgets: 05 = 89  …[+2626 chars]`
+
+### 🧑 User — 2026-11-16T02:44:58.295Z
+
+> ↩︎ result: AUTOSAVE OK | branch claude/rainbow-3d-account-recovery-xex5hc | scheduler daemon | last verified backup 2026-11-16T02:44:48+00:00 (0.1 min ago) | local 72493b2 remote 72493b2 (match) | uncommitted 6
+
+### 🤖 Claude — 2026-11-16T02:45:16.412Z
+
+I kept it06. The near foam banks and the splash look clearly closer to the approved image. The overall frame metrics barely moved (mad 51.2 → 51.3 in a clean A/B), and the splash measure did not drop toward the ref's 13.6/12.8 %.
+
+**Files changed:** `/home/user/rainbow-/src/vfx/foam.ts` and `/home/user/rainbow-/src/vfx/riderSplash.ts`. `bubbles.ts`, `spray.ts` and `index.ts` are unchanged; I tried a bubble placement change in it05, it did nothing visible, so I reverted it.
+
+**What changed (05 only):**
+- **Foam banks:** the round sphere heaps behind Benny are now two narrow, continuous wake bands. They trail back and outward along the pink bands, stay outside the splash strands, and stop at least 64 px from the frame edge, so the lower-left bank no longer touches it.
+- **Foam colour:** new colour scale with cool near-white tops, periwinkle bodies and small saturated blue holes on the lower two-thirds. The wave-8 clumps read grey. My it01–it03 colours came out pink because my colour tool was counting pink-band pixels; I fixed the tool and re-measured from foam pixels only.
+- **Splash:** the two feather wings are now a fringe of 34 lacy white strands with holes, steeper, with water visible between them. Crown droplets are scattered beads instead of flakes. Splash instances went from 200 to 168.
+
+**Measurements:** the river and walls changed under me between captures because of other specialists' edits, so numbers against the wave-9 baseline are mixed up with theirs. I ran a clean A/B: two copies of the same current tree, differing only in my two files (wave-8 versions vs it06).
+
+| Measure | Wave-8 foam (A) | it06 (B) | Ref |
+|---|---|---|---|
+| mad (lower is closer) | 51.2 | 51.3 | – |
+| hue_corr | 0.865 | 0.871 | – |
+| edge_corr | 0.191 | 0.194 | – |
+| Benny+near band | 47.4 | 47.5 | – |
+| clumpcol white % (Lclump / LL / LR / Lrim) | 32/11/14/15 | 49/31/34/22 | 25/28/28/22 |
+| clumpcol shade % (same boxes) | 49/48/47/39 | 39/41/38/35 | 56/38/44/41 |
+| splashext L/R % | 18.8/18.4 | 20.5/21.8 | 13.6/12.8 |
+
+- **Brightness:** lower-left and lower-right foam brightness (median/top) is now close to the ref (LL 231/249 vs ref 233/253).
+- **Splash numbers:** the splashext box now also contains the new foam bands and the river's white flow lines. In tighter boxes around the strands only, it06 measures 21.3/25.5 % against the ref's 15.4/14.9 %.
+- **Against the wave-9 baseline (mixed with others' edits):** mad 50.6 → 51.7, hue_corr 0.875 → 0.832, edge_corr 0.195 → 0.198, Benny+near 46.5 → 48.6.
+
+**Checks:**
+- **Type check and budget:** `npx tsc --noEmit` passes. Screen 05 renders 89 draw calls and 568,247 tris, within the 130 / 650k budget.
+- **Gameplay test:** passes, 8/8 checks, plunge 61.41, no errors.
+- **Regression vs `wave9/baseline`:** 03, 06 and 07 are pixel-identical below the HUD, so 06 keeps its stage anchors.
+  - **04 and 08 differ** (about 13k and 12k px). The A/B shows only 670 px of 04 is mine (max delta 20, intended): screen 04 looks through its far opening at the 05 rim foam, which now has the new colours. 0 px of 08 is mine; the rest comes from the other specialists' concurrent edits.
+
+**Still open:**
+- The foam clump beside Benny on the left (x 0–150, y 1000–1110) is too bright: median 238 vs ref 219, white share 49 % vs 25 %.
+- The splash fringe is narrower and shorter than the ref's.
+- There are no soap bubbles over the lower corners where the ref has two large ones.
+- The far foam rims beyond the seam belong to path-camera and still use the old colours. I posted the new colour values for them in `qa/pilot05/REQUESTS.md`.
+
+Autosave status reports OK (local and remote at the same commit). My log is in `/home/user/rainbow-/qa/pilot05/wave9/foam/NOTES.md`; captures are in `it01`–`it06`, `ab` and `regress` under `/home/user/rainbow-/qa/pilot05/wave9/foam/`.
+

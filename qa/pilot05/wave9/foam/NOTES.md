@@ -87,3 +87,24 @@ dark / mid / bright thirds of the clump-box foam px).
   clumptone (pink-free) LL L191/231/249 (ref 179/233/253, baseline 187/228/238), LR 186/232/250 (ref 184/231/253,
   baseline 186/226/239), Lrim 178/231/253 (ref 176/221/251), Lclump 184/238/253 (ref 181/219/252: too bright, open).
   splashext (wide box incl. bands) 19.9/21.9 % (ref 13.6/12.8, baseline 19.8/21.4).
+
+## End checks (it06 kept)
+* `npx tsc --noEmit` OK. Budgets: 05 = 89 calls / 568,247 tris (<= 130 / 650k; the splash has 168 instead of 200
+  instances, rafts / rim05 pools unchanged).
+* Clean A/B (`ab/`): two scratch copies of the SAME current tree, A = my two files at 2a4d3b4 (wave-8 state), B = it06
+  (all other owners' files identical): 05 mad 51.2 -> 51.3, hue_corr 0.865 -> 0.871, edge_corr 0.191 -> 0.194, river mid
+  47.1 -> 47.3, Benny+near 47.4 -> 47.5 (raw, not fidelity %); gain.py B vs A: LL -2.0 (better), splash -0.3, LR +0.1,
+  rims +0.1/+0.3, Lclump +6.0 (worse: brighter). clumpcol A W32/11/14/15 S49/48/47/39 -> B W49/31/34/22 S39/41/38/35
+  (ref W25/28/28/22 S56/38/44/41); clumptone (pink-free) LL A L185/228/238 -> B 187/231/249 (ref 179/233/253), LR A
+  185/226/239 -> B 187/231/250 (ref 184/231/253), Lrim A 187/226/247 -> B 177/230/253 (ref 176/221/251), Lclump A
+  188/228/243 -> B 183/238/253 (ref 181/219/252). splashext A 18.8/18.4 -> B 20.5/21.8 % (wide box, incl. the bands).
+* Regression `regress/` vs `wave9/baseline`: 03, 06, 07 = 0 px > 8 below the HUD; 04 = 12,993 px (far window into 05,
+  x 304-550 y 448-655) and 08 = 11,996 px (walls, y 220-659) - the A/B shows mine are 04: 670 px (max delta 20, the 05
+  rim05 impostors seen through 04's far opening: intended, they ARE 05 foam), 08: 0 px; the rest is other owners'
+  concurrent water / environment edits.
+* `node scripts/gameplay-test.mjs`: pass (8/8, plunge 61.41, errors []).
+* Open: the Lclump beside Benny (x 0-150, y 1000-1110) is too bright (median L 238 vs ref 219, W49 vs 25); the splash
+  fringe is narrower / shorter than the ref's (left x 250-360 to y ~1250 vs 200-345 to ~1300) and the wide-box whitish
+  share did not drop (the ribbon's white flow lines and the new bands share that box); no soap bubbles over the lower
+  corners (a 05-only initial-placement change showed none and was reverted); the far rims beyond the seam
+  (path-camera) still use the wave-8 colours.

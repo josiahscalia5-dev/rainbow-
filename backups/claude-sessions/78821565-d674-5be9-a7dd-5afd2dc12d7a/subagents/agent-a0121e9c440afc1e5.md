@@ -2033,3 +2033,31 @@ Now revert the `floorAt` plumbing in my ForcedTunnel class (keep only `aspect`/`
 
 > ↩︎ result: - wave9 washer-environment-modeler → path-camera-transition-engineer (02:44 UTC): thanks — oval far section works (scratch probe: no seam). One more 05-only shape term, same blend as the oval: `OVAL05.shift` = −1.8 u, a LATERAL OFFSET of the tunnel centre line along `right` (environment `shift05(s)` = OVAL05.shift·(oval05(s)−1)/(K−1); walls/rings/lids get `c += right·shift05(s)`). Reason: ref ring #1 is centred ≈67 px and ring #2 ≈24 px LEFT of the VP (ring #1 sides x≈10/855), the river sits right of the tunnel centre (broad left bank, narrow right bank); a parallel offset of a straight tunnel keeps the VP, so your far rings still converge on it. Please offset ForcedTunnel's centre the same way (c0 + Rt·shift05(sF05), i.e. every far cross-section/ring/lid centre), names `oval05`/`floor05`/`shift05` stay in buildEnvironment. Your 02:34 note (near water hidden under the bank floor) — not reproducible in my probes at 02:4x (water visible, floor 0.18 u under the water line); tell me if you still see it. Also FYI: my near lids are now one pair per bay just BEYOND each real ring (lid05: slab, angle 18, droop −38, size 2.8, stretch 1.6, sink 0.25 on the ellipse normal) — your far lids rea …[+1458 chars]
 
+### 🤖 Claude — 2026-11-16T02:44:59.515Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"shift\" src/world/tube.ts | head -20; sed -n '/^export function buildWallLids/,/^}/p' src/world/tube.ts | grep -n \"oval\\|shift\\|sink\\|dir\\b\\|normal\\|nrm\" | head -20; grep -n \"const lid05 =\\|lids05 =\" src/world/environment.ts", "description": "Inspect env's shift and lid placement code"}`
+
+### 🧑 User — 2026-11-16T02:44:59.575Z
+
+> ↩︎ result: 177:  /** wave 9 (05): lateral offset of the cross-section centre along `right` (units; OVAL05.shift) */
+> 178:  shift?: (s: number) => number;
+> 184: * `floorBelowWater` units under the water line (see TubeGeoOptions.floor), and `shift`: lateral offset (along
+> 188:export const OVAL05 = { K: 1.7, floorBelowWater: 0.18, shift: -1.8 } as const;
+> 211:    if (o.shift) c.addScaledVector(f.right, o.shift(s));
+> 323:  /** wave 9 (05): lateral offset of the ring centre along `right` (see TubeGeoOptions.shift) */
+> 324:  shift?: (s: number) => number;
+> 388:      if (opts.shift) c.addScaledVector(f.right, opts.shift(ss));
+> 435:    /** wave 9: lateral offset of the wall's centre (see TubeGeoOptions.shift) */
+> 436:    shift?: (s: number) => number;
+> 455:      if (opts.shift) c.addScaledVector(f.right, opts.shift(s));
+> 8:    angleDeg?: number; droopDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number;
+> 18:    /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */
+> 19:    oval?: (s: number) => number;
+> 20:    /** wave 9: lateral offset of the wall's centre (see TubeGeoOptions.shift) */
+> 21:    shift?: (s: number) => number;
+> 32:  const c = new THREE.Vector3( …[+1476 chars]
+
+### 🤖 Claude — 2026-11-16T02:44:59.806Z
+
+You've hit your 5-hour limit · resets 7:10am (UTC)
+
