@@ -3462,3 +3462,70 @@ Now the shader mode. It's a runtime branch inside the existing proj05 block, so 
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && Q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=0' && rm -rf $S/w2 && node scripts/proj05-move.mjs --q=\"$Q\" --out=$S/w2 --still=1.82 --fps=6.6 2>&1 | grep -i \"error\\|still frames\"; cat > $S/flowcmp.py <<'EOF'\n\"\"\"flow ghosting: each flowing frame vs the flow-off frame of the SAME instant (same waves, Benny, coins), water region\"\"\"\nimport sys, os, numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nsys.path.insert(0, 'tools/proj05' …[+1772 chars]`
 
+### 🧑 User — 2026-11-16T21:50:50.019Z
+
+> ↩︎ result: still frames 12
+> w0 per frame SSIM: 1.00 0.70 0.64 0.63 0.64 0.70 1.00 0.71 0.65 0.64 0.64 0.70
+>    cycle mean: |d| 12.6  within10 0.650  SSIM 0.721  detail contrast kept 0.94   worst frame: SSIM 0.631, contrast 0.90
+> w1 per frame SSIM: 1.00 0.77 0.71 0.70 0.71 0.77 1.00 0.78 0.72 0.70 0.71 0.77
+>    cycle mean: |d| 10.6  within10 0.710  SSIM 0.777  detail contrast kept 0.94   worst frame: SSIM 0.696, contrast 0.91
+
+### 🤖 Claude — 2026-11-16T21:51:00.490Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I -c \"\nfrom PIL import Image\nb=(60,560,804,1160)\nims=[Image.open('$S/%s/still/0009.png'%d).convert('RGB').crop(b) for d in ('w2','w0','w1')]\nw,h=ims[0].size\nim=Image.new('RGB',(w,3*h+20),(255,255,255))\nfor i,c in enumerate(ims): im.paste(c,(0,i*(h+10)))\nim.save('$S/flow3.png'); print(im.size)\"", "description": "Stack flow-off, old flow, new flow at worst phase"}`
+
+### 🧑 User — 2026-11-16T21:51:01.200Z
+
+> ↩︎ result: (744, 1820)
+
+### 🤖 Claude — 2026-11-16T21:51:01.795Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/flow3.png"}`
+
+### 🧑 User — 2026-11-16T21:51:01.847Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:51:39.901Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2' && for cfg in \"a:projflowmix05=0.5&projflowd05=1.6\" \"b:projflowmix05=0.5&projflowd05=1.0\" \"c:projflowmix05=0.35&projflowd05=1.6\"; do n=${cfg%%:*}; q=${cfg#*:}; rm -rf $S/w3$n; node scripts/proj05-move.mjs --q=\"$B&$q\" --out=$S/w3$n --still=1.82 --fps=6.6 2>&1 | grep -i \"error\" ; done; python3 -I $S/flowcmp.py $S/w2 $S/w0 $S/w1 $S/w3a $S/w3b $S/w3c 2>&1 | grep -v \"per frame\"; python3 -I -c \"\nfrom PIL import …[+342 chars]`
+
+### 🤖 Claude — 2026-11-16T21:51:41.165Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/flow3b.png"}`
+
+### 🧑 User — 2026-11-16T21:54:29.103Z
+
+> ↩︎ result: cycle mean: |d| 12.6  within10 0.650  SSIM 0.721  detail contrast kept 0.94   worst frame: SSIM 0.631, contrast 0.90
+>    cycle mean: |d| 10.6  within10 0.710  SSIM 0.777  detail contrast kept 0.94   worst frame: SSIM 0.696, contrast 0.91
+>    cycle mean: |d| 5.5  within10 0.829  SSIM 0.930  detail contrast kept 0.91   worst frame: SSIM 0.905, contrast 0.88
+>    cycle mean: |d| 4.4  within10 0.870  SSIM 0.943  detail contrast kept 0.92   worst frame: SSIM 0.919, contrast 0.88
+>    cycle mean: |d| 3.9  within10 0.882  SSIM 0.964  detail contrast kept 0.93   worst frame: SSIM 0.952, contrast 0.90
+
+### 🧑 User — 2026-11-16T21:54:29.150Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:55:02.660Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && cat > $S/flowdir.py <<'EOF'\n\"\"\"direction of the MOVING part of the water: (flowing frame - flow-off frame of the same instant), tracked between\nconsecutive frames with phase correlation in three river windows; +y = down the screen = toward the camera\"\"\"\nimport sys, numpy as np, cv2\nfrom PIL import Image\nref, d = sys.argv[1], sys.argv[2]\nn = 12\nL = lambda p: cv2.cvtColor(np.asarray(Image.open(p).convert('RGB')), cv2.COLOR_RGB2GRAY).astype(np.float32)\nR = [L(f'{d}/still/{i:04d}.png') …[+1099 chars]`
+
+### 🧑 User — 2026-11-16T21:55:08.967Z
+
+> ↩︎ result: w0
+>   far core         moving-part amplitude   3.9 levels | tracked pairs  8 | toward camera in 8/8 | median shift px (x, y) [-0.3  1. ]
+>   mid left ribbon  moving-part amplitude  10.0 levels | tracked pairs  8 | toward camera in 7/8 | median shift px (x, y) [-0.2  1.2]
+>   near right       moving-part amplitude   5.3 levels | tracked pairs  8 | toward camera in 7/8 | median shift px (x, y) [0.  3.4]
+> w1
+>   far core         moving-part amplitude   3.7 levels | tracked pairs  8 | toward camera in 8/8 | median shift px (x, y) [-0.6  0.9]
+>   mid left ribbon  moving-part amplitude   5.7 levels | tracked pairs  8 | toward camera in 8/8 | median shift px (x, y) [-0.6  1.3]
+>   near right       moving-part amplitude   5.3 levels | tracked pairs  8 | toward camera in 8/8 | median shift px (x, y) [0.  4.1]
+> w3a
+>   far core         moving-part amplitude   1.8 levels | tracked pairs  8 | toward camera in 8/8 | median shift px (x, y) [-0.6  0.9]
+>   mid left ribbon  moving-part amplitude   2.9 levels | tracked pairs  8 | toward camera in 8/8 | median shift px (x, y) [-0.5  1.3]
+>   near right       moving-part amplitude   2.7 levels | tracked pairs  8 | toward camera in 8/8 | median shift px (x, y) [0.1 4.1] …[+401 chars]
+
+### 🤖 Claude — 2026-11-16T21:55:33.892Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold=\"\"\"  // still, and `projflowmix05` (share of the flowing picture, 1 = all) can keep part of the picture fixed.\"\"\"\nnew=\"\"\"  // still, and `projflowmix05` (share of the picture that travels; default 0.5, 1 = all) keeps the rest of the approved\n  // picture fixed where it is painted — measured (qa/pilot05/proj/flow2/NOTES.md): similarity to the unflowed design\n  // over a cycle 0.72 (old flow) -> 0.93, never below 0.90; direction toward the camera in every tracked frame pair.\"\"\"\nassert old in s; s …[+1436 chars]`
+

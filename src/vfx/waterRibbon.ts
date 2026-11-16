@@ -1637,11 +1637,13 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   const rate = qn('projrate05', 0.55);
   // `&projflow05=2` (2026-11-16, tools/proj05/flow_bake.py): the same two-phase flow, but each phase slides ALONG the
   // approved streaks (flow map proj05_WN / proj05_WT) instead of straight down the river, foam banks and bubbles stay
-  // still, and `projflowmix05` (share of the flowing picture, 1 = all) can keep part of the picture fixed.
+  // still, and `projflowmix05` (share of the picture that travels; default 0.5, 1 = all) keeps the rest of the approved
+  // picture fixed where it is painted — measured (qa/pilot05/proj/flow2/NOTES.md): similarity to the unflowed design
+  // over a cycle 0.72 (old flow) -> 0.93, never below 0.90; direction toward the camera in every tracked frame pair.
   const FLOW2 = qs.get('projflow05') === '2';
   u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };
   u.uPjWN = { value: empty }; u.uPjWT = { value: empty };
-  u.uPjFlow2 = { value: new THREE.Vector4(0, 2, 4.8, THREE.MathUtils.clamp(qn('projflowmix05', 1), 0, 1)) };
+  u.uPjFlow2 = { value: new THREE.Vector4(0, 2, 4.8, THREE.MathUtils.clamp(qn('projflowmix05', 0.5), 0, 1)) };
   u.uPjPost = { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) };
   u.uPjRes = { value: new THREE.Vector2(864, 1536) };
   u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };
