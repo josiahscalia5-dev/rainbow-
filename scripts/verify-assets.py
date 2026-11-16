@@ -167,7 +167,10 @@ def cmd_agents() -> int:
         print(f"  {a['name']:34} {a['state']:7} next: {a['relaunch_when'][:70]}")
     extra = sorted(x.stem for x in (REPO / ".claude" / "agents").glob("*.md")) if (REPO / ".claude" / "agents").is_dir() else []
     unknown = [x for x in extra if x not in {a["name"] for a in roster["agents"]}]
-    running = roster.get("running_now") or []
+    # entries are names (older rosters) or {"agent": ..., ...} dicts; a recorded "running" specialist never survives
+    # the end of its session, so it is reported as interrupted until a live session relaunches it
+    running = [r if isinstance(r, str) else str(r.get("agent", r)) for r in (roster.get("running_now") or [])]
+    running = [f"{r} (recorded running = INTERRUPTED unless relaunched this session)" for r in running]
     for pr in problems:
         print("  PROBLEM:", pr)
     if problems:
