@@ -424,6 +424,19 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
 float pjDetail(float u, float s) {
   return texture2D(uPjD, vec2(u / uPjDS.x, s / uPjDS.y)).r - 0.5;
 }
+// ?projflow05=2 — the approved design's own streak direction at (u, s): x = du/ds along the streak, y = flow mask
+// (0 on foam banks, bubbles and the river's edge). Baked by tools/proj05/flow_bake.py from the N and T layers.
+uniform sampler2D uPjWN;   // flow map of the near layer (R slope, G mask, B coverage)
+uniform sampler2D uPjWT;   // flow map of the periodic tile
+uniform vec4 uPjFlow2;     // streamline mode on, slope scale, river half width (u), share of the flowing picture
+vec2 pjFlowDir(float u, float s) {
+  float ny = (s - uPjNS.x) / (uPjNS.y - uPjNS.x);
+  vec3 fn = texture2D(uPjWN, vec2(u * 0.5 + 0.5, ny)).rgb;
+  vec3 ft = texture2D(uPjWT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
+  float wn = fn.b * smoothstep(0.0, 0.08, ny) * (1.0 - smoothstep(0.92, 1.0, ny));
+  vec2 f = mix(ft.rg, fn.rg, wn);
+  return vec2((f.r - 0.5) / uPjFlow2.y, f.g);
+}
 ${PROJ05_INVERSE}#endif
 ${NOISE_GLSL}
 ${FRAG_FX_GLSL}
@@ -1371,15 +1384,32 @@ void main() {
       float D = uPjFlow.x * uPjFlow.w;
       float sA = s + D * (ph - 0.5);
       float sB = s + D * (fract(ph + 0.5) - 0.5);
+      float uA = u, uB = u;
+      if (uPjFlow2.x > 0.5) {
+        // ?projflow05=2: slide along the approved streaks (the S-curves), not straight down the river — the pink
+        // ribbons stay where they are painted, only what lies along them travels; foam banks and bubbles stay still
+        vec2 fd = pjFlowDir(u, s);
+        float k = fd.y / sqrt(1.0 + fd.x * fd.x * uPjFlow2.z * uPjFlow2.z);     // same speed along any direction
+        float oA = (sA - s) * k, oB = (sB - s) * k;
+        sA = s + oA; uA = u + fd.x * oA;
+        sB = s + oB; uB = u + fd.x * oB;
+      }
       float wA = 1.0 - abs(2.0 * ph - 1.0);
       float wEA, wEB, wNA, wNB;
-      vec3 tA = pjTarget(u, sA, mE, wEA, wNA);
-      vec3 tB = pjTarget(u, sB, mE, wEB, wNB);
+      vec3 tA = pjTarget(uA, sA, mE, wEA, wNA);
+      vec3 tB = pjTarget(uB, sB, mE, wEB, wNB);
       vec3 tgt = mix(tB, tA, wA);
       float wEx = mix(wEB, wEA, wA);
       float wNx = mix(wNB, wNA, wA);
-      float det = mix(pjDetail(u, sB), pjDetail(u, sA), wA);
+      float det = mix(pjDetail(uB, sB), pjDetail(uA, sA), wA);
       tgt = clamp(tgt + det * uPjDS.z * (1.0 - wEx), 0.0, 1.0);
+      if (uPjFlow2.x > 0.5 && uPjFlow2.w < 0.999) {
+        // keep a share of the approved picture exactly where it is painted (the layout never dissolves)
+        float wE0, wN0;
+        vec3 t0 = pjTarget(u, s, mE, wE0, wN0);
+        t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * (1.0 - wE0), 0.0, 1.0);
+        tgt = mix(t0, tgt, uPjFlow2.w);
+      }
       if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));
       vec3 lin = pjInverse(tgt);
       #ifdef USE_FOG
@@ -1605,7 +1635,13 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   // flow toward the camera: distance (s units) per cycle, cycles / s; phase chosen so the frozen QA clock (t = 12)
   // shows layer A alone at zero offset (the locked comparison is the static bake)
   const rate = qn('projrate05', 0.55);
+  // `&projflow05=2` (2026-11-16, tools/proj05/flow_bake.py): the same two-phase flow, but each phase slides ALONG the
+  // approved streaks (flow map proj05_WN / proj05_WT) instead of straight down the river, foam banks and bubbles stay
+  // still, and `projflowmix05` (share of the flowing picture, 1 = all) can keep part of the picture fixed.
+  const FLOW2 = qs.get('projflow05') === '2';
   u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };
+  u.uPjWN = { value: empty }; u.uPjWT = { value: empty };
+  u.uPjFlow2 = { value: new THREE.Vector4(0, 2, 4.8, THREE.MathUtils.clamp(qn('projflowmix05', 1), 0, 1)) };
   u.uPjPost = { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) };
   u.uPjRes = { value: new THREE.Vector2(864, 1536) };
   u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };
@@ -1643,6 +1679,17 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
     (u.uPjTS.value as THREE.Vector2).set(lut.T.a, lut.T.L);
     const ds = u.uPjDS.value as THREE.Vector4;
     ds.x = lut.D.u1 - lut.D.u0; ds.y = lut.D.s1 - lut.D.s0;
+  }).then(() => {
+    if (!FLOW2) return undefined;
+    return Promise.all([
+      load(new URL('../../assets/textures/water05/proj05_WN.png', import.meta.url).href, false, false),
+      tile(new URL('../../assets/textures/water05/proj05_WT.png', import.meta.url).href),
+      fetch(new URL('../../assets/textures/water05/proj05_flow.json', import.meta.url).href).then((r) => r.json()),
+    ]).then(([WN, WT, meta]) => {
+      u.uPjWN.value = WN; u.uPjWT.value = WT;
+      const f2 = u.uPjFlow2.value as THREE.Vector4;
+      f2.x = 1; f2.y = meta.scale; f2.z = meta.half_width_u;
+    });
   }).catch((e) => { console.error('[rainbow] proj05 textures failed', e); });
   const size = new THREE.Vector2();
   const onBeforeRender = (renderer: THREE.WebGLRenderer) => {

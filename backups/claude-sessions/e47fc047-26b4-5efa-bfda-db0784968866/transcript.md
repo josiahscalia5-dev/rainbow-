@@ -3315,3 +3315,150 @@ Restored, byte-identical to the original. Now the water itself: I'll read how th
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T21:46:00.528Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 1586, "limit": 62}`
+
+### 🧑 User — 2026-11-16T21:46:00.544Z
+
+> ↩︎ result: 1586	/** `?proj05=1`: the baked approved-water layers (assets/textures/water05/, tools/proj05/bake.py) + live post values */
+> 1587	function attachProj05(u: Record<string, THREE.IUniform>) {
+> 1588	  const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
+> 1589	  const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+> 1590	  const urls = {
+> 1591	    E: new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+> 1592	    N: new URL('../../assets/textures/water05/proj05_N.png', import.meta.url).href,
+> 1593	    T: new URL('../../assets/textures/water05/proj05_T.png', import.meta.url).href,
+> 1594	    D: new URL('../../assets/textures/water05/proj05_D.png', import.meta.url).href,
+> 1595	    lut: new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href,
+> 1596	  };
+> 1597	  const empty = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1);
+> 1598	  empty.needsUpdate = true;
+> 1599	  for (const k of ['uPjE', 'uPjN', 'uPjT', 'uPjD', 'uPjLut']) u[k] = { value: empty };
+> 1600	  u.uPjLutS = { value: new THREE.Vector4(0, 1, 1, 0) };
+> 1601	  u.uPjESize = { v …[+3028 chars]
+
+### 🤖 Claude — 2026-11-16T21:46:02.938Z
+
+> 🔧 **Bash** `{"command": "grep -c \"uniform sampler2D\\|uniform samplerCube\" src/vfx/waterRibbon.ts; sed -n 340,384p src/vfx/waterRibbon.ts | grep -n \"sampler\" ; cat assets/textures/water05/proj05_lut.json | python3 -c \"import json,sys; d=json.load(sys.stdin); print({k:(v if not isinstance(v,list) else 'list[%d]'%len(v)) for k,v in d.items()})\"; python3 -I -c \"\nfrom PIL import Image\nfor n in 'ENTD':\n    im=Image.open('assets/textures/water05/proj05_%s.png'%n); print(n, im.size, im.mode)\"", "description": "Count samplers and inspect water textures"}`
+
+### 🧑 User — 2026-11-16T21:46:03.099Z
+
+> ↩︎ result: 9
+> 26:uniform sampler2D uFlowMap;
+> 27:uniform sampler2D uRipple;
+> 29:uniform sampler2D uPano;
+> {'note': 'Screen 05 proj05 bake (tools/proj05/bake.py). E: s -> V (row), c (centre u), w (half range u); v grows with s.', 'E': {'s0': 129.71197937011718, 's1': 180.97108032226564, 'n': 1024, 'width': 1024, 'height': 1458, 'V': [0.0, 0.0103604, 0.0206676, 0.0308829, 0.0409733, 0.0509127, 0.0606821, 0.0702692, 0.0796673, 0.0888737, 0.0978889, 0.1067154, 0.1153566, 0.1238167, 0.1320996, 0.1402095, 0.1481502, 0.1559256, 0.1635392, 0.170995, 0.1782965, 0.1854474, 0.1924509, 0.1993101, 0.2060281, 0.2126079, 0.2190524, 0.2253646, 0.2315476, 0.2376046, 0.2435385, 0.2493522, 0.2550487, 0.2606306, 0.2661008, 0.2714622, 0.2767176, 0.2818695, 0.2869207, 0.2918734, 0.2967298, 0.3014922, 0.306163, 0.3107444, 0.3152389, 0.3196489, 0.3239769, 0.3282252, 0.332396, 0.3364914, 0.3405138, 0.3444654, 0.3483484, 0.3521652, 0.3559178, 0.3596084, 0.3632388, 0.3668109, 0.3703266, 0.3737877, 0.3771963, 0.3805542, 0.3838633, 0.3871255, 0.3903426, 0.3935163, 0.396648, 0.3997394, 0.4027922, 0.4058079, 0.4087882, 0.4117348, 0.414649, 0.4175324, 0.4203859, 0.4232106, 0.4260073, 0.4287769, 0.4315201, 0.4342379, 0.4369312,  …[+26464 chars]
+
+### 🤖 Claude — 2026-11-16T21:47:02.488Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/proj05/flow_bake.py", "content": "\"\"\"Screen 05 approved-water FLOW MAP (`?proj05=1&projflow05=2`, src/vfx/waterRibbon.ts): the direction in which the\napproved picture's own streaks run, read from the baked water layers in river coordinates (u across -1..1, s = arc\nlength), so the flow animation slides the fine streaks ALONG the painted S-curves instead of sliding the whole picture\nstraight down the river (which doubles the pink ribbons, the foam banks and the bubbles twice per cycle).\n  proj05_WN.png  from the near layer N (s 126..166)      R = 0 …[+6265 chars]`
+
+### 🧑 User — 2026-11-16T21:47:02.557Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/proj05/flow_bake.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T21:47:05.353Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I tools/proj05/flow_bake.py assets/textures/water05 4.8 --debug=$S/flowdbg && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('$S/flowdbg/flow_N.png'); print(im.size)\nim.crop((0,480,im.width,960)).resize((im.width*3,480*3//2*1),Image.LANCZOS).save('$S/flowdbg/flow_N_near.png')\"", "description": "Bake flow map and render direction debug view"}`
+
+### 🧑 User — 2026-11-16T21:47:06.293Z
+
+> ↩︎ result: {"scale": 2.0, "half_width_u": 4.8, "note": "R = 0.5 + m * scale (m = du/ds along the approved streaks), G = flow mask, B = coherence", "N": {"mean_abs_slope_world": 0.204, "flow_area": 0.33}, "T": {"mean_abs_slope_world": 0.164, "flow_area": 0.737}}
+> (230, 960)
+
+### 🤖 Claude — 2026-11-16T21:47:09.681Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/flowdbg/flow_N_near.png"}`
+
+### 🧑 User — 2026-11-16T21:47:09.707Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:47:22.615Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/flow_bake.py'; s=open(p).read()\nold=\"\"\"    mask = np.clip(1.0 - 1.6 * still, 0, 1) * edge * np.clip(cv * 1.5, 0, 1)\"\"\"\nnew=\"\"\"    mask = np.clip(1.0 - 1.6 * still, 0, 1) * edge\"\"\"\nassert old in s; s=s.replace(old,new)\nold=\"\"\"    return m, mask, coh, img\"\"\"\nnew=\"\"\"    return m, mask, np.clip(cv, 0, 1), img\"\"\"\nassert old in s; s=s.replace(old,new)\ns=s.replace(\"\"\"                                                          B = coherence of the direction estimate (QA only)\"\"\",\"\"\"                                 …[+834 chars]`
+
+### 🧑 User — 2026-11-16T21:47:23.316Z
+
+> ↩︎ result: {"scale": 2.0, "half_width_u": 4.8, "note": "R = 0.5 + m * scale (m = du/ds along the approved streaks), G = flow mask, B = layer coverage", "N": {"mean_abs_slope_world": 0.215, "flow_area_of_covered": 0.843}, "T": {"mean_abs_slope_world": 0.164, "flow_area": 0.737}}
+
+### 🤖 Claude — 2026-11-16T21:47:39.586Z
+
+Now the shader mode. It's a runtime branch inside the existing proj05 block, so the current flow stays the default and will be checked pixel-identical.
+
+### 🤖 Claude — 2026-11-16T21:47:44.737Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "float pjDetail(float u, float s) {\n  return texture2D(uPjD, vec2(u / uPjDS.x, s / uPjDS.y)).r - 0.5;\n}", "new_string": "float pjDetail(float u, float s) {\n  return texture2D(uPjD, vec2(u / uPjDS.x, s / uPjDS.y)).r - 0.5;\n}\n// ?projflow05=2 — the approved design's own streak direction at (u, s): x = du/ds along the streak, y = flow mask\n// (0 on foam banks, bubbles and the river's edge). Baked by tools/proj05/flow_bake.py from the N and T layers.\nuniform sampler2D uPjWN;   // flow map of the  …[+615 chars]`
+
+### 🧑 User — 2026-11-16T21:47:44.820Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T21:47:53.319Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      float D = uPjFlow.x * uPjFlow.w;\n      float sA = s + D * (ph - 0.5);\n      float sB = s + D * (fract(ph + 0.5) - 0.5);\n      float wA = 1.0 - abs(2.0 * ph - 1.0);\n      float wEA, wEB, wNA, wNB;\n      vec3 tA = pjTarget(u, sA, mE, wEA, wNA);\n      vec3 tB = pjTarget(u, sB, mE, wEB, wNB);\n      vec3 tgt = mix(tB, tA, wA);\n      float wEx = mix(wEB, wEA, wA);\n      float wNx = mix(wNB, wNA, wA);\n      float det = mix(pjDetail(u, sB), pjDetail(u, sA), wA);\n      tgt = clamp(tgt + det …[+1548 chars]`
+
+### 🧑 User — 2026-11-16T21:47:53.392Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T21:47:57.688Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };", "new_string": "  // `&projflow05=2` (2026-11-16, tools/proj05/flow_bake.py): the same two-phase flow, but each phase slides ALONG the\n  // approved streaks (flow map proj05_WN / proj05_WT) instead of straight down the river, foam banks and bubbles stay\n  // still, and `projflowmix05` (share of the flowing picture, 1 = all) can keep part of the picture fixed.\n …[+354 chars]`
+
+### 🧑 User — 2026-11-16T21:47:57.776Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T21:48:01.635Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    const ds = u.uPjDS.value as THREE.Vector4;\n    ds.x = lut.D.u1 - lut.D.u0; ds.y = lut.D.s1 - lut.D.s0;\n  }).catch((e) => { console.error('[rainbow] proj05 textures failed', e); });", "new_string": "    const ds = u.uPjDS.value as THREE.Vector4;\n    ds.x = lut.D.u1 - lut.D.u0; ds.y = lut.D.s1 - lut.D.s0;\n  }).then(() => {\n    if (!FLOW2) return undefined;\n    return Promise.all([\n      load(new URL('../../assets/textures/water05/proj05_WN.png', import.meta.url).href, false, false),\n      …[+488 chars]`
+
+### 🧑 User — 2026-11-16T21:48:01.733Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T21:48:07.822Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . 2>&1 | tail -5; S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && Q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2' && rm -rf $S/w1 && node scripts/proj05-move.mjs --q=\"$Q\" --out=$S/w1 --still=1.82 --fps=6.6 2>&1 | grep -i \"error\\|still frames\" ; python3 -I tools/proj05/screen_regions.py $S/w1/still/*.png 2>&1 | grep -E \"png|WATER\" | sed \"s#$S/##\" | paste - - | awk '{print $1, $6, $7, $8, $9, $10, $11, $12}'", "description": "Capture and measure the new streamline flow mode", "timeout": …[+8 chars]`
+
+### 🧑 User — 2026-11-16T21:49:04.898Z
+
+> ↩︎ result: still frames 12
+> w1/still/0000.png 8.62 <=10 0.877 <=20 0.925 SSIM 0.917
+> w1/still/0001.png 24.45 <=10 0.401 <=20 0.638 SSIM 0.545
+> w1/still/0002.png 28.38 <=10 0.313 <=20 0.534 SSIM 0.473
+> w1/still/0003.png 29.65 <=10 0.278 <=20 0.497 SSIM 0.446
+> w1/still/0004.png 28.38 <=10 0.288 <=20 0.529 SSIM 0.448
+> w1/still/0005.png 26.29 <=10 0.320 <=20 0.570 SSIM 0.450
+> w1/still/0006.png 30.29 <=10 0.289 <=20 0.519 SSIM 0.420
+> w1/still/0007.png 31.01 <=10 0.244 <=20 0.491 SSIM 0.421
+> w1/still/0008.png 31.81 <=10 0.227 <=20 0.444 SSIM 0.412
+> w1/still/0009.png 31.72 <=10 0.232 <=20 0.447 SSIM 0.407
+> w1/still/0010.png 29.85 <=10 0.262 <=20 0.487 SSIM 0.421
+> w1/still/0011.png 27.53 <=10 0.307 <=20 0.543 SSIM 0.438
+
+### 🤖 Claude — 2026-11-16T21:49:20.426Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\na=np.asarray(Image.open('$S/w1/still/0000.png').convert('RGB')).astype(np.float32)\nb=np.asarray(Image.open('$S/w1/still/0006.png').convert('RGB')).astype(np.float32)\nd=np.abs(a-b).mean(-1)\nprint('mean diff', d.mean().round(2), 'rows 600-1200 mean', d[600:1200].mean().round(2))\n# global shift estimate on a mid-river crop\nfor (y0,y1,x0,x1,name) in [(700,900,250,650,'mid river'),(1250,1450,250,650,'near river'),(250,450,100,40 …[+748 chars]`
+
+### 🧑 User — 2026-11-16T21:49:21.180Z
+
+> ↩︎ result: mean diff 13.84 rows 600-1200 mean 20.88
+> mid river shift px (x,y) [ 0.99 11.05] response 0.134 mean diff 18.0
+> near river shift px (x,y) [ 0.16 31.26] response 0.384 mean diff 29.4
+> wall left shift px (x,y) [-0. -0.] response 1.0 mean diff 0.0
+
+### 🤖 Claude — 2026-11-16T21:49:21.679Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/w1_cmp06.png"}`
+
+### 🧑 User — 2026-11-16T21:49:21.724Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:49:49.679Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && Q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=0' && rm -rf $S/w2 && node scripts/proj05-move.mjs --q=\"$Q\" --out=$S/w2 --still=1.82 --fps=6.6 2>&1 | grep -i \"error\\|still frames\"; cat > $S/flowcmp.py <<'EOF'\n\"\"\"flow ghosting: each flowing frame vs the flow-off frame of the SAME instant (same waves, Benny, coins), water region\"\"\"\nimport sys, os, numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nsys.path.insert(0, 'tools/proj05' …[+1772 chars]`
+
