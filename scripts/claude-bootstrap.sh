@@ -408,7 +408,7 @@ hook)
     exec 8>"$LIVE/bootstrap.lock"
     if flock -n 8; then
       : > "$RES"; UNSHALLOW_TIMEOUT=150; FETCH_TIMEOUT=90
-      { step_identity; pycheck gap "Backup gap since last session" gap --session-start "$(session_start)"; step_resume; } > "$LIVE/bootstrap-hook.log" 2>&1
+      { step_identity; step_resume; pycheck gap "Backup gap since last session" gap --session-start "$(session_start)"; } > "$LIVE/bootstrap-hook.log" 2>&1
       lfs_pull 240 >> "$LIVE/bootstrap-hook.log" 2>&1
       flock -u 8; exec 8>&-
       bash scripts/install-autosave-scheduler.sh > "$HOME/.rainbow-autosave-install.log" 2>&1
@@ -445,9 +445,8 @@ if ! flock -w 600 8; then echo "another bootstrap run holds the lock (backups/.l
 echo "RAINBOW BOOTSTRAP ($MODE) $(date -u '+%Y-%m-%d %H:%M UTC') - $ROOT"
 if [ "$CONTINUE" = 0 ]; then
   : > "$RES"
-  say "1 Repository, backup gap, newest work"
+  say "1 Repository, newest work, backup gap"
   step_identity
-  pycheck gap "Backup gap since last session" gap --session-start "$(session_start)"
   step_resume
   if [ "$DO_RESUME" = 1 ] && ! cmp -s "$SELF" "$ROOT/scripts/claude-bootstrap.sh"; then
     echo "      the merge brought a newer claude-bootstrap.sh: continuing with it"
@@ -455,6 +454,8 @@ if [ "$CONTINUE" = 0 ]; then
     exec bash "$ROOT/scripts/claude-bootstrap.sh" "${ORIG_ARGS[@]}" --continue
   fi
 fi
+# after the merge, so an old checkout already has scripts/verify-assets.py (the hook ran this itself)
+[ "$MODE" = background ] || pycheck gap "Backup gap since last session" gap --session-start "$(session_start)"
 start_tool_installs
 say "2 Game files: LFS binaries, references, screens, agents, Marble"
 step_lfs

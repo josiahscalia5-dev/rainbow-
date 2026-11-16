@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "8fad1d65b0ec412eda0919ea8c8076e05bf4467529dcc259288debe2eab0bc22"
+   "sha256": "cf82f47d6b615bb835fee028db9322d77d01b2f2b04a72ddc1e5656b83cf4c64"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -438,8 +438,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 5516,
-   "sha256": "c2b3a8b4f88206e93e84febe0e79c06a3eceb415db2ab72c19e87e6882599f37"
+   "bytes": 5976,
+   "sha256": "2f5e71aaf710709411f5dcb783e38bf23b6aba5b9eea689d1488ffd5f6a8f81f"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -5688,8 +5688,8 @@
   },
   {
    "path": "scripts/claude-bootstrap.sh",
-   "bytes": 29435,
-   "sha256": "2190070199eb3535fe41be7f794d9f813c20503d1ea1d84a55f789481c86562b"
+   "bytes": 29563,
+   "sha256": "2657e9a6502b0054c2edc2af70c569230357943b0fe10af27c6adfbbd14813bd"
   },
   {
    "path": "scripts/cloud-env-setup.sh",
