@@ -2879,3 +2879,26 @@ I'll answer the Marble question directly, but first a few checks: whether the ol
 
 > 🔧 **Bash** `{"command": "flock -w 180 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:marble-direction 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|skipping'; python3 -I scripts/autosave-status.py", "description": "Save the Marble direction and comparison image", "timeout": 400000}`
 
+### 🧑 User — 2026-11-16T01:44:53.783Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "1f9df5580c13bfbe4e2d55fa1027e690e4b0c3c0",
+> AUTOSAVE OK | branch ccr-937c7fbb-htsrgt | scheduler daemon | last verified backup 2026-11-16T01:44:46+00:00 (0.1 min ago) | local 1f9df55 remote 1f9df55 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-16T01:45:06.043Z
+
+Not directly. The playable game is built in Three.js, a real-time 3D engine. Your Marble worlds have so far been used as measured references: ring spacing, wall colours, tunnel proportions and unrolled wall textures. As of now I've told the environment specialist to put two of the existing Marble assets into the real game:
+- **Reflections:** the full-quality Marble panorama, which was generated from your approved Screen 05, will replace the hand-made reflection lighting. That's what the gold rings, lids and metal walls reflect.
+- **Wall detail:** the unrolled Marble wall textures, used as a guide or as an actual surface texture for the purple walls.
+
+It keeps either change only if the screen looks measurably closer to your approved image. No new Marble world, no API calls and no credits are involved. I'm not using the Marble splats as the playable level itself, because they only cover the stretch of tunnel near the camera, are 26–30 MB per world (too heavy for a phone), and have no continuous river path to ride.
+
+- **Old session:** I can't stop a session on another Claude account from here. It hasn't pushed anything since 01:31 UTC, and it can't overwrite this work: it only saves to its own branch, and I merge anything it adds. To be fully sure, close that session in the other account's Claude app.
+- **Marble key:** the key stored through the secure form works (I checked with a free read). I can't tell whether that's your replacement key. If you made the new key after you used the form, tell me and I'll open the form again. This wave doesn't need the key anyway.
+- **90–95% similarity:** project rules forbid invented percentages, so I report measured differences. The current whole-frame colour difference from your approved image is 51.2 on a 0–255 scale (lower is closer); it was 59.0 before the last round of work.
+
+I've sent you the "before" picture: your approved Screen 05 next to the real game as it is now. When the two specialists finish, I'll send the "after" comparison the same way.
+
+Everything is backed up (`1f9df55`, matches GitHub), and the five-minute autosave keeps running.
+
