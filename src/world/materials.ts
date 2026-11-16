@@ -199,6 +199,169 @@ radiance += tubeStripRadiance(geometryViewDir, geometryNormal, material.roughnes
   return mat;
 }
 
+/** linear radiance for a stylised palette entry: the values are solved so that, after Neutral tone mapping
+ *  (exposure 0.86), sRGB output and the grade pass (sat 1.36 / con 1.15), they land on the display colour
+ *  sampled from the approved reference (comment = target display sRGB) */
+const lin3 = (r: number, g: number, b: number) => new THREE.Vector3(r, g, b);
+
+/**
+ * Ref 05 ring look (wave 7): a stylised polished band instead of the env-map PBR result (which clipped to one
+ * flat orange). The band profile (roundBandGeometry: main half-round band, groove, camera-side lip) is read
+ * from the object-space axial coordinate, so every ring — near, real far, forced-perspective far — gets the
+ * same cross-section: dark rose contour at both edges → rose-copper → orange line → peach-gold body → pale
+ * white-yellow highlight line on the crown, a darker orange-copper groove, and a rose lip with a light crown.
+ * Warm-white "marquee" spots sit at `count` fixed azimuths (top spot at 12 o'clock) so the spots of all rings
+ * line up radially toward the VP like the reference. Deeper rings fade to rose-copper (ref rings #2/#3); the
+ * FarGlow (if the material has one) then melts them into the warm throat. Measured reference cross-section
+ * (ring #1, y 188→230 at x≈499): dark (161,32,91) · rose lip (219,96,104) · groove (202,67,51) · peach body
+ * (241,154,124) with white spots · rose (206,96,104) · dark (122,30,84); side view (y≈450): orange (251,135,29)
+ * then pale yellow crown (252,205,130).
+ */
+export interface BandShade {
+  /** band profile (same numbers as the BandOpts given to bandGeometry) */
+  width: number; lipWidth: number; groove: number;
+  /** spots per turn, spot half-width (fraction of the pitch), spot strength */
+  spots?: [number, number, number];
+  /** view distance range over which the crown highlight fades to rose-copper (deeper rings) */
+  fade?: [number, number];
+}
+export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+  const w = (b.width + b.groove + b.lipWidth) / 2;
+  const uniforms = {
+    uBandG: { value: new THREE.Vector4(w - b.width / 2, b.width / 2, -w + b.lipWidth / 2, b.lipWidth / 2) },
+    uBandS: { value: new THREE.Vector4(...(b.spots ?? [28, 0.13, 1.0]), 0) },
+    uBandF: { value: new THREE.Vector2(...(b.fade ?? [44, 110])) },
+    uBcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
+    uBcRose: { value: lin3(0.5899, 0.2114, 0.2222) }, // (215,95,100)
+    uBcOrange: { value: lin3(0.7352, 0.2871, 0.1269) }, // (240,120,40)
+    uBcCrown: { value: lin3(0.8769, 0.574, 0.3418) }, // (248,185,120)
+    uBcPeak: { value: lin3(1.0043, 0.8508, 0.5516) }, // (255,228,165)
+    uBcGroove: { value: lin3(0.4938, 0.1484, 0.1192) }, // (200,70,50)
+    uBcSpot: { value: lin3(1.6, 1.5, 1.3) }, // warm white, blooms a little
+  };
+  const prev = mat.onBeforeCompile;
+  mat.onBeforeCompile = (shader, r) => {
+    prev.call(mat, shader, r);
+    Object.assign(shader.uniforms, uniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vBandP;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvBandP = position;');
+    const fg = shader.fragmentShader.includes('float farGlowK()');
+    shader.fragmentShader = shader.fragmentShader
+      .replace('void main() {', `varying vec3 vBandP;
+uniform vec4 uBandG; uniform vec4 uBandS; uniform vec2 uBandF;
+uniform vec3 uBcDark; uniform vec3 uBcRose; uniform vec3 uBcOrange; uniform vec3 uBcCrown; uniform vec3 uBcPeak; uniform vec3 uBcGroove; uniform vec3 uBcSpot;
+vec3 bandShade(float deep){
+  float z = vBandP.z;
+  float m = (z - uBandG.x) / uBandG.y;          // main band: -1 camera side … +1 far side
+  float l = (z - uBandG.z) / uBandG.w;          // lip
+  float fm = fwidth(m) + 1e-3, fl = fwidth(l) + 1e-3;
+  float am = abs(m + 0.12);
+  vec3 crown = mix(uBcPeak, uBcCrown, smoothstep(0.04, 0.26 + fm, am));
+  crown = mix(crown, mix(uBcRose * 1.15, uBcCrown, 0.35), deep);   // deeper rings: rose-copper body
+  vec3 c = mix(crown, uBcOrange, smoothstep(0.4, 0.52 + fm, am));
+  c = mix(c, uBcRose, smoothstep(0.58, 0.7 + fm, am));
+  c = mix(c, uBcDark, smoothstep(0.84, 0.98 + fm, am));
+  float al = abs(l);
+  vec3 cl = mix(mix(uBcCrown, uBcRose, 0.45 + 0.4 * deep), uBcRose, smoothstep(0.15, 0.5 + fl, al));
+  cl = mix(cl, uBcDark, smoothstep(0.7, 0.98 + fl, al));
+  float inMain = smoothstep(-1.0 - fm, -1.0 + fm, m);
+  float inLip = 1.0 - smoothstep(1.0 - fl, 1.0 + fl, l);
+  vec3 col = mix(uBcGroove, cl, inLip);
+  col = mix(col, c, inMain);
+  // marquee spots at fixed azimuths (12 o'clock = a spot)
+  float phi = atan(vBandP.y, vBandP.x);
+  float t = (phi - 1.5707963) * uBandS.x / 6.2831853;
+  float ft = min(fwidth(t), fwidth(fract(t + 0.5)));
+  float d = fract(t + 0.5) - 0.5;
+  float sw = uBandS.y + ft * 0.7;
+  float sp = exp(-d * d / (sw * sw)) * mix(1.0, uBandS.y / sw, 0.6);
+  float across = inMain * exp(-pow((m + 0.12) / 0.62, 2.0)) + inLip * (1.0 - inMain) * 0.45 * exp(-l * l / 0.3);
+  col += uBcSpot * sp * across * uBandS.z * (1.0 - 0.45 * deep);
+  return col;
+}
+void main() {`)
+      .replace('#include <opaque_fragment>', `{
+  float bDist = length(vViewPosition);
+${fg ? '  bDist = fgDist();' : ''}
+  vec3 bc = bandShade(smoothstep(uBandF.x, uBandF.y, bDist));
+${fg ? `  float bfg = farGlowK(); float bmt = midTintK();
+  bc = mix(bc, uFarGlowColor * 0.9, min(1.0, bfg * 0.55)) + uFarGlowColor * bfg * 0.25;` : ''}
+  outgoingLight = bc;
+}
+#include <opaque_fragment>`);
+  };
+  const prevKey = mat.customProgramCacheKey.bind(mat);
+  mat.customProgramCacheKey = () => prevKey() + '|band-' + key;
+  mat.userData.bandShade = uniforms;
+  return mat;
+}
+
+/**
+ * Ref 05 wall lids (wave 7): stylised rose-copper half-disc pucks seen from below (reference L1/R1: rim
+ * (229,91,93)…(246,130,114) with white vertical highlight streaks and a bright top edge line, a lighter
+ * rose-peach underside with a thin orange contour). Regions come from the object-space normal of the lid
+ * lathe (wallLidGeometry, half revolution toward +X, Y = top normal), the streaks from the lathe azimuth.
+ */
+export function withLidShading<T extends THREE.MeshStandardMaterial>(mat: T, key: string): T {
+  const uniforms = {
+    uLcRim: { value: lin3(0.6339, 0.2406, 0.2292) }, // (222,105,100)
+    uLcUnder: { value: lin3(0.7758, 0.4074, 0.3748) }, // (238,150,140)
+    uLcTop: { value: lin3(0.8401, 0.4986, 0.3605) }, // (245,170,130)
+    uLcEdgeHi: { value: lin3(1.25, 1.12, 0.85) }, // (255,235,190)+ bright top edge
+    uLcEdgeLo: { value: lin3(0.776, 0.3236, 0.1466) }, // (245,130,50) orange contour
+    uLcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
+    uLcSpot: { value: lin3(1.3, 1.22, 1.05) },
+  };
+  const prev = mat.onBeforeCompile;
+  mat.onBeforeCompile = (shader, r) => {
+    prev.call(mat, shader, r);
+    Object.assign(shader.uniforms, uniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vLidP; varying vec3 vLidN;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvLidP = position; vLidN = normal;');
+    const fg = shader.fragmentShader.includes('float farGlowK()');
+    shader.fragmentShader = shader.fragmentShader
+      .replace('void main() {', `varying vec3 vLidP; varying vec3 vLidN;
+uniform vec3 uLcRim; uniform vec3 uLcUnder; uniform vec3 uLcTop; uniform vec3 uLcEdgeHi; uniform vec3 uLcEdgeLo; uniform vec3 uLcDark; uniform vec3 uLcSpot;
+vec3 lidShade(){
+  vec3 n = normalize(vLidN);
+  float ny = n.y;
+  float th = atan(vLidP.x, vLidP.z);                 // 0..pi along the half disc
+  float rr = length(vLidP.xz);
+  // rim band with vertical highlight streaks (reflections of the tunnel strip lights)
+  float st = pow(0.5 + 0.5 * cos(th * 7.0 - 0.6), 10.0);
+  vec3 rim = uLcRim * (0.9 + 0.25 * sin(th * 2.0 + 0.4)) + uLcSpot * st * 0.75;
+  // bright line along the upper rounded edge, orange contour along the lower one
+  float hi = exp(-pow((ny - 0.55) / 0.22, 2.0));
+  float lo = exp(-pow((ny + 0.5) / 0.2, 2.0));
+  vec3 col = mix(rim, uLcEdgeHi, hi * 0.9);
+  col = mix(col, uLcEdgeLo, lo * 0.8);
+  // underside: lighter rose-peach with a darker recess ring
+  float under = smoothstep(-0.6, -0.85, ny);
+  vec3 uc = mix(uLcUnder, uLcRim * 0.85, exp(-pow((rr - 0.6) / 0.05, 2.0)) * 0.8);
+  col = mix(col, uc, under);
+  float top = smoothstep(0.75, 0.9, ny);
+  col = mix(col, uLcTop + uLcSpot * 0.25 * st, top);
+  // dark seam where the lid meets the wall
+  col = mix(col, uLcDark, smoothstep(0.12, 0.0, th) * 0.6 + smoothstep(3.02, 3.14159, th) * 0.6);
+  return col;
+}
+void main() {`)
+      .replace('#include <opaque_fragment>', `{
+  vec3 lc = lidShade();
+${fg ? `  float lfg = farGlowK();
+  lc = mix(lc, uFarGlowColor * 0.9, min(1.0, lfg * 0.55)) + uFarGlowColor * lfg * 0.25;` : ''}
+  outgoingLight = lc;
+}
+#include <opaque_fragment>`);
+  };
+  const prevKey = mat.customProgramCacheKey.bind(mat);
+  mat.customProgramCacheKey = () => prevKey() + '|lid-' + key;
+  mat.userData.lidShade = uniforms;
+  return mat;
+}
+
 export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMaterial {
   const mat = new THREE.MeshStandardMaterial({
     color: o.color ?? '#d13fd6',

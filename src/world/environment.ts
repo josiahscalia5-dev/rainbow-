@@ -6,7 +6,7 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
-import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, tunnelEndGlowMaterial, farRiverMaterial, type FarGlow, type TubeStrips } from './materials';
+import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, tunnelEndGlowMaterial, farRiverMaterial, type FarGlow, type TubeStrips } from './materials';
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
@@ -250,12 +250,18 @@ export function buildEnvironment(course: Course): Environment {
   const glow05: FarGlow = { color: '#ffd796', near: 160, far: 470, strength: 1.6, mid: { color: '#8a30d2', near: 4, far: 48, amount: 0.45 } };
   const wall05 = {
     // lavender F0 × the magenta tube environment → violet-magenta metal (ref #992FC2 / #CD32AA)
-    ...wallBase, color: '#f29ad6', emissive: '#360440', emissiveIntensity: 0.14, envMapIntensity: 0.74,
-    rimColor: '#ff4fd8', rimStrength: 0.45, farGlow: glow05,
-    repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.1] as [number, number],
+    // wave 7: no pressed-metal corrugation (its bent normals turned the strip reflections into the "marbled
+    // swirl"), only a faint bevel; shaded slot lips instead of the bright pink dotted outline; shorter, plumper
+    // capsules (ref median slot 25 px², elongation 4.3; live was 40 px², 8.8); bluer violet F0 (ref wall
+    // medians (171,44,177) / (188,51,205) / (154,46,166))
+    ...wallBase, color: '#d49cf4', emissive: '#2a0648', emissiveIntensity: 0.14, envMapIntensity: 0.74,
+    relief: { corrugation: 0, bevel: 0.018, bevelWidth: 0.08 },
+    rimColor: '#b02a9a', rimStrength: 0.12, farGlow: glow05,
+    repeatV: 1 / slotPitch05, slotHalf: [0.2, 0.125] as [number, number],
     offsetV: 0.5 - ((((rings05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
   };
-  const strips05: TubeStrips = { ...strips, intensity: 2.8 };
+  // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
+  const strips05: TubeStrips = { ...strips, intensity: 3.4, width: 0.03 };
   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
   const addWall = (a0: number, a1: number, mat: THREE.Material) => {
@@ -277,8 +283,11 @@ export function buildEnvironment(course: Course): Environment {
   // one orange) and the rounded double-lip band (bandGeometry) whose crown, groove and lip catch the
   // strip lights as marquee spots
   const goldEnv05 = washerTubeEnv('gold05');
+  const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
+  // wave 7: the band colour is the stylised cross-section of withBandShading (materials.ts); the PBR/env
+  // result underneath only feeds the depth buffer now
   const gold05 = (key: string, virtual: boolean) => {
-    const m = withTubeStrips(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glow05, key, virtual), { ...strips, color: '#fff2c8', intensity: 2.6, width: 0.016 }, 'instance', key);
+    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glow05, key, virtual), band05, key);
     m.emissive.set('#e08a10');
     m.envMap = goldEnv05;
     m.envMapIntensity = 1.15;
@@ -286,7 +295,6 @@ export function buildEnvironment(course: Course): Environment {
   };
   const ringMat05 = gold05('ring05', false);
   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
-  const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
   // gold junction collar 04→05 (slightly heavier)
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
   zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05 }));
@@ -307,15 +315,17 @@ export function buildEnvironment(course: Course): Environment {
   };
   // 05 (ref §5.5): flat round copper-gold lids ('slab' half-disc pucks standing out of the wall, seen from
   // below at an angle), one symmetric pair per bay at mid-bay, ≈12° above the axis on both walls
-  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -24, size: 1.9, thickness: 0.42, stretch: 1.0, sink: 0.1 };
+  // wave 7: rose-copper pucks (withLidShading), thicker rim band, just camera-side of each ring (ref L1/L2/R1/R2
+  // end right where a ring band starts)
+  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -30, size: 2.1, thickness: 0.62, stretch: 1.0, sink: 0.1 };
   const lidMat05 = (key: string, virtual: boolean) => {
-    const m = withTubeStrips(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glow05, key, virtual), { ...strips, color: '#fff0d0', intensity: 0.8 }, 'instance', key);
+    const m = withLidShading(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glow05, key, virtual), key);
     m.emissive.set('#c86a18');
     m.envMap = goldEnv05;
     m.envMapIntensity = 1.35;
     return m;
   };
-  const lids05 = rings05.map((s) => s - bay05 / 2).filter((s) => s > s05 + 4);
+  const lids05 = rings05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
   zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];

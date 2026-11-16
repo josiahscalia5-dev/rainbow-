@@ -17,3 +17,23 @@ coins on the core. Baseline/PREV = `qa/pilot05/wave7/baseline/05.png`.
 
 ## Log
 (updated after every capture)
+
+### Facts measured before editing (scratch probe of the locked 05 camera + scratch metric script m05.py)
+* Rows: y 1150 ≈ s 132.44 (Benny's waterline), y 1240/1280/1320/1360 = 0.87/1.19/1.48/1.74 u behind him at
+  205/218/228/239 px/u; visible lateral y 1000 −3.15…+2.95, y 1300 −1.8…+2.0, y 1500 −1.35…+1.7.
+* Ref near sweeps → centre ±(0.4 + 0.52·back) u, half width ≈ 0.2 u. Ref mid bands EXIT the frame: left by y≈930,
+  right by y≈1090. Live: wave-5 `near05` (0.8× offset) + `nb` glide (to Benny ±1.42 u) pulled them back in =
+  the two vertical sheets.
+* Ref | baseline: pink behind Benny (x245–600 y1200–1360) 1.84 | 0.0 %; near lumStd/p5/p95 40.0/105.7/247 |
+  35.8/100.3/216.7; cyan median y1300 #01ACF8 | #18A1FF, y1400 #019AF2 | #1A9EFE; glints y1200–1536 166 | 62,
+  y700–1200 352 | 256.
+
+### it01 — tsc ok, 0 console errors, 86 calls, 633,521 tris (unchanged)
+Changes (`waterRibbon.ts` FRAG): `nb` glide DELETED; new exit push (offL += 2.0·ss(7,2.5,db), offR += 1.6·ss(2.6,0.4,db),
+before the bank clamp); new wake sweeps `pW` (diagonal, centre from Benny's track, satin rel/rims); near field "∩"
+crests (phN) DELETED → fanning flow lanes (kN = lat/(1+0.7·back)) + long speed streaks; 05 ripple rings + V-wake
+gated off (×(1−sw)). Seen: sweeps diagonal ✓, arcs gone ✓, mid bands exit at the sides ✓; but sweeps flat solid tubes,
+≈50 px too far out (Benny's real waterline s ≈ 0.3 u ahead of the row I assumed), near body flat.
+Measured: screen_report mad 59.0 → 55.0 (near band 63.8 → 59.6, mid 53.0 → 49.1; tunnel band also changed by the
+environment specialist's concurrent edit). Sweeps y1280 119–219 / 629–736 (ref 134–238 / 586–669), y1320 68–174 /
+680–795 (ref 91–202 / 626–738). Near lumStd/p5/p95 17.6/136/188 (flat!), cyan y1300 #00A4FF, glints near 64, mid 330.

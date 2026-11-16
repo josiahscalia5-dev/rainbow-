@@ -683,3 +683,308 @@ Now let me look at my source files and the partial patch.
 
 > ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-16T00:47:29.649Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "uniform vec3 uLightDir;\nvarying vec3 vFoam;\nvarying vec3 vPosW;\nvarying vec3 vNormalW;\n#include <fog_pars_fragment>\n${NOISE_GLSL}\n${FRAG_FX_GLSL}\nvoid main() {", "new_string": "uniform vec3 uLightDir;\nuniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)\nvarying vec3 vFoam;\nvarying vec3 vPosW;\nvarying vec3 vNormalW;\n#include <fog_pars_fragment>\n${NOISE_GLSL}\n${FRAG_FX_GLSL}\n${SOAP05_GLSL}\nvoid main() {"}`
+
+### 🧑 User — 2026-11-16T00:47:29.689Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:47:34.800Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  col += vec3(1.0) * spec * 0.45 + iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.18;\n  gl_FragColor = vec4(col * 0.96, 1.0);\n  ${FRAG_TAIL}", "new_string": "  col += vec3(1.0) * spec * 0.45 + iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.18;\n  col *= 0.96;\n  // 05 (wave 7): the low rim under the puffs reads as small piled soap bubbles: white only on the cell\n  // tops, periwinkle bodies, blue-violet crevices between the cells (ref 05 rim)\n  float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothst …[+561 chars]`
+
+### 🧑 User — 2026-11-16T00:47:34.846Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:47:39.559Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  const uniforms = withFog({\n    uTime: { value: 0 },\n    uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },\n    uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },\n  });", "new_string": "  const st05 = course.stage('05');\n  const uniforms = withFog({\n    uTime: { value: 0 },\n    uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },\n    uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },\n    uSt05: { value: new THREE.Vector4(st05.s0 - 6, st …[+48 chars]`
+
+### 🧑 User — 2026-11-16T00:47:39.597Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:47:47.061Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "varying vec3 vInst;\n#include <fog_pars_vertex>\nvoid main() {\n  vInst = instanceColor;\n  float br = 1.0 + 0.035 * sin(uTime * 1.7 + instanceColor.y * 40.0);", "new_string": "varying vec3 vInst;\nvarying float vW5;\n#include <fog_pars_vertex>\nvoid main() {\n  // instanceColor.x = ao + 2 q, q = 0..8 = the 05 soap-shading weight x 8 (wave 7; ao <= 1 so floor(x / 2) = q)\n  float q5 = floor(instanceColor.x * 0.5);\n  vInst = vec3(instanceColor.x - 2.0 * q5, instanceColor.yz);\n  vW5 = q5 / 8.0;\n  float b …[+62 chars]`
+
+### 🧑 User — 2026-11-16T00:47:47.089Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:47:54.621Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "varying vec3 vInst;\n#include <fog_pars_fragment>\n${NOISE_GLSL}\nvoid main() {\n  vec3 N = normalize(vNormalW);\n  vec3 V = normalize(cameraPosition - vPosW);\n  vec3 L = normalize(uLightDir);\n  float wrap = clamp(dot(N, L) * 0.55 + 0.5, 0.0, 1.0);\n  float upF = clamp(N.y * 0.5 + 0.5, 0.0, 1.0);\n  float lit = smoothstep(0.18, 0.88, wrap * 0.65 + upF * 0.35);", "new_string": "varying vec3 vInst;\nvarying float vW5;\n#include <fog_pars_fragment>\n${NOISE_GLSL}\n${SOAP05_GLSL}\nvoid main() {\n  vec3 N =  …[+1199 chars]`
+
+### 🧑 User — 2026-11-16T00:47:54.667Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:47:58.316Z
+
+> 🔧 **Bash** `{"command": "grep -n \"FRAG_TAIL\\s*=\" -A8 src/vfx/glsl.ts", "description": "Check FRAG_TAIL contents"}`
+
+### 🧑 User — 2026-11-16T00:47:58.350Z
+
+> ↩︎ result: 132:export const FRAG_TAIL = /* glsl */ `
+> 133-  #include <tonemapping_fragment>
+> 134-  #include <colorspace_fragment>
+> 135-  #include <fog_fragment>
+> 136-`;
+
+### 🤖 Claude — 2026-11-16T00:48:03.516Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float lit = smoothstep(0.18, 0.88, wrap * 0.65 + upF * 0.35);\n  if (vW5 > 0.0) {\n    // 05 (wave 7): ref soap ramp, view-space top light: white caps, periwinkle bodies, blue crevice rims\n    vec3 Nv = normalize((viewMatrix * vec4(N, 0.0)).xyz);\n    float z = clamp(Nv.z, 0.0, 1.0);\n    float t5 = soapT(Nv) - pow(1.0 - z, 1.5) * (0.2 + 0.35 * clamp(0.5 - Nv.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;\n    vec3 c5 = soap05(t5 + 0.04 * vInst.z);", "new_string": "  float lit = smoothstep(0.18, 0.88, w …[+437 chars]`
+
+### 🧑 User — 2026-11-16T00:48:03.551Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:48:05.272Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "    c5 += vec3(1.0) * pow(max(dot(reflect(-V, N), L), 0.0), 26.0) * 0.25;\n    if (vW5 >= 0.999) {\n      gl_FragColor = vec4(c5, 1.0);\n      ${FRAG_TAIL}\n      return;\n    }\n  }", "new_string": "    c5 += vec3(1.0) * pow(max(dot(reflect(-V, N), L), 0.0), 26.0) * 0.25;\n  }"}`
+
+### 🧑 User — 2026-11-16T00:48:05.300Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:48:06.813Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  col += vec3(1.0) * spec * 0.3;\n  col *= mix(0.68, 1.0, vInst.x);\n  gl_FragColor = vec4(col, 1.0);", "new_string": "  col += vec3(1.0) * spec * 0.3;\n  col *= mix(0.68, 1.0, vInst.x);\n  col = mix(col, c5, vW5);\n  gl_FragColor = vec4(col, 1.0);"}`
+
+### 🧑 User — 2026-11-16T00:48:06.852Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:48:10.960Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number }", "new_string": "interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number }"}`
+
+### 🧑 User — 2026-11-16T00:48:10.999Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:48:12.616Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "      mesh.setColorAt(i, tmpC.setRGB(pf.ao, rand(), pf.tint));", "new_string": "      // x = ao + 2 q (q = 05 soap-shading weight x 8, see PUFF_VERT)\n      mesh.setColorAt(i, tmpC.setRGB(pf.ao + 2 * Math.round(Math.min(1, Math.max(0, pf.w5 ?? 0)) * 8), rand(), pf.tint));"}`
+
+### 🧑 User — 2026-11-16T00:48:12.652Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:48:17.023Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "    const p = f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);\n    list.push({ p, r, ao, tint: rand() * 2 - 1 });\n  };", "new_string": "    const p = f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);\n    list.push({ p, r, ao, tint: rand() * 2 - 1, w5: (1 - k05) / 0.6 });\n  };"}`
+
+### 🧑 User — 2026-11-16T00:48:17.058Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:48:29.385Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "#include <fog_pars_fragment>\n${NOISE_GLSL}\nvoid main() {\n  float d2 = dot(vP, vP);\n  if (d2 > 1.0) discard;\n  float z = sqrt(1.0 - d2);\n  vec3 Nv = vec3(vP, z);\n  vec3 N = normalize((vec4(Nv, 0.0) * viewMatrix).xyz);   // view → world (rotation transpose)\n  vec3 L = normalize(uLightDir);\n  float wrap = clamp(dot(N, L) * 0.55 + 0.5, 0.0, 1.0);\n  float upF = clamp(N.y * 0.5 + 0.5, 0.0, 1.0);\n  float lit = smoothstep(0.15, 0.85, wrap * 0.6 + upF * 0.4);\n  vec3 lav = vec3(0.5, 0.47, 0.9);\n  vec3  …[+2137 chars]`
+
+### 🧑 User — 2026-11-16T00:48:29.435Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:49:09.118Z
+
+Now the flank-bank envelope. I'll replicate `bankEnv` in Python and search seeds/frequency/threshold so the QA frame's clumps fall where the reference has them.
+
+### 🤖 Claude — 2026-11-16T00:49:17.276Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && cat > $S/envsearch.py <<'EOF'\nimport math, random\nimport numpy as np\ndef hash1(n):\n    x = math.sin(n*127.1+311.7)*43758.5453; return x-math.floor(x)\ndef noise1(x):\n    i=math.floor(x); f=x-i; u=f*f*(3-2*f); return hash1(i)*(1-u)+hash1(i+1)*u\ndef sm(a,b,x):\n    t=min(1,max(0,(x-a)/(b-a))); return t*t*(3-2*t)\ndef env(s,seed,f,t0):\n    return sm(t0,t0+0.12,0.65*noise1(s*f+seed)+0.35*noise1(s*f*2.3+seed*1.7+11.0))\nS0=132.44\ndef score(tgt, seed,f,t0):\n    e=0\n    for a,b,v in tgt:\n    …[+1135 chars]`
+
+### 🧑 User — 2026-11-16T00:49:49.442Z
+
+> ↩︎ result: L current 3.48
+>   score 0.49 seed 666.766 f 0.999 t0 0.535 coverage05 0.23
+>     ..........####......########.......................................#######........
+>   score 0.78 seed 216.671 f 0.975 t0 0.516 coverage05 0.40
+>     ...........####....########.........................######..............########..
+>   score 0.83 seed 84.816 f 0.473 t0 0.478 coverage05 0.29
+>     ..........####.....########.......................................................
+>   score 1.14 seed 86.385 f 0.464 t0 0.397 coverage05 0.45
+>     .........#######...##########..................................................###
+>   score 1.26 seed 877.153 f 0.524 t0 0.567 coverage05 0.29
+>     ...........######...#######................................######.............####
+> R current 31.31
+>   score 0.83 seed 607.242 f 0.459 t0 0.357 coverage05 0.59
+>     ..........######...............###################################################
+>   score 0.93 seed 383.184 f 0.359 t0 0.363 coverage05 0.75
+>     .........######.................##################################################
+>   score 2.27 seed 315.907 f 0.352 t0 0.471 coverage05 0.61
+>     .......########................###################################################
+>   s …[+287 chars]
+
+### 🤖 Claude — 2026-11-16T00:50:10.155Z
+
+> 🔧 **Bash** `{"command": "grep -n \"BANK_PX\\|CLUMP_PX\\|BANK_ENV\" src/vfx/foam.ts", "description": "Find bank constant usages"}`
+
+### 🧑 User — 2026-11-16T00:50:10.208Z
+
+> ↩︎ result: 401: *    until it merges into the berm (ds +15); its inner edge sits BANK_PX px in from the frame edge
+> 412:const BANK_PX: [number, number] = [180, 200];
+> 415:const CLUMP_PX = 135;
+> 428:const BANK_ENV: [number, number, number][] = [[478.345, 0.85, 0.5], [127.503, 0.45, 0.54]];
+> 703:    const [seed, f, t0] = BANK_ENV[sd];
+> 801:        const frac = ((2 * BANK_PX[sd]) / 864) * env * (0.72 + 0.28 * lump);
+> 802:        const fracOut = frac - (2 * CLUMP_PX) / 864;
+> 813:        // outer border: beyond the frame edge, or (wide clump) CLUMP_PX out from its inner edge
+
+### 🤖 Claude — 2026-11-16T00:50:17.096Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const BANK_ENV: [number, number, number][] = [[478.345, 0.85, 0.5], [127.503, 0.45, 0.54]];", "new_string": "const BANK_ENV: [number, number, number][] = [[216.671, 0.975, 0.516], [607.242, 0.459, 0.357]];\n/**\n * wave 7 (ref 05 rows, qa/pilot05/wave7/foam): the bank row's inner edge (px in from the frame edge) and lateral size\n * (px) by row ds. The right bank ahead of Benny is a NARROW rim hugging the river edge (ref y 700-940: inner edge\n * 30 -> 158 -> 70 px, 20-66 px per row), not the wave-5 heap  …[+789 chars]`
+
+### 🧑 User — 2026-11-16T00:50:17.134Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:50:18.005Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const BANK_PX: [number, number] = [180, 200];", "new_string": "const BANK_PX: [number, number] = [150, 200];"}`
+
+### 🧑 User — 2026-11-16T00:50:18.040Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:50:21.985Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        const frac = ((2 * BANK_PX[sd]) / 864) * env * (0.72 + 0.28 * lump);\n        const fracOut = frac - (2 * CLUMP_PX) / 864;", "new_string": "        // wave 7: inner-edge px / clump size by row (RIM_R): lower clumps behind Benny, narrow right rim ahead\n        let pxIn: number, pxClump: number;\n        if (sd === 0) {\n          const kz = sm(-0.6, 0.2, ds);\n          pxIn = 214 + (BANK_PX[0] * (0.72 + 0.28 * lump) - 214) * kz;\n          pxClump = 157 + (CLUMP_PX - 157) * kz;\n        } else {\ …[+272 chars]`
+
+### 🧑 User — 2026-11-16T00:50:22.020Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:50:30.838Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        for (let p = 0; p < P; p++) {\n          const [f0, df, r0, dr, lift, prob] = KIND[p];\n          if (hh(10 + p) > prob) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }\n          const f = Math.min(1, f0 + df * hh(20 + p));\n          const r = (r0 + dr * hh(30 + p)) * scale;", "new_string": "        // wave 7: the right rim ahead of Benny is one low layer of smaller bubbles (no heap / outer kinds)\n        const rimK = side > 0 ? sm(1.4, 2.6, ds) : 0;\n        for (let p = 0; …[+395 chars]`
+
+### 🧑 User — 2026-11-16T00:50:30.867Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:50:33.904Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "    : [[0.0, 0.1, 0.045, 0.05, 0.15, 1], [0.12, 0.5, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.7], [0.55, 0.45, 0.07, 0.05, 0.3, 1], [0.1, 0.8, 0.055, 0.05, 0.25, 1]];", "new_string": "    : [[0.0, 0.1, 0.045, 0.05, 0.15, 1], [0.12, 0.5, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.7], [0.55, 0.45, 0.07, 0.05, 0.3, 1], [0.1, 0.8, 0.055, 0.05, 0.25, 1]];\n  /** kinds left out of the narrow right rim (heap, outer, 2nd wide body) */\n  const RIM_SKIP = quality === 'high' ? [4, 5, 7] : [2 …[+7 chars]`
+
+### 🧑 User — 2026-11-16T00:50:33.937Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:50:37.005Z
+
+> 🔧 **Bash** `{"command": "timeout 300 npx tsc --noEmit 2>&1 | head -20 && echo TSC_DONE && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave7/foam/it01 2>&1 | tail -2 && python3 -I -c \"import json;l=json.load(open('qa/capture_log.json'));print(l['errors'])\"", "description": "Type-check and capture iteration 1"}`
+
+### 🧑 User — 2026-11-16T00:50:54.204Z
+
+> ↩︎ result: TSC_DONE
+> 05 → qa/pilot05/wave7/foam/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":634673,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+
+### 🤖 Claude — 2026-11-16T00:50:55.251Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave7/foam/it01/05.png"}`
+
+### 🧑 User — 2026-11-16T00:50:55.308Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:51:01.625Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/screen_report.py 05 qa/pilot05/wave7/foam/it01 PREV=qa/pilot05/wave7/baseline/05.png NOW=qa/pilot05/wave7/foam/it01/05.png 2>&1 | tail -12; python3 -I qa/pilot05/wave6/foam/tools/foamcol.py qa/pilot05/wave7/foam/it01/05.png", "description": "Report and foam stats for iteration 1"}`
+
+### 🧑 User — 2026-11-16T00:51:09.774Z
+
+> ↩︎ result: # Screen 05: reference vs live captures (raw indicators, not a fidelity %)
+> 
+> mad = mean |ΔRGB| at 1/4 scale (lower = closer); hue_corr / edge_corr = −1…1 (higher = closer).
+> 
+> | Capture | mad | hue_corr | edge_corr | mad hud | mad tunnel+VP | mad river mid | mad Benny+near water |
+> |---|---|---|---|---|---|---|---|
+> | PREV | 59.0 | 0.809 | 0.117 | 54.4 | 62.6 | 53.0 | 63.8 |
+> | NOW | 56.9 | 0.861 | 0.16 | 56.1 | 62.7 | 48.6 | 60.4 |
+> qa/pilot05/wave7/foam/it01/05.png
+>   Lfar    13729 px  mean RGB [227 224 254]  WHITE  29.5%  SHADE(B-R>=30)  29.7%  lum 235.1
+>   Rfar    24381 px  mean RGB [230 225 254]  WHITE  35.4%  SHADE(B-R>=30)  27.3%  lum 236.5
+>   Lnear   10300 px  mean RGB [220 217 248]  WHITE  10.4%  SHADE(B-R>=30)  28.3%  lum 228.4
+>   Rnear   16289 px  mean RGB [220 217 249]  WHITE  15.0%  SHADE(B-R>=30)  30.9%  lum 229.0
+>   heapR x640-864 y700-1000: foam  21.6%  max vertical run 132 px  mean run(cols with foam) 55 px
+
+### 🤖 Claude — 2026-11-16T00:51:12.651Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/wave7/foam/it01/ && python3 -I -c \"from PIL import Image; im=Image.open('qa/pilot05/wave7/foam/it01/05_side_by_side.png'); print(im.size)\"", "description": "List report outputs"}`
+
+### 🧑 User — 2026-11-16T00:51:12.750Z
+
+> ↩︎ result: 05.png
+> 05_highlight_NOW.png
+> 05_highlight_PREV.png
+> 05_overlay_NOW.png
+> 05_overlay_PREV.png
+> 05_side_by_side.png
+> metrics.json
+> metrics.md
+> (2624, 1536)
+
+### 🤖 Claude — 2026-11-16T00:51:13.781Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave7/foam/it01/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T00:51:15.596Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T00:51:15.591Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T00:51:22.040Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/it01_r.png 600 680 864 960 1.6 references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it01/05.png && python3 -I $S/crop.py $S/c/it01_near.png 0 950 864 1340 0.7 references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it01/05.png", "description": "Zoom crops of iteration 1"}`
+
+### 🧑 User — 2026-11-16T00:51:22.514Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:51:24.635Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it01_r.png"}`
+
+### 🧑 User — 2026-11-16T00:51:24.662Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:51:25.259Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it01_near.png"}`
+
+### 🧑 User — 2026-11-16T00:51:25.283Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:51:50.202Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && timeout 300 node qa/pilot05/wave6/foam/tools/probe.mjs 05 > $S/probe1.json 2>/dev/null; python3 -I -c \"\nimport json;d=json.load(open('$S/probe1.json'))\nr=d['rafts'];print('shown',r['shown'])\nfor c in r['clumps']:\n  if c['ds']<4: print(c, 'ypx', round(c['y']*1536))\n\"; python3 -I -c \"\nimport sys; sys.path.insert(0,'qa/pilot05/wave6/foam/tools')\nfrom pipe import fwd\nfor c in [(0.23,0.22,0.66),(0.28,0.36,0.80),(0.42,0.50,0.94),(0.58,0.60,0.92),(0.80,0.77,0.97),(1.06,1.02,1.08)]: print(c,  …[+85 chars]`
+
+### 🧑 User — 2026-11-16T00:52:02.156Z
+
+> ↩︎ result: shown 794
+> {'kind': 'L', 'ds': -3.4, 'lat': -1.35, 'k': 0.29, 'y': 1.134, 'env': 0, 's': 129.22} ypx 1742
+> {'kind': 'L', 'ds': -3.19, 'lat': -1.35, 'k': 0.36, 'y': 1.089, 'env': 0, 's': 129.44} ypx 1673
+> {'kind': 'L', 'ds': -2.8, 'lat': -1.37, 'k': 0.49, 'y': 1.018, 'env': 0, 's': 129.83} ypx 1564
+> {'kind': 'L', 'ds': -2.29, 'lat': -1.53, 'k': 0.52, 'y': 0.944, 'env': 0, 's': 130.33} ypx 1450
+> {'kind': 'L', 'ds': -1.69, 'lat': -1.75, 'k': 0.52, 'y': 0.874, 'env': 0, 's': 130.93} ypx 1342
+> {'kind': 'L', 'ds': -1.01, 'lat': -1.47, 'k': 0.22, 'y': 0.811, 'env': 1, 's': 131.61} ypx 1246
+> {'kind': 'L', 'ds': -0.26, 'lat': -2.3, 'k': 0.52, 'y': 0.757, 'env': 0, 's': 132.36} ypx 1163
+> {'kind': 'L', 'ds': 0.56, 'lat': -1.95, 'k': 1.21, 'y': 0.714, 'env': 1, 's': 133.18} ypx 1097
+> {'kind': 'L', 'ds': 1.44, 'lat': -2.28, 'k': 1.28, 'y': 0.675, 'env': 1, 's': 134.06} ypx 1037
+> {'kind': 'L', 'ds': 2.37, 'lat': -3.45, 'k': 0.56, 'y': 0.635, 'env': 0.06, 's': 134.99} ypx 975
+> {'kind': 'L', 'ds': 3.36, 'lat': -4.01, 'k': 0.52, 'y': 0.6, 'env': 0, 's': 135.98} ypx 922
+> {'kind': 'R', 'ds': -3.4, 'lat': 1.47, 'k': 0.52, 'y': 1.13, 'env': 0, 's': 129.22} ypx 1736
+> {'kind': 'R', 'ds': -3.19, 'lat': 1.53, 'k': 0.52 …[+1110 chars]
+

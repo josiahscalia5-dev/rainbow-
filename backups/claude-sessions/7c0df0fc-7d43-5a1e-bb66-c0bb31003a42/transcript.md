@@ -1171,3 +1171,199 @@ Files are in `qa/worldlabs/05/MARBLE_ACCESS_2026-11-16.md` (Marble findings) and
 
 Sources: [Quickstart](https://docs.worldlabs.ai/api) · [Get a world](https://docs.worldlabs.ai/api/reference/worlds/get) · [API pricing](https://docs.worldlabs.ai/api/pricing) · [API FAQ](https://docs.worldlabs.ai/api/faq) · [Full docs text](https://docs.worldlabs.ai/llms-full.txt) · [Marble splat export](https://docs.worldlabs.ai/marble/export/gaussian-splat) · [worldlabs-mcp (unofficial)](https://github.com/sandraschi/worldlabs-mcp) · [Glama listing (unofficial)](https://glama.ai/mcp/servers/d4uwarzyfe) · [Plan prices, third-party](https://www.withorb.com/pricing-atlas/worldlabs)
 
+### 🧑 User — 2026-11-16T00:49:15.879Z
+
+Claude, I have made my decision. I am willing to purchase the $5 minimum World Labs Developer API credits to help get my Rainbow Screen 05 closer to my approved artwork.
+
+I want us to make real progress now.
+
+MY AUTHORIZATION
+
+I approve one controlled Marble pilot with a maximum planned API usage of $5. Do not submit additional paid jobs that would exceed this budget.
+
+I will handle the credit purchase myself. Do not enable automatic recharge.
+
+STEP 1 — FIX THE API
+
+Help me securely replace the previously exposed API key.
+
+Test authentication once using the official Marble API and WLT-Api-Key header.
+
+Do not put credentials in GitHub, transcripts, source files or ordinary chat.
+
+STEP 2 — ACCESS MY EXISTING MARBLE WORLD FIRST
+
+I already created a beautiful purple-and-gold washing-machine tunnel on marble.worldlabs.ai called Vibrant Tunnel of Fortune.
+
+Locate its existing world ID from my saved project information or use its world URL.
+
+Test the official Get World endpoint to determine whether my API account can access this website-generated world.
+
+If access is supported, retrieve its authorized 3D assets. Do not purchase another generation unnecessarily or bypass export restrictions.
+
+STEP 3 — IF THE EXISTING WORLD CANNOT BE ACCESSED
+
+Use my ORIGINAL APPROVED Screen 05 as the main reference and my Marble screenshot as a secondary visual guide.
+
+Generate one low-cost 3D draft and evaluate it.
+
+If promising, generate one full-quality world using the available API budget.
+
+Only request a high-quality mesh export if it will materially improve the playable game and stays within the total budget.
+
+STEP 4 — IMPORT INTO MY EXISTING GAME
+
+Use Blender and my existing Three.js game to reconstruct the tunnel.
+
+Match the approved image's glossy deep-purple washer walls, reflective gold rings, thick winding cyan-and-pink water, foam, bubbles and distant golden light.
+
+Preserve Benny, my locked gameplay camera, real animated water, controls, coins, HUD and all eleven connected screens.
+
+The Marble geometry must be optimized for a real playable Android game, not used as a static video or background.
+
+STEP 5 — SHOW ACTUAL PROGRESS
+
+Show my original approved Screen 05 beside a full-resolution screenshot of the actual running game after incorporating the useful Marble results.
+
+Tell me what improved and what still needs correction.
+
+Keep all ten specialist agents working, protect the Screen 05-to-06 transition and the deep 07-to-08 descent, and continue verified five-minute GitHub backups.
+
+Do not restart my existing Rainbow project.
+
+My priority is real, noticeable visual progress toward 90–95% similarity where achievable. Let's use this experiment to determine the best reconstruction method and finish the approved scenery.
+
+### 🤖 Claude — 2026-11-16T00:49:22.322Z
+
+You've approved one Marble pilot capped at $5, so I'll start with the existing world. First I'll look for its ID in your saved project files.
+
+### 🤖 Claude — 2026-11-16T00:49:23.729Z
+
+> 🔧 **Grep** `{"pattern": "marble\\.worldlabs\\.ai/world/[A-Za-z0-9_-]+|world_id[\"': =]+[A-Za-z0-9_-]{6,}|Vibrant Tunnel", "path": "/home/user/rainbow-", "output_mode": "content", "-o": true, "head_limit": 20}`
+
+### 🧑 User — 2026-11-16T00:49:23.791Z
+
+> ↩︎ result: backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a2cf6a18f7b77b620.sanitized.jsonl:19:marble.worldlabs.ai/world/dc2c65e4-68d3-4210-a01e-7a54cc9ded2a
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a2cf6a18f7b77b620.sanitized.jsonl:19:marble.worldlabs.ai/world/dc2c65e4-68d3-4210-a01e-7a54cc9ded2a
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a2cf6a18f7b77b620.sanitized.jsonl:31:marble.worldlabs.ai/world/69a9fc22-63ad-4e4c-9514-065b9aa56340
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a2cf6a18f7b77b620.sanitized.jsonl:31:marble.worldlabs.ai/world/20fc27f9-5b1f-4c76-8b22-67b866195aaf
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a2cf6a18f7b77b620.sanitized.jsonl:31:marble.worldlabs.ai/world/e1d2610d-32a7-4364-acbb-8fcc97c1933d
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a2cf6a18f7b77b620.sanitized.jsonl:31:marble.worldlabs.ai/world/54fad6e4-9c9b-43ba-be6d-f1e31cbe7a95
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a2cf6a18f7b77b620.sanitized.jsonl:31:marble.worldlabs.ai/worl …[+1790 chars]
+
+### 🤖 Claude — 2026-11-16T00:49:25.996Z
+
+Several Marble world links turn up in an earlier session's research notes. I'll check whether any of them is yours or whether they're public examples.
+
+### 🤖 Claude — 2026-11-16T00:49:27.703Z
+
+> 🔧 **Bash** `{"command": "F=backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a2cf6a18f7b77b620.sanitized.jsonl; for id in dc2c65e4-68d3 69a9fc22-63ad; do grep -o \".\\{300\\}$id.\\{150\\}\" $F | head -1; echo; echo ====; done", "description": "Show context around the world URLs found"}`
+
+### 🧑 User — 2026-11-16T00:49:27.925Z
+
+> ↩︎ result: 10:30:00Z\",\n>   \"updated_at\": \"2025-01-15T10:30:00Z\",\n>   \"expires_at\": \"2025-01-15T11:30:00Z\",\n>   \"done\": false,\n>   \"error\": null,\n>   \"metadata\": {\n>     \"progress\": { \"status\": \"IN_PROGRESS\", \"description\": \"World generation in progress\" },\n>     \"world_id\": \"dc2c65e4-68d3-4210-a01e-7a54cc9ded2a\"\n>   },\n>   \"response\": null\n> }\n> ```\n>\n> World generation should take **about 5 minutes** to complete. Once the wor
+> 
+> ====
+> mple files\n\nHere we provide a few example scenes and export files to test against.\n\n### Gaussian splats\n\nScroll to the right to see all options.\n\n| Scene | SPZ 2m | SPZ 500k | PLY 2m | PLY 500k |\n| - | - | - | - | - |\n| [Rustic kitchen with natural light](https://marble.worldlabs.ai/world/69a9fc22-63ad-4e4c-9514-065b9aa56340) | [](https://wlt-ai-cdn.art/example_exports/rustic_kitchen_with_natural_light/rustic_kitchen_with_natural_light_2m.spz) | [](
+> 
+> ====
+
+### 🤖 Claude — 2026-11-16T00:49:35.229Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble World API key (new, account 8)", "suggested_type": "bearer", "reason": "The user approved one Marble pilot (max US$5). This NEW key (the earlier one was exposed and must not be reused) lets me test authentication once and then check whether the existing website-made world can be read with the official Get World call."}`
+
+### 🧑 User — 2026-11-16T00:51:01.717Z
+
+> ↩︎ result: {"status":"saved","host":"api.worldlabs.ai","applies_to":"environment","note":"A credential for this host is saved on this session's environment. Every session in that environment uses it, including other people's sessions when the environment is shared. The session's network proxy injects it into HTTPS requests to this host — you never see or send the value yourself. Saving it also allows HTTPS requests to this host from those sessions, so do not add the host to the environment's allowed hosts. No environment variable holds the credential, so code that reads a key from a variable finds none and may skip its work. To run such code, set that variable to a placeholder for that command, never a real value: `proxy-injected`, or a dummy in the format the code expects if it checks one. This works where the code sends the key in a header, which the proxy overwrites; a cookie the code sends instead replaces the saved cookie of that name. Tell the user this when their own scripts expect such a variable. Retry the failing request now, as-is (do not add the credential's header yourself): the proxy usually picks the credential up within a couple of seconds. Only a refusal, with the same 401/40 …[+446 chars]
+
+### 🤖 Claude — 2026-11-16T00:51:04.620Z
+
+The key is saved in the environment's secure store; I never saw it. Now the one authentication test: reading your credit balance, which spends nothing.
+
+### 🤖 Claude — 2026-11-16T00:51:06.174Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/marble && mkdir -p $D && curl -sS -m 30 -o $D/credits.json -w 'HTTP %{http_code}\\n' https://api.worldlabs.ai/marble/v1/credits; head -c 600 $D/credits.json; echo", "description": "Test Marble API authentication with a free balance check"}`
+
+### 🧑 User — 2026-11-16T00:51:07.170Z
+
+> ↩︎ result: HTTP 200
+> {"remaining_credits":7000.0}
+
+### 🤖 Claude — 2026-11-16T00:51:14.181Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/wl-docs; awk 'NR>=4160 && NR<=4215' $D/llms-full.txt | cut -c1-220; grep -n -A30 'ListWorldsRequest:' $D/llms-full.txt | head -45 | cut -c1-200", "description": "Read the worlds:list request schema from the docs"}`
+
+### 🧑 User — 2026-11-16T00:51:14.223Z
+
+> ↩︎ result: [Rendering Marble SPZ files in third-party engines](/api/rendering-spz).
+>   </Step>
+> </Steps>
+> 
+> 
+> # List worlds
+> Source: https://docs.worldlabs.ai/api/reference/worlds/list
+> 
+> POST /marble/v1/worlds:list
+> List worlds with optional filters.
+> 
+> Returns worlds created through the API with optional filtering and pagination.
+> 
+> Args:
+>     request: List request with optional filters:
+>         - page_size: Number of results per page (default: 10)
+>         - page_token: [REDACTED] token from previous response
+>         - status: Filter by status (e.g., "COMPLETED")
+>         - model: Filter by model name (e.g., "marble-1.0-plus")
+>         - tags: Filter by tags (matches worlds with any tag)
+>         - is_public: Filter by visibility (true=public, false=private, null=all)
+>         - created_after: Filter by creation time (after timestamp)
+>         - created_before: Filter by creation time (before timestamp)
+>         - sort_by: Sort order ("created_at" or "updated_at")
+> 
+> Returns:
+>     ListWorldsResponse with worlds list and next_page_token for pagination.
+> 
+> Raises:
+>     HTTPException: 400 if invalid parameters
+>     HTTPException: 500 if request fails
+> 
+> 
+> 
+> # Rendering Marble SPZ files in third-party engines
+> Source: https:/ …[+1733 chars]
+
+### 🤖 Claude — 2026-11-16T00:51:18.460Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/marble && curl -sS -m 30 -X POST -H 'Content-Type: application/json' -d '{\"page_size\":50,\"sort_by\":\"created_at\"}' -o $D/list.json -w 'HTTP %{http_code}\\n' https://api.worldlabs.ai/marble/v1/worlds:list; python3 -I -c \"\nimport json,sys\nd=json.load(open('$D/list.json'))\nws=d.get('worlds',d if isinstance(d,list) else [])\nprint('keys:',list(d.keys()) if isinstance(d,dict) else type(d)); print('count:',len(ws))\nfor w in ws: print(w.get('world_id') or w.get('id'), '|', w.get('display_name'), …[+191 chars]`
+
+### 🧑 User — 2026-11-16T00:51:19.715Z
+
+> ↩︎ result: HTTP 200
+> keys: ['worlds', 'next_page_token']
+> count: 0
+> {"remaining_credits":7000.0}
+
+### 🤖 Claude — 2026-11-16T00:51:39.082Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/wl-docs; grep -n -E 'image_prompt|is_pano|\"model\"|marble-1\\.1|prepare_upload|media_asset_id|text_prompt|disable_recaption' $D/llms-full.txt | cut -c1-160 | head -40", "description": "Find the generate request schema in the docs"}`
+
+### 🧑 User — 2026-11-16T00:51:39.123Z
+
+> ↩︎ result: 82:`{"model":"marble-1.0",...}`.
+> 99:* Upload the file as a media asset, then reference its `media_asset_id`. See
+> 162:{model=marble-1.0, world_prompt={type=text, text_prompt=A sunlit atrium}}
+> 165:{"model":"marble-1.0","world_prompt":{"type":"text","text_prompt":"A sunlit atrium"}}
+> 172:* An input URL that World Labs cannot fetch. For an `image_prompt` or `video_prompt` with `source: "uri"`, the URL must be reachable with no cookies, refere
+> 174:* An invalid `model` value. Use one of `marble-1.0-draft`, `marble-1.0`, `marble-1.1`, or `marble-1.1-plus`.
+> 238:### What is the difference between `marble-1.0`, `marble-1.1`, and `marble-1.1-plus`?
+> 243:* `marble-1.1` provides newer standard world generation at a fixed cost.
+> 244:* `marble-1.1-plus` provides the most expansive generation path and may add 0-1,500 variable world generation cost for larger worlds, determined automatical
+> 301:      This example uses `marble-1.1`, which corresponds to Marble 1.1.
+> 303:      For the largest worlds, use `marble-1.1-plus`. Marble 1.1 Plus uses more credits to create a bigger world when prompted for outdoor or larger indoor s
+> 319:                  "model": "marble-1.1",
+> 322:                    "text_prompt …[+1948 chars]
+
+### 🤖 Claude — 2026-11-16T00:51:43.133Z
+
+> 🔧 **AskUserQuestion** `{"questions": [{"question": "Your new key works (7,000 credits), but your world \"Vibrant Tunnel of Fortune\" isn't in API listings and its ID isn't saved in the project. To test the free Get World call, open the world on marble.worldlabs.ai and paste its address bar link (it looks like marble.worldlabs.ai/world/xxxxxxxx-...) via \"Other\". Or skip straight to the paid fallback?", "header": "World link", "multiSelect": false, "options": [{"label": "I'll paste the link", "description": "Choose \"Other\" and paste the world's URL. I then run one free Get World test before spending anything."}, { …[+180 chars]`
+

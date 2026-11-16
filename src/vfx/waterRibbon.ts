@@ -389,27 +389,24 @@ void main() {
   float wR = hw * vStyle.z * (1.0 + modA * sin(s * 0.17 + 2.9) + 0.08 * wob * sin(tv * 0.55 + 2.0)) * gate;
   float brush = 0.0;
   if (freeK < 0.5) {
+    float Mb = M + sbend;
+    // 05 (wave 7): approaching Benny the two S-bands swing OUT to the banks and leave the frame at the
+    // image sides (ref 05: the left band exits at y≈930 ≈ 3.5 u ahead of him, the right one at y≈1090
+    // ≈ 0.8 u ahead); behind him only the two diagonal wake sweeps (below) carry pink. (Wave 5 glided
+    // the bands in to his track ±1.42 u instead, which drew the two wide vertical pink sheets.)
+    if (vStyle.x > 0.0 && uBenny.z > 0.0) {
+      float k5 = sw * vStyle.x;
+      offL += k5 * 2.0 * smoothstep(7.0, 2.5, db);
+      offR += k5 * 1.6 * smoothstep(2.6, 0.4, db);
+    }
     // keep both bands inside the water (the core swing pushes one toward the bank on each bend);
     // the band pressed against the bank thins a little instead of collapsing the cyan core
     // (smooth minimum: a hard min() put a visible corner in the band where the clamp starts)
-    float Mb = M + sbend;
     float roomL = Mb + hw - 0.5 - offL, roomR = hw - 0.5 - Mb - offR;
     wL = smin(wL, max(roomL, 0.6 * wL), 0.5);
     wR = smin(wR, max(roomR, 0.6 * wR), 0.5);
     offL = smin(offL, Mb + hw - wL - 0.5, 1.2);
     offR = smin(offR, hw - wR - 0.5 - Mb, 1.2);
-    // 05 (wave 5): behind Benny both S-bands run on as broad brushed sweeps at the image sides (ref 05
-    // near rows: pink at x≈90–265 / 550–770, glossy cyan between and under him). From ≈3 u ahead of him
-    // their centres glide to his track ±1.45 u and narrow to ±0.34 u, so each band stays ONE continuous
-    // ribbon. (This replaces the separate wake "trail" sweep, which drew the two hard pink "fins".)
-    if (vStyle.x > 0.0 && uBenny.z > 0.0) {
-      float nb = sw * vStyle.x * (1.0 - smoothstep(-0.5, 3.0, db));
-      float side = 1.42 + 0.02 * max(-db, 0.0);
-      offL = mix(offL, Mb - (uBenny.y - side), nb);
-      offR = mix(offR, (uBenny.y + side) - Mb, nb);
-      wL = mix(wL, 0.34, nb);
-      wR = mix(wR, 0.34, nb);
-    }
     // brushed edges: each band edge is combed into pink / cyan strands along the flow (ref 05: the
     // ribbons fray into light streaks); crisp per-pixel strands, so no violet pink-over-cyan blend.
     // Faded out where a strand would be < ≈3 px wide (no shimmer in the far field)
@@ -440,12 +437,34 @@ void main() {
       * smoothstep(0.62, 0.78, vnoise(vec2(s * 0.09, 21.0))) * gate * aa.x * freeK;   // 05 core: pure cyan
   #endif
   float pinkM = max(max(pL, pR), fil);
-  // (wave 5: the separate 05 wake "trail" sweep is gone; the main bands themselves run on behind Benny)
+  // 05 (wave 7) wake sweeps: two satin pink ribbons leave Benny's sides under the splash and fan out
+  // DIAGONALLY toward the bottom corners (ref 05 runs: y1240 x≈571–595, y1280 134–238 / 586–669,
+  // y1320 91–202 / 626–738 → centre ±(0.4 + 0.52·back) u from his track, half width ≈0.2 u, measured
+  // through the locked camera). They taper in from 0.3 u behind him, so the water right under and
+  // behind him stays cyan, and leave the frame at the bottom corners (≈2.5 u behind him).
+  float back = max(-db, 0.0);
+  float wake = (vStyle.x > 0.0 && uBenny.z > 0.0) ? sw * vStyle.x : 0.0;
+  float dlB = lat - uBenny.y;
+  // (it01 measured: Benny's real waterline s sits ≈0.3 u ahead of the checkpoint row, so the fit is
+  // re-solved against the rendered sweeps: centre 0.2 + 0.55·back, tapering in 0.7 → 1.4 u behind him)
+  float cW = 0.2 + 0.55 * back + 0.05 * sin(v5 * 1.7 + sign(dlB) * 1.9) * back;
+  float wW = (0.12 + 0.07 * back) * smoothstep(0.7, 1.4, back);
+  float dW = abs(abs(dlB) - cW);
+  float frayW = (vnoise(vec2((abs(dlB) - cW) * 14.0, v5 * 0.9 + 3.0)) - 0.5) * wW * 0.5;
+  float pW = (1.0 - smoothstep(wW - aaw, wW + aaw, dW - frayW)) * wake * step(0.001, wW);
+  float relW = clamp((cW - abs(dlB)) / max(wW, 1e-3), -1.0, 1.0);   // -1 outer edge .. +1 toward Benny
+  float pMain = max(pL, pR);
+  pinkM = max(pinkM, pW);
   // glossy rims: light-pink just inside each band edge, bright cyan just outside it
   float rimIn = max(pL * smoothstep(wL - rimW, wL - aaw, dL), pR * smoothstep(wR - rimW, wR - aaw, dR));
   float rimOut = max((1.0 - pL) * (1.0 - smoothstep(wL + aaw, wL + rimW * 1.6, dL)),
                      (1.0 - pR) * (1.0 - smoothstep(wR + aaw, wR + rimW * 1.6, dR))) * on;
   float rel = pL >= pR ? sdL / max(wL, 1e-3) : -sdR / max(wR, 1e-3);   // -1 outer edge .. +1 core side
+  if (pW > pMain) {
+    rel = relW;
+    rimIn = max(rimIn, pW * smoothstep(wW * 0.6, wW - aaw, dW));
+  }
+  rimOut = max(rimOut, (1.0 - pinkM) * (1.0 - smoothstep(wW + aaw, wW + 0.08 + aaw, dW)) * wake * step(0.001, wW));
   vec3 N0 = normalize(vNormalW);
   if (!gl_FrontFacing) N0 = -N0;
   vec3 V = normalize(cameraPosition - vPosW);
@@ -543,19 +562,27 @@ void main() {
     float wq = q + 0.05 * sin(v5 * 0.23 + q * 4.0);           // slow braid of the flow lines
     // height: braided swell ridges along the flow (mid/far), ripple cells (near), silk lines on top
     float rFar = vnoise(vec2(wq * 7.0, v5 * 0.2));
-    // near field (wave 5): thick water heaving over Benny's track. Bowed cross-flow swells (crest lines
-    // arch toward the VP, "∩" like ref 05's near arcs, λ ≈ 0.55 u ≈ 90–110 px), broken into short
-    // glossy segments by noise and warped so they never read as contour rings; deep azure troughs
-    // between them. Advected with the current (v5).
+    // near field (wave 7): thick glossy water streaming past Benny. NO cross-flow crest arcs (the wave-5
+    // "∩" swells read as pool ripples): everything runs ALONG the flow, which fans out behind him like
+    // his wake (kN = lateral / (1 + 0.7·back), so the lines spread toward the bottom corners with the
+    // pink sweeps): broad glossy lanes (light/dark azure) + long thin white speed streaks. Advected (v5).
     float dlN = lat - uBenny.y;
-    float phN = (v5 + 0.2 * dlN * dlN) * 11.4 + 2.4 * vnoise(vec2(lat * 0.9, v5 * 0.7 + 2.0));
-    float cN = 0.5 + 0.5 * sin(phN);
-    float segN = smoothstep(0.3, 0.66, vnoise(vec2(lat * 1.8 + 4.0, floor(phN * 0.159155 + 0.25) * 1.37)));
-    float crestN = (pow(cN, 30.0) + 0.15 * pow(cN, 6.0)) * segN;
-    float troughN = pow(1.0 - cN, 3.0) * (0.65 + 0.35 * vnoise(vec2(lat * 0.7, v5 * 0.9 + 6.0)));
-    // short thin speed streaks along the current (≈80–100 px dashes, ≈85 px apart, wavy)
-    float strN = silk(lat, v5 * 5.0 + 60.0, 2.6, 21.0, 0.3);
-    float rNear = 0.42 + 0.42 * crestN - 0.3 * troughN;
+    float kN = dlN / (1.0 + 0.7 * back);
+    // (it02) the flow lines wander (domain warp), so the streaks are wavy glossy water, not straight rays
+    float kNw = kN + 0.07 * sin(v5 * 2.3 + kN * 5.0) + 0.14 * (vnoise(vec2(kN * 2.0, v5 * 0.8 + 4.0)) - 0.5);
+    float laneN = vnoise(vec2(kNw * 2.4, v5 * 0.3 + 2.0));
+    float laneB = vnoise(vec2(kNw * 6.0 + laneN * 1.5, v5 * 0.55 + 9.0));
+    float troughN = smoothstep(0.52, 0.1, laneN) * (0.6 + 0.4 * laneB);
+    // glossy ridges along the flow (≈90 px apart near the frame bottom), broken into 100–200 px segments
+    float rp = kNw * 4.5 + 0.8 * laneB;
+    float ridge = pow(1.0 - abs(2.0 * fract(rp) - 1.0), 7.0);
+    float rseg = smoothstep(0.42, 0.82, vnoise(vec2(floor(rp) * 1.7 + 0.5, v5 * 0.85)));
+    float crestN = ridge * rseg;
+    float cN = laneB;
+    float segN = smoothstep(0.4, 0.75, laneN);
+    // long thin speed streaks along the fanning current + a finer set
+    float strN = max(silk(kNw, v5 * 0.55 + 60.0, 7.0, 21.0, 0.15), 0.7 * silk(kNw + 0.31, v5 * 0.8 + 13.0, 16.0, 5.0, 0.1));
+    float rNear = 0.12 + 0.6 * laneN + 0.2 * laneB + 0.25 * crestN;
     float swell = mix(rFar, rNear, near5);
     swell = mix(0.5, swell, 1.0 - smoothstep(0.3, 0.7, fwidth(wq * 7.0)) * (1.0 - near5));
     float silkA = silk(wq, v5, 15.0, 0.0, 0.16);
@@ -564,7 +591,9 @@ void main() {
     silkB = silk(wq, v5 * 1.35 + 40.0, 38.0, 7.0, 0.1);
     #endif
     // (near field: the silk lines stay on the pink sweeps only, as brushed satin; on cyan they read as road lines)
-    float silkL = max(silkA, silkB * mix(0.45, 0.8, pinkM)) * (1.0 - near5 * (1.0 - pinkM));
+    float silkL = max(silkA, silkB * mix(0.45, 0.8, pinkM)) * (1.0 - near5 * (1.0 - pinkM)) * (1.0 - pW);
+    // the wake sweeps are combed along their own diagonal (relW): satin ribbons with silk streaks
+    silkL = max(silkL, silk(relW * 0.5, v5 * 0.7 + 30.0, 9.0, 3.0, 0.08) * pW);
     float H5 = clamp(swell * 0.8 + silkL * 0.35 + 0.18 * near5, 0.0, 1.0);
 
     // cyan: deep azure troughs -> electric cyan -> bright cyan crests; light seam beside each band
@@ -578,6 +607,14 @@ void main() {
     pk = mix(pk, uP5Light, clamp(satin5 * 0.4 + smoothstep(0.78, 0.98, H5) * 0.25 + rimIn * 0.35, 0.0, 1.0));
     // glossy crest line along each ribbon (its brightest silk, toward the core side)
     pk = mix(pk, uP5Streak, exp(-pow((relB - 0.42) * 9.0, 2.0)) * 0.55 * smoothstep(0.35, 0.65, swell));
+    // (it02) wake sweeps = satin: deep-magenta edges, several light silk streaks along the diagonal,
+    // braided and broken into dashes, the brightest burning to pink-white (ref 05 near sweeps)
+    if (pW > 0.0) {
+      float stW = pow(0.5 + 0.5 * sin(relW * 11.0 + 1.3 * sin(v5 * 1.1 + relW * 3.0)), 5.0);
+      float segW = smoothstep(0.3, 0.7, vnoise(vec2(relW * 3.0 + 2.0, v5 * 0.7)));
+      pk = mix(pk, uP5Deep, smoothstep(0.5, 1.0, abs(relW)) * 0.45 * pW);
+      pk = mix(pk, uP5Streak * 1.25, clamp(stW * segW * 1.1, 0.0, 1.0) * pW);
+    }
     vec3 c5 = mix(cy, pk, pinkM);
     // silk streak light: light cyan-white on cyan, light pink on pink (the ribbons are combed silk);
     // the strongest dashes burn to near-white (ref 05 streak heads)
@@ -601,12 +638,15 @@ void main() {
     // crests (the reflection of the lit tunnel on the heaving surface; on the pink sweeps a light-pink
     // sheen), soft flow streaks
     if (near5 > 0.0) {
-      c5 *= 1.0 - near5 * 0.3 * troughN * (1.0 - 0.5 * pinkM);
-      vec3 crestCol = mix(vec3(0.85, 1.65, 2.3), uP5Streak * 1.2, pinkM);
-      c5 += crestCol * crestN * 2.1 * near5 * (1.0 - 0.45 * pinkM);
-      c5 += mix(vec3(0.6, 1.3, 1.9), uP5Streak, pinkM) * strN * 0.45 * near5 * (1.0 - pinkM);
+      // (wave 7) deep azure lanes + saturated glossy cyan lane highlights (little red, so the body stays
+      // ≈#02A2F7 instead of the pastel #18A1FF of the old white crest arcs)
+      c5 *= 1.0 - near5 * 0.42 * troughN * (1.0 - pinkM);
+      // glossy ridges: saturated cyan glow, burning to cyan-white on the ridge line
+      c5 += mix(vec3(0.02, 0.6, 1.2), vec3(1.1, 1.7, 2.1), smoothstep(0.55, 0.95, crestN)) * crestN * 1.3 * near5 * (1.0 - pinkM);
+      // long speed streaks: cyan-white glow, near-white core on the strongest dashes
+      c5 += mix(vec3(0.25, 1.1, 1.8), vec3(1.6, 1.9, 2.1), smoothstep(0.7, 1.1, strN)) * strN * 0.9 * near5 * (1.0 - pinkM);
       // Fresnel-style sheen toward the screen sides (the surface bulges, its flanks face away)
-      c5 = mix(c5, mix(vec3(0.5, 1.2, 1.9), uP5Light, pinkM), near5 * 0.18 * smoothstep(0.8, 1.6, abs(dlN)));
+      c5 = mix(c5, mix(vec3(0.1, 1.0, 1.9), uP5Light, pinkM), near5 * 0.14 * smoothstep(0.8, 1.6, abs(dlN)) * (1.0 - pW));
     }
 
     // white 4-point flares carried by the current: along the flow in the mid field, across it near
@@ -619,14 +659,14 @@ void main() {
     c5 += vec3(1.4) * near5 * step(0.6, hs5n) * smoothstep(0.16, 0.0, length(fract(g5n) - 0.5)) * (0.6 + 0.4 * sin(uTime * 6.0 + hs5n * 30.0));
     #else
     float flA = flowGlint(vec2(wq * 6.0, v5 * 0.075), 0.75, 18.0, 3.8, 0.0, uTime);
-    float flB = flowGlint(vec2(lat * 1.6, v5 * 1.4 + 0.5), 0.6, 26.0, 3.2, 1.0, uTime + 2.7);
+    float flB = flowGlint(vec2(kN * 1.6, v5 * 1.4 + 0.5), 0.6, 26.0, 3.2, 0.5, uTime + 2.7);
     // many small twinkling 4-point stars (ref 05: dozens of tiny white glints in the near and mid water)
-    float flC = flowGlint(vec2(lat * 4.0, v5 * 3.2 + 0.3), 0.8, 8.0, 2.6, 1.0, uTime + 1.3);
-    flC *= 0.4 + 0.9 * pow(cN, 3.0);            // the small stars cluster on the swell crests (not a uniform snow)
+    float flC = flowGlint(vec2(kN * 7.0, v5 * 4.5 + 0.3), 0.85, 7.0, 2.6, 0.6, uTime + 1.3);
+    flC *= 0.5 + 0.8 * cN;                      // the small stars cluster on the glossy lanes (not a uniform snow)
     float flD = flowGlint(vec2(wq * 16.0, v5 * 0.32 + 7.0), 0.5, 6.0, 2.4, 0.3, uTime + 4.1);
     // (the big near flares sit mostly on the swell crests: light catching the heaving surface)
     c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))
-        + flB * near5 * (0.35 + 1.4 * pow(cN, 6.0) * segN) + flC * near5 + flD * (1.0 - near5) * (1.0 - smoothstep(0.2, 0.5, fws)) * 0.9)
+        + flB * near5 * (0.5 + 1.6 * crestN + 0.6 * segN) + flC * near5 + flD * (1.0 - near5) * (1.0 - smoothstep(0.2, 0.5, fws)) * 0.9)
         * (1.0 - 0.5 * pinkM);
     #endif
     col = mix(col, c5, sw);
@@ -659,10 +699,11 @@ void main() {
       float k = uBenny.z;
       float rr = max(0.0, d - rb * 0.92);
       float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothstep(rb, rb * 1.3, d);
-      // 05: the magnified near field turned full rings into contour arcs; keep broken ripple fragments
-      rings *= mix(1.0, 0.45 * smoothstep(0.45, 0.8, vnoise(vec2(atan(du, dv) * 3.0, d * 2.0))), sw);
-      float back = max(-dv, 0.0);
-      float wakeV = exp(-abs(abs(du) - back * 0.42 - rb * 0.95) * 6.0) * exp(-back * 0.18) * step(dv, 0.0);
+      // 05 (wave 7): no rings and no V lines — in the magnified near field they drew "∩" pool-ripple
+      // arcs; the diagonal pink wake sweeps + fanning speed streaks carry the wake there instead
+      rings *= 1.0 - sw;
+      float bk = max(-dv, 0.0);
+      float wakeV = exp(-abs(abs(du) - bk * 0.42 - rb * 0.95) * 6.0) * exp(-bk * 0.18) * step(dv, 0.0) * (1.0 - sw);
       col += uCyanBright * 0.18 * (1.0 - smoothstep(0.0, rb * 0.3, rr)) * k;
       col += mix(uCyanBright, vec3(1.3), 0.4) * (rings * 0.22 + wakeV * 0.35) * k * (1.0 - pinkM * 0.5);
     }

@@ -19,7 +19,7 @@ import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
 /** c = (ambient occlusion 0..1, seed 0..1, tint -1..1) → instanceColor (see PUFF_VERT) */
-interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number }
+interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number }
 
 // ---------------------------------------------------------------------------------- berm profile
 /** berm spans e ∈ [BERM_IN, BERM_OUT] units outward from the ribbon edge (negative = over the water) */
@@ -117,12 +117,14 @@ const BERM_FRAG = /* glsl */ `
 uniform float uTime;
 uniform vec2 uOutro;     // amount, chamber start s
 uniform vec3 uLightDir;
+uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
 varying vec3 vFoam;
 varying vec3 vPosW;
 varying vec3 vNormalW;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 ${FRAG_FX_GLSL}
+${SOAP05_GLSL}
 void main() {
   float s = vFoam.y;
   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
@@ -167,7 +169,22 @@ void main() {
   float spec = pow(max(dot(reflect(-V, N), L), 0.0), 28.0);
   float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 3.0);
   col += vec3(1.0) * spec * 0.45 + iridescent(fres * 1.4 + c1 * 0.6) * fres * 0.18;
-  gl_FragColor = vec4(col * 0.96, 1.0);
+  col *= 0.96;
+  // 05 (wave 7): the low rim under the puffs reads as small piled soap bubbles: white only on the cell
+  // tops, periwinkle bodies, blue-violet crevices between the cells (ref 05 rim)
+  float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));
+  if (k05 > 0.0) {
+    vec3 Nv = normalize((viewMatrix * vec4(N, 0.0)).xyz);
+    float t5 = soapT(Nv) * 0.55 + 0.45 * mix(0.55, bub, max(k1, 0.3)) - 0.1;
+    t5 -= smoothstep(0.55, 0.95, c1) * 0.45 * k1 + smoothstep(0.62, 0.95, c2) * 0.25 * k2;
+    vec3 c5 = soap05(t5);
+    #ifndef LOW_Q
+    c5 = mix(c5, SOAP_CREV, (1.0 - smoothstep(0.1, 0.2, pc)) * step(0.62, hash12(floor(pp))) * 0.7 * kp);
+    #endif
+    c5 += vec3(1.0) * spec * 0.3;
+    col = mix(col, c5, k05);
+  }
+  gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
 }
 `;
@@ -184,9 +201,13 @@ varying vec3 vNormalW;
 varying vec3 vPosW;
 varying vec3 vLocal;
 varying vec3 vInst;
+varying float vW5;
 #include <fog_pars_vertex>
 void main() {
-  vInst = instanceColor;
+  // instanceColor.x = ao + 2 q, q = 0..8 = the 05 soap-shading weight x 8 (wave 7; ao <= 1 so floor(x / 2) = q)
+  float q5 = floor(instanceColor.x * 0.5);
+  vInst = vec3(instanceColor.x - 2.0 * q5, instanceColor.yz);
+  vW5 = q5 / 8.0;
   float br = 1.0 + 0.035 * sin(uTime * 1.7 + instanceColor.y * 40.0);
   vec4 wp = modelMatrix * instanceMatrix * vec4(position * br, 1.0);
   vPosW = wp.xyz;
@@ -203,8 +224,10 @@ varying vec3 vNormalW;
 varying vec3 vPosW;
 varying vec3 vLocal;
 varying vec3 vInst;
+varying float vW5;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
+${SOAP05_GLSL}
 void main() {
   vec3 N = normalize(vNormalW);
   vec3 V = normalize(cameraPosition - vPosW);
@@ -212,6 +235,21 @@ void main() {
   float wrap = clamp(dot(N, L) * 0.55 + 0.5, 0.0, 1.0);
   float upF = clamp(N.y * 0.5 + 0.5, 0.0, 1.0);
   float lit = smoothstep(0.18, 0.88, wrap * 0.65 + upF * 0.35);
+  vec3 c5 = vec3(0.0);
+  if (vW5 > 0.0) {
+    // 05 (wave 7): ref soap ramp, view-space top light: white caps, periwinkle bodies, blue crevice rims
+    vec3 Nv = normalize((viewMatrix * vec4(N, 0.0)).xyz);
+    float z = clamp(Nv.z, 0.0, 1.0);
+    float t5 = soapT(Nv) - pow(1.0 - z, 1.5) * (0.2 + 0.35 * clamp(0.5 - Nv.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;
+    c5 = soap05(t5 + 0.04 * vInst.z);
+    #ifndef LOW_Q
+    vec3 an5 = abs(vLocal);
+    vec2 pc5 = (an5.x > an5.z ? vLocal.zy : vLocal.xy) * 2.6 + vInst.y * 17.0;
+    float kp5 = 1.0 - smoothstep(0.2, 0.45, fwidth(pc5.x) + fwidth(pc5.y));
+    c5 = mix(c5, SOAP_CREV, (1.0 - smoothstep(0.1, 0.2, cells(pc5))) * step(0.6, hash12(floor(pc5) + vInst.y * 31.0)) * kp5 * 0.5);
+    #endif
+    c5 += vec3(1.0) * pow(max(dot(reflect(-V, N), L), 0.0), 26.0) * 0.25;
+  }
   vec3 lav = vec3(0.47, 0.44, 0.88);
   vec3 top = mix(vec3(1.1, 1.04, 1.16), vec3(1.04, 1.06, 1.16), clamp(vInst.z, 0.0, 1.0));
   top = mix(top, vec3(1.12, 1.02, 1.12), clamp(-vInst.z, 0.0, 1.0));
@@ -231,6 +269,7 @@ void main() {
   float spec = pow(max(dot(reflect(-V, N), L), 0.0), 26.0);
   col += vec3(1.0) * spec * 0.3;
   col *= mix(0.68, 1.0, vInst.x);
+  col = mix(col, c5, vW5);
   gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
 }
@@ -291,32 +330,25 @@ varying vec2 vP;
 varying vec3 vInst;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
+${SOAP05_GLSL}
 void main() {
   float d2 = dot(vP, vP);
   if (d2 > 1.0) discard;
   float z = sqrt(1.0 - d2);
   vec3 Nv = vec3(vP, z);
-  vec3 N = normalize((vec4(Nv, 0.0) * viewMatrix).xyz);   // view → world (rotation transpose)
-  vec3 L = normalize(uLightDir);
-  float wrap = clamp(dot(N, L) * 0.55 + 0.5, 0.0, 1.0);
-  float upF = clamp(N.y * 0.5 + 0.5, 0.0, 1.0);
-  float lit = smoothstep(0.15, 0.85, wrap * 0.6 + upF * 0.4);
-  vec3 lav = vec3(0.5, 0.47, 0.9);
-  vec3 top = mix(vec3(1.1, 1.05, 1.16), vec3(1.04, 1.07, 1.16), clamp(vInst.z, 0.0, 1.0));
-  top = mix(top, vec3(1.12, 1.03, 1.13), clamp(-vInst.z, 0.0, 1.0));
-  vec3 col = mix(lav, top, lit);
-  // pores: one or two small open bubbles on the larger puffs
+  // wave 7: ref 05 soap ramp (white top caps, lavender-white bodies, periwinkle / blue undersides); the
+  // lower and side silhouette sinks into blue-violet (the crevice between piled bubbles), the top edge stays
+  // light; inner / lower bubbles of a pile (ambient occlusion vInst.x) are bluer
+  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.2 + 0.35 * clamp(0.5 - vP.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;
+  vec3 col = soap05(t + 0.04 * vInst.z);
+  // pores: one or two small dark-blue open bubbles on the larger puffs
   vec2 pc = vP * 2.2 + vInst.y * 17.0;
   float cp = cells(pc);
   float kp = 1.0 - smoothstep(0.25, 0.5, fwidth(pc.x) * 2.0);
-  col = mix(col, lav * 0.95, (1.0 - smoothstep(0.1, 0.2, cp)) * step(0.7, hash12(floor(pc) + vInst.y * 31.0)) * kp * 0.55 * lit);
-  // soap-film rim: lavender with a hint of pink, darkest right at the silhouette (crevices in a pile)
-  float fres = pow(1.0 - z, 1.8);
-  col = mix(col, vec3(0.74, 0.62, 0.98), fres * 0.55);
-  vec3 Lv = (viewMatrix * vec4(L, 0.0)).xyz;
+  col = mix(col, SOAP_CREV, (1.0 - smoothstep(0.1, 0.2, cp)) * step(0.7, hash12(floor(pc) + vInst.y * 31.0)) * kp * 0.5);
+  vec3 Lv = (viewMatrix * vec4(normalize(uLightDir), 0.0)).xyz;
   float spec = pow(max(dot(reflect(vec3(0.0, 0.0, -1.0), Nv), Lv), 0.0), 24.0);
-  col += vec3(1.0) * spec * 0.32;
-  col *= mix(0.7, 1.0, vInst.x);
+  col += vec3(1.0) * spec * 0.25;
   gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
 }
@@ -377,7 +409,7 @@ const BANK_DS1 = 15;
 /** puffs stop here (further ahead the berm and its own puffs take over) */
 const BANK_PUFF_DS1 = 12.5;
 /** inner edge of a clump at its widest: px in from the frame edge (of an 864-px wide frame), L / R */
-const BANK_PX: [number, number] = [180, 200];
+const BANK_PX: [number, number] = [150, 200];
 /** lateral size of a clump (px): a clump whose inner edge lies further in than this floats off the frame
  * edge with water beyond it (ref 05 lower clumps x≈50–200 and 610–790) */
 const CLUMP_PX = 135;
@@ -393,7 +425,26 @@ const FLANK_SHEET = false;
  * a white wall: the outer 40 px were foam on 74 % / 100 % of the rows y 700–1400). The seeds put the
  * clumps of the QA frame (s≈132.4) where the ref has them; along 05 clumps cover ≈40 % of the length.
  */
-const BANK_ENV: [number, number, number][] = [[478.345, 0.85, 0.5], [127.503, 0.45, 0.54]];
+const BANK_ENV: [number, number, number][] = [[216.671, 0.975, 0.516], [607.242, 0.459, 0.357]];
+/**
+ * wave 7 (ref 05 rows, qa/pilot05/wave7/foam): the bank row's inner edge (px in from the frame edge) and lateral size
+ * (px) by row ds. The right bank ahead of Benny is a NARROW rim hugging the river edge (ref y 700-940: inner edge
+ * 30 -> 158 -> 70 px, 20-66 px per row), not the wave-5 heap (124-179 px per row). The ref's near clumps: left x 0-125
+ * (ds 0.4-1.9), lower left x 57-214 and lower right x 630-800 (behind Benny, ds -0.5..-1.5). The envelope seeds
+ * (BANK_ENV, searched) open/close the clumps at those rows of the QA frame; along 05 clumps cover 40 % / 59 %.
+ */
+const RIM_R: [number, number][] = [[2.6, 60], [3.4, 70], [4.4, 105], [5.5, 140], [6.6, 158], [7.8, 153], [9.0, 135], [10.3, 104], [11.6, 70], [12.9, 30]];
+const RIM_R_PX = 80;
+function rimR(ds: number): number {
+  if (ds <= RIM_R[0][0]) return RIM_R[0][1];
+  for (let i = 1; i < RIM_R.length; i++) {
+    if (ds <= RIM_R[i][0]) {
+      const [a, pa] = RIM_R[i - 1], [b, pb] = RIM_R[i];
+      return pa + ((pb - pa) * (ds - a)) / (b - a);
+    }
+  }
+  return RIM_R[RIM_R.length - 1][1];
+}
 const BANK_CLEAR_RIDER = 1.3;
 const BANK_CLEAR_CORE = 1.45;
 
@@ -464,10 +515,12 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
   geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
   geo.setIndex(idx);
   geo.computeVertexNormals();
+  const st05 = course.stage('05');
   const uniforms = withFog({
     uTime: { value: 0 },
     uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+    uSt05: { value: new THREE.Vector4(st05.s0 - 6, st05.s0 - 1, st05.s1 - 1, st05.s1 + 4) },
   });
   const mat = new THREE.ShaderMaterial({
     uniforms,
@@ -516,7 +569,8 @@ export function createFoam(
       tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
       tmpM.compose(pf.p, tmpQ, tmpS);
       mesh.setMatrixAt(i, tmpM);
-      mesh.setColorAt(i, tmpC.setRGB(pf.ao, rand(), pf.tint));
+      // x = ao + 2 q (q = 05 soap-shading weight x 8, see PUFF_VERT)
+      mesh.setColorAt(i, tmpC.setRGB(pf.ao + 2 * Math.round(Math.min(1, Math.max(0, pf.w5 ?? 0)) * 8), rand(), pf.tint));
     });
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
@@ -548,7 +602,7 @@ export function createFoam(
     const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
     const p = f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
-    list.push({ p, r, ao, tint: rand() * 2 - 1 });
+    list.push({ p, r, ao, tint: rand() * 2 - 1, w5: (1 - k05) / 0.6 });
   };
   const step = quality === 'high' ? 0.36 : 0.62;
   for (let sa = s0; sa < s1; sa += chunkLen) {
@@ -701,6 +755,8 @@ export function createFoam(
   const KIND: [number, number, number, number, number, number][] = quality === 'high'
     ? [[0.0, 0.08, 0.04, 0.045, 0.1, 1], [0.04, 0.12, 0.05, 0.04, 0.2, 1], [0.12, 0.5, 0.06, 0.06, 0.35, 1], [0.2, 0.55, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.6], [0.6, 0.4, 0.07, 0.05, 0.3, 1], [0.05, 0.9, 0.045, 0.04, 0.2, 1], [0.3, 0.65, 0.05, 0.05, 0.25, 1]]
     : [[0.0, 0.1, 0.045, 0.05, 0.15, 1], [0.12, 0.5, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.7], [0.55, 0.45, 0.07, 0.05, 0.3, 1], [0.1, 0.8, 0.055, 0.05, 0.25, 1]];
+  /** kinds left out of the narrow right rim (heap, outer, 2nd wide body) */
+  const RIM_SKIP = quality === 'high' ? [4, 5, 7] : [2, 3];
 
   const rider = { s: 0, lat: 0, str: 0, target: 0, fed: false };
   const fr = { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
@@ -763,8 +819,19 @@ export function createFoam(
         const lump = bankLump(s, side);
         const env = bankEnv(s, sd);
         rowEnv[sd][i] = env;
-        const frac = ((2 * BANK_PX[sd]) / 864) * env * (0.72 + 0.28 * lump);
-        const fracOut = frac - (2 * CLUMP_PX) / 864;
+        // wave 7: inner-edge px / clump size by row (RIM_R): lower clumps behind Benny, narrow right rim ahead
+        let pxIn: number, pxClump: number;
+        if (sd === 0) {
+          const kz = sm(-0.6, 0.2, ds);
+          pxIn = 214 + (BANK_PX[0] * (0.72 + 0.28 * lump) - 214) * kz;
+          pxClump = 157 + (CLUMP_PX - 157) * kz;
+        } else {
+          const kz = sm(1.4, 2.6, ds);
+          pxIn = 234 + (rimR(ds) * (0.85 + 0.3 * lump) - 234) * kz;
+          pxClump = 170 + (RIM_R_PX - 170) * kz;
+        }
+        const frac = ((2 * pxIn) / 864) * env;
+        const fracOut = frac - (2 * pxClump) / 864;
         const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);
         const inner = frac > 0.002 ? solveLat(cam, side * (1 - frac), camLat + side * 1.0, edge) : edge;
         const outer = fracOut > 0.004 ? solveLat(cam, side * (1 - fracOut), inner, edge) : edge;
@@ -837,11 +904,14 @@ export function createFoam(
         course.sample(sC, fr);
         // bubbles grow with distance so their on-screen size stays ≈10–45 px (ref 05 bank texture)
         const scale = Math.min(2.0, 0.9 + 0.1 * Math.max(0, ds)) * kFade * Math.min(1, wid / 0.3) * ev;
+        // wave 7: the right rim ahead of Benny is one low layer of smaller bubbles (no heap / outer kinds)
+        const rimK = side > 0 ? sm(1.4, 2.6, ds) : 0;
         for (let p = 0; p < P; p++) {
-          const [f0, df, r0, dr, lift, prob] = KIND[p];
-          if (hh(10 + p) > prob) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
+          const [f0, df, r0, dr, lift0, prob] = KIND[p];
+          if (hh(10 + p) > prob || (rimK > 0.5 && RIM_SKIP.includes(p))) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
           const f = Math.min(1, f0 + df * hh(20 + p));
-          const r = (r0 + dr * hh(30 + p)) * scale;
+          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK);
+          const lift = lift0 * (1 - 0.5 * rimK);
           if (r < 0.004) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
           const lat = lin + (lout - lin) * f;
           const h = hin + (hout - hin) * f + bankProf(f, sC, side) + r * lift;
