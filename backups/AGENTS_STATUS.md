@@ -2,11 +2,13 @@
 
 ## ▶ Transfer-session check (2026-11-16 ~01:30 UTC, session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`)
 All 10 definitions present, SHA-256 unchanged (list in `backups/CLAUDE_ACCOUNT_TRANSFER.md` §3).
-washer-environment-modeler (running in the account-8 session): latest saved state = wave-7 `it06`
-(whole-frame mad 59.0 → 51.2; Benny+near water 63.8 → 46.7) + regression captures
-`qa/pilot05/wave7/environment/regress/04–08.png` (01:19 UTC); `NOTES.md` log still empty, no final report.
-Its code passes tsc, continuity and the browser gameplay test. **Relaunch it** on the next account unless a newer
-commit shows DONE. Relaunch list + reasons: transfer guide §3.
+washer-environment-modeler: **wave 7 DONE** (log written 01:23 UTC, merged from `7cc4869`): `it06` kept
+(whole-frame mad 59.0 → 51.2; Benny+near water 63.8 → 46.7); regression 06/07/08 pixel-identical; handoff capture
+`qa/pilot05/wave7/handoff/`; next-wave list = "Left undone" in `qa/pilot05/wave7/environment/NOTES.md`.
+Code passes tsc, continuity and the browser gameplay test (re-run 01:28 UTC). Next to launch:
+path-camera-transition-engineer (far river/VP + far-ring request in `qa/pilot05/REQUESTS.md`), then
+reference-match-director + playwright-visual-qa; android-build-performance last (APK predates waves 4–7).
+Relaunch list + reasons: transfer guide §3.
 
 ## ▶ Status at the account-8 hand-off (2026-11-16 ~01:15 UTC, branch `ccr-4f6c3e0e-5kxgr0`)
 All 10 definitions present and unchanged in `.claude/agents/` (backed up every 5 min). Screen 05 wave 7 =

@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 2709,
-   "sha256": "45afe71bea9c960b1ce3beeb007400bb70963a2d914d5de7349a3f535e409eaa"
+   "bytes": 3081,
+   "sha256": "5030f2bc2ee7f124de9fea22dc44ead61b4b372bfcab0581bb6d550ea2a9bb3b"
   },
   {
    "path": "README_FIRST.md",
@@ -383,23 +383,23 @@
   },
   {
    "path": "backups/AGENTS_STATUS.md",
-   "bytes": 4492,
-   "sha256": "b9ee04d4fe2860501bad1d62bf653ab90dc58e9ea5828890a95a6059d902bef7"
+   "bytes": 5368,
+   "sha256": "8d8c31b1c1b020df1bfb56718ab25ffe1627cb7439554dfb0ccf8b5b2e752e91"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 11579,
-   "sha256": "69647e650475e7943f6b67bc922d4b17372fb1a4f8efe9ba02e9a605dc044c3e"
+   "bytes": 21152,
+   "sha256": "4c4e0865da6855166f8a7efcf19628ecb0c1505cc283ba7bcf53337873ea0cb0"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 4874,
-   "sha256": "4471c8964c0dbe8b5b11b268389271e1424e7cc106458e8286aec899b4a5a1be"
+   "bytes": 5348,
+   "sha256": "be45fb490fd5d92ef1cd24c844582f511c2d00c88b9d9e35a83355c983bf8ee9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 12081,
-   "sha256": "b3d3ee8406c36e865baf447fca913343b04b8a90269c8244d9727733f142695a"
+   "bytes": 12857,
+   "sha256": "ec51349d08232d8ad8469fc645c98a566a1b341d27c903690d20157d0fdbb377"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -413,13 +413,13 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 2173,
-   "sha256": "8dfc5837327a5665cf30c39b75ac5e8ca6be36a94b488813b69194b4eef6cdd6"
+   "bytes": 2486,
+   "sha256": "876bb050b6ac54de2f3f0734416d4797036aaf3906d14c55f664584d3b1c8eaf"
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 4053,
-   "sha256": "fce64cb341eede3e5e2e68d24da41f573a3c6048263baf622e41c508adb8e606"
+   "bytes": 4905,
+   "sha256": "fcc35b848737e821f6ceecf721e4bcaf487b26eb68ca16341f89e89d573a2dbb"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -3870,6 +3870,11 @@
    "path": "scripts/reference.sha256",
    "bytes": 1290,
    "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
+  },
+  {
+   "path": "scripts/resume-newest-work.sh",
+   "bytes": 5251,
+   "sha256": "019f51be58a41042cf0ed9dc6ce6a2bd7b29705a9029acf244052292d4f92c87"
   },
   {
    "path": "scripts/screen_report.py",

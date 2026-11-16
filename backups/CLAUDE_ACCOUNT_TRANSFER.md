@@ -17,7 +17,7 @@ Verified in the transfer session (2026-11-16 01:17–01:35 UTC):
 | **Git LFS downloadable from GitHub** | fresh `git clone` of the branch into an empty folder + `git lfs pull` → **24/24 files downloaded, SHA-256 == pointer oid and size, identical to the working copy**; `git lfs fsck` OK. Includes all 17 Marble/World Labs binaries (table in §7) |
 | References | `sha256sum -c scripts/reference.sha256` 12/12 OK |
 | Agents | 10/10 `.claude/agents/*.md` present (SHA-256 list in §3) |
-| Build / game | `npm ci` OK, `tsc --noEmit` OK, `npm run test:continuity` ok (all 10 stage gaps 0, 05→06 gap 0, 07→08 verticalDrop 61.19, max step tangent 6.24°), `node scripts/gameplay-test.mjs` **pass** (pause, continuous travel, no camera cut, no teleport, plunge 61.41, real coin pickups, heart loss on wall bump, victory, errors []) — run on the code that includes the environment specialist's unfinished wave-7 edits |
+| Build / game | `npm ci` OK, `tsc --noEmit` OK, `npm run test:continuity` ok (all 10 stage gaps 0, 05→06 gap 0, 07→08 verticalDrop 61.19, max step tangent 6.24°), `node scripts/gameplay-test.mjs` **pass** (pause, continuous travel, no camera cut, no teleport, plunge 61.41, real coin pickups, heart loss on wall bump, victory, errors []) — re-run on the code with the environment specialist's final wave-7 edits (merged from `7cc4869`) |
 | Resume script | `bash scripts/resume-newest-work.sh` → `RESUME CHECK: OK` |
 | Autosave | `AUTOSAVE OK … (match)` on `ccr-937c7fbb-htsrgt`; `autosave.config.json` now targets this branch and protects `ccr-4f6c3e0e-5kxgr0` |
 | World Labs credits | **none spent** in the transfer session |
@@ -58,8 +58,8 @@ template: `qa/pilot05/COORDINATION_WAVE7.md` + the specialist's own `qa/pilot05/
 Relaunch on the next account (state at 01:30 UTC):
 | Agent | Relaunch? |
 |---|---|
-| washer-environment-modeler | **YES, unless a newer commit shows it finished.** Wave 7 reached `it06` (whole-frame mad 59.0 → 51.2; tunnel+VP 62.6 → 61.0; Benny+near water 63.8 → 46.7) and captured the 04–08 regression set `qa/pilot05/wave7/environment/regress/` (01:19), but its `NOTES.md` log is still empty and it never reported. Its code (`src/world/environment.ts`, `materials.ts`) is saved and passes tsc/continuity/gameplay. Relaunch with: "continue wave 7 from it06; first compare `regress/04–08.png` with the wave-7 baseline captures; write the NOTES log; keep or revert per screen_report" + the Marble cues in §7 |
-| path-camera-transition-engineer | YES — next task (far river/VP strip, §6 item 5); never started |
+| washer-environment-modeler | **Wave 7 DONE** (log written 01:23 UTC): `it06` KEPT — rings with band shading + 20 spots, rose-copper lids, wall swirl removed, warm VP throat, real-3D near gold frame corners (gated to the 05 straight, no pops). Whole-frame mad 59.0 → 51.2, tunnel+VP 62.6 → 61.0, Benny+near water 63.8 → 46.7; regression 06/07/08 pixel-identical, 04 own share 0.091 %. Handoff capture `qa/pilot05/wave7/handoff/`. Relaunch for the **next wave** with its "Left undone" list in `qa/pilot05/wave7/environment/NOTES.md`: walls overshoot to violet (70–80 % vs ref 29–46 %), VP core too small/orange, lids flatter than ref, far rings at wrong virtual depths (request in `qa/pilot05/REQUESTS.md` for path-camera). It deliberately did NOT adopt the Marble 0.87 R ring spacing — the approved image shows ≈1.75 R bays |
+| path-camera-transition-engineer | YES — next task (far river/VP strip, §6 item 5, + the far-ring depth request in `qa/pilot05/REQUESTS.md`); never started |
 | water-fx-specialist, foam-bubbles-particles | later polish passes only (wave 7 DONE) |
 | reference-match-director, playwright-visual-qa | YES, after the environment + path-camera work lands |
 | benny-character-artist, cartoon-girl-character-artist, animation-and-gameplay-engineer | idle — no relaunch needed |
@@ -110,10 +110,13 @@ translucent bubbles, Benny exactly as approved, correct camera framing and premi
 screenshot beats the Marble world. Keep the finished gameplay systems and the locked camera; do not redo work the
 specialists already finished (wave-7 water/foam DONE). Report measured differences, never invented percentages.
 Wave-7 baseline `qa/pilot05/wave7/baseline/05.png`; ranked difference table in `qa/pilot05/COORDINATION_WAVE6.md`.
-1. Walls: clean deep violet→magenta metal, regular capsule-slot rows, lengthwise white-pink streaks (environment).
-2. Rings: polished yellow-gold bands, highlight line, amber lips; spacing check vs Marble ≈ 0.9 × radius (environment).
-3. Lids: round copper-gold half-dome pucks, glossy top highlight (environment).
-4. Near gold frame ring segments in the bottom corners/bottom arc (environment, 3D, gameplay-safe).
+Items 1–4 got a first full pass in wave 7 (environment DONE, it06 kept); what remains is the "Left undone" list in
+`qa/pilot05/wave7/environment/NOTES.md`:
+1. Walls: swirl removed, slot rows + streaks done — now overshoot to violet (70–80 % vs ref 29–46 %) → warmer F0 / magenta lit panels.
+2. Rings: band shading + 20 spots done — far rings at wrong virtual depths (path-camera block, `qa/pilot05/REQUESTS.md`).
+   Ring spacing follows the approved image (≈1.75 R bays), not the Marble 0.87–0.93 R.
+3. Lids: rose-copper pucks done — shading flatter than ref (V std 0.15 vs 0.22); far lids stay mid-bay.
+4. Near gold frame corners: done as real 3D (gold share 32/33/43 % vs ref 43/50/45 %). VP core now too small/orange.
 5. Far river at the VP (y 470–560) still straight 06-style stripes → keep winding S-bends + coins into the light;
    far foam rims (path-camera-transition-engineer, `class ForcedTunnel` / `// ---- 05 far tunnel` block).
 6. Water polish: brighter near highlights (p95 225 → 247), ~2× glints, sweep starts (water-fx).
@@ -188,7 +191,7 @@ Tracked: `*.glb *.ply *.spz *.blend *.fbx *.hdr *.exr *.ktx2 *.psd *.mp4` + the 
 | Test | Result | When |
 |---|---|---|
 | Fresh-clone LFS download from GitHub | 24/24 files, SHA-256 == oid, fsck OK | transfer session, 2026-11-16 ~01:20 |
-| `node scripts/gameplay-test.mjs` | pass: all 8 checks, plunge 61.41, errors [] (includes unfinished wave-7 environment code) | transfer session, 2026-11-16 ~01:21 |
+| `node scripts/gameplay-test.mjs` | pass: all 8 checks, plunge 61.41, errors [] — re-run on the final wave-7 environment code | transfer session, 2026-11-16 ~01:28 |
 | `npm run test:continuity`, `tsc`, refs 12/12 | ok / OK / OK | transfer session, ~01:20 and again via `resume-newest-work.sh` |
 | `node scripts/gameplay-test.mjs` | pass: victory, heart loss on wall bump, plunge 61.41, errors [] | account 8, 2026-11-16 00:41 |
 | `npm run test:continuity` | all stage gaps 0 | account 8 |
@@ -201,8 +204,8 @@ Tracked: `*.glb *.ply *.spz *.blend *.fbx *.hdr *.exr *.ktx2 *.psd *.mp4` + the 
 ## 12. Exact next tasks
 1. Run §2 (`resume-newest-work.sh`), check §9/§10, then read `backups/AGENTS_STATUS.md` and
    `qa/pilot05/wave7/*/NOTES.md`. Give the user a short recovery report.
-2. If the washer-environment-modeler did not report DONE (its NOTES log was empty at 01:30): relaunch it from
-   `it06` + `regress/` with its NOTES + Marble cues (§3, §7).
+2. washer-environment-modeler finished wave 7 (it06 kept). Next environment wave = its "Left undone" list
+   (warmer wall F0, VP core, lid shading) — after step 3, since far rings depend on the path-camera block.
 3. Launch path-camera-transition-engineer for the far river/VP strip (§6 item 5).
 4. Water + foam polish passes (§6 items 6–7), then reference-match-director + playwright-visual-qa report with
    approved vs before (`qa/pilot05/wave7/baseline/05.png`) vs after at 864×1536.

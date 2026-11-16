@@ -15,7 +15,7 @@ if the app lets you choose), then paste:
 >    `ccr-937c7fbb-htsrgt` and point `backups/autosave.config.json` at your branch.
 > 2. Read `CLAUDE.md`, then `backups/CLAUDE_ACCOUNT_TRANSFER.md` (§0 first) and `backups/AGENTS_STATUS.md`.
 > 3. Keep all ten specialists in `.claude/agents/` (do not recreate them); relaunch the unfinished ones listed in
->    the guide §3 (washer-environment-modeler from wave-7 it06 first, then path-camera-transition-engineer).
+>    the guide §3 (path-camera-transition-engineer next; wave-7 water, foam and environment are DONE).
 > 4. Run `node scripts/gameplay-test.mjs` and `python3 -I scripts/autosave-status.py`; keep the verified
 >    five-minute GitHub autosave running on your session branch; run the status check after every major task.
 > 5. Tell me which connectors I must sign in to again (GitHub, World Labs Atlas, Playwright, context7). Never
