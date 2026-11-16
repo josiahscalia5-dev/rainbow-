@@ -1671,3 +1671,24 @@ Shellcheck is clean. Moving to validation. **Test A:** a second full run must sk
 
 > 🔧 **Bash** `{"command": "time (echo '{\"session_id\":\"test\",\"source\":\"startup\",\"hook_event_name\":\"SessionStart\"}' | CLAUDE_PROJECT_DIR=$PWD bash scripts/autosave-hook.sh SessionStart; echo \"hook exit=$?\"); sleep 1; pgrep -af \"claude-bootstrap.sh --background\" | head -2", "description": "Run the SessionStart hook with source=startup", "timeout": 700000}`
 
+### 🧑 User — 2026-11-16T11:00:28.074Z
+
+> ↩︎ result: RAINBOW SESSION START (scripts/claude-bootstrap.sh --hook, source=startup):
+>   OK   Repository + branch            josiahscalia5-dev/rainbow- on ccr-251ed97c-ty2xvp @ 4c35fc5 (session started from ccr-44f84024-ii5iih)
+>   OK   Backup gap since last session  previous save on GitHub: 98ffd8e 2026-11-16 10:38 UTC (daemon) on ccr-251ed97c-ty2xvp, ccr-44f84024-ii5iih; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 7 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-16 03:22-09:28 UTC (6.1 h)
+>   OK   Resume newest work             12/12 remote ccr-*/claude/* branches contained in HEAD 6f652df
+>   - log gap: 11-16 00:02 -> 11-16 00:37 UTC (0.6 h without any autosave run: environment closed or idle-suspended)
+>   - log gap: 11-16 02:56 -> 11-16 03:12 UTC (0.3 h without any autosave run: environment closed or idle-suspended)
+>   - log gap: 11-16 03:22 -> 11-16 09:28 UTC (6.1 h without any autosave run: environment closed or idle-suspended)
+>   - log gap: 11-16 09:28 -> 11-16 09:47 UTC (0.3 h without any autosave run: environment closed or idle-suspended)
+>   LFS binaries: 0 pointer stubs left (0 = all restored)
+>   Full bootstrap (to …[+473 chars]
+
+### 🤖 Claude — 2026-11-16T11:00:31.723Z
+
+**Hook (startup) passed:** 8.8 s synchronous, then the full run started in the background. Waiting for the background run to release its lock, then testing `source=resume` and `--status`:
+
+### 🤖 Claude — 2026-11-16T11:00:33.378Z
+
+> 🔧 **Bash** `{"command": "flock -w 600 backups/.live/bootstrap.lock -c true && echo \"background run finished\"; tail -3 backups/.live/bootstrap.log; echo ----; echo '{\"source\":\"resume\"}' | bash scripts/autosave-hook.sh SessionStart; echo \"exit=$?\"; echo ----; bash scripts/claude-bootstrap.sh --status | tail -8", "description": "Wait for background bootstrap, test resume hook and status", "timeout": 700000}`
+
