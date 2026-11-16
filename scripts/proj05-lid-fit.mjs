@@ -126,11 +126,11 @@ try {
       if (name === 'L3' || name === 'R3') continue;   // beyond the real 05 tube: the forced-perspective far lids
       let best = null;
       for (const side of [name[0] === 'L' ? -1 : 1]) {
-        for (let s = D.sCam05 + 1; s <= D.sCam05 + 50; s += 0.5) {
+        for (let s = D.sCam05 + 1; s <= D.sCam05 + 53; s += 0.5) {
           for (let ang = -16; ang <= 70; ang += 2) {
             for (let droop = -90; droop <= -65; droop += 5) {
-              for (const stv of [1.0, 1.25, 1.5, 1.8]) { st = stv;
-              for (let size = 1.0; size <= 4.01; size += 0.2) {
+              for (const stv of [1.5, 2, 2.5, 3, 3.5, 4, 5]) { st = stv;
+              for (let size = 0.6; size <= 3.01; size += 0.15) {
                 const szw = size * Math.min(1.4, r05 / 7.6);
                 if (!clearOfRings(s - D.sCam05, szw)) continue;
                 const b = box(s, side, ang, droop, szw);
@@ -149,7 +149,7 @@ try {
       if (!best) { out[name] = { target: T, none: true }; continue; }
       const b0 = best; st = b0.stretch;
       for (let s = b0.s - 0.5; s <= b0.s + 0.5; s += 0.125) for (let ang = b0.ang - 2; ang <= b0.ang + 2; ang += 0.5)
-        for (let droop = Math.max(-90, b0.droop - 5); droop <= Math.min(-65, b0.droop + 5); droop += 2.5) for (let size = b0.size - 0.2; size <= b0.size + 0.2; size += 0.05) {
+        for (let droop = Math.max(-90, b0.droop - 5); droop <= Math.min(-65, b0.droop + 5); droop += 2.5) for (let size = b0.size - 0.15; size <= b0.size + 0.15; size += 0.05) for (const stv of [b0.stretch - 0.25, b0.stretch, b0.stretch + 0.25]) { st = stv;
           const szw = size * Math.min(1.4, r05 / 7.6);
           if (!clearOfRings(s - D.sCam05, szw)) continue;
           const b = box(s, b0.side, ang, droop, szw);

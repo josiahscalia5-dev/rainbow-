@@ -33,10 +33,10 @@ export const PROJLID05: boolean = flag05('projlid05');
  * (L3, R3) is the existing forced-perspective far lids.
  */
 export const LIDS05_FIT = [
-  { name: 'L1', side: -1, ds: 24.375, ang: 22, droop: -115, size: 1.75, stretch: 1.5 },
-  { name: 'L2', side: -1, ds: 47.5, ang: 0, droop: -115, size: 2.4, stretch: 1.5 },
-  { name: 'R1', side: 1, ds: 33.5, ang: -3.5, droop: -115, size: 2.8, stretch: 1.5 },
-  { name: 'R2', side: 1, ds: 50.5, ang: 9.5, droop: -50, size: 2.0, stretch: 1.25 },
+  { name: 'L1', side: -1, ds: 23.375, ang: 22.5, droop: -90, size: 1.55, stretch: 1.8 },
+  { name: 'L2', side: -1, ds: 45.375, ang: -0.5, droop: -90, size: 2.1, stretch: 1.8 },
+  { name: 'R1', side: 1, ds: 31, ang: 3, droop: -90, size: 2.4, stretch: 1.8 },
+  { name: 'R2', side: 1, ds: 50.5, ang: 9.5, droop: -50, size: 2.0, stretch: 1.25 },   // no on-wall fit inside the real tube: previous fit
 ] as const;
 
 /**

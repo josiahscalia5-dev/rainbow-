@@ -2189,3 +2189,92 @@ The tray fit reaches 0.76 overlap on the right big paddle and 0.51–0.66 on the
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-lid-fit.mjs'; s=open(p).read()\ns=s.replace(\"      for (const side of [1, -1]) {\",\"      for (const side of [name[0] === 'L' ? -1 : 1]) {\")\ns=s.replace(\"for (let droop = -105; droop <= -60; droop += 7.5) {\",\"for (let droop = -90; droop <= -65; droop += 5) {\")\ns=s.replace(\"for (let droop = b0.droop - 10; droop <= b0.droop + 10; droop += 2.5)\",\"for (let droop = Math.max(-90, b0.droop - 5); droop <= Math.min(-65, b0.droop + 5); droop += 2.5)\")\ns=s.replace(\"for (const stv of [0.8, 1.0, 1.25, 1.5]) { st = stv;\",\"for (const stv o …[+510 chars]`
 
+### 🧑 User — 2026-11-16T21:23:30.999Z
+
+> ↩︎ result: L1 shapeIoU 0.670 boxIoU 0.723 side -1 ds 23.38 ang 22.5 droop -90 size 1.55 stretch 1.8 box [57,307,190,415] target [62.5,315.5,214,420]
+> L2 shapeIoU 0.610 boxIoU 0.618 side -1 ds 45.38 ang -0.5 droop -90 size 2.10 stretch 1.8 box [263,408,322,473] target [248.8,418.8,332.5,472.5]
+> R1 shapeIoU 0.692 boxIoU 0.718 side 1 ds 31.00 ang 3 droop -90 size 2.40 stretch 1.8 box [750,403,864,519] target [720,400,864,527.5]
+> rings05 [124.03830202823289,138.0383020282329,146.0383020282329,166.0383020282329] sCam05 126.03830202823289 r05 7.6
+> 
+> real	4m22.261s
+> user	0m1.547s
+> sys	0m0.340s
+
+### 🤖 Claude — 2026-11-16T21:23:44.999Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nf=json.load(open('qa/pilot05/proj/tunnel/lid/fit.json'))['fit']\np='src/vfx/proj05Tunnel.ts'; s=open(p).read()\ni0=s.index('export const LIDS05_FIT = ['); i1=s.index('] as const;',i0)\nrows=[]\nfor n in ['L1','L2','R1']:\n    x=f[n]; rows.append(f\"  {{ name: '{n}', side: {x['side']}, ds: {round(x['ds'],3)}, ang: {x['ang']}, droop: {x['droop']}, size: {round(x['size'],3)}, stretch: {x['stretch']} }},\")\nrows.append(\"  { name: 'R2', side: 1, ds: 50.5, ang: 9.5, droop: -50, size: 2.0, stretch: 1.25 },   // no on-wall fit inside the real tube: pre …[+1026 chars]`
+
+### 🤖 Claude — 2026-11-16T21:23:46.253Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/l4_lids.png"}`
+
+### 🧑 User — 2026-11-16T21:24:05.307Z
+
+> ↩︎ result: 0
+> Updated 1 path from the index
+>   LID       px   27726  mean|d|  60.26  <=10 0.056  <=20 0.151  SSIM 0.218  bias [10.2, 16.7, 12.8]
+>   TUNNEL    px  440275  mean|d|  48.41  <=10 0.170  <=20 0.295  SSIM 0.304  bias [5.1, 2.5, -8.0]
+
+### 🧑 User — 2026-11-16T21:24:05.348Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:24:24.451Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-lid-fit.mjs'; s=open(p).read()\ns=s.replace(\"for (const stv of [1.0, 1.25, 1.5, 1.8]) { st = stv;\",\"for (const stv of [1.5, 2, 2.5, 3, 3.5, 4, 5]) { st = stv;\")\ns=s.replace(\"for (let size = 1.0; size <= 4.01; size += 0.2) {\",\"for (let size = 0.6; size <= 3.01; size += 0.15) {\")\ns=s.replace(\"for (let s = D.sCam05 + 1; s <= D.sCam05 + 50; s += 0.5) {\",\"for (let s = D.sCam05 + 1; s <= D.sCam05 + 53; s += 0.5) {\")\ns=s.replace(\"for (let size = b0.size - 0.2; size <= b0.size + 0.2; size += 0.05) {\",\"for (let size = b0.size - 0.15 …[+708 chars]`
+
+### 🧑 User — 2026-11-16T21:24:24.567Z
+
+> ↩︎ result: Exit code 1
+> /home/user/rainbow-/scripts/proj05-lid-fit.mjs:164
+>     }
+>     ^
+> 
+> SyntaxError: missing ) after argument list
+>     at checkSyntax (node:internal/main/check_syntax:74:5)
+> 
+> Node.js v22.23.4
+
+### 🤖 Claude — 2026-11-16T21:24:26.151Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/proj05-lid-fit.mjs", "offset": 122, "limit": 48}`
+
+### 🧑 User — 2026-11-16T21:24:26.177Z
+
+> ↩︎ result: 122	      return u > 0 ? i / u : 0;
+> 123	    };
+> 124	    const out = {};
+> 125	    for (const [name, T] of Object.entries(TARGETS)) {
+> 126	      if (name === 'L3' || name === 'R3') continue;   // beyond the real 05 tube: the forced-perspective far lids
+> 127	      let best = null;
+> 128	      for (const side of [name[0] === 'L' ? -1 : 1]) {
+> 129	        for (let s = D.sCam05 + 1; s <= D.sCam05 + 53; s += 0.5) {
+> 130	          for (let ang = -16; ang <= 70; ang += 2) {
+> 131	            for (let droop = -90; droop <= -65; droop += 5) {
+> 132	              for (const stv of [1.5, 2, 2.5, 3, 3.5, 4, 5]) { st = stv;
+> 133	              for (let size = 0.6; size <= 3.01; size += 0.15) {
+> 134	                const szw = size * Math.min(1.4, r05 / 7.6);
+> 135	                if (!clearOfRings(s - D.sCam05, szw)) continue;
+> 136	                const b = box(s, side, ang, droop, szw);
+> 137	                if (!b || b[2] <= b[0] || b[3] <= b[1]) continue;
+> 138	                const bi = iou(b, T);
+> 139	                if (bi < 0.55) continue;
+> 140	                const sc = shapeIoU(hull(project(s, side, ang, droop, szw)), T, POLYS[name]);
+> 141	                if (!best || sc > best.iou) best = { iou: sc, boxIoU: bi, …[+1974 chars]
+
+### 🤖 Claude — 2026-11-16T21:24:27.778Z
+
+An extra closing brace from my edit. Removing it and running the fit:
+
+### 🤖 Claude — 2026-11-16T21:24:29.833Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/proj05-lid-fit.mjs", "old_string": "          if (sc > best.iou) best = { iou: sc, boxIoU: bi, side: b0.side, s, ds: s - D.sCam05, ang, droop, size, stretch: st, box: b.map((x) => Math.round(x)) };\n        }\n        }\n      out[name] = { target: T, ...best };", "new_string": "          if (sc > best.iou) best = { iou: sc, boxIoU: bi, side: b0.side, s, ds: s - D.sCam05, ang, droop, size, stretch: st, box: b.map((x) => Math.round(x)) };\n        }\n      out[name] = { target: T, ...best };"}`
+
+### 🧑 User — 2026-11-16T21:24:29.917Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/proj05-lid-fit.mjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T21:24:30.833Z
+
+> 🔧 **Bash** `{"command": "node --check scripts/proj05-lid-fit.mjs && time node scripts/proj05-lid-fit.mjs 2>&1 | tail -5", "description": "Run elongated tray fit", "timeout": 600000}`
+
