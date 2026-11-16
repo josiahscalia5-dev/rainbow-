@@ -399,7 +399,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6289,
-   "sha256": "398ba4948904ac00d1153987192eca8be3a419dd199638b4bbb8a81a09971011"
+   "sha256": "5ab3fc124d9e929cb49e6caf6c63016f67f0238b77338cacab41f32d93799d02"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -5027,9 +5027,39 @@
    "sha256": "cc9e3eb40c36168337c6bf7c2dceb800d90f7bbfff94ece6fc53e9a69f107233"
   },
   {
+   "path": "qa/pilot05/wave9b/not_merged/README.md",
+   "bytes": 3104,
+   "sha256": "3c3bf582fcce9daa867c8adaa50d74f635aad7d7538d30699d3cbf3dc3aae5d9"
+  },
+  {
+   "path": "qa/pilot05/wave9b/not_merged/coordinator_tests_0950-1020_bigtunnel_round_walltint.patch",
+   "bytes": 23614,
+   "sha256": "66c4feb77800faaac44a9473d3e89bafa21f6b448542ed6583f021dcdcddf4ac"
+  },
+  {
+   "path": "qa/pilot05/wave9b/not_merged/wave9_environment_oval_plus_pathcamera_far_block.patch",
+   "bytes": 38066,
+   "sha256": "06b2f17d31fd989b2dca687001e7bc1b096b216b6e6f494106375a629278a7c6"
+  },
+  {
+   "path": "qa/pilot05/wave9b/not_merged/wave9_foam_it06.patch",
+   "bytes": 14995,
+   "sha256": "1556995d9503c6d7a9e7aaa71bb8bdb75ef2029d49becd56d3cf0c631fe26963"
+  },
+  {
    "path": "qa/pilot05/wave9b/not_merged/wave9_partial_and_coordinator_tests_vs_BEFORE.patch",
    "bytes": 109104,
    "sha256": "c8877130daa513f02273a31fb43436fd95342f666b09b0f13f3a7a9f12e8e0d4"
+  },
+  {
+   "path": "qa/pilot05/wave9b/not_merged/wave9_pathcamera_it01_far05_coins.patch",
+   "bytes": 21838,
+   "sha256": "a795c70a004baf7265a9636067f7bcf0ad3ef12f0e744db7bbd1d93af882937b"
+  },
+  {
+   "path": "qa/pilot05/wave9b/not_merged/wave9_water_it02.patch",
+   "bytes": 24726,
+   "sha256": "b25528910cebd37ae1ec29fbfaaa634f3613ebf9c9bbbd0316f3a3020fbc19eb"
   },
   {
    "path": "qa/pilot05/wave9b/rings/overlay_APPROVED.png",
