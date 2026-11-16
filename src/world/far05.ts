@@ -129,13 +129,38 @@ export const FAR05_CORE_W10: [number, number][] = [
 ];
 
 /**
+ * Test S1 (?fars05=1, user 2026-11-16: "the far river must wind in continuous S-curves all the way into the golden
+ * light"). ONE factor: the far river's lateral path. Measured on the approved image (qa/pilot05/wave10/
+ * FAR_RIVER_ANALYSIS.md, far Z = depth beyond the seam): left dip −0.8…−2.5 u at Z 6–17, +0.5…+0.7 at Z 24–33,
+ * +3.3…+3.9 at Z 44–58, right peak +4.6 at Z≈77, coins ≈ +1.0 at Z 215 and −3.2 at Z 360. FAR05_CORE and
+ * FAR05_CORE_W10 skip the left dip (one long swing right → reads as a single bend into a blob). The S variants
+ * add it — gentler in the default variant, whose seam sits at +1.2 u (the real exit bend), so the hand-over has no
+ * hook — and keep the right peak and the return left into the light. Seam blend, banks, bands, coins untouched.
+ */
+export const FARS05: boolean = (() => {
+  try {
+    return typeof location !== 'undefined' && new URLSearchParams(location.search).get('fars05') === '1';
+  } catch {
+    return false;
+  }
+})();
+export const FAR05_CORE_S: [number, number][] = [
+  [8, 0.35], [16, -0.9], [24, -0.5], [34, 0.9], [46, 2.6], [60, 3.7], [80, 4.5], [110, 4.2], [140, 3.0], [175, 1.7],
+  [215, 1.0], [260, -0.6], [310, -2.4], [350, -3.0], [400, -3.0],
+];
+export const FAR05_CORE_W10_S: [number, number][] = [
+  [0, -0.3], [6, -0.9], [14, -1.8], [22, -1.2], [32, 0.4], [44, 2.2], [60, 3.6], [80, 4.5], [110, 4.2], [140, 3.0],
+  [175, 1.7], [215, 1.0], [260, -0.6], [310, -2.4], [350, -3.0], [400, -3.0],
+];
+
+/**
  * W10 far design row: the water body spans the whole floor chord (foam rim at the wall), the two satin bands run
  * BESIDE the winding core (approved far field: bands ≈ 20 px wide, 120 px apart at y 540, deep violet water between
  * each band and its bank) instead of as thin lines on the banks of a narrow body hugging the outer wall.
  */
 function designW10(Z: number, chord: number): FarRiverRow {
   const hw = chord - 0.35;
-  const core = Math.max(-hw + 1.2, Math.min(hw - 1.2, hermite(FAR05_CORE_W10, Z)));
+  const core = Math.max(-hw + 1.2, Math.min(hw - 1.2, hermite(FARS05 ? FAR05_CORE_W10_S : FAR05_CORE_W10, Z)));
   const sep = 3.9 - 0.9 * smoothstep(60, 260, Z);
   const w = 0.85 - 0.3 * smoothstep(40, 250, Z);
   const cL = Math.max(-hw + w + 0.3, core - sep), cR = Math.min(hw - w - 0.3, core + sep);
@@ -172,7 +197,7 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
   const chordW10 = Math.sqrt(Math.max(0, ft.R * ft.R - level * level)) * 0.995;
   const designRow = (Z: number): FarRiverRow => {
     if (WATER05) return designW10(Z, chordW10);
-    const target = hermite(FAR05_CORE, Z);
+    const target = hermite(FARS05 ? FAR05_CORE_S : FAR05_CORE, Z);
     let a = -5, b = 5;
     for (let i = 0; i < 36; i++) { const m = 0.5 * (a + b); if (designFromXB(m, Z).core < target) a = m; else b = m; }
     return designFromXB(0.5 * (a + b), Z);

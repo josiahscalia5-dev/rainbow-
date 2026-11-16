@@ -4740,3 +4740,148 @@ Sent. Before the next step I'll do a checkpoint save, and update the roster: the
 > 137	  const hw = chord - 0.35;
 > 138	  const core  …[+3175 chars]
 
+### 🤖 Claude — 2026-11-16T12:29:01.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"WATER05\\b\" src/world/far05.ts | head -3; grep -n \"const WATER05\\|export const WATER05\\|WATER05 =\" -r src | head -3", "description": "Find how the water switch is defined"}`
+
+### 🧑 User — 2026-11-16T12:29:01.964Z
+
+> ↩︎ result: 20:import { coreLateral, coreShiftW10, EDGE_LIFT, WATER05 } from '../vfx/waterRibbon';
+> 174:    if (WATER05) return designW10(Z, chordW10);
+> src/vfx/waterRibbon.ts:147:export const WATER05: boolean = (() => {
+
+### 🤖 Claude — 2026-11-16T12:29:05.188Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 145,152p src/vfx/waterRibbon.ts", "description": "Read the water switch definition pattern"}`
+
+### 🧑 User — 2026-11-16T12:29:05.234Z
+
+> ↩︎ result: * Guarded read: false in vite-node / workers (no `location`).
+>  */
+> export const WATER05: boolean = (() => {
+>   try {
+>     return typeof location !== 'undefined' && new URLSearchParams(location.search).get('water05') === '1';
+>   } catch {
+>     return false;
+>   }
+
+### 🤖 Claude — 2026-11-16T12:29:16.707Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "/**\n * W10 far design row: the water body spans the whole floor chord", "new_string": "/**\n * Test S1 (?fars05=1, user 2026-11-16: \"the far river must wind in continuous S-curves all the way into the golden\n * light\"). ONE factor: the far river's lateral path. Measured on the approved image (qa/pilot05/wave10/\n * FAR_RIVER_ANALYSIS.md, far Z = depth beyond the seam): left dip −0.8…−2.5 u at Z 6–17, +0.5…+0.7 at Z 24–33,\n * +3.3…+3.9 at Z 44–58, right peak +4.6 at Z≈77, coins ≈ +1.0 at Z 215 and  …[+1150 chars]`
+
+### 🧑 User — 2026-11-16T12:29:16.890Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T12:29:18.157Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "  const core = Math.max(-hw + 1.2, Math.min(hw - 1.2, hermite(FAR05_CORE_W10, Z)));", "new_string": "  const core = Math.max(-hw + 1.2, Math.min(hw - 1.2, hermite(FARS05 ? FAR05_CORE_W10_S : FAR05_CORE_W10, Z)));"}`
+
+### 🧑 User — 2026-11-16T12:29:18.305Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T12:29:19.258Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "    const target = hermite(FAR05_CORE, Z);", "new_string": "    const target = hermite(FARS05 ? FAR05_CORE_S : FAR05_CORE, Z);"}`
+
+### 🧑 User — 2026-11-16T12:29:19.401Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T12:29:23.160Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/s1; rm -rf $S; for q in \"x=0\" \"fars05=1\" \"water05=1&fars05=1\"; do n=$(echo \"$q\" | tr '=&' '__'); timeout 600 node scripts/capture.mjs 05 --out=$S/$n \"--q=$q\" > /dev/null 2>&1 || echo \"capture $q failed\"; done; git checkout -q -- qa/capture_log.json; ls $S; python3 -I -c \"\nimport sys, numpy as np; from PIL import Image, ImageChops\nd=np.asarray(ImageChops.difference(Image.open('$S/x_0/05.png').convert('RGB'), Image.open('qa/pilot …[+221 chars]`
+
+### 🧑 User — 2026-11-16T12:30:24.203Z
+
+> ↩︎ result: TSC_OK
+> fars05_1
+> water05_1_fars05_1
+> x_0
+> default vs current_default: 3D scene max 0
+
+### 🤖 Claude — 2026-11-16T12:30:27.531Z
+
+The default is unchanged. Now the far-river region enlarged (about y 440–680, where the river meets the light) for all versions, plus the traced centreline so the S-swing is measured, not guessed:
+
+### 🤖 Claude — 2026-11-16T12:30:35.791Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/s1; python3 -I - \"$S\" <<'PY'\nimport sys, numpy as np\nfrom PIL import Image, ImageDraw\nS = sys.argv[1]\nlabs = [(\"APPROVED\", \"references/05_flow_into_the_current.png\"), (\"T2 CURRENT\", \"qa/pilot05/current_default_05.png\"),\n        (\"S path\", f\"{S}/fars05_1/05.png\"), (\"WATER it04\", \"qa/pilot05/wave10/water/05_NEW.png\"), (\"WATER + S path\", f\"{S}/water05_1_fars05_1/05.png\")]\nims = [Image.open(p).convert(\"RGB\").resize((864, 1536)).crop((250, 430, 750,  …[+1271 chars]`
+
+### 🤖 Claude — 2026-11-16T12:30:36.945Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/s1/far5.jpg"}`
+
+### 🧑 User — 2026-11-16T12:30:37.304Z
+
+> ↩︎ result: APPROVED        far rows y488..560 core x: [None, None, None, None, 544, 548, 543, 526, 510, 487, 450, 446, 470]  swing 102 px, direction changes 2
+> T2 CURRENT      far rows y488..560 core x: [None, None, 524, 532, 532, 534, 538, 542, 529, 528, 522, 527, 540]  swing 20 px, direction changes 2
+> S path          far rows y488..560 core x: [None, None, 510, 528, 539, 536, 536, 524, 501, 501, 528, 536, 540]  swing 39 px, direction changes 2
+> WATER it04      far rows y488..560 core x: [None, None, 516, 520, 522, 522, 523, 522, 512, 512, 517, 524, 516]  swing 12 px, direction changes 3
+> WATER + S path  far rows y488..560 core x: [None, None, 510, 518, 525, 526, 524, 517, 496, 499, 498, 508, 514]  swing 30 px, direction changes 4
+
+### 🧑 User — 2026-11-16T12:30:37.316Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:30:51.761Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/s1; python3 -I - \"$S\" <<'PY'\nimport sys\nfrom PIL import Image, ImageDraw\nS = sys.argv[1]\nlabs = [(\"APPROVED\", \"references/05_flow_into_the_current.png\"), (\"T2 CURRENT\", \"qa/pilot05/current_default_05.png\"),\n        (\"S path\", f\"{S}/fars05_1/05.png\"), (\"WATER + S path\", f\"{S}/water05_1_fars05_1/05.png\")]\nims = [Image.open(p).convert(\"RGB\").resize((864, 1536)).crop((330, 460, 690, 640)).resize((480, 240), Image.LANCZOS) for _, p in labs]\no = Image.ne …[+360 chars]`
+
+### 🧑 User — 2026-11-16T12:30:52.081Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T12:30:53.017Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/s1/far_zoom.jpg"}`
+
+### 🧑 User — 2026-11-16T12:30:53.037Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:31:08.879Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/far05.ts", "offset": 60, "limit": 58}`
+
+### 🧑 User — 2026-11-16T12:31:08.889Z
+
+> ↩︎ result: 60	  const h = x1 - x0, t = (x - x0) / h, t2 = t * t, t3 = t2 * t;
+> 61	  return (2 * t3 - 3 * t2 + 1) * p0 + (t3 - 2 * t2 + t) * h * tan(i) + (-2 * t3 + 3 * t2) * p1 + (t3 - t2) * h * tan(i + 1);
+> 62	}
+> 63	
+> 64	/** one row of the river layout, all laterals in units from the tunnel axis along ft.Rt */
+> 65	export interface FarRiverRow {
+> 66	  /** route (water body) centre */
+> 67	  xB: number;
+> 68	  /** water body half width */
+> 69	  hw: number;
+> 70	  /** left / right pink band centre and half width */
+> 71	  cL: number; wL: number; cR: number; wR: number;
+> 72	  /** visible cyan core centre (between the bands) — flow lines and the far coins follow it */
+> 73	  core: number;
+> 74	}
+> 75	
+> 76	/**
+> 77	 * The real 05 ribbon's band layout (waterRibbon.ts FRAG, 05 block with sw = 1, freeK = 0, Benny far away,
+> 78	 * time-dependent wobble/noise left out) for a route centre xB, half width hw, core swing M (from the route
+> 79	 * centre) and band S offset sb, at arc length s (only feeds the slow sin() modulations).
+> 80	 */
+> 81	export function bandLayout(xB: number, hw: number, M: number, sb: number, s: number): FarRiverRow {
+> 82	  const Mb = M + sb;
+> 83	  let offL = hw * (0.62 + 0.03 * Math.sin(s * 0.13 + 1.7));
+> 84	  let …[+1759 chars]
+
+### 🧑 User — 2026-11-16T12:31:25.833Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-16T12:31:25.873Z
+
+Save everything to my GitHub
+
+### 🤖 Claude — 2026-11-16T12:31:31.885Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; flock -w 120 backups/.autosave.lock -c true; python3 scripts/rainbow-autosave.py --reason manual:user-save-request --message \"Screen 05: far-river S-path test S1 (?fars05=1, candidate) + water it04 review; save requested by the user\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"|warn'; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1); echo \"local  $L\"; echo \"remote $R\"; [ \"$L\" = \"$R\" ] && echo \"REMOTE == LOCAL\"; echo \"uncommitted: $(git status --short | wc -l)\"; python3 -I script …[+293 chars]`
+

@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6783,
-   "sha256": "82c5a918d02e82b9fcaaa842b80be5f5b76c0c82ddbf96ddf7bee4c28cdaabc8"
+   "sha256": "c00193e8a78bbe2f1583ab30d8ac413683d916cc993d8fc16e83ec782975760c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6203,8 +6203,8 @@
   },
   {
    "path": "src/world/far05.ts",
-   "bytes": 14310,
-   "sha256": "fed162a8fdc2a7a9a2f16b1948fd3fc7ac55e35fce0a6f258c04387c286afafd"
+   "bytes": 15860,
+   "sha256": "18c7dba71bf436bad7b887f96bf5ea42c75d53c09280925eed8c6e6f4e992bf9"
   },
   {
    "path": "src/world/laundryRoom.ts",
