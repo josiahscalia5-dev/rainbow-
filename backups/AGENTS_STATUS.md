@@ -1,6 +1,28 @@
 # Rainbow specialists — roster, responsibilities and status
 
-## ▶ Wave 9 RUNNING (started 2026-11-16 ~02:35 UTC, recovery session `01Kbt6BV`, branch `claude/rainbow-3d-account-recovery-xex5hc`)
+## ▶ NOW: wave 9b (2026-11-16 from ~09:50 UTC, session `012NR93N`, branch `ccr-44f84024-ii5iih`) — read `qa/pilot05/COORDINATION_WAVE9B.md`
+**User decisions 2026-11-16 ~10:20 UTC:** (1) Google Flow videos cover the opening and ending — do not rebuild 01 / 02 / 11
+as detailed 3D; (2) specialists work on PLAYABLE screens 03–09: Screen 05 first, then 03, 04, 06, 07, 08, 09;
+(3) Screen 05: the BEFORE picture (`qa/pilot05/wave9/baseline/05.png`) is the preferred baseline — the oval / big
+tunnel is REJECTED; controlled tests only, one geometric factor at a time, always shown approved | BEFORE | NEW.
+* `src/` was restored to BEFORE (aa35c8a; fresh 05 capture pixel-identical to the baseline). Wave 9 below is therefore
+  NOT in the working game: its unfinished edits are in `qa/pilot05/wave9b/not_merged/*.patch` and in git history.
+* No specialist is running. All ten definitions are present and unchanged.
+* Next for Screen 05: the user's answer on test T1 (front ring), then T2 / T3 (COORDINATION_WAVE9B.md). When a
+  specialist is launched for 05 it gets ONE test at a time under those rules (URL switch, default build unchanged).
+* After 05: one specialist per screen for 03, 04, 06, 07, 08, 09 (reference-match-director first for a ranked
+  difference list per screen), never several screens at once without the user's go-ahead (credits).
+| Specialist | State | Wave-9 work (not merged) that may return as its own test |
+|---|---|---|
+| washer-environment-modeler | idle | oval K 1.7 + bank floor + shift — rejected by the user; do not reuse |
+| path-camera-transition-engineer | idle | it01 far coin trail into the light (kept by the specialist) — candidate test, WITHOUT the oval far section |
+| water-fx-specialist | idle | it01/it02 measured worse than baseline on its own metric — do not reuse as is |
+| foam-bubbles-particles | idle | it06 (wake bands, lacy splash; A/B neutral) — candidate test |
+| reference-match-director, playwright-visual-qa | idle | — |
+| benny-character-artist, cartoon-girl-character-artist, animation-and-gameplay-engineer, android-build-performance | idle | — |
+
+## (superseded) Wave 9 — stopped mid-iteration ~02:45 UTC, NOT in the working game since wave 9b
+### Wave 9 as launched (started 2026-11-16 ~02:35 UTC, recovery session `01Kbt6BV`, branch `claude/rainbow-3d-account-recovery-xex5hc`)
 Wave 8 (below) STOPPED mid-iteration when that Claude account ran out of credits (last save aa35c8a 02:08 UTC): water it05/it06,
 foam it05, environment it02, path-camera it02 (empty log). Their edits are in the code; recovered code passes tsc,
 continuity and the gameplay test. Wave 9 = each of the four CONTINUES its own wave-8 work. Brief:

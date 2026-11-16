@@ -246,7 +246,19 @@ export function buildEnvironment(course: Course): Environment {
   // The slot list still places the lid pair camera-side of that slot and the slot-row phase.
   const ringSlots05: number[] = [];
   for (let s = sF05; s >= s05 + 2; s -= bay05) ringSlots05.unshift(s);
-  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5);
+  // wave 9b — controlled geometry test T1 (user-directed 2026-11-16: BEFORE is the baseline, one factor at a time).
+  // Measured with tools/qa/ring_fit05.py (qa/pilot05/wave9b/rings): the approved rings are ROUND — A r 492 px,
+  // B 240, C 150, D 88 — and BEFORE draws B 228, C 153, D 96 (within −5…+9 %) but the front ring A only 374 (−24 %):
+  // its bay slot sits 26 u ahead of the checkpoint eye (r ≈ 9724 / depth). T1 moves ONLY that ring to RING_A05_DEPTH
+  // (20 u → r ≈ 490); tunnel radius, cross-section, camera, every other ring, the lids and the far block are untouched.
+  // Default 26 = BEFORE; ?ringa=20 shows the test. (The wave-9 oval / "big tunnel" tests are NOT in this code:
+  // qa/pilot05/wave9b/not_merged/.)
+  const qaNum05 = (key: string, d: number) => {
+    const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;
+    return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;
+  };
+  const RING_A05_DEPTH = qaNum05('ringa', 26);
+  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
   // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)

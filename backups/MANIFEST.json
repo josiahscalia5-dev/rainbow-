@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 3368,
-   "sha256": "212da7bf3a711e6a60a1bda8bba72243841f961604684049b6d06884c4514f4a"
+   "bytes": 4213,
+   "sha256": "182a6ef816deb0dccd75436a21e2565d83f755e88d0f4960751be63ee818e172"
   },
   {
    "path": "README_FIRST.md",
@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.md",
-   "bytes": 8670,
-   "sha256": "e7ecc4f8133dd850f60ba5ffbe6815ac4ddda5a8de3235bb1a95ea007be9ac9c"
+   "bytes": 10895,
+   "sha256": "4e4339c95b4d94e01c020c62c09dd61979e6d08f759c83d85feb3e22ba88845c"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -399,7 +399,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6289,
-   "sha256": "ac8f8a53246eda16fab5342d20af14f7948ec4db10840be2a6c562532d58b06f"
+   "sha256": "d4d5c9ee3583684819663383f9fbb2014dd90b1655b4e69b7aa03af837beb604"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -423,8 +423,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 5488,
-   "sha256": "8190ec6f94b90c6385808ac41bcf9e8f3a93bd37680b34d137e6f9140ddfa0af"
+   "bytes": 5516,
+   "sha256": "c2b3a8b4f88206e93e84febe0e79c06a3eceb415db2ab72c19e87e6882599f37"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -823,8 +823,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1246,
-   "sha256": "ce4033b8a7c7c2dba71d66e01f3bc87763cee366baf1744e98816561eb538986"
+   "bytes": 5163,
+   "sha256": "f56fd6548f0ef3820b4f3e3ab995f12b7eb0ecc30840d5576b2486405df6285b"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -879,7 +879,7 @@
   {
    "path": "qa/gameplay_test.json",
    "bytes": 14632,
-   "sha256": "23c6cf019f663b50138ae787b63a16093ea550b85a6157277f74d182dc107e34"
+   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
   },
   {
    "path": "qa/glb_validation.txt",
@@ -940,6 +940,11 @@
    "path": "qa/pilot05/COORDINATION_WAVE9.md",
    "bytes": 6790,
    "sha256": "81c6b5a463a8fcfbb4198d3ee4c4722ef7509bded546a7ac4a2df0b45d73e73d"
+  },
+  {
+   "path": "qa/pilot05/COORDINATION_WAVE9B.md",
+   "bytes": 6440,
+   "sha256": "ebac4d91485742bddfbfcbebac170fcaf3fff4b267b0f7e33ffb3881a56efe28"
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
@@ -5002,6 +5007,26 @@
    "sha256": "b19f40ec117779ae0c31f7aa36787f3af8685fa2e4956701fe1b5686c60963ac"
   },
   {
+   "path": "qa/pilot05/wave9b/T1/05.png",
+   "bytes": 1754285,
+   "sha256": "fc103bac02c8dfeb0ee938c644d099ce6e8924354a0024576f0a2c21a5ffe53a"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T1/05_approved_before_T1.jpg",
+   "bytes": 927811,
+   "sha256": "87c517ff0abaaf658b118d69db658fdf361a4e5460066da32dfa0e6ed33bcbde"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T1/overlay_T1.png",
+   "bytes": 1065845,
+   "sha256": "6c1393a4122e026139f25ccefdb17f07643fe687cb07cd7de68144908f405052"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T1/rings.md",
+   "bytes": 1074,
+   "sha256": "cc9e3eb40c36168337c6bf7c2dceb800d90f7bbfff94ece6fc53e9a69f107233"
+  },
+  {
    "path": "qa/pilot05/wave9b/not_merged/wave9_partial_and_coordinator_tests_vs_BEFORE.patch",
    "bytes": 109104,
    "sha256": "c8877130daa513f02273a31fb43436fd95342f666b09b0f13f3a7a9f12e8e0d4"
@@ -5883,8 +5908,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 50166,
-   "sha256": "180924bc8aa50f7fdceb9fd3f60107a0a46bfb549d0fd90fbf3a88d2f662da6c"
+   "bytes": 51276,
+   "sha256": "0a2ae4ac7f06fb8334daa2a0acc75052027ac4bcced2958e95a51fff46c460da"
   },
   {
    "path": "src/world/far05.ts",
