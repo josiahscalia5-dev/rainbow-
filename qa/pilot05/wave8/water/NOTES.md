@@ -82,6 +82,9 @@ Measured: report mad 50.7 / hue 0.880 / edge 0.189 (baseline 51.2 / 0.856 / 0.17
 cyanstat: cyan lum p50 169/155/144 (ref 157/148/141), pink 181/181 (ref 173/176). Seen: hot-pink satin S-ribbons
 with light lines along the bends, deep glossy near body; still short of the ref's big near flares and mid glitter.
 
+(wave 9 recovery check: the it06 entry below arrived with the coordinator's merge of the final wave-8 notes; numbers
+re-verified against `it06/metrics.md`; it06 = the water state of the wave-9 baseline.)
+
 ### it06 (FINAL, kept) — 0 console errors, 86 calls, 567,415 tris
 Changes: near sweeps keep full streak lines (dk × (1 + 0.9·pW)); mid flares flA twice as many rows along the flow, 22 px
 arms; near lens flares 120 px / T7 ×1.8 + 2nd set 60 px; near star flares ×(1.2 + 1.0·lane).

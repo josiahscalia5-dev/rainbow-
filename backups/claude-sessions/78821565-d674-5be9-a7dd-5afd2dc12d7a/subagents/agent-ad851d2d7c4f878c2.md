@@ -454,3 +454,18 @@ I'll start by reading the coordination file and my previous notes.
 >     }
 >     // deterministic reference counter for this checkpoint (s …[+5447 chars]
 
+### 🤖 Claude — 2026-11-16T02:23:26.223Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe; cat > /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/probe.mjs <<'EOF'\n// scratch probe: screen mapping of (ds, lat) around Benny at the 05 checkpoint + raft QA\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nprocess.chdir('/home/user/rainbow-');\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5290);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry  …[+2240 chars]`
+
+### 🧑 User — 2026-11-16T02:23:46.834Z
+
+> ↩︎ result: {"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]}
+> waterlineR 0.6536532455807745
+> ds -3 hw 5.48 0:378,1623 1:690,1626 2:1007,1630 3:1329,1633 -3:-528,1613 -2.5:-380,1614 -2:-231,1616 -1.5:-81,1618 -1:71,1619 -0.5:224,1621 0.5:533,1625 1.5:847,1628 2.5:1167,1632
+> ds -2.5 hw 5.47 0:388,1502 1:667,1505 2:950,1509 3:1239,1512 -3:-422,1492 -2.5:-290,1494 -2:-156,1495 -1.5:-22,1497 -1:114,1499 -0.5:250,1500 0.5:527,1504 1.5:808,1507 2.5:1094,1510
+> ds -2 hw 5.46 0:396,1404 1:649,1406 2:904,1408 3:1164,1411 -3:-339,1398 -2.5:-218,1399 -2:-97,1400 -1.5:25,1401 -1:148,1402 -0.5:272,1403 0.5:522,1405 1.5:776,1407 2.5:1033,1410
+> ds -1.5 hw 5.45 0:403,1323 1:633,1325 2:866,1326 3:1103,1328 -3:-269,1319 -2.5:-158,1320 -2:-48,1321 -1.5:64,1321 -1:176,1322 -0.5:290,1323 0.5:518,1324 1.5:750,1326 2.5:984,1327
+> ds -1 hw 5.45 0:409,1256 1:621,1257 2:836,1258 3:1053,1260 -3:-208,1252 -2.5:-107,1252 -2:-5,1253 -1.5:98,1254 -1:201,1254 -0.5:305,1255 0.5:515,1256 1.5:728,1258 2.5:944,1259
+> ds -0.5 hw 5.44 0:415,1198 1:611,1199 2:810,1201 3:1013,1202 -3:-155,1194 -2.5:-62,1195 -2:32,1195 -1.5:127,1196 -1:222,119 …[+4221 chars]
+

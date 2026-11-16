@@ -399,7 +399,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5834,
-   "sha256": "d2689cad4518752330b4cc5efbc64d5d31d33b86c7b2976b584d483185ed6836"
+   "sha256": "f433c6d693ef3926e9aa7c55b0edf084c15cb828b0698023152d5d94801ea341"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -823,8 +823,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5142,
-   "sha256": "4c9c5a8391ca5c07e2245e94266bdbc565132dd978e2e8559d3cd36ec9f1ef5c"
+   "bytes": 1177,
+   "sha256": "4859812a4a884198d985702ee63c3271cacc7037a506b69def7c6e92bc681c55"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -3898,8 +3898,8 @@
   },
   {
    "path": "qa/pilot05/wave8/water/NOTES.md",
-   "bytes": 8383,
-   "sha256": "b62dec77f7465050bec9e92540b1988bcd1ddbbc23f8260352fdb4f8a0a296b3"
+   "bytes": 8588,
+   "sha256": "bfd209fad482c9a207637aa64c54c305836b7e0170d01644eb2af923b42cb7c4"
   },
   {
    "path": "qa/pilot05/wave8/water/it00/03.png",
@@ -4290,6 +4290,51 @@
    "path": "qa/pilot05/wave9/recovered/metrics.md",
    "bytes": 437,
    "sha256": "c412c38822af7d2c86ba0abcd5c38f3034cdc8299e36dbe98829bddcda1223f6"
+  },
+  {
+   "path": "qa/pilot05/wave9/user_check/05.png",
+   "bytes": 1750841,
+   "sha256": "33ca624918ff713181f2d4ae9cd4d1d5073dc267fef73acc24c7a94a63d5ab7e"
+  },
+  {
+   "path": "qa/pilot05/wave9/user_check/05_highlight_NOW.png",
+   "bytes": 1858819,
+   "sha256": "ae408fe5990a9211460f41eca949bc72a10d014bcbd8146933c6d6d405e63601"
+  },
+  {
+   "path": "qa/pilot05/wave9/user_check/05_highlight_PREV.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave9/user_check/05_overlay_NOW.png",
+   "bytes": 2250622,
+   "sha256": "94eeb46669e0a47f60dbad005271a16e6e73e59ca836628505cf7d141ca239d2"
+  },
+  {
+   "path": "qa/pilot05/wave9/user_check/05_overlay_PREV.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave9/user_check/05_side_by_side.png",
+   "bytes": 4139781,
+   "sha256": "207fef5c31092538033c05f7d96967111f62a216b25258d79b8a0755411b859e"
+  },
+  {
+   "path": "qa/pilot05/wave9/user_check/approved_vs_live.png",
+   "bytes": 4217196,
+   "sha256": "c7ff574da34b30453f70f390e16faa5c1e655912adf563681f4195e2e24033f0"
+  },
+  {
+   "path": "qa/pilot05/wave9/user_check/metrics.json",
+   "bytes": 452,
+   "sha256": "867734633fec4e21cf02226e43a2eea99fd738df85fa51f836050417e2def4a6"
+  },
+  {
+   "path": "qa/pilot05/wave9/user_check/metrics.md",
+   "bytes": 437,
+   "sha256": "1c5fcaeb920df61c3b50366974a8a97b3cc55ca2e0a69c6a0a50b13be805c50c"
   },
   {
    "path": "qa/report_metrics.json",

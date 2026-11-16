@@ -1463,3 +1463,64 @@ Please focus on significant visual improvements rather than repeatedly making ti
 
 My goal remains approximately 90–95% similarity if achievable, with honest measurements and real playable Android gameplay.
 
+### 🤖 Claude — 2026-11-16T02:23:12.411Z
+
+Most of this is already underway: the four specialists are resuming their saved wave-8 work right now. Let me check how far they've got, confirm autosave is healthy, and take a fresh capture of the running game.
+
+### 🤖 Claude — 2026-11-16T02:23:16.174Z
+
+> 🔧 **Bash** `{"command": "date -u; python3 -I scripts/autosave-status.py; echo; git ls-remote origin refs/heads/ccr-937c7fbb-htsrgt | cut -c1-7; for n in environment path-camera water foam; do echo \"== $n: $(ls -d qa/pilot05/wave9/$n/it* 2>/dev/null | xargs -n1 basename 2>/dev/null | tr '\\n' ' ')\"; [ -f qa/pilot05/wave9/$n/NOTES.md ] && grep -E '^\\*? ?#*\\s*(it0|\\* it0)' qa/pilot05/wave9/$n/NOTES.md | cut -c1-140 | tail -3; for m in qa/pilot05/wave9/$n/it*/metrics.md; do [ -f \"$m\" ] && echo \"$(basename $(dirname $m)): $(grep '^| NOW' $m)\"; done; done; tail -5 qa/pilot05/REQUESTS.md | grep wave9 |  …[+77 chars]`
+
+### 🧑 User — 2026-11-16T02:23:17.380Z
+
+> ↩︎ result: Mon Nov 16 02:23:16 UTC 2026
+> AUTOSAVE OK | branch claude/rainbow-3d-account-recovery-xex5hc | scheduler daemon | last verified backup 2026-11-16T02:23:07+00:00 (0.1 min ago) | local 319ca1f remote 319ca1f (match) | uncommitted 0
+> 
+> f6e4071
+> == environment: 
+> == path-camera: 
+> == water: 
+> == foam:
+
+### 🤖 Claude — 2026-11-16T02:23:27.399Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/wave9/user_check && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave9/user_check 2>&1 | tail -2 && python3 -I scripts/screen_report.py 05 qa/pilot05/wave9/user_check PREV=qa/pilot05/wave9/baseline/05.png NOW=qa/pilot05/wave9/user_check/05.png 2>&1 | grep -E '^\\| (PREV|NOW)' && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\na=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open('qa/pilot05/wave9/user_check/05.png').convert('RGB')\nH=1536\na=a.resize((round(a.width*H/a.height),H)); b=b.resize((round( …[+597 chars]`
+
+### 🧑 User — 2026-11-16T02:23:59.596Z
+
+> ↩︎ result: 05 → qa/pilot05/wave9/user_check/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> | PREV | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> | NOW | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> (1744, 1606)
+
+### 🤖 Claude — 2026-11-16T02:24:01.957Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/wave9/user_check/approved_vs_live.png"], "caption": "Left: your approved 05. Right: a fresh capture of the running game at 02:24 UTC. It matches the recovered capture exactly (mad 50.6, hue_corr 0.875, edge_corr 0.195) because no wave-9 edits have landed yet.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T02:24:02.782Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave9/user_check/approved_vs_live.png → file_uuid: 04666073-195c-4343-b7f1-cf2e327d7a9c
+
+### 🤖 Claude — 2026-11-16T02:24:12.350Z
+
+I've sent the side-by-side: your approved Screen 05 on the left, a fresh capture of the running game on the right. It's identical to the recovered capture (mad 50.6, hue_corr 0.875, edge_corr 0.195) because the specialists haven't saved any new changes yet. I launched them at 02:20, so they're still reading their notes.
+
+**Your requests, one by one:**
+- **Specialists resumed, not restarted:** all four continue from their saved wave-8 notes and latest captures, each in its own files.
+  - **Environment:** gold rings, rounded wall fittings, walls and the golden glow.
+  - **Path and camera:** S-curves and coins into the golden light, plus the spacing of the distant rings.
+  - **Water:** pink S-bands and glossy cyan.
+  - **Foam:** fine bubble banks, the splash behind Benny, and soap bubbles.
+- **Your two Marble reconstructions:** both are on disk and open in Blender. The full world's panorama already drives the Screen 05 wall reflections, and the environment specialist is using the wall textures and measurements. No credits will be spent; the balance is still 5,190.
+- **Your priority 1:** the previous account found that your approved rings are wide ovals, about 1.75 times wider than tall. The live rings are circles. I've asked the environment specialist to test widening the Screen 05 tunnel, and to keep it only if the comparison is clearly closer and the gameplay test still passes.
+- **Protected:** the camera lock, Benny, gameplay, coins, the screen joins and the 07→08 descent. Path and camera must pass the continuity and gameplay tests before finishing.
+- **Environment and autosave:** Blender 5.3, Android SDK 34, World Labs plugin, Atlas and Playwright are all working. Gameplay and continuity pass. The autosave is pushing every 5 minutes, and GitHub matches the local copy.
+
+When the specialists report, I'll show you the approved image, the recovered game and the updated game together, with the measured differences. I'll undo anything that measures further from your image. I'll only quote a similarity figure if the evidence supports it.
+
+### 🧑 User — 2026-11-16T02:24:12.395Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
