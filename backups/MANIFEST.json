@@ -453,8 +453,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_T2.png",
-   "bytes": 1435441,
-   "sha256": "b49d37f3cec02ea0c66e5cc554707e55f93ba2c740aa9b661f0b7f3742cbddc6"
+   "bytes": 740534,
+   "sha256": "cc5429b78e5a6f897cb159416f6bd4d63bb39c6dfa7604a857a4ea9e246454e2"
   },
   {
    "path": "assets/textures/water05/proj05_WN.png",
@@ -468,8 +468,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_WT2.png",
-   "bytes": 3823,
-   "sha256": "c86895cc9a30cc94c714fbbefb7f5108285ea736002bbfc053328fbf250ac63a"
+   "bytes": 3820,
+   "sha256": "c747eac734536d62b3c6802c198c7bd1b403add2c011f3f95dcd9ae87218bcc7"
   },
   {
    "path": "assets/textures/water05/proj05_flow.json",
@@ -484,7 +484,7 @@
   {
    "path": "assets/textures/water05/proj05_near.json",
    "bytes": 1270,
-   "sha256": "9a9e204846184628cd7e62510ea9b79f2342a44613cc4e62db0248872e00201a"
+   "sha256": "8342db775bc523175ca4f52dc25cc4efdd6b6af5830c2139b3c2ad41e4f1e996"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9708,
-   "sha256": "de785556dab83aa3953a0ade4c34d20eea10ca187eabd71780a0580848a2b2fa"
+   "sha256": "9a8c020608365b8c892edfbd7d29908d72e4b9ac168e4be3189b33bc9a032694"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1885,6 +1885,21 @@
    "path": "qa/pilot05/proj/near/tools/uniform_probe.mjs",
    "bytes": 1294,
    "sha256": "bffcd3262ab9089b3dfb74a5acafaa07ad92f1d757a6a9225394fbd6ef72e463"
+  },
+  {
+   "path": "qa/pilot05/proj/near/wide_tile_test/NEW_2048_17u.png",
+   "bytes": 1968452,
+   "sha256": "dcc7d08f93b32c259e97089ad566bf379ec5bce31b71b6af70af1ed65bbf7570"
+  },
+  {
+   "path": "qa/pilot05/proj/near/wide_tile_test/crop_17u_1024_left_2048_right_full_res.png",
+   "bytes": 435936,
+   "sha256": "4d8c54c5592def9f26eabb56529f366937b591a2980a8e57046d001984a34471"
+  },
+  {
+   "path": "qa/pilot05/proj/near/wide_tile_test/metrics_1024_vs_2048.json",
+   "bytes": 3447,
+   "sha256": "b6bddae00e56757a13960ec08cdd7a654dc7bb6f298e76c024266a2f46055df7"
   },
   {
    "path": "qa/pilot05/proj/probe/camera.json",
@@ -7838,8 +7853,8 @@
   },
   {
    "path": "tools/proj05/near_bake.py",
-   "bytes": 19094,
-   "sha256": "74e3215f816f7962ba7d2646279525c4fccd760988d83b81d0ce8b4a6c4c04a1"
+   "bytes": 20005,
+   "sha256": "aa1fcefad6241644ee85cf7930ae78caaa02c6dc65cf6c1b2a3a7ed220189ef8"
   },
   {
    "path": "tools/proj05/near_bubbles.json",

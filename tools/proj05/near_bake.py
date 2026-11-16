@@ -233,13 +233,23 @@ if os.path.exists(FM) and opt.get("heal", "1") != "0":
     d_in = d_in - EB_OUT                                      # ~ texels inside the outline
     refl = (~outer) & (d_in < EB_IN + FE)
     yy_, xx_ = np.nonzero(refl)
+    bf = big.astype(np.float32)
+    # reflect along the SMOOTH normal of the outline (gradient of the blurred distance), sampled bilinearly: the first
+    # version mirrored about the nearest outside texel (integer, jumps from texel to texel) and left blocky glints
+    d_raw = (d_in + EB_OUT).astype(np.float32)
+    d_s = cv2.GaussianBlur(d_raw, (0, 0), 2.5 * sc_)
+    gx_ = cv2.Sobel(d_s, cv2.CV_32F, 1, 0, ksize=3); gy_ = cv2.Sobel(d_s, cv2.CV_32F, 0, 1, ksize=3)
+    gn = np.maximum(np.hypot(gx_, gy_), 1e-4)
+    gridy, gridx = np.mgrid[0:big.shape[0], 0:big.shape[1]].astype(np.float32)
+    mapx = gridx - 2.0 * (d_raw + 0.5) * gx_ / gn; mapy = gridy - 2.0 * (d_raw + 0.5) * gy_ / gn
+    Rsm = cv2.remap(bf, mapx, mapy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+    landed = cv2.remap(outer.astype(np.float32), mapx, mapy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT) > 0.99
     ry = np.clip(2 * qy[yy_, xx_] - yy_, 0, big.shape[0] - 1); rx = np.clip(2 * qx[yy_, xx_] - xx_, 0, big.shape[1] - 1)
     bad = ~outer[ry, rx]                                      # reflection left the outside (concave corner): nearest q
     ry[bad], rx[bad] = qy[yy_, xx_][bad], qx[yy_, xx_][bad]
-    bf = big.astype(np.float32)
     Rtex = bf.copy()
-    Rtex[yy_, xx_] = bf[ry, rx]
-    Rtex[yy_, xx_] = cv2.GaussianBlur(Rtex, (0, 0), 1.5 * sc_)[yy_, xx_]
+    Rtex[yy_, xx_] = np.where(landed[yy_, xx_][:, None], Rsm[yy_, xx_], bf[ry, rx])
+    Rtex[yy_, xx_] = cv2.GaussianBlur(Rtex, (0, 0), 1.0 * sc_)[yy_, xx_]
     inside = (~outer) & (d_in >= EB_IN)
     zone = inside & (d_in < EB_IN + FE)                       # where both textures exist: measure the colour difference
     nb = lambda img, m, sg_: cv2.GaussianBlur(img * m[..., None].astype(np.float32), (0, 0), sg_) / np.maximum(cv2.GaussianBlur(m.astype(np.float32), (0, 0), sg_), 1e-4)[..., None]
