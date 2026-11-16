@@ -3658,3 +3658,71 @@ Water-surface accuracy on your approved pixels is 3.6/255 on average, with 96 % 
 
 > ↩︎ result: Updated task #3 status
 
+### 🤖 Claude — 2026-11-16T18:40:27.753Z
+
+I didn't print the `RAINBOW 3D BACKUP VERIFIED` line because one check still fails: this environment blocks the Marble World Labs API (details at the end). Your work itself is saved and verified on GitHub.
+
+Your approved Screen 05 water is now on the real, playable 3D river behind `?proj05=1`. It is not yet at your 95 % target. The water texture itself is very close to your picture. What's left comes from Benny's splash, bubbles, coins, the bottom ring and the river banks. Your working version is unchanged: the default Screen 05 matches it pixel for pixel.
+
+**What I did**
+- **The texture follows the river:** I baked your water into the game river's own coordinates (across and along the river) from the locked camera. It stays fixed to the river, not to the screen. Nothing is pasted over the screen, and Marble's surface isn't used.
+- **Pixels from your approved picture:** your isolated artwork file is the same design but not the same pixels as the approved picture (about 49/255 different on average). So I used the approved picture wherever its water shows. Your isolated artwork fills only what Benny, the coins and the bottom ring hide.
+- **Colours:** the shader reverses the game's colour processing so your exact colours reach the screen. The glow effect is measured and corrected.
+- **Foam:** your approved fluffy foam is part of the texture, so the Screen-05-only 3D foam steps aside. `&projfoam05=1` brings it back.
+
+**Locked camera (full-size pictures sent)**
+
+Measured on your approved water area, leaving out Benny and the coins:
+
+| | Your current version | New `proj05` |
+|---|---|---|
+| Average colour error (0–255) | 49.7 | 23.2 |
+| Pixels within 20 colour levels | 23 % | 72 % |
+| Structural similarity (SSIM, 1.0 = identical) | 0.32 | 0.77 |
+
+- **Where the river is visible**, the error is only 3.6/255, with 96 % of pixels within 10 levels.
+- **The rest** comes from the bottom ring, and from about 102,000 pixels where your approved water reaches past the game's river banks.
+
+**Camera moving forward**
+- **Frames:** I rode forward 0–50 units with the real game. Your design stays on the river all the way: hot-pink S-ribbons, cyan and glints. There's no stretching, tearing or missing water. I fixed a seam and some blocky patches along the way.
+- **Flow:** the water flows toward the camera, confirmed frame by frame in the mid-river.
+- **Clips:** two are attached, one with the camera still and one riding forward.
+- **Limits:**
+  - Faint edges where the artwork fills in under Benny when he steers sideways.
+  - The fine streak detail repeats slightly.
+  - Further ahead it's a little softer than at the locked spot.
+
+**Checks**
+- Gameplay test: all 8 passed.
+- Stage joins: all continuous.
+- Frame cost: 0.98× the current version, measured in software only (not on a phone).
+- Screens 06 and 07 are identical with the switch on. On Screen 04 only the distant view down into Screen 05 changes.
+- No Marble credits were spent, and I did not build an Android APK.
+
+**Best next steps** (one at a time, each behind its own switch): match or hide Screen 05's bubbles, then visually widen the river banks to where your approved water reaches. Tell me whether to go ahead, or whether `proj05` should become your default.
+
+Write-up: `qa/pilot05/proj/NOTES.md`. Specialist instructions: `qa/pilot05/proj/BRIEF_NEXT.md`.
+
+**Backup status**
+- **What fails:** this environment's network rules block `api.worldlabs.ai`, and no World Labs key is saved on it. The credit balance can't be re-read. Nothing in this work needed it.
+- **GitHub:** branch `ccr-e546a360-cxmton`, commit `745e6e6ee436f023815389b96862356f329f0e4d`. The copy on GitHub matches the local one exactly. The five-minute autosave ran throughout, and nothing is left uncommitted.
+- **Large files:** all uploaded to GitHub (including the clips and the Blender file).
+- **Your reference images:** all 13 unchanged.
+- **Specialists:** no specialist is running.
+- **Draft pull request #9** is updated and marked "DO NOT MERGE". Your working version branch was not touched.
+
+### 🧑 User — 2026-11-16T18:40:31.803Z
+
+I have my other Marble World Labs API key, but it's through my other account. So if you want to do that, I can. I have 7,000 credits.
+Claude, IMPORTANT: I have another Marble World Labs account with 7,000 credits, but I do NOT want to connect it or spend those credits right now.
+
+Please continue working with my existing saved Marble worlds, Blender, and my ORIGINAL approved Screen 05 water artwork.
+
+Focus on projecting my exact approved water onto the existing playable 3D river, getting the closest possible visual match, and making sure it works properly when Benny moves.
+
+Do not request another Marble API key or generate a new Marble world unless it becomes absolutely necessary. If you believe it is necessary, explain why and ask for my permission first.
+
+Keep my current game protected, preserve all specialists and tools, and continue verified five-minute GitHub backups while the session is active.
+
+My goal is at least a 95% visual match to my approved Screen 05 without unnecessary spending.
+
