@@ -337,3 +337,125 @@ The live far river is a straight striped wedge. Let me understand the geometry: 
 > /**
 >  * Per-stage colour-band layout (blended across stage bound …[+5991 chars]
 
+### 🤖 Claude — 2026-11-16T01:43:35.426Z
+
+Let me check the capture script for query flags that can hide objects, and what the ride check hooks are.
+
+### 🤖 Claude — 2026-11-16T01:43:36.319Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p scripts/capture.mjs; grep -n 'searchParams\\|q\\.get\\|params.get' -r src | head -40", "description": "Read capture script and URL query flags"}`
+
+### 🧑 User — 2026-11-16T01:43:36.357Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+4503 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:37.712Z
+
+> 🔧 **Bash** `{"command": "grep -n '__rainbow' -r src | head -20; grep -n 'waterhide\\|hide=' -r src | head", "description": "Find __rainbow QA hooks and hide flags"}`
+
+### 🧑 User — 2026-11-16T01:43:37.756Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:660:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> src/vfx/index.ts:92:  // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+> src/vfx/index.ts:93:  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+> src/vfx/index.ts:94:  /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
+> src/game/Game.ts:89:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+
+### 🤖 Claude — 2026-11-16T01:43:39.073Z
+
+> 🔧 **Bash** `{"command": "sed -n 80,110p src/game/Game.ts; sed -n 560,665p src/game/Game.ts", "description": "Read Game.ts debug hide and QA API"}`
+
+### 🧑 User — 2026-11-16T01:43:39.109Z
+
+> ↩︎ result: const env = buildEnvironment(course);
+>   scene.add(env.group);
+>   const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+>   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+>   if (hidden.has('water')) water.group.visible = false;
+>   if (hidden.has('coins')) coins.group.visible = false;
+>   const zoneHidden = (k: string) => hidden.has(k);
+>   const hud = createHud();
+>   const input = createInput(canvas);
+>   const rideCam = new RideCamera(course);
+>   rideCam.axis = env.tubeAxis;
+> 
+>   // ---------------------------------------------------------------- state
+>   const st = {
+>     mode: 'intro' as Mode,
+>     t: 0, // time within the current mode
+>     clock: 0, // global animation time (shaders)
+>     frozen: null as number | null, // QA: freeze shader time
+>     s: 0,
+>     lat: 0,
+>     vlat: 0,
+>     coins: START_COINS,
+>     hearts: 5,
+>     paused: false,
+>       if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1  …[+5802 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:41.004Z
+
+I'll write a scratch probe script to understand what's at each far-river pixel (real ribbon vs far chord).
+
+### 🤖 Claude — 2026-11-16T01:43:41.661Z
+
+> 🔧 **Bash** `{"command": "cat scripts/lib/pw.mjs | head -60; ls scripts", "description": "Read Playwright helper"}`
+
+### 🧑 User — 2026-11-16T01:43:41.692Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+724 chars]
+
