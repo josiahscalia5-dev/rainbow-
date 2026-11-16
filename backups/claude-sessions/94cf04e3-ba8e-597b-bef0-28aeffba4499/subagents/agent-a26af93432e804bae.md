@@ -127,3 +127,162 @@ I'll start by reading the coordination files and my previous notes.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T01:48:05.399Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts"}`
+
+### 🧑 User — 2026-11-16T01:48:05.510Z
+
+> ↩︎ result: 1	/**
+> 2	 * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.
+> 3	 *
+> 4	 * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> 5	 * concave trough with raised frothy edges plus a short skirt under each edge (thickness).
+> 6	 * Shader: electric-cyan core with meandering hot-pink flow bands, advected white streaks and
+> 7	 * sparkles (two-phase flow-map advection so per-stage speeds never shear), Fresnel/haze
+> 8	 * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+> 9	 * glowing chevrons on the 04 slide, a dithered hand-over to the whirlpool surface in 03 and a
+> 10	 * drain-away for the 11 outro.
+> 11	 */
+> 12	import * as THREE from 'three';
+> 13	import type { Course, StageId } from '../world/course';
+> 14	import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 15	
+> 16	/** wave amplitude per stage (units); blended across boundaries */
+> 17	const AMP: Partial<Record<StageId, number>> = {
+> 18	  '02': 0.06, '03': 0.08, '04': 0.03, '05': 0.1, '06': 0.12, '07': 0.1, '08': 0.1, '09': 0.16, '10': 0.08, '11': 0.05,
+> 19	};
+> 20	export const EDGE_LIFT = 0.28;
+> 21	
+> 22	/**
+> 23 …[+44482 chars]
+
+### 🤖 Claude — 2026-11-16T01:48:06.958Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 741, "limit": 152}`
+
+### 🧑 User — 2026-11-16T01:48:06.980Z
+
+> ↩︎ result: 741	    for (int k = 0; k < 5; k++) {
+> 742	      float y = s - (uChevron.x + float(k) * uChevron.y);
+> 743	      if (abs(y) < 2.4 && abs(x) < 1.6) {
+> 744	        // "^" pointing toward +s: tip at y=+1.0, arms sweep back 1.9 units over ±1.15 lateral
+> 745	        float dist = abs(y - (1.0 - abs(x) * 1.65)) * 0.52;
+> 746	        float arm = smoothstep(1.2, 1.1, abs(x));
+> 747	        float core = smoothstep(0.2, 0.11, dist) * arm;
+> 748	        float halo = smoothstep(0.7, 0.0, dist) * smoothstep(1.5, 0.9, abs(x)) * 0.5;
+> 749	        col = mix(col, vec3(1.0), clamp(halo, 0.0, 1.0));
+> 750	        col = mix(col, vec3(2.2, 2.4, 2.5), core);
+> 751	      }
+> 752	    }
+> 753	  }
+> 754	  gl_FragColor = vec4(col, 1.0);
+> 755	  ${FRAG_TAIL}
+> 756	}
+> 757	`;
+> 758	
+> 759	export interface Ribbon {
+> 760	  mesh: THREE.Mesh;
+> 761	  uniforms: Record<string, THREE.IUniform>;
+> 762	  s0: number;
+> 763	  s1: number;
+> 764	  heightAt(s: number, lateral: number, t: number): number;
+> 765	}
+> 766	
+> 767	export function createRibbon(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): Ribbon {
+> 768	  const { s0, s1, quality } = opts;
+> 769	  const ds = quality === 'high' ? 0.4 : 0.7;
+> 770	  const cols = quality === 'high' ? 18 : 10 …[+5360 chars]
+
+### 🤖 Claude — 2026-11-16T01:48:07.309Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/glsl.ts"}`
+
+### 🧑 User — 2026-11-16T01:48:07.319Z
+
+> ↩︎ result: 1	/** Shared GLSL snippets for Rainbow water/foam/bubble shaders (WebGL2, mobile-safe). */
+> 2	import * as THREE from 'three';
+> 3	
+> 4	export const NOISE_GLSL = /* glsl */ `
+> 5	float hash12(vec2 p) {
+> 6	  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+> 7	  p3 += dot(p3, p3.yzx + 33.33);
+> 8	  return fract((p3.x + p3.y) * p3.z);
+> 9	}
+> 10	float vnoise(vec2 p) {
+> 11	  vec2 i = floor(p);
+> 12	  vec2 f = fract(p);
+> 13	  vec2 u = f * f * (3.0 - 2.0 * f);
+> 14	  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15	             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 16	}
+> 17	float fbm3(vec2 p) {
+> 18	  float a = 0.5, s = 0.0;
+> 19	  for (int i = 0; i < 3; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(17.1, 9.2); a *= 0.5; }
+> 20	  return s;
+> 21	}
+> 22	// cheap cellular "soap foam" pattern: 0 at cell centres -> 1 at borders
+> 23	float cells(vec2 p) {
+> 24	  vec2 i = floor(p);
+> 25	  vec2 f = fract(p);
+> 26	  float md = 8.0;
+> 27	  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+> 28	    vec2 g = vec2(float(x), float(y));
+> 29	    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 30	    vec2 r = g + o - f;
+> 31	    md = min(md, dot(r, r));
+> 32	  }
+> 33	  return sqrt(md);
+> 34	}
+> 35	vec3 ir …[+7181 chars]
+
+### 🤖 Claude — 2026-11-16T01:48:09.769Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import PIL, numpy; print(PIL.__version__, numpy.__version__)\"; ls scripts/ | head -50; ls qa/pilot05/wave7/water/", "description": "Check python libs and scripts"}`
+
+### 🧑 User — 2026-11-16T01:48:09.985Z
+
+> ↩︎ result: 12.3.0 2.5.3
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> cinematic-test.mjs
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export-river-05.ts
+> export_claude_sessions.py
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> landmarks05.py
+> lib
+> rainbow-autosave.py
+> reference.sha256
+> resume-newest-work.sh
+> screen_report.py
+> setup-android-sdk.sh
+> setup-blender.sh
+> setup-worldlabs-plugin.sh
+> triptych.py
+> water-lab.mjs
+> NOTES.md
+> it01
+> it02
+> it03
+> it04
+> it05
+> it06
+> it06_low
+> regress
+> ride
+
+### 🤖 Claude — 2026-11-16T01:48:12.621Z
+
+> 🔧 **Bash** `{"command": "find / -name \"m05.py\" -not -path \"*/proc/*\" 2>/dev/null | head; find / -name \"inv.py\" -path \"*scratch*\" 2>/dev/null | head; ls /tmp/claude-0/-home-user-rainbow-/ 2>/dev/null", "description": "Find previous scratch metric scripts"}`
+

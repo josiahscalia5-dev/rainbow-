@@ -3019,3 +3019,39 @@ Launching both now.
 
 > 🔧 **Bash** `{"command": "flock -w 180 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:wave8b-start --message \"wave 8b: water + foam specialists launched; Marble reflections gated to Screen 05\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|skipping'; python3 -I scripts/autosave-status.py", "description": "Save wave 8b plan and verify autosave", "timeout": 400000}`
 
+### 🧑 User — 2026-11-16T01:48:03.574Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "4de401b86f78033583c38599be49b39ce47af88f",
+> AUTOSAVE OK | branch ccr-937c7fbb-htsrgt | scheduler daemon | last verified backup 2026-11-16T01:47:55+00:00 (0.1 min ago) | local 4de401b remote 4de401b (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-16T01:48:11.063Z
+
+Four specialists are now working on Screen 05 at the same time, each in its own part of the code:
+
+| Specialist | Your priority | What it's fixing |
+|---|---|---|
+| path-camera-transition-engineer | 1 + 2 | Far river winding in S-curves into the golden light (no straight striped track), coin trail into the distance, far ring spacing and depth |
+| washer-environment-modeler | 1 | Gold ring proportions and brightness, luminous magenta walls, rounded glossy lids, the golden light at the end. It will also try your Marble panorama as reflection lighting **on Screen 05 only** and the Marble wall textures, keeping them only if they look closer |
+| water-fx-specialist | 2 + 3 | Thick, glossy cyan water with wide pink S-curve bands, brighter highlights and more sparkle |
+| foam-bubbles-particles | 3 | Low, fine soap-bubble foam banks instead of the big white ball heaps, a natural splash fan from Benny, soap bubbles |
+
+- **Your other screens:** every change is limited to Screen 05. Each specialist must show that screens 04, 07 and 08 are unchanged pixel for pixel, and that 03 and 06 change only where intended. Benny, the locked camera, gameplay, the 05→06 join and the 07→08 drop are off-limits.
+- **Blender:** Blender 5.3 is installing in the background. The environment specialist can use it if modelling a part, such as the dome-shaped lids, works better in Blender than in code.
+- **Marble:** no new worlds and no credits. Only the panorama and wall textures already saved are being used.
+
+When all four report, I'll combine their work, re-run the gameplay, continuity and other-screen checks, and send you a full-size screenshot of the actual game beside your approved Screen 05. I'll also report the measured before/after numbers, the biggest remaining differences and what comes next.
+
+Everything is saved (`4de401b`, matches GitHub), and the autosave keeps pushing the specialists' work every five minutes.
+
+### 🧑 User — 2026-11-16T01:48:12.856Z
+
+<task-notification>
+<task-id>b8hrprp38</task-id>
+<tool-use-id>toolu_01NY1qRXnwYxmVvzhfCix3R9</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/tasks/b8hrprp38.output</output-file>
+<status>completed</status>
+<summary>Background command "Install Blender 5.3 and open the Marble Blender scene" completed (exit code 0)</summary>
+</task-notification>
+

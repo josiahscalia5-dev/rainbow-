@@ -742,3 +742,19 @@ I need the forced-tunnel parameters in-page. I'll create my own `src/world/far05
 >   update(time: number, dt: number): void;
 >   doorA: …[+126 chars]
 
+### 🤖 Claude — 2026-11-16T01:47:47.518Z
+
+Adding one separate import line for my new module (no edit to the shared import lines).
+
+### 🤖 Claude — 2026-11-16T01:47:48.822Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { STAGE_CAM } from '../game/cameraRig';\nimport { buildLaundryRoom", "new_string": "import { STAGE_CAM } from '../game/cameraRig';\nimport { far05Debug } from './far05'; // path-camera (05 far tunnel block)\nimport { buildLaundryRoom"}`
+
+### 🧑 User — 2026-11-16T01:47:49.336Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:48:04.071Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/p2.js <<'EOF'\n(async () => {\n  const THREE = await import('/node_modules/.vite/deps/three.js').catch(() => null);\n  const R = window.__rainbow; const course = R.course;\n  const { far05Debug: D } = await import('/src/world/far05.ts');\n  const wr = await import('/src/vfx/waterRibbon.ts');\n  const ft = D.ft; const out = [];\n  const cam = R.camera();\n  const M = cam.matrixWorld; // column-major\n  const pos = cam.position;\n  // build projection\n  const fovy = cam.fov * Math.PI / 180 …[+2606 chars]`
+
