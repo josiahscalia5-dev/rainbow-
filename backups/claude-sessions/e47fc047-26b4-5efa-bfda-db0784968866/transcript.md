@@ -3092,3 +3092,226 @@ The scheduled check on draft PR #11 found nothing that needs fixing: no merge co
 
 Your answer is still needed: do the paddles look right to you now? If yes, the next job is making the water keep your swirl pattern while Benny rides.
 
+### 🧑 User — 2026-11-16T21:42:40.498Z
+
+<local-command-caveat>The command below was run directly in Claude Code, not sent to you as a request, and its output goes straight to the user. It's recorded here as context for later messages.</local-command-caveat>
+
+### 🧑 User — 2026-11-16T21:42:40.498Z
+
+<command-name>/model</command-name>
+            <command-message>model</command-message>
+            <command-args>claude-fable-5-2</command-args>
+
+### 🧑 User — 2026-11-16T21:42:40.498Z
+
+<local-command-stdout>Set model to `claude-fable-5-2`</local-command-stdout>
+
+### 🧑 User — 2026-11-16T21:42:40.499Z
+
+<system-reminder>The model for this session has been changed to claude-fable-5-2. You are now running as claude-fable-5-2.</system-reminder>
+
+### 🧑 User — 2026-11-16T21:42:40.613Z
+
+yes go fix the water swirls
+
+### 🤖 Claude — 2026-11-16T21:42:46.482Z
+
+Paddles approved, so on to the water. First I'll read what the project already knows about the water projection in motion, so I build on it and don't redo it.
+
+### 🤖 Claude — 2026-11-16T21:42:47.715Z
+
+> 🔧 **Bash** `{"command": "wc -l qa/pilot05/proj/NOTES.md qa/pilot05/proj/BRIEF_SPECIALIST2.md qa/pilot05/proj/BRIEF_NEXT.md && sed -n 1,140p qa/pilot05/proj/NOTES.md | cut -c1-420", "description": "Read water projection notes"}`
+
+### 🧑 User — 2026-11-16T21:42:47.745Z
+
+> ↩︎ result: 132 qa/pilot05/proj/NOTES.md
+>    47 qa/pilot05/proj/BRIEF_SPECIALIST2.md
+>    30 qa/pilot05/proj/BRIEF_NEXT.md
+>   209 total
+> # Screen 05 — `?proj05=1`: the APPROVED water projected onto the real playable river
+> 
+> Session `012NR93Q…`, 2026-11-16 ~17:30–18:45 UTC, branch `ccr-e546a360-cxmton` (experiment branch; the user's
+> working version `ccr-451ea8c7-3nqlis` and the default build are untouched). No Marble credits, no Marble API call.
+> The main session did Specialist 1's assignment (projection / bake) and the first part of Specialist 2's
+> (flow animation); instructions for the specialists to continue: `BRIEF_NEXT.md`.
+> 
+> ## What it is
+> The user's approved Screen 05 water, baked into the GAME river's own coordinates (u across −1..1, s = arc length)
+> from the locked 05 camera, using the live game's per-pixel river coordinates (`scripts/proj05-probe.mjs`). The
+> texture is anchored to the river, not to the camera — a real textured 3D river, nothing pasted over the screen.
+> Marble was not used (its reconstructed surface is distorted: `qa/pilot05/marble_feas/NOTES.md`).
+> 
+> * Source pixels (`tools/proj05/make_target.py` → `target/`): the APPROVED picture wherever its water is visible; under
+>   Benny + splas …[+9237 chars]
+
+### 🤖 Claude — 2026-11-16T21:42:54.095Z
+
+> 🔧 **Bash** `{"command": "git cat-file -e e27c6fa:scripts/proj05-move.mjs && echo \"ORIGINAL EXISTED at e27c6fa\" && git show e27c6fa:scripts/proj05-move.mjs | wc -l && wc -l scripts/proj05-move.mjs && git show e27c6fa:scripts/proj05-move.mjs | head -30", "description": "Check whether original move script was overwritten"}`
+
+### 🧑 User — 2026-11-16T21:42:54.150Z
+
+> ↩︎ result: ORIGINAL EXISTED at e27c6fa
+> 91
+> 40 scripts/proj05-move.mjs
+> #!/usr/bin/env node
+> // Screen 05 projection test — MOVING CAMERA (2026-11-16). Starts at the locked 05 checkpoint and rides forward with
+> // the real game simulation (Benny + camera rig + course unchanged), capturing full-size frames.
+> //   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> // --d: distances ahead of the checkpoint (units of s) → DIR/move_<d>.png (shader clock frozen at 12: shows layout only)
+> // --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> // --still=SECONDS: water animation at the LOCKED camera (clock runs, camera still) → DIR/still/0000.png …
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const Q = typeof opt.q === 'string' ? opt.q : '';
+> const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/move';
+> const D = typeo …[+954 chars]
+
+### 🤖 Claude — 2026-11-16T21:43:12.342Z
+
+> 🔧 **Bash** `{"command": "git show e27c6fa:scripts/proj05-move.mjs > scripts/proj05-move.mjs && git diff --stat e27c6fa -- scripts/proj05-move.mjs | tail -1; echo \"restored (empty diff above = identical)\"; sed -i 's|Motion: `node scripts/proj05-move.mjs --q=… --at=0,6,14` → `lid/move/` (paddles stay solid trays on the walls).|Motion: `node scripts/proj05-move.mjs --q=… --d=0,6,14` → `lid/move/` (paddles stay solid trays on the walls; these three frames were taken with the shader clock RUNNING, so they also show the water flow).|' qa/pilot05/proj/tunnel/NOTES.md && grep -n \"proj05-move\" qa/pilot05/proj/ …[+131 chars]`
+
+### 🧑 User — 2026-11-16T21:43:12.444Z
+
+> ↩︎ result: restored (empty diff above = identical)
+> 83:Motion: `node scripts/proj05-move.mjs --q=… --d=0,6,14` → `lid/move/` (paddles stay solid trays on the walls; these three frames were taken with the shad
+>   };
+>   if (D.length) {
+>     await page.evaluate(() => window.__rainbow.goto('05'));
+>     const s0 = (await page.evaluate(() => window.__rainbow.state())).s;
+>     for (const d of D) {
+>       // ride with the real simulation until s >= s0 + d (shader clock stays frozen: only the camera moves)
+>       await page.evaluate(([target]) => { const R = window.__rainbow; let k = 0; while (R.state().s < target && k++ < 20000) R.step(1, 1 / 60); }, [s0 + d]);
+>       await shot(`${OUT}/move_${String(d).padStart(2, '0')}.png`, { d });
+>       console.log('move', d, JSON.stringify(log.frames.at(-1)));
+>     }
+>   }
+>   if (opt.still) {
+>     mkdirSync(`${OUT}/still`, { recursive: true });
+>     const n = Math.round(Number(opt.still) * fps);
+>     await page.evaluate(() => window.__rainbow.goto('05'));
+>     for (let i = 0; i < n; i++) {
+>       await page.evaluate(([t]) => { const R = window.__rainbow; R.freezeAt(t); R.step(1, 1e-4); }, [12 + i / fps]);
+>       await shot(`${OUT}/still/${String(i).padStart(4, '0')}.png`, { t: 12  …[+2360 chars]
+
+### 🤖 Claude — 2026-11-16T21:43:15.158Z
+
+Restored, byte-identical to the original. Now the water itself: I'll read how the projected water flows in the shader, since my running-clock frames showed it smearing.
+
+### 🤖 Claude — 2026-11-16T21:43:16.526Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uPjFlow\\|projflow\\|uPjE\\b\\|uPjN\\b\\|uPjT\\b\\|uPjD\\b\\|pjSample\\|pjExact\\|pjNear\\|pjTile\\|PROJ05\" src/vfx/waterRibbon.ts | head -80", "description": "Locate water projection flow shader code"}`
+
+### 🧑 User — 2026-11-16T21:43:16.569Z
+
+> ↩︎ result: 204: * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
+> 205: * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+> 207:export const PROJ05: boolean = q05('proj05');
+> 312:export const PROJ05_INVERSE = /* glsl */ `
+> 386:#ifdef PROJ05
+> 387:uniform sampler2D uPjE;    // exact layer (rgb = approved display colour, a = valid)
+> 388:uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+> 390:uniform vec2 uPjESize;     // uPjE texels
+> 391:uniform sampler2D uPjN;    // near layer, full width (a = coverage)
+> 393:uniform sampler2D uPjT;    // periodic tile (repeat along s)
+> 395:uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
+> 397:uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
+> 414:  vec4 e = texture2D(uPjE, eUV);
+> 418:  vec4 n = texture2D(uPjN, nUV);
+> 420:  vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
+> 425:  return texture2D(uPjD, vec2(u / uPjDS.x, s / uPjDS.y)).r - 0.5;
+> 427:${PROJ05_INVERSE}#endif
+> 1359:  #ifdef PROJ05
+> 1370:      float ph = fract(uTime * uPjFlow.y + uP …[+875 chars]
+
+### 🤖 Claude — 2026-11-16T21:43:18.215Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 384, "limit": 44}`
+
+### 🧑 User — 2026-11-16T21:43:18.230Z
+
+> ↩︎ result: 384	#endif
+> 385	#include <fog_pars_fragment>
+> 386	#ifdef PROJ05
+> 387	uniform sampler2D uPjE;    // exact layer (rgb = approved display colour, a = valid)
+> 388	uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+> 389	uniform vec4 uPjLutS;      // s0, s1, lut texels, unused
+> 390	uniform vec2 uPjESize;     // uPjE texels
+> 391	uniform sampler2D uPjN;    // near layer, full width (a = coverage)
+> 392	uniform vec2 uPjNS;        // s0, s1
+> 393	uniform sampler2D uPjT;    // periodic tile (repeat along s)
+> 394	uniform vec2 uPjTS;        // start s, period L
+> 395	uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
+> 396	uniform vec4 uPjDS;        // tile width (u), tile length (s), gain, unused
+> 397	uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
+> 398	uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
+> 399	uniform vec2 uPjRes;       // render target size (vignette inverse)
+> 400	uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
+> 401	vec4 pjLut(float s) {
+> 402	  float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x …[+1279 chars]
+
+### 🤖 Claude — 2026-11-16T21:43:18.807Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 1352, "limit": 50}`
+
+### 🧑 User — 2026-11-16T21:43:18.820Z
+
+> ↩︎ result: 1352	        float core = smoothstep(0.2, 0.11, dist) * arm;
+> 1353	        float halo = smoothstep(0.7, 0.0, dist) * smoothstep(1.5, 0.9, abs(x)) * 0.5;
+> 1354	        col = mix(col, vec3(1.0), clamp(halo, 0.0, 1.0));
+> 1355	        col = mix(col, vec3(2.2, 2.4, 2.5), core);
+> 1356	      }
+> 1357	    }
+> 1358	  }
+> 1359	  #ifdef PROJ05
+> 1360	  {
+> 1361	    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+> 1362	    if (pjK > 0.001) {
+> 1363	      // exact-layer magnification: texels per screen pixel along the least dense direction
+> 1364	      vec4 Lm = pjLut(s);
+> 1365	      vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
+> 1366	      // smallest singular value of the texel-per-pixel Jacobian (robust to the shear of the per-row u range)
+> 1367	      vec2 ja = dFdx(tp), jb = dFdy(tp);
+> 1368	      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);
+> 1369	      // two-phase flow toward the camera: layer A peaks with zero offset at phase 0.5 (the frozen QA clock)
+> 1370	      float ph = fract(uTime * uPjFlow.y + uPjFlow.z);
+> 1371	      float D = uPjFlow.x * uPjFlow.w;
+> 1372	      float sA = s + D * (ph - 0.5);
+> 13 …[+1304 chars]
+
+### 🤖 Claude — 2026-11-16T21:43:59.790Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && Q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/w0 && node scripts/proj05-move.mjs --q=\"$Q\" --out=$S/w0 --still=1.82 --fps=6.6 2>&1 | tail -1 && ls $S/w0/still | tr '\\n' ' ' && python3 -I tools/proj05/screen_regions.py $S/w0/still/*.png 2>&1 | grep -E \"png|WATER\" | sed \"s#$S/##\" | paste - - | awk '{print $1, $6, $7, $8, $9, $10, $11, $12, $13}'", "description": "Measure water match across one flow cycle", "timeout": 400000}`
+
+### 🧑 User — 2026-11-16T21:44:51.693Z
+
+> ↩︎ result: still frames 12
+> 0000.png 0001.png 0002.png 0003.png 0004.png 0005.png 0006.png 0007.png 0008.png 0009.png 0010.png 0011.png w0/still/0000.png 8.62 <=10 0.877 <=20 0.925 SSIM 0.917 bias
+> w0/still/0001.png 26.56 <=10 0.344 <=20 0.592 SSIM 0.477 bias
+> w0/still/0002.png 30.44 <=10 0.258 <=20 0.486 SSIM 0.426 bias
+> w0/still/0003.png 31.38 <=10 0.232 <=20 0.457 SSIM 0.408 bias
+> w0/still/0004.png 30.01 <=10 0.251 <=20 0.497 SSIM 0.423 bias
+> w0/still/0005.png 25.36 <=10 0.321 <=20 0.585 SSIM 0.464 bias
+> w0/still/0006.png 30.29 <=10 0.289 <=20 0.519 SSIM 0.420 bias
+> w0/still/0007.png 31.62 <=10 0.229 <=20 0.480 SSIM 0.409 bias
+> w0/still/0008.png 32.93 <=10 0.200 <=20 0.423 SSIM 0.399 bias
+> w0/still/0009.png 33.24 <=10 0.199 <=20 0.413 SSIM 0.385 bias
+> w0/still/0010.png 30.52 <=10 0.233 <=20 0.463 SSIM 0.407 bias
+> w0/still/0011.png 27.43 <=10 0.297 <=20 0.538 SSIM 0.441 bias
+
+### 🤖 Claude — 2026-11-16T21:44:59.890Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I -c \"\nfrom PIL import Image\nb=(0,480,864,1250)\nims=[Image.open(p).convert('RGB').crop(b).resize((432,385),Image.LANCZOS) for p in ['references/05_flow_into_the_current.png','$S/w0/still/0000.png','$S/w0/still/0009.png']]\nim=Image.new('RGB',(3*432+20,385),(255,255,255))\nfor i,c in enumerate(ims): im.paste(c,(i*442,0))\nim.save('$S/w0_sheet.png')\"", "description": "Compare approved, frozen and mid-cycle water"}`
+
+### 🧑 User — 2026-11-16T21:45:00.265Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T21:45:01.230Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/w0_sheet.png"}`
+
+### 🧑 User — 2026-11-16T21:45:01.269Z
+
+> ↩︎ result: [image]
+

@@ -479,7 +479,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "4794d8127e3ae48e554b0140341007f1acad707be4c4f450f0a950737cf5178f"
+   "sha256": "8b5bb86617175ba395726954bf883c810d3d67c2e3e0442a43baf948555ff8bb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1633,8 +1633,8 @@
   },
   {
    "path": "qa/pilot05/proj/tunnel/NOTES.md",
-   "bytes": 8322,
-   "sha256": "cec27437a6decbd902b4ad04377ae20d407fc579b9b895b2439f53a4f331ce19"
+   "bytes": 8416,
+   "sha256": "187325e940cd45ca947af9fbcfa5971ec4a54429b0dee27ef82b67949954299f"
   },
   {
    "path": "qa/pilot05/proj/tunnel/frame/0_DEFAULT_T2_unchanged.png",
@@ -7028,8 +7028,8 @@
   },
   {
    "path": "scripts/proj05-move.mjs",
-   "bytes": 2661,
-   "sha256": "d931df91b33a3195f7333b9677562a8f7b03e803533e1ab6ad3fdd3fc7a408db"
+   "bytes": 5328,
+   "sha256": "5357f03f49fe8fbb4412b3baedf36a6ae74bc2f5ff034b97f82f0dc2f03d680a"
   },
   {
    "path": "scripts/proj05-probe.mjs",

@@ -80,7 +80,7 @@ the Blender camera-projection method was used instead:
 | FRAME (below HUD) mean abs / within 20 | 32.2 / 55.0 % | 31.1 / 56.8 % |
 | FULL screen mean abs / within 20 | 35.9 / 49.7 % | 34.8 / 51.2 % |
 
-Motion: `node scripts/proj05-move.mjs --q=… --at=0,6,14` → `lid/move/` (paddles stay solid trays on the walls).
+Motion: `node scripts/proj05-move.mjs --q=… --d=0,6,14` → `lid/move/` (paddles stay solid trays on the walls; these three frames were taken with the shader clock RUNNING, so they also show the water flow).
 Checks: default 0 px changed, protected BEFORE 0 px, `projframe05` result 0 px; gameplay 8/8 (`lid/tests/`); continuity OK.
 Known: the game's ring A band covers the left end of L1 (ring position differs from the painting; rings not moved);
 the trays are static on the far wall, so L3 / R3 do not follow the far section's "open" morph near the end of 05.
