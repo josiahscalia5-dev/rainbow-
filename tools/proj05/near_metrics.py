@@ -40,8 +40,11 @@ def measure(img, m):
 
 res = {"method": __doc__.split("\n")[0], "bands": BANDS, "benny_box": BENNY_BOX, "frames": {}}
 for d in DS:
-    R = np.fromfile(os.path.join(probe, f"ride_{d}.f32"), np.float32).reshape(H, W, 4)
-    riv = cv2.erode((R[..., 2] > 0.5).astype(np.uint8), np.ones((9, 9), np.uint8)).astype(bool)
+    if os.path.exists(os.path.join(probe, f"ride_{d}.f32")):
+        river = np.fromfile(os.path.join(probe, f"ride_{d}.f32"), np.float32).reshape(H, W, 4)[..., 2] > 0.5
+    else:                                          # the compressed copies kept in git (qa/pilot05/proj/near/probe/)
+        river = np.load(os.path.join(probe, f"ride_{d}.npz"))["river"]
+    riv = cv2.erode(river.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(bool)
     keep = np.ones((H, W), bool)
     x0, x1, y0, y1 = BENNY_BOX
     keep[y0:y1, x0:x1] = False

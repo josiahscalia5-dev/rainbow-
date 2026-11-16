@@ -45,7 +45,7 @@ Source resolution of E along the river (texels per world unit): s 130.2 → 239,
 136 → 60, 137.5 → 51, 140 → 29, 144 → 23; visible u-range grows from ±0.33 (s 130) to full width at s ≈ 144.6.
 A single painting cannot give crisp detail for the far river; the crisp detail that exists is the NEAREST water.
 
-**Plan (`?projnear05=1`, one factor, reversible):**
+**Plan (`?projnear05=1`, one factor, reversible) — BEING BUILT since 2026-11-16 22:25 UTC, see `../near/NOTES.md`:**
 1. Bake a high-resolution near tile T2 (≈1024 × 768, u −1..1 × s 130.5..137.5 = 7 u) from E through the LUT; outside
    the visible u-range reflect the row about its visible edge. Load it with `MirroredRepeatWrapping` along s (seamless,
    period 14 u) and mipmaps, INTO the existing `uPjT` sampler (set `uPjTS = (130.5, 7)`): no new sampler.

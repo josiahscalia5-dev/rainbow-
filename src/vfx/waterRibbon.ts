@@ -1698,12 +1698,14 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   u.uPjRes = { value: new THREE.Vector2(864, 1536) };
   u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };
   // `&projnear05=1` (2026-11-16, tools/proj05/near_bake.py, qa/pilot05/proj/near/NOTES.md): while riding, the near
-  // river used the 24-texel near / tile layers (pastel smear 8–17 u into the ride); this puts the HIGH-RESOLUTION near
-  // tile T2 (the nearest approved water of the locked view, ≈110 texels per unit, bubbles removed) into the same
-  // sampler uPjT with mirrored repeat + mipmaps, and its flow map into uPjWT. `projneardetail05` = share of the detail
-  // layer kept on T2 (default 0: T2 carries the approved streaks itself).
+  // river used the 24-texel near / tile layers (pastel smear 8–17 u into the ride); this adds the HIGH-RESOLUTION near
+  // tile T2 (the nearest approved water of the locked view, ≈110 texels per unit, bubbles removed, mirrored repeat +
+  // mipmaps) in its own sampler uPjT2 with its flow map uPjWT2. Within 0.5 u of the locked checkpoint nothing changes
+  // (pixel-identical locked picture). `projneardetail05` = share of the fine-streak detail layer kept on T2: default 1
+  // (measured on ride frames at 8 / 17 / 35 u: 0 left the stretch where the tile's source is soft — 8 u — softer than
+  // before; 1 is sharper than before in every band and showed no grain; 0 and 0.5 stay available for comparison).
   const NEAR = qs.get('projnear05') === '1';
-  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 0), 0, 1), 0, 0) };
+  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 1), 0, 1), 0, 0) };
   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
   u.uPjT2S = { value: new THREE.Vector2(0, 1) };
   const loader = new THREE.TextureLoader();

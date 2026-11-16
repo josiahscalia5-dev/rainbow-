@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 11526,
-   "sha256": "61faf5cdd559c2a7fba9cc677cd856ac491babdd94ab1c361322d923d9964dca"
+   "bytes": 11863,
+   "sha256": "238f475e8a117d04b5a5c341f90b394d9b01783358061a75ce7bd5199e4d9da2"
   },
   {
    "path": "README_FIRST.md",
@@ -453,8 +453,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_T2.png",
-   "bytes": 791038,
-   "sha256": "ac316878dbdad6a5f83b4b04b9153929e089fea9f8a5a01e433500d2460d8ce6"
+   "bytes": 737979,
+   "sha256": "94a3981b850fc7362876dad8177f26d8a89267d074da066a8afb31f89816352a"
   },
   {
    "path": "assets/textures/water05/proj05_WN.png",
@@ -468,8 +468,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_WT2.png",
-   "bytes": 3980,
-   "sha256": "ba120dcabc5c29ebffad12d546e3d022d1fe83496c487b3ae3aff69fc0a63937"
+   "bytes": 3854,
+   "sha256": "858f382a5530cd810d36e0295134dd03196cb48ff3e2bfbc379f154a4912de3e"
   },
   {
    "path": "assets/textures/water05/proj05_flow.json",
@@ -483,13 +483,13 @@
   },
   {
    "path": "assets/textures/water05/proj05_near.json",
-   "bytes": 1272,
-   "sha256": "2dab65a706fea0aa8f90cee20924da17d9a7baf052d6068ebc132e9f7281ea6f"
+   "bytes": 1270,
+   "sha256": "b3924513110335c68a7d82da836fa4085f196d29cda26f216c493926c6aec4bc"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 11548,
-   "sha256": "8f9c55e3841656811407d7a54cd212a73b484f16d48499eb5ea0116b4905ad8e"
+   "bytes": 11869,
+   "sha256": "b84ef8caea1d0bea69c718c7dc03f660e454b89c7d9a94fe8cdf7db768313bd1"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -503,13 +503,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 50868,
-   "sha256": "70694bc40c3028e31e2226aa0ff7988631e24b0313451bdc655d3d1461db86bc"
+   "bytes": 53117,
+   "sha256": "6331420101710fdce05f2b0d6a94835e1388a0184d0e00de95624a5257bba199"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9708,
-   "sha256": "a05bcbd81be8545f2e296f8430ba0acc9ce4c67b49252e70dd13a2c825387f33"
+   "sha256": "dc1302aa524f39022d42dd31a24388308f67e5897832ce921723f2ad4735c12a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1548,8 +1548,8 @@
   },
   {
    "path": "qa/pilot05/proj/flow2/NOTES.md",
-   "bytes": 5435,
-   "sha256": "9de0ea95de376df4bab69bba327b3e64732589a3269d6894431b315750bbcb5d"
+   "bytes": 5502,
+   "sha256": "022b701a5b861e99da61593af75b1f9a688cda796869ca8f711f8f31bd3aaf5f"
   },
   {
    "path": "qa/pilot05/proj/flow2/flow_direction_map_N.png",
@@ -1652,9 +1652,239 @@
    "sha256": "1a2c8237bc1971681d6fa9b079ceab343626f1adc631f1635f46ac941b7f38a9"
   },
   {
+   "path": "qa/pilot05/proj/near/NOTES.md",
+   "bytes": 8521,
+   "sha256": "e5a8117cdf4b604d3ce4dc5ef9ff875f5fafe58aaa43e60b9fe02ea917b6d15e"
+  },
+  {
+   "path": "qa/pilot05/proj/near/first_attempts/17u_BEFORE_left_first_tile_right_half_size.png",
+   "bytes": 938703,
+   "sha256": "0df167521c40704d3fc47d733a4aae43c7c077de702c3984590434cef566d808"
+  },
+  {
+   "path": "qa/pilot05/proj/near/first_attempts/8u_striped_handover_bug.png",
+   "bytes": 903535,
+   "sha256": "ec6dab0bfb0b701697a256e9469ccc9770efb44963314cb62729e74ca65ca564"
+  },
+  {
+   "path": "qa/pilot05/proj/near/first_attempts/layer_map_ride_distance_handover.png",
+   "bytes": 991771,
+   "sha256": "bcf3e499f9472f9de8e9b174046009060d5faa984eac362ec476936a79b11882"
+  },
+  {
+   "path": "qa/pilot05/proj/near/first_attempts/layer_map_striped_handover.png",
+   "bytes": 1007426,
+   "sha256": "916635070f5d6f9d28f2b617b74799df3ad1c474156efa5e7b56cccf12a54d42"
+  },
+  {
+   "path": "qa/pilot05/proj/near/first_attempts/locked_view_difference_before_fix.png",
+   "bytes": 464765,
+   "sha256": "c141816e7ed8bd87c114f011ff196468a9da9bb9ef0827f93a328fa1dd2ada32"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/crop_08u_BEFORE_det0_det1.png",
+   "bytes": 765295,
+   "sha256": "d3a10fb27283330121531b99bff7b90e72e1feb934235b0dd0d0713c30d76f60"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/crop_17u_BEFORE_det0_det1.png",
+   "bytes": 858760,
+   "sha256": "9669a91af45834b6811bb5a87b31124682fc2f46cac09df02beec1a8f2591479"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det0/move_08.png",
+   "bytes": 1866293,
+   "sha256": "eac916a69e4fea87cb3c8c2bbf0885c7de8e47f16c3dc12dbf5bc0c7cda086b4"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det0/move_17.png",
+   "bytes": 1924324,
+   "sha256": "5bbb657d0030f7eb2441f5094aef585068fea2d511d530c78d8569d5700abc35"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det0/move_35.png",
+   "bytes": 1749007,
+   "sha256": "4bbf8ad42ea2ab13c48aa7157e4c3f7f052635c256e6db70bfc556220fbd81ae"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det0/move_log.json",
+   "bytes": 987,
+   "sha256": "a3021041266d0f975e0229b21f7cf390145832ccdbb4bf168010b3187af14375"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det05/move_08.png",
+   "bytes": 1897455,
+   "sha256": "c4a304694b8741c4dfb9e634715702f238d9a506da227e6826e9f8bb3ec0e335"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det05/move_17.png",
+   "bytes": 1953785,
+   "sha256": "02337c67f3ff5e6b085ec948073564c1d573b600f344ca5e13bec1f1d512b1cd"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det05/move_35.png",
+   "bytes": 1783075,
+   "sha256": "81e4f708f71b45a1cd02992bca735aef82c85ef5a59fa3f4ee1964ee8ce7a193"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det05/move_log.json",
+   "bytes": 1012,
+   "sha256": "fa07ef26e3c54d58f4d5cbaf89d1d107589b73bc68d25dd50d68092e6127de14"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det1/move_08.png",
+   "bytes": 1923058,
+   "sha256": "6eef50445d8dbe92b3f99dc30928ebffc3fbc22c4a0c3f3beedc7eff18ad735c"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det1/move_17.png",
+   "bytes": 1979604,
+   "sha256": "1efe7b12b8865fc8c890daf9672b1d6fa29928276f3dc478477f6630a0f344b7"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det1/move_35.png",
+   "bytes": 1816316,
+   "sha256": "16bc4084cb2b320e8ad9dafae99bb981f9e291fdd7a5ead4365d55c6792b1bbb"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/det1/move_log.json",
+   "bytes": 1006,
+   "sha256": "36658c77f211cf3458d9ca215b3a516e8b56147b450386551d500da14e8e542f"
+  },
+  {
+   "path": "qa/pilot05/proj/near/overlay_compare/metrics_overlay_settings.json",
+   "bytes": 6047,
+   "sha256": "51697fa9182a0417223d893ad57e40c428baf0259ea93eb7ca686ba2b084507a"
+  },
+  {
+   "path": "qa/pilot05/proj/near/probe/ride_00.npz",
+   "bytes": 2015028,
+   "sha256": "f87ba379c8eddf901d1e2e8c81620667eb0505d18470f1c135baab8357e7dd70"
+  },
+  {
+   "path": "qa/pilot05/proj/near/probe/ride_08.npz",
+   "bytes": 2077420,
+   "sha256": "988a3363498fec5b8daecbdddf8a52e3803627e71e1c0ba8b5e540b54ab59672"
+  },
+  {
+   "path": "qa/pilot05/proj/near/probe/ride_17.npz",
+   "bytes": 1976680,
+   "sha256": "816ccbb2d3c874da830e9dbbe298343aad1286add980b758ec850680ed3e9e83"
+  },
+  {
+   "path": "qa/pilot05/proj/near/probe/ride_35.npz",
+   "bytes": 2491623,
+   "sha256": "513620f8fa715b187f8298bc8b5fbeeba32466ac0441e7465adfce3357c0183d"
+  },
+  {
+   "path": "qa/pilot05/proj/near/probe/ride_probe.json",
+   "bytes": 905,
+   "sha256": "b81cf21a954387eab3dfd668b31a43157121734d374ffa15a07f69f4e2790653"
+  },
+  {
+   "path": "qa/pilot05/proj/near/regression/default_05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/proj/near/regression/full_stack_projflow05_2_locked.png",
+   "bytes": 2163636,
+   "sha256": "b3ba302711c2268a6a67de1fd86fafd72d992aee1f9ebd8321b2bbfc7133cea2"
+  },
+  {
+   "path": "qa/pilot05/proj/near/regression/full_stack_projflow05_2_projnear05_locked.png",
+   "bytes": 2163636,
+   "sha256": "b3ba302711c2268a6a67de1fd86fafd72d992aee1f9ebd8321b2bbfc7133cea2"
+  },
+  {
+   "path": "qa/pilot05/proj/near/regression/protected_BEFORE_05.png",
+   "bytes": 1750841,
+   "sha256": "dc8155f9ac7bccd80601245de6344de821ba9c966d89734da2236cb980bb1c07"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride_before/move_00.png",
+   "bytes": 2163636,
+   "sha256": "b3ba302711c2268a6a67de1fd86fafd72d992aee1f9ebd8321b2bbfc7133cea2"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride_before/move_08.png",
+   "bytes": 1891549,
+   "sha256": "a503bc922f617269d7b50b89fc9a1dc7e0a541d566f3468f0aa098180d0cd416"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride_before/move_17.png",
+   "bytes": 1846006,
+   "sha256": "ffb1acb37cad92bc55d9523c26a53f062fc9c6619ae43f1c0a0dda71bbbf6595"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride_before/move_35.png",
+   "bytes": 1635508,
+   "sha256": "84f1bbe13847dda4ad5d433e872415759705cae7d0591fd149bda5fffb7ff6a2"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride_before/move_log.json",
+   "bytes": 982,
+   "sha256": "2c285ed5088e10db89b73ac454087a21b2fc66069938a1f6543700ccbf85743b"
+  },
+  {
    "path": "qa/pilot05/proj/near/tests/gameplay_recovered_full_flow2.json",
    "bytes": 14720,
    "sha256": "c965d0a4127a019b96f7c8be89d2d5005fa6d9d40c58d085f83d52010c273363"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/0_old_24texel_tile_left_vs_rejected_kaleidoscope_right.png",
+   "bytes": 1383245,
+   "sha256": "340c47a6e502948ba7a099aad500cf647ce42363fb0e9c44b8863ffb399366aa"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/1_first_bake_column_shift.png",
+   "bytes": 882199,
+   "sha256": "7e2043047e9e4bdb9123d69fbfdbcd6c4ab9bdf873b4f49037b2024ddfce9009"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/2_bubbles_removed_bar_fill_rejected.png",
+   "bytes": 778626,
+   "sha256": "52bff7ec4d522ef9858cf5aa6357ff67aff7cc11b555b25ee596bdb0e92d3bc1"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/3_bubbles_removed_cloned_water.png",
+   "bytes": 805304,
+   "sha256": "6081c40c8dd443b1df1da1d5d4700978cdae84d2b4661407f671a73c22e8081b"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/4_seam_healed_eased_start130_5.png",
+   "bytes": 817861,
+   "sha256": "80631d5b58717be7fcc3ec726169b8b46fc6541e3c29ece158d1ebd976992067"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/artwork_fill_outline_on_tile.png",
+   "bytes": 804877,
+   "sha256": "599e693d9bf04d2c5463b4e6d3d87172800b7f8ae02b22dcddc37c34afa0202a"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/candidate_1024_left_2048_right_same_patch.png",
+   "bytes": 370140,
+   "sha256": "e9ff306ed9f6d5003160cddeda76f1975cf4d6723ce316ebb83e9579f17e4b89"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/repeat_preview_no_easing_left_eased_right.png",
+   "bytes": 1529599,
+   "sha256": "c98a02448e6ebd01c430007fc7fd93c90e098228d2905dc2aa7141856d9779e3"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/repeat_preview_start130_5_left_start132_right.png",
+   "bytes": 1511703,
+   "sha256": "25325b026699d6d5da5b0a6889881592c450424723df124f904e2c38cf6fbd15"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile_history/seam_before_left_healed_right_2x.png",
+   "bytes": 273669,
+   "sha256": "c041eb564069015794c963f8dba9b91508bb233dd853776688f056ab0df894f6"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tools/uniform_probe.mjs",
+   "bytes": 1294,
+   "sha256": "bffcd3262ab9089b3dfb74a5acafaa07ad92f1d757a6a9225394fbd6ef72e463"
   },
   {
    "path": "qa/pilot05/proj/probe/camera.json",
@@ -7418,8 +7648,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 102658,
-   "sha256": "dba8e2a2a3e28b89e08b74d8d740ff3cd3ad6b1f1fc6bc5e5dad7f31c2137d2d"
+   "bytes": 102944,
+   "sha256": "cc8e0340e8c5e2ca35feaaf206dd7f034c70e827b64ad6511d1681028248c833"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -7608,8 +7838,8 @@
   },
   {
    "path": "tools/proj05/near_bake.py",
-   "bytes": 19096,
-   "sha256": "c5fe4807cb5e4438a24441b4dfdaf3457f315ffbd7a638b5d521de4e0a25003f"
+   "bytes": 19094,
+   "sha256": "74e3215f816f7962ba7d2646279525c4fccd760988d83b81d0ce8b4a6c4c04a1"
   },
   {
    "path": "tools/proj05/near_bubbles.json",
@@ -7618,8 +7848,8 @@
   },
   {
    "path": "tools/proj05/near_fillmask.py",
-   "bytes": 1938,
-   "sha256": "181d83773fd14898b2b15ee512b6ce108d8ed359b7baadff213c8a49a8ad2461"
+   "bytes": 2245,
+   "sha256": "7c80cdbbe84989cca3bf552c2e52720186cf78b82ff97b1b47a9e23ffeaed039"
   },
   {
    "path": "tools/proj05/near_fillmask_src.png",
@@ -7628,8 +7858,8 @@
   },
   {
    "path": "tools/proj05/near_metrics.py",
-   "bytes": 3699,
-   "sha256": "2e1c5b77c0b22b3ef4d3ef87a2fe69f851cf0380b2cec133d4617baee9267e1a"
+   "bytes": 3958,
+   "sha256": "5c59bc6391fd5fcbb79e379b494b8c1f6a22c3f671498686a958f97e66fb57ff"
   },
   {
    "path": "tools/proj05/residual.py",

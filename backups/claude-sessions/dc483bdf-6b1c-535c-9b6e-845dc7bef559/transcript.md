@@ -3348,3 +3348,185 @@ The stair-step is gone but a soft tonal edge remains. Let me see exactly what th
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T23:14:30.970Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/A, L = float(opt.get(\"a\", 130.5)), float(opt.get(\"l\", 7.0))/A, L = float(opt.get(\"a\", 132.0)), float(opt.get(\"l\", 6.0))/' tools/proj05/near_bake.py && sed -i 's/\\[--w=1024\\] \\[--h=768\\] \\[--a=130.5\\] \\[--l=7\\]/[--w=1024] [--h=768] [--a=132] [--l=6]/' tools/proj05/near_bake.py && grep -n 'opt.get(\"a\"\\|--a=132' tools/proj05/near_bake.py && python3 -I tools/proj05/near_bake.py assets/textures/water05 > /dev/null && cat assets/textures/water05/proj05_near.json | head -30 && ls -la assets/textures/water05/proj05_T2.png assets/textures/water05/proj05_WT2.png …[+93 chars]`
+
+### 🧑 User — 2026-11-16T23:14:37.274Z
+
+> ↩︎ result: 19:usage: python3 -I tools/proj05/near_bake.py <assets/textures/water05> [--w=1024] [--h=768] [--a=132] [--l=6]
+> 32:A, L = float(opt.get("a", 132.0)), float(opt.get("l", 6.0))
+> {
+>  "note": "proj05 near tile (tools/proj05/near_bake.py); shader: ?proj05=1&projnear05=1 (src/vfx/waterRibbon.ts)",
+>  "T2": {
+>   "a": 131.685,
+>   "L": 6.565,
+>   "width": 1024,
+>   "height": 768,
+>   "wrapT": "mirrored",
+>   "period": 13.13
+>  },
+>  "source": {
+>   "a": 132.0,
+>   "L": 6.0,
+>   "ease_near": [
+>    0.3,
+>    0.9
+>   ],
+>   "ease_far": [
+>    0.5,
+>    1.0
+>   ],
+>   "seam_heal_zone_texels": 31603
+>  },
+>  "locked_focus_s": 132.438,
+>  "texels_per_world_unit": {
+>   "along": 117.0,
+>   "across": 106.7,
+>   "old_N_T_along": 24.0,
+>   "old_T_across": 53.3
+>  },
+> -rw-r--r-- 1 root root 737979 Nov 16 23:14 assets/textures/water05/proj05_T2.png
+> -rw-r--r-- 1 root root   3854 Nov 16 23:14 assets/textures/water05/proj05_WT2.png
+> [This command modified 1 file you've previously read: tools/proj05/near_bake.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T23:14:38.876Z
+
+> 🔧 **Bash** `{"command": "grep -n \"projneardetail05\" src/vfx/waterRibbon.ts", "description": "Locate overlay default in shader loader"}`
+
+### 🧑 User — 2026-11-16T23:14:38.907Z
+
+> ↩︎ result: 1703:  // sampler uPjT with mirrored repeat + mipmaps, and its flow map into uPjWT. `projneardetail05` = share of the detail
+> 1706:  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 0), 0, 1), 0, 0) };
+
+### 🤖 Claude — 2026-11-16T23:14:40.285Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 1697, "limit": 13}`
+
+### 🧑 User — 2026-11-16T23:14:40.311Z
+
+> ↩︎ result: 1697	  u.uPjPost = { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) };
+> 1698	  u.uPjRes = { value: new THREE.Vector2(864, 1536) };
+> 1699	  u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };
+> 1700	  // `&projnear05=1` (2026-11-16, tools/proj05/near_bake.py, qa/pilot05/proj/near/NOTES.md): while riding, the near
+> 1701	  // river used the 24-texel near / tile layers (pastel smear 8–17 u into the ride); this puts the HIGH-RESOLUTION near
+> 1702	  // tile T2 (the nearest approved water of the locked view, ≈110 texels per unit, bubbles removed) into the same
+> 1703	  // sampler uPjT with mirrored repeat + mipmaps, and its flow map into uPjWT. `projneardetail05` = share of the detail
+> 1704	  // layer kept on T2 (default 0: T2 carries the approved streaks itself).
+> 1705	  const NEAR = qs.get('projnear05') === '1';
+> 1706	  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 0), 0, 1), 0, 0) };
+> 1707	  u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
+> 1708	  u.uPjT2S = { value: new THREE.Vector2(0, 1) };
+> 1709	  const loader = new THREE.TextureLoader();
+
+### 🤖 Claude — 2026-11-16T23:14:47.936Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  // `&projnear05=1` (2026-11-16, tools/proj05/near_bake.py, qa/pilot05/proj/near/NOTES.md): while riding, the near\n  // river used the 24-texel near / tile layers (pastel smear 8–17 u into the ride); this puts the HIGH-RESOLUTION near\n  // tile T2 (the nearest approved water of the locked view, ≈110 texels per unit, bubbles removed) into the same\n  // sampler uPjT with mirrored repeat + mipmaps, and its flow map into uPjWT. `projneardetail05` = share of the detail\n  // layer kept on T2 (defaul …[+1209 chars]`
+
+### 🧑 User — 2026-11-16T23:14:48.000Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T23:14:58.325Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC OK && SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride6 && rm -rf \"$SP\" && mkdir -p \"$SP\" && FULL='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2' && {\nnode scripts/proj05-move.mjs \"--q=$FULL&projnear05=1\" \"--out=$SP/new\" --d=0,8,17,26,35 > \"$SP/new.log\" 2>&1 &\nnode scripts/proj05-move.mjs \"--q=$FULL&projnear05=1&projdbg05=1\" \"--out=$SP/newdbg\" --d=0,8,17,35 > \"$SP/newdbg.log\" 2>&1 &\nnode scripts/proj05-move.mjs \"--q=$FULL\" \"--out=$SP/before_clip\" --clip=4 --fps= …[+280 chars]`
+
+### 🧑 User — 2026-11-16T23:14:58.380Z
+
+> ↩︎ result: Command running in background with ID: bmq0pfkpd. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/bmq0pfkpd.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T23:15:18.238Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && D=$SP/cand_C && mkdir -p $D && cp assets/textures/water05/proj05_E.png assets/textures/water05/proj05_lut.json $D/ && python3 -I tools/proj05/near_bake.py $D --w=2048 --h=768 | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d['T2'], d['texels_per_world_unit'], 'holes', d['holes_cloned'], d['source'])\"; ls -la $D/proj05_T2.png; python3 -I - \"$SP\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsp=sys.argv[1]\na=Image.open(\"assets/textures/water05/proj05_T2.png\").conver …[+644 chars]`
+
+### 🧑 User — 2026-11-16T23:16:22.857Z
+
+> ↩︎ result: {'a': 131.685, 'L': 6.565, 'width': 2048, 'height': 768, 'wrapT': 'mirrored', 'period': 13.13} {'along': 117.0, 'across': 213.3, 'old_N_T_along': 24.0, 'old_T_across': 53.3} holes 24 {'a': 132.0, 'L': 6.0, 'ease_near': [0.3, 0.9], 'ease_far': [0.5, 1.0], 'seam_heal_zone_texels': 64690}
+> -rw-r--r-- 1 root root 1435441 Nov 16 23:16 /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/cand_C/proj05_T2.png
+
+### 🤖 Claude — 2026-11-16T23:16:54.741Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && N=qa/pilot05/proj/near && mkdir -p $N/ride_before $N/overlay_compare/det0 $N/overlay_compare/det05 $N/overlay_compare/det1 $N/tile_history $N/regression $N/probe $N/tools $N/first_attempts && \\\ncp $SP/ride4/before/move_*.png $SP/ride4/before/move_log.json $N/ride_before/ && \\\nfor d in det0 det05 det1; do cp $SP/ride5/$d/move_08.png $SP/ride5/$d/move_17.png $SP/ride5/$d/move_35.png $SP/ride5/$d/move_log.json $N/overlay_compare/$d/; done && \\\ncp $SP/ride5/metrics_detail.json $N/overlay_comp …[+2431 chars]`
+
+### 🧑 User — 2026-11-16T23:16:56.714Z
+
+> ↩︎ result: 00 2.02 MB
+> 08 2.08 MB
+> 17 1.98 MB
+> 35 2.49 MB
+> 54M	qa/pilot05/proj/near
+> first_attempts
+> overlay_compare
+> probe
+> regression
+> ride_before
+> tests
+> tile_history
+> tools
+
+### 🤖 Claude — 2026-11-16T23:16:59.965Z
+
+The ride probe maps compress to about 2 MB each, so they go in the repo too. Making the two tools read those saved copies, then writing the notes so a future session can pick up exactly here.
+
+### 🤖 Claude — 2026-11-16T23:17:11.155Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np=\"tools/proj05/near_metrics.py\"; s=open(p).read()\nold='''    R = np.fromfile(os.path.join(probe, f\"ride_{d}.f32\"), np.float32).reshape(H, W, 4)\n    riv = cv2.erode((R[..., 2] > 0.5).astype(np.uint8), np.ones((9, 9), np.uint8)).astype(bool)'''\nnew='''    if os.path.exists(os.path.join(probe, f\"ride_{d}.f32\")):\n        river = np.fromfile(os.path.join(probe, f\"ride_{d}.f32\"), np.float32).reshape(H, W, 4)[..., 2] > 0.5\n    else:                                          # the compressed copies kept in git (qa/pilot05/proj/near/probe/)\n        river …[+2243 chars]`
+
+### 🧑 User — 2026-11-16T23:17:12.264Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/fm_npz.png (512, 1312) fill share of the seen grid: 0.282
+> fill mask from npz vs f32: differing cells 90 of 671744
+> 
+> == 17 units ahead of the locked checkpoint
+>   bottom  (200558 px)
+>      BEFORE       grad  12.23  lapstd  14.87  sat  73.7%  p95 187.0
+>   benny   (118200 px)
+
+### 🤖 Claude — 2026-11-16T23:17:49.146Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/near/NOTES.md", "content": "# Screen 05 water while RIDING — `?proj05=1&projnear05=1` (2026-11-16 ~22:25 → 23:20 UTC, WORK IN PROGRESS)\n\nSession `01KS3bZt…` (new Claude account), branch `ccr-8c4acadc-iybw0n`, started from `ccr-61131b9d-uj0oqb` @ `aea7e77`.\nContinues part 2 of `../flow2/NOTES.md` (the riding blur). Nothing here is the default: every line of game code is behind\n`?proj05=1` **and** `&projnear05=1`. The user has NOT approved the look yet — do not promote.\n\nFull test URL (the user's stack + this experiment):\n`?proj05=1&projw …[+8035 chars]`
+
+### 🧑 User — 2026-11-16T23:17:49.173Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/proj/near/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T23:17:58.139Z
+
+> 🔧 **Bash** `{"command": "grep -n \"claude/rainbow-05-water-projection\\|projflow05=2\\|near-tile plan\" CLAUDE.md | cut -c1-220; python3 -I -c \"\nimport json; d=json.load(open('backups/AGENTS_STATUS.json')); print(list(d.keys())); print(json.dumps(d.get('assignments_now'),indent=1)[:900]); print(d.get('running_now'))\"; head -3 backups/CLAUDE_ACCOUNT_TRANSFER.md | cut -c1-200", "description": "Find stale pointers in CLAUDE.md and status files"}`
+
+### 🧑 User — 2026-11-16T23:17:58.210Z
+
+> ↩︎ result: 12:   `git fetch origin claude/rainbow-05-water-projection && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
+> 20:**`claude/rainbow-05-water-projection`** (the Screen 05 water-projection experiment; contains every other `ccr-*` /
+> 91:`qa/pilot05/proj/tunnel/NOTES.md`, 2026-11-16 ~20:50; paddles approved by the user ~21:45, NOT promoted), **water flow `&projflow05=2`** (flow along the
+> 92:approved streaks, design stays crisp; riding blur diagnosed, near-tile plan NOT built: `qa/pilot05/proj/flow2/NOTES.md`), **P1 `?proj05=1`** (the approved water itself baked onto the game river; `qa/pilot05/proj/NOTES
+> 105:`claude/rainbow-05-water-projection`; status and relaunch instructions: `backups/AGENTS_STATUS.json` →
+> ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05']
+> {
+>  "_note": "State at 2026-11-16 ~15:55 UTC (urgent backup). A running specialist does NOT survive the end of a session or an account switch: if you are a new session, treat 'running' as INTERRUPTED and relaunch from the brief.",
+>  "washer-environment-modeler": {
+>   "role_now": "SPECIALIST 1 - Blende …[+820 chars]
+
+### 🤖 Claude — 2026-11-16T23:18:22.819Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, re\n# ---- CLAUDE.md pointers\np=\"CLAUDE.md\"; s=open(p).read()\nold=\"`git fetch origin claude/rainbow-05-water-projection && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.\"\nnew=\"`git fetch origin ccr-8c4acadc-iybw0n && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.\"\nassert old in s; s=s.replace(old,new)\nold=\"The GitHub default branch is an OLD version. Newest work as of 2026-11-16 ~16:00 UTC: branch\\n**`claude/rainbow-05-water-projection`** (the Screen 05 water-projectio …[+4915 chars]`
+
+### 🧑 User — 2026-11-16T23:18:22.960Z
+
+> ↩︎ result: docs updated
+> # Rainbow — Claude account transfer guide (newest: session 01KS3bZt, branch `ccr-8c4acadc-iybw0n`, 2026-11-16 ~23:20 UTC)
+> 
+> Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
+> 
+> ## ▶ NEWEST (2026-11-16 22:18 → ~23:20 UTC, NEW Claude account, session `01KS3bZt…`, branch `ccr-8c4acadc-iybw0n`) — READ THIS FIRST
+> 48:**Plan (`?projnear05=1`, one factor, reversible):**
+> [This command modified 2 files you've previously read: qa/pilot05/proj/flow2/NOTES.md, backups/CLAUDE_ACCOUNT_TRANSFER.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T23:18:24.466Z
+
+Notes and evidence are in place; committing and pushing everything now, then verifying against GitHub.
+
+### 🤖 Claude — 2026-11-16T23:18:28.575Z
+
+> 🔧 **Bash** `{"command": "sed -i '48s/.*/**Plan (`?projnear05=1`, one factor, reversible) — BEING BUILT since 2026-11-16 22:25 UTC, see `..\\/near\\/NOTES.md`:**/' qa/pilot05/proj/flow2/NOTES.md && sed -n 48p qa/pilot05/proj/flow2/NOTES.md && git status --short | wc -l && python3 scripts/rainbow-autosave.py --reason \"manual:save-everything\" > /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/save1.log 2>&1; tail -12 /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/save1.log; echo \"local : $(git rev-parse HEAD)\"; echo \"remote: $(timeout 9 …[+192 chars]`
+

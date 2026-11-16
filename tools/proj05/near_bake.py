@@ -16,7 +16,7 @@ E (through its LUT, no new artwork, no invented texture) into a tile that the sh
   proj05_WT2.png  flow map of T2 (tools/proj05/flow_bake.py flow_of: R = 0.5 + du/ds * scale, G = flow mask, B = 1);
                   the shader flips the slope on mirrored periods.
   proj05_near.json  extents + resolution report.
-usage: python3 -I tools/proj05/near_bake.py <assets/textures/water05> [--w=1024] [--h=768] [--a=130.5] [--l=7]
+usage: python3 -I tools/proj05/near_bake.py <assets/textures/water05> [--w=1024] [--h=768] [--a=132] [--l=6]
                   [--ss=3] (supersampling per axis) [--margin=0.015] (u kept away from the visible edge)
                   [--ease_near=k,b] [--ease_far=k,b] (slope k at the mirror line, back to 1 over b units; 1,0 = off)
                   [--heal=0] (skip the artwork-fill seam heal)"""
@@ -29,7 +29,7 @@ pos = [a for a in sys.argv[1:] if not a.startswith("--")]
 opt = dict(a[2:].split("=", 1) for a in sys.argv[1:] if a.startswith("--") and "=" in a)
 DIR = pos[0]
 W, H = int(opt.get("w", 1024)), int(opt.get("h", 768))
-A, L = float(opt.get("a", 130.5)), float(opt.get("l", 7.0))
+A, L = float(opt.get("a", 132.0)), float(opt.get("l", 6.0))
 SS = int(opt.get("ss", 3))
 MARGIN = float(opt.get("margin", 0.015))
 # EASING at the two mirror lines (the tile is repeated mirrored along s): a straight mirror turns every slanted ribbon
