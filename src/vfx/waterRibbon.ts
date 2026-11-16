@@ -411,10 +411,10 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
   vec2 eUV = vec2(0.5 + (u - L.y) / (2.0 * L.z), L.x);
   vec4 e = texture2D(uPjE, eUV);
   float inE = L.w * step(0.0, eUV.x) * step(eUV.x, 1.0);
-  wE = e.a * inE * smoothstep(0.42, 0.75, mE);
+  wE = e.a * inE * smoothstep(0.3, 0.55, mE);
   vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));
   vec4 n = texture2D(uPjN, nUV);
-  wN = n.a * step(0.0, nUV.y) * step(nUV.y, 1.0);
+  wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam
   vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
   vec3 lay = mix(t, n.rgb, wN);
   return mix(lay, e.rgb, wE);

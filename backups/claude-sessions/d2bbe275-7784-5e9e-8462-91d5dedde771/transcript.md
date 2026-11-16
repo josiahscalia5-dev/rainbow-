@@ -3232,3 +3232,99 @@ Now the moving-camera test. I'll write a script that rides forward from the lock
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T18:04:10.806Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nimport numpy as np\nN=np.asarray(Image.open('assets/textures/water05/proj05_N.png').convert('RGBA'),float)/255\n# N rows: (s-126)*24 ; cols: (u+1)/2*512\nfor s in [143,145,146,147,148,150,152]:\n  r=int((s-126)*24); row=N[r]\n  print(s, [tuple((row[int((u+1)/2*511)]*255).astype(int)) for u in [-0.3,-0.1,0.0,0.1,0.3]])\n\"; SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad; python3 -c \"\nfrom PIL import Image\nim=Image.open('assets/textures/water05/proj05_N.png').convert('RGBA')\nbg=Image.new('RGBA',im.size,( …[+262 chars]`
+
+### 🧑 User — 2026-11-16T18:04:11.283Z
+
+> ↩︎ result: 143 [(np.int64(0), np.int64(203), np.int64(250), np.int64(255)), (np.int64(150), np.int64(248), np.int64(245), np.int64(255)), (np.int64(25), np.int64(195), np.int64(247), np.int64(255)), (np.int64(0), np.int64(184), np.int64(247), np.int64(255)), (np.int64(52), np.int64(143), np.int64(252), np.int64(255))]
+> 145 [(np.int64(0), np.int64(178), np.int64(255), np.int64(255)), (np.int64(130), np.int64(245), np.int64(247), np.int64(255)), (np.int64(82), np.int64(203), np.int64(250), np.int64(255)), (np.int64(0), np.int64(207), np.int64(255), np.int64(255)), (np.int64(0), np.int64(208), np.int64(253), np.int64(255))]
+> 146 [(np.int64(79), np.int64(148), np.int64(250), np.int64(255)), (np.int64(120), np.int64(243), np.int64(249), np.int64(255)), (np.int64(105), np.int64(208), np.int64(250), np.int64(255)), (np.int64(7), np.int64(217), np.int64(247), np.int64(255)), (np.int64(0), np.int64(163), np.int64(250), np.int64(255))]
+> 147 [(np.int64(133), np.int64(111), np.int64(254), np.int64(255)), (np.int64(111), np.int64(242), np.int64(250), np.int64(255)), (np.int64(128), np.int64(213), np.int64(249), np.int64(255)), (np.int64(1), np.int64(177), np.int64(244), np.int64(255)), (np.int64(8), np.int64 …[+964 chars]
+
+### 🤖 Claude — 2026-11-16T18:04:11.859Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/N_mid.png"}`
+
+### 🧑 User — 2026-11-16T18:04:11.885Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:04:26.828Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/make_target.py'\ns=open(p).read()\ns=s.replace(\"hole = (benny | ringb) & ~hud          # Benny + splash: filled from the artwork here; coins: filled along the flow in the bake (coin_mask.png)\",\n\"hole = (benny | ringb | coins) & ~hud          # Benny + splash, the bottom ring and the coins: filled from the artwork\")\ns=s.replace(\"  * coins: flagged in coin_mask.png and filled later in river space along the flow direction (tools/proj05/bake.py).\",\n\"  * the coins too (an along-the-flow interpolation in river space was tried first: it drew s …[+1099 chars]`
+
+### 🤖 Claude — 2026-11-16T18:04:27.884Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/coinfill_T.png"}`
+
+### 🧑 User — 2026-11-16T18:04:44.268Z
+
+> ↩︎ result: "fill_px": 336458,
+
+### 🧑 User — 2026-11-16T18:04:44.286Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:04:54.472Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/T_ = np.stack(\\[gaussian_filter(T_\\[..., i\\], (1.5, 1.0), mode=(\"wrap\", \"nearest\")) for i in range(3)\\], -1)/T_ = np.stack([gaussian_filter(T_[..., i], (3.0, 1.5), mode=(\"wrap\", \"nearest\")) for i in range(3)], -1)/' tools/proj05/bake.py && grep -c \"(3.0, 1.5)\" tools/proj05/bake.py && SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -I tools/proj05/bake.py $SP/probe qa/pilot05/proj/target assets/textures/water05 >/dev/null && node scripts/capture.mjs 05 --q=proj05=1 --out=$SP/cap/final2 2>&1 | grep -c \"→\"; git …[+755 chars]`
+
+### 🧑 User — 2026-11-16T18:05:54.143Z
+
+> ↩︎ result: 1
+> 1
+> Updated 1 path from the index
+> residual on used pixels: mean signed rgb [5.09, 0.29, -0.04]  mean abs 3.2989813865170667  used px 485562
+> 1
+> Updated 1 path from the index
+> residual on used pixels: mean signed rgb [4.73, 0.07, -0.05]  mean abs 3.190369691540444  used px 485585
+> {'px': 559997, 'mean_abs': 23.44, 'within_10': 0.648, 'within_20': 0.7209, 'ssim_lum': 0.7629} {'px': 1157760, 'mean_abs': 41.56, 'within_10': 0.3389, 'within_20': 0.4308, 'ssim_lum': 0.4585}
+
+### 🤖 Claude — 2026-11-16T18:06:11.410Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/tex_d = np.maximum(dens \\* 1.15, 3.0)                 # texel rows per unit s (>= 3 so far rows stay addressable)/tex_d = np.maximum(dens * 1.3, 8.0)                  # texel rows per unit s (>= 8: the far rows stay sharp at the locked eye)/' tools/proj05/bake.py && grep -c \"dens \\* 1.3, 8.0\" tools/proj05/bake.py && sed -i 's/  wE = e.a \\* inE \\* smoothstep(0.42, 0.75, mE);/  wE = e.a * inE * smoothstep(0.3, 0.55, mE);/' src/vfx/waterRibbon.ts && grep -c \"smoothstep(0.3, 0.55, mE)\" src/vfx/waterRibbon.ts && SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e- …[+652 chars]`
+
+### 🧑 User — 2026-11-16T18:06:56.485Z
+
+> ↩︎ result: 1
+> 1
+> {"E": [1024, 1460], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.8839495933219178, "N_valid": 0.7803609212239583, "samples": 772815, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> 1
+> 1
+> Updated 1 path from the index
+> {'px': 559997, 'mean_abs': 23.19, 'within_10': 0.6549, 'within_20': 0.7227, 'ssim_lum': 0.7695} {'px': 1157760, 'mean_abs': 41.44, 'within_10': 0.3423, 'within_20': 0.4317, 'ssim_lum': 0.4618}
+> [This command modified 1 file you've previously read: src/vfx/waterRibbon.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T18:07:00.307Z
+
+Still working: rebuilt the layers (coins now filled from your artwork, no stripes), and the locked match holds (SSIM 0.77). Re-running the moving-camera frames with the fixes.
+
+### 🤖 Claude — 2026-11-16T18:07:05.001Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && rm -rf $SP/move && (node scripts/proj05-move.mjs --q='proj05=1' --out=$SP/move/proj --d=0,2,5,10,20,35,50 2>&1 | grep -c \"^move\") && (node scripts/proj05-move.mjs --q='proj05=1&projdbg05=1' --out=$SP/move/dbg --d=0,2,5,10,20,35,50 2>&1 | grep -c \"^move\") && (node scripts/proj05-move.mjs --q='' --out=$SP/move/default --d=0,2,5,10,20,35,50 2>&1 | grep -c \"^move\") && cd $SP/move && python3 -c \"\nfrom PIL import Image\nds=['00','02','05','10','20','35','50']\nc=Image.new('RGB',(216*7+60,384* …[+305 chars]`
+
+### 🤖 Claude — 2026-11-16T18:07:06.054Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/sheet3.png"}`
+
+### 🧑 User — 2026-11-16T18:08:49.328Z
+
+> ↩︎ result: 7
+> 7
+> 7
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-16T18:08:49.606Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:09:05.811Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nold=\"  wN = n.a * step(0.0, nUV.y) * step(nUV.y, 1.0);\"\nassert old in s\ns=s.replace(old,\"  wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . 2>&1|head -3; SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && rm -rf $SP/move/proj && node scripts/proj05-move.mjs --q='proj05=1' --out=$SP/move/proj --d=0,2,5,10,20,35,50 2>&1 | grep -c \"^move\"; node scripts/capture.mjs …[+396 chars]`
+
+### 🤖 Claude — 2026-11-16T18:09:06.911Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj/move_35.png"}`
+

@@ -2,7 +2,8 @@
   * where the approved picture shows its water (not hidden by Benny + splash, coins, HUD): the APPROVED pixels;
   * under Benny + splash and the bottom gold ring arcs: the user's ORIGINAL isolated water artwork, registered onto the approved water with dense
     optical flow (banks / bands line up), colour-matched and blended in with a soft edge (no invented texture);
-  * coins: flagged in coin_mask.png and filled later in river space along the flow direction (tools/proj05/bake.py).
+  * the coins too (an along-the-flow interpolation in river space was tried first: it drew straight stripes);
+    coin_mask.png is kept for the metrics.
 usage: python3 -I tools/proj05/make_target.py <out_dir>
 outputs: target_05.png (RGB), water_mask.png (approved water footprint), fill_mask.png (pixels taken from the artwork),
          art_registered.png, report.json"""
@@ -35,7 +36,7 @@ coins = binary_dilation(coins & (rows < 800) & (rows > 470) & binary_dilation(A0
 hud = rows < 196
 ringb = (af[..., 0] > 0.55) & (af[..., 1] > 0.30) & (af[..., 2] < 0.50) & (af[..., 0] - af[..., 2] > 0.22) & (rows > 1100)
 ringb = binary_dilation(binary_closing(ringb, iterations=4), iterations=8)   # the approved's bottom gold ring arcs
-hole = (benny | ringb) & ~hud          # Benny + splash: filled from the artwork here; coins: filled along the flow in the bake (coin_mask.png)
+hole = (benny | ringb | coins) & ~hud          # Benny + splash, the bottom ring and the coins: filled from the artwork
 
 # ---- dense registration artwork -> approved (large-scale flow, smoothed, interpolated across the holes)
 def gray(x):

@@ -24,7 +24,8 @@ W, H = 864, 1536
 R = np.fromfile(os.path.join(probe, "uv_river.f32"), np.float32).reshape(H, W, 4).astype(np.float64)
 surf = np.abs(R[..., 2] - 1) < 0.01
 wm = np.asarray(Image.open(os.path.join(tdir, "water_mask.png"))) > 127
-coin = np.asarray(Image.open(os.path.join(tdir, "coin_mask.png"))) > 127
+# coins are filled in the target from the user's artwork (make_target.py); the along-s hole filling below stays for gaps
+coin = np.zeros((H, W), bool)
 tgt = np.asarray(Image.open(os.path.join(tdir, "target_05.png")).convert("RGB"), np.float64) / 255
 # colour feedback from the live capture (tools/proj05/residual.py): what the bloom pass adds is taken out of the bake
 if os.path.exists(os.path.join(tdir, "correction.npz")):
@@ -63,7 +64,7 @@ umax = gaussian_filter1d(maximum_filter1d(umax, 25), 6) + 0.015
 umin, umax = np.clip(umin, -1, 1), np.clip(umax, -1, 1)
 cE, wE = (umin + umax) / 2, np.maximum((umax - umin) / 2, 0.02)
 dens = np.exp(gaussian_filter1d(np.log(np.clip(dens, 1, 400)), 8))
-tex_d = np.maximum(dens * 1.15, 3.0)                 # texel rows per unit s (>= 3 so far rows stay addressable)
+tex_d = np.maximum(dens * 1.3, 8.0)                  # texel rows per unit s (>= 8: the far rows stay sharp at the locked eye)
 cum = np.concatenate([[0], np.cumsum((tex_d[1:] + tex_d[:-1]) / 2 * np.diff(sg))])
 NE = int(min(2048, np.ceil(cum[-1])))
 V = cum / cum[-1]
@@ -165,7 +166,7 @@ T_ = layer(sl)
 blendr = sl - a_s < b
 r = ((sl[blendr] - a_s) / b)[:, None, None]
 T_[blendr] = layer(sl[blendr] + L) * (1 - r) + T_[blendr] * r
-T_ = np.stack([gaussian_filter(T_[..., i], (1.5, 1.0), mode=("wrap", "nearest")) for i in range(3)], -1)
+T_ = np.stack([gaussian_filter(T_[..., i], (3.0, 1.5), mode=("wrap", "nearest")) for i in range(3)], -1)
 
 # ---------------------------------------------------------------- D (detail) layer
 # streaky, glinting water under Benny (the user's isolated artwork, no bubbles or coins): s in [131.0, 134.4], u in [-0.3, 0.3]
