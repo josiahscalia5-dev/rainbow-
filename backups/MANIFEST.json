@@ -423,8 +423,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 11628,
-   "sha256": "4c3e9289cd7aed8ac503dc4e7c024a352e6de5dc12b4faaad17ee8464edd1cbe"
+   "bytes": 11548,
+   "sha256": "8f9c55e3841656811407d7a54cd212a73b484f16d48499eb5ea0116b4905ad8e"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -444,7 +444,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "73a71b7ede4bce1a4a9370345bf537427f0d623398d8184fe0fc599258241a56"
+   "sha256": "ab9814b1f548a64ddb07d18bd452f7d959f447e053dd743513d8ad1b7688457e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1378,8 +1378,8 @@
   },
   {
    "path": "qa/pilot05/proj/BRIEF_NEXT.md",
-   "bytes": 2876,
-   "sha256": "dc225856fa173d60fb7a08fdda6e51f2cf02434bf794df4c7d29990a7f27bae0"
+   "bytes": 2883,
+   "sha256": "260481ba0b6ff4679142521fd60aa56c496a11929abef693ad5cbbbd5e25cf5a"
   },
   {
    "path": "qa/pilot05/proj/BRIEF_SPECIALIST1.md",
@@ -1398,8 +1398,8 @@
   },
   {
    "path": "qa/pilot05/proj/NOTES.md",
-   "bytes": 7600,
-   "sha256": "0f8b25bc4ffbab28f20343be4baf736b44cd192258f2218594f13ace1a092395"
+   "bytes": 10424,
+   "sha256": "450605783cb5b276c9bb88d69279bf392f9968b87291e0ac7dea5e621292a235"
   },
   {
    "path": "qa/pilot05/proj/align/align.json",
@@ -1443,13 +1443,23 @@
   },
   {
    "path": "qa/pilot05/proj/compare/3_NEW_proj05.png",
-   "bytes": 1943934,
-   "sha256": "e85904fd9b521d219a8e27cccb5bae2a90349fb7c009894caedf42436fb7fab8"
+   "bytes": 1953900,
+   "sha256": "ec395f39dbab8f09da9c0d32df91e48670d739c22505d4a7616df04843172a94"
+  },
+  {
+   "path": "qa/pilot05/proj/compare/metrics_approved_water.json",
+   "bytes": 481,
+   "sha256": "7be06166920bf3f19a88e572cb7f997808511e03fa5c596747f15c1e9fd70e5c"
+  },
+  {
+   "path": "qa/pilot05/proj/compare/metrics_approved_water_split.json",
+   "bytes": 616,
+   "sha256": "3807806aaec8f70da7a064e25a9a6046f591493c687e2bb4d6cc88d4d9b47586"
   },
   {
    "path": "qa/pilot05/proj/compare/metrics_locked.json",
-   "bytes": 627,
-   "sha256": "3ede9fc5f901c1864d46db9dfcb4592969cf43622dc4c6e050ed4259407f5390"
+   "bytes": 626,
+   "sha256": "6f59c018ac42aec0ba24d70e762c31788793be29a79b71c122938e516bfd182d"
   },
   {
    "path": "qa/pilot05/proj/compare/metrics_water_surface.json",
@@ -1515,6 +1525,26 @@
    "path": "qa/pilot05/proj/probe/river05_mesh.json",
    "bytes": 1285808,
    "sha256": "b7c86f523f8af3cc9a1c5d5bff090e1468010a957b2528d2e7d681caeac1ea97"
+  },
+  {
+   "path": "qa/pilot05/proj/steer/NEW_steer_left_0.8s.png",
+   "bytes": 1647626,
+   "sha256": "eb1da1821e62d3f71b6c65e26c549580ca1935438c5754badce1527c3dcb051b"
+  },
+  {
+   "path": "qa/pilot05/proj/steer/NEW_steer_right_0.8s.png",
+   "bytes": 1733104,
+   "sha256": "11083b4fa4d816e8cb475a5f33a6bc8e874ed140ac88d651b1baaed6609f7ccb"
+  },
+  {
+   "path": "qa/pilot05/proj/steer/steer_log.json",
+   "bytes": 1504,
+   "sha256": "3de4afc67a0845ad051e2e19d0fa991ec5f81725b67f1d5c12d3f59d48f26287"
+  },
+  {
+   "path": "qa/pilot05/proj/steer/steer_sheet_BEFORE_top_NEW_bottom.png",
+   "bytes": 1884475,
+   "sha256": "a0fe5b625d18dc517124084927f043d6321fde0a6c494ec0a4b74c612bd0fa54"
   },
   {
    "path": "qa/pilot05/proj/target/art_registered.png",

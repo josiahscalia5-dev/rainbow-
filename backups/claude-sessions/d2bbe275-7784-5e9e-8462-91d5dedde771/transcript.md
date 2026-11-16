@@ -4207,3 +4207,32 @@ Steering works: Benny reaches either bank (±4.6 units) and your water design st
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T19:06:01.960Z
+
+These are your approved bubbles (part of the texture) at the locked spot. The game's extra bubbles are gone on Screen 05. Saving the final locked comparison and measuring it both ways.
+
+### 🤖 Claude — 2026-11-16T19:06:11.614Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && cp $SP/cap/r4/05.png qa/pilot05/proj/compare/3_NEW_proj05.png && python3 -I tools/proj05/frame_metrics.py qa/pilot05/proj/compare/1_APPROVED.png qa/pilot05/proj/compare/2_BEFORE_current_default_T2.png qa/pilot05/proj/compare/3_NEW_proj05.png > qa/pilot05/proj/compare/metrics_locked.json && python3 -I tools/proj05/match_metrics.py $SP/probe2 qa/pilot05/proj/compare/2_BEFORE_current_default_T2.png qa/pilot05/proj/compare/3_NEW_proj05.png > qa/pilot05/proj/compare/metrics_approved_water.json && py …[+1640 chars]`
+
+### 🧑 User — 2026-11-16T19:06:14.825Z
+
+> ↩︎ result: note approved-water pixels (where the approved picture shows water/foam); second set leaves out the pixels the locked T2 front ring covers (tunnel not moved, user rule)
+> BEFORE_all {'px': 468549, 'within_10': 0.095, 'within_20': 0.2586, 'mean_abs': 46.12}
+> BEFORE_without_T2_ring_cover {'px': 451637, 'within_10': 0.0985, 'within_20': 0.2678, 'mean_abs': 44.45}
+> NEW_all {'px': 468549, 'within_10': 0.8893, 'within_20': 0.9338, 'mean_abs': 8.7}
+> NEW_without_T2_ring_cover {'px': 451637, 'within_10': 0.9225, 'within_20': 0.9682, 'mean_abs': 5.63}
+
+### 🤖 Claude — 2026-11-16T19:06:25.477Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && mkdir -p qa/pilot05/proj/steer && cp $SP/steer/proj/steer_L_080.png qa/pilot05/proj/steer/NEW_steer_left_0.8s.png && cp $SP/steer/proj/steer_R_080.png qa/pilot05/proj/steer/NEW_steer_right_0.8s.png && cp $SP/steer/steer_sheet.png qa/pilot05/proj/steer/steer_sheet_BEFORE_top_NEW_bottom.png && cp $SP/steer/proj/move_log.json qa/pilot05/proj/steer/steer_log.json && python3 -c \"import json; d=json.load(open('qa/pilot05/proj/compare/metrics_approved_water.json')); [print(k.split('/')[-1], v) for k, …[+80 chars]`
+
+### 🧑 User — 2026-11-16T19:06:25.636Z
+
+> ↩︎ result: 2_BEFORE_current_default_T2.png {'px': 468549, 'within_10': 0.095, 'within_20': 0.2586, 'mean_abs': 46.12, 'ssim_lum': 0.3061, 'misses': {'no_river_or_covered': 35736, 'river_visible': 311625}}
+> 3_NEW_proj05.png {'px': 468549, 'within_10': 0.8893, 'within_20': 0.9338, 'mean_abs': 8.7, 'ssim_lum': 0.9233, 'misses': {'no_river_or_covered': 23591, 'river_visible': 7427}}
+
+### 🤖 Claude — 2026-11-16T19:06:48.809Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/pilot05/proj/NOTES.md'\ns=open(p).read()\nadd='''\n## Round 2 (2026-11-16 ~18:50–19:15 UTC, user: \"at least a 95% visual match … works properly when Benny moves\",\n## no new Marble key / world / credits)\nMeasure (`tools/proj05/match_metrics.py`, `compare/metrics_approved_water*.json`): every pixel where the APPROVED\npicture shows its water or foam (registered water footprint minus what the approved picture hides: Benny + splash,\ncoins, its bottom ring), rows below the HUD — 468,549 px; mean |ΔRGB| per pixel, 0–255.\n\n| | BEFORE (T2) | round 1 | **rou …[+5073 chars]`
+
