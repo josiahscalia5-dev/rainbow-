@@ -37,8 +37,11 @@ new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`. The bootstrap checks before 
 
 ## 3. Security
 * NEVER commit, print, log or paste API keys, passwords or tokens. The Marble World API key exists only as a
-  Claude-environment network secret (host `api.worldlabs.ai`, header `WLT-Api-Key`). If it must be reconnected, call
-  `request_credential`; the user types the key only into that secure form. The autosave scans staged text for secrets.
+  Claude-environment network secret (host `api.worldlabs.ai`, header `WLT-Api-Key`; on this account: the `Default`
+  environment). Check it with the free read `python3 -I scripts/verify-assets.py worldlabs` (the bootstrap does).
+  **Do not ask the user for a key unless that check reports HTTP 401/403** (authentication failed); a network error
+  or timeout is NOT a key problem. Only then call `request_credential` (host `api.worldlabs.ai`, header
+  `WLT-Api-Key`); the user types the key only into that secure form. The autosave scans staged text for secrets.
 * Ask the user ONLY for real approvals: paid credits (World Labs / Marble jobs, Meshy, Rodin — name the job and its
   credits first) or changes that could lose existing work. No new Marble worlds without the user's OK
   (ledger `qa/worldlabs/05/pilot/LEDGER.md`; free reads such as the credit balance are fine).

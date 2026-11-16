@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 8015,
-   "sha256": "e49ac3eea4cc7903facf3b89e93bec9fa788a6f22a94467384650e0a35a1995a"
+   "bytes": 8341,
+   "sha256": "fd1524a4ad9732b9c2fed503bb5a5c74eb52da1a24855cb23f249e74008b9919"
   },
   {
    "path": "README_FIRST.md",
@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 6924,
-   "sha256": "0de7a22c14d535f411710a3d6818fe06a929d87841dfc86f1edcc13bf3dfc37f"
+   "bytes": 7067,
+   "sha256": "27d3dc115a27c33495173348e319cf299695d1fe5eed3b8c1ddc7498af76adaf"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -398,8 +398,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4067,
-   "sha256": "b2016947d74447a76fe4c6516e8b28628f36d7b63303572c332401c71b0ea268"
+   "bytes": 3775,
+   "sha256": "3366a6e2a93c3aba9cb405994dedbe99f1c0704a02e05ad7747ac0d34b237008"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "09cf26de55262f1ac3dd36617ffe9079c62766b729a9e23586a31c69dbae991b"
+   "sha256": "5502189aeeb40ec201b221fc912db884ff9911a795d172e5101f5efa67057122"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -433,8 +433,8 @@
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
-   "bytes": 13033,
-   "sha256": "d09216c2d9b68e09db450fef43ed066c15f0d13d2d62c43513d79631b025eee5"
+   "bytes": 13290,
+   "sha256": "53ae99dba8eaacf7574328fb5552c8920fa5b4e30782e5b314e54c74aeffd1af"
   },
   {
    "path": "backups/autosave.config.json",
@@ -958,8 +958,8 @@
   },
   {
    "path": "qa/pilot05/COORDINATION_WAVE9B.md",
-   "bytes": 7114,
-   "sha256": "e3ba41d3c051bf03aa60cc74c0f151c7c1f57c217efceca9a12e1f3a1b185a1c"
+   "bytes": 10324,
+   "sha256": "28307bf98ff2b94e5cbc58bb650b2ac9b71ed869cb109d55c7734d1654746d9a"
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
@@ -5072,6 +5072,31 @@
    "sha256": "4597b8ff81ecec7d9596fd320095fc0119a756093264fa478211ca561eb549f3"
   },
   {
+   "path": "qa/pilot05/wave9b/W2/05_APPROVED_BEFORE_W2_fullsize.png",
+   "bytes": 5162990,
+   "sha256": "2be99cdbf35ea95ceb3967a5041509c9cfac3a3793564f5e57ebb38cf63c4b69"
+  },
+  {
+   "path": "qa/pilot05/wave9b/W2/05_wall05_W1_rejected.png",
+   "bytes": 1749637,
+   "sha256": "87499c86098db1faaff60b0369214bc4dee916a279d7b4739c28a219eab71a0c"
+  },
+  {
+   "path": "qa/pilot05/wave9b/W2/05_wall05_W2.png",
+   "bytes": 1755137,
+   "sha256": "6ce99fc384a6cb35d78fcc807506b3a8515b091ceb8da2e2d6a69e40f68d2ffd"
+  },
+  {
+   "path": "qa/pilot05/wave9b/W2/diff05_W1_rejected.md",
+   "bytes": 1382,
+   "sha256": "caba76d66d99e2959d4effd0d6c298fb5738f5a246a1a579cdb98841bfb7fbb3"
+  },
+  {
+   "path": "qa/pilot05/wave9b/W2/diff05_W2.md",
+   "bytes": 1381,
+   "sha256": "33447802f02bde46cf349bf9ca7e21e276cdb3e1c98819327185b8be52ac3595"
+  },
+  {
    "path": "qa/pilot05/wave9b/not_merged/README.md",
    "bytes": 3104,
    "sha256": "3c3bf582fcce9daa867c8adaa50d74f635aad7d7538d30699d3cbf3dc3aae5d9"
@@ -5723,8 +5748,8 @@
   },
   {
    "path": "scripts/claude-bootstrap.sh",
-   "bytes": 29563,
-   "sha256": "2657e9a6502b0054c2edc2af70c569230357943b0fe10af27c6adfbbd14813bd"
+   "bytes": 29558,
+   "sha256": "bc54c111e6c9f98202a323db5ad502376bf7918ec07644fbd2950e2adbe3d872"
   },
   {
    "path": "scripts/cloud-env-setup.sh",
@@ -5823,8 +5848,8 @@
   },
   {
    "path": "scripts/verify-assets.py",
-   "bytes": 14698,
-   "sha256": "5a82f828168c2c9fc61ddd4a56d05af268159ab65a45c3172e14de3b35782147"
+   "bytes": 16572,
+   "sha256": "38e4f7c6ff79b419f956652aeb0aa083319ebb3e1d6b4acdd9fe5cd280da52cd"
   },
   {
    "path": "scripts/water-lab.mjs",

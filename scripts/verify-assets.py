@@ -20,6 +20,7 @@ import os
 import re
 import subprocess
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -178,6 +179,39 @@ def cmd_agents() -> int:
                         f"running: {', '.join(running) if running else 'none (relaunch from notes when needed)'}")
 
 
+def cmd_worldlabs() -> int:
+    """Free, read-only Marble World API checks (no credits): balance + both pilot worlds. The key is injected by
+    the Claude environment's proxy (network secret); this never reads, prints or stores it. Only an HTTP 401/403
+    means the key must be reconnected — anything else (network, timeout, 5xx) is NOT a key problem."""
+    api = "https://api.worldlabs.ai/marble/v1"
+    man = json.loads((REPO / "backups" / "TOOL_MANIFEST.json").read_text())["marble_worldlabs"]
+
+    def get(path: str):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(api + path), timeout=25) as r:
+                return r.status, json.loads(r.read() or b"{}")
+        except urllib.error.HTTPError as e:
+            return e.code, {}
+        except Exception as e:
+            return None, {"error": str(e)[:100]}
+
+    code, d = get("/credits")
+    if code in (401, 403):
+        return done("fail", f"Marble API authentication FAILED (HTTP {code}): reconnect with the secure credential form "
+                            "(request_credential host api.worldlabs.ai, header WLT-Api-Key) - never chat or git")
+    if code != 200:
+        return done("warn", f"Marble API not reachable (HTTP {code or d.get('error')}): network/API problem, NOT a key "
+                            "problem - do not ask the user for a new key; retry later")
+    worlds = []
+    for w in man["worlds"]:
+        c, _ = get(f"/worlds/{w['world_id']}")
+        worlds.append(f"{w['label']} {c}")
+    bad = [x for x in worlds if not x.endswith(" 200")]
+    status = "warn" if bad else "ok"
+    return done(status, f"Marble API key authenticated (free read: {d.get('remaining_credits', '?'):.0f} credits); worlds "
+                        f"{', '.join(worlds)}; no paid job started")
+
+
 def parse_iso(s: str) -> dt.datetime:
     return dt.datetime.fromisoformat(s.replace("Z", "+00:00")).astimezone(UTC)
 
@@ -276,6 +310,8 @@ def main() -> int:
         return cmd_marble()
     if cmd == "agents":
         return cmd_agents()
+    if cmd == "worldlabs":
+        return cmd_worldlabs()
     if cmd == "gap":
         s = sys.argv[sys.argv.index("--session-start") + 1] if "--session-start" in sys.argv else None
         return cmd_gap(s)

@@ -61,7 +61,7 @@
   },
   "credentials": {
     "_policy": "NEVER in git, chat, logs or scripts. Stored only by the Claude platform. Transfers between Claude accounts: NO.",
-    "marble_world_api_key": {"host": "api.worldlabs.ai", "header": "WLT-Api-Key", "stored_as": "network secret on the Claude cloud environment (injected by the session proxy)", "reconnect": "Claude calls request_credential(host api.worldlabs.ai, header WLT-Api-Key); the user pastes the key only into that secure form", "needed": "only for NEW World Labs API calls - every generated asset is already in Git LFS", "check": "python3 -I tools/worldlabs/marble_pilot.py credits  (free read)"},
+    "marble_world_api_key": {"host": "api.worldlabs.ai", "header": "WLT-Api-Key", "stored_as": "network secret on the Claude cloud environment (injected by the session proxy)", "reconnect": "Claude calls request_credential(host api.worldlabs.ai, header WLT-Api-Key); the user pastes the key only into that secure form", "needed": "only for NEW World Labs API calls - every generated asset is already in Git LFS", "check": "python3 -I scripts/verify-assets.py worldlabs  (free reads: balance + both worlds)", "ask_user_only_if": "the check reports HTTP 401/403 (authentication failed); network errors/timeouts are NOT a key problem", "verified": "2026-11-16 11:27 UTC on the Default environment: authenticated, 5190 credits, draft 200, full 200"},
     "github": "session git proxy (no token in the repo)"
   },
   "network_hosts": {

@@ -1,10 +1,10 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-16T11:00:00+00:00",
+  "updated_utc": "2026-11-16T11:30:00+00:00",
   "updated_by_session": "01Kbt6BTutLARq2w7hhXopgC (branch ccr-251ed97c-ty2xvp)",
   "running_now": [],
-  "current_focus": "Screen 05 controlled tests against the user's accepted BEFORE baseline (qa/pilot05/COORDINATION_WAVE9B.md). Test T1 (?ringa=20) waits for the user's yes/no. After 05: screens 03, 04, 06, 07, 08, 09, one specialist per screen, reference-match-director first.",
+  "current_focus": "Screen 05 against the user's BEFORE baseline (qa/pilot05/COORDINATION_WAVE9B.md). T2 tunnel-height tests all rejected (no more tunnel positioning, user 11:20). Waiting for the user's yes/no on T1 (?ringa=20) and W2 (?wall05=1, violet walls). Next by the user's priority: highlights + yellow-gold rings, fewer rings around the VP, river width + S-swing, foam it06. Then screens 06, 03, 04, 07, 08, 09.",
   "agents": [
     {
       "name": "washer-environment-modeler",

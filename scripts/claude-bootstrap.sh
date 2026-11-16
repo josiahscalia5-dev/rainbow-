@@ -219,10 +219,11 @@ step_screens() {
 }
 
 step_worldlabs() {
-  local t c key plugin st=ok; t=$(now)
-  c="$(timeout 25 python3 -I tools/worldlabs/marble_pilot.py credits 2>/dev/null | tail -1)"
-  if [[ "$c" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then key="Marble API key works on this environment (free read: ${c%.*} credits left)"
-  else key="Marble API key not available here (only needed for NEW API calls: request_credential host api.worldlabs.ai, header WLT-Api-Key)"; st=warn; fi
+  local t out key plugin st=ok; t=$(now)
+  # free reads only; only HTTP 401/403 means "reconnect the key via the secure form" (never ask otherwise)
+  out="$(timeout 120 python3 -I scripts/verify-assets.py worldlabs 2>/dev/null | grep '^@@ ' | tail -1)"
+  key="$(cut -d' ' -f3- <<<"$out")"; [ -n "$key" ] || key="Marble API check did not run"
+  case "$(cut -d' ' -f2 <<<"$out")" in ok) ;; *) st=warn ;; esac
   if timeout 60 claude plugin list 2>/dev/null | grep -q 'worldlabs@'; then plugin="installed"
   elif [ "$DO_TOOLS" = 1 ] && command -v claude >/dev/null; then
     bash scripts/setup-worldlabs-plugin.sh > "$LIVE/worldlabs-plugin.log" 2>&1

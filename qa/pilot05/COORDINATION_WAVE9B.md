@@ -70,6 +70,40 @@ again (`qa/pilot05/wave9b/T1/05_approved_before_T1.jpg`). **T2 is planned ON TOP
 from T1's ring A, 78 px above the vanishing point; BEFORE is 44 px above), so T2 waits for the user's T1 answer:
 yes → T2 on top of T1; no → re-plan T2 against BEFORE (ring A at its BEFORE depth 26 u).
 
+## T2 — tunnel height (2026-11-16 11:15–11:25 UTC, session `01Kbt6BT`) — ALL REJECTED, BEFORE kept
+Measured the eye vs the 05 tunnel axis (`tools/qa/axis05.ts`): radius 7.6 u, floor 3.4 u under the stream, tunnel
+centre 0.6 u (0.08 R) ABOVE the locked eye. Marble full world (`splat_measure.json`): approved eye ≈ 0.05 R above the
+axis. Ring fits (`qa/pilot05/wave9b/T2/rings_*.json`, dy/r = centre below VP ÷ radius):
+| version | A | B | C | D |
+|---|---|---|---|---|
+| APPROVED | +0.120 | −0.096 | −0.080 | −0.068 |
+| BEFORE | −0.118 | −0.132 | −0.098 | 0.000 |
+| whole tunnel +1.5 u | −0.023 | +0.098 | +0.090 | +0.138 |
+| near tunnel only (to ring A) +1.2 / +1.6 / +2.0 u | −0.029 / +0.035 / +0.107 | −0.132 | −0.098 | 0.000 |
+* Whole-tunnel lowering pushes B–D away from the approved → rejected on the numbers.
+* Near-only lowering moves ring A's centre toward the approved while B–D, camera, water and gameplay stay identical
+  — but ring A's top arc drops into the picture under the title (an extra hoop) instead of framing it like the
+  approved (whose ring A is r 492, its top hidden behind the HUD). Not clearly closer → rejected by the user's rule.
+  Position alone cannot give the approved front ring; it needs ring A's SIZE (T1, waiting for the user).
+* Code removed from the game; patch `not_merged/T2_nearfloor05_REJECTED.patch`; full-size picture
+  `T2/05_APPROVED_BEFORE_T2best_fullsize.png`. **User 2026-11-16 ~11:20: no more endless tunnel positioning.**
+
+## Biggest visible differences (user priority order, measured by `tools/qa/diff05.py` → `wave9b/DIFF05_APPROVED_vs_BEFORE.md`)
+1. Glossy gold rings + PURPLE-metallic tunnel: BEFORE walls too pink (tunnel band pink 50 % vs 37 %), too few white
+   light streaks (0.9 % vs 3.8 %), gold packed around the vanishing point (11.7 % vs 4.6 % in the VP band).
+2. Cyan-and-pink S-river into the golden light: BEFORE river ≈ 50 % too wide (cyan mid band 38.7 % vs 23.3 %, near
+   49.1 % vs 32.1 %) and its S-swing 13–34 % smaller (far 152 vs 231 px). River width touches steering/foam-wall
+   bumps → its own test with the gameplay test.
+3. Reflections, lighting, foam, splashes: foam amount similar (white 8–10 %), look differs (fine bubbles vs clumps);
+   candidate foam it06 (`not_merged/wave9_foam_it06.patch`).
+Tests so far (URL switches, default = BEFORE, pixel-identical checked):
+| Test | Factor | Result | Status |
+|---|---|---|---|
+| W1 `?wall05=1` (first values) | pale violet wall F0 + strong white streaks | washed-out lavender, pink 20 %, sat 0.50, slots and gold lost | rejected (values replaced by W2) |
+| **W2 `?wall05=1`** | saturated violet wall F0 `#a878ff` / emissive `#300a66`, streaks ×1.27 | walls read purple like the approved (pink 50 → 22 %, sat 0.64 vs 0.70); white highlights unchanged 0.9 %, slots dark violet instead of black | **candidate — shown to the user, waiting for yes/no** (`W2/05_APPROVED_BEFORE_W2_fullsize.png`) |
+Next, one at a time: (a) brighter white-pink highlights/marquee spots on walls + rings, (b) deeper yellow-gold rings,
+(c) fewer/larger rings around the VP + golden light, (d) river width + S-swing (with gameplay test), (e) foam it06.
+
 ## Rules for whoever continues
 * The default build must stay pixel-identical to the last picture the user accepted (now: BEFORE) until the user
   accepts a test. Check: capture 05, compare with `qa/pilot05/wave9/baseline/05.png`.

@@ -3283,3 +3283,144 @@ I'll add one switch, `?wall05=1`. It sets a cooler violet base colour for the 05
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w1/top3_w2.jpg"}`
 
+### 🧑 User — 2026-11-16T11:27:17.049Z
+
+> ↩︎ result: 290:    ...wallBase, color: WALL05 ? '#a878ff' : '#dc9ef0', emissive: WALL05 ? '#300a66' : '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, r
+> TSC_OK
+> | APPROVED | tunnel top 150-470 | 5.5 | 0.0 | 36.9 | 3.8 | 1.2 | 1.00 | 0.70 |
+> | APPROVED | VP + far river 470-640 | 4.6 | 8.5 | 19.1 | 5.3 | 1.1 | 1.00 | 0.64 |
+> | BEFORE | tunnel top 150-470 | 8.5 | 0.0 | 50.2 | 0.9 | 1.1 | 1.00 | 0.66 |
+> | BEFORE | VP + far river 470-640 | 11.7 | 7.5 | 41.2 | 6.8 | 1.0 | 1.00 | 0.60 |
+> | W2 | tunnel top 150-470 | 6.9 | 0.0 | 22.0 | 0.9 | 0.1 | 1.00 | 0.64 |
+> | W2 | VP + far river 470-640 | 9.8 | 7.5 | 21.3 | 6.9 | 0.3 | 1.00 | 0.59 |
+> [This command modified 1 file you've previously read: src/world/environment.ts. Call Read before editing.]
+
+### 🧑 User — 2026-11-16T11:27:17.063Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T11:27:34.150Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w1; mkdir -p qa/pilot05/wave9b/W2; cp $S/w2/05.png qa/pilot05/wave9b/W2/05_wall05_W2.png; cp $S/w2.md qa/pilot05/wave9b/W2/diff05_W2.md; cp $S/w1.md qa/pilot05/wave9b/W2/diff05_W1_rejected.md; cp $S/wall05/05.png qa/pilot05/wave9b/W2/05_wall05_W1_rejected.png; python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nlabs=[('APPROVED','references/05_flow_into_the_current.png'),('BEFORE (kept: the game)','qa/pilot05/wave9/baseline/05.png'),('CANDIDATE W2: violet tunnel w …[+679 chars]`
+
+### 🧑 User — 2026-11-16T11:27:43.545Z
+
+> ↩︎ result: saved (2640, 1592)
+>  },
+>  "errors": []
+> }
+> ?? qa/pilot05/wave9b/W2/
+
+### 🤖 Claude — 2026-11-16T11:27:47.217Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"import json; d=json.load(open('qa/gameplay_test.json')); print('gameplay pass:', d['pass'], '| plunge:', (d.get('plunge') or {}).get('verticalDrop', d.get('plunge')))\"; npm run -s test:continuity > /dev/null 2>&1; python3 -I -c \"import json; d=json.load(open('qa/continuity_report.json')); print('continuity ok:', d['ok'], 'drop', round(d['plunge']['verticalDrop'],2))\"", "description": "Confirm gameplay and continuity results"}`
+
+### 🧑 User — 2026-11-16T11:27:48.034Z
+
+> ↩︎ result: gameplay pass: True | plunge: 61.41
+> continuity ok: True drop 61.19
+
+### 🤖 Claude — 2026-11-16T11:28:00.263Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/verify-assets.py", "old_string": "def parse_iso(s: str) -> dt.datetime:", "new_string": "def cmd_worldlabs() -> int:\n    \"\"\"Free, read-only Marble World API checks (no credits): balance + both pilot worlds. The key is injected by\n    the Claude environment's proxy (network secret); this never reads, prints or stores it. Only an HTTP 401/403\n    means the key must be reconnected — anything else (network, timeout, 5xx) is NOT a key problem.\"\"\"\n    api = \"https://api.worldlabs.ai/marble/v1\"\n    man = json.loads((REPO /  …[+1468 chars]`
+
+### 🧑 User — 2026-11-16T11:28:00.301Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/verify-assets.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:28:01.364Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/verify-assets.py", "old_string": "    if cmd == \"agents\":\n        return cmd_agents()", "new_string": "    if cmd == \"agents\":\n        return cmd_agents()\n    if cmd == \"worldlabs\":\n        return cmd_worldlabs()"}`
+
+### 🧑 User — 2026-11-16T11:28:01.393Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/verify-assets.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:28:02.366Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/verify-assets.py", "old_string": "import sys\nimport urllib.request\nfrom pathlib import Path", "new_string": "import sys\nimport urllib.error\nimport urllib.request\nfrom pathlib import Path"}`
+
+### 🧑 User — 2026-11-16T11:28:02.397Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/verify-assets.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:28:03.428Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -m py_compile scripts/verify-assets.py && python3 -I scripts/verify-assets.py worldlabs; grep -n \"python3 -I scripts/verify-assets.py agents\\b\" scripts/verify-assets.py | head -2", "description": "Test the new free Marble API check"}`
+
+### 🧑 User — 2026-11-16T11:28:04.533Z
+
+> ↩︎ result: @@ ok Marble API key authenticated (free read: 5190 credits); worlds draft 200, full 200; no paid job started
+> 7:    python3 -I scripts/verify-assets.py agents                     10 specialist definitions present + SHA-256
+
+### 🤖 Claude — 2026-11-16T11:28:07.912Z
+
+The new check works: key authenticated, 5,190 credits, both worlds HTTP 200. Wiring it into the bootstrap's World Labs step:
+
+### 🤖 Claude — 2026-11-16T11:28:11.465Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "old_string": "  local t c key plugin st=ok; t=$(now)\n  c=\"$(timeout 25 python3 -I tools/worldlabs/marble_pilot.py credits 2>/dev/null | tail -1)\"\n  if [[ \"$c\" =~ ^[0-9]+(\\.[0-9]+)?$ ]]; then key=\"Marble API key works on this environment (free read: ${c%.*} credits left)\"\n  else key=\"Marble API key not available here (only needed for NEW API calls: request_credential host api.worldlabs.ai, header WLT-Api-Key)\"; st=warn; fi", "new_string": "  local t out key plugin st=ok; t=$(now)\n  # free reads  …[+371 chars]`
+
+### 🧑 User — 2026-11-16T11:28:11.505Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/claude-bootstrap.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:28:13.020Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; bash -n scripts/claude-bootstrap.sh && shellcheck -S warning scripts/claude-bootstrap.sh && echo CLEAN; bash scripts/claude-bootstrap.sh --check 2>&1 | grep -E \"World Labs|BOOTSTRAP|FAIL\" | cut -c1-220", "description": "Lint the bootstrap and run a check-mode pass", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T11:28:26.851Z
+
+> ↩︎ result: CLEAN
+> RAINBOW BOOTSTRAP (check) 2026-11-16 11:28 UTC - /home/user/rainbow-
+>   OK   Git LFS on GitHub              24/24 LFS objects (184 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+>   OK   Marble World Labs assets       both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250
+>   OK   World Labs integration         Marble API key authenticated (free read: 5190 credits); worlds draft 200, full 200; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (
+> BOOTSTRAP OK | branch ccr-251ed97c-ty2xvp | HEAD 9c31d3b7b7ed | written: backups/BOOTSTRAP_REPORT.md
+
+### 🤖 Claude — 2026-11-16T11:28:31.290Z
+
+Now the permanent docs. First, the Marble key rule in `CLAUDE.md` and the manifest:
+
+### 🤖 Claude — 2026-11-16T11:28:34.691Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "* NEVER commit, print, log or paste API keys, passwords or tokens. The Marble World API key exists only as a\n  Claude-environment network secret (host `api.worldlabs.ai`, header `WLT-Api-Key`). If it must be reconnected, call\n  `request_credential`; the user types the key only into that secure form. The autosave scans staged text for secrets.", "new_string": "* NEVER commit, print, log or paste API keys, passwords or tokens. The Marble World API key exists only as a\n  Claude-environment network secret (host  …[+525 chars]`
+
+### 🧑 User — 2026-11-16T11:28:34.721Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:28:37.136Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/TOOL_MANIFEST.json", "old_string": "\"needed\": \"only for NEW World Labs API calls - every generated asset is already in Git LFS\", \"check\": \"python3 -I tools/worldlabs/marble_pilot.py credits  (free read)\"},", "new_string": "\"needed\": \"only for NEW World Labs API calls - every generated asset is already in Git LFS\", \"check\": \"python3 -I scripts/verify-assets.py worldlabs  (free reads: balance + both worlds)\", \"ask_user_only_if\": \"the check reports HTTP 401/403 (authentication failed); network errors/timeouts are  …[+140 chars]`
+
+### 🧑 User — 2026-11-16T11:28:37.168Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/TOOL_MANIFEST.json has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:28:52.128Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9B.md", "old_string": "yes → T2 on top of T1; no → re-plan T2 against BEFORE (ring A at its BEFORE depth 26 u).", "new_string": "yes → T2 on top of T1; no → re-plan T2 against BEFORE (ring A at its BEFORE depth 26 u).\n\n## T2 — tunnel height (2026-11-16 11:15–11:25 UTC, session `01Kbt6BT`) — ALL REJECTED, BEFORE kept\nMeasured the eye vs the 05 tunnel axis (`tools/qa/axis05.ts`): radius 7.6 u, floor 3.4 u under the stream, tunnel\ncentre 0.6 u (0.08 R) ABOVE the locked eye. Marble full world (`splat_measure.j …[+2894 chars]`
+
+### 🧑 User — 2026-11-16T11:28:52.160Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9B.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:28:55.735Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\nimport json\np = \"backups/AGENTS_STATUS.json\"; d = json.load(open(p))\nd[\"updated_utc\"] = \"2026-11-16T11:30:00+00:00\"\nd[\"current_focus\"] = (\"Screen 05 against the user's BEFORE baseline (qa/pilot05/COORDINATION_WAVE9B.md). T2 tunnel-height tests all \"\n  \"rejected (no more tunnel positioning, user 11:20). Waiting for the user's yes/no on T1 (?ringa=20) and W2 (?wall05=1, violet \"\n  \"walls). Next by the user's priority: highlights + yellow-gold rings, fewer rings around the VP, river width + S-swing, foam it06. \"\n  \"The …[+370 chars]`
+
+### 🧑 User — 2026-11-16T11:28:55.925Z
+
+> ↩︎ result: ok
+> manifest ok
+> @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: none (relaunch from notes when needed)
+
+### 🤖 Claude — 2026-11-16T11:29:01.157Z
+
+That change to `AGENTS_STATUS.json` is my own roster update. Final checks: one more default capture with the W2 code in place, which must still equal BEFORE, then the verified end-of-turn backup.
+
+### 🤖 Claude — 2026-11-16T11:29:06.625Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/final; rm -rf $S; timeout 600 node scripts/capture.mjs 05 --out=$S > /dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -I -c \"\nimport sys; from PIL import Image, ImageChops\na=Image.open(sys.argv[1]).convert('RGB'); b=Image.open(sys.argv[2]).convert('RGB')\nprint('default game vs BEFORE: max diff', max(c[1] for c in ImageChops.difference(a,b).getextrema()))\" $S/05.png qa/pilot05/wave9/baseline/05.png; sha256sum -c scripts/reference.sha256 --quiet && echo \"r …[+658 chars]`
+
