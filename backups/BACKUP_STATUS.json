@@ -1,19 +1,20 @@
 {
   "last_run": {
-    "time": "2026-11-16T02:56:00+00:00",
+    "time": "2026-11-16T03:12:12+00:00",
     "reason": "daemon",
-    "result": "committed+pushed",
-    "files_staged": 1,
-    "pushed_verified": true,
-    "branch": "claude/rainbow-3d-account-recovery-xex5hc",
-    "commit": "9175c16b29001f9256613acd1397db7502a6dcf9",
-    "duration_s": 98
+    "result": "error",
+    "files_staged": 0,
+    "pushed_verified": false,
+    "branch": "ccr-44f84024-ii5iih",
+    "note": "following session branch 'ccr-44f84024-ii5iih' (config branch 'claude/rainbow-3d-account-recovery-xex5hc')",
+    "error": "git add -- backups/claude-sessions/b970f481-ce8a-5425-9ce8-c5468817acd1/transcript.md backups/claude-sessions/b970f481-ce8a-5425-9ce8-c5468817acd1/transcript.sanitized.jsonl .claude/agents/android-build-performance.md .claude/agents/animation-and-gameplay-engineer.md .claude/agents/benny-character-artist.md .claude/agents/cartoon-girl-character-artist.md .claude/agents/foam-bubbles-particles.md .claude/agents/path-camera-transition-engineer.md .claude/agents/playwright-visual-qa.md .claude/agents/reference-match-director.md .claude/agents/washer-environment-modeler.md .claude/agents/water-fx-s",
+    "duration_s": 3
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
-  "branch": "claude/rainbow-3d-account-recovery-xex5hc",
+  "branch": "ccr-44f84024-ii5iih",
   "last_verified_remote_sha": "9175c16b29001f9256613acd1397db7502a6dcf9",
   "last_successful_backup_utc": "2026-11-16T02:56:00+00:00",
-  "consecutive_failures": 0,
-  "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=139); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-16T03:00:00+00:00"
+  "consecutive_failures": 1,
+  "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=759); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-16T03:15:00+00:00"
 }
