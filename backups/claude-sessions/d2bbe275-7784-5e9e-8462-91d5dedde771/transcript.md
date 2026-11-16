@@ -5440,3 +5440,11 @@ EXECUTE THIS INSTRUCTION. DO THE WORK. PROTECT MY ORIGINAL GAME. SHOW ME THE REA
 
 You've hit your 5-hour limit · resets 9:50pm (UTC)
 
+### 🧑 User — 2026-11-16T19:46:13.806Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-16T19:46:15.428Z
+
+You've hit your 5-hour limit · resets 9:50pm (UTC)
+
