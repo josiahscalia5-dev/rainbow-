@@ -697,3 +697,48 @@ I'll measure the reference's far river per row (cyan core runs, pink bands) to g
 > 500 .............................................................P.P....CC........................YYYY.......WW...............................P...........PP...P....
 > 504 ......................................... …[+3914 chars]
 
+### 🤖 Claude — 2026-11-16T01:47:38.647Z
+
+I need the forced-tunnel parameters in-page. I'll create my own `src/world/far05.ts` (new file, mine) with a QA debug export, and wire it from my far block.
+
+### 🤖 Claude — 2026-11-16T01:47:41.894Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/far05.ts", "content": "/**\n * Screen 05 far section (path-camera-transition-engineer, wave 8): helpers for the forced-perspective far tunnel\n * built in environment.ts (`// ---- 05 far tunnel`). Everything here is laid in the ForcedTunnel's VIRTUAL\n * straight tunnel (depth Z beyond the section start sF, offset o in the cross-section) and mapped to real\n * geometry with ft.point(), so it continues the real near/mid tunnel without a seam at the locked 05 eye.\n */\nimport * as THREE from 'three';\nimport type { ForcedTunnel } from './tube';\n\n/* …[+166 chars]`
+
+### 🧑 User — 2026-11-16T01:47:42.004Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/far05.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:47:43.740Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);\n    const uEnd = ft.uOfZ(zEnd);", "new_string": "    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);\n    const uEnd = ft.uOfZ(zEnd);\n    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, perfPath });"}`
+
+### 🧑 User — 2026-11-16T01:47:43.831Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:47:44.394Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,20p src/world/environment.ts", "description": "Show environment.ts imports"}`
+
+### 🧑 User — 2026-11-16T01:47:44.430Z
+
+> ↩︎ result: /**
+>  * Builds the whole washer world in absolute coordinates around the master course.
+>  * Drum A (01–02) → chute → whirlpool basin room (03) → gold ring pipe (04) → perforated current tube
+>  * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).
+>  */
+> import * as THREE from 'three';
+> import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+> import { Course, WORLD, funnelY } from './course';
+> import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, type FarGlow, type TubeStrips } from './materials';
+> import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> import { STAGE_CAM } from '../game/cameraRig';
+> import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
+> import { buildTowel, TowelMesh } from './towel';
+> 
+> export interface Environment {
+>   group: THREE.Group;
+>   update(time: number, dt: number): void;
+>   doorA: …[+126 chars]
+

@@ -9,6 +9,7 @@ import { Course, WORLD, funnelY } from './course';
 import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, type FarGlow, type TubeStrips } from './materials';
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
+import { far05Debug } from './far05'; // path-camera (05 far tunnel block)
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -358,6 +359,7 @@ export function buildEnvironment(course: Course): Environment {
     const zEnd = 430 - D0;
     const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);
     const uEnd = ft.uOfZ(zEnd);
+    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, perfPath });
     // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
     const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
     const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);

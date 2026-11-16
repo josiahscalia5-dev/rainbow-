@@ -383,8 +383,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.md",
-   "bytes": 6625,
-   "sha256": "932838da9a9e9f12757fe70a64f0d805028cee6a6c5966b9688cd0c94af37468"
+   "bytes": 7056,
+   "sha256": "71b29661ac7ebef58c43c719e28271bcb6923b5d0e43eb3e9657d2a4dabbdc65"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -394,7 +394,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5350,
-   "sha256": "08766100b3a995ecc1152fb1c69c50e82bbe3f684c367f52e4485527965b51bd"
+   "sha256": "988a8264bd21ca0fe3882ae03b6ce38532d8e379adf2d10572d9832b6d08d860"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -4153,8 +4153,13 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 47432,
-   "sha256": "911af0e04aa6243bc64940dac268c50687f8a88e6a589e682fb27e135c0071f8"
+   "bytes": 47582,
+   "sha256": "2ec65ae6b6d66dd70f61bc9b68e774da48adb4d9a0e8c1eccfcb5a582e0dcc9f"
+  },
+  {
+   "path": "src/world/far05.ts",
+   "bytes": 685,
+   "sha256": "051a93e418a62cce1f3c2cb21367abebaba5dc59c8e15c5ae1463460ae56e705"
   },
   {
    "path": "src/world/laundryRoom.ts",

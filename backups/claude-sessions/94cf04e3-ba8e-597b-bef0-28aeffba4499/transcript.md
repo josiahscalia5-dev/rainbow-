@@ -2977,3 +2977,45 @@ The reflection instruction is delivered and Blender is installing in the backgro
 > 45:  and tall vs the ref (gridded crop: ref left near x 0-130 y 1020-1110, lower left x 60-230 y 1220-1300, lower
 > 46:  right x 650-800 y 1260-1330; live it04 left near y 960-1110, lower clump …[+515 chars]
 
+### 🤖 Claude — 2026-11-16T01:47:21.068Z
+
+Launching both now.
+
+### 🤖 Claude — 2026-11-16T01:47:36.098Z
+
+> 🔧 **Agent** `{"subagent_type": "water-fx-specialist", "description": "Wave 8b: 05 near/mid water", "run_in_background": true, "prompt": "You are the water-fx-specialist for RAINBOW (repo /home/user/rainbow-), a real-time 3D Three.js + TypeScript portrait mobile game. This is wave 8b of the Screen 05 visual pilot (your wave-7 pass is DONE and kept). Work ONLY in your own files and evidence folder.\n\nREAD FIRST: `CLAUDE.md`; `qa/pilot05/COORDINATION_WAVE8.md` (whole file, incl. the ~01:50 update); \"Owners\" + \"Rules\" in `qa/pilot05/COORDINATION_WAVE6.md`; your own `qa/pilot05/wave7/water/NOTES.md`; `qa/p …[+3371 chars]`
+
+### 🧑 User — 2026-11-16T01:47:36.150Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a26af93432e804bae (internal ID - do not mention to user. Use SendMessage with to: 'a26af93432e804bae', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/tasks/a26af93432e804bae.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-16T01:47:49.079Z
+
+> 🔧 **Agent** `{"subagent_type": "foam-bubbles-particles", "description": "Wave 8b: 05 foam, bubbles, splash", "run_in_background": true, "prompt": "You are the foam-bubbles-particles specialist for RAINBOW (repo /home/user/rainbow-), a real-time 3D Three.js + TypeScript portrait mobile game. This is wave 8b of the Screen 05 visual pilot (your wave-7 pass is DONE and kept). Work ONLY in your own files and evidence folder.\n\nREAD FIRST: `CLAUDE.md`; `qa/pilot05/COORDINATION_WAVE8.md` (whole file, incl. the ~01:50 update); \"Owners\" + \"Rules\" in `qa/pilot05/COORDINATION_WAVE6.md`; your own `qa/pilot05/wave …[+3320 chars]`
+
+### 🧑 User — 2026-11-16T01:47:49.100Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a98a34c02aaff8fbd (internal ID - do not mention to user. Use SendMessage with to: 'a98a34c02aaff8fbd', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/tasks/a98a34c02aaff8fbd.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-16T01:47:53.510Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/AGENTS_STATUS.md", "old_string": "| washer-environment-modeler | rings (bright gold read), walls (less violet), lid shape, VP core, near-frame gold share | read `qa/pilot05/wave8/environment/NOTES.md` + newest `itNN/`, relaunch likewise |", "new_string": "| washer-environment-modeler | rings (bright gold read), walls (less violet), lid shape, VP core, near-frame gold share; Marble pano as PMREM reflections **on 05 materials only**; Marble wall textures | read `qa/pilot05/wave8/environment/NOTES.md` + newest `itNN/`, relaunch like …[+360 chars]`
+
+### 🧑 User — 2026-11-16T01:47:53.591Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/AGENTS_STATUS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:47:55.063Z
+
+> 🔧 **Bash** `{"command": "flock -w 180 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:wave8b-start --message \"wave 8b: water + foam specialists launched; Marble reflections gated to Screen 05\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|skipping'; python3 -I scripts/autosave-status.py", "description": "Save wave 8b plan and verify autosave", "timeout": 400000}`
+

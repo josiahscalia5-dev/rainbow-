@@ -5,7 +5,9 @@ Brief: `qa/pilot05/COORDINATION_WAVE8.md`; baseline `qa/pilot05/wave8/baseline/{
 | Specialist | Assignment | If this session ends before it reports |
 |---|---|---|
 | path-camera-transition-engineer | far river S-bends into the VP, far coins, far ring depths, far foam | read `qa/pilot05/wave8/path-camera/NOTES.md` + newest `itNN/`, run tsc + gameplay test, relaunch with the same brief from where it stopped |
-| washer-environment-modeler | rings (bright gold read), walls (less violet), lid shape, VP core, near-frame gold share | read `qa/pilot05/wave8/environment/NOTES.md` + newest `itNN/`, relaunch likewise |
+| washer-environment-modeler | rings (bright gold read), walls (less violet), lid shape, VP core, near-frame gold share; Marble pano as PMREM reflections **on 05 materials only**; Marble wall textures | read `qa/pilot05/wave8/environment/NOTES.md` + newest `itNN/`, relaunch likewise |
+| water-fx-specialist (wave 8b, ~01:51) | thick glossy cyan-and-pink S-shaped near/mid river, wide pink S-bands, highlights + glints | `qa/pilot05/wave8/water/NOTES.md` |
+| foam-bubbles-particles (wave 8b, ~01:51) | fine low small-bubble foam banks (not sphere heaps), natural splash fan from Benny, soap bubbles | `qa/pilot05/wave8/foam/NOTES.md` |
 Next after wave 8: foam-bubbles-particles (white sphere heaps → fine bubble rims), water polish, then
 reference-match-director + playwright-visual-qa review; coordinator: bloom strength (Game.ts) review.
 
