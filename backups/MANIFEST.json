@@ -403,8 +403,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 6781,
-   "sha256": "e940f1dfc15f16d18ac16926c68c97a6e6f2c7d03176ade1c7d8011c227a254d"
+   "bytes": 6782,
+   "sha256": "1d6ea299d384b2ad89da86200613ce9cf1ebd71d526ac9af94dbf19d663ec216"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -5680,6 +5680,11 @@
    "path": "scripts/cinematic-test.mjs",
    "bytes": 6059,
    "sha256": "449136e67bd1ca58a4e02ac628e1b83311e9c5c209fd370805364fe7865c9618"
+  },
+  {
+   "path": "scripts/claude-bootstrap.sh",
+   "bytes": 28900,
+   "sha256": "17476c415701c5526b154839cce28ef86f374f44f9d7905d525fe0f711dd5a4b"
   },
   {
    "path": "scripts/cloud-env-setup.sh",

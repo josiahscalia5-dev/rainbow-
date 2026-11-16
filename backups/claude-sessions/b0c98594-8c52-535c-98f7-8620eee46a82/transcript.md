@@ -1323,3 +1323,74 @@ Playwright is ready (Chromium 153, WebGL2 via SwiftShader). Now I'll make the An
 
 > ↩︎ result: The file /home/user/rainbow-/scripts/setup-android-sdk.sh has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-16T10:56:38.401Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "content": "#!/usr/bin/env bash\n# RAINBOW — one-command recovery + environment bootstrap for a new Claude account or cloud session.\n# Safe to run any number of times: every step checks first and only installs / merges what is missing.\n#\n#   bash scripts/claude-bootstrap.sh            full: resume newest work, LFS, refs, agents, Marble, tools, tests,\n#                                               five-minute autosave, report (backups/BOOTSTRAP_REPORT.md)\n#   bash scripts/claude-bootstrap.sh --check    report only: no instal …[+29685 chars]`
+
+### 🧑 User — 2026-11-16T10:56:38.460Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/claude-bootstrap.sh (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:57:01.522Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "old_string": "step_node; step_npm; step_pylibs; step_playwright; step_media_tools; step_blender; step_android\n[ \"$MODE\" != check ] || true\nstep_claude_config\nsay \"4 Tests\"\nstep_tests\nif [ \"$MODE\" != check ]; then say \"5 Five-minute autosave\"; step_autosave\nelse\n  t=$(now); out=\"$(python3 -I scripts/autosave-status.py 2>&1)\"\n  rec autosave \"Five-minute GitHub autosave\" \"$( [ $? = 0 ] && echo ok || echo warn)\" \"$(head -1 <<<\"$out\")\" \"$t\"\nfi", "new_string": "step_node; step_npm; st …[+415 chars]`
+
+### 🧑 User — 2026-11-16T10:57:01.552Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/claude-bootstrap.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:57:03.022Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "old_string": "      grep -E '^      (GAP|the previous session|log gap)' \"$LIVE/bootstrap-hook.log\" | sed 's/^      /  - /' | tail -4", "new_string": "      grep -E '^ +(GAP|the previous session|log gap)' \"$LIVE/bootstrap-hook.log\" | sed -E 's/^ +/  - /' | tail -4"}`
+
+### 🧑 User — 2026-11-16T10:57:03.046Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/claude-bootstrap.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:57:05.775Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "old_string": "  [ -s \"$SS_DIR/session-start\" ] || date -u +%Y-%m-%dT%H:%M:%S+00:00 > \"$SS_DIR/session-start\"\n  if [ \"${CLAUDE_CODE_REMOTE:-}\" != true ]; then", "new_string": "  [ -s \"$SS_DIR/session-start\" ] || date -u +%Y-%m-%dT%H:%M:%S+00:00 > \"$SS_DIR/session-start\"\n  if [ -n \"${CLAUDE_ENV_FILE:-}\" ] && ! grep -qs ANDROID_HOME \"$CLAUDE_ENV_FILE\"; then\n    echo \"export ANDROID_HOME=/opt/android-sdk ANDROID_SDK_ROOT=/opt/android-sdk\" >> \"$CLAUDE_ENV_FILE\"\n  fi\n  if [ \"${CLAUDE_CODE_ …[+29 chars]`
+
+### 🧑 User — 2026-11-16T10:57:05.796Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/claude-bootstrap.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:57:07.379Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; chmod +x scripts/claude-bootstrap.sh scripts/verify-assets.py; bash -n scripts/claude-bootstrap.sh && echo SYNTAX_OK; ls references; ps -o lstart= -p 1; date -u -d \"$(ps -o lstart= -p 1)\" +%Y-%m-%dT%H:%M:%S+00:00; command -v shellcheck || echo \"no shellcheck\"", "description": "Syntax-check bootstrap, list references, test start-time parsing"}`
+
+### 🧑 User — 2026-11-16T10:57:07.458Z
+
+> ↩︎ result: SYNTAX_OK
+> 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> Mon Nov 16 10:34:45 2026
+> 2026-11-16T10:34:45+00:00
+> no shellcheck
+
+### 🤖 Claude — 2026-11-16T10:57:18.694Z
+
+> 🔧 **Bash** `{"command": "mkdir -p ~/.rainbow-bootstrap && echo \"2026-11-16T10:40:49+00:00\" > ~/.rainbow-bootstrap/session-start; cd /home/user/rainbow- && ls src/main.ts && echo started", "description": "Seed session-start marker for this session"}`
+
+### 🧑 User — 2026-11-16T10:57:18.735Z
+
+> ↩︎ result: src/main.ts
+> started
+
+### 🤖 Claude — 2026-11-16T10:57:20.550Z
+
+> 🔧 **Bash** `{"command": "time bash scripts/claude-bootstrap.sh > /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/bootstrap-run1.log 2>&1; echo \"exit=$?\"", "description": "First full bootstrap run (installs missing tools)", "timeout": 2400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T10:57:20.591Z
+
+> ↩︎ result: Command running in background with ID: bx8c1h138. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/tasks/bx8c1h138.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
