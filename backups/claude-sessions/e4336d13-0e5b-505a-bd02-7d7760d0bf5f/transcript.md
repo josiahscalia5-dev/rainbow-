@@ -1269,3 +1269,263 @@ Working out which parts of your approved picture are wall, ring, paddle, bubble 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T20:07:35.116Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/proj05 && cat > /home/user/rainbow-/tools/proj05/tunnel_common.py <<'EOF'\n\"\"\"Screen 05 walls + gold rings bake (`?projwall05=1`, `?projring05=1`) — shared helpers: the approved picture's masks and\nits ring model (the gold bands as curves r(theta) about one origin O near the vanishing point).\nImage angle theta: 0 = +x (screen right), 90 deg = up, counter-clockwise; r in pixels of the 864x1536 approved frame.\"\"\"\nimport json, math\nimport numpy as np, cv2\nfrom PIL import Image\nfrom scipy.ndimage import binary_dilation, binary_opening, bi …[+6203 chars]`
+
+### 🧑 User — 2026-11-16T20:07:36.190Z
+
+> ↩︎ result: A valid theta share 0.002 band median 40.8 mid median 462.0
+>    th 0 in None out None pred mid 465.7
+>    th 30 in None out None pred mid 440.3
+>    th 60 in None out None pred mid 428.1
+>    th 90 in None out None pred mid 431.0
+>    th 120 in None out None pred mid 448.6
+>    th 150 in None out None pred mid 477.7
+>    th 180 in None out None pred mid 511.7
+> B valid theta share 0.447 band median 36.0 mid median 243.2
+>    th 0 in 202.0 out 234.5 pred mid 218.6
+>    th 30 in 212.5 out 248.5 pred mid 231.0
+>    th 60 in 228.0 out 266.5 pred mid 246.1
+>    th 90 in None out None pred mid 259.7
+>    th 120 in None out None pred mid 267.6
+>    th 150 in 250.5 out 289.5 pred mid 267.2
+>    th 180 in 258.0 out 299.5 pred mid 258.6
+> C valid theta share 0.586 band median 17.5 mid median 157.5
+>    th 0 in 129.0 out 143.2 pred mid 143.7
+>    th 30 in 135.5 out 155.5 pred mid 149.3
+>    th 60 in 144.0 out 165.0 pred mid 155.3
+>    th 90 in 153.0 out 167.5 pred mid 159.9
+>    th 120 in 153.5 out 169.5 pred mid 161.7
+>    th 150 in 150.5 out 172.5 pred mid 160.1
+>    th 180 in 150.0 out 162.0 pred mid 155.7
+> D valid theta share 0.483 band median 11.0 mid median 92.0
+>    th 0 in 79.0 out 88.5 pred mid 84.4
+>    th 30 in 82.0 out 92.5 pred  …[+1234 chars]
+
+### 🤖 Claude — 2026-11-16T20:08:13.505Z
+
+> 🔧 **Bash** `{"command": "cat > tools/proj05/tunnel_rings.py <<'EOF'\n\"\"\"Screen 05 walls + rings bake, step 1 — the approved picture's RING MODEL: for every gold ring A..G the band's inner and\nouter edge as smooth curves r(theta) about the common origin O (tunnel_common.O), measured on the gold mask.\nusage: python3 -I tools/proj05/tunnel_rings.py <out_dir>\noutputs: ring_model.json (Fourier coefficients, order 2, of r_in / r_out per ring; theta in radians, image angle),\n         ring_model_overlay.png (the curves drawn on the approved picture, to be checked by eye)\"\"\"\nimport json, math, os, sys\n …[+4069 chars]`
+
+### 🧑 User — 2026-11-16T20:08:14.678Z
+
+> ↩︎ result: A_in {'points': 89, 'source': 'measured', 'mad_px': 1.84, 'theta_deg': [34.0, 204.2]}
+> A_out {'points': 22, 'source': 'circle guess', 'mad_px': 0.0, 'theta_deg': [150.2, 154.4]}
+> B_in {'points': 830, 'source': 'measured', 'mad_px': 0.66, 'theta_deg': [0.0, 359.8]}
+> B_out {'points': 640, 'source': 'measured', 'mad_px': 0.5, 'theta_deg': [4.6, 344.6]}
+> C_in {'points': 984, 'source': 'measured', 'mad_px': 0.64, 'theta_deg': [0.0, 359.8]}
+> C_out {'points': 911, 'source': 'measured', 'mad_px': 1.37, 'theta_deg': [0.0, 358.2]}
+> D_in {'points': 770, 'source': 'measured', 'mad_px': 0.5, 'theta_deg': [0.0, 359.8]}
+> D_out {'points': 816, 'source': 'measured', 'mad_px': 0.47, 'theta_deg': [0.0, 359.8]}
+> E_in {'points': 246, 'source': 'circle guess', 'mad_px': 0.0, 'theta_deg': [7.8, 61.6]}
+> E_out {'points': 853, 'source': 'circle guess', 'mad_px': 0.0, 'theta_deg': [0.0, 359.8]}
+> F_in {'points': 0, 'source': 'circle guess', 'mad_px': 0.0, 'theta_deg': None}
+> F_out {'points': 681, 'source': 'circle guess', 'mad_px': 0.0, 'theta_deg': [9.4, 156.6]}
+> G_in {'points': 0, 'source': 'circle guess', 'mad_px': 0.0, 'theta_deg': None}
+> G_out {'points': 0, 'source': 'circle guess', 'mad_px': 0.0, 'theta_deg': None}
+
+### 🤖 Claude — 2026-11-16T20:08:20.288Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport cv2\nim=cv2.imread('qa/pilot05/proj/tunnel/model/ring_model_overlay.png')\nc=im[100:760]; cv2.imwrite('$S/look/ring_overlay.png', cv2.resize(c,None,fx=2,fy=2,interpolation=cv2.INTER_CUBIC))\nEOF", "description": "Enlarge the ring-model overlay for checking"}`
+
+### 🧑 User — 2026-11-16T20:08:20.573Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:08:23.542Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/ring_overlay.png"}`
+
+### 🧑 User — 2026-11-16T20:08:25.089Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:08:48.966Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && cat > $S/a_edge.py <<'EOF'\nimport sys, math\nsys.path.insert(0, 'tools/proj05')\nimport numpy as np, cv2\nfrom tunnel_common import *\nap8 = load_approved(); M = masks(ap8)\ngold = M[\"warm\"] & ~binary_dilation(M[\"lid\"], iterations=6) & M[\"env\"]\nbad = M[\"hud\"] | binary_dilation(M[\"lid\"], iterations=6) | ~M[\"env\"] | binary_dilation(M[\"water\"], iterations=3)\nth, r, mx, my = polar_maps()\ngp = cv2.remap(gold.astype(np.float32), mx, my, cv2.INTER_LINEAR, borderValue=0)\ninside = (mx  …[+776 chars]`
+
+### 🧑 User — 2026-11-16T20:08:49.823Z
+
+> ↩︎ result: 10 ('bad at', np.float64(330.0))
+> 14 ('bad at', np.float64(376.5))
+> 18 ('bad at', np.float64(384.0))
+> 22 ('bad at', np.float64(394.0))
+> 26 ('gold from', np.float64(392.5))
+> 30 ('gold from', np.float64(396.0))
+> 34 ('gold from', np.float64(399.0))
+> 38 ('gold from', np.float64(403.0))
+> 42 ('bad at', np.float64(406.0))
+> 46 ('bad at', np.float64(377.5))
+> 50 ('bad at', np.float64(354.5))
+> 54 ('bad at', np.float64(336.0))
+> 58 ('bad at', np.float64(330.0))
+> 120 ('bad at', np.float64(330.0))
+> 125 ('bad at', np.float64(331.5))
+> 130 ('bad at', np.float64(354.5))
+> 135 ('bad at', np.float64(384.0))
+> 140 ('bad at', np.float64(422.5))
+> 145 ('gold from', np.float64(439.5))
+> 150 ('gold from', np.float64(446.5))
+> 155 ('gold from', np.float64(453.5))
+> 160 ('bad at', np.float64(330.0))
+> 165 ('bad at', np.float64(330.0))
+> 170 ('bad at', np.float64(330.0))
+> 175 ('gold from', np.float64(474.5))
+> 180 ('gold from', np.float64(478.0))
+> 185 ('gold from', np.float64(479.5))
+> 190 ('gold from', np.float64(478.0))
+> 195 ('gold from', np.float64(476.0))
+> 200 ('bad at', np.float64(330.0))
+> 205 ('bad at', np.float64(330.0))
+> 210 ('bad at', np.float64(330.0))
+
+### 🤖 Claude — 2026-11-16T20:09:09.734Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport re\np='tools/proj05/tunnel_rings.py'\ns=open(p).read()\nold='''model[\"report\"] = report'''\nnew='''# ring A (front ring, frames the picture, mostly outside the frame / behind the HUD): its inner edge is found by scanning\n# outward from r 330 for the first sustained gold run; the outer edge is the inner one scaled by the band thickness\n# measured where the whole band is in the frame (theta 145..155 deg: inner 446, band 64 px)\nts, ys = [], []\nfor i in range(0, NTH, 2):\n    col = gp[:, i] > 0.5; b = badp[:, i]\n    run = 0\n    for k in range(int(3 …[+1398 chars]`
+
+### 🧑 User — 2026-11-16T20:09:10.924Z
+
+> ↩︎ result: A_in {'points': 292, 'source': 'scan from r 330', 'mad_px': 4.28, 'theta_deg': [25.0, 335.0]}
+> A_out {'source': 'A_in x (1 + 64/446)'}
+> B_in {'points': 830, 'source': 'measured', 'mad_px': 0.66, 'theta_deg': [0.0, 359.8]}
+> B_out {'points': 640, 'source': 'measured', 'mad_px': 0.5, 'theta_deg': [4.6, 344.6]}
+> A in [414.2, 395.1, 404.5, 436.8, 473.1] out [473.6, 451.8, 462.5, 499.5, 541.0]
+> B in [200.2, 220.6, 238.2, 247.6, 257.0] out [233.1, 259.0, 278.7, 287.7, 300.4]
+> C in [127.9, 139.7, 150.0, 151.9, 150.4] out [146.2, 161.4, 170.3, 173.2, 168.8]
+> D in [79.5, 83.6, 87.5, 87.9, 90.6] out [88.5, 95.6, 99.1, 100.5, 101.6]
+> E in [53.0, 54.4, 55.0, 54.4, 53.0] out [61.0, 62.4, 63.0, 62.4, 61.0]
+> F in [37.0, 37.7, 38.0, 37.7, 37.0] out [43.0, 43.7, 44.0, 43.7, 43.0]
+> G in [25.5, 25.5, 25.5, 25.5, 25.5] out [30.5, 30.5, 30.5, 30.5, 30.5]
+
+### 🤖 Claude — 2026-11-16T20:10:17.941Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uPjRes\\|uPjPost\" src/vfx/waterRibbon.ts src/world/materials.ts | cut -c1-230 | head -20; grep -n \"fog\\b\\|Fog\\|toneMapping\\|bloom\\|Bloom\\|grade\\|OutputPass\\|composer\" src/game/Game.ts | cut -c1-200 | head -40; cat src/render/grade.ts | head -30", "description": "See how post-processing values reach the shaders"}`
+
+### 🧑 User — 2026-11-16T20:10:18.005Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:311:/** `?proj05=1`: the inverse of the post chain (needs uniforms uPjPost, uPjRes) — shared with the far river block */
+> src/vfx/waterRibbon.ts:316:  vec2 q = gl_FragCoord.xy / uPjRes - 0.5; q.x *= 0.75;
+> src/vfx/waterRibbon.ts:317:  float vig = 1.0 - uPjPost.w * smoothstep(0.25, 0.75, length(q));
+> src/vfx/waterRibbon.ts:319:  c = (c - 0.5) / uPjPost.z + 0.5;
+> src/vfx/waterRibbon.ts:321:  c = vec3(l) + (c - vec3(l)) / uPjPost.y;
+> src/vfx/waterRibbon.ts:333:  return (c + off) / uPjPost.x;
+> src/vfx/waterRibbon.ts:398:uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
+> src/vfx/waterRibbon.ts:399:uniform vec2 uPjRes;       // render target size (vignette inverse)
+> src/vfx/waterRibbon.ts:1563:    uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
+> src/vfx/waterRibbon.ts:1578:    (u.uPjRes.value as THREE.Vector2).copy(size);
+> src/vfx/waterRibbon.ts:1579:    (u.uPjPost.value as THREE.Vector4).x = renderer.toneMappingExposure;
+> src/vfx/waterRibbon.ts:1581:  const pars = 'uniform sampler2D uPjF; uniform float uPjFZ; uniform vec4 uPjPost; uniform vec2 uPjRes;\n' + PROJ05_INVERS …[+3651 chars]
+
+### 🤖 Claude — 2026-11-16T20:10:35.139Z
+
+Starting the actual bake now: unwrapping each section of wall between two rings from your approved picture into a flat texture, and filling the parts hidden by paddles, bubbles and the top bar.
+
+### 🤖 Claude — 2026-11-16T20:11:08.658Z
+
+> 🔧 **Bash** `{"command": "cat > tools/proj05/tunnel_bake.py <<'EOF'\n\"\"\"Screen 05 walls + gold rings bake, step 2 — unwrap the approved picture's tunnel into textures in the tunnel's OWN\ncoordinates (so they are anchored to the 3D tunnel, not to the camera):\n  wall05.png   atlas, one row per wall bay between two gold rings: AB, BC, CD, DE, EF, FG, GX (beyond the last ring).\n               u = image angle theta / 360 (0 = screen right, counter-clockwise), v = t from the near ring's far edge (0) to\n               the far ring's near edge (1), linear in depth (1/r). Hidden parts (HUD, lids, bubbles, fo …[+8268 chars]`
+
+### 🧑 User — 2026-11-16T20:11:10.434Z
+
+> ↩︎ result: {
+>  "AB": {
+>   "own": 0.303,
+>   "mirror": 0.148,
+>   "reflect": 0.549,
+>   "nearest_t": 0.0
+>  },
+>  "BC": {
+>   "own": 0.472,
+>   "mirror": 0.116,
+>   "reflect": 0.413,
+>   "nearest_t": 0.0
+>  },
+>  "CD": {
+>   "own": 0.462,
+>   "mirror": 0.093,
+>   "reflect": 0.445,
+>   "nearest_t": 0.0
+>  },
+>  "DE": {
+>   "own": 0.523,
+>   "mirror": 0.019,
+>   "reflect": 0.458,
+>   "nearest_t": 0.0
+>  },
+>  "EF": {
+>   "own": 0.497,
+>   "mirror": 0.01,
+>   "reflect": 0.493,
+>   "nearest_t": 0.0
+>  },
+>  "FG": {
+>   "own": 0.468,
+>   "mirror": 0.042,
+>   "reflect": 0.49,
+>   "nearest_t": 0.0
+>  },
+>  "GX": {
+>   "own": 0.314,
+>   "mirror": 0.058,
+>   "reflect": 0.627,
+>   "nearest_t": 0.0
+>  },
+>  "ring_B": {
+>   "own_columns": 0.44,
+>   "theta_deg_own": [
+>    0.1,
+>    359.9
+>   ]
+>  }
+> }
+> atlas 2048 592 ring 2048 64
+> 
+> real	0m1.700s
+> user	0m2.390s
+> sys	0m0.260s
+> total 1608
+> drwxr-xr-x 2 root root    4096 Nov 16 20:11 .
+> drwxr-xr-x 4 root root    4096 Nov 16 20:11 ..
+> -rw-r--r-- 1 root root  149624 Nov 16 20:11 ring05.png
+> -rw-r--r-- 1 root root     538 Nov 16 20:11 tunnel05.json
+> -rw-r--r-- 1 root root 1478928 Nov 16 20:11 wall05.png
+
+### 🤖 Claude — 2026-11-16T20:11:17.487Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\na=cv2.imread('assets/textures/tunnel05/wall05.png'); src=np.load('qa/pilot05/proj/tunnel/model/wall05_srcmap.npy')\n# AB + BC rows (top 8..264, 272..400), show left half and right half at 1:1 stacked; overlay source map tint in a second image\ntop=a[0:410]\ncv2.imwrite('$S/look/atlas_ABBC_left.png', top[:, :1024]); cv2.imwrite('$S/look/atlas_ABBC_right.png', top[:, 1024:])\ntint=a.copy().astype(np.float32)\ntint[src==1]=tint[src==1]*0.6+np.array([255, …[+380 chars]`
+
+### 🧑 User — 2026-11-16T20:11:17.811Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:11:20.507Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/atlas_src.png"}`
+
+### 🧑 User — 2026-11-16T20:11:20.536Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:11:21.185Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/atlas_ABBC_left.png"}`
+
+### 🧑 User — 2026-11-16T20:11:21.219Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:11:47.509Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\na=cv2.imread('assets/textures/tunnel05/wall05.png')\nab=a[8:264]\n# own parts: theta 0..45deg -> cols 0..256 ; theta 130..200 -> cols 740..1138\np1=ab[:, 0:300]; p2=ab[:, 700:1160]\ncv2.imwrite('$S/look/ab_right.png', cv2.resize(p1,None,fx=3,fy=3,interpolation=cv2.INTER_CUBIC))\ncv2.imwrite('$S/look/ab_left.png', cv2.resize(p2,None,fx=3,fy=3,interpolation=cv2.INTER_CUBIC))\nEOF", "description": "Zoom on the real (unfilled) parts of the wall texture"}`
+
+### 🧑 User — 2026-11-16T20:11:47.776Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:11:50.322Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/ab_left.png"}`
+
+### 🧑 User — 2026-11-16T20:11:50.369Z
+
+> ↩︎ result: [image]
+

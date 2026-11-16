@@ -387,6 +387,21 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/tunnel05/ring05.png",
+   "bytes": 149624,
+   "sha256": "17effea43bb1522edb31668e37246eadcba1fc09581c964c93502792a13e4991"
+  },
+  {
+   "path": "assets/textures/tunnel05/tunnel05.json",
+   "bytes": 538,
+   "sha256": "5bbdd32f7cc509ec7bc9d7af810fb048d0586be966719905ea3995de120975ff"
+  },
+  {
+   "path": "assets/textures/tunnel05/wall05.png",
+   "bytes": 1478928,
+   "sha256": "1b20dc9156dc4369f06fd6b2a68119a5433727bfd2aaec813c9c9b770553940d"
+  },
+  {
    "path": "assets/textures/water05/proj05_A.png",
    "bytes": 85585,
    "sha256": "2bc5e36bee645fcb323e7bf54a9e101601fdbad5be65bcd258503a5729b4509e"
@@ -444,7 +459,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8737,
-   "sha256": "6b6f55f95b33c08ad42b3ca035c203d690920c8bedbacfabf9a8f18123ee680b"
+   "sha256": "045386edf29a2c91ef0d294ca0b5f44d9af1843ae87665a165425c34f68a3587"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1595,6 +1610,31 @@
    "path": "qa/pilot05/proj/tests/perf05.json",
    "bytes": 871,
    "sha256": "37e8ed8f135ac0c61c63a32a292801e06f85167a563bd67209aba958209a5815"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/model/bake_report.json",
+   "bytes": 691,
+   "sha256": "13167a17e1903c4e6863fa4aa9408a09823dd6e146e2f9f83039f9566058be4d"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/model/ring05_srcmap.npy",
+   "bytes": 131200,
+   "sha256": "0c04b0cf8426d8154db2c510629806cb0e581c988384e578762d3e0aa5dc36b5"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/model/ring_model.json",
+   "bytes": 3651,
+   "sha256": "933bd304b25c95cdaf8adc15bb2a5325d26fee3678031248ad3f5aa75023fcd6"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/model/ring_model_overlay.png",
+   "bytes": 2661832,
+   "sha256": "50c97aab84d0dde520c77ff758c32ac7c50d18cb39c6947a531f48150de31f7a"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/model/wall05_srcmap.npy",
+   "bytes": 1212544,
+   "sha256": "d02bb164dcb4deccb15cd82ee9749141bc29b40a6cda5abd07ef3f865d604382"
   },
   {
    "path": "qa/pilot05/proj/tunnel/probe/tunnel.json",
@@ -7245,6 +7285,21 @@
    "path": "tools/proj05/residual.py",
    "bytes": 1901,
    "sha256": "a1c1d42f15294d143c543e70663a3a32107380077065ea8abbc7d1616459499f"
+  },
+  {
+   "path": "tools/proj05/tunnel_bake.py",
+   "bytes": 8252,
+   "sha256": "fe52fef7a1f69a86960304e4e8e3a02a0effda6ca2df7c293b84baac2f352582"
+  },
+  {
+   "path": "tools/proj05/tunnel_common.py",
+   "bytes": 4215,
+   "sha256": "708c4b3689355e15a3b6f5f6c1f7ceef7489a1ec7d46e76f34ce73cbbbaaec21"
+  },
+  {
+   "path": "tools/proj05/tunnel_rings.py",
+   "bytes": 5414,
+   "sha256": "bc7b0ef66e457be2d112338c14bd6a7661f8ad217a3a49bc848bd8c5f705ef2a"
   },
   {
    "path": "tools/proj05/water_metrics.py",
