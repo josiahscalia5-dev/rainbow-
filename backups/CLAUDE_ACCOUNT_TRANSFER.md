@@ -1,9 +1,80 @@
-# Rainbow — Claude account transfer guide (newest: recovery session 01Kbt6BV, 2026-11-16 ~02:45 UTC; earlier: account 8 + transfer session 94cf04e3)
+# Rainbow — Claude account transfer guide (newest: session 012NR93N on branch `ccr-44f84024-ii5iih`, 2026-11-16 ~10:35 UTC)
 
-Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it. Everything below was checked in
-these sessions unless marked "last verified on account N".
+Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
 
-## ▶ NEWEST: recovery session `01Kbt6BV` (new Claude account, 2026-11-16 from ~02:12 UTC)
+## ▶ NEWEST — session `012NR93N` (2026-11-16 03:10–10:35 UTC), branch `ccr-44f84024-ii5iih` — READ THIS FIRST
+**Start the next account from branch `ccr-44f84024-ii5iih`** (prompt: `backups/START_NEW_CLAUDE_ACCOUNT.md`). It contains
+every other `ccr-*` / `claude/*` branch (all 11 checked with `git merge-base --is-ancestor`, 10:29 UTC). Draft PR #5
+("DO NOT MERGE") points at it. Where this section and older sections (§5, §6, §12, "wave 9") disagree, this one wins.
+
+### Verified at the urgent full save (2026-11-16 10:29–10:35 UTC)
+| Check | Result |
+|---|---|
+| Push | `python3 scripts/rainbow-autosave.py` → remote SHA == local HEAD on `ccr-44f84024-ii5iih` (0022842 at 10:29; the final SHA is reported to the user in chat — a file cannot contain its own commit) |
+| Other branches | all 11 remote `ccr-*` / `claude/*` tips are ancestors of this branch — nothing newer anywhere |
+| Untracked / ignored | working tree clean after the save; not in git by design: `node_modules` (npm ci), `backups/.live/` + `.autosave.lock` (scratch), `scripts/__pycache__` |
+| **Git LFS recoverable from GitHub** | 24 / 24 binaries (175 MB) downloaded fresh from GitHub LFS in an empty clone, SHA-256 == pointer oid == local copy; local `git lfs fsck` OK, 0 pointer stubs. NB this container's default LFS filter is `--skip`: after a plain clone the binaries are 130-byte pointer files until `git lfs pull` (the resume script runs it) |
+| Marble / World Labs files | 71 / 71 files under `qa/worldlabs/` tracked (17 binaries in LFS: both worlds' splats `.spz`, `splats_500k.ply`, `collider.glb`, `import/*.blend` + underlay GLBs; panoramas, thumbnails, wall textures, measurements, world JSON, ledger and prompt as normal git files) — table in §7 |
+| Approved references | `sha256sum -c scripts/reference.sha256` → 12 / 12 OK (incl. `references/05_flow_into_the_current.png`) |
+| Specialists | 10 / 10 definitions in `.claude/agents/`, SHA-256 unchanged (§3) |
+| Secrets | scan of all 494 tracked text files (transcript backups included) for GitHub / API / AWS / Slack / Google keys, private-key blocks, JWTs, `WLT-Api-Key` or Bearer values, key/password assignments and e-mail addresses → 0 hits |
+| Game | `tsc` OK, `npm run test:continuity` ok, `node scripts/gameplay-test.mjs` pass 8 / 8, 07→08 drop 61.41, errors [] (10:26 UTC, on the restored BEFORE code) |
+| Autosave | daemon running, commits every ≈5 min (10:07, 10:12, 10:17, 10:23, 10:27 …); `autosave.config.json` → `branch` = this branch, `claude/rainbow-3d-account-recovery-xex5hc` added to `protected_branches` (10 protected) |
+
+### Exact project state
+* **Working game = the user's accepted BEFORE baseline for Screen 05** (`src/` = commit `aa35c8a`; a fresh
+  `scripts/capture.mjs 05` is pixel-identical to `qa/pilot05/wave9/baseline/05.png`), plus one switchable test:
+  **T1** (`?ringa=20`: only the front ring moved closer; default build unchanged). T1 was shown to the user and is
+  **waiting for the user's yes/no**. Evidence `qa/pilot05/wave9b/T1/`, measurements `qa/pilot05/wave9b/rings/`,
+  tool `tools/qa/ring_fit05.py`, full brief + next tests **`qa/pilot05/COORDINATION_WAVE9B.md`**.
+* **Rejected by the user — never bring back:** the oval tunnel (wave 9, K 1.7) and the enlarged "big tunnel test 1".
+  The approved tunnel is round; the user wants controlled tests, one geometric factor at a time, always shown
+  approved | BEFORE | NEW, kept only when clearly closer.
+* **Unfinished specialist work is saved but NOT in the game:** `qa/pilot05/wave9b/not_merged/` (README + one patch
+  per specialist: foam it06 finished; path-camera far coin trail it01; water it02 worse than baseline; environment
+  oval rejected). Notes: `qa/pilot05/wave9/<name>/NOTES.md`. Same code in history: commit `f6de5c7`.
+* **User priorities (2026-11-16):** Google Flow videos are the opening and ending — do not rebuild 01 / 02 / 11 as
+  detailed 3D; specialists work on playable screens 03–09, Screen 05 first, then 03, 04, 06, 07, 08, 09; separate
+  full-size comparisons against the approved gameplay screens. **No Flow video file is in the repo yet**
+  (`public/video/` = placeholder only): ask the user to upload `intro.mp4` / `ending.mp4` (`docs/FLOW_VIDEO.md`).
+* All 11 screens, gameplay mechanics, Android project (`android/`, `builds/rainbow-debug.apk` from 2026-11-15, before
+  the Screen 05 waves), characters (`assets/models/*.glb`), shaders and Blender files are unchanged from the previous
+  hand-over except Screen 05 as described.
+
+### Background services / agents at hand-over
+* Running: only the five-minute autosave daemon (`scripts/autosave-daemon.sh`, re-armed by the SessionStart hook in
+  `.claude/settings.json`). It stops when the cloud session closes; the next session re-arms it automatically.
+* No specialist agent, dev server or test was running. Nothing else has to be restarted.
+
+### Tools on this account (tested in this session)
+| Tool | State | Next account |
+|---|---|---|
+| Cloud environment | personal environment `rainbow-`: limited network + package managers + MCP servers; allowed hosts `download.blender.org`, `dl.google.com`, `api.atlas.worldlabs.ai`, `lfs.github.com`; setup script = an older copy of `scripts/cloud-env-setup.sh` | create the same environment (§4); paste the current `scripts/cloud-env-setup.sh` |
+| GitHub | git proxy pushes verified; GitHub MCP `list_pull_requests` / `create_pull_request` OK (draft PR #5) | connect GitHub + install the Claude GitHub App on the repo |
+| Git LFS 3.4.1 | 24 / 24 real files; fresh download from GitHub verified | `git lfs pull` (resume script) |
+| Blender 5.3.0 (`/usr/local/bin/blender`), Android SDK 34 + build-tools 34.0.0 (`/opt/android-sdk`) | installed by the environment setup script | `resume-newest-work.sh --tools` |
+| Playwright plugin MCP + preinstalled Chromium | connected; all captures and the gameplay test ran | re-enable the plugin if missing |
+| World Labs Atlas connector | connected (tools listed); not called, no credits used | re-add the connector in claude.ai settings and sign in |
+| worldlabs@worldlabs plugin (skills) | installed | `bash scripts/setup-worldlabs-plugin.sh` |
+| Marble World API key | **not saved on this account's environment** (no network secret, `api.worldlabs.ai` not in its allowed hosts) — not needed: every generated asset is already in Git LFS | only if the API is needed again: `request_credential` (host `api.worldlabs.ai`, header `WLT-Api-Key`) |
+| context7 plugin | failed to connect (`ERR_PROXY_TUNNEL`); not used by Rainbow | ignore |
+Never transfers through GitHub: Claude account logins, connector sign-ins, environment secrets, installed tools
+(`node_modules`, Blender, Android SDK — all reinstalled by the scripts).
+
+### Exact next tasks
+1. `bash scripts/resume-newest-work.sh --tools`, autosave check, short recovery report to the user.
+2. Screen 05: get the user's answer on T1; then T2 (height of the near tunnel axis around the front ring) and T3
+   (lateral offset ≈ −0.6 u) as single-factor tests; then colour / gloss of rings, lids and walls, vanishing-point
+   glow, water depth and flares, foam (`wave9_foam_it06.patch`), far coin trail (`wave9_pathcamera_…patch`) — each
+   its own test against the accepted baseline.
+3. Flow videos: when the user uploads them, copy to `public/video/intro.mp4` / `ending.mp4`, run
+   `npm run test:cinematic`, check both hand-overs.
+4. After Screen 05: reference-match-director makes a ranked difference list per screen, then one specialist per
+   screen for 03, 04, 06, 07, 08, 09. android-build-performance rebuilds the APK at the end.
+
+Everything below was checked in the earlier sessions named, unless marked "last verified on account N".
+
+## Earlier: recovery session `01Kbt6BV` (2026-11-16 from ~02:12 UTC) — superseded by the section above
 **Newest work branch: `claude/rainbow-3d-account-recovery-xex5hc`** (started from aa35c8a = tip of `ccr-937c7fbb-htsrgt`,
 which is now protected in `autosave.config.json`). Verified 02:12–02:35 UTC:
 | Check | Result |
@@ -61,7 +132,7 @@ A new Claude Code cloud session gets its own `ccr-*` (or `claude/*`) branch, pos
 branch. From the repo folder, get the resume script from the newest branch and run it (works from any start point;
 it only fetches and merges — never resets, deletes or force-pushes):
 ```bash
-git fetch origin ccr-937c7fbb-htsrgt
+git fetch origin ccr-44f84024-ii5iih
 git show FETCH_HEAD:scripts/resume-newest-work.sh > /tmp/resume-newest-work.sh
 bash /tmp/resume-newest-work.sh            # add --tools to also install Blender 5.3, Android SDK 34, World Labs plugin
 git push -u origin "$(git branch --show-current)"

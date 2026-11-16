@@ -8,6 +8,9 @@ tunnel is REJECTED; controlled tests only, one geometric factor at a time, alway
 * `src/` was restored to BEFORE (aa35c8a; fresh 05 capture pixel-identical to the baseline). Wave 9 below is therefore
   NOT in the working game: its unfinished edits are in `qa/pilot05/wave9b/not_merged/*.patch` and in git history.
 * No specialist is running. All ten definitions are present and unchanged.
+* Each specialist's unfinished wave-9 code is a labelled patch in `qa/pilot05/wave9b/not_merged/` (README: what is
+  finished, what may be reused, how to apply one piece as a test). Restart a specialist from its own
+  `qa/pilot05/wave9/<name>/NOTES.md` + its patch — never redo foam it06 or the far coin trail from scratch.
 * Next for Screen 05: the user's answer on test T1 (front ring), then T2 / T3 (COORDINATION_WAVE9B.md). When a
   specialist is launched for 05 it gets ONE test at a time under those rules (URL switch, default build unchanged).
 * After 05: one specialist per screen for 03, 04, 06, 07, 08, 09 (reference-match-director first for a ranked

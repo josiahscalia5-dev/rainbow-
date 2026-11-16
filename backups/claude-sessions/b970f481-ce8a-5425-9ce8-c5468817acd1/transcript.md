@@ -2497,3 +2497,57 @@ First save is done and verified: branch `ccr-44f84024-ii5iih`, GitHub matches lo
 >     3329 total
 > foam patch applies cleanly on the working game
 
+### 🧑 User — 2026-11-16T10:35:30.302Z
+
+> ↩︎ result: {"environment_id":"env_01Qhnigux4LnTx4YGgVZ8BqG","name":"rainbow-","description":"Created by Claude (session cse_012NR93QW6kw1gqxbSo348sF): Rainbow game: allow Blender 5.3, Android SDK 34 and World Labs Atlas hosts.","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"limited","allow_mcp_servers":true,"allow_package_managers":true,"allowed_hosts":["download.blender.org","dl.google.com","api.atlas.worldlabs.ai","lfs.github.com"]},"environment_variable_names":null,"has_setup_script":true,"setup_script":"#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-): real Git LFS assets, Blender 5.3.0, Android SDK 34, World Labs plugin.\n# Every step is non-fatal so a session always starts. Copy: scripts/cloud-env-setup.sh\nif [ -d rainbow- ]; then\n  (cd rainbow- \u0026\u0026 git lfs pull) || echo \"rainbow: git lfs pull failed\"\n  (cd rainbow- \u0026\u0026 bash scripts/setup-blender.sh) || echo \"rainbow: blender setup failed\"\n  (cd rainbow- \u0026\u0026 bash scripts/setup-android-sdk.sh) || echo \"rainbow: android sdk setup failed\"\n  (cd rainbow- \u0026\u0026 bash scripts/setup-worldlabs-plugin.sh) …[+1304 chars]
+
+### 🤖 Claude — 2026-11-16T10:35:48.373Z
+
+LFS check passed: all 24 binaries (175 MB, including both Marble worlds) downloaded fresh from GitHub with matching checksums. Now updating the hand-over documents for your next account.
+
+### 🤖 Claude — 2026-11-16T10:35:49.819Z
+
+> 🔧 **Bash** `{"command": "cat backups/START_NEW_CLAUDE_ACCOUNT.md | cut -c1-400; echo ======; sed -n 1,40p backups/MCP_SETUP.md | cut -c1-220; echo ======; sed -n 1,30p scripts/cloud-env-setup.sh | cut -c1-160", "description": "Read the current hand-over prompt and tool setup notes"}`
+
+### 🧑 User — 2026-11-16T10:35:49.880Z
+
+> ↩︎ result: # Paste this into Claude Code on the next Claude account
+> 
+> Start a Claude Code cloud session on repository `josiahscalia5-dev/rainbow-` (pick branch
+> `claude/rainbow-3d-account-recovery-xex5hc` if the app lets you choose), then paste:
+> 
+> > Continue my EXISTING Rainbow 3D Android game. Do NOT start over and do not delete anything.
+> >
+> > Repository `josiahscalia5-dev/rainbow-`. Newest saved work: branch `claude/rainbow-3d-account-recovery-xex5hc`
+> > (recovery session of 2026-11-16, Screen 05 wave 9). Always check for anything newer on other `ccr-*`/`claude/*`
+> > branches (several sessions have saved in parallel). The GitHub default branch is an OLD version.
+> > 1. In the repo folder run:
+> >    `git fetch origin claude/rainbow-3d-account-recovery-xex5hc && git show FETCH_HEAD:scripts/resume-newest-work.sh > /tmp/r.sh && bash /tmp/r.sh --tools`
+> >    It merges every newer `ccr-*`/`claude/*` branch, restores Git LFS (24 files incl. Marble splats/PLY/collider
+> >    GLBs/.blend), checks the 12 references, the 10 agents, tsc and continuity, and installs Blender 5.3, Android
+> >    SDK 34 and the World Labs plugin. It never resets or force-pushes. Push your session branch; add
+> >    `claude/rainbow-3d-acco …[+6576 chars]
+
+### 🤖 Claude — 2026-11-16T10:37:02.916Z
+
+> 🔧 **Bash** `{"command": "blender --version 2>/dev/null | head -1; ls /opt/android-sdk/platforms /opt/android-sdk/build-tools 2>/dev/null | tr '\\n' ' '; echo; pgrep -af \"autosave\" | cut -c1-110; git log --format='%ad' --date=format:'%H:%M' -8 | tr '\\n' ' '; echo; python3 - <<'EOF'\nimport re\n# ---------- START_NEW_CLAUDE_ACCOUNT.md (rewritten)\nopen('backups/START_NEW_CLAUDE_ACCOUNT.md','w').write(\"\"\"# Paste this into Claude Code on the next Claude account\n\nStart a Claude Code cloud session on repository `josiahscalia5-dev/rainbow-` (pick branch `ccr-44f84024-ii5iih` if\nthe app lets you choose). …[+15742 chars]`
+
+### 🧑 User — 2026-11-16T10:37:18.688Z
+
+> ↩︎ result: Blender 5.3.0
+> /opt/android-sdk/build-tools: 34.0.0  /opt/android-sdk/platforms: android-34 
+> 139 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> 10:33 10:29 10:28 10:27 10:23 10:18 10:12 10:07 
+> docs updated
+> # Rainbow — Claude account transfer guide (newest: session 012NR93N on branch `ccr-44f84024-ii5iih`, 2026-11-16 ~10:35 UTC)
+> 
+> Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
+
+### 🤖 Claude — 2026-11-16T10:37:24.568Z
+
+Documents are updated. Doing the final save and verifying GitHub has the identical commit.
+
+### 🤖 Claude — 2026-11-16T10:37:27.406Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC_OK && sha256sum -c scripts/reference.sha256 2>&1 | grep -c \": OK\" && python3 scripts/rainbow-autosave.py --reason manual:urgent-full-save 2>&1 | tail -4 && L=$(git rev-parse HEAD) && R=$(git ls-remote origin refs/heads/ccr-44f84024-ii5iih | cut -f1) && echo \"branch $(git branch --show-current)\" && echo \"local  $L\" && echo \"remote $R\" && [ \"$L\" = \"$R\" ] && echo \"MATCH\" ; git status --short | wc -l; python3 -I scripts/autosave-status.py | head -1 | cut -c1-200; git ls-files | wc -l; git lfs ls-files | wc -l; git ls-files backups/claude-sess …[+117 chars]`
+

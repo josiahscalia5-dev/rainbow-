@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 4213,
-   "sha256": "182a6ef816deb0dccd75436a21e2565d83f755e88d0f4960751be63ee818e172"
+   "bytes": 4307,
+   "sha256": "a3b13d556f6cfb301bfb42a9b0c8f3a5cf6dc35a79efb15330bbd248a28ef799"
   },
   {
    "path": "README_FIRST.md",
@@ -388,18 +388,18 @@
   },
   {
    "path": "backups/AGENTS_STATUS.md",
-   "bytes": 10895,
-   "sha256": "4e4339c95b4d94e01c020c62c09dd61979e6d08f759c83d85feb3e22ba88845c"
+   "bytes": 11221,
+   "sha256": "5b69d9f52dd4c54fa2f144594d3d8955a01d4ce0f817b643eab3705257e94049"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 25398,
-   "sha256": "c85e3de074283910e536c17c1336c37a75fc7ace6ca0ba76dddb64bc4a61eb19"
+   "bytes": 33034,
+   "sha256": "6faf69ae2df7f2c13f845581c210f15e6aa67fb5bcbf428e3c65dfdf40d3d57f"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 6289,
-   "sha256": "5ab3fc124d9e929cb49e6caf6c63016f67f0238b77338cacab41f32d93799d02"
+   "bytes": 6296,
+   "sha256": "d00e642880b8925807d288971ea11e6f7ce25e6b8824a55118bbd60044330c9a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -408,8 +408,8 @@
   },
   {
    "path": "backups/MCP_SETUP.md",
-   "bytes": 4119,
-   "sha256": "07a76846395b4e60207b77b2cd8c610b24d76d421b9c0118c302c0ae879c1c4a"
+   "bytes": 5899,
+   "sha256": "fa8b3503202ff558bd6329b9319c486f82476aa70dfe73f6fdc9b6decc47845b"
   },
   {
    "path": "backups/RECOVERY.md",
@@ -418,8 +418,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 2979,
-   "sha256": "32803bad35227e6df1b0e879c4b363d0ea3f83f1522c54a70bb740076e2d712c"
+   "bytes": 3520,
+   "sha256": "7ca8d60ccce439f31609aa05a9a7364a5b4e28366b6dd840e2020810d3406ae0"
   },
   {
    "path": "backups/autosave.config.json",

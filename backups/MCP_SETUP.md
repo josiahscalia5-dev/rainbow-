@@ -1,5 +1,18 @@
 # Rainbow — tool / MCP reconnection (no secrets stored)
 
+## Newest check — session 012NR93N (branch `ccr-44f84024-ii5iih`, 2026-11-16 03:10–10:35 UTC)
+| Tool | Tested result | On the next account |
+|---|---|---|
+| GitHub (git proxy + GitHub MCP) | pushes verified (remote SHA == local); `list_pull_requests` / `create_pull_request` OK (draft PR #5) | connect GitHub to the Claude account + Claude GitHub App on the repo |
+| Git LFS | 24 / 24 binaries downloaded fresh from GitHub LFS, SHA-256 identical. Container default filter is `--skip` → run `git lfs pull` after cloning | `bash scripts/resume-newest-work.sh` |
+| World Labs Atlas connector | connected (tool list present); not called, no credits used | re-add the connector in claude.ai settings and sign in |
+| Marble World API key | NOT on this account's `rainbow-` environment (no network secret; `api.worldlabs.ai` not allowed). Not needed — all generated assets are in Git LFS | `request_credential` (host `api.worldlabs.ai`, header `WLT-Api-Key`) only if the API is needed again |
+| Playwright plugin MCP + Chromium | connected; `scripts/capture.mjs` and `scripts/gameplay-test.mjs` ran | re-enable the plugin if missing |
+| worldlabs@worldlabs plugin | installed (skills `worldlabs:*`) | `bash scripts/setup-worldlabs-plugin.sh` |
+| Blender 5.3.0 / Android SDK 34 + build-tools 34.0.0 | installed by the environment setup script (`/usr/local/bin/blender`, `/opt/android-sdk`) | `resume-newest-work.sh --tools` |
+| Cloud environment `rainbow-` | limited network + package managers + MCP servers; hosts `download.blender.org`, `dl.google.com`, `api.atlas.worldlabs.ai`, `lfs.github.com`; setup script present | recreate with the same hosts; setup script = `scripts/cloud-env-setup.sh` |
+| context7 plugin | failed to connect (`ERR_PROXY_TUNNEL`); not used | ignore |
+
 ## Newest check — recovery session 01Kbt6BV (new Claude account, 2026-11-16 ~02:15–02:45 UTC)
 | Tool | Tested result | On the next account |
 |---|---|---|
