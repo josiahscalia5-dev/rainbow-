@@ -347,7 +347,7 @@ export function buildEnvironment(course: Course): Environment {
     const P05 = tubeCenterAt(perfPath, sCam05);
     const T05 = perfPath.frame(sCam05).tan.clone();
     const axialOf = (s: number) => tubeCenterAt(perfPath, s).sub(P05).dot(T05);
-    const aIn0 = axialOf(s05), aIn1 = axialOf(s05 + 6), aOut0 = axialOf(sGlow05 - 22), aOut1 = axialOf(sGlow05 - 16);
+    const aIn0 = axialOf(s05), aIn1 = axialOf(s05 + 6), aOut0 = axialOf(sGlow05 - 30), aOut1 = axialOf(sGlow05 - 23);
     const rLat = perfPath.radius(sCam05) * 1.2;
     const camP = new THREE.Vector3(), rel = new THREE.Vector3(), slide = new THREE.Matrix4(), place = new THREE.Matrix4();
     const zero = new THREE.Matrix4().makeScale(0, 0, 0);

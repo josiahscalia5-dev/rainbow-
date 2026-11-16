@@ -2341,3 +2341,100 @@ I'll push now, before writing the transfer guide.
 
 > 🔧 **Bash** `{"command": "timeout 240 bash -c 'while pgrep -f \"rainbow-autosave.py\" >/dev/null; do read -t 3 < /dev/zero 2>/dev/null || true; done'; python3 scripts/rainbow-autosave.py --reason manual:handoff-1 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified' | head -3; python3 -I scripts/autosave-status.py 2>&1 | tail -1", "description": "Push the Marble results and status files", "timeout": 600000}`
 
+### 🧑 User — 2026-11-16T01:14:25.853Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "7f157d28ce49b9e5491b4d57d4d53d478b95f23c",
+> AUTOSAVE OK | branch ccr-4f6c3e0e-5kxgr0 | scheduler daemon | last verified backup 2026-11-16T01:14:18+00:00 (0.1 min ago) | local 7f157d2 remote 7f157d2 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-16T01:14:34.229Z
+
+Pushed and verified: `7f157d2`, 0 uncommitted. For the transfer guide's network list, I need the host names the Marble files come from.
+
+### 🤖 Claude — 2026-11-16T01:14:36.878Z
+
+> 🔧 **Bash** `{"command": "grep -h -o 'https://[^/\"]*' qa/worldlabs/05/pilot/*/operation_response.sanitized.json | sort | uniq -c; python3 -I -c \"import json;d=json.load(open('/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/marble/full_ply_op.json'));print(d['response']['url'].split('/')[2])\"; grep -h -o 'https://[^/]*' /dev/null; ls .claude/; cat .mcp.json.template | head -30", "description": "List asset hosts and the MCP config template"}`
+
+### 🧑 User — 2026-11-16T01:14:36.944Z
+
+> ↩︎ result: 12 https://cdn.marble.worldlabs.ai
+>       2 https://marble.worldlabs.ai
+> cdn.marble.worldlabs.ai
+> agents
+> settings.json
+> {
+>   "_comment": "Template only — contains NO secrets. Copy to .mcp.json (git-ignored) or use the `claude mcp add` commands in backups/MCP_SETUP.md. Put API keys in your shell env / OS keychain, never in this repo.",
+>   "mcpServers": {
+>     "playwright": { "command": "npx", "args": ["@playwright/mcp@latest"] },
+>     "blender": { "command": "uvx", "args": ["mcp-for-blender"] },
+>     "_meshy": "NOT VERIFIED HERE — install per https://github.com/meshy-dev/meshy-mcp-server README; key goes in env MESHY_API_KEY only",
+>     "hyper3d-rodin": { "type": "http", "url": "https://api.hyper3d.com/api/mcp" },
+>     "_worldlabs": "DO NOT ADD HERE (would duplicate). Atlas = claude.ai connector 'World Labs Atlas' (https://api.atlas.worldlabs.ai/mcp); the worldlabs@worldlabs plugin is installed for its skills with its own MCP copy disabled: scripts/setup-worldlabs-plugin.sh"
+>   }
+> }
+
+### 🤖 Claude — 2026-11-16T01:14:38.234Z
+
+Now the main transfer guide, `backups/CLAUDE_ACCOUNT_TRANSFER.md`.
+
+### 🤖 Claude — 2026-11-16T01:15:24.277Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "content": "# Rainbow — Claude account transfer guide (written 2026-11-16 ~01:20 UTC, account 8)\n\nRainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it. Everything below was checked in\nthis session unless marked \"last verified on account N\".\n\n## 1. Repository, branch, commit\n| | |\n|---|---|\n| Repository | `josiahscalia5-dev/rainbow-` (private, GitHub) |\n| **Source branch (newest work)** | **`ccr-4f6c3e0e-5kxgr0`** |\n| Latest verified commit | see the newest `committed+pushed` row in `back …[+11147 chars]`
+
+### 🧑 User — 2026-11-16T01:15:24.305Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:15:32.933Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "content": "# Paste this into Claude Code on the next Claude account\n\n> Continue my EXISTING Rainbow 3D Android game. Do NOT start over and do not delete anything.\n>\n> Repository: `josiahscalia5-dev/rainbow-`. Newest saved work: branch `ccr-4f6c3e0e-5kxgr0` (use its remote tip).\n> Read `CLAUDE.md`, then `backups/CLAUDE_ACCOUNT_TRANSFER.md`, and follow it:\n> 1. Verify your session branch contains `origin/ccr-4f6c3e0e-5kxgr0` (fetch it, `git fetch --unshallow`); work\n>    on your own new session branch; protect the o …[+1681 chars]`
+
+### 🧑 User — 2026-11-16T01:15:32.979Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:15:34.144Z
+
+Now the pointer in `CLAUDE.md`, and the World Labs row in the MCP setup notes.
+
+### 🤖 Claude — 2026-11-16T01:15:34.648Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/CLAUDE.md", "limit": 5}`
+
+### 🧑 User — 2026-11-16T01:15:34.666Z
+
+> ↩︎ result: 1	# RAINBOW — permanent rules for Claude Code
+> 2	
+> 3	This repo MUST be a fresh isolated game. The authoritative brief is `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`. Read it before coding, and preserve `references/*.png` and `character_references/official_cartoon_girl_original.jpg` unchanged. Do not import anything from prior games.
+> 4	
+> 5	Locked target = 11 stages, 01–11, plus one separate cartoon-girl reference. Character identity override = the new cartoon girl (same rig/model/style) in opening, scene 10 and scene 11; legacy photo girls are framing references only. Benny's pink fluff, violet eyes, knitted star hat and paw pads stay consistent. Ending is **11 · SAFELY HOME**, real-time victory, with `FINAL SPIN COMPLETE`, girl lifts/holds towel while Benny hides.
+
+### 🤖 Claude — 2026-11-16T01:15:37.430Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "# RAINBOW — permanent rules for Claude Code\n", "new_string": "# RAINBOW — permanent rules for Claude Code\n\n**New Claude account or new session? Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` FIRST** (newest branch, verified commit, specialist status, Marble results, tool setup, next tasks). This is an existing game: never restart it.\n"}`
+
+### 🧑 User — 2026-11-16T01:15:37.468Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:15:41.075Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/MCP_SETUP.md", "old_string": "| World Labs Atlas/Marble | **not installed / needs sign-in** | Optional; Atlas ≠ Marble; verify any Marble link before use | `claude mcp add --transport http worldlabs https://api.atlas.worldlabs.ai/mcp` |", "new_string": "| World Labs Atlas | account 8: claude.ai connector **connected** (`list_projects` OK); per Claude account | Re-add + sign in on each new account | claude.ai connector \"World Labs Atlas\" (preferred) or `claude mcp add --transport http worldlabs https://api.atlas.worldlabs.ai/mcp …[+334 chars]`
+
+### 🧑 User — 2026-11-16T01:15:41.109Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/MCP_SETUP.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:15:44.227Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CURRENT_STATE.md", "old_string": "| Screen 05 | wave 7 = execution of the wave-6b plans: `qa/pilot05/COORDINATION_WAVE7.md`, baseline `qa/pilot05/wave7/baseline/05.png`; environment, water, foam specialists running |", "new_string": "| Screen 05 | wave 7 = execution of the wave-6b plans: `qa/pilot05/COORDINATION_WAVE7.md`, baseline `qa/pilot05/wave7/baseline/05.png`. Water DONE, foam DONE, environment running at hand-off (`backups/AGENTS_STATUS.md`) |\n| Marble pilot (user-approved, max US$5) | website world 404 via API; generate …[+247 chars]`
+
+### 🧑 User — 2026-11-16T01:15:44.262Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CURRENT_STATE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:15:48.907Z
+
+> 🔧 **Bash** `{"command": "timeout 240 bash -c 'while pgrep -f \"rainbow-autosave.py\" >/dev/null; do read -t 3 < /dev/zero 2>/dev/null || true; done'; python3 scripts/rainbow-autosave.py --reason manual:handoff-docs 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified' | head -3; python3 -I scripts/autosave-status.py 2>&1 | tail -1", "description": "Push the handoff documents and verify", "timeout": 600000}`
+
