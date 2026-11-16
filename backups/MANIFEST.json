@@ -469,7 +469,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9219,
-   "sha256": "769d82fdf3105f91bcf0703a7ddccd6391cd0696134c8923fe47bb30969fecb4"
+   "sha256": "e1c68119f2383b7832fc8f3151702eb9dc60dcb75a4810f55ffb44f5495598c9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1655,6 +1655,11 @@
    "path": "qa/pilot05/proj/tunnel/frame/tests/gameplay_projframe05.json",
    "bytes": 14695,
    "sha256": "ebdff4afad73f700b3e701673155d0f00f42856db224a0cb201964065f17f5df"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/fit.json",
+   "bytes": 1801,
+   "sha256": "13b3926c6089f238a5bdff2e4e04a284754bd8b9cb1b0bd75c66dbe710456d3b"
   },
   {
    "path": "qa/pilot05/proj/tunnel/model/bake_report.json",
@@ -6937,6 +6942,11 @@
    "sha256": "7637ee926dac4374586bd124a89b5f35f0d8a3f52a4d86cdd3820c47fd82cace"
   },
   {
+   "path": "scripts/proj05-lid-fit.mjs",
+   "bytes": 9668,
+   "sha256": "4df458bcdbae30ef9595f4aaece5ffada94f587957b3fc31b1c83c2bf6084667"
+  },
+  {
    "path": "scripts/proj05-move.mjs",
    "bytes": 5328,
    "sha256": "5357f03f49fe8fbb4412b3baedf36a6ae74bc2f5ff034b97f82f0dc2f03d680a"
@@ -7153,8 +7163,8 @@
   },
   {
    "path": "src/vfx/proj05Tunnel.ts",
-   "bytes": 13587,
-   "sha256": "76950d6d2b135613ccd96237e7b6800fca717853d199e0d0d62dd5211c377925"
+   "bytes": 15529,
+   "sha256": "8e2939aa28cffbf6b2487840e11655aaa02cf9a4aa62ff798f71d428d360c9ab"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -7188,8 +7198,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 58834,
-   "sha256": "605b046a6fad1b0cfca762e4747bfc4452acbe9cf2577173c67c7e9335cca3ee"
+   "bytes": 59100,
+   "sha256": "146120f86aaea016a87def87153242f1fb4d2a971bb2098ecd4432d3ffbf719d"
   },
   {
    "path": "src/world/far05.ts",

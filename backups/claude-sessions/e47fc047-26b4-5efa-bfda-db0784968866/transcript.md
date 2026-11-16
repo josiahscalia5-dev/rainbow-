@@ -1907,3 +1907,133 @@ I'll give you a straight answer, but first I'm checking the paddles you describe
 > 482	    const lidSz = lid05.size * Math.min(1.4, perfPath.radius(sF05) / 7.6);
 > 483 …[+2695 chars]
 
+### 🤖 Claude — 2026-11-16T20:59:47.130Z
+
+> 🔧 **Bash** `{"command": "cat > scripts/proj05-lid-fit.mjs <<'EOF'\n#!/usr/bin/env node\n// Screen 05 paddles (`?projlid05=1`): fit each of the approved picture's six wall lids (tools/proj05/tunnel_common.py\n// LIDS: L1 L2 L3 left, R1 R2 R3 right) with one real 3D lid on the real 05 wall, seen from the locked 05 camera.\n// Grid search over (s along the tube, angle above the axis, droop, size) with the real lid geometry projected by the real\n// camera; score = IoU of the projected bounding box with the approved outline's box (both clipped to the screen).\n// Read-only: nothing in the game changes.   node …[+5475 chars]`
+
+### 🧑 User — 2026-11-16T21:00:13.487Z
+
+> ↩︎ result: L1 iou 0.972 side -1 ds 22.75 ang 22.5 droop -55 size 2.00 box [63,316,213,418] target [62.5,315.5,214,420]
+> L2 iou 0.974 side -1 ds 40.63 ang 8 droop 17.5 size 2.15 box [249,418,332,472] target [248.8,418.8,332.5,472.5]
+> L3 iou 0.180 side -1 ds 50.50 ang 2.5 droop -2.5 size 3.40 box [298,443,403,480] target [372,455,402,478]
+> R1 iou 0.991 side 1 ds 30.13 ang 5.5 droop -50 size 3.00 box [719,400,864,528] target [720,400,864,527.5]
+> R2 iou 0.874 side 1 ds 50.50 ang 18.5 droop 15 size 2.35 box [630,394,703,450] target [631,394,696,451]
+> R3 iou 0.145 side 1 ds 50.50 ang 4.5 droop -5 size 3.95 box [582,432,710,476] target [581,435,622.5,455]
+> rings05 [124.03830202823289,138.0383020282329,146.0383020282329,166.0383020282329] sCam05 126.03830202823289 r05 7.6
+> 
+> real	0m26.301s
+> user	0m1.396s
+> sys	0m0.353s
+
+### 🤖 Claude — 2026-11-16T21:00:40.710Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "/** `?projframe05=1` (2026-11-16): the near gold frame (bottom corners + bottom lip) wears the approved gold band */\nexport const PROJFRAME05: boolean = flag05('projframe05');", "new_string": "/** `?projframe05=1` (2026-11-16): the near gold frame (bottom corners + bottom lip) wears the approved gold band */\nexport const PROJFRAME05: boolean = flag05('projframe05');\n/** `?projlid05=1` (2026-11-16): the real 05 wall paddles where (and as tilted as) the approved picture shows them */\nexport cons …[+1760 chars]`
+
+### 🧑 User — 2026-11-16T21:00:40.788Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T21:00:42.355Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "import * as THREE from 'three';\nimport { PROJ05_INVERSE, flag05, proj05Pending } from './waterRibbon';", "new_string": "import * as THREE from 'three';\nimport { PROJ05_INVERSE, flag05, proj05Pending } from './waterRibbon';\nimport { wallLidGeometry, wallLidMatrix, type TubePath } from '../world/tube';"}`
+
+### 🧑 User — 2026-11-16T21:00:42.427Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T21:00:43.259Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export.*TubePath\\|^import\" src/world/tube.ts | head -8; grep -n \"^import\" src/world/far05.ts | head", "description": "Check TubePath export and import cycles"}`
+
+### 🧑 User — 2026-11-16T21:00:43.310Z
+
+> ↩︎ result: 10:import * as THREE from 'three';
+> 11:import type { Course } from './course';
+> 15:export interface TubePath {
+> 22:export function courseTubePath(course: Course, radius: (s: number) => number, depth: number | ((s: number) => number) = 0.9): TubePath {
+> 30:export function straightTubePath(
+> 147:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> 176:export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
+> 323:export function buildRingsAt(path: TubePath, list: number[], material: THREE.Material, opts: RingOpts = {}, spacing = 9): THREE.InstancedMesh {
+> 16:import * as THREE from 'three';
+> 17:import type { Course } from './course';
+> 18:import type { ForcedTunnel } from './tube';
+> 19:import { tubeCenterAt } from './tube';
+> 20:import { channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, WATER05 } from '../vfx/waterRibbon';
+
+### 🤖 Claude — 2026-11-16T21:00:44.484Z
+
+Imports are clean, with no circular dependency. Now I'll hook the switch into the scene builder, keeping the default branch untouched:
+
+### 🤖 Claude — 2026-11-16T21:00:46.800Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));", "new_string": "  // `?projlid05=1` (src/vfx/proj05Tunnel.ts): the approved paddles L1 L2 R1 R2 fitted on the real wall; default unchanged\n  if (PROJLID05) zones.tubes.add(buildLids05Fit(perfPath, sCam05, lid05.thickness, lidMat05('lid05', false)));\n  else zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));"}`
+
+### 🧑 User — 2026-11-16T21:00:46.874Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T21:00:48.849Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { PROJWALL05, PROJRING05, PROJFRAME05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests", "new_string": "import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, buildLids05Fit, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests"}`
+
+### 🧑 User — 2026-11-16T21:00:48.927Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T21:00:49.754Z
+
+> 🔧 **Bash** `{"command": "grep -n \"sCam05\" src/world/environment.ts | head -5; npx tsc --noEmit -p . 2>&1 | tail -5; echo TSC_DONE", "description": "Check sCam05 scope and typecheck"}`
+
+### 🧑 User — 2026-11-16T21:00:52.903Z
+
+> ↩︎ result: 260:  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> 263:  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+> 292:  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+> 319:    envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
+> 326:    flow05Shared.uPanoRot.value.copy(marblePanoMatrix05(perfPath.frame(sCam05).tan));
+> TSC_DONE
+
+### 🤖 Claude — 2026-11-16T21:00:58.433Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $S/l1 && node scripts/capture.mjs 05 --q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' --out=$S/l1 2>&1 | grep -ci error; git checkout qa/capture_log.json; python3 -I tools/proj05/screen_regions.py qa/pilot05/proj/tunnel/frame/3_NEW_projframe05.png $S/l1/05.png 2>&1 | sed \"s#$S/##\" | grep -E \"png|LID|WALL|TUNNEL|FRAME |FULL\"; python3 -I - <<EOF\nfrom PIL import Image\nfor nm,b in {'lidL':(40,290,420,500),'lidR':(560,370,864,540)}.items():\n    ims=[Image.open(p).con …[+374 chars]`
+
+### 🤖 Claude — 2026-11-16T21:00:59.632Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/l1_lidL.png"}`
+
+### 🤖 Claude — 2026-11-16T21:01:00.318Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/l1_lidR.png"}`
+
+### 🧑 User — 2026-11-16T21:01:17.294Z
+
+> ↩︎ result: 0
+> Updated 1 path from the index
+> qa/pilot05/proj/tunnel/frame/3_NEW_projframe05.png
+>   WALL      px  232581  mean|d|  56.94  <=10 0.064  <=20 0.179  SSIM 0.152  bias [12.7, 16.2, -30.2]
+>   LID       px   27726  mean|d|  62.61  <=10 0.022  <=20 0.086  SSIM 0.195  bias [8.9, -13.2, 34.9]
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   TUNNEL    px  440275  mean|d|  48.68  <=10 0.167  <=20 0.290  SSIM 0.302  bias [6.5, 2.3, -6.8]
+>   FRAME     px 1157760  mean|d|  32.23  <=10 0.447  <=20 0.550  SSIM 0.541  bias [6.7, -1.4, -1.6]
+>   FULL      px 1327104  mean|d|  35.86  <=10 0.393  <=20 0.497  SSIM 0.495  bias [7.3, 1.9, 0.9]
+> l1/05.png
+>   WALL      px  232581  mean|d|  56.61  <=10 0.065  <=20 0.182  SSIM 0.152  bias [10.2, 14.2, -30.1]
+>   LID       px   27726  mean|d|  55.99  <=10 0.057  <=20 0.177  SSIM 0.251  bias [9.7, 1.6, 9.5]
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   TUNNEL    px  440275  mean|d|  48.20  <=10 0.170  <=20 0.297  SSIM 0.306  bias [5.0, 1.9, -8.2]
+>   FRAME     px 1157760  mean|d|  32.05  <=10 0.448  <=20 0.553  SSIM 0.543  bias [6.2, -1.6, -2.1]
+>   FULL      px 1327 …[+77 chars]
+
+### 🧑 User — 2026-11-16T21:01:17.329Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T21:01:17.338Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:02:04.146Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-lid-fit.mjs'; s=open(p).read()\n# 1) pass the approved outline polygons too\nold=\"\"\"const { chromium } = loadPlaywright();\"\"\"\nnew=\"\"\"const POLYS = {      // approved outlines (tunnel_common.LIDS), full-frame px\n  L1: [[62.5, 360], [75, 324], [102, 315.5], [140, 322.5], [170, 340], [200, 372.5], [214, 400], [212.5, 415], [190, 420], [152, 410], [115, 392], [80, 375]],\n  L2: [[248.8, 447.5], [260, 422.5], [280, 418.8], [305, 425], [325, 442.5], [332.5, 460], [330, 470], [310, 472.5], [280, 462.5], [255, 452.5]],\n  L3: [[372, 458], …[+6687 chars]`
+

@@ -12,7 +12,7 @@ import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
 import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
-import { PROJWALL05, PROJRING05, PROJFRAME05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, buildLids05Fit, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
@@ -415,7 +415,9 @@ export function buildEnvironment(course: Course): Environment {
     return m;
   };
   const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
-  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
+  // `?projlid05=1` (src/vfx/proj05Tunnel.ts): the approved paddles L1 L2 R1 R2 fitted on the real wall; default unchanged
+  if (PROJLID05) zones.tubes.add(buildLids05Fit(perfPath, sCam05, lid05.thickness, lidMat05('lid05', false)));
+  else zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];
   for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);

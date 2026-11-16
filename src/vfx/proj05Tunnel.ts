@@ -15,11 +15,43 @@
  */
 import * as THREE from 'three';
 import { PROJ05_INVERSE, flag05, proj05Pending } from './waterRibbon';
+import { wallLidGeometry, wallLidMatrix, type TubePath } from '../world/tube';
 
 export const PROJWALL05: boolean = flag05('projwall05');
 export const PROJRING05: boolean = flag05('projring05');
 /** `?projframe05=1` (2026-11-16): the near gold frame (bottom corners + bottom lip) wears the approved gold band */
 export const PROJFRAME05: boolean = flag05('projframe05');
+/** `?projlid05=1` (2026-11-16): the real 05 wall paddles where (and as tilted as) the approved picture shows them */
+export const PROJLID05: boolean = flag05('projlid05');
+
+/**
+ * `?projlid05=1`: the approved picture's large wall paddles L1 L2 (left) R1 R2 (right), each fitted with one real lid
+ * on the real 05 wall seen from the locked 05 camera (scripts/proj05-lid-fit.mjs → qa/pilot05/proj/tunnel/lid/fit.json,
+ * bounding-box IoU 0.87–0.99). ds = arc length ahead of the 05 checkpoint eye (sCam05), side +1 = screen right, angle
+ * above the tube axis and droop as wallLidBasis, size before the radius scale. They sit higher on the wall than the
+ * default pairs (above eye level), so the camera sees their undersides like the approved picture. The small far pair
+ * (L3, R3) is the existing forced-perspective far lids.
+ */
+export const LIDS05_FIT = [
+  { name: 'L1', side: -1, ds: 22.75, ang: 22.5, droop: -55, size: 2.0 },
+  { name: 'L2', side: -1, ds: 40.625, ang: 8, droop: 17.5, size: 2.15 },
+  { name: 'R1', side: 1, ds: 30.125, ang: 5.5, droop: -50, size: 3.0 },
+  { name: 'R2', side: 1, ds: 50.5, ang: 18.5, droop: 15, size: 2.35 },
+] as const;
+
+/** the fitted 05 paddles as one InstancedMesh (same geometry family as the default 05 lids, 'slab') */
+export function buildLids05Fit(path: TubePath, sCam05: number, thickness: number, material: THREE.Material): THREE.InstancedMesh {
+  const mesh = new THREE.InstancedMesh(wallLidGeometry('slab', thickness), material, LIDS05_FIT.length);
+  const m = new THREE.Matrix4();
+  LIDS05_FIT.forEach((l, i) => {
+    const s = sCam05 + l.ds;
+    mesh.setMatrixAt(i, wallLidMatrix(path, s, l.side, l.ang, l.droop, l.size * Math.min(1.4, path.radius(s) / 7.6), 1.0, 0.1, m));
+  });
+  mesh.count = LIDS05_FIT.length;
+  mesh.instanceMatrix.needsUpdate = true;
+  mesh.frustumCulled = false;
+  return mesh;
+}
 
 /** atlas rows of wall05.png (tools/proj05/tunnel_bake.py: ROWS) */
 export const PT_ROW = { AB: 0, BC: 1, CD: 2, DE: 3, EF: 4, FG: 5, GX: 6 } as const;
