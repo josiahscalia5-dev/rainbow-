@@ -520,7 +520,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let running = !qaMode;
   let dirty = true;
   renderer.info.autoReset = false;
-  const render = () => { renderer.info.reset(); composer.render(); };
+  // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the
+  // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins
+  const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
+  const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
+  const st05 = course.stage('05');
+  const render = () => {
+    if (glow05) {
+      const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+      bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
+      bloom.radius = bloomBase.r + (bloom05.r - bloomBase.r) * w;
+      bloom.threshold = bloomBase.t + (bloom05.t - bloomBase.t) * w;
+    }
+    renderer.info.reset();
+    composer.render();
+  };
   const frame = () => {
     const now = performance.now();
     const dt = Math.min(0.05, (now - last) / 1000);

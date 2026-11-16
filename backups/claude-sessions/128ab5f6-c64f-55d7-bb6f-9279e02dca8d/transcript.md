@@ -2825,3 +2825,135 @@ The capture is deterministic: the stored W12 picture is pixel-identical to the W
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && O=qa/pilot05/wave12 && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && mkdir -p $O/glow && for v in A:glow05_T1.0_S0.9_R0.5 B:glow05_T1.3_S0.9_R0.5 C:tone05_none D:glow05_T1.0+tone05_none E:glow05_T2.0_S0.8_R0.4 F:glow05_T1.7_S0.7_R0.35 G:glow05_T2.6_S1.0_R0.4_CHOSEN H:glow05_T2.4_S1.6_R0.45; do k=${v%%:*}; n=${v#*:}; cp $S/gl_$k/05.png $O/glow/${k}_$n.png; done; cat $S/gl.md > $O/glow/WATER_INDICATORS_glow_tone.md; grep -v \"^|---\\|^| image\" $S/gl2.md $S/gl3.md | sed 's/^[^|]*|/|/' >> $O/glow/WATER_INDICATORS_glow_ …[+1598 chars]`
 
+### 🧑 User — 2026-11-16T14:18:26.192Z
+
+> ↩︎ result: "pass": true
+> "verticalDrop": 61.41
+> "errors": []
+> {
+>  "default_vs_current_default": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "before_vs_wave9_baseline": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "06_w12full_vs_default": {
+>   "max_pixel_difference": 169,
+>   "differing_pixels": 1129859
+>  },
+>  "07_w12full_vs_default": {
+>   "max_pixel_difference": 197,
+>   "differing_pixels": 1251522
+>  },
+>  "04_w12full_vs_default": {
+>   "max_pixel_difference": 222,
+>   "differing_pixels": 1255421
+>  }
+> }
+
+### 🤖 Claude — 2026-11-16T14:18:38.828Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const render = \\|function render\\|composer.render\" src/game/Game.ts | head; python3 -I /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/pix.py \"{\\\"06_silkpuff_vs_default\\\": [\\\"qa/pilot05/wave12/tests/w12_040607/06.png\\\", \\\"qa/pilot05/wave12/tests/default_040607/06.png\\\"], \\\"07_silkpuff_vs_default\\\": [\\\"qa/pilot05/wave12/tests/w12_040607/07.png\\\", \\\"qa/pilot05/wave12/tests/default_040607/07.png\\\"], \\\"04_silkpuff_vs_default\\\": [\\\"qa/pilot05/wave12/tests/w12_040607/04.png\\\", \\\"qa/pilot05/wave12/tests/def …[+87 chars]`
+
+### 🧑 User — 2026-11-16T14:18:39.445Z
+
+> ↩︎ result: 523:  const render = () => { renderer.info.reset(); composer.render(); };
+> {
+>  "06_silkpuff_vs_default": {
+>   "max_pixel_difference": 6,
+>   "differing_pixels": 27
+>  },
+>  "07_silkpuff_vs_default": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "04_silkpuff_vs_default": {
+>   "max_pixel_difference": 162,
+>   "differing_pixels": 119874
+>  }
+> }
+
+### 🤖 Claude — 2026-11-16T14:18:45.703Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  const render = () => { renderer.info.reset(); composer.render(); };", "new_string": "  // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the\n  // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins\n  const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };\n  const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };\n  const st05 = course.stage('05');\n  const render = () => {\n    if (glow05) {\n   …[+357 chars]`
+
+### 🧑 User — 2026-11-16T14:18:45.745Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:18:46.804Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const course = new Course\\|const st = {\\|let st\\b\\|const st:\" src/game/Game.ts | head -4; npx tsc --noEmit -p . && echo TSC_OK", "description": "Check declaration order and typecheck"}`
+
+### 🧑 User — 2026-11-16T14:18:49.309Z
+
+> ↩︎ result: 94:  const course = new Course();
+> 115:  const st = {
+> TSC_OK
+
+### 🤖 Claude — 2026-11-16T14:18:52.677Z
+
+Re-running the final captures and the protection checks with the stage-limited bloom:
+
+### 🤖 Claude — 2026-11-16T14:19:00.936Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/wave12 && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && W='silk05=1&puff05=1&glow05=1&flowcam05=1' && rm -rf $O/factors/W12_full $O/factors/silk05_puff05_glow05 $O/factors/glow05_only $O/tests/w12full_040607 && (\nnode scripts/capture.mjs 05 --q=\"silk05=1&puff05=1&glow05=1\" --out=$O/factors/silk05_puff05_glow05 >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W\" --out=$O/factors/W12_full >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"glow05=1\" --out=$O/factors/glow05_only >/dev/null 2>&1\nnode scripts/capture.mjs 04  …[+1454 chars]`
+
+### 🧑 User — 2026-11-16T14:21:02.688Z
+
+> ↩︎ result: "pass": true "verticalDrop": 61.41 "errors": [] "ok": true
+> {
+>  "default_vs_current_default": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "before_vs_wave9_baseline": {
+>   "max_pixel_difference": 37,
+>   "differing_pixels": 155
+>  },
+>  "05_glow_vs_G_test": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "06_w12full_vs_default": {
+>   "max_pixel_difference": 6,
+>   "differing_pixels": 27
+>  },
+>  "07_w12full_vs_default": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "04_w12full_vs_default": {
+>   "max_pixel_difference": 171,
+>   "differing_pixels": 76455
+>  }
+> }
+
+### 🤖 Claude — 2026-11-16T14:21:12.548Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && for i in 1 2; do node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/bef$i >/dev/null 2>&1; done; python3 -I $S/pix.py \"{\\\"before1\\\": [\\\"$S/bef1/05.png\\\", \\\"qa/pilot05/wave9/baseline/05.png\\\"], \\\"before2\\\": [\\\"$S/bef2/05.png\\\", \\\"qa/pilot05/wave9/baseline/05.png\\\"], \\\"bad_vs_baseline_where\\\": [\\\"qa/pilot05/wave12/tests/before_after/05.png\\\", \\\"qa/pilot05/wave9/baseline/05.png\\\"]}\"; python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\na …[+374 chars]`
+
+### 🧑 User — 2026-11-16T14:21:44.132Z
+
+> ↩︎ result: {
+>  "before1": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "before2": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "bad_vs_baseline_where": {
+>   "max_pixel_difference": 37,
+>   "differing_pixels": 155
+>  }
+> }
+> diff bbox x 59 805 y 21 104
+
+### 🤖 Claude — 2026-11-16T14:21:54.641Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/wave12 && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && cp $O/tests/before_after/05.png $O/tests/before_after/05_flaky_HUD_frame.png && cp $S/bef1/05.png $O/tests/before_after/05.png && python3 - <<'EOF'\nimport json\np='qa/pilot05/wave12/tests/pixel_checks_final.json'\nd=json.load(open(p))\nd['before_vs_wave9_baseline']={\"max_pixel_difference\":0,\"differing_pixels\":0,\"note\":\"first capture differed in 155 px of the HUD bar only (rows 21-104, kept as 05_flaky_HUD_frame.png: a HUD animation caught mid-frame); two re-capture …[+978 chars]`
+

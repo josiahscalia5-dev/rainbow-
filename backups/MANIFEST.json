@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7780,
-   "sha256": "b683a925bf2d0b00271740d288d1da7297e4857f4b0e9b964e5cf35b456b9281"
+   "sha256": "ec70280b986f83c0d20645d9d8f8a1f12d8f4c4c71c2fd9e2db52e48cf05524d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -838,8 +838,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1187,
-   "sha256": "b72321412f47d6ae57be6a29eda33f9a5b045b45134d32a79517bfffdd37dfb5"
+   "bytes": 1236,
+   "sha256": "f607139345632b958dac110508caa422a29cfe6650933672230788a1db2fd2f9"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1528,8 +1528,8 @@
   },
   {
    "path": "qa/pilot05/wave12/factors/glow05_only/05.png",
-   "bytes": 1647979,
-   "sha256": "22f18baf42950ad99a9053f5a3e2db5c9e5a95e42c7a57de68bc6f84e31f7c4c"
+   "bytes": 1647967,
+   "sha256": "a37b2f6136a0d9bed87d03fb07dc82faaec9b304a0538f186b6871a29719fe4d"
   },
   {
    "path": "qa/pilot05/wave12/factors/puff05/05.png",
@@ -1602,6 +1602,16 @@
    "sha256": "dc8155f9ac7bccd80601245de6344de821ba9c966d89734da2236cb980bb1c07"
   },
   {
+   "path": "qa/pilot05/wave12/tests/before_after/05.png",
+   "bytes": 1750841,
+   "sha256": "dc8155f9ac7bccd80601245de6344de821ba9c966d89734da2236cb980bb1c07"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/before_after/05_flaky_HUD_frame.png",
+   "bytes": 1750841,
+   "sha256": "33ca624918ff713181f2d4ae9cd4d1d5073dc267fef73acc24c7a94a63d5ab7e"
+  },
+  {
    "path": "qa/pilot05/wave12/tests/capture_run.txt",
    "bytes": 97,
    "sha256": "a49b316a40e548c121b3fb02be82aa0db511589ad92546906bb139a3a424ba8a"
@@ -1647,6 +1657,16 @@
    "sha256": "823077369b0f512f478c70778f1740410eebbcf00db78078050f8e35da11e21f"
   },
   {
+   "path": "qa/pilot05/wave12/tests/gameplay_w12full.json",
+   "bytes": 14685,
+   "sha256": "f673331819b96cdbb1c3ece3720fa149ff36bb5370cea1612656e5aba70df244"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/gameplay_w12full_stdout.txt",
+   "bytes": 577,
+   "sha256": "1bdc83e674a0a82216178030e59b68fca923d3247bb60aed82a9f45b9ddd5f0d"
+  },
+  {
    "path": "qa/pilot05/wave12/tests/perf_high_864x1536.json",
    "bytes": 1152,
    "sha256": "adc3a5b36b54b37a7201513ee398136788b415b95b13ad4de0557809e2818da9"
@@ -1660,6 +1680,11 @@
    "path": "qa/pilot05/wave12/tests/pixel_checks_05.json",
    "bytes": 352,
    "sha256": "ca8468dfe23e27538d736a7583f558a7a5bdf3cd660dc85df4830495e7a02c1a"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/pixel_checks_final.json",
+   "bytes": 851,
+   "sha256": "7c46026b1611888342696d9398c7921bd3549715f28337364be3f3c4de1eff85"
   },
   {
    "path": "qa/pilot05/wave12/tests/river05/05.png",
@@ -1693,18 +1718,18 @@
   },
   {
    "path": "qa/pilot05/wave12/tests/w12full_040607/04.png",
-   "bytes": 895051,
-   "sha256": "4d2c2da45638641f3250afb8435a81804efdb53d157d241fd282f678134b30f7"
+   "bytes": 1007448,
+   "sha256": "f80385fd2e34f2ea189a557489a0b8a47c0835115c2b5572cfc66c6be38aa9d7"
   },
   {
    "path": "qa/pilot05/wave12/tests/w12full_040607/06.png",
-   "bytes": 1485179,
-   "sha256": "3b00ba5b036a4712d4d483e2ed9698e3bb72386a43057661861bf847a775f2a5"
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
   },
   {
    "path": "qa/pilot05/wave12/tests/w12full_040607/07.png",
-   "bytes": 1733054,
-   "sha256": "4b601860bb857d5dae75d7336175be286b96b9f93c604b323ad3c601d5189e59"
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
   },
   {
    "path": "qa/pilot05/wave3/benny/it00/05.png",
@@ -6418,8 +6443,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 34304,
-   "sha256": "deee8f454a9a90ca1da5fd4f5f301349b58d6f4936838b296e04fda6864a77e0"
+   "bytes": 35000,
+   "sha256": "025614ce1461a3ee08627408b57d830e4b92d44f46cae95e10d1e9206e584318"
   },
   {
    "path": "src/game/cameraRig.ts",
