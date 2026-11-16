@@ -14,6 +14,8 @@
 //                     real lid / far lid (object x, y, 5 / 6, 40 + instance); anything else: its own colour, alpha ≤ 1
 //                   Benny, coins, bubbles, foam, splash and spray are hidden unless --all is given (then they occlude,
 //                   and pixels blended with something transparent no longer carry an exact alpha → not usable).
+//   tunnel_coords.f32  (--coords, with --q='projwall05=1&projring05=1'): the same frame, but the tunnel shaders write the
+//                   baked-texture coordinates they sample: wall (u, v in wall05.png, 7, 77), ring (u, v in ring05.png, 8, 78)
 // Uses window.__rainbow.qa3d() (QA accessor; rendering is unchanged). Nothing in the game is modified.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
@@ -23,6 +25,7 @@ const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/tunnel/prob
 const RAW = typeof opt.raw === 'string' ? opt.raw : OUT;
 const Q = typeof opt.q === 'string' ? opt.q : '';
 const ALL = !!opt.all;
+const COORDS = !!opt.coords;   // with ?projwall05=1 / ?projring05=1: the baked-texture coordinates the shaders use (tunnel_coords.f32)
 mkdirSync(OUT, { recursive: true });
 mkdirSync(RAW, { recursive: true });
 const W = 864, H = 1536;
@@ -37,7 +40,7 @@ try {
   const hide = ALL ? '' : '&hide=benny,coins&waterhide=crown,spray,bubbles,splash05,splashCrown,foamRim05,foamFlank,foamRafts';
   await page.goto(`${vite.url}/?qa=1&dpr=1${hide}${Q ? '&' + Q : ''}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
-  const meta = await page.evaluate(async () => {
+  const meta = await page.evaluate(async (COORDS) => {
     const R = window.__rainbow;
     R.goto('05');
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
@@ -83,7 +86,10 @@ try {
     scene.traverse((o) => { if (o.isMesh || o.isPoints || o.isLine || o.isSprite) all.push(o); });
     const saved = all.map((o) => ({ o, mat: o.material, cls: classify(o) }));
     const probed = {};
-    for (const s of saved) if (s.cls) { s.o.material = mats[s.cls]; probed[s.cls] = (probed[s.cls] ?? 0) + 1; }
+    // --coords: no material is replaced; the projwall05 / projring05 shaders themselves write (texture u, v, 7 | 8, 77 | 78)
+    const ptShared = COORDS ? (await import('/src/vfx/proj05Tunnel.ts')).proj05TunnelShared : null;
+    if (ptShared) ptShared.uPtDbg.value = 1;
+    else for (const s of saved) if (s.cls) { s.o.material = mats[s.cls]; probed[s.cls] = (probed[s.cls] ?? 0) + 1; }
     const bg = scene.background;
     scene.background = null;
     renderer.setRenderTarget(rt);
@@ -94,6 +100,7 @@ try {
     const buf = new Float32Array(rt.width * rt.height * 4);
     renderer.readRenderTargetPixels(rt, 0, 0, rt.width, rt.height, buf);
     for (const s of saved) s.o.material = s.mat;
+    if (ptShared) ptShared.uPtDbg.value = 0;
     scene.background = bg;
     window.__probe = buf;
     // ring instances: world matrices of the real rings (centre, radius, axial position along the tube)
@@ -116,7 +123,7 @@ try {
       ringInstances: inst(ringMesh), farRingInstances: inst(farRingMesh),
       state: R.state(),
     };
-  });
+  }, COORDS);
   const b64 = await page.evaluate(() => {
     const u8 = new Uint8Array(window.__probe.buffer);
     let s = '';
@@ -128,8 +135,9 @@ try {
   const rowB = W * 4 * 4;
   const flipped = Buffer.alloc(raw.length);
   for (let y = 0; y < H; y++) raw.copy(flipped, y * rowB, (H - 1 - y) * rowB, (H - y) * rowB);
-  writeFileSync(`${RAW}/tunnel_id${ALL ? '_all' : ''}.f32`, flipped);
-  writeFileSync(`${OUT}/tunnel${ALL ? '_all' : ''}.json`, JSON.stringify({ ...meta, q: Q, all: ALL }, null, 1));
+  const tag = `${COORDS ? 'coords' : 'id'}${ALL ? '_all' : ''}`;
+  writeFileSync(`${RAW}/tunnel_${tag}.f32`, flipped);
+  if (!COORDS) writeFileSync(`${OUT}/tunnel${ALL ? '_all' : ''}.json`, JSON.stringify({ ...meta, q: Q, all: ALL }, null, 1));
   console.log('probed', JSON.stringify(meta.probed), 'tunnel', JSON.stringify(meta.tunnel));
 } finally {
   await browser.close();

@@ -63,7 +63,7 @@ def lowfreq_match(patch, ref, ring, hole, sigma=14.0):
     return np.clip(patch + d * hole[..., None], 0, 255)
 
 
-def translate_fill(img, ok, max_w, dt_max=14, label_id=4, srcmap=None):
+def translate_fill(img, ok, max_w, dt_max=14, label_id=4, srcmap=None, pid=None):
     """fill bounded holes by copying the same wall from further along theta (shift d_theta, small d_t), chosen so that the
     copy agrees best with the own pixels round the hole; the slot rows run along theta, so the copy keeps them intact"""
     from scipy.ndimage import label as cc_label
@@ -138,7 +138,94 @@ def translate_fill(img, ok, max_w, dt_max=14, label_id=4, srcmap=None):
         out_img[hy, hx] = np.clip(patch[hy, hx] + d3[hy, hx], 0, 255)
         have[hy, hx] = True
         if srcmap is not None: srcmap[hy, hx] = label_id
+        if pid is not None: pid[hy, hx] = 1000 + i
     return out_img, have
+
+
+
+def periodic_fill(img, ok, period, srcmap=None, label_id=6, pid=None):
+    """fill what is left by repeating the wall every `period` texels along theta (the light lines repeat every 30 deg):
+    each invalid texel takes the nearest valid texel k periods away (searching both directions). Slot rows stay intact."""
+    h, w = ok.shape
+    out_img = img.copy(); have = ok.copy()
+    xs = np.arange(w)
+    for k in range(1, int(math.ceil(w / period)) + 1):
+        if have.all(): break
+        for sgn in (1, -1):
+            srcx = (xs + sgn * int(round(k * period))) % w
+            take = ~have & ok[:, srcx]
+            out_img[take] = img[:, srcx][take]
+            if srcmap is not None: srcmap[take] = label_id
+            if pid is not None: pid[take] = 100 + 2 * k + (sgn > 0)
+            have |= take
+    return out_img, have
+
+
+def feather_seams(img, srcmap, own_id=0, width=6.0):
+    """soften the seams of the filled areas along theta; own texels (the approved pixels) stay exact"""
+    filled = srcmap != own_id
+    if not filled.any(): return img
+    lab_edges = np.zeros(srcmap.shape, bool)
+    lab_edges[:, 1:] |= srcmap[:, 1:] != srcmap[:, :-1]
+    lab_edges[:, 0] |= srcmap[:, 0] != srcmap[:, -1]
+    lab_edges[1:, :] |= srcmap[1:, :] != srcmap[:-1, :]
+    d = distance_transform_edt(~lab_edges)
+    wgt = np.clip(1.0 - d / width, 0, 1) * filled
+    blur = np.stack([gaussian_filter(img[..., c], (width * 0.5, width), mode=("nearest", "wrap")) for c in range(3)], -1)
+    return img * (1 - wgt[..., None]) + blur * wgt[..., None]
+
+
+def tone_match(src_img, src_ok, ref_img, ref_ok):
+    """per-channel gain + offset that maps src onto ref where both show the same wall (low-passed), for a fill from another bay"""
+    both = src_ok & ref_ok
+    if both.sum() < 500: return src_img
+    out_img = src_img.copy()
+    for c in range(3):
+        a = gaussian_filter(src_img[..., c], 4.0, mode=("nearest", "wrap"))[both]; b = gaussian_filter(ref_img[..., c], 4.0, mode=("nearest", "wrap"))[both]
+        g = float(np.clip(b.std() / max(a.std(), 1e-3), 0.6, 1.6)); o = float(b.mean() - g * a.mean())
+        out_img[..., c] = np.clip(src_img[..., c] * g + o, 0, 255)
+    return out_img
+
+
+
+def poisson_blend(img, own, pid, screen=0.0008):
+    """gradient-domain blend of the filled texels: inside every copied patch the copy's own gradients are kept, across the
+    seams between patches the gradient is zero, and the approved (own) texels are the fixed boundary. Removes the tone
+    steps between patches; theta is periodic, the t ends are free. Own texels are returned unchanged."""
+    import scipy.sparse as sp
+    from scipy.sparse.linalg import splu
+    h, w = own.shape
+    unk = ~own
+    n = int(unk.sum())
+    if n == 0: return img
+    idx = -np.ones((h, w), np.int64); idx[unk] = np.arange(n)
+    ys, xs = np.nonzero(unk)
+    rows, cols, vals = [], [], []
+    diag = np.zeros(n)
+    b = np.zeros((n, 3))
+    me = idx[ys, xs]
+    for dy, dx in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+        ny, nx = ys + dy, (xs + dx) % w
+        inb = (ny >= 0) & (ny < h)
+        nyc = np.clip(ny, 0, h - 1)
+        same = inb & (pid[ys, xs] == pid[nyc, nx]) & ~own[nyc, nx]
+        # guidance: the copy's own gradient inside one patch, zero across seams and toward the own texels' boundary
+        g = np.where(same[:, None], img[ys, xs] - img[nyc, nx], 0.0)
+        diag += inb
+        b += g * inb[:, None]
+        nb_unk = inb & unk[nyc, nx]
+        rows.append(me[nb_unk]); cols.append(idx[nyc, nx][nb_unk]); vals.append(-np.ones(int(nb_unk.sum())))
+        nb_own = inb & own[nyc, nx]
+        b[nb_own] += img[nyc, nx][nb_own]
+    # screened: a weak pull toward the pasted colours keeps large hidden areas from drifting (decay length ~ 1/sqrt(screen))
+    diag = diag + screen
+    b += screen * img[ys, xs]
+    A = sp.csc_matrix((np.concatenate(vals + [diag]), (np.concatenate(rows + [me]), np.concatenate(cols + [me]))), shape=(n, n))
+    lu = splu(A)
+    out_img = img.copy()
+    for c in range(3):
+        out_img[ys, xs, c] = lu.solve(b[:, c])
+    return np.clip(out_img, 0, 255)
 
 
 def fill_theta(img, ok, feather=5.0, src0=None, mirror=True):
@@ -210,28 +297,31 @@ for name, h in ROWS:
     raw[name] = sample(mx, my, okmask)
 
 y0 = GUT
+P30 = TW * 30.0 / 360.0                                   # the approved wall's light lines repeat every 30 deg
 for name, h in ROWS:
     img, ok = raw[name]
-    src = np.zeros(ok.shape, np.uint8)
+    own = ok.copy()
+    src = np.zeros(ok.shape, np.uint8); pid = np.zeros(ok.shape, np.int32)
     if name == "AB":
         # the crown of bay AB is behind the HUD in the approved picture: take the same wall from bay BC (same theta, same
-        # t), which the picture shows completely, colour-matched to AB's own pixels next to it
+        # t), which the picture shows completely, tone-matched to AB's own pixels
         bimg, bok = raw["BC"]
         bimg = cv2.resize(bimg, (TW, h), interpolation=cv2.INTER_CUBIC); bok = cv2.resize(bok.astype(np.uint8), (TW, h), interpolation=cv2.INTER_NEAREST) > 0
+        bimg = tone_match(bimg, bok, img, ok)
         thd = np.degrees(th)
-        crown = ((thd > 40) & (thd < 140))[None, :] & ~ok & bok
-        ring = binary_dilation(crown, iterations=10) & ok
-        img = np.where(crown[..., None], lowfreq_match(bimg, img, ring, crown, 30.0), img)
-        src[crown] = 5; ok = ok | crown
+        crown = ((thd > 35) & (thd < 145))[None, :] & ~ok & bok
+        img = np.where(crown[..., None], bimg, img)
+        src[crown] = 5; pid[crown] = 5; ok = ok | crown
     if name in ("AB", "BC", "CD"):
-        img, ok2 = translate_fill(img, ok, max_w=int(TW * 70 / 360), dt_max=int(h * 0.06), srcmap=src)
-    else:
-        ok2 = ok
-    filled, src = fill_theta(img, ok2, src0=src, mirror=name not in ("AB", "BC", "CD"))
+        img, ok = translate_fill(img, ok, max_w=int(TW * 70 / 360), dt_max=int(h * 0.06), srcmap=src, pid=pid)
+    img, ok = periodic_fill(img, ok, P30, srcmap=src, pid=pid)
+    filled, src = fill_theta(img, ok, feather=0, src0=src, mirror=False)      # anything still missing (whole rows)
+    pid[(src == 2) | (src == 3)] = 3
+    filled = poisson_blend(filled, own, pid)
     atlas[y0:y0 + h] = filled; srcmap[y0:y0 + h] = src
     atlas[y0 - GUT:y0] = filled[0]; atlas[y0 + h:y0 + h + GUT] = filled[-1]
     meta_rows[name] = {"y0": y0, "h": h}
-    report[name] = {k: round(float((src == v).mean()), 3) for k, v in (("own", 0), ("mirror", 1), ("reflect", 2), ("nearest_t", 3), ("translate", 4), ("from_BC", 5))}
+    report[name] = {k: round(float((src == v).mean()), 3) for k, v in (("own", 0), ("reflect", 2), ("nearest_t", 3), ("translate", 4), ("from_BC", 5), ("periodic_30deg", 6))}
     y0 += h + GUT
 
 # ---- ring B band
@@ -245,9 +335,14 @@ rimg, rok = sample(mx, my, ring_ok)
 # a column is usable only if most of the band is gold there (lids / water / HUD columns are dropped entirely)
 colok = rok.mean(0) > 0.8
 rok2 = np.repeat(colok[None, :], RING_H, 0)
-rsrc = np.zeros(rok2.shape, np.uint8)
-rimg2, rok3 = translate_fill(rimg, rok2, max_w=int(RING_W * 80 / 360), dt_max=0, srcmap=rsrc)
-ring, rsrc = fill_theta(rimg2, rok3, feather=8.0, src0=rsrc, mirror=False)
+rsrc = np.zeros(rok2.shape, np.uint8); rpid = np.zeros(rok2.shape, np.int32)
+rimg2, rok3 = translate_fill(rimg, rok2, max_w=int(RING_W * 80 / 360), dt_max=0, srcmap=rsrc, pid=rpid)
+rimg2, rok3 = periodic_fill(rimg2, rok3, RING_W * 30.0 / 360.0, srcmap=rsrc, pid=rpid)
+ring, rsrc = fill_theta(rimg2, rok3, feather=0, src0=rsrc, mirror=False)
+rpid[(rsrc == 2) | (rsrc == 3)] = 3
+# the band's edges: a few texels at v 0 / 1 can catch the wall next to the gold -> take the neighbouring gold row
+ring[:2] = ring[2]; ring[-2:] = ring[-3]
+ring = poisson_blend(ring, rsrc == 0, rpid)
 report["ring_B"] = {"own_columns": round(float(colok.mean()), 3), "theta_deg_own": [round(float(np.degrees(thr[colok].min())), 1), round(float(np.degrees(thr[colok].max())), 1)]}
 
 if corr_path and os.path.exists(corr_path):

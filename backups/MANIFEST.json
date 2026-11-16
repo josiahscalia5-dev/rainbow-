@@ -388,8 +388,8 @@
   },
   {
    "path": "assets/textures/tunnel05/ring05.png",
-   "bytes": 181487,
-   "sha256": "8d664d2db51a14f3f1d394e400e3ab761a53f81c349c499e8a8f658b5c42ce4a"
+   "bytes": 167952,
+   "sha256": "5e474fa8113f4d8a2572e307e155b7353291a5a505ac8c711fbc8d7073664b81"
   },
   {
    "path": "assets/textures/tunnel05/tunnel05.json",
@@ -398,8 +398,8 @@
   },
   {
    "path": "assets/textures/tunnel05/wall05.png",
-   "bytes": 1584632,
-   "sha256": "75f9ee511748a6688026ae18ba0b400abe23c846f48db9d548ab8ce74aed4ab5"
+   "bytes": 1624000,
+   "sha256": "d16b934f809eeca2b480a8da9a8fcf9eac30174f53e90778e0331fdd28beb941"
   },
   {
    "path": "assets/textures/water05/proj05_A.png",
@@ -459,7 +459,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8737,
-   "sha256": "bc14f2dd87aae85715fdcb3735c1dd6d5cd27862763e24c52f893460a048fd04"
+   "sha256": "21778fe0e5747b654c189b06b455788e7767aa4af28fa3608156918625a5d172"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1613,13 +1613,13 @@
   },
   {
    "path": "qa/pilot05/proj/tunnel/model/bake_report.json",
-   "bytes": 959,
-   "sha256": "32bf32234ab31a75510d1a1c14636b3cead5fc37af964d2752fe534beb0f7360"
+   "bytes": 1015,
+   "sha256": "687c5bfbbc3bc0956058c93960bb150063d12269bfed822f57c4be236f1e697f"
   },
   {
    "path": "qa/pilot05/proj/tunnel/model/ring05_srcmap.npy",
    "bytes": 131200,
-   "sha256": "f8274d49d050e0595adf88d60e32140a44dd6a4621254aa9a554e61517476e00"
+   "sha256": "35efeaeca73cfbb5212716394370842b10bcfbbb6021d8810749c249087a692b"
   },
   {
    "path": "qa/pilot05/proj/tunnel/model/ring_model.json",
@@ -1634,7 +1634,7 @@
   {
    "path": "qa/pilot05/proj/tunnel/model/wall05_srcmap.npy",
    "bytes": 1212544,
-   "sha256": "9a8e0a7be9a433ee9bd5077493a1b683ae9d6f60ada8b4b0f954870d6f526f17"
+   "sha256": "f939528c76d064a9d6376d09fe1675e6e90a96f3bab4b0a789a27603df591fe5"
   },
   {
    "path": "qa/pilot05/proj/tunnel/probe/tunnel.json",
@@ -6893,8 +6893,8 @@
   },
   {
    "path": "scripts/proj05-tunnel-probe.mjs",
-   "bytes": 8573,
-   "sha256": "46a12ea3dc83cddc31ad69d0b2a5c6f35df0a8c3985f79fd1a725bcf6323d2ba"
+   "bytes": 9356,
+   "sha256": "a34f93a2de1455179b702b2b11cbf06702b3171540602198b6a8e9d2f962202d"
   },
   {
    "path": "scripts/rainbow-autosave.py",
@@ -7293,8 +7293,8 @@
   },
   {
    "path": "tools/proj05/tunnel_bake.py",
-   "bytes": 13899,
-   "sha256": "39ae9814ea22b3636e7013b5fa0f06d154a961fd06e19f8002986eb033097762"
+   "bytes": 18703,
+   "sha256": "1f396456b9652492dad8548c599bba9efcbd6553ae463086a5fce9617f432d82"
   },
   {
    "path": "tools/proj05/tunnel_common.py",

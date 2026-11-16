@@ -1736,3 +1736,122 @@ Textures are in good shape. Now wiring them into the game's wall and ring shader
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/proj05Tunnel.ts (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-16T20:17:30.149Z
+
+Shader module is written. Now connecting it to the tunnel builder (which wall section gets which texture row) and then the first in-game render.
+
+### 🤖 Claude — 2026-11-16T20:17:49.705Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\n\n# 1) import\nold=\"import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)\"\nassert old in s\ns=s.replace(old, old+\"\\nimport { PROJWALL05, PROJRING05, PT_ROW, withProj05Wall, withProj05Ring, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests\")\n\n# 2) real rings material\nold=\"  const ringMat05 = gold05('ring05', false, band05near);\"\nassert old in s\nnew='''  // `?projring05=1` (qa/pilot05/proj/tunnel/NOTES.md): the …[+4404 chars]`
+
+### 🧑 User — 2026-11-16T20:17:52.736Z
+
+> ↩︎ result: 448:    const zEnd = 430 - D0;
+> 449:    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);
+> 461:      const uEnd = sF05 + knots[knots.length - 1][0] + (zEnd - knots[knots.length - 1][1]) / slope(knots.length - 1);
+> 507:    glow.position.copy(ft.point(zEnd, new THREE.Vector3()));
+> 508:    glow.scale.setScalar(perfPath.radius(sF05) * ft.kOf(zEnd) * 1.35);
+
+### 🤖 Claude — 2026-11-16T20:18:02.106Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && mkdir -p $S/c1 && node scripts/capture.mjs 05 --q='projwall05=1&projring05=1' --out=$S/c1 2>&1 | tail -4; git checkout qa/capture_log.json 2>/dev/null; ls -la $S/c1", "description": "First in-game capture with baked walls and rings", "timeout": 400000}`
+
+### 🧑 User — 2026-11-16T20:18:18.065Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/c1/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> total 1892
+> drwxr-xr-x 2 root root    4096 Nov 16 20:18 .
+> drwx------ 6 root root    4096 Nov 16 20:18 ..
+> -rw-r--r-- 1 root root 1928816 Nov 16 20:18 05.png
+
+### 🤖 Claude — 2026-11-16T20:18:20.741Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/c1/05.png"}`
+
+### 🧑 User — 2026-11-16T20:18:20.804Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:18:27.080Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nim=Image.open('$S/c1/05.png').convert('RGB')\nc=im.crop((0,180,864,700)); c=c.resize((c.width*2,c.height*2),Image.LANCZOS); c.save('$S/look/c1_tunnel.png')\nEOF", "description": "Zoom on the tunnel of the first capture"}`
+
+### 🧑 User — 2026-11-16T20:18:27.846Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:18:30.463Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/c1_tunnel.png"}`
+
+### 🧑 User — 2026-11-16T20:18:30.524Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:19:49.535Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/tunnel_bake.py'\ns=open(p).read()\n\n# periodic extension helper + seam feather helper\nhelper = '''\ndef periodic_fill(img, ok, period, srcmap=None, label_id=6):\n    \"\"\"fill what is left by repeating the wall every `period` texels along theta (the light lines repeat every 30 deg):\n    each invalid texel takes the nearest valid texel k periods away (searching both directions). Slot rows stay intact.\"\"\"\n    h, w = ok.shape\n    out_img = img.copy(); have = ok.copy()\n    xs = np.arange(w)\n    for k in range(1, int(math.ceil(w / period …[+5358 chars]`
+
+### 🧑 User — 2026-11-16T20:20:15.849Z
+
+> ↩︎ result: {'AB': {'own': 0.303, 'reflect': 0.0, 'nearest_t': 0.0, 'translate': 0.077, 'from_BC': 0.164, 'periodic_30deg': 0.455}, 'BC': {'own': 0.472, 'reflect': 0.006, 'nearest_t': 0.0, 'translate': 0.029, 'from_BC': 0.0, 'periodic_30deg': 0.493}, 'CD': {'own': 0.462, 'reflect': 0.046, 'nearest_t': 0.0, 'translate': 0.032, 'from_BC': 0.0, 'periodic_30deg': 0.461}, 'ring_B': {'own_columns': 0.44, 'theta_deg_own': [0.1, 359.9]}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/sc
+
+### 🤖 Claude — 2026-11-16T20:20:18.086Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/c2_tunnel.png"}`
+
+### 🧑 User — 2026-11-16T20:20:18.164Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:21:00.797Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/tunnel_bake.py'\ns=open(p).read()\n\n# --- patch ids -----------------------------------------------------------------------------------\ns = s.replace(\"def translate_fill(img, ok, max_w, dt_max=14, label_id=4, srcmap=None):\", \"def translate_fill(img, ok, max_w, dt_max=14, label_id=4, srcmap=None, pid=None):\")\nold = \"        if srcmap is not None: srcmap[hy, hx] = label_id\\n    return out_img, have\"\nassert old in s\ns = s.replace(old, \"        if srcmap is not None: srcmap[hy, hx] = label_id\\n        if pid is not None: pid[hy, hx]  …[+5688 chars]`
+
+### 🧑 User — 2026-11-16T20:21:15.632Z
+
+> ↩︎ result: real	0m14.568s
+> user	0m14.519s
+> sys	0m0.729s
+
+### 🤖 Claude — 2026-11-16T20:21:17.188Z
+
+Seamless blending added to the bake; checking the textures before the next in-game capture.
+
+### 🤖 Claude — 2026-11-16T20:21:18.601Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/ab_upper.png"}`
+
+### 🧑 User — 2026-11-16T20:21:18.633Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:21:19.208Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/ring.png"}`
+
+### 🧑 User — 2026-11-16T20:21:19.221Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:21:44.926Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/tunnel_bake.py'\ns=open(p).read()\nold='''def poisson_blend(img, own, pid):'''\nnew='''def poisson_blend(img, own, pid, screen=0.0008):'''\nassert old in s; s=s.replace(old,new)\nold='''    A = sp.csc_matrix((np.concatenate(vals + [diag]), (np.concatenate(rows + [me]), np.concatenate(cols + [me]))), shape=(n, n))'''\nnew='''    # screened: a weak pull toward the pasted colours keeps large hidden areas from drifting (decay length ~ 1/sqrt(screen))\n    diag = diag + screen\n    b += screen * img[ys, xs]\n    A = sp.csc_matrix((np.concatenate(va …[+955 chars]`
+
+### 🧑 User — 2026-11-16T20:22:14.832Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-
+
+### 🤖 Claude — 2026-11-16T20:22:17.144Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/c3_tunnel.png"}`
+
+### 🧑 User — 2026-11-16T20:22:17.208Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:22:50.910Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-tunnel-probe.mjs'\ns=open(p).read()\nold=\"const ALL = !!opt.all;\"\nnew=\"const ALL = !!opt.all;\\nconst COORDS = !!opt.coords;   // with ?projwall05=1 / ?projring05=1: the baked-texture coordinates the shaders use (tunnel_coords.f32)\"\nassert old in s; s=s.replace(old,new)\nold=\"  const meta = await page.evaluate(async () => {\\n    const R = window.__rainbow;\\n    R.goto('05');\"\nnew=\"  const meta = await page.evaluate(async (COORDS) => {\\n    const R = window.__rainbow;\\n    R.goto('05');\"\nassert old in s; s=s.replace(old,new)\n …[+2536 chars]`
+
