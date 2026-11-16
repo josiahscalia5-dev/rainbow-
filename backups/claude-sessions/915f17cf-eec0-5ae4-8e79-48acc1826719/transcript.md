@@ -2251,3 +2251,191 @@ The flow map clearly shows the fast core and both foam shelves. Now the regressi
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && cat > $S/perf.mjs <<'EOF'\n// Scratch → copied to scripts/perf05.mjs: relative frame cost of Screen 05 variants at the locked checkpoint.\n// node perf.mjs OUT.json [--size=864x1536] name=query ...\nimport { writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst args = process.argv.slice(2); const out = args.shift();\nconst size = (args.find((a) => a.startsWith('--size=')) ?? '--size=864x1536').slice(7).split('x' …[+3112 chars]`
 
+### 🧑 User — 2026-11-16T13:31:18.854Z
+
+> ↩︎ result: 0 default {"medianMs":2198,"minMs":2118.8,"calls":86,"tris":567415,"textures":43,"errors":0}
+> 0 water05 {"medianMs":2161.4,"minMs":2032.5,"calls":86,"tris":567415,"textures":43,"errors":0}
+> 0 farw05 {"medianMs":2531.3,"minMs":2195.8,"calls":86,"tris":567415,"textures":43,"errors":0}
+> 0 flow05 {"medianMs":2634.9,"minMs":2275.5,"calls":86,"tris":567415,"textures":45,"errors":0}
+> 0 river05 {"medianMs":2355.7,"minMs":2212.8,"calls":86,"tris":567415,"textures":45,"errors":0}
+> 1 default {"medianMs":2377.2,"minMs":2209.8,"calls":86,"tris":567415,"textures":43,"errors":0}
+> 1 water05 {"medianMs":2520.8,"minMs":2172.4,"calls":86,"tris":567415,"textures":43,"errors":0}
+> 1 farw05 {"medianMs":2344.6,"minMs":2167.3,"calls":86,"tris":567415,"textures":43,"errors":0}
+> 1 flow05 {"medianMs":2360.8,"minMs":2171.9,"calls":86,"tris":567415,"textures":45,"errors":0}
+> 1 river05 {"medianMs":2367.1,"minMs":2187.1,"calls":86,"tris":567415,"textures":45,"errors":0}
+> [["default",2198,1,43],["water05",2161.4,0.983,43],["farw05",2344.6,1.067,43],["flow05",2360.8,1.074,45],["river05",2355.7,1.072,45]]
+
+### 🤖 Claude — 2026-11-16T13:31:29.725Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && cp $S/perf.mjs scripts/perf05.mjs && sed -i \"s|// Scratch → copied to scripts/perf05.mjs: relative frame cost of Screen 05 variants at the locked checkpoint.|// Relative frame cost of Screen 05 URL-switch variants at the locked checkpoint (headless Chromium, WebGL2).|; s|// node perf.mjs OUT.json|//   node scripts/perf05.mjs OUT.json|; s|'/home/user/rainbow-/scripts/lib/pw.mjs'|'./lib/pw.mjs'|\" scripts/perf05.mjs && cp $S/perf_high.json qa/pilot05/wave11/tests/perf_high_864x1536.json && (node  …[+281 chars]`
+
+### 🧑 User — 2026-11-16T13:31:30.769Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-16T13:31:35.800Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('$S/t/04/default.png').crop((230,380,630,760)); b=Image.open('$S/t/04/river.png').crop((230,380,630,760))\nl=Image.open('$S/t/05/low.png').resize((432,768), Image.LANCZOS)\no=Image.new('RGB',(400*2+10+432+10,768),'black'); o.paste(a,(0,0)); o.paste(b,(410,0)); o.paste(l,(820,0)); o.save('$S/chk04low.png')\"", "description": "Compose Screen 04 exit and low-quality checks"}`
+
+### 🧑 User — 2026-11-16T13:31:36.279Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:31:37.006Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/chk04low.png"}`
+
+### 🧑 User — 2026-11-16T13:31:37.055Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:31:45.983Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && python3 -I $S/farstrip.py $S/strip_final.png 150,440,850,720 1.2 APPROVED=references/05_flow_into_the_current.png CURRENT_T2=$S/t/05/default.png NEW_river05=$S/t/05/river.png; cat $S/perf_low.log | tail -3", "description": "Build final far-region comparison strip"}`
+
+### 🧑 User — 2026-11-16T13:31:46.447Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:31:47.185Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/strip_final.png"}`
+
+### 🧑 User — 2026-11-16T13:31:47.219Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:31:58.760Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && W=qa/pilot05/wave11 && mkdir -p $W/compare $W/factors $W/tests && cp qa/pilot05/wave10/compare/1_APPROVED_05.png $W/compare/1_APPROVED_05.png && cp $S/t/05/default.png $W/compare/2_CURRENT_T2_05.png && cp $S/t/05/river.png $W/compare/3_NEW_river05_05.png && cp $S/t/05/water.png $W/factors/0_baseline_water05_it04.png && cp $S/t/05/farw.png $W/factors/1_geometry_only_farw05.png && cp $S/t/05/flow.png $W/factors/2_flowmap_only_flow05.png && cp $S/t/05/low.png $W/factors/3_river05_low_quality.png && …[+1424 chars]`
+
+### 🧑 User — 2026-11-16T13:32:00.124Z
+
+> ↩︎ result: {
+>  "default_vs_qa/pilot05/current_default_05.png": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "BEFORE(?ringa=26&nearfloor05=0)_vs_qa/pilot05/wave9/baseline/05.png": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "water05_vs_qa/pilot05/wave10/water/05_NEW.png": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "04_river05_vs_default": {
+>   "max_pixel_difference": 169,
+>   "differing_pixels": 70552
+>  },
+>  "06_river05_vs_default": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "07_river05_vs_default": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  }
+> }
+> | image | band | gold % | cyan % | pink % | white % | dark % | V p95 | mean S |
+> |---|---|---|---|---|---|---|---|---|
+> 
+> | image | river visible up to y (smaller = further into the light) | S-swing px per band (far → near) |
+> |---|---|---|
+> #!/usr/bin/env python3
+> """Screen 05: measured differences between the approved image and live captures, for the three priority areas
+> (gold rings + purple tunnel; cyan/pink S-river into the light; lighting, foam, splashes).
+> 
+>     python3 -I tools/qa/diff05.py OUT.md LABEL=image ...   (first image = the reference, e.g. APPROVED=references/...)
+> 
+> Per hor …[+816 chars]
+
+### 🧑 User — 2026-11-16T13:32:02.070Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-16T12:51:37.082Z
+
+<local-command-caveat>The command below was run directly in Claude Code, not sent to you as a request, and its output goes straight to the user. It's recorded here as context for later messages.</local-command-caveat>
+
+### 🧑 User — 2026-11-16T12:51:37.083Z
+
+<command-name>/model</command-name>
+            <command-message>model</command-message>
+            <command-args>claude-fable-5-2</command-args>
+
+### 🧑 User — 2026-11-16T12:51:37.083Z
+
+<local-command-stdout>Set model to `claude-fable-5-2`</local-command-stdout>
+
+### 🧑 User — 2026-11-16T12:51:37.083Z
+
+<system-reminder>The model for this session has been changed to claude-fable-5-2. You are now running as claude-fable-5-2.</system-reminder>
+
+### 🧑 User — 2026-11-16T13:32:02.107Z
+
+Claude, I want you to investigate a better tool-assisted solution for the WATER in my approved Rainbow 3D Screen 05.
+
+Please check these tools:
+
+- Official Blender MCP connector.
+- A Three.js-compatible flow-map painter and Water2/Water shader techniques.
+- Our existing Blender 5.3, water-fx-specialist and Playwright testing system.
+
+My goal is to recreate the approved water's flowing cyan-blue liquid, wide magenta S-curves, strong white reflections, dimensional waves and natural splashes around Benny.
+
+FIRST, correct the distant river's 3D width and winding shape without touching the rideable gameplay path.
+
+SECOND, investigate generating or painting a flow map that follows the river's actual curves. Use it with animated normal maps and an improved Three.js shader so the water flows naturally.
+
+THIRD, produce one reversible visual test using our existing code and assets. Do not rebuild the game or switch engines.
+
+Please show APPROVED, CURRENT and NEW at full size, and test performance on Android/WebGL2.
+
+Do not reinstall tools we already have, buy subscriptions or spend Marble credits without approval.
+
+Tell me which new tool actually works in this Claude cloud environment, and whether it improves the real playable game.
+
+Preserve all ten agents, both Marble worlds, the working T2 version, the protected BEFORE version and automatic five-minute GitHub backups.
+
+I want a meaningful improvement to Screen 05 so we can finish it and move on.
+
+### 🤖 Claude — 2026-11-16T13:32:10.855Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && tail -4 $S/perf_low.log; ls qa/pilot05/wave11/tests/; git status --short | head -30; python3 -I scripts/autosave-status.py; git log --oneline -3", "description": "Check background perf run, working tree and autosave"}`
+
+### 🧑 User — 2026-11-16T13:32:11.532Z
+
+> ↩︎ result: 04_with_river05.png
+> capture_05_log.json
+> continuity_stdout.txt
+> gameplay_river05.json
+> gameplay_river05_stdout.txt
+> perf_high_864x1536.json
+> pixel_checks.json
+> ?? --help
+> ?? qa/pilot05/wave11/compare/
+> ?? qa/pilot05/wave11/factors/
+> ?? qa/pilot05/wave11/tests/04_with_river05.png
+> ?? qa/pilot05/wave11/tests/capture_05_log.json
+> ?? qa/pilot05/wave11/tests/perf_high_864x1536.json
+> ?? qa/pilot05/wave11/tests/pixel_checks.json
+> ?? scripts/perf05.mjs
+> AUTOSAVE OK | branch claude/rainbow-3d-account-recovery-hfb8p0 | scheduler daemon | last verified backup 2026-11-16T13:27:10+00:00 (5.0 min ago) | local a3279e9 remote a3279e9 (match) | uncommitted 8
+> a3279e9 autosave: Rainbow 2026-11-16 13:27 UTC
+> aa11ec1 autosave: Rainbow 2026-11-16 13:22 UTC
+> 511545c autosave: Rainbow 2026-11-16 13:16 UTC
+
+### 🧑 User — 2026-11-16T13:32:16.353Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-16T13:32:16.385Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>2 unread notifications (GitHub activity on a subscribed PR: 2)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+

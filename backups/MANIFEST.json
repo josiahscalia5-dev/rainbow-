@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7292,
-   "sha256": "523838c8a4b0d5da2b0031a26e40fa46f345365a8b52db7bbc1ab7843719b252"
+   "sha256": "b7c22598ff76b7480b3ab828e51ed540eab775b6bd963ea8369918e5abc1c474"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1387,6 +1387,51 @@
    "sha256": "52b271a1958dc12a4be09c310103f9c2b4abf1cba9fc98a58fad3cae2cdb3f69"
   },
   {
+   "path": "qa/pilot05/wave11/compare/1_APPROVED_05.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/wave11/compare/2_CURRENT_T2_05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/wave11/compare/3_NEW_river05_05.png",
+   "bytes": 1896901,
+   "sha256": "ecd93ae0322ae0b01e5bd55ada6bec5edf5aafce287a4f2ded6cf322cabbc837"
+  },
+  {
+   "path": "qa/pilot05/wave11/compare/far_river_zoom_APPROVED_CURRENT_NEW.png",
+   "bytes": 1423105,
+   "sha256": "8f6741322f07bf6bd59a52dc0c95f35fcecc3ad6a7d4d2aa108b9ae770c45ed8"
+  },
+  {
+   "path": "qa/pilot05/wave11/factors/0_baseline_water05_it04.png",
+   "bytes": 1761447,
+   "sha256": "330d1548f1bd2245908efbc57baa728a085bf35afa4a40824cee4f600281a4b8"
+  },
+  {
+   "path": "qa/pilot05/wave11/factors/1_geometry_only_farw05.png",
+   "bytes": 1767298,
+   "sha256": "bfb5435eeff37cf654691e13330ee6ed346cd0b5d65bf85ef006e51eb2d6d070"
+  },
+  {
+   "path": "qa/pilot05/wave11/factors/2_flowmap_only_flow05.png",
+   "bytes": 1895708,
+   "sha256": "0015dc8aba09649dbced270a61cd8a6def4a1568bc47bc1ba1bf56fd94efa8a6"
+  },
+  {
+   "path": "qa/pilot05/wave11/factors/3_river05_low_quality.png",
+   "bytes": 1786991,
+   "sha256": "6a21ccf6d1ed9b3194c42753bba4d1dd0b0133ae683301f60d42ca97a9d03617"
+  },
+  {
+   "path": "qa/pilot05/wave11/factors/4_river05_0.6s_later.png",
+   "bytes": 1921378,
+   "sha256": "75f003c49565f270d91a9da938a90f5e9c9f6e62eddd1c7190883b3ca0f3b665"
+  },
+  {
    "path": "qa/pilot05/wave11/flowmap/flowmap05.png",
    "bytes": 32039,
    "sha256": "027fee146e06efd12a914281474e03a1b4962c9e923e4fcc3e43d28d54acae0c"
@@ -1407,6 +1452,16 @@
    "sha256": "641b13d5b37ad8dcb948f415406ddc2b245c97e4b078fad2704fc201e67baef5"
   },
   {
+   "path": "qa/pilot05/wave11/tests/04_with_river05.png",
+   "bytes": 1010336,
+   "sha256": "4beff7116c6c8fe26af22c41d3afafe6b731cb79dc4100fd2e49704be0879716"
+  },
+  {
+   "path": "qa/pilot05/wave11/tests/capture_05_log.json",
+   "bytes": 866,
+   "sha256": "92f3a5bba49c615fa0838850d3ec293bb708e38766634d3dc518f43a41659af6"
+  },
+  {
    "path": "qa/pilot05/wave11/tests/continuity_stdout.txt",
    "bytes": 754,
    "sha256": "286f9e0be5408996f82a80444f7a14e63592eaeca77c55f3b8970bc4aa155697"
@@ -1420,6 +1475,16 @@
    "path": "qa/pilot05/wave11/tests/gameplay_river05_stdout.txt",
    "bytes": 548,
    "sha256": "3300407eab40ea741f058c5311c5bc948f15dec3cff0ff5e68447a4a2ba41e50"
+  },
+  {
+   "path": "qa/pilot05/wave11/tests/perf_high_864x1536.json",
+   "bytes": 1702,
+   "sha256": "9a837933c16bcb5dbe946b8a6c48170b432621100717994bfacd2dba10d1bcc1"
+  },
+  {
+   "path": "qa/pilot05/wave11/tests/pixel_checks.json",
+   "bytes": 611,
+   "sha256": "c4b2746c5fe09450e5dc9a9aefc398b581329cfdb9155e382a50c2738cebed0f"
   },
   {
    "path": "qa/pilot05/wave3/benny/it00/05.png",
@@ -6015,6 +6080,11 @@
    "path": "scripts/lib/pw.mjs",
    "bytes": 1419,
    "sha256": "67b5cb7270b3c5860146edc38b2ef454d05ba3c76100addd77f34316e56f7e61"
+  },
+  {
+   "path": "scripts/perf05.mjs",
+   "bytes": 3306,
+   "sha256": "7637ee926dac4374586bd124a89b5f35f0d8a3f52a4d86cdd3820c47fd82cace"
   },
   {
    "path": "scripts/rainbow-autosave.py",
