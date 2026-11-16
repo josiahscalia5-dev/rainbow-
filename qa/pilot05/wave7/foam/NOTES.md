@@ -33,3 +33,10 @@ Tools: `qa/pilot05/wave6/foam/tools/{foamcol,rowprof}.py` (measurements), ref fo
   near clumps read as loose grape scatter; lower-left inner edge x 160 (ref 214, rider clearance). foamcol: Lfar
   WHITE 30.5 % SHADE 43.2 %, Rfar 31.6 / 43.1, Lnear 12.7 / 45.1, Rnear 15.2 / 43.4 (ref 22.6/48.1, 22.8/44.2,
   29.9/47.7, 33.5/48.1); heapR 21.5 % / 129 px. mad 59.0 -> 55.5.
+* it03 (86 calls, 632,561 tris): near clumps (ds < 2.5): r x1.25, drawn 25 % toward the clump middle, mound lift
+  +0.7 r sin(pi f); big on-screen raft bubbles (vBig, >= ~40 px) +0.1 t (whiter caps); behind-Benny rider clearance
+  x0.32 at ds <= -1.2; right near clump inner 226 px / 145 px wide; bubbles.ts RIDE.small05 = 22 (high) / 12 (low),
+  used only while focusS is inside 05 (other stages keep 12 / 8). Seen: near clumps became tall cauliflower columns
+  (left x 0-90 y 940-1110, right y 1130-1300; ref mounds are low, ~100 px), too white (Lnear WHITE 47.5 %). NOTE: the
+  environment's concurrent ring change (white rings) now passes the foam colour mask, so foamcol Lfar/Rfar are
+  contaminated from it03 on; judge far foam on the crops.

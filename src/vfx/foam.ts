@@ -343,7 +343,7 @@ void main() {
   // wave 7: ref 05 soap ramp (white top caps, lavender-white bodies, periwinkle / blue undersides); the
   // lower and side silhouette sinks into blue-violet (the crevice between piled bubbles), the top edge stays
   // light; inner / lower bubbles of a pile (ambient occlusion vInst.x) are bluer
-  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - vP.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35 + 0.1 * vBig;
+  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - vP.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35 + 0.05 * vBig;
   vec3 col = soap05(t + 0.04 * vInst.z);
   // pores: one or two small dark-blue open bubbles on the larger puffs
   vec2 pc = vP * 2.2 + vInst.y * 17.0;
@@ -848,7 +848,7 @@ export function createFoam(
         // the ref's lower clumps sit right beside the fan, x 57-214 / 630-800)
         const behind = sm(-0.5, -1.2, ds);
         const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds))) * (1 - 0.68 * behind);
-        const clearC = BANK_CLEAR_CORE * (1 - 0.6 * behind);
+        const clearC = BANK_CLEAR_CORE * (1 - 0.75 * behind);
         let a = Math.max(side * inner, side * rider.lat + clearR, side * coreLateral(course, s) + clearC);
         a = Math.min(a, hw - 0.3);
         // outer border: beyond the frame edge, or (wide clump) CLUMP_PX out from its inner edge
@@ -924,8 +924,8 @@ export function createFoam(
           const fr0 = Math.min(1, f0 + df * hh(20 + p));
           const f = 0.5 + (fr0 - 0.5) * (1 - 0.25 * nearK);
           const bump = BUMP.includes(p) && hh(50 + p) < 0.22;
-          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1) * (1 + 0.25 * nearK);
-          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1) + 0.7 * nearK * Math.sin(Math.PI * f);
+          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1) * (1 + 0.15 * nearK);
+          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1) + 0.3 * nearK * Math.sin(Math.PI * f);
           if (r < 0.004) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
           const lat = lin + (lout - lin) * f;
           const h = hin + (hout - hin) * f + bankProf(f, sC, side) + r * lift;

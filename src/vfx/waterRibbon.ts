@@ -586,7 +586,7 @@ void main() {
     float troughN = smoothstep(0.52, 0.1, laneN) * (0.6 + 0.4 * laneB);
     // glossy ridges along the flow (≈90 px apart near the frame bottom), broken into 100–200 px segments
     float rp = kNw * 4.5 + 0.8 * laneB;
-    float ridge = pow(1.0 - abs(2.0 * fract(rp) - 1.0), 7.0);
+    float ridge = pow(1.0 - abs(2.0 * fract(rp) - 1.0), 3.0);
     float rseg = smoothstep(0.42, 0.82, vnoise(vec2(floor(rp) * 1.7 + 0.5, v5 * 0.85)));
     float crestN = ridge * rseg;
     float cN = laneB;
@@ -614,7 +614,7 @@ void main() {
     float relB = clamp(rel, -1.0, 1.0);
     float prof = 1.0 - relB * relB;
     float satin5 = exp(-pow((relB - 0.3) * 3.2, 2.0));
-    vec3 pk = mix(uP5Deep, uP5, smoothstep(0.0, 0.6, prof) * (0.62 + 0.55 * H5));
+    vec3 pk = mix(uP5Deep, uP5, smoothstep(0.0, 0.6, prof) * (0.42 + 0.8 * H5));   // (it04: more streak contrast)
     pk = mix(pk, uP5Light, clamp(satin5 * 0.4 + smoothstep(0.78, 0.98, H5) * 0.25 + rimIn * 0.35, 0.0, 1.0));
     // glossy crest line along each ribbon (its brightest silk, toward the core side)
     pk = mix(pk, uP5Streak, exp(-pow((relB - 0.42) * 9.0, 2.0)) * 0.55 * smoothstep(0.35, 0.65, swell));
@@ -655,7 +655,7 @@ void main() {
       // glossy ridges: saturated cyan glow, burning to cyan-white on the ridge line
       c5 += mix(vec3(0.02, 0.6, 1.2), vec3(1.1, 1.7, 2.1), smoothstep(0.55, 0.95, crestN)) * crestN * 1.3 * near5 * (1.0 - pinkM);
       // long speed streaks: cyan-white glow, near-white core on the strongest dashes
-      c5 += mix(vec3(0.25, 1.1, 1.8), vec3(1.6, 1.9, 2.1), smoothstep(0.7, 1.1, strN)) * strN * 0.9 * near5 * (1.0 - pinkM);
+      c5 += mix(vec3(0.25, 1.1, 1.8), vec3(1.6, 1.9, 2.1), smoothstep(0.7, 1.1, strN)) * strN * 0.5 * near5 * (1.0 - pinkM);
       // Fresnel-style sheen toward the screen sides (the surface bulges, its flanks face away)
       c5 = mix(c5, mix(vec3(0.1, 1.0, 1.9), uP5Light, pinkM), near5 * 0.14 * smoothstep(0.8, 1.6, abs(dlN)) * (1.0 - pW));
     }
@@ -676,7 +676,11 @@ void main() {
     flB = max(flB, flowGlint(vec2(kNw * 2.7 + 0.37, v5 * 2.1 + 1.6 * sin(kNw * 5.3 + 2.0)), 0.45, 18.0, 4.0, 0.2, uTime + 0.9) * 0.8);
     // many small twinkling 4-point stars (ref 05: dozens of tiny white glints in the near and mid water);
     // the cell rows are bent across the flow so the stars never line up in rows (it02 showed a dot grid)
-    float flC = flowGlint(vec2(kN * 7.0, v5 * 4.5 + 0.3 + 1.7 * sin(kN * 13.0 + 0.7)), 0.85, 7.0, 2.6, 0.6, uTime + 1.3);
+    float flC = flowGlint(vec2(kN * 7.0, v5 * 4.5 + 0.3 + 1.7 * sin(kN * 13.0 + 0.7)), 0.55, 7.0, 2.6, 0.6, uTime + 1.3);
+    // (it04) big lens-shaped white flares lying across the glossy near water (ref 05: ≈8 flares of
+    // 100–150 px × 10–14 px below Benny), cyan glow around a white core
+    float lz = lensFlare(vec2(kNw * 2.6, v5 * 1.2 + 1.1 * sin(kNw * 3.3 + 1.0)), 0.65, 70.0, 6.0, uTime);
+    c5 += mix(vec3(0.3, 1.3, 2.1), vec3(2.3, 2.5, 2.6), smoothstep(0.55, 1.0, lz)) * lz * near5 * (1.0 - pinkM) * 1.2;
     flC *= 0.5 + 0.8 * cN;                      // the small stars cluster on the glossy lanes (not a uniform snow)
     float flD = flowGlint(vec2(wq * 16.0, v5 * 0.32 + 7.0), 0.5, 6.0, 2.4, 0.3, uTime + 4.1);
     // (the big near flares sit mostly on the swell crests: light catching the heaving surface)

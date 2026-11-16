@@ -37,3 +37,24 @@ gated off (×(1−sw)). Seen: sweeps diagonal ✓, arcs gone ✓, mid bands exit
 Measured: screen_report mad 59.0 → 55.0 (near band 63.8 → 59.6, mid 53.0 → 49.1; tunnel band also changed by the
 environment specialist's concurrent edit). Sweeps y1280 119–219 / 629–736 (ref 134–238 / 586–669), y1320 68–174 /
 680–795 (ref 91–202 / 626–738). Near lumStd/p5/p95 17.6/136/188 (flat!), cyan y1300 #00A4FF, glints near 64, mid 330.
+
+### it02 — 0 console errors, 86 calls, 634,673 tris (tri change = other specialists)
+Changes: sweep fit cW = 0.2 + 0.55·back, taper 0.7→1.4 u; sweep satin (deep-magenta edges + braided light silk
+streaks `stW`); near body: domain-warped flow (kNw), deeper lanes, glossy ridges, denser small stars.
+Measured: sweeps y1280 154–252 / 593–697 (ref 134–238 / 586–669), y1320 101–208 / 643–760 (ref 91–202 / 626–738);
+near lumStd/p5/p95 26.1/129.7/216.3; cyan y1300 #00A6FF, y1400 #009EFD; glints near 106 / mid 338; pink behind
+Benny 5.08 % (ref 1.84: sweep tips at y1240–1280). report mad 55.9 (near 57.6, mid 48.6).
+Seen: satin diagonals like the ref ✓; near body busy hair lines; small stars in a visible dot GRID; no big flares.
+Mid field, band centres back-projected (scratch inv.py, lateral from core): left ✓ within ≈0.3 u at s 135–141;
+right +0.3 u too far out at s 136–139, 0.7 u too far in at s 148–150, 1.9 u too far in at s 152–156 (the ref band
+runs along the right bank); left 0.5–0.7 u too far out at s 145–152, 1.0 u too far in at s 158–164.
+
+### it03 — 0 console errors, 86 calls, 632,561 tris
+Changes: stationary 05 channel shape fL/fR(s) (fitted from the numbers above, 0 beyond s 180); near stars rows bent
+by a smooth warp; two flare sets (flB) along the warped flow; fine streak set ×0.35.
+Measured: right band s 136–139 now +1.21…+1.86 (ref +1.17…+2.0), widths 108–123 px (ref 117–156); left s 149–152
+−2.0/−2.18 (ref −1.47…−2.05); right s 150–154 +4.44…+5.26 (ref +5.11…+5.79). report mad 55.5 (mid 48.2, near 57.6).
+Near lumStd/p5/p95 27.6/130/220; glints near 73 / mid 294 (fewer counted blobs). Seen: S-river shape visibly closer
+(right band along the right bank in the distance, bends in at y 800–900). Zoom vs ref: ref near highlights are big
+lens-shaped white flares on smooth glossy blue; ours round "snow dots" + hair lines; ref pink bands carry
+bright white-pink streaks.

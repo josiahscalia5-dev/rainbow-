@@ -229,13 +229,13 @@ export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b:
   const w = (b.width + b.groove + b.lipWidth) / 2;
   const uniforms = {
     uBandG: { value: new THREE.Vector4(w - b.width / 2, b.width / 2, -w + b.lipWidth / 2, b.lipWidth / 2) },
-    uBandS: { value: new THREE.Vector4(...(b.spots ?? [28, 0.13, 1.0]), 0) },
+    uBandS: { value: new THREE.Vector4(...(b.spots ?? [28, 0.15, 1.5]), 0) },
     uBandF: { value: new THREE.Vector2(...(b.fade ?? [44, 110])) },
     uBcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
     uBcRose: { value: lin3(0.5899, 0.2114, 0.2222) }, // (215,95,100)
     uBcOrange: { value: lin3(0.7352, 0.2871, 0.1269) }, // (240,120,40)
-    uBcCrown: { value: lin3(0.8769, 0.574, 0.3418) }, // (248,185,120)
-    uBcPeak: { value: lin3(1.0043, 0.8508, 0.5516) }, // (255,228,165)
+    uBcCrown: { value: lin3(0.8057, 0.4036, 0.2027) }, // (245,150,75) orange-gold body
+    uBcPeak: { value: lin3(0.9937, 0.8256, 0.4861) }, // (255,225,150) highlight line
     uBcGroove: { value: lin3(0.4938, 0.1484, 0.1192) }, // (200,70,50)
     uBcSpot: { value: lin3(1.6, 1.5, 1.3) }, // warm white, blooms a little
   };
@@ -266,14 +266,19 @@ vec3 bandShade(float deep, vec3 N, vec3 V){
   float m = (z - uBandG.x) / uBandG.y;          // main band: -1 camera side … +1 far side
   float l = (z - uBandG.z) / uBandG.w;          // lip
   float fm = fwidth(m) + 1e-3, fl = fwidth(l) + 1e-3;
-  float ndv = clamp(dot(N, V), 0.0, 1.0);
-  float nzv = dot(N, normalize(vBandAx));
+  // sign-robust: the forced-perspective rings are placed with a mirrored basis (inverted winding), so the
+  // rendered side can face away; shade the camera-facing orientation of whatever side is drawn
+  float nv = dot(N, V);
+  float ndv = abs(nv);
+  vec3 ax = normalize(vBandAx);
+  ax *= sign(dot(ax, -V) + 1e-4);                // tube axis pointing away from the camera
+  float nzv = dot(N * sign(nv + 1e-4), ax);      // -1 = flank facing the camera … 0 = crown
   vec3 body = mix(uBcCrown, mix(uBcRose * 1.12, uBcCrown, 0.3), deep);   // deeper rings: rose-copper body
   vec3 c = mix(uBcDark, uBcRose, smoothstep(0.03, 0.14, ndv));
   c = mix(c, uBcOrange, smoothstep(0.16, 0.26, ndv));
   c = mix(c, body, smoothstep(0.3, 0.46, ndv));
-  float hl = exp(-pow((nzv + 0.62) / 0.16, 2.0)) * smoothstep(0.3, 0.5, ndv);
-  c = mix(c, uBcPeak, hl * (0.9 - 0.6 * deep));
+  float hl = exp(-pow((nzv + 0.8) / 0.07, 2.0)) * smoothstep(0.3, 0.5, ndv);
+  c = mix(c, uBcPeak, hl * (0.95 - 0.6 * deep));
   c = mix(c, uBcDark, smoothstep(0.9, 1.0, abs(m)) * 0.85);           // contour where the band meets the wall
   vec3 cl = mix(uBcDark, mix(uBcRose, uBcCrown, 0.55 - 0.35 * deep), smoothstep(0.05, 0.3, ndv));
   cl = mix(cl, uBcDark, smoothstep(0.86, 1.0, abs(l)) * 0.85);
@@ -288,7 +293,7 @@ vec3 bandShade(float deep, vec3 N, vec3 V){
   float d = fract(t + 0.5) - 0.5;
   float sw = uBandS.y + ft * 0.7;
   float sp = exp(-d * d / (sw * sw)) * mix(1.0, uBandS.y / sw, 0.6);
-  float across = inMain * smoothstep(0.25, 0.5, ndv) * (1.0 - smoothstep(0.8, 0.95, abs(m))) + inLip * (1.0 - inMain) * 0.4 * smoothstep(0.2, 0.4, ndv);
+  float across = inMain * smoothstep(0.25, 0.5, ndv) * (1.0 - smoothstep(0.93, 0.99, abs(m))) + inLip * (1.0 - inMain) * 0.4 * smoothstep(0.2, 0.4, ndv);
   col += uBcSpot * sp * across * uBandS.z * (1.0 - 0.4 * deep);
   return col;
 }
@@ -342,8 +347,8 @@ vec3 lidShade(){
   float th = atan(vLidP.x, vLidP.z);                 // 0..pi along the half disc
   float rr = length(vLidP.xz);
   // rim band with vertical highlight streaks (reflections of the tunnel strip lights)
-  float st = pow(0.5 + 0.5 * cos(th * 7.0 - 0.6), 10.0);
-  vec3 rim = uLcRim * (0.9 + 0.25 * sin(th * 2.0 + 0.4)) + uLcSpot * st * 0.75;
+  float st = pow(0.5 + 0.5 * cos(th * 7.0 - 0.6), 8.0);
+  vec3 rim = uLcRim * (0.85 + 0.3 * sin(th * 2.0 + 0.4)) + uLcSpot * st * 1.1;
   // bright line along the upper rounded edge, orange contour along the lower one
   float hi = exp(-pow((ny - 0.55) / 0.22, 2.0));
   float lo = exp(-pow((ny + 0.5) / 0.2, 2.0));

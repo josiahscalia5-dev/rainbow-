@@ -1428,3 +1428,125 @@ Now add the varying to the fragment shader and bump the small bubble count near 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T00:57:56.322Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1) * (1 + 0.25 * nearK);\n          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1) + 0.7 * nearK * Math.sin(Math.PI * f);", "new_string": "          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1) * (1 + 0.15 * nearK);\n          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1) + 0.3 * nearK * Math.sin(Math.PI * f);"}`
+
+### 🧑 User — 2026-11-16T00:57:56.384Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:57:57.372Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "- (1.0 - vInst.x) * 0.35 + 0.1 * vBig;", "new_string": "- (1.0 - vInst.x) * 0.35 + 0.05 * vBig;"}`
+
+### 🧑 User — 2026-11-16T00:57:57.409Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:57:58.427Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        const clearC = BANK_CLEAR_CORE * (1 - 0.6 * behind);", "new_string": "        const clearC = BANK_CLEAR_CORE * (1 - 0.75 * behind);"}`
+
+### 🧑 User — 2026-11-16T00:57:58.469Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:58:02.574Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/it03_far.png 0 480 864 960 0.75 references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it03/05.png", "description": "Far field crop ref vs it03"}`
+
+### 🧑 User — 2026-11-16T00:58:02.857Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:58:04.889Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it03_far.png"}`
+
+### 🧑 User — 2026-11-16T00:58:04.932Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:58:16.733Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave7/foam/NOTES.md <<'EOF'\n* it03 (86 calls, 632,561 tris): near clumps (ds < 2.5): r x1.25, drawn 25 % toward the clump middle, mound lift\n  +0.7 r sin(pi f); big on-screen raft bubbles (vBig, >= ~40 px) +0.1 t (whiter caps); behind-Benny rider clearance\n  x0.32 at ds <= -1.2; right near clump inner 226 px / 145 px wide; bubbles.ts RIDE.small05 = 22 (high) / 12 (low),\n  used only while focusS is inside 05 (other stages keep 12 / 8). Seen: near clumps became tall cauliflower columns\n  (left x 0-90 y 940-1110, right y 1130-1300; ref mounds are low, ~100 px), …[+904 chars]`
+
+### 🧑 User — 2026-11-16T00:58:44.321Z
+
+> ↩︎ result: 05 → qa/pilot05/wave7/foam/it04/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":632561,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> |---|---|---|---|---|---|---|---|
+> | PREV | 59.0 | 0.809 | 0.117 | 54.4 | 62.6 | 53.0 | 63.8 |
+> | NOW | 55.3 | 0.835 | 0.163 | 56.0 | 62.7 | 47.7 | 56.6 |
+> qa/pilot05/wave7/foam/it04/05.png
+>   Lfar    13366 px  mean RGB [224 227 254]  WHITE  36.9%  SHADE(B-R>=30)  39.3%  lum 235.0
+>   Rfar    23388 px  mean RGB [227 228 254]  WHITE  39.3%  SHADE(B-R>=30)  38.0%  lum 236.1
+>   Lnear   18696 px  mean RGB [221 224 250]  WHITE  32.8%  SHADE(B-R>=30)  33.9%  lum 231.6
+>   Rnear   17174 px  mean RGB [220 223 250]  WHITE  31.2%  SHADE(B-R>=30)  34.9%  lum 230.9
+>   heapR x640-864 y700-1000: foam  21.3%  max vertical run 129 px  mean run(cols with foam) 59 px
+
+### 🤖 Claude — 2026-11-16T00:58:45.658Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave7/foam/it04/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T00:58:47.658Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T00:58:47.654Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T00:58:50.077Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it04_near.png"}`
+
+### 🧑 User — 2026-11-16T00:58:50.103Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:59:07.417Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/it04_vp.png 250 440 700 700 1.3 references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it04/05.png", "description": "VP region crop ref vs it04"}`
+
+### 🧑 User — 2026-11-16T00:59:07.682Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:59:09.904Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it04_vp.png"}`
+
+### 🧑 User — 2026-11-16T00:59:09.935Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:59:21.585Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/pilot05/wave6/foam/tools/rowprof.py references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it02/05.png qa/pilot05/wave7/foam/it04/05.png 2>&1 | sed -n '1p;12,50p'", "description": "Row foam extents ref vs it02 vs it04"}`
+
+### 🧑 User — 2026-11-16T00:59:23.073Z
+
+> ↩︎ result: y  references  |  it02  |  it04
+>   700  89-264 122 / 840-863  17  |   19-163 103 / 823-863  14  |   19-163 104 / 823-863  13
+>   720  81-234 107 / 837-863  16  |    5-146  92 / 784-863  46  |    5-146  93 / 784-863  45
+>   740  25-151  83 / 796-863  51  |    0-116 107 / 771-863  80  |    0-116 108 / 771-863  80
+>   760   0-102  63 / 774-856  54  |    0-112  56 / 755-852  62  |    0-112  58 / 755-852  62
+>   780   0- 71  53 / 760-829  58  |      -        / 719-813  64  |      -        / 719-813  64
+>   800   0- 29  15 / 730-810  25  |      -        / 702-785  70  |      -        / 702-785  70
+>   820     -        / 711-755  19  |      -        / 686-783  74  |      -        / 696-783  73
+>   840     -        / 706-742  25  |      -        / 685-784  80  |      -        / 702-784  76
+>   860     -        / 712-780  35  |      -        / 714-835  76  |      -        / 714-835  77
+>   880     -        / 728-811  49  |      -        / 738-843  84  |      -        / 737-843  85
+>   900     -        / 759-857  66  |      -        / 761-852  52  |      -        / 761-852  52
+>   920     -        / 794-863  45  |      -        / 819-852  11  |      -        / 819-852  11
+>   940     -        / 845-863   7  |      - …[+2327 chars]
+
+### 🤖 Claude — 2026-11-16T00:59:35.913Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 - <<'EOF'\nfrom PIL import Image, ImageDraw\nS='/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad'\nims=['/home/user/rainbow-/references/05_flow_into_the_current.png','/home/user/rainbow-/qa/pilot05/wave7/foam/it04/05.png']\nout=Image.new('RGB',(2*864+8,420),(0,0,0))\nfor i,p in enumerate(ims):\n    im=Image.open(p).convert('RGB').crop((0,940,864,1360))\n    d=ImageDraw.Draw(im)\n    for y in range(960,1360,40):\n        d.line([(0,y-940),(20,y-940)],fill= …[+306 chars]`
+
+### 🧑 User — 2026-11-16T00:59:36.332Z
+
+> ↩︎ result: (Bash completed with no output)
+

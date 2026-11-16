@@ -99,9 +99,37 @@ float flowGlint(vec2 g, float density, float L, float stretch, float horiz, floa
   float l = L * (0.55 + 0.9 * fract(hs * 37.0));
   float armA = exp(-abs(pb) * 0.85) * max(0.0, 1.0 - abs(pa) / min(l * stretch, la));
   float armB = exp(-abs(pa) * 0.85) * max(0.0, 1.0 - abs(pb) / min(l, lb));
-  float core = exp(-dot(p, p) * 0.06) * 1.5;
+  // (wave 7) small hot core (≈2 px): the old wide soft core (exp(-r²·0.06)) read as round snow dots
+  float core = exp(-dot(p, p) * 0.22) * 1.4;
   float tw = 0.55 + 0.45 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);
   return ((armA * armA + armB * armB) * 1.6 + core) * tw;
+}
+// Lens-shaped glossy flare (ref 05 near field): a bright streak lying along SCREEN-horizontal, thick in
+// the middle and tapering to points (half thickness T·(1 − x²)), slightly arched, with a soft glow.
+// g = world-anchored, advected cell grid; Lpx / Tpx = half length / half thickness in pixels (clamped so
+// the lens never crosses its cell border). Returns ≈1 on the white core, a fraction in the glow.
+// Derivatives are taken before the early-out (Android-safe).
+float lensFlare(vec2 g, float density, float Lpx, float Tpx, float time) {
+  vec2 gx = dFdx(g);
+  vec2 gy = dFdy(g);
+  vec2 gi = floor(g);
+  float hs = hash12(gi + 4.17);
+  float det = gx.x * gy.y - gy.x * gx.y;
+  if (hs < 1.0 - density || abs(det) < 1e-12) return 0.0;
+  vec2 dg = fract(g) - (vec2(hash12(gi + 2.3), hash12(gi + 6.9)) * 0.3 + 0.35);
+  vec2 p = vec2(gy.y * dg.x - gy.x * dg.y, gx.x * dg.y - gx.y * dg.x) / det;   // pixels
+  float limx = 0.3 / max(abs(gx.x) + abs(gx.y), 1e-6);
+  float limy = 0.3 / max(abs(gy.x) + abs(gy.y), 1e-6);
+  float L = min(Lpx * (0.55 + 0.9 * fract(hs * 37.0)), limx);
+  float T = min(Tpx * (0.7 + 0.6 * fract(hs * 53.0)), limy * 0.5);
+  float x = p.x / L;
+  if (abs(x) > 1.0) return 0.0;
+  float y = p.y - 0.35 * T * (1.0 - x * x);       // slight arch
+  float th = T * (1.0 - x * x);
+  float lens = 1.0 - smoothstep(th * 0.35, th + 0.8, abs(y));
+  float glow = exp(-abs(y) / (T * 1.6 + 1.0)) * (1.0 - abs(x));
+  float tw = 0.75 + 0.25 * sin(time * 3.0 + hs * 40.0);
+  return (lens + 0.45 * glow) * tw;
 }
 `;
 

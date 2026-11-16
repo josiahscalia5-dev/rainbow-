@@ -323,7 +323,11 @@ export function buildRingsAt(path: TubePath, list: number[], material: THREE.Mat
       const f = path.frame(ss);
       const r = path.radius(ss) - (opts.inset ?? 0.05) + (opts.extra ?? 0);
       c.copy(f.pos).addScaledVector(f.up, path.radius(ss) - path.depth(ss));
-      basis.makeBasis(f.right, f.up, f.tan);
+      // (right, up, tan) is left-handed (right = tan × up), so the quaternion below is not the intended
+      // frame: band rings (05 only) use the right-handed (−right, up, tan) so their lip really sits on the
+      // camera side (−z); collar/torus rings (04/06/07) keep the legacy orientation unchanged
+      if (opts.band) basis.makeBasis(f.right.clone().negate(), f.up, f.tan);
+      else basis.makeBasis(f.right, f.up, f.tan);
       q.setFromRotationMatrix(basis);
       const sc = dbl ? r * 0.985 : r;
       // a collar keeps its axial width in world units; a torus scales uniformly
