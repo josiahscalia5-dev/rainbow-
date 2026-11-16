@@ -2083,3 +2083,148 @@ The lock is free (the remaining `sleep 300` is the daemon's normal 5-minute time
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:post-redaction 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"|skipping|refus|secret' | head -6; git fetch -q origin ccr-937c7fbb-htsrgt; echo \"local $(git rev-parse HEAD) remote $(git rev-parse origin/ccr-937c7fbb-htsrgt) uncommitted $(git status --porcelain | wc -l)\"; echo \"key in pushed history: $(git log origin/ccr-937c7fbb-htsrgt --format=%h -S\"$(head -1 ~/.rainbow-autosave.private-terms)\" | wc -l) commits; in HEAD files: $(git grep -l -F -f ~/.rainbow-autosave.private-terms HEAD | wc -l)\"; python3  …[+113 chars]`
 
+### 🧑 User — 2026-11-16T01:33:10.479Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "6be9587613991b1213bfb690150a98d41b235790",
+> local 6be9587613991b1213bfb690150a98d41b235790 remote 6be9587613991b1213bfb690150a98d41b235790 uncommitted 0
+> key in pushed history: 0 commits; in HEAD files: 0
+> AUTOSAVE OK | branch ccr-937c7fbb-htsrgt | scheduler daemon | last verified backup 2026-11-16T01:33:01+00:00 (0.1 min ago) | local 6be9587 remote 6be9587 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-16T01:33:13.921Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🧑 User — 2026-11-16T01:33:50.502Z
+
+> ↩︎ result: {"environment_id":"env_01SZWowwtiRzZSLYLzrYrZBL","name":"Default","description":"","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":false,"setup_script":"","network_secrets":[],"is_current":true,"editable_by_you":true,"session_has_repository":true,"note":"Edits made with update_environment change the stored environment; see that tool for when each kind of change takes effect. `setup_script` is returned only for an environment you can edit (`setup_script_withheld` / `description_withheld` mean the organization's compliance settings keep the stored text out of this tool — they refuse a `setup_script`, `new_name` or `new_description` edit too — or that this could not be checked right now, in which case calling again may return it). `other_cloud_environments` lists the user's other cloud environments (`other_cloud_environments_not_shown` counts any left out; the field is absent when they could not be read). create_environment refuses a name already in use, and only after the user has approved, so never propose a new environment under  …[+429 chars]
+
+### 🤖 Claude — 2026-11-16T01:34:09.179Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "header_name": "WLT-Api-Key", "display_name": "Marble World API key", "suggested_type": "bearer", "reason": "Free read-only checks of the Marble World API: the credit balance and the two Screen 05 pilot worlds' asset lists, to confirm the Rainbow backup is complete. No generation or paid calls."}`
+
+### 🧑 User — 2026-11-16T01:35:53.118Z
+
+> ↩︎ result: {"status":"saved","host":"api.worldlabs.ai","applies_to":"environment","note":"A credential for this host is saved on this session's environment. Every session in that environment uses it, including other people's sessions when the environment is shared. The session's network proxy injects it into HTTPS requests to this host — you never see or send the value yourself. Saving it also allows HTTPS requests to this host from those sessions, so do not add the host to the environment's allowed hosts. No environment variable holds the credential, so code that reads a key from a variable finds none and may skip its work. To run such code, set that variable to a placeholder for that command, never a real value: `proxy-injected`, or a dummy in the format the code expects if it checks one. This works where the code sends the key in a header, which the proxy overwrites; a cookie the code sends instead replaces the saved cookie of that name. Tell the user this when their own scripts expect such a variable. Retry the failing request now, as-is (do not add the credential's header yourself): the proxy usually picks the credential up within a couple of seconds. Only a refusal, with the same 401/40 …[+446 chars]
+
+### 🤖 Claude — 2026-11-16T01:35:54.087Z
+
+The key is saved in the secure store. Now the free read-only checks: the credit balance and both pilot worlds.
+
+### 🤖 Claude — 2026-11-16T01:35:57.540Z
+
+> 🔧 **Bash** `{"command": "B=https://api.worldlabs.ai/marble/v1; curl -sS --max-time 30 -w '\\nHTTP %{http_code}\\n' \"$B/credits\" | python3 -I -c 'import sys; t=sys.stdin.read(); print(\"GET /credits ->\", t.strip()[:400])'; for w in 5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9; do curl -sS --max-time 30 \"$B/worlds/$w\" -o \"/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/world_$w.json\" -w \"GET /worlds/$w -> HTTP %{http_code}\\n\"; done", "description": "Free read-only Marble balance and world lookups"}`
+
+### 🧑 User — 2026-11-16T01:35:58.679Z
+
+> ↩︎ result: GET /credits -> {"remaining_credits":5190.0}
+> HTTP 200
+> GET /worlds/5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f -> HTTP 200
+> GET /worlds/c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9 -> HTTP 200
+
+### 🤖 Claude — 2026-11-16T01:36:08.153Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad; cd /home/user/rainbow- && python3 -I - \"$S\" <<'PY'\nimport json, sys, os\nS = sys.argv[1]\nsaved = {\"5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f\": \"draft\", \"c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9\": \"full\"}\nfor wid, folder in saved.items():\n    d = json.load(open(f\"{S}/world_{wid}.json\"))\n    w = d.get(\"world\", d)\n    a = w.get(\"assets\", {})\n    sp = (a.get(\"splats\") or {}).get(\"spz_urls\") or {}\n    mesh = a.get(\"mesh\") or {}\n    print(f\"== {folder} {wid}  model={w.get('model') …[+953 chars]`
+
+### 🧑 User — 2026-11-16T01:36:08.211Z
+
+> ↩︎ result: == draft 5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f  model=marble-1.0-draft  public=False
+>    API splat sizes: ['100k', '500k', 'full_res']
+>      100k      saved: True  (qa/worldlabs/05/pilot/draft/splats_100k.spz)
+>      500k      saved: True  (qa/worldlabs/05/pilot/draft/splats_500k.spz)
+>      full_res  saved: True  (qa/worldlabs/05/pilot/draft/splats_full_res.spz)
+>    collider in API: True | saved: True
+>    hq_mesh in API: False | full_res_mesh in API: False
+>    pano in API: True | saved: False
+>    thumbnail in API: True | saved: True
+> == full c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9  model=marble-1.1  public=False
+>    API splat sizes: ['100k', '150k', '500k', 'full_res']
+>      100k      saved: True  (qa/worldlabs/05/pilot/full/splats_100k.spz)
+>      150k      saved: True  (qa/worldlabs/05/pilot/full/splats_150k.spz)
+>      500k      saved: True  (qa/worldlabs/05/pilot/full/splats_500k.spz)
+>      full_res  saved: True  (qa/worldlabs/05/pilot/full/splats_full_res.spz)
+>    collider in API: True | saved: True
+>    hq_mesh in API: False | full_res_mesh in API: False
+>    pano in API: True | saved: True
+>    thumbnail in API: True | saved: True
+
+### 🤖 Claude — 2026-11-16T01:36:19.882Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad; mkdir -p $S/dl_draft_pano && python3 -I -c '\nimport json,sys,urllib.parse as u\nd=json.load(open(sys.argv[1])); w=d.get(\"world\",d); p=w[\"assets\"][\"imagery\"][\"pano_url\"]\nq=u.urlparse(p); print(\"host:\",q.netloc,\"| path:\",q.path,\"| has query string:\",bool(q.query))\nopen(sys.argv[2],\"w\").write(p)' $S/world_5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f.json $S/dl_draft_pano/.url && curl -sS --max-time 120 -o $S/dl_draft_pano/pano.png -w 'download HTTP %{http_code}, %{size_download} bytes\\n'  …[+452 chars]`
+
+### 🧑 User — 2026-11-16T01:36:20.854Z
+
+> ↩︎ result: host: cdn.marble.worldlabs.ai | path: /5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f/d27454e9-85c5-4c55-9b77-e741ca0961d1_pano/rgb_0.png | has query string: False
+> download HTTP 200, 4468330 bytes
+> valid PNG: True | size: 2304 x 1152 | MB: 4.47 | sha256: e524cf6c2f2e2d6ae07e97bd8687548f6cae70405a648b5a66e80652ba3c98d5
+
+### 🤖 Claude — 2026-11-16T01:36:24.927Z
+
+Valid PNG, 2304×1152, 4.47 MB. I'll add it to the repo along with both refreshed world responses (their CDN links carry no signatures or keys), then update the ledger and transfer guide.
+
+### 🤖 Claude — 2026-11-16T01:36:29.127Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad; cd /home/user/rainbow- && cp $S/dl_draft_pano/pano.png qa/worldlabs/05/pilot/draft/pano.png && for p in \"5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f draft\" \"c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9 full\"; do set -- $p; python3 -I -c 'import json,sys; d=json.load(open(sys.argv[1])); json.dump(d,open(sys.argv[2],\"w\"),indent=2)' $S/world_$1.json qa/worldlabs/05/pilot/$2/world_refresh_2026-11-16.json; done; grep -c -F -f ~/.rainbow-autosave.private-terms qa/worldlabs/05/pilot/*/world_refresh_2026-11-16.jso …[+326 chars]`
+
+### 🧑 User — 2026-11-16T01:36:29.217Z
+
+> ↩︎ result: qa/worldlabs/05/pilot/draft/world_refresh_2026-11-16.json:0
+> qa/worldlabs/05/pilot/full/world_refresh_2026-11-16.json:0
+> no keys/signatures in refreshed responses
+> -rw-r--r-- 1 root root 4468330 Nov 16 01:36 qa/worldlabs/05/pilot/draft/pano.png
+> -rw-r--r-- 1 root root    5069 Nov 16 01:36 qa/worldlabs/05/pilot/draft/world_refresh_2026-11-16.json
+> -rw-r--r-- 1 root root    5317 Nov 16 01:36 qa/worldlabs/05/pilot/full/world_refresh_2026-11-16.json
+
+### 🤖 Claude — 2026-11-16T01:36:30.142Z
+
+Now the ledger and transfer-guide updates.
+
+### 🤖 Claude — 2026-11-16T01:36:33.342Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/worldlabs/05/pilot/LEDGER.md", "old_string": "**Balance reported by the API at hand-off: 5,190 credits.", "new_string": "| 01:35 | `GET /credits` (transfer session `94cf04e3`; key saved by the user via the secure credential form on this account's Default environment) | 200, **5,190** | 5,190 → 5,190 | 1,810 |\n| 01:35 | `GET /worlds/5fd3d7a7…`, `GET /worlds/c0c9dc57…` (free reads) → `*/world_refresh_2026-11-16.json` | 200, both worlds present, assets unchanged except the draft now lists a pano | 5,190 → 5,190 | 1,810 |\n| 01:36 | CDN  …[+227 chars]`
+
+### 🧑 User — 2026-11-16T01:36:33.433Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/worldlabs/05/pilot/LEDGER.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:36:38.837Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "old_string": "| draft `5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f` | op `4a549a9d-3de2-424b-8324-db24a8d1b9bd`, `marble-1.0-draft`, 230 credits (pano 80 + draft 150), 00:55 UTC | `draft/collider.glb` (35,795 tris), `splats_100k.spz`, `splats_500k.spz`, `splats_full_res.spz`, `splats_500k.ply` (free export), `thumbnail.{webp,png}`, `world.json`, `operation_response.sanitized.json`, `import/draft05.blend` + `draft05_underlay.glb` + preview + `draft05_measure.json`, `analysis/` | no pano (drafts have none); n …[+669 chars]`
+
+### 🧑 User — 2026-11-16T01:36:38.901Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:36:41.337Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "old_string": "`full/collider.glb`, `splats_100k.spz`, `splats_150k.spz`, `splats_500k.spz`, `splats_full_res.spz`, `splats_500k.ply`, `pano.png` (4608×2304) + `pano_preview_2048.jpg`, `thumbnail.{webp,png}`, `operation_response.sanitized.json`", "new_string": "`full/collider.glb`, `splats_100k.spz`, `splats_150k.spz`, `splats_500k.spz`, `splats_full_res.spz`, `splats_500k.ply`, `pano.png` (4608×2304) + `pano_preview_2048.jpg`, `thumbnail.{webp,png}`, `world_refresh_2026-11-16.json`, `operation_respon …[+20 chars]`
+
+### 🧑 User — 2026-11-16T01:36:41.407Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:36:46.133Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "old_string": "Transfer session `94cf04e3` (same date) observed: Marble World API key **not present** in that session's\nenvironment (`GET /credits` → 401 \"No API key found\") — so the 5,190 balance is the last API-reported value\n(01:06 UTC), not re-read.", "new_string": "Transfer session `94cf04e3` (same date, a different Claude account from account 8 — its environments are\n\"Default\", \"Christmas-\", \"bubblegames\"; no \"rainbow-\" environment): at 01:35 UTC the user saved a Marble World API\nk …[+697 chars]`
+
+### 🧑 User — 2026-11-16T01:36:46.215Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:36:47.635Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "old_string": "| World Labs credits | **none spent** in the transfer session |", "new_string": "| World Labs credits | **none spent** in the transfer session; balance re-read 01:35 UTC = **5,190**; both pilot worlds still on the API account; the draft pano (newly listed by the API) downloaded free → `draft/pano.png` |"}`
+
+### 🧑 User — 2026-11-16T01:36:47.716Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:36:48.953Z
+
+Saving and verifying now, including a final check that the key appears nowhere in the pushed branch.
+
+### 🤖 Claude — 2026-11-16T01:36:53.357Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:marble-refresh --message \"backup: Marble free re-check (balance 5,190, both worlds present) + draft pano saved\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"|skipping' | head -5; git fetch -q origin ccr-937c7fbb-htsrgt ccr-4f6c3e0e-5kxgr0; echo \"local $(git rev-parse HEAD)\"; echo \"remote $(git rev-parse origin/ccr-937c7fbb-htsrgt) uncommitted $(git status --porcelain | wc -l)\"; echo \"key: $(git log --all --format=%h -S\"$(head -1 ~/.rainbow-autosave.private-terms)\" | wc -l) commits on any branch, $(g …[+463 chars]`
+

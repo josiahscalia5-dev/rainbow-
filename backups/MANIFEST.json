@@ -388,13 +388,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 21152,
-   "sha256": "4c4e0865da6855166f8a7efcf19628ecb0c1505cc283ba7bcf53337873ea0cb0"
+   "bytes": 22107,
+   "sha256": "a9b5f0403641f9f90b479f926c4057e96a9e3661650aaa6fd57fd34f461bf95f"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5348,
-   "sha256": "b5e176dace2bb1de0fe16643cea909779e13ffac526dd0b8d674f1e3ac0f2d26"
+   "sha256": "bb3d417e1ec3704b6385af361076cadef9c1db4d458cde4fbb8c2755abde54cc"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -3333,8 +3333,8 @@
   },
   {
    "path": "qa/worldlabs/05/pilot/LEDGER.md",
-   "bytes": 4648,
-   "sha256": "e3fc65576de73dd9012e1924d3ee03cd7b121573879b4bde3699f8c39d7c8a16"
+   "bytes": 5248,
+   "sha256": "7f8561c82e9601e68a5ba745b992b66caae3338c27c0d24336962011ead54913"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/analysis/bay_coverage.png",
@@ -3392,6 +3392,11 @@
    "sha256": "2db735245b519816d19c147b81c1d32ef187e9f4e91530fdb15c1d0c17e34dff"
   },
   {
+   "path": "qa/worldlabs/05/pilot/draft/pano.png",
+   "bytes": 4468330,
+   "sha256": "e524cf6c2f2e2d6ae07e97bd8687548f6cae70405a648b5a66e80652ba3c98d5"
+  },
+  {
    "path": "qa/worldlabs/05/pilot/draft/splats_100k.spz",
    "bytes": 1262623,
    "sha256": "fba5764073f1e1bfdda46fbfa04b808fcf474496c8870d66416302f3313cc663"
@@ -3425,6 +3430,11 @@
    "path": "qa/worldlabs/05/pilot/draft/world.json",
    "bytes": 1746,
    "sha256": "ab4d9f347a39124ee0bffbf01c8e74a700537d01fab58610f6a61bc7a00ae3bd"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/world_refresh_2026-11-16.json",
+   "bytes": 5069,
+   "sha256": "18441f2c258a81d0be66af5580fff5f57c5caa3981d210647e7f808b01b43885"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/analysis/bay_coverage.png",
@@ -3525,6 +3535,11 @@
    "path": "qa/worldlabs/05/pilot/full/thumbnail.webp",
    "bytes": 74396,
    "sha256": "20f144ba223bfa1d21b89cd4e56ca0864ee4fd11153afdb784e0562d235e1c46"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/full/world_refresh_2026-11-16.json",
+   "bytes": 5317,
+   "sha256": "e12da8cd32e7c2aae85907759653bff54179e62092f74e116ffd0ea46bd02a6a"
   },
   {
    "path": "qa/worldlabs/05/pilot/prompt_05.txt",

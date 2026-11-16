@@ -20,7 +20,7 @@ Verified in the transfer session (2026-11-16 01:17–01:35 UTC):
 | Build / game | `npm ci` OK, `tsc --noEmit` OK, `npm run test:continuity` ok (all 10 stage gaps 0, 05→06 gap 0, 07→08 verticalDrop 61.19, max step tangent 6.24°), `node scripts/gameplay-test.mjs` **pass** (pause, continuous travel, no camera cut, no teleport, plunge 61.41, real coin pickups, heart loss on wall bump, victory, errors []) — re-run on the code with the environment specialist's final wave-7 edits (merged from `7cc4869`) |
 | Resume script | `bash scripts/resume-newest-work.sh` → `RESUME CHECK: OK` |
 | Autosave | `AUTOSAVE OK … (match)` on `ccr-937c7fbb-htsrgt`; `autosave.config.json` now targets this branch and protects `ccr-4f6c3e0e-5kxgr0` |
-| World Labs credits | **none spent** in the transfer session |
+| World Labs credits | **none spent** in the transfer session; balance re-read 01:35 UTC = **5,190**; both pilot worlds still on the API account; the draft pano (newly listed by the API) downloaded free → `draft/pano.png` |
 
 ## 1. Repository, branch, commit
 | | |
@@ -145,8 +145,8 @@ Full ledger, IDs and asset table: **`qa/worldlabs/05/pilot/LEDGER.md`**.
 Exact asset inventory (all in Git LFS unless noted; every LFS file verified downloadable from GitHub, §0):
 | World | Generation | Saved files | Not available / not bought |
 |---|---|---|---|
-| draft `5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f` | op `4a549a9d-3de2-424b-8324-db24a8d1b9bd`, `marble-1.0-draft`, 230 credits (pano 80 + draft 150), 00:55 UTC | `draft/collider.glb` (35,795 tris), `splats_100k.spz`, `splats_500k.spz`, `splats_full_res.spz`, `splats_500k.ply` (free export), `thumbnail.{webp,png}`, `world.json`, `operation_response.sanitized.json`, `import/draft05.blend` + `draft05_underlay.glb` + preview + `draft05_measure.json`, `analysis/` | no pano (drafts have none); no HQ / full-res mesh (not generated) |
-| full `c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9` | op `12a08430-f687-4a09-bdc7-3a469c76363d`, `marble-1.1`, 1,580 credits (pano 80 + world 1,500), 00:58 UTC | `full/collider.glb`, `splats_100k.spz`, `splats_150k.spz`, `splats_500k.spz`, `splats_full_res.spz`, `splats_500k.ply`, `pano.png` (4608×2304) + `pano_preview_2048.jpg`, `thumbnail.{webp,png}`, `operation_response.sanitized.json` (metric_scale_factor 1.5619, ground_plane_offset 0.9745), `import/full05.blend` + underlay + preview + measure, `analysis/` | HQ mesh export (3,500 credits) not bought — needs the user's OK |
+| draft `5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f` | op `4a549a9d-3de2-424b-8324-db24a8d1b9bd`, `marble-1.0-draft`, 230 credits (pano 80 + draft 150), 00:55 UTC | `draft/collider.glb` (35,795 tris), `splats_100k.spz`, `splats_500k.spz`, `splats_full_res.spz`, `splats_500k.ply` (free export), `pano.png` (2304×1152; listed by the API only later, downloaded free 01:36), `thumbnail.{webp,png}`, `world.json`, `world_refresh_2026-11-16.json`, `operation_response.sanitized.json`, `import/draft05.blend` + `draft05_underlay.glb` + preview + `draft05_measure.json`, `analysis/` | no HQ / full-res mesh (not generated) |
+| full `c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9` | op `12a08430-f687-4a09-bdc7-3a469c76363d`, `marble-1.1`, 1,580 credits (pano 80 + world 1,500), 00:58 UTC | `full/collider.glb`, `splats_100k.spz`, `splats_150k.spz`, `splats_500k.spz`, `splats_full_res.spz`, `splats_500k.ply`, `pano.png` (4608×2304) + `pano_preview_2048.jpg`, `thumbnail.{webp,png}`, `world_refresh_2026-11-16.json`, `operation_response.sanitized.json` (metric_scale_factor 1.5619, ground_plane_offset 0.9745), `import/full05.blend` + underlay + preview + measure, `analysis/` | HQ mesh export (3,500 credits) not bought — needs the user's OK |
 | Inputs | — | approved crop `qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png`, `qa/worldlabs/05/pilot/prompt_05.txt`; upload/generate/export calls in `tools/worldlabs/marble_pilot.py`; analysis `tools/worldlabs/analyze_splats.py`, `bay_texture.py`; Blender import `tools/blender/import_world_asset.py` | the media-asset ID of the uploaded input image was not recorded (re-upload is free) |
 Both worlds are private to the World API account that made them. Re-download (free, needs that account's key):
 `python3 -I tools/worldlabs/marble_pilot.py world <world_id> out.json` → fresh CDN links.
@@ -162,9 +162,14 @@ Both worlds are private to the World API account that made them. Re-download (fr
 | Other plugin MCPs (Figma, Notion, Slack, Linear, Atlassian, Intercom, context7) | need sign-in; not used by Rainbow | ignore unless needed |
 Nothing about Claude account logins, live MCP sessions or connector sign-ins travels through GitHub.
 
-Transfer session `94cf04e3` (same date) observed: Marble World API key **not present** in that session's
-environment (`GET /credits` → 401 "No API key found") — so the 5,190 balance is the last API-reported value
-(01:06 UTC), not re-read. Atlas connector `list_projects` OK (project "My project", Personal workspace,
+Transfer session `94cf04e3` (same date, a different Claude account from account 8 — its environments are
+"Default", "Christmas-", "bubblegames"; no "rainbow-" environment): at 01:35 UTC the user saved a Marble World API
+key through the secure credential form on that account's **Default** environment (host `api.worldlabs.ai`, header
+`WLT-Api-Key`). Free reads: `GET /credits` → **5,190** (unchanged); `GET /worlds/{id}` → both pilot worlds present,
+so the key belongs to the same World Labs platform account. The user had first pasted a key in chat: it was never
+used in a command, is redacted in the exported transcripts (`[REDACTED-PRIVATE]`) and is in no git commit (checked on
+all branches). **Advice given: delete that pasted key at platform.worldlabs.ai and use a fresh one** via the form
+on the next account. Credentials never travel through GitHub — the next account must enter the key in its own form. Atlas connector `list_projects` OK (project "My project", Personal workspace,
 `credits_available: true`, nothing run). GitHub MCP + git proxy pushes OK. Plugins seen: superpowers,
 parallax-threejs (playwright-mcp, chrome-devtools-mcp, threejs-devtools-mcp connected; **spector failed to
 connect**), playwright, context7 (**needs sign-in**), feature-dev, code-review, frontend-design,

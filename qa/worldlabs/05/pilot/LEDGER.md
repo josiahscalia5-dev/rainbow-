@@ -15,7 +15,11 @@ account-7 key was not reused.
 | 00:58 | `worlds:generate` **marble-1.1** (full quality) → world `c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9`, operation `12a08430-f687-4a09-bdc7-3a469c76363d` | done in ≈5 min | 6,770 → **5,190** | **1,810** |
 | 01:06 | `worlds/c0c9dc57…:export` splats PLY 500k | 200 (free) | 5,190 → 5,190 | 1,810 |
 
-**Balance reported by the API at hand-off: 5,190 credits. Spent 1,810 of the 6,250-credit (US$5) cap.
+| 01:35 | `GET /credits` (transfer session `94cf04e3`; key saved by the user via the secure credential form on this account's Default environment) | 200, **5,190** | 5,190 → 5,190 | 1,810 |
+| 01:35 | `GET /worlds/5fd3d7a7…`, `GET /worlds/c0c9dc57…` (free reads) → `*/world_refresh_2026-11-16.json` | 200, both worlds present, assets unchanged except the draft now lists a pano | 5,190 → 5,190 | 1,810 |
+| 01:36 | CDN download of the draft pano → `draft/pano.png` (2304×1152, sha256 `e524cf6c…98d5`) | 200 (free) | 5,190 → 5,190 | 1,810 |
+
+**Balance reported by the API at hand-off: 5,190 credits (re-read 01:35 UTC by the transfer session). Spent 1,810 of the 6,250-credit (US$5) cap.
 Remaining approved budget: 4,440 credits.** Not yet bought: HQ mesh export (3,500 credits, US$2.80) — only if
 it materially helps the playable game; ask the user first.
 
