@@ -435,7 +435,7 @@ export function buildEnvironment(course: Course): Environment {
     const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
     const farLay = farRiverLayout(course, ft, level);
     const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));
-    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay });
+    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay, sCam05, s05, sGlow05, rings05, band05, band05near });
     // rings (one per knot) and a lid pair just in front of each ring (as the real 05 lids), low-poly: small on screen
     const ringItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
     const lidItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];

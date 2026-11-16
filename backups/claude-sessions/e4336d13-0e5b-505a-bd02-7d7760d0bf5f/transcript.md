@@ -1006,3 +1006,266 @@ Code reading is done; now I'm taking a fresh baseline capture of the game and me
 > A circle (cx, cy, r) is scored by the share of gold pixels on its arc above its own centre line (HUD bar, title
 > banner and everything ou …[+2485 chars]
 
+### 🤖 Claude — 2026-11-16T20:02:22.368Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nS='$S/look/'\ndef polar(path, cx, cy, out, rmax=640, W=1440, Hh=640):\n    im=cv2.imread(path)\n    th=np.linspace(-np.pi, np.pi, W, endpoint=False)   # image angle: 0 = +x (right), pi/2 = up\n    r=np.linspace(0, rmax, Hh)\n    T,R=np.meshgrid(th,r)\n    mx=(cx+R*np.cos(T)).astype(np.float32); my=(cy-R*np.sin(T)).astype(np.float32)\n    o=cv2.remap(im,mx,my,cv2.INTER_LINEAR,borderMode=cv2.BORDER_CONSTANT,borderValue=(0,0,0))\n    cv2.imwrite(out,o)\n …[+224 chars]`
+
+### 🧑 User — 2026-11-16T20:02:22.785Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:02:25.101Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/polar_approved.png"}`
+
+### 🧑 User — 2026-11-16T20:02:25.137Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:02:25.743Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/polar_game.png"}`
+
+### 🧑 User — 2026-11-16T20:02:25.784Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:02:46.886Z
+
+> 🔧 **Bash** `{"command": "git checkout qa/capture_log.json && python3 -I -c \"\nimport json;d=json.load(open('package.json'));print(json.dumps(d['scripts'],indent=1)); print(d.get('dependencies'), d.get('devDependencies'))\"; sed -n 1,30p scripts/flow05-dump.ts | cut -c1-200; grep -n \"far05Debug\" -r src | head -5; sed -n 479,560p src/world/tube.ts", "description": "Check how TS scripts run and read the forced-perspective tunnel class"}`
+
+### 🧑 User — 2026-11-16T20:02:46.991Z
+
+> ↩︎ result: Updated 0 paths from the index
+> {
+>  "dev": "vite --host 0.0.0.0",
+>  "build": "tsc --noEmit && vite build",
+>  "preview": "vite preview --host 0.0.0.0 --port 4173",
+>  "typecheck": "tsc --noEmit",
+>  "test:continuity": "vite-node scripts/continuity-test.ts",
+>  "models:export": "node scripts/export-models.mjs",
+>  "qa:capture": "node scripts/capture.mjs",
+>  "qa:compare": "python3 scripts/compare.py",
+>  "verify:refs": "sha256sum -c scripts/reference.sha256",
+>  "android:sync": "npm run build && npx cap sync android",
+>  "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+>  "test:cinematic": "node scripts/cinematic-test.mjs"
+> }
+> {'@capacitor/android': '^6.2.0', '@capacitor/core': '^6.2.0', '@fontsource/baloo-2': '^5.1.0', 'three': '^0.170.0'} {'@capacitor/cli': '^6.2.0', '@types/three': '^0.170.0', 'typescript': '^5.6.3', 'vite': '^5.4.11', 'vite-node': '^2.1.5'}
+> /**
+>  * Screen 05 test W11: writes the generated flow map and ripple map as PNG (read-only use of the game code).
+>  *   npx vite-node scripts/flow05-dump.ts [-- --out=qa/pilot05/wave11/flowmap]
+>  * flowmap05.png      32 × 256 RGBA, the texture exactly as the shader samples it (row 0 = upstream end of stage 05;
+>  *         …[+6700 chars]
+
+### 🤖 Claude — 2026-11-16T20:03:22.089Z
+
+> 🔧 **Bash** `{"command": "cat scripts/lib/pw.mjs | head -60; grep -n \"s05\\b.*=\\|const s06\\|const s08\\|tubeR\\b.*=\" src/world/environment.ts | head -12; grep -n \"hide\" src/game/Game.ts | head -12", "description": "Read the Playwright helper and stage variables"}`
+
+### 🧑 User — 2026-11-16T20:03:22.153Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+1478 chars]
+
+### 🤖 Claude — 2026-11-16T20:03:24.592Z
+
+Now writing a measuring tool that reads the exact position of every wall and ring pixel from the live game, so the baked textures land in the right place.
+
+### 🤖 Claude — 2026-11-16T20:03:26.177Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay });", "new_string": "    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay, sCam05, s05, sGlow05, rings05, band05, band05near });"}`
+
+### 🧑 User — 2026-11-16T20:03:26.214Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T20:03:56.490Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/proj05-tunnel-probe.mjs", "content": "#!/usr/bin/env node\n// Screen 05 tunnel probe (walls + gold rings bake, `?projwall05=1` / `?projring05=1`) — exact, read-only\n// measurements of the REAL game at the locked 05 checkpoint (time frozen, as scripts/capture.mjs).\n//   node scripts/proj05-tunnel-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/tunnel/probe] [--raw=DIR] [--all]\n// Writes into OUT:\n//   tunnel.json     camera (world + projection matrix), the 05 tunnel numbers (checkpoint eye s, ring positions, far\n//                   block knots  …[+8191 chars]`
+
+### 🧑 User — 2026-11-16T20:03:56.522Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/proj05-tunnel-probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:04:01.305Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && mkdir -p $S/raw && node scripts/proj05-tunnel-probe.mjs --raw=$S/raw 2>&1 | tail -8", "description": "Run the tunnel probe on the default build", "timeout": 400000}`
+
+### 🧑 User — 2026-11-16T20:04:17.563Z
+
+> ↩︎ result: probed {"wall":2,"ring":1,"lid":1,"farWall":1,"farRing":1,"farLid":1} tunnel {"sCam05":126.03830202823289,"s05":114.68830202823243,"sGlow05":183.02412082521383,"sF05":180.0383020282329,"bay05":14,"rings05":[124.03830202823289,138.0383020282329,146.0383020282329,166.0383020282329],"ringDv":[59,97,161,222,322],"knots":[[0,0],[7,5.751032430368738],[21,43.75103243036874],[35,107.75103243036874],[49,168.75103243036875],[63,268.75103243036875]],"realSeamRing":false,"D0":53.24896756963126,"L":6,"zEnd":376.75103243036875,"R":7.6,"band05":{"height":0.095,"width":0.78,"lipHeight":0.045,"lipWidth":0.26,"groove":0.07},"band05near":{"height":0.13,"width":0.8,"lipHeight":0.065,"lipWidth":0.32,"groove":0.1},"eye":[1.920288434729371,-37.94339912418104,-68.28062556286872]}
+
+### 🤖 Claude — 2026-11-16T20:04:32.301Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, json\nfrom PIL import Image\nS='$S/'\na=np.fromfile(S+'raw/tunnel_id.f32',dtype=np.float32).reshape(1536,864,4)\nt=json.load(open('qa/pilot05/proj/tunnel/probe/tunnel.json'))\nA=a[...,3]; ID=a[...,2]\nvis=np.zeros((1536,864,3),np.uint8)\nfor cid,name in ((1,'wall'),(2,'farWall'),(3,'ring'),(4,'farRing'),(5,'lid'),(6,'farLid')):\n    lo={1:10,2:10,3:20,4:20,5:40,6:40}[cid]\n    m=(ID==cid)&(A>=lo)&(np.abs(A-np.round(A))<1e-3)\n    print(name, int(m.sum()),  …[+1394 chars]`
+
+### 🧑 User — 2026-11-16T20:04:32.884Z
+
+> ↩︎ result: wall 262304 px
+>    uv.x 2.6589753e-06 0.99999654  uv.y(s) 140.49588 180.80771 bbox 0 863 0 753
+> farWall 54996 px
+>    uv.x 0.0002581629 0.9994315  uv.y(s) 180.03897 257.83038 bbox 312 685 274 582
+> ring 161032 px
+>    inst 1 3953 bbox x 0 91 y 0 89 phi deg range 46.2 55.9 z -0.09 0.312
+>    inst 2 118728 bbox x 4 863 y 15 723 phi deg range -17.8 142.4 z -0.61 0.313
+>    inst 3 38351 bbox x 250 759 y 192 613 phi deg range -179.9 179.9 z -0.61 0.21
+> farRing 18672 px
+>    inst 0 11217 bbox x 329 669 y 293 576 phi deg range -179.8 179.8 z -0.555 0.168
+>    inst 1 4275 bbox x 396 601 y 367 534 phi deg range -179.9 179.6 z -0.555 0.297
+>    inst 2 1693 bbox x 436 561 y 411 527 phi deg range -179.3 179.8 z -0.555 0.555
+>    inst 3 958 bbox x 453 545 y 430 519 phi deg range -179.8 179.0 z -0.555 0.555
+>    inst 4 529 bbox x 468 530 y 445 509 phi deg range -178.6 179.5 z -0.555 0.555
+> lid 21921 px
+>    inst 4 3634 bbox x 802 863 y 430 510 phi deg range 9.7  z -0.18 0.17
+>    inst 5 7649 bbox x 87 213 y 431 520 phi deg range 0.0  z -0.18 0.18
+>    inst 6 3714 bbox x 692 788 y 380 440 phi deg range 0.0  z -0.18 0.18
+>    inst 7 3498 bbox x 225 317 y 381 440 phi deg range 0.0  z -0.18 0.18
+>    inst 8 1801 bbox x 637 704 y 411 …[+1284 chars]
+
+### 🤖 Claude — 2026-11-16T20:05:03.200Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nS='$S/look/'\ndef logpolar(path, cx, cy, out, r0=10, r1=260, W=1800, Hh=900, th0=-20, th1=200):\n    im=cv2.imread(path)\n    th=np.radians(np.linspace(th0, th1, W))\n    lr=np.linspace(np.log(r0), np.log(r1), Hh)\n    T,LR=np.meshgrid(th,lr); R=np.exp(LR)\n    mx=(cx+R*np.cos(T)).astype(np.float32); my=(cy-R*np.sin(T)).astype(np.float32)\n    o=cv2.remap(im,mx,my,cv2.INTER_CUBIC,borderMode=cv2.BORDER_CONSTANT,borderValue=(0,0,0))\n    # tick marks fo …[+499 chars]`
+
+### 🧑 User — 2026-11-16T20:05:03.735Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:05:05.777Z
+
+Measuring tool works. I'm now looking closely at the far end of the tunnel in your approved picture to line up each ring with its match in the game.
+
+### 🤖 Claude — 2026-11-16T20:05:07.086Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/lp_approved.png"}`
+
+### 🧑 User — 2026-11-16T20:05:07.134Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:05:07.716Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/lp_game.png"}`
+
+### 🧑 User — 2026-11-16T20:05:07.763Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:05:29.869Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/pilot05/proj/target qa/pilot05/proj/align qa/pilot05/proj/feasibility 2>/dev/null | head -50; sed -n 1,60p tools/proj05/make_target.py | cut -c1-200", "description": "List the water target masks from the earlier bake"}`
+
+### 🧑 User — 2026-11-16T20:05:29.919Z
+
+> ↩︎ result: qa/pilot05/proj/align:
+> total 1172
+> drwxr-xr-x  2 root root    4096 Nov 16 19:50 .
+> drwxr-xr-x 13 root root    4096 Nov 16 20:04 ..
+> -rw-r--r--  1 root root    1467 Nov 16 19:50 align.json
+> -rw-r--r--  1 root root 1187729 Nov 16 19:50 artwork_aligned_864x1536.png
+> 
+> qa/pilot05/proj/feasibility:
+> total 908
+> drwxr-xr-x  2 root root   4096 Nov 16 19:50 .
+> drwxr-xr-x 13 root root   4096 Nov 16 20:04 ..
+> -rw-r--r--  1 root root  47634 Nov 16 19:50 footprint.json
+> -rw-r--r--  1 root root 869656 Nov 16 19:50 footprint_overlay.png
+> 
+> qa/pilot05/proj/target:
+> total 6720
+> drwxr-xr-x  2 root root    4096 Nov 16 19:50 .
+> drwxr-xr-x 13 root root    4096 Nov 16 20:04 ..
+> -rw-r--r--  1 root root 1137351 Nov 16 19:50 art_registered.png
+> -rw-r--r--  1 root root    4194 Nov 16 19:50 coin_mask.png
+> -rw-r--r--  1 root root 3505518 Nov 16 19:50 correction.npz
+> -rw-r--r--  1 root root   11195 Nov 16 19:50 fill_mask.png
+> -rw-r--r--  1 root root     452 Nov 16 19:50 report.json
+> -rw-r--r--  1 root root 2191533 Nov 16 19:50 target_05.png
+> -rw-r--r--  1 root root    5661 Nov 16 19:50 water_mask.png
+> """Screen 05 proj05 — TARGET water image in the approved frame (864x1536, sRGB), from the user's own pictures only:
+>   * where the appr …[+3820 chars]
+
+### 🤖 Claude — 2026-11-16T20:06:00.343Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\nfrom scipy.ndimage import binary_dilation, binary_closing, binary_opening, label\nS='$S/look/'\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nenv=np.asarray(Image.open('qa/worldlabs/05/05_env_mask.png').convert('L'))>127\nwm=np.asarray(Image.open('qa/pilot05/proj/target/water_mask.png').convert('L'))>127\nprint('env',env.mean(),'water',wm.mean(), env.shape, wm.shape)\nR,G,B=ap[. …[+591 chars]`
+
+### 🧑 User — 2026-11-16T20:06:01.279Z
+
+> ↩︎ result: env 0.6631017614293981 water 0.6065892349054784 (1536, 864) (1536, 864)
+
+### 🤖 Claude — 2026-11-16T20:06:04.050Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/mask_try.png"}`
+
+### 🧑 User — 2026-11-16T20:06:04.085Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:06:25.734Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\nfrom scipy.ndimage import binary_dilation, binary_closing, binary_opening, label, binary_fill_holes\nS='$S/look/'\nap8=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'))\nap=ap8.astype(int)\nhsv=cv2.cvtColor(ap8,cv2.COLOR_RGB2HSV_FULL).astype(float); Hh=hsv[...,0]*360/255; Sa=hsv[...,1]/255; V=hsv[...,2]/255\nR,G,B=ap[...,0],ap[...,1],ap[...,2]\nwarm=((Hh>=342)|(Hh<=62))&(Sa>0.22)&(V>0.3)\nlight=(G> …[+246 chars]`
+
+### 🧑 User — 2026-11-16T20:06:26.474Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:06:28.454Z
+
+Working out which parts of your approved picture are wall, ring, paddle, bubble or water, so only true wall pixels go into the wall texture. Checking the result now.
+
+### 🤖 Claude — 2026-11-16T20:06:29.933Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/mask_try2.png"}`
+
+### 🧑 User — 2026-11-16T20:06:29.966Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:06:41.634Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nS='$S/look/'\nim=cv2.imread('references/05_flow_into_the_current.png')\ndef crop(x0,y0,x1,y1,k,name):\n    c=im[y0:y1,x0:x1]; c=cv2.resize(c,None,fx=k,fy=k,interpolation=cv2.INTER_CUBIC)\n    for x in range(x0 - x0%20 + 20, x1, 20):\n        cv2.line(c,((x-x0)*k,0),((x-x0)*k,c.shape[0]),(255,255,255) if x%100==0 else (120,120,120),1)\n        if x%100==0: cv2.putText(c,str(x),((x-x0)*k+2,12),cv2.FONT_HERSHEY_SIMPLEX,0.4,(255,255,0),1)\n    for y in ra …[+426 chars]`
+
+### 🧑 User — 2026-11-16T20:06:41.950Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:06:44.639Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/lidsL.png"}`
+
+### 🧑 User — 2026-11-16T20:06:44.682Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:06:45.275Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/lidsR.png"}`
+
+### 🧑 User — 2026-11-16T20:06:45.316Z
+
+> ↩︎ result: [image]
+
