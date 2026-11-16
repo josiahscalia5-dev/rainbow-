@@ -866,3 +866,349 @@ Saved and verified: `d72ed52` is on GitHub. Now the audit: tool versions, instal
 
 > ↩︎ result: {"environment_id":"env_01BXqU5xg4mEAG9brMLzVNqf","name":"Default","description":"","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":false,"setup_script":"","network_secrets":[{"hosts":["api.worldlabs.ai"],"header_names":["WLT-Api-Key"],"name":"api.worldlabs.ai"}],"is_current":true,"editable_by_you":true,"session_has_repository":true,"note":"Edits made with update_environment change the stored environment; see that tool for when each kind of change takes effect. `setup_script` is returned only for an environment you can edit (`setup_script_withheld` / `description_withheld` mean the organization's compliance settings keep the stored text out of this tool — they refuse a `setup_script`, `new_name` or `new_description` edit too — or that this could not be checked right now, in which case calling again may return it). `other_cloud_environments` lists the user's other cloud environments (`other_cloud_environments_not_shown` counts any left out; the field is absent when they could not be read). create_environment refuses a name already  …[+792 chars]
 
+### 🤖 Claude — 2026-11-16T10:46:17.227Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat backups/START_NEW_CLAUDE_ACCOUNT.md; echo ======; cat backups/MCP_SETUP.md | head -80", "description": "Read new-account prompt and MCP setup docs"}`
+
+### 🧑 User — 2026-11-16T10:46:17.266Z
+
+> ↩︎ result: # Paste this into Claude Code on the next Claude account
+> 
+> Start a Claude Code cloud session on repository `josiahscalia5-dev/rainbow-` (pick branch `ccr-44f84024-ii5iih` if
+> the app lets you choose). Connect GitHub to the new Claude account first (and install the Claude GitHub App on the
+> repository). Then paste the short prompt.
+> 
+> ## Short prompt
+> > Continue my EXISTING Rainbow 3D Android game — do not start over, do not delete anything. Repository
+> > `josiahscalia5-dev/rainbow-`, newest saved work on branch `ccr-44f84024-ii5iih` (the GitHub default branch is an
+> > OLD version). First run
+> > `git fetch origin ccr-44f84024-ii5iih && git show FETCH_HEAD:scripts/resume-newest-work.sh > /tmp/r.sh && bash /tmp/r.sh --tools`,
+> > then read `CLAUDE.md`, `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section) and `qa/pilot05/COORDINATION_WAVE9B.md`,
+> > keep the five-minute GitHub autosave running on your own branch, give me a short recovery report, and continue
+> > Screen 05 with controlled tests against my BEFORE baseline.
+> 
+> ## What that prompt makes the next session do (details for Claude)
+> 1. `resume-newest-work.sh --tools` merges every newer `ccr-*` / `claude/*` branch (never resets or force-pushes),
+>    …[+8185 chars]
+
+### 🤖 Claude — 2026-11-16T10:46:18.523Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 60 claude plugin list 2>&1 | head -40; echo =====; timeout 90 claude mcp list 2>&1 | head -30; echo =====; ls ~/.claude/ ~/.claude/plugins 2>&1 | head -30; cat ~/.claude/settings.json 2>/dev/null | head -40", "description": "List installed Claude plugins, MCP servers and user settings"}`
+
+### 🧑 User — 2026-11-16T10:46:21.647Z
+
+> ↩︎ result: Synced from claude.ai:
+> 
+>   > code-review@synced
+>     Version: 1.0.1
+>     Path: /root/.claude/plugins/synced/11dfa620-6d5e-446d-9c79-128c7063b36c_96a344db-ffdf-4ad1-ba1a-dbc9e5938742/59d0c87c-3069-45e4-9a6a-d5a577b71374
+>     Status: √ loaded
+> 
+>   > pyright-lsp@synced
+>     Version: 1.0.0
+>     Path: /root/.claude/plugins/synced/11dfa620-6d5e-446d-9c79-128c7063b36c_96a344db-ffdf-4ad1-ba1a-dbc9e5938742/e1717e3f-3f4b-4f6d-a341-cd635945a0a5
+>     Status: √ loaded
+> 
+>   > hubcap@synced
+>     Version: 1.2.0
+>     Path: /root/.claude/plugins/synced/11dfa620-6d5e-446d-9c79-128c7063b36c_96a344db-ffdf-4ad1-ba1a-dbc9e5938742/f6e884e4-ca68-4e40-9c68-730d040cde68
+>     Status: √ loaded
+> 
+>   > typescript-lsp@synced
+>     Version: 1.0.0
+>     Path: /root/.claude/plugins/synced/11dfa620-6d5e-446d-9c79-128c7063b36c_96a344db-ffdf-4ad1-ba1a-dbc9e5938742/e3f75ee1-558a-4065-8662-81f5cd53917e
+>     Status: √ loaded
+> 
+>   > superpowers@synced
+>     Version: 7.0.2
+>     Path: /root/.claude/plugins/synced/11dfa620-6d5e-446d-9c79-128c7063b36c_96a344db-ffdf-4ad1-ba1a-dbc9e5938742/6ba53849-2ee0-4cf0-957e-31c122ea1dd1
+>     Status: √ loaded
+> 
+>   > feature-dev@synced
+>     Version: 1.0.1
+>     Path: /root/.claude/plugins/synced/11dfa620-6d5e-446d-9c79-128 …[+1184 chars]
+
+### 🤖 Claude — 2026-11-16T10:46:25.807Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls -la .mcp.json.template 2>&1; head -60 backups/AGENTS_STATUS.md; echo =====; find qa/worldlabs -type f | sort | head -100; find qa/worldlabs -type f | wc -l", "description": "Read agent status and list Marble/World Labs files"}`
+
+### 🧑 User — 2026-11-16T10:46:25.883Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 872 Nov 16 10:40 .mcp.json.template
+> # Rainbow specialists — roster, responsibilities and status
+> 
+> ## ▶ NOW: wave 9b (2026-11-16 from ~09:50 UTC, session `012NR93N`, branch `ccr-44f84024-ii5iih`) — read `qa/pilot05/COORDINATION_WAVE9B.md`
+> **User decisions 2026-11-16 ~10:20 UTC:** (1) Google Flow videos cover the opening and ending — do not rebuild 01 / 02 / 11
+> as detailed 3D; (2) specialists work on PLAYABLE screens 03–09: Screen 05 first, then 03, 04, 06, 07, 08, 09;
+> (3) Screen 05: the BEFORE picture (`qa/pilot05/wave9/baseline/05.png`) is the preferred baseline — the oval / big
+> tunnel is REJECTED; controlled tests only, one geometric factor at a time, always shown approved | BEFORE | NEW.
+> * `src/` was restored to BEFORE (aa35c8a; fresh 05 capture pixel-identical to the baseline). Wave 9 below is therefore
+>   NOT in the working game: its unfinished edits are in `qa/pilot05/wave9b/not_merged/*.patch` and in git history.
+> * No specialist is running. All ten definitions are present and unchanged.
+> * Each specialist's unfinished wave-9 code is a labelled patch in `qa/pilot05/wave9b/not_merged/` (README: what is
+>   finished, what may be reused, how to apply one piece a …[+8743 chars]
+
+### 🤖 Claude — 2026-11-16T10:46:26.758Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat qa/pilot05/COORDINATION_WAVE9B.md; echo ====; ls tools tools/* docs | head -60", "description": "Read wave 9b coordination brief and list tools/docs"}`
+
+### 🧑 User — 2026-11-16T10:46:26.810Z
+
+> ↩︎ result: # Screen 05: wave 9b — BEFORE restored, controlled geometry tests (session `012NR93N`, branch `ccr-44f84024-ii5iih`)
+> 
+> 2026-11-16, from ~09:50 UTC. Coordinator work in the main session (no specialists launched: the user asked to stop
+> wasting credits at 03:20 UTC, then "Continue" at 09:50).
+> 
+> ## The user's decisions (2026-11-16 ~10:20 UTC) — these override earlier wave notes
+> 1. **Google Flow videos cover the opening and the ending** (girl loads the washer with hidden Benny; girl retrieves
+>    the towel). Do NOT spend effort rebuilding 01 / 02 / 11 as detailed 3D artwork. Keep the video hand-over working
+>    (`docs/FLOW_VIDEO.md`); intro → gameplay and gameplay → ending must be seamless.
+>    **No video file is in the repo yet** (`public/video/` holds only the placeholder) — the user has to upload
+>    `intro.mp4` / `ending.mp4`; until then the real-time 3D cinematics play.
+> 2. **Specialists focus on PLAYABLE gameplay, screens 03–09.** Screen 05 first ("as close as possible to the approved
+>    artwork, ideally 90–95 % if achievable"), then the screens that differ most: 03, 04, 06, 07, 08, 09.
+>    Use the existing Marble assets, Blender and Three.js. Keep the ten specialists, the five-minute aut …[+5818 chars]
+
+### 🤖 Claude — 2026-11-16T10:48:08.710Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git remote get-url origin | sed -E 's#//[^@]*@#//***@#'; git count-objects -vH | grep -E \"size-pack|count\"; time (git fetch -q --unshallow origin 2>&1 | tail -2); git rev-parse --is-shallow-repository; git count-objects -vH | grep size-pack", "description": "Time a full-history fetch and show repo size", "timeout": 400000}`
+
+### 🤖 Claude — 2026-11-16T10:48:10.516Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat .mcp.json.template; echo; ls scripts/lib; grep -hoE \"^(import|from) [a-zA-Z0-9_.]+\" scripts/*.py tools/qa/*.py tools/worldlabs/*.py tools/*.py 2>/dev/null | sort | uniq -c | sort -rn | head -30; env | grep -iE \"session|claude\" | sed -E 's/(TOKEN|KEY|SECRET)=.*/\\1=***/' | cut -c1-120", "description": "Show MCP template, Python imports used, Claude env vars"}`
+
+### 🧑 User — 2026-11-16T10:48:20.591Z
+
+> ↩︎ result: https://github.com/josiahscalia5-dev/rainbow-
+> count: 33
+> size-pack: 1005.96 MiB
+> 
+> real	0m11.833s
+> user	0m6.859s
+> sys	0m1.225s
+> false
+> size-pack: 1.17 GiB
+
+### 🧑 User — 2026-11-16T10:48:20.664Z
+
+> ↩︎ result: {
+>   "_comment": "Template only — contains NO secrets. Copy to .mcp.json (git-ignored) or use the `claude mcp add` commands in backups/MCP_SETUP.md. Put API keys in your shell env / OS keychain, never in this repo.",
+>   "mcpServers": {
+>     "playwright": { "command": "npx", "args": ["@playwright/mcp@latest"] },
+>     "blender": { "command": "uvx", "args": ["mcp-for-blender"] },
+>     "_meshy": "NOT VERIFIED HERE — install per https://github.com/meshy-dev/meshy-mcp-server README; key goes in env MESHY_API_KEY only",
+>     "hyper3d-rodin": { "type": "http", "url": "https://api.hyper3d.com/api/mcp" },
+>     "_worldlabs": "DO NOT ADD HERE (would duplicate). Atlas = claude.ai connector 'World Labs Atlas' (https://api.atlas.worldlabs.ai/mcp); the worldlabs@worldlabs plugin is installed for its skills with its own MCP copy disabled: scripts/setup-worldlabs-plugin.sh"
+>   }
+> }
+> 
+> pw.mjs
+>      12 import json
+>      11 from pathlib
+>      10 import sys
+>      10 import numpy
+>       8 from PIL
+>       5 from __future__
+>       4 import cv2
+>       4 import argparse
+>       3 import datetime
+>       2 import subprocess
+>       2 import re
+>       2 import os
+>       2 import math
+>       2 import hashlib
+>       2 import fnmatch
+>       1 …[+3047 chars]
+
+### 🤖 Claude — 2026-11-16T10:48:31.277Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"import cv2, scipy; print('cv2', cv2.__version__, 'scipy', scipy.__version__)\" 2>&1; grep -nE \"credits|BASE|https://api\" tools/worldlabs/marble_pilot.py | head -15; cat scripts/lib/pw.mjs | head -30", "description": "Check cv2/scipy, World Labs endpoints, Playwright helper"}`
+
+### 🧑 User — 2026-11-16T10:48:31.377Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     import cv2, scipy; print('cv2', cv2.__version__, 'scipy', scipy.__version__)
+>     ^^^^^^^^^^^^^^^^^
+> ModuleNotFoundError: No module named 'cv2'
+> 3:  marble_pilot.py credits
+> 12:API = "https://api.worldlabs.ai/marble/v1"
+> 31:def credits():
+> 32:    s, d = call("GET", "/credits")
+> 33:    return d.get("remaining_credits") if s == 200 else None
+> 37:    bal = credits()
+> 46:    if cmd == "credits":
+> 47:        print(credits())
+> // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the  …[+708 chars]
+
+### 🤖 Claude — 2026-11-16T10:48:34.883Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; oid=$(git lfs ls-files -l | head -1 | cut -d' ' -f1); size=$(stat -c%s assets/models/benny.glb); echo \"oid=$oid size=$size\"; curl -sS -m 30 -X POST -H \"Accept: application/vnd.git-lfs+json\" -H \"Content-Type: application/vnd.git-lfs+json\" -d \"{\\\"operation\\\":\\\"download\\\",\\\"transfers\\\":[\\\"basic\\\"],\\\"objects\\\":[{\\\"oid\\\":\\\"$oid\\\",\\\"size\\\":$size},{\\\"oid\\\":\\\"0000000000000000000000000000000000000000000000000000000000000000\\\",\\\"size\\\":1}]}\" https://github.com/josiahscalia5-dev/rainbow-.git/info/lfs/objects/batch |  …[+331 chars]`
+
+### 🧑 User — 2026-11-16T10:48:35.500Z
+
+> ↩︎ result: oid=40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1 size=1126892
+> 40633fdd0201 download-href-host=github-cloud.githubusercontent.com
+> 000000000000 ERROR {"code": 404, "message": "Object does not exist on the server"}
+
+### 🤖 Claude — 2026-11-16T10:48:45.709Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -lE \"^import cv2|^from scipy|^import scipy\" scripts/*.py tools/*.py tools/*/*.py; python3 -c \"import scipy; print('scipy', scipy.__version__)\" 2>&1 | tail -1; sed -n 1,45p tools/worldlabs/marble_pilot.py", "description": "Find cv2/scipy users and read Marble pilot auth code"}`
+
+### 🧑 User — 2026-11-16T10:48:45.803Z
+
+> ↩︎ result: scripts/landmarks05.py
+> tools/make_env_geometry_ref.py
+> tools/make_env_plate.py
+> tools/make_env_plate_v2.py
+> tools/make_env_plate_v3.py
+> ModuleNotFoundError: No module named 'scipy'
+> """Marble World API pilot helper (Rainbow Screen 05). The API key is injected by the session proxy;
+> this script never reads, prints or stores it. Usage:
+>   marble_pilot.py credits
+>   marble_pilot.py upload <image.png>                 -> prints media_asset_id
+>   marble_pilot.py generate <model> <media_asset_id> <display_name> <prompt_file>  -> prints operation id
+>   marble_pilot.py poll <operation_id> <out.json> [max_seconds]
+>   marble_pilot.py world <world_id> <out.json>
+>   marble_pilot.py export_ply <world_id> <resolution> <out.json>
+> """
+> import json, os, sys, time, urllib.request, urllib.error
+> 
+> API = "https://api.worldlabs.ai/marble/v1"
+> CAP_SPEND = 6250          # user-approved maximum: US$5
+> START_BALANCE = 7000.0    # balance at the first authentication test (2026-11-16)
+> 
+> 
+> def call(method, path, body=None, timeout=60):
+>     data = json.dumps(body).encode() if body is not None else None
+>     req = urllib.request.Request(API + path, data=data, method=method)
+>     req.add_header("Content-Type", "application/json")
+>     …[+725 chars]
+
+### 🤖 Claude — 2026-11-16T10:48:49.038Z
+
+Marble's API key comes from the session proxy (never in code). I'll do free, read-only checks now: the credit balance and whether both generated worlds still exist. No generation, no credits spent.
+
+### 🤖 Claude — 2026-11-16T10:48:52.839Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad; mkdir -p $S/wl; python3 -I tools/worldlabs/marble_pilot.py credits; python3 -I - <<'PY'\nimport json, urllib.request, urllib.error\nfor wid, name in ((\"5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f\",\"draft\"),(\"c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9\",\"full\")):\n    try:\n        with urllib.request.urlopen(f\"https://api.worldlabs.ai/marble/v1/worlds/{wid}\", timeout=30) as r:\n            d = json.loads(r.read()); print(name, wid, \"HTTP\", r.status, \"| display_name:\", d.get …[+235 chars]`
+
+### 🧑 User — 2026-11-16T10:48:54.069Z
+
+> ↩︎ result: 5190.0
+> draft 5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f HTTP 200 | display_name: Rainbow 05 draft (approved tunnel)
+> full c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9 HTTP 200 | display_name: Rainbow 05 full (approved tunnel)
+
+### 🤖 Claude — 2026-11-16T10:49:38.075Z
+
+World Labs confirmed with free reads only: balance **5,190 credits** (unchanged) and both worlds (draft + full) answer HTTP 200. Let me read the status checker, then write the bootstrap.
+
+### 🤖 Claude — 2026-11-16T10:49:39.645Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat scripts/autosave-status.py; java -version 2>&1 | grep -v JAVA_TOOL; cat android/gradle/wrapper/gradle-wrapper.properties | grep distributionUrl; ls ~/.gradle 2>&1 | head -3; grep -n \"pip\\|python\" TOOL_SETUP_AND_VERIFICATION.md | head -5; head -30 backups/RECOVERY.md", "description": "Read autosave status checker, Java/Gradle versions, recovery doc"}`
+
+### 🧑 User — 2026-11-16T10:49:39.765Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Rainbow autosave health check (read-only).
+> 
+>     python3 -I scripts/autosave-status.py          one-line verdict + details, exit 0 = healthy, 1 = problem
+>     python3 -I scripts/autosave-status.py --json   machine-readable
+> 
+> Checks: scheduler alive (cron entry or daemon process), age of the last verified backup, last result,
+> consecutive failures, local HEAD == remote branch SHA, uncommitted files, and the current branch is
+> neither protected nor outside the allowed session-branch patterns. A gap > 12 min since the last
+> verified backup (e.g. the cloud environment was closed) is reported explicitly.
+> """
+> import datetime as dt
+> import fnmatch
+> import json
+> import subprocess
+> import sys
+> from pathlib import Path
+> 
+> REPO = Path(__file__).resolve().parents[1]
+> CFG = json.loads((REPO / "backups" / "autosave.config.json").read_text())
+> 
+> 
+> def sh(*cmd, timeout=60):
+>     p = subprocess.run(cmd, cwd=REPO, capture_output=True, text=True, timeout=timeout)
+>     return p.returncode, p.stdout.strip()
+> 
+> 
+> def main() -> int:
+>     now = dt.datetime.now(dt.timezone.utc).replace(microsecond=0)
+>     live = REPO / "backups" / ".live" / "BACKUP_STATUS.json"
+>     st_path = live if live.exists() else RE …[+5293 chars]
+
+### 🤖 Claude — 2026-11-16T10:49:42.757Z
+
+I have everything needed. Writing the files now, starting with the machine-readable manifests the bootstrap will read. First the agent checksums and each agent's role line:
+
+### 🤖 Claude — 2026-11-16T10:49:43.963Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sha256sum .claude/agents/*.md; for f in .claude/agents/*.md; do echo \"== $f\"; sed -n 1,8p \"$f\" | grep -E \"^(name|description|model|tools):\"; done; ls qa/pilot05/wave9b/not_merged/ qa/pilot05/wave9/", "description": "Compute agent definition checksums and read their headers"}`
+
+### 🧑 User — 2026-11-16T10:49:44.021Z
+
+> ↩︎ result: b0c45161860a960cf37e613abf146345034950c3d671225b81d538a031eb579e  .claude/agents/android-build-performance.md
+> c48094c3ed3d22e78e1518598eccf1cf4ccaccaa2a58599da791e1d8fe77862f  .claude/agents/animation-and-gameplay-engineer.md
+> cde203afa8b927cb5d69ab4966c778eb3cda64c3090ba714114c5657ed8054cd  .claude/agents/benny-character-artist.md
+> 52058503a35585802f7a9a99af9554e4d82dbc3112e5c96fedd5a736049c0fb6  .claude/agents/cartoon-girl-character-artist.md
+> f6341dcde1ea07e5e6b102d38c9f6fac25d879ebde2d2efc86413a85922f57df  .claude/agents/foam-bubbles-particles.md
+> 4244cc8249008d7f2978c40dbf9d2f268b23478cca31931c567fb49d1b0e01be  .claude/agents/path-camera-transition-engineer.md
+> 0f14c32fb4af423f93d12762ac724558913d83f77c974b1381ccda2075638e0f  .claude/agents/playwright-visual-qa.md
+> b977e3f7592f4276a8e1fae3a88dccda07bc5d3070ac77f8ae5a4040c4495735  .claude/agents/reference-match-director.md
+> 7abdea786d530d7933f75a3926e1e0e5ae3cf5594453558a15da345b6761cc68  .claude/agents/washer-environment-modeler.md
+> b160f12ff93db70ef94b62d5951c62335320cc1268ca7998de39ea26df1a84a2  .claude/agents/water-fx-specialist.md
+> == .claude/agents/android-build-performance.md
+> name: android-build-performance
+> description: Android p …[+2098 chars]
+
+### 🤖 Claude — 2026-11-16T10:49:45.874Z
+
+All ten checksums match the documented ones. Writing `backups/AGENTS_STATUS.json`:
+
+### 🤖 Claude — 2026-11-16T10:50:11.723Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/AGENTS_STATUS.json", "content": "{\n  \"_comment\": \"Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.\",\n  \"schema\": 1,\n  \"updated_utc\": \"2026-11-16T11:00:00+00:00\",\n  \"updated_by_sessi …[+6912 chars]`
+
+### 🧑 User — 2026-11-16T10:50:11.761Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/backups/AGENTS_STATUS.json (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:50:25.082Z
+
+> 🔧 **Bash** `{"command": "python3 --version; claude --version 2>&1 | head -1; ffmpeg -version 2>&1 | head -1 | cut -c1-40; convert -version | head -1 | cut -c1-40; cd /home/user/rainbow-; grep -n \"credits\\|op\\b\\|operation\" qa/worldlabs/05/pilot/LEDGER.md | head -20", "description": "Get remaining tool versions and Marble ledger lines"}`
+
+### 🧑 User — 2026-11-16T10:50:25.444Z
+
+> ↩︎ result: Python 3.13.18
+> 2.1.325 (Claude Code)
+> ffmpeg version 6.1.1-3ubuntu5 Copyright 
+> Version: ImageMagick 6.9.12-98 Q16 x86_6
+> 1:# Marble World API pilot — credit ledger (user-approved cap: US$5 = 6,250 credits; no auto-recharge)
+> 9:| 00:52 | `GET /credits` (authentication test) | 200 | 7,000 | 0 |
+> 15:| 00:58 | `worlds:generate` **marble-1.1** (full quality) → world `c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9`, operation `12a08430-f687-4a09-bdc7-3a469c76363d` | done in ≈5 min | 6,770 → **5,190** | **1,810** |
+> 18:| 01:35 | `GET /credits` (transfer session `94cf04e3`; key saved by the user via the secure credential form on this account's Default environment) | 200, **5,190** | 5,190 → 5,190 | 1,810 |
+> 22:**Balance reported by the API at hand-off: 5,190 credits (re-read 01:35 UTC by the transfer session). Spent 1,810 of the 6,250-credit (US$5) cap.
+> 23:Remaining approved budget: 4,440 credits.** Not yet bought: HQ mesh export (3,500 credits, US$2.80) — only if
+> 29:| draft `5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f` (op `4a549a9d-3de2-424b-8324-db24a8d1b9bd`, `marble-1.0-draft`) | `draft/` | `collider.glb`, `splats_100k.spz`, `splats_500k.spz`, `splats_full_res.spz` (26 MB), `splats_500k.ply` (free export),  …[+695 chars]
+
