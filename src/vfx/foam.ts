@@ -67,6 +67,31 @@ export function bermSurface(s: number, e: number, side: number, hw: number): num
   return bermHeight(e, hw, bermLump(s, side)) + 0.2 * domeK * Math.sqrt(bermDomes(s, e, side));
 }
 
+/**
+ * wave 7: ref 05 soap colour ramp t = 0..1: blue-violet crevice -> blue -> periwinkle -> lavender-white -> white
+ * top cap. Stops = the ref 05 rim foam at its 5/20/50/70/90th luminance percentiles ((107,101,234) (117,143,247)
+ * (171,184,250) (216,212,251) (250,243,254)) inverted through the display pipeline (Neutral tone map x0.86 ->
+ * sRGB -> grade sat 1.36 / contrast 1.15; qa/pilot05/wave6/foam/tools/pipe.py). Only t > 0.8 reaches white.
+ * `soapT` = the shared view-space lighting (top-lit from the upper left, like the ref bubbles).
+ */
+const SOAP05_GLSL = /* glsl */ `
+const vec3 SOAP_CREV = vec3(0.23, 0.22, 0.66);
+vec3 soap05(float t) {
+  t = clamp(t, 0.0, 1.0) * 5.0;
+  vec3 c = mix(SOAP_CREV, vec3(0.28, 0.36, 0.80), clamp(t, 0.0, 1.0));
+  c = mix(c, vec3(0.42, 0.50, 0.94), clamp(t - 1.0, 0.0, 1.0));
+  c = mix(c, vec3(0.58, 0.60, 0.92), clamp(t - 2.0, 0.0, 1.0));
+  c = mix(c, vec3(0.80, 0.77, 0.97), clamp(t - 3.0, 0.0, 1.0));
+  return mix(c, vec3(1.06, 1.02, 1.08), clamp(t - 4.0, 0.0, 1.0));
+}
+float soapT(vec3 Nv) {
+  vec3 Lv = normalize(vec3(-0.35, 0.8, 0.5));
+  float wrap = clamp(dot(Nv, Lv) * 0.55 + 0.5, 0.0, 1.0);
+  float up = clamp(Nv.y * 0.5 + 0.5, 0.0, 1.0);
+  return smoothstep(0.1, 0.8, wrap * 0.6 + up * 0.4);
+}
+`;
+
 const BERM_VERT = /* glsl */ `
 attribute vec3 aFoam;    // x = e (units outward from the stream edge), y = s, z = side (-1 / 1)
 uniform float uTime;

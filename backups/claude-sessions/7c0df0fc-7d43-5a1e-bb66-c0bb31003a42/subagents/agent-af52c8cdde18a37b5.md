@@ -531,3 +531,155 @@ Now let me look at my source files and the partial patch.
 >   720  81-234 107 / 837-863  16  |    5-146 103 / 740-863  91  |    5-146 103 / 843-863   4
 >   740  25-151  83 / 796-863  51  |    0- 99  9 …[+3289 chars]
 
+### 🤖 Claude — 2026-11-16T00:45:20.559Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/pilot05/wave6/foam/tools/pipe.py 107,101,234 114,106,242 117,143,247 141,168,249 171,184,250 216,212,251 250,243,254 && grep -n \"toneMappingExposure\\|NeutralToneMapping\\|saturation\\|contrast\" src/render/*.ts | head", "description": "Invert ref foam colors through display pipeline"}`
+
+### 🧑 User — 2026-11-16T00:45:20.734Z
+
+> ↩︎ result: 107,101,234 -> linear [0.231 0.217 0.659] gives [107 101 234]
+> 114,106,242 -> linear [0.252 0.233 0.706] gives [114 106 242]
+> 117,143,247 -> linear [0.284 0.358 0.779] gives [117 143 247]
+> 141,168,249 -> linear [0.399 0.5   1.114] gives [141 168 255]
+> 171,184,250 -> linear [0.506 0.558 0.873] gives [171 184 250]
+> 216,212,251 -> linear [0.752 0.732 0.938] gives [216 212 251]
+> 250,243,254 -> linear [1.03  0.988 1.053] gives [250 243 254]
+> src/render/env.ts:57:  renderer.toneMapping = THREE.NeutralToneMapping;
+> src/render/env.ts:58:  renderer.toneMappingExposure = 0.86;
+> src/render/grade.ts:1:/** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> src/render/grade.ts:5:export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+> src/render/grade.ts:9:      uSat: { value: opts.saturation ?? 1.36 },
+> src/render/grade.ts:10:      uCon: { value: opts.contrast ?? 1.15 },
+
+### 🤖 Claude — 2026-11-16T00:45:31.400Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/vpL.png 120 500 440 740 1.8 references/05_flow_into_the_current.png qa/pilot05/wave7/baseline/05.png", "description": "Zoom crop of left VP rim"}`
+
+### 🧑 User — 2026-11-16T00:45:31.705Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:45:33.463Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/vpL.png"}`
+
+### 🧑 User — 2026-11-16T00:45:33.494Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:45:42.010Z
+
+> 🔧 **Bash** `{"command": "grep -n \"stage(\\|STAGES\\|s0:\\|'05'\" src/world/course.ts | head -30; grep -rn \"checkpoint\\|05_crest\" src/game/*.ts | grep -i \"05_crest\\|marks\\[\" | head", "description": "Find stage s-ranges in course"}`
+
+### 🧑 User — 2026-11-16T00:45:42.063Z
+
+> ↩︎ result: 16:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 24:  s0: number;
+> 53:  '05': 'FLOW INTO THE CURRENT',
+> 91:  s0: number;
+> 257:  mark('05');
+> 268:  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+> 328:  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+> 410:    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+> 415:    const def = (id: StageId, s0: number, s1: number, o: Partial<StageDef>): StageDef => ({
+> 423:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 426:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+> 480:    this.st05 = this.stage('05');
+> 481:    this.st10 = this.stage('10');
+> 504:  stage(id: StageId): StageDef {
+> 600:  const rideStart = c.stage('03').s0; // 01–02 tumble helix is a cinematic, checked for gaps only
+> 614:    entryAltitude07: y(c.stage('07').s0),
+> src/game/Game.ts:527:    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.t …[+78 chars]
+
+### 🤖 Claude — 2026-11-16T00:45:44.589Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/stages.mts <<'EOF'\nimport { buildCourse } from '/home/user/rainbow-/src/world/course.ts';\nEOF\ngrep -n \"^export function\\|^export class\\|^export const\" src/world/course.ts | head -20", "description": "Find course exports"}`
+
+### 🧑 User — 2026-11-16T00:45:44.628Z
+
+> ↩︎ result: 48:export const STAGE_TITLES: Record<StageId, string> = {
+> 63:export const WORLD = {
+> 73:export function funnelY(r: number): number {
+> 116:export const S05 = {
+> 183:export function meander05(u: number): number {
+> 361:export class Course {
+> 578:export function validateContinuity(c: Course): ContinuityReport {
+
+### 🤖 Claude — 2026-11-16T00:45:47.733Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow\\s*=\\|__rainbow =\\|course:\" src/game/Game.ts | head; grep -n \"window.__rainbow\" -r src | head -5", "description": "Find QA hooks exposing course"}`
+
+### 🧑 User — 2026-11-16T00:45:47.773Z
+
+> ↩︎ result: 660:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+
+### 🤖 Claude — 2026-11-16T00:45:49.254Z
+
+> 🔧 **Bash** `{"command": "sed -n 560,660p src/game/Game.ts | grep -n \"course\\|stages\\|: (\" | head -30", "description": "Inspect QA api members"}`
+
+### 🧑 User — 2026-11-16T00:45:49.297Z
+
+> ↩︎ result: 13:    st.coins = course.stage(refId).refCoins || START_COINS;
+> 31:      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+> 97:      return { fps: +fps.toFixed(1), calls: i.render.calls, triangles: i.render.triangles, geometries: i.memory.geometries, textures: i.memory.textures, modules: { ...moduleStatus }, courseLength: course.length };
+> 99:    course,
+
+### 🤖 Claude — 2026-11-16T00:45:55.706Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && cat > $S/stages.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5232);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\n  await page.goto(`${vite.url}/?qa=1&dpr=1`);\n  await page.waitForFunction(() => window.__rainbow?.ready === true || …[+698 chars]`
+
+### 🧑 User — 2026-11-16T00:46:15.779Z
+
+> ↩︎ result: {"03":["41.0","70.4"],"04":["70.4","114.7"],"05":["114.7","188.9"],"06":["188.9","247.1"],"07":["247.1","389.2"],"08":["389.2","404.8"]}
+> 03 48.495
+> 04 77.413
+> 06 198.924
+> 07 273.057
+> 08 391.22
+
+### 🤖 Claude — 2026-11-16T00:46:28.534Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/bubzoom.png 690 820 864 960 3.0 references/05_flow_into_the_current.png && python3 -I $S/crop.py $S/c/bubzoom_live.png 690 800 864 940 3.0 qa/pilot05/wave7/baseline/05.png", "description": "Zoom on ref and live right heap bubbles"}`
+
+### 🧑 User — 2026-11-16T00:46:28.885Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:46:30.552Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/bubzoom.png"}`
+
+### 🧑 User — 2026-11-16T00:46:30.571Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:46:31.218Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/bubzoom_live.png"}`
+
+### 🧑 User — 2026-11-16T00:46:31.238Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:47:06.587Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && cat > $S/sim.py <<'EOF'\nimport sys, numpy as np\nsys.path.insert(0, '/home/user/rainbow-/qa/pilot05/wave6/foam/tools')\nfrom pipe import fwd\nSTOPS = np.array([[0.23,0.22,0.66],[0.28,0.36,0.80],[0.42,0.50,0.94],[0.58,0.60,0.92],[0.80,0.77,0.97],[1.06,1.02,1.08]])\ndef soap(t):\n    t = np.clip(t,0,1)*5; i = np.minimum(4, np.floor(t).astype(int)); f = (t-i)[...,None]\n    return STOPS[i]*(1-f)+STOPS[i+1]*f\ndef ss(a,b,x):\n    u=np.clip((x-a)/(b-a),0,1); return u*u*(3-2*u)\nn=200; xs=np.linspace …[+1017 chars]`
+
+### 🧑 User — 2026-11-16T00:47:10.216Z
+
+> ↩︎ result: a0 0.2 a1 0.95 wl 0.55 sil 0.35+0.5 ao 1.0: maskfrac 0.61 WHITE 12.4% SHADE 58.9% mean [208. 209. 255.]  dark(all) 39%
+> a0 0.2 a1 0.95 wl 0.55 sil 0.35+0.5 ao 0.8: maskfrac 0.56 WHITE 0.0% SHADE 100.0% mean [187. 193. 255.]  dark(all) 44%
+> a0 0.15 a1 0.9 wl 0.6 sil 0.25+0.4 ao 0.9: maskfrac 0.66 WHITE 0.0% SHADE 65.9% mean [204. 206. 255.]  dark(all) 34%
+> a0 0.1 a1 0.85 wl 0.6 sil 0.25+0.4 ao 0.9: maskfrac 0.71 WHITE 0.0% SHADE 60.2% mean [208. 208. 255.]  dark(all) 29%
+> a0 0.1 a1 0.8 wl 0.6 sil 0.2+0.35 ao 0.95: maskfrac 0.75 WHITE 20.6% SHADE 41.1% mean [217. 216. 255.]  dark(all) 25%
+
+### 🤖 Claude — 2026-11-16T00:47:26.029Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const BERM_VERT = /* glsl */ `\nattribute vec3 aFoam;", "new_string": "/**\n * wave 7: ref 05 soap colour ramp t = 0..1: blue-violet crevice -> blue -> periwinkle -> lavender-white -> white\n * top cap. Stops = the ref 05 rim foam at its 5/20/50/70/90th luminance percentiles ((107,101,234) (117,143,247)\n * (171,184,250) (216,212,251) (250,243,254)) inverted through the display pipeline (Neutral tone map x0.86 ->\n * sRGB -> grade sat 1.36 / contrast 1.15; qa/pilot05/wave6/foam/tools/pipe.py). Only t > 0. …[+896 chars]`
+
+### 🧑 User — 2026-11-16T00:47:26.084Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+

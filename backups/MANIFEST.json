@@ -2207,6 +2207,11 @@
    "sha256": "fe88128013f8a1fb98ee74f0f8a12acd615ee434d71cbee07dfbcc323d574335"
   },
   {
+   "path": "qa/pilot05/wave7/environment/NOTES.md",
+   "bytes": 1329,
+   "sha256": "7658a5d11e14aab6f3c5993b09f68222013259921518d234db8a3d85e71df536"
+  },
+  {
    "path": "qa/pilot05/wave7/foam/NOTES.md",
    "bytes": 1087,
    "sha256": "0fb946c1ab78a3e210a98bafe3c6f0b247c47eb12e75f828e7749ed893edb459"
@@ -2813,8 +2818,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 41319,
-   "sha256": "9dbb4c1f0ecb021a3b45345623872c7c8a29f9add958473457e76983ad910d67"
+   "bytes": 42574,
+   "sha256": "b1c2505392ec5326fb01df3f61045309bc96ba7e6cca0978aea30bc1fc90ae97"
   },
   {
    "path": "src/vfx/glsl.ts",
