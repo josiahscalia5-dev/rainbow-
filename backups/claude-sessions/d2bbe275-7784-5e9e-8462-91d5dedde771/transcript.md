@@ -1251,3 +1251,158 @@ Writing up the results and saving everything to GitHub now (game code untouched,
 
 > 🔧 **Bash** `{"command": "git add -A qa/pilot05/marble_feas tools/marble05 && git commit -q -m \"Screen 05: Marble feasibility test on the two existing worlds (no credits)\n\nCamera fit of Marble's input view (f 700 px, pitch 6 deg, both worlds), ring and\nriver depth vs the approved perspective, Blender camera projection of the original\nwater artwork onto Marble's river surface, full-size camera-locked comparison and\nmoved-camera check. Game code untouched; results in qa/pilot05/marble_feas/NOTES.md.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/sessi …[+303 chars]`
 
+### 🧑 User — 2026-11-16T17:28:06.237Z
+
+> ↩︎ result: 41ab0c4 Screen 05: Marble feasibility test on the two existing worlds (no credits)
+>   "note": "following session branch 'ccr-e546a360-cxmton' (config branch 'claude/rainbow-05-water-projection')",
+>   "commit": "520f52935845e3e0699a195f89390ca5d3a5542d",
+>   "duration_s": 6
+> }
+> 520f52935845e3e0699a195f89390ca5d3a5542d	refs/heads/ccr-e546a360-cxmton
+> 520f52935845e3e0699a195f89390ca5d3a5542d
+
+### 🤖 Claude — 2026-11-16T17:28:14.294Z
+
+Pushed (`520f529`, remote = local). Verifying LFS upload and the latest bootstrap checks, then opening a draft PR.
+
+### 🤖 Claude — 2026-11-16T17:28:16.740Z
+
+> 🔧 **Bash** `{"command": "git lfs push --dry-run origin ccr-e546a360-cxmton 2>&1 | head -5; echo \"lfs-dry-run-lines: $(git lfs push --dry-run origin ccr-e546a360-cxmton 2>/dev/null | wc -l)\"; git lfs ls-files | wc -l; python3 -I scripts/autosave-status.py 2>&1 | tail -2; head -32 backups/BOOTSTRAP_REPORT.md | grep -E \"^\\| |^# \" | cut -c1-230", "description": "Confirm LFS objects on GitHub and read latest bootstrap report", "timeout": 180000}`
+
+### 🧑 User — 2026-11-16T17:28:18.601Z
+
+> ↩︎ result: lfs-dry-run-lines: 0
+> 27
+> AUTOSAVE OK | branch ccr-e546a360-cxmton | scheduler daemon | last verified backup 2026-11-16T17:27:59+00:00 (0.3 min ago) | local 520f529 remote 520f529 (match) | uncommitted 0
+> # Rainbow bootstrap report — BOOTSTRAP OK (with warnings)
+> | Step | Result | Details | s |
+> | Repository + branch | OK | josiahscalia5-dev/rainbow- on ccr-e546a360-cxmton @ 6288054 (session started from claude/rainbow-05-water-projection) | 0 |
+> | Resume newest work | OK | 16/16 remote ccr-*/claude/* branches contained in HEAD 6288054 | 33 |
+> | Backup gap since last session | OK | previous save on GitHub: 6288054 2026-11-16 16:48 UTC (daemon) on ccr-e546a360-cxmton, claude/rainbow-05-water-projection; previous session ended WITHOUT an end-of-session backup (its environ
+> | Git LFS binaries (local) | OK | 26/26 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 4 |
+> | Git LFS on GitHub | OK | 26/26 LFS objects (199 MB, 17 Marble/World Labs) confirmed on GitHub LFS | 1 |
+> | Approved references | OK | 13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference) | 0 |
+> | Game: 11 screens + code | OK | 11 approved screen reference …[+2098 chars]
+
+### 🤖 Claude — 2026-11-16T17:28:20.890Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_pull_requests,mcp__github__create_pull_request,mcp__github__get_file_contents", "max_results": 3}`
+
+### 🧑 User — 2026-11-16T17:28:20.902Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-16T17:28:22.770Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "state": "open", "fields": ["number", "title", "head", "base", "draft", "html_url"], "perPage": 30}`
+
+### 🤖 Claude — 2026-11-16T17:28:23.671Z
+
+> 🔧 **Bash** `{"command": "ls .github 2>/dev/null; find . -maxdepth 3 -iname \"*pull_request_template*\" -not -path \"./node_modules/*\" 2>/dev/null | head", "description": "Look for a pull request template"}`
+
+### 🧑 User — 2026-11-16T17:28:23.711Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-16T17:28:24.196Z
+
+> ↩︎ result: [{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"draft":true,"head":{"ref":"ccr-451ea8c7-3nqlis","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"97dda283bba47b647eabaf84595eecc11672ea1e"},"html_url":"https://github.com/josiahscalia5-dev/rainbow-/pull/8","number":8,"title":"DO NOT MERGE — Rainbow newest work (account switch recovery, Screen 05 water wave 12)"},{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"draft":true,"head":{"ref":"claude/rainbow-3d-account-recovery-hfb8p0","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"088dd3fc77c0cf18f1e853ffb27a0945e27b1f0b"},"html_url":"https://github.com/josiahscalia5-dev/rainbow-/pull/7","number":7,"title":"DO NOT MERGE — Rainbow newest work (account recovery hfb8p0, Screen 05 water / far river)"},{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"draft":true,"head":{"ref":"ccr-251ed97c-ty2xvp","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"84298d6be0 …[+2084 chars]
+
+### 🤖 Claude — 2026-11-16T17:28:34.809Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "ccr-e546a360-cxmton", "base": "claude/rainbow-05-water-projection", "draft": true, "title": "DO NOT MERGE — Screen 05 Marble feasibility test (existing worlds, no credits)", "body": "Experiment branch only. The playable game is unchanged (no edits under `src/`), and no Marble credits were spent or API calls made.\n\n## Question\nCan the two existing Marble worlds (`c0c9dc57…` full, `5fd3d7a7…` draft) reproduce the approved Screen 05 river's exact S-curve geometry and perspective? Marble is used only for 3D reconstruction. Blender came …[+1643 chars]`
+
+### 🧑 User — 2026-11-16T17:28:37.051Z
+
+> ↩︎ result: {"id":"5341772442","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/9"}
+
+### 🤖 Claude — 2026-11-16T17:28:38.620Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 9}`
+
+### 🤖 Claude — 2026-11-16T17:28:38.970Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T17:28:40.153Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#9. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🧑 User — 2026-11-16T17:28:40.165Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-16T17:28:45.818Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -5; python3 -I scripts/autosave-status.py 2>&1 | tail -1; git ls-remote origin refs/heads/ccr-e546a360-cxmton; git rev-parse HEAD", "description": "Final check that remote branch equals local HEAD"}`
+
+### 🧑 User — 2026-11-16T17:28:46.819Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-e546a360-cxmton | scheduler daemon | last verified backup 2026-11-16T17:27:59+00:00 (0.8 min ago) | local 520f529 remote 520f529 (match) | uncommitted 0
+> 520f52935845e3e0699a195f89390ca5d3a5542d	refs/heads/ccr-e546a360-cxmton
+> 520f52935845e3e0699a195f89390ca5d3a5542d
+
+### 🤖 Claude — 2026-11-16T17:28:50.515Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/marble_feas/compare/1_APPROVED.png", "qa/pilot05/marble_feas/compare/2_MARBLE_RAW_locked.png", "qa/pilot05/marble_feas/compare/3_NEW_marble_geometry_plus_projected_artwork_locked.png", "qa/pilot05/marble_feas/compare/4_GEOMETRY_marble_depth_vs_ideal_floor_locked.png"], "caption": "Full-size, same camera, 864×1536: 1 = your approved image · 2 = your existing Marble world as Marble built it · 3 = Marble's river surface with your original artwork projected on it in Blender · 4 = where Marble's depth is right (green) or wrong (red / blue)", "status": "normal", "display": "re …[+6 chars]`
+
+### 🧑 User — 2026-11-16T17:28:51.849Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/marble_feas/compare/1_APPROVED.png → file_uuid: be412c52-e2f6-49df-bd0d-3b09e5766d07
+>   /home/user/rainbow-/qa/pilot05/marble_feas/compare/2_MARBLE_RAW_locked.png → file_uuid: b966049e-90e3-424f-9d21-8c61420a4968
+>   /home/user/rainbow-/qa/pilot05/marble_feas/compare/3_NEW_marble_geometry_plus_projected_artwork_locked.png → file_uuid: 00a293f2-f5f0-4d2a-9358-79ac10257706
+>   /home/user/rainbow-/qa/pilot05/marble_feas/compare/4_GEOMETRY_marble_depth_vs_ideal_floor_locked.png → file_uuid: a9368f57-45e5-43d1-bfcf-f8a2aa9737d3
+
+### 🤖 Claude — 2026-11-16T17:29:14.361Z
+
+I didn't print the `RAINBOW 3D BACKUP VERIFIED` line because one check failed: this environment can't reach the Marble API (details below). The GitHub backup itself is verified.
+
+**Can Marble reproduce your river's exact S-curve and perspective? It gets the perspective right, but not the exact geometry.** I spent no credits and made no Marble API calls; I only used your two existing worlds. The game code is untouched.
+
+I sent four full-size pictures from the same camera at the same scale:
+1. **Your approved image.**
+2. **Your full Marble world as Marble built it.** It lines up well with your rings, side fittings, coins and river course in the band of the image Marble was given.
+3. **Marble's river surface with your original water artwork projected on it in Blender.** The water matches your artwork almost exactly (99.5 % covered, colour difference about 1.5 out of 255). That match is automatic, though: projecting and viewing through the same camera always reproduces the image, so this picture can't show geometry errors.
+4. **Where Marble's depth is right or wrong.** Green means within 10 % of a flat river floor that fits your image; red means too shallow; blue means too deep. This picture is the real answer.
+
+**What goes wrong in Marble's geometry** (both worlds behave the same):
+
+| Part of the tunnel | What Marble does |
+|---|---|
+| Near rings | Within 1–7 % of a straight tunnel's depth — correct |
+| Last four visible rings | Squashed onto a flat backdrop: 1.2–3.1× too shallow |
+| Far S-bends of the river | Tilt upward instead of lying flat: about 0.7× the correct depth |
+| Lower half of the screen (where Benny rides) | Marble never saw it; the worlds were made from only rows 197–767. It made up a different river with a giant coin, about 1.3× too deep |
+
+When I moved the camera one tunnel-width forward, as a player would, the Marble surface tore where its coins had been. The far bends also stayed squashed, while the same artwork on a flat floor stayed clean (`qa/pilot05/marble_feas/moved/`).
+
+**Recommendation: don't spend credits on a new Marble world for the river.** Both worlds squash the far tunnel the same way, which points to a limit of building a world from one image. Your game's own river already covers your approved water outline closely from this camera (94.7 % overlap, measured in an earlier session). The free next step is to project your artwork onto that river in a separate test version (`?proj05=1`), so the normal game stays as it is.
+
+A new world from the whole portrait image (with Benny and the coins removed) could fix the lower half but probably not the squashed far end. It would cost about 230 credits for a draft or 1,580 for full quality, and I won't start one without your OK.
+
+One Blender issue I found and worked around: its standard camera-projection tool ignores this camera's off-centre lens setting and was up to 188 px off. I used the camera's own maths instead, which is accurate to 0.03 px.
+
+**Backup status**
+- **What failed:** this environment's network rules block `api.worldlabs.ai`, and no World Labs key is saved on it. So I couldn't re-check your credit balance (last known: 5,190 at 01:35 UTC). This test didn't need it. Before any paid job I'll ask for the key through the secure form, which also unblocks that address.
+- **GitHub:** branch `ccr-e546a360-cxmton`, commit `520f52935845e3e0699a195f89390ca5d3a5542d`; the copy on GitHub matches the local one exactly.
+- **Large files:** all 27 are present here and confirmed on GitHub, including the new Blender scene file.
+- **Your images:** all 13 reference files are byte-identical to the originals.
+- **Specialists:** all 10 definitions are unchanged and none is running. Specialist 1 (projecting onto the game's river) was interrupted when its session ended and hasn't been relaunched.
+- **Tools:** Blender 5.3, Android SDK 34, Playwright and the World Labs plugin and tools are ready. One add-on server (context7) failed to connect; the game doesn't use it.
+- **Five-minute autosave:** running and verified.
+- **Backup gaps:** the previous session ended without a final backup, and the log shows 9 gaps longer than 10 minutes in the last 72 hours. The longest was 6.1 hours (03:22–09:28 UTC today), while the environment was closed.
+
+The work is also saved as draft pull request #9 marked "DO NOT MERGE", and I'm watching it. The full write-up is in `qa/pilot05/marble_feas/NOTES.md`.
+
+### 🧑 User — 2026-11-16T17:29:19.871Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>2 unread notifications (GitHub activity on a subscribed PR: 2)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
