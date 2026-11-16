@@ -4,10 +4,11 @@ Regions are defined on the APPROVED frame (tools/proj05/tunnel_common.masks):
   WALL    purple perforated tunnel metal (not gold, not water, not Benny, not a lid, not the HUD)
   RING    gold ring bands (warm pixels outside the lids, coins, water, Benny and the HUD)
   LID     the six wall paddles / side fittings
+  NEARFRAME the near gold frame: bottom-corner bands + bottom lip (exact nearFrameGeometry outline)
   WATER   registered water footprint minus Benny + splash and coins
   BENNY   Benny + splash (below row 760, outside the environment mask)
   COINS   coin footprint
-  TUNNEL  WALL + RING + LID (the tunnel only, HUD excluded)
+  TUNNEL  WALL + RING + LID + NEARFRAME (the tunnel only, HUD excluded)
   FRAME   every pixel below the HUD (rows >= 196, as frame_metrics.py)
   FULL    the entire screen, HUD included
 Per region: mean |dRGB| (0-255), share within 10 / 20 levels, luminance SSIM (7x7 Gaussian), mean signed dRGB (game -
@@ -34,7 +35,15 @@ water = M["water"] & ~coin & ~benny & ~hud
 lid = M["lid"] & ~hud
 ring = M["warm"] & ~M["lid"] & ~M["water"] & ~coin & ~benny & ~hud
 wall = ~M["warm"] & ~M["lid"] & ~M["water"] & ~coin & ~benny & ~hud & ~M["light"]
-REG = dict(HUD=M["hud"], WALL=wall, RING=ring, LID=lid, TUNNEL=wall | ring | lid, WATER=water, BENNY=benny & ~hud,
+# near gold frame (tube.ts nearFrameGeometry, reference pixels): two corner bands (centre (432,1060), r 457..647,
+# theta -163..-122 / -58..-17 deg) and the bottom lip (centre (432,2121), r 525..655, theta 58..122 deg)
+yy, xx = np.mgrid[0:H, 0:W].astype(float)
+def _arc(cx, cy, r0, r1, t0, t1):
+    rr = np.hypot(xx - cx, yy - cy); th = np.degrees(np.arctan2(-(yy - cy), xx - cx))
+    return (rr >= r0) & (rr <= r1) & (th >= t0) & (th <= t1)
+nearframe = (_arc(432, 1060, 457, 647, -163, -122) | _arc(432, 1060, 457, 647, -58, -17) | _arc(432, 2121, 525, 655, 58, 122))
+water = water & ~nearframe
+REG = dict(HUD=M["hud"], WALL=wall, RING=ring, LID=lid, NEARFRAME=nearframe, TUNNEL=wall | ring | lid | nearframe, WATER=water, BENNY=benny & ~hud & ~nearframe,
            COINS=coin & ~hud, FRAME=rows >= 196, FULL=np.ones((H, W), bool))
 
 
@@ -61,5 +70,5 @@ if jout:
 for p, r in out.items():
     print(p)
     for k, v in r.items():
-        print(f"  {k:7s} px {v['px']:7d}  mean|d| {v['mean_abs']:6.2f}  <=10 {v['within_10']:.3f}  <=20 {v['within_20']:.3f}  "
+        print(f"  {k:9s} px {v['px']:7d}  mean|d| {v['mean_abs']:6.2f}  <=10 {v['within_10']:.3f}  <=20 {v['within_20']:.3f}  "
               f"SSIM {v['ssim_lum']:.3f}  bias {v['bias_rgb']}")

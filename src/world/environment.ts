@@ -12,7 +12,7 @@ import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
 import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
-import { PROJWALL05, PROJRING05, PT_ROW, withProj05Wall, withProj05Ring, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+import { PROJWALL05, PROJRING05, PROJFRAME05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
@@ -647,7 +647,8 @@ export function buildEnvironment(course: Course): Environment {
   // when entering from 04 and before the 06 hall, and is collapsed (zero scale) everywhere else, so 01–04 and
   // 06–11 never see it. It covers only the frame's bottom corners/edge (below Benny), never the course ahead.
   {
-    const frame = new THREE.Mesh(nearFrameGeometry(), nearFrameMaterial());
+    // `?projframe05=1` (src/vfx/proj05Tunnel.ts): the approved gold band on the same frame; default unchanged
+    const frame = new THREE.Mesh(nearFrameGeometry(), PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial());
     frame.name = 'tube05_near_frame';
     frame.frustumCulled = false;
     frame.matrixAutoUpdate = false;

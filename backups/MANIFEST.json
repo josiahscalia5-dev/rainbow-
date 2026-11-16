@@ -387,6 +387,16 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/tunnel05/frame05.json",
+   "bytes": 492,
+   "sha256": "2094568675c6622a9ff1e1405ab484fa09792ee178564aa8d2ff2dfaeb00a033"
+  },
+  {
+   "path": "assets/textures/tunnel05/frame05.png",
+   "bytes": 17856,
+   "sha256": "98bf75dc549c86f0939e94154164d0eb4bf837c22123b73594cf812bb2549951"
+  },
+  {
    "path": "assets/textures/tunnel05/ring05.png",
    "bytes": 172302,
    "sha256": "293f7d0a5a378d460632e31a49f5dd253aa83ec49bee56965f4aecc785da0967"
@@ -458,8 +468,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 9218,
-   "sha256": "4c6f78ccad88e8acd1a14e1ac92fdc51d1d4a251569cbf0cfb11ed33ac9eb01e"
+   "bytes": 9219,
+   "sha256": "4602311247d00bc19c96a8f49f12988a02a5e1bf93107239a9383e157fbdf058"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7103,8 +7113,8 @@
   },
   {
    "path": "src/vfx/proj05Tunnel.ts",
-   "bytes": 9421,
-   "sha256": "e963f6292b6bd226d9c8c66b7d45c4b1df9005830815b205d1ab80f06c86e028"
+   "bytes": 13587,
+   "sha256": "76950d6d2b135613ccd96237e7b6800fca717853d199e0d0d62dd5211c377925"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -7138,8 +7148,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 58640,
-   "sha256": "03a9d955f22f1389431522dbbd529d6fcda851e6244a43aa393ae7620c3c2dad"
+   "bytes": 58834,
+   "sha256": "605b046a6fad1b0cfca762e4747bfc4452acbe9cf2577173c67c7e9335cca3ee"
   },
   {
    "path": "src/world/far05.ts",
@@ -7277,6 +7287,11 @@
    "sha256": "1ce19441fed454f73a2574bf0d44286287df16cb641c6625b861be802e8d3932"
   },
   {
+   "path": "tools/proj05/frame_bake.py",
+   "bytes": 4226,
+   "sha256": "e061cde1874185b44bfaa9842a93672f717b2131a2948ad22526ee7f45b50fef"
+  },
+  {
    "path": "tools/proj05/frame_metrics.py",
    "bytes": 2053,
    "sha256": "9e0447234981fb1190e46bdafeffd05680891908382f17b642e8185693e19926"
@@ -7298,8 +7313,8 @@
   },
   {
    "path": "tools/proj05/screen_regions.py",
-   "bytes": 3593,
-   "sha256": "5b15d9f9efa10a3cd7e45d207b6a66072d180e3460edf951ea93db0f66dc910a"
+   "bytes": 4347,
+   "sha256": "afc9081a191869747a6647eeb75ba63ee9ec9d0ce7f70af0aab8ae25e69a3130"
   },
   {
    "path": "tools/proj05/tunnel_bake.py",

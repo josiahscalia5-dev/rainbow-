@@ -930,3 +930,365 @@ The pale bottom gold is `tube05_near_frame`, a separate "near frame" mesh 0.9 un
 > 651	    frame.name = 'tube05_near_frame';
 > 652	    frame.frustumCulled = fals …[+1545 chars]
 
+### 🤖 Claude — 2026-11-16T20:39:33.281Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I -c \"\nfrom PIL import Image\nw=Image.open('assets/textures/tunnel05/wall05.png').convert('RGB'); print(w.size)\nw.crop((0,0,2048,400)).resize((1024,200)).save('$S/wall_top.png')\n\" && grep -n \"light\\|foam\\|hole\\|def masks\\|ok = \\|ok=\" tools/proj05/tunnel_bake.py | head -40", "description": "Inspect wall texture and bake hole masks"}`
+
+### 🧑 User — 2026-11-16T20:39:33.486Z
+
+> ↩︎ result: (2048, 592)
+> 5:               the far ring's near edge (1), linear in depth (1/r). Hidden parts (HUD, lids, bubbles, foam, river) are
+> 19:os.makedirs(out, exist_ok=True)
+> 35:nonwall = M["light"] | M["cyan"]
+> 36:nonwall = binary_dilation(binary_opening(nonwall, iterations=1), iterations=7)        # bubbles, foam (specks dropped)
+> 40:wall_ok = ~(nonwall | gold | lid | water | M["hud"]) & M["env"]
+> 42:ring_ok = M["warm"] & ~lid & ~M["hud"] & M["env"] & ~binary_dilation(M["water"], iterations=2)
+> 55:def lowfreq_match(patch, ref, ring, hole, sigma=14.0):
+> 63:    return np.clip(patch + d * hole[..., None], 0, 255)
+> 67:    """fill bounded holes by copying the same wall from further along theta (shift d_theta, small d_t), chosen so that the
+> 68:    copy agrees best with the own pixels round the hole; the slot rows run along theta, so the copy keeps them intact"""
+> 72:    # thin invalid strips (bay ends next to the gold, hairlines) must not join separate holes into one: label the
+> 73:    # opened mask, then grow every hole back by a few texels inside the invalid area
+> 117:                    srcok = have[ry2[okr], (rx[okr] + D) % w]
+> 132:        # colour difference measured on the ring (own pixel vs what …[+988 chars]
+
+### 🤖 Claude — 2026-11-16T20:39:35.288Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/wall_top.png"}`
+
+### 🧑 User — 2026-11-16T20:39:35.310Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:39:43.729Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nb=(90,520,290,720)\nims=[Image.open(p).convert('RGB').crop(b).resize((400,400),Image.NEAREST) for p in ['references/05_flow_into_the_current.png','$S/def/05.png','$S/p/05.png','$S/rec/05.png']]\nim=Image.new('RGB',(4*410,400),(255,255,255))\nfor i,c in enumerate(ims): im.paste(c,(i*410,0))\nim.save('$S/cmp_foam4.png')\na=np.fromfile('$S/raw/tunnel_id.f32',np.float32).reshape(1536,864,4)\nfor (x,y) in [(170,600),(150,620),(200,650),(1 …[+115 chars]`
+
+### 🧑 User — 2026-11-16T20:39:44.228Z
+
+> ↩︎ result: (170, 600) [0.36  0.117 0.471 1.   ]
+> (150, 620) [0.721 0.222 0.805 1.   ]
+> (200, 650) [0.09  0.262 0.602 1.   ]
+> (190, 590) [0.415 0.137 0.581 1.   ]
+
+### 🤖 Claude — 2026-11-16T20:39:46.210Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_foam4.png"}`
+
+### 🧑 User — 2026-11-16T20:39:46.234Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:40:06.754Z
+
+> 🔧 **Grep** `{"pattern": "PROJ05_INVERSE|export function flag05|export const proj05Pending", "path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "output_mode": "content", "-A": 22}`
+
+### 🧑 User — 2026-11-16T20:40:06.784Z
+
+> ↩︎ result: 209:export const proj05Pending: Promise<unknown>[] = [];
+> 210-
+> 211-/**
+> 212- * W11 geometry (`?farw05=1`, else the full width): the VISIBLE water channel of the 05 river at arc length s, in the
+> 213- * ribbon frame — centre `c` (units along `right`) and half width `hw`. Between the channel and the bank lies a foam
+> 214- * shelf (drawn by the ribbon shader on the same surface; Benny can still ride over it — widthAt() and the steering
+> 215- * range are unchanged). Approved image, banks traced through the locked 05 eye: a left shelf ≈1.3 u wide at
+> 216- * y 640–720 (s ≈ 145–155) and a right shelf that grows to ≈3.9 u at the seam (y 560–590, the big foam bank at
+> 217- * x 546–592) and continues into the far block; it hands back to the full width behind the seam (s 183–191, hidden
+> 218- * by the far block at the checkpoint, the ride into 06 is the normal river).
+> 219- */
+> 220-export function channel05(course: Course, s: number): { c: number; hw: number } {
+> 221-  const hw = course.widthAt(s) / 2;
+> 222-  if (!FARW05) return { c: 0, hw };
+> 223-  const st = course.stage('05');
+> 224-  if (s <= st.s0 || s >= st.s1 + 4) return { c: 0, hw };
+> 225-  const o = s - st.s0;                              // 05-rela …[+4386 chars]
+
+### 🤖 Claude — 2026-11-16T20:40:28.891Z
+
+> 🔧 **Grep** `{"pattern": "proj05Tunnel|withProj05Wall|withProj05Ring|PROJRING05|PROJWALL05", "path": "/home/user/rainbow-/src", "output_mode": "content"}`
+
+### 🧑 User — 2026-11-16T20:40:28.927Z
+
+> ↩︎ result: src/vfx/proj05Tunnel.ts:19:export const PROJWALL05: boolean = flag05('projwall05');
+> src/vfx/proj05Tunnel.ts:20:export const PROJRING05: boolean = flag05('projring05');
+> src/vfx/proj05Tunnel.ts:42:export const proj05TunnelShared = shared;
+> src/vfx/proj05Tunnel.ts:60:  if (PROJWALL05) {
+> src/vfx/proj05Tunnel.ts:73:  if (PROJRING05) {
+> src/vfx/proj05Tunnel.ts:82:if (PROJWALL05 || PROJRING05) proj05Pending.push(loadTextures());
+> src/vfx/proj05Tunnel.ts:100:export function withProj05Wall<T extends THREE.MeshStandardMaterial>(mat: T, segs: WallSeg[], tile: { anchor: number; period: number }, key: string): T {
+> src/vfx/proj05Tunnel.ts:141:export function withProj05Ring<T extends THREE.MeshStandardMaterial>(mat: T, flip: boolean, height: number, key: string): T {
+> src/world/environment.ts:15:import { PROJWALL05, PROJRING05, PT_ROW, withProj05Wall, withProj05Ring, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+> src/world/environment.ts:368:  const ringMat05 = PROJRING05 ? withProj05Ring(gold05('ring05', false, band05near), true, band05near.height, 'real') : gold05('ring05', false, band05near);
+> src/world/environment.ts:369:  // `?projwall05=1`: the approved purple wall, on …[+643 chars]
+
+### 🤖 Claude — 2026-11-16T20:40:46.288Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/proj05/frame_bake.py", "content": "\"\"\"Screen 05 near gold frame bake (`?projframe05=1`, src/vfx/proj05Tunnel.ts): the approved picture's two bottom-corner\ngold bands and the bottom gold lip, unwrapped into the frame mesh's OWN band coordinates (src/world/tube.ts\nnearFrameGeometry: uv.x along the arc, uv.y across the band 0 = edge toward the stream; reference-pixel geometry), so the\nexisting 3D frame wears the approved gold instead of the hand-picked palette that renders pale cream.\nHidden texels (bubbles, foam, water, splash in front of the gold) …[+3481 chars]`
+
+### 🧑 User — 2026-11-16T20:40:46.364Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/proj05/frame_bake.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:40:48.590Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I tools/proj05/frame_bake.py assets/textures/tunnel05 3 && python3 -I -c \"\nfrom PIL import Image; im=Image.open('assets/textures/tunnel05/frame05.png'); print(im.size); im.resize((1024,im.height*4),Image.NEAREST).save('$S/frame05_view.png')\"", "description": "Bake the near-frame gold texture"}`
+
+### 🧑 User — 2026-11-16T20:40:49.255Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/tools/proj05/frame_bake.py", line 68, in <module>
+>     f = fill_along_u(img, ok)
+>   File "/home/user/rainbow-/tools/proj05/frame_bake.py", line 60, in fill_along_u
+>     out[j] = out[k[np.argmin(np.abs(k - j))]]
+>                    ~~~~~~~~~^^^^^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/site-packages/numpy/_core/fromnumeric.py", line 1452, in argmin
+>     return _wrapfunc(a, 'argmin', axis=axis, out=out, **kwds)
+>   File "/usr/local/lib/python3.13/site-packages/numpy/_core/fromnumeric.py", line 54, in _wrapfunc
+>     return bound(*args, **kwds)
+> ValueError: attempt to get argmin of an empty sequence
+
+### 🤖 Claude — 2026-11-16T20:40:51.792Z
+
+One frame piece has no visible texels at all, so something in the hide mask covers the gold. I'll check which mask.
+
+### 🤖 Claude — 2026-11-16T20:40:54.337Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport sys; sys.path.insert(0,'tools/proj05')\nimport numpy as np\nfrom tunnel_common import load_approved, masks\nap=load_approved(); M=masks(ap)\nfor name,(x0,y0,x1,y1) in {'leftcorner':(0,1260,120,1420),'rightcorner':(744,1260,864,1420),'lip':(250,1480,610,1536)}.items():\n    s=(slice(y0,y1),slice(x0,x1))\n    print(name, {k: round(float(M[k][s].mean()),2) for k in ['warm','light','cyan','water','env']}, ap[s].reshape(-1,3).mean(0).round(0))\nEOF", "description": "Check mask coverage over frame areas"}`
+
+### 🧑 User — 2026-11-16T20:40:54.939Z
+
+> ↩︎ result: leftcorner {'warm': 0.65, 'light': 0.28, 'cyan': 0.07, 'water': 1.0, 'env': 1.0} [229. 167. 121.]
+> rightcorner {'warm': 0.69, 'light': 0.3, 'cyan': 0.11, 'water': 1.0, 'env': 1.0} [226. 172. 114.]
+> lip {'warm': 0.85, 'light': 0.15, 'cyan': 0.0, 'water': 1.0, 'env': 1.0} [232. 151. 102.]
+
+### 🤖 Claude — 2026-11-16T20:41:05.374Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<'EOF'\np='tools/proj05/frame_bake.py'; s=open(p).read()\nold='''hide = binary_dilation(M[\"light\"] | M[\"cyan\"] | M[\"water\"], iterations=3)     # not gold: bubbles, foam, water, splash'''\nnew='''# not gold: bubbles, foam, water, splash are bluish (B >= R - 15); gold, its warm white highlights and the rose lip\n# shading all have R well above B. (The registered water footprint and the 'light' mask both cover the frame itself.)\n_a = ap8.astype(int)\nhide = binary_dilation(_a[. …[+591 chars]`
+
+### 🧑 User — 2026-11-16T20:41:05.928Z
+
+> ↩︎ result: {"w": 256, "h": 160, "rows": {"left": {"y0": 0, "h": 48, "visible": 0.314, "mean_rgb": [209.7, 118.6, 55.8]}, "right": {"y0": 56, "h": 48, "visible": 0.356, "mean_rgb": [210.6, 118.7, 53.1]}, "lip": {"y0": 112, "h": 48, "visible": 0.273, "mean_rgb": [231.3, 135.8, 95.3]}}, "sigma_u": 3.0, "note": "u = uv.x along the arc, v = uv.y across the band (0 = edge toward the stream)"}
+> (256, 160)
+
+### 🤖 Claude — 2026-11-16T20:41:09.263Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/frame05_view.png"}`
+
+### 🧑 User — 2026-11-16T20:41:09.284Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:41:24.307Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/frame_bake.py'; s=open(p).read()\nold='''hide = binary_dilation(_a[..., 2] > _a[..., 0] - 15, iterations=2)'''\nnew='''_R, _G, _B = _a[..., 0], _a[..., 1], _a[..., 2]\nmagenta = (_B > 0.62 * _R) & (_G < 0.6 * _R)                 # the pink / magenta water stripes next to the cut\nhide = binary_dilation((_B > _R - 15) | magenta, iterations=2)'''\nassert old in s; s=s.replace(old,new); open(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad; python3 -I tools/proj05/frame_bake.py assets/textu …[+268 chars]`
+
+### 🧑 User — 2026-11-16T20:41:24.900Z
+
+> ↩︎ result: {"w": 256, "h": 160, "rows": {"left": {"y0": 0, "h": 48, "visible": 0.312, "mean_rgb": [211.7, 119.2, 54.1]}, "right": {"y0": 56, "h": 48, "visible": 0.354, "mean_rgb": [210.8, 118.7, 53.1]}, "lip": {"y0": 112, "h": 48, "visible": 0.26, "mean_rgb": [231.5, 135.9, 95.1]}}, "sigma_u": 3.0, "note": "u = uv.x along the arc, v = uv.y across the band (0 = edge toward the stream)"}
+
+### 🤖 Claude — 2026-11-16T20:41:26.036Z
+
+Now the shader wrapper, in the same file and pattern as the wall and ring wrappers:
+
+### 🤖 Claude — 2026-11-16T20:41:27.846Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "export const PROJWALL05: boolean = flag05('projwall05');\nexport const PROJRING05: boolean = flag05('projring05');", "new_string": "export const PROJWALL05: boolean = flag05('projwall05');\nexport const PROJRING05: boolean = flag05('projring05');\n/** `?projframe05=1` (2026-11-16): the near gold frame (bottom corners + bottom lip) wears the approved gold band */\nexport const PROJFRAME05: boolean = flag05('projframe05');"}`
+
+### 🧑 User — 2026-11-16T20:41:27.921Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:41:30.099Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "  uPtRingSize: { value: new THREE.Vector2(1, 1) },\n  /** QA only", "new_string": "  uPtRingSize: { value: new THREE.Vector2(1, 1) },\n  uPtFrame: { value: empty as THREE.Texture },\n  /** frame05.png: (texture height, band rows NV, left y0, right y0); lip y0 in uPtFrameLip */\n  uPtFrameRows: { value: new THREE.Vector4(1, 1, 0, 0) },\n  uPtFrameLip: { value: 0 },\n  /** QA only"}`
+
+### 🧑 User — 2026-11-16T20:41:30.176Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:41:34.404Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "  return Promise.all(jobs).catch((e) => { console.error('[rainbow] proj05 tunnel textures failed', e); });\n}\n// the game waits for these before `ready` (vfx/index.ts), so a capture never shows the 1×1 placeholder\nif (PROJWALL05 || PROJRING05) proj05Pending.push(loadTextures());", "new_string": "  if (PROJFRAME05) {\n    jobs.push(Promise.all([\n      load(new URL('../../assets/textures/tunnel05/frame05.png', import.meta.url).href),\n      fetch(new URL('../../assets/textures/tunnel05/frame05.js …[+717 chars]`
+
+### 🧑 User — 2026-11-16T20:41:34.468Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:41:44.748Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "  const prevKey = mat.customProgramCacheKey.bind(mat);\n  mat.customProgramCacheKey = () => prevKey() + '|ptring-' + key;\n  const prevRender = mat.onBeforeRender;\n  mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };\n  return mat;\n}", "new_string": "  const prevKey = mat.customProgramCacheKey.bind(mat);\n  mat.customProgramCacheKey = () => prevKey() + '|ptring-' + key;\n  const prevRender = mat.onBeforeRender;\n  mat.onBeforeRender = (r …[+2490 chars]`
+
+### 🧑 User — 2026-11-16T20:41:44.822Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:41:46.549Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { PROJWALL05, PROJRING05, PT_ROW, withProj05Wall, withProj05Ring, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests", "new_string": "import { PROJWALL05, PROJRING05, PROJFRAME05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests"}`
+
+### 🧑 User — 2026-11-16T20:41:46.621Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T20:41:48.203Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "    const frame = new THREE.Mesh(nearFrameGeometry(), nearFrameMaterial());", "new_string": "    // `?projframe05=1` (src/vfx/proj05Tunnel.ts): the approved gold band on the same frame; default unchanged\n    const frame = new THREE.Mesh(nearFrameGeometry(), PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial());"}`
+
+### 🧑 User — 2026-11-16T20:41:48.320Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T20:41:52.624Z
+
+Now typecheck, then capture the game with the frame switch on top of the recovered experiment:
+
+### 🤖 Claude — 2026-11-16T20:41:56.017Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && npx tsc --noEmit -p . 2>&1 | tail -5 && echo TSC_OK && mkdir -p $S/f1 && node scripts/capture.mjs 05 --q='proj05=1&projwall05=1&projring05=1&projframe05=1' --out=$S/f1 2>&1 | grep -i \"error\\|projframe\\|→\" | cut -c1-160; git checkout qa/capture_log.json; python3 -I tools/proj05/screen_regions.py $S/rec/05.png $S/f1/05.png 2>&1 | sed \"s#$S/##\" | grep -v \"WATER\\|BENNY\\|COINS\"", "description": "Typecheck, capture with frame switch, measure", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T20:42:15.883Z
+
+> ↩︎ result: TSC_OK
+> 05 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/f1/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":85,"tris":55672
+> Updated 1 path from the index
+> rec/05.png
+>   HUD     px  151496  mean|d|  61.29  <=10 0.024  <=20 0.129  SSIM 0.177  bias [11.6, 27.0, 18.1]
+>   WALL    px  232581  mean|d|  56.94  <=10 0.064  <=20 0.179  SSIM 0.152  bias [12.7, 16.2, -30.2]
+>   RING    px   89328  mean|d|  53.95  <=10 0.043  <=20 0.155  SSIM 0.208  bias [-22.1, -29.8, 42.9]
+>   LID     px   27726  mean|d|  62.61  <=10 0.022  <=20 0.086  SSIM 0.195  bias [8.9, -13.2, 34.9]
+>   TUNNEL  px  349635  mean|d|  56.62  <=10 0.055  <=20 0.166  SSIM 0.170  bias [3.5, 2.1, -6.4]
+>   FRAME   px 1157760  mean|d|  35.68  <=10 0.404  <=20 0.500  SSIM 0.512  bias [6.9, 1.1, 1.8]
+>   FULL    px 1327104  mean|d|  38.87  <=10 0.356  <=20 0.453  SSIM 0.469  bias [7.5, 4.1, 3.8]
+> f1/05.png
+>   HUD     px  151496  mean|d|  61.29  <=10 0.024  <=20 0.129  SSIM 0.177  bias [11.6, 27.0, 18.1]
+>   WALL    px  232581  mean|d|  56.94  <=10 0.064  <=20 0.179  SSIM 0.152  bias [12.7, 16.2, -30.2]
+>   RING    px   89328  mean|d|  53.95  <=10 0.043  <=20 0.155  SSIM 0.208  bias [-22.1, -29.8, 42.9]
+>   LID …[+379 chars]
+
+### 🤖 Claude — 2026-11-16T20:42:26.482Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/screen_regions.py'; s=open(p).read()\nold='''REG = dict(HUD=M[\"hud\"], WALL=wall, RING=ring, LID=lid, TUNNEL=wall | ring | lid, WATER=water, BENNY=benny & ~hud,'''\nnew='''# near gold frame (tube.ts nearFrameGeometry, reference pixels): two corner bands (centre (432,1060), r 457..647,\n# theta -163..-122 / -58..-17 deg) and the bottom lip (centre (432,2121), r 525..655, theta 58..122 deg)\nyy, xx = np.mgrid[0:H, 0:W].astype(float)\ndef _arc(cx, cy, r0, r1, t0, t1):\n    rr = np.hypot(xx - cx, yy - cy); th = np.degrees(np.arctan2(-(yy - cy), x …[+1196 chars]`
+
+### 🧑 User — 2026-11-16T20:42:28.967Z
+
+> ↩︎ result: def/05.png
+>   NEARFRAME px   90640  mean|d|  66.67  <=10 0.022  <=20 0.108  SSIM 0.429  bias [18.8, 38.5, 41.9]
+>   TUNNEL    px  440275  mean|d|  65.21  <=10 0.018  <=20 0.085  SSIM 0.202  bias [11.3, 26.3, 13.6]
+>   WATER     px  469357  mean|d|  46.35  <=10 0.095  <=20 0.258  SSIM 0.296  bias [-3.4, 9.7, 9.2]
+>   FRAME     px 1157760  mean|d|  54.23  <=10 0.067  <=20 0.194  SSIM 0.238  bias [5.3, 14.2, 10.9]
+>   FULL      px 1327104  mean|d|  55.38  <=10 0.061  <=20 0.185  SSIM 0.231  bias [5.5, 15.5, 12.0]
+> rec/05.png
+>   NEARFRAME px   90640  mean|d|  61.54  <=10 0.041  <=20 0.138  SSIM 0.455  bias [19.3, 35.7, 33.5]
+>   TUNNEL    px  440275  mean|d|  57.64  <=10 0.052  <=20 0.160  SSIM 0.229  bias [6.8, 9.0, 1.8]
+>   WATER     px  469357  mean|d|   8.44  <=10 0.887  <=20 0.929  SSIM 0.920  bias [1.7, -1.1, 1.2]
+>   FRAME     px 1157760  mean|d|  35.68  <=10 0.404  <=20 0.500  SSIM 0.512  bias [6.9, 1.1, 1.8]
+>   FULL      px 1327104  mean|d|  38.87  <=10 0.356  <=20 0.453  SSIM 0.469  bias [7.5, 4.1, 3.8]
+> f1/05.png
+>   NEARFRAME px   90640  mean|d|  41.70  <=10 0.195  <=20 0.374  SSIM 0.501  bias [12.6, 17.1, 17.9]
+>   TUNNEL    px  440275  mean|d|  53.55  <=10 0.084  <=20 0.209  SSIM 0.238  bias [5 …[+307 chars]
+
+### 🤖 Claude — 2026-11-16T20:42:31.093Z
+
+Near frame: mean error **61.5 → 41.7**, pixels within 20 levels **13.8 % → 37.4 %**. Now the actual picture:
+
+### 🤖 Claude — 2026-11-16T20:42:34.679Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nfor nm,b in {'bl':(0,1150,300,1536),'br':(564,1150,864,1536),'lip':(150,1400,714,1536)}.items():\n    ims=[Image.open(p).convert('RGB').crop(b) for p in ['references/05_flow_into_the_current.png','$S/rec/05.png','$S/f1/05.png']]\n    w,h=ims[0].size\n    im=Image.new('RGB',(3*w+20,h),(255,255,255))\n    for i,c in enumerate(ims): im.paste(c,(i*(w+10),0))\n    im.save('$S/cmp3_'+nm+'.png')\nEOF", "description": "Crop approved / before / after near-frame  …[+7 chars]`
+
+### 🧑 User — 2026-11-16T20:42:35.375Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:42:35.975Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp3_bl.png"}`
+
+### 🧑 User — 2026-11-16T20:42:35.989Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:42:36.579Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp3_lip.png"}`
+
+### 🧑 User — 2026-11-16T20:42:36.608Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:42:50.034Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\ndef edge(p, y, side='L'):\n    a=np.asarray(Image.open(p).convert('RGB')).astype(int)\n    row=a[y]; R,G,B=row[:,0],row[:,1],row[:,2]\n    warm=(R>B+60)&(R>150)\n    xs = range(0,432) if side=='L' else range(863,432,-1)\n    for x in xs:\n        if not warm[x]: return x\n    return None\na=np.fromfile('$S/raw/tunnel_id.f32',np.float32).reshape(1536,864,4)\nfor y in [1220,1260,1300,1350,1400,1440]:\n    print(y,'approved',edge('refer …[+270 chars]`
+
+### 🧑 User — 2026-11-16T20:42:51.404Z
+
+> ↩︎ result: 1220 approved 12 rec 0 f1 0 | R approved 845 f1 863
+> 1260 approved 38 rec 0 f1 1 | R approved 819 f1 862
+> 1300 approved 67 rec 0 f1 21 | R approved 788 f1 842
+> 1350 approved 45 rec 22 f1 49 | R approved 800 f1 810
+> 1400 approved 7 rec 61 f1 0 | R approved 845 f1 853
+> 1440 approved 67 rec 100 f1 141 | R approved 863 f1 722
+
+### 🤖 Claude — 2026-11-16T20:42:54.607Z
+
+That edge test is too noisy: white highlights break the "warm" test. I'll draw the frame's exact inner-edge circle on both images instead.
+
+### 🤖 Claude — 2026-11-16T20:42:58.656Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nfrom PIL import Image, ImageDraw\nout=[]\nfor p in ['references/05_flow_into_the_current.png','$S/f1/05.png']:\n    im=Image.open(p).convert('RGB'); d=ImageDraw.Draw(im)\n    for r,c in [(457,(0,255,0)),(420,(255,255,0)),(647,(0,255,0))]:\n        d.arc([432-r,1060-r,432+r,1060+r],0,360,fill=c,width=2)\n    d.arc([432-655,2121-655,432+655,2121+655],0,360,fill=(0,255,0),width=2)\n    out.append(im.crop((0,1100,864,1536)))\nw,h=out[0].size; im=Image.new('RGB',(w,2*h+10),(255,25 …[+157 chars]`
+
+### 🧑 User — 2026-11-16T20:42:59.043Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:42:59.958Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/edge_overlay.png"}`
+
+### 🧑 User — 2026-11-16T20:42:59.988Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:43:40.048Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport json, math\nt=json.load(open('$S/probe/tunnel.json'))\nfov=t['camera']['fov']; print('fov',fov,'aspect',t['camera']['aspect'])\nd=0.8; px=d*math.tan(math.radians(fov/2))/768\nfor (X,Y,Z,lab) in [((150-432),(768-1420),40,'cut inner (z0=40, t=0)'),((150-432)*1.0,(768-1420),40+190*0.22,'mid band bulge'),((0-432),(768-1210),40,'left edge inner')]:\n    f=d/(d-Z*px); xs=432+X*f; ys=768-Y*f\n    print(lab,'factor %.4f'%f,'design',(432+X,768-Y),'-> screen',(round(xs,1),round( …[+82 chars]`
+
+### 🧑 User — 2026-11-16T20:43:40.093Z
+
+> ↩︎ result: fov 62 aspect 0.5625
+> cut inner (z0=40, t=0) factor 1.0323 design (150, 1420) -> screen (140.9, 1441.1)
+> mid band bulge factor 1.0684 design (150.0, 1420) -> screen (130.7, 1464.6)
+> left edge inner factor 1.0323 design (0, 1210) -> screen (-14.0, 1224.3)
+
+### 🤖 Claude — 2026-11-16T20:43:55.508Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "    shader.vertexShader = shader.vertexShader\n      .replace('void main() {', 'varying float vPtSide;\\nvoid main() {')\n      .replace(vMark, `${vMark} vPtSide = position.x;`);", "new_string": "    // The frame stands toward the viewer (corner z0 40 + half-round bulge, reference px), so perspective pushed its\n    // outline ≈15–35 px outward from the measured reference edges. Pre-shrink x, y by the depth factor so every\n    // vertex projects onto its designed reference pixel (the band keeps i …[+328 chars]`
+
+### 🧑 User — 2026-11-16T20:43:55.585Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:43:57.493Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "export function withProj05Frame<T extends THREE.MeshStandardMaterial>(mat: T): T {\n  const prev = mat.onBeforeCompile;", "new_string": "export function withProj05Frame<T extends THREE.MeshStandardMaterial>(mat: T): T {\n  /** tan(fov/2) / 768: reference px of depth → relative scale (environment.ts places the frame at depth d = 0.8) */\n  const frameK = { value: 0 };\n  const prev = mat.onBeforeCompile;"}`
+
+### 🧑 User — 2026-11-16T20:43:57.565Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:44:00.038Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "old_string": "  mat.customProgramCacheKey = () => prevKey() + '|ptframe';\n  const prevRender = mat.onBeforeRender;\n  mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };", "new_string": "  mat.customProgramCacheKey = () => prevKey() + '|ptframe';\n  const prevRender = mat.onBeforeRender;\n  mat.onBeforeRender = (renderer, scene, camera, ...rest) => {\n    livePost(renderer);\n    const pc = camera as THREE.PerspectiveCamera;\n    if (pc.isPerspectiveCam …[+142 chars]`
+
+### 🧑 User — 2026-11-16T20:44:00.108Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/proj05Tunnel.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:44:08.167Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && npx tsc --noEmit -p . 2>&1 | tail -5 && echo TSC_OK && mkdir -p $S/f2 && node scripts/capture.mjs 05 --q='proj05=1&projwall05=1&projring05=1&projframe05=1' --out=$S/f2 2>&1 | grep -i \"error\\|→\" | cut -c1-120; git checkout qa/capture_log.json; python3 -I tools/proj05/screen_regions.py $S/rec/05.png $S/f1/05.png $S/f2/05.png 2>&1 | sed \"s#$S/##\" | grep -E \"png|NEARFRAME|TUNNEL|WATER|FRAME |FULL\"; python3 -I - <<EOF\nfrom PIL import Image, ImageDraw\nim=Image.open('$S/f2/05.png').convert('RG …[+319 chars]`
+
+### 🤖 Claude — 2026-11-16T20:44:09.363Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/edge_f2.png"}`
+
