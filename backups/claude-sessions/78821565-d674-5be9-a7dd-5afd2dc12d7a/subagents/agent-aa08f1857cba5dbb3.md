@@ -1861,3 +1861,108 @@ Lids are still too small/low and the ring bulbs read as broad stripes. Let me fi
 >     const floorY = floor05(sF05).y;
 >    …[+5080 chars]
 
+### 🤖 Claude — 2026-11-16T02:43:37.650Z
+
+I'll implement the shift in my geometry builders (walls, rings, lids) and ask path-camera to offset the far block's centre identically.
+
+### 🤖 Claude — 2026-11-16T02:43:39.106Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"floor?: (s: number) => { y: number; w: number };\\|const fl = o.floor ? o.floor(s) : null;\\|c.copy(f.pos).addScaledVector(f.up, path.radius(ss) - path.depth(ss));\\|bandOval?: number;\\|oval?: (s: number) => number;\\|tubeCenterAt(path, s, c);\" src/world/tube.ts", "description": "Locate edit anchors in tube.ts"}`
+
+### 🧑 User — 2026-11-16T02:43:39.167Z
+
+> ↩︎ result: 170:  oval?: (s: number) => number;
+> 176:  floor?: (s: number) => { y: number; w: number };
+> 205:    const fl = o.floor ? o.floor(s) : null;
+> 315:  oval?: (s: number) => number;
+> 317:  bandOval?: number;
+> 380:      c.copy(f.pos).addScaledVector(f.up, path.radius(ss) - path.depth(ss));
+> 426:    oval?: (s: number) => number;
+> 444:      tubeCenterAt(path, s, c);
+> 854:    tubeCenterAt(path, s, c);
+
+### 🤖 Claude — 2026-11-16T02:43:41.125Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 200,210p src/world/tube.ts; sed -n 420,446p src/world/tube.ts", "description": "Read exact text around anchors"}`
+
+### 🧑 User — 2026-11-16T02:43:41.174Z
+
+> ↩︎ result: for (let i = 0; i < rings; i++) {
+>     const s = s0 + ((s1 - s0) * i) / (rings - 1);
+>     const f = path.frame(s);
+>     const r = path.radius(s) + (o.inset ?? 0);
+>     const ov = o.oval ? o.oval(s) : 1;
+>     const fl = o.floor ? o.floor(s) : null;
+>     c.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
+>     for (let j = 0; j <= radial; j++) {
+>       const th = -Math.PI / 2 - arc / 2 + (j / radial) * arc; // centred on the bottom
+>       d.copy(f.right).multiplyScalar(Math.cos(th) * ov).addScaledVector(f.up, Math.sin(th));
+>       const k = i * (radial + 1) + j;
+>      * 'hood' (legacy 06/07 D-hood), 'dome' (half puck with a domed cap) or 'slab' (ref 05 wave 4: a flat
+>      * copper-gold half-disc lid standing out of the wall — flat underside, rounded edges, a straight
+>      * polished rim band and a flat top, like the ref's wall-mounted nozzle lids)
+>      */
+>     shape?: 'hood' | 'dome' | 'slab' | 'puck';
+>     /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */
+>     oval?: (s: number) => number;
+>   } = {},
+> ): THREE.InstancedMesh {
+>   const geo = wallLidGeometry(opts.shape ?? 'hood', opts.thickness ?? 0.42);
+>   const list: number[] = opts.positions ?? []; …[+923 chars]
+
+### 🤖 Claude — 2026-11-16T02:43:43.480Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  floor?: (s: number) => { y: number; w: number };\n}", "new_string": "  floor?: (s: number) => { y: number; w: number };\n  /** wave 9 (05): lateral offset of the cross-section centre along `right` (units; OVAL05.shift) */\n  shift?: (s: number) => number;\n}"}`
+
+### 🧑 User — 2026-11-16T02:43:43.528Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-16T02:43:45.085Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "    const fl = o.floor ? o.floor(s) : null;\n    c.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));", "new_string": "    const fl = o.floor ? o.floor(s) : null;\n    c.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));\n    if (o.shift) c.addScaledVector(f.right, o.shift(s));"}`
+
+### 🧑 User — 2026-11-16T02:43:45.148Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:46.330Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  bandOval?: number;\n};", "new_string": "  bandOval?: number;\n  /** wave 9 (05): lateral offset of the ring centre along `right` (see TubeGeoOptions.shift) */\n  shift?: (s: number) => number;\n};"}`
+
+### 🧑 User — 2026-11-16T02:43:46.364Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:47.731Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "      c.copy(f.pos).addScaledVector(f.up, path.radius(ss) - path.depth(ss));", "new_string": "      c.copy(f.pos).addScaledVector(f.up, path.radius(ss) - path.depth(ss));\n      if (opts.shift) c.addScaledVector(f.right, opts.shift(ss));"}`
+
+### 🧑 User — 2026-11-16T02:43:47.764Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:49.481Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "    /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */\n    oval?: (s: number) => number;\n  } = {},", "new_string": "    /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */\n    oval?: (s: number) => number;\n    /** wave 9: lateral offset of the wall's centre (see TubeGeoOptions.shift) */\n    shift?: (s: number) => number;\n  } = {},"}`
+
+### 🧑 User — 2026-11-16T02:43:49.515Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:51.582Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "      tubeCenterAt(path, s, c);\n      dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();\n      const sz = size * Math.min(1.4, r / 7.6);", "new_string": "      tubeCenterAt(path, s, c);\n      if (opts.shift) c.addScaledVector(f.right, opts.shift(s));\n      dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();\n      const sz = size * Math.min(1.4, r / 7.6);"}`
+
+### 🧑 User — 2026-11-16T02:43:51.619Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:52.685Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "export const OVAL05 = { K: 1.7, floorBelowWater: 0.18 } as const;", "new_string": "export const OVAL05 = { K: 1.7, floorBelowWater: 0.18, shift: -1.8 } as const;"}`
+
+### 🧑 User — 2026-11-16T02:43:52.726Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+

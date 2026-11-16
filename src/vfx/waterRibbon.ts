@@ -210,6 +210,9 @@ uniform vec3 uP5;
 uniform vec3 uP5Light;
 uniform vec3 uP5Streak;
 uniform float uFlow05;
+#ifdef W9DBG
+uniform float uDbg;
+#endif
 varying vec2 vUV;
 varying float vHalfW;
 varying float vSpeed;
@@ -727,11 +730,17 @@ void main() {
     #else
     vec3 N5 = bumpNormal(vPosW, N0, H5 * 0.09 * (1.0 - smoothstep(0.1, 0.5, fws)));
     #endif
+    #ifdef W9DBG
+    if (uDbg > 3.5) N5 = N0;
+    float dbgLit = (uDbg > 0.5 && uDbg < 1.5) ? 0.0 : 1.0;
+    #else
+    const float dbgLit = 1.0;
+    #endif
     float nv5 = clamp(dot(N5, V), 0.0, 1.0);
     vec3 R5 = reflect(-V, N5);
-    c5 = mix(c5, mix(K5CG, K5PG, pinkM), pow(1.0 - nv5, 3.0) * mix(0.04, 0.08, pinkM));
-    c5 += vec3(1.0) * pow(clamp(dot(N5, Hv), 0.0, 1.0), 90.0) * 0.9;
-    float gl5 = pow(clamp(dot(R5, Lg), 0.0, 1.0), 90.0);
+    c5 = mix(c5, mix(K5CG, K5PG, pinkM), pow(1.0 - nv5, 3.0) * mix(0.04, 0.08, pinkM) * dbgLit);
+    c5 += vec3(1.0) * pow(clamp(dot(N5, Hv), 0.0, 1.0), 90.0) * 0.9 * dbgLit;
+    float gl5 = pow(clamp(dot(R5, Lg), 0.0, 1.0), 90.0) * dbgLit;
     c5 += mix(vec3(0.3, 1.1, 1.6), vec3(1.4, 0.7, 1.3), pinkM) * gl5 * (smoothstep(0.6, 0.92, H5) * 0.5 + core * 0.7);
 
     // near field: sheen toward the screen sides; Benny's contact itself stays clean cyan (no white band)
@@ -771,6 +780,10 @@ void main() {
     c5 += mix(vec3(1.9, 2.1, 2.3), vec3(2.3, 1.7, 2.2), pinkM) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))
         + flB * near5 * 0.6 + flC * near5 + flD * (1.0 - near5) * (1.0 - smoothstep(0.2, 0.5, fws)) * 0.9)
         * (1.0 - 0.2 * pinkM);
+    #endif
+    #ifdef W9DBG
+    if (uDbg > 1.5 && uDbg < 2.5) c5 = vec3(glow * 0.5);
+    if (uDbg > 2.5 && uDbg < 3.5) c5 = mix(ladder4(K5C0, K5C1, K5C2, K5C3, t5), K5P3, pinkM);
     #endif
     col = mix(col, c5, sw);
   }

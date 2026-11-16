@@ -399,7 +399,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5841,
-   "sha256": "aed67bbb834fa22ffa2f539a73e9c4cbf18045b4ae6d495ac5856bfd53383b71"
+   "sha256": "fd74f824bd2b53a64584f7f25ed8a971c7f94927a9f4068aac61eefb0e27128b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -4582,6 +4582,16 @@
    "sha256": "feea16e6fa082747eb2a2d603e1e52a657bf321b06c0c6c4d232662dfbff6206"
   },
   {
+   "path": "qa/pilot05/wave9/foam/it06/05_ctrlA_baseline_foam.png",
+   "bytes": 1756781,
+   "sha256": "03f8dbac33daf03484d77954c7a2041bdb45018885b268552d52bba59d348119"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/05_ctrlB_it06_foam.png",
+   "bytes": 1734261,
+   "sha256": "5bbfbb3b343d998773e4c3d41da50d7377267a46aa823f77bcf3d8a0be83a19c"
+  },
+  {
    "path": "qa/pilot05/wave9/foam/it06/05_highlight_NOW.png",
    "bytes": 1836316,
    "sha256": "01db0def6823d3409b859077c5aa9c7051939b893e4c0210b0385a8b43b0bdd9"
@@ -5818,8 +5828,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 53383,
-   "sha256": "cf6be5f43996307c610326dcfc336bcf80c7605c6ec762d78ef3b11ae3f467c0"
+   "bytes": 53785,
+   "sha256": "fa935b9bae968b5d76f04e83549fa43762c3bbd4fa4bf04cfabc80f66d0b72bd"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -5833,8 +5843,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 54626,
-   "sha256": "bc5026d86d2799088a7043a4d741d89dafbd9da4ed44fa6485f82358934539c9"
+   "bytes": 54793,
+   "sha256": "0c00d219e733caf64d854e519ef2f1dbb418ba23ad01689be36ad18332c53507"
   },
   {
    "path": "src/world/far05.ts",
@@ -5858,8 +5868,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 45495,
-   "sha256": "5e6757ccc02c034b313c70f77920a97f74a7b34f1a5282ab2290c0d42b92cec6"
+   "bytes": 46347,
+   "sha256": "7f136174e5b0445bceebb1be680d4af96b4b7847b216f17a4828e064989b4f15"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

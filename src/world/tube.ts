@@ -174,14 +174,18 @@ export interface TubeGeoOptions {
    * tube has a level bank between the river edge and the wall foot instead of a trench below the water line
    */
   floor?: (s: number) => { y: number; w: number };
+  /** wave 9 (05): lateral offset of the cross-section centre along `right` (units; OVAL05.shift) */
+  shift?: (s: number) => number;
 }
 
 /**
  * wave 9 (environment): the 05 tunnel's oval cross-section, shared with the far block (ForcedTunnel, path-camera)
  * so the seam stays continuous: lateral stretch K of the `right` component, and the level bank floor
- * `floorBelowWater` units under the water line (see TubeGeoOptions.floor).
+ * `floorBelowWater` units under the water line (see TubeGeoOptions.floor), and `shift`: lateral offset (along
+ * `right`, units) of the 05 tunnel centre line — ref ring #1 is centred ≈67 px and ring #2 ≈24 px LEFT of the VP
+ * (a parallel offset of a straight tunnel keeps its vanishing point), which also gives the ref's broad left bank.
  */
-export const OVAL05 = { K: 1.7, floorBelowWater: 0.18 } as const;
+export const OVAL05 = { K: 1.7, floorBelowWater: 0.18, shift: -1.8 } as const;
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
   const radial = o.radial ?? 48;
@@ -204,6 +208,7 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
     const ov = o.oval ? o.oval(s) : 1;
     const fl = o.floor ? o.floor(s) : null;
     c.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
+    if (o.shift) c.addScaledVector(f.right, o.shift(s));
     for (let j = 0; j <= radial; j++) {
       const th = -Math.PI / 2 - arc / 2 + (j / radial) * arc; // centred on the bottom
       d.copy(f.right).multiplyScalar(Math.cos(th) * ov).addScaledVector(f.up, Math.sin(th));
@@ -315,6 +320,8 @@ export type RingOpts = {
   oval?: (s: number) => number;
   /** wave 9: band rings only — lay the band on an ellipse of aspect K (ovalBandGeometry, constant band depth) */
   bandOval?: number;
+  /** wave 9 (05): lateral offset of the ring centre along `right` (see TubeGeoOptions.shift) */
+  shift?: (s: number) => number;
 };
 
 export function bandGeometry(b: BandOpts): THREE.BufferGeometry {
@@ -378,6 +385,7 @@ export function buildRingsAt(path: TubePath, list: number[], material: THREE.Mat
       const f = path.frame(ss);
       const r = path.radius(ss) - (opts.inset ?? 0.05) + (opts.extra ?? 0);
       c.copy(f.pos).addScaledVector(f.up, path.radius(ss) - path.depth(ss));
+      if (opts.shift) c.addScaledVector(f.right, opts.shift(ss));
       // (right, up, tan) is left-handed (right = tan × up), so the quaternion below is not the intended
       // frame: band rings (05 only) use the right-handed (−right, up, tan) so their lip really sits on the
       // camera side (−z); collar/torus rings (04/06/07) keep the legacy orientation unchanged
@@ -424,6 +432,8 @@ export function buildWallLids(
     shape?: 'hood' | 'dome' | 'slab' | 'puck';
     /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */
     oval?: (s: number) => number;
+    /** wave 9: lateral offset of the wall's centre (see TubeGeoOptions.shift) */
+    shift?: (s: number) => number;
   } = {},
 ): THREE.InstancedMesh {
   const geo = wallLidGeometry(opts.shape ?? 'hood', opts.thickness ?? 0.42);
@@ -442,6 +452,7 @@ export function buildWallLids(
       const f = path.frame(s);
       const r = path.radius(s);
       tubeCenterAt(path, s, c);
+      if (opts.shift) c.addScaledVector(f.right, opts.shift(s));
       dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
       const sz = size * Math.min(1.4, r / 7.6);
       // oval wall (wave 9): the lid sits on the ellipse point (K·r·cos a, r·sin a) and is oriented to the ellipse's

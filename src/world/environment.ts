@@ -262,6 +262,8 @@ export function buildEnvironment(course: Course): Environment {
     return THREE.MathUtils.clamp((K05 * perfPath.radius(sF05)) / perfPath.radius(s), 1, K05);
   };
   const floor05 = (s: number) => ({ y: -(perfPath.radius(s) - perfPath.depth(s)) - OVAL05.floorBelowWater, w: THREE.MathUtils.clamp((oval05(s) - 1) / (K05 - 1) * 1.5, 0, 1) });
+  // lateral offset of the 05 tunnel centre (OVAL05.shift), blended exactly like the oval
+  const shift05 = (s: number) => OVAL05.shift * (oval05(s) - 1) / (K05 - 1);
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
   // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
@@ -296,7 +298,7 @@ export function buildEnvironment(course: Course): Environment {
   const strips05: TubeStrips = { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
-  const addWall = (a0: number, a1: number, mat: THREE.Material, shape: Pick<Parameters<typeof buildTubeGeometry>[3] & object, 'oval' | 'floor'> = {}) => {
+  const addWall = (a0: number, a1: number, mat: THREE.Material, shape: Pick<Parameters<typeof buildTubeGeometry>[3] & object, 'oval' | 'floor' | 'shift'> = {}) => {
     for (let a = a0; a < a1 - 0.01; a += chunk) {
       const b = Math.min(a1, a + chunk + 0.6);
       zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true, ...shape }), mat));
@@ -304,8 +306,8 @@ export function buildEnvironment(course: Course): Environment {
       zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
     }
   };
-  addWall(s05, sGlow05, perf05Mat, { oval: oval05, floor: floor05 });
-  addWall(sGlow05, s08, perfTubeMat, { oval: oval05, floor: floor05 }); // oval05 = 1 once the 06 flare is wider
+  addWall(s05, sGlow05, perf05Mat, { oval: oval05, floor: floor05, shift: shift05 });
+  addWall(sGlow05, s08, perfTubeMat, { oval: oval05, floor: floor05, shift: shift05 }); // oval05 = 1 once the 06 flare is wider
   // 06/07 rings and the 04→05 junction collar (unchanged look)
   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
   ringMat.envMap = goldEnv;
@@ -338,7 +340,7 @@ export function buildEnvironment(course: Course): Environment {
   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
   // gold junction collar 04→05 (slightly heavier)
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
-  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, ringsFullOval ? { inset: 0.02, band: band05near, bandOval: K05 } : { inset: 0.02, band: band05near, oval: oval05 }));
+  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, ringsFullOval ? { inset: 0.02, band: band05near, bandOval: K05, shift: shift05 } : { inset: 0.02, band: band05near, oval: oval05, shift: shift05 }));
   const rings0607: number[] = [];
   for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
   zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
@@ -377,7 +379,7 @@ export function buildEnvironment(course: Course): Environment {
   const lids05 = rings05
     .map((s) => s + bandHalf05 + 0.15 + lid05.size * lid05.stretch * 1.04)
     .filter((s) => s > s05 + 4 && s < sF05 && !(s - sCam05 > 20 && s - sCam05 < 38));
-  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05, oval: oval05 }));
+  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05, oval: oval05, shift: shift05 }));
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];
   for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);

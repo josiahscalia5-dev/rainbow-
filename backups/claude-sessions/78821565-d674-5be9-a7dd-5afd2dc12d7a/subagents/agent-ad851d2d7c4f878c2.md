@@ -1649,3 +1649,48 @@ Six iterations used; it06 is the kept state. Now the end checks: tsc, regression
 > 04 → /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlA/out/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":100,"tris":713522,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
 > 05 → /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrl …[+735 chars]
 
+### 🤖 Claude — 2026-11-16T02:43:36.195Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad; cd /home/user/rainbow-; python3 -c \"\nimport numpy as np\nfrom PIL import Image\nfor n in ['04','05','08']:\n  a=np.asarray(Image.open('$SP/ctrlA/out/'+n+'.png').convert('RGB')).astype(int)\n  b=np.asarray(Image.open('$SP/ctrlB/out/'+n+'.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(2); m=d>8; m[:220]=False\n  print(n,'A vs B px>8 below HUD:',int(m.sum()))\n\"; cp $SP/ctrlA/out/05.png qa/pilot05/wave9/foam/it06/05_ctrlA_baseline_foam.png; cp $SP/ctrlB/out/05.png qa/pilot05/wave9/foam/it …[+525 chars]`
+
+### 🧑 User — 2026-11-16T02:43:47.256Z
+
+> ↩︎ result: 04 A vs B px>8 below HUD: 670
+> 05 A vs B px>8 below HUD: 133295
+> 08 A vs B px>8 below HUD: 0
+> | PREV | 51.2 | 0.865 | 0.191 | 56.4 | 59.3 | 47.1 | 47.4 |
+> | NOW | 51.3 | 0.871 | 0.194 | 56.4 | 59.3 | 47.3 | 47.5 |
+> out Lclump 5545 W32 S49 B26 | LLclump 10755 W11 S48 B27 | LRclump 11506 W14 S47 B27 | Lrim 22177 W15 S39 B18
+> out Lclump 6956 W49 S39 B23 | LLclump 10947 W31 S41 B21 | LRclump 9070 W34 S38 B23 | Lrim 24997 W22 S35 B19
+> out Lclump L188/228/243 B3C3FF E0E1FE F2EFFE | LLclump L185/228/238 B1BFFB E0E2F4 EEEAF7 | LRclump L185/226/239 AEBFFB DEDFF6 EFE9F8 | Lrim L187/226/247 B4C3FF DEDEFF F6F1FF
+> out Lclump L183/238/253 B5C1FF EEEAFF FDFAFF | LLclump L187/231/249 B9C2FF EDE6F8 F7F5FF | LRclump L187/231/250 BBC4FF F0E6D4 FAF8FF | Lrim L177/230/253 B0BDFF E4E2FF FFFAFF
+> /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlA/out/05.png L 18.8% x 150-430 ylow 1329 | R 18.4% x 432-719 ylow 1326
+> /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlB/out/05.png L 20.5% x 150-430 ylow 1329 | R 21.8% x 432-719 ylow 1326
+> LL: dmad -2.04 (PREV 48.8 NOW 46.7)
+> LR: dmad +0.05 (PREV 54.7 NOW 54.7)
+> Lclump: dmad +5.96 (PREV 39.0 NOW 45.0) …[+117 chars]
+
+### 🤖 Claude — 2026-11-16T02:43:57.597Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad; cd /home/user/rainbow-; python3 -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$SP/ctrlA/out/04.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('$SP/ctrlB/out/04.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); m=d>8; m[:220]=False\nys,xs=np.where(m); print('04 bbox',xs.min(),xs.max(),ys.min(),ys.max(), 'max d', d[m].max())\nbox=(max(0,xs.min()-30),max(0,ys.min()-30),min(864,xs.max()+30),min(1536,ys.max()+30))\nA=Image.open('$SP/ctrlA/out/04.png').co …[+689 chars]`
+
+### 🧑 User — 2026-11-16T02:43:58.337Z
+
+> ↩︎ result: 04 bbox 304 543 468 627 max d 20
+
+### 🤖 Claude — 2026-11-16T02:43:58.696Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ab04.png"}`
+
+### 🧑 User — 2026-11-16T02:43:58.715Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:43:59.297Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ab_lclump.png"}`
+
+### 🧑 User — 2026-11-16T02:43:59.311Z
+
+> ↩︎ result: [image]
+

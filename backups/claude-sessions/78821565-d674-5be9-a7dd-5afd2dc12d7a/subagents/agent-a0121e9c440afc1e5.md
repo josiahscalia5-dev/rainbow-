@@ -1912,3 +1912,27 @@ Now my own far-river material in far05.ts (ported from my wave-8 shader in mater
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T02:43:31.808Z
+
+The uncapped slope turns into large slanted planes that cut across the far rings, so that is clearly worse. I'll cap the rise to a low ramp and widen the foam banks a little instead.
+
+### 🤖 Claude — 2026-11-16T02:43:35.811Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "export function farFloor05(lay: FarRiverLayout, floorY: number, slope = 0.75) {\n  return (Z: number, x: number) => {\n    const w = smoothstep(3, 16, Z);\n    if (w <= 0) return floorY;\n    const r = lay.row(Z), fw = farFoamWidth(Z);\n    const b0 = r.xB - r.hw - fw * 0.85, b1 = r.xB + r.hw + fw * 0.85;\n    const d = x < b0 ? b0 - x : x > b1 ? x - b1 : 0;\n    return floorY + w * slope * d;\n  };\n}", "new_string": "export function farFloor05(lay: FarRiverLayout, floorY: number, rise = 0.9, run = 2. …[+448 chars]`
+
+### 🧑 User — 2026-11-16T02:43:35.851Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:37.815Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "export const farFoamWidth = (Z: number) => 1.1 + 1.3 * smoothstep(1, 18, Z);\n/** height of the foam bank's crest above the far water level (rounded lumpy bank, ≈0.6 × lump radius high) */\nconst FOAM_CREST = 0.42;", "new_string": "export const farFoamWidth = (Z: number) => 1.1 + 1.9 * smoothstep(1, 18, Z);\n/** height of the foam bank's crest above the far water level (rounded lumpy bank, ≈0.6 × lump radius high) */\nconst FOAM_CREST = 0.55;"}`
+
+### 🧑 User — 2026-11-16T02:43:37.858Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:39.870Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit 2>&1 | head; echo tsc $?; /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9/look.sh look5", "description": "Scratch look with capped ramp and wider foam", "timeout": 600000}`
+
