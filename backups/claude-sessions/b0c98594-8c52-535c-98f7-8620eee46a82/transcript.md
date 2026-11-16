@@ -2325,3 +2325,79 @@ That autosave call printed nothing: I passed a stray extra argument, so it exite
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 scripts/rainbow-autosave.py --reason manual:verified-backup 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"'; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1)\"; python3 -I scripts/autosave-status.py; tail -4 backups/.live/BACKUP_LOG.md | cut -c1-140", "description": "Run the verified backup correctly and compare SHAs"}`
 
+### 🧑 User — 2026-11-16T11:10:30.924Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "334b6e71d1d286a75fe4c966d86f11e745ed52b3",
+> local  334b6e71d1d286a75fe4c966d86f11e745ed52b3
+> remote 334b6e71d1d286a75fe4c966d86f11e745ed52b3
+> AUTOSAVE OK | branch ccr-251ed97c-ty2xvp | scheduler daemon | last verified backup 2026-11-16T11:10:23+00:00 (0.1 min ago) | local 334b6e7 remote 334b6e7 (match) | uncommitted 0
+> | 2026-11-16T11:06:26+00:00 | daemon | committed+pushed | `51b2305da29a` | `ccr-251ed97c-ty2xvp` | 8 | True |  |
+> | 2026-11-16T11:08:09+00:00 | manual:docs | committed+pushed | `f3ec34b33ca4` | `ccr-251ed97c-ty2xvp` | 10 | True |  |
+> | 2026-11-16T11:08:50+00:00 | manual:redaction-order | committed+pushed | `b4ce47298947` | `ccr-251ed97c-ty2xvp` | 5 | True |  |
+> | 2026-11-16T11:10:23+00:00 | manual:verified-backup | committed+pushed | `334b6e71d1d2` | `ccr-251ed97c-ty2xvp` | 5 | True |  |
+
+### 🤖 Claude — 2026-11-16T11:10:36.051Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls -la .github 2>&1 | head; find . -path ./node_modules -prune -o -iname \"pull_request_template*\" -print 2>/dev/null | head", "description": "Look for a pull request template in the repo"}`
+
+### 🧑 User — 2026-11-16T11:10:36.122Z
+
+> ↩︎ result: ls: cannot access '.github': No such file or directory
+
+### 🤖 Claude — 2026-11-16T11:10:36.557Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_pull_requests,mcp__github__create_pull_request", "max_results": 2}`
+
+### 🧑 User — 2026-11-16T11:10:36.568Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-16T11:10:38.858Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "state": "open", "fields": ["number", "title", "draft", "head", "base", "html_url"]}`
+
+### 🧑 User — 2026-11-16T11:10:40.044Z
+
+> ↩︎ result: [{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"draft":true,"head":{"ref":"ccr-44f84024-ii5iih","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"98ffd8e20fabf69f361faac1a57d315627d9da09"},"html_url":"https://github.com/josiahscalia5-dev/rainbow-/pull/5","number":5,"title":"DO NOT MERGE — Rainbow newest work (Screen 05 wave 9b: BEFORE baseline restored, controlled test T1)"},{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"draft":true,"head":{"ref":"claude/rainbow-3d-account-recovery-xex5hc","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"6faf1a2bf1a8ef0cbb0c145b7d932ab04ff835c6"},"html_url":"https://github.com/josiahscalia5-dev/rainbow-/pull/4","number":4,"title":"DO NOT MERGE — Rainbow 3D account recovery (newest work, Screen 05 wave 9)"},{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"draft":true,"head":{"ref":"ccr-4f6c3e0e-5kxgr0","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"0fe0b0c596 …[+669 chars]
+
+### 🤖 Claude — 2026-11-16T11:10:43.003Z
+
+No PR exists for this branch yet. Creating a draft, marked DO NOT MERGE like the earlier ones, because merging into the protected original branch must never happen:
+
+### 🤖 Claude — 2026-11-16T11:10:53.404Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "ccr-251ed97c-ty2xvp", "base": "ccr-6f431adf-7h0m8y", "draft": true, "title": "DO NOT MERGE — Rainbow newest work: permanent one-command recovery + five-minute backup system", "body": "**Do not merge.** The base `ccr-6f431adf-7h0m8y` is the protected original; this draft only makes the newest branch visible. It contains every other `ccr-*` / `claude/*` branch (12/12 verified).\n\n## What changed\n- **`scripts/claude-bootstrap.sh`**: one-command recovery. It runs automatically from the SessionStart hook: fetch, merge newer branches, Git …[+2133 chars]`
+
+### 🧑 User — 2026-11-16T11:10:57.076Z
+
+> ↩︎ result: {"id":"5335891315","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/6"}
+
+### 🤖 Claude — 2026-11-16T11:10:59.101Z
+
+Draft PR #6 created. Subscribing to its activity, as required for a PR I open:
+
+### 🤖 Claude — 2026-11-16T11:10:59.706Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 6}`
+
+### 🧑 User — 2026-11-16T11:11:03.080Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#6. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🤖 Claude — 2026-11-16T11:11:07.667Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; wc -l scripts/cloud-env-setup.sh; awk '{ if (length($0) > 200) print \"LONG\", NR, length($0) }' scripts/cloud-env-setup.sh; LC_ALL=C grep -nP '[^\\x00-\\x7F]' scripts/cloud-env-setup.sh || echo \"ascii only\"; grep -c $'\\r' scripts/cloud-env-setup.sh", "description": "Check setup script line count, length and encoding"}`
+
+### 🧑 User — 2026-11-16T11:11:07.707Z
+
+> ↩︎ result: 15 scripts/cloud-env-setup.sh
+> ascii only
+> 0
+
+### 🤖 Claude — 2026-11-16T11:11:19.083Z
+
+> 🔧 **mcp__claude-code-remote__create_environment** `{"name": "rainbow-", "scope": "personal", "reason": "A rainbow- environment whose setup script preinstalls Blender, Android SDK and npm.", "repositories": ["josiahscalia5-dev/rainbow-"], "allowed_hosts": ["download.blender.org", "dl.google.com", "services.gradle.org", "github.com", "release-assets.githubusercontent.com", "repo.maven.apache.org", "api.worldlabs.ai", "api.atlas.worldlabs.ai", "cdn.marble.worldlabs.ai", "github-cloud.githubusercontent.com", "lfs.github.com"], "allow_package_managers": true, "allow_mcp_servers": true, "setup_script": "#!/usr/bin/env bash\n# Rainbow (josiahscalia5- …[+1189 chars]`
+
