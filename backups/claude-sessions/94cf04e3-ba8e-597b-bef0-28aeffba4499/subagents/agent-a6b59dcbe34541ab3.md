@@ -1190,3 +1190,297 @@ I have enough to implement. Let me check the band/lid constants used by the far 
 > 441-  const X = f.right.clone().multiplyScalar(-Math.cos(tilt) * side).addScaledVector(f.up, -Math.sin(tilt)).normalize();
 > 442-  const Y = f.right.clone().multiplyScalar(-Math.sin(ti …[+398 chars]
 
+### 🤖 Claude — 2026-11-16T01:57:39.953Z
+
+The environment specialist is editing environment.ts in parallel; I'll re-read my block before each edit. Now let me write the far-river layout and geometry in my new module.
+
+### 🤖 Claude — 2026-11-16T01:58:23.303Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/far05.ts", "content": "/**\n * Screen 05 far section (path-camera-transition-engineer, wave 8): helpers for the forced-perspective far tunnel\n * built in environment.ts (`// ---- 05 far tunnel`). Everything here is laid in the ForcedTunnel's VIRTUAL\n * straight tunnel (depth Z beyond the section start sF, offset o in the cross-section) and mapped to real\n * geometry with ft.point(), so it continues the real near/mid tunnel without a seam at the locked 05 eye.\n *\n * FAR RIVER (ref 05, approved image): beyond the seam the river keeps winding: the …[+11085 chars]`
+
+### 🧑 User — 2026-11-16T01:58:23.537Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:58:59.752Z
+
+Now the far river material (my `farRiverMaterial` in materials.ts). Let me re-read it to make an exact edit.
+
+### 🤖 Claude — 2026-11-16T01:59:00.692Z
+
+> 🔧 **Bash** `{"command": "grep -n 'export function farRiverMaterial' src/world/materials.ts; grep -n \"far-river-v4\" src/world/materials.ts", "description": "Locate farRiverMaterial bounds"}`
+
+### 🧑 User — 2026-11-16T01:59:00.728Z
+
+> ↩︎ result: 820:export function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMaterial {
+> 860:  mat.customProgramCacheKey = () => 'far-river-v4';
+
+### 🤖 Claude — 2026-11-16T01:59:01.912Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/materials.ts", "offset": 812, "limit": 52}`
+
+### 🧑 User — 2026-11-16T01:59:01.929Z
+
+> ↩︎ result: 812	}
+> 813	
+> 814	/**
+> 815	 * Far stream of the 05 forced-perspective tunnel (ForcedTunnel.chordGeometry): the water surface beyond
+> 816	 * the real ribbon, seen only as a thin winding band toward the vanishing point — a cyan core meandering
+> 817	 * between two hot-pink bands, blue edges, white foam lips, glossy flow streaks, warming into the VP glow
+> 818	 * with the virtual depth (`fgExtra`). Unlit (it is tiny on screen); morph "open" handled by three.
+> 819	 */
+> 820	export function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMaterial {
+> 821	  const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+> 822	  const uniforms = {
+> 823	    uRivCore: { value: new THREE.Color('#0aa2f6') },
+> 824	    uRivBand: { value: new THREE.Color('#ee2fd8') },
+> 825	    uRivEdge: { value: new THREE.Color('#1677e8') },
+> 826	    uRivFoam: { value: new THREE.Color('#f4eeff') },
+> 827	    uRivGlow: { value: new THREE.Color(glow.color) },
+> 828	    uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.strength) },
+> 829	  };
+> 830	  mat.onBeforeCompile = (shader) => {
+> 831	    Object.assign(shader.uniforms, uniforms);
+> 832	    shader.vertexShader = shader.vertexShader
+> 833	      .replace('#include <comm …[+1831 chars]
+
+### 🤖 Claude — 2026-11-16T01:59:36.241Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "/**\n * Far stream of the 05 forced-perspective tunnel (ForcedTunnel.chordGeometry): the water surface beyond\n * the real ribbon, seen only as a thin winding band toward the vanishing point — a cyan core meandering\n * between two hot-pink bands, blue edges, white foam lips, glossy flow streaks, warming into the VP glow\n * with the virtual depth (`fgExtra`). Unlit (it is tiny on screen); morph \"open\" handled by three.\n */\nexport function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMateria …[+9095 chars]`
+
+### 🧑 User — 2026-11-16T01:59:36.321Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:59:38.561Z
+
+Now the far block in environment.ts. Re-reading it first since the environment specialist has been editing the file.
+
+### 🤖 Claude — 2026-11-16T01:59:39.821Z
+
+> 🔧 **Bash** `{"command": "grep -n '05 far tunnel' src/world/environment.ts; awk '/---- 05 far tunnel/{f=1} f{print NR\": \"$0} /zones.tubes.add\\(...parts\\)/{if(f){exit}}' src/world/environment.ts", "description": "Print current far tunnel block"}`
+
+### 🧑 User — 2026-11-16T01:59:39.852Z
+
+> ↩︎ result: 12:import { far05Debug } from './far05'; // path-camera (05 far tunnel block)
+> 354:  // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
+> 354:   // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
+> 355:   {
+> 356:     // the checkpoint eye, exactly as RideCamera places it on the straight (cameraRig.ts, '05' block, lat 0)
+> 357:     const sC = course.marks['05_crest'];
+> 358:     const p5 = STAGE_CAM['05']!;
+> 359:     const af = perfPath.frame(sC);
+> 360:     const T = af.tan.clone();
+> 361:     const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+> 362:     const Rt = new THREE.Vector3().crossVectors(T, U).normalize();
+> 363:     const water = course.sample(sC).pos.clone();
+> 364:     const off = water.clone().sub(af.pos).dot(Rt);
+> 365:     const dz = p5.deadZone ?? 1;
+> 366:     const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
+> 367:     const eye = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - follow));
+> 368:     // one ring per knot: virtual depth of ring n (ref 05 radii → depths 86,124,160,196,234,276,322,374)
+> 369:     const D0 = tu …[+5029 chars]
+
+### 🤖 Claude — 2026-11-16T02:00:00.994Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "    // one ring per knot: virtual depth of ring n (ref 05 radii → depths 86,124,160,196,234,276,322,374)\n    const D0 = tubeCenterAt(perfPath, sF05).sub(eye).dot(T);\n    const ringDv = [86, 124, 160, 196, 234, 276, 322, 374];\n    const knots: [number, number][] = [[0, 0], ...ringDv.map((d, i) => [(i + 1) * bay05, Math.max(d - D0, (i + 1) * bay05)] as [number, number])];\n    const zEnd = 430 - D0;\n    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);\n    const uEnd = ft.uO …[+2629 chars]`
+
+### 🧑 User — 2026-11-16T02:00:01.074Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-16T02:00:04.907Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "    for (let n = 1; n <= ringDv.length; n++) {\n      const u = n * bay05;\n      const op = openAt(u);\n      ringItems.push({ u, o: new THREE.Vector3(), basis: ringBasis, s: new THREE.Vector3(rRing, rRing, 1), openPos: op.c, openScale: op.r / rRing });\n    }\n    const lidSz = lid05.size * Math.min(1.4, perfPath.radius(sF05) / 7.6);\n    for (let u = bay05 / 2; u < uEnd - bay05 * 0.4; u += bay05) {\n      for (const side of [1, -1]) {", "new_string": "    const lidSz = lid05.size * Math.min(1. …[+542 chars]`
+
+### 🧑 User — 2026-11-16T02:00:05.033Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:00:06.112Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { far05Debug } from './far05'; // path-camera (05 far tunnel block)", "new_string": "import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)"}`
+
+### 🧑 User — 2026-11-16T02:00:06.226Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:00:06.700Z
+
+> 🔧 **Bash** `{"command": "timeout 300 npx tsc --noEmit 2>&1 | head -20", "description": "Type-check the project"}`
+
+### 🧑 User — 2026-11-16T02:00:13.676Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:00:15.837Z
+
+Type-check passes. Before capturing, let me verify the far layout numerically: the seam row against the real ribbon, and the projected core path against the reference targets.
+
+### 🤖 Claude — 2026-11-16T02:00:25.306Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/p3.js <<'EOF'\n(async () => {\n  const R = window.__rainbow;\n  const { far05Debug: D } = await import('/src/world/far05.ts');\n  const ft = D.ft, lay = D.farLay, out = [];\n  const cam = R.camera(); const M = cam.matrixWorld, pos = cam.position;\n  const f = (cam.height / 2) / Math.tan(cam.fov * Math.PI / 360);\n  const Rx = [M[0], M[1], M[2]], Uy = [M[4], M[5], M[6]], Bz = [M[8], M[9], M[10]];\n  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];\n  const proj = (p) => { con …[+1424 chars]`
+
+### 🧑 User — 2026-11-16T02:00:42.306Z
+
+> ↩︎ result: realSeamRing=false knots=[[0,0],[7,5.75],[21,43.75],[35,107.75],[49,168.75],[63,268.75]] chord=6.53
+> Z=0 xB=1.84 hw=4.29 cL=-0.49±0.81 cR=4.40±0.84 core=1.94 | y=567.6 core x=544 bandL x=485 bandR x=604 edges 438..647
+> Z=1 xB=1.72 hw=4.42 cL=-0.73±0.81 cR=4.36±0.87 core=1.78 | y=566.0 core x=540 bandL x=480 bandR x=601 edges 433..644
+> Z=2 xB=1.40 hw=4.66 cL=-1.24±0.83 cR=4.19±0.93 core=1.43 | y=564.4 core x=531 bandL x=468 bandR x=596 edges 421..640
+> Z=4 xB=0.67 hw=4.89 cL=-2.08±0.83 cR=3.72±0.92 core=0.77 | y=561.5 core x=515 bandL x=450 bandR x=582 edges 402..624
+> Z=6 xB=0.23 hw=4.79 cL=-2.41±0.78 cR=3.31±0.82 core=0.43 | y=558.7 core x=507 bandL x=445 bandR x=570 edges 398..608
+> Z=8 xB=0.17 hw=4.95 cL=-2.60±0.80 cR=3.39±0.82 core=0.38 | y=556.1 core x=505 bandL x=442 bandR x=569 edges 397..606
+> Z=12 xB=0.42 hw=5.48 cL=-2.74±0.93 cR=4.06±0.88 core=0.68 | y=551.4 core x=511 bandL x=443 bandR x=578 edges 397..615
+> Z=17 xB=0.58 hw=5.35 cL=-2.32±1.04 cR=4.29±0.76 core=1.12 | y=546.3 core x=518 bandL x=455 bandR x=577 edges 410..608
+> Z=24 xB=0.95 hw=5.00 cL=-1.30±1.09 cR=4.67±0.55 core=1.95 | y=540.3 core x=531 bandL x=476 bandR x=577 edges 430..598
+> Z=32 xB=1.45 hw=4.52 cL=0.07±0.88 cR=4.85±0. …[+1141 chars]
+
+### 🤖 Claude — 2026-11-16T02:00:44.197Z
+
+`realSeamRing=false` — let me check whether the environment specialist has already changed `rings05`.
+
+### 🤖 Claude — 2026-11-16T02:00:45.093Z
+
+> 🔧 **Bash** `{"command": "grep -n 'rings05' src/world/environment.ts | head; tail -3 qa/pilot05/REQUESTS.md | cut -c1-400", "description": "Check rings05 definition and recent requests"}`
+
+### 🧑 User — 2026-11-16T02:00:45.135Z
+
+> ↩︎ result: 249:  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5);
+> 319:  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
+> 372:    // shows once the environment owner has removed that ring from rings05, so there is never a double ring.
+> 374:    const realSeamRing = rings05.some((s) => Math.abs(s - sF05) < 0.5);
+> - washer-environment-modeler → coordinator (wave5, 22:30 UTC): 05 now ends in a forced-perspective far tunnel (environment.ts, ForcedTunnel in tube.ts) from sF05 = sCam05 + 54 (depth ≈53 from the checkpoint eye); real objects beyond ≈ depth 60 (coins, bubbles) are hidden behind it at the 05 checkpoint, so ≈5 coins show instead of the ref's ≈9–10. If you want the far coins, they must be
+> - wave7 washer-environment-modeler → path-camera-transition-engineer / coordinator (01:40 UTC): 05 ring LAYOUT (your far block, ringDv/knots): reference rings sit at r ≈ 273/170/100/64 px about the VP (virtual depth ≈ 38/61/103/161, then a warm throat); live has 273/198 (real rings, depth 40/54) + far rings at depth 86/124/160/… → ring #2 too big (198 vs 170) and an extra ring at r≈84.
+> - wave8 path-camera-transition-engineer → washer-environ …[+331 chars]
+
+### 🤖 Claude — 2026-11-16T02:00:52.204Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave8/path-camera/it01 2>&1 | tail -3 && python3 -I scripts/screen_report.py 05 qa/pilot05/wave8/path-camera/it01 PREV=qa/pilot05/wave8/baseline/05.png NOW=qa/pilot05/wave8/path-camera/it01/05.png 2>&1 | tail -15", "description": "Capture iteration 1 and run screen report"}`
+
+### 🧑 User — 2026-11-16T02:01:17.880Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/path-camera/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":565719,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> # Screen 05: reference vs live captures (raw indicators, not a fidelity %)
+> 
+> mad = mean |ΔRGB| at 1/4 scale (lower = closer); hue_corr / edge_corr = −1…1 (higher = closer).
+> 
+> | Capture | mad | hue_corr | edge_corr | mad hud | mad tunnel+VP | mad river mid | mad Benny+near water |
+> |---|---|---|---|---|---|---|---|
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 50.9 | 0.881 | 0.178 | 54.1 | 58.7 | 48.4 | 46.7 |
+
+### 🤖 Claude — 2026-11-16T02:01:20.416Z
+
+Let me look at the side-by-side, then zoom the far region.
+
+### 🤖 Claude — 2026-11-16T02:01:21.068Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/wave8/path-camera/it01/", "description": "List iteration 1 output files"}`
+
+### 🧑 User — 2026-11-16T02:01:21.098Z
+
+> ↩︎ result: 05.png
+> 05_highlight_NOW.png
+> 05_highlight_PREV.png
+> 05_overlay_NOW.png
+> 05_overlay_PREV.png
+> 05_side_by_side.png
+> metrics.json
+> metrics.md
+
+### 🤖 Claude — 2026-11-16T02:01:22.063Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/path-camera/it01/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T02:01:24.080Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T02:01:24.075Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T02:01:25.741Z
+
+The whole frame includes parallel edits from other specialists (walls, near water). Let me zoom the far region for ref / baseline / it01.
+
+### 🤖 Claude — 2026-11-16T02:01:32.188Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools && cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/farzoom.py <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw\n# usage: farzoom.py OUT img1 img2 ... (ref first); crop x380-640 y460-600, 3x\nbox = (380, 460, 640, 600); sc = 3\nimgs = [Image.open(p).convert('RGB').crop(box).resize(((box[2]-box[0])*sc, (box[3]-box[1])*sc), Image.LANCZOS) for p in sys.argv[2:]]\nW, H = imgs[0].size\no = Image.new('RGB', (W, (H + 6) * len(imgs)), 'white')\ …[+632 chars]`
+
+### 🧑 User — 2026-11-16T02:01:32.702Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:01:34.468Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/far_it01.png"}`
+
+### 🧑 User — 2026-11-16T02:01:34.501Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:01:51.828Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/runs.py <<'EOF'\nimport sys\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(int)\nys = [int(v) for v in sys.argv[2].split(',')] if len(sys.argv) > 2 else list(range(487, 575, 4))\ndef runs(mask,x0):\n    out=[];st=None\n    for i,v in enumerate(mask):\n        if v and st is None: st=i\n        if (not v) and st is not None:\n            if i-st>=2: out.append((st+x0,i-1+x0))\n            st=None\n    if st is not None: out.append((s …[+595 chars]`
+
+### 🧑 User — 2026-11-16T02:01:52.094Z
+
+> ↩︎ result: 487 C []  P [(429, 430), (435, 436), (444, 452), (544, 553), (560, 562), (564, 565), (567, 568), (571, 572)]  W []  Y [(402, 406), (441, 443), (457, 459), (465, 487)]
+> 491 C []  P [(382, 383), (388, 389), (392, 394), (433, 434), (437, 438), (551, 552), (561, 564), (566, 569), (604, 605), (614, 615)]  W []  Y [(402, 407), (442, 443), (466, 474), (521, 530)]
+> 495 C [(476, 480), (491, 510), (524, 527)]  P [(411, 412), (414, 415), (454, 455), (482, 485), (488, 489), (512, 513), (516, 521), (541, 545), (581, 583), (585, 586), (635, 637), (639, 639)]  W [(472, 475), (529, 531)]  Y [(403, 407), (460, 462), (468, 470), (535, 537)]
+> 499 C [(484, 494), (503, 523), (531, 534)]  P [(448, 453), (495, 502), (525, 529), (543, 549)]  W [(479, 483), (537, 538), (623, 632)]  Y [(404, 408), (445, 447), (462, 464), (472, 475)]
+> 503 C [(491, 506), (516, 530), (538, 542)]  P [(380, 382), (432, 436), (438, 442), (507, 514), (532, 536), (555, 565), (614, 615), (617, 618)]  W [(483, 488), (544, 546)]  Y [(446, 449), (476, 479), (548, 551)]
+> 507 C [(489, 510), (521, 534), (544, 548)]  P [(384, 385), (420, 422), (435, 436), (443, 444), (452, 461), (512, 520), (536, 542), (561, 562), (572, 577), (629, 630), (632,  …[+3353 chars]
+
+### 🤖 Claude — 2026-11-16T02:02:15.306Z
+
+> 🔧 **Bash** `{"command": "git diff --stat HEAD -- src/vfx/waterRibbon.ts; git log -1 --format=%cd; grep -n 'sbend\\|offR = \\|offL = \\|float fR\\|float fL' src/vfx/waterRibbon.ts | head -20", "description": "Check water ribbon changes and band layout lines"}`
+
+### 🧑 User — 2026-11-16T02:02:15.348Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts | 49 ++++++++++++++++++++++++++++++-------------------
+>  1 file changed, 30 insertions(+), 19 deletions(-)
+> Mon Nov 16 01:57:55 2026 +0000
+> 371:  float sbend = sw * (1.05 * sin(s * 0.31 - 0.834) + 0.18 * sin(s * 0.62 + 0.6));
+> 372:  float xb = x - sbend;                       // band frame (== x on 04/06/07)
+> 423:  float offL = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.13 + 1.7)) + part + wob * 0.05 * sin(tv * 0.42 + 1.1);
+> 424:  float offR = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.11 + 4.2)) + part + wob * 0.05 * sin(tv * 0.37 + 3.9);
+> 430:    float Mb = M + sbend;
+> 435:    float fR = -0.3 * smoothstep(133.0, 136.0, s) * (1.0 - smoothstep(139.5, 142.0, s))
+> 438:    float fL = -0.5 * smoothstep(143.0, 147.0, s) * (1.0 - smoothstep(151.0, 155.0, s))
+> 457:    offL = smin(offL, Mb + hw - wL - 0.5, 1.2);
+> 458:    offR = smin(offR, hw - wR - 0.5 - Mb, 1.2);
+> 490:  float X = (lat - mix(M + sbend + 0.5 * (cLc + cRc), uBenny.y, nearW)) * mix(3.0 / hS, 1.0, nearW) / (1.0 + 0.7 * back);
+> 498:    float fLw = 0.13 * wL + aaw, fRw = 0.13 * wR + aaw;
+
+### 🤖 Claude — 2026-11-16T02:02:16.974Z
+
+> 🔧 **Bash** `{"command": "git diff HEAD -- src/vfx/waterRibbon.ts | head -150", "description": "Show water ribbon diff in progress"}`
+
+### 🧑 User — 2026-11-16T02:02:17.007Z
+
+> ↩︎ result: diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+> index 521843a..3a23693 100644
+> --- a/src/vfx/waterRibbon.ts
+> +++ b/src/vfx/waterRibbon.ts
+> @@ -320,16 +320,24 @@ float silk(float q, float v, float K, float seed, float wig) {
+>  #define SS_OCT 5
+>  #endif
+>  vec3 speedStreaks(float X, float v, float fwX, float fwV) {
+> -  float lane = 0.0, dash = 0.0, fine = 0.5;
+> +  float lane = 0.0, dash = 0.0, fine = 0.5, nPrev = 0.6;
+>    float kx = 2.2, kv = 0.22, amp = 0.5;
+>    for (int i = 0; i < SS_OCT; i++) {
+> -    float cpp = max(fwX * kx, fwV * kv * 1.5);    // cells per pixel
+> +    float cpx = fwX * kx;                         // cells per pixel across the flow
+> +    float cpp = max(cpx, fwV * kv * 1.5);
+>      float a = 1.0 - smoothstep(0.12, 0.3, cpp);
+>      if (a <= 0.0) break;
+>      float n = vnoise(vec2(X * kx, v * kv + X * kx * 0.618 + float(i) * 7.31));
+>      lane += (n - 0.5) * a * amp;
+> -    dash = max(dash, smoothstep(0.64, 0.92, n) * a * (0.55 + amp));
+> +    // (it03) the dashes are the iso-lines n = 0.5 of every octave whose cells are ≤ ≈30 px across: ≈1–2 px
+> +    // wide whatever the depth (distance |n − 0.5| over the estimated per-pixel gradient ≈1.3·cpx), so the
+> +    // water is densel …[+5946 chars]
+

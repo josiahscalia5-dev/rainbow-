@@ -1,8 +1,51 @@
 {
-  "when": "2026-11-16T01:57:38.491Z",
-  "renderer": null,
-  "shots": [],
-  "errors": [
-    "[05] ReferenceError: marblePano05 is not defined\n    at buildEnvironment (http://127.0.0.1:5201/src/world/environment.ts:224:13)\n    at startGame (http://127.0.0.1:5201/src/game/Game.ts:60:15)\n    at http://127.0.0.1:5201/src/main.ts:15:1"
-  ]
+  "when": "2026-11-16T02:01:45.007Z",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "shots": [
+    {
+      "id": "05",
+      "file": "qa/pilot05/wave8/water/it03/05.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "05",
+        "s": 132.4383020282329,
+        "y": -41.348424102617486
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.348,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "stats": {
+        "fps": 60.7,
+        "calls": 86,
+        "triangles": 565719,
+        "geometries": 102,
+        "textures": 43,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 164,
+        "firstFrameTriangles": 566655
+      }
+    }
+  ],
+  "errors": []
 }

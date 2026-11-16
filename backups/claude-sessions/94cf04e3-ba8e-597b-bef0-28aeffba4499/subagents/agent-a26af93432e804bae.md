@@ -693,3 +693,233 @@ Now the lighting, near field and glints segments.
 
 > 🔧 **Bash** `{"command": "timeout 400 bash -c 'until npx tsc --noEmit >/dev/null 2>&1; do sleep 15; done; echo tsc-ok'", "description": "Wait until the tree typechecks again", "timeout": 420000}`
 
+### 🧑 User — 2026-11-16T01:58:03.994Z
+
+> ↩︎ result: tsc-ok
+
+### 🤖 Claude — 2026-11-16T01:58:06.233Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave8/water/it01 2>&1 | tail -1 && python3 -c \"import json;print(json.load(open('qa/capture_log.json'))['errors'])\"", "description": "Capture iteration 1", "timeout": 620000}`
+
+### 🧑 User — 2026-11-16T01:58:23.006Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/water/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":572007,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+
+### 🤖 Claude — 2026-11-16T01:58:26.135Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/screen_report.py 05 qa/pilot05/wave8/water/it01 PREV=qa/pilot05/wave8/baseline/05.png NOW=qa/pilot05/wave8/water/it01/05.png >/dev/null && cat qa/pilot05/wave8/water/it01/metrics.md | tail -4; cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && python3 -I m05.py /home/user/rainbow-/qa/pilot05/wave8/water/it01/05.png", "description": "Report and metrics for it01"}`
+
+### 🧑 User — 2026-11-16T01:58:35.788Z
+
+> ↩︎ result: | Capture | mad | hue_corr | edge_corr | mad hud | mad tunnel+VP | mad river mid | mad Benny+near water |
+> |---|---|---|---|---|---|---|---|
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 52.7 | 0.795 | 0.151 | 54.1 | 59.7 | 49.5 | 50.3 |
+> == /home/user/rainbow-/qa/pilot05/wave8/water/it01/05.png
+>   near_lum_p5/p50/p95/std: [142.7, 180.7, 226.7, 27.6]
+>   mid_lum_p5/p50/p95/std: [138.3, 174.7, 245.3, 31.5]
+>   glints_near(1200-1536): 177
+>   glints_mid(700-1200): 378
+>   white_px_mid(620-1000)%: 6.27
+>   pink_near(1000-1536)%: 12.3
+>   pink_mid(620-1000)%: 20.2
+>   pink_behind_benny%: 2.58
+>   pink_mid_median: #F44AEE
+>   pink_mid_lum_p10/p90: [148.0, 208.5]
+>   cyan_mid_median: #2BB2FF
+>   cyan_near_y1300: #1CB7FF
+>   cyan_near_y1400: #23B6FF
+>   pink_runs: {650: [(0, 57), (69, 92), (322, 338), (346, 362), (631, 655), (667, 684), (706, 718)], 700: [(0, 48), (60, 76), (256, 396), (404, 417), (746, 789)], 760: [(117, 177), (179, 196), (201, 238), (243, 273), (683, 710), (736, 747), (761, 773)], 820: [(22, 160), (645, 674), (693, 709), (778, 810)], 880: [(27, 77), (655, 668), (678, 714)], 940: [(680, 692), (714, 789)], 1000: [(540, 558), (751, 804), (811, 863)], 1080: [(279, 567)], 1240: [(2 …[+136 chars]
+
+### 🤖 Claude — 2026-11-16T01:58:37.874Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/water/it01/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T01:58:39.767Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T01:58:39.760Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T01:58:45.360Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && python3 -I crops.py /home/user/rainbow-/qa/pilot05/wave8/water/it01/05.png it01_mid.png 540 1000 0 864 1.0 && python3 -I crops.py /home/user/rainbow-/qa/pilot05/wave8/water/it01/05.png it01_near.png 1000 1536 0 864 1.0", "description": "Crops of it01 mid and near"}`
+
+### 🧑 User — 2026-11-16T01:58:46.164Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:58:48.003Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/it01_mid.png"}`
+
+### 🧑 User — 2026-11-16T01:58:48.032Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:58:48.616Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/it01_near.png"}`
+
+### 🧑 User — 2026-11-16T01:58:48.644Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:59:25.815Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float n = vnoise(vec2(X * kx, v * kv + X * kx * 0.618 + float(i) * 7.31));\n    lane += (n - 0.5) * a * amp;\n    dash = max(dash, smoothstep(0.64, 0.92, n) * a * (0.55 + amp));", "new_string": "    float n = vnoise(vec2(X * kx, v * kv + X * kx * 0.618 + float(i) * 7.31));\n    lane += (n - 0.5) * a * amp;\n    // (it02) only octaves whose cells are ≈4–14 px across draw dashes, so every dash is a THIN line\n    // (1–3 px); the coarse octaves only shade the lanes (it01: 15 px wide light streaks …[+102 chars]`
+
+### 🧑 User — 2026-11-16T01:59:25.883Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:59:29.364Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float fLw = 0.22 * wL + aaw, fRw = 0.22 * wR + aaw;\n    float eL = clamp((wL - dL) / (2.0 * fLw) + 0.5, 0.0, 1.0);\n    float eR = clamp((wR - dR) / (2.0 * fRw) + 0.5, 0.0, 1.0);\n    pL = mix(pL, smoothstep(0.38, 0.62, eL + (SS.z - 0.5) * 0.7) * on, sw);\n    pR = mix(pR, smoothstep(0.38, 0.62, eR + (SS.z - 0.5) * 0.7) * on, sw);", "new_string": "    float fLw = 0.13 * wL + aaw, fRw = 0.13 * wR + aaw;\n    float eL = clamp((wL - dL) / (2.0 * fLw) + 0.5, 0.0, 1.0);\n    float eR = clamp((wR -  …[+187 chars]`
+
+### 🧑 User — 2026-11-16T01:59:29.429Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:59:33.515Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float lane = SS.x, dash = SS.y;\n    // height field (shading + bump): broad lanes, the dashes as glossy ridges on top\n    float H5 = clamp(0.5 + lane * 1.3 + dash * 0.22, 0.0, 1.0);\n    // cyan: deep azure lanes -> electric cyan -> bright cyan crests\n    vec3 cy = mix(uC5Deep, uC5, smoothstep(0.1, 0.6, H5));\n    cy = mix(cy, uC5Bright, smoothstep(0.62, 0.97, H5) * 0.6);", "new_string": "    // (it02) near the camera the coarse lanes fan out like sun rays: keep them subtle there\n    float  …[+476 chars]`
+
+### 🧑 User — 2026-11-16T01:59:33.578Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:59:37.917Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    c5 += vec3(0.45, 0.5, 0.6) * pinkM * (1.0 - pinkM) * 1.3;\n    // speed-streak dashes: light cyan / light pink glow, the strongest burning to white; on the pink they\n    // gather toward the core side (ref 05: white-pink streaks along the inner edge of each band)\n    float dk = dash * mix(1.0, 0.65 + 0.55 * smoothstep(-0.6, 0.9, relB), pinkM);\n    c5 = mix(c5, mix(uC5Streak, uP5Streak, pinkM), clamp(smoothstep(0.12, 0.6, dk) * 0.85, 0.0, 1.0));\n    c5 += vec3(0.85, 0.95, 1.05) * smoothstep( …[+564 chars]`
+
+### 🧑 User — 2026-11-16T01:59:37.981Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:59:40.619Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      c5 *= 1.0 - near5 * 0.5 * smoothstep(0.02, -0.32, lane) * (1.0 - pinkM);\n      c5 += vec3(0.02, 0.45, 1.0) * smoothstep(0.08, 0.4, lane) * 0.5 * near5 * (1.0 - pinkM);", "new_string": "      // (it02) it01 near median lum 181 vs ref 145: the whole near body is deeper, the light lanes saturated\n      c5 *= 1.0 - near5 * (0.22 + 0.4 * smoothstep(0.02, -0.25, lane)) * (1.0 - pinkM);\n      c5 += vec3(0.0, 0.3, 0.8) * smoothstep(0.06, 0.3, lane) * 0.4 * near5 * (1.0 - pinkM);"}`
+
+### 🧑 User — 2026-11-16T01:59:40.695Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:59:51.014Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave8/water/NOTES.md <<'EOF'\n\n### it00 — pre-edit capture of 03 + 05 (`it00/`): 05 pixel-identical to the baseline (no concurrent edits yet).\n\n### it01 — 0 console errors, 86 calls, 572,007 tris (tri drop = other specialists)\nChanges (`waterRibbon.ts`): new `speedStreaks()` (anisotropic value noise along the flow, 5 octaves, pixel-faded,\nearly break); new streak coordinate X (follows the band midline, fans behind Benny) computed after the band layout;\n05 pink masks = soft BRUSHED edges (feather ±22 % w, streak noise interleaves pink/cyan); near sweeps pW s …[+1573 chars]`
+
+### 🧑 User — 2026-11-16T02:00:28.845Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/water/it02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":572311,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 51.0 | 0.883 | 0.175 | 54.1 | 59.2 | 48.4 | 46.7 |
+> == /home/user/rainbow-/qa/pilot05/wave8/water/it02/05.png
+>   near_lum_p5/p50/p95/std: [121.0, 133.7, 215.0, 32.1]
+>   mid_lum_p5/p50/p95/std: [137.7, 165.0, 240.7, 29.6]
+>   glints_near(1200-1536): 201
+>   glints_mid(700-1200): 589
+>   white_px_mid(620-1000)%: 4.78
+>   pink_near(1000-1536)%: 14.2
+>   pink_mid(620-1000)%: 23.3
+>   pink_behind_benny%: 3.05
+>   pink_mid_median: #F541EB
+>   pink_mid_lum_p10/p90: [145.7, 203.7]
+>   cyan_mid_median: #1DACFF
+>   cyan_near_y1300: #0797EF
+>   cyan_near_y1400: #0190E6
+>   pink_runs: {650: [(0, 57), (69, 92), (321, 362), (630, 684), (706, 719)], 700: [(0, 48), (60, 76), (246, 397), (403, 418), (708, 719), (746, 794)], 760: [(116, 177), (179, 196), (201, 238), (240, 272), (669, 680), (682, 710), (735, 747), (761, 773)], 820: [(22, 171), (640, 674), (692, 710), (778, 815)], 880: [(0, 78), (83, 95), (632, 652), (654, 668), (678, 719)], 940: [( …[+313 chars]
+
+### 🤖 Claude — 2026-11-16T02:00:30.637Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/it02_mid.png"}`
+
+### 🧑 User — 2026-11-16T02:00:30.861Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:00:31.249Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/it02_near.png"}`
+
+### 🧑 User — 2026-11-16T02:00:31.298Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:01:25.008Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float lane = 0.0, dash = 0.0, fine = 0.5;\n  float kx = 2.2, kv = 0.22, amp = 0.5;\n  for (int i = 0; i < SS_OCT; i++) {\n    float cpp = max(fwX * kx, fwV * kv * 1.5);    // cells per pixel\n    float a = 1.0 - smoothstep(0.12, 0.3, cpp);\n    if (a <= 0.0) break;\n    float n = vnoise(vec2(X * kx, v * kv + X * kx * 0.618 + float(i) * 7.31));\n    lane += (n - 0.5) * a * amp;\n    // (it02) only octaves whose cells are ≈4–14 px across draw dashes, so every dash is a THIN line\n    // (1–3 px); t …[+1495 chars]`
+
+### 🧑 User — 2026-11-16T02:01:25.083Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:01:30.380Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float lane = SS.x * (1.0 - 0.45 * near5), dash = SS.y;", "new_string": "    float lane = SS.x * (1.0 - 0.65 * near5), dash = SS.y;"}`
+
+### 🧑 User — 2026-11-16T02:01:30.459Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:01:31.886Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      c5 *= 1.0 - near5 * (0.22 + 0.4 * smoothstep(0.02, -0.25, lane)) * (1.0 - pinkM);", "new_string": "      c5 *= 1.0 - near5 * (0.14 + 0.45 * smoothstep(0.02, -0.18, lane)) * (1.0 - pinkM);"}`
+
+### 🧑 User — 2026-11-16T02:01:31.956Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:01:36.441Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.75, 30.0, 4.5, 0.45, uTime + 2.7);\n    flB = max(flB, flowGlint(vec2(X * 2.7 + 0.37, v5 * 2.1 + 1.6 * sin(X * 5.3 + 2.0)), 0.5, 18.0, 4.0, 0.35, uTime + 0.9) * 0.8);\n    // many small twinkling 4-point stars, clustered on the light lanes\n    float flC = flowGlint(vec2(X * 7.0, v5 * 4.5 + 0.3 + 1.7 * sin(X * 13.0 + 0.7)), 0.55, 7.0, 2.6, 0.6, uTime + 1.3);", "new_string": "    float flB = flowGlint(vec2(X * 1.6, …[+409 chars]`
+
+### 🧑 User — 2026-11-16T02:01:36.525Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:01:44.411Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave8/water/NOTES.md <<'EOF'\n\n### it02 — 0 console errors, 86 calls, 572,311 tris\nChanges: dashes only from octaves with 4–14 px cells (thin), lane contrast ×0.95 (near ×0.55), cyan mix deeper, near\nbody darkened, brushed edge feather ±13 % w. Measured: report mad 51.0 (baseline 51.2), hue_corr 0.856 → 0.883, mid 48.4\n(baseline 47.2), near 46.7 (= baseline). m05: near lum p5/p50/p95 121/133.7/215 (ref 120/145/246), mid p5/p50/p95\n137.7/165/240.7 (ref 129.7/160.7/249.7), glints near 201 / mid 589 (ref 347/618), cyan mid #1DACFF, near y1300 #0797EF\n(ref #02A …[+1090 chars]`
+
+### 🧑 User — 2026-11-16T02:02:09.797Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/water/it03/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":565719,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 51.8 | 0.837 | 0.181 | 54.1 | 58.7 | 50.6 | 47.5 |
+> == /home/user/rainbow-/qa/pilot05/wave8/water/it03/05.png
+>   near_lum_p5/p50/p95/std: [127.7, 147.3, 210.0, 29.1]
+>   mid_lum_p5/p50/p95/std: [139.0, 174.7, 243.0, 30.6]
+>   glints_near(1200-1536): 197
+>   glints_mid(700-1200): 509
+>   white_px_mid(620-1000)%: 4.94
+>   pink_near(1000-1536)%: 14.6
+>   pink_mid(620-1000)%: 18.1
+>   pink_behind_benny%: 3.2
+>   pink_mid_median: #F650EF
+>   pink_mid_lum_p10/p90: [141.0, 213.0]
+>   cyan_mid_median: #32B8FF
+>   cyan_near_y1300: #0BA0FB
+>   cyan_near_y1400: #0298F1
+
+### 🤖 Claude — 2026-11-16T02:02:11.486Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/it03_mid.png"}`
+
+### 🧑 User — 2026-11-16T02:02:11.528Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:02:12.108Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/it03_near.png"}`
+
+### 🧑 User — 2026-11-16T02:02:12.144Z
+
+> ↩︎ result: [image]
+

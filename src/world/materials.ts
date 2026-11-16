@@ -682,7 +682,17 @@ export function washerTubeEnv(variant: 'wall' | 'gold' | 'gold05' = 'wall'): THR
 let marbleEnv05: THREE.Texture | null = null;
 export function marblePano05(): THREE.Texture {
   if (marbleEnv05) return marbleEnv05;
-  const t = new THREE.TextureLoader().load(new URL('../../assets/textures/marble05_env_1024.jpg', import.meta.url).href);
+  // three's UUIDs draw on Math.random: keep the global sequence untouched so the random canvas textures built
+  // later (08 laundry room, pour streams) stay pixel-identical, and give the texture a fixed uuid instead
+  const rnd = Math.random;
+  Math.random = () => 0.5;
+  let t: THREE.Texture;
+  try {
+    t = new THREE.TextureLoader().load(new URL('../../assets/textures/marble05_env_1024.jpg', import.meta.url).href);
+  } finally {
+    Math.random = rnd;
+  }
+  t.uuid = 'marble05-env-1024';
   t.mapping = THREE.EquirectangularReflectionMapping;
   t.colorSpace = THREE.SRGBColorSpace;
   t.name = 'marble05_env';
@@ -802,52 +812,110 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
 }
 
 /**
- * Far stream of the 05 forced-perspective tunnel (ForcedTunnel.chordGeometry): the water surface beyond
- * the real ribbon, seen only as a thin winding band toward the vanishing point — a cyan core meandering
- * between two hot-pink bands, blue edges, white foam lips, glossy flow streaks, warming into the VP glow
- * with the virtual depth (`fgExtra`). Unlit (it is tiny on screen); morph "open" handled by three.
+ * Far stream of the 05 forced-perspective tunnel (far05.ts farRiverGeometry, wave 8): the water surface beyond
+ * the real ribbon, laid out by the real ribbon's own band rules (per-row attributes aRivA/aRivB: route centre,
+ * half width, pink band centres/widths, cyan core), so the cyan core and its two hot-pink bands keep WINDING
+ * into the vanishing point (ref 05) instead of running straight (the old chord read as Screen 06). Flow lines
+ * follow the winding core; fine lavender/blue-shaded foam rims along both banks; beyond the rim (inner bank of
+ * a far bend) the fragment is dropped so the far wall shows down to the foam, as in the ref. Warms into the VP
+ * glow with the virtual depth (`fgExtra`). Unlit (it is small on screen); morph "open" handled by three.
  */
 export function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMaterial {
   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+  // wins the depth test against the real ribbon's continuation it covers just behind the seam
+  mat.polygonOffset = true;
+  mat.polygonOffsetFactor = -1;
+  mat.polygonOffsetUnits = -2;
+  const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
   const uniforms = {
-    uRivCore: { value: new THREE.Color('#0aa2f6') },
-    uRivBand: { value: new THREE.Color('#ee2fd8') },
-    uRivEdge: { value: new THREE.Color('#1677e8') },
-    uRivFoam: { value: new THREE.Color('#f4eeff') },
+    uRivCyanLo: { value: lin(0.02, 0.22, 0.62) },
+    uRivCyan: { value: lin(0.03, 0.42, 0.95) },
+    uRivCyanHi: { value: lin(0.25, 0.95, 1.6) },
+    uRivPinkLo: { value: lin(0.45, 0.03, 0.42) },
+    uRivPink: { value: lin(0.85, 0.07, 0.75) },
+    uRivPinkHi: { value: lin(1.05, 0.42, 1.0) },
+    uRivFoam: { value: lin(0.95, 0.92, 1.05) },
+    uRivFoamLav: { value: lin(0.62, 0.52, 0.95) },
+    uRivFoamBlue: { value: lin(0.32, 0.36, 0.9) },
     uRivGlow: { value: new THREE.Color(glow.color) },
     uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.strength) },
   };
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute float fgExtra; varying float vRivDist; varying vec2 vRivUv;')
-      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvRivUv = uv;')
+      .replace('#include <common>', `#include <common>
+attribute float fgExtra; attribute float aRivLat; attribute vec4 aRivA; attribute vec4 aRivB;
+varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB;`)
+      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvRivUv = uv; vRivLat = aRivLat; vRivA = aRivA; vRivB = aRivB;')
       .replace('#include <project_vertex>', '#include <project_vertex>\nvRivDist = length(mvPosition.xyz) + fgExtra;');
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
-varying float vRivDist; varying vec2 vRivUv;
-uniform vec3 uRivCore; uniform vec3 uRivBand; uniform vec3 uRivEdge; uniform vec3 uRivFoam; uniform vec3 uRivGlow; uniform vec3 uRivGlowR;`)
+varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB;
+uniform vec3 uRivCyanLo; uniform vec3 uRivCyan; uniform vec3 uRivCyanHi; uniform vec3 uRivPinkLo; uniform vec3 uRivPink; uniform vec3 uRivPinkHi;
+uniform vec3 uRivFoam; uniform vec3 uRivFoamLav; uniform vec3 uRivFoamBlue; uniform vec3 uRivGlow; uniform vec3 uRivGlowR;
+float rivHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float rivNoise(vec2 p) {
+  vec2 i = floor(p), f = fract(p); vec2 w = f * f * (3.0 - 2.0 * f);
+  return mix(mix(rivHash(i), rivHash(i + vec2(1.0, 0.0)), w.x), mix(rivHash(i + vec2(0.0, 1.0)), rivHash(i + vec2(1.0, 1.0)), w.x), w.y);
+}
+float rivCells(vec2 p) {
+  vec2 i = floor(p), f = fract(p); float d = 1.5;
+  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+    vec2 g = vec2(float(x), float(y));
+    vec2 o = vec2(rivHash(i + g), rivHash(i + g + 19.7));
+    d = min(d, length(g + o - f));
+  }
+  return d;
+}`)
       .replace('#include <color_fragment>', `#include <color_fragment>
 {
-  float x = vRivUv.x * 2.0 - 1.0;
-  float u = vRivUv.y;
-  float cx = 0.3 * sin(u * 0.09 + 0.6) * (1.0 - 0.5 * smoothstep(20.0, 80.0, u));            // the cyan core meanders (ref: S-bends to the VP)
-  float t = abs(x - cx);
-  vec3 col = uRivCore;
-  col = mix(col, uRivBand, smoothstep(0.14, 0.22, t) * (1.0 - smoothstep(0.44, 0.52, t)));
-  col = mix(col, uRivEdge, smoothstep(0.5, 0.6, t) * 0.6);
-  float st = pow(0.5 + 0.5 * sin((x - cx) * 46.0), 12.0);   // flow lines along the stream
-  col += vec3(0.6, 0.8, 1.0) * st * 0.15;
-  // cloud-like foam banks on both sides (purple wall above them stays visible)
-  float bump = 0.06 * sin(u * 1.3 + x * 7.0) * sin(u * 0.7 - x * 11.0);
-  float foam = smoothstep(0.74 + bump, 0.84 + bump, abs(x));
-  col = mix(col, uRivFoam * (0.86 + 0.14 * sin(u * 2.1 + x * 19.0)), foam);
+  float lat = vRivLat;                                   // units from the tunnel axis (+ right)
+  float xB = vRivA.x, hw = vRivA.y, cL = vRivA.z, cR = vRivA.w;
+  float wL = vRivB.x, wR = vRivB.y, core = vRivB.z, Zv = vRivB.w;
+  float s = vRivUv.y;                                    // virtual arc length (continues the real s)
+  float fl = fwidth(lat) + 1e-4;
+  float aaw = fl * 0.85 + 0.004;
+  float e = abs(lat - xB) - hw;                          // > 0 outside the water body
+  float bankN = (rivNoise(vec2(s * 0.9, sign(lat - xB) * 7.0 + lat * 1.3)) - 0.5) * 0.3;
+  // beyond the foam rim (inner bank of a far bend) the far wall shows down to the foam (ref 05); right behind
+  // the seam the surface covers the whole floor (the real ribbon's continuation lies under it)
+  float bankW = mix(9.0, 1.3, smoothstep(10.0, 22.0, Zv));
+  if (e > bankW + bankN * 2.0) discard;
+  // ---- water: cyan core between two hot-pink bands, flow lines that follow the winding core ----
+  float xq = lat - core;
+  float dL = abs(lat - cL), dR = abs(lat - cR);
+  float pL = 1.0 - smoothstep(wL - aaw, wL + aaw, dL);
+  float pR = 1.0 - smoothstep(wR - aaw, wR + aaw, dR);
+  float pink = max(pL, pR);
+  float relB = pL >= pR ? (lat - cL) / max(wL, 1e-3) : (cR - lat) / max(wR, 1e-3);   // +1 on the core side
+  float fade = 1.0 - smoothstep(0.05, 0.16, fl * 3.0);
+  float dn = rivNoise(vec2(xq * 3.2, s * 0.32));
+  float lines = pow(0.5 + 0.5 * sin(xq * 11.0 + 1.4 * sin(s * 0.23)), 8.0) * fade;
+  vec3 cy = mix(uRivCyanLo, uRivCyan, smoothstep(0.15, 0.75, mix(0.55, dn, fade)));
+  cy = mix(cy, uRivCyanHi, lines * smoothstep(0.35, 0.8, dn) * 0.85);
+  float rimOut = (1.0 - pink) * max(1.0 - smoothstep(wL, wL + 0.3, dL), 1.0 - smoothstep(wR, wR + 0.3, dR));
+  cy = mix(cy, uRivCyanHi, rimOut * 0.45);
+  float satin = exp(-pow((relB - 0.3) * 2.2, 2.0));
+  vec3 pk = mix(uRivPinkLo, uRivPink, smoothstep(-0.95, -0.2, relB));
+  pk = mix(pk, uRivPinkHi, clamp(satin * 0.5 + lines * 0.35, 0.0, 1.0));
+  vec3 col = mix(cy, pk, pink);
+  // ---- foam rims: fine bubbles, white tops, lavender / blue shading (low: the banks barely rise) ----
+  float foamIn = smoothstep(-0.3, -0.04, e + bankN);
+  if (foamIn > 0.0) {
+    float c = rivCells(vec2(lat * 5.5, s * 2.4 + lat * 0.7));
+    float cf = 1.0 - smoothstep(0.08, 0.22, fl * 5.5);    // bubble cells only where they are ≳ 3 px
+    float bub = mix(0.5, smoothstep(0.12, 0.8, c), cf);
+    vec3 fo = mix(uRivFoam, uRivFoamLav, bub);
+    fo = mix(fo, uRivFoamBlue, 0.55 * (1.0 - smoothstep(0.0, 0.2, abs(e + 0.05))));          // shade at the waterline
+    fo = mix(fo, uRivFoamBlue, 0.45 * smoothstep(0.45, 1.0, e / max(0.3, bankW)));         // shaded outer edge
+    col = mix(col, fo, foamIn);
+  }
   float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
   col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
-  diffuseColor.rgb = col * 0.88;
+  diffuseColor.rgb = col;
 }`);
   };
-  mat.customProgramCacheKey = () => 'far-river-v4';
+  mat.customProgramCacheKey = () => 'far-river-w8';
   return mat;
 }
 

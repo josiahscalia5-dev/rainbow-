@@ -836,3 +836,263 @@ I'll write a reusable crop script (ref | baseline | now) to judge details.
 >   Lfar    10201 px  mean RGB [223 227 255]  WHITE  34.2%  SHADE(B-R>=30)  42.1%  lum 234.9
 >   Rfar    13840 px  mean RGB [232 230 255]  WHITE  50.5%  SHADE(B-R>=30)  26.7%   …[+288 chars]
 
+### 🤖 Claude — 2026-11-16T01:58:44.409Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - q.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35 + 0.05 * vBig;\n  // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top", "new_string": "  // wave 8: steeper key light from the upper left (ref lumps: white caps only on the lit top, lavender middle, blue lower\n  // half); soapT put a sphere's centre at t ~0.86 (near white), so the clumps read grey-white\n  float tl = dot(Nv, normalize(vec3(-0.4, 0.85, 0.35)) …[+230 chars]`
+
+### 🧑 User — 2026-11-16T01:58:44.489Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:58:46.844Z
+
+> 🔧 **Bash** `{"command": "tail -5 src/vfx/riderSplash.ts", "description": "Check riderSplash.ts tail for anchor"}`
+
+### 🧑 User — 2026-11-16T01:58:46.871Z
+
+> ↩︎ result: uniforms.uStrength.value = v;
+>       mesh.visible = v > 0.01;
+>     },
+>   };
+> }
+
+### 🤖 Claude — 2026-11-16T01:59:26.830Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "      uniforms.uStrength.value = v;\n      mesh.visible = v > 0.01;\n    },\n  };\n}", "new_string": "      uniforms.uStrength.value = v;\n      mesh.visible = v > 0.01;\n    },\n  };\n}\n\n// ------------------------------------------------------------------------------------------------ 05 splash (wave 8)\n/**\n * Ref 05 splash, wave 8: the water parts round Benny's base and pours back-outward in two fans of WHITEWATER ROPES\n * lying on the surface (white, bubbly, lumpy-edged, thinning and turni …[+9577 chars]`
+
+### 🧑 User — 2026-11-16T01:59:26.893Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:59:30.554Z
+
+Now wire it in index.ts with a 05 cross-fade weight, plus finer/more spray droplets in 05 only.
+
+### 🤖 Claude — 2026-11-16T01:59:32.116Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='/home/user/rainbow-/src/vfx/index.ts'\ns=open(p).read()\nprint(s.count(\"import { createRiderSplash, FAN } from './riderSplash';\"), s.count(\"const crown = createRiderSplash(quality);\"), s.count(\"crown.update(time, dt);\"), s.count(\"crown.place(center, forward, f.up, waterlineR, strength);\"))\nEOF", "description": "Verify unique anchors in index.ts"}`
+
+### 🧑 User — 2026-11-16T01:59:32.164Z
+
+> ↩︎ result: 1 1 1 1
+
+### 🤖 Claude — 2026-11-16T01:59:33.770Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "import { createRiderSplash, FAN } from './riderSplash';", "new_string": "import { createRiderSplash, createRiderSplash05, FAN } from './riderSplash';"}`
+
+### 🧑 User — 2026-11-16T01:59:33.835Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:59:36.767Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "  const crown = createRiderSplash(quality);\n  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh);", "new_string": "  const crown = createRiderSplash(quality);\n  // wave 8: 05 has its own splash (whitewater ropes + froth collar + low crown), cross-faded by w05 below\n  const crown05 = createRiderSplash05(quality);\n  const st05 = course.stage('05');\n  const w05At = (s: number) => smooth(st05.s0 + 2, st05.s0 + 5, s) * (1 - smooth …[+177 chars]`
+
+### 🧑 User — 2026-11-16T01:59:36.827Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:59:37.965Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "spray: spray.points, splashCrown: crown.mesh };", "new_string": "spray: spray.points, splashCrown: crown.mesh, splash05: crown05.mesh };"}`
+
+### 🧑 User — 2026-11-16T01:59:38.056Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:59:38.916Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "      crown.update(time, dt);", "new_string": "      crown.update(time, dt);\n      crown05.update(time, dt);"}`
+
+### 🧑 User — 2026-11-16T01:59:38.974Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:59:40.676Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "      crown.place(center, forward, f.up, waterlineR, strength);", "new_string": "      // wave 8: inside 05 the 05 splash takes over (w05 = 0 elsewhere: the shared fan is unchanged there)\n      const w05 = w05At(s);\n      crown.place(center, forward, f.up, waterlineR, w05 > 0 ? strength * (1 - w05) : strength);\n      if (w05 > 0) crown05.place(center, forward, f.up, waterlineR, strength * w05);"}`
+
+### 🧑 User — 2026-11-16T01:59:40.739Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:59:48.088Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const rate = (quality\" -A22 src/vfx/index.ts", "description": "Show spray emission block in index.ts"}`
+
+### 🧑 User — 2026-11-16T01:59:48.120Z
+
+> ↩︎ result: 241:      const rate = (quality === 'high' ? 150 : 55) * strength;
+> 242-      const n = Math.min(14, Math.floor(rate * dt + rand()));
+> 243-      const up = tmpV2.copy(f.up);
+> 244-      back.copy(forward).multiplyScalar(-1);
+> 245-      for (let i = 0; i < n; i++) {
+> 246-        const side = rand() < 0.5 ? -1 : 1;
+> 247-        const a = rand();
+> 248-        const thR = FAN.root0 + (FAN.root1 - FAN.root0) * a;
+> 249-        const phi = FAN.dir0 + (FAN.dir1 - FAN.dir0) * a + rnd(-0.12, 0.12);
+> 250-        const t0 = rnd(0.1, 0.55); // leave the jet part-way along it
+> 251-        const rootR = Math.max(waterlineR, FAN.rootMin) * 0.95;
+> 252-        sprP.copy(center)
+> 253-          .addScaledVector(right, side * (Math.sin(thR) * rootR + Math.sin(phi) * t0 * 0.9))
+> 254-          .addScaledVector(back, Math.cos(thR) * rootR + Math.cos(phi) * t0 * 0.9)
+> 255-          .addScaledVector(up, rnd(0.04, 0.16));
+> 256-        const sp = rnd(1.1, 2.6);
+> 257-        sprV.copy(riderVel).addScaledVector(right, side * Math.sin(phi) * sp).addScaledVector(back, Math.cos(phi) * sp).addScaledVector(up, rnd(1.2, 3.0));
+> 258-        spray.emit(sprP, sprV, rnd(0.018, 0.05), rnd(0.3, 0.6));
+> 259-      }
+> 260-      // the 05 flank b …[+151 chars]
+
+### 🤖 Claude — 2026-11-16T01:59:53.921Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "      const rate = (quality === 'high' ? 150 : 55) * strength;\n      const n = Math.min(14, Math.floor(rate * dt + rand()));\n      const up = tmpV2.copy(f.up);\n      back.copy(forward).multiplyScalar(-1);\n      for (let i = 0; i < n; i++) {\n        const side = rand() < 0.5 ? -1 : 1;\n        const a = rand();\n        const thR = FAN.root0 + (FAN.root1 - FAN.root0) * a;\n        const phi = FAN.dir0 + (FAN.dir1 - FAN.dir0) * a + rnd(-0.12, 0.12);", "new_string": "      // wave 8: in 05 (w05 > 0) mo …[+762 chars]`
+
+### 🧑 User — 2026-11-16T01:59:53.997Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:59:55.225Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "        spray.emit(sprP, sprV, rnd(0.018, 0.05), rnd(0.3, 0.6));", "new_string": "        spray.emit(sprP, sprV, w05 > 0 ? rnd(0.012, 0.04) : rnd(0.018, 0.05), rnd(0.3, 0.6));"}`
+
+### 🧑 User — 2026-11-16T01:59:55.347Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:00:05.614Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave8/foam/NOTES.md <<'EOF'\n* pre (`pre/03.png`, `pre/05.png`): 05 pixel-identical to baseline (0 px > 8). Isolation (scratch, waterhide=foamRafts /\n  foam): rafts = near clumps + right rim ahead of Benny (y 720-950); berm + sphere puffs = both far rims toward the VP.\n* it01 (86 calls, 577,191 tris; baseline 87 / 634,961): foam.ts MICRO_GLSL (microFoam: Voronoi open bubbles with lit\n  lip, cell domes, specks) + BANK_BUB_VERT/FRAG rewrite (true per-pixel sphere depth via gl_FragDepth so lumps sink into\n  the water and merge with curved creases; scalloped lowe …[+1333 chars]`
+
+### 🧑 User — 2026-11-16T02:00:47.382Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/foam/it02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":565719,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+> |---|---|---|---|---|---|---|---|
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 50.9 | 0.881 | 0.178 | 54.1 | 58.7 | 48.4 | 46.7 |
+
+### 🤖 Claude — 2026-11-16T02:00:49.407Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it02/crop_splash.png"}`
+
+### 🧑 User — 2026-11-16T02:00:49.464Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:00:49.861Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it02/crop_leftnear.png"}`
+
+### 🧑 User — 2026-11-16T02:00:49.888Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:01:12.061Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && (timeout 600 node scripts/capture.mjs 05 --out=$S/iso2_nosplash --q=waterhide=splash05,spray 2>&1 | tail -1) && python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/wave8/foam/it02/05.png').convert('RGB'); b=Image.open('$S/iso2_nosplash/05.png').convert('RGB')\nbox=(150,1000,720,1340)\nw=box[2]-box[0]; h=box[3]-box[1]\no=Image.new('RGB',(2*w+6,h)); o.paste(a.crop(box),(0,0)); o.paste(b.crop(box),(w+6,0)); o=o.resize((int(o.width*1.2),int(o.height*1.2))); o.save('$S/c/iso2.png')\"",  …[+63 chars]`
+
+### 🧑 User — 2026-11-16T02:01:29.268Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/iso2_nosplash/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":84,"tris":561815,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T02:01:31.089Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/c/iso2.png"}`
+
+### 🧑 User — 2026-11-16T02:01:31.128Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:01:56.613Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/pilot05/wave6/foam/tools/foamcol.py qa/pilot05/wave8/foam/it02/05.png 2>&1 | grep -v Warn", "description": "Foam colour shares for it02"}`
+
+### 🤖 Claude — 2026-11-16T02:01:57.066Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it02/crop_rightrim.png"}`
+
+### 🧑 User — 2026-11-16T02:01:57.234Z
+
+> ↩︎ result: qa/pilot05/wave8/foam/it02/05.png
+>   Lfar    10729 px  mean RGB [218 212 254]  WHITE  13.1%  SHADE(B-R>=30)  50.0%  lum 228.0
+>   Rfar    14466 px  mean RGB [230 220 255]  WHITE  29.5%  SHADE(B-R>=30)  33.8%  lum 234.9
+>   Lnear   19087 px  mean RGB [221 218 244]  WHITE  10.5%  SHADE(B-R>=30)  36.3%  lum 227.6
+>   Rnear   16474 px  mean RGB [215 217 242]  WHITE   7.3%  SHADE(B-R>=30)  43.7%  lum 224.5
+>   heapR x640-864 y700-1000: foam  18.3%  max vertical run 111 px  mean run(cols with foam) 37 px
+
+### 🧑 User — 2026-11-16T02:01:57.260Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:02:16.969Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float t = 0.5 + 0.55 * tl - pow(1.0 - z, 1.5)", "new_string": "  float t = 0.52 + 0.62 * tl - pow(1.0 - z, 1.5)"}`
+
+### 🧑 User — 2026-11-16T02:02:17.074Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:02:19.928Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1) * (1 + 0.05 * nearK);\n          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1) + 0.12 * nearK * Math.sin(Math.PI * f);", "new_string": "          // wave 8: the right rim ahead of Benny is lower (ref band 40-65 px): smaller lumps, still sunk into the water\n          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.3 * rimK) * (bump ? 1.55 : 1) * (1 + 0.05 * nearK);\n          const lift = (lift0 < 0 ?  …[+95 chars]`
+
+### 🧑 User — 2026-11-16T02:02:20.002Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:02:20.923Z
+
+Now the splash revision (vertex layout).
+
+### 🤖 Claude — 2026-11-16T02:02:24.174Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "  float thR = mix(1.5, 0.6, a) + (hs(seed * 3.1) - 0.5) * 0.18;\n  float phi = mix(0.8, 0.2, a) + (hs(seed * 5.7) - 0.5) * 0.2 + 0.22 * u * u;\n  vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5) * 0.97;", "new_string": "  // roots just outside the fur's silhouette (the waterline chord uR hides under the body from the chase camera)\n  float thR = mix(1.4, 0.5, a) + (hs(seed * 3.1) - 0.5) * 0.18;\n  float phi = mix(0.62, 0.06, a) + (hs(seed * 5.7) - 0.5) * 0.26 + 0.25 * u * u;\n  vec2 root = vec2( …[+68 chars]`
+
+### 🧑 User — 2026-11-16T02:02:24.244Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:02:28.175Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "  float thR = mix(1.65, 1.05, a) + (hs(seed * 3.1) - 0.5) * 0.2;\n  float phi = mix(1.35, 0.7, a) + (hs(seed * 5.7) - 0.5) * 0.35;\n  vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5);\n  float len = (0.35 + 0.45 * hs(seed * 7.3)) * (0.55 + 0.45 * uStrength);\n  vec2 q = root + vec2(sin(phi), cos(phi)) * tau * len;\n  float H = (0.1 + 0.22 * hs(seed * 9.1)) * uStrength;", "new_string": "  float thR = mix(1.6, 0.8, a) + (hs(seed * 3.1) - 0.5) * 0.2;\n  float phi = mix(1.2, 0.45, a) + (hs(seed * 5. …[+267 chars]`
+
+### 🧑 User — 2026-11-16T02:02:28.244Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:02:32.027Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    float len = uLen * (0.55 + 0.45 * hs(seed * 7.3)) * (0.9 + 0.1 * sin(uTime * 2.3 + seed * 20.0)) * (0.5 + 0.5 * uStrength);\n    vLen = len;\n    p = ropePos(aUV.x, side, a, seed, len);\n    tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);\n    w = mix(0.07, 0.012, pow(aUV.x, 0.8)) * (0.55 + 0.6 * hs(seed * 19.1));", "new_string": "    float len = uLen * (0.35 + 0.65 * hs(seed * 7.3)) * (0.9 + 0.1 * sin(uTime * 2.3 + seed * 20.0)) * …[+281 chars]`
+
+### 🧑 User — 2026-11-16T02:02:32.106Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:02:37.531Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    w = mix(0.012, 0.022, hs(seed * 23.3));\n  } else {\n    // root froth: short wide lace pads hugging the waterline from beside the body round to its back flank\n    float th = mix(1.75, 0.35, a) + (hs(seed * 3.1) - 0.5) * 0.12;\n    vec2 root = vec2(sin(th), cos(th)) * max(uR, 0.5) * 0.95;\n    vec2 dir = vec2(sin(th + 0.5), cos(th + 0.5));\n    float len = 0.22 + 0.2 * hs(seed * 7.3);\n    vLen = len;\n    vec2 q = root + dir * aUV.x * len;\n    p = vec3(side * q.x, 0.05 + 0.03 * sin(3.14159 * …[+801 chars]`
+
+### 🧑 User — 2026-11-16T02:02:37.608Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:02:38.985Z
+
+Now the rope fragment: lumpy beaded whitewater with blue open bubbles instead of smooth feather sheets.
+
+### 🤖 Claude — 2026-11-16T02:02:45.689Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    vec2 lp = vec2(vUV.x * vLen * 11.0 - uTime * 3.0 + vSeed * 31.0, vUV.y * 1.4 + vSeed * 7.0);\n    float lc = cells(lp);\n    float hole = 1.0 - smoothstep(0.08, 0.2, lc);\n    float edge = 1.0 - smoothstep(0.35 + 0.45 * (1.0 - lc), 1.0, ac);\n    float tail = 1.0 - smoothstep(0.45, 1.0, vUV.x);\n    float brk = mix(1.0, smoothstep(0.15, 0.5, 1.0 - lc), smoothstep(0.3, 0.8, vUV.x));\n    alpha = edge * tail * brk * smoothstep(0.0, 0.05, vUV.x) * 0.95;\n    col = mix(cyan, white, clamp((1.0 - ac) …[+915 chars]`
+
+### 🧑 User — 2026-11-16T02:02:45.759Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:02:47.488Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    float bead = 1.0 - smoothstep(0.25, 0.45, length(vec2((fract(vUV.x * 3.0 + vSeed * 7.0) - 0.5) * 2.2, vUV.y)));", "new_string": "    float bead = 1.0 - smoothstep(0.5, 0.85, length(vec2((fract(vUV.x * 2.0 + vSeed * 7.0) - 0.5) * 2.0, vUV.y)));"}`
+
+### 🧑 User — 2026-11-16T02:02:47.557Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+

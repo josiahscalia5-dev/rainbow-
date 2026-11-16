@@ -400,7 +400,10 @@ void main() {
   gl_FragDepth = 0.5 * clip.z / clip.w + 0.5;
   // wave 7 ramp: white top caps, lavender-white bodies, periwinkle / blue undersides; lower / side silhouette = the
   // blue-violet crevice between piled bubbles; inner / lower bubbles of a pile (ambient occlusion vInst.x) bluer
-  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - q.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35 + 0.05 * vBig;
+  // wave 8: steeper key light from the upper left (ref lumps: white caps only on the lit top, lavender middle, blue lower
+  // half); soapT put a sphere's centre at t ~0.86 (near white), so the clumps read grey-white
+  float tl = dot(Nv, normalize(vec3(-0.4, 0.85, 0.35)));
+  float t = 0.52 + 0.62 * tl - pow(1.0 - z, 1.5) * (0.25 + 0.35 * clamp(0.5 - q.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.3 + 0.06 * vBig;
   // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
   vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 11.0, 1.2, 9.0) + vInst.y * 37.0;
   float dens = clamp(0.18 + 0.85 * smoothstep(0.4, -0.6, q.y) + 0.35 * (1.0 - z) - 0.25 * vBig, 0.0, 0.92);
@@ -1049,8 +1052,9 @@ export function createFoam(
           const fr0 = Math.min(1, f0 + df * hh(20 + p));
           const f = 0.5 + (fr0 - 0.5) * (1 - 0.25 * nearK);
           const bump = BUMP.includes(p) && hh(50 + p) < 0.22;
-          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1) * (1 + 0.05 * nearK);
-          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1) + 0.12 * nearK * Math.sin(Math.PI * f);
+          // wave 8: the right rim ahead of Benny is lower (ref band 40-65 px): smaller lumps, still sunk into the water
+          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.3 * rimK) * (bump ? 1.55 : 1) * (1 + 0.05 * nearK);
+          const lift = (lift0 < 0 ? lift0 : lift0 * (1 - 0.5 * rimK)) * (bump ? 0.45 : 1) + 0.12 * nearK * Math.sin(Math.PI * f);
           if (r < 0.004) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
           const lat = lin + (lout - lin) * f;
           const h = hin + (hout - hin) * f + bankProf(f, sC, side) + r * lift;

@@ -217,3 +217,226 @@ export function createRiderSplash(quality: 'high' | 'low'): RiderSplash {
     },
   };
 }
+
+// ------------------------------------------------------------------------------------------------ 05 splash (wave 8)
+/**
+ * Ref 05 splash, wave 8: the water parts round Benny's base and pours back-outward in two fans of WHITEWATER ROPES
+ * lying on the surface (white, bubbly, lumpy-edged, thinning and turning translucent cyan toward their tails; outer
+ * ropes ≈35° below the horizontal on screen, inner ones ≈70°), a frothy collar of fine bubbles at the roots, and a low
+ * crown of droplet jets thrown up beside the body. Used only inside 05 (index.ts cross-fades it with the shared fan
+ * above, which stays bit-identical in 03/04/06–10). One instanced draw, shaped and animated in the vertex shader.
+ * aType: 0 = surface rope, 1 = crown droplet jet, 2 = root froth.
+ */
+const SEG5 = 8;
+const VERT5 = /* glsl */ `
+attribute vec2 aUV;      // x: 0 root .. 1 tail, y: -1..1 across
+attribute vec4 aJet;     // x: side, y: across a (0 outer .. 1 inner), z: phase, w: seed
+attribute float aType;
+uniform float uTime;
+uniform float uR;
+uniform float uLen;
+uniform float uStrength;
+varying vec2 vUV;
+varying float vSeed;
+varying float vType;
+varying float vLen;
+varying float vTau;
+#include <fog_pars_vertex>
+float hs(float n) { return fract(sin(n * 91.345 + 3.17) * 43758.5453); }
+vec3 ropePos(float u, float side, float a, float seed, float len) {
+  // root on the waterline circle (from beside the body to its back flank), direction measured from straight back
+  // roots just outside the fur's silhouette (the waterline chord uR hides under the body from the chase camera)
+  float thR = mix(1.4, 0.5, a) + (hs(seed * 3.1) - 0.5) * 0.18;
+  float phi = mix(0.62, 0.06, a) + (hs(seed * 5.7) - 0.5) * 0.26 + 0.25 * u * u;
+  vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5) * (1.3 + 0.2 * hs(seed * 2.3));
+  vec2 q = root + vec2(sin(phi), cos(phi)) * u * len;
+  // ropes ride on the surface with small humps (whitewater, not flying jets)
+  float y = 0.035 + 0.06 * hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
+  return vec3(side * q.x, y, q.y);
+}
+vec3 jetPos(float tau, float side, float a, float seed) {
+  float thR = mix(1.6, 0.8, a) + (hs(seed * 3.1) - 0.5) * 0.2;
+  float phi = mix(1.2, 0.45, a) + (hs(seed * 5.7) - 0.5) * 0.35;
+  vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5) * 1.4;
+  float len = (0.3 + 0.5 * hs(seed * 7.3)) * (0.55 + 0.45 * uStrength);
+  vec2 q = root + vec2(sin(phi), cos(phi)) * tau * len;
+  float H = (0.12 + 0.3 * hs(seed * 9.1)) * uStrength;
+  return vec3(side * q.x, H * 4.0 * tau * (1.0 - tau) + 0.02, q.y);
+}
+void main() {
+  float side = aJet.x, a = aJet.y, seed = aJet.w;
+  vec3 p, tg;
+  float w;
+  vLen = 1.0;
+  vTau = aUV.x;
+  if (aType < 0.5) {
+    // rope: fixed shape, breathing length; the lace texture flows along it in the fragment shader
+    float len = uLen * (0.35 + 0.65 * hs(seed * 7.3)) * (0.9 + 0.1 * sin(uTime * 2.3 + seed * 20.0)) * (0.5 + 0.5 * uStrength);
+    vLen = len;
+    p = ropePos(aUV.x, side, a, seed, len);
+    tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
+    w = mix(0.05, 0.01, pow(aUV.x, 0.7)) * (0.5 + 0.7 * hs(seed * 19.1));
+  } else if (aType < 1.5) {
+    // crown droplet jet: the head runs root -> landing, the jet is a short chain of beads
+    float rate = mix(1.6, 2.6, hs(seed * 11.3));
+    float cyc = fract(aJet.z + uTime * rate);
+    float tl = 0.3;
+    float tau = clamp(cyc * (1.0 + tl) - (1.0 - aUV.x) * tl, 0.0, 1.0);
+    vTau = tau;
+    p = jetPos(tau, side, a, seed);
+    tg = jetPos(min(tau + 0.03, 1.0), side, a, seed) - jetPos(max(tau - 0.03, 0.0), side, a, seed);
+    w = mix(0.018, 0.032, hs(seed * 23.3));
+  } else {
+    // root froth: lace pads hugging the fur's silhouette at the water, from beside the body round to its back flank
+    float th = mix(1.7, 0.3, a) + (hs(seed * 3.1) - 0.5) * 0.12;
+    vec2 root = vec2(sin(th), cos(th)) * max(uR, 0.5) * (1.25 + 0.15 * hs(seed * 2.9));
+    vec2 dir = vec2(sin(th + 0.35), cos(th + 0.35));
+    float len = 0.28 + 0.25 * hs(seed * 7.3);
+    vLen = len;
+    vec2 q = root + dir * aUV.x * len;
+    p = vec3(side * q.x, 0.06 + 0.04 * sin(3.14159 * aUV.x), q.y);
+    tg = vec3(side * dir.x, 0.0, dir.y);
+    w = (0.08 + 0.07 * hs(seed * 19.1)) * (1.0 - 0.35 * aUV.x);
+  }
+  vec4 mvPosition = modelViewMatrix * vec4(p, 1.0);
+  vec2 tv = (modelViewMatrix * vec4(tg, 0.0)).xy;
+  float tl2 = length(tv);
+  vec2 nrm = tl2 > 1e-5 ? vec2(-tv.y, tv.x) / tl2 : vec2(0.0, 1.0);
+  mvPosition.xy += nrm * aUV.y * w * (0.7 + 0.3 * uStrength);
+  vUV = aUV;
+  vSeed = seed;
+  vType = aType;
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`;
+const FRAG5 = /* glsl */ `
+uniform float uTime;
+uniform float uStrength;
+varying vec2 vUV;
+varying float vSeed;
+varying float vType;
+varying float vLen;
+varying float vTau;
+#include <fog_pars_fragment>
+${NOISE_GLSL}
+void main() {
+  float ac = abs(vUV.y);
+  vec3 cyan = vec3(0.45, 0.88, 1.0);
+  vec3 white = vec3(1.1, 1.12, 1.16);
+  vec3 blue = vec3(0.42, 0.6, 1.0);
+  vec3 col;
+  float alpha;
+  if (vType < 0.5) {
+    // whitewater rope: bubbly lace flowing back along it, lumpy edges, white root -> translucent cyan tail
+    // chain of foam lumps (cells along the rope set a lumpy outline), breaking into separate blobs further out
+    vec2 lp = vec2(vUV.x * vLen * 7.0 - uTime * 2.6 + vSeed * 31.0, vUV.y * 0.8 + vSeed * 7.0);
+    float lc = cells(lp);
+    float lump = 1.0 - smoothstep(0.25, 0.75, lc);
+    float edge = 1.0 - smoothstep(0.25 + 0.6 * lump, 0.35 + 0.65 * lump, ac);
+    float tail = 1.0 - smoothstep(0.55, 1.0, vUV.x);
+    float brk = mix(1.0, smoothstep(0.3, 0.6, lump), smoothstep(0.2, 0.75, vUV.x));
+    float hole = (1.0 - smoothstep(0.1, 0.2, cells(lp * 2.7 + 3.0))) * (1.0 - smoothstep(0.6, 1.0, ac));
+    alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x);
+    col = mix(cyan, white, clamp(1.15 - vUV.x * 0.9 - ac * 0.3, 0.0, 1.0));
+    col = mix(col, blue, hole * 0.55 * (1.0 - vUV.x));
+  } else if (vType < 1.5) {
+    // crown droplets: a chain of round beads, fading in off the water and out as they fall back
+    float bead = 1.0 - smoothstep(0.5, 0.85, length(vec2((fract(vUV.x * 2.0 + vSeed * 7.0) - 0.5) * 2.0, vUV.y)));
+    float life = smoothstep(0.0, 0.12, vTau) * (1.0 - smoothstep(0.75, 1.0, vTau));
+    alpha = bead * life * 0.9;
+    col = mix(cyan, white, 0.75);
+  } else {
+    // froth collar: fine bubbles (white with blue open holes), soft all round
+    vec2 lp = vec2(vUV.x * vLen * 14.0 - uTime * 1.2 + vSeed * 17.0, vUV.y * 2.2 + vSeed * 5.0);
+    float lc = cells(lp);
+    float hole = 1.0 - smoothstep(0.1, 0.22, lc);
+    float lace = 1.0 - smoothstep(0.45, 0.75, lc);
+    float soft = (1.0 - smoothstep(0.4, 1.0, ac)) * smoothstep(0.0, 0.2, vUV.x) * (1.0 - smoothstep(0.6, 1.0, vUV.x));
+    alpha = max(lace, 0.35) * soft;
+    col = mix(white, blue, hole * 0.7);
+  }
+  alpha *= uStrength;
+  if (alpha < 0.02) discard;
+  gl_FragColor = vec4(col, min(alpha, 1.0));
+  ${FRAG_TAIL}
+}
+`;
+
+/** wave 8: the 05 splash (same API as the shared fan) */
+export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
+  const nRope = quality === 'high' ? 64 : 26;
+  const nJet = quality === 'high' ? 36 : 14;
+  const nFroth = quality === 'high' ? 22 : 10;
+  const uvs = new Float32Array((SEG5 + 1) * 2 * 2);
+  for (let i = 0; i <= SEG5; i++) uvs.set([i / SEG5, -1, i / SEG5, 1], i * 4);
+  const idx: number[] = [];
+  for (let i = 0; i < SEG5; i++) {
+    const a = i * 2, b = a + 1, c = a + 2, d = a + 3;
+    idx.push(a, c, b, b, c, d);
+  }
+  const geo = new THREE.InstancedBufferGeometry();
+  geo.setAttribute('aUV', new THREE.BufferAttribute(uvs, 2));
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array((SEG5 + 1) * 2 * 3), 3));
+  geo.setIndex(idx);
+  const perSide = nRope + nJet + nFroth;
+  const n = perSide * 2;
+  const jet = new Float32Array(n * 4);
+  const typ = new Float32Array(n);
+  let k = 0;
+  for (const side of [-1, 1]) {
+    const h = (x: number) => { const v = Math.sin(x * 127.1 + side * 311.7) * 43758.5453; return v - Math.floor(v); };
+    const add = (count: number, type: number, salt: number) => {
+      for (let i = 0; i < count; i++) {
+        const a = Math.min(1, Math.max(0, (i + h(i * 1.7 + salt)) / count));
+        typ[k] = type;
+        jet[k * 4] = side;
+        jet[k * 4 + 1] = a;
+        jet[k * 4 + 2] = (i * 0.6180339 + h(i * 3.3 + salt) * 0.25) % 1;
+        jet[k * 4 + 3] = h(i * 5.1 + 0.37 + salt);
+        k++;
+      }
+    };
+    add(nFroth, 2, 11.0);
+    add(nRope, 0, 0.0);
+    add(nJet, 1, 5.0);
+  }
+  geo.setAttribute('aJet', new THREE.InstancedBufferAttribute(jet, 4));
+  geo.setAttribute('aType', new THREE.InstancedBufferAttribute(typ, 1));
+  geo.instanceCount = n;
+  const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.55 }, uStrength: { value: 0 } });
+  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: VERT5, fragmentShader: FRAG5, fog: true, transparent: true, depthWrite: false, side: THREE.DoubleSide });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.name = 'rider_splash05';
+  mesh.frustumCulled = false;
+  mesh.renderOrder = 3;
+  mesh.visible = false;
+  const basis = new THREE.Matrix4();
+  const back = new THREE.Vector3();
+  const sideV = new THREE.Vector3();
+  let target = 0;
+  let fed = false;
+  return {
+    mesh,
+    uniforms,
+    place(center, forward, up, radius, strength) {
+      back.copy(forward).multiplyScalar(-1);
+      sideV.crossVectors(up, back).normalize();
+      basis.makeBasis(sideV, up, back);
+      mesh.quaternion.setFromRotationMatrix(basis);
+      mesh.position.copy(center);
+      uniforms.uR.value = radius;
+      target = strength;
+      fed = true;
+    },
+    update(time, dt) {
+      uniforms.uTime.value = time;
+      if (!fed) target = 0;
+      fed = false;
+      const s = uniforms.uStrength.value as number;
+      const v = dt > 0 ? s + (target - s) * Math.min(1, dt * 6) : target;
+      uniforms.uStrength.value = v;
+      mesh.visible = v > 0.01;
+    },
+  };
+}

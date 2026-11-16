@@ -34,3 +34,24 @@ Pink band runs (x) — ref vs baseline: y700 308–388 | 241–419; y760 182–2
 583–700; y940 634–796 | 680–743; y1000 704–863 | 754–863; y1280 153–235, 589–669 | 157–252, 594–660; y1320 95–190,
 631–735 | 101–208, 644–660. Positions are already close (wave 7); the LOOK differs: ref bands are motion-blurred
 streaky satin with soft brushed edges, live bands are flat fills with hard edges; near wedges are flat planks.
+
+### it00 — pre-edit capture of 03 + 05 (`it00/`): 05 pixel-identical to the baseline (no concurrent edits yet).
+
+### it01 — 0 console errors, 86 calls, 572,007 tris (tri drop = other specialists)
+Changes (`waterRibbon.ts`): new `speedStreaks()` (anisotropic value noise along the flow, 5 octaves, pixel-faded,
+early break); new streak coordinate X (follows the band midline, fans behind Benny) computed after the band layout;
+05 pink masks = soft BRUSHED edges (feather ±22 % w, streak noise interleaves pink/cyan); near sweeps pW soft-brushed;
+05 colour block rewritten (lanes + dashes on cyan and pink, pink graded deep-violet outer edge → light core side,
+white seam instead of violet); old swell/silk/ridge/lane code deleted; flares moved onto X; mid lens rungs removed.
+Measured: report mad 51.2 → 52.7 (mid 47.2 → 49.5, near 46.7 → 50.3) = WORSE. m05: near lum p5/p50/p95 142.7/180.7/226.7
+(ref 120/145/246), cyan mid #2BB2FF (ref #06A5F9), glints near 177 / mid 378 (ref 347/618), pink mid 20.2 %.
+Seen: direction right (streaky satin, soft sweeps) but PASTEL and COARSE: coarse octaves drew 15 px light streaks,
+near lanes fan out like sun rays, brushed edges too wide (torn candy stripes in the far-mid field).
+
+### it02 — 0 console errors, 86 calls, 572,311 tris
+Changes: dashes only from octaves with 4–14 px cells (thin), lane contrast ×0.95 (near ×0.55), cyan mix deeper, near
+body darkened, brushed edge feather ±13 % w. Measured: report mad 51.0 (baseline 51.2), hue_corr 0.856 → 0.883, mid 48.4
+(baseline 47.2), near 46.7 (= baseline). m05: near lum p5/p50/p95 121/133.7/215 (ref 120/145/246), mid p5/p50/p95
+137.7/165/240.7 (ref 129.7/160.7/249.7), glints near 201 / mid 589 (ref 347/618), cyan mid #1DACFF, near y1300 #0797EF
+(ref #02A3F7), pink mid 23.3 %, pink median #F541EB (ref #F23FEA). Seen: near body now deep glossy blue with fanning
+streaks (closer), but the mid bands still read flat: thresholded noise peaks too sparse to give the ref's combed satin.

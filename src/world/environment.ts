@@ -6,10 +6,10 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
-import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, type FarGlow, type TubeStrips } from './materials';
+import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
-import { far05Debug } from './far05'; // path-camera (05 far tunnel block)
+import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -365,21 +365,27 @@ export function buildEnvironment(course: Course): Environment {
     const dz = p5.deadZone ?? 1;
     const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
     const eye = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - follow));
-    // one ring per knot: virtual depth of ring n (ref 05 radii → depths 86,124,160,196,234,276,322,374)
+    // wave 8: far rings at the reference radii 170 / 104 / 62 / 45 / 31 px about the VP (rays at 90/120/150°;
+    // live calibration r ≈ 10000/D) → virtual depth ≈ 59 / 97 / 161 / 222 / 322, then the warm throat. Ring n sits
+    // at tunnel coordinate u = bay05·(n + ½) (half a bay after the seam, then one bay each, so every far bay keeps
+    // its slot rows and lid pair). The D≈59 ring replaces the real ring at sF05 (r≈189, "ring #2 too big"): it only
+    // shows once the environment owner has removed that ring from rings05, so there is never a double ring.
     const D0 = tubeCenterAt(perfPath, sF05).sub(eye).dot(T);
-    const ringDv = [86, 124, 160, 196, 234, 276, 322, 374];
-    const knots: [number, number][] = [[0, 0], ...ringDv.map((d, i) => [(i + 1) * bay05, Math.max(d - D0, (i + 1) * bay05)] as [number, number])];
+    const realSeamRing = rings05.some((s) => Math.abs(s - sF05) < 0.5);
+    const ringDv = [59, 97, 161, 222, 322];
+    const knots: [number, number][] = [[0, 0]];
+    ringDv.forEach((d, i) => knots.push([bay05 * (i + 0.5), Math.max(d - D0, knots[i][1] + 1)]));
     const zEnd = 430 - D0;
     const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);
-    const uEnd = ft.uOfZ(zEnd);
-    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, perfPath });
     // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
     const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
     const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
-    // the far stream (flat chord at the real stream level)
+    // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP
     const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
-    const farRiver = new THREE.Mesh(ft.chordGeometry(level, 12, 64, 0.62), farRiverMaterial(glow05));
-    // rings (one per knot) and lid pairs (mid-bay), low-poly bands: they are small on screen
+    const farLay = farRiverLayout(course, ft, level);
+    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05));
+    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay });
+    // rings (one per knot) and a lid pair just in front of each ring (as the real 05 lids), low-poly: small on screen
     const ringItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
     const lidItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
     const fr0 = { pos: ft.c0, tan: ft.T, up: ft.U, right: ft.Rt };
@@ -389,13 +395,16 @@ export function buildEnvironment(course: Course): Environment {
       const sReal = sF05 + ft.zOf(ft.zOfU(u));
       return { c: tubeCenterAt(perfPath, sReal), r: perfPath.radius(sReal) * 1.1 + 0.4, f: perfPath.frame(sReal) };
     };
-    for (let n = 1; n <= ringDv.length; n++) {
-      const u = n * bay05;
+    const lidSz = lid05.size * Math.min(1.4, perfPath.radius(sF05) / 7.6);
+    const lidUs: number[] = [];
+    for (let n = 0; n < ringDv.length; n++) {
+      if (n === 0 && realSeamRing) continue;
+      const u = knots[n + 1][0];
       const op = openAt(u);
       ringItems.push({ u, o: new THREE.Vector3(), basis: ringBasis, s: new THREE.Vector3(rRing, rRing, 1), openPos: op.c, openScale: op.r / rRing });
+      lidUs.push(ft.uOfZ(Math.max(0.5, knots[n + 1][1] - band05.width / 2 - lidSz * 1.05)));
     }
-    const lidSz = lid05.size * Math.min(1.4, perfPath.radius(sF05) / 7.6);
-    for (let u = bay05 / 2; u < uEnd - bay05 * 0.4; u += bay05) {
+    for (const u of lidUs) {
       for (const side of [1, -1]) {
         const b = wallLidBasis(fr0, side, lid05.angleDeg, lid05.droopDeg);
         const op = openAt(u);

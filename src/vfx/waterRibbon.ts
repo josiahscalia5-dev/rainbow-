@@ -320,17 +320,27 @@ float silk(float q, float v, float K, float seed, float wig) {
 #define SS_OCT 5
 #endif
 vec3 speedStreaks(float X, float v, float fwX, float fwV) {
-  float lane = 0.0, dash = 0.0, fine = 0.5;
-  float kx = 2.2, kv = 0.22, amp = 0.5;
+  float lane = 0.0, dash = 0.0, fine = 0.5, nPrev = 0.6;
+  // (it04) cells 25× (fine octaves ≈45×) longer along the flow than across, NO lattice shear: it03's
+  // golden-ratio shear skewed every cell diagonally across the current and the lines curled like marble
+  float kx = 2.2, kv = 0.088, amp = 0.5;
   for (int i = 0; i < SS_OCT; i++) {
-    float cpp = max(fwX * kx, fwV * kv * 1.5);    // cells per pixel
+    float cpx = fwX * kx;                         // cells per pixel across the flow
+    float cpp = max(cpx, fwV * kv * 1.5);
     float a = 1.0 - smoothstep(0.12, 0.3, cpp);
     if (a <= 0.0) break;
-    float n = vnoise(vec2(X * kx, v * kv + X * kx * 0.618 + float(i) * 7.31));
+    float n = vnoise(vec2(X * kx + float(i) * 3.17, v * kv + float(i) * 7.31));
     lane += (n - 0.5) * a * amp;
-    dash = max(dash, smoothstep(0.64, 0.92, n) * a * (0.55 + amp));
+    // (it03) the dashes are the iso-lines n = 0.5 of every octave whose cells are ≤ ≈30 px across: ≈1–2 px
+    // wide whatever the depth (distance |n − 0.5| over the estimated per-pixel gradient ≈1.3·cpx), so the
+    // water is densely combed like ref 05 satin (it02's thresholded noise peaks were too sparse), broken into
+    // dashes by the next coarser octave (they gather on its light lanes)
+    float dpx = abs(n - 0.5) / (1.3 * cpx + 1e-5);
+    float ln = 1.0 - smoothstep(0.35, 1.3, dpx);
+    dash = max(dash, ln * smoothstep(0.42, 0.72, nPrev) * a * smoothstep(0.025, 0.05, cpx) * (0.6 + 0.8 * amp));
     fine = mix(fine, n, a);
-    kx *= 2.3; kv *= 1.6; amp *= 0.62;
+    nPrev = n;
+    kx *= 2.3; kv *= 1.85; amp *= 0.62;
   }
   return vec3(lane, dash, fine);
 }
@@ -487,11 +497,11 @@ void main() {
     SS = speedStreaks(X, v5, fwX5, fws);
     // brushed band edges: over ≈±22 % of the band width the pink and cyan interleave as streaks along the
     // flow (ref 05: the ribbons fray into the current) instead of the hard 1-px cut of the flat slab
-    float fLw = 0.22 * wL + aaw, fRw = 0.22 * wR + aaw;
+    float fLw = 0.13 * wL + aaw, fRw = 0.13 * wR + aaw;
     float eL = clamp((wL - dL) / (2.0 * fLw) + 0.5, 0.0, 1.0);
     float eR = clamp((wR - dR) / (2.0 * fRw) + 0.5, 0.0, 1.0);
-    pL = mix(pL, smoothstep(0.38, 0.62, eL + (SS.z - 0.5) * 0.7) * on, sw);
-    pR = mix(pR, smoothstep(0.38, 0.62, eR + (SS.z - 0.5) * 0.7) * on, sw);
+    pL = mix(pL, smoothstep(0.4, 0.6, eL + (SS.z - 0.5) * 0.6) * on, sw);
+    pR = mix(pR, smoothstep(0.4, 0.6, eR + (SS.z - 0.5) * 0.6) * on, sw);
   }
   // hair-thin pink filaments drifting through the cyan core (mid/far field only)
   float fil = 0.0;
@@ -622,12 +632,14 @@ void main() {
   if (sw > 0.001) {
     float near5 = 1.0 - smoothstep(0.0075, 0.014, fws);
     float wq = q + 0.05 * sin(v5 * 0.23 + q * 4.0);           // slow braid of the flow lines
-    float lane = SS.x, dash = SS.y;
+    // (it02) near the camera the coarse lanes fan out like sun rays: keep them subtle there
+    float lane = SS.x * (1.0 - 0.65 * near5), dash = SS.y;
     // height field (shading + bump): broad lanes, the dashes as glossy ridges on top
-    float H5 = clamp(0.5 + lane * 1.3 + dash * 0.22, 0.0, 1.0);
-    // cyan: deep azure lanes -> electric cyan -> bright cyan crests
-    vec3 cy = mix(uC5Deep, uC5, smoothstep(0.1, 0.6, H5));
-    cy = mix(cy, uC5Bright, smoothstep(0.62, 0.97, H5) * 0.6);
+    float H5 = clamp(0.5 + lane * 0.95 + dash * 0.15, 0.0, 1.0);
+    // cyan: deep azure lanes -> saturated electric cyan -> bright cyan crests (it01 was pastel: mid cyan
+    // median #2BB2FF vs ref #06A5F9)
+    vec3 cy = mix(uC5Deep, uC5, smoothstep(0.12, 0.56, H5));
+    cy = mix(cy, uC5Bright, smoothstep(0.66, 0.97, H5) * 0.45);
     // pink satin: deep magenta-violet on the outer (bank) edge -> hot pink -> lighter on the core side
     float relB = clamp(rel, -1.0, 1.0);
     vec3 pk = mix(uP5Deep, uP5, smoothstep(-1.05, -0.2, relB) * (0.5 + 0.65 * H5));
@@ -635,12 +647,14 @@ void main() {
     vec3 c5 = mix(cy, pk, pinkM);
     // where pink and cyan streaks interleave (brushed edges) the seam lightens to a glossy lavender-white
     // instead of going violet
-    c5 += vec3(0.45, 0.5, 0.6) * pinkM * (1.0 - pinkM) * 1.3;
+    c5 += vec3(0.45, 0.5, 0.6) * pinkM * (1.0 - pinkM) * 0.9;
     // speed-streak dashes: light cyan / light pink glow, the strongest burning to white; on the pink they
     // gather toward the core side (ref 05: white-pink streaks along the inner edge of each band)
-    float dk = dash * mix(1.0, 0.65 + 0.55 * smoothstep(-0.6, 0.9, relB), pinkM);
-    c5 = mix(c5, mix(uC5Streak, uP5Streak, pinkM), clamp(smoothstep(0.12, 0.6, dk) * 0.85, 0.0, 1.0));
-    c5 += vec3(0.85, 0.95, 1.05) * smoothstep(0.6, 1.0, dk) * 0.9;
+    // (it04) the lines are SATURATED light cyan / light pink (ref mid cyan median #06A5F9: no red), only the
+    // strongest burn to white; fewer lines in the near field (ref: glossy deep blue + flares there)
+    float dk = dash * mix(1.0, 0.65 + 0.55 * smoothstep(-0.6, 0.9, relB), pinkM) * (1.0 - 0.4 * near5);
+    c5 = mix(c5, mix(uC5Bright * 1.2, uP5Light * 1.1, pinkM), clamp(smoothstep(0.08, 0.5, dk) * 0.8, 0.0, 1.0));
+    c5 += mix(vec3(0.7, 0.95, 1.1), vec3(1.0, 0.8, 1.0), pinkM) * smoothstep(0.62, 1.0, dk) * 0.8;
 
     // glossy lighting from the same height field
     #ifdef LOW_Q
@@ -660,8 +674,9 @@ void main() {
     // the screen sides; Benny's contact itself stays clean cyan (no white band)
     if (near5 > 0.0) {
       float dlN = lat - uBenny.y;
-      c5 *= 1.0 - near5 * 0.5 * smoothstep(0.02, -0.32, lane) * (1.0 - pinkM);
-      c5 += vec3(0.02, 0.45, 1.0) * smoothstep(0.08, 0.4, lane) * 0.5 * near5 * (1.0 - pinkM);
+      // (it02) it01 near median lum 181 vs ref 145: the whole near body is deeper, the light lanes saturated
+      c5 *= 1.0 - near5 * (0.14 + 0.45 * smoothstep(0.02, -0.18, lane)) * (1.0 - pinkM);
+      c5 += vec3(0.0, 0.3, 0.8) * smoothstep(0.06, 0.3, lane) * 0.4 * near5 * (1.0 - pinkM);
       c5 = mix(c5, mix(vec3(0.1, 1.0, 1.9), uP5Light, pinkM), near5 * 0.14 * smoothstep(0.8, 1.6, abs(dlN)) * (1.0 - pW));
     }
 
@@ -678,10 +693,10 @@ void main() {
     float flA = flowGlint(vec2(X * 2.0, v5 * 0.075), 0.8, 18.0, 3.8, 0.0, uTime);
     // near: big flares lying across the fanning flow (ref 05: ≈8–12 bright 80–150 px flares below Benny)
     // + a smaller set (rows bent by a smooth across-flow warp so they never line up)
-    float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.75, 30.0, 4.5, 0.45, uTime + 2.7);
-    flB = max(flB, flowGlint(vec2(X * 2.7 + 0.37, v5 * 2.1 + 1.6 * sin(X * 5.3 + 2.0)), 0.5, 18.0, 4.0, 0.35, uTime + 0.9) * 0.8);
+    float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.9, 38.0, 4.5, 0.45, uTime + 2.7);
+    flB = max(flB, flowGlint(vec2(X * 2.7 + 0.37, v5 * 2.1 + 1.6 * sin(X * 5.3 + 2.0)), 0.65, 22.0, 4.0, 0.35, uTime + 0.9) * 0.8);
     // many small twinkling 4-point stars, clustered on the light lanes
-    float flC = flowGlint(vec2(X * 7.0, v5 * 4.5 + 0.3 + 1.7 * sin(X * 13.0 + 0.7)), 0.55, 7.0, 2.6, 0.6, uTime + 1.3);
+    float flC = flowGlint(vec2(X * 7.0, v5 * 4.5 + 0.3 + 1.7 * sin(X * 13.0 + 0.7)), 0.75, 7.0, 2.6, 0.6, uTime + 1.3);
     flC *= 0.5 + 1.6 * smoothstep(-0.1, 0.3, lane);
     // lens flares across the near water (thin white core, cyan glow)
     float lz = lensFlare(vec2(X * 1.8, v5 * 1.6 + 1.1 * sin(X * 3.3 + 1.0)), 0.6, 80.0, 4.5, uTime);

@@ -15,3 +15,14 @@ bubbles.ts, riderSplash.ts, spray.ts, index.ts only (Edit tool). Tools: `qa/pilo
 5. <= 6 captures, revert what does not look closer; tsc; regress 03 04 06 07 08; gameplay-test.
 
 ## Log
+* pre (`pre/03.png`, `pre/05.png`): 05 pixel-identical to baseline (0 px > 8). Isolation (scratch, waterhide=foamRafts /
+  foam): rafts = near clumps + right rim ahead of Benny (y 720-950); berm + sphere puffs = both far rims toward the VP.
+* it01 (86 calls, 577,191 tris; baseline 87 / 634,961): foam.ts MICRO_GLSL (microFoam: Voronoi open bubbles with lit
+  lip, cell domes, specks) + BANK_BUB_VERT/FRAG rewrite (true per-pixel sphere depth via gl_FragDepth so lumps sink into
+  the water and merge with curved creases; scalloped lower outline on lumps > 16 px; holes dense on the lower half;
+  glossy tiny-bubble look < 14 px); KIND table 8 -> 13 kinds (lace 3-10 px at the waterline, sunk body lumps, small
+  bubbles on the lumps); 05 berm puffs (s0+2..s1-2) moved from 80-tri spheres to the impostor mesh `foam_rim05`
+  (build() keeps the shared rand() sequence; hash size spread x0.5-1.45, sunk 0.4 r) + 7 extra small rim bubbles per
+  step/side from rng(9091). Seen: near clumps = low sunk mounds with open bubbles, far rims finer; but flat grey-
+  lavender. mad 51.2 -> 51.1. foamcol Lfar W 34.2 / S 42.1, Rfar 50.5 / 26.7, Lnear 28.8 / 23.0, Rnear 19.8 / 23.9
+  (ref 22.6/48.1, 22.8/44.2, 29.9/47.7, 33.5/48.1; baseline 24.5/48.6, 39.5/35.0, 21.1/31.0, 17.5/28.1): too grey/white.

@@ -22,7 +22,7 @@ import { createPuddles } from './puddles';
 import { createFoam } from './foam';
 import { createBubbles } from './bubbles';
 import { createSpray } from './spray';
-import { createRiderSplash, FAN } from './riderSplash';
+import { createRiderSplash, createRiderSplash05, FAN } from './riderSplash';
 
 export { PALETTE } from './glsl';
 export const BENNY_RIDE_OFFSET = 0.55;
@@ -85,9 +85,13 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const bubbles = createBubbles(course, { quality, sStart: ribbonS0 });
   const spray = createSpray(quality);
   const crown = createRiderSplash(quality);
-  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh);
+  // wave 8: 05 has its own splash (whitewater ropes + froth collar + low crown), cross-faded by w05 below
+  const crown05 = createRiderSplash05(quality);
+  const st05 = course.stage('05');
+  const w05At = (s: number) => smooth(st05.s0 + 2, st05.s0 + 5, s) * (1 - smooth(st05.s1 - 5, st05.s1 - 2, s));
+  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh, crown05.mesh);
 
-  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh };
+  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh, splash05: crown05.mesh };
   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
   // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
@@ -196,6 +200,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       }
       spray.update(dt, camera);
       crown.update(time, dt);
+      crown05.update(time, dt);
       for (const k of qaHide) { const o = parts[k]; if (o) o.visible = false; }
     },
     wake(pos, forward, right, speed, dt) {
@@ -219,7 +224,10 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       }
       // 3D V spray fans thrown back and outward from the waterline (ref 05)
       const center = tmpV.copy(pos).addScaledVector(f.up, -above);
-      crown.place(center, forward, f.up, waterlineR, strength);
+      // wave 8: inside 05 the 05 splash takes over (w05 = 0 elsewhere: the shared fan is unchanged there)
+      const w05 = w05At(s);
+      crown.place(center, forward, f.up, waterlineR, w05 > 0 ? strength * (1 - w05) : strength);
+      if (w05 > 0) crown05.place(center, forward, f.up, waterlineR, strength * w05);
       // Benny's measured velocity: droplets inherit it so the fan stays attached to him instead of
       // trailing 4-6 units back toward the chase camera (the old white spots at the frame bottom).
       // QA checkpoints hold him still, so the measured velocity is 0 there as well.
@@ -230,15 +238,17 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       // droplets thrown off the two streak fans: rooted on the flanks at the waterline and flying
       // back-outward along the same jet directions as riderSplash.ts (FAN), a short hop above the water
       // (ref 05: fine 3–12 px droplets all round the fans, a few flung up beside the body)
-      const rate = (quality === 'high' ? 150 : 55) * strength;
-      const n = Math.min(14, Math.floor(rate * dt + rand()));
+      // wave 8: in 05 (w05 > 0) more and finer droplets along the 05 rope fans (riderSplash.ts createRiderSplash05:
+      // roots 1.5 -> 0.6 rad, directions 0.8 -> 0.2 rad); elsewhere the exact same numbers and rand() calls as before
+      const rate = (quality === 'high' ? 150 : 55) * strength * (w05 > 0 ? 1 + 1.4 * w05 : 1);
+      const n = Math.min(w05 > 0 ? 26 : 14, Math.floor(rate * dt + rand()));
       const up = tmpV2.copy(f.up);
       back.copy(forward).multiplyScalar(-1);
       for (let i = 0; i < n; i++) {
         const side = rand() < 0.5 ? -1 : 1;
         const a = rand();
-        const thR = FAN.root0 + (FAN.root1 - FAN.root0) * a;
-        const phi = FAN.dir0 + (FAN.dir1 - FAN.dir0) * a + rnd(-0.12, 0.12);
+        const thR = w05 > 0 ? 1.5 - 0.9 * a : FAN.root0 + (FAN.root1 - FAN.root0) * a;
+        const phi = (w05 > 0 ? 0.8 - 0.6 * a : FAN.dir0 + (FAN.dir1 - FAN.dir0) * a) + rnd(-0.12, 0.12);
         const t0 = rnd(0.1, 0.55); // leave the jet part-way along it
         const rootR = Math.max(waterlineR, FAN.rootMin) * 0.95;
         sprP.copy(center)
@@ -247,7 +257,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
           .addScaledVector(up, rnd(0.04, 0.16));
         const sp = rnd(1.1, 2.6);
         sprV.copy(riderVel).addScaledVector(right, side * Math.sin(phi) * sp).addScaledVector(back, Math.cos(phi) * sp).addScaledVector(up, rnd(1.2, 3.0));
-        spray.emit(sprP, sprV, rnd(0.018, 0.05), rnd(0.3, 0.6));
+        spray.emit(sprP, sprV, w05 > 0 ? rnd(0.012, 0.04) : rnd(0.018, 0.05), rnd(0.3, 0.6));
       }
       // the 05 flank banks (foam.ts) keep clear of Benny's real waterline position
       foam.rider(s, lateral, strength);
