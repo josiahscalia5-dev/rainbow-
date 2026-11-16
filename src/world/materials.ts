@@ -1047,7 +1047,7 @@ float rivCells(vec2 p) {
   #ifdef REFERENCE05
   col = reference05Color(lx, s, uRivTime, uRivFlow, lb, 0.0, 0.0, 0.0);
   #ifdef FIT05
-  col = fit05Color(lat, s, col);
+  col = fit05Color(lat, s, uRivTime, col);
   #endif
   #else
   float lv = s - uRivTime * uRivFlow;

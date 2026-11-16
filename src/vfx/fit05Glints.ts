@@ -12,6 +12,8 @@ export interface Fit05GlintOptions {
   ampAt: (course: Course, s: number) => number;
   edgeLift: number;
   quality?: 'high' | 'low';
+  /** Set false for the exact authored pose; material.uniforms.uMotion can also toggle this live. */
+  motion?: boolean;
   /** Small normal offset covering the water mesh's interpolation error. */
   lift?: number;
 }
@@ -46,19 +48,29 @@ const VERT = /* glsl */ `
 attribute vec3 aWater; // s, normalized lateral, amplitude
 attribute vec3 aRefPosition;
 attribute vec3 aRefNormal;
+attribute vec3 aFlow;
+attribute vec3 aRefFlow;
+attribute float aCycle;
 attribute vec3 aTint; // strength, magenta membership, sheen flag
 uniform float uTime;
 uniform vec3 uBenny;
+uniform float uMotion;
 varying vec2 vRibbon;
 varying vec3 vTint;
 varying float vWaterU;
+varying float vFlowWeight;
 #include <fog_pars_vertex>
 ${REFERENCE05_FRAME_GLSL}
 void main() {
-  float s=aWater.x, u=aWater.y;
+  float phase=fract((uTime-12.0)*uMotion/5.0+0.5+aCycle);
+  float deltaS=-(phase-0.5)*0.6;
+  vFlowWeight=1.0-abs(2.0*phase-1.0);
+  float s=aWater.x+deltaS, u=aWater.y;
   float h=aWater.z*(0.6*sin(s*0.9-uTime*2.4+u*1.7)+0.4*sin(s*0.41+uTime*1.5-u*2.3));
   float upright=reference05Weight(s,uBenny.x);
-  vec3 p=mix(position+normal*h,aRefPosition+aRefNormal*h,upright);
+  // First-order surface advection is limited to +/-0.3 course units. The two layers wrap
+  // only at zero opacity; both still use the game's live wave and rider-focus deformation.
+  vec3 p=mix(position+aFlow*deltaS+normal*h,aRefPosition+aRefFlow*deltaS+aRefNormal*h,upright);
   vec4 mvPosition=modelViewMatrix*vec4(p,1.0);
   gl_Position=projectionMatrix*mvPosition;
   vRibbon=uv;
@@ -71,9 +83,10 @@ const FRAG = /* glsl */ `
 varying vec2 vRibbon;
 varying vec3 vTint;
 varying float vWaterU;
+varying float vFlowWeight;
 #include <fog_pars_fragment>
 void main() {
-  if(abs(vWaterU)>1.0) discard;
+  if(vFlowWeight<=0.0 || abs(vWaterU)>1.0) discard;
   float across=abs(vRibbon.x);
   float aa=max(fwidth(vRibbon.x),0.002);
   float ends=smoothstep(0.0,0.025,vRibbon.y)*(1.0-smoothstep(0.975,1.0,vRibbon.y));
@@ -86,6 +99,7 @@ void main() {
     color=vec3(0.08,0.95,1.35);
     alpha=shoulder*vTint.x*0.32*ends;
   }
+  alpha*=vFlowWeight;
   if(alpha<0.002) discard;
   gl_FragColor=vec4(color,min(alpha,1.0));
   ${FRAG_TAIL}
@@ -103,10 +117,22 @@ export function createFit05Glints(
     ...(data.sheens ?? []).map((stroke) => ({ ...stroke, sheen: true })),
   ]);
   const position: number[] = [], normal: number[] = [], referencePosition: number[] = [], referenceNormal: number[] = [];
+  const flow: number[] = [], referenceFlow: number[] = [];
   const uv: number[] = [], water: number[] = [], tint: number[] = [], indices: number[] = [];
   const step = options.quality === 'low' ? 0.18 : 0.10;
   const lift = options.lift ?? 0.025;
   const p = new THREE.Vector3(), n = new THREE.Vector3(), rp = new THREE.Vector3(), rn = new THREE.Vector3();
+  const before = new THREE.Vector3(), after = new THREE.Vector3(), refBefore = new THREE.Vector3(), refAfter = new THREE.Vector3();
+  const derivativeStep = 0.025;
+  const surfaceAt = (s: number, lat: number, out: THREE.Vector3, outRef: THREE.Vector3) => {
+    const frame = course.sample(s), target = reference05TargetFrame(frame), halfWidth = course.widthAt(s) / 2;
+    const u = lat / halfWidth, height = options.edgeLift * Math.min(1, Math.abs(u)) ** 3;
+    const slope = Math.abs(u) <= 1 ? options.edgeLift * 3 * u * Math.abs(u) / halfWidth : 0;
+    const normal = frame.up.clone().addScaledVector(frame.right, -slope).normalize();
+    const refNormal = target.up.clone().addScaledVector(target.right, -slope).normalize();
+    out.copy(frame.pos).addScaledVector(frame.right, lat).addScaledVector(frame.up, height).addScaledVector(normal, lift);
+    outRef.copy(target.pos).addScaledVector(target.right, lat).addScaledVector(target.up, height).addScaledVector(refNormal, lift);
+  };
   for (const stroke of strokes) {
     const controls = stroke.points.filter((v, i, all) => i === 0 || Math.hypot(v[0] - all[i - 1][0], v[1] - all[i - 1][1]) > 1e-7);
     if (controls.length < 2) continue;
@@ -143,6 +169,10 @@ export function createFit05Glints(
         rp.copy(target.pos).addScaledVector(target.right, lat).addScaledVector(target.up, surface).addScaledVector(rn, lift);
         p.toArray(position, position.length); n.toArray(normal, normal.length);
         rp.toArray(referencePosition, referencePosition.length); rn.toArray(referenceNormal, referenceNormal.length);
+        surfaceAt(s - derivativeStep, lat, before, refBefore);
+        surfaceAt(s + derivativeStep, lat, after, refAfter);
+        after.sub(before).divideScalar(2 * derivativeStep).toArray(flow, flow.length);
+        refAfter.sub(refBefore).divideScalar(2 * derivativeStep).toArray(referenceFlow, referenceFlow.length);
         uv.push(side, sample.distance / Math.max(distance, 1e-8));
         water.push(s, u, options.ampAt(course, s));
         let pink = 0;
@@ -164,9 +194,11 @@ export function createFit05Glints(
   for (const [name, values, size] of [
     ['position', position, 3], ['normal', normal, 3], ['aRefPosition', referencePosition, 3],
     ['aRefNormal', referenceNormal, 3], ['uv', uv, 2], ['aWater', water, 3], ['aTint', tint, 3],
+    ['aFlow', flow, 3], ['aRefFlow', referenceFlow, 3],
   ] as [string, number[], number][]) geometry.setAttribute(name, new THREE.Float32BufferAttribute(values, size));
+  geometry.setAttribute('aCycle', new THREE.InstancedBufferAttribute(new Float32Array([0, 0.5]), 1));
   geometry.setIndex(indices); geometry.computeBoundingSphere();
-  const uniforms = withFog({ uTime: sharedTime, uBenny: sharedBenny });
+  const uniforms = withFog({ uTime: sharedTime, uBenny: sharedBenny, uMotion: { value: options.motion === false ? 0 : 1 } });
   // Preserve shared uniform identity after UniformsUtils.merge inside withFog.
   uniforms.uTime = sharedTime; uniforms.uBenny = sharedBenny;
   const material = new THREE.ShaderMaterial({
@@ -174,9 +206,12 @@ export function createFit05Glints(
     depthTest: true, depthWrite: false, side: THREE.DoubleSide, blending: THREE.NormalBlending,
     polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1, fog: true,
   });
-  const mesh = new THREE.Mesh(geometry, material);
+  const mesh = new THREE.InstancedMesh(geometry, material, 2);
+  const identity = new THREE.Matrix4();
+  mesh.setMatrixAt(0, identity); mesh.setMatrixAt(1, identity);
   mesh.name = 'fit05_authored_glints'; mesh.frustumCulled = false;
   mesh.userData.fit05 = { sourceStrokes: data.glints.length + (data.sheens?.length ?? 0), strips: strokes.length,
-    vertices: position.length / 3, triangles: indices.length / 3, lift, frozenReferenceTime: 12 };
+    vertices: position.length / 3, triangles: indices.length / 3, lift, frozenReferenceTime: 12,
+    instances: 2, flowPeriod: 5, maxFlowOffset: 0.3, flowVelocity: -0.12, derivativeStep };
   return mesh;
 }

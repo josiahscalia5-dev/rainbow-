@@ -18,6 +18,7 @@ function fit05OpticalField(): THREE.Texture {
     opticalField.wrapS = opticalField.wrapT = THREE.ClampToEdgeWrapping;
     opticalField.minFilter = THREE.LinearMipmapLinearFilter;
     opticalField.magFilter = THREE.LinearFilter;
+    opticalField.anisotropy = 4;
   }
   return opticalField;
 }
@@ -66,6 +67,7 @@ export function fit05Uniforms(which: 'near' | 'far'): Record<string, THREE.IUnif
   texture.generateMipmaps = false;
   texture.needsUpdate = true;
   const flat = typeof location !== 'undefined' && new URLSearchParams(location.search).get('fitflat05') === '1';
+  const still = typeof location !== 'undefined' && new URLSearchParams(location.search).get('fitstill05') === '1';
   return cache[which] = {
     uFitCurves: { value: texture },
     uFitRange: { value: new THREE.Vector2(...range) },
@@ -73,6 +75,7 @@ export function fit05Uniforms(which: 'near' | 'far'): Record<string, THREE.IUnif
     uFitFlat: { value: flat ? 1 : 0 },
     uFitSheen: { value: fit05OpticalField() },
     uFitNear: { value: which === 'near' ? 1 : 0 },
+    uFitStill: { value: still ? 1 : 0 },
   };
 }
 
@@ -83,6 +86,7 @@ uniform vec2 uFitBandRanges[4];
 uniform float uFitFlat;
 uniform sampler2D uFitSheen;
 uniform float uFitNear;
+uniform float uFitStill;
 vec4 fit05Fetch(float row, float s) {
   float scale=1.0-1.0/(1.0+(uFitRange.y-uFitRange.x)/3.0);
   float p=clamp((1.0-1.0/(1.0+max(0.0,s-uFitRange.x)/3.0))/scale,0.0,1.0)*2047.0;
@@ -91,7 +95,11 @@ vec4 fit05Fetch(float row, float s) {
   return mix(texture2D(uFitCurves,a),texture2D(uFitCurves,a+vec2(1.0/2048.0,0.0)),fract(p));
 }
 float fit05Bell(float x) {return exp(-x*x);}
-vec3 fit05Color(float lat, float s, vec3 fallback) {
+float fit05Optical(float lat, float s) {
+  float v=(1.0-1.0/(1.0+max(0.0,s-128.5)/3.0))/(1.0-1.0/(1.0+(190.0-128.5)/3.0));
+  return texture2D(uFitSheen,vec2((lat+6.6)/13.2,v)).r;
+}
+vec3 fit05Color(float lat, float s, float time, vec3 fallback) {
   if (s<uFitRange.x || s>uFitRange.y) return fallback;
   float core=0.0, shoulder=0.0, bandQ=0.0, nearest=10000.0;
   float leftCentre=-4.0, rightCentre=4.0;
@@ -124,8 +132,12 @@ vec3 fit05Color(float lat, float s, vec3 fallback) {
   vec3 pink=mix(vec3(0.642370,0.104295,0.508640),vec3(0.740898,0.187007,0.755719),fit05Bell((bandQ+0.15)/0.8));
   pink=mix(pink,vec3(0.814419,0.374931,0.809222),fit05Bell((bandQ-0.17)/0.12)*0.50+fit05Bell((bandQ+0.46)/0.18)*0.24);
   if(uFitNear>0.5) {
-    float opticalV=(1.0-1.0/(1.0+max(0.0,s-128.5)/3.0))/(1.0-1.0/(1.0+(190.0-128.5)/3.0));
-    float optical=texture2D(uFitSheen,vec2((lat+6.6)/13.2,opticalV)).r;
+    // Two overlapping advection phases hide each texture reset. At the authored
+    // t=12 pose phase A has zero displacement and full weight, preserving the fit.
+    float phase=fract((time-12.0)*(1.0-uFitStill)/5.0+0.5);
+    float phaseB=fract(phase+0.5);
+    float weight=1.0-abs(phase*2.0-1.0);
+    float optical=mix(fit05Optical(lat,s+(phaseB-0.5)*0.6),fit05Optical(lat,s+(phase-0.5)*0.6),weight);
     cyan=mix(vec3(0.072220,0.292446,0.616343),vec3(0.081280,0.425117,0.769562),min(1.0,optical/0.45));
     cyan=mix(cyan,vec3(0.090253,0.615079,0.847841),clamp((optical-0.45)/0.35,0.0,1.0));
     cyan=mix(cyan,vec3(0.11524333,0.81196928,0.88675652),max(0.0,(optical-0.8)/0.2));

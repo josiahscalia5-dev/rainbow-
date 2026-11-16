@@ -913,7 +913,7 @@ void main() {
       asin(clamp(reflRef.y, -1.0, 1.0)) * 0.31830989 + 0.5)).rgb;
     cRef += cRef * smoothstep(0.72, 0.98, max(panoRef.r, max(panoRef.g, panoRef.b))) * uPanoK * 0.04;
     #ifdef FIT05
-    cRef = fit05Color(lat, s, cRef);
+    cRef = fit05Color(lat, s, uTime, cRef);
     #endif
     col = mix(col, cRef, sw);
     #else
@@ -1475,7 +1475,9 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'water_ribbon';
   mesh.frustumCulled = false; // one long mesh spanning the whole course
-  if (FIT05) mesh.add(createFit05Glints(course, uniforms.uTime, uniforms.uBenny, { ampAt, edgeLift: EDGE_LIFT, quality }));
+  if (FIT05) mesh.add(createFit05Glints(course, uniforms.uTime, uniforms.uBenny, {
+    ampAt, edgeLift: EDGE_LIFT, quality, motion: !q05('fitstill05'),
+  }));
   return {
     mesh,
     uniforms,
