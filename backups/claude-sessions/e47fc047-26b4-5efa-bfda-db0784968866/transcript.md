@@ -2624,3 +2624,291 @@ Step B: a browser script that casts every paddle vertex from the real game camer
 > R1 hits 746 dist from camera 27.3..45.8
 > R2 hits 85 dist from camera 50.3..56.9
 
+### 🤖 Claude — 2026-11-16T21:35:19.740Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-lid-raycast.mjs'; s=open(p).read()\nold=\"\"\"    const walls = [];\n    scene.traverse((o) => {\n      let k = '';\n      try { k = o.material?.customProgramCacheKey?.() ?? ''; } catch { /* */ }\n      if (o.isMesh && /strips-attribute-wall05/.test(k) && !/wall05v/.test(k)) walls.push(o);\n    });\"\"\"\nnew=\"\"\"    const walls = [], farWalls = [];\n    scene.traverse((o) => {\n      let k = '';\n      try { k = o.material?.customProgramCacheKey?.() ?? ''; } catch { /* */ }\n      if (o.isMesh && /strips-attribute-wall05v/.test(k)) farWal …[+1312 chars]`
+
+### 🧑 User — 2026-11-16T21:35:33.494Z
+
+> ↩︎ result: walls 2 far walls 1 on far wall 126 missed rays 0 { L1: 632, L2: 214, R1: 746, R2: 178 }
+
+### 🤖 Claude — 2026-11-16T21:36:10.533Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/proj05/lid_blender.py", "content": "\"\"\"Screen 05 paddles (`?projlid05=1`), Blender pipeline step C (run INSIDE Blender):\n  blender -b --factory-startup -P tools/proj05/lid_blender.py -- <lid_dir> <texture.png> <crop x0,y0,x1,y1> <out.glb> [depth]\nBuilds each approved paddle (L1 L2 R1 R2) as a real 3D tray-block in the game's world coordinates:\n  back  = the approved outline lifted onto the real 05 wall (raycast.json, step B), 0.02 u off the wall\n  front = the same rays, `depth` u (radially) closer to the tube axis\n  sides = along the camera rays …[+4852 chars]`
+
+### 🧑 User — 2026-11-16T21:36:10.602Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/proj05/lid_blender.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T21:36:12.884Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nImage.open('references/05_flow_into_the_current.png').convert('RGB').crop((58,311,864,532)).save('assets/textures/tunnel05/lid05.png'); print('crop ok')\" && blender -b --factory-startup -P tools/proj05/lid_blender.py -- qa/pilot05/proj/tunnel/lid assets/textures/tunnel05/lid05.png 58,311,864,532 assets/models/lids05.glb 0.35 2>&1 | grep -E \"LIDS05|Error|error|Traceback\" | head; ls -la assets/models/lids05.glb qa/pilot05/proj/tunnel/lid/lids05.blend", "description": "Build paddle trays in Blender and export GLB", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T21:36:14.618Z
+
+> ↩︎ result: crop ok
+> LIDS05 {"depth": 0.35, "lids": {"L1": {"verts": 1264, "faces": 2456}, "L2": {"verts": 428, "faces": 814}, "R1": {"verts": 1492, "faces": 2876}, "R2": {"verts": 356, "faces": 672}}, "glb": "assets/models/lids05.glb"}
+> -rw-r--r-- 1 root root 954876 Nov 16 21:36 assets/models/lids05.glb
+> -rw-r--r-- 1 root root 260031 Nov 16 21:36 qa/pilot05/proj/tunnel/lid/lids05.blend
+
+### 🤖 Claude — 2026-11-16T21:36:33.974Z
+
+> 🔧 **Bash** `{"command": "grep -n \"LIDS05_FIT\\|buildLids05Fit\\|TRAY05\\|trayLidGeometry\\|^import\\|^export const PROJLID05\" src/vfx/proj05Tunnel.ts | head -20; git check-attr filter assets/models/lids05.glb qa/pilot05/proj/tunnel/lid/lids05.blend", "description": "Locate superseded paddle code and LFS attrs"}`
+
+### 🧑 User — 2026-11-16T21:36:34.021Z
+
+> ↩︎ result: 16:import * as THREE from 'three';
+> 17:import { PROJ05_INVERSE, flag05, proj05Pending } from './waterRibbon';
+> 18:import { wallLidMatrix, type TubePath } from '../world/tube';
+> 25:export const PROJLID05: boolean = flag05('projlid05');
+> 35:export const LIDS05_FIT = [
+> 48:export function trayLidGeometry(h: number, segments = 28): THREE.BufferGeometry {
+> 61:export const TRAY05 = { depth: 0.45, sink: 0.2 };
+> 62:export function buildLids05Fit(path: TubePath, sCam05: number, material: THREE.Material): THREE.InstancedMesh {
+> 63:  const mesh = new THREE.InstancedMesh(trayLidGeometry(TRAY05.depth), material, LIDS05_FIT.length);
+> 65:  LIDS05_FIT.forEach((l, i) => {
+> 67:    mesh.setMatrixAt(i, wallLidMatrix(path, s, l.side, l.ang, l.droop, l.size * Math.min(1.4, path.radius(s) / 7.6), l.stretch, TRAY05.sink, m));
+> 69:  mesh.count = LIDS05_FIT.length;
+> assets/models/lids05.glb: filter: lfs
+> qa/pilot05/proj/tunnel/lid/lids05.blend: filter: lfs
+
+### 🤖 Claude — 2026-11-16T21:36:35.586Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "offset": 20, "limit": 58}`
+
+### 🧑 User — 2026-11-16T21:36:35.608Z
+
+> ↩︎ result: 20	export const PROJWALL05: boolean = flag05('projwall05');
+> 21	export const PROJRING05: boolean = flag05('projring05');
+> 22	/** `?projframe05=1` (2026-11-16): the near gold frame (bottom corners + bottom lip) wears the approved gold band */
+> 23	export const PROJFRAME05: boolean = flag05('projframe05');
+> 24	/** `?projlid05=1` (2026-11-16): the real 05 wall paddles where (and as tilted as) the approved picture shows them */
+> 25	export const PROJLID05: boolean = flag05('projlid05');
+> 26	
+> 27	/**
+> 28	 * `?projlid05=1`: the approved picture's large wall paddles L1 L2 (left) R1 R2 (right), each fitted with one real lid
+> 29	 * on the real 05 wall seen from the locked 05 camera (scripts/proj05-lid-fit.mjs → qa/pilot05/proj/tunnel/lid/fit.json,
+> 30	 * tray silhouette IoU 0.67–0.77, never crossing a ring band; the painting draws them long along the tube → stretch 2.75–4.25). ds = arc length ahead of the 05 checkpoint eye (sCam05), side +1 = screen right, angle
+> 31	 * above the tube axis and droop as wallLidBasis, size before the radius scale. They sit higher on the wall than the
+> 32	 * default pairs (above eye level), so the camera sees their undersides like the approved picture. The small far pair
+> 33	 …[+2607 chars]
+
+### 🤖 Claude — 2026-11-16T21:36:38.756Z
+
+I'll replace the superseded fitted-puck block (it stays in git history and `fit.json`) with the Blender GLB loader, keeping the tray profile the fit script still uses:
+
+### 🤖 Claude — 2026-11-16T21:36:53.064Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/proj05Tunnel.ts'; s=open(p).read()\ni0=s.index(\"/**\\n * `?projlid05=1`: the approved picture's large wall paddles L1 L2\")\ni1=s.index(\"/**\\n * The approved paddle is a D-shaped TRAY\")\ns=s[:i0]+s[i1:]\ni0=s.index(\"/** the fitted 05 paddles (approved trays) as one InstancedMesh */\")\ni1=s.index(\"/** atlas rows of wall05.png\")\nnew='''/**\n * `?projlid05=1` (Blender pipeline, qa/pilot05/proj/tunnel/NOTES.md): the approved picture's four large paddles L1 L2 R1\n * R2 as real 3D tray-blocks on the real 05 wall (assets/models/lids05.glb, built …[+3736 chars]`
+
+### 🧑 User — 2026-11-16T21:36:55.673Z
+
+> ↩︎ result: 84:  mat.onBeforeRender = (renderer) => livePost(renderer);
+> 105:const shared = {
+> 176:function livePost(renderer: THREE.WebGLRenderer) {
+> 223:  mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };
+> TSC_DONE
+
+### 🤖 Claude — 2026-11-16T21:36:59.296Z
+
+Typecheck passes. Next, a real game capture with the Blender paddles:
+
+### 🤖 Claude — 2026-11-16T21:37:04.247Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $S/b1 && node scripts/capture.mjs 05 --q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' --out=$S/b1 2>&1 | grep -i \"error\\|projlid\\|→\" | cut -c1-150; git checkout qa/capture_log.json; python3 -I tools/proj05/screen_regions.py qa/pilot05/proj/tunnel/frame/3_NEW_projframe05.png $S/b1/05.png 2>&1 | sed \"s#$S/##\" | grep -E \"png|LID|TUNNEL|FRAME |FULL\"; python3 -I - <<EOF\nfrom PIL import Image\nims=[]\nfor b in [(40,290,420,500),(560,370,864,540)]:\n    for p in ['re …[+429 chars]`
+
+### 🤖 Claude — 2026-11-16T21:37:05.446Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/b1_lids.png"}`
+
+### 🧑 User — 2026-11-16T21:37:21.986Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/b1/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":88,"t
+> Updated 1 path from the index
+> qa/pilot05/proj/tunnel/frame/3_NEW_projframe05.png
+>   LID       px   27726  mean|d|  62.61  <=10 0.022  <=20 0.086  SSIM 0.195  bias [8.9, -13.2, 34.9]
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   TUNNEL    px  440275  mean|d|  48.68  <=10 0.167  <=20 0.290  SSIM 0.302  bias [6.5, 2.3, -6.8]
+>   FRAME     px 1157760  mean|d|  32.23  <=10 0.447  <=20 0.550  SSIM 0.541  bias [6.7, -1.4, -1.6]
+>   FULL      px 1327104  mean|d|  35.86  <=10 0.393  <=20 0.497  SSIM 0.495  bias [7.3, 1.9, 0.9]
+> b1/05.png
+>   LID       px   27726  mean|d|  22.27  <=10 0.685  <=20 0.722  SSIM 0.690  bias [12.5, 20.0, 8.0]
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   TUNNEL    px  440275  mean|d|  45.86  <=10 0.210  <=20 0.333  SSIM 0.335  bias [5.1, 2.3, -7.8]
+>   FRAME     px 1157760  mean|d|  31.16  <=10 0.463  <=20 0.566  SSIM 0.553  bias [6.2, -1.4, -1.9]
+>   FULL      px 1327104  mean|d|  34.93  <=10 0.407  <=20 0.511  SSIM 0.5 …[+24 chars]
+
+### 🧑 User — 2026-11-16T21:37:22.032Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:37:41.040Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/^USE = \\[\"L1\", \"L2\", \"R1\", \"R2\"\\]          # L3 \\/ R3 lie in the forced-perspective far section: the existing far lids/USE = [\"L1\", \"L2\", \"L3\", \"R1\", \"R2\", \"R3\"]   # L3 \\/ R3 lie on the forced-perspective far wall (raycast falls back to it)/' tools/proj05/lid_mesh2d.py && grep -n \"^USE\" tools/proj05/lid_mesh2d.py && python3 -I tools/proj05/lid_mesh2d.py && node scripts/proj05-lid-raycast.mjs 2>&1 | tail -1 && python3 -I -c \"\nfrom PIL import Image\nImage.open('references/05_flow_into_the_current.png').convert('RGB').crop((58,311,864,532)).save( …[+342 chars]`
+
+### 🧑 User — 2026-11-16T21:37:55.549Z
+
+> ↩︎ result: 17:USE = ["L1", "L2", "L3", "R1", "R2", "R3"]   # L3 / R3 lie on the forced-perspective far wall (raycast falls back to it)
+> L1 verts 632 tris 1176 boundary 104
+> L2 verts 214 tris 378 boundary 58
+> L3 verts 46 tris 64 boundary 26
+> R1 verts 746 tris 1379 boundary 118
+> R2 verts 178 tris 309 boundary 54
+> R3 verts 52 tris 73 boundary 31
+> walls 2 far walls 1 on far wall 224 missed rays 0 { L1: 632, L2: 214, L3: 46, R1: 746, R2: 178, R3: 52 }
+> LIDS05 {"depth": 0.35, "lids": {"L1": {"verts": 1264, "faces": 2456}, "L2": {"verts": 428, "faces": 814}, "L3": {"verts": 92, "faces": 154}, "R1": {"verts": 1492, "faces": 2876}, "R2": {"verts": 356, "faces": 672}, "R3": {"verts": 104, "faces": 177}}, "glb": "assets/models/lids05.glb"}
+> [This command modified 1 file you've previously read: tools/proj05/lid_mesh2d.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T21:37:57.239Z
+
+Now the far tongues off under the switch only:
+
+### 🤖 Claude — 2026-11-16T21:38:04.099Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const farLids = new THREE.InstancedMesh\" src/world/environment.ts && python3 -I - <<'EOF'\np='src/world/environment.ts'; s=open(p).read()\nold=\"\"\"    const farLids = new THREE.InstancedMesh(wallLidGeometry('slab', lid05.thickness, 16), lidMat05('lid05v', true), lidItems.length);\"\"\"\nnew=\"\"\"    const farLids = new THREE.InstancedMesh(wallLidGeometry('slab', lid05.thickness, 16), lidMat05('lid05v', true), lidItems.length);\n    // `?projlid05=1`: the approved small far paddles L3 / R3 are Blender trays (lids05.glb); the far slab pucks stay out\n    if (PROJLID05) …[+1032 chars]`
+
+### 🧑 User — 2026-11-16T21:38:24.464Z
+
+> ↩︎ result: 503:    const farLids = new THREE.InstancedMesh(wallLidGeometry('slab', lid05.thickness, 16), lidMat05('lid05v', true), lidItems.length);
+> 47: * R2 (+ the small far pair L3 R3 on the far wall) as real 3D tray-blocks on the real 05 wall (assets/models/lids05.glb, built in Blender by tools/proj05/lid_blender.py
+> 51: * paddle pairs and the far slab pucks are left out under the switch.
+> 0
+> Updated 1 path from the index
+> b1/05.png
+>   LID       px   27726  mean|d|  22.27  <=10 0.685  <=20 0.722  SSIM 0.690  bias [12.5, 20.0, 8.0]
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   TUNNEL    px  440275  mean|d|  45.86  <=10 0.210  <=20 0.333  SSIM 0.335  bias [5.1, 2.3, -7.8]
+>   FRAME     px 1157760  mean|d|  31.16  <=10 0.463  <=20 0.566  SSIM 0.553  bias [6.2, -1.4, -1.9]
+>   FULL      px 1327104  mean|d|  34.93  <=10 0.407  <=20 0.511  SSIM 0.506  bias [6.8, 1.9, 0.6]
+> b2/05.png
+>   LID       px   27726  mean|d|  19.30  <=10 0.743  <=20 0.772  SSIM 0.731  bias [12.2, 20.5, 7.6]
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   TUNNEL    px  440275  mean|d|  45.58  <=10 0.214  <=20 0.338  SSIM 0.339  …[+351 chars]
+
+### 🤖 Claude — 2026-11-16T21:38:29.269Z
+
+> 🔧 **Bash** `{"command": "grep -ln \"forward_10\\|--ahead\\|ahead=\" scripts/*.mjs | head; grep -n \"ahead\\|opt\\.\\(ds\\|fwd\\|forward\\)\" scripts/capture.mjs | head -5", "description": "Find forward-motion capture option"}`
+
+### 🧑 User — 2026-11-16T21:38:29.313Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T21:38:30.418Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/b2/05.png"}`
+
+### 🧑 User — 2026-11-16T21:38:30.495Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:38:36.940Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"__rainbow\\s*=\" src | head -2; grep -rn \"step\\s*(\\|simulate\\|advance\" src/qa*.ts src/main.ts 2>/dev/null | head -8; ls qa/pilot05/proj/move/ | head; grep -rln \"NEW_proj05_forward\" scripts tools 2>/dev/null | head -3", "description": "Find game simulation API for forward frames"}`
+
+### 🧑 User — 2026-11-16T21:38:37.002Z
+
+> ↩︎ result: src/game/Game.ts:694:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> NEW_proj05_forward_05.png
+> NEW_proj05_forward_10.png
+> NEW_proj05_forward_20.png
+> NEW_proj05_forward_35.png
+> contact_sheet_BEFORE_top_NEW_bottom.png
+> layer_map_with_before.png
+> move_log.json
+
+### 🤖 Claude — 2026-11-16T21:38:39.102Z
+
+> 🔧 **Bash** `{"command": "sed -n 600,694p src/game/Game.ts | grep -n \"^\\s*[a-zA-Z0-9_]*\\s*[:(]\" | head -40; head -c 600 qa/pilot05/proj/move/move_log.json", "description": "List QA API methods and prior move log"}`
+
+### 🧑 User — 2026-11-16T21:38:39.153Z
+
+> ↩︎ result: 5:    render();
+> 11:    ready: true,
+> 12:    checkpoints: Object.keys(CHECKPOINTS),
+> 13:    goto: gotoCheckpoint,
+> 14:    run(v = true) { running = v; last = performance.now(); },
+> 15:    unfreeze() { st.frozen = null; input.override = null; },
+> 17:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 18:    setSteer(v: number | null) { input.override = v; },
+> 20:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 21:    startRideAt(id: StageId = '03') {
+> 22:      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+> 25:    state() {
+> 28:    log() { return st.log; },
+> 29:    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> 31:    coinScreen() {
+> 39:        if (coins.collected[i]) return;
+> 42:        if (c.z > 1 || c.z < -1) return;
+> 45:        if (x < -50 || x > W + 50 || y < -50 || y > H + 50) return;
+> 50:    respawns() { return st.respawns; },
+> 52:    camera() {
+> 58:    bennyScreen() {
+> 63:    probe(x = 0, y = 0) {
+> 71:    drawList() {
+> 75:        if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoi …[+912 chars]
+
+### 🤖 Claude — 2026-11-16T21:38:44.426Z
+
+The game's test controls can step the simulation (`step`). I'll write a small, reusable script that rides forward from the Screen 05 start and screenshots real frames at set distances.
+
+### 🤖 Claude — 2026-11-16T21:38:45.122Z
+
+> 🔧 **Bash** `{"command": "sed -n 25,70p scripts/capture.mjs", "description": "Read capture.mjs core loop"}`
+
+### 🧑 User — 2026-11-16T21:38:45.161Z
+
+> ↩︎ result: const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = { when: new Date().toISOString(), renderer: null, shots: [], errors: [] };
+> try {
+>   for (const id of ids) {
+>     const [w, h] = size ?? NATIVE[id] ?? [864, 1536];
+>     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+>     page.on('console', (m) => { if (m.type() === 'error') log.errors.push(`[${id}] ${m.text()}`); });
+>     page.on('pageerror', (e) => log.errors.push(`[${id}] pageerror ${e.message}`));
+>     await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+>     await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>     const err = await page.evaluate(() => window.__error);
+>     if (err) throw new Error(err);
+>     if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+>     const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+>     // let a few frames render (font …[+1699 chars]
+
+### 🤖 Claude — 2026-11-16T21:38:55.886Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/proj05-move.mjs", "content": "#!/usr/bin/env node\n// Screen 05 motion check: the REAL game from the locked 05 checkpoint, ridden forward by the deterministic simulation\n// (window.__rainbow.step, steering centred), one screenshot every --at units of arc length ahead.\n//   node scripts/proj05-move.mjs --q='proj05=1&projlid05=1' --at=0,5,10,20 --out=DIR\n// Writes DIR/move_<d>.png and DIR/move_log.json (s, Benny lateral, camera). Read-only: the game is unchanged.\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ …[+2174 chars]`
+
+### 🧑 User — 2026-11-16T21:38:55.978Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/proj05-move.mjs has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T21:38:59.283Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && node scripts/proj05-move.mjs --q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' --at=0,6,14 --out=$S/mv 2>&1 | tail -4 && python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('$S/mv/move_%02d.png'%d).convert('RGB').resize((432,768),Image.LANCZOS) for d in (0,6,14)]\nim=Image.new('RGB',(3*432+20,768),(255,255,255))\nfor i,c in enumerate(ims): im.paste(c,(i*442,0))\nim.save('$S/mv_sheet.png')\"", "description": "Capture forward-motion frames with paddles", "timeout": 300000}`
+
+### 🤖 Claude — 2026-11-16T21:39:00.387Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/mv_sheet.png"}`
+
+### 🧑 User — 2026-11-16T21:39:21.347Z
+
+> ↩︎ result: d 0 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/mv/move_00.png s 132.62 stage 05
+> d 6 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/mv/move_06.png s 138.49 stage 05
+> d 14 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/mv/move_14.png s 146.56 stage 05
+
+### 🧑 User — 2026-11-16T21:39:21.385Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:39:34.067Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && rm -rf $S/def3 $S/bef3 $S/f4 && mkdir -p $S/def3 $S/bef3 $S/f4 && node scripts/capture.mjs 05 --out=$S/def3 >/dev/null 2>&1; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/bef3 >/dev/null 2>&1; node scripts/capture.mjs 05 --q='proj05=1&projwall05=1&projring05=1&projframe05=1' --out=$S/f4 >/dev/null 2>&1; git checkout qa/capture_log.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\ndef cmp(a,b):\n    A=np.asarray(Image.open(a).convert('RGB')).astype(int); B=n …[+1005 chars]`
+
+### 🧑 User — 2026-11-16T21:40:23.865Z
+
+> ↩︎ result: Updated 1 path from the index
+> default vs session start (differing px): 0
+> protected BEFORE vs baseline: 0
+> frame-test (no projlid05) vs earlier frame result: 0
+> gameplay pass True {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True} errors []
+> 9
+

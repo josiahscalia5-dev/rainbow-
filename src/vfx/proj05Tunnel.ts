@@ -15,29 +15,14 @@
  */
 import * as THREE from 'three';
 import { PROJ05_INVERSE, flag05, proj05Pending } from './waterRibbon';
-import { wallLidMatrix, type TubePath } from '../world/tube';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export const PROJWALL05: boolean = flag05('projwall05');
 export const PROJRING05: boolean = flag05('projring05');
 /** `?projframe05=1` (2026-11-16): the near gold frame (bottom corners + bottom lip) wears the approved gold band */
 export const PROJFRAME05: boolean = flag05('projframe05');
-/** `?projlid05=1` (2026-11-16): the real 05 wall paddles where (and as tilted as) the approved picture shows them */
+/** `?projlid05=1` (2026-11-16): the approved paddles L1 L2 R1 R2 as Blender-built 3D trays on the real 05 wall */
 export const PROJLID05: boolean = flag05('projlid05');
-
-/**
- * `?projlid05=1`: the approved picture's large wall paddles L1 L2 (left) R1 R2 (right), each fitted with one real lid
- * on the real 05 wall seen from the locked 05 camera (scripts/proj05-lid-fit.mjs → qa/pilot05/proj/tunnel/lid/fit.json,
- * tray silhouette IoU 0.67–0.77, never crossing a ring band; the painting draws them long along the tube → stretch 2.75–4.25). ds = arc length ahead of the 05 checkpoint eye (sCam05), side +1 = screen right, angle
- * above the tube axis and droop as wallLidBasis, size before the radius scale. They sit higher on the wall than the
- * default pairs (above eye level), so the camera sees their undersides like the approved picture. The small far pair
- * (L3, R3) is the existing forced-perspective far lids.
- */
-export const LIDS05_FIT = [
-  { name: 'L1', side: -1, ds: 24.375, ang: 23, droop: -90, size: 1.35, stretch: 2.75 },
-  { name: 'L2', side: -1, ds: 46.75, ang: 0.5, droop: -90, size: 1.65, stretch: 3.75 },
-  { name: 'R1', side: 1, ds: 29.375, ang: 5.5, droop: -90, size: 2.05, stretch: 4.25 },
-  { name: 'R2', side: 1, ds: 53.5, ang: 10, droop: -65, size: 1.6, stretch: 3.75 },
-] as const;
 
 /**
  * The approved paddle is a D-shaped TRAY (studied at 4× zoom: a thick polished gold rim whose INNER face shows above a
@@ -57,19 +42,56 @@ export function trayLidGeometry(h: number, segments = 28): THREE.BufferGeometry 
   return geo;
 }
 
-/** the fitted 05 paddles (approved trays) as one InstancedMesh */
-export const TRAY05 = { depth: 0.45, sink: 0.2 };
-export function buildLids05Fit(path: TubePath, sCam05: number, material: THREE.Material): THREE.InstancedMesh {
-  const mesh = new THREE.InstancedMesh(trayLidGeometry(TRAY05.depth), material, LIDS05_FIT.length);
-  const m = new THREE.Matrix4();
-  LIDS05_FIT.forEach((l, i) => {
-    const s = sCam05 + l.ds;
-    mesh.setMatrixAt(i, wallLidMatrix(path, s, l.side, l.ang, l.droop, l.size * Math.min(1.4, path.radius(s) / 7.6), l.stretch, TRAY05.sink, m));
-  });
-  mesh.count = LIDS05_FIT.length;
-  mesh.instanceMatrix.needsUpdate = true;
-  mesh.frustumCulled = false;
-  return mesh;
+/**
+ * `?projlid05=1` (Blender pipeline, qa/pilot05/proj/tunnel/NOTES.md): the approved picture's four large paddles L1 L2 R1
+ * R2 (+ the small far pair L3 R3 on the far wall) as real 3D tray-blocks on the real 05 wall (assets/models/lids05.glb, built in Blender by tools/proj05/lid_blender.py
+ * from the approved outlines lifted onto the wall through the locked 05 camera). From the checkpoint their outline is the
+ * approved one; riding on, they show their real depth. They carry the approved paddle pixels (camera-projected UVs,
+ * assets/textures/tunnel05/lid05.png inside the GLB), shown through the post-chain inverse like the walls. The default
+ * paddle pairs and the far slab pucks are left out under the switch.
+ */
+let lids05Scene: THREE.Object3D | null = null;
+const lids05Ready: Promise<void> | null = PROJLID05
+  ? new GLTFLoader().loadAsync(new URL('../../assets/models/lids05.glb', import.meta.url).href).then((gltf) => {
+    gltf.scene.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      const map = (m.material as THREE.MeshStandardMaterial).map;
+      if (!map) return;
+      map.colorSpace = THREE.NoColorSpace;          // the texels ARE display values: the shader undoes the post chain
+      map.needsUpdate = true;
+      m.material = lidProjMaterial(map);
+      m.frustumCulled = false;
+    });
+    lids05Scene = gltf.scene;
+    lids05Scene.name = 'tube05_lids_blender';
+  }).catch((e) => { console.error('[rainbow] projlid05: lids05.glb failed', e); })
+  : null;
+if (lids05Ready) proj05Pending.push(lids05Ready);
+
+function lidProjMaterial(map: THREE.Texture): THREE.MeshBasicMaterial {
+  const mat = new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide, fog: false });
+  mat.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, shared);
+    shader.fragmentShader = shader.fragmentShader
+      .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes;
+${PROJ05_INVERSE}
+void main() {`)
+      .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+gl_FragColor = vec4(pjInverse(texture2D(map, vMapUv).rgb), 1.0);   // ?projlid05=1: the approved paddle pixels`);
+  };
+  mat.customProgramCacheKey = () => 'ptlid05';
+  mat.onBeforeRender = (renderer) => livePost(renderer);
+  return mat;
+}
+
+/** the group environment.ts adds under `?projlid05=1`; the Blender paddles join it once the GLB has loaded */
+export function lids05Group(): THREE.Group {
+  const g = new THREE.Group();
+  g.name = 'tube05_lids05';
+  const attach = () => { if (lids05Scene) g.add(lids05Scene); };
+  if (lids05Scene) attach(); else lids05Ready?.then(attach);
+  return g;
 }
 
 /** atlas rows of wall05.png (tools/proj05/tunnel_bake.py: ROWS) */

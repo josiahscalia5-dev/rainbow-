@@ -377,6 +377,11 @@
    "sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
   },
   {
+   "path": "assets/models/lids05.glb",
+   "bytes": 992168,
+   "sha256": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c"
+  },
+  {
    "path": "assets/models/rainbow_girl.glb",
    "bytes": 3546480,
    "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
@@ -395,6 +400,11 @@
    "path": "assets/textures/tunnel05/frame05.png",
    "bytes": 19719,
    "sha256": "e3f7d188a44a2d036f10177a51e150dbfe1490881378067e3dd1d277946a4f3a"
+  },
+  {
+   "path": "assets/textures/tunnel05/lid05.png",
+   "bytes": 356183,
+   "sha256": "c1a99325efea914eeb2f7ad7d35c19aff7f1d97f2471212572fa135fee93745f"
   },
   {
    "path": "assets/textures/tunnel05/ring05.png",
@@ -469,7 +479,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "44c2c08418fc75adbac74b11091537fc31748afe3783bb3e9ce34c71999df245"
+   "sha256": "5516bd17e55a04931df10f9134ebdaf2dd49f7ccf725902116402f551649d671"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1662,14 +1672,24 @@
    "sha256": "51bcabe00701981812ec864e0df52df93c8484f245b95a4caf0e9f2f957ee2d5"
   },
   {
+   "path": "qa/pilot05/proj/tunnel/lid/lids05.blend",
+   "bytes": 269334,
+   "sha256": "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0"
+  },
+  {
    "path": "qa/pilot05/proj/tunnel/lid/mesh2d.json",
-   "bytes": 83831,
-   "sha256": "442ba6f54bc870134a53daaf7654652aee47ba7c68515800ef279aa5be383850"
+   "bytes": 87605,
+   "sha256": "6bc292d9fa7f5e626168a8789ee5b3eb717a916e0fd2d2ce19a735ce22e0072d"
   },
   {
    "path": "qa/pilot05/proj/tunnel/lid/raycast.json",
-   "bytes": 313687,
-   "sha256": "9085b7ec8fc61b48d510b00318de0377396311d6426dbbd6c486baa6844838de"
+   "bytes": 345902,
+   "sha256": "d0424523d7b023ccae9dfed354281f8ef15dd210c09f025886e7d74d49a25005"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/tests/gameplay_projlid05.json",
+   "bytes": 14707,
+   "sha256": "3285efce8125267affabb9bd24b30a744f493b2daad5a32f59e152f691fd3d04"
   },
   {
    "path": "qa/pilot05/proj/tunnel/model/bake_report.json",
@@ -6963,8 +6983,8 @@
   },
   {
    "path": "scripts/proj05-move.mjs",
-   "bytes": 5328,
-   "sha256": "5357f03f49fe8fbb4412b3baedf36a6ae74bc2f5ff034b97f82f0dc2f03d680a"
+   "bytes": 2661,
+   "sha256": "d931df91b33a3195f7333b9677562a8f7b03e803533e1ab6ad3fdd3fc7a408db"
   },
   {
    "path": "scripts/proj05-probe.mjs",
@@ -7178,8 +7198,8 @@
   },
   {
    "path": "src/vfx/proj05Tunnel.ts",
-   "bytes": 16833,
-   "sha256": "01e981b709cbc70ea2a78e3c5c83880a4292da18638798677781f733c2b979fe"
+   "bytes": 17639,
+   "sha256": "6ab3d981834277b6a920d243d220a45fbbd20a202d07ef5c64a7a5602b0b57fb"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -7213,8 +7233,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 59083,
-   "sha256": "dd742facb44631718988e7067775d5f9751ea3804bb560c673c49a28a704ef5e"
+   "bytes": 59198,
+   "sha256": "6bcbbfcf672bfba515fa302d6cef981d075b67559d27b97d67316185810545a2"
   },
   {
    "path": "src/world/far05.ts",
@@ -7362,9 +7382,14 @@
    "sha256": "9e0447234981fb1190e46bdafeffd05680891908382f17b642e8185693e19926"
   },
   {
+   "path": "tools/proj05/lid_blender.py",
+   "bytes": 5170,
+   "sha256": "7c599a88ebda0807129e709cdb698017915a5dd4e7ab321174c95dc61890eacb"
+  },
+  {
    "path": "tools/proj05/lid_mesh2d.py",
-   "bytes": 2513,
-   "sha256": "4199e7469aa57646d10d66f883b04222aa3b6db4deb6dedaec458877636248eb"
+   "bytes": 2519,
+   "sha256": "6b6486acc88c30242cc162d34241ceb61c607093fb85d1d6f86dd8d79f433f43"
   },
   {
    "path": "tools/proj05/make_target.py",

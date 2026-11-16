@@ -14,7 +14,7 @@ from tunnel_common import LIDS, W, H  # noqa: E402
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "qa/pilot05/proj/tunnel/lid/mesh2d.json"
 NAMES = ["L1", "L2", "L3", "R1", "R2", "R3"]
-USE = ["L1", "L2", "R1", "R2"]          # L3 / R3 lie in the forced-perspective far section: the existing far lids
+USE = ["L1", "L2", "L3", "R1", "R2", "R3"]   # L3 / R3 lie on the forced-perspective far wall (raycast falls back to it)
 STEP = 4.0
 
 
