@@ -22,6 +22,7 @@ import { findCinematic, playCinematic } from '../ui/cinematicVideo';
 import { createCoins, COIN_VALUE } from '../gameplay/coins';
 import { createInput } from '../gameplay/input';
 import { RideCamera } from './cameraRig';
+import { flag05 } from '../vfx/waterRibbon';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -57,7 +58,19 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+  // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
+  // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
+  // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear
+  // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
+  const glow05 = flag05('glow05');
+  const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', glow05 ? 0.9 : 0.2), qn('bloomR', glow05 ? 0.5 : 0.35), qn('bloomT', glow05 ? 1.0 : 0.94));
+  // Tone-mapping test TM1 (same message: "use NoToneMapping or lower the exposure"): `?tone05=none` → NoToneMapping,
+  // `?tone05=0.75` → Neutral at that exposure. The OutputPass tone-maps the whole frame (not per material), so this is
+  // global by nature. Off: Neutral 0.86 (src/render/env.ts), unchanged.
+  const tone05 = qs.get('tone05');
+  if (tone05 === 'none') renderer.toneMapping = THREE.NoToneMapping;
+  else if (tone05 !== null && tone05 !== '' && isFinite(+tone05) && +tone05 > 0) renderer.toneMappingExposure = +tone05;
   const useBloom = qs.get('bloom') !== '0';
   if (useBloom) composer.addPass(bloom);
   composer.addPass(new OutputPass());

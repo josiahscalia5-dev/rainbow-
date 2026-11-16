@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7780,
-   "sha256": "96a587e9b27560122dc42c30d766e9520206caddc7acccd49b0dc46cc500c5b1"
+   "sha256": "0944f95566a9fdb7fa89e6e3ab72801c66600b97fb7faf79d546ba85d698219e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -838,8 +838,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1181,
-   "sha256": "dbd5fac30c4460bf163c9bb9f3d30fe1f32169708a41e0cfe90804b5ce53afd1"
+   "bytes": 1242,
+   "sha256": "0441f68a31aa73b1b6e11eec52631377c09bb718e82f5eb9a1364047a1aaa312"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1587,6 +1587,11 @@
    "sha256": "adc3a5b36b54b37a7201513ee398136788b415b95b13ad4de0557809e2818da9"
   },
   {
+   "path": "qa/pilot05/wave12/tests/perf_low_864x1536.json",
+   "bytes": 908,
+   "sha256": "8c1256f41fc9b480ee54c3bc729eb53048d024ce0cff8541a1e83f970f9b2528"
+  },
+  {
    "path": "qa/pilot05/wave12/tests/pixel_checks_05.json",
    "bytes": 352,
    "sha256": "ca8468dfe23e27538d736a7583f558a7a5bdf3cd660dc85df4830495e7a02c1a"
@@ -1598,8 +1603,8 @@
   },
   {
    "path": "qa/pilot05/wave12/tests/run2.txt",
-   "bytes": 84,
-   "sha256": "531e0300a1d9db57efa96b513eb0685c2659d8be043bea14eaa3a9c2e6be4522"
+   "bytes": 98,
+   "sha256": "42440b1dffe83a92050505b8ae50aad9f17cb542ca3422f821b50d5e20488c2c"
   },
   {
    "path": "qa/pilot05/wave12/tests/w12_040607/04.png",
@@ -6333,8 +6338,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 32768,
-   "sha256": "57133c4a0f1937f8b78165a6834a4583b25718e429bd788dad729aed500e9e49"
+   "bytes": 34056,
+   "sha256": "0e27c2f0c48a1e4688182301a0b0e188fa7649bd71daaa677e9b53524b1b1d40"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -6433,8 +6438,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 80694,
-   "sha256": "89aee2035ccebbb5bd00431dce3522d18828c692f79abfb698061338ff13136d"
+   "bytes": 81168,
+   "sha256": "4d1ccb0552792e10772507e400982bed0df83b8dd7dce74938142f5921db3b33"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -6448,8 +6453,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 54797,
-   "sha256": "f8a9592a9edb9352a4d7814afb9a44f067d2c58cf0ef6042660c7bb20ea86d5c"
+   "bytes": 54840,
+   "sha256": "47412014af0e28c3bf0036cc78feadc3883e2d6f4c0e830d2d8f1a6c14e75e6d"
   },
   {
    "path": "src/world/far05.ts",

@@ -2444,3 +2444,286 @@ The capture is deterministic: the stored W12 picture is pixel-identical to the W
 
 > 🔧 **Bash** `{"command": "until grep -q \"perf-low-done\" qa/pilot05/wave12/tests/run2.txt 2>/dev/null || ! pgrep -f \"gameplay-test.mjs|perf05.mjs|continuity-test|capture.mjs\" >/dev/null; do sleep 5; done; O=qa/pilot05/wave12/tests; cat $O/run2.txt | tr '\\n' ' '; echo; cat $O/gameplay_w12_stdout.txt | head -40; tail -5 $O/continuity_stdout.txt", "description": "Wait for gameplay, continuity, perf results", "timeout": 1500000}`
 
+### 🧑 User — 2026-11-16T14:10:39.658Z
+
+> ↩︎ result: silk-done both-done w467-done low-done gameplay-done continuity-done perf-high-done perf-low-done 
+> {
+>  "query": "silk05=1&puff05=1",
+>  "out": "qa/pilot05/wave12/tests/gameplay_w12.json",
+>  "pass": true,
+>  "checks": {
+>   "pauseFreezes": true,
+>   "continuousTravel": true,
+>   "noCameraCut": true,
+>   "noTeleport": true,
+>   "plunge": true,
+>   "realCoinPickups": true,
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+>   "08->09 gap=0 dT=0.12 y=-113.59",
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+
+### 🤖 Claude — 2026-11-16T14:11:05.839Z
+
+> 🔧 **Bash** `{"command": "ls src/render/; grep -rn \"toneMapping\\|toneMappingExposure\\|UnrealBloom\\|BloomPass\\|threshold\\|strength\\|radius\\|outputColorSpace\\|EffectComposer\" src/render/*.ts src/main.ts | head -40", "description": "Inspect tone mapping and bloom setup"}`
+
+### 🧑 User — 2026-11-16T14:11:05.872Z
+
+> ↩︎ result: env.ts
+> grade.ts
+> src/render/env.ts:56:  renderer.outputColorSpace = THREE.SRGBColorSpace;
+> src/render/env.ts:57:  renderer.toneMapping = THREE.NeutralToneMapping;
+> src/render/env.ts:58:  renderer.toneMappingExposure = 0.86;
+
+### 🤖 Claude — 2026-11-16T14:11:07.291Z
+
+> 🔧 **Bash** `{"command": "grep -n \"FRAG_TAIL\\s*=\" -A 12 src/vfx/glsl.ts | head -20; grep -rn \"colorSpace\" src/world/environment.ts src/world/materials.ts src/vfx/*.ts | head -12; grep -n \"toneMapped\" -r src | head", "description": "Check shader tail, texture colour spaces"}`
+
+### 🧑 User — 2026-11-16T14:11:07.343Z
+
+> ↩︎ result: 164:export const FRAG_TAIL = /* glsl */ `
+> 165-  #include <tonemapping_fragment>
+> 166-  #include <colorspace_fragment>
+> 167-  #include <fog_fragment>
+> 168-`;
+> src/world/materials.ts:687:    t.colorSpace = THREE.LinearSRGBColorSpace;
+> src/world/materials.ts:694:  cube.colorSpace = THREE.LinearSRGBColorSpace;
+> src/world/materials.ts:727:  t.colorSpace = THREE.SRGBColorSpace;
+> src/world/materials.ts:1182:  if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+> src/vfx/flow05.ts:193:  flowMap.colorSpace = THREE.NoColorSpace;
+> src/vfx/flow05.ts:202:  ripple.colorSpace = THREE.NoColorSpace;
+> src/world/laundryRoom.ts:85:  const sky = new THREE.Mesh(new THREE.PlaneGeometry(winW, winH), new THREE.MeshBasicMaterial({ map: skyTex, toneMapped: false, fog: false }));
+> src/world/environment.ts:684:  const sky = new THREE.Mesh(new THREE.CircleGeometry(6.2, 48), new THREE.MeshBasicMaterial({ map: skyTex, toneMapped: false }));
+> src/world/environment.ts:712:  const screen = new THREE.Mesh(new THREE.PlaneGeometry(6.6, 4.2), new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false }));
+> src/world/environment.ts:793:  const mat = new THREE.MeshBasicMaterial({ map: tex, color: '#bff6ff', transparent: true, opacity:  …[+70 chars]
+
+### 🤖 Claude — 2026-11-16T14:11:10.165Z
+
+> 🔧 **Bash** `{"command": "grep -rni \"bloom\" src --include=*.ts | head -20; wc -l src/render/grade.ts src/render/env.ts; sed -n 40,70p src/render/env.ts; grep -n \"marblePano05\\|colorSpace\" src/world/materials.ts | sed -n 1,12p", "description": "Find bloom implementation and pano colour space"}`
+
+### 🧑 User — 2026-11-16T14:11:10.214Z
+
+> ↩︎ result: src/world/materials.ts:249:    uBcSpot: { value: lin3(1.6, 1.5, 1.3) }, // warm white, blooms a little
+> src/world/materials.ts:805: * core blooms a little. It fades with the CAMERA distance to its own centre: full beyond `fade.y`, gone
+> src/vfx/waterRibbon.ts:120: * (exposure 0.86 → Neutral → sRGB → grade.ts saturation 1.36 / contrast 1.15; bloom ignored) so the
+> src/vfx/waterRibbon.ts:467:// sRGB → grade (sat 1.36 / con 1.15), bloom ignored. Cyan has R ≈ 0 and aqua (G ≈ B) highlights like the approved;
+> src/vfx/glsl.ts:106:  // streaks, the bare 1-px arms read as thin wire crosses (the game's bloom is weak)
+> src/vfx/glsl.ts:143: * desaturate them toward pastel; only highlights/sparkles/foam exceed 1.0 (and feed bloom).
+> src/game/Game.ts:14:import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+> src/game/Game.ts:60:  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+> src/game/Game.ts:61:  const useBloom = qs.get('bloom') !== '0';
+> src/game/Game.ts:62:  if (useBloom) composer.addPass(bloom);
+> src/game/Game.ts:71:    bloom.resolution.set(w / 2, h / 2);
+>   26 src/render/grade.ts
+>   60 src/render/env.ts
+>   86 total
+>     const m = o as T …[+924 chars]
+
+### 🤖 Claude — 2026-11-16T14:11:11.726Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 40, "limit": 45}`
+
+### 🧑 User — 2026-11-16T14:11:11.744Z
+
+> ↩︎ result: 40	  const qaMode = qs.has('qa');
+> 41	  const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });
+> 42	  const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+> 43	  renderer.setPixelRatio(dpr);
+> 44	  const scene = new THREE.Scene();
+> 45	  scene.environment = createCandyEnvironment(renderer);
+> 46	  scene.background = new THREE.Color('#b23fb4');
+> 47	  const fog = new THREE.FogExp2('#ffbde9', 0.0035);
+> 48	  scene.fog = fog;
+> 49	  scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+> 50	  const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+> 51	  sun.position.set(0.3, 1, 0.45);
+> 52	  scene.add(sun);
+> 53	  scene.add(sun.target);
+> 54	  const fill = new THREE.PointLight('#ffd8ff', 30, 30, 1.6);
+> 55	  scene.add(fill);
+> 56	
+> 57	  const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+> 58	  const composer = new EffectComposer(renderer);
+> 59	  composer.addPass(new RenderPass(scene, camera));
+> 60	  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+> 61	  const useBloom = qs.get('bloom') !== '0';
+> 62	  if (useBloom) composer.addPass(bloom);
+> 63	  composer.addPass(new OutputPass());
+> 64	  composer.addPas …[+729 chars]
+
+### 🤖 Claude — 2026-11-16T14:11:12.031Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/render/grade.ts"}`
+
+### 🧑 User — 2026-11-16T14:11:12.049Z
+
+> ↩︎ result: 1	/** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> 2	import * as THREE from 'three';
+> 3	import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+> 4	
+> 5	export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+> 6	  return new ShaderPass({
+> 7	    uniforms: {
+> 8	      tDiffuse: { value: null },
+> 9	      uSat: { value: opts.saturation ?? 1.36 },
+> 10	      uCon: { value: opts.contrast ?? 1.15 },
+> 11	      uVig: { value: opts.vignette ?? 0.18 },
+> 12	    },
+> 13	    vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+> 14	    fragmentShader: /* glsl */ `
+> 15	      uniform sampler2D tDiffuse; uniform float uSat; uniform float uCon; uniform float uVig; varying vec2 vUv;
+> 16	      void main(){
+> 17	        vec4 c = texture2D(tDiffuse, vUv);
+> 18	        float l = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
+> 19	        vec3 col = mix(vec3(l), c.rgb, uSat);
+> 20	        col = (col - 0.5) * uCon + 0.5;
+> 21	        vec2 d = vUv - 0.5; d.x *= 0.75;
+> 22	        col *= 1.0 - uVig * smoothstep(0.25, 0.75, length(d …[+137 chars]
+
+### 🤖 Claude — 2026-11-16T14:12:00.943Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow\\s*=\\|__rainbow\\.\\w\\+\\s*=\\|goto(\\|step(\\|pause\\|setTime\\|fixedDt\\|advance\" src/game/Game.ts | head -25; grep -n \"uTime.value\\|flow05Shared.uTime\" src -r | head -6", "description": "Find QA hooks for stepping game time"}`
+
+### 🧑 User — 2026-11-16T14:12:00.986Z
+
+> ↩︎ result: 6: *                   5 hearts (bumping the foam walls costs one), pause/resume.
+> 30:const sm = (a: number, b: number, x: number) => THREE.MathUtils.smoothstep(x, a, b);
+> 110:    paused: false,
+> 317:    setTimeout(() => hud.showHint(null), 3500);
+> 390:      st.paused = true;
+> 391:      void playCinematic(cinematic.ending, { onEnding: () => { st.t = Math.max(st.t, O.badge - 0.4); st.paused = false; } });
+> 465:    st.paused = true;
+> 466:    void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
+> 471:    st.paused = !st.paused;
+> 472:    hud.showPaused(st.paused);
+> 475:    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+> 487:    if (st.paused) return;
+> 587:    /** deterministic simulation: advance n steps of dt (no rendering needed) */
+> 588:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 594:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2) …[+674 chars]
+
+### 🤖 Claude — 2026-11-16T14:12:02.964Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 560, "limit": 100}`
+
+### 🧑 User — 2026-11-16T14:12:02.986Z
+
+> ↩︎ result: 560	      if (cp.mode === 'outro') {
+> 561	        startOutro();
+> 562	        settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+> 563	      } else {
+> 564	        // settle camera springs without moving Benny: run with speed frozen
+> 565	        const s0 = st.s;
+> 566	        for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+> 567	        rideCam.update(0, st.s, st.lat, camera, true);
+> 568	      }
+> 569	    }
+> 570	    // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+> 571	    const refId = (id.slice(0, 2) as StageId);
+> 572	    st.coins = course.stage(refId).refCoins || START_COINS;
+> 573	    hud.setCoins(st.coins);
+> 574	    hud.setHearts(5);
+> 575	    render();
+> 576	    dirty = false;
+> 577	    return { stage: st.stage, s: st.s, y: benny.root.position.y };
+> 578	  };
+> 579	
+> 580	  const api = {
+> 581	    ready: true,
+> 582	    checkpoints: Object.keys(CHECKPOINTS),
+> 583	    goto: gotoCheckpoint,
+> 584	    run(v = true) { running = v; last = performance.now(); },
+> 585	    unfreeze() { st.frozen = null; input.override = null; },
+> 586	    setSteer(v: number | null) { input.override = v; },
+> 587	    /** deterministic simulation: advance n steps o …[+5016 chars]
+
+### 🤖 Claude — 2026-11-16T14:12:17.389Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^const FLOW05 = 1.3;\\|^/\\*\\* 05 texture advection\" src/vfx/waterRibbon.ts; grep -n \"^import\" src/game/Game.ts | tail -6; grep -n \"^import.*waterRibbon\\|FLOWMAP05\" src/world/environment.ts | head -3", "description": "Locate FLOW05 constant and imports"}`
+
+### 🧑 User — 2026-11-16T14:12:17.442Z
+
+> ↩︎ result: 136:/** 05 texture advection relative to the stage speed (>1: the current visibly overtakes Benny) */
+> 137:const FLOW05 = 1.3;
+> 20:import { createHud } from '../ui/hud';
+> 21:import { findCinematic, playCinematic } from '../ui/cinematicVideo';
+> 22:import { createCoins, COIN_VALUE } from '../gameplay/coins';
+> 23:import { createInput } from '../gameplay/input';
+> 24:import { RideCamera } from './cameraRig';
+> 25:import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+> 13:import { FLOWMAP05 } from '../vfx/waterRibbon'; // Screen 05 test W11 (?flow05=1)
+> 321:  if (FLOWMAP05) {
+> 436:    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * 1.3 } : undefined));
+
+### 🤖 Claude — 2026-11-16T14:12:19.285Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "/** 05 texture advection relative to the stage speed (>1: the current visibly overtakes Benny) */\nconst FLOW05 = 1.3;", "new_string": ""}`
+
+### 🧑 User — 2026-11-16T14:12:19.320Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:12:22.384Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';\n};", "new_string": "  return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';\n};\n/** the same switch reader for other modules (Game.ts: `?glow05=1`) */\nexport const flag05 = q05;\n/**\n * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the\n * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026 …[+280 chars]`
+
+### 🧑 User — 2026-11-16T14:12:22.425Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:12:23.783Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { FLOWMAP05 } from '../vfx/waterRibbon'; // Screen 05 test W11 (?flow05=1)", "new_string": "import { FLOW05, FLOWMAP05 } from '../vfx/waterRibbon'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)"}`
+
+### 🧑 User — 2026-11-16T14:12:23.817Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:12:24.934Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "time: flow05Shared.uTime, speed: course.stage('05').speed * 1.3 } : undefined));", "new_string": "time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));"}`
+
+### 🧑 User — 2026-11-16T14:12:24.964Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:12:30.632Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);", "new_string": "  // Screen 05 test GL1 (user 2026-11-16: \"the glow on the highlights is most of what makes the approved version look so\n  // shiny\"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,\n  // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear\n  // HDR luminance). Switch off: 0.2 / 0.35 /  …[+930 chars]`
+
+### 🧑 User — 2026-11-16T14:12:30.665Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:12:31.634Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "import { RideCamera } from './cameraRig';", "new_string": "import { RideCamera } from './cameraRig';\nimport { flag05 } from '../vfx/waterRibbon';"}`
+
+### 🧑 User — 2026-11-16T14:12:31.668Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:12:36.158Z
+
+`tsc` next, then captures: the default (must stay pixel-identical) and W12 with bloom, tone mapping and both.
+
+### 🤖 Claude — 2026-11-16T14:12:41.410Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && W='silk05=1&puff05=1' && (\nnode scripts/capture.mjs 05 --out=$S/gl_default >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&glow05=1\" --out=$S/gl_A >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&glow05=1&bloomT=1.3\" --out=$S/gl_B >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&tone05=none\" --out=$S/gl_C >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&glow05=1&tone05=none\" --out=$S/gl_D >/dev/null 2>&1 ); grep -o '\"errors\":\\[ …[+519 chars]`
+

@@ -133,8 +133,6 @@ const RIVER05_PAL = {
   pinkLight: lin(0.92, 0.3, 0.88),
   pinkStreak: lin(1.1, 0.58, 1.04),
 };
-/** 05 texture advection relative to the stage speed (>1: the current visibly overtakes Benny) */
-const FLOW05 = 1.3;
 
 /**
  * Screen 05 controlled water test W10 (?water05=1, water-fx-specialist wave 10; qa/pilot05/wave10/water/NOTES.md).
@@ -158,6 +156,15 @@ const q05 = (key: string): boolean => {
   }
   return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
 };
+/** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+export const flag05 = q05;
+/**
+ * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the
+ * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026-11-16: "scroll the
+ * texture so the water flows toward the camera"): 0.5 — slower than the ride, so the streaks stream TOWARD the camera
+ * at half the ride speed while still moving downstream in the world.
+ */
+export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
 /**
  * Screen 05 test W11 (2026-11-16, qa/pilot05/wave11/NOTES.md) — ONE reversible demonstration `?river05=1` made of two
  * factors that can also be switched on separately (each on top of the W10 palette, so `?water05=1` is their baseline):

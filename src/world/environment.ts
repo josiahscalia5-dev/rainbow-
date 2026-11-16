@@ -10,7 +10,7 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
-import { FLOWMAP05 } from '../vfx/waterRibbon'; // Screen 05 test W11 (?flow05=1)
+import { FLOW05, FLOWMAP05 } from '../vfx/waterRibbon'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
@@ -433,7 +433,7 @@ export function buildEnvironment(course: Course): Environment {
     // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP
     const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
     const farLay = farRiverLayout(course, ft, level);
-    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * 1.3 } : undefined));
+    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));
     Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay });
     // rings (one per knot) and a lid pair just in front of each ring (as the real 05 lids), low-poly: small on screen
     const ringItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
