@@ -1936,3 +1936,67 @@ The uncapped slope turns into large slanted planes that cut across the far rings
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit 2>&1 | head; echo tsc $?; /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9/look.sh look5", "description": "Scratch look with capped ramp and wider foam", "timeout": 600000}`
 
+### 🧑 User — 2026-11-16T02:44:00.443Z
+
+> ↩︎ result: tsc 0
+> cyan    20.3%  median #4DC6FF
+> pink    34.5%  median #DD53BA
+> white   16.5%  median #D7D4FF
+> violet   1.1%  median #BF80F3
+> gold    10.6%  median #FFC86C
+
+### 🤖 Claude — 2026-11-16T02:44:02.634Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9/look5_zoom.png"}`
+
+### 🧑 User — 2026-11-16T02:44:02.675Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:44:14.638Z
+
+The ramp adds a busy moiré on the bank floor and is not closer to the reference, so I'll revert it and keep the level floor (matches the environment's near floor) with the wider, higher foam banks.
+
+### 🤖 Claude — 2026-11-16T02:44:19.093Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "    const floorY = floor05(sF05).y;\n    let farFloor: ((Z: number, x: number) => number) | undefined; // set once the far river layout exists (below)\n    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T, { aspect: K, floorY: K > 1.001 ? floorY : undefined, floorAt: (Z, x) => (farFloor ? farFloor(Z, x) : floorY) });\n    // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP\n    const level = -(perfPath.radius(sF05) - p …[+866 chars]`
+
+### 🧑 User — 2026-11-16T02:44:19.160Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-16T02:44:20.437Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05, farFloor05 } from './far05';", "new_string": "import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05 } from './far05';"}`
+
+### 🧑 User — 2026-11-16T02:44:20.530Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:44:24.043Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "\n/**\n * wave 9: bank floor of the far (oval) section — level `floorY` (the near 05 bank floor, environment floor05) at the\n * seam; further in, beyond each foam bank's foot it slopes up toward the wall, so the slotted wall runs down to the\n * foam as in ref 05 (instead of a flat pale platform between foam and wall). It must stay a floor (lifted, never the\n * open ellipse below): the forced section maps virtual heights above the real ones, so a lifted floor always hides\n * the real tube floor / ri …[+576 chars]`
+
+### 🧑 User — 2026-11-16T02:44:24.103Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:44:25.475Z
+
+Now revert the `floorAt` plumbing in my ForcedTunnel class (keep only `aspect`/`floorY`).
+
+### 🤖 Claude — 2026-11-16T02:44:26.286Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"floorAt\\|readonly floorY\\|this.floorY\" src/world/tube.ts", "description": "Locate floorAt code in tube.ts"}`
+
+### 🧑 User — 2026-11-16T02:44:26.357Z
+
+> ↩︎ result: 572:  readonly floorY: number | undefined;
+> 574:  readonly floorAt: ((Z: number, x: number) => number) | undefined;
+> 575:  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number; floorAt?: (Z: number, x: number) => number } = {}) {
+> 577:    this.floorY = shape.floorY;
+> 578:    this.floorAt = shape.floorAt;
+> 665:        if (this.floorY !== undefined) {
+> 667:          const fy = this.floorAt ? this.floorAt(Z, x) : this.floorY;
+> 671:            const dx = this.floorAt ? (this.floorAt(Z, x + 0.05) - this.floorAt(Z, x - 0.05)) / 0.1 : 0;
+

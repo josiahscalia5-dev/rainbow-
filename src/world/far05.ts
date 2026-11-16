@@ -186,25 +186,6 @@ export const farFoamWidth = (Z: number) => 1.1 + 1.9 * smoothstep(1, 18, Z);
 /** height of the foam bank's crest above the far water level (rounded lumpy bank, ≈0.6 × lump radius high) */
 const FOAM_CREST = 0.55;
 
-/**
- * wave 9: bank floor of the far (oval) section — level `floorY` (the near 05 bank floor, environment floor05) at the
- * seam; further in, beyond each foam bank's foot it slopes up toward the wall, so the slotted wall runs down to the
- * foam as in ref 05 (instead of a flat pale platform between foam and wall). It must stay a floor (lifted, never the
- * open ellipse below): the forced section maps virtual heights above the real ones, so a lifted floor always hides
- * the real tube floor / ribbon past the seam.
- */
-export function farFloor05(lay: FarRiverLayout, floorY: number, rise = 0.9, run = 2.2) {
-  return (Z: number, x: number) => {
-    const w = smoothstep(3, 16, Z);
-    if (w <= 0) return floorY;
-    const r = lay.row(Z), fw = farFoamWidth(Z);
-    const b0 = r.xB - r.hw - fw * 0.85, b1 = r.xB + r.hw + fw * 0.85;
-    const d = x < b0 ? b0 - x : x > b1 ? x - b1 : 0;
-    // a low ramp (never a tall slab: the far rings' lower arcs and the lids must stay visible)
-    return floorY + w * rise * smoothstep(0, run, d);
-  };
-}
-
 export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: number, cols = 16, steps = 120): THREE.BufferGeometry {
   // columns: floor (2) · foam bank (bank) · water (cols) · foam bank · floor (2)
   const bank = 6, flr = 2;

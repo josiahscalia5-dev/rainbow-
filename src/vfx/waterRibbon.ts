@@ -957,13 +957,22 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     uP5Streak: { value: RIVER05_PAL.pinkStreak.clone() },
     uFlow05: { value: course.stage('05').speed * FLOW05 },
   });
+  // (wave 9, temporary QA hook) `?w9dbg` in the URL compiles debug views of the 05 river (uDbg: 1 no lighting adds,
+  // 2 streak glow, 3 base ladder, 4 no bump) and exposes the uniforms as window.__w9; without it nothing changes
+  const dbg = typeof location !== 'undefined' && new URLSearchParams(location.search).has('w9dbg');
+  const defines: Record<string, number> = quality === 'low' ? { LOW_Q: 1 } : {};
+  if (dbg) {
+    defines.W9DBG = 1;
+    (uniforms as Record<string, THREE.IUniform>).uDbg = { value: 0 };
+    (window as unknown as { __w9: unknown }).__w9 = uniforms;
+  }
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: VERT,
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: quality === 'low' ? { LOW_Q: 1 } : {},
+    defines,
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'water_ribbon';

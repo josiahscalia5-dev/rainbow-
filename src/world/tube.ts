@@ -570,12 +570,9 @@ export class ForcedTunnel {
    */
   readonly aspect: number;
   readonly floorY: number | undefined;
-  /** optional bank-floor height (along U) at virtual depth Z and lateral x — overrides the level floorY */
-  readonly floorAt: ((Z: number, x: number) => number) | undefined;
-  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number; floorAt?: (Z: number, x: number) => number } = {}) {
+  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number } = {}) {
     this.aspect = shape.aspect ?? 1;
     this.floorY = shape.floorY;
-    this.floorAt = shape.floorAt;
     const f = path.frame(sF);
     this.c0 = tubeCenterAt(path, sF);
     // `axis`: direction of the straight run the camera looks down (the path's tangent at sF may already
@@ -662,15 +659,9 @@ export class ForcedTunnel {
         o.copy(this.Rt).multiplyScalar(Math.cos(th) * K * r0).addScaledVector(this.U, Math.sin(th) * r0);
         // ellipse normal; the lifted bank floor faces down (outward), as the near 05 walls (buildTubeGeometry floor)
         d.copy(this.Rt).multiplyScalar(Math.cos(th) / K).addScaledVector(this.U, Math.sin(th)).normalize();
-        if (this.floorY !== undefined) {
-          const x = Math.cos(th) * K * r0;
-          const fy = this.floorAt ? this.floorAt(Z, x) : this.floorY;
-          if (Math.sin(th) * r0 < fy) {
-            o.addScaledVector(this.U, fy - Math.sin(th) * r0);
-            // floor normal (outward = down), tilted outward where the bank floor slopes up toward the wall
-            const dx = this.floorAt ? (this.floorAt(Z, x + 0.05) - this.floorAt(Z, x - 0.05)) / 0.1 : 0;
-            d.copy(this.U).negate().addScaledVector(this.Rt, dx).normalize();
-          }
+        if (this.floorY !== undefined && Math.sin(th) * r0 < this.floorY) {
+          o.addScaledVector(this.U, this.floorY - Math.sin(th) * r0);
+          d.copy(this.U).negate();
         }
         this.point(Z, o, p);
         const k = i * (radial + 1) + j;

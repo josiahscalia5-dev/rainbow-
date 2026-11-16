@@ -9,7 +9,7 @@ import { Course, WORLD, funnelY } from './course';
 import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, OVAL05 } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
-import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05, farFloor05 } from './far05'; // path-camera (05 far tunnel block)
+import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05 } from './far05'; // path-camera (05 far tunnel block)
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -413,14 +413,12 @@ export function buildEnvironment(course: Course): Environment {
     // wave 9: the same OVAL section as the near 05 tunnel at the seam (environment `oval05`/`floor05`: lateral
     // stretch K, level bank floor just under the water), so walls, rings and lids continue without a step
     const K = oval05(sF05);
-    const floorY = floor05(sF05).y;
-    let farFloor: ((Z: number, x: number) => number) | undefined; // set once the far river layout exists (below)
-    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T, { aspect: K, floorY: K > 1.001 ? floorY : undefined, floorAt: (Z, x) => (farFloor ? farFloor(Z, x) : floorY) });
+    // (a lifted floor, never the open ellipse below the water: the forced section maps virtual heights above the
+    // real ones, so the lifted floor hides the real tube floor / ribbon past the seam)
+    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T, { aspect: K, floorY: K > 1.001 ? floor05(sF05).y : undefined });
     // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP
     const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
     const farLay = farRiverLayout(course, ft, level);
-    // wave 9: beyond the far foam banks the bank floor slopes up into the wall (far05.ts farFloor05)
-    farFloor = farFloor05(farLay, floorY);
     // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
     const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
     const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);

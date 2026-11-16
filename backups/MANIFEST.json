@@ -399,7 +399,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5841,
-   "sha256": "fd74f824bd2b53a64584f7f25ed8a971c7f94927a9f4068aac61eefb0e27128b"
+   "sha256": "9b33627fd6275ec319c3880a9e0d7b5f6857883bed649a85bbb431cb605e03cc"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -879,7 +879,7 @@
   {
    "path": "qa/gameplay_test.json",
    "bytes": 14632,
-   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+   "sha256": "23c6cf019f663b50138ae787b63a16093ea550b85a6157277f74d182dc107e34"
   },
   {
    "path": "qa/glb_validation.txt",
@@ -943,8 +943,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 12604,
-   "sha256": "2af49c05cdc43e9ce243a1a0b20a9c888b387f25ab515e95b526b66c173a033e"
+   "bytes": 14014,
+   "sha256": "7a21cdccb8611a468fcf9e8f6f246b90c611f1f4025b3d846edb57dfe48e44ab"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -5828,8 +5828,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 53785,
-   "sha256": "fa935b9bae968b5d76f04e83549fa43762c3bbd4fa4bf04cfabc80f66d0b72bd"
+   "bytes": 54330,
+   "sha256": "be4f6df62dda0c7c1397d64ca92be20e7612b847f89cbb5289d7e824dfee26eb"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -5843,13 +5843,13 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 54793,
-   "sha256": "0c00d219e733caf64d854e519ef2f1dbb418ba23ad01689be36ad18332c53507"
+   "bytes": 54730,
+   "sha256": "2c2145ece026a46fac3f1ffcef3a72cd3413561f9f011a386f209aee8099546e"
   },
   {
    "path": "src/world/far05.ts",
-   "bytes": 26669,
-   "sha256": "e5dcd471676b7900e48e84d8d1ad47bd97650047b55702e28fd8df3cefe636ea"
+   "bytes": 25621,
+   "sha256": "d4410333dda7b6c687e54ee89e61143fbf0f8c88291195543f9d2aae3b79f940"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -5868,8 +5868,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 46347,
-   "sha256": "7f136174e5b0445bceebb1be680d4af96b4b7847b216f17a4828e064989b4f15"
+   "bytes": 45712,
+   "sha256": "869b54f5e0f2ee8a5bf4af59e485390c4ef2fa4854506568b9a7c1d3c700d7e8"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

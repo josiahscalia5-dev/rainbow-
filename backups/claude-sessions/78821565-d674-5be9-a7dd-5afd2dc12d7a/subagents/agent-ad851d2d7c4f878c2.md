@@ -1694,3 +1694,29 @@ Six iterations used; it06 is the kept state. Now the end checks: tsc, regression
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T02:44:17.329Z
+
+The A/B is clean: 08 identical, 05 differs as intended, and 04 differs in only 670 px (max delta 20) where 04 looks through the far opening at the 05 rim impostors. Now the gameplay test.
+
+### 🤖 Claude — 2026-11-16T02:44:18.178Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/gameplay-test.mjs 2>&1 | tail -15", "description": "Run gameplay test", "timeout": 960000}`
+
+### 🧑 User — 2026-11-16T02:44:30.354Z
+
+> ↩︎ result: "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+

@@ -1966,3 +1966,35 @@ I'll implement the shift in my geometry builders (walls, rings, lids) and ask pa
 
 > ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
 
+### 🤖 Claude — 2026-11-16T02:43:56.454Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": " * `floorBelowWater` units under the water line (see TubeGeoOptions.floor).\n */", "new_string": " * `floorBelowWater` units under the water line (see TubeGeoOptions.floor), and `shift`: lateral offset (along\n * `right`, units) of the 05 tunnel centre line — ref ring #1 is centred ≈67 px and ring #2 ≈24 px LEFT of the VP\n * (a parallel offset of a straight tunnel keeps its vanishing point), which also gives the ref's broad left bank.\n */"}`
+
+### 🧑 User — 2026-11-16T02:43:56.496Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:59.105Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const floor05 = (s: number) => ({ y: -(perfPath.radius(s) - perfPath.depth(s)) - OVAL05.floorBelowWater, w: THREE.MathUtils.clamp((oval05(s) - 1) / (K05 - 1) * 1.5, 0, 1) });", "new_string": "  const floor05 = (s: number) => ({ y: -(perfPath.radius(s) - perfPath.depth(s)) - OVAL05.floorBelowWater, w: THREE.MathUtils.clamp((oval05(s) - 1) / (K05 - 1) * 1.5, 0, 1) });\n  // lateral offset of the 05 tunnel centre (OVAL05.shift), blended exactly like the oval\n  const shift05 = (s: number) => OVAL0 …[+40 chars]`
+
+### 🧑 User — 2026-11-16T02:43:59.159Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-16T02:44:03.207Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='/home/user/rainbow-/src/world/environment.ts'\nt=open(p).read()\nreps=[\n(\"addWall(s05, sGlow05, perf05Mat, { oval: oval05, floor: floor05 });\",\"addWall(s05, sGlow05, perf05Mat, { oval: oval05, floor: floor05, shift: shift05 });\"),\n(\"addWall(sGlow05, s08, perfTubeMat, { oval: oval05, floor: floor05 });\",\"addWall(sGlow05, s08, perfTubeMat, { oval: oval05, floor: floor05, shift: shift05 });\"),\n(\"ringsFullOval ? { inset: 0.02, band: band05near, bandOval: K05 } : { inset: 0.02, band: band05near, oval: oval05 }\",\"ringsFullOval  …[+553 chars]`
+
+### 🧑 User — 2026-11-16T02:44:06.073Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:44:09.526Z
+
+tsc is clean. Filing the shift request for path-camera's far block.
+
+### 🤖 Claude — 2026-11-16T02:44:17.637Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; echo \"- wave9 washer-environment-modeler → path-camera-transition-engineer ($(date -u +%H:%M) UTC): thanks — oval far section works (scratch probe: no seam). One more 05-only shape term, same blend as the oval: \\`OVAL05.shift\\` = −1.8 u, a LATERAL OFFSET of the tunnel centre line along \\`right\\` (environment \\`shift05(s)\\` = OVAL05.shift·(oval05(s)−1)/(K−1); walls/rings/lids get \\`c += right·shift05(s)\\`). Reason: ref ring #1 is centred ≈67 px and ring #2 ≈24 px LEFT of the VP (ring #1 sides x≈10/855), the river sits right of the tunnel centre (bro …[+1181 chars]`
+
