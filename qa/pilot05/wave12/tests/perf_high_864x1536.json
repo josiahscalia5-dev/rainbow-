@@ -1,5 +1,5 @@
 {
-  "when": "2026-11-16T14:02:43.673Z",
+  "when": "2026-11-16T14:21:55.209Z",
   "size": [
     864,
     1536
@@ -12,46 +12,61 @@
       "name": "default",
       "query": "",
       "runs": [
-        2537.9,
-        2397.1
+        2390,
+        2415.4
       ],
       "calls": 86,
       "tris": 567415,
       "textures": 43,
       "geometries": 102,
       "errors": [],
-      "medianMs": 2397.1,
+      "medianMs": 2390,
       "vsFirst": 1
     },
     {
       "name": "river05",
       "query": "river05=1",
       "runs": [
-        2522.3,
-        2608.9
+        2441.6,
+        2513.8
       ],
       "calls": 86,
       "tris": 567415,
       "textures": 45,
       "geometries": 102,
       "errors": [],
-      "medianMs": 2522.3,
-      "vsFirst": 1.052
+      "medianMs": 2441.6,
+      "vsFirst": 1.022
     },
     {
       "name": "w12",
       "query": "silk05=1&puff05=1",
       "runs": [
-        2559.5,
-        2484
+        2410.3,
+        2430.9
       ],
       "calls": 86,
       "tris": 567415,
       "textures": 45,
       "geometries": 102,
       "errors": [],
-      "medianMs": 2484,
-      "vsFirst": 1.036
+      "medianMs": 2410.3,
+      "vsFirst": 1.008
+    },
+    {
+      "name": "w12full",
+      "query": "silk05=1&puff05=1&glow05=1&flowcam05=1",
+      "runs": [
+        2472.8,
+        2459.2
+      ],
+      "calls": 86,
+      "tris": 567415,
+      "textures": 45,
+      "geometries": 102,
+      "errors": [],
+      "medianMs": 2459.2,
+      "vsFirst": 1.029
     }
   ]
 }

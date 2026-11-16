@@ -1,8 +1,42 @@
-# Rainbow — Claude account transfer guide (newest: session 01Kbt6BT on branch `ccr-251ed97c-ty2xvp`, 2026-11-16 ~11:15 UTC)
+# Rainbow — Claude account transfer guide (newest: session 013VHsJB on branch `ccr-451ea8c7-3nqlis`, 2026-11-16 ~15:00 UTC)
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
 
-## ▶ NEWEST — permanent recovery + backup system (session `01Kbt6BT`, 2026-11-16 10:40–11:20 UTC), branch `ccr-251ed97c-ty2xvp` — READ THIS FIRST
+## ▶ NEWEST — account switch recovery + Screen 05 water wave 12 (session `013VHsJB`, 2026-11-16 13:42–15:00 UTC), branch `ccr-451ea8c7-3nqlis` — READ THIS FIRST
+The previous account (session `915f17cf`, branch `claude/rainbow-3d-account-recovery-hfb8p0`) ran out of credits at 13:32
+UTC, right after its W11 water work and before its emergency-backup request could run. Nothing was lost: its 13:32 Stop
+hook save and 13:37 daemon save (`088dd3f`) are on GitHub and its working tree was clean.
+
+### Recovery on the new account (verified)
+| Check | Result |
+|---|---|
+| SessionStart hook | merged `ccr-251ed97c-ty2xvp` (13:42, `494848d`), 14/14 remote branches contained, LFS 24/24 real files, all on GitHub LFS (184 MB, 17 Marble) |
+| Bootstrap | BOOTSTRAP OK with one warning: Marble API key HTTP 401 on this account's personal environment `rainbow-` |
+| Marble key | user re-entered it through `request_credential` (host `api.worldlabs.ai`, header `WLT-Api-Key`); free read OK: 5,190 credits, both worlds HTTP 200. No credits spent |
+| Atlas connector | NOT installed on this Claude account (ListConnectors: none) — add it in claude.ai only for an Atlas task |
+| Environment setup script | the user DECLINED adding `scripts/cloud-env-setup.sh` as the `rainbow-` environment's setup script — do not propose it again; the SessionStart hook installs Blender / Android SDK / npm in every session anyway (≈1 min) |
+| Protected checkpoint | `claude/rainbow-3d-account-recovery-hfb8p0` (`088dd3f`) added to `protected_branches`; `autosave.config.json` → `branch` = `ccr-451ea8c7-3nqlis` |
+| Autosave | daemon every 5 min, remote == local verified repeatedly |
+| Tools | Node 22.23.4 / npm 10.9.9, Playwright Chromium WebGL2 (SwiftShader), Blender 5.3.0 (bpy OK), Android SDK 34 + build-tools 34.0.0 + Java 21, ffmpeg, ImageMagick, Python QA libs; plugins incl. playwright, worldlabs, superpowers; MCP: playwright + github connected, context7 / design MCPs fail (proxy 403, not used by Rainbow) |
+| Specialists | 10/10 definitions, SHA-256 unchanged, none running (none needed relaunching) |
+
+### Work done (all behind URL switches; default T2 and BEFORE pixel-identical)
+* Wave 11 write-up that the previous account could not write: `qa/pilot05/wave11/NOTES.md`.
+* **Wave 12** — `qa/pilot05/wave12/NOTES.md`: `?silk05=1` (smooth long streaks along the current, deep electric cyan),
+  `?puff05=1` (bubbly foam banks), `?glow05=1` (Screen-05-only highlight bloom, threshold 2.6), `?flowcam05=1` (water
+  streams toward the camera), `?tone05=` (tone-mapping test, not kept). NEW = `?silk05=1&puff05=1&glow05=1&flowcam05=1`.
+  Gameplay 8/8, continuity OK, +3–5 % relative frame cost. Full-size pictures `qa/pilot05/wave12/compare/`.
+* New QA tool `tools/qa/water05_grain.py`; build-time switch `VITE_RAINBOW_Q05` for experiment APKs.
+* Android: see `qa/pilot05/wave12/android/NOTES.md` (experiment + default APK in `builds/`); no device → device fps unverified.
+
+### Exact next tasks
+1. The user's verdict on W12 (and on W2 `?wall05=1`, G1b `?gold05=1`, still waiting).
+2. Then, one factor at a time (W12 "Left undone"): vivid magenta ribbons beside Benny + bigger near flares; splash
+   beads / froth collar (foam-bubbles-particles); far-river saturation under the golden glow; polished gold rings,
+   purple metal walls, premium lighting. Then screens 03, 04, 06, 07, 08, 09.
+3. Flow videos: still no `intro.mp4` / `ending.mp4` in `public/video/` — ask the user.
+
+## Earlier — permanent recovery + backup system (session `01Kbt6BT`, 2026-11-16 10:40–11:20 UTC), branch `ccr-251ed97c-ty2xvp` — READ THIS FIRST
 This section wins over everything below it (history). Prompt for a new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`.
 
 ### One command — recovery is automatic now

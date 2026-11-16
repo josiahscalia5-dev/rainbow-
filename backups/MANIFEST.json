@@ -403,13 +403,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 40620,
-   "sha256": "40b2099cb6c868c4e1f1c26b2c2d0cb5aa8bcfa52f04dd42e2bdcd2d0e1cecd9"
+   "bytes": 44097,
+   "sha256": "ea858809b59088f7ac98d2f1c00146bde5d9b0fa5ba2cad3c9ff8cbad2e3bd17"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7780,
-   "sha256": "ec70280b986f83c0d20645d9d8f8a1f12d8f4c4c71c2fd9e2db52e48cf05524d"
+   "sha256": "ffeb3aa91103338657d7f9502a074419e2c395863562951ad9fc2d79002c3a4b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -455,6 +455,11 @@
    "path": "backups/source-package/Rainbow_GitHub_Autosave_5_Minute_Claude_Prompt.md",
    "bytes": 11339,
    "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
+  },
+  {
+   "path": "builds/rainbow-debug-w12-water.apk",
+   "bytes": 7391867,
+   "sha256": "fdbf9c695e1ef8550c61f51b4dace45c59bdcd69be917c0e280a5a3abe808211"
   },
   {
    "path": "builds/rainbow-debug.apk",
@@ -958,8 +963,8 @@
   },
   {
    "path": "qa/pilot05/COORDINATION_WAVE9B.md",
-   "bytes": 11699,
-   "sha256": "71f10ae2a1e1409f2186af52d74083644688c584ba774030372d4fdec288a44b"
+   "bytes": 12257,
+   "sha256": "48602a6e3024529538811e5e800ad85830cd94ad6cdfcce7d706b1d8651bf52d"
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
@@ -1502,9 +1507,24 @@
    "sha256": "9bf5b87867ce4b32fd63b0b571782633ce6fdd7a99e6afb93bcc40b31fe2fb90"
   },
   {
+   "path": "qa/pilot05/wave12/NOTES.md",
+   "bytes": 8093,
+   "sha256": "7a2de0aa4ce500cdc0f56bf1fcabe2ba4687138b7222323cc15e575d4bf68fb6"
+  },
+  {
    "path": "qa/pilot05/wave12/WATER_INDICATORS.md",
-   "bytes": 1937,
-   "sha256": "f9ecf539ab4deabefbb123bbb6273d101a0e38b06959811bb97135cae3c15243"
+   "bytes": 1967,
+   "sha256": "e07492b09a0397ac6bd250e6880f279cd5e337a149d737571e85c1f8d2c38477"
+  },
+  {
+   "path": "qa/pilot05/wave12/android/build_default_log.txt",
+   "bytes": 2362,
+   "sha256": "dc2f8a3a5d1b1e2969892718852a3c1ee5172cf8407772d487b51b386dac320f"
+  },
+  {
+   "path": "qa/pilot05/wave12/android/build_w12_log.txt",
+   "bytes": 12614,
+   "sha256": "d26c7f267927d899ffd44508e68be0e99cdccef35ea89a86250f3ea50800a631"
   },
   {
    "path": "qa/pilot05/wave12/compare/1_APPROVED_05.png",
@@ -1518,8 +1538,8 @@
   },
   {
    "path": "qa/pilot05/wave12/compare/3_NEW_W12_water_05.png",
-   "bytes": 1782814,
-   "sha256": "95da7e07aeb791c0345bdbf6063b3925d746d3f439e88a786dd9569bb5c6463f"
+   "bytes": 1755937,
+   "sha256": "dea968c0a55a2ecde9d540740d0c3385fc4d61220f4c79bc6693720b19f686ef"
   },
   {
    "path": "qa/pilot05/wave12/factors/W12_full/05.png",
@@ -1668,13 +1688,13 @@
   },
   {
    "path": "qa/pilot05/wave12/tests/perf_high_864x1536.json",
-   "bytes": 1152,
-   "sha256": "adc3a5b36b54b37a7201513ee398136788b415b95b13ad4de0557809e2818da9"
+   "bytes": 1460,
+   "sha256": "817e21d69381fe3073a00e81fb4e51f4bb26a5b928e1f0d1ce055505ee265265"
   },
   {
    "path": "qa/pilot05/wave12/tests/perf_low_864x1536.json",
-   "bytes": 908,
-   "sha256": "8c1256f41fc9b480ee54c3bc729eb53048d024ce0cff8541a1e83f970f9b2528"
+   "bytes": 933,
+   "sha256": "df3348cf70f17f2700bbcc992b9b6fabdd80e425fe4e785521789a5fdcf07111"
   },
   {
    "path": "qa/pilot05/wave12/tests/pixel_checks_05.json",

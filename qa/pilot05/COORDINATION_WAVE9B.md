@@ -127,3 +127,11 @@ Next, one at a time: (a) brighter white-pink highlights/marquee spots on walls +
   accepts a test. Check: capture 05, compare with `qa/pilot05/wave9/baseline/05.png`.
 * One factor per test, a URL switch, `ring_fit05.py` numbers, and a full-size approved | BEFORE | NEW picture.
 * Protected: locked STAGE_CAM['05'], Benny, HUD, gameplay, 05→06 join, 07→08 descent, the S-shaped river.
+
+## Water tests after the tunnel work (2026-11-16) — details in their own notes
+| Test | Switch | Notes | Status |
+|---|---|---|---|
+| W10 | `?water05=1` | `qa/pilot05/wave10/water/NOTES.md` | candidate |
+| S1 | `?fars05=1` | far-river S-path (`qa/pilot05/wave10/FAR_RIVER_ANALYSIS.md`) | candidate |
+| W11 | `?river05=1` (= `?farw05=1` + `?flow05=1`) | `qa/pilot05/wave11/NOTES.md` | user: "too grainy" |
+| **W12** | `?silk05=1&puff05=1&glow05=1&flowcam05=1` (each also alone) | `qa/pilot05/wave12/NOTES.md` | **newest candidate, waiting for the user** |

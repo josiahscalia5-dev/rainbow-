@@ -2957,3 +2957,183 @@ Re-running the final captures and the protection checks with the stage-limited b
 
 > 🔧 **Bash** `{"command": "O=qa/pilot05/wave12 && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && cp $O/tests/before_after/05.png $O/tests/before_after/05_flaky_HUD_frame.png && cp $S/bef1/05.png $O/tests/before_after/05.png && python3 - <<'EOF'\nimport json\np='qa/pilot05/wave12/tests/pixel_checks_final.json'\nd=json.load(open(p))\nd['before_vs_wave9_baseline']={\"max_pixel_difference\":0,\"differing_pixels\":0,\"note\":\"first capture differed in 155 px of the HUD bar only (rows 21-104, kept as 05_flaky_HUD_frame.png: a HUD animation caught mid-frame); two re-capture …[+978 chars]`
 
+### 🧑 User — 2026-11-16T14:31:19.491Z
+
+> ↩︎ result: high default 2390 ms x 1 calls 86 tris 567415 tex 43 err []
+> high river05 2441.6 ms x 1.022 calls 86 tris 567415 tex 45 err []
+> high w12 2410.3 ms x 1.008 calls 86 tris 567415 tex 45 err []
+> high w12full 2459.2 ms x 1.029 calls 86 tris 567415 tex 45 err []
+> low default_low 1858.9 ms x 1 calls 86 tris 425525 tex 43 err []
+> low w12full_low 1956.2 ms x 1.052 calls 86 tris 425525 tex 45 err []
+
+### 🤖 Claude — 2026-11-16T14:31:28.600Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T14:31:28.611Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-16T14:31:28.890Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T14:31:28.896Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-16T14:31:31.395Z
+
+> 🔧 **Bash** `{"command": "cat .gitattributes | head; python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print([p for p in d.get('allow',d.get('include',d.get('allow_list',[]))) if 'build' in p or 'apk' in p] if isinstance(d.get('allow',d.get('include',d.get('allow_list'))),list) else list(d.keys()))\"; ls ~/.gradle/wrapper/dists 2>/dev/null; git log -1 --format='%h %ad' --date=iso -- builds/rainbow-debug.apk; ls android/app/build/outputs/apk/debug 2>/dev/null", "description": "Check LFS patterns, autosave allow-list, gradle cache"}`
+
+### 🧑 User — 2026-11-16T14:31:31.470Z
+
+> ↩︎ result: Exit code 2
+> # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> ['project', 'repo_full_name', 'remote_name', 'remote_url_must_contain', 'branch', 'session_branch_patterns', 'commit_trailer', 'claude_projects_glob', 'allowlist', 'status_only_paths', 'max_plain_git_file_mb', 'push_retries', 'protected_branches', 'original_branch_note', 'branch_history_note']
+> f8e4b83 2026-11-15 18:00:06 +0000
+
+### 🤖 Claude — 2026-11-16T14:31:33.608Z
+
+> 🔧 **Bash** `{"command": "grep -n \"apk\\|zip\" .gitattributes; python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print([p for p in d['allowlist'] if 'build' in p or 'apk' in p]); print(d['max_plain_git_file_mb'])\"", "description": "Check APK LFS and allowlist entries"}`
+
+### 🧑 User — 2026-11-16T14:31:33.660Z
+
+> ↩︎ result: 15:*.apk   filter=lfs diff=lfs merge=lfs -text
+> 17:*.zip   filter=lfs diff=lfs merge=lfs -text
+> ['builds']
+> 49
+
+### 🤖 Claude — 2026-11-16T14:31:41.842Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/wave12/android && export ANDROID_HOME=/opt/android-sdk ANDROID_SDK_ROOT=/opt/android-sdk && ( time (VITE_RAINBOW_Q05='silk05=1&puff05=1&glow05=1&flowcam05=1' npm run android:debug) ) > qa/pilot05/wave12/android/build_w12_log.txt 2>&1; echo \"exit $?\" >> qa/pilot05/wave12/android/build_w12_log.txt; tail -15 qa/pilot05/wave12/android/build_w12_log.txt; ls -la android/app/build/outputs/apk/debug/", "description": "Build the W12 water experiment APK", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T14:31:41.888Z
+
+> ↩︎ result: Command running in background with ID: b5pp8av8e. Output is being written to: /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/tasks/b5pp8av8e.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T14:31:43.622Z
+
+While Gradle runs, I'll write the wave-12 technical write-up with all the measured numbers.
+
+### 🤖 Claude — 2026-11-16T14:31:46.426Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/wave12 && C=qa/pilot05/wave11/compare && cp $O/factors/W12_full/05.png $O/compare/3_NEW_W12_water_05.png && python3 -I tools/qa/water05_grain.py $O/WATER_INDICATORS.md APPROVED=$C/1_APPROVED_05.png T2_CURRENT=$O/tests/default/05.png RIVER05_W11=$O/tests/river05/05.png W12_silk+puff=$O/factors/silk05_puff05/05.png W12_silk+puff+glow=$O/factors/silk05_puff05_glow05/05.png W12_FULL=$O/factors/W12_full/05.png >/dev/null && cat $O/WATER_INDICATORS.md | grep \"mid river\\|near water\\|far river\" | grep \"W12_FULL\\|glow\"", "description": "Final NEW picture and indicator t …[+6 chars]`
+
+### 🧑 User — 2026-11-16T14:31:49.175Z
+
+> ↩︎ result: | W12_silk+puff+glow | far river 560-700 | 0.653 | 1.000 | 0.660 | 0.808 | 0.028 | 0.068 | 0.405 | 14.09 |
+> | W12_silk+puff+glow | mid river 700-1000 | 0.968 | 0.996 | 0.733 | 0.961 | 0.017 | 0.038 | 0.452 | 4.97 |
+> | W12_silk+puff+glow | near water 1000-1536 | 0.987 | 0.933 | 0.734 | 0.918 | 0.017 | 0.038 | 0.443 | 3.30 |
+> | W12_FULL | far river 560-700 | 0.729 | 1.000 | 0.664 | 0.816 | 0.028 | 0.070 | 0.392 | 13.58 |
+> | W12_FULL | mid river 700-1000 | 0.975 | 0.965 | 0.709 | 0.965 | 0.015 | 0.039 | 0.394 | 5.70 |
+> | W12_FULL | near water 1000-1536 | 1.000 | 0.910 | 0.735 | 0.898 | 0.017 | 0.039 | 0.446 | 3.34 |
+
+### 🤖 Claude — 2026-11-16T14:32:21.776Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave12/NOTES.md", "content": "# Screen 05 — wave 12 (W12): smooth silky water, bubbly foam banks, highlight glow, flow toward the camera\n\nSession `013VHsJBUBZaHLYkVpBPkFed`, branch `ccr-451ea8c7-3nqlis`, 2026-11-16 ~13:45–15:00 UTC. Coordinator work in the\nmain session (no specialist launched). Built on W11 (`qa/pilot05/wave11/NOTES.md`). Default build = **T2**, unchanged.\n\n## Why\n* User, 13:32 (end of the previous account): the W11 flow-map water (`?river05=1`) was **too grainy**; wanted long,\n  smooth, flow-aligned ripples, rich cyan, mage …[+7593 chars]`
+
+### 🧑 User — 2026-11-16T14:32:21.965Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave12/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T14:32:23.330Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/tasks/b5pp8av8e.output; tail -5 /home/user/rainbow-/qa/pilot05/wave12/android/build_w12_log.txt", "description": "Check APK build progress"}`
+
+### 🧑 User — 2026-11-16T14:32:23.375Z
+
+> ↩︎ result: > Configure project :app
+> WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
+> 
+> > Configure project :capacitor-cordova-android-plugins
+> WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
+
+### 🤖 Claude — 2026-11-16T14:32:26.290Z
+
+Gradle is configuring and its dependencies resolved. While it builds, I'll add this session's section to the top of the transfer guide.
+
+### 🤖 Claude — 2026-11-16T14:32:43.095Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='backups/CLAUDE_ACCOUNT_TRANSFER.md'\nt=open(p).read()\nold_title=t.split('\\n',1)[0]\nnew_title=\"# Rainbow — Claude account transfer guide (newest: session 013VHsJB on branch `ccr-451ea8c7-3nqlis`, 2026-11-16 ~15:00 UTC)\"\nt=t.replace(old_title,new_title,1)\nanchor=\"## ▶ NEWEST — permanent recovery + backup system\"\nsec='''## ▶ NEWEST — account switch recovery + Screen 05 water wave 12 (session `013VHsJB`, 2026-11-16 13:42–15:00 UTC), branch `ccr-451ea8c7-3nqlis` — READ THIS FIRST\nThe previous account (session `915f17cf`, branch `claude/rainbow-3d-accoun …[+3485 chars]`
+
+### 🧑 User — 2026-11-16T14:32:43.154Z
+
+> ↩︎ result: ok
+> > Task :capacitor-cordova-android-plugins:processDebugJavaRes NO-SOURCE
+> > Task :app:checkDebugDuplicateClasses
+> > Task :app:mergeDebugJniLibFolders
+
+### 🤖 Claude — 2026-11-16T14:32:48.588Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/COORDINATION_WAVE9B.md <<'EOF'\n\n## Water tests after the tunnel work (2026-11-16) — details in their own notes\n| Test | Switch | Notes | Status |\n|---|---|---|---|\n| W10 | `?water05=1` | `qa/pilot05/wave10/water/NOTES.md` | candidate |\n| S1 | `?fars05=1` | far-river S-path (`qa/pilot05/wave10/FAR_RIVER_ANALYSIS.md`) | candidate |\n| W11 | `?river05=1` (= `?farw05=1` + `?flow05=1`) | `qa/pilot05/wave11/NOTES.md` | user: \"too grainy\" |\n| **W12** | `?silk05=1&puff05=1&glow05=1&flowcam05=1` (each also alone) | `qa/pilot05/wave12/NOTES.md` | **newest candidat …[+304 chars]`
+
+### 🧑 User — 2026-11-16T14:33:13.673Z
+
+> ↩︎ result: 82 actionable tasks: 82 executed
+> 
+> real	1m29.503s
+> user	0m15.680s
+> sys	0m1.784s
+> exit 0
+> total 7232
+> drwxr-xr-x 2 root root    4096 Nov 16 14:33 .
+> drwxr-xr-x 3 root root    4096 Nov 16 14:33 ..
+> -rw-r--r-- 1 root root 7391867 Nov 16 14:33 app-debug.apk
+> -rw-r--r-- 1 root root     372 Nov 16 14:33 output-metadata.json
+
+### 🤖 Claude — 2026-11-16T14:33:21.361Z
+
+> 🔧 **Bash** `{"command": "cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug-w12-water.apk && D=$(mktemp -d -p /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad) && unzip -q builds/rainbow-debug-w12-water.apk -d $D && echo \"baked switch occurrences: $(grep -l 'silk05=1&puff05=1&glow05=1&flowcam05=1' -r $D/assets | wc -l) file(s)\" && ls $D/assets/public | head; /opt/android-sdk/build-tools/34.0.0/apksigner verify --print-certs builds/rainbow-debug-w12-water.apk 2>&1 | head -3; /opt/android-sdk/build-tools/34.0.0/aapt dump badging builds/rainbow-debug- …[+192 chars]`
+
+### 🧑 User — 2026-11-16T14:33:21.940Z
+
+> ↩︎ result: baked switch occurrences: 1 file(s)
+> assets
+> cordova.js
+> cordova_plugins.js
+> index.html
+> video
+> Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=42893 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|172.31.*|192.168.*|100.64.0.0/10|*.svc.cluster.local|*.svc.cluster.local -Djdk.http.auth.tunneling.disabledSchemes= -Djdk.http.auth.proxying.disabledSchemes=
+> Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+> Signer #1 certificate SHA-256 digest: d6506c9f13a0b333374ecf9498274b119d7a89b05ff145be4a667c39687bd913
+> package: name='com.rainbow.washergame' versionCode='1' versionName='1.0' platformBuildVersionName='14' platformBuildVersionCode='34' compileSdkVersion='34' co …[+256 chars]
+
+### 🤖 Claude — 2026-11-16T14:33:29.578Z
+
+> 🔧 **Bash** `{"command": "export ANDROID_HOME=/opt/android-sdk ANDROID_SDK_ROOT=/opt/android-sdk && ( time npm run android:debug ) > qa/pilot05/wave12/android/build_default_log.txt 2>&1; echo \"exit $?\" >> qa/pilot05/wave12/android/build_default_log.txt; tail -4 qa/pilot05/wave12/android/build_default_log.txt", "description": "Build the default T2 APK", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T14:33:29.595Z
+
+> ↩︎ result: Command running in background with ID: bywt5viug. Output is being written to: /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/tasks/bywt5viug.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T14:33:30.588Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p scripts/lib/pw.mjs | grep -n \"export\\|CHROMIUM_ARGS\" | head; sed -n 30,60p scripts/capture.mjs", "description": "Read capture helper internals"}`
+
+### 🧑 User — 2026-11-16T14:33:30.643Z
+
+> ↩︎ result: 7:export function loadPlaywright() {
+> 16:export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 19:export async function startVite(port = 5199) {
+> 27:export async function waitDone(page, timeoutMs = 180000) {
+>     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+>     page.on('console', (m) => { if (m.type() === 'error') log.errors.push(`[${id}] ${m.text()}`); });
+>     page.on('pageerror', (e) => log.errors.push(`[${id}] pageerror ${e.message}`));
+>     await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+>     await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>     const err = await page.evaluate(() => window.__error);
+>     if (err) throw new Error(err);
+>     if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+>     const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+>     // …[+1645 chars]
+

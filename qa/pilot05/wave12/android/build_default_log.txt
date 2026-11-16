@@ -1,0 +1,54 @@
+
+> rainbow-washer-game@0.1.0 android:debug
+> npm run android:sync && cd android && ./gradlew assembleDebug
+
+
+> rainbow-washer-game@0.1.0 android:sync
+> npm run build && npx cap sync android
+
+
+> rainbow-washer-game@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 52 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                               0.74 kB │ gzip:   0.45 kB
+dist/assets/baloo-2-vietnamese-800-normal-ConLnEgt.woff2      4.80 kB
+dist/assets/baloo-2-vietnamese-700-normal-h4tlcePq.woff2      5.41 kB
+dist/assets/baloo-2-vietnamese-800-normal-GQACmpuv.woff       6.74 kB
+dist/assets/baloo-2-vietnamese-700-normal-DoF59Mjc.woff       7.28 kB
+dist/assets/baloo-2-latin-ext-800-normal-C_Iwmf1s.woff2      15.07 kB
+dist/assets/baloo-2-latin-ext-700-normal-Mlh7kdab.woff2      16.04 kB
+dist/assets/baloo-2-latin-800-normal-BbF3Etk1.woff2          18.63 kB
+dist/assets/baloo-2-latin-700-normal-CqTg7A15.woff2          19.44 kB
+dist/assets/baloo-2-latin-ext-800-normal-D-iCxxqE.woff       19.67 kB
+dist/assets/baloo-2-latin-ext-700-normal-D6LeXASg.woff       20.42 kB
+dist/assets/baloo-2-latin-800-normal-B8BXfZF7.woff           22.60 kB
+dist/assets/baloo-2-latin-700-normal-Ld3Zm3l2.woff           23.41 kB
+dist/assets/marble05_env_1024-BW6Rb9aP.jpg                   51.15 kB
+dist/assets/baloo-2-devanagari-800-normal-BURIY0wZ.woff2     57.00 kB
+dist/assets/baloo-2-devanagari-700-normal-D37Te3iF.woff2     65.86 kB
+dist/assets/baloo-2-devanagari-800-normal-YLp1oUqR.woff      89.07 kB
+dist/assets/baloo-2-devanagari-700-normal-CEIF4sJg.woff      97.58 kB
+dist/assets/benny-BNj-9CQ9.glb                            1,126.89 kB
+dist/assets/rainbow_girl-BGmVI95Z.glb                     3,546.48 kB
+dist/assets/main-CXqpzoXj.css                                 3.02 kB │ gzip:   0.65 kB
+dist/assets/runtime-BTF47cZ2.js                               1.72 kB │ gzip:   1.02 kB
+dist/assets/runtime-BN0mX_fX.js                               9.14 kB │ gzip:   3.99 kB
+dist/assets/GLTFLoader-BgvsrxKA.js                           46.06 kB │ gzip:  13.68 kB
+dist/assets/vfx-D1Z6l9bH.js                                  80.37 kB │ gzip:  27.03 kB
+dist/assets/main-BMXdsHac.js                                814.52 kB │ gzip: 231.09 kB
+✓ built in 1.96s
+✔ Copying web assets from dist to android/app/src/main/assets/public in 27.87ms
+✔ Creating capacitor.config.json in android/app/src/main/assets in 840.07μs
+✔ copy android in 38.32ms
+✔ Updating Android plugins in 3.40ms
+✔ update android in 43.43ms
+[info] Sync finished in 0.095s
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=42893 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|172.31.*|192.168.*|100.64.0.0/10|*.svc.cluster.local|*.svc.cluster.local -Djdk.http.auth.tunneling.disabledSchemes= -Djdk.http.auth.proxying.disabledSchemes=
+
+> Configure project :app
+WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
