@@ -173,6 +173,9 @@ void main() {
   // 05 (wave 7): the low rim under the puffs reads as small piled soap bubbles: white only on the cell
   // tops, periwinkle bodies, blue-violet crevices between the cells (ref 05 rim)
   float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));
+  // 05: the bank stops just past its bubble crest with a scalloped (cell) edge, so the purple wall shows right above
+  // the rim instead of a pale lather slope (ref 05; e is the raw offset outward from the stream edge)
+  if (vFoam.x > mix(9.0, 0.3 + 0.45 * (1.0 - c1), k05)) discard;
   if (k05 > 0.0) {
     vec3 Nv = normalize((viewMatrix * vec4(N, 0.0)).xyz);
     float t5 = soapT(Nv) * 0.55 + 0.45 * mix(0.55, bub, max(k1, 0.3)) - 0.1;

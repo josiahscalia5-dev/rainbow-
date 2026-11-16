@@ -45,3 +45,11 @@ Tools: `qa/pilot05/wave6/foam/tools/{foamcol,rowprof}.py` (measurements), ref fo
   and tall vs the ref (gridded crop: ref left near x 0-130 y 1020-1110, lower left x 60-230 y 1220-1300, lower
   right x 650-800 y 1260-1330; live it04 left near y 960-1110, lower clumps y 1140/1170-1340). foamcol Lnear WHITE
   32.8 % SHADE 33.9 %, Rnear 31.2 / 34.9 (ref 29.9/47.7, 33.5/48.1). mad 55.3 (it02 55.5).
+* it05 (86 calls, 632,561 tris): BANK_ENV re-searched on the gridded ref clump rows (L [58.457, 0.835, 0.581]: 1 for
+  ds -1.45..-0.95 and 0.5..1.5; right near [267.601, 1.094, 0.563]: 1 for ds -1.6..-1.15), right near clump inner
+  214 px / 150 px wide, BANK_PX L 170, near r x1.05, mound lift 0.12. Seen: left near clump x 0-130 y 1010-1110 (ref
+  0-130 / 1020-1110), lower right x 660-820 y 1210-1340 (ref 650-800 / 1260-1330), lower left x 0-170 y 1230-1340
+  (ref 60-230 / 1220-1300; row env 0.76). Best so far. foamcol Lfar WHITE 24.9 % SHADE 48.1 % (ref 22.6/48.1), Rfar
+  39.5 / 37.2 (ref 22.8/44.2), Lnear 24.5 / 35.5, Rnear 19.8 / 34.4; mad 55.2. Probe: 672 raft puffs shown, 22 small
+  + 19 big bubbles. iso_noberm (waterhide=foamBerm): the pale lavender slope between the right rim puffs and the
+  wall (and the wedge at the far end, x 600-650 y 540-600) is the berm's outer slope.

@@ -326,13 +326,13 @@ ${fg ? `  float bfg = farGlowK(); float bmt = midTintK();
  */
 export function withLidShading<T extends THREE.MeshStandardMaterial>(mat: T, key: string): T {
   const uniforms = {
-    uLcRim: { value: lin3(0.6339, 0.2406, 0.2292) }, // (222,105,100)
-    uLcUnder: { value: lin3(0.7758, 0.4074, 0.3748) }, // (238,150,140)
-    uLcTop: { value: lin3(0.8401, 0.4986, 0.3605) }, // (245,170,130)
-    uLcEdgeHi: { value: lin3(1.25, 1.12, 0.85) }, // (255,235,190)+ bright top edge
+    uLcRim: { value: lin3(0.612, 0.2117, 0.2013) }, // (220,95,90)
+    uLcUnder: { value: lin3(0.7024, 0.2903, 0.2645) }, // (232,120,110) (ref L1 region mean (200,95,105); wave-7 it03 (230,137,142))
+    uLcTop: { value: lin3(0.7971, 0.3659, 0.2802) }, // (245,140,110)
+    uLcEdgeHi: { value: lin3(0.9686, 0.7531, 0.4015) }, // (255,215,130) bright yellow top edge
     uLcEdgeLo: { value: lin3(0.776, 0.3236, 0.1466) }, // (245,130,50) orange contour
     uLcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
-    uLcSpot: { value: lin3(1.3, 1.22, 1.05) },
+    uLcSpot: { value: lin3(1.25, 1.0, 0.62) }, // warm yellow-white streak cores
   };
   const prev = mat.onBeforeCompile;
   mat.onBeforeCompile = (shader, r) => {

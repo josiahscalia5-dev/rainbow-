@@ -1724,3 +1724,30 @@ Now add the varying to the fragment shader and bump the small bubble count near 
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && timeout 300 node qa/pilot05/wave6/foam/tools/probe.mjs 05 > $S/probe5.json 2>/dev/null; python3 -I -c \"\nimport json;d=json.load(open('$S/probe5.json'))\nr=d['rafts'];print('shown',r['shown'], 'small', len(d['bubbles']['small']), 'big', len(d['bubbles']['big']))\nfor c in r['clumps']:\n  if c['ds']<3 and c['ds']>-2.4: print(c, 'ypx', round(c['y']*1536), 'xpx', round(c['x']*864))\n\"", "description": "Probe raft rows for it05 state"}`
 
+### 🧑 User — 2026-11-16T01:03:25.013Z
+
+> ↩︎ result: shown 672 small 22 big 19
+> {'kind': 'L', 'ds': -2.29, 'lat': -1.53, 'k': 0.52, 'y': 0.944, 'x': -0.011, 'env': 0, 's': 130.33} ypx 1450 xpx -10
+> {'kind': 'L', 'ds': -1.69, 'lat': -1.05, 'k': 0.63, 'y': 0.873, 'x': 0.177, 'env': 0.76, 's': 130.93} ypx 1341 xpx 153
+> {'kind': 'L', 'ds': -1.01, 'lat': -2, 'k': 0.52, 'y': 0.811, 'x': -0.008, 'env': 0, 's': 131.61} ypx 1246 xpx -7
+> {'kind': 'L', 'ds': -0.26, 'lat': -2.3, 'k': 0.52, 'y': 0.757, 'x': -0.007, 'env': 0, 's': 132.36} ypx 1163 xpx -6
+> {'kind': 'L', 'ds': 0.56, 'lat': -1.91, 'k': 0.63, 'y': 0.714, 'x': 0.13, 'env': 1, 's': 133.18} ypx 1097 xpx 112
+> {'kind': 'L', 'ds': 1.44, 'lat': -2.86, 'k': 0.7, 'y': 0.672, 'x': 0.024, 'env': 0.21, 's': 134.06} ypx 1032 xpx 21
+> {'kind': 'L', 'ds': 2.37, 'lat': -3.5, 'k': 0.52, 'y': 0.634, 'x': -0.006, 'env': 0, 's': 134.99} ypx 974 xpx -5
+> {'kind': 'R', 'ds': -2.29, 'lat': 1.79, 'k': 0.52, 'y': 0.937, 'x': 1.011, 'env': 0, 's': 130.33} ypx 1439 xpx 874
+> {'kind': 'R', 'ds': -1.69, 'lat': 1.09, 'k': 0.58, 'y': 0.869, 'x': 0.763, 'env': 1, 's': 130.93} ypx 1335 xpx 659
+> {'kind': 'R', 'ds': -1.01, 'lat': 2.16, 'k': 0.52, 'y': 0.808, 'x': 1.009, 'env': 0, 's': 131.61} ypx 1241 xpx 872
+> {'kind': 'R', 'ds': -0 …[+433 chars]
+
+### 🤖 Claude — 2026-11-16T01:03:30.903Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));\n  if (k05 > 0.0) {", "new_string": "  float k05 = smoothstep(uSt05.x, uSt05.y, s) * (1.0 - smoothstep(uSt05.z, uSt05.w, s));\n  // 05: the bank stops just past its bubble crest with a scalloped (cell) edge, so the purple wall shows right above\n  // the rim instead of a pale lather slope (ref 05; e is the raw offset outward from the stream edge)\n  if (vFoam.x > mix(9.0, 0.3 + 0.45 * (1.0 - c1), k05)) discard;\n  if  …[+15 chars]`
+
+### 🧑 User — 2026-11-16T01:03:31.061Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:03:42.061Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave7/foam/NOTES.md <<'EOF'\n* it05 (86 calls, 632,561 tris): BANK_ENV re-searched on the gridded ref clump rows (L [58.457, 0.835, 0.581]: 1 for\n  ds -1.45..-0.95 and 0.5..1.5; right near [267.601, 1.094, 0.563]: 1 for ds -1.6..-1.15), right near clump inner\n  214 px / 150 px wide, BANK_PX L 170, near r x1.05, mound lift 0.12. Seen: left near clump x 0-130 y 1010-1110 (ref\n  0-130 / 1020-1110), lower right x 660-820 y 1210-1340 (ref 650-800 / 1260-1330), lower left x 0-170 y 1230-1340\n  (ref 60-230 / 1220-1300; row env 0.76). Best so far. foamcol Lfar WHITE  …[+1049 chars]`
+
