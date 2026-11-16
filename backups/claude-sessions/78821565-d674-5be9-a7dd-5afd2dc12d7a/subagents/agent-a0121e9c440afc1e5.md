@@ -742,3 +742,74 @@ While the probe runs, I'll add the recovered log entry to the wave-8 notes (from
 > 82	[exited with code 0]
 > 83
 
+### 🤖 Claude — 2026-11-16T02:22:59.963Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe && cat > p1.js <<'EOF'\nconst R = window.__rainbow; const c = R.course;\nconst fm = await import('/src/world/far05.ts');\nconst d = fm.far05Debug; const ft = d.ft;\nconst st05 = c.stage('05'), st06 = c.stage('06');\nconst cam = R.camera();\nconst out = { s05: [st05.s0, st05.s1], s06: st06.s0, crest: c.marks['05_crest'], sF05: d.sF05, D0: ft.D0, zEnd: ft.zEnd, L: ft.L, knots: d.knots, level: d.level, R: ft.R, eye: d.eye.toArray(), cam: cam.position, fov: cam.fov, realSeamRing: d.realSeamRing  …[+818 chars]`
+
+### 🧑 User — 2026-11-16T02:22:59.990Z
+
+> ↩︎ result: Command running in background with ID: bmutaqnpr. Output is being written to: /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/bmutaqnpr.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-16T02:23:02.609Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"export function coreLateral\\|export const EDGE_LIFT\\|sF05\\|far\\b\\|seam\" src/vfx/waterRibbon.ts | head -30; grep -n \"export function coreLateral\" -A25 src/vfx/waterRibbon.ts | head -40", "description": "Inspect waterRibbon core lateral and seam handling"}`
+
+### 🧑 User — 2026-11-16T02:23:02.667Z
+
+> ↩︎ result: 20:export const EDGE_LIFT = 0.28;
+> 35: * 05 layout from ref 05 at the live 05 camera (y=600 ≈ 36 px/u, y=700 ≈ 63, y=800 ≈ 93): in the mid/far
+> 66: * far crest; ≤1.25 u within 35 u of the 05 checkpoint), inside the ≥2 u core half width, so a coin on
+> 71:export function coreLateral(course: Course, s: number): number {
+> 256:  // each line breaks into tapered streak segments; sparser when the slots are far apart on screen
+> 376:  // detail fade with distance (cells per pixel), keeps far water from shimmering
+> 463:    // Faded out where a strand would be < ≈3 px wide (no shimmer in the far field)
+> 506:  // hair-thin pink filaments drifting through the cyan core (mid/far field only)
+> 549:  vec3 Lg = normalize(vTanW + N0 * 0.1);      // the bright tunnel end, far downstream
+> 584:    // tinted (not white) reflection so the glossy far water stays saturated, not pastel
+> 591:    // glossy white-blue reflection of the bright tunnel end (refs 05–07): the light sits far
+> 649:    // where pink and cyan streaks interleave (brushed edges) the seam lightens to a glossy lavender-white
+> 71:export function coreLateral(course: Course, s: number): number {
+> 72-  const st = course.stage('05');
+> 73-  if (s <= st.s0 || s …[+1282 chars]
+
+### 🤖 Claude — 2026-11-16T02:23:04.313Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 95,140p src/vfx/waterRibbon.ts", "description": "Read the 05 river palette in waterRibbon"}`
+
+### 🧑 User — 2026-11-16T02:23:04.380Z
+
+> ↩︎ result: /**
+>  * 05 river palette (wave 4), shader-space linear values solved through the full post chain
+>  * (exposure 0.86 → Neutral → sRGB → grade.ts saturation 1.36 / contrast 1.15; bloom ignored) so the
+>  * flat colours land on the ref 05 samples instead of clipping: cyan deep ≈#0466CF (troughs),
+>  * cyan ≈#029AF3 (ref core), bright ≈#33C0FF, streak ≈#8FE6FF; pink deep ≈#BC16A8, pink ≈#F73DEA
+>  * (ref #F739E5 / band medians #F749F1), light ≈#FA9EF2, streak ≈#FEC0F6. The old RIBBON_PAL pink
+>  * (1.55, 0.03, 1.2) clips to #FF23FF in that chain and the lighting lifted it to lavender #FF6CFF.
+>  */
+> const RIVER05_PAL = {
+>   cyanDeep: lin(0.04, 0.16, 0.46),
+>   cyan: lin(0.06, 0.37, 0.74),
+>   cyanBright: lin(0.1, 0.8, 1.8),
+>   cyanStreak: lin(0.36, 1.25, 2.1),
+>   pinkDeep: lin(0.36, 0.04, 0.3),
+>   pink: lin(0.7, 0.08, 0.64),
+>   pinkLight: lin(0.92, 0.3, 0.88),
+>   pinkStreak: lin(1.1, 0.58, 1.04),
+> };
+> /** 05 texture advection relative to the stage speed (>1: the current visibly overtakes Benny) */
+> const FLOW05 = 1.3;
+> 
+> export function ampAt(course: Course, s: number): number {
+>   let v = 0, w = 0;
+>   for (const st of course.stages) {
+>     const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5 …[+858 chars]
+
+### 🤖 Claude — 2026-11-16T02:23:07.835Z
+
+> 🔧 **Bash** `{"command": "until [ -s /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/p1.out ] && grep -q '}' /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/p1.out; do sleep 3; done; cat /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/p1.out", "description": "Wait for probe output file", "timeout": 400000}`
+
+### 🧑 User — 2026-11-16T02:23:07.881Z
+
+> ↩︎ result: {"s05":[114.68830202823243,188.92412082521383],"s06":188.92412082521383,"crest":132.4383020282329,"sF05":180.0383020282329,"D0":53.24896756963126,"zEnd":376.75103243036875,"L":6,"knots":[[0,0],[7,5.751032430368738],[21,43.75103243036874],[35,107.75103243036874],[49,168.75103243036875],[63,268.75103243036875]],"level":-3.831685660915462,"R":7.6,"eye":[1.920288434729371,-37.94339912418104,-68.28062556286872],"cam":[1.920288434729371,-37.94339912418104,-68.28062556286872],"fov":62,"realSeamRing":false,"coinScreen":[[20,488,739,93],[21,555,662,67],[22,478,609,49],[23,432,578,37],[24,441,560,29],[25,470,550,24],[26,555,541,21],[27,463,482,20],[28,459,446,20],[29,455,409,19],[30,449,375,19],[31,442,346,18],[32,435,324,18],[33,429,312,17],[34,427,314,16],[35,434,330,16],[36,447,353,15],[37,462,381,15],[38,479,409,14],[39,496,436,14],[40,514,463,14],[41,532,488,13],[42,550,511,13],[43,568,528,13],[44,585,538,12],[45,632,543,11],[46,637,542,11],[47,626,540,10],[48,600,535,10],[49,573,535,10],[50,563,535,9],[51,572,533,9],[52,585,529,9],[53,589,527,8],[54,582,528,8],[55,577,528,8],[56,576,534,8],[57,577,552,7],[58,577,582,7],[59,575,615,7],[60,572,649,7],[61,568,681,7],[62,563,712,7],[63,559 …[+199 chars]
+

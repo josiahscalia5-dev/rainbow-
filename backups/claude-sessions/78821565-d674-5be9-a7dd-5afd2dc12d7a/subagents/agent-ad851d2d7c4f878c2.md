@@ -346,3 +346,111 @@ I'll start by reading the coordination file and my previous notes.
 > ↩︎ result: references Lclump L181/221/251 A6B9FA D6D9FC F8FAFF | LLclump L180/223/252 B3ABFA E8D7FF FDFBFF | LRclump L183/224/253 AFB7FA DEDCFF FCFCFF | Lrim L177/214/250 B4A9FA E4CAFD FDF3FF
 > baseline Lclump L189/228/243 B2C3FF DEE1FE F2EFFE | LLclump L186/226/238 B4BEFC DCE2F7 EEEAF6 | LRclump L187/225/239 AEC1FD DCE1F8 EFEAF9 | Lrim L189/218/244 BFABFF D7D7FF EEEDFF
 
+### 🤖 Claude — 2026-11-16T02:22:58.233Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,80p scripts/capture.mjs; ls qa/pilot05/wave8/foam/it05/", "description": "Read capture script header"}`
+
+### 🧑 User — 2026-11-16T02:22:58.271Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3467 chars]
+
+### 🤖 Claude — 2026-11-16T02:23:01.906Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat scripts/lib/pw.mjs | head -60; grep -n \"05\" src/world/course*.ts | grep -i \"extent\\|STAGE_CAM\\|S05\" | head", "description": "Read Playwright helper"}`
+
+### 🧑 User — 2026-11-16T02:23:01.951Z
+
+> ↩︎ result: // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function  …[+870 chars]
+
+### 🤖 Claude — 2026-11-16T02:23:05.929Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"__rainbow\\s*=\\|__rainbow =\\|coinScreen\\|project(\" src/Game.ts | head -20; grep -n \"window.__rainbow\\|__rainbow\" src/*.ts src/**/*.ts | head -20", "description": "Find __rainbow QA hooks"}`
+
+### 🧑 User — 2026-11-16T02:23:05.998Z
+
+> ↩︎ result: grep: src/Game.ts: No such file or directory
+> src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:660:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+
+### 🤖 Claude — 2026-11-16T02:23:07.419Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 540,665p src/game/Game.ts", "description": "Read QA api in Game.ts"}`
+
+### 🧑 User — 2026-11-16T02:23:07.618Z
+
+> ↩︎ result: const gotoCheckpoint = (id: string, time = 12.0) => {
+>     const cp = CHECKPOINTS[id];
+>     if (!cp) throw new Error('unknown checkpoint ' + id);
+>     resetToIntro();
+>     st.frozen = time;
+>     st.clock = time;
+>     input.override = 0;
+>     const settle = (n: number, dt: number) => { for (let i = 0; i < n; i++) stepSim(dt); };
+>     if (cp.mode === 'intro') {
+>       // replay the cinematic deterministically up to the checkpoint time
+>       const steps = Math.round((cp.t ?? 0) / (1 / 30));
+>       settle(steps, 1 / 30);
+>     } else {
+>       startRide();
+>       hud.showHint(null);
+>       const sTarget = cp.s ?? course.stage('11').s0;
+>       st.s = sTarget;
+>       st.lat = cp.lat ?? 0;
+>       coins.resetUntil(sTarget + 0.5);
+>       setStage(stageOf(sTarget));
+>       if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (s …[+5447 chars]
+

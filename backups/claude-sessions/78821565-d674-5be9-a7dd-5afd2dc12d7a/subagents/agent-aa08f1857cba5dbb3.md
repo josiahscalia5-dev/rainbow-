@@ -501,3 +501,78 @@ Let me look closely at the lids/rings region in both images.
 >   slots, rings orange-salmon, lids still read as long copper planks jutting out (shape, not shading, is the mismatch). = wave-9 baseline.
 > * it0 …[+1615 chars]
 
+### 🤖 Claude — 2026-11-16T02:22:59.000Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n '__rainbow' -r src | head -20; grep -n 'qa=1\\|params.get' src/main.ts 2>/dev/null | head", "description": "Find debug hooks exposed on window"}`
+
+### 🧑 User — 2026-11-16T02:22:59.054Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:660:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+
+### 🤖 Claude — 2026-11-16T02:23:00.539Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 590,665p src/game/Game.ts", "description": "Read the QA API in Game.ts"}`
+
+### 🧑 User — 2026-11-16T02:23:00.602Z
+
+> ↩︎ result: resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+>     /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+>     coinScreen() {
+>       const mesh = coins.group.children[0] as THREE.InstancedMesh;
+>       const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+>       const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+>       camera.updateMatrixWorld();
+>       const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+>       const out: { i: number; x: number; y: number; d: number }[] = [];
+>  …[+3439 chars]
+
+### 🤖 Claude — 2026-11-16T02:23:04.326Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat package.json; ls node_modules/.bin | grep -i -E 'tsx|vite-node|esbuild|ts-node' ; head -30 scripts/export-river-05.ts", "description": "Check package scripts and TS runners"}`
+
+### 🧑 User — 2026-11-16T02:23:04.403Z
+
+> ↩︎ result: {
+>   "name": "rainbow-washer-game",
+>   "private": true,
+>   "version": "0.1.0",
+>   "description": "RAINBOW — 11-screen real-time 3D portrait mobile game (Three.js + TypeScript + Vite + Capacitor)",
+>   "type": "module",
+>   "scripts": {
+>     "dev": "vite --host 0.0.0.0",
+>     "build": "tsc --noEmit && vite build",
+>     "preview": "vite preview --host 0.0.0.0 --port 4173",
+>     "typecheck": "tsc --noEmit",
+>     "test:continuity": "vite-node scripts/continuity-test.ts",
+>     "models:export": "node scripts/export-models.mjs",
+>     "qa:capture": "node scripts/capture.mjs",
+>     "qa:compare": "python3 scripts/compare.py",
+>     "verify:refs": "sha256sum -c scripts/reference.sha256",
+>     "android:sync": "npm run build && npx cap sync android",
+>     "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+>     "test:cinematic": "node scripts/cinematic-test.mjs"
+>   },
+>   "dependencies": {
+>     "@capacitor/android": "^6.2.0",
+>     "@capacitor/core": "^6.2.0",
+>     "@fontsource/baloo-2": "^5.1.0",
+>     "three": "^0.170.0"
+>   },
+>   "devDependencies": {
+>     "@capacitor/cli": "^6.2.0",
+>     "@types/three": "^0.170.0",
+>     "typescript": "^5.6.3",
+>     "vite": "^5.4.11",
+>     "vite-node": "^2.1.5"
+>   }
+> } …[+1806 chars]
+

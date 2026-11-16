@@ -1381,3 +1381,85 @@ Recovery is complete and the specialists are working. Here are the first two of 
 >   /home/user/rainbow-/references/05_flow_into_the_current.png → file_uuid: 4725e7d3-51a9-4b0c-8252-610f89cf9534
 >   /home/user/rainbow-/qa/pilot05/wave9/recovered/05.png → file_uuid: 633d611b-9a3d-4dc4-9038-e6da17bc3b58
 
+### 🤖 Claude — 2026-11-16T02:22:59.614Z
+
+## Recovery report
+
+**Project recovered. Nothing was restarted or regenerated, and no credits were spent.**
+
+| Area | Result |
+|---|---|
+| **GitHub** | I checked all 10 `ccr-*`/`claude/*` branches; every one is merged into the new working branch **`claude/rainbow-3d-account-recovery-xex5hc`**. None of your original branches were force-pushed, reset or deleted. Draft PR **#4** (marked "do not merge") makes the branch easy to find, and I'm watching it. |
+| **Previous session** | Its container is still alive and pushed final notes at 02:13 (no code changes). I merged them in and added that branch to the autosave's protected list. |
+| **Assets** | All 24 Git LFS files are real files, not pointers. The 12 approved reference images match their checksums. Models, the APK, Blender projects and the Marble splats are all present. |
+| **Game** | Type check and continuity test pass (07→08 drop 61.19). The **browser gameplay test passes**: pause, coins, hearts lost on wall bumps, the 61.41 plunge and the victory sequence all work, with no errors. |
+| **10 specialists** | All 10 definitions are present and unchanged. |
+| **Marble** | Both worlds are on disk with all splat sizes, `.ply` files, colliders, panoramas, wall textures and both `.blend` projects (both open in Blender). The worlds also still exist on your World Labs account. **Balance: 5,190 credits** (unchanged). |
+| **Tools** | Blender 5.3.0, Android SDK 34, the World Labs plugin, the Atlas connector and the Playwright tools all work. |
+| **Autosave** | Running every 5 minutes on the new branch. I checked that the copy on GitHub matches the local copy. |
+
+**What I found:** your previous account ran out of credits while all four Screen 05 specialists were partway through their latest round. Their changes were already saved and the game still plays. Together those changes had moved the measured difference from your approved image from 51.2 to 50.6 (lower means closer), a modest gain.
+
+**Specialists relaunched.** Each one picks up its own unfinished list, and each edits only its own files:
+- **Environment:** turn the blocky copper "planks" into rounded gold pucks, make the walls pinker magenta using the Marble wall textures, make the rings yellower gold, and enlarge the golden glow at the end of the tunnel.
+- **Path and camera:** keep the S-curves winding into the golden light, extend the coin trail to about 8–10 coins, and fix the spacing of the distant rings.
+- **Water:** broad pink S-bands through the middle of the river, deeper glossy cyan, and more sparkle.
+- **Foam:** fine bubble banks instead of white heaps, a natural splash behind Benny, and small soap bubbles.
+
+The biggest gap I see is the tunnel shape. In your approved image the rings are wide ovals that reach almost to both edges of the screen; the live rings are circles. The environment specialist can try widening the Screen 05 tunnel, but only if the gameplay test still passes and the comparison is clearly closer.
+
+**Things only you can reconnect:**
+- **World Labs key:** saved through the secure form on this account's Default environment. If it's the key you pasted into chat on an earlier account, delete it at platform.worldlabs.ai and save a fresh one the same way.
+- **context7:** needs sign-in in your claude.ai connector settings. Rainbow doesn't use it.
+- **Blender and Android SDK:** installed for this session only. If you'd like a "rainbow-" environment that installs them automatically in future sessions, I can set one up.
+
+When the specialists finish, I'll compare your approved image, the recovered game and the updated game. I'll keep only changes that measure closer and still pass gameplay, then send the third image.
+
+### 🧑 User — 2026-11-16T02:22:59.704Z
+
+Stop hook feedback:
+[command hook 2]: There are 1 unpushed commit(s) on branch 'claude/rainbow-3d-account-recovery-xex5hc'. Please push these changes to the remote repository.
+
+### 🤖 Claude — 2026-11-16T02:23:02.082Z
+
+> 🔧 **Bash** `{"command": "git log --oneline origin/claude/rainbow-3d-account-recovery-xex5hc..HEAD; git push -u origin claude/rainbow-3d-account-recovery-xex5hc 2>&1 | tail -1; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-3d-account-recovery-xex5hc | cut -f1)\"", "description": "Push unpushed commit and verify remote"}`
+
+### 🧑 User — 2026-11-16T02:23:03.778Z
+
+> ↩︎ result: c821d91 autosave: Rainbow 2026-11-16 02:22 UTC
+> branch 'claude/rainbow-3d-account-recovery-xex5hc' set up to track 'origin/claude/rainbow-3d-account-recovery-xex5hc'.
+> local  c821d91e78d40e16039b9b094e60ebb3e3217f9a
+> remote c821d91e78d40e16039b9b094e60ebb3e3217f9a
+
+### 🤖 Claude — 2026-11-16T02:23:05.927Z
+
+The hook caught a 02:22 autosave commit that showed as not yet pushed. It's pushed now, and the copy on GitHub matches the local one (`c821d91`).
+
+The four Screen 05 specialists are still working in the background. When they finish, I'll run the comparison and gameplay checks and send you the updated image.
+
+### 🧑 User — 2026-11-16T02:23:07.533Z
+
+Claude, thank you for recovering my Rainbow 3D game on this new account.
+
+Please resume the four unfinished wave-8 Screen 05 specialists from their latest saved work. Do not restart their designs.
+
+IMPORTANT: Restore and use my TWO existing Marble World Labs reconstructions from GitHub. Use their panoramas, wall textures and 3D measurements wherever they improve the real playable game. Do not spend more Marble credits yet.
+
+My original approved Screen 05 remains the visual target.
+
+Prioritize these corrections:
+
+1. The tunnel must have the approved depth, correctly proportioned reflective gold rings and rounded glossy wall fittings.
+2. The cyan-and-pink water must continue in strong S-curves all the way into the distant golden light, not become a straight striped track.
+3. Improve the deep luminous purple-metallic walls, glossy water, fine foam, bubbles and natural splashes around Benny.
+
+Keep my camera lock, Benny, gameplay, coins, all eleven connected screens and 07-to-08 deep descent protected.
+
+Finish restoring the development environment, verify gameplay and continuity, and resume five-minute GitHub autosaves.
+
+Then show me the original approved Screen 05 alongside a fresh screenshot of the actual running game.
+
+Please focus on significant visual improvements rather than repeatedly making tiny adjustments that barely change the overall result.
+
+My goal remains approximately 90–95% similarity if achievable, with honest measurements and real playable Android gameplay.
+
