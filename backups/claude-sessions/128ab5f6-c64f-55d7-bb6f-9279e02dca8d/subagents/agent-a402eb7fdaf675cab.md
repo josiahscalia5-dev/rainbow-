@@ -560,3 +560,138 @@ Let me look at the reference images directly.
 >     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
 >     '10': { mode: 'ride', s: course.stage( …[+7063 chars]
 
+### 🤖 Claude — 2026-11-16T15:48:15.981Z
+
+> 🔧 **Bash** `{"command": "cat tools/qa/water05_grain.py | head -60; ls scripts/ | head -100", "description": "Read water05_grain QA tool and list scripts"}`
+
+### 🧑 User — 2026-11-16T15:48:16.021Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Screen 05 water texture indicators (water pixels only), for the W12 "silk" test.
+> 
+>     python3 -I tools/qa/water05_grain.py OUT.md LABEL=image ...   (first image = the reference, e.g. APPROVED=...)
+> 
+> Water pixels = cyan (hue 170-215) or magenta-pink (hue 290-345) with saturation > 0.3 and value > 0.35, inside the
+> river area of the 864x1536 frame (rows 560-1536), Benny's body box excluded. Per band it reports:
+>   * cyan S / V median, pink S / V median          colour depth (rich electric cyan = high S, not pastel)
+>   * fine grain   mean |L - blur(L, 1.5 px)|        pixel-scale texture energy (thin lines, speckle) — lower = smoother
+>   * broad flow   mean |blur(L, 2) - blur(L, 9)|    larger structure (lanes, swells, ribbons)
+>   * grain ratio  fine / broad                       "grainy" when high; silky glossy water keeps it low
+>   * thin white % white pixels (S < .25, V > .85) that vanish under a 5x5 opening, i.e. hair lines / speckle,
+>                  as a share of the band's water + white pixels
+> Simple, reproducible indicators — NOT a fidelity percentage.
+> """
+> import sys
+> import numpy as np
+> from PIL import Image, ImageFilter
+> 
+> W, H = 864, 1536
+> BANDS = [("far river 5 …[+2067 chars]
+
+### 🤖 Claude — 2026-11-16T15:48:17.451Z
+
+> 🔧 **Bash** `{"command": "cat scripts/camera-lock-05.mjs | head -80; cat scripts/lib/pw.mjs | head -60", "description": "Read camera-lock script and Playwright helper"}`
+
+### 🧑 User — 2026-11-16T15:48:17.491Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 CAMERA LOCK — measured image-to-geometry alignment (coordinator tool, wave 6).
+> //   python3 -I scripts/landmarks05.py references/05_flow_into_the_current.png qa/pilot05/wave6/camera_lock/landmarks_ref_px.json
+> //   node scripts/camera-lock-05.mjs [--ref=qa/pilot05/wave6/camera_lock/landmarks_ref_px.json]
+> // Opens the REAL game at the 05 checkpoint, reads the live render camera (window.__rainbow.camera()), the
+> // game's own coin screen positions, Benny's screen position and the 05 course frames, then
+> //   1. writes camera05.json  — the locked camera (Three.js world matrix, vFOV, aspect) + the same pose
+> //      converted to Blender axes, for tools/blender/camera_lock_05.py
+> //   2. back-projects reference landmarks (coin centres at the coins' real height, VP) through that camera
+> //      onto the river surface → world (s, lateral): the S-path the reference implies, in game coordinates
+> //   3. compares the game's coins/VP with the reference in pixels (residual table)
+> // Writes qa/pilot05/wave6/camera_lock/{camera05.json,landmarks.json}. Read-only for the game.
+> import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+> import * as THREE from 'three' …[+5179 chars]
+
+### 🤖 Claude — 2026-11-16T15:50:31.603Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function farRiverMaterial\" -A120 src/world/materials.ts | head -200", "description": "Read farRiverMaterial shader"}`
+
+### 🧑 User — 2026-11-16T15:50:31.654Z
+
+> ↩︎ result: 861:export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+> 862-  const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+> 863-  // wins the depth test against the real ribbon's continuation it covers just behind the seam
+> 864-  mat.polygonOffset = true;
+> 865-  mat.polygonOffsetFactor = -1;
+> 866-  mat.polygonOffsetUnits = -2;
+> 867-  const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+> 868-  const uniforms = {
+> 869-    uRivCyanLo: { value: lin(0.02, 0.22, 0.62) },
+> 870-    uRivCyan: { value: lin(0.03, 0.42, 0.95) },
+> 871-    uRivCyanHi: { value: lin(0.25, 0.95, 1.6) },
+> 872-    uRivPinkLo: { value: lin(0.45, 0.03, 0.42) },
+> 873-    uRivPink: { value: lin(0.85, 0.07, 0.75) },
+> 874-    uRivPinkHi: { value: lin(1.05, 0.42, 1.0) },
+> 875-    uRivFoam: { value: lin(0.95, 0.92, 1.05) },
+> 876-    uRivFoamLav: { value: lin(0.62, 0.52, 0.95) },
+> 877-    uRivFoamBlue: { value: lin(0.32, 0.36, 0.9) },
+> 878-    uRivGlow: { value: new THREE.Color(glow.color) },
+> 879-    uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.st …[+6519 chars]
+
+### 🤖 Claude — 2026-11-16T15:50:52.929Z
+
+> 🔧 **Bash** `{"command": "grep -n \"qaHide\" src/vfx/index.ts | head; grep -n \"hidden.has\\|zoneHidden\" src/game/Game.ts | head -20; grep -rn \"uTime.value\" src/vfx/index.ts | head", "description": "Find hide switches and uTime update"}`
+
+### 🧑 User — 2026-11-16T15:50:52.975Z
+
+> ↩︎ result: 97:  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+> 99:  const qaNoRibbonWake = qaHide.includes('ribbonWake');
+> 204:      for (const k of qaHide) { const o = parts[k]; if (o) o.visible = false; }
+> 106:  if (hidden.has('water')) water.group.visible = false;
+> 107:  if (hidden.has('coins')) coins.group.visible = false;
+> 108:  const zoneHidden = (k: string) => hidden.has(k);
+> 152:      env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);
+> 171:      ribbon.uniforms.uTime.value = time;
+> 172:      whirl.uniforms.uTime.value = time;
+> 173:      drum.uniforms.uTime.value = time;
+> 177:      wave.uniforms.uTime.value = time;
+> 178:      puddles.uniforms.uTime.value = time;
+
+### 🤖 Claude — 2026-11-16T15:50:54.614Z
+
+> 🔧 **Bash** `{"command": "sed -n 160,260p src/vfx/index.ts; grep -n \"benny.root.visible\\|hidden.has('benny')\" src/game/Game.ts", "description": "Read water update and Benny hiding"}`
+
+### 🧑 User — 2026-11-16T15:50:54.661Z
+
+> ↩︎ result: group,
+>     controls,
+>     parts,
+>     surfaceHeight,
+>     stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
+>     update(time, dt, focusS, camera) {
+>       if (Math.abs(focusS - lastFocusSeed) > 25) seed = 0x5eed ^ Math.round(focusS * 16);
+>       lastFocusSeed = focusS;
+>       qaCamera = camera;
+>       focus = focusS;
+>       curTime = time;
+>       ribbon.uniforms.uTime.value = time;
+>       whirl.uniforms.uTime.value = time;
+>       drum.uniforms.uTime.value = time;
+>       drum.uniforms.uAgitation.value = controls.drumAgitation;
+>       drum.swirlUniforms.uSwirl.value = controls.drumSwirl;
+>       drum.swirl.visible = controls.drumSwirl > 0.001;
+>       wave.uniforms.uTime.value = time;
+>       puddles.uniforms.uTime.value = time;
+>       puddles.uniforms.uAmount.value = controls.outro;
+>       (ribbon.uniforms.uOutro.value as THREE.Vector2).x = controls.outro;
+>       puddles.group.visible = controls.outro > 0.001;
+>       // region visibility (perf): only what the camera around focusS can see
+>       drum.group.visible = focusS < st03.s0 + 12;
+>       whirl.mesh.visible = focusS > drainMark - 8 && focusS < st04.s0 + 45;
+>  …[+5849 chars]
+
+### 🤖 Claude — 2026-11-16T15:50:58.886Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "    togglePause,\n    stats() {", "new_string": "    togglePause,\n    /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact\n     *  per-pixel river UV / footprint renders. Nothing calls it in the game; rendering is unchanged. */\n    qa3d() { return { scene, camera, renderer, composer }; },\n    stats() {"}`
+
+### 🧑 User — 2026-11-16T15:50:58.943Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+

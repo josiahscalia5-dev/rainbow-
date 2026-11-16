@@ -4026,3 +4026,163 @@ The pending changes are committed and pushed: `claude/rainbow-05-water-projectio
 
 Specialist 1 is still working, so more uncommitted files will appear as it goes; the five-minute autosave picks those up. I'll show you the feasibility results as soon as it reports.
 
+### 🧑 User — 2026-11-16T15:51:01.206Z
+
+Make sure u save everything CLAUDE — URGENT RAINBOW 3D COMPLETE BACKUP AND ACCOUNT TRANSFER
+
+I may be running out of Claude credits. I need you to IMMEDIATELY save and verify EVERYTHING from my current Rainbow 3D project to GitHub so I can continue from another Claude account without restarting or losing work.
+
+MY GITHUB REPOSITORY:
+https://github.com/josiahscalia5-dev/rainbow-
+
+MY SOURCE BRANCH:
+"ccr-451ea8c7-3nqlis"
+
+CURRENT SCREEN 05 WATER-PROJECTION EXPERIMENT:
+"claude/rainbow-05-water-projection"
+
+IMPORTANT: The Blender texture-projection specialist is currently working on matching my approved Screen 05 water. Do not cancel its work unnecessarily. Preserve everything it has completed, including unfinished experiments.
+
+PRIORITY 1 — SAVE EVERYTHING IMMEDIATELY
+
+Before doing any more game development:
+
+1. Verify the GitHub repository, active branch, latest commit and remote connection.
+2. Identify all active specialist branches and any newer unsaved work.
+3. Save the entire Rainbow 3D game source, designs, assets, approved reference images, textures, shaders, animations, game logic, tests, Blender scenes, screenshots, documentation and experimental code.
+4. Include all current work on the Screen 05 texture-projection experiment.
+5. Include all intermediate results, specialist notes, measurements, screenshots, and working files, even if a specialist has not finished.
+6. Use Git LFS for large binary assets and verify the actual files are accessible from GitHub.
+7. Commit and push safely. Do not force-push, reset, delete, or overwrite protected work.
+8. Verify the exact remote commit SHA after pushing.
+
+If specialists are editing files simultaneously, use the existing backup lock and avoid conflicting Git operations.
+
+DO NOT WAIT UNTIL THE SPECIALIST FINISHES TO MAKE THE FIRST VERIFIED BACKUP.
+
+PRIORITY 2 — PRESERVE ALL TEN SPECIALISTS
+
+Save and verify all ten existing specialist definitions, configurations, instructions, roles and relevant skills.
+
+Record which specialists are running, completed, queued or interrupted.
+
+Update "backups/AGENTS_STATUS.json" with the exact current assignments, files being edited, progress, remaining work and relaunch instructions.
+
+The current Blender specialist is doing the camera-matched water texture-projection feasibility test.
+
+The water-FX specialist is supposed to animate the approved water AFTER the static visual match is evaluated.
+
+Preserve their instructions exactly so my next Claude account knows where to resume.
+
+PRIORITY 3 — SAVE MARBLE WORLD LABS
+
+Preserve both existing Marble World Labs worlds, all downloaded assets, panoramas, splats, collision meshes, textures, Blender scenes and asset metadata.
+
+Save the world IDs, file inventories, recovery instructions and checksums.
+
+Verify that the large files are actually stored on GitHub, not just Git LFS placeholders.
+
+Preserve all existing Marble integration code, configuration templates and instructions for reconnecting the World Labs API and Atlas connector.
+
+SECURITY: Never save or print my actual Marble API key, passwords, authentication tokens or other secrets in GitHub, source files, logs or chat backups. Only record credential names and secure setup instructions.
+
+Do not create new Marble worlds or spend World Labs credits for this backup.
+
+PRIORITY 4 — PRESERVE BLENDER, SERVERS, PLUGINS AND TOOLS
+
+Save all reproducible configurations, manifests, setup scripts, versions, agent skills and installation instructions for:
+
+- Blender 5.3
+- Three.js and WebGL2
+- Node.js and npm
+- Playwright and Chromium
+- Android SDK, Java and build tools
+- Git and Git LFS
+- World Labs integrations
+- GitHub integration
+- MCP servers and connected plugins
+- Existing testing, screenshot, visual-comparison, texture-projection and flow-map tools
+
+Update "backups/TOOL_MANIFEST.json".
+
+Ensure "scripts/claude-bootstrap.sh" and the recovery scripts can restore supported tools and configurations on another Claude account.
+
+Check whether any plugins or servers require a separate authorization on the new account and document that clearly.
+
+Do not claim that credentials, installed programs, account permissions or active background agents can transfer through GitHub automatically. Save everything needed to recreate or relaunch them safely.
+
+PRIORITY 5 — AUTOMATIC GITHUB BACKUP EVERY FIVE MINUTES
+
+I authorize normal, non-destructive GitHub backups without repeated permission requests, subject to the platform's permissions.
+
+Verify that a five-minute autosave is actively running on the correct writable branch.
+
+Save changes from the main session and specialists, including new screenshots, logs, shaders and experimental files.
+
+Also save immediately at major checkpoints and on normal session shutdown when possible.
+
+Make sure the backup system avoids Git index collisions, handles push failures, records errors and verifies the remote commit.
+
+If the cloud environment stops, explain that autosave cannot continue without an independent running service. Never claim a backup succeeded unless GitHub confirms it.
+
+PRIORITY 6 — MAKE MY NEXT CLAUDE ACCOUNT READY
+
+Update:
+
+- "CLAUDE.md"
+- "backups/CLAUDE_ACCOUNT_TRANSFER.md"
+- "backups/START_NEW_CLAUDE_ACCOUNT.md"
+- "backups/AGENTS_STATUS.json"
+- "backups/TOOL_MANIFEST.json"
+
+Document the exact branch and commit to recover, the current Screen 05 progress, and how to use the bootstrap script.
+
+My next Claude account must be instructed to:
+
+1. Connect to the correct private GitHub repository.
+2. Recover the newest verified work without overwriting any branch.
+3. Restore the saved large files and required tools.
+4. Reconnect plugins and MCP servers where authorization permits.
+5. Relaunch interrupted specialists from their saved instructions.
+6. Restart and verify the five-minute autosave.
+7. Continue my existing Rainbow 3D project, NOT create a new game.
+
+PRIORITY 7 — PROTECT MY APPROVED SCREEN 05
+
+My approved artwork is the absolute visual reference.
+
+Keep the current playable T2 build and protected BEFORE version restorable.
+
+Preserve all the water shader experiments, including Codex's work if available, without automatically merging them.
+
+Continue the current camera-matched Blender water-projection experiment only after making the initial verified backup.
+
+Preserve the exact current objective: reproduce my approved cyan-and-magenta S-shaped water visually, then animate it flowing toward the camera in the real playable Three.js game.
+
+Do not redesign Benny, change the approved art, or break gameplay.
+
+FINAL REQUIREMENT — REPORT THE BACKUP PROOF
+
+When the initial backup is verified, tell me:
+
+- The actual repository and branch backed up.
+- The full Git commit SHA and whether the remote matches.
+- Whether the Screen 05 water-projection work is saved.
+- Whether all ten specialist definitions and current progress are saved.
+- Whether both Marble worlds and all large files are verified.
+- Which servers, plugins and tools can be restored automatically and which require reconnecting.
+- Whether the five-minute autosave is active.
+- The exact instructions for starting from another Claude account.
+
+FIRST SAVE AND VERIFY EVERYTHING. THEN CONTINUE MY EXISTING WORK.
+
+I do not want to lose any of my designs, specialist progress, assets or experiments if I run out of credits again.
+
+### 🤖 Claude — 2026-11-16T15:51:04.417Z
+
+Saving first, before anything else.
+
+### 🤖 Claude — 2026-11-16T15:51:07.522Z
+
+> 🔧 **Bash** `{"command": "date -u +\"%H:%M:%S UTC\" && git remote get-url origin | sed 's#//[^@]*@#//#' && git symbolic-ref --short HEAD && for i in $(seq 1 40); do out=$(python3 scripts/rainbow-autosave.py --reason manual:urgent-backup --message \"URGENT full backup: Screen 05 water-projection experiment in progress (Specialist 1 running), all work saved\" 2>&1); echo \"$out\" | grep -q \"another autosave is running\" || break; sleep 3; done; echo \"$out\" | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"|\"files\"' | head -6; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remo …[+211 chars]`
+

@@ -680,6 +680,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
       return [...hits.entries()].sort((a, b) => b[1] - a[1]);
     },
     togglePause,
+    /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
+     *  per-pixel river UV / footprint renders. Nothing calls it in the game; rendering is unchanged. */
+    qa3d() { return { scene, camera, renderer, composer }; },
     stats() {
       const i = renderer.info;
       return { fps: +fps.toFixed(1), calls: i.render.calls, triangles: i.render.triangles, geometries: i.memory.geometries, textures: i.memory.textures, modules: { ...moduleStatus }, courseLength: course.length };
