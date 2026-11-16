@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7780,
-   "sha256": "123dfc75016032bb146852dd113ad3ecec9d17593f72221a5032bbe0d3772307"
+   "sha256": "96a587e9b27560122dc42c30d766e9520206caddc7acccd49b0dc46cc500c5b1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1582,6 +1582,11 @@
    "sha256": "823077369b0f512f478c70778f1740410eebbcf00db78078050f8e35da11e21f"
   },
   {
+   "path": "qa/pilot05/wave12/tests/perf_high_864x1536.json",
+   "bytes": 1152,
+   "sha256": "adc3a5b36b54b37a7201513ee398136788b415b95b13ad4de0557809e2818da9"
+  },
+  {
    "path": "qa/pilot05/wave12/tests/pixel_checks_05.json",
    "bytes": 352,
    "sha256": "ca8468dfe23e27538d736a7583f558a7a5bdf3cd660dc85df4830495e7a02c1a"
@@ -1593,8 +1598,8 @@
   },
   {
    "path": "qa/pilot05/wave12/tests/run2.txt",
-   "bytes": 69,
-   "sha256": "1173254f26244ddfc3db4db8ee5104d82d23ed52c87941d1765d47f7d9139d8e"
+   "bytes": 84,
+   "sha256": "531e0300a1d9db57efa96b513eb0685c2659d8be043bea14eaa3a9c2e6be4522"
   },
   {
    "path": "qa/pilot05/wave12/tests/w12_040607/04.png",
