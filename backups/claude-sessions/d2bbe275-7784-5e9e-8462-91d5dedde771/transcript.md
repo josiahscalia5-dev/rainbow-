@@ -3011,3 +3011,224 @@ Water region with the berm sheet faded on 05 only: mean error 22.9, 73 % of pixe
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/capture.mjs 04 05 06 07 --out=$SP/cap/def_all 2>&1 | grep -c \"→\"; node scripts/capture.mjs 04 06 07 --q=proj05=1 --out=$SP/cap/proj_all 2>&1 | grep -c \"→\"; git checkout qa/capture_log.json; python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nSP='$SP'\ndef d(a,b):\n    a=np.asarray(Image.open(a).convert('RGB')).astype(int); b=np.asarray(Image.open(b).convert('RGB')).astype(int); x=np.abs(a-b).sum(-1); return int((x>0).sum()), int(x.max())\nprint('default 05 vs protected  …[+463 chars]`
 
+### 🧑 User — 2026-11-16T17:59:23.983Z
+
+> ↩︎ result: 4
+> 3
+> Updated 1 path from the index
+> default 05 vs protected current_default_05: (0, 0)
+> 04 proj05 vs default (same build): (190969, 426)  default vs screenshots/: (1153805, 489)
+> 06 proj05 vs default (same build): (0, 0)  default vs screenshots/: (1280318, 697)
+> 07 proj05 vs default (same build): (0, 0)  default vs screenshots/: (1279505, 691)
+
+### 🤖 Claude — 2026-11-16T17:59:28.826Z
+
+Default 05, plus screens 06 and 07 with `?proj05=1`, are pixel-identical to the default. Screen 04 differs, so I'm checking where.
+
+### 🤖 Claude — 2026-11-16T17:59:32.277Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -c \"\nimport numpy as np\nfrom PIL import Image\na=Image.open('$SP/cap/def_all/04.png').convert('RGB'); b=Image.open('$SP/cap/proj_all/04.png').convert('RGB')\nx=np.abs(np.asarray(a).astype(int)-np.asarray(b).astype(int)).sum(-1)>0\nys,xs=np.nonzero(x); print('diff bbox', xs.min(),xs.max(),ys.min(),ys.max())\nc=Image.new('RGB',(a.width*2+10,a.height)); c.paste(a,(0,0)); c.paste(b,(a.width+10,0)); c.resize((c.width//2,c.height//2)).save('$SP/mf/04_pair.png')\"", "description": "Locate s …[+35 chars]`
+
+### 🧑 User — 2026-11-16T17:59:32.743Z
+
+> ↩︎ result: diff bbox 0 863 0 1144
+
+### 🤖 Claude — 2026-11-16T17:59:33.472Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/04_pair.png"}`
+
+### 🧑 User — 2026-11-16T17:59:33.523Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:59:44.889Z
+
+> 🔧 **Bash** `{"command": "grep -n \"BAND_STYLE\\b\\|const BAND_STYLE\\|BAND_DEFAULT =\" -A12 src/vfx/waterRibbon.ts | head -30; SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$SP/cap/def_all/04.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$SP/cap/proj_all/04.png').convert('RGB')).astype(int)\nx=np.abs(a-b).sum(-1)\nfor r0 in range(0,1536,128): print(r0, int((x[r0:r0+128]>0).sum()), int((x[r0:r0+128]>30).sum()))\"", "description": "Check band style weights and 04 diff di …[+12 chars]`
+
+### 🧑 User — 2026-11-16T17:59:45.237Z
+
+> ↩︎ result: 40:const BAND_STYLE: Partial<Record<StageId, Style>> = {
+> 41-  '04': [0, 0.6, 0.19, 1],
+> 42-  '05': [1, 0.62, 0.19, 0],
+> 43-  '06': [0.4, 0.48, 0.1, 1],
+> 44-  '07': [0, 0.52, 0.13, 1],
+> 45-};
+> 46-const BAND_DEFAULT: Style = [0, 0.5, 0.12, 1];
+> 47-
+> 48-function bandStyleAt(course: Course, s: number): Style {
+> 49-  const o: Style = [0, 0, 0, 0];
+> 50-  let w = 0;
+> 51-  for (const st of course.stages) {
+> 52-    const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+> --
+> 54:    const v = BAND_STYLE[st.id] ?? BAND_DEFAULT;
+> 55-    for (let i = 0; i < 4; i++) o[i] += v[i] * a;
+> 56-    w += a;
+> 57-  }
+> 58:  if (w <= 0) return [...(BAND_STYLE[course.stageAtS(s).id] ?? BAND_DEFAULT)];
+> 59-  return [o[0] / w, o[1] / w, o[2] / w, o[3] / w];
+> 60-}
+> 61-
+> 62-/**
+> 63- * 05 current: lateral position (units, ribbon `right` axis, + = right) of the centre of the
+> 64- * electric-cyan core relative to the route centreline. The core swings WITH the course meander,
+> 65- * amplified by CORE_SWING, so the two pink bands trace S-bends ≈(1 + CORE_SWING)× as strong as the
+> 66- * route's own (ref 05: ±60–120 px). Bounded by CORE_SWING · max|offset05| (≈0.9 · 1.85 = 1.7 u at the
+> 67- * far crest; ≤1.25 u within …[+380 chars]
+
+### 🤖 Claude — 2026-11-16T18:00:05.247Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='tools/proj05/residual.py'; s=open(p).read()\ns=s.replace('p = os.path.join(tdir, \"correction.npy\")\\nacc = np.load(p) if os.path.exists(p) else np.zeros_like(rs)\\nacc = acc + gain * rs\\nnp.save(p, acc.astype(np.float32))',\n 'p = os.path.join(tdir, \"correction.npz\")\\nacc = np.load(p)[\"c\"].astype(np.float64) if os.path.exists(p) else np.zeros_like(rs)\\nacc = acc + gain * rs\\nnp.savez_compressed(p, c=acc.astype(np.float16))')\ns=s.replace(\"ACCUMULATED into <target_dir>/correction.npy\",\"ACCUMULATED into <target_dir>/correction.npz\")\nop …[+2059 chars]`
+
+### 🧑 User — 2026-11-16T18:00:32.137Z
+
+> ↩︎ result: total 6608
+> drwxr-xr-x 2 root root    4096 Nov 16 18:00 .
+> drwxr-xr-x 7 root root    4096 Nov 16 17:39 ..
+> -rw-r--r-- 1 root root 1139636 Nov 16 17:46 art_registered.png
+> -rw-r--r-- 1 root root    4194 Nov 16 17:46 coin_mask.png
+> -rw-r--r-- 1 root root 3417987 Nov 16 18:00 correction.npz
+> -rw-r--r-- 1 root root    8545 Nov 16 17:46 fill_mask.png
+> -rw-r--r-- 1 root root     452 Nov 16 17:46 report.json
+> -rw-r--r-- 1 root root 2160608 Nov 16 17:46 target_05.png
+> -rw-r--r-- 1 root root    5618 Nov 16 17:46 water_mask.png
+> cd3efd57948fc19f6fb860c7cc591fed  assets/textures/water05/proj05_E.png
+> 1
+> Updated 1 path from the index
+> re-bake from npz == previous capture: 2
+> 2_BEFORE_current_default_T2.png {'px': 559593, 'mean_abs': 49.67, 'within_10': 0.0829, 'within_20': 0.2337, 'ssim_lum': 0.3178}
+> 3_NEW_proj05.png {'px': 559593, 'mean_abs': 22.85, 'within_10': 0.665, 'within_20': 0.7307, 'ssim_lum': 0.7755}
+
+### 🤖 Claude — 2026-11-16T18:00:36.489Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/proj/compare/1_APPROVED.png", "qa/pilot05/proj/compare/3_NEW_proj05.png", "qa/pilot05/proj/compare/2_BEFORE_current_default_T2.png"], "caption": "Locked 05 camera, full size, real game: 1 APPROVED · 3 NEW (?proj05=1) · 2 BEFORE (your current default T2). On your approved water (excluding Benny and the coins): mean error 49.7 → 22.9 out of 255, SSIM 0.32 → 0.78. The tunnel, rings, Benny, coins and bubbles are unchanged by design. Moving-camera test is next.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T18:00:37.135Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/proj/compare/1_APPROVED.png → file_uuid: c8463f6e-47db-49da-886d-197fd889297c
+>   /home/user/rainbow-/qa/pilot05/proj/compare/3_NEW_proj05.png → file_uuid: 253b66fb-69aa-474f-8c7a-8941152a0155
+>   /home/user/rainbow-/qa/pilot05/proj/compare/2_BEFORE_current_default_T2.png → file_uuid: 3b82a8c9-a470-4ebb-8462-f8c200ac4fdb
+
+### 🤖 Claude — 2026-11-16T18:00:39.168Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T18:00:39.180Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T18:00:39.518Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T18:00:39.537Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-16T18:00:44.144Z
+
+Now the moving-camera test. I'll write a script that rides forward from the locked 05 checkpoint and captures frames at increasing distances, with proj05 and default side by side.
+
+### 🤖 Claude — 2026-11-16T18:00:45.001Z
+
+> 🔧 **Bash** `{"command": "sed -n 655,694p src/game/Game.ts; grep -n \"frozen\" src/game/Game.ts | head", "description": "Read QA render/step API and frozen time handling"}`
+
+### 🧑 User — 2026-11-16T18:00:45.045Z
+
+> ↩︎ result: bennyScreen() {
+>       const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
+>       return { x: +v.x.toFixed(2), y: +v.y.toFixed(2), z: +v.z.toFixed(3), visible: benny.root.visible, cam: camera.position.toArray().map((q) => +q.toFixed(2)), benny: benny.root.position.toArray().map((q) => +q.toFixed(2)) };
+>     },
+>     /** debug: what does a ray from the camera through NDC (x,y) hit first? */
+>     probe(x = 0, y = 0) {
+>       const rc = new THREE.Raycaster();
+>       rc.setFromCamera(new THREE.Vector2(x, y), camera);
+>       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+>       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
+>       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+>     },
+>     /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+>     drawList() {
+>       const hits = new Map<string, number>();
+>       const hooked: [THREE.Ob …[+1673 chars]
+
+### 🤖 Claude — 2026-11-16T18:01:25.362Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\ns=s.replace(\"vec3 pjTarget(float u, float s, float mE, out float wE) {\",\"vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {\")\ns=s.replace(\"  float wN = n.a * step(0.0, nUV.y) * step(nUV.y, 1.0);\\n  vec3 t = texture2D(uPjT\",\"  wN = n.a * step(0.0, nUV.y) * step(nUV.y, 1.0);\\n  vec3 t = texture2D(uPjT\")\ns=s.replace(\"uniform vec2 uPjRes;       // render target size (vignette inverse)\",\"uniform vec2 uPjRes;       // render target size (vignette inverse)\\nuniform float uPjDbg;      //  …[+5932 chars]`
+
+### 🧑 User — 2026-11-16T18:02:35.638Z
+
+> ↩︎ result: move 0 {"file":"/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj/move_00.png","d":0,"s":132.438,"cam":[1.92,-37.94,-6
+> move 2 {"file":"/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj/move_02.png","d":2,"s":134.455,"cam":[1.93,-37.98,-6
+> move 5 {"file":"/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj/move_05.png","d":5,"s":137.572,"cam":[1.97,-38.1,-71
+> move 10 {"file":"/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj/move_10.png","d":10,"s":142.522,"cam":[2.02,-38.3,-
+> move 20 {"file":"/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj/move_20.png","d":20,"s":152.605,"cam":[1.93,-38.72,
+> move 35 {"file":"/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj/move_35.png","d":35,"s":167.455,"cam":[1.34,-39.33,
+> move 50 {"file":"/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj/move_50.png","d":50,"s":182.488,"cam":[3.29,-39.92,
+> 7
+
+### 🤖 Claude — 2026-11-16T18:02:39.850Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && cd $SP/move && python3 -c \"\nfrom PIL import Image\nds=['00','02','05','10','20','35','50']\nfor kind in ['proj','dbg']:\n  c=Image.new('RGB',(216*7+60,384),(0,0,0))\n  for i,d in enumerate(ds): c.paste(Image.open(f'{kind}/move_{d}.png').convert('RGB').resize((216,384)),(i*226,0))\n  c.save(f'{kind}_sheet.png')\n\"", "description": "Contact sheets of moving frames and layer map"}`
+
+### 🤖 Claude — 2026-11-16T18:02:40.997Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj_sheet.png"}`
+
+### 🧑 User — 2026-11-16T18:02:41.105Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-16T18:02:41.156Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:02:41.602Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/dbg_sheet.png"}`
+
+### 🧑 User — 2026-11-16T18:02:41.637Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:02:48.991Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/proj/move_35.png"}`
+
+### 🧑 User — 2026-11-16T18:02:49.040Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:03:21.202Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\nold=\"\"\"      vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;\n      float mE = min(length(dFdx(tp)), length(dFdy(tp)));\"\"\"\nnew=\"\"\"      vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;\n      // smallest singular value of the texel-per-pixel Jacobian (robust to the shear of the per-row u range)\n      vec2 ja = dFdx(tp), jb = dFdy(tp);\n      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);\"\"\"\nassert old in s\ns=s.replace(old,new)\nop …[+2314 chars]`
+
+### 🤖 Claude — 2026-11-16T18:03:22.404Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/T_v2.png"}`
+
+### 🧑 User — 2026-11-16T18:03:32.592Z
+
+> ↩︎ result: {"E": [1024, 1241], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9044440282534246, "N_valid": 0.7301615397135417, "samples": 772872, "coin_pixels": 21493, "sE": [129.71197937011718, 180.97108032226564]}
+
+### 🧑 User — 2026-11-16T18:03:32.605Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:03:47.876Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/bake.py'\ns=open(p).read()\ns=s.replace(\"    valid = valid | filled\\n    return img, valid\\n\",\"    valid = valid | filled\\n    finish.filled = filled\\n    return img, valid\\n\")\ns=s.replace(\"N_, validN = finish(accN, wtN[..., 0], holeN[..., 0], fill_sigma=1.5, max_gap=int(12 * dN), fill_all=True)\",\n\"N_, validN = finish(accN, wtN[..., 0], holeN[..., 0], fill_sigma=1.5, max_gap=int(12 * dN), fill_all=True)\\nrealN = validN & ~finish.filled                    # texels that saw real approved water (not coin / gap fills)\")\ns=s.replace(\ …[+974 chars]`
+
+### 🤖 Claude — 2026-11-16T18:03:49.035Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/T_v3.png"}`
+
+### 🧑 User — 2026-11-16T18:03:56.779Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-16T18:03:56.792Z
+
+> ↩︎ result: [image]
+

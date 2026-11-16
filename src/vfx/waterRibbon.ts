@@ -395,6 +395,7 @@ uniform vec4 uPjDS;        // tile width (u), tile length (s), gain, unused
 uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
 uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
 uniform vec2 uPjRes;       // render target size (vignette inverse)
+uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
 vec4 pjLut(float s) {
   float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
   float i = floor(x);
@@ -405,7 +406,7 @@ vec4 pjLut(float s) {
   return r;
 }
 // display-space target at (u, s): exact layer where it is sharp enough, else near / tile layout + detail
-vec3 pjTarget(float u, float s, float mE, out float wE) {
+vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
   vec4 L = pjLut(s);
   vec2 eUV = vec2(0.5 + (u - L.y) / (2.0 * L.z), L.x);
   vec4 e = texture2D(uPjE, eUV);
@@ -413,7 +414,7 @@ vec3 pjTarget(float u, float s, float mE, out float wE) {
   wE = e.a * inE * smoothstep(0.42, 0.75, mE);
   vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));
   vec4 n = texture2D(uPjN, nUV);
-  float wN = n.a * step(0.0, nUV.y) * step(nUV.y, 1.0);
+  wN = n.a * step(0.0, nUV.y) * step(nUV.y, 1.0);
   vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
   vec3 lay = mix(t, n.rgb, wN);
   return mix(lay, e.rgb, wE);
@@ -1360,20 +1361,24 @@ void main() {
       // exact-layer magnification: texels per screen pixel along the least dense direction
       vec4 Lm = pjLut(s);
       vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
-      float mE = min(length(dFdx(tp)), length(dFdy(tp)));
+      // smallest singular value of the texel-per-pixel Jacobian (robust to the shear of the per-row u range)
+      vec2 ja = dFdx(tp), jb = dFdy(tp);
+      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);
       // two-phase flow toward the camera: layer A peaks with zero offset at phase 0.5 (the frozen QA clock)
       float ph = fract(uTime * uPjFlow.y + uPjFlow.z);
       float D = uPjFlow.x * uPjFlow.w;
       float sA = s + D * (ph - 0.5);
       float sB = s + D * (fract(ph + 0.5) - 0.5);
       float wA = 1.0 - abs(2.0 * ph - 1.0);
-      float wEA, wEB;
-      vec3 tA = pjTarget(u, sA, mE, wEA);
-      vec3 tB = pjTarget(u, sB, mE, wEB);
+      float wEA, wEB, wNA, wNB;
+      vec3 tA = pjTarget(u, sA, mE, wEA, wNA);
+      vec3 tB = pjTarget(u, sB, mE, wEB, wNB);
       vec3 tgt = mix(tB, tA, wA);
       float wEx = mix(wEB, wEA, wA);
+      float wNx = mix(wNB, wNA, wA);
       float det = mix(pjDetail(u, sB), pjDetail(u, sA), wA);
       tgt = clamp(tgt + det * uPjDS.z * (1.0 - wEx), 0.0, 1.0);
+      if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));
       vec3 lin = pjInverse(tgt);
       #ifdef USE_FOG
       #ifdef FOG_EXP2
@@ -1598,6 +1603,7 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };
   u.uPjPost = { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) };
   u.uPjRes = { value: new THREE.Vector2(864, 1536) };
+  u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };
   const loader = new THREE.TextureLoader();
   const load = (url: string, mip: boolean, repeat: boolean) =>
     new Promise<THREE.Texture>((res, rej) =>

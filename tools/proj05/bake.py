@@ -27,8 +27,8 @@ wm = np.asarray(Image.open(os.path.join(tdir, "water_mask.png"))) > 127
 coin = np.asarray(Image.open(os.path.join(tdir, "coin_mask.png"))) > 127
 tgt = np.asarray(Image.open(os.path.join(tdir, "target_05.png")).convert("RGB"), np.float64) / 255
 # colour feedback from the live capture (tools/proj05/residual.py): what the bloom pass adds is taken out of the bake
-if os.path.exists(os.path.join(tdir, "correction.npy")):
-    tgt = np.clip(tgt - np.load(os.path.join(tdir, "correction.npy")).astype(np.float64), 0, 1)
+if os.path.exists(os.path.join(tdir, "correction.npz")):
+    tgt = np.clip(tgt - np.load(os.path.join(tdir, "correction.npz"))["c"].astype(np.float64), 0, 1)
 U, S = R[..., 0], R[..., 1]
 S_CUT = 182.0                                   # the real ribbon ends behind the far block's seam
 use = surf & wm & (S < S_CUT)
@@ -117,6 +117,7 @@ def finish(acc, wt, holew, fill_sigma=1.2, along_axis=0, max_gap=400, fill_all=F
         sm = np.stack([gaussian_filter(img[..., i], (0.6, 1.5)) for i in range(img.shape[2])], -1)
         img[filled] = sm[filled]
     valid = valid | filled
+    finish.filled = filled
     return img, valid
 
 xE, yE = e_coords(su, ss)
@@ -134,34 +135,37 @@ accN, _ = splat(xN, yN, np.where(scoin[:, None], 0, sc), WN, NN)
 holeN, _ = splat(xN, yN, scoin[:, None].astype(float), WN, NN)
 wtN, _ = splat(xN, yN, (~scoin)[:, None].astype(float), WN, NN)
 N_, validN = finish(accN, wtN[..., 0], holeN[..., 0], fill_sigma=1.5, max_gap=int(12 * dN), fill_all=True)
+realN = validN & ~finish.filled                    # texels that saw real approved water (not coin / gap fills)
 # fill the remaining (unseen) gaps inside N by a wide normalised blur, but keep them flagged as weak
 covN = gaussian_filter(validN.astype(float), 3.0)
 alphaN = np.clip((covN - 0.35) / 0.5, 0, 1)
 
 # ---------------------------------------------------------------- T (periodic tile) layer
-a_s, L, b = 137.0, 14.0, 3.0
-iy = lambda s: np.clip(((s - sN0) * dN).astype(int), 0, NN - 1)
+# full-width mid river (s 145-159 is visible bank to bank from the locked eye), as LAYOUT only (the detail layer adds the
+# fine streaks): rows interpolated, invalid texels filled with smooth weights (mirror of the other bank, then the
+# column mean), so there are no hard fill edges; periodic with a 3-unit crossfade at the wrap
+a_s, L, b = 145.0, 14.0, 3.0
 NT = int(L * dN)
-sl = a_s + np.arange(NT) / dN
-T_ = N_[iy(sl)].copy()
-wT = validN[iy(sl)].astype(float)
+def rows_at(img, s_):
+    y = np.clip((s_ - sN0) * dN - 0.5, 0, NN - 1.001); y0 = np.floor(y).astype(int); f = (y - y0)[:, None]
+    return img[y0] * (1 - f[..., None] if img.ndim == 3 else 1 - f) + img[y0 + 1] * (f[..., None] if img.ndim == 3 else f)
+sl = a_s + (np.arange(NT) + 0.5) / dN
+# the tile trusts only texels that saw real water; everything else is first replaced by its column mean
+colmeanN = (N_ * realN[..., None]).sum(0) / np.maximum(realN.sum(0), 1)[:, None]
+N_t = np.where(realN[..., None], N_, colmeanN[None])
+vN = np.clip((gaussian_filter(realN.astype(float), 2.0) - 0.5) * 2, 0, 1)
+def layer(s_):
+    c = rows_at(N_t, s_); w = rows_at(vN, s_)
+    cm, wm_ = c[:, ::-1], w[:, ::-1]                      # mirrored bank
+    colmean = (c * w[..., None]).sum(0) / np.maximum(w.sum(0), 1e-6)[:, None]
+    w1 = np.clip(w, 0, 1); w2 = np.clip(wm_, 0, 1) * (1 - w1)
+    w3 = np.clip(1 - w1 - w2, 0, 1)
+    return (c * w1[..., None] + cm * w2[..., None] + colmean[None] * w3[..., None]) / np.maximum(w1 + w2 + w3, 1e-6)[..., None]
+T_ = layer(sl)
 blendr = sl - a_s < b
-src2 = N_[iy(sl[blendr] + L)]
 r = ((sl[blendr] - a_s) / b)[:, None, None]
-T_[blendr] = src2 * (1 - r) + T_[blendr] * r
-# the right bank is not visible near s 137-145 from the locked eye: mirror the left half (the design is two pink
-# bands + foam on both sides), then fill what is left from the column average along s
-wT = np.maximum(wT, 0)
-src_b = validN[iy(sl[blendr] + L)].astype(float)
-wT[blendr] = np.minimum(wT[blendr], src_b)
-mir = T_[:, ::-1]; wm_ = wT[:, ::-1]
-use_m = (wT < 0.5) & (wm_ > 0.5)
-T_[use_m] = mir[use_m]; wT = np.maximum(wT, use_m.astype(float))
-for x in range(WN):
-    m = wT[:, x] > 0.5
-    if m.any() and (~m).any():
-        T_[~m, x] = T_[m, x].mean(0)
-T_ = np.stack([gaussian_filter(T_[..., i], (1.0, 0.8), mode=("wrap", "nearest")) for i in range(3)], -1)
+T_[blendr] = layer(sl[blendr] + L) * (1 - r) + T_[blendr] * r
+T_ = np.stack([gaussian_filter(T_[..., i], (1.5, 1.0), mode=("wrap", "nearest")) for i in range(3)], -1)
 
 # ---------------------------------------------------------------- D (detail) layer
 # streaky, glinting water under Benny (the user's isolated artwork, no bubbles or coins): s in [131.0, 134.4], u in [-0.3, 0.3]

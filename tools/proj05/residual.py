@@ -1,5 +1,5 @@
 """proj05 colour feedback: (capture - target) on visible river pixels, outliers (Benny, coins, bubbles, splash) rejected,
-smoothed, ACCUMULATED into <target_dir>/correction.npy; tools/proj05/bake.py subtracts it from the target before baking.
+smoothed, ACCUMULATED into <target_dir>/correction.npz; tools/proj05/bake.py subtracts it from the target before baking.
 This removes what the shader cannot undo analytically (the bloom pass adds light around bright streaks).
 usage: python3 -I tools/proj05/residual.py <capture.png> <probe_dir> <target_dir> [gain=0.85]"""
 import os, sys
@@ -23,8 +23,8 @@ sig = 4.0
 den = gaussian_filter(m, sig)
 rs = np.stack([gaussian_filter(r[..., i] * m, sig) for i in range(3)], -1) / np.maximum(den, 1e-4)[..., None]
 rs *= np.clip(den / 0.25, 0, 1)[..., None]                # fade where there is little support
-p = os.path.join(tdir, "correction.npy")
-acc = np.load(p) if os.path.exists(p) else np.zeros_like(rs)
+p = os.path.join(tdir, "correction.npz")
+acc = np.load(p)["c"].astype(np.float64) if os.path.exists(p) else np.zeros_like(rs)
 acc = acc + gain * rs
-np.save(p, acc.astype(np.float32))
+np.savez_compressed(p, c=acc.astype(np.float16))
 print("residual on used pixels: mean signed rgb", (r[m > 0].mean(0) * 255).round(2).tolist(), " mean abs", float(np.abs(r[m > 0]).mean() * 255), " used px", int(m.sum()))

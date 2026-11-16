@@ -612,6 +612,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     goto: gotoCheckpoint,
     run(v = true) { running = v; last = performance.now(); },
     unfreeze() { st.frozen = null; input.override = null; },
+    /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+    freezeAt(t: number) { st.frozen = t; st.clock = t; },
     setSteer(v: number | null) { input.override = v; },
     /** deterministic simulation: advance n steps of dt (no rendering needed) */
     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },

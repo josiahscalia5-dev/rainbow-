@@ -1,0 +1,34 @@
+{
+ "qa/pilot05/proj/compare/2_BEFORE_current_default_T2.png": {
+  "WATER": {
+   "px": 559593,
+   "mean_abs": 49.67,
+   "within_10": 0.0829,
+   "within_20": 0.2337,
+   "ssim_lum": 0.3178
+  },
+  "FRAME": {
+   "px": 1157760,
+   "mean_abs": 54.23,
+   "within_10": 0.0667,
+   "within_20": 0.1935,
+   "ssim_lum": 0.2381
+  }
+ },
+ "qa/pilot05/proj/compare/3_NEW_proj05.png": {
+  "WATER": {
+   "px": 559593,
+   "mean_abs": 22.85,
+   "within_10": 0.665,
+   "within_20": 0.7307,
+   "ssim_lum": 0.7755
+  },
+  "FRAME": {
+   "px": 1157760,
+   "mean_abs": 41.17,
+   "within_10": 0.3461,
+   "within_20": 0.4361,
+   "ssim_lum": 0.4646
+  }
+ }
+}
