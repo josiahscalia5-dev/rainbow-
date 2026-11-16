@@ -553,3 +553,206 @@ DELIVER in `qa/pilot05/full_reference_match/benny/`: `NOTES.md` (per mismatch: a
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T23:39:43.515Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nS=\"/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/\"\nap=Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")\ngm=Image.open(\"qa/pilot05/full_reference_match/stack_2340/05_match05.png\").convert(\"RGB\")\nbox=(260,860,600,1040)\nap.crop(box).resize((1360,720),Image.LANCZOS).save(S+\"ap_hat.png\")\ngm.crop(box).resize((1360,720),Image.LANCZOS).save(S+\"gm_hat.png\")\nbox=(340,760,520,920)\nap.crop(box).resize((1080,960),Image.LANCZOS).save(S+\"ap_pom.png\")\nbox=(230,1010,620,120 …[+208 chars]`
+
+### 🤖 Claude — 2026-11-16T23:39:44.786Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/ap_hat.png"}`
+
+### 🧑 User — 2026-11-16T23:39:44.978Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-16T23:39:45.005Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:39:45.421Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/gm_hat.png"}`
+
+### 🧑 User — 2026-11-16T23:39:45.450Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:41:19.267Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/ | head -50 && ls qa/pilot05/benny* 2>/dev/null | head -40 && grep -rn \"benny-lab\" --include=*.mjs --include=*.py --include=*.ts --include=*.md -l . 2>/dev/null | grep -v node_modules | head -20", "description": "Find earlier Benny QA work and scripts driving benny-lab"}`
+
+### 🧑 User — 2026-11-16T23:41:19.402Z
+
+> ↩︎ result: 05_before_81e639e.png
+> 05_partial_f2a86ab.png
+> 05_ref_before_partial.png
+> COORDINATION.md
+> COORDINATION_WAVE3.md
+> COORDINATION_WAVE4.md
+> COORDINATION_WAVE5.md
+> COORDINATION_WAVE6.md
+> COORDINATION_WAVE7.md
+> COORDINATION_WAVE8.md
+> COORDINATION_WAVE9.md
+> COORDINATION_WAVE9B.md
+> REQUESTS.md
+> benny
+> camera
+> current_default_05.png
+> environment
+> foam
+> full_reference_match
+> marble_feas
+> proj
+> water
+> wave10
+> wave11
+> wave12
+> wave3
+> wave3_baseline
+> wave4
+> wave5
+> wave6
+> wave7
+> wave8
+> wave9
+> wave9b
+> before
+> iter1
+> ./backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-ac8dcef8e7b76b5b4.md
+> ./backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a37bba196b0b06729.md
+> ./backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a7655acf7fa1e151e.md
+> ./backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-af234f41ccc8827ce.md
+> ./backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md
+> ./backups/claude-sessions/025fdfec-0536-5765-8355-e6c259e1aa5d/subagents/agent-a52fe238922a756d7.md
+> ./backups/claude-sessions/025fdfec-0536-5765-8355-e6c259e1aa5d/subagents/agent-a8a31d00e7bffcc47.md
+> ./backups/claude-sessions/025fdfec-0536-5765-8355-e6 …[+1155 chars]
+
+### 🤖 Claude — 2026-11-16T23:41:21.956Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/pilot05/benny qa/pilot05/benny/* | head -60 && sed -n 120,173p src/characters/benny/benny-lab.ts && grep -n \"export\\|GLTFExporter\\|maxTextureSize\\|__glbBase64\" tools/model-lab.ts | head -30 && cat src/characters/types.ts && grep -n \"saturation\\|contrast\\|vignette\\|exposure\\|export\" src/render/grade.ts | head -30", "description": "Look at earlier Benny QA folder, lab rendering loop, GLB export code and grade settings"}`
+
+### 🧑 User — 2026-11-16T23:41:21.998Z
+
+> ↩︎ result: qa/pilot05/benny:
+> total 16
+> drwxr-xr-x  4 root root 4096 Nov 16 23:23 .
+> drwxr-xr-x 22 root root 4096 Nov 16 23:23 ..
+> drwxr-xr-x  2 root root 4096 Nov 16 23:23 before
+> drwxr-xr-x  2 root root 4096 Nov 16 23:23 iter1
+> 
+> qa/pilot05/benny/before:
+> total 6632
+> drwxr-xr-x 2 root root    4096 Nov 16 23:23 .
+> drwxr-xr-x 4 root root    4096 Nov 16 23:23 ..
+> -rw-r--r-- 1 root root 1097990 Nov 16 23:23 01.png
+> -rw-r--r-- 1 root root 1286327 Nov 16 23:23 02.png
+> -rw-r--r-- 1 root root 1613369 Nov 16 23:23 05.png
+> -rw-r--r-- 1 root root 1384203 Nov 16 23:23 10.png
+> -rw-r--r-- 1 root root 1391519 Nov 16 23:23 11.png
+> 
+> qa/pilot05/benny/iter1:
+> total 1384
+> drwxr-xr-x 2 root root    4096 Nov 16 23:23 .
+> drwxr-xr-x 4 root root    4096 Nov 16 23:23 ..
+> -rw-r--r-- 1 root root 1405947 Nov 16 23:23 05.png
+>     const key = new THREE.DirectionalLight('#ffffff', 2.2);
+>     key.position.set(3, 6, 5);
+>     scene.add(key);
+>     const rim = new THREE.DirectionalLight('#9ff6ff', 1.2);
+>     rim.position.set(-4, 2, -5);
+>     scene.add(rim);
+>     // an opaque cyan "water" plane at the game's ride height (refs / game views)
+>     if (views !== 'turntable' && views !== 'cmp') {
+>       const water = new THREE.Mesh(
+>         new THREE.CircleGeom …[+4887 chars]
+
+### 🤖 Claude — 2026-11-16T23:41:25.599Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/ | grep rainbow-render; ps aux | grep -E \"node|chrom|blender\" | grep -v grep | awk '{print $2,$3,$4,$11,$12,$13,$14}' | head -20; nproc; uptime", "description": "Check render slots and running processes"}`
+
+### 🧑 User — 2026-11-16T23:41:25.657Z
+
+> ↩︎ result: 94 1.5 2.1 /opt/node22/bin/claude --preload /home/claude/.claude/remote/spare.sock 
+> 1712 0.0 0.6 node /root/.npm/_npx/9833c18b2d85bc59/node_modules/.bin/playwright-mcp  
+> 4571 0.0 0.0 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1794871463040-86lfb6.sh
+> 4
+>  23:41:25 up 24 min,  0 user,  load average: 0.61, 0.65, 0.45
+
+### 🤖 Claude — 2026-11-16T23:41:28.421Z
+
+> 🔧 **Bash** `{"command": "STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' && B=qa/pilot05/full_reference_match/benny && mkdir -p $B/cap/before && time node scripts/capture.mjs 05 --q=\"$STACK\" --out=$B/cap/before 2>&1 | tail -5 && cp $B/cap/before/05.png $B/before.png && python3 -I tools/match05/metrics.py $B/before.png $B/cap/before/ | head -6", "description": "Capture the STACK baseline frame and measure it", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T23:41:47.856Z
+
+> ↩︎ result: 05 → qa/pilot05/full_reference_match/benny/cap/before/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":76,"tris":553856,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> real	0m18.262s
+> user	0m1.368s
+> sys	0m0.319s
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 34.1, 'within_10': 0.4286, 'within_20': 0.5157, 'ssim_lum': 0.5093, 'mean_signed_rgb': [2.9, -0.7, -0.6]}
+> gold_rings_and_front_frame   px  125730  mean  37.74  <=10 0.388  <=20 0.500  ssim 0.562  signed [-25.2, -26.9, 26.8]
+> purple_walls                 px  312706  mean  53.82  <=10 0.103  <=20 0.211  ssim 0.202  signed [6.4, 6.6, -18.8]
+> side_fittings                px   13776  mean  26.85  <=10 0.539  <=20 0.597  ssim 0.604  signed [-5.9, -0.3, 25.8]
+> water                        px  480736  mean   9.40  <=10 0.849  <=20 0.883  ssim 0.893  signed [4.7, -3.5, -4.5]
+> foam_banks                   px   28862  mean   8.43  <=10 0.897  <=20 0.927  ssim 0.897  signed [-0.1, -6.4, -8.9]
+
+### 🤖 Claude — 2026-11-16T23:41:51.511Z
+
+> 🔧 **Bash** `{"command": "STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' && B=qa/pilot05/full_reference_match/benny && mkdir -p $B/cap/before_mask $B/cap/hide && node scripts/capture.mjs 05 --q=\"$STACK&bennyMask=1\" --out=$B/cap/before_mask 2>&1 | tail -2 && node scripts/capture.mjs 05 --q=\"$STACK&hide=benny\" --out=$B/cap/hide 2>&1 | tail -2 && python3 -I tools/match05/metrics.py $B/before.png $B/cap/before/ | grep -i benny && git status --short | head", "description": "Capture flat-ID mask frame and Benny-hidden frame", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T23:42:20.252Z
+
+> ↩︎ result: 05 → qa/pilot05/full_reference_match/benny/cap/before_mask/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":74,"tris":553456,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → qa/pilot05/full_reference_match/benny/cap/hide/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":76,"tris":553856,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> benny_and_hat                px   93061  mean  49.71  <=10 0.066  <=20 0.235  ssim 0.087  signed [-0.7, -14.6, 8.5]
+>  M qa/capture_log.json
+>  M tools/proj05/bake.py
+> ?? qa/pilot05/full_reference_match/benny/before.png
+> ?? qa/pilot05/full_reference_match/benny/cap/
+
+### 🤖 Claude — 2026-11-16T23:42:26.627Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nS=\"/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/\"\nB=\"qa/pilot05/full_reference_match/benny/\"\na=Image.open(B+\"cap/before_mask/05.png\").convert(\"RGB\").crop((200,740,650,1220))\nb=Image.open(B+\"cap/hide/05.png\").convert(\"RGB\").crop((200,740,650,1220))\nim=Image.new(\"RGB\",(900,480)); im.paste(a,(0,0)); im.paste(b,(450,0)); im.save(S+\"mask_hide.png\")\nEOF", "description": "Compose mask and hidden captures for inspection"}`
+
+### 🧑 User — 2026-11-16T23:42:26.847Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T23:42:27.823Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/mask_hide.png"}`
+
+### 🧑 User — 2026-11-16T23:42:27.839Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:42:40.454Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport sys\nsys.path.insert(0,\"qa/pilot05/full_reference_match/benny\")\nimport numpy as np\nfrom PIL import Image\nimport bennyseg as bs\nS=\"/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/\"\nap=bs.load(bs.REF); m=np.asarray(Image.open(bs.MASK))>0\ncls=bs.colour_classes(ap)\ncls[~m]=0\npal=np.array([[40,40,40],[255,80,180],[120,30,230],[255,255,255],[255,220,0]],np.uint8)\nvis=pal[cls]; vis[~m]=(ap[~m]*0.4).astype(np.uint8)\nImage.fromarray(vis[740:1220,200:650]).resize((900,960),Image.NEAREST).save(S+\"ap_cls.png\")\nf …[+494 chars]`
+
+### 🧑 User — 2026-11-16T23:42:41.244Z
+
+> ↩︎ result: other 1234544 {'x0': 0, 'x1': 863, 'y0': 0, 'y1': 1535, 'w': 864, 'h': 1536, 'cx': 432.1, 'cy': 749.8, 'px': 1234544}
+> pink 41816 {'x0': 234, 'x1': 608, 'y0': 775, 'y1': 1179, 'w': 375, 'h': 405, 'cx': 420.0, 'cy': 1073.6, 'px': 41816}
+> purple 35532 {'x0': 239, 'x1': 607, 'y0': 777, 'y1': 1188, 'w': 369, 'h': 412, 'cx': 428.4, 'cy': 946.7, 'px': 35532}
+> white 12923 {'x0': 236, 'x1': 603, 'y0': 778, 'y1': 1125, 'w': 368, 'h': 348, 'cx': 400.6, 'cy': 942.6, 'px': 12923}
+> yellow 2289 {'x0': 482, 'x1': 552, 'y0': 917, 'y1': 983, 'w': 71, 'h': 67, 'cx': 519.1, 'cy': 953.1, 'px': 2289}
+> 330 [(0, 860, 27), (3, 887, 5), (2, 892, 6), (2, 899, 3), (2, 903, 15), (3, 918, 5), (2, 923, 4), (3, 927, 36), (2, 963, 55), (1, 1018, 27)]
+> 380 [(2, 860, 27), (3, 887, 7), (3, 896, 16), (2, 912, 37), (3, 949, 23), (1, 972, 5), (2, 977, 34), (2, 1013, 17), (1, 1030, 15)]
+> 430 [(2, 860, 39), (3, 899, 23), (2, 922, 34), (3, 956, 4), (3, 961, 3), (1, 968, 3), (3, 971, 3), (1, 974, 3), (2, 979, 53), (1, 1032, 13)]
+> 480 [(2, 860, 26), (3, 886, 7), (3, 895, 20), (2, 915, 25), (1, 940, 3), (2, 943, 9), (3, 952, 24), (2, 976, 35), (2, 1013, 15), (1, 1028, 17)]
+> 530 [(0, 860, 34), (2, 899, 5), (2, 906, 25), (3, 931, 4), ( …[+67 chars]
+
+### 🤖 Claude — 2026-11-16T23:42:41.637Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/ap_cls.png"}`
+
+### 🧑 User — 2026-11-16T23:42:41.655Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T23:42:47.103Z
+
+[Request interrupted by user]
+

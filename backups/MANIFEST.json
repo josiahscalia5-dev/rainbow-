@@ -524,7 +524,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10204,
-   "sha256": "2ac724937a5f53190f03d27afcce26fc1f3b5f13a915de22315ca1ff2f51456e"
+   "sha256": "85160c43381e294ffb3f699997bdeb4cc57f215e551d9c7ff30641f4d7d40ba2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -963,8 +963,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1235,
-   "sha256": "95f97c56510e8afafffdfcfef9dbef4caddca56bdbe8ce85b4669e6af4dd7a9b"
+   "bytes": 1196,
+   "sha256": "1cddabf9ac083a31e8a9c5a971d55bddca1ae7276bb3bfad5393b0de64efa5ef"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1312,9 +1312,39 @@
    "sha256": "0367f5126617ce625e089c55bb5f9bb7fc9535a929a4717b13f31e667c0906c6"
   },
   {
+   "path": "qa/pilot05/full_reference_match/benny/before.png",
+   "bytes": 2180494,
+   "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/benny/bennyseg.py",
    "bytes": 2070,
    "sha256": "bcb57f4f45908921d097bba30879c8ce637ddcb12f02f9dc60e86a114b6d697b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/before/05.png",
+   "bytes": 2180494,
+   "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/before/FULL_FRAME_METRICS.json",
+   "bytes": 411,
+   "sha256": "09d588d95c70e6fb7c1d54ccf70ef4bef8c63a741ea76c2d8d8aacc5c33e14ec"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/before/REGION_METRICS.json",
+   "bytes": 2516,
+   "sha256": "161770458c98ecaf1e732aff95911a8bd68826e298868143e15a3e2df1a28f5b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/before_mask/05.png",
+   "bytes": 2026280,
+   "sha256": "da69cb3c45f0def40a0aef303ffffee0a45497214816f63ab24a772e19f51cfc"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/hide/05.png",
+   "bytes": 2180494,
+   "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
   },
   {
    "path": "qa/pilot05/full_reference_match/masks/benny_and_hat.png",
@@ -7973,8 +8003,8 @@
   },
   {
    "path": "tools/proj05/bake.py",
-   "bytes": 16638,
-   "sha256": "d39a1827e8687e103ef72addfbdfcb6cc05fe92b6ee97a927550a9e6ad54011d"
+   "bytes": 17685,
+   "sha256": "2da7de1f8bcdba167ad4104ada8e52d17bfaaad6c26572ba1d6b65a08ee09aa3"
   },
   {
    "path": "tools/proj05/flow_bake.py",

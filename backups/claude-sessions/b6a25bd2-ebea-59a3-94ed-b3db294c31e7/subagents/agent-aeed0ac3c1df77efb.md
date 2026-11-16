@@ -518,3 +518,351 @@ DELIVER in `qa/pilot05/full_reference_match/hud/` and `coins/`: `NOTES.md` each 
 > if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
 > const size = typeof opt.size === 'str …[+10539 chars]
 
+### 🤖 Claude — 2026-11-16T23:39:38.135Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-16T23:39:38.156Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:39:38.607Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/stack_2340/05_match05.png"}`
+
+### 🧑 User — 2026-11-16T23:39:38.660Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:39:46.948Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w && cd /home/user/rainbow- && S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w && python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, json\nS=\"/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w\"\nap=Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")\ng=Image.open(\"qa/pilot05/full_reference_match/stack_2340/05_match05.png\").convert(\"RGB\")\nprint(ap.size,g.size)\nfor n,im in ((\"ap\" …[+847 chars]`
+
+### 🧑 User — 2026-11-16T23:39:47.529Z
+
+> ↩︎ result: (864, 1536) (864, 1536)
+> (1536, 864) uint8 [  0 255]
+> hud mask bbox 30 832 12 186 125488
+> 12 30 832 803
+> 18 30 832 803
+> 24 30 832 803
+> 30 30 832 803
+> 36 30 832 803
+> 42 30 832 803
+> 48 30 832 803
+> 54 30 832 803
+> 60 30 832 803
+> 66 30 832 803
+> 72 30 832 803
+> 78 30 832 803
+> 84 30 832 803
+> 90 30 832 803
+> 96 30 832 803
+> 102 30 832 803
+> 114 114 752 639
+> 120 114 752 639
+> 126 114 752 639
+> 132 114 752 639
+> 138 114 752 639
+> 144 114 752 639
+> 150 114 752 639
+> 156 114 752 639
+> 162 114 752 639
+> 168 114 752 639
+> 174 114 752 639
+> 180 114 752 639
+> 186 114 752 639
+> coin mask bbox 51 860 466 781 27437
+> {
+>  "vp_estimate": [
+>   497,
+>   478
+>  ],
+>  "fittings_boxes": {
+>   "L1": [
+>    52,
+>    300,
+>    222,
+>    432
+>   ],
+>   "L2": [
+>    244,
+>    408,
+>    338,
+>    478
+>   ],
+>   "L3": [
+>    366,
+>    448,
+>    404,
+>    480
+>   ],
+>   "R1": [
+>    712,
+>    388,
+>    864,
+>    540
+>   ],
+>   "R2": [
+>    626,
+>    384,
+>    702,
+>    458
+>   ],
+>   "R3": [
+>    584,
+>    428,
+>    618,
+>    466
+>   ]
+>  },
+>  "bubbles": 30,
+>  "regions": {
+>   "gold_rings_and_front_frame": {
+>    "id": 1,
+>    "px": 125730,
+>    "share": 0.0947
+>   },
+>   "purple_walls": {
+>    "id": 2,
+>    "px": 312706,
+>    "share": 0.2356
+>   },
+>   "side_fittings": {
+>    "id": 3,
+>    "px": 13776,
+>    "share": 0.0104
+>   },
+>   "water": {
+>    "id": 4,
+>    "px": 480736,
+>     …[+527 chars]
+
+### 🤖 Claude — 2026-11-16T23:39:50.267Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/ap_hud.png"}`
+
+### 🧑 User — 2026-11-16T23:39:50.291Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:39:50.896Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/game_hud.png"}`
+
+### 🧑 User — 2026-11-16T23:39:50.928Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:39:58.392Z
+
+> 🔧 **Bash** `{"command": "cat package.json && ls node_modules/@fontsource/ && ls node_modules/@fontsource/baloo-2/ | head -50 && ls node_modules/@fontsource/baloo-2/files | head -60; fc-list | head -30; ls public assets | head -60", "description": "Check available fonts and packages"}`
+
+### 🧑 User — 2026-11-16T23:39:58.442Z
+
+> ↩︎ result: {
+>   "name": "rainbow-washer-game",
+>   "private": true,
+>   "version": "0.1.0",
+>   "description": "RAINBOW — 11-screen real-time 3D portrait mobile game (Three.js + TypeScript + Vite + Capacitor)",
+>   "type": "module",
+>   "scripts": {
+>     "dev": "vite --host 0.0.0.0",
+>     "build": "tsc --noEmit && vite build",
+>     "preview": "vite preview --host 0.0.0.0 --port 4173",
+>     "typecheck": "tsc --noEmit",
+>     "test:continuity": "vite-node scripts/continuity-test.ts",
+>     "models:export": "node scripts/export-models.mjs",
+>     "qa:capture": "node scripts/capture.mjs",
+>     "qa:compare": "python3 scripts/compare.py",
+>     "verify:refs": "sha256sum -c scripts/reference.sha256",
+>     "android:sync": "npm run build && npx cap sync android",
+>     "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+>     "test:cinematic": "node scripts/cinematic-test.mjs"
+>   },
+>   "dependencies": {
+>     "@capacitor/android": "^6.2.0",
+>     "@capacitor/core": "^6.2.0",
+>     "@fontsource/baloo-2": "^5.1.0",
+>     "three": "^0.170.0"
+>   },
+>   "devDependencies": {
+>     "@capacitor/cli": "^6.2.0",
+>     "@types/three": "^0.170.0",
+>     "typescript": "^5.6.3",
+>     "vite": "^5.4.11",
+>     "vite-node": "^2.1.5"
+>   }
+> } …[+5738 chars]
+
+### 🤖 Claude — 2026-11-16T23:40:16.616Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nS=\"/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w\"\nap=Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")\ng=Image.open(\"qa/pilot05/full_reference_match/stack_2340/05_match05.png\").convert(\"RGB\")\ndef z(im,box,k,name):\n    c=im.crop(box); c=c.resize((c.width*k,c.height*k),Image.LANCZOS); c.save(f\"{S}/{name}.png\")\nz(ap,(20,0,350,120),5,\"ap_left\")\nz(ap,(330,0,650,120),5,\"ap_mid\")\nz(ap,(640,0,864,120),5,\"ap_right\")\nz(g,(20,0,350,120),5,\"g_lef …[+212 chars]`
+
+### 🧑 User — 2026-11-16T23:40:17.891Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T23:40:19.757Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/ap_left.png"}`
+
+### 🧑 User — 2026-11-16T23:40:19.784Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:40:20.509Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/ap_mid.png"}`
+
+### 🧑 User — 2026-11-16T23:40:20.531Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:40:21.145Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/ap_right.png"}`
+
+### 🧑 User — 2026-11-16T23:40:21.169Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:40:26.929Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nnp.set_printoptions(linewidth=250)\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(int)\ng=np.asarray(Image.open(\"qa/pilot05/full_reference_match/stack_2340/05_match05.png\").convert(\"RGB\")).astype(int)\ndef col(im,x,y0,y1):\n    print(f\"-- column x={x}\")\n    for y in range(y0,y1): print(y, im[y,x], end=\" | \")\n    print()\n# vertical profile through bar at a clean x (e.g. x=640, between counter and divider)\nfor x in (640,250,680):\n    print(\"AP\"); col(ap,x, …[+113 chars]`
+
+### 🧑 User — 2026-11-16T23:40:27.231Z
+
+> ↩︎ result: AP
+> -- column x=640
+> 5 [209  16 133] | 6 [220  27 146] | 7 [226  34 153] | 8 [221  32 148] | 9 [220  31 149] | 10 [220  24 150] | 11 [220  25 155] | 12 [214  30 154] | 13 [207  56 159] | 14 [255 164 229] | 15 [255 191 245] | 16 [226 147 213] | 17 [255 154 246] | 18 [217  77 212] | 19 [169  19 178] | 20 [148  13 177] | 21 [118   1 159] | 22 [ 95   1 141] | 23 [ 92   5 136] | 24 [ 91   2 132] | 25 [ 92   1 132] | 26 [ 91   1 133] | 27 [ 91   1 133] | 28 [ 92   1 130] | 29 [ 92   1 128] | 30 [ 92   2 126] | 31 [ 91   3 126] | 32 [ 91   2 128] | 33 [ 92   3 129] | 34 [ 91   2 128] | 35 [ 90   1 127] | 36 [ 87   1 126] | 37 [ 87   1 126] | 38 [ 88   2 127] | 39 [ 89   3 128] | 40 [ 89   3 128] | 41 [ 87   3 127] | 42 [ 87   3 127] | 43 [ 87   3 127] | 44 [ 87   3 127] | 45 [ 86   2 126] | 46 [ 86   2 126] | 47 [ 86   2 126] | 48 [ 84   0 124] | 49 [ 84   0 122] | 50 [ 85   1 123] | 51 [ 83   2 123] | 52 [ 83   2 123] | 53 [ 83   2 123] | 54 [ 82   1 122] | 55 [ 82   1 122] | 56 [ 81   0 121] | 57 [ 82   1 122] | 58 [ 82   1 122] | 59 [ 83   2 123] | 60 [ 86   2 124] | 61 [ 86   2 124] | 62 [ 87   3 125] | 63 [ 87   3 125] | 64 [ 87   3 124] | 65 [ 87   3 124] | 66 [ 86   2 123] | 67 [ 86  …[+7200 chars]
+
+### 🤖 Claude — 2026-11-16T23:40:39.350Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nnp.set_printoptions(linewidth=250)\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(int)\ndef row(im,y,x0,x1,step=1):\n    print(f\"-- row y={y}\")\n    print(\" | \".join(f\"{x} {im[y,x]}\" for x in range(x0,x1,step)))\nrow(ap,26,20,864,8)\nrow(ap,58,20,864,6)\nrow(ap,92,20,864,8)\n# interior stats: pixels with G<12 inside y 24..94\nsub=ap[24:95,40:820]\nm=(sub[...,1]<14)&(sub[...,0]<125)\nprint(\"interior px\",m.sum(), \"mean\",sub[m].mean(0),\"std\",sub[m].std(0))\n#  …[+371 chars]`
+
+### 🧑 User — 2026-11-16T23:40:39.522Z
+
+> ↩︎ result: -- row y=26
+> 20 [236  22 172] | 28 [171   7 130] | 36 [125   0  78] | 44 [230  40 174] | 52 [197 166 233] | 60 [111  20 159] | 68 [ 95   2 134] | 76 [102   2 128] | 84 [127  10 114] | 92 [136  12 108] | 100 [ 71   3 116] | 108 [ 75   3 115] | 116 [ 77   6 112] | 124 [164  14 114] | 132 [86  0 96] | 140 [ 78   3 122] | 148 [ 92   4 127] | 156 [ 91   2 130] | 164 [ 76   2 125] | 172 [ 99   3 129] | 180 [ 99   5 125] | 188 [127  12 155] | 196 [149  13 181] | 204 [161   7 181] | 212 [125   2 152] | 220 [105   3 141] | 228 [107   5 141] | 236 [110   7 148] | 244 [109   1 139] | 252 [ 92   3 129] | 260 [ 85   0 127] | 268 [ 86   1 130] | 276 [121   5 130] | 284 [124   9 140] | 292 [ 98   2 135] | 300 [107   5 140] | 308 [135  10 148] | 316 [152  59 191] | 324 [132   2 162] | 332 [131   1 159] | 340 [133   3 163] | 348 [118   4 154] | 356 [120   1 155] | 364 [103   2 142] | 372 [ 90   5 134] | 380 [105   5 127] | 388 [133  11 145] | 396 [232 187  84] | 404 [255 173  53] | 412 [222  58   0] | 420 [252  83  18] | 428 [228  67   0] | 436 [255 224  38] | 444 [227 166 112] | 452 [108   0 111] | 460 [ 89   2 109] | 468 [ 73   3 125] | 476 [ 82   2 125] | 484 [ 92   1 128] | 492 [ 79   0 120] | 5 …[+6687 chars]
+
+### 🤖 Claude — 2026-11-16T23:41:16.288Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md", "offset": 677, "limit": 234}`
+
+### 🧑 User — 2026-11-16T23:41:16.302Z
+
+> ↩︎ result: 677	PART 16 — MANDATORY FULL-SCREEN QUALITY MEASUREMENT
+> 678	
+> 679	Create comparison masks for at least:
+> 680	
+> 681	1. Gold rings and front gold frame.
+> 682	2. Purple tunnel walls and perforations.
+> 683	3. Metallic side fittings.
+> 684	4. Water.
+> 685	5. Foam banks.
+> 686	6. Benny and his hat.
+> 687	7. Benny's wake and splash.
+> 688	8. Coins.
+> 689	9. Bubbles.
+> 690	10. HUD and text.
+> 691	11. Distant tunnel and end glow.
+> 692	12. The entire composite frame.
+> 693	
+> 694	Record:
+> 695	
+> 696	- Screen-space alignment.
+> 697	- Object boundary and silhouette differences.
+> 698	- Pixel color error.
+> 699	- Percentage of pixels within 10 and 20 RGB levels.
+> 700	- Structural similarity (SSIM), where appropriate.
+> 701	- Missing or incorrectly covered pixels.
+> 702	- Major mismatched shapes.
+> 703	- Color contamination from lighting.
+> 704	- Clearly visible artifacts.
+> 705	
+> 706	Also calculate whole-frame comparison metrics.
+> 707	
+> 708	Never confuse a water-only measurement with whole-screen similarity.
+> 709	
+> 710	Never present "pixels within 20 color levels" as though it were a universal visual quality percentage.
+> 711	
+> 712	The 95% goal is an aspiration for the complete visual result, not permission to manipulate masks, exclude difficult r …[+7800 chars]
+
+### 🤖 Claude — 2026-11-16T23:41:17.102Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md", "offset": 1, "limit": 57}`
+
+### 🧑 User — 2026-11-16T23:41:17.115Z
+
+> ↩︎ result: 1	# The user's FINAL MASTER EXECUTION ORDER for Screen 05 (received 2026-11-16 ~19:40 UTC) — verbatim, as received
+> 2	
+> 3	NOTE: the message arrived CUT OFF in the middle of Part 14 (last words: "For the tunnel, rings, a"). Everything up to
+> 4	that point is below, word for word. When the user resends the remainder, append it here.
+> 5	
+> 6	---
+> 7	
+> 8	CLAUDIA — FINAL MASTER EXECUTION ORDER
+> 9	
+> 10	RAINBOW — SCREEN 05: FLOW INTO THE CURRENT
+> 11	
+> 12	COMPLETE, PIXEL-REFERENCED VISUAL RECONSTRUCTION
+> 13	
+> 14	READ THIS ENTIRE INSTRUCTION BEFORE MAKING CHANGES. THIS IS AN IMPLEMENTATION ORDER, NOT A REQUEST FOR ANOTHER PLAN, FEASIBILITY DISCUSSION, OR GENERIC STATUS REPORT.
+> 15	
+> 16	I have spent extensive time attempting to make Screen 05 match my approved artwork. I am no longer accepting endless experiments that improve one small feature while leaving the overall scene visibly different.
+> 17	
+> 18	MY ONE PRIMARY OBJECTIVE: MAKE THE ENTIRE REAL, PLAYABLE 3D SCREEN 05 LOOK AS CLOSE AS TECHNICALLY POSSIBLE TO MY EXACT ORIGINAL APPROVED IMAGE.
+> 19	
+> 20	The complete approved image is the authority. Not previous interpretations, not Marble, not another AI-generated image, and not your opinion of what looks better. …[+1887 chars]
+
+### 🤖 Claude — 2026-11-16T23:42:16.374Z
+
+> 🔧 **Bash** `{"command": "ls references/ && python3 -I - <<'EOF'\nfrom PIL import Image\nS=\"/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w\"\nimport glob\nims=[]\nfor n in (\"04\",\"05\",\"06\",\"07\"):\n    f=glob.glob(f\"references/{n}_*.png\")[0]\n    im=Image.open(f).convert(\"RGB\"); print(f,im.size)\n    ims.append(im.crop((0,0,im.width,200)).resize((864,200)))\nout=Image.new(\"RGB\",(864,800))\nfor i,im in enumerate(ims): out.paste(im,(0,i*200))\nout.save(f\"{S}/huds_refs.png\")\nEOF", "description": "Compare HUD strips across reference screens"}`
+
+### 🧑 User — 2026-11-16T23:42:16.750Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+> references/04_through_the_five_arrows.png (864, 1536)
+> references/05_flow_into_the_current.png (864, 1536)
+> references/06_crest_the_rinse_arch.png (864, 1536)
+> references/07_dive_the_washer_tube.png (864, 1536)
+
+### 🤖 Claude — 2026-11-16T23:42:19.135Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/w/huds_refs.png"}`
+
+### 🧑 User — 2026-11-16T23:42:19.168Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:42:28.084Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, glob\nR={n:np.asarray(Image.open(glob.glob(f\"references/{n}_*.png\")[0]).convert(\"RGB\")).astype(int) for n in (\"05\",\"06\",\"07\")}\na,b,c=R[\"05\"],R[\"06\"],R[\"07\"]\nfor (y0,y1,x0,x1,name) in ((24,94,620,700,\"clean interior right\"),(24,94,150,330,\"5/5 + area\"),(24,94,40,150,\"heart\"),(14,104,370,470,\"coin\"),(14,104,730,830,\"pause\"),(12,104,30,832,\"whole bar\"),(110,186,114,752,\"banner\")):\n    d1=np.abs(a[y0:y1,x0:x1]-b[y0:y1,x0:x1]).mean(); d2=np.abs(a[y0:y1,x0:x1]-c[y0:y1,x0:x1]).mean()\n    pr …[+427 chars]`
+
+### 🧑 User — 2026-11-16T23:42:28.379Z
+
+> ↩︎ result: clean interior right   05-06   4.65  05-07   4.84
+> 5/5 + area             05-06  12.43  05-07  15.97
+> heart                  05-06  18.68  05-07  21.52
+> coin                   05-06  11.79  05-07  15.79
+> pause                  05-06  18.79  05-07  22.67
+> whole bar              05-06  16.68  05-07  21.53
+> banner                 05-06  45.90  05-07  47.49
+> best shift 05 vs 06 heart area (np.float64(14.797980295566502), 0, 0)
+
+### 🧑 User — 2026-11-16T23:42:47.108Z
+
+[Request interrupted by user]
+

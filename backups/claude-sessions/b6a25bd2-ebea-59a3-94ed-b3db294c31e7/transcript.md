@@ -1118,3 +1118,80 @@ Now the bake change (an optional mode that writes to a separate folder, so the e
 
 [Image: original 2900x540, displayed at 2000x372. Multiply coordinates by 1.45 to map to original image.]
 
+### 🤖 Claude — 2026-11-16T23:39:50.742Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; mkdir -p $S/ride_far; node scripts/proj05-move.mjs --q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' --out=$S/ride_far --d=8,17 2>&1 | tail -2 | cut -c1-60; python3 -I - <<EOF\nfrom PIL import Image\na=Image.open('$S/ride_new/move_17.png').convert('RGB'); b=Image.open('$S/ride_far/move_17.png').convert('RGB')\nbox=(0,420,864,900)\nout=Image.new('RGB',(864*2+10,480)); out.paste(a.crop(box),(0,0)); out.paste(b.crop(box),(874,0)); out.save('$S/ri …[+137 chars]`
+
+### 🧑 User — 2026-11-16T23:40:06.749Z
+
+> ↩︎ result: move 8 {"file":"/tmp/claude-0/-home-user-rainbow-/b6a25bd2-e
+> move 17 {"file":"/tmp/claude-0/-home-user-rainbow-/b6a25bd2-
+
+### 🤖 Claude — 2026-11-16T23:40:08.559Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/ride17_pair.png"}`
+
+### 🧑 User — 2026-11-16T23:40:08.591Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:40:21.437Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; mkdir -p $S/ride_dbg; node scripts/proj05-move.mjs --q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1&projdbg05=1' --out=$S/ride_dbg --d=17 2>&1 | tail -1 | cut -c1-60; python3 -I - <<EOF\nfrom PIL import Image\nb=Image.open('$S/ride_dbg/move_17.png').convert('RGB')\nb.crop((0,420,864,900)).save('$S/ride17_dbg.png')\nEOF", "description": "Capture the layer debug map while riding at 17 units", "timeout": 900000}`
+
+### 🧑 User — 2026-11-16T23:40:34.995Z
+
+> ↩︎ result: move 17 {"file":"/tmp/claude-0/-home-user-rainbow-/b6a25bd2-
+
+### 🤖 Claude — 2026-11-16T23:40:36.791Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/ride17_dbg.png"}`
+
+### 🧑 User — 2026-11-16T23:40:36.825Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:41:13.375Z
+
+Checked the far river while riding: the torn pink patch is gone with the fix. Now removing a flat blank patch that appears mid-river when Benny rides forward (water the start view never saw).
+
+### 🤖 Claude — 2026-11-16T23:41:22.981Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; python3 -I - <<'EOF'\np='tools/proj05/bake.py'; s=open(p).read()\na='''alphaE = gaussian_filter(binary_erosion(validE, iterations=1).astype(float), 0.8)\n'''\nb='''alphaE = gaussian_filter(binary_erosion(validE, iterations=1).astype(float), 0.8)\nif FARFIX:\n    # water the locked eye never saw (behind wave crests, long interpolated runs along s): the straight interpolation\n    # shows as a flat blank patch as soon as Benny rides forward. Those texels are released (alpha 0) so the tile\n    # lay …[+1686 chars]`
+
+### 🧑 User — 2026-11-16T23:41:49.567Z
+
+> ↩︎ result: {"E_unseen_texels": 0, "E_texels": 1494016}
+> {"A_px": 18413, "E": [1024, 1459], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.8858117985349554, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> 05 → /tmp/claude-0/-home-user-rainbow-
+> locked view: px changed by the unseen-release 154  by >8 levels 17
+
+### 🤖 Claude — 2026-11-16T23:42:11.629Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nt=Image.open('qa/pilot05/proj/target/target_05.png').convert('RGB')\na=Image.open('references/05_flow_into_the_current.png').convert('RGB')\ncm=np.asarray(Image.open('qa/pilot05/proj/target/coin_mask.png'))>127\nprint('coin mask px',cm.sum(),'rows',np.nonzero(cm.any(1))[0][[0,-1]],'cols',np.nonzero(cm.any(0))[0][[0,-1]])\nbox=(360,470,640,790); z=2\nw,h=box[2]-box[0],box[3]-box[1]\nout=Image.new('RGB',(w*z*2+10,h*z)); out.paste(a.crop( …[+259 chars]`
+
+### 🧑 User — 2026-11-16T23:42:12.051Z
+
+> ↩︎ result: coin mask px 27437 rows [466 781] cols [ 51 860]
+> (1130, 640)
+
+### 🤖 Claude — 2026-11-16T23:42:13.704Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad/coinfill.png"}`
+
+### 🧑 User — 2026-11-16T23:42:13.752Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T23:42:47.103Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-16T23:42:47.163Z
+
+Save everything to my GitHub. Everything.
+
+### 🤖 Claude — 2026-11-16T23:42:47.639Z
+
+You've hit your 5-hour limit · resets 4:20am (UTC)
+

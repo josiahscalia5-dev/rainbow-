@@ -142,6 +142,20 @@ holeE, _ = splat(xE, yE, scoin[:, None].astype(float), WE, NE)
 wtE, _ = splat(xE, yE, (~scoin)[:, None].astype(float), WE, NE)
 E, validE = finish(accE, wtE[..., 0], holeE[..., 0], max_gap=int(NE * 0.35))
 alphaE = gaussian_filter(binary_erosion(validE, iterations=1).astype(float), 0.8)
+if FARFIX:
+    # water the locked eye never saw (behind wave crests, long interpolated runs along s): the straight interpolation
+    # shows as a flat blank patch as soon as Benny rides forward. Those texels are released (alpha 0) so the tile
+    # layers — the approved design, repeating — show there instead. Runs of <= UNSEEN_MIN rows stay (sub-texel gaps).
+    UNSEEN_MIN = 8
+    fl = finish.filled.copy()
+    run = np.zeros(fl.shape, np.int32)
+    for y in range(fl.shape[0]):                       # run length ending at y (down each column)
+        run[y] = np.where(fl[y], (run[y - 1] if y else 0) + 1, 0)
+    for y in range(fl.shape[0] - 2, -1, -1):           # spread the full run length back up the run
+        run[y] = np.where(fl[y] & fl[y + 1], np.maximum(run[y], run[y + 1]), run[y])
+    unseen = binary_erosion(run > UNSEEN_MIN, iterations=2)
+    alphaE = alphaE * (1.0 - np.clip(gaussian_filter(unseen.astype(float), 1.0) * 1.6, 0, 1))
+    print(json.dumps(dict(E_unseen_texels=int(unseen.sum()), E_texels=int(unseen.size))))
 
 if FARFIX:      # N / T / D: water-only samples, as before
     use = use_all
