@@ -2565,3 +2565,255 @@ Keep all gameplay, specialists, Marble assets and five-minute GitHub backups pro
 
 My goal is the exact look of my approved Screen 05, not a bigger tunnel for its own sake.
 
+### 🤖 Claude — 2026-11-16T11:13:25.562Z
+
+Your Big Tunnel message is the same decision you gave the previous session at ~10:20 UTC, and it is already in force:
+- The working game is your BEFORE. I re-checked it today: pixel-identical.
+- The big/oval tunnel is not in the game code. It exists only as a labelled, unmerged patch.
+
+I'll confirm that in the code again, tighten the Marble key handling so you're only asked for a key when authentication truly fails, and then run the next one-factor geometry test using your Marble assets.
+
+### 🤖 Claude — 2026-11-16T11:13:28.097Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I scripts/autosave-status.py; pgrep -af autosave-daemon | head -2; echo \"--- big/oval tunnel switches in src (expect none):\"; grep -rnEi \"bigtunnel|big_tunnel|oval|K ?1\\.7|ovalK|hc=|qaNum05\\('(b|hc|oval)\" src | head; echo \"--- URL switches present in 05 code:\"; grep -noE \"qaNum05\\('[a-z0-9]+'\" src/world/environment.ts | sort -u; git log -1 --format='%h %cd' --date=format:%H:%M", "description": "Check autosave health and confirm big tunnel code is absent"}`
+
+### 🧑 User — 2026-11-16T11:13:28.824Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-251ed97c-ty2xvp | scheduler daemon | last verified backup 2026-11-16T11:12:43+00:00 (0.8 min ago) | local c3f7315 remote c3f7315 (match) | uncommitted 0
+> 311 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> --- big/oval tunnel switches in src (expect none):
+> src/world/environment.ts:254:  // Default 26 = BEFORE; ?ringa=20 shows the test. (The wave-9 oval / "big tunnel" tests are NOT in this code:
+> src/world/tube.ts:168:   * multiplied by oval(s) (ref 05 rings are ovals ≈1.75 wider than tall), normals follow the ellipse
+> src/world/tube.ts:170:  oval?: (s: number) => number;
+> src/world/tube.ts:191:    const ov = o.oval ? o.oval(s) : 1;
+> src/world/tube.ts:297:  /** wave 8: lateral stretch (see TubeGeoOptions.oval) — the ring's local x (= ∓right) is scaled by oval(s) */
+> src/world/tube.ts:298:  oval?: (s: number) => number;
+> src/world/tube.ts:345:      m.compose(c, q, new THREE.Vector3(sc * (opts.oval ? opts.oval(ss) : 1), sc, collar ? 1 : sc * (dbl ? 0.6 : 1)));
+> src/world/tube.ts:381:    /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */
+> src/world/tube.ts:382:    oval?: (s: number) => number;
+> src/world/tube.ts:411:      if (opts.ov …[+149 chars]
+
+### 🤖 Claude — 2026-11-16T11:13:31.603Z
+
+`tube.ts` still has an optional `oval` parameter from wave 8. Checking whether anything uses it:
+
+### 🤖 Claude — 2026-11-16T11:13:32.956Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"oval\" src --include=*.ts | grep -v \"^src/world/tube.ts\" | head; echo \"---\"; grep -n \"straightTubePath\" -r src | head -3; sed -n \"$(grep -n 'export function straightTubePath' src/world/tube.ts | cut -d: -f1),+45p\" src/world/tube.ts", "description": "Check oval usage and read straightTubePath"}`
+
+### 🧑 User — 2026-11-16T11:13:33.019Z
+
+> ↩︎ result: src/world/environment.ts:254:  // Default 26 = BEFORE; ?ringa=20 shows the test. (The wave-9 oval / "big tunnel" tests are NOT in this code:
+> ---
+> src/world/environment.ts:10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> src/world/environment.ts:231:  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+> src/world/tube.ts:5: *  - straightTubePath: tube on a low-pass-filtered axis of the course (05–07): the tunnel stays
+> export function straightTubePath(
+>   course: Course,
+>   s0: number,
+>   s1: number,
+>   opts: { window: number; taper: number; baseRadius: (s: number) => number },
+> ): TubePath {
+>   const ds = 0.5;
+>   const n = Math.ceil((s1 - s0) / ds) + 1;
+>   const S = (i: number) => Math.min(s1, s0 + i * ds);
+>   const axis: THREE.Vector3[] = [];
+>   const cp: THREE.Vector3[] = [];
+>   for (let i = 0; i < n; i++) cp.push(course.sample(S(i)).pos.clone());
+>   for (let i = 0; i < n; i++) {
+>     const s = S(i);
+>     const taper = THREE.MathUtils.smoothstep(s, s0, s0 + opts.taper) * (1 - THREE.MathUt …[+1638 chars]
+
+### 🤖 Claude — 2026-11-16T11:13:35.701Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; start=$(grep -n 'export function straightTubePath' src/world/tube.ts | cut -d: -f1); sed -n \"$((start+46)),$((start+110))p\" src/world/tube.ts; grep -n \"straightAxes\" -r src | head -5; grep -n \"tubeR\\b\\|const tubeR\" src/world/environment.ts | head -4", "description": "Read the rest of straightTubePath and tube radius"}`
+
+### 🧑 User — 2026-11-16T11:13:35.753Z
+
+> ↩︎ result: runDepth[i] = r.floorDepth;
+>       const u = cp[i].clone().sub(r.a).dot(ab) / ab2;
+>       const onLine = r.a.clone().addScaledVector(ab, u);
+>       axis[i].x += (onLine.x - axis[i].x) * wl;
+>       axis[i].z += (onLine.z - axis[i].z) * wl;
+>       axis[i].y += (onLine.y - axis[i].y) * w;
+>     }
+>   }
+>   const WU = new THREE.Vector3(0, 1, 0);
+>   const frames: Frame[] = axis.map((p, i) => {
+>     const a = axis[Math.max(0, i - 2)], b = axis[Math.min(n - 1, i + 2)];
+>     const tan = b.clone().sub(a).normalize();
+>     const cu = course.sample(S(i)).up.clone().lerp(WU, wRun[i]); // no banking roll on straight stretches
+>     const up = cu.addScaledVector(tan, -cu.dot(tan)).normalize();
+>     const right = new THREE.Vector3().crossVectors(tan, up).normalize();
+>     return { pos: p, tan, up, right };
+>   });
+>   // radius/depth so the floor stays below the stream edges, dilated + smoothed for a steady tube
+>   const rawR: number[] = [], rawD: number[] = [], needR: number[] = [], needD: number[] = [];
+>   for (let i = 0; i < n; i++) {
+>     const s = S(i);
+>     const off = cp[i].clone().sub(frames[i].pos);
+>     const d = off.dot(frames[i].right);
+>     const X = Math.abs(d) + course.widthAt(s) / 2 + 0.25;
+>     const r = Math …[+2676 chars]
+
+### 🤖 Claude — 2026-11-16T11:13:52.761Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"floorDepth\" src | grep -v \"^src/world/tube.ts\" | head; grep -n \"export function tubeCenterAt\" -A8 src/world/tube.ts | head -12; grep -rn \"'05'\" src/world/camera*.ts src/game/*.ts 2>/dev/null | grep -i \"STAGE_CAM\\|back\\|height\\|up:\" | head -5; grep -rn \"STAGE_CAM\" src --include=*.ts -l | head -3", "description": "Find floorDepth definition, tube centre function, 05 camera"}`
+
+### 🧑 User — 2026-11-16T11:13:52.825Z
+
+> ↩︎ result: src/world/course.ts:96:  floorDepth: number;
+> src/world/course.ts:102:  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> src/world/course.ts:268:  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+> src/world/course.ts:410:    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+> 144:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> 145-  const f = path.frame(s);
+> 146-  return out.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
+> 147-}
+> 148-
+> 149-export interface TubeGeoOptions {
+> 150-  radial?: number;
+> 151-  step?: number;
+> 152-  vScale?: number;
+> src/game/cameraRig.ts:31:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> src/game/cameraRig.ts:122:    const p5 = STAGE_CAM['05'] as CamParams;
+> src/characters/benny/benny-lab.ts
+> src/world/environment.ts
+> src/game/cameraRig.ts
+
+### 🤖 Claude — 2026-11-16T11:14:07.967Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,40p scripts/continuity-test.ts | grep -nE \"import|new Course|build|course\\b\" | head -12; sed -n 100,140p src/game/cameraRig.ts | grep -nE \"p5|eye|up|back|ahead|lookUp|yaw\" | head -20", "description": "See how the continuity test builds the course and the 05 camera"}`
+
+### 🧑 User — 2026-11-16T11:14:08.025Z
+
+> ↩︎ result: 5:import { writeFileSync, mkdirSync } from 'node:fs';
+> 6:import { Course, validateContinuity, WORLD } from '../src/world/course';
+> 8:const c = new Course();
+> 2:    outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(upPos, p.lookUp);
+> 3:    outUp.set(0, 1, 0).lerp(up, p.roll).normalize();
+> 23:    const p5 = STAGE_CAM['05'] as CamParams;
+> 32:      const dz = p5.deadZone ?? 1;
+> 33:      const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
+> 34:      const cp = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - follow));
+> 35:      const pitch = Math.atan2(p5.up - p5.lookUp, p5.ahead + p5.back);
+> 36:      const yaw = THREE.MathUtils.degToRad(p5.yaw ?? 0);
+> 37:      const look = T.clone().multiplyScalar(Math.cos(pitch) * Math.cos(yaw)).addScaledVector(U, -Math.sin(pitch)).addScaledVector(Rt, -Math.cos(pitch) * Math.sin(yaw));
+> 39:      outTarget.lerp(cp.clone().addScaledVector(look, p5.ahead + p5.back), w5);
+
+### 🤖 Claude — 2026-11-16T11:14:43.593Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nimport json\nfor f in ['qa/worldlabs/05/pilot/full/analysis/splat_measure.json','qa/worldlabs/05/pilot/full/import/full05_measure.json','qa/worldlabs/05/pilot/full/analysis/bay_measure.json']:\n    d=json.load(open(f)); print('==',f); s=json.dumps(d); print(s[:1500])\n\"", "description": "Read the Marble full world measurement files"}`
+
+### 🧑 User — 2026-11-16T11:14:43.658Z
+
+> ↩︎ result: == qa/worldlabs/05/pilot/full/analysis/splat_measure.json
+> {"points_used": 458043, "axis": [-0.016147846131020403, -0.028066550081554783, 0.9994756204289571], "centre": [-0.001220703125, -0.074462890625, 0.682861328125], "length": 8.444786277011184, "t_range": [-4.550074314413964, 3.89471196259722], "wall_radius_p90_median": 1.6627396769549798, "sections": [{"t": -4.4797010954388705, "n": 330, "r_p50": 1.4982119273060353, "r_p90": 1.8356904697376666}, {"t": -3.6352224677377523, "n": 572, "r_p50": 1.3902655632557064, "r_p90": 1.7243376682645095}, {"t": -2.7907438400366336, "n": 1303, "r_p50": 1.522881879840562, "r_p90": 1.725174826824972}, {"t": -1.9462652123355153, "n": 4874, "r_p50": 1.3350803939878038, "r_p90": 1.611074833599087}, {"t": -1.1017865846343966, "n": 13853, "r_p50": 1.1899082250419957, "r_p90": 1.6460942845634299}, {"t": -0.25730795693327835, "n": 22397, "r_p50": 1.1399674212864634, "r_p90": 1.4980923736400729}, {"t": 0.5871706707678399, "n": 20283, "r_p50": 1.123488157870556, "r_p90": 1.5575255189560628}, {"t": 1.4316492984689582, "n": 7356, "r_p50": 1.181469237250699, "r_p90": 1.5170459817451747}, {"t": 2.2761279261700773, "n": 2441, "r_p50": 1.4889812093813874, "r_p …[+2894 chars]
+
+### 🤖 Claude — 2026-11-16T11:15:03.773Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 160,200p src/world/environment.ts | grep -nE \"const s0[0-9]|const s05|const s08|course.stage\" | head; grep -n \"prop('tube'\\|tube:\" src/world/course.ts | head -5; grep -n \"'05_crest'\" src/world/course.ts | head -3", "description": "Find s05/s08 definitions and tube radius property"}`
+
+### 🧑 User — 2026-11-16T11:15:03.844Z
+
+> ↩︎ result: 17:  const s04 = course.stage('04').s0, s05 = course.stage('05').s0;
+> 36:  const s08 = course.stage('08').s0;
+> 29:  tube: number;
+> 416:      id, title: STAGE_TITLES[id], s0, s1, width: 5, tube: 0, tubeKind: 'none', speed: 11, refCoins: 0,
+> 423:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 426:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+> 427:      def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
+> 142:/** the original (wave 1–5) sine meander; kept verbatim up to U05_KEEP so the 04→05 join, the '05_crest'
+> 482:    // '05_crest': the first meander crest (stream furthest left, heading parallel to the tunnel
+> 489:    this.marks['05_crest'] = best;
+
+### 🤖 Claude — 2026-11-16T11:15:14.157Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/qa/axis05.ts", "content": "// Screen 05 geometry probe (read-only): where the LOCKED checkpoint eye sits relative to the 05 tunnel axis.\n//   npx vite-node tools/qa/axis05.ts [floorDelta]\n// Prints, for depths ahead of the eye, the tunnel radius R, floor depth D (stream above tunnel bottom), the\n// tunnel-centre offset from the eye in the tube frame (right / up, in units and in R), and the predicted\n// projected ring-centre offset ratio (offset / ring radius) = what tools/qa/ring_fit05.py measures in pixels.\n// floorDelta (optional) adds to the 05  …[+1782 chars]`
+
+### 🧑 User — 2026-11-16T11:15:14.183Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/qa/axis05.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:15:15.357Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; for d in 0 1 2 3; do npx vite-node tools/qa/axis05.ts $d 2>&1 | tail -7; echo; done", "description": "Probe eye-to-tunnel-axis offsets for several floor deltas", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T11:15:19.238Z
+
+> ↩︎ result: floorDepth delta 0; eye at s=126.0 (Benny s=132.4), camera back 6.4 up 3.6
+> depth | R    | D    | centre-eye right  up (u) | right/R  up/R | stream below eye
+>    14 | 7.60 | 3.39 |   0.48   0.61        |  0.063  0.080 | 4.18
+>    20 | 7.60 | 3.41 |   0.48   0.59        |  0.063  0.077 | 4.43
+>    26 | 7.60 | 3.42 |   0.48   0.58        |  0.063  0.076 | 4.68
+>    40 | 7.60 | 3.62 |   0.48   0.38        |  0.063  0.049 | 5.26
+>    54 | 7.60 | 3.73 |   2.28   0.36        |  0.300  0.048 | 5.81
+> 
+> floorDepth delta 1; eye at s=126.0 (Benny s=132.4), camera back 6.4 up 3.6
+> depth | R    | D    | centre-eye right  up (u) | right/R  up/R | stream below eye
+>    14 | 7.60 | 4.30 |   0.48  -0.30        |  0.063 -0.039 | 4.18
+>    20 | 7.60 | 4.30 |   0.48  -0.30        |  0.063 -0.039 | 4.43
+>    26 | 7.60 | 4.30 |   0.48  -0.30        |  0.063 -0.039 | 4.68
+>    40 | 7.60 | 4.30 |   0.48  -0.30        |  0.063 -0.039 | 5.26
+>    54 | 7.60 | 4.30 |   2.28  -0.21        |  0.300 -0.028 | 5.81
+> 
+> floorDepth delta 2; eye at s=126.0 (Benny s=132.4), camera back 6.4 up 3.6
+> depth | R    | D    | centre-eye right  up (u) | right/R  up/R | stream below eye
+>    14 | 7.60 | 5.30 |   0.48  -1.30        |  0.063 -0.171 | 4.18
+>   …[+750 chars]
+
+### 🤖 Claude — 2026-11-16T11:15:39.615Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 255,272p src/world/course.ts; grep -n \"location\\|URLSearchParams\" src/world/course.ts | head", "description": "Read the 05 straight definition in course.ts"}`
+
+### 🧑 User — 2026-11-16T11:15:39.678Z
+
+> ↩︎ result: return s4c.clone().add(V(0, R4 * (Math.cos(-pitch4) - Math.cos(a)), R4 * (Math.sin(-pitch4) - Math.sin(a))));
+>   });
+>   mark('05');
+>   // ---- 05: long STRAIGHT perforated current tube (ref 05: concentric rings, ONE vanishing point);
+>   // the wide stream winds in S-curves inside it. Here only the straight line s5 → s5+L05 (slight
+>   // descent) is laid; the lateral S-offset meander05(u) is added after smoothing (see the end of
+>   // buildRoute). Offset and slope vanish at both ends, so 04 and 06 join tangentially and s6 (hence
+>   // 06/07/plunge/08) is unchanged. tube.ts builds the 05 tunnel on the line.
+>   const s5 = pts[pts.length - 1].clone();
+>   const L05 = V(0, -3, -S05.L);
+>   // 48 points (1.5-unit spacing) as before: the junction smoothing, hence the 04/05 and 05/06 stage
+>   // boundaries and the 06 checkpoint, stay exactly where they were
+>   seg(48, (t) => s5.clone().addScaledVector(L05, t));
+>   straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+>   mark('06');
+>   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
+>   const s6 = pts[pts.length - 1].clone();
+>   seg(34, (t) =>
+
+### 🤖 Claude — 2026-11-16T11:15:46.214Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rnE \"\\.depth\\(|tubeCenterAt|straightAxes|floorDepth\" src --include=*.ts | grep -v \"^src/world/tube.ts\" | head -12; grep -rnE \"wall(Bump|Hit)|heart\" src/game/*.ts | head -5", "description": "Check what else uses the tube depth or straight axes"}`
+
+### 🧑 User — 2026-11-16T11:15:46.262Z
+
+> ↩︎ result: src/world/environment.ts:10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> src/world/environment.ts:387:    const D0 = tubeCenterAt(perfPath, sF05).sub(eye).dot(T);
+> src/world/environment.ts:398:    const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
+> src/world/environment.ts:410:      return { c: tubeCenterAt(perfPath, sReal), r: perfPath.radius(sReal) * 1.1 + 0.4, f: perfPath.frame(sReal) };
+> src/world/environment.ts:473:  const inletC = tubeCenterAt(perfPath, s08 - 0.05);
+> src/world/environment.ts:581:    const P05 = tubeCenterAt(perfPath, sCam05);
+> src/world/environment.ts:583:    const axialOf = (s: number) => tubeCenterAt(perfPath, s).sub(P05).dot(T05);
+> src/world/course.ts:96:  floorDepth: number;
+> src/world/course.ts:102:  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> src/world/course.ts:268:  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+> src/world/course.ts:367:  readonly straightAxes: StraightAxis[] …[+530 chars]
+
+### 🤖 Claude — 2026-11-16T11:15:54.865Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/course.ts", "old_string": "  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });", "new_string": "  // wave 9b controlled test T2 (user-directed 2026-11-16: BEFORE is the baseline, ONE geometric factor per test):\n  // the HEIGHT of the 05 tunnel relative to the locked eye. BEFORE puts the tunnel centre 0.6 u (0.08 R) ABOVE\n  // the eye (tools/qa/axis05.ts); the approved image (ring centres below the vanishing point,\n  // tools/qa/ring_fit05.py) and the Marble world built from it ( …[+664 chars]`
+
+### 🧑 User — 2026-11-16T11:15:54.909Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:15:59.166Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2; rm -rf $S; mkdir -p $S; for d in 0 1 1.5 2; do timeout 600 node scripts/capture.mjs 05 --out=$S/d$d --q=floor05=$d > $S/cap_$d.log 2>&1 || echo \"capture $d failed\"; done; git checkout -q -- qa/capture_log.json 2>/dev/null; python3 -I -c \"\nimport sys; from PIL import Image, ImageChops\na=Image.open(sys.argv[1]).convert('RGB'); b=Image.open(sys.argv[2]).convert('RGB')\nprint('default build (floor05=0) vs BEFORE baseline: max diff', max( …[+211 chars]`
+

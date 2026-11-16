@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "b96f667c562d5881fd94dcc2033fc12992d098cd50a1e8a9ab1de700abdab39e"
+   "sha256": "0a6e9813afefd471dd987f5f523afcbb5cf0c0194f69005688ee54e3c872d950"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -838,8 +838,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5163,
-   "sha256": "f56fd6548f0ef3820b4f3e3ab995f12b7eb0ecc30840d5576b2486405df6285b"
+   "bytes": 1237,
+   "sha256": "12ca7d62111286d87d15b6447761fa5b1979e9d268c98f2ee2ea2e92f172516a"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -5963,8 +5963,8 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 29605,
-   "sha256": "d1957d911bf2091e6b4ff13f3dca4e568ae0fc836e0fccdc6b254ea29aaab0af"
+   "bytes": 30552,
+   "sha256": "8e94e4f94a0ea00aa5862fb74b23c4ffb0c82161ef68090dd1ecf8050efd13d5"
   },
   {
    "path": "src/world/environment.ts",
@@ -6050,6 +6050,11 @@
    "path": "tools/model-lab.ts",
    "bytes": 4451,
    "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tools/qa/axis05.ts",
+   "bytes": 2276,
+   "sha256": "627733d752be0468fdd0aef9b9f630cda2ffa318ecd5091cc425f0d12eb9a301"
   },
   {
    "path": "tools/qa/ring_fit05.py",
