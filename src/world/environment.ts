@@ -12,6 +12,7 @@ import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
 import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+import { PROJWALL05, PROJRING05, PT_ROW, withProj05Wall, withProj05Ring, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
@@ -363,7 +364,25 @@ export function buildEnvironment(course: Course): Environment {
     m.envMapIntensity = 1.15;
     return m;
   };
-  const ringMat05 = gold05('ring05', false, band05near);
+  // `?projring05=1` (qa/pilot05/proj/tunnel/NOTES.md): the approved gold band baked onto the 05 rings; off = unchanged
+  const ringMat05 = PROJRING05 ? withProj05Ring(gold05('ring05', false, band05near), true, band05near.height, 'real') : gold05('ring05', false, band05near);
+  // `?projwall05=1`: the approved purple wall, one baked texture row per bay between two rings (src/vfx/proj05Tunnel.ts).
+  // Depths are measured from the locked checkpoint eye; the BC bay runs from the real ring B across the seam to the far
+  // block's first ring (virtual depth ringDv[0]), so both walls share its row (split at tSeam05, linear in depth).
+  const ptHw05 = (band05near.width + band05near.groove + band05near.lipWidth) / 2;
+  const ptA05 = sCam05 + RING_A05_DEPTH;
+  const ptB05 = rings05.find((s) => s > ptA05 + 1) ?? ptA05 + 20;
+  const ptSeam05 = (dC: number, d0: number) => (d0 - (d0 - (sF05 - ptB05) + ptHw05)) / (dC - (band05.width + band05.groove + band05.lipWidth) / 2 - (d0 - (sF05 - ptB05) + ptHw05));
+  if (PROJWALL05) {
+    const segs: WallSeg[] = [];
+    const before = rings05.filter((s) => s < ptA05 - 1);
+    const list = [(before[0] ?? ptA05) - bay05, ...before, ptA05];
+    for (let i = 0; i + 1 < list.length; i++) segs.push({ v0: list[i] + ptHw05, v1: list[i + 1] - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
+    segs.push({ v0: ptA05 + ptHw05, v1: ptB05 - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
+    // D0 of the far block is known further down; the eye sits (STAGE_CAM back) behind the crest, so depth(sF05) ≈ sF05 − sCam05 − 0.75
+    segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(59, sF05 - sCam05 - 0.75) });
+    withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
+  }
   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
   // gold junction collar 04→05 (slightly heavier)
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
@@ -430,6 +449,20 @@ export function buildEnvironment(course: Course): Environment {
     const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);
     // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
     const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
+    if (PROJWALL05) {
+      // far bays in the wall's own coordinate v = sF05 + u (knots: u → virtual depth Z, piecewise linear)
+      const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
+      const slope = (i: number) => (knots[Math.min(i + 1, knots.length - 1)][1] - knots[Math.min(i + 1, knots.length - 1) - 1][1]) / (knots[Math.min(i + 1, knots.length - 1)][0] - knots[Math.min(i + 1, knots.length - 1) - 1][0]);
+      const nearEdge = (n: number) => sF05 + knots[n + 1][0] - hwF / slope(n);          // camera side of far ring n
+      const farEdge = (n: number) => sF05 + knots[n + 1][0] + hwF / slope(n + 1);       // far side of far ring n
+      const rows = [PT_ROW.CD, PT_ROW.DE, PT_ROW.EF, PT_ROW.FG];
+      const segs: WallSeg[] = [{ v0: sF05 - 1, v1: nearEdge(0), row: PT_ROW.BC, t0: ptSeam05(ringDv[0], D0), t1: 1 }];
+      rows.forEach((row, n) => segs.push({ v0: farEdge(n), v1: nearEdge(n + 1), row, t0: 0, t1: 1 }));
+      const uEnd = sF05 + knots[knots.length - 1][0] + (zEnd - knots[knots.length - 1][1]) / slope(knots.length - 1);
+      segs.push({ v0: farEdge(rows.length), v1: uEnd, row: PT_ROW.GX, t0: 0, t1: 0.07 });
+      segs.push({ v0: uEnd, v1: 1e9, row: PT_ROW.GX, t0: 0.07, t1: 0.07 });
+      withProj05Wall(farWallMat, segs, { anchor: sF05, period: bay05 }, 'far');
+    }
     const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
     // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP
     const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
@@ -464,7 +497,7 @@ export function buildEnvironment(course: Course): Environment {
         lidItems.push({ u, o, basis: new THREE.Matrix4().makeBasis(b.X, b.Y, b.Z), s: new THREE.Vector3(lidSz, lidSz, lidSz * lid05.stretch), openPos: op.c.clone().addScaledVector(dirOpen, op.r + lidSz * 1.5), openScale: 1 });
       }
     }
-    const farRings = new THREE.InstancedMesh(bandGeometry({ ...band05, segments: 48 }), gold05('ring05v', true), ringItems.length);
+    const farRings = new THREE.InstancedMesh(bandGeometry({ ...band05, segments: 48 }), PROJRING05 ? withProj05Ring(gold05('ring05v', true), false, band05.height, 'far') : gold05('ring05v', true), ringItems.length);
     const farLids = new THREE.InstancedMesh(wallLidGeometry('slab', lid05.thickness, 16), lidMat05('lid05v', true), lidItems.length);
     // warm light at the very end (ref 05 VP: core ≲40 px, halo ≲120 px)
     const glowMat = tunnelEndGlowMaterial(new THREE.Vector4(0, 0.001, 400, 420));

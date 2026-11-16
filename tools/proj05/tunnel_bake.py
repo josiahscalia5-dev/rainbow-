@@ -51,16 +51,106 @@ def sample(mx, my, ok):
     return np.clip(img, 0, 255), (v > 0.985) & inside
 
 
-def fill_theta(img, ok, feather=5.0):
+
+def lowfreq_match(patch, ref, ring, hole, sigma=14.0):
+    """shift the copied patch by the smooth colour difference to the surrounding own pixels (ring), so no tone step shows"""
+    d = np.zeros_like(patch); wsum = ring.astype(np.float32)
+    for c in range(3):
+        d[..., c] = gaussian_filter((ref[..., c] - patch[..., c]) * wsum, sigma, mode=("nearest", "wrap"))
+    wb = gaussian_filter(wsum, sigma, mode=("nearest", "wrap"))
+    d = d / np.maximum(wb, 1e-4)[..., None]
+    d[wb < 1e-3] = 0
+    return np.clip(patch + d * hole[..., None], 0, 255)
+
+
+def translate_fill(img, ok, max_w, dt_max=14, label_id=4, srcmap=None):
+    """fill bounded holes by copying the same wall from further along theta (shift d_theta, small d_t), chosen so that the
+    copy agrees best with the own pixels round the hole; the slot rows run along theta, so the copy keeps them intact"""
+    from scipy.ndimage import label as cc_label
+    h, w = ok.shape
+    out_img = img.copy(); have = ok.copy()
+    # thin invalid strips (bay ends next to the gold, hairlines) must not join separate holes into one: label the
+    # opened mask, then grow every hole back by a few texels inside the invalid area
+    core = binary_opening(~ok, iterations=4)
+    lab0, n = cc_label(core)
+    lab = lab0.copy()
+    for _ in range(7):
+        grown = np.zeros_like(lab)
+        for dy, dx in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+            sh = np.roll(lab, (dy, dx), (0, 1))
+            if dy == 1: sh[0] = 0
+            if dy == -1: sh[-1] = 0
+            grown = np.where((grown == 0), sh, grown)
+        lab = np.where((lab == 0) & ~ok, grown, lab)
+    # merge components across the theta seam
+    for y in range(h):
+        a, b = lab[y, 0], lab[y, -1]
+        if a and b and a != b: lab[lab == b] = a
+    ids = [i for i in np.unique(lab) if i]
+    info = []
+    for i in ids:
+        m = lab == i
+        cols = np.nonzero(m.any(0))[0]
+        if len(cols) == 0: continue
+        # width on the circle: the smallest arc containing the columns
+        gaps = np.diff(np.concatenate([cols, [cols[0] + w]]))
+        wd = w - gaps.max() + 1
+        if wd > max_w or m.sum() < 12: continue
+        info.append((int(m.sum()), i, wd))
+    for _, i, wd in sorted(info):
+        m = lab == i
+        ring = binary_dilation(m, iterations=7) & have & ~m
+        if ring.sum() < 30: continue
+        hy, hx = np.nonzero(m); ry, rx = np.nonzero(ring)
+        sub = slice(None, None, max(1, len(hy) // 4000))
+        hys, hxs = hy[sub], hx[sub]
+        best = None
+        for sign in (-1, 1):
+            for d in range(wd + 3, min(3 * wd + 80, w // 3), 2):
+                D = sign * d
+                for dt in range(-dt_max, dt_max + 1, 2):
+                    yy = hys + dt
+                    if yy.min() < 0 or yy.max() >= h: continue
+                    if have[yy, (hxs + D) % w].mean() < 0.995: continue
+                    ry2 = ry + dt; okr = (ry2 >= 0) & (ry2 < h)
+                    if okr.mean() < 0.7: continue
+                    srcok = have[ry2[okr], (rx[okr] + D) % w]
+                    if srcok.mean() < 0.7: continue
+                    a = out_img[ry2[okr], (rx[okr] + D) % w][srcok]; b = out_img[ry[okr], rx[okr]][srcok]
+                    diff = a - b
+                    cost = float(np.abs(diff - diff.mean(0)).mean()) + 0.004 * d + 0.15 * abs(dt)
+                    if best is None or cost < best[0]: best = (cost, D, dt)
+        if best is None: continue
+        _, D, dt = best
+        yy = np.clip(hy + dt, 0, h - 1)
+        patch = out_img.copy()
+        patch[hy, hx] = out_img[yy, (hx + D) % w]
+        ringv = np.zeros((h, w), bool); ringv[ry, rx] = True
+        ry2 = np.clip(ry + dt, 0, h - 1)
+        ref = out_img.copy()
+        cmp_ = out_img.copy(); cmp_[ry, rx] = out_img[ry2, (rx + D) % w]
+        # colour difference measured on the ring (own pixel vs what the copy would put there), diffused into the hole
+        d3 = np.zeros_like(out_img); wsum = ringv.astype(np.float32)
+        for c in range(3):
+            d3[..., c] = gaussian_filter((ref[..., c] - cmp_[..., c]) * wsum, 12.0, mode=("nearest", "wrap"))
+        wb = gaussian_filter(wsum, 12.0, mode=("nearest", "wrap"))
+        d3 = d3 / np.maximum(wb, 1e-4)[..., None]
+        out_img[hy, hx] = np.clip(patch[hy, hx] + d3[hy, hx], 0, 255)
+        have[hy, hx] = True
+        if srcmap is not None: srcmap[hy, hx] = label_id
+    return out_img, have
+
+
+def fill_theta(img, ok, feather=5.0, src0=None, mirror=True):
     """fill invalid texels: (1) from the mirrored wall (theta -> 180 deg - theta), (2) by reflection along theta about the
     nearest valid run, (3) nearest along t. Returns the filled image and the source map (0 own, 1 mirror, 2 reflect, 3 t)."""
     h, w = ok.shape
-    src = np.zeros((h, w), np.uint8)
+    src = np.zeros((h, w), np.uint8) if src0 is None else src0.copy()
     out_img = img.copy(); have = ok.copy()
     j = np.arange(w)
     jm = (w // 2 - 1 - j) % w
     mimg, mok = img[:, jm], ok[:, jm]
-    take = ~have & mok
+    take = ~have & mok & mirror
     out_img[take] = mimg[take]; src[take] = 1; have |= take
     # reflection along theta (periodic), row by row, repeated until nothing changes
     for _ in range(64):
@@ -105,8 +195,8 @@ atlas_h = sum(h for _, h in ROWS) + GUT * (len(ROWS) + 1)
 atlas = np.zeros((atlas_h, TW, 3), np.float32)
 srcmap = np.zeros((atlas_h, TW), np.uint8)
 meta_rows = {}
-y0 = GUT
 report = {}
+raw = {}
 for name, h in ROWS:
     a, b = name[0], name[1]
     r0 = edge(a, "in", th)
@@ -116,12 +206,32 @@ for name, h in ROWS:
     rr = 1.0 / inv
     mx = (O[0] + rr * np.cos(th)[None, :]).astype(np.float32)
     my = (O[1] - rr * np.sin(th)[None, :]).astype(np.float32)
-    img, ok = sample(mx, my, wall_ok if name in ("AB", "BC", "CD") else (wall_ok | (M["env"] & ~M["hud"] & ~water & ~lid)) if name != "GX" else (M["env"] & ~M["hud"] & ~binary_dilation(M["water"], iterations=2)))
-    filled, src = fill_theta(img, ok)
+    okmask = wall_ok if name in ("AB", "BC", "CD") else (wall_ok | (M["env"] & ~M["hud"] & ~water & ~lid)) if name != "GX" else (M["env"] & ~M["hud"] & ~binary_dilation(M["water"], iterations=2))
+    raw[name] = sample(mx, my, okmask)
+
+y0 = GUT
+for name, h in ROWS:
+    img, ok = raw[name]
+    src = np.zeros(ok.shape, np.uint8)
+    if name == "AB":
+        # the crown of bay AB is behind the HUD in the approved picture: take the same wall from bay BC (same theta, same
+        # t), which the picture shows completely, colour-matched to AB's own pixels next to it
+        bimg, bok = raw["BC"]
+        bimg = cv2.resize(bimg, (TW, h), interpolation=cv2.INTER_CUBIC); bok = cv2.resize(bok.astype(np.uint8), (TW, h), interpolation=cv2.INTER_NEAREST) > 0
+        thd = np.degrees(th)
+        crown = ((thd > 40) & (thd < 140))[None, :] & ~ok & bok
+        ring = binary_dilation(crown, iterations=10) & ok
+        img = np.where(crown[..., None], lowfreq_match(bimg, img, ring, crown, 30.0), img)
+        src[crown] = 5; ok = ok | crown
+    if name in ("AB", "BC", "CD"):
+        img, ok2 = translate_fill(img, ok, max_w=int(TW * 70 / 360), dt_max=int(h * 0.06), srcmap=src)
+    else:
+        ok2 = ok
+    filled, src = fill_theta(img, ok2, src0=src, mirror=name not in ("AB", "BC", "CD"))
     atlas[y0:y0 + h] = filled; srcmap[y0:y0 + h] = src
     atlas[y0 - GUT:y0] = filled[0]; atlas[y0 + h:y0 + h + GUT] = filled[-1]
     meta_rows[name] = {"y0": y0, "h": h}
-    report[name] = {"own": round(float((src == 0).mean()), 3), "mirror": round(float((src == 1).mean()), 3), "reflect": round(float((src == 2).mean()), 3), "nearest_t": round(float((src == 3).mean()), 3)}
+    report[name] = {k: round(float((src == v).mean()), 3) for k, v in (("own", 0), ("mirror", 1), ("reflect", 2), ("nearest_t", 3), ("translate", 4), ("from_BC", 5))}
     y0 += h + GUT
 
 # ---- ring B band
@@ -135,7 +245,9 @@ rimg, rok = sample(mx, my, ring_ok)
 # a column is usable only if most of the band is gold there (lids / water / HUD columns are dropped entirely)
 colok = rok.mean(0) > 0.8
 rok2 = np.repeat(colok[None, :], RING_H, 0)
-ring, rsrc = fill_theta(rimg, rok2, feather=8.0)
+rsrc = np.zeros(rok2.shape, np.uint8)
+rimg2, rok3 = translate_fill(rimg, rok2, max_w=int(RING_W * 80 / 360), dt_max=0, srcmap=rsrc)
+ring, rsrc = fill_theta(rimg2, rok3, feather=8.0, src0=rsrc, mirror=False)
 report["ring_B"] = {"own_columns": round(float(colok.mean()), 3), "theta_deg_own": [round(float(np.degrees(thr[colok].min())), 1), round(float(np.degrees(thr[colok].max())), 1)]}
 
 if corr_path and os.path.exists(corr_path):

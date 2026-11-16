@@ -1529,3 +1529,210 @@ Starting the actual bake now: unwrapping each section of wall between two rings 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T20:12:42.093Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/ring.png"}`
+
+### 🧑 User — 2026-11-16T20:12:42.113Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:13:31.532Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/tunnel_bake.py'\ns=open(p).read()\n\n# 1) translate fill helper, inserted before fill_theta\nhelper = '''\ndef lowfreq_match(patch, ref, ring, hole, sigma=14.0):\n    \"\"\"shift the copied patch by the smooth colour difference to the surrounding own pixels (ring), so no tone step shows\"\"\"\n    d = np.zeros_like(patch); wsum = ring.astype(np.float32)\n    for c in range(3):\n        d[..., c] = gaussian_filter((ref[..., c] - patch[..., c]) * wsum, sigma, mode=(\"nearest\", \"wrap\"))\n    wb = gaussian_filter(wsum, sigma, mode=(\"nearest\", …[+7196 chars]`
+
+### 🧑 User — 2026-11-16T20:13:41.159Z
+
+> ↩︎ result: },
+>  "DE": {
+>   "own": 0.523,
+>   "mirror": 0.019,
+>   "reflect": 0.458,
+>   "nearest_t": 0.0,
+>   "translate": 0.0,
+>   "from_BC": 0.0
+>  },
+>  "EF": {
+>   "own": 0.497,
+>   "mirror": 0.01,
+>   "reflect": 0.493,
+>   "nearest_t": 0.0,
+>   "translate": 0.0,
+>   "from_BC": 0.0
+>  },
+>  "FG": {
+>   "own": 0.468,
+>   "mirror": 0.042,
+>   "reflect": 0.49,
+>   "nearest_t": 0.0,
+>   "translate": 0.0,
+>   "from_BC": 0.0
+>  },
+>  "GX": {
+>   "own": 0.314,
+>   "mirror": 0.058,
+>   "reflect": 0.627,
+>   "nearest_t": 0.0,
+>   "translate": 0.0,
+>   "from_BC": 0.0
+>  },
+>  "ring_B": {
+>   "own_columns": 0.44,
+>   "theta_deg_own": [
+>    0.1,
+>    359.9
+>   ]
+>  }
+> }
+> atlas 2048 592 ring 2048 64
+> 
+> real	0m9.564s
+> user	0m10.116s
+> sys	0m0.240s
+
+### 🤖 Claude — 2026-11-16T20:13:48.110Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I -c \"\nimport json; r=json.load(open('qa/pilot05/proj/tunnel/model/bake_report.json')); print({k:r[k] for k in ('AB','BC','CD')})\" && python3 -I - <<EOF\nimport numpy as np, cv2\na=cv2.imread('assets/textures/tunnel05/wall05.png'); src=np.load('qa/pilot05/proj/tunnel/model/wall05_srcmap.npy')\nab=a[8:264]; sab=src[8:264]\n# theta 0..200 deg -> cols 0..1138 ; show at 1.2x in two strips\np=ab[:, 0:1150]\ncv2.imwrite('$S/look/ab_upper.png', cv2.resize(p,None,fx=1.6,fy=1.6,interpolation= …[+465 chars]`
+
+### 🧑 User — 2026-11-16T20:13:48.408Z
+
+> ↩︎ result: {'AB': {'own': 0.303, 'mirror': 0.0, 'reflect': 0.522, 'nearest_t': 0.0, 'translate': 0.019, 'from_BC': 0.156}, 'BC': {'own': 0.472, 'mirror': 0.0, 'reflect': 0.52, 'nearest_t': 0.0, 'translate': 0.008, 'from_BC': 0.0}, 'CD': {'own': 0.462, 'mirror': 0.0, 'reflect': 0.525, 'nearest_t': 0.0, 'translate': 0.014, 'from_BC': 0.0}}
+
+### 🤖 Claude — 2026-11-16T20:13:51.300Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/ab_upper.png"}`
+
+### 🧑 User — 2026-11-16T20:13:51.332Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:13:51.980Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/ab_upper_src.png"}`
+
+### 🧑 User — 2026-11-16T20:13:52.002Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:14:13.085Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/tunnel_bake.py'\ns=open(p).read()\nold='''    lab, n = cc_label(~ok)\n'''\nnew='''    # thin invalid strips (bay ends next to the gold, hairlines) must not join separate holes into one: label the\n    # opened mask, then grow every hole back by a few texels inside the invalid area\n    core = binary_opening(~ok, iterations=4)\n    lab0, n = cc_label(core)\n    lab = lab0.copy()\n    for _ in range(7):\n        grown = np.zeros_like(lab)\n        for dy, dx in ((0, 1), (0, -1), (1, 0), (-1, 0)):\n            sh = np.roll(lab, (dy, dx), (0, 1))\ …[+1484 chars]`
+
+### 🧑 User — 2026-11-16T20:14:23.700Z
+
+> ↩︎ result: real	0m10.313s
+> user	0m10.946s
+> sys	0m0.239s
+> {'AB': {'own': 0.303, 'mirror': 0.0, 'reflect': 0.454, 'nearest_t': 0.0, 'translate': 0.087, 'from_BC': 0.156}, 'BC': {'own': 0.472, 'mirror': 0.0, 'reflect': 0.499, 'nearest_t': 0.0, 'translate': 0.029, 'from_BC': 0.0}, 'CD': {'own': 0.462, 'mirror': 0.0, 'reflect': 0.506, 'nearest_t': 0.0, 'translate': 0.032, 'from_BC': 0.0}, 'ring_B': {'own_columns': 0.44, 'theta_deg_own': [0.1, 359.9]}}
+
+### 🤖 Claude — 2026-11-16T20:14:26.299Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/ab_upper.png"}`
+
+### 🧑 User — 2026-11-16T20:14:26.332Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:14:26.987Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/ab_upper_src.png"}`
+
+### 🧑 User — 2026-11-16T20:14:27.008Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:14:34.891Z
+
+> 🔧 **Bash** `{"command": "grep -n \"function q05\\|export function flag05\\|VITE_RAINBOW_Q05\\|const Q05\" -A6 src/vfx/waterRibbon.ts | head -50; sed -n 1586,1655p src/vfx/waterRibbon.ts | cut -c1-210", "description": "Read the switch helpers and water texture loader"}`
+
+### 🧑 User — 2026-11-16T20:14:34.940Z
+
+> ↩︎ result: 147: * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+> 148- * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+> 149- */
+> 150:const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> 151-const q05 = (key: string): boolean => {
+> 152-  try {
+> 153-    if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+> 154-  } catch {
+> 155-    /* no location (vite-node / workers) */
+> 156-  }
+> /** `?proj05=1`: the baked approved-water layers (assets/textures/water05/, tools/proj05/bake.py) + live post values */
+> function attachProj05(u: Record<string, THREE.IUniform>) {
+>   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
+>   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+>   const urls = {
+>     E: new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+>     N: new URL('../../assets/textures/water05/proj05_N.png', import.meta.url).href,
+>     T: new URL('../../assets/textu …[+3646 chars]
+
+### 🤖 Claude — 2026-11-16T20:15:19.447Z
+
+Textures are in good shape. Now wiring them into the game's wall and ring shaders behind two new switches, so the default build stays untouched.
+
+### 🤖 Claude — 2026-11-16T20:15:26.242Z
+
+> 🔧 **Bash** `{"command": "sed -n 151,175p src/vfx/waterRibbon.ts | cut -c1-200; S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, json\na=np.fromfile('$S/raw/tunnel_id.f32',dtype=np.float32).reshape(1536,864,4)\nA=a[...,3]; ID=a[...,2]\nys,xs=np.mgrid[0:1536,0:864]\nfor cid,inst,name in ((3,2,'A real'),(3,3,'B real'),(4,0,'C far'),(4,1,'D far')):\n    m=(ID==cid)&(np.abs(A-(20+inst))<1e-3)\n    phi=a[...,0][m]; z=a[...,1][m]; x=xs[m]; y=ys[m]\n    # ring screen centre: fit circle to pixels with z near -0.5 (outer edge)\n    print( …[+634 chars]`
+
+### 🧑 User — 2026-11-16T20:15:26.478Z
+
+> ↩︎ result: const q05 = (key: string): boolean => {
+>   try {
+>     if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+>   } catch {
+>     /* no location (vite-node / workers) */
+>   }
+>   return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
+> };
+> /** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+> export const flag05 = q05;
+> /**
+>  * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the
+>  * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026-11-16: "scroll the
+>  * texture so the water flows toward the camera"): 0.5 — slower than the ride, so the streaks stream TOWARD the camera
+>  * at half the ride speed while still moving downstream in the world.
+>  */
+> export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> /**
+>  * Screen 05 test W11 (2026-11-16, qa/pilot05/wave11/NOTES.md) — ONE reversible demonstration `?river05=1` made of two
+>  * factors that can also be switched on separately (each on top of the W10 palette, so `?water05=1` is their baseline):
+>  *  `?farw05=1`  GEOMETRY: the distant river is a narrower channel  …[+2758 chars]
+
+### 🤖 Claude — 2026-11-16T20:16:20.671Z
+
+> 🔧 **Bash** `{"command": "grep -n \"material.onBeforeRender\\|object.onBeforeRender\" node_modules/three/src/renderers/WebGLRenderer.js | head; sed -n 20,45p src/game/modules.ts | cut -c1-200; grep -n \"proj05Pending\\|ready\" src/vfx/index.ts | head -12", "description": "Check renderer hooks and how the game waits for baked textures"}`
+
+### 🧑 User — 2026-11-16T20:16:20.725Z
+
+> ↩︎ result: 1608:			object.onBeforeRender( _this, scene, camera, geometry, material, group );
+> 1613:			material.onBeforeRender( _this, scene, camera, geometry, object, group );
+> const girlMods = import.meta.glob('../characters/girl/runtime.ts');
+> 
+> export const moduleStatus: Record<string, string> = {};
+> 
+> export async function loadWater(course: Course): Promise<WaterLike> {
+>   const f = Object.values(vfxMods)[0];
+>   if (f) {
+>     try {
+>       const m = (await f()) as { createWater: (c: Course, o?: { quality?: 'high' | 'low' }) => WaterLike };
+>       // Android/mobile defaults to the low tier (measured budgets: see qa/performance.md); ?quality= overrides
+>       const qp = new URLSearchParams(location.search).get('quality');
+>       const mobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+>       const q = qp === 'low' || (qp !== 'high' && mobile) ? 'low' : 'high';
+>       const w = m.createWater(course, { quality: q });
+>       // `?proj05=1` only: wait for the baked approved-water textures (undefined → nothing to wait for)
+>       const ready = (w as { ready?: Promise<void> }).ready;
+>       if (ready) await ready;
+>       moduleStatus.water = 'vfx/index.ts';
+>       return w;
+>     } catch (e) {
+>       console.err …[+354 chars]
+
+### 🤖 Claude — 2026-11-16T20:17:02.024Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/vfx/proj05Tunnel.ts", "content": "/**\n * Screen 05 projection tests for the TUNNEL (2026-11-16, qa/pilot05/proj/tunnel/NOTES.md), same method as the water\n * (`?proj05=1`): the user's APPROVED Screen 05 picture, unwrapped into the tunnel's own coordinates and baked into\n * textures (tools/proj05/tunnel_rings.py + tunnel_bake.py → assets/textures/tunnel05/), so the design is anchored to the\n * 3D tunnel, not pasted over the screen.\n *   `?projwall05=1`  the purple metal WALLS: one texture row per wall bay between two gold rings (AB, BC, CD … as the\n  …[+9046 chars]`
+
+### 🧑 User — 2026-11-16T20:17:02.056Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/vfx/proj05Tunnel.ts (file state is current in your context — no need to Read it back)
+
