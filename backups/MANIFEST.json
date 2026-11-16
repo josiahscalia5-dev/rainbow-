@@ -393,8 +393,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 5349,
-   "sha256": "31103960e92b92d2b0aaf422e4226f23a7172333bf5a8bf32f9345fd335c1ffe"
+   "bytes": 5350,
+   "sha256": "08766100b3a995ecc1152fb1c69c50e82bbe3f684c367f52e4485527965b51bd"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -928,8 +928,8 @@
   },
   {
    "path": "qa/pilot05/COORDINATION_WAVE8.md",
-   "bytes": 4354,
-   "sha256": "73a7ad255c756eac73f11c4f2f43e2c4317d63a06f0acda0184e298ae158250d"
+   "bytes": 5600,
+   "sha256": "60201b948a5229a4d63bc827697f2fee0b183752fbe43bcb614c9ac12e0775a2"
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
@@ -3285,6 +3285,11 @@
    "path": "qa/pilot05/wave8/environment/NOTES.md",
    "bytes": 1151,
    "sha256": "7769f66891091d71768d8d8116d7ca140b43e3bf75de12e0d4c598183570eccb"
+  },
+  {
+   "path": "qa/pilot05/wave8/environment/measure05.py",
+   "bytes": 4854,
+   "sha256": "d95aff36215a3de818430fe2c4dcd90e3fa4991a380c1dae1a71b310291a868c"
   },
   {
    "path": "qa/pilot05/wave8/path-camera/NOTES.md",

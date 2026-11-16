@@ -47,3 +47,16 @@ Sent to washer-environment-modeler (may use up to 8 iterations): try the Marble 
 looks better), and `full/analysis/bay_unrolled.png` / `wall_unrolled.png` as wall-detail reference or tiling map.
 Keep only if whole-frame closer to the approved image; log asset + before/after in NOTES. No World Labs API calls,
 no credits. Marble key verified working (free `GET /credits` 200) — not needed for this wave.
+
+## Update ~01:50 UTC — user priorities; wave 8b (water + foam) launched in parallel
+User priorities: (1) exact perspective, tunnel depth, gold ring proportions + spacing; (2) thick glossy cyan-and-pink
+S-shaped river all the way into the distant golden light — never a straight striped track; (3) water, natural splashes,
+small soap bubbles, fine foam banks. Marble panorama/wall textures wherever they genuinely improve the REAL 3D scene;
+reflection lighting tested on Screen 05 ONLY (sent to environment: gate the Marble PMREM to 05 materials). No credits.
+Protected: Benny, locked camera, gameplay, 05→06 join, 07→08 descent, all ten specialists. Blender 5.3 being installed.
+* **water-fx-specialist** (owns `src/vfx/waterRibbon.ts`, `src/vfx/glsl.ts`, `docs/vfx/*`): near/mid river only
+  (far river = path-camera's `farRiverMaterial`; agree the seam colours via REQUESTS.md).
+* **foam-bubbles-particles** (owns `src/vfx/foam.ts`, `bubbles.ts`, `riderSplash.ts`, `spray.ts`, `vfx/index.ts`):
+  near/mid foam banks, soap bubbles, Benny's splash (far foam rims = path-camera).
+* Both: changes gated to the 05 s-range; 03/04/06/07/08 unchanged (regression set). Same rules as above, NOTES in
+  `qa/pilot05/wave8/{water,foam}/NOTES.md`.

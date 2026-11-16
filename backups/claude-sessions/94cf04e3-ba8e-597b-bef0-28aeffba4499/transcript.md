@@ -2902,3 +2902,78 @@ I've sent you the "before" picture: your approved Screen 05 next to the real gam
 
 Everything is backed up (`1f9df55`, matches GitHub), and the five-minute autosave keeps running.
 
+### 🧑 User — 2026-11-16T01:46:35.148Z
+
+Claude, thank you. I understand now that Marble is being used for reflections, textures and 3D reconstruction references.
+
+Please continue with this approach. I want the best possible combination of Marble World Labs, Blender and Three.js to recreate my approved Screen 05.
+
+My three biggest priorities are:
+
+1. Match the exact perspective, tunnel depth, gold ring proportions and spacing from my approved image.
+
+2. Recreate the thick, glossy cyan-and-pink S-shaped river all the way into the distant golden light. Do not let the far river turn into a straight striped track.
+
+3. Improve the water, natural splashes, small soap bubbles and fine foam banks to match the approved artwork.
+
+Use the existing Marble panorama and wall textures wherever they genuinely improve the REAL playable 3D environment.
+
+Please test the reflection lighting specifically on Screen 05 before applying any global changes that might affect my other screens.
+
+Keep Benny, the locked camera, gameplay, Screen 05-to-06 continuity, Screen 07-to-08 descent and all ten specialists protected.
+
+I do not want to spend more Marble credits yet because we already have two generated worlds.
+
+When the two specialists finish, show me a new full-size screenshot of the actual playable game alongside my approved Screen 05.
+
+I want to see substantial visual improvement, not just small technical changes. Please report the biggest remaining differences and what you will fix next.
+
+Continue saving everything automatically to GitHub every five minutes.
+
+### 🤖 Claude — 2026-11-16T01:47:04.392Z
+
+Agreed, and your three priorities line up with the specialists already running. Path-camera owns priority 2 (the far river) and the far part of priority 1 (ring spacing into the distance); the environment specialist owns the ring proportions. I'll do four things now:
+1. Tell the environment specialist to test the Marble reflections on Screen 05 only.
+2. Install Blender in this session so it's available.
+3. Start the water and foam specialists for priority 3, kept to Screen 05.
+4. Save everything.
+
+### 🤖 Claude — 2026-11-16T01:47:08.848Z
+
+> 🔧 **SendMessage** `{"to": "ae5de932c09c31983", "summary": "Gate Marble reflections to Screen 05 only", "message": "User clarification for the Marble reflection test: apply the Marble-panorama PMREM ONLY to Screen 05 this wave (gate it to the 05 materials / the 05 s-range, e.g. set it as envMap on the 05-only materials gold05 / lidMat05 / wall05 / near-frame material rather than replacing scene.environment globally). Do NOT change the reflection lighting of any other screen (01–04, 06–11) in this wave; the procedural candy env stays the global default. 04/07/08 must stay pixel-identical below the HUD in your regr …[+676 chars]`
+
+### 🧑 User — 2026-11-16T01:47:08.887Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to ae5de932c09c31983 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"ae5de932c09c31983","name":"ae5de932c09c31983","ref":"6f0cde"}}
+
+### 🤖 Claude — 2026-11-16T01:47:11.946Z
+
+> 🔧 **Bash** `{"command": "bash scripts/setup-blender.sh > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/blender-install.log 2>&1; tail -3 /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/blender-install.log; blender -b qa/worldlabs/05/pilot/full/import/full05.blend --python-expr \"import bpy; print('OBJECTS', len(bpy.data.objects), [o.name for o in bpy.data.objects][:12])\" 2>&1 | grep -E 'OBJECTS|Error' | head -3", "description": "Install Blender 5.3 and open the Marble Blender scene", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T01:47:11.979Z
+
+> ↩︎ result: Command running in background with ID: b8hrprp38. Output is being written to: /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/tasks/b8hrprp38.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T01:47:14.139Z
+
+The reflection instruction is delivered and Blender is installing in the background. Now the brief for the water and foam specialists, recorded in the coordination file first.
+
+### 🤖 Claude — 2026-11-16T01:47:20.050Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/COORDINATION_WAVE8.md <<'EOF'\n\n## Update ~01:50 UTC — user priorities; wave 8b (water + foam) launched in parallel\nUser priorities: (1) exact perspective, tunnel depth, gold ring proportions + spacing; (2) thick glossy cyan-and-pink\nS-shaped river all the way into the distant golden light — never a straight striped track; (3) water, natural splashes,\nsmall soap bubbles, fine foam banks. Marble panorama/wall textures wherever they genuinely improve the REAL 3D scene;\nreflection lighting tested on Screen 05 ONLY (sent to environment: gate the Marble PMREM to  …[+950 chars]`
+
+### 🧑 User — 2026-11-16T01:47:20.105Z
+
+> ↩︎ result: 24:* Ref near sweeps → centre ±(0.4 + 0.52·back) u, half width ≈ 0.2 u. Ref mid bands EXIT the frame: left by y≈930,
+> 48:Mid field, band centres back-projected (scratch inv.py, lateral from core): left ✓ within ≈0.3 u at s 135–141;
+> 50:runs along the right bank); left 0.5–0.7 u too far out at s 145–152, 1.0 u too far in at s 158–164.
+> 55:Measured: right band s 136–139 now +1.21…+1.86 (ref +1.17…+2.0), widths 108–123 px (ref 117–156); left s 149–152
+> 58:(right band along the right bank in the distance, bends in at y 800–900). Zoom vs ref: ref near highlights are big
+> 67:lens flares (cell clamp limited them to ≈60 px); near body still too uniform/light (p5 132 vs ref 106).
+> 88:| pink y1000–1200 beside Benny (left) | x 85–210 (in-glide) | none (bands exit) | none |
+> ===
+> 40:  (left x 0-90 y 940-1110, right y 1130-1300; ref mounds are low, ~100 px), too white (Lnear WHITE 47.5 %). NOTE: the
+> 44:  clearance behind Benny x0.25. Seen: lower-left clump now reaches x 199 (ref 57-214); near clumps still too high
+> 45:  and tall vs the ref (gridded crop: ref left near x 0-130 y 1020-1110, lower left x 60-230 y 1220-1300, lower
+> 46:  right x 650-800 y 1260-1330; live it04 left near y 960-1110, lower clump …[+515 chars]
+

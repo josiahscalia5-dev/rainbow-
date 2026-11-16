@@ -581,3 +581,119 @@ I'll write a scratch probe script to understand what's at each far-river pixel (
 > 497,495: tube05_far_river<zone_tubes<washer_world<Scene d=59.11 | tube05_end_glow<zone_tubes<washer_world<Scene d=59.16 | water_ribbon<water_system<Scene d=65.69 | Mesh<zone_tubes<washer_world<Scene d=69.9
 > 440,560: Mesh<coins<Scene d=39.51 | water_ribbon<water_system<Scene d=52.26 | water_ribbon<water_system<Scene d=54.72 | tube05_far_river<zone_tubes<washer_wo …[+2014 chars]
 
+### 🤖 Claude — 2026-11-16T01:45:07.276Z
+
+Let me zoom into the reference VP region to measure the far coins and river path precisely.
+
+### 🤖 Claude — 2026-11-16T01:45:09.877Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB'); b=Image.open('qa/pilot05/wave8/baseline/05.png').convert('RGB')\nbox=(400,440,620,600)\nA=a.crop(box).resize((880,640),Image.LANCZOS); B=b.crop(box).resize((880,640),Image.LANCZOS)\no=Image.new('RGB',(880,1290),'white'); o.paste(A,(0,0)); o.paste(B,(0,650)); o.save('/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/vp_zoom.png')\n\"", "description": "Zoom VP region of ref and baseline 4x"}`
+
+### 🧑 User — 2026-11-16T01:45:10.444Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:45:11.680Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/vp_zoom.png"}`
+
+### 🧑 User — 2026-11-16T01:45:11.723Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:46:19.747Z
+
+> 🔧 **Bash** `{"command": "cat src/gameplay/coins.ts | head -150", "description": "Read gameplay coins module"}`
+
+### 🧑 User — 2026-11-16T01:46:19.780Z
+
+> ↩︎ result: /**
+>  * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+>  * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+>  * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+>  * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+>  */
+> import * as THREE from 'three';
+> import type { Course, StageId } from '../world/course';
+> import { canvasTexture } from '../world/materials';
+> import { coreLateral } from '../vfx/waterRibbon';
+> 
+> export const COIN_VALUE = 10;
+> 
+> /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number }
+> 
+> /**
+>  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+>  * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+>  * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+>  * so their face reads as a slightly flattened disc with the rim visible  …[+7470 chars]
+
+### 🤖 Claude — 2026-11-16T01:46:24.045Z
+
+> 🔧 **Bash** `{"command": "grep -n 'export const STAGE_CAM\\|export function tubeCenterAt\\|perfPath =\\|const perfPath\\|export function buildEnvironment\\|tubeAxis' -r src | head; sed -n 225,260p src/world/environment.ts", "description": "Locate STAGE_CAM, perfPath and env section near sF05"}`
+
+### 🧑 User — 2026-11-16T01:46:24.099Z
+
+> ↩︎ result: src/world/environment.ts:28:  tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> src/world/environment.ts:36:export function buildEnvironment(course: Course): Environment {
+> src/world/environment.ts:230:  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+> src/world/environment.ts:577:    tubeAxis: { path: perfPath, s0: s05, s1: course.marks['07_plunge_top'] },
+> src/world/tube.ts:144:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> src/world/tube.ts:164:  /** also store the local tube frame per vertex (`tubeAxis`, `tubeUp`) for withTubeStrips('attribute') */
+> src/world/tube.ts:212:    g.setAttribute('tubeAxis', new THREE.BufferAttribute(ax, 3));
+> src/world/tube.ts:581:    g.setAttribute('tubeAxis', new THREE.BufferAttribute(ax, 3));
+> src/world/materials.ts:139: * Axis source: 'attribute' = per-vertex `tubeAxis`/`tubeUp` (buildTubeGeometry({ axisAttr: true })),
+> src/world/materials.ts:164:      : `vTubeAxis = normalize((viewMatrix * modelMatrix * vec4(tubeAxis, 0.0)).xyz);
+>   const rowRepeat0607 = slotRowsPerBay / ringSpacing;
+>   const rowOffset0607 = (((ROW06_PHASE - s06 * rowRepeat0607)  …[+3010 chars]
+
+### 🤖 Claude — 2026-11-16T01:46:32.341Z
+
+> 🔧 **Bash** `{"command": "grep -rn 'STAGE_CAM' src --include=*.ts | grep -v '^\\s*//' | head -5; sed -n 36,60p src/world/environment.ts; sed -n 200,224p src/world/environment.ts; sed -n 120,160p src/world/tube.ts", "description": "Find STAGE_CAM and environment setup lines"}`
+
+### 🧑 User — 2026-11-16T01:46:32.389Z
+
+> ↩︎ result: src/characters/benny/benny-lab.ts:62:            // yawed 2.96° left (STAGE_CAM['05']). `&bennyMask` → flat ID colours on grey for pixel measurement.
+> src/characters/benny/benny-lab.ts:74:              // stage 05 ride camera (cameraRig STAGE_CAM['05'])
+> src/world/environment.ts:11:import { STAGE_CAM } from '../game/cameraRig';
+> src/world/environment.ts:239:  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> src/world/environment.ts:344:    const p5 = STAGE_CAM['05']!;
+> export function buildEnvironment(course: Course): Environment {
+>   const root = new THREE.Group();
+>   root.name = 'washer_world';
+>   const zones = {
+>     drumA: new THREE.Group(),
+>     basin: new THREE.Group(),
+>     tubes: new THREE.Group(),
+>     chamber: new THREE.Group(),
+>   };
+>   Object.entries(zones).forEach(([k, g]) => { g.name = 'zone_' + k; root.add(g); });
+>   const goldMat = gold();
+>   const goldSoft = gold({ roughness: 0.3, emissive: 0.3 });
+>   const chromeMat = chrome();
+>   const animated: ((t: number, dt: number) => void)[] = [];
+> 
+>   // =====================================================================================
+>   // Drum A (01–02)
+>   // ====================================================== …[+3866 chars]
+
+### 🤖 Claude — 2026-11-16T01:46:54.394Z
+
+I'll measure the reference's far river per row (cyan core runs, pink bands) to get a target centreline.
+
+### 🤖 Claude — 2026-11-16T01:46:57.292Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\ndef cls(p):\n    r,g,b=p\n    if b>170 and g>120 and r<150 and b-r>80: return 'C'   # cyan/blue\n    if r>200 and b>150 and g<120: return 'P'  # pink/magenta\n    if r>215 and g>215 and b>215: return 'W'\n    if r>200 and g>150 and b<120: return 'Y'  # gold\n    return '.'\nfor y in range(476,600,4):\n    row=''.join(cls(a[y,x]) for x in range(340,660,2))\n    print(y,row)\n\"\n", "description": "Classify ref far-river pixels  …[+9 chars]`
+
+### 🧑 User — 2026-11-16T01:46:57.503Z
+
+> ↩︎ result: 476 .....PP.P..........................................Y......Y.....Y.YYYYYY.....W.WWWW....YYYYY.Y................................................P.........PPPPPPP.
+> 480 .........................P...............................Y.YYY...Y.YYYY.....WWWWWWWWW...YYYY.Y...............................................P..........P.PP....
+> 484 ....................................................Y.....Y..W...YY.Y.Y.Y..Y..WWWWWWW.......Y...Y...Y.....Y.........P........................P...........PP....P
+> 488 ............................................................PP........WWWW.Y..Y.Y.....WWW....Y.Y...............PPPPP.W......................P.....Y.............
+> 492 .............................................PP.P.....P.......................WWW......YYY...WWW......P....................PPP..PPPP......PP....................
+> 496 ...................P............................................CCC...W.........W..........YYYY.....W.......................................W.WW................
+> 500 .............................................................P.P....CC........................YYYY.......WW...............................P...........PP...P....
+> 504 ......................................... …[+3914 chars]
+
