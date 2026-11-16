@@ -32,24 +32,32 @@ uu, vv = np.meshgrid((np.arange(W) + 0.5) * k, (np.arange(H) + 0.5) * k)
 ray = np.stack([(uu - CX) / F, (vv - CY) / F, np.ones_like(uu)], -1)
 P = ray * dep[..., None]
 
-# tunnel axis: PCA of high-opacity splats, in camera frame, pointing forward
-X = (S["xyz"][S["alpha"] > 0.3]) @ R
-c0 = np.median(X, 0); ax = np.linalg.svd(X - c0, full_matrices=False)[2][0]
-ax = ax if ax[2] > 0 else -ax
-vp = (F * ax[0] / ax[2] + CX, F * ax[1] / ax[2] + CY)
-# approved image + its VP (brightest blurred spot near the tunnel end)
+# approved image + its VP (brightest blurred spot at the tunnel end) = the TRUE perspective of the approved design
 appr = np.asarray(Image.open("references/05_flow_into_the_current.png").convert("RGB"), float) / 255
 lum = gaussian_filter(appr.mean(-1), 6)
 win = lum[380:560, 380:620]; yy, xx = np.unravel_index(np.argmax(win), win.shape)
 vp_img = (xx + 380.0, yy + 380.0)
-
-# axis frame: t along the axis, e_r right, e_d "down" (perpendicular to the axis, in the camera's vertical plane)
+# tunnel axis direction = the ray through the approved VP; Marble's own PCA axis is reported for comparison
+ax = np.array([(vp_img[0] - CX) / F, (vp_img[1] - CY) / F, 1.0]); ax /= np.linalg.norm(ax)
+X = (S["xyz"][S["alpha"] > 0.3]) @ R
+pc = np.linalg.svd(X - np.median(X, 0), full_matrices=False)[2][0]; pc = pc if pc[2] > 0 else -pc
+vp = (F * pc[0] / pc[2] + CX, F * pc[1] / pc[2] + CY)
+# axis frame: t along the axis, e_r right, e_d down (perpendicular to the axis); origin = camera for now
 e_d = np.array([0, 1.0, 0]) - ax * ax[1]; e_d /= np.linalg.norm(e_d)
 e_r = np.cross(e_d, ax)
-rel = P - c0
-T = rel @ ax; LAT = rel @ e_r; DN = rel @ e_d
-cam_t = (-c0) @ ax; cam_lat = (-c0) @ e_r; cam_dn = (-c0) @ e_d
-
+T0, L0, D0 = P @ ax, P @ e_r, P @ e_d
+# tunnel centre line: least-squares circle through the wall cells 1-5 units ahead, upper 70 % of the section
+selw = (T0 > 1) & (T0 < 5) & np.isfinite(T0)
+Lw, Dw = L0[selw], D0[selw]
+for _ in range(3):
+    Am = np.stack([Lw, Dw, np.ones_like(Lw)], 1); bm = Lw ** 2 + Dw ** 2
+    cl, cd, cc = np.linalg.lstsq(Am, bm, rcond=None)[0]; cl /= 2; cd /= 2
+    rad = float(np.sqrt(cc + cl ** 2 + cd ** 2))
+    keep = (np.abs(np.hypot(Lw - cl, Dw - cd) - rad) < 0.25 * rad) & (Dw - cd < 0.3 * rad)
+    Lw, Dw = Lw[keep], Dw[keep]
+c0 = cl * e_r + cd * e_d
+T, LAT, DN = T0, L0 - cl, D0 - cd
+cam_t, cam_lat, cam_dn = 0.0, float(-cl), float(-cd)
 # water footprint of the approved design (isolated artwork registered to the approved frame)
 art = Image.open("qa/pilot05/proj/align/artwork_aligned_864x1536.png").convert("RGBA")
 A = np.asarray(art.resize((W, H), Image.BOX), float)[..., 3] / 255 > 0.5
@@ -58,7 +66,6 @@ in_crop = (vv >= ROW0) & (vv < ROW1)
 # floor level from the near river inside the crop (rows 560-767: well covered by the input image)
 near = A & (vv > 560) & (vv < ROW1)
 floor_dn = float(np.median(DN[near]))
-rad = float(np.median(np.hypot(LAT, DN)[(~A) & in_crop & (T - cam_t > 0.5) & (T - cam_t < 3)]))
 # Marble's own river = cells whose reconstructed point lies at river level (within 12 % of the radius)
 river_m = np.abs(DN - floor_dn) < 0.12 * rad
 def iou(a, b, m):
@@ -75,6 +82,7 @@ for r0 in range(int(vp[1]) + 8, HF, 16):
     # flat-floor prediction from the same pixel rays: intersect each ray with the plane DN = floor_dn
     d_ray = ray[m] @ e_d
     lam = (floor_dn - cam_dn) / np.maximum(d_ray, 1e-4)
+    lam = np.where(d_ray > 1e-4, lam, np.inf)
     t_flat = float(np.median(lam * (ray[m] @ ax)))
     rows.append(dict(row=r0, in_input=bool(ROW0 <= r0 < ROW1), n=int(m.sum()), t_marble=t_m, t_flat_floor=t_flat,
                      ratio=t_m / t_flat if t_flat > 0 else None, dn_marble_over_radius=float(np.median(DN[m] - floor_dn) / rad)))
@@ -101,12 +109,12 @@ if rings:
 
 res = dict(world=world, camera=dict(f_px=F, cx=CX, cy=CY, size=[WF, HF], pitch_deg=fit["pitch_deg"], yaw_deg=fit["yaw_deg"],
                                     input_rows=[ROW0, ROW1]),
-           vp_marble_axis=[float(vp[0]), float(vp[1])], vp_approved_image=list(vp_img),
+           vp_marble_pca_axis=[float(vp[0]), float(vp[1])], vp_approved_image=list(vp_img),
            tunnel_radius=rad, floor_below_axis=floor_dn, camera_offset_from_axis=dict(right=float(cam_lat), down=float(cam_dn)),
            footprint=dict(iou_inside_input_rows=iou(river_m, A, in_crop), iou_below_input_rows=iou(river_m, A, vv >= ROW1),
                           iou_full_frame=iou(river_m, A, np.ones_like(A))),
            max_river_depth_marble=float(np.nanmax((T - cam_t)[A & in_crop])),
-           max_river_depth_flat_floor=float(max(r["t_flat_floor"] for r in rows)),
+           max_river_depth_flat_floor=float(max(r["t_flat_floor"] for r in rows if np.isfinite(r["t_flat_floor"]))),
            river_rows=rows, rings=rings)
 json.dump(res, open(os.path.join(out, f"geometry_{world}.json"), "w"), indent=1)
 np.savez_compressed(os.path.join(out, f"geometry_{world}.npz"), depth=dep, T=T - cam_t, LAT=LAT - cam_lat, DN=DN, A=A,
@@ -128,7 +136,7 @@ def plan(points_t, points_lat, colors, title, path, tmax):
 artc = np.asarray(Image.open("qa/pilot05/proj/align/artwork_aligned_864x1536.png").convert("RGB").resize((W, H), Image.BOX), float) / 255
 m = A
 lam = (floor_dn - cam_dn) / np.maximum(ray[m] @ e_d, 1e-4)
-tf = lam * (ray[m] @ ax); lf = lam * (ray[m] @ e_r) + cam_lat - cam_lat
+tf = lam * (ray[m] @ ax)
 tmax = float(min(max(np.nanmax(tf), np.nanmax((T - cam_t)[m])), 14 * rad))
 plan((T - cam_t)[m], (LAT - cam_lat)[m] + float(cam_lat), artc[m], f"MARBLE {world}: river as reconstructed (artwork colours)", os.path.join(out, f"plan_{world}_marble.png"), tmax)
 plan(tf, (ray[m] @ e_r) * lam + float(cam_lat), artc[m], "SAME PIXELS on a flat floor (ideal geometry for this view)", os.path.join(out, f"plan_{world}_flatfloor.png"), tmax)

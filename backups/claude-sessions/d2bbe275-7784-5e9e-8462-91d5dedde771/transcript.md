@@ -552,3 +552,209 @@ Both worlds agree: Marble placed your image at focal 700 px (63° horizontal FOV
 > }
 > rows: [(544, 3.79, 27.19, True), (560, 3.18, 10.01, True), (576, 2.71, 6.14, True), (592, 2.52, 4.45, True), (608, 2.34, 3.48, True), (624, 2.17, 2.86, True), (640, 2.06, 2.43, True), (656, 1.92, 2.12, True), (672, 1.79, 1.88, True), (688, 1.72, 1.67, True), (704, 1.65, 1.52, True), (720, 1.58, 1.39, True), (736, 1.53, 1.28, True), (752, 1.48, 1.19, True), (768, 1.43, 1.11, False), (784, 1.38, 1.04, False), (800, 1.33, 0.98, False), (816, 1.29, 0.93, Fal …[+1407 chars]
 
+### 🤖 Claude — 2026-11-16T17:02:48.418Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/marble05/river_geometry.py'\ns=open(p).read()\nold=s[s.index(\"# tunnel axis: PCA\"):s.index(\"# axis frame:\")]\nnew='''# approved image + its VP (brightest blurred spot at the tunnel end) = the TRUE perspective of the approved design\nappr = np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\"), float) / 255\nlum = gaussian_filter(appr.mean(-1), 6)\nwin = lum[380:560, 380:620]; yy, xx = np.unravel_index(np.argmax(win), win.shape)\nvp_img = (xx + 380.0, yy + 380.0)\n# tunnel axis direction = the ray through the approved VP …[+2843 chars]`
+
+### 🧑 User — 2026-11-16T17:02:50.793Z
+
+> ↩︎ result: 60:cam_t, cam_lat, cam_dn = 0.0, float(-cl), float(-cd)
+> 68:floor_dn = float(np.median(DN[near]))
+> 70:river_m = np.abs(DN - floor_dn) < 0.12 * rad
+> 82:    # flat-floor prediction from the same pixel rays: intersect each ray with the plane DN = floor_dn
+> 84:    lam = (floor_dn - cam_dn) / np.maximum(d_ray, 1e-4)
+> 88:                     ratio=t_m / t_flat if t_flat > 0 else None, dn_marble_over_radius=float(np.median(DN[m] - floor_dn) / rad)))
+> 113:           tunnel_radius=rad, floor_below_axis=floor_dn, camera_offset_from_axis=dict(right=float(cam_lat), down=float(cam_dn)),
+> 138:lam = (floor_dn - cam_dn) / np.maximum(ray[m] @ e_d, 1e-4)
+> 140:tmax = float(min(max(np.nanmax(tf), np.nanmax((T - cam_t)[m])), 14 * rad))
+>   536.6122337927352
+>  ],
+>  "vp_approved_image": [
+>   500.0,
+>   481.0
+>  ],
+>  "tunnel_radius": 1.1926929330887226,
+>  "floor_below_axis": 0.694002056805171,
+>  "camera_offset_from_axis": {
+>   "right": 0.15217094974376938,
+>   "down": 0.19699794701571924
+>  },
+>  "footprint": {
+>   "iou_inside_input_rows": 0.7000085492006497,
+>   "iou_below_input_rows": 0.3798982372374545,
+>   "iou_full_frame": 0.45032539592972953
+>  },
+>  "max_river_depth_marble": 15.213374256802428,
+>  "max_river_depth_flat_floor": 5.4198374 …[+1869 chars]
+
+### 🤖 Claude — 2026-11-16T17:03:10.096Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/pilot05/marble_feas/geometry && python3 -c \"\nfrom PIL import Image\na=Image.open('plan_full_marble.png'); b=Image.open('plan_full_flatfloor.png'); d=Image.open('depth_full.png').resize((432,768))\nc=Image.new('RGB',(600*2+432+20,900),(0,0,0)); c.paste(a,(0,0)); c.paste(b,(610,0)); c.paste(d,(1220,0)); c.save('/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/plans.png')\n\"", "description": "Combine plan views and depth map for a quick look"}`
+
+### 🧑 User — 2026-11-16T17:03:10.302Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T17:03:11.249Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/plans.png"}`
+
+### 🧑 User — 2026-11-16T17:03:11.281Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:04:08.088Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && npm view @sparkjsdev/spark@0.1.10 peerDependencies dependencies main module exports --json 2>&1 | head -40", "description": "Check Spark renderer package dependencies"}`
+
+### 🧑 User — 2026-11-16T17:04:08.725Z
+
+> ↩︎ result: {
+>   "dependencies": {
+>     "fflate": "^0.8.2"
+>   },
+>   "main": "./dist/spark.cjs.js",
+>   "module": "./dist/spark.module.js",
+>   "exports": {
+>     ".": {
+>       "types": "./dist/types/index.d.ts",
+>       "import": "./dist/spark.module.js",
+>       "require": "./dist/spark.cjs.js"
+>     }
+>   }
+> }
+
+### 🤖 Claude — 2026-11-16T17:04:12.137Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/sparkr && mkdir -p $SP && cd $SP && npm init -y >/dev/null && npm install --no-audit --no-fund @sparkjsdev/spark@0.1.10 three@0.178.0 2>&1 | tail -3 && ls node_modules/@sparkjsdev/spark/dist | head; grep -o '\"three[^,]*' node_modules/@sparkjsdev/spark/package.json | head", "description": "Install Spark splat renderer into an isolated scratch folder", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T17:04:14.133Z
+
+> ↩︎ result: added 3 packages in 1s
+> assets
+> spark.cjs.js
+> spark.cjs.js.map
+> spark.cjs.min.js
+> spark.cjs.min.js.map
+> spark.module.js
+> spark.module.js.map
+> spark.module.min.js
+> spark.module.min.js.map
+> types
+> "three": "^0.178.0"
+> "three.js"
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-16T17:04:52.527Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T17:04:52.541Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-16T17:04:55.983Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport numpy as np\nfrom PIL import Image\nd=np.load('qa/pilot05/marble_feas/geometry/geometry_full.npz')\nA,M=d['A'],d['river_m']\nappr=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('L').resize(A.shape[::-1]),float)/255\no=np.stack([appr*0.5]*3,-1)\no[A&M]=[0.2,0.9,0.3]; o[A&~M]=[1,0.2,0.6]; o[M&~A]=[0.2,0.6,1]\nImage.fromarray((o*255).astype(np.uint8)).resize((432,768),Image.NEAREST).save('/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/ov.png')\nprint(d['T'].shape)\n\"", "description": "Overlay Marbl …[+51 chars]`
+
+### 🧑 User — 2026-11-16T17:04:56.224Z
+
+> ↩︎ result: (384, 216)
+
+### 🤖 Claude — 2026-11-16T17:04:58.269Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/ov.png"}`
+
+### 🧑 User — 2026-11-16T17:04:58.305Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:06:13.654Z
+
+> 🔧 **Bash** `{"command": "cat > tools/marble05/build_meshes.py <<'EOF'\n\"\"\"Build the two river meshes for the projection test (no credits, read-only on Marble assets):\n  marble_river.obj  = the approved water footprint lifted onto MARBLE's reconstructed surface (median splat depth,\n                      coins/bubbles removed with a robust image-space median), i.e. Marble used for 3D reconstruction only\n  flat_river.obj    = the same pixels on the ideal flat river floor implied by the approved image (axis through its\n                      vanishing point, floor height measured from Marble's near rive …[+5240 chars]`
+
+### 🧑 User — 2026-11-16T17:06:25.499Z
+
+> ↩︎ result: /home/user/rainbow-/tools/marble05/build_meshes.py:61: RuntimeWarning: All-NaN slice encountered
+>   ok &= np.nanmax(q, -1) / np.nanmin(q, -1) < 1.12
+> {
+>  "marble": {
+>   "vertices": 201958,
+>   "quads": 200469,
+>   "depth_range": [
+>    0.40087194569326867,
+>    15.220569197234779
+>   ]
+>  },
+>  "flat": {
+>   "vertices": 201697,
+>   "quads": 200319,
+>   "depth_range": [
+>    0.30785343626872713,
+>    58.477933691767426
+>   ]
+>  }
+> }
+> 
+> real	0m11.773s
+> user	0m13.088s
+> sys	0m0.506s
+> total 42772
+> drwxr-xr-x 2 root root     4096 Nov 16 17:06 .
+> drwxr-xr-x 4 root root     4096 Nov 16 17:06 ..
+> -rw-r--r-- 1 root root 20725576 Nov 16 17:06 flat_river.obj
+> -rw-r--r-- 1 root root  2314197 Nov 16 17:06 marble_depth_k2.npz
+> -rw-r--r-- 1 root root 20745153 Nov 16 17:06 marble_river.obj
+> -rw-r--r-- 1 root root      939 Nov 16 17:06 scene.json
+
+### 🤖 Claude — 2026-11-16T17:06:30.818Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && mkdir -p $SP/scene && mv qa/pilot05/marble_feas/scene/*.obj $SP/scene/ && git status --short | head; python3 -I scripts/autosave-status.py 2>&1 | tail -3; grep -n \"max_file\\|size\" backups/autosave.config.json | head", "description": "Move large OBJ files to scratchpad and check autosave status"}`
+
+### 🧑 User — 2026-11-16T17:06:31.896Z
+
+> ↩︎ result: M qa/pilot05/marble_feas/geometry/depth_full.png
+>  M qa/pilot05/marble_feas/geometry/geometry_full.json
+>  M qa/pilot05/marble_feas/geometry/geometry_full.npz
+>  M qa/pilot05/marble_feas/geometry/plan_full_flatfloor.png
+>  M qa/pilot05/marble_feas/geometry/plan_full_marble.png
+>  M tools/marble05/river_geometry.py
+> ?? qa/pilot05/marble_feas/scene/
+> ?? tools/marble05/build_meshes.py
+> AUTOSAVE OK | branch ccr-e546a360-cxmton | scheduler daemon | last verified backup 2026-11-16T17:02:01+00:00 (4.5 min ago) | local bf4821d remote bf4821d (match) | uncommitted 8
+
+### 🤖 Claude — 2026-11-16T17:06:51.689Z
+
+Building the Blender camera-projection scene now (your artwork projected from the locked camera onto Marble's reconstructed river surface).
+
+### 🤖 Claude — 2026-11-16T17:06:52.636Z
+
+> 🔧 **Bash** `{"command": "cat .gitattributes | head -30; sed -n 1,60p tools/blender/camera_lock_05.py | head -60", "description": "Check LFS patterns and existing Blender camera-lock script"}`
+
+### 🧑 User — 2026-11-16T17:06:52.693Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+> """
+> Screen 05 CAMERA LOCK scene in Blender 5.3 (coordinator tool, wave 6).
+> 
+>     npx vite-node scripts/export-river-05.ts -- --cam=X,Y,Z --look=X,Y,Z --fov=62      (river05_layout.json)
+>     blender -b --python tools/blender/build_05_river_scene.py -- --layout ... --out-dir OUT
+>     blender -b OUT/screen05_layout.blend --python tools/blender/camera_lock_05.py -- \
+>         --camera qa/pilot05/wave6 …[+2111 chars]
+

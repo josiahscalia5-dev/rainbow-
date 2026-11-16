@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8264,
-   "sha256": "19138f7942e1688ab3bb8665ffed427ca85ea83d4b1982bded228edd197bbb3a"
+   "sha256": "32620d28f92c7922d0398d4088f3265acc2f9b2e07ec53caabd101f9c83260b4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1178,28 +1178,28 @@
   },
   {
    "path": "qa/pilot05/marble_feas/geometry/depth_full.png",
-   "bytes": 32528,
-   "sha256": "16882cd7463f45e384f8bd769fc7db9b0fa6c33cd406327e9ac68fdbc910bbbf"
+   "bytes": 33150,
+   "sha256": "407a3b70b97be8e4c3e182f270b71c3b627e1549fb53fa5b1af2a45478d0c8f2"
   },
   {
    "path": "qa/pilot05/marble_feas/geometry/geometry_full.json",
-   "bytes": 15707,
-   "sha256": "3ed88bac729afb0d07858bc4ac7dc5fbb51644f17f2f6ae9c1da0b84ced5ff63"
+   "bytes": 15688,
+   "sha256": "5de45ffbe66b115e37f77ec9e0e7937202491ab59991133b9efd72eca45dd6e7"
   },
   {
    "path": "qa/pilot05/marble_feas/geometry/geometry_full.npz",
-   "bytes": 4205718,
-   "sha256": "91cfa92acf53e4f184aa8c918cb99e515c2a1c8e995be87c19a4a59aeff604bf"
+   "bytes": 4209835,
+   "sha256": "cf8321ee4ebec743c7831d204502057a980d4196e004e02976e91f90f2596ebb"
   },
   {
    "path": "qa/pilot05/marble_feas/geometry/plan_full_flatfloor.png",
-   "bytes": 78003,
-   "sha256": "2a72ecd44f3c5da7cc367afb0970e693137f3196ce235dd34adafc85e13ec6e3"
+   "bytes": 94551,
+   "sha256": "eec96fca708697867a02ca57a42f476ef6d107b2f995d9292a6474039bbfe331"
   },
   {
    "path": "qa/pilot05/marble_feas/geometry/plan_full_marble.png",
-   "bytes": 90892,
-   "sha256": "ea923e07e27ee804936ce1ea58a14f17413c7d83bab6d887c5324c9a60ec6835"
+   "bytes": 94098,
+   "sha256": "73c71a6ee30d2a417350320186b6448b52fb10f3a5abe61cae96bf632c5e3ce2"
   },
   {
    "path": "qa/pilot05/marble_feas/pano_fit_draft.json",
@@ -1210,6 +1210,16 @@
    "path": "qa/pilot05/marble_feas/pano_fit_full.json",
    "bytes": 265,
    "sha256": "b196dfe7a8b3706217d6174fbda849745b1ad86062fadeeadb5e386758882f21"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/scene/marble_depth_k2.npz",
+   "bytes": 2314197,
+   "sha256": "5ab0335f36876c3b55892949d05a2577e0c6ecc0149d4bf07d761d4617dae450"
+  },
+  {
+   "path": "qa/pilot05/marble_feas/scene/scene.json",
+   "bytes": 939,
+   "sha256": "1e73438e2061de83eb2433df59c2953b954194e9a17874b787485ed4a74ce1a1"
   },
   {
    "path": "qa/pilot05/marble_feas/splat_fit_draft.json",
@@ -6817,6 +6827,11 @@
    "sha256": "668c36bbc5326237444e39c8af465cfd382015fc90b69f8362f1e423c30d7c8d"
   },
   {
+   "path": "tools/marble05/build_meshes.py",
+   "bytes": 5367,
+   "sha256": "ba6cd6a96099bbbb43a2b62133aeb9aed96cd7329739ec370a6245a2eac31257"
+  },
+  {
    "path": "tools/marble05/fit_camera.py",
    "bytes": 2575,
    "sha256": "458e310caf448dfcb48cb6f028ca13d271d3ccb36ed1cbddfd7d6c7446d020b7"
@@ -6828,8 +6843,8 @@
   },
   {
    "path": "tools/marble05/river_geometry.py",
-   "bytes": 8574,
-   "sha256": "95c666ee9d104c8a419320f11311f4906d0579b322863d175879d394e015a82e"
+   "bytes": 9209,
+   "sha256": "5f1c108cf399ecaa2899d2f484504deb78d69d6b131c180632fd838348d5eb05"
   },
   {
    "path": "tools/marble05/splat_fit.py",
