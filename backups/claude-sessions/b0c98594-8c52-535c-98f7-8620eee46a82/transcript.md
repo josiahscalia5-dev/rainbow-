@@ -1772,3 +1772,94 @@ Shellcheck is clean. Moving to validation. **Test A:** a second full run must sk
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'PY'\nimport json\np = \"backups/autosave.config.json\"\nc = json.load(open(p))\nc[\"branch\"] = \"ccr-251ed97c-ty2xvp\"\nc[\"commit_trailer\"] = \"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\\nClaude-Session: https://claude.ai/code/session_01Kbt6BTutLARq2w7hhXopgC\"\nif \"ccr-44f84024-ii5iih\" not in c[\"protected_branches\"]:\n    c[\"protected_branches\"].append(\"ccr-44f84024-ii5iih\")\nc[\"branch_history_note\"] += (\" Session 01Kbt6BT (2026-11-16 ~10:40 UTC, permanent bootstrap + backup system) works on \"\n    \"ccr-251ed97c-ty2xvp, started from c …[+800 chars]`
 
+### 🧑 User — 2026-11-16T11:03:26.366Z
+
+> ↩︎ result: ccr-251ed97c-ty2xvp 11 protected
+>  backups/autosave.config.json | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "3d6ed23372f30ddd5259c363fc2da3ff882d3b6b",
+> Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+> Claude-Session: https://claude.ai/code/session_01Kbt6BTutLARq2w7hhXopgC
+
+### 🤖 Claude — 2026-11-16T11:03:36.183Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/newacct; cd $S/rainbow- && git fetch -q origin && git checkout -q -f -B test-newacct origin/ccr-6f431adf-7h0m8y && git clean -qfdx -e node_modules && echo \"reset to $(git log -1 --format=%h), has bootstrap: $(test -f scripts/claude-bootstrap.sh && echo yes || echo no)\" && git fetch -q origin ccr-251ed97c-ty2xvp && git show FETCH_HEAD:scripts/resume-newest-work.sh > $S/r.sh && time bash $S/r.sh --tools --no-autosave > $S/run3.log 2>&1; echo \"exit=$?\"; grep -E \"^  (OK|WARN|FAIL|SKIP)|BOOTSTRAP|c …[+147 chars]`
+
+### 🧑 User — 2026-11-16T11:04:02.974Z
+
+> ↩︎ result: reset to 81e639e, has bootstrap: no
+> 
+> real	0m24.100s
+> user	0m20.472s
+> sys	0m4.047s
+> exit=0
+> running claude-bootstrap.sh from origin/ccr-251ed97c-ty2xvp
+> RAINBOW BOOTSTRAP (full) 2026-11-16 11:03 UTC - /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/newacct/rainbow-
+>   WARN Repository + branch            branch test-newacct is not a ccr-*/claude/* session branch: the autosave will not push it
+>   OK   Resume newest work             12/12 remote ccr-*/claude/* branches contained in HEAD 8efa669; merged newer work from: ccr-8b6fc834-7kd55l claude/rainbow-3d-recovery-m4v347 ccr-d4bb0ad3-8ycajb 
+>   OK   Backup gap since last session  previous save on GitHub: 98ffd8e 2026-11-16 10:38 UTC (daemon) on ccr-251ed97c-ty2xvp, ccr-44f84024-ii5iih; previous session ended WITHOUT an end-of-session backu
+>   OK   Git LFS binaries (local)       24/24 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK
+>   OK   Git LFS on GitHub              24/24 LFS objects (184 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+>   OK   Approved references            12/12 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference)
+>   OK  …[+2054 chars]
+
+### 🤖 Claude — 2026-11-16T11:04:10.661Z
+
+> 🔧 **Bash** `{"command": "rm -rf /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/newacct && echo \"scratch clone removed\"; df -h / | tail -1", "description": "Delete the throwaway test clone"}`
+
+### 🤖 Claude — 2026-11-16T11:04:12.546Z
+
+> 🔧 **Bash** `{"command": "time bash scripts/claude-bootstrap.sh --full --skip-resume > /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/bootstrap-full.log 2>&1; echo \"exit=$?\"", "description": "Full-test bootstrap run with gameplay and pixel checks", "timeout": 2400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T11:04:13.335Z
+
+> ↩︎ result: scratch clone removed
+> /dev/vda        252G   14G   25G  36% /
+
+### 🧑 User — 2026-11-16T11:04:13.375Z
+
+> ↩︎ result: Command running in background with ID: bmj16g29t. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/tasks/bmj16g29t.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T11:04:44.141Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; for u in https://services.gradle.org/distributions/gradle-8.2.1-all.zip https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip \"https://download.blender.org/release/Blender5.3/blender-5.3.0-linux-x64.tar.xz\"; do echo \"== $u\"; curl -sSIL -m 20 -o /dev/null -w '%{url_effective} %{http_code}\\n' \"$u\" 2>&1 | tail -1; curl -sSIL -m 20 \"$u\" 2>/dev/null | grep -i '^location' | sed -E 's#(https?://[^/]+).*#\\1#' ; done; grep -rhoE \"https://[a-z0-9.-]+\" qa/worldlabs/05/pilot/full/world_refresh_2026-11-16.json | sort | uniq -c;  …[+249 chars]`
+
+### 🧑 User — 2026-11-16T11:04:45.702Z
+
+> ↩︎ result: == https://services.gradle.org/distributions/gradle-8.2.1-all.zip
+> https://release-assets.githubusercontent.com/github-production-release-asset/696192900/1e77bbfb-4cde-4376-92ea-fc4ff57b8362?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-11-16T11%3A56%3A54Z&rscd=attachment%3B+filename%3Dgradle-8.2.1-all.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-11-16T10%3A56%3A12Z&ske=2026-11-16T11%3A56%3A54Z&sks=b&skv=2018-11-09&sig=lsMMUE3ohLaIcoBuzLZ5sq0yClJvNOcUnn8FjC0ICkY%3D&jwt=[REDACTED-JWT]&response-content-disposition=attachment%3B%20filename%3Dgradle-8.2.1-all.zip&response-content-type=application%2Foctet-stream 200
+> Location: https://github.com
+> Location: https://release-assets.githubusercontent.com
+> == https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+> https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip 200
+> == https://download.blender.org/release/Blender5.3/blender-5.3.0-linux-x64.tar.xz
+> https://download.blender.org/release/Blender5.3/blender-5.3.0-linux-x64.tar.xz 200
+>       8 https://cdn.marble.worldlabs.ai
+>       1 https://marble.worldlabs.ai
+>  …[+55 chars]
+
+### 🤖 Claude — 2026-11-16T11:04:56.113Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; for f in README_FIRST.md START_HERE_PASTE_TO_CLAUDE.md TOOL_SETUP_AND_VERIFICATION.md backups/CURRENT_STATE.md; do echo \"===== $f ($(wc -l < $f) lines)\"; head -15 \"$f\"; done", "description": "Read the heads of the other entry-point docs"}`
+
+### 🧑 User — 2026-11-16T11:04:56.148Z
+
+> ↩︎ result: ===== README_FIRST.md (33 lines)
+> # Rainbow NEW 11-screen Claude Code kit — START HERE
+> 
+> You have **11 original, untouched approved stage screenshots** plus **1 original new official cartoon girl reference**, and the complete updated master prompt. This replaces the earlier 10-screen brief.
+> 
+> ## Exactly what to do
+> 
+> 1. Download this ZIP and extract it into the root of a **NEW EMPTY Rainbow project folder**, NOT an old Bubble Wash Kingdom or Ripple folder/repository.
+> 2. Open that folder in Claude Code. Read `Rainbow_Claude_Code_Master_Prompt_11_Screens.md` and paste `START_HERE_PASTE_TO_CLAUDE.md` into the conversation (or paste the entire master prompt if you prefer).
+> 3. Let Claude inspect the actual original source images in `references/` plus `character_references/official_cartoon_girl_original.jpg`.
+> 4. Claude should verify available MCP tools, initialize new Git/repository safely, and begin a real playable 3D implementation. Paid generators require your approval.
+> 
+> ### Critical creative decisions already settled
+> 
+> - There are **11** numbered scenes. `11 · SAFELY HOME` is the **real final ending**.
+> - The new cartoon girl is **ONE official character** for the opening and ending, and rep …[+4080 chars]
+
