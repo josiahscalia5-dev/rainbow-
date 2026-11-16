@@ -4395,3 +4395,18 @@ Everything is committed and pushed. GitHub matches the local copy at commit `667
 
 The water specialist is still working on its fourth and final iteration, so new edits will keep appearing until it finishes. The five-minute autosave saves them as it goes, so this warning may show up again before then. When the specialist reports back, I'll check its result myself, show you the real game at full size beside your approved image, and do a final verified save.
 
+### 🧑 User — 2026-11-16T12:18:05.094Z
+
+Show me the water result at full size when it's done
+
+### 🤖 Claude — 2026-11-16T12:18:09.031Z
+
+The water specialist is still working: it's on its fourth and final iteration, and I haven't received its report yet. When it finishes, I'll:
+
+1. Check the result myself: first that the default game is unchanged and gameplay still passes, then compare it against your approved image.
+2. Send you the real game at full size (864×1536) beside your approved image, as separate pictures with no grid lines.
+3. Tell you plainly whether it's genuinely closer, and keep it only if it is.
+4. Save everything to GitHub and give you the commit.
+
+The five-minute autosave keeps saving the specialist's work to GitHub in the meantime.
+
