@@ -18,9 +18,10 @@ import { EDGE_LIFT, coreLateral } from './waterRibbon';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 import { REFERENCEFOAM05, ROUNDFOAM05 } from './foam05Options';
+import { REFERENCE05_FRAME_GLSL, reference05BlendFrame, reference05Shared, reference05TargetFrame } from './reference05Geometry';
 
 /** c = (ambient occlusion 0..1, seed 0..1, tint -1..1) → instanceColor (see PUFF_VERT) */
-interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean }
+interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean; s?: number }
 
 // ---------------------------------------------------------------------------------- berm profile
 /** berm spans e ∈ [BERM_IN, BERM_OUT] units outward from the ribbon edge (negative = over the water) */
@@ -95,6 +96,12 @@ float soapT(vec3 Nv) {
 
 const BERM_VERT = /* glsl */ `
 attribute vec3 aFoam;    // x = e (units outward from the stream edge), y = s, z = side (-1 / 1)
+#ifdef REFERENCE_FOAM05
+attribute vec3 aRefPosition;
+attribute vec3 aRefNormal;
+uniform vec3 uRefBenny;
+${REFERENCE05_FRAME_GLSL}
+#endif
 uniform float uTime;
 varying vec3 vFoam;
 varying vec3 vPosW;
@@ -103,10 +110,20 @@ varying vec3 vNormalW;
 void main() {
   // gentle breathing of the lather (never at the water line)
   float k = smoothstep(-0.2, 0.3, aFoam.x);
+  #ifdef REFERENCE_FOAM05
+  float refWeight = reference05Weight(aFoam.y, uRefBenny.x);
+  vec3 refNormal = normalize(mix(normal, aRefNormal, refWeight));
+  vec3 p = mix(position, aRefPosition, refWeight) + refNormal * (0.03 * k * sin(uTime * 1.6 + aFoam.y * 2.1 + aFoam.z * 3.0));
+  #else
   vec3 p = position + normal * (0.03 * k * sin(uTime * 1.6 + aFoam.y * 2.1 + aFoam.z * 3.0));
+  #endif
   vec4 wp = modelMatrix * vec4(p, 1.0);
   vPosW = wp.xyz;
+  #ifdef REFERENCE_FOAM05
+  vNormalW = normalize(mat3(modelMatrix) * refNormal);
+  #else
   vNormalW = normalize(mat3(modelMatrix) * normal);
+  #endif
   vFoam = aFoam;
   vec4 mvPosition = viewMatrix * wp;
   gl_Position = projectionMatrix * mvPosition;
@@ -344,6 +361,11 @@ vec4 microFoam(vec2 p, float dens) {
 `;
 
 const BANK_BUB_VERT = /* glsl */ `
+#ifdef REFERENCE_FOAM05
+attribute vec4 aRefCenter; // xyz upright target center, w course distance; zero for CPU-positioned rafts
+uniform vec3 uRefBenny;
+${REFERENCE05_FRAME_GLSL}
+#endif
 varying vec2 vP;
 varying vec3 vInst;
 varying float vBig;
@@ -351,7 +373,13 @@ varying vec3 vCv;
 varying float vR;
 #include <fog_pars_vertex>
 void main() {
+  #ifdef REFERENCE_FOAM05
+  vec4 centre = instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+  centre.xyz = mix(centre.xyz, aRefCenter.xyz, reference05Weight(aRefCenter.w, uRefBenny.x));
+  vec4 c = modelMatrix * centre;
+  #else
   vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+  #endif
   float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);
   vec4 mvPosition = viewMatrix * c;
   vCv = mvPosition.xyz;
@@ -476,6 +504,7 @@ function makeBankBubbleMaterial() {
     uTime: { value: 0 },
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
   });
+  if (REFERENCEFOAM05) (uniforms as Record<string, THREE.IUniform>).uRefBenny = reference05Shared.uBenny;
   const mat = new THREE.ShaderMaterial({
     uniforms, vertexShader: BANK_BUB_VERT, fragmentShader: BANK_BUB_FRAG, fog: true,
     defines: { ...(ROUNDFOAM05 ? { ROUND_FOAM05: 1 } : {}), ...(REFERENCEFOAM05 ? { REFERENCE_FOAM05: 1 } : {}) },
@@ -592,6 +621,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
   const C = E.length;
   const n = rows * C * 2;
   const pos = new Float32Array(n * 3);
+  const refPos = REFERENCEFOAM05 ? new Float32Array(n * 3) : null;
   const foam = new Float32Array(n * 3);
   const tmp = new THREE.Vector3();
   let k = 0;
@@ -600,6 +630,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     const s = Math.min(s1, s0 + i * ds);
     rowS.push(s);
     const f = course.sample(s);
+    const refFrame = REFERENCEFOAM05 ? reference05TargetFrame(f) : null;
     const hw = course.widthAt(s) / 2;
     for (const side of [-1, 1]) {
       for (let j = 0; j < C; j++) {
@@ -612,6 +643,10 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
         const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
         tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
         tmp.toArray(pos, k * 3);
+        if (refPos && refFrame) {
+          tmp.copy(refFrame.pos).addScaledVector(refFrame.right, side * (hw + eS)).addScaledVector(refFrame.up, h);
+          tmp.toArray(refPos, k * 3);
+        }
         foam[k * 3] = e;
         foam[k * 3 + 1] = s;
         foam[k * 3 + 2] = side;
@@ -638,6 +673,15 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
   geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
   geo.setIndex(idx);
   geo.computeVertexNormals();
+  if (refPos) {
+    const targetGeometry = new THREE.BufferGeometry();
+    targetGeometry.setAttribute('position', new THREE.BufferAttribute(refPos, 3));
+    targetGeometry.setIndex(idx);
+    targetGeometry.computeVertexNormals();
+    geo.setAttribute('aRefPosition', new THREE.BufferAttribute(refPos, 3));
+    geo.setAttribute('aRefNormal', targetGeometry.getAttribute('normal').clone());
+    targetGeometry.dispose();
+  }
   const st05 = course.stage('05');
   const uniforms = withFog({
     uTime: { value: 0 },
@@ -646,13 +690,14 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
     // colour starts at the 05 stage start (not s0 - 6 like the squash) so the 04 frame keeps its own foam colours
     uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
   });
+  if (REFERENCEFOAM05) (uniforms as Record<string, THREE.IUniform>).uRefBenny = reference05Shared.uBenny;
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: BERM_VERT,
     fragmentShader: BERM_FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: quality === 'low' ? { LOW_Q: 1 } : {},
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(REFERENCEFOAM05 ? { REFERENCE_FOAM05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'foam_berm';
@@ -686,7 +731,7 @@ export function createFoam(
   const tmpC = new THREE.Color();
 
   /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
-  const imp05: { p: THREE.Vector3; r: number; c: [number, number, number] }[] = [];
+  const imp05: { p: THREE.Vector3; r: number; c: [number, number, number]; s: number }[] = [];
   const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
     if (!list.length) return;
     const nMesh = list.reduce((n, pf) => n + (pf.imp ? 0 : 1), 0);
@@ -697,7 +742,7 @@ export function createFoam(
       tmpQ.setFromEuler(tmpE.set(rand() * 6, rand() * 6, rand() * 6));
       tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
       const seed = rand();
-      if (pf.imp) { imp05.push({ p: pf.p, r: pf.r, c: [pf.ao, seed, pf.tint] }); continue; }
+      if (pf.imp) { imp05.push({ p: pf.p, r: pf.r, c: [pf.ao, seed, pf.tint], s: pf.s ?? 0 }); continue; }
       tmpM.compose(pf.p, tmpQ, tmpS);
       mesh!.setMatrixAt(i, tmpM);
       // x = ao + 2 q (q = 05 soap-shading weight x 8, see PUFF_VERT)
@@ -746,7 +791,7 @@ export function createFoam(
       r *= 0.5 + 0.95 * hz * hz;
       lift -= 0.4 * r;
     }
-    list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp });
+    list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp, s: ss });
   };
   const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
   /** 05 soap-shading weight of a puff (same ramp as the berm's uSt05) */
@@ -800,7 +845,7 @@ export function createFoam(
           const e = lace ? -0.6 + r5() * 0.35 : -0.35 + r5() * 0.75;
           const u = r5();
           const r = lace ? 0.025 + 0.03 * u * u : 0.035 + 0.06 * u * u;
-          imp05.push({ p: bermPoint(ss, e, side, r * (lace ? 0.2 : -0.1)), r, c: [lace ? 0.95 : 0.75 + 0.25 * r5(), r5(), r5() * 2 - 1] });
+          imp05.push({ p: bermPoint(ss, e, side, r * (lace ? 0.2 : -0.1)), r, c: [lace ? 0.95 : 0.75 + 0.25 * r5(), r5(), r5() * 2 - 1], s: ss });
         }
       }
     }
@@ -904,6 +949,11 @@ export function createFoam(
   const rr = rng(4242);
   const bub = makeBankBubbleMaterial();
   const rafts = new THREE.InstancedMesh(new THREE.PlaneGeometry(2, 2), bub.mat, nRaft);
+  if (REFERENCEFOAM05) {
+    // Rafts are already positioned in the blended frame on the CPU. One zero-valued
+    // instanced attribute spans the entire draw, preventing a second deformation.
+    rafts.geometry.setAttribute('aRefCenter', new THREE.InstancedBufferAttribute(new Float32Array(4), 4, false, Math.max(1, nRaft)));
+  }
   rafts.name = 'foam_rafts';
   rafts.frustumCulled = false;
   rafts.renderOrder = 1;
@@ -917,14 +967,23 @@ export function createFoam(
   group.add(rafts);
   total += nRaft;
   // wave 8: the 05 berm puffs + rim bubbles as fine-foam impostors (one draw, static)
-  const rim05 = new THREE.InstancedMesh(rafts.geometry, bub.mat, Math.max(1, imp05.length));
+  const rimGeometry = REFERENCEFOAM05 ? new THREE.PlaneGeometry(2, 2) : rafts.geometry;
+  const refCenters = REFERENCEFOAM05 ? new Float32Array(Math.max(1, imp05.length) * 4) : null;
+  const rim05 = new THREE.InstancedMesh(rimGeometry, bub.mat, Math.max(1, imp05.length));
   rim05.name = 'foam_rim05';
   rim05.frustumCulled = false;
   rim05.count = imp05.length;
   imp05.forEach((b, i) => {
     rim05.setMatrixAt(i, tmpM.makeScale(b.r, b.r, b.r).setPosition(b.p));
     rim05.setColorAt(i, tmpC.setRGB(b.c[0], b.c[1], b.c[2]));
+    if (refCenters) {
+      const f = course.sample(b.s), target = reference05TargetFrame(f);
+      const offset = b.p.clone().sub(f.pos);
+      target.pos.addScaledVector(target.right, offset.dot(f.right)).addScaledVector(target.up, offset.dot(f.up)).addScaledVector(target.tan, offset.dot(f.tan));
+      refCenters.set([target.pos.x, target.pos.y, target.pos.z, b.s], i * 4);
+    }
   });
+  if (refCenters) rimGeometry.setAttribute('aRefCenter', new THREE.InstancedBufferAttribute(refCenters, 4));
   rim05.instanceMatrix.needsUpdate = true;
   if (rim05.instanceColor) rim05.instanceColor.needsUpdate = true;
   group.add(rim05);
@@ -996,6 +1055,7 @@ export function createFoam(
         const ds = rowDs[i];
         const s = Math.min(s1, Math.max(s0, rider.s + ds));
         course.sample(s, fr);
+        if (REFERENCEFOAM05) reference05BlendFrame(fr, reference05Shared.uBenny.value.x);
         const hw = course.widthAt(s) / 2;
         hBase = heightAt(s, side * 2.5, time);
         const camLat = pv.copy(camPos).sub(fr.pos).dot(fr.right);
@@ -1088,6 +1148,7 @@ export function createFoam(
         const ev = sm(0.06, 0.45, L(rowEnv[sd]));
         const wid = Math.abs(lout - lin);
         course.sample(sC, fr);
+        if (REFERENCEFOAM05) reference05BlendFrame(fr, reference05Shared.uBenny.value.x);
         // bubbles grow with distance so their on-screen size stays ≈10–45 px (ref 05 bank texture)
         const scale = Math.min(2.0, 0.9 + 0.1 * Math.max(0, ds)) * kFade * Math.min(1, wid / 0.3) * ev;
         // wave 7: the right rim ahead of Benny is one low layer of smaller bubbles (no heap / outer kinds)

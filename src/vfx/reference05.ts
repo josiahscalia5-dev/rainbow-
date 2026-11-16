@@ -27,16 +27,16 @@ vec2 ref05Glints(vec2 p, float seed) {
   vec2 alongFlow = normalize(vec2(-gy.x, gx.x) + vec2(0.000001, 0.0));
   vec2 acrossFlow = vec2(-alongFlow.y, alongFlow.x);
   vec2 cellRate = alongFlow.x * gx + alongFlow.y * gy;
-  float lengthPx = min(22.0 + 36.0 * h, 0.26 / max(max(abs(cellRate.x), abs(cellRate.y)), 0.00001));
+  float lengthPx = min(14.0 + 24.0 * h, 0.26 / max(max(abs(cellRate.x), abs(cellRate.y)), 0.00001));
   float t = dot(px, alongFlow) / max(lengthPx, 0.01);
   float taper = max(0.0, 1.0 - t * t);
   // Screen Jacobian follows each S-bend. A broad centre splits into two curved tapered tips,
   // rather than turning into an evenly spaced row of luminous wires.
-  float spine = dot(px, acrossFlow) + 5.0 * t * taper;
-  float width = (2.1 + 2.1 * h) * taper * taper;
-  float core = 1.0 - smoothstep(max(0.0, width - 0.65), width + 0.9, abs(spine));
+  float spine = dot(px, acrossFlow) + 2.8 * t * taper;
+  float width = (1.7 + 1.5 * h) * taper * taper;
+  float core = exp(-spine * spine / max(0.6, width * width * 0.42)) * taper;
   float shoulder = exp(-abs(spine) / (width * 2.5 + 1.0)) * taper;
-  float visible = (1.0 - smoothstep(0.15, 0.35, max(fw.x, fw.y))) * smoothstep(0.38, 0.58, h);
+  float visible = (1.0 - smoothstep(0.15, 0.35, max(fw.x, fw.y))) * smoothstep(0.30, 0.52, h);
   return vec2(core * taper, shoulder * 0.5) * visible;
 }
 
@@ -49,10 +49,13 @@ vec3 reference05Color(float x, float s, float time, float speed, float band,
   float a = p + 0.15 * sin(v * 0.29);
   float b = x * 9.1 + 1.8 * warp + v * 0.055;
   float c = x * 19.3 + 3.7 * warp + 0.65 * sin(v * 0.21 + x) - v * 0.09;
+  float d = x * 37.1 + 6.2 * warp + 1.7 * sin(v * 0.16 - x * 0.8) + v * 0.08;
   float fine = 1.0 - smoothstep(0.35, 1.2, fwidth(c));
+  float satinFine = 1.0 - smoothstep(0.3, 1.1, fwidth(d));
   float body = clamp(0.55 + 0.16 * sin(a) + 0.12 * sin(b) + 0.04 * sin(c) * fine, 0.0, 1.0);
   float sheen = pow(max(0.0, sin(b + 0.5)), 7.0) * 0.65
-              + pow(max(0.0, sin(c + 0.4)), 12.0) * 0.22 * fine;
+              + pow(max(0.0, sin(c + 0.4)), 12.0) * 0.22 * fine
+              + pow(max(0.0, sin(d)), 10.0) * 0.12 * satinFine;
   vec2 highlights = ref05Glints(vec2(x, v), 0.0);
   highlights = max(highlights, ref05Glints(vec2(x + 0.32, v * 0.91 + 3.7), 11.7) * 0.6);
 
@@ -62,8 +65,8 @@ vec3 reference05Color(float x, float s, float time, float speed, float band,
   float arc = -back * 15.0 + 0.8 * sin(back * 4.3) + 7.0 * dl * dl / (1.0 + back * 0.35)
               + 0.6 * dl * sin(back * 2.1) + (time - 12.0) * 1.6;
   float crest = 0.5 + 0.5 * sin(arc);
-  float nearBody = 0.45 + 0.23 * sin(arc - 0.6) + 0.09 * sin(x * 4.6 + back);
-  body = mix(body, nearBody, wakeNear * 0.8);
+  float nearBody = 0.49 + 0.20 * sin(arc - 0.6) + 0.09 * sin(x * 4.6 + back);
+  body = mix(body, nearBody, wakeNear * 0.65);
   sheen = mix(sheen, pow(crest, 8.0) * 0.64 + sheen * 0.32, wakeNear * 0.78);
   float cycle = (arc - 1.5707963) * 0.15915494;
   float id = floor(cycle + 0.5);

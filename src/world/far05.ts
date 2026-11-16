@@ -18,6 +18,7 @@ import type { Course } from './course';
 import type { ForcedTunnel } from './tube';
 import { tubeCenterAt } from './tube';
 import { ampAt, channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, LIQUID05, REFERENCE05, WATER05 } from '../vfx/waterRibbon';
+import { reference05TargetFrame } from '../vfx/reference05Geometry';
 
 /** QA only: the far block publishes its tunnel + river path here (read by qa scripts via dynamic import) */
 export const far05Debug: Record<string, unknown> = {};
@@ -104,6 +105,7 @@ export interface FarRiverLayout {
   nearSurface?(Z: number, x: number): {
     s: number; u: number; amp: number; point: THREE.Vector3; normal: THREE.Vector3;
     flowX: number; band: number;
+    referencePoint?: THREE.Vector3; referenceNormal?: THREE.Vector3;
   };
 }
 
@@ -305,9 +307,18 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
     const n = sample((lo + hi) * 0.5), r = relLay(n.s);
     const tL = (n.lateral - r.cL) / Math.max(r.wL, 0.001);
     const tR = (r.cR - n.lateral) / Math.max(r.wR, 0.001);
+    let reference: { referencePoint: THREE.Vector3; referenceNormal: THREE.Vector3 } | undefined;
+    if (REFERENCE05) {
+      const f = course.sample(n.s), target = reference05TargetFrame(f);
+      const referencePoint = target.pos.clone().addScaledVector(target.right, n.lateral)
+        .addScaledVector(target.up, EDGE_LIFT * Math.min(1, Math.abs(n.u)) ** 3);
+      const referenceNormal = target.right.clone().multiplyScalar(n.normal.dot(f.right))
+        .addScaledVector(target.up, n.normal.dot(f.up)).addScaledVector(target.tan, n.normal.dot(f.tan)).normalize();
+      reference = { referencePoint, referenceNormal };
+    }
     return { s: n.s, u: n.u, amp: ampAt(course, n.s) * (1 - smoothstep(1, 1.25, Math.abs(n.u))), point: n.point, normal: n.normal,
       flowX: (n.lateral - 0.5 * (r.cL + r.cR)) * 3 / Math.max(0.5 * (r.cR - r.cL), 0.6),
-      band: Math.abs(tL) < Math.abs(tR) ? tL : tR };
+      band: Math.abs(tL) < Math.abs(tR) ? tL : tR, ...reference };
   };
   return {
     chord,
@@ -345,6 +356,8 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
   const seam = LIQUID05 ? new Float32Array(n * 4) : null;
   const seamNormal = LIQUID05 ? new Float32Array(n * 3) : null;
   const seamFlow = LIQUID05 ? new Float32Array(n * 2) : null;
+  const referenceDelta = REFERENCE05 ? new Float32Array(n * 4) : null;
+  const referenceNormal = REFERENCE05 ? new Float32Array(n * 3) : null;
   const o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
   const ch = lay.chord;
   const entryRow = REFERENCE05 ? lay.row(0) : null;
@@ -398,6 +411,12 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
           const kn = ft.kOf(Z), cn = ft.cOf(Z), axialNormal = n.normal.dot(ft.T);
           n.normal.multiplyScalar(kn).addScaledVector(ft.T, (cn - kn) * axialNormal);
           n.normal.toArray(seamNormal, k * 3);
+          if (referenceDelta && referenceNormal && n.referencePoint && n.referenceNormal) {
+            const delta = n.referencePoint.sub(n.point).multiplyScalar(kn * bridge);
+            referenceDelta.set([delta.x, delta.y, delta.z, n.s], k * 4);
+            const axial = n.referenceNormal.dot(ft.T);
+            n.referenceNormal.multiplyScalar(kn).addScaledVector(ft.T, (cn - kn) * axial).toArray(referenceNormal, k * 3);
+          }
           seamFlow.set([n.flowX, n.band], k * 2);
         }
       }
@@ -431,6 +450,10 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
     g.setAttribute('aRivSeam', new THREE.BufferAttribute(seam, 4));
     g.setAttribute('aRivSeamNormal', new THREE.BufferAttribute(seamNormal, 3));
     g.setAttribute('aRivSeamFlow', new THREE.BufferAttribute(seamFlow, 2));
+  }
+  if (referenceDelta && referenceNormal) {
+    g.setAttribute('aRivReference', new THREE.BufferAttribute(referenceDelta, 4));
+    g.setAttribute('aRivReferenceNormal', new THREE.BufferAttribute(referenceNormal, 3));
   }
   g.morphAttributes.position = [new THREE.BufferAttribute(opn, 3)];
   g.setIndex(idx);

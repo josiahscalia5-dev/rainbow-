@@ -15,6 +15,7 @@ import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
 import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
 import { LIQUID05_GLSL } from './liquid05';
 import { REFERENCE05_GLSL } from './reference05';
+import { REFERENCE05_FRAME_GLSL, reference05Shared, reference05TargetFrame } from './reference05Geometry';
 import { ROUNDFOAM05, REFERENCEFOAM05 } from './foam05Options';
 
 /** wave amplitude per stage (units); blended across boundaries */
@@ -248,6 +249,11 @@ attribute float aSkirt;  // 0 surface, 1 skirt bottom
 attribute vec4 aStyle;   // band layout: gate, offset, half width, free-meander weight (see BAND_STYLE)
 attribute float aCore;   // 05: core-centre lateral swing (units, see coreLateral)
 attribute vec3 aTan;     // course tangent (downstream)
+#ifdef REFERENCE05
+attribute vec3 aRefPosition; attribute vec3 aRefNormal;
+uniform vec3 uBenny;
+${REFERENCE05_FRAME_GLSL}
+#endif
 #ifdef FARW05
 attribute vec2 aChan;    // W11: visible channel centre / half width (units, see channel05)
 varying vec2 vChan;
@@ -276,9 +282,15 @@ void main() {
   float s = aUV.y;
   float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u * 2.3));
   vec3 p = position + normal * h * (1.0 - aSkirt);
+  vec3 surfaceNormal = normal;
+  #ifdef REFERENCE05
+  float upright = reference05Weight(s, uBenny.x);
+  p = mix(p, aRefPosition + aRefNormal * h * (1.0 - aSkirt), upright);
+  surfaceNormal = normalize(mix(normal, aRefNormal, upright));
+  #endif
   vec4 wp = modelMatrix * vec4(p, 1.0);
   vPosW = wp.xyz;
-  vNormalW = normalize(mat3(modelMatrix) * normal);
+  vNormalW = normalize(mat3(modelMatrix) * surfaceNormal);
   vUV = aUV;
   vHalfW = aHalfW;
   vSpeed = aSpeed;
@@ -885,7 +897,11 @@ void main() {
     vec4 fmRef = texture2D(uFlowMap, vec2(u * 0.5 + 0.5, (s - uFlowS.x) * uFlowS.y));
     vec4 ripRef = flowRipple(uRipple, vec2(xRef, s) * vec2(0.18, 0.008),
       -vec2(fmRef.r - 0.5, fmRef.g) * vec2(0.007, uFlow05 * 0.008), (uTime - 12.0) * 0.35 + fmRef.a);
-    cRef *= 0.985 + 0.03 * ripRef.b;
+    float rippleRef = 1.0 - smoothstep(168.0, 176.0, s);
+    cRef *= mix(1.0, 0.88 + 0.24 * smoothstep(0.15, 0.85, ripRef.b), rippleRef);
+    vec3 sheenRef = mix(vec3(0.01, 0.20, 0.29), vec3(0.27, 0.065, 0.22),
+      1.0 - smoothstep(0.8, 1.2, abs(bandRef)));
+    cRef += sheenRef * pow(max(0.0, ripRef.b), 6.0) * 0.6 * rippleRef;
     vec3 reflRef = uPanoRot * reflect(-V, normalize(N0 + normalize(cross(vTanW, N0)) * (ripRef.r - 0.5) * 0.035));
     vec3 panoRef = texture2D(uPano, vec2(atan(reflRef.z, reflRef.x) * 0.15915494 + 0.5,
       asin(clamp(reflRef.y, -1.0, 1.0)) * 0.31830989 + 0.5)).rgb;
@@ -1321,12 +1337,15 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   const core = new Float32Array(n);
   const chan = FARW05 ? new Float32Array(n * 2) : null;
   const tang = new Float32Array(n * 3);
+  const refPosition = REFERENCE05 ? new Float32Array(n * 3) : null;
+  const refNormal = REFERENCE05 ? new Float32Array(n * 3) : null;
   const tmp = new THREE.Vector3();
   const nrm = new THREE.Vector3();
   let k = 0;
   for (let i = 0; i < rows; i++) {
     const s = Math.min(s1, s0 + i * ds);
     const f = course.sample(s);
+    const ref = REFERENCE05 ? reference05TargetFrame(f) : null;
     const hw = course.widthAt(s) / 2;
     const sp = Math.max(3, course.prop(s, 'speed'));
     const a = ampAt(course, s);
@@ -1337,6 +1356,12 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
       tmp.copy(f.pos).addScaledVector(f.right, lateral).addScaledVector(f.up, h);
       tmp.toArray(pos, k * 3);
       nn.toArray(nor, k * 3);
+      if (ref && refPosition && refNormal) {
+        tmp.copy(ref.pos).addScaledVector(ref.right, lateral).addScaledVector(ref.up, h).toArray(refPosition, k * 3);
+        // Convert the existing normal's frame components, including both edge skirts.
+        tmp.copy(ref.right).multiplyScalar(nn.dot(f.right)).addScaledVector(ref.up, nn.dot(f.up))
+          .addScaledVector(ref.tan, nn.dot(f.tan)).normalize().toArray(refNormal, k * 3);
+      }
       f.tan.toArray(tang, k * 3);
       uv[k * 2] = u;
       uv[k * 2 + 1] = s;
@@ -1379,6 +1404,10 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
   geo.setAttribute('aCore', new THREE.BufferAttribute(core, 1));
   if (chan) geo.setAttribute('aChan', new THREE.BufferAttribute(chan, 2));
   geo.setAttribute('aTan', new THREE.BufferAttribute(tang, 3));
+  if (refPosition && refNormal) {
+    geo.setAttribute('aRefPosition', new THREE.BufferAttribute(refPosition, 3));
+    geo.setAttribute('aRefNormal', new THREE.BufferAttribute(refNormal, 3));
+  }
   geo.setIndex(idx);
   geo.computeBoundingSphere();
 
@@ -1395,7 +1424,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     uFoamLav: { value: PALETTE.foamLav.clone() },
     uHaze: { value: PALETTE.haze.clone() },
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
-    uBenny: { value: new THREE.Vector3(0, 0, 0) },
+    uBenny: REFERENCE05 ? reference05Shared.uBenny : { value: new THREE.Vector3(0, 0, 0) },
     uBennyR: { value: 0.7 },
     uChevron: { value: new THREE.Vector3(st04.s0 + 8.5, 3.6, 1) },
     uOutro: { value: new THREE.Vector2(0, st08.s0) },
@@ -1410,6 +1439,8 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     uP5Streak: { value: RIVER05_PAL.pinkStreak.clone() },
     uFlow05: { value: course.stage('05').speed * FLOW05 },
   });
+  // UniformsUtils.merge in withFog clones values; retain the focus shared with far water and foam.
+  if (REFERENCE05) uniforms.uBenny = reference05Shared.uBenny;
   if (FLOWMAP05) {
     // W11: textures / shared uniforms are attached AFTER the merge above (UniformsUtils.merge would clone them)
     const f5 = flow05Textures(course);

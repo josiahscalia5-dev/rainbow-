@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import { FARW05, WATER05, LIQUID05, REFERENCE05 } from '../vfx/waterRibbon';
 import { LIQUID05_GLSL } from '../vfx/liquid05';
 import { REFERENCE05_GLSL } from '../vfx/reference05';
+import { REFERENCE05_FRAME_GLSL, reference05Shared } from '../vfx/reference05Geometry';
 import { ROUNDFOAM05, REFERENCEFOAM05 } from '../vfx/foam05Options';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
@@ -883,6 +884,7 @@ export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THR
     /** W11: depth of the seam from the locked 05 eye (ForcedTunnel.D0) — screen-isotropic foam cells */
     uRivD0: { value: d0 },
     ...(flow ? { uRivRipple: { value: flow.ripple }, uRivTime: flow.time, uRivFlow: { value: flow.speed } } : {}),
+    ...(REFERENCE05 ? { uRefBenny: reference05Shared.uBenny } : {}),
   };
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
@@ -894,11 +896,21 @@ varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4
 attribute vec4 aRivSeam; attribute vec3 aRivSeamNormal; attribute vec2 aRivSeamFlow;
 varying vec4 vRivSeam; varying vec2 vRivSeamFlow;
 uniform float uRivTime;
+#endif
+#ifdef REFERENCE05
+attribute vec4 aRivReference; attribute vec3 aRivReferenceNormal;
+uniform vec3 uRefBenny;
+${REFERENCE05_FRAME_GLSL}
 #endif`)
       .replace('#include <uv_vertex>', `#include <uv_vertex>
 vRivUv = uv; vRivLat = aRivLat; vRivA = aRivA; vRivB = aRivB;
 #ifdef LIQUID05
 vRivSeam = aRivSeam; vRivSeamFlow = aRivSeamFlow;
+#endif`)
+      .replace('#include <begin_vertex>', `#include <begin_vertex>
+#ifdef REFERENCE05
+float referenceUpright = reference05Weight(aRivReference.w, uRefBenny.x);
+transformed += aRivReference.xyz * referenceUpright;
 #endif`)
       .replace('#include <project_vertex>', `
 #ifdef LIQUID05
@@ -909,7 +921,11 @@ float seamClosed = 1.0;
 #ifdef USE_MORPHTARGETS
 seamClosed = 1.0 - morphTargetInfluences[0];
 #endif
-transformed += aRivSeamNormal * seamWave * aRivSeam.w * seamClosed;
+vec3 seamNormal = aRivSeamNormal;
+#ifdef REFERENCE05
+seamNormal = mix(seamNormal, aRivReferenceNormal, referenceUpright);
+#endif
+transformed += seamNormal * seamWave * aRivSeam.w * seamClosed;
 #endif
 #include <project_vertex>
 vRivDist = length(mvPosition.xyz) + fgExtra;`);
