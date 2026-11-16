@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Screen 05 texture-projection probe (Specialist 1, 2026-11-16) — exact, read-only measurements of the REAL game.
-//   node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe]
+//   node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe] [--raw=DIR for the float maps]
 // Opens the game at the locked 05 checkpoint (time frozen, as scripts/capture.mjs) and writes into OUT:
 //   camera.json      the live render camera (world matrix, projection matrix, vFOV, size) + uTime + stage numbers
 //   uv_river.f32     864×1536×4 float32 (top row first): per pixel the river surface the camera sees when ONLY the
@@ -18,8 +18,10 @@ import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
 
 const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
 const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/probe';
+const RAW = typeof opt.raw === 'string' ? opt.raw : OUT;   // the three 21 MB float maps (keep them out of git: --raw=scratch dir)
 const Q = typeof opt.q === 'string' ? opt.q : '';
 mkdirSync(OUT, { recursive: true });
+mkdirSync(RAW, { recursive: true });
 const W = 864, H = 1536;
 
 const { chromium } = loadPlaywright();
@@ -95,12 +97,17 @@ try {
       else o.visible = false;
     }
     const A = renderTo();
-    // B: the whole static scene occludes (dynamic objects were hidden by the URL switches; foam hidden here)
+    // B: the whole static environment occludes (walls, rings, lids, far wall, glow); Benny, coins, the girl and every
+    // other water part (foam, bubbles, splash, spray) are hidden — they are not part of the isolated water layer
+    let envRoot = farWall;
+    while (envRoot.parent && envRoot.parent !== scene) envRoot = envRoot.parent;
+    const underEnv = (o) => { let c = o; while (c) { if (c === envRoot) return true; c = c.parent; } return false; };
     for (const s of saved) {
       const o = s.o;
       o.visible = s.vis;
       if (o === ribbon || o === far) continue;
       if (isFoam(o)) { foamNames.add(o.name || o.type); o.visible = false; continue; }
+      if (!underEnv(o)) { o.visible = false; continue; }
       if (o.visible) { const m = writeOff(o); o.material = Array.isArray(s.mat) ? m : m[0]; }
     }
     const B = renderTo();
@@ -167,9 +174,9 @@ try {
     for (let y = 0; y < h; y++) out.copy(flip, y * w * 16, (h - 1 - y) * w * 16, (h - y) * w * 16);
     return flip;
   };
-  writeFileSync(`${OUT}/uv_river.f32`, await fetch('A'));
-  writeFileSync(`${OUT}/uv_scene.f32`, await fetch('B'));
-  writeFileSync(`${OUT}/uv_foam.f32`, await fetch('F'));
+  writeFileSync(`${RAW}/uv_river.f32`, await fetch('A'));
+  writeFileSync(`${RAW}/uv_scene.f32`, await fetch('B'));
+  writeFileSync(`${RAW}/uv_foam.f32`, await fetch('F'));
   const { ribbon, far, ...cam } = meta;
   writeFileSync(`${OUT}/camera.json`, JSON.stringify({ ...cam, query: Q }, null, 1));
   writeFileSync(`${OUT}/river05_mesh.json`, JSON.stringify({ uTime: meta.uTime, camera: meta.camera, stage05: meta.stage05, ribbon, far }));

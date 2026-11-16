@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 8844,
-   "sha256": "0da972e6205efdd5a93f210461ece61d5e042e2837780f847b3148be609797de"
+   "bytes": 10620,
+   "sha256": "7a5954bbc90734b68de4d4a4770aad2afd2f86eead87d559529fd3ebeaf2fc9a"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7796,
-   "sha256": "452b739607b9beed5b650b843fc6e18650b6a05a95825bbdcf43e0aabece5fa2"
+   "sha256": "5305bdfe274c52398d069866e134d14e8af551d5e6ce5fe4c4a8a91c1f91e721"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -438,8 +438,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 6097,
-   "sha256": "6e02f30a32abe75f82271f7b395a1ec2e7fd7d6eec5ef1dadb3020fb88531d25"
+   "bytes": 6193,
+   "sha256": "26aad5e5f2bc13c98e5e9db2145eb58252356c1e32751204a4ed38fcc3f9b576"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -1172,9 +1172,29 @@
    "sha256": "9bb84b234323cc9bc02ee4a8587ed437af040bc077411ee82113d96eb579ab90"
   },
   {
+   "path": "qa/pilot05/proj/BRIEF_SPECIALIST1_VERBATIM.md",
+   "bytes": 9957,
+   "sha256": "9b65c25eeb26d92ae64b21a7ec441b2dd53570d552c7e249b3fdb95663ed4210"
+  },
+  {
+   "path": "qa/pilot05/proj/BRIEF_SPECIALIST2.md",
+   "bytes": 4256,
+   "sha256": "27d402ebfec5c1fdc21ec04c99dbd22e58dc199ec7eb794a7e61279184e38abc"
+  },
+  {
    "path": "qa/pilot05/proj/caps/default/05.png",
    "bytes": 1746598,
    "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/proj/probe/camera.json",
+   "bytes": 1200,
+   "sha256": "e4c60f4a6995e84546b72c3d118d719e74514bda92801ce1a0339b3d7dfd3d6a"
+  },
+  {
+   "path": "qa/pilot05/proj/probe/river05_mesh.json",
+   "bytes": 1285808,
+   "sha256": "b7c86f523f8af3cc9a1c5d5bff090e1468010a957b2528d2e7d681caeac1ea97"
   },
   {
    "path": "qa/pilot05/water/before/03.png",
@@ -6418,8 +6438,8 @@
   },
   {
    "path": "scripts/proj05-probe.mjs",
-   "bytes": 10920,
-   "sha256": "cecceac1bc515a6c4ba2073d987b4aa16be74bfa0f82acd147aeb3a100851f1d"
+   "bytes": 11527,
+   "sha256": "2a7332e7ab7760e421e246835fe04ee69b3daa73a1f77926167bdf688ffeb11e"
   },
   {
    "path": "scripts/rainbow-autosave.py",

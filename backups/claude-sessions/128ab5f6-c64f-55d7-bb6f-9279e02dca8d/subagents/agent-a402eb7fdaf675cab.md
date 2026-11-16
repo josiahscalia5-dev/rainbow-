@@ -741,3 +741,163 @@ Now the probe script that renders exact per-pixel river UV maps from the live ga
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/proj05-probe.mjs (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-16T15:52:09.097Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='scripts/proj05-probe.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"    const THREE = await import('/node_modules/.vite/deps/three.js').catch(() => null);\n    const { scene, camera, renderer } = R.qa3d();\"\"\",\"\"\"    const { scene, camera, renderer, composer } = R.qa3d();\"\"\")\ns=s.replace(\"\"\"    // the THREE namespace used by the game (the vite dep chunk); fall back to the objects' constructors\n    const T3 = THREE ?? {};\n    const RT = T3.WebGLRenderTarget, SM = T3.ShaderMaterial, MBM = T3.MeshBasicMaterial;\n    const rt = new RT(innerWidth, innerHe …[+680 chars]`
+
+### 🧑 User — 2026-11-16T15:52:09.876Z
+
+> ↩︎ result: 15:export const DoubleSide = 2;
+> 89:export const FloatType = 1015;
+> 90:export const HalfFloatType = 1016;
+> 97:export const RGBAFormat = 1023;
+
+### 🤖 Claude — 2026-11-16T15:52:11.971Z
+
+> 🔧 **Bash** `{"command": "time node scripts/proj05-probe.mjs --out=qa/pilot05/proj/probe 2>&1 | tail -20; ls -la qa/pilot05/proj/probe", "description": "Run the projection probe on the live game", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T15:52:43.947Z
+
+> ↩︎ result: probe → qa/pilot05/proj/probe {"w":864,"h":1536,"uTime":12,"ribbonRows":240,"farVerts":2783,"farMorph":0,"foam":["foam_berm","Mesh","foam_flank","foam_rafts","foam_rim05"],"state":{"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]}}
+> 
+> real	0m31.837s
+> user	0m3.115s
+> sys	0m1.176s
+> total 63476
+> drwxr-xr-x 2 root root     4096 Nov 16 15:52 .
+> drwxr-xr-x 4 root root     4096 Nov 16 15:52 ..
+> -rw-r--r-- 1 root root     1200 Nov 16 15:52 camera.json
+> -rw-r--r-- 1 root root  1285808 Nov 16 15:52 river05_mesh.json
+> -rw-r--r-- 1 root root 21233664 Nov 16 15:52 uv_foam.f32
+> -rw-r--r-- 1 root root 21233664 Nov 16 15:52 uv_river.f32
+> -rw-r--r-- 1 root root 21233664 Nov 16 15:52 uv_scene.f32
+
+### 🤖 Claude — 2026-11-16T15:52:50.136Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && mkdir -p $SP/probe && mv qa/pilot05/proj/probe/*.f32 $SP/probe/ && cat qa/pilot05/proj/probe/camera.json | head -40 && grep -n \"benny\" src/game/Game.ts | grep -i hid", "description": "Move large float maps to scratchpad, show camera"}`
+
+### 🧑 User — 2026-11-16T15:52:50.206Z
+
+> ↩︎ result: {
+>  "w": 864,
+>  "h": 1536,
+>  "uTime": 12,
+>  "foamNames": [
+>   "foam_berm",
+>   "Mesh",
+>   "foam_flank",
+>   "foam_rafts",
+>   "foam_rim05"
+>  ],
+>  "camera": {
+>   "matrixWorld": [
+>    0.9986658287817988,
+>    -0.0021497500655029284,
+>    -0.05159400157207067,
+>    0,
+>    -0.011394273178140263,
+>    0.9653330416232079,
+>    -0.2607724856828803,
+>    0,
+>    0.05036599013525768,
+>    0.26101244668624896,
+>    0.9640206272235845,
+>    0,
+>    1.920288434729371,
+>    -37.94339912418104,
+>    -68.28062556286872,
+>    1
+>   ],
+>   "projection": [
+>    2.958719079734254,
+>    0,
+>    0,
+>    0,
+>    0,
+>    1.664279482350518,
+>    0,
+>    0,
+>    0,
+> 104:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> 414:    benny.root.position.copy(pose.pos).addScaledVector(course.sample(sEnd).tan, 0.6 * sm(0, O.hide, t));
+> 416:    benny.root.visible = t < O.hide;
+
+### 🤖 Claude — 2026-11-16T15:52:55.265Z
+
+> 🔧 **Bash** `{"command": "grep -n \"group.name\\|new THREE.Group()\" src/world/environment.ts | head; grep -n \"root.name\\|\\.name = \" src/benny/*.ts 2>/dev/null | head -5; ls src", "description": "Find environment and Benny group names"}`
+
+### 🧑 User — 2026-11-16T15:52:55.317Z
+
+> ↩︎ result: 40:  const root = new THREE.Group();
+> 43:    drumA: new THREE.Group(),
+> 44:    basin: new THREE.Group(),
+> 45:    tubes: new THREE.Group(),
+> 46:    chamber: new THREE.Group(),
+> 99:  const doorA = new THREE.Group();
+> 102:  const doorAInner = new THREE.Group();
+> 111:  const anchorA = new THREE.Group();
+> 543:  const doorC = new THREE.Group();
+> 546:  const doorCInner = new THREE.Group();
+> characters
+> game
+> gameplay
+> main.ts
+> render
+> ui
+> vfx
+> world
+
+### 🤖 Claude — 2026-11-16T15:53:06.516Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='scripts/proj05-probe.mjs'\ns=open(p).read()\nold=\"\"\"    // B: the whole static scene occludes (dynamic objects were hidden by the URL switches; foam hidden here)\n    for (const s of saved) {\n      const o = s.o;\n      o.visible = s.vis;\n      if (o === ribbon || o === far) continue;\n      if (isFoam(o)) { foamNames.add(o.name || o.type); o.visible = false; continue; }\n      if (o.visible) { const m = writeOff(o); o.material = Array.isArray(s.mat) ? m : m[0]; }\n    }\"\"\"\nnew=\"\"\"    // B: the whole static environment occludes (walls, rings, lids …[+2041 chars]`
+
+### 🧑 User — 2026-11-16T15:53:27.588Z
+
+> ↩︎ result: probe → qa/pilot05/proj/probe {"w":864,"h":1536,"uTime":12,"ribbonRows":240,"farVerts":2783,"farMorph":0,"foam":["foam_berm","Mesh","foam_flank","foam_rafts","foam_rim05"],"state":{"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]}}
+
+### 🤖 Claude — 2026-11-16T15:53:28.503Z
+
+Now let me visualise the maps and align the artwork to the approved frame.
+
+### 🤖 Claude — 2026-11-16T15:53:36.089Z
+
+> 🔧 **Bash** `{"command": "mkdir -p tools/qa && cat > /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/viz.py <<'EOF'\nimport numpy as np, sys\nfrom PIL import Image\nSP=sys.argv[1]; OUT=sys.argv[2]\nW,H=864,1536\ndef load(n): return np.fromfile(f'{SP}/{n}.f32',np.float32).reshape(H,W,4)\nA=load('uv_river'); B=load('uv_scene'); F=load('uv_foam')\nfor name,M in [('A',A),('B',B)]:\n    idc=np.round(M[...,2]).astype(int)\n    print(name,'ids', {i:int((idc==i).sum()) for i in range(0,5)})\n    rib=(idc==1)|(idc==2); far=idc==3\n    print(name,'ribbon s range', M[...,1][rib].min( …[+943 chars]`
+
+### 🧑 User — 2026-11-16T15:53:36.587Z
+
+> ↩︎ result: A ids {0: 502749, 1: 811573, 2: 1299, 3: 11483, 4: 0}
+> A ribbon s range 129.73198 257.93384 u -1.0 1.0
+> A far Z range 0.0060458123 376.60767
+> B ids {0: 502749, 1: 811573, 2: 1299, 3: 11483, 4: 0}
+> B ribbon s range 129.73198 257.93384 u -1.0 1.0
+> B far Z range 0.0060458123 376.60767
+> foam px 92889
+
+### 🤖 Claude — 2026-11-16T15:53:46.579Z
+
+> 🔧 **Bash** `{"command": "sed -n 60,130p scripts/proj05-probe.mjs", "description": "Review current probe render section"}`
+
+### 🧑 User — 2026-11-16T15:53:46.614Z
+
+> ↩︎ result: sh.fragmentShader = sh.fragmentShader
+>         .replace('#include <common>', '#include <common>\nvarying vec2 vPUv; varying float vPLat; varying float vPZ;')
+>         .replace('#include <dithering_fragment>', 'gl_FragColor = vec4(vPUv.x, vPZ, 3.0, vPLat);');
+>     };
+>     const foamMat = new MBM({ color: 0xffffff, fog: false });
+>     foamMat.onBeforeCompile = (sh) => { sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>', 'gl_FragColor = vec4(0.0, 0.0, 4.0, 1.0);'); };
+>     const foamRoot = scene.getObjectByName('water_system');
+>     const foamNames = new Set();
+>     // every renderable
+>     const all = [];
+>     scene.traverse((o) => { if (o.isMesh || o.isPoints || o.isLine || o.isSprite) all.push(o); });
+>     const saved = all.map((o) => ({ o, vis: o.visible, mat: o.material }));
+>     const isFoam = (o) => { let c = o; while (c) { if (c.name && /foam/i.test(c.name)) return true; c = c.parent; } return false; };
+>     const bg = scene.background;
+>     scene.background = null;
+>     const read = () => {
+>       const buf = new Float32Array(rt.width * rt.height * 4);
+>       renderer.readRenderTargetPixels(rt, 0, 0, rt.width, rt.height, buf);
+>       return buf;
+>     };
+>     const ren …[+2742 chars]
+

@@ -1,9 +1,32 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-16T14:30:00+00:00",
+  "updated_utc": "2026-11-16T15:55:00+00:00",
   "updated_by_session": "013VHsJBUBZaHLYkVpBPkFed (branch ccr-451ea8c7-3nqlis)",
-  "running_now": [{"name": "washer-environment-modeler", "as": "SPECIALIST 1 — Blender texture-projection and UV-mapping artist (user request 2026-11-16 ~15:40 UTC)", "branch": "claude/rainbow-05-water-projection", "started_utc": "2026-11-16T15:47:00+00:00", "task": "Screen 05 texture-projection FEASIBILITY test, then a camera-matched projected / baked texture of the user's original water (references/water/05_water_isolated_original.png -> target references/05_flow_into_the_current.png) on the existing river mesh behind ?proj05=1 (+ ?projgeo05=1 corrected geometry if needed)", "outputs": "qa/pilot05/proj/ (NOTES.md, compare/, tests/), tools/blender/, assets/textures/water05/", "relaunch": "if this session ends before it reports: relaunch washer-environment-modeler with the brief in qa/pilot05/proj/BRIEF_SPECIALIST1.md, continuing from qa/pilot05/proj/NOTES.md"}, {"name": "water-fx-specialist", "as": "SPECIALIST 2 — Three.js water animation and flow-map engineer", "state": "queued (starts after Specialist 1's static match is shown)", "task": "animate the SAME projected design: flow down the S-curves toward the camera, layout anchored to the world, no new procedural water look"}],
+  "running_now": ["washer-environment-modeler (SPECIALIST 1: Screen 05 camera-matched water texture projection, branch claude/rainbow-05-water-projection; if this session ended it is INTERRUPTED: relaunch with qa/pilot05/proj/BRIEF_SPECIALIST1_VERBATIM.md)"],
+  "assignments_now": {
+    "_note": "State at 2026-11-16 ~15:55 UTC (urgent backup). A running specialist does NOT survive the end of a session or an account switch: if you are a new session, treat 'running' as INTERRUPTED and relaunch from the brief.",
+    "washer-environment-modeler": {
+      "role_now": "SPECIALIST 1 - Blender texture-projection and UV-mapping artist",
+      "status": "running (launched 15:47 UTC)",
+      "branch": "claude/rainbow-05-water-projection",
+      "brief_verbatim": "qa/pilot05/proj/BRIEF_SPECIALIST1_VERBATIM.md",
+      "brief_summary": "qa/pilot05/proj/BRIEF_SPECIALIST1.md",
+      "progress_at_backup": "step 1 (feasibility) in progress: fresh default capture (qa/pilot05/proj/caps/default/05.png), live camera + river mesh exported (qa/pilot05/proj/probe/camera.json, river05_mesh.json), probe script scripts/proj05-probe.mjs, read-only QA hook qa3d() added to src/game/Game.ts (rendering unchanged). No footprint numbers, no baked texture, no ?proj05 switch yet.",
+      "files_it_edits": "qa/pilot05/proj/**, scripts/proj05-*.mjs, tools/blender/*proj*, assets/textures/water05/**, src/vfx/waterRibbon.ts + src/world/far05.ts + src/world/materials.ts + src/world/environment.ts (only behind ?proj05=1 / ?projgeo05=1), src/game/Game.ts (QA hook only)",
+      "remaining": "footprint match numbers + overlay (IoU, bank offsets, S-swing, far channel, texel density) -> verdict; Blender camera projection + bake to a UV texture; Three.js material behind ?proj05=1; corrected geometry ?projgeo05=1 if needed; evidence in qa/pilot05/proj/compare + tests; NOTES.md with the hand-over for Specialist 2",
+      "relaunch": "Agent tool, subagent_type washer-environment-modeler, prompt = qa/pilot05/proj/BRIEF_SPECIALIST1_VERBATIM.md (below its line) + 'Continue from qa/pilot05/proj/NOTES.md and the files already in qa/pilot05/proj/; do not redo finished steps.'",
+      "session_backup": "backups/claude-sessions/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/subagents/agent-a402eb7fdaf675cab.md"
+    },
+    "water-fx-specialist": {
+      "role_now": "SPECIALIST 2 - Three.js water animation and flow-map engineer",
+      "status": "queued - launch ONLY after Specialist 1's static match has been shown to the user",
+      "branch": "claude/rainbow-05-water-projection",
+      "brief": "qa/pilot05/proj/BRIEF_SPECIALIST2.md (user's exact words + ready launch prompt)",
+      "task": "animate the SAME projected design (?projflow05=1 on top of ?proj05=1): layout anchored to the world, liquid detail flowing down the S-curves toward the camera; short clip + measured flow direction; no new procedural water look"
+    },
+    "others": "the remaining eight specialists are idle (see 'agents'); none is needed for the projection task"
+  },
   "current_focus": "Screen 05 water — NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
   "agents": [
     {
@@ -11,12 +34,12 @@
       "file": ".claude/agents/washer-environment-modeler.md",
       "sha256": "7abdea786d530d7933f75a3926e1e0e5ae3cf5594453558a15da345b6761cc68",
       "role": "Detailed Blender environment builder (walls, rings, lids, vanishing-point glow)",
-      "state": "idle",
+      "state": "running",
       "last_wave": "wave 9 (stopped mid-iteration 2026-11-16 ~02:45 UTC); wave 7 it06 is in the game",
       "unfinished_work": "qa/pilot05/wave9b/not_merged/wave9_environment_oval_plus_pathcamera_far_block.patch",
       "unfinished_work_verdict": "REJECTED by the user (oval K 1.7 tunnel) - never reuse",
       "notes": "qa/pilot05/wave9/environment/NOTES.md",
-      "relaunch_when": "Screen 05 tests T2/T3 (near tunnel axis height, lateral offset) or colour/gloss tests - one factor per test, URL switch, default build unchanged"
+      "relaunch_when": "NOW if interrupted: SPECIALIST 1 texture projection, qa/pilot05/proj/BRIEF_SPECIALIST1_VERBATIM.md (see assignments_now)"
     },
     {
       "name": "path-camera-transition-engineer",
@@ -35,12 +58,12 @@
       "file": ".claude/agents/water-fx-specialist.md",
       "sha256": "b160f12ff93db70ef94b62d5951c62335320cc1268ca7998de39ea26df1a84a2",
       "role": "Real-time 3D animated cyan/pink fluid look and flow",
-      "state": "idle",
+      "state": "queued",
       "last_wave": "wave 12 DONE by the coordinator (no specialist launched): W11 ?river05=1 (flow map, far channel) + W12 ?silk05=1&puff05=1 behind URL switches; candidates waiting for the user's yes/no",
       "unfinished_work": "qa/pilot05/wave12/NOTES.md -> 'Left undone' (vivid magenta ribbons around Benny, bigger near flares, splash beads + froth collar, far-river saturation under the golden glow, flat foam at the right of the seam)",
       "unfinished_work_verdict": "W12 measured closer than T2 and W11 on the water indicators (tools/qa/water05_grain.py); the 'Left undone' items are new single-factor tests, nothing half-applied",
       "notes": "qa/pilot05/wave12/NOTES.md (W12), qa/pilot05/wave11/NOTES.md (W11), qa/pilot05/wave10/water/NOTES.md (W10)",
-      "relaunch_when": "after the user's verdict on W12: magenta ribbons + near flares as the next single-factor test (splash belongs to foam-bubbles-particles)"
+      "relaunch_when": "after the user has seen Specialist 1 static match: qa/pilot05/proj/BRIEF_SPECIALIST2.md (animate the same design)"
     },
     {
       "name": "foam-bubbles-particles",

@@ -4242,3 +4242,161 @@ Saving first, before anything else.
 
 > 🔧 **Bash** `{"command": "C=origin/codex/screen05-water-hfb8p0-20261116 && MB=$(git merge-base HEAD $C) && echo \"merge-base $(git log -1 --format='%h %ad %s' --date=format:'%m-%d %H:%M' $MB | cut -c1-90)\"; echo \"--- codex commits not in HEAD:\"; git log --format='%h %ad %an | %s' --date=format:'%m-%d %H:%M' $MB..$C | cut -c1-150 | head -20; echo \"--- files changed by codex:\"; git diff --stat $MB $C | tail -25; echo \"--- other codex branch:\"; git log -1 --format='%h %ad %an | %s' --date=format:'%m-%d %H:%M' origin/codex/screen05-water-experiment-20261116 | cut -c1-140; git lfs ls-files $C 2>/dev/null …[+72 chars]`
 
+### 🧑 User — 2026-11-16T15:52:17.326Z
+
+> ↩︎ result: merge-base 088dd3f 11-16 13:37 autosave: Rainbow 2026-11-16 13:37 UTC
+> --- codex commits not in HEAD:
+> 4abf548 11-16 15:03 josiah | Add opt-in Screen 05 liquid water experiment and review evidence
+> --- files changed by codex:
+>  qa/codex-water/tests/performance-stdout.txt        |    9 +
+>  qa/codex-water/tests/performance.json              |   72 ++
+>  qa/codex-water/tests/reference_hashes.txt          |   16 +
+>  qa/codex-water/tests/render-review.json            |  691 +++++++++++
+>  qa/codex-water/tests/scope-default/04.png          |  Bin 0 -> 330291 bytes
+>  qa/codex-water/tests/scope-default/06.png          |  Bin 0 -> 472992 bytes
+>  qa/codex-water/tests/scope-default/07.png          |  Bin 0 -> 542696 bytes
+>  qa/codex-water/tests/scope-improved/04.png         |  Bin 0 -> 331293 bytes
+>  qa/codex-water/tests/scope-improved/06.png         |  Bin 0 -> 472989 bytes
+>  qa/codex-water/tests/scope-improved/07.png         |  Bin 0 -> 542699 bytes
+>  qa/codex-water/tests/scope-regression.json         |   32 +
+>  qa/codex-water/tests/screenshots.sha256            |    3 +
+>  qa/codex-water/tests/seam-numeric.json             |   60 +
+>  qa/codex-water/visual-indicators.md                |   20 +
+>  scripts/liquid0 …[+752 chars]
+
+### 🤖 Claude — 2026-11-16T15:52:36.322Z
+
+> 🔧 **TaskCreate** `{"subject": "URGENT: full verified backup + account-transfer docs (projection branch)", "description": "First save done f01bad3. Remaining: LFS/agents/Marble verification, protect codex branches (no merge), update AGENTS_STATUS, TOOL_MANIFEST, CLAUDE.md, CLAUDE_ACCOUNT_TRANSFER, START_NEW_CLAUDE_ACCOUNT, verbatim specialist briefs, bootstrap check, autosave check, final verified push + report.", "activeForm": "Backing up and verifying everything"}`
+
+### 🧑 User — 2026-11-16T15:52:36.334Z
+
+> ↩︎ result: Task #9 created successfully: URGENT: full verified backup + account-transfer docs (projection branch)
+
+### 🤖 Claude — 2026-11-16T15:52:40.277Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/verify-assets.py lfs-remote 2>&1 | tail -1; echo \"local LFS: $(git lfs ls-files | wc -l) files, pointer stubs: $(git lfs ls-files | awk '$2==\"-\"' | wc -l)\"; git lfs fsck 2>&1 | tail -1; python3 -I scripts/verify-assets.py agents 2>&1 | tail -1; python3 -I scripts/verify-assets.py marble 2>&1 | tail -1; python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -1; echo \"references: $(sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK')/12 OK; isolated water: $(cd references/water && sha256sum -c SHA256SUMS 2>&1 | tail -1)\"; echo \"--- autosave daemo …[+302 chars]`
+
+### 🧑 User — 2026-11-16T15:52:52.027Z
+
+> ↩︎ result: @@ ok 26/26 LFS objects (199 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> local LFS: 26 files, pointer stubs: 0
+> Git LFS fsck OK
+> TypeError: sequence item 0: expected str instance, dict found
+> @@ ok both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250
+> @@ ok Marble API key authenticated (free read: 5190 credits); worlds draft 200, full 200; no paid job started
+> references: 12/12 OK; isolated water: 05_water_isolated_original.png: OK
+> --- autosave daemon:
+> 157 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> AUTOSAVE OK | branch claude/rainbow-05-water-projection | scheduler daemon | last verified backup 2026-11-16T15:52:02+00:00 (0.8 min ago) | local dc7e037 remote dc7e037 (match) | uncommitted 1
+> --- bootstrap merge patterns:
+> 98:    rec identity "Repository + branch" fail "on PROTECTED branch $branch: the autosave refuses to push here. Start a new Claude session (it gets a new ccr-*/claude/* branch)" "$t"
+> 99:  elif [[ "$branch" != ccr-* && "$branch" != claude/* ]]; then
+> 100:    rec identity "Repository + branch" warn "branch $branch is not a ccr-*/claude/* session branch: the …[+117 chars]
+
+### 🤖 Claude — 2026-11-16T15:52:56.425Z
+
+> 🔧 **Bash** `{"command": "sed -n 157,181p scripts/verify-assets.py", "description": "Read the agents check to see the expected format"}`
+
+### 🧑 User — 2026-11-16T15:52:56.472Z
+
+> ↩︎ result: def cmd_agents() -> int:
+>     roster = json.loads((REPO / "backups" / "AGENTS_STATUS.json").read_text())
+>     problems, changed = [], []
+>     for a in roster["agents"]:
+>         p = REPO / a["file"]
+>         if not p.is_file():
+>             problems.append(f"{a['name']}: definition missing ({a['file']})")
+>             continue
+>         if hashlib.sha256(p.read_bytes()).hexdigest() != a["sha256"]:
+>             changed.append(a["name"])
+>         print(f"  {a['name']:34} {a['state']:7} next: {a['relaunch_when'][:70]}")
+>     extra = sorted(x.stem for x in (REPO / ".claude" / "agents").glob("*.md")) if (REPO / ".claude" / "agents").is_dir() else []
+>     unknown = [x for x in extra if x not in {a["name"] for a in roster["agents"]}]
+>     running = roster.get("running_now") or []
+>     for pr in problems:
+>         print("  PROBLEM:", pr)
+>     if problems:
+>         return done("fail", f"{len(roster['agents']) - len(problems)}/{len(roster['agents'])} specialist definitions present")
+>     note = f"; definition changed since roster: {', '.join(changed)}" if changed else "; all SHA-256 unchanged"
+>     note += f"; extra definitions: {', '.join(unknown)}" if unknown else ""
+>     status = "warn" if changed else "ok"
+>   …[+227 chars]
+
+### 🤖 Claude — 2026-11-16T15:53:03.250Z
+
+> 🔧 **Bash** `{"command": "echo \"--- specialist files so far:\"; find qa/pilot05/proj tools/blender tools/qa scripts assets/textures -newer qa/pilot05/proj/BRIEF_SPECIALIST1.md -type f 2>/dev/null | grep -v \"__pycache__\" | head -40; echo \"--- git status:\"; git status --short | grep -v \"backups/claude-sessions\\|CONVERSATION_INDEX\" | head -20; echo \"--- Game.ts change:\"; git diff origin/ccr-451ea8c7-3nqlis HEAD -- src/game/Game.ts | grep \"^[+-]\" | grep -v \"^+++\\|^---\" | cut -c1-220; ls backups/claude-sessions/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/subagents/ 2>/dev/null; grep -c \"\" backups/clau …[+331 chars]`
+
+### 🧑 User — 2026-11-16T15:53:03.326Z
+
+> ↩︎ result: --- specialist files so far:
+> qa/pilot05/proj/probe/river05_mesh.json
+> qa/pilot05/proj/probe/camera.json
+> qa/pilot05/proj/caps/default/05.png
+> scripts/proj05-probe.mjs
+> --- git status:
+> ?? qa/pilot05/proj/probe/
+> --- Game.ts change:
+> +    /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
+> +     *  per-pixel river UV / footprint renders. Nothing calls it in the game; rendering is unchanged. */
+> +    qa3d() { return { scene, camera, renderer, composer }; },
+> agent-a402eb7fdaf675cab.md
+> agent-a402eb7fdaf675cab.sanitized.jsonl
+> 743
+> 5:You are SPECIALIST 1 for the Rainbow game (repo /home/user/rainbow-, branch `claude/rainbow-05-water-projection` — already checked out; stay on it). Role for this assignment: **Blender texture-projection and UV-mapping artist** for Screen 05's water. Read `CLAUDE.md` first (rules: never delete work, never touch protected branches, no paid credits, no secrets, references are immutable).
+
+### 🤖 Claude — 2026-11-16T15:53:12.212Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\nsrc='backups/claude-sessions/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/subagents/agent-a402eb7fdaf675cab.md'\nL=open(src).read().split('\\n')\nstart=next(i for i,l in enumerate(L) if l.startswith('You are SPECIALIST 1 for the Rainbow game'))\nend=next(i for i in range(start+1,len(L)) if L[i].startswith('### '))\nprompt='\\n'.join(L[start:end]).rstrip()+'\\n'\nassert 'Report back (final message)' in prompt and len(prompt)>5000, len(prompt)\nhead=(\"# VERBATIM launch prompt — SPECIALIST 1 (agent `washer-environment-modeler`)\\n\\n\"\n\"Launched 2026-11-16 ~1 …[+682 chars]`
+
+### 🧑 User — 2026-11-16T15:53:12.262Z
+
+> ↩︎ result: verbatim prompt chars: 9312 lines: 34
+
+### 🤖 Claude — 2026-11-16T15:53:28.936Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/BRIEF_SPECIALIST2.md", "content": "# Brief — SPECIALIST 2 (agent `water-fx-specialist`, role: Three.js water animation and flow-map engineer) — QUEUED\n\nNot launched yet (2026-11-16 ~15:55 UTC). **Launch only after Specialist 1's static match has been shown to the user**\n(`qa/pilot05/proj/NOTES.md`, `qa/pilot05/proj/compare/`). Branch `claude/rainbow-05-water-projection`.\n\n## The user's words (2026-11-16 ~15:40 UTC) — keep exactly\n> SPECIALIST 2: Three.js water animation and flow-map engineer.\n> After the static water appearance is match …[+3773 chars]`
+
+### 🧑 User — 2026-11-16T15:53:28.988Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/proj/BRIEF_SPECIALIST2.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T15:53:30.415Z
+
+Now fixing `AGENTS_STATUS.json` (the format the bootstrap expects, plus exact current assignments) and protecting the Codex branches.
+
+### 🤖 Claude — 2026-11-16T15:53:49.241Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\nt=open(p).read(); d=json.loads(t)\n# 1. running_now back to a list of strings (verify-assets.py joins them); details move to assignments_now\nold_run=json.dumps(d['running_now'],ensure_ascii=False)\nrun=[\"washer-environment-modeler (SPECIALIST 1: Screen 05 camera-matched water texture projection, branch claude/rainbow-05-water-projection; if this session ended it is INTERRUPTED: relaunch with qa/pilot05/proj/BRIEF_SPECIALIST1_VERBATIM.md)\"]\nassign={\n \"_note\":\"State at 2026-11-16 ~15:55 UTC (urgent backup). A ru …[+4455 chars]`
+
+### 🧑 User — 2026-11-16T15:53:49.412Z
+
+> ↩︎ result: agents json ok
+> Traceback (most recent call last):
+>   File "<stdin>", line 39, in <module>
+> AssertionError: ['ccr-44f84024-ii5iih', 'ccr-251ed97c-ty2xvp', 'claude/rainbow-3d-account-recovery-hfb8p0', 'ccr-451ea8c7-3nqlis']
+>   cartoon-girl-character-artist      idle    next: not planned: the user's Google Flow videos cover the opening and endin
+>   animation-and-gameplay-engineer    idle    next: Flow video hand-over checks once the user uploads intro.mp4 / ending.m
+>   android-build-performance          idle    next: at the end: rebuild and verify the APK
+> @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: washer-environment-modeler (SPECIALIST 1: Screen 05 camera-matched water texture projection, branch claude/rainbow-05-water-projection; if this session en
+
+### 🤖 Claude — 2026-11-16T15:53:51.168Z
+
+The specialist check passes again (10/10). The Codex-branch protection didn't apply because the list is formatted differently than I assumed; checking the format.
+
+### 🤖 Claude — 2026-11-16T15:53:52.152Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ccr-451ea8c7-3nqlis\" -B2 -A3 backups/autosave.config.json | cut -c1-200", "description": "Show how the protected list is formatted"}`
+
+### 🧑 User — 2026-11-16T15:53:52.186Z
+
+> ↩︎ result: 62-    "ccr-44f84024-ii5iih",
+> 63-    "ccr-251ed97c-ty2xvp",
+> 64:    "claude/rainbow-3d-account-recovery-hfb8p0", "ccr-451ea8c7-3nqlis"
+> 65-  ],
+> 66-  "original_branch_note": "PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original from the first Claude account (81e639e); claude/rainbow-3d-recovery-m4v347 = recovery
+> 67-  "branch_history_note": "Account 2 recovery work lives on claude/rainbow-3d-recovery-m4v347. Account 3 started on ccr-8b6fc834-7kd55l (from f2a86ab) and at the user's request (2026-11-15 ~19:40 UT
+
+### 🤖 Claude — 2026-11-16T15:53:57.506Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/autosave.config.json'\nt=open(p).read()\nold='    \"claude/rainbow-3d-account-recovery-hfb8p0\", \"ccr-451ea8c7-3nqlis\"\\n  ],'\nnew=('    \"claude/rainbow-3d-account-recovery-hfb8p0\",\\n    \"ccr-451ea8c7-3nqlis\",\\n'\n     '    \"codex/screen05-water-hfb8p0-20261116\",\\n    \"codex/screen05-water-experiment-20261116\"\\n  ],')\nassert t.count(old)==1\nt=t.replace(old,new,1); d=json.loads(t); open(p,'w').write(t)\nprint('branch:',d['branch'],'| protected:',len(d['protected_branches']),d['protected_branches'][-3:])\nEOF\nfor i in $(se …[+646 chars]`
+
