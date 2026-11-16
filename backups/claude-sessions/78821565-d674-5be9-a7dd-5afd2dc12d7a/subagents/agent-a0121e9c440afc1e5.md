@@ -2000,3 +2000,36 @@ Now revert the `floorAt` plumbing in my ForcedTunnel class (keep only `aspect`/`
 > 667:          const fy = this.floorAt ? this.floorAt(Z, x) : this.floorY;
 > 671:            const dx = this.floorAt ? (this.floorAt(Z, x + 0.05) - this.floorAt(Z, x - 0.05)) / 0.1 : 0;
 
+### 🤖 Claude — 2026-11-16T02:44:30.464Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  readonly floorY: number | undefined;\n  /** optional bank-floor height (along U) at virtual depth Z and lateral x — overrides the level floorY */\n  readonly floorAt: ((Z: number, x: number) => number) | undefined;\n  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number; floorAt?: (Z: number, x: number) => number } = {}) {\n    thi …[+465 chars]`
+
+### 🧑 User — 2026-11-16T02:44:30.510Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:44:33.263Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "        if (this.floorY !== undefined) {\n          const x = Math.cos(th) * K * r0;\n          const fy = this.floorAt ? this.floorAt(Z, x) : this.floorY;\n          if (Math.sin(th) * r0 < fy) {\n            o.addScaledVector(this.U, fy - Math.sin(th) * r0);\n            // floor normal (outward = down), tilted outward where the bank floor slopes up toward the wall\n            const dx = this.floorAt ? (this.floorAt(Z, x + 0.05) - this.floorAt(Z, x - 0.05)) / 0.1 : 0;\n            d.copy(this.U).nega …[+283 chars]`
+
+### 🧑 User — 2026-11-16T02:44:33.305Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:44:34.416Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit 2>&1 | head; echo tsc $?; tail -n +18 qa/pilot05/REQUESTS.md | cut -c1-400", "description": "Type-check and read new request lines", "timeout": 320000}`
+
+### 🧑 User — 2026-11-16T02:44:40.842Z
+
+> ↩︎ result: tsc 0
+> - wave9 washer-environment-modeler → path-camera-transition-engineer (02:44 UTC): thanks — oval far section works (scratch probe: no seam). One more 05-only shape term, same blend as the oval: `OVAL05.shift` = −1.8 u, a LATERAL OFFSET of the tunnel centre line along `right` (environment `shift05(s)` = OVAL05.shift·(oval05(s)−1)/(K−1); walls/rings/lids get `c += right·shift05(s)`). Reas
+
+### 🤖 Claude — 2026-11-16T02:44:43.004Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; tail -n +18 qa/pilot05/REQUESTS.md; grep -n \"shift05\\|OVAL05\" src/world/environment.ts | head; grep -n \"OVAL05 = \" src/world/tube.ts", "description": "Read the full shift request and its code"}`
+
+### 🧑 User — 2026-11-16T02:44:43.068Z
+
+> ↩︎ result: - wave9 washer-environment-modeler → path-camera-transition-engineer (02:44 UTC): thanks — oval far section works (scratch probe: no seam). One more 05-only shape term, same blend as the oval: `OVAL05.shift` = −1.8 u, a LATERAL OFFSET of the tunnel centre line along `right` (environment `shift05(s)` = OVAL05.shift·(oval05(s)−1)/(K−1); walls/rings/lids get `c += right·shift05(s)`). Reason: ref ring #1 is centred ≈67 px and ring #2 ≈24 px LEFT of the VP (ring #1 sides x≈10/855), the river sits right of the tunnel centre (broad left bank, narrow right bank); a parallel offset of a straight tunnel keeps the VP, so your far rings still converge on it. Please offset ForcedTunnel's centre the same way (c0 + Rt·shift05(sF05), i.e. every far cross-section/ring/lid centre), names `oval05`/`floor05`/`shift05` stay in buildEnvironment. Your 02:34 note (near water hidden under the bank floor) — not reproducible in my probes at 02:4x (water visible, floor 0.18 u under the water line); tell me if you still see it. Also FYI: my near lids are now one pair per bay just BEYOND each real ring (lid05: slab, angle 18, droop −38, size 2.8, stretch 1.6, sink 0.25 on the ellipse normal) — your far lids rea …[+1458 chars]
+

@@ -1998,3 +1998,7 @@ tsc is clean. Filing the shift request for path-camera's far block.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; echo \"- wave9 washer-environment-modeler → path-camera-transition-engineer ($(date -u +%H:%M) UTC): thanks — oval far section works (scratch probe: no seam). One more 05-only shape term, same blend as the oval: \\`OVAL05.shift\\` = −1.8 u, a LATERAL OFFSET of the tunnel centre line along \\`right\\` (environment \\`shift05(s)\\` = OVAL05.shift·(oval05(s)−1)/(K−1); walls/rings/lids get \\`c += right·shift05(s)\\`). Reason: ref ring #1 is centred ≈67 px and ring #2 ≈24 px LEFT of the VP (ring #1 sides x≈10/855), the river sits right of the tunnel centre (bro …[+1181 chars]`
 
+### 🧑 User — 2026-11-16T02:44:49.347Z
+
+> ↩︎ result: done 25.652 calls 89 tris 568151 []
+

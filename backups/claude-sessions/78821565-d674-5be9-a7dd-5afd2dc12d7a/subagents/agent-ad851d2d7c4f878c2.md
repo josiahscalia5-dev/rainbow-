@@ -1720,3 +1720,16 @@ The A/B is clean: 08 identical, 05 differs as intended, and 04 differs in only 6
 >  "errors": []
 > }
 
+### 🤖 Claude — 2026-11-16T02:44:33.409Z
+
+> 🔧 **Bash** `{"command": "ls -t qa/*.json | head -3; f=$(ls -t qa/gameplay*.json 2>/dev/null | head -1); echo $f; python3 -c \"\nimport json,sys\nd=json.load(open('$f')); print({k:v for k,v in d.items() if k in ('pass','ok','checks','result')})\" 2>/dev/null; grep -n \"pass\" scripts/gameplay-test.mjs | head -5", "description": "Find gameplay test pass status"}`
+
+### 🧑 User — 2026-11-16T02:44:33.502Z
+
+> ↩︎ result: qa/gameplay_test.json
+> qa/capture_log.json
+> qa/continuity_report.json
+> qa/gameplay_test.json
+> {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.026, 'coins': 2240, 'hearts': 5, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}}, 'pass': True}
+> 40:  out.checks.pauseFreezes = { pass: Math.abs(sPaused - sBefore) < 1e-6 && sAfter > sPaused, sBefore …[+497 chars]
+
