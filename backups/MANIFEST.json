@@ -498,8 +498,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3692,
-   "sha256": "84a75081fc541f32e700a117d26ca176a236384cee92e1fd032d9dd14e7ccce6"
+   "bytes": 3965,
+   "sha256": "24cbf198ea49aece5c91feb95ec7739569c00a1f9a1642443c035a3c3c31db49"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -508,8 +508,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10194,
-   "sha256": "2c914e2aa2d4203d3cf7ea22472bae95fc5d10a1f661b64d1e90e81fa0564ddb"
+   "bytes": 10203,
+   "sha256": "18881f4b51ac85c3f897bc16671552299e8f782e40968d3eae1f4213402e36e6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -948,8 +948,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1242,
-   "sha256": "91bcac414315d3756fd4a4abb0fa6545357897e7b3d7ea5aee709f0fc627daa0"
+   "bytes": 1235,
+   "sha256": "95f97c56510e8afafffdfcfef9dbef4caddca56bdbe8ce85b4669e6af4dd7a9b"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
