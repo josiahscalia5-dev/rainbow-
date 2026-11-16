@@ -408,8 +408,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 7780,
-   "sha256": "cd1f53ee6d96b6f2c9c85fd1e8e5498c266ccd88d4bcc137983a0600c6dcae99"
+   "bytes": 7795,
+   "sha256": "920445a8123c4dd8aa11ba4c2fe559a149e6bd5644f7956fb51c001e0ebc6e00"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -438,8 +438,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 6058,
-   "sha256": "96cafd8eea0b38235412beed1d85086ecc9a1144359e1153d46cab5aad4a34c4"
+   "bytes": 6096,
+   "sha256": "34c96227a4490b07092f66d1f1084b9464aded2b185c638186d89dfa367b29ed"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -6150,6 +6150,21 @@
    "path": "references/11_safely_home_final_victory.png",
    "bytes": 481475,
    "sha256": "4f30ca59a926d6eed449a2865d35776368864bfd92c5c7f0845a96bf500397ae"
+  },
+  {
+   "path": "references/water/05_water_isolated_original.png",
+   "bytes": 1472297,
+   "sha256": "f93daf1febffc9a691f99d9b3272ebc23dfadfba6fb3f6a5c7b4e3a119406251"
+  },
+  {
+   "path": "references/water/README.md",
+   "bytes": 895,
+   "sha256": "dc9d0afa4844241250f777a13e6bad9a01fcb4f30aa18626b1ea4a7a867453f5"
+  },
+  {
+   "path": "references/water/SHA256SUMS",
+   "bytes": 97,
+   "sha256": "736be076fbbe9d74cb3680776058030cfe99df3f1c56b4f257d3c643b5e34a92"
   },
   {
    "path": "screenshots/01.png",

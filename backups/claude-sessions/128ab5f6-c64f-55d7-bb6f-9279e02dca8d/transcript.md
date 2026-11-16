@@ -3570,3 +3570,236 @@ Both notifications only confirm that I'm now watching draft PR #8. The repositor
 
 Everything else is as in my report above. The latest save is `b9b27aa`, and GitHub matches it.
 
+### 🧑 User — 2026-11-16T15:42:03.588Z
+
+Claude, I need you to change the entire approach to my Screen 05 water.
+
+STOP recreating my approved water with new procedural patterns, random shader adjustments and additional bloom.
+
+I have spent a lot of time trying to get my approved Screen 05 water, and I want the ACTUAL ORIGINAL DESIGN reproduced, not another interpretation.
+
+I want you to assign two specialists:
+
+SPECIALIST 1: Blender texture-projection and UV-mapping artist.
+
+Use my original approved Screen 05 and my original isolated blue-and-pink water artwork from the repository.
+
+Find and inspect the actual reference files. Do not substitute generated alternatives.
+
+Trace the exact water contours, cyan areas, magenta S-shaped ribbons, white glossy highlights and foam edges.
+
+Using Blender 5.3, investigate camera-matched UV projection or texture baking onto the actual existing 3D river mesh.
+
+The goal is to make a paused screenshot from the real Three.js game match my approved water as closely as technically possible.
+
+Do not just paste my approved image over the gameplay screen. Build a real textured, continuous 3D river that can be viewed and animated during gameplay.
+
+If the current river geometry prevents an accurate visual match, explain exactly why and build a reversible corrected geometry candidate.
+
+SPECIALIST 2: Three.js water animation and flow-map engineer.
+
+After the static water appearance is matched, animate that SAME design.
+
+The water must visibly flow down the S-curves toward the camera, with thick brilliant cyan liquid, sweeping glossy magenta ribbons, organic white reflections and natural flowing foam.
+
+Keep the approved color pattern and overall river layout anchored to the world while making the liquid details move.
+
+Do not replace the approved texture with a completely new procedural water shader.
+
+MOST IMPORTANT REQUIREMENTS:
+
+1. First demonstrate the closest possible static visual match of the approved water from the locked camera.
+2. Then demonstrate animated water in the real playable game.
+3. Use the exact approved images as source material.
+4. Preserve Benny, the camera, coins, steering, gameplay and transitions to other screens.
+5. Test the result with Playwright screenshots, water-only image comparisons, continuity checks and Android performance checks where possible.
+6. Create the work in a separate reversible branch. Do not overwrite our current working version.
+7. Save all source files, textures, Blender files, specialists' notes, shaders and tests to GitHub. Keep the five-minute autosave enabled.
+
+Do not claim 100% similarity without evidence.
+
+Show me full-size APPROVED versus NEW images using the exact same camera and scale. Then show a short clip proving that the water actually flows in the correct direction.
+
+I do not want another round of changing just saturation, bloom or white lines.
+
+I want you to reproduce my original approved water's DESIGN FIRST, then make it move.
+
+Please begin with the texture-projection feasibility test, not another general water-shader experiment.
+
+### 🤖 Claude — 2026-11-16T15:42:38.852Z
+
+I'll change approach as you ask: no more procedural or bloom tuning. The work becomes a camera-matched projection of your actual approved water onto the real 3D river mesh, built first and checked static, then animated. It will happen on a separate branch so the current working version stays untouched.
+
+First I'll find your original isolated water artwork in the repository and check the existing camera-lock tools.
+
+### 🤖 Claude — 2026-11-16T15:42:41.458Z
+
+> 🔧 **Bash** `{"command": "sha256sum /root/.claude/uploads/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/0df51e50-image.png | cut -c1-16; identify /root/.claude/uploads/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/0df51e50-image.png | cut -d' ' -f2-4,7; ls references/ character_references/ 2>/dev/null; git ls-files | grep -iE \"water|river|isolat|stream\" | grep -iE \"\\.(png|jpg|jpeg|webp)$\" | grep -v \"^qa/pilot05/wave\\|^qa/pilot05/water\\|screenshots/\" | head -30", "description": "Locate isolated water artwork in repo"}`
+
+### 🧑 User — 2026-11-16T15:42:41.611Z
+
+> ↩︎ result: f93daf1febffc9a6
+> PNG 941x1672 941x1672+0+0 1.40409MiB
+> character_references/:
+> official_cartoon_girl_original.jpg
+> 
+> references/:
+> 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> docs/vfx/water_01.png
+> docs/vfx/water_01_low.png
+> docs/vfx/water_02.png
+> docs/vfx/water_03.png
+> docs/vfx/water_03_low.png
+> docs/vfx/water_04.png
+> docs/vfx/water_04_chevrons_topdown.png
+> docs/vfx/water_05.png
+> docs/vfx/water_05_low.png
+> docs/vfx/water_06.png
+> docs/vfx/water_07.png
+> docs/vfx/water_07mid.png
+> docs/vfx/water_08.png
+> docs/vfx/water_09.png
+> docs/vfx/water_09_low.png
+> docs/vfx/water_10.png
+> docs/vfx/water_11.png
+> qa/pilot05/foam/iso/05_waterhide_crown,spray,bubbles.png
+> qa/pilot05/foam/iso/05_waterhide_crown.png
+> qa/pilot05/foam/iso/05_waterhide_ribbon.png
+> qa/pilot05/foam/iso/05_waterhide_spray.png
+> qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake,crown,spray,bubbles,foam.png
+> qa/pilot05/foam/iso/fix1/05_waterhide_ribbonWake.png
+
+### 🤖 Claude — 2026-11-16T15:42:44.618Z
+
+No file by an obvious name. I'll search the whole repository by content hash and by its exact size (941 × 1672), and also check earlier uploads.
+
+### 🤖 Claude — 2026-11-16T15:42:48.420Z
+
+> 🔧 **Bash** `{"command": "H=$(sha256sum /root/.claude/uploads/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/0df51e50-image.png | cut -d' ' -f1); git ls-files -z | grep -zE '\\.(png|jpg|jpeg|webp)$' | xargs -0 sha256sum 2>/dev/null | grep \"$H\" | head; echo \"--- by size 941x1672:\"; git ls-files -z | grep -zE '\\.(png|jpg|jpeg|webp)$' | xargs -0 identify -format '%w %h %i\\n' 2>/dev/null | awk '$1==941 && $2==1672' | head; echo \"--- uploads dir:\"; ls -la /root/.claude/uploads/*/ 2>/dev/null | grep -v \"^total\" | head -30; grep -rln \"isolated\\|water artwork\\|water-only reference\\|water_only\" --include=*.md  …[+140 chars]`
+
+### 🧑 User — 2026-11-16T15:43:33.006Z
+
+> ↩︎ result: --- by size 941x1672:
+> --- uploads dir:
+> drwx------ 2 root root    4096 Nov 16 15:42 .
+> drwx------ 3 root root    4096 Nov 16 14:05 ..
+> -rw------- 1 root root     856 Nov 16 15:42 .saved-uploads.jsonl
+> -rw------- 1 root root 1472297 Nov 16 15:42 0df51e50-image.png
+> -rw------- 1 root root  447188 Nov 16 15:42 0e710ddd-image.jpg
+> -rw------- 1 root root  449090 Nov 16 14:05 10eea209-image.jpg
+> -rw------- 1 root root  475708 Nov 16 15:42 1a84177b-image.jpg
+> -rw------- 1 root root  194450 Nov 16 14:05 b2585c2d-image.jpg
+> ./backups/CURRENT_STATE.md
+> ./backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/subagents/agent-a589db1976a40894d.md
+> ./backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md
+> ./backups/claude-sessions/915f17cf-eec0-5ae4-8e79-48acc1826719/transcript.md
+> ./backups/claude-sessions/025fdfec-0536-5765-8355-e6c259e1aa5d/subagents/agent-a52fe238922a756d7.md
+> ./backups/claude-sessions/025fdfec-0536-5765-8355-e6c259e1aa5d/subagents/agent-a8a31d00e7bffcc47.md
+> ./backups/claude-sessions/025fdfec-0536-5765-8355-e6c259e1aa5d/transcript.md
+> ./backups/claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/transcript.md
+> ./backups/claude-sessions/94cf04e3-ba8e-597b-bef0-28a …[+123 chars]
+
+### 🤖 Claude — 2026-11-16T15:43:36.113Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"isolated\\|water artwork\\|water-only reference\\|water_only\" backups/CURRENT_STATE.md backups/claude-sessions/915f17cf-eec0-5ae4-8e79-48acc1826719/transcript.md backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md backups/claude-sessions/025fdfec-0536-5765-8355-e6c259e1aa5d/transcript.md 2>/dev/null | cut -c1-260 | head -20", "description": "Find mentions of an isolated water reference"}`
+
+### 🧑 User — 2026-11-16T15:43:36.170Z
+
+> ↩︎ result: backups/CURRENT_STATE.md:66:A brand-new, isolated, portrait **real-time 3D mobile game** (Three.js r170 + TypeScript + Vite, Capacitor
+> backups/claude-sessions/915f17cf-eec0-5ae4-8e79-48acc1826719/transcript.md:1970:Third flow-map iteration rendered: the ripples now run in the river's own streamline direction, and I've isolated the Marble reflection so I can judge each part separately. Checkin
+> backups/claude-sessions/915f17cf-eec0-5ae4-8e79-48acc1826719/transcript.md:2029:>     "isolatedModules": true,
+> backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md:564:> 14	A brand-new, isolated, portrait **real-time 3D mobile game** (Three.js r170 + TypeScript + Vite, Capacitor
+> backups/claude-sessions/025fdfec-0536-5765-8355-e6c259e1aa5d/transcript.md:3483:> 🔧 **SendMessage** `{"to": "a8a31d00e7bffcc47", "summary": "Foam follow-up: blocky clump, 04/07 sheet", "message": "Wave 5b follow-up for foam-bubbles-particles: the 04/07 whit
+
+### 🤖 Claude — 2026-11-16T15:43:57.019Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && ISO=/root/.claude/uploads/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/0df51e50-image.png && identify -format '%[channels] %[type] alpha:%A\\n' $ISO && python3 -I - \"$ISO\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\niso = Image.open(sys.argv[1]); print('mode', iso.mode, iso.size)\na = np.asarray(iso.convert('RGBA')).astype(float)\nprint('alpha min/max', a[...,3].min(), a[...,3].max(), 'share alpha>0:', round(float((a[...,3]>0).mean()),3))\napp = np.asarray(Image.open('references/05_flow_i …[+1806 chars]`
+
+### 🧑 User — 2026-11-16T15:43:59.624Z
+
+> ↩︎ result: srgba TrueColorAlpha alpha:True
+> mode RGBA (941, 1672)
+> alpha min/max 0.0 255.0 share alpha>0: 0.614
+> best shifts (agreement, overlap-of-approved-water) dx dy: [((0.7226522750399768, 0.6578901696484099), 12, 0), ((0.7212603576101178, 0.6576659965578584), 16, 0), ((0.7205080680331444, 0.6639790000433884), 12, -4)]
+> no-shift: (0.698964238988225, 0.6283933297658476)
+
+### 🤖 Claude — 2026-11-16T15:44:10.582Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image, ImageFilter\nS='/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad'\niso=Image.open('/root/.claude/uploads/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/0df51e50-image.png').convert('RGBA').resize((864,1536),Image.LANCZOS)\napp=Image.open('references/05_flow_into_the_current.png').convert('RGB')\na=np.asarray(iso)[...,3]>128\nedge=np.asarray(Image.fromarray((a*255).astype(np.uint8)).filter(ImageFilter.FIND_EDG …[+680 chars]`
+
+### 🧑 User — 2026-11-16T15:44:11.021Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T15:44:12.692Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/iso_overlay.jpg"}`
+
+### 🧑 User — 2026-11-16T15:44:12.723Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T15:44:21.052Z
+
+> 🔧 **Bash** `{"command": "head -30 .claude/agents/washer-environment-modeler.md; echo ======; head -30 .claude/agents/water-fx-specialist.md; echo ======; ls qa/pilot05/wave6/camera_lock/ | head -20; sed -n 1,25p scripts/camera-lock-05.mjs | grep \"//\" | head -15", "description": "Read specialist definitions and camera-lock tools"}`
+
+### 🧑 User — 2026-11-16T15:44:21.118Z
+
+> ↩︎ result: ---
+> name: washer-environment-modeler
+> description: Detailed Blender environment builder. Use for Rainbow 11-screen game execution only.
+> ---
+> 
+> # washer-environment-modeler
+> 
+> **Scope:** Model magenta perforated drum/washer tunnels, thick concentric orange-gold rings, chrome door, curved machine tubes, washer nozzles, gold perforated shelves/platform and door window. Build actual continuous tube, not backdrops.
+> 
+> **Canonical sources:** `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`, `REFERENCE_ORDER.md`, all `references/*.png`, and `character_references/official_cartoon_girl_original.jpg`.
+> 
+> **Deliverables:** assets/models/washer_*.glb, Blender source files, dimension/path anchor guide.
+> 
+> **Hard test:** Continuous 07 drop into 08, scene 08/09/10/11 architectural continuity, glossy materials matched.
+> 
+> Work only on the fresh Rainbow project. Coordinate with the visual director and path-camera specialist; preserve immutable user images. All gameplay must be real 3D; do not use screenshot-as-game substitutes. Never spend paid credits or expose secrets without authorization. Prove any claimed completion by actual file output and test capture.
+> ======
+> ---
+> name: water-fx-specialist
+> description:  …[+2556 chars]
+
+### 🤖 Claude — 2026-11-16T15:44:31.314Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print([p for p in d['allowlist'] if 'ref' in p], d['session_branch_patterns'])\"; git status --short | wc -l; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-451ea8c7-3nqlis | cut -c1-12; git ls-remote origin 'refs/heads/claude/rainbow-05-water-projection' | wc -l", "description": "Check allowlist, patterns and branch state"}`
+
+### 🧑 User — 2026-11-16T15:44:32.666Z
+
+> ↩︎ result: ['references', 'character_references'] ['ccr-*', 'claude/*']
+> 0
+> 97dda283bba47b647eabaf84595eecc11672ea1e
+> 97dda283bba4
+> 0
+
+### 🤖 Claude — 2026-11-16T15:44:40.681Z
+
+> 🔧 **Bash** `{"command": "git switch -c claude/rainbow-05-water-projection && mkdir -p references/water && cp /root/.claude/uploads/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/0df51e50-image.png references/water/05_water_isolated_original.png && (cd references/water && sha256sum 05_water_isolated_original.png > SHA256SUMS) && cat > references/water/README.md <<'EOF'\n# Screen 05 — the user's original isolated water artwork\n\n`05_water_isolated_original.png` — 941 × 1672 RGBA PNG, transparent background, the blue-and-pink water layer of the\napproved Screen 05 (`references/05_flow_into_the_current.png`, 864 × 153 …[+1275 chars]`
+
+### 🧑 User — 2026-11-16T15:44:40.802Z
+
+> ↩︎ result: Switched to a new branch 'claude/rainbow-05-water-projection'
+> claude/rainbow-05-water-projection ['ccr-251ed97c-ty2xvp', 'claude/rainbow-3d-account-recovery-hfb8p0', 'ccr-451ea8c7-3nqlis']
+>  backups/autosave.config.json | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
+### 🤖 Claude — 2026-11-16T15:44:45.797Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:projection-branch --message \"Screen 05 projection test: separate branch claude/rainbow-05-water-projection (ccr-451ea8c7-3nqlis protected as the current working version); user's isolated water artwork stored byte-for-byte in references/water/\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"|\"note\"'; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-05-water-projection | cut -f1)\"; echo \"working branch untouched: $(git ls-remote origin refs/heads/ccr-451 …[+137 chars]`
+
