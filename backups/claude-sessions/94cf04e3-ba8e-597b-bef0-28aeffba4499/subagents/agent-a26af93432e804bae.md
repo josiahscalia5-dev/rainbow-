@@ -1242,3 +1242,21 @@ Now the lighting, near field and glints segments.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T02:08:16.298Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave8/water/NOTES.md <<'EOF'\n\n### it06 (FINAL, kept) — 0 console errors, 86 calls, 567,415 tris\nChanges: near sweeps keep full streak lines (dk × (1 + 0.9·pW)); mid flares flA twice as many rows along the flow, 22 px\narms; near lens flares 120 px / T7 ×1.8 + 2nd set 60 px; near star flares ×(1.2 + 1.0·lane).\nMeasured: report mad 50.7 / hue 0.879 / edge 0.192 (best edge), mid 47.7 (it05 48.0, baseline 47.2), near 46.8.\nm05: near p5/p50/p95 128/148.3/213.3 (ref 120/145/246), glints near 191 / mid 367 (peak metric DROPPED vs it05 504:\nthe longer glowing flA a …[+638 chars]`
+
+### 🧑 User — 2026-11-16T02:09:33.386Z
+
+> ↩︎ result: tsc-exit=0
+> 03 → qa/pilot05/wave8/water/regress/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":95,"tris":713386,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → qa/pilot05/wave8/water/regress/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":712274,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/wave8/water/regress/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":72,"tris":543081,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → qa/pilot05/wave8/water/regress/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":181,"tris":660599,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 08 → qa/pilot05/wave8/water/regress/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":160,"tris":610707,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+
+### 🤖 Claude — 2026-11-16T02:09:33.605Z
+
+You've hit your 5-hour limit · resets 6:10am (UTC)
+

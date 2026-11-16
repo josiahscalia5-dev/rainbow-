@@ -81,3 +81,12 @@ Measured: report mad 50.7 / hue 0.880 / edge 0.189 (baseline 51.2 / 0.856 / 0.17
 (ref 25.9), pink median #F447EA (ref #F23FEA), cyan mid #25B4FF, near y1300/1400 #079EF8/#0396EE (ref #02A3F7/#0198F0).
 cyanstat: cyan lum p50 169/155/144 (ref 157/148/141), pink 181/181 (ref 173/176). Seen: hot-pink satin S-ribbons
 with light lines along the bends, deep glossy near body; still short of the ref's big near flares and mid glitter.
+
+### it06 (FINAL, kept) — 0 console errors, 86 calls, 567,415 tris
+Changes: near sweeps keep full streak lines (dk × (1 + 0.9·pW)); mid flares flA twice as many rows along the flow, 22 px
+arms; near lens flares 120 px / T7 ×1.8 + 2nd set 60 px; near star flares ×(1.2 + 1.0·lane).
+Measured: report mad 50.7 / hue 0.879 / edge 0.192 (best edge), mid 47.7 (it05 48.0, baseline 47.2), near 46.8.
+m05: near p5/p50/p95 128/148.3/213.3 (ref 120/145/246), glints near 191 / mid 367 (peak metric DROPPED vs it05 504:
+the longer glowing flA arms raise the 15×15 local mean; a crop of it05 vs it06 looks about equal), pink mid 25.5 %
+(ref 25.9), pink behind Benny 3.63 % (ref 1.28), cyan near y1300/1400 #0DA2FB/#0B9BF2 (ref #02A3F7/#0198F0).
+Seen: near flares bigger/brighter (still flat white lenses, not the ref's jagged lightning), sweeps streakier.
