@@ -2178,3 +2178,150 @@ No commit of this session's transcript ever held it. But one commit anywhere in 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -m py_compile scripts/export_claude_sessions.py && python3 scripts/rainbow-autosave.py --reason manual:redaction-order 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"'; d=backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82; grep -c \"outlook\\.com\" $d/transcript.md $d/transcript.sanitized.jsonl; grep -oE \"\\[REDACTED-(EMAIL|PRIVATE)\\]\" $d/transcript.md | sort | uniq -c", "description": "Recompile exporter, save, confirm addresses fully redacted"}`
 
+### 🧑 User — 2026-11-16T11:08:56.746Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "b4ce472989471e0896cc060ebeb6edf52ebafe22",
+> backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82/transcript.md:7
+> backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82/transcript.sanitized.jsonl:4
+>       1 [REDACTED-EMAIL]
+>      16 [REDACTED-PRIVATE]
+
+### 🤖 Claude — 2026-11-16T11:09:02.629Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; d=backups/claude-sessions/b0c98594-8c52-535c-98f7-8620eee46a82; grep -oE \"[A-Za-z0-9._%+-]+@outlook\\.com\" $d/transcript.md $d/transcript.sanitized.jsonl | sort | uniq -c; echo \"full addresses in HEAD (any file): $(git grep -cE '[A-Za-z0-9._%+-]{3,}@outlook\\.com' HEAD -- . | wc -l)\"", "description": "Confirm no full outlook.com address remains anywhere in HEAD"}`
+
+### 🧑 User — 2026-11-16T11:09:08.159Z
+
+> ↩︎ result: full addresses in HEAD (any file): 0
+
+### 🤖 Claude — 2026-11-16T11:09:18.639Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"ringa\\|RING_A05\" src | head; ls qa/pilot05/wave9b/ qa/pilot05/wave9b/T1 qa/pilot05/wave9b/rings; sed -n 1,30p tools/qa/ring_fit05.py | grep -E \"^#|usage|argv|def \" | head -12", "description": "Find the T1 switch in source and the ring-fit tool usage"}`
+
+### 🧑 User — 2026-11-16T11:09:18.708Z
+
+> ↩︎ result: src/world/environment.ts:252:  // its bay slot sits 26 u ahead of the checkpoint eye (r ≈ 9724 / depth). T1 moves ONLY that ring to RING_A05_DEPTH
+> src/world/environment.ts:254:  // Default 26 = BEFORE; ?ringa=20 shows the test. (The wave-9 oval / "big tunnel" tests are NOT in this code:
+> src/world/environment.ts:260:  const RING_A05_DEPTH = qaNum05('ringa', 26);
+> src/world/environment.ts:261:  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+> qa/pilot05/wave9b/:
+> T1
+> not_merged
+> rings
+> 
+> qa/pilot05/wave9b/T1:
+> 05.png
+> 05_approved_before_T1.jpg
+> overlay_T1.png
+> rings.md
+> 
+> qa/pilot05/wave9b/rings:
+> overlay_APPROVED.png
+> overlay_BEFORE.png
+> rings.json
+> rings.md
+> #!/usr/bin/env python3
+> def gold_mask(a):
+
+### 🤖 Claude — 2026-11-16T11:09:21.279Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 225,330p src/world/environment.ts; grep -n \"qaNum05\" src/world/environment.ts | head -3; sed -n \"$(grep -n 'function qaNum05' src/world/environment.ts | cut -d: -f1),+6p\" src/world/environment.ts", "description": "Read the Screen 05 ring/tunnel code around the T1 switch"}`
+
+### 🧑 User — 2026-11-16T11:09:21.372Z
+
+> ↩︎ result: Exit code 1
+>   const ROW06_PHASE = 0.9661842;
+>   const rowRepeat0607 = slotRowsPerBay / ringSpacing;
+>   const rowOffset0607 = (((ROW06_PHASE - s06 * rowRepeat0607) % 1) + 1) % 1;
+>   const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: rowRepeat0607, offsetV: rowOffset0607, slotHalf: [0.36, 0.12] });
+>   withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
+>   // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
+>   const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+> 
+>   // ---- 05 current (ref 05): long ring bays + forced-perspective far tunnel, anchored to the 05 camera ----
+>   // Ref 05 ring radii about the VP: 288,192,122,85,66,54,45 px → from the locked checkpoint eye the rings sit
+>   // at depth ≈36/55 (near bays ≈17–19 units) and then recede in ever longer bays to a small warm light.
+>   // The straight only runs ≈56 units ahead of that eye before it flares into the 06 hall, so the real bays
+>   // end with a ring at depth ≈54 (sF05) and a ForcedTunnel (tube.ts) continues the same tunnel — walls,
+>   // slot rows, rings, lid pairs, water — to a virtual depth ≈430, compressed along the eye rays into the
+>   //  …[+7689 chars]
+
+### 🤖 Claude — 2026-11-16T11:09:37.167Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat qa/pilot05/wave9b/T1/rings.md | head -30; grep -nE \"query|search|\\?|qs=|--q\" scripts/capture.mjs | head -10", "description": "Read T1 evidence notes and capture query-param support"}`
+
+### 🧑 User — 2026-11-16T11:09:37.217Z
+
+> ↩︎ result: | image | ring | centre x | centre y | radius | band thick | radius ÷ next ring | gold share on arc |
+> |---|---|---|---|---|---|---|---|
+> | APPROVED | A | 474 | 529 | 492.5 | 64 | 2.06 | 1.0 |
+> | APPROVED | B | 477 | 447 | 239.5 | 38 | 1.60 | 0.97 |
+> | APPROVED | C | 491 | 458 | 150.0 | 23 | 1.69 | 0.98 |
+> | APPROVED | D | 493 | 464 | 88.5 | 12 | 1.74 | 1.0 |
+> | APPROVED | E | 503 | 466 | 51.0 | 15 | 2.17 | 1.0 |
+> | APPROVED | F | 501 | 473 | 23.5 | 50 | — | 1.0 |
+> | BEFORE | A | 505 | 426 | 374.0 | 69 | 1.64 | 0.98 |
+> | BEFORE | B | 506 | 440 | 227.5 | 42 | 1.49 | 0.94 |
+> | BEFORE | C | 502 | 455 | 153.0 | 17 | 1.59 | 0.93 |
+> | BEFORE | D | 500 | 470 | 96.5 | 10 | 2.33 | 1.0 |
+> | BEFORE | E | 497 | 484 | 41.5 | 56 | 3.07 | 1.0 |
+> | BEFORE | F | 492 | 465 | 13.5 | 78 | — | 1.0 |
+> | T1 | A | 489 | 391 | 455.5 | 78 | 2.00 | 1.0 |
+> | T1 | B | 506 | 440 | 227.5 | 42 | 1.49 | 0.94 |
+> | T1 | C | 502 | 455 | 153.0 | 17 | 1.59 | 0.93 |
+> | T1 | D | 500 | 470 | 96.5 | 10 | 2.33 | 1.0 |
+> | T1 | E | 497 | 484 | 41.5 | 56 | 3.07 | 1.0 |
+> | T1 | F | 492 | 465 | 13.5 | 78 | — | 1.0 |
+> 12:const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return …[+1100 chars]
+
+### 🤖 Claude — 2026-11-16T11:09:41.864Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t1check; rm -rf $S; timeout 600 node scripts/capture.mjs 05 --out=$S --q=ringa=20 > $S.log 2>&1; git checkout -q -- qa/capture_log.json 2>/dev/null; python3 -I -c \"\nimport sys; from PIL import Image, ImageChops\na=Image.open(sys.argv[1]).convert('RGB'); b=Image.open(sys.argv[2]).convert('RGB')\nprint('T1 re-capture vs recorded T1 evidence: size', a.size, b.size, 'max channel diff', max(c[1] for c in ImageChops.difference(a,b).getextrema()))\" $S/05.png qa/pilot05/wave9b/T1 …[+136 chars]`
+
+### 🧑 User — 2026-11-16T11:10:01.842Z
+
+> ↩︎ result: T1 re-capture vs recorded T1 evidence: size (864, 1536) (864, 1536) max channel diff 0
+
+### 🤖 Claude — 2026-11-16T11:10:06.105Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9b/T1/05_approved_before_T1.jpg"}`
+
+### 🧑 User — 2026-11-16T11:10:06.279Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T11:10:09.830Z
+
+The comparison is clear. I'll record the re-verification in the Screen 05 brief, then do the final verified backup.
+
+### 🤖 Claude — 2026-11-16T11:10:14.382Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9B.md", "old_string": "After the geometry: colour/gloss of rings, lids and walls, vanishing-point glow, water depth and flares, foam, the far\ncoin trail — each as its own test against BEFORE.", "new_string": "After the geometry: colour/gloss of rings, lids and walls, vanishing-point glow, water depth and flares, foam, the far\ncoin trail — each as its own test against BEFORE.\n\n**Re-verified 2026-11-16 ~11:12 UTC (session `01Kbt6BT`, branch `ccr-251ed97c-ty2xvp`, after the recovery):** default\nbuild capture …[+543 chars]`
+
+### 🧑 User — 2026-11-16T11:10:14.422Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9B.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:10:16.534Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 scripts/rainbow-autosave.py --reason manual:verified-backup 2026-11-16 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"'; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1)\"; python3 -I scripts/autosave-status.py; git status --short | wc -l; python3 -I scripts/verify-assets.py lfs-remote | tail -1; git lfs ls-files | awk '$2==\"-\"' | wc -l", "description": "Verified backup, compare SHAs, autosave status, LFS check"}`
+
+### 🧑 User — 2026-11-16T11:10:18.247Z
+
+> ↩︎ result: local  b4ce472989471e0896cc060ebeb6edf52ebafe22
+> remote b4ce472989471e0896cc060ebeb6edf52ebafe22
+> AUTOSAVE OK | branch ccr-251ed97c-ty2xvp | scheduler daemon | last verified backup 2026-11-16T11:08:50+00:00 (1.4 min ago) | local b4ce472 remote b4ce472 (match) | uncommitted 1
+> 1
+> @@ ok 24/24 LFS objects (184 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> 0
+
+### 🤖 Claude — 2026-11-16T11:10:21.733Z
+
+That autosave call printed nothing: I passed a stray extra argument, so it exited without saving (the brief edit is still uncommitted). Running it correctly:
+
+### 🤖 Claude — 2026-11-16T11:10:23.538Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 scripts/rainbow-autosave.py --reason manual:verified-backup 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"'; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1)\"; python3 -I scripts/autosave-status.py; tail -4 backups/.live/BACKUP_LOG.md | cut -c1-140", "description": "Run the verified backup correctly and compare SHAs"}`
+

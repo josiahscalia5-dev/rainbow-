@@ -63,6 +63,13 @@ right of it.
 After the geometry: colour/gloss of rings, lids and walls, vanishing-point glow, water depth and flares, foam, the far
 coin trail — each as its own test against BEFORE.
 
+**Re-verified 2026-11-16 ~11:12 UTC (session `01Kbt6BT`, branch `ccr-251ed97c-ty2xvp`, after the recovery):** default
+build capture pixel-identical to `qa/pilot05/wave9/baseline/05.png` (max diff 0, `claude-bootstrap.sh --full`); the
+T1 capture (`--q=ringa=20`) pixel-identical to `qa/pilot05/wave9b/T1/05.png` (max diff 0). T1 was shown to the user
+again (`qa/pilot05/wave9b/T1/05_approved_before_T1.jpg`). **T2 is planned ON TOP of T1** (its expected numbers start
+from T1's ring A, 78 px above the vanishing point; BEFORE is 44 px above), so T2 waits for the user's T1 answer:
+yes → T2 on top of T1; no → re-plan T2 against BEFORE (ring A at its BEFORE depth 26 u).
+
 ## Rules for whoever continues
 * The default build must stay pixel-identical to the last picture the user accepted (now: BEFORE) until the user
   accepts a test. Check: capture 05, compare with `qa/pilot05/wave9/baseline/05.png`.
