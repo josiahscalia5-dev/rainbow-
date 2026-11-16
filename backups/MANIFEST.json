@@ -443,8 +443,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 8273,
-   "sha256": "b66bd4ffb1d7dc4d8a19e7204babd2f26ea08a0a74691ec50d6b5a3e1dd4ff5e"
+   "bytes": 8274,
+   "sha256": "0c30abca2c52166ab42500e8de788144f7379d9f4652f7dd7fb1ee351628a790"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1200,6 +1200,11 @@
    "path": "qa/pilot05/foam/it1/05_base.png",
    "bytes": 1549652,
    "sha256": "2d3ec03255cc763bb7469756e8de4afb3512ac40045d07a38cc3374b3343b619"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md",
+   "bytes": 20426,
+   "sha256": "9e09e0ce7b841b9b6f4d0dbe89d33e465fdfb60e1c377592f13c7f76362a462d"
   },
   {
    "path": "qa/pilot05/marble_feas/NOTES.md",
