@@ -2720,3 +2720,97 @@ The regression captures and the three overlay variants are rendering (CPU-only W
 Stop hook feedback:
 [command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
 
+### 🤖 Claude — 2026-11-16T23:02:33.749Z
+
+I'll commit and push the two tool updates (the new `near_metrics.py` and the bake-tool description) through the project's verified autosave.
+
+### 🤖 Claude — 2026-11-16T23:02:35.427Z
+
+> 🔧 **Bash** `{"command": "git status --short; python3 scripts/rainbow-autosave.py --reason \"manual:near-tools\" 2>&1 | grep -E '\"result\"|\"commit\"|error' ; echo \"local : $(git rev-parse HEAD)\"; echo \"remote: $(timeout 60 git ls-remote origin refs/heads/ccr-8c4acadc-iybw0n | cut -f1)\"; git status --short | head -3", "description": "Commit and push pending tool changes, verify remote", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T23:02:36.017Z
+
+> ↩︎ result: local : 3a3e0222343f4ab32bbdb0b53f51a41fbfcfa6a5
+> remote: 5cf74ff624c4d9e72d3dc5a31449613221cadce0
+
+### 🤖 Claude — 2026-11-16T23:02:39.640Z
+
+The commit was made locally (`3a3e022`) but GitHub still shows `5cf74ff`, so the push didn't land yet. Checking the autosave log:
+
+### 🤖 Claude — 2026-11-16T23:02:40.450Z
+
+> 🔧 **Bash** `{"command": "tail -4 backups/BACKUP_LOG.md; cat backups/BACKUP_STATUS.json | head -14; git log --oneline -3", "description": "Inspect autosave result"}`
+
+### 🧑 User — 2026-11-16T23:02:40.504Z
+
+> ↩︎ result: | 2026-11-16T22:46:15+00:00 | hook:Stop | committed+pushed | `e452946debc1` | `ccr-8c4acadc-iybw0n` | 4 | True |  |
+> | 2026-11-16T22:46:37+00:00 | hook:Stop | committed+pushed | `f28a6490a173` | `ccr-8c4acadc-iybw0n` | 4 | True |  |
+> | 2026-11-16T22:49:24+00:00 | daemon | no-change | `f28a6490a173` | `ccr-8c4acadc-iybw0n` | 0 | True |  |
+> | 2026-11-16T22:57:44+00:00 | daemon | committed+pushed | `5cf74ff624c4` | `ccr-8c4acadc-iybw0n` | 1 | True |  |
+> {
+>   "last_run": {
+>     "time": "2026-11-16T22:57:44+00:00",
+>     "reason": "daemon",
+>     "result": "committed+pushed",
+>     "files_staged": 1,
+>     "pushed_verified": true,
+>     "branch": "ccr-8c4acadc-iybw0n",
+>     "commit": "5cf74ff624c4d9e72d3dc5a31449613221cadce0",
+>     "duration_s": 89
+>   },
+>   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
+>   "branch": "ccr-8c4acadc-iybw0n",
+>   "last_verified_remote_sha": "5cf74ff624c4d9e72d3dc5a31449613221cadce0",
+> 3a3e022 autosave: Rainbow 2026-11-16 23:02 UTC
+> 5cf74ff autosave: Rainbow 2026-11-16 22:57 UTC
+> f28a649 autosave: Rainbow 2026-11-16 22:46 UTC
+
+### 🤖 Claude — 2026-11-16T23:02:50.076Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I - \"$SP\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsp=sys.argv[1]\ndef cmp(a,b,label):\n    A=np.asarray(Image.open(a).convert(\"RGB\")).astype(int); B=np.asarray(Image.open(b).convert(\"RGB\")).astype(int)\n    d=np.abs(A-B).max(-1); print(f\"{label}: max diff {d.max()}, pixels differing {int((d>0).sum())}\")\nr=f\"{sp}/ride4\"\ncmp(f\"{r}/reg_default/05.png\",\"qa/pilot05/current_default_05.png\",\"1 default game 05            vs saved accepted default\")\ncmp(f\"{r …[+722 chars]`
+
+### 🧑 User — 2026-11-16T23:02:52.006Z
+
+> ↩︎ result: 1 default game 05            vs saved accepted default: max diff 33, pixels differing 152
+> 2 protected BEFORE           vs saved baseline: max diff 37, pixels differing 155
+> 3 full stack (paddles)       vs saved paddles capture: max diff 0, pixels differing 0
+> 4 full + projflow05=2        vs this session's pre-change capture: max diff 35, pixels differing 153
+> 5 full + flow2 + projnear05=1 vs same without projnear05 (locked view): max diff 203, pixels differing 19506
+> remote now: 3a3e0222343f4ab32bbdb0b53f51a41fbfcfa6a5  local: 3a3e0222343f4ab32bbdb0b53f51a41fbfcfa6a5
+
+### 🤖 Claude — 2026-11-16T23:03:13.248Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I - \"$SP\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsp=sys.argv[1]; r=f\"{sp}/ride4\"\nld=lambda p: np.asarray(Image.open(p).convert(\"RGB\")).astype(int)\nfor a,b,tag in [(f\"{r}/reg_default/05.png\",\"qa/pilot05/current_default_05.png\",\"default\"),(f\"{r}/reg_before/05.png\",\"qa/pilot05/wave9/baseline/05.png\",\"before\"),(f\"{r}/reg_flow2/05.png\",f\"{sp}/verify/full_flow2/05.png\",\"flow2\"),(f\"{r}/reg_near/05.png\",f\"{r}/reg_flow2/05.png\",\"near\")]:\n    A, …[+400 chars]`
+
+### 🧑 User — 2026-11-16T23:03:14.234Z
+
+> ↩︎ result: default: bbox x 59-805 y 21-104  n=152
+> before: bbox x 59-805 y 21-104  n=155
+> flow2: bbox x 59-805 y 21-104  n=153
+> near: bbox x 1-863 y 21-1348  n=19506
+
+### 🤖 Claude — 2026-11-16T23:03:21.756Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/diff_near.png"}`
+
+### 🧑 User — 2026-11-16T23:03:21.796Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:03:41.504Z
+
+> 🔧 **Bash** `{"command": "sed -n 25,70p scripts/capture.mjs | grep -n \"goto\\|freeze\\|step\\|drawList\\|render\" | head -20; cat > /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/uniform_probe.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5251);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\n  await page.goto …[+1158 chars]`
+
+### 🧑 User — 2026-11-16T23:03:52.250Z
+
+> ↩︎ result: 2:const log = { when: new Date().toISOString(), renderer: null, shots: [], errors: [] };
+> 9:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 13:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+> 14:    const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+> 15:    // let a few frames render (fonts, bloom) — time is frozen so the image is deterministic
+> 25:    await page.evaluate(() => window.__rainbow.drawList?.());
+> after ready      {"near":[1,0,0,132.438],"s":0}
+> after goto 05    {"near":[1,0,132.62163536156623,132.438],"s":132.438}
+> after drawList   {"near":[1,0,132.62163536156623,132.438],"s":132.438}
+> after step(1)    {"near":[1,0,132.62163536156623,132.438],"s":132.622}
+
