@@ -11,7 +11,8 @@ in this environment; nothing here is assumed.
 | Blender MCP (`mcp-for-blender`) | **not connected** | No desktop Blender in this headless container; the add-on needs Blender's UI to start its socket server | `claude mcp add blender uvx mcp-for-blender` then `uvx mcp-for-blender install-addon`, enable add-on in Blender, start server from the N-panel |
 | Meshy MCP | **not installed / needs API key + credits** | No key provided; paid generation requires your approval | Follow https://github.com/meshy-dev/meshy-mcp-server README; store `MESHY_API_KEY` in local env only |
 | Hyper3D Rodin MCP | **not installed / needs sign-in + credits** | Requires OAuth in `/mcp` and a billing workspace | `claude mcp add --transport http hyper3d-rodin --scope user https://api.hyper3d.com/api/mcp` |
-| World Labs Atlas/Marble | **not installed / needs sign-in** | Optional; Atlas ≠ Marble; verify any Marble link before use | `claude mcp add --transport http worldlabs https://api.atlas.worldlabs.ai/mcp` |
+| World Labs Atlas | account 8: claude.ai connector **connected** (`list_projects` OK); per Claude account | Re-add + sign in on each new account | claude.ai connector "World Labs Atlas" (preferred) or `claude mcp add --transport http worldlabs https://api.atlas.worldlabs.ai/mcp` |
+| Marble World API | account 8: key saved via secure form as an environment network secret (host `api.worldlabs.ai`, header `WLT-Api-Key`); tested 200 | Secrets never transfer: re-enter via `request_credential` on the new environment | REST, no MCP: `tools/worldlabs/marble_pilot.py`; ledger `qa/worldlabs/05/pilot/LEDGER.md` |
 | context7 (docs) | needs authentication | Not required for Rainbow | via claude.ai connector settings |
 
 `.mcp.json.template` mirrors these servers without credentials. Copy it to `.mcp.json` (git-ignored) if

@@ -1,0 +1,38 @@
+{
+ "PREV": {
+  "file": "qa/pilot05/wave7/baseline/05.png",
+  "mad": 59.0,
+  "hue_corr": 0.809,
+  "edge_corr": 0.117,
+  "bands": {
+   "hud": 54.4,
+   "tunnel+VP": 62.6,
+   "river mid": 53.0,
+   "Benny+near water": 63.8
+  }
+ },
+ "IT03": {
+  "file": "qa/pilot05/wave7/environment/it03/05.png",
+  "mad": 55.7,
+  "hue_corr": 0.86,
+  "edge_corr": 0.158,
+  "bands": {
+   "hud": 55.9,
+   "tunnel+VP": 63.6,
+   "river mid": 47.6,
+   "Benny+near water": 57.3
+  }
+ },
+ "NOW": {
+  "file": "qa/pilot05/wave7/environment/it04/05.png",
+  "mad": 54.8,
+  "hue_corr": 0.86,
+  "edge_corr": 0.172,
+  "bands": {
+   "hud": 55.4,
+   "tunnel+VP": 61.0,
+   "river mid": 47.2,
+   "Benny+near water": 56.9
+  }
+ }
+}
