@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 8957,
-   "sha256": "d760ef93d0f296f41c3987b5592543071a581c268f9dc69499945720a32bf7a5"
+   "bytes": 9235,
+   "sha256": "82ed4e60533e19e7ac28cfe9ba4bfe442a8a0f1131485cbe1445f2ecb7142137"
   },
   {
    "path": "README_FIRST.md",
@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 7228,
-   "sha256": "bf3dafcb8b64ee7241ecc5b5abb3a0e9fd88298a124ae2fcbbcc67e5c71ada50"
+   "bytes": 7857,
+   "sha256": "c1737eeca3a6af605adea2f9cdfdb05ef0ecf58f3d9b1a70fe9e67df38ed1727"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7780,
-   "sha256": "00bcb68716c61d4b4b638dc3f0e37aad415772fbcd4d01105d37c77ea77f9046"
+   "sha256": "123dfc75016032bb146852dd113ad3ecec9d17593f72221a5032bbe0d3772307"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -428,13 +428,13 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 4226,
-   "sha256": "99526c926f96566ba043c47676d4e69c70be0be4103942588217752363df5599"
+   "bytes": 5089,
+   "sha256": "eadb2b4b18412bc07f68f307e309a80c81b1676ff5f4f24808010f2f950bd06d"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
-   "bytes": 13290,
-   "sha256": "53ae99dba8eaacf7574328fb5552c8920fa5b4e30782e5b314e54c74aeffd1af"
+   "bytes": 14563,
+   "sha256": "935a5b347de252ce358ac2f0001e11e109d4afefd020211e7d19dc3e0d69d13d"
   },
   {
    "path": "backups/autosave.config.json",
@@ -838,8 +838,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1182,
-   "sha256": "2ea53578a26c779942251218246d40a5d8a930d95ec43cfdeba7493df12b1da2"
+   "bytes": 1181,
+   "sha256": "dbd5fac30c4460bf163c9bb9f3d30fe1f32169708a41e0cfe90804b5ce53afd1"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1497,14 +1497,44 @@
    "sha256": "c4b2746c5fe09450e5dc9a9aefc398b581329cfdb9155e382a50c2738cebed0f"
   },
   {
+   "path": "qa/pilot05/wave12/DIFF05_bands.md",
+   "bytes": 1812,
+   "sha256": "9bf5b87867ce4b32fd63b0b571782633ce6fdd7a99e6afb93bcc40b31fe2fb90"
+  },
+  {
+   "path": "qa/pilot05/wave12/WATER_INDICATORS.md",
+   "bytes": 1937,
+   "sha256": "f9ecf539ab4deabefbb123bbb6273d101a0e38b06959811bb97135cae3c15243"
+  },
+  {
+   "path": "qa/pilot05/wave12/compare/1_APPROVED_05.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/wave12/compare/2_CURRENT_T2_05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/wave12/compare/3_NEW_W12_water_05.png",
+   "bytes": 1782814,
+   "sha256": "95da7e07aeb791c0345bdbf6063b3925d746d3f439e88a786dd9569bb5c6463f"
+  },
+  {
    "path": "qa/pilot05/wave12/factors/puff05/05.png",
    "bytes": 1897732,
    "sha256": "2b9c2324a91b90d4e39e8578ed6c96a5948296acf9698f81428e77caab7932f9"
   },
   {
    "path": "qa/pilot05/wave12/factors/silk05/05.png",
-   "bytes": 1786291,
-   "sha256": "0ef7b98e6008c4073f9edac3482386900a394c3e9a9f1d5a581367bb6eb1b3b3"
+   "bytes": 1782324,
+   "sha256": "c27bf8f38531e1ad12633396486f4e5e67ed430651104dd70a3f626bd18e20c0"
+  },
+  {
+   "path": "qa/pilot05/wave12/factors/silk05_puff05/05.png",
+   "bytes": 1782814,
+   "sha256": "95da7e07aeb791c0345bdbf6063b3925d746d3f439e88a786dd9569bb5c6463f"
   },
   {
    "path": "qa/pilot05/wave12/tests/before/05.png",
@@ -1513,8 +1543,13 @@
   },
   {
    "path": "qa/pilot05/wave12/tests/capture_run.txt",
-   "bytes": 58,
-   "sha256": "6f9b0292ee94cee56257f6ec33eae982bfb588c899e089133dfd69c0ba4d0e5c"
+   "bytes": 97,
+   "sha256": "a49b316a40e548c121b3fb02be82aa0db511589ad92546906bb139a3a424ba8a"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/continuity_stdout.txt",
+   "bytes": 754,
+   "sha256": "286f9e0be5408996f82a80444f7a14e63592eaeca77c55f3b8970bc4aa155697"
   },
   {
    "path": "qa/pilot05/wave12/tests/default/05.png",
@@ -1522,9 +1557,64 @@
    "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
   },
   {
+   "path": "qa/pilot05/wave12/tests/default_040607/04.png",
+   "bytes": 1006508,
+   "sha256": "69a7228ada62930f4db2344580774936da1f8e240b439ed8670e971697219914"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/default_040607/06.png",
+   "bytes": 1504499,
+   "sha256": "688609e2f7481e102df6091dd7a697138d3600e2e37da1d29ce19404c57b62ee"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/default_040607/07.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/gameplay_w12.json",
+   "bytes": 14664,
+   "sha256": "57e6dcff90058eb7b19b69aefa5453c39f4d5e829f016c80a46382890d6bfc43"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/gameplay_w12_stdout.txt",
+   "bytes": 552,
+   "sha256": "823077369b0f512f478c70778f1740410eebbcf00db78078050f8e35da11e21f"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/pixel_checks_05.json",
+   "bytes": 352,
+   "sha256": "ca8468dfe23e27538d736a7583f558a7a5bdf3cd660dc85df4830495e7a02c1a"
+  },
+  {
    "path": "qa/pilot05/wave12/tests/river05/05.png",
    "bytes": 1896901,
    "sha256": "ecd93ae0322ae0b01e5bd55ada6bec5edf5aafce287a4f2ded6cf322cabbc837"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/run2.txt",
+   "bytes": 69,
+   "sha256": "1173254f26244ddfc3db4db8ee5104d82d23ed52c87941d1765d47f7d9139d8e"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/w12_040607/04.png",
+   "bytes": 1005290,
+   "sha256": "5ba34c6fe60707b46d4f35c135da38e772b1f41ad61b2f316930becdecab902a"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/w12_040607/06.png",
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/w12_040607/07.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/w12_low/05.png",
+   "bytes": 1688473,
+   "sha256": "4e4a4112f0ec77ec552c9b89c84339d342a0a868f5dcbad98a8ab0324aa7babe"
   },
   {
    "path": "qa/pilot05/wave3/benny/it00/05.png",
@@ -6338,8 +6428,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 80044,
-   "sha256": "322cc147337d55f203820bceac1369c1d965bcb40604132d69aaadadd6f33edc"
+   "bytes": 80694,
+   "sha256": "89aee2035ccebbb5bd00431dce3522d18828c692f79abfb698061338ff13136d"
   },
   {
    "path": "src/vfx/whirlpool.ts",

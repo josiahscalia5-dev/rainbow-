@@ -1,10 +1,10 @@
 {
-  "when": "2026-11-16T13:57:22.517Z",
+  "when": "2026-11-16T14:02:20.607Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
       "id": "05",
-      "file": "qa/pilot05/wave12/factors/puff05/05.png",
+      "file": "qa/pilot05/wave12/tests/w12_low/05.png",
       "size": [
         864,
         1536
@@ -33,8 +33,8 @@
       "stats": {
         "fps": 60.1,
         "calls": 86,
-        "triangles": 567415,
-        "geometries": 102,
+        "triangles": 425525,
+        "geometries": 101,
         "textures": 45,
         "modules": {
           "water": "vfx/index.ts",
@@ -43,7 +43,7 @@
         },
         "courseLength": 435.1923632433159,
         "firstFrameCalls": 164,
-        "firstFrameTriangles": 568351
+        "firstFrameTriangles": 426461
       }
     }
   ],

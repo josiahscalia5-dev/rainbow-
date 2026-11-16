@@ -3,7 +3,7 @@
   "schema": 1,
   "project": "RAINBOW - 11-screen 3D mobile game (Three.js + Vite + Capacitor Android)",
   "repo": "josiahscalia5-dev/rainbow-",
-  "updated_utc": "2026-11-16T11:00:00+00:00",
+  "updated_utc": "2026-11-16T14:30:00+00:00",
   "entry_points": {
     "bootstrap": "bash scripts/claude-bootstrap.sh            # full: resume newest work, LFS, refs, agents, Marble, tools, tests, autosave, report",
     "bootstrap_check_only": "bash scripts/claude-bootstrap.sh --check    # no installs, no merges",
@@ -44,7 +44,8 @@
     "android_sdk": {"required": "android", "root": "/opt/android-sdk", "cmdline_tools": "11076708", "packages": ["platform-tools", "platforms;android-34", "build-tools;34.0.0"], "check": "dirs platforms/android-34 and build-tools/34.0.0 exist", "install": "bash scripts/setup-android-sdk.sh", "hosts": ["dl.google.com"], "env": {"ANDROID_HOME": "/opt/android-sdk", "ANDROID_SDK_ROOT": "/opt/android-sdk"}, "local_properties": "android/local.properties sdk.dir (git-ignored, written by the bootstrap)"},
     "ffmpeg": {"required": false, "tested": "6.1.1", "used_by": "Flow video checks"},
     "imagemagick": {"required": false, "tested": "6.9.12"},
-    "claude_cli": {"required": true, "tested": "2.1.325", "used_by": "plugin install / mcp list checks"}
+    "claude_cli": {"required": true, "tested": "2.1.325", "used_by": "plugin install / mcp list checks"},
+    "screen05_water_qa": {"required": false, "water05_grain": "python3 -I tools/qa/water05_grain.py OUT.md APPROVED=references/05_flow_into_the_current.png NAME=capture.png ... (water-only cyan/pink S+V, fine grain, grain ratio, thin-white %; indicators, not a fidelity %)", "capture_with_switch": "node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=DIR", "gameplay_with_switch": "node scripts/gameplay-test.mjs --q='silk05=1&puff05=1' --out=FILE.json", "perf_relative": "node scripts/perf05.mjs OUT.json name=query ... (headless SwiftShader: relative cost only, not device fps)", "flow_map_dump": "npx vite-node scripts/flow05-dump.ts", "experiment_build": "VITE_RAINBOW_Q05='silk05=1&puff05=1' npm run android:debug bakes Screen 05 switches into a separate APK (Android has no URL query); unset = default build"}
   },
   "claude_plugins": {
     "synced_from_claude_ai_account": ["superpowers", "playwright", "code-review", "feature-dev", "claude-code-setup", "hubcap", "typescript-lsp", "pyright-lsp"],
@@ -61,7 +62,7 @@
   },
   "credentials": {
     "_policy": "NEVER in git, chat, logs or scripts. Stored only by the Claude platform. Transfers between Claude accounts: NO.",
-    "marble_world_api_key": {"host": "api.worldlabs.ai", "header": "WLT-Api-Key", "stored_as": "network secret on the Claude cloud environment (injected by the session proxy)", "reconnect": "Claude calls request_credential(host api.worldlabs.ai, header WLT-Api-Key); the user pastes the key only into that secure form", "needed": "only for NEW World Labs API calls - every generated asset is already in Git LFS", "check": "python3 -I scripts/verify-assets.py worldlabs  (free reads: balance + both worlds)", "ask_user_only_if": "the check reports HTTP 401/403 (authentication failed); network errors/timeouts are NOT a key problem", "verified": "2026-11-16 11:27 UTC on the Default environment: authenticated, 5190 credits, draft 200, full 200"},
+    "marble_world_api_key": {"host": "api.worldlabs.ai", "header": "WLT-Api-Key", "stored_as": "network secret on the Claude cloud environment (injected by the session proxy)", "reconnect": "Claude calls request_credential(host api.worldlabs.ai, header WLT-Api-Key); the user pastes the key only into that secure form", "needed": "only for NEW World Labs API calls - every generated asset is already in Git LFS", "check": "python3 -I scripts/verify-assets.py worldlabs  (free reads: balance + both worlds)", "ask_user_only_if": "the check reports HTTP 401/403 (authentication failed); network errors/timeouts are NOT a key problem", "verified": "2026-11-16 11:27 UTC on the Default environment: authenticated, 5190 credits, draft 200, full 200; 2026-11-16 ~14:00 UTC (session ccr-451ea8c7-3nqlis, personal environment rainbow-): stored key gave HTTP 401, the user re-entered it via request_credential, free read OK again (5190 credits, both worlds 200). No credits spent"},
     "github": "session git proxy (no token in the repo)"
   },
   "network_hosts": {
@@ -77,6 +78,7 @@
     "lfs.github.com": "Git LFS (older link host)"
   },
   "marble_worldlabs": {
+    "atlas_connector_2026_11_16": "NOT installed on the current Claude account (ListConnectors found none). Add World Labs Atlas in claude.ai Settings -> Connectors only for an Atlas task; the game does not depend on it.",
     "ledger": "qa/worldlabs/05/pilot/LEDGER.md",
     "budget": {"user_cap_credits": 6250, "user_cap_usd": 5, "spent_credits": 1810, "balance_last_read": 5190, "balance_read_utc": "2026-11-16T10:55:00+00:00", "auto_recharge": false},
     "prompt": "qa/worldlabs/05/pilot/prompt_05.txt",

@@ -470,8 +470,14 @@ const vec3 W5_CDEEP = vec3(0.058, 0.197, 0.379);   // #0068AD
 const vec3 W5_CDEEP2 = vec3(0.062, 0.290, 0.572);  // #0086D8
 const vec3 W5_CMID = vec3(0.066, 0.424, 0.747);    // #00A8F5
 const vec3 W5_CBRIGHT = vec3(0.088, 0.567, 0.825); // #00C4FB
+#ifdef SILK05
+// W12: red-free aqua / blue tones (approved cyan pixels have S ≈ 0.99 even in the bright lanes)
+const vec3 W5_CAQUA = vec3(0.03, 0.78, 0.9);
+const vec3 W5_CAQUAW = vec3(0.2, 0.93, 0.97);
+#else
 const vec3 W5_CAQUA = vec3(0.142, 0.787, 0.882);   // #20E8FA
 const vec3 W5_CAQUAW = vec3(0.39, 0.942, 0.947);   // #7DF9FA
+#endif
 const vec3 W5_PDEEP = vec3(0.465, 0.086, 0.376);   // #C81CAE
 const vec3 W5_PBODY = vec3(0.698, 0.112, 0.545);   // #F72BD4
 const vec3 W5_PLIGHT = vec3(0.779, 0.204, 0.769);  // #FB57F9
@@ -479,7 +485,11 @@ const vec3 W5_PPALE = vec3(0.835, 0.534, 0.872);   // #F0AFF7
 const vec3 W5_PWHITE = vec3(0.945, 0.767, 0.974);  // #F8D7FD
 const vec3 W5_VIN = vec3(0.372, 0.170, 0.625);     // #A14FE4 violet, core side
 const vec3 W5_VPERI = vec3(0.311, 0.252, 0.740);   // #866FF6 periwinkle
+#ifdef SILK05
+const vec3 W5_VBLUE = vec3(0.07, 0.40, 0.82);
+#else
 const vec3 W5_VBLUE = vec3(0.168, 0.427, 0.795);   // #3FA3F9 blue into the cyan core
+#endif
 const vec3 W5_VOUT = vec3(0.381, 0.185, 0.674);    // #A255ED violet, bank side
 const vec3 W5_OBLUE = vec3(0.211, 0.256, 0.715);   // #5F73F3 blue-violet outer water
 const vec3 W5_ODEEP = vec3(0.161, 0.316, 0.700);   // #4287ED deep blue outer water
@@ -1005,7 +1015,13 @@ void main() {
     #endif
     float nv5 = clamp(dot(N5, V), 0.0, 1.0);
     vec3 R5 = reflect(-V, N5);
+    #ifdef SILK05
+    // W12: sun / glitter glints in the water's own saturated hue (approved highlights are saturated cyan or crisp white,
+    // hardly ever the pastel in between); the crisp white comes from the streak cores and flares only
+    vec3 glintC = mix(vec3(0.08, 1.05, 1.35), vec3(1.4, 0.55, 1.3), pk5);
+    #else
     vec3 glintC = mix(vec3(0.5, 1.25, 1.3), vec3(1.35, 0.95, 1.35), pk5);
+    #endif
     c5 = mix(c5, mix(W5_CBRIGHT, W5_PLIGHT, pk5), pow(1.0 - nv5, 3.0) * 0.05);
     c5 += glintC * pow(clamp(dot(N5, Hv), 0.0, 1.0), 90.0) * 0.6;
     float gl5 = pow(clamp(dot(R5, Lg), 0.0, 1.0), 90.0);
@@ -1024,7 +1040,7 @@ void main() {
     vec3 reflHue5 = mix(W5_CAQUA, W5_PLIGHT, pk5) * plum5 * 1.35;
     c5 += mix(reflHue5, vec3(plum5), smoothstep(0.9, 1.0, plum5) * 0.6) * smoothstep(0.62, 0.97, plum5) * fres5 * uPanoK;
     // long smooth satin sheen along the crest of each broad swell (mid field), same hue as the water under it
-    c5 = mix(c5, mix(W5_CAQUAW, W5_PPALE, pk5), silkHi * mid5 * 0.28);
+    c5 = mix(c5, mix(mix(W5_CBRIGHT, W5_CAQUA, 0.5), W5_PLIGHT, pk5), silkHi * mid5 * 0.32);
     // LONG smooth glossy streaks (approved mid field: long white / white-pink streaks along the current on both the
     // cyan and the ribbons), lit in long lens-shaped segments
     // (W12 it03: lines of constant streamline coordinate X — parallel to the current by construction; it02 used noise

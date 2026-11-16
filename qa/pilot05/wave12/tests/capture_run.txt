@@ -3,3 +3,7 @@ before-done
 river05-done
 silk-done
 puff-done
+both-done
+d467-done
+w467-done
+low-done

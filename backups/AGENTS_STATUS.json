@@ -1,10 +1,10 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-16T12:45:00+00:00",
-  "updated_by_session": "01Kbt6BTutLARq2w7hhXopgC (branch ccr-251ed97c-ty2xvp)",
+  "updated_utc": "2026-11-16T14:30:00+00:00",
+  "updated_by_session": "013VHsJBUBZaHLYkVpBPkFed (branch ccr-451ea8c7-3nqlis)",
   "running_now": [],
-  "current_focus": "Screen 05 against the user's BEFORE baseline (qa/pilot05/COORDINATION_WAVE9B.md). T2 tunnel-height tests all rejected (no more tunnel positioning, user 11:20). Waiting for the user's yes/no on T1 (?ringa=20) and W2 (?wall05=1, violet walls). Next by the user's priority: highlights + yellow-gold rings, fewer rings around the VP, river width + S-swing, foam it06. Then screens 06, 03, 04, 07, 08, 09.",
+  "current_focus": "Screen 05 water, wave 12 (qa/pilot05/wave12/NOTES.md): default = T2 (provisional), BEFORE protected via ?ringa=26&nearfloor05=0. Candidates waiting for the user's yes/no: W2 ?wall05=1, G1b ?gold05=1, W10 ?water05=1, S1 ?fars05=1, W11 ?river05=1 (user: too grainy), W12 ?silk05=1&puff05=1 (smooth long flow-aligned streaks, deep electric cyan, bubbly foam banks; experiment APK builds/rainbow-debug-w12-water.apk). Next by the user's priority: more vivid magenta ribbons + realistic splash around Benny, far-river saturation (fog/glow lighting test), then polished gold rings, purple metal walls, premium lighting; then screens 03, 04, 06, 07, 08, 09.",
   "agents": [
     {
       "name": "washer-environment-modeler",
@@ -36,11 +36,11 @@
       "sha256": "b160f12ff93db70ef94b62d5951c62335320cc1268ca7998de39ea26df1a84a2",
       "role": "Real-time 3D animated cyan/pink fluid look and flow",
       "state": "idle",
-      "last_wave": "wave 10 DONE (it04 kept behind ?water05=1; candidate waiting for the user's yes/no)",
-      "unfinished_work": "qa/pilot05/wave10/water/NOTES.md -> 'Left undone' (mid bands wider/fewer streaks, far coin off-centre, far river not animated, flares smaller, low-quality flares)",
-      "unfinished_work_verdict": "measured worse than the baseline on its own metric - do not reuse as is",
-      "notes": "qa/pilot05/wave10/water/NOTES.md",
-      "relaunch_when": "after the user's verdict on ?water05=1: polish its 'Left undone' list"
+      "last_wave": "wave 12 DONE by the coordinator (no specialist launched): W11 ?river05=1 (flow map, far channel) + W12 ?silk05=1&puff05=1 behind URL switches; candidates waiting for the user's yes/no",
+      "unfinished_work": "qa/pilot05/wave12/NOTES.md -> 'Left undone' (vivid magenta ribbons around Benny, bigger near flares, splash beads + froth collar, far-river saturation under the golden glow, flat foam at the right of the seam)",
+      "unfinished_work_verdict": "W12 measured closer than T2 and W11 on the water indicators (tools/qa/water05_grain.py); the 'Left undone' items are new single-factor tests, nothing half-applied",
+      "notes": "qa/pilot05/wave12/NOTES.md (W12), qa/pilot05/wave11/NOTES.md (W11), qa/pilot05/wave10/water/NOTES.md (W10)",
+      "relaunch_when": "after the user's verdict on W12: magenta ribbons + near flares as the next single-factor test (splash belongs to foam-bubbles-particles)"
     },
     {
       "name": "foam-bubbles-particles",

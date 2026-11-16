@@ -9,13 +9,13 @@ only; a conflicting merge is aborted and reported), restored the Git LFS binarie
 started the full bootstrap in the background. Its summary ("RAINBOW SESSION START") is in your context.
 1. `bash scripts/claude-bootstrap.sh --status` → `backups/BOOTSTRAP_REPORT.md` (re-run when it says "still in progress").
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh` yourself; from a branch without it:
-   `git fetch origin ccr-251ed97c-ty2xvp && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
+   `git fetch origin ccr-451ea8c7-3nqlis && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
 2. Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
-   `backups/TOOL_MANIFEST.json` and the current brief `qa/pilot05/COORDINATION_WAVE9B.md`.
+   `backups/TOOL_MANIFEST.json` and the current briefs `qa/pilot05/wave12/NOTES.md` (water) + `qa/pilot05/COORDINATION_WAVE9B.md`.
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup
    report of §4. Tell the user plainly about every failure and every backup GAP the bootstrap reports.
-The GitHub default branch is an OLD version. Newest work as of 2026-11-16 ~11:15 UTC: branch `ccr-251ed97c-ty2xvp`
+The GitHub default branch is an OLD version. Newest work as of 2026-11-16 ~14:30 UTC: branch `ccr-451ea8c7-3nqlis`
 (contains every other branch) — the bootstrap's merge result always wins over this line. Ready-to-paste prompt for a
 new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`. The bootstrap checks before installing (Blender 5.3.0, Android SDK
 34, npm, Python libs, World Labs plugin): never reinstall a working tool by hand, never run `playwright install`.
@@ -81,7 +81,9 @@ time, a URL switch, default build unchanged, shown approved | BEFORE | NEW as se
 kept only when clearly closer; never the oval / enlarged "big tunnel" (`qa/pilot05/COORDINATION_WAVE9B.md`).
 Current default = **T2** (front ring A at 20 u + near tunnel 2 u lower, promoted 2026-11-16 under the user's rule
 "only if genuinely closer"; picture `qa/pilot05/current_default_05.png`) — **PROVISIONAL until the user approves the
-visual result** (user, 2026-11-16 ~11:50). Candidates waiting for the user: W2 `?wall05=1`, G1b `?gold05=1`. The user's **BEFORE stays protected**:
+visual result** (user, 2026-11-16 ~11:50). Candidates waiting for the user: W2 `?wall05=1`, G1b `?gold05=1`, W10 `?water05=1`, S1 `?fars05=1`, W11 `?river05=1`
+(user: "too grainy"), **W12 `?silk05=1&puff05=1`** (newest water: smooth long streaks, deep cyan, bubbly foam banks;
+`qa/pilot05/wave12/NOTES.md`; experiment APK via `VITE_RAINBOW_Q05`). The user's **BEFORE stays protected**:
 `?ringa=26&nearfloor05=0` reproduces `qa/pilot05/wave9/baseline/05.png` pixel-for-pixel (`claude-bootstrap.sh --full`
 checks both). No more tunnel-position experiments (user, 2026-11-16): next are the rings' polished gold, the purple
 metal walls, the thick cyan-and-pink S-river and premium lighting. Report branch + commit SHA at major checkpoints.

@@ -2049,3 +2049,398 @@ The autosave daemon is pushing every five minutes: latest is `7c11351`, and remo
 
 > 🔧 **Bash** `{"command": "until [ \"$(grep -c done qa/pilot05/wave12/tests/capture_run.txt 2>/dev/null)\" -ge 6 ] || ! pgrep -f \"capture.mjs\" >/dev/null; do sleep 3; done; cat qa/pilot05/wave12/tests/capture_run.txt; ls qa/pilot05/wave12/tests qa/pilot05/wave12/factors", "description": "Wait for first six captures to finish", "timeout": 600000}`
 
+### 🧑 User — 2026-11-16T13:57:51.319Z
+
+> ↩︎ result: default-done
+> before-done
+> river05-done
+> silk-done
+> puff-done
+> both-done
+> qa/pilot05/wave12/factors:
+> puff05
+> silk05
+> silk05_puff05
+> 
+> qa/pilot05/wave12/tests:
+> before
+> capture_run.txt
+> default
+> default_040607
+> river05
+
+### 🤖 Claude — 2026-11-16T13:57:57.782Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/pix.py <<'EOF'\nimport sys, json, numpy as np\nfrom PIL import Image\ndef d(a, b):\n    A = np.asarray(Image.open(a).convert('RGB')).astype(int); B = np.asarray(Image.open(b).convert('RGB')).astype(int)\n    if A.shape != B.shape: return {\"shape\": [A.shape, B.shape]}\n    x = np.abs(A - B).max(-1)\n    return {\"max_pixel_difference\": int(x.max()), \"differing_pixels\": int((x > 0).sum())}\npairs = json.loads(sys.argv[1]); out = {}\nfor k, (a, b) in pairs.items(): out[k] = d(a, b)\nprint(jso …[+709 chars]`
+
+### 🧑 User — 2026-11-16T13:57:58.552Z
+
+> ↩︎ result: {
+>  "default_vs_qa/pilot05/current_default_05.png": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "BEFORE(?ringa=26&nearfloor05=0)_vs_qa/pilot05/wave9/baseline/05.png": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  },
+>  "river05_vs_wave11/compare/3_NEW_river05_05.png": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  }
+> }
+
+### 🤖 Claude — 2026-11-16T13:58:04.735Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/wave12; C=qa/pilot05/wave11/compare; python3 -I tools/qa/water05_grain.py $O/WATER_INDICATORS.md APPROVED=$C/1_APPROVED_05.png T2_CURRENT=$O/tests/default/05.png RIVER05_W11=$O/tests/river05/05.png SILK05=$O/factors/silk05/05.png PUFF05=$O/factors/puff05/05.png SILK05+PUFF05=$O/factors/silk05_puff05/05.png >/dev/null; cat $O/WATER_INDICATORS.md; python3 -I tools/qa/diff05.py $O/DIFF05_bands.md APPROVED=$C/1_APPROVED_05.png T2_CURRENT=$O/tests/default/05.png W12=$O/factors/silk05_puff05/05.png > /dev/null; grep -i \"river\\|S-swing\\|W12 \\|T2\" $O/DIFF05_bands.md | ta …[+55 chars]`
+
+### 🧑 User — 2026-11-16T13:58:08.663Z
+
+> ↩︎ result: | image | band | cyan S | cyan V | pink S | pink V | fine grain | broad flow | grain ratio | thin white % |
+> |---|---|---|---|---|---|---|---|---|---|
+> | APPROVED | far river 560-700 | 0.917 | 0.980 | 0.711 | 0.953 | 0.029 | 0.060 | 0.476 | 6.80 |
+> | APPROVED | mid river 700-1000 | 0.988 | 0.976 | 0.752 | 0.973 | 0.018 | 0.043 | 0.429 | 4.80 |
+> | APPROVED | near water 1000-1536 | 0.991 | 0.949 | 0.682 | 0.969 | 0.015 | 0.043 | 0.359 | 4.94 |
+> | T2_CURRENT | far river 560-700 | 0.718 | 1.000 | 0.696 | 0.855 | 0.028 | 0.069 | 0.406 | 12.13 |
+> | T2_CURRENT | mid river 700-1000 | 0.871 | 1.000 | 0.701 | 0.969 | 0.016 | 0.036 | 0.442 | 3.58 |
+> | T2_CURRENT | near water 1000-1536 | 0.922 | 1.000 | 0.674 | 0.922 | 0.014 | 0.032 | 0.443 | 2.90 |
+> | RIVER05_W11 | far river 560-700 | 0.669 | 1.000 | 0.680 | 0.824 | 0.031 | 0.075 | 0.411 | 14.68 |
+> | RIVER05_W11 | mid river 700-1000 | 0.753 | 1.000 | 0.654 | 0.976 | 0.017 | 0.042 | 0.419 | 5.73 |
+> | RIVER05_W11 | near water 1000-1536 | 0.789 | 0.933 | 0.718 | 0.925 | 0.020 | 0.044 | 0.456 | 4.13 |
+> | SILK05 | far river 560-700 | 0.698 | 1.000 | 0.683 | 0.816 | 0.030 | 0.074 | 0.400 | 15.10 |
+> | SILK05 | mid river 700-1000 | 0.846 | 0.992 | 0.714 | 0.969  …[+1352 chars]
+
+### 🤖 Claude — 2026-11-16T13:58:27.665Z
+
+> 🔧 **Bash** `{"command": "until [ \"$(grep -c done qa/pilot05/wave12/tests/capture_run.txt 2>/dev/null)\" -ge 9 ] || ! pgrep -f \"capture.mjs\" >/dev/null; do sleep 3; done; cat qa/pilot05/wave12/tests/capture_run.txt | tr '\\n' ' '; echo; S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; node scripts/capture.mjs 05 --q='silk05=1&puff05=1&panok=0' --out=$S/w12_pk0 2>&1 | tail -1 | cut -c1-40; C=qa/pilot05/wave11/compare; python3 -I tools/qa/water05_grain.py $S/gpk.md PANOK0=$S/w12_pk0/05.png | tail -3", "description": "Wait for batch; test W12 without pano reflection", "t …[+16 chars]`
+
+### 🧑 User — 2026-11-16T13:59:41.207Z
+
+> ↩︎ result: default-done before-done river05-done silk-done puff-done both-done d467-done w467-done low-done 
+> 05 → /tmp/claude-0/-home-user-rainbow-
+> | PANOK0 | mid river 700-1000 | 0.846 | 0.992 | 0.714 | 0.969 | 0.015 | 0.038 | 0.407 | 5.14 |
+> | PANOK0 | near water 1000-1536 | 0.928 | 0.914 | 0.731 | 0.918 | 0.017 | 0.040 | 0.425 | 3.45 |
+
+### 🤖 Claude — 2026-11-16T13:59:51.222Z
+
+> 🔧 **Bash** `{"command": "grep -n \"vec3 glintC = mix(vec3(0.5, 1.25, 1.3), vec3(1.35, 0.95, 1.35), pk5);\" src/vfx/waterRibbon.ts", "description": "Locate glint colour line"}`
+
+### 🧑 User — 2026-11-16T13:59:51.264Z
+
+> ↩︎ result: 1008:    vec3 glintC = mix(vec3(0.5, 1.25, 1.3), vec3(1.35, 0.95, 1.35), pk5);
+
+### 🤖 Claude — 2026-11-16T13:59:54.639Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    vec3 glintC = mix(vec3(0.5, 1.25, 1.3), vec3(1.35, 0.95, 1.35), pk5);", "new_string": "    #ifdef SILK05\n    // W12: sun / glitter glints in the water's own saturated hue (approved highlights are saturated cyan or crisp white,\n    // hardly ever the pastel in between); the crisp white comes from the streak cores and flares only\n    vec3 glintC = mix(vec3(0.08, 1.05, 1.35), vec3(1.4, 0.55, 1.3), pk5);\n    #else\n    vec3 glintC = mix(vec3(0.5, 1.25, 1.3), vec3(1.35, 0.95, 1.35), pk5);\n    # …[+7 chars]`
+
+### 🧑 User — 2026-11-16T13:59:54.685Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:59:56.090Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    c5 = mix(c5, mix(W5_CAQUAW, W5_PPALE, pk5), silkHi * mid5 * 0.28);", "new_string": "    c5 = mix(c5, mix(mix(W5_CBRIGHT, W5_CAQUA, 0.5), W5_PLIGHT, pk5), silkHi * mid5 * 0.32);"}`
+
+### 🧑 User — 2026-11-16T13:59:56.123Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:59:59.099Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=$S/w12f 2>&1 | tail -1 | cut -c1-40; grep -o '\"errors\":\\[[^]]*\\]' qa/capture_log.json | tail -1; python3 -I tools/qa/water05_grain.py $S/gf.md W12f=$S/w12f/05.png | tail -3; convert qa/pilot05/wave12/factors/silk05_puff05/05.png $S/w12f/05.png -crop 864x700+0+600 +repage -resize 50% +append $S/v/e_vs_f.jpg", "description": "Capture and measure W12f saturated glints", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T14:00:17.758Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-
+> | W12f | mid river 700-1000 | 0.847 | 0.992 | 0.714 | 0.969 | 0.015 | 0.038 | 0.409 | 5.13 |
+> | W12f | near water 1000-1536 | 0.914 | 0.922 | 0.729 | 0.922 | 0.017 | 0.040 | 0.418 | 3.41 |
+
+### 🤖 Claude — 2026-11-16T14:00:30.970Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "const vec3 W5_CAQUA = vec3(0.142, 0.787, 0.882);   // #20E8FA\nconst vec3 W5_CAQUAW = vec3(0.39, 0.942, 0.947);   // #7DF9FA", "new_string": "#ifdef SILK05\n// W12: red-free aqua / blue tones (approved cyan pixels have S ≈ 0.99 even in the bright lanes)\nconst vec3 W5_CAQUA = vec3(0.03, 0.78, 0.9);\nconst vec3 W5_CAQUAW = vec3(0.2, 0.93, 0.97);\n#else\nconst vec3 W5_CAQUA = vec3(0.142, 0.787, 0.882);   // #20E8FA\nconst vec3 W5_CAQUAW = vec3(0.39, 0.942, 0.947);   // #7DF9FA\n#endif"}`
+
+### 🧑 User — 2026-11-16T14:00:31.004Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:00:32.669Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "const vec3 W5_VBLUE = vec3(0.168, 0.427, 0.795);   // #3FA3F9 blue into the cyan core", "new_string": "#ifdef SILK05\nconst vec3 W5_VBLUE = vec3(0.07, 0.40, 0.82);\n#else\nconst vec3 W5_VBLUE = vec3(0.168, 0.427, 0.795);   // #3FA3F9 blue into the cyan core\n#endif"}`
+
+### 🧑 User — 2026-11-16T14:00:32.705Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:00:35.772Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=$S/w12g 2>&1 | tail -1 | cut -c1-40; grep -o '\"errors\":\\[[^]]*\\]' qa/capture_log.json | tail -1; python3 -I tools/qa/water05_grain.py $S/gg.md W12g=$S/w12g/05.png | tail -3; convert qa/pilot05/wave11/compare/1_APPROVED_05.png qa/pilot05/wave12/tests/default/05.png $S/w12g/05.png -crop 864x900+0+560 +repage -resize 40% +append $S/v/apr_t2_g.jpg", "description": "Capture and measure W12g red-free aqua", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T14:00:52.429Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-
+> | W12g | mid river 700-1000 | 0.916 | 1.000 | 0.715 | 0.969 | 0.016 | 0.037 | 0.423 | 5.01 |
+> | W12g | near water 1000-1536 | 0.958 | 0.925 | 0.729 | 0.922 | 0.016 | 0.038 | 0.425 | 3.36 |
+
+### 🤖 Claude — 2026-11-16T14:00:56.246Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/apr_t2_g.jpg"}`
+
+### 🧑 User — 2026-11-16T14:00:56.266Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T14:01:05.518Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/wave12 && rm -rf $O/factors/silk05 $O/factors/silk05_puff05 $O/tests/w12_040607 $O/tests/w12_low && (\nnode scripts/capture.mjs 05 --q='silk05=1' --out=$O/factors/silk05 >/dev/null 2>&1; echo silk-done\nnode scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=$O/factors/silk05_puff05 >/dev/null 2>&1; echo both-done\nnode scripts/capture.mjs 04 06 07 --q='silk05=1&puff05=1' --out=$O/tests/w12_040607 >/dev/null 2>&1; echo w467-done\nnode scripts/capture.mjs 05 --q='silk05=1&puff05=1&quality=low' --out=$O/tests/w12_low >/dev/null 2>&1; echo low-done\nnode scripts/gamepl …[+706 chars]`
+
+### 🧑 User — 2026-11-16T14:01:05.563Z
+
+> ↩︎ result: Command running in background with ID: bilk6rf0p. Output is being written to: /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/tasks/bilk6rf0p.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T14:01:06.369Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p scripts/perf05.mjs | grep -n \"name=\\|split\\|=\" | head -8", "description": "Confirm perf05 argument parsing"}`
+
+### 🧑 User — 2026-11-16T14:01:06.421Z
+
+> ↩︎ result: 2://   node scripts/perf05.mjs OUT.json [--size=864x1536] name=query ...
+> 5:const args = process.argv.slice(2); const out = args.shift();
+> 6:const size = (args.find((a) => a.startsWith('--size=')) ?? '--size=864x1536').slice(7).split('x').map(Number);
+> 7:const N = 14;
+> 8:const variants = args.filter((a) => !a.startsWith('--')).map((a) => { const i = a.indexOf('='); return [a.slice(0, i), a.slice(i + 1)]; });
+> 9:const { chromium } = loadPlaywright();
+> 10:const vite = await startVite(5237);
+> 11:const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+
+### 🤖 Claude — 2026-11-16T14:01:11.205Z
+
+> 🔧 **Bash** `{"command": "wc -l backups/START_NEW_CLAUDE_ACCOUNT.md && sed -n 1,60p backups/START_NEW_CLAUDE_ACCOUNT.md", "description": "Read the new-account continuation prompt"}`
+
+### 🧑 User — 2026-11-16T14:01:11.247Z
+
+> ↩︎ result: 44 backups/START_NEW_CLAUDE_ACCOUNT.md
+> # Paste this into Claude Code on the next Claude account
+> 
+> ## Before you paste (one-time, on the new account — these never travel through GitHub)
+> 1. claude.ai → connect **GitHub** to the new Claude account and install the **Claude GitHub App** on
+>    `josiahscalia5-dev/rainbow-`.
+> 2. claude.ai → Settings → Connectors: add **World Labs Atlas** and sign in (only needed for new World Labs tasks).
+>    Enable the **playwright** plugin if it is not already on.
+> 3. Optional, makes every session start faster: Claude Code → environment settings → create a personal environment
+>    for `josiahscalia5-dev/rainbow-` and paste `scripts/cloud-env-setup.sh` as its setup script (network: unrestricted,
+>    or limited + package managers + MCP servers + the hosts in `backups/TOOL_MANIFEST.json` → `network_hosts`).
+> 4. Start a Claude Code cloud session on `josiahscalia5-dev/rainbow-`; pick branch **`ccr-251ed97c-ty2xvp`** if the app
+>    lets you choose (any branch works — the bootstrap merges the newest work).
+> 
+> ## Short prompt
+> > Continue my EXISTING Rainbow 3D game — do not start over, do not delete anything. Repository
+> > `josiahscalia5-dev/rainbow-`. Follow `CLAUDE.md`: t …[+3033 chars]
+
+### 🤖 Claude — 2026-11-16T14:01:12.660Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('backups/TOOL_MANIFEST.json'));print(list(d.keys()));print(json.dumps({k:d[k] for k in d if k in ('updated_utc','updated_by_session','newest_branch','connectors','credentials','marble_worlds','cloud_environments')},indent=1)[:2500])\"", "description": "Inspect tool manifest keys"}`
+
+### 🧑 User — 2026-11-16T14:01:12.745Z
+
+> ↩︎ result: ['_comment', 'schema', 'project', 'repo', 'updated_utc', 'entry_points', 'startup_integration', 'tools', 'claude_plugins', 'mcp_servers', 'credentials', 'network_hosts', 'marble_worldlabs', 'protected', 'cannot_transfer_through_github']
+> {
+>  "updated_utc": "2026-11-16T11:00:00+00:00",
+>  "credentials": {
+>   "_policy": "NEVER in git, chat, logs or scripts. Stored only by the Claude platform. Transfers between Claude accounts: NO.",
+>   "marble_world_api_key": {
+>    "host": "api.worldlabs.ai",
+>    "header": "WLT-Api-Key",
+>    "stored_as": "network secret on the Claude cloud environment (injected by the session proxy)",
+>    "reconnect": "Claude calls request_credential(host api.worldlabs.ai, header WLT-Api-Key); the user pastes the key only into that secure form",
+>    "needed": "only for NEW World Labs API calls - every generated asset is already in Git LFS",
+>    "check": "python3 -I scripts/verify-assets.py worldlabs  (free reads: balance + both worlds)",
+>    "ask_user_only_if": "the check reports HTTP 401/403 (authentication failed); network errors/timeouts are NOT a key problem",
+>    "verified": "2026-11-16 11:27 UTC on the Default environment: authenticated, 5190 credits, draft 200, full 200"
+>    …[+62 chars]
+
+### 🤖 Claude — 2026-11-16T14:01:30.403Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='backups/START_NEW_CLAUDE_ACCOUNT.md'\nt=open(p).read()\nt=t.replace(\"pick branch **`ccr-251ed97c-ty2xvp`** if the app\\n   lets you choose (any branch works — the bootstrap merges the newest work).\",\n \"pick branch **`ccr-451ea8c7-3nqlis`** if the app\\n   lets you choose (any branch works — the bootstrap merges the newest work).\")\nt=t.replace(\"> `git fetch origin ccr-251ed97c-ty2xvp && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`).\",\n \"> `git fetch origin ccr-451ea8c7-3nqlis && git show FETCH_HEAD:scripts …[+2961 chars]`
+
+### 🧑 User — 2026-11-16T14:01:30.478Z
+
+> ↩︎ result: 2 True
+
+### 🤖 Claude — 2026-11-16T14:01:39.803Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/TOOL_MANIFEST.json'\nd=json.load(open(p))\nd['updated_utc']='2026-11-16T14:30:00+00:00'\nc=d['credentials']['marble_world_api_key']\nc['verified']=(\"2026-11-16 ~14:00 UTC, session ccr-451ea8c7-3nqlis, personal environment 'rainbow-': the stored key returned \"\n \"HTTP 401, the user re-entered it through request_credential, free read then OK: 5190 credits, draft 200, full 200. No credits spent.\")\nmw=d.setdefault('marble_worldlabs',{})\nif isinstance(mw,dict):\n    mw['atlas_connector_status_2026_11_16']=(\"NOT installed on the current  …[+1474 chars]`
+
+### 🧑 User — 2026-11-16T14:01:39.895Z
+
+> ↩︎ result: ok dict dict
+>  backups/TOOL_MANIFEST.json | 443 ++++++++++++++++++++++++++++++++++-----------
+>  1 file changed, 338 insertions(+), 105 deletions(-)
+
+### 🤖 Claude — 2026-11-16T14:01:41.772Z
+
+The manifest diff is large only because I re-serialized it with a different indentation. I'll restore the original formatting so the diff shows only the real changes.
+
+### 🤖 Claude — 2026-11-16T14:01:43.375Z
+
+> 🔧 **Bash** `{"command": "git show HEAD:backups/TOOL_MANIFEST.json | head -4 | cat -A | cut -c1-40; python3 - <<'EOF'\nimport json\np='backups/TOOL_MANIFEST.json'\nd=json.load(open(p))\nopen(p,'w').write(json.dumps(d,indent=2,ensure_ascii=False)+'\\n')\nEOF\ngit diff --stat backups/TOOL_MANIFEST.json", "description": "Restore manifest indentation and recheck diff"}`
+
+### 🧑 User — 2026-11-16T14:01:43.460Z
+
+> ↩︎ result: {$
+>   "_comment": "Machine-readable Rainbow 
+>   "schema": 1,$
+>   "project": "RAINBOW - 11-screen 3D mob
+>  backups/TOOL_MANIFEST.json | 301 ++++++++++++++++++++++++++++++++++++++++-----
+>  1 file changed, 267 insertions(+), 34 deletions(-)
+
+### 🤖 Claude — 2026-11-16T14:01:45.028Z
+
+> 🔧 **Bash** `{"command": "git diff backups/TOOL_MANIFEST.json | head -40", "description": "Inspect manifest diff format"}`
+
+### 🧑 User — 2026-11-16T14:01:45.069Z
+
+> ↩︎ result: diff --git a/backups/TOOL_MANIFEST.json b/backups/TOOL_MANIFEST.json
+> index 2ce46db..670d001 100644
+> --- a/backups/TOOL_MANIFEST.json
+> +++ b/backups/TOOL_MANIFEST.json
+> @@ -3,7 +3,7 @@
+>    "schema": 1,
+>    "project": "RAINBOW - 11-screen 3D mobile game (Three.js + Vite + Capacitor Android)",
+>    "repo": "josiahscalia5-dev/rainbow-",
+> -  "updated_utc": "2026-11-16T11:00:00+00:00",
+> +  "updated_utc": "2026-11-16T14:30:00+00:00",
+>    "entry_points": {
+>      "bootstrap": "bash scripts/claude-bootstrap.sh            # full: resume newest work, LFS, refs, agents, Marble, tools, tests, autosave, report",
+>      "bootstrap_check_only": "bash scripts/claude-bootstrap.sh --check    # no installs, no merges",
+> @@ -31,37 +31,180 @@
+>      }
+>    },
+>    "tools": {
+> -    "node": {"required": true, "need": ">=20", "tested": "22.23.4", "check": "node -v", "install": "preinstalled in Claude cloud images (/opt/node22)"},
+> -    "npm_deps": {"required": true, "check": "node_modules/.rainbow-bootstrap.sha256 == sha256(package.json, package-lock.json)", "install": "npm ci --no-audit --no-fund --prefer-offline", "cache": "~/.npm (reused)", "packages": "three ^0.170, vite ^5.4, vite-node ^2.1, typescript ^5.6, @capacitor/* ^6 …[+2842 chars]
+
+### 🤖 Claude — 2026-11-16T14:01:47.051Z
+
+The original manifest mixes compact one-line objects, so I'll revert it and make plain text edits instead.
+
+### 🤖 Claude — 2026-11-16T14:01:48.157Z
+
+> 🔧 **Bash** `{"command": "git checkout backups/TOOL_MANIFEST.json && grep -n '\"verified\": \"2026-11-16 11:27\\|\"updated_utc\"\\|\"claude_cli\"\\|\"marble_worldlabs\": {' backups/TOOL_MANIFEST.json", "description": "Revert manifest and find edit anchors"}`
+
+### 🧑 User — 2026-11-16T14:01:48.242Z
+
+> ↩︎ result: Updated 1 path from the index
+> 6:  "updated_utc": "2026-11-16T11:00:00+00:00",
+> 47:    "claude_cli": {"required": true, "tested": "2.1.325", "used_by": "plugin install / mcp list checks"}
+> 64:    "marble_world_api_key": {"host": "api.worldlabs.ai", "header": "WLT-Api-Key", "stored_as": "network secret on the Claude cloud environment (injected by the session proxy)", "reconnect": "Claude calls request_credential(host api.worldlabs.ai, header WLT-Api-Key); the user pastes the key only into that secure form", "needed": "only for NEW World Labs API calls - every generated asset is already in Git LFS", "check": "python3 -I scripts/verify-assets.py worldlabs  (free reads: balance + both worlds)", "ask_user_only_if": "the check reports HTTP 401/403 (authentication failed); network errors/timeouts are NOT a key problem", "verified": "2026-11-16 11:27 UTC on the Default environment: authenticated, 5190 credits, draft 200, full 200"},
+> 79:  "marble_worldlabs": {
+
+### 🤖 Claude — 2026-11-16T14:01:57.464Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/TOOL_MANIFEST.json'\nt=open(p).read()\nt=t.replace('\"updated_utc\": \"2026-11-16T11:00:00+00:00\",','\"updated_utc\": \"2026-11-16T14:30:00+00:00\",',1)\nt=t.replace('\"verified\": \"2026-11-16 11:27 UTC on the Default environment: authenticated, 5190 credits, draft 200, full 200\"},',\n '\"verified\": \"2026-11-16 11:27 UTC on the Default environment: authenticated, 5190 credits, draft 200, full 200; 2026-11-16 ~14:00 UTC (session ccr-451ea8c7-3nqlis, personal environment rainbow-): stored key gave HTTP 401, the user re-entered it via r …[+1855 chars]`
+
+### 🧑 User — 2026-11-16T14:01:57.565Z
+
+> ↩︎ result: valid json
+>  backups/TOOL_MANIFEST.json | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+> silk-done
+> both-done
+
+### 🤖 Claude — 2026-11-16T14:01:59.325Z
+
+Manifest updated with an 8-line diff. Next is the specialist roster file.
+
+### 🤖 Claude — 2026-11-16T14:02:00.980Z
+
+> 🔧 **Bash** `{"command": "grep -n '\"updated_utc\"\\|\"updated_by_session\"\\|\"current_focus\"\\|\"name\": \"water-fx-specialist\"\\|\"name\": \"android-build-performance\"\\|\"name\": \"playwright-visual-qa\"' backups/AGENTS_STATUS.json; python3 -c \"\nimport json;d=json.load(open('backups/AGENTS_STATUS.json'));a=[x for x in d['agents'] if x['name']=='water-fx-specialist'][0];print(json.dumps(a,indent=1)[:1500])\"", "description": "Inspect water specialist entry"}`
+
+### 🧑 User — 2026-11-16T14:02:01.063Z
+
+> ↩︎ result: 4:  "updated_utc": "2026-11-16T12:45:00+00:00",
+> 5:  "updated_by_session": "01Kbt6BTutLARq2w7hhXopgC (branch ccr-251ed97c-ty2xvp)",
+> 7:  "current_focus": "Screen 05 against the user's BEFORE baseline (qa/pilot05/COORDINATION_WAVE9B.md). T2 tunnel-height tests all rejected (no more tunnel positioning, user 11:20). Waiting for the user's yes/no on T1 (?ringa=20) and W2 (?wall05=1, violet walls). Next by the user's priority: highlights + yellow-gold rings, fewer rings around the VP, river width + S-swing, foam it06. Then screens 06, 03, 04, 07, 08, 09.",
+> 34:      "name": "water-fx-specialist",
+> 69:      "name": "playwright-visual-qa",
+> 113:      "name": "android-build-performance",
+> {
+>  "name": "water-fx-specialist",
+>  "file": ".claude/agents/water-fx-specialist.md",
+>  "sha256": "b160f12ff93db70ef94b62d5951c62335320cc1268ca7998de39ea26df1a84a2",
+>  "role": "Real-time 3D animated cyan/pink fluid look and flow",
+>  "state": "idle",
+>  "last_wave": "wave 10 DONE (it04 kept behind ?water05=1; candidate waiting for the user's yes/no)",
+>  "unfinished_work": "qa/pilot05/wave10/water/NOTES.md -> 'Left undone' (mid bands wider/fewer streaks, far coin off-centre, far river not animated, flares smaller, low-qu …[+256 chars]
+
+### 🤖 Claude — 2026-11-16T14:02:12.261Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\nt=open(p).read()\nd=json.loads(t)\ncur=d['current_focus']\nnew_focus=(\"Screen 05 water, wave 12 (qa/pilot05/wave12/NOTES.md): default = T2 (provisional), BEFORE protected via ?ringa=26&nearfloor05=0. \"\n \"Candidates waiting for the user's yes/no: W2 ?wall05=1, G1b ?gold05=1, W10 ?water05=1, S1 ?fars05=1, W11 ?river05=1 (user: too grainy), \"\n \"W12 ?silk05=1&puff05=1 (smooth long flow-aligned streaks, deep electric cyan, bubbly foam banks; experiment APK builds/rainbow-debug-w12-water.apk). \"\n \"Next by the user …[+1951 chars]`
+
+### 🧑 User — 2026-11-16T14:02:12.334Z
+
+> ↩︎ result: ok
+>  backups/AGENTS_STATUS.json | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+
+### 🤖 Claude — 2026-11-16T14:02:16.129Z
+
+Now a minimal update to `CLAUDE.md`'s pointers: the newest branch, the current brief and the candidate list.
+
+### 🤖 Claude — 2026-11-16T14:02:21.929Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='CLAUDE.md'\nt=open(p).read()\nn=0\nfor a,b in [\n (\"`git fetch origin ccr-251ed97c-ty2xvp && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`\",\n  \"`git fetch origin ccr-451ea8c7-3nqlis && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`\"),\n (\"`backups/TOOL_MANIFEST.json` and the current brief `qa/pilot05/COORDINATION_WAVE9B.md`.\",\n  \"`backups/TOOL_MANIFEST.json` and the current briefs `qa/pilot05/wave12/NOTES.md` (water) + `qa/pilot05/COORDINATION_WAVE9B.md`.\"),\n (\"Newest work as of 2026 …[+751 chars]`
+
+### 🧑 User — 2026-11-16T14:02:22.003Z
+
+> ↩︎ result: 4 edits
+> silk-done both-done w467-done
+
+### 🤖 Claude — 2026-11-16T14:02:25.074Z
+
+While the gameplay test runs, I'll prepare the three separate full-size comparison pictures.
+
+### 🤖 Claude — 2026-11-16T14:02:28.675Z
+
+> 🔧 **Bash** `{"command": "identify references/05_flow_into_the_current.png | cut -d' ' -f1-3; O=qa/pilot05/wave12; cp qa/pilot05/wave11/compare/1_APPROVED_05.png $O/compare/1_APPROVED_05.png && cp $O/tests/default/05.png $O/compare/2_CURRENT_T2_05.png && cp $O/factors/silk05_puff05/05.png $O/compare/3_NEW_W12_water_05.png && cmp qa/pilot05/wave11/compare/1_APPROVED_05.png $O/compare/1_APPROVED_05.png && identify $O/compare/*.png | cut -d' ' -f1-3; python3 -I /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/pix.py \"{\\\"w12_final_vs_w12g_scratch\\\": [\\\"$O/factors/silk05_ …[+189 chars]`
+
+### 🧑 User — 2026-11-16T14:02:29.246Z
+
+> ↩︎ result: references/05_flow_into_the_current.png JPEG 864x1536
+> qa/pilot05/wave12/compare/1_APPROVED_05.png JPEG 864x1536
+> qa/pilot05/wave12/compare/2_CURRENT_T2_05.png PNG 864x1536
+> qa/pilot05/wave12/compare/3_NEW_W12_water_05.png PNG 864x1536
+> {
+>  "w12_final_vs_w12g_scratch": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  }
+> }
+
+### 🤖 Claude — 2026-11-16T14:02:31.664Z
+
+The capture is deterministic: the stored W12 picture is pixel-identical to the W12g check. Next I'll re-measure the final factor pictures for the notes.
+
+### 🤖 Claude — 2026-11-16T14:02:35.256Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/wave12; C=qa/pilot05/wave11/compare; python3 -I tools/qa/water05_grain.py $O/WATER_INDICATORS.md APPROVED=$C/1_APPROVED_05.png T2_CURRENT=$O/tests/default/05.png RIVER05_W11=$O/tests/river05/05.png SILK05=$O/factors/silk05/05.png PUFF05=$O/factors/puff05/05.png W12_SILK05+PUFF05=$O/factors/silk05_puff05/05.png >/dev/null; cat $O/WATER_INDICATORS.md | grep -v PUFF05\\ \\|; python3 -I tools/qa/diff05.py $O/DIFF05_bands.md APPROVED=$C/1_APPROVED_05.png T2_CURRENT=$O/tests/default/05.png RIVER05_W11=$O/tests/river05/05.png W12=$O/factors/silk05_puff05/05.png >/dev/null; g …[+176 chars]`
+
+### 🧑 User — 2026-11-16T14:02:39.692Z
+
+> ↩︎ result: | image | band | cyan S | cyan V | pink S | pink V | fine grain | broad flow | grain ratio | thin white % |
+> |---|---|---|---|---|---|---|---|---|---|
+> | APPROVED | far river 560-700 | 0.917 | 0.980 | 0.711 | 0.953 | 0.029 | 0.060 | 0.476 | 6.80 |
+> | APPROVED | mid river 700-1000 | 0.988 | 0.976 | 0.752 | 0.973 | 0.018 | 0.043 | 0.429 | 4.80 |
+> | APPROVED | near water 1000-1536 | 0.991 | 0.949 | 0.682 | 0.969 | 0.015 | 0.043 | 0.359 | 4.94 |
+> | T2_CURRENT | far river 560-700 | 0.718 | 1.000 | 0.696 | 0.855 | 0.028 | 0.069 | 0.406 | 12.13 |
+> | T2_CURRENT | mid river 700-1000 | 0.871 | 1.000 | 0.701 | 0.969 | 0.016 | 0.036 | 0.442 | 3.58 |
+> | T2_CURRENT | near water 1000-1536 | 0.922 | 1.000 | 0.674 | 0.922 | 0.014 | 0.032 | 0.443 | 2.90 |
+> | RIVER05_W11 | far river 560-700 | 0.669 | 1.000 | 0.680 | 0.824 | 0.031 | 0.075 | 0.411 | 14.68 |
+> | RIVER05_W11 | mid river 700-1000 | 0.753 | 1.000 | 0.654 | 0.976 | 0.017 | 0.042 | 0.419 | 5.73 |
+> | RIVER05_W11 | near water 1000-1536 | 0.789 | 0.933 | 0.718 | 0.925 | 0.020 | 0.044 | 0.456 | 4.13 |
+> | SILK05 | far river 560-700 | 0.727 | 1.000 | 0.683 | 0.816 | 0.030 | 0.074 | 0.404 | 14.77 |
+> | SILK05 | mid river 700-1000 | 0.916 | 1.000 | 0.715 | 0.969  …[+797 chars]
+
+### 🤖 Claude — 2026-11-16T14:02:47.069Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"perf-low-done\" qa/pilot05/wave12/tests/run2.txt 2>/dev/null || ! pgrep -f \"gameplay-test.mjs|perf05.mjs|continuity-test|capture.mjs\" >/dev/null; do sleep 5; done; O=qa/pilot05/wave12/tests; cat $O/run2.txt | tr '\\n' ' '; echo; cat $O/gameplay_w12_stdout.txt | head -40; tail -5 $O/continuity_stdout.txt", "description": "Wait for gameplay, continuity, perf results", "timeout": 1500000}`
+
