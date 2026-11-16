@@ -444,7 +444,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "01fd79eafc846946856b819242793556c832bb1e05849fba442a5a7803d6dfec"
+   "sha256": "bedc7e4d582eafa01e8e69a8f827b68052be5c978397b5844583de11753ef33e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1415,6 +1415,11 @@
    "path": "qa/pilot05/proj/caps/default/05.png",
    "bytes": 1746598,
    "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/proj/clips/proj05_benny_steering_3s.mp4",
+   "bytes": 1785733,
+   "sha256": "a981e19d63840292399433c082f016f59ce3735c2cb917951ffaacc7f8a1332f"
   },
   {
    "path": "qa/pilot05/proj/clips/proj05_locked_flow_3s.mp4",

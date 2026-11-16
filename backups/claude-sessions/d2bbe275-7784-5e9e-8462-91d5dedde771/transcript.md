@@ -4123,3 +4123,56 @@ The strip covers most of the missing far-bank pixels (green: about 15,900 of 19,
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/steer/steer_sheet.png"}`
 
+### 🧑 User — 2026-11-16T18:51:00.032Z
+
+> ↩︎ result: steer -1 0.25 -0.714
+> steer -1 0.5 -2.352
+> steer -1 0.8 -4.566
+> steer 1 0.25 0.705
+> steer 1 0.5 2.342
+> steer 1 0.8 4.556
+> 6
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-16T18:51:00.177Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:51:04.111Z
+
+Steering works: Benny reaches either bank (±4.6 units) and your water design stays coherent around him. Checking the two extreme frames at full size for seams.
+
+### 🤖 Claude — 2026-11-16T18:51:06.861Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('$SP/steer/proj/steer_L_080.png').convert('RGB').crop((0,500,864,1536)); b=Image.open('$SP/steer/proj/steer_R_080.png').convert('RGB').crop((0,500,864,1536))\nc=Image.new('RGB',(864*2+10,1036)); c.paste(a,(0,0)); c.paste(b,(874,0)); c.resize((869,518)).save('$SP/mf/steer_ext.png')\"", "description": "Full-detail crop of extreme steering frames"}`
+
+### 🧑 User — 2026-11-16T18:51:07.214Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T18:51:08.063Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/steer_ext.png"}`
+
+### 🧑 User — 2026-11-16T18:51:08.103Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:51:22.678Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/proj05-move.mjs --q='proj05=1' --out=$SP/steer/zz --zigzag=3 --fps=24 2>&1 | tail -1 && ffmpeg -y -loglevel error -framerate 24 -i $SP/steer/zz/zigzag/%04d.png -vf \"scale=432:768\" -c:v libx264 -pix_fmt yuv420p -crf 20 qa/pilot05/proj/clips/proj05_benny_steering_3s.mp4 && ls -la qa/pilot05/proj/clips/", "description": "Render steering zig-zag clip with flow", "timeout": 2400000}`
+
+### 🤖 Claude — 2026-11-16T18:51:28.988Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && npx tsc --noEmit -p . 2>&1 | head -3; node scripts/capture.mjs 04 05 06 07 --out=$SP/cap/chk_def 2>&1 | grep -c \"→\"; node scripts/capture.mjs 04 06 07 --q=proj05=1 --out=$SP/cap/chk_proj 2>&1 | grep -c \"→\"; git checkout -q qa/capture_log.json; python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nSP='$SP'\ndef d(a,b):\n    a=np.asarray(Image.open(a).convert('RGB')).astype(int); b=np.asarray(Image.open(b).convert('RGB')).astype(int); x=np.abs(a-b).sum(-1); return int((x>0).sum()), int( …[+817 chars]`
+
+### 🧑 User — 2026-11-16T18:54:57.702Z
+
+> ↩︎ result: zigzag frames 72
+> total 4536
+> drwxr-xr-x  2 root root    4096 Nov 16 18:54 .
+> drwxr-xr-x 11 root root    4096 Nov 16 18:38 ..
+> -rw-r--r--  1 root root 1785733 Nov 16 18:54 proj05_benny_steering_3s.mp4
+> -rw-r--r--  1 root root  838039 Nov 16 18:26 proj05_locked_flow_3s.mp4
+> -rw-r--r--  1 root root 2007272 Nov 16 18:32 proj05_ride_4s.mp4
+
