@@ -1292,3 +1292,376 @@ That edge test is too noisy: white highlights break the "warm" test. I'll draw t
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/edge_f2.png"}`
 
+### 🧑 User — 2026-11-16T20:44:29.321Z
+
+> ↩︎ result: TSC_OK
+> 05 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/f2/05.png {"stage":"05","s":132
+> Updated 1 path from the index
+> rec/05.png
+>   NEARFRAME px   90640  mean|d|  61.54  <=10 0.041  <=20 0.138  SSIM 0.455  bias [19.3, 35.7, 33.5]
+>   TUNNEL    px  440275  mean|d|  57.64  <=10 0.052  <=20 0.160  SSIM 0.229  bias [6.8, 9.0, 1.8]
+>   WATER     px  469357  mean|d|   8.44  <=10 0.887  <=20 0.929  SSIM 0.920  bias [1.7, -1.1, 1.2]
+>   FRAME     px 1157760  mean|d|  35.68  <=10 0.404  <=20 0.500  SSIM 0.512  bias [6.9, 1.1, 1.8]
+>   FULL      px 1327104  mean|d|  38.87  <=10 0.356  <=20 0.453  SSIM 0.469  bias [7.5, 4.1, 3.8]
+> f1/05.png
+>   NEARFRAME px   90640  mean|d|  41.70  <=10 0.195  <=20 0.374  SSIM 0.501  bias [12.6, 17.1, 17.9]
+>   TUNNEL    px  440275  mean|d|  53.55  <=10 0.084  <=20 0.209  SSIM 0.238  bias [5.4, 5.2, -1.4]
+>   WATER     px  469357  mean|d|   8.54  <=10 0.877  <=20 0.929  SSIM 0.922  bias [2.1, -1.0, 1.1]
+>   FRAME     px 1157760  mean|d|  34.18  <=10 0.412  <=20 0.518  SSIM 0.516  bias [6.6, -0.2, 0.5]
+>   FULL      px 1327104  mean|d|  37.56  <=10 0.363  <=20 0.469  SSIM 0.473  bias [7.2, 2.9, 2.7]
+> f2/05.png
+>   NEARFRAME px   90640  mean|d|   …[+457 chars]
+
+### 🧑 User — 2026-11-16T20:44:29.343Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:45:00.908Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/frame_bake.py'; s=open(p).read()\nold='''out = sys.argv[1]\nsig_u = float(sys.argv[2]) if len(sys.argv) > 2 else 3.0'''\nnew='''pos = [a for a in sys.argv[1:] if not a.startswith(\"--\")]\nopt = dict(a[2:].split(\"=\", 1) for a in sys.argv[1:] if a.startswith(\"--\") and \"=\" in a)\nout = pos[0]\nsig_u = float(pos[1]) if len(pos) > 1 else 3.0\n# --capture=<05.png with ?projframe05=1>: colour feedback (bloom spill the shader cannot undo). The capture is sampled at\n# the same band coordinates (the frame projects onto its designed outline), e = …[+3935 chars]`
+
+### 🧑 User — 2026-11-16T20:45:19.136Z
+
+> ↩︎ result: left capture - texture: mean [ 1.8  7.1 10.3] mean abs 7.7
+> right capture - texture: mean [1.9 6.7 9.3] mean abs 7.9
+> lip capture - texture: mean [ 2.4  8.2 11.6] mean abs 8.8
+> {"w": 256, "h": 160, "rows": {"left": {"y0": 0, "h": 48, "visible": 0.312, "mean_rgb": [210.7, 115.4, 49.7]}, "right": {"y0": 56, "h": 48, "visible": 0.354, "mean_rgb": [209.8, 115.2, 49.1]}, "lip": {
+> 0
+> Updated 1 path from the index
+> f2/05.png
+>   NEARFRAME px   90640  mean|d|  20.68  <=10 0.480  <=20 0.749  SSIM 0.809  bias [19.7, 8.4, -1.6]
+>   TUNNEL    px  440275  mean|d|  49.23  <=10 0.143  <=20 0.286  SSIM 0.301  bias [6.9, 3.4, -5.4]
+>   FRAME     px 1157760  mean|d|  32.45  <=10 0.437  <=20 0.548  SSIM 0.540  bias [6.9, -1.0, -1.0]
+>   FULL      px 1327104  mean|d|  36.05  <=10 0.384  <=20 0.495  SSIM 0.494  bias [7.5, 2.3, 1.4]
+> f3/05.png
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   TUNNEL    px  440275  mean|d|  48.68  <=10 0.167  <=20 0.290  SSIM 0.302  bias [6.5, 2.3, -6.8]
+>   FRAME     px 1157760  mean|d|  32.23  <=10 0.447  <=20 0.550  SSIM 0.541  bias [6.7, -1.4, -1.6]
+>   FULL      px 1327104  mean|d|  35.86  <=10 0.393  <=20 0.497  SSIM 0.495  bias [7. …[+12 chars]
+
+### 🤖 Claude — 2026-11-16T20:45:30.964Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $S/def2 $S/bef $S/rec2 && node scripts/capture.mjs 05 --out=$S/def2 >/dev/null 2>&1; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/bef >/dev/null 2>&1; node scripts/capture.mjs 05 --q='proj05=1&projwall05=1&projring05=1' --out=$S/rec2 >/dev/null 2>&1; git checkout qa/capture_log.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\ndef cmp(a,b):\n    A=np.asarray(Image.open(a).convert('RGB')).astype(int); B=np.asarray(Image.open(b).convert('RGB')).asty …[+532 chars]`
+
+### 🧑 User — 2026-11-16T20:46:18.170Z
+
+> ↩︎ result: Updated 1 path from the index
+> default before vs after my change: differing px, max diff (0, 0)
+> protected BEFORE ?ringa=26&nearfloor05=0 vs qa/pilot05/wave9/baseline/05.png (0, 0)
+> recovered experiment (no projframe05) before vs after (0, 0)
+
+### 🤖 Claude — 2026-11-16T20:46:20.710Z
+
+All three are pixel-identical (0 differing pixels): the protected default, your protected BEFORE, and the recovered experiment without the new switch. Next, the gameplay checks with the switch on.
+
+### 🤖 Claude — 2026-11-16T20:46:21.711Z
+
+> 🔧 **Bash** `{"command": "grep -A30 '\"scripts\"' package.json | grep -E '\"(test|qa|gameplay|continuity|play)[^\"]*\"' | head -15; ls scripts | grep -i \"gameplay\\|play\\|steer\\|test\" | head", "description": "Find gameplay test scripts"}`
+
+### 🧑 User — 2026-11-16T20:46:21.758Z
+
+> ↩︎ result: "test:continuity": "vite-node scripts/continuity-test.ts",
+>     "qa:capture": "node scripts/capture.mjs",
+>     "qa:compare": "python3 scripts/compare.py",
+>     "test:cinematic": "node scripts/cinematic-test.mjs"
+> aspect-test.mjs
+> cinematic-test.mjs
+> continuity-test.ts
+> gameplay-test.mjs
+
+### 🤖 Claude — 2026-11-16T20:46:23.269Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p scripts/gameplay-test.mjs | grep -n \"q=\\|opt\\|usage\\|//\" | head -12", "description": "Check gameplay test options"}`
+
+### 🧑 User — 2026-11-16T20:46:23.312Z
+
+> ↩︎ result: 2:// Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> 3:// Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> 4://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> 5://  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> 6://  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> 7://  * real coin pickups update the counter; steering into the foam wall costs a heart
+> 8://  * pause freezes the simulation; resume continues
+> 9://  * the run ends in the 11 victory with Benny hidden under the towel
+> 10:// Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+
+### 🤖 Claude — 2026-11-16T20:46:25.933Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/proj/tunnel/frame/tests && node scripts/gameplay-test.mjs --q='proj05=1&projwall05=1&projring05=1&projframe05=1' --out=qa/pilot05/proj/tunnel/frame/tests/gameplay_projframe05.json 2>&1 | tail -15; npm run -s test:continuity 2>&1 | tail -3", "description": "Run gameplay and continuity tests with new switch", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T20:46:33.394Z
+
+> ↩︎ result: "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+
+### 🤖 Claude — 2026-11-16T20:46:35.563Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json; d=json.load(open('qa/pilot05/proj/tunnel/frame/tests/gameplay_projframe05.json'))\nprint('pass' , d.get('pass', d.get('ok')), 'errors', d.get('errors'))\nprint({k:v for k,v in d.get('checks',{}).items()} if 'checks' in d else list(d.keys()))\n\"", "description": "Summarize gameplay test result"}`
+
+### 🧑 User — 2026-11-16T20:46:35.629Z
+
+> ↩︎ result: pass True errors []
+> {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.027, 'coins': 2240, 'hearts': 5, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}}
+
+### 🤖 Claude — 2026-11-16T20:46:59.247Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && grep -n \"tunnel\\|projwall\\|projring\" qa/pilot05/proj/NOTES.md | head -8; python3 -I -c \"\nimport numpy as np; p='qa/pilot05/proj/tunnel/model/frame_correction.npy'; a=np.load(p); np.save(p,a.astype(np.float32)); print(a.shape)\" && sed -i 's/    np.save(CORR, np.stack(corr_new))/    np.save(CORR, np.stack(corr_new).astype(np.float32))/' tools/proj05/frame_bake.py && grep -n \"np.save(CORR\" tools/proj05/frame_bake.py && D=qa/pilot05/proj/tunnel/frame && cp references/05_flow_into_the_curren …[+1458 chars]`
+
+### 🧑 User — 2026-11-16T20:47:03.848Z
+
+> ↩︎ result: 80:  tunnel changes (the 05 river seen from afar, plus its bloom halo) — the 04 river, foam and Benny are unchanged.
+> 104:3. Visual-only bank strip on the lower tunnel wall (`src/vfx/proj05Apron.ts`, texture `proj05_A.png`): the approved
+> 110:bottom corners (16.9 k px, 3.6 % — the tunnel was not moved, user rule), game coins at other far positions and
+> (3, 48, 256, 3)
+> 107:    np.save(CORR, np.stack(corr_new).astype(np.float32))
+> total 6396
+> drwxr-xr-x 3 root root    4096 Nov 16 20:47 .
+> drwxr-xr-x 5 root root    4096 Nov 16 20:46 ..
+> -rw-r--r-- 1 root root 1746598 Nov 16 20:46 0_DEFAULT_T2_unchanged.png
+> -rw-r--r-- 1 root root  484196 Nov 16 20:46 1_APPROVED.png
+> -rw-r--r-- 1 root root 2125706 Nov 16 20:46 2_RECOVERED_e27c6fa_proj05_projwall05_projring05.png
+> -rw-r--r-- 1 root root 2155825 Nov 16 20:46 3_NEW_projframe05.png
+> -rw-r--r-- 1 root root   13123 Nov 16 20:47 REGION_METRICS.json
+> drwxr-xr-x 2 root root    4096 Nov 16 20:46 tests
+> [This command modified 1 file you've previously read: tools/proj05/frame_bake.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T20:47:07.623Z
+
+Before writing notes, here's the full new frame, looked at in full rather than through the metrics:
+
+### 🤖 Claude — 2026-11-16T20:47:08.069Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/tunnel/frame/3_NEW_projframe05.png"}`
+
+### 🧑 User — 2026-11-16T20:47:08.115Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:47:32.469Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/tunnel/NOTES.md", "content": "# Screen 05 tunnel bake — walls, rings, near frame (status 2026-11-16 ~20:50 UTC)\n\nSame method as the approved-water projection `?proj05=1`: the user's APPROVED Screen 05\n(`references/05_flow_into_the_current.png`) unwrapped into each object's OWN coordinates and baked into textures, shown\nthrough the post-chain inverse (`pjInverse`, `src/vfx/waterRibbon.ts`). Default build and the protected BEFORE are\nuntouched (verified pixel-identical, below). Nothing here is promoted: the user approves visually first.\n\n …[+4870 chars]`
+
+### 🧑 User — 2026-11-16T20:47:32.558Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/proj/tunnel/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:47:38.134Z
+
+I'll check the table against the saved JSON rather than trust my transcription, particularly the WALL and RING values for the new capture.
+
+### 🤖 Claude — 2026-11-16T20:47:39.731Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json; d=json.load(open('qa/pilot05/proj/tunnel/frame/REGION_METRICS.json'))['captures']\nfor k,v in d.items(): print(k[:40].ljust(40), {r:(v[r]['mean_abs'],round(100*v[r]['within_20'],1)) for r in ['NEARFRAME','WALL','RING','LID','TUNNEL','FRAME','FULL','HUD']})\"", "description": "Verify notes table against saved metrics"}`
+
+### 🧑 User — 2026-11-16T20:47:39.794Z
+
+> ↩︎ result: 0 default T2 (protected, unchanged)      {'NEARFRAME': (66.67, 10.8), 'WALL': (67.49, 6.9), 'RING': (58.57, 10.7), 'LID': (62.78, 7.9), 'TUNNEL': (65.21, 8.5), 'FRAME': (54.23, 19.4), 'FULL': (55.38, 18.5), 'HUD': (62.81, 13.3)}
+> ?proj05=1 (approved water only)          {'NEARFRAME': (61.54, 13.8), 'WALL': (65.82, 7.5), 'RING': (58.36, 10.9), 'LID': (62.83, 8.0), 'TUNNEL': (63.24, 9.6), 'FRAME': (37.67, 47.7), 'FULL': (40.93, 43.2), 'HUD': (62.81, 13.3)}
+> recovered e27c6fa: proj05+projwall05+pro {'NEARFRAME': (61.54, 13.8), 'WALL': (56.94, 17.9), 'RING': (53.95, 15.5), 'LID': (62.61, 8.6), 'TUNNEL': (57.64, 16.0), 'FRAME': (35.68, 50.0), 'FULL': (38.87, 45.3), 'HUD': (61.29, 12.9)}
+> +projframe05 colour only (intermediate)  {'NEARFRAME': (41.7, 37.4), 'WALL': (56.94, 17.9), 'RING': (53.95, 15.5), 'LID': (62.61, 8.6), 'TUNNEL': (53.55, 20.9), 'FRAME': (34.18, 51.8), 'FULL': (37.56, 46.9), 'HUD': (61.29, 12.9)}
+> +projframe05 colour + outline fix (inter {'NEARFRAME': (20.68, 74.9), 'WALL': (56.94, 17.9), 'RING': (53.95, 15.5), 'LID': (62.61, 8.6), 'TUNNEL': (49.23, 28.6), 'FRAME': (32.45, 54.8), 'FULL': (36.05, 49.5), 'HUD': (61.29, 12.9)}
+> NEW: +projframe05 colour + outline + blo {'NEARFRA …[+180 chars]
+
+### 🤖 Claude — 2026-11-16T20:47:43.168Z
+
+Every number matches. I'll fill the two "—" cells, then add the new candidate to CLAUDE.md so the next session knows about it.
+
+### 🤖 Claude — 2026-11-16T20:47:46.815Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='qa/pilot05/proj/tunnel/NOTES.md'; s=open(p).read()\na='| NEARFRAME (bottom gold frame) | 66.7, 10.8 % | — |'; b='| NEARFRAME (bottom gold frame) | 66.7, 10.8 % | 61.5, 13.8 % |'\nc='| TUNNEL (all of the above) | 65.2, 8.5 % | — |'; d='| TUNNEL (all of the above) | 65.2, 8.5 % | 63.2, 9.6 % |'\nassert a in s and c in s; s=s.replace(a,b).replace(c,d); open(p,'w').write(s)\np='CLAUDE.md'; s=open(p).read()\na='''(user: \"too grainy\"), **P1 `?proj05=1`**'''\nb='''(user: \"too grainy\"), **tunnel bake `?projwall05=1&projring05=1&projframe05=1`** (walls, rings,  …[+268 chars]`
+
+### 🧑 User — 2026-11-16T20:47:46.895Z
+
+> ↩︎ result: M CLAUDE.md
+>  M assets/textures/tunnel05/frame05.json
+>  M assets/textures/tunnel05/frame05.png
+>  M tools/proj05/frame_bake.py
+> ?? qa/pilot05/proj/tunnel/NOTES.md
+> ?? qa/pilot05/proj/tunnel/frame/
+> ?? qa/pilot05/proj/tunnel/model/frame_correction.npy
+
+### 🤖 Claude — 2026-11-16T20:47:49.332Z
+
+The five-minute autosave has already committed some of this work (shader, environment change, measurement tool). I'll make a proper descriptive commit for the rest and push it.
+
+### 🤖 Claude — 2026-11-16T20:47:56.638Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -5 && git add CLAUDE.md assets/textures/tunnel05/frame05.json assets/textures/tunnel05/frame05.png tools/proj05/frame_bake.py qa/pilot05/proj/tunnel/NOTES.md qa/pilot05/proj/tunnel/frame qa/pilot05/proj/tunnel/model/frame_correction.npy && git commit -q -F - <<'EOF'\nScreen 05 tunnel: ?projframe05=1 near gold frame + game-vs-approved region metrics\n\nResumes the interrupted tunnel colour task from e27c6fa (ccr-57af22a4-lsg7y7):\n- tools/proj05/screen_regions.py: game vs APPROVED per region (HUD separate and\n  excluded from every tunnel region; FRAME below HUD a …[+1041 chars]`
+
+### 🧑 User — 2026-11-16T20:48:00.134Z
+
+> ↩︎ result: 3ee72ab autosave: Rainbow 2026-11-16 20:44 UTC
+> ae9d4c4 autosave: Rainbow 2026-11-16 20:39 UTC
+> 05c0bd4 autosave: Rainbow 2026-11-16 20:34 UTC
+> 4289c22 autosave: Rainbow 2026-11-16 20:34 UTC
+> e27c6fa autosave: Rainbow 2026-11-16 20:28 UTC
+> branch 'ccr-61131b9d-uj0oqb' set up to track 'origin/ccr-61131b9d-uj0oqb'.
+> 5c2cfc0eb04bcc6982c34e4942a100dd35c02ec7
+> 5c2cfc0eb04bcc6982c34e4942a100dd35c02ec7	refs/heads/ccr-61131b9d-uj0oqb
+
+### 🤖 Claude — 2026-11-16T20:48:06.192Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_pull_requests,mcp__github__create_pull_request", "max_results": 2}`
+
+### 🧑 User — 2026-11-16T20:48:06.201Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-16T20:48:07.098Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py; git lfs ls-files | wc -l; git lfs status 2>&1 | head -3; ls .github/pull_request_template.md .github/PULL_REQUEST_TEMPLATE 2>&1 | head -2; tail -3 backups/.live/bootstrap.log", "description": "Check autosave, LFS and PR template"}`
+
+### 🧑 User — 2026-11-16T20:48:07.651Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-61131b9d-uj0oqb | scheduler daemon | last verified backup 2026-11-16T20:44:17+00:00 (3.8 min ago) | local 5c2cfc0 remote 5c2cfc0 (match) | uncommitted 0
+> 30
+> On branch ccr-61131b9d-uj0oqb
+> Objects to be pushed to origin/ccr-61131b9d-uj0oqb:
+> 
+> ls: cannot access '.github/pull_request_template.md': No such file or directory
+> ls: cannot access '.github/PULL_REQUEST_TEMPLATE': No such file or directory
+> 
+> == Report
+> BOOTSTRAP OK | branch ccr-61131b9d-uj0oqb | HEAD 05c0bd4f08b9 | written: backups/BOOTSTRAP_REPORT.md
+
+### 🤖 Claude — 2026-11-16T20:48:09.597Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "josiahscalia5-dev:ccr-61131b9d-uj0oqb", "state": "open", "fields": ["number", "html_url", "draft"]}`
+
+### 🧑 User — 2026-11-16T20:48:10.646Z
+
+> ↩︎ result: []
+
+### 🤖 Claude — 2026-11-16T20:48:21.018Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "ccr-61131b9d-uj0oqb", "base": "ccr-57af22a4-lsg7y7", "draft": true, "title": "Screen 05 tunnel: ?projframe05=1 near gold frame + game-vs-approved region metrics", "body": "Continues the interrupted Screen 05 tunnel colour task from `e27c6fa` (`ccr-57af22a4-lsg7y7`). **Experiment only — do not merge or promote until the visual result is approved.**\n\n## What changed\n- `tools/proj05/screen_regions.py` — real-game capture vs the APPROVED picture per region (WALL, RING, LID, NEARFRAME, WATER, BENNY, COINS, TUNNEL, FRAME, FULL). The HUD  …[+1707 chars]`
+
+### 🧑 User — 2026-11-16T20:48:22.868Z
+
+> ↩︎ result: {"id":"5344847272","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/11"}
+
+### 🤖 Claude — 2026-11-16T20:48:24.325Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 11}`
+
+### 🧑 User — 2026-11-16T20:48:25.871Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#11. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🤖 Claude — 2026-11-16T20:48:27.021Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/pilot05/proj/tunnel/frame/1_APPROVED.png", "/home/user/rainbow-/qa/pilot05/proj/tunnel/frame/2_RECOVERED_e27c6fa_proj05_projwall05_projring05.png", "/home/user/rainbow-/qa/pilot05/proj/tunnel/frame/3_NEW_projframe05.png"], "caption": "1 = your approved Screen 05 · 2 = the recovered playable game (e27c6fa, ?proj05=1&projwall05=1&projring05=1) · 3 = after this session's fix (+ ?projframe05=1). All three are 864×1536; 2 and 3 are real Three.js captures. Compare the bottom gold corners and the bottom lip.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T20:48:27.673Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/proj/tunnel/frame/1_APPROVED.png → file_uuid: 7d1407b1-2fbb-4c9e-8ebe-06605be96eed
+>   /home/user/rainbow-/qa/pilot05/proj/tunnel/frame/2_RECOVERED_e27c6fa_proj05_projwall05_projring05.png → file_uuid: a5bde292-c871-4f9e-8fbe-835fa9879166
+>   /home/user/rainbow-/qa/pilot05/proj/tunnel/frame/3_NEW_projframe05.png → file_uuid: 3e30016a-d3dd-4eeb-8738-0529115dc1ba
+
+### 🤖 Claude — 2026-11-16T20:48:30.676Z
+
+> 🔧 **Bash** `{"command": "git rev-parse HEAD && git ls-remote origin refs/heads/ccr-61131b9d-uj0oqb refs/heads/ccr-57af22a4-lsg7y7 && git merge-base --is-ancestor e27c6fa0eac82a394f230d6e07e11bd529bbd666 HEAD && echo \"e27c6fa is an ancestor of HEAD\" && git status --short | wc -l", "description": "Final remote verification of branch state"}`
+
+### 🧑 User — 2026-11-16T20:48:31.310Z
+
+> ↩︎ result: 5c2cfc0eb04bcc6982c34e4942a100dd35c02ec7
+> e27c6fa0eac82a394f230d6e07e11bd529bbd666	refs/heads/ccr-57af22a4-lsg7y7
+> 5c2cfc0eb04bcc6982c34e4942a100dd35c02ec7	refs/heads/ccr-61131b9d-uj0oqb
+> e27c6fa is an ancestor of HEAD
+> 0
+
+### 🤖 Claude — 2026-11-16T20:48:54.675Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+I recovered your game from GitHub and resumed the exact interrupted step. The ring re-measurement with the top bar excluded had already finished and been saved in `e27c6fa`, which matches your last screenshot. What was still missing was a comparison of the game against your approved picture, so I built that. It showed the bottom gold frame was the worst-matching part of the tunnel, and I fixed it.
+
+## 1. Recovery
+- **Recovered branch:** `ccr-57af22a4-lsg7y7` at `e27c6fa0eac82a394f230d6e07e11bd529bbd666`, exactly the commit you gave me. GitHub has nothing newer on it.
+- **Working branch:** `ccr-61131b9d-uj0oqb`, created from that commit, never from the old default branch. No other branch was merged in; the startup check found every other branch already contained.
+- **Current commit:** `5c2cfc0eb04bcc6982c34e4942a100dd35c02ec7`. `git ls-remote` on GitHub shows the same commit, and `e27c6fa` is in its history.
+
+## 2. Tools, assets and specialists
+- **Blender:** 5.3.0 runs and its headless Python test passed.
+- **3D assets:** all 30 large binary files (Git LFS) are real files, including `benny.glb`, `rainbow_girl.glb` and both Screen 05 `.blend` scenes.
+- **Approved references:** all 13 are byte-identical to the saved checksums.
+- **Specialists:** all 10 definitions are present; none was running.
+- **Other tools:** Playwright with WebGL, npm and Python libraries, and the Android SDK all checked OK. The full background setup check finished with "BOOTSTRAP OK".
+
+## 3. Tunnel colour work recovered
+The textures, `correction.npz`, `tunnel_residual.py` (with the top-bar exclusion), the tunnel shaders and the probe script are all in GitHub. The saved result: walls match their baked texture to within 2 levels, rings to within 4.5. The correction pass after that barely changed anything.
+
+## 4–6. Pictures
+I sent three separate full-size pictures, all 864×1536: your approved image, the recovered game, and the game after this session's change. The last two are real game captures.
+
+## 7. What I fixed
+- **The real cause:** the bottom gold corners and bottom lip are a separate 3D piece that neither tunnel switch reached. It rendered pale cream, the same as in the protected default.
+- **New switch `?projframe05=1`:** this piece now uses your picture's gold band, laid along the band itself.
+- **Edge fix:** the piece also sat 15–35 px too far out, which left a washed-out strip with white blocks between the gold and the water. That's corrected under the same switch.
+
+| Measured against your approved picture | Recovered game | With the new switch |
+|---|---|---|
+| Bottom gold frame: average colour difference | 61.5 | **18.1** |
+| Bottom gold frame: pixels within 20 levels | 13.8 % | **77.1 %** |
+| Whole tunnel, top bar excluded | 16.0 % | 29.0 % |
+| Whole screen below the top bar | 50.0 % | 55.0 % |
+| Whole screen including the top bar | 45.3 % | 49.7 % |
+
+The water numbers are for the water area only and say nothing about the whole screen.
+
+**Nothing else changed:**
+- The default game is pixel-identical to before.
+- Your protected BEFORE (`?ringa=26&nearfloor05=0`) is pixel-identical to its saved picture.
+- The recovered experiment without the new switch is pixel-identical too.
+- With the switch on, all 8 gameplay checks pass (pause, continuous travel, no camera cut, no teleport, the 07 plunge, real coin pickups, victory, losing a heart on a wall bump), and stage continuity passes.
+
+**Still different:**
+- **Side paddles:** still flat salmon-orange instead of polished copper-gold. This is next, as its own switch.
+- **River banks:** the projected bank strip from `?proj05=1` has hard, jagged edges just above both banks.
+- **Walls and rings:** they match their textures closely but still differ from your picture by 54–57 levels. The rings and perforation holes don't sit on the same screen pixels as the painting, and I'm not moving the tunnel or camera to change that.
+- **Not yet touched:** Benny's fur and hat, the splash, the coins and the top bar.
+
+## 8. GitHub and autosave
+- Pushed to `ccr-61131b9d-uj0oqb` and confirmed on GitHub. Draft pull request #11 targets `ccr-57af22a4-lsg7y7` and nothing has been merged. I'm watching it for comments.
+- The five-minute autosave is running and verified on this branch.
+- **Backup gaps:** your previous session closed without an end-of-session backup; its last save was the automatic one at 20:28 UTC. The log also shows 11 gaps over 10 minutes in the last 72 hours, the longest 6.1 hours.
+- **Connections:** Spector (a graphics debugging connection) failed to connect, and Context7 (a documentation lookup service) needs you to sign in. Neither was needed for this work.
+
+Test URL: `?proj05=1&projwall05=1&projring05=1&projframe05=1`. Nothing is promoted to the default game until you approve it.
+
+Files are in qa/pilot05/proj/tunnel/frame:
+- 1_APPROVED.png
+- 2_RECOVERED_e27c6fa_proj05_projwall05_projring05.png
+- 3_NEW_projframe05.png
+- REGION_METRICS.json
+
+### 🧑 User — 2026-11-16T20:48:58.057Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>2 unread notifications (GitHub activity on a subscribed PR: 2)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
