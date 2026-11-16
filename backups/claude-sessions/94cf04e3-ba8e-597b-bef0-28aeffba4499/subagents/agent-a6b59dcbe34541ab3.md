@@ -771,3 +771,222 @@ Adding one separate import line for my new module (no edit to the shared import 
 > s=158 off05=-1.05 core=-0.95 hw=4.91 lat=-0.90 up=-3.87 ax=-21.40 rx=0.998 centre px=(459,627) z=31.9 core px=(421,628)
 > s=160 off05=-1.14 core=-1.02 hw=4.82 lat=-0.99 up=-3.87 ax=-19.40 rx=0.999 centre px=(458,61 …[+1907 chars]
 
+### 🤖 Claude — 2026-11-16T01:48:55.950Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nfrom scipy import ndimage\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nr,g,b=a[...,0],a[...,1],a[...,2]\nm=(r>190)&(g>140)&(b<110)&(r-b>110)\ny0,y1,x0,x1=470,760,380,620\nsub=m[y0:y1,x0:x1]\nlab,n=ndimage.label(sub)\nfor i in range(1,n+1):\n    ys,xs=np.nonzero(lab==i)\n    if len(ys)<6: continue\n    print('coin? c=(%.1f,%.1f) n=%d w=%d h=%d'%(xs.mean()+x0,ys.mean()+y0,len(ys),xs.max()-xs.min()+1,ys.max()-ys.min()+1))\n\" 2>&1 | head -40", "description": "Detect gold b …[+32 chars]`
+
+### 🧑 User — 2026-11-16T01:48:56.208Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<string>", line 4, in <module>
+>     from scipy import ndimage
+> ModuleNotFoundError: No module named 'scipy'
+
+### 🤖 Claude — 2026-11-16T01:49:00.850Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nr,g,b=a[...,0],a[...,1],a[...,2]\nm=(r>190)&(g>140)&(b<110)&(r-b>110)\ny0,y1,x0,x1=470,760,380,620\nsub=m[y0:y1,x0:x1].copy()\nH,W=sub.shape\nlab=np.zeros_like(sub,dtype=int); n=0\nfor y in range(H):\n  for x in range(W):\n    if sub[y,x] and not lab[y,x]:\n      n+=1; st=[(y,x)]; lab[y,x]=n\n      while st:\n        cy,cx=st.pop()\n        for dy in (-1,0,1):\n          for dx in (-1,0,1):\n            yy,xx=cy+dy,cx+dx\n     …[+379 chars]`
+
+### 🧑 User — 2026-11-16T01:49:01.164Z
+
+> ↩︎ result: c=(470.9,476.0) n=221 w=34 h=15
+> c=(519.3,476.4) n=117 w=17 h=15
+> c=(441.7,475.3) n=17 w=4 h=7
+> c=(401.2,478.3) n=6 w=4 h=3
+> c=(539.2,482.2) n=5 w=3 h=3
+> c=(455.2,483.6) n=5 w=2 h=4
+> c=(475.5,483.5) n=12 w=4 h=4
+> c=(480.6,484.2) n=5 w=2 h=3
+> c=(484.0,485.2) n=5 w=3 h=3
+> c=(527.8,486.8) n=11 w=3 h=6
+> c=(490.9,486.1) n=14 w=5 h=3
+> c=(505.5,490.2) n=8 w=5 h=3
+> c=(515.6,492.8) n=25 w=6 h=5
+> c=(526.7,514.2) n=382 w=32 h=36
+> c=(495.1,532.3) n=197 w=20 h=15
+> c=(465.7,545.5) n=373 w=28 h=19
+> c=(431.2,574.1) n=841 w=43 h=29
+> c=(482.1,610.8) n=1399 w=56 h=39
+> c=(548.7,658.7) n=2165 w=70 h=51
+> c=(474.4,726.2) n=4141 w=96 h=73
+
+### 🤖 Claude — 2026-11-16T01:49:16.193Z
+
+> 🔧 **Bash** `{"command": "grep -rn 'VP' qa/pilot05/wave7/environment/NOTES.md | head -20; grep -rln 'vp\\b\\|VP' qa/pilot05/wave6/camera_lock 2>/dev/null | head; ls qa/pilot05/wave6/camera_lock 2>/dev/null", "description": "Search notes for reference VP position"}`
+
+### 🧑 User — 2026-11-16T01:49:16.242Z
+
+> ↩︎ result: 11:4. VP: `glow05` orange and earlier (warm throat r<50 px, no purple gaps), `tunnelEndGlowMaterial` smaller pale core + orange halo.
+> 15:Whole-frame mad / tunnel+VP band mad (screen_report; the river/near bands also move with water+foam edits running in parallel):
+> 22:  keeps glow05); VP disc smaller core + orange halo. Throat now warm. Rings pale peach, no spots visible.
+> 45:| VP r32–48 warm share · mean r16–24 | 66 % · (239,181,139) | 48 % · (232,199,164) | 61 % · (227,147,121) |
+> 46:| warm runs up from the VP (px) | 7–50, 60–68, 164–178, 256–290 | 18–25, 27–29, 31–33, 36–38, 42–46, 50–55, 62–67, 79–87, 115–125, 188–209, 258–289 | 8–46, 50–55, 65–67, 84–87, 121–124, 254–286 |
+> 52:* VP hot core now small/orange (r16–24 more orange than the ref); far rings still sit at virtual depths 86/124/160/… (ringDv in the
+> qa/pilot05/wave6/camera_lock/README.md
+> qa/pilot05/wave6/camera_lock/camera_lock_render.png
+> qa/pilot05/wave6/camera_lock/landmarks_ref_px.json
+> qa/pilot05/wave6/camera_lock/camera_lock_overlay.png
+> qa/pilot05/wave6/camera_lock/camera_lock_markers.png
+> qa/pilot05/wave6/camera_lock/screen05_layout_cam05.png
+> qa/pilot05/wave6/camera_lock/landmarks_current_px.json
+> qa/pilot05/wave6/camera …[+405 chars]
+
+### 🤖 Claude — 2026-11-16T01:49:18.156Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/wave6/camera_lock/landmarks_ref_px.json | head -60; sed -n 1,40p scripts/screen_report.py", "description": "Read ref landmarks and screen_report header"}`
+
+### 🧑 User — 2026-11-16T01:49:18.200Z
+
+> ↩︎ result: {
+>  "image": "references/05_flow_into_the_current.png",
+>  "size": [
+>   864,
+>   1536
+>  ],
+>  "vp": {
+>   "x": 498.6,
+>   "y": 479.4,
+>   "px": 115,
+>   "w": 17,
+>   "h": 12
+>  },
+>  "coins": [
+>   {
+>    "x": 473.9,
+>    "y": 726.3,
+>    "w": 96,
+>    "h": 75,
+>    "area": 5097
+>   },
+>   {
+>    "x": 547.8,
+>    "y": 661.2,
+>    "w": 70,
+>    "h": 50,
+>    "area": 1921
+>   },
+>   {
+>    "x": 482.0,
+>    "y": 612.1,
+>    "w": 56,
+>    "h": 40,
+>    "area": 1335
+>   },
+>   {
+>    "x": 431.1,
+>    "y": 574.3,
+>    "w": 43,
+>    "h": 30,
+>    "area": 945
+>   },
+>   {
+>    "x": 683.2,
+>    "y": 560.8,
+>    "w": 22,
+>    "h": 23,
+>    "area": 236
+>   },
+>   {
+>    "x": 465.8,
+>    "y": 545.7,
+>    "w": 28,
+>    "h": 20,
+>    "area": 408
+>   },
+>   {
+>    "x": 495.1,
+>    "y": 533.0,
+>    "w": 20,
+> #!/usr/bin/env python3
+> """One-screen reference report: approved reference vs one or more labelled live captures.
+> 
+>     python3 -I scripts/screen_report.py 05 OUT_DIR PREV=qa/.../05.png NOW=qa/.../05.png
+> 
+> Writes into OUT_DIR (nothing else is touched; qa/report_metrics.json stays as it is):
+>   NN_side_by_side.png       REFERENCE | each capture (same height, labelled)
+>   NN_overlay_<LABEL>.png    50 % blend of the reference and that capture
+>   NN_highlight_<LABEL>.png  the capture with a transparent red tint where …[+1305 chars]
+
+### 🤖 Claude — 2026-11-16T01:49:50.276Z
+
+The reference VP is (498.6,479.4), matching live (499.8,478.8). Let me read how the real ribbon lays out its core and bands, so the far river matches at the seam.
+
+### 🤖 Claude — 2026-11-16T01:49:50.924Z
+
+> 🔧 **Bash** `{"command": "sed -n 300,420p src/vfx/waterRibbon.ts", "description": "Read the water ribbon fragment band layout"}`
+
+### 🧑 User — 2026-11-16T01:49:50.955Z
+
+> ↩︎ result: float dpx = abs(fract(p) - c) / fw;
+>   float line = (1.0 - smoothstep(0.3, 1.2, dpx)) * 0.7 + exp(-dpx * 0.55) * 0.4;
+>   // short tapered brush dashes (≈1–2 u: ref 05 speed streaks are 30–80 px in the mid field)
+>   float n = vnoise(vec2(id * 3.1 + seed, v * 0.42 + hs * 17.0));
+>   float seg = smoothstep(0.5, 0.86, n);
+>   return line * seg * (0.5 + 0.7 * hs) * (1.0 - smoothstep(0.22, 0.42, fw));
+> }
+> 
+> void main() {
+>   float u = vUV.x;
+>   float s = vUV.y;
+>   // dithered hide (03 hand-over)
+>   if (vHide < 0.5) discard;
+>   float cutFoam = 1.0 - smoothstep(0.5, 0.85, vHide);
+>   // 11 outro: the stream drains away in the chamber, leaving puddles
+>   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+>     float n = vnoise(vec2(u * 3.0, s * 0.35)) * 0.7 + 0.3;
+>     if (n < uOutro.x * 1.15) discard;
+>   }
+> 
+>   // ---- channel layout: winding cyan core between two hot-pink S-bands, cyan again outside ----
+>   float hw = vHalfW;
+>   float lat = u * hw;                         // lateral units in the ribbon frame
+>   // core centre: free drifting meander on 04/06/07 (freeK = 1); on 05 (freeK = 0) pinned to the
+>   // course's own S-meander, amplified (vCore = CORE_SWING · offset05), so the coins stay on cyan
+>   float freeK = vStyle …[+6437 chars]
+
+### 🤖 Claude — 2026-11-16T01:49:52.196Z
+
+> 🔧 **Bash** `{"command": "sed -n 420,520p src/vfx/waterRibbon.ts", "description": "Continue reading ribbon band colours"}`
+
+### 🧑 User — 2026-11-16T01:49:52.228Z
+
+> ↩︎ result: offR = smin(offR, hw - wR - 0.5 - Mb, 1.2);
+>     // brushed edges: each band edge is combed into pink / cyan strands along the flow (ref 05: the
+>     // ribbons fray into light streaks); crisp per-pixel strands, so no violet pink-over-cyan blend.
+>     // Faded out where a strand would be < ≈3 px wide (no shimmer in the far field)
+>     float bK = 11.0;
+>     brush = sw * (vnoise(vec2(xb * bK, v5 * 0.11 + 5.0)) - 0.5) * (1.0 - smoothstep(0.05, 0.12, fwx * bK));
+>   }
+>   float sdL = xb + offL + pert;
+>   float sdR = xb - offR + pert;
+>   float dL = abs(sdL);
+>   float dR = abs(sdR);
+>   float on = smoothstep(0.02, 0.2, gate);
+>   float pL = (1.0 - smoothstep(wL - aaw, wL + aaw, dL - brush * wL * 0.55)) * on;
+>   float pR = (1.0 - smoothstep(wR - aaw, wR + aaw, dR - brush * wR * 0.55)) * on;
+>   // a thin cyan thread splits a band into two streaks along some stretches (ref 05 mid-ground)
+>   float rimW = 0.05 * hwc + aaw;
+>   float thrW = 0.028 * hwc;
+>   float splitOn = smoothstep(0.55, 0.7, vnoise(vec2(s * 0.07, 13.0))) * mix(0.0, 1.0, freeK);
+>   float sL = (1.0 - smoothstep(thrW, thrW + aaw, abs(xb + offL + pert * 1.4 + 0.25 * wL * sin(s * 0.5)))) * splitOn;
+>   float sR = (1.0 - smoothstep(thrW, thrW + aaw, abs(x …[+4879 chars]
+
+### 🤖 Claude — 2026-11-16T01:51:22.841Z
+
+Let me zoom into the baseline seam region (y 530–600) to see the current join between the real ribbon and the far chord.
+
+### 🤖 Claude — 2026-11-16T01:51:25.739Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB'); b=Image.open('qa/pilot05/wave8/baseline/05.png').convert('RGB')\nbox=(360,470,660,620)\nA=a.crop(box).resize((900,450),Image.LANCZOS); B=b.crop(box).resize((900,450),Image.LANCZOS)\no=Image.new('RGB',(900,910),'white'); o.paste(A,(0,0)); o.paste(B,(0,460)); o.save('/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/seam_zoom.png')\n\"", "description": "Zoom seam region of ref and baseline 3x"}`
+
+### 🧑 User — 2026-11-16T01:51:26.263Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:51:28.608Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/seam_zoom.png"}`
+
+### 🧑 User — 2026-11-16T01:51:28.648Z
+
+> ↩︎ result: [image]
+

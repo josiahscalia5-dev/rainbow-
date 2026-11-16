@@ -306,3 +306,249 @@ Let me zoom into the foam regions and splash of both images to see details.
 > uniform float uFocal;   // pixels per unit at depth 1 (viewport height / (2 tan(fov/2)))
 > uniform float uMaxPx;   // ca …[+5004 chars]
 
+### 🤖 Claude — 2026-11-16T01:48:26.433Z
+
+Let me write the NOTES plan first, then capture a pre-edit 03 (no baseline exists for 03).
+
+### 🤖 Claude — 2026-11-16T01:48:27.634Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p scripts/capture.mjs && ls qa/pilot05/wave6/foam/tools/ && cat qa/pilot05/wave8/path-camera/NOTES.md | head -40", "description": "Read capture script header, foam tools, path-camera notes"}`
+
+### 🧑 User — 2026-11-16T01:48:27.671Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+4143 chars]
+
+### 🤖 Claude — 2026-11-16T01:48:36.099Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/wave8/foam && cat > /home/user/rainbow-/qa/pilot05/wave8/foam/NOTES.md <<'EOF'\n# Screen 05 wave 8b: foam-bubbles-particles\n\nStarted 2026-11-16 ~02:00 UTC (transfer session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`). Wave-7 pass kept.\nBaseline `qa/pilot05/wave8/baseline/05.png` (87 calls, 634,961 tris; budget <= 130 / <= 650k). Files: src/vfx/foam.ts,\nbubbles.ts, riderSplash.ts, spray.ts, index.ts only (Edit tool). Tools: `qa/pilot05/wave6/foam/tools/{foamcol,rowprof}.py`.\n\n## Plan (5 lines)\n1. Foam banks = fine-bubble FOAM, not sphere …[+1050 chars]`
+
+### 🧑 User — 2026-11-16T01:49:04.369Z
+
+> ↩︎ result: 03 → qa/pilot05/wave8/foam/pre/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":96,"tris":737452,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → qa/pilot05/wave8/foam/pre/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":87,"tris":634961,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T01:49:07.020Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image, ImageChops\na=Image.open('qa/pilot05/wave8/baseline/05.png').convert('RGB'); b=Image.open('qa/pilot05/wave8/foam/pre/05.png').convert('RGB')\nd=ImageChops.difference(a,b).convert('L').point(lambda v:255 if v>8 else 0); print(d.getbbox(), sum(1 for v in d.getdata() if v))\n\"; cat qa/pilot05/wave6/foam/tools/foamcol.py | head -60", "description": "Diff pre vs baseline and view foamcol tool"}`
+
+### 🧑 User — 2026-11-16T01:49:07.242Z
+
+> ↩︎ result: <string>:4: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+> None 0
+> """Foam colour stats (wave 6). Usage: python3 -I foamcol.py IMG...
+> Mask = foam colour (R>=140,G>=140,B>=200), 7x7 opening, HUD + Benny bbox removed, big non-cyan blobs (bankcc.big_blobs).
+> Per region (left/right bank y540-1000, near L/R y1000-1400): px count, mean RGB, WHITE% = pixels with min(R,G,B)>=235
+> (pure white), SHADE% = pixels with B-R>=30 (blue/lavender shaded), mean lum. Also the tallest vertical foam run in the
+> right strip x>=640, y 700-1000 (the 'white heap' test) and the right-strip foam px."""
+> import os, sys
+> sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..', 'wave5', 'foam', 'tools'))
+> os.environ.setdefault('FOAM_OPEN', '3')
+> import numpy as np
+> from foammask import foam_mask
+> sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+> from bigblobs import big_blobs
+> 
+> REG = {'Lfar': (0, 432, 520, 1000), 'Rfar': (432, 864, 520, 1000), 'Lnear': (0, 432, 1000, 1400), 'Rnear': (432, 864, 1000, 1400)}
+> for p in sys.argv[1:]:
+>     m, a = foam_mask(p)
+>     k = big_blobs(m, a)
+>     print(p)
+>     for nm, (x0,  …[+876 chars]
+
+### 🤖 Claude — 2026-11-16T01:49:49.672Z
+
+Pre-edit 05 is identical to the baseline. Let me zoom closer into the reference splash and foam texture to design the new look.
+
+### 🤖 Claude — 2026-11-16T01:49:53.617Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB'); b=Image.open('qa/pilot05/wave8/baseline/05.png').convert('RGB')\nD='/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/c/'\ndef pair(box,name,s):\n    a=r.crop(box); c=b.crop(box); w,h=a.size\n    o=Image.new('RGB',(w*2+6,h),'black'); o.paste(a,(0,0)); o.paste(c,(w+6,0))\n    o=o.resize(((w*2+6)*s, h*s), Image.LANCZOS); o.save(D+name)\npair((240,1060,460,1300),'splashL3.png',2)\npair((0,1000,250,1140),'leftclump3.png',3)\npair((100,600,300 …[+89 chars]`
+
+### 🧑 User — 2026-11-16T01:49:54.247Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:49:54.678Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/c/splashL3.png"}`
+
+### 🧑 User — 2026-11-16T01:49:54.697Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:49:55.315Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/c/leftclump3.png"}`
+
+### 🧑 User — 2026-11-16T01:49:55.339Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:49:55.920Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/c/leftrim3.png"}`
+
+### 🧑 User — 2026-11-16T01:49:55.941Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:50:21.384Z
+
+> 🔧 **Bash** `{"command": "grep -m1 '\"version\"' node_modules/three/package.json; grep -rn \"logarithmicDepthBuffer\\|antialias\\|samples\\|EffectComposer\\|UnrealBloom\" src --include=*.ts | head -20; grep -n \"goto\\|warm\\|advance\\|step(\" src/game/*.ts | grep -i \"goto\\|warm\" | head -20", "description": "Check three version and render pipeline settings"}`
+
+### 🧑 User — 2026-11-16T01:50:21.425Z
+
+> ↩︎ result: "version": "0.170.0",
+> src/world/course.ts:164: *  smoothing, which looks ±12 samples back into 05) is bit-identical to the approved 06 */
+> src/vfx/waterRibbon.ts:98: * flat colours land on the ref 05 samples instead of clipping: cyan deep ≈#0466CF (troughs),
+> src/game/Game.ts:12:import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+> src/game/Game.ts:14:import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+> src/game/Game.ts:58:  const composer = new EffectComposer(renderer);
+> src/game/Game.ts:60:  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+> src/render/env.ts:51:    antialias: true,
+> src/game/Game.ts:540:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> src/game/Game.ts:583:    goto: gotoCheckpoint,
+
+### 🤖 Claude — 2026-11-16T01:50:23.184Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,75p src/render/env.ts; sed -n 50,70p src/game/Game.ts; sed -n 536,585p src/game/Game.ts", "description": "Read renderer creation and checkpoint goto"}`
+
+### 🧑 User — 2026-11-16T01:50:23.225Z
+
+> ↩︎ result: const m = o as THREE.Mesh;
+>     if (m.isMesh) (m.material as THREE.Material).dispose();
+>   });
+>   box.dispose();
+>   return rt.texture;
+> }
+> 
+> /** Standard renderer setup used by the game and the tools. */
+> export function createRenderer(canvas: HTMLCanvasElement, opts: { preserveDrawingBuffer?: boolean } = {}): THREE.WebGLRenderer {
+>   const renderer = new THREE.WebGLRenderer({
+>     canvas,
+>     antialias: true,
+>     alpha: false,
+>     powerPreference: 'high-performance',
+>     preserveDrawingBuffer: !!opts.preserveDrawingBuffer,
+>   });
+>   renderer.outputColorSpace = THREE.SRGBColorSpace;
+>   renderer.toneMapping = THREE.NeutralToneMapping;
+>   renderer.toneMappingExposure = 0.86;
+>   return renderer;
+> }
+>   const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+>   sun.position.set(0.3, 1, 0.45);
+>   scene.add(sun);
+>   scene.add(sun.target);
+>   const fill = new THREE.PointLight('#ffd8ff', 30, 30, 1.6);
+>   scene.add(fill);
+> 
+>   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+>   const composer = new EffectComposer(renderer);
+>   composer.addPass(new RenderPass(scene, camera));
+>   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+>   const useBloom = qs.get('bloom') !== '0' …[+2213 chars]
+
+### 🤖 Claude — 2026-11-16T01:50:39.032Z
+
+> 🔧 **Bash** `{"command": "grep -n \"transparent\\|depthWrite\\|renderOrder\" src/vfx/waterRibbon.ts src/vfx/bubbles.ts | head; grep -n \"logarithmic\\|reversedDepth\" -r src | head -3; grep -n \"cells\\|float cells\\|vec2 hash22\\|hash12\\|iridescent\\|bumpNormal\" src/vfx/glsl.ts | head", "description": "Check ribbon depth/transparency and glsl helpers"}`
+
+### 🧑 User — 2026-11-16T01:50:39.085Z
+
+> ↩︎ result: src/vfx/bubbles.ts:193:    new THREE.ShaderMaterial({ uniforms: bigUniforms, vertexShader: BIG_VERT, fragmentShader: BIG_FRAG, fog: true, transparent: true, depthWrite: false }),
+> src/vfx/bubbles.ts:198:  big.renderOrder = 5;
+> src/vfx/bubbles.ts:212:    new THREE.ShaderMaterial({ uniforms: ptUniforms, vertexShader: PT_VERT, fragmentShader: PT_FRAG, fog: true, transparent: true, depthWrite: false }),
+> src/vfx/bubbles.ts:216:  small.renderOrder = 4;
+> src/vfx/whirlpool.ts:3: * cyan / hot-pink / white bands follow the SAME logarithmic spiral as Benny's course through the
+> 5:float hash12(vec2 p) {
+> 14:  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15:             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 23:float cells(vec2 p) {
+> 29:    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 35:vec3 iridescent(float t) {
+> 42: *  - bumpNormal: Mikkelsen-style "bump mapping without tangents" from a scalar height field
+> 47:vec3 bumpNormal(vec3 pos, vec3 n, float h) {
+> 62:  float hs = hash12(gi + 7.31);
+> 64:  vec2 cpp = max(fwidth(g), vec2(1e-4));           // cells per pixel
+
+### 🤖 Claude — 2026-11-16T01:50:40.740Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p src/vfx/glsl.ts; grep -n \"ShaderMaterial(\" -A6 src/vfx/waterRibbon.ts | head -20; grep -n \"FRAG_TAIL =\" -A8 src/vfx/glsl.ts", "description": "Read glsl helpers and ribbon material"}`
+
+### 🧑 User — 2026-11-16T01:50:40.782Z
+
+> ↩︎ result: /** Shared GLSL snippets for Rainbow water/foam/bubble shaders (WebGL2, mobile-safe). */
+> import * as THREE from 'three';
+> 
+> export const NOISE_GLSL = /* glsl */ `
+> float hash12(vec2 p) {
+>   vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+>   p3 += dot(p3, p3.yzx + 33.33);
+>   return fract((p3.x + p3.y) * p3.z);
+> }
+> float vnoise(vec2 p) {
+>   vec2 i = floor(p);
+>   vec2 f = fract(p);
+>   vec2 u = f * f * (3.0 - 2.0 * f);
+>   return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+>              mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> }
+> float fbm3(vec2 p) {
+>   float a = 0.5, s = 0.0;
+>   for (int i = 0; i < 3; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(17.1, 9.2); a *= 0.5; }
+>   return s;
+> }
+> // cheap cellular "soap foam" pattern: 0 at cell centres -> 1 at borders
+> float cells(vec2 p) {
+>   vec2 i = floor(p);
+>   vec2 f = fract(p);
+>   float md = 8.0;
+>   for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+>     vec2 g = vec2(float(x), float(y));
+>     vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+>     vec2 r = g + o - f;
+>     md = min(md, dot(r, r));
+>   }
+>   return sqrt(md);
+> }
+> vec3 iridescent(float t) {
+>   return 0.5 + 0.5 * cos(6.28318 * (t + vec3(0.0, 0.33, 0.67)));
+> }
+> `;
+> 
+> /**
+> 8 …[+380 chars]
+
+### 🤖 Claude — 2026-11-16T01:51:25.997Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && (timeout 600 node scripts/capture.mjs 05 --out=$S/iso_norafts --q=waterhide=foamRafts 2>&1 | tail -1) && (timeout 600 node scripts/capture.mjs 05 --out=$S/iso_nofoam --q=waterhide=foam,splashCrown,spray 2>&1 | tail -1) && python3 -I -c \"\nfrom PIL import Image\nD='$S/'\na=Image.open('qa/pilot05/wave8/foam/pre/05.png').convert('RGB'); b=Image.open(D+'iso_norafts/05.png').convert('RGB'); c=Image.open(D+'iso_nofoam/05.png').convert('RGB')\nbox=(0,500,864,1400)\no=Image.new('RGB',(864*3//2+8, 900// …[+178 chars]`
+
+### 🧑 User — 2026-11-16T01:52:05.797Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/iso_norafts/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":631665,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/iso_nofoam/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":76,"tris":479145,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T01:52:07.394Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/c/iso.png"}`
+
+### 🧑 User — 2026-11-16T01:52:07.439Z
+
+> ↩︎ result: [image]
+

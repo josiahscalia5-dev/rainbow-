@@ -324,3 +324,180 @@ I'll start by reading the coordination files and my previous notes.
 > 
 > # hori …[+3734 chars]
 
+### 🤖 Claude — 2026-11-16T01:48:33.034Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && cat > crops.py <<'EOF'\nimport sys\nfrom PIL import Image\nref = Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nlive = Image.open(sys.argv[1]).convert('RGB').resize(ref.size)\nout = sys.argv[2]\ny0, y1 = int(sys.argv[3]), int(sys.argv[4])\nx0, x1 = (int(sys.argv[5]), int(sys.argv[6])) if len(sys.argv) > 6 else (0, 864)\na = ref.crop((x0, y0, x1, y1)); b = live …[+592 chars]`
+
+### 🧑 User — 2026-11-16T01:48:33.826Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T01:48:35.100Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/mid_base.png"}`
+
+### 🧑 User — 2026-11-16T01:48:35.134Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:48:35.702Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/near_base.png"}`
+
+### 🧑 User — 2026-11-16T01:48:35.732Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:49:16.116Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && cat > m05.py <<'EOF'\n\"\"\"Scratch metrics for the 05 river (water-fx wave 8). Usage: m05.py IMG [IMG2 ...]\"\"\"\nimport sys, json\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as ndi\n\ndef load(p):\n    im = Image.open(p).convert('RGB')\n    if im.size != (864, 1536): im = im.resize((864, 1536), Image.LANCZOS)\n    return np.asarray(im).astype(np.float32)\n\ndef masks(a):\n    R, G, B = a[..., 0], a[..., 1], a[..., 2]\n    pink = (R > 170) & (B > 120) & (R - G > 90)  …[+3186 chars]`
+
+### 🧑 User — 2026-11-16T01:49:16.306Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/m05.py", line 5, in <module>
+>     from scipy import ndimage as ndi
+> ModuleNotFoundError: No module named 'scipy'
+
+### 🤖 Claude — 2026-11-16T01:49:25.005Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && python3 - <<'EOF'\nimport re\ns = open('m05.py').read()\ns = s.replace(\"from scipy import ndimage as ndi\\n\", \"\")\ns = s.replace('''def glints(a, y0, y1, x0=0, x1=864):\n    sub = a[y0:y1, x0:x1]\n    lum = sub.mean(axis=2)\n    # bright, near-white blobs that stand out from their 9x9 neighbourhood\n    loc = ndi.uniform_filter(lum, 15)\n    m = (sub.min(axis=2) > 215) & (lum - loc > 25)\n    lab, n = ndi.label(m)\n    if n == 0: return 0, 0\n    sizes = ndi.sum(m, lab, range(1, n + 1))\n   …[+1117 chars]`
+
+### 🧑 User — 2026-11-16T01:49:25.782Z
+
+> ↩︎ result: == /home/user/rainbow-/references/05_flow_into_the_current.png
+>   near_lum_p5/p50/p95/std: [120.3, 145.3, 246.3, 36.6]
+>   mid_lum_p5/p50/p95/std: [129.7, 160.7, 249.7, 33.7]
+>   glints_near(1200-1536): 347
+>   glints_mid(700-1200): 618
+>   white_px_mid(620-1000)%: 6.21
+>   pink_near(1000-1536)%: 12.6
+>   pink_mid(620-1000)%: 25.9
+>   pink_behind_benny%: 1.28
+>   pink_mid_median: #F23FEA
+>   pink_mid_lum_p10/p90: [150.3, 200.7]
+>   cyan_mid_median: #06A5F9
+>   cyan_near_y1300: #02A3F7
+>   cyan_near_y1400: #0198F0
+>   pink_runs: {650: [(62, 80), (95, 121), (275, 335), (340, 385), (704, 769)], 700: [(61, 74), (86, 113), (308, 355), (368, 388), (752, 802)], 760: [(11, 22), (182, 270), (682, 695), (730, 794)], 820: [(41, 74), (124, 169), (362, 374), (574, 637), (651, 687), (824, 839)], 880: [(0, 99), (576, 608), (631, 690), (825, 839), (849, 863)], 940: [(0, 29), (634, 796)], 1000: [(704, 863)], 1080: [(275, 287), (324, 353), (355, 404), (406, 423), (425, 500), (503, 517), (520, 533), (546, 560), (819, 863)], 1240: [], 1280: [(153, 178), (202, 235), (589, 628), (630, 643), (649, 669)], 1320: [(95, 140), (152, 190), (631, 735)], 1360: [(130, 149), (683, 721)], 1400: []}
+> == /home/user/rainbow-/qa/pilot05/wave8/bas …[+1173 chars]
+
+### 🤖 Claude — 2026-11-16T01:49:41.333Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && python3 -I crops.py /home/user/rainbow-/qa/pilot05/wave8/baseline/05.png z_midL.png 680 960 0 430 1.0 && python3 -I crops.py /home/user/rainbow-/qa/pilot05/wave8/baseline/05.png z_midR.png 760 1080 430 864 1.0", "description": "Zoom crops mid-left and mid-right"}`
+
+### 🧑 User — 2026-11-16T01:49:41.803Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:49:43.277Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/z_midL.png"}`
+
+### 🧑 User — 2026-11-16T01:49:43.290Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:49:43.877Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/z_midR.png"}`
+
+### 🧑 User — 2026-11-16T01:49:43.896Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:50:31.322Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && python3 -I crops.py /home/user/rainbow-/qa/pilot05/wave8/baseline/05.png z3.png 760 880 40 330 1.5 && python3 -I crops.py /home/user/rainbow-/qa/pilot05/wave8/baseline/05.png z4.png 1220 1420 60 420 1.2", "description": "High zoom crops of pink band and near sweep"}`
+
+### 🧑 User — 2026-11-16T01:50:31.754Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:50:33.258Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/z3.png"}`
+
+### 🧑 User — 2026-11-16T01:50:33.271Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:50:33.810Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/z4.png"}`
+
+### 🧑 User — 2026-11-16T01:50:33.830Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:51:23.718Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,60p' scripts/capture.mjs; grep -rn \"waterhide\" src | head", "description": "Inspect capture script and waterhide option"}`
+
+### 🧑 User — 2026-11-16T01:51:23.759Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3563 chars]
+
+### 🤖 Claude — 2026-11-16T01:51:28.129Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/wave8/water && ls /home/user/rainbow-/qa/pilot05/wave8/water/", "description": "Create water evidence folder"}`
+
+### 🧑 User — 2026-11-16T01:51:28.186Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:51:41.545Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/water/NOTES.md", "content": "# water-fx-specialist, wave 8b (Screen 05) — thick glossy cyan-and-pink S-river\n\nOwns only `src/vfx/waterRibbon.ts`, `src/vfx/glsl.ts`, `docs/vfx/*` (Edit tool only). Camera, course, Benny, gameplay,\n05→06 and 07→08 protected. Far river beyond the forced-tunnel seam = path-camera's `farRiverMaterial` (seam look agreed\nvia `wave8` lines in `qa/pilot05/REQUESTS.md`). Baseline/PREV = `qa/pilot05/wave8/baseline/05.png`. All changes gated to\nthe 05 river block (sw = 1 only on 05) so 03/04/06/07/08 do not change.\n …[+2490 chars]`
+
+### 🧑 User — 2026-11-16T01:51:41.610Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave8/water/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:51:43.313Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/capture.mjs 03 05 --out=qa/pilot05/wave8/water/it00 2>&1 | tail -5", "description": "Capture pre-edit 03 and 05 state", "timeout": 620000}`
+
+### 🧑 User — 2026-11-16T01:52:19.287Z
+
+> ↩︎ result: 03 → qa/pilot05/wave8/water/it00/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":96,"tris":737452,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → qa/pilot05/wave8/water/it00/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":87,"tris":634961,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T01:52:23.118Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('/home/user/rainbow-/qa/pilot05/wave8/baseline/05.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('/home/user/rainbow-/qa/pilot05/wave8/water/it00/05.png').convert('RGB')).astype(int)\nd=np.abs(a-b).sum(2)>12\nprint('diff %', d.mean()*100)\nys,xs=np.nonzero(d)\nif len(ys): print('bbox', xs.min(), xs.max(), ys.min(), ys.max())\nfor y0 in range(0,1536,128): print(y0, round(d[y0:y0+128].mean()*100,2))\n …[+47 chars]`
+
+### 🧑 User — 2026-11-16T01:52:23.492Z
+
+> ↩︎ result: diff % 0.0
+> 0 0.0
+> 128 0.0
+> 256 0.0
+> 384 0.0
+> 512 0.0
+> 640 0.0
+> 768 0.0
+> 896 0.0
+> 1024 0.0
+> 1152 0.0
+> 1280 0.0
+> 1408 0.0
+
