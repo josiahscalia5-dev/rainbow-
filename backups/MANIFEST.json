@@ -394,7 +394,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4874,
-   "sha256": "a3c51bf79b381603effc6e6c769e835dccb3dda5df8e2d240a3ae162cf6e1016"
+   "sha256": "4471c8964c0dbe8b5b11b268389271e1424e7cc106458e8286aec899b4a5a1be"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -819,7 +819,7 @@
   {
    "path": "qa/capture_log.json",
    "bytes": 5199,
-   "sha256": "3e77589dc8db9a53135228c9ba5c472c9a1f40de1383ef78ea1b8393bc3a2790"
+   "sha256": "805dbeec44801a9d6e32e64bc2873b6be0ffe9aded9f7a67be8298c1a2742219"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -928,8 +928,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 5682,
-   "sha256": "418cb239de583a3e8fb96d426efa66df7a53c6ae60d59582f16f4fb92c73f79a"
+   "bytes": 6418,
+   "sha256": "d18920caf3a046f1b070868ebfec05583942ab12f44b84f8e49720a59b8935cc"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -2218,8 +2218,8 @@
   },
   {
    "path": "qa/pilot05/wave7/environment/NOTES.md",
-   "bytes": 1329,
-   "sha256": "7658a5d11e14aab6f3c5993b09f68222013259921518d234db8a3d85e71df536"
+   "bytes": 6235,
+   "sha256": "80ffbc97ddad2912b1886e1cf695b681b231b13dfa5c911134a1a05618896e13"
   },
   {
    "path": "qa/pilot05/wave7/environment/it01/05.png",
@@ -2523,8 +2523,8 @@
   },
   {
    "path": "qa/pilot05/wave7/environment/regress/06.png",
-   "bytes": 1504496,
-   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+   "bytes": 1504499,
+   "sha256": "688609e2f7481e102df6091dd7a697138d3600e2e37da1d29ce19404c57b62ee"
   },
   {
    "path": "qa/pilot05/wave7/environment/regress/07.png",
@@ -2533,8 +2533,8 @@
   },
   {
    "path": "qa/pilot05/wave7/environment/regress/08.png",
-   "bytes": 1428636,
-   "sha256": "dcf4e447a58b42c0225248905d3e3b2785a0d47cef8d04161ef708a7079b559b"
+   "bytes": 1428959,
+   "sha256": "b61a073f56cf3c7f307630c86a5e13517079ca1a3b432a6e6e7a91841e70ffce"
   },
   {
    "path": "qa/pilot05/wave7/foam/NOTES.md",
@@ -2825,6 +2825,46 @@
    "path": "qa/pilot05/wave7/foam/regress_fix/05.png",
    "bytes": 1838056,
    "sha256": "c4b1c6630258042f7d33ee3eb0c4dbfe631d33b468dcaa65bd57ff5ac7caf831"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/05.png",
+   "bytes": 1825075,
+   "sha256": "1c2547f339dcc3b99108e7766777de6b53386ea484e1172683f6ffb44441254e"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/05_highlight_NOW.png",
+   "bytes": 1934638,
+   "sha256": "0c3b78591eff8ffd7fd9019b713169c1912e889a7ceaf22f6ae85c03b115a838"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/05_highlight_PREV.png",
+   "bytes": 2003676,
+   "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/05_overlay_NOW.png",
+   "bytes": 2289406,
+   "sha256": "c5c19c5d0cea588302d1b407c194985e46abe12d81cee4ab5cec45fa9f38c728"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/05_overlay_PREV.png",
+   "bytes": 2320701,
+   "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/05_side_by_side.png",
+   "bytes": 5975628,
+   "sha256": "e7252a27fcbbd299dfe1b337f5515e3b0f1ac90ccc4602e33deee1927f21801f"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/metrics.json",
+   "bytes": 449,
+   "sha256": "1695328c92ed8cefedf2f53f704fd3455fb96a7bcbd78a572b01d2c2142db5c4"
+  },
+  {
+   "path": "qa/pilot05/wave7/handoff/metrics.md",
+   "bytes": 437,
+   "sha256": "88e7f82d4381738e5abe87b31a36ed0de50365b08a246ab99b97da93bee32d37"
   },
   {
    "path": "qa/pilot05/wave7/water/NOTES.md",

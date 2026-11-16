@@ -2438,3 +2438,77 @@ Now the pointer in `CLAUDE.md`, and the World Labs row in the MCP setup notes.
 
 > 🔧 **Bash** `{"command": "timeout 240 bash -c 'while pgrep -f \"rainbow-autosave.py\" >/dev/null; do read -t 3 < /dev/zero 2>/dev/null || true; done'; python3 scripts/rainbow-autosave.py --reason manual:handoff-docs 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified' | head -3; python3 -I scripts/autosave-status.py 2>&1 | tail -1", "description": "Push the handoff documents and verify", "timeout": 600000}`
 
+### 🧑 User — 2026-11-16T01:19:56.731Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "8d7464b534709afd83e225e3c9de38b9ff46f50f",
+> AUTOSAVE OK | branch ccr-4f6c3e0e-5kxgr0 | scheduler daemon | last verified backup 2026-11-16T01:19:49+00:00 (0.1 min ago) | local 8d7464b remote 8d7464b (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-16T01:20:00.565Z
+
+> 🔧 **Bash** `{"command": "echo \"tsc:\"; timeout 200 npx tsc --noEmit 2>&1 | tail -3 && echo \"  OK\"; echo \"refs: $(sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK')/12\"; echo \"lfs: $(git lfs fsck 2>&1 | tail -1); missing $(git lfs ls-files | awk '$2==\"-\"' | wc -l); tracked $(git lfs ls-files | wc -l)\"; echo \"agents: $(ls .claude/agents/*.md | wc -l)\"; echo \"continuity:\"; timeout 300 npm run -s test:continuity 2>&1 | grep -E '\"ok\"|gap=|verticalDrop' | head -3; O=qa/pilot05/wave7/handoff && mkdir -p $O && timeout 600 node scripts/capture.mjs 05 --out=$O 2>&1 | tail -1", "description" …[+74 chars]`
+
+### 🧑 User — 2026-11-16T01:20:26.599Z
+
+> ↩︎ result: tsc:
+>   OK
+> refs: 12/12
+> lfs: Git LFS fsck OK; missing 0; tracked 24
+> agents: 10
+> continuity:
+>  "ok": true,
+>   "verticalDrop": 61.19,
+>   "01->02 gap=0 dT=0.249 y=-2.4",
+> 05 → qa/pilot05/wave7/handoff/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":87,"tris":634961,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T01:20:30.936Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node scripts/gameplay-test.mjs 2>&1 | python3 -I -c \"\nimport sys,json,re\nt=sys.stdin.read(); i=t.find('{'); \ntry:\n  d=json.loads(t[i:]); print('pass:',d.get('pass'), '| errors:',d.get('errors'), '| plunge:',d.get('plunge',{}).get('verticalDrop'), '| checks:',{k:v for k,v in d.items() if isinstance(v,bool)})\n  print({k:v for k,v in (d.get('checks') or d.get('summary') or {}).items()} if isinstance(d.get('checks') or d.get('summary'),dict) else '')\nexcept Exception as e: print(t[-1500:])\n\"; python3 -I scripts/screen_report.py 05 qa/pilot05/wave7/handoff PREV=qa/ …[+198 chars]`
+
+### 🧑 User — 2026-11-16T01:20:47.666Z
+
+> ↩︎ result: pass: True | errors: [] | plunge: 61.41 | checks: {'pass': True}
+> {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> mad = mean |ΔRGB| at 1/4 scale (lower = closer); hue_corr / edge_corr = −1…1 (higher = closer).
+> 
+> | Capture | mad | hue_corr | edge_corr | mad hud | mad tunnel+VP | mad river mid | mad Benny+near water |
+> |---|---|---|---|---|---|---|---|
+> | PREV | 59.0 | 0.809 | 0.117 | 54.4 | 62.6 | 53.0 | 63.8 |
+> | NOW | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> 05.png
+> 05_highlight_NOW.png
+> 05_highlight_PREV.png
+> 05_overlay_NOW.png
+> 05_overlay_PREV.png
+> 05_side_by_side.png
+> metrics.json
+> metrics.md
+
+### 🤖 Claude — 2026-11-16T01:20:51.158Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave7/handoff/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T01:20:53.149Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T01:20:53.142Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T01:21:01.265Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/wave7/handoff/05.png", "qa/pilot05/wave7/handoff/05_side_by_side.png", "qa/worldlabs/05/pilot/full/pano_preview_2048.jpg"], "caption": "3) The live 3D game NOW (864×1536 capture, 87 draw calls, 635k tris) — water and foam done, walls/rings still in progress. Then: approved | before | now side-by-side. Last: the 360° panorama of the full Marble world generated from your approved image.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T01:21:02.234Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave7/handoff/05.png → file_uuid: 6be90767-cab3-491b-9606-ab14c8870734
+>   /home/user/rainbow-/qa/pilot05/wave7/handoff/05_side_by_side.png → file_uuid: aa867128-f4de-4be2-a8c8-1a9e6ee6dcf1
+>   /home/user/rainbow-/qa/worldlabs/05/pilot/full/pano_preview_2048.jpg → file_uuid: e3d2b1fa-32ac-4408-a760-12e2a30f29b0
+
+### 🤖 Claude — 2026-11-16T01:21:03.720Z
+
+> 🔧 **Bash** `{"command": "timeout 240 bash -c 'while pgrep -f \"rainbow-autosave.py\" >/dev/null; do read -t 3 < /dev/zero 2>/dev/null || true; done'; python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified' | head -3; python3 -I scripts/autosave-status.py 2>&1 | tail -1; echo \"local $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-4f6c3e0e-5kxgr0 | cut -f1)\"; echo \"uncommitted $(git status --porcelain | wc -l)\"; git status --porcelain | head", "description": "Final backup and remote/local verification", "timeout": 600000 …[+1 chars]`
+
