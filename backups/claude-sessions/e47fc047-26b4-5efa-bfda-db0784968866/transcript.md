@@ -1764,3 +1764,146 @@ That version is the third picture I sent earlier (`3_NEW_projframe05.png`). It s
 
 If you're running an installed Android app on your phone, it shows whichever version that app was built from. I can't tell which build that is from here.
 
+### 🧑 User — 2026-11-16T20:56:57.564Z
+
+So what do I have to do to make my exact approved screen? I don't know what else to do. It looks like the water is not exactly like the approved screen. You know, like the water, the blue and pink and the purple, you know, like it swirls around. Like the, you know, how the water swirls, like the texture and everything. And plus the gold stuff, you know, the gold blocks, whatever, you know, on the side of the purple thing. There's like, I think, you know, there's like 3 on the purple machine part. So first off, you have on the wrong, they're facing the wrong way. You have them upward, and they're supposed to be like kind of, they're different texture. And they're down, they're not up. And I think, so compare my approved screen and what I have now. What do I have to do to get an exact approved screen? I don't know how many times I'm going to say it. What can I do? Please tell me.
+
+### 🤖 Claude — 2026-11-16T20:57:18.225Z
+
+I'll give you a straight answer, but first I'm checking the paddles you described against your approved picture.
+
+### 🤖 Claude — 2026-11-16T20:57:21.978Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nfor nm,b in {'lidL':(40,290,420,500),'lidR':(560,370,864,540)}.items():\n    ims=[Image.open(p).convert('RGB').crop(b) for p in ['references/05_flow_into_the_current.png','qa/pilot05/proj/tunnel/frame/3_NEW_projframe05.png']]\n    w,h=ims[0].size\n    im=Image.new('RGB',(w,2*h+10),(255,255,255)); im.paste(ims[0],(0,0)); im.paste(ims[1],(0,h+10))\n    im=im.resize((im.width*2,im.height*2),Image.LANCZOS); im.save('$S/'+nm+'.png')\nEOF", "description": "Zo …[+29 chars]`
+
+### 🧑 User — 2026-11-16T20:57:22.662Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T20:57:23.226Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/lidL.png"}`
+
+### 🧑 User — 2026-11-16T20:57:23.259Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:57:23.783Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/lidR.png"}`
+
+### 🧑 User — 2026-11-16T20:57:23.815Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:57:40.946Z
+
+> 🔧 **Grep** `{"pattern": "lid05|buildWallLids|wallLidGeometry|wallLidBasis|withLidShading", "path": "/home/user/rainbow-/src/world/environment.ts", "output_mode": "content", "-n": true}`
+
+### 🧑 User — 2026-11-16T20:57:41.005Z
+
+> ↩︎ result: 9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
+> 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 407:  // wave 7: rose-copper pucks (withLidShading), thicker rim band, just camera-side of each ring (ref L1/L2/R1/R2
+> 409:  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -34, size: 2.2, thickness: 0.36, stretch: 1.0, sink: 0.1 };
+> 411:    const m = withLidShading(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glowT05, key, virtual), key);
+> 417:  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+> 418:  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
+> 422:  zones.tubes.add(buildWallLids(per …[+980 chars]
+
+### 🤖 Claude — 2026-11-16T20:57:42.452Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 400, "limit": 24}`
+
+### 🧑 User — 2026-11-16T20:57:42.469Z
+
+> ↩︎ result: 400	      const ss = THREE.MathUtils.clamp(s + ds, 0, course.length);
+> 401	      if (course.sample(ss).pos.distanceTo(centre) < size * 1.2 + course.widthAt(ss) / 2 + 1.0) return true;
+> 402	    }
+> 403	    return false;
+> 404	  };
+> 405	  // 05 (ref §5.5): flat round copper-gold lids ('slab' half-disc pucks standing out of the wall, seen from
+> 406	  // below at an angle), one symmetric pair per bay at mid-bay, ≈12° above the axis on both walls
+> 407	  // wave 7: rose-copper pucks (withLidShading), thicker rim band, just camera-side of each ring (ref L1/L2/R1/R2
+> 408	  // end right where a ring band starts)
+> 409	  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -34, size: 2.2, thickness: 0.36, stretch: 1.0, sink: 0.1 };
+> 410	  const lidMat05 = (key: string, virtual: boolean) => {
+> 411	    const m = withLidShading(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glowT05, key, virtual), key);
+> 412	    m.emissive.set('#c86a18');
+> 413	    m.envMap = goldEnv05;
+> 414	    m.envMapIntensity = 1.35;
+> 415	    return m;
+> 416	  };
+> 417	  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+> 418	  zones.tubes.add(buildWallLid …[+520 chars]
+
+### 🤖 Claude — 2026-11-16T20:57:43.402Z
+
+> 🔧 **Grep** `{"pattern": "export function (buildWallLids|wallLidGeometry|wallLidBasis)", "path": "/home/user/rainbow-/src/world/tube.ts", "output_mode": "content", "-n": true}`
+
+### 🧑 User — 2026-11-16T20:57:43.436Z
+
+> ↩︎ result: 367:export function buildWallLids(
+> 427:export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segments?: number): THREE.BufferGeometry {
+> 458:export function wallLidBasis(f: Frame, side: number, angDeg: number, droopDeg: number) {
+
+### 🤖 Claude — 2026-11-16T20:57:44.811Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "offset": 367, "limit": 110}`
+
+### 🧑 User — 2026-11-16T20:57:44.837Z
+
+> ↩︎ result: 367	export function buildWallLids(
+> 368	  path: TubePath,
+> 369	  s0: number,
+> 370	  s1: number,
+> 371	  spacing: number,
+> 372	  material: THREE.Material,
+> 373	  opts: {
+> 374	    angleDeg?: number; droopDeg?: number; size?: number; thickness?: number; stretch?: number; sink?: number;
+> 375	    skip?: (s: number, centre: THREE.Vector3, size: number) => boolean;
+> 376	    /** explicit lid positions along the path (default: s0, s0 + spacing, … s1) */
+> 377	    positions?: number[];
+> 378	    /**
+> 379	     * 'hood' (legacy 06/07 D-hood), 'dome' (half puck with a domed cap) or 'slab' (ref 05 wave 4: a flat
+> 380	     * copper-gold half-disc lid standing out of the wall — flat underside, rounded edges, a straight
+> 381	     * polished rim band and a flat top, like the ref's wall-mounted nozzle lids)
+> 382	     */
+> 383	    shape?: 'hood' | 'dome' | 'slab';
+> 384	    /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */
+> 385	    oval?: (s: number) => number;
+> 386	  } = {},
+> 387	): THREE.InstancedMesh {
+> 388	  const geo = wallLidGeometry(opts.shape ?? 'hood', opts.thickness ?? 0.42);
+> 389	  const list: number[] = opts.positions ?? [];
+> 390	  if (!opts.positions) for (let s = s0; s <= s1 + 1e- …[+5854 chars]
+
+### 🤖 Claude — 2026-11-16T20:59:05.338Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "/** Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness. */", "new_string": "/**\n * `?projlid05=1` (src/vfx/proj05Tunnel.ts): the matrix of ONE wall lid with its own parameters, the same placement as\n * buildWallLids (which stays untouched for the default build): side ±1, angle above the axis, droop, size (already\n * radius-scaled by the caller), stretch along the tube, sink into the wall.\n */\nexport function wallLidMatrix(path: TubePath, s: number, side: number …[+634 chars]`
+
+### 🧑 User — 2026-11-16T20:59:05.456Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T20:59:05.941Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 470, "limit": 45}`
+
+### 🧑 User — 2026-11-16T20:59:05.966Z
+
+> ↩︎ result: 470	    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));
+> 471	    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay, sCam05, s05, sGlow05, rings05, band05, band05near });
+> 472	    // rings (one per knot) and a lid pair just in front of each ring (as the real 05 lids), low-poly: small on screen
+> 473	    const ringItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
+> 474	    const lidItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
+> 475	    const fr0 = { pos: ft.c0, tan: ft.T, up: ft.U, right: ft.Rt };
+> 476	    const ringBasis = new THREE.Matrix4().makeBasis(ft.Rt, ft.U, ft.T);
+> 477	    const rRing = perfPath.radius(sF05) - 0.02;
+> 478	    const openAt = (u: number) => {
+> 479	      const sReal = sF05 + ft.zOf(ft.zOfU(u));
+> 480	      return { c: tubeCenterAt(perfPath, sReal), r: perfPath.radius(sReal) * 1.1 + 0.4, f: perfPath.frame(sReal) };
+> 481	    };
+> 482	    const lidSz = lid05.size * Math.min(1.4, perfPath.radius(sF05) / 7.6);
+> 483 …[+2695 chars]
+

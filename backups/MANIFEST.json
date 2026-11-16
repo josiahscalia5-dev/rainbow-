@@ -469,7 +469,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9219,
-   "sha256": "e81b901242b4297ce92219c26c73fa79f75154961824b9b53716fafdda18e118"
+   "sha256": "769d82fdf3105f91bcf0703a7ddccd6391cd0696134c8923fe47bb30969fecb4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7213,8 +7213,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 40171,
-   "sha256": "256dabe69e3b802ce73f1c67825c390b5ae2a6fe71832ac54b5b3bc4542a42ab"
+   "bytes": 41087,
+   "sha256": "5c15377b00d15cebec9b32f32b293f6839ee74253f1dd20b175e133dbd549e6c"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",
