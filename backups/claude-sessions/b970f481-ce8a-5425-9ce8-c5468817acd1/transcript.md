@@ -1140,3 +1140,112 @@ Found the real cause: the approved tunnel is simply much bigger and rounder arou
 >    30°: 34(6) 76(5) 133(7) 223(7) 311(29)
 >    15°: 23(7) 41(5) 62(5) 80(6) 139(19) 257(23) 293(21) 342(30)
 
+### 🤖 Claude — 2026-11-16T10:04:06.360Z
+
+> 🔧 **Bash** `{"command": "grep -n \"buildCourse\\|export function\\|export const\" src/world/course.ts | head -20; grep -n \"STAGE_CAM\" src/game/cameraRig.ts | head -5; grep -n \"'05'\" src/game/cameraRig.ts | head -10; sed -n 1,30p scripts/continuity-test.ts | cut -c1-160", "description": "Find the course and camera APIs to measure the tunnel"}`
+
+### 🧑 User — 2026-11-16T10:04:06.424Z
+
+> ↩︎ result: 48:export const STAGE_TITLES: Record<StageId, string> = {
+> 63:export const WORLD = {
+> 73:export function funnelY(r: number): number {
+> 116:export const S05 = {
+> 183:export function meander05(u: number): number {
+> 578:export function validateContinuity(c: Course): ContinuityReport {
+> 25:export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+> 39:/** the blended (required) numeric keys; 05-only extras (yaw, deadZone) are read directly from STAGE_CAM */
+> 47:    const p = STAGE_CAM[st.id];
+> 54:  if (w === 0) return { ...(STAGE_CAM['03'] as CamParams) };
+> 122:    const p5 = STAGE_CAM['05'] as CamParams;
+> 31:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> 116:    // 05 straight current tube: the '05' preset measured in the straight tunnel's own frame — aimed
+> 121:    const st5 = this.course.stage('05');
+> 122:    const p5 = STAGE_CAM['05'] as CamParams;
+> /**
+>  * Route continuity + altitude test (run: npm run test:continuity).
+>  * Writes qa/continuity_report.json and docs/path_graph.md (altitude chart), exits 1 on failure.
+>  */
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { Course, validateContinuity, WORLD } from  …[+1287 chars]
+
+### 🤖 Claude — 2026-11-16T10:04:28.214Z
+
+Measuring the game's tunnel against the approved one so I resize it by the right amount instead of guessing.
+
+### 🤖 Claude — 2026-11-16T10:04:34.378Z
+
+> 🔧 **Bash** `{"command": "S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && cat > scripts/_probe05.ts <<'EOF'\nimport { Course } from '../src/world/course';\nimport { straightTubePath, tubeCenterAt } from '../src/world/tube';\nimport { STAGE_CAM } from '../src/game/cameraRig';\nconst c = new Course();\nconst s05 = c.stage('05').s0, s06 = c.stage('06').s0, s08 = c.stage('08').s0;\nconst tubeR = (s: number) => c.prop('tube', s);\nconst p = straightTubePath(c, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });\nconst sC = c.marks['05_crest'];\nconst sCam = sC - S …[+720 chars]`
+
+### 🧑 User — 2026-11-16T10:04:35.450Z
+
+> ↩︎ result: ahead: 18,
+>     lookUp: -1.92,
+>     fov: 62,
+>     latFollow: 0.85,
+>     roll: 0,
+>     yaw: 2.96,
+>     deadZone: 1
+>   }
+> }
+> 114.7 R 7.60 depth 3.35 width 6.70 waterY -40.63 ctrY -36.44 tanY -0.164
+> 119.7 R 7.58 depth 3.35 width 10.05 waterY -41.21 ctrY -37.01 tanY -0.069
+> 126.0 R 7.60 depth 3.35 width 11.21 waterY -41.54 ctrY -37.30 tanY -0.043
+> 132.4 R 7.60 depth 3.36 width 10.88 waterY -41.81 ctrY -37.57 tanY -0.042
+> 152.0 R 7.60 depth 3.42 width 10.81 waterY -42.62 ctrY -38.44 tanY -0.042
+> 166.0 R 7.60 depth 3.62 width 9.70 waterY -43.20 ctrY -39.23 tanY -0.042
+> 180.0 R 7.60 depth 3.73 width 8.59 waterY -43.76 ctrY -39.89 tanY -0.043
+> 183.0 R 7.62 depth 3.73 width 9.66 waterY -43.84 ctrY -39.99 tanY -0.041
+> 185.9 R 10.72 depth 3.73 width 9.15 waterY -43.80 ctrY -36.95 tanY 0.033
+> 188.9 R 14.41 depth 3.74 width 8.00 waterY -43.34 ctrY -33.48 tanY 0.354
+> 193.9 R 15.00 depth 3.43 width 7.04 waterY -41.01 ctrY -31.43 tanY 0.553
+> 203.9 R 15.00 depth 2.01 width 7.00 waterY -34.88 ctrY -23.88 tanY 0.530
+> 218.9 R 15.00 depth 1.37 width 7.00 waterY -34.11 ctrY -22.48 tanY -0.517
+
+### 🤖 Claude — 2026-11-16T10:05:40.850Z
+
+> 🔧 **Bash** `{"command": "sed -n 566,600p src/world/tube.ts | cut -c1-260 && sed -n 640,735p src/world/tube.ts | cut -c1-240", "description": "Read the far-tunnel class that continues the tunnel into the distance"}`
+
+### 🧑 User — 2026-11-16T10:05:40.908Z
+
+> ↩︎ result: * `knots` ([u, Z] pairs, increasing, starting at [0, 0]): the virtual tunnel coordinate u (continues
+>    * the real s, so slot rows / ring bays repeat every bay in u) → virtual depth Z, piecewise linear. Ref 05
+>    * draws the far bays longer than the near ones (ring radii 288,192,122,85,66,54,45 px): one ring per
+>    * knot reproduces that while every bay keeps its slot rows and lid pair. Without knots Z = u.
+>    */
+>   /**
+>    * wave 9 (05 oval, environment OVAL05): lateral stretch of the cross-section (the near 05 walls/rings are ovals
+>    * K wider than tall) and the level bank floor (wall points below `floorY`, measured along U from the centre line,
+>    * are lifted onto it), so the far section continues the near one at the seam
+>    */
+>   readonly aspect: number;
+>   readonly floorY: number | undefined;
+>   constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number } = {}) {
+>     this.aspect = shape.aspect ?? 1;
+>     this.floorY = shape.floorY;
+>     const f = path.frame(sF);
+>     this.c0 = tubeCenterAt(path, sF);
+>     // `axis`: dir …[+6006 chars]
+
+### 🤖 Claude — 2026-11-16T10:07:20.957Z
+
+Now rebuilding the Screen 05 tunnel as a larger oval with its roof higher above the water, which is what the approved picture actually shows.
+
+### 🤖 Claude — 2026-11-16T10:07:22.281Z
+
+> 🔧 **Bash** `{"command": "grep -n \"RING06_PHASE\\|const ringSpacing\\|const s06\\b\\|const s05\\b\\|const s08\\b\\|far05Debug\" src/world/*.ts | cut -c1-200 | head -20; sed -n 432,475p src/world/environment.ts | cut -c1-250", "description": "Read ring spacing constants and the far ring and lid placement"}`
+
+### 🧑 User — 2026-11-16T10:07:22.341Z
+
+> ↩︎ result: src/world/environment.ts:12:import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05 } from './far05'; // path-camera (05 far tunnel block)
+> src/world/environment.ts:195:  const s08 = course.stage('08').s0;
+> src/world/environment.ts:205:  const ringSpacing = 9.0;
+> src/world/environment.ts:223:  const s06 = course.stage('06').s0;
+> src/world/environment.ts:224:  const RING06_PHASE = 5.5643876;
+> src/world/environment.ts:347:  for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
+> src/world/environment.ts:387:  for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
+> src/world/environment.ts:428:    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay });
+> src/world/far05.ts:24:export const far05Debug: Record<string, unknown> = {};
+> src/world/far05.ts:307:  Object.assign(far05Debug, { farCoins: items.map((it) => ({ Z: it.Z, o: it.o.toArray(), k: it.s.x })) });
+>     const fr0 = { pos: ft.c0, tan: ft.T, up: ft.U, right: ft.Rt };
+>     const ringBasis = n …[+3187 chars]
+
