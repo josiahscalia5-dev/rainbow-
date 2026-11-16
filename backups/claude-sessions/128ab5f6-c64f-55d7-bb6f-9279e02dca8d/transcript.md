@@ -4564,3 +4564,11 @@ All 20 bootstrap checks pass on the new branch (BOOTSTRAP OK). Making the final 
 
 You've hit your 5-hour limit · resets 6:40pm (UTC)
 
+### 🧑 User — 2026-11-16T16:06:18.895Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-16T16:06:20.085Z
+
+You've hit your 5-hour limit · resets 6:40pm (UTC)
+
