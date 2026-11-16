@@ -165,7 +165,8 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
     group,
     controls,
     parts,
-    ...(ribbon.ready ? { ready: Promise.all([ribbon.ready, ...proj05Pending]).then(() => undefined) } : {}),
+    // `?proj05=1` / `?projwall05=1` / `?projring05=1`: wait for the baked textures (nothing pending → no `ready`, as before)
+    ...(ribbon.ready || proj05Pending.length ? { ready: Promise.all([ribbon.ready, ...proj05Pending]).then(() => undefined) } : {}),
     surfaceHeight,
     stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
     update(time, dt, focusS, camera) {
