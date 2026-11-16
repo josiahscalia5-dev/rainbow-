@@ -1855,3 +1855,861 @@ Seamless blending added to the bake; checking the textures before the next in-ga
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-tunnel-probe.mjs'\ns=open(p).read()\nold=\"const ALL = !!opt.all;\"\nnew=\"const ALL = !!opt.all;\\nconst COORDS = !!opt.coords;   // with ?projwall05=1 / ?projring05=1: the baked-texture coordinates the shaders use (tunnel_coords.f32)\"\nassert old in s; s=s.replace(old,new)\nold=\"  const meta = await page.evaluate(async () => {\\n    const R = window.__rainbow;\\n    R.goto('05');\"\nnew=\"  const meta = await page.evaluate(async (COORDS) => {\\n    const R = window.__rainbow;\\n    R.goto('05');\"\nassert old in s; s=s.replace(old,new)\n …[+2536 chars]`
 
+### 🧑 User — 2026-11-16T20:23:08.317Z
+
+> ↩︎ result: probed {} tunnel {"sCam05":126.03830202823289,"s05":114.68830202823243,"sGlow05":183.02412082521383,"sF05":180.0383020282329,"bay05":14,"rings05":[124.03830202823289,138.0383020282329,146.038302028232
+> total 41480
+> drwxr-xr-x 2 root root     4096 Nov 16 20:23 .
+> drwx------ 8 root root     4096 Nov 16 20:21 ..
+> -rw-r--r-- 1 root root 21233664 Nov 16 20:23 tunnel_coords_all.f32
+> -rw-r--r-- 1 root root 21233664 Nov 16 20:04 tunnel_id.f32
+
+### 🤖 Claude — 2026-11-16T20:23:17.370Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\na=np.fromfile('$S/raw/tunnel_coords_all.f32',dtype=np.float32).reshape(1536,864,4)\ncap=np.asarray(Image.open('$S/c3/05.png').convert('RGB')).astype(np.float32)\nwall=np.asarray(Image.open('assets/textures/tunnel05/wall05.png').convert('RGB')).astype(np.float32)\nring=np.asarray(Image.open('assets/textures/tunnel05/ring05.png').convert('RGB')).astype(np.float32)\nfor name,tex,code,alpha in (('wall',wall,7,77),('ring',ring,8,78)) …[+853 chars]`
+
+### 🧑 User — 2026-11-16T20:23:17.717Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "<stdin>", line 12, in <module>
+> cv2.error: OpenCV(5.0.0) /io/opencv/modules/imgproc/src/imgwarp.cpp:1427: error: (-215:Assertion failed) dst.cols < SHRT_MAX && dst.rows < SHRT_MAX && src.cols < SHRT_MAX && src.rows < SHRT_MAX in function 'remap'
+
+### 🤖 Claude — 2026-11-16T20:23:32.777Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && cat > tools/proj05/tunnel_residual.py <<'EOF'\n\"\"\"Screen 05 walls + rings bake, step 3 — colour feedback: what the game shows (a locked capture with `?projwall05=1`\nand / or `?projring05=1`) minus what the baked texture asked for, per texel, so the next bake can pre-compensate the\npart of the post chain the shader cannot undo (bloom spill).\nusage: python3 -I tools/proj05/tunnel_residual.py <capture.png> <tunnel_coords[_all].f32> <assets_dir> <out correction.npz> [gain]\nThe coordinates com …[+2588 chars]`
+
+### 🧑 User — 2026-11-16T20:23:34.100Z
+
+> ↩︎ result: wall px 312415 mean diff RGB [-4.89  9.75 -0.01] mean abs 12.079999923706055 within 10: 0.79
+> ring px 176258 mean diff RGB [-21.18  -7.08  24.88] mean abs 25.420000076293945 within 10: 0.643
+
+### 🤖 Claude — 2026-11-16T20:23:53.334Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/materials.ts", "offset": 60, "limit": 75}`
+
+### 🧑 User — 2026-11-16T20:23:53.359Z
+
+> ↩︎ result: 60	  virtualDepth?: boolean;
+> 61	  /**
+> 62	   * paint a far stream on the tunnel floor (forced-perspective section only): band centred on the
+> 63	   * bottom (uv.x = 0.5), half width in uv.x, visible beyond `from` virtual units
+> 64	   */
+> 65	  river?: { halfWidth: number; from: number; core: THREE.ColorRepresentation; band: THREE.ColorRepresentation; foam: THREE.ColorRepresentation };
+> 66	}
+> 67	
+> 68	export interface FarGlow {
+> 69	  color: THREE.ColorRepresentation; near: number; far: number; strength: number;
+> 70	  /** optional mid-distance tint of the metal colour (refs: walls turn violet deeper in the tunnel) */
+> 71	  mid?: { color: THREE.ColorRepresentation; near: number; far: number; amount: number };
+> 72	}
+> 73	
+> 74	/** GLSL for the distance glow, shared by the tube wall, rings and lids. With FG_VIRTUAL the distance is the
+> 75	 *  forced-perspective (virtual) depth: real view distance + the per-vertex/per-instance `fgExtra`. */
+> 76	const FAR_GLOW_PARS = `uniform vec3 uFarGlowColor; uniform vec3 uFarGlowRange; uniform vec3 uMidTint; uniform vec3 uMidRange;
+> 77	#ifdef FG_VIRTUAL
+> 78	varying float vFgExtra;
+> 79	float fgDist(){ return length(vViewPosition) + vFgExtra; }
+> 80	#else
+> 81	float fgDist(){ re …[+2863 chars]
+
+### 🤖 Claude — 2026-11-16T20:24:00.784Z
+
+Found why the ring colours looked off in my measurement: the top bar overlay was being counted. Excluding it and re-measuring.
+
+### 🤖 Claude — 2026-11-16T20:24:04.789Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && python3 -I - <<'EOF'\np='/home/user/rainbow-/tools/proj05/tunnel_residual.py'\ns=open(p).read()\nold='''    m = (np.abs(a[..., 2] - code) < 1e-3) & (np.abs(a[..., 3] - alpha) < 1e-3)\n'''\nnew='''    m = (np.abs(a[..., 2] - code) < 1e-3) & (np.abs(a[..., 3] - alpha) < 1e-3)\n    m[:204, :] = False                       # the HUD bar and the title are drawn over the canvas: not the tunnel's colour\n'''\nassert old in s; s=s.replace(old,new); open(p,'w').write(s)\nEOF\npython3 -I tools/proj05/tunn …[+169 chars]`
+
+### 🧑 User — 2026-11-16T20:24:06.124Z
+
+> ↩︎ result: wall px 210749 mean diff RGB [1.16 4.11 0.71] mean abs 2.049999952316284 within 10: 0.998
+> ring px 101668 mean diff RGB [1.99 4.02 6.9 ] mean abs 4.440000057220459 within 10: 0.95
+
+### 🤖 Claude — 2026-11-16T20:24:14.660Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && C=qa/pilot05/proj/tunnel/model/correction.npz && rm -f $C && python3 -I tools/proj05/tunnel_residual.py $S/c3/05.png $S/raw/tunnel_coords_all.f32 assets/textures/tunnel05 $C && python3 -I tools/proj05/tunnel_bake.py qa/pilot05/proj/tunnel/model assets/textures/tunnel05 $C > /dev/null && mkdir -p $S/c4 && node scripts/capture.mjs 05 --q='projwall05=1&projring05=1' --out=$S/c4 2>&1 | tail -1 | cut -c1-40 && git checkout qa/capture_log.json && python3 -I tools/proj05/tunnel_residual.py $S/c4/05.png …[+217 chars]`
+
+### 🧑 User — 2026-11-16T20:24:46.386Z
+
+> ↩︎ result: wall px 210749 mean diff RGB [1.16 4.11 0.71] mean abs 2.049999952316284 within 10: 0.998
+> ring px 101668 mean diff RGB [1.99 4.02 6.9 ] mean abs 4.440000057220459 within 10: 0.95
+> 05 → /tmp/claude-0/-home-user-rainbow-
+> Updated 1 path from the index
+> wall px 210749 mean diff RGB [1.08 4.07 0.66] mean abs 2.009999990463257 within 10: 0.998
+> ring px 101668 mean diff RGB [2.02 4.   7.22] mean abs 4.539999961853027 within 10: 0.941
+> -rw-r--r-- 1 root root 6167080 Nov 16 20:24 qa/pilot05/proj/tunnel/model/correction.npz
+> 
+> assets/textures/tunnel05:
+> total 1780
+> drwxr-xr-x 2 root root    4096 Nov 16 20:11 .
+> drwxr-xr-x 4 root root    4096 Nov 16 20:11 ..
+> -rw-r--r-- 1 root root  172302 Nov 16 20:24 ring05.png
+> -rw-r--r-- 1 root root     538 Nov 16 20:24 tunnel05.json
+> -rw-r--r-- 1 root root 1633057 Nov 16 20:24 wall05.png
+
+### 🧑 User — 2026-11-16T20:24:51.146Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-16T20:24:51.185Z
+
+CLAUDIA — CONTINUATION OF MY FINAL MASTER COMMAND
+
+SCREEN 05 — PARTS 14 THROUGH 22
+
+THIS CONTINUES MY PREVIOUS MESSAGE. DO NOT TREAT IT AS A NEW OR SEPARATE PROJECT.
+
+For the tunnel, rings, and metal details, use calibrated texture projection, baked material maps, or controlled 3D rendering where that achieves better fidelity.
+
+Reuse the actual approved artwork wherever it helps.
+
+If procedural reconstruction cannot reproduce a stationary visual detail accurately, investigate 2.5D camera-projected detail layers attached to legitimate 3D geometry.
+
+But:
+
+DO NOT turn Screen 05 into a single static wallpaper, a video, or a slideshow.
+
+The result must remain real, depth-correct, playable Three.js gameplay.
+
+Do not permit foreground layers to cover interactive objects incorrectly.
+
+Do not use texture projection in a way that looks correct only in one screenshot but visibly tears when Benny moves.
+
+Prioritize the approved gameplay-camera appearance over unnecessary artistic redesign.
+
+---
+
+PART 15 — EXECUTION ORDER
+
+Carry out the corrections in this order:
+
+PHASE A — COMPLETE VISUAL AUDIT
+
+Take the approved artwork and latest game render at the exact same 864 × 1536 resolution, camera, seed, checkpoint and rendering conditions.
+
+Produce a comprehensive discrepancy report covering every major object and effect described above.
+
+Identify which 3–5 mismatches create the largest visible whole-screen differences.
+
+Do not stop at the audit. Immediately use it to guide implementation.
+
+PHASE B — GOLDEN RINGS AND PURPLE TUNNEL
+
+Correct gold materials, purple metal, rings, perforations, side fittings, reflections, geometry appearance and tunnel depth.
+
+Preserve the improved water.
+
+PHASE C — FOREGROUND RING AND WATER EDGES
+
+Correct the front ring's visible silhouette only if it improves the full picture.
+
+Preserve the improved reference-projected water and far-bank foam.
+
+Remove visible seams and problematic occlusions.
+
+PHASE D — BENNY AND SPLASH
+
+Match the character silhouette, knit detail, hat, pom-pom, fur, body position and water wake.
+
+PHASE E — COINS AND BUBBLES
+
+Match exact approved checkpoint positions, sizes, lighting and appearance.
+
+Keep these as functional game elements where applicable.
+
+PHASE F — FINAL LIGHTING AND HUD
+
+Correct remaining color-processing differences, gold-to-purple balance, composition, typography and overlay alignment.
+
+PHASE G — WHOLE-SCREEN REFINEMENT
+
+Perform final measured reference-matching passes against the complete screen.
+
+Each pass must target an identified mismatch and show actual improvement.
+
+Do not run unlimited blind parameter sweeps.
+
+Do not declare the task finished because one measurement reaches 95%.
+
+---
+
+PART 16 — MANDATORY FULL-SCREEN QUALITY MEASUREMENT
+
+Create comparison masks for at least:
+
+1. Gold rings and front gold frame.
+2. Purple tunnel walls and perforations.
+3. Metallic side fittings.
+4. Water.
+5. Foam banks.
+6. Benny and his hat.
+7. Benny's wake and splash.
+8. Coins.
+9. Bubbles.
+10. HUD and text.
+11. Distant tunnel and end glow.
+12. The entire composite frame.
+
+Record:
+
+- Screen-space alignment.
+- Object boundary and silhouette differences.
+- Pixel color error.
+- Percentage of pixels within 10 and 20 RGB levels.
+- Structural similarity (SSIM), where appropriate.
+- Missing or incorrectly covered pixels.
+- Major mismatched shapes.
+- Color contamination from lighting.
+- Clearly visible artifacts.
+
+Also calculate whole-frame comparison metrics.
+
+Never confuse a water-only measurement with whole-screen similarity.
+
+Never present "pixels within 20 color levels" as though it were a universal visual quality percentage.
+
+The 95% goal is an aspiration for the complete visual result, not permission to manipulate masks, exclude difficult regions, or redefine what counts.
+
+Report all exclusions clearly.
+
+---
+
+PART 17 — MANDATORY VISUAL PROOF
+
+I do not want tiny collages as the main proof.
+
+Show these as FOUR SEPARATE, FULL-SIZE, CLEARLY LABELED IMAGES:
+
+IMAGE 1 — ORIGINAL APPROVED SCREEN 05
+
+The original image, unchanged.
+
+IMAGE 2 — BEFORE
+
+The actual latest playable game capture before these full-screen corrections, with "?proj05=1".
+
+IMAGE 3 — NEW
+
+The actual rendered result from the same checkpoint, camera and resolution.
+
+IMAGE 4 — DIFFERENCE
+
+A clearly labeled difference visualization showing remaining mismatches, with a short legend.
+
+Also save a transparent 50/50 overlay for alignment inspection.
+
+The approved, before and new screenshots must be direct images from the source or real Three.js render—not AI-generated replacements or screenshots edited to make the result look better.
+
+Do not present crops or grids as substitutes for the full-size proof.
+
+Do not ask me to approve results based only on a technical summary or thumbnail.
+
+---
+
+PART 18 — REAL GAME MOVEMENT
+
+After the locked-camera artwork is visually close, test the scene during gameplay.
+
+Use the same established Screen 05 path and camera system.
+
+Test:
+
+- Stationary checkpoint.
+- Forward movement.
+- Steering left.
+- Steering right.
+- Return to center.
+- Coins passing the camera.
+- Water flowing toward the viewer.
+- Foam passing along the edges.
+- Continuous tunnel rings and metal surfaces.
+- Screen 04 → 05 transition.
+- Screen 05 → 06 transition.
+
+Produce real moving-game captures and short clips.
+
+Benny must not detach from the water.
+
+The tunnel must not transform into an unrelated pink environment during Screen 05 unless that transition is actually part of the approved level sequence.
+
+No broken geometry, sudden texture changes, flat card-like surfaces, missing water, or obvious repeating patterns.
+
+All changes must remain within Screen 05, except unavoidable properly blended boundary views.
+
+The screen must remain playable on Android.
+
+---
+
+PART 19 — BACKUP AND SAFETY RULES
+
+Keep my game safe.
+
+- Do not start a new game.
+- Do not rebuild the repository from scratch.
+- Do not delete earlier assets or completed work.
+- Do not overwrite approved reference images.
+- Do not force-push, reset, rebase or rewrite protected history.
+- Do not merge draft pull request #9 automatically.
+- Do not promote experiments to the default build without my explicit visual approval.
+- Keep the working T2 and original BEFORE versions recoverable.
+- Use reversible Screen-05-only switches.
+- Preserve the existing "?proj05=1" work.
+- Keep the five-minute autosave active while the environment is running.
+- Verify saved commits actually reach GitHub.
+- Confirm Git LFS asset availability.
+- Preserve the ten existing specialist definitions.
+
+Run reference-hash verification, baseline screenshot regression checks, gameplay tests, continuity tests, and relevant performance tests.
+
+A technical test passing is necessary for safety but is NOT visual approval.
+
+Do not pretend external services or background agents are running if they are not.
+
+---
+
+PART 20 — USE THE AVAILABLE SPECIALISTS CORRECTLY
+
+Reuse the existing project specialists where relevant:
+
+- "reference-match-director": Own the whole-screen reference audit and ensure all visual corrections serve the approved image.
+- "washer-environment-modeler": Gold rings, purple tube geometry, metal panels, fittings and calibrated textures.
+- "water-fx-specialist": Preserve and refine the approved projected water, flow and highlights.
+- "benny-character-artist": Benny, hat, pom-pom, star, fur and silhouette.
+- "foam-bubbles-particles": Foam, approved bubble arrangement and Benny's splash.
+- "playwright-visual-qa": Locked-camera screenshots, masks, overlays, metrics and moving-frame proof.
+- "animation-and-gameplay-engineer" and "android-build-performance": Preserve playable behavior and performance.
+
+Coordinate the specialists so they do not overwrite each other's changes.
+
+Do not recreate specialist definitions that already exist.
+
+If multiple agents cannot run, perform the work sequentially yourself.
+
+---
+
+PART 21 — WHAT I WILL NOT ACCEPT
+
+I will not consider Screen 05 finished because:
+
+- The water metric is high.
+- All eight gameplay tests pass.
+- The tunnel looks generally purple and gold.
+- The result looks attractive but different.
+- A new shader looks more realistic.
+- The scene contains the right categories of objects.
+- Another generated image looks similar.
+- You produced a video instead of gameplay.
+- You achieved a good result only by hiding the regions that differ.
+- You showed tiny comparison images that conceal defects.
+- You reported unverified percentages.
+- You completed one component but ignored the others.
+
+If any major object still differs significantly from the approved image, identify it and continue the targeted correction process.
+
+If an important feature cannot be reproduced accurately, report the exact technical limitation and demonstrate it rather than making promises.
+
+---
+
+PART 22 — EXACT FINAL DELIVERABLES
+
+Save your work under a clearly named folder such as:
+
+"qa/pilot05/full_reference_match/"
+
+Include:
+
+- "01_APPROVED.png"
+- "02_BEFORE.png"
+- "03_NEW.png"
+- "04_DIFFERENCE.png"
+- "05_OVERLAY.png"
+- "VISUAL_AUDIT.md"
+- "REGION_METRICS.json"
+- "FULL_FRAME_METRICS.json"
+- "REMAINING_DIFFERENCES.md"
+- "IMPLEMENTATION_NOTES.md"
+- Moving-game frames and clips
+- Gameplay and continuity test results
+- GitHub branch, full commit SHA and remote-push verification
+
+Use the actual real-game capture script, "scripts/capture.mjs", and the existing projection/QA utilities as appropriate.
+
+Do not create fabricated before-and-after images.
+
+Give me a clear final report explaining:
+
+1. Which parts now match my approved image closely.
+2. Which parts remain different.
+3. What you changed in the actual game.
+4. What the whole-screen measurements say.
+5. Whether Screen 05 still functions properly.
+6. Whether the default and original working versions remain protected.
+7. The exact files and full-size previews I should inspect.
+
+DO NOT MERGE OR PROMOTE ANYTHING UNTIL I APPROVE THE FINAL VISUAL.
+
+---
+
+FINAL INSTRUCTION
+
+This is my final, authoritative specification for Screen 05.
+
+I do not want another generic plan, another unnecessary software recommendation, another Marble reconstruction, or another series of questions about whether I want stricter instructions.
+
+I WANT THE ACTUAL EXISTING GAME SCENE MODIFIED UNTIL IT REPRODUCES MY APPROVED SCREEN 05 AS FAITHFULLY AS POSSIBLE.
+
+Take responsibility for the detailed comparison. Do not expect me to repeatedly point out the same mismatches.
+
+Use my approved artwork as the source of truth.
+
+Make actual changes, verify the improvements, and present full-size evidence.
+
+The completed result must be recognizable as MY EXACT APPROVED SCREEN 05—not Claudia's artistic interpretation of it.
+
+EXECUTE THIS INSTRUCTION. DO THE WORK. PROTECT MY ORIGINAL GAME. SHOW ME THE REAL RESULTS.
+CLAUDIA — CONTINUATION OF MY FINAL MASTER COMMAND
+
+SCREEN 05 — PARTS 14 THROUGH 22
+
+THIS CONTINUES MY PREVIOUS MESSAGE. DO NOT TREAT IT AS A NEW OR SEPARATE PROJECT.
+
+For the tunnel, rings, and metal details, use calibrated texture projection, baked material maps, or controlled 3D rendering where that achieves better fidelity.
+
+Reuse the actual approved artwork wherever it helps.
+
+If procedural reconstruction cannot reproduce a stationary visual detail accurately, investigate 2.5D camera-projected detail layers attached to legitimate 3D geometry.
+
+But:
+
+DO NOT turn Screen 05 into a single static wallpaper, a video, or a slideshow.
+
+The result must remain real, depth-correct, playable Three.js gameplay.
+
+Do not permit foreground layers to cover interactive objects incorrectly.
+
+Do not use texture projection in a way that looks correct only in one screenshot but visibly tears when Benny moves.
+
+Prioritize the approved gameplay-camera appearance over unnecessary artistic redesign.
+
+---
+
+PART 15 — EXECUTION ORDER
+
+Carry out the corrections in this order:
+
+PHASE A — COMPLETE VISUAL AUDIT
+
+Take the approved artwork and latest game render at the exact same 864 × 1536 resolution, camera, seed, checkpoint and rendering conditions.
+
+Produce a comprehensive discrepancy report covering every major object and effect described above.
+
+Identify which 3–5 mismatches create the largest visible whole-screen differences.
+
+Do not stop at the audit. Immediately use it to guide implementation.
+
+PHASE B — GOLDEN RINGS AND PURPLE TUNNEL
+
+Correct gold materials, purple metal, rings, perforations, side fittings, reflections, geometry appearance and tunnel depth.
+
+Preserve the improved water.
+
+PHASE C — FOREGROUND RING AND WATER EDGES
+
+Correct the front ring's visible silhouette only if it improves the full picture.
+
+Preserve the improved reference-projected water and far-bank foam.
+
+Remove visible seams and problematic occlusions.
+
+PHASE D — BENNY AND SPLASH
+
+Match the character silhouette, knit detail, hat, pom-pom, fur, body position and water wake.
+
+PHASE E — COINS AND BUBBLES
+
+Match exact approved checkpoint positions, sizes, lighting and appearance.
+
+Keep these as functional game elements where applicable.
+
+PHASE F — FINAL LIGHTING AND HUD
+
+Correct remaining color-processing differences, gold-to-purple balance, composition, typography and overlay alignment.
+
+PHASE G — WHOLE-SCREEN REFINEMENT
+
+Perform final measured reference-matching passes against the complete screen.
+
+Each pass must target an identified mismatch and show actual improvement.
+
+Do not run unlimited blind parameter sweeps.
+
+Do not declare the task finished because one measurement reaches 95%.
+
+---
+
+PART 16 — MANDATORY FULL-SCREEN QUALITY MEASUREMENT
+
+Create comparison masks for at least:
+
+1. Gold rings and front gold frame.
+2. Purple tunnel walls and perforations.
+3. Metallic side fittings.
+4. Water.
+5. Foam banks.
+6. Benny and his hat.
+7. Benny's wake and splash.
+8. Coins.
+9. Bubbles.
+10. HUD and text.
+11. Distant tunnel and end glow.
+12. The entire composite frame.
+
+Record:
+
+- Screen-space alignment.
+- Object boundary and silhouette differences.
+- Pixel color error.
+- Percentage of pixels within 10 and 20 RGB levels.
+- Structural similarity (SSIM), where appropriate.
+- Missing or incorrectly covered pixels.
+- Major mismatched shapes.
+- Color contamination from lighting.
+- Clearly visible artifacts.
+
+Also calculate whole-frame comparison metrics.
+
+Never confuse a water-only measurement with whole-screen similarity.
+
+Never present "pixels within 20 color levels" as though it were a universal visual quality percentage.
+
+The 95% goal is an aspiration for the complete visual result, not permission to manipulate masks, exclude difficult regions, or redefine what counts.
+
+Report all exclusions clearly.
+
+---
+
+PART 17 — MANDATORY VISUAL PROOF
+
+I do not want tiny collages as the main proof.
+
+Show these as FOUR SEPARATE, FULL-SIZE, CLEARLY LABELED IMAGES:
+
+IMAGE 1 — ORIGINAL APPROVED SCREEN 05
+
+The original image, unchanged.
+
+IMAGE 2 — BEFORE
+
+The actual latest playable game capture before these full-screen corrections, with "?proj05=1".
+
+IMAGE 3 — NEW
+
+The actual rendered result from the same checkpoint, camera and resolution.
+
+IMAGE 4 — DIFFERENCE
+
+A clearly labeled difference visualization showing remaining mismatches, with a short legend.
+
+Also save a transparent 50/50 overlay for alignment inspection.
+
+The approved, before and new screenshots must be direct images from the source or real Three.js render—not AI-generated replacements or screenshots edited to make the result look better.
+
+Do not present crops or grids as substitutes for the full-size proof.
+
+Do not ask me to approve results based only on a technical summary or thumbnail.
+
+---
+
+PART 18 — REAL GAME MOVEMENT
+
+After the locked-camera artwork is visually close, test the scene during gameplay.
+
+Use the same established Screen 05 path and camera system.
+
+Test:
+
+- Stationary checkpoint.
+- Forward movement.
+- Steering left.
+- Steering right.
+- Return to center.
+- Coins passing the camera.
+- Water flowing toward the viewer.
+- Foam passing along the edges.
+- Continuous tunnel rings and metal surfaces.
+- Screen 04 → 05 transition.
+- Screen 05 → 06 transition.
+
+Produce real moving-game captures and short clips.
+
+Benny must not detach from the water.
+
+The tunnel must not transform into an unrelated pink environment during Screen 05 unless that transition is actually part of the approved level sequence.
+
+No broken geometry, sudden texture changes, flat card-like surfaces, missing water, or obvious repeating patterns.
+
+All changes must remain within Screen 05, except unavoidable properly blended boundary views.
+
+The screen must remain playable on Android.
+
+---
+
+PART 19 — BACKUP AND SAFETY RULES
+
+Keep my game safe.
+
+- Do not start a new game.
+- Do not rebuild the repository from scratch.
+- Do not delete earlier assets or completed work.
+- Do not overwrite approved reference images.
+- Do not force-push, reset, rebase or rewrite protected history.
+- Do not merge draft pull request #9 automatically.
+- Do not promote experiments to the default build without my explicit visual approval.
+- Keep the working T2 and original BEFORE versions recoverable.
+- Use reversible Screen-05-only switches.
+- Preserve the existing "?proj05=1" work.
+- Keep the five-minute autosave active while the environment is running.
+- Verify saved commits actually reach GitHub.
+- Confirm Git LFS asset availability.
+- Preserve the ten existing specialist definitions.
+
+Run reference-hash verification, baseline screenshot regression checks, gameplay tests, continuity tests, and relevant performance tests.
+
+A technical test passing is necessary for safety but is NOT visual approval.
+
+Do not pretend external services or background agents are running if they are not.
+
+---
+
+PART 20 — USE THE AVAILABLE SPECIALISTS CORRECTLY
+
+Reuse the existing project specialists where relevant:
+
+- "reference-match-director": Own the whole-screen reference audit and ensure all visual corrections serve the approved image.
+- "washer-environment-modeler": Gold rings, purple tube geometry, metal panels, fittings and calibrated textures.
+- "water-fx-specialist": Preserve and refine the approved projected water, flow and highlights.
+- "benny-character-artist": Benny, hat, pom-pom, star, fur and silhouette.
+- "foam-bubbles-particles": Foam, approved bubble arrangement and Benny's splash.
+- "playwright-visual-qa": Locked-camera screenshots, masks, overlays, metrics and moving-frame proof.
+- "animation-and-gameplay-engineer" and "android-build-performance": Preserve playable behavior and performance.
+
+Coordinate the specialists so they do not overwrite each other's changes.
+
+Do not recreate specialist definitions that already exist.
+
+If multiple agents cannot run, perform the work sequentially yourself.
+
+---
+
+PART 21 — WHAT I WILL NOT ACCEPT
+
+I will not consider Screen 05 finished because:
+
+- The water metric is high.
+- All eight gameplay tests pass.
+- The tunnel looks generally purple and gold.
+- The result looks attractive but different.
+- A new shader looks more realistic.
+- The scene contains the right categories of objects.
+- Another generated image looks similar.
+- You produced a video instead of gameplay.
+- You achieved a good result only by hiding the regions that differ.
+- You showed tiny comparison images that conceal defects.
+- You reported unverified percentages.
+- You completed one component but ignored the others.
+
+If any major object still differs significantly from the approved image, identify it and continue the targeted correction process.
+
+If an important feature cannot be reproduced accurately, report the exact technical limitation and demonstrate it rather than making promises.
+
+---
+
+PART 22 — EXACT FINAL DELIVERABLES
+
+Save your work under a clearly named folder such as:
+
+"qa/pilot05/full_reference_match/"
+
+Include:
+
+- "01_APPROVED.png"
+- "02_BEFORE.png"
+- "03_NEW.png"
+- "04_DIFFERENCE.png"
+- "05_OVERLAY.png"
+- "VISUAL_AUDIT.md"
+- "REGION_METRICS.json"
+- "FULL_FRAME_METRICS.json"
+- "REMAINING_DIFFERENCES.md"
+- "IMPLEMENTATION_NOTES.md"
+- Moving-game frames and clips
+- Gameplay and continuity test results
+- GitHub branch, full commit SHA and remote-push verification
+
+Use the actual real-game capture script, "scripts/capture.mjs", and the existing projection/QA utilities as appropriate.
+
+Do not create fabricated before-and-after images.
+
+Give me a clear final report explaining:
+
+1. Which parts now match my approved image closely.
+2. Which parts remain different.
+3. What you changed in the actual game.
+4. What the whole-screen measurements say.
+5. Whether Screen 05 still functions properly.
+6. Whether the default and original working versions remain protected.
+7. The exact files and full-size previews I should inspect.
+
+DO NOT MERGE OR PROMOTE ANYTHING UNTIL I APPROVE THE FINAL VISUAL.
+
+---
+
+FINAL INSTRUCTION
+
+This is my final, authoritative specification for Screen 05.
+
+I do not want another generic plan, another unnecessary software recommendation, another Marble reconstruction, or another series of questions about whether I want stricter instructions.
+
+I WANT THE ACTUAL EXISTING GAME SCENE MODIFIED UNTIL IT REPRODUCES MY APPROVED SCREEN 05 AS FAITHFULLY AS POSSIBLE.
+
+Take responsibility for the detailed comparison. Do not expect me to repeatedly point out the same mismatches.
+
+Use my approved artwork as the source of truth.
+
+Make actual changes, verify the improvements, and present full-size evidence.
+
+The completed result must be recognizable as MY EXACT APPROVED SCREEN 05—not Claudia's artistic interpretation of it.
+
+EXECUTE THIS INSTRUCTION. DO THE WORK. PROTECT MY ORIGINAL GAME. SHOW ME THE REAL RESULTS.
+CLAUDE — RESTORE MY EXISTING RAINBOW 3D GAME ON THIS NEW ACCOUNT.
+
+THIS IS AN ACCOUNT TRANSFER, NOT A NEW GAME. DO NOT RECREATE OR OVERWRITE ANYTHING.
+
+GitHub repository: josiahscalia5-dev/rainbow-
+
+Latest verified Screen 05 experiment branch:
+ccr-e546a360-cxmton
+
+Protected working version:
+ccr-451ea8c7-3nqlis
+
+FIRST — RECOVER MY PROJECT
+
+1. Fetch the latest GitHub branches and identify the most recent verified Screen 05 work. Do not use the old default branch as the latest version.
+
+2. Read CLAUDE.md, backups/CLAUDE_ACCOUNT_TRANSFER.md, backups/AGENTS_STATUS.json, and qa/pilot05/proj/NOTES.md.
+
+3. Run the existing scripts/claude-bootstrap.sh recovery system safely on your new session branch. If the script is missing from the initial checkout, fetch it from ccr-e546a360-cxmton first.
+
+4. Restore all Git LFS files, Blender .blend projects, GLB character models, approved reference images, water textures, scripts, and other saved assets.
+
+5. Check Blender using blender --version and run a background Python test. If Blender 5.3 is missing, use the EXISTING scripts/setup-blender.sh. Do not reinstall if it already works.
+
+6. Verify these important files:
+
+- references/05_flow_into_the_current.png
+- references/water/05_water_isolated_original.png
+- assets/models/benny.glb
+- qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend
+- qa/pilot05/wave6/camera_lock/screen05_layout.blend
+- assets/textures/water05/
+- qa/pilot05/proj/
+- qa/pilot05/full_reference_match/
+
+7. Restore the existing ten specialist agent definitions, Playwright testing, necessary Python packages, Three.js/npm dependencies, and Android SDK where needed. Verify each tool rather than assuming it is available.
+
+8. Restart and verify the five-minute GitHub autosave while this session is active. Never force-push or overwrite protected branches.
+
+SECOND — CONTINUE MY SCREEN 05
+
+My approved image is the visual authority.
+
+Preserve the completed ?proj05=1 water-projection improvements.
+
+My priority is the ENTIRE visual design: rich golden-yellow metallic rings, deep glossy purple tunnel, perforations, side fittings, water, Benny, his knitted hat, fur, splashes, coins, foam, bubbles, lighting, and HUD.
+
+Do not restart Screen 05. Do not replace the original artwork with AI-generated alternatives.
+
+Use Blender and the existing Three.js code to improve the real 3D scene.
+
+First produce a genuine full-size Screen 05 capture and verify that the recovered game and Blender assets work.
+
+Then continue the detailed full-screen matching task, keeping every visual experiment reversible and leaving the protected working version untouched.
+
+Do not spend Marble credits, purchase anything, or ask for API keys.
+
+THIRD — PROVE THE RECOVERY
+
+Report:
+
+- GitHub branch and full SHA
+- GitHub push verification
+- Blender version and successful test
+- GLB and .blend asset status
+- Ten specialist definitions
+- Autosave status
+- Current ?proj05=1 screenshot
+- Anything that could not be restored
+
+DO THE RECOVERY FIRST. THEN CONTINUE THE EXISTING GAME. DO NOT START OVER.
+Make sure u save everything to my GitHub fall 
+My GitHub resporitory I meant
+
+### 🧑 User — 2026-11-16T20:24:57.345Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-16T20:25:23.123Z
+
+<local-command-caveat>The command below was run directly in Claude Code, not sent to you as a request, and its output goes straight to the user. It's recorded here as context for later messages.</local-command-caveat>
+
+### 🧑 User — 2026-11-16T20:25:23.124Z
+
+<command-name>/model</command-name>
+            <command-message>model</command-message>
+            <command-args>claude-opus-5-5</command-args>
+
+### 🧑 User — 2026-11-16T20:25:23.124Z
+
+<local-command-stdout>Set model to `claude-opus-5-5`</local-command-stdout>
+
+### 🧑 User — 2026-11-16T20:25:23.124Z
+
+<system-reminder>The model for this session has been changed to claude-opus-5-5. You are now running as claude-opus-5-5.</system-reminder>
+
+### 🧑 User — 2026-11-16T20:25:23.254Z
+
+Make sure  u save everything to my GitHub resporitory
+
+### 🤖 Claude — 2026-11-16T20:25:27.825Z
+
+Saving everything to your GitHub repository first, then I'll check that GitHub really has it.
+
+### 🤖 Claude — 2026-11-16T20:25:29.419Z
+
+> 🔧 **Bash** `{"command": "git branch --show-current && git status --short | head -30 && echo \"--- untracked/ignored check\" && git status --short --ignored -- tools/proj05 scripts/proj05-tunnel-probe.mjs src/vfx/proj05Tunnel.ts assets/textures/tunnel05 qa/pilot05/proj/tunnel | head -20 && git log --oneline -3", "description": "Show what is not yet saved to GitHub"}`
+
+### 🧑 User — 2026-11-16T20:25:29.478Z
+
+> ↩︎ result: ccr-57af22a4-lsg7y7
+>  M assets/textures/tunnel05/ring05.png
+>  M assets/textures/tunnel05/wall05.png
+>  M qa/pilot05/proj/tunnel/model/bake_report.json
+> ?? qa/pilot05/proj/tunnel/model/correction.npz
+> ?? tools/proj05/tunnel_residual.py
+> --- untracked/ignored check
+>  M assets/textures/tunnel05/ring05.png
+>  M assets/textures/tunnel05/wall05.png
+>  M qa/pilot05/proj/tunnel/model/bake_report.json
+> ?? qa/pilot05/proj/tunnel/model/correction.npz
+> ?? tools/proj05/tunnel_residual.py
+> !! tools/proj05/__pycache__/
+> 8fbac1f autosave: Rainbow 2026-11-16 20:22 UTC
+> 0426529 autosave: Rainbow 2026-11-16 20:17 UTC
+> b51b8a1 autosave: Rainbow 2026-11-16 20:12 UTC
+
+### 🤖 Claude — 2026-11-16T20:25:29.885Z
+
+You've hit your 5-hour limit · resets 12:50am (UTC)
+

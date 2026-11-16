@@ -388,8 +388,8 @@
   },
   {
    "path": "assets/textures/tunnel05/ring05.png",
-   "bytes": 167952,
-   "sha256": "5e474fa8113f4d8a2572e307e155b7353291a5a505ac8c711fbc8d7073664b81"
+   "bytes": 172302,
+   "sha256": "293f7d0a5a378d460632e31a49f5dd253aa83ec49bee56965f4aecc785da0967"
   },
   {
    "path": "assets/textures/tunnel05/tunnel05.json",
@@ -398,8 +398,8 @@
   },
   {
    "path": "assets/textures/tunnel05/wall05.png",
-   "bytes": 1624000,
-   "sha256": "d16b934f809eeca2b480a8da9a8fcf9eac30174f53e90778e0331fdd28beb941"
+   "bytes": 1633057,
+   "sha256": "f67bb1759e80a3bd901f2aa5c79d65f8e0750e96d17476f79e3762d0209b1342"
   },
   {
    "path": "assets/textures/water05/proj05_A.png",
@@ -458,8 +458,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 8737,
-   "sha256": "21778fe0e5747b654c189b06b455788e7767aa4af28fa3608156918625a5d172"
+   "bytes": 8738,
+   "sha256": "3ccd3684053a9885b1739ba48f044a4e4c6b30dd25cd262af26625ba730fed23"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1613,8 +1613,13 @@
   },
   {
    "path": "qa/pilot05/proj/tunnel/model/bake_report.json",
-   "bytes": 1015,
-   "sha256": "687c5bfbbc3bc0956058c93960bb150063d12269bfed822f57c4be236f1e697f"
+   "bytes": 1077,
+   "sha256": "2d5b57658d6e92d33e01d53951134b01df14c779308d9b3b398fc8773759fbcd"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/model/correction.npz",
+   "bytes": 6167080,
+   "sha256": "543ee3027371fc6f1b05b3d73329d56b91ce19cfc037c6b1298a3d988642222b"
   },
   {
    "path": "qa/pilot05/proj/tunnel/model/ring05_srcmap.npy",
@@ -7300,6 +7305,11 @@
    "path": "tools/proj05/tunnel_common.py",
    "bytes": 4215,
    "sha256": "708c4b3689355e15a3b6f5f6c1f7ceef7489a1ec7d46e76f34ce73cbbbaaec21"
+  },
+  {
+   "path": "tools/proj05/tunnel_residual.py",
+   "bytes": 2871,
+   "sha256": "ac6065518ce4567b54965a6dd3352b9cbe45f581d580a0bb7c6ac54bf94ee88c"
   },
   {
    "path": "tools/proj05/tunnel_rings.py",
