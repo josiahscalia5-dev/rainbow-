@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "8bd49708fa8f7dbc747ec4414ddc2db0998dc0db27a3e4f9f0f96941012f678e"
+   "sha256": "09cf26de55262f1ac3dd36617ffe9079c62766b729a9e23586a31c69dbae991b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -5022,6 +5022,11 @@
    "sha256": "b19f40ec117779ae0c31f7aa36787f3af8685fa2e4956701fe1b5686c60963ac"
   },
   {
+   "path": "qa/pilot05/wave9b/DIFF05_APPROVED_vs_BEFORE.md",
+   "bytes": 1017,
+   "sha256": "5b91b33b86c5e34f42e87bb6f77947114b82c6c7f943ef8eb32c124bad3288ce"
+  },
+  {
    "path": "qa/pilot05/wave9b/T1/05.png",
    "bytes": 1754285,
    "sha256": "fc103bac02c8dfeb0ee938c644d099ce6e8924354a0024576f0a2c21a5ffe53a"
@@ -5042,9 +5047,39 @@
    "sha256": "cc9e3eb40c36168337c6bf7c2dceb800d90f7bbfff94ece6fc53e9a69f107233"
   },
   {
+   "path": "qa/pilot05/wave9b/T2/05_APPROVED_BEFORE_T2best_fullsize.png",
+   "bytes": 5037479,
+   "sha256": "f7cf480654dfa19f4118f8aaa62d1173067a45ecc471108c9f64cfd6b575ba3b"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T2/05_approved_before_near12_16_20.jpg",
+   "bytes": 691925,
+   "sha256": "d522a5eb05c95f966eaf291864d3250602f2be393f0d3222a2e9a137457e5040"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T2/05_near20.png",
+   "bytes": 1732916,
+   "sha256": "6313bf6b6a2f7c3687a910bd05a859ed1639d720e1b968bc5f3c104d66d75b71"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T2/rings_near.json",
+   "bytes": 2894,
+   "sha256": "f706d5d1b3c93b2466776642647eea6a406847e38486b2019e43424eea3bbd11"
+  },
+  {
+   "path": "qa/pilot05/wave9b/T2/rings_whole_tunnel.json",
+   "bytes": 2891,
+   "sha256": "4597b8ff81ecec7d9596fd320095fc0119a756093264fa478211ca561eb549f3"
+  },
+  {
    "path": "qa/pilot05/wave9b/not_merged/README.md",
    "bytes": 3104,
    "sha256": "3c3bf582fcce9daa867c8adaa50d74f635aad7d7538d30699d3cbf3dc3aae5d9"
+  },
+  {
+   "path": "qa/pilot05/wave9b/not_merged/T2_nearfloor05_REJECTED.patch",
+   "bytes": 3308,
+   "sha256": "bd741d2048c1bf13a1b49ed012e080eceedb3e4d4f442b97b4166111399be51c"
   },
   {
    "path": "qa/pilot05/wave9b/not_merged/coordinator_tests_0950-1020_bigtunnel_round_walltint.patch",
@@ -5968,8 +6003,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 52567,
-   "sha256": "0f77f72df7228bb3a7f3ec765fae01b46abfdcda0b45f68e43699be2236e64b2"
+   "bytes": 51896,
+   "sha256": "5b8a2e3e01f17d482301a9439ed2728fd39900b1c2da409a718683b833ad8cb0"
   },
   {
    "path": "src/world/far05.ts",
@@ -5993,8 +6028,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 40171,
-   "sha256": "256dabe69e3b802ce73f1c67825c390b5ae2a6fe71832ac54b5b3bc4542a42ab"
+   "bytes": 39856,
+   "sha256": "7698afd9d871b648a8eef26026b2f49555475d89d45d672d53cf27c2e07a8f22"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",
@@ -6055,6 +6090,11 @@
    "path": "tools/qa/axis05.ts",
    "bytes": 2366,
    "sha256": "7457d41d9a54e9ba0b9adb5f7b36e66feccd300242c0895534bc42e0fb194b39"
+  },
+  {
+   "path": "tools/qa/diff05.py",
+   "bytes": 3532,
+   "sha256": "b0901defc3746ff05d07dec4849d0a19b72c00fa1e095abb67e42a1a12625662"
   },
   {
    "path": "tools/qa/ring_fit05.py",

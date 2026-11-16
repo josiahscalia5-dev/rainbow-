@@ -228,19 +228,7 @@ export function buildEnvironment(course: Course): Environment {
   const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: rowRepeat0607, offsetV: rowOffset0607, slotHalf: [0.36, 0.12] });
   withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
   // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
-  // wave 9b controlled test T2 (user-directed 2026-11-16: BEFORE is the baseline, ONE geometric factor per test):
-  // the HEIGHT of the NEAR 05 tunnel around the front ring A. Measured (tools/qa/ring_fit05.py, tools/qa/axis05.ts,
-  // qa/pilot05/wave9b/T2/): the approved ring A centre is 59 px BELOW the vanishing point, BEFORE's 44 px ABOVE,
-  // while rings B, C, D already sit like the approved (slightly above). Lowering the WHOLE tunnel moved B–D
-  // away from the approved (rejected). T2 lowers only the tunnel up to ring A (26 u ahead of the eye) by
-  // ?nearfloor05=<d> units and blends back to BEFORE before ring B (40 u): radius 7.6, ring depths and spacing,
-  // ring B onward, the far block, camera, river and gameplay are untouched. Default 0 = BEFORE (pixel-identical).
-  const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 0) : 0;
-  const NEAR_FLOOR05 = Number.isFinite(qaNear05) ? qaNear05 : 0;
-  const sEye05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
-  const floorExtra05 = NEAR_FLOOR05 === 0 ? undefined
-    : (s: number) => NEAR_FLOOR05 * (1 - THREE.MathUtils.smootherstep(s, sEye05 + 28, sEye05 + 38)) * THREE.MathUtils.smoothstep(s, s05 + 2, s05 + 10);
-  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR, floorExtra: floorExtra05 });
+  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
 
   // ---- 05 current (ref 05): long ring bays + forced-perspective far tunnel, anchored to the 05 camera ----
   // Ref 05 ring radii about the VP: 288,192,122,85,66,54,45 px → from the locked checkpoint eye the rings sit
@@ -270,6 +258,11 @@ export function buildEnvironment(course: Course): Environment {
     return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;
   };
   const RING_A05_DEPTH = qaNum05('ringa', 26);
+  // wave 9b controlled test W1 (user priority 1, 2026-11-16: glossy purple-metallic tunnel): tools/qa/diff05.py measured
+  // the BEFORE walls too PINK (tunnel band pink 50 % vs approved 37 %) and too dull (white light streaks 0.9 % vs
+  // 3.8 %). ?wall05=1 = ONE material factor: cooler violet wall F0 + emissive, brighter/wider/whiter lengthwise light
+  // streaks. Geometry, rings, lids, Marble reflection map, river, camera untouched. Default 0 = BEFORE.
+  const WALL05 = qaNum05('wall05', 0) === 1;
   const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
@@ -294,7 +287,7 @@ export function buildEnvironment(course: Course): Environment {
     // and the Marble 05 panorama as the reflection source (marblePano05: pink walls, warm ring lights, VP glow)
     // (it02: Marble env pre-blurred 6 px — its sharp ring arcs smeared into red-orange blotches on the near walls
     // in it01 — and violet back with depth: bluer F0, mid tint '#8a30d2' 0.45 @8–50; it01 overshot to 14–22 %)
-    ...wallBase, color: '#dc9ef0', emissive: '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,
+    ...wallBase, color: WALL05 ? '#a878ff' : '#dc9ef0', emissive: WALL05 ? '#300a66' : '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,
     relief: { corrugation: 0, bevel: 0, bevelWidth: 0.08 },
     rimColor: '#b02a9a', rimStrength: 0.0, farGlow: { ...glowT05, mid: { color: '#8a30d2', near: 8, far: 50, amount: 0.45 } },
     envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
@@ -302,7 +295,9 @@ export function buildEnvironment(course: Course): Environment {
     offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
   };
   // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
-  const strips05: TubeStrips = { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
+  const strips05: TubeStrips = WALL05
+    ? { ...strips, intensity: 5.6, width: 0.02, alt: 0.8 }
+    : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
   const addWall = (a0: number, a1: number, mat: THREE.Material) => {

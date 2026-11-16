@@ -3020,3 +3020,266 @@ Now the checks. The default must still be pixel-identical to BEFORE. I'll also s
 > N23 C 502 455 153.0 dy/r -0.098
 > N23 D 500 470 96.5 dy/r +0.000
 
+### 🤖 Claude — 2026-11-16T11:22:21.592Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2n; python3 -I -c \"\nfrom PIL import Image, ImageDraw\nlabs=[('APPROVED','references/05_flow_into_the_current.png'),('BEFORE','qa/pilot05/wave9/baseline/05.png'),('+1.2','$S/n1.2/05.png'),('+1.6','$S/n1.6/05.png'),('+2.0','$S/n2/05.png')]\nims=[Image.open(p).convert('RGB').resize((432,768)) for _,p in labs]\no=Image.new('RGB',(432*5+40,768+30),(15,15,20)); d=ImageDraw.Draw(o)\nfor i,(im,(l,_)) in enumerate(zip(ims,labs)): o.paste(im,(i*442,30)); d.text((i*442+6,8),l,fill=( …[+140 chars]`
+
+### 🧑 User — 2026-11-16T11:22:22.041Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T11:22:22.351Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2n/five.jpg"}`
+
+### 🧑 User — 2026-11-16T11:22:22.421Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T11:22:22.417Z
+
+[Image: original 2200x798, displayed at 2000x725. Multiply coordinates by 1.10 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T11:22:57.381Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; mkdir -p qa/pilot05/wave9b/T2 && git diff -- src/world/environment.ts src/world/tube.ts > qa/pilot05/wave9b/not_merged/T2_nearfloor05_REJECTED.patch && git checkout -- src/world/environment.ts src/world/tube.ts && git status --short src; echo \"src diff vs HEAD: $(git diff HEAD --stat -- src | wc -l) lines\"; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad; cp $S/t2n/five.jpg qa/pilot05/wave9b/T2/05_approved_before_near12_16_20.jpg; cp $S/t2n/fit/rings.json qa/pilot05/wave9b/T2/rings_near.json; cp $S/t2/fit/rings.json qa/ …[+617 chars]`
+
+### 🧑 User — 2026-11-16T11:23:20.127Z
+
+> ↩︎ result: src diff vs HEAD: 0 lines
+> TSC_OK
+> game after revert vs BEFORE: max diff 0
+
+### 🤖 Claude — 2026-11-16T11:23:24.620Z
+
+The diff against HEAD is empty, but the autosave commits every 5 minutes, so HEAD itself could contain the test code. Checking the files directly:
+
+### 🤖 Claude — 2026-11-16T11:23:26.212Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -c \"nearfloor05\\|floorExtra\\|floor05\" src/world/environment.ts src/world/tube.ts src/world/course.ts; git diff 334b6e7 -- src --stat; wc -c qa/pilot05/wave9b/not_merged/T2_nearfloor05_REJECTED.patch; git log --oneline -3 -- src/world/environment.ts", "description": "Confirm no test code remains in src and the patch has content"}`
+
+### 🧑 User — 2026-11-16T11:23:26.356Z
+
+> ↩︎ result: src/world/environment.ts:4
+> src/world/tube.ts:3
+> src/world/course.ts:0
+> diff --git a/src/world/environment.ts b/src/world/environment.ts
+> index 74001b7..1a7105a 100644
+> --- a/src/world/environment.ts
+> +++ b/src/world/environment.ts
+> @@ -228,7 +228,19 @@ export function buildEnvironment(course: Course): Environment {
+>    const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: rowRepeat0607, offsetV: rowOffset0607, slotHalf: [0.36, 0.12] });
+>    withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
+>    // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
+> -  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+> +  // wave 9b controlled test T2 (user-directed 2026-11-16: BEFORE is the baseline, ONE geometric factor per test):
+> +  // the HEIGHT of the NEAR 05 tunnel around the front ring A. Measured (tools/qa/ring_fit05.py, tools/qa/axis05.ts,
+> +  // qa/pilot05/wave9b/T2/): the approved ring A centre is 59 px BELOW the vanishing point, BEFORE's 44 px ABOVE,
+> +  // while rings B, C, D already sit like the approved (slightly above). Lowering the WHOLE tunnel moved B–D
+> +  // away from the approved (rejected). T2 lowers on …[+2372 chars]
+
+### 🤖 Claude — 2026-11-16T11:23:36.856Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git diff 334b6e7 -- src/world/environment.ts src/world/tube.ts > qa/pilot05/wave9b/not_merged/T2_nearfloor05_REJECTED.patch; wc -l qa/pilot05/wave9b/not_merged/T2_nearfloor05_REJECTED.patch; git checkout 334b6e7 -- src/world/environment.ts src/world/tube.ts; echo \"test code left in src: $(grep -c 'nearfloor05\\|floorExtra\\|floor05' src/world/environment.ts src/world/tube.ts src/world/course.ts | awk -F: '{s+=$2} END {print s}')\"; echo \"src vs 334b6e7: $(git diff 334b6e7 -- src | wc -l) diff lines\"; npx tsc --noEmit && echo TSC_OK; S=/tmp/claude-0/-home …[+610 chars]`
+
+### 🧑 User — 2026-11-16T11:24:00.935Z
+
+> ↩︎ result: 48 qa/pilot05/wave9b/not_merged/T2_nearfloor05_REJECTED.patch
+> test code left in src: 0
+> src vs 334b6e7: 0 diff lines
+> TSC_OK
+> game vs BEFORE: max diff 0
+
+### 🤖 Claude — 2026-11-16T11:24:10.027Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad; cp $S/t2n/n2/05.png qa/pilot05/wave9b/T2/05_near20.png; python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nlabs=[('APPROVED','references/05_flow_into_the_current.png'),('BEFORE (kept: the game)','qa/pilot05/wave9/baseline/05.png'),('BEST TEST CANDIDATE: near tunnel 2.0 u lower (REJECTED)','qa/pilot05/wave9b/T2/05_near20.png')]\nW,H,G,T=864,1536,24,56\no=Image.new('RGB',(3*W+2*G,H+T),(18,16,28)); d=ImageDraw.Draw(o)\ntry: f=ImageFont.truetype('/usr/share/fonts/tr …[+438 chars]`
+
+### 🧑 User — 2026-11-16T11:24:11.545Z
+
+> ↩︎ result: (2640, 1592)
+
+### 🤖 Claude — 2026-11-16T11:24:15.123Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,30p scripts/screen_report.py | grep -E \"^#|\\\"\\\"\\\"|usage|argv|region|band\" | head -15", "description": "Read the screen report tool's usage"}`
+
+### 🧑 User — 2026-11-16T11:24:15.170Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """One-screen reference report: approved reference vs one or more labelled live captures.
+>                             method as scripts/compare.py) and mad per horizontal band of the frame
+> """
+> # horizontal bands in reference pixels (864x1536 portrait); names describe what the ref shows there
+
+### 🤖 Claude — 2026-11-16T11:24:17.734Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,20p scripts/screen_report.py; grep -n \"BANDS\\|argv\\[\" scripts/screen_report.py | head", "description": "Read screen report header and arguments"}`
+
+### 🧑 User — 2026-11-16T11:24:17.783Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """One-screen reference report: approved reference vs one or more labelled live captures.
+> 
+>     python3 -I scripts/screen_report.py 05 OUT_DIR PREV=qa/.../05.png NOW=qa/.../05.png
+> 
+> Writes into OUT_DIR (nothing else is touched; qa/report_metrics.json stays as it is):
+>   NN_side_by_side.png       REFERENCE | each capture (same height, labelled)
+>   NN_overlay_<LABEL>.png    50 % blend of the reference and that capture
+>   NN_highlight_<LABEL>.png  the capture with a transparent red tint where it differs most from the
+>                             reference (|ΔRGB| smoothed; tint alpha ∝ difference above a threshold)
+>   metrics.json / metrics.md raw numbers per capture: whole-frame mad / hue_corr / edge_corr (same
+>                             method as scripts/compare.py) and mad per horizontal band of the frame
+> These are crude, reproducible indicators, NOT a fidelity percentage.
+> """
+> from __future__ import annotations
+> 
+> import json
+> import sys
+> from pathlib import Path
+> 
+> 28:BANDS = {
+> 47:    for name, y0, y1 in BANDS.get(nn, []):
+> 63:    nn, out = argv[0], Path(argv[1])
+> 64:    caps = [a.split("=", 1) for a in argv[2:]]
+> 79:    bands = [b[0] for b in BANDS.get(nn, [])]
+> 93:    sys …[+25 chars]
+
+### 🤖 Claude — 2026-11-16T11:24:40.232Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/qa/diff05.py", "content": "#!/usr/bin/env python3\n\"\"\"Screen 05: measured differences between the approved image and live captures, for the three priority areas\n(gold rings + purple tunnel; cyan/pink S-river into the light; lighting, foam, splashes).\n\n    python3 -I tools/qa/diff05.py OUT.md LABEL=image ...   (first image = the reference, e.g. APPROVED=references/...)\n\nPer horizontal band (864x1536 frame): share of gold, cyan water, pink, white foam/highlight and dark wall-slot\npixels, plus brightness p95 and mean saturation. River: the highest …[+3153 chars]`
+
+### 🧑 User — 2026-11-16T11:24:40.258Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/qa/diff05.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:24:41.388Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I tools/qa/diff05.py qa/pilot05/wave9b/DIFF05_APPROVED_vs_BEFORE.md APPROVED=references/05_flow_into_the_current.png BEFORE=qa/pilot05/wave9/baseline/05.png", "description": "Measure priority-area differences approved vs BEFORE"}`
+
+### 🧑 User — 2026-11-16T11:24:42.558Z
+
+> ↩︎ result: | image | band | gold % | cyan % | pink % | white % | dark % | V p95 | mean S |
+> |---|---|---|---|---|---|---|---|---|
+> | APPROVED | tunnel top 150-470 | 5.5 | 0.0 | 36.9 | 3.8 | 1.2 | 1.00 | 0.70 |
+> | APPROVED | VP + far river 470-640 | 4.6 | 8.5 | 19.1 | 5.3 | 1.1 | 1.00 | 0.64 |
+> | APPROVED | mid river 640-1000 | 2.4 | 23.3 | 20.4 | 9.3 | 0.3 | 1.00 | 0.68 |
+> | APPROVED | Benny + near water 1000-1536 | 5.6 | 32.1 | 12.7 | 8.1 | 0.0 | 1.00 | 0.72 |
+> | BEFORE | tunnel top 150-470 | 8.5 | 0.0 | 50.2 | 0.9 | 1.1 | 1.00 | 0.66 |
+> | BEFORE | VP + far river 470-640 | 11.7 | 7.5 | 41.2 | 6.8 | 1.0 | 1.00 | 0.60 |
+> | BEFORE | mid river 640-1000 | 3.9 | 38.7 | 26.3 | 8.1 | 0.3 | 1.00 | 0.67 |
+> | BEFORE | Benny + near water 1000-1536 | 7.8 | 49.1 | 15.6 | 10.3 | 0.0 | 1.00 | 0.69 |
+> 
+> | image | river visible up to y (smaller = further into the light) | S-swing px per band (far → near) |
+> |---|---|---|
+> | APPROVED | 475 | tunnel None, VP 231, mid 360, Benny 436 |
+> | BEFORE | 471 | tunnel None, VP 152, mid 271, Benny 378 |
+
+### 🤖 Claude — 2026-11-16T11:25:22.020Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"const wall05 = {\" -A3 src/world/environment.ts | head -5; grep -n \"const strips05\\|const perf05Mat\\|strips05\" src/world/environment.ts | head -5; grep -n \"export function withTubeStrips\" -A12 src/world/materials.ts | head -16; grep -n \"const strips\\b\\|const strips:\" src/world/environment.ts | head -2", "description": "Read the 05 wall material and light-streak definitions"}`
+
+### 🧑 User — 2026-11-16T11:25:22.083Z
+
+> ↩︎ result: 273:  const wall05 = {
+> 274-    // lavender F0 × the magenta tube environment → violet-magenta metal (ref #992FC2 / #CD32AA)
+> 275-    // wave 7: no pressed-metal corrugation (its bent normals turned the strip reflections into the "marbled
+> 276-    // swirl"), only a faint bevel; shaded slot lips instead of the bright pink dotted outline; shorter, plumper
+> 293:  const strips05: TubeStrips = { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
+> 294:  const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
+> 395:    const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
+> 154:export function withTubeStrips<T extends THREE.MeshStandardMaterial>(mat: T, s: TubeStrips, source: 'attribute' | 'instance', key: string): T {
+> 155-  const uniforms = {
+> 156-    uStripColor: { value: new THREE.Color(s.color).multiplyScalar(s.intensity) },
+> 157-    uStripP: { value: new THREE.Vector4(s.count, s.width, 0, s.alt ?? 0.7) },
+> 158-  };
+> 159-  const prev = mat.onBeforeCompile;
+> 160-  mat.onBeforeCompile = (shader, r) => {
+> 161-    prev.call(mat, shader, r);
+> 162-    Object.assign(shader.uniforms, uniforms);
+> 163-    c …[+444 chars]
+
+### 🤖 Claude — 2026-11-16T11:25:26.925Z
+
+I'll add one switch, `?wall05=1`. It sets a cooler violet base colour for the 05 walls plus brighter, wider, whiter light streaks. Off by default, so the game stays BEFORE.
+
+### 🤖 Claude — 2026-11-16T11:25:27.580Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 284, "limit": 12}`
+
+### 🧑 User — 2026-11-16T11:25:27.598Z
+
+> ↩︎ result: 284	    // in it01 — and violet back with depth: bluer F0, mid tint '#8a30d2' 0.45 @8–50; it01 overshot to 14–22 %)
+> 285	    ...wallBase, color: '#dc9ef0', emissive: '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,
+> 286	    relief: { corrugation: 0, bevel: 0, bevelWidth: 0.08 },
+> 287	    rimColor: '#b02a9a', rimStrength: 0.0, farGlow: { ...glowT05, mid: { color: '#8a30d2', near: 8, far: 50, amount: 0.45 } },
+> 288	    envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
+> 289	    repeatU: 64, repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.16] as [number, number],
+> 290	    offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+> 291	  };
+> 292	  // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
+> 293	  const strips05: TubeStrips = { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
+> 294	  const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
+> 295	  const chunk = 40;
+
+### 🤖 Claude — 2026-11-16T11:25:30.860Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "    ...wallBase, color: '#dc9ef0', emissive: '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,", "new_string": "    ...wallBase, color: WALL05 ? '#c4a2ff' : '#dc9ef0', emissive: WALL05 ? '#2c0c58' : '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,"}`
+
+### 🧑 User — 2026-11-16T11:25:30.896Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:25:32.459Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const strips05: TubeStrips = { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };", "new_string": "  const strips05: TubeStrips = WALL05\n    ? { ...strips, intensity: 7.5, width: 0.026, alt: 0.8, color: '#fff2ff' }\n    : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };"}`
+
+### 🧑 User — 2026-11-16T11:25:32.498Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:25:35.306Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const RING_A05_DEPTH = qaNum05('ringa', 26);", "new_string": "  const RING_A05_DEPTH = qaNum05('ringa', 26);\n  // wave 9b controlled test W1 (user priority 1, 2026-11-16: glossy purple-metallic tunnel): tools/qa/diff05.py measured\n  // the BEFORE walls too PINK (tunnel band pink 50 % vs approved 37 %) and too dull (white light streaks 0.9 % vs\n  // 3.8 %). ?wall05=1 = ONE material factor: cooler violet wall F0 + emissive, brighter/wider/whiter lengthwise light\n  // streaks. Geometry, rings, …[+122 chars]`
+
+### 🧑 User — 2026-11-16T11:25:35.344Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:25:39.256Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; npx tsc --noEmit && echo TSC_OK; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w1; rm -rf $S; for q in \"x=0\" \"wall05=1\"; do timeout 600 node scripts/capture.mjs 05 --out=$S/${q%%=*} --q=$q > /dev/null 2>&1 || echo \"capture $q failed\"; done; git checkout -q -- qa/capture_log.json; python3 -I -c \"\nimport sys; from PIL import Image, ImageChops\na=Image.open(sys.argv[1]).convert('RGB'); b=Image.open(sys.argv[2]).convert('RGB')\nprint('default vs BEFORE: max diff', max(c[1] for c in ImageChops.difference(a,b).getextr …[+331 chars]`
+
+### 🧑 User — 2026-11-16T11:26:20.391Z
+
+> ↩︎ result: TSC_OK
+> default vs BEFORE: max diff 0
+> | APPROVED | tunnel top 150-470 | 5.5 | 0.0 | 36.9 | 3.8 | 1.2 | 1.00 | 0.70 |
+> | APPROVED | VP + far river 470-640 | 4.6 | 8.5 | 19.1 | 5.3 | 1.1 | 1.00 | 0.64 |
+> | BEFORE | tunnel top 150-470 | 8.5 | 0.0 | 50.2 | 0.9 | 1.1 | 1.00 | 0.66 |
+> | BEFORE | VP + far river 470-640 | 11.7 | 7.5 | 41.2 | 6.8 | 1.0 | 1.00 | 0.60 |
+> | W1 | tunnel top 150-470 | 2.4 | 0.0 | 20.2 | 4.7 | 0.0 | 1.00 | 0.50 |
+> | W1 | VP + far river 470-640 | 5.8 | 7.2 | 19.5 | 10.6 | 0.0 | 1.00 | 0.48 |
+
+### 🤖 Claude — 2026-11-16T11:26:29.317Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w1; python3 -I -c \"\nfrom PIL import Image\nps=['references/05_flow_into_the_current.png','qa/pilot05/wave9/baseline/05.png','$S/wall05/05.png']\nims=[Image.open(p).convert('RGB').resize((864,1536)).crop((0,0,864,760)).resize((560,493)) for p in ps]\no=Image.new('RGB',(560*3+20,493),(15,15,20))\nfor i,im in enumerate(ims): o.paste(im,(i*570,0))\no.save('$S/top3.jpg',quality=88)\"", "description": "Crop tunnel region of approved, BEFORE and W1 side by side"}`
+
+### 🧑 User — 2026-11-16T11:26:29.572Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T11:26:30.120Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w1/top3.jpg"}`
+
+### 🧑 User — 2026-11-16T11:26:30.145Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T11:26:53.219Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i \"s/color: WALL05 ? '#c4a2ff' : '#dc9ef0', emissive: WALL05 ? '#2c0c58' : '#3c0848'/color: WALL05 ? '#a878ff' : '#dc9ef0', emissive: WALL05 ? '#300a66' : '#3c0848'/; s/? { ...strips, intensity: 7.5, width: 0.026, alt: 0.8, color: '#fff2ff' }/? { ...strips, intensity: 5.6, width: 0.02, alt: 0.8 }/\" src/world/environment.ts; grep -n \"WALL05 ?\" src/world/environment.ts | cut -c1-150; npx tsc --noEmit && echo TSC_OK; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w1; timeout 600 node scripts/capture.mjs 05 --out=$S …[+722 chars]`
+
+### 🤖 Claude — 2026-11-16T11:26:53.916Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w1/top3_w2.jpg"}`
+
