@@ -120,26 +120,7 @@ json.dump(res, open(os.path.join(out, f"geometry_{world}.json"), "w"), indent=1)
 np.savez_compressed(os.path.join(out, f"geometry_{world}.npz"), depth=dep, T=T - cam_t, LAT=LAT - cam_lat, DN=DN, A=A,
                     river_m=river_m, rgb=C["rgb"], acc=C["acc"])
 
-# plan view (top-down): Marble river (as reconstructed) vs the same pixels on a flat floor
-def plan(points_t, points_lat, colors, title, path, tmax):
-    Wp, Hp = 600, 900; img = Image.new("RGB", (Wp, Hp), (18, 14, 28)); d = ImageDraw.Draw(img)
-    sx = Wp / (2.4 * rad); sy = (Hp - 40) / tmax
-    for tt in np.arange(0, tmax + 1e-6, rad):
-        y = Hp - 20 - tt * sy; d.line([(0, y), (Wp, y)], fill=(48, 40, 64))
-    for wall in (-rad, rad):
-        x = Wp / 2 + wall * sx; d.line([(x, 0), (x, Hp)], fill=(140, 60, 150), width=2)
-    xs = (Wp / 2 + points_lat * sx).astype(int); ys = (Hp - 20 - points_t * sy).astype(int)
-    ok = (xs >= 0) & (xs < Wp) & (ys >= 0) & (ys < Hp)
-    arr = np.asarray(img).copy(); arr[ys[ok], xs[ok]] = (colors[ok] * 255).astype(np.uint8); img = Image.fromarray(arr)
-    d = ImageDraw.Draw(img); d.text((8, 8), title, fill=(255, 255, 255)); d.text((8, 24), "grid = 1 tunnel radius; violet = walls; camera at bottom centre", fill=(200, 200, 200))
-    img.save(path)
-artc = np.asarray(Image.open("qa/pilot05/proj/align/artwork_aligned_864x1536.png").convert("RGB").resize((W, H), Image.BOX), float) / 255
-m = A
-lam = (floor_dn - cam_dn) / np.maximum(ray[m] @ e_d, 1e-4)
-tf = lam * (ray[m] @ ax)
-tmax = float(min(max(np.nanmax(tf), np.nanmax((T - cam_t)[m])), 14 * rad))
-plan((T - cam_t)[m], (LAT - cam_lat)[m] + float(cam_lat), artc[m], f"MARBLE {world}: river as reconstructed (artwork colours)", os.path.join(out, f"plan_{world}_marble.png"), tmax)
-plan(tf, (ray[m] @ e_r) * lam + float(cam_lat), artc[m], "SAME PIXELS on a flat floor (ideal geometry for this view)", os.path.join(out, f"plan_{world}_flatfloor.png"), tmax)
+tmax = float(min(np.nanmax((T - cam_t)[A]), 14 * rad))
 # depth image
 dv = np.clip((T - cam_t) / tmax, 0, 1)
 dimg = (np.stack([dv, 0.4 + 0 * dv, 1 - dv], -1) * 255).astype(np.uint8)
