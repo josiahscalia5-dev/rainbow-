@@ -64,7 +64,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
   // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
   const glow05 = flag05('glow05');
   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', glow05 ? 0.9 : 0.2), qn('bloomR', glow05 ? 0.5 : 0.35), qn('bloomT', glow05 ? 1.0 : 0.94));
+  // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
+  // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', glow05 ? 1.0 : 0.2), qn('bloomR', glow05 ? 0.4 : 0.35), qn('bloomT', glow05 ? 2.6 : 0.94));
   // Tone-mapping test TM1 (same message: "use NoToneMapping or lower the exposure"): `?tone05=none` → NoToneMapping,
   // `?tone05=0.75` → Neutral at that exposure. The OutputPass tone-maps the whole frame (not per material), so this is
   // global by nature. Off: Neutral 0.86 (src/render/env.ts), unchanged.

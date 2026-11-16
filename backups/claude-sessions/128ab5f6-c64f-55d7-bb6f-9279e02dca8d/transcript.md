@@ -2727,3 +2727,101 @@ The capture is deterministic: the stored W12 picture is pixel-identical to the W
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && W='silk05=1&puff05=1' && (\nnode scripts/capture.mjs 05 --out=$S/gl_default >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&glow05=1\" --out=$S/gl_A >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&glow05=1&bloomT=1.3\" --out=$S/gl_B >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&tone05=none\" --out=$S/gl_C >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&glow05=1&tone05=none\" --out=$S/gl_D >/dev/null 2>&1 ); grep -o '\"errors\":\\[ …[+519 chars]`
 
+### 🧑 User — 2026-11-16T14:14:11.231Z
+
+> ↩︎ result: TSC_OK
+> {
+>  "default_after_glow_code": {
+>   "max_pixel_difference": 0,
+>   "differing_pixels": 0
+>  }
+> }
+> | W12 | far river 560-700 | 0.727 | 1.000 | 0.683 | 0.816 | 0.030 | 0.074 | 0.404 | 14.81 |
+> | W12 | mid river 700-1000 | 0.916 | 1.000 | 0.715 | 0.969 | 0.016 | 0.037 | 0.423 | 5.01 |
+> | W12 | near water 1000-1536 | 0.958 | 0.925 | 0.729 | 0.922 | 0.016 | 0.038 | 0.425 | 3.36 |
+> | A_glow | far river 560-700 | 0.322 | 1.000 | 0.369 | 1.000 | 0.006 | 0.020 | 0.297 | 1.86 |
+> | A_glow | mid river 700-1000 | 0.427 | 1.000 | 0.392 | 1.000 | 0.004 | 0.015 | 0.297 | 6.65 |
+> | A_glow | near water 1000-1536 | 0.514 | 1.000 | 0.431 | 1.000 | 0.007 | 0.017 | 0.420 | 3.47 |
+> | B_glowT13 | far river 560-700 | 0.361 | 1.000 | 0.482 | 0.855 | 0.018 | 0.048 | 0.363 | 7.05 |
+> | B_glowT13 | mid river 700-1000 | 0.557 | 1.000 | 0.533 | 1.000 | 0.008 | 0.022 | 0.375 | 6.74 |
+> | B_glowT13 | near water 1000-1536 | 0.788 | 0.969 | 0.668 | 0.929 | 0.014 | 0.033 | 0.423 | 3.48 |
+> | C_tonenone | far river 560-700 | 0.639 | 1.000 | 0.602 | 0.831 | 0.028 | 0.065 | 0.432 | 15.98 |
+> | C_tonenone | mid river 700-1000 | 0.792 | 1.000 | 0.624 | 1.000 | 0.014 | 0.033 | 0.420 | 8.81 |
+> | C_tonenone | near water 1000-1536 | 0.816 |  …[+351 chars]
+
+### 🤖 Claude — 2026-11-16T14:14:27.858Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && W='silk05=1&puff05=1' && (\nnode scripts/capture.mjs 05 --q=\"$W&glow05=1&bloomT=2.0&bloomS=0.8&bloomR=0.4\" --out=$S/gl_E >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&glow05=1&bloomT=1.7&bloomS=0.7&bloomR=0.35\" --out=$S/gl_F >/dev/null 2>&1\nnode scripts/capture.mjs 05 --q=\"$W&glow05=1&bloomT=2.6&bloomS=1.0&bloomR=0.4\" --out=$S/gl_G >/dev/null 2>&1 ); python3 -I tools/qa/water05_grain.py $S/gl2.md E_T20=$S/gl_E/05.png F_T17=$S/gl_F/05.png G_T26=$S/gl_G/05.png | grep -v \"^|---\\|^|  …[+823 chars]`
+
+### 🧑 User — 2026-11-16T14:15:19.828Z
+
+> ↩︎ result: | E_T20 | far river 560-700 | 0.478 | 1.000 | 0.595 | 0.804 | 0.022 | 0.059 | 0.369 | 13.78 |
+> | E_T20 | mid river 700-1000 | 0.824 | 1.000 | 0.691 | 0.969 | 0.015 | 0.034 | 0.432 | 5.41 |
+> | E_T20 | near water 1000-1536 | 0.972 | 0.937 | 0.730 | 0.918 | 0.017 | 0.038 | 0.438 | 3.32 |
+> | F_T17 | far river 560-700 | 0.471 | 1.000 | 0.600 | 0.800 | 0.021 | 0.060 | 0.360 | 13.90 |
+> | F_T17 | mid river 700-1000 | 0.816 | 1.000 | 0.665 | 0.976 | 0.013 | 0.033 | 0.411 | 5.65 |
+> | F_T17 | near water 1000-1536 | 0.963 | 0.937 | 0.733 | 0.918 | 0.016 | 0.038 | 0.433 | 3.34 |
+> | G_T26 | far river 560-700 | 0.653 | 1.000 | 0.660 | 0.808 | 0.028 | 0.068 | 0.405 | 14.09 |
+> | G_T26 | mid river 700-1000 | 0.968 | 0.996 | 0.733 | 0.961 | 0.017 | 0.038 | 0.452 | 4.97 |
+> | G_T26 | near water 1000-1536 | 0.987 | 0.933 | 0.734 | 0.918 | 0.017 | 0.038 | 0.443 | 3.30 |
+> 
+> gl_E mean lum 0.591
+> gl_F mean lum 0.59
+> gl_G mean lum 0.568
+> W12 mean lum 0.552
+> APPROVED mean lum 0.503
+
+### 🤖 Claude — 2026-11-16T14:15:26.065Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; convert qa/pilot05/wave11/compare/1_APPROVED_05.png qa/pilot05/wave12/factors/silk05_puff05/05.png $S/gl_G/05.png -resize 432x768 +append $S/v/glowG.jpg; convert qa/pilot05/wave11/compare/1_APPROVED_05.png qa/pilot05/wave12/factors/silk05_puff05/05.png $S/gl_G/05.png -crop 864x440+0+560 +repage -resize 50% +append $S/v/glowG_mid.jpg", "description": "Build glow comparison strips"}`
+
+### 🧑 User — 2026-11-16T14:15:26.455Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T14:15:28.017Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/glowG.jpg"}`
+
+### 🧑 User — 2026-11-16T14:15:28.033Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T14:15:28.622Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/glowG_mid.jpg"}`
+
+### 🧑 User — 2026-11-16T14:15:28.640Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T14:15:35.398Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && W='silk05=1&puff05=1' && node scripts/capture.mjs 05 --q=\"$W&glow05=1&bloomT=2.4&bloomS=1.6&bloomR=0.45\" --out=$S/gl_H >/dev/null 2>&1; python3 -I tools/qa/water05_grain.py $S/gl3.md H=$S/gl_H/05.png | grep -v \"^|---\\|^| image\"; convert qa/pilot05/wave11/compare/1_APPROVED_05.png $S/gl_G/05.png $S/gl_H/05.png -resize 432x768 +append $S/v/glowH.jpg", "description": "Capture stronger glow variant H", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T14:15:52.068Z
+
+> ↩︎ result: | H | far river 560-700 | 0.420 | 1.000 | 0.511 | 0.812 | 0.019 | 0.052 | 0.368 | 12.18 |
+> | H | mid river 700-1000 | 0.741 | 1.000 | 0.660 | 0.969 | 0.013 | 0.030 | 0.439 | 5.59 |
+> | H | near water 1000-1536 | 0.914 | 0.957 | 0.653 | 0.925 | 0.016 | 0.035 | 0.445 | 3.19 |
+
+### 🤖 Claude — 2026-11-16T14:15:53.621Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/glowH.jpg"}`
+
+### 🧑 User — 2026-11-16T14:15:53.640Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T14:16:06.346Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', glow05 ? 0.9 : 0.2), qn('bloomR', glow05 ? 0.5 : 0.35), qn('bloomT', glow05 ? 1.0 : 0.94));", "new_string": "  // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's\n  // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)\n  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', gl …[+91 chars]`
+
+### 🧑 User — 2026-11-16T14:16:06.390Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T14:16:15.902Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && O=qa/pilot05/wave12 && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && mkdir -p $O/glow && for v in A:glow05_T1.0_S0.9_R0.5 B:glow05_T1.3_S0.9_R0.5 C:tone05_none D:glow05_T1.0+tone05_none E:glow05_T2.0_S0.8_R0.4 F:glow05_T1.7_S0.7_R0.35 G:glow05_T2.6_S1.0_R0.4_CHOSEN H:glow05_T2.4_S1.6_R0.45; do k=${v%%:*}; n=${v#*:}; cp $S/gl_$k/05.png $O/glow/${k}_$n.png; done; cat $S/gl.md > $O/glow/WATER_INDICATORS_glow_tone.md; grep -v \"^|---\\|^| image\" $S/gl2.md $S/gl3.md | sed 's/^[^|]*|/|/' >> $O/glow/WATER_INDICATORS_glow_ …[+1598 chars]`
+

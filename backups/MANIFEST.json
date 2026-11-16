@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7780,
-   "sha256": "0944f95566a9fdb7fa89e6e3ab72801c66600b97fb7faf79d546ba85d698219e"
+   "sha256": "b683a925bf2d0b00271740d288d1da7297e4857f4b0e9b964e5cf35b456b9281"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -838,8 +838,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1242,
-   "sha256": "0441f68a31aa73b1b6e11eec52631377c09bb718e82f5eb9a1364047a1aaa312"
+   "bytes": 1187,
+   "sha256": "b72321412f47d6ae57be6a29eda33f9a5b045b45134d32a79517bfffdd37dfb5"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1522,6 +1522,16 @@
    "sha256": "95da7e07aeb791c0345bdbf6063b3925d746d3f439e88a786dd9569bb5c6463f"
   },
   {
+   "path": "qa/pilot05/wave12/factors/W12_full/05.png",
+   "bytes": 1755937,
+   "sha256": "dea968c0a55a2ecde9d540740d0c3385fc4d61220f4c79bc6693720b19f686ef"
+  },
+  {
+   "path": "qa/pilot05/wave12/factors/glow05_only/05.png",
+   "bytes": 1647979,
+   "sha256": "22f18baf42950ad99a9053f5a3e2db5c9e5a95e42c7a57de68bc6f84e31f7c4c"
+  },
+  {
    "path": "qa/pilot05/wave12/factors/puff05/05.png",
    "bytes": 1897732,
    "sha256": "2b9c2324a91b90d4e39e8578ed6c96a5948296acf9698f81428e77caab7932f9"
@@ -1535,6 +1545,56 @@
    "path": "qa/pilot05/wave12/factors/silk05_puff05/05.png",
    "bytes": 1782814,
    "sha256": "95da7e07aeb791c0345bdbf6063b3925d746d3f439e88a786dd9569bb5c6463f"
+  },
+  {
+   "path": "qa/pilot05/wave12/factors/silk05_puff05_glow05/05.png",
+   "bytes": 1756483,
+   "sha256": "6dfefa728fdf36ff9e702c2a0924b6d0a14b7551866ad4dfe42db38f80f500d7"
+  },
+  {
+   "path": "qa/pilot05/wave12/glow/A_glow05_T1.0_S0.9_R0.5.png",
+   "bytes": 1230912,
+   "sha256": "e4405e9c4b5b38734aa3ba46539dc9a6c0a1f94c38b240d4cf3712ac3b5ee57a"
+  },
+  {
+   "path": "qa/pilot05/wave12/glow/B_glow05_T1.3_S0.9_R0.5.png",
+   "bytes": 1543073,
+   "sha256": "f5e8464c24c6495509cce6f35a14d296a62d585c34f73afe661df60ad2f13f42"
+  },
+  {
+   "path": "qa/pilot05/wave12/glow/C_tone05_none.png",
+   "bytes": 1632180,
+   "sha256": "52681e938900d02c3c24a9da579e2c5eab589eb863cacbc384b5fd16399d49a8"
+  },
+  {
+   "path": "qa/pilot05/wave12/glow/D_glow05_T1.0+tone05_none.png",
+   "bytes": 827384,
+   "sha256": "99ea4ef5930371c69ab9882f21773fa53ead92508305de6441d5b599cbec3f61"
+  },
+  {
+   "path": "qa/pilot05/wave12/glow/E_glow05_T2.0_S0.8_R0.4.png",
+   "bytes": 1733270,
+   "sha256": "0187cff2f5d026b67906fe1538d98d6b1828b11d87b5a1cfd3b152d95b8f05e3"
+  },
+  {
+   "path": "qa/pilot05/wave12/glow/F_glow05_T1.7_S0.7_R0.35.png",
+   "bytes": 1734135,
+   "sha256": "95f670e54732c934c3c23013fa429810cb0ed4851c25a32a39d5b63c99acb766"
+  },
+  {
+   "path": "qa/pilot05/wave12/glow/G_glow05_T2.6_S1.0_R0.4_CHOSEN.png",
+   "bytes": 1756483,
+   "sha256": "6dfefa728fdf36ff9e702c2a0924b6d0a14b7551866ad4dfe42db38f80f500d7"
+  },
+  {
+   "path": "qa/pilot05/wave12/glow/H_glow05_T2.4_S1.6_R0.45.png",
+   "bytes": 1649464,
+   "sha256": "e78d76bddf4e85679553e29e067ca0fb50a796da90a8ebf63ea55849a047a1ac"
+  },
+  {
+   "path": "qa/pilot05/wave12/glow/WATER_INDICATORS_glow_tone.md",
+   "bytes": 2729,
+   "sha256": "7ef502bbf200c981d5488a34267a92e09c78591995163ad4f9ab7ef09cfdae08"
   },
   {
    "path": "qa/pilot05/wave12/tests/before/05.png",
@@ -1570,6 +1630,11 @@
    "path": "qa/pilot05/wave12/tests/default_040607/07.png",
    "bytes": 1786768,
    "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/default_after/05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
   },
   {
    "path": "qa/pilot05/wave12/tests/gameplay_w12.json",
@@ -1625,6 +1690,21 @@
    "path": "qa/pilot05/wave12/tests/w12_low/05.png",
    "bytes": 1688473,
    "sha256": "4e4a4112f0ec77ec552c9b89c84339d342a0a868f5dcbad98a8ab0324aa7babe"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/w12full_040607/04.png",
+   "bytes": 895051,
+   "sha256": "4d2c2da45638641f3250afb8435a81804efdb53d157d241fd282f678134b30f7"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/w12full_040607/06.png",
+   "bytes": 1485179,
+   "sha256": "3b00ba5b036a4712d4d483e2ed9698e3bb72386a43057661861bf847a775f2a5"
+  },
+  {
+   "path": "qa/pilot05/wave12/tests/w12full_040607/07.png",
+   "bytes": 1733054,
+   "sha256": "4b601860bb857d5dae75d7336175be286b96b9f93c604b323ad3c601d5189e59"
   },
   {
    "path": "qa/pilot05/wave3/benny/it00/05.png",
@@ -6338,8 +6418,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 34056,
-   "sha256": "0e27c2f0c48a1e4688182301a0b0e188fa7649bd71daaa677e9b53524b1b1d40"
+   "bytes": 34304,
+   "sha256": "deee8f454a9a90ca1da5fd4f5f301349b58d6f4936838b296e04fda6864a77e0"
   },
   {
    "path": "src/game/cameraRig.ts",
