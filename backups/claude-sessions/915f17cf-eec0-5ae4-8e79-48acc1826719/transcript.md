@@ -1074,3 +1074,373 @@ The capture script starts one game server per run, so I'll write a small scratch
 > src/game/Game.ts:326:    const halfW = course.widthAt(st.s) / 2;
 > src/game/modules.ts:84:    const w = course.widthAt(s) / 2;
 
+### 🤖 Claude — 2026-11-16T12:51:22.140Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "limit": 140}`
+
+### 🧑 User — 2026-11-16T12:51:22.155Z
+
+> ↩︎ result: 1	/**
+> 2	 * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.
+> 3	 *
+> 4	 * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> 5	 * concave trough with raised frothy edges plus a short skirt under each edge (thickness).
+> 6	 * Shader: electric-cyan core with meandering hot-pink flow bands, advected white streaks and
+> 7	 * sparkles (two-phase flow-map advection so per-stage speeds never shear), Fresnel/haze
+> 8	 * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+> 9	 * glowing chevrons on the 04 slide, a dithered hand-over to the whirlpool surface in 03 and a
+> 10	 * drain-away for the 11 outro.
+> 11	 */
+> 12	import * as THREE from 'three';
+> 13	import type { Course, StageId } from '../world/course';
+> 14	import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 15	
+> 16	/** wave amplitude per stage (units); blended across boundaries */
+> 17	const AMP: Partial<Record<StageId, number>> = {
+> 18	  '02': 0.06, '03': 0.08, '04': 0.03, '05': 0.1, '06': 0.12, '07': 0.1, '08': 0.1, '09': 0.16, '10': 0.08, '11': 0.05,
+> 19	};
+> 20	export const EDGE_LIFT = 0.28;
+> 21	
+> 22	/**
+> 23 …[+6995 chars]
+
+### 🤖 Claude — 2026-11-16T12:51:23.379Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^const \\|^export \\|^function \\|^#ifdef\\|#ifdef WATER05\\|flowPhase\\|uFlow\\|normalMap\\|texture2D\\|texture(\" src/vfx/waterRibbon.ts | head -80", "description": "Outline the ribbon shader module"}`
+
+### 🧑 User — 2026-11-16T12:51:23.420Z
+
+> ↩︎ result: 17:const AMP: Partial<Record<StageId, number>> = {
+> 20:export const EDGE_LIFT = 0.28;
+> 39:const BAND_STYLE: Partial<Record<StageId, Style>> = {
+> 45:const BAND_DEFAULT: Style = [0, 0.5, 0.12, 1];
+> 47:function bandStyleAt(course: Course, s: number): Style {
+> 70:export const CORE_SWING = 0.9;
+> 71:export function coreLateral(course: Course, s: number): number {
+> 78:export const sbend05 = (s: number) => 1.05 * Math.sin(s * 0.31 - 0.834) + 0.18 * Math.sin(s * 0.62 + 0.6);
+> 89:export function coreShiftW10(course: Course, s: number): number {
+> 108:const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+> 109:const RIBBON_PAL = {
+> 125:const RIVER05_PAL = {
+> 136:const FLOW05 = 1.3;
+> 144: * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+> 147:export const WATER05: boolean = (() => {
+> 155:export function ampAt(course: Course, s: number): number {
+> 168:function smooth(a: number, b: number, x: number) {
+> 174:export function ribbonWave(u: number, s: number, t: number, amp: number): number {
+> 180:const VERT = /* glsl */ `
+> 226:const FRAG = /* glsl */ `
+> 251:uniform float uFlow05;
+> 356:#ifdef LOW_Q
+> 387:# …[+1592 chars]
+
+### 🤖 Claude — 2026-11-16T12:51:26.252Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 140, "limit": 250}`
+
+### 🧑 User — 2026-11-16T12:51:26.275Z
+
+> ↩︎ result: 140	 * ONE switch for the 05 river look: hue-ramped satin bands (hot pink body → violet → periwinkle → electric cyan,
+> 141	 * colours sampled from the approved image and solved through the post chain), flow-aligned brushed streaks with
+> 142	 * aqua / white-pink cores, deep-blue outer water, glossy near swells; the far river block (far05.ts / materials.ts)
+> 143	 * and the 05 splash follow the same switch. Off (default): every shader and geometry is byte-for-byte the previous
+> 144	 * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+> 145	 * Guarded read: false in vite-node / workers (no `location`).
+> 146	 */
+> 147	export const WATER05: boolean = (() => {
+> 148	  try {
+> 149	    return typeof location !== 'undefined' && new URLSearchParams(location.search).get('water05') === '1';
+> 150	  } catch {
+> 151	    return false;
+> 152	  }
+> 153	})();
+> 154	
+> 155	export function ampAt(course: Course, s: number): number {
+> 156	  let v = 0, w = 0;
+> 157	  for (const st of course.stages) {
+> 158	    const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+> 159	    if (a > 0) { v += (AMP[st.id] ?? 0.08) * a; w += a; }
+> 160	  }
+> 161	  let amp = …[+11514 chars]
+
+### 🤖 Claude — 2026-11-16T12:51:55.608Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 440, "limit": 330}`
+
+### 🧑 User — 2026-11-16T12:51:55.632Z
+
+> ↩︎ result: 440	vec2 bolt05(vec2 g, float density, float Lpx, float Tpx, float seed) {
+> 441	  vec2 gx = dFdx(g);
+> 442	  vec2 gy = dFdy(g);
+> 443	  vec2 gi = floor(g);
+> 444	  float hs = hash12(gi + seed);
+> 445	  float det = gx.x * gy.y - gy.x * gx.y;
+> 446	  if (hs < 1.0 - density || abs(det) < 1e-12) return vec2(0.0);
+> 447	  vec2 dg = fract(g) - (vec2(hash12(gi + seed + 2.3), hash12(gi + seed + 6.9)) * 0.3 + 0.35);
+> 448	  vec2 p = vec2(gy.y * dg.x - gy.x * dg.y, gx.x * dg.y - gx.y * dg.x) / det;   // pixels from the flare centre
+> 449	  float limx = 0.3 / max(abs(gx.x) + abs(gx.y), 1e-6);
+> 450	  float limy = 0.3 / max(abs(gy.x) + abs(gy.y), 1e-6);
+> 451	  float L = min(Lpx * (0.6 + 0.8 * fract(hs * 37.0)), limx);
+> 452	  float T = min(Tpx * (0.7 + 0.6 * fract(hs * 53.0)), limy * 0.35);
+> 453	  float ax = abs(p.x / L);
+> 454	  if (ax > 1.0 && abs(p.y) > limy) return vec2(0.0);
+> 455	  float k = 2.0 + 1.5 * fract(hs * 71.0);             // zig-zag kinks per half length
+> 456	  float zz = (abs(fract(p.x / L * k + hs * 3.0) - 0.5) * 2.0 - 0.5) * T * 1.3 * max(0.0, 1.0 - ax);
+> 457	  float y = p.y - zz;
+> 458	  float th = T * pow(max(0.0, 1.0 - ax * ax), 1.3);
+> 459	  float core = (1.0 - smoothstep(th * 0.45, th + 0.8, abs(y)))  …[+20578 chars]
+
+### 🤖 Claude — 2026-11-16T12:54:28.758Z
+
+> 🔧 **ToolSearch** `{"query": "select:WebSearch,WebFetch", "max_results": 2}`
+
+### 🧑 User — 2026-11-16T12:54:28.770Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-16T12:54:30.058Z
+
+> 🔧 **WebSearch** `{"query": "three.js flowmap painter free tool flow map Water2 flowMap", "mode": "standard"}`
+
+### 🤖 Claude — 2026-11-16T12:54:30.694Z
+
+> 🔧 **WebSearch** `{"query": "FlowMap Studio Blender add-on \"From Curves\" river flow map generator price", "mode": "standard"}`
+
+### 🤖 Claude — 2026-11-16T12:54:31.384Z
+
+> 🔧 **WebSearch** `{"query": "JangaFX IlluGen pricing indie license Linux system requirements export normal map flipbook", "mode": "standard"}`
+
+### 🤖 Claude — 2026-11-16T12:54:32.114Z
+
+> 🔧 **WebSearch** `{"query": "JangaFX LiquiGen pricing license Linux GPU requirements export flipbook splash foam", "mode": "standard"}`
+
+### 🤖 Claude — 2026-11-16T12:54:33.632Z
+
+> 🔧 **Bash** `{"command": "ls node_modules/three/examples/jsm/objects/ | grep -i water; ls node_modules/three/examples/ ; ls node_modules/three/examples/textures 2>/dev/null | head; grep '\"version\"' node_modules/three/package.json; ls public public/* | head -40; ls scripts | head -60", "description": "Check Water2 in installed three.js and project assets"}`
+
+### 🧑 User — 2026-11-16T12:54:33.696Z
+
+> ↩︎ result: Water.js
+> Water2.js
+> Water2Mesh.js
+> WaterMesh.js
+> fonts
+> jsm
+>   "version": "0.170.0",
+> public:
+> video
+> 
+> public/video:
+> PUT_FLOW_VIDEOS_HERE.txt
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> cinematic-test.mjs
+> claude-bootstrap.sh
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export-river-05.ts
+> export_claude_sessions.py
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> landmarks05.py
+> lib
+> rainbow-autosave.py
+> reference.sha256
+> resume-newest-work.sh
+> screen_report.py
+> setup-android-sdk.sh
+> setup-blender.sh
+> setup-worldlabs-plugin.sh
+> triptych.py
+> verify-assets.py
+> water-lab.mjs
+
+### 🧑 User — 2026-11-16T12:54:34.380Z
+
+> ↩︎ result: Web search results for query: "FlowMap Studio Blender add-on "From Curves" river flow map generator price"
+> 
+> Links: [{"title":"Flow Map Painter Adds Free Blender Painting Tools","url":"https://digitalproduction.com/2021/04/02/flow-map-painter-tool/"},{"title":"superhivemarket.com","url":"https://superhivemarket.com/products/cell-fluids/versions"},{"title":"free flow map painter for blender","url":"https://80.lv/articles/free-flow-map-painter-for-blender"},{"title":"flow map painter for blender","url":"https://cgpress.org/archives/flow-map-painter-for-blender.html"},{"title":"geometry nodes powered procedural flowmap preset for blender","url":"https://80.lv/articles/geometry-nodes-powered-procedural-flowmap-preset-for-blender/"},{"title":"clemensbeute.gumroad.com","url":"https://clemensbeute.gumroad.com/l/heZDT"},{"title":"Blender Add-ons","url":"https://cgpress.org/page/158"},{"title":"procedural flowmap","url":"https://3dsinghvfx.gumroad.com/l/procedural-flowmap"},{"title":"Procedural Flowmap","url":"https://blendermarket.com/products/procedural-flowmap"},{"title":"Procedural River","url":"https://blender-addons.org/procedural-river/"},{"title":"A downloadable tool for Windows","ur …[+1847 chars]
+
+### 🧑 User — 2026-11-16T12:54:35.283Z
+
+> ↩︎ result: Web search results for query: "three.js flowmap painter free tool flow map Water2 flowMap"
+> 
+> Links: [{"title":"free flow map painter for blender","url":"https://80.lv/articles/free-flow-map-painter-for-blender"},{"title":"Wednesday, October 3rd, 2012 Posted by Jim Thacker","url":"https://www.cgchannel.com/?p=44561"},{"title":"Flow Map generator for water effect in three.js","url":"https://discourse.threejs.org/t/flow-map-generator-for-water-effect-in-three-js/68941/8"},{"title":"Flow Map generator for water effect in three.js","url":"https://discourse.threejs.org/t/flow-map-generator-for-water-effect-in-three-js/68941"},{"title":"Wednesday, October 3rd, 2012 Posted by Jim Thacker","url":"https://www.cgchannel.com/2012/10/paint-games-flow-maps-with-flowmap-painter"},{"title":"Flow Map Painter Adds Free Blender Painting Tools","url":"https://digitalproduction.com/2021/04/02/flow-map-painter-tool/"},{"title":"flowmap painter","url":"https://cgpress.org/archives/flowmap_painter.html"},{"title":"browser based flowmap painting","url":"https://cgpress.org/archives/browser-based-flowmap-painting.html"},{"title":"free wip flowmap creation tool for unity","url":"https://80.lv/articles/free-wi …[+2841 chars]
+
+### 🧑 User — 2026-11-16T12:54:37.797Z
+
+> ↩︎ result: Web search results for query: "JangaFX IlluGen pricing indie license Linux system requirements export normal map flipbook"
+> 
+> Links: [{"title":"Tuesday, July 29th, 2025 Posted by Jim Thacker","url":"https://www.cgchannel.com/?p=168888"},{"title":"Choose Your Plan","url":"https://jangafx.com/software/pricing"},{"title":"jangafx.com","url":"https://jangafx.com/?p=427"},{"title":"www.itechguides.com","url":"https://www.itechguides.com/products/liquigen/"},{"title":"IlluGen Real-Time Game VFX Software by JangaFX","url":"https://gamefromscratch.com/illugen-real-time-game-vfx-software-by-jangafx/"},{"title":"public.jangafx.com","url":"https://public.jangafx.com/?p=427"},{"title":"live.jangafx.com","url":"https://live.jangafx.com/?p=427"},{"title":"IlluGen Drops: Node-Based VFX Tool from JangaFX Now Public, and Free for 14 Days","url":"https://digitalproduction.com/2025/07/28/illugen-drops-node-based-vfx-tool-from-jangafx-now-public-and-free-for-14-days/"},{"title":"Monday, January 27th, 2025 Posted by Jim Thacker","url":"https://www.cgchannel.com/2025/01/jangafx-teases-illugen/"},{"title":"Monday, January 27th, 2025 Posted by Jim Thacker","url":"https://www.cgchannel.com/?p=164441"},{"titl …[+4765 chars]
+
+### 🧑 User — 2026-11-16T12:54:38.779Z
+
+> ↩︎ result: Web search results for query: "JangaFX LiquiGen pricing license Linux GPU requirements export flipbook splash foam"
+> 
+> Links: [{"title":"JangaFX unleashes LiquiGen 1.0: liquids meet production‑ready polish","url":"https://digitalproduction.com/2025/08/01/jangafx-unleashes-liquigen-1-0-liquids-meet-production%e2%80%91ready-polish/"},{"title":"JangaFX unleashes LiquiGen 1.0: liquids meet production‑ready polish","url":"https://digitalproduction.com/2025/08/01/jangafx-unleashes-liquigen-1-0-liquids-meet-production-ready-polish/"},{"title":"www.itechguides.com","url":"https://www.itechguides.com/products/liquigen/"},{"title":"Tuesday, July 29th, 2025 Posted by Jim Thacker","url":"https://www.cgchannel.com/?p=168880"},{"title":"Tuesday, July 29th, 2025 Posted by Jim Thacker","url":"https://www.cgchannel.com/2025/07/jangafx-releases-liquigen-1-0/"},{"title":"live.jangafx.com","url":"https://live.jangafx.com/?p=427"},{"title":"JangaFX releases LiquiGen 0.1","url":"https://www.cgchannel.com/2024/02/jangafx-releases-liquigen-0-1/"},{"title":"JangaFX releases LiquiGen 0.1","url":"https://www.cgchannel.com/?p=154934"},{"title":"Tuesday, July 23rd, 2024 Posted by Jim Thacker","url":"https://www. …[+2716 chars]
+
+### 🤖 Claude — 2026-11-16T12:54:43.329Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p scripts/export-river-05.ts; echo ------; sed -n 1,40p scripts/water-lab.mjs; echo -----; sed -n '/fragmentShader/,/^\\t`/p' node_modules/three/examples/jsm/objects/Water2.js | sed -n 1,90p", "description": "Read river export tool, water lab and Water2 shader"}`
+
+### 🧑 User — 2026-11-16T12:54:43.382Z
+
+> ↩︎ result: /**
+>  * Export the game's OWN Screen 05 river + tunnel layout for Blender (read-only use of the game code).
+>  *   npx vite-node scripts/export-river-05.ts [-- --cam=x,y,z --look=x,y,z --fov=62]
+>  * Writes qa/worldlabs/05/blender/river05_layout.json, consumed by tools/blender/build_05_river_scene.py.
+>  *
+>  * Contents (world units, Three.js axes: +Y up, the 05 tunnel runs toward −Z):
+>  *   river[]  every 0.25 u of stage 05 (plus 6 u of 04 and 06 on either side): centre, right, up,
+>  *            water width (Course.widthAt) and the cyan-core lateral (waterRibbon.coreLateral)
+>  *   tunnel   the straight 05 tunnel line a→b, radius (stage 'tube' prop) and the water depth below the axis
+>  *   checkpoint  the 05 gameplay checkpoint (s, Benny's water position) and, if given, the camera
+>  * The Blender scene built from this is the alignment base for a Marble/Atlas tunnel export; the near
+>  * river comes from this real game geometry, not from an invented image fill.
+>  */
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { Course } from '../src/world/course';
+> import { coreLateral } from '../src/vfx/waterRibbon';
+> 
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('-- …[+5496 chars]
+
+### 🤖 Claude — 2026-11-16T12:54:43.862Z
+
+> 🔧 **WebSearch** `{"query": "\"FlowMap Studio\" Blender addon flow map \"From Curves\"", "mode": "extended"}`
+
+### 🧑 User — 2026-11-16T12:54:47.871Z
+
+> ↩︎ result: Web search results for query: ""FlowMap Studio" Blender addon flow map "From Curves""
+> 
+> Links: [{"title":"GitHub - MadPonyInteractive/CurveShapes: Blender addon to create 3D geometry from sketches controllable by curves. · GitHub","url":"https://github.com/MadPonyInteractive/CurveShapes"},{"title":"Daniel Bystedt’s free Blender add-on creates hair cards from curves","url":"https://www.cgchannel.com/2024/03/daniel-bystedts-free-blender-add-on-creates-hair-cards-from-curves/"},{"title":"GitHub - Pomb/along-a-curve: Simple Blender Addon to distribute objects evenly along a curve","url":"https://github.com/Pomb/DistrubuteAlongCurve"},{"title":"SURFACES FROM CURVES IN BLENDER - YouTube","url":"https://www.youtube.com/watch?v=YSvZzPq3pjA"},{"title":"Hair Tool - Released Add-ons and Extensions - Blender Artists Community","url":"https://blenderartists.org/t/hair-tool/693534"},{"title":"How to loft (create mesh) between separate curve? - Modeling - Blender Artists Community","url":"https://blenderartists.org/t/how-to-loft-create-mesh-between-separate-curve/634152"},{"title":"Loft Curves - Superhive (formerly Blender Market)","url":"https://superhivemarket.com/products/loft-curves"},{"title" …[+1412 chars]
+
+### 🤖 Claude — 2026-11-16T12:54:51.742Z
+
+> 🔧 **Bash** `{"command": "sed -n '/Water.WaterShader = {/,$p' node_modules/three/examples/jsm/objects/Water2.js | sed -n '/fragmentShader/,$p' | sed -n 1,110p", "description": "Read Water2 fragment shader flow sampling"}`
+
+### 🧑 User — 2026-11-16T12:54:51.796Z
+
+> ↩︎ result: fragmentShader: /* glsl */`
+> 
+> 		#include <common>
+> 		#include <fog_pars_fragment>
+> 		#include <logdepthbuf_pars_fragment>
+> 
+> 		uniform sampler2D tReflectionMap;
+> 		uniform sampler2D tRefractionMap;
+> 		uniform sampler2D tNormalMap0;
+> 		uniform sampler2D tNormalMap1;
+> 
+> 		#ifdef USE_FLOWMAP
+> 			uniform sampler2D tFlowMap;
+> 		#else
+> 			uniform vec2 flowDirection;
+> 		#endif
+> 
+> 		uniform vec3 color;
+> 		uniform float reflectivity;
+> 		uniform vec4 config;
+> 
+> 		varying vec4 vCoord;
+> 		varying vec2 vUv;
+> 		varying vec3 vToEye;
+> 
+> 		void main() {
+> 
+> 			#include <logdepthbuf_fragment>
+> 
+> 			float flowMapOffset0 = config.x;
+> 			float flowMapOffset1 = config.y;
+> 			float halfCycle = config.z;
+> 			float scale = config.w;
+> 
+> 			vec3 toEye = normalize( vToEye );
+> 
+> 			// determine flow direction
+> 			vec2 flow;
+> 			#ifdef USE_FLOWMAP
+> 				flow = texture2D( tFlowMap, vUv ).rg * 2.0 - 1.0;
+> 			#else
+> 				flow = flowDirection;
+> 			#endif
+> 			flow.x *= - 1.0;
+> 
+> 			// sample normal maps (distort uvs with flowdata)
+> 			vec4 normalColor0 = texture2D( tNormalMap0, ( vUv * scale ) + flow * flowMapOffset0 );
+> 			vec4 normalColor1 = texture2D( tNormalMap1, ( vUv * scale ) + flow * flowMapOffset1 );
+> 
+> 			// linear interpolate to get the final normal color …[+1020 chars]
+
+### 🤖 Claude — 2026-11-16T12:54:53.221Z
+
+Now the measurement: per screen row, where the water body's left and right banks lie in the approved image versus the game, back-projected through the locked camera.
+
+### 🤖 Claude — 2026-11-16T12:55:04.943Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && cat > $S/edges.py <<'EOF'\nimport sys, colorsys\nimport numpy as np\nfrom PIL import Image\n# per-row water-body edges (between the foam banks) for a Screen 05 picture; prints table + writes overlay\ndef load(p):\n    im=Image.open(p).convert('RGB')\n    if im.size!=(864,1536): im=im.resize((864,1536), Image.LANCZOS)\n    return im\ndef hsv(a):\n    a=a/255.0; mx=a.max(-1); mn=a.min(-1); d=mx-mn\n    h=np.zeros_like(mx); r,g,b=a[...,0],a[...,1],a[...,2]\n    m=d>1e-6\n    hr=((g-b)/np.where(m,d, …[+1790 chars]`
+
+### 🧑 User — 2026-11-16T12:55:05.823Z
+
+> ↩︎ result: == references/05_flow_into_the_current.png
+>  y    L    R    w  ctr | depth  latL  latR  width  centre
+> 486 -
+> 492 -
+> 498 -
+> 504 -
+> 510 -
+>  516  525  577   52  551 |  123.0   2.41   7.41   5.00   4.91
+>  522  499  585   86  542 |  105.8  -0.08   7.04   7.12   3.48
+>  528  410  588  178  499 |   92.9  -6.54   6.39  12.93  -0.07
+>  534  474  587  113  530 |   82.7  -1.68   5.63   7.31   1.97
+>  540  377  863  486  620 |   74.6  -7.18  21.18  28.36   7.00
+>  546  354  576  222  465 |   67.9  -7.76   4.04  11.80  -1.86
+>  552  327  407   80  367 |   62.3  -8.44  -4.54   3.90  -6.49
+>  558  442  556  114  499 |   57.6  -2.61   2.52   5.14  -0.05
+>  560  447  530   83  488 |   56.2  -2.33   1.32   3.65  -0.51
+>  570  360  548  188  454 |   50.0  -5.48   1.88   7.35  -1.80
+>  580  395  587  192  491 |   45.0  -3.70   3.07   6.77  -0.32
+>  590  309  466  157  387 |   41.0  -6.13  -1.09   5.04  -3.61
+>  600  235  472  237  353 |   37.6  -7.80  -0.82   6.97  -4.31
+>  610  224  543  319  383 |   34.7  -7.50   1.17   8.67  -3.17
+>  620  399  710  311  554 |   32.3  -2.55   5.30   7.85   1.38
+>  630  442  532   90  487 |   30.1  -1.37   0.75   2.12  -0.31
+>  640  221  544  323  382 |   28.3  -6.17   0.97   7.14  -2.60
+>  650  230  497  …[+3628 chars]
+
+### 🤖 Claude — 2026-11-16T12:55:08.659Z
+
+The automatic edge detection is too noisy, because white highlights read as foam. I'll trace the banks by eye on enlarged crops with a pixel grid instead.
+
+### 🤖 Claude — 2026-11-16T12:55:14.500Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && cat > $S/grid.py <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw\n# grid.py IN OUT x0,y0,x1,y1 scale step\np,out,box,sc,step=sys.argv[1],sys.argv[2],tuple(map(int,sys.argv[3].split(','))),float(sys.argv[4]),int(sys.argv[5])\nim=Image.open(p).convert('RGB')\nif im.size!=(864,1536): im=im.resize((864,1536), Image.LANCZOS)\nc=im.crop(box); c=c.resize((int(c.width*sc),int(c.height*sc)), Image.LANCZOS)\nd=ImageDraw.Draw(c)\nx=(box[0]//step+1)*step\nwhile x<box[2]:\n    X=(x-box[0])*sc; d.line([ …[+527 chars]`
+
+### 🧑 User — 2026-11-16T12:55:15.090Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T12:55:17.010Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/g_app_far.png"}`
+
+### 🧑 User — 2026-11-16T12:55:17.040Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:55:17.629Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/g_cur_far.png"}`
+
+### 🧑 User — 2026-11-16T12:55:17.685Z
+
+> ↩︎ result: [image]
+
