@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 7067,
-   "sha256": "27d3dc115a27c33495173348e319cf299695d1fe5eed3b8c1ddc7498af76adaf"
+   "bytes": 7417,
+   "sha256": "54a040cb34897b09ce83728f0e6b949d1c4c3a9a2d6b012bbcf55e601a7cf1aa"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "e66a0b5cc9e19c6c21cf221e3e89fcf13a2904c2580a87f37654ae5523da2cd5"
+   "sha256": "ab6a8382d3285b88e56f95bc75764bae869c01a9fc433e2f50e6b59bcdde6f95"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -5030,6 +5030,11 @@
    "path": "qa/pilot05/wave9b/DIFF05_APPROVED_vs_BEFORE.md",
    "bytes": 1017,
    "sha256": "5b91b33b86c5e34f42e87bb6f77947114b82c6c7f943ef8eb32c124bad3288ce"
+  },
+  {
+   "path": "qa/pilot05/wave9b/G1/05_APPROVED_NOW_G1b_fullsize.png",
+   "bytes": 4819979,
+   "sha256": "73da5b9771dd751f7007e3a4e9e6b5520df7c81293f37982f8cec9b8ac6505ad"
   },
   {
    "path": "qa/pilot05/wave9b/G1/05_gold05_G1b.png",

@@ -4095,3 +4095,73 @@ Checkpoint saved and verified on GitHub. Sending the three separate full-size sc
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/g1; mkdir -p qa/pilot05/wave9b/G1; cp $S/g1b/05.png qa/pilot05/wave9b/G1/05_gold05_G1b.png; python3 -I $S/goldstats.py APPROVED=references/05_flow_into_the_current.png NOW=qa/pilot05/current_default_05.png G1b=qa/pilot05/wave9b/G1/05_gold05_G1b.png > qa/pilot05/wave9b/G1/gold_stats.txt; cp $S/goldstats.py tools/qa/gold05.py; python3 scripts/rainbow-autosave.py --reason manual:gold-test-G1b --message \"Screen 05: gold-ring tone test G1b (?gold05=1, candidate); T2 marked provi …[+256 chars]`
 
+### 🧑 User — 2026-11-16T11:44:20.334Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "7627b4d676904657524e405127640e5a62d30cf0",
+> remote 7627b4d676904657524e405127640e5a62d30cf0
+> local  7627b4d676904657524e405127640e5a62d30cf0
+
+### 🤖 Claude — 2026-11-16T11:44:51.515Z
+
+> 🔧 **Agent** `{"subagent_type": "water-fx-specialist", "description": "Screen 05 water look test", "prompt": "You are the water-fx-specialist on the EXISTING Rainbow 3D game (repo /home/user/rainbow-, Three.js + Vite, TypeScript). Never restart or rewrite the game. Read CLAUDE.md first (rules), then qa/pilot05/COORDINATION_WAVE9B.md (latest Screen 05 state) and the earlier water notes qa/pilot05/wave9/water/NOTES.md and qa/pilot05/wave7/water/NOTES.md (wave 9 it01/it02 were measured WORSE than the baseline — learn from that, do not repeat it).\n\n## Goal (the user's words, 2026-11-16)\nMake the Screen 05 WA …[+4525 chars]`
+
+### 🧑 User — 2026-11-16T11:44:51.547Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a7495236882471786 (internal ID - do not mention to user. Use SendMessage with to: 'a7495236882471786', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/tasks/a7495236882471786.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-16T11:45:05.474Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\nimport json\np = \"backups/AGENTS_STATUS.json\"; d = json.load(open(p))\nd[\"updated_utc\"] = \"2026-11-16T11:58:00+00:00\"\nd[\"running_now\"] = [\"water-fx-specialist (wave 10, Screen 05 water look behind ?water05=1; brief + results: qa/pilot05/wave10/water/; started ~11:57 UTC)\"]\nfor a in d[\"agents\"]:\n    if a[\"name\"] == \"water-fx-specialist\":\n        a[\"state\"] = \"running (wave 10)\"\n        a[\"relaunch_when\"] = (\"if the session ended before qa/pilot05/wave10/water/NOTES.md says DONE: relaunch with the same brief \" …[+1119 chars]`
+
+### 🧑 User — 2026-11-16T11:45:06.653Z
+
+> ↩︎ result: roster updated
+> saved
+
+### 🤖 Claude — 2026-11-16T11:45:10.503Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/wave9b/G1/05_APPROVED_NOW_G1b_fullsize.png"], "caption": "Gold-ring test, full size, no grid: APPROVED | game now (T2, provisional) | G1b deeper orange-gold rings (a switch only; the game is unchanged).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T11:45:11.239Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave9b/G1/05_APPROVED_NOW_G1b_fullsize.png → file_uuid: 3cac523c-2492-4aa5-8bba-6a7f4f84dba6
+
+### 🤖 Claude — 2026-11-16T11:45:24.156Z
+
+The gold-ring test is done and the water work has started. Your BEFORE is still protected: `?ringa=26&nearfloor05=0` reproduces it pixel-for-pixel. T2 stays provisional until you approve it.
+
+**One thing to decide:** right now the game shows T2, which also includes T1's bigger front ring. If you'd rather it show BEFORE until you approve, say so and I'll switch the default back; it's a one-line change.
+
+**Gold-ring colour and reflection test (G1b):** the rings were pale peach. G1b gives them the rich, saturated orange-gold body of your approved image. Gold colour moved roughly halfway to yours, saturation from 0.55 to 0.61 (yours 0.66), and the bright highlights stayed at a normal level. It isn't perfect: the front ring's left edge leans slightly copper-red, and your rings get more of their polished look from brighter yellow highlights. It is only a switch (`?gold05=1`); the game is unchanged. The full-size comparison is attached above.
+
+**Still waiting for your yes/no:** W2 (violet walls, `?wall05=1`) and G1b (deeper gold rings, `?gold05=1`).
+
+**Water, your next priority:** your water-fx-specialist is now working on it in the background. Its target is your approved image:
+- thick, brilliant cyan with magenta-pink bands flowing along the S-curves, not wide diagonal patches
+- long white glossy highlights instead of small dots
+- the S-curves continuing all the way into the golden light, where the game is weakest now
+- natural splashes around Benny
+
+Its limits:
+- One switchable test, with the game unchanged by default.
+- No changes to river geometry, width, camera, tunnel, Benny, gameplay or transitions.
+- At most 4 iterations, measured against your image and kept only if genuinely closer.
+- Only your existing local Marble files; no credits.
+
+I left the river *width* out on purpose. The 05 river is built to fill the tunnel floor wall to wall, and the same width drives steering and the heart loss on wall bumps. Changing it would affect gameplay, so it would need its own test. When the specialist finishes, I'll show you the real game at full size beside your approved image.
+
+**Backups:** branch `ccr-251ed97c-ty2xvp`, checkpoint commit `7627b4d676904657524e405127640e5a62d30cf0`, verified on GitHub. The five-minute autosave is running, and every run since 11:11 UTC has pushed and matched GitHub. No World Labs credits spent.
+
+### 🧑 User — 2026-11-16T11:45:26.141Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
