@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8264,
-   "sha256": "32620d28f92c7922d0398d4088f3265acc2f9b2e07ec53caabd101f9c83260b4"
+   "sha256": "e915b4fe5ac2b940183d265dbe097f8b9ff917eeb26ab1b5b838c0b0321b319c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6802,6 +6802,11 @@
    "sha256": "07c456cfc39fe57741e4071ca9bf7b46ad14c49de65e02db2b7c538e01905e44"
   },
   {
+   "path": "tools/blender/marble05_projection.py",
+   "bytes": 8322,
+   "sha256": "331ab9a4d029551f4e4d70d7c8c0d456c7dbe19f2e175889262aa988d5e01ade"
+  },
+  {
    "path": "tools/blender/render_05_proof.py",
    "bytes": 4679,
    "sha256": "06e8869bc701026514d5a31e49197017fe2451bbf88029cbfa767fb17df1285f"
@@ -6845,6 +6850,16 @@
    "path": "tools/marble05/river_geometry.py",
    "bytes": 9209,
    "sha256": "5f1c108cf399ecaa2899d2f484504deb78d69d6b131c180632fd838348d5eb05"
+  },
+  {
+   "path": "tools/marble05/spark/render.html",
+   "bytes": 1901,
+   "sha256": "ba7e55518dd8a97f51402d85c9a6e5a31207d23c2e6f63f1840babdacbf652ac"
+  },
+  {
+   "path": "tools/marble05/spark/render.mjs",
+   "bytes": 1736,
+   "sha256": "f05680bb0b27e2b90f440dfa511b93c596b81d477ae024a4ed83392d07c965c2"
   },
   {
    "path": "tools/marble05/splat_fit.py",

@@ -758,3 +758,64 @@ Building the Blender camera-projection scene now (your artwork projected from th
 >     blender -b OUT/screen05_layout.blend --python tools/blender/camera_lock_05.py -- \
 >         --camera qa/pilot05/wave6 …[+2111 chars]
 
+### 🤖 Claude — 2026-11-16T17:07:47.805Z
+
+> 🔧 **Bash** `{"command": "cat > tools/blender/marble05_projection.py <<'EOF'\n\"\"\"\nScreen 05 MARBLE FEASIBILITY — Blender 5.3 camera projection of the user's ORIGINAL water artwork onto\n(a) Marble's reconstructed river surface and (b) the ideal flat river floor, from the camera that reproduces the\napproved 864x1536 frame (Marble origin camera fitted in qa/pilot05/marble_feas/splat_fit_full.json, lens shift\nfor the full frame). No Marble API calls, no credits.\n\n    blender -b --python tools/blender/marble05_projection.py -- --scene-dir DIR --artwork PNG --out-dir OUT [--blend OUT.blend]\n\nDIR holds …[+7477 chars]`
+
+### 🧑 User — 2026-11-16T17:08:06.673Z
+
+> ↩︎ result: 00:05.458  render           | Saved: '/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/blender_out/river_marble_locked.png'
+> 00:09.270  render           | Saved: '/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/blender_out/river_marble_moved1R.png'
+> 00:13.036  render           | Saved: '/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/blender_out/river_flat_moved1R.png'
+> 00:16.929  render           | Saved: '/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/blender_out/river_flat_locked.png'
+> Info: Saved as "marble05_projection.blend"
+> REPORT {"camera": {"lens_mm": 16.40625, "sensor_fit": "VERTICAL", "sensor_height": 36.0, "shift_x": -0.0, "shift_y": -0.1858723908662796, "rotation_deg": [96.00000267144338, 0.0, 0.0]}, "rivers": {"marble_river": {"vertices": 201903, "faces": 200469, "max_px_err_uvproject_vs_analytic": 188.5665384617209, "max_px_err_world_to_camera_view_vs_analytic": 0.020367475887692922, "checked_loops": 4010}, "flat_river": {"vertices": 201404, "faces": 200319, "max_px_err_uvproject_vs_analytic": 188.5656247583454, "max_px_err_world_to_came …[+782 chars]
+
+### 🤖 Claude — 2026-11-16T17:08:25.174Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/blender/marble05_projection.py'\ns=open(p).read()\nold=s[s.index('    mod = ob.modifiers.new(\"CameraProjection\", \"UV_PROJECT\")'):s.index('    me.uv_layers.remove(me.uv_layers[\"ObjUV\"])')]\nnew='''    # UV Project modifier (kept for the record: it ignores lens shift, measured error below) ...\n    tmp = ob.copy(); tmp.data = me.copy(); sc.collection.objects.link(tmp)\n    mod = tmp.modifiers.new(\"CameraProjection\", \"UV_PROJECT\")\n    mod.uv_layer = \"ProjUV\"; mod.projector_count = 1; mod.projectors[0].object = cam_locked\n    mod.aspect_x, mod …[+2886 chars]`
+
+### 🧑 User — 2026-11-16T17:08:46.669Z
+
+> ↩︎ result: REPORT {"camera": {"lens_mm": 16.40625, "sensor_fit": "VERTICAL", "sensor_height": 36.0, "shift_x": -0.0, "shift_y": -0.1858723908662796, "rotation_deg": [96.00000267144338, 0.0, 0.0]}, "rivers": {"marble_river": {"vertices": 201903, "faces": 200469, "max_px_err_uvproject_modifier_vs_analytic": 188.5665384617209, "max_px_err_projuv_vs_world_to_camera_view": 0.0002555816031024352, "max_px_err_world_to_camera_view_vs_analytic": 0.020367475887692922, "checked_loops": 4010, "note": "UV Project modifier ignores lens shift -> ProjUV comes from the camera projection matrix"}, "flat_river": {"vertices": 201404, "faces": 200319, "max_px_err_uvproject_modifier_vs_analytic": 188.5656247583454, "max_px_err_projuv_vs_world_to_camera_view": 0.00027415855976290295, "max_px_err_world_to_camera_view_vs_analytic": 0.027336155024093478, "checked_loops": 4007, "note": "UV Project modifier ignores lens shift -> ProjUV comes from the camera projection matrix"}}}
+> 
+> real	0m21.381s
+> user	1m2.321s
+> sys	0m1.812s
+
+### 🤖 Claude — 2026-11-16T17:08:51.265Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad; cd $SP/blender_out && python3 -c \"\nfrom PIL import Image\nims=[Image.open(f).convert('RGBA') for f in ['river_marble_locked.png','river_flat_locked.png','river_marble_moved1R.png','river_flat_moved1R.png']]\nc=Image.new('RGB',(432*4+30,768),(30,30,30))\nfor i,im in enumerate(ims):\n  bg=Image.new('RGBA',im.size,(0,0,0,255)); bg.alpha_composite(im); c.paste(bg.convert('RGB').resize((432,768)),(i*442,0))\nc.save('$SP/mf/river_layers.png')\"", "description": "Combine river layer renders for a quic …[+8 chars]`
+
+### 🧑 User — 2026-11-16T17:08:51.846Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-16T17:08:52.212Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/river_layers.png"}`
+
+### 🧑 User — 2026-11-16T17:08:52.259Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:09:18.233Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/sparkr; cd /home/user/rainbow- && mkdir -p tools/marble05/spark && cat > tools/marble05/spark/render.html <<'EOF'\n<!doctype html>\n<html><head><meta charset=\"utf-8\"><title>Marble 05 locked render</title>\n<style>html,body{margin:0;background:#000;overflow:hidden}</style>\n<script type=\"importmap\">{\"imports\":{\"three\":\"./node_modules/three/build/three.module.js\",\"@sparkjsdev/spark\":\"./node_modules/@sparkjsdev/spark/dist/spark.module.js\"}}</script>\n</head><body>\n<script type=\"module …[+4021 chars]`
+
+### 🧑 User — 2026-11-16T17:09:18.412Z
+
+> ↩︎ result: at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+>   code: 'ERR_MODULE_NOT_FOUND'
+> }
+> 
+> Node.js v22.23.4
+> 
+> real	0m0.053s
+> user	0m0.052s
+> sys	0m0.005s
+
+### 🤖 Claude — 2026-11-16T17:09:23.237Z
+
+> 🔧 **Bash** `{"command": "sed -i 's#^import { chromium } from \"playwright\";#import { createRequire } from \"node:module\";\\nconst { chromium } = createRequire(import.meta.url)(\"playwright\");#' tools/marble05/spark/render.mjs && SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/sparkr && time node tools/marble05/spark/render.mjs $SP full_500k.spz /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/spark_full500k_locked.png 2>&1 | tail -5", "description": "Fix Playwright import and retry Spark render", "timeout": 900000}`
+
