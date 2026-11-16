@@ -1,5 +1,13 @@
 # Rainbow — CURRENT STATE (handoff)
 
+## ▶ Account-transfer backup (2026-11-16 ~01:30 UTC, session `94cf04e3`) — read this first
+| | |
+|---|---|
+| **Working branch** | `ccr-937c7fbb-htsrgt` — contains all 9 earlier branches incl. `ccr-93add0fa-q17ey6` 08fb461 and `ccr-4f6c3e0e-5kxgr0` 8d7464b (merged). Account 8 was still saving to `ccr-4f6c3e0e-5kxgr0` in parallel: merge any newer tip with `scripts/resume-newest-work.sh` |
+| Verified | fresh-clone LFS download 24/24 SHA OK; refs 12/12; 10 agents; tsc OK; continuity ok (gaps 0, drop 61.19); gameplay test pass (plunge 61.41, errors []) |
+| Handoff docs | `backups/CLAUDE_ACCOUNT_TRANSFER.md` (§0 first), `backups/START_NEW_CLAUDE_ACCOUNT.md` |
+| World Labs | nothing spent; World API key not in this session's environment; Atlas `list_projects` OK |
+
 ## ▶ Account 8 update (2026-11-16, session `7c0df0fc…`) — read this first
 | | |
 |---|---|

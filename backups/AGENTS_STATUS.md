@@ -1,5 +1,13 @@
 # Rainbow specialists — roster, responsibilities and status
 
+## ▶ Transfer-session check (2026-11-16 ~01:30 UTC, session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`)
+All 10 definitions present, SHA-256 unchanged (list in `backups/CLAUDE_ACCOUNT_TRANSFER.md` §3).
+washer-environment-modeler (running in the account-8 session): latest saved state = wave-7 `it06`
+(whole-frame mad 59.0 → 51.2; Benny+near water 63.8 → 46.7) + regression captures
+`qa/pilot05/wave7/environment/regress/04–08.png` (01:19 UTC); `NOTES.md` log still empty, no final report.
+Its code passes tsc, continuity and the browser gameplay test. **Relaunch it** on the next account unless a newer
+commit shows DONE. Relaunch list + reasons: transfer guide §3.
+
 ## ▶ Status at the account-8 hand-off (2026-11-16 ~01:15 UTC, branch `ccr-4f6c3e0e-5kxgr0`)
 All 10 definitions present and unchanged in `.claude/agents/` (backed up every 5 min). Screen 05 wave 7 =
 `qa/pilot05/COORDINATION_WAVE7.md` (strict file ownership, baseline `qa/pilot05/wave7/baseline/05.png`).

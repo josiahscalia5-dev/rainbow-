@@ -1,26 +1,51 @@
-# Rainbow — Claude account transfer guide (written 2026-11-16 ~01:20 UTC, account 8)
+# Rainbow — Claude account transfer guide (account 8 + transfer session 94cf04e3, 2026-11-16 ~01:30 UTC)
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it. Everything below was checked in
-this session unless marked "last verified on account N".
+these sessions unless marked "last verified on account N".
+
+## ▶ 0. Final verified backup (transfer session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`) — read first
+**Two Claude sessions were saving at the same time** at hand-off: account 8 on `ccr-4f6c3e0e-5kxgr0` (with the
+washer-environment-modeler still running) and the transfer session on `ccr-937c7fbb-htsrgt`. The transfer branch
+merged everything account 8 had pushed up to `8d7464b` (01:19 UTC). If account 8 kept saving after that, its
+newer commits are only on `ccr-4f6c3e0e-5kxgr0`, so **always run `scripts/resume-newest-work.sh`** (§2): it merges
+every remote `ccr-*`/`claude/*` branch your session does not yet contain, restores LFS and runs the checks.
+
+Verified in the transfer session (2026-11-16 01:17–01:35 UTC):
+| Check | Result |
+|---|---|
+| Branch containment (after `git fetch --unshallow`) | `ccr-937c7fbb-htsrgt` contains all 9 earlier branches: `ccr-6f431adf-7h0m8y` 81e639e, `claude/rainbow-3d-recovery-m4v347` b83b7e0, `ccr-8b6fc834-7kd55l` 8a36270, `ccr-d4bb0ad3-8ycajb` 648f531, `ccr-e033f912-8b40f5` 3c0fe33, `claude/rainbow-3d-account-transfer-syorak` 7ae64c3, `ccr-93add0fa-q17ey6` **08fb461** (merged; its content was already here), `ccr-4f6c3e0e-5kxgr0` **8d7464b** (merged) |
+| **Git LFS downloadable from GitHub** | fresh `git clone` of the branch into an empty folder + `git lfs pull` → **24/24 files downloaded, SHA-256 == pointer oid and size, identical to the working copy**; `git lfs fsck` OK. Includes all 17 Marble/World Labs binaries (table in §7) |
+| References | `sha256sum -c scripts/reference.sha256` 12/12 OK |
+| Agents | 10/10 `.claude/agents/*.md` present (SHA-256 list in §3) |
+| Build / game | `npm ci` OK, `tsc --noEmit` OK, `npm run test:continuity` ok (all 10 stage gaps 0, 05→06 gap 0, 07→08 verticalDrop 61.19, max step tangent 6.24°), `node scripts/gameplay-test.mjs` **pass** (pause, continuous travel, no camera cut, no teleport, plunge 61.41, real coin pickups, heart loss on wall bump, victory, errors []) — run on the code that includes the environment specialist's unfinished wave-7 edits |
+| Resume script | `bash scripts/resume-newest-work.sh` → `RESUME CHECK: OK` |
+| Autosave | `AUTOSAVE OK … (match)` on `ccr-937c7fbb-htsrgt`; `autosave.config.json` now targets this branch and protects `ccr-4f6c3e0e-5kxgr0` |
+| World Labs credits | **none spent** in the transfer session |
 
 ## 1. Repository, branch, commit
 | | |
 |---|---|
 | Repository | `josiahscalia5-dev/rainbow-` (private, GitHub) |
-| **Source branch (newest work)** | **`ccr-4f6c3e0e-5kxgr0`** |
-| Latest verified commit | see the newest `committed+pushed` row in `backups/BACKUP_LOG.md` (the autosave keeps pushing while this session lives); at the time of writing `7f157d2`. Always use the remote branch tip: `git ls-remote origin refs/heads/ccr-4f6c3e0e-5kxgr0` |
-| Contains | every earlier branch (checked after `git fetch --unshallow`): `ccr-6f431adf-7h0m8y` (original), `claude/rainbow-3d-recovery-m4v347`, `ccr-8b6fc834-7kd55l`, `ccr-d4bb0ad3-8ycajb`, `ccr-e033f912-8b40f5`, `claude/rainbow-3d-account-transfer-syorak`, and `ccr-93add0fa-q17ey6` up to `6cf0b4f` (its later `08fb461` only added account-7 transcript lines, copied in here) |
-| Protected (autosave refuses to push) | all branches above — `backups/autosave.config.json` → `protected_branches` |
+| **Newest work** | **`ccr-937c7fbb-htsrgt`** (transfer session; contains everything below) — plus any commits account 8 pushed to **`ccr-4f6c3e0e-5kxgr0`** after 01:19 UTC (merge them; §2) |
+| Latest verified commit | the final commit is reported to the user in chat; the doc cannot contain its own SHA. Always use the remote tips: `git ls-remote origin refs/heads/ccr-937c7fbb-htsrgt refs/heads/ccr-4f6c3e0e-5kxgr0` |
+| Contains | every earlier branch (checked after `git fetch --unshallow`): `ccr-6f431adf-7h0m8y` (original), `claude/rainbow-3d-recovery-m4v347`, `ccr-8b6fc834-7kd55l`, `ccr-d4bb0ad3-8ycajb`, `ccr-e033f912-8b40f5`, `claude/rainbow-3d-account-transfer-syorak`, `ccr-93add0fa-q17ey6` (08fb461), `ccr-4f6c3e0e-5kxgr0` (to 8d7464b) |
+| Protected (autosave refuses to push) | all branches above — `backups/autosave.config.json` → `protected_branches`. The next account must add `ccr-937c7fbb-htsrgt` too |
+| Default branch warning | the repo's GitHub default branch is the OLD original `ccr-6f431adf-7h0m8y` (81e639e). A session that starts there has the old game — run §2 first |
 
 ## 2. Safe new working branch on the next account
-A new Claude Code cloud session gets its own `ccr-*` (or `claude/*`) branch. Start it FROM the source branch:
+A new Claude Code cloud session gets its own `ccr-*` (or `claude/*`) branch, possibly started from the old default
+branch. From the repo folder, get the resume script from the newest branch and run it (works from any start point;
+it only fetches and merges — never resets, deletes or force-pushes):
 ```bash
-git fetch origin ccr-4f6c3e0e-5kxgr0 && git fetch --unshallow origin 2>/dev/null || true
-git checkout -B <your-new-session-branch> origin/ccr-4f6c3e0e-5kxgr0   # only if the session did not start on it
-git merge-base --is-ancestor origin/ccr-4f6c3e0e-5kxgr0 HEAD && echo "contains source: OK"
+git fetch origin ccr-937c7fbb-htsrgt
+git show FETCH_HEAD:scripts/resume-newest-work.sh > /tmp/resume-newest-work.sh
+bash /tmp/resume-newest-work.sh            # add --tools to also install Blender 5.3, Android SDK 34, World Labs plugin
+git push -u origin "$(git branch --show-current)"
 ```
-Then add `ccr-4f6c3e0e-5kxgr0` to `protected_branches` and set `"branch"` + `commit_trailer` in
-`backups/autosave.config.json` to the new session (as done for every previous account). Never force-push.
+Expect `RESUME CHECK: OK`, `24 tracked, 0 still pointer stubs`, `10 agent definitions`, `tsc OK`, and every
+`ccr-*`/`claude/*` branch listed as `ok`. If it stops with `CONFLICT`, resolve keeping both sides, `git commit`.
+Then add `ccr-937c7fbb-htsrgt` to `protected_branches` and set `"branch"` + `commit_trailer` in
+`backups/autosave.config.json` to the new session branch (as done for every previous account). Never force-push.
 
 ## 3. The ten specialist agents
 `.claude/agents/*.md` — android-build-performance, animation-and-gameplay-engineer, benny-character-artist,
@@ -29,6 +54,22 @@ reference-match-director, washer-environment-modeler, water-fx-specialist. They 
 subagents (Agent tool, `subagent_type` = file name without `.md`). Do not recreate or rename them.
 Status, finished work and who must be relaunched: **`backups/AGENTS_STATUS.md` (top table)**. Relaunch brief
 template: `qa/pilot05/COORDINATION_WAVE7.md` + the specialist's own `qa/pilot05/wave7/<name>/NOTES.md`.
+
+Relaunch on the next account (state at 01:30 UTC):
+| Agent | Relaunch? |
+|---|---|
+| washer-environment-modeler | **YES, unless a newer commit shows it finished.** Wave 7 reached `it06` (whole-frame mad 59.0 → 51.2; tunnel+VP 62.6 → 61.0; Benny+near water 63.8 → 46.7) and captured the 04–08 regression set `qa/pilot05/wave7/environment/regress/` (01:19), but its `NOTES.md` log is still empty and it never reported. Its code (`src/world/environment.ts`, `materials.ts`) is saved and passes tsc/continuity/gameplay. Relaunch with: "continue wave 7 from it06; first compare `regress/04–08.png` with the wave-7 baseline captures; write the NOTES log; keep or revert per screen_report" + the Marble cues in §7 |
+| path-camera-transition-engineer | YES — next task (far river/VP strip, §6 item 5); never started |
+| water-fx-specialist, foam-bubbles-particles | later polish passes only (wave 7 DONE) |
+| reference-match-director, playwright-visual-qa | YES, after the environment + path-camera work lands |
+| benny-character-artist, cartoon-girl-character-artist, animation-and-gameplay-engineer | idle — no relaunch needed |
+| android-build-performance | YES at the end — rebuild the APK (the committed `builds/rainbow-debug.apk` is from 2026-11-15 18:00, before the Screen 05 waves 4–7) |
+
+Definition checksums (unchanged; compare with `sha256sum .claude/agents/*.md`):
+`android-build-performance b0c45161…`, `animation-and-gameplay-engineer c48094c3…`, `benny-character-artist cde203af…`,
+`cartoon-girl-character-artist 52058503…`, `foam-bubbles-particles f6341dcd…`, `path-camera-transition-engineer 4244cc82…`,
+`playwright-visual-qa 0f14c32f…`, `reference-match-director b977e3f7…`, `washer-environment-modeler 7abdea78…`,
+`water-fx-specialist b160f12f…`.
 
 ## 4. Tools — exact setup
 Cloud environment (claude.ai → Claude Code → environment settings) for the new account:
@@ -62,6 +103,12 @@ Playwright/Chromium are preinstalled in Claude cloud containers (`require('playw
 Gameplay systems: coins, hearts (loss on wall bump), pause/resume, steering, HUD, collisions, stage transitions.
 
 ## 6. Unfinished Screen 05 work (approved image `references/05_flow_into_the_current.png` ALWAYS wins)
+User's goal (unchanged): recreate the APPROVED Screen 05 as real playable 3D, ideally 90–95 % visually similar
+where achievable — rich metallic purple perforated washer walls, properly sized reflective golden tunnel rings,
+thick glossy cyan-and-pink winding water in continuous S-curves into the golden light, natural foam, splashes and
+translucent bubbles, Benny exactly as approved, correct camera framing and premium lighting. The approved
+screenshot beats the Marble world. Keep the finished gameplay systems and the locked camera; do not redo work the
+specialists already finished (wave-7 water/foam DONE). Report measured differences, never invented percentages.
 Wave-7 baseline `qa/pilot05/wave7/baseline/05.png`; ranked difference table in `qa/pilot05/COORDINATION_WAVE6.md`.
 1. Walls: clean deep violet→magenta metal, regular capsule-slot rows, lengthwise white-pink streaks (environment).
 2. Rings: polished yellow-gold bands, highlight line, amber lips; spacing check vs Marble ≈ 0.9 × radius (environment).
@@ -92,6 +139,15 @@ Full ledger, IDs and asset table: **`qa/worldlabs/05/pilot/LEDGER.md`**.
 * Budget: user approved max US$5 (6,250 credits) for this pilot, no auto-recharge. Spent 1,810; API balance
   5,190 at hand-off.
 
+Exact asset inventory (all in Git LFS unless noted; every LFS file verified downloadable from GitHub, §0):
+| World | Generation | Saved files | Not available / not bought |
+|---|---|---|---|
+| draft `5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f` | op `4a549a9d-3de2-424b-8324-db24a8d1b9bd`, `marble-1.0-draft`, 230 credits (pano 80 + draft 150), 00:55 UTC | `draft/collider.glb` (35,795 tris), `splats_100k.spz`, `splats_500k.spz`, `splats_full_res.spz`, `splats_500k.ply` (free export), `thumbnail.{webp,png}`, `world.json`, `operation_response.sanitized.json`, `import/draft05.blend` + `draft05_underlay.glb` + preview + `draft05_measure.json`, `analysis/` | no pano (drafts have none); no HQ / full-res mesh (not generated) |
+| full `c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9` | op `12a08430-f687-4a09-bdc7-3a469c76363d`, `marble-1.1`, 1,580 credits (pano 80 + world 1,500), 00:58 UTC | `full/collider.glb`, `splats_100k.spz`, `splats_150k.spz`, `splats_500k.spz`, `splats_full_res.spz`, `splats_500k.ply`, `pano.png` (4608×2304) + `pano_preview_2048.jpg`, `thumbnail.{webp,png}`, `operation_response.sanitized.json` (metric_scale_factor 1.5619, ground_plane_offset 0.9745), `import/full05.blend` + underlay + preview + measure, `analysis/` | HQ mesh export (3,500 credits) not bought — needs the user's OK |
+| Inputs | — | approved crop `qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png`, `qa/worldlabs/05/pilot/prompt_05.txt`; upload/generate/export calls in `tools/worldlabs/marble_pilot.py`; analysis `tools/worldlabs/analyze_splats.py`, `bay_texture.py`; Blender import `tools/blender/import_world_asset.py` | the media-asset ID of the uploaded input image was not recorded (re-upload is free) |
+Both worlds are private to the World API account that made them. Re-download (free, needs that account's key):
+`python3 -I tools/worldlabs/marble_pilot.py world <world_id> out.json` → fresh CDN links.
+
 ## 8. World Labs authentication (no credentials here)
 | Connection | State on account 8 | On the next account |
 |---|---|---|
@@ -102,6 +158,16 @@ Full ledger, IDs and asset table: **`qa/worldlabs/05/pilot/LEDGER.md`**.
 | Playwright MCP | plugin, connected | re-enable the plugin if missing; Chromium is preinstalled |
 | Other plugin MCPs (Figma, Notion, Slack, Linear, Atlassian, Intercom, context7) | need sign-in; not used by Rainbow | ignore unless needed |
 Nothing about Claude account logins, live MCP sessions or connector sign-ins travels through GitHub.
+
+Transfer session `94cf04e3` (same date) observed: Marble World API key **not present** in that session's
+environment (`GET /credits` → 401 "No API key found") — so the 5,190 balance is the last API-reported value
+(01:06 UTC), not re-read. Atlas connector `list_projects` OK (project "My project", Personal workspace,
+`credits_available: true`, nothing run). GitHub MCP + git proxy pushes OK. Plugins seen: superpowers,
+parallax-threejs (playwright-mcp, chrome-devtools-mcp, threejs-devtools-mcp connected; **spector failed to
+connect**), playwright, context7 (**needs sign-in**), feature-dev, code-review, frontend-design,
+claude-code-setup. The worldlabs@worldlabs plugin was **not** installed in that container, and Blender / Android
+SDK were not installed there either (its environment setup script did not run) — run `--tools` (§2) or
+`scripts/cloud-env-setup.sh`. Hosts `download.blender.org` and `dl.google.com` answered 200.
 
 ## 9. Git LFS restore
 ```bash
@@ -121,6 +187,9 @@ Tracked: `*.glb *.ply *.spz *.blend *.fbx *.hdr *.exr *.ktx2 *.psd *.mp4` + the 
 ## 11. Last successful tests
 | Test | Result | When |
 |---|---|---|
+| Fresh-clone LFS download from GitHub | 24/24 files, SHA-256 == oid, fsck OK | transfer session, 2026-11-16 ~01:20 |
+| `node scripts/gameplay-test.mjs` | pass: all 8 checks, plunge 61.41, errors [] (includes unfinished wave-7 environment code) | transfer session, 2026-11-16 ~01:21 |
+| `npm run test:continuity`, `tsc`, refs 12/12 | ok / OK / OK | transfer session, ~01:20 and again via `resume-newest-work.sh` |
 | `node scripts/gameplay-test.mjs` | pass: victory, heart loss on wall bump, plunge 61.41, errors [] | account 8, 2026-11-16 00:41 |
 | `npm run test:continuity` | all stage gaps 0 | account 8 |
 | `npx tsc --noEmit` | OK | account 8 (also by water + foam specialists) |
@@ -130,8 +199,10 @@ Tracked: `*.glb *.ply *.spz *.blend *.fbx *.hdr *.exr *.ktx2 *.psd *.mp4` + the 
 | Android `assembleDebug` | BUILD SUCCESSFUL, APK 7.29 MB (`builds/rainbow-debug.apk`), not run on a device | last verified on account 6 |
 
 ## 12. Exact next tasks
-1. Verify (§2, §9, §10), then read `backups/AGENTS_STATUS.md` and `qa/pilot05/wave7/*/NOTES.md`.
-2. If the washer-environment-modeler did not report DONE: relaunch it with its NOTES + Marble cues (§7).
+1. Run §2 (`resume-newest-work.sh`), check §9/§10, then read `backups/AGENTS_STATUS.md` and
+   `qa/pilot05/wave7/*/NOTES.md`. Give the user a short recovery report.
+2. If the washer-environment-modeler did not report DONE (its NOTES log was empty at 01:30): relaunch it from
+   `it06` + `regress/` with its NOTES + Marble cues (§3, §7).
 3. Launch path-camera-transition-engineer for the far river/VP strip (§6 item 5).
 4. Water + foam polish passes (§6 items 6–7), then reference-match-director + playwright-visual-qa report with
    approved vs before (`qa/pilot05/wave7/baseline/05.png`) vs after at 864×1536.

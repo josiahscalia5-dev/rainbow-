@@ -1,6 +1,6 @@
 # RAINBOW — permanent rules for Claude Code
 
-**New Claude account or new session? Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` FIRST** (newest branch, verified commit, specialist status, Marble results, tool setup, next tasks). This is an existing game: never restart it.
+**New Claude account or new session? Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` FIRST** (newest branch, verified commit, specialist status, Marble results, tool setup, next tasks). This is an existing game: never restart it. Before any work run `bash scripts/resume-newest-work.sh` (merges every newer `ccr-*`/`claude/*` branch, restores Git LFS, verifies refs/agents/tsc/continuity; never resets or force-pushes) — the GitHub default branch is an OLD version, and more than one session may have saved in parallel. Ready-to-paste prompt for a new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`.
 
 This repo MUST be a fresh isolated game. The authoritative brief is `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`. Read it before coding, and preserve `references/*.png` and `character_references/official_cartoon_girl_original.jpg` unchanged. Do not import anything from prior games.
 
