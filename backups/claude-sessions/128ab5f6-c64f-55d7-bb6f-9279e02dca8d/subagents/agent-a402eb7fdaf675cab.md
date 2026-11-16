@@ -480,3 +480,83 @@ Let me look at the reference images directly.
 > 167-  #include <fog_fragment>
 > 168-`;
 
+### 🤖 Claude — 2026-11-16T15:47:48.821Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.array(Image.open('references/water/05_water_isolated_original.png')).astype(float)\nal=a[...,3]\nprint('alpha unique count',len(np.unique(al)), 'min/max',al.min(),al.max())\nys,xs=np.nonzero(al>128)\nprint('alpha>128 bbox x',xs.min(),xs.max(),'y',ys.min(),ys.max(), 'frac', (al>128).mean())\nprint('semi-transparent px (8..247):', ((al>8)&(al<247)).sum())\nfor y in [500,520,560,600,700,800,900,1000,1100,1300,1600,1671]:\n    row=np.nonzero(al[y]>128)[0]\n    print(y, (row.min(),row.max()) if len(row) else None)\n\"\n" …[+53 chars]`
+
+### 🧑 User — 2026-11-16T15:47:49.202Z
+
+> ↩︎ result: alpha unique count 256 min/max 0.0 255.0
+> alpha>128 bbox x 0 940 y 507 1671 frac 0.6061904774011155
+> semi-transparent px (8..247): 6178
+> 500 None
+> 520 (np.int64(482), np.int64(529))
+> 560 (np.int64(492), np.int64(649))
+> 600 (np.int64(310), np.int64(617))
+> 700 (np.int64(153), np.int64(901))
+> 800 (np.int64(78), np.int64(940))
+> 900 (np.int64(0), np.int64(822))
+> 1000 (np.int64(0), np.int64(940))
+> 1100 (np.int64(0), np.int64(940))
+> 1300 (np.int64(0), np.int64(940))
+> 1600 (np.int64(0), np.int64(940))
+> 1671 (np.int64(0), np.int64(940))
+
+### 🤖 Claude — 2026-11-16T15:47:52.090Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/cap_default.log; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.array(Image.open('qa/pilot05/proj/caps/default/05.png').convert('RGB')).astype(int)\nb=np.array(Image.open('qa/pilot05/current_default_05.png').convert('RGB')).astype(int)\nprint('default vs current_default max diff', np.abs(a-b).max(), 'npx diff', (np.abs(a-b).max(-1)>0).sum())\n\"", "description": "Check capture log and compare default with stored picture"}`
+
+### 🧑 User — 2026-11-16T15:47:52.557Z
+
+> ↩︎ result: 05 → qa/pilot05/proj/caps/default/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> real	0m21.205s
+> user	0m1.973s
+> sys	0m0.424s
+> default vs current_default max diff 0 npx diff 0
+
+### 🤖 Claude — 2026-11-16T15:47:55.004Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow\\|frozen\\|goto\\b\\|goto(\" src/game/Game.ts | head -40", "description": "Find QA API and frozen time in Game.ts"}`
+
+### 🧑 User — 2026-11-16T15:47:55.046Z
+
+> ↩︎ result: 9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> 119:    frozen: null as number | null, // QA: freeze shader time
+> 504:    if (st.frozen === null) st.clock += dt;
+> 511:    const time = st.frozen ?? st.clock;
+> 573:    st.frozen = time;
+> 593:        // settle camera springs without moving Benny: run with speed frozen
+> 612:    goto: gotoCheckpoint,
+> 614:    unfreeze() { st.frozen = null; input.override = null; },
+> 689:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-16T15:47:56.261Z
+
+> 🔧 **Bash** `{"command": "sed -n 540,691p src/game/Game.ts", "description": "Read gotoCheckpoint and QA API"}`
+
+### 🧑 User — 2026-11-16T15:47:56.300Z
+
+> ↩︎ result: const dt = Math.min(0.05, (now - last) / 1000);
+>     last = now;
+>     fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;
+>     if (running) stepSim(dt);
+>     // QA mode renders on demand only (software WebGL is slow; frames are deterministic)
+>     if (!qaMode || running || dirty) { render(); dirty = false; }
+>     requestAnimationFrame(frame);
+>   };
+>   requestAnimationFrame(frame);
+> 
+>   // ---------------------------------------------------------------- QA API
+>   const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+>     '01': { mode: 'intro', t: T.cp01 },
+>     '02': { mode: 'intro', t: T.cp02 },
+>     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+>     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+>     '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+>     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+>     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+>     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+>     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+>     '10': { mode: 'ride', s: course.stage( …[+7063 chars]
+
