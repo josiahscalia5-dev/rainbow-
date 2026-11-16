@@ -40,3 +40,8 @@ Tools: `qa/pilot05/wave6/foam/tools/{foamcol,rowprof}.py` (measurements), ref fo
   (left x 0-90 y 940-1110, right y 1130-1300; ref mounds are low, ~100 px), too white (Lnear WHITE 47.5 %). NOTE: the
   environment's concurrent ring change (white rings) now passes the foam colour mask, so foamcol Lfar/Rfar are
   contaminated from it03 on; judge far foam on the crops.
+* it04 (86 calls, 632,561 tris): near mound lift 0.7 -> 0.3, near r x1.25 -> x1.15, vBig +0.1 -> +0.05, core
+  clearance behind Benny x0.25. Seen: lower-left clump now reaches x 199 (ref 57-214); near clumps still too high
+  and tall vs the ref (gridded crop: ref left near x 0-130 y 1020-1110, lower left x 60-230 y 1220-1300, lower
+  right x 650-800 y 1260-1330; live it04 left near y 960-1110, lower clumps y 1140/1170-1340). foamcol Lnear WHITE
+  32.8 % SHADE 33.9 %, Rnear 31.2 / 34.9 (ref 29.9/47.7, 33.5/48.1). mad 55.3 (it02 55.5).

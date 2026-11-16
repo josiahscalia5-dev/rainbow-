@@ -413,7 +413,7 @@ const BANK_DS1 = 15;
 /** puffs stop here (further ahead the berm and its own puffs take over) */
 const BANK_PUFF_DS1 = 12.5;
 /** inner edge of a clump at its widest: px in from the frame edge (of an 864-px wide frame), L / R */
-const BANK_PX: [number, number] = [150, 200];
+const BANK_PX: [number, number] = [170, 200];
 /** lateral size of a clump (px): a clump whose inner edge lies further in than this floats off the frame
  * edge with water beyond it (ref 05 lower clumps x≈50–200 and 610–790) */
 const CLUMP_PX = 135;
@@ -429,7 +429,7 @@ const FLANK_SHEET = false;
  * a white wall: the outer 40 px were foam on 74 % / 100 % of the rows y 700–1400). The seeds put the
  * clumps of the QA frame (s≈132.4) where the ref has them; along 05 clumps cover ≈40 % of the length.
  */
-const BANK_ENV: [number, number, number][] = [[216.671, 0.975, 0.516], [607.242, 0.459, 0.357], [256.507, 1.01, 0.543]];
+const BANK_ENV: [number, number, number][] = [[58.457, 0.835, 0.581], [607.242, 0.459, 0.357], [267.601, 1.094, 0.563]];
 /**
  * wave 7 (ref 05 rows, qa/pilot05/wave7/foam): the bank row's inner edge (px in from the frame edge) and lateral size
  * (px) by row ds. The right bank ahead of Benny is a NARROW rim hugging the river edge (ref y 700-940: inner edge
@@ -834,8 +834,8 @@ export function createFoam(
         } else {
           const kz = sm(1.4, 2.6, ds);
           env = bankEnv(s, 2) + (bankEnv(s, 1) - bankEnv(s, 2)) * kz;
-          pxIn = 226 + (rimR(ds) * (0.85 + 0.3 * lump) - 226) * kz;
-          pxClump = 145 + (RIM_R_PX - 145) * kz;
+          pxIn = 214 + (rimR(ds) * (0.85 + 0.3 * lump) - 214) * kz;
+          pxClump = 150 + (RIM_R_PX - 150) * kz;
         }
         rowEnv[sd][i] = env;
         const frac = ((2 * pxIn) / 864) * env;
@@ -924,8 +924,8 @@ export function createFoam(
           const fr0 = Math.min(1, f0 + df * hh(20 + p));
           const f = 0.5 + (fr0 - 0.5) * (1 - 0.25 * nearK);
           const bump = BUMP.includes(p) && hh(50 + p) < 0.22;
-          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1) * (1 + 0.15 * nearK);
-          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1) + 0.3 * nearK * Math.sin(Math.PI * f);
+          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1) * (1 + 0.05 * nearK);
+          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1) + 0.12 * nearK * Math.sin(Math.PI * f);
           if (r < 0.004) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
           const lat = lin + (lout - lin) * f;
           const h = hin + (hout - hin) * f + bankProf(f, sC, side) + r * lift;

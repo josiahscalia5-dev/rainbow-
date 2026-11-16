@@ -126,10 +126,10 @@ float lensFlare(vec2 g, float density, float Lpx, float Tpx, float time) {
   if (abs(x) > 1.0) return 0.0;
   float y = p.y - 0.35 * T * (1.0 - x * x);       // slight arch
   float th = T * (1.0 - x * x);
-  float lens = 1.0 - smoothstep(th * 0.35, th + 0.8, abs(y));
-  float glow = exp(-abs(y) / (T * 1.6 + 1.0)) * (1.0 - abs(x));
+  float lens = 1.0 - smoothstep(th * 0.6, th + 1.0, abs(y));
+  float glow = exp(-abs(y) / (T * 2.2 + 1.0)) * (1.0 - abs(x));
   float tw = 0.75 + 0.25 * sin(time * 3.0 + hs * 40.0);
-  return (lens + 0.45 * glow) * tw;
+  return (lens + 0.7 * glow) * tw;
 }
 `;
 

@@ -229,13 +229,15 @@ export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b:
   const w = (b.width + b.groove + b.lipWidth) / 2;
   const uniforms = {
     uBandG: { value: new THREE.Vector4(w - b.width / 2, b.width / 2, -w + b.lipWidth / 2, b.lipWidth / 2) },
-    uBandS: { value: new THREE.Vector4(...(b.spots ?? [28, 0.15, 1.5]), 0) },
+    // ref ring #1: spot pitch ≈85 px at r 273 (≈20/turn), white core ≈12 px inside a yellow halo
+    uBandS: { value: new THREE.Vector4(...(b.spots ?? [20, 0.055, 1.6]), 0) },
     uBandF: { value: new THREE.Vector2(...(b.fade ?? [44, 110])) },
     uBcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
     uBcRose: { value: lin3(0.5899, 0.2114, 0.2222) }, // (215,95,100)
     uBcOrange: { value: lin3(0.7352, 0.2871, 0.1269) }, // (240,120,40)
-    uBcCrown: { value: lin3(0.8057, 0.4036, 0.2027) }, // (245,150,75) orange-gold body
-    uBcPeak: { value: lin3(0.9937, 0.8256, 0.4861) }, // (255,225,150) highlight line
+    uBcCrown: { value: lin3(0.6246, 0.22, 0.199) }, // (222,98,88) rose-gold body between the spots (ref (215–230,90–100,80–95))
+    uBcPeak: { value: lin3(0.9077, 0.602, 0.3465) }, // (252,190,120) highlight line
+    uBcHalo: { value: lin3(0.9439, 0.6846, 0.2725) }, // (255,205,90) yellow halo around each spot
     uBcGroove: { value: lin3(0.4938, 0.1484, 0.1192) }, // (200,70,50)
     uBcSpot: { value: lin3(1.6, 1.5, 1.3) }, // warm white, blooms a little
   };
@@ -256,7 +258,7 @@ vBandAx = (viewMatrix * modelMatrix * vec4(0.0, 0.0, 1.0, 0.0)).xyz;
     shader.fragmentShader = shader.fragmentShader
       .replace('void main() {', `varying vec3 vBandP; varying vec3 vBandAx;
 uniform vec4 uBandG; uniform vec4 uBandS; uniform vec2 uBandF;
-uniform vec3 uBcDark; uniform vec3 uBcRose; uniform vec3 uBcOrange; uniform vec3 uBcCrown; uniform vec3 uBcPeak; uniform vec3 uBcGroove; uniform vec3 uBcSpot;
+uniform vec3 uBcDark; uniform vec3 uBcRose; uniform vec3 uBcOrange; uniform vec3 uBcCrown; uniform vec3 uBcPeak; uniform vec3 uBcGroove; uniform vec3 uBcSpot; uniform vec3 uBcHalo;
 // The rider sees every band at a grazing angle, i.e. mostly its camera-facing flank: the colour therefore
 // follows the view-space normal — facing (ndv) for body → orange line → rose → dark silhouette contour, the
 // normal's axial component (nzv: -1 camera-facing base … 0 crown) for the highlight line — and the axial
@@ -291,9 +293,11 @@ vec3 bandShade(float deep, vec3 N, vec3 V){
   float t = (phi - 1.5707963) * uBandS.x / 6.2831853;
   float ft = min(fwidth(t), fwidth(fract(t + 0.5)));
   float d = fract(t + 0.5) - 0.5;
-  float sw = uBandS.y + ft * 0.7;
+  float sw = uBandS.y + ft * 0.7, hw = uBandS.y * 3.0 + ft * 0.7;
   float sp = exp(-d * d / (sw * sw)) * mix(1.0, uBandS.y / sw, 0.6);
+  float halo = exp(-d * d / (hw * hw));
   float across = inMain * smoothstep(0.25, 0.5, ndv) * (1.0 - smoothstep(0.93, 0.99, abs(m))) + inLip * (1.0 - inMain) * 0.4 * smoothstep(0.2, 0.4, ndv);
+  col = mix(col, uBcHalo, halo * across * 0.8);
   col += uBcSpot * sp * across * uBandS.z * (1.0 - 0.4 * deep);
   return col;
 }

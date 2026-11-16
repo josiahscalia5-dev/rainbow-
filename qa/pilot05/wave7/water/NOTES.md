@@ -58,3 +58,17 @@ Near lumStd/p5/p95 27.6/130/220; glints near 73 / mid 294 (fewer counted blobs).
 (right band along the right bank in the distance, bends in at y 800–900). Zoom vs ref: ref near highlights are big
 lens-shaped white flares on smooth glossy blue; ours round "snow dots" + hair lines; ref pink bands carry
 bright white-pink streaks.
+
+### it04 — 0 console errors, 86 calls, 632,561 tris
+Changes: `glsl.ts` flowGlint core exp(−r²·0.06)·1.5 → exp(−r²·0.22)·1.4 (05-only function); new `lensFlare()` in
+FRAG_FX_GLSL; near: ridges pow 7 → 3, speed streaks ×0.5, small stars density 0.85 → 0.55, lens flares added; pink
+streak contrast (0.62 + 0.55·H5 → 0.42 + 0.8·H5). Measured: report mad 55.6 (mid 47.6, near 57.3); near lumStd/p5/p95
+26.9/131.7/218.3; glints near 63 / mid 322. Seen: snow dots gone (crisp 4-point crosses) ✓ cleaner; only 2 small
+lens flares (cell clamp limited them to ≈60 px); near body still too uniform/light (p5 132 vs ref 106).
+
+### it05 — 0 console errors, 86 calls, 632,561 tris
+Changes: lens cells wider (kNw·1.8, density 0.8, 90 px) + 2nd set (kNw·3.1, 0.5, 50 px); deeper near lanes
+(troughN 0.6→0.12, ×0.55); glints also on pink (pink-white, ×(1−0.2·pink)); silk white boost ×0.9 on pink.
+Measured: report mad 55.8 (mid 47.6, near 57.6); near lumStd/p5/p95 28.8/131.3/222.3; cyan y1300 #06A9FF;
+glints near 61 / mid 309. Seen: ≈8 lens flares now in the near field but thin dim slivers (ref: thick bright
+haloed flares); darker lanes visible.

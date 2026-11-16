@@ -583,7 +583,7 @@ void main() {
     float kNw = kN + 0.07 * sin(v5 * 2.3 + kN * 5.0) + 0.14 * (vnoise(vec2(kN * 2.0, v5 * 0.8 + 4.0)) - 0.5);
     float laneN = vnoise(vec2(kNw * 2.4, v5 * 0.3 + 2.0));
     float laneB = vnoise(vec2(kNw * 6.0 + laneN * 1.5, v5 * 0.55 + 9.0));
-    float troughN = smoothstep(0.52, 0.1, laneN) * (0.6 + 0.4 * laneB);
+    float troughN = smoothstep(0.6, 0.12, laneN) * (0.6 + 0.4 * laneB);
     // glossy ridges along the flow (≈90 px apart near the frame bottom), broken into 100–200 px segments
     float rp = kNw * 4.5 + 0.8 * laneB;
     float ridge = pow(1.0 - abs(2.0 * fract(rp) - 1.0), 3.0);
@@ -630,7 +630,7 @@ void main() {
     // silk streak light: light cyan-white on cyan, light pink on pink (the ribbons are combed silk);
     // the strongest dashes burn to near-white (ref 05 streak heads)
     c5 = mix(c5, mix(uC5Streak, uP5Streak, pinkM), clamp(silkL * mix(0.9, 1.05, pinkM), 0.0, 1.0));
-    c5 += vec3(0.9, 1.0, 1.1) * smoothstep(0.75, 1.1, silkA) * 0.6;
+    c5 += vec3(0.9, 1.0, 1.1) * smoothstep(0.75, 1.1, silkA) * mix(0.6, 0.9, pinkM);
 
     // glossy lighting from the same height field
     #ifdef LOW_Q
@@ -651,7 +651,7 @@ void main() {
     if (near5 > 0.0) {
       // (wave 7) deep azure lanes + saturated glossy cyan lane highlights (little red, so the body stays
       // ≈#02A2F7 instead of the pastel #18A1FF of the old white crest arcs)
-      c5 *= 1.0 - near5 * 0.42 * troughN * (1.0 - pinkM);
+      c5 *= 1.0 - near5 * 0.55 * troughN * (1.0 - pinkM);
       // glossy ridges: saturated cyan glow, burning to cyan-white on the ridge line
       c5 += mix(vec3(0.02, 0.6, 1.2), vec3(1.1, 1.7, 2.1), smoothstep(0.55, 0.95, crestN)) * crestN * 1.3 * near5 * (1.0 - pinkM);
       // long speed streaks: cyan-white glow, near-white core on the strongest dashes
@@ -679,14 +679,21 @@ void main() {
     float flC = flowGlint(vec2(kN * 7.0, v5 * 4.5 + 0.3 + 1.7 * sin(kN * 13.0 + 0.7)), 0.55, 7.0, 2.6, 0.6, uTime + 1.3);
     // (it04) big lens-shaped white flares lying across the glossy near water (ref 05: ≈8 flares of
     // 100–150 px × 10–14 px below Benny), cyan glow around a white core
-    float lz = lensFlare(vec2(kNw * 2.6, v5 * 1.2 + 1.1 * sin(kNw * 3.3 + 1.0)), 0.65, 70.0, 6.0, uTime);
-    c5 += mix(vec3(0.3, 1.3, 2.1), vec3(2.3, 2.5, 2.6), smoothstep(0.55, 1.0, lz)) * lz * near5 * (1.0 - pinkM) * 1.2;
+    // (it05: wider cells — the cell-border clamp cut the it04 lenses to ≈60 px — and a second, smaller set)
+    float lz = lensFlare(vec2(kNw * 1.8, v5 * 1.6 + 1.1 * sin(kNw * 3.3 + 1.0)), 0.8, 90.0, 7.0, uTime);
+    lz = max(lz, 0.85 * lensFlare(vec2(kNw * 3.1 + 0.41, v5 * 2.3 + 1.4 * sin(kNw * 4.7 + 2.2)), 0.5, 50.0, 4.5, uTime + 1.7));
+    c5 += mix(vec3(0.3, 1.3, 2.1), vec3(2.3, 2.5, 2.6), smoothstep(0.55, 1.0, lz)) * lz * near5 * (1.0 - pinkM) * 1.6;
+    // (it06) mid field: smaller lens sparkles on the core AND the pink ribbons (ref 05: the river at
+    // y 700–1000 glitters with short horizontal white flares), faded out before they shimmer
+    float lzM = lensFlare(vec2(wq * 1.2, v5 * 0.5 + 0.9 * sin(wq * 2.9 + 0.4)), 0.7, 30.0, 3.2, uTime + 0.6);
+    c5 += mix(vec3(0.6, 1.6, 2.3), vec3(2.3, 1.6, 2.2), pinkM) * lzM * (1.0 - near5) * (1.0 - smoothstep(0.15, 0.4, fws)) * 1.1;
     flC *= 0.5 + 0.8 * cN;                      // the small stars cluster on the glossy lanes (not a uniform snow)
     float flD = flowGlint(vec2(wq * 16.0, v5 * 0.32 + 7.0), 0.5, 6.0, 2.4, 0.3, uTime + 4.1);
     // (the big near flares sit mostly on the swell crests: light catching the heaving surface)
-    c5 += vec3(1.9, 2.1, 2.3) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))
+    // (it05: the pink ribbons sparkle too, pink-white — ref 05 mid bands are full of bright glints)
+    c5 += mix(vec3(1.9, 2.1, 2.3), vec3(2.3, 1.7, 2.2), pinkM) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))
         + flB * near5 * (0.5 + 1.6 * crestN + 0.6 * segN) + flC * near5 + flD * (1.0 - near5) * (1.0 - smoothstep(0.2, 0.5, fws)) * 0.9)
-        * (1.0 - 0.5 * pinkM);
+        * (1.0 - 0.2 * pinkM);
     #endif
     col = mix(col, c5, sw);
   }

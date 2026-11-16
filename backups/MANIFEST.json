@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4874,
-   "sha256": "de2cf75befc9574c39474efe5971070a890abf287ca86e4b350391a4248c1a88"
+   "sha256": "d0d6bd83f7552b4cfbb1d699a2867671779ed9474e86aad97ff0671ae9a7a279"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1183,
-   "sha256": "9e610e8a527528888df5baafdd5a30874762eb9998d8c021a6f0ad72e8c4a9b0"
+   "bytes": 1180,
+   "sha256": "ce8aea1d000f3694b65f10a0e6a6e1a39b3302a707191f02b210f9af50e93a65"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -2307,9 +2307,29 @@
    "sha256": "a6c0a2c6d3b33558f7abea5a648fcdbceec8afb47f556e1855c6b67b51833db6"
   },
   {
+   "path": "qa/pilot05/wave7/environment/it03/05_highlight_IT02.png",
+   "bytes": 1922021,
+   "sha256": "5f9b89965c64ef9538556311017b5c566ad6d1e981dd6c62addc3050a9ada490"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it03/05_highlight_NOW.png",
+   "bytes": 1915507,
+   "sha256": "422771800ad1476dce67e0cc0f45a7b7314d9ce702e49c2268718d572fa4b025"
+  },
+  {
    "path": "qa/pilot05/wave7/environment/it03/05_highlight_PREV.png",
    "bytes": 2003676,
    "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it03/05_overlay_IT02.png",
+   "bytes": 2300281,
+   "sha256": "484c23ffbaae82d2ab8650aa3559d51d3c1956c675dd6f8dbf1aa7ed0a1c9b57"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it03/05_overlay_NOW.png",
+   "bytes": 2291525,
+   "sha256": "1ecdd1e62e601856e2cc1922031fc02d24e16d209b1959f26470489ba4fb0c90"
   },
   {
    "path": "qa/pilot05/wave7/environment/it03/05_overlay_PREV.png",
@@ -2317,9 +2337,29 @@
    "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
   },
   {
+   "path": "qa/pilot05/wave7/environment/it03/05_side_by_side.png",
+   "bytes": 7597230,
+   "sha256": "a8171a1f0888896724c5b5a123062e2c899374b7de3d99e7be2f7653b41b7330"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it03/metrics.json",
+   "bytes": 688,
+   "sha256": "bd025de619ebd8893cce7e392a162fe771c263464cf894c5cc88c8c5de64cd1e"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it03/metrics.md",
+   "bytes": 495,
+   "sha256": "3e79bf4b01a58c6516557fd25283128e1c1424081351506b8e0814d31ec3cb71"
+  },
+  {
    "path": "qa/pilot05/wave7/foam/NOTES.md",
-   "bytes": 3993,
-   "sha256": "8bf4302a8bc20160c0dd54df39a820445374af4fac8d9a98a5b0f452fc8bc8e8"
+   "bytes": 4533,
+   "sha256": "e87d7f3f493e652dbff2155c83ab7d43b22bb61190e7ffd1f9378964580b4072"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/iso_noberm/05.png",
+   "bytes": 1849554,
+   "sha256": "7e4f601df3b2711adb765ecfd8624b7a5191c9a6f4ef4ceb24f840e6b59447fa"
   },
   {
    "path": "qa/pilot05/wave7/foam/iso_norafts/05.png",
@@ -2487,9 +2527,49 @@
    "sha256": "edd943ad3bfec420e5e343988d983b9e5c0a591156ded66afe0fddacf6495933"
   },
   {
+   "path": "qa/pilot05/wave7/foam/it05/05.png",
+   "bytes": 1841371,
+   "sha256": "f854d8de03477936e39112e289ca9a4ac30b1bb868cec8dd3c58aea83467cb61"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it05/05_highlight_NOW.png",
+   "bytes": 1928170,
+   "sha256": "944605f02627339b329c3051239dd59d54b5122e9789357963dd1e3761e7033c"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it05/05_highlight_PREV.png",
+   "bytes": 2003676,
+   "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it05/05_overlay_NOW.png",
+   "bytes": 2294299,
+   "sha256": "26bbb70332c3d9c31d177ed33d98fbb0c781179e8f9ad9193ba34c2c82ad4d80"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it05/05_overlay_PREV.png",
+   "bytes": 2320701,
+   "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it05/05_side_by_side.png",
+   "bytes": 5999920,
+   "sha256": "044590932ff664cfd634bbd8df9c5d20fdac2c86ad35e99b60f9c2ad64ba567c"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it05/metrics.json",
+   "bytes": 451,
+   "sha256": "17f3993d511769a08feb44cd7bc837763800a8e3f9f8aa44c84a57961edfdd09"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it05/metrics.md",
+   "bytes": 437,
+   "sha256": "f16058e43dd86e39dc454696d00da1415bf949560d24596807be2940aa3abc90"
+  },
+  {
    "path": "qa/pilot05/wave7/water/NOTES.md",
-   "bytes": 5273,
-   "sha256": "688d9b11e7e42132ec9759d621d0aa950c5e2499561d1a5b1c771dfb49787567"
+   "bytes": 6450,
+   "sha256": "fca388868df129ffcb4814b9a2cb506a5346d39f1753e25afb22a310fb6b5277"
   },
   {
    "path": "qa/pilot05/wave7/water/it01/05.png",
@@ -2650,6 +2730,86 @@
    "path": "qa/pilot05/wave7/water/it04/metrics.md",
    "bytes": 436,
    "sha256": "acab7d202704d229cb5cb861beabd3fb6005ae2ff619e67525c6188f94f4d8fc"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it05/05.png",
+   "bytes": 1836479,
+   "sha256": "3c324f7eadaa5cd778def2641b87d1ac629d397909147b21459e6ea5753933b0"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it05/05_highlight_NOW.png",
+   "bytes": 1924646,
+   "sha256": "45a97ac96e20f59489725b31d6bdd643e52fbf78cdf5fc3b8f0260a230f01269"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it05/05_highlight_PREV.png",
+   "bytes": 2003676,
+   "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it05/05_overlay_NOW.png",
+   "bytes": 2293134,
+   "sha256": "0434b64e3f00f0c78b24b2ae0b713b8f98a4105d9fd213bad665cd3b898f4de8"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it05/05_overlay_PREV.png",
+   "bytes": 2320701,
+   "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it05/05_side_by_side.png",
+   "bytes": 5993859,
+   "sha256": "8349fb1ca9dee160c27ad7eddfcfbfb0aed85561e20533d212e5fc8aa09d1490"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it05/metrics.json",
+   "bytes": 452,
+   "sha256": "4ddd9db0f68effa282e147158b2f81875872f9f2e7169e16f1f791be655b91b2"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it05/metrics.md",
+   "bytes": 437,
+   "sha256": "45675b65903bc6d526b41d246f74defac11e82184c0955ae79e1a2e7f10f577e"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it06/05.png",
+   "bytes": 1844684,
+   "sha256": "0310a4eb519296d7ea0d84018d909162e850fa063d8710bf5dffafcce98edb1e"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it06/05_highlight_NOW.png",
+   "bytes": 1934154,
+   "sha256": "7d27a1cfd7fe1a14dc24b9235ddd2a8fb098ee678a02ddd66b58af5be1ad086d"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it06/05_highlight_PREV.png",
+   "bytes": 2003676,
+   "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it06/05_overlay_NOW.png",
+   "bytes": 2293245,
+   "sha256": "f9ecb8704971b8d3cd8aa2b6af6dd370e0e8d0161681273ae112d97a050416ca"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it06/05_overlay_PREV.png",
+   "bytes": 2320701,
+   "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it06/05_side_by_side.png",
+   "bytes": 5993488,
+   "sha256": "3d67a610d6fdebd566a9c52ae02d32a90df18ae0b6c137e050be07ef7eb567db"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it06/metrics.json",
+   "bytes": 452,
+   "sha256": "0182f9e77ebef5e5cd9f2f449e3823fccb07dd50785b2ee22e8d8077f560380e"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it06/metrics.md",
+   "bytes": 437,
+   "sha256": "f7dae8439beea9b659730a950f7e0b3d10d6e5640f7726bfa0c1c706093b63da"
   },
   {
    "path": "qa/report_metrics.json",
@@ -3333,13 +3493,13 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 47838,
-   "sha256": "d0963b98835f9a8f68e261059bc729192abbf502437df5af8d988329bc2bdcb7"
+   "bytes": 47839,
+   "sha256": "7182e8a23782f615bfd868a1b2df31c2e797386b5d5e3e974e44f7a90a553bdf"
   },
   {
    "path": "src/vfx/glsl.ts",
-   "bytes": 7846,
-   "sha256": "79b6a0badb5ef26f3d54663c65c9a592d93a172113a40f8525493984b4589f36"
+   "bytes": 7844,
+   "sha256": "3b64868f57924c414c6ec27ec439cd2988e8769f2c1652ff4dfd4b3d22a15438"
   },
   {
    "path": "src/vfx/index.ts",
@@ -3363,8 +3523,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 48146,
-   "sha256": "d98f9cc11560813857ea1dcaf1f3a276b0f7af25f0c07bbe2ed38d4d347196b0"
+   "bytes": 48978,
+   "sha256": "703d425919e360f4276034c9b1326a5f6090052c3984e71b219a15edf2190ea7"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -3388,8 +3548,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 42058,
-   "sha256": "013604b8218228b93eb02840ff40e20fd00f0392c666ee361ea35a14988002bc"
+   "bytes": 42450,
+   "sha256": "336cc8a1c912b9a5c0c5bb9a4b552831c02d8894cccad090217aa9b7d75a1a0e"
   },
   {
    "path": "src/world/towel.ts",
