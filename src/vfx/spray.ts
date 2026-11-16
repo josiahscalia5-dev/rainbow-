@@ -13,12 +13,14 @@ varying float vAlpha;
 #include <fog_pars_vertex>
 void main() {
   vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-  gl_PointSize = clamp(aSize * uScale / -mvPosition.z, 1.0, 48.0);
+  gl_PointSize = clamp(aSize * uScale / -mvPosition.z, 1.0, 28.0);
   vAlpha = aAlpha;
   gl_Position = projectionMatrix * mvPosition;
   #include <fog_vertex>
 }
 `;
+// water bead (ref 05 droplets): translucent cyan body, brighter rim, a white glint up-left. Never a
+// solid white disc: the old opaque discs read as white dots stuck round Benny's base.
 const FRAG = /* glsl */ `
 varying float vAlpha;
 #include <fog_pars_fragment>
@@ -26,10 +28,11 @@ void main() {
   vec2 c = gl_PointCoord - 0.5;
   float d = length(c) * 2.0;
   if (d > 1.0) discard;
-  float body = 1.0 - smoothstep(0.6, 1.0, d);
-  float hl = smoothstep(0.35, 0.0, length(c - vec2(-0.15, -0.15)));
-  vec3 col = mix(vec3(0.75, 0.95, 1.0), vec3(1.0), 0.5 + 0.5 * hl) * 1.25;
-  gl_FragColor = vec4(col, body * vAlpha * 0.9);
+  float body = 1.0 - smoothstep(0.7, 1.0, d);
+  float rim = smoothstep(0.45, 0.85, d) * body;
+  float hl = smoothstep(0.32, 0.0, length(c - vec2(-0.14, -0.14)));
+  vec3 col = mix(vec3(0.5, 0.88, 1.0), vec3(1.15, 1.18, 1.2), clamp(rim * 0.6 + hl, 0.0, 1.0));
+  gl_FragColor = vec4(col, (body * 0.38 + rim * 0.3 + hl * 0.5) * vAlpha);
   ${FRAG_TAIL}
 }
 `;

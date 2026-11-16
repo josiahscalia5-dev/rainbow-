@@ -6,8 +6,10 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
-import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture } from './materials';
-import { buildTubeGeometry, buildRings, buildNozzles, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
+import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
+import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, OVAL05 } from './tube';
+import { STAGE_CAM } from '../game/cameraRig';
+import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05 } from './far05'; // path-camera (05 far tunnel block)
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
@@ -192,23 +194,301 @@ export function buildEnvironment(course: Course): Environment {
   // =====================================================================================
   const s08 = course.stage('08').s0;
   const pinkFlow = pinkFlowMaterial();
-  const perfTubeMat = perforatedMetal({ color: '#b02ccc', emissive: '#7a14a8', emissiveIntensity: 0.32, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.5, streaks: 0.55, metalness: 0.8, roughness: 0.22 });
+  // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+  // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+  // hot magenta near → violet mid-tunnel → warm yellow-white core at the vanishing point
+  const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+  const wallGlow: FarGlow = { ...tubeGlow, mid: { color: '#8a3cf0', near: 10, far: 42, amount: 0.55 } };
+  const tubeEnv = washerTubeEnv('wall');
+  const goldEnv = washerTubeEnv('gold');
+  // 06/07 ring bays (unchanged): gold bands every 9 units, 4 circumferential slot rows per bay
+  const ringSpacing = 9.0;
+  const slotRowsPerBay = 4;
+  // analytic strip lights along the tunnel (28 around: ref 05 shows ≈12–16 marquee spots per half-ring)
+  const strips: TubeStrips = { count: 28, width: 0.022, intensity: 2.6, color: '#ffd9f6', alt: 0.65 };
+  // glossy (low roughness → the strips stay crisp lengthwise streaks instead of a flat clipped sheen)
+  const wallBase = {
+    // pale pink F0: the saturation comes from the magenta/violet tube environment, so white strip lights
+    // reflect as white-pink streaks (a saturated F0 turned them into clipped flat magenta)
+    color: '#ffa8e8', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',
+    slot: 1, repeatU: 48, stagger: false,
+    streaks: 0, metalness: 0.92, roughness: 0.1,
+    relief: { corrugation: 0.05, bevel: 0.05, bevelWidth: 0.12 }, rimColor: '#ff5fe0', rimStrength: 0.9,
+    envMap: tubeEnv, envMapIntensity: 1.0, farGlow: wallGlow,
+  } as const;
+  // STAGE ANCHORS (wave 6): the 06/07 ring bays, hood lids and slot rows are laid out from the 06 STAGE
+  // START, not from the 05 start, so reshaping the 05 river (which changes its arc length) never slides the
+  // 06/07 rings, lids or slot rows along the tube. The phases reproduce the pre-wave-6 layout exactly
+  // (measured on that course: first 06/07 ring 5.5644 u after the 06 start; slot-row phase 0.96618 there).
+  const s06 = course.stage('06').s0;
+  const RING06_PHASE = 5.5643876;
+  const ROW06_PHASE = 0.9661842;
+  const rowRepeat0607 = slotRowsPerBay / ringSpacing;
+  const rowOffset0607 = (((ROW06_PHASE - s06 * rowRepeat0607) % 1) + 1) % 1;
+  const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: rowRepeat0607, offsetV: rowOffset0607, slotHalf: [0.36, 0.12] });
+  withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
   // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
   const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+
+  // ---- 05 current (ref 05): long ring bays + forced-perspective far tunnel, anchored to the 05 camera ----
+  // Ref 05 ring radii about the VP: 288,192,122,85,66,54,45 px → from the locked checkpoint eye the rings sit
+  // at depth ≈36/55 (near bays ≈17–19 units) and then recede in ever longer bays to a small warm light.
+  // The straight only runs ≈56 units ahead of that eye before it flares into the 06 hall, so the real bays
+  // end with a ring at depth ≈54 (sF05) and a ForcedTunnel (tube.ts) continues the same tunnel — walls,
+  // slot rows, rings, lid pairs, water — to a virtual depth ≈430, compressed along the eye rays into the
+  // last ≈6 real units. If path-camera moves the checkpoint, the bays and the far section follow.
+  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+  const bay05 = 14;
+  const sGlow05 = course.stage('06').s0 - 5.9; // the straight flares into the 06 hall after this
+  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+  // ring slots every bay, ending at sF05; wave 8 (path-camera request, REQUESTS.md): the real ring AT sF05 is
+  // dropped (depth 53 → r≈189 px, ref ring #2 is r≈170) — the far block's ring at virtual depth ≈59 replaces it.
+  // The slot list still places the lid pair camera-side of that slot and the slot-row phase.
+  const ringSlots05: number[] = [];
+  for (let s = sF05; s >= s05 + 2; s -= bay05) ringSlots05.unshift(s);
+  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5);
+  // wave 9: OVAL 05 tunnel. The approved image's rings are ovals ≈1.7 wider than tall (ring #1 half-axes ≈490×270 px,
+  // #2 284×170, #3 184×102): a lateral stretch K05 of the cross-section puts the depth-40 ring's top AND sides on ref
+  // ring #1 and the depth-54 slot on ring #2 (scratch projection with the locked 05 camera). The river keeps its width
+  // (its edge at depth 40 projects where the ref river edge is): between the river and the wall foot a level bank
+  // floor just under the water line (TubeGeoOptions.floor) — the ref fills it with foam banks. Blends in after the
+  // 04 junction (behind the checkpoint eye); past the far-tunnel seam the half-width is held until the 06 flare's
+  // radius catches up (no pinch), so 06 and its stage anchors are untouched.
+  const K05 = OVAL05.K;
+  const oval05 = (s: number) => {
+    const rise = THREE.MathUtils.smoothstep(s, s05 + 1, s05 + 9);
+    if (s <= sF05) return 1 + (K05 - 1) * rise;
+    if (s >= s06) return 1;
+    return THREE.MathUtils.clamp((K05 * perfPath.radius(sF05)) / perfPath.radius(s), 1, K05);
+  };
+  const floor05 = (s: number) => ({ y: -(perfPath.radius(s) - perfPath.depth(s)) - OVAL05.floorBelowWater, w: THREE.MathUtils.clamp((oval05(s) - 1) / (K05 - 1) * 1.5, 0, 1) });
+  // lateral offset of the 05 tunnel centre (OVAL05.shift), blended exactly like the oval
+  const shift05 = (s: number) => OVAL05.shift * (oval05(s) - 1) / (K05 - 1);
+  // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
+  // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
+  // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
+  const slotPitch05 = bay05 / 10;
+  // ref 05 walls: deep metallic magenta/violet (#CD32AA / #992FC2), black slots, white-pink lengthwise
+  // streaks; the warm light only at the very end (virtual depth ≳160 → halo ≲60 px about the VP)
+  const glow05: FarGlow = { color: '#ffd796', near: 160, far: 470, strength: 1.6, mid: { color: '#8a30d2', near: 4, far: 48, amount: 0.45 } };
+  // wave 7, tunnel surfaces only (walls, rings, lids; the far river keeps glow05): orange and earlier — the
+  // reference throat inside the 4th ring (r < 50 px ≈ virtual depth > 200) is one continuous warm orange well
+  // ((229,111,81) at r 32–48, (248,169,89) at r 16–24), no purple gaps between the rings
+  const glowT05: FarGlow = { ...glow05, color: '#ff9c5a', near: 95, far: 330, strength: 1.5 };
+  const wall05 = {
+    // lavender F0 × the magenta tube environment → violet-magenta metal (ref #992FC2 / #CD32AA)
+    // wave 7: no pressed-metal corrugation (its bent normals turned the strip reflections into the "marbled
+    // swirl"), only a faint bevel; shaded slot lips instead of the bright pink dotted outline; shorter, plumper
+    // capsules (ref median slot 25 px², elongation 4.3; live was 40 px², 8.8); bluer violet F0 (ref wall
+    // medians (171,44,177) / (188,51,205) / (154,46,166))
+    // wave 8: luminous magenta-pink instead of violet (ref left wall mean (192,76,167), violet share of
+    // violet+magenta 40–51 %; it06 (159,47,178), 91–93 %): warmer F0 between '#d49cf4' and '#f29ad6', softer
+    // and later violet mid tint, no slot bevel (its aliased highlight drew a jagged pink outline round every slot),
+    // and the Marble 05 panorama as the reflection source (marblePano05: pink walls, warm ring lights, VP glow)
+    // (it02: Marble env pre-blurred 6 px — its sharp ring arcs smeared into red-orange blotches on the near walls
+    // in it01 — and violet back with depth: bluer F0, mid tint '#8a30d2' 0.45 @8–50; it01 overshot to 14–22 %)
+    ...wallBase, color: '#dc9ef0', emissive: '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,
+    relief: { corrugation: 0, bevel: 0, bevelWidth: 0.08 },
+    rimColor: '#b02a9a', rimStrength: 0.0, farGlow: { ...glowT05, mid: { color: '#8a30d2', near: 8, far: 50, amount: 0.45 } },
+    envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
+    repeatU: 64, repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.16] as [number, number],
+    offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+  };
+  // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
+  const strips05: TubeStrips = { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
+  const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
-  for (let a = s05; a < s08; a += chunk) {
-    const b = Math.min(s08 + 0.0, a + chunk + 0.6);
-    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6 }), perfTubeMat));
-    // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
-    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6 }), pinkFlow.material));
+  const addWall = (a0: number, a1: number, mat: THREE.Material, shape: Pick<Parameters<typeof buildTubeGeometry>[3] & object, 'oval' | 'floor' | 'shift'> = {}) => {
+    for (let a = a0; a < a1 - 0.01; a += chunk) {
+      const b = Math.min(a1, a + chunk + 0.6);
+      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true, ...shape }), mat));
+      // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
+      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+    }
+  };
+  addWall(s05, sGlow05, perf05Mat, { oval: oval05, floor: floor05, shift: shift05 });
+  addWall(sGlow05, s08, perfTubeMat, { oval: oval05, floor: floor05, shift: shift05 }); // oval05 = 1 once the 06 flare is wider
+  // 06/07 rings and the 04→05 junction collar (unchanged look)
+  const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+  ringMat.envMap = goldEnv;
+  ringMat.envMapIntensity = 1.3;
+  // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
+  // copper only on the shadowed side — from a yellow F0, little flat emissive (it flattened the band to
+  // one orange) and the rounded double-lip band (bandGeometry) whose crown, groove and lip catch the
+  // strip lights as marquee spots
+  const goldEnv05 = washerTubeEnv('gold05');
+  const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
+  // wave 7: the band colour is the stylised cross-section of withBandShading (materials.ts); the PBR/env
+  // result underneath only feeds the depth buffer now
+  // wave 8: the real (near) ring is thicker — ref ring #1 top spans y 188–230 (lip 8 px · groove 3 · body 17 ·
+  // turned-away flank 7 · contour) where it06 drew 31 px; the far rings (path-camera block) keep band05, the
+  // reference's deeper rings are thin (ring #2 top ≈12 px)
+  const band05near = { height: 0.13, width: 0.8, lipHeight: 0.065, lipWidth: 0.32, groove: 0.1 };
+  // wave 9: `oval` = the band's ellipse aspect (ovalBandGeometry) → bulbs evenly spaced along it; the oval near ring
+  // gets denser bulbs (ref ring #1 top: bulbs at x ≈100/280/405/485/568/675/795, pitch ≈80–120 px; it02 ≈128 px)
+  const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05, oval = 1) => {
+    const shade = oval === 1 ? band : { ...band, oval, spots: [28, 0.06, 1.9] as [number, number, number] };
+    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), shade, key);
+    m.emissive.set('#e08a10');
+    m.envMap = goldEnv05;
+    m.envMapIntensity = 1.15;
+    return m;
+  };
+  // all real 05 rings sit where the oval is complete (s05+9 … sF05): one pre-ovalised band, uniform instance scale
+  const ringsFullOval = rings05.every((s) => Math.abs(oval05(s) - K05) < 1e-3);
+  const ringMat05 = gold05('ring05', false, band05near, ringsFullOval ? K05 : 1);
+  const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
+  // gold junction collar 04→05 (slightly heavier)
+  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
+  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, ringsFullOval ? { inset: 0.02, band: band05near, bandOval: K05, shift: shift05 } : { inset: 0.02, band: band05near, oval: oval05, shift: shift05 }));
+  const rings0607: number[] = [];
+  for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
+  zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
+  // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
+  // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
+  const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
+  lidMat.envMap = goldEnv;
+  lidMat.envMapIntensity = 1.25;
+  const lidClear = (s: number, centre: THREE.Vector3, size: number) => {
+    for (let ds = -6; ds <= 6; ds += 1.5) {
+      const ss = THREE.MathUtils.clamp(s + ds, 0, course.length);
+      if (course.sample(ss).pos.distanceTo(centre) < size * 1.2 + course.widthAt(ss) / 2 + 1.0) return true;
+    }
+    return false;
+  };
+  // 05 (ref §5.5): flat round copper-gold lids ('slab' half-disc pucks standing out of the wall, seen from
+  // below at an angle), one symmetric pair per bay at mid-bay, ≈12° above the axis on both walls
+  // wave 7: rose-copper pucks (withLidShading), thicker rim band, just camera-side of each ring (ref L1/L2/R1/R2
+  // end right where a ring band starts)
+  // wave 9 (oval tunnel): ref L1/R1 are long D-shelves seen from below — bright rim band along the top, the broad
+  // underside below it, rounded near end — filling most of the bay just BEYOND ring #1 (L1 spans x 65–215 between
+  // ring #1 and ring #2). Scratch projections with the locked camera: lower on the wall (18°), inner edge raised
+  // (tilt −20° on the ellipse normal), 1.6× longer along the tube, sunk 0.25 so no cut end shows → L1 ≈ x 124–244,
+  // y 338–433 (ref 65–215 / 318–420; the oval ring #1 sits ≈60 px right of ref ring #1 on the left)
+  const lid05 = { shape: 'slab' as const, angleDeg: 18, droopDeg: -38, size: 2.8, thickness: 0.45, stretch: 1.6, sink: 0.25 };
+  const lidMat05 = (key: string, virtual: boolean) => {
+    const m = withLidShading(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glowT05, key, virtual), key);
+    m.emissive.set('#c86a18');
+    m.envMap = goldEnv05;
+    m.envMapIntensity = 1.35;
+    return m;
+  };
+  // one pair per bay, starting just past each real ring (the far block continues past the seam); the bay that
+  // would show its pair OUTSIDE ring #1 at the checkpoint (depth ≈26–40, the ref frames nothing there) has none
+  const bandHalf05 = (band05near.width + band05near.groove + band05near.lipWidth) / 2;
+  const lids05 = rings05
+    .map((s) => s + bandHalf05 + 0.15 + lid05.size * lid05.stretch * 1.04)
+    .filter((s) => s > s05 + 4 && s < sF05 && !(s - sCam05 > 20 && s - sCam05 < 38));
+  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05, oval: oval05, shift: shift05 }));
+  // 06/07: legacy hoods, unchanged
+  const lids0607: number[] = [];
+  for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
+  zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
+
+  // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
+  {
+    // the checkpoint eye, exactly as RideCamera places it on the straight (cameraRig.ts, '05' block, lat 0)
+    const sC = course.marks['05_crest'];
+    const p5 = STAGE_CAM['05']!;
+    const af = perfPath.frame(sC);
+    const T = af.tan.clone();
+    const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+    const Rt = new THREE.Vector3().crossVectors(T, U).normalize();
+    const water = course.sample(sC).pos.clone();
+    const off = water.clone().sub(af.pos).dot(Rt);
+    const dz = p5.deadZone ?? 1;
+    const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
+    const eye = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - follow));
+    // wave 8: far rings at the reference radii 170 / 104 / 62 / 45 / 31 px about the VP (rays at 90/120/150°;
+    // live calibration r ≈ 10000/D) → virtual depth ≈ 59 / 97 / 161 / 222 / 322, then the warm throat. Ring n sits
+    // at tunnel coordinate u = bay05·(n + ½) (half a bay after the seam, then one bay each, so every far bay keeps
+    // its slot rows and lid pair). The D≈59 ring replaces the real ring at sF05 (r≈189, "ring #2 too big"): it only
+    // shows once the environment owner has removed that ring from rings05, so there is never a double ring.
+    const D0 = tubeCenterAt(perfPath, sF05).sub(eye).dot(T);
+    const realSeamRing = rings05.some((s) => Math.abs(s - sF05) < 0.5);
+    const ringDv = [59, 97, 161, 222, 322];
+    const knots: [number, number][] = [[0, 0]];
+    ringDv.forEach((d, i) => knots.push([bay05 * (i + 0.5), Math.max(d - D0, knots[i][1] + 1)]));
+    const zEnd = 430 - D0;
+    // wave 9: the same OVAL section as the near 05 tunnel at the seam (environment `oval05`/`floor05`: lateral
+    // stretch K, level bank floor just under the water), so walls, rings and lids continue without a step
+    const K = oval05(sF05);
+    // (a lifted floor, never the open ellipse below the water: the forced section maps virtual heights above the
+    // real ones, so the lifted floor hides the real tube floor / ribbon past the seam)
+    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T, { aspect: K, floorY: K > 1.001 ? floor05(sF05).y : undefined });
+    // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP
+    const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
+    const farLay = farRiverLayout(course, ft, level);
+    // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
+    const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
+    const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
+    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial05(glow05)); // wave 9: far05.ts
+    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay });
+    // rings (one per knot) and a lid pair just in front of each ring (as the real 05 lids), low-poly: small on screen
+    const ringItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
+    const lidItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
+    const fr0 = { pos: ft.c0, tan: ft.T, up: ft.U, right: ft.Rt };
+    const ringBasis = new THREE.Matrix4().makeBasis(ft.Rt, ft.U, ft.T);
+    const rRing = perfPath.radius(sF05) - 0.02;
+    const openAt = (u: number) => {
+      const sReal = sF05 + ft.zOf(ft.zOfU(u));
+      return { c: tubeCenterAt(perfPath, sReal), r: perfPath.radius(sReal) * 1.1 + 0.4, f: perfPath.frame(sReal) };
+    };
+    const lidSz = lid05.size * Math.min(1.4, perfPath.radius(sF05) / 7.6);
+    const lidUs: number[] = [];
+    for (let n = 0; n < ringDv.length; n++) {
+      if (n === 0 && realSeamRing) continue;
+      const u = knots[n + 1][0];
+      const op = openAt(u);
+      ringItems.push({ u, o: new THREE.Vector3(), basis: ringBasis, s: new THREE.Vector3(rRing * K, rRing, 1), openPos: op.c, openScale: op.r / rRing });
+      lidUs.push(ft.uOfZ(Math.max(0.5, knots[n + 1][1] - band05.width / 2 - lidSz * 1.05)));
+    }
+    for (const u of lidUs) {
+      for (const side of [1, -1]) {
+        const b = wallLidBasis(fr0, side, lid05.angleDeg, lid05.droopDeg);
+        const op = openAt(u);
+        const cosA = Math.cos(THREE.MathUtils.degToRad(lid05.angleDeg));
+        // on the oval wall: the near lids' offset (buildWallLids oval: + right·(K − 1)·r·cos(ang)·side)
+        const o = b.dir.clone().multiplyScalar(perfPath.radius(sF05) - lidSz * lid05.sink).addScaledVector(ft.Rt, (K - 1) * perfPath.radius(sF05) * cosA * side);
+        const dirOpen = op.f.right.clone().multiplyScalar(cosA * side).addScaledVector(op.f.up, Math.sin(THREE.MathUtils.degToRad(lid05.angleDeg)));
+        const openPos = op.c.clone().addScaledVector(dirOpen, op.r + lidSz * 1.5).addScaledVector(op.f.right, (K - 1) * op.r * cosA * side);
+        lidItems.push({ u, o, basis: new THREE.Matrix4().makeBasis(b.X, b.Y, b.Z), s: new THREE.Vector3(lidSz, lidSz, lidSz * lid05.stretch), openPos, openScale: 1 });
+      }
+    }
+    const farRings = new THREE.InstancedMesh(bandGeometry({ ...band05, segments: 48 }), gold05('ring05v', true), ringItems.length);
+    const farLids = new THREE.InstancedMesh(wallLidGeometry('slab', lid05.thickness, 16), lidMat05('lid05v', true), lidItems.length);
+    // warm light at the very end (ref 05 VP: core ≲40 px, halo ≲120 px)
+    const glowMat = tunnelEndGlowMaterial(new THREE.Vector4(0, 0.001, 400, 420));
+    const glow = new THREE.Mesh(new THREE.CircleGeometry(1, 48), glowMat);
+    glow.name = 'tube05_end_glow';
+    glow.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(fr0.right, fr0.up, fr0.tan.clone().negate()));
+    glow.position.copy(ft.point(zEnd, new THREE.Vector3()));
+    glow.scale.setScalar(perfPath.radius(sF05) * ft.kOf(zEnd) * 1.35);
+    glow.scale.x *= K; // wave 9: covers the oval end of the far section (else the 06 hall shows through)
+    // wave 9: the coin trail continues along the far core into the light (visual only, far05.ts farCoins05)
+    const farCoins = farCoins05(ft, farLay, level);
+    const parts = [farWall, farRiver, farRings, farLids, glow, farCoins.mesh];
+    for (const p of parts) { p.frustumCulled = false; p.name ||= 'tube05_far'; }
+    farWall.name = 'tube05_far_wall'; farRiver.name = 'tube05_far_river';
+    // open/close with the rider camera (closed at the 05 checkpoint, folded away from ≈18 units before sF)
+    let openNow = -1;
+    const camPos = new THREE.Vector3();
+    const sync = (cam: THREE.Camera) => {
+      const o = ft.openFor(camPos.setFromMatrixPosition(cam.matrixWorld));
+      if (Math.abs(o - openNow) < 1e-4) return;
+      openNow = o;
+      ft.placeInstances(farRings, ringItems, o);
+      ft.placeInstances(farLids, lidItems, o);
+      farCoins.place(o);
+    };
+    sync(new THREE.PerspectiveCamera().translateOnAxis(T, -1e4)); // initial: closed
+    farWall.onBeforeRender = (_r, _s, cam) => { sync(cam); farWall.morphTargetInfluences![0] = openNow; };
+    farRiver.onBeforeRender = (_r, _s, cam) => { sync(cam); farRiver.morphTargetInfluences![0] = openNow; };
+    farRings.onBeforeRender = (_r, _s, cam) => sync(cam);
+    farLids.onBeforeRender = (_r, _s, cam) => sync(cam);
+    glow.onBeforeRender = (_r, _s, cam) => { sync(cam); glowMat.uniforms.uOpacity.value = 1 - openNow; };
+    zones.tubes.add(...parts);
   }
-  // gold junction ring 04→05
-  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, goldMat, { tube: 0.08, inset: 0.2 }));
-  // thick double gold ribs
-  zones.tubes.add(buildRings(perfPath, s05 + 3, s08 - 1, 7, goldMat, { tube: 0.042, double: true }));
-  // wall lids / nozzles
-  const lidMat = gold({ color: '#f0a040', roughness: 0.25, emissive: 0.35 });
-  zones.tubes.add(buildNozzles(perfPath, s05 + 6, s08 - 6, 8.5, lidMat, goldMat, { angleDeg: 34, size: 1.9 }));
   animated.push(pinkFlow.update);
 
   // =====================================================================================
@@ -316,6 +596,43 @@ export function buildEnvironment(course: Course): Environment {
     animated.push(stream.update);
   }
 
+  // 05 near gold frame (wave 7, ref bottom corners + bottom lip), built LAST: three's UUIDs draw on Math.random,
+  // so creating it earlier shifted the random canvas textures of the 08 laundry room / pour streams.
+  // Real 3D bands held in front of the rider
+  // camera (nearFrameGeometry, reference-pixel units → camera space at depth 0.8, scaled by the camera FOV).
+  // Shown only while the camera rides the straight 05 current; it slides down out of the frame over ≈6 units
+  // when entering from 04 and before the 06 hall, and is collapsed (zero scale) everywhere else, so 01–04 and
+  // 06–11 never see it. It covers only the frame's bottom corners/edge (below Benny), never the course ahead.
+  {
+    const frame = new THREE.Mesh(nearFrameGeometry(), nearFrameMaterial());
+    frame.name = 'tube05_near_frame';
+    frame.frustumCulled = false;
+    frame.matrixAutoUpdate = false;
+    frame.matrixWorldAutoUpdate = false;
+    frame.renderOrder = 2;
+    const P05 = tubeCenterAt(perfPath, sCam05);
+    const T05 = perfPath.frame(sCam05).tan.clone();
+    const axialOf = (s: number) => tubeCenterAt(perfPath, s).sub(P05).dot(T05);
+    const aIn0 = axialOf(s05), aIn1 = axialOf(s05 + 6), aOut0 = axialOf(sGlow05 - 30), aOut1 = axialOf(sGlow05 - 23);
+    const rLat = perfPath.radius(sCam05) * 1.2;
+    const camP = new THREE.Vector3(), rel = new THREE.Vector3(), slide = new THREE.Matrix4(), place = new THREE.Matrix4();
+    const zero = new THREE.Matrix4().makeScale(0, 0, 0), scl = new THREE.Matrix4();
+    frame.onBeforeRender = (_r, _s, cam) => {
+      camP.setFromMatrixPosition(cam.matrixWorld);
+      rel.copy(camP).sub(P05);
+      const a = rel.dot(T05);
+      const lat = rel.addScaledVector(T05, -a).length();
+      const k = THREE.MathUtils.smoothstep(a, aIn0, aIn1) * (1 - THREE.MathUtils.smoothstep(a, aOut0, aOut1)) * (lat < rLat ? 1 : 0);
+      const pc = cam as THREE.PerspectiveCamera;
+      if (k <= 1e-3 || !pc.isPerspectiveCamera) { frame.matrixWorld.copy(zero); return; }
+      const d = 0.8;
+      const px = (d * Math.tan(THREE.MathUtils.degToRad(pc.fov) / 2)) / 768;
+      slide.makeTranslation(0, -(1 - k) * 420, 0);
+      place.makeTranslation(0, 0, -d).multiply(scl.makeScale(px, px, px)).multiply(slide);
+      frame.matrixWorld.multiplyMatrices(cam.matrixWorld, place);
+    };
+    zones.tubes.add(frame);
+  }
   return {
     group: root,
     update: (t, dt) => animated.forEach((f) => f(t, dt)),

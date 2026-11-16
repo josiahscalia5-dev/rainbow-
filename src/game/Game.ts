@@ -18,6 +18,7 @@ import { buildEnvironment } from '../world/environment';
 import { createCandyEnvironment, createRenderer } from '../render/env';
 import { createGradePass } from '../render/grade';
 import { createHud } from '../ui/hud';
+import { findCinematic, playCinematic } from '../ui/cinematicVideo';
 import { createCoins, COIN_VALUE } from '../gameplay/coins';
 import { createInput } from '../gameplay/input';
 import { RideCamera } from './cameraRig';
@@ -158,6 +159,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
 
   const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
   const tmpV = new THREE.Vector3();
+  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
   const doorAOpen = -1.9, doorCOpen = -1.95;
 
   // ---------------------------------------------------------------- intro (01–02)
@@ -359,7 +361,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
     benny.root.visible = true;
     benny.setExpression('happy');
     benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
-    water.wake(pose.pos, f.tan, f.right, speed, dt);
+    // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),
+    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
     // camera
     rideCam.update(dt, st.s, st.lat, camera);
     // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)
@@ -376,10 +380,16 @@ export async function startGame(canvas: HTMLCanvasElement) {
   };
 
   // ---------------------------------------------------------------- outro (11)
+  const cinematic = { ending: null as string | null };
   const startOutro = () => {
     st.mode = 'outro';
     st.t = 0;
     setStage('11');
+    if (cinematic.ending) {
+      // optional Flow ending video; the real-time 11 frame (girl holds towel, FINAL SPIN COMPLETE) follows
+      st.paused = true;
+      void playCinematic(cinematic.ending, { onEnding: () => { st.t = Math.max(st.t, O.badge - 0.4); st.paused = false; } });
+    }
   };
   const outroUpdate = (dt: number) => {
     const t = st.t;
@@ -441,6 +451,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
   input.onTap(() => {
     if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }
   });
+
+  // ---------------------------------------------------------------- optional Google Flow cinematics
+  // public/video/intro.mp4 shows 01 (towel loaded, door closed, girl walks away). While it plays, the live
+  // 3D intro is held on that same moment underneath, then revealed by a cross-fade and continued in real
+  // time (02 tumble -> 03 ride). Without a video the real-time 01 cinematic plays. See src/ui/cinematicVideo.ts.
+  const [introVideo, endingVideo] = await Promise.all([findCinematic('intro'), findCinematic('ending')]);
+  cinematic.ending = endingVideo;
+  const playIntroVideo = () => {
+    if (!introVideo) return;
+    st.t = T.cp01;
+    introUpdate(0);
+    st.paused = true;
+    void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
+  };
+  playIntroVideo();
   const togglePause = () => {
     if (st.mode !== 'ride') return;
     st.paused = !st.paused;
@@ -455,6 +480,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
     env.doorC.rotation.y = 0;
     benny.root.visible = true;
+    playIntroVideo();
   };
 
   const stepSim = (dt: number) => {
@@ -498,7 +524,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     '02': { mode: 'intro', t: T.cp02 },
     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
-    '05': { mode: 'ride', s: course.stage('05').s0 + 30 },
+    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
@@ -569,7 +595,33 @@ export async function startGame(canvas: HTMLCanvasElement) {
     },
     log() { return st.log; },
     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+    /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+    coinScreen() {
+      const mesh = coins.group.children[0] as THREE.InstancedMesh;
+      const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+      camera.updateMatrixWorld();
+      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+      const out: { i: number; x: number; y: number; d: number }[] = [];
+      coins.defs.forEach((_, i) => {
+        if (coins.collected[i]) return;
+        mesh.getMatrixAt(i, m); m.decompose(p, q, sc);
+        const c = p.clone().project(camera);
+        if (c.z > 1 || c.z < -1) return;
+        const e = p.clone().addScaledVector(right, 0.5 * sc.x).project(camera);
+        const x = ((c.x + 1) / 2) * W, y = ((1 - c.y) / 2) * H;
+        if (x < -50 || x > W + 50 || y < -50 || y > H + 50) return;
+        out.push({ i, x: Math.round(x), y: Math.round(y), d: Math.round((e.x - c.x) * W) });
+      });
+      return out;
+    },
     respawns() { return st.respawns; },
+    /** QA (camera lock): the live render camera — world matrix (column-major), vertical fov, aspect, near/far */
+    camera() {
+      camera.updateMatrixWorld();
+      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+      return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam.target.toArray() };
+    },
     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
     bennyScreen() {
       const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
@@ -582,6 +634,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+    },
+    /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+    drawList() {
+      const hits = new Map<string, number>();
+      const hooked: [THREE.Object3D, THREE.Object3D['onAfterRender']][] = [];
+      scene.traverse((o) => {
+        if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoints && !(o as THREE.Line).isLine && !(o as THREE.Sprite).isSprite) return;
+        const prev = o.onAfterRender;
+        const key = (o.parent?.name ? o.parent.name + '/' : '') + (o.name || o.type);
+        hooked.push([o, prev]);
+        o.onAfterRender = (...a: Parameters<THREE.Object3D['onAfterRender']>) => { hits.set(key, (hits.get(key) ?? 0) + 1); prev.apply(o, a); };
+      });
+      render();
+      for (const [o, prev] of hooked) o.onAfterRender = prev;
+      return [...hits.entries()].sort((a, b) => b[1] - a[1]);
     },
     togglePause,
     stats() {
