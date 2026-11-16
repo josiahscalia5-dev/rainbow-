@@ -3584,3 +3584,92 @@ Now the shader mode. It's a runtime branch inside the existing proj05 block, so 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T22:07:56.362Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, numpy as np\nfrom PIL import Image\nlut=json.load(open('assets/textures/water05/proj05_lut.json'))['E']\nE=np.asarray(Image.open('assets/textures/water05/proj05_E.png'))\nV=np.array(lut['V']); c=np.array(lut['c']); w=np.array(lut['w']); n=lut['n']\nS=lambda i: lut['s0']+(lut['s1']-lut['s0'])*i/(n-1)\nprint('E', E.shape, 'alpha>127 share', round(float((E[...,3]>127).mean()),3))\nfor s in (130.2,131,132,134,136,137.5,140,144):\n    i=(s-lut['s0'])/(lut['s1']-lut['s0'])*(n-1); i0=int(i)\n    row=int(V[i0]*(E.shape[0]-1)); a=E[row,:,3]>127\n    # row …[+339 chars]`
+
+### 🧑 User — 2026-11-16T22:07:56.573Z
+
+> ↩︎ result: E (1458, 1024, 4) alpha>127 share 0.86
+> s  130.2 row  129 u-range [-0.31, +0.35] valid share 0.90 rows/unit   239 texels/unit across   321
+> s  131.0 row  309 u-range [-0.37, +0.40] valid share 0.91 rows/unit   171 texels/unit across   280
+> s  132.0 row  465 u-range [-0.44, +0.45] valid share 0.92 rows/unit   116 texels/unit across   241
+> s  134.0 row  655 u-range [-0.60, +0.53] valid share 0.94 rows/unit    72 texels/unit across   189
+> s  136.0 row  790 u-range [-0.76, +0.59] valid share 0.96 rows/unit    60 texels/unit across   158
+> s  137.5 row  876 u-range [-0.90, +0.55] valid share 0.92 rows/unit    51 texels/unit across   147
+> s  140.0 row  984 u-range [-1.00, +0.52] valid share 0.98 rows/unit    29 texels/unit across   141
+> s  144.0 row 1088 u-range [-1.00, +0.90] valid share 0.94 rows/unit    23 texels/unit across   112
+
+### 🧑 User — 2026-11-16T22:08:18.008Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-16T22:08:18.065Z
+
+Save everything to my GitHub repository and  everything
+
+### 🤖 Claude — 2026-11-16T22:08:28.770Z
+
+Saving everything now. First, what's not yet on GitHub:
+
+### 🤖 Claude — 2026-11-16T22:08:29.706Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -20; git log --oneline -3; npx tsc --noEmit -p . 2>&1 | tail -3; echo TSC_DONE", "description": "Show unsaved changes and typecheck"}`
+
+### 🧑 User — 2026-11-16T22:08:32.207Z
+
+> ↩︎ result: 4a9c5cc autosave: Rainbow 2026-11-16 22:06 UTC
+> 64f87f1 autosave: Rainbow 2026-11-16 22:01 UTC
+> 5077d62 autosave: Rainbow 2026-11-16 21:55 UTC
+> TSC_DONE
+
+### 🤖 Claude — 2026-11-16T22:08:42.772Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && D=qa/pilot05/proj/flow2 && mkdir -p $D/still_worst_moment $D/ride $D/tools && cp $S/w2/still/0009.png $D/still_worst_moment/1_flow_off_reference.png && cp $S/w0/still/0009.png $D/still_worst_moment/2_BEFORE_old_flow.png && cp $S/w4/still/0009.png $D/still_worst_moment/3_NEW_projflow05_2.png && cp $S/rideO/clip/0030.png $D/ride/BEFORE_old_flow_17u_ahead.png && cp $S/rideN/clip/0030.png $D/ride/NEW_projflow05_2_17u_ahead.png && cp $S/dbg_sheet.png $D/ride/layer_map_0_8_17u_green_exact_blue_near_re …[+793 chars]`
+
+### 🧑 User — 2026-11-16T22:09:27.130Z
+
+> ↩︎ result: qa/pilot05/proj/flow2:
+>  328
+> 4096 .
+> 4096 ..
+> 311063 flow_direction_map_N.png
+> 2635 measurements.txt
+> 4096 ride
+> 4096 still_worst_moment
+> 4096 tools
+>  
+>  qa/pilot05/proj/flow2/ride:
+>  14920
+> 4096 .
+> 4096 ..
+> 1819512 BEFORE_old_flow_17u_ahead.png
+> 4859033 BEFORE_old_flow_ride_3s.mp4
+> 1811877 NEW_projflow05_2_17u_ahead.png
+> 4783938 NEW_projflow05_2_ride_3s.mp4
+> 1985723 layer_map_0_8_17u_green_exact_blue_near_red_tile.png
+> w0 per frame SSIM: 1.00 0.70 0.64 0.63 0.64 0.70 1.00 0.71 0.65 0.64 0.64 0.70
+>    cycle mean: |d| 12.6  within10 0.650  SSIM 0.721  detail contrast kept 0.94   worst frame: SSIM 0.631, contrast 0.90
+> w1 per frame SSIM: 1.00 0.77 0.71 0.70 0.71 0.77 1.00 0.78 0.72 0.70 0.71 0.77
+>    cycle mean: |d| 10.6  within10 0.710  SSIM 0.777  detail contrast kept 0.94   worst frame: SSIM 0.696, contrast 0.91
+> w4 per frame SSIM: 1.00 0.92 0.91 0.91 0.91 0.93 1.00 0.93 0.91 0.91 0.91 0.93
+>    cycle mean: |d| 5.5  within10 0.829  SSIM 0.930  detail contrast kept 0.91   worst frame: SSIM 0.905, contrast 0.88
+> w3b per frame SSIM: 1.00 0.94 0.92 0.92 0.92 0.94 1.00 0.94 0.93 0.92 0.93 0.94
+>    cycle mean: |d| 4.4  within10 0.870  SSIM 0.943  detail contrast kept 0.92   worst frame: SSIM 0.919, contrast 0.88 …[+345 chars]
+
+### 🤖 Claude — 2026-11-16T22:09:51.300Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/flow2/NOTES.md", "content": "# Screen 05 water in motion — `?proj05=1&projflow05=2` (2026-11-16 ~21:50–22:15 UTC)\n\nUser (after approving the Blender paddles): \"yes go fix the water swirls\" — the water must keep the approved swirl\ndesign while the game runs / Benny rides. Work in progress: part 1 is done and measured, part 2 is diagnosed and\nplanned but NOT built yet (the user asked to save everything at this point).\n\n## Part 1 (done): the flow animation no longer blurs the design — `&projflow05=2`\n**Finding.** Every screenshot so far  …[+4936 chars]`
+
+### 🧑 User — 2026-11-16T22:09:51.398Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/proj/flow2/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:09:52.722Z
+
+Notes are written. Now committing and pushing everything, then verifying it on GitHub.
+
+### 🤖 Claude — 2026-11-16T22:10:02.185Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='CLAUDE.md'; s=open(p).read()\na=\"\"\"`qa/pilot05/proj/tunnel/NOTES.md`, 2026-11-16 ~20:50), **P1 `?proj05=1`**\"\"\"\nb=\"\"\"`qa/pilot05/proj/tunnel/NOTES.md`, 2026-11-16 ~20:50; paddles approved by the user ~21:45, NOT promoted), **water flow `&projflow05=2`** (flow along the\napproved streaks, design stays crisp; riding blur diagnosed, near-tile plan NOT built: `qa/pilot05/proj/flow2/NOTES.md`), **P1 `?proj05=1`**\"\"\"\nassert a in s; s=s.replace(a,b); open(p,'w').write(s)\nEOF\ngit add CLAUDE.md qa/pilot05/proj/flow2 && git commit -q -F - <<'EOF'\nSc …[+1465 chars]`
+

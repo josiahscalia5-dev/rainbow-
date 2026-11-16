@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 11306,
-   "sha256": "8fcd981af9b77685dad9efebb27fb15a5806033cb1edacff3838907bda860ff1"
+   "bytes": 11526,
+   "sha256": "61faf5cdd559c2a7fba9cc677cd856ac491babdd94ab1c361322d923d9964dca"
   },
   {
    "path": "README_FIRST.md",
@@ -494,7 +494,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "3750dc79284928bc32c24fa8ed0b99a9e1087e8841a10f14a892683e09bef210"
+   "sha256": "e94b76d3bf65340a702d45d44c51e5bb677ef5ed1fa1c442e4a4b06dfe37e24c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1530,6 +1530,71 @@
    "path": "qa/pilot05/proj/feasibility/footprint_overlay.png",
    "bytes": 869656,
    "sha256": "54c05840ac3ccf0d3bbe7967b11d60fa54187db22cf73a36cde42fedbf6aa37e"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/NOTES.md",
+   "bytes": 5435,
+   "sha256": "9de0ea95de376df4bab69bba327b3e64732589a3269d6894431b315750bbcb5d"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/flow_direction_map_N.png",
+   "bytes": 311063,
+   "sha256": "ebf94b66b3b86f65c3584ecda7678118cdd0f2b652f1f5cc343e993770a8f79c"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/measurements.txt",
+   "bytes": 2635,
+   "sha256": "a2f560b4cd567d5b6267d97a90510c96d921310415d1253d60b459f62d0118dc"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/ride/BEFORE_old_flow_17u_ahead.png",
+   "bytes": 1819512,
+   "sha256": "47d7ab7d40eb4aabdc602dec2f41c06c4009b66235a8e195c9201ce383535cad"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/ride/BEFORE_old_flow_ride_3s.mp4",
+   "bytes": 4859033,
+   "sha256": "a52ba378fd7cf77452dcb2964ece0364b8af83674c26749d16f2dc97a023ff0b"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/ride/NEW_projflow05_2_17u_ahead.png",
+   "bytes": 1811877,
+   "sha256": "03432bd4b3e2e9411af64a178470ddf7b52bc43c7148bfd25e0815bd13658b55"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/ride/NEW_projflow05_2_ride_3s.mp4",
+   "bytes": 4783938,
+   "sha256": "d7fab8e52df41e7a3423552d055b84a9eb99ce294f4ea675b7a3d699f5224f18"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/ride/layer_map_0_8_17u_green_exact_blue_near_red_tile.png",
+   "bytes": 1985723,
+   "sha256": "775de8d31ea8aaa4d03a57b34ed8d1aaf066d74541a5349e6036de9b250e133d"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/still_worst_moment/1_flow_off_reference.png",
+   "bytes": 2161774,
+   "sha256": "01edca7dcd1ae624ea35e91ca53d77fdad6ee79a6847e94480f23a05e9d4aa81"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/still_worst_moment/2_BEFORE_old_flow.png",
+   "bytes": 2151444,
+   "sha256": "91edb4c309687540ad87559d8f9c1cc4bafdb4c148c502e6ba747c687e7e7be7"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/still_worst_moment/3_NEW_projflow05_2.png",
+   "bytes": 2134185,
+   "sha256": "d0543fee4d7ee057b83a293eac2a916cba8d7e90f7a010fab1b954754ef65043"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/tools/flowcmp.py",
+   "bytes": 1851,
+   "sha256": "48278d47ff86521ae32dbf564f57f489cad72afb0d6bb9f5e220189fc2aa9e71"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/tools/flowdir.py",
+   "bytes": 1390,
+   "sha256": "6d0a1bef80595ccc1a727be1a51bd881d1dad55357cffeab981009efb500506b"
   },
   {
    "path": "qa/pilot05/proj/move/NEW_proj05_forward_05.png",
