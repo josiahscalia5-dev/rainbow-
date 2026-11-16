@@ -24,7 +24,11 @@
       "SessionEnd": "scripts/autosave-hook.sh SessionEnd -> one verified autosave"
     },
     "cloud_environment_setup_script": "scripts/cloud-env-setup.sh (paste into the claude.ai environment's setup script; it runs claude-bootstrap.sh --env-setup: installs tools before Claude starts, so the hook finds them ready)",
-    "hook_runs_on": "every SessionStart; the heavy part only when source=startup (resume/clear/compact only re-arm the autosave)"
+    "hook_runs_on": "every SessionStart; the heavy part only when source=startup (resume/clear/compact only re-arm the autosave)",
+    "cloud_environments_current_account": {
+      "rainbow-": "personal, created 2026-11-16 ~11:14 UTC by session 01Kbt6BT with the user's approval: setup script = scripts/cloud-env-setup.sh, limited network (package managers + MCP servers + the 11 network_hosts below), repository josiahscalia5-dev/rainbow-. No secrets saved on it yet (the Marble key would be entered via request_credential only if new API calls are needed)",
+      "Default": "personal, unrestricted network, no setup script; holds the Marble World API key as a network secret (host api.worldlabs.ai, header WLT-Api-Key)"
+    }
   },
   "tools": {
     "node": {"required": true, "need": ">=20", "tested": "22.23.4", "check": "node -v", "install": "preinstalled in Claude cloud images (/opt/node22)"},

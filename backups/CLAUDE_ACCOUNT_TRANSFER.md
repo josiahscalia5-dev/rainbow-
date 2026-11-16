@@ -64,6 +64,14 @@ Versions, install commands, hosts, plugins, MCP servers, credentials (names only
 * No specialist running; unfinished wave-9 work as patches in `qa/pilot05/wave9b/not_merged/`.
 * No Google Flow video in the repo yet (`public/video/` placeholder) — ask the user for `intro.mp4` / `ending.mp4`.
 
+### Cloud environments on the current account
+* **`rainbow-`** (personal, created ~11:14 UTC with the user's approval): setup script = `scripts/cloud-env-setup.sh`,
+  limited network = package managers + MCP servers + the 11 hosts in `TOOL_MANIFEST.json` → `network_hosts`,
+  repository linked. Pick it for the next session to start with Blender / SDK / npm already installed. It has no
+  Marble key yet (only needed for new API calls: `request_credential`).
+* **`Default`** (unrestricted, no setup script) holds the Marble key; this session ran on it. The repo's SessionStart
+  hook makes either environment work — the setup script only saves ≈ 1 minute of background installs.
+
 ### What cannot travel through GitHub (re-connect on a new Claude account)
 Claude login · GitHub connection + Claude GitHub App on the repo · World Labs Atlas connector sign-in · the Marble
 World API key (network secret on the environment; secure form `request_credential`, host `api.worldlabs.ai`, header

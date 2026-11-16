@@ -403,13 +403,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 39934,
-   "sha256": "a378857ac1bfbfad7ab2a6606c86dfae356669ae1b62ec12c7c13494255f6af2"
+   "bytes": 40620,
+   "sha256": "40b2099cb6c868c4e1f1c26b2c2d0cb5aa8bcfa52f04dd42e2bdcd2d0e1cecd9"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "85b50b26bcec2224e448e8089d5214f95b83cac9936b64fc7282f80c71fa3aba"
+   "sha256": "03b992a291097a076cd3bbf9a5dd680fe1c3b53d155fd4c9400f596bc2fa9854"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -433,8 +433,8 @@
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
-   "bytes": 12434,
-   "sha256": "40c0d01099b446c255262e8075885c0b99f68a393bcd7d9723b5ca0c5d6a53cc"
+   "bytes": 13033,
+   "sha256": "d09216c2d9b68e09db450fef43ed066c15f0d13d2d62c43513d79631b025eee5"
   },
   {
    "path": "backups/autosave.config.json",
