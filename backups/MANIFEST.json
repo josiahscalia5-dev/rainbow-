@@ -1277,6 +1277,16 @@
    "sha256": "d0ef59589cf5360bacf7f996d89c9eccfd00703984e5f3cbf547b6144bdc018e"
   },
   {
+   "path": "qa/pilot05/wave10/water/it02/05.png",
+   "bytes": 1711045,
+   "sha256": "ff3ef32b612b54f91ccd596f8de302b90b3d903e554e68456c1a3cccae6648b1"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/it02/diff05.md",
+   "bytes": 1389,
+   "sha256": "c3e693d715200783a920cbf3fe7df68539668bd1d8d905b2ea12ece3bc55e8dc"
+  },
+  {
    "path": "qa/pilot05/wave3/benny/it00/05.png",
    "bytes": 1403849,
    "sha256": "b4cc45132d80c16b71c0d6ace67295fc40045436e490cf3c781495f97b03e2fb"
@@ -6073,8 +6083,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 61051,
-   "sha256": "1f1588ec1fd08b99cab59c90c463dbb41aec95b5b547918331cbfccf11bc89c7"
+   "bytes": 61052,
+   "sha256": "dfe3e572aa9ff3e7f3b18d8375bde9c9f20c9c4b324ff3a2401f61aab66be3ce"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -6103,8 +6113,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 57560,
-   "sha256": "3bfafae78c8693b678fac1a6b43437d61dde3c3e61b18299b75386dfdbbfd9c4"
+   "bytes": 61237,
+   "sha256": "c7ba77b4abd358f7aef583a4181050d4f233781f7252cdcfac16f92806852606"
   },
   {
    "path": "src/world/towel.ts",

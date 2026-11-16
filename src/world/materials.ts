@@ -4,6 +4,7 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
+import { WATER05 } from '../vfx/waterRibbon'; // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
   /** base metal colour */
@@ -909,6 +910,63 @@ float rivCells(vec2 p) {
   // the seam the surface covers the whole floor (the real ribbon's continuation lies under it)
   float bankW = mix(9.0, 1.3, smoothstep(10.0, 22.0, Zv));
   if (e > bankW + bankN * 2.0) discard;
+#ifdef WATER05
+  // ---- W10 (?water05=1): the near ribbon's approved-image palette and hue ramp (waterRibbon.ts W5_*): electric cyan
+  // core with flow-aligned brushed streaks and aqua cores, hot-pink satin bands ramping through violet / periwinkle,
+  // deep blue-violet water toward the banks, bubbly foam rims (no flat lavender sheet right behind the seam) ----
+  vec3 C_DEEP2 = vec3(0.062, 0.290, 0.572), C_MID = vec3(0.066, 0.424, 0.747), C_BRIGHT = vec3(0.088, 0.567, 0.825);
+  vec3 C_AQUA = vec3(0.142, 0.787, 0.882), C_AQUAW = vec3(0.39, 0.942, 0.947);
+  vec3 P_DEEP = vec3(0.465, 0.086, 0.376), P_BODY = vec3(0.698, 0.112, 0.545), P_LIGHT = vec3(0.779, 0.204, 0.769);
+  vec3 P_PALE = vec3(0.835, 0.534, 0.872);
+  vec3 V_IN = vec3(0.372, 0.170, 0.625), V_PERI = vec3(0.311, 0.252, 0.740), V_BLUE = vec3(0.168, 0.427, 0.795);
+  vec3 V_OUT = vec3(0.381, 0.185, 0.674), O_BLUE = vec3(0.211, 0.256, 0.715), O_DEEP = vec3(0.161, 0.316, 0.700);
+  float xq = lat - core;
+  float fsv = fwidth(s) + 1e-4;
+  // brushed streaks along the winding core: 2 octaves, each faded before its cells drop under ≈4 px across / along
+  float a1 = 1.0 - smoothstep(0.12, 0.28, max(fl * 3.0, fsv * 0.02 * 2.0));
+  float a2 = 1.0 - smoothstep(0.12, 0.28, max(fl * 6.6, fsv * 0.034 * 2.0));
+  float n1 = rivNoise(vec2(xq * 3.0 + 1.7, s * 0.02));
+  float n2 = rivNoise(vec2(xq * 6.6 + 7.1, s * 0.034 + 3.7));
+  float brv = clamp(0.5 + ((n1 - 0.5) * a1 + (n2 - 0.5) * a2 * 0.8) * 1.1, 0.0, 1.0);
+  float bco = max(smoothstep(0.62, 0.88, n1) * a1 * 0.55, smoothstep(0.7, 0.88, n2) * a2);
+  // band coordinate of the nearer band: -1 bank-side edge .. +1 core-side edge
+  float tLb = (lat - cL) / max(wL, 1e-3), tRb = (cR - lat) / max(wR, 1e-3);
+  float tb = abs(tLb) < abs(tRb) ? tLb : tRb;
+  tb += (brv - 0.5) * 0.3 * a1;
+  float at = abs(tb);
+  float h5 = clamp(0.5 + (brv - 0.5) * 0.9, 0.0, 1.0);
+  vec3 cy = mix(C_DEEP2, C_MID, smoothstep(0.1, 0.45, h5));
+  cy = mix(cy, C_BRIGHT, smoothstep(0.5, 0.78, h5) * 0.85);
+  cy = mix(cy, C_AQUAW, bco * 0.8);
+  vec3 ow = mix(O_DEEP * 0.82, O_BLUE, smoothstep(0.3, 0.75, h5));
+  vec3 pk = mix(P_DEEP, P_BODY, smoothstep(0.1, 0.45, h5));
+  pk = mix(pk, P_LIGHT, exp(-pow((tb - 0.45) / 0.2, 2.0)) * 0.35);
+  pk = mix(pk, P_PALE, bco * 0.75);
+  pk = mix(pk, P_DEEP, smoothstep(-0.2, -0.85, tb) * 0.35);
+  vec3 col;
+  if (tb >= 0.0) {
+    col = mix(pk, V_IN, smoothstep(0.8, 1.0, at));
+    col = mix(col, V_PERI, smoothstep(0.98, 1.1, at));
+    col = mix(col, V_BLUE, smoothstep(1.08, 1.2, at));
+    col = mix(col, cy, smoothstep(1.17, 1.35, at));
+  } else {
+    col = mix(pk, V_OUT, smoothstep(0.8, 1.0, at));
+    col = mix(col, O_BLUE, smoothstep(1.0, 1.15, at));
+    col = mix(col, ow, smoothstep(1.12, 1.3, at));
+  }
+  // bubbly foam rim along each bank and over the floor beyond it (white puffs with lavender / blue shading)
+  float foamIn = smoothstep(-0.45, -0.1, e + bankN);
+  if (foamIn > 0.0) {
+    float c = rivCells(vec2(lat * 4.2, s * 1.6 + lat * 0.7));
+    float c2 = rivCells(vec2(lat * 9.0 + 3.1, s * 3.4 - lat * 0.5));
+    float cf = 1.0 - smoothstep(0.08, 0.22, fl * 4.2);
+    float puff = mix(0.5, 1.0 - smoothstep(0.2, 0.85, c), cf);
+    vec3 fo = mix(uRivFoamLav * 0.9, uRivFoam, puff);
+    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.05, 0.25, c2)) * cf * 0.6);
+    fo = mix(fo, uRivFoamBlue, 0.4 * (1.0 - smoothstep(0.0, 0.2, abs(e + 0.12))));
+    col = mix(col, fo, foamIn);
+  }
+#else
   // ---- water: cyan core between two hot-pink bands, flow lines that follow the winding core ----
   float xq = lat - core;
   float dL = abs(lat - cL), dR = abs(lat - cR);
@@ -944,12 +1002,18 @@ float rivCells(vec2 p) {
     fo = mix(fo, uRivFoamBlue, 0.45 * smoothstep(0.45, 1.0, e / max(0.3, bankW)));         // shaded outer edge
     col = mix(col, fo, foamIn);
   }
+#endif
   float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
   col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
   diffuseColor.rgb = col;
 }`);
   };
-  mat.customProgramCacheKey = () => 'far-river-w8';
+  if (WATER05) {
+    mat.defines = { WATER05: 1 };
+    mat.customProgramCacheKey = () => 'far-river-w8-w10';
+  } else {
+    mat.customProgramCacheKey = () => 'far-river-w8';
+  }
   return mat;
 }
 

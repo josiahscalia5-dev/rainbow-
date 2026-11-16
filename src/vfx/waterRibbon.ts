@@ -757,13 +757,13 @@ void main() {
       float dlN = lat - uBenny.y;
       float ph = v5 * 13.0 + 4.6 * dlN * dlN / (1.0 + 0.35 * back) + 2.2 * vnoise(vec2(dlN * 0.9 + 3.0, v5 * 0.6));
       float sv = 0.5 + 0.5 * sin(ph);
-      vec3 nb = mix(W5_CDEEP2, W5_CMID, smoothstep(0.0, 0.45, sv));
-      nb = mix(nb, W5_CBRIGHT, smoothstep(0.55, 1.0, sv) * 0.75);
-      float seg = smoothstep(0.38, 0.66, vnoise(vec2(dlN * 1.4 + 9.0, v5 * 1.3)));
+      vec3 nb = mix(W5_CDEEP2, W5_CMID, smoothstep(0.0, 0.35, sv));
+      nb = mix(nb, W5_CBRIGHT, smoothstep(0.45, 1.0, sv) * 0.85);
+      float seg = smoothstep(0.34, 0.62, vnoise(vec2(dlN * 1.4 + 9.0, v5 * 1.3)));
       float sp = max(0.0, sin(ph + 1.2));
-      crestN = (pow(sp, 60.0) + 0.3 * pow(sp, 8.0)) * seg;
+      crestN = (pow(sp, 40.0) + 0.45 * pow(sp, 6.0)) * seg;
       nb = mix(nb, W5_CAQUAW, clamp(crestN, 0.0, 1.0) * 0.9);
-      nb += vec3(0.5, 0.8, 0.8) * pow(sp, 120.0) * seg * 0.8;
+      nb += vec3(0.6, 0.9, 0.9) * pow(sp, 140.0) * seg * 1.2;
       cy = mix(cy, nb, near5);
     }
     // deep blue / blue-violet water between a band and its bank
@@ -812,11 +812,11 @@ void main() {
     float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.8, 30.0, 4.6, 0.0, uTime);
     flA = max(flA, 0.75 * flowGlint(vec2(X * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.5, 16.0, 4.2, 0.0, uTime + 1.9));
     // near: big flares lying across the flow on the swell crests + lens flares (white core, aqua glow)
-    float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.75, 40.0, 4.8, 0.7, uTime + 2.7);
+    float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.8, 56.0, 5.0, 0.85, uTime + 2.7);
     float lz = lensFlare(vec2(X * 1.8, v5 * 1.6 + 1.1 * sin(X * 3.3 + 1.0)), 0.7, 110.0, 5.5, uTime);
     c5 += mix(vec3(0.2, 1.2, 1.4), vec3(2.2, 2.45, 2.5), smoothstep(0.55, 1.0, lz)) * lz * near5 * (1.0 - pk5) * 0.7;
     c5 += mix(vec3(1.7, 2.1, 2.2), vec3(2.2, 1.7, 2.2), pk5) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))
-        + flB * near5 * (0.8 + 1.2 * smoothstep(0.2, 0.8, crestN)));
+        + flB * near5 * (1.0 + 1.4 * smoothstep(0.2, 0.8, crestN)));
     #endif
     col = mix(col, c5, sw);
   }
