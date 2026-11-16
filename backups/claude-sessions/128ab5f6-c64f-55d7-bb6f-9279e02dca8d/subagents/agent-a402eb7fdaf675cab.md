@@ -448,3 +448,35 @@ Let me look at the reference images directly.
 >  * (s = sF + axial), so the far surface lands exactly on the real ribbon at the seam and covers the real
 >  * ribbon …[+16551 chars]
 
+### 🤖 Claude — 2026-11-16T15:47:14.293Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/proj/caps && (time node scripts/capture.mjs 05 --out=qa/pilot05/proj/caps/default) > /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/cap_default.log 2>&1; tail -5 /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/cap_default.log", "description": "Capture the default Screen 05 from the live game", "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T15:47:14.315Z
+
+> ↩︎ result: Command running in background with ID: b9163ijap. Output is being written to: /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/tasks/b9163ijap.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T15:47:15.637Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ribbon\\|05\\b\" src/vfx/glsl.ts | head -20; grep -n \"FRAG_TAIL\\|withFog\" -A12 src/vfx/glsl.ts | head -60", "description": "Inspect shared GLSL helpers (fog, tail)"}`
+
+### 🧑 User — 2026-11-16T15:47:15.685Z
+
+> ↩︎ result: 44: *                cross stays star-shaped under grazing foreshortening (refs 05–07 white glints)
+> 59:// stretch: horizontal (g.x) arm length relative to the vertical one (ref 05 glints are wide flares)
+> 71:  float core = exp(-dot(px, px) * 0.05) * 1.6;
+> 78:// on every bend (ref 05 mid-field) instead of collapsing into horizontal dashes under grazing
+> 79:// foreshortening. horiz 0..1 turns the long arm toward screen-horizontal (ref 05 near-field flares lie
+> 105:  // (wave 8) soft glow lying along the long arm (≈5 px wide, tapering): ref 05 flares are thick glowing
+> 111:// Lens-shaped glossy flare (ref 05 near field): a bright streak lying along SCREEN-horizontal, thick in
+> 159:export function withFog<T extends Record<string, THREE.IUniform>>(u: T): T & typeof THREE.UniformsLib.fog {
+> 160-  return THREE.UniformsUtils.merge([THREE.UniformsLib.fog, u]) as T & typeof THREE.UniformsLib.fog;
+> 161-}
+> 162-
+> 163-/** standard tail: tonemapping + colour space + fog (call with gl_FragColor already set) */
+> 164:export const FRAG_TAIL = /* glsl */ `
+> 165-  #include <tonemapping_fragment>
+> 166-  #include <colorspace_fragment>
+> 167-  #include <fog_fragment>
+> 168-`;
+

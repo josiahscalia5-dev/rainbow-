@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7795,
-   "sha256": "e2be064cd2aa75b651d582bda60cb138ea29e12125e04cce61e183d927108b9c"
+   "sha256": "0707d2d6eb732d6d7270e8f24dc2fe7e38c33627e84236fc200703be28c45492"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -438,8 +438,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 6096,
-   "sha256": "34c96227a4490b07092f66d1f1084b9464aded2b185c638186d89dfa367b29ed"
+   "bytes": 6097,
+   "sha256": "6e02f30a32abe75f82271f7b395a1ec2e7fd7d6eec5ef1dadb3020fb88531d25"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -848,8 +848,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1236,
-   "sha256": "f607139345632b958dac110508caa422a29cfe6650933672230788a1db2fd2f9"
+   "bytes": 1178,
+   "sha256": "fc91c9d081c1c09c15b3d065184fa39dbad4cad46df4c4201415b6dc7d6ee1b4"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1170,6 +1170,11 @@
    "path": "qa/pilot05/proj/BRIEF_SPECIALIST1.md",
    "bytes": 4212,
    "sha256": "9bb84b234323cc9bc02ee4a8587ed437af040bc077411ee82113d96eb579ab90"
+  },
+  {
+   "path": "qa/pilot05/proj/caps/default/05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
   },
   {
    "path": "qa/pilot05/water/before/03.png",

@@ -3881,3 +3881,100 @@ I've switched to your approach. No more procedural, bloom or saturation rounds: 
 
 The full brief is saved in `qa/pilot05/proj/BRIEF_SPECIALIST1.md`, so the work can be relaunched if this session closes. When Specialist 1 reports, you'll get its verdict with numbers and full-size APPROVED and NEW pictures from the same camera and scale. The clip of the flowing water comes after Specialist 2.
 
+### 🧑 User — 2026-11-16T15:47:11.205Z
+
+<local-command-caveat>The command below was run directly in Claude Code, not sent to you as a request, and its output goes straight to the user. It's recorded here as context for later messages.</local-command-caveat>
+
+### 🧑 User — 2026-11-16T15:47:11.205Z
+
+<command-name>/model</command-name>
+            <command-message>model</command-message>
+            <command-args>claude-fable-5-2</command-args>
+
+### 🧑 User — 2026-11-16T15:47:11.205Z
+
+<local-command-stdout>Set model to `claude-fable-5-2`</local-command-stdout>
+
+### 🧑 User — 2026-11-16T15:47:11.205Z
+
+<system-reminder>The model for this session has been changed to claude-fable-5-2. You are now running as claude-fable-5-2.</system-reminder>
+
+### 🧑 User — 2026-11-16T15:47:11.330Z
+
+Show me the feasibility results when Specialist 1 finishes
+
+### 🤖 Claude — 2026-11-16T15:47:23.057Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print(repr(d.get('commit_trailer')))\"; echo \"--- proj folder so far:\"; ls -la qa/pilot05/proj/ qa/pilot05/proj/* 2>/dev/null | head -40; python3 -I scripts/autosave-status.py", "description": "Check commit trailer, specialist output so far, autosave"}`
+
+### 🧑 User — 2026-11-16T15:47:23.901Z
+
+> ↩︎ result: 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoZdcyzCFdBum9wN5EU'
+> --- proj folder so far:
+> -rw-r--r-- 1 root root 4212 Nov 16 15:46 qa/pilot05/proj/BRIEF_SPECIALIST1.md
+> 
+> qa/pilot05/proj/:
+> total 20
+> drwxr-xr-x  3 root root 4096 Nov 16 15:47 .
+> drwxr-xr-x 20 root root 4096 Nov 16 15:46 ..
+> -rw-r--r--  1 root root 4212 Nov 16 15:46 BRIEF_SPECIALIST1.md
+> drwxr-xr-x  3 root root 4096 Nov 16 15:47 caps
+> 
+> qa/pilot05/proj/caps:
+> total 12
+> drwxr-xr-x 3 root root 4096 Nov 16 15:47 .
+> drwxr-xr-x 3 root root 4096 Nov 16 15:47 ..
+> drwxr-xr-x 2 root root 4096 Nov 16 15:47 default
+> AUTOSAVE OK | branch claude/rainbow-05-water-projection | scheduler daemon | last verified backup 2026-11-16T15:46:59+00:00 (0.4 min ago) | local 0dde50c remote 0dde50c (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-16T15:47:28.238Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/autosave.config.json'\nt=open(p).read()\nold='Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>'\nnew='Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>'\nassert t.count(old)==1\nt=t.replace(old,new,1); json.loads(t); open(p,'w').write(t); print('trailer updated')\nEOF\ngit log -1 --format='%B' | tail -3", "description": "Update autosave commit trailer to current attribution"}`
+
+### 🧑 User — 2026-11-16T15:47:28.312Z
+
+> ↩︎ result: trailer updated
+> Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+> Claude-Session: https://claude.ai/code/session_013VHsJBUBZaHLYkVpBPkFed
+
+### 🤖 Claude — 2026-11-16T15:47:30.594Z
+
+> 🔧 **TaskCreate** `{"subject": "Specialist 1: texture-projection feasibility + baked water (?proj05=1)", "description": "washer-environment-modeler running in background on claude/rainbow-05-water-projection. When it reports: verify its numbers and pictures myself, then show the user the feasibility verdict + full-size APPROVED vs NEW.", "activeForm": "Waiting for Specialist 1's feasibility results"}`
+
+### 🧑 User — 2026-11-16T15:47:30.604Z
+
+> ↩︎ result: Task #7 created successfully: Specialist 1: texture-projection feasibility + baked water (?proj05=1)
+
+### 🤖 Claude — 2026-11-16T15:47:31.992Z
+
+> 🔧 **TaskCreate** `{"subject": "Specialist 2: animate the same projected design + flow-direction clip", "description": "water-fx-specialist, after the user has seen the static match: flow down the S-curves toward the camera, layout world-anchored; short clip proving direction; gameplay/continuity/Android checks.", "activeForm": "Animating the projected water"}`
+
+### 🧑 User — 2026-11-16T15:47:31.999Z
+
+> ↩︎ result: Task #8 created successfully: Specialist 2: animate the same projected design + flow-direction clip
+
+### 🤖 Claude — 2026-11-16T15:47:32.945Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T15:47:32.970Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-16T15:47:36.404Z
+
+Will do. Specialist 1 is still running; so far it has only taken a fresh capture of the default game, so there are no feasibility numbers yet.
+
+When it finishes I'll check its results myself before showing you anything, then send you:
+
+- **The verdict:** whether the existing river mesh can carry your projected artwork, and exactly where it can't.
+- **The measurements:** how far the game's river outline is from yours (overlap, bank offsets row by row, S-curve size), and how much detail your artwork gives the far river.
+- **The pictures:** an overlay of the game's river on your artwork, plus full-size APPROVED and NEW from the same camera and scale.
+
+Its work is being saved to GitHub every five minutes on `claude/rainbow-05-water-projection`; the last save, `0dde50c`, matches. Specialist 2 stays queued until you've seen the static match.
+
+### 🧑 User — 2026-11-16T15:47:37.752Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
