@@ -713,3 +713,296 @@ On it. I'll start by reading how the tunnel walls and rings are built and how th
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T19:59:27.220Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/proj05Apron.ts"}`
+
+### 🧑 User — 2026-11-16T19:59:27.241Z
+
+> ↩︎ result: 1	/**
+> 2	 * Screen 05 projection test (`?proj05=1`, qa/pilot05/proj/NOTES.md): a thin VISUAL-ONLY strip that hugs the tunnel wall
+> 3	 * from the river's edge up ≈ 2.5 u, on 05 only. At the far bends the approved picture's fluffy foam banks lie beyond the
+> 4	 * game river's edge (on the lower wall); this strip carries them (baked from the approved picture through the locked
+> 5	 * camera: assets/textures/water05/proj05_A.png, tools/proj05/bake.py). No collisions, no gameplay: steering, coins and the
+> 6	 * camera are untouched. Where it would be magnified (camera close) or where the approved picture shows no foam/water,
+> 7	 * it dithers away and the wall shows as before. `?projbank05=0` leaves it out.
+> 8	 * attribute aPj = (t · side, s): t 0 at the river edge → 1 at the top of the strip, side −1 left / +1 right.
+> 9	 */
+> 10	import * as THREE from 'three';
+> 11	import type { Course } from '../world/course';
+> 12	import type { TubePath } from '../world/tube';
+> 13	import { tubeCenterAt } from '../world/tube';
+> 14	import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending } from './waterRibbon';
+> 15	
+> 16	/** s range covered by proj05_A.png (must match tools/proj05/bake.py: A_S0, A_S1) */
+> 17	export const PJ_A_S0 = 1 …[+4721 chars]
+
+### 🤖 Claude — 2026-11-16T19:59:29.055Z
+
+> 🔧 **Bash** `{"command": "grep -n \"PROJ05_INVERSE\\|export const PROJ05\\|export function flag05\\|proj05Pending\\|export const proj05\\|export function proj05\\|uPjExposure\\|uPjVig\\|pjInverse\\|loadPj\\|proj05_[A-Z]\\.png\\|correction\" src/vfx/waterRibbon.ts | cut -c1-220", "description": "Locate the colour-inverse and texture loading code in the water shader"}`
+
+### 🧑 User — 2026-11-16T19:59:29.113Z
+
+> ↩︎ result: 207:export const PROJ05: boolean = q05('proj05');
+> 209:export const proj05Pending: Promise<unknown>[] = [];
+> 312:export const PROJ05_INVERSE = /* glsl */ `
+> 315:vec3 pjInverse(vec3 t) {
+> 427:${PROJ05_INVERSE}#endif
+> 1322:  // fur fringe turned into the jagged "splash artifact" under Benny (wave-3 correction 7). Only a
+> 1384:      vec3 lin = pjInverse(tgt);
+> 1559:/** `?proj05=1`: uniforms + GLSL for the far river block (materials.ts farRiverMaterial) — its baked layer proj05_F.png */
+> 1560:export function proj05Far() {
+> 1565:  proj05Pending.push(new Promise<void>((res) => {
+> 1566:    const tex = new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+> 1573:  proj05Pending.push(fetch(new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
+> 1581:  const pars = 'uniform sampler2D uPjF; uniform float uPjFZ; uniform vec4 uPjPost; uniform vec2 uPjRes;\n' + PROJ05_INVERSE;
+> 1582:  const apply = 'col = mix(col, pjInverse(texture2D(uPjF, vec2(vRivUv.x, log(1.0 + max(vRivB.w, 0.0)) / log(1.0 + uPjFZ))).rgb), texture2D(uPjF, vec2(vRivUv.x, l …[+410 chars]
+
+### 🤖 Claude — 2026-11-16T19:59:31.046Z
+
+Still reading the code: I now understand how the walls and rings are built; next I'm checking the colour-correction code from the water bake so I can reuse it.
+
+### 🤖 Claude — 2026-11-16T19:59:32.640Z
+
+> 🔧 **Bash** `{"command": "sed -n 196,215p src/vfx/waterRibbon.ts | cut -c1-260; echo ...; sed -n 300,345p src/vfx/waterRibbon.ts | cut -c1-260; echo ...; sed -n 1372,1392p src/vfx/waterRibbon.ts | cut -c1-240", "description": "Read switch parsing and the colour-inverse shader code"}`
+
+### 🧑 User — 2026-11-16T19:59:32.691Z
+
+> ↩︎ result: /**
+>  * Screen 05 PROJECTION test (`?proj05=1`, 2026-11-16, qa/pilot05/proj/NOTES.md): the user's APPROVED Screen 05 water,
+>  * baked into the REAL river's own coordinates (u across, s along; tools/proj05/bake.py from the locked 05 camera), so
+>  * it is anchored to the river, not to the camera. Four layers, all from the user's pictures (approved image; the
+>  * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
+>  *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+>  *   glints, luminance high-pass) — E fades to N/T + D wherever the camera magnifies it (no stretching).
+>  * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+>  * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
+>  * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+>  */
+> export const PROJ05: boolean = q05('proj05');
+> /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+> export const proj …[+3337 chars]
+
+### 🤖 Claude — 2026-11-16T19:59:33.572Z
+
+> 🔧 **Bash** `{"command": "cat scripts/proj05-probe.mjs | cut -c1-240 | head -150; echo ....; sed -n 675,696p src/game/Game.ts | cut -c1-240", "description": "Read the probe script and QA hook"}`
+
+### 🧑 User — 2026-11-16T19:59:33.635Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 texture-projection probe (Specialist 1, 2026-11-16) — exact, read-only measurements of the REAL game.
+> //   node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe] [--raw=DIR for the float maps]
+> // Opens the game at the locked 05 checkpoint (time frozen, as scripts/capture.mjs) and writes into OUT:
+> //   camera.json      the live render camera (world matrix, projection matrix, vFOV, size) + uTime + stage numbers
+> //   uv_river.f32     864×1536×4 float32 (top row first): per pixel the river surface the camera sees when ONLY the
+> //                    river (+ the far tunnel wall as occluder) is drawn — ribbon: (u, s, 1 + skirt, 1);
+> //                    far block: (uv.x across the floor chord, Z virtual depth, 3, lateral units); else 0
+> //   uv_scene.f32     the same, but every other static object of the scene (walls, rings, lids, far wall, glow)
+> //                    occludes — Benny, coins, bubbles, foam, splash and spray hidden (not part of the water layer)
+> //   uv_foam.f32      only the game's 3D foam (berm / rafts / rim / flank) drawn as id 4 over the scene depth
+> //   river05_mesh.json  the river meshes exactly as rendered at thi …[+10445 chars]
+
+### 🤖 Claude — 2026-11-16T19:59:37.158Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^export \\|^  [a-zA-Z]*(.*{$\\|uv\\b\\|uvs\\|aAxis\\|aStrip\\|setAttribute\" src/world/tube.ts | cut -c1-200", "description": "Outline tube geometry and its UV attributes"}`
+
+### 🧑 User — 2026-11-16T19:59:37.205Z
+
+> ↩︎ result: 13:export interface Frame { pos: THREE.Vector3; tan: THREE.Vector3; up: THREE.Vector3; right: THREE.Vector3 }
+> 15:export interface TubePath {
+> 22:export function courseTubePath(course: Course, radius: (s: number) => number, depth: number | ((s: number) => number) = 0.9): TubePath {
+> 30:export function straightTubePath(
+> 147:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> 152:export interface TubeGeoOptions {
+> 176:export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
+> 185:  const uv = new Float32Array(rings * (radial + 1) * 2);
+> 206:      uv[k * 2] = j / radial;
+> 207:      uv[k * 2 + 1] = s / vScale;
+> 218:  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+> 219:  g.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+> 220:  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+> 222:    g.setAttribute('tubeAxis', new THREE.BufferAttribute(ax, 3));
+> 223:    g.setAttribute('tubeUp', new THREE.BufferAttribute(au, 3));
+> 239:export function collarGeometry(depth = 0.022, lip = 0.012, width = 1.1, segments = 96): THREE.BufferGeometry {
+> 270:export function roundBandGeometry(height  …[+3731 chars]
+
+### 🤖 Claude — 2026-11-16T19:59:39.127Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "offset": 150, "limit": 220}`
+
+### 🧑 User — 2026-11-16T19:59:39.152Z
+
+> ↩︎ result: 150	}
+> 151	
+> 152	export interface TubeGeoOptions {
+> 153	  radial?: number;
+> 154	  step?: number;
+> 155	  vScale?: number;
+> 156	  /** angular range (radians, measured from the bottom) — default full circle */
+> 157	  arc?: number;
+> 158	  /** radius offset (negative = inset toward the axis) */
+> 159	  inset?: number;
+> 160	  /**
+> 161	   * Store the front-face (outward) normal. The faces wind outward, so BackSide/DoubleSide materials
+> 162	   * flip this to the inward normal and light the inside of the tube correctly. The legacy default
+> 163	   * (false) stores -d, which those materials flip to point AWAY from the viewer (dot(N,V) <= 0 →
+> 164	   * full fresnel, un-tinted pale reflections); kept only so the 02 chute / 04 pipe look is unchanged.
+> 165	   */
+> 166	  frontNormals?: boolean;
+> 167	  /** also store the local tube frame per vertex (`tubeAxis`, `tubeUp`) for withTubeStrips('attribute') */
+> 168	  axisAttr?: boolean;
+> 169	  /**
+> 170	   * wave 8: lateral stretch of the cross-section (1 = circle): the `right` component of every wall point is
+> 171	   * multiplied by oval(s) (ref 05 rings are ovals ≈1.75 wider than tall), normals follow the ellipse
+> 172	   */
+> 173	  oval?: (s: number) => number;
+> 174	}
+> 175	
+> 176	e …[+10333 chars]
+
+### 🤖 Claude — 2026-11-16T19:59:42.255Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^export function \\|^function \\|^export const \\|^const [a-zA-Z0-9_]* = \\|onBeforeCompile\\|customProgramCacheKey\" src/world/materials.ts | cut -c1-190", "description": "Outline the materials file"}`
+
+### 🧑 User — 2026-11-16T19:59:42.293Z
+
+> ↩︎ result: 76:const FAR_GLOW_PARS = `uniform vec3 uFarGlowColor; uniform vec3 uFarGlowRange; uniform vec3 uMidTint; uniform vec3 uMidRange;
+> 86:const FG_VIRTUAL_VERT_PARS = `#ifdef FG_VIRTUAL
+> 89:const FG_VIRTUAL_VERT = `#ifdef FG_VIRTUAL
+> 93:const FAR_GLOW_APPLY = (solid = '1.0') => `{ float sol = ${solid}; float mt = midTintK() * sol; diffuseColor.rgb = mix(diffuseColor.rgb, uMidTint, mt); totalEmissiveRadiance *= 1.0 - mt *
+> 96:function farGlowUniforms(g: FarGlow) {
+> 109:export function withFarGlow<T extends THREE.MeshStandardMaterial>(mat: T, g: FarGlow, key: string, virtualDepth = false): T {
+> 111:  const prev = mat.onBeforeCompile;
+> 113:  mat.onBeforeCompile = (shader, r) => {
+> 129:  const prevKey = mat.customProgramCacheKey.bind(mat);
+> 130:  mat.customProgramCacheKey = () => prevKey() + '|fg2-' + key + (virtualDepth ? '-v' : '');
+> 156:export function withTubeStrips<T extends THREE.MeshStandardMaterial>(mat: T, s: TubeStrips, source: 'attribute' | 'instance', key: string): T {
+> 161:  const prev = mat.onBeforeCompile;
+> 162:  mat.onBeforeCompile = (shader, r) => {
+> 200:  const prevKey = mat.customProgramCacheKey.bind(mat);
+> 201:  mat.customProgramCacheKey = () => prevKey() + '|strips-' + source + '-' + …[+3049 chars]
+
+### 🤖 Claude — 2026-11-16T19:59:44.796Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/materials.ts", "offset": 205, "limit": 140}`
+
+### 🧑 User — 2026-11-16T19:59:44.813Z
+
+> ↩︎ result: 205	
+> 206	/** linear radiance for a stylised palette entry: the values are solved so that, after Neutral tone mapping
+> 207	 *  (exposure 0.86), sRGB output and the grade pass (sat 1.36 / con 1.15), they land on the display colour
+> 208	 *  sampled from the approved reference (comment = target display sRGB) */
+> 209	const lin3 = (r: number, g: number, b: number) => new THREE.Vector3(r, g, b);
+> 210	
+> 211	/**
+> 212	 * Ref 05 ring look (wave 7): a stylised polished band instead of the env-map PBR result (which clipped to one
+> 213	 * flat orange). The band profile (roundBandGeometry: main half-round band, groove, camera-side lip) is read
+> 214	 * from the object-space axial coordinate, so every ring — near, real far, forced-perspective far — gets the
+> 215	 * same cross-section: dark rose contour at both edges → rose-copper → orange line → peach-gold body → pale
+> 216	 * white-yellow highlight line on the crown, a darker orange-copper groove, and a rose lip with a light crown.
+> 217	 * Warm-white "marquee" spots sit at `count` fixed azimuths (top spot at 12 o'clock) so the spots of all rings
+> 218	 * line up radially toward the VP like the reference. Deeper rings fade to rose-copper (ref rings #2/#3); the
+> 2 …[+8842 chars]
+
+### 🤖 Claude — 2026-11-16T19:59:45.475Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/materials.ts", "offset": 432, "limit": 175}`
+
+### 🧑 User — 2026-11-16T19:59:45.498Z
+
+> ↩︎ result: 432	}
+> 433	
+> 434	export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMaterial {
+> 435	  const mat = new THREE.MeshStandardMaterial({
+> 436	    color: o.color ?? '#d13fd6',
+> 437	    metalness: o.metalness ?? 0.72,
+> 438	    roughness: o.roughness ?? 0.26,
+> 439	    emissive: new THREE.Color(o.emissive ?? '#9a1fa8'),
+> 440	    emissiveIntensity: o.emissiveIntensity ?? 0.26,
+> 441	    side: o.side ?? THREE.BackSide,
+> 442	    envMapIntensity: o.envMapIntensity ?? 1.0,
+> 443	  });
+> 444	  if (o.envMap) mat.envMap = o.envMap;
+> 445	  if (o.envMapRotation) mat.envMapRotation.copy(o.envMapRotation);
+> 446	  const relief = o.relief;
+> 447	  // mean hole coverage of one cell (capsule area / cell area): sub-pixel slot rows fade to this instead
+> 448	  // of aliasing into moiré stripes down the tunnel
+> 449	  const hs = o.slotHalf ?? [((o.holeSize ?? 0.42) * ((o.slot ?? 1) ? 0.62 : 0.5)), ((o.holeSize ?? 0.42) * ((o.slot ?? 1) ? 0.24 : 0.5))];
+> 450	  const rr = Math.min(hs[0], hs[1]);
+> 451	  const holeCover = THREE.MathUtils.clamp(4 * hs[0] * hs[1] - (4 - Math.PI) * rr * rr, 0, 1);
+> 452	  const river = o.river;
+> 453	  const uniforms = {
+> 454	    uHoleColor: { value: new THREE.Color(o.holeColor ?? '#2b0 …[+7545 chars]
+
+### 🤖 Claude — 2026-11-16T20:01:48.178Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p scripts/capture.mjs | cut -c1-220; ls qa/pilot05/wave9b/rings/ | head -30; ls tools/qa | head -40", "description": "Read capture script header and list ring-fit data"}`
+
+### 🧑 User — 2026-11-16T20:01:48.233Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+1809 chars]
+
+### 🤖 Claude — 2026-11-16T20:01:50.101Z
+
+Code reading is done; now I'm taking a fresh baseline capture of the game and measuring the rings in your approved picture.
+
+### 🤖 Claude — 2026-11-16T20:01:53.258Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad && mkdir -p $S/base && (time node scripts/capture.mjs 05 --out=$S/base) 2>&1 | tail -6 && python3 -I - <<EOF\nfrom PIL import Image, ImageChops\na=Image.open('$S/base/05.png').convert('RGB'); b=Image.open('qa/pilot05/current_default_05.png').convert('RGB')\nd=ImageChops.difference(a,b); print('default vs current_default_05: bbox of differences =', d.getbbox())\nEOF\ngit status --short | head", "description": "Capture default Screen 05 and compare to the stored default", "timeout": 400000}`
+
+### 🤖 Claude — 2026-11-16T20:01:54.360Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/wave9b/rings/rings.md | cut -c1-300 | head -40; sed -n 1,60p tools/qa/ring_fit05.py | cut -c1-200", "description": "Read existing ring measurements and the fitting tool"}`
+
+### 🧑 User — 2026-11-16T20:02:09.871Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/base/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> real	0m16.331s
+> user	0m1.661s
+> sys	0m0.356s
+> default vs current_default_05: bbox of differences = None
+>  M qa/capture_log.json
+
+### 🧑 User — 2026-11-16T20:02:09.911Z
+
+> ↩︎ result: | image | ring | centre x | centre y | radius | band thick | radius ÷ next ring | gold share on arc |
+> |---|---|---|---|---|---|---|---|
+> | APPROVED | A | 474 | 529 | 492.5 | 64 | 2.06 | 1.0 |
+> | APPROVED | B | 477 | 447 | 239.5 | 38 | 1.60 | 0.97 |
+> | APPROVED | C | 491 | 458 | 150.0 | 23 | 1.69 | 0.98 |
+> | APPROVED | D | 493 | 464 | 88.5 | 12 | 1.74 | 1.0 |
+> | APPROVED | E | 503 | 466 | 51.0 | 15 | 2.17 | 1.0 |
+> | APPROVED | F | 501 | 473 | 23.5 | 50 | — | 1.0 |
+> | BEFORE | A | 505 | 426 | 374.0 | 69 | 1.64 | 0.98 |
+> | BEFORE | B | 506 | 440 | 227.5 | 42 | 1.49 | 0.94 |
+> | BEFORE | C | 502 | 455 | 153.0 | 17 | 1.59 | 0.93 |
+> | BEFORE | D | 500 | 470 | 96.5 | 10 | 2.33 | 1.0 |
+> | BEFORE | E | 497 | 484 | 41.5 | 56 | 3.07 | 1.0 |
+> | BEFORE | F | 492 | 465 | 13.5 | 78 | — | 1.0 |
+> #!/usr/bin/env python3
+> """Screen 05: measure the projected gold rings (centre, radius, band thickness) in the approved image and in live
+> captures, by fitting circles to the gold pixels of each ring's upper arc.
+> 
+>     python3 -I tools/qa/ring_fit05.py OUT_DIR LABEL=image[:guessfile] ...
+> 
+> A circle (cx, cy, r) is scored by the share of gold pixels on its arc above its own centre line (HUD bar, title
+> banner and everything ou …[+2485 chars]
+
