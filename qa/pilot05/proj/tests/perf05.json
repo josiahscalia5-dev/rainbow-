@@ -1,5 +1,5 @@
 {
-  "when": "2026-11-16T18:33:16.185Z",
+  "when": "2026-11-16T18:56:48.868Z",
   "size": [
     864,
     1536
@@ -12,31 +12,31 @@
       "name": "default",
       "query": "",
       "runs": [
-        2592.8,
-        2474.2
+        2391.8,
+        2289.3
       ],
       "calls": 86,
       "tris": 567415,
       "textures": 43,
       "geometries": 102,
       "errors": [],
-      "medianMs": 2474.2,
+      "medianMs": 2289.3,
       "vsFirst": 1
     },
     {
       "name": "proj05",
       "query": "proj05=1",
       "runs": [
-        2432.9,
-        2520
+        2359.7,
+        2299.1
       ],
-      "calls": 84,
-      "tris": 554329,
-      "textures": 49,
-      "geometries": 102,
+      "calls": 85,
+      "tris": 556729,
+      "textures": 50,
+      "geometries": 103,
       "errors": [],
-      "medianMs": 2432.9,
-      "vsFirst": 0.983
+      "medianMs": 2299.1,
+      "vsFirst": 1.004
     }
   ]
 }
