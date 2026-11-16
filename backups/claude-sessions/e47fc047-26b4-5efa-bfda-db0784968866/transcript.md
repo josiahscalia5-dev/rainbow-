@@ -3529,3 +3529,15 @@ Now the shader mode. It's a runtime branch inside the existing proj05 block, so 
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold=\"\"\"  // still, and `projflowmix05` (share of the flowing picture, 1 = all) can keep part of the picture fixed.\"\"\"\nnew=\"\"\"  // still, and `projflowmix05` (share of the picture that travels; default 0.5, 1 = all) keeps the rest of the approved\n  // picture fixed where it is painted — measured (qa/pilot05/proj/flow2/NOTES.md): similarity to the unflowed design\n  // over a cycle 0.72 (old flow) -> 0.93, never below 0.90; direction toward the camera in every tracked frame pair.\"\"\"\nassert old in s; s …[+1436 chars]`
 
+### 🧑 User — 2026-11-16T21:57:09.927Z
+
+> ↩︎ result: 0
+> 0
+> old flow (projflow05 unset), 12 running-clock frames, before vs after the shader change — differing px per frame: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+> new mode default (mix 0.5) vs the tested w3a run: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+> new mode frozen-clock frame vs old flow frozen-clock frame: 100
+
+### 🤖 Claude — 2026-11-16T21:57:22.616Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/rideO $S/rideN && (node scripts/proj05-move.mjs --q=\"$B\" --out=$S/rideO --clip=3 --fps=24 2>&1 | tail -1) && (node scripts/proj05-move.mjs --q=\"$B&projflow05=2\" --out=$S/rideN --clip=3 --fps=24 2>&1 | tail -1) && ls $S/rideN/clip | wc -l && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/w4/still/0000.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/w0/still/ …[+196 chars]`
+
