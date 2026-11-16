@@ -1734,3 +1734,33 @@ Nothing on draft PR #11 needs action. The repository has no automated tests on G
 
 I'll look at it again at 21:40 UTC. Any comment on the PR, or a message from you, brings me back sooner. Nothing will be merged or promoted until you approve the picture.
 
+### 🧑 User — 2026-11-16T20:54:47.646Z
+
+What does mine look like right now on my screen?
+
+### 🤖 Claude — 2026-11-16T20:54:54.796Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/pilot05/proj/tunnel/frame/0_DEFAULT_T2_unchanged.png"], "caption": "Screen 05 as the game shows it right now with no test switches (the protected default, T2), captured from the real game at 864×1536 this session.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T20:54:55.368Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/pilot05/proj/tunnel/frame/0_DEFAULT_T2_unchanged.png → file_uuid: 8b195db7-64b0-4b92-92cb-f84fbfae1164
+
+### 🤖 Claude — 2026-11-16T20:54:59.742Z
+
+I can't see your phone, but I sent you the picture of what Screen 05 shows when you open the game normally right now. It's the protected default version (T2), captured from the real game this session. Today's work didn't change it at all: I checked, and it's pixel-identical to before.
+
+In that default version you'll see:
+- **Walls:** flat magenta walls with wavy white bands and black slots, not the glossy purple metal.
+- **Gold:** the rings, paddles and bottom corners are a flat, pale orange-cream.
+- **Water and Benny:** the older procedural water, with Benny riding it.
+
+All of the improvements so far, including the approved water, glossy purple walls, gold rings and today's gold bottom frame, only appear with the test switches added to the game address:
+
+`?proj05=1&projwall05=1&projring05=1&projframe05=1`
+
+That version is the third picture I sent earlier (`3_NEW_projframe05.png`). It stays a test until you approve it.
+
+If you're running an installed Android app on your phone, it shows whichever version that app was built from. I can't tell which build that is from here.
+
