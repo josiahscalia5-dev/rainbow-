@@ -213,10 +213,24 @@ wtF, _ = splat(xF, yF, (~fcoin)[:, None].astype(float), WF_, HF_)
 F_, validF = finish(accF, wtF[..., 0], holeF[..., 0], fill_sigma=1.5, max_gap=80, fill_all=True)
 alphaF = np.clip((gaussian_filter(validF.astype(float), 1.5) - 0.3) / 0.5, 0, 1)
 
+# ---------------------------------------------------------------- A (bank strip) layer
+# the visual-only strip on the lower wall (src/vfx/proj05Apron.ts): x = 0.5 + 0.5 * t * side, y = s over [A_S0, A_S1]
+A_S0, A_S1, WA, dA = 126.0, 190.0, 256, 12
+HA = int((A_S1 - A_S0) * dA)
+apm = (np.abs(R[..., 2] - 5) < 0.01) & wm
+if apm.any():
+    xa = (0.5 + 0.5 * R[..., 0][apm]) * WA - 0.5; ya = (R[..., 1][apm] - A_S0) * dA - 0.5
+    accA, _ = splat(xa, ya, tgt[apm], WA, HA)
+    wtA, _ = splat(xa, ya, np.ones((int(apm.sum()), 1)), WA, HA)
+    A_, validA = finish(accA, wtA[..., 0], np.zeros((HA, WA)), fill_sigma=1.5, max_gap=int(3 * dA), fill_all=False)
+    alphaA = np.clip((gaussian_filter(validA.astype(float), 1.2) - 0.3) / 0.5, 0, 1)
+else:
+    A_, alphaA = np.zeros((HA, WA, 3)), np.zeros((HA, WA))
+
 def save(img, a, name):
     rgba = np.concatenate([np.clip(img, 0, 1), np.clip(a, 0, 1)[..., None]], -1) if a is not None else np.clip(img, 0, 1)
     Image.fromarray((rgba * 255 + 0.5).astype(np.uint8)).save(os.path.join(out, name), optimize=True)
-save(F_, alphaF, "proj05_F.png"); save(E, alphaE, "proj05_E.png"); save(N_, alphaN, "proj05_N.png"); save(T_, None, "proj05_T.png")
+save(F_, alphaF, "proj05_F.png"); save(A_, alphaA, "proj05_A.png"); save(E, alphaE, "proj05_E.png"); save(N_, alphaN, "proj05_N.png"); save(T_, None, "proj05_T.png")
 Image.fromarray((D * 255 + 0.5).astype(np.uint8)).save(os.path.join(out, "proj05_D.png"), optimize=True)
 
 LUTN = 1024
@@ -231,6 +245,6 @@ lut = dict(
     F=dict(zmax=ZMAX, width=WF_, height=HF_, note="far block: x = uv.x, y = log(1 + Z) / log(1 + zmax)"),
     probe_camera_uTime=12)
 json.dump(lut, open(os.path.join(out, "proj05_lut.json"), "w"))
-rep = dict(E=[WE, NE], N=[WN, NN], T=[WN, NT], D=[int(Wd - p), int(Hd - p)], E_valid=float(validE.mean()), N_valid=float(validN.mean()),
+rep = dict(A_px=int(apm.sum()), E=[WE, NE], N=[WN, NN], T=[WN, NT], D=[int(Wd - p), int(Hd - p)], E_valid=float(validE.mean()), N_valid=float(validN.mean()),
            samples=int(use.sum()), coin_pixels=int(scoin.sum()), sE=[sE0, sE1])
 print(json.dumps(rep))

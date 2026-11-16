@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { createRibbon, PROJ05, flag05 } from './waterRibbon';
+import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
 import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
 import { createDrumWater } from './drumWater';
 import { createFinalWave } from './finalWave';
@@ -165,7 +165,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
     group,
     controls,
     parts,
-    ...(ribbon.ready ? { ready: ribbon.ready } : {}),
+    ...(ribbon.ready ? { ready: Promise.all([ribbon.ready, ...proj05Pending]).then(() => undefined) } : {}),
     surfaceHeight,
     stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
     update(time, dt, focusS, camera) {

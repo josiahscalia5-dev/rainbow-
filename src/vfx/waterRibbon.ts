@@ -205,6 +205,8 @@ export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
  * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
  */
 export const PROJ05: boolean = q05('proj05');
+/** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+export const proj05Pending: Promise<unknown>[] = [];
 
 /**
  * W11 geometry (`?farw05=1`, else the full width): the VISIBLE water channel of the 05 river at arc length s, in the
@@ -1560,12 +1562,15 @@ export function proj05Far() {
     uPjF: { value: null }, uPjFZ: { value: 400 },
     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
   };
-  const tex = new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
-    t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
-  });
-  tex.flipY = false;
-  u.uPjF.value = tex;
-  fetch(new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {});
+  proj05Pending.push(new Promise<void>((res) => {
+    const tex = new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+      t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
+      res();
+    }, undefined, () => res());
+    tex.flipY = false;
+    u.uPjF.value = tex;
+  }));
+  proj05Pending.push(fetch(new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
   const size = new THREE.Vector2();
   const onBeforeRender = (renderer: THREE.WebGLRenderer) => {
     const rt = renderer.getRenderTarget();

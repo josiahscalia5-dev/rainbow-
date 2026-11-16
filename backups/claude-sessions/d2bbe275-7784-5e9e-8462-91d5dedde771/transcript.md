@@ -3983,3 +3983,143 @@ First I'm breaking down exactly where the remaining differences come from, so ea
 >   const floorExtra05 = NEAR_FLOOR05 === 0 ? undefined
 >     : (s: number) => N …[+2228 chars]
 
+### 🤖 Claude — 2026-11-16T18:45:38.644Z
+
+> 🔧 **Bash** `{"command": "sed -n 425,440p src/world/environment.ts; grep -n \"^import\\|from '../vfx/waterRibbon'\" src/world/environment.ts | head -20; grep -n \"export const EDGE_LIFT\" src/vfx/waterRibbon.ts; grep -n \"envRoot\\|washer_world\" src/world/environment.ts | head -5", "description": "Find insertion point and imports in environment.ts"}`
+
+### 🧑 User — 2026-11-16T18:45:38.706Z
+
+> ↩︎ result: const ringDv = [59, 97, 161, 222, 322];
+>     const knots: [number, number][] = [[0, 0]];
+>     ringDv.forEach((d, i) => knots.push([bay05 * (i + 0.5), Math.max(d - D0, knots[i][1] + 1)]));
+>     const zEnd = 430 - D0;
+>     const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);
+>     // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
+>     const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
+>     const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
+>     // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP
+>     const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
+>     const farLay = farRiverLayout(course, ft, level);
+>     const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));
+>     Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay });
+>     // rings …[+1511 chars]
+
+### 🤖 Claude — 2026-11-16T18:46:01.373Z
+
+> 🔧 **Bash** `{"command": "grep -n \"add(.*farRiver\\|farRiver)\" src/world/environment.ts | head -3 && cat > src/vfx/proj05Apron.ts <<'EOF'\n/**\n * Screen 05 projection test (`?proj05=1`, qa/pilot05/proj/NOTES.md): a thin VISUAL-ONLY strip that hugs the tunnel wall\n * from the river's edge up ≈ 2.5 u, on 05 only. At the far bends the approved picture's fluffy foam banks lie beyond the\n * game river's edge (on the lower wall); this strip carries them (baked from the approved picture through the locked\n * camera: assets/textures/water05/proj05_A.png, tools/proj05/bake.py). No collisions, no gameplay: ste …[+5124 chars]`
+
+### 🧑 User — 2026-11-16T18:46:01.439Z
+
+> ↩︎ result: 43:  tan: THREE.Vector3;
+> 442:    const tan: THREE.Vector3[] = [];
+> 543:    const o = out ?? { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+> 606:    prev = { ...cur, pos: cur.pos.clone(), tan: cur.tan.clone(), up: cur.up.clone(), right: cur.right.clone() };
+
+### 🤖 Claude — 2026-11-16T18:46:13.162Z
+
+> 🔧 **Bash** `{"command": "grep -n \"buildEnvironment\\|createEnvironment\\|= build.*(course\\|loadWater(\" src/game/Game.ts | head -5; grep -n \"farWall, farRiver\\|farRiver,\" src/world/environment.ts | head -5", "description": "Check env vs water creation order and far group add"}`
+
+### 🧑 User — 2026-11-16T18:46:13.210Z
+
+> ↩︎ result: 17:import { buildEnvironment } from '../world/environment';
+> 95:  const env = buildEnvironment(course);
+> 97:  const water = await loadWater(course);
+> 475:    const parts = [farWall, farRiver, farRings, farLids, glow];
+
+### 🤖 Claude — 2026-11-16T18:46:15.325Z
+
+> 🔧 **Bash** `{"command": "sed -n 472,482p src/world/environment.ts", "description": "Read far parts group construction"}`
+
+### 🧑 User — 2026-11-16T18:46:15.362Z
+
+> ↩︎ result: glow.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(fr0.right, fr0.up, fr0.tan.clone().negate()));
+>     glow.position.copy(ft.point(zEnd, new THREE.Vector3()));
+>     glow.scale.setScalar(perfPath.radius(sF05) * ft.kOf(zEnd) * 1.35);
+>     const parts = [farWall, farRiver, farRings, farLids, glow];
+>     for (const p of parts) { p.frustumCulled = false; p.name ||= 'tube05_far'; }
+>     farWall.name = 'tube05_far_wall'; farRiver.name = 'tube05_far_river';
+>     // open/close with the rider camera (closed at the 05 checkpoint, folded away from ≈18 units before sF)
+>     let openNow = -1;
+>     const camPos = new THREE.Vector3();
+>     const sync = (cam: THREE.Camera) => {
+>       const o = ft.openFor(camPos.setFromMatrixPosition(cam.matrixWorld));
+
+### 🤖 Claude — 2026-11-16T18:46:35.025Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\ns=s.replace(\"export const PROJ05: boolean = q05('proj05');\",\"export const PROJ05: boolean = q05('proj05');\\n/** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */\\nexport const proj05Pending: Promise<unknown>[] = [];\",1)\nold=\"\"\"  const tex = new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {\n    t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.min …[+3334 chars]`
+
+### 🧑 User — 2026-11-16T18:46:37.887Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T18:47:05.176Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/proj05Apron.ts'\ns=open(p).read()\ns=s.replace(\"const VERT = /* glsl */ `\",\"/** s range covered by proj05_A.png (must match tools/proj05/bake.py: A_S0, A_S1) */\\nexport const PJ_A_S0 = 126, PJ_A_S1 = 190;\\n\\nconst VERT = /* glsl */ `\",1)\ns=s.replace(\"uPjA: { value: null }, uPjAS: { value: new THREE.Vector4(s0, s1, 1, 1) },\",\"uPjA: { value: null }, uPjAS: { value: new THREE.Vector4(PJ_A_S0, PJ_A_S1, 1, 1) },\")\ns=s.replace(\"(uniforms.uPjAS.value as THREE.Vector4).set(s0, s1, t.image.width, t.image.height);\",\"(uniforms.uPjAS.value as THRE …[+3267 chars]`
+
+### 🧑 User — 2026-11-16T18:47:30.224Z
+
+> ↩︎ result: probe → /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/probe2 {"w":864,"h":1536,"uTime":12,"ribbonRows":240,"farVerts":2783,"farMorph":0,"foam":["foam_berm","Mesh"
+> apron px 0  ribbon px 786397
+> ribbon (u,s) same as before: max diff 0.0
+
+### 🤖 Claude — 2026-11-16T18:47:40.577Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/    }, undefined, () => { mesh.visible = false; res(); });/    }, undefined, () => res());/' src/vfx/proj05Apron.ts && grep -c \"undefined, () => res());\" src/vfx/proj05Apron.ts && SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/proj05-probe.mjs --q=proj05=1 --out=$SP/probe2 --raw=$SP/probe2 2>&1 | grep -c \"probe →\" && python3 -c \"\nimport numpy as np\nfrom PIL import Image\nR=np.fromfile('$SP/probe2/uv_river.f32',np.float32).reshape(1536,864,4)\nB=np.fromfile('$SP/probe2/uv_scene.f32',np.float32).reshape(1536,864, …[+701 chars]`
+
+### 🤖 Claude — 2026-11-16T18:47:41.631Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/apron_cov.png"}`
+
+### 🧑 User — 2026-11-16T18:48:01.718Z
+
+> ↩︎ result: 1
+> 1
+> apron px (river pass) 67321  visible in scene 48812  of which approved water/foam 15880
+> s range 139.26036071777344 180.03762817382812
+
+### 🧑 User — 2026-11-16T18:48:01.744Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:48:07.036Z
+
+The strip covers most of the missing far-bank pixels (green: about 15,900 of 19,100). Wherever your approved picture shows wall rather than foam, the strip stays invisible. Baking its texture now.
+
+### 🤖 Claude — 2026-11-16T18:48:11.842Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/    A_, validA = finish(accA, wtA\\[..., 0\\], np.zeros((HA, WA)), fill_sigma=1.5, max_gap=int(3 \\* dA), fill_all=True)/    A_, validA = finish(accA, wtA[..., 0], np.zeros((HA, WA)), fill_sigma=1.5, max_gap=int(3 * dA), fill_all=False)/' tools/proj05/bake.py && grep -c \"fill_all=False\" tools/proj05/bake.py && SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -I tools/proj05/bake.py $SP/probe2 qa/pilot05/proj/target assets/textures/water05 && node scripts/capture.mjs 05 --q=proj05=1 --out=$SP/cap/r3 2>&1 | grep -c \"→\"; gi …[+433 chars]`
+
+### 🤖 Claude — 2026-11-16T18:48:12.844Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/banks_r3.png"}`
+
+### 🧑 User — 2026-11-16T18:48:40.665Z
+
+> ↩︎ result: 2
+> {"A_px": 18413, "E": [1024, 1458], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.8844943576388888, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> 1
+> r2 {'px': 468549, 'within_10': 0.857, 'within_20': 0.9075, 'mean_abs': 10.93, 'ssim_lum': 0.8997, 'misses': {'no_river_or_covered': 36036, 'river_visible': 7297}}
+> r3 {'px': 468549, 'within_10': 0.8801, 'within_20': 0.9333, 'mean_abs': 8.93, 'ssim_lum': 0.9228, 'misses': {'no_river_or_covered': 23593, 'river_visible': 7650}}
+
+### 🧑 User — 2026-11-16T18:48:40.681Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:48:48.164Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -I tools/proj05/residual.py $SP/cap/r3/05.png $SP/probe2 qa/pilot05/proj/target 0.8 && python3 -I tools/proj05/bake.py $SP/probe2 qa/pilot05/proj/target assets/textures/water05 >/dev/null && node scripts/capture.mjs 05 --q=proj05=1 --out=$SP/cap/r4 2>&1 | grep -c \"→\"; git checkout -q qa/capture_log.json; python3 -I tools/proj05/match_metrics.py $SP/probe2 $SP/cap/r4/05.png | python3 -c \"import json,sys; d=json.load(sys.stdin); [print(k.split('/')[-2], v) for k,v in d.items()]\"", "de …[+75 chars]`
+
+### 🧑 User — 2026-11-16T18:49:19.667Z
+
+> ↩︎ result: residual on used pixels: mean signed rgb [4.9, 0.36, 0.46]  mean abs 3.672104531202922  used px 506694
+> 1
+> r4 {'px': 468549, 'within_10': 0.8893, 'within_20': 0.9338, 'mean_abs': 8.7, 'ssim_lum': 0.9233, 'misses': {'no_river_or_covered': 23591, 'river_visible': 7427}}
+
+### 🤖 Claude — 2026-11-16T18:49:48.257Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='scripts/proj05-move.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"  if (opt.clip) {\"\"\",\"\"\"  if (opt.steer) {\n    // Benny steers from the locked checkpoint: hold left / right, frames at 0.25 / 0.5 / 0.8 s (real simulation)\n    for (const dir of String(opt.steer).split(',').map(Number)) {\n      await page.evaluate(() => window.__rainbow.goto('05'));\n      let tPrev = 0;\n      for (const t of [0.25, 0.5, 0.8]) {\n        await page.evaluate(([dir, n]) => { const R = window.__rainbow; R.setSteer(dir); R.step(n, 1 / 60); }, [dir, Math.round((t - tPrev) * 6 …[+1872 chars]`
+
+### 🤖 Claude — 2026-11-16T18:49:49.260Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/steer/steer_sheet.png"}`
+

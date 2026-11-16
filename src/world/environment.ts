@@ -10,7 +10,8 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
-import { FLOW05, FLOWMAP05 } from '../vfx/waterRibbon'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
+import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
@@ -475,6 +476,11 @@ export function buildEnvironment(course: Course): Environment {
     const parts = [farWall, farRiver, farRings, farLids, glow];
     for (const p of parts) { p.frustumCulled = false; p.name ||= 'tube05_far'; }
     farWall.name = 'tube05_far_wall'; farRiver.name = 'tube05_far_river';
+    // `?proj05=1` only: visual-only strip on the lower wall carrying the approved foam banks beyond the river edge at the
+    // far bends (src/vfx/proj05Apron.ts); `?projbank05=0` leaves it out. No collisions; nothing else changes.
+    if (PROJ05 && (typeof location === 'undefined' || new URLSearchParams(location.search).get('projbank05') !== '0')) {
+      root.add(createProj05Apron(course, perfPath, sCam05 + 4, sF05));
+    }
     // open/close with the rider camera (closed at the 05 checkpoint, folded away from ≈18 units before sF)
     let openNow = -1;
     const camPos = new THREE.Vector3();

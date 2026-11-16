@@ -48,6 +48,32 @@ try {
     }
     console.log('still frames', n);
   }
+  if (opt.steer) {
+    // Benny steers from the locked checkpoint: hold left / right, frames at 0.25 / 0.5 / 0.8 s (real simulation)
+    for (const dir of String(opt.steer).split(',').map(Number)) {
+      await page.evaluate(() => window.__rainbow.goto('05'));
+      let tPrev = 0;
+      for (const t of [0.25, 0.5, 0.8]) {
+        await page.evaluate(([dir, n]) => { const R = window.__rainbow; R.setSteer(dir); R.step(n, 1 / 60); }, [dir, Math.round((t - tPrev) * 60)]);
+        tPrev = t;
+        await shot(`${OUT}/steer_${dir < 0 ? 'L' : 'R'}_${String(Math.round(t * 100)).padStart(3, '0')}.png`, { steer: dir, t });
+        console.log('steer', dir, t, JSON.stringify(log.frames.at(-1).lat));
+      }
+    }
+  }
+  if (opt.zigzag) {
+    // a steering clip with the clock running: left, right, left (flow + Benny moving across the water)
+    mkdirSync(`${OUT}/zigzag`, { recursive: true });
+    const n = Math.round(Number(opt.zigzag) * fps);
+    await page.evaluate(() => window.__rainbow.goto('05'));
+    for (let i = 0; i < n; i++) {
+      const ph = (i / n) * 3;
+      const dir = ph < 0.5 ? -1 : ph < 1.5 ? 1 : ph < 2.5 ? -1 : 1;
+      await page.evaluate(([t, dt, dir]) => { const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); }, [12 + i / fps, 1 / fps, dir]);
+      await shot(`${OUT}/zigzag/${String(i).padStart(4, '0')}.png`, { t: 12 + (i + 1) / fps, steer: dir });
+    }
+    console.log('zigzag frames', n);
+  }
   if (opt.clip) {
     mkdirSync(`${OUT}/clip`, { recursive: true });
     const n = Math.round(Number(opt.clip) * fps);

@@ -40,6 +40,7 @@ try {
     const ribbon = scene.getObjectByName('water_ribbon');
     const far = scene.getObjectByName('tube05_far_river');
     const farWall = scene.getObjectByName('tube05_far_wall');
+    const apron = scene.getObjectByName('proj05_apron');   // ?proj05=1: visual-only bank strip (id 5: t·side, s)
     // the game's own THREE classes, taken from live objects (no second three.js instance)
     const T3 = { FloatType: 1015, RGBAFormat: 1023, DoubleSide: 2 };
     const RT = composer.renderTarget1.constructor, SM = ribbon.material.constructor, MBM = far.material.constructor;
@@ -61,6 +62,7 @@ try {
         .replace('#include <common>', '#include <common>\nvarying vec2 vPUv; varying float vPLat; varying float vPZ;')
         .replace('#include <dithering_fragment>', 'gl_FragColor = vec4(vPUv.x, vPZ, 3.0, vPLat);');
     };
+    const apronMat = apron ? new SM({ vertexShader: apron.material.vertexShader, fragmentShader: 'varying vec2 vPj; void main(){ gl_FragColor = vec4(vPj.x, vPj.y, 5.0, 1.0); }', side: T3.DoubleSide }) : null;
     const foamMat = new MBM({ color: 0xffffff, fog: false });
     foamMat.onBeforeCompile = (sh) => { sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>', 'gl_FragColor = vec4(0.0, 0.0, 4.0, 1.0);'); };
     const foamNames = new Set();
@@ -82,7 +84,7 @@ try {
     };
     let envRoot = farWall;
     while (envRoot.parent && envRoot.parent !== scene) envRoot = envRoot.parent;
-    const underEnv = (o) => { let c = o; while (c) { if (c === envRoot) return true; c = c.parent; } return false; };
+    const underEnv = (o) => { if (o === apron) return false; let c = o; while (c) { if (c === envRoot) return true; c = c.parent; } return false; };
     for (const s of saved) { if (isFoam(s.o)) foamNames.add(s.o.name || s.o.type); }
     /** two draws into one target: (1) occluders depth-only (their own vertex shaders, colour writes off), (2) writers
      *  with their id material, depth-tested against (1) — so a river pixel survives only where it is the first hit */
@@ -100,7 +102,7 @@ try {
       renderer.setRenderTarget(null);
       return read();
     };
-    const riverId = (o) => (o === ribbon ? ribMat : o === far ? farMat : null);
+    const riverId = (o) => (o === ribbon ? ribMat : o === far ? farMat : apron && o === apron ? apronMat : null);
     // A: the river surfaces alone (the far tunnel wall occludes, as it hides the ribbon's continuation behind the seam)
     const A = pass((o) => o === farWall, riverId);
     // B: the whole static environment occludes (walls, rings, lids, far wall, glow); Benny, coins, the girl and every

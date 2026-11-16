@@ -387,34 +387,39 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/water05/proj05_A.png",
+   "bytes": 85585,
+   "sha256": "2bc5e36bee645fcb323e7bf54a9e101601fdbad5be65bcd258503a5729b4509e"
+  },
+  {
    "path": "assets/textures/water05/proj05_D.png",
-   "bytes": 58999,
-   "sha256": "3280bf69ab20c4303600089d0b3327be106e1430922354a3a0bdb884ad01f734"
+   "bytes": 59068,
+   "sha256": "ee7f77dca613cdce15306e0f3c8dab1cbcad522bfa60f58f4e74fa3b90febdb9"
   },
   {
    "path": "assets/textures/water05/proj05_E.png",
-   "bytes": 2003546,
-   "sha256": "8b22f243b1f5c35f29ec49780b50885f998b897a9cd38f9744f565e76b757bbd"
+   "bytes": 2029538,
+   "sha256": "d559ee789ec5ecdfb527ecece1417006b434643e80b75ddb3d114de214bbbb4a"
   },
   {
    "path": "assets/textures/water05/proj05_F.png",
-   "bytes": 230576,
-   "sha256": "859a956537d4cdebbb2944076142268abbe59970dab0741478776bf64298be1e"
+   "bytes": 229896,
+   "sha256": "0546914384122da41fd9e994f686cb288f4040ce4f4e1ed4c6120a8bd3ca8fec"
   },
   {
    "path": "assets/textures/water05/proj05_N.png",
-   "bytes": 618754,
-   "sha256": "e7f30481b36cda2f5167224276b0361c79f043e668466d3a5c67d2136f234298"
+   "bytes": 617963,
+   "sha256": "2f0ae0b721ae9fe87e84ba02f7ac0ce9bd9ce8dae7220f9a40d768fe793c8317"
   },
   {
    "path": "assets/textures/water05/proj05_T.png",
-   "bytes": 179290,
-   "sha256": "08d8ee70d9906242dd471bb4373fb888ddc7d6bde08988e0b440c94c464afd75"
+   "bytes": 179313,
+   "sha256": "88c1c11eba2ab561e87b65cd7dd72dbe69207c0f754a03b589071754d296770a"
   },
   {
    "path": "assets/textures/water05/proj05_lut.json",
-   "bytes": 27351,
-   "sha256": "30a09d1fdb0e6913083f3cd26ca1fa5f491ff0f5d1bfe4400cb4fd2d8a26d14d"
+   "bytes": 27503,
+   "sha256": "a91d9e565b409f2fb7a74c4d6e8ec7b3826992906f610f331fb23cec08851c91"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -439,7 +444,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "43b2579ee20c465e3db54eeeabeb7814a642d11a497182800c19d50b069e541c"
+   "sha256": "01fd79eafc846946856b819242793556c832bb1e05849fba442a5a7803d6dfec"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1518,8 +1523,8 @@
   },
   {
    "path": "qa/pilot05/proj/target/correction.npz",
-   "bytes": 3491055,
-   "sha256": "2d188a063fc30f17cbc79bdef5506666f3f0087a749f4882ead9bbbc5c79e434"
+   "bytes": 3505518,
+   "sha256": "d40fd5ee66beb9f952a86df6f8df990f64bb07ab25708698457aac2cab942831"
   },
   {
    "path": "qa/pilot05/proj/target/fill_mask.png",
@@ -6793,13 +6798,13 @@
   },
   {
    "path": "scripts/proj05-move.mjs",
-   "bytes": 3821,
-   "sha256": "974dea5b20ed5bd64b4f58ee6674a61cd85a68b9bcbfb036a45839489d7a56fc"
+   "bytes": 5328,
+   "sha256": "5357f03f49fe8fbb4412b3baedf36a6ae74bc2f5ff034b97f82f0dc2f03d680a"
   },
   {
    "path": "scripts/proj05-probe.mjs",
-   "bytes": 11752,
-   "sha256": "5ba30d7cc73eaf1a33002cc882cc39c025ea959c83c1cd840dddbdd52c4636f3"
+   "bytes": 12141,
+   "sha256": "c91043485dad22712bb2ef03ef2b3c8902449416137053619458265cc0565127"
   },
   {
    "path": "scripts/rainbow-autosave.py",
@@ -6993,8 +6998,13 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 15984,
-   "sha256": "5f26de6608a940c06234bb34f227aece5254343308a32e7ee03120abcf3ca821"
+   "bytes": 16054,
+   "sha256": "2d88e07e8f68ea031e1a308c124f5d4936258283c365cc22c54c61066a6a8c76"
+  },
+  {
+   "path": "src/vfx/proj05Apron.ts",
+   "bytes": 5585,
+   "sha256": "17c7d5ecd3329982de40c490fa5d85cb4e7f83a7178e8a23101ecb0a1491b8f1"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -7013,8 +7023,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 93821,
-   "sha256": "e466b852b805427cdc0daa68912a07ad4e6eb6a22592c80cfd9c41439870f506"
+   "bytes": 94117,
+   "sha256": "8ac3a374289e3d1790e0d8a7bf04f7911e9350aa1be35c37b1af6176b2e41b30"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -7028,8 +7038,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 54840,
-   "sha256": "47412014af0e28c3bf0036cc78feadc3883e2d6f4c0e830d2d8f1a6c14e75e6d"
+   "bytes": 55336,
+   "sha256": "63699bc763e65da4a054ae50477f4be1f7e019d61ba691f30b12d13df7dd3edb"
   },
   {
    "path": "src/world/far05.ts",
@@ -7163,8 +7173,8 @@
   },
   {
    "path": "tools/proj05/bake.py",
-   "bytes": 13935,
-   "sha256": "fc6706e684ecc8bce253ea7760aa688be57ae16e4c75e97c31454867b7f345ed"
+   "bytes": 14792,
+   "sha256": "1ce19441fed454f73a2574bf0d44286287df16cb641c6625b861be802e8d3932"
   },
   {
    "path": "tools/proj05/frame_metrics.py",
