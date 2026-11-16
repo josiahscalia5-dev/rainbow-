@@ -18,17 +18,17 @@
  "qa/pilot05/proj/compare/3_NEW_proj05.png": {
   "WATER": {
    "px": 559997,
-   "mean_abs": 23.21,
-   "within_10": 0.6534,
-   "within_20": 0.7221,
-   "ssim_lum": 0.7683
+   "mean_abs": 16.97,
+   "within_10": 0.7478,
+   "within_20": 0.8008,
+   "ssim_lum": 0.8446
   },
   "FRAME": {
    "px": 1157760,
-   "mean_abs": 41.31,
-   "within_10": 0.3417,
-   "within_20": 0.4319,
-   "ssim_lum": 0.4612
+   "mean_abs": 37.67,
+   "within_10": 0.392,
+   "within_20": 0.4767,
+   "ssim_lum": 0.5046
   }
  }
 }

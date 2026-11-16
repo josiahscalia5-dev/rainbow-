@@ -16,11 +16,10 @@ approved it yet: nothing becomes default, `ccr-451ea8c7-3nqlis` stays protected.
 Relaunch prompt: "Rainbow Screen 05, branch <session branch>. Read qa/pilot05/proj/NOTES.md and BRIEF_NEXT.md. Improve
 `?proj05=1` one factor at a time, each behind its own URL switch, default build pixel-identical
 (qa/pilot05/current_default_05.png), approved | BEFORE | NEW full-size from the locked camera, numbers from
-tools/proj05/frame_metrics.py, no 95 % claim without the measurement." Candidate factors (in this order):
-1. bubbles: the game's 05 bubbles vs the approved bubbles baked into the texture (hide / reposition on 05 only);
-2. `?projgeo05=1`: visual-only bank widening where the approved water reaches past the game river (≈102 k px; course.ts,
-   widthAt(), steering, coins, collisions untouched);
-3. seams of the artwork fill under Benny (visible when he steers): better registration / feathering in make_target.py.
+tools/proj05/frame_metrics.py, no 95 % claim without the measurement." Done in round 2 (NOTES.md): bubbles off on 05 (`projbub05`), visual-only bank strip (`projbank05`), multi-band fill.
+Remaining candidate factors: (1) the bottom corners covered by the T2 front ring (needs the user's OK — tunnel rule);
+(2) the bloom spill on pure cyan (a 05-only bloom reduction under proj05 would change the tunnel's glow too — ask);
+(3) sharper near water when riding / steering (higher-resolution near layer from the art fill).
 Tools: `tools/proj05/*`, `scripts/proj05-probe.mjs`, `scripts/proj05-move.mjs`. Blender is optional (the bake uses the
 game's own per-pixel river coordinates; if Blender is used for camera projection: its UV Project modifier ignores lens
 shift — use the camera projection matrix, see `tools/blender/marble05_projection.py`).

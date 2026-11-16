@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-16T18:50:00Z",
+ "updated_utc": "2026-11-16T19:15:00Z",
  "updated_by_session": "012NR93QX82e3JqBGArAa4BD (branch ccr-e546a360-cxmton)",
  "running_now": [],
  "assignments_now": {
@@ -152,12 +152,12 @@
   "waiting_for_user": "look at qa/pilot05/marble_feas/compare/1..4 and decide; any new Marble world needs the user's OK (paid)"
  },
  "proj05": {
-  "status": "first version DONE 2026-11-16 ~18:45 UTC by the main session (Specialist 1 projection + first part of Specialist 2 flow); WAITING for the user's verdict; not default",
+  "status": "round 2 DONE 2026-11-16 ~19:15 UTC (main session); WAITING for the user's verdict; not default",
   "branch": "ccr-e546a360-cxmton",
-  "switch": "?proj05=1 (+ projfoam05, projflow05, projflowd05, projrate05, projdetail05, projdbg05)",
+  "switch": "?proj05=1 (+ projfoam05, projbub05, projbank05, projflow05, projflowd05, projrate05, projdetail05, projdbg05)",
   "notes": "qa/pilot05/proj/NOTES.md",
   "next_instructions": "qa/pilot05/proj/BRIEF_NEXT.md",
-  "locked_result": "approved water area (Benny+coins excluded): mean |dRGB| 49.7 -> 23.2, within 20 levels 23% -> 72%, SSIM 0.32 -> 0.77; water surface itself 3.6/255 mean, 96% within 10",
+  "locked_result": "approved-water pixels within 20 levels 25.9% -> 93.4% (96.8% without the T2-ring-covered corners), SSIM 0.31 -> 0.92, mean 46.1 -> 8.7",
   "checks": "default pixel-identical; 06/07 identical with proj05; gameplay 8/8; continuity OK; relative frame cost 0.98x"
  }
 }

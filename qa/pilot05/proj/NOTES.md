@@ -34,7 +34,7 @@ Marble was not used (its reconstructed surface is distorted: `qa/pilot05/marble_
   joins). `?projfoam05=1` keeps the 3D foam.
 
 ## Switches (default build: none of this runs)
-`?proj05=1` on · `&projfoam05=1` keep the 3D foam · `&projflow05=0` no flow · `&projflowd05=` flow distance ·
+`?proj05=1` on · `&projfoam05=1` keep the 3D foam · `&projbub05=1` keep the game bubbles · `&projbank05=0` no bank strip · `&projflow05=0` no flow · `&projflowd05=` flow distance ·
 `&projrate05=` flow rate · `&projdetail05=` detail gain (0.9) · `&projdbg05=1` layer map (green exact, blue near,
 red tile). Experiment APK: `VITE_RAINBOW_Q05="proj05=1" npm run android:debug` (not built in this session).
 
@@ -81,6 +81,44 @@ Next levers, one at a time, each as its own switch: hide or reposition the 05 bu
 * Gameplay test with `?proj05=1`: 8 / 8 (`tests/gameplay_proj05.json`); continuity: all stage joins gap 0;
   relative frame cost 0.98× default (`tests/perf05.json`, SwiftShader — device fps not measured).
 * References 13 / 13 unchanged (`sha256sum -c scripts/reference.sha256`).
+
+## Round 2 (2026-11-16 ~18:50–19:15 UTC, user: "at least a 95% visual match … works properly when Benny moves",
+## no new Marble key / world / credits)
+Measure (`tools/proj05/match_metrics.py`, `compare/metrics_approved_water*.json`): every pixel where the APPROVED
+picture shows its water or foam (registered water footprint minus what the approved picture hides: Benny + splash,
+coins, its bottom ring), rows below the HUD — 468,549 px; mean |ΔRGB| per pixel, 0–255.
+
+| | BEFORE (T2) | round 1 | **round 2** |
+|---|---:|---:|---:|
+| within 20 levels | 25.9 % | 84.1 % | **93.4 %** |
+| within 10 levels | 9.5 % | 77.6 % | **88.9 %** |
+| mean abs | 46.1 | 14.2 | **8.7** |
+| SSIM (luminance) | 0.31 | 0.84 | **0.92** |
+| — without the 16,912 px the locked T2 front ring covers: within 20 / 10 levels, mean | 26.8 % / 9.9 % / 44.5 | | **96.8 % / 92.3 % / 5.6** |
+
+What changed (each measured on its own first):
+1. Artwork fill blended with a multi-band (Laplacian) blend INSIDE the hidden areas → approved pixels outside them stay
+   exact (84.1 → 87.9 %).
+2. The game's own bubbles thin out to none while Benny is on 05 (ramped over 3 u at both joins; the approved bubbles
+   are in the texture) → 90.8 %. `?projbub05=1` keeps them. Other screens' bubbles unchanged.
+3. Visual-only bank strip on the lower tunnel wall (`src/vfx/proj05Apron.ts`, texture `proj05_A.png`): the approved
+   fluffy foam banks beyond the river's edge at the far bends; dithers away where magnified or where the approved shows
+   wall; no collisions → 93.3 %. `?projbank05=0` leaves it out.
+4. Colour feedback re-run → 93.4 %.
+
+What still differs (all outside the water texture): the locked T2 front ring covers the approved water in the two
+bottom corners (16.9 k px, 3.6 % — the tunnel was not moved, user rule), game coins at other far positions and
+Benny's splash (≈ 7.4 k px), a +5 red bias where bloom from the pink ribbons spills onto pure cyan (the texture cannot
+go below 0 there). **No "95 % visual match" claim beyond these measured numbers.**
+
+Benny moving (`steer/`, `clips/proj05_benny_steering_3s.mp4`): from the locked checkpoint Benny steers hard left and
+right (lateral ±4.6 u in 0.8 s, real simulation); the water stays continuous around him — no tears, holes or seams where
+the artwork fills the approved Benny area; next to Benny the water is softer (near / tile layers) than at the locked
+view. Zig-zag clip with the flow running: `clips/proj05_benny_steering_3s.mp4`. Moving-camera sheet and ride clip
+refreshed with the round-2 textures.
+
+Checks after round 2: default 05 pixel-identical; 06 / 07 identical with proj05; 04 only its distant 05 view; gameplay
+8 / 8; continuity OK; relative frame cost 1.00× (SwiftShader).
 
 ## Reproduce
 ```
