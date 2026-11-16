@@ -2534,3 +2534,93 @@ So my recommendation is to install nothing right now. Tools aren't what's missin
 
 Reply "go" and I'll start the paddles in Blender.
 
+### 🧑 User — 2026-11-16T21:32:41.032Z
+
+go
+
+### 🤖 Claude — 2026-11-16T21:34:12.709Z
+
+Starting the Blender paddles. The plan uses the same camera-projection idea as your water:
+
+1. Raycast every pixel of each painted paddle, through the real game camera, onto the real tunnel wall. That gives each paddle's footprint in 3D.
+2. In Blender, build each paddle as a solid gold tray whose sides run exactly along the camera's lines of sight. From the starting view its outline matches your painting exactly, and as Benny moves it shows real depth.
+3. Paint it with your picture's own paddle pixels, export a 3D model file, and load it in the game under `?projlid05=1`.
+
+First I'll check how the game loads 3D models and which Three.js version it uses.
+
+### 🤖 Claude — 2026-11-16T21:34:14.023Z
+
+> 🔧 **Bash** `{"command": "grep -o '\"three\": *\"[^\"]*\"' package.json; grep -rn \"GLTFLoader\" src --include=*.ts | head -3; grep -rn \"vMapUv\" node_modules/three/src/renderers/shaders/ShaderChunk/map_fragment.glsl.js | head -2", "description": "Check three version and GLB loading"}`
+
+### 🧑 User — 2026-11-16T21:34:14.096Z
+
+> ↩︎ result: "three": "^0.170.0"
+> src/characters/girl/runtime.ts:6:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> src/characters/girl/runtime.ts:12:  const gltf = await new GLTFLoader().loadAsync(url);
+> src/characters/benny/runtime.ts:6:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> 4:	vec4 sampledDiffuseColor = texture2D( map, vMapUv );
+
+### 🤖 Claude — 2026-11-16T21:34:15.696Z
+
+Step A: the paddle outlines as 2D triangle meshes in screen pixels, densely sampled so the 3D shape follows the wall's curve.
+
+### 🤖 Claude — 2026-11-16T21:34:25.058Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/proj05/lid_mesh2d.py", "content": "\"\"\"Screen 05 paddles (`?projlid05=1`), Blender pipeline step A: each approved paddle outline (tunnel_common.LIDS, the\nlarge pairs L1 L2 R1 R2) as a 2D triangle mesh in approved-frame pixels — boundary resampled every STEP px plus an\ninterior grid, Delaunay, triangles kept when their centroid lies inside the outline. Step B\n(scripts/proj05-lid-raycast.mjs) lifts every vertex onto the real 05 wall through the real game camera; step C\n(tools/proj05/lid_blender.py, Blender) builds the trays and exports the GLB.\nusa …[+1991 chars]`
+
+### 🧑 User — 2026-11-16T21:34:25.133Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/proj05/lid_mesh2d.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T21:34:25.919Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"import matplotlib\" 2>&1 | head -1; python3 -I tools/proj05/lid_mesh2d.py", "description": "Build 2D paddle meshes"}`
+
+### 🧑 User — 2026-11-16T21:34:26.395Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/tools/proj05/lid_mesh2d.py", line 10, in <module>
+>     from matplotlib.path import Path
+> ModuleNotFoundError: No module named 'matplotlib'
+
+### 🤖 Claude — 2026-11-16T21:34:28.760Z
+
+matplotlib isn't installed. OpenCV, which is installed, can do the same point-in-outline test:
+
+### 🤖 Claude — 2026-11-16T21:34:31.629Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/lid_mesh2d.py'; s=open(p).read()\ns=s.replace(\"from matplotlib.path import Path\\n\",\"import cv2\\n\")\ns=s.replace(\"\"\"    path = Path(np.array(poly))\n\"\"\",\"\"\"    cnt = np.array(poly, np.float32).reshape(-1, 1, 2)\n    sd = lambda P: np.array([cv2.pointPolygonTest(cnt, (float(x), float(y)), True) for x, y in P])   # >0 inside\n\"\"\")\ns=s.replace(\"\"\"    inner = path.contains_points(g, radius=-STEP * 0.6)          # keep interior points clear of the boundary\"\"\",\"\"\"    inner = sd(g) > STEP * 0.6                               …[+281 chars]`
+
+### 🧑 User — 2026-11-16T21:34:32.099Z
+
+> ↩︎ result: L1 verts 632 tris 1176 boundary 104
+> L2 verts 214 tris 378 boundary 58
+> R1 verts 746 tris 1379 boundary 118
+> R2 verts 178 tris 309 boundary 54
+
+### 🤖 Claude — 2026-11-16T21:34:37.374Z
+
+Step B: a browser script that casts every paddle vertex from the real game camera onto the real Screen 05 wall mesh.
+
+### 🤖 Claude — 2026-11-16T21:34:49.741Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/proj05-lid-raycast.mjs", "content": "#!/usr/bin/env node\n// Screen 05 paddles (`?projlid05=1`), Blender pipeline step B: lift every vertex of the approved paddle outlines\n// (qa/pilot05/proj/tunnel/lid/mesh2d.json, tools/proj05/lid_mesh2d.py) onto the REAL 05 wall: a ray from the real locked\n// 05 camera through the vertex pixel, first hit on the real 05 wall mesh (rings, lids, water and Benny ignored).\n// Writes raycast.json: camera (position, matrixWorld, projection, fov, aspect) + per paddle per vertex the wall point,\n// the wall normal (towar …[+3191 chars]`
+
+### 🧑 User — 2026-11-16T21:34:49.795Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/proj05-lid-raycast.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T21:34:51.844Z
+
+> 🔧 **Bash** `{"command": "node scripts/proj05-lid-raycast.mjs 2>&1 | tail -3 && python3 -I - <<'EOF'\nimport json, numpy as np\nr=json.load(open('qa/pilot05/proj/tunnel/lid/raycast.json'))\nc=np.array(r['camera']['position'])\nfor k,v in r['lids'].items():\n    P=np.array([p for p in v['P'] if p]); d=np.linalg.norm(P-c,axis=1)\n    print(k, 'hits', len(P), 'dist from camera %.1f..%.1f' % (d.min(), d.max()))\nEOF", "description": "Raycast paddle vertices onto the real wall", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T21:35:05.309Z
+
+> ↩︎ result: walls 2 missed rays 126 { L1: 632, L2: 214, R1: 746, R2: 178 }
+> L1 hits 632 dist from camera 21.5..33.9
+> L2 hits 181 dist from camera 39.7..55.2
+> R1 hits 746 dist from camera 27.3..45.8
+> R2 hits 85 dist from camera 50.3..56.9
+

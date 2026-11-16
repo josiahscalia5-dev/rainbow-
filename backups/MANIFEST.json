@@ -468,8 +468,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 9219,
-   "sha256": "859801638e8653001f64f2df47f9cfe0203ee6fd3671f1890cdf507e8c79e482"
+   "bytes": 9220,
+   "sha256": "44c2c08418fc75adbac74b11091537fc31748afe3783bb3e9ce34c71999df245"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1660,6 +1660,16 @@
    "path": "qa/pilot05/proj/tunnel/lid/fit.json",
    "bytes": 1514,
    "sha256": "51bcabe00701981812ec864e0df52df93c8484f245b95a4caf0e9f2f957ee2d5"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/mesh2d.json",
+   "bytes": 83831,
+   "sha256": "442ba6f54bc870134a53daaf7654652aee47ba7c68515800ef279aa5be383850"
+  },
+  {
+   "path": "qa/pilot05/proj/tunnel/lid/raycast.json",
+   "bytes": 313687,
+   "sha256": "9085b7ec8fc61b48d510b00318de0377396311d6426dbbd6c486baa6844838de"
   },
   {
    "path": "qa/pilot05/proj/tunnel/model/bake_report.json",
@@ -6947,6 +6957,11 @@
    "sha256": "addb4bc51a79797c67c7ed3dbf7ba1e1ea243d70b5691ba0a41d30d4bc071037"
   },
   {
+   "path": "scripts/proj05-lid-raycast.mjs",
+   "bytes": 4079,
+   "sha256": "c4704c27a686ed2fbb775902619d978d3288a95c6d922e914fdb07d254697703"
+  },
+  {
    "path": "scripts/proj05-move.mjs",
    "bytes": 5328,
    "sha256": "5357f03f49fe8fbb4412b3baedf36a6ae74bc2f5ff034b97f82f0dc2f03d680a"
@@ -7345,6 +7360,11 @@
    "path": "tools/proj05/frame_metrics.py",
    "bytes": 2053,
    "sha256": "9e0447234981fb1190e46bdafeffd05680891908382f17b642e8185693e19926"
+  },
+  {
+   "path": "tools/proj05/lid_mesh2d.py",
+   "bytes": 2513,
+   "sha256": "4199e7469aa57646d10d66f883b04222aa3b6db4deb6dedaec458877636248eb"
   },
   {
    "path": "tools/proj05/make_target.py",
