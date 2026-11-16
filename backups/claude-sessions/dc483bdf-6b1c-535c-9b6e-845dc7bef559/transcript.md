@@ -3530,3 +3530,101 @@ Notes and evidence are in place; committing and pushing everything now, then ver
 
 > 🔧 **Bash** `{"command": "sed -i '48s/.*/**Plan (`?projnear05=1`, one factor, reversible) — BEING BUILT since 2026-11-16 22:25 UTC, see `..\\/near\\/NOTES.md`:**/' qa/pilot05/proj/flow2/NOTES.md && sed -n 48p qa/pilot05/proj/flow2/NOTES.md && git status --short | wc -l && python3 scripts/rainbow-autosave.py --reason \"manual:save-everything\" > /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/save1.log 2>&1; tail -12 /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/save1.log; echo \"local : $(git rev-parse HEAD)\"; echo \"remote: $(timeout 9 …[+192 chars]`
 
+### 🧑 User — 2026-11-16T23:18:40.853Z
+
+> ↩︎ result: **Plan (`?projnear05=1`, one factor, reversible) — BEING BUILT since 2026-11-16 22:25 UTC, see `../near/NOTES.md`:**
+> 19
+> {
+>   "time": "2026-11-16T23:18:28+00:00",
+>   "reason": "manual:save-everything",
+>   "result": "committed+pushed",
+>   "files_staged": 61,
+>   "pushed_verified": true,
+>   "branch": "ccr-8c4acadc-iybw0n",
+>   "commit": "1596a2afac3eafaaf0b6c4cb6720fa37b853c433",
+>   "duration_s": 12
+> }
+> local : 1596a2afac3eafaaf0b6c4cb6720fa37b853c433
+> remote: 1596a2afac3eafaaf0b6c4cb6720fa37b853c433
+> uncommitted: 0
+> [This command modified 1 file you've previously read: qa/pilot05/proj/flow2/NOTES.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T23:18:45.777Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride6; ls $SP/new $SP/newdbg 2>/dev/null; ls $SP/before_clip/clip 2>/dev/null | wc -l; pgrep -f \"proj05-move.mjs\" | wc -l", "description": "Check capture batch progress"}`
+
+### 🧑 User — 2026-11-16T23:18:45.870Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride6/new:
+> move_00.png
+> move_08.png
+> move_17.png
+> move_26.png
+> move_35.png
+> move_log.json
+> 
+> /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride6/newdbg:
+> move_00.png
+> move_08.png
+> move_17.png
+> move_35.png
+> move_log.json
+> 72
+> 2
+
+### 🤖 Claude — 2026-11-16T23:18:48.021Z
+
+The ride frames with the final tile are done (the BEFORE clip is still recording). Looking at them — BEFORE left, NEW right:
+
+### 🤖 Claude — 2026-11-16T23:18:51.257Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I - \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nsp=sys.argv[1]\nfor d in [\"08\",\"17\",\"35\"]:\n    a=Image.open(f\"{sp}/ride4/before/move_{d}.png\"); b=Image.open(f\"{sp}/ride6/new/move_{d}.png\")\n    c=Image.new(\"RGB\",(a.width*2+16,a.height),(255,255,255)); c.paste(a,(0,0)); c.paste(b,(a.width+16,0))\n    c.resize((c.width//2,c.height//2),Image.LANCZOS).save(f\"{sp}/ride6/sbs_{d}.png\")\nEOF\necho ok", "description": "Build BEFORE|NEW half-size pairs"}`
+
+### 🧑 User — 2026-11-16T23:18:52.068Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T23:18:53.720Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride6/sbs_08.png"}`
+
+### 🧑 User — 2026-11-16T23:18:53.776Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:18:54.513Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride6/sbs_17.png"}`
+
+### 🧑 User — 2026-11-16T23:18:54.556Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:18:55.136Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride6/sbs_35.png"}`
+
+### 🧑 User — 2026-11-16T23:18:55.209Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:19:03.446Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/tile_1024_left_2048_right.png"}`
+
+### 🧑 User — 2026-11-16T23:19:03.584Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T23:19:03.579Z
+
+[Image: original 2064x600, displayed at 2000x581. Multiply coordinates by 1.03 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T23:19:12.441Z
+
+The double-width version is only marginally crisper in this patch. Rather than guess, I'll test it in the real game and keep it only if the ride frames measurably improve.
+
+### 🤖 Claude — 2026-11-16T23:19:17.627Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && ls $SP/ride6/before_clip/clip | wc -l; pgrep -f \"proj05-move.mjs\" | wc -l; mkdir -p $SP/t2_1024 && cp assets/textures/water05/proj05_T2.png assets/textures/water05/proj05_WT2.png assets/textures/water05/proj05_near.json $SP/t2_1024/ && cp $SP/cand_C/proj05_T2.png $SP/cand_C/proj05_WT2.png $SP/cand_C/proj05_near.json assets/textures/water05/ && python3 -I -c \"\nfrom PIL import Image; print('assets T2 now', Image.open('assets/textures/water05/proj05_T2.png').size)\" && FULL='proj05=1&projwall0 …[+492 chars]`
+

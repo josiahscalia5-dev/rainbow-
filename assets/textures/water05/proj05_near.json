@@ -3,7 +3,7 @@
  "T2": {
   "a": 131.685,
   "L": 6.565,
-  "width": 1024,
+  "width": 2048,
   "height": 768,
   "wrapT": "mirrored",
   "period": 13.13
@@ -19,12 +19,12 @@
    0.5,
    1.0
   ],
-  "seam_heal_zone_texels": 31603
+  "seam_heal_zone_texels": 64690
  },
  "locked_focus_s": 132.438,
  "texels_per_world_unit": {
   "along": 117.0,
-  "across": 106.7,
+  "across": 213.3,
   "old_N_T_along": 24.0,
   "old_T_across": 53.3
  },
@@ -58,9 +58,9 @@
   ]
  },
  "share_of_texels_from_visible_water": 0.929,
- "share_filled_along_flow": 0.0916,
+ "share_filled_along_flow": 0.0816,
  "bubbles_removed": 15,
- "holes_cloned": 16,
+ "holes_cloned": 24,
  "column_shift_s": {
   "-0.9": 6.9,
   "-0.7": 4.37,
@@ -75,7 +75,7 @@
  "flow": {
   "file": "proj05_WT2.png",
   "height": 53,
-  "mean_abs_slope_world": 0.109,
-  "flow_area": 0.822
+  "mean_abs_slope_world": 0.111,
+  "flow_area": 0.829
  }
 }

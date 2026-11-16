@@ -453,8 +453,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_T2.png",
-   "bytes": 737979,
-   "sha256": "94a3981b850fc7362876dad8177f26d8a89267d074da066a8afb31f89816352a"
+   "bytes": 1435441,
+   "sha256": "b49d37f3cec02ea0c66e5cc554707e55f93ba2c740aa9b661f0b7f3742cbddc6"
   },
   {
    "path": "assets/textures/water05/proj05_WN.png",
@@ -468,8 +468,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_WT2.png",
-   "bytes": 3854,
-   "sha256": "858f382a5530cd810d36e0295134dd03196cb48ff3e2bfbc379f154a4912de3e"
+   "bytes": 3823,
+   "sha256": "c86895cc9a30cc94c714fbbefb7f5108285ea736002bbfc053328fbf250ac63a"
   },
   {
    "path": "assets/textures/water05/proj05_flow.json",
@@ -484,7 +484,7 @@
   {
    "path": "assets/textures/water05/proj05_near.json",
    "bytes": 1270,
-   "sha256": "b3924513110335c68a7d82da836fa4085f196d29cda26f216c493926c6aec4bc"
+   "sha256": "9a9e204846184628cd7e62510ea9b79f2342a44613cc4e62db0248872e00201a"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9708,
-   "sha256": "dc1302aa524f39022d42dd31a24388308f67e5897832ce921723f2ad4735c12a"
+   "sha256": "de785556dab83aa3953a0ade4c34d20eea10ca187eabd71780a0580848a2b2fa"
   },
   {
    "path": "backups/CURRENT_STATE.md",
