@@ -1639,3 +1639,365 @@ Let me first read the existing river code and the probe data Specialist 1 alread
 > //   uv_foam.f32      only the game's 3D foam (berm / rafts / rim / flank) drawn as id 4 over the scene depth
 > //   river05_mesh.json  the river meshes exactly as rendered at thi …[+7569 chars]
 
+### 🤖 Claude — 2026-11-16T17:33:34.426Z
+
+> 🔧 **Bash** `{"command": "sed -n 1289,1430p src/vfx/waterRibbon.ts", "description": "Read createRibbon geometry and material setup"}`
+
+### 🧑 User — 2026-11-16T17:33:34.472Z
+
+> ↩︎ result: export function createRibbon(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): Ribbon {
+>   const { s0, s1, quality } = opts;
+>   const ds = quality === 'high' ? 0.4 : 0.7;
+>   const cols = quality === 'high' ? 18 : 10;
+>   const rows = Math.ceil((s1 - s0) / ds) + 1;
+>   const vertsPerRow = cols + 1 + 2; // + skirt left/right
+>   const n = rows * vertsPerRow;
+>   const pos = new Float32Array(n * 3);
+>   const nor = new Float32Array(n * 3);
+>   const uv = new Float32Array(n * 2);
+>   const halfW = new Float32Array(n);
+>   const speed = new Float32Array(n);
+>   const amp = new Float32Array(n);
+>   const skirt = new Float32Array(n);
+>   const style = new Float32Array(n * 4);
+>   const core = new Float32Array(n);
+>   const chan = FARW05 ? new Float32Array(n * 2) : null;
+>   const tang = new Float32Array(n * 3);
+>   const tmp = new THREE.Vector3();
+>   const nrm = new THREE.Vector3();
+>   let k = 0;
+>   for (let i = 0; i < rows; i++) {
+>     const s = Math.min(s1, s0 + i * ds);
+>     const f = course.sample(s);
+>     const hw = course.widthAt(s) / 2;
+>     const sp = Math.max(3, course.prop(s, 'speed'));
+>     const a = ampAt(course, s);
+>     const bs = bandStyleAt(course, s);
+>     const cl = coreLateral(course, s …[+5135 chars]
+
+### 🤖 Claude — 2026-11-16T17:33:38.737Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const FRAG\\|const VERT\\|void main\\|gl_FragColor\\|fogFragment\\|fog_fragment\\|#include\\|uniform \\|varying \" src/vfx/waterRibbon.ts | head -80", "description": "Locate shader main, uniforms, varyings, fog includes"}`
+
+### 🧑 User — 2026-11-16T17:33:38.787Z
+
+> ↩︎ result: 243:const VERT = /* glsl */ `
+> 254:varying vec2 vChan;
+> 256:uniform float uTime;
+> 257:uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
+> 258:varying vec2 vUV;
+> 259:varying float vHalfW;
+> 260:varying float vSpeed;
+> 261:varying float vSkirt;
+> 262:varying float vHide;
+> 263:varying vec4 vStyle;
+> 264:varying float vCore;
+> 265:varying vec3 vTanW;
+> 266:varying vec3 vPosW;
+> 267:varying vec3 vNormalW;
+> 268:#include <fog_pars_vertex>
+> 269:void main() {
+> 292:  #include <fog_vertex>
+> 296:const FRAG = /* glsl */ `
+> 297:uniform float uTime;
+> 298:uniform vec3 uCyanDeep;
+> 299:uniform vec3 uCyan;
+> 300:uniform vec3 uCyanBright;
+> 301:uniform vec3 uPinkDeep;
+> 302:uniform vec3 uPink;
+> 303:uniform vec3 uPinkLight;
+> 304:uniform vec3 uFoam;
+> 305:uniform vec3 uFoamLav;
+> 306:uniform vec3 uHaze;
+> 307:uniform vec3 uLightDir;
+> 308:uniform vec3 uBenny;      // s, lateral (units), strength
+> 309:uniform float uBennyR;    // Benny's waterline radius (units)
+> 310:uniform vec3 uChevron;    // start s, spacing, enabled
+> 311:uniform vec2 uOutro;      // amount, chamber start s
+> 313:uniform vec3 uC5Deep;
+> 314:uniform vec3 uC5;
+> 315:uniform vec3 uC5Bright;
+> 316:uniform vec3 uC5Streak;
+> 317:uniform vec3 uP5Deep;
+> 318:uniform vec3 uP5;
+> 319:uni …[+1038 chars]
+
+### 🤖 Claude — 2026-11-16T17:33:41.597Z
+
+> 🔧 **Bash** `{"command": "sed -n 243,296p src/vfx/waterRibbon.ts; sed -n 576,600p src/vfx/waterRibbon.ts; sed -n 1255,1288p src/vfx/waterRibbon.ts; grep -n \"s05\\|stage('05')\\|uS05\\|w05 =\\|is05\" src/vfx/waterRibbon.ts | head -30", "description": "Read vertex shader and fragment shader start/end"}`
+
+### 🧑 User — 2026-11-16T17:33:41.650Z
+
+> ↩︎ result: const VERT = /* glsl */ `
+> attribute vec2 aUV;      // x = u (-1..1 across), y = s (arc length)
+> attribute float aHalfW;
+> attribute float aSpeed;
+> attribute float aAmp;
+> attribute float aSkirt;  // 0 surface, 1 skirt bottom
+> attribute vec4 aStyle;   // band layout: gate, offset, half width, free-meander weight (see BAND_STYLE)
+> attribute float aCore;   // 05: core-centre lateral swing (units, see coreLateral)
+> attribute vec3 aTan;     // course tangent (downstream)
+> #ifdef FARW05
+> attribute vec2 aChan;    // W11: visible channel centre / half width (units, see channel05)
+> varying vec2 vChan;
+> #endif
+> uniform float uTime;
+> uniform vec4 uHide;      // s03Start, s04Start, chuteMark, unused
+> varying vec2 vUV;
+> varying float vHalfW;
+> varying float vSpeed;
+> varying float vSkirt;
+> varying float vHide;
+> varying vec4 vStyle;
+> varying float vCore;
+> varying vec3 vTanW;
+> varying vec3 vPosW;
+> varying vec3 vNormalW;
+> #include <fog_pars_vertex>
+> void main() {
+>   vStyle = aStyle;
+>   vCore = aCore;
+>   #ifdef FARW05
+>   vChan = aChan;
+>   #endif
+>   vTanW = normalize(mat3(modelMatrix) * aTan);
+>   float u = aUV.x;
+>   float s = aUV.y;
+>   float h = aAmp * (0.6 * sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * sin(s * 0.41 + uTime * 1.5 - u *  …[+3036 chars]
+
+### 🤖 Claude — 2026-11-16T17:33:46.177Z
+
+> 🔧 **Bash** `{"command": "grep -n \"FRAG_TAIL\\s*=\" -A12 src/vfx/*.ts | head -20; grep -n \"function bandStyleAt\" -A25 src/vfx/waterRibbon.ts | head -40; sed -n 1,80p src/render/grade.ts", "description": "Read fragment tail, band style weights and grade shader"}`
+
+### 🧑 User — 2026-11-16T17:33:46.227Z
+
+> ↩︎ result: src/vfx/glsl.ts:164:export const FRAG_TAIL = /* glsl */ `
+> src/vfx/glsl.ts-165-  #include <tonemapping_fragment>
+> src/vfx/glsl.ts-166-  #include <colorspace_fragment>
+> src/vfx/glsl.ts-167-  #include <fog_fragment>
+> src/vfx/glsl.ts-168-`;
+> 48:function bandStyleAt(course: Course, s: number): Style {
+> 49-  const o: Style = [0, 0, 0, 0];
+> 50-  let w = 0;
+> 51-  for (const st of course.stages) {
+> 52-    const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+> 53-    if (a <= 0) continue;
+> 54-    const v = BAND_STYLE[st.id] ?? BAND_DEFAULT;
+> 55-    for (let i = 0; i < 4; i++) o[i] += v[i] * a;
+> 56-    w += a;
+> 57-  }
+> 58-  if (w <= 0) return [...(BAND_STYLE[course.stageAtS(s).id] ?? BAND_DEFAULT)];
+> 59-  return [o[0] / w, o[1] / w, o[2] / w, o[3] / w];
+> 60-}
+> 61-
+> 62-/**
+> 63- * 05 current: lateral position (units, ribbon `right` axis, + = right) of the centre of the
+> 64- * electric-cyan core relative to the route centreline. The core swings WITH the course meander,
+> 65- * amplified by CORE_SWING, so the two pink bands trace S-bends ≈(1 + CORE_SWING)× as strong as the
+> 66- * route's own (ref 05: ±60–120 px). Bounded by CORE_SWING · max|offset05| (≈0.9 · 1.85 = 1.7 u at the
+> 67- * far cr …[+1672 chars]
+
+### 🤖 Claude — 2026-11-16T17:34:33.741Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p src/world/far05.ts; grep -n \"HalfFloat\\|FloatType\\|EffectComposer\\|OutputPass\\|UnrealBloom\\|toneMappingExposure\\|NeutralToneMapping\" src/game/*.ts src/render/*.ts | head", "description": "Read far river block header and render target types"}`
+
+### 🧑 User — 2026-11-16T17:34:33.784Z
+
+> ↩︎ result: /**
+>  * Screen 05 far section (path-camera-transition-engineer, wave 8): helpers for the forced-perspective far tunnel
+>  * built in environment.ts (`// ---- 05 far tunnel`). Everything here is laid in the ForcedTunnel's VIRTUAL
+>  * straight tunnel (depth Z beyond the section start sF, offset o in the cross-section) and mapped to real
+>  * geometry with ft.point(), so it continues the real near/mid tunnel without a seam at the locked 05 eye.
+>  *
+>  * FAR RIVER (ref 05, approved image): beyond the seam the river keeps winding: the cyan core with its two
+>  * hot-pink bands swings RIGHT (core ≈ x 530–547 at y 538–526, ≈ 535 at y 508) and then back LEFT into the
+>  * vanishing point (≈ 505 at y 496, ≈ 490 at y 490). The live far chord ran straight into the VP (06-style
+>  * candy stripes). The layout model here is the real ribbon's own (waterRibbon.ts, 05 block): route centre
+>  * xB, half width hw = extent − |xB|, core swing M = CORE_SWING·xB, band offsets 0.62·hw / widths 0.19·hw with
+>  * the same smooth clamps against the banks. For the first few virtual units it follows the REAL course
+>  * (s = sF + axial), so the far surface lands exactly on the real ribbon at the seam and covers the real
+>  * ribbon …[+3645 chars]
+
+### 🤖 Claude — 2026-11-16T17:34:40.005Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && mkdir -p $SP/probe && sed -n 120,182p scripts/proj05-probe.mjs && time node scripts/proj05-probe.mjs --out=$SP/probe --raw=$SP/probe 2>&1 | tail -5; ls -la $SP/probe", "description": "Re-run the live game probe to get per-pixel river (u,s) maps", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T17:35:02.634Z
+
+> ↩︎ result: const per = 21; // high quality: 19 surface columns + 2 skirts
+>     const nRows = P.length / 3 / per;
+>     const sA = st.s0 - 8, sB = st6.s0 + 14;
+>     const rows = [];
+>     for (let i = 0; i < nRows; i++) {
+>       const s = UV[(i * per) * 2 + 1];
+>       if (s < sA || s > sB) continue;
+>       const row = [];
+>       for (let j = 0; j < per; j++) {
+>         const k = i * per + j;
+>         const u = UV[k * 2];
+>         const h = AM[k] * (0.6 * Math.sin(s * 0.9 - uTime * 2.4 + u * 1.7) + 0.4 * Math.sin(s * 0.41 + uTime * 1.5 - u * 2.3)) * (1 - SK[k]);
+>         row.push([P[k * 3] + N[k * 3] * h, P[k * 3 + 1] + N[k * 3 + 1] * h, P[k * 3 + 2] + N[k * 3 + 2] * h, u, s, SK[k]]);
+>       }
+>       rows.push(row);
+>     }
+>     const fg = far.geometry;
+>     const inf = far.morphTargetInfluences?.[0] ?? 0;
+>     const fp = fg.attributes.position.array, fm = fg.morphAttributes.position[0].array;
+>     const fpos = [];
+>     for (let k = 0; k < fp.length; k++) fpos.push(fp[k] + (fm[k] - fp[k]) * inf);
+>     camera.updateMatrixWorld();
+>     return {
+>       w: rt.width, h: rt.height, uTime, foamNames: [...foamNames],
+>       camera: { matrixWorld: camera.matrixWorld.toArray(), projection: camera.projectionMatrix.toArray(), fov: c …[+2943 chars]
+
+### 🤖 Claude — 2026-11-16T17:35:05.490Z
+
+> 🔧 **Bash** `{"command": "cat scripts/capture.mjs | head -62; cat qa/pilot05/proj/probe/camera.json | python3 -c \"import json,sys;d=json.load(sys.stdin);print(d.get('stage05'),d.get('state'),d['camera']['fov'])\"", "description": "Read capture script and stage 05 numbers"}`
+
+### 🧑 User — 2026-11-16T17:35:05.574Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3503 chars]
+
+### 🤖 Claude — 2026-11-16T17:35:08.402Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T17:35:08.411Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T17:35:17.457Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nW,H=864,1536\nR=np.fromfile('$SP/probe/uv_river.f32',np.float32).reshape(H,W,4)\nS=np.fromfile('$SP/probe/uv_scene.f32',np.float32).reshape(H,W,4)\nF=np.fromfile('$SP/probe/uv_foam.f32',np.float32).reshape(H,W,4)\nrib=(R[...,2]>=0.5)&(R[...,2]<2.5); surf=(R[...,2]>0.5)&(R[...,2]<1.5); far=np.abs(R[...,2]-3)<0.1\nprint('ribbon px',rib.sum(),'surface',surf.sum(),'skirt',(rib&~surf).sum(),'far',far.sum())\ns=R[...,1][surf]; u=R[...,0][sur …[+1193 chars]`
+
+### 🧑 User — 2026-11-16T17:35:18.303Z
+
+> ↩︎ result: ribbon px 786928 surface 786608 skirt 320 far 11483
+> s range 129.73198 196.35515 u range -1.0 1.0
+> 1530 n 864 s 129.75..129.79 u -0.25..0.30
+> 1400 n 864 s 130.35..130.42 u -0.29..0.33
+> 1200 n 864 s 131.79..131.82 u -0.39..0.41
+> 1000 n 864 s 134.35..134.71 u -0.59..0.53
+> 900 n 864 s 136.25..136.84 u -0.75..0.58
+> 800 n 864 s 138.37..141.73 u -0.94..0.73
+> 700 n 727 s 144.31..147.23 u -1.00..1.00
+> 650 n 570 s 150.05..153.55 u -1.00..1.00
+> 600 n 340 s 161.80..165.39 u -1.00..1.00
+> 560 n 158 s 172.16..180.11 u -1.00..1.00
+> 540 n 24 s 177.88..179.62 u -1.00..-0.89
+> far Z range 0.0060458123 376.60767 uvx 0.0 0.99859226
+> art water px 804501  covered by ribbon surf 772210  by far 9312  art not covered 22979  ribbon surf not art 14398
+> approved vs artwork mean abs (rows<800, water): 48.82018219859423  median 33.666666666666664
+> game foam px 74858 foam over art water 63720
+
+### 🤖 Claude — 2026-11-16T17:35:27.846Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((0,480,864,1100))\nb=Image.open('qa/pilot05/proj/align/artwork_aligned_864x1536.png').convert('RGBA')\nbg=Image.new('RGBA',b.size,(0,0,0,255)); bg.alpha_composite(b); b=bg.convert('RGB').crop((0,480,864,1100))\nc=Image.new('RGB',(864,1240)); c.paste(a,(0,0)); c.paste(b,(0,620)); c.save('$SP/mf/appr_vs_art.png')\n\"; cat qa/pilot05/proj/align/align.json | python3 -c \"import json,sys …[+198 chars]`
+
+### 🧑 User — 2026-11-16T17:35:28.410Z
+
+> ↩︎ result: ['translation', 'affine', 'plain_resize', 'chosen', 'chosen_scale_xy', 'chosen_shift_vs_resize_px', 'chosen_corner_offsets_vs_resize_px']
+> {'plain_resize': {'M_artwork_to_approved': [[0.9181721572794899, 0.0, 0.0], [0.0, 0.9186602870813397, 0.0]], 'photometric_mean_abs': [0.2127746045589447, 546024]}, 'chosen': 'plain_resize', 'chosen_scale_xy': [0.9181721572794899, 0.9186602870813397], 'chosen_shift_vs_resize_px': [0.0, 0.0], 'chosen_corner_offsets_vs_resize_px': [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]]}
+
+### 🤖 Claude — 2026-11-16T17:35:28.848Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/appr_vs_art.png"}`
+
+### 🧑 User — 2026-11-16T17:35:28.898Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:35:53.912Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nimport numpy as np\nfor f in ['qa/worldlabs/05/geometry_ref/3_mask_05.png','qa/worldlabs/05/05_env_mask.png']:\n  im=Image.open(f); a=np.asarray(im); print(f, im.size, im.mode, np.unique(a.reshape(-1, a.shape[-1]) if a.ndim==3 else a, axis=0)[:6] if a.size<5e6 else '')\n\"; cat qa/worldlabs/05/rejected/README.md 2>/dev/null | head -20; grep -rl \"benny_mask\\|mask_benny\\|bennyMask\" qa/pilot05 --include=*.json --include=*.md 2>/dev/null | head; ls qa/pilot05 | head -40", "description": "Look for existing occluder masks of the approved image"}`
+
+### 🧑 User — 2026-11-16T17:35:54.246Z
+
+> ↩︎ result: qa/worldlabs/05/geometry_ref/3_mask_05.png (864, 571) L [[0 0 0 ... 0 0 0]
+>  [0 0 0 ... 0 0 0]
+>  [0 0 0 ... 0 0 0]
+>  [0 0 0 ... 0 0 0]
+>  [0 0 0 ... 0 0 0]
+>  [0 0 0 ... 0 0 0]]
+> qa/worldlabs/05/05_env_mask.png (864, 1536) L [[  0   0   0 ...   0   0   0]
+>  [255 255 255 ... 255 255 255]
+>  [255 255 255 ... 255 255 255]
+>  [255 255 255 ... 255 255 255]
+>  [255 255 255 ... 255 255 255]
+>  [255 255 255 ... 255 255 255]]
+> # Rejected Screen 05 environment plates: do NOT upload these to Marble or Atlas
+> 
+> * `v1_*` (tools/make_env_plate.py): copied real water/wall pieces into the masked areas.
+>   **Rejected by the user (2026-11-15 ~20:05 UTC)**: rectangular patches, repeated textures, distorted geometry,
+>   grey smear in the river; risk that Marble rebuilds the artifacts as real 3D objects.
+> * `v2_*` (tools/make_env_plate_v2.py): procedural repaint of the whole Benny area (harmonic band field +
+>   synthetic streaks). Not shown to the user; judged failed by the coordinator: the 450 px hole reads as a flat
+>   pale-cyan blob with hair-like streaks, and a pink band ends in a blob.
+> 
+> Kept only as a record of what was tried. The current candidate is `../plate_v3/` (geometry-focused crop).
+> * `v3_*` (tools/make_env_plate_ …[+954 chars]
+
+### 🤖 Claude — 2026-11-16T17:36:03.323Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nm=Image.open('qa/worldlabs/05/05_env_mask.png').convert('L').resize((432,768))\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').resize((432,768))\nimport numpy as np\nx=np.asarray(a,float); mm=np.asarray(m,float)[...,None]/255\no=(x*(0.35+0.65*mm)).astype(np.uint8)\nc=Image.new('RGB',(864,768)); c.paste(Image.fromarray(o),(0,0)); c.paste(m.convert('RGB'),(432,0)); c.save('/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/envmask.png')\"; ls qa/pilot05/proj/caps/default/ 2>/dev/null", "d …[+69 chars]`
+
+### 🧑 User — 2026-11-16T17:36:03.707Z
+
+> ↩︎ result: 05.png
+
+### 🤖 Claude — 2026-11-16T17:36:04.621Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/envmask.png"}`
+
+### 🧑 User — 2026-11-16T17:36:04.654Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:38:10.993Z
+
+> 🔧 **Bash** `{"command": "grep -n \"TextureLoader\\|new URL(\\|import.meta.url\\|?url\\|loadAsync\\|whenReady\\|pending\\|ready =\" src/vfx/flow05.ts src/world/environment.ts src/game/Game.ts src/vfx/index.ts | head -20; grep -n \"goto\\|setS\\|seek\\|freeze\\|ready\\|qa3d\\|state()\" src/game/Game.ts | head -30", "description": "Find texture loading pattern and QA API in Game.ts"}`
+
+### 🧑 User — 2026-11-16T17:38:11.072Z
+
+> ↩︎ result: 84:    renderer.setSize(w, h, false);
+> 85:    composer.setSize(w, h);
+> 119:    frozen: null as number | null, // QA: freeze shader time
+> 136:  const setStage = (id: StageId) => {
+> 139:    hud.setStage(id);
+> 215:    if (t >= T.spin && st.stage === '01') { st.stage = '02'; hud.setStage('02'); }
+> 220:      env.drumTowel.mesh.scale.setScalar(0.62);
+> 260:      env.drumTowel.mesh.scale.setScalar(lerp(0.62, 0.8, sm(T.spin, T.cp02, t)));
+> 270:    env.laundry.shirt.scale.setScalar(0.62);
+> 271:    env.laundry.sock.scale.setScalar(0.62);
+> 327:    setStage('03');
+> 367:    setStage(stageOf(st.s));
+> 402:    setStage('11');
+> 461:  hud.setStage('03');
+> 569:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 588:      setStage(stageOf(sTarget));
+> 610:    ready: true,
+> 612:    goto: gotoCheckpoint,
+> 614:    unfreeze() { st.frozen = null; input.override = null; },
+> 615:    setSteer(v: number | null) { input.override = v; },
+> 617:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 620:      return api.state();
+> 622:    state() {
+> 685:    qa3d() { return { scene, camera, renderer, composer }; },
+
