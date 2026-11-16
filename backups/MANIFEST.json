@@ -397,6 +397,11 @@
    "sha256": "aa85ea15ab362777d9e63f09951c30ba118e8429b27a1848aac20d0a82d1fc91"
   },
   {
+   "path": "assets/textures/water05/proj05_F.png",
+   "bytes": 171028,
+   "sha256": "4328b7d65bbdaa688d620bc74db794e00563ebb84348e9d4fb68c1490eae9006"
+  },
+  {
    "path": "assets/textures/water05/proj05_N.png",
    "bytes": 596474,
    "sha256": "a0a548f53c2dd15f90fe8396230e40ebb89cf64e9656df59ff496f46dcb53870"
@@ -408,8 +413,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_lut.json",
-   "bytes": 27221,
-   "sha256": "258f87905b5d591a2b8334058b08c52721f293fa178f88c470c3286fb0c765b1"
+   "bytes": 27346,
+   "sha256": "141c2abc6fbe772fc9200d9a16a68d36d84812ba31582fbc17e7ba8a708d1ca7"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -434,7 +439,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "11d937f5dfea318a76f06e8f9d3a255985ce4841cbde908e06c2be210bddfddb"
+   "sha256": "98c24aeee3c1a269ec4b813b9788a3cfb4eb084b3a43da1ffdc7a5d7723e978a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6813,8 +6818,8 @@
   },
   {
    "path": "src/game/modules.ts",
-   "bytes": 5374,
-   "sha256": "d9f4bc92b8ddaa143f6f99b80663a5e37ae06453f2603106cff9bcfc52fb68e4"
+   "bytes": 5570,
+   "sha256": "eceb381c4c6b7fb5ef5ab4a203c68b1265415d5ea568bcc8398f5b4463d72049"
   },
   {
    "path": "src/gameplay/coins.ts",
@@ -6883,8 +6888,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 15136,
-   "sha256": "ac0e674dabd79b9078592b8efacfe0ea4762359dd2258a61682ab9bde8d5bf22"
+   "bytes": 15308,
+   "sha256": "737de1bc7b556ae0c97bc3196a773f0069fb938495c432144a7396485f0b749e"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -6903,8 +6908,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 81168,
-   "sha256": "4d1ccb0552792e10772507e400982bed0df83b8dd7dce74938142f5921db3b33"
+   "bytes": 93192,
+   "sha256": "c0d2237326de5132cbb53dd0f90bd3e15502e51139fcccd39fd3d8719d9bad1d"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -6933,8 +6938,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 66690,
-   "sha256": "ad77e9e8acfb9e7808121d61bcec61663879c608c1b156a9b464f9b20c2dbe93"
+   "bytes": 67390,
+   "sha256": "74b99da44871917d29a302fc807fb5f49203ff3d5662b4a6ff694b5b97b5a3ef"
   },
   {
    "path": "src/world/towel.ts",
@@ -7053,13 +7058,23 @@
   },
   {
    "path": "tools/proj05/bake.py",
-   "bytes": 11283,
-   "sha256": "bc1153f6573aa8ceec5def472d279913a736249b614ba79f5d91954e70450977"
+   "bytes": 12411,
+   "sha256": "6016348fcbb7967f92df2d5c21cf69d41aa198b0b0c530c5730b0c2f4245b20f"
+  },
+  {
+   "path": "tools/proj05/frame_metrics.py",
+   "bytes": 2053,
+   "sha256": "9e0447234981fb1190e46bdafeffd05680891908382f17b642e8185693e19926"
   },
   {
    "path": "tools/proj05/make_target.py",
    "bytes": 6221,
    "sha256": "18033ba350f9ff2d66e3341a1fb7e9b502eedb2b63bd2bf01469adc333d5e98c"
+  },
+  {
+   "path": "tools/proj05/water_metrics.py",
+   "bytes": 1616,
+   "sha256": "cca535b04c04070b1b139ee98d2bcfaab96bb330da71453e0d930389ab791a21"
   },
   {
    "path": "tools/qa/axis05.ts",

@@ -10,6 +10,7 @@ outputs (out_dir, default assets/textures/water05/):
   proj05_T.png   TILE layer: seamless periodic copy of the full-width mid river (s period L) for the rest of Screen 05
   proj05_D.png   DETAIL layer: luminance high-pass of the sharpest near water (the approved streaks / glints), seamless
                  in u and s, 0.5 = no change
+  proj05_F.png   FAR layer: the far river block (far05.ts) in its own (uv.x, log depth) coordinates; alpha = valid
   proj05_lut.json  s -> (V, centre u, half range u) for proj05_E + all layer extents
 coins are filled along the flow (s direction) in river space."""
 import json, os, sys
@@ -186,10 +187,24 @@ def wrap_axis(a, axis):
 hpw = wrap_axis(wrap_axis(hp, 0), 1)
 D = np.clip(0.5 + hpw * 1.0, 0, 1)
 
+# ---------------------------------------------------------------- F (far river block) layer
+# the forced-perspective far river (far05.ts): its own coordinates (uv.x across the floor chord, virtual depth Z)
+farm = (np.abs(R[..., 2] - 3) < 0.01) & wm
+fx_, fz_ = R[..., 0][farm], R[..., 1][farm]
+fcol, fcoin = tgt[farm], coin[farm]
+ZMAX = float(max(fz_.max(), 1.0)) if farm.any() else 400.0
+WF_, HF_ = 512, 512
+xF = fx_ * WF_ - 0.5; yF = np.log1p(np.maximum(fz_, 0)) / np.log1p(ZMAX) * HF_ - 0.5
+accF, _ = splat(xF, yF, np.where(fcoin[:, None], 0, fcol), WF_, HF_)
+holeF, _ = splat(xF, yF, fcoin[:, None].astype(float), WF_, HF_)
+wtF, _ = splat(xF, yF, (~fcoin)[:, None].astype(float), WF_, HF_)
+F_, validF = finish(accF, wtF[..., 0], holeF[..., 0], fill_sigma=1.5, max_gap=80, fill_all=True)
+alphaF = np.clip((gaussian_filter(validF.astype(float), 1.5) - 0.3) / 0.5, 0, 1)
+
 def save(img, a, name):
     rgba = np.concatenate([np.clip(img, 0, 1), np.clip(a, 0, 1)[..., None]], -1) if a is not None else np.clip(img, 0, 1)
     Image.fromarray((rgba * 255 + 0.5).astype(np.uint8)).save(os.path.join(out, name), optimize=True)
-save(E, alphaE, "proj05_E.png"); save(N_, alphaN, "proj05_N.png"); save(T_, None, "proj05_T.png")
+save(F_, alphaF, "proj05_F.png"); save(E, alphaE, "proj05_E.png"); save(N_, alphaN, "proj05_N.png"); save(T_, None, "proj05_T.png")
 Image.fromarray((D * 255 + 0.5).astype(np.uint8)).save(os.path.join(out, "proj05_D.png"), optimize=True)
 
 LUTN = 1024
@@ -201,6 +216,7 @@ lut = dict(
            w=[round(float(x), 5) for x in np.interp(sl_, sg, wE)]),
     N=dict(s0=sN0, s1=sN1, width=WN, height=NN), T=dict(a=a_s, L=L, width=WN, height=NT),
     D=dict(u0=du0, u1=du1, s0=ds0, s1=ds1, size=int(Wd - p), lum_gain=1.0),
+    F=dict(zmax=ZMAX, width=WF_, height=HF_, note="far block: x = uv.x, y = log(1 + Z) / log(1 + zmax)"),
     probe_camera_uTime=12)
 json.dump(lut, open(os.path.join(out, "proj05_lut.json"), "w"))
 rep = dict(E=[WE, NE], N=[WN, NN], T=[WN, NT], D=[int(Wd - p), int(Hd - p)], E_valid=float(validE.mean()), N_valid=float(validN.mean()),

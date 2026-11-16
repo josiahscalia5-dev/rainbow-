@@ -53,6 +53,8 @@ export interface WaterSystem {
   parts: Record<string, THREE.Object3D>;
   /** live stats for perf reporting */
   stats(): { instances: number; bubbles: number; smallBubbles: number; sprayCapacity: number };
+  /** `?proj05=1`: resolves when the projection textures are loaded (undefined otherwise) */
+  ready?: Promise<void>;
 }
 
 const smooth = (a: number, b: number, x: number) => {
@@ -160,6 +162,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
     group,
     controls,
     parts,
+    ...(ribbon.ready ? { ready: ribbon.ready } : {}),
     surfaceHeight,
     stats: () => ({ instances: foam.instanceCount, bubbles: bubbles.counts.big, smallBubbles: bubbles.counts.small, sprayCapacity: spray.capacity }),
     update(time, dt, focusS, camera) {

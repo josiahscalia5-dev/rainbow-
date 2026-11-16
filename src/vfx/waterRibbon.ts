@@ -194,6 +194,19 @@ export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
 export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
 
 /**
+ * Screen 05 PROJECTION test (`?proj05=1`, 2026-11-16, qa/pilot05/proj/NOTES.md): the user's APPROVED Screen 05 water,
+ * baked into the REAL river's own coordinates (u across, s along; tools/proj05/bake.py from the locked 05 camera), so
+ * it is anchored to the river, not to the camera. Four layers, all from the user's pictures (approved image; the
+ * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
+ *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+ *   glints, luminance high-pass) — E fades to N/T + D wherever the camera magnifies it (no stretching).
+ * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+ * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
+ * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+ */
+export const PROJ05: boolean = q05('proj05');
+
+/**
  * W11 geometry (`?farw05=1`, else the full width): the VISIBLE water channel of the 05 river at arc length s, in the
  * ribbon frame — centre `c` (units along `right`) and half width `hw`. Between the channel and the bank lies a foam
  * shelf (drawn by the ribbon shader on the same surface; Benny can still ride over it — widthAt() and the steering
@@ -293,6 +306,32 @@ void main() {
 }
 `;
 
+/** `?proj05=1`: the inverse of the post chain (needs uniforms uPjPost, uPjRes) — shared with the far river block */
+export const PROJ05_INVERSE = /* glsl */ `
+// undo grade (vignette, contrast, saturation) -> sRGB -> Neutral tone map -> exposure: the linear colour that the
+// post chain turns into the display colour t (bloom is not undone: it is measured and fed back into the bake)
+vec3 pjInverse(vec3 t) {
+  vec2 q = gl_FragCoord.xy / uPjRes - 0.5; q.x *= 0.75;
+  float vig = 1.0 - uPjPost.w * smoothstep(0.25, 0.75, length(q));
+  vec3 c = t / max(vig, 0.5);
+  c = (c - 0.5) / uPjPost.z + 0.5;
+  float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+  c = vec3(l) + (c - vec3(l)) / uPjPost.y;
+  c = clamp(c, 0.0, 0.975);
+  c = mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c));
+  float np = max(c.r, max(c.g, c.b));
+  if (np >= 0.76) {
+    float peak = 0.0576 / (1.0 - np) - 0.24 + 0.76;
+    float g = 1.0 - 1.0 / (0.15 * (peak - np) + 1.0);
+    c = (c - g * np) / (1.0 - g);
+    c *= peak / np;
+  }
+  float x = min(c.r, min(c.g, c.b));
+  float off = x >= 0.04 ? 0.04 : (sqrt(max(x, 0.0)) / 2.5 - x);
+  return (c + off) / uPjPost.x;
+}
+`;
+
 const FRAG = /* glsl */ `
 uniform float uTime;
 uniform vec3 uCyanDeep;
@@ -342,6 +381,47 @@ varying vec3 vNormalW;
 varying vec2 vChan;
 #endif
 #include <fog_pars_fragment>
+#ifdef PROJ05
+uniform sampler2D uPjE;    // exact layer (rgb = approved display colour, a = valid)
+uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+uniform vec4 uPjLutS;      // s0, s1, lut texels, unused
+uniform vec2 uPjESize;     // uPjE texels
+uniform sampler2D uPjN;    // near layer, full width (a = coverage)
+uniform vec2 uPjNS;        // s0, s1
+uniform sampler2D uPjT;    // periodic tile (repeat along s)
+uniform vec2 uPjTS;        // start s, period L
+uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
+uniform vec4 uPjDS;        // tile width (u), tile length (s), gain, unused
+uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
+uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
+uniform vec2 uPjRes;       // render target size (vignette inverse)
+vec4 pjLut(float s) {
+  float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
+  float i = floor(x);
+  vec4 a = texture2D(uPjLut, vec2((i + 0.5) / uPjLutS.z, 0.5));
+  vec4 b = texture2D(uPjLut, vec2((min(i + 1.0, uPjLutS.z - 1.0) + 0.5) / uPjLutS.z, 0.5));
+  vec4 r = mix(a, b, x - i);
+  r.w = step(uPjLutS.x, s) * step(s, uPjLutS.y);
+  return r;
+}
+// display-space target at (u, s): exact layer where it is sharp enough, else near / tile layout + detail
+vec3 pjTarget(float u, float s, float mE, out float wE) {
+  vec4 L = pjLut(s);
+  vec2 eUV = vec2(0.5 + (u - L.y) / (2.0 * L.z), L.x);
+  vec4 e = texture2D(uPjE, eUV);
+  float inE = L.w * step(0.0, eUV.x) * step(eUV.x, 1.0);
+  wE = e.a * inE * smoothstep(0.42, 0.75, mE);
+  vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));
+  vec4 n = texture2D(uPjN, nUV);
+  float wN = n.a * step(0.0, nUV.y) * step(nUV.y, 1.0);
+  vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
+  vec3 lay = mix(t, n.rgb, wN);
+  return mix(lay, e.rgb, wE);
+}
+float pjDetail(float u, float s) {
+  return texture2D(uPjD, vec2(u / uPjDS.x, s / uPjDS.y)).r - 0.5;
+}
+${PROJ05_INVERSE}#endif
 ${NOISE_GLSL}
 ${FRAG_FX_GLSL}
 #ifdef FLOWMAP05
@@ -1273,6 +1353,41 @@ void main() {
       }
     }
   }
+  #ifdef PROJ05
+  {
+    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+    if (pjK > 0.001) {
+      // exact-layer magnification: texels per screen pixel along the least dense direction
+      vec4 Lm = pjLut(s);
+      vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
+      float mE = min(length(dFdx(tp)), length(dFdy(tp)));
+      // two-phase flow toward the camera: layer A peaks with zero offset at phase 0.5 (the frozen QA clock)
+      float ph = fract(uTime * uPjFlow.y + uPjFlow.z);
+      float D = uPjFlow.x * uPjFlow.w;
+      float sA = s + D * (ph - 0.5);
+      float sB = s + D * (fract(ph + 0.5) - 0.5);
+      float wA = 1.0 - abs(2.0 * ph - 1.0);
+      float wEA, wEB;
+      vec3 tA = pjTarget(u, sA, mE, wEA);
+      vec3 tB = pjTarget(u, sB, mE, wEB);
+      vec3 tgt = mix(tB, tA, wA);
+      float wEx = mix(wEB, wEA, wA);
+      float det = mix(pjDetail(u, sB), pjDetail(u, sA), wA);
+      tgt = clamp(tgt + det * uPjDS.z * (1.0 - wEx), 0.0, 1.0);
+      vec3 lin = pjInverse(tgt);
+      #ifdef USE_FOG
+      #ifdef FOG_EXP2
+      float pjF = 1.0 - exp(-fogDensity * fogDensity * vFogDepth * vFogDepth);
+      #else
+      float pjF = smoothstep(fogNear, fogFar, vFogDepth);
+      #endif
+      float pjFd = pjF * (1.0 - wEx);              // the exact layer already carries the approved haze
+      lin = (lin * (1.0 - pjFd) + fogColor * pjFd - fogColor * pjF) / max(1.0 - pjF, 0.05);
+      #endif
+      col = mix(col, lin, pjK);
+    }
+  }
+  #endif
   gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
 }
@@ -1284,6 +1399,8 @@ export interface Ribbon {
   s0: number;
   s1: number;
   heightAt(s: number, lateral: number, t: number): number;
+  /** `?proj05=1`: resolves when the projection textures are loaded (undefined otherwise) */
+  ready?: Promise<void>;
 }
 
 export function createRibbon(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): Ribbon {
@@ -1406,15 +1523,17 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     const pk = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('panok') : null;   // QA: ?panok=0 isolates the reflection
     u5.uPanoK = { value: pk !== null && isFinite(+pk) ? +pk : 0.9 };
   }
+  const proj = PROJ05 ? attachProj05(uniforms as Record<string, THREE.IUniform>) : undefined;
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: VERT,
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}), ...(PROJ05 ? { PROJ05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
+  if (proj) mesh.onBeforeRender = proj.onBeforeRender;
   mesh.name = 'water_ribbon';
   mesh.frustumCulled = false; // one long mesh spanning the whole course
   return {
@@ -1426,5 +1545,100 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
       const hw = course.widthAt(s) / 2;
       return ribbonWave(lateral / hw, s, t, ampAt(course, s));
     },
+    ready: proj?.ready,
   };
+}
+
+/** `?proj05=1`: uniforms + GLSL for the far river block (materials.ts farRiverMaterial) — its baked layer proj05_F.png */
+export function proj05Far() {
+  const u: Record<string, THREE.IUniform> = {
+    uPjF: { value: null }, uPjFZ: { value: 400 },
+    uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
+  };
+  const tex = new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+    t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
+  });
+  tex.flipY = false;
+  u.uPjF.value = tex;
+  fetch(new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {});
+  const size = new THREE.Vector2();
+  const onBeforeRender = (renderer: THREE.WebGLRenderer) => {
+    const rt = renderer.getRenderTarget();
+    if (rt) size.set(rt.width, rt.height); else renderer.getDrawingBufferSize(size);
+    (u.uPjRes.value as THREE.Vector2).copy(size);
+    (u.uPjPost.value as THREE.Vector4).x = renderer.toneMappingExposure;
+  };
+  const pars = 'uniform sampler2D uPjF; uniform float uPjFZ; uniform vec4 uPjPost; uniform vec2 uPjRes;\n' + PROJ05_INVERSE;
+  const apply = 'col = mix(col, pjInverse(texture2D(uPjF, vec2(vRivUv.x, log(1.0 + max(vRivB.w, 0.0)) / log(1.0 + uPjFZ))).rgb), texture2D(uPjF, vec2(vRivUv.x, log(1.0 + max(vRivB.w, 0.0)) / log(1.0 + uPjFZ))).a);';
+  return { uniforms: u, pars, apply, onBeforeRender };
+}
+
+/** `?proj05=1`: the baked approved-water layers (assets/textures/water05/, tools/proj05/bake.py) + live post values */
+function attachProj05(u: Record<string, THREE.IUniform>) {
+  const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
+  const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+  const urls = {
+    E: new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+    N: new URL('../../assets/textures/water05/proj05_N.png', import.meta.url).href,
+    T: new URL('../../assets/textures/water05/proj05_T.png', import.meta.url).href,
+    D: new URL('../../assets/textures/water05/proj05_D.png', import.meta.url).href,
+    lut: new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href,
+  };
+  const empty = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1);
+  empty.needsUpdate = true;
+  for (const k of ['uPjE', 'uPjN', 'uPjT', 'uPjD', 'uPjLut']) u[k] = { value: empty };
+  u.uPjLutS = { value: new THREE.Vector4(0, 1, 1, 0) };
+  u.uPjESize = { value: new THREE.Vector2(1, 1) };
+  u.uPjNS = { value: new THREE.Vector2(0, 1) };
+  u.uPjTS = { value: new THREE.Vector2(0, 1) };
+  u.uPjDS = { value: new THREE.Vector4(1, 1, qn('projdetail05', 0.9), 0) };
+  // flow toward the camera: distance (s units) per cycle, cycles / s; phase chosen so the frozen QA clock (t = 12)
+  // shows layer A alone at zero offset (the locked comparison is the static bake)
+  const rate = qn('projrate05', 0.55);
+  u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };
+  u.uPjPost = { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) };
+  u.uPjRes = { value: new THREE.Vector2(864, 1536) };
+  const loader = new THREE.TextureLoader();
+  const load = (url: string, mip: boolean, repeat: boolean) =>
+    new Promise<THREE.Texture>((res, rej) =>
+      loader.load(url, (t) => {
+        t.flipY = false;
+        t.colorSpace = THREE.NoColorSpace;          // the texels ARE display values: the shader undoes the post chain
+        t.generateMipmaps = mip;
+        t.minFilter = mip ? THREE.LinearMipmapLinearFilter : THREE.LinearFilter;
+        t.magFilter = THREE.LinearFilter;
+        t.wrapS = repeat ? THREE.RepeatWrapping : THREE.ClampToEdgeWrapping;
+        t.wrapT = repeat ? THREE.RepeatWrapping : THREE.ClampToEdgeWrapping;
+        if (mip) t.anisotropy = 4;
+        t.needsUpdate = true;
+        res(t);
+      }, undefined, rej));
+  const tile = (url: string) => load(url, false, false).then((t) => { t.wrapT = THREE.RepeatWrapping; return t; });
+  const ready = Promise.all([
+    load(urls.E, false, false), load(urls.N, false, false), tile(urls.T), load(urls.D, true, true),
+    fetch(urls.lut).then((r) => r.json()),
+  ]).then(([E, N, T, D, lut]) => {
+    u.uPjE.value = E; u.uPjN.value = N; u.uPjT.value = T; u.uPjD.value = D;
+    const n = lut.E.n as number;
+    const data = new Float32Array(n * 4);
+    for (let i = 0; i < n; i++) { data[i * 4] = lut.E.V[i]; data[i * 4 + 1] = lut.E.c[i]; data[i * 4 + 2] = lut.E.w[i]; data[i * 4 + 3] = 1; }
+    const L = new THREE.DataTexture(data, n, 1, THREE.RGBAFormat, THREE.FloatType);
+    L.minFilter = L.magFilter = THREE.NearestFilter;
+    L.needsUpdate = true;
+    u.uPjLut.value = L;
+    (u.uPjLutS.value as THREE.Vector4).set(lut.E.s0, lut.E.s1, n, 0);
+    (u.uPjESize.value as THREE.Vector2).set(lut.E.width, lut.E.height);
+    (u.uPjNS.value as THREE.Vector2).set(lut.N.s0, lut.N.s1);
+    (u.uPjTS.value as THREE.Vector2).set(lut.T.a, lut.T.L);
+    const ds = u.uPjDS.value as THREE.Vector4;
+    ds.x = lut.D.u1 - lut.D.u0; ds.y = lut.D.s1 - lut.D.s0;
+  }).catch((e) => { console.error('[rainbow] proj05 textures failed', e); });
+  const size = new THREE.Vector2();
+  const onBeforeRender = (renderer: THREE.WebGLRenderer) => {
+    const rt = renderer.getRenderTarget();
+    if (rt) size.set(rt.width, rt.height); else renderer.getDrawingBufferSize(size);
+    (u.uPjRes.value as THREE.Vector2).copy(size);
+    (u.uPjPost.value as THREE.Vector4).x = renderer.toneMappingExposure;
+  };
+  return { ready, onBeforeRender };
 }

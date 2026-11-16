@@ -2435,3 +2435,314 @@ Let me first read the existing river code and the probe data Specialist 1 alread
 >   return t * t * (3 - 2 * t);
 > };
 
+### 🤖 Claude — 2026-11-16T17:48:13.680Z
+
+Now writing the shader and loader code (behind `#ifdef PROJ05` / `if (PROJ05)` only).
+
+### 🤖 Claude — 2026-11-16T17:49:03.182Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'\ns=open(p).read()\n\n# 1) flag\nanchor=\"export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;\\n\"\nassert anchor in s\ns=s.replace(anchor, anchor+'''\n/**\n * Screen 05 PROJECTION test (`?proj05=1`, 2026-11-16, qa/pilot05/proj/NOTES.md): the user's APPROVED Screen 05 water,\n * baked into the REAL river's own coordinates (u across, s along; tools/proj05/bake.py from the locked 05 camera), so\n * it is anchored to the river, not to the camera. Four layers, all from the user's pictures (approved image; the\n * isolated …[+12825 chars]`
+
+### 🧑 User — 2026-11-16T17:49:03.264Z
+
+> ↩︎ result: if (!cam) return null;
+>       const w = window.innerWidth, h = window.innerHeight;
+>       return { bubbles: bubbles.qaScreen(cam, w, h), rafts: foam.qaRafts(), fanStrength: crown.uniforms.uStrength.value, waterlineR: ribbon.uniforms.uBennyR.value };
+>     };
+>   }
+> 
+>   return {
+>     group,
+>     controls,
+>     parts,
+>     surfaceHeight,
+
+### 🤖 Claude — 2026-11-16T17:49:07.681Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/index.ts'\ns=open(p).read()\ns=s.replace(\"  return {\\n    group,\\n    controls,\\n    parts,\\n    surfaceHeight,\",\"  return {\\n    group,\\n    controls,\\n    parts,\\n    ...(ribbon.ready ? { ready: ribbon.ready } : {}),\\n    surfaceHeight,\",1)\nopen(p,'w').write(s)\np='src/game/modules.ts'\ns=open(p).read()\ns=s.replace(\"      const w = m.createWater(course, { quality: q });\\n      moduleStatus.water = 'vfx/index.ts';\",\"      const w = m.createWater(course, { quality: q });\\n      // `?proj05=1` only: wait for the baked approved-water …[+344 chars]`
+
+### 🧑 User — 2026-11-16T17:49:11.007Z
+
+> ↩︎ result: tsc-exit 0
+
+### 🤖 Claude — 2026-11-16T17:49:13.971Z
+
+Type check passes. Capturing the locked Screen 05 with `?proj05=1` and the default (which must stay pixel-identical).
+
+### 🤖 Claude — 2026-11-16T17:49:17.670Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && mkdir -p $SP/cap && (node scripts/capture.mjs 05 --q=proj05=1 --out=$SP/cap/proj_v1 2>&1 | tail -3; node scripts/capture.mjs 05 --out=$SP/cap/default 2>&1 | tail -2) && python3 -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$SP/cap/default/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('qa/pilot05/current_default_05.png').convert('RGB')).astype(int)\nprint('default vs protected current_default_05.png: max diff', np.abs(a-b).max(), 'differing px', (np.a …[+162 chars]`
+
+### 🧑 User — 2026-11-16T17:49:51.874Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/proj_v1/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/default/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> default vs protected current_default_05.png: max diff 0 differing px 0
+
+### 🤖 Claude — 2026-11-16T17:49:53.094Z
+
+Default is pixel-identical to your protected working version (0 differing pixels). Let me look at the first `?proj05=1` result.
+
+### 🤖 Claude — 2026-11-16T17:49:54.408Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/proj_v1/05.png"}`
+
+### 🧑 User — 2026-11-16T17:49:54.465Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:50:14.175Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/capture.mjs 05 \"--q=proj05=1&hide=benny,coins&waterhide=crown,spray,bubbles,splash05,splashCrown,foam\" --out=$SP/cap/proj_v1_wateronly 2>&1 | tail -1; git checkout qa/capture_log.json 2>/dev/null; cat > tools/proj05/water_metrics.py <<'EOF'\n\"\"\"Compare a water-only capture (Benny, coins, bubbles, splash, foam hidden) with the proj05 TARGET on the pixels where\nthe game's river is the visible surface and the target is real approved water (or the artwork fill).\nusage: python3 - …[+1649 chars]`
+
+### 🧑 User — 2026-11-16T17:50:32.046Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/proj_v1_wateronly/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":71,"tris":452259,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> {
+>  "all": {
+>   "px": 671364,
+>   "mean_abs": 20.799977856026437,
+>   "median": 5.333333333333333,
+>   "within_10": 0.7784123068856835,
+>   "within_20": 0.853808068350403,
+>   "mean_signed_rgb": [
+>    33.26511996472852,
+>    -11.335726967784987,
+>    -3.122723291686775
+>   ]
+>  },
+>  "approved_pixels": {
+>   "px": 424654,
+>   "mean_abs": 5.575778555404321,
+>   "median": 4.666666666666667,
+>   "within_10": 0.9035803265717501,
+>   "within_20": 0.9911151196032535,
+>   "mean_signed_rgb": [
+>    8.893185981999464,
+>    4.551279394518832,
+>    1.823894276281396
+>   ]
+>  },
+>  "artwork_fill": {
+>   "px": 246710,
+>   "mean_abs": 47.00490319268236,
+>   "median": 7.666666666666667,
+>   "within_10": 0.5629646143245105,
+>   "within_20": 0.6174658505938146,
+>   "mean_signed_rgb": [
+>    75.2157472335941,
+>    -38.68152081391107,
+>    -11.637177252644806
+>   ]
+>  },
+>  "far_rows_lt_600": {
+>   "px": 7694,
+>   "mean_abs": 9.574906853825492,
+>   "median": 4.666666666666667,
+>   "within_10":  …[+423 chars]
+
+### 🤖 Claude — 2026-11-16T17:50:41.071Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('$SP/mf/heat_v1.png').resize((432,768)); b=Image.open('$SP/cap/proj_v1_wateronly/05.png').convert('RGB').resize((432,768))\nc=Image.new('RGB',(864,768)); c.paste(a,(0,0)); c.paste(b,(432,0)); c.save('$SP/mf/heat_v1_pair.png')\"", "description": "Pair error heatmap with water-only capture"}`
+
+### 🧑 User — 2026-11-16T17:50:41.458Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T17:50:42.270Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/heat_v1_pair.png"}`
+
+### 🧑 User — 2026-11-16T17:50:42.309Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:50:59.824Z
+
+> 🔧 **Bash** `{"command": "sed -n 861,900p src/world/materials.ts; awk 'NR>=900 && NR<=1060 && /gl_FragColor|diffuseColor|dithering|#include <color_fragment>|return mat|onBeforeCompile|customProgramCacheKey|outgoingLight|opaque_fragment/ {print NR\": \"$0}' src/world/materials.ts", "description": "Read far river material structure"}`
+
+### 🧑 User — 2026-11-16T17:50:59.877Z
+
+> ↩︎ result: export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+>   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+>   // wins the depth test against the real ribbon's continuation it covers just behind the seam
+>   mat.polygonOffset = true;
+>   mat.polygonOffsetFactor = -1;
+>   mat.polygonOffsetUnits = -2;
+>   const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+>   const uniforms = {
+>     uRivCyanLo: { value: lin(0.02, 0.22, 0.62) },
+>     uRivCyan: { value: lin(0.03, 0.42, 0.95) },
+>     uRivCyanHi: { value: lin(0.25, 0.95, 1.6) },
+>     uRivPinkLo: { value: lin(0.45, 0.03, 0.42) },
+>     uRivPink: { value: lin(0.85, 0.07, 0.75) },
+>     uRivPinkHi: { value: lin(1.05, 0.42, 1.0) },
+>     uRivFoam: { value: lin(0.95, 0.92, 1.05) },
+>     uRivFoamLav: { value: lin(0.62, 0.52, 0.95) },
+>     uRivFoamBlue: { value: lin(0.32, 0.36, 0.9) },
+>     uRivGlow: { value: new THREE.Color(glow.color) },
+>     uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.strength) },
+>     /** W11: depth of the seam from the locked 05 eye (ForcedTunn …[+1439 chars]
+
+### 🤖 Claude — 2026-11-16T17:51:02.435Z
+
+> 🔧 **Bash** `{"command": "awk 'NR>=918 && NR<=1110 {print NR\": \"$0}' src/world/materials.ts | grep -n \"diffuseColor\\|^.*\\`);\\|customProgramCacheKey\\|return mat\\|vRivB.w\\|float s =\\|float Z\\|defines\" | head -30", "description": "Find far material fragment end and defines"}`
+
+### 🧑 User — 2026-11-16T17:51:02.486Z
+
+> ↩︎ result: 5:922:   float wL = vRivB.x, wR = vRivB.y, core = vRivB.z, Zv = vRivB.w;
+> 6:923:   float s = vRivUv.y;                                    // virtual arc length (continues the real s)
+> 183:1100:   diffuseColor.rgb = col;
+> 184:1101: }`);
+> 187:1104:     mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}) };
+> 188:1105:     mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '') + (SILK05 ? '-w12s' : '') + (PUFF05 ? '-w12p' : '');
+> 190:1107:     mat.customProgramCacheKey = () => 'far-river-w8';
+> 192:1109:   return mat;
+
+### 🤖 Claude — 2026-11-16T17:51:04.332Z
+
+> 🔧 **Bash** `{"command": "sed -n 1092,1112p src/world/materials.ts; grep -n \"^import\\|from '../vfx/waterRibbon'\" src/world/materials.ts | head", "description": "Read far material ending and imports"}`
+
+### 🧑 User — 2026-11-16T17:51:04.382Z
+
+> ↩︎ result: vec3 fo = mix(uRivFoam, uRivFoamLav, bub);
+>     fo = mix(fo, uRivFoamBlue, 0.55 * (1.0 - smoothstep(0.0, 0.2, abs(e + 0.05))));          // shade at the waterline
+>     fo = mix(fo, uRivFoamBlue, 0.45 * smoothstep(0.45, 1.0, e / max(0.3, bankW)));         // shaded outer edge
+>     col = mix(col, fo, foamIn);
+>   }
+> #endif
+>   float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
+>   col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
+>   diffuseColor.rgb = col;
+> }`);
+>   };
+>   if (WATER05) {
+>     mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(SILK05 ? { SILK05: 1 } : {}), ...(PUFF05 ? { PUFF05: 1 } : {}) };
+>     mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '') + (SILK05 ? '-w12s' : '') + (PUFF05 ? '-w12p' : '');
+>   } else {
+>     mat.customProgramCacheKey = () => 'far-river-w8';
+>   }
+>   return mat;
+> }
+> 
+> export function gold(opts: { roughness?: number; emissive?: number; color?: THREE.ColorRepresentation } = {}): THREE.MeshStandardMaterial {
+> 6:import * as THREE from 'three';
+> 7:import { FARW05, PUFF05, SILK05, WATER05 } from '../vfx/waterRibbon';
+> 8:import { FLOW05_GLSL } from '../vfx/flow05' …[+127 chars]
+
+### 🤖 Claude — 2026-11-16T17:51:45.118Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\n# ---- bake: far block layer\np='tools/proj05/bake.py'\ns=open(p).read()\ns=s.replace('''def save(img, a, name):''','''# ---------------------------------------------------------------- F (far river block) layer\n# the forced-perspective far river (far05.ts): its own coordinates (uv.x across the floor chord, virtual depth Z)\nfarm = (np.abs(R[..., 2] - 3) < 0.01) & wm\nfx_, fz_ = R[..., 0][farm], R[..., 1][farm]\nfcol, fcoin = tgt[farm], coin[farm]\nZMAX = float(max(fz_.max(), 1.0)) if farm.any() else 400.0\nWF_, HF_ = 512, 512\nxF = fx_ * WF_ - 0.5; yF = np.log …[+5961 chars]`
+
+### 🧑 User — 2026-11-16T17:51:45.246Z
+
+> ↩︎ result: 436:    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));
+> 477:    farWall.name = 'tube05_far_wall'; farRiver.name = 'tube05_far_river';
+
+### 🤖 Claude — 2026-11-16T17:51:56.987Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/materials.ts'\ns=open(p).read()\ns=s.replace(\"\"\"  if (pj) {\n    const key = mat.customProgramCacheKey;\n    mat.customProgramCacheKey = () => key() + '-proj05';\n  }\"\"\",\"\"\"  if (pj) {\n    const key = mat.customProgramCacheKey;\n    mat.customProgramCacheKey = () => key() + '-proj05';\n    mat.defines = { ...(mat.defines ?? {}), PROJ05: 1 };\n    mat.onBeforeRender = (renderer) => pj.onBeforeRender(renderer);\n  }\"\"\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . 2>&1 | head; SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8 …[+786 chars]`
+
+### 🧑 User — 2026-11-16T17:52:42.262Z
+
+> ↩︎ result: {"E": [1024, 1241], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9044440282534246, "N_valid": 0.7301615397135417, "samples": 772872, "coin_pixels": 21493, "sE": [129.71197937011718, 180.97108032226564]}
+> 05 → /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/proj_v2/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 1
+> Updated 1 path from the index
+> default identical: True
+
+### 🤖 Claude — 2026-11-16T17:52:44.676Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/far_v2.png"}`
+
+### 🧑 User — 2026-11-16T17:52:44.720Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:52:50.394Z
+
+The far river now carries your approved water right up to the vanishing point. Looking at the full frame now.
+
+### 🤖 Claude — 2026-11-16T17:52:51.540Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/proj_v2/05.png"}`
+
+### 🧑 User — 2026-11-16T17:52:51.598Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:53:10.677Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/capture.mjs 05 \"--q=proj05=1&waterhide=foam\" --out=$SP/cap/proj_v2_nofoam 2>&1 | grep -c \"05 →\"; git checkout qa/capture_log.json; cat > tools/proj05/frame_metrics.py <<'EOF'\n\"\"\"Full-frame APPROVED vs capture comparison, reported per region (no single invented 'fidelity score').\nRegions: WATER = the approved water footprint (registered artwork alpha) minus Benny + splash and coins (both differ in\nthe game by design: same character / gameplay coins, not part of the water); …[+2080 chars]`
+
+### 🧑 User — 2026-11-16T17:53:28.411Z
+
+> ↩︎ result: 1
+> Updated 1 path from the index
+> {
+>  "qa/pilot05/current_default_05.png": {
+>   "WATER": {
+>    "px": 559593,
+>    "mean_abs": 49.67,
+>    "within_10": 0.0829,
+>    "within_20": 0.2337,
+>    "ssim_lum": 0.3178
+>   },
+>   "FRAME": {
+>    "px": 1157760,
+>    "mean_abs": 54.23,
+>    "within_10": 0.0667,
+>    "within_20": 0.1935,
+>    "ssim_lum": 0.2381
+>   }
+>  },
+>  "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/proj_v2/05.png": {
+>   "WATER": {
+>    "px": 559593,
+>    "mean_abs": 28.32,
+>    "within_10": 0.527,
+>    "within_20": 0.6561,
+>    "ssim_lum": 0.6934
+>   },
+>   "FRAME": {
+>    "px": 1157760,
+>    "mean_abs": 43.95,
+>    "within_10": 0.2731,
+>    "within_20": 0.3964,
+>    "ssim_lum": 0.4242
+>   }
+>  },
+>  "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/proj_v2_nofoam/05.png": {
+>   "WATER": {
+>    "px": 559593,
+>    "mean_abs": 24.4,
+>    "within_10": 0.6025,
+>    "within_20": 0.7248,
+>    "ssim_lum": 0.7762
+>   },
+>   "FRAME": {
+>    "px": 1157760,
+>    "mean_abs": 41.96,
+>    "within_10": 0.3098,
+>    "within_20": 0.4302,
+>    "ssim_lum": 0.4653
+>   }
+>  }
+> }
+
+### 🤖 Claude — 2026-11-16T17:53:41.775Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -c \"\nimport numpy as np\nfrom PIL import Image\nT='qa/pilot05/proj/target'\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'),float)\nc=np.asarray(Image.open('$SP/cap/proj_v2_nofoam/05.png').convert('RGB'),float)\nwm=np.asarray(Image.open(T+'/water_mask.png'))>127\nd=np.abs(c-ap).mean(-1)\ng=(np.stack([ap.mean(-1)]*3,-1)*0.4)\nm=wm&(d>20)\ng[m]=[255,40,40]; g[wm&(d<=20)]=[40,200,60]\nB=np.fromfile('$SP/probe/uv_scene.f32',np.float32).reshape(1536,864,4 …[+326 chars]`
+
+### 🧑 User — 2026-11-16T17:53:42.322Z
+
+> ↩︎ result: water px not covered by visible game river: 102217  of 805151
+
+### 🤖 Claude — 2026-11-16T17:53:42.980Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/err_nofoam.png"}`
+
+### 🧑 User — 2026-11-16T17:53:43.003Z
+
+> ↩︎ result: [image]
+
