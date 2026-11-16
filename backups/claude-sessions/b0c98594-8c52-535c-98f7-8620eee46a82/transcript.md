@@ -2425,3 +2425,143 @@ Draft PR #6 created. Subscribing to its activity, as required for a PR I open:
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"import json; json.load(open('backups/TOOL_MANIFEST.json')); print('manifest JSON OK')\"; python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"'; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1); echo \"local  $L\"; echo \"remote $R\"; [ \"$L\" = \"$R\" ] && echo \"REMOTE == LOCAL\"; python3 -I scripts/autosave-status.py; python3 -I scripts/verify-assets.py lfs-remote | tail -1; echo \"LFS stubs: $(git lfs ls-files | awk '$2==\"-\" …[+348 chars]`
 
+### 🧑 User — 2026-11-16T11:12:06.153Z
+
+> ↩︎ result: manifest JSON OK
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "658a54fe893b8e5db358a88c863c059f06b68f13",
+> local  658a54fe893b8e5db358a88c863c059f06b68f13
+> remote 658a54fe893b8e5db358a88c863c059f06b68f13
+> REMOTE == LOCAL
+> AUTOSAVE OK | branch ccr-251ed97c-ty2xvp | scheduler daemon | last verified backup 2026-11-16T11:11:57+00:00 (0.1 min ago) | local 658a54f remote 658a54f (match) | uncommitted 0
+> @@ ok 24/24 LFS objects (184 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> LFS stubs: 0
+> refs 12/12 OK
+>      12 ok
+> Mon Nov 16 11:12:06 UTC 2026
+
+### 🤖 Claude — 2026-11-16T11:12:19.842Z
+
+Everything checks out at the end-of-session save. Updating the task list, then sending you the T1 comparison so you can decide.
+
+### 🤖 Claude — 2026-11-16T11:12:20.283Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T11:12:20.294Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-16T11:12:20.734Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T11:12:20.744Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-16T11:12:21.687Z
+
+> 🔧 **TaskUpdate** `{"taskId": "8", "status": "in_progress", "description": "T1 re-verified and shown again; blocked on the user's yes/no. T2 is planned on top of T1."}`
+
+### 🧑 User — 2026-11-16T11:12:21.695Z
+
+> ↩︎ result: Updated task #8 description, status
+
+### 🤖 Claude — 2026-11-16T11:12:23.388Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/wave9b/T1/05_approved_before_T1.jpg"], "caption": "Screen 05, test T1: APPROVED | BEFORE (your accepted baseline, still the game) | T1 (only change: the front gold ring moved closer). Re-checked today: both render pixel-identical to what you saw before. Keep T1: yes or no?", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T11:12:23.951Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave9b/T1/05_approved_before_T1.jpg → file_uuid: 8953efa3-f399-4d83-a868-7337a3d67172
+
+### 🤖 Claude — 2026-11-16T11:12:40.337Z
+
+**RAINBOW 3D BACKUP VERIFIED**
+
+| Item | Status |
+|---|---|
+| GitHub branch | `ccr-251ed97c-ty2xvp`. It contains all 12 of your session branches. |
+| Full commit SHA | `658a54fe893b8e5db358a88c863c059f06b68f13` (end-of-session save, 11:12 UTC) |
+| Remote verification | The GitHub copy matches the local copy exactly. The autosave keeps adding commits every 5 minutes after this one. |
+| Git LFS | All 24 large files are present locally (no placeholders left) and confirmed on GitHub. In the full test I downloaded every one fresh from GitHub and the checksums matched. This includes the 17 Marble files. |
+| Ten specialists | All 10 are present and unchanged. None is running. Next jobs are listed in the new `backups/AGENTS_STATUS.json`. |
+| Marble / World Labs | Both worlds are complete in the repo: draft `5fd3d7a7…` and full `c0c9dc57…`, 49 files checked. The API key works (read-only check: **5,190 credits**, unchanged). The Atlas connector is connected and the World Labs plugin is installed. **No credits spent.** |
+| Blender / Android / Playwright / MCP | Blender 5.3.0 runs headless. Android SDK 34 + build-tools 34.0.0 and Java 21 are ready. Chromium renders WebGL2. The Playwright tool connection is up. |
+| Five-minute autosave | Running every 5 minutes with a lock. Status check: `AUTOSAVE OK … (match)`. |
+
+**What I built**
+- **One command: `scripts/claude-bootstrap.sh`.** It runs automatically every time a session starts. In about 9 seconds it:
+  - merges any newer saved work (a conflicting merge is cancelled and reported; nothing is ever reset or force-pushed)
+  - restores the large files
+  - restarts the autosave
+  - then the slower installs and tests run in the background
+- **It checks before installing.** The second run took 24 s and reinstalled nothing.
+- **New-account test passed.** I made a fresh copy from the old default branch and ran the one-liner from `backups/START_NEW_CLAUDE_ACCOUNT.md`. It recovered everything and passed, both via the new command and the old `resume-newest-work.sh --tools`.
+- **Machine-readable lists:** `backups/TOOL_MANIFEST.json` (versions, install steps, network hosts, plugins, credentials by name only, Marble IDs) and `backups/AGENTS_STATUS.json`. The rules are written into `CLAUDE.md` and both transfer documents.
+- **New "rainbow-" cloud environment** (the one you approved). Its setup script installs the tools before a session starts. If you pick it for your next session, the Marble key has to be entered once there through the secure form, and only if new Marble calls are needed.
+- **Test results:**
+  - Screen 05 is still pixel-identical to your accepted BEFORE.
+  - The gameplay test passes, including the 07→08 descent.
+  - Draft PR #6 (marked DO NOT MERGE) shows the branch on GitHub. I'm watching it.
+
+**Problems I found and fixed**
+- One autosave at 10:40 failed because it collided with the large-file download at session start. That can't happen any more.
+- The old kit files `README_FIRST.md` and `START_HERE_PASTE_TO_CLAUDE.md` told Claude to start a brand-new game. They now carry a "do not paste" warning.
+
+**Gaps and things that could not be transferred**
+- **The previous session ended without an end-of-session backup.** Its last save was an automatic one at 10:38, two minutes before this session started.
+- **Backups don't run while no session is open.** The log shows several such gaps; the longest was 03:22–09:28 UTC.
+- **Sign-ins don't transfer through GitHub:** your Claude login, GitHub connection, World Labs Atlas sign-in and the Marble key. The context7 plugin needs a sign-in but isn't used.
+- **The GitHub default branch is still the old version,** so a session started from it doesn't have this setup. Pick the newest branch when you start a session, or change the default branch in GitHub settings.
+- **One older saved transcript contains the part of your e-mail address before the "@"**, inside a search command. The full address appears nowhere. Removing it would mean rewriting history, which I won't do without your permission.
+
+**Your game:** T1 (front ring moved closer) still renders exactly as you saw it. The next test, T2, is planned on top of T1. **Keep T1: yes or no?** I sent the comparison image above. The Google Flow videos (`intro.mp4`, `ending.mp4`) still need uploading.
+
+### 🧑 User — 2026-11-16T11:12:43.364Z
+
+Claude, I see that my Marble World Labs API connection is working and both existing worlds are accessible.
+
+Please keep that connection securely configured and include its setup instructions in my permanent account recovery system.
+
+Do not ask me for another API key unless authentication actually fails.
+
+If a new key is needed, open the secure credential form. Never put my API key in chat or GitHub.
+
+Please finish the permanent bootstrap system, restore all ten design specialists, Blender, plugins and servers, and verify my five-minute GitHub backups.
+
+Then continue improving my approved Screen 05 using my existing Marble World Labs assets.
+
+Please confirm when the entire setup is saved and verified on GitHub.
+Claude, STOP and review Big Tunnel Test 1.
+
+I compared my APPROVED Screen 05, the BEFORE version and Big Tunnel Test 1.
+
+The BEFORE version looks CLOSER to my approved screen than Big Tunnel Test 1.
+
+I do NOT approve Big Tunnel Test 1.
+
+The bigger-tunnel experiment makes the gold rings look stretched horizontally and makes the tunnel look flatter and more oval.
+
+My approved tunnel is deep, beautifully rounded and cylindrical, with gold rings receding naturally into the distance.
+
+Please:
+
+1. Preserve the BEFORE version as our current preferred baseline.
+2. Do not merge Big Tunnel Test 1 into the working game.
+3. Do not simply enlarge the tunnel radius again.
+4. Measure the actual projected ring positions, widths, heights, spacing and vanishing point against my approved reference.
+5. Correct the tunnel geometry and perspective together while preserving the locked gameplay camera wherever possible.
+6. Keep the natural S-shaped river continuing into the golden light.
+7. Run another controlled test, changing one major geometric factor at a time.
+8. Show my approved image, BEFORE and the NEW test side by side.
+
+Only keep a test if its visual structure is clearly closer to my approved image, not just because the tunnel is technically larger.
+
+Keep all gameplay, specialists, Marble assets and five-minute GitHub backups protected.
+
+My goal is the exact look of my approved Screen 05, not a bigger tunnel for its own sake.
+
