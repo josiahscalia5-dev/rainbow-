@@ -390,6 +390,17 @@ void main() {
   float brush = 0.0;
   if (freeK < 0.5) {
     float Mb = M + sbend;
+    // 05 (wave 7) channel shape fitted to ref 05 (band centres back-projected through the locked camera,
+    // lateral from the core): the river widens at s≈148–166 (the right band runs along the right bank at
+    // s≈152–157, the left band bulges toward the core at s≈145–152 and swings out at s≈158–166), and the
+    // right band runs ≈0.3 u closer to the core at s≈136–139. Stationary in s; 0 beyond s 180 (06 join).
+    float fR = -0.3 * smoothstep(133.0, 136.0, s) * (1.0 - smoothstep(139.5, 142.0, s))
+             + 1.9 * smoothstep(146.5, 154.0, s) * (1.0 - smoothstep(160.0, 168.0, s))
+             - 0.9 * smoothstep(165.0, 170.0, s) * (1.0 - smoothstep(174.0, 180.0, s));
+    float fL = -0.5 * smoothstep(143.0, 147.0, s) * (1.0 - smoothstep(151.0, 155.0, s))
+             + 1.0 * smoothstep(154.0, 158.0, s) * (1.0 - smoothstep(168.0, 176.0, s));
+    offL += sw * fL;
+    offR += sw * fR;
     // 05 (wave 7): approaching Benny the two S-bands swing OUT to the banks and leave the frame at the
     // image sides (ref 05: the left band exits at y≈930 ≈ 3.5 u ahead of him, the right one at y≈1090
     // ≈ 0.8 u ahead); behind him only the two diagonal wake sweeps (below) carry pink. (Wave 5 glided
@@ -581,7 +592,7 @@ void main() {
     float cN = laneB;
     float segN = smoothstep(0.4, 0.75, laneN);
     // long thin speed streaks along the fanning current + a finer set
-    float strN = max(silk(kNw, v5 * 0.55 + 60.0, 7.0, 21.0, 0.15), 0.7 * silk(kNw + 0.31, v5 * 0.8 + 13.0, 16.0, 5.0, 0.1));
+    float strN = max(silk(kNw, v5 * 0.55 + 60.0, 7.0, 21.0, 0.15), 0.35 * silk(kNw + 0.31, v5 * 0.8 + 13.0, 16.0, 5.0, 0.1));
     float rNear = 0.12 + 0.6 * laneN + 0.2 * laneB + 0.25 * crestN;
     float swell = mix(rFar, rNear, near5);
     swell = mix(0.5, swell, 1.0 - smoothstep(0.3, 0.7, fwidth(wq * 7.0)) * (1.0 - near5));
@@ -659,9 +670,13 @@ void main() {
     c5 += vec3(1.4) * near5 * step(0.6, hs5n) * smoothstep(0.16, 0.0, length(fract(g5n) - 0.5)) * (0.6 + 0.4 * sin(uTime * 6.0 + hs5n * 30.0));
     #else
     float flA = flowGlint(vec2(wq * 6.0, v5 * 0.075), 0.75, 18.0, 3.8, 0.0, uTime);
-    float flB = flowGlint(vec2(kN * 1.6, v5 * 1.4 + 0.5), 0.6, 26.0, 3.2, 0.5, uTime + 2.7);
-    // many small twinkling 4-point stars (ref 05: dozens of tiny white glints in the near and mid water)
-    float flC = flowGlint(vec2(kN * 7.0, v5 * 4.5 + 0.3), 0.85, 7.0, 2.6, 0.6, uTime + 1.3);
+    // (it03) near "lightning" flares: long bright streaks laid along the fanning flow, two staggered sets
+    // (rows bent by a smooth across-flow warp — a per-column hash jump would spike the glint's derivatives)
+    float flB = flowGlint(vec2(kNw * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(kNw * 4.1 + 0.6)), 0.7, 30.0, 4.5, 0.3, uTime + 2.7);
+    flB = max(flB, flowGlint(vec2(kNw * 2.7 + 0.37, v5 * 2.1 + 1.6 * sin(kNw * 5.3 + 2.0)), 0.45, 18.0, 4.0, 0.2, uTime + 0.9) * 0.8);
+    // many small twinkling 4-point stars (ref 05: dozens of tiny white glints in the near and mid water);
+    // the cell rows are bent across the flow so the stars never line up in rows (it02 showed a dot grid)
+    float flC = flowGlint(vec2(kN * 7.0, v5 * 4.5 + 0.3 + 1.7 * sin(kN * 13.0 + 0.7)), 0.85, 7.0, 2.6, 0.6, uTime + 1.3);
     flC *= 0.5 + 0.8 * cN;                      // the small stars cluster on the glossy lanes (not a uniform snow)
     float flD = flowGlint(vec2(wq * 16.0, v5 * 0.32 + 7.0), 0.5, 6.0, 2.4, 0.3, uTime + 4.1);
     // (the big near flares sit mostly on the swell crests: light catching the heaving surface)

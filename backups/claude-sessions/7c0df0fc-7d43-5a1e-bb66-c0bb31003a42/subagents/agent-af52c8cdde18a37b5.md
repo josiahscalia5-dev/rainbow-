@@ -988,3 +988,443 @@ Now the flank-bank envelope. I'll replicate `bankEnv` in Python and search seeds
 > {'kind': 'R', 'ds': -3.4, 'lat': 1.47, 'k': 0.52, 'y': 1.13, 'env': 0, 's': 129.22} ypx 1736
 > {'kind': 'R', 'ds': -3.19, 'lat': 1.53, 'k': 0.52 …[+1110 chars]
 
+### 🤖 Claude — 2026-11-16T00:52:45.764Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && cat > $S/pct.py <<'EOF'\nimport os, sys\nsys.path.insert(0, '/home/user/rainbow-/qa/pilot05/wave5/foam/tools'); sys.path.insert(0, '/home/user/rainbow-/qa/pilot05/wave6/foam/tools')\nos.environ.setdefault('FOAM_OPEN', '3')\nimport numpy as np\nfrom foammask import foam_mask\nfrom bigblobs import big_blobs\nfrom PIL import Image\n# usage: pct.py x0 y0 x1 y1 IMG...  (foam-ish px incl. crevices: big-blob mask dilated 4 px, B>=180)\nx0,y0,x1,y1 = map(int, sys.argv[1:5])\nfor p in sys.argv[5:]:\n     …[+957 chars]`
+
+### 🧑 User — 2026-11-16T00:52:45.837Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     import scipy
+> ModuleNotFoundError: No module named 'scipy'
+
+### 🤖 Claude — 2026-11-16T00:52:51.228Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && sed -i 's/    from scipy.ndimage import binary_dilation\\n//' $S/pct.py && python3 - <<'EOF'\np='/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/pct.py'\ns=open(p).read()\ns=s.replace(\"    from scipy.ndimage import binary_dilation\\n    kd = binary_dilation(k, iterations=4)\\n\",\"    kd = k.copy()\\n    for _ in range(4):\\n        kd = kd | np.roll(kd,1,0) | np.roll(kd,-1,0) | np.roll(kd,1,1) | np.roll(kd,-1,1)\\n\")\nopen(p,'w').write(s)\nEOF\ncd /home/user/ …[+411 chars]`
+
+### 🧑 User — 2026-11-16T00:52:54.608Z
+
+> ↩︎ result: references 13806 5%(np.int64(165), np.int64(91), np.int64(230)) 10%(np.int64(236), np.int64(102), np.int64(255)) 20%(np.int64(179), np.int64(153), np.int64(250)) 35%(np.int64(185), np.int64(176), np.int64(243)) 50%(np.int64(233), np.int64(184), np.int64(255)) 70%(np.int64(174), np.int64(233), np.int64(255)) 90%(np.int64(250), np.int64(245), np.int64(251))
+> it01 19037 5%(np.int64(181), np.int64(95), np.int64(255)) 10%(np.int64(255), np.int64(106), np.int64(252)) 20%(np.int64(181), np.int64(188), np.int64(254)) 35%(np.int64(225), np.int64(219), np.int64(254)) 50%(np.int64(235), np.int64(229), np.int64(255)) 70%(np.int64(243), np.int64(236), np.int64(255)) 90%(np.int64(250), np.int64(243), np.int64(255))
+> references 29933 5%(np.int64(242), np.int64(87), np.int64(249)) 10%(np.int64(11), np.int64(179), np.int64(252)) 20%(np.int64(157), np.int64(165), np.int64(238)) 35%(np.int64(254), np.int64(159), np.int64(255)) 50%(np.int64(173), np.int64(208), np.int64(248)) 70%(np.int64(222), np.int64(230), np.int64(253)) 90%(np.int64(255), np.int64(249), np.int64(253))
+> it01 35127 5%(np.int64(113), np.int64(109), np.int64(232)) 10%(np.int64(61), np.int64(149), np.int64(243)) 20%(np.int64(102), np.int6 …[+927 chars]
+
+### 🤖 Claude — 2026-11-16T00:53:11.466Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && cat >> $S/envsearch.py <<'EOF'\nprint('--- near-right')\nTN=[(-3.4,-1.95,0),(-1.45,-0.75,1),(-0.4,2.6,0)]\nrandom.seed(11); best=[]\nfor it in range(80000):\n    seed=random.uniform(0,1000); f=random.uniform(0.6,1.3); t0=random.uniform(0.4,0.62)\n    sc=score(TN,seed,f,t0); best.append((sc,seed,f,t0))\n    if len(best)>400: best.sort(); best=best[:20]\nbest.sort()\nfor sc,seed,f,t0 in best[:5]:\n    cov=np.mean([env(s,seed,f,t0)>0.5 for s in np.arange(114.7,188.9,0.1)])\n    print(f'  score {sc: …[+334 chars]`
+
+### 🧑 User — 2026-11-16T00:53:21.962Z
+
+> ↩︎ result: --- near-right
+>   score 0.00 seed 31.950 f 0.686 t0 0.573 coverage05 0.21
+>     .................###########..............................................
+>   score 0.00 seed 165.729 f 0.657 t0 0.595 coverage05 0.25
+>     .................############.............................................
+>   score 0.00 seed 256.507 f 1.010 t0 0.543 coverage05 0.28
+>     ..................##########...................................###........
+>   score 0.00 seed 328.622 f 0.626 t0 0.594 coverage05 0.26
+>     ..................###########.............................................
+>   score 0.00 seed 400.348 f 0.813 t0 0.422 coverage05 0.53
+>     ................#############......................................#######
+
+### 🤖 Claude — 2026-11-16T00:53:25.401Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const env = bankEnv\\|rowEnv\\[sd\\]\\[i\\] = env\\|const bankEnv\\|const behind = sm\\|const clearR\\|const clearC\\|qa.push\" src/vfx/foam.ts", "description": "Locate row loop lines"}`
+
+### 🧑 User — 2026-11-16T00:53:25.435Z
+
+> ↩︎ result: 721:  const bankEnv = (s: number, sd: number) => {
+> 820:        const env = bankEnv(s, sd);
+> 821:        rowEnv[sd][i] = env;
+> 840:        const behind = sm(-0.5, -1.2, ds);
+> 841:        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds))) * (1 - 0.22 * behind);
+> 842:        const clearC = BANK_CLEAR_CORE * (1 - 0.35 * behind);
+> 857:          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2), y: +((1 - yN) / 2).toFixed(3), env: +env.toFixed(2), s: +s.toFixed(2) });
+
+### 🤖 Claude — 2026-11-16T00:53:26.862Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/foam.ts", "offset": 815, "limit": 45}`
+
+### 🧑 User — 2026-11-16T00:53:26.895Z
+
+> ↩︎ result: 815	        course.sample(s, fr);
+> 816	        const hw = course.widthAt(s) / 2;
+> 817	        hBase = heightAt(s, side * 2.5, time);
+> 818	        const camLat = pv.copy(camPos).sub(fr.pos).dot(fr.right);
+> 819	        const lump = bankLump(s, side);
+> 820	        const env = bankEnv(s, sd);
+> 821	        rowEnv[sd][i] = env;
+> 822	        // wave 7: inner-edge px / clump size by row (RIM_R): lower clumps behind Benny, narrow right rim ahead
+> 823	        let pxIn: number, pxClump: number;
+> 824	        if (sd === 0) {
+> 825	          const kz = sm(-0.6, 0.2, ds);
+> 826	          pxIn = 214 + (BANK_PX[0] * (0.72 + 0.28 * lump) - 214) * kz;
+> 827	          pxClump = 157 + (CLUMP_PX - 157) * kz;
+> 828	        } else {
+> 829	          const kz = sm(1.4, 2.6, ds);
+> 830	          pxIn = 234 + (rimR(ds) * (0.85 + 0.3 * lump) - 234) * kz;
+> 831	          pxClump = 170 + (RIM_R_PX - 170) * kz;
+> 832	        }
+> 833	        const frac = ((2 * pxIn) / 864) * env;
+> 834	        const fracOut = frac - (2 * pxClump) / 864;
+> 835	        const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);
+> 836	        const inner = frac > 0.002 ? solveLat(cam, side * (1 - frac), camLat + side * 1.0, edge) : edge;
+> 837	        co …[+1785 chars]
+
+### 🤖 Claude — 2026-11-16T00:53:35.020Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        const env = bankEnv(s, sd);\n        rowEnv[sd][i] = env;\n        // wave 7: inner-edge px / clump size by row (RIM_R): lower clumps behind Benny, narrow right rim ahead\n        let pxIn: number, pxClump: number;\n        if (sd === 0) {\n          const kz = sm(-0.6, 0.2, ds);\n          pxIn = 214 + (BANK_PX[0] * (0.72 + 0.28 * lump) - 214) * kz;\n          pxClump = 157 + (CLUMP_PX - 157) * kz;\n        } else {\n          const kz = sm(1.4, 2.6, ds);\n          pxIn = 234 + (rimR(ds) * (0.85 …[+901 chars]`
+
+### 🧑 User — 2026-11-16T00:53:35.072Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:53:36.470Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const BANK_ENV: [number, number, number][] = [[216.671, 0.975, 0.516], [607.242, 0.459, 0.357]];", "new_string": "const BANK_ENV: [number, number, number][] = [[216.671, 0.975, 0.516], [607.242, 0.459, 0.357], [256.507, 1.01, 0.543]];"}`
+
+### 🧑 User — 2026-11-16T00:53:36.495Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:53:39.478Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax to ≈0.75×\n        const behind = sm(-0.5, -1.2, ds);\n        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds))) * (1 - 0.22 * behind);\n        const clearC = BANK_CLEAR_CORE * (1 - 0.35 * behind);", "new_string": "        // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax (wave 7: to ≈0.5×,\n        // the ref's lower clumps sit right beside the fan, x 57- …[+220 chars]`
+
+### 🧑 User — 2026-11-16T00:53:39.512Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:53:42.526Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "          const yN = pv.copy(fr.pos).addScaledVector(fr.right, side * a).addScaledVector(fr.up, hIn).project(cam).y;\n          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2), y: +((1 - yN) / 2).toFixed(3), env: +env.toFixed(2), s: +s.toFixed(2) });", "new_string": "          const pN = pv.copy(fr.pos).addScaledVector(fr.right, side * a).addScaledVector(fr.up, hIn).project(cam);\n          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFix …[+173 chars]`
+
+### 🧑 User — 2026-11-16T00:53:42.559Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:53:44.551Z
+
+> 🔧 **Bash** `{"command": "grep -n \"y?: number; env?: number; s?: number\" src/vfx/foam.ts", "description": "Find qa type declarations"}`
+
+### 🧑 User — 2026-11-16T00:53:44.589Z
+
+> ↩︎ result: 389:  qaRafts(): { visible: boolean; puffs: number; shown: number; clumps: { kind: string; ds: number; lat: number; k: number; y?: number; env?: number; s?: number }[] };
+> 766:  const qa: { kind: string; ds: number; lat: number; k: number; y?: number; env?: number; s?: number }[] = [];
+
+### 🤖 Claude — 2026-11-16T00:53:46.229Z
+
+> 🔧 **Bash** `{"command": "grep -c \"y?: number; env?: number; s?: number\" src/vfx/foam.ts", "description": "Count occurrences before replace-all edit"}`
+
+### 🧑 User — 2026-11-16T00:53:46.266Z
+
+> ↩︎ result: 2
+
+### 🤖 Claude — 2026-11-16T00:53:48.032Z
+
+> 🔧 **Edit** `{"replace_all": true, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "y?: number; env?: number; s?: number", "new_string": "y?: number; x?: number; env?: number; s?: number"}`
+
+### 🧑 User — 2026-11-16T00:53:48.070Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated. All occurrences were successfully replaced.
+
+### 🤖 Claude — 2026-11-16T00:53:53.749Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && cd $S && python3 - <<'EOF'\nimport sys; sys.path.insert(0,'/home/user/rainbow-/qa/pilot05/wave6/foam/tools')\nfrom pipe import fwd\nimport numpy as np\nfor c in [(0.23,0.22,0.66),(0.26,0.38,0.84),(0.38,0.54,0.97),(0.55,0.66,0.97),(0.76,0.81,0.99),(1.05,1.03,1.08)]: print(c, fwd(c).round())\nEOF\nsed -i 's/^STOPS = .*/STOPS = np.array([[0.23,0.22,0.66],[0.26,0.38,0.84],[0.38,0.54,0.97],[0.55,0.66,0.97],[0.76,0.81,0.99],[1.05,1.03,1.08]])/' sim.py\nsed -i 's/^for args in .*/for args in [(0.1,0.8,0 …[+172 chars]`
+
+### 🧑 User — 2026-11-16T00:53:56.094Z
+
+> ↩︎ result: (0.23, 0.22, 0.66) [107. 102. 234.]
+> (0.26, 0.38, 0.84) [107. 149. 255.]
+> (0.38, 0.54, 0.97) [137. 182. 255.]
+> (0.55, 0.66, 0.97) [176. 202. 255.]
+> (0.76, 0.81, 0.99) [213. 223. 255.]
+> (1.05, 1.03, 1.08) [250. 247. 255.]
+> a0 0.1 a1 0.8 wl 0.6 sil 0.2+0.35 ao 0.95: maskfrac 0.71 WHITE 26.3% SHADE 51.0% mean [214. 224. 255.]  dark(all) 29%
+> a0 0.1 a1 0.8 wl 0.6 sil 0.3+0.45 ao 0.95: maskfrac 0.70 WHITE 20.3% SHADE 58.3% mean [211. 222. 255.]  dark(all) 30%
+> a0 0.1 a1 0.75 wl 0.6 sil 0.3+0.5 ao 0.9: maskfrac 0.71 WHITE 0.0% SHADE 72.2% mean [207. 220. 255.]  dark(all) 29%
+
+### 🤖 Claude — 2026-11-16T00:54:07.074Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/src/vfx/foam.ts'\ns=open(p).read()\nold=\"\"\"  vec3 c = mix(SOAP_CREV, vec3(0.28, 0.36, 0.80), clamp(t, 0.0, 1.0));\n  c = mix(c, vec3(0.42, 0.50, 0.94), clamp(t - 1.0, 0.0, 1.0));\n  c = mix(c, vec3(0.58, 0.60, 0.92), clamp(t - 2.0, 0.0, 1.0));\n  c = mix(c, vec3(0.80, 0.77, 0.97), clamp(t - 3.0, 0.0, 1.0));\n  return mix(c, vec3(1.06, 1.02, 1.08), clamp(t - 4.0, 0.0, 1.0));\"\"\"\nnew=\"\"\"  vec3 c = mix(SOAP_CREV, vec3(0.26, 0.38, 0.84), clamp(t, 0.0, 1.0));\n  c = mix(c, vec3(0.38, 0.54, 0.97), clamp(t - 1.0, 0.0, 1.0));\n  c = mix(c …[+851 chars]`
+
+### 🧑 User — 2026-11-16T00:54:07.140Z
+
+> ↩︎ result: 84:  c = mix(c, vec3(0.78, 0.79, 0.98), clamp(t - 3.0, 0.0, 1.0));
+> 243:    float t5 = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - Nv.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;
+> 342:  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - vP.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;
+
+### 🤖 Claude — 2026-11-16T00:54:13.320Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/foam.ts", "offset": 755, "limit": 10}`
+
+### 🧑 User — 2026-11-16T00:54:13.337Z
+
+> ↩︎ result: 755	  const KIND: [number, number, number, number, number, number][] = quality === 'high'
+> 756	    ? [[0.0, 0.08, 0.04, 0.045, 0.1, 1], [0.04, 0.12, 0.05, 0.04, 0.2, 1], [0.12, 0.5, 0.06, 0.06, 0.35, 1], [0.2, 0.55, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.6], [0.6, 0.4, 0.07, 0.05, 0.3, 1], [0.05, 0.9, 0.045, 0.04, 0.2, 1], [0.3, 0.65, 0.05, 0.05, 0.25, 1]]
+> 757	    : [[0.0, 0.1, 0.045, 0.05, 0.15, 1], [0.12, 0.5, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.7], [0.55, 0.45, 0.07, 0.05, 0.3, 1], [0.1, 0.8, 0.055, 0.05, 0.25, 1]];
+> 758	  /** kinds left out of the narrow right rim (heap, outer, 2nd wide body) */
+> 759	  const RIM_SKIP = quality === 'high' ? [4, 5, 7] : [2, 3];
+> 760	
+> 761	  const rider = { s: 0, lat: 0, str: 0, target: 0, fed: false };
+> 762	  const fr = { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+> 763	  const pP = new THREE.Vector3();
+> 764	  const pv = new THREE.Vector3();
+
+### 🤖 Claude — 2026-11-16T00:54:16.077Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  const RIM_SKIP = quality === 'high' ? [4, 5, 7] : [2, 3];\n", "new_string": "  const RIM_SKIP = quality === 'high' ? [4, 5, 7] : [2, 3];\n  /** body kinds that sometimes become a big bump (ref 05 clumps: a few 30-45 px bumps among 10-20 px bubbles) */\n  const BUMP = quality === 'high' ? [2, 3] : [1];\n"}`
+
+### 🧑 User — 2026-11-16T00:54:16.110Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:54:17.945Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK);\n          const lift = lift0 * (1 - 0.5 * rimK);", "new_string": "          const bump = BUMP.includes(p) && hh(50 + p) < 0.22;\n          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1);\n          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1);"}`
+
+### 🧑 User — 2026-11-16T00:54:17.992Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:54:29.184Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave7/foam/NOTES.md <<'EOF'\n* iso (`iso_norafts`, waterhide=foamRafts): the right heap x 680-864 y 770-950 and all near clumps are the flank\n  impostor bubbles (rafts); the VP rims are the berm + berm puffs. Baseline rowprof: right heap 124-179 px/row at\n  y 780-900 (ref rim 19-66 px/row, inner edge 30 -> 158 -> 70 px from the frame edge over y 700-940).\n* it01 (05 frame: 86 calls, 634,673 tris): foam.ts SOAP05_GLSL (soap05 ramp + soapT view-space top light) used by\n  BERM_FRAG (uSt05 ramp, set in createBerm), PUFF_VERT/FRAG (instanceColor.x = ao + 2q, q = 0 …[+1212 chars]`
+
+### 🧑 User — 2026-11-16T00:54:59.829Z
+
+> ↩︎ result: 05 → qa/pilot05/wave7/foam/it02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":632561,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> |---|---|---|---|---|---|---|---|
+> | PREV | 59.0 | 0.809 | 0.117 | 54.4 | 62.6 | 53.0 | 63.8 |
+> | NOW | 55.5 | 0.832 | 0.161 | 55.4 | 61.9 | 49.1 | 56.9 |
+> qa/pilot05/wave7/foam/it02/05.png
+>   Lfar    12659 px  mean RGB [222 225 254]  WHITE  30.5%  SHADE(B-R>=30)  43.2%  lum 233.6
+>   Rfar    23629 px  mean RGB [224 225 254]  WHITE  31.6%  SHADE(B-R>=30)  43.1%  lum 234.6
+>   Lnear   15372 px  mean RGB [214 218 249]  WHITE  12.7%  SHADE(B-R>=30)  45.1%  lum 226.9
+>   Rnear   13411 px  mean RGB [215 218 249]  WHITE  15.2%  SHADE(B-R>=30)  43.4%  lum 227.0
+>   heapR x640-864 y700-1000: foam  21.5%  max vertical run 129 px  mean run(cols with foam) 55 px
+
+### 🤖 Claude — 2026-11-16T00:55:01.074Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave7/foam/it02/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T00:55:02.999Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T00:55:02.996Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T00:55:08.091Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/it02_near.png 0 950 864 1340 0.7 references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it02/05.png && python3 -I $S/crop.py $S/c/it02_far.png 0 480 864 980 0.7 references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it02/05.png", "description": "Zoom crops of iteration 2"}`
+
+### 🧑 User — 2026-11-16T00:55:08.573Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:55:10.535Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it02_near.png"}`
+
+### 🧑 User — 2026-11-16T00:55:10.566Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:55:11.154Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it02_far.png"}`
+
+### 🧑 User — 2026-11-16T00:55:11.179Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:55:24.574Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && timeout 300 node qa/pilot05/wave6/foam/tools/probe.mjs 05 > $S/probe2.json 2>/dev/null; python3 -I -c \"\nimport json;d=json.load(open('$S/probe2.json'))\nr=d['rafts'];print('shown',r['shown'])\nfor c in r['clumps']:\n  if c['ds']<4 and c['ds']>-2.4: print(c, 'ypx', round(c['y']*1536), 'xpx', round(c['x']*864))\n\"", "description": "Probe raft rows with screen x"}`
+
+### 🧑 User — 2026-11-16T00:55:36.269Z
+
+> ↩︎ result: shown 763
+> {'kind': 'L', 'ds': -2.29, 'lat': -1.53, 'k': 0.52, 'y': 0.944, 'x': -0.011, 'env': 0, 's': 130.33} ypx 1450 xpx -10
+> {'kind': 'L', 'ds': -1.69, 'lat': -1.75, 'k': 0.52, 'y': 0.874, 'x': -0.009, 'env': 0, 's': 130.93} ypx 1342 xpx -8
+> {'kind': 'L', 'ds': -1.01, 'lat': -1.19, 'k': 0.5, 'y': 0.811, 'x': 0.185, 'env': 1, 's': 131.61} ypx 1246 xpx 160
+> {'kind': 'L', 'ds': -0.26, 'lat': -2.3, 'k': 0.52, 'y': 0.757, 'x': -0.007, 'env': 0, 's': 132.36} ypx 1163 xpx -6
+> {'kind': 'L', 'ds': 0.56, 'lat': -1.95, 'k': 1.21, 'y': 0.714, 'x': 0.123, 'env': 1, 's': 133.18} ypx 1097 xpx 106
+> {'kind': 'L', 'ds': 1.44, 'lat': -2.28, 'k': 1.28, 'y': 0.675, 'x': 0.121, 'env': 1, 's': 134.06} ypx 1037 xpx 105
+> {'kind': 'L', 'ds': 2.37, 'lat': -3.45, 'k': 0.56, 'y': 0.635, 'x': 0.001, 'env': 0.06, 's': 134.99} ypx 975 xpx 1
+> {'kind': 'L', 'ds': 3.36, 'lat': -4.01, 'k': 0.52, 'y': 0.6, 'x': -0.006, 'env': 0, 's': 135.98} ypx 922 xpx -5
+> {'kind': 'R', 'ds': -2.29, 'lat': 1.79, 'k': 0.52, 'y': 0.937, 'x': 1.011, 'env': 0, 's': 130.33} ypx 1439 xpx 874
+> {'kind': 'R', 'ds': -1.69, 'lat': 1.01, 'k': 0.66, 'y': 0.869, 'x': 0.741, 'env': 1, 's': 130.93} ypx 1335 xpx 640
+> {'kind': 'R', 'ds': -1.01, 'lat': 1.09,  …[+643 chars]
+
+### 🤖 Claude — 2026-11-16T00:56:04.164Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/foam.ts", "offset": 893, "limit": 50}`
+
+### 🧑 User — 2026-11-16T00:56:04.179Z
+
+> ↩︎ result: 893	        const hh = (q: number) => hash1(j * 7.13 + side * 3.7 + q * 1.31);
+> 894	        const sC = (j + 0.5 + (hh(0) - 0.5) * 0.7) * CELL;
+> 895	        const ds = sC - rider.s;
+> 896	        const base = (sd * NC + slot) * P;
+> 897	        const kFade = w * (1 - sm(BANK_PUFF_DS1 - 1.5, BANK_PUFF_DS1, ds)) * sm(BANK_DS0, BANK_DS0 + 0.3, ds);
+> 898	        if (kFade < 0.02 || sC < s0 || sC > s1) {
+> 899	          for (let p = 0; p < P; p++) rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0));
+> 900	          continue;
+> 901	        }
+> 902	        // interpolate the bank rows at this ds
+> 903	        const t = Math.pow(Math.min(1, Math.max(0, (ds - BANK_DS0) / (BANK_DS1 - BANK_DS0))), 1 / 1.5) * (R - 1);
+> 904	        const ri = Math.min(R - 2, Math.floor(t)), rf = t - ri;
+> 905	        const L = (A: Float32Array) => A[ri] + (A[ri + 1] - A[ri]) * rf;
+> 906	        const lin = L(rowIn[sd]), lout = L(rowOut[sd]), hin = L(rowHIn[sd]), hout = L(rowHOut[sd]);
+> 907	        const ev = sm(0.06, 0.45, L(rowEnv[sd]));
+> 908	        const wid = Math.abs(lout - lin);
+> 909	        course.sample(sC, fr);
+> 910	        // bubbles grow with distance so their on-screen size stays ≈10–45 px (ref 05 bank texture)
+> 911	        c …[+1593 chars]
+
+### 🤖 Claude — 2026-11-16T00:56:15.246Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        const rimK = side > 0 ? sm(1.4, 2.6, ds) : 0;\n        for (let p = 0; p < P; p++) {\n          const [f0, df, r0, dr, lift0, prob] = KIND[p];\n          if (hh(10 + p) > prob || (rimK > 0.5 && RIM_SKIP.includes(p))) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }\n          const f = Math.min(1, f0 + df * hh(20 + p));\n          const bump = BUMP.includes(p) && hh(50 + p) < 0.22;\n          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1);\n     …[+1479 chars]`
+
+### 🧑 User — 2026-11-16T00:56:15.286Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:56:16.700Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds))) * (1 - 0.5 * behind);", "new_string": "        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds))) * (1 - 0.68 * behind);"}`
+
+### 🧑 User — 2026-11-16T00:56:16.732Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:56:18.200Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "          pxIn = 234 + (rimR(ds) * (0.85 + 0.3 * lump) - 234) * kz;\n          pxClump = 170 + (RIM_R_PX - 170) * kz;", "new_string": "          pxIn = 226 + (rimR(ds) * (0.85 + 0.3 * lump) - 226) * kz;\n          pxClump = 145 + (RIM_R_PX - 145) * kz;"}`
+
+### 🧑 User — 2026-11-16T00:56:18.238Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:56:26.143Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "varying vec2 vP;\nvarying vec3 vInst;\n#include <fog_pars_vertex>\nvoid main() {\n  vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);\n  float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);\n  vec4 mvPosition = viewMatrix * c;", "new_string": "varying vec2 vP;\nvarying vec3 vInst;\nvarying float vBig;\n#include <fog_pars_vertex>\nvoid main() {\n  vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);\n  float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).x …[+248 chars]`
+
+### 🧑 User — 2026-11-16T00:56:26.184Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:56:27.946Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - vP.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;", "new_string": "  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - vP.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35 + 0.1 * vBig;"}`
+
+### 🧑 User — 2026-11-16T00:56:27.984Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:56:29.056Z
+
+Now add the varying to the fragment shader and bump the small bubble count near the banks.
+
+### 🤖 Claude — 2026-11-16T00:56:30.366Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "uniform float uTime;\nvarying vec2 vP;\nvarying vec3 vInst;\n#include <fog_pars_fragment>", "new_string": "uniform float uTime;\nvarying vec2 vP;\nvarying vec3 vInst;\nvarying float vBig;\n#include <fog_pars_fragment>"}`
+
+### 🧑 User — 2026-11-16T00:56:30.397Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T00:56:32.070Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "old_string": "  // wave 4 (user): ≈15–20 larger soap bubbles at the sides, only a few small ones\n  high: { big: 19, small: 12 },\n  low: { big: 14, small: 8 },", "new_string": "  // wave 4 (user): ≈15–20 larger soap bubbles at the sides; wave 7: ref 05 shows ≈20–25 small ones near the banks\n  high: { big: 19, small: 22 },\n  low: { big: 14, small: 12 },"}`
+
+### 🧑 User — 2026-11-16T00:56:32.105Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/bubbles.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:56:38.677Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "old_string": "  // wave 4 (user): ≈15–20 larger soap bubbles at the sides; wave 7: ref 05 shows ≈20–25 small ones near the banks\n  high: { big: 19, small: 22 },\n  low: { big: 14, small: 8 },", "new_string": "  // wave 4 (user): ≈15–20 larger soap bubbles at the sides, only a few small ones; wave 7: in 05 the ref shows\n  // ≈20–25 small ones near the banks (small05, 05 s-range only)\n  high: { big: 19, small: 12, small05: 22 },\n  low: { big: 14, small: 8, small05: 12 },"}`
+
+### 🧑 User — 2026-11-16T00:56:38.689Z
+
+> ↩︎ result: <tool_use_error>String to replace not found in file.
+> String:   // wave 4 (user): ≈15–20 larger soap bubbles at the sides; wave 7: ref 05 shows ≈20–25 small ones near the banks
+>   high: { big: 19, small: 22 },
+>   low: { big: 14, small: 8 },
+> (note: Edit also tried swapping \uXXXX escapes and their characters; neither form matched, so the mismatch is likely elsewhere in old_string. Re-read the file and copy the exact surrounding text.)</tool_use_error>
+
+### 🤖 Claude — 2026-11-16T00:56:41.818Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "old_string": "  // wave 4 (user): ≈15–20 larger soap bubbles at the sides; wave 7: ref 05 shows ≈20–25 small ones near the banks\n  high: { big: 19, small: 22 },\n  low: { big: 14, small: 12 },", "new_string": "  // wave 4 (user): ≈15–20 larger soap bubbles at the sides, only a few small ones; wave 7: in 05 the ref shows\n  // ≈20–25 small ones near the banks (small05, 05 s-range only)\n  high: { big: 19, small: 12, small05: 22 },\n  low: { big: 14, small: 8, small05: 12 },"}`
+
+### 🧑 User — 2026-11-16T00:56:41.857Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/bubbles.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:56:43.367Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "old_string": "      const smallLimit = Math.round((inDrum ? nSmall * 0.95 : ride.small) * density);", "new_string": "      const in05 = focusS > st05.s0 + 1 && focusS < st05.s1 - 1;\n      const smallLimit = Math.round((inDrum ? nSmall * 0.95 : in05 ? ride.small05 : ride.small) * density);"}`
+
+### 🧑 User — 2026-11-16T00:56:43.400Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/bubbles.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:56:44.470Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "old_string": "  const drumEnd = course.marks['02_drain'] ?? course.stage('03').s0;", "new_string": "  const drumEnd = course.marks['02_drain'] ?? course.stage('03').s0;\n  const st05 = course.stage('05');"}`
+
+### 🧑 User — 2026-11-16T00:56:44.506Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/bubbles.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T00:56:53.858Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave7/foam/NOTES.md <<'EOF'\n* it02 (86 calls, 632,561 tris): soap05 stops shifted azure (G >= R mid-tones, ref near clumps 70 % (222,230,253)),\n  stronger silhouette crevice term (0.3 + 0.45 low); right near clumps get their own envelope BANK_ENV[2] (searched:\n  0 for ds -0.4..2.6, 1 for -1.45..-0.75), blended into the rim envelope over ds 1.4-2.6; behind-Benny clearances\n  relaxed (rider x0.5, core x0.4 at ds <= -1.2); 22 % of body bubbles are big bumps (r x1.55, lift x0.45). Seen:\n  foam now blue-white shaded like the ref; lower-right clump in place (inner …[+778 chars]`
+
+### 🧑 User — 2026-11-16T00:57:27.285Z
+
+> ↩︎ result: 05 → qa/pilot05/wave7/foam/it03/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":632561,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> |---|---|---|---|---|---|---|---|
+> | PREV | 59.0 | 0.809 | 0.117 | 54.4 | 62.6 | 53.0 | 63.8 |
+> | NOW | 57.0 | 0.81 | 0.159 | 58.6 | 66.6 | 48.2 | 57.6 |
+> qa/pilot05/wave7/foam/it03/05.png
+>   Lfar    22534 px  mean RGB [227 230 252]  WHITE  48.9%  SHADE(B-R>=30)  32.4%  lum 236.4
+>   Rfar    31782 px  mean RGB [227 226 251]  WHITE  39.1%  SHADE(B-R>=30)  33.6%  lum 235.1
+>   Lnear   18987 px  mean RGB [225 227 251]  WHITE  47.5%  SHADE(B-R>=30)  29.0%  lum 234.3
+>   Rnear   19092 px  mean RGB [226 228 251]  WHITE  49.8%  SHADE(B-R>=30)  28.1%  lum 235.0
+>   heapR x640-864 y700-1000: foam  22.2%  max vertical run 129 px  mean run(cols with foam) 60 px
+
+### 🤖 Claude — 2026-11-16T00:57:29.263Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave7/foam/it03/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T00:57:31.225Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T00:57:31.218Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T00:57:39.410Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/it03_near.png 0 950 864 1340 0.7 references/05_flow_into_the_current.png qa/pilot05/wave7/foam/it02/05.png qa/pilot05/wave7/foam/it03/05.png", "description": "Compare near field ref, it02, it03"}`
+
+### 🧑 User — 2026-11-16T00:57:39.725Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:57:41.669Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/it03_near.png"}`
+
+### 🧑 User — 2026-11-16T00:57:41.704Z
+
+> ↩︎ result: [image]
+

@@ -157,9 +157,10 @@ function rnd(a: number, b: number) {
 
 /** ride counts (visible at once in a 05-like frame) and caps, per quality tier */
 const RIDE = {
-  // wave 4 (user): ≈15–20 larger soap bubbles at the sides, only a few small ones
-  high: { big: 19, small: 12 },
-  low: { big: 14, small: 8 },
+  // wave 4 (user): ≈15–20 larger soap bubbles at the sides, only a few small ones; wave 7: in 05 the ref shows
+  // ≈20–25 small ones near the banks (small05, 05 s-range only)
+  high: { big: 19, small: 12, small05: 22 },
+  low: { big: 14, small: 8, small05: 12 },
 };
 /** half width (NDC x) of the no-bubble lane around the projected cyan core / coin line */
 const CORE_LANE = 0.19;
@@ -180,6 +181,7 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
   group.name = 'bubbles';
   const dA = WORLD.drumA;
   const drumEnd = course.marks['02_drain'] ?? course.stage('03').s0;
+  const st05 = course.stage('05');
 
   // ---- big (impostors) ----
   const quad = new THREE.PlaneGeometry(2, 2);
@@ -445,7 +447,8 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
         else if (a === 0) b.life = Math.min(b.life, b.age + 0.25);
       };
       const bigLimit = Math.round((inDrum ? Math.min(nBig, 16) : ride.big) * density);
-      const smallLimit = Math.round((inDrum ? nSmall * 0.95 : ride.small) * density);
+      const in05 = focusS > st05.s0 + 1 && focusS < st05.s1 - 1;
+      const smallLimit = Math.round((inDrum ? nSmall * 0.95 : in05 ? ride.small05 : ride.small) * density);
       for (let i = 0; i < nBig; i++) {
         const b = bigS[i];
         step(b, true);

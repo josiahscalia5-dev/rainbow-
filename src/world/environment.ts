@@ -244,24 +244,29 @@ export function buildEnvironment(course: Course): Environment {
   for (let s = sF05; s >= s05 + 2; s -= bay05) rings05.unshift(s);
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
-  const slotPitch05 = bay05 / 7;
+  // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
+  const slotPitch05 = bay05 / 10;
   // ref 05 walls: deep metallic magenta/violet (#CD32AA / #992FC2), black slots, white-pink lengthwise
   // streaks; the warm light only at the very end (virtual depth ≳160 → halo ≲60 px about the VP)
   const glow05: FarGlow = { color: '#ffd796', near: 160, far: 470, strength: 1.6, mid: { color: '#8a30d2', near: 4, far: 48, amount: 0.45 } };
+  // wave 7, tunnel surfaces only (walls, rings, lids; the far river keeps glow05): orange and earlier — the
+  // reference throat inside the 4th ring (r < 50 px ≈ virtual depth > 200) is one continuous warm orange well
+  // ((229,111,81) at r 32–48, (248,169,89) at r 16–24), no purple gaps between the rings
+  const glowT05: FarGlow = { ...glow05, color: '#ff9c5a', near: 95, far: 330, strength: 1.5 };
   const wall05 = {
     // lavender F0 × the magenta tube environment → violet-magenta metal (ref #992FC2 / #CD32AA)
     // wave 7: no pressed-metal corrugation (its bent normals turned the strip reflections into the "marbled
     // swirl"), only a faint bevel; shaded slot lips instead of the bright pink dotted outline; shorter, plumper
     // capsules (ref median slot 25 px², elongation 4.3; live was 40 px², 8.8); bluer violet F0 (ref wall
     // medians (171,44,177) / (188,51,205) / (154,46,166))
-    ...wallBase, color: '#d49cf4', emissive: '#2a0648', emissiveIntensity: 0.14, envMapIntensity: 0.74,
+    ...wallBase, color: '#d49cf4', emissive: '#2a0648', emissiveIntensity: 0.14, envMapIntensity: 0.74, roughness: 0.07,
     relief: { corrugation: 0, bevel: 0.018, bevelWidth: 0.08 },
-    rimColor: '#b02a9a', rimStrength: 0.12, farGlow: glow05,
-    repeatV: 1 / slotPitch05, slotHalf: [0.2, 0.125] as [number, number],
+    rimColor: '#b02a9a', rimStrength: 0.0, farGlow: glowT05,
+    repeatU: 64, repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.16] as [number, number],
     offsetV: 0.5 - ((((rings05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
   };
   // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
-  const strips05: TubeStrips = { ...strips, intensity: 3.4, width: 0.03 };
+  const strips05: TubeStrips = { ...strips, intensity: 3.8, width: 0.017 };
   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
   const addWall = (a0: number, a1: number, mat: THREE.Material) => {
@@ -287,7 +292,7 @@ export function buildEnvironment(course: Course): Environment {
   // wave 7: the band colour is the stylised cross-section of withBandShading (materials.ts); the PBR/env
   // result underneath only feeds the depth buffer now
   const gold05 = (key: string, virtual: boolean) => {
-    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glow05, key, virtual), band05, key);
+    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), band05, key);
     m.emissive.set('#e08a10');
     m.envMap = goldEnv05;
     m.envMapIntensity = 1.15;
@@ -317,9 +322,9 @@ export function buildEnvironment(course: Course): Environment {
   // below at an angle), one symmetric pair per bay at mid-bay, ≈12° above the axis on both walls
   // wave 7: rose-copper pucks (withLidShading), thicker rim band, just camera-side of each ring (ref L1/L2/R1/R2
   // end right where a ring band starts)
-  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -30, size: 2.1, thickness: 0.62, stretch: 1.0, sink: 0.1 };
+  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -34, size: 2.2, thickness: 0.36, stretch: 1.0, sink: 0.1 };
   const lidMat05 = (key: string, virtual: boolean) => {
-    const m = withLidShading(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glow05, key, virtual), key);
+    const m = withLidShading(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glowT05, key, virtual), key);
     m.emissive.set('#c86a18');
     m.envMap = goldEnv05;
     m.envMapIntensity = 1.35;

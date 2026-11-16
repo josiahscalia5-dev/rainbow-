@@ -389,7 +389,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 4874,
-   "sha256": "bc5edd18fcc9641f18103b17129bffa3ac953a3150dd9cd51901a535e468dfc9"
+   "sha256": "16e80b112bdaf4779d4fe275cc0091a278276d43a12e5e9b6a6bd696768b3cb6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1174,
-   "sha256": "abb967117388d4009753ed94ad2ebcdf01d99bef919168a62f6724c2e487ae38"
+   "bytes": 1176,
+   "sha256": "c5a5a9b1a673e4d4d7bfa478dc7571ac2874b83e1aac11e85f115c47ef6758a9"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -2252,9 +2252,59 @@
    "sha256": "701015767871fa6270a6058583dd9a45a346c9c15b4c05cd98fc84c45a711831"
   },
   {
+   "path": "qa/pilot05/wave7/environment/it02/05.png",
+   "bytes": 1824272,
+   "sha256": "2c4f45f6bdea4a17d25b35d3dcd4caa5377963e5b6366c87425973e003550886"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it02/05_highlight_IT01.png",
+   "bytes": 1791851,
+   "sha256": "f807e5a3075913c9a22141770f990abf0959db1e3e7e106ba288161cd231af58"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it02/05_highlight_NOW.png",
+   "bytes": 1922021,
+   "sha256": "5f9b89965c64ef9538556311017b5c566ad6d1e981dd6c62addc3050a9ada490"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it02/05_highlight_PREV.png",
+   "bytes": 2003676,
+   "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it02/05_overlay_IT01.png",
+   "bytes": 2231948,
+   "sha256": "aa12d35f370d54a200f290cc5821ab55fbb995277a98b6e8b7dacc589794791a"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it02/05_overlay_NOW.png",
+   "bytes": 2300281,
+   "sha256": "484c23ffbaae82d2ab8650aa3559d51d3c1956c675dd6f8dbf1aa7ed0a1c9b57"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it02/05_overlay_PREV.png",
+   "bytes": 2320701,
+   "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it02/05_side_by_side.png",
+   "bytes": 7323577,
+   "sha256": "698ee7936fbce5d36d5840ca2a48e83ad40a0c9cb0ea8cc4fd9a131edd09c894"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it02/metrics.json",
+   "bytes": 689,
+   "sha256": "6618b6f9d5a81e4c076e96ef99a3cd8e65a2d7a9e5ddefce1d1750b99efc0f09"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/it02/metrics.md",
+   "bytes": 496,
+   "sha256": "53fa32592dcc827a1d43d993ea0f234534b0fe20f891e7e126fde42cc8d8b510"
+  },
+  {
    "path": "qa/pilot05/wave7/foam/NOTES.md",
-   "bytes": 1087,
-   "sha256": "0fb946c1ab78a3e210a98bafe3c6f0b247c47eb12e75f828e7749ed893edb459"
+   "bytes": 3245,
+   "sha256": "f27d165552e007af98e45cad6daafab3bae071a8064dc737f28771ac2c2d4538"
   },
   {
    "path": "qa/pilot05/wave7/foam/iso_norafts/05.png",
@@ -2302,6 +2352,86 @@
    "sha256": "5b6a417c2fc3a4b43a8d55a3618ef065bf8bf5413672f7e653e56c63be9c8c5e"
   },
   {
+   "path": "qa/pilot05/wave7/foam/it02/05.png",
+   "bytes": 1824135,
+   "sha256": "531065bdcd695eb345290efa77a201b9ab68791e927b3e45de236a8b4a35c209"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it02/05_highlight_NOW.png",
+   "bytes": 1922090,
+   "sha256": "f256e76d7c055bc9ce1f9e282d82f13ad51a25f387594b85959bc7ad021d748b"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it02/05_highlight_PREV.png",
+   "bytes": 2003676,
+   "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it02/05_overlay_NOW.png",
+   "bytes": 2300146,
+   "sha256": "4bcaeb6393ac0ca1548f5224c2f35e00199e946e26ac4be83d4a9ef6832cbab2"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it02/05_overlay_PREV.png",
+   "bytes": 2320701,
+   "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it02/05_side_by_side.png",
+   "bytes": 5964999,
+   "sha256": "ed22e99c6058a419e94d440b4ebeb5239afedf76038a2409f24bab6fc78f3513"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it02/metrics.json",
+   "bytes": 451,
+   "sha256": "f55c2ce95f5e4bfc7da4a614ddb2784bb5532fa7ac83968d9ee940ad4be389e8"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it02/metrics.md",
+   "bytes": 437,
+   "sha256": "8cc98383fc752ba2f0322a49d134e2de1c40489d80d310c52c644a4d150402e3"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it03/05.png",
+   "bytes": 1793174,
+   "sha256": "f2b806ae1af97f256b2912856fab86a1e38890be95e8b613b427be37f8f1afd8"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it03/05_highlight_NOW.png",
+   "bytes": 1915619,
+   "sha256": "b55e81dee6acc4097c73f7d1047b73252631b94c74a7dfdfc928f32540354d10"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it03/05_highlight_PREV.png",
+   "bytes": 2003676,
+   "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it03/05_overlay_NOW.png",
+   "bytes": 2297284,
+   "sha256": "2c7664b3a1dc548d97ac14a8fb2f48e5ab27260770d635269a2eb5e6945d74c6"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it03/05_overlay_PREV.png",
+   "bytes": 2320701,
+   "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it03/05_side_by_side.png",
+   "bytes": 5950912,
+   "sha256": "9895a48819053123b42879459f446d35eed0ad7bb076f927cfe610fc6dd6be1b"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it03/metrics.json",
+   "bytes": 450,
+   "sha256": "6433a91ca5b4cb8f94ed1c6d74059cb6d89dda7924bab871850a598119918158"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/it03/metrics.md",
+   "bytes": 436,
+   "sha256": "101c86f43e4b4e0e09a5373f9814d6ef3b07494890ee056e11e2ce224b97a74f"
+  },
+  {
    "path": "qa/pilot05/wave7/water/NOTES.md",
    "bytes": 3296,
    "sha256": "e1d9f53503d481dcb9be2d09052824cafc926583a97e8e8419dc57954efd7968"
@@ -2345,6 +2475,86 @@
    "path": "qa/pilot05/wave7/water/it01/metrics.md",
    "bytes": 437,
    "sha256": "bec81054528cda5f81f1073614bd9c38c6beaea79c9a43f39e44d6c5fdaa1d68"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it02/05.png",
+   "bytes": 1751676,
+   "sha256": "3b7d0bd3ce6e15b4043243c878ef47d886651727eb32da179bd0d606eea32726"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it02/05_highlight_NOW.png",
+   "bytes": 1854949,
+   "sha256": "25cfec7034253abdd912d850d21bc3177bf470ab216d7765176e9feeabae2d5b"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it02/05_highlight_PREV.png",
+   "bytes": 2003676,
+   "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it02/05_overlay_NOW.png",
+   "bytes": 2255480,
+   "sha256": "ac8f58577919bacb19f174e001b98a0b2a538294fbd918ec5468dc76a2087f56"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it02/05_overlay_PREV.png",
+   "bytes": 2320701,
+   "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it02/05_side_by_side.png",
+   "bytes": 5896300,
+   "sha256": "e41c032d273177dd6d6d5516c37bd5e9f8e4662c4e7224b2cd918a52e3e16b50"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it02/metrics.json",
+   "bytes": 452,
+   "sha256": "7b5baf19f291d052e54f52917f7050a8a211bb59fcc1d721a7c519785fdacedd"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it02/metrics.md",
+   "bytes": 437,
+   "sha256": "c9c19c4e5c6e1541ece7e69a5f34b93ceec8393db02d300ffe7279adf4953f2a"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it03/05.png",
+   "bytes": 1811949,
+   "sha256": "d5e0cb1dc7ec16fdd886e62cf4daff5fc8e2e5ff127010f898c918bb5a8b88b1"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it03/05_highlight_NOW.png",
+   "bytes": 1912181,
+   "sha256": "4cc4fafda9477c6e066031b96c18b569b98cb6113806739c040e1f7a9cda2ded"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it03/05_highlight_PREV.png",
+   "bytes": 2003676,
+   "sha256": "acfbbe01bc2a84e7b901763bb7061badebb066f947e30ad9e322df9659ba9d8d"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it03/05_overlay_NOW.png",
+   "bytes": 2294056,
+   "sha256": "5d81225143c07992a8656c20ad947d862ddfd53dbc342b880f94ee1ea613a5e3"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it03/05_overlay_PREV.png",
+   "bytes": 2320701,
+   "sha256": "e75971e7aef606b41dc359ac1d3ee71e9d3ae2fc8ed0949004d59e82fef71eba"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it03/05_side_by_side.png",
+   "bytes": 5964769,
+   "sha256": "357b88a9021842efb5ed7837405cef6f928ed6d5db4f941c5809d02859e0a7d0"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it03/metrics.json",
+   "bytes": 452,
+   "sha256": "c99d2402d7ba8b14869f27d6f11805fa89b4c55937028d2cc0efe552b28dedcf"
+  },
+  {
+   "path": "qa/pilot05/wave7/water/it03/metrics.md",
+   "bytes": 437,
+   "sha256": "3dca181a2ec242e46521739723c0412d7a72a64db48d4bf7a7e0975d5d982d1d"
   },
   {
    "path": "qa/report_metrics.json",
@@ -2440,6 +2650,76 @@
    "path": "qa/worldlabs/05/marble_user_world/vibrant_tunnel_of_fortune_screenshot.webp",
    "bytes": 177708,
    "sha256": "9f03860a4a076e58ab41215a347d987225948f72874d52a15e66cfe2df272a75"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/analysis/splat_measure.json",
+   "bytes": 2114,
+   "sha256": "1c7e46a1095529fe9522259a31e6eb3960702d57206d580cb1890c8c38f1ee3d"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/analysis/wall_unrolled.png",
+   "bytes": 552524,
+   "sha256": "3dc8f529f66113fe069f98c0a1547785c22976ce3ac6db8f2c014b0f1267f23c"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/collider.glb",
+   "bytes": 942532,
+   "sha256": "cdaf62b116a7d74662c07da4272ad73629cbb5625979f7288de02b160c7bc9d2"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/import/draft05.blend",
+   "bytes": 10904778,
+   "sha256": "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/import/draft05_measure.json",
+   "bytes": 2808,
+   "sha256": "ee4e5daa755df9c7b02eaf0d6593ce900785403adbe66003d2a6ae78f70c9cdb"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/import/draft05_preview.png",
+   "bytes": 408421,
+   "sha256": "8faf7c234b1531f93a8a3ecba0b08e921038e26a57cdf4a3ea2f108271d9f0e3"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/import/draft05_underlay.glb",
+   "bytes": 224568,
+   "sha256": "3aabf9f058ac662b580a0096a36a90657156ac0b0905eb1eb05777cc0eed1778"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/splats_100k.spz",
+   "bytes": 1262623,
+   "sha256": "fba5764073f1e1bfdda46fbfa04b808fcf474496c8870d66416302f3313cc663"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/splats_500k.ply",
+   "bytes": 27869546,
+   "sha256": "11d359d5bcb84e6cdbe403ce01d683d27d3069e34b83204bb0056739ad3e4e27"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/splats_500k.spz",
+   "bytes": 5876916,
+   "sha256": "18e9dfe4d4fe99ba593144c05f2118260e0b0a0d3b281f96c841f146f556d025"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/thumbnail.png",
+   "bytes": 554796,
+   "sha256": "0686247c959d328a8d48edf93cad4a2c4fd58c96df12344bc1cfd4e6add43d4d"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/thumbnail.webp",
+   "bytes": 74396,
+   "sha256": "20f144ba223bfa1d21b89cd4e56ca0864ee4fd11153afdb784e0562d235e1c46"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/draft/world.json",
+   "bytes": 1746,
+   "sha256": "ab4d9f347a39124ee0bffbf01c8e74a700537d01fab58610f6a61bc7a00ae3bd"
+  },
+  {
+   "path": "qa/worldlabs/05/pilot/prompt_05.txt",
+   "bytes": 1266,
+   "sha256": "80df2f0d31c935b0e0fc7f1b064c54b5e72e9e27abb49643ee6729170eb7a7c6"
   },
   {
    "path": "qa/worldlabs/05/rejected/README.md",
@@ -2923,8 +3203,8 @@
   },
   {
    "path": "src/vfx/bubbles.ts",
-   "bytes": 21923,
-   "sha256": "398d9959920a8daddbd30972f509dfe98d688cbda8ea7a56412ff1fadee99b6d"
+   "bytes": 22169,
+   "sha256": "42821ec0e90c60d5ea2683c36232099efdba3301dc88aa2d81e27345086470cb"
   },
   {
    "path": "src/vfx/drumWater.ts",
@@ -2938,8 +3218,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 46577,
-   "sha256": "4c723f99a549504fee413435864e4ea2b2de03190c35f440d559d83af49ccd31"
+   "bytes": 47836,
+   "sha256": "a74e4d1e647fb69f88208877489e30c93a3edfbd68c2519809f620089e856acb"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -2968,8 +3248,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 46261,
-   "sha256": "6a63bcd7a3a351e2ed6be0c9dd2ed486797ba4e48b870af640177c8bf36518e3"
+   "bytes": 47708,
+   "sha256": "234e75f4ed547e09bbbca1c45b3b96f21c5cd3363a595ab415d76346f3564386"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -2983,8 +3263,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 44476,
-   "sha256": "b752bcf1cdb5990b35e7fec789979dceed748ec538e0d845c2f986675cf6cb79"
+   "bytes": 45041,
+   "sha256": "9a11ce7e55498e15eabc52daecdcf4cf466861e202b037472c6ef2c826031a5c"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -2993,8 +3273,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 40482,
-   "sha256": "022e705c755c9345763d486705882ea0012497680f507225391e8751bf82f872"
+   "bytes": 41642,
+   "sha256": "ddda9e61706a9cfb25957ece2052e2fea27db947a178dd03306253b007f37a7f"
   },
   {
    "path": "src/world/towel.ts",
@@ -3003,8 +3283,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 35446,
-   "sha256": "54f570eb50160996107831cdfb3adb27331c97d15e8d6b6e76a2ef3602b07f94"
+   "bytes": 35515,
+   "sha256": "85baa535925f7e724806fcfef35f7a311a16dc16bad3fbc01646a5aca7db1812"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

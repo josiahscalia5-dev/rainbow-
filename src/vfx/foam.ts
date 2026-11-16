@@ -78,11 +78,11 @@ const SOAP05_GLSL = /* glsl */ `
 const vec3 SOAP_CREV = vec3(0.23, 0.22, 0.66);
 vec3 soap05(float t) {
   t = clamp(t, 0.0, 1.0) * 5.0;
-  vec3 c = mix(SOAP_CREV, vec3(0.28, 0.36, 0.80), clamp(t, 0.0, 1.0));
-  c = mix(c, vec3(0.42, 0.50, 0.94), clamp(t - 1.0, 0.0, 1.0));
-  c = mix(c, vec3(0.58, 0.60, 0.92), clamp(t - 2.0, 0.0, 1.0));
-  c = mix(c, vec3(0.80, 0.77, 0.97), clamp(t - 3.0, 0.0, 1.0));
-  return mix(c, vec3(1.06, 1.02, 1.08), clamp(t - 4.0, 0.0, 1.0));
+  vec3 c = mix(SOAP_CREV, vec3(0.26, 0.38, 0.84), clamp(t, 0.0, 1.0));
+  c = mix(c, vec3(0.38, 0.54, 0.97), clamp(t - 1.0, 0.0, 1.0));
+  c = mix(c, vec3(0.56, 0.63, 0.96), clamp(t - 2.0, 0.0, 1.0));
+  c = mix(c, vec3(0.78, 0.79, 0.98), clamp(t - 3.0, 0.0, 1.0));
+  return mix(c, vec3(1.05, 1.03, 1.08), clamp(t - 4.0, 0.0, 1.0));
 }
 float soapT(vec3 Nv) {
   vec3 Lv = normalize(vec3(-0.35, 0.8, 0.5));
@@ -240,7 +240,7 @@ void main() {
     // 05 (wave 7): ref soap ramp, view-space top light: white caps, periwinkle bodies, blue crevice rims
     vec3 Nv = normalize((viewMatrix * vec4(N, 0.0)).xyz);
     float z = clamp(Nv.z, 0.0, 1.0);
-    float t5 = soapT(Nv) - pow(1.0 - z, 1.5) * (0.2 + 0.35 * clamp(0.5 - Nv.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;
+    float t5 = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - Nv.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;
     c5 = soap05(t5 + 0.04 * vInst.z);
     #ifndef LOW_Q
     vec3 an5 = abs(vLocal);
@@ -310,11 +310,14 @@ function makePuffMaterial(quality: 'high' | 'low') {
 const BANK_BUB_VERT = /* glsl */ `
 varying vec2 vP;
 varying vec3 vInst;
+varying float vBig;
 #include <fog_pars_vertex>
 void main() {
   vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
   float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);
   vec4 mvPosition = viewMatrix * c;
+  // wave 7: 0 for bubbles <= ~18 px, 1 for >= ~40 px on screen (the ref's big near bumps show large white caps)
+  vBig = smoothstep(0.012, 0.026, projectionMatrix[1][1] * r / max(-mvPosition.z, 0.01));
   mvPosition.xyz += normalize(-mvPosition.xyz) * r * 0.6;
   mvPosition.xy += position.xy * r;
   vP = position.xy;
@@ -328,6 +331,7 @@ uniform vec3 uLightDir;
 uniform float uTime;
 varying vec2 vP;
 varying vec3 vInst;
+varying float vBig;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 ${SOAP05_GLSL}
@@ -339,7 +343,7 @@ void main() {
   // wave 7: ref 05 soap ramp (white top caps, lavender-white bodies, periwinkle / blue undersides); the
   // lower and side silhouette sinks into blue-violet (the crevice between piled bubbles), the top edge stays
   // light; inner / lower bubbles of a pile (ambient occlusion vInst.x) are bluer
-  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.2 + 0.35 * clamp(0.5 - vP.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35;
+  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - vP.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35 + 0.1 * vBig;
   vec3 col = soap05(t + 0.04 * vInst.z);
   // pores: one or two small dark-blue open bubbles on the larger puffs
   vec2 pc = vP * 2.2 + vInst.y * 17.0;
@@ -386,7 +390,7 @@ export interface FoamSystem {
   /** camera: needed in 05, where the flank banks are fitted to the frame edges */
   update(time: number, dt: number, focusS: number, outro?: number, camera?: THREE.Camera): void;
   /** QA: current flank-bank placement (kind L/R, row ds, inner-edge lateral, bank width) */
-  qaRafts(): { visible: boolean; puffs: number; shown: number; clumps: { kind: string; ds: number; lat: number; k: number; y?: number; env?: number; s?: number }[] };
+  qaRafts(): { visible: boolean; puffs: number; shown: number; clumps: { kind: string; ds: number; lat: number; k: number; y?: number; x?: number; env?: number; s?: number }[] };
   instanceCount: number;
 }
 
@@ -425,7 +429,7 @@ const FLANK_SHEET = false;
  * a white wall: the outer 40 px were foam on 74 % / 100 % of the rows y 700–1400). The seeds put the
  * clumps of the QA frame (s≈132.4) where the ref has them; along 05 clumps cover ≈40 % of the length.
  */
-const BANK_ENV: [number, number, number][] = [[216.671, 0.975, 0.516], [607.242, 0.459, 0.357]];
+const BANK_ENV: [number, number, number][] = [[216.671, 0.975, 0.516], [607.242, 0.459, 0.357], [256.507, 1.01, 0.543]];
 /**
  * wave 7 (ref 05 rows, qa/pilot05/wave7/foam): the bank row's inner edge (px in from the frame edge) and lateral size
  * (px) by row ds. The right bank ahead of Benny is a NARROW rim hugging the river edge (ref y 700-940: inner edge
@@ -757,13 +761,15 @@ export function createFoam(
     : [[0.0, 0.1, 0.045, 0.05, 0.15, 1], [0.12, 0.5, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.7], [0.55, 0.45, 0.07, 0.05, 0.3, 1], [0.1, 0.8, 0.055, 0.05, 0.25, 1]];
   /** kinds left out of the narrow right rim (heap, outer, 2nd wide body) */
   const RIM_SKIP = quality === 'high' ? [4, 5, 7] : [2, 3];
+  /** body kinds that sometimes become a big bump (ref 05 clumps: a few 30-45 px bumps among 10-20 px bubbles) */
+  const BUMP = quality === 'high' ? [2, 3] : [1];
 
   const rider = { s: 0, lat: 0, str: 0, target: 0, fed: false };
   const fr = { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
   const pP = new THREE.Vector3();
   const pv = new THREE.Vector3();
   const camPos = new THREE.Vector3();
-  const qa: { kind: string; ds: number; lat: number; k: number; y?: number; env?: number; s?: number }[] = [];
+  const qa: { kind: string; ds: number; lat: number; k: number; y?: number; x?: number; env?: number; s?: number }[] = [];
   let shown = 0;
   let hBase = 0;
   /** NDC x of the water point at `lat` on the current row frame `fr` */
@@ -817,29 +823,32 @@ export function createFoam(
         hBase = heightAt(s, side * 2.5, time);
         const camLat = pv.copy(camPos).sub(fr.pos).dot(fr.right);
         const lump = bankLump(s, side);
-        const env = bankEnv(s, sd);
-        rowEnv[sd][i] = env;
-        // wave 7: inner-edge px / clump size by row (RIM_R): lower clumps behind Benny, narrow right rim ahead
-        let pxIn: number, pxClump: number;
+        // wave 7: inner-edge px / clump size by row (RIM_R): lower clumps behind Benny, narrow right rim ahead;
+        // the right side blends its own short-clump envelope (BANK_ENV[2], beside / behind Benny) into the rim's
+        let pxIn: number, pxClump: number, env: number;
         if (sd === 0) {
           const kz = sm(-0.6, 0.2, ds);
+          env = bankEnv(s, 0);
           pxIn = 214 + (BANK_PX[0] * (0.72 + 0.28 * lump) - 214) * kz;
           pxClump = 157 + (CLUMP_PX - 157) * kz;
         } else {
           const kz = sm(1.4, 2.6, ds);
-          pxIn = 234 + (rimR(ds) * (0.85 + 0.3 * lump) - 234) * kz;
-          pxClump = 170 + (RIM_R_PX - 170) * kz;
+          env = bankEnv(s, 2) + (bankEnv(s, 1) - bankEnv(s, 2)) * kz;
+          pxIn = 226 + (rimR(ds) * (0.85 + 0.3 * lump) - 226) * kz;
+          pxClump = 145 + (RIM_R_PX - 145) * kz;
         }
+        rowEnv[sd][i] = env;
         const frac = ((2 * pxIn) / 864) * env;
         const fracOut = frac - (2 * pxClump) / 864;
         const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);
         const inner = frac > 0.002 ? solveLat(cam, side * (1 - frac), camLat + side * 1.0, edge) : edge;
         const outer = fracOut > 0.004 ? solveLat(cam, side * (1 - fracOut), inner, edge) : edge;
         // keep clear of Benny (near him) and of the cyan core / coin line; merge into the berm at the edge
-        // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax to ≈0.75×
+        // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax (wave 7: to ≈0.5×,
+        // the ref's lower clumps sit right beside the fan, x 57-214 / 630-800)
         const behind = sm(-0.5, -1.2, ds);
-        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds))) * (1 - 0.22 * behind);
-        const clearC = BANK_CLEAR_CORE * (1 - 0.35 * behind);
+        const clearR = BANK_CLEAR_RIDER * (1 - sm(2.5, 4.5, Math.abs(ds))) * (1 - 0.68 * behind);
+        const clearC = BANK_CLEAR_CORE * (1 - 0.6 * behind);
         let a = Math.max(side * inner, side * rider.lat + clearR, side * coreLateral(course, s) + clearC);
         a = Math.min(a, hw - 0.3);
         // outer border: beyond the frame edge, or (wide clump) CLUMP_PX out from its inner edge
@@ -853,8 +862,8 @@ export function createFoam(
         rowHOut[sd][i] = hOut;
         if (qa.length < 80 && i % 2 === 0) {
           // screen y (0 top … 1 bottom) of the bank's inner edge on this row
-          const yN = pv.copy(fr.pos).addScaledVector(fr.right, side * a).addScaledVector(fr.up, hIn).project(cam).y;
-          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2), y: +((1 - yN) / 2).toFixed(3), env: +env.toFixed(2), s: +s.toFixed(2) });
+          const pN = pv.copy(fr.pos).addScaledVector(fr.right, side * a).addScaledVector(fr.up, hIn).project(cam);
+          qa.push({ kind: side < 0 ? 'L' : 'R', ds: +ds.toFixed(2), lat: +(side * a).toFixed(2), k: +(outA - a).toFixed(2), y: +((1 - pN.y) / 2).toFixed(3), x: +((1 + pN.x) / 2).toFixed(3), env: +env.toFixed(2), s: +s.toFixed(2) });
         }
         for (let j = 0; j < C; j++) {
           const f = Math.pow(j / (C - 1), 0.85);
@@ -906,12 +915,17 @@ export function createFoam(
         const scale = Math.min(2.0, 0.9 + 0.1 * Math.max(0, ds)) * kFade * Math.min(1, wid / 0.3) * ev;
         // wave 7: the right rim ahead of Benny is one low layer of smaller bubbles (no heap / outer kinds)
         const rimK = side > 0 ? sm(1.4, 2.6, ds) : 0;
+        // wave 7: the near clumps (beside / behind Benny) are compact mounds of overlapping bubbles (ref 05),
+        // not a loose scatter: bigger bubbles drawn toward the clump middle, taller in the middle
+        const nearK = 1 - sm(2.0, 3.0, ds);
         for (let p = 0; p < P; p++) {
           const [f0, df, r0, dr, lift0, prob] = KIND[p];
           if (hh(10 + p) > prob || (rimK > 0.5 && RIM_SKIP.includes(p))) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
-          const f = Math.min(1, f0 + df * hh(20 + p));
-          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK);
-          const lift = lift0 * (1 - 0.5 * rimK);
+          const fr0 = Math.min(1, f0 + df * hh(20 + p));
+          const f = 0.5 + (fr0 - 0.5) * (1 - 0.25 * nearK);
+          const bump = BUMP.includes(p) && hh(50 + p) < 0.22;
+          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.15 * rimK) * (bump ? 1.55 : 1) * (1 + 0.25 * nearK);
+          const lift = lift0 * (1 - 0.5 * rimK) * (bump ? 0.45 : 1) + 0.7 * nearK * Math.sin(Math.PI * f);
           if (r < 0.004) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
           const lat = lin + (lout - lin) * f;
           const h = hin + (hout - hin) * f + bankProf(f, sC, side) + r * lift;

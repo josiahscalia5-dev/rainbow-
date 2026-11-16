@@ -244,47 +244,59 @@ export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b:
     prev.call(mat, shader, r);
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vBandP;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvBandP = position;');
+      .replace('#include <common>', '#include <common>\nvarying vec3 vBandP; varying vec3 vBandAx;')
+      .replace('#include <begin_vertex>', `#include <begin_vertex>
+vBandP = position;
+#ifdef USE_INSTANCING
+vBandAx = (viewMatrix * modelMatrix * instanceMatrix * vec4(0.0, 0.0, 1.0, 0.0)).xyz;
+#else
+vBandAx = (viewMatrix * modelMatrix * vec4(0.0, 0.0, 1.0, 0.0)).xyz;
+#endif`);
     const fg = shader.fragmentShader.includes('float farGlowK()');
     shader.fragmentShader = shader.fragmentShader
-      .replace('void main() {', `varying vec3 vBandP;
+      .replace('void main() {', `varying vec3 vBandP; varying vec3 vBandAx;
 uniform vec4 uBandG; uniform vec4 uBandS; uniform vec2 uBandF;
 uniform vec3 uBcDark; uniform vec3 uBcRose; uniform vec3 uBcOrange; uniform vec3 uBcCrown; uniform vec3 uBcPeak; uniform vec3 uBcGroove; uniform vec3 uBcSpot;
-vec3 bandShade(float deep){
+// The rider sees every band at a grazing angle, i.e. mostly its camera-facing flank: the colour therefore
+// follows the view-space normal — facing (ndv) for body → orange line → rose → dark silhouette contour, the
+// normal's axial component (nzv: -1 camera-facing base … 0 crown) for the highlight line — and the axial
+// coordinate only for the thin dark contour lines where band and lip meet the wall and for the groove.
+vec3 bandShade(float deep, vec3 N, vec3 V){
   float z = vBandP.z;
   float m = (z - uBandG.x) / uBandG.y;          // main band: -1 camera side … +1 far side
   float l = (z - uBandG.z) / uBandG.w;          // lip
   float fm = fwidth(m) + 1e-3, fl = fwidth(l) + 1e-3;
-  float am = abs(m + 0.12);
-  vec3 crown = mix(uBcPeak, uBcCrown, smoothstep(0.04, 0.26 + fm, am));
-  crown = mix(crown, mix(uBcRose * 1.15, uBcCrown, 0.35), deep);   // deeper rings: rose-copper body
-  vec3 c = mix(crown, uBcOrange, smoothstep(0.4, 0.52 + fm, am));
-  c = mix(c, uBcRose, smoothstep(0.58, 0.7 + fm, am));
-  c = mix(c, uBcDark, smoothstep(0.84, 0.98 + fm, am));
-  float al = abs(l);
-  vec3 cl = mix(mix(uBcCrown, uBcRose, 0.45 + 0.4 * deep), uBcRose, smoothstep(0.15, 0.5 + fl, al));
-  cl = mix(cl, uBcDark, smoothstep(0.7, 0.98 + fl, al));
+  float ndv = clamp(dot(N, V), 0.0, 1.0);
+  float nzv = dot(N, normalize(vBandAx));
+  vec3 body = mix(uBcCrown, mix(uBcRose * 1.12, uBcCrown, 0.3), deep);   // deeper rings: rose-copper body
+  vec3 c = mix(uBcDark, uBcRose, smoothstep(0.03, 0.14, ndv));
+  c = mix(c, uBcOrange, smoothstep(0.16, 0.26, ndv));
+  c = mix(c, body, smoothstep(0.3, 0.46, ndv));
+  float hl = exp(-pow((nzv + 0.62) / 0.16, 2.0)) * smoothstep(0.3, 0.5, ndv);
+  c = mix(c, uBcPeak, hl * (0.9 - 0.6 * deep));
+  c = mix(c, uBcDark, smoothstep(0.9, 1.0, abs(m)) * 0.85);           // contour where the band meets the wall
+  vec3 cl = mix(uBcDark, mix(uBcRose, uBcCrown, 0.55 - 0.35 * deep), smoothstep(0.05, 0.3, ndv));
+  cl = mix(cl, uBcDark, smoothstep(0.86, 1.0, abs(l)) * 0.85);
   float inMain = smoothstep(-1.0 - fm, -1.0 + fm, m);
   float inLip = 1.0 - smoothstep(1.0 - fl, 1.0 + fl, l);
   vec3 col = mix(uBcGroove, cl, inLip);
   col = mix(col, c, inMain);
-  // marquee spots at fixed azimuths (12 o'clock = a spot)
+  // marquee spots at fixed azimuths (12 o'clock = a spot): radial lines of spots into the VP
   float phi = atan(vBandP.y, vBandP.x);
   float t = (phi - 1.5707963) * uBandS.x / 6.2831853;
   float ft = min(fwidth(t), fwidth(fract(t + 0.5)));
   float d = fract(t + 0.5) - 0.5;
   float sw = uBandS.y + ft * 0.7;
   float sp = exp(-d * d / (sw * sw)) * mix(1.0, uBandS.y / sw, 0.6);
-  float across = inMain * exp(-pow((m + 0.12) / 0.62, 2.0)) + inLip * (1.0 - inMain) * 0.45 * exp(-l * l / 0.3);
-  col += uBcSpot * sp * across * uBandS.z * (1.0 - 0.45 * deep);
+  float across = inMain * smoothstep(0.25, 0.5, ndv) * (1.0 - smoothstep(0.8, 0.95, abs(m))) + inLip * (1.0 - inMain) * 0.4 * smoothstep(0.2, 0.4, ndv);
+  col += uBcSpot * sp * across * uBandS.z * (1.0 - 0.4 * deep);
   return col;
 }
 void main() {`)
       .replace('#include <opaque_fragment>', `{
   float bDist = length(vViewPosition);
 ${fg ? '  bDist = fgDist();' : ''}
-  vec3 bc = bandShade(smoothstep(uBandF.x, uBandF.y, bDist));
+  vec3 bc = bandShade(smoothstep(uBandF.x, uBandF.y, bDist), normalize(normal), normalize(vViewPosition));
 ${fg ? `  float bfg = farGlowK(); float bmt = midTintK();
   bc = mix(bc, uFarGlowColor * 0.9, min(1.0, bfg * 0.55)) + uFarGlowColor * bfg * 0.25;` : ''}
   outgoingLight = bc;
@@ -642,11 +654,12 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
     uniforms: {
       uFade: { value: fade },
       uOpacity: { value: 1 },
-      // wave 4: small golden-white hot spot (ref 05 VP), no pink-orange disc
-      uCore: { value: new THREE.Color(3.2, 3.05, 2.5) },
-      uGold: { value: new THREE.Color(2.5, 1.95, 0.85) },
-      uWarm: { value: new THREE.Color(1.5, 0.95, 0.42) },
-      uRim: { value: new THREE.Color(0.9, 0.5, 0.36) },
+      // wave 7: smaller pale core inside an ORANGE halo (ref 05 VP: hot core ≈115 px², glow radius 13/20 px,
+      // r 16–24 (248,169,89), r 24–32 (244,134,76); live was a 289 px² pale-yellow disc, r 16–24 (255,220,139))
+      uCore: { value: new THREE.Color(3.0, 2.75, 2.1) },
+      uGold: { value: new THREE.Color(1.6, 0.85, 0.32) },
+      uWarm: { value: new THREE.Color(1.05, 0.42, 0.2) },
+      uRim: { value: new THREE.Color(0.8, 0.3, 0.2) },
     },
     vertexShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec4 uFade;
       void main(){
@@ -659,8 +672,8 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
       void main(){
         float r = length(vUv - 0.5) * 2.0;
         vec3 c = mix(uRim, uWarm, smoothstep(1.0, 0.6, r));
-        c = mix(c, uGold, smoothstep(0.7, 0.3, r));
-        c = mix(c, uCore, smoothstep(0.6, 0.05, r));
+        c = mix(c, uGold, smoothstep(0.62, 0.25, r));
+        c = mix(c, uCore, smoothstep(0.34, 0.02, r));
         float a = (1.0 - smoothstep(0.82, 1.0, r)) * vFade * uOpacity;
         if (a < 0.003) discard;
         gl_FragColor = vec4(c, a);
