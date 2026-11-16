@@ -332,41 +332,6 @@ export function buildEnvironment(course: Course): Environment {
   };
   const lids05 = rings05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
   zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
-  // 05 near gold frame (wave 7, ref bottom corners + bottom lip): real 3D bands held in front of the rider
-  // camera (nearFrameGeometry, reference-pixel units → camera space at depth 0.8, scaled by the camera FOV).
-  // Shown only while the camera rides the straight 05 current; it slides down out of the frame over ≈6 units
-  // when entering from 04 and before the 06 hall, and is collapsed (zero scale) everywhere else, so 01–04 and
-  // 06–11 never see it. It covers only the frame's bottom corners/edge (below Benny), never the course ahead.
-  {
-    const frame = new THREE.Mesh(nearFrameGeometry(), nearFrameMaterial());
-    frame.name = 'tube05_near_frame';
-    frame.frustumCulled = false;
-    frame.matrixAutoUpdate = false;
-    frame.matrixWorldAutoUpdate = false;
-    frame.renderOrder = 2;
-    const P05 = tubeCenterAt(perfPath, sCam05);
-    const T05 = perfPath.frame(sCam05).tan.clone();
-    const axialOf = (s: number) => tubeCenterAt(perfPath, s).sub(P05).dot(T05);
-    const aIn0 = axialOf(s05), aIn1 = axialOf(s05 + 6), aOut0 = axialOf(sGlow05 - 22), aOut1 = axialOf(sGlow05 - 16);
-    const rLat = perfPath.radius(sCam05) * 1.2;
-    const camP = new THREE.Vector3(), rel = new THREE.Vector3(), slide = new THREE.Matrix4(), place = new THREE.Matrix4();
-    const zero = new THREE.Matrix4().makeScale(0, 0, 0);
-    frame.onBeforeRender = (_r, _s, cam) => {
-      camP.setFromMatrixPosition(cam.matrixWorld);
-      rel.copy(camP).sub(P05);
-      const a = rel.dot(T05);
-      const lat = rel.addScaledVector(T05, -a).length();
-      const k = THREE.MathUtils.smoothstep(a, aIn0, aIn1) * (1 - THREE.MathUtils.smoothstep(a, aOut0, aOut1)) * (lat < rLat ? 1 : 0);
-      const pc = cam as THREE.PerspectiveCamera;
-      if (k <= 1e-3 || !pc.isPerspectiveCamera) { frame.matrixWorld.copy(zero); return; }
-      const d = 0.8;
-      const px = (d * Math.tan(THREE.MathUtils.degToRad(pc.fov) / 2)) / 768;
-      slide.makeTranslation(0, -(1 - k) * 420, 0);
-      place.makeTranslation(0, 0, -d).multiply(new THREE.Matrix4().makeScale(px, px, px)).multiply(slide);
-      frame.matrixWorld.multiplyMatrices(cam.matrixWorld, place);
-    };
-    zones.tubes.add(frame);
-  }
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];
   for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
@@ -561,6 +526,43 @@ export function buildEnvironment(course: Course): Environment {
     animated.push(stream.update);
   }
 
+  // 05 near gold frame (wave 7, ref bottom corners + bottom lip), built LAST: three's UUIDs draw on Math.random,
+  // so creating it earlier shifted the random canvas textures of the 08 laundry room / pour streams.
+  // Real 3D bands held in front of the rider
+  // camera (nearFrameGeometry, reference-pixel units → camera space at depth 0.8, scaled by the camera FOV).
+  // Shown only while the camera rides the straight 05 current; it slides down out of the frame over ≈6 units
+  // when entering from 04 and before the 06 hall, and is collapsed (zero scale) everywhere else, so 01–04 and
+  // 06–11 never see it. It covers only the frame's bottom corners/edge (below Benny), never the course ahead.
+  {
+    const frame = new THREE.Mesh(nearFrameGeometry(), nearFrameMaterial());
+    frame.name = 'tube05_near_frame';
+    frame.frustumCulled = false;
+    frame.matrixAutoUpdate = false;
+    frame.matrixWorldAutoUpdate = false;
+    frame.renderOrder = 2;
+    const P05 = tubeCenterAt(perfPath, sCam05);
+    const T05 = perfPath.frame(sCam05).tan.clone();
+    const axialOf = (s: number) => tubeCenterAt(perfPath, s).sub(P05).dot(T05);
+    const aIn0 = axialOf(s05), aIn1 = axialOf(s05 + 6), aOut0 = axialOf(sGlow05 - 30), aOut1 = axialOf(sGlow05 - 23);
+    const rLat = perfPath.radius(sCam05) * 1.2;
+    const camP = new THREE.Vector3(), rel = new THREE.Vector3(), slide = new THREE.Matrix4(), place = new THREE.Matrix4();
+    const zero = new THREE.Matrix4().makeScale(0, 0, 0), scl = new THREE.Matrix4();
+    frame.onBeforeRender = (_r, _s, cam) => {
+      camP.setFromMatrixPosition(cam.matrixWorld);
+      rel.copy(camP).sub(P05);
+      const a = rel.dot(T05);
+      const lat = rel.addScaledVector(T05, -a).length();
+      const k = THREE.MathUtils.smoothstep(a, aIn0, aIn1) * (1 - THREE.MathUtils.smoothstep(a, aOut0, aOut1)) * (lat < rLat ? 1 : 0);
+      const pc = cam as THREE.PerspectiveCamera;
+      if (k <= 1e-3 || !pc.isPerspectiveCamera) { frame.matrixWorld.copy(zero); return; }
+      const d = 0.8;
+      const px = (d * Math.tan(THREE.MathUtils.degToRad(pc.fov) / 2)) / 768;
+      slide.makeTranslation(0, -(1 - k) * 420, 0);
+      place.makeTranslation(0, 0, -d).multiply(scl.makeScale(px, px, px)).multiply(slide);
+      frame.matrixWorld.multiplyMatrices(cam.matrixWorld, place);
+    };
+    zones.tubes.add(frame);
+  }
   return {
     group: root,
     update: (t, dt) => animated.forEach((f) => f(t, dt)),

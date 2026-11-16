@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 2484,
-   "sha256": "138fa88b367cd20614e35e7739ebb23c21ec4c3f69c64177a499b1ab82d3db7d"
+   "bytes": 2709,
+   "sha256": "45afe71bea9c960b1ce3beeb007400bb70963a2d914d5de7349a3f535e409eaa"
   },
   {
    "path": "README_FIRST.md",
@@ -374,14 +374,12 @@
   {
    "path": "assets/models/benny.glb",
    "bytes": 1126892,
-   "sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1",
-   "lfs_pointer_only": true
+   "sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
   },
   {
    "path": "assets/models/rainbow_girl.glb",
    "bytes": 3546480,
-   "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528",
-   "lfs_pointer_only": true
+   "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -389,24 +387,34 @@
    "sha256": "b9ee04d4fe2860501bad1d62bf653ab90dc58e9ea5828890a95a6059d902bef7"
   },
   {
+   "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
+   "bytes": 11579,
+   "sha256": "69647e650475e7943f6b67bc922d4b17372fb1a4f8efe9ba02e9a605dc044c3e"
+  },
+  {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 5128,
-   "sha256": "a23f44c3e31425217485af7dc8008210ee5b1dacd36f584badc38e6fd9f2416c"
+   "bytes": 4874,
+   "sha256": "a3c51bf79b381603effc6e6c769e835dccb3dda5df8e2d240a3ae162cf6e1016"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 11719,
-   "sha256": "fbbaf3dc0e8466ea3d361aef04e93aaf9481bdd2380fa337a1d96211a37c6965"
+   "bytes": 12081,
+   "sha256": "b3d3ee8406c36e865baf447fca913343b04b8a90269c8244d9727733f142695a"
   },
   {
    "path": "backups/MCP_SETUP.md",
-   "bytes": 2234,
-   "sha256": "8942f814be1d80d0d89730ee62b9c99b976b36fd927175fc5a11af25bd390baa"
+   "bytes": 2636,
+   "sha256": "aae67329d62c29642da1e0f385a5f722e70835714eab6b86a34c1b64fbf55cee"
   },
   {
    "path": "backups/RECOVERY.md",
    "bytes": 5431,
    "sha256": "0cfc33b4153da3fe65420f1b59d50b1f882ee5f8d5807541971076c2e1ea90cb"
+  },
+  {
+   "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
+   "bytes": 2173,
+   "sha256": "8dfc5837327a5665cf30c39b75ac5e8ca6be36a94b488813b69194b4eef6cdd6"
   },
   {
    "path": "backups/autosave.config.json",
@@ -416,8 +424,7 @@
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
    "bytes": 5455698,
-   "sha256": "982e007c75e95cb0913749e28f763579fddb39825f4dc2bfd5b12c64e478c0f3",
-   "lfs_pointer_only": true
+   "sha256": "982e007c75e95cb0913749e28f763579fddb39825f4dc2bfd5b12c64e478c0f3"
   },
   {
    "path": "backups/source-package/Rainbow_Claude_Code_Master_Prompt_11_Screens.uploaded.md",
@@ -432,8 +439,7 @@
   {
    "path": "builds/rainbow-debug.apk",
    "bytes": 7339491,
-   "sha256": "dca8d754b769bad4b8d92e89fcdfc73eaff0e4c55f5cca8ca31c7ef4eaad9b25",
-   "lfs_pointer_only": true
+   "sha256": "dca8d754b769bad4b8d92e89fcdfc73eaff0e4c55f5cca8ca31c7ef4eaad9b25"
   },
   {
    "path": "capacitor.config.ts",
@@ -812,8 +818,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1183,
-   "sha256": "254c94203c85d93b6230a3b5bf2921680b882be460ad7d6de4fc3ef0db3a22f7"
+   "bytes": 5199,
+   "sha256": "3e77589dc8db9a53135228c9ba5c472c9a1f40de1383ef78ea1b8393bc3a2790"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1833,20 +1839,17 @@
   {
    "path": "qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
    "bytes": 445121,
-   "sha256": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b",
-   "lfs_pointer_only": true
+   "sha256": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b"
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/screen05_layout.blend",
    "bytes": 411754,
-   "sha256": "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440",
-   "lfs_pointer_only": true
+   "sha256": "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440"
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/screen05_layout.glb",
    "bytes": 2773144,
-   "sha256": "8567f56ef76fa3ef6a898e23148111ea4d67fffb6146f04ece9e4b62c565a9ed",
-   "lfs_pointer_only": true
+   "sha256": "8567f56ef76fa3ef6a898e23148111ea4d67fffb6146f04ece9e4b62c565a9ed"
   },
   {
    "path": "qa/pilot05/wave6/camera_lock/screen05_layout_cam05.png",
@@ -2507,6 +2510,31 @@
    "path": "qa/pilot05/wave7/environment/it06/metrics.md",
    "bytes": 497,
    "sha256": "356180c8829048c1c9460b7e8c5d0e2298c490be324bc287d110a199c83775e6"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/regress/04.png",
+   "bytes": 1009749,
+   "sha256": "94e19bf636490f6bfff75b9e22a30d237bbd825c1794ae53eaa0715c93271505"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/regress/05.png",
+   "bytes": 1825075,
+   "sha256": "1c2547f339dcc3b99108e7766777de6b53386ea484e1172683f6ffb44441254e"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/regress/06.png",
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/regress/07.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/pilot05/wave7/environment/regress/08.png",
+   "bytes": 1428636,
+   "sha256": "dcf4e447a58b42c0225248905d3e3b2785a0d47cef8d04161ef708a7079b559b"
   },
   {
    "path": "qa/pilot05/wave7/foam/NOTES.md",
@@ -3221,14 +3249,12 @@
   {
    "path": "qa/worldlabs/05/blender/screen05_layout.blend",
    "bytes": 410225,
-   "sha256": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9",
-   "lfs_pointer_only": true
+   "sha256": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9"
   },
   {
    "path": "qa/worldlabs/05/blender/screen05_layout.glb",
    "bytes": 2773392,
-   "sha256": "8cfd5093ede29e763e3a4af0981a11fecd976844506632febe8fe8134c0300f0",
-   "lfs_pointer_only": true
+   "sha256": "8cfd5093ede29e763e3a4af0981a11fecd976844506632febe8fe8134c0300f0"
   },
   {
    "path": "qa/worldlabs/05/geometry_ref/1_original_approved_05.png",
@@ -3298,14 +3324,12 @@
   {
    "path": "qa/worldlabs/05/pilot/draft/collider.glb",
    "bytes": 942532,
-   "sha256": "cdaf62b116a7d74662c07da4272ad73629cbb5625979f7288de02b160c7bc9d2",
-   "lfs_pointer_only": true
+   "sha256": "cdaf62b116a7d74662c07da4272ad73629cbb5625979f7288de02b160c7bc9d2"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/import/draft05.blend",
    "bytes": 10904778,
-   "sha256": "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59",
-   "lfs_pointer_only": true
+   "sha256": "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/import/draft05_measure.json",
@@ -3320,8 +3344,7 @@
   {
    "path": "qa/worldlabs/05/pilot/draft/import/draft05_underlay.glb",
    "bytes": 224568,
-   "sha256": "3aabf9f058ac662b580a0096a36a90657156ac0b0905eb1eb05777cc0eed1778",
-   "lfs_pointer_only": true
+   "sha256": "3aabf9f058ac662b580a0096a36a90657156ac0b0905eb1eb05777cc0eed1778"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/operation_response.sanitized.json",
@@ -3331,26 +3354,22 @@
   {
    "path": "qa/worldlabs/05/pilot/draft/splats_100k.spz",
    "bytes": 1262623,
-   "sha256": "fba5764073f1e1bfdda46fbfa04b808fcf474496c8870d66416302f3313cc663",
-   "lfs_pointer_only": true
+   "sha256": "fba5764073f1e1bfdda46fbfa04b808fcf474496c8870d66416302f3313cc663"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/splats_500k.ply",
    "bytes": 27869546,
-   "sha256": "11d359d5bcb84e6cdbe403ce01d683d27d3069e34b83204bb0056739ad3e4e27",
-   "lfs_pointer_only": true
+   "sha256": "11d359d5bcb84e6cdbe403ce01d683d27d3069e34b83204bb0056739ad3e4e27"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/splats_500k.spz",
    "bytes": 5876916,
-   "sha256": "18e9dfe4d4fe99ba593144c05f2118260e0b0a0d3b281f96c841f146f556d025",
-   "lfs_pointer_only": true
+   "sha256": "18e9dfe4d4fe99ba593144c05f2118260e0b0a0d3b281f96c841f146f556d025"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/splats_full_res.spz",
    "bytes": 26251526,
-   "sha256": "6cbc1d15a75bc810d03f2cb752b464127f364f0fee9c84f545be2d4bb38463b5",
-   "lfs_pointer_only": true
+   "sha256": "6cbc1d15a75bc810d03f2cb752b464127f364f0fee9c84f545be2d4bb38463b5"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/thumbnail.png",
@@ -3395,14 +3414,12 @@
   {
    "path": "qa/worldlabs/05/pilot/full/collider.glb",
    "bytes": 1072924,
-   "sha256": "d7e952d0e53fcacdfc75eb5b27193396c007daef83d2052a18f3a76cf342d48a",
-   "lfs_pointer_only": true
+   "sha256": "d7e952d0e53fcacdfc75eb5b27193396c007daef83d2052a18f3a76cf342d48a"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/import/full05.blend",
    "bytes": 15765357,
-   "sha256": "5704dfcd8f3e893246773835f32c9f12db965beee08bbee8f02d0d58e820ab39",
-   "lfs_pointer_only": true
+   "sha256": "5704dfcd8f3e893246773835f32c9f12db965beee08bbee8f02d0d58e820ab39"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/import/full05_measure.json",
@@ -3417,8 +3434,7 @@
   {
    "path": "qa/worldlabs/05/pilot/full/import/full05_underlay.glb",
    "bytes": 252716,
-   "sha256": "f1e40d63fddd88d63a8f0da36f042d7b1736ceff5769d06eb0f8045b7c83e7f5",
-   "lfs_pointer_only": true
+   "sha256": "f1e40d63fddd88d63a8f0da36f042d7b1736ceff5769d06eb0f8045b7c83e7f5"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/operation_response.sanitized.json",
@@ -3438,32 +3454,27 @@
   {
    "path": "qa/worldlabs/05/pilot/full/splats_100k.spz",
    "bytes": 1411145,
-   "sha256": "205ed0707f46435b5335497be51c0fb7276aa3ba09f571c1bbefe8f2e1bf2d53",
-   "lfs_pointer_only": true
+   "sha256": "205ed0707f46435b5335497be51c0fb7276aa3ba09f571c1bbefe8f2e1bf2d53"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/splats_150k.spz",
    "bytes": 2302513,
-   "sha256": "8bbe94cef2a91e9c7fd3af33c2623e2288ef56b147645f5d3b8a87e265bd5be4",
-   "lfs_pointer_only": true
+   "sha256": "8bbe94cef2a91e9c7fd3af33c2623e2288ef56b147645f5d3b8a87e265bd5be4"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/splats_500k.ply",
    "bytes": 28000362,
-   "sha256": "c601833e7b3d7cb5d2f0b171812e96d57e2f249fc93089fafe782e838533c9c1",
-   "lfs_pointer_only": true
+   "sha256": "c601833e7b3d7cb5d2f0b171812e96d57e2f249fc93089fafe782e838533c9c1"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/splats_500k.spz",
    "bytes": 7700721,
-   "sha256": "fdf3d02fc5f20ac3f856283ad4e263d1bd64ad2d4f8e69734af01481a2f8f768",
-   "lfs_pointer_only": true
+   "sha256": "fdf3d02fc5f20ac3f856283ad4e263d1bd64ad2d4f8e69734af01481a2f8f768"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/splats_full_res.spz",
    "bytes": 29613526,
-   "sha256": "441b6c56677ef04d10da29e3149bfc4a4aeeb28aa394d29db7f20ef5df572f87",
-   "lfs_pointer_only": true
+   "sha256": "441b6c56677ef04d10da29e3149bfc4a4aeeb28aa394d29db7f20ef5df572f87"
   },
   {
    "path": "qa/worldlabs/05/pilot/full/thumbnail.png",
@@ -4022,8 +4033,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 47267,
-   "sha256": "107141c0c3aa5252c26f8ae5c7016f1f5f0ea6c2edc50c0bf594d430cc66c0f1"
+   "bytes": 47432,
+   "sha256": "911af0e04aa6243bc64940dac268c50687f8a88e6a589e682fb27e135c0071f8"
   },
   {
    "path": "src/world/laundryRoom.ts",

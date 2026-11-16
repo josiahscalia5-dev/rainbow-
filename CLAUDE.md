@@ -1,5 +1,7 @@
 # RAINBOW — permanent rules for Claude Code
 
+**New Claude account or new session? Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` FIRST** (newest branch, verified commit, specialist status, Marble results, tool setup, next tasks). This is an existing game: never restart it.
+
 This repo MUST be a fresh isolated game. The authoritative brief is `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`. Read it before coding, and preserve `references/*.png` and `character_references/official_cartoon_girl_original.jpg` unchanged. Do not import anything from prior games.
 
 Locked target = 11 stages, 01–11, plus one separate cartoon-girl reference. Character identity override = the new cartoon girl (same rig/model/style) in opening, scene 10 and scene 11; legacy photo girls are framing references only. Benny's pink fluff, violet eyes, knitted star hat and paw pads stay consistent. Ending is **11 · SAFELY HOME**, real-time victory, with `FINAL SPIN COMPLETE`, girl lifts/holds towel while Benny hides.
