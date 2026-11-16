@@ -14,7 +14,7 @@
  */
 import * as THREE from 'three';
 import { type Course, WORLD, funnelY } from '../world/course';
-import { createRibbon } from './waterRibbon';
+import { createRibbon, PROJ05, flag05 } from './waterRibbon';
 import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
 import { createDrumWater } from './drumWater';
 import { createFinalWave } from './finalWave';
@@ -97,6 +97,9 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const controls: WaterControls = { drumSwirl: 0, drumAgitation: 0, outro: 0 };
   // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+  // `?proj05=1`: the approved picture's own fluffy foam is baked into the river texture, so the three Screen-05-only foam
+  // parts (rim puffs, flank sheet, flank puffs) step aside; `?projfoam05=1` keeps them. No other screen's foam changes.
+  if (PROJ05 && !flag05('projfoam05')) qaHide.push('foamRim05', 'foamFlank', 'foamRafts');
   /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
   const qaNoRibbonWake = qaHide.includes('ribbonWake');
   let focus = 0;

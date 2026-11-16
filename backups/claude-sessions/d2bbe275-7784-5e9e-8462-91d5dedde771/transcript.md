@@ -2746,3 +2746,268 @@ The far river now carries your approved water right up to the vanishing point. L
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T17:53:54.515Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/proj_v2_nofoam/05.png"}`
+
+### 🧑 User — 2026-11-16T17:53:54.574Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:54:04.532Z
+
+> 🔧 **Bash** `{"command": "grep -n \"name = 'foam\\|\\.name = \\|InstancedMesh\\|aS\\b\\|attribute float aS\\|onBeforeCompile\\|function createFoam\\|rim05\\|flank\\b\" src/vfx/foam.ts | head -30; wc -l src/vfx/foam.ts", "description": "Inspect foam mesh structure for per-stage hiding"}`
+
+### 🧑 User — 2026-11-16T17:54:04.588Z
+
+> ↩︎ result: 9: *  - flank banks (05, wave 4): one CONTINUOUS cloud bank per side that continues the berm down both
+> 12: *    the camera each frame. Replaces wave 3's floating "flank"/"wake" raft clumps, which read as round
+> 308: * 05 flank-bank bubble: a camera-facing sphere IMPOSTOR (2 triangles) shaded like the soap puffs
+> 456:  /** 05 flank-bank puffs (instanced, on top of `flank`) */
+> 457:  rafts: THREE.InstancedMesh;
+> 459:  rim05: THREE.InstancedMesh;
+> 460:  /** 05 flank-bank lather sheet (shares the berm material) */
+> 461:  flank: THREE.Mesh;
+> 464:  /** camera: needed in 05, where the flank banks are fitted to the frame edges */
+> 466:  /** QA: current flank-bank placement (kind L/R, row ds, inner-edge lateral, bank width) */
+> 471:// ---------------------------------------------------------------------------------- flank banks (05)
+> 495: * The flank lather SHEET (berm shader) read as flat white paper with straight cut edges at the clump ends;
+> 614:  mesh.name = 'foam_berm';
+> 619:export function createFoam(
+> 633:  group.name = 'foam_banks';
+> 636:  const chunks: { mesh: THREE.InstancedMesh; sa: number; sb: number }[] = [];
+> 649:    const mesh = nMesh ? new THREE.InstancedMesh(geoHi, mat, nMesh) : null;
+> 767 …[+751 chars]
+
+### 🤖 Claude — 2026-11-16T17:54:11.332Z
+
+> 🔧 **Bash** `{"command": "sed -n 619,700p src/vfx/foam.ts; grep -n \"chunk\\.\\|c.mesh.visible\\|mesh.visible =\" src/vfx/foam.ts | head -20", "description": "Read foam chunk/berm creation and visibility logic"}`
+
+### 🧑 User — 2026-11-16T17:54:11.374Z
+
+> ↩︎ result: export function createFoam(
+>   course: Course,
+>   opts: { s0: number; s1: number; quality: 'high' | 'low'; height?: (s: number, lat: number, t: number) => number },
+> ): FoamSystem {
+>   const { s0, s1, quality } = opts;
+>   const heightAt = opts.height ?? (() => 0);
+>   const rand = rng(1337);
+>   const density = quality === 'high' ? 1 : 0.5;
+>   // LOD: 80-tri puffs in the chunks around Benny, 20-tri puffs further out (low tier: 20-tri only)
+>   const geoHi = puffGeometry(quality === 'high' ? 1 : 0);
+>   const geoLo = quality === 'high' ? puffGeometry(0) : geoHi;
+>   const puff = makePuffMaterial(quality);
+>   const mat = puff.mat;
+>   const group = new THREE.Group();
+>   group.name = 'foam_banks';
+>   const st03 = course.stage('03'), st04 = course.stage('04');
+>   const chunkLen = 24;
+>   const chunks: { mesh: THREE.InstancedMesh; sa: number; sb: number }[] = [];
+>   let total = 0;
+>   const tmpM = new THREE.Matrix4();
+>   const tmpQ = new THREE.Quaternion();
+>   const tmpS = new THREE.Vector3();
+>   const tmpE = new THREE.Euler();
+>   const tmpC = new THREE.Color();
+> 
+>   /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
+>   const imp05: { p: THREE.Vector3; r: …[+3168 chars]
+
+### 🤖 Claude — 2026-11-16T17:54:23.365Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/capture.mjs 05 \"--q=proj05=1&waterhide=foamRim05,foamFlank,foamRafts\" --out=$SP/cap/proj_v2_no05foam 2>&1 | grep -c \"05 →\"; git checkout qa/capture_log.json; python3 -I tools/proj05/frame_metrics.py references/05_flow_into_the_current.png $SP/cap/proj_v2_no05foam/05.png | python3 -c \"import json,sys; d=json.load(sys.stdin); [print(k.split('/')[-2], v) for k,v in d.items()]\"", "description": "Test hiding only the 05-specific foam parts", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T17:54:41.658Z
+
+> ↩︎ result: 1
+> Updated 1 path from the index
+> proj_v2_no05foam {'WATER': {'px': 559593, 'mean_abs': 24.95, 'within_10': 0.59, 'within_20': 0.7121, 'ssim_lum': 0.7618}, 'FRAME': {'px': 1157760, 'mean_abs': 42.27, 'within_10': 0.3037, 'within_20': 0.4239, 'ssim_lum': 0.458}}
+
+### 🤖 Claude — 2026-11-16T17:54:46.837Z
+
+> 🔧 **Bash** `{"command": "grep -n \"qaHide\" src/vfx/index.ts | head; grep -n \"import {.*waterRibbon\\|from './waterRibbon'\" src/vfx/index.ts", "description": "Find how waterhide is enforced"}`
+
+### 🧑 User — 2026-11-16T17:54:46.882Z
+
+> ↩︎ result: 99:  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
+> 101:  const qaNoRibbonWake = qaHide.includes('ribbonWake');
+> 207:      for (const k of qaHide) { const o = parts[k]; if (o) o.visible = false; }
+> 17:import { createRibbon } from './waterRibbon';
+
+### 🤖 Claude — 2026-11-16T17:54:51.640Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/index.ts'\ns=open(p).read()\ns=s.replace(\"import { createRibbon } from './waterRibbon';\",\"import { createRibbon, PROJ05 } from './waterRibbon';\")\ns=s.replace(\"  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];\",\n\"\"\"  const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];\n  // `?proj05=1`: the approved picture's own fluffy foam is baked into the river texture, …[+480 chars]`
+
+### 🧑 User — 2026-11-16T17:54:54.303Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T17:55:08.044Z
+
+Next, the colour feedback loop: measure the in-game result minus your approved picture on visible water, smooth it, subtract it from the bake, and re-capture. This removes the bloom's warm bias.
+
+### 🤖 Claude — 2026-11-16T17:55:22.010Z
+
+> 🔧 **Bash** `{"command": "cat > tools/proj05/residual.py <<'EOF'\n\"\"\"proj05 colour feedback: (capture - target) on visible river pixels, outliers (Benny, coins, bubbles, splash) rejected,\nsmoothed, ACCUMULATED into <target_dir>/correction.npy; tools/proj05/bake.py subtracts it from the target before baking.\nThis removes what the shader cannot undo analytically (the bloom pass adds light around bright streaks).\nusage: python3 -I tools/proj05/residual.py <capture.png> <probe_dir> <target_dir> [gain=0.85]\"\"\"\nimport os, sys\nimport numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussia …[+2990 chars]`
+
+### 🧑 User — 2026-11-16T17:56:32.264Z
+
+> ↩︎ result: residual on used pixels: mean signed rgb [10.53, 4.97, 1.66]  mean abs 6.144927597844055  used px 470451
+> residual on used pixels: mean signed rgb [5.34, 0.41, 0.03]  mean abs 3.1824091544082864  used px 479128
+> Updated 1 path from the index
+> residual on used pixels: mean signed rgb [4.6, 0.03, -0.06]  mean abs 2.9914639137719092  used px 479689
+> iter1 {'px': 559593, 'mean_abs': 24.95, 'within_10': 0.59, 'within_20': 0.7121, 'ssim_lum': 0.7618}
+> iter3 {'px': 559593, 'mean_abs': 23.44, 'within_10': 0.6508, 'within_20': 0.718, 'ssim_lum': 0.7611}
+
+### 🤖 Claude — 2026-11-16T17:56:40.188Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py 2>&1 | tail -1; git log --oneline -3; git ls-remote origin refs/heads/ccr-e546a360-cxmton", "description": "Verify autosave pushes during the work"}`
+
+### 🧑 User — 2026-11-16T17:56:41.190Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-e546a360-cxmton | scheduler daemon | last verified backup 2026-11-16T17:53:50+00:00 (2.8 min ago) | local fa08cf4 remote fa08cf4 (match) | uncommitted 9
+> fa08cf4 autosave: Rainbow 2026-11-16 17:53 UTC
+> 1131301 autosave: Rainbow 2026-11-16 17:48 UTC
+> d7932b4 autosave: Rainbow 2026-11-16 17:43 UTC
+> fa08cf4e9fc82eedfaaf5bb34767a661bd6506ae	refs/heads/ccr-e546a360-cxmton
+
+### 🤖 Claude — 2026-11-16T17:56:46.122Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/iter3/05.png"}`
+
+### 🧑 User — 2026-11-16T17:56:46.177Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:56:51.981Z
+
+The berm sheet (a course-wide foam strip) now shows as a flat pale band where your fluffy foam should be. Checking whether it can be faded out on Screen 05 only.
+
+### 🤖 Claude — 2026-11-16T17:56:53.329Z
+
+> 🔧 **Bash** `{"command": "grep -n \"function createBerm\" -A60 src/vfx/foam.ts | grep -n \"attribute\\|varying\\|ShaderMaterial\\|onBeforeCompile\\|discard\\|aS\\b\\|vS\\b\\|uv\\b\\|setAttribute\\|defines\" | head -20", "description": "Inspect berm material for an arc-length attribute"}`
+
+### 🧑 User — 2026-11-16T17:56:53.377Z
+
+> ↩︎ result: 51:593-  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+> 52:594-  geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
+
+### 🤖 Claude — 2026-11-16T17:56:55.725Z
+
+> 🔧 **Bash** `{"command": "sed -n 560,618p src/vfx/foam.ts; grep -n \"BERM_FRAG\\|BERM_VERT\\|const BERM\" src/vfx/foam.ts | head", "description": "Read berm geometry attributes and shader names"}`
+
+### 🧑 User — 2026-11-16T17:56:55.768Z
+
+> ↩︎ result: for (const side of [-1, 1]) {
+>       for (let j = 0; j < C; j++) {
+>         // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
+>         // at the water line (keeps the lace edge flush with the stream)
+>         const e = E[j];
+>         const k05 = hk(s);
+>         const h = squashBerm(bermSurface(s, e, side, hw), k05);
+>         // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow band of bubbles
+>         const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+>         tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+>         tmp.toArray(pos, k * 3);
+>         foam[k * 3] = e;
+>         foam[k * 3 + 1] = s;
+>         foam[k * 3 + 2] = side;
+>         k++;
+>       }
+>     }
+>   }
+>   const idx: number[] = [];
+>   const rowStride = C * 2;
+>   for (let i = 0; i < rows - 1; i++) {
+>     const sa = rowS[i], sb = rowS[i + 1];
+>     if (sb > skip[0] && sa < skip[1]) continue;
+>     for (let sideI = 0; sideI < 2; sideI++) {
+>       for (let j = 0; j < C - 1; j++) {
+>         const a = i * rowStride + sideI * C + j, b = a + 1, c = a + rowStride, d = c + 1;
+>         // CCW seen from above on both sides (side +1 runs +right, side −1 runs −right)
+>  …[+1327 chars]
+
+### 🤖 Claude — 2026-11-16T17:57:00.264Z
+
+> 🔧 **Bash** `{"command": "sed -n 95,135p src/vfx/foam.ts", "description": "Read berm vertex/fragment shader heads"}`
+
+### 🧑 User — 2026-11-16T17:57:00.304Z
+
+> ↩︎ result: const BERM_VERT = /* glsl */ `
+> attribute vec3 aFoam;    // x = e (units outward from the stream edge), y = s, z = side (-1 / 1)
+> uniform float uTime;
+> varying vec3 vFoam;
+> varying vec3 vPosW;
+> varying vec3 vNormalW;
+> #include <fog_pars_vertex>
+> void main() {
+>   // gentle breathing of the lather (never at the water line)
+>   float k = smoothstep(-0.2, 0.3, aFoam.x);
+>   vec3 p = position + normal * (0.03 * k * sin(uTime * 1.6 + aFoam.y * 2.1 + aFoam.z * 3.0));
+>   vec4 wp = modelMatrix * vec4(p, 1.0);
+>   vPosW = wp.xyz;
+>   vNormalW = normalize(mat3(modelMatrix) * normal);
+>   vFoam = aFoam;
+>   vec4 mvPosition = viewMatrix * wp;
+>   gl_Position = projectionMatrix * mvPosition;
+>   #include <fog_vertex>
+> }
+> `;
+> 
+> const BERM_FRAG = /* glsl */ `
+> uniform float uTime;
+> uniform vec2 uOutro;     // amount, chamber start s
+> uniform vec3 uLightDir;
+> uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+> varying vec3 vFoam;
+> varying vec3 vPosW;
+> varying vec3 vNormalW;
+> #include <fog_pars_fragment>
+> ${NOISE_GLSL}
+> ${FRAG_FX_GLSL}
+> ${SOAP05_GLSL}
+> void main() {
+>   float s = vFoam.y;
+>   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+>     float n = vnoise(vec2(vFoam.x * 3.0, s * 0.35)) * 0.7 …[+158 chars]
+
+### 🤖 Claude — 2026-11-16T17:57:09.807Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^import\" src/vfx/foam.ts src/vfx/waterRibbon.ts | head; python3 - <<'EOF'\np='src/vfx/foam.ts'\ns=open(p).read()\ns=s.replace(\"\"\"void main() {\n  float s = vFoam.y;\n  if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {\"\"\",\"\"\"void main() {\n  float s = vFoam.y;\n  #ifdef PROJ05\n  // \\\\`?proj05=1\\\\`: the approved picture's foam is baked into the 05 river texture, so the lather sheet steps aside on 05\n  // (dithered over 3 u at both joins; 04 / 06 keep their berm)\n  float pjIn = smoothstep(uSt05.y, uSt05.y + 3.0, s) * (1.0 - smoothstep(uSt05.z - 3.0, uSt05.z, s)); …[+695 chars]`
+
+### 🧑 User — 2026-11-16T17:57:09.875Z
+
+> ↩︎ result: src/vfx/foam.ts:15:import * as THREE from 'three';
+> src/vfx/foam.ts:16:import { type Course, WORLD, funnelY } from '../world/course';
+> src/vfx/foam.ts:17:import { EDGE_LIFT, coreLateral } from './waterRibbon';
+> src/vfx/foam.ts:18:import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
+> src/vfx/foam.ts:19:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+> src/vfx/waterRibbon.ts:12:import * as THREE from 'three';
+> src/vfx/waterRibbon.ts:13:import type { Course, StageId } from '../world/course';
+> src/vfx/waterRibbon.ts:14:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> src/vfx/waterRibbon.ts:15:import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> 17:import { EDGE_LIFT, coreLateral } from './waterRibbon';
+
+### 🤖 Claude — 2026-11-16T17:57:16.524Z
+
+> 🔧 **Bash** `{"command": "sed -i \"17s/.*/import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from '.\\/waterRibbon';/\" src/vfx/foam.ts && grep -n '\\\\\\\\`?proj05' src/vfx/foam.ts; sed -i 's/  \\/\\/ \\\\`?proj05=1\\\\`: the approved picture/  \\/\\/ ?proj05=1: the approved picture/' src/vfx/foam.ts && grep -n \"proj05=1: the approved picture\" src/vfx/foam.ts && sed -i \"s/  if (PROJ05 \\&\\& typeof location !== 'undefined' \\&\\& new URLSearchParams(location.search).get('projfoam05') !== '1') qaHide.push/  if (PROJ05 \\&\\& !flag05('projfoam05')) qaHide.push/; s/import { createRibbon, PROJ05 } from '.\\ …[+691 chars]`
+
+### 🧑 User — 2026-11-16T17:57:35.275Z
+
+> ↩︎ result: 131:  // ?proj05=1: the approved picture's foam is baked into the 05 river texture, so the lather sheet steps aside on 05
+> 17:import { createRibbon, PROJ05, flag05 } from './waterRibbon';
+> 101:  // parts (rim puffs, flank sheet, flank puffs) step aside; `?projfoam05=1` keeps them. No other screen's foam changes.
+> 102:  if (PROJ05 && !flag05('projfoam05')) qaHide.push('foamRim05', 'foamFlank', 'foamRafts');
+> 1
+> Updated 1 path from the index
+> v3 {'WATER': {'px': 559593, 'mean_abs': 22.85, 'within_10': 0.665, 'within_20': 0.7307, 'ssim_lum': 0.7755}, 'FRAME': {'px': 1157760, 'mean_abs': 41.17, 'within_10': 0.3461, 'within_20': 0.4361, 'ssim_lum': 0.4646}}
+> [This command modified 1 file you've previously read: src/vfx/foam.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T17:57:38.612Z
+
+Water region with the berm sheet faded on 05 only: mean error 22.9, 73 % of pixels within 20 levels, SSIM 0.78. Now checking that the default build and the other screens are unchanged.
+
+### 🤖 Claude — 2026-11-16T17:57:43.816Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/capture.mjs 04 05 06 07 --out=$SP/cap/def_all 2>&1 | grep -c \"→\"; node scripts/capture.mjs 04 06 07 --q=proj05=1 --out=$SP/cap/proj_all 2>&1 | grep -c \"→\"; git checkout qa/capture_log.json; python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nSP='$SP'\ndef d(a,b):\n    a=np.asarray(Image.open(a).convert('RGB')).astype(int); b=np.asarray(Image.open(b).convert('RGB')).astype(int); x=np.abs(a-b).sum(-1); return int((x>0).sum()), int(x.max())\nprint('default 05 vs protected  …[+463 chars]`
+

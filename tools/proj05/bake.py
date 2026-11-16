@@ -26,6 +26,9 @@ surf = np.abs(R[..., 2] - 1) < 0.01
 wm = np.asarray(Image.open(os.path.join(tdir, "water_mask.png"))) > 127
 coin = np.asarray(Image.open(os.path.join(tdir, "coin_mask.png"))) > 127
 tgt = np.asarray(Image.open(os.path.join(tdir, "target_05.png")).convert("RGB"), np.float64) / 255
+# colour feedback from the live capture (tools/proj05/residual.py): what the bloom pass adds is taken out of the bake
+if os.path.exists(os.path.join(tdir, "correction.npy")):
+    tgt = np.clip(tgt - np.load(os.path.join(tdir, "correction.npy")).astype(np.float64), 0, 1)
 U, S = R[..., 0], R[..., 1]
 S_CUT = 182.0                                   # the real ribbon ends behind the far block's seam
 use = surf & wm & (S < S_CUT)
