@@ -1,0 +1,55 @@
+{
+ "bay": [
+  -0.2537892959845234,
+  1.2662722338774897
+ ],
+ "spacing": 1.520061529862013,
+ "texture_px": [
+  1024,
+  149
+ ],
+ "coverage": 0.31587536703020136,
+ "rings": [
+  {
+   "ring_t": -3.462808081248774,
+   "band_width": 0.0,
+   "band_width_over_spacing": 0.0
+  },
+  {
+   "ring_t": -2.15386620831204,
+   "band_width": 0.09120369179172078,
+   "band_width_over_spacing": 0.06
+  },
+  {
+   "ring_t": -1.8371867229241206,
+   "band_width": 0.09120369179172078,
+   "band_width_over_spacing": 0.06
+  },
+  {
+   "ring_t": -0.2537892959845234,
+   "band_width": 0.12160492238896103,
+   "band_width_over_spacing": 0.07999999999999999
+  },
+  {
+   "ring_t": 1.2662722338774897,
+   "band_width": 0.0,
+   "band_width_over_spacing": 0.0
+  },
+  {
+   "ring_t": 1.9207431703458564,
+   "band_width": 0.0,
+   "band_width_over_spacing": 0.0
+  },
+  {
+   "ring_t": 1.9418551360383844,
+   "band_width": 0.0,
+   "band_width_over_spacing": 0.0
+  },
+  {
+   "ring_t": 2.6807739352768634,
+   "band_width": 0.0,
+   "band_width_over_spacing": 0.0
+  }
+ ],
+ "band_width_over_spacing_median": 0.0
+}

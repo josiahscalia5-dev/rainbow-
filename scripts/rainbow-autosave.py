@@ -13,7 +13,9 @@ Each run:
      enforces LFS for large binaries
   5. commits with a timestamp when real changes exist (status/log-only changes never commit)
   6. pushes (no force, ever) with retries and verifies the remote branch SHA == local HEAD
-  7. records the result in backups/BACKUP_STATUS.json and backups/BACKUP_LOG.md
+  7. records the result in the LIVE log (backups/.live/, git-ignored). The tracked copies
+     backups/BACKUP_STATUS.json / BACKUP_LOG.md are refreshed from the live copies only inside a real
+     commit, so a run never leaves the working tree dirty (no endless "uncommitted changes" prompts).
 Never force-pushes, hard-resets, deletes files or rewrites history.
 """
 from __future__ import annotations
@@ -21,6 +23,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import fcntl
+import fnmatch
 import hashlib
 import json
 import os
@@ -33,13 +36,13 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 CFG = json.loads((REPO / "backups" / "autosave.config.json").read_text())
-STATUS = REPO / "backups" / "BACKUP_STATUS.json"
-LOG = REPO / "backups" / "BACKUP_LOG.md"
+TRACKED_STATUS = REPO / "backups" / "BACKUP_STATUS.json"
+TRACKED_LOG = REPO / "backups" / "BACKUP_LOG.md"
+LIVE = REPO / "backups" / ".live"
+STATUS = LIVE / "BACKUP_STATUS.json"
+LOG = LIVE / "BACKUP_LOG.md"
 LOCK = REPO / "backups" / ".autosave.lock"
-TRAILER = (
-    "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n"
-    "Claude-Session: https://claude.ai/code/session_018Sg3ATUJvTjfLDpKrpB9di"
-)
+TRAILER = "\n\n" + CFG.get("commit_trailer", "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
 SECRET_PATTERNS = [
     re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
     re.compile(r"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{30,}\b"),
@@ -65,6 +68,21 @@ def git(*args: str, check: bool = True, timeout: int = 180) -> subprocess.Comple
     if check and p.returncode != 0:
         raise RuntimeError(f"git {' '.join(args)} failed ({p.returncode}): {p.stderr.strip()[:800]}")
     return p
+
+
+def seed_live() -> None:
+    """First run in a fresh checkout: start the live log/status from the tracked copies."""
+    LIVE.mkdir(parents=True, exist_ok=True)
+    for live, tracked in ((STATUS, TRACKED_STATUS), (LOG, TRACKED_LOG)):
+        if not live.exists() and tracked.exists():
+            live.write_text(tracked.read_text())
+
+
+def sync_tracked_from_live() -> None:
+    """Copy the live log/status into the tracked files (called only right before a real commit)."""
+    for live, tracked in ((STATUS, TRACKED_STATUS), (LOG, TRACKED_LOG)):
+        if live.exists():
+            tracked.write_text(live.read_text())
 
 
 def load_status() -> dict:
@@ -116,12 +134,26 @@ def refresh_manifest() -> None:
         if not p.is_file() or rel.startswith("backups/claude-sessions/") or rel in CFG["status_only_paths"] \
                 or rel == "backups/MANIFEST.json":
             continue
-        h = hashlib.sha256(p.read_bytes()).hexdigest()
-        rows.append({"path": rel, "bytes": p.stat().st_size, "sha256": h})
+        data = p.read_bytes()
+        lfs = lfs_pointer(data)
+        if lfs:
+            # Content not fetched yet (pointer stub): record the real object's hash/size, not the stub's,
+            # so a backup taken before `git lfs pull` never regresses the manifest.
+            rows.append({"path": rel, "bytes": lfs[1], "sha256": lfs[0], "lfs_pointer_only": True})
+            continue
+        rows.append({"path": rel, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()})
     text = json.dumps({"project": CFG["project"], "files": rows}, indent=1) + "\n"
     mp = REPO / "backups" / "MANIFEST.json"
     if not mp.exists() or mp.read_text() != text:
         mp.write_text(text)
+
+
+def lfs_pointer(data: bytes) -> tuple[str, int] | None:
+    """(oid, size) if `data` is a Git LFS pointer stub, else None."""
+    if len(data) > 1024 or not data.startswith(b"version https://git-lfs.github.com/spec/v1"):
+        return None
+    m = re.search(rb"oid sha256:([0-9a-f]{64})\s+size (\d+)", data)
+    return (m.group(1).decode(), int(m.group(2))) if m else None
 
 
 def allowlisted_files() -> list[str]:
@@ -196,6 +228,7 @@ def main() -> int:
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
     t0 = now_utc()
+    seed_live()
     st = load_status()
     row = {"time": t0.isoformat(), "reason": args.reason, "result": "error", "files_staged": 0,
            "pushed_verified": False, "branch": CFG["branch"]}
@@ -215,8 +248,17 @@ def main() -> int:
         if CFG["remote_url_must_contain"] not in url:
             raise RuntimeError(f"remote URL {url!r} is not the verified Rainbow repo; refusing to back up")
         branch = git("symbolic-ref", "--short", "HEAD").stdout.strip()
+        row["branch"] = branch
+        if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+            raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
         if branch != CFG["branch"]:
-            raise RuntimeError(f"current branch {branch!r} != verified branch {CFG['branch']!r}; refusing to push")
+            # A new cloud session gets a fresh working-branch name. Follow it only when it matches an
+            # explicitly allowed session-branch pattern (protected branches were rejected above).
+            pats = CFG.get("session_branch_patterns", [])
+            if not any(fnmatch.fnmatchcase(branch, p) for p in pats):
+                raise RuntimeError(f"current branch {branch!r} != verified branch {CFG['branch']!r} and matches no "
+                                   f"session_branch_patterns {pats}; refusing to push")
+            row["note"] = f"following session branch {branch!r} (config branch {CFG['branch']!r})"
         gitdir = REPO / ".git"
         for busy in ("index.lock", "MERGE_HEAD", "rebase-merge", "rebase-apply", "CHERRY_PICK_HEAD"):
             if (gitdir / busy).exists():
@@ -237,6 +279,9 @@ def main() -> int:
         refresh_manifest()
 
         # ---- 3. stage allow-listed paths ----------------------------------------------
+        # tracked status/log files: start from HEAD; they are refreshed from the live log only when a
+        # real commit is made (below), so status-only runs never leave the tree dirty
+        git("checkout", "--", *CFG["status_only_paths"], check=False)
         files = allowlisted_files()
         if files:
             # add in chunks to stay under arg limits
@@ -258,8 +303,10 @@ def main() -> int:
 
         has_head = git("rev-parse", "--verify", "-q", "HEAD", check=False).returncode == 0
         if not real:
-            # status/log-only diff: don't create a recursive log-only commit
-            git("reset", "-q", "--", *CFG["status_only_paths"], check=False) if has_head else None
+            # nothing but status/log: no commit, and leave the tracked status files exactly as in HEAD
+            if has_head:
+                git("reset", "-q", "--", *CFG["status_only_paths"], check=False)
+                git("checkout", "--", *CFG["status_only_paths"], check=False)
             row["result"] = "no-change"
             row["files_staged"] = 0
             head = git("rev-parse", "HEAD", check=False).stdout.strip() if has_head else ""
@@ -277,6 +324,8 @@ def main() -> int:
                 else:
                     row["pushed_verified"] = True
         else:
+            sync_tracked_from_live()
+            git("add", "--", *CFG["status_only_paths"], check=False)
             stamp = t0.strftime("%Y-%m-%d %H:%M UTC")
             subject = args.message or f"autosave: Rainbow {stamp}"
             body = (f"\n\nAutomated Rainbow backup ({args.reason}). {len(real)} file(s) changed."
@@ -307,14 +356,18 @@ def main() -> int:
         row["duration_s"] = int((t1 - t0).total_seconds())
         st["last_run"] = row
         st["repo"] = f"https://github.com/{CFG['repo_full_name']}"
-        st["branch"] = CFG["branch"]
+        st["branch"] = row.get("branch", CFG["branch"])
         if row.get("pushed_verified"):
             st["last_verified_remote_sha"] = row.get("commit")
             st["last_successful_backup_utc"] = row["time"]
         if row["result"] not in ("skipped",):
             st["consecutive_failures"] = 0 if row["result"] in ("no-change", "committed+pushed", "pushed-pending-commits") \
                 else st.get("consecutive_failures", 0) + 1
-        st["schedule"] = "cron */5 * * * * (container-local; see backups/RECOVERY.md for limits)"
+        try:
+            sched = (Path.home() / ".rainbow-autosave-install.log").read_text().strip().splitlines()[-1]
+        except Exception:
+            sched = "unknown"
+        st["schedule"] = f"every 5 min, container-local ({sched}); see backups/RECOVERY.md for limits"
         st["next_scheduled_utc"] = (t1 + dt.timedelta(minutes=5 - t1.minute % 5)).replace(second=0).isoformat()
         write_status(st)
         append_log(row)
