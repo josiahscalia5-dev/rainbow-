@@ -3276,3 +3276,140 @@ The two new APKs bring the LFS binaries from 24 to 26. I'll check whether the bo
 
 > 🔧 **Bash** `{"command": "git diff --stat HEAD -- src | tail -6; python3 scripts/rainbow-autosave.py --reason manual:wave12-checkpoint --message \"Screen 05 wave 12: smooth silky water (?silk05=1), bubbly foam banks (?puff05=1), Screen-05 highlight bloom (?glow05=1), flow toward camera (?flowcam05=1); W11 write-up; experiment + default APKs validated; recovery docs updated\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"|warn' ; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-451ea8c7-3nqlis | cut -f1)\"; git status --short | wc -l; git log -1 …[+105 chars]`
 
+### 🧑 User — 2026-11-16T14:34:59.018Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "3d051a46bc7b01b11f782d96992b4f5d06a3a84e",
+> local  3d051a46bc7b01b11f782d96992b4f5d06a3a84e
+> remote 3d051a46bc7b01b11f782d96992b4f5d06a3a84e
+> 0
+> 3d051a4 Screen 05 wave 12: smooth silky water (?silk05=1), bubbly foam banks (?puff05=1), Screen-05 highlight bloom (?gl
+
+### 🤖 Claude — 2026-11-16T14:35:02.477Z
+
+Checkpoint `3d051a4` is pushed, remote equals local, and the working tree is clean. I'll confirm the new APKs are real LFS objects and present on GitHub's LFS server, not just pointers.
+
+### 🤖 Claude — 2026-11-16T14:35:03.273Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files | grep apk; grep -n \"confirmed on GitHub LFS\" scripts/*.sh scripts/*.py | head -3", "description": "Check APK LFS objects and remote check tool"}`
+
+### 🧑 User — 2026-11-16T14:35:03.364Z
+
+> ↩︎ result: 7f89d6ba94 * builds/rainbow-debug-T2-default.apk
+> fdbf9c695e * builds/rainbow-debug-w12-water.apk
+> dca8d754b7 * builds/rainbow-debug.apk
+> scripts/verify-assets.py:113:    return done("ok", f"{ok}/{len(objs)} LFS objects ({total_mb:.0f} MB, {marble} Marble/World Labs) confirmed on GitHub LFS{extra}")
+
+### 🤖 Claude — 2026-11-16T14:35:04.926Z
+
+> 🔧 **Bash** `{"command": "grep -n \"def \\|sys.argv\\|choices\" scripts/verify-assets.py | head -20", "description": "Find verify-assets subcommands"}`
+
+### 🧑 User — 2026-11-16T14:35:04.962Z
+
+> ↩︎ result: 31:def git(*args: str, timeout: int = 120) -> str:
+> 36:def done(status: str, summary: str) -> int:
+> 41:def lfs_pointer(data: bytes):
+> 48:def lfs_objects() -> list[dict]:
+> 59:def lfs_endpoint() -> str:
+> 67:def cmd_lfs_remote(download: bool) -> int:
+> 116:def cmd_marble() -> int:
+> 157:def cmd_agents() -> int:
+> 182:def cmd_worldlabs() -> int:
+> 189:    def get(path: str):
+> 215:def parse_iso(s: str) -> dt.datetime:
+> 219:def cmd_gap(session_start: str | None) -> int:
+> 270:def cmd_report(results: str, mode: str) -> int:
+> 302:def main() -> int:
+> 303:    if len(sys.argv) < 2:
+> 306:    cmd = sys.argv[1]
+> 308:        return cmd_lfs_remote("--download" in sys.argv)
+> 316:        s = sys.argv[sys.argv.index("--session-start") + 1] if "--session-start" in sys.argv else None
+> 319:        return cmd_report(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else "full")
+
+### 🤖 Claude — 2026-11-16T14:35:07.599Z
+
+> 🔧 **Bash** `{"command": "sed -n 306,308p scripts/verify-assets.py; python3 -I scripts/verify-assets.py lfs-remote 2>&1 | tail -2; python3 -I scripts/verify-assets.py agents 2>&1 | tail -1; python3 -I scripts/verify-assets.py marble 2>&1 | tail -1; sha256sum -c scripts/reference.sha256 2>&1 | grep -c OK", "description": "Verify LFS on GitHub, agents, Marble, references", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T14:35:08.492Z
+
+> ↩︎ result: cmd = sys.argv[1]
+>     if cmd == "lfs-remote":
+>         return cmd_lfs_remote("--download" in sys.argv)
+> @@ ok 26/26 LFS objects (199 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: none (relaunch from notes when needed)
+> @@ ok both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250
+> 12
+
+### 🤖 Claude — 2026-11-16T14:35:16.499Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T14:35:16.509Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-16T14:35:16.702Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T14:35:16.712Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-16T14:35:17.754Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/wave12/compare/1_APPROVED_05.png"], "caption": "1 · APPROVED Screen 05 (your target)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T14:35:18.295Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave12/compare/1_APPROVED_05.png → file_uuid: 67f497c8-9d6d-46eb-820a-c2aea4bdc3ff
+
+### 🤖 Claude — 2026-11-16T14:35:18.954Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/wave12/compare/2_CURRENT_T2_05.png"], "caption": "2 · CURRENT GAME: default T2, live WebGL capture (unchanged)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T14:35:19.575Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave12/compare/2_CURRENT_T2_05.png → file_uuid: ae470077-1e99-44d0-8228-1bfd18d2c3c4
+
+### 🤖 Claude — 2026-11-16T14:35:20.110Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/wave12/compare/3_NEW_W12_water_05.png"], "caption": "3 · NEW WATER (W12): ?silk05=1&puff05=1&glow05=1&flowcam05=1, live capture, same checkpoint", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T14:35:20.680Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave12/compare/3_NEW_W12_water_05.png → file_uuid: 86da8e15-c06f-4010-a9df-406343ef6b51
+
+### 🤖 Claude — 2026-11-16T14:35:22.605Z
+
+I'll look at the final NEW picture myself so my comparison describes what is actually in it.
+
+### 🤖 Claude — 2026-11-16T14:35:25.660Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; O=qa/pilot05/wave12/compare; convert $O/1_APPROVED_05.png $O/2_CURRENT_T2_05.png $O/3_NEW_W12_water_05.png -resize 432x768 +append $S/v/final3.jpg; python3 -I tools/qa/diff05.py $S/final_bands.md APPROVED=$O/1_APPROVED_05.png T2=$O/2_CURRENT_T2_05.png NEW=$O/3_NEW_W12_water_05.png >/dev/null; grep \"tunnel top\\|S-swing\\|^| NEW | VP\\|^| T2 | VP\" $S/final_bands.md", "description": "Build final triptych and band stats"}`
+
+### 🧑 User — 2026-11-16T14:35:27.155Z
+
+> ↩︎ result: | APPROVED | tunnel top 150-470 | 5.5 | 0.0 | 36.9 | 3.8 | 1.2 | 1.00 | 0.70 |
+> | T2 | tunnel top 150-470 | 9.0 | 0.0 | 47.1 | 1.1 | 0.9 | 1.00 | 0.65 |
+> | T2 | VP + far river 470-640 | 9.6 | 7.4 | 43.5 | 6.7 | 0.4 | 1.00 | 0.60 |
+> | NEW | tunnel top 150-470 | 7.4 | 0.0 | 46.0 | 1.7 | 0.9 | 1.00 | 0.56 |
+> | NEW | VP + far river 470-640 | 7.6 | 5.4 | 41.7 | 8.9 | 1.5 | 1.00 | 0.53 |
+> | image | river visible up to y (smaller = further into the light) | S-swing px per band (far → near) |
+
+### 🤖 Claude — 2026-11-16T14:35:29.043Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/final3.jpg"}`
+
+### 🧑 User — 2026-11-16T14:35:29.066Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T14:35:35.344Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:end-of-turn 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"'; python3 -I scripts/autosave-status.py; echo \"HEAD   $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-451ea8c7-3nqlis | cut -f1)\"; git status --short | wc -l", "description": "Final verified save and remote match check", "timeout": 300000}`
+
