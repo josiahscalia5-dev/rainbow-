@@ -398,8 +398,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 5832,
-   "sha256": "1fef9ebf34de89013650063fcabc554c1a6804acba68dd39a55833626e226119"
+   "bytes": 5833,
+   "sha256": "46246ec49dac803b6ac95dec0ad2393a111518eacf7b8c913a9532e87c22e363"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -423,8 +423,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 4905,
-   "sha256": "fcc35b848737e821f6ceecf721e4bcaf487b26eb68ca16341f89e89d573a2dbb"
+   "bytes": 5488,
+   "sha256": "8190ec6f94b90c6385808ac41bcf9e8f3a93bd37680b34d137e6f9140ddfa0af"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -823,8 +823,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1177,
-   "sha256": "59f6637a3b8ab319a952a50e0a9dc1a61f2dd8904212a7e1184f1389d7c3f5d8"
+   "bytes": 1176,
+   "sha256": "49c8f30cc332523992b8bd55950ffa634c9800bd55553b6edbd4deb1f14de08a"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -4080,6 +4080,46 @@
    "path": "qa/pilot05/wave8/water/it06/metrics.md",
    "bytes": 437,
    "sha256": "94e228131eabf483fcc38ed4e3ac9581def44e0e306b9a470e44be0789b0e6f1"
+  },
+  {
+   "path": "qa/pilot05/wave9/recovered/05.png",
+   "bytes": 1750841,
+   "sha256": "dc8155f9ac7bccd80601245de6344de821ba9c966d89734da2236cb980bb1c07"
+  },
+  {
+   "path": "qa/pilot05/wave9/recovered/05_highlight_NOW.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave9/recovered/05_highlight_PREV.png",
+   "bytes": 1934638,
+   "sha256": "0c3b78591eff8ffd7fd9019b713169c1912e889a7ceaf22f6ae85c03b115a838"
+  },
+  {
+   "path": "qa/pilot05/wave9/recovered/05_overlay_NOW.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave9/recovered/05_overlay_PREV.png",
+   "bytes": 2289406,
+   "sha256": "c5c19c5d0cea588302d1b407c194985e46abe12d81cee4ab5cec45fa9f38c728"
+  },
+  {
+   "path": "qa/pilot05/wave9/recovered/05_side_by_side.png",
+   "bytes": 5767417,
+   "sha256": "f52fcbb51cc66a32b7375e90fc95076422bfca103506336ba23b2de04de2f41e"
+  },
+  {
+   "path": "qa/pilot05/wave9/recovered/metrics.json",
+   "bytes": 451,
+   "sha256": "ace21ce9bac3a8f3eb11809b531100e591c1ced294fa8e175ddf8b8f2702f524"
+  },
+  {
+   "path": "qa/pilot05/wave9/recovered/metrics.md",
+   "bytes": 437,
+   "sha256": "c412c38822af7d2c86ba0abcd5c38f3034cdc8299e36dbe98829bddcda1223f6"
   },
   {
    "path": "qa/report_metrics.json",
