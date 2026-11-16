@@ -301,18 +301,22 @@ export function buildEnvironment(course: Course): Environment {
   const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
   // wave 7: the band colour is the stylised cross-section of withBandShading (materials.ts); the PBR/env
   // result underneath only feeds the depth buffer now
-  const gold05 = (key: string, virtual: boolean) => {
-    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), band05, key);
+  // wave 8: the real (near) ring is thicker — ref ring #1 top spans y 188–230 (lip 8 px · groove 3 · body 17 ·
+  // turned-away flank 7 · contour) where it06 drew 31 px; the far rings (path-camera block) keep band05, the
+  // reference's deeper rings are thin (ring #2 top ≈12 px)
+  const band05near = { height: 0.13, width: 0.8, lipHeight: 0.065, lipWidth: 0.32, groove: 0.1 };
+  const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {
+    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), band, key);
     m.emissive.set('#e08a10');
     m.envMap = goldEnv05;
     m.envMapIntensity = 1.15;
     return m;
   };
-  const ringMat05 = gold05('ring05', false);
+  const ringMat05 = gold05('ring05', false, band05near);
   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
   // gold junction collar 04→05 (slightly heavier)
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
-  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05 }));
+  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
   const rings0607: number[] = [];
   for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
   zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
@@ -340,7 +344,7 @@ export function buildEnvironment(course: Course): Environment {
     m.envMapIntensity = 1.35;
     return m;
   };
-  const lids05 = rings05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
   zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];
