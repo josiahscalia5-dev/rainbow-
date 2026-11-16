@@ -2278,3 +2278,99 @@ An extra closing brace from my edit. Removing it and running the fit:
 
 > 🔧 **Bash** `{"command": "node --check scripts/proj05-lid-fit.mjs && time node scripts/proj05-lid-fit.mjs 2>&1 | tail -5", "description": "Run elongated tray fit", "timeout": 600000}`
 
+### 🧑 User — 2026-11-16T21:28:30.701Z
+
+> ↩︎ result: L1 shapeIoU 0.732 boxIoU 0.855 side -1 ds 24.38 ang 23 droop -90 size 1.35 stretch 2.75 box [61,320,205,415] target [62.5,315.5,214,420]
+> L2 shapeIoU 0.726 boxIoU 0.792 side -1 ds 46.75 ang 0.5 droop -90 size 1.65 stretch 3.75 box [259,420,329,470] target [248.8,418.8,332.5,472.5]
+> R1 shapeIoU 0.772 boxIoU 0.799 side 1 ds 29.38 ang 5.5 droop -90 size 2.05 stretch 4.25 box [737,412,864,528] target [720,400,864,527.5]
+> R2 shapeIoU 0.672 boxIoU 0.570 side 1 ds 53.50 ang 10 droop -65 size 1.60 stretch 3.75 box [641,400,715,448] target [631,394,696,451]
+> rings05 [124.03830202823289,138.0383020282329,146.0383020282329,166.0383020282329] sCam05 126.03830202823289 r05 7.6
+> 
+> real	3m59.795s
+> user	0m1.472s
+> sys	0m0.297s
+
+### 🤖 Claude — 2026-11-16T21:28:39.123Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nf=json.load(open('qa/pilot05/proj/tunnel/lid/fit.json'))['fit']\np='src/vfx/proj05Tunnel.ts'; s=open(p).read()\ni0=s.index('export const LIDS05_FIT = ['); i1=s.index('] as const;',i0)\nrows=[]\nfor n in ['L1','L2','R1','R2']:\n    x=f[n]; rows.append(f\"  {{ name: '{n}', side: {x['side']}, ds: {round(x['ds'],3)}, ang: {x['ang']}, droop: {x['droop']}, size: {round(x['size'],3)}, stretch: {round(x['stretch'],3)} }},\")\ns=s[:i0]+'export const LIDS05_FIT = [\\n'+'\\n'.join(rows)+'\\n'+s[i1:]\ns=s.replace(\"tray silhouette IoU 0.51–0.76, never crossi …[+1114 chars]`
+
+### 🤖 Claude — 2026-11-16T21:28:40.274Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/l5_lids.png"}`
+
+### 🧑 User — 2026-11-16T21:28:59.846Z
+
+> ↩︎ result: { name: 'L1', side: -1, ds: 24.375, ang: 23, droop: -90, size: 1.35, stretch: 2.75 },
+>   { name: 'L2', side: -1, ds: 46.75, ang: 0.5, droop: -90, size: 1.65, stretch: 3.75 },
+>   { name: 'R1', side: 1, ds: 29.375, ang: 5.5, droop: -90, size: 2.05, stretch: 4.25 },
+>   { name: 'R2', side: 1, ds: 53.5, ang: 10, droop: -65, size: 1.6, stretch: 3.75 },
+> 0
+> Updated 1 path from the index
+>   LID       px   27726  mean|d|  57.46  <=10 0.081  <=20 0.191  SSIM 0.239  bias [-6.6, -4.2, 6.1]
+>   TUNNEL    px  440275  mean|d|  48.12  <=10 0.171  <=20 0.299  SSIM 0.306  bias [3.8, 0.8, -8.3]
+
+### 🧑 User — 2026-11-16T21:28:59.886Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T21:29:34.764Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-16T21:29:34.834Z
+
+do u think u should use blender too make the process faster and more of chance to get my exact approved screen
+
+### 🤖 Claude — 2026-11-16T21:29:49.589Z
+
+I'll check what the saved Blender scene for Screen 05 already contains before answering, so the answer is based on what's actually there.
+
+### 🤖 Claude — 2026-11-16T21:29:53.038Z
+
+> 🔧 **Bash** `{"command": "for f in qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend qa/pilot05/wave6/camera_lock/screen05_layout.blend; do echo \"== $f\"; blender -b \"$f\" --python-expr \"\nimport bpy\nsc=bpy.context.scene\nprint('RES', sc.render.resolution_x, sc.render.resolution_y, 'camera', sc.camera.name if sc.camera else None)\nif sc.camera: c=sc.camera.data; print('CAM lens', round(c.lens,2), 'sensor', c.sensor_fit, round(c.sensor_height,2), 'bg images', len(c.background_images), [bi.image.filepath if bi.image else None for bi in c.background_images])\nprint('OBJECTS', len(bpy.data.objects)); …[+236 chars]`
+
+### 🧑 User — 2026-11-16T21:29:54.562Z
+
+> ↩︎ result: == qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend
+> RES 864 1536 camera Cam05
+> CAM lens 19.97 sensor VERTICAL 24.0 bg images 1 ['/home/user/rainbow-/references/05_flow_into_the_current.png']
+> OBJECTS 32
+> [('Benny05_marker', 'EMPTY'), ('Cam05', 'CAMERA'), ('CyanCore05', 'CURVE'), ('GameCoin05_0', 'MESH'), ('GameCoin05_1', 'MESH'), ('GameCoin05_2', 'MESH'), ('GameCoin05_3', 'MESH'), ('GameCoin05_4', 'MESH'), ('GameCoin05_5', 'MESH'), ('GameCoin05_6', 'MESH'), ('GameCoin05_7', 'MESH'), ('GameCoin05_8', 'MESH'), ('GameCoin05_9', 'MESH'), ('RefCoin05_0', 'MESH'), ('RefCoin05_1', 'MESH'), ('RefCoin05_2', 'MESH'), ('RefCoin05_3', 'MESH'), ('RingMark05_00', 'MESH'), ('RingMark05_01', 'MESH'), ('RingMark05_02', 'MESH'), ('RingMark05_03', 'MESH'), ('RingMark05_04', 'MESH'), ('RingMark05_05', 'MESH'), ('RingMark05_06', 'MESH'), ('RingMark05_07', 'MESH')]
+> == qa/pilot05/wave6/camera_lock/screen05_layout.blend
+> RES 1920 1080 camera Cam05
+> CAM lens 19.97 sensor VERTICAL 24.0 bg images 0 []
+> OBJECTS 18
+> [('Benny05_marker', 'EMPTY'), ('Cam05', 'CAMERA'), ('CyanCore05', 'CURVE'), ('RingMark05_00', 'MESH'), ('RingMark05_01', 'MESH'), ('RingMark05_02', 'MESH'), ('RingMark05_03', 'MESH'), ('RingMark05_ …[+545 chars]
+
+### 🤖 Claude — 2026-11-16T21:30:12.712Z
+
+Yes. For the paddles and the other solid gold and purple parts, Blender is the better tool, and your project already has a Blender scene built for this job. `screen05_camera_lock.blend` contains:
+
+- **Camera:** the game's locked Screen 05 camera. It's 864×1536 with the same 62° field of view as the game.
+- **Background:** your approved picture set as the camera's background image.
+- **Markers:** the tunnel, ring, river and coin positions.
+
+**Why it's faster and more likely to match:** for the paddles I've been searching blindly. Each try takes 4–7 minutes, I can't see the shape while it searches, and the results still aren't right. My last render shows arches, not your trays. In Blender I can:
+
+1. Shape each paddle directly over your picture through that same camera, until its outline lines up.
+2. Project your picture's own gold and lavender colours onto the model, the same method that gave your water its swirls.
+3. Export the paddles as a 3D model file the game loads under the test switch, so the default game stays untouched.
+4. Capture the real game and send you approved, before and new as separate full-size pictures.
+
+**What Blender won't change:**
+
+- **Exact match:** it still won't be a 100 % pixel copy. Your painting draws the paddles longer than real perspective allows, so the 3D version will match from the starting view and look natural while moving, but not identical.
+- **Water swirls:** making the water swirl as Benny moves is shader work inside the game. Blender doesn't help there.
+- **Benny:** his fur and hat are a separate model job.
+
+I run Blender with scripts, not by hand. I'll render overlay pictures at each step to check the alignment.
+
+The paddle test so far is only on my working branch behind `?projlid05=1`; your default game hasn't changed.
+
+Should I switch to Blender for the paddles now?
+
+### 🧑 User — 2026-11-16T21:30:12.752Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

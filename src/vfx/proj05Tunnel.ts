@@ -27,16 +27,16 @@ export const PROJLID05: boolean = flag05('projlid05');
 /**
  * `?projlid05=1`: the approved picture's large wall paddles L1 L2 (left) R1 R2 (right), each fitted with one real lid
  * on the real 05 wall seen from the locked 05 camera (scripts/proj05-lid-fit.mjs → qa/pilot05/proj/tunnel/lid/fit.json,
- * tray silhouette IoU 0.51–0.76, never crossing a ring band). ds = arc length ahead of the 05 checkpoint eye (sCam05), side +1 = screen right, angle
+ * tray silhouette IoU 0.67–0.77, never crossing a ring band; the painting draws them long along the tube → stretch 2.75–4.25). ds = arc length ahead of the 05 checkpoint eye (sCam05), side +1 = screen right, angle
  * above the tube axis and droop as wallLidBasis, size before the radius scale. They sit higher on the wall than the
  * default pairs (above eye level), so the camera sees their undersides like the approved picture. The small far pair
  * (L3, R3) is the existing forced-perspective far lids.
  */
 export const LIDS05_FIT = [
-  { name: 'L1', side: -1, ds: 23.375, ang: 22.5, droop: -90, size: 1.55, stretch: 1.8 },
-  { name: 'L2', side: -1, ds: 45.375, ang: -0.5, droop: -90, size: 2.1, stretch: 1.8 },
-  { name: 'R1', side: 1, ds: 31, ang: 3, droop: -90, size: 2.4, stretch: 1.8 },
-  { name: 'R2', side: 1, ds: 50.5, ang: 9.5, droop: -50, size: 2.0, stretch: 1.25 },   // no on-wall fit inside the real tube: previous fit
+  { name: 'L1', side: -1, ds: 24.375, ang: 23, droop: -90, size: 1.35, stretch: 2.75 },
+  { name: 'L2', side: -1, ds: 46.75, ang: 0.5, droop: -90, size: 1.65, stretch: 3.75 },
+  { name: 'R1', side: 1, ds: 29.375, ang: 5.5, droop: -90, size: 2.05, stretch: 4.25 },
+  { name: 'R2', side: 1, ds: 53.5, ang: 10, droop: -65, size: 1.6, stretch: 3.75 },
 ] as const;
 
 /**
