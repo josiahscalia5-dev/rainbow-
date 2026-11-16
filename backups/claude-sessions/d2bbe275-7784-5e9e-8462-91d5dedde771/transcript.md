@@ -3493,3 +3493,108 @@ The tile now carries hot-pink S-ribbons on both sides, a glossy cyan core and fo
 
 > 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/proj/tests && (node scripts/gameplay-test.mjs --q=proj05=1 --out=qa/pilot05/proj/tests/gameplay_proj05.json 2>&1 | tail -4) ; (npm run -s test:continuity 2>&1 | tail -3); (node scripts/perf05.mjs qa/pilot05/proj/tests/perf05.json default= proj05=proj05=1 2>&1 | tail -6)", "description": "Run gameplay, continuity and relative perf tests with proj05", "timeout": 3600000}`
 
+### 🧑 User — 2026-11-16T18:36:45.515Z
+
+> ↩︎ result: "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+> 0 default {"medianMs":2592.8,"minMs":2272.4,"calls":86,"tris":567415,"textures":43,"errors":0}
+> 0 proj05 {"medianMs":2432.9,"minMs":2158.5,"calls":84,"tris":554329,"textures":49,"errors":0}
+> 1 default {"medianMs":2474.2,"minMs":2244.8,"calls":86,"tris":567415,"textures":43,"errors":0}
+> 1 proj05 {"medianMs":2520,"minMs":2140.5,"calls":84,"tris":554329,"textures":49,"errors":0}
+> [["default",2474.2,1,43],["proj05",2432.9,0.983,49]]
+
+### 🤖 Claude — 2026-11-16T18:36:49.729Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nd=json.load(open('qa/pilot05/proj/tests/gameplay_proj05.json'))\nprint({k:v for k,v in d.items() if k in ('pass','ok','passed','checks','summary','failures','errors')})\nch=d.get('checks') or d.get('results')\nif isinstance(ch,dict): print({k:(v.get('pass') if isinstance(v,dict) else v) for k,v in ch.items()})\nelif isinstance(ch,list): print([(c.get('name'),c.get('pass')) for c in ch])\nprint(list(d.keys())[:20])\n\"; npm run -s test:continuity 2>&1 | grep -iE \"ok|fail|gap\" | head -3", "description": "Summarise gameplay test pass/fail", "timeout": 30 …[+5 chars]`
+
+### 🧑 User — 2026-11-16T18:36:50.445Z
+
+> ↩︎ result: {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.027, 'coins': 2240, 'hearts': 5, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}}, 'errors': [], 'pass': True}
+> {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+>  …[+160 chars]
+
+### 🤖 Claude — 2026-11-16T18:37:08.784Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && cp $SP/cap/final6/05.png qa/pilot05/proj/compare/3_NEW_proj05.png && python3 -I tools/proj05/frame_metrics.py qa/pilot05/proj/compare/1_APPROVED.png qa/pilot05/proj/compare/2_BEFORE_current_default_T2.png qa/pilot05/proj/compare/3_NEW_proj05.png > qa/pilot05/proj/compare/metrics_locked.json && node scripts/capture.mjs 05 \"--q=proj05=1&hide=benny,coins&waterhide=crown,spray,bubbles,splash05,splashCrown,foam\" --out=$SP/cap/final6_wo 2>&1 | grep -c \"→\"; git checkout qa/capture_log.json; python …[+1088 chars]`
+
+### 🧑 User — 2026-11-16T18:37:28.532Z
+
+> ↩︎ result: 1
+> Updated 1 path from the index
+> surface approved px {'px': 424914, 'mean_abs': 3.601720191223009, 'median': 2.6666666666666665, 'within_10': 0.9615781075700024, 'within_20': 0.9915747657172981, 'mean_signed_rgb': [3.4815044926738117, -0.2150599886094598, 0.2707747920755729]}
+> surface artwork-fill {'px': 246710, 'mean_abs': 45.66760028643616, 'median': 4.0, 'within_10': 0.6080864172510234, 'within_20': 0.6206436707064975, 'mean_signed_rgb': [70.90707308175591, -41.74504073608691, -14.225276640590167]}
+> 12M	qa/pilot05/proj/move
+> 4.0M	qa/pilot05/proj/compare
+> 2.8M	qa/pilot05/proj/clips
+> 2.9M	assets/textures/water05
+
+### 🤖 Claude — 2026-11-16T18:37:38.303Z
+
+Water-surface accuracy on your approved pixels is 3.6/255 on average, with 96 % of pixels within 10 levels. Writing the notes and specialist instructions now.
+
+### 🤖 Claude — 2026-11-16T18:38:06.704Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/NOTES.md", "content": "# Screen 05 — `?proj05=1`: the APPROVED water projected onto the real playable river\n\nSession `012NR93Q…`, 2026-11-16 ~17:30–18:45 UTC, branch `ccr-e546a360-cxmton` (experiment branch; the user's\nworking version `ccr-451ea8c7-3nqlis` and the default build are untouched). No Marble credits, no Marble API call.\nThe main session did Specialist 1's assignment (projection / bake) and the first part of Specialist 2's\n(flow animation); instructions for the specialists to continue: `BRIEF_NEXT.md`.\n\n## What it is\nThe use …[+7097 chars]`
+
+### 🧑 User — 2026-11-16T18:38:06.753Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/proj/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T18:38:17.854Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/BRIEF_NEXT.md", "content": "# Screen 05 projection — instructions for the next specialist runs (2026-11-16 ~18:45 UTC)\n\nThe user (2026-11-16 ~17:30 UTC): \"project my ORIGINAL APPROVED Screen 05 water artwork onto my existing playable 3D\nriver using ?proj05=1 … exact S-curve layout, electric cyan-blue liquid, glossy magenta-pink ribbons, brilliant white\nhighlights, and fluffy foam edges. Use the existing clean gameplay river mesh, NOT Marble's distorted reconstructed\nsurface. Keep my camera, Benny, gameplay, coins, and other screens uncha …[+2378 chars]`
+
+### 🧑 User — 2026-11-16T18:38:17.896Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/proj/BRIEF_NEXT.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T18:38:26.711Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && rm -rf $SP/move/dbg && node scripts/proj05-move.mjs --q='proj05=1&projdbg05=1' --out=$SP/move/dbg --d=0,2,5,10,20,35,50 2>&1 | grep -c \"^move\" && cd $SP/move && python3 -c \"\nfrom PIL import Image\nds=['00','02','05','10','20','35','50']\nc=Image.new('RGB',(216*7+60,384*3+20),(0,0,0))\nfor j,kind in enumerate(['default','proj','dbg']):\n  for i,d in enumerate(ds): c.paste(Image.open(f'{kind}/move_{d}.png').convert('RGB').resize((216,384)),(i*226,j*394))\nc.save('/home/user/rainbow-/qa/pilot0 …[+180 chars]`
+
+### 🤖 Claude — 2026-11-16T18:38:37.670Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\nd=json.load(open(p))\nd['updated_utc']='2026-11-16T18:50:00Z'\nd['proj05']={\n \"status\":\"first version DONE 2026-11-16 ~18:45 UTC by the main session (Specialist 1 projection + first part of Specialist 2 flow); WAITING for the user's verdict; not default\",\n \"branch\":\"ccr-e546a360-cxmton\",\n \"switch\":\"?proj05=1 (+ projfoam05, projflow05, projflowd05, projrate05, projdetail05, projdbg05)\",\n \"notes\":\"qa/pilot05/proj/NOTES.md\",\n \"next_instructions\":\"qa/pilot05/proj/BRIEF_NEXT.md\",\n \"locked_result\ …[+2186 chars]`
+
+### 🧑 User — 2026-11-16T18:39:00.745Z
+
+> ↩︎ result: 7
+> NEW_proj05_forward_05.png
+> NEW_proj05_forward_10.png
+> NEW_proj05_forward_20.png
+> NEW_proj05_forward_35.png
+> contact_sheet_BEFORE_top_NEW_bottom.png
+> layer_map_with_before.png
+> move_log.json
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-16T18:39:01.429Z
+
+> ↩︎ result: 1
+> M  CLAUDE.md
+> M  backups/AGENTS_STATUS.json
+> M  backups/CLAUDE_ACCOUNT_TRANSFER.md
+> A  qa/pilot05/proj/BRIEF_NEXT.md
+> A  qa/pilot05/proj/NOTES.md
+> M  qa/pilot05/proj/compare/3_NEW_proj05.png
+> M  qa/pilot05/proj/compare/metrics_locked.json
+> A  qa/pilot05/proj/compare/metrics_water_surface.json
+> A  qa/pilot05/proj/move/NEW_proj05_forward_05.png
+> A  qa/pilot05/proj/move/NEW_proj05_forward_10.png
+> A  qa/pilot05/proj/move/NEW_proj05_forward_20.png
+> A  qa/pilot05/proj/move/NEW_proj05_forward_35.png
+> A  qa/pilot05/proj/move/contact_sheet_BEFORE_top_NEW_bottom.png
+> A  qa/pilot05/proj/move/layer_map_with_before.png
+> A  qa/pilot05/proj/move/move_log.json
+> A  qa/pilot05/proj/probe/camera_proj05_session.json
+> A  qa/pilot05/proj/tests/perf05.json
+
+### 🤖 Claude — 2026-11-16T18:39:12.579Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . 2>&1 | head -3; SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/capture.mjs 05 --out=$SP/cap/def_final 2>&1 | grep -c \"→\"; git checkout qa/capture_log.json; python3 -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$SP/cap/def_final/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('qa/pilot05/current_default_05.png').convert('RGB')).astype(int)\nprint('FINAL default vs protected current_default_05.png: differing px', int((np.abs(a-b).sum(-1)>0).sum()))\"; sha256sum -c …[+1108 chars]`
+

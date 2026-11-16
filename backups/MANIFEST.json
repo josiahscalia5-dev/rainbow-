@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 10993,
-   "sha256": "bc81753ae211bb40a024c3114050f25f6372be78a1c29b501dc899e66b737dce"
+   "bytes": 11114,
+   "sha256": "014e46f24ece44f90c782da3b94c8a9ea4f2fb3cc8fdd1eda66b309bc1e95840"
   },
   {
    "path": "README_FIRST.md",
@@ -418,8 +418,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 11023,
-   "sha256": "a0410ccd8e50dddb2b780158f584c9fcae49a1aed7b6c0c4a6e3e881c3f7a195"
+   "bytes": 11628,
+   "sha256": "4c3e9289cd7aed8ac503dc4e7c024a352e6de5dc12b4faaad17ee8464edd1cbe"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -433,13 +433,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 50278,
-   "sha256": "1be43a3a04743fa652cda0df57c21ce9e86a6e9bf9db18af0c80e9266faaff3c"
+   "bytes": 50868,
+   "sha256": "70694bc40c3028e31e2226aa0ff7988631e24b0313451bdc655d3d1461db86bc"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "b3abcbb845e3eebbfc254b108e5b9818fda972240aa6f4dc7bf3504f37846ee1"
+   "sha256": "28cbcfcd5d3811dd73c544ba69ae61f62c3653d6e5d4bab87d426ee702b10888"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1372,6 +1372,11 @@
    "sha256": "62657b41a8d393a1429736f2702d0fb11237dafd6ab67484a3aa85683c76d5e4"
   },
   {
+   "path": "qa/pilot05/proj/BRIEF_NEXT.md",
+   "bytes": 2876,
+   "sha256": "dc225856fa173d60fb7a08fdda6e51f2cf02434bf794df4c7d29990a7f27bae0"
+  },
+  {
    "path": "qa/pilot05/proj/BRIEF_SPECIALIST1.md",
    "bytes": 4212,
    "sha256": "9bb84b234323cc9bc02ee4a8587ed437af040bc077411ee82113d96eb579ab90"
@@ -1385,6 +1390,11 @@
    "path": "qa/pilot05/proj/BRIEF_SPECIALIST2.md",
    "bytes": 4256,
    "sha256": "27d402ebfec5c1fdc21ec04c99dbd22e58dc199ec7eb794a7e61279184e38abc"
+  },
+  {
+   "path": "qa/pilot05/proj/NOTES.md",
+   "bytes": 7600,
+   "sha256": "0f8b25bc4ffbab28f20343be4baf736b44cd192258f2218594f13ace1a092395"
   },
   {
    "path": "qa/pilot05/proj/align/align.json",
@@ -1423,13 +1433,18 @@
   },
   {
    "path": "qa/pilot05/proj/compare/3_NEW_proj05.png",
-   "bytes": 1942852,
-   "sha256": "af08f7d7f95b8dce9fa924294a51ff9839cc26cd2865fd342bf86cbfe22ebc75"
+   "bytes": 1943934,
+   "sha256": "e85904fd9b521d219a8e27cccb5bae2a90349fb7c009894caedf42436fb7fab8"
   },
   {
    "path": "qa/pilot05/proj/compare/metrics_locked.json",
    "bytes": 627,
-   "sha256": "c26852d9ffc282896597311a81d8e7f0138d2aa59624d96c9ed52f6aa430c45d"
+   "sha256": "3ede9fc5f901c1864d46db9dfcb4592969cf43622dc4c6e050ed4259407f5390"
+  },
+  {
+   "path": "qa/pilot05/proj/compare/metrics_water_surface.json",
+   "bytes": 1307,
+   "sha256": "d2d86ecdb44902c123827c8639b47550afe7fbd0f139a58eba22161b13975056"
   },
   {
    "path": "qa/pilot05/proj/feasibility/footprint.json",
@@ -1442,7 +1457,47 @@
    "sha256": "54c05840ac3ccf0d3bbe7967b11d60fa54187db22cf73a36cde42fedbf6aa37e"
   },
   {
+   "path": "qa/pilot05/proj/move/NEW_proj05_forward_05.png",
+   "bytes": 1731068,
+   "sha256": "5a74f88332fe5c4b3d305243f43ba69442cc9e8439f70bb8dd5cf21e1e5de387"
+  },
+  {
+   "path": "qa/pilot05/proj/move/NEW_proj05_forward_10.png",
+   "bytes": 1719552,
+   "sha256": "d5d445dbc31b71b229b1412f82f80fa90ac588711c38e4e56991c256de17ae9b"
+  },
+  {
+   "path": "qa/pilot05/proj/move/NEW_proj05_forward_20.png",
+   "bytes": 1649623,
+   "sha256": "f36b511ad707b31bfdc392e42f2f594d34ad10605c529d201405af4ce23416a8"
+  },
+  {
+   "path": "qa/pilot05/proj/move/NEW_proj05_forward_35.png",
+   "bytes": 1480947,
+   "sha256": "ca7899e7d573f98408524015d7437444fa790de584b816524ae09fb51c94d9a1"
+  },
+  {
+   "path": "qa/pilot05/proj/move/contact_sheet_BEFORE_top_NEW_bottom.png",
+   "bytes": 2174221,
+   "sha256": "718de67ebbe175eb7d1903dc2eb18e1e3defd187239cd77963736734fa783288"
+  },
+  {
+   "path": "qa/pilot05/proj/move/layer_map_with_before.png",
+   "bytes": 3127641,
+   "sha256": "5c1d82bdd0a51a05e2f6fae4d273505ffb3a6f6c887cb4faf088d83edd7bcd77"
+  },
+  {
+   "path": "qa/pilot05/proj/move/move_log.json",
+   "bytes": 1566,
+   "sha256": "5264d614ac718c7b4c5772b56b2162fa23cc75ab278d1a673ec8cec87ccc554b"
+  },
+  {
    "path": "qa/pilot05/proj/probe/camera.json",
+   "bytes": 1200,
+   "sha256": "e4c60f4a6995e84546b72c3d118d719e74514bda92801ce1a0339b3d7dfd3d6a"
+  },
+  {
+   "path": "qa/pilot05/proj/probe/camera_proj05_session.json",
    "bytes": 1200,
    "sha256": "e4c60f4a6995e84546b72c3d118d719e74514bda92801ce1a0339b3d7dfd3d6a"
   },
@@ -1490,6 +1545,11 @@
    "path": "qa/pilot05/proj/tests/gameplay_proj05.json",
    "bytes": 14655,
    "sha256": "fe5ee368fb22aa823207d821e72e9ddd4d698f7bf09809f89ced5e225f07a719"
+  },
+  {
+   "path": "qa/pilot05/proj/tests/perf05.json",
+   "bytes": 869,
+   "sha256": "e02544b37c57b4ee9371439fcd3eea425efe2007a3c3056e652b9f620fea4838"
   },
   {
    "path": "qa/pilot05/water/before/03.png",
