@@ -1,0 +1,1301 @@
+{
+  "created": "2026-11-16T14:39:59.568Z",
+  "commit": "088dd3fc77c0cf18f1e853ffb27a0945e27b1f0b",
+  "sourceHashes": {
+    "src/vfx/foam05Options.ts": "5c32d24903c8b80a176d4b84bbeb2e08201a57132f38990083e48da7eb5c4cee",
+    "src/vfx/liquid05.ts": "8a74bca534074a2a9559ef3fd54bf7d157b1e2f6a06ad3cde9e3f8fef72ecd0d",
+    "src/characters/benny/benny-lab.html": "cd43ae8fbb22e2b07e6f88518c08ad92d525fe9d1533438a7a4573964736a054",
+    "src/characters/benny/benny-lab.ts": "8571f4ece727b54b91bf48a465db48f949af809927d5ac4b1c3e29281af5d7b6",
+    "src/characters/benny/build.ts": "7f0cf0e0740197cab5c1cb347d95fe37be3d3f442e27bb07fcee6e9d07c307ad",
+    "src/characters/benny/fur.ts": "8fd897055b834224cb3dcf3ec4d9406041835130bfdd9ed3718f41157ffc161e",
+    "src/characters/benny/runtime.ts": "21cfc091a4c4b00a95e9886868f30479ba3b3d4a70375a11eb2744f832f2d5f3",
+    "src/characters/benny/textures.ts": "3af300f15af918ff77018a9fda81e965ede8bc7c6b877eec302c2216ceeb7e48",
+    "src/characters/girl/build.ts": "c749e2b3bbd9cba11ab60a85f8b9681678e951685c25f8fb3f261edb810e1e59",
+    "src/characters/girl/girl-lab.html": "3f027137ab722a5f0f3859140283432c1e516091f1c6ae444e99f73d83041b62",
+    "src/characters/girl/girl-lab.ts": "4be581946af9c9625a6c501748c78bef2742a43d90321e724554a1a9afce6bf1",
+    "src/characters/girl/runtime.ts": "3e06fa933489bca7bc608dcde2485e8aa0f5c81318cbe25758a1361fb56dda7e",
+    "src/characters/girl/textures.ts": "9398e5103e5b9ffce7f393c6411acf9e06fee7ecc114475a3e76444fd949a531",
+    "src/characters/types.ts": "bb0791d2826ed7f4bf11694146e4f20ebffaf26d732a78bafb7fa880a5437b0a",
+    "src/game/Game.ts": "57133c4a0f1937f8b78165a6834a4583b25718e429bd788dad729aed500e9e49",
+    "src/game/cameraRig.ts": "ce017bd50ca169b6f6f868108a176deed47738474d16518225cef9632a2d6806",
+    "src/game/modules.ts": "d9f4bc92b8ddaa143f6f99b80663a5e37ae06453f2603106cff9bcfc52fb68e4",
+    "src/gameplay/coins.ts": "ccfa96bb76f993750010813b788e999e441111aa70238b2ccf1d4b12705d3c7a",
+    "src/gameplay/input.ts": "a932c2ec6ce2979efc6b539cdfe56cca1045d2d012c5a489f85ff2cb19e46eee",
+    "src/main.ts": "77a2f053b1004e90d468bcce71691313ca9befd45c38f5c8097447515fbe904e",
+    "src/render/env.ts": "e6b4c0e86eb9dd05154e436cea3c3dee5189daed160b6be514bd07524cc372c1",
+    "src/render/grade.ts": "f4573a37b5493b836d60cf23604c156f08ab28db60b5a64a34faf60ce321eec8",
+    "src/ui/cinematicVideo.ts": "04a804a4d39389fe968d068cd143311d6478d78cb067b0aea3a807b5d30494eb",
+    "src/ui/hud.ts": "8f276df29ad1047573d7bf00e2e1308cdd0a74a93b25890700a672f915229bbe",
+    "src/vfx/bubbles.ts": "42821ec0e90c60d5ea2683c36232099efdba3301dc88aa2d81e27345086470cb",
+    "src/vfx/drumWater.ts": "41622a2706ea078c4c5a318e816ba29c432dcef3b6e50f45be6beecba8ddfddf",
+    "src/vfx/finalWave.ts": "12a07f4e9e342b2e876af760f97e1c4f50df03bbe07646fd589e6d32fa03a39a",
+    "src/vfx/flow05.ts": "76ad51b59e596f1904fc48bb295fae5a388f5a04f304a20efd217010bd8a948b",
+    "src/vfx/foam.ts": "890c12a3256fde47f1bf33363dbfc240db5f3b801d1dab861b7283a56f3bdffb",
+    "src/vfx/glsl.ts": "1e1a135f0aff44d43643b48c9dc438f98bf9dde76b85e59cec48420dc514ae20",
+    "src/vfx/index.ts": "ac0e674dabd79b9078592b8efacfe0ea4762359dd2258a61682ab9bde8d5bf22",
+    "src/vfx/puddles.ts": "f364cdf4a4d7be7ddbaa3b3c2c6c5b8f4f7d4fa853c58fc92f49c90c66adf75d",
+    "src/vfx/riderSplash.ts": "5c7ca776b9e2f8f6aae4ef58aea2b6782e6e952d5cac97ecdb4ddad13910528c",
+    "src/vfx/spray.ts": "79649fa8d284943986414c09989d296805aa799db5da963979e7dfc3e088fd79",
+    "src/vfx/waterRibbon.ts": "b041d5bbabc20d70e3d923cbdcf5f8aa70cdb86e974caa10d69916e982b8c264",
+    "src/vfx/whirlpool.ts": "d574e2cea4b81cdd608ed58b3a98b0793906a092e70a0b4ff90f207cba144ff4",
+    "src/world/course.ts": "d1957d911bf2091e6b4ff13f3dca4e568ae0fc836e0fccdc6b254ea29aaab0af",
+    "src/world/environment.ts": "f8a9592a9edb9352a4d7814afb9a44f067d2c58cf0ef6042660c7bb20ea86d5c",
+    "src/world/far05.ts": "665fa009beb5e58e11be2755a4b11463df8dbb032b90b3c6779e666605c60caa",
+    "src/world/laundryRoom.ts": "7c3a4cb22741c58f3c589239d07ffcf9097d6c4b8e59c99a72d7d8f689cc7679",
+    "src/world/materials.ts": "54e40e582bbb583812936ce0e37a2c72f7fdffd329d5e71a4a7e6c14db99b60f",
+    "src/world/towel.ts": "c6f65ee435296d6a1c53ff4f56dc7d0ed76917b91dd8c962e20134f91215cee0",
+    "src/world/tube.ts": "256dabe69e3b802ce73f1c67825c390b5ae2a6fe71832ac54b5b3bc4542a42ab"
+  },
+  "query": "liquid05=1&roundfoam05=1",
+  "viewport": {
+    "width": 432,
+    "height": 768,
+    "deviceScaleFactor": 1
+  },
+  "note": "Real WebGL rendering and browser input events; simulation is stepped deterministically. Not Android hardware performance.",
+  "checks": {
+    "keyboardSteering": {
+      "pass": true,
+      "events": [
+        {
+          "key": "ArrowLeft",
+          "before": 0,
+          "after": -1.65,
+          "pass": true
+        },
+        {
+          "key": "ArrowRight",
+          "before": 0,
+          "after": 1.64,
+          "pass": true
+        }
+      ]
+    },
+    "pointerPressAndDrag": {
+      "pass": true,
+      "before": 0,
+      "rightPress": 1.659,
+      "leftDrag": -0.087
+    },
+    "hudPauseResume": {
+      "pass": true,
+      "before": 134.272,
+      "paused": 134.272,
+      "resumed": 136.105
+    },
+    "keyboardPauseResume": {
+      "pass": true,
+      "paused": 136.105,
+      "resumed": 137.938
+    },
+    "replayButton": {
+      "pass": true,
+      "before": {
+        "mode": "end",
+        "stage": "11",
+        "s": 435.192,
+        "lat": 0,
+        "coins": 2500,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -109.565,
+        "bennyVisible": false,
+        "cam": [
+          11.2,
+          -99.1,
+          -304
+        ]
+      },
+      "after": {
+        "mode": "intro",
+        "stage": "01",
+        "s": 0,
+        "lat": 0,
+        "coins": 1330,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -109.565,
+        "bennyVisible": true,
+        "cam": [
+          11.2,
+          -99.1,
+          -304
+        ]
+      }
+    },
+    "finiteFarGeometry": {
+      "pass": true,
+      "vertices": 2783,
+      "triangles": 5280
+    },
+    "bankAndUvContinuity": {
+      "pass": true,
+      "banks": [
+        {
+          "side": -1,
+          "s": 181.2217279895434,
+          "axialResidual": 1.329492071988625e-14,
+          "lateralGap": 4.952260823642973e-11,
+          "staticSurfaceGap": 0.7211090718885532
+        },
+        {
+          "side": 1,
+          "s": 179.93683230185133,
+          "axialResidual": -2.3953061756287752e-14,
+          "lateralGap": 1.290967333034132e-12,
+          "staticSurfaceGap": 0.46337115077419483
+        }
+      ],
+      "longitudinalMapping": "actual near s varies across the oblique seam",
+      "seamUvGap": 1.183423435634296
+    },
+    "actualSurfaceBridge": {
+      "pass": true,
+      "vertices": [
+        {
+          "vertex": 3,
+          "s": 181.2217254638672,
+          "u": -1,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000002674064645044973,
+          "waveDirectionGap": 2.851407003901666e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 4,
+          "s": 180.4061737060547,
+          "u": -0.9751419425010681,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000004178896277288594,
+          "waveDirectionGap": 3.5915799037064686e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 5,
+          "s": 180.30970764160156,
+          "u": -0.904763400554657,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000004611322736551252,
+          "waveDirectionGap": 2.468169595891498e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 6,
+          "s": 180.2379608154297,
+          "u": -0.8332233428955078,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000024989270548801337,
+          "waveDirectionGap": 7.920100753692703e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 7,
+          "s": 180.17697143554688,
+          "u": -0.7600215673446655,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000002611849848846659,
+          "waveDirectionGap": 1.5740580032500677e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 8,
+          "s": 180.12962341308594,
+          "u": -0.6862009763717651,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.00000433873161230981,
+          "waveDirectionGap": 2.6709949887049643e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 9,
+          "s": 180.0926971435547,
+          "u": -0.6120758652687073,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000002150903274587004,
+          "waveDirectionGap": 4.5393185610037324e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 10,
+          "s": 180.0631103515625,
+          "u": -0.5377159118652344,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000030367533796985653,
+          "waveDirectionGap": 3.4683185988741546e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 11,
+          "s": 180.0388641357422,
+          "u": -0.4631725549697876,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000007566055660060596,
+          "waveDirectionGap": 5.169040490254503e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 12,
+          "s": 180.01864624023438,
+          "u": -0.3884839415550232,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000033018801823039616,
+          "waveDirectionGap": 1.1278414606279361e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 13,
+          "s": 180.0015106201172,
+          "u": -0.3136786222457886,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000016001902847363362,
+          "waveDirectionGap": 1.1294186621296326e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 14,
+          "s": 179.98681640625,
+          "u": -0.2387782782316208,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000004459372042848213,
+          "waveDirectionGap": 4.926356032001552e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 15,
+          "s": 179.9740447998047,
+          "u": -0.16376978158950806,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000004000973619659074,
+          "waveDirectionGap": 3.101833885224207e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 16,
+          "s": 179.9628143310547,
+          "u": -0.08858239650726318,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000002936305056908425,
+          "waveDirectionGap": 2.9116168550298494e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 17,
+          "s": 179.95303344726562,
+          "u": -0.01338195614516735,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000016815746085684814,
+          "waveDirectionGap": 1.9109822280407333e-7,
+          "uvGap": 0
+        },
+        {
+          "vertex": 18,
+          "s": 179.94444274902344,
+          "u": 0.061830051243305206,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.000002025216585134208,
+          "waveDirectionGap": 6.769890335293704e-8,
+          "uvGap": 0
+        },
+        {
+          "vertex": 19,
+          "s": 179.93682861328125,
+          "u": 0.1370522826910019,
+          "weight": 1,
+          "amplitudeGap": 1.4901161138336505e-9,
+          "staticGap": 0.0000029748080026265214,
+          "waveDirectionGap": 2.0494181922614497e-7,
+          "uvGap": 0
+        }
+      ],
+      "tolerances": {
+        "staticGap": 0.0001,
+        "waveDirectionGap": 0.0001,
+        "amplitudeGap": 0.000001
+      }
+    },
+    "foamSupportHeight": {
+      "pass": true,
+      "maximum": 0.28,
+      "vertices": [
+        {
+          "vertex": 0,
+          "u": -1.4151138067245483,
+          "lift": 0.27999588804089676
+        },
+        {
+          "vertex": 1,
+          "u": -1.2428758144378662,
+          "lift": 0.27999208468159537
+        },
+        {
+          "vertex": 2,
+          "u": -1.1170717477798462,
+          "lift": 0.2799961630583089
+        },
+        {
+          "vertex": 20,
+          "u": 0.4682038426399231,
+          "lift": 0.028738934354949834
+        },
+        {
+          "vertex": 21,
+          "u": 0.7994627952575684,
+          "lift": 0.1430719162520387
+        },
+        {
+          "vertex": 22,
+          "u": 1.1307895183563232,
+          "lift": 0.2799982702532419
+        }
+      ]
+    },
+    "layoutBlendContinuity": {
+      "pass": true,
+      "localJumps": [
+        {
+          "z": 0,
+          "maxDelta": 0.0022451079216048164
+        },
+        {
+          "z": 2,
+          "maxDelta": 0.00045409351696124034
+        },
+        {
+          "z": 10,
+          "maxDelta": 0.00044264045096165106
+        }
+      ],
+      "channelJoins": [
+        {
+          "s": 114.68830202823243,
+          "centreDelta": 0,
+          "widthDelta": 0.0005749999946789153
+        },
+        {
+          "s": 192.92412082521383,
+          "centreDelta": 0,
+          "widthDelta": 0.00013888888657476173
+        }
+      ]
+    },
+    "animatedWater": {
+      "pass": true,
+      "seconds": 0.6,
+      "meanAbsoluteRgb": 29.899928146841727
+    },
+    "phaseBoundarySamples": {
+      "pass": true,
+      "threshold": 15,
+      "units": "mean absolute RGB difference, range 0–255, at 1/60-second steps",
+      "samples": [
+        {
+          "from": 11.233333333333333,
+          "to": 11.25,
+          "meanAbsoluteRgb": 10.59716506630087
+        },
+        {
+          "from": 11.25,
+          "to": 11.266666666666667,
+          "meanAbsoluteRgb": 10.914951989026063
+        },
+        {
+          "from": 11.983333333333333,
+          "to": 12,
+          "meanAbsoluteRgb": 10.627408713828467
+        },
+        {
+          "from": 12,
+          "to": 12.016666666666667,
+          "meanAbsoluteRgb": 10.073616826703246
+        }
+      ]
+    },
+    "screen05To06": {
+      "pass": true,
+      "stage": "06",
+      "maxCameraStep": 0.21470910553583306,
+      "maxBennyYStep": 0.10699999999999932,
+      "nonMonotonicSteps": 0
+    },
+    "noBrowserErrors": {
+      "pass": false,
+      "count": 1
+    }
+  },
+  "errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found) (http://127.0.0.1:5243/favicon.ico)"
+  ],
+  "failedResources": [],
+  "captures": [
+    {
+      "file": "qa/codex-water/tests/final/time_11_2333.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.398,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 11.233333333333333
+    },
+    {
+      "file": "qa/codex-water/tests/final/time_11_2500.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.398,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 11.25
+    },
+    {
+      "file": "qa/codex-water/tests/final/time_11_2667.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.398,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 11.266666666666667
+    },
+    {
+      "file": "qa/codex-water/tests/final/time_11_9833.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.35,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 11.983333333333333
+    },
+    {
+      "file": "qa/codex-water/tests/final/time_12_0000.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.348,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12
+    },
+    {
+      "file": "qa/codex-water/tests/final/time_12_0167.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.347,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12.016666666666667
+    },
+    {
+      "file": "qa/codex-water/tests/final/time_12_6000.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.354,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "waterTime": 12.6
+    },
+    {
+      "file": "qa/codex-water/tests/final/ride_s168_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 168.188,
+        "lat": 0,
+        "coins": 1470,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -42.817,
+        "bennyVisible": true,
+        "cam": [
+          1.37,
+          -39.37,
+          -102.4
+        ]
+      },
+      "targetS": 168.0383020282329
+    },
+    {
+      "file": "qa/codex-water/tests/final/ride_s174_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 174.055,
+        "lat": 0,
+        "coins": 1480,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -43.105,
+        "bennyVisible": true,
+        "cam": [
+          1.78,
+          -39.61,
+          -108.25
+        ]
+      },
+      "targetS": 174.0383020282329
+    },
+    {
+      "file": "qa/codex-water/tests/final/ride_s180_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 180.105,
+        "lat": 0,
+        "coins": 1480,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -43.386,
+        "bennyVisible": true,
+        "cam": [
+          3.24,
+          -39.83,
+          -113.82
+        ]
+      },
+      "targetS": 180.0383020282329
+    },
+    {
+      "file": "qa/codex-water/tests/final/ride_s184_04.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 184.138,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -43.412,
+        "bennyVisible": true,
+        "cam": [
+          3.03,
+          -40.01,
+          -117.68
+        ]
+      },
+      "targetS": 184.0383020282329
+    },
+    {
+      "file": "qa/codex-water/tests/final/ride_s188_42.png",
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 188.538,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -42.979,
+        "bennyVisible": true,
+        "cam": [
+          3.27,
+          -40.55,
+          -122.25
+        ]
+      },
+      "targetS": 188.42412082521383
+    },
+    {
+      "file": "qa/codex-water/tests/final/ride_s189_42.png",
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 189.455,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -42.78,
+        "bennyVisible": true,
+        "cam": [
+          3.09,
+          -40.64,
+          -123.21
+        ]
+      },
+      "targetS": 189.42412082521383
+    },
+    {
+      "file": "qa/codex-water/tests/final/ride_s192_92.png",
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 192.938,
+        "lat": 0,
+        "coins": 1490,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.265,
+        "bennyVisible": true,
+        "cam": [
+          2.17,
+          -40.91,
+          -126.73
+        ]
+      },
+      "targetS": 192.92412082521383
+    }
+  ],
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "geometry": {
+    "liquidEnabled": true,
+    "finite": true,
+    "vertices": 2783,
+    "triangles": 5280,
+    "seamS": 180.0383020282329,
+    "seamLongitudinal": 181.2217254638672,
+    "seamUvGap": 1.183423435634296,
+    "rows": [
+      {
+        "z": -0.01,
+        "xB": -0.07127997762177007,
+        "hw": 2.482715166201011,
+        "cL": -1.33133704826162,
+        "wL": 0.23407039851491357,
+        "cR": 1.0594879790644154,
+        "wR": 0.48828590253398313,
+        "core": -0.26303228660813716
+      },
+      {
+        "z": 0,
+        "xB": -0.08422350153828861,
+        "hw": 2.495781307396247,
+        "cL": -1.3333884060156795,
+        "wL": 0.234069087347856,
+        "cR": 1.0597170161665792,
+        "wR": 0.4882280682831198,
+        "core": -0.2639151853921821
+      },
+      {
+        "z": 0.01,
+        "xB": -0.09067255126182583,
+        "hw": 2.5023517364566192,
+        "cL": -1.3353903436696284,
+        "wL": 0.23407322434742636,
+        "cR": 1.060120172406077,
+        "wR": 0.48808663858395845,
+        "core": -0.26464179275004174
+      },
+      {
+        "z": 1.99,
+        "xB": -0.7202746587531486,
+        "hw": 3.059913953574428,
+        "cL": -1.7775825979783992,
+        "wL": 0.5548688266587986,
+        "cR": 1.1800673343876629,
+        "wR": 0.38175885320750563,
+        "core": -0.21220264506972178
+      },
+      {
+        "z": 2,
+        "xB": -0.7225458691321933,
+        "hw": 3.061185953935989,
+        "cL": -1.77780028553933,
+        "wL": 0.5548907718834647,
+        "cR": 1.1810706444635457,
+        "wR": 0.3797227870417441,
+        "core": -0.21078082811703192
+      },
+      {
+        "z": 2.01,
+        "xB": -0.7248134857739451,
+        "hw": 3.062445034619077,
+        "cL": -1.7779970892417816,
+        "wL": 0.5549104093884505,
+        "cR": 1.1820876030436478,
+        "wR": 0.37766388404323553,
+        "core": -0.20933148042645935
+      },
+      {
+        "z": 9.99,
+        "xB": -1.498540511355222,
+        "hw": 2.8806748199833976,
+        "cL": -3.284554302444276,
+        "wL": 0.547327852220416,
+        "cR": 0.2874798933269447,
+        "wR": 0.5473267967622384,
+        "core": -1.4985366768295767
+      },
+      {
+        "z": 10,
+        "xB": -1.5003703703703701,
+        "hw": 2.8812962962962962,
+        "cL": -3.286774074074074,
+        "wL": 0.5474462962962963,
+        "cR": 0.2860333333333336,
+        "wR": 0.5474462962962963,
+        "core": -1.5003703703703701
+      },
+      {
+        "z": 10.01,
+        "xB": -1.502196371958162,
+        "hw": 2.8819203624091223,
+        "cL": -3.2889869966518175,
+        "wL": 0.5475648688577333,
+        "cR": 0.2845942527354939,
+        "wR": 0.5475648688577333,
+        "core": -1.502196371958162
+      },
+      {
+        "z": 24,
+        "xB": -1.9373854244928626,
+        "hw": 3.3710894064613073,
+        "cL": -4.027460856498873,
+        "wL": 0.6405069872276484,
+        "cR": 0.1526900075131481,
+        "wR": 0.6405069872276484,
+        "core": -1.9373854244928626
+      },
+      {
+        "z": 60,
+        "xB": 2.5230464646464648,
+        "hw": 3.3075339154269927,
+        "cL": 0.47237543708172947,
+        "wL": 0.6284314439311286,
+        "cR": 4.5737174922112,
+        "wR": 0.6284314439311286,
+        "core": 2.5230464646464648
+      },
+      {
+        "z": 110,
+        "xB": 2.050490661601773,
+        "hw": 3.3,
+        "cL": 0.004490661601773027,
+        "wL": 0.627,
+        "cR": 4.096490661601773,
+        "wR": 0.627,
+        "core": 2.050490661601773
+      },
+      {
+        "z": 215,
+        "xB": -2.7910921700280715,
+        "hw": 3.039488210045386,
+        "cL": -4.67557486025621,
+        "wL": 0.5775027599086233,
+        "cR": -0.9066094797999322,
+        "wR": 0.5775027599086233,
+        "core": -2.7910921700280715
+      },
+      {
+        "z": 330,
+        "xB": 0.09680000000000014,
+        "hw": 3.2376,
+        "cL": -1.910512,
+        "wL": 0.615144,
+        "cR": 2.104112,
+        "wR": 0.615144,
+        "core": 0.09680000000000014
+      }
+    ],
+    "localJumps": [
+      {
+        "z": 0,
+        "maxDelta": 0.0022451079216048164
+      },
+      {
+        "z": 2,
+        "maxDelta": 0.00045409351696124034
+      },
+      {
+        "z": 10,
+        "maxDelta": 0.00044264045096165106
+      }
+    ],
+    "banks": [
+      {
+        "side": -1,
+        "s": 181.2217279895434,
+        "axialResidual": 1.329492071988625e-14,
+        "lateralGap": 4.952260823642973e-11,
+        "staticSurfaceGap": 0.7211090718885532
+      },
+      {
+        "side": 1,
+        "s": 179.93683230185133,
+        "axialResidual": -2.3953061756287752e-14,
+        "lateralGap": 1.290967333034132e-12,
+        "staticSurfaceGap": 0.46337115077419483
+      }
+    ],
+    "channelJoins": [
+      {
+        "s": 114.68830202823243,
+        "centreDelta": 0,
+        "widthDelta": 0.0005749999946789153
+      },
+      {
+        "s": 192.92412082521383,
+        "centreDelta": 0,
+        "widthDelta": 0.00013888888657476173
+      }
+    ],
+    "bridgeVertices": [
+      {
+        "vertex": 3,
+        "s": 181.2217254638672,
+        "u": -1,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000002674064645044973,
+        "waveDirectionGap": 2.851407003901666e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 4,
+        "s": 180.4061737060547,
+        "u": -0.9751419425010681,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000004178896277288594,
+        "waveDirectionGap": 3.5915799037064686e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 5,
+        "s": 180.30970764160156,
+        "u": -0.904763400554657,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000004611322736551252,
+        "waveDirectionGap": 2.468169595891498e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 6,
+        "s": 180.2379608154297,
+        "u": -0.8332233428955078,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000024989270548801337,
+        "waveDirectionGap": 7.920100753692703e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 7,
+        "s": 180.17697143554688,
+        "u": -0.7600215673446655,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000002611849848846659,
+        "waveDirectionGap": 1.5740580032500677e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 8,
+        "s": 180.12962341308594,
+        "u": -0.6862009763717651,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.00000433873161230981,
+        "waveDirectionGap": 2.6709949887049643e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 9,
+        "s": 180.0926971435547,
+        "u": -0.6120758652687073,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000002150903274587004,
+        "waveDirectionGap": 4.5393185610037324e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 10,
+        "s": 180.0631103515625,
+        "u": -0.5377159118652344,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000030367533796985653,
+        "waveDirectionGap": 3.4683185988741546e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 11,
+        "s": 180.0388641357422,
+        "u": -0.4631725549697876,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000007566055660060596,
+        "waveDirectionGap": 5.169040490254503e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 12,
+        "s": 180.01864624023438,
+        "u": -0.3884839415550232,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000033018801823039616,
+        "waveDirectionGap": 1.1278414606279361e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 13,
+        "s": 180.0015106201172,
+        "u": -0.3136786222457886,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000016001902847363362,
+        "waveDirectionGap": 1.1294186621296326e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 14,
+        "s": 179.98681640625,
+        "u": -0.2387782782316208,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000004459372042848213,
+        "waveDirectionGap": 4.926356032001552e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 15,
+        "s": 179.9740447998047,
+        "u": -0.16376978158950806,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000004000973619659074,
+        "waveDirectionGap": 3.101833885224207e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 16,
+        "s": 179.9628143310547,
+        "u": -0.08858239650726318,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000002936305056908425,
+        "waveDirectionGap": 2.9116168550298494e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 17,
+        "s": 179.95303344726562,
+        "u": -0.01338195614516735,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000016815746085684814,
+        "waveDirectionGap": 1.9109822280407333e-7,
+        "uvGap": 0
+      },
+      {
+        "vertex": 18,
+        "s": 179.94444274902344,
+        "u": 0.061830051243305206,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.000002025216585134208,
+        "waveDirectionGap": 6.769890335293704e-8,
+        "uvGap": 0
+      },
+      {
+        "vertex": 19,
+        "s": 179.93682861328125,
+        "u": 0.1370522826910019,
+        "weight": 1,
+        "amplitudeGap": 1.4901161138336505e-9,
+        "staticGap": 0.0000029748080026265214,
+        "waveDirectionGap": 2.0494181922614497e-7,
+        "uvGap": 0
+      }
+    ],
+    "supportLifts": [
+      {
+        "vertex": 0,
+        "u": -1.4151138067245483,
+        "lift": 0.27999588804089676
+      },
+      {
+        "vertex": 1,
+        "u": -1.2428758144378662,
+        "lift": 0.27999208468159537
+      },
+      {
+        "vertex": 2,
+        "u": -1.1170717477798462,
+        "lift": 0.2799961630583089
+      },
+      {
+        "vertex": 20,
+        "u": 0.4682038426399231,
+        "lift": 0.028738934354949834
+      },
+      {
+        "vertex": 21,
+        "u": 0.7994627952575684,
+        "lift": 0.1430719162520387
+      },
+      {
+        "vertex": 22,
+        "u": 1.1307895183563232,
+        "lift": 0.2799982702532419
+      }
+    ],
+    "maxSupportLift": 0.28,
+    "note": "banks.staticSurfaceGap measures the legacy unbridged floor formula. bridgeVertices compares actual new first-row mesh positions/wave vectors independently against the near course; visual overlap is inspected in ride captures."
+  },
+  "ride": {
+    "samples": [
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 168.188,
+          "lat": 0,
+          "coins": 1470,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -42.817,
+          "bennyVisible": true,
+          "cam": [
+            1.37,
+            -39.37,
+            -102.4
+          ]
+        },
+        "steps": 195,
+        "maxCameraStep": 0.19104973174543985,
+        "maxBennyYStep": 0.01899999999999835,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 174.055,
+          "lat": 0,
+          "coins": 1480,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -43.105,
+          "bennyVisible": true,
+          "cam": [
+            1.78,
+            -39.61,
+            -108.25
+          ]
+        },
+        "steps": 32,
+        "maxCameraStep": 0.19131126469708754,
+        "maxBennyYStep": 0.015000000000000568,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 180.105,
+          "lat": 0,
+          "coins": 1480,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -43.386,
+          "bennyVisible": true,
+          "cam": [
+            3.24,
+            -39.83,
+            -113.82
+          ]
+        },
+        "steps": 33,
+        "maxCameraStep": 0.18788294228056093,
+        "maxBennyYStep": 0.019000000000005457,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 184.138,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -43.412,
+          "bennyVisible": true,
+          "cam": [
+            3.03,
+            -40.01,
+            -117.68
+          ]
+        },
+        "steps": 22,
+        "maxCameraStep": 0.18466185312620073,
+        "maxBennyYStep": 0.015000000000000568,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "05",
+          "s": 188.538,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -42.979,
+          "bennyVisible": true,
+          "cam": [
+            3.27,
+            -40.55,
+            -122.25
+          ]
+        },
+        "steps": 24,
+        "maxCameraStep": 0.21470910553583306,
+        "maxBennyYStep": 0.030000000000001137,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 189.455,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -42.78,
+          "bennyVisible": true,
+          "cam": [
+            3.09,
+            -40.64,
+            -123.21
+          ]
+        },
+        "steps": 5,
+        "maxCameraStep": 0.20322401432901885,
+        "maxBennyYStep": 0.045000000000001705,
+        "nonMonotonicSteps": 0
+      },
+      {
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 192.938,
+          "lat": 0,
+          "coins": 1490,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -41.265,
+          "bennyVisible": true,
+          "cam": [
+            2.17,
+            -40.91,
+            -126.73
+          ]
+        },
+        "steps": 19,
+        "maxCameraStep": 0.19748417658132675,
+        "maxBennyYStep": 0.10699999999999932,
+        "nonMonotonicSteps": 0
+      }
+    ],
+    "maxCameraStep": 0.21470910553583306,
+    "maxBennyYStep": 0.10699999999999932,
+    "nonMonotonicSteps": 0
+  },
+  "stats": {
+    "calls": 80,
+    "triangles": 593413,
+    "geometries": 342,
+    "textures": 61,
+    "modules": {
+      "water": "vfx/index.ts",
+      "benny": "assets/models/benny.glb",
+      "girl": "assets/models/rainbow_girl.glb"
+    },
+    "courseLength": 435.1923632433159
+  },
+  "pass": false
+}

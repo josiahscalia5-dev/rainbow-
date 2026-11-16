@@ -13,6 +13,8 @@ import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
 import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+import { LIQUID05_GLSL } from './liquid05';
+import { ROUNDFOAM05 } from './foam05Options';
 
 /** wave amplitude per stage (units); blended across boundaries */
 const AMP: Partial<Record<StageId, number>> = {
@@ -147,7 +149,9 @@ const FLOW05 = 1.3;
  */
 const q05 = (key: string): boolean => {
   try {
-    return typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1';
+    if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+    // A separate Android experiment can bake the same switch; ordinary builds remain unchanged.
+    return new URLSearchParams(import.meta.env?.VITE_RAINBOW_Q05 ?? '').get(key) === '1';
   } catch {
     return false;
   }
@@ -163,7 +167,9 @@ const q05 = (key: string): boolean => {
  *               animated ripples, glossy highlights and the Marble panorama's reflection follow the S-curves.
  * All off (default): every shader program and geometry attribute is the previous one (pixel-identical build).
  */
-export const RIVER05: boolean = q05('river05');
+/** New, reversible experiment. Existing water05 / river05 programs and the default are preserved. */
+export const LIQUID05: boolean = q05('liquid05');
+export const RIVER05: boolean = LIQUID05 || q05('river05');
 export const FARW05: boolean = RIVER05 || q05('farw05');
 export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
 export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
@@ -321,6 +327,9 @@ ${NOISE_GLSL}
 ${FRAG_FX_GLSL}
 #ifdef FLOWMAP05
 ${FLOW05_GLSL}
+#endif
+#ifdef LIQUID05
+${LIQUID05_GLSL}
 #endif
 
 // Stationary channel shape (refs 05–07): lateral offset (units) of the electric-cyan core centre
@@ -820,6 +829,63 @@ void main() {
 #ifdef WATER05
   // ---- W10 (?water05=1): satin S-ribbons + electric cyan, hue-ramped like the approved image ----
   if (sw > 0.001) {
+    #ifdef LIQUID05
+    // The new study is a separate material path: no old brushed grain or stacked flare grids.
+    // Shared field/colour functions also shade the far river, using the same clock and arc length.
+    float nearL = 1.0 - smoothstep(0.006, 0.024, fws);
+    vec4 lf = liquid05Field(X, s, uTime, uFlow05);
+    vec4 fmL = texture2D(uFlowMap, vec2(u * 0.5 + 0.5, (s - uFlowS.x) * uFlowS.y));
+    const vec2 scaleL = vec2(0.22, 0.008);
+    vec4 rippleL = flowRipple(uRipple, vec2(X, s) * scaleL,
+      vec2(0.0, fmL.g * uFlow05 * 1.25 * scaleL.y), uTime * 0.8 + fmL.a);
+    // Recovered flow-map advection remains a quiet second layer rather than drawing tiny crests.
+    lf.x = clamp(lf.x + (rippleL.b - 0.5) * 0.12, 0.0, 1.0);
+    float tLL = sdL / max(wL, 1e-3), tRL = -sdR / max(wR, 1e-3);
+    float bandL = abs(tLL) < abs(tRL) ? tLL : tRL;
+    if (wake > 0.0 && wW > 0.001) {
+      float wakeL = (cW - abs(dlB)) / wW;
+      if (abs(wakeL) < abs(bandL)) bandL = wakeL;
+    }
+    float pinkL = 1.0 - smoothstep(0.85, 1.25, abs(bandL));
+    // A few broad bowed swells in the magnified foreground, with continuous soft transitions.
+    float dlL = lat - uBenny.y;
+    // Rider-relative wake swells drift slowly; world advection at 16 rad/unit would alias
+    // above 30 Hz on mobile. Mid/far river reflections still use the downstream flow clock.
+    float arcL = db * 16.0 - uTime * 2.4 + 9.0 * dlL * dlL / (1.0 + 0.25 * back);
+    float swellL = 0.44 + 0.31 * sin(arcL - 0.5) + 0.07 * sin(arcL * 0.47 + dlL * 0.8);
+    float arcTopL = max(0.0, sin(arcL));
+    float nearCyanL = nearL * (1.0 - pinkL);
+    lf.x = mix(lf.x, swellL, nearCyanL * 0.94);
+    lf.y = mix(lf.y, pow(arcTopL, 3.0) * 0.88, nearCyanL * 0.94);
+    // A short glint lies ON each curved crest. Measuring distance to the crest in pixels gives
+    // a clean white edge instead of a fuzzy sinusoidal blob; each crest has a different offset.
+    float crestCycleL = (arcL - 1.5707963) * 0.15915494;
+    float crestIdL = floor(crestCycleL + 0.5);
+    float crestDpxL = abs(fract(crestCycleL + 0.5) - 0.5) / max(fwidth(crestCycleL), 0.0001);
+    float crestSeedL = liquid05Hash(vec2(crestIdL, 17.3));
+    float alongL = dlL - (crestSeedL - 0.5) * 1.8;
+    float halfLengthL = min(0.35 + crestSeedL * 0.3, max(fwidth(dlL), 0.0001) * 60.0);
+    halfLengthL *= mix(0.7, 1.3, smoothstep(-0.06, 0.06, alongL));
+    float alongNormL = alongL / max(halfLengthL, 0.0001);
+    float taperL = max(0.0, 1.0 - alongNormL * alongNormL);
+    float whiteArcL = (1.0 - smoothstep(0.6 + 2.4 * taperL, 1.4 + 2.4 * taperL, crestDpxL)) * taperL;
+    lf.z = lf.z * (1.0 - nearCyanL) + whiteArcL * nearCyanL;
+    vec3 cLiq = liquid05Color(bandL, lf);
+    vec3 acrossL = normalize(cross(vTanW, N0));
+    vec3 normalL = normalize(N0 + acrossL * (lf.w * 0.09 + (rippleL.r - 0.5) * 0.05));
+    vec3 reflectedL = reflect(-V, normalL);
+    float nvL = clamp(dot(normalL, V), 0.0, 1.0);
+    float fresL = 0.06 + 0.94 * pow(1.0 - nvL, 5.0);
+    vec3 pdL = uPanoRot * reflectedL;
+    vec2 puvL = vec2(atan(pdL.z, pdL.x) * 0.15915494 + 0.5,
+                     asin(clamp(pdL.y, -1.0, 1.0)) * 0.31830989 + 0.5);
+    vec3 panoL = texture2D(uPano, puvL).rgb;
+    float lampL = max(panoL.r, max(panoL.g, panoL.b));
+    vec3 hueL = mix(vec3(0.025, 0.85, 1.15), vec3(1.1, 0.22, 0.9), pinkL);
+    cLiq += hueL * smoothstep(0.68, 0.98, lampL) * fresL * uPanoK * 0.32;
+    cLiq += hueL * pow(max(0.0, dot(normalL, Hv)), 70.0) * 0.18;
+    col = mix(col, cLiq, sw);
+    #else
     #ifdef FLOWMAP05
     // (W11: wider hand-over between the mid-field satin and the near swells — the narrow one drew a hard line
     // across the river ≈1.5 u behind Benny)
@@ -976,6 +1042,7 @@ void main() {
         + flB * near5 * (0.5 + 0.8 * smoothstep(0.2, 0.8, crestN)));
     #endif
     col = mix(col, c5, sw);
+    #endif
   }
 #else
   if (sw > 0.001) {
@@ -1077,17 +1144,30 @@ void main() {
       float wl = (vnoise(vec2(s * 0.5, sgn * 7.0)) - 0.5) * 0.7;
       float e2 = eC + wl * min(1.0, sideW);
       float fl2 = fwidth(lat) + 1e-4;
+      #ifdef ROUND_FOAM05
+      vec2 pc = vec2(lat * 1.05 + 1.7, s * 0.24);
+      #else
       vec2 pc = vec2(lat * 1.6 + 1.7, s * 0.36);
+      #endif
       float c1 = cells(pc);
       float c1u = cells(pc + vec2(0.0, 0.16));
+      #ifndef ROUND_FOAM05
       float c2 = cells(vec2(lat * 4.6 + 5.3, s * 1.05));
+      #endif
       float f1 = 1.0 - smoothstep(0.1, 0.3, fl2 * 1.6), f2 = 1.0 - smoothstep(0.1, 0.3, fl2 * 4.6);
       float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.55 * f1) * shOn;   // the waterline bulges round each puff
       float dome = 1.0 - smoothstep(0.15, 0.78, c1);
       float lit = clamp((c1u - c1) * 3.2 + 0.55, 0.0, 1.0);                 // top of each puff catches the light
+      #ifdef ROUND_FOAM05
+      float cap = sqrt(max(0.0, 1.0 - pow(min(c1 / 0.76, 1.0), 2.0)));
+      vec3 fo = mix(vec3(0.31, 0.42, 0.72), vec3(1.06, 1.09, 1.18),
+        mix(0.75, smoothstep(0.08, 0.93, cap * (0.6 + 0.4 * lit)), f1));
+      fo = mix(fo, vec3(0.32, 0.46, 0.81), (1.0 - smoothstep(0.0, 0.32, e2)) * 0.23);
+      #else
       vec3 fo = mix(uFoamLav * 0.7, uFoam * 1.14, mix(0.62, dome * (0.45 + 0.55 * lit) + 0.25 * lit, f1));
       fo = mix(fo, vec3(0.5, 0.56, 1.05), (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.22);
       fo = mix(fo, vec3(0.36, 0.42, 0.98), (1.0 - smoothstep(0.0, 0.3, e2)) * 0.4);            // shaded waterline
+      #endif
       col = mix(col, col * vec3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * shOn * (1.0 - shelf));
       col = mix(col, fo, shelf);
     }
@@ -1286,7 +1366,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(ROUNDFOAM05 ? { ROUND_FOAM05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'water_ribbon';

@@ -17,7 +17,7 @@ import * as THREE from 'three';
 import type { Course } from './course';
 import type { ForcedTunnel } from './tube';
 import { tubeCenterAt } from './tube';
-import { channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, WATER05 } from '../vfx/waterRibbon';
+import { ampAt, channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, LIQUID05, WATER05 } from '../vfx/waterRibbon';
 
 /** QA only: the far block publishes its tunnel + river path here (read by qa scripts via dynamic import) */
 export const far05Debug: Record<string, unknown> = {};
@@ -100,6 +100,11 @@ export interface FarRiverLayout {
   row(Z: number): FarRiverRow;
   /** half chord of the tube floor at the water level */
   chord: number;
+  /** Opt-in seam bridge: actual near-ribbon coordinates at an oblique far cross-section. */
+  nearSurface?(Z: number, x: number): {
+    s: number; u: number; amp: number; point: THREE.Vector3; normal: THREE.Vector3;
+    flowX: number; band: number;
+  };
 }
 
 /**
@@ -232,8 +237,41 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
     return designFromXB(0.5 * (a + b), Z);
   };
   const chord = Math.sqrt(Math.max(0, ft.R * ft.R - level * level)) * 0.995;
+  // The far cross-section cuts the winding near ribbon diagonally. Its vertices therefore do NOT
+  // share one course distance, and a bank of the narrowed visual channel is not a bank of the full
+  // playable ribbon. Solve each point in the near ribbon's own frame; use its full-width trough and
+  // normal, then carry the same (s,u,amplitude) into the far shader's animated seam displacement.
+  const nearSurface = (Z: number, x: number) => {
+    const sample = (s: number) => {
+      const f = course.sample(s), hw = course.widthAt(s) / 2;
+      const rel = f.pos.clone().sub(ft.c0);
+      const lateral = (x - rel.dot(ft.Rt)) / Math.max(0.3, f.right.dot(ft.Rt));
+      const u = lateral / hw;
+      const point = f.pos.clone().addScaledVector(f.right, lateral);
+      const axial = point.clone().sub(ft.c0).dot(ft.T);
+      // The far bank-support columns can extend outside the playable ribbon. Do not extrapolate
+      // the cubic trough there: that lifts the outer foam into angular plates above the river.
+      const lift = EDGE_LIFT * Math.min(1, Math.abs(u)) ** 3;
+      point.addScaledVector(f.up, lift);
+      const slope = Math.abs(u) <= 1 + 1e-6 ? EDGE_LIFT * 3 * u * Math.abs(u) / hw : 0;
+      const normal = f.up.clone().addScaledVector(f.right, -slope).normalize();
+      return { s, u, point, axial, normal, lateral };
+    };
+    let lo = ft.sF - 12, hi = ft.sF + 24;
+    for (let i = 0; i < 36; i++) {
+      const mid = (lo + hi) * 0.5;
+      if (sample(mid).axial < Z) lo = mid; else hi = mid;
+    }
+    const n = sample((lo + hi) * 0.5), r = relLay(n.s);
+    const tL = (n.lateral - r.cL) / Math.max(r.wL, 0.001);
+    const tR = (r.cR - n.lateral) / Math.max(r.wR, 0.001);
+    return { s: n.s, u: n.u, amp: ampAt(course, n.s) * (1 - smoothstep(1, 1.25, Math.abs(n.u))), point: n.point, normal: n.normal,
+      flowX: (n.lateral - 0.5 * (r.cL + r.cR)) * 3 / Math.max(0.5 * (r.cR - r.cL), 0.6),
+      band: Math.abs(tL) < Math.abs(tR) ? tL : tR };
+  };
   return {
     chord,
+    ...(LIQUID05 ? { nearSurface } : {}),
     row(Z) {
       const w = smoothstep(2, 10, Z);
       if (w <= 0) return realRow(Z);
@@ -263,6 +301,9 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
   const n = rows * per;
   const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);
   const lat = new Float32Array(n), A = new Float32Array(n * 4), B = new Float32Array(n * 4), ext = new Float32Array(n), opn = new Float32Array(n * 3);
+  const seam = LIQUID05 ? new Float32Array(n * 4) : null;
+  const seamNormal = LIQUID05 ? new Float32Array(n * 3) : null;
+  const seamFlow = LIQUID05 ? new Float32Array(n * 2) : null;
   const o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
   const ch = lay.chord;
   for (let i = 0; i < rows; i++) {
@@ -288,9 +329,27 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
       o.copy(ft.Rt).multiplyScalar(x).addScaledVector(ft.U, level + h);
       ft.point(Z, o, p);
       const k = i * per + j;
+      let longitudinal = ft.sF + ft.uOfZ(Z);
+      if (seam && seamNormal && seamFlow && lay.nearSurface) {
+        const bridge = 1 - smoothstep(2, 10, Z);
+        // Past the blend, zero weight avoids extra geometry work and restores the exact existing far design.
+        if (bridge > 0) {
+          const n = lay.nearSurface(Z, x);
+          const nearOffset = n.point.clone().sub(ft.c0).addScaledVector(ft.T, -Z);
+          const nearPoint = ft.point(Z, nearOffset);
+          p.lerp(nearPoint, bridge);
+          longitudinal += (n.s - longitudinal) * bridge;
+          seam.set([n.s, n.u, n.amp, bridge], k * 4);
+          // Forced-perspective differential: transverse motion scales by k, axial motion by dz/dZ.
+          const kn = ft.kOf(Z), cn = ft.cOf(Z), axialNormal = n.normal.dot(ft.T);
+          n.normal.multiplyScalar(kn).addScaledVector(ft.T, (cn - kn) * axialNormal);
+          n.normal.toArray(seamNormal, k * 3);
+          seamFlow.set([n.flowX, n.band], k * 2);
+        }
+      }
       p.toArray(pos, k * 3);
       ft.U.toArray(nor, k * 3);
-      uv[k * 2] = (x + ch) / (2 * ch); uv[k * 2 + 1] = ft.sF + ft.uOfZ(Z);
+      uv[k * 2] = (x + ch) / (2 * ch); uv[k * 2 + 1] = longitudinal;
       lat[k] = x;
       A[k * 4] = r.xB; A[k * 4 + 1] = r.hw; A[k * 4 + 2] = r.cL; A[k * 4 + 3] = r.cR;
       B[k * 4] = r.wL; B[k * 4 + 1] = r.wR; B[k * 4 + 2] = r.core; B[k * 4 + 3] = Z;
@@ -314,6 +373,11 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
   g.setAttribute('aRivA', new THREE.BufferAttribute(A, 4));
   g.setAttribute('aRivB', new THREE.BufferAttribute(B, 4));
   g.setAttribute('fgExtra', new THREE.BufferAttribute(ext, 1));
+  if (seam && seamNormal && seamFlow) {
+    g.setAttribute('aRivSeam', new THREE.BufferAttribute(seam, 4));
+    g.setAttribute('aRivSeamNormal', new THREE.BufferAttribute(seamNormal, 3));
+    g.setAttribute('aRivSeamFlow', new THREE.BufferAttribute(seamFlow, 2));
+  }
   g.morphAttributes.position = [new THREE.BufferAttribute(opn, 3)];
   g.setIndex(idx);
   g.computeBoundingSphere();

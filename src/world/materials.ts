@@ -4,7 +4,9 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, WATER05 } from '../vfx/waterRibbon';
+import { FARW05, WATER05, LIQUID05 } from '../vfx/waterRibbon';
+import { LIQUID05_GLSL } from '../vfx/liquid05';
+import { ROUNDFOAM05 } from '../vfx/foam05Options';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
@@ -886,9 +888,30 @@ export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THR
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', `#include <common>
 attribute float fgExtra; attribute float aRivLat; attribute vec4 aRivA; attribute vec4 aRivB;
-varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB;`)
-      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvRivUv = uv; vRivLat = aRivLat; vRivA = aRivA; vRivB = aRivB;')
-      .replace('#include <project_vertex>', '#include <project_vertex>\nvRivDist = length(mvPosition.xyz) + fgExtra;');
+varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB;
+#ifdef LIQUID05
+attribute vec4 aRivSeam; attribute vec3 aRivSeamNormal; attribute vec2 aRivSeamFlow;
+varying vec4 vRivSeam; varying vec2 vRivSeamFlow;
+uniform float uRivTime;
+#endif`)
+      .replace('#include <uv_vertex>', `#include <uv_vertex>
+vRivUv = uv; vRivLat = aRivLat; vRivA = aRivA; vRivB = aRivB;
+#ifdef LIQUID05
+vRivSeam = aRivSeam; vRivSeamFlow = aRivSeamFlow;
+#endif`)
+      .replace('#include <project_vertex>', `
+#ifdef LIQUID05
+// Follow the playable surface's displacement at the join; release it with the existing opening morph.
+float seamWave = aRivSeam.z * (0.6 * sin(aRivSeam.x * 0.9 - uRivTime * 2.4 + aRivSeam.y * 1.7)
+  + 0.4 * sin(aRivSeam.x * 0.41 + uRivTime * 1.5 - aRivSeam.y * 2.3));
+float seamClosed = 1.0;
+#ifdef USE_MORPHTARGETS
+seamClosed = 1.0 - morphTargetInfluences[0];
+#endif
+transformed += aRivSeamNormal * seamWave * aRivSeam.w * seamClosed;
+#endif
+#include <project_vertex>
+vRivDist = length(mvPosition.xyz) + fgExtra;`);
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
 varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB;
@@ -900,6 +923,10 @@ uniform float uRivD0;
 #ifdef FLOWMAP05
 uniform sampler2D uRivRipple; uniform float uRivTime; uniform float uRivFlow;
 ${FLOW05_GLSL}
+#endif
+#ifdef LIQUID05
+varying vec4 vRivSeam; varying vec2 vRivSeamFlow;
+${LIQUID05_GLSL}
 #endif
 float rivHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float rivNoise(vec2 p) {
@@ -985,6 +1012,18 @@ float rivCells(vec2 p) {
     col = mix(col, O_BLUE, smoothstep(1.0, 1.15, at));
     col = mix(col, ow, smoothstep(1.12, 1.3, at));
   }
+  #ifdef LIQUID05
+  // Same normalized band coordinate, longitudinal distance, clock and palette as the playable ribbon.
+  // The existing realRow bridge keeps the band centres continuous through the first two virtual units.
+  float lx = (lat - 0.5 * (cL + cR)) * 3.0 / max(0.5 * (cR - cL), 0.6);
+  lx = mix(lx, vRivSeamFlow.x, vRivSeam.w);
+  float lv = s - uRivTime * uRivFlow;
+  lx += 0.05 * sin(lv * 0.21 + lx * 1.1);
+  vec4 lf = liquid05Field(lx, s, uRivTime, uRivFlow);
+  float lb = abs(tLb) < abs(tRb) ? tLb : tRb;
+  lb = mix(lb, vRivSeamFlow.y, vRivSeam.w);
+  col = liquid05Color(lb, lf);
+  #endif
   // (it03) beyond the bank the floor reads as deep violet water, not as a flat pale foam sheet (the lavender wedge
   // left of the seam); only a narrow bubbly foam rim (puff cells ≥ ≈6 px, lavender / blue shading) lines each bank
 #ifdef FARW05
@@ -994,24 +1033,43 @@ float rivCells(vec2 p) {
   // ribbon's continuation lies under it; the approved image has its big foam bank there), further in it is a rim
   // ≈1.3 u wide with a scalloped outer edge and the tunnel wall shows beyond it ----
   {
+    #ifdef LIQUID05
+    // The recovered nine-unit seam shelf exposed the flat support mesh as a white plate.
+    // Keep a rounded narrow foam rim; the real foreground shelf remains visible underneath.
+    float rimW = mix(0.9, 1.3, smoothstep(2.0, 24.0, Zv));
+    #else
     float rimW = mix(9.0, 1.3, smoothstep(5.0, 24.0, Zv));
+    #endif
     float sgn = lat > xB ? 1.0 : -1.0;
     float ld = log(uRivD0 + Zv) * 3.69;                    // ln depth × eye height: isotropic cells on screen
     float wl = (rivNoise(vec2(ld * 1.1, sgn * 7.0)) - 0.5) * 0.7;
     float e2 = e + wl * 0.6;
+    #ifdef ROUND_FOAM05
+    vec2 pc = vec2(lat * 0.95 + 1.7, ld * 0.95);
+    #else
     vec2 pc = vec2(lat * 1.3 + 1.7, ld * 1.3);
+    #endif
     float c1 = rivCells(pc);
     float c1u = rivCells(pc + vec2(0.0, 0.16));
+    #ifndef ROUND_FOAM05
     float c2 = rivCells(vec2(lat * 3.6 + 5.3, ld * 3.6));
+    #endif
     float f1 = 1.0 - smoothstep(0.1, 0.3, fl * 1.3), f2 = 1.0 - smoothstep(0.1, 0.3, fl * 3.6);
     if (e2 - rimW + (c1 - 0.5) * 0.8 * f1 > 0.0) discard;
     float shelf = smoothstep(-0.1, 0.08, e2 + (0.5 - c1) * 0.55 * f1);
     float dome = 1.0 - smoothstep(0.15, 0.78, c1);
     float lit = clamp((c1u - c1) * 3.2 + 0.55, 0.0, 1.0);
+    #ifdef ROUND_FOAM05
+    float cap = sqrt(max(0.0, 1.0 - pow(min(c1 / 0.76, 1.0), 2.0)));
+    vec3 fo = mix(vec3(0.31, 0.42, 0.72), vec3(1.06, 1.09, 1.18),
+      mix(0.75, smoothstep(0.08, 0.93, cap * (0.6 + 0.4 * lit)), f1));
+    fo = mix(fo, vec3(0.32, 0.46, 0.81), (1.0 - smoothstep(0.0, 0.32, e2)) * 0.23);
+    #else
     vec3 fo = mix(uRivFoamLav * 0.8, uRivFoam * 1.06, mix(0.62, dome * (0.45 + 0.55 * lit) + 0.25 * lit, f1));
     fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.25);
     fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.0, 0.3, e2)) * 0.4);            // shaded waterline
     fo = mix(fo, uRivFoamBlue * 0.85, smoothstep(0.6, 1.0, e2 / max(rimW, 0.3)) * 0.45 * smoothstep(8.0, 26.0, Zv));
+    #endif
     col = mix(col, col * vec3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * (1.0 - shelf));
     col = mix(col, fo, shelf);
   }
@@ -1073,8 +1131,8 @@ float rivCells(vec2 p) {
 }`);
   };
   if (WATER05) {
-    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}) };
-    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '');
+    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(ROUNDFOAM05 ? { ROUND_FOAM05: 1 } : {}) };
+    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '') + (LIQUID05 ? '-liquid05' : '') + (ROUNDFOAM05 ? '-roundfoam05' : '');
   } else {
     mat.customProgramCacheKey = () => 'far-river-w8';
   }

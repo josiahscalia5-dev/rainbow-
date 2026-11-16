@@ -1,0 +1,16 @@
+{
+  "identicalSimulationResults": true,
+  "checks": 8,
+  "samples": 71,
+  "collectedCoins": 91,
+  "plunge": {
+    "tTop": 23.699999999999935,
+    "tBottom": 30.283333333332894,
+    "t08": 30.283333333332894,
+    "yTop": -51.836,
+    "yBottom": -113.243,
+    "y08": -113.243,
+    "travelTimeTopToInlet": 6.58,
+    "verticalDrop": 61.41
+  }
+}

@@ -17,6 +17,7 @@ import { type Course, WORLD, funnelY } from '../world/course';
 import { EDGE_LIFT, coreLateral } from './waterRibbon';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+import { ROUNDFOAM05 } from './foam05Options';
 
 /** c = (ambient occlusion 0..1, seed 0..1, tint -1..1) → instanceColor (see PUFF_VERT) */
 interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean }
@@ -398,6 +399,28 @@ void main() {
   vec3 Nv = vec3(q, z);
   vec4 clip = projectionMatrix * vec4(vCv + vR * vec3(vP, z * R), 1.0);
   gl_FragDepth = 0.5 * clip.z / clip.w + 0.5;
+#ifdef ROUND_FOAM05
+  // Keep the same sphere geometry, intersection depth and bank placement. A broad wrapped
+  // key light reveals the rounded bodies; cool undersides connect neighbouring puffs without
+  // the previous dense dark pores and speckled highlights overwhelming the silhouette.
+  float diffuse = dot(Nv, normalize(vec3(-0.33, 0.88, 0.35)));
+  float under = 1.0 - smoothstep(-0.75, 0.25, q.y);
+  float rimShade = pow(1.0 - z, 1.7) * (0.06 + 0.10 * under);
+  // The key is steeper than the view direction: white belongs to the upper cap, while
+  // the lower hemisphere retains a broad blue-lavender gradient after the game's grade.
+  float light = clamp(0.38 + 0.67 * diffuse - rimShade - 0.13 * under - (1.0 - vInst.x) * 0.24, 0.0, 1.0);
+  vec3 col = mix(vec3(0.24, 0.34, 0.72), vec3(0.64, 0.70, 0.96), smoothstep(0.12, 0.65, light));
+  col = mix(col, vec3(1.04, 1.035, 1.08), smoothstep(0.57, 0.88, light));
+  // Only large lumps carry a small amount of coarse lather detail. Small distant bubbles
+  // integrate into smooth shaded banks rather than resolving as blue dots or white noise.
+  vec2 mp = q * (1.0 + 0.25 * (1.0 - z)) * clamp(px / 14.0, 1.2, 3.0) + vInst.y * 37.0;
+  vec4 mf = microFoam(mp, 0.12 + under * 0.22);
+  float coarse = smoothstep(18.0, 34.0, px) * (1.0 - smoothstep(0.3, 0.7, fwidth(mp.x) + fwidth(mp.y)));
+  col *= 1.0 - mf.x * 0.085 * coarse;
+  col += vec3(0.035) * mf.y * coarse;
+  vec2 cap = vP - vec2(-0.28, 0.40);
+  col += vec3(0.08, 0.09, 0.10) * exp(-dot(cap, cap) * 9.0);
+#else
   // wave 7 ramp: white top caps, lavender-white bodies, periwinkle / blue undersides; lower / side silhouette = the
   // blue-violet crevice between piled bubbles; inner / lower bubbles of a pile (ambient occlusion vInst.x) bluer
   // wave 8: steeper key light from the upper left (ref lumps: white caps only on the lit top, lavender middle, blue lower
@@ -425,6 +448,7 @@ void main() {
   vec2 qs = vP - vec2(-0.32, 0.34);
   vec3 cb = mix(soap05(0.8 + 0.1 * vInst.z), soap05(0.12), smoothstep(0.5, 0.95, d)) + vec3(1.0) * exp(-dot(qs, qs) * 14.0) * 0.55;
   col = mix(col, cb, tiny);
+#endif
   gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
 }
@@ -435,7 +459,10 @@ function makeBankBubbleMaterial() {
     uTime: { value: 0 },
     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
   });
-  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: BANK_BUB_VERT, fragmentShader: BANK_BUB_FRAG, fog: true });
+  const mat = new THREE.ShaderMaterial({
+    uniforms, vertexShader: BANK_BUB_VERT, fragmentShader: BANK_BUB_FRAG, fog: true,
+    defines: ROUNDFOAM05 ? { ROUND_FOAM05: 1 } : {},
+  });
   return { mat, uniforms };
 }
 
