@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7293,
-   "sha256": "b6f7b9c0f7b5d30dabc6f969e0dff9c91d2be07188143db484a0b7a258431c7c"
+   "sha256": "86c3df1405d3ff55d2930bf813627b32a32581f6af936b793b3c2936a1bd4f81"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1480,6 +1480,11 @@
    "path": "qa/pilot05/wave11/tests/perf_high_864x1536.json",
    "bytes": 1702,
    "sha256": "9a837933c16bcb5dbe946b8a6c48170b432621100717994bfacd2dba10d1bcc1"
+  },
+  {
+   "path": "qa/pilot05/wave11/tests/perf_low_864x1536.json",
+   "bytes": 904,
+   "sha256": "512a79d5a49f1ef682cd536f5ccb1312c5fc08747cafa1d8abbe3c5ab3d3b5df"
   },
   {
    "path": "qa/pilot05/wave11/tests/pixel_checks.json",

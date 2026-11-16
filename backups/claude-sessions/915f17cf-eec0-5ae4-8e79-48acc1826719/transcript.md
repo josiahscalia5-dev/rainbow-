@@ -2486,3 +2486,201 @@ Say "continue" and I'll finish the Android build, the write-up and the verified 
 Stop hook feedback:
 [command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
 
+### 🤖 Claude — 2026-11-16T13:32:37.663Z
+
+> 🔧 **Bash** `{"command": "head -c 200 -- ./--help; rm -f -- ./--help; python3 scripts/rainbow-autosave.py --reason manual:wave11-checkpoint --message \"Screen 05 wave 11: far-river channel (?farw05=1) + flow-map water (?flow05=1), combined ?river05=1; evidence and tests\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"|warn'; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-3d-account-recovery-hfb8p0 | cut -f1)\"; git status --short | wc -l", "description": "Remove stray scratch file; run verified autosave", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T13:32:38.549Z
+
+> ↩︎ result: | image | band | gold % | cyan % | pink % | white % | dark % | V p95 | mean S |
+> |---|---|---|---|---|---|---|---|---|
+> 
+> | image | river visible up to y (smaller = further into the light) | S-swing px plocal  59d05eb5301dc4f88c387ebd2fbf4de437a294e6
+> remote 2046013f8247285b4630c6cb6c9263c9b348cb16
+> 0
+
+### 🤖 Claude — 2026-11-16T13:32:38.775Z
+
+You've hit your 5-hour limit · resets 5:40pm (UTC)
+
+### 🧑 User — 2026-11-16T13:32:38.801Z
+
+RAINBOW 3D — EMERGENCY FULL BACKUP, RUNNING AGENTS & ACCOUNT TRANSFER
+
+Claude, IMPORTANT: I may run out of credits again. I need you to immediately protect my ENTIRE Rainbow 3D mobile game project, including everything being developed RIGHT NOW.
+
+CURRENT GITHUB BRANCH:
+"claude/rainbow-3d-account-recovery-hfb8p0"
+
+Do not switch to an older branch or start another game.
+
+1. SAVE EVERYTHING TO GITHUB IMMEDIATELY
+
+Perform a verified checkpoint backup right now while keeping my active work safe.
+
+Include:
+
+- All game source code and approved designs.
+- All 12 approved reference images.
+- Every Blender scene, model, texture and shader.
+- All ten specialist agent definitions and skills.
+- All current specialist work, including incomplete experiments.
+- All MCP server and plugin configuration files.
+- Three.js, Blender, Playwright and Android setup scripts.
+- All Marble World Labs assets from both generated worlds.
+- Every screenshot, comparison, test and development report.
+- My working T2 Screen 05 and protected BEFORE baseline.
+- Current development notes and account-recovery documentation.
+
+Use Git LFS for large assets and verify the actual files exist on GitHub.
+
+Never include passwords, API keys, tokens or private credentials.
+
+2. SAVE THE SPECIALISTS RUNNING RIGHT NOW
+
+This is especially important.
+
+I want you to save the work of EVERY specialist, subagent, background task and tool currently active.
+
+For each running specialist, preserve:
+
+- Exact specialist name and role.
+- Agent definition and instructions.
+- Assigned task and current progress.
+- Source files being modified.
+- Completed and unfinished code.
+- Generated assets and screenshots.
+- Current test results.
+- Background-task logs and output.
+- Remaining work and exact next steps.
+- Commands and configuration required to restart it.
+
+Update "backups/AGENTS_STATUS.json" and create or update a detailed running-task handoff report.
+
+Do not stop active specialists merely to create the backup unless necessary for safety.
+
+If files are changing during a backup, use the existing Git locking and autosave system to capture safe checkpoints. Verify each push and save later changes in subsequent backups.
+
+Clearly identify which work is unfinished or experimental.
+
+3. SAVE THE NEW SCREEN 05 WATER-FLOW SYSTEM
+
+My new water system is extremely important.
+
+Preserve all work associated with:
+
+- "src/vfx/flow05.ts"
+- "src/vfx/waterRibbon.ts"
+- The new flow-map generator.
+- Water2-inspired two-phase flowing-water animation.
+- Ripple and normal-map textures.
+- The new narrow far-river S-curves.
+- Rounded foam banks.
+- Cyan-blue and magenta flowing-water shaders.
+- Strong glossy reflections and highlights.
+- All current water retuning experiments.
+
+The current flow-map test is being adjusted because its first result was too grainy.
+
+Make sure the next Claude account knows we need long, smooth, flow-aligned ripples, rich cyan water, magenta ribbons and selective white highlights matching my approved Screen 05.
+
+Save the latest successful version AND unfinished candidate experiments separately.
+
+DO NOT overwrite the approved image, protected BEFORE version or working T2 game.
+
+4. PRESERVE MARBLE WORLD LABS
+
+Both existing Marble World Labs worlds must be backed up and verified.
+
+Preserve every downloaded asset, world ID, panorama, collision mesh, splat, texture, Blender scene and integration script.
+
+Keep the World Labs API connection instructions and Atlas connector configuration.
+
+Never put the actual API key in GitHub.
+
+Record how the next Claude account can securely reconnect World Labs if necessary.
+
+Do not generate additional worlds or spend Marble credits during this backup.
+
+5. SAVE ALL SERVERS, PLUGINS AND TOOLS
+
+Save the reproducible configurations and setup instructions for:
+
+- Blender 5.3
+- Three.js and WebGL2
+- Playwright and Chromium
+- Android SDK and Java
+- Git and Git LFS
+- World Labs and Atlas
+- MCP servers
+- Claude Code plugins
+- All ten specialist agents
+- Any newly introduced flow-map tools
+
+Update "backups/TOOL_MANIFEST.json".
+
+Remember that live processes, installed packages, sessions and account-specific connections do not automatically transfer through GitHub.
+
+Document exactly how to reinstall, reauthorize and restart anything required on the next account.
+
+6. KEEP AUTOMATIC BACKUPS EVERY FIVE MINUTES
+
+Verify that the existing automatic GitHub autosave system is running.
+
+Every five minutes while the development environment is active, safely commit and push new project changes.
+
+Use a Git lock to avoid collisions with specialists or other Git operations.
+
+Verify the remote matches the local commit. Log successful backups and report failures.
+
+Also save at important checkpoints, before account transfers and when ending the session.
+
+Never force-push or destroy protected branches.
+
+7. MAKE THE NEXT CLAUDE ACCOUNT READY TO CONTINUE
+
+Update:
+
+- "CLAUDE.md"
+- "backups/START_NEW_CLAUDE_ACCOUNT.md"
+- "backups/CLAUDE_ACCOUNT_TRANSFER.md"
+- "backups/AGENTS_STATUS.json"
+- "backups/TOOL_MANIFEST.json"
+
+Verify the existing "scripts/claude-bootstrap.sh" recovery system.
+
+Create a single, updated continuation prompt that I can paste into my next Claude account.
+
+That prompt must tell the new Claude to recover my latest GitHub branch, run the bootstrap, restore every tool, reconnect services where needed, relaunch unfinished specialists and continue Screen 05 exactly where this account stopped.
+
+Do not restart completed work or repeat expensive experiments.
+
+8. VERIFY EVERYTHING BEFORE TELLING ME IT IS SAVED
+
+Give me a final report confirming:
+
+1. GitHub repository and working branch.
+2. Latest full commit SHA.
+3. GitHub remote and local copy match.
+4. All source code and Git LFS assets verified.
+5. All ten specialist definitions backed up.
+6. Every currently running specialist's work and restart instructions saved.
+7. Both Marble World Labs worlds verified.
+8. Blender, servers, plugins and MCP configurations documented.
+9. Five-minute autosave functioning.
+10. Exact next task for Screen 05.
+
+Also tell me whether there are any uncommitted files or tasks that cannot yet be recovered.
+
+DO NOT CLAIM EVERYTHING IS SAVED UNTIL THE REMOTE GITHUB PUSH HAS BEEN VERIFIED.
+
+Save everything NOW, without stopping the current water development unnecessarily.
+
+My goal is to switch Claude accounts without losing even the unfinished Screen 05 water-flow improvements.
+
+DO NOT START OVER. PRESERVE MY ENTIRE PROJECT.
+
+### 🤖 Claude — 2026-11-16T13:32:39.727Z
+
+You've hit your 5-hour limit · resets 5:40pm (UTC)
+
