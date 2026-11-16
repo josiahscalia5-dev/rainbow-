@@ -676,3 +676,16 @@ Now the lighting, near field and glints segments.
 >     // cyan: deep azure lanes -> electric cyan -> bright cyan crests
 >     vec3 cy = mix(uC5Deep, uC5, smoothstep(0.1, 0.6, H5)) …[+4954 chars]
 
+### 🤖 Claude — 2026-11-16T01:57:35.426Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | tail -3 && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave8/water/it01 2>&1 | tail -2 && python3 -c \"import json;print(json.load(open('qa/capture_log.json'))['errors'])\"", "description": "Typecheck and capture iteration 1", "timeout": 660000}`
+
+### 🧑 User — 2026-11-16T01:57:40.150Z
+
+> ↩︎ result: src/world/environment.ts(278,13): error TS2304: Cannot find name 'marblePano05'.
+> src/world/environment.ts(278,45): error TS2304: Cannot find name 'marblePanoRotation05'.
+> src/world/environment.ts(279,5): error TS1117: An object literal cannot have multiple properties with the same name.
+> 
+> Node.js v22.23.4
+> ['[05] ReferenceError: marblePano05 is not defined\n    at buildEnvironment (http://127.0.0.1:5201/src/world/environment.ts:224:13)\n    at startGame (http://127.0.0.1:5201/src/game/Game.ts:60:15)\n    at http://127.0.0.1:5201/src/main.ts:15:1']
+

@@ -1164,3 +1164,29 @@ Let me extract the reference far river's cyan and pink runs per row more precise
 >     vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
 >     col = mi …[+2962 chars]
 
+### 🤖 Claude — 2026-11-16T01:57:37.234Z
+
+I have enough to implement. Let me check the band/lid constants used by the far block before writing the new module.
+
+### 🤖 Claude — 2026-11-16T01:57:38.423Z
+
+> 🔧 **Bash** `{"command": "grep -n 'const band05\\|const lid05\\|band05 =\\|lid05 =' -A3 src/world/environment.ts | head -20; grep -n 'export function wallLidBasis' -A12 src/world/tube.ts", "description": "Read band05/lid05 constants and wallLidBasis"}`
+
+### 🧑 User — 2026-11-16T01:57:38.454Z
+
+> ↩︎ result: 304:  const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
+> 305-  // wave 7: the band colour is the stylised cross-section of withBandShading (materials.ts); the PBR/env
+> 306-  // result underneath only feeds the depth buffer now
+> 307-  const gold05 = (key: string, virtual: boolean) => {
+> --
+> 338:  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -34, size: 2.2, thickness: 0.36, stretch: 1.0, sink: 0.1 };
+> 339-  const lidMat05 = (key: string, virtual: boolean) => {
+> 340-    const m = withLidShading(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glowT05, key, virtual), key);
+> 341-    m.emissive.set('#c86a18');
+> 437:export function wallLidBasis(f: Frame, side: number, angDeg: number, droopDeg: number) {
+> 438-  const ang = THREE.MathUtils.degToRad(angDeg);
+> 439-  const tilt = ang + THREE.MathUtils.degToRad(droopDeg);
+> 440-  const dir = f.right.clone().multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
+> 441-  const X = f.right.clone().multiplyScalar(-Math.cos(tilt) * side).addScaledVector(f.up, -Math.sin(tilt)).normalize();
+> 442-  const Y = f.right.clone().multiplyScalar(-Math.sin(ti …[+398 chars]
+

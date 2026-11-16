@@ -264,19 +264,16 @@ export function buildEnvironment(course: Course): Environment {
     // swirl"), only a faint bevel; shaded slot lips instead of the bright pink dotted outline; shorter, plumper
     // capsules (ref median slot 25 px², elongation 4.3; live was 40 px², 8.8); bluer violet F0 (ref wall
     // medians (171,44,177) / (188,51,205) / (154,46,166))
-    ...wallBase, color: '#d49cf4', emissive: '#2a0648', emissiveIntensity: 0.14, envMapIntensity: 0.74, roughness: 0.07,
-    relief: { corrugation: 0, bevel: 0.018, bevelWidth: 0.08 },
-    rimColor: '#b02a9a', rimStrength: 0.0, farGlow: glowT05,
-    repeatU: 64, repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.16] as [number, number],
-    offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
     // wave 8: luminous magenta-pink instead of violet (ref left wall mean (192,76,167), violet share of
     // violet+magenta 40–51 %; it06 (159,47,178), 91–93 %): warmer F0 between '#d49cf4' and '#f29ad6', softer
     // and later violet mid tint, no slot bevel (its aliased highlight drew a jagged pink outline round every slot),
     // and the Marble 05 panorama as the reflection source (marblePano05: pink walls, warm ring lights, VP glow)
-    color: '#eaa2ea', emissive: '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9,
+    ...wallBase, color: '#eaa2ea', emissive: '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,
     relief: { corrugation: 0, bevel: 0, bevelWidth: 0.08 },
+    rimColor: '#b02a9a', rimStrength: 0.0, farGlow: { ...glowT05, mid: { color: '#9a3ad8', near: 14, far: 60, amount: 0.3 } },
     envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
-    farGlow: { ...glowT05, mid: { color: '#9a3ad8', near: 14, far: 60, amount: 0.3 } },
+    repeatU: 64, repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.16] as [number, number],
+    offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
   };
   // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
   const strips05: TubeStrips = { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
