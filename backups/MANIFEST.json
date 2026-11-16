@@ -4033,8 +4033,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 47267,
-   "sha256": "e5ac28c1cb8b8678d90ac951077298bd3b26fa1ca791e84bcd3e6edd360b4caa"
+   "bytes": 47432,
+   "sha256": "911af0e04aa6243bc64940dac268c50687f8a88e6a589e682fb27e135c0071f8"
   },
   {
    "path": "src/world/laundryRoom.ts",
