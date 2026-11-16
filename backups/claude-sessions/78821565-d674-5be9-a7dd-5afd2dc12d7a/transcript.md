@@ -955,3 +955,154 @@ Recovered game measures **mad 50.6 / hue_corr 0.875 / edge_corr 0.195** (wave-8 
 > qa/worldlabs/05/pilot/draft/pano.png (2304, 1152)
 > assets/textures/marble05_env_1024.jpg (1024, 512)
 
+### 🤖 Claude — 2026-11-16T02:18:02.751Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/wave9/baseline && cp qa/pilot05/wave9/recovered/05.png qa/pilot05/wave9/baseline/05.png && timeout 900 node scripts/capture.mjs 03 04 06 07 08 --out=qa/pilot05/wave9/baseline 2>&1 | tail -6", "description": "Capture regression baselines for screens 03,04,06,07,08", "timeout": 920000}`
+
+### 🧑 User — 2026-11-16T02:19:08.773Z
+
+> ↩︎ result: 03 → qa/pilot05/wave9/baseline/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":95,"tris":713386,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → qa/pilot05/wave9/baseline/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":712274,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/wave9/baseline/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":72,"tris":543081,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → qa/pilot05/wave9/baseline/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":181,"tris":660599,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 08 → qa/pilot05/wave9/baseline/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":160,"tris":610707,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T02:19:11.524Z
+
+Baselines captured. Now writing the wave-9 coordination brief (continuation of wave 8, same strict file ownership) and relaunching the four Screen 05 specialists.
+
+### 🤖 Claude — 2026-11-16T02:19:37.880Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9.md", "content": "# Screen 05: wave 9 (recovery session `01Kbt6BV`, branch `claude/rainbow-3d-account-recovery-xex5hc`)\n\nStarted 2026-11-16 ~02:30 UTC on a NEW Claude account. Wave 8 (session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`) stopped\nmid-iteration when that account ran out of credits: water had reached it05/it06, foam it05, environment it02 (log only\nup to it01), path-camera it02 (log EMPTY). All their edits are in the code as it is now. Wave 9 = each specialist\nCONTINUES its own wave-8 work from where it stopped. Do  …[+6292 chars]`
+
+### 🧑 User — 2026-11-16T02:19:37.919Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:19:53.374Z
+
+> 🔧 **Agent** `{"subagent_type": "washer-environment-modeler", "description": "Screen 05 wave 9 environment", "run_in_background": true, "prompt": "You are the washer-environment-modeler for the existing RAINBOW 3D game in /home/user/rainbow- (real playable Three.js game; never restart or redesign it). A previous Claude account ran out of credits while you were mid-way through Screen 05 wave 8; you are now CONTINUING that work as wave 9.\n\nRead first, in this order:\n1. /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9.md (rules, file ownership, ranked gaps, capture/report commands)\n2. Your own wave-8 log  …[+3337 chars]`
+
+### 🧑 User — 2026-11-16T02:19:53.401Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: aa08f1857cba5dbb3 (internal ID - do not mention to user. Use SendMessage with to: 'aa08f1857cba5dbb3', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/aa08f1857cba5dbb3.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-16T02:20:05.826Z
+
+> 🔧 **Agent** `{"subagent_type": "path-camera-transition-engineer", "description": "Screen 05 wave 9 far river", "run_in_background": true, "prompt": "You are the path-camera-transition-engineer for the existing RAINBOW 3D game in /home/user/rainbow- (real playable Three.js game; never restart or redesign it). A previous Claude account ran out of credits while you were mid-way through Screen 05 wave 8; you are now CONTINUING that work as wave 9.\n\nRead first, in this order:\n1. /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9.md (rules, file ownership, ranked gaps, capture/report commands)\n2. Your own wav …[+3178 chars]`
+
+### 🧑 User — 2026-11-16T02:20:05.843Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a0121e9c440afc1e5 (internal ID - do not mention to user. Use SendMessage with to: 'a0121e9c440afc1e5', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/a0121e9c440afc1e5.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-16T02:20:16.478Z
+
+> 🔧 **Agent** `{"subagent_type": "water-fx-specialist", "description": "Screen 05 wave 9 water", "run_in_background": true, "prompt": "You are the water-fx-specialist for the existing RAINBOW 3D game in /home/user/rainbow- (real playable Three.js game; never restart or redesign it). A previous Claude account ran out of credits while you were mid-way through Screen 05 wave 8b; you are now CONTINUING that work as wave 9.\n\nRead first, in this order:\n1. /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9.md (rules, file ownership, ranked gaps, capture/report commands)\n2. Your own wave-8 log qa/pilot05/wave8/wa …[+2513 chars]`
+
+### 🧑 User — 2026-11-16T02:20:16.492Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: af51923537e86162d (internal ID - do not mention to user. Use SendMessage with to: 'af51923537e86162d', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/af51923537e86162d.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-16T02:20:26.530Z
+
+> 🔧 **Agent** `{"subagent_type": "foam-bubbles-particles", "description": "Screen 05 wave 9 foam", "run_in_background": true, "prompt": "You are the foam-bubbles-particles specialist for the existing RAINBOW 3D game in /home/user/rainbow- (real playable Three.js game; never restart or redesign it). A previous Claude account ran out of credits while you were mid-way through Screen 05 wave 8b; you are now CONTINUING that work as wave 9.\n\nRead first, in this order:\n1. /home/user/rainbow-/qa/pilot05/COORDINATION_WAVE9.md (rules, file ownership, ranked gaps, capture/report commands)\n2. Your own wave-8 log qa/ …[+2566 chars]`
+
+### 🧑 User — 2026-11-16T02:20:26.550Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ad851d2d7c4f878c2 (internal ID - do not mention to user. Use SendMessage with to: 'ad851d2d7c4f878c2', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/tasks/ad851d2d7c4f878c2.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-16T02:20:29.763Z
+
+All four specialists are relaunched in the background with strict file ownership. While they work, I'll record this session's recovery in the handoff docs so the next account (if any) sees wave 9.
+
+### 🤖 Claude — 2026-11-16T02:20:30.222Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T02:20:30.233Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T02:20:30.675Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T02:20:30.683Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-16T02:20:31.077Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T02:20:31.086Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-16T02:20:31.583Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/AGENTS_STATUS.md", "limit": 3}`
+
+### 🧑 User — 2026-11-16T02:20:31.594Z
+
+> ↩︎ result: 1	# Rainbow specialists — roster, responsibilities and status
+> 2	
+> 3	## ▶ Wave 8 RUNNING (started 2026-11-16 ~01:47 UTC, session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`)
+
+### 🤖 Claude — 2026-11-16T02:20:40.659Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/AGENTS_STATUS.md", "old_string": "# Rainbow specialists — roster, responsibilities and status\n\n## ▶ Wave 8 RUNNING (started 2026-11-16 ~01:47 UTC, session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`)", "new_string": "# Rainbow specialists — roster, responsibilities and status\n\n## ▶ Wave 9 RUNNING (started 2026-11-16 ~02:35 UTC, recovery session `01Kbt6BV`, branch `claude/rainbow-3d-account-recovery-xex5hc`)\nWave 8 (below) STOPPED mid-iteration when that Claude account ran out of credits (last save aa35c8a 02:08 UTC): water it05 …[+1465 chars]`
+
+### 🧑 User — 2026-11-16T02:20:40.715Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/AGENTS_STATUS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:20:41.260Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "limit": 6}`
+
+### 🧑 User — 2026-11-16T02:20:41.285Z
+
+> ↩︎ result: 1	# Rainbow — Claude account transfer guide (account 8 + transfer session 94cf04e3, 2026-11-16 ~01:30 UTC)
+> 2	
+> 3	Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it. Everything below was checked in
+> 4	these sessions unless marked "last verified on account N".
+> 5	
+> 6	## ▶ 0. Final verified backup (transfer session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`) — read first
+
+### 🤖 Claude — 2026-11-16T02:20:50.558Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "old_string": "Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it. Everything below was checked in\nthese sessions unless marked \"last verified on account N\".\n\n## ▶ 0. Final verified backup", "new_string": "Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it. Everything below was checked in\nthese sessions unless marked \"last verified on account N\".\n\n## ▶ NEWEST: recovery session `01Kbt6BV` (new Claude account, 2026-11-16 from ~02:12 UTC)\n**N …[+1524 chars]`
+
+### 🧑 User — 2026-11-16T02:20:50.604Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:20:52.810Z
+
+Now a manual save to push the recovery docs and confirm the autosave uses this session's branch and trailer.
+
+### 🤖 Claude — 2026-11-16T02:20:54.412Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:wave9-start 2>&1 | tail -5; echo; git log -1 --format='%h %s%n%b' | tail -4; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-3d-account-recovery-xex5hc | cut -f1)\"", "description": "Manual autosave push and verify remote matches", "timeout": 300000}`
+

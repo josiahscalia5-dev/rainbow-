@@ -388,18 +388,18 @@
   },
   {
    "path": "backups/AGENTS_STATUS.md",
-   "bytes": 7056,
-   "sha256": "71b29661ac7ebef58c43c719e28271bcb6923b5d0e43eb3e9657d2a4dabbdc65"
+   "bytes": 8670,
+   "sha256": "e7ecc4f8133dd850f60ba5ffbe6815ac4ddda5a8de3235bb1a95ea007be9ac9c"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 22790,
-   "sha256": "10b8df2ec58f07d63cb5436ac8f89dba1e76d3f510df8101263f2a4f95abac8d"
+   "bytes": 24368,
+   "sha256": "e7ea83833ae6e78a74f0f323bee8c02bd4e4b2c8b591c01a3be0e684b1ea38a0"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5833,
-   "sha256": "46246ec49dac803b6ac95dec0ad2393a111518eacf7b8c913a9532e87c22e363"
+   "sha256": "250f3656ac52d9e977afd85ebebec46848a4c82696e1e8c0a578fea51ada1d5b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -823,8 +823,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1176,
-   "sha256": "49c8f30cc332523992b8bd55950ffa634c9800bd55553b6edbd4deb1f14de08a"
+   "bytes": 5142,
+   "sha256": "4c9c5a8391ca5c07e2245e94266bdbc565132dd978e2e8559d3cd36ec9f1ef5c"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -935,6 +935,11 @@
    "path": "qa/pilot05/COORDINATION_WAVE8.md",
    "bytes": 5600,
    "sha256": "60201b948a5229a4d63bc827697f2fee0b183752fbe43bcb614c9ac12e0775a2"
+  },
+  {
+   "path": "qa/pilot05/COORDINATION_WAVE9.md",
+   "bytes": 6790,
+   "sha256": "81c6b5a463a8fcfbb4198d3ee4c4722ef7509bded546a7ac4a2df0b45d73e73d"
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
@@ -3288,8 +3293,8 @@
   },
   {
    "path": "qa/pilot05/wave8/environment/NOTES.md",
-   "bytes": 3441,
-   "sha256": "505e07bd097519718541029532680a3c159186bcbee5958bd854873f6171d1b0"
+   "bytes": 4668,
+   "sha256": "ad0a90aa178d1b472acc23ef8d208e6219a8de44c5b08f7bdf61993a095b8cae"
   },
   {
    "path": "qa/pilot05/wave8/environment/it01/05.png",
@@ -4080,6 +4085,76 @@
    "path": "qa/pilot05/wave8/water/it06/metrics.md",
    "bytes": 437,
    "sha256": "94e228131eabf483fcc38ed4e3ac9581def44e0e306b9a470e44be0789b0e6f1"
+  },
+  {
+   "path": "qa/pilot05/wave9/baseline/03.png",
+   "bytes": 689327,
+   "sha256": "70b33b54649c5640c5f8310b2ea33d10b30ad0547bfe6f386890370d9cb1084c"
+  },
+  {
+   "path": "qa/pilot05/wave9/baseline/04.png",
+   "bytes": 1006397,
+   "sha256": "b4e5263b929f11c9d83028201adad2d66e7aedbede19a3deef0b6d282e2fcd14"
+  },
+  {
+   "path": "qa/pilot05/wave9/baseline/05.png",
+   "bytes": 1750841,
+   "sha256": "dc8155f9ac7bccd80601245de6344de821ba9c966d89734da2236cb980bb1c07"
+  },
+  {
+   "path": "qa/pilot05/wave9/baseline/06.png",
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+  },
+  {
+   "path": "qa/pilot05/wave9/baseline/07.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/pilot05/wave9/baseline/08.png",
+   "bytes": 1428957,
+   "sha256": "4c5b9d985376ce5cccac3fa0e7594b661264446dc06bc88e40d2e56d8bae40ff"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/pre/crop_leftnear.png",
+   "bytes": 810881,
+   "sha256": "ea6666eb701debdefbdda69c5b70bd9b07e654b2d52dfcd74f21d5e76707017d"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/pre/crop_leftrim.png",
+   "bytes": 811981,
+   "sha256": "24853b672573826b1bd277d8463baa4a205372d2cddf8dca946843661bc4302e"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/pre/crop_rightnear.png",
+   "bytes": 633291,
+   "sha256": "aae7b414e405f85558bc37dd28fc8f4fb4db31c8173990d71a00505f0c349050"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/pre/crop_rightrim.png",
+   "bytes": 1095172,
+   "sha256": "0077accf8bd43327dbfa1acad0d925308c707e0c1f3913fadf4a03c2c6080ed8"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/pre/crop_splash.png",
+   "bytes": 946400,
+   "sha256": "b8e13f8593b4cde33dddf1def4eb8c702a474ace27a900e313faff14684c635c"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/tools/clumpcol.py",
+   "bytes": 1114,
+   "sha256": "4afce443fd4903e6cc9c0557d1425e4826f8da1ffb62c3f5ca0ab5382fb30fa8"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/tools/crops.py",
+   "bytes": 986,
+   "sha256": "ef23ea86849d441980916a4c469974c395fb0877e7ad3be1d926bc0d7dc24da0"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/tools/splashext.py",
+   "bytes": 865,
+   "sha256": "23355a876ab0b9954ce59da15eaf1141805a5ac7089d5b8be4b3ff462410f34d"
   },
   {
    "path": "qa/pilot05/wave9/recovered/05.png",

@@ -1,6 +1,20 @@
 # Rainbow specialists — roster, responsibilities and status
 
-## ▶ Wave 8 RUNNING (started 2026-11-16 ~01:47 UTC, session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`)
+## ▶ Wave 9 RUNNING (started 2026-11-16 ~02:35 UTC, recovery session `01Kbt6BV`, branch `claude/rainbow-3d-account-recovery-xex5hc`)
+Wave 8 (below) STOPPED mid-iteration when that Claude account ran out of credits (last save aa35c8a 02:08 UTC): water it05/it06,
+foam it05, environment it02, path-camera it02 (empty log). Their edits are in the code; recovered code passes tsc,
+continuity and the gameplay test. Wave 9 = each of the four CONTINUES its own wave-8 work. Brief:
+`qa/pilot05/COORDINATION_WAVE9.md`; baseline `qa/pilot05/wave9/baseline/{03..08}.png` (recovered 05: mad 50.6,
+hue 0.875, edge 0.195 vs approved).
+| Specialist | Wave-9 assignment | If this session ends before it reports |
+|---|---|---|
+| washer-environment-modeler | lids → rounded gold pucks (biggest mismatch), pinker magenta walls + Marble wall textures, yellow-gold rings, VP glow | read `qa/pilot05/wave9/environment/NOTES.md` + newest `itNN/`, relaunch with the same brief |
+| path-camera-transition-engineer | far river S-bends into the VP, far coins (≈8–10), far ring depths, far foam rims | `qa/pilot05/wave9/path-camera/NOTES.md`; run tsc + continuity + gameplay test |
+| water-fx-specialist | broad pink S-ribbons through the mid river, deeper glossy cyan, near flares + glints | `qa/pilot05/wave9/water/NOTES.md` |
+| foam-bubbles-particles | sphere heaps → fine bubble banks, natural splash, soap bubbles | `qa/pilot05/wave9/foam/NOTES.md` |
+Next after wave 9: reference-match-director + playwright-visual-qa review (approved | recovered | after); android-build-performance APK rebuild.
+
+## ▶ Wave 8 STOPPED (credits ran out ~02:08 UTC; started 2026-11-16 ~01:47 UTC, session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`)
 Brief: `qa/pilot05/COORDINATION_WAVE8.md`; baseline `qa/pilot05/wave8/baseline/{04..08}.png`.
 | Specialist | Assignment | If this session ends before it reports |
 |---|---|---|

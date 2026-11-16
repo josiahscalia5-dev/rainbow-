@@ -30,3 +30,12 @@ Whole-frame/band mads also move with the water + foam specialists' parallel wave
   192–234 (ref 188–230); ring sides between spots match the ref ring #2 cross-section (no-bloom scratch: dark → orange (245,118,85) → orange
   line → pale yellow (252,204,132) ≈10 px → peach); bloom adds a ≈(+8,+8,+15) haze. VP core: r8–16 (255,221,151) vs ref (250,220,141),
   r16–24 (252,164,101) vs (248,175,97) — close; r32–90 too bright/pale (far walls). Lids unchanged (V std 0.139).
+* it02 (RECOVERED in wave 9 from the evidence — the wave-8 account ran out of credits before logging it; changes read from the
+  autosave diff 64b9e5e → aa35c8a): `assets/textures/marble05_env_1024.jpg` pre-blurred ≈6 px (183 → 51 KB) so the pano's sharp ring
+  arcs no longer smear into red-orange blotches; wall05 F0 '#eaa2ea' → '#dc9ef0' and mid tint '#8a30d2' 0.45 @8–50 (violet back with
+  depth); `withLidShading` v2 palette sampled on ref L1 (orange near end, peach → orange-gold → pale yellow → white → orange-red band,
+  dark plum underside, view-side-aware lathe azimuth); tube.ts `wallLidGeometry('slab')` barrel rim (0.95 → 1.04 → 0.95) + domed top;
+  unused `oval` option added to buildTubeGeometry/buildRingsAt/buildWallLids. Report (it02/metrics.md): mad 51.2 → 50.7, hue_corr
+  0.856 → 0.88, edge_corr 0.177 → 0.189, **tunnel+VP 61.0 → 58.7**. measure05.py on it02: lid L1 V std 0.188 (ref 0.216), upper-wall
+  violet share 25.4 % (ref 40.0), left wall 4.0 % (ref 50.9), VP core px 723 (ref 1306). Side-by-side: walls magenta-pink with dark
+  slots, rings orange-salmon, lids still read as long copper planks jutting out (shape, not shading, is the mismatch). = wave-9 baseline.

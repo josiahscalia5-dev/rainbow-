@@ -3,7 +3,22 @@
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it. Everything below was checked in
 these sessions unless marked "last verified on account N".
 
-## ▶ 0. Final verified backup (transfer session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`) — read first
+## ▶ NEWEST: recovery session `01Kbt6BV` (new Claude account, 2026-11-16 from ~02:12 UTC)
+**Newest work branch: `claude/rainbow-3d-account-recovery-xex5hc`** (started from aa35c8a = tip of `ccr-937c7fbb-htsrgt`,
+which is now protected in `autosave.config.json`). Verified 02:12–02:35 UTC:
+| Check | Result |
+|---|---|
+| `scripts/resume-newest-work.sh` | RESUME CHECK OK — all 10 `ccr-*`/`claude/*` branches contained (incl. `ccr-4f6c3e0e-5kxgr0` 0fe0b0c, `ccr-937c7fbb-htsrgt` aa35c8a); LFS 24 tracked / 0 pointer stubs, fsck OK; refs 12/12; 10 agents; tsc OK; continuity ok (drop 61.19) |
+| Gameplay test on the recovered (wave-8 mid-iteration) code | **pass** 8/8, plunge 61.41, errors [] |
+| Tools | Blender 5.3.0, Android SDK 34 + build-tools 34.0.0, worldlabs plugin installed via `scripts/setup-*.sh`; Atlas connector `list_projects` OK |
+| World Labs | key saved by the user via the secure form on this account's **Default** environment (host `api.worldlabs.ai`, header `WLT-Api-Key`); free reads: credits **5,190** (unchanged), both pilot worlds HTTP 200. No credits spent |
+| Marble files | all present; `full05.blend` + `draft05.blend` open in Blender 5.3 |
+| Autosave | daemon follows this branch; config `branch` + `commit_trailer` updated |
+Wave 8 had stopped mid-iteration (credits ran out). Wave 9 (all four Screen 05 specialists continuing their own wave-8
+work) brief: `qa/pilot05/COORDINATION_WAVE9.md`; status: `backups/AGENTS_STATUS.md` top table.
+Recovered 05 vs approved (`qa/pilot05/wave9/recovered/`): mad 50.6, hue_corr 0.875, edge_corr 0.195.
+
+## ▶ 0. Earlier verified backup (transfer session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`) — read first
 **Two Claude sessions were saving at the same time** at hand-off: account 8 on `ccr-4f6c3e0e-5kxgr0` (with the
 washer-environment-modeler still running) and the transfer session on `ccr-937c7fbb-htsrgt`. The transfer branch
 merged everything account 8 had pushed up to `8d7464b` (01:19 UTC). If account 8 kept saving after that, its
