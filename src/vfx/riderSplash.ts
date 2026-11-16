@@ -246,8 +246,9 @@ float hs(float n) { return fract(sin(n * 91.345 + 3.17) * 43758.5453); }
 vec3 ropePos(float u, float side, float a, float seed, float len) {
   // root on the waterline circle (from beside the body to its back flank), direction measured from straight back
   // roots just outside the fur's silhouette (the waterline chord uR hides under the body from the chase camera)
-  float thR = mix(1.4, 0.5, a) + (hs(seed * 3.1) - 0.5) * 0.18;
-  float phi = mix(0.62, 0.06, a) + (hs(seed * 5.7) - 0.5) * 0.26 + 0.25 * u * u;
+  // wave 9: steeper on screen (ref strands 52-75 deg below the horizontal, wave 8 ~43 deg = two sideways wings)
+  float thR = mix(1.3, 0.45, a) + (hs(seed * 3.1) - 0.5) * 0.2;
+  float phi = mix(0.46, 0.0, a) + (hs(seed * 5.7) - 0.5) * 0.3 + 0.22 * u * u;
   vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5) * (1.3 + 0.2 * hs(seed * 2.3));
   vec2 q = root + vec2(sin(phi), cos(phi)) * u * len;
   // ropes ride on the surface with small humps (whitewater, not flying jets)
@@ -339,8 +340,12 @@ void main() {
     float hole = (1.0 - smoothstep(0.1, 0.2, cells(lp * 2.7 + 3.0))) * (1.0 - smoothstep(0.6, 1.0, ac));
     // it04: white only in the rope core, translucent cyan edges / tail, so the water shows between the strands
     alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x) * mix(0.9, 0.45, smoothstep(0.3, 1.0, ac + vUV.x * 0.5));
+    // wave 9: torn lace (ref): open holes through the strand (the water shows through), lighter overall
+    float tear = 1.0 - smoothstep(0.13, 0.24, cells(lp * vec2(1.9, 1.4) + 9.0));
+    alpha *= (1.0 - 0.85 * tear) * 0.8;
     col = mix(cyan, white, clamp(1.2 - vUV.x * 0.9 - ac * 0.9, 0.0, 1.0));
     col = mix(col, blue, hole * 0.55 * (1.0 - vUV.x));
+    col = mix(col, cyan, tear * 0.6);
   } else if (vType < 1.5) {
     // crown droplets: a chain of round beads, fading in off the water and out as they fall back
     // it05: small translucent water beads (cyan body, bright rim / glint), not white flakes
@@ -357,7 +362,8 @@ void main() {
     float hole = 1.0 - smoothstep(0.1, 0.22, lc);
     float lace = 1.0 - smoothstep(0.45, 0.75, lc);
     float soft = (1.0 - smoothstep(0.4, 1.0, ac)) * smoothstep(0.0, 0.2, vUV.x) * (1.0 - smoothstep(0.6, 1.0, vUV.x));
-    alpha = lace * soft * 0.9;
+    // wave 9: open lace (wave 8's 0.9 read as a bright continuous leading edge along the top of each fan)
+    alpha = lace * soft * 0.6 * (1.0 - 0.7 * hole);
     col = mix(white, blue, hole * 0.7);
   }
   alpha *= uStrength;
@@ -369,9 +375,10 @@ void main() {
 
 /** wave 8: the 05 splash (same API as the shared fan) */
 export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
-  const nRope = quality === 'high' ? 44 : 20;
+  // wave 9: fewer strands (44 -> 30) so water shows between them (ref), fewer froth pads (16 -> 10)
+  const nRope = quality === 'high' ? 30 : 16;
   const nJet = quality === 'high' ? 40 : 16;
-  const nFroth = quality === 'high' ? 16 : 8;
+  const nFroth = quality === 'high' ? 10 : 6;
   const uvs = new Float32Array((SEG5 + 1) * 2 * 2);
   for (let i = 0; i <= SEG5; i++) uvs.set([i / SEG5, -1, i / SEG5, 1], i * 4);
   const idx: number[] = [];

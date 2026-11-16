@@ -4212,6 +4212,11 @@
    "sha256": "15bca21ea9a741d52008ad21581b75cd03e17a282fc74687834f5299fec6eb00"
   },
   {
+   "path": "qa/pilot05/wave9/foam/NOTES.md",
+   "bytes": 2677,
+   "sha256": "f1cd76be9f2f056f34e9b0575ec8ae92ec6f51783856b25a87ff0730cda565ee"
+  },
+  {
    "path": "qa/pilot05/wave9/foam/pre/crop_leftnear.png",
    "bytes": 810881,
    "sha256": "ea6666eb701debdefbdda69c5b70bd9b07e654b2d52dfcd74f21d5e76707017d"
@@ -5153,8 +5158,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 55913,
-   "sha256": "063a2e34b1aa82008c0e2d5de3122d5d6421f936c0cda243154f2e17e70d49ed"
+   "bytes": 57984,
+   "sha256": "559fa86d535a6eade18fb86a7f60c097b74f2f93d1293eb691de2f42c9d91293"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -5173,8 +5178,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 20504,
-   "sha256": "7e06994d707eed7ecdc1f163f5525c1b4eaf41b09040223dda7930af0d4c8a6d"
+   "bytes": 21108,
+   "sha256": "f7d640f4b7620036058104e4ce3b5fe79b7d7d9e245519ab8816f331d7c53090"
   },
   {
    "path": "src/vfx/spray.ts",

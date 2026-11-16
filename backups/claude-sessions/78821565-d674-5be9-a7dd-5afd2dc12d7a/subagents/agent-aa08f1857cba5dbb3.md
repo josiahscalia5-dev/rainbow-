@@ -678,3 +678,184 @@ Probes take ~14 s. Now let me write the wave-9 plan in NOTES before changing any
 
 > 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/tools/lidproj.ts <<'EOF'\n// scratch: project the 05 lid pair nearest the camera (L1/R1) and the near ring for candidate lid params\nimport * as THREE from 'three';\nimport { readFileSync, writeFileSync } from 'node:fs';\nimport { Course } from '/home/user/rainbow-/src/world/course';\nimport { straightTubePath, buildWallLids, tubeCenterAt } from '/home/user/rainbow-/src/world/tube';\nimport { STAGE_CAM } from '/home/user/rainbow-/src/game/cameraRig';\n\nconst S = '/tmp/claude-0/-home-user-ra …[+3871 chars]`
 
+### 🧑 User — 2026-11-16T02:24:48.501Z
+
+> ↩︎ result: ok [ '-2.0', '12.0', '26.0', '40.0', '54.0' ] [ '7.60/3.35', '7.60/3.38', '7.60/3.42', '7.60/3.62', '7.60/3.73' ]
+
+### 🤖 Claude — 2026-11-16T02:25:00.744Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/tools/lidraster.py <<'EOF'\n# scratch: rasterize lidproj.json (flat colours by class, lit by n.view) next to the ref and a live capture\nimport json, sys\nfrom PIL import Image, ImageDraw\nS = '/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/'\nd = json.load(open(S + 'lidproj.json'))\nref = Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nlive = Image.open(sys.argv[1]).convert('RGB').resize(ref.size) if len(sys.arg …[+1289 chars]`
+
+### 🧑 User — 2026-11-16T02:25:01.172Z
+
+> ↩︎ result: (1744, 333)
+
+### 🤖 Claude — 2026-11-16T02:25:03.029Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidraster.png"}`
+
+### 🧑 User — 2026-11-16T02:25:03.078Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:25:08.727Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; sed -i 's/^box = (0, 150, 864, 650)/box = tuple(json.loads(sys.argv[2])) if len(sys.argv) > 2 else (0, 150, 864, 650)/; s/^out = out.resize((out.width \\* 2 \\/\\/ 3, out.height \\* 2 \\/\\/ 3))/sc = float(sys.argv[3]) if len(sys.argv) > 3 else 0.667\\nout = out.resize((int(out.width * sc), int(out.height * sc)))/' $S/tools/lidraster.py; python3 -I $S/tools/lidraster.py qa/pilot05/wave9/baseline/05.png '[0,260,864,560]' 0.75", "description": "Rerender raster with tighter …[+7 chars]`
+
+### 🧑 User — 2026-11-16T02:25:09.089Z
+
+> ↩︎ result: (1962, 225)
+
+### 🤖 Claude — 2026-11-16T02:25:10.858Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidraster.png"}`
+
+### 🧑 User — 2026-11-16T02:25:10.888Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:25:14.680Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 -I $S/tools/lidraster.py qa/pilot05/wave9/baseline/05.png '[0,280,440,520]' 1.0", "description": "Raster crop of left lids at 1x"}`
+
+### 🧑 User — 2026-11-16T02:25:14.983Z
+
+> ↩︎ result: (1344, 240)
+
+### 🤖 Claude — 2026-11-16T02:25:16.554Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidraster.png"}`
+
+### 🧑 User — 2026-11-16T02:25:16.580Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:25:38.460Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; timeout 300 npx vite-node $S/tools/lidproj.ts '[{\"droopDeg\":-8},{\"droopDeg\":10},{\"droopDeg\":30}]' 2>&1 | tail -1; python3 -I $S/tools/lidraster.py qa/pilot05/wave9/baseline/05.png '[0,280,440,520]' 0.8", "description": "Project lid variants with different droop", "timeout": 320000}`
+
+### 🧑 User — 2026-11-16T02:25:40.111Z
+
+> ↩︎ result: ok [ '-2.0', '12.0', '26.0', '40.0', '54.0' ] [ '7.60/3.35', '7.60/3.38', '7.60/3.42', '7.60/3.62', '7.60/3.73' ]
+> (1792, 192)
+
+### 🤖 Claude — 2026-11-16T02:25:41.928Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidraster.png"}`
+
+### 🧑 User — 2026-11-16T02:25:41.963Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:26:19.700Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nimport json\nd=json.load(open('/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidproj.json'))\nfor r in d['rings']:\n  P=[p for p in r['pts'] if p[2]<1]\n  if not P: print(r['s']-d['sCam05'],'behind'); continue\n  # angle 90 = top (index 18), 0 = right (index 0), 180 = left (36)\n  pts=r['pts']\n  print(round(r['s']-d['sCam05'],1),'top',[round(v) for v in pts[18][:2]],'right',[round(v) for v in pts[0][:2]],'left',[round(v) for v in pts[36][:2]],'r-200',[round(v) for v in pts[int((360-34)/5)][:2]])\n\"\ …[+128 chars]`
+
+### 🧑 User — 2026-11-16T02:26:19.818Z
+
+> ↩︎ result: -2.0 behind
+> 12.0 top [523, -614] right [1382, 406] left [-307, 411] r-200 [1158, 881]
+> 26.0 top [509, 21] right [898, 448] left [122, 449] r-200 [811, 671]
+> 40.0 top [506, 197] right [756, 466] left [254, 466] r-200 [703, 611]
+> 54.0 top [500, 273] right [686, 472] left [311, 472] r-200 [648, 580]
+> 18:export type StageProp = 'width' | 'tube' | 'speed' | 'bank';
+> 26:  /** water ribbon width (units) */
+> 27:  width: number;
+> 126:  /** half extent of the stream (|offset| + half width) in the current: fills the tube floor */
+> 416:      id, title: STAGE_TITLES[id], s0, s1, width: 5, tube: 0, tubeKind: 'none', speed: 11, refCoins: 0,
+> 420:      def('01', 0, 0.01, { width: 6, interactive: false, speed: 0 }),
+> 421:      def('02', 0.01, m['03'], { width: 5, interactive: false, speed: 9, bank: 0 }),
+> 422:      def('03', m['03'], m['04'], { width: 7, speed: 9, refCoins: 1330, bank: 2.2 }),
+> 423:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 424:      // 05: level current (ref 05 shows no tilt) → weak curvature banking. `width` is the hand-over
+> 425:      // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the flo …[+819 chars]
+
+### 🤖 Claude — 2026-11-16T02:26:21.928Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 120,140p src/world/course.ts; sed -n 520,560p src/world/course.ts", "description": "Read stream width logic in course"}`
+
+### 🧑 User — 2026-11-16T02:26:21.969Z
+
+> ↩︎ result: lambda: 32,
+>   /** u of the first (left) crest, where Benny rides at the 05 checkpoint */
+>   uCrest: 14,
+>   /** crest amplitude at uCrest and at uCrest + 1.5 λ (linear growth in between) */
+>   a0: 0.45,
+>   a1: 1.85,
+>   /** half extent of the stream (|offset| + half width) in the current: fills the tube floor */
+>   extent: 6.0,
+> };
+> 
+> /**
+>  * 05 meander AHEAD of Benny's crest (u > uCrest): [u, offset] knots fitted to the APPROVED reference (wave 6
+>  * camera lock, qa/pilot05/wave6/camera_lock/landmarks.json). The reference's coin trail was back-projected
+>  * through the live locked 05 camera onto the river (coin height 1.2 u) and converted to offsets from the
+>  * tunnel line; coins sit at (1 + latK·CORE_SWING) ≈ 1.62 × the course offset, so knot = coin offset / 1.62.
+>  * Ref coins (px → u, coin offset): (474,726)→21.6,−0.31 · (548,661)→26.3,+0.60 · (482,612)→32.2,−0.37 ·
+>  * (431,574)→43.0,−1.85 · (466,546)→55.5,−1.28 · (495,533)→67.0,−0.26. The previous sine (λ 32) put the right
+>  * swing at u≈30–33 and +1.45 wide, so the 3rd coin sat ≈100 px right of the reference.
+>  * Interpolation: C¹ cubic Hermite (non-uniform Catmull-Rom tangents), slope 0 at the crest and at L.
+>  */
+> const MEANDER05_KNOTS: [numb …[+1845 chars]
+
+### 🤖 Claude — 2026-11-16T02:27:42.019Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/tools/nums.ts <<'EOF'\nimport { Course } from '/home/user/rainbow-/src/world/course';\nimport { straightTubePath } from '/home/user/rainbow-/src/world/tube';\nimport { STAGE_CAM } from '/home/user/rainbow-/src/game/cameraRig';\nconst course = new Course();\nconst s05 = course.stage('05').s0, s06 = course.stage('06').s0, s08 = course.stage('08').s0;\nconst perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: (s) => course.prop('tube', s) });\nconst sCam05 = cours …[+654 chars]`
+
+### 🧑 User — 2026-11-16T02:27:42.925Z
+
+> ↩︎ result: {
+>   s05: 114.68830202823246,
+>   sCam05: 126.03830202823292,
+>   crest: 132.43830202823293,
+>   sF05: 180.03830202823292,
+>   sGlow05: 183.02412082521414,
+>   s06: 188.92412082521415,
+>   len05: 74.23581879698169
+> }
+> 112.7 r 7.60 depth 3.35 w 5.59
+> 116.7 r 7.55 depth 3.35 w 8.05
+> 120.7 r 7.60 depth 3.35 w 10.48
+> 124.7 r 7.60 depth 3.35 w 11.34
+> 128.7 r 7.60 depth 3.35 w 10.99
+> 132.7 r 7.60 depth 3.36 w 10.88
+> 136.7 r 7.60 depth 3.38 w 11.21
+> 140.7 r 7.60 depth 3.39 w 11.25
+> 144.7 r 7.60 depth 3.41 w 11.17
+> 148.7 r 7.60 depth 3.42 w 11.30
+> 152.7 r 7.60 depth 3.42 w 10.69
+> 156.7 r 7.60 depth 3.45 w 9.99
+> 160.7 r 7.60 depth 3.53 w 9.62
+> 164.7 r 7.60 depth 3.60 w 9.64
+> 168.7 r 7.60 depth 3.67 w 9.90
+> 172.7 r 7.60 depth 3.72 w 10.34
+> 176.7 r 7.60 depth 3.73 w 10.45
+> 180.7 r 7.60 depth 3.73 w 8.73
+> 184.7 r 8.89 depth 3.73 w 9.62
+> 188.7 r 14.25 depth 3.74 w 8.06
+> 192.7 r 15.00 depth 3.58 w 7.18
+> 196.7 r 15.00 depth 3.05 w 7.00
+> 200.7 r 15.00 depth 2.47 w 7.00
+> 204.7 r 15.00 depth 1.90 w 7.00
+> 208.7 r 15.00 depth 1.44 w 7.00
+
+### 🤖 Claude — 2026-11-16T02:27:46.066Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n 'nearFrame\\|NearFrame' src/world/environment.ts | head; sed -n 442,520p src/world/environment.ts", "description": "Inspect near frame and rest of 05 env section"}`
+
+### 🧑 User — 2026-11-16T02:27:46.107Z
+
+> ↩︎ result: 9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
+> 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 558:  // camera (nearFrameGeometry, reference-pixel units → camera space at depth 0.8, scaled by the camera FOV).
+> 563:    const frame = new THREE.Mesh(nearFrameGeometry(), nearFrameMaterial());
+>     farRiver.onBeforeRender = (_r, _s, cam) => { sync(cam); farRiver.morphTargetInfluences![0] = openNow; };
+>     farRings.onBeforeRender = (_r, _s, cam) => sync(cam);
+>     farLids.onBeforeRender = (_r, _s, cam) => sync(cam);
+>     glow.onBeforeRender = (_r, _s, cam) => { sync(cam); glowMat.uniforms.uOpacity.value = 1 - openNow; };
+>     zones.tubes.add(...parts);
+>   }
+>   animated.push(pinkFlow.update);
+> 
+>   // ============================================================================= …[+4284 chars]
+

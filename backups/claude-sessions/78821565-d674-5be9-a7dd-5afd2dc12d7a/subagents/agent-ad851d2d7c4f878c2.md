@@ -469,3 +469,209 @@ I'll start by reading the coordination file and my previous notes.
 > ds -1 hw 5.45 0:409,1256 1:621,1257 2:836,1258 3:1053,1260 -3:-208,1252 -2.5:-107,1252 -2:-5,1253 -1.5:98,1254 -1:201,1254 -0.5:305,1255 0.5:515,1256 1.5:728,1258 2.5:944,1259
 > ds -0.5 hw 5.44 0:415,1198 1:611,1199 2:810,1201 3:1013,1202 -3:-155,1194 -2.5:-62,1195 -2:32,1195 -1.5:127,1196 -1:222,119 …[+4221 chars]
 
+### 🤖 Claude — 2026-11-16T02:25:09.010Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/vfx/spray.ts; sed -n 1,60p src/vfx/bubbles.ts", "description": "Read spray.ts and bubbles header"}`
+
+### 🧑 User — 2026-11-16T02:25:09.058Z
+
+> ↩︎ result: /**
+>  * Spray droplets: one pooled THREE.Points draw for Benny's wake fans, landing splashes, the
+>  * final-wave crest spray and spout splashes. Simple ballistic CPU sim (gravity along -Y).
+>  */
+> import * as THREE from 'three';
+> import { FRAG_TAIL, withFog } from './glsl';
+> 
+> const VERT = /* glsl */ `
+> attribute float aSize;
+> attribute float aAlpha;
+> uniform float uScale;
+> varying float vAlpha;
+> #include <fog_pars_vertex>
+> void main() {
+>   vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+>   gl_PointSize = clamp(aSize * uScale / -mvPosition.z, 1.0, 28.0);
+>   vAlpha = aAlpha;
+>   gl_Position = projectionMatrix * mvPosition;
+>   #include <fog_vertex>
+> }
+> `;
+> // water bead (ref 05 droplets): translucent cyan body, brighter rim, a white glint up-left. Never a
+> // solid white disc: the old opaque discs read as white dots stuck round Benny's base.
+> const FRAG = /* glsl */ `
+> varying float vAlpha;
+> #include <fog_pars_fragment>
+> void main() {
+>   vec2 c = gl_PointCoord - 0.5;
+>   float d = length(c) * 2.0;
+>   if (d > 1.0) discard;
+>   float body = 1.0 - smoothstep(0.7, 1.0, d);
+>   float rim = smoothstep(0.45, 0.85, d) * body;
+>   float hl = smoothstep(0.32, 0.0, length(c - vec2(-0.14, -0.14)));
+>   vec3 col = mix(vec3(0.5 …[+4960 chars]
+
+### 🤖 Claude — 2026-11-16T02:25:11.466Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat qa/pilot05/wave9/recovered/metrics.md | head -40", "description": "Read recovered metrics report"}`
+
+### 🧑 User — 2026-11-16T02:25:11.499Z
+
+> ↩︎ result: # Screen 05: reference vs live captures (raw indicators, not a fidelity %)
+> 
+> mad = mean |ΔRGB| at 1/4 scale (lower = closer); hue_corr / edge_corr = −1…1 (higher = closer).
+> 
+> | Capture | mad | hue_corr | edge_corr | mad hud | mad tunnel+VP | mad river mid | mad Benny+near water |
+> |---|---|---|---|---|---|---|---|
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+
+### 🤖 Claude — 2026-11-16T02:25:12.857Z
+
+Now let me write the wave-9 NOTES plan before changing code.
+
+### 🤖 Claude — 2026-11-16T02:25:25.554Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/NOTES.md", "content": "# Screen 05 wave 9: foam-bubbles-particles\n\nStarted 2026-11-16 (recovery session `01Kbt6BV`). Continues wave 8b (log `qa/pilot05/wave8/foam/NOTES.md`, through it05;\nno wave-8 captures are missing from that log). Baseline `qa/pilot05/wave9/baseline/05.png` (86 calls, 567,415 tris).\nFiles: src/vfx/foam.ts, bubbles.ts, riderSplash.ts, spray.ts, index.ts only (Edit tool, 05-gated). Tools (copied from\nwave 8 + new): `tools/{clumpcol,splashext,crops,clumptone}.py` (clumptone = luminance p10/p50/p90 + median RGB of t …[+2192 chars]`
+
+### 🧑 User — 2026-11-16T02:25:25.583Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave9/foam/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:26:45.546Z
+
+Now let me implement the V-wake near banks in foam.ts.
+
+### 🤖 Claude — 2026-11-16T02:26:58.243Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        rowEnv[sd][i] = env;\n        const frac = ((2 * pxIn) / 864) * env;\n        const fracOut = frac - (2 * pxClump) / 864;\n        const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);\n        const inner = frac > 0.002 ? solveLat(cam, side * (1 - frac), camLat + side * 1.0, edge) : edge;\n        const outer = fracOut > 0.004 ? solveLat(cam, side * (1 - fracOut), inner, edge) : edge;\n        // keep clear of Benny (near him) and of the cyan core / coin line; merge into the b …[+3256 chars]`
+
+### 🧑 User — 2026-11-16T02:26:58.279Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:27:00.347Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const BANK_CLEAR_RIDER = 1.3;\nconst BANK_CLEAR_CORE = 1.45;", "new_string": "const BANK_CLEAR_RIDER = 1.3;\nconst BANK_CLEAR_CORE = 1.45;\n/** wave 9: the near wake bands (behind Benny) keep their outer border this many px in from the frame edge and end at\n * this ds (ref 05: they stop at the corner rings, x >= ~56 px, y <= ~1310) */\nconst V_EDGE_PX = 64;\nconst V_DS_END = -1.45;"}`
+
+### 🧑 User — 2026-11-16T02:27:00.384Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:27:06.832Z
+
+Now the bank-bubble shading: an own violet-lavender ramp, brighter caps, softer upper rims, holes only low.
+
+### 🤖 Claude — 2026-11-16T02:27:12.537Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const BANK_BUB_FRAG = /* glsl */ `\nuniform mat4 projectionMatrix;\nuniform vec3 uLightDir;\nuniform float uTime;\nvarying vec2 vP;\nvarying vec3 vInst;\nvarying float vBig;\nvarying vec3 vCv;\nvarying float vR;\n#include <fog_pars_fragment>\n${NOISE_GLSL}\n${SOAP05_GLSL}\n${MICRO_GLSL}\nvoid main() {", "new_string": "const BANK_BUB_FRAG = /* glsl */ `\nuniform mat4 projectionMatrix;\nuniform vec3 uLightDir;\nuniform float uTime;\nvarying vec2 vP;\nvarying vec3 vInst;\nvarying float vBig;\nvarying vec3 vC …[+684 chars]`
+
+### 🧑 User — 2026-11-16T02:27:12.576Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:27:27.991Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float tl = dot(Nv, normalize(vec3(-0.4, 0.85, 0.35)));\n  float t = 0.52 + 0.62 * tl - pow(1.0 - z, 1.5) * (0.25 + 0.35 * clamp(0.5 - q.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.3 + 0.06 * vBig;\n  // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top\n  vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 8.0, 1.2, 12.0) + vInst.y * 37.0;\n  float dens = clamp(0.25 + 0.9 * smoothstep(0.35, -0.6, q.y) + 0.35 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);\n  vec4 mf = microFoam(mp, den …[+3134 chars]`
+
+### 🧑 User — 2026-11-16T02:27:28.030Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:27:30.294Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float rad = 0.17 + 0.2 * h1.x;", "new_string": "  float rad = 0.14 + 0.15 * h1.x;"}`
+
+### 🧑 User — 2026-11-16T02:27:30.330Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:27:40.702Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"float cells\\|float hash12\\|float vnoise\\|FRAG_TAIL =\" -A8 src/vfx/glsl.ts | head -60", "description": "Look up cells() noise in glsl.ts"}`
+
+### 🧑 User — 2026-11-16T02:27:40.745Z
+
+> ↩︎ result: 5:float hash12(vec2 p) {
+> 6-  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+> 7-  p3 += dot(p3, p3.yzx + 33.33);
+> 8-  return fract((p3.x + p3.y) * p3.z);
+> 9-}
+> 10:float vnoise(vec2 p) {
+> 11-  vec2 i = floor(p);
+> 12-  vec2 f = fract(p);
+> 13-  vec2 u = f * f * (3.0 - 2.0 * f);
+> 14-  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x),
+> 15-             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y);
+> 16-}
+> 17-float fbm3(vec2 p) {
+> 18-  float a = 0.5, s = 0.0;
+> --
+> 23:float cells(vec2 p) {
+> 24-  vec2 i = floor(p);
+> 25-  vec2 f = fract(p);
+> 26-  float md = 8.0;
+> 27-  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+> 28-    vec2 g = vec2(float(x), float(y));
+> 29-    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+> 30-    vec2 r = g + o - f;
+> 31-    md = min(md, dot(r, r));
+> --
+> 164:export const FRAG_TAIL = /* glsl */ `
+> 165-  #include <tonemapping_fragment>
+> 166-  #include <colorspace_fragment>
+> 167-  #include <fog_fragment>
+> 168-`;
+
+### 🤖 Claude — 2026-11-16T02:27:42.500Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 31,36p src/vfx/glsl.ts", "description": "Read cells return value"}`
+
+### 🧑 User — 2026-11-16T02:27:42.536Z
+
+> ↩︎ result: md = min(md, dot(r, r));
+>   }
+>   return sqrt(md);
+> }
+> vec3 iridescent(float t) {
+>   return 0.5 + 0.5 * cos(6.28318 * (t + vec3(0.0, 0.33, 0.67)));
+
+### 🤖 Claude — 2026-11-16T02:27:46.194Z
+
+Now the 05 splash: steeper, fewer, lacier strands, and a weaker leading edge.
+
+### 🤖 Claude — 2026-11-16T02:27:48.846Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "  float thR = mix(1.4, 0.5, a) + (hs(seed * 3.1) - 0.5) * 0.18;\n  float phi = mix(0.62, 0.06, a) + (hs(seed * 5.7) - 0.5) * 0.26 + 0.25 * u * u;", "new_string": "  // wave 9: steeper on screen (ref strands 52-75 deg below the horizontal, wave 8 ~43 deg = two sideways wings)\n  float thR = mix(1.3, 0.45, a) + (hs(seed * 3.1) - 0.5) * 0.2;\n  float phi = mix(0.46, 0.0, a) + (hs(seed * 5.7) - 0.5) * 0.3 + 0.22 * u * u;"}`
+
+### 🧑 User — 2026-11-16T02:27:48.885Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:27:53.399Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    // it04: white only in the rope core, translucent cyan edges / tail, so the water shows between the strands\n    alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x) * mix(0.9, 0.45, smoothstep(0.3, 1.0, ac + vUV.x * 0.5));\n    col = mix(cyan, white, clamp(1.2 - vUV.x * 0.9 - ac * 0.9, 0.0, 1.0));\n    col = mix(col, blue, hole * 0.55 * (1.0 - vUV.x));", "new_string": "    // it04: white only in the rope core, translucent cyan edges / tail, so the water shows between the strands\n    alpha …[+511 chars]`
+
+### 🧑 User — 2026-11-16T02:27:53.436Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:27:55.901Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    float soft = (1.0 - smoothstep(0.4, 1.0, ac)) * smoothstep(0.0, 0.2, vUV.x) * (1.0 - smoothstep(0.6, 1.0, vUV.x));\n    alpha = lace * soft * 0.9;", "new_string": "    float soft = (1.0 - smoothstep(0.4, 1.0, ac)) * smoothstep(0.0, 0.2, vUV.x) * (1.0 - smoothstep(0.6, 1.0, vUV.x));\n    // wave 9: open lace (wave 8's 0.9 read as a bright continuous leading edge along the top of each fan)\n    alpha = lace * soft * 0.6 * (1.0 - 0.7 * hole);"}`
+
+### 🧑 User — 2026-11-16T02:27:55.930Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:27:57.962Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "  const nRope = quality === 'high' ? 44 : 20;\n  const nJet = quality === 'high' ? 40 : 16;\n  const nFroth = quality === 'high' ? 16 : 8;", "new_string": "  // wave 9: fewer strands (44 -> 30) so water shows between them (ref), fewer froth pads (16 -> 10)\n  const nRope = quality === 'high' ? 30 : 16;\n  const nJet = quality === 'high' ? 40 : 16;\n  const nFroth = quality === 'high' ? 10 : 6;"}`
+
+### 🧑 User — 2026-11-16T02:27:57.996Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:28:00.534Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -20 && echo TSC_DONE && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave9/foam/it01 2>&1 | tail -3", "description": "Typecheck and capture it01", "timeout": 660000}`
+

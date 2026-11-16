@@ -330,7 +330,7 @@ vec4 microFoam(vec2 p, float dens) {
     else if (dd < d2) d2 = dd;
   }
   d1 = sqrt(d1); d2 = sqrt(d2);
-  float rad = 0.17 + 0.2 * h1.x;
+  float rad = 0.14 + 0.15 * h1.x;
   float on = step(h1.y, dens);
   vec2 dir = -r1 / max(d1, 1e-4);
   float hole = (1.0 - smoothstep(rad * 0.68, rad, d1)) * on;
@@ -384,6 +384,15 @@ varying float vR;
 ${NOISE_GLSL}
 ${SOAP05_GLSL}
 ${MICRO_GLSL}
+// wave 9: ref 05 clump ramp. The soap05 stops rendered the clumps grey-blue (G > R: mid third #DCE2F7, dark #B4BEFC, top
+// #EEEAF6); the ref clumps are violet-lavender (mid #E8D7FF, dark #B3ABFA) with near-white caps (#FDFBFF)
+vec3 bank05(float t) {
+  t = clamp(t, 0.0, 1.0) * 4.0;
+  vec3 c = mix(vec3(0.25, 0.2, 0.72), vec3(0.44, 0.38, 0.93), clamp(t, 0.0, 1.0));
+  c = mix(c, vec3(0.6, 0.5, 0.98), clamp(t - 1.0, 0.0, 1.0));
+  c = mix(c, vec3(0.86, 0.71, 1.02), clamp(t - 2.0, 0.0, 1.0));
+  return mix(c, vec3(1.3, 1.25, 1.32), clamp(t - 3.0, 0.0, 1.0));
+}
 void main() {
   float px = 2.0 / max(fwidth(vP.x), 1e-4);
   float d = length(vP);
@@ -403,27 +412,28 @@ void main() {
   // wave 8: steeper key light from the upper left (ref lumps: white caps only on the lit top, lavender middle, blue lower
   // half); soapT put a sphere's centre at t ~0.86 (near white), so the clumps read grey-white
   float tl = dot(Nv, normalize(vec3(-0.4, 0.85, 0.35)));
-  float t = 0.52 + 0.62 * tl - pow(1.0 - z, 1.5) * (0.25 + 0.35 * clamp(0.5 - q.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.3 + 0.06 * vBig;
-  // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
-  vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 8.0, 1.2, 12.0) + vInst.y * 37.0;
-  float dens = clamp(0.25 + 0.9 * smoothstep(0.35, -0.6, q.y) + 0.35 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);
+  // wave 9: soft cloud lumps (ref): bright upper silhouette, the rim darkens only on the lower half (crease to the next
+  // lump / the water), front faces lifted so the lump centres read pale lavender, not grey
+  float t = 0.56 + 0.58 * tl + 0.12 * z - pow(1.0 - z, 1.5) * (0.06 + 0.42 * clamp(0.35 - q.y * 0.8, 0.0, 1.0)) - (1.0 - vInst.x) * 0.3 + 0.06 * vBig;
+  // fine open bubbles: dense on the lower half and the flanks, (almost) none on the lit top
+  vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 7.0, 1.2, 14.0) + vInst.y * 37.0;
+  float dens = clamp(0.04 + 0.95 * smoothstep(0.15, -0.65, q.y) + 0.25 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);
   vec4 mf = microFoam(mp, dens);
   float kf = 1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y));
   // wave 8 (it04): tone S-curve: few grey mid-tones, a broad white-lavender lit area and clearly blue shading
   // it05: the shading boundary sits higher (it04's 0.2..0.9 curve turned 50 % of the clump px pure white)
   // it06: boundary lower again (it05 clump boxes W 27-59 %, ref 22-28 %), no white bonus for big lumps
   t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * vBig);
-  t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.55 * kf + mf.y * 0.3 * kf;
-  vec3 col = soap05(t + 0.04 * vInst.z);
-  col = mix(col, vec3(1.0, 0.97, 1.07), smoothstep(0.75, 1.0, t) * 0.3);
-  col += vec3(1.0) * mf.w * 0.45 * kf;
+  t += (mf.z - 0.6) * 0.16 * dens * kf - mf.x * 0.6 * kf + mf.y * 0.22 * kf;
+  vec3 col = bank05(t + 0.04 * vInst.z);
+  col += vec3(1.0) * mf.w * 0.4 * kf;
   vec3 Lv = (viewMatrix * vec4(normalize(uLightDir), 0.0)).xyz;
   float rl = max(dot(reflect(vec3(0.0, 0.0, -1.0), Nv), Lv), 0.0);
   col += vec3(1.0) * (pow(rl, 24.0) * 0.25 + pow(rl, 6.0) * 0.1);
   // tiny bubbles: lavender-white glossy body, thin blue rim, white speck (the lace at the ref waterlines)
   float tiny = 1.0 - smoothstep(9.0, 16.0, px);
   vec2 qs = vP - vec2(-0.32, 0.34);
-  vec3 cb = mix(soap05(0.8 + 0.1 * vInst.z), soap05(0.12), smoothstep(0.5, 0.95, d)) + vec3(1.0) * exp(-dot(qs, qs) * 14.0) * 0.55;
+  vec3 cb = mix(bank05(0.8 + 0.1 * vInst.z), bank05(0.15), smoothstep(0.5, 0.95, d)) + vec3(1.0) * exp(-dot(qs, qs) * 14.0) * 0.55;
   col = mix(col, cb, tiny);
   gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
@@ -526,6 +536,10 @@ function rimR(ds: number): number {
 }
 const BANK_CLEAR_RIDER = 1.3;
 const BANK_CLEAR_CORE = 1.45;
+/** wave 9: the near wake bands (behind Benny) keep their outer border this many px in from the frame edge and end at
+ * this ds (ref 05: they stop at the corner rings, x >= ~56 px, y <= ~1310) */
+const V_EDGE_PX = 64;
+const V_DS_END = -1.45;
 
 /**
  * wave 5: 0.4 in 05 (smooth ramps at the stage ends), 1 elsewhere. In 05 the stream-edge rim toward the VP
@@ -970,7 +984,6 @@ export function createFoam(
           pxIn = 214 + (rimR(ds) * (0.85 + 0.3 * lump) - 214) * kz;
           pxClump = 150 + (RIM_R_PX - 150) * kz;
         }
-        rowEnv[sd][i] = env;
         const frac = ((2 * pxIn) / 864) * env;
         const fracOut = frac - (2 * pxClump) / 864;
         const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);
@@ -985,7 +998,23 @@ export function createFoam(
         let a = Math.max(side * inner, side * rider.lat + clearR, side * coreLateral(course, s) + clearC);
         a = Math.min(a, hw - 0.3);
         // outer border: beyond the frame edge, or (wide clump) CLUMP_PX out from its inner edge
-        const outA = Math.max(a + 0.12, Math.min(outer === edge ? side * edge + 0.55 : side * outer, hw + 0.15));
+        let outA = Math.max(a + 0.12, Math.min(outer === edge ? side * edge + 0.55 : side * outer, hw + 0.15));
+        // wave 9: behind Benny the near banks are the splash's foam WAKE (ref 05): two narrow bands trailing back-outward
+        // along the pink bands from under the splash roots (ref left (300,1160) -> (56,1300), right (620,1190) ->
+        // (795,1311): |lat - rider| inner 0.3 + 0.7 b, outer 0.9 + 0.47 b, b = -ds), ending before the frame edge
+        // (outer border >= V_EDGE_PX in from it), instead of round blobs fitted to the frame edges
+        const vK = 1 - sm(-0.45, 0.05, ds);
+        if (vK > 0) {
+          const b = Math.max(0, -ds);
+          const vIn = side * rider.lat + 0.3 + 0.7 * b + 0.08 * (lump - 0.5);
+          const lim = side * solveLat(cam, side * (1 - (2 * V_EDGE_PX) / 864), camLat + side * 1.0, edge);
+          const vOut = Math.min(side * rider.lat + 0.9 + 0.47 * b + 0.06 * lump, lim, hw + 0.1);
+          const vEnv = (1 - sm(-0.3, 0.0, ds)) * sm(V_DS_END - 0.3, V_DS_END, ds) * sm(0.12, 0.3, vOut - vIn);
+          a += (Math.min(vIn, hw - 0.3) - a) * vK;
+          outA += (Math.max(vOut, vIn + 0.12) - outA) * vK;
+          env += (vEnv - env) * vK;
+        }
+        rowEnv[sd][i] = env;
         // fade in/out (stage entry/exit): the bank narrows towards the frame edge instead of sinking
         a = outA - (outA - a) * w;
         rowIn[sd][i] = side * a;

@@ -890,3 +890,209 @@ While the probe runs, I'll add the recovered log entry to the wave-8 notes (from
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T02:24:56.633Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat tsconfig.json; git diff --stat HEAD | tail -5; git log -1 --format='%H %cd'", "description": "Check tsconfig and current working tree diff"}`
+
+### 🧑 User — 2026-11-16T02:24:56.699Z
+
+> ↩︎ result: {
+>   "compilerOptions": {
+>     "target": "ES2022",
+>     "useDefineForClassFields": true,
+>     "module": "ESNext",
+>     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+>     "skipLibCheck": true,
+>     "moduleResolution": "bundler",
+>     "allowImportingTsExtensions": false,
+>     "resolveJsonModule": true,
+>     "isolatedModules": true,
+>     "noEmit": true,
+>     "strict": true,
+>     "noUnusedLocals": false,
+>     "noUnusedParameters": false,
+>     "noFallthroughCasesInSwitch": true,
+>     "types": ["vite/client"]
+>   },
+>   "include": ["src", "tools"]
+> }
+> 2a4d3b4bdff0a8809d1c4782d0ff516d48a4c8f5 Mon Nov 16 02:24:50 2026 +0000
+
+### 🤖 Claude — 2026-11-16T02:25:55.161Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe && cat > lib.js <<'EOF'\nconst R = window.__rainbow; const c = R.course;\nconst THREE = await import('/node_modules/three/build/three.module.js');\nconst fm = await import('/src/world/far05.ts');\nconst d = fm.far05Debug; const ft = d.ft;\nconst ci = R.camera();\nconst cam = new THREE.PerspectiveCamera(ci.fov, ci.aspect, ci.near, ci.far);\ncam.matrixWorld.fromArray(ci.matrixWorld); cam.matrixWorldInverse.copy(cam.matrixWorld).invert(); cam.updateProjectionMatrix();\nconst W = ci.width, H = c …[+2342 chars]`
+
+### 🧑 User — 2026-11-16T02:26:08.320Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "<string>", line 2, in <module>
+>     import json;d=json.load(open('/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/p2.out'))
+>                   ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/json/__init__.py", line 298, in load
+>     return loads(fp.read(),
+>         cls=cls, object_hook=object_hook,
+>         parse_float=parse_float, parse_int=parse_int,
+>         parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+>   File "/usr/local/lib/python3.13/json/__init__.py", line 352, in loads
+>     return _default_decoder.decode(s)
+>            ~~~~~~~~~~~~~~~~~~~~~~~^^^
+>   File "/usr/local/lib/python3.13/json/decoder.py", line 348, in decode
+>     raise JSONDecodeError("Extra data", s, end)
+> json.decoder.JSONDecodeError: Extra data: line 2 column 1 (char 152)
+
+### 🤖 Claude — 2026-11-16T02:26:10.444Z
+
+> 🔧 **Bash** `{"command": "head -c 600 /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/p2.out", "description": "Show probe raw output"}`
+
+### 🧑 User — 2026-11-16T02:26:10.474Z
+
+> ↩︎ result: {"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]}
+> waterlineR 0.6536532455807745
+> ds -3 hw 5.48 0:378,1623 1:690,1626 2:1007,1630 3:1329,1633 -3:-528,1613 -2.5:-380,1614 -2:-231,1616 -1.5:-81,1618 -1:71,1619 -0.5:224,1621 0.5:533,1625 1.5:847,1628 2.5:1167,1632
+> ds -2.5 hw 5.47 0:388,1502 1:667,1505 2:950,1509 3:1239,1512 -3:-422,1492 -2.5:-290,1494 -2:-156,1495 -1.5:-22,1497 -1:114,1499 -0.5:250,1500 0.5:527,1504 1.5:808,1507 2.5:1094,1510
+> ds -2 hw 5.46 0:396,1404 1:649,1406 2:904,1408 3:1164,14
+
+### 🤖 Claude — 2026-11-16T02:26:15.133Z
+
+> 🔧 **Bash** `{"command": "tail -1 /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/p2.out | python3 -I -c \"\nimport json,sys;d=json.loads(sys.stdin.read())\nprint('q',d['q'],'level',d['level'],'vp',d['vp'])\nfor r in d['rows']: print(r)\nfor r in d['real']: print(r)\n\"; grep -c . /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/p2.out", "description": "Parse last JSON line of probe output"}`
+
+### 🧑 User — 2026-11-16T02:26:15.203Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<string>", line 3, in <module>
+>     print('q',d['q'],'level',d['level'],'vp',d['vp'])
+>               ~^^^^^
+> KeyError: 'q'
+> 53
+
+### 🤖 Claude — 2026-11-16T02:26:17.223Z
+
+> 🔧 **Bash** `{"command": "cut -c1-200 /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/p2.out | tail -30", "description": "Inspect the probe output lines"}`
+
+### 🧑 User — 2026-11-16T02:26:17.253Z
+
+> ↩︎ result: {"kind":"L","ds":3.36,"lat":-4.01,"k":0.52,"y":0.6,"x":-0.006,"env":0,"s":135.98}
+> {"kind":"L","ds":4.4,"lat":-4.57,"k":0.52,"y":0.566,"x":-0.006,"env":0,"s":137.02}
+> {"kind":"L","ds":5.48,"lat":-5.17,"k":0.52,"y":0.532,"x":-0.005,"env":0,"s":138.1}
+> {"kind":"L","ds":6.62,"lat":-5.43,"k":0.42,"y":0.504,"x":0.031,"env":0,"s":139.24}
+> {"kind":"L","ds":7.79,"lat":-5.37,"k":0.42,"y":0.482,"x":0.089,"env":0,"s":140.41}
+> {"kind":"L","ds":9.01,"lat":-5.06,"k":0.65,"y":0.471,"x":0.155,"env":0.91,"s":141.64}
+> {"kind":"L","ds":10.28,"lat":-5.25,"k":0.42,"y":0.463,"x":0.162,"env":0,"s":142.9}
+> {"kind":"L","ds":11.58,"lat":-5.29,"k":0.42,"y":0.46,"x":0.177,"env":0.29,"s":144.2}
+> {"kind":"L","ds":12.92,"lat":-5.37,"k":0.42,"y":0.456,"x":0.185,"env":0,"s":145.54}
+> {"kind":"L","ds":14.3,"lat":-5.43,"k":0.42,"y":0.451,"x":0.193,"env":0,"s":146.92}
+> {"kind":"R","ds":-3.4,"lat":1.47,"k":0.52,"y":1.13,"x":1.013,"env":0,"s":129.22}
+> {"kind":"R","ds":-3.19,"lat":1.53,"k":0.52,"y":1.085,"x":1.013,"env":0,"s":129.44}
+> {"kind":"R","ds":-2.8,"lat":1.64,"k":0.52,"y":1.013,"x":1.012,"env":0,"s":129.83}
+> {"kind":"R","ds":-2.29,"lat":1.79,"k":0.52,"y":0.937,"x":1.011,"env":0,"s":130.33}
+> {"kind":"R","ds":-1.69,"lat":1.09,"k …[+1273 chars]
+
+### 🤖 Claude — 2026-11-16T02:26:22.839Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe; grep -n '\"rows\"\\|pageerror\\|Error' p2.out | cut -c1-300; cut -c1-150 p2.out | head -8; cat /home/user/rainbow-/vite.config.* 2>/dev/null | head -30", "description": "Search probe output for the result"}`
+
+### 🧑 User — 2026-11-16T02:26:22.874Z
+
+> ↩︎ result: {"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]
+> waterlineR 0.6536532455807745
+> ds -3 hw 5.48 0:378,1623 1:690,1626 2:1007,1630 3:1329,1633 -3:-528,1613 -2.5:-380,1614 -2:-231,1616 -1.5:-81,1618 -1:71,1619 -0.5:224,1621 0.5:533,16
+> ds -2.5 hw 5.47 0:388,1502 1:667,1505 2:950,1509 3:1239,1512 -3:-422,1492 -2.5:-290,1494 -2:-156,1495 -1.5:-22,1497 -1:114,1499 -0.5:250,1500 0.5:527,
+> ds -2 hw 5.46 0:396,1404 1:649,1406 2:904,1408 3:1164,1411 -3:-339,1398 -2.5:-218,1399 -2:-97,1400 -1.5:25,1401 -1:148,1402 -0.5:272,1403 0.5:522,1405
+> ds -1.5 hw 5.45 0:403,1323 1:633,1325 2:866,1326 3:1103,1328 -3:-269,1319 -2.5:-158,1320 -2:-48,1321 -1.5:64,1321 -1:176,1322 -0.5:290,1323 0.5:518,13
+> ds -1 hw 5.45 0:409,1256 1:621,1257 2:836,1258 3:1053,1260 -3:-208,1252 -2.5:-107,1252 -2:-5,1253 -1.5:98,1254 -1:201,1254 -0.5:305,1255 0.5:515,1256 
+> ds -0.5 hw 5.44 0:415,1198 1:611,1199 2:810,1201 3:1013,1202 -3:-155,1194 -2.5:-62,1195 -2:32,1195 -1.5:127,1196 -1:222,1197 -0.5:319,1197 0.5:513,119
+> import { defineConfig } from 'vite';
+> import { resolve } from 'node:path';
+> 
+> export default defineConfig({
+>   base:  …[+302 chars]
+
+### 🤖 Claude — 2026-11-16T02:26:28.922Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe; ls -la; head -5 run2.js; wc -l p2.out", "description": "Check probe files and sizes"}`
+
+### 🧑 User — 2026-11-16T02:26:28.965Z
+
+> ↩︎ result: total 40
+> drwxr-xr-x 2 root root 4096 Nov 16 02:25 .
+> drwx------ 6 root root 4096 Nov 16 02:24 ..
+> -rw-r--r-- 1 root root  790 Nov 16 02:25 lib.js
+> -rw-r--r-- 1 root root  742 Nov 16 02:22 p1.js
+> -rw-r--r-- 1 root root 1400 Nov 16 02:23 p1.out
+> -rw-r--r-- 1 root root 1255 Nov 16 02:25 p2.js
+> -rw-r--r-- 1 root root 5422 Nov 16 02:26 p2.out
+> -rw-r--r-- 1 root root 2349 Nov 16 02:23 probe.mjs
+> -rw-r--r-- 1 root root 2045 Nov 16 02:25 run2.js
+> const R = window.__rainbow; const c = R.course;
+> const THREE = await import('/node_modules/three/build/three.module.js');
+> const fm = await import('/src/world/far05.ts');
+> const d = fm.far05Debug; const ft = d.ft;
+> const ci = R.camera();
+> 53 p2.out
+
+### 🤖 Claude — 2026-11-16T02:26:32.301Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/probe/probe.mjs; date -u", "description": "Show the probe runner contents"}`
+
+### 🧑 User — 2026-11-16T02:26:32.332Z
+
+> ↩︎ result: // scratch probe: screen mapping of (ds, lat) around Benny at the 05 checkpoint + raft QA
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';
+> process.chdir('/home/user/rainbow-');
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5290);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   const out = await page.evaluate(() => {
+>     const R = window.__rainbow;
+>     R.goto('05');
+>     const st = R.state();
+>     const cam = R.camera();
+>     const m = cam.matrixWorld; // column-major
+>     const rx = [m[0], m[1], m[2]], ry = [m[4], m[5], m[6]], rz = [m[8], m[9], m[10]], t = [m[12], m[13], m[14]];
+>     const f = 1 / Math.tan((cam.fov * Math.PI) / 360);
+>     const proj = (p) => {
+>       const d = [p.x - t[0], p.y - t[1], p.z - t[2]];
+>       const x = d[0] * rx[0] + d[1] * rx[1] + d[2] * rx[2];
+>       const y = d[0] * ry[0] + d[1] * ry[1] + d[2] * ry[2];
+>    …[+1177 chars]
+
+### 🤖 Claude — 2026-11-16T02:26:35.487Z
+
+Another specialist shares this scratchpad and overwrote my probe runner, so I'll keep my tools in a uniquely named folder.
+
+### 🤖 Claude — 2026-11-16T02:26:42.056Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9; mkdir -p $P && cd $P && cp ../probe/lib.js ../probe/p2.js . && cat > pcprobe.mjs <<'EOF'\n// path-camera wave 9 probe: node pcprobe.mjs <evalfile.js> [checkpoint]  (cwd = project root)\nimport { readFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst [file, cp = '05'] = process.argv.slice(2);\nconst body = readFileSync(file, 'utf8');\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(534 …[+1163 chars]`
+
+### 🧑 User — 2026-11-16T02:26:55.844Z
+
+> ↩︎ result: q [0.07634283583023259, -0.2679005790230198] level -3.831685660915462 vp [500, 479]
+> {'Z': 0, 'D': 53.2, 'xB': 1.7, 'hw': 4.28, 'cL': -0.39, 'cR': 4.35, 'core': 1.97, 'scrCore': [545, 568], 'scrL': [434, 567], 'scrR': [643, 568], 'coinAt': [546, 539]}
+> {'Z': 1, 'D': 54.2, 'xB': 1.33, 'hw': 4.66, 'cL': -0.96, 'cR': 4.34, 'core': 1.71, 'scrCore': [538, 566], 'scrL': [418, 566], 'scrR': [641, 566], 'coinAt': [538, 538]}
+> {'Z': 2, 'D': 55.2, 'xB': 1.07, 'hw': 4.86, 'cL': -1.49, 'cR': 4.22, 'core': 1.35, 'scrCore': [529, 564], 'scrL': [409, 564], 'scrR': [637, 565], 'coinAt': [529, 537]}
+> {'Z': 3, 'D': 56.2, 'xB': 0.87, 'hw': 4.97, 'cL': -1.94, 'cR': 4.1, 'core': 1.03, 'scrCore': [521, 563], 'scrL': [403, 563], 'scrR': [632, 563], 'coinAt': [521, 536]}
+> {'Z': 4, 'D': 57.2, 'xB': 0.72, 'hw': 5.07, 'cL': -2.31, 'cR': 3.98, 'core': 0.76, 'scrCore': [514, 561], 'scrL': [399, 561], 'scrR': [629, 562], 'coinAt': [515, 535]}
+> {'Z': 6, 'D': 59.2, 'xB': 0.42, 'hw': 5.18, 'cL': -2.93, 'cR': 4.01, 'core': 0.52, 'scrCore': [509, 559], 'scrL': [394, 559], 'scrR': [620, 559], 'coinAt': [509, 533]}
+> {'Z': 8, 'D': 61.2, 'xB': 0.36, 'hw': 5.48, 'cL': -3.44, 'cR': 4.48, 'core': 0.53, 'scrCore': [509, 556], 'scr …[+3979 chars]
+
+### 🤖 Claude — 2026-11-16T02:27:05.603Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9 && python3 -I -c \"\nfrom PIL import Image\nR=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nbox=(440,470,600,560)\na=R.crop(box).resize((960,540),Image.NEAREST)\nfrom PIL import ImageDraw\nd=ImageDraw.Draw(a)\nfor y in range(470,560,10):\n  d.line([(0,(y-470)*6),(960,(y-470)*6)],fill=(0,0,0)); d.text((2,(y-470)*6+1),str(y),fill=(255,255,255))\nfor x in range(440,600,10):\n  d.line([((x-440)*6,0),((x-440)*6,540)],fill=(0,0,0)); d.text(((x-440)* …[+130 chars]`
+
+### 🧑 User — 2026-11-16T02:27:05.786Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:27:07.931Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9/ref_coins_zoom.png"}`
+
+### 🧑 User — 2026-11-16T02:27:07.943Z
+
+> ↩︎ result: [image]
+
