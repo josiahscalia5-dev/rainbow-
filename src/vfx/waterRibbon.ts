@@ -406,6 +406,9 @@ uniform vec4 uPjNear;
 uniform sampler2D uPjT2;   // near tile T2
 uniform sampler2D uPjWT2;  // its flow map (?projflow05=2)
 uniform vec2 uPjT2S;       // start s, half period L (mirrored repeat: period 2 L)
+// how far ?projnear05=1 is engaged: 0 within 0.5 u of the locked checkpoint (the locked picture is the original
+// proj05 one EXACTLY, including its own hand-overs), 1 from 2 u of riding on
+float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }
 vec4 pjLut(float s) {
   float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
   float i = floor(x);
@@ -430,7 +433,7 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
     // ?projnear05=1: where the exact layer would be magnified, the 24-texel near layer and the old tile hand over to
     // the crisp tile T2 by the same test as E (at the locked checkpoint mE = 1.3: wT2 = 0, the locked picture is the
     // old one exactly)
-    float wT2 = 1.0 - smoothstep(0.3, 0.55, mE);
+    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));
     t = mix(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
     wN *= 1.0 - wT2;
   }
@@ -452,7 +455,7 @@ vec2 pjFlowDir(float u, float s, float mE) {
   float wn = fn.b * smoothstep(0.0, 0.08, ny) * (1.0 - smoothstep(0.92, 1.0, ny));
   if (uPjNear.x > 0.5) {
     // T2's own streak direction where T2 is what is shown; a mirrored period runs its streaks mirrored
-    float wT2 = 1.0 - smoothstep(0.3, 0.55, mE);
+    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));
     vec3 f2 = texture2D(uPjWT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb;
     if (mod(floor((s - uPjT2S.x) / uPjT2S.y), 2.0) > 0.5) f2.r = 1.0 - f2.r;
     ft = mix(ft, f2, wT2);
@@ -1416,7 +1419,9 @@ void main() {
         vec4 a0 = pjLut(s - 0.3), a1 = pjLut(s + 0.3), b0 = pjLut(sr - 0.3), b1 = pjLut(sr + 0.3);
         float rS = (a1.x - a0.x) / max(b1.x - b0.x, 1e-6);
         float rU = pjLut(sr).z / max(Lm.z, 1e-3);
-        mE = 1.3 * min(rS, rU);
+        // at the locked checkpoint the original per-pixel test stays in charge (exactly the approved locked picture);
+        // from 0.5 to 2 u of riding on the wave-free test takes over
+        mE = mix(mE, 1.3 * min(rS, rU), pjNearK());
       }
       // two-phase flow toward the camera: layer A peaks with zero offset at phase 0.5 (the frozen QA clock)
       float ph = fract(uTime * uPjFlow.y + uPjFlow.z);
@@ -1443,7 +1448,7 @@ void main() {
       float det = mix(pjDetail(uB, sB), pjDetail(uA, sA), wA);
       // ?projnear05=1: the crisp tile carries its own approved streaks — the detail layer stays on the near layer only
       float dW = 1.0 - wEx;
-      float wT2m = uPjNear.x > 0.5 ? 1.0 - smoothstep(0.3, 0.55, mE) : 0.0;   // share of T2 in the tile
+      float wT2m = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));   // share of T2 in the tile
       dW *= 1.0 - (1.0 - wNx) * wT2m * (1.0 - uPjNear.y);
       tgt = clamp(tgt + det * uPjDS.z * dW, 0.0, 1.0);
       if (uPjFlow2.x > 0.5 && uPjFlow2.w < 0.999) {

@@ -2814,3 +2814,194 @@ The commit was made locally (`3a3e022`) but GitHub still shows `5cf74ff`, so the
 > after drawList   {"near":[1,0,132.62163536156623,132.438],"s":132.438}
 > after step(1)    {"near":[1,0,132.62163536156623,132.438],"s":132.622}
 
+### 🤖 Claude — 2026-11-16T23:04:27.800Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "uniform vec2 uPjT2S;       // start s, half period L (mirrored repeat: period 2 L)\nvec4 pjLut(float s) {", "new_string": "uniform vec2 uPjT2S;       // start s, half period L (mirrored repeat: period 2 L)\n// how far ?projnear05=1 is engaged: 0 within 0.5 u of the locked checkpoint (the locked picture is the original\n// proj05 one EXACTLY, including its own hand-overs), 1 from 2 u of riding on\nfloat pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }\nv …[+22 chars]`
+
+### 🧑 User — 2026-11-16T23:04:27.848Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T23:04:29.900Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float wT2 = 1.0 - smoothstep(0.3, 0.55, mE);\n    t = mix(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);", "new_string": "    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));\n    t = mix(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);"}`
+
+### 🧑 User — 2026-11-16T23:04:29.938Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T23:04:31.599Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    // T2's own streak direction where T2 is what is shown; a mirrored period runs its streaks mirrored\n    float wT2 = 1.0 - smoothstep(0.3, 0.55, mE);", "new_string": "    // T2's own streak direction where T2 is what is shown; a mirrored period runs its streaks mirrored\n    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));"}`
+
+### 🧑 User — 2026-11-16T23:04:31.641Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T23:04:33.699Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "        float rU = pjLut(sr).z / max(Lm.z, 1e-3);\n        mE = 1.3 * min(rS, rU);\n      }", "new_string": "        float rU = pjLut(sr).z / max(Lm.z, 1e-3);\n        // at the locked checkpoint the original per-pixel test stays in charge (exactly the approved locked picture);\n        // from 0.5 to 2 u of riding on the wave-free test takes over\n        mE = mix(mE, 1.3 * min(rS, rU), pjNearK());\n      }"}`
+
+### 🧑 User — 2026-11-16T23:04:33.735Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T23:04:35.052Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      float wT2m = uPjNear.x > 0.5 ? 1.0 - smoothstep(0.3, 0.55, mE) : 0.0;   // share of T2 in the tile", "new_string": "      float wT2m = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));   // share of T2 in the tile"}`
+
+### 🧑 User — 2026-11-16T23:04:35.098Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T23:04:42.943Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC OK && SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/reg5 && rm -rf $SP && mkdir -p $SP && FULL='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2' && \\\nnode scripts/capture.mjs 05 --out=$SP/default > $SP/log 2>&1; node scripts/capture.mjs 05 --out=$SP/before \"--q=ringa=26&nearfloor05=0\" >> $SP/log 2>&1; node scripts/capture.mjs 05 --out=$SP/flow2 \"--q=$FULL\" >> $SP/log 2>&1; node scripts/capture.mjs 05 --out=$SP/near \"--q=$FULL&projnear05=1\" >> $SP/log 2>&1; git checkout -q -- qa/ca …[+151 chars]`
+
+### 🧑 User — 2026-11-16T23:04:42.973Z
+
+> ↩︎ result: Command running in background with ID: bz2r3qag0. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/bz2r3qag0.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T23:04:45.094Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I tools/proj05/near_metrics.py $SP/rideprobe $SP/ride4/metrics_detail.json BEFORE=$SP/ride4/before NEW_det0=$SP/ride4/det0 NEW_det05=$SP/ride4/det05 NEW_det1=$SP/ride4/det1 --d=08,17,35", "description": "Measure 3 overlay settings vs BEFORE at 8/17/35"}`
+
+### 🧑 User — 2026-11-16T23:04:47.305Z
+
+> ↩︎ result: == 08 units ahead of the locked checkpoint
+>   bottom  (200558 px)
+>      BEFORE       grad  15.18  lapstd  14.46  sat  75.9%  p95 224.0
+>   benny   (118200 px)
+>      BEFORE       grad  26.70  lapstd  24.44  sat  74.4%  p95 214.0
+>   ahead   (72407 px)
+>      BEFORE       grad  40.68  lapstd  38.24  sat  60.6%  p95 243.0
+> 
+> == 17 units ahead of the locked checkpoint
+>   bottom  (200558 px)
+>      BEFORE       grad  12.23  lapstd  14.87  sat  73.7%  p95 187.0
+>   benny   (118200 px)
+>      BEFORE       grad  18.11  lapstd  18.67  sat  67.9%  p95 178.0
+>   ahead   (66935 px)
+>      BEFORE       grad  30.82  lapstd  28.87  sat  57.9%  p95 220.0
+> 
+> == 35 units ahead of the locked checkpoint
+>   bottom  (241920 px)
+>      BEFORE       grad   8.76  lapstd   5.21  sat  71.5%  p95 204.0
+>   benny   (118200 px)
+>      BEFORE       grad  24.57  lapstd  26.53  sat  69.3%  p95 221.0
+>   ahead   (54323 px)
+>      BEFORE       grad  39.02  lapstd  30.84  sat  51.5%  p95 234.0
+
+### 🤖 Claude — 2026-11-16T23:04:48.877Z
+
+Only BEFORE got measured, so the variant folders must be missing frames. Checking:
+
+### 🤖 Claude — 2026-11-16T23:04:50.568Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride4; ls $SP; ls $SP/det0 $SP/det05 $SP/det1 2>&1 | head; tail -5 $SP/B.log $SP/C.log $SP/D.log", "description": "Inspect detail-variant outputs and logs"}`
+
+### 🧑 User — 2026-11-16T23:04:50.608Z
+
+> ↩︎ result: Exit code 1
+> A.log
+> before
+> metrics_detail.json
+> reg_before
+> reg_default
+> reg_flow2
+> reg_full
+> reg_near
+> ls: cannot access '/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride4/det0': No such file or directory
+> ls: cannot access '/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride4/det05': No such file or directory
+> ls: cannot access '/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride4/det1': No such file or directory
+> tail: option used in invalid context -- 5
+
+### 🤖 Claude — 2026-11-16T23:05:04.018Z
+
+> 🔧 **Bash** `{"command": "ls -d /det0 /det05 /det1 /B.log /C.log /D.log 2>/dev/null; rm -rf /det0 /det05 /det1 /B.log /C.log /D.log; cd /home/user/rainbow- && SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride5; mkdir -p $SP; FULL='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2'; echo \"Q check: $FULL&projnear05=1\"; \\\nnode scripts/proj05-move.mjs \"--q=$FULL&projnear05=1\" --out=$SP/det0 --d=0,8,17,35 > $SP/B.log 2>&1 &\nnode scripts/proj05-move.mjs \"--q=$FULL&projnear05=1&projneardetail05=0.5\" --out=$SP/det05 --d=0,8,17,35 > $SP/C.log  …[+309 chars]`
+
+### 🧑 User — 2026-11-16T23:05:15.618Z
+
+> ↩︎ result: Command running in background with ID: brx6o70k4. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/brx6o70k4.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-16T23:05:20.962Z
+
+While those run, I'll check whether the earlier interrupted attempt (same command structure) also left stray output at the filesystem root:
+
+### 🤖 Claude — 2026-11-16T23:05:22.105Z
+
+> 🔧 **Bash** `{"command": "ls -la / | grep -vE \" (bin|boot|dev|etc|home|lib|lib64|media|mnt|opt|proc|root|run|sbin|srv|sys|tmp|usr|var|lib32|libx32)$|^total\" ", "description": "List unexpected entries at filesystem root"}`
+
+### 🧑 User — 2026-11-16T23:05:22.230Z
+
+> ↩︎ result: drwxr-xr-x  25 root root  4096 Nov 16 23:05 .
+> drwxr-xr-x  25 root root  4096 Nov 16 23:05 ..
+> lrwxrwxrwx   1 root root     7 Apr 22  2024 bin -> usr/bin
+> drwxr-xr-x   2 root root  4096 Apr  8  2024 bin.usr-is-merged
+> -rw-r--r--   1 root root    88 Nov 16 22:57 container_info.json
+> drwxr-xr-x   2 root root  4096 Nov 16 22:42 d0
+> -rw-r--r--   1 root root   171 Nov 16 22:42 d0.log
+> drwxr-xr-x   2 root root  4096 Nov 16 22:42 d05
+> -rw-r--r--   1 root root   173 Nov 16 22:42 d05.log
+> drwxr-xr-x   2 root root  4096 Nov 16 22:42 d1
+> -rw-r--r--   1 root root   171 Nov 16 22:42 d1.log
+> lrwxrwxrwx   1 root root     7 Apr 22  2024 lib -> usr/lib
+> drwxr-xr-x   2 root root  4096 Nov 14  2024 lib.usr-is-merged
+> lrwxrwxrwx   1 root root     9 Apr 22  2024 lib64 -> usr/lib64
+> drwx------   2 root root 12288 Oct 27 20:09 lost+found
+> drwxr-xr-x   4 root root  4096 Oct 27 19:50 nix
+> drwxr-xr-x   2 root root  4096 Nov 16 22:12 old_root
+> lrwxrwxrwx   1 root root     8 Apr 22  2024 sbin -> usr/sbin
+
+### 🤖 Claude — 2026-11-16T23:05:24.896Z
+
+Yes: `/d0`, `/d05`, `/d1` and their logs from 22:42 are the same mistake in the interrupted attempt. Checking they contain only my output, then removing them:
+
+### 🤖 Claude — 2026-11-16T23:05:25.782Z
+
+> 🔧 **Bash** `{"command": "ls -la /d0 /d05 /d1; cat /d0.log; rm -rf /d0 /d05 /d1 /d0.log /d05.log /d1.log && echo removed", "description": "Inspect and remove stray root output dirs"}`
+
+### 🧑 User — 2026-11-16T23:05:35.358Z
+
+> ↩︎ result: /d0:
+> total 3344
+> drwxr-xr-x  2 root root    4096 Nov 16 22:42 .
+> drwxr-xr-x 25 root root    4096 Nov 16 23:05 ..
+> -rw-r--r--  1 root root 1746598 Nov 16 22:42 move_00.png
+> -rw-r--r--  1 root root 1665956 Nov 16 22:42 move_08.png
+> 
+> /d05:
+> total 3344
+> drwxr-xr-x  2 root root    4096 Nov 16 22:42 .
+> drwxr-xr-x 25 root root    4096 Nov 16 23:05 ..
+> -rw-r--r--  1 root root 1746598 Nov 16 22:42 move_00.png
+> -rw-r--r--  1 root root 1665956 Nov 16 22:42 move_08.png
+> 
+> /d1:
+> total 3348
+> drwxr-xr-x  2 root root    4096 Nov 16 22:42 .
+> drwxr-xr-x 25 root root    4096 Nov 16 23:05 ..
+> -rw-r--r--  1 root root 1746598 Nov 16 22:42 move_00.png
+> -rw-r--r--  1 root root 1665956 Nov 16 22:42 move_08.png
+> -rw-r--r--  1 root root     317 Nov 16 22:42 move_log.json
+> move 0 {"file":"/d0/move_00.png","d":0,"s":132.438,"cam":[1.92,-37.94,-68.28],"lat":0}
+> move 8 {"file":"/d0/move_08.png","d":8,"s":140.505,"cam":[2,-38.22,-74.84],"lat":0}
+> removed
+
+### 🤖 Claude — 2026-11-16T23:05:39.177Z
+
+Removed; they held only stray copies of my test frames. Waiting for the regression captures to finish.
+
+### 🤖 Claude — 2026-11-16T23:05:41.478Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/reg5; until [ -f $SP/near/05.png ] || grep -qi \"error\" $SP/log 2>/dev/null; do sleep 3; done; ls $SP/*/05.png; grep -i error $SP/log | head -3", "description": "Wait for sequential regression captures", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T23:05:41.509Z
+
+> ↩︎ result: Command running in background with ID: bv0zxcxbo. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/bv0zxcxbo.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T23:05:42.865Z
+
+The regression captures and the three overlay variants are both rendering. I'll compare as soon as they land.
+

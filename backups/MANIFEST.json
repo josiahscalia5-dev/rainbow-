@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9707,
-   "sha256": "5f449dd3388256d780e9405b6ee75333a2a81e5c96f688e724515408ea7774c9"
+   "sha256": "7a982d4b00e9de5c5c74271b554f55ab25191de3ebc87c52fc4c7b9a7f5a2922"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -948,8 +948,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1247,
-   "sha256": "cf3545dc9f6dd95ebba55160290246efb896787dabbf318c4be586a68360de13"
+   "bytes": 1242,
+   "sha256": "91bcac414315d3756fd4a4abb0fa6545357897e7b3d7ea5aee709f0fc627daa0"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -7418,8 +7418,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 102139,
-   "sha256": "3304b991f1f2c356f0d45fb2ce134d6c4c5d2f7e69fb785d586c9173343f27b2"
+   "bytes": 102658,
+   "sha256": "dba8e2a2a3e28b89e08b74d8d740ff3cd3ad6b1f1fc6bc5e5dad7f31c2137d2d"
   },
   {
    "path": "src/vfx/whirlpool.ts",
