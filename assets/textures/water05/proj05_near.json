@@ -43,11 +43,25 @@
    0.512
   ]
  },
- "share_of_texels_from_visible_water": 0.506,
+ "share_of_texels_from_visible_water": 0.931,
+ "share_filled_along_flow": 0.1001,
+ "bubbles_removed": 15,
+ "holes_cloned": 19,
+ "column_shift_s": {
+  "-0.9": 8.4,
+  "-0.7": 5.87,
+  "-0.5": 3.45,
+  "-0.3": 0.79,
+  "+0.0": 0.0,
+  "+0.3": 0.49,
+  "+0.5": 4.46,
+  "+0.7": 12.47,
+  "+0.9": 14.98
+ },
  "flow": {
   "file": "proj05_WT2.png",
   "height": 56,
-  "mean_abs_slope_world": 0.459,
-  "flow_area": 0.905
+  "mean_abs_slope_world": 0.13,
+  "flow_area": 0.835
  }
 }

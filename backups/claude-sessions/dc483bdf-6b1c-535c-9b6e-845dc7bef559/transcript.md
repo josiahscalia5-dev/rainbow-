@@ -1472,3 +1472,240 @@ The verification captures finished. Comparing each against its saved reference p
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/proj05-ride-probe.mjs (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-16T22:29:01.482Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && timeout 900 node scripts/proj05-ride-probe.mjs --q='proj05=1' --out=$SP/rideprobe --d=0,8,17,35 2>&1 | tail -6; ls -la $SP/rideprobe", "description": "Run ride probe at 0/8/17/35 units", "timeout": 960000}`
+
+### 🧑 User — 2026-11-16T22:29:26.740Z
+
+> ↩︎ result: ride probe 0 132.438
+> ride probe 8 140.505
+> ride probe 17 149.488
+> ride probe 35 167.455
+> total 82956
+> drwxr-xr-x 2 root root     4096 Nov 16 22:29 .
+> drwx------ 4 root root     4096 Nov 16 22:29 ..
+> -rw-r--r-- 1 root root 21233664 Nov 16 22:29 ride_00.f32
+> -rw-r--r-- 1 root root 21233664 Nov 16 22:29 ride_08.f32
+> -rw-r--r-- 1 root root 21233664 Nov 16 22:29 ride_17.f32
+> -rw-r--r-- 1 root root 21233664 Nov 16 22:29 ride_35.f32
+> -rw-r--r-- 1 root root      905 Nov 16 22:29 ride_probe.json
+
+### 🤖 Claude — 2026-11-16T22:29:30.201Z
+
+Now the analysis: for each ride distance, which u-range is visible at each distance ahead of Benny, and how many screen pixels a world unit covers there.
+
+### 🤖 Claude — 2026-11-16T22:29:37.367Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I - \"$SP/rideprobe\" <<'EOF'\nimport sys, json, numpy as np\nd=sys.argv[1]; W,H=864,1536; HW=4.8\nlog=json.load(open(d+\"/ride_probe.json\"))\nfor fr in log[\"frames\"]:\n    R=np.fromfile(fr[\"file\"].replace(\"qa/pilot05/proj/near/probe\",d),np.float32).reshape(H,W,4)\n    riv=R[...,2]>0.5\n    U,S=R[...,0],R[...,1]\n    gy=np.abs(np.gradient(S,axis=0)); gx=np.abs(np.gradient(U,axis=1))*HW\n    # px per world unit along s (vertical) and across (horizontal), robust: only interior riv …[+850 chars]`
+
+### 🧑 User — 2026-11-16T22:29:37.913Z
+
+> ↩︎ result: == d=0  Benny s=132.44  river px=705892  s range on screen [129.8,196.2]
+>  ahead(s-sB) | screen rows | u-range visible      | px per wu along s (med) | across (med)
+>  [ -3, -2)   | 1386-1527 | [-0.20,+0.25] |   198.6 |   298.9
+>  [ -2, -1)   | 1239-1394 | [-0.32,+0.36] |   149.6 |   261.3
+>  [ -1,  0)   | 1138-1244 | [-0.40,+0.41] |   100.8 |   222.6
+>  [  0,  1)   | 1059-1142 | [-0.47,+0.46] |    72.8 |   194.4
+>  [  1,  2)   |  996-1071 | [-0.55,+0.50] |    58.5 |   173.6
+>  [  2,  4)   |  891-1014 | [-0.69,+0.54] |    49.8 |   150.9
+>  [  4,  6)   |  797- 916 | [-0.87,+0.58] |    41.0 |   128.0
+>  [  6,  9)   |  715- 856 | [-0.98,+0.65] |    23.6 |   114.6
+>  [  9, 14)   |  692- 806 | [-0.96,+0.92] |    17.5 |    83.4
+>  [ 14, 25)   |  613- 704 | [-0.97,+0.98] |     8.6 |    65.3
+> 
+> == d=8  Benny s=140.50  river px=695876  s range on screen [136.4,196.2]
+>  ahead(s-sB) | screen rows | u-range visible      | px per wu along s (med) | across (med)
+>  [ -3, -2)   | 1144-1359 | [-0.42,+0.30] |   136.0 |   252.7
+>  [ -2, -1)   | 1040-1239 | [-0.52,+0.33] |    95.5 |   220.6
+>  [ -1,  0)   |  962-1153 | [-0.61,+0.36] |    69.8 |   196.8
+>  [  0,  1)   |  907-1087 | [-0.70,+0.39] |    55.7 |   175.4
+>  [  1,  2)   |  8 …[+1900 chars]
+
+### 🤖 Claude — 2026-11-16T22:30:17.153Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/proj/target/ | head -30; grep -n -i \"bubble\" tools/proj05/make_target.py | head", "description": "Look for existing bubble/foam masks"}`
+
+### 🧑 User — 2026-11-16T22:30:17.189Z
+
+> ↩︎ result: art_registered.png
+> coin_mask.png
+> correction.npz
+> fill_mask.png
+> report.json
+> target_05.png
+> water_mask.png
+
+### 🤖 Claude — 2026-11-16T22:30:48.010Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "old_string": "def sample(u, s):\n    \"\"\"E colour (display values) at river coords (u, s); u is first folded into the row's visible range\"\"\"\n    lo, hi = np.interp(s, s_row, ulo), np.interp(s, s_row, uhi)", "new_string": "# FILL (2026-11-16, after the first bake showed a kaleidoscope): near the start of the tile only the river centre is\n# visible in the locked view (u ±0.28 at s 130.5), so instead of bouncing that strip across the river, each column u\n# reads REAL visible approved water from the first …[+1686 chars]`
+
+### 🧑 User — 2026-11-16T22:30:48.045Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/near_bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:30:49.668Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "old_string": "    share_of_texels_from_visible_water=round(float(real.mean()), 3),", "new_string": "    share_of_texels_from_visible_water=round(float(real.mean()), 3),\n    column_shift_s={f\"{u:+.1f}\": round(float(shift_of(u)), 2) for u in (-0.9, -0.7, -0.5, -0.3, 0.0, 0.3, 0.5, 0.7, 0.9)},"}`
+
+### 🧑 User — 2026-11-16T22:30:49.701Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/near_bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:30:54.059Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/proj05/near_bake.py assets/textures/water05 | python3 -c \"import json,sys; d=json.load(sys.stdin); print('real share', d['share_of_texels_from_visible_water']); print('shift', d['column_shift_s']); print('flow', d['flow'])\" && python3 -I - <<'EOF'\nfrom PIL import Image\nT2=Image.open(\"assets/textures/water05/proj05_T2.png\").convert(\"RGB\")\nT2.transpose(Image.FLIP_TOP_BOTTOM).save(\"/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/T2_v2.png\")\nEOF", "description": "Rebake tile with per-column shift fill"}`
+
+### 🧑 User — 2026-11-16T22:30:57.558Z
+
+> ↩︎ result: real share 0.931
+> shift {'-0.9': 8.4, '-0.7': 5.87, '-0.5': 3.45, '-0.3': 0.79, '+0.0': 0.0, '+0.3': 0.49, '+0.5': 4.46, '+0.7': 12.47, '+0.9': 14.98}
+> flow {'file': 'proj05_WT2.png', 'height': 56, 'mean_abs_slope_world': 0.139, 'flow_area': 0.821}
+
+### 🤖 Claude — 2026-11-16T22:30:59.360Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/T2_v2.png"}`
+
+### 🧑 User — 2026-11-16T22:30:59.391Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:31:36.165Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "old_string": "    x = (0.5 + (uf - c) / (2 * w)) * WE - 0.5\n    y = v * NE - 0.5\n    return np.stack([map_coordinates(E[..., k], [y, x], order=1, mode=\"nearest\") for k in range(3)], -1), (u >= lo) & (u <= hi)", "new_string": "    x = (0.5 + (uf - c) / (2 * w)) * WE - 0.5\n    y = v * NE - 0.5\n    # alpha-weighted (premultiplied) so E texels without data (rgb 0) never bleed in as black lines\n    a = map_coordinates(E[..., 3], [y, x], order=1, mode=\"nearest\")\n    rgb = np.stack([map_coordinates(E[...,  …[+149 chars]`
+
+### 🧑 User — 2026-11-16T22:31:36.206Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/near_bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:31:46.665Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "old_string": "acc = np.zeros((H, W, 3), np.float64); real = np.zeros((H, W), np.float64)\nfor oy in range(SS):\n    for ox in range(SS):\n        uu = -1 + (np.arange(W) + (ox + 0.5) / SS) / W * 2\n        ss_ = A + (np.arange(H) + (oy + 0.5) / SS) / H * L\n        U, S = np.meshgrid(uu, ss_)\n        col, inside = sample(U.ravel(), S.ravel())\n        acc += col.reshape(H, W, 3); real += inside.reshape(H, W)\nT2 = acc / (SS * SS)\nreal /= SS * SS", "new_string": "acc = np.zeros((H, W, 3), np.float64); real = …[+2036 chars]`
+
+### 🧑 User — 2026-11-16T22:31:46.704Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/near_bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:31:47.919Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "old_string": "    share_of_texels_from_visible_water=round(float(real.mean()), 3),", "new_string": "    share_of_texels_from_visible_water=round(float(real.mean()), 3),\n    share_filled_along_flow=round(hole_share, 4), bubbles_removed=len(BUBBLES),"}`
+
+### 🧑 User — 2026-11-16T22:31:47.955Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/near_bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:31:53.919Z
+
+Now a bubble list file (empty first), so I can check the black-line fix, then mark bubbles precisely on zoomed crops.
+
+### 🤖 Claude — 2026-11-16T22:32:00.079Z
+
+> 🔧 **Bash** `{"command": "echo '{\"note\": \"approved bubbles + Benny splash foam to remove from the repeating near tile (tools/proj05/near_bake.py): [u, s, radius_u, radius_s] in SOURCE river coordinates of the approved picture\", \"bubbles\": []}' > tools/proj05/near_bubbles.json && python3 -I tools/proj05/near_bake.py assets/textures/water05 > /dev/null && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nsp=\"/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/\"\nT2=Image.open(\"assets/textures/water05/proj05_T2.png\").convert(\"RGB\").transpose(Image.FLIP_TOP_BOTTO …[+722 chars]`
+
+### 🧑 User — 2026-11-16T22:32:04.752Z
+
+> ↩︎ result: done
+
+### 🤖 Claude — 2026-11-16T22:32:06.780Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/zoomL.png"}`
+
+### 🧑 User — 2026-11-16T22:32:06.811Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:32:07.392Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/zoomR.png"}`
+
+### 🧑 User — 2026-11-16T22:32:07.427Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:32:30.325Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nsp=\"/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/\"\nT2=Image.open(sp+\"T2_v3.png\")\nfor name,box in [(\"zoomUL\",(0,0,512,384)),(\"zoomUR\",(512,0,1024,384))]:\n    c=T2.crop(box).resize((1024,768),Image.LANCZOS); d=ImageDraw.Draw(c)\n    for gx in range(0,512,32):\n        d.line([(gx*2,0),(gx*2,768)],fill=(255,255,0) if gx%64==0 else (90,90,0),width=1); d.text((gx*2+2,2),str(box[0]+gx),fill=(255,255,0))\n    for gy in range(0,384,32):\n        d.line([(0,gy*2),(1024,gy*2)],fill=(255,2 …[+196 chars]`
+
+### 🧑 User — 2026-11-16T22:32:30.744Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T22:32:32.709Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/zoomUL.png"}`
+
+### 🧑 User — 2026-11-16T22:32:32.726Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:32:33.322Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/zoomUR.png"}`
+
+### 🧑 User — 2026-11-16T22:32:33.356Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:32:48.013Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, sys, os\nsrc=open(\"tools/proj05/near_bake.py\").read().split(\"# supersampled bake\")[0]\nsys.argv=[\"near_bake.py\",\"assets/textures/water05\"]\nns={\"__name__\":\"x\",\"__file__\":os.path.abspath(\"tools/proj05/near_bake.py\")}\nexec(compile(src,\"near_bake.py\",\"exec\"),ns)\nA,L,W,H=ns[\"A\"],ns[\"L\"],ns[\"W\"],ns[\"H\"]\n# (x, y_display, rx, ry) in the displayed (far-on-top) 1024x768 tile; label\nmarks=[(201,661,36,72,\"big bubble left of Benny\"),(291,579,16,35,\"bubble\"),(375,641,7,9,\"small bubble\"),(384,676,6,7,\"small bubble\"),\n  …[+1585 chars]`
+
+### 🧑 User — 2026-11-16T22:32:52.321Z
+
+> ↩︎ result: [-0.6064, 136.233, 0.0703, 0.6562, 'big bubble left of Benny']
+> [-0.4307, 134.771, 0.0312, 0.319, 'bubble']
+> [-0.2666, 132.173, 0.0137, 0.082, 'small bubble']
+> [-0.249, 131.784, 0.0117, 0.0638, 'small bubble']
+> [-0.2139, 131.282, 0.0977, 0.4193, 'Benny splash foam + bubble, left']
+> [-0.4229, 133.653, 0.0547, 0.7474, 'foam column under bubble']
+> [-0.4971, 134.157, 0.0137, 0.1003, 'small bubble']
+> [-0.2725, 133.046, 0.0098, 0.082, 'small bubble']
+> [0.3408, 133.811, 0.0273, 0.3372, 'bubble right']
+> [0.2803, 131.747, 0.0352, 0.3281, 'bubble right']
+> [0.2549, 131.201, 0.0723, 0.4193, 'Benny splash foam, right']
+> [0.335, 131.393, 0.0156, 0.1185, 'small bubble']
+> [0.8584, 145.642, 0.0527, 0.793, 'big teardrop bubble far right']
+> [0.7197, 143.389, 0.125, 0.4193, 'foam cloud on pink, right']
+> [0.5088, 136.184, 0.0078, 0.474, 'dark seam line']
+> {'share_of_texels_from_visible_water': 0.931, 'share_filled_along_flow': 0.1001, 'bubbles_removed': 15}
+
+### 🤖 Claude — 2026-11-16T22:32:54.294Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/T2_v4.png"}`
+
+### 🧑 User — 2026-11-16T22:32:54.326Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:33:28.674Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "old_string": "sm = np.stack([_gf(fill[..., k], (0.8, 2.0)) for k in range(3)], -1)\nT2 = np.where(hole[..., None], sm, T2)\nhole_share = float(hole.mean())", "new_string": "sm = np.stack([_gf(fill[..., k], (0.8, 2.0)) for k in range(3)], -1)\nT2i = np.where(hole[..., None], sm, T2)          # fallback fill (flat bars where a hole touches the tile's end)\n# main fill: each hole takes REAL water texture from just further along the same columns (gradient-domain clone, so the\n# patch's colours meet the surroundi …[+1663 chars]`
+
+### 🧑 User — 2026-11-16T22:33:28.740Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/near_bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:33:29.889Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "old_string": "    share_filled_along_flow=round(hole_share, 4), bubbles_removed=len(BUBBLES),", "new_string": "    share_filled_along_flow=round(hole_share, 4), bubbles_removed=len(BUBBLES), holes_cloned=cloned,"}`
+
+### 🧑 User — 2026-11-16T22:33:29.944Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/near_bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:33:37.466Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/proj05/near_bake.py assets/textures/water05 | python3 -c \"import json,sys; d=json.load(sys.stdin); print({k:d[k] for k in ['share_of_texels_from_visible_water','share_filled_along_flow','bubbles_removed','holes_cloned','flow']})\"; python3 -I -c \"\nfrom PIL import Image; sp='/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/'\nImage.open('assets/textures/water05/proj05_T2.png').convert('RGB').transpose(Image.FLIP_TOP_BOTTOM).save(sp+'T2_v5.png')\"", "description": "Rebake with gradient-domain clone fill"}`
+
+### 🧑 User — 2026-11-16T22:33:42.340Z
+
+> ↩︎ result: {'share_of_texels_from_visible_water': 0.931, 'share_filled_along_flow': 0.1001, 'bubbles_removed': 15, 'holes_cloned': 19, 'flow': {'file': 'proj05_WT2.png', 'height': 56, 'mean_abs_slope_world': 0.13, 'flow_area': 0.835}}
+
+### 🤖 Claude — 2026-11-16T22:33:44.095Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/T2_v5.png"}`
+
+### 🧑 User — 2026-11-16T22:33:44.131Z
+
+> ↩︎ result: [image]
+

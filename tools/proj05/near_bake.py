@@ -55,8 +55,37 @@ ulo = gaussian_filter1d(maximum_filter1d(ulo, 9), 4) + MARGIN          # shrink:
 uhi = gaussian_filter1d(minimum_filter1d(uhi, 9), 4) - MARGIN
 
 
+# FILL (2026-11-16, after the first bake showed a kaleidoscope): near the start of the tile only the river centre is
+# visible in the locked view (u ±0.28 at s 130.5), so instead of bouncing that strip across the river, each column u
+# reads REAL visible approved water from the first s where that column becomes visible: per-column shift along s,
+# smooth in u (no mirror symmetry; the crisp centre keeps shift 0). The sides then come from E at 30-75 rows / unit —
+# what the riding view needs there (scripts/proj05-ride-probe.mjs: 25-50 px / unit 2-6 u ahead of Benny).
+SHIFT_PAD = float(opt.get("pad", 0.4))         # extra s beyond the first visible row (stay off the visible edge)
+uu_g = np.linspace(-1, 1, 401)
+s_scan = np.linspace(A, Ej["s1"] - L - 0.5, 1200)
+lo_scan, hi_scan = np.interp(s_scan, s_row, ulo), np.interp(s_scan, s_row, uhi)
+uc = np.clip(uu_g, -0.985, 0.985)
+vis = (uc[:, None] >= lo_scan[None]) & (uc[:, None] <= hi_scan[None])
+first = np.where(vis.any(1), s_scan[np.argmax(vis, 1)], s_scan[-1])
+need = np.maximum(first + SHIFT_PAD - A, 0.0)
+need = np.where(np.abs(uu_g) < 0.15, 0.0, need)                 # Benny's lane: always the crisp nearest water
+# monotone away from the centre, then smoothed (and never below what is needed)
+mid = len(uu_g) // 2
+need[mid:] = np.maximum.accumulate(need[mid:]); need[:mid + 1] = np.maximum.accumulate(need[:mid + 1][::-1])[::-1]
+shift_g = gaussian_filter1d(need, 6)
+shift_g = np.maximum(shift_g, need)
+shift_g = gaussian_filter1d(shift_g, 3)
+
+
+def shift_of(u):
+    return np.interp(u, uu_g, shift_g)
+
+
 def sample(u, s):
-    """E colour (display values) at river coords (u, s); u is first folded into the row's visible range"""
+    """E colour (display values) at river coords (u, s): the column's s is first moved to where u is visible; anything
+    still outside the row's visible range is folded back into it (rare, only at the river's very edge)"""
+    s = s + shift_of(u)
+    u = np.clip(u, -0.985, 0.985)
     lo, hi = np.interp(s, s_row, ulo), np.interp(s, s_row, uhi)
     span = np.maximum(hi - lo, 1e-3)
     t = np.mod(u - lo, 2 * span)
@@ -64,21 +93,89 @@ def sample(u, s):
     v = np.interp(s, sg, Vg); c = np.interp(s, sg, cg); w = np.interp(s, sg, wg)
     x = (0.5 + (uf - c) / (2 * w)) * WE - 0.5
     y = v * NE - 0.5
-    return np.stack([map_coordinates(E[..., k], [y, x], order=1, mode="nearest") for k in range(3)], -1), (u >= lo) & (u <= hi)
+    # alpha-weighted (premultiplied) so E texels without data (rgb 0) never bleed in as black lines
+    a = map_coordinates(E[..., 3], [y, x], order=1, mode="nearest")
+    rgb = np.stack([map_coordinates(E[..., k] * E[..., 3], [y, x], order=1, mode="nearest") for k in range(3)], -1)
+    return rgb / np.maximum(a, 1e-4)[:, None], (u >= lo) & (u <= hi), a
 
 
 # supersampled bake (SS x SS per texel, box filter): the source is denser than the tile across u everywhere and along s
 # for s < 134, so averaging avoids aliasing the fine glints
-acc = np.zeros((H, W, 3), np.float64); real = np.zeros((H, W), np.float64)
+acc = np.zeros((H, W, 3), np.float64); real = np.zeros((H, W), np.float64); wsum = np.zeros((H, W), np.float64)
 for oy in range(SS):
     for ox in range(SS):
         uu = -1 + (np.arange(W) + (ox + 0.5) / SS) / W * 2
         ss_ = A + (np.arange(H) + (oy + 0.5) / SS) / H * L
         U, S = np.meshgrid(uu, ss_)
-        col, inside = sample(U.ravel(), S.ravel())
-        acc += col.reshape(H, W, 3); real += inside.reshape(H, W)
-T2 = acc / (SS * SS)
+        col, inside, a = sample(U.ravel(), S.ravel())
+        a = a.reshape(H, W)
+        acc += col.reshape(H, W, 3) * a[..., None]; wsum += a; real += inside.reshape(H, W)
+T2 = acc / np.maximum(wsum, 1e-6)[..., None]
+cover = wsum / (SS * SS)
 real /= SS * SS
+
+# HOLES: texels without enough valid E data, and the approved BUBBLES + Benny's splash foam (they must not repeat with
+# the tile: the game's own bubbles / splash are separate 3D objects). Bubbles are listed in SOURCE river coordinates
+# (u, s of the approved picture: centre u, centre s, radius u, radius s), so they stay valid if the tile is re-cut.
+BUBBLES = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "near_bubbles.json")))["bubbles"]
+uu_c = -1 + (np.arange(W) + 0.5) / W * 2
+ss_c = A + (np.arange(H) + 0.5) / H * L
+Uc, Sc = np.meshgrid(uu_c, ss_c)
+Ssrc = Sc + shift_of(Uc)
+hole = cover < 0.6
+for b in BUBBLES:
+    hole |= ((Uc - b[0]) / b[2]) ** 2 + ((Ssrc - b[1]) / b[3]) ** 2 <= 1.0
+from scipy.ndimage import binary_dilation as _dil, gaussian_filter as _gf
+hole = _dil(hole, iterations=2)
+# fill each hole along the column (= along the flow, s), between the valid texels at both ends, like the coin holes in
+# tools/proj05/bake.py; then a soft across-u blur inside the fill only (no smear outside the holes)
+fill = T2.copy()
+for x in range(W):
+    hcol = hole[:, x]
+    if not hcol.any():
+        continue
+    idx = np.nonzero(~hcol)[0]
+    if len(idx) < 2:
+        continue
+    hy = np.nonzero(hcol)[0]
+    for k in range(3):
+        fill[hy, x, k] = np.interp(hy, idx, T2[idx, x, k])
+sm = np.stack([_gf(fill[..., k], (0.8, 2.0)) for k in range(3)], -1)
+T2i = np.where(hole[..., None], sm, T2)          # fallback fill (flat bars where a hole touches the tile's end)
+# main fill: each hole takes REAL water texture from just further along the same columns (gradient-domain clone, so the
+# patch's colours meet the surrounding water without an outline). The tile is mirror-padded along s first, exactly as
+# MirroredRepeatWrapping repeats it in the game, so holes at the tile's ends clone across the mirror like the game sees.
+import cv2
+from scipy.ndimage import label as _label, find_objects as _find
+PADY, PADX = H // 2, 24
+big = np.pad(np.clip(T2i * 255, 0, 255).astype(np.uint8), ((PADY, PADY), (PADX, PADX), (0, 0)), mode="symmetric")
+bmask = np.pad(hole, ((PADY, PADY), (PADX, PADX)), mode="symmetric")
+bmask[:, :PADX] = False; bmask[:, -PADX:] = False
+lab, nlab = _label(bmask)
+cloned = 0
+for k, sl in enumerate(_find(lab), 1):
+    if sl is None:
+        continue
+    r0, r1 = sl[0].start, sl[0].stop
+    if r1 <= PADY - 4 or r0 >= PADY + H + 4:          # only components that reach the real tile
+        continue
+    comp = lab == k
+    h = r1 - r0
+    done = False
+    for dy in (h + 12, -(h + 12), 2 * h + 24, -(2 * h + 24)):
+        if r0 + dy < 2 or r1 + dy > big.shape[0] - 2:
+            continue
+        if (np.roll(comp, dy, 0) & bmask).sum() > 0.02 * comp.sum():   # the source must be clean water
+            continue
+        src = np.roll(big, -dy, 0)                    # src at the hole = the water dy rows further along s
+        m8 = (_dil(comp, iterations=3) * 255).astype(np.uint8)
+        ys, xs = np.nonzero(m8)
+        cx, cy = (xs.min() + xs.max() + 1) // 2, (ys.min() + ys.max() + 1) // 2
+        big = cv2.seamlessClone(src, big, m8, (int(cx), int(cy)), cv2.NORMAL_CLONE)
+        cloned += 1; done = True
+        break
+T2 = big[PADY:PADY + H, PADX:PADX + W].astype(np.float64) / 255.0
+hole_share = float(hole.mean())
 Image.fromarray(np.clip(T2 * 255 + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(DIR, "proj05_T2.png"), optimize=True)
 
 # flow map of the new tile with the existing flow_bake.flow_of (same structure-tensor method, same encoding)
@@ -104,6 +201,8 @@ rep = dict(
     visible_u_range={f"{s:.1f}": [round(float(np.interp(s, s_row, ulo)), 3), round(float(np.interp(s, s_row, uhi)), 3)]
                      for s in (130.5, 132, 134, 136, 137.5)},
     share_of_texels_from_visible_water=round(float(real.mean()), 3),
+    share_filled_along_flow=round(hole_share, 4), bubbles_removed=len(BUBBLES), holes_cloned=cloned,
+    column_shift_s={f"{u:+.1f}": round(float(shift_of(u)), 2) for u in (-0.9, -0.7, -0.5, -0.3, 0.0, 0.3, 0.5, 0.7, 0.9)},
     flow=dict(file="proj05_WT2.png", height=out_h, mean_abs_slope_world=round(float(np.abs(m * hw)[mask > 0.5].mean()), 3),
               flow_area=round(float((mask > 0.5).mean()), 3)),
 )
