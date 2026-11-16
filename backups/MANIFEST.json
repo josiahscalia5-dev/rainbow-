@@ -1267,6 +1267,16 @@
    "sha256": "a131a03ec3628c550920b69689671ffa1a7847057a4939cd01bb802efa456bfd"
   },
   {
+   "path": "qa/pilot05/wave10/water/it01/05.png",
+   "bytes": 1712268,
+   "sha256": "1c8cdccd602f25ae5df2bc7b955c788bfcd04c7c214adf4a23a88295f5466801"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/it01/diff05.md",
+   "bytes": 1389,
+   "sha256": "d0ef59589cf5360bacf7f996d89c9eccfd00703984e5f3cbf547b6144bdc018e"
+  },
+  {
    "path": "qa/pilot05/wave3/benny/it00/05.png",
    "bytes": 1403849,
    "sha256": "b4cc45132d80c16b71c0d6ace67295fc40045436e490cf3c781495f97b03e2fb"
@@ -6063,8 +6073,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 53332,
-   "sha256": "010ef45bfdc728064aa9a12f3c6162952df5df82cc7267a087851e9390488b42"
+   "bytes": 59638,
+   "sha256": "f0cf2015e56a3790eccf2edc30a1896b263ff9747a4342100c2597175a97e418"
   },
   {
    "path": "src/vfx/whirlpool.ts",
