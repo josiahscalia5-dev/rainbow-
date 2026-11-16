@@ -541,3 +541,175 @@ Notifications are queued for this session (more may arrive before you read them)
 
 PR #10 is in good order: no CI runs on this repository, no review comments, and no merge conflict, so nothing needs doing there. My answer to your plugin question above stands as written.
 
+### 🧑 User — 2026-11-16T19:56:01.966Z
+
+do the purple walls and gold rings next
+
+### 🤖 Claude — 2026-11-16T19:56:36.178Z
+
+On it. I'll start by reading how the tunnel walls and rings are built and how the water bake was wired in, so the walls and rings use the same proven method.
+
+### 🤖 Claude — 2026-11-16T19:56:37.549Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -5; git log --oneline -3; ls; echo ---; wc -l src/*/*.ts src/*.ts 2>/dev/null | sort -n | tail -50; echo ---; ls tools/proj05 scripts | head -80", "description": "List source tree and projection tools"}`
+
+### 🧑 User — 2026-11-16T19:56:37.614Z
+
+> ↩︎ result: 9e57d83 autosave: Rainbow 2026-11-16 19:55 UTC
+> 30414cd autosave: Rainbow 2026-11-16 19:54 UTC
+> 1d5ad35 autosave: Rainbow 2026-11-16 19:54 UTC
+> CLAUDE.md
+> README_FIRST.md
+> REFERENCE_ORDER.md
+> Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> START_HERE_PASTE_TO_CLAUDE.md
+> TOOL_SETUP_AND_VERIFICATION.md
+> VISUAL_QA_CHECKLIST.md
+> android
+> assets
+> backups
+> builds
+> capacitor.config.ts
+> character_references
+> docs
+> index.html
+> node_modules
+> package-lock.json
+> package.json
+> public
+> qa
+> references
+> screenshots
+> scripts
+> src
+> tools
+> tsconfig.json
+> vite.config.ts
+> ---
+>     23 src/main.ts
+>     26 src/render/grade.ts
+>     37 src/characters/types.ts
+>     53 src/gameplay/input.ts
+>     60 src/render/env.ts
+>     96 src/vfx/spray.ts
+>    112 src/vfx/proj05Apron.ts
+>    119 src/vfx/puddles.ts
+>    129 src/game/modules.ts
+>    138 src/ui/hud.ts
+>    151 src/world/towel.ts
+>    159 src/game/cameraRig.ts
+>    161 src/ui/cinematicVideo.ts
+>    168 src/vfx/glsl.ts
+>    183 src/vfx/finalWave.ts
+>    186 src/gameplay/coins.ts
+>    190 src/world/laundryRoom.ts
+>    199 src/vfx/whirlpool.ts
+>    231 src/vfx/flow05.ts
+>    239 src/vfx/drumWater.ts
+>    283 src/vfx/index.ts
+>    321 src/world/far05.ts
+>    463 src/vfx/riderSplash.ts
+>    472 src/vfx/bubbles.ts
+>    629 src/world/cours …[+915 chars]
+
+### 🤖 Claude — 2026-11-16T19:56:38.605Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p qa/pilot05/COORDINATION_WAVE9B.md | cut -c1-600; echo; ls qa/pilot05 | head -60", "description": "Read the Screen 05 controlled-test rules"}`
+
+### 🧑 User — 2026-11-16T19:56:38.649Z
+
+> ↩︎ result: # Screen 05: wave 9b — BEFORE restored, controlled geometry tests (session `012NR93N`, branch `ccr-44f84024-ii5iih`)
+> 
+> 2026-11-16, from ~09:50 UTC. Coordinator work in the main session (no specialists launched: the user asked to stop
+> wasting credits at 03:20 UTC, then "Continue" at 09:50).
+> 
+> ## The user's decisions (2026-11-16 ~10:20 UTC) — these override earlier wave notes
+> 1. **Google Flow videos cover the opening and the ending** (girl loads the washer with hidden Benny; girl retrieves
+>    the towel). Do NOT spend effort rebuilding 01 / 02 / 11 as detailed 3D artwork. Keep the video hand-over working
+>    (`docs/FLOW_VIDEO.md`); intro → gameplay and gameplay → ending must be seamless.
+>    **No video file is in the repo yet** (`public/video/` holds only the placeholder) — the user has to upload
+>    `intro.mp4` / `ending.mp4`; until then the real-time 3D cinematics play.
+> 2. **Specialists focus on PLAYABLE gameplay, screens 03–09.** Screen 05 first ("as close as possible to the approved
+>    artwork, ideally 90–95 % if achievable"), then the screens that differ most: 03, 04, 06, 07, 08, 09.
+>    Use the existing Marble assets, Blender and Three.js. Keep the ten specialists, the five-minute aut …[+6411 chars]
+
+### 🤖 Claude — 2026-11-16T19:56:42.143Z
+
+> 🔧 **Bash** `{"command": "grep -n \"wall05\\|gold05\\|proj05\\|PROJ05\\|qparam\\|URLSearchParams\" -r src --include=*.ts | grep -v \"^src/vfx/waterRibbon.ts\" | cut -c1-220 | head -80", "description": "Find the existing wall, gold and projection switches"}`
+
+### 🧑 User — 2026-11-16T19:56:42.180Z
+
+> ↩︎ result: src/ui/cinematicVideo.ts:57:  const q = new URLSearchParams(location.search);
+> src/ui/cinematicVideo.ts:78:  const focus = opts.focus ?? new URLSearchParams(location.search).get('videoFocus') ?? '50% 50%';
+> src/characters/girl/girl-lab.ts:13:const q = new URLSearchParams(location.search);
+> src/characters/benny/benny-lab.ts:18:const q = new URLSearchParams(location.search);
+> src/characters/benny/runtime.ts:26:  const qp = new URLSearchParams(location.search).get('quality');
+> src/characters/benny/runtime.ts:52:  const v = parseFloat(new URLSearchParams(location.search).get('bennyLift') ?? '');
+> src/characters/benny/runtime.ts:66:  const v = parseFloat(new URLSearchParams(location.search).get('bennyPitch') ?? '');
+> src/characters/benny/runtime.ts:99:    const tint = new URLSearchParams(location.search).get('bennyTint');
+> src/characters/benny/runtime.ts:218:    const qs = new URLSearchParams(location.search);
+> src/world/environment.ts:13:import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
+> src/world/environment.ts:14:import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+> src/world/environment.ts:245:  const qaNear05 = …[+6234 chars]
+
+### 🤖 Claude — 2026-11-16T19:56:43.243Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^export \\|^function \\|^const [A-Z_0-9]* =\\|^  // ----\\|^// ====\\|^// ---\" src/world/environment.ts | cut -c1-200", "description": "Outline the environment builder"}`
+
+### 🧑 User — 2026-11-16T19:56:43.286Z
+
+> ↩︎ result: 19:export interface Environment {
+> 40:export function buildEnvironment(course: Course): Environment {
+> 252:  // ---- 05 current (ref 05): long ring bays + forced-perspective far tunnel, anchored to the 05 camera ----
+> 405:  // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
+> 661:// ---------------------------------------------------------------------------------------
+> 662:function buildBasinBackdrop(g: THREE.Group, goldMat: THREE.Material, chromeMat: THREE.Material) {
+> 767:function buildSpout(domeMat: THREE.Material, rimMat: THREE.Material, size: number): THREE.Group {
+> 778:function buildPourStream(from: THREE.Vector3, floorY: number, dirX: number) {
+> 804:function buildSock(): THREE.Group {
+> 828:function buildShirt(): THREE.Group {
+> 862:function pinkFlowMaterial() {
+
+### 🤖 Claude — 2026-11-16T19:56:45.191Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 236, "limit": 270}`
+
+### 🧑 User — 2026-11-16T19:56:45.234Z
+
+> ↩︎ result: 236	  // qa/pilot05/wave9b/T2/): the approved ring A centre is 59 px BELOW the vanishing point, BEFORE's 44 px ABOVE,
+> 237	  // while rings B, C, D already sit like the approved (slightly above). Lowering the WHOLE tunnel moved B–D
+> 238	  // away from the approved (rejected). T2 lowers only the tunnel up to ring A (26 u ahead of the eye) by
+> 239	  // ?nearfloor05=<d> units and blends back to BEFORE before ring B (40 u): radius 7.6, ring depths and spacing,
+> 240	  // ring B onward, the far block, camera, river and gameplay are untouched.
+> 241	  // PROMOTED 2026-11-16 ~11:45 UTC together with T1 (user: "only promote T2 if it is genuinely closer"): default 2.0 u
+> 242	  // with ring A at 20 u = ring A centre (502,478) r 433 vs approved (474,529) r 492 (BEFORE (505,426) r 374), its arc
+> 243	  // meets the right edge at y 241 (approved 229, BEFORE 321); B, C, D, 06, 07 pixel-identical (qa/pilot05/wave9b/T2b/).
+> 244	  // BEFORE = ?ringa=26&nearfloor05=0 (pixel-identical to qa/pilot05/wave9/baseline/05.png).
+> 245	  const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 2) : 2;
+> 246	  const NEAR_FLOOR05 = Number.isFinite(qaNear05) ? qaNear …[+21056 chars]
+
+### 🤖 Claude — 2026-11-16T19:56:53.101Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look && cd /home/user/rainbow- && python3 -I - <<'EOF'\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/'\na=Image.open('references/05_flow_into_the_current.png').convert('RGB'); print(a.size)\ng=Image.open('qa/pilot05/current_default_05.png').convert('RGB'); print(g.size)\nif a.size!=(864,1536): a=a.resize((864,1536),Image.LANCZOS)\n# upper tunnel region 0..864 x 180..700\nfor name,im in (('approved',a),('game',g)):\n    c=im. …[+179 chars]`
+
+### 🧑 User — 2026-11-16T19:56:54.450Z
+
+> ↩︎ result: (864, 1536)
+> (864, 1536)
+
+### 🤖 Claude — 2026-11-16T19:56:56.679Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/approved_tunnel.png"}`
+
+### 🧑 User — 2026-11-16T19:56:56.740Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T19:56:57.322Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/look/game_tunnel.png"}`
+
+### 🧑 User — 2026-11-16T19:56:57.367Z
+
+> ↩︎ result: [image]
+
