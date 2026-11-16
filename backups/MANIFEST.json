@@ -394,7 +394,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5349,
-   "sha256": "e86896c24f1da25e3022a52eaf927f6fbf478fb546e9da54018bf89f0b8b3d37"
+   "sha256": "3420441252da91d7f280901e3b7f8f9bbc800ae5499bb24271c0f0cd4f5fec06"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -3275,6 +3275,11 @@
    "path": "qa/pilot05/wave8/baseline/08.png",
    "bytes": 1428957,
    "sha256": "4c5b9d985376ce5cccac3fa0e7594b661264446dc06bc88e40d2e56d8bae40ff"
+  },
+  {
+   "path": "qa/pilot05/wave8/environment/NOTES.md",
+   "bytes": 1151,
+   "sha256": "7769f66891091d71768d8d8116d7ca140b43e3bf75de12e0d4c598183570eccb"
   },
   {
    "path": "qa/pilot05/wave8/path-camera/NOTES.md",

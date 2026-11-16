@@ -253,3 +253,87 @@ Let me crop and enlarge the far region of both images to compare details.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T01:43:29.285Z
+
+The live far river is a straight striped wedge. Let me understand the geometry: sF05, bay05, the course offset in 05, and the water ribbon's coreLateral.
+
+### 🤖 Claude — 2026-11-16T01:43:30.391Z
+
+> 🔧 **Bash** `{"command": "grep -n 'sF05\\|bay05\\|sGlow05\\|sCam05' src/world/environment.ts | head -40; grep -n 'coreLateral\\|offset05\\|CORE_SWING' -r src | head -30", "description": "Find sF05/bay05 definitions and coreLateral usage"}`
+
+### 🧑 User — 2026-11-16T01:43:30.431Z
+
+> ↩︎ result: 236:  // end with a ring at depth ≈54 (sF05) and a ForcedTunnel (tube.ts) continues the same tunnel — walls,
+> 239:  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> 240:  const bay05 = 14;
+> 241:  const sGlow05 = course.stage('06').s0 - 5.9; // the straight flares into the 06 hall after this
+> 242:  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+> 244:  for (let s = sF05; s >= s05 + 2; s -= bay05) rings05.unshift(s);
+> 248:  const slotPitch05 = bay05 / 10;
+> 280:  addWall(s05, sGlow05, perf05Mat);
+> 281:  addWall(sGlow05, s08, perfTubeMat);
+> 307:  for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
+> 334:  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
+> 337:  for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
+> 355:    const D0 = tubeCenterAt(perfPath, sF05).sub(eye).dot(T);
+> 357:    const knots: [number, number][] = [[0, 0], ...ringDv.map((d, i) => [(i + 1) * bay05, Math.max(d - D0, (i + 1) * bay05)] as [number, number])];
+> 359:     …[+2966 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:31.924Z
+
+> 🔧 **Bash** `{"command": "sed -n 120,175p src/world/course.ts; sed -n 470,560p src/world/course.ts", "description": "Read course offset05 and S05 definitions"}`
+
+### 🧑 User — 2026-11-16T01:43:31.960Z
+
+> ↩︎ result: lambda: 32,
+>   /** u of the first (left) crest, where Benny rides at the 05 checkpoint */
+>   uCrest: 14,
+>   /** crest amplitude at uCrest and at uCrest + 1.5 λ (linear growth in between) */
+>   a0: 0.45,
+>   a1: 1.85,
+>   /** half extent of the stream (|offset| + half width) in the current: fills the tube floor */
+>   extent: 6.0,
+> };
+> 
+> /**
+>  * 05 meander AHEAD of Benny's crest (u > uCrest): [u, offset] knots fitted to the APPROVED reference (wave 6
+>  * camera lock, qa/pilot05/wave6/camera_lock/landmarks.json). The reference's coin trail was back-projected
+>  * through the live locked 05 camera onto the river (coin height 1.2 u) and converted to offsets from the
+>  * tunnel line; coins sit at (1 + latK·CORE_SWING) ≈ 1.62 × the course offset, so knot = coin offset / 1.62.
+>  * Ref coins (px → u, coin offset): (474,726)→21.6,−0.31 · (548,661)→26.3,+0.60 · (482,612)→32.2,−0.37 ·
+>  * (431,574)→43.0,−1.85 · (466,546)→55.5,−1.28 · (495,533)→67.0,−0.26. The previous sine (λ 32) put the right
+>  * swing at u≈30–33 and +1.45 wide, so the 3rd coin sat ≈100 px right of the reference.
+>  * Interpolation: C¹ cubic Hermite (non-uniform Catmull-Rom tangents), slope 0 at the crest and at L.
+>  */
+> const MEANDER05_KNOTS: [numb …[+6124 chars]
+
+### 🤖 Claude — 2026-11-16T01:43:32.657Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,140p src/vfx/waterRibbon.ts", "description": "Read waterRibbon header and coreLateral"}`
+
+### 🧑 User — 2026-11-16T01:43:32.692Z
+
+> ↩︎ result: /**
+>  * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.
+>  *
+>  * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+>  * concave trough with raised frothy edges plus a short skirt under each edge (thickness).
+>  * Shader: electric-cyan core with meandering hot-pink flow bands, advected white streaks and
+>  * sparkles (two-phase flow-map advection so per-stage speeds never shear), Fresnel/haze
+>  * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+>  * glowing chevrons on the 04 slide, a dithered hand-over to the whirlpool surface in 03 and a
+>  * drain-away for the 11 outro.
+>  */
+> import * as THREE from 'three';
+> import type { Course, StageId } from '../world/course';
+> import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 
+> /** wave amplitude per stage (units); blended across boundaries */
+> const AMP: Partial<Record<StageId, number>> = {
+>   '02': 0.06, '03': 0.08, '04': 0.03, '05': 0.1, '06': 0.12, '07': 0.1, '08': 0.1, '09': 0.16, '10': 0.08, '11': 0.05,
+> };
+> export const EDGE_LIFT = 0.28;
+> 
+> /**
+>  * Per-stage colour-band layout (blended across stage bound …[+5991 chars]
+

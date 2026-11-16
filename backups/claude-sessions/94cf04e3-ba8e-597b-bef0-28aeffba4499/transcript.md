@@ -2728,3 +2728,36 @@ Both specialists are running. In case this account runs out mid-wave, I'll recor
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:wave8-start --message \"wave 8 started: path-camera + environment specialists (brief qa/pilot05/COORDINATION_WAVE8.md)\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|skipping'; python3 -I scripts/autosave-status.py", "description": "Save wave-8 brief and status, verify autosave", "timeout": 300000}`
 
+### 🧑 User — 2026-11-16T01:43:26.956Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "65cafe85b6f407863b154955103bf4bdca9eeb82",
+> AUTOSAVE OK | branch ccr-937c7fbb-htsrgt | scheduler daemon | last verified backup 2026-11-16T01:43:20+00:00 (0.1 min ago) | local 65cafe8 remote 65cafe8 (match) | uncommitted 1
+
+### 🤖 Claude — 2026-11-16T01:43:33.416Z
+
+We're continuing here. I checked first that your other session has gone quiet (nothing pushed since 01:31 UTC), so the two won't overwrite each other.
+
+**What's happening now (wave 8 of the Screen 05 work):** I compared your approved Screen 05 with the current game and started two specialists in parallel. Each works only in its own part of the code, so they won't collide.
+- **path-camera-transition-engineer:**
+  - make the far river keep winding in S-curves into the golden light (it currently turns into a straight striped wedge);
+  - extend the coin trail toward the vanishing point without breaking real coin pickups;
+  - fix the far ring spacing (the second ring is too big and there's an extra one).
+- **washer-environment-modeler:**
+  - make the rings read as bright, glowing gold instead of dim salmon;
+  - make the walls luminous magenta-pink instead of deep violet;
+  - turn the flat plank-like lids into rounded glossy domes;
+  - warm up the vanishing-point light.
+
+Each one measures every attempt against your approved image, keeps only changes that look closer, and finishes by checking that screens 04–08 still behave and the gameplay test passes.
+
+**Progress is protected:** the brief and a "before" capture are saved on GitHub (`65cafe8`, remote matches). The autosave pushes the specialists' work every five minutes. If this account runs out mid-wave, the handoff files say exactly where to pick up.
+
+I'll report what they changed, with before/after comparisons, when they finish. After that the plan is foam (replacing the big white bubble heaps with fine bubble rims), water polish and a full visual review.
+
+### 🧑 User — 2026-11-16T01:43:34.404Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
