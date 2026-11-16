@@ -439,7 +439,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "6c1f457d8f0451c07dcc3787c6f33c0eea2c62ded28a1b20b877f64c58319610"
+   "sha256": "b3abcbb845e3eebbfc254b108e5b9818fda972240aa6f4dc7bf3504f37846ee1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1408,8 +1408,8 @@
   },
   {
    "path": "qa/pilot05/proj/clips/proj05_ride_4s.mp4",
-   "bytes": 1972153,
-   "sha256": "d8af98338093a219c78d7a1cd6412e86d9dcda9c4f46bf64ec61f22af49cb05a"
+   "bytes": 2007272,
+   "sha256": "a60a8d5329972e7f5efd540b40a06d9c2ea3b544feb613eb55a587a56e1f9c03"
   },
   {
    "path": "qa/pilot05/proj/compare/1_APPROVED.png",
@@ -1485,6 +1485,11 @@
    "path": "qa/pilot05/proj/target/water_mask.png",
    "bytes": 5661,
    "sha256": "11aa34d4d95a5e34219557e2b144440adc85e4aa88ff6f262e87852bc754aa47"
+  },
+  {
+   "path": "qa/pilot05/proj/tests/gameplay_proj05.json",
+   "bytes": 14655,
+   "sha256": "fe5ee368fb22aa823207d821e72e9ddd4d698f7bf09809f89ced5e225f07a719"
   },
   {
    "path": "qa/pilot05/water/before/03.png",

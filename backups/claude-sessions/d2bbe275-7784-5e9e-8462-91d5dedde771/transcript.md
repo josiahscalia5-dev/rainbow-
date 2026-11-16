@@ -3455,3 +3455,41 @@ The tile now carries hot-pink S-ribbons on both sides, a glossy cyan core and fo
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/move/sheet_final.png"}`
 
+### 🧑 User — 2026-11-16T18:32:57.094Z
+
+> ↩︎ result: 1
+> Updated 1 path from the index
+> {'px': 559997, 'mean_abs': 23.21, 'within_10': 0.6534, 'within_20': 0.7221, 'ssim_lum': 0.7683}
+> 7
+> clip frames 96
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-16T18:32:57.259Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:33:03.113Z
+
+> 🔧 **Bash** `{"command": "head -12 scripts/gameplay-test.mjs | grep -E \"^//\" ; head -15 scripts/perf05.mjs | grep -E \"^//\"; grep -n \"test:continuity\" package.json", "description": "Read usage of gameplay, perf and continuity tests"}`
+
+### 🧑 User — 2026-11-16T18:33:03.181Z
+
+> ↩︎ result: // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> // Relative frame cost of Screen 05 URL-switch variants at the locked checkpoint (headless Chromium, WebGL2).
+> //   node scripts/perf05.mjs OUT.json [--size=864x1536] name=query ...
+> 12:    "test:continuity": "vite-node scripts/continuity-test. …[+4 chars]
+
+### 🤖 Claude — 2026-11-16T18:33:06.236Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/proj/tests && (node scripts/gameplay-test.mjs --q=proj05=1 --out=qa/pilot05/proj/tests/gameplay_proj05.json 2>&1 | tail -4) ; (npm run -s test:continuity 2>&1 | tail -3); (node scripts/perf05.mjs qa/pilot05/proj/tests/perf05.json default= proj05=proj05=1 2>&1 | tail -6)", "description": "Run gameplay, continuity and relative perf tests with proj05", "timeout": 3600000}`
+
