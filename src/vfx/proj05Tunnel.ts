@@ -15,7 +15,7 @@
  */
 import * as THREE from 'three';
 import { PROJ05_INVERSE, flag05, proj05Pending } from './waterRibbon';
-import { wallLidGeometry, wallLidMatrix, type TubePath } from '../world/tube';
+import { wallLidMatrix, type TubePath } from '../world/tube';
 
 export const PROJWALL05: boolean = flag05('projwall05');
 export const PROJRING05: boolean = flag05('projring05');
@@ -27,16 +27,16 @@ export const PROJLID05: boolean = flag05('projlid05');
 /**
  * `?projlid05=1`: the approved picture's large wall paddles L1 L2 (left) R1 R2 (right), each fitted with one real lid
  * on the real 05 wall seen from the locked 05 camera (scripts/proj05-lid-fit.mjs → qa/pilot05/proj/tunnel/lid/fit.json,
- * silhouette IoU 0.67–0.91, never crossing a ring band). ds = arc length ahead of the 05 checkpoint eye (sCam05), side +1 = screen right, angle
+ * tray silhouette IoU 0.51–0.76, never crossing a ring band). ds = arc length ahead of the 05 checkpoint eye (sCam05), side +1 = screen right, angle
  * above the tube axis and droop as wallLidBasis, size before the radius scale. They sit higher on the wall than the
  * default pairs (above eye level), so the camera sees their undersides like the approved picture. The small far pair
  * (L3, R3) is the existing forced-perspective far lids.
  */
 export const LIDS05_FIT = [
-  { name: 'L1', side: -1, ds: 22.375, ang: 29.5, droop: 12.5, size: 1.8 },
-  { name: 'L2', side: -1, ds: 42.75, ang: 9, droop: 27.5, size: 2.2 },
-  { name: 'R1', side: 1, ds: 25.875, ang: 18.5, droop: 12.5, size: 2.95 },
-  { name: 'R2', side: 1, ds: 50.5, ang: 19, droop: 22.5, size: 2.45 },
+  { name: 'L1', side: -1, ds: 24.375, ang: 22, droop: -115, size: 1.75, stretch: 1.5 },
+  { name: 'L2', side: -1, ds: 47.5, ang: 0, droop: -115, size: 2.4, stretch: 1.5 },
+  { name: 'R1', side: 1, ds: 33.5, ang: -3.5, droop: -115, size: 2.8, stretch: 1.5 },
+  { name: 'R2', side: 1, ds: 50.5, ang: 9.5, droop: -50, size: 2.0, stretch: 1.25 },
 ] as const;
 
 /**
@@ -57,13 +57,14 @@ export function trayLidGeometry(h: number, segments = 28): THREE.BufferGeometry 
   return geo;
 }
 
-/** the fitted 05 paddles as one InstancedMesh (same geometry family as the default 05 lids, 'slab') */
-export function buildLids05Fit(path: TubePath, sCam05: number, thickness: number, material: THREE.Material): THREE.InstancedMesh {
-  const mesh = new THREE.InstancedMesh(wallLidGeometry('slab', thickness), material, LIDS05_FIT.length);
+/** the fitted 05 paddles (approved trays) as one InstancedMesh */
+export const TRAY05 = { depth: 0.45, sink: 0.2 };
+export function buildLids05Fit(path: TubePath, sCam05: number, material: THREE.Material): THREE.InstancedMesh {
+  const mesh = new THREE.InstancedMesh(trayLidGeometry(TRAY05.depth), material, LIDS05_FIT.length);
   const m = new THREE.Matrix4();
   LIDS05_FIT.forEach((l, i) => {
     const s = sCam05 + l.ds;
-    mesh.setMatrixAt(i, wallLidMatrix(path, s, l.side, l.ang, l.droop, l.size * Math.min(1.4, path.radius(s) / 7.6), 1.0, 0.1, m));
+    mesh.setMatrixAt(i, wallLidMatrix(path, s, l.side, l.ang, l.droop, l.size * Math.min(1.4, path.radius(s) / 7.6), l.stretch, TRAY05.sink, m));
   });
   mesh.count = LIDS05_FIT.length;
   mesh.instanceMatrix.needsUpdate = true;

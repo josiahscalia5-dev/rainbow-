@@ -416,7 +416,7 @@ export function buildEnvironment(course: Course): Environment {
   };
   const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
   // `?projlid05=1` (src/vfx/proj05Tunnel.ts): the approved paddles L1 L2 R1 R2 fitted on the real wall; default unchanged
-  if (PROJLID05) zones.tubes.add(buildLids05Fit(perfPath, sCam05, lid05.thickness, lidMat05('lid05', false)));
+  if (PROJLID05) zones.tubes.add(buildLids05Fit(perfPath, sCam05, lidMat05('lid05', false)));
   else zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];

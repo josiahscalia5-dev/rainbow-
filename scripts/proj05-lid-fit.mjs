@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Screen 05 paddles (`?projlid05=1`): fit each of the approved picture's six wall lids (tools/proj05/tunnel_common.py
 // LIDS: L1 L2 L3 left, R1 R2 R3 right) with one real 3D lid on the real 05 wall, seen from the locked 05 camera.
-// Lid = the approved D-shaped TRAY (src/vfx/proj05Tunnel.ts trayLidGeometry), lying on the wall (droop ≈ −90°).
+// Lid = the approved D-shaped TRAY (src/vfx/proj05Tunnel.ts trayLidGeometry), lying on the wall: droop −90° (flat on
+// the tangent plane) … −65° (raised off the wall), never into it.
 // Grid search over (s along the tube, angle above the axis, droop, size, stretch along the tube) with the real lid geometry projected by the real
 // camera; score = raster IoU of the projected silhouette (convex hull) with the approved outline polygon (bounding-box
 // IoU >= 0.55 as a prefilter); a lid may not cross a gold ring band, and the camera must see its underside.
@@ -124,11 +125,11 @@ try {
     for (const [name, T] of Object.entries(TARGETS)) {
       if (name === 'L3' || name === 'R3') continue;   // beyond the real 05 tube: the forced-perspective far lids
       let best = null;
-      for (const side of [1, -1]) {
+      for (const side of [name[0] === 'L' ? -1 : 1]) {
         for (let s = D.sCam05 + 1; s <= D.sCam05 + 50; s += 0.5) {
           for (let ang = -16; ang <= 70; ang += 2) {
-            for (let droop = -105; droop <= -60; droop += 7.5) {
-              for (const stv of [0.8, 1.0, 1.25, 1.5]) { st = stv;
+            for (let droop = -90; droop <= -65; droop += 5) {
+              for (const stv of [1.0, 1.25, 1.5, 1.8]) { st = stv;
               for (let size = 1.0; size <= 4.01; size += 0.2) {
                 const szw = size * Math.min(1.4, r05 / 7.6);
                 if (!clearOfRings(s - D.sCam05, szw)) continue;
@@ -148,7 +149,7 @@ try {
       if (!best) { out[name] = { target: T, none: true }; continue; }
       const b0 = best; st = b0.stretch;
       for (let s = b0.s - 0.5; s <= b0.s + 0.5; s += 0.125) for (let ang = b0.ang - 2; ang <= b0.ang + 2; ang += 0.5)
-        for (let droop = b0.droop - 10; droop <= b0.droop + 10; droop += 2.5) for (let size = b0.size - 0.2; size <= b0.size + 0.2; size += 0.05) {
+        for (let droop = Math.max(-90, b0.droop - 5); droop <= Math.min(-65, b0.droop + 5); droop += 2.5) for (let size = b0.size - 0.2; size <= b0.size + 0.2; size += 0.05) {
           const szw = size * Math.min(1.4, r05 / 7.6);
           if (!clearOfRings(s - D.sCam05, szw)) continue;
           const b = box(s, b0.side, ang, droop, szw);

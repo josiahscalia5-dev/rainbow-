@@ -469,7 +469,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9219,
-   "sha256": "bcd9025de81819ebd302e96091aa20d0fcdfc82a2ee6619cbeda3a33ac9fe453"
+   "sha256": "a64ad18d4fba17fad88fda1950a5752ed2f00bbbeac95b08da247b393ef735ce"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1658,8 +1658,8 @@
   },
   {
    "path": "qa/pilot05/proj/tunnel/lid/fit.json",
-   "bytes": 1433,
-   "sha256": "6ee4ba5fdb3cde10872983e6dba9e8f3c71caa4218804705c97dfb32396c5c93"
+   "bytes": 1512,
+   "sha256": "eb9291a5e997809d14e68c754435b8b45c3284ac7cba0b8abf1c8397f518f998"
   },
   {
    "path": "qa/pilot05/proj/tunnel/model/bake_report.json",
@@ -6943,8 +6943,8 @@
   },
   {
    "path": "scripts/proj05-lid-fit.mjs",
-   "bytes": 10747,
-   "sha256": "723f600a4e8d5fbdd0462d2c46dc2b0413b205a74a5ce7f9142a25e15f9297cf"
+   "bytes": 10866,
+   "sha256": "e0b8f80bf5ebc1ad92feffa1f530c3d74622190850772e1779cd9a6b5703fdd0"
   },
   {
    "path": "scripts/proj05-move.mjs",
@@ -7163,8 +7163,8 @@
   },
   {
    "path": "src/vfx/proj05Tunnel.ts",
-   "bytes": 16717,
-   "sha256": "f4f06525177a3e655b5e386d1a1f4c8b729392ea8acd0d3216093dd6398cc664"
+   "bytes": 16759,
+   "sha256": "26e48a3de9194ebcd55cc09cf8528b6b3b796a236d8010ce84e5d3ce08192780"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -7198,8 +7198,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 59100,
-   "sha256": "146120f86aaea016a87def87153242f1fb4d2a971bb2098ecd4432d3ffbf719d"
+   "bytes": 59083,
+   "sha256": "dd742facb44631718988e7067775d5f9751ea3804bb560c673c49a28a704ef5e"
   },
   {
    "path": "src/world/far05.ts",

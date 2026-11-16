@@ -2134,3 +2134,58 @@ Imports are clean, with no circular dependency. Now I'll hook the switch into th
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-lid-fit.mjs'; s=open(p).read()\n# use the tray geometry, depth TRAY_H; droop near -90 (D flat on the wall, straight edge low), stretch along the tube\ns=s.replace(\"\"\"    const { wallLidMatrix, wallLidGeometry } = await import('/src/world/tube.ts');\"\"\",\"\"\"    const { wallLidMatrix } = await import('/src/world/tube.ts');\n    const { trayLidGeometry } = await import('/src/vfx/proj05Tunnel.ts');\"\"\")\ns=s.replace(\"\"\"    const geo = wallLidGeometry('slab', 0.36, 16);\"\"\",\"\"\"    const TRAY_H = 0.45, SINK = 0.2;\n    const geo = …[+2828 chars]`
 
+### 🧑 User — 2026-11-16T21:18:19.300Z
+
+> ↩︎ result: 45:    const TRAY_H = 0.45, SINK = 0.2;
+> 46:    const geo = trayLidGeometry(TRAY_H, 16);
+> 52:    let st = 1.0;
+> 98:    const seenFromBelow = (s, side, ang, droop, size) => {
+> 126:      let best = null;
+> 131:              for (const stv of [0.8, 1.0, 1.25, 1.5]) { st = stv;
+> 140:                if (!best || sc > best.iou) best = { iou: sc, boxIoU: bi, side, s, ds: s - D.sCam05, ang, droop, size, stretch: st, box: b.map((x) => Math.round(x)) };
+> 149:      const b0 = best; st = b0.stretch;
+> 159:          if (sc > best.iou) best = { iou: sc, boxIoU: bi, side: b0.side, s, ds: s - D.sCam05, ang, droop, size, stretch: st, box: b.map((x) => Math.round(x)) };
+> L1 shapeIoU 0.664 boxIoU 0.679 side -1 ds 24.38 ang 22 droop -115 size 1.75 stretch 1.5 box [77,303,195,415] target [62.5,315.5,214,420]
+> L2 shapeIoU 0.634 boxIoU 0.633 side -1 ds 47.50 ang 0 droop -115 size 2.40 stretch 1.5 box [259,403,330,478] target [248.8,418.8,332.5,472.5]
+> R1 shapeIoU 0.758 boxIoU 0.901 side 1 ds 33.50 ang -3.5 droop -115 size 2.80 stretch 1.5 box [731,397,864,527] target [720,400,864,527.5]
+> R2 shapeIoU 0.514 boxIoU 0.669 side 1 ds 50.50 ang 9.5 droop -50 size 2.00 stretch 1.25 box [642,396,709,450] target [631,394,696,45 …[+162 chars]
+
+### 🤖 Claude — 2026-11-16T21:18:23.169Z
+
+The tray fit reaches 0.76 overlap on the right big paddle and 0.51–0.66 on the others. Several values hit the edge of the search range, but I'll look at the actual picture before tuning numbers.
+
+### 🤖 Claude — 2026-11-16T21:18:34.432Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nf=json.load(open('qa/pilot05/proj/tunnel/lid/fit.json'))['fit']\np='src/vfx/proj05Tunnel.ts'; s=open(p).read()\ni0=s.index('export const LIDS05_FIT = ['); i1=s.index('] as const;',i0)\nrows=[]\nfor n in ['L1','L2','R1','R2']:\n    x=f[n]; rows.append(f\"  {{ name: '{n}', side: {x['side']}, ds: {round(x['ds'],3)}, ang: {x['ang']}, droop: {x['droop']}, size: {round(x['size'],3)}, stretch: {x['stretch']} }},\")\ns=s[:i0]+'export const LIDS05_FIT = [\\n'+'\\n'.join(rows)+'\\n'+s[i1:]\nold=\"\"\"export function buildLids05Fit(path: TubePath, sCam05: n …[+2465 chars]`
+
+### 🤖 Claude — 2026-11-16T21:18:35.574Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/l3_lidL.png"}`
+
+### 🤖 Claude — 2026-11-16T21:18:36.182Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/l3_lidR.png"}`
+
+### 🧑 User — 2026-11-16T21:18:54.488Z
+
+> ↩︎ result: { name: 'L1', side: -1, ds: 24.375, ang: 22, droop: -115, size: 1.75, stretch: 1.5 },
+>   { name: 'L2', side: -1, ds: 47.5, ang: 0, droop: -115, size: 2.4, stretch: 1.5 },
+>   { name: 'R1', side: 1, ds: 33.5, ang: -3.5, droop: -115, size: 2.8, stretch: 1.5 },
+>   { name: 'R2', side: 1, ds: 50.5, ang: 9.5, droop: -50, size: 2.0, stretch: 1.25 },
+> 0
+> Updated 1 path from the index
+>   LID       px   27726  mean|d|  62.40  <=10 0.044  <=20 0.128  SSIM 0.211  bias [15.1, 7.4, 33.9]
+>   TUNNEL    px  440275  mean|d|  48.46  <=10 0.169  <=20 0.295  SSIM 0.304  bias [5.2, 1.4, -6.5]
+
+### 🧑 User — 2026-11-16T21:18:54.514Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T21:18:54.521Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:19:08.654Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-lid-fit.mjs'; s=open(p).read()\ns=s.replace(\"      for (const side of [1, -1]) {\",\"      for (const side of [name[0] === 'L' ? -1 : 1]) {\")\ns=s.replace(\"for (let droop = -105; droop <= -60; droop += 7.5) {\",\"for (let droop = -90; droop <= -65; droop += 5) {\")\ns=s.replace(\"for (let droop = b0.droop - 10; droop <= b0.droop + 10; droop += 2.5)\",\"for (let droop = Math.max(-90, b0.droop - 5); droop <= Math.min(-65, b0.droop + 5); droop += 2.5)\")\ns=s.replace(\"for (const stv of [0.8, 1.0, 1.25, 1.5]) { st = stv;\",\"for (const stv o …[+510 chars]`
+
