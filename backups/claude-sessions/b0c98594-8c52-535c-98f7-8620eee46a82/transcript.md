@@ -3641,3 +3641,110 @@ The default search window for ring A tops out at radius 410, which is too small 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b; rm -rf $S; mkdir -p $S/fit; for d in 0 1.2 1.6 2 2.4; do timeout 600 node scripts/capture.mjs 05 --out=$S/n$d \"--q=ringa=20&nearfloor05=$d\" > $S/cap_$d.log 2>&1 || echo \"capture $d failed\"; echo '{\"A\": [495, 500, 475, 45, 90, 55]}' > $S/fit/guess_T2_$d.json; done; git checkout -q -- qa/capture_log.json; cp $S/fit/guess_T2_0.json $S/fit/guess_T1.json; python3 -I tools/qa/ring_fit05.py $S/fit APPROVED=references/05_flow_into_the_current.png BEFORE=qa/pilot05/wave9/b …[+780 chars]`
 
+### 🧑 User — 2026-11-16T11:33:12.946Z
+
+> ↩︎ result: image     | ring A centre  r     | A top y | dx/r    dy/r   | B r / dy/r     | C r   | D r
+> APPROVED  | (474, 529) 492.5 |     36 | -0.053 +0.120 | 239.5 -0.096 | 150.0 |  88.5
+> BEFORE    | (505, 426) 374.0 |     52 | +0.013 -0.118 | 227.5 -0.132 | 153.0 |  96.5
+> T1        | (486, 414) 459.5 |    -46 | -0.030 -0.122 | 227.5 -0.132 | 153.0 |  96.5
+> T2_1.2    | (494, 426) 437.5 |    -12 | -0.014 -0.101 | 227.5 -0.132 | 153.0 |  96.5
+> T2_1.6    | (530, 446) 458.0 |    -12 | +0.066 -0.052 | 227.5 -0.132 | 153.0 |  96.5
+> T2_2      | (502, 478) 433.0 |     45 | +0.005 +0.018 | 227.5 -0.132 | 153.0 |  96.5
+> T2_2.4    | (505, 503) 430.0 |     73 | +0.012 +0.077 | 232.0 -0.099 | 153.0 |  96.5
+
+### 🤖 Claude — 2026-11-16T11:33:21.970Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b; python3 -I -c \"\nfrom PIL import Image, ImageDraw\nlabs=[('APPROVED','references/05_flow_into_the_current.png'),('BEFORE','qa/pilot05/wave9/baseline/05.png'),('T1','$S/n0/05.png'),('T2 1.6','$S/n1.6/05.png'),('T2 2.0','$S/n2/05.png'),('T2 2.4','$S/n2.4/05.png')]\nims=[Image.open(p).convert('RGB').resize((864,1536)).resize((360,640)) for _,p in labs]\no=Image.new('RGB',(370*6,662),(15,15,20)); d=ImageDraw.Draw(o)\nfor i,(im,(l,_)) in enumerate(zip(ims,labs)): o.paste(im …[+170 chars]`
+
+### 🧑 User — 2026-11-16T11:33:22.515Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T11:33:23.021Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b/six.jpg"}`
+
+### 🧑 User — 2026-11-16T11:33:23.090Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T11:33:23.086Z
+
+[Image: original 2220x662, displayed at 2000x596. Multiply coordinates by 1.11 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T11:33:36.182Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b; python3 -I -c \"\nfrom PIL import Image, ImageDraw\nlabs=[('APPROVED','references/05_flow_into_the_current.png'),('BEFORE','qa/pilot05/wave9/baseline/05.png'),('T1','$S/n0/05.png'),('T2 2.0','$S/n2/05.png'),('T2 2.4','$S/n2.4/05.png')]\nims=[Image.open(p).convert('RGB').resize((864,1536)).crop((400,100,864,760)) for _,p in labs]\nims=[i.resize((348,495)) for i in ims]\no=Image.new('RGB',(358*5,517),(15,15,20)); d=ImageDraw.Draw(o)\nfor i,(im,(l,_)) in enumerate(zip(ims, …[+177 chars]`
+
+### 🧑 User — 2026-11-16T11:33:36.543Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T11:33:37.186Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b/upright.jpg"}`
+
+### 🧑 User — 2026-11-16T11:33:37.199Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T11:34:17.204Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b; ls qa/pilot05/wave9/baseline/; timeout 900 node scripts/capture.mjs 04 06 07 --out=$S/reg_def > /dev/null 2>&1; timeout 900 node scripts/capture.mjs 04 06 07 --out=$S/reg_t2 \"--q=ringa=20&nearfloor05=2\" > /dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -I - \"$S\" <<'PY'\nimport sys; from PIL import Image, ImageChops\nimport numpy as np\nS = sys.argv[1]\nfor n in (\"04\", \"06\", \"07\"):\n    a = Image.open(f\"{S}/reg_def/{n}.png\").convert(\"RGB\");  …[+568 chars]`
+
+### 🧑 User — 2026-11-16T11:35:50.994Z
+
+> ↩︎ result: 03.png
+> 04.png
+> 05.png
+> 06.png
+> 07.png
+> 08.png
+> 04: T2 vs default max diff 206, pixels changed >8: 0.051 % | default vs wave9 baseline max diff 0
+> 06: T2 vs default max diff 0, pixels changed >8: 0.000 % | default vs wave9 baseline max diff 0
+> 07: T2 vs default max diff 0, pixels changed >8: 0.000 % | default vs wave9 baseline max diff n/a
+
+### 🤖 Claude — 2026-11-16T11:35:54.169Z
+
+Screens 06 and 07 are pixel-identical. On 04, 0.05 % of the pixels changed. Let me see exactly where:
+
+### 🤖 Claude — 2026-11-16T11:35:58.868Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b; python3 -I - \"$S\" <<'PY'\nimport sys; from PIL import Image, ImageChops\nimport numpy as np\nS = sys.argv[1]\na = Image.open(f\"{S}/reg_def/04.png\").convert(\"RGB\"); b = Image.open(f\"{S}/reg_t2/04.png\").convert(\"RGB\")\nd = np.asarray(ImageChops.difference(a, b)).max(-1) > 8\nys, xs = np.nonzero(d); print(\"04 size\", a.size, \"changed bbox x\", xs.min(), xs.max(), \"y\", ys.min(), ys.max(), \"count\", d.sum())\nx0, x1, y0, y1 = max(0, xs.min()-60), min(a.width,  …[+395 chars]`
+
+### 🧑 User — 2026-11-16T11:35:59.209Z
+
+> ↩︎ result: 04 size (864, 1536) changed bbox x 305 550 y 477 607 count 672
+> (740, 250)
+
+### 🤖 Claude — 2026-11-16T11:36:00.119Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b/reg04.png"}`
+
+### 🧑 User — 2026-11-16T11:36:00.143Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T11:36:14.877Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/s05.ts <<'EOF'\nimport { Course } from '../../../../../home/user/rainbow-/src/world/course';\nconst c = new Course();\nconsole.log('s04', c.stage('04').s0.toFixed(1), 's05', c.stage('05').s0.toFixed(1), 'crest', c.marks['05_crest'].toFixed(1), 's06', c.stage('06').s0.toFixed(1));\nEOF\ncp /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/s05.ts tools/qa/_s05probe.ts && sed -i \"s#'../../../../../home/user/rainbow-/src/world/course'#'../../ …[+190 chars]`
+
+### 🧑 User — 2026-11-16T11:36:16.682Z
+
+> ↩︎ result: s04 70.4 s05 114.7 crest 132.4 s06 188.9
+
+### 🤖 Claude — 2026-11-16T11:36:37.832Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"qaNum05('ringa', 26)\\|get('nearfloor05') ?? 0) : 0\\|Default 26 = BEFORE\\|Default 0 = BEFORE (pixel-identical)\" src/world/environment.ts", "description": "Locate the T1/T2 default lines to change"}`
+
+### 🧑 User — 2026-11-16T11:36:37.873Z
+
+> ↩︎ result: 237:  // ring B onward, the far block, camera, river and gameplay are untouched. Default 0 = BEFORE (pixel-identical).
+> 238:  const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 0) : 0;
+> 266:  // Default 26 = BEFORE; ?ringa=20 shows the test. (The wave-9 oval / "big tunnel" tests are NOT in this code:
+> 272:  const RING_A05_DEPTH = qaNum05('ringa', 26);
+
+### 🤖 Claude — 2026-11-16T11:36:48.085Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\np = \"src/world/environment.ts\"; s = open(p).read()\nrep = [\n (\"  // ring B onward, the far block, camera, river and gameplay are untouched. Default 0 = BEFORE (pixel-identical).\\n\",\n  \"  // ring B onward, the far block, camera, river and gameplay are untouched.\\n\"\n  \"  // PROMOTED 2026-11-16 ~11:45 UTC together with T1 (user: \\\"only promote T2 if it is genuinely closer\\\"): default 2.0 u\\n\"\n  \"  // with ring A at 20 u = ring A centre (502,478) r 433 vs approved (474,529) r 492 (BEFORE (505,426) r 374), its arc\\n\"\n  …[+1617 chars]`
+

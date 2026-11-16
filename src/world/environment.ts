@@ -234,8 +234,12 @@ export function buildEnvironment(course: Course): Environment {
   // while rings B, C, D already sit like the approved (slightly above). Lowering the WHOLE tunnel moved B–D
   // away from the approved (rejected). T2 lowers only the tunnel up to ring A (26 u ahead of the eye) by
   // ?nearfloor05=<d> units and blends back to BEFORE before ring B (40 u): radius 7.6, ring depths and spacing,
-  // ring B onward, the far block, camera, river and gameplay are untouched. Default 0 = BEFORE (pixel-identical).
-  const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 0) : 0;
+  // ring B onward, the far block, camera, river and gameplay are untouched.
+  // PROMOTED 2026-11-16 ~11:45 UTC together with T1 (user: "only promote T2 if it is genuinely closer"): default 2.0 u
+  // with ring A at 20 u = ring A centre (502,478) r 433 vs approved (474,529) r 492 (BEFORE (505,426) r 374), its arc
+  // meets the right edge at y 241 (approved 229, BEFORE 321); B, C, D, 06, 07 pixel-identical (qa/pilot05/wave9b/T2b/).
+  // BEFORE = ?ringa=26&nearfloor05=0 (pixel-identical to qa/pilot05/wave9/baseline/05.png).
+  const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 2) : 2;
   const NEAR_FLOOR05 = Number.isFinite(qaNear05) ? qaNear05 : 0;
   const sEye05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
   const floorExtra05 = NEAR_FLOOR05 === 0 ? undefined
@@ -263,13 +267,13 @@ export function buildEnvironment(course: Course): Environment {
   // B 240, C 150, D 88 — and BEFORE draws B 228, C 153, D 96 (within −5…+9 %) but the front ring A only 374 (−24 %):
   // its bay slot sits 26 u ahead of the checkpoint eye (r ≈ 9724 / depth). T1 moves ONLY that ring to RING_A05_DEPTH
   // (20 u → r ≈ 490); tunnel radius, cross-section, camera, every other ring, the lids and the far block are untouched.
-  // Default 26 = BEFORE; ?ringa=20 shows the test. (The wave-9 oval / "big tunnel" tests are NOT in this code:
+  // Default 20 since the T2 promotion (2026-11-16); ?ringa=26 = BEFORE. (The wave-9 oval / "big tunnel" tests are NOT in this code:
   // qa/pilot05/wave9b/not_merged/.)
   const qaNum05 = (key: string, d: number) => {
     const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;
     return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;
   };
-  const RING_A05_DEPTH = qaNum05('ringa', 26);
+  const RING_A05_DEPTH = qaNum05('ringa', 20);
   // wave 9b controlled test W1 (user priority 1, 2026-11-16: glossy purple-metallic tunnel): tools/qa/diff05.py measured
   // the BEFORE walls too PINK (tunnel band pink 50 % vs approved 37 %) and too dull (white light streaks 0.9 % vs
   // 3.8 %). ?wall05=1 = ONE material factor: cooler violet wall F0 + emissive, brighter/wider/whiter lengthwise light

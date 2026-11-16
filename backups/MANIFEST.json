@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "21415a93c8fb9a5e45e4615c1d1bdd524962dab821f82bccc9036d250af85d86"
+   "sha256": "a18934b9707dd9175cf68fe4231faeb9a76008a9a4f31ccbb7663872a51f56a3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -838,8 +838,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1240,
-   "sha256": "f0208c697d81d3c48a6ada95215a8930646d393557b708bdc8cb0e258283cfbe"
+   "bytes": 1248,
+   "sha256": "14fda897f9aa681fbfe0e6aae78d366409f1abd7f8f18ce0b4d93692b0e28240"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -6028,8 +6028,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 53187,
-   "sha256": "8a775205cff4799927edaee638bc1fa9da1068d685c751c4a8d0a7be6bb877b0"
+   "bytes": 53623,
+   "sha256": "e1ac912bbf470c5a916cd88963c114c165e53a70319aff9d25a9d16f5127f99c"
   },
   {
    "path": "src/world/far05.ts",
