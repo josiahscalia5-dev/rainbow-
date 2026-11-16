@@ -422,6 +422,21 @@
    "sha256": "f67bb1759e80a3bd901f2aa5c79d65f8e0750e96d17476f79e3762d0209b1342"
   },
   {
+   "path": "assets/textures/water05/far1/proj05_E.png",
+   "bytes": 2035970,
+   "sha256": "d9d34cd67d1b8ab5580bcbf70a4fd46a49177877c718c52b7a26c4c6fbb92bd8"
+  },
+  {
+   "path": "assets/textures/water05/far1/proj05_F.png",
+   "bytes": 344553,
+   "sha256": "6f8958aa7c92bb2b96001ccde5414b514ee6c6e25e2612f2ab684490cf17c5f6"
+  },
+  {
+   "path": "assets/textures/water05/far1/proj05_lut.json",
+   "bytes": 27412,
+   "sha256": "27f50d69a751202535fd98a7433bad21e7481449e453b442fba59696f6bf9c8b"
+  },
+  {
    "path": "assets/textures/water05/proj05_A.png",
    "bytes": 85535,
    "sha256": "ba6b1a4915416da6b4a1dc85e0eeebaff93120bad6a46c7b01be08e5fe918bfc"
@@ -509,7 +524,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10203,
-   "sha256": "18881f4b51ac85c3f897bc16671552299e8f782e40968d3eae1f4213402e36e6"
+   "sha256": "dbcab3f02f411884bdca61a3966c0d9f67fc8f86bd034e7fd8f1472a89551119"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2005,6 +2020,21 @@
    "path": "qa/pilot05/proj/probe/river05_mesh.json",
    "bytes": 1285808,
    "sha256": "b7c86f523f8af3cc9a1c5d5bff090e1468010a957b2528d2e7d681caeac1ea97"
+  },
+  {
+   "path": "qa/pilot05/proj/status_1116_2330/1_APPROVED.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/proj/status_1116_2330/2_BEFORE_game_default_today.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/proj/status_1116_2330/3_NEW_full_stack_locked.png",
+   "bytes": 2179543,
+   "sha256": "8863ea3fe339d240c241e588802bf542b0155b7a30fdc49ecb44b8f9f34a2a59"
   },
   {
    "path": "qa/pilot05/proj/steer/NEW_steer_left_0.8s.png",
@@ -7753,8 +7783,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 103427,
-   "sha256": "8c57fc2bb58178dee6f911db617a72bec41cebb3e09199f52ce5786e55e67e4f"
+   "bytes": 104397,
+   "sha256": "c7fce7a93e1c5d9c0a9624e5d7d4b548d272b63ab4e02609895aafcccf2b7f56"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -7913,8 +7943,8 @@
   },
   {
    "path": "tools/proj05/bake.py",
-   "bytes": 14792,
-   "sha256": "1ce19441fed454f73a2574bf0d44286287df16cb641c6625b861be802e8d3932"
+   "bytes": 16638,
+   "sha256": "d39a1827e8687e103ef72addfbdfcb6cc05fe92b6ee97a927550a9e6ad54011d"
   },
   {
    "path": "tools/proj05/flow_bake.py",

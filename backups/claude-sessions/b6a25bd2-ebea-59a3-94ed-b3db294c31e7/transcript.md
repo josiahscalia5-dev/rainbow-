@@ -526,3 +526,268 @@ Measuring exactly where the game's river sits on screen versus where your approv
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T23:31:31.791Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nW,H=864,1536\nSc=np.fromfile('$S/probe/uv_scene.f32',np.float32).reshape(H,W,4)\nwm=np.asarray(Image.open('qa/pilot05/proj/target/water_mask.png'))>127\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(float)\nb=np.asarray(Image.open('$S/cap_full/05.png').convert('RGB')).astype(float)\nd=np.abs(a-b).mean(-1)\nrib=np.abs(Sc[...,2]-1)<0.6; far=np.abs(Sc[...,2]-3)<0.01; ap=np.abs(Sc[...,2]-5)<0.01\ …[+1000 chars]`
+
+### 🧑 User — 2026-11-16T23:31:32.212Z
+
+> ↩︎ result: ribbon & approved water                px  28363  mean abs   20.6  within20  67.0%
+> ribbon & approved NOT water (green)    px   1200  mean abs   51.1  within20  35.9%
+> far block & approved water (blue)      px   9547  mean abs   35.0  within20  54.8%
+> far block & NOT water (green)          px   1798  mean abs   74.3  within20   3.1%
+> apron & water                          px  11923  mean abs    6.8  within20  92.4%
+> apron & not water                      px  11095  mean abs   59.4  within20  14.6%
+> no river surface & approved water (red) px   6569  mean abs   74.8  within20   5.6%
+> no river surface, not water (walls)    px  55505  mean abs   50.9  within20  25.3%
+> whole far zone                         px 126000  mean abs   41.0  within20  41.1%
+
+### 🤖 Claude — 2026-11-16T23:31:38.848Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; D=qa/pilot05/proj/status_1116_2330; mkdir -p $D && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && cp qa/pilot05/current_default_05.png $D/2_BEFORE_game_default_today.png && cp $S/cap_full/05.png $D/3_NEW_full_stack_locked.png && ls -la $D", "description": "Save the approved, before and new full-size pictures into the project"}`
+
+### 🧑 User — 2026-11-16T23:31:39.022Z
+
+> ↩︎ result: total 4324
+> drwxr-xr-x  2 root root    4096 Nov 16 23:31 .
+> drwxr-xr-x 16 root root    4096 Nov 16 23:31 ..
+> -rw-r--r--  1 root root  484196 Nov 16 23:31 1_APPROVED.png
+> -rw-r--r--  1 root root 1746598 Nov 16 23:31 2_BEFORE_game_default_today.png
+> -rw-r--r--  1 root root 2179543 Nov 16 23:31 3_NEW_full_stack_locked.png
+
+### 🤖 Claude — 2026-11-16T23:31:42.491Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/pilot05/proj/status_1116_2330/1_APPROVED.png", "/home/user/rainbow-/qa/pilot05/proj/status_1116_2330/2_BEFORE_game_default_today.png", "/home/user/rainbow-/qa/pilot05/proj/status_1116_2330/3_NEW_full_stack_locked.png"], "caption": "1 = your approved screen (the target). 2 = what the game shows by default today. 3 = the real game right now with your approved artwork baked onto the river, walls, rings and paddles (still behind a test switch). 3 is clearly closer than 2, but it is NOT yet identical — I'm working on the far end of the river now.", "status": "norm …[+4 chars]`
+
+### 🧑 User — 2026-11-16T23:31:43.235Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/proj/status_1116_2330/1_APPROVED.png → file_uuid: 15ae8b14-8686-4ce6-9e87-082924af6d21
+>   /home/user/rainbow-/qa/pilot05/proj/status_1116_2330/2_BEFORE_game_default_today.png → file_uuid: c4e65476-84c0-465d-83f8-88a4e1280652
+>   /home/user/rainbow-/qa/pilot05/proj/status_1116_2330/3_NEW_full_stack_locked.png → file_uuid: 0fbcde6e-c80e-400a-b5fd-c73e54606c6b
+
+### 🤖 Claude — 2026-11-16T23:31:45.513Z
+
+I've sent you the three pictures (approved, today's default game, and the new version). Now fixing the torn far end of the river.
+
+### 🤖 Claude — 2026-11-16T23:31:46.417Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uPjF\\|proj05_F\\|PJ_F\\|pjFar\" -r src | head -30", "description": "Find where the far-river baked texture is used in the game code"}`
+
+### 🧑 User — 2026-11-16T23:31:46.445Z
+
+> ↩︎ result: src/world/materials.ts:884:  // `?proj05=1`: the approved water baked onto the far block (proj05_F.png); off: nothing below is used
+> src/vfx/waterRibbon.ts:404:uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
+> src/vfx/waterRibbon.ts:457:uniform vec4 uPjFlow2;     // streamline mode on, slope scale, river half width (u), share of the flowing picture
+> src/vfx/waterRibbon.ts:472:  return vec2((f.r - 0.5) / uPjFlow2.y, f.g);
+> src/vfx/waterRibbon.ts:1434:      float ph = fract(uTime * uPjFlow.y + uPjFlow.z);
+> src/vfx/waterRibbon.ts:1435:      float D = uPjFlow.x * uPjFlow.w;
+> src/vfx/waterRibbon.ts:1439:      if (uPjFlow2.x > 0.5) {
+> src/vfx/waterRibbon.ts:1443:        float k = fd.y / sqrt(1.0 + fd.x * fd.x * uPjFlow2.z * uPjFlow2.z);     // same speed along any direction
+> src/vfx/waterRibbon.ts:1461:      if (uPjFlow2.x > 0.5 && uPjFlow2.w < 0.999) {
+> src/vfx/waterRibbon.ts:1468:        tgt = mix(t0, tgt, uPjFlow2.w);
+> src/vfx/waterRibbon.ts:1646:/** `?proj05=1`: uniforms + GLSL for the far river block (materials.ts farRiverMaterial) — its baked layer proj05_F.png */
+> src/vfx/waterRibbon.ts:1649:    uPjF: { value: null }, uPjFZ: { value: 400 },
+> src/vfx/waterRibbon …[+1192 chars]
+
+### 🤖 Claude — 2026-11-16T23:32:09.009Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,200p scripts/proj05-lid-raycast.mjs | cut -c1-260 | head -70; python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nt=np.asarray(Image.open('qa/pilot05/proj/target/target_05.png').convert('RGB')).astype(int)\nwm=np.asarray(Image.open('qa/pilot05/proj/target/water_mask.png'))>127\nd=np.abs(a-t).max(-1)\nprint('target vs approved: outside water mask max diff',d[~wm].max(),' inside: px changed',(d[wm]>8).sum())\nEOF", "description": "Read the paddle raycast script and c …[+46 chars]`
+
+### 🧑 User — 2026-11-16T23:32:09.326Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 paddles (`?projlid05=1`), Blender pipeline step B: lift every vertex of the approved paddle outlines
+> // (qa/pilot05/proj/tunnel/lid/mesh2d.json, tools/proj05/lid_mesh2d.py) onto the REAL 05 wall: a ray from the real locked
+> // 05 camera through the vertex pixel, first hit on the real 05 wall mesh (rings, lids, water and Benny ignored); beyond the
+> // real wall's end, the forced-perspective far wall.
+> // Writes raycast.json: camera (position, matrixWorld, projection, fov, aspect) + per paddle per vertex the wall point,
+> // the wall normal (toward the camera) and the ray direction. Read-only: nothing in the game changes.
+> //   node scripts/proj05-lid-raycast.mjs [--dir=qa/pilot05/proj/tunnel/lid]
+> import { readFileSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const DIR = typeof opt.dir === 'string' ? opt.dir : 'qa/pilot05/proj/tunnel/lid';
+> const mesh2d = JSON.parse(readFileSync(`${DIR}/mesh2d.json`, 'utf8') …[+2957 chars]
+
+### 🤖 Claude — 2026-11-16T23:32:49.576Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 1640, "limit": 148}`
+
+### 🧑 User — 2026-11-16T23:32:49.590Z
+
+> ↩︎ result: 1640	      return ribbonWave(lateral / hw, s, t, ampAt(course, s));
+> 1641	    },
+> 1642	    ready: proj?.ready,
+> 1643	  };
+> 1644	}
+> 1645	
+> 1646	/** `?proj05=1`: uniforms + GLSL for the far river block (materials.ts farRiverMaterial) — its baked layer proj05_F.png */
+> 1647	export function proj05Far() {
+> 1648	  const u: Record<string, THREE.IUniform> = {
+> 1649	    uPjF: { value: null }, uPjFZ: { value: 400 },
+> 1650	    uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
+> 1651	  };
+> 1652	  proj05Pending.push(new Promise<void>((res) => {
+> 1653	    const tex = new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+> 1654	      t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
+> 1655	      res();
+> 1656	    }, undefined, () => res());
+> 1657	    tex.flipY = false;
+> 1658	    u.uPjF.value = tex;
+> 1659	  }));
+> 1660	  proj05Pending.push(fetch(new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
+> 1661	  con …[+9042 chars]
+
+### 🤖 Claude — 2026-11-16T23:32:58.857Z
+
+Working on the far river: re-baking your approved artwork over the far part of the river where the game currently shows torn filler.
+
+### 🤖 Claude — 2026-11-16T23:33:00.794Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uPjE\\b\\|uPjE,\\|pjExact\\|uPjLutS\\|uPjDbg\" src/vfx/waterRibbon.ts | head -30; grep -n \"PROJ05\\b.*=\\|export const PROJ05\\|PROJNEAR\\|projnear05\\|projbank05\\|projfoam05\" src/vfx/waterRibbon.ts src/vfx/index.ts src/world/*.ts src/game/*.ts | head -20", "description": "Locate the exact-layer sampling code and existing switch definitions"}`
+
+### 🧑 User — 2026-11-16T23:33:00.825Z
+
+> ↩︎ result: 394:uniform sampler2D uPjE;    // exact layer (rgb = approved display colour, a = valid)
+> 395:uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+> 396:uniform vec4 uPjLutS;      // s0, s1, lut texels, unused
+> 397:uniform vec2 uPjESize;     // uPjE texels
+> 407:uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
+> 420:  float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
+> 422:  vec4 a = texture2D(uPjLut, vec2((i + 0.5) / uPjLutS.z, 0.5));
+> 423:  vec4 b = texture2D(uPjLut, vec2((min(i + 1.0, uPjLutS.z - 1.0) + 0.5) / uPjLutS.z, 0.5));
+> 425:  r.w = step(uPjLutS.x, s) * step(s, uPjLutS.y);
+> 432:  vec4 e = texture2D(uPjE, eUV);
+> 1425:        float sr = max(s - rideD, uPjLutS.x + 0.31);
+> 1470:      if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));
+> 1686:  for (const k of ['uPjE', 'uPjN', 'uPjT', 'uPjD', 'uPjLut']) u[k] = { value: empty };
+> 1687:  u.uPjLutS = { value: new THREE.Vector4(0, 1, 1, 0) };
+> 1706:  u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };
+> 1738:    u.uPjE.val …[+1892 chars]
+
+### 🤖 Claude — 2026-11-16T23:33:02.132Z
+
+Now the bake change (an optional mode that writes to a separate folder, so the existing candidate textures stay untouched):
+
+### 🤖 Claude — 2026-11-16T23:33:14.659Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport re\np='tools/proj05/bake.py'; s=open(p).read()\ns=s.replace('''probe, tdir, out = sys.argv[1], sys.argv[2], sys.argv[3]\n''','''probe, tdir, out = sys.argv[1], sys.argv[2], sys.argv[3]\n# optional 4th argument \"far\" (`&projfar05=1`, 2026-11-16 late): FAR-RIVER FIX. Where the game's far river (ribbon beyond\n# S_FAR0 and the forced-perspective far block) is on screen but the approved picture shows something else there (bank\n# foam, wall), the old bake had no data and the game showed filler / the procedural far river (torn \"flag\" at the far\n# bend) …[+2623 chars]`
+
+### 🧑 User — 2026-11-16T23:33:14.746Z
+
+> ↩︎ result: 64:dsel = dsy[use][order]; usel = su[order]
+
+### 🤖 Claude — 2026-11-16T23:33:25.472Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; mkdir -p $S/bake_ref $S/bake_far && python3 -I tools/proj05/bake.py $S/probe qa/pilot05/proj/target $S/bake_ref 2>&1 | tail -2 && python3 -I tools/proj05/bake.py $S/probe qa/pilot05/proj/target $S/bake_far far 2>&1 | tail -2 && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nfor n in ['proj05_E.png','proj05_F.png','proj05_N.png','proj05_T.png','proj05_A.png','proj05_D.png']:\n    a=np.asarray(Image.open('assets/textures/water05/'+n)).astype(int); b=np.asarray(Image.open('$S/bake_ref …[+421 chars]`
+
+### 🧑 User — 2026-11-16T23:33:41.503Z
+
+> ↩︎ result: {"A_px": 18413, "E": [1024, 1458], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.8844943576388888, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> {"A_px": 18413, "E": [1024, 1459], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.8858117985349554, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> proj05_E.png (1458, 1024, 4) (1458, 1024, 4) (1459, 1024, 4) repo vs re-bake: differing texels 0 | far vs re-bake shape
+> proj05_F.png (512, 512, 4) (512, 512, 4) (512, 512, 4) repo vs re-bake: differing texels 0 | far vs re-bake 137884
+> proj05_N.png (960, 512, 4) (960, 512, 4) (960, 512, 4) repo vs re-bake: differing texels 0 | far vs re-bake 0
+> proj05_T.png (336, 512, 3) (336, 512, 3) (336, 512, 3) repo vs re-bake: differing texels 0 | far vs re-bake 0
+> proj05_A.png (768, 256, 4) (768, 256, 4) (768, 256, 4) repo vs re-bake: differing texels 0 | far vs re-bake 0
+> proj05_D.png (512, 512) (512, 512) (512, 512) repo vs re-bake: differing texels 0 | far vs re-bake 0
+
+### 🤖 Claude — 2026-11-16T23:33:55.349Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; mkdir -p assets/textures/water05/far1 && cp $S/bake_far/proj05_E.png $S/bake_far/proj05_F.png $S/bake_far/proj05_lut.json assets/textures/water05/far1/ && python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\n# far block: F + lut\na='''    const tex = new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {'''\nb='''    const tex = new THREE.TextureLoader().load(PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_ …[+2280 chars]`
+
+### 🧑 User — 2026-11-16T23:33:57.622Z
+
+> ↩︎ result: * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
+>  *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+>  *   glints, luminance high-pass) — E fades to N/T + D wherever the camera magnifies it (no stretching).
+>  * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+>  * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
+>  * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+>  */
+> /**
+>  * Screen 05 FULL REFERENCE MATCH (`?match05=1`, 2026-11-16, qa/pilot05/full_reference_match/): one master switch that turns
+>  * on every Screen-05 reference-match part (proj05 water + env05 tunnel / rings / fittings + hud05 + coins05 + benny05 +
+>  * splash05m + bub05 …). `on05('part')` = that part's own switch OR the master switch. Default build: all off.
+>  */
+> export const MATCH05: boolean = q05('match05');
+> export const on05 = (key: string): boolean => q05(key) || MATCH05;
+> export const PROJ05: boolean = on05('proj05');
+> /**
+>  * `?pro …[+110 chars]
+
+### 🤖 Claude — 2026-11-16T23:34:03.416Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/pilot05/full_reference_match/ 2>/dev/null | head -40; git log --oneline -8 origin/ccr-e546a360-cxmton 2>/dev/null; grep -rn \"on05('\" src | sed 's/:.*on05(/ on05(/' | sort | uniq -c | head -40", "description": "Inspect the full-reference-match work merged from the other session branch"}`
+
+### 🧑 User — 2026-11-16T23:34:03.474Z
+
+> ↩︎ result: total 2448
+> drwxr-xr-x  5 root root    4096 Nov 16 23:24 .
+> drwxr-xr-x 22 root root    4096 Nov 16 23:23 ..
+> -rw-r--r--  1 root root  484196 Nov 16 23:24 01_APPROVED.png
+> -rw-r--r--  1 root root 1953900 Nov 16 23:24 02_BEFORE.png
+> -rw-r--r--  1 root root    5762 Nov 16 23:24 COORDINATION.md
+> -rw-r--r--  1 root root   31323 Nov 16 23:24 ORDER_USER_VERBATIM.md
+> drwxr-xr-x  2 root root    4096 Nov 16 23:24 before
+> drwxr-xr-x  2 root root    4096 Nov 16 23:24 benny
+> drwxr-xr-x  2 root root    4096 Nov 16 23:24 masks
+> 48dc787 autosave: Rainbow 2026-11-16 23:20 UTC
+> b8c4562 autosave: Rainbow 2026-11-16 23:15 UTC
+> b00902f autosave: Rainbow 2026-11-16 23:08 UTC
+> b2d8854 autosave: Rainbow 2026-11-16 19:51 UTC
+> 3bfd182 autosave: Rainbow 2026-11-16 19:46 UTC
+> a93c5ef autosave: Rainbow 2026-11-16 19:43 UTC
+> f1b453c autosave: Rainbow 2026-11-16 19:36 UTC
+> 4bf2d3c autosave: Rainbow 2026-11-16 19:08 UTC
+>       1 src/game/Game.ts on05('proj05');
+>       1 src/vfx/waterRibbon.ts on05('part')` = that part's own switch OR the master switch. Default build: all off.
+>       1 src/vfx/waterRibbon.ts on05('proj05');
+>       1 src/vfx/waterRibbon.ts on05('projfar05');
+
+### 🤖 Claude — 2026-11-16T23:34:06.201Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/full_reference_match/COORDINATION.md; echo; echo ====== ORDER; head -c 6000 qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md; echo; ls qa/pilot05/full_reference_match/before qa/pilot05/full_reference_match/benny qa/pilot05/full_reference_match/masks", "description": "Read the full-reference-match coordination notes and the user's verbatim order"}`
+
+### 🧑 User — 2026-11-16T23:34:06.252Z
+
+> ↩︎ result: # Screen 05 FULL REFERENCE MATCH — coordination (started 2026-11-16 ~23:20 UTC, branch `ccr-e546a360-cxmton`)
+> 
+> Authority: the user's order, word for word: `ORDER_USER_VERBATIM.md` (Parts 1–22). Read YOUR parts there first.
+> Source of truth for every pixel: `references/05_flow_into_the_current.png` (864 × 1536),
+> plus `references/water/05_water_isolated_original.png`. Never modify these (13 hashes: `sha256sum -c scripts/reference.sha256`).
+> 
+> ## Rules for everyone (coordinator + specialists)
+> 1. **Default build stays pixel-identical.** Everything new sits behind a URL switch read with
+>    `import { on05 } from '../vfx/waterRibbon'` → `on05('<your switch>')` (true for `?<your switch>=1` or the master
+>    `?match05=1`). Check after every change:
+>    `node scripts/capture.mjs 05 --out=<scratch dir>` must equal `qa/pilot05/current_default_05.png` (0 differing pixels);
+>    then `git checkout -q qa/capture_log.json`.
+> 2. **Screen 05 only.** Other screens must not change (check 04, 06, 07 with your switch on vs off when your change
+>    could reach them). Global things (HUD, Benny, coin look) are still switch-gated; say so in your notes.
+> 3. **Only your own files** (table below). Need a change elsewher …[+10948 chars]
+
+### 🤖 Claude — 2026-11-16T23:34:22.480Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin ccr-e546a360-cxmton ccr-8c4acadc-iybw0n 2>&1 | tail -2; for b in ccr-e546a360-cxmton ccr-8c4acadc-iybw0n; do echo \"$b $(git log -1 --format='%h %ci %s' origin/$b)  contained-in-HEAD: $(git merge-base --is-ancestor origin/$b HEAD && echo yes || echo NO)\"; done; date -u; python3 -I - <<'EOF'\nimport json\nd=json.load(open('backups/AGENTS_STATUS.json'))\nprint(list(d.keys()))\nfor k in ('updated','running_now','assignments_now'):\n    v=d.get(k); print(k,':',json.dumps(v,indent=1)[:3500] if v is not None else None)\nEOF", "description": "Check whether the other  …[+64 chars]`
+
+### 🧑 User — 2026-11-16T23:34:23.627Z
+
+> ↩︎ result: ccr-e546a360-cxmton 48dc787 2026-11-16 23:20:39 +0000 autosave: Rainbow 2026-11-16 23:20 UTC  contained-in-HEAD: yes
+> ccr-8c4acadc-iybw0n 0214822 2026-11-16 23:24:47 +0000 autosave: Rainbow 2026-11-16 23:24 UTC  contained-in-HEAD: NO
+> Mon Nov 16 23:34:23 UTC 2026
+> ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05']
+> updated : None
+> running_now : []
+> assignments_now : {
+>  "_note": "State at 2026-11-16 ~15:55 UTC (urgent backup). A running specialist does NOT survive the end of a session or an account switch: if you are a new session, treat 'running' as INTERRUPTED and relaunch from the brief.",
+>  "washer-environment-modeler": {
+>   "role_now": "SPECIALIST 1 - Blender texture-projection and UV-mapping artist",
+>   "status": "idle - proj05 first version done by the main session; relaunch only on the user's request with qa/pilot05/proj/BRIEF_NEXT.md",
+>   "branch": "claude/rainbow-05-water-projection",
+>   "brief_verbatim": "qa/pilot05/proj/BRIEF_SPECIALIST1_VERBATIM.md",
+>   "brief_summary": "qa/pilot05/proj/BRIEF_SPECIALIST1.md",
+>   "progress_at_backup": "step 1 (feasibility) in progress: fresh defau …[+2064 chars]
+

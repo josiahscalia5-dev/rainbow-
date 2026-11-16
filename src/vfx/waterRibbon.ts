@@ -212,6 +212,14 @@ export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
 export const MATCH05: boolean = q05('match05');
 export const on05 = (key: string): boolean => q05(key) || MATCH05;
 export const PROJ05: boolean = on05('proj05');
+/**
+ * `?proj05=1&projfar05=1` (2026-11-16 late, tools/proj05/bake.py … far): FAR-RIVER FIX. The exact layer E and the far
+ * block's layer F are baked a second time (assets/textures/water05/far1/) so that the far river also carries the approved
+ * pixels where the approved picture shows bank foam / wall on top of the game's river (there the first bake had no data:
+ * torn filler and the procedural far river showed at the far bend). Nothing else changes; without the switch the
+ * first bake is used as before.
+ */
+export const PROJFAR05: boolean = PROJ05 && on05('projfar05');
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
@@ -1650,14 +1658,14 @@ export function proj05Far() {
     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
   };
   proj05Pending.push(new Promise<void>((res) => {
-    const tex = new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+    const tex = new THREE.TextureLoader().load(PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_F.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
       t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
       res();
     }, undefined, () => res());
     tex.flipY = false;
     u.uPjF.value = tex;
   }));
-  proj05Pending.push(fetch(new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
+  proj05Pending.push(fetch(PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_lut.json', import.meta.url).href : new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
   const size = new THREE.Vector2();
   const onBeforeRender = (renderer: THREE.WebGLRenderer) => {
     const rt = renderer.getRenderTarget();
@@ -1675,11 +1683,11 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
   const urls = {
-    E: new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+    E: PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
     N: new URL('../../assets/textures/water05/proj05_N.png', import.meta.url).href,
     T: new URL('../../assets/textures/water05/proj05_T.png', import.meta.url).href,
     D: new URL('../../assets/textures/water05/proj05_D.png', import.meta.url).href,
-    lut: new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href,
+    lut: PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_lut.json', import.meta.url).href : new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href,
   };
   const empty = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1);
   empty.needsUpdate = true;

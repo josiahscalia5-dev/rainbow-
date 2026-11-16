@@ -19,6 +19,13 @@ from PIL import Image
 from scipy.ndimage import gaussian_filter, gaussian_filter1d, binary_dilation, binary_erosion
 
 probe, tdir, out = sys.argv[1], sys.argv[2], sys.argv[3]
+# optional 4th argument "far" (`&projfar05=1`, 2026-11-16 late): FAR-RIVER FIX. Where the game's far river (ribbon beyond
+# S_FAR0 and the forced-perspective far block) is on screen but the approved picture shows something else there (bank
+# foam, wall), the old bake had no data and the game showed filler / the procedural far river (torn "flag" at the far
+# bend). With "far" those texels take the APPROVED pixels as they are, so the locked view shows the approved picture on
+# the whole far river. Only E, F and the LUT differ (out dir: assets/textures/water05/far1/).
+FARFIX = len(sys.argv) > 4 and sys.argv[4] == "far"
+S_FAR0 = 157.0
 os.makedirs(out, exist_ok=True)
 W, H = 864, 1536
 R = np.fromfile(os.path.join(probe, "uv_river.f32"), np.float32).reshape(H, W, 4).astype(np.float64)
@@ -27,12 +34,20 @@ wm = np.asarray(Image.open(os.path.join(tdir, "water_mask.png"))) > 127
 # coins are filled in the target from the user's artwork (make_target.py); the along-s hole filling below stays for gaps
 coin = np.zeros((H, W), bool)
 tgt = np.asarray(Image.open(os.path.join(tdir, "target_05.png")).convert("RGB"), np.float64) / 255
+if FARFIX:      # outside the approved water footprint the target IS the approved picture
+    here = os.path.dirname(os.path.abspath(__file__))
+    appr = np.asarray(Image.open(os.path.join(here, "..", "..", "references", "05_flow_into_the_current.png")).convert("RGB"), np.float64) / 255
+    tgt = np.where(wm[..., None], tgt, appr)
 # colour feedback from the live capture (tools/proj05/residual.py): what the bloom pass adds is taken out of the bake
 if os.path.exists(os.path.join(tdir, "correction.npz")):
     tgt = np.clip(tgt - np.load(os.path.join(tdir, "correction.npz"))["c"].astype(np.float64), 0, 1)
 U, S = R[..., 0], R[..., 1]
 S_CUT = 182.0                                   # the real ribbon ends behind the far block's seam
 use = surf & wm & (S < S_CUT)
+use_all = use
+if FARFIX:      # E only: the far ribbon also where the approved picture shows no water (N / T / D keep the water-only set)
+    useE = surf & (S < S_CUT) & (wm | (S > S_FAR0))
+    use = useE
 ys, xs = np.nonzero(use)
 su, ss, sc, scoin = U[use], S[use], tgt[use], coin[use]
 # locked-view density along s (screen rows per unit s), per pixel
@@ -128,6 +143,10 @@ wtE, _ = splat(xE, yE, (~scoin)[:, None].astype(float), WE, NE)
 E, validE = finish(accE, wtE[..., 0], holeE[..., 0], max_gap=int(NE * 0.35))
 alphaE = gaussian_filter(binary_erosion(validE, iterations=1).astype(float), 0.8)
 
+if FARFIX:      # N / T / D: water-only samples, as before
+    use = use_all
+    ys, xs = np.nonzero(use)
+    su, ss, sc, scoin = U[use], S[use], tgt[use], coin[use]
 # ---------------------------------------------------------------- N (near, full width) layer
 sN0, sN1, dN, WN = 126.0, 166.0, 24, 512
 NN = int((sN1 - sN0) * dN)
@@ -201,7 +220,7 @@ D = np.clip(0.5 + hpw * 1.0, 0, 1)
 
 # ---------------------------------------------------------------- F (far river block) layer
 # the forced-perspective far river (far05.ts): its own coordinates (uv.x across the floor chord, virtual depth Z)
-farm = (np.abs(R[..., 2] - 3) < 0.01) & wm
+farm = (np.abs(R[..., 2] - 3) < 0.01) & (wm | FARFIX)
 fx_, fz_ = R[..., 0][farm], R[..., 1][farm]
 fcol, fcoin = tgt[farm], coin[farm]
 ZMAX = float(max(fz_.max(), 1.0)) if farm.any() else 400.0
@@ -212,6 +231,14 @@ holeF, _ = splat(xF, yF, fcoin[:, None].astype(float), WF_, HF_)
 wtF, _ = splat(xF, yF, (~fcoin)[:, None].astype(float), WF_, HF_)
 F_, validF = finish(accF, wtF[..., 0], holeF[..., 0], fill_sigma=1.5, max_gap=80, fill_all=True)
 alphaF = np.clip((gaussian_filter(validF.astype(float), 1.5) - 0.3) / 0.5, 0, 1)
+if FARFIX:      # the whole far block carries the bake (texels the locked eye never saw: nearest valid texel)
+    from scipy.ndimage import distance_transform_edt
+    okF = validF & np.isfinite(F_).all(-1)
+    if okF.any():
+        iy, ix = distance_transform_edt(~okF, return_distances=False, return_indices=True)
+        soft = np.stack([gaussian_filter(F_[iy, ix][..., i], 2.0) for i in range(3)], -1)
+        F_ = np.where(okF[..., None], F_, soft)
+        alphaF = np.ones_like(alphaF)
 
 # ---------------------------------------------------------------- A (bank strip) layer
 # the visual-only strip on the lower wall (src/vfx/proj05Apron.ts): x = 0.5 + 0.5 * t * side, y = s over [A_S0, A_S1]
