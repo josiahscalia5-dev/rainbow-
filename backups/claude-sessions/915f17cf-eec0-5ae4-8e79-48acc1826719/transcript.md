@@ -1444,3 +1444,108 @@ The automatic edge detection is too noisy, because white highlights read as foam
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T12:57:45.108Z
+
+> 🔧 **Bash** `{"command": "grep -n \"class ForcedTunnel\" -A 120 src/world/tube.ts | head -190", "description": "Read the ForcedTunnel forced-perspective class"}`
+
+### 🧑 User — 2026-11-16T12:57:45.157Z
+
+> ↩︎ result: 479:export class ForcedTunnel {
+> 480-  readonly c0: THREE.Vector3;
+> 481-  readonly T: THREE.Vector3;
+> 482-  readonly U: THREE.Vector3;
+> 483-  readonly Rt: THREE.Vector3;
+> 484-  readonly R: number;
+> 485-  readonly D0: number;
+> 486-  /** eye offset from the section's centre line, in the cross-section plane */
+> 487-  readonly q: THREE.Vector3;
+> 488-  /**
+> 489-   * `knots` ([u, Z] pairs, increasing, starting at [0, 0]): the virtual tunnel coordinate u (continues
+> 490-   * the real s, so slot rows / ring bays repeat every bay in u) → virtual depth Z, piecewise linear. Ref 05
+> 491-   * draws the far bays longer than the near ones (ring radii 288,192,122,85,66,54,45 px): one ring per
+> 492-   * knot reproduces that while every bay keeps its slot rows and lid pair. Without knots Z = u.
+> 493-   */
+> 494-  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3) {
+> 495-    const f = path.frame(sF);
+> 496-    this.c0 = tubeCenterAt(path, sF);
+> 497-    // `axis`: direction of the straight run the camera looks down (the path's tangent at sF may already
+> 498-    // be easing toward the next s …[+5836 chars]
+
+### 🤖 Claude — 2026-11-16T12:57:48.832Z
+
+Recovery is done and verified; I'm now measuring the approved river against the game through the locked camera, so I can reshape the far river behind a reversible switch.
+
+### 🤖 Claude — 2026-11-16T12:58:01.728Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/probe.mjs", "content": "// Scratch: screen mapping of the far block + real ribbon at the locked 05 eye.\n// node probe.mjs [query]  → JSON: D0, level, chord, R, sF; table Z → screen y, px per unit; ribbon s → screen\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst q = process.argv[2] || '';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5233);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  c …[+2626 chars]`
+
+### 🧑 User — 2026-11-16T12:58:01.805Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T12:58:05.864Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && node $S/probe.mjs > $S/probe.json 2>$S/probe.err; tail -3 $S/probe.err; python3 -I - \"$S/probe.json\" <<'EOF'\nimport json,sys\nd=json.load(open(sys.argv[1]))\nprint({k:d[k] for k in ['D0','R','level','sF05','chord','zEnd','L','st05','crest','fov']}, d['state'])\nprint('FAR  Z   x0     y   px/u | row')\nfor r in d['far']: print(f\"{r['Z']:5} {r['x0']:6} {r['y']:6} {r['pxPerU']:6} | {r['row']}\")\nprint('RIB s off hw c l r')\nfor r in d['rib']: print(r['s'], r['off'], r['hw'], r['c'], r['l'], r[ …[+91 chars]`
+
+### 🧑 User — 2026-11-16T12:58:19.813Z
+
+> ↩︎ result: {'D0': 53.24896756963126, 'R': 7.6, 'level': -3.831685660915462, 'sF05': 180.0383020282329, 'chord': 6.530580380073458, 'zEnd': 376.75103243036875, 'L': 6, 'st05': [114.68830202823243, 188.92412082521383], 'crest': 132.4383020282329, 'fov': 62} {'mode': 'ride', 'stage': '05', 's': 132.438, 'lat': 0, 'coins': 1420, 'hearts': 5, 'paused': False, 'bennyY': -41.348, 'bennyVisible': True, 'cam': [1.92, -37.94, -68.28]}
+> FAR  Z   x0     y   px/u | row
+>     0    497  567.5  24.33 | {'xB': 1.7, 'hw': 4.28, 'cL': -0.39, 'wL': 0.84, 'cR': 4.35, 'wR': 0.85, 'core': 1.97}
+>     2  497.1  564.4  23.46 | {'xB': 1.07, 'hw': 4.86, 'cL': -1.49, 'wL': 0.9, 'cR': 4.22, 'wR': 0.91, 'core': 1.35}
+>     4  497.2  561.4  22.65 | {'xB': 0.72, 'hw': 5.07, 'cL': -2.31, 'wL': 0.8, 'cR': 3.98, 'wR': 0.95, 'core': 0.76}
+>     6  497.3  558.7  21.89 | {'xB': 0.42, 'hw': 5.18, 'cL': -2.93, 'wL': 0.69, 'cR': 4.01, 'wR': 0.73, 'core': 0.52}
+>     8  497.4  556.1  21.19 | {'xB': 0.36, 'hw': 5.48, 'cL': -3.44, 'wL': 0.65, 'cR': 4.48, 'wR': 0.63, 'core': 0.53}
+>    10  497.5  553.7  20.53 | {'xB': 0.47, 'hw': 5.69, 'cL': -3.58, 'wL': 0.65, 'cR': 4.83, 'wR': 0.65, 'core': 0.63}
+>    13  497.6  550.3  19.61 | {'xB': 0.61, 'hw': 5.57 …[+4525 chars]
+
+### 🤖 Claude — 2026-11-16T12:58:28.801Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && python3 -I $S/grid.py references/05_flow_into_the_current.png $S/g_app_mid.png 60,550,864,820 1.3 40 && python3 -I $S/grid.py $S/base/default.png $S/g_cur_mid.png 60,550,864,820 1.3 40", "description": "Make gridded mid-river crops"}`
+
+### 🧑 User — 2026-11-16T12:58:29.293Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T12:58:31.354Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/g_app_mid.png"}`
+
+### 🧑 User — 2026-11-16T12:58:31.383Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:58:31.966Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad/g_cur_mid.png"}`
+
+### 🧑 User — 2026-11-16T12:58:32.002Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:00:10.078Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 769, "limit": 377}`
+
+### 🧑 User — 2026-11-16T13:00:10.093Z
+
+> ↩︎ result: 769	      if (abs(tW5) < abs(tb)) { tb = tW5; sweep = true; }
+> 770	    }
+> 771	    tb += (br - 0.5) * 0.34 * mid5;              // brushed edges: pink and cyan interleave as streaks along the flow
+> 772	    float at = abs(tb);
+> 773	    // electric cyan: saturated brushed lanes deep -> mid -> bright (approved mid ladder p5 #0185E5, p50 #05B3FB),
+> 774	    // soft aqua highlight lanes, crisp white-aqua lens streaks
+> 775	    float h5 = clamp(0.5 + lane5 * 0.8 + (br - 0.5) * 0.7, 0.0, 1.0);
+> 776	    vec3 cy = mix(W5_CDEEP, W5_CDEEP2, smoothstep(0.0, 0.22, h5));
+> 777	    cy = mix(cy, W5_CMID, smoothstep(0.22, 0.45, h5));
+> 778	    cy = mix(cy, W5_CBRIGHT, smoothstep(0.5, 0.76, h5) * 0.85);
+> 779	    cy = mix(cy, W5_CAQUA, bglow * 0.55);
+> 780	    cy = mix(cy, W5_CAQUAW, bcore * 0.85);
+> 781	    cy += vec3(0.9, 1.1, 1.1) * bcore * bcore * 0.9;   // (it04) whiter streak cores
+> 782	    // near field: thick glossy swells rolling past Benny, bowed around his track (approved: ∩ highlight arcs
+> 783	    // ≈60–100 px apart behind him), bright glossy cyan body, crisp aqua-white crest lines broken into segments
+> 784	    float crestN = 0.0, phN = 0.0;
+> 785	    if (near5 > 0.0) {
+> 786	      float dlN = lat - uBenny.y;
+> 787 …[+21320 chars]
+
