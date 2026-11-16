@@ -17,7 +17,7 @@ import { type Course, WORLD, funnelY } from '../world/course';
 import { EDGE_LIFT, coreLateral } from './waterRibbon';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
-import { ROUNDFOAM05 } from './foam05Options';
+import { REFERENCEFOAM05, ROUNDFOAM05 } from './foam05Options';
 
 /** c = (ambient occlusion 0..1, seed 0..1, tint -1..1) → instanceColor (see PUFF_VERT) */
 interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean }
@@ -399,7 +399,24 @@ void main() {
   vec3 Nv = vec3(q, z);
   vec4 clip = projectionMatrix * vec4(vCv + vR * vec3(vP, z * R), 1.0);
   gl_FragDepth = 0.5 * clip.z / clip.w + 0.5;
-#ifdef ROUND_FOAM05
+#ifdef REFERENCE_FOAM05
+  // Reference study: the approved banks are soft lather with distinct blue/lavender
+  // undersides. Use the existing reference-calibrated palette on the actual sphere
+  // normal; reserve white for the small upper cap rather than lifting the entire puff.
+  float nl = dot(Nv, normalize(vec3(-0.34, 0.83, 0.44)));
+  float under = 1.0 - smoothstep(-0.7, 0.25, q.y);
+  float rim = pow(1.0 - z, 1.6);
+  float t = 0.50 + 0.39 * nl - 0.075 * under - rim * (0.035 + 0.055 * under)
+          - (1.0 - vInst.x) * 0.18 + vInst.z * 0.012;
+  // Barely visible coarse lather variation only on resolved near puffs. Small banks
+  // stay smooth, with no high-frequency black pores, rim dots or glitter specks.
+  float coarse = smoothstep(22.0, 42.0, px);
+  t += 0.008 * sin(q.x * 8.0 + vInst.y * 19.0) * sin(q.y * 6.0 - vInst.y * 13.0) * coarse;
+  vec3 col = soap05(t);
+  vec2 cap = q - vec2(-0.25, 0.44);
+  float softSpec = exp(-dot(cap, cap) * 12.0) * smoothstep(0.55, 0.85, t);
+  col += vec3(0.10, 0.105, 0.12) * softSpec;
+#elif defined(ROUND_FOAM05)
   // Keep the same sphere geometry, intersection depth and bank placement. A broad wrapped
   // key light reveals the rounded bodies; cool undersides connect neighbouring puffs without
   // the previous dense dark pores and speckled highlights overwhelming the silhouette.
@@ -461,7 +478,7 @@ function makeBankBubbleMaterial() {
   });
   const mat = new THREE.ShaderMaterial({
     uniforms, vertexShader: BANK_BUB_VERT, fragmentShader: BANK_BUB_FRAG, fog: true,
-    defines: ROUNDFOAM05 ? { ROUND_FOAM05: 1 } : {},
+    defines: { ...(ROUNDFOAM05 ? { ROUND_FOAM05: 1 } : {}), ...(REFERENCEFOAM05 ? { REFERENCE_FOAM05: 1 } : {}) },
   });
   return { mat, uniforms };
 }

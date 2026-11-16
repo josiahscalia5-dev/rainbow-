@@ -17,7 +17,7 @@ import * as THREE from 'three';
 import type { Course } from './course';
 import type { ForcedTunnel } from './tube';
 import { tubeCenterAt } from './tube';
-import { ampAt, channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, LIQUID05, WATER05 } from '../vfx/waterRibbon';
+import { ampAt, channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, LIQUID05, REFERENCE05, WATER05 } from '../vfx/waterRibbon';
 
 /** QA only: the far block publishes its tunnel + river path here (read by qa scripts via dynamic import) */
 export const far05Debug: Record<string, unknown> = {};
@@ -190,7 +190,10 @@ export const FAR05_BODY_W11: [number, number, number][] = [
 ];
 function designW11(Z: number, chord: number): FarRiverRow {
   const c = hermite(FAR05_BODY_W11.map(([z, v]) => [z, v] as [number, number]), Z);
-  const hw = Math.min(hermite(FAR05_BODY_W11.map(([z, , h]) => [z, h] as [number, number]), Z), chord - 0.7 - Math.abs(c));
+  const width = hermite(FAR05_BODY_W11.map(([z, , h]) => [z, h] as [number, number]), Z);
+  const room = chord - 0.7 - Math.abs(c);
+  // Ease into the wall clearance instead of introducing a corner where the hard clamp activates.
+  const hw = REFERENCE05 ? smin(width, room, 0.3) : Math.min(width, room);
   const off = 0.62 * hw, w = 0.19 * hw;
   return { xB: c, hw, cL: c - off, wL: w, cR: c + off, wR: w, core: c };
 }
@@ -237,6 +240,43 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
     return designFromXB(0.5 * (a + b), Z);
   };
   const chord = Math.sqrt(Math.max(0, ft.R * ft.R - level * level)) * 0.995;
+  // The old cross-fade reverses the first bend twice within six screen pixels, then freezes its
+  // real-course input at Z=8. Keep the exact entry through Z=2 and join the existing designed S at
+  // Z=27 with matching endpoint tangents. This is visual geometry only; the course is unchanged.
+  const entryStart = 2, entryEnd = 27, derivativeStep = 0.005;
+  const referenceEntry = REFERENCE05 ? {
+    start: realRow(entryStart), end: designRow(entryEnd),
+    beforeStart: realRow(entryStart - derivativeStep), afterStart: realRow(entryStart + derivativeStep),
+    beforeEnd: designRow(entryEnd - derivativeStep), afterEnd: designRow(entryEnd + derivativeStep),
+  } : null;
+  const referenceRow = (Z: number): FarRiverRow => {
+    if (Z <= entryStart) return realRow(Z);
+    if (Z >= entryEnd) return designRow(Z);
+    const e = referenceEntry!, span = entryEnd - entryStart, t = (Z - entryStart) / span;
+    const t2 = t * t, t3 = t2 * t, o = {} as FarRiverRow;
+    for (const k of ['xB', 'hw'] as const) {
+      const m0 = (e.afterStart[k] - e.beforeStart[k]) / (2 * derivativeStep);
+      const m1 = (e.afterEnd[k] - e.beforeEnd[k]) / (2 * derivativeStep);
+      o[k] = (2 * t3 - 3 * t2 + 1) * e.start[k] + (t3 - 2 * t2 + t) * span * m0
+        + (-2 * t3 + 3 * t2) * e.end[k] + (t3 - t2) * span * m1;
+    }
+    // Carry bands in the body's frame. A near-bank width can shrink quickly at the seam; extending
+    // that derivative over the whole 25-unit join would make it negative. Release the endpoint
+    // derivatives over three units, then interpolate positive normalized widths and offsets.
+    for (const k of ['cL', 'cR', 'wL', 'wR'] as const) {
+      const centre = k === 'cL' || k === 'cR';
+      const normalized = (r: FarRiverRow) => (r[k] - (centre ? r.xB : 0)) / r.hw;
+      const start = normalized(e.start), end = normalized(e.end);
+      const m0 = (normalized(e.afterStart) - normalized(e.beforeStart)) / (2 * derivativeStep);
+      const m1 = (normalized(e.afterEnd) - normalized(e.beforeEnd)) / (2 * derivativeStep);
+      const d0 = Z - entryStart, d1 = entryEnd - Z;
+      const value = start + (end - start) * smoothstep(0, 1, t)
+        + m0 * d0 * (1 - smoothstep(0, 3, d0)) - m1 * d1 * (1 - smoothstep(0, 3, d1));
+      o[k] = (centre ? o.xB : 0) + value * o.hw;
+    }
+    o.core = 0.5 * (o.cL + o.wL + o.cR - o.wR);
+    return o;
+  };
   // The far cross-section cuts the winding near ribbon diagonally. Its vertices therefore do NOT
   // share one course distance, and a bank of the narrowed visual channel is not a bank of the full
   // playable ribbon. Solve each point in the near ribbon's own frame; use its full-width trough and
@@ -273,6 +313,7 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
     chord,
     ...(LIQUID05 ? { nearSurface } : {}),
     row(Z) {
+      if (REFERENCE05) return referenceRow(Z);
       const w = smoothstep(2, 10, Z);
       if (w <= 0) return realRow(Z);
       const d = designRow(Z);
@@ -306,6 +347,7 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
   const seamFlow = LIQUID05 ? new Float32Array(n * 2) : null;
   const o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
   const ch = lay.chord;
+  const entryRow = REFERENCE05 ? lay.row(0) : null;
   for (let i = 0; i < rows; i++) {
     const t = i / steps;
     const Dv = 1 / (1 / ft.D0 - t * (1 / ft.D0 - 1 / (ft.D0 + ft.zEnd)));
@@ -331,15 +373,27 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
       const k = i * per + j;
       let longitudinal = ft.sF + ft.uOfZ(Z);
       if (seam && seamNormal && seamFlow && lay.nearSurface) {
-        const bridge = 1 - smoothstep(2, 10, Z);
+        const bridge = REFERENCE05 ? 1 - smoothstep(0, 45, Z) : 1 - smoothstep(2, 10, Z);
         // Past the blend, zero weight avoids extra geometry work and restores the exact existing far design.
         if (bridge > 0) {
-          const n = lay.nearSurface(Z, x);
-          const nearOffset = n.point.clone().sub(ft.c0).addScaledVector(ft.T, -Z);
-          const nearPoint = ft.point(Z, nearOffset);
-          p.lerp(nearPoint, bridge);
-          longitudinal += (n.s - longitudinal) * bridge;
-          seam.set([n.s, n.u, n.amp, bridge], k * 4);
+          const entryX = entryRow ? entryRow.xB + (x - r.xB) * entryRow.hw / r.hw : x;
+          const n = lay.nearSurface(REFERENCE05 ? 0 : Z, entryX);
+          if (REFERENCE05) {
+            // Carry the attached seam profile into the far section. Following the actual 06 bank
+            // immediately beyond the seam folded the left edge downward across its own screen rows.
+            // Release its residual height/tilt slowly; do not import the next course bend's banking.
+            const residual = n.point.clone().sub(ft.c0).addScaledVector(ft.Rt, -entryX)
+              .addScaledVector(ft.U, -(level + h));
+            ft.point(Z, o.clone().addScaledVector(residual, bridge), p);
+            longitudinal += (n.s - ft.sF) * bridge;
+          } else {
+            const nearOffset = n.point.clone().sub(ft.c0).addScaledVector(ft.T, -Z);
+            const nearPoint = ft.point(Z, nearOffset);
+            p.lerp(nearPoint, bridge);
+            longitudinal += (n.s - longitudinal) * bridge;
+          }
+          const waveBridge = REFERENCE05 ? 1 - smoothstep(0, 12, Z) : bridge;
+          seam.set([REFERENCE05 ? longitudinal : n.s, n.u, n.amp, waveBridge], k * 4);
           // Forced-perspective differential: transverse motion scales by k, axial motion by dz/dZ.
           const kn = ft.kOf(Z), cn = ft.cOf(Z), axialNormal = n.normal.dot(ft.T);
           n.normal.multiplyScalar(kn).addScaledVector(ft.T, (cn - kn) * axialNormal);

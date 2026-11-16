@@ -18,6 +18,7 @@
 import * as THREE from 'three';
 import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 import { WATER05 } from './waterRibbon'; // Screen 05 water test W10 (?water05=1): thinner, wider splash threads
+import { REFERENCEFOAM05 } from './foam05Options';
 
 /**
  * Jet layout shared with the spray droplets (index.ts): across a = 0 (outer, most sideways jet) … 1
@@ -247,7 +248,12 @@ float hs(float n) { return fract(sin(n * 91.345 + 3.17) * 43758.5453); }
 vec3 ropePos(float u, float side, float a, float seed, float len) {
   // root on the waterline circle (from beside the body to its back flank), direction measured from straight back
   // roots just outside the fur's silhouette (the waterline chord uR hides under the body from the chase camera)
-  #ifdef WATER05
+  #ifdef REFERENCE_FOAM05
+  // Reference study: fewer broad trails curl gradually away from the fur. Keep the
+  // same root circle, but avoid the previous long straight radial wire fan.
+  float thR = mix(1.5, 0.35, a) + (hs(seed * 3.1) - 0.5) * 0.22;
+  float phi = mix(0.74, 0.13, a) + (hs(seed * 5.7) - 0.5) * 0.16 + 0.48 * u * u;
+  #elif defined(WATER05)
   // W10 (?water05=1): approved splash = a wide fan of thin water threads leaving Benny's lower back and flanks
   // (straight back … ≈65° out), curling outward along their length; not two dense white "wings"
   float thR = mix(1.5, 0.35, a) + (hs(seed * 3.1) - 0.5) * 0.22;
@@ -283,7 +289,14 @@ void main() {
     vLen = len;
     p = ropePos(aUV.x, side, a, seed, len);
     tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
-    #ifdef WATER05
+    #ifdef REFERENCE_FOAM05
+    len *= 0.86;
+    vLen = len;
+    p = ropePos(aUV.x, side, a, seed, len);
+    tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
+    w = mix(0.036, 0.012, pow(aUV.x, 0.9)) * (0.7 + 0.45 * hs(seed * 19.1));
+    w *= 1.0 - smoothstep(0.72, 1.0, aUV.x);
+    #elif defined(WATER05)
     // W10: thin threads (≈2–5 px near the camera), a little longer, so the water shows between them
     len *= 1.15;
     vLen = len;
@@ -345,6 +358,19 @@ void main() {
   vec3 col;
   float alpha;
   if (vType < 0.5) {
+    #ifdef REFERENCE_FOAM05
+    // A soft wet trail with coarse lather beads and a translucent cyan tail. Broader
+    // silhouettes carry the wake without many thin opaque white strokes or tiny holes.
+    vec2 lp = vec2(vUV.x * vLen * 4.2 - uTime * 1.8 + vSeed * 31.0, vUV.y * 0.7 + vSeed * 7.0);
+    float lc = cells(lp);
+    float lump = 1.0 - smoothstep(0.20, 0.78, lc);
+    float edge = 1.0 - smoothstep(0.20 + 0.35 * lump, 0.55 + 0.45 * lump, ac);
+    float tail = 1.0 - smoothstep(0.40, 1.0, vUV.x);
+    float brk = mix(1.0, smoothstep(0.18, 0.60, lump), smoothstep(0.32, 0.85, vUV.x));
+    alpha = edge * tail * brk * smoothstep(0.0, 0.07, vUV.x) * 0.68;
+    float core = (1.0 - smoothstep(0.08, 0.72, ac)) * (1.0 - smoothstep(0.15, 0.90, vUV.x));
+    col = mix(vec3(0.12, 0.58, 0.88), vec3(0.98, 1.01, 1.08), core * (0.55 + 0.45 * lump));
+    #else
     // whitewater rope: bubbly lace flowing back along it, lumpy edges, white root -> translucent cyan tail
     // chain of foam lumps (cells along the rope set a lumpy outline), breaking into separate blobs further out
     vec2 lp = vec2(vUV.x * vLen * 7.0 - uTime * 2.6 + vSeed * 31.0, vUV.y * 0.8 + vSeed * 7.0);
@@ -358,6 +384,7 @@ void main() {
     alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x) * mix(0.9, 0.45, smoothstep(0.3, 1.0, ac + vUV.x * 0.5));
     col = mix(cyan, white, clamp(1.2 - vUV.x * 0.9 - ac * 0.9, 0.0, 1.0));
     col = mix(col, blue, hole * 0.55 * (1.0 - vUV.x));
+    #endif
   } else if (vType < 1.5) {
     // crown droplets: a chain of round beads, fading in off the water and out as they fall back
     // it05: small translucent water beads (cyan body, bright rim / glint), not white flakes
@@ -386,7 +413,7 @@ void main() {
 
 /** wave 8: the 05 splash (same API as the shared fan) */
 export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
-  const nRope = quality === 'high' ? 44 : 20;
+  const nRope = REFERENCEFOAM05 ? (quality === 'high' ? 20 : 10) : (quality === 'high' ? 44 : 20);
   const nJet = quality === 'high' ? 40 : 16;
   const nFroth = quality === 'high' ? 16 : 8;
   const uvs = new Float32Array((SEG5 + 1) * 2 * 2);
@@ -426,7 +453,10 @@ export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
   geo.setAttribute('aType', new THREE.InstancedBufferAttribute(typ, 1));
   geo.instanceCount = n;
   const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.55 }, uStrength: { value: 0 } });
-  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: VERT5, fragmentShader: FRAG5, fog: true, transparent: true, depthWrite: false, side: THREE.DoubleSide, ...(WATER05 ? { defines: { WATER05: 1 } } : {}) });
+  const mat = new THREE.ShaderMaterial({
+    uniforms, vertexShader: VERT5, fragmentShader: FRAG5, fog: true, transparent: true, depthWrite: false, side: THREE.DoubleSide,
+    ...((WATER05 || REFERENCEFOAM05) ? { defines: { ...(WATER05 ? { WATER05: 1 } : {}), ...(REFERENCEFOAM05 ? { REFERENCE_FOAM05: 1 } : {}) } } : {}),
+  });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'rider_splash05';
   mesh.frustumCulled = false;

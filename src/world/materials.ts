@@ -4,9 +4,10 @@
  * up the candy PMREM environment, with shader patches for the perforations and glow.
  */
 import * as THREE from 'three';
-import { FARW05, WATER05, LIQUID05 } from '../vfx/waterRibbon';
+import { FARW05, WATER05, LIQUID05, REFERENCE05 } from '../vfx/waterRibbon';
 import { LIQUID05_GLSL } from '../vfx/liquid05';
-import { ROUNDFOAM05 } from '../vfx/foam05Options';
+import { REFERENCE05_GLSL } from '../vfx/reference05';
+import { ROUNDFOAM05, REFERENCEFOAM05 } from '../vfx/foam05Options';
 import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
 
 export interface PerforatedOptions {
@@ -928,6 +929,9 @@ ${FLOW05_GLSL}
 varying vec4 vRivSeam; varying vec2 vRivSeamFlow;
 ${LIQUID05_GLSL}
 #endif
+#ifdef REFERENCE05
+${REFERENCE05_GLSL}
+#endif
 float rivHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float rivNoise(vec2 p) {
   vec2 i = floor(p), f = fract(p); vec2 w = f * f * (3.0 - 2.0 * f);
@@ -1017,12 +1021,16 @@ float rivCells(vec2 p) {
   // The existing realRow bridge keeps the band centres continuous through the first two virtual units.
   float lx = (lat - 0.5 * (cL + cR)) * 3.0 / max(0.5 * (cR - cL), 0.6);
   lx = mix(lx, vRivSeamFlow.x, vRivSeam.w);
+  float lb = abs(tLb) < abs(tRb) ? tLb : tRb;
+  lb = mix(lb, vRivSeamFlow.y, vRivSeam.w);
+  #ifdef REFERENCE05
+  col = reference05Color(lx, s, uRivTime, uRivFlow, lb, 0.0, 0.0, 0.0);
+  #else
   float lv = s - uRivTime * uRivFlow;
   lx += 0.05 * sin(lv * 0.21 + lx * 1.1);
   vec4 lf = liquid05Field(lx, s, uRivTime, uRivFlow);
-  float lb = abs(tLb) < abs(tRb) ? tLb : tRb;
-  lb = mix(lb, vRivSeamFlow.y, vRivSeam.w);
   col = liquid05Color(lb, lf);
+  #endif
   #endif
   // (it03) beyond the bank the floor reads as deep violet water, not as a flat pale foam sheet (the lavender wedge
   // left of the seam); only a narrow bubbly foam rim (puff cells ≥ ≈6 px, lavender / blue shading) lines each bank
@@ -1131,8 +1139,8 @@ float rivCells(vec2 p) {
 }`);
   };
   if (WATER05) {
-    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(ROUNDFOAM05 ? { ROUND_FOAM05: 1 } : {}) };
-    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '') + (LIQUID05 ? '-liquid05' : '') + (ROUNDFOAM05 ? '-roundfoam05' : '');
+    mat.defines = { WATER05: 1, ...(FARW05 ? { FARW05: 1 } : {}), ...(flow ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(REFERENCE05 ? { REFERENCE05: 1 } : {}), ...((ROUNDFOAM05 || REFERENCEFOAM05) ? { ROUND_FOAM05: 1 } : {}) };
+    mat.customProgramCacheKey = () => 'far-river-w8-w10' + (FARW05 ? '-w11g' : '') + (flow ? '-w11f' : '') + (LIQUID05 ? '-liquid05' : '') + (REFERENCE05 ? '-reference05' : '') + ((ROUNDFOAM05 || REFERENCEFOAM05) ? '-roundfoam05' : '');
   } else {
     mat.customProgramCacheKey = () => 'far-river-w8';
   }

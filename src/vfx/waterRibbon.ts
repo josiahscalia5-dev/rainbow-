@@ -14,7 +14,8 @@ import type { Course, StageId } from '../world/course';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
 import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
 import { LIQUID05_GLSL } from './liquid05';
-import { ROUNDFOAM05 } from './foam05Options';
+import { REFERENCE05_GLSL } from './reference05';
+import { ROUNDFOAM05, REFERENCEFOAM05 } from './foam05Options';
 
 /** wave amplitude per stage (units); blended across boundaries */
 const AMP: Partial<Record<StageId, number>> = {
@@ -91,11 +92,13 @@ export const sbend05 = (s: number) => 1.05 * Math.sin(s * 0.31 - 0.834) + 0.18 *
  */
 export function coreShiftW10(course: Course, s: number): number {
   if (!WATER05) return 0;
-  const w = smooth(171, 175, s) * (1 - smooth(182, 189, s));
+  const w = REFERENCE05 ? smooth(168, 174, s) * (1 - smooth(184, 192, s))
+    : smooth(171, 175, s) * (1 - smooth(182, 189, s));
   if (w <= 0) return 0;
   const rx = Math.max(0.5, course.sample(s).right.x);
   const visible = course.offset05(s) + (coreLateral(course, s) + sbend05(s)) * rx;
-  const target = -0.67 + 0.37 * smooth(172, 180, s);
+  const target = REFERENCE05 ? -0.65 + 0.45 * smooth(170, 179, s) - 0.8 * smooth(179, 187, s)
+    : -0.67 + 0.37 * smooth(172, 180, s);
   return (w * (target - visible)) / rx;
 }
 
@@ -168,7 +171,8 @@ const q05 = (key: string): boolean => {
  * All off (default): every shader program and geometry attribute is the previous one (pixel-identical build).
  */
 /** New, reversible experiment. Existing water05 / river05 programs and the default are preserved. */
-export const LIQUID05: boolean = q05('liquid05');
+export const REFERENCE05: boolean = q05('reference05');
+export const LIQUID05: boolean = REFERENCE05 || q05('liquid05');
 export const RIVER05: boolean = LIQUID05 || q05('river05');
 export const FARW05: boolean = RIVER05 || q05('farw05');
 export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
@@ -193,7 +197,21 @@ export function channel05(course: Course, s: number): { c: number; hw: number } 
   const shR = 3.7 * smooth(52, 65, o) * (1 - smooth(68.5, 76.5, o));
   const k = Math.min(1, (hw - 2.4) / Math.max(1e-3, (shL + shR) / 2));   // never narrower than 2.4 u half width
   const a = shL * Math.max(0, k), b = shR * Math.max(0, k);
-  return { c: (a - b) / 2, hw: hw - (a + b) / 2 };
+  const base = { c: (a - b) / 2, hw: hw - (a + b) / 2 };
+  if (REFERENCE05) {
+    // Keep the visual neck smooth in tunnel space while the playable spline turns underneath.
+    // The old right shelf subtracted a constant width from a rapidly widening course at the seam.
+    const weight = smooth(168, 178, s) * (1 - smooth(184, 192, s));
+    if (weight > 0) {
+      const rx = Math.max(0.5, course.sample(s).right.x);
+      const axisCentre = 0.35 - 0.12 * (s - 180), axisHalfWidth = 2.05 + 0.02 * (s - 180);
+      const halfWidth = Math.min(hw - 0.05, axisHalfWidth / rx);
+      const centre = Math.max(-hw + halfWidth, Math.min(hw - halfWidth, (axisCentre - course.offset05(s)) / rx));
+      base.c += (centre - base.c) * weight;
+      base.hw += (halfWidth - base.hw) * weight;
+    }
+  }
+  return base;
 }
 
 export function ampAt(course: Course, s: number): number {
@@ -330,6 +348,9 @@ ${FLOW05_GLSL}
 #endif
 #ifdef LIQUID05
 ${LIQUID05_GLSL}
+#endif
+#ifdef REFERENCE05
+${REFERENCE05_GLSL}
 #endif
 
 // Stationary channel shape (refs 05–07): lateral offset (units) of the electric-cyan core centre
@@ -613,7 +634,16 @@ void main() {
   // 05: the band shapes are carried downstream (a slow travelling wobble), so the pink S-sections
   // visibly flow and swirl even though the channel itself is fixed to the course meander
   float tv = s - uTime * vSpeed * 0.3;
+  #ifdef REFERENCE05
+  // Match the approved silhouette at the paused reference phase. Animate reflections through
+  // it rather than sliding the whole river outline sideways or breaking the far join.
+  pert *= freeK;
+  tv = mix(s - 12.0 * vSpeed * 0.3, tv, freeK);
+  #endif
   float wob = sw * hwc;
+  #ifdef REFERENCE05
+  wob *= freeK;
+  #endif
   float offL = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.13 + 1.7)) + part + wob * 0.05 * sin(tv * 0.42 + 1.1);
   float offR = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.11 + 4.2)) + part + wob * 0.05 * sin(tv * 0.37 + 3.9);
   float modA = mix(0.15, 0.4, freeK);         // 05: even band width (the ±40 % swell drew the slab)
@@ -685,7 +715,9 @@ void main() {
   float q = (xb - 0.5 * (cLc + cRc)) / hS;
   float nearW = uBenny.z > 0.0 ? sw * smoothstep(5.0, 0.5, db) : 0.0;
   float X = (lat - mix(M + sbend + 0.5 * (cLc + cRc), uBenny.y, nearW)) * mix(3.0 / hS, 1.0, nearW) / (1.0 + 0.7 * back);
+  #ifndef REFERENCE05
   X += 0.05 * sin(v5 * 0.21 + X * 1.1);       // the streaks braid gently
+  #endif
   float fwX5 = fwidth(X);
   vec3 SS = vec3(0.0, 0.0, 0.5);
   if (sw > 0.001) {
@@ -719,6 +751,11 @@ void main() {
   // re-solved against the rendered sweeps: centre 0.2 + 0.55·back, tapering in 0.7 → 1.4 u behind him)
   float cW = 0.2 + 0.55 * back + 0.05 * sin(v5 * 1.7 + sign(dlB) * 1.9) * back;
   float wW = (0.12 + 0.07 * back) * smoothstep(0.7, 1.4, back);
+  #ifdef REFERENCE05
+  // Curved tapered side trails measured in the existing wake frame, not solid V wedges.
+  cW = 0.25 + 0.42 * back + 0.11 * back * back + 0.06 * sin(back * 2.3 + sign(dlB));
+  wW = (0.10 + 0.045 * back) * smoothstep(0.45, 1.15, back);
+  #endif
   float dW = abs(abs(dlB) - cW);
   // (wave 8) soft brushed edges from the same streak field (the sweeps lie along the fanning X lines,
   // so their edges fray into streaks along the sweep instead of the straight plank edges of wave 7)
@@ -830,6 +867,31 @@ void main() {
   // ---- W10 (?water05=1): satin S-ribbons + electric cyan, hue-ramped like the approved image ----
   if (sw > 0.001) {
     #ifdef LIQUID05
+    #ifdef REFERENCE05
+    float tLRef = sdL / max(wL, 1e-3), tRRef = -sdR / max(wR, 1e-3);
+    float bandRef = abs(tLRef) < abs(tRRef) ? tLRef : tRRef;
+    float xRef = X;
+    float wakeRef = 0.0;
+    if (wake > 0.0 && wW > 0.001) {
+      float bwRef = (cW - abs(dlB)) / wW;
+      wakeRef = (1.0 - smoothstep(1.0, 2.0, abs(bwRef))) * smoothstep(0.3, 0.9, back);
+      if (abs(bwRef) < abs(bandRef)) bandRef = bwRef;
+      // Reflection sheets follow the curved wake's own tangent, so pink stays glossy.
+      xRef = mix(xRef, bwRef * 0.58 + sign(dlB) * 3.0, wakeRef);
+    }
+    float nearRef = (1.0 - smoothstep(-0.1, 3.0, db)) * (1.0 - wakeRef);
+    vec3 cRef = reference05Color(xRef, s, uTime, uFlow05, bandRef, nearRef, dlB, back);
+    // Keep the recovered flow map and Marble reflection as quiet secondary depth cues.
+    vec4 fmRef = texture2D(uFlowMap, vec2(u * 0.5 + 0.5, (s - uFlowS.x) * uFlowS.y));
+    vec4 ripRef = flowRipple(uRipple, vec2(xRef, s) * vec2(0.18, 0.008),
+      -vec2(fmRef.r - 0.5, fmRef.g) * vec2(0.007, uFlow05 * 0.008), (uTime - 12.0) * 0.35 + fmRef.a);
+    cRef *= 0.985 + 0.03 * ripRef.b;
+    vec3 reflRef = uPanoRot * reflect(-V, normalize(N0 + normalize(cross(vTanW, N0)) * (ripRef.r - 0.5) * 0.035));
+    vec3 panoRef = texture2D(uPano, vec2(atan(reflRef.z, reflRef.x) * 0.15915494 + 0.5,
+      asin(clamp(reflRef.y, -1.0, 1.0)) * 0.31830989 + 0.5)).rgb;
+    cRef += cRef * smoothstep(0.72, 0.98, max(panoRef.r, max(panoRef.g, panoRef.b))) * uPanoK * 0.04;
+    col = mix(col, cRef, sw);
+    #else
     // The new study is a separate material path: no old brushed grain or stacked flare grids.
     // Shared field/colour functions also shade the far river, using the same clock and arc length.
     float nearL = 1.0 - smoothstep(0.006, 0.024, fws);
@@ -885,6 +947,7 @@ void main() {
     cLiq += hueL * smoothstep(0.68, 0.98, lampL) * fresL * uPanoK * 0.32;
     cLiq += hueL * pow(max(0.0, dot(normalL, Hv)), 70.0) * 0.18;
     col = mix(col, cLiq, sw);
+    #endif
     #else
     #ifdef FLOWMAP05
     // (W11: wider hand-over between the mid-field satin and the near swells — the narrow one drew a hard line
@@ -1366,7 +1429,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(ROUNDFOAM05 ? { ROUND_FOAM05: 1 } : {}) },
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}), ...(FARW05 ? { FARW05: 1 } : {}), ...(FLOWMAP05 ? { FLOWMAP05: 1 } : {}), ...(LIQUID05 ? { LIQUID05: 1 } : {}), ...(REFERENCE05 ? { REFERENCE05: 1 } : {}), ...((ROUNDFOAM05 || REFERENCEFOAM05) ? { ROUND_FOAM05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'water_ribbon';
