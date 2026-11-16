@@ -388,8 +388,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_D.png",
-   "bytes": 76358,
-   "sha256": "0a4f3360c9454dfcbe4189e540482a255a966d428de7b980cbb6c9a8a3d29c51"
+   "bytes": 58869,
+   "sha256": "5421c5b66eae8edd33445975360c7f6a1ea6e1abf3d6f7aaca6bc008d08382a9"
   },
   {
    "path": "assets/textures/water05/proj05_E.png",
@@ -413,8 +413,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_lut.json",
-   "bytes": 27349,
-   "sha256": "d282c13d2770eb5328bb71bf44971663230803692a42d450f2b3e6de1243382f"
+   "bytes": 27351,
+   "sha256": "e25e67119576ba03944da34c51c287db27c86a219a69b32df27523e13115c4e1"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -439,7 +439,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "7766f674050e208a3076346daf6643b1d693fd98b1a6cf26597f9c2e2b8aa70c"
+   "sha256": "ab485a146faeecdecfa3874f40c1aa33c011e1f73420823189b191d98e7f9198"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7088,8 +7088,8 @@
   },
   {
    "path": "tools/proj05/bake.py",
-   "bytes": 13580,
-   "sha256": "ddc73424bd0f822d93b5181c7f06b08caf5a857757bc7531c39c16ad78601b73"
+   "bytes": 13582,
+   "sha256": "e8498af0eef27414ff3e08445b97f1e2126bff5064ab1bebf3c9a7b09fb25415"
   },
   {
    "path": "tools/proj05/frame_metrics.py",

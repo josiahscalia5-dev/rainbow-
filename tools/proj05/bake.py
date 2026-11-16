@@ -169,8 +169,8 @@ T_[blendr] = layer(sl[blendr] + L) * (1 - r) + T_[blendr] * r
 T_ = np.stack([gaussian_filter(T_[..., i], (3.0, 1.5), mode=("wrap", "nearest")) for i in range(3)], -1)
 
 # ---------------------------------------------------------------- D (detail) layer
-# streaky, glinting water under Benny (the user's isolated artwork, no bubbles or coins): s in [131.0, 134.4], u in [-0.3, 0.3]
-du0, du1, ds0, ds1 = -0.30, 0.30, 131.0, 134.4
+# streaky, glinting water under Benny (the user's isolated artwork, no bubbles or coins): s in [131.5, 134.3], u in [-0.18, 0.18]
+du0, du1, ds0, ds1 = -0.18, 0.18, 131.5, 134.3
 ND = 512
 m = (su > du0 - 0.03) & (su < du1 + 0.03) & (ss > ds0 - 0.1) & (ss < ds1 + 0.1)
 lum = (sc[m] * np.array([0.2126, 0.7152, 0.0722])).sum(1)
