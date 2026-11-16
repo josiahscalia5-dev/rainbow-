@@ -3343,3 +3343,34 @@ Still working: rebuilt the layers (coins now filled from your artwork, no stripe
 
 > 🔧 **Bash** `{"command": "sed -i 's/du0, du1, ds0, ds1 = -0.30, 0.30, 131.0, 134.4/du0, du1, ds0, ds1 = -0.18, 0.18, 131.5, 134.3/; s/no bubbles or coins): s in \\[131.0, 134.4\\], u in \\[-0.3, 0.3\\]/no bubbles or coins): s in [131.5, 134.3], u in [-0.18, 0.18]/' tools/proj05/bake.py && grep -n \"du0, du1, ds0, ds1 =\" tools/proj05/bake.py && SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 -I tools/proj05/bake.py $SP/probe qa/pilot05/proj/target assets/textures/water05 >/dev/null && python3 -c \"\nfrom PIL import Image; Image.open('assets/textures/water05/p …[+278 chars]`
 
+### 🧑 User — 2026-11-16T18:18:13.073Z
+
+> ↩︎ result: 173:du0, du1, ds0, ds1 = -0.18, 0.18, 131.5, 134.3
+> still frames 72
+> clip frames 96
+> 
+> real	7m51.237s
+> user	1m12.068s
+> sys	0m4.059s
+
+### 🤖 Claude — 2026-11-16T18:18:21.535Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && mkdir -p qa/pilot05/proj/clips && ffmpeg -y -loglevel error -framerate 24 -i $SP/clip/still/%04d.png -vf \"scale=432:768\" -c:v libx264 -pix_fmt yuv420p -crf 20 qa/pilot05/proj/clips/proj05_locked_flow_3s.mp4 && ffmpeg -y -loglevel error -framerate 24 -i $SP/clip/clip/%04d.png -vf \"scale=432:768\" -c:v libx264 -pix_fmt yuv420p -crf 20 qa/pilot05/proj/clips/proj05_ride_4s.mp4 && ls -la qa/pilot05/proj/clips && python3 - <<EOF\n# flow direction proof: track the near-water pattern between consecu …[+862 chars]`
+
+### 🧑 User — 2026-11-16T18:18:32.136Z
+
+> ↩︎ result: total 2080
+> drwxr-xr-x 2 root root    4096 Nov 16 18:18 .
+> drwxr-xr-x 9 root root    4096 Nov 16 18:18 ..
+> -rw-r--r-- 1 root root  147368 Nov 16 18:18 proj05_locked_flow_3s.mp4
+> -rw-r--r-- 1 root root 1972153 Nov 16 18:18 proj05_ride_4s.mp4
+> frames with a confident match: 71 / 71  median vertical shift px/frame (+ = down the screen = toward camera): 0.0  share moving down: 0.0
+
+### 🤖 Claude — 2026-11-16T18:18:38.471Z
+
+The locked-camera clip came out static. My clock hook only took effect on the next simulation step, so I'm adding a zero-length step after each clock change and re-rendering that clip.
+
+### 🤖 Claude — 2026-11-16T18:18:45.777Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s|      await page.evaluate((\\[t\\]) => window.__rainbow.freezeAt(t), \\[12 + i / fps\\]);|      await page.evaluate(([t]) => { const R = window.__rainbow; R.freezeAt(t); R.step(1, 0); }, [12 + i / fps]);|\" scripts/proj05-move.mjs && grep -n \"R.step(1, 0)\" scripts/proj05-move.mjs && SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && rm -rf $SP/clip/still && node scripts/proj05-move.mjs --q='proj05=1' --out=$SP/clip --still=3 --fps=24 2>&1 | tail -1 && ffmpeg -y -loglevel error -framerate 24 -i $SP/clip/still/%04d.png -vf \"scale=43 …[+1126 chars]`
+

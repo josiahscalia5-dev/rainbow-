@@ -439,7 +439,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "ab485a146faeecdecfa3874f40c1aa33c011e1f73420823189b191d98e7f9198"
+   "sha256": "b9e079cfb0ba59237ff468f7902488f2e2fd1a7d1afaaf2da73a549bdb66269f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1400,6 +1400,16 @@
    "path": "qa/pilot05/proj/caps/default/05.png",
    "bytes": 1746598,
    "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/proj/clips/proj05_locked_flow_3s.mp4",
+   "bytes": 147368,
+   "sha256": "1d9e5ed9777d10c4cf507fb30ff4c9fdb36bd25c9480de5da121ef5cd8cb6f01"
+  },
+  {
+   "path": "qa/pilot05/proj/clips/proj05_ride_4s.mp4",
+   "bytes": 1972153,
+   "sha256": "d8af98338093a219c78d7a1cd6412e86d9dcda9c4f46bf64ec61f22af49cb05a"
   },
   {
    "path": "qa/pilot05/proj/compare/1_APPROVED.png",
@@ -6718,8 +6728,8 @@
   },
   {
    "path": "scripts/proj05-move.mjs",
-   "bytes": 3786,
-   "sha256": "9392be3a8dd74f8382108a51c279e43185204c403fbf456723fc0eab5e7d05e6"
+   "bytes": 3818,
+   "sha256": "b84fefd0d975d94937103e990dddeddc08c8cb584249c7241e839fa9d44953b4"
   },
   {
    "path": "scripts/proj05-probe.mjs",
