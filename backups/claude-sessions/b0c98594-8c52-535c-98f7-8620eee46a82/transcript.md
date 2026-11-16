@@ -4536,3 +4536,26 @@ I'll check where the water specialist is. If it's still running, I'll wait for i
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 scripts/rainbow-autosave.py --reason manual:far-river-analysis 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"'; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1); [ \"$L\" = \"$R\" ] && echo \"REMOTE == LOCAL ($L)\"; python3 -I scripts/autosave-status.py | head -1", "description": "Save the far-river analysis and verify on GitHub"}`
 
+### 🧑 User — 2026-11-16T12:22:47.818Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "63962a631dab95734816fc112cec38e9f4da76c3",
+> REMOTE == LOCAL (63962a631dab95734816fc112cec38e9f4da76c3)
+> AUTOSAVE OK | branch ccr-251ed97c-ty2xvp | scheduler daemon | last verified backup 2026-11-16T12:22:38+00:00 (0.1 min ago) | local 63962a6 remote 63962a6 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-16T12:22:57.677Z
+
+The water specialist is still working on its fourth and final iteration, so I can't show you the full-size water comparison yet. I won't guess at its result.
+
+**Your far-river question: it needs 3D path geometry, not more shader work.** The far river is a separate 3D surface whose sideways path has only one bend. It drifts right and swings back into the light, which is why it reads as a blob. I traced the river's centre in your approved image. Past the end of the rideable river, yours first bends **left** (about −2.5 u), then swings hard **right** (+4.6 u), then winds into the light: a 99 px side-to-side swing on screen versus 24 px in the game. The game's far path skips that left bend on purpose, to avoid a wiggle where the far section joins the rideable river.
+
+**Plan once the specialist reports:**
+1. I'll check its result myself. The default game must be unchanged and gameplay must pass, and I'll keep only what genuinely looks closer.
+2. I'll send you **APPROVED, T2 CURRENT and the BEST WATER VERSION** as separate full-size pictures.
+3. Then the next big fix, which matches the biggest remaining difference I can see: **reshape the far river into alternating S-bends into the golden light.** I'll add the missing left bend, a stronger right swing, then smaller bends into the light, blended smoothly where it meets the rideable river. It's visual only, so gameplay and the 05→06 transition can't break, and it'll be behind a switch with a full-size comparison.
+
+Separately, your rideable river also sits further left near its end (depth 40–50). That's the gameplay path, so it would only change as its own test with the gameplay and transition checks. The full analysis is saved in `qa/pilot05/wave10/FAR_RIVER_ANALYSIS.md`.
+
+**Saved and verified on GitHub:** branch `ccr-251ed97c-ty2xvp`, commit `63962a631dab95734816fc112cec38e9f4da76c3`; GitHub matches the local copy, nothing uncommitted. The five-minute autosave keeps saving everything, including the specialist's work in progress and the Marble files.
+
