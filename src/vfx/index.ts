@@ -192,7 +192,10 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
       // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
       if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
       foam.update(time, dt, focusS, controls.outro, camera);
-      bubbles.update(time, dt, focusS, camera, 1 - 0.7 * controls.outro);
+      // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game's own bubbles thin out
+      // to none while Benny is on 05 (ramped over 3 u at both joins); `?projbub05=1` keeps them. Elsewhere unchanged.
+      const bub05 = PROJ05 && !flag05('projbub05') ? 1 - w05At(focusS) : 1;
+      bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);
       // crest spray off the final wave
       if (wave.mesh.visible && focusS > st09.s0 - 20 && focusS < st09.s1 + 20 && controls.outro < 0.5) {
         const n = quality === 'high' ? 3 : 1;

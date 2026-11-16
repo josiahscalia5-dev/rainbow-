@@ -3726,3 +3726,260 @@ Keep my current game protected, preserve all specialists and tools, and continue
 
 My goal is at least a 95% visual match to my approved Screen 05 without unnecessary spending.
 
+### 🤖 Claude — 2026-11-16T18:40:53.505Z
+
+Understood: no new Marble key, no new world, no credits. I'll keep working with what's here, focusing on:
+
+- closing the gap to your approved picture;
+- making sure it holds up when Benny steers.
+
+First I'm breaking down exactly where the remaining differences come from, so each fix targets the biggest one.
+
+### 🤖 Claude — 2026-11-16T18:41:03.014Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -1 && python3 -I scripts/autosave-status.py 2>&1 | tail -1; SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && ls $SP/probe >/dev/null && python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import binary_dilation\nSP='$SP'; T='qa/pilot05/proj/target'\nH,W=1536,864\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'),float)\nc=np.asarray(Image.open('qa/pilot05/proj/compare/3_NEW_proj05.png').convert('RGB'),float)\nwm=np.asarray(Image.open(T+'/water_mask.png'))>127\nfill= …[+1519 chars]`
+
+### 🧑 User — 2026-11-16T18:41:04.731Z
+
+> ↩︎ result: 2dd7a1e autosave: Rainbow 2026-11-16 18:40 UTC
+> AUTOSAVE OK | branch ccr-e546a360-cxmton | scheduler daemon | last verified backup 2026-11-16T18:40:31+00:00 (0.5 min ago) | local 2dd7a1e remote 2dd7a1e (match) | uncommitted 0
+> approved-visible water px 468549
+> within20 0.841  within10 0.776  mean 14.19
+> river not visible (wall/ring/bank geometry) 35940 7.7% of R
+> river visible, error (objects in front or texture) 38568 8.2% of R
+>   of which the capture differs from the bake target too (an object in front): 20165
+>   of which the capture matches the bake target (target != approved): 18403
+>    rows 196-560: not-visible 2632, objects 2153
+>    rows 560-700: not-visible 16614, objects 4026
+>    rows 700-900: not-visible 12, objects 4365
+>    rows 900-1200: not-visible 0, objects 8245
+>    rows 1200-1536: not-visible 16682, objects 1376
+
+### 🤖 Claude — 2026-11-16T18:41:25.023Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nSP='$SP'; T='qa/pilot05/proj/target'\nH,W=1536,864\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'),float)\nc=np.asarray(Image.open('qa/pilot05/proj/compare/3_NEW_proj05.png').convert('RGB'),float)\nwm=np.asarray(Image.open(T+'/water_mask.png'))>127\nfill=np.asarray(Image.open(T+'/fill_mask.png'))>127\nrows=np.arange(H)[:,None]*np.ones((1,W))\nA=np.fromfile(SP+'/probe/uv_river.f32',np.float32).reshape …[+1025 chars]`
+
+### 🧑 User — 2026-11-16T18:41:25.812Z
+
+> ↩︎ result: not visible total 35940  ribbon exists but environment covers it: 16845  no ribbon there: 19095
+>  rows 560 700 covered 135 no ribbon 16479
+>  rows 1200 1536 covered 16682 no ribbon 0
+>  no-ribbon left half 12978 right half 6117
+
+### 🤖 Claude — 2026-11-16T18:41:26.178Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/notvisible.png"}`
+
+### 🧑 User — 2026-11-16T18:41:26.219Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T18:42:10.255Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/make_target.py'\ns=open(p).read()\na=s.index(\"# ---- feathered blend of the colour-matched artwork into the hole\")\nb=s.index('Image.fromarray(tgt).save')\ns=s[:a]+'''# ---- multi-band (Laplacian pyramid) blend of the colour-matched artwork INTO the hole: the transition lies inside the\n#      hole (approved pixels outside it stay exact — a soft edge outside the hole first cost 3.9 % of the visible water),\n#      and low / high frequencies blend over different widths, so there is no visible seam when Benny steers aside.\n#      (A Poisson blen …[+3966 chars]`
+
+### 🧑 User — 2026-11-16T18:42:44.595Z
+
+> ↩︎ result: "fill_px": 336458,
+> 1
+> {
+>  "qa/pilot05/proj/compare/3_NEW_proj05.png": {
+>   "px": 468549,
+>   "within_10": 0.7763,
+>   "within_20": 0.841,
+>   "mean_abs": 14.19,
+>   "ssim_lum": 0.8418,
+>   "misses": {
+>    "no_river_or_covered": 35940,
+>    "river_visible": 38568
+>   }
+>  },
+>  "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/cap/r1/05.png": {
+>   "px": 468549,
+>   "within_10": 0.8282,
+>   "within_20": 0.8791,
+>   "mean_abs": 12.58,
+>   "ssim_lum": 0.8654,
+>   "misses": {
+>    "no_river_or_covered": 35912,
+>    "river_visible": 20735
+>   }
+>  }
+> }
+
+### 🤖 Claude — 2026-11-16T18:42:52.724Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && node scripts/capture.mjs 05 \"--q=proj05=1&waterhide=bubbles,bubblesSmall,bubblesBig\" --out=$SP/cap/r1_nobub 2>&1 | grep -c \"→\"; git checkout -q qa/capture_log.json; python3 -I tools/proj05/match_metrics.py $SP/probe $SP/cap/r1_nobub/05.png | python3 -c \"import json,sys; d=json.load(sys.stdin); [print(v) for v in d.values()]\"; python3 -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$SP/cap/r1/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$SP/cap/ …[+292 chars]`
+
+### 🧑 User — 2026-11-16T18:43:10.077Z
+
+> ↩︎ result: 1
+> {'px': 468549, 'within_10': 0.8571, 'within_20': 0.9076, 'mean_abs': 10.93, 'ssim_lum': 0.9003, 'misses': {'no_river_or_covered': 35923, 'river_visible': 7378}}
+> pixels changed by hiding bubbles: 163259
+
+### 🤖 Claude — 2026-11-16T18:43:17.897Z
+
+> 🔧 **Bash** `{"command": "wc -l src/vfx/bubbles.ts && grep -n \"export function createBubbles\\|update(\\|focusS\\|setMatrixAt\\|\\.count\\s*=\\|visible\\s*=\\|st05\\|stage('05')\\|qaScreen\" src/vfx/bubbles.ts | head -40", "description": "Inspect bubbles placement and update logic"}`
+
+### 🧑 User — 2026-11-16T18:43:17.945Z
+
+> ↩︎ result: 472 src/vfx/bubbles.ts
+> 139:  update(time: number, dt: number, focusS: number, camera: THREE.Camera, density?: number): void;
+> 142:  qaScreen(camera: THREE.PerspectiveCamera, w: number, h: number): { big: number[][]; small: number[][] };
+> 175:export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; sStart: number }): BubbleSystem {
+> 184:  const st05 = course.stage('05');
+> 255:  /** projected core line (NDC), sorted by screen y (bottom → top), rebuilt every frame in update() */
+> 264:  const spawn = (b: BubbleState, focusS: number, isBig: boolean, initial: boolean) => {
+> 268:    if (focusS < drumEnd) {
+> 276:      b.s = focusS;
+> 288:    course.sample(Math.max(opts.sStart, focusS), f0);
+> 303:      let s = focusS;
+> 306:        s = focusS;
+> 351:    qaScreen(camera, w, h) {
+> 378:    update(time, dt, focusS, camera, density = 1) {
+> 395:      if (view.ok && focusS >= drumEnd) {
+> 397:          const s = Math.min(course.length, focusS + 1 + k * k * 0.06 + k * 0.5);
+> 420:      const jump = Math.abs(focusS - lastFocus) > 25 || (camJump && focusS >= drumEnd);
+> 421:      const crossedDrum = (lastFocus < drumEnd) !== (focusS < drumEnd);
+> 423:        rngState = (0x0b0b ^ Math.round(focusS * 16) …[+557 chars]
+
+### 🤖 Claude — 2026-11-16T18:43:20.002Z
+
+> 🔧 **Bash** `{"command": "sed -n 378,395p src/vfx/bubbles.ts; sed -n 428,472p src/vfx/bubbles.ts; grep -n \"density\" src/vfx/index.ts | head", "description": "Read bubbles update loop and density use"}`
+
+### 🧑 User — 2026-11-16T18:43:20.051Z
+
+> ↩︎ result: update(time, dt, focusS, camera, density = 1) {
+>       bigUniforms.uTime.value = time;
+>       ptUniforms.uTime.value = time;
+>       const persp = camera as THREE.PerspectiveCamera;
+>       view.ok = !!persp.isPerspectiveCamera;
+>       if (view.ok) {
+>         camera.updateMatrixWorld();
+>         view.inv.copy(camera.matrixWorldInverse);
+>         camera.getWorldPosition(view.pos);
+>         camera.getWorldDirection(view.dir);
+>         view.right.setFromMatrixColumn(camera.matrixWorld, 0).normalize();
+>         view.up.setFromMatrixColumn(camera.matrixWorld, 1).normalize();
+>         view.tanV = Math.tan(THREE.MathUtils.degToRad(persp.fov) / 2);
+>         view.tanH = view.tanV * persp.aspect;
+>       }
+>       // projected route centre (core lateral at water level) from just ahead of Benny to the far field
+>       coreN = 0;
+>       if (view.ok && focusS >= drumEnd) {
+>       ptUniforms.uScale.value = focal;
+>       ptUniforms.uMaxPx.value = MAX_PX_SMALL * pxK;
+>       bigUniforms.uFocal.value = focal;
+>       const inDrum = focusS < drumEnd;
+>       bigUniforms.uMaxPx.value = (inDrum ? MAX_PX_DRUM : MAX_PX_RIDE) * pxK;
+>       bigUniforms.uNear.value = inDrum ? 1.2 : 2.6;
+>       const step = (b: BubbleState, isBig: boolea …[+1848 chars]
+
+### 🤖 Claude — 2026-11-16T18:43:25.004Z
+
+> 🔧 **Bash** `{"command": "grep -n \"bubbles.update(\" src/vfx/index.ts", "description": "Find bubbles.update call"}`
+
+### 🧑 User — 2026-11-16T18:43:25.042Z
+
+> ↩︎ result: 195:      bubbles.update(time, dt, focusS, camera, 1 - 0.7 * controls.outro);
+
+### 🤖 Claude — 2026-11-16T18:43:27.632Z
+
+> 🔧 **TaskCreate** `{"subject": "proj05 round 2: approach 95% (bubbles, banks, Benny steering)", "description": "blend inside holes (done), game bubbles off on 05 only, visual-only bank widening for proj05, Benny steering test + seams, colour feedback, re-run checks, notes, push", "activeForm": "Improving proj05 match"}`
+
+### 🧑 User — 2026-11-16T18:43:27.650Z
+
+> ↩︎ result: Task #4 created successfully: proj05 round 2: approach 95% (bubbles, banks, Benny steering)
+
+### 🤖 Claude — 2026-11-16T18:43:32.884Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/index.ts'\ns=open(p).read()\nold=\"      bubbles.update(time, dt, focusS, camera, 1 - 0.7 * controls.outro);\"\nnew=\"\"\"      // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game's own bubbles thin out\n      // to none while Benny is on 05 (ramped over 3 u at both joins); `?projbub05=1` keeps them. Elsewhere unchanged.\n      const bub05 = PROJ05 && !flag05('projbub05') ? 1 - w05At(focusS) : 1;\n      bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);\"\"\"\nassert old in s\ns=s.repla …[+567 chars]`
+
+### 🧑 User — 2026-11-16T18:43:52.898Z
+
+> ↩︎ result: 93:  const w05At = (s: number) => smooth(st05.s0 + 2, st05.s0 + 5, s) * (1 - smooth(st05.s1 - 5, st05.s1 - 2, s));
+> 1
+> {'px': 468549, 'within_10': 0.857, 'within_20': 0.9075, 'mean_abs': 10.93, 'ssim_lum': 0.8997, 'misses': {'no_river_or_covered': 35923, 'river_visible': 7410}}
+
+### 🤖 Claude — 2026-11-16T18:44:18.787Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/raycast.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5251);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\nconst page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\nawait page.goto(`${vite.url}/?qa=1&dpr=1&proj05=1`);\nawait page.waitForFunction(() => window.__rainbow?.ready === true, null, { time …[+1009 chars]`
+
+### 🧑 User — 2026-11-16T18:44:32.307Z
+
+> ↩︎ result: 60 640 [{"d":21.13,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-4.99,-41.25,-87.97]},{"d":22.67,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-5.49,-41.49,-89.41]}]
+> 120 620 [{"d":25.98,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-5.49,-41.67,-92.9]}]
+> 200 600 [{"d":32.06,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-5.37,-42.13,-99.22]}]
+> 260 585 [{"d":36.96,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-4.84,-42.39,-104.34]},{"d":272.95,"obj":"Mesh<laundry_room<Group<zone_chamber<washer_world","p":[-48,-70.76,-334.62]}]
+> 700 600 [{"d":39.96,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[8.03,-43.16,-107.42]},{"d":40.35,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[8.09,-43.22,-107.81]}]
+> 780 640 [{"d":33.07,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[8.92,-43.18,-100.18]},{"d":331.08,"obj":"Mesh<laundry_room<Group<zone_chamber<washer_world","p":[72,-90.39,-387.58]}]
+> 830 660 [{"d":23.25,"obj":"foam_berm<foam_banks<water_system<Scene","p":[7.66,-41.93,-90.45]},{"d":23.68,"obj":"foam_berm<foam_banks<water_system<Scene","p":[7.77,-42,-90.87]}]
+> 300 580 [{"d":40.33,"obj":"Mesh<zone_tubes<washer_world<Scene","p":[-4.24,-42.66,-107.86]},{"d":43.22,"obj":"Mesh<zone_tubes< …[+450 chars]
+
+### 🤖 Claude — 2026-11-16T18:44:53.116Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function tubeCenterAt\\|export const TUBE\\|export function tubeRadius\" -A12 src/world/tube.ts | head -40", "description": "Read tube centre helper"}`
+
+### 🧑 User — 2026-11-16T18:44:53.159Z
+
+> ↩︎ result: 147:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> 148-  const f = path.frame(s);
+> 149-  return out.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
+> 150-}
+> 151-
+> 152-export interface TubeGeoOptions {
+> 153-  radial?: number;
+> 154-  step?: number;
+> 155-  vScale?: number;
+> 156-  /** angular range (radians, measured from the bottom) — default full circle */
+> 157-  arc?: number;
+> 158-  /** radius offset (negative = inset toward the axis) */
+> 159-  inset?: number;
+
+### 🤖 Claude — 2026-11-16T18:44:55.748Z
+
+> 🔧 **Bash** `{"command": "grep -n \"interface TubePath\" -A14 src/world/tube.ts | head -20; grep -n \"TubePath\\|tubePath\\|makeTubePath\\|const path05\\|zone_tubes\" src/world/environment.ts | head -12", "description": "Find how the 05 tube path is built in environment.ts"}`
+
+### 🧑 User — 2026-11-16T18:44:55.794Z
+
+> ↩︎ result: 15:export interface TubePath {
+> 16-  frame(s: number): Frame;
+> 17-  radius(s: number): number;
+> 18-  /** distance from the water point on the axis down to the tube bottom */
+> 19-  depth(s: number): number;
+> 20-}
+> 21-
+> 22-export function courseTubePath(course: Course, radius: (s: number) => number, depth: number | ((s: number) => number) = 0.9): TubePath {
+> 23-  return {
+> 24-    frame: (s) => course.sample(s),
+> 25-    radius,
+> 26-    depth: typeof depth === 'number' ? () => depth : depth,
+> 27-  };
+> 28-}
+> 29-
+> 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 31:  tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> 128:  const chutePath = courseTubePath(course, () => 2.25, 0.55);
+> 184:  const goldPath = courseTubePath(course, r04, 0.9);
+> 249:  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR, floorExtra: floorExtra05 });
+
+### 🤖 Claude — 2026-11-16T18:44:58.092Z
+
+> 🔧 **Bash** `{"command": "sed -n 236,262p src/world/environment.ts; grep -n \"tubeAxis\" src/world/environment.ts | head -5; grep -n \"tubeAxis\\|env.tubeAxis\" src -r | grep -v \"environment.ts\" | head", "description": "Read 05 tube path setup and exported tube axis"}`
+
+### 🧑 User — 2026-11-16T18:44:58.145Z
+
+> ↩︎ result: // while rings B, C, D already sit like the approved (slightly above). Lowering the WHOLE tunnel moved B–D
+>   // away from the approved (rejected). T2 lowers only the tunnel up to ring A (26 u ahead of the eye) by
+>   // ?nearfloor05=<d> units and blends back to BEFORE before ring B (40 u): radius 7.6, ring depths and spacing,
+>   // ring B onward, the far block, camera, river and gameplay are untouched.
+>   // PROMOTED 2026-11-16 ~11:45 UTC together with T1 (user: "only promote T2 if it is genuinely closer"): default 2.0 u
+>   // with ring A at 20 u = ring A centre (502,478) r 433 vs approved (474,529) r 492 (BEFORE (505,426) r 374), its arc
+>   // meets the right edge at y 241 (approved 229, BEFORE 321); B, C, D, 06, 07 pixel-identical (qa/pilot05/wave9b/T2b/).
+>   // BEFORE = ?ringa=26&nearfloor05=0 (pixel-identical to qa/pilot05/wave9/baseline/05.png).
+>   const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 2) : 2;
+>   const NEAR_FLOOR05 = Number.isFinite(qaNear05) ? qaNear05 : 0;
+>   const sEye05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+>   const floorExtra05 = NEAR_FLOOR05 === 0 ? undefined
+>     : (s: number) => N …[+2228 chars]
+

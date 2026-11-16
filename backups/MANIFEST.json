@@ -388,28 +388,28 @@
   },
   {
    "path": "assets/textures/water05/proj05_D.png",
-   "bytes": 58869,
-   "sha256": "5421c5b66eae8edd33445975360c7f6a1ea6e1abf3d6f7aaca6bc008d08382a9"
+   "bytes": 58999,
+   "sha256": "3280bf69ab20c4303600089d0b3327be106e1430922354a3a0bdb884ad01f734"
   },
   {
    "path": "assets/textures/water05/proj05_E.png",
-   "bytes": 1915028,
-   "sha256": "cb98ba5589e0b9ab80520fcd71431fc8118be4aed788711c10f1c999cebf8b0e"
+   "bytes": 2003546,
+   "sha256": "8b22f243b1f5c35f29ec49780b50885f998b897a9cd38f9744f565e76b757bbd"
   },
   {
    "path": "assets/textures/water05/proj05_F.png",
-   "bytes": 227991,
-   "sha256": "6faec1a8ac2409d2b2f2bcb95a8ab6d30b9ad6132c14f07371e8a17f46cbdccc"
+   "bytes": 230576,
+   "sha256": "859a956537d4cdebbb2944076142268abbe59970dab0741478776bf64298be1e"
   },
   {
    "path": "assets/textures/water05/proj05_N.png",
-   "bytes": 597571,
-   "sha256": "f948453b49a21004a2470281d1951eabc412932074255ab0c3ebed8fc235bc5b"
+   "bytes": 618754,
+   "sha256": "e7f30481b36cda2f5167224276b0361c79f043e668466d3a5c67d2136f234298"
   },
   {
    "path": "assets/textures/water05/proj05_T.png",
-   "bytes": 176920,
-   "sha256": "e4fca2c2f3d3379fe22d64295c0c1279c2931546e5062983cf30f827b8820c73"
+   "bytes": 179290,
+   "sha256": "08d8ee70d9906242dd471bb4373fb888ddc7d6bde08988e0b440c94c464afd75"
   },
   {
    "path": "assets/textures/water05/proj05_lut.json",
@@ -439,7 +439,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "60053a0d3f2032d2fef8dab28fb248be3f4750b564bb841c35abf2206de551cf"
+   "sha256": "43b2579ee20c465e3db54eeeabeb7814a642d11a497182800c19d50b069e541c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1533,8 +1533,8 @@
   },
   {
    "path": "qa/pilot05/proj/target/target_05.png",
-   "bytes": 2144431,
-   "sha256": "21736fe9db22e09ab79d0cb20a44fea181911c0cd59a51df86c00f934aa61007"
+   "bytes": 2191533,
+   "sha256": "6e5a95a85403fe67517d92f635ca03b4d820f2eb8b44ecbf13c63a36ec51ab63"
   },
   {
    "path": "qa/pilot05/proj/target/water_mask.png",
@@ -6993,8 +6993,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 15659,
-   "sha256": "33e8695e350314ddd066add8c5d90ff6b19389bf91738057b922bd5c31a40004"
+   "bytes": 15984,
+   "sha256": "5f26de6608a940c06234bb34f227aece5254343308a32e7ee03120abcf3ca821"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -7173,8 +7173,13 @@
   },
   {
    "path": "tools/proj05/make_target.py",
-   "bytes": 6233,
-   "sha256": "729250e1c5ec259b2ac5d2582099286076bdaf5cbb5d5949510c3765ee0c09a6"
+   "bytes": 7242,
+   "sha256": "b0db57bdb756d2f80df70273406bbca63197769ec892f30e1a95d76210f745d0"
+  },
+  {
+   "path": "tools/proj05/match_metrics.py",
+   "bytes": 2001,
+   "sha256": "8f2530ac64a0f692ec495382b769784cf5ab6f0986145b0643018274b2205dcc"
   },
   {
    "path": "tools/proj05/residual.py",

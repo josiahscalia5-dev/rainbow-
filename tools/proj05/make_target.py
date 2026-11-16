@@ -1,7 +1,7 @@
 """Screen 05 proj05 — TARGET water image in the approved frame (864x1536, sRGB), from the user's own pictures only:
   * where the approved picture shows its water (not hidden by Benny + splash, coins, HUD): the APPROVED pixels;
   * under Benny + splash and the bottom gold ring arcs: the user's ORIGINAL isolated water artwork, registered onto the approved water with dense
-    optical flow (banks / bands line up), colour-matched and blended in with a soft edge (no invented texture);
+    optical flow (banks / bands line up), colour-matched and blended in with a multi-band blend inside the hidden area (no invented texture);
   * the coins too (an along-the-flow interpolation in river space was tried first: it drew straight stripes);
     coin_mask.png is kept for the metrics.
 usage: python3 -I tools/proj05/make_target.py <out_dir>
@@ -68,11 +68,27 @@ mu_d, sd_d = dst[ring].mean(0), dst[ring].std(0) + 1e-3
 # mean shift only, half strength (a per-channel std match turned the artwork's pink into red)
 fill = np.clip(src + 0.5 * (mu_d - mu_s), 0, 255).astype(np.uint8)
 
-# ---- feathered blend of the colour-matched artwork into the hole (a Poisson blend was tried first: it pushed the
-#      pink band at the hole's rim into a saturated red streak inside the hole)
-alpha = np.clip(gaussian_filter(binary_dilation(hole, iterations=6).astype(float), 7), 0, 1)
-alpha = np.maximum(alpha, hole.astype(float))
-tgt = np.clip(appr.astype(float) * (1 - alpha[..., None]) + fill.astype(float) * alpha[..., None], 0, 255).astype(np.uint8)
+# ---- multi-band (Laplacian pyramid) blend of the colour-matched artwork INTO the hole: the transition lies inside the
+#      hole (approved pixels outside it stay exact — a soft edge outside the hole first cost 3.9 % of the visible water),
+#      and low / high frequencies blend over different widths, so there is no visible seam when Benny steers aside.
+#      (A Poisson blend was tried first: it pushed the pink band at the hole's rim into a saturated red streak.)
+def pyr_blend(a_, b_, m_, levels=6):
+    ga = [a_]; gb = [b_]; gm = [m_]
+    for _ in range(levels):
+        ga.append(cv2.pyrDown(ga[-1])); gb.append(cv2.pyrDown(gb[-1])); gm.append(cv2.pyrDown(gm[-1]))
+    la = [ga[i] - cv2.pyrUp(ga[i + 1], dstsize=ga[i].shape[1::-1]) for i in range(levels)] + [ga[levels]]
+    lb = [gb[i] - cv2.pyrUp(gb[i + 1], dstsize=gb[i].shape[1::-1]) for i in range(levels)] + [gb[levels]]
+    out = None
+    for i in range(levels, -1, -1):
+        mm = gm[i][..., None]
+        lv = la[i] * (1 - mm) + lb[i] * mm
+        out = lv if out is None else cv2.pyrUp(out, dstsize=lv.shape[1::-1]) + lv
+    return out
+from scipy.ndimage import binary_erosion
+inner = binary_erosion(hole, iterations=5)
+mask = np.clip(gaussian_filter(inner.astype(float), 3.0) * 1.15, 0, 1).astype(np.float32)
+blend = pyr_blend(appr.astype(np.float32), fill.astype(np.float32), mask)
+tgt = np.where(hole[..., None], np.clip(blend, 0, 255), appr).astype(np.uint8)
 
 Image.fromarray(tgt).save(os.path.join(out, "target_05.png"))
 Image.fromarray((Aw * 255).astype(np.uint8)).save(os.path.join(out, "water_mask.png"))
