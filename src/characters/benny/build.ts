@@ -1,8 +1,9 @@
 /**
  * Benny — the ONE canonical mascot model + joint rig (procedural, exported to assets/models/benny.glb).
  *
- * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70, fur adds ~0.14
- * (visual body radius ≈ 0.84). Total height incl. beanie + pom-pom ≈ 2.5 units.
+ * Contract: origin = centre of the round body, faces +Z, up +Y. Skin sphere r = 0.70 (lower half bulged
+ * ~6 % → pear-round plush ball), fur adds ~0.15 (visual half-width ≈ 0.86). The beanie perches on the
+ * top ~40 % of the ball (brim bottom ≈ +0.10 at the back, +0.24 at the front). Height incl. pom ≈ 2.3.
  * Joints: benny_root › body › { hat › pom, eyes › eyeL/eyeR, mouth, armL, armR, footL, footR }.
  * Meshes named fur_* receive the runtime shell-fur shader (see fur.ts); their userData carries the
  * fur parameters (exported as glTF extras).
@@ -11,6 +12,7 @@ import * as THREE from 'three';
 import type { BuiltModel } from '../types';
 import {
   BENNY_COLORS as C,
+  CROWN_REPEAT,
   blushTexture,
   eyeTexture,
   knitCrownTextures,
@@ -21,11 +23,71 @@ import {
 
 export const BENNY_DIMS = {
   skin: 0.7,
-  fur: 0.105,
+  fur: 0.12,
   radius: 0.8,
-  hatTilt: -0.2, // front of the beanie raised (rad, about X)
-  brimBottom: 0.1, // hat-local
+  /** lower-body bulge (radial gain at its peak): a full round plush ball below the cuff, not a bowl (ref 05 rear:
+   *  body ≈ as wide as the cuff from the cuff down to the water) */
+  pear: 0.1,
+  /** centre (below the ball centre) and width of that bulge */
+  bulgeY: 0.24,
+  bulgeW: 0.38,
+  /** fuller, flatter bottom (wave 5, ref 05 rear: the plush ball stays ≈ cuff-wide down to the waterline and ends
+   *  in a broad round base, not an egg tip). Lower-half cross-section r_xz = r·(1 − t^p)^(1/p), t = −y/r,
+   *  p = 2 + flat (0 = sphere), radial gain capped at flatCap. Lab g05 rows 1129/1149/1169: 247/208/143 px (sphere)
+   *  → 259/234/176 (ref 05: 258/228/181) */
+  flat: 0.8,
+  flatCap: 1.5,
+  /** lower-half vertical stretch at the bottom pole (y' = y·(1 + stretch·|y|/r) for y < 0). Wave 5: 0.10 → 0.03 with
+   *  the flatter base (keeps the bottom at the ref-05 waterline, ≈ 1185 px) */
+  stretch: 0.03,
+  /** beanie tilt (rad, about X; + = front down). Wave 4: back to a slight backward tilt so the front brim clears the
+   *  eyes (refs 02/03); the rear ride views get their low, level look from the runtime's ride lean instead
+   *  (runtime.ts BENNY_RIDE_PITCH), not from tipping the hat over his face */
+  hatTilt: -0.04,
+  /** hat-local cuff bottom (front ≈ +0.25, back ≈ +0.19 above the ball centre). Wave 4: the beanie sits DOWN on the
+   *  head again (wave 3's 0.40 perched it like a small cap and pushed the pom 60 px above the ref) */
+  brimBottom: 0.22,
+  /** cuff outer radius ≈ the fluffy body half-width (rear refs 05/07/09/10: cuff as wide as the body) */
+  brimR: 0.8,
+  /** folded cuff band height (ref 05: 55 px band on a 295 px wide cuff) */
+  cuffH: 0.265,
+  /** crown dome height above its base (inside the cuff). Wave 4: taller rounded dome (ref 05 rear: ≈ 95 px of knit
+   *  between the cuff and the pom, the old 0.44 showed 76 px) */
+  crownH: 0.53,
+  /** pom-pom core radius; the shell fur adds ≈ 0.1 → ≈ 0.5 × the cuff width (ref 05: ≈ 140–150 px / 295) */
+  pomR: 0.31,
+  /** star badge: angle around the hat from the front (deg, toward −X = his right), centre height above the cuff
+   *  top, centre radius. Wave 5: 143° / +0.015 / 0.79 → 137° / +0.065 / 0.77 (live 05: centre (500, 965) = +0.57 cuff
+   *  half-widths; ref 05: (519, 953) = +0.64, lower points on the cuff, the rest on the white band) */
+  starAng: 137,
+  starY: 0.065,
+  starR: 0.77,
 };
+
+/**
+ * Body skin deformation of a point `v` on the r = skin sphere: the lower half is stretched down a little
+ * and bulged radially (strongest at the sides/back, faded out on the face so eyes, blush and mouth keep
+ * their places) → a big round plush ball below the beanie.
+ */
+function deformBody(v: THREE.Vector3, out: THREE.Vector3): THREE.Vector3 {
+  const D = BENNY_DIMS;
+  const r = D.skin;
+  const zf = THREE.MathUtils.smoothstep(v.z / r, 0.1, 0.75);
+  const face = 1 - 0.8 * zf;
+  let k = 1 + D.pear * Math.exp(-(((v.y + D.bulgeY) / D.bulgeW) ** 2)) * face;
+  k *= 1 + (bottomGain(-v.y / r) - 1) * face;
+  const y = v.y < 0 ? v.y * (1 + (D.stretch * -v.y) / r) : v.y;
+  return out.set(v.x * k, y, v.z * k);
+}
+
+/** radial gain of the flattened lower half at t = −y/r (1 on the upper half / with flat = 0) */
+function bottomGain(t: number): number {
+  const D = BENNY_DIMS;
+  if (D.flat <= 0 || t <= 0) return 1;
+  const tc = Math.min(t, 0.9999);
+  const p = 2 + D.flat;
+  return Math.min(D.flatCap, Math.pow(1 - Math.pow(tc, p), 1 / p) / Math.sqrt(1 - tc * tc));
+}
 
 const FACE_DIR = new THREE.Vector3(0, 0.05, 1).normalize();
 
@@ -82,12 +144,12 @@ function furData(o: {
   return { fur: { gravity: 0.35, ...o } };
 }
 
-function lathe(points: [number, number][], segs: number, v0: number, v1: number): THREE.LatheGeometry {
+function lathe(points: [number, number][], segs: number, v0: number, v1: number, uRepeat = 1): THREE.LatheGeometry {
   const g = new THREE.LatheGeometry(points.map(([r, y]) => new THREE.Vector2(r, y)), segs);
-  // re-map v to height so stripes are linear in height
+  // re-map v to height so stripes are linear in height; u (around) optionally tiles the texture
   const p = g.attributes.position as THREE.BufferAttribute;
   const uv = g.attributes.uv as THREE.BufferAttribute;
-  for (let i = 0; i < p.count; i++) uv.setY(i, (p.getY(i) - v0) / (v1 - v0));
+  for (let i = 0; i < p.count; i++) uv.setXY(i, uv.getX(i) * uRepeat, (p.getY(i) - v0) / (v1 - v0));
   return g;
 }
 
@@ -112,17 +174,46 @@ export function buildBenny(): BuiltModel {
   // ---------------- body (fur) ----------------
   const hatUp = new THREE.Vector3(0, 1, 0).applyAxisAngle(new THREE.Vector3(1, 0, 0), D.hatTilt);
   const bodyMat = std({ color: C.pinkSkin, roughness: 0.92, metalness: 0 });
-  const bodyMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.skin, 48, 36), bodyMat), 'fur_body');
+  const bodyGeo = new THREE.SphereGeometry(D.skin, 48, 36);
+  {
+    // pear-round plush ball. Normals come from finite differences of the deformation on the sphere
+    // (position-only, so UV-seam / pole duplicates get identical normals and the shell fur stays closed)
+    const p = bodyGeo.attributes.position as THREE.BufferAttribute;
+    const n = bodyGeo.attributes.normal as THREE.BufferAttribute;
+    const d = new THREE.Vector3(), t1 = new THREE.Vector3(), t2 = new THREE.Vector3();
+    const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3(), e = new THREE.Vector3();
+    const s = new THREE.Vector3(), o = new THREE.Vector3();
+    const eps = 1e-3;
+    for (let i = 0; i < p.count; i++) {
+      d.set(p.getX(i), p.getY(i), p.getZ(i)).normalize();
+      t1.set(0, 1, 0).cross(d);
+      if (t1.lengthSq() < 1e-6) t1.set(1, 0, 0).cross(d);
+      t1.normalize();
+      t2.crossVectors(d, t1).normalize();
+      const at = (u: number, w: number, out: THREE.Vector3) =>
+        deformBody(s.copy(d).addScaledVector(t1, u).addScaledVector(t2, w).setLength(D.skin), out);
+      at(eps, 0, a); at(-eps, 0, b); at(0, eps, c); at(0, -eps, e);
+      a.sub(b); c.sub(e);
+      const nn = o.crossVectors(a, c).normalize();
+      if (nn.dot(d) < 0) nn.negate();
+      n.setXYZ(i, nn.x, nn.y, nn.z);
+      deformBody(s.copy(d).multiplyScalar(D.skin), a);
+      p.setXYZ(i, a.x, a.y, a.z);
+    }
+  }
+  const bodyMesh = named(new THREE.Mesh(bodyGeo, bodyMat), 'fur_body');
   bodyMesh.userData = furData({
     length: D.fur,
-    density: 66,
+    density: 64,
     shells: 20,
     root: C.pinkRoot,
     tip: C.pinkTip,
     // bald under the beanie: dot(normal, hatUp) > brimBottom/skin (+ a little overlap)
-    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.035) / D.skin],
-    short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0.28],
-    gravity: 0.14,
+    // (wave 4: +0.07 → full-length fur tucks under the cuff edge; +0.03 left a bare pink collar under the cuff once
+    // the ride lean shows the back of the ball)
+    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.07) / D.skin],
+    short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0.26],
+    gravity: 0.1,
   });
   body.add(bodyMesh);
 
@@ -191,22 +282,25 @@ export function buildBenny(): BuiltModel {
   const armMat = std({ color: C.pinkSkin, roughness: 0.92 });
   const palmTex = soleTexture('hand');
   for (const side of [1, -1] as const) {
-    const a = joint(side > 0 ? 'armL' : 'armR', 0.58 * side, -0.2, 0.08);
+    // round paw nubs stick out left/right just under the cuff (rear ref 05: ≈ 53 px round balls, centres ≈ 35 px
+    // below the cuff's side corners and ≈ 0.92 cuff-half-widths out). Wave 4: a near-sphere with short dense fur
+    // (was a 1.25× elongated ellipsoid with long drooping fur that read as fuzzy wings from behind).
+    const a = joint(side > 0 ? 'armL' : 'armR', 0.71 * side, -0.06, 0.0);
     body.add(a);
-    const phi = 1.0 * side;
+    const phi = 1.3 * side;
     const dir = new THREE.Vector3(Math.sin(phi), -Math.cos(phi), 0);
     const g = new THREE.SphereGeometry(0.13, 20, 14);
-    g.scale(1, 1.45, 1);
+    g.scale(1, 1.06, 1);
     const arm = named(new THREE.Mesh(g, armMat), side > 0 ? 'fur_armL' : 'fur_armR');
-    arm.position.copy(dir).multiplyScalar(0.16);
+    arm.position.copy(dir).multiplyScalar(0.18);
     arm.rotation.z = phi;
-    arm.userData = furData({ length: 0.07, density: 90, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.2 });
+    arm.userData = furData({ length: 0.055, density: 96, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.04 });
     a.add(arm);
     const palm = named(
       new THREE.Mesh(new THREE.CircleGeometry(0.07, 24), std({ map: palmTex, roughness: 0.6 })),
       side > 0 ? 'palmL' : 'palmR',
     );
-    palm.position.copy(dir).multiplyScalar(0.25).add(new THREE.Vector3(0, -0.01, 0.105));
+    palm.position.copy(dir).multiplyScalar(0.24).add(new THREE.Vector3(0, -0.01, 0.1));
     palm.rotation.x = -0.25;
     a.add(palm);
   }
@@ -214,7 +308,7 @@ export function buildBenny(): BuiltModel {
   // ---------------- feet ----------------
   const footTex = soleTexture('foot');
   for (const side of [1, -1] as const) {
-    const f = joint(side > 0 ? 'footL' : 'footR', 0.3 * side, -0.6, 0.26);
+    const f = joint(side > 0 ? 'footL' : 'footR', 0.31 * side, -0.65, 0.27);
     body.add(f);
     const g = new THREE.SphereGeometry(0.2, 22, 16);
     g.scale(1, 0.82, 1.12);
@@ -238,24 +332,33 @@ export function buildBenny(): BuiltModel {
   hat.rotation.x = D.hatTilt;
   body.add(hat);
   const yb = D.brimBottom;
+  const yt = yb + D.cuffH; // cuff top
+  const bk = D.brimR / 0.778; // profile scale (profiles were authored for a 0.778 brim)
   const brimTex = ribbedBrimTextures();
-  const brimMat = std({ map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.88 });
+  // base-colour factors (wave 5): the tone-mapped scene light lifted the knit to lavender (live 05 cuff median #B248FF
+  // L167, ref 05 #6B0DEB L117; refs 03/07 also paint a deep-violet cuff). In-game A/B (?bennyTint): cuff ×#7868a0 →
+  // #620BEE L118; the crown gets a milder warm factor so the white stripes stay cream-white in every scene
+  const brimMat = std({ color: '#7868a0', map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(1.25, 1.25), roughness: 0.86 });
+  // inner lip hugs the skin at the brim height (sphere radius there ≈ 0.68)
+  const lip = Math.sqrt(D.skin * D.skin - yb * yb) + 0.012;
+  // chunky rolled cuff: rounded bottom and top edges, slight belly in the middle
   const brim = named(
     new THREE.Mesh(
       lathe(
         [
-          [0.69, yb + 0.01],
-          [0.735, yb - 0.005],
-          [0.765, yb + 0.03],
-          [0.778, yb + 0.1],
-          [0.778, yb + 0.18],
-          [0.765, yb + 0.235],
-          [0.735, yb + 0.26],
-          [0.69, yb + 0.265],
+          [lip, yb + 0.01],
+          [0.725 * bk, yb - 0.008],
+          [0.758 * bk, yb + 0.02],
+          [0.776 * bk, yb + 0.07],
+          [0.781 * bk, yb + 0.15],
+          [0.776 * bk, yt - 0.075],
+          [0.758 * bk, yt - 0.025],
+          [0.725 * bk, yt - 0.003],
+          [0.68 * bk, yt],
         ],
         72,
         yb - 0.01,
-        yb + 0.27,
+        yt + 0.005,
       ),
       brimMat,
     ),
@@ -264,58 +367,59 @@ export function buildBenny(): BuiltModel {
   // the brim texture's "v" should run across the band (ribs vertical): lathe u = around ✓
   hat.add(brim);
   const crownTex = knitCrownTextures();
-  const crownMat = std({ map: crownTex.map, normalMap: crownTex.normalMap, normalScale: new THREE.Vector2(0.8, 0.8), roughness: 0.9 });
-  const crownY0 = yb + 0.24;
-  const crownY1 = yb + 0.95;
+  const crownMat = std({ color: '#eae6d6', map: crownTex.map, normalMap: crownTex.normalMap, normalScale: new THREE.Vector2(1.3, 1.3), roughness: 0.9 });
+  // crown dome: starts inside the cuff and is narrower than it (the chunky cuff flares out, refs 04–10), with
+  // an elliptic profile r = R0·√(1 − (y/H)²) that tapers to the pom-pom (which covers the apex).
+  // v = height → horizontal knit stripes.
+  const crownY0 = yt - 0.045;
+  const R0 = 0.705 * bk;
+  const crownProfile: [number, number][] = [];
+  for (const t of [0, 0.08, 0.16, 0.25, 0.34, 0.43, 0.52, 0.6, 0.68, 0.75, 0.81, 0.86, 0.9, 0.935, 0.96, 0.98, 0.993, 1]) {
+    // wave 4: × (1 − 0.18 t) tapers the shoulders (ref 05 rear: dome half-width ≈ 0.85 / 0.77 / 0.66 / 0.54 of the
+    // cuff's at 0 / 0.11 / 0.27 / 0.38 above the cuff top: a rounded beehive, not a flat-topped mushroom)
+    crownProfile.push([R0 * Math.sqrt(Math.max(0, 1 - t * t)) * (1 - 0.18 * t), crownY0 + t * D.crownH]);
+  }
   const crown = named(
-    new THREE.Mesh(
-      lathe(
-        [
-          [0.725, crownY0],
-          [0.748, crownY0 + 0.07],
-          [0.756, crownY0 + 0.17],
-          [0.746, crownY0 + 0.27],
-          [0.712, crownY0 + 0.37],
-          [0.652, crownY0 + 0.46],
-          [0.565, crownY0 + 0.54],
-          [0.45, crownY0 + 0.6],
-          [0.31, crownY0 + 0.635],
-          [0.155, crownY0 + 0.65],
-          [0.0, crownY0 + 0.655],
-        ],
-        72,
-        crownY0,
-        crownY0 + 0.655,
-      ),
-      crownMat,
-    ),
+    new THREE.Mesh(lathe(crownProfile, 72, crownY0, crownY0 + D.crownH, CROWN_REPEAT), crownMat),
     'hat_crown',
   );
   hat.add(crown);
-  // gold star on Benny's RIGHT side (−X), slightly behind the side
-  const starGeo = new THREE.ExtrudeGeometry(starShape(0.19, 0.085), {
-    depth: 0.035,
+  // puffy gold star badge sewn on the lower white stripe just above the cuff, rear-RIGHT (−X): image-right of
+  // centre in the rear gameplay views (ref 05: centre at ≈ +0.68 of the cuff half-width, ≈ 0.11 × the cuff width
+  // above the cuff's top edge, ≈ 0.27 × the cuff width across, its lower points overlapping the cuff). Its face
+  // is turned toward the back (normal 160° from the front) and leans back against the sloping crown (tilted 25°
+  // up), so the rear ride cameras (10–25° above Benny) see it face-on, never edge-on.
+  const starGeo = new THREE.ExtrudeGeometry(starShape(0.165, 0.083), {
+    depth: 0.02,
     bevelEnabled: true,
-    bevelThickness: 0.025,
-    bevelSize: 0.02,
-    bevelSegments: 3,
+    bevelThickness: 0.045,
+    bevelSize: 0.032,
+    bevelSegments: 4,
   });
   starGeo.center();
   const star = named(
-    new THREE.Mesh(starGeo, std({ color: C.gold, metalness: 0.55, roughness: 0.25, emissive: '#ffb000', emissiveIntensity: 0.38 })),
+    new THREE.Mesh(starGeo, std({ color: C.gold, metalness: 0.12, roughness: 0.3, emissive: '#ffb800', emissiveIntensity: 0.22 })),
     'hat_star',
   );
-  const sa = THREE.MathUtils.degToRad(132);
-  const starPos = new THREE.Vector3(-Math.sin(sa) * 0.785, yb + 0.235, Math.cos(sa) * 0.785);
+  const sa = THREE.MathUtils.degToRad(D.starAng);
+  // wave 4: centred on the cuff's top edge (ref 05: ≈ 40 % of the star on the cuff, the rest on the white band);
+  // leans back only 12° because the runtime's ride lean (≈ 13°) tips it the rest of the way toward the chase camera
+  const starPos = new THREE.Vector3(-Math.sin(sa) * D.starR, yt + D.starY, Math.cos(sa) * D.starR);
+  const na = THREE.MathUtils.degToRad(160), tilt = THREE.MathUtils.degToRad(12);
+  const starN = new THREE.Vector3(-Math.sin(na) * Math.cos(tilt), Math.sin(tilt), Math.cos(na) * Math.cos(tilt));
   star.position.copy(starPos);
-  star.lookAt(starPos.clone().multiply(new THREE.Vector3(2, 1, 2)).add(new THREE.Vector3(0, 0.25, 0)));
-  star.rotateZ(0.12);
+  star.lookAt(starPos.clone().add(starN));
+  star.rotateZ(-0.14);
   hat.add(star);
-  // pom-pom
-  const pom = joint('pom', 0, crownY0 + 0.655 + 0.165, -0.03);
+  // big fluffy-round pom-pom sitting ON the crown apex (≈ 0.5 × the cuff width wide and ≈ 0.46 × tall above the
+  // crown in ref 05; wave 3 raised it out of the crown and moved it back over the apex against the forward tilt)
+  // wave 4: core centre 0.12 above the dome apex → the lower third of the pom nests in the dome (ref 05: the top purple
+  // band shows around its base), slightly to the back so the ride lean keeps it centred over the dome
+  const pom = joint('pom', 0, crownY0 + D.crownH + 0.12, -0.05);
   hat.add(pom);
-  const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(0.235, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
-  pomMesh.userData = furData({ length: 0.115, density: 80, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.15 });
+  const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.pomR, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
+  // short, dense strands with little droop → a round plush ball rather than a spiky urchin
+  pomMesh.userData = furData({ length: 0.12, density: 88, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.05 });
   pom.add(pomMesh);
 
   const animations = buildClips();
@@ -338,10 +442,10 @@ function loop(n: number, dur: number): number[] {
   return Array.from({ length: n + 1 }, (_, i) => (i / n) * dur);
 }
 
-const ARM_L: E3 = [0.58, -0.2, 0.08];
-const ARM_R: E3 = [-0.58, -0.2, 0.08];
-const FOOT_L: E3 = [0.3, -0.6, 0.26];
-const FOOT_R: E3 = [-0.3, -0.6, 0.26];
+const ARM_L: E3 = [0.7, -0.08, 0.03];
+const ARM_R: E3 = [-0.7, -0.08, 0.03];
+const FOOT_L: E3 = [0.31, -0.65, 0.27];
+const FOOT_R: E3 = [-0.31, -0.65, 0.27];
 
 function buildClips(): THREE.AnimationClip[] {
   const N = 12;
