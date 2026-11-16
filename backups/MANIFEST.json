@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9700,
-   "sha256": "668ec66634599fb0417dca635010e50e445219c7f956bf7ead5af8b71575cfc5"
+   "sha256": "2d4e8439ba16c71604cfa3baf0bb7f121a720134ec6cf727f9db4cc17ba6bd3e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7343,8 +7343,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 16206,
-   "sha256": "562c79bbd7636b0b29589589b3ff6cd5244a8583a940939a0b2beec0fb9c5c7a"
+   "bytes": 16422,
+   "sha256": "3c24ba812ec8731fab52de647ea8892b35ac3e83b25370a64a9e70c81600f7ea"
   },
   {
    "path": "src/vfx/proj05Apron.ts",
@@ -7373,8 +7373,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 97334,
-   "sha256": "d1137d8b035506d190554a5e4ea2f6f7ee57b4822cdf5b3ab74aa8ddcf52bdff"
+   "bytes": 101249,
+   "sha256": "0a75a42dcd178cf20b055cc5729d35dad186ee0b1a62140459fe886c4f81c427"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -7563,8 +7563,8 @@
   },
   {
    "path": "tools/proj05/near_bake.py",
-   "bytes": 12048,
-   "sha256": "bb5ced3386aed4bc3ed546bb5137f67f33f7b0e98cb482779219202d71b7d616"
+   "bytes": 12297,
+   "sha256": "f8c1519913e483b5e375471aa007ef885ef831259ced18ebca5f0c4e6a7cf311"
   },
   {
    "path": "tools/proj05/near_bubbles.json",

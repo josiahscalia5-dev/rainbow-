@@ -1709,3 +1709,306 @@ Now a bubble list file (empty first), so I can check the black-line fix, then ma
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T22:34:26.424Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)\nvec4 pjLut(float s) {", "new_string": "uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)\n// ?projnear05=1 (2026-11-16, tools/proj05/near_bake.py): uPjT holds the HIGH-RESOLUTION near tile T2 (≈110 texels per\n// unit instead of 24, mirrored repeat along s, mipmaps); x = on, y = share of the detail layer kept on T2\nuniform vec4 uPjNear;\nvec4 pjLut(floa …[+8 chars]`
+
+### 🧑 User — 2026-11-16T22:34:26.462Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:34:29.941Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam\n  vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;", "new_string": "  wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam\n  // ?projnear05=1: the 24-texel near layer hands over to the crisp tile where it would be magnified, by the same test\n  // as the exact layer (at the locked camera mE ≈ 1.3, so t …[+178 chars]`
+
+### 🧑 User — 2026-11-16T22:34:29.981Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:34:34.434Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "vec2 pjFlowDir(float u, float s) {\n  float ny = (s - uPjNS.x) / (uPjNS.y - uPjNS.x);\n  vec3 fn = texture2D(uPjWN, vec2(u * 0.5 + 0.5, ny)).rgb;\n  vec3 ft = texture2D(uPjWT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;\n  float wn = fn.b * smoothstep(0.0, 0.08, ny) * (1.0 - smoothstep(0.92, 1.0, ny));", "new_string": "vec2 pjFlowDir(float u, float s, float mE) {\n  float ny = (s - uPjNS.x) / (uPjNS.y - uPjNS.x);\n  vec3 fn = texture2D(uPjWN, vec2(u * 0.5 + 0.5, ny)).rgb;\n  vec3 ft = textur …[+409 chars]`
+
+### 🧑 User — 2026-11-16T22:34:34.467Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:34:35.432Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "        vec2 fd = pjFlowDir(u, s);", "new_string": "        vec2 fd = pjFlowDir(u, s, mE);"}`
+
+### 🧑 User — 2026-11-16T22:34:35.463Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:34:40.195Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      float det = mix(pjDetail(uB, sB), pjDetail(uA, sA), wA);\n      tgt = clamp(tgt + det * uPjDS.z * (1.0 - wEx), 0.0, 1.0);\n      if (uPjFlow2.x > 0.5 && uPjFlow2.w < 0.999) {\n        // keep a share of the approved picture exactly where it is painted (the layout never dissolves)\n        float wE0, wN0;\n        vec3 t0 = pjTarget(u, s, mE, wE0, wN0);\n        t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * (1.0 - wE0), 0.0, 1.0);", "new_string": "      float det = mix(pjDetail(uB, sB), pjDetail( …[+677 chars]`
+
+### 🧑 User — 2026-11-16T22:34:40.248Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:34:42.876Z
+
+Now the JavaScript side: load the new tile and its flow map only when `projnear05=1`.
+
+### 🤖 Claude — 2026-11-16T22:34:46.914Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };\n  const loader = new THREE.TextureLoader();", "new_string": "  u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };\n  // `&projnear05=1` (2026-11-16, tools/proj05/near_bake.py, qa/pilot05/proj/near/NOTES.md): while riding, the near\n  // river used the 24-texel near / tile layers (pastel smear 8–17 u into the ride); this puts the HIGH-RESOLUTION near\n  // tile T2 (the nearest approved water of the locked view, ≈110 texels per uni …[+433 chars]`
+
+### 🧑 User — 2026-11-16T22:34:46.952Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:34:54.817Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    const ds = u.uPjDS.value as THREE.Vector4;\n    ds.x = lut.D.u1 - lut.D.u0; ds.y = lut.D.s1 - lut.D.s0;\n  }).then(() => {\n    if (!FLOW2) return undefined;\n    return Promise.all([\n      load(new URL('../../assets/textures/water05/proj05_WN.png', import.meta.url).href, false, false),\n      tile(new URL('../../assets/textures/water05/proj05_WT.png', import.meta.url).href),\n      fetch(new URL('../../assets/textures/water05/proj05_flow.json', import.meta.url).href).then((r) => r.json()),\n  …[+1897 chars]`
+
+### 🧑 User — 2026-11-16T22:34:54.872Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:34:58.667Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC OK", "description": "Typecheck after shader + loader changes", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T22:35:01.037Z
+
+> ↩︎ result: TSC OK
+
+### 🤖 Claude — 2026-11-16T22:35:03.620Z
+
+Typecheck passes. Now real-game captures from the same ride positions, BEFORE (your current full stack + `projflow05=2`) vs NEW (+ `projnear05=1`), plus a layer map of NEW, at 0, 8, 17 and 35 units.
+
+### 🤖 Claude — 2026-11-16T22:35:04.168Z
+
+> 🔧 **Bash** `{"command": "nproc; free -g | head -2", "description": "Check CPU and memory for parallel runs"}`
+
+### 🧑 User — 2026-11-16T22:35:04.202Z
+
+> ↩︎ result: 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0           8           0           7          14
+
+### 🤖 Claude — 2026-11-16T22:35:08.924Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1 && mkdir -p $SP && FULL='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2' && \\\n( node scripts/proj05-move.mjs \"--q=$FULL\" --out=$SP/before --d=0,8,17,35 > $SP/before.log 2>&1 & \\\n  node scripts/proj05-move.mjs \"--q=$FULL&projnear05=1\" --out=$SP/new --d=0,8,17,35 > $SP/new.log 2>&1 & \\\n  node scripts/proj05-move.mjs \"--q=$FULL&projnear05=1&projdbg05=1\" --out=$SP/newdbg --d=0,8,17,35 > $SP/newdbg.log 2>&1 & wait ); tail -2 $SP/*.log; ls $SP/*/", "descripti …[+80 chars]`
+
+### 🧑 User — 2026-11-16T22:35:55.812Z
+
+> ↩︎ result: tail: option used in invalid context -- 2
+> /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/before/:
+> move_00.png
+> move_08.png
+> move_17.png
+> move_35.png
+> move_log.json
+> 
+> /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/new/:
+> move_00.png
+> move_08.png
+> move_17.png
+> move_35.png
+> move_log.json
+> 
+> /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/newdbg/:
+> move_00.png
+> move_08.png
+> move_17.png
+> move_35.png
+> move_log.json
+
+### 🤖 Claude — 2026-11-16T22:36:00.837Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1 && for f in $SP/*.log; do echo \"== $f\"; grep -i \"error\" $f | head -3; done; python3 -I - \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nsp=sys.argv[1]\n# side-by-side at 17u full size: BEFORE | NEW\nfor d in [\"08\",\"17\"]:\n    a=Image.open(f\"{sp}/before/move_{d}.png\"); b=Image.open(f\"{sp}/new/move_{d}.png\")\n    c=Image.new(\"RGB\",(a.width*2+16,a.height),(255,255,255)); c.paste(a,(0,0)); c.paste(b,(a.width+16,0))\n    c.resize((c.width//2,c.height//2),Image.LANCZOS).save(f\" …[+92 chars]`
+
+### 🧑 User — 2026-11-16T22:36:01.385Z
+
+> ↩︎ result: == /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/before.log
+> == /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/new.log
+> == /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/newdbg.log
+> ok
+
+### 🤖 Claude — 2026-11-16T22:36:02.854Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/sbs_17.png"}`
+
+### 🧑 User — 2026-11-16T22:36:02.894Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:36:09.103Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/sbs_08.png"}`
+
+### 🧑 User — 2026-11-16T22:36:09.130Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:36:18.840Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1 && python3 -I - \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nsp=sys.argv[1]\nims=[Image.open(f\"{sp}/newdbg/move_{d}.png\") for d in [\"00\",\"08\",\"17\",\"35\"]]\nw,h=ims[0].size\nc=Image.new(\"RGB\",(w*4+48,h),(255,255,255))\nfor i,im in enumerate(ims): c.paste(im,(i*(w+16),0))\nc.resize((c.width//3,c.height//3),Image.LANCZOS).save(f\"{sp}/dbg_strip.png\")\nImage.open(f\"{sp}/new/move_08.png\").crop((0,500,864,1200)).save(f\"{sp}/new08_crop.png\")\nEOF\necho ok", "description": "Bu …[+33 chars]`
+
+### 🧑 User — 2026-11-16T22:36:19.446Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T22:36:21.531Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/dbg_strip.png"}`
+
+### 🧑 User — 2026-11-16T22:36:21.559Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:36:22.148Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride1/new08_crop.png"}`
+
+### 🧑 User — 2026-11-16T22:36:22.177Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:37:00.756Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);", "new_string": "      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);\n      if (uPjNear.x > 0.5) {\n        // ?projnear05=1: the same magnification, but from SMOOTH slopes of the LUT (±0.3 u) instead of the derivative\n        // of the piecewise-linear lookup (which jumps at every LUT bin and made the E -> tile hand-over flicker row by\n        // row into horizontal str …[+668 chars]`
+
+### 🧑 User — 2026-11-16T22:37:00.812Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:37:03.775Z
+
+Re-capturing NEW and its layer map at 8 and 17 units with the smoother hand-over:
+
+### 🤖 Claude — 2026-11-16T22:37:08.686Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride2 && mkdir -p $SP && FULL='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2' && \\\n( node scripts/proj05-move.mjs \"--q=$FULL&projnear05=1\" --out=$SP/new --d=0,8,17,35 > $SP/new.log 2>&1 & \\\n  node scripts/proj05-move.mjs \"--q=$FULL&projnear05=1&projdbg05=1\" --out=$SP/newdbg --d=0,8,17,35 > $SP/newdbg.log 2>&1 & wait ); grep -il error $SP/*.log; python3 -I - \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nsp=sys.argv[1]\nims=[Image.open(f\ …[+456 chars]`
+
+### 🧑 User — 2026-11-16T22:37:45.244Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T22:37:47.325Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride2/dbg_strip.png"}`
+
+### 🧑 User — 2026-11-16T22:37:47.353Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:37:47.931Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride2/new08_crop.png"}`
+
+### 🧑 User — 2026-11-16T22:37:47.964Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:38:11.692Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uniform float uBenny\\|uniform vec[234] uBenny\\|uBennyS\\|uPlayer\\|uCamS\\|uRideS\\|uniforms.uBenny\\|uBenny\" src/vfx/waterRibbon.ts | head -20; grep -n \"uBenny\\|waterRibbon\\|ribbon.update\\|\\.update(\" src/game/Game.ts | head -20", "description": "Find a Benny-position uniform in the water shader"}`
+
+### 🧑 User — 2026-11-16T22:38:11.748Z
+
+> ↩︎ result: 349:uniform vec3 uBenny;      // s, lateral (units), strength
+> 350:uniform float uBennyR;    // Benny's waterline radius (units)
+> 744:  float db = s - uBenny.x;
+> 791:    if (vStyle.x > 0.0 && uBenny.z > 0.0) {
+> 834:  float nearW = uBenny.z > 0.0 ? sw * smoothstep(5.0, 0.5, db) : 0.0;
+> 835:  float X = (lat - mix(M + sbend + 0.5 * (cLc + cRc), uBenny.y, nearW)) * mix(3.0 / hS, 1.0, nearW) / (1.0 + 0.7 * back);
+> 864:  float wake = (vStyle.x > 0.0 && uBenny.z > 0.0) ? sw * vStyle.x : 0.0;
+> 865:  float dlB = lat - uBenny.y;
+> 1065:      float dlN = lat - uBenny.y;
+> 1245:      float dlN = lat - uBenny.y;
+> 1348:  if (uBenny.z > 0.0) {
+> 1349:    float du = lat - uBenny.y;
+> 1350:    float dv = s - uBenny.x;
+> 1351:    float rb = uBennyR;
+> 1354:      float k = uBenny.z;
+> 1565:    uBenny: { value: new THREE.Vector3(0, 0, 0) },
+> 1566:    uBennyR: { value: 0.7 },
+> 25:import { flag05 } from '../vfx/waterRibbon';
+> 228:      benny.update(dt, { swim: 0, steer: 0, speed: 0, time: st.clock });
+> 253:      benny.update(dt, { swim: 0.4, steer: 0, speed: 8, time: st.clock, tumble: tumble < 0.99 });
+> 337:    input.update(dt);
+> 365:    const got = coins.update(st.clock, dt, st.s, st.lat);
+> 378:    benny.update(dt, { swim: 1, stee …[+328 chars]
+
+### 🤖 Claude — 2026-11-16T22:38:14.653Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"uBenny.value\\|uBenny\\.value\" src | head", "description": "Find where Benny's s is fed to the water shader"}`
+
+### 🧑 User — 2026-11-16T22:38:14.693Z
+
+> ↩︎ result: src/vfx/index.ts:194:      if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+> src/vfx/index.ts:232:        (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);
+
+### 🤖 Claude — 2026-11-16T22:38:16.115Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/index.ts", "offset": 185, "limit": 55}`
+
+### 🧑 User — 2026-11-16T22:38:16.142Z
+
+> ↩︎ result: 185	      puddles.uniforms.uTime.value = time;
+> 186	      puddles.uniforms.uAmount.value = controls.outro;
+> 187	      (ribbon.uniforms.uOutro.value as THREE.Vector2).x = controls.outro;
+> 188	      puddles.group.visible = controls.outro > 0.001;
+> 189	      // region visibility (perf): only what the camera around focusS can see
+> 190	      drum.group.visible = focusS < st03.s0 + 12;
+> 191	      whirl.mesh.visible = focusS > drainMark - 8 && focusS < st04.s0 + 45;
+> 192	      wave.mesh.visible = focusS > st08.s0 - 25;
+> 193	      // when Benny is off the ribbon (drum / whirlpool), no ribbon wake
+> 194	      if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+> 195	      foam.update(time, dt, focusS, controls.outro, camera);
+> 196	      // `?proj05=1`: the approved picture's bubbles are part of the baked 05 water, so the game's own bubbles thin out
+> 197	      // to none while Benny is on 05 (ramped over 3 u at both joins); `?projbub05=1` keeps them. Elsewhere unchanged.
+> 198	      const bub05 = PROJ05 && !flag05('projbub05') ? 1 - w05At(focusS) : 1;
+> 199	      bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);
+> 200	      // cre …[+2574 chars]
+
+### 🤖 Claude — 2026-11-16T22:39:00.165Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      if (uPjNear.x > 0.5) {\n        // ?projnear05=1: the same magnification, but from SMOOTH slopes of the LUT (±0.3 u) instead of the derivative\n        // of the piecewise-linear lookup (which jumps at every LUT bin and made the E -> tile hand-over flicker row by\n        // row into horizontal stripes once the tile no longer shows the same picture as E)\n        vec4 La = pjLut(s - 0.3), Lb = pjLut(s + 0.3);\n        float w2 = 2.0 * max(Lm.z, 1e-3);\n        float dVs = (Lb.x - La.x) / 0.6  …[+1672 chars]`
+
+### 🧑 User — 2026-11-16T22:39:00.207Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:39:02.123Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "// unit instead of 24, mirrored repeat along s, mipmaps); x = on, y = share of the detail layer kept on T2\nuniform vec4 uPjNear;", "new_string": "// unit instead of 24, mirrored repeat along s, mipmaps); x = on, y = share of the detail layer kept on T2,\n// z = ride focus s (Benny / camera, set every frame by vfx/index.ts), w = focus s of the locked 05 checkpoint\nuniform vec4 uPjNear;"}`
+
+### 🧑 User — 2026-11-16T22:39:02.157Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:39:04.016Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      u.uPjT.value = T2;\n      (u.uPjTS.value as THREE.Vector2).set(near.T2.a, near.T2.L);\n      (u.uPjNear.value as THREE.Vector4).x = 1;", "new_string": "      u.uPjT.value = T2;\n      (u.uPjTS.value as THREE.Vector2).set(near.T2.a, near.T2.L);\n      const nv = u.uPjNear.value as THREE.Vector4;\n      nv.x = 1; nv.w = near.locked_focus_s;"}`
+
+### 🧑 User — 2026-11-16T22:39:04.048Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:39:06.070Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "      const bub05 = PROJ05 && !flag05('projbub05') ? 1 - w05At(focusS) : 1;", "new_string": "      const bub05 = PROJ05 && !flag05('projbub05') ? 1 - w05At(focusS) : 1;\n      // `?proj05=1&projnear05=1`: the ride position for the near-tile hand-over (waterRibbon.ts uPjNear.z)\n      const pjNear = ribbon.uniforms.uPjNear;\n      if (pjNear) (pjNear.value as THREE.Vector4).z = focusS;"}`
+
+### 🧑 User — 2026-11-16T22:39:06.108Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T22:39:07.976Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/near_bake.py", "old_string": "    T2=dict(a=A, L=L, width=W, height=H, wrapT=\"mirrored\", period=2 * L),", "new_string": "    T2=dict(a=A, L=L, width=W, height=H, wrapT=\"mirrored\", period=2 * L),\n    # Benny's s at the locked 05 checkpoint (scripts/capture.mjs 05 log: s 132.438): the shader's hand-over compares\n    # each point with the locked view's density at the same distance from Benny\n    locked_focus_s=float(opt.get(\"lock\", 132.438)),"}`
+
+### 🧑 User — 2026-11-16T22:39:08.020Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/near_bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T22:39:11.590Z
+
+> 🔧 **Bash** `{"command": "grep -n \"update(time, dt, focusS\\|update(time: number\\|focusS =\\|focus = \" src/vfx/index.ts | head; python3 -I tools/proj05/near_bake.py assets/textures/water05 | grep locked; npx tsc --noEmit && echo TSC OK", "description": "Confirm focusS source, rebake json, typecheck", "timeout": 300000}`
+

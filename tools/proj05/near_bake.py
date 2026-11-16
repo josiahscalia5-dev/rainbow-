@@ -195,6 +195,9 @@ dens_src = np.gradient(np.interp(sg, sg, Vg), sg) * NE
 rep = dict(
     note="proj05 near tile (tools/proj05/near_bake.py); shader: ?proj05=1&projnear05=1 (src/vfx/waterRibbon.ts)",
     T2=dict(a=A, L=L, width=W, height=H, wrapT="mirrored", period=2 * L),
+    # Benny's s at the locked 05 checkpoint (scripts/capture.mjs 05 log: s 132.438): the shader's hand-over compares
+    # each point with the locked view's density at the same distance from Benny
+    locked_focus_s=float(opt.get("lock", 132.438)),
     texels_per_world_unit=dict(along=round(H / L, 1), across=round(W / (2 * hw), 1), old_N_T_along=24.0,
                               old_T_across=round(512 / (2 * hw), 1)),
     source_rows_per_world_unit={f"{s:.1f}": round(float(np.interp(s, sg, dens_src)), 1) for s in (130.5, 132, 134, 136, 137.5)},
