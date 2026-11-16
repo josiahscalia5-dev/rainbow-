@@ -228,7 +228,19 @@ export function buildEnvironment(course: Course): Environment {
   const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: rowRepeat0607, offsetV: rowOffset0607, slotHalf: [0.36, 0.12] });
   withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
   // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
-  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+  // wave 9b controlled test T2 (user-directed 2026-11-16: BEFORE is the baseline, ONE geometric factor per test):
+  // the HEIGHT of the NEAR 05 tunnel around the front ring A. Measured (tools/qa/ring_fit05.py, tools/qa/axis05.ts,
+  // qa/pilot05/wave9b/T2/): the approved ring A centre is 59 px BELOW the vanishing point, BEFORE's 44 px ABOVE,
+  // while rings B, C, D already sit like the approved (slightly above). Lowering the WHOLE tunnel moved B–D
+  // away from the approved (rejected). T2 lowers only the tunnel up to ring A (26 u ahead of the eye) by
+  // ?nearfloor05=<d> units and blends back to BEFORE before ring B (40 u): radius 7.6, ring depths and spacing,
+  // ring B onward, the far block, camera, river and gameplay are untouched. Default 0 = BEFORE (pixel-identical).
+  const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 0) : 0;
+  const NEAR_FLOOR05 = Number.isFinite(qaNear05) ? qaNear05 : 0;
+  const sEye05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+  const floorExtra05 = NEAR_FLOOR05 === 0 ? undefined
+    : (s: number) => NEAR_FLOOR05 * (1 - THREE.MathUtils.smootherstep(s, sEye05 + 28, sEye05 + 38)) * THREE.MathUtils.smoothstep(s, s05 + 2, s05 + 10);
+  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR, floorExtra: floorExtra05 });
 
   // ---- 05 current (ref 05): long ring bays + forced-perspective far tunnel, anchored to the 05 camera ----
   // Ref 05 ring radii about the VP: 288,192,122,85,66,54,45 px → from the locked checkpoint eye the rings sit

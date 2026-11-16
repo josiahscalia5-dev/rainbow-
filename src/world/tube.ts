@@ -31,7 +31,7 @@ export function straightTubePath(
   course: Course,
   s0: number,
   s1: number,
-  opts: { window: number; taper: number; baseRadius: (s: number) => number },
+  opts: { window: number; taper: number; baseRadius: (s: number) => number; floorExtra?: (s: number) => number },
 ): TubePath {
   const ds = 0.5;
   const n = Math.ceil((s1 - s0) / ds) + 1;
@@ -120,6 +120,9 @@ export function straightTubePath(
       D[i] += (Math.max(runDepth[i], nD[i], 0.9) - D[i]) * w;
     }
   }
+  // optional extra floor depth (Screen 05 controlled test T2): lowers the tunnel centre by floorExtra(s)
+  // without touching the radius, the stream or the frames; undefined = unchanged geometry
+  if (opts.floorExtra) for (let i = 0; i < n; i++) D[i] += opts.floorExtra(S(i));
   const idx = (s: number) => {
     const x = THREE.MathUtils.clamp((s - s0) / ds, 0, n - 1);
     const i = Math.min(n - 2, Math.floor(x));

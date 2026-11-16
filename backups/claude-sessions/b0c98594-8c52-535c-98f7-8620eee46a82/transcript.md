@@ -3584,3 +3584,60 @@ Once Screen 05 is approved, proceed to Screen 06 and then the remaining playable
 
 Let's focus on real visual improvements and move the game forward.
 
+### 🤖 Claude — 2026-11-16T11:30:38.741Z
+
+T1 stays a saved experiment and the game stays BEFORE. Now T2. The earlier near-tunnel tests ran **without** T1: the front ring was still its BEFORE size, so lowering it dropped its top arc into view as an extra hoop. The original plan for T2 builds on T1's larger front ring, and that combination is what I'll test now. I'll put the near-tunnel switch back from the saved patch:
+
+### 🤖 Claude — 2026-11-16T11:30:40.247Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git apply --check qa/pilot05/wave9b/not_merged/T2_nearfloor05_REJECTED.patch && git apply qa/pilot05/wave9b/not_merged/T2_nearfloor05_REJECTED.patch && echo APPLIED; grep -c \"nearfloor05\\|floorExtra\" src/world/environment.ts src/world/tube.ts; npx tsc --noEmit && echo TSC_OK", "description": "Re-apply the near-tunnel switch and typecheck"}`
+
+### 🧑 User — 2026-11-16T11:30:43.025Z
+
+> ↩︎ result: APPLIED
+> src/world/environment.ts:4
+> src/world/tube.ts:3
+> TSC_OK
+
+### 🤖 Claude — 2026-11-16T11:30:47.802Z
+
+Capturing T1 alone, then T1 with the near tunnel lowered by 1.2 / 1.6 / 2.0 / 2.4 u. First I'll check the ring-fit search ranges, because ring A will move outside the default search window:
+
+### 🤖 Claude — 2026-11-16T11:30:48.451Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 18,40p tools/qa/ring_fit05.py", "description": "Read the ring-fit starting guesses and ranges"}`
+
+### 🧑 User — 2026-11-16T11:30:48.487Z
+
+> ↩︎ result: W, H = 864, 1536
+> GUESS = {
+>     # rough starting circles (cx, cy, r, search half-ranges dx, dy, dr)
+>     'ref': {'A': (455, 535, 499, 45, 70, 60), 'B': (465, 455, 245, 30, 40, 30), 'C': (478, 453, 150, 20, 25, 20),
+>             'D': (490, 460, 96, 14, 18, 14), 'E': (495, 464, 62, 10, 12, 9), 'F': (497, 466, 42, 8, 9, 6)},
+>     'live': {'A': (512, 480, 370, 40, 50, 40), 'B': (505, 478, 232, 30, 35, 28), 'C': (500, 475, 160, 20, 22, 20),
+>              'D': (500, 472, 96, 14, 16, 14), 'E': (500, 471, 58, 10, 12, 9), 'F': (500, 470, 41, 8, 9, 6)},
+> }
+> 
+> def gold_mask(a):
+>     r, g, b = a[..., 0].astype(int), a[..., 1].astype(int), a[..., 2].astype(int)
+>     return (r > 160) & (r - b > 70) & (g > 45)
+> 
+> def arc_points(cx, cy, r, n=220):
+>     th = np.linspace(math.radians(8), math.radians(172), n)
+>     x = cx + r * np.cos(th); y = cy - r * np.sin(th)
+>     ok = (x >= 0) & (x < W) & (y >= 112) & (y < H) & ~((x > 112) & (x < 752) & (y > 114) & (y < 188))
+>     return x[ok].astype(int), y[ok].astype(int)
+> 
+> def score(m, cx, cy, r):
+>     x, y = arc_points(cx, cy, r)
+>     if len(x) < 30: return 0.0
+>     return float(m[y, x].mean())
+
+### 🤖 Claude — 2026-11-16T11:30:52.488Z
+
+The default search window for ring A tops out at radius 410, which is too small for T1's bigger front ring. I'll give the T1/T2 captures a wider guess for ring A:
+
+### 🤖 Claude — 2026-11-16T11:30:59.739Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/t2b; rm -rf $S; mkdir -p $S/fit; for d in 0 1.2 1.6 2 2.4; do timeout 600 node scripts/capture.mjs 05 --out=$S/n$d \"--q=ringa=20&nearfloor05=$d\" > $S/cap_$d.log 2>&1 || echo \"capture $d failed\"; echo '{\"A\": [495, 500, 475, 45, 90, 55]}' > $S/fit/guess_T2_$d.json; done; git checkout -q -- qa/capture_log.json; cp $S/fit/guess_T2_0.json $S/fit/guess_T1.json; python3 -I tools/qa/ring_fit05.py $S/fit APPROVED=references/05_flow_into_the_current.png BEFORE=qa/pilot05/wave9/b …[+780 chars]`
+
