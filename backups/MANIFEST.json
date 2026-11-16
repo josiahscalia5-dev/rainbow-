@@ -448,8 +448,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3875,
-   "sha256": "eab516fa0c9daaba10d4ad2a26480255347361a97d04d9f9e194abbc49cc9971"
+   "bytes": 3822,
+   "sha256": "9946b624f50046d7a5509f649decdbcf1496f3352469990053555c4f72865831"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -459,7 +459,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9218,
-   "sha256": "98d4d5752f7622825ce465aa11b284b4bac53afe8da5446b71237fa322a30d49"
+   "sha256": "4c6f78ccad88e8acd1a14e1ac92fdc51d1d4a251569cbf0cfb11ed33ac9eb01e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7295,6 +7295,11 @@
    "path": "tools/proj05/residual.py",
    "bytes": 1901,
    "sha256": "a1c1d42f15294d143c543e70663a3a32107380077065ea8abbc7d1616459499f"
+  },
+  {
+   "path": "tools/proj05/screen_regions.py",
+   "bytes": 3593,
+   "sha256": "5b15d9f9efa10a3cd7e45d207b6a66072d180e3460edf951ea93db0f66dc910a"
   },
   {
    "path": "tools/proj05/tunnel_bake.py",

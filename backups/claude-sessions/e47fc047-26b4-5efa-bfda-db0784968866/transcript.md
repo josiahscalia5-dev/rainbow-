@@ -536,3 +536,397 @@ The previous session ended right after "Excluding it and re-measuring", and its 
 > > ↩︎ result: Exit code 1
 > > Trac …[+5080 chars]
 
+### 🤖 Claude — 2026-11-16T20:34:55.314Z
+
+> 🔧 **Bash** `{"command": "pgrep -af \"claude-bootstrap|vite|capture.mjs\" | grep -v pgrep | head; echo ---; tail -5 backups/.live/bootstrap.log 2>/dev/null; echo ---; python3 -I scripts/autosave-status.py; echo ---; blender --version 2>&1 | head -1; blender -b --python-expr \"import bpy; print('BPY_OK', bpy.app.version_string, len(bpy.data.objects))\" 2>&1 | grep BPY_OK; sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK'; ls .claude/agents/; git lfs ls-files | wc -l; git lfs ls-files | grep -c ' - ' ; ls -la assets/models/*.glb qa/pilot05/wave6/camera_lock/*.blend 2>&1 | awk '{print $5, $NF}'", "d …[+69 chars]`
+
+### 🧑 User — 2026-11-16T20:34:57.558Z
+
+> ↩︎ result: 581 bash /home/user/rainbow-/scripts/claude-bootstrap.sh --background
+> ---
+> 
+> == 4 Tests
+>   OK   Build + game tests             tsc OK; continuity OK (all stage joins gap 0, 07->08 drop 61.19)
+> 
+> == 5 Five-minute autosave
+> ---
+> AUTOSAVE OK | branch ccr-61131b9d-uj0oqb | scheduler daemon | last verified backup 2026-11-16T20:34:01+00:00 (0.9 min ago) | local 4289c22 remote 4289c22 (match) | uncommitted 3
+> ---
+> Blender 5.3.0
+> BPY_OK 5.3.0 3
+> 13
+> android-build-performance.md
+> animation-and-gameplay-engineer.md
+> benny-character-artist.md
+> cartoon-girl-character-artist.md
+> foam-bubbles-particles.md
+> path-camera-transition-engineer.md
+> playwright-visual-qa.md
+> reference-match-director.md
+> washer-environment-modeler.md
+> water-fx-specialist.md
+> 30
+> 0
+> 1126892 assets/models/benny.glb
+> 3546480 assets/models/rainbow_girl.glb
+> 445121 qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend
+> 411754 qa/pilot05/wave6/camera_lock/screen05_layout.blend
+
+### 🤖 Claude — 2026-11-16T20:35:04.293Z
+
+> 🔧 **Bash** `{"command": "f=backups/claude-sessions/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/transcript.md; sed -n 330,372p $f | cut -c1-400; ls qa/pilot05/full_reference_match/ 2>&1 | head -30", "description": "Read prior session's metrics table and deliverables"}`
+
+### 🧑 User — 2026-11-16T20:35:04.335Z
+
+> ↩︎ result: >   /home/user/rainbow-/qa/pilot05/proj/compare/1_APPROVED.png → file_uuid: fa8feb0c-1e3a-4842-825e-00f09c09086d
+> >   /home/user/rainbow-/qa/pilot05/proj/compare/2_BEFORE_current_default_T2.png → file_uuid: c527071a-c158-4ceb-9f55-b56473f11a19
+> >   /home/user/rainbow-/qa/pilot05/proj/compare/3_NEW_proj05.png → file_uuid: 42bf8be2-2abb-4638-928c-c5c98f6ee132
+> >   /home/user/rainbow-/qa/pilot05/proj/move/NEW_proj05_forward_10.png → file_uuid: 847f5fca-2b67-4d2b-9718-a9ebae05c072
+> 
+> ### 🤖 Claude — 2026-11-16T19:54:13.227Z
+> 
+> **No, not exactly.** I cannot build a playable 3D Screen 05 that looks exactly like your approved picture, and I won't promise it. I can build one that is clearly the same design and much closer than today's game, but not identical.
+> 
+> ## Why "exactly" is not possible
+> 
+> - **The approved picture is one painted image.** Its lighting, reflections and perspective exist for a single frozen moment. A real 3D game has to redraw the scene from a new position many times a second as Benny moves.
+> - **A phone cannot draw that painted finish live.** The soft fur, the chrome walls and the gold glints in the picture are illustration quality.
+> - **The only way to get identical pixels is to  …[+1797 chars]
+
+### 🤖 Claude — 2026-11-16T20:35:08.571Z
+
+> 🔧 **Bash** `{"command": "cat tools/proj05/frame_metrics.py tools/proj05/match_metrics.py; head -40 scripts/capture.mjs | grep -n \"opt\\|--\\|usage\" | head -20; python3 -c \"from PIL import Image; im=Image.open('references/05_flow_into_the_current.png'); print(im.size, im.mode)\"", "description": "Read metrics tools and capture options"}`
+
+### 🧑 User — 2026-11-16T20:35:08.771Z
+
+> ↩︎ result: """Full-frame APPROVED vs capture comparison, reported per region (no single invented 'fidelity score').
+> Regions: WATER = the approved water footprint (registered artwork alpha) minus Benny + splash and coins (both differ in
+> the game by design: same character / gameplay coins, not part of the water); FRAME = all pixels below the HUD.
+> Per region: mean |dRGB| (0-255), share of pixels within 10 / 20 levels, and SSIM on luminance (7x7 Gaussian).
+> usage: python3 -I tools/proj05/frame_metrics.py <approved.png> <capture.png> [<capture2.png> ...]"""
+> import json, sys
+> import numpy as np
+> from PIL import Image
+> from scipy.ndimage import gaussian_filter
+> T = "qa/pilot05/proj/target"
+> ap = np.asarray(Image.open(sys.argv[1]).convert("RGB"), float)
+> wm = np.asarray(Image.open(f"{T}/water_mask.png")) > 127
+> coin = np.asarray(Image.open(f"{T}/coin_mask.png")) > 127
+> env = np.asarray(Image.open("qa/worldlabs/05/05_env_mask.png").convert("L")) > 127
+> H, W = wm.shape
+> rows = np.arange(H)[:, None] * np.ones((1, W))
+> benny = ~env & (rows >= 760)
+> water = wm & ~coin & ~benny & (rows >= 196)
+> frame = rows >= 196
+> def ssim_map(a, b):
+>     la, lb = (a * [0.2126, 0.7152, 0.0722]).sum(-1), (b * [0.2126, 0.7152, 0.0722]).sum …[+3732 chars]
+
+### 🤖 Claude — 2026-11-16T20:35:16.296Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/proj/target/ && sed -n 1,200p tools/proj05/tunnel_common.py | head -90", "description": "List target masks and tunnel common helpers"}`
+
+### 🧑 User — 2026-11-16T20:35:16.339Z
+
+> ↩︎ result: art_registered.png
+> coin_mask.png
+> correction.npz
+> fill_mask.png
+> report.json
+> target_05.png
+> water_mask.png
+> """Screen 05 walls + gold rings bake (`?projwall05=1`, `?projring05=1`) — shared helpers: the approved picture's masks and
+> its ring model (the gold bands as curves r(theta) about one origin O near the vanishing point).
+> Image angle theta: 0 = +x (screen right), 90 deg = up, counter-clockwise; r in pixels of the 864x1536 approved frame."""
+> import json, math
+> import numpy as np, cv2
+> from PIL import Image
+> from scipy.ndimage import binary_dilation, binary_opening, binary_closing, median_filter, uniform_filter1d
+> 
+> W, H = 864, 1536
+> APPROVED = "references/05_flow_into_the_current.png"
+> O = (497.0, 468.0)                      # common polar origin (close to the vanishing point of the approved tunnel)
+> NTH = 3600                              # theta samples (0.1 deg)
+> # circle fits of the approved rings (tools/qa/ring_fit05.py, qa/pilot05/wave9b/rings/rings.md) + far rings read off the
+> # log-polar view (qa/pilot05/proj/tunnel/NOTES.md): name -> (cx, cy, r mid-band, band thickness)
+> RING_GUESS = {
+>     "A": (474, 529, 492.5, 64), "B": (477, 447, 239.5, 38), "C": (491, 458, 150.0, 23), "D": (493, 46 …[+3115 chars]
+
+### 🤖 Claude — 2026-11-16T20:35:20.273Z
+
+I'll capture the real game at 864×1536 in three states: the protected default, `?proj05=1` water only, and the recovered tunnel experiment combined with the approved water.
+
+### 🤖 Claude — 2026-11-16T20:35:23.390Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $S/def $S/p $S/rec && pgrep -af claude-bootstrap | grep -v pgrep | head -2; time (node scripts/capture.mjs 05 --out=$S/def 2>&1 | tail -1 | cut -c1-80; node scripts/capture.mjs 05 --q='proj05=1' --out=$S/p 2>&1 | tail -1 | cut -c1-80; node scripts/capture.mjs 05 --q='proj05=1&projwall05=1&projring05=1' --out=$S/rec 2>&1 | tail -1 | cut -c1-80); git checkout qa/capture_log.json 2>/dev/null; python3 -c \"\nfrom PIL import Image\nfor p in ['def','p','rec']: print(p, Image.open('$S/'+p+'/05 …[+110 chars]`
+
+### 🧑 User — 2026-11-16T20:36:10.084Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/sc
+> 05 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/sc
+> 05 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/sc
+> 
+> real	0m46.484s
+> user	0m4.966s
+> sys	0m0.972s
+> def (864, 1536)
+> p (864, 1536)
+> rec (864, 1536)
+
+### 🤖 Claude — 2026-11-16T20:36:11.349Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-16T20:36:11.369Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:36:11.991Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/rec/05.png"}`
+
+### 🧑 User — 2026-11-16T20:36:12.046Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:36:43.596Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/proj05/screen_regions.py", "content": "\"\"\"Screen 05 — APPROVED vs real-game capture, per region of the approved picture (no single invented 'fidelity score').\nRegions are defined on the APPROVED frame (tools/proj05/tunnel_common.masks):\n  HUD     top bar + title banner (drawn over the canvas; reported on its own, never mixed into tunnel numbers)\n  WALL    purple perforated tunnel metal (not gold, not water, not Benny, not a lid, not the HUD)\n  RING    gold ring bands (warm pixels outside the lids, coins, water, Benny and the HUD)\n  LID     the s …[+3186 chars]`
+
+### 🧑 User — 2026-11-16T20:36:43.661Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/proj05/screen_regions.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T20:36:44.903Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I tools/proj05/screen_regions.py $S/def/05.png $S/p/05.png $S/rec/05.png 2>&1 | sed \"s#$S/##\"", "description": "Measure region metrics for three captures"}`
+
+### 🧑 User — 2026-11-16T20:36:48.209Z
+
+> ↩︎ result: def/05.png
+>   HUD     px  151496  mean|d|  62.81  <=10 0.025  <=20 0.133  SSIM 0.184  bias [7.9, 26.8, 18.3]
+>   WALL    px  232581  mean|d|  67.49  <=10 0.012  <=20 0.069  SSIM 0.119  bias [20.2, 40.0, -18.2]
+>   RING    px   89328  mean|d|  58.57  <=10 0.026  <=20 0.107  SSIM 0.195  bias [-15.8, -9.7, 60.9]
+>   LID     px   27726  mean|d|  62.78  <=10 0.018  <=20 0.079  SSIM 0.179  bias [-0.6, -11.2, 34.6]
+>   TUNNEL  px  349635  mean|d|  64.84  <=10 0.016  <=20 0.079  SSIM 0.143  bias [9.4, 23.2, 6.2]
+>   WATER   px  559997  mean|d|  49.64  <=10 0.083  <=20 0.234  SSIM 0.318  bias [0.2, 14.3, 14.5]
+>   BENNY   px  219642  mean|d|  46.98  <=10 0.110  <=20 0.281  SSIM 0.202  bias [14.6, 9.1, 11.6]
+>   COINS   px   27437  mean|d|  61.40  <=10 0.021  <=20 0.110  SSIM 0.135  bias [4.3, -6.9, 41.6]
+>   FRAME   px 1157760  mean|d|  54.23  <=10 0.067  <=20 0.194  SSIM 0.238  bias [5.3, 14.2, 10.9]
+>   FULL    px 1327104  mean|d|  55.38  <=10 0.061  <=20 0.185  SSIM 0.231  bias [5.5, 15.5, 12.0]
+> p/05.png
+>   HUD     px  151496  mean|d|  62.81  <=10 0.025  <=20 0.133  SSIM 0.184  bias [7.9, 26.8, 18.3]
+>   WALL    px  232581  mean|d|  65.82  <=10 0.015  <=20 0.075  SSIM 0.127  bias [22.5, 33.9, -22.2]
+>   RING    …[+1746 chars]
+
+### 🤖 Claude — 2026-11-16T20:37:07.713Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nfrom PIL import Image, ImageDraw\na=Image.open('references/05_flow_into_the_current.png').convert('RGB'); r=Image.open('$S/rec/05.png').convert('RGB')\ncrops={'botleft':(0,1150,300,1536),'botright':(564,1150,864,1536),'leftwall':(0,250,300,800),'rightwall':(564,250,864,800),'center':(282,250,582,600)}\nfor k,b in crops.items():\n    w,h=b[2]-b[0],b[3]-b[1]\n    im=Image.new('RGB',(w*2+10,h),(255,255,255)); im.paste(a.crop(b),(0,0)); im.paste(r.crop(b),(w+10,0))\n    im=im.res …[+189 chars]`
+
+### 🧑 User — 2026-11-16T20:37:08.903Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_botleft.png
+> /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_botright.png
+> /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_center.png
+> /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_leftwall.png
+> /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_rightwall.png
+
+### 🤖 Claude — 2026-11-16T20:37:10.476Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_botleft.png"}`
+
+### 🧑 User — 2026-11-16T20:37:10.509Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:37:11.182Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_leftwall.png"}`
+
+### 🧑 User — 2026-11-16T20:37:11.201Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:37:11.785Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_rightwall.png"}`
+
+### 🧑 User — 2026-11-16T20:37:11.809Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:37:36.022Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nb=(0,1150,300,1536)\nims=[Image.open(p).convert('RGB').crop(b) for p in ['references/05_flow_into_the_current.png','$S/def/05.png','$S/p/05.png','$S/rec/05.png']]\nim=Image.new('RGB',(4*300+30,386),(255,255,255))\nfor i,c in enumerate(ims): im.paste(c,(i*310,0))\nim.save('$S/cmp_bl4.png')\nEOF\nls $S/; ls $S/raw 2>/dev/null", "description": "Compare bottom-left corner across all versions"}`
+
+### 🧑 User — 2026-11-16T20:37:36.413Z
+
+> ↩︎ result: Exit code 2
+> cmp_bl4.png
+> cmp_botleft.png
+> cmp_botright.png
+> cmp_center.png
+> cmp_leftwall.png
+> cmp_rightwall.png
+> def
+> p
+> rec
+
+### 🤖 Claude — 2026-11-16T20:37:38.357Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cmp_bl4.png"}`
+
+### 🧑 User — 2026-11-16T20:37:38.381Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T20:37:50.563Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $S/raw $S/probe && node scripts/proj05-tunnel-probe.mjs --out=$S/probe --raw=$S/raw --q='proj05=1&projwall05=1&projring05=1' 2>&1 | tail -1 | cut -c1-300 && node scripts/proj05-tunnel-probe.mjs --coords --all --out=$S/probe --raw=$S/raw --q='proj05=1&projwall05=1&projring05=1' 2>&1 | tail -1 | cut -c1-100; python3 -I - <<EOF\nimport numpy as np\na=np.fromfile('$S/raw/tunnel_id.f32',np.float32).reshape(1536,864,4)\nc=np.fromfile('$S/raw/tunnel_coords_all.f32',np.float32).reshape(1536,864 …[+273 chars]`
+
+### 🧑 User — 2026-11-16T20:38:24.348Z
+
+> ↩︎ result: probed {"wall":2,"ring":1,"lid":1,"farWall":1,"farRing":1,"farLid":1} tunnel {"sCam05":126.03830202823289,"s05":114.68830202823243,"sGlow05":183.02412082521383,"sF05":180.0383020282329,"bay05":14,"rings05":[124.03830202823289,138.0383020282329,146.0383020282329,166.0383020282329],"ringDv":[59,97,161
+> probed {} tunnel {"sCam05":126.03830202823289,"s05":114.68830202823243,"sGlow05":183.02412082521383,
+> (40, 1400) id [0.848 0.462 0.105 1.   ] coords [0.848 0.462 0.105 1.   ]
+> (100, 1450) id [0.911 0.623 0.237 1.   ] coords [0.911 0.623 0.237 1.   ]
+> (150, 1300) id [0.924 0.35  0.925 1.   ] coords [0.924 0.35  0.925 1.   ]
+> (800, 1400) id [1.134 1.011 0.815 1.   ] coords [1.134 1.011 0.815 1.   ]
+> (60, 1500) id [0.808 0.415 0.152 1.   ] coords [0.808 0.415 0.152 1.   ]
+> (420, 1520) id [0.843 0.381 0.243 1.   ] coords [0.843 0.381 0.243 1.   ]
+> (30, 300) id [  0.166 144.402   1.     10.   ] coords [ 0.416  0.381  7.    77.   ]
+> (830, 300) id [  0.855 151.497   1.     10.   ] coords [ 0.105  0.125  7.    77.   ]
+> (150, 600) id [  0.273 153.247   1.     10.   ] coords [ 0.523  0.165  7.    77.   ]
+> (160, 380) id [  0.178 152.265   1.     10.   ] coords [ 0.428  0.143  7.    77.   ]
+
+### 🤖 Claude — 2026-11-16T20:38:28.243Z
+
+The bottom-corner gold isn't one of the tunnel rings the probe recognises. It's a separate mesh drawn in its own colour. I'll raycast that pixel in the live game to name it.
+
+### 🤖 Claude — 2026-11-16T20:38:35.712Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && cat > $S/ray.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5241);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&proj05=1&projwall05=1&projring05=1`);\n  await page.waitForFunction(() => win …[+1363 chars]`
+
+### 🧑 User — 2026-11-16T20:38:48.159Z
+
+> ↩︎ result: 100,
+>   1450,
+>   [
+>    "tube05_near_frame<zone_tubes<washer_world<Scene MeshStandardMaterial key=near-frame-05-v1 d=0.89",
+>    "water_ribbon<water_system<Scene ShaderMaterial key=onBeforeCompile() {\n  } d=5.68",
+>    "Mesh<zone_tubes<washer_world<Scene MeshStandardMaterial key=onBeforeCompile() {\n  } d=12.62",
+>    "Mesh<zone_tubes<washer_world<Scene MeshStandardMaterial key=perf-v4-r-g|strips-attribute-wall05|ptwall-real d=12.79"
+>   ]
+>  ],
+>  [
+>   800,
+>   1400,
+>   [
+>    "tube05_near_frame<zone_tubes<washer_world<Scene MeshStandardMaterial key=near-frame-05-v1 d=0.88",
+>    "water_ribbon<water_system<Scene ShaderMaterial key=onBeforeCompile() {\n  } d=5.84",
+>    "Mesh<zone_tubes<washer_world<Scene MeshStandardMaterial key=onBeforeCompile() {\n  } d=13.62",
+>    "Mesh<zone_tubes<washer_world<Scene MeshStandardMaterial key=perf-v4-r-g|strips-attribute-wall05|ptwall-real d=13.80"
+>   ]
+>  ],
+>  [
+>   420,
+>   1520,
+>   [
+>    "tube05_near_frame<zone_tubes<washer_world<Scene MeshStandardMaterial key=near-frame-05-v1 d=0.91",
+>    "water_ribbon<water_system<Scene ShaderMaterial key=onBeforeCompile() {\n  } d=5.25",
+>    "Mesh<zone_tubes<washer_world<Scene MeshStandardMaterial key=onBeforeCompile() {\n  } d=12.88",
+>    "Mesh …[+597 chars]
+
+### 🤖 Claude — 2026-11-16T20:38:49.702Z
+
+The pale bottom gold is `tube05_near_frame`, a separate "near frame" mesh 0.9 units from the camera. Neither tunnel switch wraps it. I'll find where it's built.
+
+### 🤖 Claude — 2026-11-16T20:38:50.406Z
+
+> 🔧 **Grep** `{"pattern": "near_frame|near-frame-05|nearFrame", "path": "/home/user/rainbow-/src", "output_mode": "content"}`
+
+### 🧑 User — 2026-11-16T20:38:50.448Z
+
+> ↩︎ result: src/world/tube.ts:700:export function nearFrameGeometry(): THREE.BufferGeometry {
+> src/world/environment.ts:9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
+> src/world/environment.ts:10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> src/world/environment.ts:645:  // camera (nearFrameGeometry, reference-pixel units → camera space at depth 0.8, scaled by the camera FOV).
+> src/world/environment.ts:650:    const frame = new THREE.Mesh(nearFrameGeometry(), nearFrameMaterial());
+> src/world/environment.ts:651:    frame.name = 'tube05_near_frame';
+> src/world/materials.ts:757: * Ref 05 near gold frame (nearFrameGeometry in tube.ts): stylised polished gold bands. Corners (from the edge
+> src/world/materials.ts:763:export function nearFrameMaterial(): THREE.MeshS …[+100 chars]
+
+### 🤖 Claude — 2026-11-16T20:38:51.732Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/materials.ts", "offset": 750, "limit": 55}`
+
+### 🧑 User — 2026-11-16T20:38:51.747Z
+
+> ↩︎ result: 750	  const M = marblePanoLookup05(tan);
+> 751	  const e = new THREE.Euler().setFromRotationMatrix(M, 'XYZ');
+> 752	  // three applies makeRotationFromEuler(−rotation) to the lookup vector (WebGLMaterials, PMREM env)
+> 753	  return new THREE.Euler(-e.x, -e.y, -e.z, 'XYZ');
+> 754	}
+> 755	
+> 756	/**
+> 757	 * Ref 05 near gold frame (nearFrameGeometry in tube.ts): stylised polished gold bands. Corners (from the edge
+> 758	 * toward the stream outward, reference row y 1330): broad white highlight · thin orange line · yellow-orange ·
+> 759	 * orange with a pale striation, dark cut face; bottom lip (reference column x 432, top → down): pale edge ·
+> 760	 * dark orange line · salmon with two white spots · orange · dark amber · rose. Colours solved through the
+> 761	 * output pipeline like the band palette; a mild facing term keeps the half-round bulge readable.
+> 762	 */
+> 763	export function nearFrameMaterial(): THREE.MeshStandardMaterial {
+> 764	  const mat = new THREE.MeshStandardMaterial({ color: '#ffb347', metalness: 1, roughness: 0.2, side: THREE.DoubleSide, fog: false });
+> 765	  mat.onBeforeCompile = (shader) => {
+> 766	    shader.vertexShader = shader.vertexShader
+> 767	      .replace('#include <common>', '#includ …[+2637 chars]
+
+### 🤖 Claude — 2026-11-16T20:38:52.434Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "offset": 680, "limit": 90}`
+
+### 🧑 User — 2026-11-16T20:38:52.449Z
+
+> ↩︎ result: 680	      this.matrix(Z, it.o, it.basis, it.s, open, it.openPos, it.openScale, m);
+> 681	      mesh.setMatrixAt(i, m);
+> 682	      ext!.setX(i, (Z - this.zOf(Z)) * (1 - open));
+> 683	    });
+> 684	    mesh.count = items.length;
+> 685	    mesh.instanceMatrix.needsUpdate = true;
+> 686	    ext.needsUpdate = true;
+> 687	  }
+> 688	}
+> 689	
+> 690	/**
+> 691	 * Ref 05 near gold frame (wave 7): the approved image is framed at the bottom by two thick gold ring segments
+> 692	 * cut flat where they meet the stream (bottom corners) and the ∩ lip of a gold ring the stream pours over
+> 693	 * (bottom arc). Built as one real 3D mesh in REFERENCE-PIXEL units of an 864×1536 portrait frame (origin at the
+> 694	 * frame centre, +x right, +y up, +z toward the viewer); environment.ts places it in camera space and scales
+> 695	 * it by the camera's FOV, so it keeps this framing on any portrait viewport. Each band is a rounded strip
+> 696	 * (half-round bulge toward the viewer). uv = (along the arc, across the band 0 = edge toward the stream);
+> 697	 * `framePiece` 0 = corner (uv.x = 1 at the cut), 1 = bottom lip. Measured reference edges: corner inner edge
+> 698	 * (0,1210) · (65,1300) · (135,1400) · cut ≈ (150,1420); right mirrored; lip  …[+3341 chars]
+
+### 🤖 Claude — 2026-11-16T20:38:53.083Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 636, "limit": 40}`
+
+### 🧑 User — 2026-11-16T20:38:53.098Z
+
+> ↩︎ result: 636	    zones.chamber.add(s);
+> 637	    const stream = buildPourStream(wall.clone().add(new THREE.Vector3(-side * 2.0 * scale, -1.6 * scale, 0)), C.center.y - C.radius + 1.2 + Math.abs(Math.cos(ang)) * 1.5, -side);
+> 638	    zones.chamber.add(stream.mesh);
+> 639	    animated.push(stream.update);
+> 640	  }
+> 641	
+> 642	  // 05 near gold frame (wave 7, ref bottom corners + bottom lip), built LAST: three's UUIDs draw on Math.random,
+> 643	  // so creating it earlier shifted the random canvas textures of the 08 laundry room / pour streams.
+> 644	  // Real 3D bands held in front of the rider
+> 645	  // camera (nearFrameGeometry, reference-pixel units → camera space at depth 0.8, scaled by the camera FOV).
+> 646	  // Shown only while the camera rides the straight 05 current; it slides down out of the frame over ≈6 units
+> 647	  // when entering from 04 and before the 06 hall, and is collapsed (zero scale) everywhere else, so 01–04 and
+> 648	  // 06–11 never see it. It covers only the frame's bottom corners/edge (below Benny), never the course ahead.
+> 649	  {
+> 650	    const frame = new THREE.Mesh(nearFrameGeometry(), nearFrameMaterial());
+> 651	    frame.name = 'tube05_near_frame';
+> 652	    frame.frustumCulled = fals …[+1545 chars]
+
