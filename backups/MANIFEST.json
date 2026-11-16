@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7796,
-   "sha256": "b95db5719bff416cb533597f37d7d9d98bdb83dcad6f8de05d777fff8c8f99dc"
+   "sha256": "452b739607b9beed5b650b843fc6e18650b6a05a95825bbdcf43e0aabece5fa2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6415,6 +6415,11 @@
    "path": "scripts/perf05.mjs",
    "bytes": 3306,
    "sha256": "7637ee926dac4374586bd124a89b5f35f0d8a3f52a4d86cdd3820c47fd82cace"
+  },
+  {
+   "path": "scripts/proj05-probe.mjs",
+   "bytes": 10920,
+   "sha256": "cecceac1bc515a6c4ba2073d987b4aa16be74bfa0f82acd147aeb3a100851f1d"
   },
   {
    "path": "scripts/rainbow-autosave.py",

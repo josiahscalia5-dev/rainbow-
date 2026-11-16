@@ -695,3 +695,49 @@ Let me look at the reference images directly.
 
 > ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
 
+### 🤖 Claude — 2026-11-16T15:51:21.363Z
+
+> 🔧 **Bash** `{"command": "grep -n \"\\\"three\\\"\\|\\\"vite\\\"\" package.json; node -e \"console.log(require('three/package.json').version)\"; grep -n \"class ForcedTunnel\" -A30 src/world/tube.ts | head -60", "description": "Check three version and ForcedTunnel class"}`
+
+### 🧑 User — 2026-11-16T15:51:21.450Z
+
+> ↩︎ result: 25:    "three": "^0.170.0"
+> 31:    "vite": "^5.4.11",
+> node:internal/modules/cjs/loader:671
+>       throw e;
+>       ^
+> 
+> Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './package.json' is not defined by "exports" in /home/user/rainbow-/node_modules/three/package.json
+>     at exportsNotFound (node:internal/modules/esm/resolve:318:10)
+>     at packageExportsResolve (node:internal/modules/esm/resolve:665:9)
+>     at resolveExports (node:internal/modules/cjs/loader:664:36)
+>     at Function._findPath (node:internal/modules/cjs/loader:731:31)
+>     at Function._resolveFilename (node:internal/modules/cjs/loader:1415:27)
+>     at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+>     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+>     at Function._load (node:internal/modules/cjs/loader:1216:25)
+>     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+>     at Module.require (node:internal/modules/cjs/loader:1527:12) {
+>   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+> }
+> 
+> Node.js v22.23.4
+> 479:export class ForcedTunnel {
+> 480-  readonly c0: THREE.Vector3;
+> 481-  readonly T: THREE.Vector3;
+> 482-  readonly U: THREE.Vector3;
+> 483-  readonly Rt: THREE.Vector3;
+> 484-  readonly R: numb …[+1654 chars]
+
+### 🤖 Claude — 2026-11-16T15:51:22.532Z
+
+Now the probe script that renders exact per-pixel river UV maps from the live game and exports the river meshes.
+
+### 🤖 Claude — 2026-11-16T15:51:59.396Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/proj05-probe.mjs", "content": "#!/usr/bin/env node\n// Screen 05 texture-projection probe (Specialist 1, 2026-11-16) — exact, read-only measurements of the REAL game.\n//   node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe]\n// Opens the game at the locked 05 checkpoint (time frozen, as scripts/capture.mjs) and writes into OUT:\n//   camera.json      the live render camera (world matrix, projection matrix, vFOV, size) + uTime + stage numbers\n//   uv_river.f32     864×1536×4 float32 (top row first): per pixel the river surfac …[+10591 chars]`
+
+### 🧑 User — 2026-11-16T15:51:59.751Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/proj05-probe.mjs (file state is current in your context — no need to Read it back)
+
