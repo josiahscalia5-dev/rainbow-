@@ -1,5 +1,18 @@
 # Rainbow specialists — roster, responsibilities and status
 
+## ▶ Status at the account-8 hand-off (2026-11-16 ~01:15 UTC, branch `ccr-4f6c3e0e-5kxgr0`)
+All 10 definitions present and unchanged in `.claude/agents/` (backed up every 5 min). Screen 05 wave 7 =
+`qa/pilot05/COORDINATION_WAVE7.md` (strict file ownership, baseline `qa/pilot05/wave7/baseline/05.png`).
+| Specialist | Wave-7 assignment | State | Evidence / what is left |
+|---|---|---|---|
+| water-fx-specialist | 05 near/mid water (`src/vfx/waterRibbon.ts`, `glsl.ts`) | **DONE** (6 iterations, kept it06) | `qa/pilot05/wave7/water/NOTES.md`, `it06/05_side_by_side.png`; whole-frame mad 59.0→55.4; 06/07 pixel-identical. Left: near highlight p95 225 vs ref 247, glints 88 vs 166, sweep starts ~20 px too far inside |
+| foam-bubbles-particles | 05 foam rims (`src/vfx/foam.ts`, `bubbles.ts`) | **DONE** (6 iterations, kept it06) | `qa/pilot05/wave7/foam/NOTES.md`; right heap coverage 35.1→21.3 % (ref 14.0 %); 06/07/08 pixel-identical. Left: near clumps less blue (36 vs 48 %), lower-left clump touches frame edge, no rims in the far forced-tunnel strip (path-camera) |
+| washer-environment-modeler | 05 rings, walls, lids, VP, near gold frame corners | **RUNNING at hand-off** — its saved files are autosaved; if the session ends first, read `qa/pilot05/wave7/environment/NOTES.md` and its newest `itNN/` and **relaunch** it with the same brief + Marble measurements below | Marble cues: ring spacing ≈ 0.87–0.93 × tube radius, wall rgb ≈ (178–184, 62–71, 160), unrolled bays `qa/worldlabs/05/pilot/{draft,full}/analysis/bay_unrolled.png` |
+| path-camera-transition-engineer | far river at the VP (y 470–560 still 06-style straight stripes), far foam rims | **NOT STARTED** (camera + course LOCKED by coordinator) | next wave |
+| reference-match-director / playwright-visual-qa | whole-frame review + before/after report | **NOT STARTED** this account | run after the environment wave lands |
+| benny-character-artist | Benny preserved as is (wave-5 GLB) | idle | — |
+| cartoon-girl-character-artist, animation-and-gameplay-engineer, android-build-performance | not needed for 05 | idle | Android build last verified on account 6 |
+
 Definitions live in `.claude/agents/<name>.md` (copied unmodified from the user's kit, then backed up
 every 5 minutes). These are **custom Claude Code project subagents**, not third-party plugins.
 Status is updated by Claude as work lands; "outputs" lists real files only.

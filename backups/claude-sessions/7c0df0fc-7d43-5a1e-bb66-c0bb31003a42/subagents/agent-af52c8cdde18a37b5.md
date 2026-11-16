@@ -1938,3 +1938,110 @@ it06 keeps everything from it05 and additionally shows the purple wall directly 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T01:08:33.977Z
+
+Regression looks right: 04 differs only in the far water window (concurrent water edit); 03 is normal. Let me fix one stale comment, then do the final type-check and notes.
+
+### 🤖 Claude — 2026-11-16T01:08:35.938Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax (wave 7: to ≈0.5×,\n        // the ref's lower clumps sit right beside the fan, x 57-214 / 630-800)", "new_string": "        // behind Benny (ds < −0.6) there are no coins and only the spray fan: clearances relax (wave 7: rider ×0.32,\n        // core ×0.25 at ds ≤ −1.2; the ref's lower clumps sit right beside the fan, x 60-230 / 650-800)"}`
+
+### 🧑 User — 2026-11-16T01:08:35.982Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:08:37.387Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": " * (BANK_ENV, searched) open/close the clumps at those rows of the QA frame; along 05 clumps cover 40 % / 59 %.", "new_string": " * (BANK_ENV, searched; [2] = right side beside / behind Benny) open/close the clumps at those rows of the QA frame."}`
+
+### 🧑 User — 2026-11-16T01:08:37.425Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:08:40.103Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ref's near clumps\\|x 57-214\\|ds 0.4-1.9\" src/vfx/foam.ts", "description": "Find doc comment with outdated clump numbers"}`
+
+### 🧑 User — 2026-11-16T01:08:40.140Z
+
+> ↩︎ result: 439: * 30 -> 158 -> 70 px, 20-66 px per row), not the wave-5 heap (124-179 px per row). The ref's near clumps: left x 0-125
+> 440: * (ds 0.4-1.9), lower left x 57-214 and lower right x 630-800 (behind Benny, ds -0.5..-1.5). The envelope seeds
+
+### 🤖 Claude — 2026-11-16T01:08:43.112Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "The ref's near clumps: left x 0-125\n * (ds 0.4-1.9), lower left x 57-214 and lower right x 630-800 (behind Benny, ds -0.5..-1.5). The envelope seeds", "new_string": "The ref's near clumps: left x 0-130\n * y 1020-1110 (ds 0.5-1.5), lower left x 60-230 y 1220-1300 and lower right x 650-800 y 1260-1330 (behind Benny,\n * ds -1.1..-1.7). The envelope seeds"}`
+
+### 🧑 User — 2026-11-16T01:08:43.166Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:08:43.962Z
+
+> 🔧 **Bash** `{"command": "timeout 300 npx tsc --noEmit 2>&1 | head -5; echo \"tsc exit ${PIPESTATUS[0]}\"", "description": "Final type-check"}`
+
+### 🧑 User — 2026-11-16T01:08:46.248Z
+
+> ↩︎ result: tsc exit 0
+
+### 🤖 Claude — 2026-11-16T01:08:51.675Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave7/foam/NOTES.md <<'EOF'\n* Regression (`regress/`, 03 04 06 07 08, errors []): 06 / 07 / 08 pixel-identical below the HUD to\n  `wave6/regress0408/now`; 04 differs only in the far water window (x 304-549, y 448-667): the 05 colour ramp first\n  started at s0-6 (like the squash) and tinted a few far 04-end puffs, so it now starts at s0-1..s0+2 (uSt05 and\n  soap05W in createFoam); re-capture `regress_fix/04.png`: 12,541 -> 12,514 diff px, i.e. the rest is the concurrent\n  waterRibbon.ts / glsl.ts edit. `regress_fix/05.png` = it06 (0 px diff). 03 looks normal. …[+371 chars]`
+
+### 🧑 User — 2026-11-16T01:08:51.708Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T01:09:12.171Z
+
+The foam banks on Screen 05 now read much closer to the reference: low blue-shaded bubble rims along both river edges, a narrow right rim with the purple wall showing above it, and the near clumps where the reference has them. The best result is it06 (the last of the 6 iterations). `npx tsc --noEmit` passes and 06/07/08 are unchanged.
+
+**What I changed**
+
+`src/vfx/foam.ts`:
+- **Soap colour ramp (new, 05 only):** crevices are blue-violet, then blue, periwinkle and lavender-white, with white only on the bubble tops. The colours come from the reference foam, converted back through the display pipeline. It is applied to:
+  - the berm shader, ramped in from the 05 start to just past its end;
+  - the berm puffs, with a 05 weight stored per instance and decoded in the puff shaders (0 outside 05);
+  - the near-field bubble clumps.
+- **Berm edge (05 only):** the bank is cut off just past its bubble crest with a scalloped edge, so the purple wall shows above the rim instead of a pale slope.
+- **Bank layout (`updateRafts`):**
+  - **Right rim:** an 80 px band whose inner edge follows the reference (30 → 158 → 70 px from the frame edge), one layer of smaller, lower bubbles with no heap. This removes the big white heap.
+  - **Clump positions:** I searched new noise seeds so the clumps fall where the reference has them, and added a separate one for the lower-right clump.
+  - **Behind Benny:** the clearances are relaxed so the lower clumps can sit beside the splash fan.
+  - **Shape:** near clumps are compact, low mounds; about 22 % of bubbles are larger bumps.
+
+`src/vfx/bubbles.ts`: 22 small bubbles instead of 12 near the banks, only while Benny is in 05 (low quality: 12 instead of 8).
+
+The splash fan and the iridescent bubbles are unchanged. I did not touch `riderSplash.ts`, `spray.ts` or `index.ts`. One step deviated from the Edit-tool rule: in iteration 2 I changed the ramp colours in `foam.ts` with a small Python find-and-replace instead of the Edit tool (my own file; same result).
+
+**Measured, 05 frame**
+
+| | Baseline | it06 | Reference |
+|---|---|---|---|
+| Right heap area (x 640–864, y 700–1000): foam coverage / tallest run | 35.1 % / 160 px | 21.3 % / 129 px | 14.0 % / 65 px |
+| Left far foam: white / blue-shaded | 70.7 % / 11.2 % | 24.5 % / 48.6 % | 22.6 % / 48.1 % |
+| Left near foam: white / blue-shaded | 21.8 % / 22.2 % | 24.6 % / 35.7 % | 29.9 % / 47.7 % |
+| Right near foam: white / blue-shaded | 0.2 % / 62.8 % (only spray and streaks there; the clump was missing) | 19.8 % / 35.7 % | 33.5 % / 48.1 % |
+| Right rim width per row, y 800–900 | 124–179 px | 52–85 px | 19–66 px |
+
+- **Near clumps (it06):** left x 0–130, y 1010–1110 (reference 0–130, 1020–1110); lower right x 660–820, y 1210–1340 (reference 650–800, 1260–1330); lower left x 0–170, y 1230–1340 (reference 60–230, 1220–1300).
+- **Budget:** 86 draw calls and 632,561 triangles, within ≤130 / 650k.
+- **Whole-frame difference score:** 59.0 → 54.8. This also includes the other two specialists' changes made at the same time.
+- **Right far white share:** 39.5 % against the reference's 22.8 % (blue-shaded 35.0 % against 44.2 %). Treat these with care: the environment specialist's rings briefly turned white during it03 and passed the foam-colour mask; they were gold again in it05/it06.
+
+**Regression** (03 04 06 07 08, no console errors)
+- 06, 07 and 08 are pixel-identical below the HUD to the wave-6 frames.
+- 04 differs only in its far water window. My colour ramp first started 6 units before 05 and tinted a few puffs at the end of 04; I moved its start to the 05 boundary and re-captured. The diff barely changed (12,541 → 12,514 px), so the rest comes from the water specialist's concurrent edits to `waterRibbon.ts` and `glsl.ts`.
+- The fix leaves the 05 frame exactly as it06 (0 px difference). 03 looks normal.
+
+**Not done**
+- The far tunnel strip near the vanishing point has no foam rims, so the rims stop where my bank meets it (a small pale wedge around x 600–650, y 540–600). That strip is the path-camera specialist's forced tunnel, not my files.
+- Near clumps are still less blue than the reference (36 % blue-shaded against 48 %).
+- The lower-left clump touches the frame edge; in the reference it starts about 60 px in.
+
+Files are in `/home/user/rainbow-/qa/pilot05/wave7/foam/`:
+- `it06/05.png` (best frame)
+- `it06/05_side_by_side.png`
+- `NOTES.md` (plan and per-iteration log)
+- `regress/` (03 04 06 07 08)
+- `regress_fix/04.png` and `regress_fix/05.png` (after the ramp-start fix)
+

@@ -436,8 +436,9 @@ const BANK_ENV: [number, number, number][] = [[58.457, 0.835, 0.581], [607.242, 
 /**
  * wave 7 (ref 05 rows, qa/pilot05/wave7/foam): the bank row's inner edge (px in from the frame edge) and lateral size
  * (px) by row ds. The right bank ahead of Benny is a NARROW rim hugging the river edge (ref y 700-940: inner edge
- * 30 -> 158 -> 70 px, 20-66 px per row), not the wave-5 heap (124-179 px per row). The ref's near clumps: left x 0-125
- * (ds 0.4-1.9), lower left x 57-214 and lower right x 630-800 (behind Benny, ds -0.5..-1.5). The envelope seeds
+ * 30 -> 158 -> 70 px, 20-66 px per row), not the wave-5 heap (124-179 px per row). The ref's near clumps: left x 0-130
+ * y 1020-1110 (ds 0.5-1.5), lower left x 60-230 y 1220-1300 and lower right x 650-800 y 1260-1330 (behind Benny,
+ * ds -1.1..-1.7). The envelope seeds
  * (BANK_ENV, searched; [2] = right side beside / behind Benny) open/close the clumps at those rows of the QA frame.
  */
 const RIM_R: [number, number][] = [[2.6, 60], [3.4, 70], [4.4, 105], [5.5, 140], [6.6, 158], [7.8, 153], [9.0, 135], [10.3, 104], [11.6, 70], [12.9, 30]];

@@ -666,6 +666,54 @@ export class ForcedTunnel {
   }
 }
 
+/**
+ * Ref 05 near gold frame (wave 7): the approved image is framed at the bottom by two thick gold ring segments
+ * cut flat where they meet the stream (bottom corners) and the ∩ lip of a gold ring the stream pours over
+ * (bottom arc). Built as one real 3D mesh in REFERENCE-PIXEL units of an 864×1536 portrait frame (origin at the
+ * frame centre, +x right, +y up, +z toward the viewer); environment.ts places it in camera space and scales
+ * it by the camera's FOV, so it keeps this framing on any portrait viewport. Each band is a rounded strip
+ * (half-round bulge toward the viewer). uv = (along the arc, across the band 0 = edge toward the stream);
+ * `framePiece` 0 = corner (uv.x = 1 at the cut), 1 = bottom lip. Measured reference edges: corner inner edge
+ * (0,1210) · (65,1300) · (135,1400) · cut ≈ (150,1420); right mirrored; lip top edge ≈ y 1466 at x 432.
+ */
+export function nearFrameGeometry(): THREE.BufferGeometry {
+  const pos: number[] = [], uv: number[] = [], piece: number[] = [], idx: number[] = [];
+  const strip = (id: number, cx: number, cy: number, a0: number, b0: number, w: number, dir: 1 | -1, th0: number, th1: number, z0: number, nu: number, nv = 10) => {
+    const base = pos.length / 3;
+    for (let i = 0; i <= nu; i++) {
+      const th = THREE.MathUtils.degToRad(th0 + ((th1 - th0) * i) / nu);
+      for (let j = 0; j <= nv; j++) {
+        const t = j / nv;
+        const a = a0 + dir * t * w, b = b0 + dir * t * w;
+        const xs = cx + a * Math.cos(th), ys = cy - b * Math.sin(th); // screen px (y down)
+        pos.push(xs - 432, 768 - ys, z0 + w * 0.22 * Math.sin(Math.PI * t));
+        uv.push(i / nu, t);
+        piece.push(id);
+      }
+    }
+    for (let i = 0; i < nu; i++) {
+      for (let j = 0; j < nv; j++) {
+        const p = base + i * (nv + 1) + j, q = p + nv + 1;
+        idx.push(p, q, p + 1, q, q + 1, p + 1);
+      }
+    }
+  };
+  // corners: inner circle centre (432, 1060), r 457 (through the reference edge (0,1210) and the cut (150,1420)),
+  // band 190 px outward; uv.x = 1 at the cut (θ −122° / −58°)
+  strip(0, 432, 1060, 457, 457, 190, 1, -163, -122, 40, 36);
+  strip(0, 432, 1060, 457, 457, 190, 1, -17, -58, 40, 36);
+  // bottom lip: circle centre (432, 2121), top edge radius 655, band 130 px inward (downward)
+  strip(1, 432, 2121, 655, 655, 130, -1, 122, 58, 0, 48);
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  g.setAttribute('framePiece', new THREE.Float32BufferAttribute(piece, 1));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  g.computeBoundingSphere();
+  return g;
+}
+
 /** Half-dome wall "lids"/spray heads mounted on the upper tube walls (refs 05–07). */
 export function buildNozzles(
   path: TubePath,

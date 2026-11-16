@@ -12,7 +12,31 @@ account-7 key was not reused.
 | 00:55 | `media-assets:prepare_upload` ×3 + PUT (input image) | 200 (free) | 7,000 | 0 |
 | 00:55 | `worlds:generate` **marble-1.0-draft** → world `5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f` | done in ≈30 s | 7,000 → **6,770** | **230** |
 | 00:56 | `worlds/5fd3d7a7…:export` splats PLY 500k | 200 (free) | 6,770 → 6,770 | 230 |
-| 00:58 | `worlds:generate` **marble-1.1** (full quality) | running | 6,770 → … | … |
+| 00:58 | `worlds:generate` **marble-1.1** (full quality) → world `c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9`, operation `12a08430-f687-4a09-bdc7-3a469c76363d` | done in ≈5 min | 6,770 → **5,190** | **1,810** |
+| 01:06 | `worlds/c0c9dc57…:export` splats PLY 500k | 200 (free) | 5,190 → 5,190 | 1,810 |
+
+**Balance reported by the API at hand-off: 5,190 credits. Spent 1,810 of the 6,250-credit (US$5) cap.
+Remaining approved budget: 4,440 credits.** Not yet bought: HQ mesh export (3,500 credits, US$2.80) — only if
+it materially helps the playable game; ask the user first.
+
+## Assets saved in git (large files in Git LFS; signed URLs stripped from the saved responses)
+| World | Folder | Files |
+|---|---|---|
+| draft `5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f` (op `4a549a9d-3de2-424b-8324-db24a8d1b9bd`, `marble-1.0-draft`) | `draft/` | `collider.glb`, `splats_100k.spz`, `splats_500k.spz`, `splats_full_res.spz` (26 MB), `splats_500k.ply` (free export), `thumbnail.{webp,png}`, `world.json`, `operation_response.sanitized.json`; no pano for drafts; Blender `import/draft05.blend` + `draft05_underlay.glb` + preview + `draft05_measure.json`; `analysis/` (splat_measure.json, wall_unrolled.png, bay_unrolled.png, bay_measure.json) |
+| full `c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9` (op `12a08430-f687-4a09-bdc7-3a469c76363d`, `marble-1.1`) | `full/` | `collider.glb`, `splats_100k.spz`, `splats_150k.spz`, `splats_500k.spz`, `splats_full_res.spz` (30 MB), `splats_500k.ply`, `pano.png` (4608×2304) + `pano_preview_2048.jpg`, `thumbnail.{webp,png}`, `operation_response.sanitized.json`; Blender `import/full05.blend` + underlay + preview; `analysis/` |
+
+Recovery if a file is ever missing: `git lfs pull`; otherwise with a World API key for the SAME platform
+account: `python3 -I tools/worldlabs/marble_pilot.py world <world_id> out.json` (fresh signed URLs, free read),
+PLY via `… export_ply <world_id> 500k out.json` (free). Both worlds are private to that API account.
+Web viewer: `https://marble.worldlabs.ai/world/<world_id>`.
+
+## Full-quality result (`full/analysis/`)
+* Wall radius 1.66; clean ring gaps 1.58 / 1.52 → **ring spacing ≈ 0.93 × radius** (double ring lips show as
+  extra close peaks); river width ≈ **0.73 × diameter**; wall mean rgb(178,62,160); ring bands ≈ 6–8 % of the
+  spacing on the well-covered rings. Splats cover only ≈ 8.4 units of tunnel near the camera (the far tunnel is
+  sparse): use it as a near-field modelling/texture reference, not as a whole-level mesh.
+* Scripts (no secrets; key injected by the proxy): `tools/worldlabs/marble_pilot.py`, `analyze_splats.py`,
+  `bay_texture.py`.
 
 Input for both worlds: `qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png` (approved 05 image rows
 197–767, real pixels only) + `prompt_05.txt`.

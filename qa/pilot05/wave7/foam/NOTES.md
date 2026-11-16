@@ -59,3 +59,11 @@ Tools: `qa/pilot05/wave6/foam/tools/{foamcol,rowprof}.py` (measurements), ref fo
   y 640-690); left rim unchanged; everything else as it05. foamcol Lfar WHITE 24.5 % SHADE 48.6 %, Rfar 39.5 / 35.0,
   Lnear 24.6 / 35.7, Rnear 19.8 / 35.7; heapR 21.3 % / max run 129 px (baseline 35.1 % / 160, ref 14.0 % / 65).
   screen_report mad 59.0 (baseline) -> 54.8 (whole frame; includes the other specialists' concurrent edits).
+* Regression (`regress/`, 03 04 06 07 08, errors []): 06 / 07 / 08 pixel-identical below the HUD to
+  `wave6/regress0408/now`; 04 differs only in the far water window (x 304-549, y 448-667): the 05 colour ramp first
+  started at s0-6 (like the squash) and tinted a few far 04-end puffs, so it now starts at s0-1..s0+2 (uSt05 and
+  soap05W in createFoam); re-capture `regress_fix/04.png`: 12,541 -> 12,514 diff px, i.e. the rest is the concurrent
+  waterRibbon.ts / glsl.ts edit. `regress_fix/05.png` = it06 (0 px diff). 03 looks normal. tsc OK.
+* Left undone / for others: the far tunnel strip (path-camera's forced tunnel) has no foam rims, so the ref's rims
+  that run right into the VP stop where the berm meets it (x 600-650, y 540-600 wedge, now smaller).
+  Near-clump shading is a bit less blue than the ref (SHADE 35-36 % vs 48 %).

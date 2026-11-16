@@ -652,6 +652,52 @@ export function washerTubeEnv(variant: 'wall' | 'gold' | 'gold05' = 'wall'): THR
 }
 
 /**
+ * Ref 05 near gold frame (nearFrameGeometry in tube.ts): stylised polished gold bands. Corners (from the edge
+ * toward the stream outward, reference row y 1330): broad white highlight · thin orange line · yellow-orange ·
+ * orange with a pale striation, dark cut face; bottom lip (reference column x 432, top → down): pale edge ·
+ * dark orange line · salmon with two white spots · orange · dark amber · rose. Colours solved through the
+ * output pipeline like the band palette; a mild facing term keeps the half-round bulge readable.
+ */
+export function nearFrameMaterial(): THREE.MeshStandardMaterial {
+  const mat = new THREE.MeshStandardMaterial({ color: '#ffb347', metalness: 1, roughness: 0.2, side: THREE.DoubleSide, fog: false });
+  mat.onBeforeCompile = (shader) => {
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', '#include <common>\nattribute float framePiece; varying vec2 vFrUv; varying float vFrPiece;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvFrUv = uv; vFrPiece = framePiece;');
+    shader.fragmentShader = shader.fragmentShader
+      .replace('void main() {', `varying vec2 vFrUv; varying float vFrPiece;
+vec3 frameShade(float ndv){
+  float u = vFrUv.x, v = vFrUv.y;
+  vec3 c;
+  if (vFrPiece < 0.5) {
+    c = vec3(0.7669, 0.3044, 0.1155);                                                  // (245,125,30)
+    c = mix(c, vec3(0.9079, 0.6239, 0.2219), 1.0 - smoothstep(0.3, 0.42, v));          // (252,195,72)
+    c = mix(c, vec3(0.8461, 0.4509, 0.0961), exp(-pow((v - 0.16) / 0.025, 2.0)));      // thin orange line
+    c = mix(c, vec3(1.2, 1.12, 0.98), 1.0 - smoothstep(0.07, 0.13, v));                // white highlight on the inner bevel
+    c = mix(c, vec3(1.0, 0.82, 0.5), exp(-pow((v - 0.62) / 0.035, 2.0)) * 0.7);        // pale striation
+    c = mix(c, vec3(0.4522, 0.1464, 0.0954), smoothstep(0.93, 1.0, v));                // outer contour
+    c = mix(c, vec3(0.32, 0.09, 0.07), smoothstep(0.965, 0.995, u));                    // dark cut face
+  } else {
+    c = vec3(0.5533, 0.2056, 0.2503);                                                  // (207,93,113) rose
+    c = mix(c, vec3(0.4522, 0.1464, 0.0954), 1.0 - smoothstep(0.6, 0.68, v));          // dark amber
+    c = mix(c, vec3(0.6941, 0.2626, 0.1093), 1.0 - smoothstep(0.5, 0.57, v));          // orange
+    c = mix(c, vec3(0.8453, 0.3825, 0.2436), 1.0 - smoothstep(0.42, 0.48, v));         // salmon
+    c = mix(c, vec3(0.6052, 0.1934, 0.0783), 1.0 - smoothstep(0.09, 0.13, v));         // dark orange line
+    c = mix(c, vec3(1.0514, 0.9607, 0.8204), 1.0 - smoothstep(0.02, 0.05, v));         // pale top edge
+    float sp = exp(-pow((u - 0.36) / 0.022, 2.0)) + exp(-pow((u - 0.64) / 0.022, 2.0));
+    c += vec3(1.3, 1.2, 1.0) * sp * smoothstep(0.1, 0.16, v) * (1.0 - smoothstep(0.36, 0.44, v));
+  }
+  return c * mix(0.78, 1.0, ndv);
+}
+void main() {`)
+      .replace('#include <opaque_fragment>', `outgoingLight = frameShade(abs(dot(normalize(normal), normalize(vViewPosition))));
+#include <opaque_fragment>`);
+  };
+  mat.customProgramCacheKey = () => 'near-frame-05-v1';
+  return mat;
+}
+
+/**
  * "Light at the end of the tunnel" (ref 05): a warm radial glow filling the tube cross-section at the end
  * of the straight 05 current. Opaque yellow-white core → gold → warm magenta → transparent rim, HDR so the
  * core blooms a little. It fades with the CAMERA distance to its own centre: full beyond `fade.y`, gone

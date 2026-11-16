@@ -1,54 +1,10 @@
 {
-  "when": "2026-11-16T01:07:28.813Z",
+  "when": "2026-11-16T01:12:43.497Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
-      "id": "04",
-      "file": "qa/pilot05/wave7/foam/regress_fix/04.png",
-      "size": [
-        864,
-        1536
-      ],
-      "checkpoint": {
-        "stage": "04",
-        "s": 77.41308465825975,
-        "y": -21.89573584663209
-      },
-      "state": {
-        "mode": "ride",
-        "stage": "04",
-        "s": 77.413,
-        "lat": 0,
-        "coins": 1330,
-        "hearts": 5,
-        "paused": false,
-        "bennyY": -21.896,
-        "bennyVisible": true,
-        "cam": [
-          0.72,
-          -14.48,
-          -15.82
-        ]
-      },
-      "stats": {
-        "fps": 60.1,
-        "calls": 97,
-        "triangles": 735140,
-        "geometries": 110,
-        "textures": 41,
-        "modules": {
-          "water": "vfx/index.ts",
-          "benny": "assets/models/benny.glb",
-          "girl": "assets/models/rainbow_girl.glb"
-        },
-        "courseLength": 435.1923632433159,
-        "firstFrameCalls": 154,
-        "firstFrameTriangles": 735824
-      }
-    },
-    {
       "id": "05",
-      "file": "qa/pilot05/wave7/foam/regress_fix/05.png",
+      "file": "qa/pilot05/wave7/environment/it06/05.png",
       "size": [
         864,
         1536
@@ -75,10 +31,10 @@
         ]
       },
       "stats": {
-        "fps": 60.1,
-        "calls": 86,
-        "triangles": 632561,
-        "geometries": 101,
+        "fps": 60.2,
+        "calls": 87,
+        "triangles": 634961,
+        "geometries": 102,
         "textures": 41,
         "modules": {
           "water": "vfx/index.ts",
@@ -86,8 +42,8 @@
           "girl": "assets/models/rainbow_girl.glb"
         },
         "courseLength": 435.1923632433159,
-        "firstFrameCalls": 143,
-        "firstFrameTriangles": 633245
+        "firstFrameCalls": 144,
+        "firstFrameTriangles": 635645
       }
     }
   ],
