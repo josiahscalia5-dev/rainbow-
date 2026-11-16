@@ -3541,3 +3541,46 @@ Now the shader mode. It's a runtime branch inside the existing proj05 block, so 
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/rideO $S/rideN && (node scripts/proj05-move.mjs --q=\"$B\" --out=$S/rideO --clip=3 --fps=24 2>&1 | tail -1) && (node scripts/proj05-move.mjs --q=\"$B&projflow05=2\" --out=$S/rideN --clip=3 --fps=24 2>&1 | tail -1) && ls $S/rideN/clip | wc -l && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/w4/still/0000.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/w0/still/ …[+196 chars]`
 
+### 🧑 User — 2026-11-16T22:04:26.098Z
+
+> ↩︎ result: clip frames 72
+> clip frames 72
+> 72
+> frozen frame new vs old: max level diff 1
+
+### 🤖 Claude — 2026-11-16T22:04:31.575Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport json\nlg=json.load(open('$S/rideN/move_log.json'))['frames']\nfor i in (0,23,47,71): print(i, 't', round(lg[i]['t'],2), 's', round(lg[i]['s'],2))\nfrom PIL import Image\nfor i in (30, 60):\n    ims=[Image.open('$S/%s/clip/%04d.png'%(d,i)).convert('RGB').resize((432,768),Image.LANCZOS) for d in ('rideO','rideN')]\n    im=Image.new('RGB',(2*432+10,768),(255,255,255)); im.paste(ims[0],(0,0)); im.paste(ims[1],(442,0)); im.save('$S/ride_cmp_%d.png'%i)\nEOF", "description":  …[+41 chars]`
+
+### 🧑 User — 2026-11-16T22:04:32.346Z
+
+> ↩︎ result: 0 t 12.04 s 132.99
+> 23 t 13 s 145.64
+> 47 t 14 s 158.84
+> 71 t 15 s 172.04
+
+### 🤖 Claude — 2026-11-16T22:04:32.933Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/ride_cmp_30.png"}`
+
+### 🧑 User — 2026-11-16T22:04:32.962Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T22:05:10.895Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2' && rm -rf $S/dbgA $S/dbgB && node scripts/proj05-move.mjs --q=\"$B\" --out=$S/dbgA --d=0,8,17 2>&1 | grep -ci error; node scripts/proj05-move.mjs --q=\"$B&projdbg05=1\" --out=$S/dbgB --d=0,8,17 2>&1 | grep -ci error; python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('$S/%s/move_%02d.png'%(d,k)).convert('RGB').resize((324,576),Image.LANCZOS) for d in ('dbgA','dbgB') for k in (0,8,17)]\nim=Image.new('RGB',(3*334,2 …[+190 chars]`
+
+### 🤖 Claude — 2026-11-16T22:05:12.308Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/dbg_sheet.png"}`
+
+### 🧑 User — 2026-11-16T22:05:58.157Z
+
+> ↩︎ result: 0
+> 0
+
+### 🧑 User — 2026-11-16T22:05:58.197Z
+
+> ↩︎ result: [image]
+
