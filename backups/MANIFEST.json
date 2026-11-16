@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 8803,
-   "sha256": "2df39f68318c217396a107f3ee28432df4f052bf199e36b49efda548493b4c68"
+   "bytes": 8957,
+   "sha256": "d760ef93d0f296f41c3987b5592543071a581c268f9dc69499945720a32bf7a5"
   },
   {
    "path": "README_FIRST.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "2b105e874b4aeb18f494b4da925b93c73519ecfadae5099b949e89c2eda509f4"
+   "sha256": "e66a0b5cc9e19c6c21cf221e3e89fcf13a2904c2580a87f37654ae5523da2cd5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -5032,6 +5032,16 @@
    "sha256": "5b91b33b86c5e34f42e87bb6f77947114b82c6c7f943ef8eb32c124bad3288ce"
   },
   {
+   "path": "qa/pilot05/wave9b/G1/05_gold05_G1b.png",
+   "bytes": 1756111,
+   "sha256": "a1803f79f533e20934f83f9d3fc81e117c3885e03e71220894630a2b9a9e2136"
+  },
+  {
+   "path": "qa/pilot05/wave9b/G1/gold_stats.txt",
+   "bytes": 351,
+   "sha256": "df59a5aff0fb0f64ac8a43ba136568922290cd01bb2143f0f2be11bb5b371e8f"
+  },
+  {
    "path": "qa/pilot05/wave9b/T1/05.png",
    "bytes": 1754285,
    "sha256": "fc103bac02c8dfeb0ee938c644d099ce6e8924354a0024576f0a2c21a5ffe53a"
@@ -6155,6 +6165,11 @@
    "path": "tools/qa/diff05.py",
    "bytes": 3532,
    "sha256": "b0901defc3746ff05d07dec4849d0a19b72c00fa1e095abb67e42a1a12625662"
+  },
+  {
+   "path": "tools/qa/gold05.py",
+   "bytes": 734,
+   "sha256": "787a8e4e1dccc7f6c136acd6536bdf0d9be937313bf4c1e2f6e85e336213aaf9"
   },
   {
    "path": "tools/qa/ring_fit05.py",

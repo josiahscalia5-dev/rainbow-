@@ -4013,3 +4013,85 @@ Checkpoint saved and verified on GitHub. Sending the three separate full-size sc
 > b6deac8 autosave: Rainbow 2026-11-16 11:37 UTC
 > 92111a9 autosave: Rainbow 2026-11-16 11:32 UTC
 
+### 🤖 Claude — 2026-11-16T11:42:22.388Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/g1; rm -rf $S/def3; timeout 600 node scripts/capture.mjs 05 --out=$S/def3 > /dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -I - \"$S\" <<'PY'\nimport sys, numpy as np\nfrom PIL import Image, ImageChops\nS = sys.argv[1]; ref = Image.open(\"qa/pilot05/current_default_05.png\").convert(\"RGB\")\nfor n in (\"def\", \"def2\", \"def3\"):\n    d = np.asarray(ImageChops.difference(Image.open(f\"{S}/{n}/05.png\").convert(\"RGB\"), ref)).max(-1)\n    print(n, \"| whol …[+288 chars]`
+
+### 🧑 User — 2026-11-16T11:42:41.931Z
+
+> ↩︎ result: def | whole frame max 0 | HUD bar y<110 max 0 | 3D scene y>=110 max 0
+> def2 | whole frame max 33 | HUD bar y<110 max 33 | 3D scene y>=110 max 0
+> def3 | whole frame max 0 | HUD bar y<110 max 0 | 3D scene y>=110 max 0
+> src/ui/hud.ts:52:#hud .victory.pop { animation: rbPop 0.7s cubic-bezier(.2,1.6,.4,1) both; }
+> src/ui/hud.ts:53:@keyframes rbPop { from { transform: translateX(-50%) scale(0.2); opacity: 0; } to { transform: translateX(-50%) scale(1); opacity: 1; } }
+
+### 🤖 Claude — 2026-11-16T11:42:53.345Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/g1; python3 -I -c \"\nfrom PIL import Image\nps=['references/05_flow_into_the_current.png','qa/pilot05/current_default_05.png','$S/g1b/05.png']\nims=[Image.open(p).convert('RGB').resize((864,1536)).crop((0,110,864,760)).resize((560,421)) for p in ps]\no=Image.new('RGB',(560*3+20,421),(15,15,20))\nfor i,im in enumerate(ims): o.paste(im,(i*570,0))\no.save('$S/top3b.jpg',quality=90)\"", "description": "Crop tunnel region: approved, current game, G1b"}`
+
+### 🧑 User — 2026-11-16T11:42:53.629Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T11:42:54.445Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/g1/top3b.jpg"}`
+
+### 🧑 User — 2026-11-16T11:42:54.458Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T11:43:28.190Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "Current default = **T2** (front ring A at 20 u + near tunnel 2 u lower, promoted 2026-11-16 under the user's rule\n\"only if genuinely closer\"; picture `qa/pilot05/current_default_05.png`). The user's **BEFORE stays protected**:", "new_string": "Current default = **T2** (front ring A at 20 u + near tunnel 2 u lower, promoted 2026-11-16 under the user's rule\n\"only if genuinely closer\"; picture `qa/pilot05/current_default_05.png`) — **PROVISIONAL until the user approves the\nvisual result** (user, 2026-11-16  …[+115 chars]`
+
+### 🧑 User — 2026-11-16T11:43:28.223Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T11:43:29.164Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"widthAt(\" src --include=*.ts | grep -v \"^src/world/course.ts\" | cut -c1-160 | head -20; grep -n \"widthAt\" src/world/course.ts | head -5", "description": "Find everything that uses the river width"}`
+
+### 🧑 User — 2026-11-16T11:43:29.211Z
+
+> ↩︎ result: src/world/environment.ts:374:      if (course.sample(ss).pos.distanceTo(centre) < size * 1.2 + course.widthAt(ss) / 2 + 1.0) return true;
+> src/world/tube.ts:99:    const X = Math.abs(d) + course.widthAt(s) / 2 + 0.25;
+> src/world/far05.ts:134:  const relLay = (s: number) => bandLayout(0, course.widthAt(s) / 2, coreLateral(course, s), sbend05(s), s);
+> src/world/far05.ts:142:    const eL = cross(Z, (s) => -course.widthAt(s) / 2), eR = cross(Z, (s) => course.widthAt(s) / 2);
+> src/vfx/bubbles.ts:313:        const hw = course.widthAt(s) / 2;
+> src/vfx/finalWave.ts:123:    const hw = course.widthAt(s) / 2;
+> src/vfx/foam.ts:559:    const hw = course.widthAt(s) / 2;
+> src/vfx/foam.ts:689:    const hw = course.widthAt(ss) / 2;
+> src/vfx/foam.ts:955:        const hw = course.widthAt(s) / 2;
+> src/vfx/waterRibbon.ts:4: * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> src/vfx/waterRibbon.ts:807:    const hw = course.widthAt(s) / 2;
+> src/vfx/waterRibbon.ts:904:      const hw = course.widthAt(s) / 2;
+> src/game/Game.ts:326:    const halfW = course.widthAt(st.s) / 2;
+> src/game/modules.ts:84:    const w = course.widthAt(s) / 2;
+> 425:      // value at the 04/06 junctions; i …[+99 chars]
+
+### 🤖 Claude — 2026-11-16T11:43:32.755Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 420,432p src/world/course.ts; sed -n 520,545p src/world/course.ts; sed -n 320,332p src/game/Game.ts", "description": "Read the 05 width rule and the gameplay wall-bump code"}`
+
+### 🧑 User — 2026-11-16T11:43:32.817Z
+
+> ↩︎ result: def('01', 0, 0.01, { width: 6, interactive: false, speed: 0 }),
+>       def('02', 0.01, m['03'], { width: 5, interactive: false, speed: 9, bank: 0 }),
+>       def('03', m['03'], m['04'], { width: 7, speed: 9, refCoins: 1330, bank: 2.2 }),
+>       def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+>       // 05: level current (ref 05 shows no tilt) → weak curvature banking. `width` is the hand-over
+>       // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
+>       def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+>       def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
+>       def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
+>       def('08', m['08'], m['09'], { width: 4.8, speed: 9.5, refCoins: 2040 }),
+>       def('09', m['09'], m['10'], { width: 6.4, speed: 9.5, refCoins: 2280 }),
+>       def('10', m['10'], m['11'], { width: 3.8, speed: 7.5, refCoins: 2500 }),
+>       def('11', m['11'], this.length, { width: 3, interactive: false, speed: …[+2031 chars]
+
+### 🤖 Claude — 2026-11-16T11:44:07.296Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/g1; mkdir -p qa/pilot05/wave9b/G1; cp $S/g1b/05.png qa/pilot05/wave9b/G1/05_gold05_G1b.png; python3 -I $S/goldstats.py APPROVED=references/05_flow_into_the_current.png NOW=qa/pilot05/current_default_05.png G1b=qa/pilot05/wave9b/G1/05_gold05_G1b.png > qa/pilot05/wave9b/G1/gold_stats.txt; cp $S/goldstats.py tools/qa/gold05.py; python3 scripts/rainbow-autosave.py --reason manual:gold-test-G1b --message \"Screen 05: gold-ring tone test G1b (?gold05=1, candidate); T2 marked provi …[+256 chars]`
+

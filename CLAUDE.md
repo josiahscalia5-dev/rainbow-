@@ -80,7 +80,8 @@ ideally 90–95 %), then 03, 04, 06, 07, 08, 09. Screen 05 visual changes are co
 time, a URL switch, default build unchanged, shown approved | BEFORE | NEW as separate full-size pictures (no grid),
 kept only when clearly closer; never the oval / enlarged "big tunnel" (`qa/pilot05/COORDINATION_WAVE9B.md`).
 Current default = **T2** (front ring A at 20 u + near tunnel 2 u lower, promoted 2026-11-16 under the user's rule
-"only if genuinely closer"; picture `qa/pilot05/current_default_05.png`). The user's **BEFORE stays protected**:
+"only if genuinely closer"; picture `qa/pilot05/current_default_05.png`) — **PROVISIONAL until the user approves the
+visual result** (user, 2026-11-16 ~11:50). Candidates waiting for the user: W2 `?wall05=1`, G1b `?gold05=1`. The user's **BEFORE stays protected**:
 `?ringa=26&nearfloor05=0` reproduces `qa/pilot05/wave9/baseline/05.png` pixel-for-pixel (`claude-bootstrap.sh --full`
 checks both). No more tunnel-position experiments (user, 2026-11-16): next are the rings' polished gold, the purple
 metal walls, the thick cyan-and-pink S-river and premium lighting. Report branch + commit SHA at major checkpoints.
