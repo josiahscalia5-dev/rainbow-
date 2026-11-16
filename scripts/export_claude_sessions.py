@@ -60,16 +60,18 @@ if os.path.exists(_PRIVATE_TERMS_FILE):
 
 
 def redact_text(s: str) -> str:
-    for term in PRIVATE_TERMS:
-        if term in s:
-            s = s.replace(term, "[REDACTED-PRIVATE]")
     keep = {}
     for i, e in enumerate(KEEP_EMAILS):
         tok = f"\u0000KEEP{i}\u0000"
         keep[tok] = e
         s = s.replace(e, tok)
+    # patterns first (whole e-mail addresses -> [REDACTED-EMAIL]), THEN private terms for any stray fragments,
+    # so a private term can never break up an address and leave its domain behind
     for pat, rep in REDACTIONS:
         s = pat.sub(rep, s)
+    for term in PRIVATE_TERMS:
+        if term in s:
+            s = s.replace(term, "[REDACTED-PRIVATE]")
     for tok, e in keep.items():
         s = s.replace(tok, e)
     return s
