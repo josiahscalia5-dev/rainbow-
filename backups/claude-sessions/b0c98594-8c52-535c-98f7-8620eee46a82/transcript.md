@@ -1394,3 +1394,35 @@ Playwright is ready (Chromium 153, WebGL2 via SwiftShader). Now I'll make the An
 
 > ↩︎ result: Command running in background with ID: bx8c1h138. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/tasks/bx8c1h138.output. You will be notified when it completes. To check interim output, use Read on that file path.
 
+### 🤖 Claude — 2026-11-16T10:57:51.172Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/autosave-hook.sh", "content": "#!/usr/bin/env bash\n# Claude Code hook entry point:  autosave-hook.sh <SessionStart|PreCompact|Stop|SessionEnd>\n# SessionStart -> scripts/claude-bootstrap.sh --hook: merges newer saved work, restores Git LFS, re-arms the\n#   five-minute autosave, prints a short recovery summary for Claude and runs the full bootstrap in the background.\n# Stop runs in the background so it never delays a turn (and re-arms the scheduler if it died);\n# PreCompact/SessionEnd run one verified autosave inline (bounded).\nEVENT=\"${1:-hook}\ …[+1241 chars]`
+
+### 🧑 User — 2026-11-16T10:57:51.322Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/autosave-hook.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:57:52.673Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/settings.json", "old_string": "          { \"type\": \"command\", \"command\": \"bash \\\"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\\\" SessionStart\", \"timeout\": 60 }", "new_string": "          { \"type\": \"command\", \"command\": \"bash \\\"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\\\" SessionStart\", \"timeout\": 600 }"}`
+
+### 🧑 User — 2026-11-16T10:57:56.064Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/settings.json has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T10:57:57.023Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/cloud-env-setup.sh", "content": "#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-) cloud-environment setup script: paste it into claude.ai ->\n# Claude Code -> environment settings -> Setup script. It runs as root before Claude starts, from the folder\n# that holds the repository checkout, and installs TOOLS only (npm packages, Python QA libraries, Blender 5.3.0,\n# Android SDK 34, World Labs plugin), skipping anything already installed. It never touches git: the\n# repository's SessionStart hook (scripts/claude-bootstrap.sh --hook) merges n …[+685 chars]`
+
+### 🧑 User — 2026-11-16T10:57:57.073Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/cloud-env-setup.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:58:03.175Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/resume-newest-work.sh", "content": "#!/usr/bin/env bash\n# Rainbow — legacy entry point (older prompts and docs call it). All the work now lives in\n# scripts/claude-bootstrap.sh: resume the newest saved work, restore Git LFS, check references / agents / Marble,\n# install missing tools, run the tests, restart the five-minute autosave and write backups/BOOTSTRAP_REPORT.md.\n#\n#   bash scripts/resume-newest-work.sh [--tools] [--check] [--full]     (--tools is accepted and ignored)\n#\n# Works from any start point, including the OLD default branch that …[+1083 chars]`
+
+### 🧑 User — 2026-11-16T10:58:03.227Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/resume-newest-work.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+

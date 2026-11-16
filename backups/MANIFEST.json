@@ -53,8 +53,8 @@
   },
   {
    "path": ".claude/settings.json",
-   "bytes": 806,
-   "sha256": "60ca7d82e6e50140eb5648f5e1f8c8cb880da9a983a78329d908397660e94675"
+   "bytes": 807,
+   "sha256": "5243193dd80bca38f015f2e18395b23994dd32afc72e54aebb75c35faa3a70dc"
   },
   {
    "path": ".gitattributes",
@@ -404,7 +404,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "1d6ea299d384b2ad89da86200613ce9cf1ebd71d526ac9af94dbf19d663ec216"
+   "sha256": "30e9a11f64d99db4b70888885e27a18a147a505cce3bd088bd08fb5cc55565e2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -5653,8 +5653,8 @@
   },
   {
    "path": "scripts/autosave-hook.sh",
-   "bytes": 1428,
-   "sha256": "28d2df826278f558e5b58a2382a624b7f557936b4e2b6a55114ed4a8c75b1f3a"
+   "bytes": 1694,
+   "sha256": "1c478330207f5e7af2d231bc42f6c3902565831427617ff8db71c67c54bf196c"
   },
   {
    "path": "scripts/autosave-status.py",
@@ -5688,8 +5688,8 @@
   },
   {
    "path": "scripts/cloud-env-setup.sh",
-   "bytes": 1072,
-   "sha256": "44697c9672c12b3c29583427a1af234e6d8327366b45d3a21bf55d47100ba414"
+   "bytes": 1184,
+   "sha256": "02591d39de0e587850cc839266267b7c58bfcf01257f58190e6b8f46a0cd9dd1"
   },
   {
    "path": "scripts/compare.py",
@@ -5743,8 +5743,8 @@
   },
   {
    "path": "scripts/rainbow-autosave.py",
-   "bytes": 18717,
-   "sha256": "e3b321f371ae0708215043413c523a3e24f8b7f928714a5814c84c57a5f46682"
+   "bytes": 19244,
+   "sha256": "4fd988693dd58215c19ada5be75675ea050b7cda382aee601de0920323ae3bf8"
   },
   {
    "path": "scripts/reference.sha256",
@@ -5753,8 +5753,8 @@
   },
   {
    "path": "scripts/resume-newest-work.sh",
-   "bytes": 5251,
-   "sha256": "019f51be58a41042cf0ed9dc6ce6a2bd7b29705a9029acf244052292d4f92c87"
+   "bytes": 1540,
+   "sha256": "ca3c4c4f2f06da1dc72769ef583e8af54a5992e0aca165843544f1db3ce10584"
   },
   {
    "path": "scripts/screen_report.py",

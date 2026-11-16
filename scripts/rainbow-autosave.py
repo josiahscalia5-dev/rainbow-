@@ -42,7 +42,19 @@ LIVE = REPO / "backups" / ".live"
 STATUS = LIVE / "BACKUP_STATUS.json"
 LOG = LIVE / "BACKUP_LOG.md"
 LOCK = REPO / "backups" / ".autosave.lock"
-TRAILER = "\n\n" + CFG.get("commit_trailer", "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
+def _trailer() -> str:
+    """Commit trailer from the config; its Claude-Session line follows the CURRENT cloud session when known,
+    so a new session never has to edit the config just for attribution."""
+    t = CFG.get("commit_trailer", "Co-Authored-By: Claude <noreply@anthropic.com>")
+    sid = os.environ.get("CLAUDE_CODE_REMOTE_SESSION_ID", "")
+    if sid.startswith("cse_"):
+        url = "https://claude.ai/code/session_" + sid[4:]
+        lines = [ln for ln in t.splitlines() if not ln.startswith("Claude-Session:")]
+        t = "\n".join(lines + [f"Claude-Session: {url}"])
+    return "\n\n" + t
+
+
+TRAILER = _trailer()
 SECRET_PATTERNS = [
     re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
     re.compile(r"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{30,}\b"),
