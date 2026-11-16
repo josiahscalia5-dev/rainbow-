@@ -158,14 +158,16 @@ vec2 boltFlare(vec2 g, float density, float Lpx, float Tpx, float time) {
   p = vec2(ca * p.x + sa * p.y, -sa * p.x + ca * p.y);
   float x = p.x / L;
   float ax = abs(x);
-  // Z-kink: the streak steps sideways by ≈0.9·T between |x| ≈ 0.2 and 0.45, plus a slight arch
-  float kz = (fract(hs * 13.0) > 0.5 ? 0.9 : -0.9) * T;
-  float y = p.y - kz * (smoothstep(-0.45, -0.2, x) - smoothstep(0.2, 0.45, x)) - 0.25 * T * (1.0 - x * x);
+  // Z-kink: the streak steps sideways by ≈1.4·T over a short run at |x| ≈ 0.3 (sharp lightning steps), plus a
+  // slight arch (it02: it01's soft 0.9·T kink read as a flat white "bat")
+  float kz = (fract(hs * 13.0) > 0.5 ? 1.4 : -1.4) * T;
+  float y = p.y - kz * (smoothstep(-0.36, -0.27, x) - smoothstep(0.27, 0.36, x)) - 0.25 * T * (1.0 - x * x);
   float th = T * max(1.0 - x * x, 0.0);
-  float core = (1.0 - smoothstep(th * 0.45, th + 0.9, abs(y))) * step(ax, 1.0);
+  float core = (1.0 - smoothstep(th * 0.4, th + 0.8, abs(y))) * step(ax, 1.0);
   float arm = exp(-abs(p.x) * 0.9) * max(0.0, 1.0 - abs(p.y) / (0.3 * L));
   core = max(core, arm * arm * 1.2);
-  float halo = exp(-abs(y) / (T * 1.8 + 3.0)) * max(0.0, 1.0 - ax * ax) + 0.5 * exp(-length(p) / (T * 3.0 + 4.0));
+  // wide electric halo (ref: the bolts sit in a 15–25 px cyan glow)
+  float halo = exp(-abs(y) / (T * 3.0 + 5.0)) * max(0.0, 1.0 - ax * ax) + 0.6 * exp(-length(p) / (T * 4.0 + 6.0));
   float tw = 0.8 + 0.2 * sin(time * 3.0 + hs * 40.0);
   return vec2(core, min(halo, 1.0)) * tw;
 }

@@ -1,4 +1,4 @@
-"""wave 9: tone of the foam px inside the clump boxes (same mask as clumpcol.py): luminance percentiles p10/p50/p90 and
+"""wave 9: tone of the foam px inside the clump boxes (clumpcol.py mask + |R-G| < 45: no pink-band px): luminance percentiles p10/p50/p90 and
 median RGB of the darkest / middle / brightest thirds. Usage: python3 -I clumptone.py IMG..."""
 import sys
 import numpy as np
@@ -10,7 +10,7 @@ for p in sys.argv[1:]:
     for nm, (x0, y0, x1, y1) in BOX.items():
         s = a[y0:y1, x0:x1].reshape(-1, 3)
         r, g, b = s[:, 0], s[:, 1], s[:, 2]
-        m = (r >= 140) & (g >= 140) & (b >= 200) & ~((b - r > 90) & (g - r > 40))
+        m = (r >= 140) & (g >= 140) & (b >= 200) & ~((b - r > 90) & (g - r > 40)) & (np.abs(r - g) < 45)
         px = s[m]
         if len(px) < 30:
             out.append(f'{nm} -'); continue

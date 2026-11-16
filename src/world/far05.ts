@@ -151,7 +151,8 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
     for (let i = 0; i < 36; i++) { const m = 0.5 * (a + b); if (designFromXB(m, Z).core < target) a = m; else b = m; }
     return designFromXB(0.5 * (a + b), Z);
   };
-  const chord = Math.sqrt(Math.max(0, ft.R * ft.R - level * level)) * 0.995;
+  // wave 9: × the section's lateral stretch (05 oval) — the floor between the river and the wall foot is wider
+  const chord = Math.sqrt(Math.max(0, ft.R * ft.R - level * level)) * 0.995 * ft.aspect;
   return {
     chord,
     row(Z) {
@@ -262,8 +263,9 @@ export function farCoins05(ft: ForcedTunnel, lay: FarRiverLayout, level: number)
     const basis = new THREE.Matrix4().makeBasis(ft.Rt, ft.U, ft.T.clone().negate())
       .multiply(new THREE.Matrix4().makeRotationX(-C05.tilt));
     const k = C05.scale * (1 + 0.5 * smoothstep(90, 300, D));
-    // water level − 0.04 = the real course water at the seam; the coin centre C05.h above it
-    const o = ft.Rt.clone().multiplyScalar(r.core).addScaledVector(ft.U, level - 0.04 + C05.h);
+    // water level − 0.04 = the real course water at the seam; the coin centre C05.h above it. Lateral: the real
+    // trail's rule (C05.latK × core: inside the middle of the core) — lands within ≈5 px of every ref far coin
+    const o = ft.Rt.clone().multiplyScalar(C05.latK * r.core).addScaledVector(ft.U, level - 0.04 + C05.h);
     return { Z, o, basis, s: new THREE.Vector3(k, k, k) };
   });
   const mesh = new THREE.InstancedMesh(geo, materials, items.length);

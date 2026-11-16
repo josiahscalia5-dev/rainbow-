@@ -1163,3 +1163,308 @@ Now the 05 splash: steeper, fewer, lacier strands, and a weaker leading edge.
 >       while (i < coreN - 2 && coreY[i + 1] < yn) i++;
 >       const t = Math.min(1, Math.max(0, (y …[+3987 chars]
 
+### 🤖 Claude — 2026-11-16T02:33:23.646Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/wave9/foam/NOTES.md <<'EOF'\n* it02 (86 calls, 566,455 tris): t -0.09; holes dense on the lower VISIBLE part (q.y < 0.45); wake band starts left ds\n  -0.15 / right -0.6 (vK 1 - sm(-0.05, 0.35)): no bridge; splash ropes 20 / side, wider (0.056 -> 0.012) lacy tendrils.\n  NOTE: the river changed a lot between it01 and it02 (water-fx's concurrent waterRibbon.ts edit), so screen_report vs\n  the wave-9 baseline is confounded from here on (mad 52.3, hue_corr 0.836, Benny+near 50.9 are mostly the river). A\n  control capture (copy of the tree w …[+1419 chars]`
+
+### 🧑 User — 2026-11-16T02:33:55.695Z
+
+> ↩︎ result: 05 → qa/pilot05/wave9/foam/it03/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":567799,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> | PREV | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> | NOW | 51.7 | 0.69 | 0.202 | 55.6 | 59.2 | 47.7 | 48.7 |
+> it03 Lclump 7552 W38 S40 B25 | LLclump 9423 W26 S37 B21 | LRclump 10835 W18 S32 B19 | Lrim 24435 W17 S33 B15
+> it03 Lclump L176/228/252 C0ACFF EFE5FF FFF8FF | LLclump L178/231/249 BFACFF F0E6D5 F9F2FF | LRclump L181/217/248 C9A1FF EDCDFF F8EDFF | Lrim L184/220/250 D0A3FF EDCCFF FFF3FF
+> qa/pilot05/wave9/foam/it03/05.png L 18.8% x 150-401 ylow 1329 | R 17.8% x 432-719 ylow 1326
+> LL: dmad -1.15 (PREV 50.5 NOW 49.3)
+> LR: dmad -1.06 (PREV 58.2 NOW 57.1)
+> Lclump: dmad +0.62 (PREV 47.8 NOW 48.5)
+> splashC: dmad -3.08 (PREV 44.4 NOW 41.3)
+> Rrim: dmad +0.73 (PREV 48.4 NOW 49.1)
+> Lrim: dmad -3.74 (PREV 54.9 NOW 51.1)
+> 1
+
+### 🤖 Claude — 2026-11-16T02:33:56.990Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it03/05.png"}`
+
+### 🧑 User — 2026-11-16T02:33:57.049Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:33:59.808Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it03/crop_leftnear.png"}`
+
+### 🧑 User — 2026-11-16T02:33:59.836Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:34:00.284Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it03/crop_splash.png"}`
+
+### 🧑 User — 2026-11-16T02:34:00.312Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:34:00.742Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it03/crop_rightnear.png"}`
+
+### 🧑 User — 2026-11-16T02:34:00.765Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:34:13.353Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/'\nN=Image.open('qa/pilot05/wave9/foam/it03/05.png').convert('RGB')\nR=Image.open('references/05_flow_into_the_current.png').convert('RGB')\no=Image.new('RGB',(2*270*3+10,140*3))\no.paste(R.crop((60,1180,330,1320)).resize((810,420),Image.LANCZOS),(0,0))\no.paste(N.crop((60,1130,330,1270)).resize((810,420),Image.LANCZOS),(820,0))\no.save(S+'it03_ll3.png')\n\"\n", "description": "Zoom crop of it03 left band vs ref"}`
+
+### 🧑 User — 2026-11-16T02:34:13.729Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:34:14.454Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/it03_ll3.png"}`
+
+### 🧑 User — 2026-11-16T02:34:14.482Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:34:41.582Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; T=qa/pilot05/wave9/foam/tools; sed -i 's/m = (r >= 140) \\& (g >= 140) \\& (b >= 200) \\& ~((b - r > 90) \\& (g - r > 40))/m = (r >= 140) \\& (g >= 140) \\& (b >= 200) \\& ~((b - r > 90) \\& (g - r > 40)) \\& (np.abs(r - g) < 45)/' $T/clumptone.py; sed -i 's/(same mask as clumpcol.py)/(clumpcol.py mask + |R-G| < 45: no pink-band px)/' $T/clumptone.py; grep -n \"abs(r - g)\" $T/clumptone.py; python3 -I $T/clumptone.py references/05_flow_into_the_current.png qa/pilot05/wave9/baseline/05.png qa/pilot05/wave9/foam/it03/05.png", "description": "Exclude pink px f …[+25 chars]`
+
+### 🧑 User — 2026-11-16T02:34:41.933Z
+
+> ↩︎ result: 13:        m = (r >= 140) & (g >= 140) & (b >= 200) & ~((b - r > 90) & (g - r > 40)) & (np.abs(r - g) < 45)
+> references Lclump L181/219/252 A5B8FA D7D7FB F9FAFF | LLclump L179/233/253 ADB8FA ECE2FF FEFCFF | LRclump L184/231/253 ACBEFB E3E3FF FDFCFE | Lrim L176/221/251 ADAFFA E0D4FD FDF6FF
+> baseline Lclump L189/228/243 B3C4FF E0E1FE F2EFFE | LLclump L187/228/238 B3C0FB E1E3F5 EEEAF7 | LRclump L186/226/239 AFC1FD DEE1F7 EFEBF9 | Lrim L187/225/246 B3C4FF DBDEFF F3F0FF
+> it03 Lclump L175/233/252 BEABFF F3DFFF FFF8FF | LLclump L177/231/249 C0AEFF F0E6D4 FAF2FF | LRclump L177/231/249 BEACFF F0E5D5 FBF3FF | Lrim L176/228/251 C0AEFF E8DDFF FFF8FF
+
+### 🤖 Claude — 2026-11-16T02:34:57.488Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "// wave 9: ref 05 clump ramp. The soap05 stops rendered the clumps grey-blue (G > R: mid third #DCE2F7, dark #B4BEFC, top\n// #EEEAF6); the ref clumps are violet-lavender (mid #E8D7FF, dark #B3ABFA) with near-white caps (#FDFBFF)\nvec3 bank05(float t) {\n  t = clamp(t, 0.0, 1.0) * 4.0;\n  vec3 c = mix(vec3(0.25, 0.2, 0.72), vec3(0.44, 0.38, 0.93), clamp(t, 0.0, 1.0));\n  c = mix(c, vec3(0.6, 0.5, 0.98), clamp(t - 1.0, 0.0, 1.0));\n  c = mix(c, vec3(0.86, 0.71, 1.02), clamp(t - 2.0, 0.0, 1.0));\n  return m …[+767 chars]`
+
+### 🧑 User — 2026-11-16T02:34:57.534Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:34:59.491Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float dens = clamp(0.04 + 0.95 * smoothstep(0.45, -0.25, q.y) + 0.25 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);", "new_string": "  // it04: ref holes cover the lower 2/3 of each lump, densest at the waterline\n  float dens = clamp(0.08 + 0.9 * smoothstep(0.75, -0.15, q.y) + 0.25 * (1.0 - z) - 0.15 * vBig, 0.0, 0.95);"}`
+
+### 🧑 User — 2026-11-16T02:34:59.532Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:35:01.542Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  t += (mf.z - 0.6) * 0.16 * dens * kf - mf.x * 0.25 * kf + mf.y * 0.22 * kf;", "new_string": "  // it04: the cell domes (bubbly relief) everywhere, not only where the holes are (it03 lumps read as smooth marshmallows)\n  t += (mf.z - 0.6) * 0.24 * (0.45 + 0.55 * dens) * kf - mf.x * 0.25 * kf + mf.y * 0.22 * kf;"}`
+
+### 🧑 User — 2026-11-16T02:35:01.575Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:35:03.247Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    vec2 bq = vec2((fract(vUV.x * 3.0 + vSeed * 7.0) - 0.5) * 2.4, vUV.y);", "new_string": "    // wave 9: 6 beads per chain (3 drew elongated white flakes: the chain is ~4x longer than wide on screen)\n    vec2 bq = vec2((fract(vUV.x * 6.0 + vSeed * 7.0) - 0.5) * 2.4, vUV.y);"}`
+
+### 🧑 User — 2026-11-16T02:35:03.287Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:35:12.158Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 405,472p src/vfx/bubbles.ts; sed -n 160,182p src/vfx/bubbles.ts", "description": "Read bubble update loop"}`
+
+### 🧑 User — 2026-11-16T02:35:12.211Z
+
+> ↩︎ result: coreX[coreN] = v.x / (depth * view.tanH);
+>           coreY[coreN] = yn;
+>           coreN++;
+>         }
+>       }
+>       // pixel scale for impostors and point sprites
+>       const vh = (typeof window !== 'undefined' ? window.innerHeight : 800) * (typeof window !== 'undefined' ? Math.min(2, window.devicePixelRatio || 1) : 1);
+>       const focal = persp.isPerspectiveCamera ? vh / (2 * Math.tan(THREE.MathUtils.degToRad(persp.fov) / 2)) : 600;
+>       const pxK = vh / 1536; // caps are authored for the 864×1536 reference frame
+>       focalNow = focal;
+>       pxKNow = pxK;
+>       // respawn everything after a checkpoint jump / respawn or a camera teleport (the screen-space
+>       // placement needs the camera that will actually show the bubbles)
+>       const camJump = view.ok && lastCam.distanceToSquared(view.pos) > 4;
+>       if (view.ok) lastCam.copy(view.pos);
+>       const jump = Math.abs(focusS - lastFocus) > 25 || (camJump && focusS >= drumEnd);
+>       const crossedDrum = (lastFocus < drumEnd) !== (focusS < drumEnd);
+>       if (jump || crossedDrum) {
+>         rngState = (0x0b0b ^ Math.round(focusS * 16)) >>> 0;
+>         for (const b of bigS) spawn(b, focusS, true, true);
+>         for (const b of smallS)  …[+3352 chars]
+
+### 🤖 Claude — 2026-11-16T02:35:25.031Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/wave9/foam/NOTES.md <<'EOF'\n* it03 (89 calls, 567,799 tris; calls/tris moved by others' concurrent edits): wake-band lumps x1.18 (wakeK); holes = a\n  fixed saturated blue mix (0.8) instead of a t-subtraction, radius 0.16 + 0.17 h; splash rope alpha x0.95, froth 0.72.\n  Environment walls changed under me (hue_corr 0.69 vs baseline is the environment specialist's tunnel, not foam).\n  gain vs it02 (same-region |d| vs ref): LL -1.2, LR -1.1, splash -3.1, Lrim -3.7 better; Lclump +0.6, Rrim +0.7.\n  Seen: splash = white lacy tendrils with b …[+1202 chars]`
+
+### 🧑 User — 2026-11-16T02:36:02.445Z
+
+> ↩︎ result: 05 → qa/pilot05/wave9/foam/it04/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":567799,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> | PREV | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> | NOW | 51.6 | 0.708 | 0.202 | 55.6 | 59.9 | 47.4 | 48.2 |
+> it04 Lclump 7020 W49 S39 B23 | LLclump 9531 W32 S36 B20 | LRclump 8274 W30 S41 B25 | Lrim 25642 W21 S35 B19
+> it04 Lclump L183/238/253 B4C1FF EFEAFF FDFAFF | LLclump L191/231/250 BDC8FF EFE6D4 F7F5FF | LRclump L187/231/250 B9C4FF F0E6D5 F9F6FF | Lrim L178/231/253 B1BDFF E4E2FF FFFAFF
+> qa/pilot05/wave9/foam/it04/05.png L 20.3% x 150-401 ylow 1329 | R 18.9% x 432-719 ylow 1326
+> LL: dmad +0.28 (PREV 49.3 NOW 49.6)
+> LR: dmad -0.04 (PREV 57.1 NOW 57.1)
+> Lclump: dmad -2.67 (PREV 48.5 NOW 45.8)
+> splashC: dmad -0.74 (PREV 41.3 NOW 40.5)
+> Rrim: dmad -0.27 (PREV 49.1 NOW 48.8)
+> Lrim: dmad +0.65 (PREV 51.1 NOW 51.8)
+> []
+
+### 🤖 Claude — 2026-11-16T02:36:06.636Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/'\nN=Image.open('qa/pilot05/wave9/foam/it04/05.png').convert('RGB')\nR=Image.open('references/05_flow_into_the_current.png').convert('RGB')\no=Image.new('RGB',(2*864//2*1+10,1536//2*0+520))\na=R.crop((0,980,864,1400)); b=N.crop((0,980,864,1400))\no=Image.new('RGB',(864,850)); o.paste(a,(0,0)); o.paste(b,(0,430)); o.save(S+'it04_low.png')\n\"\n", "description": "Make stacked lower-frame comparison for it04"}`
+
+### 🧑 User — 2026-11-16T02:36:07.042Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:36:07.894Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/it04_low.png"}`
+
+### 🧑 User — 2026-11-16T02:36:07.926Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:36:29.892Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"float bead = \\|float bd = \\|alpha = bead\" src/vfx/riderSplash.ts", "description": "Locate crown bead lines"}`
+
+### 🧑 User — 2026-11-16T02:36:29.929Z
+
+> ↩︎ result: 115:  float bead = 1.0 - smoothstep(0.18, 0.42, abs(fract(vUV.x * 3.0 + vSeed * 7.0) - 0.5));
+> 355:    float bd = length(bq);
+> 356:    float bead = 1.0 - smoothstep(0.6, 0.9, bd);
+> 358:    alpha = bead * life * (0.45 + 0.45 * smoothstep(0.3, 0.8, bd));
+
+### 🤖 Claude — 2026-11-16T02:36:32.921Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    float bead = 1.0 - smoothstep(0.6, 0.9, bd);", "new_string": "    // it05: drop ~half the beads at random so the chains read as scattered droplets, not dotted arcs\n    float bi = floor(vUV.x * 6.0 + vSeed * 7.0);\n    float bead = (1.0 - smoothstep(0.6, 0.9, bd)) * step(0.45, fract(sin(bi * 12.9898 + vSeed * 78.233) * 43758.5453));"}`
+
+### 🧑 User — 2026-11-16T02:36:32.987Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:36:34.672Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "  float thR = mix(1.3, 0.45, a) + (hs(seed * 3.1) - 0.5) * 0.2;", "new_string": "  // it05: the root arc wraps the fur's lower side round to its back (ref fringe x 200-330 / 480-640)\n  float thR = mix(1.45, 0.35, a) + (hs(seed * 3.1) - 0.5) * 0.2;"}`
+
+### 🧑 User — 2026-11-16T02:36:34.721Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:36:36.771Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    w = mix(0.056, 0.012, pow(aUV.x, 0.7)) * (0.55 + 0.6 * hs(seed * 19.1));", "new_string": "    // it05: 34 thinner tendrils (it04's 20 wide ones read as a few short sticks; the ref fringe has many fine strands)\n    w = mix(0.042, 0.01, pow(aUV.x, 0.7)) * (0.55 + 0.6 * hs(seed * 19.1));"}`
+
+### 🧑 User — 2026-11-16T02:36:36.819Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:36:37.730Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "  const nRope = quality === 'high' ? 20 : 12;", "new_string": "  const nRope = quality === 'high' ? 34 : 16;"}`
+
+### 🧑 User — 2026-11-16T02:36:37.763Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:36:52.585Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"D = Math.max(3.9, Dw \\* rnd\" src/vfx/bubbles.ts; grep -n \"const spawn = \" src/vfx/bubbles.ts", "description": "Locate bubble depth line"}`
+
+### 🧑 User — 2026-11-16T02:36:52.628Z
+
+> ↩︎ result: 301:      D = Math.max(3.9, Dw * rnd(isBig ? 0.55 : 0.6, 0.92));
+> 264:  const spawn = (b: BubbleState, focusS: number, isBig: boolean, initial: boolean) => {
+
+### 🤖 Claude — 2026-11-16T02:36:56.365Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "old_string": "      D = Math.max(3.9, Dw * rnd(isBig ? 0.55 : 0.6, 0.92));", "new_string": "      // wave 9 (05 only): an initial bubble in the lower third floats just above the water there (ref 05: ~60 px\n      // bubbles over the lower corner foam at (105,1240) / (720,1210)); half-way to the camera it was \"behind\" Benny or\n      // in the near fade and got recycled before the first frame, so 05 opened with none below y~1100. Same rnd() calls.\n      const low05 = initial && yPx > 1080 && focusS > st05.s0 + 1 & …[+115 chars]`
+
+### 🧑 User — 2026-11-16T02:36:56.411Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/bubbles.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:37:06.262Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/wave9/foam/NOTES.md <<'EOF'\n* it04 (89 calls, 567,799 tris): bank05 ramp re-solved from the pink-free ref px (periwinkle dark G >= R, near-neutral\n  mid, white cap); holes over the lower 2/3; cell-dome relief everywhere; crown chains 6 beads. Seen (stacked lower-frame\n  view): bands now cool white-lavender cloud strings with visible blue dots, same diagonal V as the ref (closest so far);\n  splash = only 4-6 short thick tendrils per side (ref: a broad fringe of many fine lacy strands wrapping the fur's\n  lower half); crown beads drew d …[+1463 chars]`
+
+### 🧑 User — 2026-11-16T02:37:37.074Z
+
+> ↩︎ result: 05 → qa/pilot05/wave9/foam/it05/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":568247,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> | PREV | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> | NOW | 51.7 | 0.832 | 0.202 | 55.6 | 59.9 | 47.4 | 48.6 |
+> it05 Lclump 7040 W48 S39 B24 | LLclump 10018 W31 S37 B19 | LRclump 8070 W31 S39 B24 | Lrim 25610 W21 S35 B19
+> it05 Lclump L183/238/253 B4C0FF EEEAFF FDFAFF | LLclump L191/231/249 BEC6FF EFE6D5 F7F5FF | LRclump L187/231/249 BAC4FF F0E6D5 F8F6FF | Lrim L178/231/253 B1BDFF E4E3FF FFFAFF
+> qa/pilot05/wave9/foam/it05/05.png L 20.2% x 150-401 ylow 1329 | R 18.6% x 434-719 ylow 1326
+> LL: dmad -0.39 (PREV 49.6 NOW 49.2)
+> LR: dmad -0.65 (PREV 57.1 NOW 56.4)
+> Lclump: dmad -1.13 (PREV 45.8 NOW 44.7)
+> splashC: dmad -0.66 (PREV 40.5 NOW 39.9)
+> Rrim: dmad -0.02 (PREV 48.8 NOW 48.8)
+> Lrim: dmad -0.01 (PREV 51.8 NOW 51.8)
+> []
+
+### 🤖 Claude — 2026-11-16T02:37:38.779Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/it05_low.png"}`
+
+### 🧑 User — 2026-11-16T02:37:38.806Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:37:53.051Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"uBenny\" src/vfx/waterRibbon.ts | head -20; grep -n \"heightAt\" src/vfx/waterRibbon.ts | head -5", "description": "Check ribbon wake displacement near Benny"}`
+
+### 🧑 User — 2026-11-16T02:37:53.097Z
+
+> ↩︎ result: 199:uniform vec3 uBenny;      // s, lateral (units), strength
+> 200:uniform float uBennyR;    // Benny's waterline radius (units)
+> 457:  float db = s - uBenny.x;
+> 501:    if (vStyle.x > 0.0 && uBenny.z > 0.0) {
+> 544:  float nearW = uBenny.z > 0.0 ? sw * smoothstep(5.0, 0.5, db) : 0.0;
+> 545:  float X = (lat - mix(M + sbend + 0.5 * (cLc + cRc), uBenny.y, nearW)) * mix(3.0 / hS, 1.0, nearW) / (1.0 + 0.7 * back);
+> 572:  float wake = (vStyle.x > 0.0 && uBenny.z > 0.0) ? sw * vStyle.x : 0.0;
+> 573:  float dlB = lat - uBenny.y;
+> 735:      float dlN = lat - uBenny.y;
+> 791:  if (uBenny.z > 0.0) {
+> 792:    float du = lat - uBenny.y;
+> 793:    float dv = s - uBenny.x;
+> 794:    float rb = uBennyR;
+> 797:      float k = uBenny.z;
+> 927:    uBenny: { value: new THREE.Vector3(0, 0, 0) },
+> 928:    uBennyR: { value: 0.7 },
+> 836:  heightAt(s: number, lateral: number, t: number): number;
+> 958:    heightAt(s, lateral, t) {
+
+### 🤖 Claude — 2026-11-16T02:38:12.583Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/bubbles.ts", "old_string": "      // wave 9 (05 only): an initial bubble in the lower third floats just above the water there (ref 05: ~60 px\n      // bubbles over the lower corner foam at (105,1240) / (720,1210)); half-way to the camera it was \"behind\" Benny or\n      // in the near fade and got recycled before the first frame, so 05 opened with none below y~1100. Same rnd() calls.\n      const low05 = initial && yPx > 1080 && focusS > st05.s0 + 1 && focusS < st05.s1 - 1;\n      D = Math.max(3.9, Dw * (low05 ? rnd(0.84, 0.96) …[+115 chars]`
+
+### 🧑 User — 2026-11-16T02:38:12.637Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/bubbles.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:38:13.592Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git diff --stat src/vfx/bubbles.ts; grep -n \"const vTop\\|float y = 0.035\" src/vfx/foam.ts src/vfx/riderSplash.ts", "description": "Confirm bubbles.ts reverted, locate next edits"}`
+
+### 🧑 User — 2026-11-16T02:38:13.643Z
+
+> ↩︎ result: src/vfx/foam.ts:1020:          const vTop = side < 0 ? -0.15 : -0.6;
+> src/vfx/riderSplash.ts:256:  float y = 0.035 + 0.06 * hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
+

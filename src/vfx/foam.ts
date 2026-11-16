@@ -384,14 +384,15 @@ varying float vR;
 ${NOISE_GLSL}
 ${SOAP05_GLSL}
 ${MICRO_GLSL}
-// wave 9: ref 05 clump ramp. The soap05 stops rendered the clumps grey-blue (G > R: mid third #DCE2F7, dark #B4BEFC, top
-// #EEEAF6); the ref clumps are violet-lavender (mid #E8D7FF, dark #B3ABFA) with near-white caps (#FDFBFF)
+// wave 9: ref 05 clump ramp. The soap05 stops rendered the clumps grey (mid third #E1E3F5, top #EEEAF7: blue too low,
+// caps not white); ref foam px (pink-band px excluded): dark #ADB8FA (periwinkle, G >= R), mid #ECE2FF / #E3E3FF, top
+// #FEFCFF. (it01-it03 used a violet R > G ramp chasing pink-band px in the boxes: lumps read pink-lavender.)
 vec3 bank05(float t) {
   t = clamp(t, 0.0, 1.0) * 4.0;
-  vec3 c = mix(vec3(0.25, 0.2, 0.72), vec3(0.44, 0.38, 0.93), clamp(t, 0.0, 1.0));
-  c = mix(c, vec3(0.6, 0.5, 0.98), clamp(t - 1.0, 0.0, 1.0));
-  c = mix(c, vec3(0.86, 0.71, 1.02), clamp(t - 2.0, 0.0, 1.0));
-  return mix(c, vec3(1.3, 1.25, 1.32), clamp(t - 3.0, 0.0, 1.0));
+  vec3 c = mix(vec3(0.23, 0.24, 0.7), vec3(0.36, 0.46, 0.93), clamp(t, 0.0, 1.0));
+  c = mix(c, vec3(0.6, 0.65, 0.99), clamp(t - 1.0, 0.0, 1.0));
+  c = mix(c, vec3(0.86, 0.83, 1.03), clamp(t - 2.0, 0.0, 1.0));
+  return mix(c, vec3(1.3, 1.28, 1.34), clamp(t - 3.0, 0.0, 1.0));
 }
 void main() {
   float px = 2.0 / max(fwidth(vP.x), 1e-4);
@@ -419,14 +420,16 @@ void main() {
   // fine open bubbles: dense on the lower VISIBLE part (the lumps are sunk, so from q.y ~0.4 down) and the flanks,
   // none on the lit top
   vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 7.0, 1.2, 14.0) + vInst.y * 37.0;
-  float dens = clamp(0.04 + 0.95 * smoothstep(0.45, -0.25, q.y) + 0.25 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);
+  // it04: ref holes cover the lower 2/3 of each lump, densest at the waterline
+  float dens = clamp(0.08 + 0.9 * smoothstep(0.75, -0.15, q.y) + 0.25 * (1.0 - z) - 0.15 * vBig, 0.0, 0.95);
   vec4 mf = microFoam(mp, dens);
   float kf = 1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y));
   // wave 8 (it04): tone S-curve: few grey mid-tones, a broad white-lavender lit area and clearly blue shading
   // it05: the shading boundary sits higher (it04's 0.2..0.9 curve turned 50 % of the clump px pure white)
   // it06: boundary lower again (it05 clump boxes W 27-59 %, ref 22-28 %), no white bonus for big lumps
   t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * vBig);
-  t += (mf.z - 0.6) * 0.16 * dens * kf - mf.x * 0.25 * kf + mf.y * 0.22 * kf;
+  // it04: the cell domes (bubbly relief) everywhere, not only where the holes are (it03 lumps read as smooth marshmallows)
+  t += (mf.z - 0.6) * 0.24 * (0.45 + 0.55 * dens) * kf - mf.x * 0.25 * kf + mf.y * 0.22 * kf;
   vec3 col = bank05(t + 0.04 * vInst.z);
   // it03: the open bubbles are saturated blue dots (ref), whatever the lump's tone (subtracting t only greyed them)
   col = mix(col, vec3(0.3, 0.38, 0.95), mf.x * kf * 0.8);

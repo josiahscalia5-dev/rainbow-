@@ -247,7 +247,8 @@ vec3 ropePos(float u, float side, float a, float seed, float len) {
   // root on the waterline circle (from beside the body to its back flank), direction measured from straight back
   // roots just outside the fur's silhouette (the waterline chord uR hides under the body from the chase camera)
   // wave 9: steeper on screen (ref strands 52-75 deg below the horizontal, wave 8 ~43 deg = two sideways wings)
-  float thR = mix(1.3, 0.45, a) + (hs(seed * 3.1) - 0.5) * 0.2;
+  // it05: the root arc wraps the fur's lower side round to its back (ref fringe x 200-330 / 480-640)
+  float thR = mix(1.45, 0.35, a) + (hs(seed * 3.1) - 0.5) * 0.2;
   float phi = mix(0.46, 0.0, a) + (hs(seed * 5.7) - 0.5) * 0.3 + 0.22 * u * u;
   vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5) * (1.3 + 0.2 * hs(seed * 2.3));
   vec2 q = root + vec2(sin(phi), cos(phi)) * u * len;
@@ -277,7 +278,8 @@ void main() {
     p = ropePos(aUV.x, side, a, seed, len);
     tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
     // wave 9 it02: fewer, wider lacy tendrils (torn by the fragment holes) instead of a brush of thin hairs
-    w = mix(0.056, 0.012, pow(aUV.x, 0.7)) * (0.55 + 0.6 * hs(seed * 19.1));
+    // it05: 34 thinner tendrils (it04's 20 wide ones read as a few short sticks; the ref fringe has many fine strands)
+    w = mix(0.042, 0.01, pow(aUV.x, 0.7)) * (0.55 + 0.6 * hs(seed * 19.1));
   } else if (aType < 1.5) {
     // crown droplet jet: the head runs root -> landing, the jet is a short chain of beads
     float rate = mix(1.6, 2.6, hs(seed * 11.3));
@@ -350,9 +352,12 @@ void main() {
   } else if (vType < 1.5) {
     // crown droplets: a chain of round beads, fading in off the water and out as they fall back
     // it05: small translucent water beads (cyan body, bright rim / glint), not white flakes
-    vec2 bq = vec2((fract(vUV.x * 3.0 + vSeed * 7.0) - 0.5) * 2.4, vUV.y);
+    // wave 9: 6 beads per chain (3 drew elongated white flakes: the chain is ~4x longer than wide on screen)
+    vec2 bq = vec2((fract(vUV.x * 6.0 + vSeed * 7.0) - 0.5) * 2.4, vUV.y);
     float bd = length(bq);
-    float bead = 1.0 - smoothstep(0.6, 0.9, bd);
+    // it05: drop ~half the beads at random so the chains read as scattered droplets, not dotted arcs
+    float bi = floor(vUV.x * 6.0 + vSeed * 7.0);
+    float bead = (1.0 - smoothstep(0.6, 0.9, bd)) * step(0.45, fract(sin(bi * 12.9898 + vSeed * 78.233) * 43758.5453));
     float life = smoothstep(0.0, 0.12, vTau) * (1.0 - smoothstep(0.75, 1.0, vTau));
     alpha = bead * life * (0.45 + 0.45 * smoothstep(0.3, 0.8, bd));
     col = mix(cyan, white, 0.35 + 0.6 * smoothstep(0.35, 0.8, bd));
@@ -377,7 +382,7 @@ void main() {
 /** wave 8: the 05 splash (same API as the shared fan) */
 export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
   // wave 9: fewer strands (44 -> 30) so water shows between them (ref), fewer froth pads (16 -> 10)
-  const nRope = quality === 'high' ? 20 : 12;
+  const nRope = quality === 'high' ? 34 : 16;
   const nJet = quality === 'high' ? 40 : 16;
   const nFroth = quality === 'high' ? 10 : 6;
   const uvs = new Float32Array((SEG5 + 1) * 2 * 2);

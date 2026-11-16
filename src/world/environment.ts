@@ -393,7 +393,10 @@ export function buildEnvironment(course: Course): Environment {
     const knots: [number, number][] = [[0, 0]];
     ringDv.forEach((d, i) => knots.push([bay05 * (i + 0.5), Math.max(d - D0, knots[i][1] + 1)]));
     const zEnd = 430 - D0;
-    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);
+    // wave 9: the same OVAL section as the near 05 tunnel at the seam (environment `oval05`/`floor05`: lateral
+    // stretch K, level bank floor just under the water), so walls, rings and lids continue without a step
+    const K = oval05(sF05);
+    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T, { aspect: K, floorY: K > 1.001 ? floor05(sF05).y : undefined });
     // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
     const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
     const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
@@ -418,16 +421,19 @@ export function buildEnvironment(course: Course): Environment {
       if (n === 0 && realSeamRing) continue;
       const u = knots[n + 1][0];
       const op = openAt(u);
-      ringItems.push({ u, o: new THREE.Vector3(), basis: ringBasis, s: new THREE.Vector3(rRing, rRing, 1), openPos: op.c, openScale: op.r / rRing });
+      ringItems.push({ u, o: new THREE.Vector3(), basis: ringBasis, s: new THREE.Vector3(rRing * K, rRing, 1), openPos: op.c, openScale: op.r / rRing });
       lidUs.push(ft.uOfZ(Math.max(0.5, knots[n + 1][1] - band05.width / 2 - lidSz * 1.05)));
     }
     for (const u of lidUs) {
       for (const side of [1, -1]) {
         const b = wallLidBasis(fr0, side, lid05.angleDeg, lid05.droopDeg);
         const op = openAt(u);
-        const o = b.dir.clone().multiplyScalar(perfPath.radius(sF05) - lidSz * lid05.sink);
-        const dirOpen = op.f.right.clone().multiplyScalar(Math.cos(THREE.MathUtils.degToRad(lid05.angleDeg)) * side).addScaledVector(op.f.up, Math.sin(THREE.MathUtils.degToRad(lid05.angleDeg)));
-        lidItems.push({ u, o, basis: new THREE.Matrix4().makeBasis(b.X, b.Y, b.Z), s: new THREE.Vector3(lidSz, lidSz, lidSz * lid05.stretch), openPos: op.c.clone().addScaledVector(dirOpen, op.r + lidSz * 1.5), openScale: 1 });
+        const cosA = Math.cos(THREE.MathUtils.degToRad(lid05.angleDeg));
+        // on the oval wall: the near lids' offset (buildWallLids oval: + right·(K − 1)·r·cos(ang)·side)
+        const o = b.dir.clone().multiplyScalar(perfPath.radius(sF05) - lidSz * lid05.sink).addScaledVector(ft.Rt, (K - 1) * perfPath.radius(sF05) * cosA * side);
+        const dirOpen = op.f.right.clone().multiplyScalar(cosA * side).addScaledVector(op.f.up, Math.sin(THREE.MathUtils.degToRad(lid05.angleDeg)));
+        const openPos = op.c.clone().addScaledVector(dirOpen, op.r + lidSz * 1.5).addScaledVector(op.f.right, (K - 1) * op.r * cosA * side);
+        lidItems.push({ u, o, basis: new THREE.Matrix4().makeBasis(b.X, b.Y, b.Z), s: new THREE.Vector3(lidSz, lidSz, lidSz * lid05.stretch), openPos, openScale: 1 });
       }
     }
     const farRings = new THREE.InstancedMesh(bandGeometry({ ...band05, segments: 48 }), gold05('ring05v', true), ringItems.length);
@@ -439,6 +445,7 @@ export function buildEnvironment(course: Course): Environment {
     glow.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(fr0.right, fr0.up, fr0.tan.clone().negate()));
     glow.position.copy(ft.point(zEnd, new THREE.Vector3()));
     glow.scale.setScalar(perfPath.radius(sF05) * ft.kOf(zEnd) * 1.35);
+    glow.scale.x *= K; // wave 9: covers the oval end of the far section (else the 06 hall shows through)
     // wave 9: the coin trail continues along the far core into the light (visual only, far05.ts farCoins05)
     const farCoins = farCoins05(ft, farLay, level);
     const parts = [farWall, farRiver, farRings, farLids, glow, farCoins.mesh];

@@ -394,7 +394,7 @@ export function buildWallLids(
      * copper-gold half-disc lid standing out of the wall — flat underside, rounded edges, a straight
      * polished rim band and a flat top, like the ref's wall-mounted nozzle lids)
      */
-    shape?: 'hood' | 'dome' | 'slab';
+    shape?: 'hood' | 'dome' | 'slab' | 'puck';
     /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */
     oval?: (s: number) => number;
   } = {},
@@ -417,15 +417,22 @@ export function buildWallLids(
       tubeCenterAt(path, s, c);
       dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
       const sz = size * Math.min(1.4, r / 7.6);
+      // oval wall (wave 9): the lid sits on the ellipse point (K·r·cos a, r·sin a) and is oriented to the ellipse's
+      // normal (angle atan2(sin a, cos a / K)), so a puck lies flat on the stretched wall
+      const ov = opts.oval ? opts.oval(s) : 1;
+      const angN = opts.oval ? Math.atan2(Math.sin(ang), Math.cos(ang) / ov) : ang;
+      const tiltI = opts.oval ? angN + (tilt - ang) : tilt;
       // in the cross-section: +X points inward (radially, then drooped toward the stream), +Y is the
       // hood's top normal, +Z runs along the tube (the D's straight edge)
-      X.copy(f.right).multiplyScalar(-Math.cos(tilt) * side).addScaledVector(f.up, -Math.sin(tilt)).normalize();
-      Y.copy(f.right).multiplyScalar(-Math.sin(tilt) * side).addScaledVector(f.up, Math.cos(tilt)).normalize();
+      X.copy(f.right).multiplyScalar(-Math.cos(tiltI) * side).addScaledVector(f.up, -Math.sin(tiltI)).normalize();
+      Y.copy(f.right).multiplyScalar(-Math.sin(tiltI) * side).addScaledVector(f.up, Math.cos(tiltI)).normalize();
       Z.crossVectors(X, Y).normalize();
       basis.makeBasis(X, Y, Z);
       q.setFromRotationMatrix(basis);
-      p.copy(c).addScaledVector(dir, r - sz * (opts.sink ?? 0.12));
-      if (opts.oval) p.addScaledVector(f.right, (opts.oval(s) - 1) * r * Math.cos(ang) * side);
+      if (opts.oval) {
+        p.copy(c).addScaledVector(f.right, Math.cos(ang) * side * r * ov).addScaledVector(f.up, Math.sin(ang) * r);
+        p.addScaledVector(f.right, -Math.cos(angN) * side * sz * (opts.sink ?? 0.12)).addScaledVector(f.up, -Math.sin(angN) * sz * (opts.sink ?? 0.12));
+      } else p.copy(c).addScaledVector(dir, r - sz * (opts.sink ?? 0.12));
       if (opts.skip?.(s, p.clone().addScaledVector(X, sz * 0.5), sz)) continue;
       m.compose(p, q, new THREE.Vector3(sz, sz, sz * (opts.stretch ?? 1.25)));
       mesh.setMatrixAt(k++, m);
@@ -437,8 +444,21 @@ export function buildWallLids(
   return mesh;
 }
 
-/** Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness. */
-export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segments?: number): THREE.BufferGeometry {
+/**
+ * Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness.
+ * 'puck' (wave 9, ref 05): a FULL round half-dome puck lying on the wall — local Y is its axis (the wall's
+ * inward normal, droopDeg 90 in buildWallLids), the base (y = 0) sits on the wall and a short skirt runs into it;
+ * a bulging rounded rim band, a rounded shoulder and a shallow dome (top highlight). h = dome height / radius.
+ */
+export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab' | 'puck', h: number, segments?: number): THREE.BufferGeometry {
+  if (shape === 'puck') {
+    const prof: [number, number][] = [
+      [0, -0.3 * h], [0.97, -0.3 * h], [0.985, -0.04 * h], [1.0, 0.0], [1.025, 0.1 * h], [1.04, 0.24 * h], [1.035, 0.38 * h],
+      [1.015, 0.5 * h], [0.975, 0.6 * h], [0.92, 0.68 * h], [0.84, 0.76 * h], [0.72, 0.85 * h], [0.56, 0.93 * h],
+      [0.38, 0.98 * h], [0.19, 1.01 * h], [0, 1.02 * h],
+    ];
+    return new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), segments ?? 40);
+  }
   // bottom → top so the lathe normals face outward
   const prof: [number, number][] = shape === 'dome'
     ? [
@@ -505,7 +525,16 @@ export class ForcedTunnel {
    * draws the far bays longer than the near ones (ring radii 288,192,122,85,66,54,45 px): one ring per
    * knot reproduces that while every bay keeps its slot rows and lid pair. Without knots Z = u.
    */
-  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3) {
+  /**
+   * wave 9 (05 oval, environment OVAL05): lateral stretch of the cross-section (the near 05 walls/rings are ovals
+   * K wider than tall) and the level bank floor (wall points below `floorY`, measured along U from the centre line,
+   * are lifted onto it), so the far section continues the near one at the seam
+   */
+  readonly aspect: number;
+  readonly floorY: number | undefined;
+  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number } = {}) {
+    this.aspect = shape.aspect ?? 1;
+    this.floorY = shape.floorY;
     const f = path.frame(sF);
     this.c0 = tubeCenterAt(path, sF);
     // `axis`: direction of the straight run the camera looks down (the path's tangent at sF may already
@@ -588,8 +617,14 @@ export class ForcedTunnel {
       const rOpen = this.path.radius(sReal) * 1.1 + 0.4;
       for (let j = 0; j <= radial; j++) {
         const th = -1.5 * Math.PI + (j / radial) * Math.PI * 2;
-        d.copy(this.Rt).multiplyScalar(Math.cos(th)).addScaledVector(this.U, Math.sin(th));
-        o.copy(d).multiplyScalar(r0);
+        const K = this.aspect;
+        o.copy(this.Rt).multiplyScalar(Math.cos(th) * K * r0).addScaledVector(this.U, Math.sin(th) * r0);
+        // ellipse normal; the lifted bank floor faces down (outward), as the near 05 walls (buildTubeGeometry floor)
+        d.copy(this.Rt).multiplyScalar(Math.cos(th) / K).addScaledVector(this.U, Math.sin(th)).normalize();
+        if (this.floorY !== undefined && Math.sin(th) * r0 < this.floorY) {
+          o.addScaledVector(this.U, this.floorY - Math.sin(th) * r0);
+          d.copy(this.U).negate();
+        }
         this.point(Z, o, p);
         const k = i * (radial + 1) + j;
         p.toArray(pos, k * 3);
@@ -598,7 +633,7 @@ export class ForcedTunnel {
         this.T.toArray(ax, k * 3); this.U.toArray(au, k * 3);
         ext[k] = Z - z;
         // open: just outside the real (flaring) tube wall at the same depth
-        o.copy(fr.right).multiplyScalar(Math.cos(th)).addScaledVector(fr.up, Math.sin(th)).multiplyScalar(rOpen).add(cr);
+        o.copy(fr.right).multiplyScalar(Math.cos(th) * K).addScaledVector(fr.up, Math.sin(th)).multiplyScalar(rOpen).add(cr);
         o.toArray(opn, k * 3);
       }
     }
@@ -635,7 +670,7 @@ export class ForcedTunnel {
     const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);
     const ext = new Float32Array(n), opn = new Float32Array(n * 3);
     const o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
-    const w = Math.sqrt(Math.max(0, this.R * this.R - level * level)) * 0.995 * widthFrac;
+    const w = Math.sqrt(Math.max(0, this.R * this.R - level * level)) * 0.995 * widthFrac * this.aspect;
     for (let i = 0; i < rows; i++) {
       const t = i / steps;
       const Dv = 1 / (1 / this.D0 - t * (1 / this.D0 - 1 / (this.D0 + this.zEnd)));

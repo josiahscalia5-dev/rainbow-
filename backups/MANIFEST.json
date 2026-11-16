@@ -823,8 +823,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1177,
-   "sha256": "e72a79ff37d2488101448ab7bcf01ec2cb2161f9b2e75506109b7624b8f42a3e"
+   "bytes": 1176,
+   "sha256": "48b841afcc087a8c0defebe9b10adcd34bfff19c78b68117210336b15b0c6548"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -943,8 +943,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 11649,
-   "sha256": "5bc02ed0395df2f44d174898dfb2a211d214a696c2a84d7a1c3bfa43f081d1e6"
+   "bytes": 12604,
+   "sha256": "2af49c05cdc43e9ce243a1a0b20a9c888b387f25ab515e95b526b66c173a033e"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -4213,8 +4213,8 @@
   },
   {
    "path": "qa/pilot05/wave9/foam/NOTES.md",
-   "bytes": 4031,
-   "sha256": "8cc696ac82be21f60d96357da59a28a1be276ae7c35a67201e58468a93b4f1d2"
+   "bytes": 7176,
+   "sha256": "81dc0ea3b316a9d13429cfe42e53c36a44ec6bc08a8a3d9f53ea2fdc8d9ff193"
   },
   {
    "path": "qa/pilot05/wave9/foam/it01/05.png",
@@ -4367,6 +4367,216 @@
    "sha256": "0debb5bf32431f4e5f7ef9df91bd56867d84c884383ae638416e9db980196198"
   },
   {
+   "path": "qa/pilot05/wave9/foam/it03/05.png",
+   "bytes": 1674609,
+   "sha256": "f4acece3ae03127aea5f8d0a9e14b60f8968b8cff5d631555ad5082cde3816ea"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/05_highlight_NOW.png",
+   "bytes": 1793936,
+   "sha256": "2f1835df9cc9a6e417c369ce07aa32769fa04befbbb80282c82ad6250d1cb750"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/05_highlight_PREV.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/05_overlay_NOW.png",
+   "bytes": 2228660,
+   "sha256": "a92841d4a47822370610347669bee94ebae16f479c29b2c6bc8f98334cdf47d6"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/05_overlay_PREV.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/05_side_by_side.png",
+   "bytes": 5631332,
+   "sha256": "0418d53f916c594108e647d007892f29ec866228bbb8f3a61a73bfde4f75d5ae"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/crop_leftnear.png",
+   "bytes": 776634,
+   "sha256": "fea01893059962ee4cc13d85d9f35d51ba1434eeb0eddceea1e1e354a719ce8e"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/crop_leftrim.png",
+   "bytes": 809176,
+   "sha256": "17aab35161a2b2ed29a2633027d14b103f3b011a92f07de6d0fc173a7bea2548"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/crop_rightnear.png",
+   "bytes": 612523,
+   "sha256": "7db9a3186ebf4d4651d82ccea2c95c41cc48ddfd9baa18d928a670c8fb6fde53"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/crop_rightrim.png",
+   "bytes": 1089205,
+   "sha256": "cd5fdf6902f124f3cbefc85b8a8efcb6945990a60723d4e37a6f79a1e6454084"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/crop_splash.png",
+   "bytes": 935884,
+   "sha256": "000a0252127338e4195152da890bb3f04f9c1fd528a3982fa34fe83748c6390b"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/gain_vs_it02.png",
+   "bytes": 143776,
+   "sha256": "7d97c759ca1af481958e149c83e2fe53f492f31054a53455931077119e954efc"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/metrics.json",
+   "bytes": 450,
+   "sha256": "909e60cb041547063bf150d4248f8491f5b4bccec857f21755333c1d6c0972a2"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it03/metrics.md",
+   "bytes": 436,
+   "sha256": "ba266425357e3b4359b960f8bf7e97d2797a35e291e98f4162c03531e0dbcd3e"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/05.png",
+   "bytes": 1692603,
+   "sha256": "417dde51e4663c90146e8a8e54bac16c1ba89808ab2c0942b3fd466a90d2d75a"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/05_highlight_NOW.png",
+   "bytes": 1815841,
+   "sha256": "29ee198c74f155e9350797188a991374cbcb12dfdf458c9e0f8dd459451ff805"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/05_highlight_PREV.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/05_overlay_NOW.png",
+   "bytes": 2245817,
+   "sha256": "270633d9013c5809ed638a9fb0f14c0afb33506c3f8a7cbb154f059eb66ccef5"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/05_overlay_PREV.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/05_side_by_side.png",
+   "bytes": 5680322,
+   "sha256": "a7a2fc552cd0ce5cb4470d07db9f81d5fecbb21954fe5008fe3883bd3dd6bfcb"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/crop_leftnear.png",
+   "bytes": 800533,
+   "sha256": "000b369f6e3c92edbebabf8529a4cb47b452513927fa145ccffe402c39ba1ea2"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/crop_leftrim.png",
+   "bytes": 824442,
+   "sha256": "55fde93fe4e2fe4a47d2982391852e5c79d580144883856ab7979ca4d2bbaa13"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/crop_rightnear.png",
+   "bytes": 624747,
+   "sha256": "7f8f997fd33f13e21ddbb14c1bef90c6b0e75159d100672f4f68fafe502ddc0f"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/crop_rightrim.png",
+   "bytes": 1109825,
+   "sha256": "9ccb1fa3d5137bbfc390a2bcd5b762ddab2835346f96f0e83217f1265e13de33"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/crop_splash.png",
+   "bytes": 937614,
+   "sha256": "ed435b1bbc3e29d29189b41b3a2480e80f622ce24f9b340752adb286ef80bb2a"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/gain_vs_it03.png",
+   "bytes": 99018,
+   "sha256": "bd4331f4ea95224bbb19695947352fb9887a47aa75060384f1e99d8df5f5b02f"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/metrics.json",
+   "bytes": 451,
+   "sha256": "7d153e03fc1bff8362d7a9292eb673bed2cc150cb97a2f16e3feb07e95d65774"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it04/metrics.md",
+   "bytes": 437,
+   "sha256": "367f87b35b2f0200d0f5d6d2cc8890353e9e3d808137a5182cb2c8b81469581a"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/05.png",
+   "bytes": 1705977,
+   "sha256": "ecd7e3c44bf5adeaf9674497cc39b3854203e71db3c4bfe6a5b17467df77d442"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/05_highlight_NOW.png",
+   "bytes": 1826952,
+   "sha256": "78e2080f2c44b6227e81def14d6bdb6ecca6384627c9e02cb71aef914f53900d"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/05_highlight_PREV.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/05_overlay_NOW.png",
+   "bytes": 2248492,
+   "sha256": "506a9b1576b2ff9d1bf1af13c056af8443c28766bfddc7b701e17963bd976b27"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/05_overlay_PREV.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/05_side_by_side.png",
+   "bytes": 5689750,
+   "sha256": "f98ccb3ea41b3d208ecee53627e5bd34af992d3c8d5fca1eb597be6edcc53431"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/crop_leftnear.png",
+   "bytes": 804476,
+   "sha256": "fffbe5b6c55dd5b79ecb5be76b651cb70364529a2636652affc71845e5a327eb"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/crop_leftrim.png",
+   "bytes": 825266,
+   "sha256": "49749a95ceca28f378dda033b6e77adb7a6e121d84f07f99a1846e9a4e5bd60b"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/crop_rightnear.png",
+   "bytes": 628930,
+   "sha256": "efc1a97f8b80235e4a9daa1d0b550e6399578cf8dd3035ba817d58d470d3bb9e"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/crop_rightrim.png",
+   "bytes": 1110005,
+   "sha256": "ccfbc2804756702815034a5761755d7c0507971890fb5dc3219a6d72eaaad236"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/crop_splash.png",
+   "bytes": 940119,
+   "sha256": "e4cf47b24d18746fdb5bf555b9d8927f157991192f8d11ffb2547edf0ce46573"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/gain_vs_it04.png",
+   "bytes": 53578,
+   "sha256": "f8ef81ade2d9247c40125b4814cf30350f225059f986e96dace3ba15895d17d8"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/metrics.json",
+   "bytes": 451,
+   "sha256": "edd4f60d94ed92bb6e9ee87765b74bb6abaad24f4dc8b78121b0c18745a4ab87"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it05/metrics.md",
+   "bytes": 437,
+   "sha256": "c93881badc8884c2d217d9dbef9afd5bcdfafe5475955b7e4d7ce8170bd231f6"
+  },
+  {
    "path": "qa/pilot05/wave9/foam/pre/crop_leftnear.png",
    "bytes": 810881,
    "sha256": "ea6666eb701debdefbdda69c5b70bd9b07e654b2d52dfcd74f21d5e76707017d"
@@ -4398,8 +4608,8 @@
   },
   {
    "path": "qa/pilot05/wave9/foam/tools/clumptone.py",
-   "bytes": 1218,
-   "sha256": "c8c90f235fdbd268b3e888dc131fe3786f2a5c92148b61d7e11f7eeed431d90f"
+   "bytes": 1263,
+   "sha256": "405dee747c929dcfb8a6c3f25d464f62f481b6f233213451c86542bd163dec4e"
   },
   {
    "path": "qa/pilot05/wave9/foam/tools/crops.py",
@@ -4420,6 +4630,46 @@
    "path": "qa/pilot05/wave9/path-camera/NOTES.md",
    "bytes": 2758,
    "sha256": "daec78f695430fbf11bb3ec463cc32128bd7af134cb2fdd3c8385c9684ad99b0"
+  },
+  {
+   "path": "qa/pilot05/wave9/path-camera/it01/05.png",
+   "bytes": 1697287,
+   "sha256": "8f8fd02c00ceeb8b849f29326163b7041976e45013d5bbf2f8311745fdc307ef"
+  },
+  {
+   "path": "qa/pilot05/wave9/path-camera/it01/05_highlight_NOW.png",
+   "bytes": 1819457,
+   "sha256": "6ea540c1559d14f528e27b6d7538f9d7bfe51ba313028596a540f8db86874b2d"
+  },
+  {
+   "path": "qa/pilot05/wave9/path-camera/it01/05_highlight_PREV.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave9/path-camera/it01/05_overlay_NOW.png",
+   "bytes": 2246772,
+   "sha256": "a8cc45dd4354bca03d9fd3953301a544cf2e792db4fd4b896bf9ff26700d4c12"
+  },
+  {
+   "path": "qa/pilot05/wave9/path-camera/it01/05_overlay_PREV.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave9/path-camera/it01/05_side_by_side.png",
+   "bytes": 5684658,
+   "sha256": "fa53de3e9768a8cd34a3c8ca38df40a99ffd71263b48f21b2ce3b3519a2c7fe1"
+  },
+  {
+   "path": "qa/pilot05/wave9/path-camera/it01/metrics.json",
+   "bytes": 458,
+   "sha256": "532a246d4255e0dbb572c61539e41712c27f9775f5aa2dada6871fe83f7d1e53"
+  },
+  {
+   "path": "qa/pilot05/wave9/path-camera/it01/metrics.md",
+   "bytes": 437,
+   "sha256": "e60a73daab53051cffb58149a6c49e128954e854f9faeaf9fe4f301af55876ec"
   },
   {
    "path": "qa/pilot05/wave9/recovered/05.png",
@@ -4508,8 +4758,8 @@
   },
   {
    "path": "qa/pilot05/wave9/water/NOTES.md",
-   "bytes": 3528,
-   "sha256": "e4037f02ebde1139d3f3f80b2b6bfec955a70edc5d31962acaff3e398b7b76e4"
+   "bytes": 5089,
+   "sha256": "06a97bb37137fe4d57fca51c6326b3c800a5598bf0196f171a371c8aadada698"
   },
   {
    "path": "qa/pilot05/wave9/water/it01/05.png",
@@ -4550,6 +4800,46 @@
    "path": "qa/pilot05/wave9/water/it01/metrics.md",
    "bytes": 437,
    "sha256": "fa40002c526068b3f9984275148147bd21eefb519401660880b4cd6eafb6d18a"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it02/05.png",
+   "bytes": 1703459,
+   "sha256": "8d7d597a4a35f9589031871608b6e90126ac70c19c98d6e102515531697d64c5"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it02/05_highlight_NOW.png",
+   "bytes": 1825084,
+   "sha256": "7b72f6a43cc75268b839f9a72016b4333ac47c66ab3d0e5202b204e2bc5d3cc9"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it02/05_highlight_PREV.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it02/05_overlay_NOW.png",
+   "bytes": 2247765,
+   "sha256": "16b80d83ef892a6e2407bd8bd92ded73faa606a053a55d109692f0b3bbd785f0"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it02/05_overlay_PREV.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it02/05_side_by_side.png",
+   "bytes": 5688040,
+   "sha256": "6f46bf5876f26ca6f22d184af9bb1d0f32e49aa5ab4d7b51fb60ff8da334fdc1"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it02/metrics.json",
+   "bytes": 450,
+   "sha256": "95b5158aaed05c60da7778c4f89846e3667c86c8d1098ed8645574b0c363368d"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it02/metrics.md",
+   "bytes": 435,
+   "sha256": "4e0042aeeeeac29a899a7b655dddbe46b266651ae32d00d58f623c5a0c62f6a0"
   },
   {
    "path": "qa/report_metrics.json",
@@ -5363,13 +5653,13 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 58663,
-   "sha256": "6307fdf9c72dc6666343837eacd415c7ad198ca8ef43ac809686d440c4207eea"
+   "bytes": 59003,
+   "sha256": "2dad99b9249d675a3daaf5d61836207a9cf0e3c7f9e1fa73dcad4b73e270fe14"
   },
   {
    "path": "src/vfx/glsl.ts",
-   "bytes": 10234,
-   "sha256": "ec5285b07e39f22c99fdc7582a81cd06de67385b5f34dbc7b168184113c8467d"
+   "bytes": 10397,
+   "sha256": "d17b0cd14737a18bb93dc3a5f3f9f7d14390bb957cc8ae8d36f4c8ccf40f8dad"
   },
   {
    "path": "src/vfx/index.ts",
@@ -5383,8 +5673,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 21220,
-   "sha256": "972ac926be31566821af99584794b0a57de7bd5ce6c23d324f9c90a55d911c0c"
+   "bytes": 21774,
+   "sha256": "474e194eed26d052557de0f50c4ab1470ff9c0805046b13fc3ca644c4cbf0457"
   },
   {
    "path": "src/vfx/spray.ts",
@@ -5393,8 +5683,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 51426,
-   "sha256": "b827bf6311086091cf23d999e754490a4866de9a98308e5eb970988f2f4aa91d"
+   "bytes": 52857,
+   "sha256": "36c7cab96e1a2ba4b387b27f6781e4ae68e711981bf317ced69321677b95b1b3"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -5408,13 +5698,13 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 51887,
-   "sha256": "bc0b83e82c33779026d2cc127d60fde08f0d4cc7ce1afc75884a4f93b3e135b0"
+   "bytes": 52598,
+   "sha256": "121ea3440248056746bd889b0968dbf56fdd1aa0ee70985db7fd19e70fe4755f"
   },
   {
    "path": "src/world/far05.ts",
-   "bytes": 15520,
-   "sha256": "ec7690129b90d242e50bff2a2cf1cab40f0ac7cbdae95eb6f4dc0a6cbadd64fc"
+   "bytes": 15794,
+   "sha256": "0f6fad1f2ddc025576c3010a351961d82d6e7581073e40617a312541dec98a3a"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -5433,8 +5723,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 40974,
-   "sha256": "9779e56cebbb1b02f06bf3eb0e02183ec7a2baef2369f35c87fbde441c4f6fa5"
+   "bytes": 43365,
+   "sha256": "8c19700ed1fdc1ea4fec20d4f0475a36b9f414cf15fe99e52fff820e7e2b3401"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

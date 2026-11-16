@@ -40,3 +40,19 @@ fanning thin rays, small stars, flat white lens pills, straight hard-edged pink 
 
 ## Log
 (updated after every capture)
+
+NOTE: other owners edit in parallel (it01 already shows new pink wall panels → hue_corr 0.875 → 0.687, tunnel/HUD
+bands moved). Whole-frame numbers are confounded; my judge = m05 "WATER mad" (|ΔRGB| over pixels the REF marks as
+river water, Benny box excluded, 1/2 scale; baseline mid 45.9 / near 35.9) + tone ladders + crops.
+
+### it01 — 0 console errors, 89 calls, 567,799 tris (lab check high+low compiled first)
+Changes: `speedStreaks` → `satinStreaks` (iso-line of each octave drawn as a soft Gaussian glow σ 0.7–2.6 px + core,
+own dash noise, finer octaves weigh more); cyan/pink coloured through ref-solved tone ladders (K5* consts) + glow →
+electric cyan #1DD8FF / pink #F990FD + near-white cores; lavender seam removed; near: streaks ×0.15, body from broad
+cross-flow swells (near ladder), `boltFlare` (glsl.ts) replaces the lens pills, small stars ×0.3; sweeps curved
+(+0.09·back²), wider, start at back 0.85–1.6, fade toward the ring.
+Measured: WATER mad mid 45.9 → 48.2, near 35.9 → 39.0 (WORSE); report mad 51.6 / hue 0.687 (walls) / edge 0.202,
+mid 47.7, near 48.4. Near lum p5/p50/p95/std 131.7/141/196.3/20.9 (flatter); cyan mid ladder #1BBAFD…#8CE6FF (lighter
+than baseline); pink p50 lum 195 (ref 175); pink behind Benny 4.04 → 0.55 % (ref 1.38). Seen: no visible streaks — the
+value-noise iso-lines have wide flat plateaus near 0.5, so the "glow" became a uniform light wash; bolts are flat white
+"bat" shapes with weak halos. Kept: sweep geometry (curved, soft, clean contact). Next: exact-width slot streaks.

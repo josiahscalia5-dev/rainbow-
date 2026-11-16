@@ -1176,3 +1176,300 @@ While path-camera picks that up, I'll work on the lid shape in the oval geometry
 > ↩︎ result: ok [ '-2.0', '12.0', '26.0', '40.0', '54.0' ] [ '7.60/3.35', '7.60/3.38', '7.60/3.42', '7.60/3.62', '7.60/3.73' ]
 > (972, 552)
 
+### 🤖 Claude — 2026-11-16T02:33:12.371Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidgrid.png"}`
+
+### 🧑 User — 2026-11-16T02:33:12.416Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:33:54.585Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; timeout 300 npx vite-node $S/tools/lidproj.ts '[{\"K\":1.7,\"angleDeg\":30,\"droopDeg\":-52,\"stretch\":2.2,\"off\":5.6,\"size\":2.2},{\"K\":1.7,\"angleDeg\":30,\"droopDeg\":-64,\"stretch\":2.2,\"off\":5.6,\"size\":2.2},{\"K\":1.7,\"angleDeg\":34,\"droopDeg\":-60,\"stretch\":2.6,\"off\":6.4,\"size\":2.2,\"thickness\":0.5},{\"K\":1.7,\"angleDeg\":26,\"droopDeg\":-56,\"stretch\":2.6,\"off\":6.4,\"size\":2.4,\"thickness\":0.5},{\"K\":1.7,\"angleDeg\":30,\"droopDeg\":-75,\"s …[+202 chars]`
+
+### 🧑 User — 2026-11-16T02:33:56.497Z
+
+> ↩︎ result: ok [ '-2.0', '12.0', '26.0', '40.0', '54.0' ] [ '7.60/3.35', '7.60/3.38', '7.60/3.42', '7.60/3.62', '7.60/3.73' ]
+> (972, 828)
+
+### 🤖 Claude — 2026-11-16T02:33:58.518Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidgrid.png"}`
+
+### 🧑 User — 2026-11-16T02:33:58.561Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:34:58.717Z
+
+Let me test the coordinator's description directly: a round half-dome puck sitting flush on the wall (dome facing the tunnel centre). I'll add a `puck` lid shape to my wallLidGeometry section.
+
+### 🤖 Claude — 2026-11-16T02:35:00.062Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git diff --stat src/world/tube.ts; grep -n \"shape === 'dome'\\|shape?: 'hood'\\|wallLidGeometry(shape\\|geo.translate(0, -h \\* 0.5, 0)\\|half revolution (phi\" src/world/tube.ts", "description": "Check tube.ts state and lid geometry anchors"}`
+
+### 🧑 User — 2026-11-16T02:35:00.122Z
+
+> ↩︎ result: src/world/tube.ts | 25 ++++++++++++++++++++-----
+>  1 file changed, 20 insertions(+), 5 deletions(-)
+> 397:    shape?: 'hood' | 'dome' | 'slab';
+> 441:export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segments?: number): THREE.BufferGeometry {
+> 443:  const prof: [number, number][] = shape === 'dome'
+> 464:  // half revolution (phi 0..π → local +X): the open cut face lies in the wall plane x = 0
+> 466:  geo.translate(0, -h * 0.5, 0);
+
+### 🤖 Claude — 2026-11-16T02:35:01.883Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "offset": 436, "limit": 36}`
+
+### 🧑 User — 2026-11-16T02:35:01.904Z
+
+> ↩︎ result: 436	  mesh.frustumCulled = false;
+> 437	  return mesh;
+> 438	}
+> 439	
+> 440	/** Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness. */
+> 441	export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segments?: number): THREE.BufferGeometry {
+> 442	  // bottom → top so the lathe normals face outward
+> 443	  const prof: [number, number][] = shape === 'dome'
+> 444	    ? [
+> 445	      [0, 0.06], [0.62, 0.05], [0.7, 0.0], [0.86, -0.04], [1.04, -0.05], [1.08, 0.0], [1.0, 0.06],
+> 446	      [0.98, h * 0.55], [0.96, h * 0.82], [0.88, h * 1.02], [0.72, h * 1.18], [0.48, h * 1.3], [0.24, h * 1.36], [0, h * 1.38],
+> 447	    ]
+> 448	    : shape === 'slab'
+> 449	      ? [
+> 450	        // flat underside with a shallow recess and an inner ring, rounded lower edge, straight rim band,
+> 451	        // rounded upper edge, flat (very slightly crowned) top
+> 452	        // (edge rounding scales with the thickness so thin pucks stay valid)
+> 453	        // wave 8: ROUNDED puck — the rim band bulges (barrel, radius 0.95 → 1.04 → 0.95) between two rounded
+> 454	        // edges, so its smooth normal sweeps up/down across the band and the shading reads a glossy convex
+> 455	        // c …[+1165 chars]
+
+### 🤖 Claude — 2026-11-16T02:35:26.002Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "/** Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness. */\nexport function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segments?: number): THREE.BufferGeometry {\n  // bottom → top so the lathe normals face outward\n  const prof: [number, number][] = shape === 'dome'", "new_string": "/**\n * Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness.\n * 'puck' (wave 9, ref 05): a FULL round half-dome puck lying on the  …[+989 chars]`
+
+### 🧑 User — 2026-11-16T02:35:26.044Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:35:27.002Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "    shape?: 'hood' | 'dome' | 'slab';", "new_string": "    shape?: 'hood' | 'dome' | 'slab' | 'puck';"}`
+
+### 🧑 User — 2026-11-16T02:35:27.055Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:35:27.656Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/tube.ts", "offset": 400, "limit": 40}`
+
+### 🧑 User — 2026-11-16T02:35:27.668Z
+
+> ↩︎ result: 400	  } = {},
+> 401	): THREE.InstancedMesh {
+> 402	  const geo = wallLidGeometry(opts.shape ?? 'hood', opts.thickness ?? 0.42);
+> 403	  const list: number[] = opts.positions ?? [];
+> 404	  if (!opts.positions) for (let s = s0; s <= s1 + 1e-6; s += spacing) list.push(s);
+> 405	  const n = Math.max(1, list.length) * 2;
+> 406	  const mesh = new THREE.InstancedMesh(geo, material, n);
+> 407	  const size = opts.size ?? 1.6;
+> 408	  const ang = THREE.MathUtils.degToRad(opts.angleDeg ?? 18);
+> 409	  const tilt = ang + THREE.MathUtils.degToRad(opts.droopDeg ?? 20);
+> 410	  const c = new THREE.Vector3(), dir = new THREE.Vector3(), X = new THREE.Vector3(), Y = new THREE.Vector3(), Z = new THREE.Vector3();
+> 411	  const basis = new THREE.Matrix4(), m = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3();
+> 412	  let k = 0;
+> 413	  for (const s of list) {
+> 414	    for (const side of [1, -1]) {
+> 415	      const f = path.frame(s);
+> 416	      const r = path.radius(s);
+> 417	      tubeCenterAt(path, s, c);
+> 418	      dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
+> 419	      const sz = size * Math.min(1.4, r / 7.6);
+> 420	      // in the cross-section: +X  …[+1025 chars]
+
+### 🤖 Claude — 2026-11-16T02:35:38.887Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "      const sz = size * Math.min(1.4, r / 7.6);\n      // in the cross-section: +X points inward (radially, then drooped toward the stream), +Y is the\n      // hood's top normal, +Z runs along the tube (the D's straight edge)\n      X.copy(f.right).multiplyScalar(-Math.cos(tilt) * side).addScaledVector(f.up, -Math.sin(tilt)).normalize();\n      Y.copy(f.right).multiplyScalar(-Math.sin(tilt) * side).addScaledVector(f.up, Math.cos(tilt)).normalize();\n      Z.crossVectors(X, Y).normalize();\n      basis. …[+1589 chars]`
+
+### 🧑 User — 2026-11-16T02:35:38.937Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:35:46.064Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; timeout 300 npx vite-node $S/tools/lidproj.ts '[{\"K\":1.7,\"shape\":\"puck\",\"angleDeg\":24,\"droopDeg\":90,\"size\":2.4,\"thickness\":0.45,\"sink\":0.04,\"stretch\":1.0,\"off\":3.0},{\"K\":1.7,\"shape\":\"puck\",\"angleDeg\":24,\"droopDeg\":90,\"size\":2.4,\"thickness\":0.45,\"sink\":0.04,\"stretch\":1.6,\"off\":4.4},{\"K\":1.7,\"shape\":\"puck\",\"angleDeg\":30,\"droopDeg\":90,\"size\":2.6,\"thickness\":0.5,\"sink\":0.04,\"stretch\":1.5,\"off\":4.4},{\"K\":1.7,\"shap …[+257 chars]`
+
+### 🧑 User — 2026-11-16T02:35:49.010Z
+
+> ↩︎ result: ok [ '-2.0', '12.0', '26.0', '40.0', '54.0' ] [ '7.60/3.35', '7.60/3.38', '7.60/3.42', '7.60/3.62', '7.60/3.73' ]
+> (972, 828)
+
+### 🤖 Claude — 2026-11-16T02:35:50.938Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidgrid.png"}`
+
+### 🧑 User — 2026-11-16T02:35:50.972Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:36:04.554Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 -I -c \"\nfrom PIL import Image\nS='$S/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open(S+'p01_oval.png').convert('RGB')\nfor nm,box in [('L',(0,280,330,500)),('R',(560,330,864,550))]:\n  w=Image.new('RGB',((box[2]-box[0])*4+10,(box[3]-box[1])*2))\n  w.paste(r.crop(box).resize(((box[2]-box[0])*2,(box[3]-box[1])*2)),(0,0)); w.paste(b.crop(box).resize(((box[2]-box[0])*2,(box[3]-box[1])*2)),((box[2]-box[0])*2+10,0)); w.save(S+' …[+72 chars]`
+
+### 🧑 User — 2026-11-16T02:36:05.076Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:36:07.323Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidL01.png"}`
+
+### 🧑 User — 2026-11-16T02:36:07.354Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:36:07.947Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidR01.png"}`
+
+### 🧑 User — 2026-11-16T02:36:07.983Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:36:34.889Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; timeout 300 npx vite-node $S/tools/lidproj.ts '[{\"K\":1.7,\"angleDeg\":24,\"droopDeg\":-50,\"size\":2.6,\"thickness\":0.5,\"sink\":0.25,\"stretch\":1.6,\"off\":4.6},{\"K\":1.7,\"angleDeg\":30,\"droopDeg\":-60,\"size\":2.6,\"thickness\":0.5,\"sink\":0.25,\"stretch\":1.6,\"off\":4.6},{\"K\":1.7,\"angleDeg\":20,\"droopDeg\":-40,\"size\":2.8,\"thickness\":0.5,\"sink\":0.25,\"stretch\":1.6,\"off\":4.9},{\"K\":1.7,\"angleDeg\":26,\"droopDeg\":-62,\"size\":3.0,\"thickness\":0. …[+305 chars]`
+
+### 🧑 User — 2026-11-16T02:36:37.015Z
+
+> ↩︎ result: ok [ '-2.0', '12.0', '26.0', '40.0', '54.0' ] [ '7.60/3.35', '7.60/3.38', '7.60/3.42', '7.60/3.62', '7.60/3.73' ]
+> (972, 828)
+
+### 🤖 Claude — 2026-11-16T02:36:39.262Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidgrid.png"}`
+
+### 🧑 User — 2026-11-16T02:36:39.301Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:37:03.346Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 -I -c \"\nfrom PIL import Image\nS='$S/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open(S+'p01_oval.png').convert('RGB')\nbox=(250,170,650,300)\nw=Image.new('RGB',(800,(box[3]-box[1])*4+10))\nw.paste(r.crop(box).resize((800,(box[3]-box[1])*2)),(0,0)); w.paste(b.crop(box).resize((800,(box[3]-box[1])*2)),(0,(box[3]-box[1])*2+10)); w.save(S+'ring01.png')\n\"", "description": "Zoom ring #1 top in ref vs probe"}`
+
+### 🧑 User — 2026-11-16T02:37:03.628Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:37:05.919Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/ring01.png"}`
+
+### 🧑 User — 2026-11-16T02:37:05.946Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:37:13.489Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n 'export function withBandShading' -A100 src/world/materials.ts | head -140", "description": "Read withBandShading shader code"}`
+
+### 🧑 User — 2026-11-16T02:37:13.527Z
+
+> ↩︎ result: 230:export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+> 231-  const w = (b.width + b.groove + b.lipWidth) / 2;
+> 232-  const uniforms = {
+> 233-    uBandG: { value: new THREE.Vector4(w - b.width / 2, b.width / 2, -w + b.lipWidth / 2, b.lipWidth / 2) },
+> 234-    // ref ring #1: spot pitch ≈85 px at r 273 (≈20/turn), white core ≈12 px inside a yellow halo
+> 235-    uBandS: { value: new THREE.Vector4(...(b.spots ?? [20, 0.055, 1.6]), 0) },
+> 236-    uBandF: { value: new THREE.Vector2(...(b.fade ?? [44, 110])) },
+> 237-    uBcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
+> 238-    uBcRose: { value: lin3(0.5899, 0.2114, 0.2222) }, // (215,95,100)
+> 239-    uBcOrange: { value: lin3(0.7352, 0.2871, 0.1269) }, // (240,120,40)
+> 240-    uBcCrown: { value: lin3(0.6246, 0.22, 0.199) }, // (222,98,88) rose-gold body between the spots (ref (215–230,90–100,80–95))
+> 241-    uBcPeak: { value: lin3(0.9077, 0.602, 0.3465) }, // (252,190,120) highlight line
+> 242-    uBcHalo: { value: lin3(0.9439, 0.6846, 0.2725) }, // (255,205,90) yellow halo around each spot
+> 243-    uBcGroove: { value: lin3(0.5618, 0.1695, 0.1159) }, // (214,79,44) orange-red gr …[+6180 chars]
+
+### 🤖 Claude — 2026-11-16T02:37:19.470Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 -I -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open('$S/p01_oval.png').convert('RGB')\nfor nm,im in [('REF',r),('LIVE',b)]:\n  for x in (380,520,600):\n    print(nm,x,[im.getpixel((x,y)) for y in range(184,246,3)])\n\"\n", "description": "Sample ring #1 top column colors"}`
+
+### 🧑 User — 2026-11-16T02:37:19.637Z
+
+> ↩︎ result: REF 380 [(160, 43, 184), (170, 32, 171), (75, 0, 60), (124, 11, 101), (222, 47, 212), (197, 42, 224), (199, 39, 225), (216, 46, 230), (206, 34, 168), (198, 76, 75), (236, 102, 101), (227, 94, 121), (232, 95, 89), (206, 71, 15), (241, 115, 56), (249, 131, 81), (252, 130, 89), (254, 126, 91), (250, 119, 89), (240, 135, 80), (229, 110, 68)]
+> REF 520 [(187, 23, 156), (200, 43, 156), (137, 23, 95), (207, 83, 93), (183, 62, 107), (188, 65, 86), (169, 46, 51), (165, 47, 45), (224, 94, 80), (214, 94, 96), (215, 94, 99), (215, 90, 98), (213, 100, 86), (233, 135, 96), (165, 59, 99), (174, 63, 96), (118, 23, 81), (152, 51, 189), (165, 55, 216), (155, 39, 202), (224, 94, 228)]
+> REF 600 [(147, 26, 131), (171, 29, 137), (213, 39, 163), (248, 54, 176), (79, 0, 42), (142, 11, 77), (223, 51, 159), (187, 31, 154), (183, 30, 147), (186, 30, 155), (198, 45, 153), (154, 16, 65), (210, 83, 76), (209, 78, 84), (217, 83, 92), (218, 84, 59), (220, 83, 31), (255, 114, 68), (242, 102, 69), (238, 96, 76), (229, 95, 84)]
+> LIVE 380 [(255, 211, 107), (165, 33, 133), (93, 31, 64), (154, 16, 139), (152, 12, 139), (151, 11, 141), (149, 11, 142), (202, 131, 113), (215, 146, 124), (236, 166, 138), (255, 187, 155), (255, …[+875 chars]
+
+### 🤖 Claude — 2026-11-16T02:37:28.610Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 -I -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open('$S/p01_oval.png').convert('RGB')\nfor nm,im,xs in [('REF',r,range(0,80,3)),('LIVE',b,range(30,140,4))]:\n  for y in (420,520):\n    print(nm,y,[im.getpixel((x,y)) for x in xs])\n\"\n", "description": "Sample ring #1 left side colors"}`
+
+### 🧑 User — 2026-11-16T02:37:28.768Z
+
+> ↩︎ result: REF 420 [(250, 127, 70), (249, 130, 64), (251, 142, 57), (235, 115, 5), (233, 88, 23), (249, 112, 60), (251, 113, 66), (251, 113, 66), (220, 51, 18), (247, 85, 184), (242, 50, 197), (248, 64, 196), (254, 90, 247), (240, 80, 230), (255, 201, 255), (243, 31, 193), (222, 17, 154), (218, 43, 170), (255, 242, 255), (255, 166, 246), (247, 117, 243), (252, 107, 255), (253, 79, 252), (246, 89, 230), (255, 97, 220), (231, 41, 151), (218, 57, 150)]
+> REF 520 [(228, 110, 70), (231, 110, 57), (211, 90, 17), (174, 58, 17), (192, 79, 85), (193, 81, 95), (197, 79, 95), (169, 53, 98), (178, 64, 238), (171, 57, 231), (157, 49, 230), (161, 59, 229), (160, 46, 220), (122, 28, 125), (3, 0, 9), (34, 0, 18), (187, 37, 170), (173, 47, 216), (165, 60, 215), (154, 50, 199), (149, 47, 182), (158, 44, 184), (171, 42, 186), (101, 0, 86), (45, 0, 35), (87, 5, 77), (137, 26, 154)]
+> LIVE 420 [(149, 37, 149), (198, 91, 82), (221, 116, 76), (241, 136, 81), (243, 144, 93), (243, 138, 83), (239, 125, 78), (234, 114, 87), (229, 104, 96), (226, 93, 99), (225, 89, 98), (178, 66, 100), (154, 54, 102), (154, 55, 102), (155, 55, 102), (170, 65, 106), (157, 57, 102), (157, 57, 102), (159, 59, 103), (172, 67, 107), (179, 71, 1 …[+583 chars]
+
+### 🤖 Claude — 2026-11-16T02:37:41.781Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nfor nm,p in [('REF','references/05_flow_into_the_current.png'),('LIVE','$S/p01_oval.png')]:\n  a=np.asarray(Image.open(p).convert('RGB')).astype(int)\n  band=a[190:240,:,:]\n  # brightness: min channel high = white/yellow\n  v=(band.min(-1)>200)&(band[...,0]>240)\n  col=v.sum(0)\n  xs=[x for x in range(864) if col[x]>=3]\n  # group\n  g=[];cur=[]\n  for x in xs:\n    if cur and x-cur[-1]>4: g.append(cur);cur=[] …[+148 chars]`
+
+### 🧑 User — 2026-11-16T02:37:42.062Z
+
+> ↩︎ result: REF [(36, 49), (82, 118), (262, 299), (396, 415), (481, 489), (556, 581), (662, 687), (694, 694), (762, 762), (779, 808)]
+> LIVE [(0, 36), (365, 388), (499, 511), (622, 640)]
+
+### 🤖 Claude — 2026-11-16T02:38:17.079Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n 'export function withTubeStrips' -A60 src/world/materials.ts | grep -n 'uv\\|atan\\|tubeUp\\|tubeAxis\\|azim' | head -20; grep -n 'vUv\\|uv\\.' src/world/materials.ts | head -40", "description": "Check how strips and perforation use UVs"}`
+
+### 🧑 User — 2026-11-16T02:38:17.133Z
+
+> ↩︎ result: 13:166-      : `vTubeAxis = normalize((viewMatrix * modelMatrix * vec4(tubeAxis, 0.0)).xyz);
+> 14:167-vTubeUp = normalize((viewMatrix * modelMatrix * vec4(tubeUp, 0.0)).xyz);`;
+> 18:171-${source === 'attribute' ? 'attribute vec3 tubeAxis; attribute vec3 tubeUp;' : ''}`)
+> 31:184-  float t = atan(dot(P, E2), dot(P, E1)) * uStripP.x / 6.2831853; // strip index space
+> 61:   * bottom (uv.x = 0.5), half width in uv.x, visible beyond `from` virtual units
+> 555:    normal = normalize(normal - (dHduv.x * gradU + dHduv.y * gradV) * lod);
+> 812:    vertexShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec4 uFade;
+> 814:        vUv = uv;
+> 819:    fragmentShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec3 uCore; uniform vec3 uPale; uniform vec3 uGold; uniform vec3 uWarm; uniform vec3 uRim; uniform float uOpacity;
+> 821:        float r = length(vUv - 0.5) * 2.0;
+> 872:varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB;`)
+> 873:      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvRivUv = uv; vRivLat = aRivLat; vRivA = aRivA; vRivB = aRivB;')
+> 877:varying float vRivDist; varying vec2 vRivUv; varying float vRivLat …[+147 chars]
+
+### 🤖 Claude — 2026-11-16T02:38:18.727Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 150,215p src/world/materials.ts", "description": "Read tube strips shader details"}`
+
+### 🧑 User — 2026-11-16T02:38:18.761Z
+
+> ↩︎ result: /** brightness of every other strip (default 0.7) */
+>   alt?: number;
+> }
+> 
+> export function withTubeStrips<T extends THREE.MeshStandardMaterial>(mat: T, s: TubeStrips, source: 'attribute' | 'instance', key: string): T {
+>   const uniforms = {
+>     uStripColor: { value: new THREE.Color(s.color).multiplyScalar(s.intensity) },
+>     uStripP: { value: new THREE.Vector4(s.count, s.width, 0, s.alt ?? 0.7) },
+>   };
+>   const prev = mat.onBeforeCompile;
+>   mat.onBeforeCompile = (shader, r) => {
+>     prev.call(mat, shader, r);
+>     Object.assign(shader.uniforms, uniforms);
+>     const axis = source === 'instance'
+>       ? `vTubeAxis = normalize((viewMatrix * modelMatrix * instanceMatrix * vec4(0.0, 0.0, 1.0, 0.0)).xyz);
+> vTubeUp = normalize((viewMatrix * modelMatrix * instanceMatrix * vec4(0.0, 1.0, 0.0, 0.0)).xyz);`
+>       : `vTubeAxis = normalize((viewMatrix * modelMatrix * vec4(tubeAxis, 0.0)).xyz);
+> vTubeUp = normalize((viewMatrix * modelMatrix * vec4(tubeUp, 0.0)).xyz);`;
+>     shader.vertexShader = shader.vertexShader
+>       .replace('#include <common>', `#include <common>
+> varying vec3 vTubeAxis; varying vec3 vTubeUp;
+> ${source === 'attribute' ? 'attribute vec3 tubeAxis; attribute vec3 tubeUp;' : ''}`)
+>        …[+2451 chars]
+

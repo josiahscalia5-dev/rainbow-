@@ -43,3 +43,31 @@ dark / mid / bright thirds of the clump-box foam px).
   LL +2.5, LR +5.9, Lclump +6.5 worse, splash -0.4 better). clumpcol W54/32/32/26 S28/34/32/33 (ref W25/28/28/22
   S56/38/44/41: too white, too little blue); clumptone mid F0E6F8 (ref E8D7FF), p50 231-244 (ref 221-224). splashext
   L/R 20.0/22.8 % (box now includes the V bands, like the ref's).
+* it02 (86 calls, 566,455 tris): t -0.09; holes dense on the lower VISIBLE part (q.y < 0.45); wake band starts left ds
+  -0.15 / right -0.6 (vK 1 - sm(-0.05, 0.35)): no bridge; splash ropes 20 / side, wider (0.056 -> 0.012) lacy tendrils.
+  NOTE: the river changed a lot between it01 and it02 (water-fx's concurrent waterRibbon.ts edit), so screen_report vs
+  the wave-9 baseline is confounded from here on (mad 52.3, hue_corr 0.836, Benny+near 50.9 are mostly the river). A
+  control capture (copy of the tree with my two files at 2a4d3b4) failed: waterRibbon.ts was mid-edit (K5* consts) at
+  copy time and fonts 403 outside the vite root; not repeated. Judged on crops + clump/splash metrics instead. Seen:
+  lumps now lavender bodies with white caps (closer), band layout like the ref V (left touches the splash root, runs
+  to (60,1290)); right band a 1-lump string of pearls; holes barely visible (t-subtract greyed them). Splash = wider lacy
+  tendrils with water between them, a bit faint. clumpcol W39/21/15/21 S38/40/33/40 B22/25/21/19 (ref W25/28/28/22
+  S56/38/44/41 B35/23/26/22); clumptone LL L171/226/247 (ref 180/223/252), Lrim 179/220/251 (ref 177/214/250), Lclump
+  173/230/251 (ref 181/221/251). splashext 17.3/17.9 % (ref 13.6/12.8; incl. the V bands).
+* it03 (89 calls, 567,799 tris; calls/tris moved by others' concurrent edits): wake-band lumps x1.18 (wakeK); holes = a
+  fixed saturated blue mix (0.8) instead of a t-subtraction, radius 0.16 + 0.17 h; splash rope alpha x0.95, froth 0.72.
+  Environment walls changed under me (hue_corr 0.69 vs baseline is the environment specialist's tunnel, not foam).
+  gain vs it02 (same-region |d| vs ref): LL -1.2, LR -1.1, splash -3.1, Lrim -3.7 better; Lclump +0.6, Rrim +0.7.
+  Seen: splash = white lacy tendrils with blue holes rooted at the fur's lower corners, water between them (closest so
+  far); bands = smooth pink-lavender marshmallow string, few holes. clumptone fixed (tools/clumptone.py now drops px
+  with |R-G| >= 45 = pink-band px that biased the ref "mid third" to #E8D7FF): ref dark #ADB8FA / mid #ECE2FF-#E3E3FF /
+  top #FEFCFF; it03 dark #C0AEFF (violet, wrong way), mid #F3DFFF (pink); baseline dark #B3C0FB was right, mid/top grey.
+  clumpcol W38/26/18/17 S40/37/32/33; splashext 18.8/17.8 %.
+* it04 (89 calls, 567,799 tris): bank05 ramp re-solved from the pink-free ref px (periwinkle dark G >= R, near-neutral
+  mid, white cap); holes over the lower 2/3; cell-dome relief everywhere; crown chains 6 beads. Seen (stacked lower-frame
+  view): bands now cool white-lavender cloud strings with visible blue dots, same diagonal V as the ref (closest so far);
+  splash = only 4-6 short thick tendrils per side (ref: a broad fringe of many fine lacy strands wrapping the fur's
+  lower half); crown beads drew dotted arcs. clumptone LL L191/231/250 (ref 179/233/253), LR 187/231/250 (ref
+  184/231/253), Lrim 178/231/253 (ref 176/221/251), Lclump 183/238/253 (ref 181/219/252: still too bright); dark thirds
+  #B4C1FF-#BDC8FF (ref #A5B8FA-#ADB8FA). clumpcol W49/32/30/21 S39/36/41/35. gain vs it03: Lclump -2.7, splash -0.7,
+  others +-0.3. splashext 20.3/18.9 %.
