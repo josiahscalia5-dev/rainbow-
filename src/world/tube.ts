@@ -190,7 +190,29 @@ const qaNum = (key: string, d: number) => {
   const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;
   return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;
 };
-export const OVAL05 = { K: qaNum('k05', 1.7), floorBelowWater: 0.18, shift: qaNum('sh05', -1.8) };
+// wave 9b (coordinator): K = 1 (round). The "ovals" were a misreading of the approved image — each fit paired one
+// ring's SIDES with the next ring's TOP (ring A's top is hidden behind the HUD/title; the arc under the title is
+// ring B). Traced separately the rings are round: A r≈499 px centred (455,535), B r≈245 (465,455), C r≈148
+// (478,453), D r≈95 (490,460) about the VP (500,470). The oval/floor/shift code stays for QA (?k05=1.7&sh05=-1.8).
+export const OVAL05 = { K: qaNum('k05', 1), floorBelowWater: 0.18, shift: qaNum('sh05', 0) };
+/**
+ * wave 9b (coordinator): the BIG 05 tunnel. On the approved image the ring ellipses A/B/C (half-axes ≈490×270,
+ * 284×170, 184×102 px) are centred ≈100 / 85 / 63 px ABOVE the vanishing point: the tunnel axis runs about half a
+ * vertical radius above the eye. The wave-9 lateral stretch alone (vertical radius 7.6, axis at eye level) left every
+ * ring top 50–110 px too low — a flat hall. `b` = vertical semi-axis of the 05 section (0 = off: the path's own
+ * radius), `hc` = height of its centre line above the water; the lateral semi-axis is OVAL05.K · b. `ringA` =
+ * depth of the one real ring ahead of the 05 checkpoint eye (ref ring A); `farRings` = virtual depths of the far
+ * rings B, C, … (r_px ≈ 1278 · b / depth for the locked camera).
+ */
+// (tested 2026-11-16: b 10 / hc 8.6 with K 1.67 puts the ring tops right but reads as a wide saucer, not the
+// approved round tunnel → OFF by default: b = 0. QA: ?b05=10&hc05=8.6&k05=1.67&ra05=47)
+export const BIG05 = { b: qaNum('b05', 0), hc: qaNum('hc05', 8.6), ringA: qaNum('ra05', 47), farRings: [75, 125, 194, 304, 473] };
+/**
+ * wave 9b: depth (ahead of the locked 05 checkpoint eye) of the big near ring = ref ring A. r_px ≈ 10000 / depth:
+ * the bay slot at depth 26 drew r≈385 (25 % too small, a ring floating inside the frame); depth 20 → r≈500, its
+ * sides leave the frame at y≈330 like the reference and its top passes behind the HUD.
+ */
+export const RING_A05 = qaNum('ringa', 20);
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
   const radial = o.radial ?? 48;

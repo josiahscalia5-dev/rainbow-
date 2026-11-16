@@ -1249,3 +1249,107 @@ Now rebuilding the Screen 05 tunnel as a larger oval with its roof higher above 
 >     const fr0 = { pos: ft.c0, tan: ft.T, up: ft.U, right: ft.Rt };
 >     const ringBasis = n …[+3187 chars]
 
+### 🤖 Claude — 2026-11-16T10:08:03.152Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ft\\.R\\b\\|\\.aspect\\|EXTENT_FAR\\|chord\\|halfW\\|hw\\b\" src/world/far05.ts | cut -c1-220 | head -40; sed -n 475,506p src/world/environment.ts | cut -c1-200", "description": "Check how the far river width depends on the tunnel size"}`
+
+### 🧑 User — 2026-11-16T10:08:03.205Z
+
+> ↩︎ result: 9: * vanishing point (≈ 505 at y 496, ≈ 490 at y 490). The live far chord ran straight into the VP (06-style
+> 11: * xB, half width hw = extent − |xB|, core swing M = CORE_SWING·xB, band offsets 0.62·hw / widths 0.19·hw with
+> 26:/** far water body: outer bank of each far bend (units from the axis; the floor chord is ≈6.53, foam rim outside) */
+> 27:const EXTENT_FAR = 6.25;
+> 70:  hw: number;
+> 79: * time-dependent wobble/noise left out) for a route centre xB, half width hw, core swing M (from the route
+> 82:export function bandLayout(xB: number, hw: number, M: number, sb: number, s: number): FarRiverRow {
+> 84:  let offL = hw * (0.62 + 0.03 * Math.sin(s * 0.13 + 1.7));
+> 85:  let offR = hw * (0.62 + 0.03 * Math.sin(s * 0.11 + 4.2));
+> 86:  let wL = hw * 0.19 * (1 + 0.15 * Math.sin(s * 0.19 + 0.4));
+> 87:  let wR = hw * 0.19 * (1 + 0.15 * Math.sin(s * 0.17 + 2.9));
+> 88:  const roomL = Mb + hw - 0.5 - offL, roomR = hw - 0.5 - Mb - offR;
+> 91:  offL = smin(offL, Mb + hw - wL - 0.5, 1.2);
+> 92:  offR = smin(offR, hw - wR - 0.5 - Mb, 1.2);
+> 94:  return { xB, hw, cL, wL, cR, wR, core: 0.5 * (cL + wL + cR - wR) };
+> 102:  /** half chord of the tube floor at the water level */
+> 103:  chord: number;
+> 108: * EXTENT_FAR  …[+3351 chars]
+
+### 🤖 Claude — 2026-11-16T10:08:53.236Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/tube.ts'; t=open(p).read()\nold=\"export const OVAL05 = { K: qaNum('k05', 1.7), floorBelowWater: 0.18, shift: qaNum('sh05', -1.8) };\"\nnew=\"\"\"export const OVAL05 = { K: qaNum('k05', 1.7), floorBelowWater: 0.18, shift: qaNum('sh05', -1.8) };\n/**\n * wave 9b (coordinator): the BIG 05 tunnel. On the approved image the ring ellipses A/B/C (half-axes ≈490×270,\n * 284×170, 184×102 px) are centred ≈100 / 85 / 63 px ABOVE the vanishing point: the tunnel axis runs about half a\n * vertical radius above the eye. The wave-9 lateral stretch alone (vertica …[+6719 chars]`
+
+### 🧑 User — 2026-11-16T10:08:56.191Z
+
+> ↩︎ result: far block perfPath refs replaced: 14
+> TSC_OK
+> 242:  const sGlow05 = course.stage('06').s0 - 5.9; // the straight flares into the 06 hall after this
+> 243:  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+> 268:    return s <= sF05 ? THREE.MathUtils.smoothstep(s, s05 + 1, s05 + 9) : 1 - THREE.MathUtils.smoothstep(s, sGlow05 - 0.5, sEnd05);
+> 326:  addWall(s05, sGlow05, perf05Mat, { oval: oval05, floor: floor05, shift: shift05 }, big05Path);
+
+### 🤖 Claude — 2026-11-16T10:09:03.843Z
+
+The bigger tunnel is coded and compiles — taking a test picture of Screen 05 now.
+
+### 🤖 Claude — 2026-11-16T10:09:09.794Z
+
+> 🔧 **Bash** `{"command": "S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && cat > \"$S/grid2.py\" <<'EOF'\n\"\"\"grid2.py out img [img ...] — gridded 864x720 top crops side by side\"\"\"\nimport sys\nfrom PIL import Image, ImageDraw\ndef grid(src):\n    a = Image.open(src).convert('RGB')\n    if a.size != (864, 1536): a = a.resize((864, 1536), Image.LANCZOS)\n    a = a.crop((0, 0, 864, 720)); d = ImageDraw.Draw(a)\n    for x in range(0, 864, 100): d.line([(x, 0), (x, 720)], fill=(255, 255, 255), width=1); d.text((x + 3, 3), str(x), fill=(255, 255, 0))\n    for y in  …[+606 chars]`
+
+### 🧑 User — 2026-11-16T10:09:26.454Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/big1/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":550103,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T10:09:30.764Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/big1_cmp.png"}`
+
+### 🧑 User — 2026-11-16T10:09:30.932Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T10:10:20.065Z
+
+> 🔧 **Bash** `{"command": "S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && python3 scripts/triptych.py \"$S/w/big1_trip.png\" 1150 \"approved=references/05_flow_into_the_current.png\" \"before (wave-9 baseline)=qa/pilot05/wave9/baseline/05.png\" \"big tunnel test 1=$S/w/big1/05.png\" >/dev/null && python3 -I scripts/screen_report.py 05 \"$S/w/rep1\" BASE=qa/pilot05/wave9/baseline/05.png BIG1=\"$S/w/big1/05.png\" >/dev/null 2>&1; tail -2 \"$S/w/rep1/metrics.md\"", "description": "Build a full-frame comparison and measure the bigger-tunnel test"}`
+
+### 🧑 User — 2026-11-16T10:10:30.319Z
+
+> ↩︎ result: | BASE | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> | BIG1 | 51.1 | 0.861 | 0.224 | 54.6 | 59.5 | 47.3 | 47.5 |
+
+### 🤖 Claude — 2026-11-16T10:10:32.823Z
+
+Checking the full-frame result of the first bigger-tunnel test.
+
+### 🤖 Claude — 2026-11-16T10:10:33.966Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/big1_trip.png"}`
+
+### 🧑 User — 2026-11-16T10:10:34.236Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T10:12:20.045Z
+
+> 🔧 **Bash** `{"command": "git show aa35c8a:src/world/environment.ts | grep -n \"const lid05\\|lids05\\b\" | cut -c1-260 | head -8; git show aa35c8a:src/world/environment.ts | grep -n \"const lids05\" -A 6 | cut -c1-200", "description": "Look up the lid settings from before last night's oval experiment"}`
+
+### 🧑 User — 2026-11-16T10:12:20.090Z
+
+> ↩︎ result: 341:  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -34, size: 2.2, thickness: 0.36, stretch: 1.0, sink: 0.1 };
+> 349:  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+> 350:  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
+> 349:  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+> 350-  zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
+> 351-  // 06/07: legacy hoods, unchanged
+> 352-  const lids0607: number[] = [];
+> 353-  for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
+> 354-  zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
+> 355-
+
+### 🤖 Claude — 2026-11-16T10:12:30.115Z
+
+The test showed the oval idea itself was a misreading — the approved rings are round, with one extra-large ring near the camera. Switching to that now: round tunnel, big front ring.
+
+### 🤖 Claude — 2026-11-16T10:12:47.042Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/tube.ts'; t=open(p).read()\nold=\"export const OVAL05 = { K: qaNum('k05', 1.7), floorBelowWater: 0.18, shift: qaNum('sh05', -1.8) };\"\nnew=\"\"\"// wave 9b (coordinator): K = 1 (round). The \"ovals\" were a misreading of the approved image — each fit paired one\n// ring's SIDES with the next ring's TOP (ring A's top is hidden behind the HUD/title; the arc under the title is\n// ring B). Traced separately the rings are round: A r≈499 px centred (455,535), B r≈245 (465,455), C r≈148\n// (478,453), D r≈95 (490,460) about the VP (500,470). The oval/flo …[+3377 chars]`
+
