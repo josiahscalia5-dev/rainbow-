@@ -980,3 +980,56 @@ Bootstrap so far: LFS 34/34 real files and confirmed on GitHub, references 13/13
 > 1630	  u.uPjLutS = { value: new THREE.Vector4(0, 1, 1, 0) };
 > 1631	  u.u …[+4930 chars]
 
+### 🤖 Claude — 2026-11-16T22:23:24.995Z
+
+I now have the full picture of the projection pipeline (E exact / N near / T tile / D detail layers, the LUT, and the `projflow05=2` streak flow). Checking the bootstrap:
+
+### 🤖 Claude — 2026-11-16T22:23:26.398Z
+
+> 🔧 **Bash** `{"command": "sleep 20; tail -40 /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/bootstrap.log | grep -v '^        log gap'", "description": "Check bootstrap progress"}`
+
+### 🧑 User — 2026-11-16T22:23:46.439Z
+
+> ↩︎ result: == 2 Game files: LFS binaries, references, screens, agents, Marble
+>   OK   Git LFS binaries (local)       34/34 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK
+>   OK   Git LFS on GitHub              34/34 LFS objects (231 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+>   OK   Approved references            13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference)
+>   OK   Game: 11 screens + code        11 approved screen references 01-11, source tree src/ (43 files), Android project android/, characters assets/models/*.glb
+>         washer-environment-modeler         running next: NOW if interrupted: SPECIALIST 1 texture projection, qa/pilot05/proj/B
+>         path-camera-transition-engineer    idle    next: far coin trail test on Screen 05; owns the locked STAGE_CAM['05'] and 
+>         water-fx-specialist                queued  next: after the user has seen Specialist 1 static match: qa/pilot05/proj/BRI
+>         foam-bubbles-particles             idle    next: foam test on Screen 05 (apply it06 as its own URL-switch test)
+>         reference-match-director           idle    next: after Screen 05: ranked difference list  …[+3112 chars]
+
+### 🤖 Claude — 2026-11-16T22:23:52.640Z
+
+> 🔧 **Bash** `{"command": "echo \"local : $(git rev-parse HEAD)\"; echo \"remote: $(timeout 60 git ls-remote origin refs/heads/ccr-8c4acadc-iybw0n | cut -f1)\"; git log --oneline -3; git merge-base --is-ancestor aea7e77469e4744f97fa3576c97bb952c76f1705 HEAD && echo \"aea7e77 is ancestor of HEAD: YES\"; pgrep -af autosave-daemon | head -2; git lfs ls-files | wc -l; git lfs ls-files | awk '$2==\"-\"' | wc -l; git lfs ls-files | grep -iE 'glb|blend' ", "description": "Verify remote push, daemon, LFS assets"}`
+
+### 🧑 User — 2026-11-16T22:23:53.263Z
+
+> ↩︎ result: local : 1ce3da893de1f2ed4ced5aa19c564e3ecc7c7e10
+> remote: 1ce3da893de1f2ed4ced5aa19c564e3ecc7c7e10
+> 1ce3da8 autosave: Rainbow 2026-11-16 22:23 UTC
+> aea7e77 autosave: Rainbow 2026-11-16 22:12 UTC
+> f64e020 autosave: Rainbow 2026-11-16 22:11 UTC
+> aea7e77 is ancestor of HEAD: YES
+> 728 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> 34
+> 0
+> 40633fdd02 * assets/models/benny.glb
+> f2cd3abeaa * assets/models/lids05.glb
+> fa846773af * assets/models/rainbow_girl.glb
+> 9a33cdf35c * qa/pilot05/marble_feas/blender/marble05_projection.blend
+> 8bd205c396 * qa/pilot05/proj/tunnel/lid/lids05.blend
+> 25baa89f89 * qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend
+> 90e43977de * qa/pilot05/wave6/camera_lock/screen05_layout.blend
+> 8567f56ef7 * qa/pilot05/wave6/camera_lock/screen05_layout.glb
+> b1a21d0843 * qa/worldlabs/05/blender/screen05_layout.blend
+> 8cfd5093ed * qa/worldlabs/05/blender/screen05_layout.glb
+> cdaf62b116 * qa/worldlabs/05/pilot/draft/collider.glb
+> 915423cf00 * qa/worldlabs/05/pilot/draft/import/draft05.blend
+> 3aabf9f058 * qa/worldlabs/05/pilot/draft/import/draft05_underlay.glb
+> d7e952d0e5 * qa/worldlabs/05/pilot/full/collider.glb
+> 5704dfcd8f * qa/worldlabs/05/pilot/full/import/full05.blend
+> f1e40d63fd * qa/ …[+50 chars]
+
