@@ -2001,3 +2001,239 @@ Let me first read the existing river code and the probe data Specialist 1 alread
 > 622:    state() {
 > 685:    qa3d() { return { scene, camera, renderer, composer }; },
 
+### 🤖 Claude — 2026-11-16T17:38:13.651Z
+
+> 🔧 **Bash** `{"command": "sed -n 560,640p src/game/Game.ts; grep -n \"uPano\\|loadPano\\|Texture(\" src/vfx/flow05.ts | head -12", "description": "Read checkpoint/QA API and flow05 texture loading"}`
+
+### 🧑 User — 2026-11-16T17:38:13.725Z
+
+> ↩︎ result: '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+>     '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
+>     '11': { mode: 'outro', t: O.cp11 },
+>     '07a_plunge_top': { mode: 'ride', s: course.marks['07_plunge_top'] - 1 },
+>     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
+>     '07c_plunge_bottom': { mode: 'ride', s: course.marks['07_plunge_bottom'] - 3 },
+>     '07d_entering_08': { mode: 'ride', s: course.stage('08').s0 + 0.2 },
+>   };
+> 
+>   const gotoCheckpoint = (id: string, time = 12.0) => {
+>     const cp = CHECKPOINTS[id];
+>     if (!cp) throw new Error('unknown checkpoint ' + id);
+>     resetToIntro();
+>     st.frozen = time;
+>     st.clock = time;
+>     input.override = 0;
+>     const settle = (n: number, dt: number) => { for (let i = 0; i < n; i++) stepSim(dt); };
+>     if (cp.mode === 'intro') {
+>       // replay the cinematic deterministically up to the checkpoint time
+>       const steps = Math.round((cp.t ?? 0) / (1 / 30));
+>       settle(steps, 1 / 30);
+>     } else {
+>       startRide();
+>       hud.showHint(null);
+>       const sTarget = cp.s ?? course.stage('11').s0;
+>       st.s = sTarget;
+>       st.lat = cp.lat ?? 0;
+>       coins. …[+3196 chars]
+
+### 🤖 Claude — 2026-11-16T17:38:18.517Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"uPano.value\\s*=\\|\\.loadAsync\\|new THREE.TextureLoader\\|ImageBitmapLoader\\|import .*\\.png\\|\\.jpg'\" src | head; grep -n \"drawList\\|render()\\s*{\\|const render =\" src/game/Game.ts | head; ls public | head; ls assets | head; grep -n \"assets\\|publicDir\" vite.config.ts | head", "description": "Find async asset loading conventions"}`
+
+### 🧑 User — 2026-11-16T17:38:18.728Z
+
+> ↩︎ result: src/characters/girl/runtime.ts:12:  const gltf = await new GLTFLoader().loadAsync(url);
+> src/characters/girl/build.ts:708:    identity: 'character_references/official_cartoon_girl_original.jpg',
+> src/characters/benny/runtime.ts:15:  if (!cached) cached = new GLTFLoader().loadAsync(BENNY_URL).then((g) => {
+> src/world/environment.ts:323:    flow05Shared.uPano.value = marblePano05();
+> src/world/materials.ts:721:    t = new THREE.TextureLoader().load(new URL('../../assets/textures/marble05_env_1024.jpg', import.meta.url).href);
+> 528:  const render = () => {
+> 668:    drawList() {
+> video
+> models
+> textures
+> 6:  assetsInclude: ['**/*.glb'],
+> 11:    assetsInlineLimit: 0,
+
+### 🤖 Claude — 2026-11-16T17:38:24.654Z
+
+> 🔧 **Bash** `{"command": "grep -n \"await\\|async\" src/game/Game.ts | head -20; sed -n 520,545p src/game/Game.ts; grep -n \"createRibbon\\|farRiverMaterial\\|tube05_far_river\" src/world/environment.ts src/vfx/index.ts src/world/materials.ts | head", "description": "Check async init and where ribbon/far river are created"}`
+
+### 🧑 User — 2026-11-16T17:38:24.709Z
+
+> ↩︎ result: 39:export async function startGame(canvas: HTMLCanvasElement) {
+> 97:  const water = await loadWater(course);
+> 99:  const benny = await loadBennyRuntime();
+> 101:  const girl = await loadGirlRuntime();
+> 474:  const [introVideo, endingVideo] = await Promise.all([findCinematic('intro'), findCinematic('ending')]);
+>   let running = !qaMode;
+>   let dirty = true;
+>   renderer.info.autoReset = false;
+>   // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the
+>   // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins
+>   const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
+>   const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
+>   const st05 = course.stage('05');
+>   const render = () => {
+>     if (glow05) {
+>       const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+>       bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
+>       bloom.radius = bloomBase.r + (bloom05.r - bloomBase.r) * w;
+>       bloom.threshold = bloomBase.t + (bloom05.t - bloomBase.t) * w;
+>     }
+>     renderer.info.reset();
+>     composer.render();
+>   };
+>   const frame = () => {
+>     const now = performan …[+1406 chars]
+
+### 🤖 Claude — 2026-11-16T17:39:23.807Z
+
+> 🔧 **Bash** `{"command": "sed -n 56,82p src/game/Game.ts; sed -n 861,960p src/world/materials.ts | grep -n \"varying\\|vUv\\|uv\\|gl_FragColor\\|diffuseColor\\|replace(\\|aRiv\" | head -30", "description": "Check pass order and far river material hooks"}`
+
+### 🧑 User — 2026-11-16T17:39:23.861Z
+
+> ↩︎ result: scene.add(fill);
+> 
+>   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+>   const composer = new EffectComposer(renderer);
+>   composer.addPass(new RenderPass(scene, camera));
+>   // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
+>   // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
+>   // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear
+>   // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
+>   const glow05 = flag05('glow05');
+>   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+>   // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
+>   // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
+>   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', glow05 ? 1.0 : 0.2), qn('bloomR', glow05 ? 0.4 : 0.35), qn('bloomT', glow05 ?  …[+1660 chars]
+
+### 🤖 Claude — 2026-11-16T17:39:53.544Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/proj05 /home/user/rainbow-/qa/pilot05/proj/target && cd /home/user/rainbow- && cat > tools/proj05/make_target.py <<'EOF'\n\"\"\"Screen 05 proj05 — TARGET water image in the approved frame (864x1536, sRGB), from the user's own pictures only:\n  * where the approved picture shows its water (not hidden by Benny + splash, coins, HUD): the APPROVED pixels;\n  * where the approved water is hidden: the user's ORIGINAL isolated water artwork, registered onto the approved water\n    with dense optical flow (banks / bands line up), colour-matched and Poiss …[+6101 chars]`
+
+### 🧑 User — 2026-11-16T17:40:03.990Z
+
+> ↩︎ result: {
+>  "note": "target = approved water where visible; registered + colour-matched + Poisson-blended original artwork in the holes",
+>  "water_px": 804987,
+>  "fill_px": 239796,
+>  "coins_px": 60060,
+>  "benny_px": 219642,
+>  "flow_px_median": 32.7133755818523,
+>  "flow_px_p95": 49.45922088019505,
+>  "approved_vs_artwork_registered_mean_abs_visible_water": 46.41478013627252,
+>  "approved_vs_artwork_plain_mean_abs_visible_water": 53.45295486173818
+> }
+
+### 🤖 Claude — 2026-11-16T17:40:09.114Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nt=Image.open('qa/pilot05/proj/target/target_05.png').crop((0,420,864,1536))\nt.resize((432,558)).save('/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/target_v1.png')\"", "description": "Downscale target crop for inspection"}`
+
+### 🧑 User — 2026-11-16T17:40:09.338Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T17:40:10.165Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/target_v1.png"}`
+
+### 🧑 User — 2026-11-16T17:40:10.193Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:40:20.019Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/coins = binary_dilation(coins \\& (rows < 800) \\& (rows > 430), iterations=5)/coins = binary_dilation(coins \\& (rows < 800) \\& (rows > 430), iterations=12)/' tools/proj05/make_target.py && python3 -I tools/proj05/make_target.py qa/pilot05/proj/target | grep -E \"fill_px|coins_px\" && python3 -c \"\nfrom PIL import Image\nt=Image.open('qa/pilot05/proj/target/target_05.png').crop((300,450,700,800)); a=Image.open('references/05_flow_into_the_current.png').crop((300,450,700,800))\nc=Image.new('RGB',(800,350)); c.paste(a,(0,0)); c.paste(t,(400,0)); c.save('/tmp/claude-0/-h …[+181 chars]`
+
+### 🤖 Claude — 2026-11-16T17:40:21.171Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/coins_fill.png"}`
+
+### 🧑 User — 2026-11-16T17:40:28.320Z
+
+> ↩︎ result: "fill_px": 248603,
+>  "coins_px": 89762,
+
+### 🧑 User — 2026-11-16T17:40:28.336Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:40:49.745Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/make_target.py'\ns=open(p).read()\ns=s.replace(\"coins = binary_dilation(coins & (rows < 800) & (rows > 430), iterations=12)\",\n \"coins = binary_dilation(coins & (rows < 800) & (rows > 470) & binary_dilation(A0, iterations=4), iterations=10) & A0\")\ns=s.replace(\"hole = (benny | coins) & ~hud\", \"hole = benny & ~hud          # Benny + splash: filled from the artwork here; coins: filled along the flow in the bake (coin_mask.png)\")\ns=s.replace('Image.fromarray((hole * 255).astype(np.uint8)).save(os.path.join(out, \"fill_mask.png\"))',\n 'Imag …[+1411 chars]`
+
+### 🤖 Claude — 2026-11-16T17:40:50.894Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/benny_fill.png"}`
+
+### 🧑 User — 2026-11-16T17:40:59.472Z
+
+> ↩︎ result: "fill_px": 219642,
+>  "coins_px": 27437,
+>  "flow_px_median": 33.91580892073044,
+>  "flow_px_p95": 49.45922088019505,
+
+### 🧑 User — 2026-11-16T17:40:59.500Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:41:16.410Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/make_target.py'\ns=open(p).read()\na=s.index(\"# ---- Poisson blend\")\nb=s.index('Image.fromarray(tgt).save')\ns=s[:a]+'''# ---- feathered blend of the colour-matched artwork into the hole (a Poisson blend was tried first: it pushed the\n#      pink band at the hole's rim into a saturated red streak inside the hole)\nalpha = np.clip(gaussian_filter(binary_dilation(hole, iterations=6).astype(float), 7), 0, 1)\nalpha = np.maximum(alpha, hole.astype(float))\ntgt = np.clip(appr.astype(float) * (1 - alpha[..., None]) + fill.astype(float) * alpha[..., …[+750 chars]`
+
+### 🤖 Claude — 2026-11-16T17:41:17.462Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/benny_fill.png"}`
+
+### 🧑 User — 2026-11-16T17:41:24.414Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-16T17:41:24.440Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:41:32.484Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/make_target.py'\ns=open(p).read()\ns=s.replace(\"fill = np.clip((src - mu_s) / sd_s * sd_d + mu_d, 0, 255).astype(np.uint8)\",\n\"# mean shift only, half strength (a per-channel std match turned the artwork's pink into red)\\nfill = np.clip(src + 0.5 * (mu_d - mu_s), 0, 255).astype(np.uint8)\")\ns=s.replace(\"# ---- colour match the registered artwork to the approved water around each hole (per-channel mean / std, local)\",\"# ---- colour match the registered artwork to the approved water around the hole\")\nopen(p,'w').write(s)\nEOF\npython3 -I  …[+551 chars]`
+
+### 🤖 Claude — 2026-11-16T17:41:33.591Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/benny_fill.png"}`
+
+### 🧑 User — 2026-11-16T17:41:40.297Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-16T17:41:40.323Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:42:23.836Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad && python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nW,H=864,1536\nR=np.fromfile('$SP/probe/uv_river.f32',np.float32).reshape(H,W,4)\nsurf=np.abs(R[...,2]-1)<0.01\nwm=np.asarray(Image.open('qa/pilot05/proj/target/water_mask.png'))>127\nS=R[...,1]\ndsy=np.abs(np.gradient(S,axis=0))\nm=surf&wm&np.roll(surf,1,0)&np.roll(surf,-1,0)\nfor a in [129.7,130,131,132,134,136,138,140,142,145,148,150,153,156,160,165,170,175,180,185,190,196]:\n  b=m&(S>=a)&(S<a+1)\n  if b.sum()>10:\n    d=np.median(ds …[+244 chars]`
+
+### 🧑 User — 2026-11-16T17:42:24.324Z
+
+> ↩︎ result: s  129.7 px  163867 rows/unit   202.0 u -0.31..+0.35
+> s  130.0 px  153961 rows/unit   181.0 u -0.33..+0.37
+> s  131.0 px  102335 rows/unit   119.6 u -0.40..+0.42
+> s  132.0 px   71269 rows/unit    83.2 u -0.48..+0.47
+> s  134.0 px   46850 rows/unit    54.3 u -0.64..+0.54
+> s  136.0 px   37513 rows/unit    45.2 u -0.81..+0.58
+> s  138.0 px   24427 rows/unit    34.9 u -1.00..+0.48
+> s  140.0 px   14604 rows/unit    19.8 u -0.99..+0.56
+> s  142.0 px   12445 rows/unit    20.3 u -0.99..+0.80
+> s  145.0 px    7930 rows/unit    12.7 u -1.00..+1.00
+> s  148.0 px    5195 rows/unit     8.6 u -0.88..+1.00
+> s  150.0 px    5602 rows/unit    10.1 u -1.00..+0.99
+> s  153.0 px    2688 rows/unit     5.6 u -0.99..+0.99
+> s  156.0 px    2617 rows/unit     7.7 u -0.99..+0.99
+> s  160.0 px    1070 rows/unit     3.0 u -0.99..+0.99
+> s  165.0 px    1122 rows/unit     4.8 u -0.99..+0.99
+> s  170.0 px     921 rows/unit     5.6 u -0.62..+0.96
+> s  175.0 px     927 rows/unit    11.7 u -0.99..-0.11
+> s  196.0 px      18 rows/unit    12.3 u +0.32..+0.42
+> max s in water 196.27914
+

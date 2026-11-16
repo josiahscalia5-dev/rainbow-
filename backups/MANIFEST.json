@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8273,
-   "sha256": "f059e8a633851e5a91f8624f12b7630dd881b59e0a95942c4cd363685405cfcc"
+   "sha256": "1534367aa771db4136a5d941417deb8d39ff8951175e4b7dc97fa9a54871289d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1390,6 +1390,36 @@
    "path": "qa/pilot05/proj/probe/river05_mesh.json",
    "bytes": 1285808,
    "sha256": "b7c86f523f8af3cc9a1c5d5bff090e1468010a957b2528d2e7d681caeac1ea97"
+  },
+  {
+   "path": "qa/pilot05/proj/target/art_registered.png",
+   "bytes": 1150242,
+   "sha256": "397ada4afc8b09a803234ebd084d93ef30d5072b66b8b4df5e84b143f4f64949"
+  },
+  {
+   "path": "qa/pilot05/proj/target/coin_mask.png",
+   "bytes": 4194,
+   "sha256": "b257d62aa88f4b0e1827ad14be907d5a73840f387a24043a075faf43c5eeb195"
+  },
+  {
+   "path": "qa/pilot05/proj/target/fill_mask.png",
+   "bytes": 4402,
+   "sha256": "c5288b3c47a9520ccc084897316e377fe3e958ef87c7610e7e5f94a0ddb563de"
+  },
+  {
+   "path": "qa/pilot05/proj/target/report.json",
+   "bytes": 433,
+   "sha256": "5aa5996df816880740f66cfb0feef553c8bbae0ae0ee81e7fb63c56e32c04492"
+  },
+  {
+   "path": "qa/pilot05/proj/target/target_05.png",
+   "bytes": 2217443,
+   "sha256": "2f971e6374b1dd9c9c1b2612babd05a3a201015b103e4f31b3c79cccbebdbd65"
+  },
+  {
+   "path": "qa/pilot05/proj/target/water_mask.png",
+   "bytes": 5618,
+   "sha256": "d35684a58b2fe19eb47f0df2213b01cc6d4248484a40911af34b78cd272e5703"
   },
   {
    "path": "qa/pilot05/water/before/03.png",
@@ -6995,6 +7025,11 @@
    "path": "tools/model-lab.ts",
    "bytes": 4451,
    "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tools/proj05/make_target.py",
+   "bytes": 5916,
+   "sha256": "395c74e882a8307e9e5b50c4557ea13e96cdedd8f50f54ad821a22ba772fa674"
   },
   {
    "path": "tools/qa/axis05.ts",
