@@ -382,6 +382,11 @@
    "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
   },
   {
+   "path": "assets/textures/marble05_env_1024.jpg",
+   "bytes": 183358,
+   "sha256": "0acbf48ab316fd8cc8ee1f0cd07d23eac8a5c06908a17be82539dcf7ddee0084"
+  },
+  {
    "path": "backups/AGENTS_STATUS.md",
    "bytes": 7056,
    "sha256": "71b29661ac7ebef58c43c719e28271bcb6923b5d0e43eb3e9657d2a4dabbdc65"
@@ -394,7 +399,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5350,
-   "sha256": "68f2744423bdb9538feff299073eee74176613a90ab2088484e176de5ba82ee5"
+   "sha256": "59fa1cd41a920253c436720087f0631e2e1a098a82a5c551c0572315bbfffca6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -818,8 +823,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 2171,
-   "sha256": "ec7ab440218131b48b257ae0cf31a548fda42f8976cb36b9931124cceedc3108"
+   "bytes": 1176,
+   "sha256": "8887ab60a75ed866c33a861aff242d6662646396fa21548ba107154429fe8c57"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -933,8 +938,8 @@
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
-   "bytes": 6418,
-   "sha256": "d18920caf3a046f1b070868ebfec05583942ab12f44b84f8e49720a59b8935cc"
+   "bytes": 7320,
+   "sha256": "b269034d1610a7db3aafab05ccc2c879532fdadab8a313077925b0daa2001ecf"
   },
   {
    "path": "qa/pilot05/benny/before/01.png",
@@ -3297,6 +3302,71 @@
    "sha256": "dc9a19a080f2a4c65553292a7542dae7505d1484fc6569fc342b50e81dbb757b"
   },
   {
+   "path": "qa/pilot05/wave8/foam/it01/05.png",
+   "bytes": 1849742,
+   "sha256": "c05043c7445934bd67c0548757ec8c5b190182c2969ed323fcf5359cfc9c5048"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/05_highlight_NOW.png",
+   "bytes": 1950556,
+   "sha256": "7a0f6fdc58c0a5e0010e0a72595a0327eb6302b247fa040806fbd96e9a7b03ec"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/05_highlight_PREV.png",
+   "bytes": 1934638,
+   "sha256": "0c3b78591eff8ffd7fd9019b713169c1912e889a7ceaf22f6ae85c03b115a838"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/05_overlay_NOW.png",
+   "bytes": 2296618,
+   "sha256": "3065269c9fdec8c03010fcb65c30f4e1a7dbcab536c02eb4d29842eb8dd424af"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/05_overlay_PREV.png",
+   "bytes": 2289406,
+   "sha256": "c5c19c5d0cea588302d1b407c194985e46abe12d81cee4ab5cec45fa9f38c728"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/05_side_by_side.png",
+   "bytes": 4930863,
+   "sha256": "b1fd50d2cf28e3eda0e55c259c027fbb97c62192c9df843904791c661a80fb3c"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/crop_leftnear.png",
+   "bytes": 791854,
+   "sha256": "d48b096ff7c5d1492caae54536c1988fd5d0a2e9b5338b9c9f4cb1c7ffcb75a5"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/crop_leftrim.png",
+   "bytes": 848230,
+   "sha256": "2a9788f36054e38648dd7c13fa8c008a0353e01717424048e8b5ae898fb52ce5"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/crop_rightnear.png",
+   "bytes": 640657,
+   "sha256": "3655f652dfc8fff4da77f4f760a3c3b8b5ad7dfa4465798ee81a3861996e8ac6"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/crop_rightrim.png",
+   "bytes": 1138191,
+   "sha256": "e9419d5afe617da7213d7811afc13e2b366bcecb93f2690a1782b731b1536846"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/crop_splash.png",
+   "bytes": 914252,
+   "sha256": "af67ee79845632f53e0b074d4ec9258c8c26b309ad30223057e7dcc99173a818"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/metrics.json",
+   "bytes": 451,
+   "sha256": "8e20ba57554ce91b837ccff29b0e4184916163886a870f6904090c15c16e6da4"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/it01/metrics.md",
+   "bytes": 437,
+   "sha256": "2350637baba29afb27f9828db396aa5a9c7e748596b6a71cd6aef478bc96dc6d"
+  },
+  {
    "path": "qa/pilot05/wave8/foam/pre/03.png",
    "bytes": 689327,
    "sha256": "70b33b54649c5640c5f8310b2ea33d10b30ad0547bfe6f386890370d9cb1084c"
@@ -3305,6 +3375,11 @@
    "path": "qa/pilot05/wave8/foam/pre/05.png",
    "bytes": 1825075,
    "sha256": "1c2547f339dcc3b99108e7766777de6b53386ea484e1172683f6ffb44441254e"
+  },
+  {
+   "path": "qa/pilot05/wave8/foam/tools/crops.py",
+   "bytes": 986,
+   "sha256": "745af5431ad34832d69025b408b4e82b426408a4f3cba667974dee55a1171941"
   },
   {
    "path": "qa/pilot05/wave8/path-camera/NOTES.md",
@@ -4138,8 +4213,8 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 48636,
-   "sha256": "9299d7dbc517d19d90018e7dfa2999a5bed3ea5fe452b4f5019051073de1992e"
+   "bytes": 55015,
+   "sha256": "c629be472415004b23ff8c40dab251f187aeac15e31ba67f792a262a2e96b413"
   },
   {
    "path": "src/vfx/glsl.ts",
@@ -4148,8 +4223,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 14101,
-   "sha256": "329b779d660018049cb77c1103e8b4211c55ba69307ca8c251cfca33a741a65a"
+   "bytes": 14124,
+   "sha256": "d73f1d7063b7fa07f122717e161f02c06b1241c9c4216f3f96590a328a38152b"
   },
   {
    "path": "src/vfx/puddles.ts",
@@ -4168,8 +4243,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 48978,
-   "sha256": "703d425919e360f4276034c9b1326a5f6090052c3984e71b219a15edf2190ea7"
+   "bytes": 47583,
+   "sha256": "47f5a3e172f46db54f6b36c634d89fa3381a7abe5079fd74a3353abbc30c9ad4"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -4183,8 +4258,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 47582,
-   "sha256": "2ec65ae6b6d66dd70f61bc9b68e774da48adb4d9a0e8c1eccfcb5a582e0dcc9f"
+   "bytes": 48785,
+   "sha256": "eccf7a9bf979e61bf96fe331f429aad21be75dcc697873442645ed3e3e67a9d0"
   },
   {
    "path": "src/world/far05.ts",
@@ -4198,8 +4273,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 45708,
-   "sha256": "d04c2894b1445e94a143e5372a069f280248e5a90d811fcc6eeb86e72ab12484"
+   "bytes": 50330,
+   "sha256": "08e31f3732efa7cae15f701d91b8580e313ea6a4395bab23c43db491fa5c8e13"
   },
   {
    "path": "src/world/towel.ts",

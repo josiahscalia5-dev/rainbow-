@@ -48,6 +48,8 @@ export interface PerforatedOptions {
   /** dedicated reflection environment (e.g. washerTubeEnv()) instead of scene.environment */
   envMap?: THREE.Texture | null;
   envMapIntensity?: number;
+  /** orientation of `envMap` (e.g. marblePanoRotation05 for the Marble panorama) */
+  envMapRotation?: THREE.Euler;
   /**
    * forced-perspective section (05 far tunnel): the geometry carries a per-vertex `fgExtra` attribute =
    * virtual minus real depth, so the distance glow / mid tint behave as if the tunnel ran on for hundreds
@@ -238,8 +240,16 @@ export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b:
     uBcCrown: { value: lin3(0.6246, 0.22, 0.199) }, // (222,98,88) rose-gold body between the spots (ref (215–230,90–100,80–95))
     uBcPeak: { value: lin3(0.9077, 0.602, 0.3465) }, // (252,190,120) highlight line
     uBcHalo: { value: lin3(0.9439, 0.6846, 0.2725) }, // (255,205,90) yellow halo around each spot
-    uBcGroove: { value: lin3(0.4938, 0.1484, 0.1192) }, // (200,70,50)
+    uBcGroove: { value: lin3(0.5618, 0.1695, 0.1159) }, // (214,79,44) orange-red groove line (ref ring #1 top y 200–202)
     uBcSpot: { value: lin3(1.6, 1.5, 1.3) }, // warm white, blooms a little
+    // wave 8: the rings READ gold because their sides are a broad pale-yellow crown between saturated orange
+    // lines (ref ring #2 left side, x 199→239: dark · peach-orange lip (245,115,80) · orange-red line (234,89,4)
+    // · pale yellow (252,206,130) with white maxima · orange (246,151,70) · peach); only the near top arc
+    // (ring #1, ≈11–1 o'clock) is rose-red between big white spots
+    uBcPale: { value: lin3(0.931, 0.6926, 0.3911) }, // (252,206,130)
+    uBcGold: { value: lin3(0.8111, 0.4073, 0.193) }, // (246,151,70)
+    uBcLine: { value: lin3(0.6601, 0.1926, 0.0761) }, // (234,89,4)
+    uBcLipS: { value: lin3(0.7599, 0.2745, 0.1948) }, // (245,115,80)
   };
   const prev = mat.onBeforeCompile;
   mat.onBeforeCompile = (shader, r) => {
@@ -259,6 +269,7 @@ vBandAx = (viewMatrix * modelMatrix * vec4(0.0, 0.0, 1.0, 0.0)).xyz;
       .replace('void main() {', `varying vec3 vBandP; varying vec3 vBandAx;
 uniform vec4 uBandG; uniform vec4 uBandS; uniform vec2 uBandF;
 uniform vec3 uBcDark; uniform vec3 uBcRose; uniform vec3 uBcOrange; uniform vec3 uBcCrown; uniform vec3 uBcPeak; uniform vec3 uBcGroove; uniform vec3 uBcSpot; uniform vec3 uBcHalo;
+uniform vec3 uBcPale; uniform vec3 uBcGold; uniform vec3 uBcLine; uniform vec3 uBcLipS;
 // The rider sees every band at a grazing angle, i.e. mostly its camera-facing flank: the colour therefore
 // follows the view-space normal — facing (ndv) for body → orange line → rose → dark silhouette contour, the
 // normal's axial component (nzv: -1 camera-facing base … 0 crown) for the highlight line — and the axial
@@ -275,14 +286,21 @@ vec3 bandShade(float deep, vec3 N, vec3 V){
   vec3 ax = normalize(vBandAx);
   ax *= sign(dot(ax, -V) + 1e-4);                // tube axis pointing away from the camera
   float nzv = dot(N * sign(nv + 1e-4), ax);      // -1 = flank facing the camera … 0 = crown
-  vec3 body = mix(uBcCrown, mix(uBcRose * 1.12, uBcCrown, 0.3), deep);   // deeper rings: rose-copper body
-  vec3 c = mix(uBcDark, uBcRose, smoothstep(0.03, 0.14, ndv));
-  c = mix(c, uBcOrange, smoothstep(0.16, 0.26, ndv));
-  c = mix(c, body, smoothstep(0.3, 0.46, ndv));
+  // wave 8: only the near top arc (±30°, gone by ±55°) keeps the rose-red body of ref ring #1's top; the sides
+  // and the deeper rings read gold: pale-yellow crown framed by orange (ref ring #2/#3 sides)
+  float topArc = (1.0 - smoothstep(0.52, 0.96, abs(atan(vBandP.y, vBandP.x) - 1.5707963))) * (1.0 - deep);
+  vec3 body = mix(mix(uBcGold, uBcPale, smoothstep(0.42, 0.62, ndv)), uBcCrown, topArc);
+  body = mix(body, mix(uBcOrange, uBcGold, 0.5), deep * 0.55);      // deeper rings: orange with bright spots
+  vec3 c = mix(uBcDark, mix(uBcLipS, uBcRose, topArc), smoothstep(0.03, 0.12, ndv));
+  c = mix(c, uBcOrange, smoothstep(0.13, 0.22, ndv));
+  c = mix(c, body, smoothstep(0.26, 0.4, ndv));
   float hl = exp(-pow((nzv + 0.8) / 0.07, 2.0)) * smoothstep(0.3, 0.5, ndv);
-  c = mix(c, uBcPeak, hl * (0.95 - 0.6 * deep));
+  c = mix(c, uBcPeak, hl * (0.95 - 0.6 * deep) * (0.35 + 0.65 * topArc));
+  // saturated orange-red line just inside the camera-side edge (ref: between the lip and the body)
+  c = mix(c, mix(uBcLine, uBcGroove, topArc), exp(-pow((m + 0.84) / 0.07, 2.0)) * 0.9);
   c = mix(c, uBcDark, smoothstep(0.9, 1.0, abs(m)) * 0.85);           // contour where the band meets the wall
-  vec3 cl = mix(uBcDark, mix(uBcRose, uBcCrown, 0.55 - 0.35 * deep), smoothstep(0.05, 0.3, ndv));
+  vec3 cl = mix(uBcDark, mix(uBcLipS, mix(uBcRose, uBcCrown, 0.55), topArc), smoothstep(0.05, 0.3, ndv));
+  cl = mix(cl, uBcPeak, exp(-pow((l + 0.3) / 0.22, 2.0)) * 0.55 * smoothstep(0.3, 0.6, ndv));   // light line on the lip
   cl = mix(cl, uBcDark, smoothstep(0.86, 1.0, abs(l)) * 0.85);
   float inMain = smoothstep(-1.0 - fm, -1.0 + fm, m);
   float inLip = 1.0 - smoothstep(1.0 - fl, 1.0 + fl, l);
@@ -394,6 +412,7 @@ export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMa
     envMapIntensity: o.envMapIntensity ?? 1.0,
   });
   if (o.envMap) mat.envMap = o.envMap;
+  if (o.envMapRotation) mat.envMapRotation.copy(o.envMapRotation);
   const relief = o.relief;
   // mean hole coverage of one cell (capsule area / cell area): sub-pixel slot rows fade to this instead
   // of aliasing into moiré stripes down the tunnel
@@ -652,6 +671,41 @@ export function washerTubeEnv(variant: 'wall' | 'gold' | 'gold05' = 'wall'): THR
 }
 
 /**
+ * Wave 8 (user request): the Marble (World Labs) full-quality world generated from the approved 05 image, used
+ * as the REFLECTION source of the 05 tunnel metal only. Runtime copy `assets/textures/marble05_env_1024.jpg`
+ * (183 KB) = `qa/worldlabs/05/pilot/full/pano.png` (4608×2304) downsampled to 1024×512, with the hemisphere
+ * below the vanishing-point row (row 234) replaced by a mirror of the one above it, so the glossy walls reflect
+ * the pano's pink-magenta perforated walls, warm ring lights and the VP glow, never its cyan river floor.
+ * three converts the equirect texture to a PMREM on first use (Equirectangular mapping on a standard
+ * material); until the image has loaded the material simply renders without it.
+ */
+let marbleEnv05: THREE.Texture | null = null;
+export function marblePano05(): THREE.Texture {
+  if (marbleEnv05) return marbleEnv05;
+  const t = new THREE.TextureLoader().load(new URL('../../assets/textures/marble05_env_1024.jpg', import.meta.url).href);
+  t.mapping = THREE.EquirectangularReflectionMapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.name = 'marble05_env';
+  marbleEnv05 = t;
+  return t;
+}
+/** envMapRotation that puts the pano's vanishing point (u 0.514, v 0.542 in three's equirect uv) on the
+ *  tunnel direction `tan` (and the pano's up on world up) */
+export function marblePanoRotation05(tan: THREE.Vector3): THREE.Euler {
+  const az = (0.514 - 0.5) * Math.PI * 2, el = (0.542 - 0.5) * Math.PI;
+  const P = new THREE.Vector3(Math.cos(el) * Math.cos(az), Math.sin(el), Math.cos(el) * Math.sin(az));
+  const basis = (f: THREE.Vector3) => {
+    const u = new THREE.Vector3(0, 1, 0).addScaledVector(f, -f.y).normalize();
+    return new THREE.Matrix4().makeBasis(f.clone().normalize(), u, new THREE.Vector3().crossVectors(f, u).normalize());
+  };
+  const W = basis(tan), Q = basis(P);
+  const M = Q.multiply(W.transpose()); // world direction → pano lookup direction
+  const e = new THREE.Euler().setFromRotationMatrix(M, 'XYZ');
+  // three applies makeRotationFromEuler(−rotation) to the lookup vector (WebGLMaterials, PMREM env)
+  return new THREE.Euler(-e.x, -e.y, -e.z, 'XYZ');
+}
+
+/**
  * Ref 05 near gold frame (nearFrameGeometry in tube.ts): stylised polished gold bands. Corners (from the edge
  * toward the stream outward, reference row y 1330): broad white highlight · thin orange line · yellow-orange ·
  * orange with a pale striation, dark cut face; bottom lip (reference column x 432, top → down): pale edge ·
@@ -711,10 +765,15 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
       uOpacity: { value: 1 },
       // wave 7: smaller pale core inside an ORANGE halo (ref 05 VP: hot core ≈115 px², glow radius 13/20 px,
       // r 16–24 (248,169,89), r 24–32 (244,134,76); live was a 289 px² pale-yellow disc, r 16–24 (255,220,139))
+      // wave 8: the reference VP is a larger white-gold light (radial means about (499,478): r 0–8 (252,248,211),
+      // 8–16 (250,220,141), 16–24 (248,175,97), 24–32 (244,140,83), 32–48 (229,112,85)); live it06 went
+      // white → (255,191,106) → (255,155,81) within 16 px. Disc ≈40 px radius at the checkpoint: white core to
+      // ≈0.3 R, pale yellow, yellow-orange, orange, red-orange rim (display values solved through the pipeline)
       uCore: { value: new THREE.Color(3.0, 2.75, 2.1) },
-      uGold: { value: new THREE.Color(1.6, 0.85, 0.32) },
-      uWarm: { value: new THREE.Color(1.05, 0.42, 0.2) },
-      uRim: { value: new THREE.Color(0.8, 0.3, 0.2) },
+      uPale: { value: new THREE.Color(0.95, 0.8, 0.45) }, // (250,220,141)
+      uGold: { value: new THREE.Color(0.8587, 0.5199, 0.2695) }, // (248,175,97)
+      uWarm: { value: new THREE.Color(0.7872, 0.3634, 0.2143) }, // (244,140,83)
+      uRim: { value: new THREE.Color(0.6738, 0.2623, 0.2011) }, // (229,112,85)
     },
     vertexShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec4 uFade;
       void main(){
@@ -723,13 +782,14 @@ export function tunnelEndGlowMaterial(fade = new THREE.Vector4(14, 30, 95, 120))
         vFade = smoothstep(uFade.x, uFade.y, d) * (1.0 - smoothstep(uFade.z, uFade.w, d));
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }`,
-    fragmentShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec3 uCore; uniform vec3 uGold; uniform vec3 uWarm; uniform vec3 uRim; uniform float uOpacity;
+    fragmentShader: /* glsl */ `varying vec2 vUv; varying float vFade; uniform vec3 uCore; uniform vec3 uPale; uniform vec3 uGold; uniform vec3 uWarm; uniform vec3 uRim; uniform float uOpacity;
       void main(){
         float r = length(vUv - 0.5) * 2.0;
-        vec3 c = mix(uRim, uWarm, smoothstep(1.0, 0.6, r));
-        c = mix(c, uGold, smoothstep(0.62, 0.25, r));
-        c = mix(c, uCore, smoothstep(0.34, 0.02, r));
-        float a = (1.0 - smoothstep(0.82, 1.0, r)) * vFade * uOpacity;
+        vec3 c = mix(uRim, uWarm, smoothstep(0.95, 0.72, r));
+        c = mix(c, uGold, smoothstep(0.72, 0.5, r));
+        c = mix(c, uPale, smoothstep(0.52, 0.32, r));
+        c = mix(c, uCore, smoothstep(0.34, 0.14, r));
+        float a = (1.0 - smoothstep(0.86, 1.0, r)) * vFade * uOpacity;
         if (a < 0.003) discard;
         gl_FragColor = vec4(c, a);
         #include <tonemapping_fragment>

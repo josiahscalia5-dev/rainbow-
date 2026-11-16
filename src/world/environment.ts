@@ -241,8 +241,12 @@ export function buildEnvironment(course: Course): Environment {
   const bay05 = 14;
   const sGlow05 = course.stage('06').s0 - 5.9; // the straight flares into the 06 hall after this
   const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
-  const rings05: number[] = [];
-  for (let s = sF05; s >= s05 + 2; s -= bay05) rings05.unshift(s);
+  // ring slots every bay, ending at sF05; wave 8 (path-camera request, REQUESTS.md): the real ring AT sF05 is
+  // dropped (depth 53 → r≈189 px, ref ring #2 is r≈170) — the far block's ring at virtual depth ≈59 replaces it.
+  // The slot list still places the lid pair camera-side of that slot and the slot-row phase.
+  const ringSlots05: number[] = [];
+  for (let s = sF05; s >= s05 + 2; s -= bay05) ringSlots05.unshift(s);
+  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5);
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
   // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
@@ -264,10 +268,18 @@ export function buildEnvironment(course: Course): Environment {
     relief: { corrugation: 0, bevel: 0.018, bevelWidth: 0.08 },
     rimColor: '#b02a9a', rimStrength: 0.0, farGlow: glowT05,
     repeatU: 64, repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.16] as [number, number],
-    offsetV: 0.5 - ((((rings05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+    offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+    // wave 8: luminous magenta-pink instead of violet (ref left wall mean (192,76,167), violet share of
+    // violet+magenta 40–51 %; it06 (159,47,178), 91–93 %): warmer F0 between '#d49cf4' and '#f29ad6', softer
+    // and later violet mid tint, no slot bevel (its aliased highlight drew a jagged pink outline round every slot),
+    // and the Marble 05 panorama as the reflection source (marblePano05: pink walls, warm ring lights, VP glow)
+    color: '#eaa2ea', emissive: '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9,
+    relief: { corrugation: 0, bevel: 0, bevelWidth: 0.08 },
+    envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
+    farGlow: { ...glowT05, mid: { color: '#9a3ad8', near: 14, far: 60, amount: 0.3 } },
   };
   // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
-  const strips05: TubeStrips = { ...strips, intensity: 3.8, width: 0.017 };
+  const strips05: TubeStrips = { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
   const addWall = (a0: number, a1: number, mat: THREE.Material) => {

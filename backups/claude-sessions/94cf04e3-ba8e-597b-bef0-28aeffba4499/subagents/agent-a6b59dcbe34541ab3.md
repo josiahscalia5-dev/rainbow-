@@ -990,3 +990,177 @@ Let me zoom into the baseline seam region (y 530–600) to see the current join 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T01:52:45.283Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np, math\nfor name in ['references/05_flow_into_the_current.png','qa/pilot05/wave8/baseline/05.png']:\n  a=np.asarray(Image.open(name).convert('RGB')).astype(float)\n  vx,vy=499.5,479\n  print(name)\n  for ang in (90,60,120,30,150):\n    th=math.radians(ang); runs=[]; prev=False; start=0\n    for r in range(8,330):\n      x=int(round(vx+r*math.cos(th))); y=int(round(vy-r*math.sin(th)))\n      if y<0: break\n      R,G,B=a[y,x]\n      gold = (R>200 and G>120 and B<170 and R-B>70)\n      if gold and not prev: start=r\n      if  …[+191 chars]`
+
+### 🧑 User — 2026-11-16T01:52:45.552Z
+
+> ↩︎ result: references/05_flow_into_the_current.png
+>  ang 90 ['8-19', '22-23', '30-32', '44-46', '165-172', '258-274', '288-289']
+>  ang 60 ['8-25', '30-31', '155-156', '243-249', '251-252', '256-259']
+>  ang 120 ['8-24', '30-32', '44-46', '61-64', '101-102', '265-266']
+>  ang 30 ['9-20', '22-26', '41-42', '139-148', '215-234']
+>  ang 150 ['8-27', '29-34', '37-38', '43-47', '60-64', '95-96', '104-108', '160-161', '171-173', '175-178', '284-286']
+> qa/pilot05/wave8/baseline/05.png
+>  ang 90 ['9-46', '53-54', '273-286', '295-297', '320-326']
+>  ang 60 ['8-45', '50-53', '60-65', '78-83', '113-118', '184-195', '257-265']
+>  ang 120 ['9-45', '50-53', '61-64', '78-82', '113-118', '184-194', '246-270']
+>  ang 30 ['8-42', '178-182', '248-252']
+>  ang 150 ['9-43', '179-183', '236-241']
+
+### 🤖 Claude — 2026-11-16T01:53:12.657Z
+
+> 🔧 **Bash** `{"command": "tail -c 300 qa/pilot05/REQUESTS.md | cat -A | tail -3; ls qa/pilot05/wave8/", "description": "Check end of REQUESTS.md formatting"}`
+
+### 🧑 User — 2026-11-16T01:53:12.688Z
+
+> ↩︎ result: 3, 161, 255 (and dropping/flattening the real ring at sF05) would match; ring/lid MATERIALS already follow it (gold05/lidMat05/glowT05 in my section). FYI: the far-ring basis makeBasis(Rt, U, T) is left-handed (Rt = TM-CM-^WU), i.e. a mirror M-bM-^FM-^R inverted winding; my band shader is now sign-robust to it.$
+> baseline
+> environment
+> foam
+> path-camera
+> water
+
+### 🤖 Claude — 2026-11-16T01:53:14.926Z
+
+> 🔧 **Bash** `{"command": "for d in environment foam water; do echo \"== $d\"; cat qa/pilot05/wave8/$d/NOTES.md 2>/dev/null | head -30; ls qa/pilot05/wave8/$d; done", "description": "Read other wave8 specialists' NOTES"}`
+
+### 🧑 User — 2026-11-16T01:53:14.961Z
+
+> ↩︎ result: == environment
+> # wave 8 · washer-environment-modeler · Screen 05 (second pass after wave 7 it06)
+> 
+> ## Plan (written first, before any capture)
+> 1. RINGS (gold05/withBandShading, sign-robust): measure ref ring #1/#2 bulb pitch/size/brightness + highlight line + halo first;
+>    then denser, bigger, brighter warm-white bulbs with a yellow halo + a brighter white-yellow crown line; body hue only if measured.
+> 2. WALLS (wall05): warmer F0/base toward magenta-pink (between '#d49cf4' and '#f29ad6'), lighter lit panels, stronger lengthwise
+>    white-pink streaks; keep the capsule-slot rows. Target: violet share 29–46 %, spec-white ≈5 %.
+> 3. LIDS (lid05 geometry in tube.ts + lidMat05): rounded half-dome puck SHAPE first (domed top, rounded rim), then glossy shading
+>    with a top highlight (target lid V std ≈0.22).
+> 4. VP (my glow/tunnelEndGlow section): larger warm white-gold core so the rings recede evenly into light.
+> 5. Near gold frame corners last (gold share 32/33/43 → 43/50/45 %). Max 6 captures, screen_report + side-by-side each,
+>    revert what does not look closer; tsc + regress 04 06 07 08 at the end; read REQUESTS.md between iterations.
+> 
+> ## Log
+> NOTES.md
+> measure05.py
+> == foam
+> # Screen 05 wa …[+3643 chars]
+
+### 🤖 Claude — 2026-11-16T01:53:17.783Z
+
+Other wave-8 specialists (water, foam) are also active. I'll append my request line (append only, no rewrite).
+
+### 🤖 Claude — 2026-11-16T01:53:22.232Z
+
+> 🔧 **Bash** `{"command": "printf '%s\\n' \"- wave8 path-camera-transition-engineer → washer-environment-modeler (02:20 UTC): FAR RINGS. Measured ref ring radii about the VP (499,479), rays at 90/120/150°: ≈270 / 170 / 104 / 62 / 45 / 31 px, then the warm throat (r<25). Live calibration r ≈ 10000/D → virtual depths ≈ 40 (your real ring #1, keep) / 59 / 97 / 161 / 222 / 322. My far block will put far rings at D ≈ 59, 97, 161, 222, 322 (ringDv). Please DROP the real 05 ring at sF05 (rings05's last entry, depth 53.25 → r≈189, it is the 'ring #2 too big'); my far ring at D≈59 replaces it (r≈170). Until you drop …[+325 chars]`
+
+### 🧑 User — 2026-11-16T01:53:22.267Z
+
+> ↩︎ result: - wave8 path-camera-transition-engineer → washer-environment-modeler (02:20 UTC): FAR RINGS. Measured ref ring radii a
+
+### 🤖 Claude — 2026-11-16T01:53:26.881Z
+
+> 🔧 **Bash** `{"command": "grep -n 'rings05' src/world/environment.ts", "description": "Find rings05 usages"}`
+
+### 🧑 User — 2026-11-16T01:53:26.916Z
+
+> ↩︎ result: 244:  const rings05: number[] = [];
+> 245:  for (let s = sF05; s >= s05 + 2; s -= bay05) rings05.unshift(s);
+> 267:    offsetV: 0.5 - ((((rings05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+> 306:  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05 }));
+> 334:  const lids05 = rings05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+
+### 🤖 Claude — 2026-11-16T01:53:32.985Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/REQUESTS.md", "old_string": "Until you drop it I keep my first far ring OFF so there is never a double ring; tell me here when it is gone.", "new_string": "My block checks `rings05` itself for an entry within ±0.5 of sF05: while it is there my D≈59 ring stays OFF (never a double ring); once you remove it from `rings05` my ring switches on by itself — tell me here when it is gone."}`
+
+### 🧑 User — 2026-11-16T01:53:33.062Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/REQUESTS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:53:46.959Z
+
+Let me extract the reference far river's cyan and pink runs per row more precisely to define the far-river layout.
+
+### 🤖 Claude — 2026-11-16T01:53:51.061Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\ndef runs(mask,x0):\n    out=[];st=None\n    for i,v in enumerate(mask):\n        if v and st is None: st=i\n        if (not v) and st is not None:\n            if i-st>=2: out.append((st+x0,i-1+x0))\n            st=None\n    if st is not None: out.append((st+x0,len(mask)-1+x0))\n    return out\nx0,x1=380,640\nfor y in range(484,572,3):\n    row=a[y,x0:x1]; r,g,b=row[:,0],row[:,1],row[:,2]\n    cy=(b>190)&(g>110)&(r<140)&(b-r>9 …[+268 chars]`
+
+### 🧑 User — 2026-11-16T01:53:51.250Z
+
+> ↩︎ result: 484 C []  P [(572, 573), (622, 623)]  W [(460, 462), (495, 508)]  Y [(443, 444), (455, 456), (470, 472), (475, 477), (480, 481), (484, 485), (523, 524), (551, 552)]
+> 487 C []  P [(559, 561), (563, 567), (571, 572), (621, 622)]  W [(470, 480), (510, 514)]  Y [(489, 493), (527, 530)]
+> 490 C []  P [(563, 571), (585, 588), (606, 607), (616, 620)]  W [(483, 494), (520, 523)]  Y [(504, 506), (514, 515)]
+> 493 C []  P [(542, 543), (570, 571)]  W [(497, 504), (528, 536), (605, 606), (610, 611), (620, 621)]  Y [(513, 518)]
+> 496 C [(471, 472)]  P []  W [(477, 481), (499, 501), (507, 508), (536, 541), (619, 620), (624, 627)]  Y [(522, 528)]
+> 499 C [(475, 476)]  P [(508, 509), (567, 568), (615, 616)]  W [(494, 495), (551, 552), (623, 627)]  Y [(523, 529)]
+> 502 C []  P []  W [(488, 489)]  Y [(529, 537)]
+> 505 C [(522, 525)]  P [(470, 471), (514, 517), (639, 639)]  W [(488, 490), (492, 495), (559, 565)]  Y [(530, 538), (626, 627)]
+> 508 C [(545, 547)]  P [(516, 517), (556, 558)]  W [(425, 426), (482, 497), (564, 568)]  Y [(532, 541), (625, 626)]
+> 511 C [(519, 526), (546, 551)]  P [(509, 512), (562, 564), (585, 586)]  W [(414, 415), (457, 466), (469, 482), (572, 576)]  Y [(531, 537)]
+> 514 C [(518, 521), (541, …[+3177 chars]
+
+### 🤖 Claude — 2026-11-16T01:56:05.888Z
+
+> 🔧 **Bash** `{"command": "grep -n 'float smin' -A4 src/vfx/*.ts | head; grep -n 'aCore\\|vHalfW\\|aStyle' src/vfx/waterRibbon.ts | head -20; sed -n 780,820p src/vfx/waterRibbon.ts", "description": "Find smin and ribbon attribute setup"}`
+
+### 🧑 User — 2026-11-16T01:56:05.930Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:239:float smin(float a, float b, float k) {
+> src/vfx/waterRibbon.ts-240-  float h = max(k - abs(a - b), 0.0) / k;
+> src/vfx/waterRibbon.ts-241-  return min(a, b) - h * h * k * 0.25;
+> src/vfx/waterRibbon.ts-242-}
+> src/vfx/waterRibbon.ts-243-
+> 23: * Per-stage colour-band layout (blended across stage boundaries, baked into `aStyle`):
+> 147:attribute vec4 aStyle;   // band layout: gate, offset, half width, free-meander weight (see BAND_STYLE)
+> 148:attribute float aCore;   // 05: core-centre lateral swing (units, see coreLateral)
+> 153:varying float vHalfW;
+> 164:  vStyle = aStyle;
+> 165:  vCore = aCore;
+> 175:  vHalfW = aHalfW;
+> 214:varying float vHalfW;
+> 351:  float hw = vHalfW;
+> 732:  float eu = abs(lat) - vHalfW;               // units from the edge (negative inside)
+> 733:  float edge = smoothstep(-0.75, -0.3, eu + edgeN * vHalfW);
+> 740:  float cutC = cells(vec2(u * vHalfW * 4.0, s * 3.6));
+> 770:    float x = u * vHalfW;
+> 866:  geo.setAttribute('aStyle', new THREE.BufferAttribute(style, 4));
+> 867:  geo.setAttribute('aCore', new THREE.BufferAttribute(core, 1));
+>         col = mix(col, vec3(2.2, 2.4, 2.5), core);
+>       }
+>     }
+>   }
+>   gl_FragColor = vec4(col, 1.0);
+>   ${FRAG_TAIL}
+> }
+> `;
+> 
+> exp …[+1160 chars]
+
+### 🤖 Claude — 2026-11-16T01:56:08.145Z
+
+> 🔧 **Bash** `{"command": "sed -n 720,760p src/vfx/waterRibbon.ts; sed -n 820,860p src/vfx/waterRibbon.ts", "description": "Read ribbon edge foam lace and vertex layout"}`
+
+### 🧑 User — 2026-11-16T01:56:08.187Z
+
+> ↩︎ result: flC *= 0.5 + 0.8 * cN;                      // the small stars cluster on the glossy lanes (not a uniform snow)
+>     float flD = flowGlint(vec2(wq * 16.0, v5 * 0.32 + 7.0), 0.5, 6.0, 2.4, 0.3, uTime + 4.1);
+>     // (the big near flares sit mostly on the swell crests: light catching the heaving surface)
+>     // (it05: the pink ribbons sparkle too, pink-white — ref 05 mid bands are full of bright glints)
+>     c5 += mix(vec3(1.9, 2.1, 2.3), vec3(2.3, 1.7, 2.2), pinkM) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))
+>         + flB * near5 * (0.5 + 1.6 * crestN + 0.6 * segN) + flC * near5 + flD * (1.0 - near5) * (1.0 - smoothstep(0.2, 0.5, fws)) * 0.9)
+>         * (1.0 - 0.2 * pinkM);
+>     #endif
+>     col = mix(col, c5, sw);
+>   }
+>   // ---- soap-foam lace where the water meets the foam banks ----
+>   float edgeN = (vnoise(vec2(s * 1.3, u * 2.0)) - 0.5) * 0.1;
+>   float eu = abs(lat) - vHalfW;               // units from the edge (negative inside)
+>   float edge = smoothstep(-0.75, -0.3, eu + edgeN * vHalfW);
+>   if (edge > 0.0) {
+>     float c = cells(vec2(lat * 3.2, (s - vSpeed * uTime * 0.35) * 3.2));
+>     vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
+>     col = mi …[+2962 chars]
+

@@ -501,3 +501,178 @@ I'll start by reading the coordination files and my previous notes.
 > 1280 0.0
 > 1408 0.0
 
+### 🤖 Claude — 2026-11-16T01:53:32.255Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"flowGlint\\|lensFlare\\|starGlint\\|FRAG_FX_GLSL\" src --include=*.ts | grep -v \"^src/vfx/glsl.ts\" ", "description": "Find glint helper usages"}`
+
+### 🧑 User — 2026-11-16T01:53:32.287Z
+
+> ↩︎ result: src/vfx/foam.ts:19:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+> src/vfx/foam.ts:126:${FRAG_FX_GLSL}
+> src/vfx/waterRibbon.ts:14:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> src/vfx/waterRibbon.ts:225:${FRAG_FX_GLSL}
+> src/vfx/waterRibbon.ts:555:    float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * 0.42), 0.42, 22.0, 2.4, uTime);
+> src/vfx/waterRibbon.ts:672:    float flA = flowGlint(vec2(wq * 6.0, v5 * 0.075), 0.75, 18.0, 3.8, 0.0, uTime);
+> src/vfx/waterRibbon.ts:675:    float flB = flowGlint(vec2(kNw * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(kNw * 4.1 + 0.6)), 0.7, 30.0, 4.5, 0.3, uTime + 2.7);
+> src/vfx/waterRibbon.ts:676:    flB = max(flB, flowGlint(vec2(kNw * 2.7 + 0.37, v5 * 2.1 + 1.6 * sin(kNw * 5.3 + 2.0)), 0.45, 18.0, 4.0, 0.2, uTime + 0.9) * 0.8);
+> src/vfx/waterRibbon.ts:679:    float flC = flowGlint(vec2(kN * 7.0, v5 * 4.5 + 0.3 + 1.7 * sin(kN * 13.0 + 0.7)), 0.55, 7.0, 2.6, 0.6, uTime + 1.3);
+> src/vfx/waterRibbon.ts:683:    float lz = lensFlare(vec2(kNw * 1.8, v5 * 1.6 + 1.1 * sin(kNw * 3.3 + 1.0)), 0.8, 90.0, 7.0, uTime);
+> src/vfx/waterRibbon.ts:684:    lz = max(lz, 0.85 * lensFlare(vec2(kNw * 3.1 + 0.41, v5  …[+325 chars]
+
+### 🤖 Claude — 2026-11-16T01:54:53.797Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/wave8/path-camera/NOTES.md | head -80; grep -n \"farRiverMaterial\" -A60 src/world/materials.ts | head -120", "description": "Read path-camera notes and far river material"}`
+
+### 🧑 User — 2026-11-16T01:54:53.831Z
+
+> ↩︎ result: # Screen 05 wave 8 — path-camera-transition-engineer
+> 
+> ## Plan (written before any edit)
+> 1. Far river: replace the straight striped chord with a winding far stream — the chord's centre (and the cyan core / pink bands)
+>    follows an S-bend lateral offset that continues the real near/mid core (coreLateral) at the seam and narrows into the VP.
+> 2. Far coins: only if they can be placed through ft.point and hand over to the real coins with no pop; else omit (gameplay count unchanged).
+> 3. Far ring depths: ringDv → ≈61/103/161/255 virtual depth (+ throat); request the env specialist to flatten/drop the real ring at sF05 if needed.
+> 4. Far foam rims (fine lavender/blue edges) on the far river + warm white-gold far VP (my glow), rings receding evenly into it.
+> 5. Each step: capture itNN, screen_report vs baseline, Read the side-by-side, keep only what looks closer; finish with tsc, ride check, gameplay test, regression.
+> 
+> ## Log
+> 750:export function farRiverMaterial(glow: FarGlow): THREE.MeshBasicMaterial {
+> 751-  const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+> 752-  const uniforms = {
+> 753-    uRivCore: { value: new THREE.Color('#0aa2f6') },
+> 754-    uRivBand: { value: ne …[+3074 chars]
+
+### 🤖 Claude — 2026-11-16T01:54:58.492Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad && python3 -I crops.py /home/user/rainbow-/qa/pilot05/wave8/baseline/05.png z_seam.png 470 660 200 700 1.6", "description": "Zoom on far river seam region"}`
+
+### 🧑 User — 2026-11-16T01:54:58.799Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T01:55:00.475Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/z_seam.png"}`
+
+### 🧑 User — 2026-11-16T01:55:00.497Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:55:54.089Z
+
+Now I'll implement the first iteration: a single anisotropic speed-streak field for 05 (pink and cyan), brushed soft band edges, soft streaky near sweeps, and a new colour block.
+
+### 🤖 Claude — 2026-11-16T01:56:01.113Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  return line * seg * (0.5 + 0.7 * hs) * (1.0 - smoothstep(0.22, 0.42, fw));\n}\n\nvoid main() {", "new_string": "  return line * seg * (0.5 + 0.7 * hs) * (1.0 - smoothstep(0.22, 0.42, fw));\n}\n\n// 05 (wave 8) speed streaks: ref 05 water is motion-blurred satin — densely packed bright dashes running\n// ALONG the flow (≈4–8 px apart in the mid field, long fanning streaks near the camera) over broad light /\n// dark lanes, on the cyan AND on the pink bands. Anisotropic value noise (cells ≈15–25× l …[+1300 chars]`
+
+### 🧑 User — 2026-11-16T01:56:01.181Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:10.174Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  pR *= 1.0 - sR * smoothstep(rimW * 1.8, rimW * 2.8, wR);\n  // hair-thin pink filaments", "new_string": "  pR *= 1.0 - sR * smoothstep(rimW * 1.8, rimW * 2.8, wR);\n  // ---- 05 (wave 8): one speed-streak field for the whole river (cyan + pink) ----\n  // X = across-flow coordinate (units): ahead of Benny it follows the S-band midline, normalised by the band\n  // spacing so the streaks stay parallel to the pink bands on every bend; behind him it fans out from his\n  // track (÷(1 + 0.7·back)) li …[+1220 chars]`
+
+### 🧑 User — 2026-11-16T01:56:10.244Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:14.000Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float back = max(-db, 0.0);\n  float wake = (vStyle.x > 0.0 && uBenny.z > 0.0) ? sw * vStyle.x : 0.0;", "new_string": "  float wake = (vStyle.x > 0.0 && uBenny.z > 0.0) ? sw * vStyle.x : 0.0;"}`
+
+### 🧑 User — 2026-11-16T01:56:14.071Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:17.207Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  float dW = abs(abs(dlB) - cW);\n  float frayW = (vnoise(vec2((abs(dlB) - cW) * 14.0, v5 * 0.9 + 3.0)) - 0.5) * wW * 0.5;\n  float pW = (1.0 - smoothstep(wW - aaw, wW + aaw, dW - frayW)) * wake * step(0.001, wW);", "new_string": "  float dW = abs(abs(dlB) - cW);\n  // (wave 8) soft brushed edges from the same streak field (the sweeps lie along the fanning X lines,\n  // so their edges fray into streaks along the sweep instead of the straight plank edges of wave 7)\n  float fWw = 0.4 * wW + aaw;\n  …[+149 chars]`
+
+### 🧑 User — 2026-11-16T01:56:17.277Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:19.414Z
+
+> 🔧 **Bash** `{"command": "grep -n \"=============== 05: thick glossy river\\|col = mix(col, c5, sw);\\|soap-foam lace\" src/vfx/waterRibbon.ts", "description": "Locate 05 colour block bounds"}`
+
+### 🧑 User — 2026-11-16T01:56:19.441Z
+
+> ↩︎ result: 615:  // =============== 05: thick glossy river (sw = 1) ===============
+> 753:    col = mix(col, c5, sw);
+> 755:  // ---- soap-foam lace where the water meets the foam banks ----
+
+### 🤖 Claude — 2026-11-16T01:56:52.453Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  // =============== 05: thick glossy river (sw = 1) ===============\n  // The user rejected the 05 water as \"a flat blue road with straight stripes\". Here the surface is a\n  // flow-aligned height field: every streak, ridge and flare is laid out in the flow coordinate q\n  // (-1 on the left band's centre line, +1 on the right one), so they bend with the pink S-bands.\n  // Depth comes from deep-azure troughs between bright crests, tubular pink ribbons (deep magenta\n  // edges → hot pink → lig …[+7324 chars]`
+
+### 🧑 User — 2026-11-16T01:56:52.529Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:53.311Z
+
+Now the lighting, near field and glints segments.
+
+### 🤖 Claude — 2026-11-16T01:57:01.711Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    c5 += mix(vec3(0.6, 1.2, 1.6), vec3(1.4, 0.7, 1.3), pinkM) * gl5 * (smoothstep(0.6, 0.92, H5) * 0.6 + silkL * 0.7);\n\n    // near field (right behind Benny, 1 u ≈ 160–280 px): deep azure troughs, blue-white glossy swell\n    // crests (the reflection of the lit tunnel on the heaving surface; on the pink sweeps a light-pink\n    // sheen), soft flow streaks\n    if (near5 > 0.0) {\n      // (wave 7) deep azure lanes + saturated glossy cyan lane highlights (little red, so the body stays\n      / …[+1592 chars]`
+
+### 🧑 User — 2026-11-16T01:57:01.777Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:57:19.917Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    #else\n    float flA = flowGlint(vec2(wq * 6.0, v5 * 0.075), 0.75, 18.0, 3.8, 0.0, uTime);\n    // (it03) near \"lightning\" flares: long bright streaks laid along the fanning flow, two staggered sets\n    // (rows bent by a smooth across-flow warp — a per-column hash jump would spike the glint's derivatives)\n    float flB = flowGlint(vec2(kNw * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(kNw * 4.1 + 0.6)), 0.7, 30.0, 4.5, 0.3, uTime + 2.7);\n    flB = max(flB, flowGlint(vec2(kNw * 2.7 + 0.37, v5 * 2.1 +  …[+3914 chars]`
+
+### 🧑 User — 2026-11-16T01:57:19.992Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:57:24.374Z
+
+> 🔧 **Bash** `{"command": "grep -n \"silkL\\|silkA\\|crestN\\|kNw\\|\\bkN\\b\\|swell\\|troughN\\|strN\\|segN\\|\\bcN\\b\\|rFar\\|silk(\" src/vfx/waterRibbon.ts; npx tsc --noEmit 2>&1 | tail -3", "description": "Check stale variable references and typecheck"}`
+
+### 🧑 User — 2026-11-16T01:57:26.564Z
+
+> ↩︎ result: 294:float silk(float q, float v, float K, float seed, float wig) {
+> 384:  // (04/06/07 strand texture; 05 has its own silk/swell field below)
+> 417:  float modA = mix(0.15, 0.4, freeK);         // 05: even band width (the ±40 % swell drew the slab)
+> 647:    vec3 N5 = normalize(N0 + 0.3 * vec3(H5 - 0.5, 0.0, swell - 0.5));
+
+### 🤖 Claude — 2026-11-16T01:57:29.525Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    vec3 N5 = normalize(N0 + 0.3 * vec3(H5 - 0.5, 0.0, swell - 0.5));", "new_string": "    vec3 N5 = normalize(N0 + 0.3 * vec3(H5 - 0.5, 0.0, dash - 0.25));"}`
+
+### 🧑 User — 2026-11-16T01:57:29.588Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:57:30.180Z
+
+> 🔧 **Bash** `{"command": "sed -n 612,700p src/vfx/waterRibbon.ts", "description": "Review the new 05 block"}`
+
+### 🧑 User — 2026-11-16T01:57:30.210Z
+
+> ↩︎ result: #endif
+>   }
+> 
+>   // =============== 05: thick glossy river (sw = 1) ===============
+>   // Wave 8: the whole 05 river (cyan core, pink S-bands, near sweeps) is shaded from ONE speed-streak field
+>   // laid out along the flow coordinate X (see above): motion-blurred satin like ref 05 — broad light/dark
+>   // lanes + dense thin bright dashes along the current, on cyan and on pink — instead of flat pink fills and
+>   // marble-like silk lines. Depth: deep-azure lanes between bright crests, pink ribbons graded from a deep
+>   // magenta-violet outer edge to a light streaky core side, Fresnel tint, sun specular, the tunnel-end
+>   // glitter path and bump normals from the same height field; star flares carried by the current.
+>   if (sw > 0.001) {
+>     float near5 = 1.0 - smoothstep(0.0075, 0.014, fws);
+>     float wq = q + 0.05 * sin(v5 * 0.23 + q * 4.0);           // slow braid of the flow lines
+>     float lane = SS.x, dash = SS.y;
+>     // height field (shading + bump): broad lanes, the dashes as glossy ridges on top
+>     float H5 = clamp(0.5 + lane * 1.3 + dash * 0.22, 0.0, 1.0);
+>     // cyan: deep azure lanes -> electric cyan -> bright cyan crests
+>     vec3 cy = mix(uC5Deep, uC5, smoothstep(0.1, 0.6, H5)) …[+4954 chars]
+

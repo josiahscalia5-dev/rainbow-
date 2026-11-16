@@ -552,3 +552,287 @@ Pre-edit 05 is identical to the baseline. Let me zoom closer into the reference 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T01:54:10.319Z
+
+> 🔧 **Bash** `{"command": "grep -n \"'04'\\|'05'\\|'06'\" src/game/Game.ts | head -10; grep -n \"stage('05')\\|s0:\\|s1:\" src/world/course.ts | head -20; cat qa/capture_log.json | python3 -I -c \"import json,sys; d=json.load(sys.stdin); [print(s['id'], s['state'].get('s'), s['state'].get('stage')) for s in d['shots']]\"", "description": "Find stage ranges and checkpoint s values"}`
+
+### 🧑 User — 2026-11-16T01:54:10.383Z
+
+> ↩︎ result: 29:const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> 130:    basin: ['02', '05'],
+> 526:    '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+> 527:    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+> 528:    '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+> 24:  s0: number;
+> 25:  s1: number;
+> 91:  s0: number;
+> 92:  s1: number;
+> 410:    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+> 415:    const def = (id: StageId, s0: number, s1: number, o: Partial<StageDef>): StageDef => ({
+> 480:    this.st05 = this.stage('05');
+> 03 48.495 03
+> 05 132.438 05
+
+### 🤖 Claude — 2026-11-16T01:54:16.120Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/st.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5207);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\nconst page = await browser.newPage({ viewport: { width: 432, height: 768 } });\nawait page.goto(`${vite.url}/?qa=1&dpr=1`);\nawait page.waitForFunction(() => window.__rainbow?.ready === true, null, { timeout: 240000 });\nconst r = await page …[+494 chars]`
+
+### 🧑 User — 2026-11-16T01:54:27.094Z
+
+> ↩︎ result: {"04":{"mode":"ride","stage":"04","s":77.413,"lat":0,"coins":1330,"hearts":5,"paused":false,"bennyY":-21.896,"bennyVisible":true,"cam":[0.72,-14.48,-15.82]},"05":{"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]},"06":{"mode":"ride","stage":"06","s":198.924,"lat":0,"coins":1680,"hearts":5,"paused":false,"bennyY":-37.452,"bennyVisible":true,"cam":[0.95,-38.81,-132.79]}}
+> 423:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 426:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+> 427:      def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
+
+### 🤖 Claude — 2026-11-16T01:54:30.362Z
+
+Now I'll write the new fine-foam impostor shader (micro open-bubble texture, scalloped lower outlines, per-pixel sphere depth so lumps sink into the water and merge with curved creases).
+
+### 🤖 Claude — 2026-11-16T01:54:59.086Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const BANK_BUB_VERT = /* glsl */ `\nvarying vec2 vP;\nvarying vec3 vInst;\nvarying float vBig;\n#include <fog_pars_vertex>\nvoid main() {\n  vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);\n  float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);\n  vec4 mvPosition = viewMatrix * c;\n  // wave 7: 0 for bubbles <= ~18 px, 1 for >= ~40 px on screen (the ref's big near bumps show large white caps)\n  vBig = smoothstep(0.012, 0.026, projectionMatrix[1][1] * r / max(-mvPosition.z, …[+6741 chars]`
+
+### 🧑 User — 2026-11-16T01:54:59.162Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:55:00.665Z
+
+Now the raft kind table: more size spread, sunk lumps, and tiny lace bubbles at the waterline.
+
+### 🤖 Claude — 2026-11-16T01:55:02.022Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  const CELL = quality === 'high' ? 0.16 : 0.3;\n  const P = quality === 'high' ? 8 : 5;", "new_string": "  const CELL = quality === 'high' ? 0.16 : 0.3;\n  const P = quality === 'high' ? 13 : 7;"}`
+
+### 🧑 User — 2026-11-16T01:55:02.096Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:55:04.623Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  for (let i = 0; i < nRaft; i++) {\n    const kind = i % P; // 0–1 rim, 2–3 body, 4 heap, 5 outer, 6–7 body (high) / 4 body (low)\n    rafts.setColorAt(i, tmpC.setRGB(kind < 2 ? 0.86 + 0.1 * rr() : 0.8 + 0.2 * rr(), rr(), rr() * 2 - 1));", "new_string": "  for (let i = 0; i < nRaft; i++) {\n    const kind = i % P; // see KIND\n    rafts.setColorAt(i, tmpC.setRGB(kind < 2 || kind >= 8 ? 0.86 + 0.1 * rr() : 0.8 + 0.2 * rr(), rr(), rr() * 2 - 1));"}`
+
+### 🧑 User — 2026-11-16T01:55:04.700Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:55:15.925Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  const KIND: [number, number, number, number, number, number][] = quality === 'high'\n    ? [[0.0, 0.08, 0.04, 0.045, 0.1, 1], [0.04, 0.12, 0.05, 0.04, 0.2, 1], [0.12, 0.5, 0.06, 0.06, 0.35, 1], [0.2, 0.55, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.6], [0.6, 0.4, 0.07, 0.05, 0.3, 1], [0.05, 0.9, 0.045, 0.04, 0.2, 1], [0.3, 0.65, 0.05, 0.05, 0.25, 1]]\n    : [[0.0, 0.1, 0.045, 0.05, 0.15, 1], [0.12, 0.5, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.7], [0.55, 0.45, 0.07, 0.05, 0.3, 1] …[+1838 chars]`
+
+### 🧑 User — 2026-11-16T01:55:16.001Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:55:20.332Z
+
+Now route the 05 berm puffs to a depth-correct impostor mesh while keeping the shared `rand()` sequence (so every other stage's foam stays identical).
+
+### 🤖 Claude — 2026-11-16T01:55:21.533Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number }", "new_string": "interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean }"}`
+
+### 🧑 User — 2026-11-16T01:55:21.595Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:55:30.296Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {\n    if (!list.length) return;\n    const mesh = new THREE.InstancedMesh(geoHi, mat, list.length);\n    list.forEach((pf, i) => {\n      tmpQ.setFromEuler(tmpE.set(rand() * 6, rand() * 6, rand() * 6));\n      tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);\n      tmpM.compose(pf.p, tmpQ, tmpS);\n      mesh.setMatrixAt(i, tmpM);\n      // x = ao + 2 q (q = 05 soap-shading weight x 8, see PUFF_VERT)\n      mesh.setColor …[+1790 chars]`
+
+### 🧑 User — 2026-11-16T01:55:30.380Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:55:42.078Z
+
+Now mark 05-range puffs as impostors with size spread and sinking, and add extra small rim bubbles from a separate RNG.
+
+### 🤖 Claude — 2026-11-16T01:55:49.244Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;\n  const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {\n    const ss = Math.min(s1, Math.max(s0, s));\n    if (inSkip(ss)) return;\n    const f = course.sample(ss);\n    const hw = course.widthAt(ss) / 2;\n    const k05 = bermK(ss);\n    const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;\n    const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;\n    const p = f.pos.clone().ad …[+1406 chars]`
+
+### 🧑 User — 2026-11-16T01:55:49.320Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:55:56.779Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "    build(list, group, sa - 2, sb + 2);\n  }\n", "new_string": "    build(list, group, sa - 2, sb + 2);\n  }\n  // wave 8: extra small bubbles along both 05 rims (own RNG: the shared sequence above is untouched): a lace of tiny\n  // bubbles at the waterline and small bubbles piled on the crest, so the rim reads as fine foam toward the VP\n  {\n    const r5 = rng(9091);\n    const n5 = quality === 'high' ? 7 : 3;\n    for (let s = st05b.s0 + 2; s < st05b.s1 - 2; s += step) {\n      for (const side of [-1, …[+471 chars]`
+
+### 🧑 User — 2026-11-16T01:55:56.869Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:00.429Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  if (rafts.instanceColor) rafts.instanceColor.needsUpdate = true;\n  rafts.visible = false;\n  group.add(rafts);\n  total += nRaft;", "new_string": "  if (rafts.instanceColor) rafts.instanceColor.needsUpdate = true;\n  rafts.visible = false;\n  group.add(rafts);\n  total += nRaft;\n  // wave 8: the 05 berm puffs + rim bubbles as fine-foam impostors (one draw, static)\n  const rim05 = new THREE.InstancedMesh(rafts.geometry, bub.mat, Math.max(1, imp05.length));\n  rim05.name = 'foam_rim05';\n  rim05.frustu …[+382 chars]`
+
+### 🧑 User — 2026-11-16T01:56:00.513Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:06.101Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "      // rotate whirlpool foam about the basin axis with the swirl (θ decreasing = course direction)", "new_string": "      rim05.visible = imp05.length > 0 && st05.s1 - 2 > focusS - 12 && st05.s0 + 2 < focusS + 130 && outro < 0.3;\n      // rotate whirlpool foam about the basin axis with the swirl (θ decreasing = course direction)"}`
+
+### 🧑 User — 2026-11-16T01:56:06.178Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:07.055Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "    berm: berm.mesh,\n    rafts,", "new_string": "    berm: berm.mesh,\n    rafts,\n    rim05,"}`
+
+### 🧑 User — 2026-11-16T01:56:07.126Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:08.654Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  rafts: THREE.InstancedMesh;\n  /** 05 flank-bank lather sheet (shares the berm material) */", "new_string": "  rafts: THREE.InstancedMesh;\n  /** wave 8: 05 berm puffs + rim bubbles as fine-foam impostors */\n  rim05: THREE.InstancedMesh;\n  /** 05 flank-bank lather sheet (shares the berm material) */"}`
+
+### 🧑 User — 2026-11-16T01:56:08.726Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:09.666Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/index.ts", "old_string": "foamRafts: foam.rafts, foamFlank: foam.flank,", "new_string": "foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank,"}`
+
+### 🧑 User — 2026-11-16T01:56:09.732Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/index.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T01:56:14.344Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -10 && (timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave8/foam/it01 2>&1 | tail -2) && python3 -I -c \"import json; d=json.load(open('qa/capture_log.json')); print(d['errors'][:5])\"", "description": "Typecheck and capture it01"}`
+
+### 🧑 User — 2026-11-16T01:56:29.680Z
+
+> ↩︎ result: '  174:   vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 11.0, 1.2, 9.0) + vInst.y * 37.0;'
+> ]
+> ["[05] THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false\n\nMaterial Name: \nMaterial Type: ShaderMaterial\n\nProgram Info Log: Fragment shader is not compiled.\n\nFRAGMENT\n\nERROR: 0:168: 'projectionMatrix' : undeclared identifier\n\n  163:   float R = 1.0 - amp * (1.0 - sc);\n  164:   if (d > R) discard;\n  165:   vec2 q = vP / R;\n  166:   float z = sqrt(max(1.0 - dot(q, q), 0.0));\n  167:   vec3 Nv = vec3(q, z);\n> 168:   vec4 clip = projectionMatrix * vec4(vCv + vR * vec3(vP, z * R), 1.0);\n  169:   gl_FragDepth = 0.5 * clip.z / clip.w + 0.5;\n  170:   // wave 7 ramp: white top caps, lavender-white bodies, periwinkle / blue undersides; lower / side silhouette = the\n  171:   // blue-violet crevice between piled bubbles; inner / lower bubbles of a pile (ambient occlusion vInst.x) bluer\n  172:   float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - q.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35 + 0.05 * vBig;\n  173:   // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top\n  174:   vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(p …[+39 chars]
+
+### 🤖 Claude — 2026-11-16T01:56:33.553Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "const BANK_BUB_FRAG = /* glsl */ `\nuniform vec3 uLightDir;", "new_string": "const BANK_BUB_FRAG = /* glsl */ `\nuniform mat4 projectionMatrix;\nuniform vec3 uLightDir;"}`
+
+### 🧑 User — 2026-11-16T01:56:33.619Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T01:56:35.364Z
+
+> 🔧 **Bash** `{"command": "(timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave8/foam/it01 2>&1 | tail -1) && python3 -I -c \"import json; d=json.load(open('qa/capture_log.json')); print(str(d['errors'])[:600])\" && python3 -I scripts/screen_report.py 05 qa/pilot05/wave8/foam/it01 PREV=qa/pilot05/wave8/baseline/05.png NOW=qa/pilot05/wave8/foam/it01/05.png 2>&1 | tail -15", "description": "Recapture it01 and run screen report"}`
+
+### 🧑 User — 2026-11-16T01:56:58.605Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/foam/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":577191,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+> # Screen 05: reference vs live captures (raw indicators, not a fidelity %)
+> 
+> mad = mean |ΔRGB| at 1/4 scale (lower = closer); hue_corr / edge_corr = −1…1 (higher = closer).
+> 
+> | Capture | mad | hue_corr | edge_corr | mad hud | mad tunnel+VP | mad river mid | mad Benny+near water |
+> |---|---|---|---|---|---|---|---|
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 51.1 | 0.857 | 0.175 | 55.4 | 61.0 | 46.8 | 46.5 |
+
+### 🤖 Claude — 2026-11-16T01:57:00.454Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/wave8/foam/it01/", "description": "List it01 outputs"}`
+
+### 🧑 User — 2026-11-16T01:57:00.473Z
+
+> ↩︎ result: 05.png
+> 05_highlight_NOW.png
+> 05_highlight_PREV.png
+> 05_overlay_NOW.png
+> 05_overlay_PREV.png
+> 05_side_by_side.png
+> metrics.json
+> metrics.md
+
+### 🤖 Claude — 2026-11-16T01:57:01.451Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it01/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T01:57:03.431Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T01:57:03.426Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T01:57:05.194Z
+
+I'll write a reusable crop script (ref | baseline | now) to judge details.
+
+### 🤖 Claude — 2026-11-16T01:57:10.964Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/wave8/foam/tools && cat > /home/user/rainbow-/qa/pilot05/wave8/foam/tools/crops.py <<'EOF'\n\"\"\"wave 8 foam crops: ref | baseline | NOW for the foam/splash regions. Usage: python3 -I crops.py NOW.png OUTDIR\"\"\"\nimport sys\nfrom PIL import Image\nnow, out = sys.argv[1], sys.argv[2]\nR = Image.open('references/05_flow_into_the_current.png').convert('RGB')\nB = Image.open('qa/pilot05/wave8/baseline/05.png').convert('RGB')\nN = Image.open(now).convert('RGB')\nBOX = {'leftrim': (0, 560, 330, 840, 2), 'rightrim': (560, 560, 864, 980, 2), 'lef …[+789 chars]`
+
+### 🧑 User — 2026-11-16T01:57:12.170Z
+
+> ↩︎ result: 05.png
+> 05_highlight_NOW.png
+> 05_highlight_PREV.png
+> 05_overlay_NOW.png
+> 05_overlay_PREV.png
+> 05_side_by_side.png
+> crop_leftnear.png
+> crop_leftrim.png
+> crop_rightnear.png
+> crop_rightrim.png
+> crop_splash.png
+> metrics.json
+> metrics.md
+
+### 🤖 Claude — 2026-11-16T01:57:13.658Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it01/crop_leftrim.png"}`
+
+### 🧑 User — 2026-11-16T01:57:13.684Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:57:14.210Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it01/crop_leftnear.png"}`
+
+### 🧑 User — 2026-11-16T01:57:14.234Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:57:14.661Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it01/crop_rightrim.png"}`
+
+### 🧑 User — 2026-11-16T01:57:14.694Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T01:57:26.517Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/pilot05/wave6/foam/tools/foamcol.py references/05_flow_into_the_current.png qa/pilot05/wave8/baseline/05.png qa/pilot05/wave8/foam/it01/05.png 2>&1 | grep -v Warn", "description": "Measure foam colour shares ref/baseline/it01"}`
+
+### 🧑 User — 2026-11-16T01:57:27.903Z
+
+> ↩︎ result: references/05_flow_into_the_current.png
+>   Lfar    15528 px  mean RGB [216 207 250]  WHITE  22.6%  SHADE(B-R>=30)  48.1%  lum 224.5
+>   Rfar    13971 px  mean RGB [219 208 250]  WHITE  22.8%  SHADE(B-R>=30)  44.2%  lum 225.6
+>   Lnear   14064 px  mean RGB [215 218 250]  WHITE  29.9%  SHADE(B-R>=30)  47.7%  lum 227.4
+>   Rnear    7921 px  mean RGB [215 224 250]  WHITE  33.5%  SHADE(B-R>=30)  48.1%  lum 229.6
+>   heapR x640-864 y700-1000: foam  14.0%  max vertical run 65 px  mean run(cols with foam) 33 px
+> qa/pilot05/wave8/baseline/05.png
+>   Lfar    10946 px  mean RGB [220 224 254]  WHITE  24.5%  SHADE(B-R>=30)  48.6%  lum 232.8
+>   Rfar    23546 px  mean RGB [228 228 254]  WHITE  39.5%  SHADE(B-R>=30)  35.0%  lum 236.7
+>   Lnear   20246 px  mean RGB [221 223 243]  WHITE  21.1%  SHADE(B-R>=30)  31.0%  lum 229.3
+>   Rnear   16662 px  mean RGB [222 223 241]  WHITE  17.5%  SHADE(B-R>=30)  28.1%  lum 228.6
+>   heapR x640-864 y700-1000: foam  21.3%  max vertical run 129 px  mean run(cols with foam) 59 px
+> qa/pilot05/wave8/foam/it01/05.png
+>   Lfar    10201 px  mean RGB [223 227 255]  WHITE  34.2%  SHADE(B-R>=30)  42.1%  lum 234.9
+>   Rfar    13840 px  mean RGB [232 230 255]  WHITE  50.5%  SHADE(B-R>=30)  26.7%   …[+288 chars]
+

@@ -19,7 +19,7 @@ import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
 
 /** c = (ambient occlusion 0..1, seed 0..1, tint -1..1) → instanceColor (see PUFF_VERT) */
-interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number }
+interface Puff { p: THREE.Vector3; r: number; ao: number; tint: number; w5?: number; imp?: boolean }
 
 // ---------------------------------------------------------------------------------- berm profile
 /** berm spans e ∈ [BERM_IN, BERM_OUT] units outward from the ribbon edge (negative = over the water) */
@@ -310,15 +310,51 @@ function makePuffMaterial(quality: 'high' | 'low') {
  * bubbles, a few pores, a glint). instanceColor = (ambient occlusion, seed, tint) as for the puffs.
  * The quad is pushed to the sphere's front so the lather apron and neighbours cut it like a sphere.
  */
+/**
+ * wave 8: fine soap-foam micro texture (ref 05 lumps: the lit tops are smooth lavender-white, the lower half and the
+ * flanks are packed with tiny open bubbles = blue holes with a lit lower-right lip, and a few glossy specks).
+ * p in cells; dens 0..1 = share of cells that are open bubbles. Returns (hole, lip, dome = cell interior, speck).
+ */
+const MICRO_GLSL = /* glsl */ `
+vec4 microFoam(vec2 p, float dens) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  float d1 = 8.0, d2 = 8.0;
+  vec2 r1 = vec2(0.0), h1 = vec2(0.0);
+  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+    vec2 g = vec2(float(x), float(y));
+    vec2 o = vec2(hash12(i + g), hash12(i + g + 19.7));
+    vec2 r = g + o - f;
+    float dd = dot(r, r);
+    if (dd < d1) { d2 = d1; d1 = dd; r1 = r; h1 = vec2(hash12(i + g + 7.3), hash12(i + g + 3.1)); }
+    else if (dd < d2) d2 = dd;
+  }
+  d1 = sqrt(d1); d2 = sqrt(d2);
+  float rad = 0.17 + 0.2 * h1.x;
+  float on = step(h1.y, dens);
+  vec2 dir = -r1 / max(d1, 1e-4);
+  float hole = (1.0 - smoothstep(rad * 0.68, rad, d1)) * on;
+  float ring = smoothstep(rad * 0.7, rad, d1) * (1.0 - smoothstep(rad, rad * 1.55, d1));
+  float lip = ring * on * clamp(dot(dir, vec2(0.6, -0.8)) * 0.7 + 0.45, 0.0, 1.0);
+  float dome = smoothstep(0.0, 0.32, d2 - d1);
+  float speck = (1.0 - smoothstep(0.03, 0.08, length(-r1 - vec2(-0.13, 0.15)))) * (1.0 - on) * step(0.55, h1.x);
+  return vec4(hole, lip, dome, speck);
+}
+`;
+
 const BANK_BUB_VERT = /* glsl */ `
 varying vec2 vP;
 varying vec3 vInst;
 varying float vBig;
+varying vec3 vCv;
+varying float vR;
 #include <fog_pars_vertex>
 void main() {
   vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
   float r = length((instanceMatrix * vec4(1.0, 0.0, 0.0, 0.0)).xyz);
   vec4 mvPosition = viewMatrix * c;
+  vCv = mvPosition.xyz;
+  vR = r;
   // wave 7: 0 for bubbles <= ~18 px, 1 for >= ~40 px on screen (the ref's big near bumps show large white caps)
   vBig = smoothstep(0.012, 0.026, projectionMatrix[1][1] * r / max(-mvPosition.z, 0.01));
   mvPosition.xyz += normalize(-mvPosition.xyz) * r * 0.6;
@@ -329,33 +365,58 @@ void main() {
   #include <fog_vertex>
 }
 `;
+/**
+ * wave 8 (05 only: rafts + the 05 berm puffs): one foam lump = a sphere impostor with the true per-pixel sphere depth,
+ * so lumps sink into the water and into each other with curved creases (a merged low foam mound, not stacked discs);
+ * the lower outline of larger lumps is scalloped by small piled bubbles; the micro texture packs tiny open bubbles on
+ * the lower half / flanks; bubbles under ~14 px render as glossy little soap bubbles with a thin blue rim.
+ */
 const BANK_BUB_FRAG = /* glsl */ `
+uniform mat4 projectionMatrix;
 uniform vec3 uLightDir;
 uniform float uTime;
 varying vec2 vP;
 varying vec3 vInst;
 varying float vBig;
+varying vec3 vCv;
+varying float vR;
 #include <fog_pars_fragment>
 ${NOISE_GLSL}
 ${SOAP05_GLSL}
+${MICRO_GLSL}
 void main() {
-  float d2 = dot(vP, vP);
-  if (d2 > 1.0) discard;
-  float z = sqrt(1.0 - d2);
-  vec3 Nv = vec3(vP, z);
-  // wave 7: ref 05 soap ramp (white top caps, lavender-white bodies, periwinkle / blue undersides); the
-  // lower and side silhouette sinks into blue-violet (the crevice between piled bubbles), the top edge stays
-  // light; inner / lower bubbles of a pile (ambient occlusion vInst.x) are bluer
-  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - vP.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35 + 0.05 * vBig;
+  float px = 2.0 / max(fwidth(vP.x), 1e-4);
+  float d = length(vP);
+  float ang = atan(vP.y, vP.x);
+  float nS = clamp(floor(px / 8.0), 5.0, 16.0);
+  float sc = abs(sin(ang * nS * 0.5 + vInst.y * 31.0));
+  float amp = 0.11 * smoothstep(16.0, 34.0, px) * smoothstep(0.45, -0.35, vP.y / max(d, 1e-3));
+  float R = 1.0 - amp * (1.0 - sc);
+  if (d > R) discard;
+  vec2 q = vP / R;
+  float z = sqrt(max(1.0 - dot(q, q), 0.0));
+  vec3 Nv = vec3(q, z);
+  vec4 clip = projectionMatrix * vec4(vCv + vR * vec3(vP, z * R), 1.0);
+  gl_FragDepth = 0.5 * clip.z / clip.w + 0.5;
+  // wave 7 ramp: white top caps, lavender-white bodies, periwinkle / blue undersides; lower / side silhouette = the
+  // blue-violet crevice between piled bubbles; inner / lower bubbles of a pile (ambient occlusion vInst.x) bluer
+  float t = soapT(Nv) - pow(1.0 - z, 1.5) * (0.3 + 0.45 * clamp(0.5 - q.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.35 + 0.05 * vBig;
+  // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
+  vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 11.0, 1.2, 9.0) + vInst.y * 37.0;
+  float dens = clamp(0.18 + 0.85 * smoothstep(0.4, -0.6, q.y) + 0.35 * (1.0 - z) - 0.25 * vBig, 0.0, 0.92);
+  vec4 mf = microFoam(mp, dens);
+  float kf = 1.0 - smoothstep(0.45, 0.8, fwidth(mp.x) + fwidth(mp.y));
+  t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.5 * kf + mf.y * 0.3 * kf;
   vec3 col = soap05(t + 0.04 * vInst.z);
-  // pores: one or two small dark-blue open bubbles on the larger puffs
-  vec2 pc = vP * 2.2 + vInst.y * 17.0;
-  float cp = cells(pc);
-  float kp = 1.0 - smoothstep(0.25, 0.5, fwidth(pc.x) * 2.0);
-  col = mix(col, SOAP_CREV, (1.0 - smoothstep(0.1, 0.2, cp)) * step(0.7, hash12(floor(pc) + vInst.y * 31.0)) * kp * 0.5);
+  col += vec3(1.0) * mf.w * 0.45 * kf;
   vec3 Lv = (viewMatrix * vec4(normalize(uLightDir), 0.0)).xyz;
   float spec = pow(max(dot(reflect(vec3(0.0, 0.0, -1.0), Nv), Lv), 0.0), 24.0);
   col += vec3(1.0) * spec * 0.25;
+  // tiny bubbles: lavender-white glossy body, thin blue rim, white speck (the lace at the ref waterlines)
+  float tiny = 1.0 - smoothstep(9.0, 16.0, px);
+  vec2 qs = vP - vec2(-0.32, 0.34);
+  vec3 cb = mix(soap05(0.8 + 0.1 * vInst.z), soap05(0.12), smoothstep(0.5, 0.95, d)) + vec3(1.0) * exp(-dot(qs, qs) * 14.0) * 0.55;
+  col = mix(col, cb, tiny);
   gl_FragColor = vec4(col, 1.0);
   ${FRAG_TAIL}
 }
@@ -386,6 +447,8 @@ export interface FoamSystem {
   berm: THREE.Mesh;
   /** 05 flank-bank puffs (instanced, on top of `flank`) */
   rafts: THREE.InstancedMesh;
+  /** wave 8: 05 berm puffs + rim bubbles as fine-foam impostors */
+  rim05: THREE.InstancedMesh;
   /** 05 flank-bank lather sheet (shares the berm material) */
   flank: THREE.Mesh;
   /** Benny's waterline position on the course (call from water.wake() each riding frame) */
@@ -570,23 +633,32 @@ export function createFoam(
   const tmpE = new THREE.Euler();
   const tmpC = new THREE.Color();
 
+  /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris each), see imp05 below */
+  const imp05: { p: THREE.Vector3; r: number; c: [number, number, number] }[] = [];
   const build = (list: Puff[], parent: THREE.Object3D, sa: number, sb: number) => {
     if (!list.length) return;
-    const mesh = new THREE.InstancedMesh(geoHi, mat, list.length);
-    list.forEach((pf, i) => {
+    const nMesh = list.reduce((n, pf) => n + (pf.imp ? 0 : 1), 0);
+    const mesh = nMesh ? new THREE.InstancedMesh(geoHi, mat, nMesh) : null;
+    let i = 0;
+    // the same rand() calls per puff whichever list it lands in, so every other stage's foam stays identical
+    for (const pf of list) {
       tmpQ.setFromEuler(tmpE.set(rand() * 6, rand() * 6, rand() * 6));
       tmpS.set(pf.r, pf.r * (0.78 + rand() * 0.22), pf.r);
+      const seed = rand();
+      if (pf.imp) { imp05.push({ p: pf.p, r: pf.r, c: [pf.ao, seed, pf.tint] }); continue; }
       tmpM.compose(pf.p, tmpQ, tmpS);
-      mesh.setMatrixAt(i, tmpM);
+      mesh!.setMatrixAt(i, tmpM);
       // x = ao + 2 q (q = 05 soap-shading weight x 8, see PUFF_VERT)
-      mesh.setColorAt(i, tmpC.setRGB(pf.ao + 2 * Math.round(Math.min(1, Math.max(0, pf.w5 ?? 0)) * 8), rand(), pf.tint));
-    });
+      mesh!.setColorAt(i, tmpC.setRGB(pf.ao + 2 * Math.round(Math.min(1, Math.max(0, pf.w5 ?? 0)) * 8), seed, pf.tint));
+      i++;
+    }
+    if (!mesh) return;
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     mesh.computeBoundingSphere();
     parent.add(mesh);
     chunks.push({ mesh, sa, sb });
-    total += list.length;
+    total += nMesh;
   };
 
   // ---- continuous lather bank (berm) along both edges ----
@@ -602,16 +674,27 @@ export function createFoam(
   const st05b = course.stage('05');
   const bermK = bermScale05(course);
   const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
-  const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
-    const ss = Math.min(s1, Math.max(s0, s));
-    if (inSkip(ss)) return;
+  /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
+  const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
+  const bermPoint = (ss: number, e: number, side: number, lift: number) => {
     const f = course.sample(ss);
     const hw = course.widthAt(ss) / 2;
     const k05 = bermK(ss);
     const h = squashBerm(bermSurface(ss, e, side, hw), k05) + lift;
     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
-    const p = f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
-    list.push({ p, r, ao, tint: rand() * 2 - 1, w5: soap05W(ss) });
+    return f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+  };
+  const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
+    const ss = Math.min(s1, Math.max(s0, s));
+    if (inSkip(ss)) return;
+    const imp = imp05S(ss);
+    if (imp) {
+      // 05 fine foam: wide size spread (most lumps smaller, a few larger), sunk into the bank so the rim stays low
+      const hz = hash1(ss * 13.1 + e * 7.7 + side * 3.3);
+      r *= 0.5 + 0.95 * hz * hz;
+      lift -= 0.4 * r;
+    }
+    list.push({ p: bermPoint(ss, e, side, lift), r, ao, tint: rand() * 2 - 1, w5: soap05W(ss), imp });
   };
   const smw = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
   /** 05 soap-shading weight of a puff (same ramp as the berm's uSt05) */
@@ -651,6 +734,24 @@ export function createFoam(
       }
     }
     build(list, group, sa - 2, sb + 2);
+  }
+  // wave 8: extra small bubbles along both 05 rims (own RNG: the shared sequence above is untouched): a lace of tiny
+  // bubbles at the waterline and small bubbles piled on the crest, so the rim reads as fine foam toward the VP
+  {
+    const r5 = rng(9091);
+    const n5 = quality === 'high' ? 7 : 3;
+    for (let s = st05b.s0 + 2; s < st05b.s1 - 2; s += step) {
+      for (const side of [-1, 1]) {
+        for (let k = 0; k < n5; k++) {
+          const ss = s + (r5() - 0.5) * step;
+          const lace = k < 3;
+          const e = lace ? -0.6 + r5() * 0.35 : -0.35 + r5() * 0.75;
+          const u = r5();
+          const r = lace ? 0.025 + 0.03 * u * u : 0.035 + 0.06 * u * u;
+          imp05.push({ p: bermPoint(ss, e, side, r * (lace ? 0.2 : -0.1)), r, c: [lace ? 0.95 : 0.75 + 0.25 * r5(), r5(), r5() * 2 - 1] });
+        }
+      }
+    }
   }
 
   // ---- whirlpool: rim ring + spiral band foam (rotates with the swirl) ----
@@ -745,7 +846,7 @@ export function createFoam(
   // bubble puffs: camera-facing sphere impostors (2 triangles each), CELL-spaced world cells along s,
   // P puffs per cell, a ring buffer of NC cells per side
   const CELL = quality === 'high' ? 0.16 : 0.3;
-  const P = quality === 'high' ? 8 : 5;
+  const P = quality === 'high' ? 13 : 7;
   const NC = Math.ceil((BANK_PUFF_DS1 - BANK_DS0) / CELL) + 3;
   const nRaft = 2 * NC * P;
   const rr = rng(4242);
@@ -755,18 +856,34 @@ export function createFoam(
   rafts.frustumCulled = false;
   rafts.renderOrder = 1;
   for (let i = 0; i < nRaft; i++) {
-    const kind = i % P; // 0–1 rim, 2–3 body, 4 heap, 5 outer, 6–7 body (high) / 4 body (low)
-    rafts.setColorAt(i, tmpC.setRGB(kind < 2 ? 0.86 + 0.1 * rr() : 0.8 + 0.2 * rr(), rr(), rr() * 2 - 1));
+    const kind = i % P; // see KIND
+    rafts.setColorAt(i, tmpC.setRGB(kind < 2 || kind >= 8 ? 0.86 + 0.1 * rr() : 0.8 + 0.2 * rr(), rr(), rr() * 2 - 1));
     rafts.setMatrixAt(i, tmpM.makeScale(0, 0, 0));
   }
   if (rafts.instanceColor) rafts.instanceColor.needsUpdate = true;
   rafts.visible = false;
   group.add(rafts);
   total += nRaft;
+  // wave 8: the 05 berm puffs + rim bubbles as fine-foam impostors (one draw, static)
+  const rim05 = new THREE.InstancedMesh(rafts.geometry, bub.mat, Math.max(1, imp05.length));
+  rim05.name = 'foam_rim05';
+  rim05.frustumCulled = false;
+  rim05.count = imp05.length;
+  imp05.forEach((b, i) => {
+    rim05.setMatrixAt(i, tmpM.makeScale(b.r, b.r, b.r).setPosition(b.p));
+    rim05.setColorAt(i, tmpC.setRGB(b.c[0], b.c[1], b.c[2]));
+  });
+  rim05.instanceMatrix.needsUpdate = true;
+  if (rim05.instanceColor) rim05.instanceColor.needsUpdate = true;
+  group.add(rim05);
+  total += imp05.length;
   /** per puff kind: across range [f0, f0 + df], radius [r0, r0 + dr], lift (× r above the apron), probability */
+  // wave 8: fine foam = a few LOW lumps sunk into the water (negative lift: with the impostor's sphere depth only the
+  // cap shows) + many small / tiny bubbles (size spread ~3-40 px, most under 12 px): 0-1 waterline lace, 2-3 body lumps,
+  // 4 big low lump, 5 outer, 6 small on the lumps, 7 body, 8 lace on the water off the edge, 9-12 small / tiny
   const KIND: [number, number, number, number, number, number][] = quality === 'high'
-    ? [[0.0, 0.08, 0.04, 0.045, 0.1, 1], [0.04, 0.12, 0.05, 0.04, 0.2, 1], [0.12, 0.5, 0.06, 0.06, 0.35, 1], [0.2, 0.55, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.6], [0.6, 0.4, 0.07, 0.05, 0.3, 1], [0.05, 0.9, 0.045, 0.04, 0.2, 1], [0.3, 0.65, 0.05, 0.05, 0.25, 1]]
-    : [[0.0, 0.1, 0.045, 0.05, 0.15, 1], [0.12, 0.5, 0.065, 0.06, 0.35, 1], [0.15, 0.5, 0.09, 0.05, 0.4, 0.7], [0.55, 0.45, 0.07, 0.05, 0.3, 1], [0.1, 0.8, 0.055, 0.05, 0.25, 1]];
+    ? [[-0.04, 0.12, 0.01, 0.016, 0.2, 1], [0.0, 0.14, 0.014, 0.02, 0.1, 1], [0.12, 0.5, 0.065, 0.06, -0.3, 1], [0.2, 0.55, 0.06, 0.055, -0.2, 1], [0.2, 0.5, 0.1, 0.06, -0.5, 0.6], [0.6, 0.4, 0.065, 0.05, -0.15, 1], [0.05, 0.9, 0.022, 0.024, 0.35, 1], [0.3, 0.65, 0.045, 0.045, -0.05, 1], [-0.16, 0.16, 0.007, 0.011, 0.3, 0.7], [0.0, 0.5, 0.016, 0.018, 0.25, 1], [0.1, 0.8, 0.013, 0.016, 0.55, 0.8], [-0.08, 0.3, 0.008, 0.01, 0.35, 0.8], [0.4, 0.6, 0.02, 0.02, 0.3, 0.8]]
+    : [[-0.04, 0.12, 0.012, 0.018, 0.15, 1], [0.12, 0.5, 0.065, 0.06, -0.25, 1], [0.15, 0.5, 0.1, 0.05, -0.45, 0.7], [0.55, 0.45, 0.065, 0.05, -0.1, 1], [0.1, 0.8, 0.05, 0.05, 0.0, 1], [0.0, 0.6, 0.02, 0.02, 0.3, 1], [-0.12, 0.25, 0.009, 0.012, 0.3, 0.8]];
   /** kinds left out of the narrow right rim (heap, outer, 2nd wide body) */
   const RIM_SKIP = quality === 'high' ? [4, 5, 7] : [2, 3];
   /** body kinds that sometimes become a big bump (ref 05 clumps: a few 30-45 px bumps among 10-20 px bubbles) */
@@ -952,6 +1069,7 @@ export function createFoam(
     whirlGroup,
     berm: berm.mesh,
     rafts,
+    rim05,
     flank,
     instanceCount: total,
     rider(s, lat, strength) {
@@ -971,6 +1089,7 @@ export function createFoam(
         c.mesh.visible = c.sb > focusS - 12 && c.sa < focusS + 130 && !(outro > 0.3 && c.sb > s08 + 8);
         if (c.mesh.visible) c.mesh.geometry = c.sb > focusS - 12 && c.sa < focusS + 30 ? geoHi : geoLo;
       }
+      rim05.visible = imp05.length > 0 && st05.s1 - 2 > focusS - 12 && st05.s0 + 2 < focusS + 130 && outro < 0.3;
       // rotate whirlpool foam about the basin axis with the swirl (θ decreasing = course direction)
       whirlGroup.rotation.y = -time * 0.45 * ((Math.PI * 2) / 3);
       void whirlStart;

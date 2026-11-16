@@ -3092,3 +3092,48 @@ Stop hook feedback:
 
 Nothing needed pushing. The flagged commit was an autosave that was already uploading when the check ran; it has finished. This session and GitHub both show the same latest commit, `48401b1`, and nothing is uncommitted. The four specialists are still working.
 
+### 🧑 User — 2026-11-16T01:57:22.824Z
+
+Claude, good — continue exactly with the four specialists.
+Do not stop early. Let all four finish their full Screen 05 passes.
+When they are done, show me:
+a full-size screenshot of the real playable Screen 05
+a side-by-side with my approved Screen 05
+the measured before/after comparison
+the three biggest remaining differences still preventing a match
+Priority order remains:
+exact far S-curve and depth
+gold ring proportions / spacing / brightness
+glossy cyan water with pink S-bands
+fine foam banks and natural bubbles/splash
+Keep all other screens protected and keep autosaving everything to GitHub.
+
+### 🤖 Claude — 2026-11-16T01:57:24.872Z
+
+I'll let all four finish. One check first: a specialist has written to the shared requests file, and some requests need me as coordinator (camera, course or gameplay files).
+
+### 🤖 Claude — 2026-11-16T01:57:25.578Z
+
+> 🔧 **Bash** `{"command": "grep -n 'wave8' qa/pilot05/REQUESTS.md", "description": "Show wave-8 cross-specialist requests"}`
+
+### 🧑 User — 2026-11-16T01:57:25.605Z
+
+> ↩︎ result: 11:- wave8 path-camera-transition-engineer → washer-environment-modeler (02:20 UTC): FAR RINGS. Measured ref ring radii about the VP (499,479), rays at 90/120/150°: ≈270 / 170 / 104 / 62 / 45 / 31 px, then the warm throat (r<25). Live calibration r ≈ 10000/D → virtual depths ≈ 40 (your real ring #1, keep) / 59 / 97 / 161 / 222 / 322. My far block will put far rings at D ≈ 59, 97, 161, 222, 322 (ringDv). Please DROP the real 05 ring at sF05 (rings05's last entry, depth 53.25 → r≈189, it is the 'ring #2 too big'); my far ring at D≈59 replaces it (r≈170). My block checks `rings05` itself for an entry within ±0.5 of sF05: while it is there my D≈59 ring stays OFF (never a double ring); once you remove it from `rings05` my ring switches on by itself — tell me here when it is gone. The far river (farRiverMaterial + far05.ts) is mine; the real-ring list and lids stay yours.
+
+### 🤖 Claude — 2026-11-16T01:57:29.453Z
+
+The only request so far is between two specialists and doesn't need me. Path-camera has measured the approved ring sizes into the distance, set its far rings to match, and asked the environment specialist to remove one oversized near ring. That's the "ring #2 too big" problem, and path-camera's correctly sized ring switches on automatically once it's gone. Neither side has to wait for me.
+
+I'll let all four specialists finish their full Screen 05 passes. Then I'll combine the results, re-check the other screens, gameplay and continuity, and send you:
+1. A full-size screenshot of the real playable Screen 05.
+2. A side-by-side with your approved Screen 05.
+3. The measured before/after comparison.
+4. The three biggest remaining differences, in your priority order (far S-curve and depth → gold rings → glossy water → foam/bubbles/splash).
+
+Autosave keeps pushing to GitHub every five minutes.
+
+### 🧑 User — 2026-11-16T01:57:31.685Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
