@@ -494,7 +494,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "e94b76d3bf65340a702d45d44c51e5bb677ef5ed1fa1c442e4a4b06dfe37e24c"
+   "sha256": "8d5a1b0704d51312171ee1c187b1fbf8aaf508bb162000eab411edb713ebd76d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1585,6 +1585,11 @@
    "path": "qa/pilot05/proj/flow2/still_worst_moment/3_NEW_projflow05_2.png",
    "bytes": 2134185,
    "sha256": "d0543fee4d7ee057b83a293eac2a916cba8d7e90f7a010fab1b954754ef65043"
+  },
+  {
+   "path": "qa/pilot05/proj/flow2/tests/gameplay_projflow05_2.json",
+   "bytes": 14720,
+   "sha256": "c965d0a4127a019b96f7c8be89d2d5005fa6d9d40c58d085f83d52010c273363"
   },
   {
    "path": "qa/pilot05/proj/flow2/tools/flowcmp.py",
