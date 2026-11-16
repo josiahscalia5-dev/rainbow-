@@ -1,5 +1,14 @@
 # Rainbow specialists — roster, responsibilities and status
 
+## ▶ Wave 8 RUNNING (started 2026-11-16 ~01:47 UTC, session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`)
+Brief: `qa/pilot05/COORDINATION_WAVE8.md`; baseline `qa/pilot05/wave8/baseline/{04..08}.png`.
+| Specialist | Assignment | If this session ends before it reports |
+|---|---|---|
+| path-camera-transition-engineer | far river S-bends into the VP, far coins, far ring depths, far foam | read `qa/pilot05/wave8/path-camera/NOTES.md` + newest `itNN/`, run tsc + gameplay test, relaunch with the same brief from where it stopped |
+| washer-environment-modeler | rings (bright gold read), walls (less violet), lid shape, VP core, near-frame gold share | read `qa/pilot05/wave8/environment/NOTES.md` + newest `itNN/`, relaunch likewise |
+Next after wave 8: foam-bubbles-particles (white sphere heaps → fine bubble rims), water polish, then
+reference-match-director + playwright-visual-qa review; coordinator: bloom strength (Game.ts) review.
+
 ## ▶ Transfer-session check (2026-11-16 ~01:30 UTC, session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`)
 All 10 definitions present, SHA-256 unchanged (list in `backups/CLAUDE_ACCOUNT_TRANSFER.md` §3).
 washer-environment-modeler: **wave 7 DONE** (log written 01:23 UTC, merged from `7cc4869`): `it06` kept

@@ -383,8 +383,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.md",
-   "bytes": 5685,
-   "sha256": "f4ba37ebaf0dbc1acb5219eef315d5239020b920304931fe49ea63d90870abf7"
+   "bytes": 6625,
+   "sha256": "932838da9a9e9f12757fe70a64f0d805028cee6a6c5966b9688cd0c94af37468"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -394,7 +394,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5349,
-   "sha256": "43e33ea0f38be7a2588dbbcd303845bc34e13057be285121e8565066c299c878"
+   "sha256": "e86896c24f1da25e3022a52eaf927f6fbf478fb546e9da54018bf89f0b8b3d37"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -925,6 +925,11 @@
    "path": "qa/pilot05/COORDINATION_WAVE7.md",
    "bytes": 2043,
    "sha256": "c0f8407a322eeaa996135ba036a810160f980126ff1a630096c2e9847d6ac64c"
+  },
+  {
+   "path": "qa/pilot05/COORDINATION_WAVE8.md",
+   "bytes": 3599,
+   "sha256": "e8a3345de10c65336499f6385823c95ba4aa0a3f5b9663f1cefeb0c34d5a64b1"
   },
   {
    "path": "qa/pilot05/REQUESTS.md",
@@ -3270,6 +3275,11 @@
    "path": "qa/pilot05/wave8/baseline/08.png",
    "bytes": 1428957,
    "sha256": "4c5b9d985376ce5cccac3fa0e7594b661264446dc06bc88e40d2e56d8bae40ff"
+  },
+  {
+   "path": "qa/pilot05/wave8/path-camera/NOTES.md",
+   "bytes": 937,
+   "sha256": "94bc53c626a508fb58761a87b13e822a9d9d5c5db075be0905f34d6831d0be9b"
   },
   {
    "path": "qa/report_metrics.json",
