@@ -660,3 +660,17 @@ Probes take ~14 s. Now let me write the wave-9 plan in NOTES before changing any
 > 181:  const r04 = (s: number) => tubeR(s) + 1.8 * (1 - sm(g0, g0 + 6, s));
 > 231:  c …[+3239 chars]
 
+### 🤖 Claude — 2026-11-16T02:24:29.038Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"tube'\" src/world/course.ts | head; grep -n 'straightAxes' src/world/course.ts | head -5; grep -n \"'05'\" src/game/cameraRig.ts | head", "description": "Find tube radius prop and stage cam config"}`
+
+### 🧑 User — 2026-11-16T02:24:29.090Z
+
+> ↩︎ result: 18:export type StageProp = 'width' | 'tube' | 'speed' | 'bank';
+> 367:  readonly straightAxes: StraightAxis[];
+> 410:    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+> 31:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> 116:    // 05 straight current tube: the '05' preset measured in the straight tunnel's own frame — aimed
+> 121:    const st5 = this.course.stage('05');
+> 122:    const p5 = STAGE_CAM['05'] as CamParams;
+
