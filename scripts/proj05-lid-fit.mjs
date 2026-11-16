@@ -3,7 +3,7 @@
 // LIDS: L1 L2 L3 left, R1 R2 R3 right) with one real 3D lid on the real 05 wall, seen from the locked 05 camera.
 // Grid search over (s along the tube, angle above the axis, droop, size) with the real lid geometry projected by the real
 // camera; score = raster IoU of the projected silhouette (convex hull) with the approved outline polygon (bounding-box
-// IoU >= 0.55 as a prefilter); a lid may not cross a gold ring band.
+// IoU >= 0.55 as a prefilter); a lid may not cross a gold ring band, and the camera must see its underside.
 // Read-only: nothing in the game changes.   node scripts/proj05-lid-fit.mjs [--out=qa/pilot05/proj/tunnel/lid/fit.json]
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -87,6 +87,17 @@ try {
       }
       return u ? i / u : 0;
     };
+    // the approved paddles are seen from BELOW (their flat underside faces down toward the camera): the camera must lie
+    // on the underside of the lid plane (local +Y = the lid's top normal)
+    const camP = new THREE.Vector3().setFromMatrixPosition(camera.matrixWorld);
+    const lp = new THREE.Vector3(), ly = new THREE.Vector3();
+    const seenFromBelow = (s, side, ang, droop, size) => {
+      wallLidMatrix(path, s, side, ang, droop, size, 1.0, 0.1, M);
+      lp.setFromMatrixPosition(M);
+      ly.setFromMatrixColumn(M, 1).normalize();
+      const d = camP.clone().sub(lp);
+      return ly.dot(d) < -0.12 * d.length();
+    };
     const clearOfRings = (ds, size) => ringsAhead.every((r) => Math.abs(ds - r) > size + bandHalf + 0.15);
     const box = (s, side, ang, droop, size) => {
       wallLidMatrix(path, s, side, ang, droop, size, 1.0, 0.1, M);
@@ -116,6 +127,7 @@ try {
               for (let size = 1.2; size <= 4.01; size += 0.2) {
                 const szw = size * Math.min(1.4, r05 / 7.6);
                 if (!clearOfRings(s - D.sCam05, szw)) continue;
+                if (!seenFromBelow(s, side, ang, droop, szw)) continue;
                 const b = box(s, side, ang, droop, szw);
                 if (!b || b[2] <= b[0] || b[3] <= b[1]) continue;
                 const bi = iou(b, T);
@@ -134,6 +146,7 @@ try {
         for (let droop = b0.droop - 10; droop <= b0.droop + 10; droop += 2.5) for (let size = b0.size - 0.2; size <= b0.size + 0.2; size += 0.05) {
           const szw = size * Math.min(1.4, r05 / 7.6);
           if (!clearOfRings(s - D.sCam05, szw)) continue;
+          if (!seenFromBelow(s, b0.side, ang, droop, szw)) continue;
           const b = box(s, b0.side, ang, droop, szw);
           if (!b || b[2] <= b[0] || b[3] <= b[1]) continue;
           const bi = iou(b, T);

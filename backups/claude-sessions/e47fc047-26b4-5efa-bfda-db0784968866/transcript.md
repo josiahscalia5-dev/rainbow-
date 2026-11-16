@@ -2037,3 +2037,88 @@ Imports are clean, with no circular dependency. Now I'll hook the switch into th
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-lid-fit.mjs'; s=open(p).read()\n# 1) pass the approved outline polygons too\nold=\"\"\"const { chromium } = loadPlaywright();\"\"\"\nnew=\"\"\"const POLYS = {      // approved outlines (tunnel_common.LIDS), full-frame px\n  L1: [[62.5, 360], [75, 324], [102, 315.5], [140, 322.5], [170, 340], [200, 372.5], [214, 400], [212.5, 415], [190, 420], [152, 410], [115, 392], [80, 375]],\n  L2: [[248.8, 447.5], [260, 422.5], [280, 418.8], [305, 425], [325, 442.5], [332.5, 460], [330, 470], [310, 472.5], [280, 462.5], [255, 452.5]],\n  L3: [[372, 458], …[+6687 chars]`
 
+### 🧑 User — 2026-11-16T21:06:51.789Z
+
+> ↩︎ result: L1 shapeIoU 0.743 boxIoU 0.833 side -1 ds 22.38 ang 29.5 droop 12.5 size 1.80 box [79,316,213,426] target [62.5,315.5,214,420]
+> L2 shapeIoU 0.671 boxIoU 0.722 side -1 ds 42.75 ang 9 droop 27.5 size 2.20 box [260,419,337,480] target [248.8,418.8,332.5,472.5]
+> R1 shapeIoU 0.914 boxIoU 0.966 side 1 ds 25.88 ang 18.5 droop 12.5 size 2.95 box [719,398,864,529] target [720,400,864,527.5]
+> R2 shapeIoU 0.742 boxIoU 0.795 side 1 ds 50.50 ang 19 droop 22.5 size 2.45 box [631,393,704,456] target [631,394,696,451]
+> rings05 [124.03830202823289,138.0383020282329,146.0383020282329,166.0383020282329] sCam05 126.03830202823289 r05 7.6
+> 
+> real	4m47.548s
+> user	0m1.457s
+> sys	0m0.397s
+
+### 🤖 Claude — 2026-11-16T21:07:01.516Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nf=json.load(open('qa/pilot05/proj/tunnel/lid/fit.json'))['fit']\np='src/vfx/proj05Tunnel.ts'; s=open(p).read()\ni0=s.index('export const LIDS05_FIT = ['); i1=s.index('] as const;',i0)\nrows=[]\nfor n in ['L1','L2','R1','R2']:\n    x=f[n]; rows.append(f\"  {{ name: '{n}', side: {x['side']}, ds: {round(x['ds'],3)}, ang: {x['ang']}, droop: {x['droop']}, size: {round(x['size'],3)} }},\")\ns=s[:i0]+'export const LIDS05_FIT = [\\n'+'\\n'.join(rows)+'\\n'+s[i1:]\ns=s.replace(\"bounding-box IoU 0.87–0.99)\",\"silhouette IoU 0.67–0.91, never crossing a ri …[+1013 chars]`
+
+### 🤖 Claude — 2026-11-16T21:07:02.864Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/l2_lidL.png"}`
+
+### 🤖 Claude — 2026-11-16T21:07:03.468Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/l2_lidR.png"}`
+
+### 🧑 User — 2026-11-16T21:07:22.866Z
+
+> ↩︎ result: { name: 'L1', side: -1, ds: 22.375, ang: 29.5, droop: 12.5, size: 1.8 },
+>   { name: 'L2', side: -1, ds: 42.75, ang: 9, droop: 27.5, size: 2.2 },
+>   { name: 'R1', side: 1, ds: 25.875, ang: 18.5, droop: 12.5, size: 2.95 },
+>   { name: 'R2', side: 1, ds: 50.5, ang: 19, droop: 22.5, size: 2.45 },
+> 0
+> Updated 1 path from the index
+> l1/05.png
+>   LID       px   27726  mean|d|  55.99  <=10 0.057  <=20 0.177  SSIM 0.251  bias [9.7, 1.6, 9.5]
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   TUNNEL    px  440275  mean|d|  48.20  <=10 0.170  <=20 0.297  SSIM 0.306  bias [5.0, 1.9, -8.2]
+>   FRAME     px 1157760  mean|d|  32.05  <=10 0.448  <=20 0.553  SSIM 0.543  bias [6.2, -1.6, -2.1]
+>   FULL      px 1327104  mean|d|  35.70  <=10 0.394  <=20 0.499  SSIM 0.496  bias [6.8, 1.7, 0.5]
+> l2/05.png
+>   LID       px   27726  mean|d|  55.22  <=10 0.079  <=20 0.205  SSIM 0.241  bias [32.7, 34.6, 5.9]
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   TUNNEL    px  440275  mean|d|  47.99  <=10 0.171  <=20 0.300  SSIM 0.306  bias [6.4, 3.1, -8.0]
+>   FRAME     px 1157760  mean|d|  31.97  <=10 0.449  <=20 0.554  SSIM 0.5 …[+123 chars]
+
+### 🧑 User — 2026-11-16T21:07:22.889Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T21:07:22.896Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T21:07:41.237Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/proj05-lid-fit.mjs'; s=open(p).read()\nold=\"\"\"    const clearOfRings = (ds, size) =>\"\"\"\nnew=\"\"\"    // the approved paddles are seen from BELOW (their flat underside faces down toward the camera): the camera must lie\n    // on the underside of the lid plane (local +Y = the lid's top normal)\n    const camP = new THREE.Vector3().setFromMatrixPosition(camera.matrixWorld);\n    const lp = new THREE.Vector3(), ly = new THREE.Vector3();\n    const seenFromBelow = (s, side, ang, droop, size) => {\n      wallLidMatrix(path, s, side, ang, droop,  …[+1382 chars]`
+
+### 🧑 User — 2026-11-16T21:09:10.498Z
+
+> ↩︎ result: 3
+> L1 shapeIoU 0.541 boxIoU 0.646 side -1 ds 22.38 ang 25 droop -40 size 1.80 box [70,328,216,400] target [62.5,315.5,214,420]
+> L2 shapeIoU 0.454 boxIoU 0.607 side -1 ds 42.75 ang 2.5 droop -50 size 2.20 box [257,402,327,467] target [248.8,418.8,332.5,472.5]
+> R1 shapeIoU 0.544 boxIoU 0.588 side 1 ds 23.63 ang 6 droop -35 size 3.00 box [756,413,864,552] target [720,400,864,527.5]
+> R2 shapeIoU 0.441 boxIoU 0.691 side 1 ds 50.50 ang 9 droop -47.5 size 2.45 box [639,392,712,451] target [631,394,696,451]
+> rings05 [124.03830202823289,138.0383020282329,146.0383020282329,166.0383020282329] sCam05 126.03830202823289 r05 7.6
+> 
+> real	1m29.180s
+> user	0m1.452s
+> sys	0m0.363s
+
+### 🤖 Claude — 2026-11-16T21:09:25.541Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nL=a.crop((50,300,230,430)).resize((720,520),Image.LANCZOS); R=a.crop((700,385,864,535)).resize((656,600),Image.LANCZOS)\nim=Image.new('RGB',(720+10+656,600),(255,255,255)); im.paste(L,(0,0)); im.paste(R,(730,0)); im.save('$S/lid_zoom.png')\"", "description": "Zoom approved big paddles 4x"}`
+
+### 🧑 User — 2026-11-16T21:09:25.838Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T21:09:26.651Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/lid_zoom.png"}`
+
+### 🧑 User — 2026-11-16T21:09:26.692Z
+
+> ↩︎ result: [image]
+
