@@ -483,8 +483,8 @@
   },
   {
    "path": "assets/textures/water05/proj05_near.json",
-   "bytes": 1089,
-   "sha256": "50dc6e005b0b4bc532878aa18e745cb10c93316442ddfc9b161c817c07cfe216"
+   "bytes": 1117,
+   "sha256": "b235d1d1cff2644f7d2bd6b981e076b703ec6652bea7880ab5ed56fd0a235e31"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9700,
-   "sha256": "2d4e8439ba16c71604cfa3baf0bb7f121a720134ec6cf727f9db4cc17ba6bd3e"
+   "sha256": "2fdc3d05af135b5631c47f8e139e0894e5a64c5e62fe86b5c9b3b56f24247de2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7373,8 +7373,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 101249,
-   "sha256": "0a75a42dcd178cf20b055cc5729d35dad186ee0b1a62140459fe886c4f81c427"
+   "bytes": 102139,
+   "sha256": "3304b991f1f2c356f0d45fb2ce134d6c4c5d2f7e69fb785d586c9173343f27b2"
   },
   {
    "path": "src/vfx/whirlpool.ts",
