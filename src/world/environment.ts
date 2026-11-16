@@ -268,9 +268,11 @@ export function buildEnvironment(course: Course): Environment {
     // violet+magenta 40–51 %; it06 (159,47,178), 91–93 %): warmer F0 between '#d49cf4' and '#f29ad6', softer
     // and later violet mid tint, no slot bevel (its aliased highlight drew a jagged pink outline round every slot),
     // and the Marble 05 panorama as the reflection source (marblePano05: pink walls, warm ring lights, VP glow)
-    ...wallBase, color: '#eaa2ea', emissive: '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,
+    // (it02: Marble env pre-blurred 6 px — its sharp ring arcs smeared into red-orange blotches on the near walls
+    // in it01 — and violet back with depth: bluer F0, mid tint '#8a30d2' 0.45 @8–50; it01 overshot to 14–22 %)
+    ...wallBase, color: '#dc9ef0', emissive: '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,
     relief: { corrugation: 0, bevel: 0, bevelWidth: 0.08 },
-    rimColor: '#b02a9a', rimStrength: 0.0, farGlow: { ...glowT05, mid: { color: '#9a3ad8', near: 14, far: 60, amount: 0.3 } },
+    rimColor: '#b02a9a', rimStrength: 0.0, farGlow: { ...glowT05, mid: { color: '#8a30d2', near: 8, far: 50, amount: 0.45 } },
     envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
     repeatU: 64, repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.16] as [number, number],
     offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,

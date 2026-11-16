@@ -343,45 +343,69 @@ ${fg ? `  float bfg = farGlowK(); float bmt = midTintK();
  * lathe (wallLidGeometry, half revolution toward +X, Y = top normal), the streaks from the lathe azimuth.
  */
 export function withLidShading<T extends THREE.MeshStandardMaterial>(mat: T, key: string): T {
+  // wave 8 palette, sampled on ref L1 (x 100 / 140 / 175, y 318 → 422): the near end of the rim is saturated
+  // orange (250,119,38), the middle runs peach top edge (254,133,115) → orange-gold (252,165,95) → pale yellow
+  // (249,205,112) → white (254,245,200) low on the bulge → pale orange (249,184,115) → orange-red bottom edge
+  // (228,83,88), the tip side is peach (252,145,110); the underside below is DARK plum (150,40,92)…(175,58,100)
+  // (wave 7 painted it lighter than the rim — inverted)
   const uniforms = {
-    uLcRim: { value: lin3(0.612, 0.2117, 0.2013) }, // (220,95,90)
-    uLcUnder: { value: lin3(0.7024, 0.2903, 0.2645) }, // (232,120,110) (ref L1 region mean (200,95,105); wave-7 it03 (230,137,142))
-    uLcTop: { value: lin3(0.7971, 0.3659, 0.2802) }, // (245,140,110)
-    uLcEdgeHi: { value: lin3(0.9686, 0.7531, 0.4015) }, // (255,215,130) bright yellow top edge
-    uLcEdgeLo: { value: lin3(0.776, 0.3236, 0.1466) }, // (245,130,50) orange contour
+    uLcRim: { value: lin3(0.7866, 0.2857, 0.1249) }, // (250,119,38) saturated orange (near end)
+    uLcUnder: { value: lin3(0.298, 0.0954, 0.168) }, // (150,40,92) dark plum underside
+    uLcTop: { value: lin3(0.838, 0.3415, 0.2905) }, // (254,133,115) peach upper edge / top
+    uLcEdgeHi: { value: lin3(1.0471, 0.9918, 0.7441) }, // (254,245,200) white highlight low on the bulge
+    uLcEdgeLo: { value: lin3(0.6355, 0.1828, 0.1922) }, // (228,83,88) orange-red bottom edge
     uLcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
     uLcSpot: { value: lin3(1.25, 1.0, 0.62) }, // warm yellow-white streak cores
+    uLcGold: { value: lin3(0.8678, 0.4731, 0.2587) }, // (252,165,95)
+    uLcPale: { value: lin3(0.9089, 0.6835, 0.3326) }, // (249,205,112)
+    uLcPaleO: { value: lin3(0.8796, 0.5677, 0.3258) }, // (249,184,115)
+    uLcPeach: { value: lin3(0.8423, 0.3875, 0.2847) }, // (252,145,110) tip side
+    uLcRecess: { value: lin3(0.3927, 0.1254, 0.1958) }, // (175,58,100)
   };
   const prev = mat.onBeforeCompile;
   mat.onBeforeCompile = (shader, r) => {
     prev.call(mat, shader, r);
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vLidP; varying vec3 vLidN;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvLidP = position; vLidN = normal;');
+      .replace('#include <common>', '#include <common>\nvarying vec3 vLidP; varying vec3 vLidN; varying float vLidZv;')
+      .replace('#include <begin_vertex>', `#include <begin_vertex>
+vLidP = position; vLidN = normal;
+#ifdef USE_INSTANCING
+vLidZv = (viewMatrix * modelMatrix * instanceMatrix * vec4(0.0, 0.0, 1.0, 0.0)).z;
+#else
+vLidZv = (viewMatrix * modelMatrix * vec4(0.0, 0.0, 1.0, 0.0)).z;
+#endif`);
     const fg = shader.fragmentShader.includes('float farGlowK()');
     shader.fragmentShader = shader.fragmentShader
-      .replace('void main() {', `varying vec3 vLidP; varying vec3 vLidN;
+      .replace('void main() {', `varying vec3 vLidP; varying vec3 vLidN; varying float vLidZv;
 uniform vec3 uLcRim; uniform vec3 uLcUnder; uniform vec3 uLcTop; uniform vec3 uLcEdgeHi; uniform vec3 uLcEdgeLo; uniform vec3 uLcDark; uniform vec3 uLcSpot;
+uniform vec3 uLcGold; uniform vec3 uLcPale; uniform vec3 uLcPaleO; uniform vec3 uLcPeach; uniform vec3 uLcRecess;
 vec3 lidShade(){
   vec3 n = normalize(vLidN);
-  float ny = n.y;
-  float th = atan(vLidP.x, vLidP.z);                 // 0..pi along the half disc
+  float ny = n.y;                                    // barrel rim: ≈+0.45 upper bulge … −0.45 lower bulge, ±0.8 edges
+  float th0 = atan(vLidP.x, vLidP.z);                // 0..pi along the half disc (lathe azimuth)
+  // the lid's local Z points back toward the rider on one wall and away on the other: measure th from the end
+  // nearest the camera (view-space +z = toward the camera)
+  float th = vLidZv > 0.0 ? th0 : 3.14159265 - th0;  // 0 = end nearest the rider … pi/2 tip … pi far end
   float rr = length(vLidP.xz);
-  // rim band with vertical highlight streaks (reflections of the tunnel strip lights)
-  float st = pow(0.5 + 0.5 * cos(th * 7.0 - 0.6), 8.0);
-  vec3 rim = uLcRim * (0.85 + 0.3 * sin(th * 2.0 + 0.4)) + uLcSpot * st * 1.1;
-  // bright line along the upper rounded edge, orange contour along the lower one
-  float hi = exp(-pow((ny - 0.55) / 0.22, 2.0));
-  float lo = exp(-pow((ny + 0.5) / 0.2, 2.0));
-  vec3 col = mix(rim, uLcEdgeHi, hi * 0.9);
-  col = mix(col, uLcEdgeLo, lo * 0.8);
-  // underside: lighter rose-peach with a darker recess ring
-  float under = smoothstep(-0.6, -0.85, ny);
-  vec3 uc = mix(uLcUnder, uLcRim * 0.85, exp(-pow((rr - 0.6) / 0.05, 2.0)) * 0.8);
-  col = mix(col, uc, under);
-  float top = smoothstep(0.75, 0.9, ny);
-  col = mix(col, uLcTop + uLcSpot * 0.25 * st, top);
+  // convex rim band, top edge → bottom edge: peach · orange-gold · pale yellow · white · pale orange · orange-red
+  vec3 band = mix(uLcEdgeLo, uLcPaleO, smoothstep(-0.62, -0.42, ny));
+  band = mix(band, uLcEdgeHi, smoothstep(-0.42, -0.24, ny) * (1.0 - smoothstep(-0.16, 0.02, ny)));
+  band = mix(band, uLcPale, smoothstep(-0.16, 0.02, ny));
+  band = mix(band, uLcGold, smoothstep(0.02, 0.26, ny));
+  band = mix(band, uLcTop, smoothstep(0.32, 0.6, ny));
+  // along the rim: saturated orange at the near end (no highlight there), peach toward the tip
+  float nearEnd = 1.0 - smoothstep(0.25, 0.75, th);
+  vec3 endCol = mix(uLcRim, uLcEdgeLo, smoothstep(-0.35, -0.6, ny));
+  band = mix(band, endCol, nearEnd * 0.85);
+  band = mix(band, mix(uLcPeach, band, 0.35), smoothstep(1.15, 1.6, th) * (1.0 - smoothstep(-0.4, -0.2, ny) * 0.5));
+  // a few soft vertical streaks (strip-light reflections) across the band
+  float st = pow(0.5 + 0.5 * cos(th * 6.0 - 1.4), 10.0) * (1.0 - nearEnd);
+  band += uLcSpot * st * 0.35 * (1.0 - smoothstep(0.5, 0.75, abs(ny)));
+  // dark plum underside with a slightly lighter recess ring, top: peach-gold
+  vec3 uc = mix(uLcUnder, uLcRecess, exp(-pow((rr - 0.6) / 0.07, 2.0)));
+  vec3 col = mix(band, uc, smoothstep(-0.72, -0.9, ny));
+  col = mix(col, mix(uLcTop, uLcGold, 0.4), smoothstep(0.8, 0.92, ny));
   // dark seam where the lid meets the wall
   col = mix(col, uLcDark, smoothstep(0.12, 0.0, th) * 0.6 + smoothstep(3.02, 3.14159, th) * 0.6);
   return col;
@@ -888,11 +912,17 @@ float rivCells(vec2 p) {
   float pR = 1.0 - smoothstep(wR - aaw, wR + aaw, dR);
   float pink = max(pL, pR);
   float relB = pL >= pR ? (lat - cL) / max(wL, 1e-3) : (cR - lat) / max(wR, 1e-3);   // +1 on the core side
+  // two octaves of flow lines along the winding core (fine near the seam, coarse further in), each faded out
+  // where its spacing drops below a few px so the far water never shimmers
   float fade = 1.0 - smoothstep(0.05, 0.16, fl * 3.0);
+  float fade2 = 1.0 - smoothstep(0.1, 0.3, fl * 1.1);
   float dn = rivNoise(vec2(xq * 3.2, s * 0.32));
+  float dn2 = rivNoise(vec2(xq * 1.2 + 4.0, s * 0.11));
   float lines = pow(0.5 + 0.5 * sin(xq * 11.0 + 1.4 * sin(s * 0.23)), 8.0) * fade;
-  vec3 cy = mix(uRivCyanLo, uRivCyan, smoothstep(0.15, 0.75, mix(0.55, dn, fade)));
-  cy = mix(cy, uRivCyanHi, lines * smoothstep(0.35, 0.8, dn) * 0.85);
+  float lines2 = pow(0.5 + 0.5 * sin(xq * 3.6 + 0.9 * sin(s * 0.09 + 1.0)), 10.0) * fade2 * smoothstep(0.3, 0.7, dn2);
+  vec3 cy = mix(uRivCyanLo, uRivCyan, smoothstep(0.15, 0.75, mix(mix(0.55, dn2, fade2), dn, fade)));
+  cy = mix(cy, uRivCyanHi, clamp(lines * smoothstep(0.35, 0.8, dn) * 0.85 + lines2 * 0.75, 0.0, 1.0));
+  lines = max(lines, lines2);
   float rimOut = (1.0 - pink) * max(1.0 - smoothstep(wL, wL + 0.3, dL), 1.0 - smoothstep(wR, wR + 0.3, dR));
   cy = mix(cy, uRivCyanHi, rimOut * 0.45);
   float satin = exp(-pow((relB - 0.3) * 2.2, 2.0));

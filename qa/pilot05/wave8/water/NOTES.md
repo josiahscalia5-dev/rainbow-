@@ -55,3 +55,29 @@ body darkened, brushed edge feather ±13 % w. Measured: report mad 51.0 (baselin
 137.7/165/240.7 (ref 129.7/160.7/249.7), glints near 201 / mid 589 (ref 347/618), cyan mid #1DACFF, near y1300 #0797EF
 (ref #02A3F7), pink mid 23.3 %, pink median #F541EB (ref #F23FEA). Seen: near body now deep glossy blue with fanning
 streaks (closer), but the mid bands still read flat: thresholded noise peaks too sparse to give the ref's combed satin.
+
+### it03 — 0 console errors, 86 calls, 565,719 tris
+Changes: dashes = pixel-width ISO-LINES (n = 0.5) of each octave with cells ≤ 30 px (dense combing at every depth),
+broken by the next coarser octave; near lane contrast ×0.35; near flares denser/bigger (flB 0.9/38 px, flC 0.75).
+Measured: report mad 51.8 (mid 50.6, near 47.5) = worse; m05 near p5/p50/p95 127.7/147.3/210, mid p50 174.7, cyan mid
+#32B8FF (pastel), glints near 197 / mid 509, pink mid 18.1 %. Seen: dense lines but they CURL like marble wood-grain
+(cause: the 0.618 lattice shear skews every cell ≈37° across the flow; screen anisotropy only ≈4:1) and are pastel
+(light-cyan streak colour over a large area); near field reads as a fan of light rays.
+
+### it04 — 0 console errors, 86 calls, 565,719 tris
+Changes: streak cells 25× (fine ≈45×) longer along the flow, lattice shear removed; lines saturated light cyan / pink
+(white only on the strongest), near lines ×0.6; `glsl.ts` flowGlint: soft glow along the long arm (05-only function).
+Measured: report mad 51.2 (= baseline), hue_corr 0.878, edge 0.182 (baseline 0.177), mid 48.6, near 47.5. m05 near
+p5/p50/p95 126/142/209, glints near 155 / mid 412, pink mid 24.2 %, pink median #FF5BF7, cyan mid #3DBDFF.
+cyanstat (scratch): cyan lum p50 y620–800 / y800–1000 / near = 176/166/145 (ref 157/148/141, baseline 161/143/151);
+pink lum p50 195/199 (ref 173/176). Seen: pink bands now satin ribbons with long light lines following the S-curves
+(closer); cyan still too light/pastel, pink too light.
+
+### it05 — 0 console errors, 86 calls, 567,415 tris (path-camera's winding far river now in the frame)
+Changes: iso-lines thinner (0.3–1.1 px) and sparser (seg 0.5–0.78); line mix 0.65 cyan / 0.6 pink, pink line colour
+mix(P5, P5Light, 0.65); pink base deeper (0.42 + 0.6·H5), light satin 0.28; near lens flares 0.85/90 px/T6 + 2nd set.
+Measured: report mad 50.7 / hue 0.880 / edge 0.189 (baseline 51.2 / 0.856 / 0.177) — best so far; mid 48.0 (baseline
+47.2), near 46.6 (46.7). m05: near p5/p50/p95 126.7/142/203.3, mid p50 169.7, glints near 183 / mid 504, pink mid 25.7 %
+(ref 25.9), pink median #F447EA (ref #F23FEA), cyan mid #25B4FF, near y1300/1400 #079EF8/#0396EE (ref #02A3F7/#0198F0).
+cyanstat: cyan lum p50 169/155/144 (ref 157/148/141), pink 181/181 (ref 173/176). Seen: hot-pink satin S-ribbons
+with light lines along the bends, deep glossy near body; still short of the ref's big near flares and mid glitter.

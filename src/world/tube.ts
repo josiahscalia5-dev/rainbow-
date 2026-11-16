@@ -163,6 +163,11 @@ export interface TubeGeoOptions {
   frontNormals?: boolean;
   /** also store the local tube frame per vertex (`tubeAxis`, `tubeUp`) for withTubeStrips('attribute') */
   axisAttr?: boolean;
+  /**
+   * wave 8: lateral stretch of the cross-section (1 = circle): the `right` component of every wall point is
+   * multiplied by oval(s) (ref 05 rings are ovals ≈1.75 wider than tall), normals follow the ellipse
+   */
+  oval?: (s: number) => number;
 }
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
@@ -183,15 +188,17 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
     const s = s0 + ((s1 - s0) * i) / (rings - 1);
     const f = path.frame(s);
     const r = path.radius(s) + (o.inset ?? 0);
+    const ov = o.oval ? o.oval(s) : 1;
     c.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
     for (let j = 0; j <= radial; j++) {
       const th = -Math.PI / 2 - arc / 2 + (j / radial) * arc; // centred on the bottom
-      d.copy(f.right).multiplyScalar(Math.cos(th)).addScaledVector(f.up, Math.sin(th));
+      d.copy(f.right).multiplyScalar(Math.cos(th) * ov).addScaledVector(f.up, Math.sin(th));
       const k = i * (radial + 1) + j;
       if (ax && au) { f.tan.toArray(ax, k * 3); f.up.toArray(au, k * 3); }
       pos[k * 3] = c.x + d.x * r;
       pos[k * 3 + 1] = c.y + d.y * r;
       pos[k * 3 + 2] = c.z + d.z * r;
+      if (ov !== 1) d.copy(f.right).multiplyScalar(Math.cos(th) / ov).addScaledVector(f.up, Math.sin(th)).normalize();
       nor[k * 3] = ns * d.x; nor[k * 3 + 1] = ns * d.y; nor[k * 3 + 2] = ns * d.z;
       uv[k * 2] = j / radial;
       uv[k * 2 + 1] = s / vScale;
@@ -285,7 +292,11 @@ export function roundBandGeometry(height = 0.095, width = 0.78, lipHeight = 0.04
 
 export type BandOpts = { height?: number; width?: number; lipHeight?: number; lipWidth?: number; groove?: number; segments?: number };
 
-export type RingOpts = { tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number }; band?: BandOpts };
+export type RingOpts = {
+  tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number }; band?: BandOpts;
+  /** wave 8: lateral stretch (see TubeGeoOptions.oval) — the ring's local x (= ∓right) is scaled by oval(s) */
+  oval?: (s: number) => number;
+};
 
 export function bandGeometry(b: BandOpts): THREE.BufferGeometry {
   return roundBandGeometry(b.height, b.width, b.lipHeight, b.lipWidth, b.groove, b.segments);
@@ -331,7 +342,7 @@ export function buildRingsAt(path: TubePath, list: number[], material: THREE.Mat
       q.setFromRotationMatrix(basis);
       const sc = dbl ? r * 0.985 : r;
       // a collar keeps its axial width in world units; a torus scales uniformly
-      m.compose(c, q, new THREE.Vector3(sc, sc, collar ? 1 : sc * (dbl ? 0.6 : 1)));
+      m.compose(c, q, new THREE.Vector3(sc * (opts.oval ? opts.oval(ss) : 1), sc, collar ? 1 : sc * (dbl ? 0.6 : 1)));
       mesh.setMatrixAt(k++, m);
     }
   }
@@ -367,6 +378,8 @@ export function buildWallLids(
      * polished rim band and a flat top, like the ref's wall-mounted nozzle lids)
      */
     shape?: 'hood' | 'dome' | 'slab';
+    /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */
+    oval?: (s: number) => number;
   } = {},
 ): THREE.InstancedMesh {
   const geo = wallLidGeometry(opts.shape ?? 'hood', opts.thickness ?? 0.42);
@@ -395,6 +408,7 @@ export function buildWallLids(
       basis.makeBasis(X, Y, Z);
       q.setFromRotationMatrix(basis);
       p.copy(c).addScaledVector(dir, r - sz * (opts.sink ?? 0.12));
+      if (opts.oval) p.addScaledVector(f.right, (opts.oval(s) - 1) * r * Math.cos(ang) * side);
       if (opts.skip?.(s, p.clone().addScaledVector(X, sz * 0.5), sz)) continue;
       m.compose(p, q, new THREE.Vector3(sz, sz, sz * (opts.stretch ?? 1.25)));
       mesh.setMatrixAt(k++, m);
@@ -419,9 +433,13 @@ export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segm
         // flat underside with a shallow recess and an inner ring, rounded lower edge, straight rim band,
         // rounded upper edge, flat (very slightly crowned) top
         // (edge rounding scales with the thickness so thin pucks stay valid)
-        // wave 7: crisper puck (ref 05 lids: a tall straight rim band between two small rounded edges)
-        [0, 0.12 * h], [0.58, 0.12 * h], [0.64, 0.0], [0.93, 0.0], [0.985, 0.06 * h], [1.0, 0.16 * h],
-        [1.0, 0.84 * h], [0.985, 0.94 * h], [0.93, h], [0.5, h * 1.05], [0, h * 1.07],
+        // wave 8: ROUNDED puck — the rim band bulges (barrel, radius 0.95 → 1.04 → 0.95) between two rounded
+        // edges, so its smooth normal sweeps up/down across the band and the shading reads a glossy convex
+        // copper-gold rim with a highlight low on the bulge (ref L1 at x 140: peach top edge → orange-gold → pale
+        // yellow → white → orange-red bottom edge) instead of a flat plank; flat recessed underside; domed top
+        [0, 0.1 * h], [0.56, 0.1 * h], [0.62, 0.03 * h], [0.88, 0.0], [0.94, 0.035 * h], [0.975, 0.12 * h],
+        [1.015, 0.3 * h], [1.04, 0.5 * h], [1.015, 0.7 * h], [0.975, 0.86 * h], [0.93, 0.95 * h], [0.86, h],
+        [0.55, h * 1.07], [0, h * 1.1],
       ]
       : [
         [0, 0.09], [0.74, 0.07], [0.82, 0.0], [0.9, -0.03], [0.97, -0.01], [1, 0.05], [1, h * 0.78], [0.95, h * 0.97], [0.82, h * 1.04], [0, h * 1.08],

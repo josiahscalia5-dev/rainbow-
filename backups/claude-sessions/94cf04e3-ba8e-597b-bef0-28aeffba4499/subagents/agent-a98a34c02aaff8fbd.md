@@ -1096,3 +1096,325 @@ Now the rope fragment: lumpy beaded whitewater with blue open bubbles instead of
 
 > ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
 
+### 🤖 Claude — 2026-11-16T02:02:57.140Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave8/foam/NOTES.md <<'EOF'\n* it02 (86 calls, 565,719 tris; tris also moved by concurrent edits of others): BANK_BUB_FRAG steeper key light (t =\n  0.5 + 0.55 dot(N, upper-left)); riderSplash.ts createRiderSplash05 (new 05-only instanced mesh: 64 surface whitewater\n  ropes + 36 crown droplet jets + 22 root-froth pads per side) cross-faded in index.ts by w05 (smooth s0+2..s0+5,\n  s1-5..s1-2; shared fan gets strength*(1-w05), i.e. unchanged outside 05); index.ts spray droplets in 05: rate x2.4,\n  cap 26, size 0.012-0.04, along the 05 rope directions (same rand( …[+1195 chars]`
+
+### 🧑 User — 2026-11-16T02:03:30.022Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/foam/it03/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":565719,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 51.2 | 0.878 | 0.182 | 54.1 | 58.7 | 48.6 | 47.5 |
+> qa/pilot05/wave8/foam/it03/05.png
+>   Lfar    12390 px  mean RGB [227 213 255]  WHITE  22.6%  SHADE(B-R>=30)  37.2%  lum 231.6
+>   Rfar     8723 px  mean RGB [227 231 255]  WHITE  51.8%  SHADE(B-R>=30)  35.7%  lum 237.7
+>   Lnear   27678 px  mean RGB [224 233 247]  WHITE  27.7%  SHADE(B-R>=30)  38.1%  lum 234.5
+>   Rnear   22133 px  mean RGB [224 232 245]  WHITE  30.3%  SHADE(B-R>=30)  31.9%  lum 233.9
+>   heapR x640-864 y700-1000: foam  12.3%  max vertical run 95 px  mean run(cols with foam) 38 px
+
+### 🤖 Claude — 2026-11-16T02:03:31.645Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it03/crop_splash.png"}`
+
+### 🧑 User — 2026-11-16T02:03:31.670Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:03:32.092Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it03/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T02:03:33.899Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T02:03:33.895Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T02:03:45.164Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it03/crop_rightrim.png"}`
+
+### 🧑 User — 2026-11-16T02:03:45.194Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:03:45.557Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it03/crop_leftnear.png"}`
+
+### 🧑 User — 2026-11-16T02:03:45.584Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:03:57.903Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB'); n=Image.open('qa/pilot05/wave8/foam/it03/05.png').convert('RGB')\nD='/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/c/'\ndef pair(b1,b2,name,s=3):\n    a=r.crop(b1); c=n.crop(b2); w,h=a.size\n    o=Image.new('RGB',(w*2+6,h),'black'); o.paste(a,(0,0)); o.paste(c,(w+6,0)); o=o.resize(((w*2+6)*s,h*s),Image.LANCZOS); o.save(D+name)\npair((0,1180,240,1330),(0,1180,240,1330),'nearL_it03.png')\n\"", "description": "3x zoom of lower-left clump …[+14 chars]`
+
+### 🧑 User — 2026-11-16T02:03:58.307Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:03:59.110Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/c/nearL_it03.png"}`
+
+### 🧑 User — 2026-11-16T02:03:59.138Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:04:29.749Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 11.0, 1.2, 9.0) + vInst.y * 37.0;\n  float dens = clamp(0.18 + 0.85 * smoothstep(0.4, -0.6, q.y) + 0.35 * (1.0 - z) - 0.25 * vBig, 0.0, 0.92);\n  vec4 mf = microFoam(mp, dens);\n  float kf = 1.0 - smoothstep(0.45, 0.8, fwidth(mp.x) + fwidth(mp.y));\n  t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.5 * kf + mf.y * 0.3 * kf;\n  vec3 col = soap05(t + 0.04 * vInst.z);\n  col += vec3(1.0) * mf.w * 0.45 * kf;\n  vec3 Lv = (viewMatrix * vec4(normalize(uLightDi …[+1041 chars]`
+
+### 🧑 User — 2026-11-16T02:04:29.827Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:04:31.251Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    w = mix(0.05, 0.01, pow(aUV.x, 0.7)) * (0.5 + 0.7 * hs(seed * 19.1));", "new_string": "    w = mix(0.034, 0.008, pow(aUV.x, 0.7)) * (0.5 + 0.7 * hs(seed * 19.1));"}`
+
+### 🧑 User — 2026-11-16T02:04:31.313Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:04:34.203Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    float len = 0.28 + 0.25 * hs(seed * 7.3);\n    vLen = len;\n    vec2 q = root + dir * aUV.x * len;\n    p = vec3(side * q.x, 0.06 + 0.04 * sin(3.14159 * aUV.x), q.y);\n    tg = vec3(side * dir.x, 0.0, dir.y);\n    w = (0.08 + 0.07 * hs(seed * 19.1)) * (1.0 - 0.35 * aUV.x);", "new_string": "    float len = 0.2 + 0.18 * hs(seed * 7.3);\n    vLen = len;\n    vec2 q = root + dir * aUV.x * len;\n    p = vec3(side * q.x, 0.06 + 0.04 * sin(3.14159 * aUV.x), q.y);\n    tg = vec3(side * dir.x, 0.0, dir. …[+71 chars]`
+
+### 🧑 User — 2026-11-16T02:04:34.272Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:04:37.053Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x);\n    col = mix(cyan, white, clamp(1.15 - vUV.x * 0.9 - ac * 0.3, 0.0, 1.0));", "new_string": "    // it04: white only in the rope core, translucent cyan edges / tail, so the water shows between the strands\n    alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x) * mix(0.9, 0.45, smoothstep(0.3, 1.0, ac + vUV.x * 0.5));\n    col = mix(cyan, white, clamp(1.2 - vUV.x * 0.9 - ac * 0.9, 0.0, 1.0));"}`
+
+### 🧑 User — 2026-11-16T02:04:37.121Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:04:38.056Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    alpha = max(lace, 0.35) * soft;", "new_string": "    alpha = lace * soft * 0.9;"}`
+
+### 🧑 User — 2026-11-16T02:04:38.126Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:04:39.663Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "  const nRope = quality === 'high' ? 64 : 26;\n  const nJet = quality === 'high' ? 36 : 14;\n  const nFroth = quality === 'high' ? 22 : 10;", "new_string": "  const nRope = quality === 'high' ? 44 : 20;\n  const nJet = quality === 'high' ? 40 : 16;\n  const nFroth = quality === 'high' ? 16 : 8;"}`
+
+### 🧑 User — 2026-11-16T02:04:39.741Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:04:49.896Z
+
+> 🔧 **Bash** `{"command": "cat > qa/pilot05/wave8/foam/tools/splashext.py <<'EOF'\n\"\"\"wave 8: splash extent. Whitish px (R>=170, G>=200, B>=225) in x 150-720, y 1100-1330 per side (L: x<432, R: x>=432),\ntheir share of the box and the outermost x / lowest y with >= 3 whitish px per column / row. Usage: python3 -I splashext.py IMG...\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nfor p in sys.argv[1:]:\n    a = np.asarray(Image.open(p).convert('RGB')).astype(int)[1100:1330, 150:720]\n    m = (a[..., 0] >= 170) & (a[..., 1] >= 200) & (a[..., 2] >= 225)\n    out = []\n    for nm, sl in (('L', …[+680 chars]`
+
+### 🧑 User — 2026-11-16T02:04:50.370Z
+
+> ↩︎ result: references/05_flow_into_the_current.png L 13.6% x 150-387 ylow 1329 | R 12.8% x 485-719 ylow 1329
+> qa/pilot05/wave8/baseline/05.png L 10.0% x 150-431 ylow 1329 | R 17.4% x 432-719 ylow 1327
+> qa/pilot05/wave8/foam/it03/05.png L 31.2% x 150-409 ylow 1329 | R 30.8% x 441-719 ylow 1328
+> /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/iso2_nosplash/05.png L  4.3% x 150-408 ylow 1329 | R  8.0% x 445-719 ylow 1329
+
+### 🤖 Claude — 2026-11-16T02:04:59.822Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave8/foam/NOTES.md <<'EOF'\n* it03 (86 calls, 565,719 tris): BANK_BUB_FRAG top caps brighter (0.52 + 0.62 tl); right rim (rafts, rimK) lumps x0.7\n  and still sunk; splash05 ropes rooted outside the fur silhouette (1.3-1.5 uR), directions 0.62 -> 0.06 rad from back,\n  lumpy beaded rope fragment; crown jets rooted 1.4 uR, higher; froth pads at 1.25-1.4 uR. Seen: the splash now fans\n  DOWN-outward like the ref, but as two heavy opaque white wings (splashext L/R 31.2 / 30.8 % whitish px vs ref 13.6 /\n  12.8, baseline 10.0 / 17.4); clumps at 3x = matte grey-laven …[+1009 chars]`
+
+### 🧑 User — 2026-11-16T02:05:05.151Z
+
+> ↩︎ result: Exit code 1
+> src/world/far05.ts(133,24): error TS2304: Cannot find name 'FAR05_PATH'.
+> src/world/far05.ts(134,36): error TS2304: Cannot find name 'EXTENT05'.
+> Node.js v22.23.4
+> ['[05] ReferenceError: FAR05_PATH is not defined\n    at designRow (http://127.0.0.1:5201/src/world/far05.ts:82:24)\n    at mixRow (http://127.0.0.1:5201/src/world/far05.ts:88:15)\n    at Object.row (http://127.0.0.1:5201/src/world/far05.ts:98:17)\n    at farRiverGeometry (http://127.0.0.1:5201/src/world/far05.ts:125:19)\n    at buildEnvironment (http://127.0.0.1:5201/src/world/environment.ts:302:37)\n    at startGame (http://127.0.0.1:5201/src/game/Game.ts:60:15)\n    at http://127.0.0.1:5201/src/main.ts:15:1']
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: 'qa/pilot05/wave8/foam/it04/05.png'
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/qa/pilot05/wave8/foam/tools/crops.py", line 7, in <module>
+>     N = Image.open(now).convert('RGB')
+>         ~~~~~~~~~~^^^^^
+>   File "/usr/local/lib/python3.13/site-packages/PIL/Image.py", line 3639, in open
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: 'qa/pilot05/wave …[+19 chars]
+
+### 🤖 Claude — 2026-11-16T02:05:07.964Z
+
+The path-camera specialist's `src/world/far05.ts` is mid-edit (not my file). I'll check REQUESTS.md meanwhile, then retry.
+
+### 🤖 Claude — 2026-11-16T02:05:08.953Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^- wave8\\|wave8\" qa/pilot05/REQUESTS.md | tail -10; npx tsc --noEmit 2>&1 | head -3", "description": "Check wave8 requests and retry typecheck"}`
+
+### 🧑 User — 2026-11-16T02:05:11.374Z
+
+> ↩︎ result: 11:- wave8 path-camera-transition-engineer → washer-environment-modeler (02:20 UTC): FAR RINGS. Measured ref ring radii about the VP (499,479), rays at 90/120/150°: ≈270 / 170 / 104 / 62 / 45 / 31 px, then the warm throat (r<25). Live calibration r ≈ 10000/D → virtual depths ≈ 40 (your real ring #1, keep) / 59 / 97 / 161 / 222 / 322. My far block will put far rings at D ≈ 59, 97, 161, 222, 322 (ringDv). Please DROP the real 05 ring at sF05 (rings05's last entry, depth 53.25 → r≈189, it is the 'ring #2 too big'); my far ring at D≈59 replaces it (r≈170). My block checks `rings05` itself for an entry within ±0.5 of sF05: while it is there my D≈59 ring stays OFF (never a double ring); once you remove it from `rings05` my ring switches on by itself — tell me here when it is gone. The far river (farRiverMaterial + far05.ts) is mine; the real-ring list and lids stay yours.
+> 12:- wave8 washer-environment-modeler → path-camera-transition-engineer (02:58 UTC): DONE — the real 05 ring at sF05 is gone from `rings05` (environment.ts: `ringSlots05` keeps the slot for the lid pair camera-side of it and the slot-row phase; `rings05 = ringSlots05` minus the entry within ±0.5 of sF05), so your D≈59 r …[+1364 chars]
+
+### 🤖 Claude — 2026-11-16T02:05:13.837Z
+
+I'll post the seam-matching request for the far foam rims to path-camera while waiting.
+
+### 🤖 Claude — 2026-11-16T02:05:14.695Z
+
+> 🔧 **Bash** `{"command": "tail -c 400 qa/pilot05/REQUESTS.md; echo; wc -l qa/pilot05/REQUESTS.md", "description": "Show end of REQUESTS.md"}`
+
+### 🧑 User — 2026-11-16T02:05:14.731Z
+
+> ↩︎ result: FA9EF2 on the core side, band centre ±0.62·halfwidth from the core, band half width ≈0.19·halfwidth (your t 0.18–0.48 is close), a few thin light flow lines along the bands (no white sheet); my core centre at the seam = coreLateral(course,s) + 1.05·sin(s·0.31−0.834) band swing (FRAG `sbend`), so continue your S from that lateral. Tell me if you want different numbers — I match yours.
+> 
+> 13 qa/pilot05/REQUESTS.md
+
+### 🤖 Claude — 2026-11-16T02:05:20.874Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/REQUESTS.md", "old_string": "so continue your S from that lateral. Tell me if you want different numbers — I match yours.\n", "new_string": "so continue your S from that lateral. Tell me if you want different numbers — I match yours.\n- wave8 foam-bubbles-particles → path-camera-transition-engineer (03:20 UTC): FAR FOAM RIMS at the seam. My 05 rims up to the forced-tunnel seam are now fine-foam sphere impostors (`foam_rim05` + `foam_rafts`, shader BANK_BUB_FRAG / MICRO_GLSL in src/vfx/foam.ts; you may import the GLSL strings i …[+664 chars]`
+
+### 🧑 User — 2026-11-16T02:05:20.947Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/REQUESTS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:05:21.581Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -3; echo rc=$?", "description": "Retry typecheck"}`
+
+### 🧑 User — 2026-11-16T02:05:24.230Z
+
+> ↩︎ result: rc=0
+
+### 🤖 Claude — 2026-11-16T02:05:27.731Z
+
+> 🔧 **Bash** `{"command": "(timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave8/foam/it04 2>&1 | tail -1) && python3 -I -c \"import json; d=json.load(open('qa/capture_log.json')); print(str(d['errors'])[:800])\" && python3 -I scripts/screen_report.py 05 qa/pilot05/wave8/foam/it04 PREV=qa/pilot05/wave8/baseline/05.png NOW=qa/pilot05/wave8/foam/it04/05.png 2>&1 | tail -2 && python3 -I qa/pilot05/wave8/foam/tools/crops.py qa/pilot05/wave8/foam/it04/05.png qa/pilot05/wave8/foam/it04 && python3 -I qa/pilot05/wave6/foam/tools/foamcol.py qa/pilot05/wave8/foam/it04/05.png 2>&1 | grep -v Warn && python3 - …[+129 chars]`
+
+### 🧑 User — 2026-11-16T02:06:05.930Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/foam/it04/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 50.7 | 0.88 | 0.189 | 54.0 | 58.7 | 48.0 | 46.6 |
+> qa/pilot05/wave8/foam/it04/05.png
+>   Lfar     9869 px  mean RGB [229 231 255]  WHITE  50.2%  SHADE(B-R>=30)  29.6%  lum 238.2
+>   Rfar    13332 px  mean RGB [237 236 255]  WHITE  68.6%  SHADE(B-R>=30)  21.0%  lum 242.4
+>   Lnear   17810 px  mean RGB [234 232 243]  WHITE  52.3%  SHADE(B-R>=30)  13.0%  lum 236.4
+>   Rnear   14404 px  mean RGB [232 230 241]  WHITE  42.1%  SHADE(B-R>=30)  14.1%  lum 234.3
+>   heapR x640-864 y700-1000: foam  14.6%  max vertical run 108 px  mean run(cols with foam) 45 px
+> qa/pilot05/wave8/foam/it04/05.png L 20.9% x 150-431 ylow 1329 | R 23.2% x 432-719 ylow 1328
+
+### 🤖 Claude — 2026-11-16T02:06:07.921Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it04/crop_leftnear.png"}`
+
+### 🧑 User — 2026-11-16T02:06:07.960Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:06:08.378Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it04/crop_splash.png"}`
+
+### 🧑 User — 2026-11-16T02:06:08.407Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:06:23.038Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it04/crop_leftrim.png"}`
+
+### 🧑 User — 2026-11-16T02:06:23.075Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:06:28.604Z
+
+The left far rim is now finer with varied bubble sizes; it needs the blue shading back. For it05: tone midway between it03 and it04, and smaller translucent crown droplets.
+
+### 🤖 Claude — 2026-11-16T02:06:31.968Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  t = 0.12 + 0.95 * smoothstep(0.2, 0.9, t);\n  t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.55 * kf + mf.y * 0.3 * kf;\n  vec3 col = soap05(t + 0.04 * vInst.z);\n  col = mix(col, vec3(1.0, 0.97, 1.07), smoothstep(0.55, 0.95, t) * 0.4);", "new_string": "  // it05: the shading boundary sits higher (it04's 0.2..0.9 curve turned 50 % of the clump px pure white)\n  t = 0.12 + 0.95 * smoothstep(0.3, 1.0, t);\n  t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.55 * kf + mf.y * 0.3 * kf;\n  vec3 col = soap05(t + …[+93 chars]`
+
+### 🧑 User — 2026-11-16T02:06:32.053Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:06:33.070Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    w = mix(0.018, 0.032, hs(seed * 23.3));", "new_string": "    w = mix(0.009, 0.018, hs(seed * 23.3));"}`
+
+### 🧑 User — 2026-11-16T02:06:33.182Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:06:36.773Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    float bead = 1.0 - smoothstep(0.5, 0.85, length(vec2((fract(vUV.x * 2.0 + vSeed * 7.0) - 0.5) * 2.0, vUV.y)));\n    float life = smoothstep(0.0, 0.12, vTau) * (1.0 - smoothstep(0.75, 1.0, vTau));\n    alpha = bead * life * 0.9;\n    col = mix(cyan, white, 0.75);", "new_string": "    // it05: small translucent water beads (cyan body, bright rim / glint), not white flakes\n    vec2 bq = vec2((fract(vUV.x * 3.0 + vSeed * 7.0) - 0.5) * 2.4, vUV.y);\n    float bd = length(bq);\n    float bead = 1.0  …[+252 chars]`
+
+### 🧑 User — 2026-11-16T02:06:36.859Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:06:45.308Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave8/foam/NOTES.md <<'EOF'\n* it04 (86 calls, 567,415 tris): BANK_BUB_FRAG tone S-curve (0.12 + 0.95 smoothstep(0.2, 0.9, t)) + white-lavender\n  lift of the upper mid-tones + soft gloss (pow 6), finer / denser open bubbles (px/8); splash05 ropes thinner (0.034 ->\n  0.008), white only in the core with translucent cyan edges, 44 ropes / 40 jets / 16 froth pads per side, froth pads\n  lacy (no fill). Seen: splash = separate lumpy strands fanning down-outward with water between them (closest so far;\n  splashext L/R 20.9 / 23.2 % incl. 4-8 % water lines, ref 13.6  …[+1050 chars]`
+
+### 🧑 User — 2026-11-16T02:07:27.982Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/foam/it05/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 50.7 | 0.879 | 0.192 | 54.0 | 58.6 | 47.7 | 46.8 |
+> qa/pilot05/wave8/foam/it05/05.png
+>   Lfar     9077 px  mean RGB [225 228 255]  WHITE  42.8%  SHADE(B-R>=30)  36.3%  lum 236.0
+>   Rfar     8342 px  mean RGB [236 237 255]  WHITE  70.2%  SHADE(B-R>=30)  23.7%  lum 242.3
+>   Lnear   16411 px  mean RGB [231 230 243]  WHITE  45.8%  SHADE(B-R>=30)  18.7%  lum 234.5
+>   Rnear   13471 px  mean RGB [228 228 241]  WHITE  36.7%  SHADE(B-R>=30)  21.3%  lum 232.2
+>   heapR x640-864 y700-1000: foam  12.0%  max vertical run 105 px  mean run(cols with foam) 40 px
+> qa/pilot05/wave8/foam/it05/05.png L 20.1% x 150-431 ylow 1329 | R 22.4% x 432-719 ylow 1328
+
+### 🤖 Claude — 2026-11-16T02:07:32.093Z
+
+Lnear/Rnear include the splash and the ribbon's new white flow lines, so I'll measure foam colour only inside the clump boxes (no splash there).
+
+### 🤖 Claude — 2026-11-16T02:07:38.293Z
+
+> 🔧 **Bash** `{"command": "cat > qa/pilot05/wave8/foam/tools/clumpcol.py <<'EOF'\n\"\"\"wave 8: foam colour inside the near-clump / rim boxes only (no splash): mask R>=140, G>=140, B>=200 and not a\nsaturated cyan water px (B-R > 90 and G-R > 40 = water). WHITE = min(RGB) >= 235, SHADE = B-R >= 30, BLUE = B-R >= 60.\nUsage: python3 -I clumpcol.py IMG...\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nBOX = {'Lclump': (0, 1000, 150, 1120), 'LLclump': (0, 1200, 240, 1345), 'LRclump': (620, 1200, 864, 1345), 'Lrim': (0, 600, 300, 830)}\nfor p in sys.argv[1:]:\n    a = np.asarray(Image.open(p).con …[+856 chars]`
+
+### 🧑 User — 2026-11-16T02:07:38.963Z
+
+> ↩︎ result: references Lclump 5460 W25 S56 B35 | LLclump 10527 W28 S38 B23 | LRclump 9514 W28 S44 B26 | Lrim 20501 W22 S41 B22
+> baseline Lclump 7727 W35 S36 B13 | LLclump 14692 W13 S30 B13 | LRclump 18115 W18 S31 B13 | Lrim 19882 W19 S45 B14
+> it01 Lclump 6799 W35 S35 B13 | LLclump 14112 W21 S25 B12 | LRclump 16400 W18 S32 B14 | Lrim 19615 W22 S44 B15
+> it02 Lclump 6714 W14 S60 B28 | LLclump 15428 W8 S45 B22 | LRclump 15325 W8 S49 B24 | Lrim 20061 W10 S55 B25
+> it03 Lclump 6665 W37 S47 B22 | LLclump 15717 W16 S49 B18 | LRclump 14694 W21 S43 B20 | Lrim 21698 W18 S44 B19
+> it04 Lclump 6745 W69 S23 B13 | LLclump 12748 W37 S27 B15 | LRclump 14695 W42 S23 B14 | Lrim 20554 W33 S34 B16
+> it05 Lclump 6367 W59 S32 B17 | LLclump 12374 W31 S33 B19 | LRclump 14145 W35 S32 B19 | Lrim 19821 W27 S38 B17
+
+### 🤖 Claude — 2026-11-16T02:07:46.933Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave8/foam/it05/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T02:07:48.907Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T02:07:48.901Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T02:07:54.150Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  t = 0.12 + 0.95 * smoothstep(0.3, 1.0, t);", "new_string": "  // it06: boundary lower again (it05 clump boxes W 27-59 %, ref 22-28 %), no white bonus for big lumps\n  t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * vBig);"}`
+
+### 🧑 User — 2026-11-16T02:07:54.239Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:08:00.415Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/wave8/foam/NOTES.md <<'EOF'\n* it05 (86 calls, 567,415 tris): tone curve smoothstep(0.3, 1.0), white lift only t > 0.75; crown jets = small\n  translucent cyan beads. Seen: splash strands with water between them, beads no longer flakes; foam still whiter than\n  the ref. New clean metric `tools/clumpcol.py` (clump / rim boxes only, no splash; W = white, S = B-R >= 30, B = B-R\n  >= 60): ref Lclump W25 S56 B35, LLclump W28 S38 B23, LRclump W28 S44 B26, Lrim W22 S41 B22; baseline W35/13/18/19\n  S36/30/31/45; it03 W37/16/21/18 S47/49/43/44 (closest numbers); it04 W …[+955 chars]`
+

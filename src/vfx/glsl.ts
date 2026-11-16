@@ -97,12 +97,16 @@ float flowGlint(vec2 g, float density, float L, float stretch, float horiz, floa
   float la = 0.38 / max(max(abs(ca.x), abs(ca.y)), 1e-6);
   float lb = 0.38 / max(max(abs(cb.x), abs(cb.y)), 1e-6);
   float l = L * (0.55 + 0.9 * fract(hs * 37.0));
-  float armA = exp(-abs(pb) * 0.85) * max(0.0, 1.0 - abs(pa) / min(l * stretch, la));
+  float tA = max(0.0, 1.0 - abs(pa) / min(l * stretch, la));
+  float armA = exp(-abs(pb) * 0.85) * tA;
   float armB = exp(-abs(pa) * 0.85) * max(0.0, 1.0 - abs(pb) / min(l, lb));
   // (wave 7) small hot core (≈2 px): the old wide soft core (exp(-r²·0.06)) read as round snow dots
   float core = exp(-dot(p, p) * 0.22) * 1.4;
+  // (wave 8) soft glow lying along the long arm (≈5 px wide, tapering): ref 05 flares are thick glowing
+  // streaks, the bare 1-px arms read as thin wire crosses (the game's bloom is weak)
+  float glowA = exp(-abs(pb) * 0.2) * tA * tA * 0.3;
   float tw = 0.55 + 0.45 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);
-  return ((armA * armA + armB * armB) * 1.6 + core) * tw;
+  return ((armA * armA + armB * armB) * 1.6 + core + glowA) * tw;
 }
 // Lens-shaped glossy flare (ref 05 near field): a bright streak lying along SCREEN-horizontal, thick in
 // the middle and tapering to points (half thickness T·(1 − x²)), slightly arched, with a soft glow.

@@ -1484,3 +1484,232 @@ The whole frame includes parallel edits from other specialists (walls, near wate
 > +    // wide whatever the depth (distance |n − 0.5| over the estimated per-pixel gradient ≈1.3·cpx), so the
 > +    // water is densel …[+5946 chars]
 
+### 🤖 Claude — 2026-11-16T02:04:20.776Z
+
+> 🔧 **Bash** `{"command": "grep -n 'export const FAR05_PATH' -A3 src/world/far05.ts | head -5; grep -n 'export function farRiverLayout' src/world/far05.ts; grep -n '^export function farRiverGeometry' src/world/far05.ts", "description": "Locate sections in far05.ts"}`
+
+### 🧑 User — 2026-11-16T02:04:20.817Z
+
+> ↩︎ result: 37:export const FAR05_PATH: [number, number][] = [
+> 38-  [6, 0.3], [12, 0.42], [17, 0.58], [24, 0.95], [32, 1.45], [43, 1.85], [60, 2.05], [90, 2.25], [125, 2.35],
+> 39-  [160, 1.75], [215, 0.55], [280, -0.75], [330, -1.3], [400, -1.5],
+> 40-];
+> 112:export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number): FarRiverLayout {
+> 162:export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: number, cols = 16, steps = 120): THREE.BufferGeometry {
+
+### 🤖 Claude — 2026-11-16T02:04:21.792Z
+
+Rewriting the layout part of my own module (the geometry builder stays).
+
+### 🤖 Claude — 2026-11-16T02:04:22.440Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/far05.ts", "offset": 24, "limit": 20}`
+
+### 🧑 User — 2026-11-16T02:04:22.457Z
+
+> ↩︎ result: 24	
+> 25	/** S05.extent (course.ts): half extent |offset| + half width of the 05 stream (outer bank of each bend) */
+> 26	const EXTENT05 = 6.0;
+> 27	
+> 28	/**
+> 29	 * Designed far path: route-centre lateral xB (units along ft.Rt, + = right) at virtual depth Z beyond the seam.
+> 30	 * The visible cyan core sits at (1 + CORE_SWING)·xB. Fitted to the reference core centres back-projected through
+> 31	 * the locked 05 eye (f 1278 px, VP (500,479), eye 3.56 u above the far water plane):
+> 32	 * y 538 → x 530 (Z≈24), 532 → 542 (Z≈32), 526 → 547 (Z≈43), 511 → 537 (Z≈88), 505 → 534 (Z≈121),
+> 33	 * then back left: 496 → ≈505 (Z≈215), 490 → ≈490 (Z≈330). The first knots continue the real exit bend
+> 34	 * (route lateral ≈0.3 at Z≈6) straight into the right swing (the reference's dip to the left at y≈550 sits where
+> 35	 * the locked course has its exit bend, so it is not chased: that would add a wiggle at the seam).
+> 36	 */
+> 37	export const FAR05_PATH: [number, number][] = [
+> 38	  [6, 0.3], [12, 0.42], [17, 0.58], [24, 0.95], [32, 1.45], [43, 1.85], [60, 2.05], [90, 2.25], [125, 2.35],
+> 39	  [160, 1.75], [215, 0.55], [280, -0.75], [330, -1.3], [400, -1.5],
+> 40	];
+> 41	
+> 42	function smoothstep(a: number, b: number, x: nu …[+67 chars]
+
+### 🤖 Claude — 2026-11-16T02:04:31.559Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "/** S05.extent (course.ts): half extent |offset| + half width of the 05 stream (outer bank of each bend) */\nconst EXTENT05 = 6.0;\n\n/**\n * Designed far path: route-centre lateral xB (units along ft.Rt, + = right) at virtual depth Z beyond the seam.\n * The visible cyan core sits at (1 + CORE_SWING)·xB. Fitted to the reference core centres back-projected through\n * the locked 05 eye (f 1278 px, VP (500,479), eye 3.56 u above the far water plane):\n * y 538 → x 530 (Z≈24), 532 → 542 (Z≈32), 526 → 547 …[+1792 chars]`
+
+### 🧑 User — 2026-11-16T02:04:31.625Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:04:32.269Z
+
+Now the layout function itself.
+
+### 🤖 Claude — 2026-11-16T02:04:32.921Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/far05.ts", "offset": 90, "limit": 62}`
+
+### 🧑 User — 2026-11-16T02:04:32.935Z
+
+> ↩︎ result: 90	  offL = smin(offL, Mb + hw - wL - 0.5, 1.2);
+> 91	  offR = smin(offR, hw - wR - 0.5 - Mb, 1.2);
+> 92	  const cL = xB + Mb - offL, cR = xB + Mb + offR;
+> 93	  return { xB, hw, cL, wL, cR, wR, core: 0.5 * (cL + wL + cR - wR) };
+> 94	}
+> 95	
+> 96	/** the ribbon shader's 05 band S (sbend) */
+> 97	const sbend05 = (s: number) => 1.05 * Math.sin(s * 0.31 - 0.834) + 0.18 * Math.sin(s * 0.62 + 0.6);
+> 98	
+> 99	export interface FarRiverLayout {
+> 100	  row(Z: number): FarRiverRow;
+> 101	  /** lateral of the far coin trail (= the real coins' rule: centre + latK·M) */
+> 102	  coinLat(Z: number, latK: number): number;
+> 103	  /** half chord of the tube floor at the water level */
+> 104	  chord: number;
+> 105	}
+> 106	
+> 107	/**
+> 108	 * Layout of the far river at virtual depth Z. For Z ≲ 6 it is the REAL ribbon at the arc length s whose route
+> 109	 * point lies Z units beyond the seam along the axis (what the eye would see there without the far section);
+> 110	 * it blends (Z 3 → 12) into the designed FAR05_PATH, where the core swing is CORE_SWING·xB and the band S is off.
+> 111	 */
+> 112	export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number): FarRiverLayout {
+> 113	  const rel = new THREE.Vector3();
+> 114	  cons …[+1666 chars]
+
+### 🤖 Claude — 2026-11-16T02:05:09.578Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "export interface FarRiverLayout {\n  row(Z: number): FarRiverRow;\n  /** lateral of the far coin trail (= the real coins' rule: centre + latK·M) */\n  coinLat(Z: number, latK: number): number;\n  /** half chord of the tube floor at the water level */\n  chord: number;\n}\n\n/**\n * Layout of the far river at virtual depth Z. For Z ≲ 6 it is the REAL ribbon at the arc length s whose route\n * point lies Z units beyond the seam along the axis (what the eye would see there without the far section);\n * it …[+5336 chars]`
+
+### 🧑 User — 2026-11-16T02:05:09.675Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:05:13.138Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/^import { coreLateral, CORE_SWING, EDGE_LIFT } from/import { coreLateral, EDGE_LIFT } from/' src/world/far05.ts && grep -n \"^import\" src/world/far05.ts && timeout 300 npx tsc --noEmit 2>&1 | head", "description": "Drop unused import and type-check"}`
+
+### 🧑 User — 2026-11-16T02:05:15.574Z
+
+> ↩︎ result: 16:import * as THREE from 'three';
+> 17:import type { Course } from './course';
+> 18:import type { ForcedTunnel } from './tube';
+> 19:import { tubeCenterAt } from './tube';
+> 20:import { coreLateral, EDGE_LIFT } from '../vfx/waterRibbon';
+> [This command modified 1 file you've previously read: src/world/far05.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-16T02:05:18.474Z
+
+Type-check passes. Now let me validate the real-zone layout: for rows in front of the seam (Z<0) it must predict the real ribbon's band positions that are rendered in it01.
+
+### 🤖 Claude — 2026-11-16T02:05:24.775Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools && sed -e 's/for (const Z of \\[0, 1, 2, 4, 6, 8, 12, 17, 24, 32, 43, 60, 90, 125, 160, 215, 280, 330, 376\\])/for (const Z of [-6, -4, -3, -2, -1, 0, 1, 2, 4, 6, 8, 10, 12, 17, 24, 32, 43, 60, 88, 110, 140, 175, 212, 260, 310, 350, 376])/' -e 's/core x=\\${c\\[0\\].toFixed(0)} bandL x=\\${l\\[0\\].toFixed(0)} bandR x=\\${rr\\[0\\].toFixed(0)}/core x=${c[0].toFixed(0)} bandL x=${(proj(vpt(Z, r.cL - r.wL, 0))[0]).toFixed(0)}-${(proj(vpt(Z, r.cL + r.wL, 0))[0]).toFixed(0)} bandR x=${(proj(vpt( …[+482 chars]`
+
+### 🧑 User — 2026-11-16T02:05:46.232Z
+
+> ↩︎ result: 1
+> realSeamRing=false knots=[[0,0],[7,5.75],[21,43.75],[35,107.75],[49,168.75],[63,268.75]] chord=6.53
+> Z=-6 | y=NaN core x=NaN bandL x=NaN-NaN bandR x=NaN-NaN edges NaN..NaN
+> Z=-4 | y=574.6 core x=502 bandL x=380-447 bandR x=558-624 edges 353..645
+> Z=-3 | y=572.8 core x=512 bandL x=388-458 bandR x=567-625 edges 362..645
+> Z=-2 | y=571.0 core x=524 bandL x=406-473 bandR x=575-626 edges 371..646
+> Z=-1 | y=569.3 core x=539 bandL x=444-496 bandR x=581-625 edges 389..645
+> Z=0 | y=567.6 core x=545 bandL x=467-508 bandR x=582-624 edges 434..643
+> Z=1 | y=566.0 core x=538 bandL x=453-495 bandR x=581-622 edges 418..641
+> Z=2 | y=564.4 core x=529 bandL x=441-483 bandR x=575-618 edges 409..637
+> Z=4 | y=561.5 core x=514 bandL x=427-463 bandR x=566-609 edges 399..629
+> Z=6 | y=558.7 core x=509 bandL x=418-448 bandR x=569-602 edges 394..620
+> Z=8 | y=556.1 core x=509 bandL x=411-438 bandR x=579-606 edges 389..622
+> Z=10 | y=553.7 core x=510 bandL x=411-438 bandR x=583-610 edges 391..624
+> Z=12 | y=551.4 core x=512 bandL x=418-443 bandR x=582-608 edges 398..621
+> Z=17 | y=546.3 core x=516 bandL x=431-455 bandR x=578-602 edges 412..613
+> Z=24 | y=540.3 core x=528 bandL x=460-481 bandR x=576-597 edges 441..603
+> Z=32 | y=53 …[+872 chars]
+
+### 🤖 Claude — 2026-11-16T02:05:56.357Z
+
+> 🔧 **Bash** `{"command": "sed -n 425,500p src/vfx/waterRibbon.ts", "description": "Read current ribbon band placement code"}`
+
+### 🧑 User — 2026-11-16T02:05:56.398Z
+
+> ↩︎ result: float offL = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.13 + 1.7)) + part + wob * 0.05 * sin(tv * 0.42 + 1.1);
+>   float offR = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.11 + 4.2)) + part + wob * 0.05 * sin(tv * 0.37 + 3.9);
+>   float modA = mix(0.15, 0.4, freeK);         // 05: even band width (the ±40 % swell drew the slab)
+>   float wL = hw * vStyle.z * (1.0 + modA * sin(s * 0.19 + 0.4) + 0.08 * wob * sin(tv * 0.6)) * gate;
+>   float wR = hw * vStyle.z * (1.0 + modA * sin(s * 0.17 + 2.9) + 0.08 * wob * sin(tv * 0.55 + 2.0)) * gate;
+>   float brush = 0.0;
+>   if (freeK < 0.5) {
+>     float Mb = M + sbend;
+>     // 05 (wave 7) channel shape fitted to ref 05 (band centres back-projected through the locked camera,
+>     // lateral from the core): the river widens at s≈148–166 (the right band runs along the right bank at
+>     // s≈152–157, the left band bulges toward the core at s≈145–152 and swings out at s≈158–166), and the
+>     // right band runs ≈0.3 u closer to the core at s≈136–139. Stationary in s; 0 beyond s 180 (06 join).
+>     float fR = -0.3 * smoothstep(133.0, 136.0, s) * (1.0 - smoothstep(139.5, 142.0, s))
+>              + 1.9 * smoothstep(146.5, 154.0, s) * …[+4154 chars]
+
+### 🤖 Claude — 2026-11-16T02:06:05.409Z
+
+The band code matches my replication, so let me check what object actually renders at y≈571 (it may not be the ribbon row I assumed).
+
+### 🤖 Claude — 2026-11-16T02:06:13.170Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/p5.js <<'EOF'\n(async () => {\n  const R = window.__rainbow; const out = [];\n  const course = R.course;\n  for (const [x, y] of [[500,571],[540,571],[600,571],[540,580],[600,585],[540,590],[450,575]]) {\n    const nx = x / 864 * 2 - 1, ny = 1 - y / 1536 * 2;\n    out.push(`${x},${y}: ` + R.probe(nx, ny).slice(0,3).map(h => `${h.obj.split('<')[0]} d=${h.d} p=${h.p.map(v=>v.toFixed(1))}`).join(' | '));\n  }\n  // map hit points on the water ribbon to (s, l)\n  const near = (p) => { let bes …[+1035 chars]`
+
+### 🧑 User — 2026-11-16T02:06:28.433Z
+
+> ↩︎ result: 500,571: water_ribbon d=50.77 p=2.0,-43.6,-118.7 | tube05_far d=58.67 p=2.0,-44.5,-126.6 | tube05_far_wall d=58.77 p=2.0,-44.5,-126.7
+> 540,571: water_ribbon d=52.12 p=3.6,-43.7,-120.0 | tube05_far_wall d=58.67 p=3.8,-44.4,-126.6 | tube05_far d=58.69 p=3.8,-44.4,-126.6
+> 600,571: water_ribbon d=45.46 p=5.5,-43.0,-113.3 | water_ribbon d=47.56 p=5.6,-43.2,-115.4 | water_ribbon d=56.24 p=6.3,-44.1,-124.0
+> 540,580: water_ribbon d=45.28 p=3.4,-43.3,-113.2 | tube05_far_wall d=58.57 p=3.8,-44.8,-126.4 | Mesh d=65.4 p=4.0,-45.6,-133.2
+> 600,585: water_ribbon d=42.83 p=5.3,-43.1,-110.7 | water_ribbon d=49.23 p=5.8,-43.9,-117.0 | water_ribbon d=52.61 p=6.0,-44.3,-120.3
+> 540,590: water_ribbon d=42.53 p=3.3,-43.3,-110.5 | tube05_far_wall d=58.42 p=3.8,-45.3,-126.2 | Mesh d=60.45 p=3.9,-45.5,-128.2
+> 450,575: Mesh d=31.48 p=0.7,-41.5,-99.5 | water_ribbon d=50.71 p=0.0,-43.7,-118.6 | tube05_far_wall d=58.6 p=-0.3,-44.6,-126.5
+> 480,571 ribbon s=176.35 l=-1.57 hw=5.39
+> 530,571 ribbon s=177.95 l=-0.14 hw=4.68
+> 545,571 ribbon s=173.20 l=2.35 hw=5.23
+> 560,571 ribbon s=172.55 l=2.94 hw=5.16
+> 575,571 ribbon s=172.10 l=3.47 hw=5.12
+> 600,571 ribbon s=171.55 l=4.33 hw=5.09
+
+### 🤖 Claude — 2026-11-16T02:06:47.392Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  float fade = 1.0 - smoothstep(0.05, 0.16, fl * 3.0);\n  float dn = rivNoise(vec2(xq * 3.2, s * 0.32));\n  float lines = pow(0.5 + 0.5 * sin(xq * 11.0 + 1.4 * sin(s * 0.23)), 8.0) * fade;\n  vec3 cy = mix(uRivCyanLo, uRivCyan, smoothstep(0.15, 0.75, mix(0.55, dn, fade)));\n  cy = mix(cy, uRivCyanHi, lines * smoothstep(0.35, 0.8, dn) * 0.85);", "new_string": "  // two octaves of flow lines along the winding core (fine near the seam, coarse further in), each faded out\n  // where its spacing drops b …[+706 chars]`
+
+### 🧑 User — 2026-11-16T02:06:47.486Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-16T02:06:51.086Z
+
+> 🔧 **Bash** `{"command": "timeout 300 npx tsc --noEmit 2>&1 | head -5 && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave8/path-camera/it02 2>&1 | tail -1 && python3 -I scripts/screen_report.py 05 qa/pilot05/wave8/path-camera/it02 PREV=qa/pilot05/wave8/baseline/05.png NOW=qa/pilot05/wave8/path-camera/it02/05.png 2>&1 | tail -3 && python3 -I /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/farzoom.py /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/far_it02.png references/05_flow_into_the_current.png qa/pilot05/wave8/path-c …[+117 chars]`
+
+### 🧑 User — 2026-11-16T02:07:38.472Z
+
+> ↩︎ result: 05 → qa/pilot05/wave8/path-camera/it02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> |---|---|---|---|---|---|---|---|
+> | PREV | 51.2 | 0.856 | 0.177 | 55.4 | 61.0 | 47.2 | 46.7 |
+> | NOW | 50.7 | 0.879 | 0.192 | 54.0 | 58.6 | 47.7 | 46.8 |
+
+### 🤖 Claude — 2026-11-16T02:07:40.176Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/far_it02.png"}`
+
+### 🧑 User — 2026-11-16T02:07:40.220Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:07:57.702Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/crop.py <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw\n# usage: crop.py OUT x0 y0 x1 y1 scale img...\nout = sys.argv[1]; x0, y0, x1, y1, sc = map(int, sys.argv[2:7]); paths = sys.argv[7:]\nims = [Image.open(p).convert('RGB').crop((x0, y0, x1, y1)).resize(((x1-x0)*sc, (y1-y0)*sc), Image.NEAREST if sc >= 4 else Image.LANCZOS) for p in paths]\nW, H = ims[0].size\no = Image.new('RGB', (W, (H + 6) * len(ims)), 'white')\nd = ImageDraw.Draw(o)\nfor i, im in enumerate(ims):\n    o.paste(i …[+536 chars]`
+
+### 🧑 User — 2026-11-16T02:07:58.104Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:07:59.782Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/seam_it02.png"}`
+
+### 🧑 User — 2026-11-16T02:07:59.810Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:08:05.513Z
+
+> 🔧 **Bash** `{"command": "python3 -I /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/crop.py /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/seam2_it02.png 380 500 680 640 3 qa/pilot05/wave8/path-camera/it02/05.png", "description": "Larger seam crop of it02"}`
+

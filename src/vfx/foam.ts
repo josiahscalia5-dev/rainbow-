@@ -405,16 +405,21 @@ void main() {
   float tl = dot(Nv, normalize(vec3(-0.4, 0.85, 0.35)));
   float t = 0.52 + 0.62 * tl - pow(1.0 - z, 1.5) * (0.25 + 0.35 * clamp(0.5 - q.y * 0.7, 0.0, 1.0)) - (1.0 - vInst.x) * 0.3 + 0.06 * vBig;
   // fine open bubbles: dense on the lower half and the flanks, sparse on the lit top
-  vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 11.0, 1.2, 9.0) + vInst.y * 37.0;
-  float dens = clamp(0.18 + 0.85 * smoothstep(0.4, -0.6, q.y) + 0.35 * (1.0 - z) - 0.25 * vBig, 0.0, 0.92);
+  vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 8.0, 1.2, 12.0) + vInst.y * 37.0;
+  float dens = clamp(0.25 + 0.9 * smoothstep(0.35, -0.6, q.y) + 0.35 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);
   vec4 mf = microFoam(mp, dens);
-  float kf = 1.0 - smoothstep(0.45, 0.8, fwidth(mp.x) + fwidth(mp.y));
-  t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.5 * kf + mf.y * 0.3 * kf;
+  float kf = 1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y));
+  // wave 8 (it04): tone S-curve: few grey mid-tones, a broad white-lavender lit area and clearly blue shading
+  // it05: the shading boundary sits higher (it04's 0.2..0.9 curve turned 50 % of the clump px pure white)
+  // it06: boundary lower again (it05 clump boxes W 27-59 %, ref 22-28 %), no white bonus for big lumps
+  t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * vBig);
+  t += (mf.z - 0.6) * 0.2 * dens * kf - mf.x * 0.55 * kf + mf.y * 0.3 * kf;
   vec3 col = soap05(t + 0.04 * vInst.z);
+  col = mix(col, vec3(1.0, 0.97, 1.07), smoothstep(0.75, 1.0, t) * 0.3);
   col += vec3(1.0) * mf.w * 0.45 * kf;
   vec3 Lv = (viewMatrix * vec4(normalize(uLightDir), 0.0)).xyz;
-  float spec = pow(max(dot(reflect(vec3(0.0, 0.0, -1.0), Nv), Lv), 0.0), 24.0);
-  col += vec3(1.0) * spec * 0.25;
+  float rl = max(dot(reflect(vec3(0.0, 0.0, -1.0), Nv), Lv), 0.0);
+  col += vec3(1.0) * (pow(rl, 24.0) * 0.25 + pow(rl, 6.0) * 0.1);
   // tiny bubbles: lavender-white glossy body, thin blue rim, white speck (the lace at the ref waterlines)
   float tiny = 1.0 - smoothstep(9.0, 16.0, px);
   vec2 qs = vP - vec2(-0.32, 0.34);

@@ -275,7 +275,7 @@ void main() {
     vLen = len;
     p = ropePos(aUV.x, side, a, seed, len);
     tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
-    w = mix(0.05, 0.01, pow(aUV.x, 0.7)) * (0.5 + 0.7 * hs(seed * 19.1));
+    w = mix(0.034, 0.008, pow(aUV.x, 0.7)) * (0.5 + 0.7 * hs(seed * 19.1));
   } else if (aType < 1.5) {
     // crown droplet jet: the head runs root -> landing, the jet is a short chain of beads
     float rate = mix(1.6, 2.6, hs(seed * 11.3));
@@ -285,18 +285,18 @@ void main() {
     vTau = tau;
     p = jetPos(tau, side, a, seed);
     tg = jetPos(min(tau + 0.03, 1.0), side, a, seed) - jetPos(max(tau - 0.03, 0.0), side, a, seed);
-    w = mix(0.018, 0.032, hs(seed * 23.3));
+    w = mix(0.009, 0.018, hs(seed * 23.3));
   } else {
     // root froth: lace pads hugging the fur's silhouette at the water, from beside the body round to its back flank
     float th = mix(1.7, 0.3, a) + (hs(seed * 3.1) - 0.5) * 0.12;
     vec2 root = vec2(sin(th), cos(th)) * max(uR, 0.5) * (1.25 + 0.15 * hs(seed * 2.9));
     vec2 dir = vec2(sin(th + 0.35), cos(th + 0.35));
-    float len = 0.28 + 0.25 * hs(seed * 7.3);
+    float len = 0.2 + 0.18 * hs(seed * 7.3);
     vLen = len;
     vec2 q = root + dir * aUV.x * len;
     p = vec3(side * q.x, 0.06 + 0.04 * sin(3.14159 * aUV.x), q.y);
     tg = vec3(side * dir.x, 0.0, dir.y);
-    w = (0.08 + 0.07 * hs(seed * 19.1)) * (1.0 - 0.35 * aUV.x);
+    w = (0.05 + 0.045 * hs(seed * 19.1)) * (1.0 - 0.35 * aUV.x);
   }
   vec4 mvPosition = modelViewMatrix * vec4(p, 1.0);
   vec2 tv = (modelViewMatrix * vec4(tg, 0.0)).xy;
@@ -337,15 +337,19 @@ void main() {
     float tail = 1.0 - smoothstep(0.55, 1.0, vUV.x);
     float brk = mix(1.0, smoothstep(0.3, 0.6, lump), smoothstep(0.2, 0.75, vUV.x));
     float hole = (1.0 - smoothstep(0.1, 0.2, cells(lp * 2.7 + 3.0))) * (1.0 - smoothstep(0.6, 1.0, ac));
-    alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x);
-    col = mix(cyan, white, clamp(1.15 - vUV.x * 0.9 - ac * 0.3, 0.0, 1.0));
+    // it04: white only in the rope core, translucent cyan edges / tail, so the water shows between the strands
+    alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x) * mix(0.9, 0.45, smoothstep(0.3, 1.0, ac + vUV.x * 0.5));
+    col = mix(cyan, white, clamp(1.2 - vUV.x * 0.9 - ac * 0.9, 0.0, 1.0));
     col = mix(col, blue, hole * 0.55 * (1.0 - vUV.x));
   } else if (vType < 1.5) {
     // crown droplets: a chain of round beads, fading in off the water and out as they fall back
-    float bead = 1.0 - smoothstep(0.5, 0.85, length(vec2((fract(vUV.x * 2.0 + vSeed * 7.0) - 0.5) * 2.0, vUV.y)));
+    // it05: small translucent water beads (cyan body, bright rim / glint), not white flakes
+    vec2 bq = vec2((fract(vUV.x * 3.0 + vSeed * 7.0) - 0.5) * 2.4, vUV.y);
+    float bd = length(bq);
+    float bead = 1.0 - smoothstep(0.6, 0.9, bd);
     float life = smoothstep(0.0, 0.12, vTau) * (1.0 - smoothstep(0.75, 1.0, vTau));
-    alpha = bead * life * 0.9;
-    col = mix(cyan, white, 0.75);
+    alpha = bead * life * (0.45 + 0.45 * smoothstep(0.3, 0.8, bd));
+    col = mix(cyan, white, 0.35 + 0.6 * smoothstep(0.35, 0.8, bd));
   } else {
     // froth collar: fine bubbles (white with blue open holes), soft all round
     vec2 lp = vec2(vUV.x * vLen * 14.0 - uTime * 1.2 + vSeed * 17.0, vUV.y * 2.2 + vSeed * 5.0);
@@ -353,7 +357,7 @@ void main() {
     float hole = 1.0 - smoothstep(0.1, 0.22, lc);
     float lace = 1.0 - smoothstep(0.45, 0.75, lc);
     float soft = (1.0 - smoothstep(0.4, 1.0, ac)) * smoothstep(0.0, 0.2, vUV.x) * (1.0 - smoothstep(0.6, 1.0, vUV.x));
-    alpha = max(lace, 0.35) * soft;
+    alpha = lace * soft * 0.9;
     col = mix(white, blue, hole * 0.7);
   }
   alpha *= uStrength;
@@ -365,9 +369,9 @@ void main() {
 
 /** wave 8: the 05 splash (same API as the shared fan) */
 export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
-  const nRope = quality === 'high' ? 64 : 26;
-  const nJet = quality === 'high' ? 36 : 14;
-  const nFroth = quality === 'high' ? 22 : 10;
+  const nRope = quality === 'high' ? 44 : 20;
+  const nJet = quality === 'high' ? 40 : 16;
+  const nFroth = quality === 'high' ? 16 : 8;
   const uvs = new Float32Array((SEG5 + 1) * 2 * 2);
   for (let i = 0; i <= SEG5; i++) uvs.set([i / SEG5, -1, i / SEG5, 1], i * 4);
   const idx: number[] = [];

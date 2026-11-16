@@ -17,26 +17,26 @@ import * as THREE from 'three';
 import type { Course } from './course';
 import type { ForcedTunnel } from './tube';
 import { tubeCenterAt } from './tube';
-import { coreLateral, CORE_SWING, EDGE_LIFT } from '../vfx/waterRibbon';
+import { coreLateral, EDGE_LIFT } from '../vfx/waterRibbon';
 
 /** QA only: the far block publishes its tunnel + river path here (read by qa scripts via dynamic import) */
 export const far05Debug: Record<string, unknown> = {};
 
-/** S05.extent (course.ts): half extent |offset| + half width of the 05 stream (outer bank of each bend) */
-const EXTENT05 = 6.0;
+/** far water body: outer bank of each far bend (units from the axis; the floor chord is ≈6.53, foam rim outside) */
+const EXTENT_FAR = 6.25;
 
 /**
- * Designed far path: route-centre lateral xB (units along ft.Rt, + = right) at virtual depth Z beyond the seam.
- * The visible cyan core sits at (1 + CORE_SWING)·xB. Fitted to the reference core centres back-projected through
- * the locked 05 eye (f 1278 px, VP (500,479), eye 3.56 u above the far water plane):
- * y 538 → x 530 (Z≈24), 532 → 542 (Z≈32), 526 → 547 (Z≈43), 511 → 537 (Z≈88), 505 → 534 (Z≈121),
- * then back left: 496 → ≈505 (Z≈215), 490 → ≈490 (Z≈330). The first knots continue the real exit bend
+ * Designed far path: lateral of the VISIBLE cyan core (units along ft.Rt, + = right) at virtual depth Z beyond the
+ * seam. Fitted to the reference core (between the two pink bands) back-projected through the locked 05 eye
+ * (f 1278 px, VP (500,479), eye 3.56 u above the far water plane): y 538 → core x 506–553 (Z≈24), 532 → 525–560
+ * (Z≈32), 526 → 529–565 (Z≈43), 511 → 513–561 (Z≈88), 508 → 518–555 (Z≈103), then back left into the VP:
+ * coins/core ≈505 at y 496 (Z≈215), ≈490 at y 490 (Z≈330). The first knots continue the real exit bend
  * (route lateral ≈0.3 at Z≈6) straight into the right swing (the reference's dip to the left at y≈550 sits where
  * the locked course has its exit bend, so it is not chased: that would add a wiggle at the seam).
  */
-export const FAR05_PATH: [number, number][] = [
-  [6, 0.3], [12, 0.42], [17, 0.58], [24, 0.95], [32, 1.45], [43, 1.85], [60, 2.05], [90, 2.25], [125, 2.35],
-  [160, 1.75], [215, 0.55], [280, -0.75], [330, -1.3], [400, -1.5],
+export const FAR05_CORE: [number, number][] = [
+  [8, 0.55], [12, 0.75], [17, 1.0], [24, 1.8], [32, 2.75], [43, 3.4], [60, 3.6], [88, 4.0], [110, 4.35], [140, 4.45],
+  [175, 4.1], [212, 2.6], [260, 0.8], [310, -1.6], [350, -2.5], [400, -2.8],
 ];
 
 function smoothstep(a: number, b: number, x: number) {
@@ -98,55 +98,71 @@ const sbend05 = (s: number) => 1.05 * Math.sin(s * 0.31 - 0.834) + 0.18 * Math.s
 
 export interface FarRiverLayout {
   row(Z: number): FarRiverRow;
-  /** lateral of the far coin trail (= the real coins' rule: centre + latK·M) */
-  coinLat(Z: number, latK: number): number;
   /** half chord of the tube floor at the water level */
   chord: number;
 }
 
 /**
- * Layout of the far river at virtual depth Z. For Z ≲ 6 it is the REAL ribbon at the arc length s whose route
- * point lies Z units beyond the seam along the axis (what the eye would see there without the far section);
- * it blends (Z 3 → 12) into the designed FAR05_PATH, where the core swing is CORE_SWING·xB and the band S is off.
+ * Far design row for a water-body centre xB: the body hugs the outer wall of each bend (half width
+ * EXTENT_FAR − |xB|); the two pink bands are thin lines near the banks (ref 05 far field: 3–10 px bands, the cyan
+ * core fills the river), the inner-bank band sits a little further in.
+ */
+function designFromXB(xB: number, Z: number): FarRiverRow {
+  const hw = EXTENT_FAR - Math.sqrt(xB * xB + 0.09);
+  const bend = Math.min(1, Math.abs(xB) / 2.5);
+  const aIn = 0.25 + 0.2 * bend, aOut = 0.25 - 0.08 * bend;
+  const aL = xB >= 0 ? aIn : aOut, aR = xB >= 0 ? aOut : aIn;
+  const w = Math.min(0.65, Math.max(0.26, 0.13 * hw)) * (1 - 0.35 * smoothstep(60, 200, Z));
+  const cL = xB - hw * (1 - aL), cR = xB + hw * (1 - aR);
+  return { xB, hw, cL, wL: w, cR, wR: w, core: 0.5 * (cL + cR) };
+}
+
+/**
+ * Layout of the far river at virtual depth Z. For small Z it is the REAL ribbon exactly as the eye would see it
+ * there without the far section: at the seam the route is in its exit bend (heading ≈26° off the axis), so a
+ * screen row cuts the ribbon diagonally — each band centre / bank edge curve l(s) of the real ribbon is intersected
+ * with the row (axial = Z), widths divided by cos(heading). It blends (Z 2 → 10) into the designed FAR05_CORE path.
  */
 export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number): FarRiverLayout {
-  const rel = new THREE.Vector3();
-  const sample = (s: number) => {
+  const q = new THREE.Vector3();
+  const at = (s: number, l: number) => {
     const f = course.sample(s);
-    rel.copy(f.pos).sub(ft.c0);
-    return { ax: rel.dot(ft.T), lat: rel.dot(ft.Rt), rx: f.right.dot(ft.Rt) };
+    q.copy(f.pos).addScaledVector(f.right, l).sub(ft.c0);
+    return { ax: q.dot(ft.T), x: q.dot(ft.Rt), rx: f.right.dot(ft.Rt) };
   };
-  // arc length of the route point at axial distance Z beyond the seam (monotone over the short join)
-  const sOfAx = (Z: number) => {
-    let a = ft.sF - 4, b = ft.sF + 14;
-    for (let i = 0; i < 40; i++) { const m = 0.5 * (a + b); if (sample(m).ax < Z) a = m; else b = m; }
-    return 0.5 * (a + b);
+  // the real ribbon's band layout at s, relative to the route centre (ribbon frame, vCore = coreLateral)
+  const relLay = (s: number) => bandLayout(0, course.widthAt(s) / 2, coreLateral(course, s), sbend05(s), s);
+  const cross = (Z: number, lOf: (s: number) => number) => {
+    let a = ft.sF - 8, b = ft.sF + 16;
+    for (let i = 0; i < 36; i++) { const m = 0.5 * (a + b); if (at(m, lOf(m)).ax < Z) a = m; else b = m; }
+    const s = 0.5 * (a + b), p = at(s, lOf(s));
+    return { s, x: p.x, rx: Math.max(0.3, p.rx) };
   };
-  const realRow = (Z: number) => {
-    const s = sOfAx(Z);
-    const p = sample(s);
-    const hw = course.widthAt(s) / 2;
-    const M = coreLateral(course, s) * p.rx;
-    return { s, xB: p.lat, hw, M, sb: sbend05(s) };
+  const realRow = (Z: number): FarRiverRow => {
+    const eL = cross(Z, (s) => -course.widthAt(s) / 2), eR = cross(Z, (s) => course.widthAt(s) / 2);
+    const bl = cross(Z, (s) => relLay(s).cL), br = cross(Z, (s) => relLay(s).cR);
+    const wL = relLay(bl.s).wL / bl.rx, wR = relLay(br.s).wR / br.rx;
+    return { xB: 0.5 * (eL.x + eR.x), hw: 0.5 * (eR.x - eL.x), cL: bl.x, wL, cR: br.x, wR, core: 0.5 * (bl.x + wL + br.x - wR) };
   };
-  const designRow = (Z: number) => {
-    const xB = hermite(FAR05_PATH, Z);
-    return { s: ft.sF + Z, xB, hw: EXTENT05 - Math.sqrt(xB * xB + 0.09), M: CORE_SWING * xB, sb: 0 };
-  };
-  const mixRow = (Z: number) => {
-    const w = smoothstep(3, 12, Z);
-    if (w <= 0) return realRow(Z);
-    const d = designRow(Z);
-    if (w >= 1) return d;
-    const r = realRow(Math.min(Z, 12));
-    const L = (a: number, b: number) => a + (b - a) * w;
-    return { s: L(r.s, d.s), xB: L(r.xB, d.xB), hw: L(r.hw, d.hw), M: L(r.M, d.M), sb: L(r.sb, d.sb) };
+  const designRow = (Z: number): FarRiverRow => {
+    const target = hermite(FAR05_CORE, Z);
+    let a = -5, b = 5;
+    for (let i = 0; i < 36; i++) { const m = 0.5 * (a + b); if (designFromXB(m, Z).core < target) a = m; else b = m; }
+    return designFromXB(0.5 * (a + b), Z);
   };
   const chord = Math.sqrt(Math.max(0, ft.R * ft.R - level * level)) * 0.995;
   return {
     chord,
-    row(Z) { const r = mixRow(Z); return bandLayout(r.xB, r.hw, r.M, r.sb, r.s); },
-    coinLat(Z, latK) { const r = mixRow(Z); return r.xB + latK * r.M; },
+    row(Z) {
+      const w = smoothstep(2, 10, Z);
+      if (w <= 0) return realRow(Z);
+      const d = designRow(Z);
+      if (w >= 1) return d;
+      const r = realRow(Math.min(Z, 8));
+      const o = {} as FarRiverRow;
+      for (const k of Object.keys(d) as (keyof FarRiverRow)[]) o[k] = r[k] + (d[k] - r[k]) * w;
+      return o;
+    },
   };
 }
 
