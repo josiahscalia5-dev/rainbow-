@@ -758,3 +758,16 @@ Adding one separate import line for my new module (no edit to the shared import 
 
 > 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/p2.js <<'EOF'\n(async () => {\n  const THREE = await import('/node_modules/.vite/deps/three.js').catch(() => null);\n  const R = window.__rainbow; const course = R.course;\n  const { far05Debug: D } = await import('/src/world/far05.ts');\n  const wr = await import('/src/vfx/waterRibbon.ts');\n  const ft = D.ft; const out = [];\n  const cam = R.camera();\n  const M = cam.matrixWorld; // column-major\n  const pos = cam.position;\n  // build projection\n  const fovy = cam.fov * Math.PI / 180 …[+2606 chars]`
 
+### 🧑 User — 2026-11-16T01:48:19.663Z
+
+> ↩︎ result: f=1278.2 fov=62 cam=1.92,-37.94,-68.28 target=0.69,-44.31,-91.80
+> sF05=180.038 D0=53.249 R=7.600 L=6 c0=1.844,-39.893,-121.495 T=0.0000,-0.0416,-0.9991 U=-0.0016,0.9991,-0.0416 Rt=1.0000,0.0016,-0.0001 q=0.077,-0.268,0.011
+> level=-3.832 depth=3.728 st05={"id":"05","title":"FLOW INTO THE CURRENT","s0":114.68830202823243,"s1":188.92412082521383,"width":9,"tube":7.6,"tubeKind":"perf","speed":11,"refCoins":1420,"interactive":true,"bank":0.25} st06s0=188.92412082521383 crest=132.4383020282329
+> VP=(499.8,478.8)
+> s=150 off05=-0.31 core=-0.28 hw=5.57 lat=-0.16 up=-3.87 ax=-29.37 rx=0.995 centre px=(485,675) z=24.1 core px=(471,675)
+> s=152 off05=-0.51 core=-0.46 hw=5.41 lat=-0.36 up=-3.87 ax=-27.38 rx=0.995 centre px=(477,660) z=26.0 core px=(454,660)
+> s=154 off05=-0.72 core=-0.64 hw=5.22 lat=-0.57 up=-3.87 ax=-25.39 rx=0.995 centre px=(469,648) z=28.0 core px=(439,648)
+> s=156 off05=-0.90 core=-0.81 hw=5.05 lat=-0.75 up=-3.87 ax=-23.40 rx=0.996 centre px=(463,637) z=29.9 core px=(428,637)
+> s=158 off05=-1.05 core=-0.95 hw=4.91 lat=-0.90 up=-3.87 ax=-21.40 rx=0.998 centre px=(459,627) z=31.9 core px=(421,628)
+> s=160 off05=-1.14 core=-1.02 hw=4.82 lat=-0.99 up=-3.87 ax=-19.40 rx=0.999 centre px=(458,61 …[+1907 chars]
+

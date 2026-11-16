@@ -286,3 +286,41 @@ I'll start by reading the coordination files and my previous notes.
 
 > 🔧 **Bash** `{"command": "find / -name \"m05.py\" -not -path \"*/proc/*\" 2>/dev/null | head; find / -name \"inv.py\" -path \"*scratch*\" 2>/dev/null | head; ls /tmp/claude-0/-home-user-rainbow-/ 2>/dev/null", "description": "Find previous scratch metric scripts"}`
 
+### 🧑 User — 2026-11-16T01:48:17.502Z
+
+> ↩︎ result: 94cf04e3-ba8e-597b-bef0-28aeffba4499
+
+### 🤖 Claude — 2026-11-16T01:48:19.269Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,80p' scripts/screen_report.py; grep -n \"def \\|band\\|BANDS\" scripts/screen_report.py | head -40", "description": "Inspect screen_report script"}`
+
+### 🧑 User — 2026-11-16T01:48:19.307Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """One-screen reference report: approved reference vs one or more labelled live captures.
+> 
+>     python3 -I scripts/screen_report.py 05 OUT_DIR PREV=qa/.../05.png NOW=qa/.../05.png
+> 
+> Writes into OUT_DIR (nothing else is touched; qa/report_metrics.json stays as it is):
+>   NN_side_by_side.png       REFERENCE | each capture (same height, labelled)
+>   NN_overlay_<LABEL>.png    50 % blend of the reference and that capture
+>   NN_highlight_<LABEL>.png  the capture with a transparent red tint where it differs most from the
+>                             reference (|ΔRGB| smoothed; tint alpha ∝ difference above a threshold)
+>   metrics.json / metrics.md raw numbers per capture: whole-frame mad / hue_corr / edge_corr (same
+>                             method as scripts/compare.py) and mad per horizontal band of the frame
+> These are crude, reproducible indicators, NOT a fidelity percentage.
+> """
+> from __future__ import annotations
+> 
+> import json
+> import sys
+> from pathlib import Path
+> 
+> import numpy as np
+> from PIL import Image, ImageFilter
+> 
+> sys.path.insert(0, str(Path(__file__).resolve().parent))
+> import compare as C  # noqa: E402  (reuses REFS, mask_for, hue_hist, corr, edges, label)
+> 
+> # hori …[+3734 chars]
+

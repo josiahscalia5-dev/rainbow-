@@ -133,3 +133,176 @@ Let me zoom into the foam regions and splash of both images to see details.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T01:48:15.878Z
+
+> 🔧 **Bash** `{"command": "wc -l src/vfx/*.ts && grep -n \"^export\\|^function\\|^const [A-Z_0-9]* =\\|^  [a-zA-Z]*(.*{$\\|^class\\|^  private [a-zA-Z]*(\" src/vfx/foam.ts | head -120", "description": "List vfx files and foam.ts structure"}`
+
+### 🧑 User — 2026-11-16T01:48:15.924Z
+
+> ↩︎ result: 472 src/vfx/bubbles.ts
+>    239 src/vfx/drumWater.ts
+>    183 src/vfx/finalWave.ts
+>    986 src/vfx/foam.ts
+>    164 src/vfx/glsl.ts
+>    264 src/vfx/index.ts
+>    119 src/vfx/puddles.ts
+>    219 src/vfx/riderSplash.ts
+>     96 src/vfx/spray.ts
+>    891 src/vfx/waterRibbon.ts
+>    199 src/vfx/whirlpool.ts
+>   3832 total
+> 26:export const BERM_IN = -0.6;
+> 27:export const BERM_OUT = 1.2;
+> 31:export function bermLump(s: number, side: number): number {
+> 35:export function bermDomes(s: number, e: number, side: number): number {
+> 50:export function bermHeight(e: number, hw: number, lump: number): number {
+> 65:export function bermSurface(s: number, e: number, side: number, hw: number): number {
+> 77:const SOAP05_GLSL = /* glsl */ `
+> 95:const BERM_VERT = /* glsl */ `
+> 116:const BERM_FRAG = /* glsl */ `
+> 201:const PUFF_VERT = /* glsl */ `
+> 224:const PUFF_FRAG = /* glsl */ `
+> 281:function rng(seed: number) {
+> 292:function makePuffMaterial(quality: 'high' | 'low') {
+> 313:const BANK_BUB_VERT = /* glsl */ `
+> 332:const BANK_BUB_FRAG = /* glsl */ `
+> 364:function makeBankBubbleMaterial() {
+> 374:function puffGeometry(detail: number) {
+> 383:export interface FoamSystem {
+> 414:const BANK_DS0 = -3.4;
+> 415:const BANK_DS1 = 15;
+> 417:const BANK_PUFF …[+516 chars]
+
+### 🤖 Claude — 2026-11-16T01:48:16.816Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/foam.ts"}`
+
+### 🧑 User — 2026-11-16T01:48:16.922Z
+
+> ↩︎ result: 1	/**
+> 2	 * Foam banks along the stream (refs 03–10) + whirlpool rim foam.
+> 3	 *  - berm: ONE continuous lumpy lather bank per side, swept along the course (custom shader:
+> 4	 *    two-scale cellular soap bubbles with derivative bump lighting, lavender crevices, pores,
+> 5	 *    faint iridescent rim). This is what makes the banks read as continuous foam, not cotton balls.
+> 6	 *  - puffs: instanced bubble puffs sitting ON the berm crest (silhouette lumps), in ~40-unit chunks
+> 7	 *    so only chunks near Benny are drawn; quality 'low' halves density and uses 20-tri puffs.
+> 8	 *  - foam rings on the whirlpool rim and along its spiral bands (rotating with the swirl)
+> 9	 *  - flank banks (05, wave 4): one CONTINUOUS cloud bank per side that continues the berm down both
+> 10	 *    sides of the frame to Benny's level (ref 05: banks hugging BOTH edges y≈540–1300): a lather sheet
+> 11	 *    (berm shader, 1 draw) + world-anchored instanced puffs (1 draw), fitted to the frame edges from
+> 12	 *    the camera each frame. Replaces wave 3's floating "flank"/"wake" raft clumps, which read as round
+> 13	 *    islands on open water. Fixed pools, no per-frame allocation.
+> 14	 */
+> 15	import * as THREE from 'three';
+> 16	 …[+42266 chars]
+
+### 🤖 Claude — 2026-11-16T01:48:18.523Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/foam.ts", "offset": 835, "limit": 155}`
+
+### 🧑 User — 2026-11-16T01:48:18.540Z
+
+> ↩︎ result: 835	        // the right side blends its own short-clump envelope (BANK_ENV[2], beside / behind Benny) into the rim's
+> 836	        let pxIn: number, pxClump: number, env: number;
+> 837	        if (sd === 0) {
+> 838	          const kz = sm(-0.6, 0.2, ds);
+> 839	          env = bankEnv(s, 0);
+> 840	          pxIn = 214 + (BANK_PX[0] * (0.72 + 0.28 * lump) - 214) * kz;
+> 841	          pxClump = 157 + (CLUMP_PX - 157) * kz;
+> 842	        } else {
+> 843	          const kz = sm(1.4, 2.6, ds);
+> 844	          env = bankEnv(s, 2) + (bankEnv(s, 1) - bankEnv(s, 2)) * kz;
+> 845	          pxIn = 214 + (rimR(ds) * (0.85 + 0.3 * lump) - 214) * kz;
+> 846	          pxClump = 150 + (RIM_R_PX - 150) * kz;
+> 847	        }
+> 848	        rowEnv[sd][i] = env;
+> 849	        const frac = ((2 * pxIn) / 864) * env;
+> 850	        const fracOut = frac - (2 * pxClump) / 864;
+> 851	        const edge = solveLat(cam, side, camLat + side * 1.5, camLat + side * 3);
+> 852	        const inner = frac > 0.002 ? solveLat(cam, side * (1 - frac), camLat + side * 1.0, edge) : edge;
+> 853	        const outer = fracOut > 0.004 ? solveLat(cam, side * (1 - fracOut), inner, edge) : edge;
+> 854	        // keep clear of Benny (near him) and of the cyan core / coin  …[+7823 chars]
+
+### 🤖 Claude — 2026-11-16T01:48:20.312Z
+
+> 🔧 **Bash** `{"command": "cat src/vfx/riderSplash.ts src/vfx/spray.ts", "description": "Read riderSplash.ts and spray.ts"}`
+
+### 🧑 User — 2026-11-16T01:48:20.336Z
+
+> ↩︎ result: /**
+>  * Rider splash (ref 05: a V of fine white/cyan droplet streaks thrown BACK and OUTWARD from Benny's
+>  * base, one fan per flank, frothy lace at the roots, clear glossy water straight behind him).
+>  *
+>  * Wave 4 rebuild. The wave-3 fan was one continuous mesh sheet per flank (16 × 8 quads) whose straight
+>  * borders and long noise jets rendered as translucent white wedges / spikes beside Benny. Now the fan is
+>  * made of many INDEPENDENT streaks: each instance is a short, thin, camera-facing ribbon that rides along
+>  * its own ballistic jet path (rooted on the waterline circle under the fur, aimed back-outward, arcing up
+>  * and falling back to the water), tapers at its tail and breaks into droplet beads late in its flight.
+>  * A quarter of the instances are wider, short-lived "froth" puffs of white lace near the roots. Nothing
+>  * has a hard outline, so the fan reads as spray, not geometry. The ballistic droplets in spray.ts
+>  * (index.ts `wake()`) share the same jet layout (FAN).
+>  *
+>  * One instanced draw (2 × N streaks of 6 segments), shaped and animated entirely in the vertex shader
+>  * (no per-frame CPU work besides placement), placed every frame at the water surface under Benny's rea …[+12572 chars]
+
+### 🤖 Claude — 2026-11-16T01:48:20.913Z
+
+> 🔧 **Bash** `{"command": "cat src/vfx/index.ts", "description": "Read vfx index.ts"}`
+
+### 🧑 User — 2026-11-16T01:48:20.967Z
+
+> ↩︎ result: /**
+>  * Rainbow water system (water-fx-specialist + foam-bubbles-particles).
+>  *
+>  *   const water = createWater(course, { quality: 'high' });
+>  *   scene.add(water.group);
+>  *   // per frame:
+>  *   water.update(time, dt, bennyS, camera);
+>  *   water.wake(bennyBodyCentre, forward, right, speed, dt);   // centre of the (lifted) body, not the root
+>  *   // cinematic controls (0..1): water.controls.drumSwirl / drumAgitation / outro
+>  *
+>  * Benny rides ON the water: place his body centre at
+>  *   course.pointAt(s, lateral, water.surfaceHeight(s, lateral, time) + BENNY_RIDE_OFFSET)
+>  * (BENNY_RIDE_OFFSET ≈ 0.55 for a 0.8-radius body: bottom third in the water, splash visible).
+>  */
+> import * as THREE from 'three';
+> import { type Course, WORLD, funnelY } from '../world/course';
+> import { createRibbon } from './waterRibbon';
+> import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
+> import { createDrumWater } from './drumWater';
+> import { createFinalWave } from './finalWave';
+> import { createPuddles } from './puddles';
+> import { createFoam } from './foam';
+> import { createBubbles } from './bubbles';
+> import { createSpray } from './spray';
+> import { createRiderSplash, FAN } from './riderSplash …[+12892 chars]
+
+### 🤖 Claude — 2026-11-16T01:48:23.144Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p src/vfx/bubbles.ts && grep -n \"05\\|small05\\|RIDE\" src/vfx/bubbles.ts | head -60", "description": "Read bubbles.ts header and 05-related lines"}`
+
+### 🧑 User — 2026-11-16T01:48:23.192Z
+
+> ↩︎ result: /**
+>  * Iridescent soap bubbles.
+>  *  - big bubbles: instanced camera-facing sphere IMPOSTORS (2 triangles each) with an analytic
+>  *    thin-film shader: saturated magenta/cyan film, crisp outline, tinted interior, white window
+>  *    highlights (ref 05). The on-screen diameter is capped (uMaxPx) and bubbles fade out close to the
+>  *    camera, so a bubble can never become a giant occluding sphere.
+>  *  - small bubbles: one THREE.Points draw of tiny ring-sprite bubbles.
+>  * Ride (03–10): bubbles live only at the SIDES of the stream, over the foam banks and the lower
+>  * walls (ref 05: ≈18 large 25–65 px + ≈25 small, none over the path or Benny). Drum A (01–02):
+>  * free-floating in the drum volume as before.
+>  * Pooled (fixed arrays, no per-frame allocation); respawned ahead when Benny passes them.
+>  */
+> import * as THREE from 'three';
+> import { type Course, WORLD } from '../world/course';
+> import { BERM_OUT } from './foam';
+> import { coreLateral } from './waterRibbon';
+> import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+> 
+> const BIG_VERT = /* glsl */ `
+> attribute float aSeed;
+> uniform float uFocal;   // pixels per unit at depth 1 (viewport height / (2 tan(fov/2)))
+> uniform float uMaxPx;   // ca …[+5004 chars]
+
