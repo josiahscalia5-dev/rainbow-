@@ -474,3 +474,81 @@ Fitting Marble's origin camera to your approved image (first pass was too noisy 
 
 > 🔧 **Bash** `{"command": "cat > tools/marble05/splat_fit.py <<'EOF'\n\"\"\"Fit Marble's origin camera to the input image using the SPLATS (not the pano): focal, yaw, pitch.\nPoint render at quarter resolution + blur, NCC against the input image.\nusage: python3 -I tools/marble05/splat_fit.py <world_dir> <out.json> [preview.png]\"\"\"\nimport json, sys, os\nimport numpy as np\nfrom PIL import Image, ImageFilter\nsys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))\nfrom splatlib import load_ply\n\nwd, outp = sys.argv[1], sys.argv[2]\nS = load_ply(os.path.join(wd, \"splats_500k.ply\"), min_alpha=0. …[+3583 chars]`
 
+### 🧑 User — 2026-11-16T16:59:51.606Z
+
+> ↩︎ result: {"world_dir": "qa/worldlabs/05/pilot/draft", "f_px": 700.0, "hfov_deg": 63.36102742591729, "yaw_deg": 0.0, "pitch_deg": 6.000000000000001, "ncc_blurred_quarter_res": 0.6885429571035492, "convention": "camera at the PLY origin; camera->world rotation = Ry(yaw) @ Rx(pitch), +pitch looks up, PLY y down, z forward"}
+> {"world_dir": "qa/worldlabs/05/pilot/full", "f_px": 700.0, "hfov_deg": 63.36102742591729, "yaw_deg": 0.0, "pitch_deg": 6.000000000000001, "ncc_blurred_quarter_res": 0.634242171694527, "convention": "camera at the PLY origin; camera->world rotation = Ry(yaw) @ Rx(pitch), +pitch looks up, PLY y down, z forward"}
+> [1]-  Done                    python3 -I tools/marble05/splat_fit.py qa/worldlabs/05/pilot/full qa/pilot05/marble_feas/splat_fit_full.json $SP/splat_full.png
+> [2]+  Done                    python3 -I tools/marble05/splat_fit.py qa/worldlabs/05/pilot/draft qa/pilot05/marble_feas/splat_fit_draft.json $SP/splat_draft.png
+
+### 🤖 Claude — 2026-11-16T16:59:53.610Z
+
+Both worlds agree: Marble placed your image at focal 700 px (63° horizontal FOV), camera pitched 6° up. Checking the match visually.
+
+### 🤖 Claude — 2026-11-16T16:59:54.455Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/mf/splat_full.png"}`
+
+### 🧑 User — 2026-11-16T16:59:54.508Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T17:00:57.633Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\ns=open('tools/marble05/splatlib.py').read()\ns=s.replace('''    keep = alpha > min_alpha\n    return dict(xyz=xyz[keep], rgb=rgb[keep], alpha=alpha[keep], scale=scale[keep], n_total=n)''','''    rot = np.stack([P[\"rot_0\"], P[\"rot_1\"], P[\"rot_2\"], P[\"rot_3\"]], 1)  # 3DGS PLY: (w, x, y, z)\n    rot /= np.linalg.norm(rot, axis=1, keepdims=True)\n    keep = alpha > min_alpha\n    return dict(xyz=xyz[keep], rgb=rgb[keep], alpha=alpha[keep], scale=scale[keep], rot=rot[keep], n_total=n)\n\ndef cam_rot(yaw_deg, pitch_deg):\n    \"\"\"camera->world rot …[+2916 chars]`
+
+### 🧑 User — 2026-11-16T17:00:57.717Z
+
+> ↩︎ result: 4:def load_ply(path, min_alpha=0.0):
+> 21:def cam_rot(yaw_deg, pitch_deg):
+> 29:def sample_gaussians(S, k, seed=0):
+> 43:def composite(cam_xyz, alpha, rgb, f, cx, cy, W, H, a_scale=1.0):
+> 68:def project(xyz, f, cx, cy):
+> 75:def zbuffer(xyz, rgb, f, cx, cy, W, H, extra=None):
+
+### 🤖 Claude — 2026-11-16T17:01:55.931Z
+
+> 🔧 **Bash** `{"command": "cat > tools/marble05/river_geometry.py <<'EOF'\n\"\"\"Screen 05 Marble feasibility — does Marble's 3D reconstruction hold the approved river's S-curve geometry and\nperspective?  Read-only on the Marble assets; no API calls, no credits.\nusage: python3 -I tools/marble05/river_geometry.py <world: full|draft> <out_dir>\nCamera = the origin camera fitted in qa/pilot05/marble_feas/splat_fit_<world>.json, extended to the FULL approved\nframe 864x1536 (Marble only saw rows 197-767, so the principal point sits at row 285.5+197 = 482.5).\"\"\"\nimport json, os, sys\nimport numpy as np\nfr …[+8490 chars]`
+
+### 🧑 User — 2026-11-16T17:01:58.301Z
+
+> ↩︎ result: "world": "full",
+>  "camera": {
+>   "f_px": 700.0,
+>   "cx": 432.0,
+>   "cy": 482.5,
+>   "size": [
+>    864,
+>    1536
+>   ],
+>   "pitch_deg": 6.000000000000001,
+>   "yaw_deg": 0.0,
+>   "input_rows": [
+>    197,
+>    767
+>   ]
+>  },
+>  "vp_marble_axis": [
+>   420.63517063753,
+>   536.6122337927352
+>  ],
+>  "vp_approved_image": [
+>   500.0,
+>   481.0
+>  ],
+>  "tunnel_radius": 1.2303114779024051,
+>  "floor_below_axis": 0.4104653039152284,
+>  "camera_offset_from_axis": {
+>   "right": -0.00998713974336281,
+>   "down": 0.054279381127374154
+>  },
+>  "footprint": {
+>   "iou_inside_input_rows": 0.6680618744313012,
+>   "iou_below_input_rows": 0.07020643256455555,
+>   "iou_full_frame": 0.19580967674102961
+>  },
+>  "max_river_depth_marble": 15.056136474088431,
+>  "max_river_depth_flat_floor": 27.193521330196404
+> }
+> rows: [(544, 3.79, 27.19, True), (560, 3.18, 10.01, True), (576, 2.71, 6.14, True), (592, 2.52, 4.45, True), (608, 2.34, 3.48, True), (624, 2.17, 2.86, True), (640, 2.06, 2.43, True), (656, 1.92, 2.12, True), (672, 1.79, 1.88, True), (688, 1.72, 1.67, True), (704, 1.65, 1.52, True), (720, 1.58, 1.39, True), (736, 1.53, 1.28, True), (752, 1.48, 1.19, True), (768, 1.43, 1.11, False), (784, 1.38, 1.04, False), (800, 1.33, 0.98, False), (816, 1.29, 0.93, Fal …[+1407 chars]
+
