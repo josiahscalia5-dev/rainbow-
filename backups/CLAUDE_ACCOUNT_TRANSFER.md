@@ -1,4 +1,4 @@
-# Rainbow — Claude account transfer guide (account 8 + transfer session 94cf04e3, 2026-11-16 ~01:30 UTC)
+# Rainbow — Claude account transfer guide (newest: recovery session 01Kbt6BV, 2026-11-16 ~02:45 UTC; earlier: account 8 + transfer session 94cf04e3)
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it. Everything below was checked in
 these sessions unless marked "last verified on account N".
@@ -17,6 +17,15 @@ which is now protected in `autosave.config.json`). Verified 02:12–02:35 UTC:
 Wave 8 had stopped mid-iteration (credits ran out). Wave 9 (all four Screen 05 specialists continuing their own wave-8
 work) brief: `qa/pilot05/COORDINATION_WAVE9.md`; status: `backups/AGENTS_STATUS.md` top table.
 Recovered 05 vs approved (`qa/pilot05/wave9/recovered/`): mad 50.6, hue_corr 0.875, edge_corr 0.195.
+The previous transfer branch `ccr-937c7fbb-htsrgt` received one more autosave (f6e4071, 02:13: final wave-8 notes, no
+source change) after this session started; it was merged here (7b70f98). New finding in it: approved rings are OVALS
+(aspect ≈1.7–1.8, ring #1 half-axes ≈490×270 px), live rings are circles — forwarded to environment + path-camera.
+
+Full save check (02:45 UTC, user request "save everything"): every remote `ccr-*`/`claude/*` branch contained; secret
+scan of all 486 tracked/pending text files → 0 hits; LFS 24/24 real locally + 24/24 downloadable from GitHub (LFS batch
+API); not in git by design: node_modules (npm ci), installed Blender/Android SDK (setup scripts), `backups/.live/`
+scratch, the World Labs key (network secret on the Claude environment). Draft PR #4 (DO NOT MERGE) points at this branch.
+**Next account: start from `claude/rainbow-3d-account-recovery-xex5hc`** (see `backups/START_NEW_CLAUDE_ACCOUNT.md`).
 
 ## ▶ 0. Earlier verified backup (transfer session `94cf04e3`, branch `ccr-937c7fbb-htsrgt`) — read first
 **Two Claude sessions were saving at the same time** at hand-off: account 8 on `ccr-4f6c3e0e-5kxgr0` (with the
@@ -41,7 +50,7 @@ Verified in the transfer session (2026-11-16 01:17–01:35 UTC):
 | | |
 |---|---|
 | Repository | `josiahscalia5-dev/rainbow-` (private, GitHub) |
-| **Newest work** | **`ccr-937c7fbb-htsrgt`** (transfer session; contains everything below) — plus any commits account 8 pushed to **`ccr-4f6c3e0e-5kxgr0`** after 01:19 UTC (merge them; §2) |
+| **Newest work** | **`claude/rainbow-3d-account-recovery-xex5hc`** (recovery session 01Kbt6BV, 2026-11-16; contains every branch below incl. `ccr-937c7fbb-htsrgt` f6e4071). Earlier: `ccr-937c7fbb-htsrgt` (transfer session) |
 | Latest verified commit | the final commit is reported to the user in chat; the doc cannot contain its own SHA. Always use the remote tips: `git ls-remote origin refs/heads/ccr-937c7fbb-htsrgt refs/heads/ccr-4f6c3e0e-5kxgr0` |
 | Contains | every earlier branch (checked after `git fetch --unshallow`): `ccr-6f431adf-7h0m8y` (original), `claude/rainbow-3d-recovery-m4v347`, `ccr-8b6fc834-7kd55l`, `ccr-d4bb0ad3-8ycajb`, `ccr-e033f912-8b40f5`, `claude/rainbow-3d-account-transfer-syorak`, `ccr-93add0fa-q17ey6` (08fb461), `ccr-4f6c3e0e-5kxgr0` (to 8d7464b) |
 | Protected (autosave refuses to push) | all branches above — `backups/autosave.config.json` → `protected_branches`. The next account must add `ccr-937c7fbb-htsrgt` too |

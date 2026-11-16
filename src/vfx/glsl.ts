@@ -168,6 +168,8 @@ vec2 boltFlare(vec2 g, float density, float Lpx, float Tpx, float time) {
   core = max(core, arm * arm * 1.2);
   // wide electric halo (ref: the bolts sit in a 15–25 px cyan glow)
   float halo = exp(-abs(y) / (T * 3.0 + 5.0)) * max(0.0, 1.0 - ax * ax) + 0.6 * exp(-length(p) / (T * 4.0 + 6.0));
+  // (it03) the halo fades out inside its own cell (it02's halo was cut at the cell border: boxy light patches)
+  halo *= (1.0 - smoothstep(0.2, 0.34, abs(dg.x))) * (1.0 - smoothstep(0.2, 0.34, abs(dg.y)));
   float tw = 0.8 + 0.2 * sin(time * 3.0 + hs * 40.0);
   return vec2(core, min(halo, 1.0)) * tw;
 }

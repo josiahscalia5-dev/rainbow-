@@ -1011,13 +1011,15 @@ export function createFoam(
         // (795,1311): |lat - rider| inner 0.3 + 0.7 b, outer 0.9 + 0.47 b, b = -ds), ending before the frame edge
         // (outer border >= V_EDGE_PX in from it), instead of round blobs fitted to the frame edges
         // it02: no bridge to the frame-fit clumps (the band starts under the splash roots: left ds -0.15, right -0.6)
+        // it06: inner edge 0.62 + 0.4 b (0.3 + 0.7 b put the band's top end on the splash's outer strands and hid them;
+        // the ref band runs OUTSIDE the strands: inner lat ~0.95 / 1.07 / 1.3 at ds -0.5 / -1 / -1.5), left top -0.3
         const vK = 1 - sm(-0.05, 0.35, ds);
         if (vK > 0) {
           const b = Math.max(0, -ds);
-          const vIn = side * rider.lat + 0.3 + 0.7 * b + 0.08 * (lump - 0.5);
+          const vIn = side * rider.lat + 0.62 + 0.4 * b + 0.08 * (lump - 0.5);
           const lim = side * solveLat(cam, side * (1 - (2 * V_EDGE_PX) / 864), camLat + side * 1.0, edge);
           const vOut = Math.min(side * rider.lat + 0.9 + 0.47 * b + 0.06 * lump, lim, hw + 0.1);
-          const vTop = side < 0 ? -0.15 : -0.6;
+          const vTop = side < 0 ? -0.3 : -0.6;
           const vEnv = (1 - sm(vTop - 0.3, vTop, ds)) * sm(V_DS_END - 0.3, V_DS_END, ds) * sm(0.12, 0.3, vOut - vIn);
           a += (Math.min(vIn, hw - 0.3) - a) * vK;
           outA += (Math.max(vOut, vIn + 0.12) - outA) * vK;

@@ -177,15 +177,47 @@ export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number):
  * cL, cR), aRivB (wL, wR, core, Z), fgExtra (virtual − real depth). Morph "open": dropped below the real tube
  * bottom (as the old chord), so the ride into 06 is untouched.
  */
+/**
+ * wave 9: width (units) of the foam bank along each far river edge at virtual depth Z (foam-bubbles-particles 03:20:
+ * a low band hugging each edge, lumps sunk into the bank; ref far banks ≈ 2–3 u, narrower at the seam where the
+ * real foam rims end). Beyond it the fragment is dropped and the far section's wall / bank floor shows (as in the ref).
+ */
+export const farFoamWidth = (Z: number) => 1.1 + 1.9 * smoothstep(1, 18, Z);
+/** height of the foam bank's crest above the far water level (rounded lumpy bank, ≈0.6 × lump radius high) */
+const FOAM_CREST = 0.55;
+
+/**
+ * wave 9: bank floor of the far (oval) section — level `floorY` (the near 05 bank floor, environment floor05) at the
+ * seam; further in, beyond each foam bank's foot it slopes up toward the wall, so the slotted wall runs down to the
+ * foam as in ref 05 (instead of a flat pale platform between foam and wall). It must stay a floor (lifted, never the
+ * open ellipse below): the forced section maps virtual heights above the real ones, so a lifted floor always hides
+ * the real tube floor / ribbon past the seam.
+ */
+export function farFloor05(lay: FarRiverLayout, floorY: number, rise = 0.9, run = 2.2) {
+  return (Z: number, x: number) => {
+    const w = smoothstep(3, 16, Z);
+    if (w <= 0) return floorY;
+    const r = lay.row(Z), fw = farFoamWidth(Z);
+    const b0 = r.xB - r.hw - fw * 0.85, b1 = r.xB + r.hw + fw * 0.85;
+    const d = x < b0 ? b0 - x : x > b1 ? x - b1 : 0;
+    // a low ramp (never a tall slab: the far rings' lower arcs and the lids must stay visible)
+    return floorY + w * rise * smoothstep(0, run, d);
+  };
+}
+
 export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: number, cols = 16, steps = 120): THREE.BufferGeometry {
-  const bank = 3;
-  const per = cols + 1 + 2 * bank;
+  // columns: floor (2) · foam bank (bank) · water (cols) · foam bank · floor (2)
+  const bank = 6, flr = 2;
+  const per = cols + 1 + 2 * (bank + flr);
   const rows = steps + 1;
   const n = rows * per;
   const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);
   const lat = new Float32Array(n), A = new Float32Array(n * 4), B = new Float32Array(n * 4), ext = new Float32Array(n), opn = new Float32Array(n * 3);
+  const fwA = new Float32Array(n);
   const o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
   const ch = lay.chord;
+  // rounded bank: waterline at the ribbon's edge height, crest ≈40 % out, foot just above the bank floor
+  const bankH = (f: number) => EDGE_LIFT * (1 - f) + FOAM_CREST * Math.sin(Math.PI * Math.pow(f, 0.8)) - 0.12 * f * f;
   for (let i = 0; i < rows; i++) {
     const t = i / steps;
     const Dv = 1 / (1 / ft.D0 - t * (1 / ft.D0 - 1 / (ft.D0 + ft.zEnd)));
@@ -196,16 +228,21 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
     tubeCenterAt(ft.path, sReal, cr);
     const rr = ft.path.radius(sReal);
     const r = lay.row(Z);
+    const fw = farFoamWidth(Z);
     const e0 = Math.max(-ch + 0.05, r.xB - r.hw), e1 = Math.min(ch - 0.05, r.xB + r.hw);
+    const b0 = Math.max(-ch + 0.02, e0 - fw), b1 = Math.min(ch - 0.02, e1 + fw);
     for (let j = 0; j < per; j++) {
       let x: number, h: number;
-      if (j < bank) { const f = j / bank; x = -ch + (e0 + ch) * f; h = EDGE_LIFT + 0.1 * Math.sin(Math.PI * f); }
-      else if (j > bank + cols) { const f = (j - bank - cols) / bank; x = e1 + (ch - e1) * f; h = EDGE_LIFT + 0.1 * Math.sin(Math.PI * f); }
-      else {
-        const f = (j - bank) / cols; x = e0 + (e1 - e0) * f;
+      const jw = j - flr - bank; // water column index
+      if (j < flr) { x = -ch + (b0 + ch) * (j / flr); h = -0.12; }
+      else if (jw < 0) { const f = -jw / bank; x = e0 + (b0 - e0) * f; h = bankH(f); }
+      else if (jw <= cols) {
+        const f = jw / cols; x = e0 + (e1 - e0) * f;
         const u = Math.min(1, Math.abs(x - r.xB) / Math.max(0.5, r.hw));
         h = EDGE_LIFT * u * u * u;
-      }
+      } else if (jw <= cols + bank) { const f = (jw - cols) / bank; x = e1 + (b1 - e1) * f; h = bankH(f); }
+      else { const f = (jw - cols - bank) / flr; x = b1 + (ch - b1) * f; h = -0.12; }
+      fwA[i * per + j] = fw;
       o.copy(ft.Rt).multiplyScalar(x).addScaledVector(ft.U, level + h);
       ft.point(Z, o, p);
       const k = i * per + j;
@@ -235,6 +272,7 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
   g.setAttribute('aRivA', new THREE.BufferAttribute(A, 4));
   g.setAttribute('aRivB', new THREE.BufferAttribute(B, 4));
   g.setAttribute('fgExtra', new THREE.BufferAttribute(ext, 1));
+  g.setAttribute('aRivF', new THREE.BufferAttribute(fwA, 1));
   g.morphAttributes.position = [new THREE.BufferAttribute(opn, 3)];
   g.setIndex(idx);
   g.computeBoundingSphere();
@@ -287,4 +325,137 @@ export function farCoins05(ft: ForcedTunnel, lay: FarRiverLayout, level: number)
   place(0);
   Object.assign(far05Debug, { farCoins: items.map((it) => ({ Z: it.Z, o: it.o.toArray(), k: it.s.x })) });
   return { mesh, place };
+}
+
+/** far glow parameters (environment.ts glow05 shape) */
+export interface FarRiverGlow { color: THREE.ColorRepresentation; near: number; far: number; strength: number }
+
+/**
+ * Far stream material (wave 9, path-camera; wave-8 version moved here from materials.ts, which is environment-owned).
+ * Laid out per row by farRiverGeometry (aRivA/aRivB: route centre, half width, band centres/widths, core, Z; aRivF:
+ * foam bank width). Unlit (small on screen), so the colours are the 05 ribbon's flat display colours
+ * (RIVER05_PAL in waterRibbon.ts, solved through exposure → Neutral → grade):
+ *  - cyan core lighter and streakier than wave 8 (ref far field cyan median #4DC2F9; live it01 #00A8FF), thin light
+ *    flow lines that follow the winding core;
+ *  - pink bands = water-fx SEAM LOOK: #BC16A8 on the bank side → #F73DEA → lighter #FA9EF2 toward the core;
+ *  - foam banks = foam-bubbles-particles' far-rim look: white-lavender lit tops #FAF3FE, periwinkle body #ABB8FA,
+ *    blue lower half / crevices #758FF7 → #6B65EA, bubble cells, scalloped outer edge — beyond it the fragment is
+ *    dropped so the far wall / bank floor shows, as in the ref.
+ * Warms into the VP glow with the virtual depth (`fgExtra`).
+ */
+export function farRiverMaterial05(glow: FarRiverGlow): THREE.MeshBasicMaterial {
+  const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+  // wins the depth test against the real ribbon's continuation it covers just behind the seam
+  mat.polygonOffset = true;
+  mat.polygonOffsetFactor = -1;
+  mat.polygonOffsetUnits = -2;
+  const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+  const uniforms = {
+    uRivCyanLo: { value: lin(0.05, 0.3, 0.82) },
+    uRivCyan: { value: lin(0.14, 0.62, 1.25) },
+    uRivCyanHi: { value: lin(0.5, 1.35, 2.0) },
+    uRivPinkLo: { value: lin(0.36, 0.04, 0.3) },
+    uRivPink: { value: lin(0.7, 0.08, 0.64) },
+    uRivPinkHi: { value: lin(0.92, 0.3, 0.88) },
+    uFoamTop: { value: lin(0.95, 0.9, 1.0) },
+    uFoamPeri: { value: lin(0.45, 0.5, 0.95) },
+    uFoamBlue: { value: lin(0.2, 0.28, 0.9) },
+    uFoamDeep: { value: lin(0.15, 0.13, 0.75) },
+    uRivGlow: { value: new THREE.Color(glow.color) },
+    uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.strength) },
+  };
+  mat.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, uniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', `#include <common>
+attribute float fgExtra; attribute float aRivLat; attribute vec4 aRivA; attribute vec4 aRivB; attribute float aRivF;
+varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB; varying float vRivF;`)
+      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvRivUv = uv; vRivLat = aRivLat; vRivA = aRivA; vRivB = aRivB; vRivF = aRivF;')
+      .replace('#include <project_vertex>', '#include <project_vertex>\nvRivDist = length(mvPosition.xyz) + fgExtra;');
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <common>', `#include <common>
+varying float vRivDist; varying vec2 vRivUv; varying float vRivLat; varying vec4 vRivA; varying vec4 vRivB; varying float vRivF;
+uniform vec3 uRivCyanLo; uniform vec3 uRivCyan; uniform vec3 uRivCyanHi; uniform vec3 uRivPinkLo; uniform vec3 uRivPink; uniform vec3 uRivPinkHi;
+uniform vec3 uFoamTop; uniform vec3 uFoamPeri; uniform vec3 uFoamBlue; uniform vec3 uFoamDeep; uniform vec3 uRivGlow; uniform vec3 uRivGlowR;
+float rivHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float rivNoise(vec2 p) {
+  vec2 i = floor(p), f = fract(p); vec2 w = f * f * (3.0 - 2.0 * f);
+  return mix(mix(rivHash(i), rivHash(i + vec2(1.0, 0.0)), w.x), mix(rivHash(i + vec2(0.0, 1.0)), rivHash(i + vec2(1.0, 1.0)), w.x), w.y);
+}
+float rivCells(vec2 p) {
+  vec2 i = floor(p), f = fract(p); float d = 1.5;
+  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+    vec2 g = vec2(float(x), float(y));
+    vec2 o = vec2(rivHash(i + g), rivHash(i + g + 19.7));
+    d = min(d, length(g + o - f));
+  }
+  return d;
+}`)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+{
+  float lat = vRivLat;                                   // units from the tunnel axis (+ right)
+  float xB = vRivA.x, hw = vRivA.y, cL = vRivA.z, cR = vRivA.w;
+  float wL = vRivB.x, wR = vRivB.y, core = vRivB.z;
+  float fw = max(vRivF, 0.3);
+  float s = vRivUv.y;                                    // virtual arc length (continues the real s)
+  float fl = fwidth(lat) + 1e-4;
+  float fs = fwidth(s) + 1e-4;
+  float aaw = fl * 0.85 + 0.004;
+  float side = sign(lat - xB);
+  float e = abs(lat - xB) - hw;                          // > 0 outside the water body
+  float fb = e / fw;                                     // 0 at the waterline … 1 at the foam bank's foot
+  // scalloped outer edge of the foam bank (lumps ≈0.3 u, faded to a smooth edge where they would be < 2 px)
+  float scN = rivNoise(vec2(s * 2.2, side * 9.0 + lat * 0.4));
+  float scF = 1.0 - smoothstep(0.1, 0.35, fs * 2.2);
+  if (fb > 0.88 + mix(0.0, 0.22 * (scN - 0.5), scF)) discard;
+  // ---- water: cyan core between two hot-pink bands, flow lines that follow the winding core ----
+  float xq = lat - core;
+  float dL = abs(lat - cL), dR = abs(lat - cR);
+  float pL = 1.0 - smoothstep(wL - aaw, wL + aaw, dL);
+  float pR = 1.0 - smoothstep(wR - aaw, wR + aaw, dR);
+  float pink = max(pL, pR);
+  float relB = pL >= pR ? (lat - cL) / max(wL, 1e-3) : (cR - lat) / max(wR, 1e-3);   // +1 on the core side
+  // two octaves of flow lines (fine near the seam, coarse further in), each faded where its spacing < a few px
+  float fade = 1.0 - smoothstep(0.05, 0.16, fl * 3.0);
+  float fade2 = 1.0 - smoothstep(0.1, 0.3, fl * 1.1);
+  float dn = rivNoise(vec2(xq * 3.2, s * 0.32));
+  float dn2 = rivNoise(vec2(xq * 1.2 + 4.0, s * 0.11));
+  float lines = pow(0.5 + 0.5 * sin(xq * 11.0 + 1.4 * sin(s * 0.23)), 8.0) * fade;
+  float lines2 = pow(0.5 + 0.5 * sin(xq * 3.6 + 0.9 * sin(s * 0.09 + 1.0)), 6.0) * fade2 * smoothstep(0.25, 0.65, dn2);
+  vec3 cy = mix(uRivCyanLo, uRivCyan, smoothstep(0.1, 0.7, mix(mix(0.6, dn2, fade2), dn, fade)));
+  cy = mix(cy, uRivCyanHi, clamp(lines * smoothstep(0.3, 0.8, dn) * 0.9 + lines2 * 0.8, 0.0, 1.0));
+  // far field (lines faded): a light glossy sheen down the middle of the core instead (ref far cyan #4DC2F9)
+  float sheen = exp(-pow(xq / max(0.35 * hw, 0.3), 2.0));
+  cy = mix(cy, uRivCyanHi, sheen * 0.32 * (1.0 - fade2 * 0.5));
+  lines = max(lines, lines2);
+  float rimOut = (1.0 - pink) * max(1.0 - smoothstep(wL, wL + 0.3, dL), 1.0 - smoothstep(wR, wR + 0.3, dR));
+  cy = mix(cy, uRivCyanHi, rimOut * 0.4);
+  float satin = exp(-pow((relB - 0.35) * 2.0, 2.0));
+  vec3 pk = mix(uRivPinkLo, uRivPink, smoothstep(-0.95, -0.25, relB));
+  pk = mix(pk, uRivPinkHi, clamp(satin * 0.55 + lines * 0.35, 0.0, 1.0));
+  vec3 col = mix(cy, pk, pink);
+  // ---- foam bank: fine bubbles, white-lavender lit tops, periwinkle body, blue waterline / crevices / foot ----
+  float bankN = (rivNoise(vec2(s * 0.9, side * 7.0 + lat * 1.3)) - 0.5) * 0.12;
+  float foamIn = smoothstep(-0.06, 0.02, fb + bankN);
+  if (foamIn > 0.0) {
+    float c = rivCells(vec2(lat * 3.4, s * 1.7 + lat * 0.5));
+    float c2 = rivCells(vec2(lat * 8.0 + 3.0, s * 4.0));
+    float cf = 1.0 - smoothstep(0.08, 0.25, max(fl * 3.4, fs * 1.7));   // lumps only where they are ≳ 3 px
+    float cf2 = 1.0 - smoothstep(0.08, 0.25, max(fl * 8.0, fs * 4.0));
+    float lump = mix(0.45, smoothstep(0.08, 0.85, c), cf);              // 0 = lit lump top … 1 = crevice
+    float crest = exp(-pow((fb - 0.4) / 0.32, 2.0));
+    vec3 fo = mix(uFoamBlue, uFoamPeri, smoothstep(0.0, 0.22, fb));     // blue at the waterline → periwinkle body
+    fo = mix(fo, uFoamTop, crest * (1.0 - 0.75 * lump));                // white-lavender lit tops
+    fo = mix(fo, uFoamDeep, (1.0 - crest) * lump * 0.55);               // shaded crevices
+    fo = mix(fo, uFoamBlue, cf2 * smoothstep(0.55, 0.0, fb) * (1.0 - smoothstep(0.05, 0.3, c2)) * 0.6); // small blue bubble dots low
+    fo = mix(fo, uFoamDeep, smoothstep(0.62, 1.0, fb) * 0.55);           // foot in the shade of the bank
+    col = mix(col, fo, foamIn);
+  }
+  float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
+  col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
+  diffuseColor.rgb = col;
+}`);
+  };
+  mat.customProgramCacheKey = () => 'far-river-05-w9';
+  return mat;
 }

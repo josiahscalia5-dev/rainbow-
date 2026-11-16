@@ -1468,3 +1468,184 @@ Now the 05 splash: steeper, fewer, lacier strands, and a weaker leading edge.
 > ↩︎ result: src/vfx/foam.ts:1020:          const vTop = side < 0 ? -0.15 : -0.6;
 > src/vfx/riderSplash.ts:256:  float y = 0.035 + 0.06 * hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
 
+### 🤖 Claude — 2026-11-16T02:38:31.967Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1008,1032p src/vfx/foam.ts", "description": "Show V-band block before editing"}`
+
+### 🧑 User — 2026-11-16T02:38:32.014Z
+
+> ↩︎ result: let outA = Math.max(a + 0.12, Math.min(outer === edge ? side * edge + 0.55 : side * outer, hw + 0.15));
+>         // wave 9: behind Benny the near banks are the splash's foam WAKE (ref 05): two narrow bands trailing back-outward
+>         // along the pink bands from under the splash roots (ref left (300,1160) -> (56,1300), right (620,1190) ->
+>         // (795,1311): |lat - rider| inner 0.3 + 0.7 b, outer 0.9 + 0.47 b, b = -ds), ending before the frame edge
+>         // (outer border >= V_EDGE_PX in from it), instead of round blobs fitted to the frame edges
+>         // it02: no bridge to the frame-fit clumps (the band starts under the splash roots: left ds -0.15, right -0.6)
+>         const vK = 1 - sm(-0.05, 0.35, ds);
+>         if (vK > 0) {
+>           const b = Math.max(0, -ds);
+>           const vIn = side * rider.lat + 0.3 + 0.7 * b + 0.08 * (lump - 0.5);
+>           const lim = side * solveLat(cam, side * (1 - (2 * V_EDGE_PX) / 864), camLat + side * 1.0, edge);
+>           const vOut = Math.min(side * rider.lat + 0.9 + 0.47 * b + 0.06 * lump, lim, hw + 0.1);
+>           const vTop = side < 0 ? -0.15 : -0.6;
+>           const vEnv = (1 - sm(vTop - 0.3, vTop, ds)) * sm(V_DS_END - 0.3, V_DS_END, ds) * …[+537 chars]
+
+### 🤖 Claude — 2026-11-16T02:38:37.802Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        // it02: no bridge to the frame-fit clumps (the band starts under the splash roots: left ds -0.15, right -0.6)\n        const vK = 1 - sm(-0.05, 0.35, ds);\n        if (vK > 0) {\n          const b = Math.max(0, -ds);\n          const vIn = side * rider.lat + 0.3 + 0.7 * b + 0.08 * (lump - 0.5);\n          const lim = side * solveLat(cam, side * (1 - (2 * V_EDGE_PX) / 864), camLat + side * 1.0, edge);\n          const vOut = Math.min(side * rider.lat + 0.9 + 0.47 * b + 0.06 * lump, lim, hw + 0.1); …[+869 chars]`
+
+### 🧑 User — 2026-11-16T02:38:37.848Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:38:39.864Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "  float y = 0.035 + 0.06 * hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);", "new_string": "  // wave 9 it06: 0.035 -> 0.05 above the local plane (strands dipped under the ribbon's swell and vanished)\n  float y = 0.05 + 0.06 * hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);"}`
+
+### 🧑 User — 2026-11-16T02:38:39.909Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:38:49.101Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/wave9/foam/NOTES.md <<'EOF'\n* it05 (89 calls, 568,247 tris): splash 34 thinner ropes (0.042 -> 0.01), root arc 1.45 -> 0.35 rad, crown beads: ~half\n  dropped at random; bubbles.ts: initial 05 bubbles in the lower third placed near the water (to get the ref's lower-\n  corner bubbles). Seen: splash barely changed (still ~5 visible strands per side: the left V band's top lumps at\n  (200-300, 1110-1190) cover the outer strands; the inner ones hide under the ribbon swell); no lower-corner bubble\n  appeared -> bubbles.ts change REVERTED (fi …[+1260 chars]`
+
+### 🧑 User — 2026-11-16T02:39:19.603Z
+
+> ↩︎ result: 05 → qa/pilot05/wave9/foam/it06/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":568247,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> | PREV | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> | NOW | 51.7 | 0.832 | 0.198 | 55.6 | 59.9 | 47.4 | 48.6 |
+> it06 Lclump 6996 W49 S39 B23 | LLclump 10812 W31 S38 B20 | LRclump 9313 W33 S38 B23 | Lrim 25611 W21 S35 B19
+> it06 Lclump L184/238/253 B5C1FF EEEAFF FDFAFF | LLclump L191/231/249 BEC5FF EEE6F9 F7F5FF | LRclump L186/232/250 BBC4FF EFE6D6 FAF8FF | Lrim L178/231/253 B1BDFF E4E3FF FFFAFF
+> qa/pilot05/wave9/foam/it06/05.png L 19.9% x 150-401 ylow 1329 | R 21.9% x 434-719 ylow 1326
+> LL: dmad +0.06 (PREV 49.2 NOW 49.3)
+> LR: dmad -1.26 (PREV 56.4 NOW 55.2)
+> Lclump: dmad +0.60 (PREV 44.7 NOW 45.3)
+> splashC: dmad +0.85 (PREV 39.9 NOW 40.7)
+> Rrim: dmad -0.06 (PREV 48.8 NOW 48.8)
+> Lrim: dmad -0.01 (PREV 51.8 NOW 51.8)
+> []
+
+### 🤖 Claude — 2026-11-16T02:39:21.797Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/it06_low.png"}`
+
+### 🧑 User — 2026-11-16T02:39:21.838Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:39:35.446Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nimport numpy as np\nfrom PIL import Image\nfor p in ['references/05_flow_into_the_current.png','qa/pilot05/wave9/baseline/05.png','qa/pilot05/wave9/foam/it04/05.png','qa/pilot05/wave9/foam/it05/05.png','qa/pilot05/wave9/foam/it06/05.png']:\n  a=np.asarray(Image.open(p).convert('RGB')).astype(int)\n  out=[]\n  for nm,(x0,y0,x1,y1) in {'L':(230,1110,400,1300),'R':(460,1110,640,1300)}.items():\n    s=a[y0:y1,x0:x1]; m=(s[...,0]>=170)&(s[...,1]>=200)&(s[...,2]>=225)\n    lav=(s[...,0]>=170)&(s[...,1]>=170)&(s[...,2]>=225)&(np.abs(s[...,0]-s[...,1 …[+169 chars]`
+
+### 🧑 User — 2026-11-16T02:39:35.866Z
+
+> ↩︎ result: references L white 15.4%  R white 14.9% 
+> baseline L white 27.4%  R white 30.9% 
+> it04 L white 23.3%  R white 22.0% 
+> it05 L white 23.2%  R white 21.6% 
+> it06 L white 21.3%  R white 25.5%
+
+### 🤖 Claude — 2026-11-16T02:39:42.263Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it06/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T02:39:44.196Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T02:39:44.190Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T02:39:51.548Z
+
+Six iterations used; it06 is the kept state. Now the end checks: tsc, regression captures, gameplay test.
+
+### 🤖 Claude — 2026-11-16T02:39:58.257Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/wave9/foam/NOTES.md <<'EOF'\n* it06 (89 calls, 568,247 tris) KEPT: wake band inner edge 0.62 + 0.4 b (was 0.3 + 0.7 b), left top ds -0.3; splash\n  ropes 0.05 above the local plane. Seen: the bands now run OUTSIDE the splash strands like the ref (left (60-260,\n  1150-1320), right (630-770, 1190-1320)), and the splash shows a fuller fringe of lacy strands on both sides (left\n  x 250-360, right 460-600, down to y ~1250; ref 200-345 / 480-640 down to ~1300). gain vs it05: LR -1.3, splash +0.9,\n  Lclump +0.6, LL/rims ~0. Tight fan boxes (L  …[+932 chars]`
+
+### 🧑 User — 2026-11-16T02:41:31.778Z
+
+> ↩︎ result: TSC_OK
+> 03 → qa/pilot05/wave9/foam/regress/03.png {"stage":"03","s":48.495,"y":-13.425,"calls":98,"tris":714730,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → qa/pilot05/wave9/foam/regress/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":100,"tris":713618,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/wave9/foam/regress/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":72,"tris":543081,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 07 → qa/pilot05/wave9/foam/regress/07.png {"stage":"07","s":273.057,"y":-49.659,"calls":181,"tris":660599,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 08 → qa/pilot05/wave9/foam/regress/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":160,"tris":610707,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> []
+
+### 🤖 Claude — 2026-11-16T02:41:37.161Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nimport numpy as np\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/'\nfor n in ['03','04','06','07','08']:\n  a=np.asarray(Image.open(f'qa/pilot05/wave9/baseline/{n}.png').convert('RGB')).astype(int)\n  b=np.asarray(Image.open(f'qa/pilot05/wave9/foam/regress/{n}.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(2); m=d>8\n  m[:220]=False\n  ys,xs=np.where(m)\n  print(n, a.shape, 'px>8 below HUD:', int(m.sum()), ('bbox x %d-%d y %d-%d'%(xs.min(),xs.max(),ys.min(),ys.max())) if m …[+222 chars]`
+
+### 🧑 User — 2026-11-16T02:41:38.143Z
+
+> ↩︎ result: 03 (1536, 727, 3) px>8 below HUD: 0 
+> 04 (1536, 864, 3) px>8 below HUD: 12993 bbox x 304-550 y 448-655
+> 06 (1536, 864, 3) px>8 below HUD: 0 
+> 07 (1536, 864, 3) px>8 below HUD: 0 
+> 08 (1536, 864, 3) px>8 below HUD: 11996 bbox x 48-863 y 220-659
+
+### 🤖 Claude — 2026-11-16T02:41:43.164Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/'\nfor n,box in [('04',(260,420,600,690)),('08',(0,200,864,680))]:\n  a=Image.open(f'qa/pilot05/wave9/baseline/{n}.png').convert('RGB').crop(box)\n  b=Image.open(f'qa/pilot05/wave9/foam/regress/{n}.png').convert('RGB').crop(box)\n  w,h=a.size; o=Image.new('RGB',(2*w+6,h)); o.paste(a,(0,0)); o.paste(b,(w+6,0))\n  if n=='04': o=o.resize((o.width*2,o.height*2))\n  o.save(S+f'reg_{n}_pair.png')\n\"", "description": "Crop baseline vs regress …[+27 chars]`
+
+### 🧑 User — 2026-11-16T02:41:43.696Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:41:44.411Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/reg_04_pair.png"}`
+
+### 🧑 User — 2026-11-16T02:41:44.442Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:41:45.014Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/reg_08_pair.png"}`
+
+### 🧑 User — 2026-11-16T02:41:45.050Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:41:54.726Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/'\nbox=(440,440,580,670)\na=Image.open('qa/pilot05/wave9/baseline/04.png').convert('RGB').crop(box)\nb=Image.open('qa/pilot05/wave9/foam/regress/04.png').convert('RGB').crop(box)\nm=Image.open(S+'reg_04.png').resize((864,1536)).crop(box)\nw,h=a.size; o=Image.new('RGB',(3*w+12,h)); o.paste(a,(0,0)); o.paste(b,(w+6,0)); o.paste(m,(2*w+12,0))\no.resize((o.width*3,o.height*3),Image.NEAREST).save(S+'reg_04_zoom.png')\n\"", "description": "Zo …[+34 chars]`
+
+### 🧑 User — 2026-11-16T02:41:54.950Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:41:55.929Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/reg_04_zoom.png"}`
+
+### 🧑 User — 2026-11-16T02:41:55.949Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:42:08.183Z
+
+> 🔧 **Bash** `{"command": "set -e; SP=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad; cd /home/user/rainbow-; npx tsc --noEmit; for v in A B; do C=$SP/ctrl$v; rm -rf $C; mkdir -p $C/scripts; cp -r src index.html package.json tsconfig.json assets public $C/; cp -r scripts/capture.mjs scripts/lib $C/scripts/; ln -s /home/user/rainbow-/node_modules $C/node_modules; sed \"s#server: { port: 5173, strictPort: false }#server: { port: 5173, strictPort: false, fs: { allow: ['/home/user/rainbow-', '$C'] } }#\" vite.config.ts > $C/vite.config.ts; done; git show 2a4d3b4:src/vfx/foam.t …[+258 chars]`
+
+### 🧑 User — 2026-11-16T02:42:11.525Z
+
+> ↩︎ result: Files /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlA/src/vfx/foam.ts and /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlB/src/vfx/foam.ts differ
+> Files /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlA/src/vfx/riderSplash.ts and /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlB/src/vfx/riderSplash.ts differ
+> 1
+
+### 🤖 Claude — 2026-11-16T02:42:15.419Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad; (cd $SP/ctrlA && timeout 900 node scripts/capture.mjs 04 05 08 --out=$SP/ctrlA/out 2>&1 | tail -3) & (cd $SP/ctrlB && timeout 900 node scripts/capture.mjs 04 05 08 --out=$SP/ctrlB/out 2>&1 | tail -3) & wait; for v in A B; do python3 -c \"import json;d=json.load(open('$SP/ctrl$v/qa/capture_log.json'));print('$v', [e[:120] for e in d['errors'][:3]])\"; done", "description": "Capture 04 05 08 in both A/B copies", "timeout": 960000}`
+
+### 🧑 User — 2026-11-16T02:43:30.122Z
+
+> ↩︎ result: 04 → /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlB/out/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":100,"tris":713522,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlB/out/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":568151,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 08 → /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlB/out/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":160,"tris":610611,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrlA/out/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":100,"tris":713522,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrl …[+735 chars]
+

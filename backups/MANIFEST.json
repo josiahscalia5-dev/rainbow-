@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 3081,
-   "sha256": "5030f2bc2ee7f124de9fea22dc44ead61b4b372bfcab0581bb6d550ea2a9bb3b"
+   "bytes": 3368,
+   "sha256": "212da7bf3a711e6a60a1bda8bba72243841f961604684049b6d06884c4514f4a"
   },
   {
    "path": "README_FIRST.md",
@@ -393,13 +393,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 24368,
-   "sha256": "e7ea83833ae6e78a74f0f323bee8c02bd4e4b2c8b591c01a3be0e684b1ea38a0"
+   "bytes": 25398,
+   "sha256": "c85e3de074283910e536c17c1336c37a75fc7ace6ca0ba76dddb64bc4a61eb19"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 5834,
-   "sha256": "e45a135475b5b16917d236337fbe94b0b6657c4ad4228cde3066cfd7a79e7847"
+   "bytes": 5841,
+   "sha256": "aed67bbb834fa22ffa2f539a73e9c4cbf18045b4ae6d495ac5856bfd53383b71"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -408,8 +408,8 @@
   },
   {
    "path": "backups/MCP_SETUP.md",
-   "bytes": 2636,
-   "sha256": "aae67329d62c29642da1e0f385a5f722e70835714eab6b86a34c1b64fbf55cee"
+   "bytes": 4119,
+   "sha256": "07a76846395b4e60207b77b2cd8c610b24d76d421b9c0118c302c0ae879c1c4a"
   },
   {
    "path": "backups/RECOVERY.md",
@@ -418,8 +418,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 2486,
-   "sha256": "876bb050b6ac54de2f3f0734416d4797036aaf3906d14c55f664584d3b1c8eaf"
+   "bytes": 2979,
+   "sha256": "32803bad35227e6df1b0e879c4b363d0ea3f83f1522c54a70bb740076e2d712c"
   },
   {
    "path": "backups/autosave.config.json",
@@ -823,8 +823,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1176,
-   "sha256": "48b841afcc087a8c0defebe9b10adcd34bfff19c78b68117210336b15b0c6548"
+   "bytes": 5163,
+   "sha256": "f56fd6548f0ef3820b4f3e3ab995f12b7eb0ecc30840d5576b2486405df6285b"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -4213,8 +4213,8 @@
   },
   {
    "path": "qa/pilot05/wave9/foam/NOTES.md",
-   "bytes": 7176,
-   "sha256": "81dc0ea3b316a9d13429cfe42e53c36a44ec6bc08a8a3d9f53ea2fdc8d9ff193"
+   "bytes": 8969,
+   "sha256": "96d1e60e4c7db33d0732f22639b5d259ab4970eb6b96e22767da69e11b27c102"
   },
   {
    "path": "qa/pilot05/wave9/foam/it01/05.png",
@@ -4577,6 +4577,76 @@
    "sha256": "c93881badc8884c2d217d9dbef9afd5bcdfafe5475955b7e4d7ce8170bd231f6"
   },
   {
+   "path": "qa/pilot05/wave9/foam/it06/05.png",
+   "bytes": 1714821,
+   "sha256": "feea16e6fa082747eb2a2d603e1e52a657bf321b06c0c6c4d232662dfbff6206"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/05_highlight_NOW.png",
+   "bytes": 1836316,
+   "sha256": "01db0def6823d3409b859077c5aa9c7051939b893e4c0210b0385a8b43b0bdd9"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/05_highlight_PREV.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/05_overlay_NOW.png",
+   "bytes": 2251119,
+   "sha256": "046622eee361f06d47aeda1f9b883c9fe61a296d615fdcf6d826e623975e7ae7"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/05_overlay_PREV.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/05_side_by_side.png",
+   "bytes": 5699337,
+   "sha256": "19f810688ef50053093db44017396b311cc94af2bcf5f9e21bfa530cf6b12bcf"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/crop_leftnear.png",
+   "bytes": 806133,
+   "sha256": "842270fd627bc5311c7b7146b48904b45b6c7e894f85b05aad7a33cc39f6e8a4"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/crop_leftrim.png",
+   "bytes": 825541,
+   "sha256": "28e60c9132a4aec34f8023dd849210301a818395e2a448e8f657c43d6256b983"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/crop_rightnear.png",
+   "bytes": 630870,
+   "sha256": "f7a5e5f097f85e12c24e5df824c6e1de732099d4c13b913f5c775ce1bb9aae1f"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/crop_rightrim.png",
+   "bytes": 1111233,
+   "sha256": "e6809f06efe5be2d76ec05b1b282d7057e64bc3f569520ef8dcc096f9716cb22"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/crop_splash.png",
+   "bytes": 952496,
+   "sha256": "cb3d731ddfc59b6de742a082ad1796e5255187d5b10acebdcf20570aaacbd84e"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/gain_vs_it05.png",
+   "bytes": 27738,
+   "sha256": "e0887b880e442d3cf828bea6b54b696edace662700cc829f235d41b8a64c8be9"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/metrics.json",
+   "bytes": 451,
+   "sha256": "50b636312d6cf2df88f93fba7f60a424bdfdd3bffd1757138e9a97ef36e257c4"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/it06/metrics.md",
+   "bytes": 437,
+   "sha256": "7d564dc784e19b8e898533757b3a5ab7b7f1a1592912051dde04bed24ed3b4fa"
+  },
+  {
    "path": "qa/pilot05/wave9/foam/pre/crop_leftnear.png",
    "bytes": 810881,
    "sha256": "ea6666eb701debdefbdda69c5b70bd9b07e654b2d52dfcd74f21d5e76707017d"
@@ -4600,6 +4670,31 @@
    "path": "qa/pilot05/wave9/foam/pre/crop_splash.png",
    "bytes": 946400,
    "sha256": "b8e13f8593b4cde33dddf1def4eb8c702a474ace27a900e313faff14684c635c"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/regress/03.png",
+   "bytes": 689327,
+   "sha256": "70b33b54649c5640c5f8310b2ea33d10b30ad0547bfe6f386890370d9cb1084c"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/regress/04.png",
+   "bytes": 1007886,
+   "sha256": "c7aad425ea4a53554271bc11464c95c9ce0a30b33e8dfe2c256f9b57a8a2a9bf"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/regress/06.png",
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/regress/07.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/pilot05/wave9/foam/regress/08.png",
+   "bytes": 1428035,
+   "sha256": "e43b25303268926f0ce8b8f63b6b8967ed2514828788acf76e68d16cb6b14039"
   },
   {
    "path": "qa/pilot05/wave9/foam/tools/clumpcol.py",
@@ -4628,8 +4723,8 @@
   },
   {
    "path": "qa/pilot05/wave9/path-camera/NOTES.md",
-   "bytes": 2758,
-   "sha256": "daec78f695430fbf11bb3ec463cc32128bd7af134cb2fdd3c8385c9684ad99b0"
+   "bytes": 4505,
+   "sha256": "a078234b0b5ac2d0a731ad91cf62acd02d487ded9a35d6ea9f21ac2a4389ad90"
   },
   {
    "path": "qa/pilot05/wave9/path-camera/it01/05.png",
@@ -4758,8 +4853,8 @@
   },
   {
    "path": "qa/pilot05/wave9/water/NOTES.md",
-   "bytes": 5089,
-   "sha256": "06a97bb37137fe4d57fca51c6326b3c800a5598bf0196f171a371c8aadada698"
+   "bytes": 6147,
+   "sha256": "e8cab2d13674d360a8e617263f7c2132a768046185cdda23697c3ca8c544c6a9"
   },
   {
    "path": "qa/pilot05/wave9/water/it01/05.png",
@@ -4840,6 +4935,46 @@
    "path": "qa/pilot05/wave9/water/it02/metrics.md",
    "bytes": 435,
    "sha256": "4e0042aeeeeac29a899a7b655dddbe46b266651ae32d00d58f623c5a0c62f6a0"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it03/05.png",
+   "bytes": 1716206,
+   "sha256": "3ea5befd2f37390efa9c42aace18f839a70b0b07d03210548f2deeba0bc09c2f"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it03/05_highlight_NOW.png",
+   "bytes": 1830103,
+   "sha256": "091712b98ff95e722a1029d7c79cf0e9f5741d6044ca68f1d959cd72ece00143"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it03/05_highlight_PREV.png",
+   "bytes": 1858803,
+   "sha256": "3a22ade7fa1716a4eb89d6c00cb72830d741e8109a0c3bc4feffa9d74ee09b58"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it03/05_overlay_NOW.png",
+   "bytes": 2247022,
+   "sha256": "f72aa78a2eb66e5843278c4e0a72443aa394bf84cc1482997d0d66166cb25a69"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it03/05_overlay_PREV.png",
+   "bytes": 2250609,
+   "sha256": "1c8c2cc875456522997d9d3b128ebb5f83e6b5bd767cacf0375bce80c49d3da5"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it03/05_side_by_side.png",
+   "bytes": 5704462,
+   "sha256": "6eee17c1ee4057886a3a99569471a1070f77f40a3e77b7ea2c23bc417e2401b9"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it03/metrics.json",
+   "bytes": 451,
+   "sha256": "5bfd99fe15920b98f076fd16bb0464e2fff3da81ee0b9332579b45f53fc16628"
+  },
+  {
+   "path": "qa/pilot05/wave9/water/it03/metrics.md",
+   "bytes": 436,
+   "sha256": "b19f40ec117779ae0c31f7aa36787f3af8685fa2e4956701fe1b5686c60963ac"
   },
   {
    "path": "qa/report_metrics.json",
@@ -5653,13 +5788,13 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 59003,
-   "sha256": "2dad99b9249d675a3daaf5d61836207a9cf0e3c7f9e1fa73dcad4b73e270fe14"
+   "bytes": 59242,
+   "sha256": "45a7d4017fe352680ddc0cdbd82fb14eac772a5a3b2298c6333a9a95f4faa6e4"
   },
   {
    "path": "src/vfx/glsl.ts",
-   "bytes": 10397,
-   "sha256": "d17b0cd14737a18bb93dc3a5f3f9f7d14390bb957cc8ae8d36f4c8ccf40f8dad"
+   "bytes": 10604,
+   "sha256": "7101488d4feb1f93141b2c477f054c5e5f1c8b294ed13e74596be6535dec0a19"
   },
   {
    "path": "src/vfx/index.ts",
@@ -5673,8 +5808,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 21774,
-   "sha256": "474e194eed26d052557de0f50c4ab1470ff9c0805046b13fc3ca644c4cbf0457"
+   "bytes": 21882,
+   "sha256": "93f833143d531af5f51725454757ffb1d9f47042c354041446d7d0fe11e8d050"
   },
   {
    "path": "src/vfx/spray.ts",
@@ -5683,8 +5818,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 52857,
-   "sha256": "36c7cab96e1a2ba4b387b27f6781e4ae68e711981bf317ced69321677b95b1b3"
+   "bytes": 53383,
+   "sha256": "cf6be5f43996307c610326dcfc336bcf80c7605c6ec762d78ef3b11ae3f467c0"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -5698,13 +5833,13 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 52598,
-   "sha256": "121ea3440248056746bd889b0968dbf56fdd1aa0ee70985db7fd19e70fe4755f"
+   "bytes": 54626,
+   "sha256": "bc5026d86d2799088a7043a4d741d89dafbd9da4ed44fa6485f82358934539c9"
   },
   {
    "path": "src/world/far05.ts",
-   "bytes": 15794,
-   "sha256": "0f6fad1f2ddc025576c3010a351961d82d6e7581073e40617a312541dec98a3a"
+   "bytes": 26669,
+   "sha256": "e5dcd471676b7900e48e84d8d1ad47bd97650047b55702e28fd8df3cefe636ea"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -5713,8 +5848,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 57175,
-   "sha256": "92a143cd059c2659fb99444ed2e9c64a6177a3a22b5003db877d1b188f8d4461"
+   "bytes": 58447,
+   "sha256": "97927438096f325596767a4666a05392d2b8c65417969256f76a19b819bb0ad8"
   },
   {
    "path": "src/world/towel.ts",
@@ -5723,8 +5858,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 43365,
-   "sha256": "8c19700ed1fdc1ea4fec20d4f0475a36b9f414cf15fe99e52fff820e7e2b3401"
+   "bytes": 45495,
+   "sha256": "5e6757ccc02c034b313c70f77920a97f74a7b34f1a5282ab2290c0d42b92cec6"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

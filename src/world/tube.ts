@@ -313,10 +313,37 @@ export type RingOpts = {
   tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number }; band?: BandOpts;
   /** wave 8: lateral stretch (see TubeGeoOptions.oval) — the ring's local x (= ∓right) is scaled by oval(s) */
   oval?: (s: number) => number;
+  /** wave 9: band rings only — lay the band on an ellipse of aspect K (ovalBandGeometry, constant band depth) */
+  bandOval?: number;
 };
 
 export function bandGeometry(b: BandOpts): THREE.BufferGeometry {
   return roundBandGeometry(b.height, b.width, b.lipHeight, b.lipWidth, b.groove, b.segments);
+}
+
+/**
+ * wave 9 (05 oval): the band laid on an ellipse (local x stretched by K, y unchanged) with a CONSTANT radial
+ * profile — each vertex keeps its depth below the wall along the ellipse normal — so the oval ring is not
+ * thicker at its sides (an instance x-scale would make the band K× deeper there). Use with a uniform
+ * instance scale (r, r, 1); withBandShading(…, oval K) spaces the bulbs evenly along the ellipse.
+ */
+export function ovalBandGeometry(b: BandOpts, K: number): THREE.BufferGeometry {
+  const g = bandGeometry(b);
+  if (K === 1) return g;
+  const pos = g.attributes.position as THREE.BufferAttribute, nor = g.attributes.normal as THREE.BufferAttribute;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i), y = pos.getY(i);
+    const rho = Math.hypot(x, y), ph = Math.atan2(y, x);
+    const cx = Math.cos(ph), sy = Math.sin(ph);
+    const nl = Math.hypot(cx / K, sy), nx = cx / K / nl, ny = sy / nl; // outward ellipse normal
+    pos.setXY(i, K * cx - nx * (1 - rho), sy - ny * (1 - rho));
+    const ax = nor.getX(i), ay = nor.getY(i);
+    const nr = ax * cx + ay * sy, nt = -ax * sy + ay * cx; // radial / tangential parts on the circle
+    nor.setXY(i, nr * nx - nt * ny, nr * ny + nt * nx);
+  }
+  pos.needsUpdate = true; nor.needsUpdate = true;
+  g.computeBoundingSphere();
+  return g;
 }
 
 /** Instanced thick gold ring ribs placed perpendicular to the tube every `spacing` units. */
@@ -337,7 +364,7 @@ export function buildRings(
 export function buildRingsAt(path: TubePath, list: number[], material: THREE.Material, opts: RingOpts = {}, spacing = 9): THREE.InstancedMesh {
   const tube = opts.tube ?? 0.075;
   const collar = opts.band ?? opts.collar;
-  const geo = opts.band ? bandGeometry(opts.band) : opts.collar ? collarGeometry(opts.collar.depth, opts.collar.lip, opts.collar.width, opts.collar.segments) : new THREE.TorusGeometry(1, tube, 14, 72);
+  const geo = opts.band ? ovalBandGeometry(opts.band, opts.bandOval ?? 1) : opts.collar ? collarGeometry(opts.collar.depth, opts.collar.lip, opts.collar.width, opts.collar.segments) : new THREE.TorusGeometry(1, tube, 14, 72);
   const n = Math.max(1, list.length) * (opts.double ? 2 : 1);
   const mesh = new THREE.InstancedMesh(geo, material, n);
   const m = new THREE.Matrix4();
@@ -532,9 +559,12 @@ export class ForcedTunnel {
    */
   readonly aspect: number;
   readonly floorY: number | undefined;
-  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number } = {}) {
+  /** optional bank-floor height (along U) at virtual depth Z and lateral x — overrides the level floorY */
+  readonly floorAt: ((Z: number, x: number) => number) | undefined;
+  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number; floorAt?: (Z: number, x: number) => number } = {}) {
     this.aspect = shape.aspect ?? 1;
     this.floorY = shape.floorY;
+    this.floorAt = shape.floorAt;
     const f = path.frame(sF);
     this.c0 = tubeCenterAt(path, sF);
     // `axis`: direction of the straight run the camera looks down (the path's tangent at sF may already
@@ -621,9 +651,15 @@ export class ForcedTunnel {
         o.copy(this.Rt).multiplyScalar(Math.cos(th) * K * r0).addScaledVector(this.U, Math.sin(th) * r0);
         // ellipse normal; the lifted bank floor faces down (outward), as the near 05 walls (buildTubeGeometry floor)
         d.copy(this.Rt).multiplyScalar(Math.cos(th) / K).addScaledVector(this.U, Math.sin(th)).normalize();
-        if (this.floorY !== undefined && Math.sin(th) * r0 < this.floorY) {
-          o.addScaledVector(this.U, this.floorY - Math.sin(th) * r0);
-          d.copy(this.U).negate();
+        if (this.floorY !== undefined) {
+          const x = Math.cos(th) * K * r0;
+          const fy = this.floorAt ? this.floorAt(Z, x) : this.floorY;
+          if (Math.sin(th) * r0 < fy) {
+            o.addScaledVector(this.U, fy - Math.sin(th) * r0);
+            // floor normal (outward = down), tilted outward where the bank floor slopes up toward the wall
+            const dx = this.floorAt ? (this.floorAt(Z, x + 0.05) - this.floorAt(Z, x - 0.05)) / 0.1 : 0;
+            d.copy(this.U).negate().addScaledVector(this.Rt, dx).normalize();
+          }
         }
         this.point(Z, o, p);
         const k = i * (radial + 1) + j;

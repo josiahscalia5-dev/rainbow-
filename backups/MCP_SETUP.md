@@ -1,5 +1,16 @@
 # Rainbow — tool / MCP reconnection (no secrets stored)
 
+## Newest check — recovery session 01Kbt6BV (new Claude account, 2026-11-16 ~02:15–02:45 UTC)
+| Tool | Tested result | On the next account |
+|---|---|---|
+| GitHub (git proxy + GitHub MCP) | pushes verified (remote SHA == local); `list_pull_requests`/`create_pull_request` OK (draft PR #4) | connect GitHub to the Claude account + Claude GitHub App on the repo |
+| World Labs Atlas connector | `list_projects` OK ("My project", Personal workspace, credits_available true); nothing run | re-add the connector in claude.ai settings and sign in |
+| Marble World API key | saved by the user via the secure credential form on this account's **Default** environment (host `api.worldlabs.ai`, header `WLT-Api-Key`); free `GET /credits` → 5,190; both pilot worlds `GET /worlds/{id}` → 200 | does not transfer: request it again with the secure form; never chat/git |
+| Playwright plugin MCP | tools loaded (`browser_*`); captures use the preinstalled Chromium via `scripts/capture.mjs` | re-enable the plugin if missing |
+| worldlabs@worldlabs plugin | installed by `scripts/setup-worldlabs-plugin.sh` (its duplicate Atlas MCP disabled) | `bash scripts/setup-worldlabs-plugin.sh` |
+| Blender 5.3.0 / Android SDK 34 + build-tools 34.0.0 | installed by `scripts/setup-blender.sh` / `setup-android-sdk.sh`; both `.blend` Marble imports open | rerun the scripts (or `resume-newest-work.sh --tools`) |
+| context7 plugin | needs OAuth sign-in; not used by Rainbow | ignore unless needed |
+
 Status as verified in the cloud development session on 2026-11-15. "Tested" means a real call succeeded
 in this environment; nothing here is assumed.
 

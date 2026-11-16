@@ -1473,3 +1473,391 @@ Let me test the coordinator's description directly: a round half-dome puck sitti
 > ${source === 'attribute' ? 'attribute vec3 tubeAxis; attribute vec3 tubeUp;' : ''}`)
 >        …[+2451 chars]
 
+### 🤖 Claude — 2026-11-16T02:38:42.100Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"attribute vec2 uv\" node_modules/three/src/renderers/webgl/WebGLProgram.js | head; grep -n \"USE_UV\\b\\|'#define USE_UV'\" node_modules/three/src/renderers/webgl/WebGLProgram.js | head -5", "description": "Check whether uv attribute is always declared"}`
+
+### 🧑 User — 2026-11-16T02:38:42.146Z
+
+> ↩︎ result: 685:			'attribute vec2 uv;',
+> 689:			'	attribute vec2 uv1;',
+> 695:			'	attribute vec2 uv2;',
+> 701:			'	attribute vec2 uv3;',
+
+### 🤖 Claude — 2026-11-16T02:39:08.518Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rln \"lin3\\|solve.*Neutral\\|neutral_inv\\|invNeutral\" --include=*.py --include=*.mjs --include=*.ts . 2>/dev/null | grep -v node_modules | head; grep -n \"sat 1.36\\|uGrade\\|grade\" src/game/Game.ts src/render/*.ts 2>/dev/null | head", "description": "Find palette solver or grade pass"}`
+
+### 🧑 User — 2026-11-16T02:39:08.644Z
+
+> ↩︎ result: ./src/world/materials.ts
+> ./src/vfx/waterRibbon.ts
+> src/game/Game.ts:19:import { createGradePass } from '../render/grade';
+> src/render/grade.ts:1:/** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+
+### 🤖 Claude — 2026-11-16T02:39:10.762Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/render/grade.ts | head -60; grep -n \"createGradePass\\|toneMappingExposure\\|NeutralToneMapping\\|exposure\" src/game/Game.ts | head", "description": "Read grade pass and tone mapping settings"}`
+
+### 🧑 User — 2026-11-16T02:39:10.807Z
+
+> ↩︎ result: /** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> import * as THREE from 'three';
+> import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+> 
+> export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+>   return new ShaderPass({
+>     uniforms: {
+>       tDiffuse: { value: null },
+>       uSat: { value: opts.saturation ?? 1.36 },
+>       uCon: { value: opts.contrast ?? 1.15 },
+>       uVig: { value: opts.vignette ?? 0.18 },
+>     },
+>     vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+>     fragmentShader: /* glsl */ `
+>       uniform sampler2D tDiffuse; uniform float uSat; uniform float uCon; uniform float uVig; varying vec2 vUv;
+>       void main(){
+>         vec4 c = texture2D(tDiffuse, vUv);
+>         float l = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
+>         vec3 col = mix(vec3(l), c.rgb, uSat);
+>         col = (col - 0.5) * uCon + 0.5;
+>         vec2 d = vUv - 0.5; d.x *= 0.75;
+>         col *= 1.0 - uVig * smoothstep(0.25, 0.75, length(d));
+>         gl_FragColor = vec4(clamp(col, 0.0, 1.0), c.a …[+161 chars]
+
+### 🤖 Claude — 2026-11-16T02:39:16.255Z
+
+I'll write a tiny solver for the stylised palette (Neutral tone map at exposure 0.86 → sRGB → grade sat 1.36/con 1.15) and verify it on existing lin3 pairs before choosing new ring colours.
+
+### 🤖 Claude — 2026-11-16T02:39:25.050Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/tools/palette.py <<'EOF'\n# scratch: forward/inverse of the display pipeline for lin3 palette values (Neutral TM @0.86 → sRGB → grade)\nimport sys\nimport numpy as np\nfrom scipy.optimize import least_squares\n\ndef neutral(c, exp=0.86):\n    c = np.array(c, float) * exp\n    x = c.min(); off = x - 6.25 * x * x if x < 0.08 else 0.04\n    c = c - off\n    peak = c.max(); sc = 0.76\n    if peak < sc: return c\n    d = 1 - sc; npk = 1 - d * d / (peak + d - sc)\n    c = c * npk / peak\n    g = 1 …[+1219 chars]`
+
+### 🧑 User — 2026-11-16T02:39:25.185Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/tools/palette.py", line 4, in <module>
+>     from scipy.optimize import least_squares
+> ModuleNotFoundError: No module named 'scipy'
+
+### 🤖 Claude — 2026-11-16T02:39:30.299Z
+
+> 🔧 **Bash** `{"command": "cd /tmp; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 - <<EOF\np='$S/tools/palette.py'\nt=open(p).read()\nt=t.replace(\"from scipy.optimize import least_squares\\n\",\"\")\nt=t.replace(\"\"\"    r = least_squares(lambda x: fwd(np.abs(x)) - t, x0=np.full(3, 0.5), bounds=(0, 4))\n    return r.x, fwd(r.x)\"\"\",\"\"\"    x = np.full(3, 0.5)\n    for it in range(400):\n        f = fwd(x); e = f - t\n        J = np.zeros((3, 3)); h = 1e-4\n        for k in range(3):\n            xx = x.copy(); xx[k] += h; J[:, k] = (fwd(xx) - f) / h\n  …[+375 chars]`
+
+### 🧑 User — 2026-11-16T02:39:30.467Z
+
+> ↩︎ result: fwd [0.9077, 0.602, 0.3465] -> [252 190 120]
+> fwd [0.6246, 0.22, 0.199] -> [222  98  88]
+> fwd [0.931, 0.6926, 0.3911] -> [252 206 130]
+> fwd [0.7866, 0.2857, 0.1249] -> [250 119  38]
+> inv [252.0, 190.0, 120.0] -> lin3(0.9076, 0.6020, 0.3465) check [252 190 120]
+
+### 🤖 Claude — 2026-11-16T02:39:44.797Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "export function bandGeometry(b: BandOpts): THREE.BufferGeometry {\n  return roundBandGeometry(b.height, b.width, b.lipHeight, b.lipWidth, b.groove, b.segments);\n}", "new_string": "export function bandGeometry(b: BandOpts): THREE.BufferGeometry {\n  return roundBandGeometry(b.height, b.width, b.lipHeight, b.lipWidth, b.groove, b.segments);\n}\n\n/**\n * wave 9 (05 oval): the band laid on an ellipse (local x stretched by K, y unchanged) with a CONSTANT radial\n * profile — each vertex keeps its depth bel …[+1190 chars]`
+
+### 🧑 User — 2026-11-16T02:39:44.841Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:39:46.950Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  /** wave 8: lateral stretch (see TubeGeoOptions.oval) — the ring's local x (= ∓right) is scaled by oval(s) */\n  oval?: (s: number) => number;\n};", "new_string": "  /** wave 8: lateral stretch (see TubeGeoOptions.oval) — the ring's local x (= ∓right) is scaled by oval(s) */\n  oval?: (s: number) => number;\n  /** wave 9: band rings only — lay the band on an ellipse of aspect K (ovalBandGeometry, constant band depth) */\n  bandOval?: number;\n};"}`
+
+### 🧑 User — 2026-11-16T02:39:46.989Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:39:48.104Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  const geo = opts.band ? bandGeometry(opts.band) : opts.collar", "new_string": "  const geo = opts.band ? ovalBandGeometry(opts.band, opts.bandOval ?? 1) : opts.collar"}`
+
+### 🧑 User — 2026-11-16T02:39:48.150Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:39:59.353Z
+
+Now materials.ts: oval-aware bulb spacing and the warmer, more saturated palette.
+
+### 🤖 Claude — 2026-11-16T02:40:01.805Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n 'BandShade' src/world/materials.ts | head -5; grep -n 'type BandShade\\|interface BandShade' -A8 src/world/materials.ts; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 -I $S/tools/palette.py 236,104,70 253,208,98 248,146,42 255,198,58 254,212,108 247,112,48 226,92,74", "description": "Find BandShade type and solve new ring colours"}`
+
+### 🧑 User — 2026-11-16T02:40:02.191Z
+
+> ↩︎ result: 222:export interface BandShade {
+> 230:export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+> 222:export interface BandShade {
+> 223-  /** band profile (same numbers as the BandOpts given to bandGeometry) */
+> 224-  width: number; lipWidth: number; groove: number;
+> 225-  /** spots per turn, spot half-width (fraction of the pitch), spot strength */
+> 226-  spots?: [number, number, number];
+> 227-  /** view distance range over which the crown highlight fades to rose-copper (deeper rings) */
+> 228-  fade?: [number, number];
+> 229-}
+> 230-export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+> inv [236.0, 104.0, 70.0] -> lin3(0.6983, 0.2384, 0.1688) check [236 104  70]
+> inv [253.0, 208.0, 98.0] -> lin3(0.9367, 0.7023, 0.2956) check [253 208  98]
+> inv [248.0, 146.0, 42.0] -> lin3(0.8126, 0.3850, 0.1406) check [248 146  42]
+> inv [255.0, 198.0, 58.0] -> lin3(0.9282, 0.6401, 0.1939) check [255 198  58]
+> inv [254.0, 212.0, 108.0] -> lin3(0.9515, 0.7291, 0.3277) check [254 212 108]
+> inv [247.0, 112.0, 48.0] -> lin3(0.7632, 0.2632, 0.1366) check [247 112  48]
+> inv [226.0, 92.0, 74.0] -> lin3(0.6352, 0.2039,  …[+27 chars]
+
+### 🤖 Claude — 2026-11-16T02:40:15.702Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  /** view distance range over which the crown highlight fades to rose-copper (deeper rings) */\n  fade?: [number, number];\n}\nexport function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {\n  const w = (b.width + b.groove + b.lipWidth) / 2;\n  const uniforms = {\n    uBandG: { value: new THREE.Vector4(w - b.width / 2, b.width / 2, -w + b.lipWidth / 2, b.lipWidth / 2) },\n    // ref ring #1: spot pitch ≈85 px at r 273 (≈20/turn), white core ≈12 px ins …[+2966 chars]`
+
+### 🧑 User — 2026-11-16T02:40:15.773Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:18.557Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "    uBcPale: { value: lin3(0.931, 0.6926, 0.3911) }, // (252,206,130)\n    uBcGold: { value: lin3(0.8111, 0.4073, 0.193) }, // (246,151,70)\n    uBcLine: { value: lin3(0.6601, 0.1926, 0.0761) }, // (234,89,4)\n    uBcLipS: { value: lin3(0.7599, 0.2745, 0.1948) }, // (245,115,80)\n  };", "new_string": "    uBcPale: { value: lin3(0.9367, 0.7023, 0.2956) }, // (253,208,98)\n    uBcGold: { value: lin3(0.8126, 0.385, 0.1406) }, // (248,146,42)\n    uBcLine: { value: lin3(0.6601, 0.1926, 0.0761) }, // (2 …[+87 chars]`
+
+### 🧑 User — 2026-11-16T02:40:18.627Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:20.053Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "uniform vec4 uBandG; uniform vec4 uBandS; uniform vec2 uBandF;\nuniform vec3 uBcDark;", "new_string": "uniform vec4 uBandG; uniform vec4 uBandS; uniform vec2 uBandF; uniform vec3 uBandE;\nuniform vec3 uBcDark;"}`
+
+### 🧑 User — 2026-11-16T02:40:20.096Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:21.954Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  float topArc = (1.0 - smoothstep(0.52, 0.96, abs(atan(vBandP.y, vBandP.x) - 1.5707963))) * (1.0 - deep);", "new_string": "  float eAng = atan(vBandP.y, vBandP.x / uBandE.x);   // eccentric angle on the (oval) band\n  float topArc = (1.0 - smoothstep(0.52, 0.96, abs(eAng - 1.5707963))) * (1.0 - deep);"}`
+
+### 🧑 User — 2026-11-16T02:40:22.000Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:23.855Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  float phi = atan(vBandP.y, vBandP.x);\n  float t = (phi - 1.5707963) * uBandS.x / 6.2831853;", "new_string": "  // evenly along the ellipse: arc length s(E) ≈ m·E − c·sin 2E (= E on a circle), 12 o'clock stays a spot\n  float t = (uBandE.y * (eAng - 1.5707963) - uBandE.z * sin(2.0 * eAng)) * uBandS.x / (6.2831853 * uBandE.y);"}`
+
+### 🧑 User — 2026-11-16T02:40:23.906Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:37.405Z
+
+Now the environment.ts changes: oval band rings with denser bulbs, and the new lid shelf placement.
+
+### 🤖 Claude — 2026-11-16T02:40:41.057Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {\n    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), band, key);", "new_string": "  // wave 9: `oval` = the band's ellipse aspect (ovalBandGeometry) → bulbs evenly spaced along it; the oval near ring\n  // gets denser bulbs (ref ring #1 top: bulbs at x ≈100/280/405/485/568/675/795, pitch ≈80–120 px; it02 ≈128 px)\n  const gold05 = (key: stri …[+318 chars]`
+
+### 🧑 User — 2026-11-16T02:40:41.107Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-16T02:40:43.058Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const ringMat05 = gold05('ring05', false, band05near);", "new_string": "  // all real 05 rings sit where the oval is complete (s05+9 … sF05): one pre-ovalised band, uniform instance scale\n  const ringsFullOval = rings05.every((s) => Math.abs(oval05(s) - K05) < 1e-3);\n  const ringMat05 = gold05('ring05', false, band05near, ringsFullOval ? K05 : 1);"}`
+
+### 🧑 User — 2026-11-16T02:40:43.110Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:44.810Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near, oval: oval05 }));", "new_string": "  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, ringsFullOval ? { inset: 0.02, band: band05near, bandOval: K05 } : { inset: 0.02, band: band05near, oval: oval05 }));"}`
+
+### 🧑 User — 2026-11-16T02:40:44.850Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:48.761Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -34, size: 2.2, thickness: 0.36, stretch: 1.0, sink: 0.1 };", "new_string": "  // wave 9 (oval tunnel): ref L1/R1 are long D-shelves seen from below — bright rim band along the top, the broad\n  // underside below it, rounded near end — filling most of the bay just BEYOND ring #1 (L1 spans x 65–215 between\n  // ring #1 and ring #2). Scratch projections with the locked camera: lower on the wall (18°), inner edge raised\n  // (tilt − …[+335 chars]`
+
+### 🧑 User — 2026-11-16T02:40:48.794Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:51.865Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);", "new_string": "  // one pair per bay, starting just past each real ring (the far block continues past the seam); the bay that\n  // would show its pair OUTSIDE ring #1 at the checkpoint (depth ≈26–40, the ref frames nothing there) has none\n  const bandHalf05 = (band05near.width + band05near.groove + band05near.lipWidth) / 2;\n  const lids05 = rings05\n    .map((s) => s + bandHalf05 + 0 …[+129 chars]`
+
+### 🧑 User — 2026-11-16T02:40:51.924Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:53.734Z
+
+Someone else edited environment.ts meanwhile; let me check what changed (likely path-camera's far block).
+
+### 🤖 Claude — 2026-11-16T02:40:54.543Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git diff src/world/environment.ts | grep '^[+-]' | grep -v '^+++\\|^---' | head -80", "description": "Show environment.ts diff from HEAD"}`
+
+### 🧑 User — 2026-11-16T02:40:54.587Z
+
+> ↩︎ result: -  const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {
+> -    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), band, key);
+> +  // wave 9: `oval` = the band's ellipse aspect (ovalBandGeometry) → bulbs evenly spaced along it; the oval near ring
+> +  // gets denser bulbs (ref ring #1 top: bulbs at x ≈100/280/405/485/568/675/795, pitch ≈80–120 px; it02 ≈128 px)
+> +  const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05, oval = 1) => {
+> +    const shade = oval === 1 ? band : { ...band, oval, spots: [28, 0.06, 1.9] as [number, number, number] };
+> +    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), shade, key);
+> -  const ringMat05 = gold05('ring05', false, band05near);
+> +  // all real 05 rings sit where the oval is complete (s05+9 … sF05): one pre-ovalised band, uniform instance scale
+> +  const ringsFullOval = rings05.every((s) => Math.abs(oval05(s) - K05) < 1e-3);
+> +  const ringMat05 = gold05('ring05', false, band05near, ringsFullOval ? K05 : 1);
+> -  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat …[+1668 chars]
+
+### 🤖 Claude — 2026-11-16T02:40:59.259Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit 2>&1 | head -20; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; timeout 600 node $S/tools/probe.mjs $S/p02.png && python3 -I $S/tools/sbs.py $S/sbs02.png $S/p01_oval.png $S/p02.png", "description": "Typecheck and probe the ring and lid changes", "timeout": 620000}`
+
+### 🧑 User — 2026-11-16T02:41:32.604Z
+
+> ↩︎ result: src/world/environment.ts(421,83): error TS2552: Cannot find name 'farRiverMaterial05'. Did you mean 'farRiverMaterial'?
+> done 21.799 calls 89 tris 568151 []
+
+### 🤖 Claude — 2026-11-16T02:41:36.076Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/sbs02.png"}`
+
+### 🧑 User — 2026-11-16T02:41:36.115Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:41:40.169Z
+
+Path-camera has already given the far block the oval: the seam is gone and the rings recede as ovals. Let me zoom the upper half.
+
+### 🤖 Claude — 2026-11-16T02:41:43.115Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 -I -c \"\nfrom PIL import Image\nS='$S/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open(S+'p02.png').convert('RGB')\nbox=(0,150,864,720)\nw=Image.new('RGB',(864*2+10,570))\nw.paste(r.crop(box),(0,0)); w.paste(b.crop(box),(874,0)); w.save(S+'upper02.png')\n\"; tail -3 qa/pilot05/REQUESTS.md | cut -c1-400", "description": "Crop upper area and check new requests"}`
+
+### 🧑 User — 2026-11-16T02:41:43.569Z
+
+> ↩︎ result: - wave9 washer-environment-modeler → path-camera-transition-engineer (02:32 UTC): OVAL 05 TUNNEL is in (coordinator-approved test): the near 05 walls, real rings and lids now use a lateral stretch `OVAL05.K` = 1.7 (exported from tube.ts, my section) — scratch projection with the locked camera: the depth-40 ring then lies on ref ring #1 (top AND sides at the frame edges) and depth 54 on ref rin
+> - wave9 washer-environment-modeler → foam-bubbles-particles (02:32 UTC): with the oval 05 tunnel there is now a level BANK FLOOR between each river edge and the wall foot (width ≈ 6.33·(1.7−1) ≈ 4.4 u at the sides, 0.18 u under the water line, from s05+9 to the seam). The approved image fills exactly this zone with broad white-lavender foam banks (left bank x 0–300 px at y 620–700). I
+> - wave9 path-camera-transition-engineer → washer-environment-modeler (02:34 UTC): OVAL FAR SECTION is in. My far block now reads your `oval05(sF05)` (= OVAL05.K at the seam, so a taper would follow automatically) and `floor05(sF05).y`: ForcedTunnel (tube.ts, my class) takes `{ aspect, floorY }` — walls d = Rt·cos·K + U·sin with ellipse normals, points below floorY lifted onto the bank floor
+
+### 🤖 Claude — 2026-11-16T02:41:45.506Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; tail -1 qa/pilot05/REQUESTS.md | cut -c400-2000", "description": "Read rest of path-camera reply"}`
+
+### 🧑 User — 2026-11-16T02:41:45.539Z
+
+> ↩︎ result: r (normal −U); far ring instances x-scale × K; far lid offsets + Rt·(K−1)·r·cos(ang)·side (open placements too); far river chord × K. Please keep the names `oval05` / `floor05` inside buildEnvironment (or tell me here). FYI in my scratch look (~02:33) the near 05 water was hidden under the slotted bank floor across the whole near field (floor above the ribbon?) — probably your in-progress state; I will capture my it01 once that reads normally. Also: far coins now continue the trail into the light (visual only, coins05_far, 3 draw calls).
+
+### 🤖 Claude — 2026-11-16T02:41:46.887Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/upper02.png"}`
+
+### 🧑 User — 2026-11-16T02:41:46.929Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:41:58.991Z
+
+Big structural step: oval rings recede into the VP like the ref. Lids now read as rounded D-shelves (band on top, underside below) but are still too small and low. Let me zoom ring #1 and lid L1.
+
+### 🤖 Claude — 2026-11-16T02:42:04.844Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; python3 -I -c \"\nfrom PIL import Image\nS='$S/'\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open(S+'p02.png').convert('RGB')\nbox=(0,170,520,440)\nW=(box[2]-box[0]);H=(box[3]-box[1])\nw=Image.new('RGB',(W*2+10,H*2))\nw.paste(r.crop(box).resize((W*2//1,H*2)).crop((0,0,W,H*2)),(0,0))\nw=Image.new('RGB',(W*3+10,H*3//2*2))\n\" ; python3 -I -c \"\nfrom PIL import Image\nS='$S/'\nr=Image.open('references/05_flow_into_the_current.png').conv …[+443 chars]`
+
+### 🧑 User — 2026-11-16T02:42:05.313Z
+
+> ↩︎ result: (1695, 420)
+
+### 🤖 Claude — 2026-11-16T02:42:07.279Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/zoom02.png"}`
+
+### 🧑 User — 2026-11-16T02:42:07.308Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:42:13.197Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; cat > $S/tools/zoom.py <<'EOF'\n# scratch: zoom.py OUT x0,y0,x1,y1 SCALE live.png [live2.png ...]  → ref | live... stacked vertically\nimport sys\nfrom PIL import Image\nout, box, sc = sys.argv[1], tuple(int(v) for v in sys.argv[2].split(',')), float(sys.argv[3])\nims = [Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')] + [Image.open(p).convert('RGB').resize((864, 1536)) for p in sys.argv[4:]]\nW, H = int((box[2] - box[0]) * sc), i …[+333 chars]`
+
+### 🧑 User — 2026-11-16T02:42:13.557Z
+
+> ↩︎ result: (840, 852)
+
+### 🤖 Claude — 2026-11-16T02:42:15.654Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/zoom02.png"}`
+
+### 🧑 User — 2026-11-16T02:42:15.695Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:42:34.342Z
+
+Lids are still too small/low and the ring bulbs read as broad stripes. Let me fit the lid parameters numerically to the ref L1 box (65–215 × 318–420) with the projector.
+
+### 🤖 Claude — 2026-11-16T02:42:41.897Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9; cat > $S/tools/lidbox.py <<'EOF'\nimport json\nd = json.load(open('/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/w9/lidproj.json'))\nfor vi, var in enumerate(d['variants']):\n    by = {}\n    for a, b, c, cls, nv, z, k in var['tris']:\n        if nv <= 0: continue\n        by.setdefault(k, []).append((a, b, c, cls))\n    out = []\n    for k, ts in by.items():\n        xs = [p[0] for t in ts for p in t[:3]]; ys = [p[1] for t in ts for p …[+956 chars]`
+
+### 🧑 User — 2026-11-16T02:42:45.542Z
+
+> ↩︎ result: ok [ '-2.0', '12.0', '26.0', '40.0', '54.0' ] [ '7.60/3.35', '7.60/3.38', '7.60/3.42', '7.60/3.62', '7.60/3.73' ]
+> 0 {'angleDeg': 24, 'droopDeg': -44, 'size': 3.2, 'thickness': 0.45, 'stretch': 1.5, 'sink': 0.25, 'off': 5.75} [((834, 276, 1085, 385), 0.53), ((-48, 283, 183, 388), 0.54), ((732, 354, 877, 419), 0.53), ((141, 357, 278, 420), 0.54), ((731, 268, 907, 337), 0.51), ((88, 283, 233, 353), 0.52)]
+> 1 {'angleDeg': 24, 'droopDeg': -44, 'size': 3.6, 'thickness': 0.45, 'stretch': 1.5, 'sink': 0.25, 'off': 6.38} [((807, 275, 1081, 394), 0.54), ((-44, 283, 209, 397), 0.54), ((714, 353, 874, 424), 0.53), ((144, 356, 294, 426), 0.54), ((747, 231, 955, 305), 0.47), ((40, 248, 212, 324), 0.49)]
+> 2 {'angleDeg': 24, 'droopDeg': -54, 'size': 3.2, 'thickness': 0.45, 'stretch': 1.5, 'sink': 0.25, 'off': 5.75} [((840, 261, 1088, 384), 0.56), ((-51, 268, 179, 387), 0.56), ((735, 342, 879, 418), 0.55), ((139, 345, 274, 420), 0.55), ((735, 256, 909, 337), 0.53), ((84, 269, 229, 352), 0.55)]
+> 3 {'angleDeg': 24, 'droopDeg': -54, 'size': 3.6, 'thickness': 0.45, 'stretch': 1.5, 'sink': 0.25, 'off': 6.38} [((813, 259, 1084, 393), 0.56), ((-47, 266, 204, 396), 0.57), ((718, 340, 877, 424), 0.55), ((141,  …[+1250 chars]
+
+### 🤖 Claude — 2026-11-16T02:43:27.847Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git diff HEAD --stat; grep -n 'OVAL05\\|oval05\\|floor05' src/world/tube.ts src/world/environment.ts src/world/far05.ts | head -30", "description": "Check current state of oval references"}`
+
+### 🧑 User — 2026-11-16T02:43:27.906Z
+
+> ↩︎ result: CLAUDE.md                             |   2 +-
+>  backups/CLAUDE_ACCOUNT_TRANSFER.md    |  13 ++-
+>  backups/START_NEW_CLAUDE_ACCOUNT.md   |  36 +++---
+>  qa/capture_log.json                   | 214 +++++++++++++++++++++++++++++++---
+>  qa/pilot05/wave9/foam/NOTES.md        |  16 +++
+>  qa/pilot05/wave9/path-camera/NOTES.md |  16 +++
+>  qa/pilot05/wave9/water/NOTES.md       |  11 ++
+>  src/vfx/foam.ts                       |   6 +-
+>  src/vfx/glsl.ts                       |   2 +
+>  src/vfx/riderSplash.ts                |   3 +-
+>  src/vfx/waterRibbon.ts                |  37 +++---
+>  src/world/environment.ts              |  43 +++++--
+>  src/world/far05.ts                    | 184 +++++++++++++++++++++++++++--
+>  src/world/materials.ts                |  37 ++++--
+>  src/world/tube.ts                     |  46 +++++++-
+>  15 files changed, 575 insertions(+), 91 deletions(-)
+> src/world/tube.ts:184:export const OVAL05 = { K: 1.7, floorBelowWater: 0.18 } as const;
+> src/world/tube.ts:556:   * wave 9 (05 oval, environment OVAL05): lateral stretch of the cross-section (the near 05 walls/rings are ovals
+> src/world/environment.ts:10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, strai …[+1571 chars]
+
+### 🤖 Claude — 2026-11-16T02:43:31.065Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 400,440p src/world/environment.ts; sed -n 550,600p src/world/tube.ts", "description": "Read path-camera's far block oval handling"}`
+
+### 🧑 User — 2026-11-16T02:43:31.107Z
+
+> ↩︎ result: // wave 8: far rings at the reference radii 170 / 104 / 62 / 45 / 31 px about the VP (rays at 90/120/150°;
+>     // live calibration r ≈ 10000/D) → virtual depth ≈ 59 / 97 / 161 / 222 / 322, then the warm throat. Ring n sits
+>     // at tunnel coordinate u = bay05·(n + ½) (half a bay after the seam, then one bay each, so every far bay keeps
+>     // its slot rows and lid pair). The D≈59 ring replaces the real ring at sF05 (r≈189, "ring #2 too big"): it only
+>     // shows once the environment owner has removed that ring from rings05, so there is never a double ring.
+>     const D0 = tubeCenterAt(perfPath, sF05).sub(eye).dot(T);
+>     const realSeamRing = rings05.some((s) => Math.abs(s - sF05) < 0.5);
+>     const ringDv = [59, 97, 161, 222, 322];
+>     const knots: [number, number][] = [[0, 0]];
+>     ringDv.forEach((d, i) => knots.push([bay05 * (i + 0.5), Math.max(d - D0, knots[i][1] + 1)]));
+>     const zEnd = 430 - D0;
+>     // wave 9: the same OVAL section as the near 05 tunnel at the seam (environment `oval05`/`floor05`: lateral
+>     // stretch K, level bank floor just under the water), so walls, rings and lids continue without a step
+>     const K = oval05(sF05);
+>     const floorY = floor05(sF05).y;
+>    …[+5080 chars]
+

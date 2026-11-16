@@ -71,3 +71,19 @@ dark / mid / bright thirds of the clump-box foam px).
   184/231/253), Lrim 178/231/253 (ref 176/221/251), Lclump 183/238/253 (ref 181/219/252: still too bright); dark thirds
   #B4C1FF-#BDC8FF (ref #A5B8FA-#ADB8FA). clumpcol W49/32/30/21 S39/36/41/35. gain vs it03: Lclump -2.7, splash -0.7,
   others +-0.3. splashext 20.3/18.9 %.
+* it05 (89 calls, 568,247 tris): splash 34 thinner ropes (0.042 -> 0.01), root arc 1.45 -> 0.35 rad, crown beads: ~half
+  dropped at random; bubbles.ts: initial 05 bubbles in the lower third placed near the water (to get the ref's lower-
+  corner bubbles). Seen: splash barely changed (still ~5 visible strands per side: the left V band's top lumps at
+  (200-300, 1110-1190) cover the outer strands; the inner ones hide under the ribbon swell); no lower-corner bubble
+  appeared -> bubbles.ts change REVERTED (file identical to baseline again). gain vs it04: LL -0.4, LR -0.7, Lclump -1.1,
+  splash -0.7. clumpcol W48/31/31/21 S39/37/39/35; splashext 20.2/18.6 %.
+* it06 (89 calls, 568,247 tris) KEPT: wake band inner edge 0.62 + 0.4 b (was 0.3 + 0.7 b), left top ds -0.3; splash
+  ropes 0.05 above the local plane. Seen: the bands now run OUTSIDE the splash strands like the ref (left (60-260,
+  1150-1320), right (630-770, 1190-1320)), and the splash shows a fuller fringe of lacy strands on both sides (left
+  x 250-360, right 460-600, down to y ~1250; ref 200-345 / 480-640 down to ~1300). gain vs it05: LR -1.3, splash +0.9,
+  Lclump +0.6, LL/rims ~0. Tight fan boxes (L 230-400 / R 460-640, y 1110-1300, whitish px incl. the ribbon's white flow
+  lines): ref 15.4/14.9 %, baseline 27.4/30.9, it04 23.3/22.0, it05 23.2/21.6, it06 21.3/25.5. clumpcol W49/31/33/21
+  S39/38/38/35 B23/20/23/19 (ref W25/28/28/22 S56/38/44/41 B35/23/26/22; baseline W32/12/14/17 S50/47/49/46);
+  clumptone (pink-free) LL L191/231/249 (ref 179/233/253, baseline 187/228/238), LR 186/232/250 (ref 184/231/253,
+  baseline 186/226/239), Lrim 178/231/253 (ref 176/221/251), Lclump 184/238/253 (ref 181/219/252: too bright, open).
+  splashext (wide box incl. bands) 19.9/21.9 % (ref 13.6/12.8, baseline 19.8/21.4).

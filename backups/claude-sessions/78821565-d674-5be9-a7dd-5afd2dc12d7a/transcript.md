@@ -1649,3 +1649,290 @@ I checked PR #4. Nothing on it needs action:
 
 The PR stays a do-not-merge pointer to the newest saved work, and every 5-minute autosave updates it. The four Screen 05 specialists are still working; I'll review their results when they report.
 
+### 🧑 User — 2026-11-16T02:41:38.490Z
+
+Claude, IMPORTANT: Please save EVERYTHING from my Rainbow 3D game project to my private GitHub repository RIGHT NOW.
+
+GitHub repository:
+josiahscalia5-dev/rainbow-
+
+Previous recovery branch:
+ccr-937c7fbb-htsrgt
+
+First verify my CURRENT working branch and check for newer commits from my other Claude sessions. Always preserve the newest valid work.
+
+SAVE EVERYTHING
+
+1. All eleven gameplay screens, Three.js source code, game systems, shaders, textures, lighting and animations.
+
+2. All 12 approved reference images, screenshots, visual comparisons and QA reports.
+
+3. All ten design specialist agents, their instructions, completed work, unfinished tasks, progress notes and agent configuration files.
+
+4. All Marble World Labs assets, including both generated 3D worlds, splat files, panoramas, wall textures, collision meshes, Blender imports, world IDs, generation settings and API credit ledger.
+
+5. All Blender projects, GLB models, Benny and girl character assets, Google Flow video integration, Android files and available APK builds.
+
+6. All MCP server configurations, plugin setup instructions, recovery scripts and development environment dependencies. Never save API keys or passwords.
+
+7. Update CLAUDE.md and both account-transfer documents so my next Claude account knows exactly how to continue.
+
+AUTOMATIC BACKUPS
+
+Keep my existing five-minute automatic GitHub backups running while this cloud session is active.
+
+Save unfinished specialist work automatically. Do not ask me each time.
+
+Do not overwrite or force-push any protected branches.
+
+VERIFY THE BACKUP
+
+After saving:
+
+- Run git status and confirm what is committed.
+- Verify all Git LFS files are available.
+- Check that no API keys or secrets are included.
+- Push the latest changes to my current safe working branch.
+- Verify the remote GitHub commit matches the local commit.
+- Give me the exact branch name and full commit SHA.
+- Tell me if ANY files or active work could not be saved.
+
+Keep my approved Screen 05 design, current Marble reconstruction and all gameplay intact.
+
+SAVE FIRST, VERIFY EVERYTHING, THEN CONTINUE WORKING.
+
+I authorize all ordinary non-destructive GitHub saves without asking. Only ask me about paid credits or potentially destructive changes.
+
+### 🤖 Claude — 2026-11-16T02:41:59.576Z
+
+Saving and verifying everything now. First: current branch, newer commits from other sessions, and anything Git is currently ignoring.
+
+### 🤖 Claude — 2026-11-16T02:42:02.279Z
+
+> 🔧 **Bash** `{"command": "date -u && echo \"branch: $(git branch --show-current)  HEAD: $(git rev-parse HEAD)\" && git fetch -q origin '+refs/heads/ccr-*:refs/remotes/origin/ccr-*' '+refs/heads/claude/*:refs/remotes/origin/claude/*' && for r in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin/ccr-* refs/remotes/origin/claude/*); do if git merge-base --is-ancestor $r HEAD; then s=contained; else s=\"NOT CONTAINED ($(git rev-list --count HEAD..$r) new)\"; fi; echo \"  $r $(git rev-parse --short $r) $s\"; done; echo; git status --short | wc -l; git status --short | grep -v 'backups/claude-se …[+91 chars]`
+
+### 🧑 User — 2026-11-16T02:42:02.937Z
+
+> ↩︎ result: Mon Nov 16 02:42:02 UTC 2026
+> branch: claude/rainbow-3d-account-recovery-xex5hc  HEAD: 1c89ffd7fd9011df025f54fc73be62196bf7deef
+>   origin/ccr-4f6c3e0e-5kxgr0 0fe0b0c contained
+>   origin/ccr-6f431adf-7h0m8y 81e639e contained
+>   origin/ccr-8b6fc834-7kd55l 8a36270 contained
+>   origin/ccr-937c7fbb-htsrgt f6e4071 contained
+>   origin/ccr-93add0fa-q17ey6 08fb461 contained
+>   origin/ccr-d4bb0ad3-8ycajb 648f531 contained
+>   origin/ccr-e033f912-8b40f5 3c0fe33 contained
+>   origin/claude/rainbow-3d-account-recovery-xex5hc 1c89ffd contained
+>   origin/claude/rainbow-3d-account-transfer-syorak 7ae64c3 contained
+>   origin/claude/rainbow-3d-recovery-m4v347 b83b7e0 contained
+> 
+> 15
+>  M qa/capture_log.json
+>  M qa/pilot05/wave9/foam/NOTES.md
+>  M qa/pilot05/wave9/path-camera/NOTES.md
+>  M qa/pilot05/wave9/water/NOTES.md
+>  M src/vfx/foam.ts
+>  M src/vfx/glsl.ts
+>  M src/vfx/riderSplash.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/environment.ts
+>  M src/world/far05.ts
+>  M src/world/materials.ts
+>  M src/world/tube.ts
+> ?? qa/pilot05/wave9/foam/it06/
+> ?? qa/pilot05/wave9/foam/regress/
+> ?? qa/pilot05/wave9/water/it03/
+
+### 🤖 Claude — 2026-11-16T02:42:06.734Z
+
+> 🔧 **Bash** `{"command": "echo \"== ignored (top level, excluding node_modules):\"; git status --ignored --short | grep '^!!' | grep -v node_modules | head -30; echo; cat .gitignore | head -40", "description": "List ignored files and .gitignore"}`
+
+### 🧑 User — 2026-11-16T02:42:06.781Z
+
+> ↩︎ result: == ignored (top level, excluding node_modules):
+> !! backups/.autosave.lock
+> !! backups/.live/
+> !! scripts/__pycache__/
+> 
+> # --- dependencies / caches / build output ---
+> node_modules/
+> dist/
+> .vite/
+> coverage/
+> *.log
+> .cache/
+> __pycache__/
+> *.pyc
+> 
+> # --- Android build outputs (sources under android/ ARE backed up) ---
+> android/.gradle/
+> android/build/
+> android/app/build/
+> android/capacitor-cordova-android-plugins/build/
+> android/local.properties
+> android/.idea/
+> *.keystore
+> *.jks
+> 
+> # --- secrets & local auth (never commit) ---
+> .env
+> .env.*
+> *.pem
+> *.key
+> *.p12
+> .mcp.json
+> .credentials.json
+> **/secrets/**
+> 
+> # --- local-only backup scratch (raw, unredacted, lock files) ---
+> backups/raw/
+> backups/.autosave.lock
+> backups/.tmp/
+> backups/.live/
+> 
+> # --- editor/OS ---
+> .DS_Store
+> .idea/
+> .vscode/
+
+### 🤖 Claude — 2026-11-16T02:42:16.717Z
+
+> 🔧 **Bash** `{"command": "ls backups/.live | head -5; grep -nE 'def .*(secret|redact|scan)' scripts/rainbow-autosave.py | head -8; echo \"== secret scan (tracked + pending files, excluding node_modules/binaries)\"; git add -N . 2>/dev/null; git grep -I -n -E '(sk-ant-[A-Za-z0-9_-]{20,}|sk-[A-Za-z0-9]{32,}|ghp_[A-Za-z0-9]{30,}|gho_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{35}|xox[bpas]-[A-Za-z0-9-]{10,}|-----BEGIN [A-Z ]*PRIVATE KEY-----|WLT-Api-Key[\"'\"'\"']?\\s*[:=]\\s*[\"'\"'\"']?[A-Za-z0-9_-]{16,}|(api[_-]?key|apikey|password|passwd|secret|token)[\"'\"'\"']?\\s*[: …[+241 chars]`
+
+### 🧑 User — 2026-11-16T02:42:16.801Z
+
+> ↩︎ result: BACKUP_LOG.md
+> BACKUP_STATUS.json
+> 171:def scan_and_guard(staged: list[str]) -> list[str]:
+> == secret scan (tracked + pending files, excluding node_modules/binaries)
+> fatal: command line, '(sk-ant-[A-Za-z0-9_-]{20,}|sk-[A-Za-z0-9]{32,}|ghp_[A-Za-z0-9]{30,}|gho_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{35}|xox[bpas]-[A-Za-z0-9-]{10,}|-----BEGIN [A-Z ]*PRIVATE KEY-----|WLT-Api-Key["']?\s*[:=]\s*["']?[A-Za-z0-9_-]{16,}|(api[_-]?key|apikey|password|passwd|secret|token)["']?\s*[:=]\s*["'][A-Za-z0-9_\-/+]{20,}["'])': Invalid range end
+> scan exit done
+
+### 🤖 Claude — 2026-11-16T02:42:19.723Z
+
+The regex syntax was wrong for git grep. Using a small Python scanner over every tracked and pending file instead:
+
+### 🤖 Claude — 2026-11-16T02:42:27.659Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad && cat > $S/secret_scan.py <<'EOF'\nimport re, subprocess, sys, os\npats = {\n 'anthropic': r'sk-ant-[A-Za-z0-9_\\-]{20,}',\n 'openai-like': r'\\bsk-[A-Za-z0-9]{32,}',\n 'github': r'\\b(ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}',\n 'aws': r'\\bAKIA[0-9A-Z]{16}\\b',\n 'google': r'\\bAIza[0-9A-Za-z_\\-]{35}\\b',\n 'slack': r'\\bxox[bpas]-[A-Za-z0-9\\-]{10,}',\n 'privkey': r'-----BEGIN [A-Z ]*PRIVATE KEY-----',\n 'wlt-header': r'WLT-Api-Key[\"\\']?\\s*[:=]\\s*[\"\\']?(?!proxy- …[+1169 chars]`
+
+### 🧑 User — 2026-11-16T02:42:38.399Z
+
+> ↩︎ result: SCANNED 486 text files, HITS 0
+
+### 🤖 Claude — 2026-11-16T02:42:48.912Z
+
+> 🔧 **Bash** `{"command": "git lfs fsck 2>&1 | tail -1; echo \"LFS tracked: $(git lfs ls-files | wc -l), pointer stubs: $(git lfs ls-files | awk '$2==\"-\"' | wc -l)\"; git lfs ls-files -l -s | awk '{print $1, $(NF-1), $NF}' | head -3; S=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad; git lfs ls-files -l -n | while read f; do oid=$(git lfs ls-files -l -I \"$f\" | awk '{print $1}' | head -1); sz=$(stat -c %s \"$f\"); echo \"$oid $sz\"; done > $S/lfs_oids.txt; wc -l < $S/lfs_oids.txt; python3 -I - $S/lfs_oids.txt > $S/batch.json <<'EOF'\nimport json,sys\nobjs=[{\"oid\":l.spl …[+807 chars]`
+
+### 🧑 User — 2026-11-16T02:42:53.119Z
+
+> ↩︎ result: Git LFS fsck OK
+> LFS tracked: 24, pointer stubs: 0
+> 40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1 (1.1 MB)
+> fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528 (3.5 MB)
+> 982e007c75e95cb0913749e28f763579fddb39825f4dc2bfd5b12c64e478c0f3 (5.5 MB)
+> 24
+> HTTP 200
+> remote LFS objects downloadable: 24 / 24  errors: 0 []
+
+### 🤖 Claude — 2026-11-16T02:42:56.329Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md"}`
+
+### 🧑 User — 2026-11-16T02:42:56.385Z
+
+> ↩︎ result: 1	# Paste this into Claude Code on the next Claude account
+> 2	
+> 3	Start a Claude Code cloud session on repository `josiahscalia5-dev/rainbow-` (pick branch `ccr-937c7fbb-htsrgt`
+> 4	if the app lets you choose), then paste:
+> 5	
+> 6	> Continue my EXISTING Rainbow 3D Android game. Do NOT start over and do not delete anything.
+> 7	>
+> 8	> Repository `josiahscalia5-dev/rainbow-`. Newest saved work: branch `ccr-937c7fbb-htsrgt`, plus anything newer
+> 9	> on `ccr-4f6c3e0e-5kxgr0` (two sessions were saving in parallel). The GitHub default branch is an OLD version.
+> 10	> 1. In the repo folder run:
+> 11	>    `git fetch origin ccr-937c7fbb-htsrgt && git show FETCH_HEAD:scripts/resume-newest-work.sh > /tmp/r.sh && bash /tmp/r.sh --tools`
+> 12	>    It merges every newer `ccr-*`/`claude/*` branch, restores Git LFS (24 files incl. Marble splats/PLY/collider
+> 13	>    GLBs/.blend), checks the 12 references, the 10 agents, tsc and continuity, and installs Blender 5.3, Android
+> 14	>    SDK 34 and the World Labs plugin. It never resets or force-pushes. Push your session branch; protect
+> 15	>    `ccr-937c7fbb-htsrgt` and point `backups/autosave.config.json` at your branch.
+> 16	> 2. Read `CLAUDE.md`, then `backups/CLAUDE_ACC …[+1352 chars]
+
+### 🤖 Claude — 2026-11-16T02:43:06.556Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "content": "# Paste this into Claude Code on the next Claude account\n\nStart a Claude Code cloud session on repository `josiahscalia5-dev/rainbow-` (pick branch\n`claude/rainbow-3d-account-recovery-xex5hc` if the app lets you choose), then paste:\n\n> Continue my EXISTING Rainbow 3D Android game. Do NOT start over and do not delete anything.\n>\n> Repository `josiahscalia5-dev/rainbow-`. Newest saved work: branch `claude/rainbow-3d-account-recovery-xex5hc`\n> (recovery session of 2026-11-16, Screen 05 wave 9). Always che …[+2498 chars]`
+
+### 🧑 User — 2026-11-16T02:43:06.639Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:43:08.207Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "old_string": "# Rainbow — Claude account transfer guide (account 8 + transfer session 94cf04e3, 2026-11-16 ~01:30 UTC)", "new_string": "# Rainbow — Claude account transfer guide (newest: recovery session 01Kbt6BV, 2026-11-16 ~02:45 UTC; earlier: account 8 + transfer session 94cf04e3)"}`
+
+### 🧑 User — 2026-11-16T02:43:08.345Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:15.104Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "old_string": "Wave 8 had stopped mid-iteration (credits ran out). Wave 9 (all four Screen 05 specialists continuing their own wave-8\nwork) brief: `qa/pilot05/COORDINATION_WAVE9.md`; status: `backups/AGENTS_STATUS.md` top table.\nRecovered 05 vs approved (`qa/pilot05/wave9/recovered/`): mad 50.6, hue_corr 0.875, edge_corr 0.195.", "new_string": "Wave 8 had stopped mid-iteration (credits ran out). Wave 9 (all four Screen 05 specialists continuing their own wave-8\nwork) brief: `qa/pilot05/COORDINATION …[+1116 chars]`
+
+### 🧑 User — 2026-11-16T02:43:15.147Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:17.455Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md", "old_string": "| **Newest work** | **`ccr-937c7fbb-htsrgt`** (transfer session; contains everything below) — plus any commits account 8 pushed to **`ccr-4f6c3e0e-5kxgr0`** after 01:19 UTC (merge them; §2) |", "new_string": "| **Newest work** | **`claude/rainbow-3d-account-recovery-xex5hc`** (recovery session 01Kbt6BV, 2026-11-16; contains every branch below incl. `ccr-937c7fbb-htsrgt` f6e4071). Earlier: `ccr-937c7fbb-htsrgt` (transfer session) |"}`
+
+### 🧑 User — 2026-11-16T02:43:17.491Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/CLAUDE_ACCOUNT_TRANSFER.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:18.006Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/CLAUDE.md", "limit": 4}`
+
+### 🧑 User — 2026-11-16T02:43:18.037Z
+
+> ↩︎ result: 1	# RAINBOW — permanent rules for Claude Code
+> 2	
+> 3	**New Claude account or new session? Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` FIRST** (newest branch, verified commit, specialist status, Marble results, tool setup, next tasks). This is an existing game: never restart it. Before any work run `bash scripts/resume-newest-work.sh` (merges every newer `ccr-*`/`claude/*` branch, restores Git LFS, verifies refs/agents/tsc/continuity; never resets or force-pushes) — the GitHub default branch is an OLD version, and more than one session may have saved in parallel. Ready-to-paste prompt for a new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`.
+> 4
+
+### 🤖 Claude — 2026-11-16T02:43:21.110Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "Ready-to-paste prompt for a new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`.", "new_string": "Ready-to-paste prompt for a new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`. Newest work as of 2026-11-16 ~02:45 UTC: branch `claude/rainbow-3d-account-recovery-xex5hc` (Screen 05 wave 9, brief `qa/pilot05/COORDINATION_WAVE9.md`; relaunch rules in `backups/AGENTS_STATUS.md`) — always confirm with `git ls-remote` that no newer `ccr-*`/`claude/*` branch exists."}`
+
+### 🧑 User — 2026-11-16T02:43:21.164Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:43:23.537Z
+
+Adding this session's verified connector status to the MCP setup guide:
+
+### 🤖 Claude — 2026-11-16T02:43:24.042Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/MCP_SETUP.md", "limit": 8}`
+
+### 🧑 User — 2026-11-16T02:43:24.062Z
+
+> ↩︎ result: 1	# Rainbow — tool / MCP reconnection (no secrets stored)
+> 2	
+> 3	Status as verified in the cloud development session on 2026-11-15. "Tested" means a real call succeeded
+> 4	in this environment; nothing here is assumed.
+> 5	
+> 6	| Tool | Status here | Evidence / blocker | Reconnect |
+> 7	|---|---|---|---|
+> 8	| Playwright MCP | **connected** (`claude mcp list` → ✓ Connected) | Plugin server `@playwright/mcp@latest`; Chromium + Playwright library preinstalled and used by `scripts/` capture tooling | `claude mcp add playwright npx @playwright/mcp@latest` |
+
+### 🤖 Claude — 2026-11-16T02:43:30.753Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/MCP_SETUP.md", "old_string": "# Rainbow — tool / MCP reconnection (no secrets stored)\n", "new_string": "# Rainbow — tool / MCP reconnection (no secrets stored)\n\n## Newest check — recovery session 01Kbt6BV (new Claude account, 2026-11-16 ~02:15–02:45 UTC)\n| Tool | Tested result | On the next account |\n|---|---|---|\n| GitHub (git proxy + GitHub MCP) | pushes verified (remote SHA == local); `list_pull_requests`/`create_pull_request` OK (draft PR #4) | connect GitHub to the Claude account + Claude GitHub App on the repo |\n| Wo …[+1117 chars]`
+
+### 🧑 User — 2026-11-16T02:43:30.789Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/MCP_SETUP.md has been updated successfully.
+

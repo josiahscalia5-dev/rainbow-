@@ -1710,3 +1710,205 @@ Now the far river chord follows the aspect, and the far coins use the same `latK
 > violet   1.1%  median #B97AFD
 > gold    12.2%  median #FFC46D
 
+### 🤖 Claude — 2026-11-16T02:39:22.075Z
+
+I'll log it01 first.
+
+### 🤖 Claude — 2026-11-16T02:39:30.779Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/wave9/path-camera/NOTES.md <<'EOF'\n* **it01** (far coins + seam coin + OVAL far section, env request 02:32). Changes: `coinVisuals()` shared (coins.ts, pure\n  refactor), seam coin 26 → axis-lateral −0.2 (`C05.seamAxisLat`, `farSeam05()`), `farCoins05` (far05.ts: 7 coins at\n  virtual D 70/83/106/150/205/280/370 on C05.latK × far core, ×1→1.5 size, shrink away while the section opens),\n  ForcedTunnel `{ aspect, floorY }` (tube.ts) fed by env `oval05(sF05)`/`floor05(sF05)`: oval far walls (+ bank floor),\n  far rings x × K, far lids on th …[+1259 chars]`
+
+### 🧑 User — 2026-11-16T02:39:30.825Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:39:32.518Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/far05.ts", "offset": 100, "limit": 25}`
+
+### 🧑 User — 2026-11-16T02:39:32.546Z
+
+> ↩︎ result: 100	export interface FarRiverLayout {
+> 101	  row(Z: number): FarRiverRow;
+> 102	  /** half chord of the tube floor at the water level */
+> 103	  chord: number;
+> 104	}
+> 105	
+> 106	/**
+> 107	 * Far design row for a water-body centre xB: the body hugs the outer wall of each bend (half width
+> 108	 * EXTENT_FAR − |xB|); the two pink bands are thin lines near the banks (ref 05 far field: 3–10 px bands, the cyan
+> 109	 * core fills the river), the inner-bank band sits a little further in.
+> 110	 */
+> 111	function designFromXB(xB: number, Z: number): FarRiverRow {
+> 112	  const hw = EXTENT_FAR - Math.sqrt(xB * xB + 0.09);
+> 113	  const bend = Math.min(1, Math.abs(xB) / 2.5);
+> 114	  const aIn = 0.25 + 0.2 * bend, aOut = 0.25 - 0.08 * bend;
+> 115	  const aL = xB >= 0 ? aIn : aOut, aR = xB >= 0 ? aOut : aIn;
+> 116	  const w = Math.min(0.65, Math.max(0.26, 0.13 * hw)) * (1 - 0.35 * smoothstep(60, 200, Z));
+> 117	  const cL = xB - hw * (1 - aL), cR = xB + hw * (1 - aR);
+> 118	  return { xB, hw, cL, wL: w, cR, wR: w, core: 0.5 * (cL + cR) };
+> 119	}
+> 120	
+> 121	/**
+> 122	 * Layout of the far river at virtual depth Z. For small Z it is the REAL ribbon exactly as the eye would see it
+> 123	 * there without the far section: at the seam t …[+183 chars]
+
+### 🤖 Claude — 2026-11-16T02:39:59.200Z
+
+Now the far river geometry: raised foam banks with a scalloped outer edge (the reference's foam look), and a foam-width attribute.
+
+### 🤖 Claude — 2026-11-16T02:40:16.158Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: number, cols = 16, steps = 120): THREE.BufferGeometry {\n  const bank = 3;\n  const per = cols + 1 + 2 * bank;\n  const rows = steps + 1;\n  const n = rows * per;\n  const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);\n  const lat = new Float32Array(n), A = new Float32Array(n * 4), B = new Float32Array(n * 4), ext = new Float32Array(n), opn = new Float32Array(n * 3);\n  const o = …[+3938 chars]`
+
+### 🧑 User — 2026-11-16T02:40:16.196Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:17.959Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "  g.setAttribute('fgExtra', new THREE.BufferAttribute(ext, 1));\n  g.morphAttributes.position = [new THREE.BufferAttribute(opn, 3)];", "new_string": "  g.setAttribute('fgExtra', new THREE.BufferAttribute(ext, 1));\n  g.setAttribute('aRivF', new THREE.BufferAttribute(fwA, 1));\n  g.morphAttributes.position = [new THREE.BufferAttribute(opn, 3)];"}`
+
+### 🧑 User — 2026-11-16T02:40:18.005Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:40:23.257Z
+
+Now my own far-river material in far05.ts (ported from my wave-8 shader in materials.ts, which I leave untouched), with the water-fx seam colours and the foam look.
+
+### 🤖 Claude — 2026-11-16T02:40:56.675Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> src/world/far05.ts <<'EOF'\n\n/** far glow parameters (environment.ts glow05 shape) */\nexport interface FarRiverGlow { color: THREE.ColorRepresentation; near: number; far: number; strength: number }\n\n/**\n * Far stream material (wave 9, path-camera; wave-8 version moved here from materials.ts, which is environment-owned).\n * Laid out per row by farRiverGeometry (aRivA/aRivB: route centre, half width, band centres/widths, core, Z; aRivF:\n * foam bank width). Unlit (small on screen), so the colours are the 05 ribbon's flat display colours\n * (RIV …[+8242 chars]`
+
+### 🧑 User — 2026-11-16T02:40:56.734Z
+
+> ↩︎ result: 421:    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05));
+
+### 🤖 Claude — 2026-11-16T02:40:58.882Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05));", "new_string": "    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial05(glow05)); // wave 9: far05.ts"}`
+
+### 🧑 User — 2026-11-16T02:40:58.932Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:41:00.332Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05 } from './far05'; // path-camera (05 far tunnel block)", "new_string": "import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05 } from './far05'; // path-camera (05 far tunnel block)"}`
+
+### 🧑 User — 2026-11-16T02:41:00.380Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:41:01.191Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit 2>&1 | head; echo tsc $?", "description": "Type-check after material move", "timeout": 320000}`
+
+### 🧑 User — 2026-11-16T02:41:06.384Z
+
+> ↩︎ result: tsc 0
+
+### 🤖 Claude — 2026-11-16T02:41:13.407Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9; cat > $P/look.sh <<'EOF'\n#!/bin/bash\n# usage: look.sh NAME  → scratch screenshot + zoom vs ref\nP=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9\ncd /home/user/rainbow- && timeout 400 node $P/pcprobe.mjs $P/run3.js 05 $P/$1.png > $P/$1.out 2>&1\ngrep -v PCRESULT $P/$1.out | grep -i error | head -3\ncd $P && python3 -I -c \"\nfrom PIL import Image\nR=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nB …[+433 chars]`
+
+### 🧑 User — 2026-11-16T02:41:36.583Z
+
+> ↩︎ result: cyan    20.6%  median #4DC6FF
+> pink    33.4%  median #DA4EB4
+> white   14.3%  median #D9D5FF
+> violet   1.1%  median #C081F4
+> gold    12.8%  median #FFC263
+
+### 🤖 Claude — 2026-11-16T02:41:38.965Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9/look3_zoom.png"}`
+
+### 🧑 User — 2026-11-16T02:41:39.001Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:42:14.762Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "  readonly aspect: number;\n  readonly floorY: number | undefined;\n  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number } = {}) {\n    this.aspect = shape.aspect ?? 1;\n    this.floorY = shape.floorY;", "new_string": "  readonly aspect: number;\n  readonly floorY: number | undefined;\n  /** optional bank-floor height (along U) at  …[+521 chars]`
+
+### 🧑 User — 2026-11-16T02:42:14.796Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-16T02:42:17.762Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/tube.ts", "old_string": "        if (this.floorY !== undefined && Math.sin(th) * r0 < this.floorY) {\n          o.addScaledVector(this.U, this.floorY - Math.sin(th) * r0);\n          d.copy(this.U).negate();\n        }", "new_string": "        if (this.floorY !== undefined) {\n          const x = Math.cos(th) * K * r0;\n          const fy = this.floorAt ? this.floorAt(Z, x) : this.floorY;\n          if (Math.sin(th) * r0 < fy) {\n            o.addScaledVector(this.U, fy - Math.sin(th) * r0);\n            // floor normal (outwar …[+283 chars]`
+
+### 🧑 User — 2026-11-16T02:42:17.851Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/tube.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:42:22.567Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/far05.ts", "old_string": "/** height of the foam bank's crest above the far water level (rounded lumpy bank, ≈0.6 × lump radius high) */\nconst FOAM_CREST = 0.42;", "new_string": "/** height of the foam bank's crest above the far water level (rounded lumpy bank, ≈0.6 × lump radius high) */\nconst FOAM_CREST = 0.42;\n\n/**\n * wave 9: bank floor of the far (oval) section — level `floorY` (the near 05 bank floor, environment floor05) at the\n * seam; further in, beyond each foam bank's foot it slopes up toward the wall, so the sl …[+725 chars]`
+
+### 🧑 User — 2026-11-16T02:42:22.615Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/far05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:42:27.039Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 404, "limit": 22}`
+
+### 🧑 User — 2026-11-16T02:42:27.067Z
+
+> ↩︎ result: 404	    // shows once the environment owner has removed that ring from rings05, so there is never a double ring.
+> 405	    const D0 = tubeCenterAt(perfPath, sF05).sub(eye).dot(T);
+> 406	    const realSeamRing = rings05.some((s) => Math.abs(s - sF05) < 0.5);
+> 407	    const ringDv = [59, 97, 161, 222, 322];
+> 408	    const knots: [number, number][] = [[0, 0]];
+> 409	    ringDv.forEach((d, i) => knots.push([bay05 * (i + 0.5), Math.max(d - D0, knots[i][1] + 1)]));
+> 410	    const zEnd = 430 - D0;
+> 411	    // wave 9: the same OVAL section as the near 05 tunnel at the seam (environment `oval05`/`floor05`: lateral
+> 412	    // stretch K, level bank floor just under the water), so walls, rings and lids continue without a step
+> 413	    const K = oval05(sF05);
+> 414	    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T, { aspect: K, floorY: K > 1.001 ? floor05(sF05).y : undefined });
+> 415	    // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
+> 416	    const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
+> 417	    const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
+> 418	   …[+776 chars]
+
+### 🤖 Claude — 2026-11-16T02:42:33.784Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T, { aspect: K, floorY: K > 1.001 ? floor05(sF05).y : undefined });\n    // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth\n    const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');\n    const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);\n    // the far stream (wave 8, far05.ts): the real ribbon's band  …[+1230 chars]`
+
+### 🧑 User — 2026-11-16T02:42:33.925Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:42:35.134Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/environment.ts", "old_string": "import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05 } from './far05';", "new_string": "import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05, farFloor05 } from './far05';"}`
+
+### 🧑 User — 2026-11-16T02:42:35.169Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/environment.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:42:37.081Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit 2>&1 | head; echo tsc $?; /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9/look.sh look4", "description": "Type-check and scratch look with sloped far floor", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T02:43:10.530Z
+
+> ↩︎ result: tsc 0
+> cyan    20.6%  median #4DC6FF
+> pink    39.8%  median #CB41A9
+> white   14.5%  median #DAD4FF
+> violet   0.9%  median #BE7BFF
+> gold     7.5%  median #FFCF71
+
+### 🤖 Claude — 2026-11-16T02:43:12.985Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/pathcam_w9/look4_zoom.png"}`
+
+### 🧑 User — 2026-11-16T02:43:13.020Z
+
+> ↩︎ result: [image]
+

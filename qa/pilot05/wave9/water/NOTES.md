@@ -56,3 +56,14 @@ mid 47.7, near 48.4. Near lum p5/p50/p95/std 131.7/141/196.3/20.9 (flatter); cya
 than baseline); pink p50 lum 195 (ref 175); pink behind Benny 4.04 → 0.55 % (ref 1.38). Seen: no visible streaks — the
 value-noise iso-lines have wide flat plateaus near 0.5, so the "glow" became a uniform light wash; bolts are flat white
 "bat" shapes with weak halos. Kept: sweep geometry (curved, soft, clean contact). Next: exact-width slot streaks.
+
+### it02 — 0 console errors, 89 calls, 567,799 tris
+Changes: streaks = 3 exact-width slot layers (`satinLayer`: K 3/7/16 per X unit ≈ 33/14/6 px apart at y800, Gaussian
+glow ≤ 12 % of the spacing + 1-px core, per-slot dash noise), value-noise only for the base lanes; near ladder one
+step deeper, swell gain 2.4; Fresnel 0.04; bolts thinner (T 2.6) with sharp Z-kinks and wider halos.
+Measured: WATER mad mid 47.3 / near 39.6 (baseline 45.9 / 35.9); report mad 51.8 / hue 0.831 / edge 0.200, mid 47.4
+(baseline 47.6), near 48.7. Near p5/p50/p95/std 122/135/194/23.1 (p5 now ≈ ref 120). Mid cyan ladder #17B0FB #23BBFD
+#2FC4FF #46CAFF (still light). Diagnostic render with `bloom=0` (scratch, not an iteration): bloom lifts cyan ≈ +8 lum /
+R +15; without it mid cyan p5 #08ADF9 → the base sits at mid-ladder (lane variance in the far-mid is small) and the
+streak glow + 1-px white cores lift the rest. Seen: thin white "marble" lines, little satin glow; near body deeper but
+the bolt halos are clipped at their cell borders (boxy light patches).

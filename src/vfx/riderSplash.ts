@@ -253,7 +253,8 @@ vec3 ropePos(float u, float side, float a, float seed, float len) {
   vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5) * (1.3 + 0.2 * hs(seed * 2.3));
   vec2 q = root + vec2(sin(phi), cos(phi)) * u * len;
   // ropes ride on the surface with small humps (whitewater, not flying jets)
-  float y = 0.035 + 0.06 * hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
+  // wave 9 it06: 0.035 -> 0.05 above the local plane (strands dipped under the ribbon's swell and vanished)
+  float y = 0.05 + 0.06 * hs(seed * 9.1) * sin(3.14159 * min(u * 1.6, 1.0)) * (1.0 - u);
   return vec3(side * q.x, y, q.y);
 }
 vec3 jetPos(float tau, float side, float a, float seed) {
