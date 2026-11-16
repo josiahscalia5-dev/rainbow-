@@ -956,3 +956,187 @@ Reading how the game does its final colour and lighting pass — the live pictur
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T09:58:30.532Z
+
+> 🔧 **Bash** `{"command": "sed -n 160,192p src/world/tube.ts && grep -n \"K05\\|OVAL05\" src/world/environment.ts | cut -c1-160 && grep -n \"qs.get\\|URLSearchParams\" src/game/Game.ts src/world/*.ts src/main.ts | cut -c1-170 | head -20", "description": "Read the oval settings and available debug query options"}`
+
+### 🧑 User — 2026-11-16T09:58:30.584Z
+
+> ↩︎ result: * (false) stores -d, which those materials flip to point AWAY from the viewer (dot(N,V) <= 0 →
+>    * full fresnel, un-tinted pale reflections); kept only so the 02 chute / 04 pipe look is unchanged.
+>    */
+>   frontNormals?: boolean;
+>   /** also store the local tube frame per vertex (`tubeAxis`, `tubeUp`) for withTubeStrips('attribute') */
+>   axisAttr?: boolean;
+>   /**
+>    * wave 8: lateral stretch of the cross-section (1 = circle): the `right` component of every wall point is
+>    * multiplied by oval(s) (ref 05 rings are ovals ≈1.75 wider than tall), normals follow the ellipse
+>    */
+>   oval?: (s: number) => number;
+>   /**
+>    * wave 9 (05 oval): flat bank floor — wall points lower than floor(s).y (height above the tube centre along
+>    * `up`) are lifted onto it, blended by floor(s).w (0 = untouched circle/ellipse, 1 = flat), so the wide oval
+>    * tube has a level bank between the river edge and the wall foot instead of a trench below the water line
+>    */
+>   floor?: (s: number) => { y: number; w: number };
+>   /** wave 9 (05): lateral offset of the cross-section centre along `right` (units; OVAL05.shift) */
+>   shift?: (s: number) => number;
+> }
+> 
+> /**
+>  * wave 9 (environment): the 05 tunnel's oval cros …[+2317 chars]
+
+### 🤖 Claude — 2026-11-16T09:58:42.796Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re,io\np='src/world/tube.ts'; t=open(p).read()\nold=\"export const OVAL05 = { K: 1.7, floorBelowWater: 0.18, shift: -1.8 } as const;\"\nnew=\"\"\"// QA overrides (?k05=1.3&sh05=-1): compare cross-sections from the same build without editing the constants\nconst qaNum = (key: string, d: number) => {\n  const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;\n  return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;\n};\nexport const OVAL05 = { K: qaNum('k05', 1.7), floorBelowWater: 0.18, shift: …[+1043 chars]`
+
+### 🧑 User — 2026-11-16T09:58:46.090Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-16T09:58:56.141Z
+
+> 🔧 **Bash** `{"command": "S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && cp qa/capture_log.json \"$S/w/capture_log.keep.json\" && (timeout 600 node scripts/capture.mjs 05 --out=\"$S/w/k100\" \"--q=k05=1&sh05=0\" 2>&1 | tail -2; timeout 600 node scripts/capture.mjs 05 --out=\"$S/w/k125\" \"--q=k05=1.25&sh05=-0.6\" 2>&1 | tail -2) && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nS=\"$S\"\ndef grid(src):\n    a=Image.open(src).convert('RGB').crop((0,0,864,720)); d=ImageDraw.Draw(a)\n    for x in range(0,864,100): d.line([(x,0),(x,720)],fill=(255,255,255),width= …[+433 chars]`
+
+### 🧑 User — 2026-11-16T09:59:25.736Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/k100/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":568151,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/k125/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":568151,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T09:59:28.681Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/k_cmp.png"}`
+
+### 🧑 User — 2026-11-16T09:59:28.856Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T10:00:32.335Z
+
+> 🔧 **Bash** `{"command": "grep -n \"oval\\|aspect\\|floorY\\|\\.floor\\|shift\" src/world/tube.ts | cut -c1-210", "description": "Find every place the tunnel cross-section shape is applied"}`
+
+### 🧑 User — 2026-11-16T10:00:32.370Z
+
+> ↩︎ result: 76:      runDepth[i] = r.floorDepth;
+> 125:    const i = Math.min(n - 2, Math.floor(x));
+> 168:   * multiplied by oval(s) (ref 05 rings are ovals ≈1.75 wider than tall), normals follow the ellipse
+> 170:  oval?: (s: number) => number;
+> 172:   * wave 9 (05 oval): flat bank floor — wall points lower than floor(s).y (height above the tube centre along
+> 173:   * `up`) are lifted onto it, blended by floor(s).w (0 = untouched circle/ellipse, 1 = flat), so the wide oval
+> 177:  /** wave 9 (05): lateral offset of the cross-section centre along `right` (units; OVAL05.shift) */
+> 178:  shift?: (s: number) => number;
+> 182: * wave 9 (environment): the 05 tunnel's oval cross-section, shared with the far block (ForcedTunnel, path-camera)
+> 184: * `floorBelowWater` units under the water line (see TubeGeoOptions.floor), and `shift`: lateral offset (along
+> 193:export const OVAL05 = { K: qaNum('k05', 1.7), floorBelowWater: 0.18, shift: qaNum('sh05', -1.8) };
+> 213:    const ov = o.oval ? o.oval(s) : 1;
+> 214:    const fl = o.floor ? o.floor(s) : null;
+> 216:    if (o.shift) c.addScaledVector(f.right, o.shift(s));
+> 222:      // flat bank floor (05 oval): lift the part below the water line onto a level floor
+> 324:  /** wave  …[+2843 chars]
+
+### 🤖 Claude — 2026-11-16T10:00:58.717Z
+
+Found the real cause: the approved tunnel is simply much bigger and rounder around the water than ours, not flatter. I'm testing a larger round tunnel now.
+
+### 🤖 Claude — 2026-11-16T10:01:00.064Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export interface TubePath\" -A 22 src/world/tube.ts | head -40; grep -n \"perfPath\" src/world/environment.ts | cut -c1-190 | sed -n 1,60p", "description": "Read the tunnel path interface and where the 05 block uses it"}`
+
+### 🧑 User — 2026-11-16T10:01:00.103Z
+
+> ↩︎ result: 15:export interface TubePath {
+> 16-  frame(s: number): Frame;
+> 17-  radius(s: number): number;
+> 18-  /** distance from the water point on the axis down to the tube bottom */
+> 19-  depth(s: number): number;
+> 20-}
+> 21-
+> 22-export function courseTubePath(course: Course, radius: (s: number) => number, depth: number | ((s: number) => number) = 0.9): TubePath {
+> 23-  return {
+> 24-    frame: (s) => course.sample(s),
+> 25-    radius,
+> 26-    depth: typeof depth === 'number' ? () => depth : depth,
+> 27-  };
+> 28-}
+> 29-
+> 30-export function straightTubePath(
+> 31-  course: Course,
+> 32-  s0: number,
+> 33-  s1: number,
+> 34-  opts: { window: number; taper: number; baseRadius: (s: number) => number },
+> 35-): TubePath {
+> 36-  const ds = 0.5;
+> 37-  const n = Math.ceil((s1 - s0) / ds) + 1;
+> 231:  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
+> 262:    return THREE.MathUtils.clamp((K05 * perfPath.radius(sF05)) / perfPath.radius(s), 1, K05);
+> 266:  const floor05 = (s: number) => ({ y: -(perfPath.radius(s) - perfPath.depth(s)) - OVAL05.floorBelowWater, w: THREE.MathUtils.clamp(ovalW05(s) * 1.5, 0, 1) });
+> 295:    envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath …[+2488 chars]
+
+### 🤖 Claude — 2026-11-16T10:01:19.754Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const tubeR\\b\\|tubeR =\" -A 6 src/world/environment.ts | head -24; grep -n \"export function tubeCenterAt\" -A 6 src/world/tube.ts; sed -n 396,432p src/world/environment.ts | cut -c1-230", "description": "Read tunnel radius, centre and the far-tunnel setup"}`
+
+### 🧑 User — 2026-11-16T10:01:19.806Z
+
+> ↩︎ result: 177:  const tubeR = (s: number) => course.prop('tube', s);
+> 178-  // the pipe mouth is the drain hole itself: narrow at the lip, opening up as it dives
+> 179-  // the ring tunnel starts just ahead of Benny on the open slide (ref 04), with a flared mouth
+> 180-  const g0 = s04 + 5.0;
+> 181-  const r04 = (s: number) => tubeR(s) + 1.8 * (1 - sm(g0, g0 + 6, s));
+> 182-  const goldPath = courseTubePath(course, r04, 0.9);
+> 183-  const goldPipe = new THREE.Mesh(buildTubeGeometry(goldPath, g0, s05, { radial: 56, step: 0.4 }), goldRibbed(1.25));
+> 144:export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+> 145-  const f = path.frame(s);
+> 146-  return out.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
+> 147-}
+> 148-
+> 149-export interface TubeGeoOptions {
+> 150-  radial?: number;
+>     const T = af.tan.clone();
+>     const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+>     const Rt = new THREE.Vector3().crossVectors(T, U).normalize();
+>     const water = course.sample(sC).pos.clone();
+>     const off = water.clone().sub(af.pos).dot(Rt);
+>     const dz = p5.deadZone ?? 1;
+>     const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
+>     co …[+2730 chars]
+
+### 🤖 Claude — 2026-11-16T10:01:54.206Z
+
+> 🔧 **Bash** `{"command": "S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && cat > \"$S/rays.py\" <<'EOF'\n\"\"\"gold-band positions along rays from the vanishing point: rays.py VPx VPy img [img...]\"\"\"\nimport sys, colorsys, math\nimport numpy as np\nfrom PIL import Image\nvx, vy = float(sys.argv[1]), float(sys.argv[2])\ndef gold(im):\n    a = np.asarray(im).astype(np.float32) / 255\n    r, g, b = a[..., 0], a[..., 1], a[..., 2]\n    mx, mn = a.max(2), a.min(2)\n    sat = (mx - mn) / np.maximum(mx, 1e-3)\n    # orange/yellow hue: r >= g > b\n    hue_ok = (r >= g * …[+1592 chars]`
+
+### 🧑 User — 2026-11-16T10:01:55.388Z
+
+> ↩︎ result: references/05_flow_into_the_current.png
+>    90°: 
+>   120°: 
+>   150°: 167(5) 271(23) 476(49)
+>   165°: 41(6) 317(6) 339(8) 372(7) 498(43)
+>    60°: 
+>    30°: 408(5)
+>    15°: 134(6) 171(4) 181(4)
+> baseline/05.png
+>    90°: 23(4)
+>   120°: 54(4) 94(6) 234(4)
+>   150°: 27(5) 39(4) 95(5) 160(9) 227(15) 358(26)
+>   165°: 167(14) 242(15)
+>    60°: 94(6)
+>    30°: 25(4) 54(4) 93(6) 159(9) 237(16) 378(28) 400(5)
+>    15°: 26(4) 83(4) 170(14) 250(18)
+> k100/05.png
+>    90°: 23(4) 99(4)
+>   120°: 54(4) 94(6) 235(7)
+>   150°: 27(5) 40(5) 72(13) 95(5) 126(7) 164(11) 182(16) 227(15) 348(5) 571(15)
+>   165°: 28(18) 227(23) 353(40)
+>    60°: 94(6) 242(5)
+>    30°: 26(5) 40(4) 54(4) 76(5) 93(6) 126(7) 136(4) 168(11) 187(14) 237(16) 367(5)
+>    15°: 28(17) 237(23) 364(26)
+> preview/05.png
+>    90°: 37(4)
+>   120°: 25(4) 40(4) 109(5) 269(5)
+>   150°: 35(5) 53(6) 76(4) 132(6) 224(13) 276(18) 371(30)
+>   165°: 23(8) 42(5) 63(5) 81(5) 139(17) 240(11) 258(10) 308(16) 430(29)
+>    60°: 25(4) 41(5) 109(5) 187(5) 251(5)
+>    30°: 34(6) 76(5) 133(7) 223(7) 311(29)
+>    15°: 23(7) 41(5) 62(5) 80(6) 139(19) 257(23) 293(21) 342(30)
+

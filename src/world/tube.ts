@@ -185,7 +185,12 @@ export interface TubeGeoOptions {
  * `right`, units) of the 05 tunnel centre line — ref ring #1 is centred ≈67 px and ring #2 ≈24 px LEFT of the VP
  * (a parallel offset of a straight tunnel keeps its vanishing point), which also gives the ref's broad left bank.
  */
-export const OVAL05 = { K: 1.7, floorBelowWater: 0.18, shift: -1.8 } as const;
+// QA overrides (?k05=1.3&sh05=-1): compare cross-sections from the same build without editing the constants
+const qaNum = (key: string, d: number) => {
+  const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;
+  return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;
+};
+export const OVAL05 = { K: qaNum('k05', 1.7), floorBelowWater: 0.18, shift: qaNum('sh05', -1.8) };
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
   const radial = o.radial ?? 48;

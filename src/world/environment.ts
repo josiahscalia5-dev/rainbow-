@@ -261,9 +261,11 @@ export function buildEnvironment(course: Course): Environment {
     if (s >= s06) return 1;
     return THREE.MathUtils.clamp((K05 * perfPath.radius(sF05)) / perfPath.radius(s), 1, K05);
   };
-  const floor05 = (s: number) => ({ y: -(perfPath.radius(s) - perfPath.depth(s)) - OVAL05.floorBelowWater, w: THREE.MathUtils.clamp((oval05(s) - 1) / (K05 - 1) * 1.5, 0, 1) });
+  // 0…1 share of the oval at s (0 everywhere when the tunnel is round: K05 = 1)
+  const ovalW05 = (s: number) => (K05 > 1.0005 ? (oval05(s) - 1) / (K05 - 1) : 0);
+  const floor05 = (s: number) => ({ y: -(perfPath.radius(s) - perfPath.depth(s)) - OVAL05.floorBelowWater, w: THREE.MathUtils.clamp(ovalW05(s) * 1.5, 0, 1) });
   // lateral offset of the 05 tunnel centre (OVAL05.shift), blended exactly like the oval
-  const shift05 = (s: number) => OVAL05.shift * (oval05(s) - 1) / (K05 - 1);
+  const shift05 = (s: number) => OVAL05.shift * ovalW05(s);
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
   // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
