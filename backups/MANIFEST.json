@@ -388,13 +388,13 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 4873,
-   "sha256": "ff391232eb81cc7b529cfac32a78dbeeb81c37cd6eb69638efce7f5d0855c0ff"
+   "bytes": 4874,
+   "sha256": "350c0665ac08a1f4d962e51a6b36cdb8ae3c564ab609f80de7a25a8e7374a0e8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
-   "bytes": 10358,
-   "sha256": "c6fad5912e222a5c2022633c21a6c63f43c48487030409a82cc5b8a854b1709d"
+   "bytes": 11719,
+   "sha256": "fbbaf3dc0e8466ea3d361aef04e93aaf9481bdd2380fa337a1d96211a37c6965"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -408,8 +408,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 3876,
-   "sha256": "ed82493241bd82b376283c27b892be50747b0874a70ce25ded25ccec50439136"
+   "bytes": 4053,
+   "sha256": "fce64cb341eede3e5e2e68d24da41f573a3c6048263baf622e41c508adb8e606"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -808,8 +808,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1175,
-   "sha256": "c69bc95bc6a3da1b48daff9a4f198e9dec6e1a09d539757403b67ac5cecfc6a0"
+   "bytes": 1183,
+   "sha256": "8f4622d657a4c79c9c5fd5699af812a96900d718de43c8e83b38da48a4d10aa0"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -2207,6 +2207,16 @@
    "sha256": "fe88128013f8a1fb98ee74f0f8a12acd615ee434d71cbee07dfbcc323d574335"
   },
   {
+   "path": "qa/pilot05/wave7/foam/NOTES.md",
+   "bytes": 1087,
+   "sha256": "0fb946c1ab78a3e210a98bafe3c6f0b247c47eb12e75f828e7749ed893edb459"
+  },
+  {
+   "path": "qa/pilot05/wave7/foam/iso_norafts/05.png",
+   "bytes": 1981335,
+   "sha256": "3366c20bf848fc6087f4f811c802d6cac930a4b8800a20f2a168b0920ad93577"
+  },
+  {
    "path": "qa/pilot05/wave7/water/NOTES.md",
    "bytes": 1432,
    "sha256": "d464c9a3852b7ab6c95169bfbd8d3edfddebff9c0411047b1f35c4212df32267"
@@ -2240,6 +2250,11 @@
    "path": "qa/worldlabs/05/ACCOUNT7_STATUS.md",
    "bytes": 3299,
    "sha256": "ecc70501c11a1103ae67e14532042841544cde8eb5c8406427fde13ea5e8c673"
+  },
+  {
+   "path": "qa/worldlabs/05/MARBLE_ACCESS_2026-11-16.md",
+   "bytes": 3272,
+   "sha256": "9299a7aee6c83866a0114581e416fdaec4b07517bd7b74fcc7b9f8781c1aca24"
   },
   {
    "path": "qa/worldlabs/05/MARBLE_MANUAL.md",
@@ -2290,6 +2305,16 @@
    "path": "qa/worldlabs/05/geometry_ref/check.json",
    "bytes": 444,
    "sha256": "352ae401de7b7a1f547328f501fde1ba69e362037eca7bc0ad64c6eedb9fd46a"
+  },
+  {
+   "path": "qa/worldlabs/05/marble_user_world/vibrant_tunnel_of_fortune_screenshot.png",
+   "bytes": 1207068,
+   "sha256": "63ed269a460fbc7f2c7a96ee075e06a20c44e58e676e01117cff72f85d4fe582"
+  },
+  {
+   "path": "qa/worldlabs/05/marble_user_world/vibrant_tunnel_of_fortune_screenshot.webp",
+   "bytes": 177708,
+   "sha256": "9f03860a4a076e58ab41215a347d987225948f72874d52a15e66cfe2df272a75"
   },
   {
    "path": "qa/worldlabs/05/rejected/README.md",
@@ -2543,8 +2568,8 @@
   },
   {
    "path": "scripts/autosave-hook.sh",
-   "bytes": 1140,
-   "sha256": "c08df26d25f9747f5fe123da7ecf4c207229370aba0eec41ec64dd3e91ef0a9d"
+   "bytes": 1428,
+   "sha256": "28d2df826278f558e5b58a2382a624b7f557936b4e2b6a55114ed4a8c75b1f3a"
   },
   {
    "path": "scripts/autosave-status.py",

@@ -362,3 +362,133 @@ Now let me look at my source files and the partial patch.
 > 20	attribute float aSeed;
 > 21	uniform float uFocal;   // pixels per unit at depth 1 (viewport  …[+22458 chars]
 
+### 🤖 Claude — 2026-11-16T00:42:22.139Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p scripts/capture.mjs && grep -n \"argv\\|--\" scripts/capture.mjs | head -40 && sed -n 1,40p scripts/screen_report.py", "description": "Inspect capture and report scripts options"}`
+
+### 🧑 User — 2026-11-16T00:42:22.184Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+5515 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:27.021Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/pilot05/wave6/foam/iso_norafts qa/pilot05/wave5/foam/ | head -40; ls qa/pilot05/wave6/ ; cat qa/pilot05/REQUESTS.md | tail -20", "description": "List isolation captures and requests"}`
+
+### 🧑 User — 2026-11-16T00:42:27.064Z
+
+> ↩︎ result: qa/pilot05/wave5/foam/:
+> total 52
+> drwxr-xr-x 10 root root 4096 Nov 16 00:36 .
+> drwxr-xr-x  8 root root 4096 Nov 16 00:36 ..
+> -rw-r--r--  1 root root 8754 Nov 16 00:36 NOTES.md
+> drwxr-xr-x  2 root root 4096 Nov 16 00:36 iso_noflank
+> drwxr-xr-x  2 root root 4096 Nov 16 00:36 it01
+> drwxr-xr-x  2 root root 4096 Nov 16 00:36 it02
+> drwxr-xr-x  2 root root 4096 Nov 16 00:36 it03
+> drwxr-xr-x  2 root root 4096 Nov 16 00:36 it04
+> drwxr-xr-x  2 root root 4096 Nov 16 00:36 it05
+> drwxr-xr-x  2 root root 4096 Nov 16 00:36 regress
+> drwxr-xr-x  3 root root 4096 Nov 16 00:42 tools
+> 
+> qa/pilot05/wave6/foam/iso_norafts:
+> total 1944
+> drwxr-xr-x 2 root root    4096 Nov 16 00:36 .
+> drwxr-xr-x 4 root root    4096 Nov 16 00:36 ..
+> -rw-r--r-- 1 root root 1981335 Nov 16 00:36 05.png
+> camera_lock
+> coordinator
+> current
+> director
+> environment
+> foam
+> pathcam
+> proof
+> regress0408
+> water
+> - foam-bubbles-particles → water-fx-specialist (FYI, no action needed): since 19:30 `water.wake()` receives Benny's LIFTED body centre (Game.ts) and feeds `uBennyR` = the true waterline chord sqrt(0.86² − h²) ≈ 0.44 at the default 0.3 ride lift (it was 0.67, derived from the unlifted root, which made the contact band ~2× too wide). The bottom-of-frame white …[+5240 chars]
+
+### 🤖 Claude — 2026-11-16T00:42:36.259Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/wave7/foam && cat > /home/user/rainbow-/qa/pilot05/wave7/foam/NOTES.md <<'EOF'\n# Screen 05 wave 7: foam-bubbles-particles (executes the wave-6b plan)\n\nStarted 2026-11-16 (account 8, branch ccr-4f6c3e0e-5kxgr0). Baseline `qa/pilot05/wave7/baseline/05.png` (86 calls,\n633,521 tris). Files: src/vfx/foam.ts, bubbles.ts, riderSplash.ts, spray.ts, index.ts only (Edit tool).\nTools: `qa/pilot05/wave6/foam/tools/{foamcol,rowprof}.py` (measurements), ref foam ramp in `../../wave6/foam/NOTES.md`.\n\n## Plan (5 lines)\n1. Soap ramp (05-gated, set un …[+861 chars]`
+
+### 🧑 User — 2026-11-16T00:42:51.514Z
+
+> ↩︎ result: 05 → qa/pilot05/wave7/foam/iso_norafts/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":85,"tris":630225,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T00:42:52.529Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave7/foam/iso_norafts/05.png"}`
+
+### 🧑 User — 2026-11-16T00:42:52.593Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:43:01.622Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c && cd /home/user/rainbow- && cat > /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/crop.py <<'EOF'\nimport sys\nfrom PIL import Image\n# usage: crop.py OUT x0 y0 x1 y1 scale IMG...\nout=sys.argv[1]; x0,y0,x1,y1=map(int,sys.argv[2:6]); sc=float(sys.argv[6]); ims=sys.argv[7:]\nw,h=int((x1-x0)*sc),int((y1-y0)*sc)\ncanvas=Image.new('RGB',(w*len(ims)+8*(len(ims)-1),h),(0,0,0))\nfor i,p in enumerate(ims):\n    im=Image.open(p).convert('RGB').crop((x0,y0,x1,y1)). …[+504 chars]`
+
+### 🧑 User — 2026-11-16T00:43:02.108Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:43:03.883Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/right.png"}`
+
+### 🧑 User — 2026-11-16T00:43:03.917Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:43:04.392Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/worldlabs/05/marble_user_world/vibrant_tunnel_of_fortune_screenshot.png"}`
+
+### 🧑 User — 2026-11-16T00:43:04.429Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:43:06.632Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/left.png"}`
+
+### 🧑 User — 2026-11-16T00:43:06.659Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:43:17.573Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad && python3 -I $S/crop.py $S/c/near.png 0 950 864 1400 0.7 references/05_flow_into_the_current.png qa/pilot05/wave7/baseline/05.png", "description": "Crop near-field region of ref and baseline"}`
+
+### 🧑 User — 2026-11-16T00:43:17.803Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T00:43:19.592Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/c/near.png"}`
+
+### 🧑 User — 2026-11-16T00:43:19.627Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T00:43:50.563Z
+
+> 🔧 **Bash** `{"command": "timeout 300 node qa/pilot05/wave6/foam/tools/probe.mjs 05 > /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/probe0.json 2>/dev/null; python3 -I -c \"\nimport json;d=json.load(open('/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/probe0.json'))\nr=d['rafts'];print('visible',r['visible'],'puffs',r['puffs'],'shown',r['shown'])\nfor c in r['clumps']: print(c)\nprint('big',d['bubbles']['big']);print('small',d['bubbles']['small'])\n\"", "description": "Probe raft rows and bubble placement at 05"}`
+

@@ -1,5 +1,15 @@
 # Rainbow — CURRENT STATE (handoff)
 
+## ▶ Account 8 update (2026-11-16, session `7c0df0fc…`) — read this first
+| | |
+|---|---|
+| **Working branch** | `ccr-4f6c3e0e-5kxgr0`; contains account 7's newest commit `6cf0b4f` (`ccr-93add0fa-q17ey6`, 00:34 UTC autosave) — verified ancestor, nothing lost |
+| Protected (autosave never pushes) | as before, plus `ccr-93add0fa-q17ey6` and `claude/rainbow-3d-account-transfer-syorak` |
+| Cloud environment (account 8) | personal "rainbow-", **unrestricted** network, setup script saved, **no network secrets** (the exposed account-7 Marble key is not here) |
+| Verified here | LFS 9/9 (fsck OK) after clearing a stale `lfs.<url>.access=basic` (fixed in `scripts/autosave-hook.sh`); refs 12/12; `npm ci` + `tsc` OK; gameplay test pass (victory, heart loss, plunge 61.41, errors []); continuity gaps 0; Blender 5.3.0; 10 agents present |
+| World Labs | Atlas connector connected (`list_projects` OK, nothing run). Marble: see `qa/worldlabs/05/MARBLE_ACCESS_2026-11-16.md` — web-app world not reachable without a new World API key + world ID, and API support for web-made worlds is unconfirmed. User's Marble screenshot stored in `qa/worldlabs/05/marble_user_world/` |
+| Screen 05 | wave 7 = execution of the wave-6b plans: `qa/pilot05/COORDINATION_WAVE7.md`, baseline `qa/pilot05/wave7/baseline/05.png`; environment, water, foam specialists running |
+
 ## ▶ Account 6 update (2026-11-15, session `025fdfec…`) — read this first
 | | |
 |---|---|
