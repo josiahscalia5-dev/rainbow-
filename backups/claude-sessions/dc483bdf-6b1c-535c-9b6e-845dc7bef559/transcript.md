@@ -3005,3 +3005,166 @@ Removed; they held only stray copies of my test frames. Waiting for the regressi
 
 The regression captures and the three overlay variants are both rendering. I'll compare as soon as they land.
 
+### 🧑 User — 2026-11-16T23:05:54.292Z
+
+<local-command-caveat>The command below was run directly in Claude Code, not sent to you as a request, and its output goes straight to the user. It's recorded here as context for later messages.</local-command-caveat>
+
+### 🧑 User — 2026-11-16T23:05:54.292Z
+
+<command-name>/model</command-name>
+            <command-message>model</command-message>
+            <command-args>claude-fable-5-2</command-args>
+
+### 🧑 User — 2026-11-16T23:05:54.292Z
+
+<local-command-stdout>Set model to `claude-fable-5-2`</local-command-stdout>
+
+### 🧑 User — 2026-11-16T23:05:54.292Z
+
+<system-reminder>The model for this session has been changed to claude-fable-5-2. You are now running as claude-fable-5-2.</system-reminder>
+
+### 🧑 User — 2026-11-16T23:05:54.489Z
+
+keep going and show me the results when done
+
+### 🤖 Claude — 2026-11-16T23:06:01.517Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad; ls $SP/reg5/*/05.png 2>&1; ls $SP/ride5/*/ 2>&1 | head -30; pgrep -af \"capture.mjs|proj05-move.mjs\" | grep -v pgrep | cut -c1-160", "description": "Check status of regression and variant captures"}`
+
+### 🧑 User — 2026-11-16T23:06:01.922Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/reg5/before/05.png
+> /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/reg5/default/05.png
+> /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/reg5/flow2/05.png
+> /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride5/det0/:
+> move_00.png
+> move_08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride5/det05/:
+> move_00.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride5/det1/:
+> move_00.png
+> move_08.png
+> 1778 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1794870001569-3nv4sp.sh 2>/dev/null || true && export ANDROID_HOME=/opt/android-sdk ANDROID
+> 2070 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1794870001569-3nv4sp.sh 2>/dev/null || true && export ANDROID_HOME=/opt/android-sdk ANDROID
+> 2074 node scripts/proj05-move.mjs --q=proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1 --out=/tmp/claude-0/-home-user-rain
+> 2075 node scripts/proj05-move.mjs --q=proj05=1&projwall05=1&projri …[+416 chars]
+
+### 🤖 Claude — 2026-11-16T23:06:06.052Z
+
+Still rendering (the last locked-view capture and the three overlay variants). Meanwhile, updating the autosave's commit trailer to match the current session attribution.
+
+### 🤖 Claude — 2026-11-16T23:06:08.774Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np=\"backups/autosave.config.json\"\nc=json.load(open(p))\nc[\"commit_trailer\"]=\"Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>\\nClaude-Session: https://claude.ai/code/session_01KS3bZtuLZb28K4pdNYaQHQ\"\njson.dump(c,open(p,\"w\"),indent=2); open(p,\"a\").write(\"\\n\"); print(\"trailer updated\")\nEOF\ngrep -n \"commit_trailer\\|CLAUDE_CODE_REMOTE_SESSION_ID\" scripts/rainbow-autosave.py | head -6", "description": "Update autosave commit trailer"}`
+
+### 🧑 User — 2026-11-16T23:06:08.877Z
+
+> ↩︎ result: trailer updated
+> 48:    t = CFG.get("commit_trailer", "Co-Authored-By: Claude <noreply@anthropic.com>")
+> 49:    sid = os.environ.get("CLAUDE_CODE_REMOTE_SESSION_ID", "")
+
+### 🤖 Claude — 2026-11-16T23:06:45.204Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad; until [ -f $SP/reg5/near/05.png ] && [ -f $SP/ride5/det0/move_35.png ] && [ -f $SP/ride5/det05/move_35.png ] && [ -f $SP/ride5/det1/move_35.png ] && ! pgrep -f \"proj05-move.mjs|capture.mjs\" >/dev/null; do sleep 4; done; echo ALL DONE; ls $SP/ride5/*/ | head -30", "description": "Wait for all captures to finish", "timeout": 2400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-16T23:06:45.259Z
+
+> ↩︎ result: Command running in background with ID: bn0ulo777. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/tasks/bn0ulo777.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T23:06:50.557Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I - \"$SP\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nsp=sys.argv[1]; r=f\"{sp}/reg5\"\ndef cmp(a,b,label):\n    A=np.asarray(Image.open(a).convert(\"RGB\")).astype(int); B=np.asarray(Image.open(b).convert(\"RGB\")).astype(int)\n    d=np.abs(A-B).max(-1); ys,xs=np.nonzero(d>0)\n    bb=f\" bbox x {xs.min()}-{xs.max()} y {ys.min()}-{ys.max()}\" if len(ys) else \"\"\n    print(f\"{label}: max diff {d.max()}, pixels differing {int((d>0).sum())}{bb}\")\ncmp(f\"{r}/default/05. …[+504 chars]`
+
+### 🧑 User — 2026-11-16T23:06:51.339Z
+
+> ↩︎ result: 1 default game 05      vs saved accepted default: max diff 0, pixels differing 0
+> 2 protected BEFORE     vs saved baseline: max diff 0, pixels differing 0
+> 3 full + projflow05=2  vs pre-change capture: max diff 0, pixels differing 0
+> 4 full+flow2+projnear05=1 vs same without near (locked view): max diff 0, pixels differing 0
+
+### 🤖 Claude — 2026-11-16T23:06:58.469Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && grep -h '\"q\"' $SP/ride5/*/move_log.json; python3 -I tools/proj05/near_metrics.py $SP/rideprobe $SP/ride5/metrics_detail.json BEFORE=$SP/ride4/before NEW_det0=$SP/ride5/det0 NEW_det05=$SP/ride5/det05 NEW_det1=$SP/ride5/det1", "description": "Measure the three overlay settings vs BEFORE"}`
+
+### 🧑 User — 2026-11-16T23:07:02.199Z
+
+> ↩︎ result: "q": "proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1",
+>  "q": "proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projneardetail05=0.5",
+>  "q": "proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projneardetail05=1",
+> 
+> == 00 units ahead of the locked checkpoint
+>   bottom  (200558 px)
+>      BEFORE       grad  51.19  lapstd  52.08  sat  67.0%  p95 241.0
+>      NEW_det0     grad  51.19  lapstd  52.08  sat  67.0%  p95 241.0
+>      NEW_det05    grad  51.19  lapstd  52.08  sat  67.0%  p95 241.0
+>      NEW_det1     grad  51.19  lapstd  52.08  sat  67.0%  p95 241.0
+>      APPROVED     grad  62.58  lapstd  60.33  sat  71.8%  p95 248.0
+>   benny   (118200 px)
+>      BEFORE       grad  48.17  lapstd  53.94  sat  72.9%  p95 237.0
+>      NEW_det0     grad  48.17  lapstd  53.94  sat  72.9%  p95 237.0
+>      NEW_det05    grad  48.17  lapstd  53.94  sat  72.9%  p95 237.0
+>      NEW_det1     grad  48.17  lapstd  53.94  sat  72.9%  p95 237.0
+>      APPROVED     grad  53.23  lapstd  60.16  sat  76.1%  p95 241.0
+>   ahead   (73600 px)
+>      BEFORE       grad  63.31  lapstd  60.74  sat  56.4%  p95 244.0
+>      NEW_det0    …[+3030 chars]
+
+### 🤖 Claude — 2026-11-16T23:07:20.267Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I - \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw\nsp=sys.argv[1]\ndef strip(d, box, name, labels=(\"BEFORE\",\"det0\",\"det1\")):\n    ims=[Image.open(f\"{sp}/ride4/before/move_{d}.png\").crop(box), Image.open(f\"{sp}/ride5/det0/move_{d}.png\").crop(box), Image.open(f\"{sp}/ride5/det1/move_{d}.png\").crop(box)]\n    w,h=ims[0].size\n    c=Image.new(\"RGB\",(w*3+24,h),(255,255,255))\n    for i,im in enumerate(ims):\n        c.paste(im,(i*(w+12),0)); ImageDraw.Draw(c).te …[+277 chars]`
+
+### 🧑 User — 2026-11-16T23:07:21.040Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-16T23:07:22.890Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/crop08_bottom_left.png"}`
+
+### 🧑 User — 2026-11-16T23:07:22.930Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:07:23.523Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/crop17_bottom_left.png"}`
+
+### 🧑 User — 2026-11-16T23:07:23.559Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:07:45.080Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I - \"$SP\" <<'EOF'\nimport sys, json, numpy as np\nfrom PIL import Image\nsp=sys.argv[1]\nH,W=1536,864\nT2=np.asarray(Image.open(\"assets/textures/water05/proj05_T2.png\").convert(\"RGB\"))\nnear=json.load(open(\"assets/textures/water05/proj05_near.json\"))\nA,L=near[\"T2\"][\"a\"],near[\"T2\"][\"L\"]\n# locked-view screen -> (u,s): map the artwork-fill mask into tile coordinates (centre columns have shift 0)\nR=np.fromfile(f\"{sp}/rideprobe/ride_00.f32\",np.float32).reshape(H,W,4)\nf …[+671 chars]`
+
+### 🧑 User — 2026-11-16T23:07:45.380Z
+
+> ↩︎ result: fill_mask (1536, 864) values [  0 255] 0.254150390625
+> fill px on river 268742  u range -0.99903613 0.99925077  s range 129.76271 195.36575
+
+### 🤖 Claude — 2026-11-16T23:07:46.750Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/tile_zoom_seam.png"}`
+
+### 🧑 User — 2026-11-16T23:07:46.781Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:08:00.933Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad && python3 -I - \"$SP\" <<'EOF'\nimport sys, json, os, numpy as np, cv2\nfrom PIL import Image\nsp=sys.argv[1]\nH,W=1536,864\nsrc=open(\"tools/proj05/near_bake.py\").read().split(\"# supersampled bake\")[0]\nsys.argv=[\"near_bake.py\",\"assets/textures/water05\"]\nns={\"__name__\":\"x\",\"__file__\":os.path.abspath(\"tools/proj05/near_bake.py\")}\nexec(compile(src,\"near_bake.py\",\"exec\"),ns)\nA,L,TW,TH=ns[\"A\"],ns[\"L\"],ns[\"W\"],ns[\"H\"]\nR=np.fromfile(f\"{sp}/rideprobe/ride_00.f32\",np.flo …[+1672 chars]`
+
+### 🧑 User — 2026-11-16T23:08:01.808Z
+
+> ↩︎ result: fill share of tile: 0.2706858317057292
+
+### 🤖 Claude — 2026-11-16T23:08:03.162Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/tile_fillmask_overlay.png"}`
+
+### 🧑 User — 2026-11-16T23:08:03.191Z
+
+> ↩︎ result: [image]
+
