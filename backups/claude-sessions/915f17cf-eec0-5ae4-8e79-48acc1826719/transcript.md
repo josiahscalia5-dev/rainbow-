@@ -2178,3 +2178,76 @@ The flow map clearly shows the fast core and both foam shelves. Now the regressi
 >  "test:cinematic": "node scripts/cinematic-test.mjs"
 > }
 
+### 🤖 Claude — 2026-11-16T13:22:03.878Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,24p scripts/gameplay-test.mjs; sed -n 92,128p scripts/gameplay-test.mjs", "description": "Read gameplay test head and output section"}`
+
+### 🧑 User — 2026-11-16T13:22:03.921Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> mkdirSync('qa', { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5213);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
+> const errors = [];
+> page.on('pageerror', (e …[+2251 chars]
+
+### 🤖 Claude — 2026-11-16T13:22:13.460Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='scripts/gameplay-test.mjs'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:50]\n    s=s.replace(old,new)\nrep(\"\"\"// Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.\"\"\",\"\"\"// Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.\n//   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json\n//   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.\"\"\")\nrep(\"\"\"mkdirSync('qa' …[+1662 chars]`
+
+### 🧑 User — 2026-11-16T13:22:24.625Z
+
+> ↩︎ result: TSC OK
+> 2: "ok": true,
+> 27:  "01->02 gap=0 dT=0.249 y=-2.4",
+> 28:  "02->03 gap=-0.0001 dT=0.673 y=-11.87",
+> 29:  "03->04 gap=0 dT=0.932 y=-19.41",
+> 30:  "04->05 gap=0 dT=0.246 y=-40.63",
+> 31:  "05->06 gap=0 dT=0.281 y=-43.35",
+> 32:  "06->07 gap=0 dT=0.114 y=-48.53",
+> 33:  "07->08 gap=0 dT=0.339 y=-113.5",
+> {
+>  "query": "river05=1",
+>  "out": "qa/pilot05/wave11/tests/gameplay_river05.json",
+>  "pass": true,
+>  "checks": {
+>   "pauseFreezes": true,
+>   "continuousTravel": true,
+>   "noCameraCut": true,
+>   "noTeleport": true,
+>   "plunge": true,
+>   "realCoinPickups": true,
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-16T13:22:54.539Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/915f17cf-eec0-5ae4-8e79-48acc1826719/scratchpad && cat > $S/perf.mjs <<'EOF'\n// Scratch → copied to scripts/perf05.mjs: relative frame cost of Screen 05 variants at the locked checkpoint.\n// node perf.mjs OUT.json [--size=864x1536] name=query ...\nimport { writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst args = process.argv.slice(2); const out = args.shift();\nconst size = (args.find((a) => a.startsWith('--size=')) ?? '--size=864x1536').slice(7).split('x' …[+3112 chars]`
+
