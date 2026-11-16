@@ -6063,8 +6063,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 49579,
-   "sha256": "b7739c084ba42e653348937f993d77067e1707610017dfc4e9370980365db873"
+   "bytes": 53332,
+   "sha256": "010ef45bfdc728064aa9a12f3c6162952df5df82cc7267a087851e9390488b42"
   },
   {
    "path": "src/vfx/whirlpool.ts",

@@ -113,6 +113,23 @@ const RIVER05_PAL = {
 /** 05 texture advection relative to the stage speed (>1: the current visibly overtakes Benny) */
 const FLOW05 = 1.3;
 
+/**
+ * Screen 05 controlled water test W10 (?water05=1, water-fx-specialist wave 10; qa/pilot05/wave10/water/NOTES.md).
+ * ONE switch for the 05 river look: hue-ramped satin bands (hot pink body → violet → periwinkle → electric cyan,
+ * colours sampled from the approved image and solved through the post chain), flow-aligned brushed streaks with
+ * aqua / white-pink cores, deep-blue outer water, glossy near swells; the far river block (far05.ts / materials.ts)
+ * and the 05 splash follow the same switch. Off (default): every shader and geometry is byte-for-byte the previous
+ * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+ * Guarded read: false in vite-node / workers (no `location`).
+ */
+export const WATER05: boolean = (() => {
+  try {
+    return typeof location !== 'undefined' && new URLSearchParams(location.search).get('water05') === '1';
+  } catch {
+    return false;
+  }
+})();
+
 export function ampAt(course: Course, s: number): number {
   let v = 0, w = 0;
   for (const st of course.stages) {
@@ -344,6 +361,54 @@ vec3 speedStreaks(float X, float v, float fwX, float fwV) {
   }
   return vec3(lane, dash, fine);
 }
+
+#ifdef WATER05
+// ---- W10 (?water05=1): approved-image palette, shader-linear values solved through exposure 0.86 → Neutral →
+// sRGB → grade (sat 1.36 / con 1.15), bloom ignored. Cyan has R ≈ 0 and aqua (G ≈ B) highlights like the approved;
+// the bands ramp hot pink → violet → periwinkle → cyan on the core side and → deep blue toward the banks.
+const vec3 W5_CDEEP = vec3(0.058, 0.197, 0.379);   // #0068AD
+const vec3 W5_CDEEP2 = vec3(0.062, 0.290, 0.572);  // #0086D8
+const vec3 W5_CMID = vec3(0.066, 0.424, 0.747);    // #00A8F5
+const vec3 W5_CBRIGHT = vec3(0.088, 0.567, 0.825); // #00C4FB
+const vec3 W5_CAQUA = vec3(0.142, 0.787, 0.882);   // #20E8FA
+const vec3 W5_CAQUAW = vec3(0.39, 0.942, 0.947);   // #7DF9FA
+const vec3 W5_PDEEP = vec3(0.465, 0.086, 0.376);   // #C81CAE
+const vec3 W5_PBODY = vec3(0.698, 0.112, 0.545);   // #F72BD4
+const vec3 W5_PLIGHT = vec3(0.779, 0.204, 0.769);  // #FB57F9
+const vec3 W5_PPALE = vec3(0.835, 0.534, 0.872);   // #F0AFF7
+const vec3 W5_PWHITE = vec3(0.945, 0.767, 0.974);  // #F8D7FD
+const vec3 W5_VIN = vec3(0.372, 0.170, 0.625);     // #A14FE4 violet, core side
+const vec3 W5_VPERI = vec3(0.311, 0.252, 0.740);   // #866FF6 periwinkle
+const vec3 W5_VBLUE = vec3(0.168, 0.427, 0.795);   // #3FA3F9 blue into the cyan core
+const vec3 W5_VOUT = vec3(0.381, 0.185, 0.674);    // #A255ED violet, bank side
+const vec3 W5_OBLUE = vec3(0.211, 0.256, 0.715);   // #5F73F3 blue-violet outer water
+const vec3 W5_ODEEP = vec3(0.161, 0.316, 0.700);   // #4287ED deep blue outer water
+
+// Flow-aligned brushed satin: anisotropic value noise (cells ≈44× longer along the flow than across in world units,
+// ≈7–10× on screen in the mid field), 3 octaves, each faded before its cells drop under ≈4–8 px across (no shimmer,
+// no hair lines); the finer octaves drift a little faster than the coarse ones (layered movement).
+// returns x = coarse lane (-0.5..0.5), y = brushed value (0..1, mean 0.5), z = bright streak cores (0..1)
+vec3 brush05(float X, float v, float fwX, float fwV, float drift) {
+  float lane = vnoise(vec2(X * 1.1 + 2.3, v * 0.03 + 3.0)) - 0.5;
+  float b = 0.0, wsum = 0.0, core = 0.0;
+  float kx = 4.0, kv = 0.09, wt = 1.0;
+  #ifdef LOW_Q
+  const int NB = 2;
+  #else
+  const int NB = 3;
+  #endif
+  for (int i = 0; i < NB; i++) {
+    float cpx = max(fwX * kx, fwV * kv * 2.0);
+    float a = 1.0 - smoothstep(0.12, 0.28, cpx);
+    float n = vnoise(vec2(X * kx + float(i) * 7.13, (v - drift * float(i)) * kv + float(i) * 3.71));
+    b += (n - 0.5) * a * wt;
+    wsum += wt;
+    core = max(core, smoothstep(0.74, 0.93, n) * a * (0.55 + 0.45 * wt));
+    kx *= 2.2; kv *= 1.7; wt *= 0.8;
+  }
+  return vec3(lane, clamp(0.5 + b / wsum * 1.9, 0.0, 1.0), core);
+}
+#endif
 
 void main() {
   float u = vUV.x;
@@ -890,7 +955,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
     fragmentShader: FRAG,
     fog: true,
     side: THREE.DoubleSide,
-    defines: quality === 'low' ? { LOW_Q: 1 } : {},
+    defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(WATER05 ? { WATER05: 1 } : {}) },
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'water_ribbon';
