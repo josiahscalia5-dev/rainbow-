@@ -1465,3 +1465,177 @@ I checked draft PR #9 and nothing needs fixing. The repository runs no automated
 
 I've set one check for 18:20 UTC to look at it again. If nothing has changed by then, I'll stop checking. Comments or reviews posted on the PR before then will reach me straight away.
 
+### 🧑 User — 2026-11-16T17:31:11.544Z
+
+Claude, YES. Go ahead and project my ORIGINAL APPROVED Screen 05 water artwork onto my existing playable 3D river using ?proj05=1.
+
+I want the water to match my approved picture as closely as possible: exact S-curve layout, electric cyan-blue liquid, glossy magenta-pink ribbons, brilliant white highlights, and fluffy foam edges.
+
+Use the existing clean gameplay river mesh, NOT Marble's distorted reconstructed surface.
+
+Keep my camera, Benny, gameplay, coins, and other screens unchanged.
+
+First show me a full-size comparison of APPROVED versus NEW from the exact locked camera.
+
+Then test the camera moving forward to confirm the texture doesn't stretch, tear, or disappear. The water must also animate naturally toward the camera.
+
+Do not replace my working version until I approve the results. Keep the experiment reversible.
+
+Save all work, assets, and specialist instructions to GitHub every five minutes while the session is active, and verify the push.
+
+Do not spend any additional Marble credits.
+
+My goal is a 95% or better visual match in the real playable 3D game, not just a still image.
+
+### 🤖 Claude — 2026-11-16T17:32:12.724Z
+
+On it — no Marble credits. Here's the plan:
+
+1. Bake your original artwork into the game river's own texture coordinates (across × along the river), so it is anchored to the world, not to one camera.
+2. Add it behind `?proj05=1` only (default build unchanged).
+3. Show a full-size APPROVED vs NEW from the locked camera.
+4. Then test forward camera motion and add flow toward the camera.
+
+Let me first read the existing river code and the probe data Specialist 1 already exported.
+
+### 🤖 Claude — 2026-11-16T17:32:14.532Z
+
+> 🔧 **TaskCreate** `{"subject": "proj05: bake approved artwork onto game river (UV space), ?proj05=1 material", "description": "Bake projection into ribbon (u,s) texture; Three.js material behind ?proj05=1; colour pre-compensation; locked-camera APPROVED vs NEW full-size; default + BEFORE pixel-identical", "activeForm": "Baking approved water onto game river"}`
+
+### 🧑 User — 2026-11-16T17:32:14.548Z
+
+> ↩︎ result: Task #2 created successfully: proj05: bake approved artwork onto game river (UV space), ?proj05=1 material
+
+### 🤖 Claude — 2026-11-16T17:32:16.028Z
+
+> 🔧 **TaskCreate** `{"subject": "proj05: moving-camera test + flow animation toward camera", "description": "Forward camera frames: no stretch/tear/disappear (detail fallback where bake is magnified); anchored flow animation; clip; gameplay/continuity/perf checks; NOTES + briefs + push", "activeForm": "Testing moving camera and flow"}`
+
+### 🧑 User — 2026-11-16T17:32:16.044Z
+
+> ↩︎ result: Task #3 created successfully: proj05: moving-camera test + flow animation toward camera
+
+### 🤖 Claude — 2026-11-16T17:32:17.683Z
+
+> 🔧 **Bash** `{"command": "wc -l src/vfx/waterRibbon.ts src/world/environment.ts src/world/far05.ts src/world/materials.ts scripts/capture.mjs scripts/proj05-probe.mjs src/game/Game.ts src/world/course.ts; ls src src/*; grep -rn \"silk05\\|URLSearchParams\\|getParam\\|qflag\" src --include=*.ts | head -30", "description": "Survey river code size and URL switch mechanism"}`
+
+### 🧑 User — 2026-11-16T17:32:17.856Z
+
+> ↩︎ result: 1430 src/vfx/waterRibbon.ts
+>    871 src/world/environment.ts
+>    321 src/world/far05.ts
+>   1185 src/world/materials.ts
+>     62 scripts/capture.mjs
+>    182 scripts/proj05-probe.mjs
+>    694 src/game/Game.ts
+>    629 src/world/course.ts
+>   5374 total
+> src/main.ts
+> 
+> src:
+> characters
+> game
+> gameplay
+> main.ts
+> render
+> ui
+> vfx
+> world
+> 
+> src/characters:
+> benny
+> girl
+> types.ts
+> 
+> src/game:
+> Game.ts
+> cameraRig.ts
+> modules.ts
+> 
+> src/gameplay:
+> coins.ts
+> input.ts
+> 
+> src/render:
+> env.ts
+> grade.ts
+> 
+> src/ui:
+> cinematicVideo.ts
+> hud.ts
+> 
+> src/vfx:
+> bubbles.ts
+> drumWater.ts
+> finalWave.ts
+> flow05.ts
+> foam.ts
+> glsl.ts
+> index.ts
+> puddles.ts
+> riderSplash.ts
+> spray.ts
+> waterRibbon.ts
+> whirlpool.ts
+> 
+> src/world:
+> course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> materials.ts
+> towel.ts
+> tube.ts
+> src/ui/cinematicVideo.ts:57:  const q = new URLSearchParams(location.search);
+> src/ui/cinematicVideo.ts:78:  const focus = opts.focus ?? new URLSearchParams(location.search).get('videoFocus') ?? '50% 50%';
+> src/characters/girl/girl-lab.ts:13:const q = new URLSearchParams(location.search);
+> src/characters/benny/benny-lab.ts:18:const q = new URLSearchParams(location.search);
+> src/characters/benny/runtime.ts:26:  const qp = new URLSearchParams(location.search).get('quality');
+> src/ …[+2515 chars]
+
+### 🤖 Claude — 2026-11-16T17:32:20.883Z
+
+> 🔧 **Bash** `{"command": "sed -n 130,200p src/vfx/waterRibbon.ts; grep -n \"export function createRibbon\\|aUV\\|uStage\\|stageS\\|function q05\\|river05\\|createRiver05\\|ShaderMaterial\\|onBeforeCompile\" src/vfx/waterRibbon.ts | head -60", "description": "Read ribbon switches and find ribbon geometry/material code"}`
+
+### 🧑 User — 2026-11-16T17:32:20.929Z
+
+> ↩︎ result: cyanStreak: lin(0.36, 1.25, 2.1),
+>   pinkDeep: lin(0.36, 0.04, 0.3),
+>   pink: lin(0.7, 0.08, 0.64),
+>   pinkLight: lin(0.92, 0.3, 0.88),
+>   pinkStreak: lin(1.1, 0.58, 1.04),
+> };
+> 
+> /**
+>  * Screen 05 controlled water test W10 (?water05=1, water-fx-specialist wave 10; qa/pilot05/wave10/water/NOTES.md).
+>  * ONE switch for the 05 river look: hue-ramped satin bands (hot pink body → violet → periwinkle → electric cyan,
+>  * colours sampled from the approved image and solved through the post chain), flow-aligned brushed streaks with
+>  * aqua / white-pink cores, deep-blue outer water, glossy near swells; the far river block (far05.ts / materials.ts)
+>  * and the 05 splash follow the same switch. Off (default): every shader and geometry is byte-for-byte the previous
+>  * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+>  * Guarded read: false in vite-node / workers (no `location`).
+>  */
+> /**
+>  * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+>  * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+>  */
+> const BUILD_Q05:  …[+4537 chars]
+
+### 🤖 Claude — 2026-11-16T17:32:22.843Z
+
+> 🔧 **Bash** `{"command": "cat scripts/proj05-probe.mjs | head -120; python3 -c \"\nimport json;d=json.load(open('qa/pilot05/proj/probe/river05_mesh.json'));print(type(d), list(d.keys()) if isinstance(d,dict) else len(d))\nfor k,v in d.items():\n  if isinstance(v,list): print(k,len(v), str(v[:6])[:200])\n  elif isinstance(v,dict): print(k, list(v.keys())[:20])\n  else: print(k, str(v)[:200])\n\"", "description": "Read probe script and river mesh export format"}`
+
+### 🧑 User — 2026-11-16T17:32:22.985Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 texture-projection probe (Specialist 1, 2026-11-16) — exact, read-only measurements of the REAL game.
+> //   node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe] [--raw=DIR for the float maps]
+> // Opens the game at the locked 05 checkpoint (time frozen, as scripts/capture.mjs) and writes into OUT:
+> //   camera.json      the live render camera (world matrix, projection matrix, vFOV, size) + uTime + stage numbers
+> //   uv_river.f32     864×1536×4 float32 (top row first): per pixel the river surface the camera sees when ONLY the
+> //                    river (+ the far tunnel wall as occluder) is drawn — ribbon: (u, s, 1 + skirt, 1);
+> //                    far block: (uv.x across the floor chord, Z virtual depth, 3, lateral units); else 0
+> //   uv_scene.f32     the same, but every other static object of the scene (walls, rings, lids, far wall, glow)
+> //                    occludes — Benny, coins, bubbles, foam, splash and spray hidden (not part of the water layer)
+> //   uv_foam.f32      only the game's 3D foam (berm / rafts / rim / flank) drawn as id 4 over the scene depth
+> //   river05_mesh.json  the river meshes exactly as rendered at thi …[+7569 chars]
+
