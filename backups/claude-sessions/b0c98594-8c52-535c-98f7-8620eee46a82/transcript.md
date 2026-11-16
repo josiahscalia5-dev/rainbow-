@@ -4885,3 +4885,37 @@ Save everything to my GitHub
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; flock -w 120 backups/.autosave.lock -c true; python3 scripts/rainbow-autosave.py --reason manual:user-save-request --message \"Screen 05: far-river S-path test S1 (?fars05=1, candidate) + water it04 review; save requested by the user\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"|warn'; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1); echo \"local  $L\"; echo \"remote $R\"; [ \"$L\" = \"$R\" ] && echo \"REMOTE == LOCAL\"; echo \"uncommitted: $(git status --short | wc -l)\"; python3 -I script …[+293 chars]`
 
+### 🧑 User — 2026-11-16T12:31:44.235Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "78779ab1957a2aadf4505607962ce285749e46c2",
+> local  78779ab1957a2aadf4505607962ce285749e46c2
+> remote 78779ab1957a2aadf4505607962ce285749e46c2
+> REMOTE == LOCAL
+> uncommitted: 0
+> AUTOSAVE OK | branch ccr-251ed97c-ty2xvp | scheduler daemon | last verified backup 2026-11-16T12:31:31+00:00 (0.2 min ago) | local 78779ab remote 78779ab (match) | uncommitted 0
+> @@ ok 24/24 LFS objects (184 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: none (relaunch from notes when needed)
+> @@ ok both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250
+
+### 🤖 Claude — 2026-11-16T12:31:50.138Z
+
+Everything is saved to your GitHub repository and verified.
+
+- **Branch:** `ccr-251ed97c-ty2xvp`
+- **Commit:** `78779ab1957a2aadf4505607962ce285749e46c2`. The GitHub copy matches the local copy exactly, with nothing left uncommitted.
+- **Large files:** all 24 confirmed on GitHub, including the 17 Marble files.
+- **Marble assets:** both worlds complete (49 files checked).
+- **Specialists:** all 10 saved and unchanged; none is running now.
+- **Autosave:** running every five minutes, last run successful.
+
+This save includes:
+- The water specialist's finished iteration 4 (`?water05=1`) with its notes.
+- The new far-river S-curve test (`?fars05=1`).
+- The far-river analysis and the full-size comparison pictures.
+
+The game itself is still the provisional T2 version, and your BEFORE remains protected.
+
+**Where I stopped:** I was reading how the far river's width is set. The zoomed comparison shows our far river covers the whole tunnel floor, while yours is a narrow river winding between foam banks. That width, more than the S-curve, is what still separates the two. The far section is visual only, so narrowing it can't affect gameplay or the 05→06 transition. I'll test that next unless you'd like something else first.
+
