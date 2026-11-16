@@ -628,3 +628,35 @@ Let me look closely at the lids/rings region in both images.
 
 > ↩︎ result: done 13.868 calls 86 tris 567415 []
 
+### 🤖 Claude — 2026-11-16T02:24:12.233Z
+
+Probes take ~14 s. Now let me write the wave-9 plan in NOTES before changing anything.
+
+### 🤖 Claude — 2026-11-16T02:24:21.586Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/wave9/environment; cat > /home/user/rainbow-/qa/pilot05/wave9/environment/NOTES.md <<'EOF'\n# wave 9 · washer-environment-modeler · Screen 05 (continues wave 8 it02 = wave-9 baseline)\n\n## Plan (written first, before any change)\nBaseline = `qa/pilot05/wave9/baseline/05.png` (86 calls / 567,415 tris); my windows (wave-8 `measure05.py`) are identical to wave-8 it02:\nlid L1 V std 0.188 (ref 0.216), upper-wall violet share 25.4 % (ref 40.0), left wall 4.0 % (ref 50.9), VP core px 723 (ref 1306),\nring #1 gold-pixel mean (239,156,113) (ref (24 …[+1666 chars]`
+
+### 🧑 User — 2026-11-16T02:24:21.635Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T02:24:22.841Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,60p src/world/environment.ts | grep -n -i 'tubeR\\|import' ; grep -n 'tubeR' src/world/environment.ts | head; grep -n 'export function straightTubePath' -A60 src/world/tube.ts | head -90", "description": "Inspect tube radius and straightTubePath"}`
+
+### 🧑 User — 2026-11-16T02:24:22.897Z
+
+> ↩︎ result: 6:import * as THREE from 'three';
+> 7:import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+> 8:import { Course, WORLD, funnelY } from './course';
+> 9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
+> 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 11:import { STAGE_CAM } from '../game/cameraRig';
+> 12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> 13:import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
+> 14:import { buildTowel, TowelMesh } from './towel';
+> 29:  tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> 177:  const tubeR = (s: number) => course.prop('tube', s);
+> 181:  const r04 = (s: number) => tubeR(s) + 1.8 * (1 - sm(g0, g0 + 6, s));
+> 231:  c …[+3239 chars]
+
