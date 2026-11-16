@@ -459,3 +459,125 @@ I'll write a scratch probe script to understand what's at each far-river pixel (
 > 
 > export async function  …[+724 chars]
 
+### 🤖 Claude — 2026-11-16T01:43:53.531Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools && cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/probe.mjs <<'EOF'\n// usage: node probe.mjs  (run from repo root) — evaluates JS file given as argv[2] in the 05 checkpoint page\nimport { readFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5231);\nconst browser = await chromium.launch({ args: …[+1624 chars]`
+
+### 🧑 User — 2026-11-16T01:44:05.909Z
+
+> ↩︎ result: },
+>   {
+>    "i": 85,
+>    "x": 540,
+>    "y": 814,
+>    "d": 5
+>   },
+>   {
+>    "i": 86,
+>    "x": 544,
+>    "y": 812,
+>    "d": 5
+>   },
+>   {
+>    "i": 87,
+>    "x": 546,
+>    "y": 809,
+>    "d": 5
+>   },
+>   {
+>    "i": 88,
+>    "x": 546,
+>    "y": 805,
+>    "d": 5
+>   },
+>   {
+>    "i": 89,
+>    "x": 545,
+>    "y": 800,
+>    "d": 5
+>   },
+>   {
+>    "i": 90,
+>    "x": 545,
+>    "y": 794,
+>    "d": 5
+>   }
+>  ],
+>  {
+>   "mode": "ride",
+>   "stage": "05",
+>   "s": 132.438,
+>   "lat": 0,
+>   "coins": 1420,
+>   "hearts": 5,
+>   "paused": false,
+>   "bennyY": -41.348,
+>   "bennyVisible": true,
+>   "cam": [
+>    1.92,
+>    -37.94,
+>    -68.28
+>   ]
+>  },
+>  [
+>   1.920288434729371,
+>   -37.94339912418104,
+>   -68.28062556286872
+>  ]
+> ]
+
+### 🤖 Claude — 2026-11-16T01:44:11.726Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/p1.js <<'EOF'\n(async () => {\n  const R = window.__rainbow; const out = [];\n  for (const [x, y] of [[480,560],[480,540],[490,520],[495,505],[497,495],[440,560],[540,560],[470,600],[473,728],[500,650]]) {\n    const nx = x / 864 * 2 - 1, ny = 1 - y / 1536 * 2;\n    out.push(`${x},${y}: ` + R.probe(nx, ny).map(h => `${h.obj} d=${h.d}`).join(' | '));\n  }\n  const defs = R.coinDefs();\n  out.push('coins: ' + R.coinScreen().map(c => `#${c.i} s=${defs[c.i].s.toFixed(1)} lat=${defs[c.i].lat.t …[+403 chars]`
+
+### 🧑 User — 2026-11-16T01:44:24.690Z
+
+> ↩︎ result: #31 s=204.5 lat=-0.60 (442,346) d18
+> #32 s=207.4 lat=-0.66 (435,324) d18
+> #33 s=210.3 lat=-0.83 (429,312) d17
+> #34 s=213.2 lat=-1.07 (427,314) d16
+> #35 s=216.1 lat=-1.34 (434,330) d16
+> #36 s=219.0 lat=-1.61 (447,353) d15
+> #37 s=221.9 lat=-1.83 (462,381) d15
+> #38 s=224.8 lat=-1.97 (479,409) d14
+> #39 s=227.7 lat=-2.00 (496,436) d14
+> #40 s=230.6 lat=-1.92 (514,463) d14
+> #41 s=233.5 lat=-1.74 (532,488) d13
+> #42 s=236.4 lat=-1.50 (550,511) d13
+> #43 s=239.3 lat=-1.22 (568,528) d13
+> #44 s=242.2 lat=-0.95 (585,538) d12
+> #45 s=253.1 lat=0.84 (632,543) d11
+> #46 s=258.6 lat=1.00 (637,542) d11
+> #47 s=264.1 lat=0.91 (626,540) d10
+> #48 s=269.6 lat=0.60 (600,535) d10
+> #49 s=275.1 lat=0.14 (573,535) d10
+> #50 s=280.6 lat=-0.35 (563,535) d9
+> #51 s=286.1 lat=-0.76 (572,533) d9
+> #52 s=291.6 lat=-0.98 (585,529) d9
+> #53 s=297.1 lat=-0.96 (589,527) d8
+> #54 s=302.6 lat=-0.71 (582,528) d8
+> #55 s=308.1 lat=-0.28 (577,528) d8
+> #56 s=313.6 lat=0.22 (576,534) d8
+> #57 s=319.1 lat=0.66 (577,552) d7
+> #58 s=324.6 lat=0.94 (577,582) d7
+> #59 s=330.2 lat=0.99 (575,615) d7
+> #60 s=335.7 lat=0.80 (572,649) d7
+> #61 s=341.2 lat=0.41 (568,681) d7
+> #62 s=346.7 lat=-0.08 (563,712) d7
+> #63 s=352.2 lat=-0.54 (559,743) d7
+> #64 s=357.7 lat=-0.88 (555,772) d6
+> #6 …[+904 chars]
+
+### 🤖 Claude — 2026-11-16T01:44:26.724Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/probe.mjs /tmp/claude-0/-home-user-rainbow-/94cf04e3-ba8e-597b-bef0-28aeffba4499/scratchpad/tools/p1.js 2>&1 | head -45", "description": "Show head of probe output"}`
+
+### 🧑 User — 2026-11-16T01:44:40.029Z
+
+> ↩︎ result: 480,560: water_ribbon<water_system<Scene d=52.02 | water_ribbon<water_system<Scene d=54.57 | tube05_far_river<zone_tubes<washer_world<Scene d=56.08 | water_ribbon<water_system<Scene d=58.31
+> 480,540: tube05_far_river<zone_tubes<washer_world<Scene d=58.13 | tube05_far_wall<zone_tubes<washer_world<Scene d=58.97 | water_ribbon<water_system<Scene d=61.76 | Mesh<zone_tubes<washer_world<Scene d=67.55
+> 490,520: tube05_far_river<zone_tubes<washer_world<Scene d=58.75 | tube05_far_wall<zone_tubes<washer_world<Scene d=59.08 | tube05_far<zone_tubes<washer_world<Scene d=59.09 | water_ribbon<water_system<Scene d=63.77
+> 495,505: tube05_far_river<zone_tubes<washer_world<Scene d=58.99 | tube05_far_wall<zone_tubes<washer_world<Scene d=59.15 | tube05_far<zone_tubes<washer_world<Scene d=59.15 | tube05_end_glow<zone_tubes<washer_world<Scene d=59.17
+> 497,495: tube05_far_river<zone_tubes<washer_world<Scene d=59.11 | tube05_end_glow<zone_tubes<washer_world<Scene d=59.16 | water_ribbon<water_system<Scene d=65.69 | Mesh<zone_tubes<washer_world<Scene d=69.9
+> 440,560: Mesh<coins<Scene d=39.51 | water_ribbon<water_system<Scene d=52.26 | water_ribbon<water_system<Scene d=54.72 | tube05_far_river<zone_tubes<washer_wo …[+2014 chars]
+

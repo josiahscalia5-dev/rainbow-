@@ -39,3 +39,11 @@ apply (strict file ownership, Edit tool only, NOTES first, no commits, no paid g
 * End: `npx tsc --noEmit`; regression capture `04 06 07 08` → `qa/pilot05/wave8/<you>/regress`: 04/07/08 pixel-identical
   below the HUD to `qa/pilot05/wave8/baseline/NN.png` unless intended (say so); 06 keeps its stage anchors.
 * path-camera: ride check 04 start → 06 (no warps/pops) and `node scripts/gameplay-test.mjs` must still pass.
+
+## Update ~01:46 UTC — user: use the EXISTING Marble assets in the real game (no new Marble world)
+Sent to washer-environment-modeler (may use up to 8 iterations): try the Marble full-world panorama
+`qa/worldlabs/05/pilot/full/pano.png` (generated from the approved 05 image) as the PMREM reflection source in
+`src/render/env.ts` (small runtime copy ≤1024×512, procedural env kept as fallback/other stages unless regression
+looks better), and `full/analysis/bay_unrolled.png` / `wall_unrolled.png` as wall-detail reference or tiling map.
+Keep only if whole-frame closer to the approved image; log asset + before/after in NOTES. No World Labs API calls,
+no credits. Marble key verified working (free `GET /credits` 200) — not needed for this wave.
