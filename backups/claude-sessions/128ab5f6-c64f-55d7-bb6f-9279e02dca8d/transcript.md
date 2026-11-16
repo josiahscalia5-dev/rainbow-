@@ -4512,3 +4512,26 @@ Next come the three hand-over documents, starting with `CLAUDE.md`.
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 40); do out=$(python3 scripts/rainbow-autosave.py --reason manual:urgent-backup-3 --message \"URGENT backup 3: account-transfer docs updated for the Screen 05 water-projection experiment (CLAUDE.md, transfer guide, new-account prompt, tool manifest); isolated water artwork added to the protected reference list (13 files)\" 2>&1); echo \"$out\" | grep -q \"another autosave is running\" || break; sleep 3; done; echo \"$out\" | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"' | head -4; echo \"local $(git rev-parse HEAD) remote $(git ls-remote origin ref …[+261 chars]`
 
+### 🧑 User — 2026-11-16T15:56:39.217Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "7b9b2cf411ea08764618504f6cecfe6ca1e65858",
+> local 7b9b2cf411ea08764618504f6cecfe6ca1e65858 remote 7b9b2cf411ea08764618504f6cecfe6ca1e65858
+> RAINBOW BOOTSTRAP (check) 2026-11-16 15:55 UTC - /home/user/rainbow-
+>   OK   Repository + branch            josiahscalia5-dev/rainbow- on claude/rainbow-05-water-projection @ 7b9b2cf (session started from claude/rainbow-3d-account-recovery-hfb8p0)
+>   OK   Resume newest work             15/15 remote ccr-*/claude/* branches contained in HEAD 7b9b2cf
+>   OK   Backup gap since last session  previous save on GitHub: 088dd3f 2026-11-16 13:37 UTC (daemon) on ccr-451ea8c7-3nqlis, claude/rainbow-05-water-projection, claude/rainbow-3d-account-recovery-hfb8p0; previo
+>   OK   Git LFS binaries (local)       26/26 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK
+>   OK   Git LFS on GitHub              26/26 LFS objects (199 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+>   OK   Approved references            13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference)
+>   OK   Game: 11 screens + code        11 approved screen refer …[+2179 chars]
+
+### 🤖 Claude — 2026-11-16T15:56:46.611Z
+
+All 20 bootstrap checks pass on the new branch (BOOTSTRAP OK). Making the final verified save now, then I'll give you the proof report.
+
+### 🤖 Claude — 2026-11-16T15:56:51.020Z
+
+> 🔧 **Bash** `{"command": "for i in $(seq 1 40); do out=$(python3 scripts/rainbow-autosave.py --reason manual:urgent-backup-final --message \"URGENT backup final: bootstrap check BOOTSTRAP OK on claude/rainbow-05-water-projection; specialist work in progress saved\" 2>&1); echo \"$out\" | grep -q \"another autosave is running\" || break; sleep 3; done; echo \"$out\" | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"' | head -4; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-05-water-projection | cut -f1)\"; echo \"working branch: $(git ls-re …[+593 chars]`
+

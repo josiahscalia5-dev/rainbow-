@@ -1012,3 +1012,84 @@ Now let me visualise the maps and align the artwork to the approved frame.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T15:56:46.251Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/tools/qa/proj05_footprint.py <<'EOF'\n#!/usr/bin/env python3\n\"\"\"Screen 05 projection test — FOOTPRINT of the game's river vs the isolated artwork (exact per-pixel maps).\n\n    python3 -I tools/qa/proj05_footprint.py RAW_DIR OUT_DIR [ARTWORK_ALIGNED.png]\n\nRAW_DIR = the float maps of scripts/proj05-probe.mjs (uv_river.f32 / uv_scene.f32 / uv_foam.f32), OUT_DIR gets\nfootprint.json + footprint_overlay.png. Masks (864x1536, locked 05 camera):\n  G_scene  river surface (ribbon id 1/2, far block id 3) that is the first hit among the static environment\n  …[+5356 chars]`
+
+### 🧑 User — 2026-11-16T15:56:46.998Z
+
+> ↩︎ result: {
+>  "pixels": {
+>   "A_artwork": 804501,
+>   "G_scene": 718085,
+>   "G_ribbon": 706643,
+>   "G_far": 11442,
+>   "F_foam3d": 74858,
+>   "RING_hidden": 80326
+>  },
+>  "IoU_A_vs_Gscene": 0.9465844293436085,
+>  "IoU_A_vs_Gscene_or_foam": 0.9501810198994647,
+>  "A_not_G (artwork water where no game river)": 22860,
+>  "G_not_A (game river where artwork has none)": 16718,
+>  "A_in_far_rows_covered_by_far_block_or_ribbon": null,
+>  "far_rows_440_600": {
+>   "A_px": 31963,
+>   "A_covered_by_river_px": 21437,
+>   "A_covered_by_far_block_px": 9283,
+>   "G_far_not_A_px": 2159
+>  },
+>  "bank_offsets": {
+>   "440-520": {
+>    "left": {
+>     "n": 13,
+>     "median_abs_px": 30.0,
+>     "max_abs_px": 39.0
+>    },
+>    "right": {
+>     "n": 13,
+>     "median_abs_px": 31.0,
+>     "max_abs_px": 38.0
+>    }
+>   },
+>   "520-600": {
+>    "left": {
+>     "n": 20,
+>     "median_abs_px": 107.0,
+>     "max_abs_px": 177.0
+>    },
+>    "right": {
+>     "n": 20,
+>     "median_abs_px": 34.0,
+>     "max_abs_px": 91.0
+>    }
+>   },
+>   "600-700": {
+>    "left": {
+>     "n": 18,
+>     "median_abs_px": 97.0,
+>     "max_abs_px": 150.0
+>    },
+>    "right": {
+>     "n": 18,
+>     "median_abs_px": 74.5,
+>     "max_abs_px": 99.0
+>    }
+>   },
+>   "700-800": {
+>    "left": {
+>     "n": 0,
+>     "median_abs_px": null,
+>     "max_abs_px": n …[+604 chars]
+
+### 🤖 Claude — 2026-11-16T15:56:50.711Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/pilot05/proj/feasibility/footprint_overlay.png').crop((0,420,864,1000)); im.save('/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/fp_crop.png')\"", "description": "Crop the footprint overlay to the far/mid region"}`
+
+### 🧑 User — 2026-11-16T15:56:50.988Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T15:56:51.255Z
+
+You've hit your 5-hour limit · resets 6:40pm (UTC)
+

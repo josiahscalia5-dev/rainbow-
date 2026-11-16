@@ -398,8 +398,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4002,
-   "sha256": "04d25ac97cab9b9a2577df67a2096bc3f07167dddbbd1093a71b97979a40d523"
+   "bytes": 4107,
+   "sha256": "78cf6a6fa4a40bdc76864fe5bbfbebf30a0da418639309f9a86779e8a9f64909"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7796,
-   "sha256": "37acfd6e7e2daaccaca5662f9ad92d4be1158b8f5563114145575e2f18456413"
+   "sha256": "8c3ec34691070de7f133e4689fa5ca2b22f737b4f3edb8c73bf31a171f40e2d7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1195,6 +1195,16 @@
    "path": "qa/pilot05/proj/caps/default/05.png",
    "bytes": 1746598,
    "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/proj/feasibility/footprint.json",
+   "bytes": 47634,
+   "sha256": "93c2b32db13e4f75c61993178545d01e1bc2a21818ff963ae38f8a9671dfb5f6"
+  },
+  {
+   "path": "qa/pilot05/proj/feasibility/footprint_overlay.png",
+   "bytes": 869656,
+   "sha256": "54c05840ac3ccf0d3bbe7967b11d60fa54187db22cf73a36cde42fedbf6aa37e"
   },
   {
    "path": "qa/pilot05/proj/probe/camera.json",
@@ -6780,6 +6790,11 @@
    "path": "tools/qa/proj05_align.py",
    "bytes": 5023,
    "sha256": "2cddf9d385d77c12c848f37a746ba0ef2d2faf78b04219f09b226c986f3f2418"
+  },
+  {
+   "path": "tools/qa/proj05_footprint.py",
+   "bytes": 5432,
+   "sha256": "911841756f3dc0a6368273d5305da56226dddde052ab337ced097a1495f7c24c"
   },
   {
    "path": "tools/qa/ring_fit05.py",
