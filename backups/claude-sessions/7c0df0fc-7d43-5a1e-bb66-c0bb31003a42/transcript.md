@@ -1102,3 +1102,72 @@ The config is updated. I'll run one manual backup now to confirm it pushes this 
 
 > 🔧 **Bash** `{"command": "python3 -c \"import json;json.load(open('backups/autosave.config.json'))\" && python3 scripts/rainbow-autosave.py --reason manual:recovery 2>&1 | tail -4; echo \"---\"; python3 -I scripts/autosave-status.py 2>&1 | tail -3; echo \"local $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/ccr-4f6c3e0e-5kxgr0 | cut -c1-7) old-branch $(git ls-remote origin refs/heads/ccr-93add0fa-q17ey6 | cut -c1-7)\"", "description": "Run a manual autosave and verify the push", "timeout": 180000}`
 
+### 🧑 User — 2026-11-16T00:44:02.374Z
+
+> ↩︎ result: "branch": "ccr-4f6c3e0e-5kxgr0",
+>   "commit": "42cab891edaf8f7b2a87b91bc227901e69817c8b",
+>   "duration_s": 6
+> }
+> ---
+> AUTOSAVE OK | branch ccr-4f6c3e0e-5kxgr0 | scheduler daemon | last verified backup 2026-11-16T00:43:55+00:00 (0.1 min ago) | local 42cab89 remote 42cab89 (match) | uncommitted 0
+> local 42cab89 remote 42cab89 old-branch 08fb461
+
+### 🤖 Claude — 2026-11-16T00:44:07.024Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin ccr-93add0fa-q17ey6 && git log --format='%h %ci %an %s' 6cf0b4f..FETCH_HEAD | head; echo \"--- files changed since 6cf0b4f:\"; git diff --stat 6cf0b4f FETCH_HEAD | tail -8", "description": "Inspect new commits on the previous account's branch"}`
+
+### 🧑 User — 2026-11-16T00:44:07.645Z
+
+> ↩︎ result: 08fb461 2026-11-16 00:39:58 +0000 Claude autosave: Rainbow 2026-11-16 00:39 UTC
+> --- files changed since 6cf0b4f:
+>  backups/BACKUP_LOG.md                                      |  1 +
+>  backups/BACKUP_STATUS.json                                 | 14 +++++++-------
+>  backups/CONVERSATION_INDEX.md                              |  2 +-
+>  backups/MANIFEST.json                                      |  2 +-
+>  .../9403ef16-db4f-520b-8577-610f580574f8/transcript.md     |  8 ++++++++
+>  .../transcript.sanitized.jsonl                             |  4 ++++
+>  6 files changed, 22 insertions(+), 9 deletions(-)
+
+### 🤖 Claude — 2026-11-16T00:44:39.401Z
+
+I've recovered your game on the new account without losing anything. Three specialists are now working on Screen 05's walls and rings, water, and foam. I can't reach your Marble world yet: that needs a new API key and the world's ID, and even then the docs don't confirm the API can read website-made worlds.
+
+## Recovery
+- **Branch:** I'm working on this session's branch, `ccr-4f6c3e0e-5kxgr0`. It contains the newest commit from `ccr-93add0fa-q17ey6` (`6cf0b4f`). Nothing was overwritten, and the backup and recovery branches are untouched.
+- **Large files (Git LFS):** all 9 restored and verified (Benny and girl models, APK, Blender files, kit ZIP). The first download failed because of a leftover login setting; I cleared it and fixed the session-start hook so future sessions don't hit it.
+- **Approved references:** all 12 images match their saved fingerprints.
+- **Game:** the code compiles. The full gameplay test passes: coins, pause, heart loss, the 07→08 plunge (61.41) and the victory screen. There are no gaps between stages.
+- **Tools:** all 10 specialist agents are present, Blender 5.3.0 is installed, and Playwright works. I haven't rebuilt the Android app this session yet; I'll do that with the final checks.
+- **Backups:** I ran a manual backup and confirmed local and remote both at `42cab89`. Two things to know:
+  - There were no backups from 00:02 to 00:37 UTC while the environment was closed during the account switch.
+  - Your old account-7 session is still running and pushed an autosave to its own branch at 00:39. It only adds that session's transcript and no game code, but you may want to close it. I've added that branch to the protected list so this session's autosave can never push to it.
+
+## Can I access your Marble world?
+- **Atlas connector:** it is connected, but Atlas is a separate World Labs product. None of its tools can list or open Marble worlds.
+- **Marble World API:** it can fetch a world by ID for "the world owner or users with access to public worlds". But the docs describe the world endpoints as managing "worlds created through the API", and they never say whether website-made worlds are included. Only a real test would settle it.
+- **What that test needs:**
+  - your world's ID (from its `marble.worldlabs.ai/world/…` link);
+  - a new API key from platform.worldlabs.ai, entered through the secure form, never the exposed one.
+  - **Possible cost:** the docs say to add a payment method and buy credits "to get started". The minimum purchase is $5, and it's separate from any Marble subscription. Whether a key works for free read-only calls without buying credits isn't stated.
+- **If the API can read your world:** reading it isn't listed as a credit cost. It would return the splat files and collision mesh already made, and a .ply export is free. A high-quality mesh costs 3,500 credits ($2.80).
+- **Website export:** the free plan can't export. Splats and collision mesh need Standard (about $20/month); the high-quality textured mesh needs Pro (about $35/month).
+- **Third-party "Marble MCP" servers:** these are unofficial wrappers around the same API that need the same key, so they add no access. I didn't install any.
+- I won't pull the 3D files from the website viewer's traffic, since that would bypass the export restriction.
+
+## Screen 05: three biggest differences, and who's fixing them
+I saved your Marble screenshot in the repo as a secondary reference and sent it to the specialists. Your approved image stays the target.
+
+1. **Gold rings and fittings (walls specialist):** flat orange in the game. The target is polished yellow gold with highlight spots, round copper-gold fittings, and the gold frame ring in the bottom corners.
+2. **Washer walls (same specialist):** the swirly reflections are being replaced with clean violet-magenta metal, regular slot rows and lengthwise light streaks, using cues from your Marble world.
+3. **Water and foam (water and foam specialists):** the flat vertical pink sheets and pool-like ripples become diagonal pink sweeps fanning from Benny, thick glossy cyan winding into the light, and low bubbly foam rims instead of white heaps.
+
+The camera lock, river path, Benny, coins, HUD and gameplay are untouched. Each specialist must check screens 04, 06, 07 and 08 for regressions.
+
+I've sent you image 1 (your approved Screen 05) and image 2 (the live game before changes). When the specialists finish, I'll send image 3 (after) at 864×1536 with a side-by-side and measured differences.
+
+**Decision for you:** if you want the Marble test, send the world link and say whether you'll create a new key (which may require that $5 credit purchase). I'll then show the secure key form. Nothing else needs approval, and no credits have been spent.
+
+Files are in `qa/worldlabs/05/MARBLE_ACCESS_2026-11-16.md` (Marble findings) and `qa/pilot05/COORDINATION_WAVE7.md` (Screen 05 plan).
+
+Sources: [Quickstart](https://docs.worldlabs.ai/api) · [Get a world](https://docs.worldlabs.ai/api/reference/worlds/get) · [API pricing](https://docs.worldlabs.ai/api/pricing) · [API FAQ](https://docs.worldlabs.ai/api/faq) · [Full docs text](https://docs.worldlabs.ai/llms-full.txt) · [Marble splat export](https://docs.worldlabs.ai/marble/export/gaussian-splat) · [worldlabs-mcp (unofficial)](https://github.com/sandraschi/worldlabs-mcp) · [Glama listing (unofficial)](https://glama.ai/mcp/servers/d4uwarzyfe) · [Plan prices, third-party](https://www.withorb.com/pricing-atlas/worldlabs)
+

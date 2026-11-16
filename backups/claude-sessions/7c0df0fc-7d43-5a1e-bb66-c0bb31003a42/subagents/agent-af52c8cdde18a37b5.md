@@ -492,3 +492,42 @@ Now let me look at my source files and the partial patch.
 
 > 🔧 **Bash** `{"command": "timeout 300 node qa/pilot05/wave6/foam/tools/probe.mjs 05 > /tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/probe0.json 2>/dev/null; python3 -I -c \"\nimport json;d=json.load(open('/tmp/claude-0/-home-user-rainbow-/7c0df0fc-7d43-5a1e-bb66-c0bb31003a42/scratchpad/probe0.json'))\nr=d['rafts'];print('visible',r['visible'],'puffs',r['puffs'],'shown',r['shown'])\nfor c in r['clumps']: print(c)\nprint('big',d['bubbles']['big']);print('small',d['bubbles']['small'])\n\"", "description": "Probe raft rows and bubble placement at 05"}`
 
+### 🧑 User — 2026-11-16T00:44:03.118Z
+
+> ↩︎ result: visible True puffs 1648 shown 534
+> {'kind': 'L', 'ds': -3.4, 'lat': -1.35, 'k': 0.29, 'y': 1.134, 'env': 0, 's': 129.22}
+> {'kind': 'L', 'ds': -3.19, 'lat': -1.35, 'k': 0.36, 'y': 1.089, 'env': 0, 's': 129.44}
+> {'kind': 'L', 'ds': -2.8, 'lat': -1.37, 'k': 0.49, 'y': 1.018, 'env': 0, 's': 129.83}
+> {'kind': 'L', 'ds': -2.29, 'lat': -1.53, 'k': 0.52, 'y': 0.944, 'env': 0, 's': 130.33}
+> {'kind': 'L', 'ds': -1.69, 'lat': -1.75, 'k': 0.52, 'y': 0.874, 'env': 0, 's': 130.93}
+> {'kind': 'L', 'ds': -1.01, 'lat': -1.48, 'k': 0.43, 'y': 0.811, 'env': 1, 's': 131.61}
+> {'kind': 'L', 'ds': -0.26, 'lat': -2.3, 'k': 0.52, 'y': 0.757, 'env': 0, 's': 132.36}
+> {'kind': 'L', 'ds': 0.56, 'lat': -2.44, 'k': 0.72, 'y': 0.712, 'env': 0.22, 's': 133.18}
+> {'kind': 'L', 'ds': 1.44, 'lat': -2.09, 'k': 0.89, 'y': 0.676, 'env': 1, 's': 134.06}
+> {'kind': 'L', 'ds': 2.37, 'lat': -3.5, 'k': 0.52, 'y': 0.634, 'env': 0, 's': 134.99}
+> {'kind': 'L', 'ds': 3.36, 'lat': -4.01, 'k': 0.52, 'y': 0.6, 'env': 0, 's': 135.98}
+> {'kind': 'L', 'ds': 4.4, 'lat': -4.57, 'k': 0.52, 'y': 0.566, 'env': 0, 's': 137.02}
+> {'kind': 'L', 'ds': 5.48, 'lat': -5.17, 'k': 0.52, 'y': 0.532, 'env': 0, 's': 138.1}
+> {'kind': 'L', 'ds': 6.62, 'lat': -5.43, 'k': 0 …[+2778 chars]
+
+### 🤖 Claude — 2026-11-16T00:44:20.523Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/pilot05/wave6/foam/tools/rowprof.py references/05_flow_into_the_current.png qa/pilot05/wave7/baseline/05.png qa/pilot05/wave7/foam/iso_norafts/05.png 2>&1", "description": "Row foam extents for ref, baseline, no-rafts"}`
+
+### 🧑 User — 2026-11-16T00:44:21.828Z
+
+> ↩︎ result: y  references  |  baseline  |  iso_norafts
+>   500     -        /     -         |      -        /     -         |      -        /     -       
+>   520 317-427  41 /     -         |  415-431   6 / 432-454  15  |  415-431   6 / 432-454  14
+>   540 278-378  37 / 548-571   6  |  375-431  30 / 432-641  28  |  375-431  30 / 432-641  28
+>   560 251-311  33 / 544-643  42  |  297-412  40 / 603-656  44  |  297-412  40 / 603-656  44
+>   580 199-285  31 / 576-682  58  |  274-379  51 / 604-681  56  |  274-379  51 / 604-681  56
+>   600 182-240  41 / 656-696  15  |  225-322  65 / 611-724  83  |  225-322  65 / 611-724  83
+>   620 182-220  22 / 746-799  18  |  182-289  68 / 647-801  99  |  182-289  68 / 647-801  99
+>   640 202-253  20 / 762-816  30  |  163-249  66 / 683-843 101  |  163-249  66 / 683-843 100
+>   660 226-279  35 / 795-853  21  |   87-233 102 / 759-863  84  |   87-233 102 / 759-863  84
+>   680 138-282  65 / 811-863  36  |   79-201 115 / 783-863  53  |   79-201 115 / 783-863  53
+>   700  89-264 122 / 840-863  17  |   19-190 145 / 759-863  34  |   19-190 145 / 823-863  27
+>   720  81-234 107 / 837-863  16  |    5-146 103 / 740-863  91  |    5-146 103 / 843-863   4
+>   740  25-151  83 / 796-863  51  |    0- 99  9 …[+3289 chars]
+
