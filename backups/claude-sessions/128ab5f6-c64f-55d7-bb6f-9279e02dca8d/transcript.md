@@ -3854,3 +3854,30 @@ I'll also save the full brief in the repository, so a future session can relaunc
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:specialist1-launched --message \"Screen 05 projection: Specialist 1 (washer-environment-modeler as texture-projection artist) launched; brief + agent status saved\" 2>&1 | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"'; echo \"remote $(git ls-remote origin refs/heads/claude/rainbow-05-water-projection | cut -c1-12) local $(git rev-parse --short=12 HEAD)\"", "description": "Save brief and status to GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-16T15:46:45.015Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "ba1e9a3527310655b3b83d4b2847aa511c0b257d",
+> remote ba1e9a352731 local ba1e9a352731
+
+### 🤖 Claude — 2026-11-16T15:46:57.678Z
+
+I've switched to your approach. No more procedural, bloom or saturation rounds: the work now reproduces your actual water design.
+
+**Your isolated water artwork was not in the repository.** I searched every image by content and size and found nothing matching, so the copy you attached is now saved byte-for-byte as `references/water/05_water_isolated_original.png`. I checked it against the approved Screen 05: it is that picture's water layer. Its bank outline follows the approved banks and the S-curves line up. It is also clean where Benny, the coins and the bubbles cover the water in the approved image. So your artwork is the source texture, and the approved image is the target to match.
+
+**Separate branch:**
+- The projection work is on the new branch `claude/rainbow-05-water-projection`, saved on GitHub at `ba1e9a3`, matching local.
+- The current working version, `ccr-451ea8c7-3nqlis` at `97dda28`, is now protected, so the autosave can no longer push to it.
+- The five-minute autosave now follows the new branch. It had paused for about 19 minutes while this session was idle between your messages; it is running again.
+
+**Specialist 1 is running** on the texture-projection feasibility test only. The roster has no specialist with that exact title, and the project rules say to reuse the ten specialists rather than create new ones. So the Blender specialist (washer-environment-modeler) is doing it, briefed as the texture-projection and UV-mapping artist. It is:
+1. Fixing the projection camera, reusing the existing Blender scene matched to the game's locked Screen 05 camera.
+2. Projecting the real river mesh into your artwork and measuring how far the game's river shape differs from yours: overlap, bank offsets row by row, S-curve size. It also measures how much detail your artwork gives the distant river, which limits how close the camera can come before the far design blurs.
+3. Then, in Blender 5.3, baking your artwork onto the river as a real texture. It renders behind a new switch `?proj05=1`, with the default game unchanged. If the river's shape blocks a close match, it builds a corrected-shape version behind its own switch `?projgeo05=1`.
+
+**Specialist 2 (water-fx-specialist) is queued.** It starts only after you've seen the static match, and its job is to animate that same design down the S-curves toward the camera.
+
+The full brief is saved in `qa/pilot05/proj/BRIEF_SPECIALIST1.md`, so the work can be relaunched if this session closes. When Specialist 1 reports, you'll get its verdict with numbers and full-size APPROVED and NEW pictures from the same camera and scale. The clip of the flowing water comes after Specialist 2.
+
