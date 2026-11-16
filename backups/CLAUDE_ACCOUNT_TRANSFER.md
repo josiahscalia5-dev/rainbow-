@@ -1,6 +1,28 @@
-# Rainbow — Claude account transfer guide (newest: session 013VHsJB, branch `claude/rainbow-05-water-projection`, 2026-11-16 ~16:00 UTC)
+# Rainbow — Claude account transfer guide (newest: session 01KS3bZt, branch `ccr-8c4acadc-iybw0n`, 2026-11-16 ~23:20 UTC)
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
+
+## ▶ NEWEST (2026-11-16 22:18 → ~23:20 UTC, NEW Claude account, session `01KS3bZt…`, branch `ccr-8c4acadc-iybw0n`) — READ THIS FIRST
+The previous account (branch `ccr-61131b9d-uj0oqb`, last commit `aea7e77`, 22:12 UTC) ran out of credits. This session:
+* **Transfer:** the session branch `ccr-8c4acadc-iybw0n` was an old ancestor (81e639e) → fast-forwarded to `aea7e77` (no merge
+  commit, no history rewrite). All 19 remote `ccr-*` / `claude/*` branches are contained; the 3 `codex/*` branches stay
+  separate (never auto-merged). `scripts/claude-bootstrap.sh --skip-resume` → BOOTSTRAP OK (LFS 34 / 34 + on GitHub LFS,
+  references 13 / 13, 10 / 10 specialists unchanged, Blender 5.3.0, Android SDK 34 + Java 21, Playwright WebGL2, tsc,
+  continuity). `backups/autosave.config.json`: `branch` = this branch; `ccr-61131b9d-uj0oqb`, `ccr-e546a360-cxmton`,
+  `ccr-57af22a4-lsg7y7`, `claude/rainbow-05-water-projection` and the two newer `codex/*` branches added to `protected_branches`.
+* **Recovered game verified** (captures one at a time): default 05, protected BEFORE and the full stack
+  (`?proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1`) 0 px different from their saved pictures;
+  `&projflow05=2` at the frozen clock 90 px by 1 level; gameplay test on the full stack + `projflow05=2` 8 / 8.
+* **Blender** checked on the user's request: `qa/tools_check/blender_2026-11-16/REPORT.md` (7 / 7 `.blend` open, Cycles /
+  EEVEE / Workbench renders, paddles GLB round-trip).
+* **Work: `&projnear05=1`** — the riding blur of `qa/pilot05/proj/flow2/NOTES.md` part 2. State, failures, measurements,
+  exact next steps: **`qa/pilot05/proj/near/NOTES.md`** ("Still to do"). Behind the switch; default game unchanged; the
+  user has NOT approved it. Draft PR #12 (base `ccr-61131b9d-uj0oqb`, "DO NOT MERGE").
+* Connectors on this account: GitHub MCP + git proxy OK, Playwright plugin OK, World Labs Atlas connector OK
+  (`list_projects`, free), Marble key works through the environment proxy (free read 5,190 credits; nothing spent).
+  No specialist is running; none was needed.
+* Next account: start from **`ccr-8c4acadc-iybw0n`** (or whatever branch is newest by `git ls-remote`), run the bootstrap,
+  read `qa/pilot05/proj/near/NOTES.md`.
 
 ## ▶ NEWEST (2026-11-16 ~18:50 UTC, session `012NR93Q…`, branch `ccr-e546a360-cxmton`) — `?proj05=1` first version DONE
 The user's APPROVED Screen 05 water baked onto the real game river (river coordinates, world-anchored; approved

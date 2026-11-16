@@ -1,8 +1,8 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-16T19:15:00Z",
- "updated_by_session": "012NR93QX82e3JqBGArAa4BD (branch ccr-e546a360-cxmton)",
+ "updated_utc": "2026-11-16T23:20:00+00:00",
+ "updated_by_session": "01KS3bZtuLZb28K4pdNYaQHQ",
  "running_now": [],
  "assignments_now": {
   "_note": "State at 2026-11-16 ~15:55 UTC (urgent backup). A running specialist does NOT survive the end of a session or an account switch: if you are a new session, treat 'running' as INTERRUPTED and relaunch from the brief.",
@@ -27,7 +27,7 @@
   },
   "others": "the remaining eight specialists are idle (see 'agents'); none is needed for the projection task"
  },
- "current_focus": "Screen 05 water — NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
+ "current_focus": "2026-11-16 ~23:20 UTC, branch ccr-8c4acadc-iybw0n (new Claude account): the MAIN session is building ?proj05=1&projnear05=1 (high-resolution near water tile so the approved swirls stay sharp while Benny rides) - qa/pilot05/proj/near/NOTES.md, section 'Still to do'. No specialist is running; none needs relaunching for this. Previous focus: Screen 05 water \u2014 NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
  "agents": [
   {
    "name": "washer-environment-modeler",

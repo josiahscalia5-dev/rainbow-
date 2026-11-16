@@ -1,0 +1,49 @@
+{
+ "q": "proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1",
+ "frames": [
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride5/det0/move_00.png",
+   "d": 0,
+   "s": 132.438,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride5/det0/move_08.png",
+   "d": 8,
+   "s": 140.505,
+   "cam": [
+    2,
+    -38.22,
+    -74.84
+   ],
+   "lat": 0
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride5/det0/move_17.png",
+   "d": 17,
+   "s": 149.488,
+   "cam": [
+    2,
+    -38.59,
+    -83.77
+   ],
+   "lat": 0
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/dc483bdf-6b1c-535c-9b6e-845dc7bef559/scratchpad/ride5/det0/move_35.png",
+   "d": 35,
+   "s": 167.455,
+   "cam": [
+    1.34,
+    -39.33,
+    -101.67
+   ],
+   "lat": 0
+  }
+ ]
+}

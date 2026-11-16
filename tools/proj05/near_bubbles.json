@@ -1,0 +1,111 @@
+{
+ "note": "approved bubbles + Benny splash foam to remove from the repeating near tile (tools/proj05/near_bake.py): [u, s, radius_u, radius_s] in SOURCE river coordinates of the approved picture",
+ "bubbles": [
+  [
+   -0.6064,
+   136.233,
+   0.0703,
+   0.6562,
+   "big bubble left of Benny"
+  ],
+  [
+   -0.4307,
+   134.771,
+   0.0312,
+   0.319,
+   "bubble"
+  ],
+  [
+   -0.2666,
+   132.173,
+   0.0137,
+   0.082,
+   "small bubble"
+  ],
+  [
+   -0.249,
+   131.784,
+   0.0117,
+   0.0638,
+   "small bubble"
+  ],
+  [
+   -0.2139,
+   131.282,
+   0.0977,
+   0.4193,
+   "Benny splash foam + bubble, left"
+  ],
+  [
+   -0.4229,
+   133.653,
+   0.0547,
+   0.7474,
+   "foam column under bubble"
+  ],
+  [
+   -0.4971,
+   134.157,
+   0.0137,
+   0.1003,
+   "small bubble"
+  ],
+  [
+   -0.2725,
+   133.046,
+   0.0098,
+   0.082,
+   "small bubble"
+  ],
+  [
+   0.3408,
+   133.811,
+   0.0273,
+   0.3372,
+   "bubble right"
+  ],
+  [
+   0.2803,
+   131.747,
+   0.0352,
+   0.3281,
+   "bubble right"
+  ],
+  [
+   0.2549,
+   131.201,
+   0.0723,
+   0.4193,
+   "Benny splash foam, right"
+  ],
+  [
+   0.335,
+   131.393,
+   0.0156,
+   0.1185,
+   "small bubble"
+  ],
+  [
+   0.8584,
+   145.642,
+   0.0527,
+   0.793,
+   "big teardrop bubble far right"
+  ],
+  [
+   0.7197,
+   143.389,
+   0.125,
+   0.4193,
+   "foam cloud on pink, right"
+  ],
+  [
+   0.5088,
+   136.184,
+   0.0078,
+   0.474,
+   "dark seam line"
+  ]
+ ],
+ "how": "marked by eye on the first bake's tile (A 130.5, L 7, 1024x768, pad 0.4), converted with the tile's column shift; to check: python3 -I tools/proj05/near_bake.py assets/textures/water05"
+}
