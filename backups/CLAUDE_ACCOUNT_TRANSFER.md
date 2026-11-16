@@ -1,8 +1,57 @@
-# Rainbow — Claude account transfer guide (newest: session 013VHsJB on branch `ccr-451ea8c7-3nqlis`, 2026-11-16 ~15:00 UTC)
+# Rainbow — Claude account transfer guide (newest: session 013VHsJB, branch `claude/rainbow-05-water-projection`, 2026-11-16 ~16:00 UTC)
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
 
-## ▶ NEWEST — account switch recovery + Screen 05 water wave 12 (session `013VHsJB`, 2026-11-16 13:42–15:00 UTC), branch `ccr-451ea8c7-3nqlis` — READ THIS FIRST
+## ▶ NEWEST — URGENT BACKUP during the Screen 05 water-PROJECTION experiment (2026-11-16 ~15:50–16:00 UTC) — READ THIS FIRST
+Rainbow is an EXISTING game. Do not start a new one. This section wins over everything below.
+
+### Branches (all on GitHub, nothing force-pushed)
+| Branch | What it is | Rule |
+|---|---|---|
+| **`claude/rainbow-05-water-projection`** | NEWEST work: everything below + the projection experiment in progress. Recover from this one | session branch of the experiment; a new session gets its own branch and the SessionStart hook merges this one into it |
+| `ccr-451ea8c7-3nqlis` (`97dda28`) | the user's current WORKING version: default = T2, candidates W12 `?silk05=1&puff05=1&glow05=1&flowcam05=1`, W11, W10, W2, G1b behind URL switches; APKs in `builds/` | PROTECTED, never pushed to |
+| `codex/screen05-water-hfb8p0-20261116` (`4abf548`) | Codex's separate opt-in water experiment (`src/vfx/liquid05.ts`, `foam05Options.ts`, `scripts/liquid05-*`, `qa/codex-water/`), based on `088dd3f` | PROTECTED. **Never merge automatically** (user) — compare / cherry-pick only when the user asks |
+| `codex/screen05-water-experiment-20261116` (`d493cc3`) | points at one of this session's autosave commits, no extra work | protected |
+| all earlier `ccr-*` / `claude/*` | history | protected, all contained in the newest branch |
+
+### The current objective (user, 2026-11-16 ~15:40) — do not change it
+"STOP recreating my approved water with new procedural patterns, random shader adjustments and additional bloom …
+reproduce my original approved water's DESIGN FIRST, then make it move." Texture-projection feasibility test first; then a
+real textured, continuous 3D river (not an image pasted over the screen); then the SAME design animated, flowing down the
+S-curves toward the camera; full-size APPROVED vs NEW from the same camera and scale; a short clip proving the flow
+direction; separate reversible branch; no 100 % claims without evidence.
+* Source artwork (supplied by the user in chat 15:42 UTC, was NOT in the repo before): `references/water/05_water_isolated_original.png`
+  (941 × 1672 RGBA; in `scripts/reference.sha256`, 13 files now). Target: `references/05_flow_into_the_current.png`.
+* **Specialist 1** = `washer-environment-modeler` as Blender texture-projection / UV-mapping artist — RUNNING at the time
+  of this backup (launched 15:47). Progress then: live camera + river mesh exported (`qa/pilot05/proj/probe/`), probe
+  script `scripts/proj05-probe.mjs`, read-only QA hook `qa3d()` in `src/game/Game.ts`; no footprint numbers, no baked
+  texture, no `?proj05` switch yet. Later progress: look at `qa/pilot05/proj/` (NOTES.md when it exists) and `git log`.
+  **A running specialist does not survive a session end: if you are a new session, it is INTERRUPTED — relaunch it** with
+  `qa/pilot05/proj/BRIEF_SPECIALIST1_VERBATIM.md` (exact prompt) + "continue from the files already in qa/pilot05/proj/".
+* **Specialist 2** = `water-fx-specialist` — QUEUED; launch only after the user has seen Specialist 1's static match:
+  `qa/pilot05/proj/BRIEF_SPECIALIST2.md` (the user's exact words + ready launch prompt).
+* Machine-readable: `backups/AGENTS_STATUS.json` → `running_now`, `assignments_now`.
+
+### Verified at this backup (15:51–16:00 UTC)
+| Check | Result |
+|---|---|
+| Push | `claude/rainbow-05-water-projection`: remote SHA == local HEAD after every save (15:51 `f01bad3`, 15:55 `4de60b0`, then the final one reported to the user in chat) |
+| Other branches | all 15 `ccr-*` / `claude/*` remote branches are ancestors of the newest branch; the one branch NOT contained is Codex's `codex/screen05-water-hfb8p0-20261116` (kept separate on purpose) |
+| Git LFS | 26 / 26 real files locally, `git lfs fsck` OK, 26 / 26 objects (199 MB, 17 Marble / World Labs) confirmed on GitHub LFS |
+| Marble / World Labs | both worlds complete (draft `5fd3d7a7-…`, full `c0c9dc57-…`): 49 files checked, 71 tracked under `qa/worldlabs/`; API key works on the `rainbow-` environment (free read: 5,190 credits); no credits spent, no new world |
+| References | 13 / 13 byte-identical (12 approved + the isolated water artwork) |
+| Specialists | 10 / 10 definitions present, SHA-256 unchanged |
+| Autosave | daemon running, every 5 min, lock-protected, remote verified; `autosave.config.json` → `branch` = the projection branch; 16 protected branches |
+
+### What does NOT travel through GitHub (re-do on the next account)
+Claude login · GitHub connection + Claude GitHub App on the private repo · the Marble World API key (secure form
+`request_credential`, host `api.worldlabs.ai`, header `WLT-Api-Key`, only when the free check says 401 / 403) · World Labs
+Atlas connector (not installed on the current account; optional) · account-level plugins (enable `playwright`) ·
+installed tools (Blender, Android SDK, npm packages — the bootstrap reinstalls them in ≈ 1 min) · running processes
+(autosave daemon: restarted by the SessionStart hook; specialists: relaunch from the briefs). Backups cannot run while
+the cloud environment is closed.
+
+## Earlier — account switch recovery + Screen 05 water wave 12 (session `013VHsJB`, 2026-11-16 13:42–15:00 UTC), branch `ccr-451ea8c7-3nqlis` — READ THIS FIRST
 The previous account (session `915f17cf`, branch `claude/rainbow-3d-account-recovery-hfb8p0`) ran out of credits at 13:32
 UTC, right after its W11 water work and before its emergency-backup request could run. Nothing was lost: its 13:32 Stop
 hook save and 13:37 daemon save (`088dd3f`) are on GitHub and its working tree was clean.

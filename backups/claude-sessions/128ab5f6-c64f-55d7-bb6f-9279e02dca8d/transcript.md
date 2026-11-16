@@ -4400,3 +4400,115 @@ The specialist check passes again (10/10). The Codex-branch protection didn't ap
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/autosave.config.json'\nt=open(p).read()\nold='    \"claude/rainbow-3d-account-recovery-hfb8p0\", \"ccr-451ea8c7-3nqlis\"\\n  ],'\nnew=('    \"claude/rainbow-3d-account-recovery-hfb8p0\",\\n    \"ccr-451ea8c7-3nqlis\",\\n'\n     '    \"codex/screen05-water-hfb8p0-20261116\",\\n    \"codex/screen05-water-experiment-20261116\"\\n  ],')\nassert t.count(old)==1\nt=t.replace(old,new,1); d=json.loads(t); open(p,'w').write(t)\nprint('branch:',d['branch'],'| protected:',len(d['protected_branches']),d['protected_branches'][-3:])\nEOF\nfor i in $(se …[+646 chars]`
 
+### 🧑 User — 2026-11-16T15:54:06.083Z
+
+> ↩︎ result: branch: claude/rainbow-05-water-projection | protected: 16 ['ccr-451ea8c7-3nqlis', 'codex/screen05-water-hfb8p0-20261116', 'codex/screen05-water-experiment-20261116']
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "4de60b05077370360bf82807d41fcc8fcb89d660",
+> local 4de60b05077370360bf82807d41fcc8fcb89d660 remote 4de60b05077370360bf82807d41fcc8fcb89d660
+
+### 🤖 Claude — 2026-11-16T15:54:16.323Z
+
+Second verified backup is on GitHub (`4de60b0`). Now the transfer documents. First I'll look at the manifest's plugin and server sections and the bootstrap's reference check.
+
+### 🤖 Claude — 2026-11-16T15:54:18.340Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('backups/TOOL_MANIFEST.json'))\nfor k in ('claude_plugins','mcp_servers','cannot_transfer_through_github','protected'):\n    print('==',k); print(json.dumps(d[k],indent=1,ensure_ascii=False)[:1600])\nprint('== marble keys', list(d['marble_worldlabs'].keys()))\"; grep -n \"reference.sha256\\|12/12\\|/12 \" scripts/claude-bootstrap.sh | head -6", "description": "Read manifest sections and bootstrap reference check"}`
+
+### 🧑 User — 2026-11-16T15:54:18.456Z
+
+> ↩︎ result: == claude_plugins
+> {
+>  "synced_from_claude_ai_account": [
+>   "superpowers",
+>   "playwright",
+>   "code-review",
+>   "feature-dev",
+>   "claude-code-setup",
+>   "hubcap",
+>   "typescript-lsp",
+>   "pyright-lsp"
+>  ],
+>  "note_synced": "Account-level plugins follow the Claude account (claude.ai settings), not the repo. On a new account enable at least 'playwright' (Playwright MCP).",
+>  "repo_installed": {
+>   "worldlabs@worldlabs": {
+>    "marketplace": "worldlabsai/skills",
+>    "install": "bash scripts/setup-worldlabs-plugin.sh",
+>    "purpose": "skills atlas-blender, atlas-splats, atlas-flythrough, worldlabs-cli; its duplicate MCP copy plugin:worldlabs:worldlabs is disabled for this project"
+>   }
+>  },
+>  "not_needed": [
+>   "context7 (needs OAuth sign-in; not used by Rainbow)"
+>  ]
+> }
+> == mcp_servers
+> {
+>  "plugin:playwright:playwright": {
+>   "source": "playwright plugin (npx @playwright/mcp@latest)",
+>   "needed": true,
+>   "check": "claude mcp list"
+>  },
+>  "World Labs Atlas": {
+>   "source": "claude.ai connector (https://api.atlas.worldlabs.ai/mcp), per Claude account",
+>   "needed": "only for new World Labs tasks",
+>   "reconnect": "claude.ai -> Settings -> Connectors -> World Labs Atlas -> sign in",
+>   "credits": "task tools spend  …[+1805 chars]
+
+### 🤖 Claude — 2026-11-16T15:54:32.278Z
+
+> 🔧 **Bash** `{"command": "tail -2 scripts/reference.sha256 | cut -c1-110 && grep -q \"references/water/05_water_isolated_original.png\" scripts/reference.sha256 || sha256sum references/water/05_water_isolated_original.png >> scripts/reference.sha256; echo \"now: $(sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK$')/$(grep -c . scripts/reference.sha256) OK\" && python3 - <<'EOF'\nimport json\np='backups/TOOL_MANIFEST.json'\nt=open(p).read()\ndef rep(a,b,n=1):\n    global t\n    assert t.count(a)>=1, a[:70]\n    t=t.replace(a,b,n)\nrep('\"updated_utc\": \"2026-11-16T14:30:00+00:00\",','\"updated_ut …[+2863 chars]`
+
+### 🧑 User — 2026-11-16T15:54:32.439Z
+
+> ↩︎ result: 4f30ca59a926d6eed449a2865d35776368864bfd92c5c7f0845a96bf500397ae  references/11_safely_home_final_victory.png
+> 92bbaa61a66c7a4dc16d70730be76a34b9575d3f4484e72d95129ad574460daf  character_references/official_cartoon_girl_o
+> now: 13/13 OK
+> manifest ok
+> 55:    "not_needed": ["context7 (needs OAuth sign-in; not used by Rainbow)"]
+> 56-  },
+> 57-  "mcp_servers": {
+> 58-    "plugin:playwright:playwright": {"source": "playwright plugin (npx @playwright/mcp@latest)", "needed": true, "check": "claude mcp list"},
+> 52:    "synced_from_claude_ai_account": ["superpowers", "playwright", "code-review", "feature-dev", "claude-code-setup", "hubcap", "typescript-lsp", "pyright-lsp"],
+
+### 🤖 Claude — 2026-11-16T15:54:40.190Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/TOOL_MANIFEST.json'\nt=open(p).read()\na='    \"not_needed\": [\"context7 (needs OAuth sign-in; not used by Rainbow)\"]'\nb=('    \"not_needed\": [\"context7 (needs OAuth sign-in; not used by Rainbow)\", \"design plugin MCP servers: asana / atlassian / figma / intercom / linear / notion / slack (blocked by the environment network, not used by Rainbow)\"],\\n'\n   '    \"state_2026_11_16_current_account\": \"connected and working: playwright MCP, GitHub MCP + git proxy, worldlabs@worldlabs plugin (skills), superpowers, frontend-design, con …[+1300 chars]`
+
+### 🧑 User — 2026-11-16T15:54:40.281Z
+
+> ↩︎ result: manifest plugins ok
+>  1 file changed, 8 insertions(+), 3 deletions(-)
+
+### 🤖 Claude — 2026-11-16T15:54:41.427Z
+
+Next come the three hand-over documents, starting with `CLAUDE.md`.
+
+### 🤖 Claude — 2026-11-16T15:54:54.881Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='CLAUDE.md'\nt=open(p).read(); n=0\ndef rep(a,b):\n    global t,n\n    assert t.count(a)==1, 'MISSING/DUP: '+a[:70]\n    t=t.replace(a,b,1); n+=1\nrep(\"`git fetch origin ccr-451ea8c7-3nqlis && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`\",\n    \"`git fetch origin claude/rainbow-05-water-projection && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`\")\nrep(\"`backups/TOOL_MANIFEST.json` and the current briefs `qa/pilot05/wave12/NOTES.md` (water) + `qa/pilot05/COORDINATION_WAVE9B.md`.\",\n    \" …[+3337 chars]`
+
+### 🧑 User — 2026-11-16T15:54:54.963Z
+
+> ↩︎ result: 5 CLAUDE.md edits
+
+### 🤖 Claude — 2026-11-16T15:55:19.573Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='CLAUDE.md'\nt=open(p).read()\na=\"Claude-environment network secret (host `api.worldlabs.ai`, header `WLT-Api-Key`; on this account: the `Default`\\n  environment).\"\nassert t.count(a)==1\nt=t.replace(a,\"Claude-environment network secret (host `api.worldlabs.ai`, header `WLT-Api-Key`; on the current account: the personal\\n  `rainbow-` environment, re-entered by the user 2026-11-16).\",1)\nopen(p,'w').write(t)\n\np='backups/CLAUDE_ACCOUNT_TRANSFER.md'\nt=open(p).read()\nt=t.replace(t.split('\\n',1)[0],\"# Rainbow — Claude account transfer guide (newest: ses …[+5512 chars]`
+
+### 🧑 User — 2026-11-16T15:55:19.657Z
+
+> ↩︎ result: transfer guide ok
+
+### 🤖 Claude — 2026-11-16T15:55:42.874Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "content": "# Paste this into Claude Code on the next Claude account\n\n(Updated 2026-11-16 ~16:00 UTC, during the Screen 05 water-projection experiment.)\n\n## Before you paste (one-time, on the new account — these never travel through GitHub)\n1. claude.ai → connect **GitHub** to the new Claude account and install the **Claude GitHub App** on the private repo\n   `josiahscalia5-dev/rainbow-` (https://github.com/josiahscalia5-dev/rainbow-).\n2. Enable the **playwright** plugin if it is not already on. Optional: Settings  …[+6172 chars]`
+
+### 🧑 User — 2026-11-16T15:55:42.932Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T15:55:49.494Z
+
+> 🔧 **Bash** `{"command": "for i in $(seq 1 40); do out=$(python3 scripts/rainbow-autosave.py --reason manual:urgent-backup-3 --message \"URGENT backup 3: account-transfer docs updated for the Screen 05 water-projection experiment (CLAUDE.md, transfer guide, new-account prompt, tool manifest); isolated water artwork added to the protected reference list (13 files)\" 2>&1); echo \"$out\" | grep -q \"another autosave is running\" || break; sleep 3; done; echo \"$out\" | grep -E '\"result\"|\"pushed_verified\"|\"commit\"|\"error\"' | head -4; echo \"local $(git rev-parse HEAD) remote $(git ls-remote origin ref …[+261 chars]`
+

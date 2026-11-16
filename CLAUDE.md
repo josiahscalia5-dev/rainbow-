@@ -9,14 +9,18 @@ only; a conflicting merge is aborted and reported), restored the Git LFS binarie
 started the full bootstrap in the background. Its summary ("RAINBOW SESSION START") is in your context.
 1. `bash scripts/claude-bootstrap.sh --status` → `backups/BOOTSTRAP_REPORT.md` (re-run when it says "still in progress").
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh` yourself; from a branch without it:
-   `git fetch origin ccr-451ea8c7-3nqlis && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
+   `git fetch origin claude/rainbow-05-water-projection && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
 2. Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
-   `backups/TOOL_MANIFEST.json` and the current briefs `qa/pilot05/wave12/NOTES.md` (water) + `qa/pilot05/COORDINATION_WAVE9B.md`.
+   `backups/TOOL_MANIFEST.json` and the current briefs: **`qa/pilot05/proj/`** (water texture projection — `NOTES.md` when it
+   exists, `BRIEF_SPECIALIST1_VERBATIM.md`, `BRIEF_SPECIALIST2.md`), `qa/pilot05/wave12/NOTES.md`, `qa/pilot05/COORDINATION_WAVE9B.md`.
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup
    report of §4. Tell the user plainly about every failure and every backup GAP the bootstrap reports.
-The GitHub default branch is an OLD version. Newest work as of 2026-11-16 ~14:30 UTC: branch `ccr-451ea8c7-3nqlis`
-(contains every other branch) — the bootstrap's merge result always wins over this line. Ready-to-paste prompt for a
+The GitHub default branch is an OLD version. Newest work as of 2026-11-16 ~16:00 UTC: branch
+**`claude/rainbow-05-water-projection`** (the Screen 05 water-projection experiment; contains every other `ccr-*` /
+`claude/*` branch). `ccr-451ea8c7-3nqlis` (`97dda28`) = the user's current WORKING version (T2 default + W12 candidates),
+protected. `codex/*` branches hold Codex's separate water experiment: preserved, protected, **never merge them
+automatically** (the bootstrap only merges `ccr-*` / `claude/*`). The bootstrap's merge result always wins over this line. Ready-to-paste prompt for a
 new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`. The bootstrap checks before installing (Blender 5.3.0, Android SDK
 34, npm, Python libs, World Labs plugin): never reinstall a working tool by hand, never run `playwright install`.
 
@@ -37,8 +41,8 @@ new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`. The bootstrap checks before 
 
 ## 3. Security
 * NEVER commit, print, log or paste API keys, passwords or tokens. The Marble World API key exists only as a
-  Claude-environment network secret (host `api.worldlabs.ai`, header `WLT-Api-Key`; on this account: the `Default`
-  environment). Check it with the free read `python3 -I scripts/verify-assets.py worldlabs` (the bootstrap does).
+  Claude-environment network secret (host `api.worldlabs.ai`, header `WLT-Api-Key`; on the current account: the personal
+  `rainbow-` environment, re-entered by the user 2026-11-16). Check it with the free read `python3 -I scripts/verify-assets.py worldlabs` (the bootstrap does).
   **Do not ask the user for a key unless that check reports HTTP 401/403** (authentication failed); a network error
   or timeout is NOT a key problem. Only then call `request_credential` (host `api.worldlabs.ai`, header
   `WLT-Api-Key`); the user types the key only into that secure form. The autosave scans staged text for secrets.
@@ -65,8 +69,9 @@ update that file when its state changes. Tool versions, plugins, MCP servers, ho
 pushes or tests unless verified.
 
 ## 6. The game (authoritative brief `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`)
-Fresh isolated game: do not import anything from prior games. Preserve `references/*.png` and
-`character_references/official_cartoon_girl_original.jpg` unchanged (`sha256sum -c scripts/reference.sha256`).
+Fresh isolated game: do not import anything from prior games. Preserve `references/*.png`,
+`references/water/05_water_isolated_original.png` (the user's original isolated Screen 05 water artwork) and
+`character_references/official_cartoon_girl_original.jpg` unchanged (`sha256sum -c scripts/reference.sha256`, 13 files).
 Locked target = 11 stages, 01–11, plus one separate cartoon-girl reference. Character identity override = the new
 cartoon girl (same rig/model/style) in opening, scene 10 and scene 11; legacy photo girls are framing references only.
 Benny's pink fluff, violet eyes, knitted star hat and paw pads stay consistent. Ending is **11 · SAFELY HOME**,
@@ -87,6 +92,17 @@ visual result** (user, 2026-11-16 ~11:50). Candidates waiting for the user: W2 `
 `?ringa=26&nearfloor05=0` reproduces `qa/pilot05/wave9/baseline/05.png` pixel-for-pixel (`claude-bootstrap.sh --full`
 checks both). No more tunnel-position experiments (user, 2026-11-16): next are the rings' polished gold, the purple
 metal walls, the thick cyan-and-pink S-river and premium lighting. Report branch + commit SHA at major checkpoints.
+
+**Screen 05 water — CURRENT OBJECTIVE (user, 2026-11-16 ~15:40): reproduce the ACTUAL approved water DESIGN first, then
+make it move.** No more procedural-pattern / saturation / bloom / white-line rounds. Specialist 1
+(`washer-environment-modeler` as Blender texture-projection artist) camera-projects / bakes the user's original artwork
+(`references/water/05_water_isolated_original.png`, target `references/05_flow_into_the_current.png`) onto the real river
+mesh, feasibility test first (`?proj05=1`, corrected visual geometry `?projgeo05=1` if needed); after the user has seen
+the static match, Specialist 2 (`water-fx-specialist`) animates the SAME design flowing down the S-curves toward the
+camera (`?projflow05=1`), layout anchored to the world, plus a short clip proving the direction. Branch
+`claude/rainbow-05-water-projection`; status and relaunch instructions: `backups/AGENTS_STATUS.json` →
+`assignments_now`. Benny, camera, coins, steering, gameplay and transitions stay untouched; never paste the approved
+image over the screen; no 100 % claims without evidence.
 
 Real 3D interactive mobile portrait gameplay; 01–02 real-time cinematics; 03–10 interactive ride; 11 victory
 cinematic. No wallpaper/collage/slideshow/video as interactive substitute. Water must run along contiguous spline

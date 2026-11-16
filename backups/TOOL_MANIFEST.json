@@ -3,7 +3,7 @@
   "schema": 1,
   "project": "RAINBOW - 11-screen 3D mobile game (Three.js + Vite + Capacitor Android)",
   "repo": "josiahscalia5-dev/rainbow-",
-  "updated_utc": "2026-11-16T14:30:00+00:00",
+  "updated_utc": "2026-11-16T15:58:00+00:00",
   "entry_points": {
     "bootstrap": "bash scripts/claude-bootstrap.sh            # full: resume newest work, LFS, refs, agents, Marble, tools, tests, autosave, report",
     "bootstrap_check_only": "bash scripts/claude-bootstrap.sh --check    # no installs, no merges",
@@ -45,13 +45,17 @@
     "ffmpeg": {"required": false, "tested": "6.1.1", "used_by": "Flow video checks"},
     "imagemagick": {"required": false, "tested": "6.9.12"},
     "claude_cli": {"required": true, "tested": "2.1.325", "used_by": "plugin install / mcp list checks"},
+    "screen05_texture_projection": {"required": false, "status": "IN PROGRESS 2026-11-16 (Specialist 1, branch claude/rainbow-05-water-projection)", "source_artwork": "references/water/05_water_isolated_original.png (941x1672 RGBA) -> target references/05_flow_into_the_current.png", "probe": "node scripts/proj05-probe.mjs (live camera + river mesh via the QA hook window.__rainbow.qa3d(); outputs qa/pilot05/proj/probe/)", "locked_camera": "qa/pilot05/wave6/camera_lock/ (camera05.json, screen05_camera_lock.blend), scripts/camera-lock-05.mjs, tools/blender/camera_lock_05.py, scripts/export-river-05.ts", "blender": "Blender 5.3.0 headless (bake scripts go to tools/blender/, textures to assets/textures/water05/)", "switches": "?proj05=1 (projected texture), ?projgeo05=1 (corrected visual geometry), ?projflow05=1 (animation, Specialist 2) - all planned, default build untouched", "briefs": "qa/pilot05/proj/BRIEF_SPECIALIST1_VERBATIM.md, BRIEF_SPECIALIST2.md", "apk_check": "node scripts/apk-web-check.mjs APK OUT.png [checkpoint] (runs the web bundle packed inside an APK in headless Chromium)"},
     "screen05_water_qa": {"required": false, "water05_grain": "python3 -I tools/qa/water05_grain.py OUT.md APPROVED=references/05_flow_into_the_current.png NAME=capture.png ... (water-only cyan/pink S+V, fine grain, grain ratio, thin-white %; indicators, not a fidelity %)", "capture_with_switch": "node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=DIR", "gameplay_with_switch": "node scripts/gameplay-test.mjs --q='silk05=1&puff05=1' --out=FILE.json", "perf_relative": "node scripts/perf05.mjs OUT.json name=query ... (headless SwiftShader: relative cost only, not device fps)", "flow_map_dump": "npx vite-node scripts/flow05-dump.ts", "experiment_build": "VITE_RAINBOW_Q05='silk05=1&puff05=1' npm run android:debug bakes Screen 05 switches into a separate APK (Android has no URL query); unset = default build"}
   },
   "claude_plugins": {
     "synced_from_claude_ai_account": ["superpowers", "playwright", "code-review", "feature-dev", "claude-code-setup", "hubcap", "typescript-lsp", "pyright-lsp"],
     "note_synced": "Account-level plugins follow the Claude account (claude.ai settings), not the repo. On a new account enable at least 'playwright' (Playwright MCP).",
     "repo_installed": {"worldlabs@worldlabs": {"marketplace": "worldlabsai/skills", "install": "bash scripts/setup-worldlabs-plugin.sh", "purpose": "skills atlas-blender, atlas-splats, atlas-flythrough, worldlabs-cli; its duplicate MCP copy plugin:worldlabs:worldlabs is disabled for this project"}},
-    "not_needed": ["context7 (needs OAuth sign-in; not used by Rainbow)"]
+    "not_needed": ["context7 (needs OAuth sign-in; not used by Rainbow)", "design plugin MCP servers: asana / atlassian / figma / intercom / linear / notion / slack (blocked by the environment network, not used by Rainbow)"],
+    "state_2026_11_16_current_account": "connected and working: playwright MCP, GitHub MCP + git proxy, worldlabs@worldlabs plugin (skills), superpowers, frontend-design, context7 plugin installed (its MCP fails to connect: proxy). NOT installed on this account: World Labs Atlas connector (add in claude.ai Settings -> Connectors only for an Atlas task)",
+    "needs_authorization_on_a_new_account": ["GitHub: connect GitHub to the Claude account + install the Claude GitHub App on josiahscalia5-dev/rainbow- (private repo)", "Marble World API key: only via request_credential (host api.worldlabs.ai, header WLT-Api-Key) and only when the free check reports HTTP 401/403", "World Labs Atlas connector: optional, claude.ai Settings -> Connectors, sign in", "playwright plugin: enable in the account plugin settings if missing"],
+    "restored_automatically_by_the_bootstrap": ["npm packages (three, vite, capacitor...)", "Python QA libs", "Blender 5.3.0", "Android SDK 34 + build-tools 34.0.0", "worldlabs plugin (scripts/setup-worldlabs-plugin.sh)", "Git LFS binaries", "five-minute autosave (hooks in .claude/settings.json)", "the ten specialist definitions (.claude/agents/, in git)"]
   },
   "mcp_servers": {
     "plugin:playwright:playwright": {"source": "playwright plugin (npx @playwright/mcp@latest)", "needed": true, "check": "claude mcp list"},
@@ -99,7 +103,8 @@
   },
   "protected": {
     "branches": "backups/autosave.config.json -> protected_branches (never pushed, force-pushed or rewritten)",
-    "files": "scripts/reference.sha256 (12 approved references incl. character_references/official_cartoon_girl_original.jpg) - never modified"
+    "files": "scripts/reference.sha256 (13 files: the 12 approved references incl. character_references/official_cartoon_girl_original.jpg + the user's original isolated Screen 05 water artwork references/water/05_water_isolated_original.png, added 2026-11-16) - never modified",
+    "codex_branches": "codex/screen05-water-hfb8p0-20261116 (4abf548: Codex's opt-in Screen 05 liquid water experiment - src/vfx/liquid05.ts, foam05Options.ts, scripts/liquid05-*, qa/codex-water/; based on 088dd3f) and codex/screen05-water-experiment-20261116 (d493cc3, no extra work). PRESERVED ON GITHUB, PROTECTED, NEVER MERGE AUTOMATICALLY (user 2026-11-16); the bootstrap only merges ccr-*/claude/* branches"
   },
   "cannot_transfer_through_github": [
     "Claude account logins and connector sign-ins (GitHub, World Labs Atlas)",

@@ -63,7 +63,6 @@ try {
     };
     const foamMat = new MBM({ color: 0xffffff, fog: false });
     foamMat.onBeforeCompile = (sh) => { sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>', 'gl_FragColor = vec4(0.0, 0.0, 4.0, 1.0);'); };
-    const foamRoot = scene.getObjectByName('water_system');
     const foamNames = new Set();
     // every renderable
     const all = [];
@@ -77,43 +76,38 @@ try {
       renderer.readRenderTargetPixels(rt, 0, 0, rt.width, rt.height, buf);
       return buf;
     };
-    const renderTo = () => {
-      renderer.setRenderTarget(rt);
-      renderer.setClearColor(0x000000, 0);
-      renderer.clear(true, true, true);
-      renderer.render(scene, camera);
-      renderer.setRenderTarget(null);
-      return read();
+    const writeOff = (m) => {
+      const one = (x) => { if (!x) return x; const c = x.clone(); c.colorWrite = false; if (x.onBeforeCompile) c.onBeforeCompile = x.onBeforeCompile; if (x.customProgramCacheKey) c.customProgramCacheKey = x.customProgramCacheKey; return c; };
+      return Array.isArray(m) ? m.map(one) : one(m);
     };
-    const writeOff = (o) => {
-      const mats = Array.isArray(o.material) ? o.material : [o.material];
-      return mats.map((m) => { if (!m) return m; const c = m.clone(); c.colorWrite = false; if (m.onBeforeCompile) c.onBeforeCompile = m.onBeforeCompile; if (m.customProgramCacheKey) c.customProgramCacheKey = m.customProgramCacheKey; return c; });
-    };
-    // A: river only (+ far wall as occluder)
-    for (const { o } of saved) {
-      if (o === ribbon) { o.material = ribMat; o.visible = true; }
-      else if (o === far) { o.material = farMat; o.visible = true; }
-      else if (o === farWall) { const m = writeOff(o); o.material = Array.isArray(o.material) ? m : m[0]; }
-      else o.visible = false;
-    }
-    const A = renderTo();
-    // B: the whole static environment occludes (walls, rings, lids, far wall, glow); Benny, coins, the girl and every
-    // other water part (foam, bubbles, splash, spray) are hidden — they are not part of the isolated water layer
     let envRoot = farWall;
     while (envRoot.parent && envRoot.parent !== scene) envRoot = envRoot.parent;
     const underEnv = (o) => { let c = o; while (c) { if (c === envRoot) return true; c = c.parent; } return false; };
-    for (const s of saved) {
-      const o = s.o;
-      o.visible = s.vis;
-      if (o === ribbon || o === far) continue;
-      if (isFoam(o)) { foamNames.add(o.name || o.type); o.visible = false; continue; }
-      if (!underEnv(o)) { o.visible = false; continue; }
-      if (o.visible) { const m = writeOff(o); o.material = Array.isArray(s.mat) ? m : m[0]; }
-    }
-    const B = renderTo();
-    // F: foam id over the same scene depth
-    for (const s of saved) { if (isFoam(s.o) && s.vis) { s.o.visible = true; s.o.material = foamMat; } }
-    const F = renderTo();
+    for (const s of saved) { if (isFoam(s.o)) foamNames.add(s.o.name || s.o.type); }
+    /** two draws into one target: (1) occluders depth-only (their own vertex shaders, colour writes off), (2) writers
+     *  with their id material, depth-tested against (1) — so a river pixel survives only where it is the first hit */
+    const pass = (occ, writer) => {
+      renderer.setRenderTarget(rt);
+      renderer.setClearColor(0x000000, 0);
+      renderer.clear(true, true, true);
+      const ac = renderer.autoClear;
+      renderer.autoClear = false;
+      for (const s of saved) { const on = s.vis && occ(s.o); s.o.visible = on; if (on) { s.depthOnly ??= writeOff(s.mat); s.o.material = s.depthOnly; } }
+      renderer.render(scene, camera);
+      for (const s of saved) { const m = s.vis ? writer(s.o) : null; s.o.visible = !!m; if (m) s.o.material = m; }
+      renderer.render(scene, camera);
+      renderer.autoClear = ac;
+      renderer.setRenderTarget(null);
+      return read();
+    };
+    const riverId = (o) => (o === ribbon ? ribMat : o === far ? farMat : null);
+    // A: the river surfaces alone (the far tunnel wall occludes, as it hides the ribbon's continuation behind the seam)
+    const A = pass((o) => o === farWall, riverId);
+    // B: the whole static environment occludes (walls, rings, lids, far wall, glow); Benny, coins, the girl and every
+    // other water part (foam, bubbles, splash, spray) are left out — they are not part of the isolated water layer
+    const B = pass((o) => underEnv(o), riverId);
+    // F: the game's 3D foam (id 4) where it is the first hit in front of the environment and the river surfaces
+    const F = pass((o) => underEnv(o) || o === ribbon || o === far, (o) => (isFoam(o) ? foamMat : null));
     // restore
     for (const s of saved) { s.o.visible = s.vis; s.o.material = s.mat; }
     scene.background = bg;

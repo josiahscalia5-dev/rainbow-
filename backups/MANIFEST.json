@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 9235,
-   "sha256": "82ed4e60533e19e7ac28cfe9ba4bfe442a8a0f1131485cbe1445f2ecb7142137"
+   "bytes": 10993,
+   "sha256": "bc81753ae211bb40a024c3114050f25f6372be78a1c29b501dc899e66b737dce"
   },
   {
    "path": "README_FIRST.md",
@@ -403,13 +403,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 44097,
-   "sha256": "ea858809b59088f7ac98d2f1c00146bde5d9b0fa5ba2cad3c9ff8cbad2e3bd17"
+   "bytes": 49207,
+   "sha256": "fec70d15e242d419e99c4ebf84a2a8171ef69c2a6011f39dd6ec3f6a227e37e7"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 7796,
-   "sha256": "5305bdfe274c52398d069866e134d14e8af551d5e6ce5fe4c4a8a91c1f91e721"
+   "sha256": "37acfd6e7e2daaccaca5662f9ad92d4be1158b8f5563114145575e2f18456413"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -428,13 +428,13 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 5089,
-   "sha256": "eadb2b4b18412bc07f68f307e309a80c81b1676ff5f4f24808010f2f950bd06d"
+   "bytes": 6639,
+   "sha256": "f3827d2eb50406e2fd54ebab473197f1b06d6dff7a1549f1ae87489bd1dc4020"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
-   "bytes": 14563,
-   "sha256": "935a5b347de252ce358ac2f0001e11e109d4afefd020211e7d19dc3e0d69d13d"
+   "bytes": 17557,
+   "sha256": "d2183d6ea7a80eb32ce23ac63886d216b0490a7b6883edfd7bffca90a85306bb"
   },
   {
    "path": "backups/autosave.config.json",
@@ -1180,6 +1180,16 @@
    "path": "qa/pilot05/proj/BRIEF_SPECIALIST2.md",
    "bytes": 4256,
    "sha256": "27d402ebfec5c1fdc21ec04c99dbd22e58dc199ec7eb794a7e61279184e38abc"
+  },
+  {
+   "path": "qa/pilot05/proj/align/align.json",
+   "bytes": 1467,
+   "sha256": "0e6f409a52c672f4906b4b42dabd4427877f240e0fe59aa88fc1f2ff084723ac"
+  },
+  {
+   "path": "qa/pilot05/proj/align/artwork_aligned_864x1536.png",
+   "bytes": 1187729,
+   "sha256": "27c7dfaa33e46c01fae7901f566f45a1d66bd5cf670ead67f0213ca045101d62"
   },
   {
    "path": "qa/pilot05/proj/caps/default/05.png",
@@ -6438,8 +6448,8 @@
   },
   {
    "path": "scripts/proj05-probe.mjs",
-   "bytes": 11527,
-   "sha256": "2a7332e7ab7760e421e246835fe04ee69b3daa73a1f77926167bdf688ffeb11e"
+   "bytes": 11752,
+   "sha256": "5ba30d7cc73eaf1a33002cc882cc39c025ea959c83c1cd840dddbdd52c4636f3"
   },
   {
    "path": "scripts/rainbow-autosave.py",
@@ -6448,8 +6458,8 @@
   },
   {
    "path": "scripts/reference.sha256",
-   "bytes": 1290,
-   "sha256": "3fbcd7144053f8e36b49f67dd869c99fa05c08c3af4e3ced923890dc84a85290"
+   "bytes": 1404,
+   "sha256": "de11eecb546832139d797fbbb8878edc6e790c91e99f0167bf7725972e95a8f1"
   },
   {
    "path": "scripts/resume-newest-work.sh",
@@ -6765,6 +6775,11 @@
    "path": "tools/qa/gold05.py",
    "bytes": 734,
    "sha256": "787a8e4e1dccc7f6c136acd6536bdf0d9be937313bf4c1e2f6e85e336213aaf9"
+  },
+  {
+   "path": "tools/qa/proj05_align.py",
+   "bytes": 5023,
+   "sha256": "2cddf9d385d77c12c848f37a746ba0ef2d2faf78b04219f09b226c986f3f2418"
   },
   {
    "path": "tools/qa/ring_fit05.py",

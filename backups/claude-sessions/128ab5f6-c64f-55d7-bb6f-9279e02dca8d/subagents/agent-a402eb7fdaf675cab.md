@@ -901,3 +901,114 @@ Now let me visualise the maps and align the artwork to the approved frame.
 >     };
 >     const ren …[+2742 chars]
 
+### 🤖 Claude — 2026-11-16T15:54:03.739Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='scripts/proj05-probe.mjs'\ns=open(p).read()\na=s.index(\"    const renderTo = () => {\")\nb=s.index(\"    // restore\\n\")\nnew='''    const writeOff = (m) => {\n      const one = (x) => { if (!x) return x; const c = x.clone(); c.colorWrite = false; if (x.onBeforeCompile) c.onBeforeCompile = x.onBeforeCompile; if (x.customProgramCacheKey) c.customProgramCacheKey = x.customProgramCacheKey; return c; };\n      return Array.isArray(m) ? m.map(one) : one(m);\n    };\n    let envRoot = farWall;\n    while (envRoot.parent && envRoot.parent !== scene) envRoot = envR …[+2473 chars]`
+
+### 🧑 User — 2026-11-16T15:54:25.675Z
+
+> ↩︎ result: 74:    const read = () => {
+> 79:    const writeOff = (m) => {
+> 95:      for (const s of saved) { const on = s.vis && occ(s.o); s.o.visible = on; if (on) { s.depthOnly ??= writeOff(s.mat); s.o.material = s.depthOnly; } }
+> probe → qa/pilot05/proj/probe {"w":864,"h":1536,"uTime":12,"ribbonRows":240,"farVerts":2783,"farMorph":0,"foam":["foam_berm","Mesh","foam_flank","foam_rafts","foam_rim05"],"state":{"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]}}
+> A ids {0: 528693, 1: 786608, 2: 320, 3: 11483, 4: 0}
+> A ribbon s range 129.73198 196.35515 u -1.0 1.0
+> A far Z range 0.0060458123 376.60767
+> B ids {0: 609019, 1: 706378, 2: 265, 3: 11442, 4: 0}
+> B ribbon s range 129.76271 196.15695 u -1.0 1.0
+> B far Z range 0.0060458123 376.60767
+> foam px 74858
+
+### 🤖 Claude — 2026-11-16T15:54:27.383Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/uvmap_B.png"}`
+
+### 🧑 User — 2026-11-16T15:54:27.418Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T15:54:35.466Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/uvmap_A.png"}`
+
+### 🧑 User — 2026-11-16T15:54:35.484Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T15:55:03.229Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/qa && cat > /home/user/rainbow-/tools/qa/proj05_align.py <<'EOF'\n#!/usr/bin/env python3\n\"\"\"Screen 05 projection test — align the isolated water artwork to the approved frame (measured, not assumed).\n\n    python3 -I tools/qa/proj05_align.py OUT_DIR\n\nThe isolated artwork (941x1672 RGBA) is first resized to 864x1536 (scale 864/941 = 0.91817 horizontally,\n1536/1672 = 0.91866 vertically), then an affine refinement is solved with OpenCV ECC on edge-strength images of the\ntwo pictures, inside the water area of the artwork alpha with Benny, th …[+4833 chars]`
+
+### 🧑 User — 2026-11-16T15:55:36.861Z
+
+> ↩︎ result: {
+>  "translation": [
+>   0.22337381541728973,
+>   527716
+>  ],
+>  "affine": [
+>   0.24064455926418304,
+>   448959
+>  ],
+>  "plain_resize": [
+>   0.2127746045589447,
+>   546024
+>  ],
+>  "chosen": "plain_resize",
+>  "chosen_scale_xy": [
+>   0.9181721572794899,
+>   0.9186602870813397
+>  ],
+>  "chosen_shift_vs_resize_px": [
+>   0.0,
+>   0.0
+>  ],
+>  "chosen_corner_offsets_vs_resize_px": [
+>   [
+>    0.0,
+>    0.0
+>   ],
+>   [
+>    0.0,
+>    0.0
+>   ],
+>   [
+>    0.0,
+>    0.0
+>   ],
+>   [
+>    0.0,
+>    0.0
+>   ],
+>   [
+>    0.0,
+>    0.0
+>   ]
+>  ]
+> }
+
+### 🤖 Claude — 2026-11-16T15:55:45.408Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;r=json.load(open('qa/pilot05/proj/align/align.json'))\nfor k in ['translation','affine']: print(k, r[k]['ecc'], r[k]['refine_vs_resize'])\n\" && python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nSP='/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad'\na=Image.open('qa/pilot05/proj/align/artwork_aligned_864x1536.png')\nr=Image.open('references/05_flow_into_the_current.png').convert('RGBA')\n# plain resize\na0=Image.open('references/water/05_water_isolated_original.png').resize((864,1536),Image.LANCZOS)\nbg= …[+423 chars]`
+
+### 🧑 User — 2026-11-16T15:55:46.339Z
+
+> ↩︎ result: translation 0.11403973628016774 [[1.0, 0.0, 15.530240058898926], [0.0, 1.0, -10.541814804077148]]
+> affine 0.10498291777019089 [[1.1215702295303345, 0.12935055792331696, -141.84402465820312], [0.0009944934863597155, 1.009684681892395, -14.290284156799316]]
+
+### 🤖 Claude — 2026-11-16T15:55:48.250Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/side_mid.png"}`
+
+### 🧑 User — 2026-11-16T15:55:48.288Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T15:55:48.866Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/side_near.png"}`
+
+### 🧑 User — 2026-11-16T15:55:48.904Z
+
+> ↩︎ result: [image]
+
