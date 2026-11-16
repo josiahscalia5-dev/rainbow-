@@ -279,6 +279,12 @@ export function buildEnvironment(course: Course): Environment {
   // 3.8 %). ?wall05=1 = ONE material factor: cooler violet wall F0 + emissive, brighter/wider/whiter lengthwise light
   // streaks. Geometry, rings, lids, Marble reflection map, river, camera untouched. Default 0 = BEFORE.
   const WALL05 = qaNum05('wall05', 0) === 1;
+  // wave 9b controlled test G1 (user goal: polished gold rings): tools measured the ring gold (gold-mask pixels,
+  // tunnel area) APPROVED mean (231,125,85), G/R 0.48, sat 0.66, shadow V p10 0.75 vs the game (239,154,112), 0.64,
+  // 0.55, 0.82 = pale peach. ?gold05=1 = ONE material factor: a tone curve on the 05 ring band colour that deepens
+  // the mid-tones toward saturated orange-gold while highlights stay bright. Default 0 = shader unchanged.
+  const GOLD05 = qaNum05('gold05', 0) === 1;
+  const TONE05: [number, number, number] = [1.35, 1.75, 1.3];
   const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
@@ -343,7 +349,7 @@ export function buildEnvironment(course: Course): Environment {
   // reference's deeper rings are thin (ring #2 top ≈12 px)
   const band05near = { height: 0.13, width: 0.8, lipHeight: 0.065, lipWidth: 0.32, groove: 0.1 };
   const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {
-    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), band, key);
+    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), GOLD05 ? { ...band, tone: TONE05 } : band, key);
     m.emissive.set('#e08a10');
     m.envMap = goldEnv05;
     m.envMapIntensity = 1.15;

@@ -226,6 +226,9 @@ export interface BandShade {
   spots?: [number, number, number];
   /** view distance range over which the crown highlight fades to rose-copper (deeper rings) */
   fade?: [number, number];
+  /** optional per-channel tone exponents on the final band colour (linear): >1 deepens mid-tones, highlights stay
+   *  bright. Screen 05 test G1 (?gold05=1); undefined = shader unchanged */
+  tone?: [number, number, number];
 }
 export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
   const w = (b.width + b.groove + b.lipWidth) / 2;
@@ -324,6 +327,7 @@ void main() {`)
   float bDist = length(vViewPosition);
 ${fg ? '  bDist = fgDist();' : ''}
   vec3 bc = bandShade(smoothstep(uBandF.x, uBandF.y, bDist), normalize(normal), normalize(vViewPosition));
+${b.tone ? `  bc = pow(clamp(bc, 0.0, 1.0), vec3(${b.tone.map((x) => x.toFixed(3)).join(', ')})) + max(bc - 1.0, vec3(0.0));` : ''}
 ${fg ? `  float bfg = farGlowK(); float bmt = midTintK();
   bc = mix(bc, uFarGlowColor * 0.9, min(1.0, bfg * 0.55)) + uFarGlowColor * bfg * 0.25;` : ''}
   outgoingLight = bc;
@@ -331,7 +335,7 @@ ${fg ? `  float bfg = farGlowK(); float bmt = midTintK();
 #include <opaque_fragment>`);
   };
   const prevKey = mat.customProgramCacheKey.bind(mat);
-  mat.customProgramCacheKey = () => prevKey() + '|band-' + key;
+  mat.customProgramCacheKey = () => prevKey() + '|band-' + key + (b.tone ? '-tone' : '');
   mat.userData.bandShade = uniforms;
   return mat;
 }

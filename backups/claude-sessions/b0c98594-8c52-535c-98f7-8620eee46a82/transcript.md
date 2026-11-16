@@ -3839,3 +3839,177 @@ Now `CLAUDE.md` and the Screen 05 brief, so every future session knows the promo
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 scripts/rainbow-autosave.py --reason \"manual:screen05-T2-promoted\" --message \"Screen 05: promote T2 (front ring A 20 u + near tunnel 2 u lower); BEFORE kept via ?ringa=26&nearfloor05=0\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"'; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1); echo \"local  $L\"; echo \"remote $R\"; [ \"$L\" = \"$R\" ] && echo \"REMOTE == LOCAL\"; python3 -I scripts/autosave-status.py | head -2", "description": "Checkpoint save of the T2 promotion and verify  …[+11 chars]`
 
+### 🧑 User — 2026-11-16T11:38:47.632Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "2ec502aab98812c4a0027f729bb46b4857dcb879",
+> local  2ec502aab98812c4a0027f729bb46b4857dcb879
+> remote 2ec502aab98812c4a0027f729bb46b4857dcb879
+> REMOTE == LOCAL
+> AUTOSAVE OK | branch ccr-251ed97c-ty2xvp | scheduler daemon | last verified backup 2026-11-16T11:38:36+00:00 (0.2 min ago) | local 2ec502a remote 2ec502a (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-16T11:38:50.803Z
+
+Checkpoint saved and verified on GitHub. Sending the three separate full-size screenshots:
+
+### 🤖 Claude — 2026-11-16T11:38:52.600Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/wave9b/T2b/1_APPROVED_05.png", "qa/pilot05/wave9b/T2b/2_BEFORE_05.png", "qa/pilot05/wave9b/T2b/3_T2_05.png"], "caption": "Full size (864×1536), no grid: 1 APPROVED, 2 BEFORE, 3 T2 (front ring closer and lower; now the game's default; BEFORE kept and restorable).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T11:38:53.433Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave9b/T2b/1_APPROVED_05.png → file_uuid: 8e6c883f-3363-40a5-b52e-4d28579d84ec
+>   /home/user/rainbow-/qa/pilot05/wave9b/T2b/2_BEFORE_05.png → file_uuid: 6c0ae5f8-501d-4b35-8dd8-0146d80ebd34
+>   /home/user/rainbow-/qa/pilot05/wave9b/T2b/3_T2_05.png → file_uuid: c13578cb-ecbb-481e-9a2e-26aa21255d73
+
+### 🤖 Claude — 2026-11-16T11:39:05.123Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\nimport numpy as np\nfrom PIL import Image\ndef load(p):\n    a = np.asarray(Image.open(p).convert(\"RGB\").resize((864, 1536))).astype(np.float32)\n    return a\ndef stats(label, p):\n    a = load(p)[150:700]          # tunnel area, below the title\n    r, g, b = a[..., 0], a[..., 1], a[..., 2]\n    gold = (r > 160) & (r - b > 70) & (g > 45)       # same mask as ring_fit05\n    px = a[gold]; mx = px.max(1); mn = px.min(1)\n    sat = (mx - mn) / (mx + 1e-6); v = mx / 255\n    hue_ratio = px[:, 1] / (px[:, 0] + 1e-6)          # G/R: highe …[+884 chars]`
+
+### 🧑 User — 2026-11-16T11:39:05.523Z
+
+> ↩︎ result: APPROVED  gold px  25.6 % | mean RGB [231. 125.  85.] | G/R 0.48 | V p10/p50/p90 0.75/0.94/1.00 | sat 0.66 | highlights 2.4 %
+> BEFORE    gold px  26.9 % | mean RGB [240. 156. 112.] | G/R 0.64 | V p10/p50/p90 0.83/0.97/1.00 | sat 0.55 | highlights 4.3 %
+> T2 now    gold px  28.5 % | mean RGB [239. 154. 112.] | G/R 0.64 | V p10/p50/p90 0.82/0.96/1.00 | sat 0.55 | highlights 4.3 %
+> 230:export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+> export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+>   const w = (b.width + b.groove + b.lipWidth) / 2;
+>   const uniforms = {
+>     uBandG: { value: new THREE.Vector4(w - b.width / 2, b.width / 2, -w + b.lipWidth / 2, b.lipWidth / 2) },
+>     // ref ring #1: spot pitch ≈85 px at r 273 (≈20/turn), white core ≈12 px inside a yellow halo
+>     uBandS: { value: new THREE.Vector4(...(b.spots ?? [20, 0.055, 1.6]), 0) },
+>     uBandF: { value: new THREE.Vector2(...(b.fade ?? [44, 110])) },
+>     uBcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
+>     uBcRose: { value: lin3(0.5899, 0.2114, 0.2222) }, // (215,95,100)
+>     uBcOrange: { value: lin3(0.73 …[+3701 chars]
+
+### 🤖 Claude — 2026-11-16T11:39:25.338Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"bandShade(\\|uBandF\\b\\|uBandS\\b\" src/world/materials.ts | head; n=$(grep -n \"bandShade(\" src/world/materials.ts | tail -1 | cut -d: -f1); sed -n \"$((n-4)),$((n+8))p\" src/world/materials.ts; grep -n \"interface BandShade\\|type BandShade\" -A8 src/world/materials.ts | head -12", "description": "Find where the band shading colour is applied"}`
+
+### 🧑 User — 2026-11-16T11:39:25.386Z
+
+> ↩︎ result: 235:    uBandS: { value: new THREE.Vector4(...(b.spots ?? [20, 0.055, 1.6]), 0) },
+> 236:    uBandF: { value: new THREE.Vector2(...(b.fade ?? [44, 110])) },
+> 270:uniform vec4 uBandG; uniform vec4 uBandS; uniform vec2 uBandF;
+> 277:vec3 bandShade(float deep, vec3 N, vec3 V){
+> 311:  float t = (phi - 1.5707963) * uBandS.x / 6.2831853;
+> 314:  float sw = uBandS.y + ft * 0.7, hw = uBandS.y * 3.0 + ft * 0.7;
+> 315:  float sp = exp(-d * d / (sw * sw)) * mix(1.0, uBandS.y / sw, 0.6);
+> 319:  col += uBcSpot * sp * across * uBandS.z * (1.0 - 0.4 * deep);
+> 326:  vec3 bc = bandShade(smoothstep(uBandF.x, uBandF.y, bDist), normalize(normal), normalize(vViewPosition));
+> void main() {`)
+>       .replace('#include <opaque_fragment>', `{
+>   float bDist = length(vViewPosition);
+> ${fg ? '  bDist = fgDist();' : ''}
+>   vec3 bc = bandShade(smoothstep(uBandF.x, uBandF.y, bDist), normalize(normal), normalize(vViewPosition));
+> ${fg ? `  float bfg = farGlowK(); float bmt = midTintK();
+>   bc = mix(bc, uFarGlowColor * 0.9, min(1.0, bfg * 0.55)) + uFarGlowColor * bfg * 0.25;` : ''}
+>   outgoingLight = bc;
+> }
+> #include <opaque_fragment>`);
+>   };
+>   const prevKey = mat.customProgramCacheKey.bind(mat);
+>   mat.customProgramCacheKey = () => pr …[+567 chars]
+
+### 🤖 Claude — 2026-11-16T11:39:46.108Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  /** view distance range over which the crown highlight fades to rose-copper (deeper rings) */\n  fade?: [number, number];\n}", "new_string": "  /** view distance range over which the crown highlight fades to rose-copper (deeper rings) */\n  fade?: [number, number];\n  /** optional per-channel tone exponents on the final band colour (linear): >1 deepens mid-tones, highlights stay\n   *  bright. Screen 05 test G1 (?gold05=1); undefined = shader unchanged */\n  tone?: [number, number, number];\n}"}`
+
+### 🧑 User — 2026-11-16T11:39:46.148Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:39:48.161Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  vec3 bc = bandShade(smoothstep(uBandF.x, uBandF.y, bDist), normalize(normal), normalize(vViewPosition));\n${fg ? `  float bfg = farGlowK();", "new_string": "  vec3 bc = bandShade(smoothstep(uBandF.x, uBandF.y, bDist), normalize(normal), normalize(vViewPosition));\n${b.tone ? `  bc = pow(max(bc, vec3(0.0)), vec3(${b.tone.map((x) => x.toFixed(3)).join(', ')}));` : ''}\n${fg ? `  float bfg = farGlowK();"}`
+
+### 🧑 User — 2026-11-16T11:39:48.197Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:39:49.362Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "  mat.customProgramCacheKey = () => prevKey() + '|band-' + key;", "new_string": "  mat.customProgramCacheKey = () => prevKey() + '|band-' + key + (b.tone ? '-tone' : '');"}`
+
+### 🧑 User — 2026-11-16T11:39:49.401Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T11:39:50.216Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"const gold05 = (key\" -A2 src/world/environment.ts; grep -n \"const WALL05 = \" src/world/environment.ts", "description": "Locate the 05 gold helper and wall switch"}`
+
+### 🧑 User — 2026-11-16T11:39:50.274Z
+
+> ↩︎ result: 345:  const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {
+> 346-    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), band, key);
+> 347-    m.emissive.set('#e08a10');
+> 281:  const WALL05 = qaNum05('wall05', 0) === 1;
+
+### 🤖 Claude — 2026-11-16T11:40:00.837Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\np = \"src/world/environment.ts\"; s = open(p).read()\na = \"  const WALL05 = qaNum05('wall05', 0) === 1;\\n\"\nb = a + (\"  // wave 9b controlled test G1 (user goal: polished gold rings): tools measured the ring gold (gold-mask pixels,\\n\"\n         \"  // tunnel area) APPROVED mean (231,125,85), G/R 0.48, sat 0.66, shadow V p10 0.75 vs the game (239,154,112), 0.64,\\n\"\n         \"  // 0.55, 0.82 = pale peach. ?gold05=1 = ONE material factor: a tone curve on the 05 ring band colour that deepens\\n\"\n         \"  // the mid-tones tow …[+1220 chars]`
+
+### 🧑 User — 2026-11-16T11:40:41.356Z
+
+> ↩︎ result: ok
+> TSC_OK
+> default vs current_default_05: max diff 0
+
+### 🤖 Claude — 2026-11-16T11:40:49.827Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/g1; cat > $S/goldstats.py <<'PY'\nimport sys\nimport numpy as np\nfrom PIL import Image\ndef stats(label, p):\n    a = np.asarray(Image.open(p).convert(\"RGB\").resize((864, 1536))).astype(np.float32)[150:700]\n    r, g, b = a[..., 0], a[..., 1], a[..., 2]\n    gold = (r > 160) & (r - b > 70) & (g > 45)\n    px = a[gold]; mx = px.max(1); mn = px.min(1); sat = (mx - mn) / (mx + 1e-6); v = mx / 255\n    hi = ((v > 0.95) & (sat < 0.35)).mean() * 100\n    print(f\"{label:9} gold …[+889 chars]`
+
+### 🧑 User — 2026-11-16T11:40:50.448Z
+
+> ↩︎ result: APPROVED  gold px  25.6 % | mean RGB [231. 125.  85.] | G/R 0.48 | V p10/p50 0.75/0.94 | sat 0.66 | highlights 2.4 %
+> NOW       gold px  28.5 % | mean RGB [239. 154. 112.] | G/R 0.64 | V p10/p50 0.82/0.96 | sat 0.55 | highlights 4.3 %
+> G1        gold px  27.0 % | mean RGB [244. 137. 103.] | G/R 0.55 | V p10/p50 0.87/0.99 | sat 0.61 | highlights 5.6 %
+
+### 🤖 Claude — 2026-11-16T11:40:50.929Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/g1/top3.jpg"}`
+
+### 🧑 User — 2026-11-16T11:40:50.948Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T11:41:10.478Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\np = \"src/world/materials.ts\"; s = open(p).read()\na = \"  bc = pow(max(bc, vec3(0.0)), vec3(${b.tone.map((x) => x.toFixed(3)).join(', ')}));\"\nb = \"  bc = pow(clamp(bc, 0.0, 1.0), vec3(${b.tone.map((x) => x.toFixed(3)).join(', ')})) + max(bc - 1.0, vec3(0.0));\"\nassert s.count(a) == 1; s = s.replace(a, b); open(p, \"w\").write(s); print(\"ok\")\nPY\nnpx tsc --noEmit && echo TSC_OK; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/g1; timeout 600 node scripts/capture.mjs 05 --out=$S/g1b --q=gold05= …[+851 chars]`
+
+### 🧑 User — 2026-11-16T11:41:52.696Z
+
+> ↩︎ result: ok
+> TSC_OK
+> default vs current_default_05: max diff 33
+> APPROVED  gold px  25.6 % | mean RGB [231. 125.  85.] | G/R 0.48 | V p10/p50 0.75/0.94 | sat 0.66 | highlights 2.4 %
+> NOW       gold px  28.5 % | mean RGB [239. 154. 112.] | G/R 0.64 | V p10/p50 0.82/0.96 | sat 0.55 | highlights 4.3 %
+> G1        gold px  27.0 % | mean RGB [244. 137. 103.] | G/R 0.55 | V p10/p50 0.87/0.99 | sat 0.61 | highlights 5.6 %
+> G1b       gold px  25.3 % | mean RGB [245. 133. 101.] | G/R 0.54 | V p10/p50 0.88/0.99 | sat 0.61 | highlights 4.0 %
+> | APPROVED | tunnel top 150-470 | 5.5 | 0.0 | 36.9 | 3.8 | 1.2 | 1.00 | 0.70 |
+> | APPROVED | VP + far river 470-640 | 4.6 | 8.5 | 19.1 | 5.3 | 1.1 | 1.00 | 0.64 |
+> | NOW | tunnel top 150-470 | 9.0 | 0.0 | 47.1 | 1.1 | 0.9 | 1.00 | 0.65 |
+> | NOW | VP + far river 470-640 | 9.6 | 7.4 | 43.5 | 6.7 | 0.4 | 1.00 | 0.60 |
+> | G1b | tunnel top 150-470 | 4.1 | 0.0 | 49.9 | 1.1 | 0.9 | 1.00 | 0.69 |
+> | G1b | VP + far river 470-640 | 7.1 | 7.4 | 45.2 | 6.7 | 0.4 | 1.00 | 0.62 |
+
+### 🤖 Claude — 2026-11-16T11:42:11.825Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/g1; python3 -I - \"$S\" <<'PY'\nimport sys, numpy as np\nfrom PIL import Image, ImageChops\nS = sys.argv[1]\nfor a, b in ((f\"{S}/def2/05.png\", \"qa/pilot05/current_default_05.png\"), (f\"{S}/def/05.png\", \"qa/pilot05/current_default_05.png\"), (f\"{S}/def2/05.png\", f\"{S}/def/05.png\")):\n    d = np.asarray(ImageChops.difference(Image.open(a).convert(\"RGB\"), Image.open(b).convert(\"RGB\"))).max(-1)\n    ys, xs = np.nonzero(d > 0)\n    print(a.split(\"/\")[-2], \"vs\",  …[+256 chars]`
+
+### 🧑 User — 2026-11-16T11:42:12.545Z
+
+> ↩︎ result: def2 vs pilot05 max 33 px>0: 152 bbox (np.int64(59), np.int64(805), np.int64(21), np.int64(104))
+> def vs pilot05 max 0 px>0: 0 bbox None
+> def2 vs def max 33 px>0: 152 bbox (np.int64(59), np.int64(805), np.int64(21), np.int64(104))
+>  src/world/environment.ts | 8 +++++++-
+>  src/world/materials.ts   | 6 +++++-
+>  2 files changed, 12 insertions(+), 2 deletions(-)
+> 2ec502a Screen 05: promote T2 (front ring A 20 u + near tunnel 2 u lower); BEFORE kept via ?ringa=26&nearfloor05=0
+> b6deac8 autosave: Rainbow 2026-11-16 11:37 UTC
+> 92111a9 autosave: Rainbow 2026-11-16 11:32 UTC
+
