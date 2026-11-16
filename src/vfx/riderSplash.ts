@@ -276,7 +276,8 @@ void main() {
     vLen = len;
     p = ropePos(aUV.x, side, a, seed, len);
     tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
-    w = mix(0.034, 0.008, pow(aUV.x, 0.7)) * (0.5 + 0.7 * hs(seed * 19.1));
+    // wave 9 it02: fewer, wider lacy tendrils (torn by the fragment holes) instead of a brush of thin hairs
+    w = mix(0.056, 0.012, pow(aUV.x, 0.7)) * (0.55 + 0.6 * hs(seed * 19.1));
   } else if (aType < 1.5) {
     // crown droplet jet: the head runs root -> landing, the jet is a short chain of beads
     float rate = mix(1.6, 2.6, hs(seed * 11.3));
@@ -342,7 +343,7 @@ void main() {
     alpha = edge * tail * brk * smoothstep(0.0, 0.04, vUV.x) * mix(0.9, 0.45, smoothstep(0.3, 1.0, ac + vUV.x * 0.5));
     // wave 9: torn lace (ref): open holes through the strand (the water shows through), lighter overall
     float tear = 1.0 - smoothstep(0.13, 0.24, cells(lp * vec2(1.9, 1.4) + 9.0));
-    alpha *= (1.0 - 0.85 * tear) * 0.8;
+    alpha *= (1.0 - 0.85 * tear) * 0.95;
     col = mix(cyan, white, clamp(1.2 - vUV.x * 0.9 - ac * 0.9, 0.0, 1.0));
     col = mix(col, blue, hole * 0.55 * (1.0 - vUV.x));
     col = mix(col, cyan, tear * 0.6);
@@ -363,7 +364,7 @@ void main() {
     float lace = 1.0 - smoothstep(0.45, 0.75, lc);
     float soft = (1.0 - smoothstep(0.4, 1.0, ac)) * smoothstep(0.0, 0.2, vUV.x) * (1.0 - smoothstep(0.6, 1.0, vUV.x));
     // wave 9: open lace (wave 8's 0.9 read as a bright continuous leading edge along the top of each fan)
-    alpha = lace * soft * 0.6 * (1.0 - 0.7 * hole);
+    alpha = lace * soft * 0.72 * (1.0 - 0.7 * hole);
     col = mix(white, blue, hole * 0.7);
   }
   alpha *= uStrength;
@@ -376,7 +377,7 @@ void main() {
 /** wave 8: the 05 splash (same API as the shared fan) */
 export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
   // wave 9: fewer strands (44 -> 30) so water shows between them (ref), fewer froth pads (16 -> 10)
-  const nRope = quality === 'high' ? 30 : 16;
+  const nRope = quality === 'high' ? 20 : 12;
   const nJet = quality === 'high' ? 40 : 16;
   const nFroth = quality === 'high' ? 10 : 6;
   const uvs = new Float32Array((SEG5 + 1) * 2 * 2);

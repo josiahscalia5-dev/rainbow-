@@ -330,7 +330,7 @@ vec4 microFoam(vec2 p, float dens) {
     else if (dd < d2) d2 = dd;
   }
   d1 = sqrt(d1); d2 = sqrt(d2);
-  float rad = 0.14 + 0.15 * h1.x;
+  float rad = 0.16 + 0.17 * h1.x;
   float on = step(h1.y, dens);
   vec2 dir = -r1 / max(d1, 1e-4);
   float hole = (1.0 - smoothstep(rad * 0.68, rad, d1)) * on;
@@ -414,18 +414,22 @@ void main() {
   float tl = dot(Nv, normalize(vec3(-0.4, 0.85, 0.35)));
   // wave 9: soft cloud lumps (ref): bright upper silhouette, the rim darkens only on the lower half (crease to the next
   // lump / the water), front faces lifted so the lump centres read pale lavender, not grey
-  float t = 0.56 + 0.58 * tl + 0.12 * z - pow(1.0 - z, 1.5) * (0.06 + 0.42 * clamp(0.35 - q.y * 0.8, 0.0, 1.0)) - (1.0 - vInst.x) * 0.3 + 0.06 * vBig;
-  // fine open bubbles: dense on the lower half and the flanks, (almost) none on the lit top
+  // it02: -0.09 (it01 clump boxes W 32-54 % vs ref 25-28 %, median L 231-244 vs 221-224)
+  float t = 0.47 + 0.58 * tl + 0.12 * z - pow(1.0 - z, 1.5) * (0.06 + 0.42 * clamp(0.35 - q.y * 0.8, 0.0, 1.0)) - (1.0 - vInst.x) * 0.3 + 0.06 * vBig;
+  // fine open bubbles: dense on the lower VISIBLE part (the lumps are sunk, so from q.y ~0.4 down) and the flanks,
+  // none on the lit top
   vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 7.0, 1.2, 14.0) + vInst.y * 37.0;
-  float dens = clamp(0.04 + 0.95 * smoothstep(0.15, -0.65, q.y) + 0.25 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);
+  float dens = clamp(0.04 + 0.95 * smoothstep(0.45, -0.25, q.y) + 0.25 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);
   vec4 mf = microFoam(mp, dens);
   float kf = 1.0 - smoothstep(0.5, 0.9, fwidth(mp.x) + fwidth(mp.y));
   // wave 8 (it04): tone S-curve: few grey mid-tones, a broad white-lavender lit area and clearly blue shading
   // it05: the shading boundary sits higher (it04's 0.2..0.9 curve turned 50 % of the clump px pure white)
   // it06: boundary lower again (it05 clump boxes W 27-59 %, ref 22-28 %), no white bonus for big lumps
   t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * vBig);
-  t += (mf.z - 0.6) * 0.16 * dens * kf - mf.x * 0.6 * kf + mf.y * 0.22 * kf;
+  t += (mf.z - 0.6) * 0.16 * dens * kf - mf.x * 0.25 * kf + mf.y * 0.22 * kf;
   vec3 col = bank05(t + 0.04 * vInst.z);
+  // it03: the open bubbles are saturated blue dots (ref), whatever the lump's tone (subtracting t only greyed them)
+  col = mix(col, vec3(0.3, 0.38, 0.95), mf.x * kf * 0.8);
   col += vec3(1.0) * mf.w * 0.4 * kf;
   vec3 Lv = (viewMatrix * vec4(normalize(uLightDir), 0.0)).xyz;
   float rl = max(dot(reflect(vec3(0.0, 0.0, -1.0), Nv), Lv), 0.0);
@@ -1003,13 +1007,15 @@ export function createFoam(
         // along the pink bands from under the splash roots (ref left (300,1160) -> (56,1300), right (620,1190) ->
         // (795,1311): |lat - rider| inner 0.3 + 0.7 b, outer 0.9 + 0.47 b, b = -ds), ending before the frame edge
         // (outer border >= V_EDGE_PX in from it), instead of round blobs fitted to the frame edges
-        const vK = 1 - sm(-0.45, 0.05, ds);
+        // it02: no bridge to the frame-fit clumps (the band starts under the splash roots: left ds -0.15, right -0.6)
+        const vK = 1 - sm(-0.05, 0.35, ds);
         if (vK > 0) {
           const b = Math.max(0, -ds);
           const vIn = side * rider.lat + 0.3 + 0.7 * b + 0.08 * (lump - 0.5);
           const lim = side * solveLat(cam, side * (1 - (2 * V_EDGE_PX) / 864), camLat + side * 1.0, edge);
           const vOut = Math.min(side * rider.lat + 0.9 + 0.47 * b + 0.06 * lump, lim, hw + 0.1);
-          const vEnv = (1 - sm(-0.3, 0.0, ds)) * sm(V_DS_END - 0.3, V_DS_END, ds) * sm(0.12, 0.3, vOut - vIn);
+          const vTop = side < 0 ? -0.15 : -0.6;
+          const vEnv = (1 - sm(vTop - 0.3, vTop, ds)) * sm(V_DS_END - 0.3, V_DS_END, ds) * sm(0.12, 0.3, vOut - vIn);
           a += (Math.min(vIn, hw - 0.3) - a) * vK;
           outA += (Math.max(vOut, vIn + 0.12) - outA) * vK;
           env += (vEnv - env) * vK;
@@ -1080,6 +1086,8 @@ export function createFoam(
         // wave 7: the near clumps (beside / behind Benny) are compact mounds of overlapping bubbles (ref 05),
         // not a loose scatter: bigger bubbles drawn toward the clump middle, taller in the middle
         const nearK = 1 - sm(2.0, 3.0, ds);
+        // wave 9 it03: the wake bands behind Benny read as a 1-lump string of pearls; ref band lumps 35-55 px, 1.5-2 across
+        const wakeK = 1 + 0.18 * (1 - sm(-0.2, 0.2, ds));
         for (let p = 0; p < P; p++) {
           const [f0, df, r0, dr, lift0, prob] = KIND[p];
           if (hh(10 + p) > prob || (rimK > 0.5 && RIM_SKIP.includes(p))) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
@@ -1087,7 +1095,7 @@ export function createFoam(
           const f = 0.5 + (fr0 - 0.5) * (1 - 0.25 * nearK);
           const bump = BUMP.includes(p) && hh(50 + p) < 0.22;
           // wave 8: the right rim ahead of Benny is lower (ref band 40-65 px): smaller lumps, still sunk into the water
-          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.3 * rimK) * (bump ? 1.55 : 1) * (1 + 0.05 * nearK);
+          const r = (r0 + dr * hh(30 + p)) * scale * (1 - 0.3 * rimK) * (bump ? 1.55 : 1) * (1 + 0.05 * nearK) * wakeK;
           const lift = (lift0 < 0 ? lift0 : lift0 * (1 - 0.5 * rimK)) * (bump ? 0.45 : 1) + 0.12 * nearK * Math.sin(Math.PI * f);
           if (r < 0.004) { rafts.setMatrixAt(base + p, tmpM.makeScale(0, 0, 0)); continue; }
           const lat = lin + (lout - lin) * f;

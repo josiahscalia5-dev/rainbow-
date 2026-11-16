@@ -675,3 +675,491 @@ Now the 05 splash: steeper, fewer, lacier strands, and a weaker leading edge.
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -20 && echo TSC_DONE && timeout 600 node scripts/capture.mjs 05 --out=qa/pilot05/wave9/foam/it01 2>&1 | tail -3", "description": "Typecheck and capture it01", "timeout": 660000}`
 
+### 🧑 User — 2026-11-16T02:28:20.329Z
+
+> ↩︎ result: TSC_DONE
+> 05 → qa/pilot05/wave9/foam/it01/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":566775,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-16T02:28:23.644Z
+
+> 🔧 **Bash** `{"command": "D=qa/pilot05/wave9/foam/it01 && python3 -I scripts/screen_report.py 05 $D PREV=qa/pilot05/wave9/baseline/05.png NOW=$D/05.png 2>&1 | tail -5; T=qa/pilot05/wave9/foam/tools; python3 -I $T/clumpcol.py references/05_flow_into_the_current.png qa/pilot05/wave9/baseline/05.png $D/05.png; python3 -I $T/clumptone.py references/05_flow_into_the_current.png qa/pilot05/wave9/baseline/05.png $D/05.png; python3 -I $T/splashext.py references/05_flow_into_the_current.png qa/pilot05/wave9/baseline/05.png $D/05.png; python3 -I $T/crops.py $D/05.png $D", "description": "Run reports and metrics for  …[+6 chars]`
+
+### 🧑 User — 2026-11-16T02:28:34.764Z
+
+> ↩︎ result: | Capture | mad | hue_corr | edge_corr | mad hud | mad tunnel+VP | mad river mid | mad Benny+near water |
+> |---|---|---|---|---|---|---|---|
+> | PREV | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> | NOW | 51.1 | 0.883 | 0.193 | 54.0 | 58.6 | 47.6 | 48.1 |
+> references Lclump 5460 W25 S56 B35 | LLclump 10527 W28 S38 B23 | LRclump 9514 W28 S44 B26 | Lrim 20501 W22 S41 B22
+> baseline Lclump 5550 W32 S50 B26 | LLclump 10873 W12 S47 B26 | LRclump 12239 W14 S49 B28 | Lrim 18687 W17 S46 B21
+> it01 Lclump 7743 W54 S28 B16 | LLclump 9855 W32 S34 B20 | LRclump 8025 W32 S32 B19 | Lrim 21642 W26 S33 B15
+> references Lclump L181/221/251 A6B9FA D6D9FC F8FAFF | LLclump L180/223/252 B3ABFA E8D7FF FDFBFF | LRclump L183/224/253 AFB7FA DEDCFF FCFCFF | Lrim L177/214/250 B4A9FA E4CAFD FDF3FF
+> baseline Lclump L189/228/243 B2C3FF DEE1FE F2EFFE | LLclump L186/226/238 B4BEFC DCE2F7 EEEAF6 | LRclump L187/225/239 AEC1FD DCE1F8 EFEAF9 | Lrim L189/218/244 BFABFF D7D7FF EEEDFF
+> it01 Lclump L180/244/253 C5B3FF FAF0FF FFFAFF | LLclump L177/231/250 BFABFF F0E6F8 FBF6FF | LRclump L183/232/251 BFB7FF F0E7D7 FCF6FF | Lrim L186/222/254 D0A4FF E5D8FF FFFAFF
+> references/05_flow_into_the_current.png L 13.6% x 150-387 ylow 1329 | …[+211 chars]
+
+### 🤖 Claude — 2026-11-16T02:28:35.899Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it01/05.png"}`
+
+### 🧑 User — 2026-11-16T02:28:35.953Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:28:42.793Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it01/crop_leftnear.png"}`
+
+### 🧑 User — 2026-11-16T02:28:42.824Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:28:43.344Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it01/crop_splash.png"}`
+
+### 🧑 User — 2026-11-16T02:28:43.376Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:28:43.804Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it01/crop_rightnear.png"}`
+
+### 🧑 User — 2026-11-16T02:28:43.832Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:29:09.893Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it01/05_side_by_side.png"}`
+
+### 🧑 User — 2026-11-16T02:29:12.010Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-16T02:29:12.004Z
+
+[Image: original 2624x1536, displayed at 2000x1171. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-16T02:29:25.471Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/wave9/foam/tools/gain.py <<'EOF'\n\"\"\"wave 9: where did NOW get closer / further from the ref than PREV? 1/4-scale |dRGB| maps (box blur 3), prints the mean\nchange per 1/4-scale tile row band in the lower frame and saves a red(worse)/green(better) map. Usage: gain.py PREV NOW OUT\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image, ImageFilter\nref = Image.open('references/05_flow_into_the_current.png').convert('RGB').resize((216, 384), Image.BOX)\nP = Image.open(sys.argv[1]).convert('RGB').resize((216, 384), Image.BOX)\nN = Ima …[+1046 chars]`
+
+### 🧑 User — 2026-11-16T02:29:25.812Z
+
+> ↩︎ result: LL: dmad +2.53 (PREV 48.7 NOW 51.2)
+> LR: dmad +5.93 (PREV 50.6 NOW 56.6)
+> Lclump: dmad +6.46 (PREV 37.5 NOW 44.0)
+> splashC: dmad -0.39 (PREV 39.3 NOW 39.0)
+> Rrim: dmad +0.12 (PREV 47.1 NOW 47.3)
+> Lrim: dmad -0.43 (PREV 56.0 NOW 55.6)
+
+### 🤖 Claude — 2026-11-16T02:29:26.801Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it01/gain.png"}`
+
+### 🧑 User — 2026-11-16T02:29:26.819Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:29:58.490Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        const vK = 1 - sm(-0.45, 0.05, ds);\n        if (vK > 0) {\n          const b = Math.max(0, -ds);\n          const vIn = side * rider.lat + 0.3 + 0.7 * b + 0.08 * (lump - 0.5);\n          const lim = side * solveLat(cam, side * (1 - (2 * V_EDGE_PX) / 864), camLat + side * 1.0, edge);\n          const vOut = Math.min(side * rider.lat + 0.9 + 0.47 * b + 0.06 * lump, lim, hw + 0.1);\n          const vEnv = (1 - sm(-0.3, 0.0, ds)) * sm(V_DS_END - 0.3, V_DS_END, ds) * sm(0.12, 0.3, vOut - vIn);", "new_ …[+690 chars]`
+
+### 🧑 User — 2026-11-16T02:29:58.522Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:30:03.644Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float t = 0.56 + 0.58 * tl + 0.12 * z - pow(1.0 - z, 1.5) * (0.06 + 0.42 * clamp(0.35 - q.y * 0.8, 0.0, 1.0)) - (1.0 - vInst.x) * 0.3 + 0.06 * vBig;\n  // fine open bubbles: dense on the lower half and the flanks, (almost) none on the lit top\n  vec2 mp = q * (1.0 + 0.6 * (1.0 - z)) * clamp(px / 7.0, 1.2, 14.0) + vInst.y * 37.0;\n  float dens = clamp(0.04 + 0.95 * smoothstep(0.15, -0.65, q.y) + 0.25 * (1.0 - z) - 0.2 * vBig, 0.0, 0.95);", "new_string": "  // it02: -0.09 (it01 clump boxes W 32-54 % vs re …[+534 chars]`
+
+### 🧑 User — 2026-11-16T02:30:03.684Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:30:05.595Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    w = mix(0.034, 0.008, pow(aUV.x, 0.7)) * (0.5 + 0.7 * hs(seed * 19.1));", "new_string": "    // wave 9 it02: fewer, wider lacy tendrils (torn by the fragment holes) instead of a brush of thin hairs\n    w = mix(0.056, 0.012, pow(aUV.x, 0.7)) * (0.55 + 0.6 * hs(seed * 19.1));"}`
+
+### 🧑 User — 2026-11-16T02:30:05.625Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:30:06.557Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "  const nRope = quality === 'high' ? 30 : 16;", "new_string": "  const nRope = quality === 'high' ? 20 : 12;"}`
+
+### 🧑 User — 2026-11-16T02:30:06.592Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:30:18.292Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> qa/pilot05/wave9/foam/NOTES.md <<'EOF'\n* it01 (86 calls, 566,775 tris): foam.ts updateRafts: rows behind Benny (vK = 1 - sm(-0.45, 0.05, ds)) take V-wake\n  laterals (inner 0.3 + 0.7 b, outer 0.9 + 0.47 b from Benny, outer clamped V_EDGE_PX = 64 px in from the frame edge,\n  envelope ds -0.3 .. V_DS_END -1.45); BANK_BUB_FRAG own ramp bank05 (violet-lavender, white cap 1.3), softer upper rim,\n  holes smaller (rad 0.14 + 0.15 h) and only low; riderSplash.ts 05 ropes steeper (thR 1.3 -> 0.45, phi 0.46 -> 0),\n  torn-lace holes cut the alpha (x0.8 over …[+1453 chars]`
+
+### 🧑 User — 2026-11-16T02:30:48.982Z
+
+> ↩︎ result: 05 → qa/pilot05/wave9/foam/it02/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":566455,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> | PREV | 50.6 | 0.875 | 0.195 | 54.0 | 58.6 | 47.6 | 46.5 |
+> | NOW | 52.3 | 0.836 | 0.199 | 54.0 | 58.6 | 48.3 | 50.9 |
+> it02 Lclump 7222 W39 S38 B22 | LLclump 9408 W21 S40 B25 | LRclump 11268 W15 S33 B21 | Lrim 19833 W21 S40 B19
+> it02 Lclump L173/230/251 BBAAFF EEDEFF FDF7FF | LLclump L171/226/247 B9A1FF EADFFF F6F0FF | LRclump L177/213/247 C2A6FF FFBDFF F3E9FF | Lrim L179/220/251 C6A0FF E0D5FF FEF2FF
+> qa/pilot05/wave9/foam/it02/05.png L 17.3% x 150-431 ylow 1329 | R 17.9% x 432-719 ylow 1327
+> LL: dmad +1.78 (PREV 48.7 NOW 50.5)
+> LR: dmad +7.56 (PREV 50.6 NOW 58.2)
+> Lclump: dmad +10.34 (PREV 37.5 NOW 47.8)
+> splashC: dmad +5.01 (PREV 39.3 NOW 44.4)
+> Rrim: dmad +1.24 (PREV 47.1 NOW 48.4)
+> Lrim: dmad -1.14 (PREV 56.0 NOW 54.9)
+
+### 🤖 Claude — 2026-11-16T02:30:50.561Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it02/05.png"}`
+
+### 🧑 User — 2026-11-16T02:30:50.622Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:31:03.895Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it02/crop_splash.png"}`
+
+### 🧑 User — 2026-11-16T02:31:03.936Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:31:04.347Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it02/crop_leftnear.png"}`
+
+### 🧑 User — 2026-11-16T02:31:04.375Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:31:18.580Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; git log --format='%h %ci %s' -8; for c in $(git log --format=%h -8); do echo \"$c $(git show $c:src/vfx/foam.ts | grep -c 'V_EDGE_PX') $(git show $c:src/vfx/riderSplash.ts | grep -c 'wave 9')\"; done; git status --short | head", "description": "Find commit with baseline versions of my files"}`
+
+### 🧑 User — 2026-11-16T02:31:18.666Z
+
+> ↩︎ result: b34fd83 2026-11-16 02:28:07 +0000 autosave: Rainbow 2026-11-16 02:28 UTC
+> 2a4d3b4 2026-11-16 02:24:50 +0000 autosave: Rainbow 2026-11-16 02:24 UTC
+> 0515841 2026-11-16 02:24:36 +0000 autosave: Rainbow 2026-11-16 02:24 UTC
+> 1e9c57a 2026-11-16 02:24:26 +0000 autosave: Rainbow 2026-11-16 02:24 UTC
+> 0fe24db 2026-11-16 02:24:16 +0000 autosave: Rainbow 2026-11-16 02:24 UTC
+> 319ca1f 2026-11-16 02:23:11 +0000 autosave: Rainbow 2026-11-16 02:23 UTC
+> c821d91 2026-11-16 02:22:59 +0000 autosave: Rainbow 2026-11-16 02:22 UTC
+> 7b70f98 2026-11-16 02:21:48 +0000 resume: merge final wave-8 notes from origin/ccr-937c7fbb-htsrgt (f6e4071)
+> b34fd83 3 4
+> 2a4d3b4 0 0
+> 0515841 0 0
+> 1e9c57a 0 0
+> 0fe24db 0 0
+> 319ca1f 0 0
+> c821d91 0 0
+> 7b70f98 0 0
+>  M qa/capture_log.json
+>  M qa/pilot05/wave9/foam/NOTES.md
+>  M src/gameplay/coins.ts
+>  M src/vfx/foam.ts
+>  M src/vfx/riderSplash.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/environment.ts
+>  M src/world/far05.ts
+>  M src/world/tube.ts
+> ?? qa/pilot05/wave9/foam/it01/
+
+### 🤖 Claude — 2026-11-16T02:31:23.640Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; ls; du -sh src assets public 2>/dev/null; cat vite.config.* 2>/dev/null | head -30", "description": "Inspect repo top-level layout"}`
+
+### 🧑 User — 2026-11-16T02:31:23.686Z
+
+> ↩︎ result: CLAUDE.md
+> README_FIRST.md
+> REFERENCE_ORDER.md
+> Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> START_HERE_PASTE_TO_CLAUDE.md
+> TOOL_SETUP_AND_VERIFICATION.md
+> VISUAL_QA_CHECKLIST.md
+> android
+> assets
+> backups
+> builds
+> capacitor.config.ts
+> character_references
+> docs
+> index.html
+> node_modules
+> package-lock.json
+> package.json
+> public
+> qa
+> references
+> screenshots
+> scripts
+> src
+> tools
+> tsconfig.json
+> vite.config.ts
+> 744K	src
+> 4.6M	assets
+> 12K	public
+> import { defineConfig } from 'vite';
+> import { resolve } from 'node:path';
+> 
+> export default defineConfig({
+>   base: './',
+>   assetsInclude: ['**/*.glb'],
+>   server: { port: 5173, strictPort: false },
+>   build: {
+>     target: 'es2020',
+>     outDir: 'dist',
+>     assetsInlineLimit: 0,
+>     chunkSizeWarningLimit: 2000,
+>     rollupOptions: {
+>       input: {
+>         main: resolve(__dirname, 'index.html'),
+>       },
+>     },
+>   },
+> });
+
+### 🤖 Claude — 2026-11-16T02:31:26.437Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"qa/\\|references/\\|'/qa\\|\\.\\./\\.\\./\" src --include=*.ts | grep -v \"^\\s*//\" | grep \"import\\|new URL\\|fetch\" | head", "description": "Check whether src imports files outside src"}`
+
+### 🧑 User — 2026-11-16T02:31:26.472Z
+
+> ↩︎ result: src/characters/girl/girl-lab.ts:7:import { createCandyEnvironment, createRenderer } from '../../render/env';
+> src/characters/girl/runtime.ts:11:export async function loadGirl(url = new URL('../../../assets/models/rainbow_girl.glb', import.meta.url).href): Promise<GirlRuntime> {
+> src/characters/benny/benny-lab.ts:11:import { createCandyEnvironment, createRenderer } from '../../render/env';
+> src/characters/benny/runtime.ts:10:const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+> src/world/materials.ts:715:    t = new THREE.TextureLoader().load(new URL('../../assets/textures/marble05_env_1024.jpg', import.meta.url).href);
+
+### 🤖 Claude — 2026-11-16T02:31:31.244Z
+
+> 🔧 **Bash** `{"command": "set -e; C=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrl; rm -rf $C; mkdir -p $C; cd /home/user/rainbow-; cp -r src index.html package.json tsconfig.json vite.config.ts $C/; mkdir -p $C/scripts; cp -r scripts/capture.mjs scripts/lib $C/scripts/; cp -r assets $C/assets; cp -r public $C/public; ln -s /home/user/rainbow-/node_modules $C/node_modules; git show 2a4d3b4:src/vfx/foam.ts > $C/src/vfx/foam.ts; git show 2a4d3b4:src/vfx/riderSplash.ts > $C/src/vfx/riderSplash.ts; diff <(git show 2a4d3b4:src/vfx/index.ts) src/vfx/index.ts && echo idx-sa …[+255 chars]`
+
+### 🧑 User — 2026-11-16T02:31:47.670Z
+
+> ↩︎ result: idx-same
+> ]
+
+### 🤖 Claude — 2026-11-16T02:31:50.043Z
+
+> 🔧 **Bash** `{"command": "C=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrl; ls -la $C/out 2>&1; cat $C/qa/capture_log.json 2>/dev/null | head -20", "description": "Check control capture output"}`
+
+### 🧑 User — 2026-11-16T02:31:50.079Z
+
+> ↩︎ result: total 1624
+> drwxr-xr-x 2 root root    4096 Nov 16 02:31 .
+> drwxr-xr-x 8 root root    4096 Nov 16 02:31 ..
+> -rw-r--r-- 1 root root 1653241 Nov 16 02:31 05.png
+> {
+>   "when": "2026-11-16T02:31:31.980Z",
+>   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+>   "shots": [
+>     {
+>       "id": "05",
+>       "file": "/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrl/out/05.png",
+>       "size": [
+>         864,
+>         1536
+>       ],
+>       "checkpoint": {
+>         "stage": "05",
+>         "s": 132.4383020282329,
+>         "y": -41.348424102617486
+>       },
+>       "state": {
+>         "mode": "ride",
+>         "stage": "05",
+>         "s": 132.438,
+
+### 🤖 Claude — 2026-11-16T02:31:54.637Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; D=qa/pilot05/wave9/foam/it02; T=qa/pilot05/wave9/foam/tools; python3 -I scripts/screen_report.py 05 /tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/rep_ctrl PREV=$D/05_ctrl.png NOW=$D/05.png 2>&1 | tail -2; python3 -I $T/gain.py $D/05_ctrl.png $D/05.png $D/gain_vs_ctrl.png; python3 -I $T/clumpcol.py $D/05_ctrl.png; python3 -I $T/clumptone.py $D/05_ctrl.png; python3 -I $T/splashext.py $D/05_ctrl.png", "description": "Compare it02 against same-time control capture"}`
+
+### 🧑 User — 2026-11-16T02:32:06.022Z
+
+> ↩︎ result: | PREV | 72.2 | 0.582 | 0.073 | 55.4 | 59.2 | 74.0 | 85.9 |
+> | NOW | 52.3 | 0.836 | 0.199 | 54.0 | 58.6 | 48.3 | 50.9 |
+> LL: dmad -35.90 (PREV 86.4 NOW 50.5)
+> LR: dmad -31.74 (PREV 89.9 NOW 58.2)
+> Lclump: dmad -54.43 (PREV 102.3 NOW 47.8)
+> splashC: dmad -33.66 (PREV 78.0 NOW 44.4)
+> Rrim: dmad -22.65 (PREV 71.0 NOW 48.4)
+> Lrim: dmad -10.60 (PREV 65.5 NOW 54.9)
+> it02 Lclump 5838 W29 S47 B25 | LLclump 12618 W8 S39 B19 | LRclump 14873 W9 S38 B20 | Lrim 29081 W9 S31 B13
+> it02 Lclump L187/225/243 B3BDFF DDDDFF F3EEFE | LLclump L183/216/237 B4B4FE D7D6F8 F0E7F5 | LRclump L185/215/237 B4B1FF DAD2FB F0E6F8 | Lrim L190/217/241 FFA9FF FFC2FF EAE5FF
+> qa/pilot05/wave9/foam/it02/05_ctrl.png L 18.9% x 150-351 ylow 1299 | R 21.6% x 472-719 ylow 1321
+
+### 🤖 Claude — 2026-11-16T02:32:07.296Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it02/05_ctrl.png"}`
+
+### 🧑 User — 2026-11-16T02:32:07.351Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:32:15.498Z
+
+> 🔧 **Bash** `{"command": "C=/tmp/claude-0/-home-user-rainbow-/78821565-d674-5be9-a7dd-5afd2dc12d7a/scratchpad/ctrl; python3 -c \"\nimport json;d=json.load(open('$C/qa/capture_log.json'));print(d['errors'][:5]);print(d['shots'][0]['stats'])\"", "description": "Inspect control capture errors"}`
+
+### 🧑 User — 2026-11-16T02:32:15.565Z
+
+> ↩︎ result: ["[05] THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false\n\nMaterial Name: \nMaterial Type: ShaderMaterial\n\nProgram Info Log: Fragment shader is not compiled.\n\nFRAGMENT\n\nERROR: 0:662: 'K5C0' : undeclared identifier\nERROR: 0:662: 'K5C1' : undeclared identifier\nERROR: 0:662: 'K5C2' : undeclared identifier\nERROR: 0:662: 'K5C3' : undeclared identifier\nERROR: 0:662: 'ladder4' : no matching overloaded function found\nERROR: 0:663: 'K5N0' : undeclared identifier\nERROR: 0:663: 'K5N1' : undeclared identifier\nERROR: 0:663: 'K5N2' : undeclared identifier\nERROR: 0:663: 'K5N3' : undeclared identifier\nERROR: 0:663: 'ladder4' : no matching overloaded function found\nERROR: 0:662: '=' : dimension mismatch\nERROR: 0:662: '=' : cannot convert from 'highp float' to 'highp 3-component vector of float'\nERROR: 0:666: 'K5CG' : undeclared identifier\nERROR: 0:666: 'mix' : no matching overloaded function found\nERROR: 0:666: '=' : dimension mismatch\nERROR: 0:666: 'assign' : cannot convert from 'const mediump float' to 'highp 3-component vector of float'\nERROR: 0:671: 'K5P1' : undeclared identifier\nERROR: 0:671: 'K5P2' : undeclared identifier\nERROR: 0:671: 'K5P3' : undeclared ide …[+2851 chars]
+
+### 🤖 Claude — 2026-11-16T02:32:28.435Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it02/crop_rightnear.png"}`
+
+### 🧑 User — 2026-11-16T02:32:28.468Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:32:28.891Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave9/foam/it02/crop_rightrim.png"}`
+
+### 🧑 User — 2026-11-16T02:32:28.929Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T02:32:49.768Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"mf.x \\* 0.6\\|float rad = \\|nearK) \\* (bump\\|const scale = \" src/vfx/foam.ts", "description": "Locate lines to tweak in foam.ts"}`
+
+### 🧑 User — 2026-11-16T02:32:49.808Z
+
+> ↩︎ result: 333:  float rad = 0.14 + 0.15 * h1.x;
+> 429:  t += (mf.z - 0.6) * 0.16 * dens * kf - mf.x * 0.6 * kf + mf.y * 0.22 * kf;
+> 1081:        const scale = Math.min(2.0, 0.9 + 0.1 * Math.max(0, ds)) * kFade * Math.min(1, wid / 0.3) * ev;
+
+### 🤖 Claude — 2026-11-16T02:32:51.794Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 426,434p src/vfx/foam.ts; sed -n 1076,1100p src/vfx/foam.ts", "description": "Show surrounding lines for edits"}`
+
+### 🧑 User — 2026-11-16T02:32:51.901Z
+
+> ↩︎ result: // it05: the shading boundary sits higher (it04's 0.2..0.9 curve turned 50 % of the clump px pure white)
+>   // it06: boundary lower again (it05 clump boxes W 27-59 %, ref 22-28 %), no white bonus for big lumps
+>   t = 0.12 + 0.95 * smoothstep(0.38, 1.12, t - 0.06 * vBig);
+>   t += (mf.z - 0.6) * 0.16 * dens * kf - mf.x * 0.6 * kf + mf.y * 0.22 * kf;
+>   vec3 col = bank05(t + 0.04 * vInst.z);
+>   col += vec3(1.0) * mf.w * 0.4 * kf;
+>   vec3 Lv = (viewMatrix * vec4(normalize(uLightDir), 0.0)).xyz;
+>   float rl = max(dot(reflect(vec3(0.0, 0.0, -1.0), Nv), Lv), 0.0);
+>   col += vec3(1.0) * (pow(rl, 24.0) * 0.25 + pow(rl, 6.0) * 0.1);
+>         const lin = L(rowIn[sd]), lout = L(rowOut[sd]), hin = L(rowHIn[sd]), hout = L(rowHOut[sd]);
+>         const ev = sm(0.06, 0.45, L(rowEnv[sd]));
+>         const wid = Math.abs(lout - lin);
+>         course.sample(sC, fr);
+>         // bubbles grow with distance so their on-screen size stays ≈10–45 px (ref 05 bank texture)
+>         const scale = Math.min(2.0, 0.9 + 0.1 * Math.max(0, ds)) * kFade * Math.min(1, wid / 0.3) * ev;
+>         // wave 7: the right rim ahead of Benny is one low layer of smaller bubbles (no heap / outer kinds)
+>         const rimK = side > 0 ? sm(1.4, 2. …[+1447 chars]
+
+### 🤖 Claude — 2026-11-16T02:32:57.534Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "        const nearK = 1 - sm(2.0, 3.0, ds);\n        for (let p = 0; p < P; p++) {", "new_string": "        const nearK = 1 - sm(2.0, 3.0, ds);\n        // wave 9 it03: the wake bands behind Benny read as a 1-lump string of pearls; ref band lumps 35-55 px, 1.5-2 across\n        const wakeK = 1 + 0.18 * (1 - sm(-0.2, 0.2, ds));\n        for (let p = 0; p < P; p++) {"}`
+
+### 🧑 User — 2026-11-16T02:32:57.572Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:32:58.687Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "(bump ? 1.55 : 1) * (1 + 0.05 * nearK);", "new_string": "(bump ? 1.55 : 1) * (1 + 0.05 * nearK) * wakeK;"}`
+
+### 🧑 User — 2026-11-16T02:32:58.739Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:33:01.141Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  t += (mf.z - 0.6) * 0.16 * dens * kf - mf.x * 0.6 * kf + mf.y * 0.22 * kf;\n  vec3 col = bank05(t + 0.04 * vInst.z);", "new_string": "  t += (mf.z - 0.6) * 0.16 * dens * kf - mf.x * 0.25 * kf + mf.y * 0.22 * kf;\n  vec3 col = bank05(t + 0.04 * vInst.z);\n  // it03: the open bubbles are saturated blue dots (ref), whatever the lump's tone (subtracting t only greyed them)\n  col = mix(col, vec3(0.3, 0.38, 0.95), mf.x * kf * 0.8);"}`
+
+### 🧑 User — 2026-11-16T02:33:01.180Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:33:02.194Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/foam.ts", "old_string": "  float rad = 0.14 + 0.15 * h1.x;", "new_string": "  float rad = 0.16 + 0.17 * h1.x;"}`
+
+### 🧑 User — 2026-11-16T02:33:02.227Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/foam.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T02:33:03.244Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    alpha *= (1.0 - 0.85 * tear) * 0.8;", "new_string": "    alpha *= (1.0 - 0.85 * tear) * 0.95;"}`
+
+### 🧑 User — 2026-11-16T02:33:03.275Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:33:04.299Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "    alpha = lace * soft * 0.6 * (1.0 - 0.7 * hole);", "new_string": "    alpha = lace * soft * 0.72 * (1.0 - 0.7 * hole);"}`
+
+### 🧑 User — 2026-11-16T02:33:04.340Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T02:33:06.842Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"05\\|ds\\b\\|behind\\|ahead\" src/vfx/bubbles.ts | head -50", "description": "Check bubble placement logic"}`
+
+### 🧑 User — 2026-11-16T02:33:06.884Z
+
+> ↩︎ result: 5: *    highlights (ref 05). The on-screen diameter is capped (uMaxPx) and bubbles fade out close to the
+> 9: * walls (ref 05: ≈18 large 25–65 px + ≈25 small, none over the path or Benny). Drum A (01–02):
+> 11: * Pooled (fixed arrays, no per-frame allocation); respawned ahead when Benny passes them.
+> 38:  vFade = smoothstep(uNear, uNear * 1.8, depth) * step(0.0005, r);
+> 60:  // swirling thin film: magenta / violet / cyan bands with a little gold (ref 05)
+> 78:  vec3 col = film * (0.55 + 0.75 * rim) + vec3(1.0) * edge * 0.45 + vec3(1.05) * hl;
+> 158:/** ride counts (visible at once in a 05-like frame) and caps, per quality tier */
+> 160:  // wave 4 (user): ≈15–20 larger soap bubbles at the sides, only a few small ones; wave 7: in 05 the ref shows
+> 161:  // ≈20–25 small ones near the banks (small05, 05 s-range only)
+> 162:  high: { big: 19, small: 12, small05: 22 },
+> 163:  low: { big: 14, small: 8, small05: 12 },
+> 168:/** ride big bubbles: target on-screen diameter range (px in the 864×1536 frame), ref 05 ≈25–65 px */
+> 184:  const st05 = course.stage('05');
+> 188:  const seeds = new Float32Array(nBig).map(() => rand());
+> 189:  quad.setAttribute('aSeed', new THREE.InstancedBufferAttribute(seeds, 1));
+> 240: …[+1759 chars]
+
+### 🤖 Claude — 2026-11-16T02:33:08.481Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 228,262p src/vfx/bubbles.ts; sed -n 282,345p src/vfx/bubbles.ts", "description": "Read bubble ride spawn logic"}`
+
+### 🧑 User — 2026-11-16T02:33:08.535Z
+
+> ↩︎ result: /**
+>    * 1 = fine, 0 = in the no-bubble corridor (stream centre: Benny, splash, coin line), -1 = out of
+>    * the frame / too close to the camera. NDC from the camera basis; `r` (world radius) widens the
+>    * corridor so a bubble's rim never overlaps Benny either.
+>    */
+>   const allowed = (p: THREE.Vector3, r = 0): number => {
+>     if (!view.ok) return 1;
+>     const v = tmp3.copy(p).applyMatrix4(view.inv);
+>     const depth = -v.z;
+>     if (depth < 2.5) return -1;
+>     const xn = v.x / (depth * view.tanH), yn = v.y / (depth * view.tanV);
+>     if (Math.abs(xn) > 1.12 || yn < -1.12 || yn > 1.1) return -1;
+>     if (yn > 0.62) return 0; // upper tube / HUD: keep clear (ref 05 has none there)
+>     const rN = r / (depth * view.tanH);
+>     const corridor = yn < 0.1 ? 0.47 : 0.3;
+>     if (Math.abs(xn) - rN < corridor) return 0;
+>     // the route ahead (cyan core + coin line) winds off the screen centre in 05: keep a lane clear
+>     // around its projection at this screen row (the nearest coin sits at x≈640 in the 05 frame)
+>     if (coreN > 1 && yn <= coreY[coreN - 1] && yn >= coreY[0] - 0.4) {
+>       let i = 0;
+>       while (i < coreN - 2 && coreY[i + 1] < yn) i++;
+>       const t = Math.min(1, Math.max(0, (y …[+3987 chars]
+

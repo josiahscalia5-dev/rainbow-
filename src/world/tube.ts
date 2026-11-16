@@ -168,7 +168,20 @@ export interface TubeGeoOptions {
    * multiplied by oval(s) (ref 05 rings are ovals ≈1.75 wider than tall), normals follow the ellipse
    */
   oval?: (s: number) => number;
+  /**
+   * wave 9 (05 oval): flat bank floor — wall points lower than floor(s).y (height above the tube centre along
+   * `up`) are lifted onto it, blended by floor(s).w (0 = untouched circle/ellipse, 1 = flat), so the wide oval
+   * tube has a level bank between the river edge and the wall foot instead of a trench below the water line
+   */
+  floor?: (s: number) => { y: number; w: number };
 }
+
+/**
+ * wave 9 (environment): the 05 tunnel's oval cross-section, shared with the far block (ForcedTunnel, path-camera)
+ * so the seam stays continuous: lateral stretch K of the `right` component, and the level bank floor
+ * `floorBelowWater` units under the water line (see TubeGeoOptions.floor).
+ */
+export const OVAL05 = { K: 1.7, floorBelowWater: 0.18 } as const;
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
   const radial = o.radial ?? 48;
@@ -189,16 +202,20 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
     const f = path.frame(s);
     const r = path.radius(s) + (o.inset ?? 0);
     const ov = o.oval ? o.oval(s) : 1;
+    const fl = o.floor ? o.floor(s) : null;
     c.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
     for (let j = 0; j <= radial; j++) {
       const th = -Math.PI / 2 - arc / 2 + (j / radial) * arc; // centred on the bottom
       d.copy(f.right).multiplyScalar(Math.cos(th) * ov).addScaledVector(f.up, Math.sin(th));
       const k = i * (radial + 1) + j;
       if (ax && au) { f.tan.toArray(ax, k * 3); f.up.toArray(au, k * 3); }
-      pos[k * 3] = c.x + d.x * r;
-      pos[k * 3 + 1] = c.y + d.y * r;
-      pos[k * 3 + 2] = c.z + d.z * r;
+      // flat bank floor (05 oval): lift the part below the water line onto a level floor
+      const lift = fl && fl.w > 0 && Math.sin(th) * r < fl.y ? (fl.y - Math.sin(th) * r) * fl.w : 0;
+      pos[k * 3] = c.x + d.x * r + f.up.x * lift;
+      pos[k * 3 + 1] = c.y + d.y * r + f.up.y * lift;
+      pos[k * 3 + 2] = c.z + d.z * r + f.up.z * lift;
       if (ov !== 1) d.copy(f.right).multiplyScalar(Math.cos(th) / ov).addScaledVector(f.up, Math.sin(th)).normalize();
+      if (lift > 0) d.lerp(f.up.clone().negate(), fl!.w).normalize();
       nor[k * 3] = ns * d.x; nor[k * 3 + 1] = ns * d.y; nor[k * 3 + 2] = ns * d.z;
       uv[k * 2] = j / radial;
       uv[k * 2 + 1] = s / vScale;

@@ -18,6 +18,7 @@ import type { Course } from './course';
 import type { ForcedTunnel } from './tube';
 import { tubeCenterAt } from './tube';
 import { coreLateral, EDGE_LIFT } from '../vfx/waterRibbon';
+import { C05, coinVisuals } from '../gameplay/coins';
 
 /** QA only: the far block publishes its tunnel + river path here (read by qa scripts via dynamic import) */
 export const far05Debug: Record<string, unknown> = {};
@@ -237,4 +238,51 @@ export function farRiverGeometry(ft: ForcedTunnel, lay: FarRiverLayout, level: n
   g.setIndex(idx);
   g.computeBoundingSphere();
   return g;
+}
+
+/**
+ * FAR COINS (wave 9). Ref 05 continues the coin trail along the winding core right into the light: past ref coin #2
+ * (494, 531) come (518, 522) 16 px · (531, 516) 13 · (536, 507) 12 · (526, 498) 9 · (515, 493) 7 · (506, 489) 6 ·
+ * (497, 486) 5. With the real coin height C05.h over the far water those rows are virtual depths D ≈ 70 / 82 / 108 /
+ * 159 / 215 / 301 / 431, the x positions lie within ≈7 px of the far core (FAR05_CORE), so each far coin sits on the
+ * far river's core at its depth. The ref draws the far coins a little larger than physical (×1 → ×1.5 by D ≈ 300).
+ * Purely visual: same geometry/materials as the real coins (coinVisuals), placed through ft.matrix, never pickups.
+ * They exist only while the far section is closed and shrink away (smoothly, ≤ 16 px on screen) while it opens
+ * (rider camera 34 → 18 u before the seam), before the real tube beyond shows — no pop, never a double coin.
+ * The real 05 trail ends with the seam coin (coins.ts, C05.seamAxisLat) just in front of the first far coin.
+ */
+export const FAR05_COIN_D = [70, 83, 106, 150, 205, 280, 370];
+
+export function farCoins05(ft: ForcedTunnel, lay: FarRiverLayout, level: number) {
+  const { geo, materials } = coinVisuals();
+  const items = FAR05_COIN_D.map((D) => {
+    const Z = D - ft.D0;
+    const r = lay.row(Z);
+    // the real coin pose (coins.ts place(): face toward the camera, leaning back by C05.tilt)
+    const basis = new THREE.Matrix4().makeBasis(ft.Rt, ft.U, ft.T.clone().negate())
+      .multiply(new THREE.Matrix4().makeRotationX(-C05.tilt));
+    const k = C05.scale * (1 + 0.5 * smoothstep(90, 300, D));
+    // water level − 0.04 = the real course water at the seam; the coin centre C05.h above it
+    const o = ft.Rt.clone().multiplyScalar(r.core).addScaledVector(ft.U, level - 0.04 + C05.h);
+    return { Z, o, basis, s: new THREE.Vector3(k, k, k) };
+  });
+  const mesh = new THREE.InstancedMesh(geo, materials, items.length);
+  mesh.name = 'coins05_far';
+  mesh.frustumCulled = false;
+  const m = new THREE.Matrix4(), sc = new THREE.Vector3();
+  /** open: the far section's open state (0 closed … 1 folded away) */
+  const place = (open: number) => {
+    const fade = 1 - smoothstep(0, 0.45, open);
+    mesh.visible = fade > 1e-3;
+    if (!mesh.visible) return;
+    items.forEach((it, i) => {
+      // closed placement (open = 0): the forced-perspective mapping; only the size fades while it opens
+      ft.matrix(it.Z, it.o, it.basis, sc.copy(it.s).multiplyScalar(fade), 0, it.o, 1, m);
+      mesh.setMatrixAt(i, m);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+  };
+  place(0);
+  Object.assign(far05Debug, { farCoins: items.map((it) => ({ Z: it.Z, o: it.o.toArray(), k: it.s.x })) });
+  return { mesh, place };
 }

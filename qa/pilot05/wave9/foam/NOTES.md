@@ -31,3 +31,15 @@ dark / mid / bright thirds of the clump-box foam px).
    08; gameplay-test.
 
 ## Log
+* it01 (86 calls, 566,775 tris): foam.ts updateRafts: rows behind Benny (vK = 1 - sm(-0.45, 0.05, ds)) take V-wake
+  laterals (inner 0.3 + 0.7 b, outer 0.9 + 0.47 b from Benny, outer clamped V_EDGE_PX = 64 px in from the frame edge,
+  envelope ds -0.3 .. V_DS_END -1.45); BANK_BUB_FRAG own ramp bank05 (violet-lavender, white cap 1.3), softer upper rim,
+  holes smaller (rad 0.14 + 0.15 h) and only low; riderSplash.ts 05 ropes steeper (thR 1.3 -> 0.45, phi 0.46 -> 0),
+  torn-lace holes cut the alpha (x0.8 overall), 30 ropes / 10 froth pads (froth alpha 0.6, holed). Seen: the near
+  banks now run diagonally back-outward from the splash like the ref V (left (240,1180) -> (60,1290), right (610,1130)
+  -> (760,1270)), continuous; but cotton-white lumps without the blue holes / lower halves, and a bridge up to y 1120
+  on both sides (band blended into the frame-fit rows at ds -0.45..0.05). Splash lighter and steeper but a brush of
+  thin hairs. Numbers: mad 50.6 -> 51.1, hue_corr 0.875 -> 0.883, edge 0.195 -> 0.193, Benny+near 46.5 -> 48.1 (gain.py:
+  LL +2.5, LR +5.9, Lclump +6.5 worse, splash -0.4 better). clumpcol W54/32/32/26 S28/34/32/33 (ref W25/28/28/22
+  S56/38/44/41: too white, too little blue); clumptone mid F0E6F8 (ref E8D7FF), p50 231-244 (ref 221-224). splashext
+  L/R 20.0/22.8 % (box now includes the V bands, like the ref's).
