@@ -4697,3 +4697,46 @@ Sent. Before the next step I'll do a checkpoint save, and update the roster: the
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\nimport json\np = \"backups/AGENTS_STATUS.json\"; d = json.load(open(p))\nd[\"updated_utc\"] = \"2026-11-16T12:45:00+00:00\"; d[\"running_now\"] = []\nfor a in d[\"agents\"]:\n    if a[\"name\"] == \"water-fx-specialist\":\n        a[\"state\"] = \"idle\"\n        a[\"last_wave\"] = \"wave 10 DONE (it04 kept behind ?water05=1; candidate waiting for the user's yes/no)\"\n        a[\"unfinished_work\"] = \"qa/pilot05/wave10/water/NOTES.md -> 'Left undone' (mid bands wider/fewer streaks, far coin off-centre, far river not animated, flares s …[+912 chars]`
 
+### 🧑 User — 2026-11-16T12:28:15.563Z
+
+> ↩︎ result: roster ok
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "3b1dfc1ce1a25682c8808e2d006511e2daacdc84",
+> REMOTE == LOCAL (3b1dfc1ce1a25682c8808e2d006511e2daacdc84)
+> src/world/far05.ts:37:export const FAR05_CORE: [number, number][] = [
+> src/world/far05.ts:121: * W10 (?water05=1) far path: lateral of the visible cyan core (units along ft.Rt). Starts where the W10 ribbon hands
+> src/world/far05.ts:124: * left into the vanishing point (as FAR05_CORE beyond Z 140).
+> src/world/far05.ts:126:export const FAR05_CORE_W10: [number, number][] = [
+> src/world/far05.ts:138:  const core = Math.max(-hw + 1.2, Math.min(hw - 1.2, hermite(FAR05_CORE_W10, Z)));
+> src/world/far05.ts:149: * with the row (axial = Z), widths divided by cos(heading). It blends (Z 2 → 10) into the designed FAR05_CORE path.
+> src/world/far05.ts:175:    const target = hermite(FAR05_CORE, Z);
+
+### 🤖 Claude — 2026-11-16T12:28:21.017Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/far05.ts", "offset": 118, "limit": 75}`
+
+### 🧑 User — 2026-11-16T12:28:21.029Z
+
+> ↩︎ result: 118	}
+> 119	
+> 120	/**
+> 121	 * W10 (?water05=1) far path: lateral of the visible cyan core (units along ft.Rt). Starts where the W10 ribbon hands
+> 122	 * over at the seam (core held at −0.3 u, see coreShiftW10) and climbs smoothly up-right like the approved river
+> 123	 * (core ≈ 504 px at y 540, ≈ 523 at y 522, ≈ 535 at y 510 → Z ≈ 24 / 55 / 100 at the locked eye), then swings back
+> 124	 * left into the vanishing point (as FAR05_CORE beyond Z 140).
+> 125	 */
+> 126	export const FAR05_CORE_W10: [number, number][] = [
+> 127	  [0, -0.3], [8, 0.2], [16, 0.75], [24, 1.25], [32, 1.8], [43, 2.45], [60, 3.1], [88, 3.7], [110, 4.05], [140, 4.3],
+> 128	  [175, 4.0], [212, 2.6], [260, 0.8], [310, -1.4], [350, -2.2], [400, -2.5],
+> 129	];
+> 130	
+> 131	/**
+> 132	 * W10 far design row: the water body spans the whole floor chord (foam rim at the wall), the two satin bands run
+> 133	 * BESIDE the winding core (approved far field: bands ≈ 20 px wide, 120 px apart at y 540, deep violet water between
+> 134	 * each band and its bank) instead of as thin lines on the banks of a narrow body hugging the outer wall.
+> 135	 */
+> 136	function designW10(Z: number, chord: number): FarRiverRow {
+> 137	  const hw = chord - 0.35;
+> 138	  const core  …[+3175 chars]
+
