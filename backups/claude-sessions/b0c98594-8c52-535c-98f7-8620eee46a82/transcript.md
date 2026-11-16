@@ -4210,3 +4210,87 @@ All changes are now committed and on GitHub, and the working tree is clean. The 
 
 The water specialist is still working in the background. I'll show you the result next to your approved image when it finishes.
 
+### 🧑 User — 2026-11-16T12:16:09.117Z
+
+How's it looking so far and make sure you save everything to my GitHub resporitory
+
+### 🤖 Claude — 2026-11-16T12:16:26.305Z
+
+The water specialist hasn't reported back yet, so it's still working. I can see its progress from the files it's writing (notes and code changes), and I'll make a verified save:
+
+### 🤖 Claude — 2026-11-16T12:16:27.611Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; date -u +%H:%M; ls -la qa/pilot05/wave10/water/ 2>&1 | head -20; echo \"--- code files changed vs last checkpoint:\"; git diff --stat 7627b4d -- src | tail -8; echo \"--- uncommitted:\"; git status --short | head -10", "description": "Check the water specialist's work-in-progress files"}`
+
+### 🧑 User — 2026-11-16T12:16:27.673Z
+
+> ↩︎ result: 12:16
+> total 20
+> drwxr-xr-x 5 root root 4096 Nov 16 12:15 .
+> drwxr-xr-x 3 root root 4096 Nov 16 12:02 ..
+> drwxr-xr-x 2 root root 4096 Nov 16 12:02 it01
+> drwxr-xr-x 2 root root 4096 Nov 16 12:12 it02
+> drwxr-xr-x 2 root root 4096 Nov 16 12:15 it03
+> --- code files changed vs last checkpoint:
+>  src/vfx/riderSplash.ts |  19 +++-
+>  src/vfx/waterRibbon.ts | 237 ++++++++++++++++++++++++++++++++++++++++++++++++-
+>  src/world/far05.ts     |  31 ++++++-
+>  src/world/materials.ts |  68 +++++++++++++-
+>  4 files changed, 348 insertions(+), 7 deletions(-)
+> --- uncommitted:
+>  M src/vfx/riderSplash.ts
+>  M src/vfx/waterRibbon.ts
+>  M src/world/materials.ts
+> ?? qa/pilot05/wave10/water/it03/
+
+### 🤖 Claude — 2026-11-16T12:16:33.924Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; for d in it01 it02 it03; do echo \"== $d\"; ls qa/pilot05/wave10/water/$d | head -8; done; for d in it01 it02 it03; do f=$(ls qa/pilot05/wave10/water/$d/*.md 2>/dev/null | head -1); [ -n \"$f\" ] && { echo \"== $f\"; grep -E \"NEW|CURRENT|APPROVED\" \"$f\" | head -12; }; done", "description": "List iteration captures and their measurement tables"}`
+
+### 🧑 User — 2026-11-16T12:16:33.971Z
+
+> ↩︎ result: == it01
+> 05.png
+> diff05.md
+> == it02
+> 05.png
+> diff05.md
+> == it03
+> 05.png
+> diff05.md
+> == qa/pilot05/wave10/water/it01/diff05.md
+> | APPROVED | tunnel top 150-470 | 5.5 | 0.0 | 36.9 | 3.8 | 1.2 | 1.00 | 0.70 |
+> | APPROVED | VP + far river 470-640 | 4.6 | 8.5 | 19.1 | 5.3 | 1.1 | 1.00 | 0.64 |
+> | APPROVED | mid river 640-1000 | 2.4 | 23.3 | 20.4 | 9.3 | 0.3 | 1.00 | 0.68 |
+> | APPROVED | Benny + near water 1000-1536 | 5.6 | 32.1 | 12.7 | 8.1 | 0.0 | 1.00 | 0.72 |
+> | CURRENT | tunnel top 150-470 | 9.0 | 0.0 | 47.1 | 1.1 | 0.9 | 1.00 | 0.65 |
+> | CURRENT | VP + far river 470-640 | 9.6 | 7.4 | 43.5 | 6.7 | 0.4 | 1.00 | 0.60 |
+> | CURRENT | mid river 640-1000 | 4.4 | 38.7 | 25.2 | 8.1 | 0.1 | 1.00 | 0.66 |
+> | CURRENT | Benny + near water 1000-1536 | 7.8 | 49.1 | 15.6 | 10.3 | 0.0 | 1.00 | 0.69 |
+> | NEW | tunnel top 150-470 | 9.0 | 0.0 | 47.1 | 1.1 | 0.9 | 1.00 | 0.65 |
+> | NEW | VP + far river 470-640 | 9.8 | 7.0 | 43.0 | 6.8 | 0.4 | 1.00 | 0.60 |
+> | NEW | mid river 640-1000 | 4.5 | 30.5 | 22.6 | 8.2 | 0.1 | 1.00 | 0.62 |
+> | NEW | Benny + near water 1000-1536 | 7.8 | 49.4 | 15.0 | 9.7 | 0.0 | 1.00 | 0.69 |
+> == qa/pilot05/wave10/water/it02/diff05.md
+> | APPROVED | tunnel top 150-470 | 5.5 | 0.0 | 36.9 | 3.8 | 1.2 | 1.0 …[+1919 chars]
+
+### 🤖 Claude — 2026-11-16T12:16:42.631Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad; python3 -I -c \"\nfrom PIL import Image, ImageDraw\nlabs=[('APPROVED','references/05_flow_into_the_current.png'),('GAME NOW','qa/pilot05/current_default_05.png'),('WATER it03 (work in progress)','qa/pilot05/wave10/water/it03/05.png')]\nims=[Image.open(p).convert('RGB').resize((864,1536)).resize((432,768)) for _,p in labs]\no=Image.new('RGB',(442*3,792),(15,15,20)); d=ImageDraw.Draw(o)\nfor i,(im,(l,_)) in enumerate(zip(ims,labs)): o.paste(im,(i*442,24)); d.text((i*442+4,6), …[+135 chars]`
+
+### 🧑 User — 2026-11-16T12:16:42.930Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T12:16:43.581Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/water_wip.jpg"}`
+
+### 🧑 User — 2026-11-16T12:16:43.594Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:16:52.301Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; flock -w 120 backups/.autosave.lock -c true; python3 scripts/rainbow-autosave.py --reason manual:user-save-request 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"'; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1); echo \"local  $L\"; echo \"remote $R\"; [ \"$L\" = \"$R\" ] && echo \"REMOTE == LOCAL\"; echo \"uncommitted: $(git status --short | wc -l)\"; python3 -I scripts/autosave-status.py | head -1; python3 -I scripts/verify-assets.py lfs-remote | tail -1", "description": "Verified save of ev …[+46 chars]`
+

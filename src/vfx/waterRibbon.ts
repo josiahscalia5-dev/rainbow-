@@ -432,6 +432,35 @@ vec4 brush05(float X, float v, float fwX, float fwV, float drift) {
   }
   return vec4(lane, clamp(0.5 + b / wsum * 1.9, 0.0, 1.0), core, glow);
 }
+
+// Jagged white "lightning" flare (approved near field: ≈8–12 bright 60–120 px flares on the swell crests): a thick
+// lens along SCREEN-horizontal whose spine zig-zags, a short vertical spike and a soft halo. g = world-anchored,
+// advected cell grid; sizes in pixels, clamped so the flare never crosses its cell border (no clipped halos).
+// Derivatives are taken before the early-out (Android-safe). returns x = white core, y = halo
+vec2 bolt05(vec2 g, float density, float Lpx, float Tpx, float seed) {
+  vec2 gx = dFdx(g);
+  vec2 gy = dFdy(g);
+  vec2 gi = floor(g);
+  float hs = hash12(gi + seed);
+  float det = gx.x * gy.y - gy.x * gx.y;
+  if (hs < 1.0 - density || abs(det) < 1e-12) return vec2(0.0);
+  vec2 dg = fract(g) - (vec2(hash12(gi + seed + 2.3), hash12(gi + seed + 6.9)) * 0.3 + 0.35);
+  vec2 p = vec2(gy.y * dg.x - gy.x * dg.y, gx.x * dg.y - gx.y * dg.x) / det;   // pixels from the flare centre
+  float limx = 0.3 / max(abs(gx.x) + abs(gx.y), 1e-6);
+  float limy = 0.3 / max(abs(gy.x) + abs(gy.y), 1e-6);
+  float L = min(Lpx * (0.6 + 0.8 * fract(hs * 37.0)), limx);
+  float T = min(Tpx * (0.7 + 0.6 * fract(hs * 53.0)), limy * 0.35);
+  float ax = abs(p.x / L);
+  if (ax > 1.0 && abs(p.y) > limy) return vec2(0.0);
+  float k = 2.0 + 1.5 * fract(hs * 71.0);             // zig-zag kinks per half length
+  float zz = (abs(fract(p.x / L * k + hs * 3.0) - 0.5) * 2.0 - 0.5) * T * 1.3 * max(0.0, 1.0 - ax);
+  float y = p.y - zz;
+  float th = T * pow(max(0.0, 1.0 - ax * ax), 1.3);
+  float core = (1.0 - smoothstep(th * 0.45, th + 0.8, abs(y))) * step(ax, 1.0);
+  float spike = exp(-abs(p.x) * 0.9) * max(0.0, 1.0 - abs(p.y) / min(L * 0.3, limy));
+  float halo = exp(-length(vec2(p.x / (L * 0.75), y / (T * 2.5 + 5.0))) * 2.0) * max(0.0, 1.0 - abs(p.y) / limy);
+  return vec2(max(core, spike * 0.7), halo);
+}
 #endif
 
 void main() {
@@ -755,15 +784,19 @@ void main() {
     float crestN = 0.0;
     if (near5 > 0.0) {
       float dlN = lat - uBenny.y;
-      float ph = v5 * 13.0 + 4.6 * dlN * dlN / (1.0 + 0.35 * back) + 2.2 * vnoise(vec2(dlN * 0.9 + 3.0, v5 * 0.6));
+      // (it03) stronger ∩ bow (approved arcs drop ≈40–60 px over ±250 px), less random warp, deeper troughs, the
+      // bright tier only on the crest side of each swell (approved near ladder p5 #0087E2, p50 #01A5FA, p75 #03C0FC)
+      float ph = v5 * 12.0 + 9.0 * dlN * dlN / (1.0 + 0.25 * back) + 0.9 * vnoise(vec2(dlN * 0.9 + 3.0, v5 * 0.6));
       float sv = 0.5 + 0.5 * sin(ph);
-      vec3 nb = mix(W5_CDEEP2, W5_CMID, smoothstep(0.0, 0.35, sv));
-      nb = mix(nb, W5_CBRIGHT, smoothstep(0.45, 1.0, sv) * 0.85);
-      float seg = smoothstep(0.34, 0.62, vnoise(vec2(dlN * 1.4 + 9.0, v5 * 1.3)));
-      float sp = max(0.0, sin(ph + 1.2));
-      crestN = (pow(sp, 40.0) + 0.45 * pow(sp, 6.0)) * seg;
-      nb = mix(nb, W5_CAQUAW, clamp(crestN, 0.0, 1.0) * 0.9);
-      nb += vec3(0.6, 0.9, 0.9) * pow(sp, 140.0) * seg * 1.2;
+      vec3 nb = mix(W5_CDEEP, W5_CDEEP2, smoothstep(0.0, 0.25, sv));
+      nb = mix(nb, W5_CMID, smoothstep(0.25, 0.6, sv));
+      nb = mix(nb, W5_CBRIGHT, smoothstep(0.7, 1.0, sv) * 0.8);
+      float seg = smoothstep(0.3, 0.58, vnoise(vec2(dlN * 1.4 + 9.0, v5 * 1.3)));
+      float sp = max(0.0, sin(ph + 1.0));
+      crestN = (pow(sp, 36.0) + 0.5 * pow(sp, 7.0)) * seg;
+      nb = mix(nb, W5_CAQUA, clamp(0.5 * pow(sp, 7.0) * seg, 0.0, 1.0));
+      nb = mix(nb, W5_CAQUAW, clamp(pow(sp, 36.0) * seg, 0.0, 1.0) * 0.95);
+      nb += vec3(0.6, 0.9, 0.9) * pow(sp, 140.0) * seg * 1.4;
       cy = mix(cy, nb, near5);
     }
     // deep blue / blue-violet water between a band and its bank
@@ -813,10 +846,15 @@ void main() {
     flA = max(flA, 0.75 * flowGlint(vec2(X * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.5, 16.0, 4.2, 0.0, uTime + 1.9));
     // near: big flares lying across the flow on the swell crests + lens flares (white core, aqua glow)
     float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.8, 56.0, 5.0, 0.85, uTime + 2.7);
-    float lz = lensFlare(vec2(X * 1.8, v5 * 1.6 + 1.1 * sin(X * 3.3 + 1.0)), 0.7, 110.0, 5.5, uTime);
-    c5 += mix(vec3(0.2, 1.2, 1.4), vec3(2.2, 2.45, 2.5), smoothstep(0.55, 1.0, lz)) * lz * near5 * (1.0 - pk5) * 0.7;
+    // (it03) jagged lightning flares replace the flat lens pills (two cell sets so they never line up)
+    vec2 bz = bolt05(vec2(X * 1.3, v5 * 1.15 + 0.5 * sin(X * 3.1 + 0.4)), 0.55, 62.0, 5.5, 4.17);
+    vec2 bz2 = bolt05(vec2(X * 2.3 + 0.41, v5 * 2.0 + 0.7 * sin(X * 4.7 + 2.2)), 0.35, 34.0, 3.5, 9.31);
+    bz = max(bz, bz2 * 0.85);
+    float boltN = near5 * (1.0 - pk5);
+    c5 = mix(c5, W5_CAQUA, clamp(bz.y * 0.55, 0.0, 1.0) * boltN);
+    c5 += vec3(2.0, 2.3, 2.4) * bz.x * boltN;
     c5 += mix(vec3(1.7, 2.1, 2.2), vec3(2.2, 1.7, 2.2), pk5) * (flA * (1.0 - near5) * (1.0 - smoothstep(0.3, 0.8, fws))
-        + flB * near5 * (1.0 + 1.4 * smoothstep(0.2, 0.8, crestN)));
+        + flB * near5 * (0.5 + 0.8 * smoothstep(0.2, 0.8, crestN)));
     #endif
     col = mix(col, c5, sw);
   }

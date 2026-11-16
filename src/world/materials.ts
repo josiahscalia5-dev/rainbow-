@@ -954,16 +954,18 @@ float rivCells(vec2 p) {
     col = mix(col, O_BLUE, smoothstep(1.0, 1.15, at));
     col = mix(col, ow, smoothstep(1.12, 1.3, at));
   }
-  // bubbly foam rim along each bank and over the floor beyond it (white puffs with lavender / blue shading)
-  float foamIn = smoothstep(-0.45, -0.1, e + bankN);
+  // (it03) beyond the bank the floor reads as deep violet water, not as a flat pale foam sheet (the lavender wedge
+  // left of the seam); only a narrow bubbly foam rim (puff cells ≥ ≈6 px, lavender / blue shading) lines each bank
+  col = mix(col, O_DEEP * 0.6 + V_OUT * 0.25, smoothstep(0.15, 0.6, e));
+  float foamIn = smoothstep(-0.42, -0.12, e + bankN) * (1.0 - smoothstep(0.25, 0.55, e + bankN));
   if (foamIn > 0.0) {
-    float c = rivCells(vec2(lat * 4.2, s * 1.6 + lat * 0.7));
-    float c2 = rivCells(vec2(lat * 9.0 + 3.1, s * 3.4 - lat * 0.5));
-    float cf = 1.0 - smoothstep(0.08, 0.22, fl * 4.2);
-    float puff = mix(0.5, 1.0 - smoothstep(0.2, 0.85, c), cf);
-    vec3 fo = mix(uRivFoamLav * 0.9, uRivFoam, puff);
-    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.05, 0.25, c2)) * cf * 0.6);
-    fo = mix(fo, uRivFoamBlue, 0.4 * (1.0 - smoothstep(0.0, 0.2, abs(e + 0.12))));
+    float c = rivCells(vec2(lat * 2.4, s * 0.9 + lat * 0.7));
+    float c2 = rivCells(vec2(lat * 5.0 + 3.1, s * 1.9 - lat * 0.5));
+    float cf = 1.0 - smoothstep(0.08, 0.22, fl * 2.4);
+    float cf2 = 1.0 - smoothstep(0.08, 0.22, fl * 5.0);
+    float puff = mix(0.55, 1.0 - smoothstep(0.2, 0.85, c), cf);
+    vec3 fo = mix(uRivFoamLav * 0.8, uRivFoam, puff);
+    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.05, 0.25, c2)) * cf2 * 0.6);
     col = mix(col, fo, foamIn);
   }
 #else

@@ -17,6 +17,7 @@
  */
 import * as THREE from 'three';
 import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+import { WATER05 } from './waterRibbon'; // Screen 05 water test W10 (?water05=1): thinner, wider splash threads
 
 /**
  * Jet layout shared with the spray droplets (index.ts): across a = 0 (outer, most sideways jet) … 1
@@ -246,8 +247,15 @@ float hs(float n) { return fract(sin(n * 91.345 + 3.17) * 43758.5453); }
 vec3 ropePos(float u, float side, float a, float seed, float len) {
   // root on the waterline circle (from beside the body to its back flank), direction measured from straight back
   // roots just outside the fur's silhouette (the waterline chord uR hides under the body from the chase camera)
+  #ifdef WATER05
+  // W10 (?water05=1): approved splash = a wide fan of thin water threads leaving Benny's lower back and flanks
+  // (straight back … ≈65° out), curling outward along their length; not two dense white "wings"
+  float thR = mix(1.5, 0.35, a) + (hs(seed * 3.1) - 0.5) * 0.22;
+  float phi = mix(1.1, 0.08, a) + (hs(seed * 5.7) - 0.5) * 0.34 + 0.35 * u * u;
+  #else
   float thR = mix(1.4, 0.5, a) + (hs(seed * 3.1) - 0.5) * 0.18;
   float phi = mix(0.62, 0.06, a) + (hs(seed * 5.7) - 0.5) * 0.26 + 0.25 * u * u;
+  #endif
   vec2 root = vec2(sin(thR), cos(thR)) * max(uR, 0.5) * (1.3 + 0.2 * hs(seed * 2.3));
   vec2 q = root + vec2(sin(phi), cos(phi)) * u * len;
   // ropes ride on the surface with small humps (whitewater, not flying jets)
@@ -275,7 +283,16 @@ void main() {
     vLen = len;
     p = ropePos(aUV.x, side, a, seed, len);
     tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
+    #ifdef WATER05
+    // W10: thin threads (≈2–5 px near the camera), a little longer, so the water shows between them
+    len *= 1.15;
+    vLen = len;
+    p = ropePos(aUV.x, side, a, seed, len);
+    tg = ropePos(min(aUV.x + 0.04, 1.0), side, a, seed, len) - ropePos(max(aUV.x - 0.04, 0.0), side, a, seed, len);
+    w = mix(0.015, 0.004, pow(aUV.x, 0.7)) * (0.55 + 0.7 * hs(seed * 19.1));
+    #else
     w = mix(0.034, 0.008, pow(aUV.x, 0.7)) * (0.5 + 0.7 * hs(seed * 19.1));
+    #endif
   } else if (aType < 1.5) {
     // crown droplet jet: the head runs root -> landing, the jet is a short chain of beads
     float rate = mix(1.6, 2.6, hs(seed * 11.3));
@@ -409,7 +426,7 @@ export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
   geo.setAttribute('aType', new THREE.InstancedBufferAttribute(typ, 1));
   geo.instanceCount = n;
   const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.55 }, uStrength: { value: 0 } });
-  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: VERT5, fragmentShader: FRAG5, fog: true, transparent: true, depthWrite: false, side: THREE.DoubleSide });
+  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: VERT5, fragmentShader: FRAG5, fog: true, transparent: true, depthWrite: false, side: THREE.DoubleSide, ...(WATER05 ? { defines: { WATER05: 1 } } : {}) });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'rider_splash05';
   mesh.frustumCulled = false;

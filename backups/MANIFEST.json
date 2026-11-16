@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "defb7ba2a6acc1b64f2fc78931a715bda963c1aa8f7c17bf1ba90eb90339d690"
+   "sha256": "9c1c3f9271e2796e820848c74f08e7de14d311f4056ed5ad6f3644b0d1208e89"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1285,6 +1285,16 @@
    "path": "qa/pilot05/wave10/water/it02/diff05.md",
    "bytes": 1389,
    "sha256": "c3e693d715200783a920cbf3fe7df68539668bd1d8d905b2ea12ece3bc55e8dc"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/it03/05.png",
+   "bytes": 1753896,
+   "sha256": "7ff47783d170ee745cfc17069999aec7cc8b33ff695e785a300c262da98e663c"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/it03/diff05.md",
+   "bytes": 1389,
+   "sha256": "49204c06c071a26e6b5e12171d270f921c815d2702380abd6b8b379238bd1cc1"
   },
   {
    "path": "qa/pilot05/wave3/benny/it00/05.png",
@@ -6073,8 +6083,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 20504,
-   "sha256": "7e06994d707eed7ecdc1f163f5525c1b4eaf41b09040223dda7930af0d4c8a6d"
+   "bytes": 21474,
+   "sha256": "5c7ca776b9e2f8f6aae4ef58aea2b6782e6e952d5cac97ecdb4ddad13910528c"
   },
   {
    "path": "src/vfx/spray.ts",
@@ -6083,8 +6093,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 61052,
-   "sha256": "dfe3e572aa9ff3e7f3b18d8375bde9c9f20c9c4b324ff3a2401f61aab66be3ce"
+   "bytes": 63526,
+   "sha256": "f322a4faaf3c3892cd98fbc94dfc56ff13f19544a3a67cd04834af48ab880cdb"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -6113,8 +6123,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 61237,
-   "sha256": "c7ba77b4abd358f7aef583a4181050d4f233781f7252cdcfac16f92806852606"
+   "bytes": 61457,
+   "sha256": "f31e2e5b37ef84e6f0dc481c3a39970d022558aa4a5c2e94145e594431d6674d"
   },
   {
    "path": "src/world/towel.ts",
