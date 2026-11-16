@@ -1034,6 +1034,10 @@ float rivCells(vec2 p) {
     float lit = clamp((c1u - c1) * 3.2 + 0.55, 0.0, 1.0);
     vec3 fo = mix(uRivFoamLav * 0.8, uRivFoam * 1.06, mix(0.62, dome * (0.45 + 0.55 * lit) + 0.25 * lit, f1));
     fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.25);
+#ifdef PUFF05
+    // W12: bubbly surface (white bubble centres, lavender-blue rims) like the approved foam banks
+    fo = mix(fo, mix(uRivFoam * 1.12, uRivFoamLav * 0.72, smoothstep(0.2, 0.8, c2)) * (0.8 + 0.3 * lit), f2 * 0.7);
+#endif
     fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.0, 0.3, e2)) * 0.4);            // shaded waterline
     fo = mix(fo, uRivFoamBlue * 0.85, smoothstep(0.6, 1.0, e2 / max(rimW, 0.3)) * 0.45 * smoothstep(8.0, 26.0, Zv));
     col = mix(col, col * vec3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * (1.0 - shelf));

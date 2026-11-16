@@ -1649,3 +1649,403 @@ Next I'll typecheck and capture the combined variant to see the result.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-16T13:52:38.588Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    // long smooth satin sheen along the crest of each broad swell (mid field), same hue as the water under it\n    c5 = mix(c5, mix(W5_CAQUAW, W5_PPALE, pk5), silkHi * mid5 * 0.28);", "new_string": "    // long smooth satin sheen along the crest of each broad swell (mid field), same hue as the water under it\n    c5 = mix(c5, mix(W5_CAQUAW, W5_PPALE, pk5), silkHi * mid5 * 0.28);\n    // a few LONG smooth glossy streaks (approved mid field: long white / white-pink streaks along the current on both\ …[+657 chars]`
+
+### 🧑 User — 2026-11-16T13:52:38.633Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:52:42.491Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      fo = mix(fo, vec3(0.5, 0.56, 1.05), (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.22);\n      fo = mix(fo, vec3(0.36, 0.42, 0.98), (1.0 - smoothstep(0.0, 0.3, e2)) * 0.4);            // shaded waterline", "new_string": "      fo = mix(fo, vec3(0.5, 0.56, 1.05), (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.22);\n      #ifdef PUFF05\n      // W12: a bubbly surface like the bank lace and the approved foam (white bubble centres, lavender-blue rims)\n      // instead of a smooth snow-drift sheet\n      …[+351 chars]`
+
+### 🧑 User — 2026-11-16T13:52:42.523Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:52:44.795Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/materials.ts", "old_string": "    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.25);", "new_string": "    fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.25);\n#ifdef PUFF05\n    // W12: bubbly surface (white bubble centres, lavender-blue rims) like the approved foam banks\n    fo = mix(fo, mix(uRivFoam * 1.12, uRivFoamLav * 0.72, smoothstep(0.2, 0.8, c2)) * (0.8 + 0.3 * lit), f2 * 0.7);\n#endif"}`
+
+### 🧑 User — 2026-11-16T13:52:44.834Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/materials.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:52:50.865Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -2; npx tsc --noEmit -p . && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=$S/w12b 2>&1 | tail -1 | cut -c1-120; C=qa/pilot05/wave11/compare; python3 -I tools/qa/water05_grain.py $S/g2.md APPROVED=$C/1_APPROVED_05.png W12b=$S/w12b/05.png | tail -6; for f in $C/1_APPROVED_05.png $S/w12a/05.png $S/w12b/05.png; do convert $f -crop 864x380+0+560 +repage miff:-; done | convert - -append -resize 60% $S/v/mid_w12b.jpg", "description" …[+71 chars]`
+
+### 🧑 User — 2026-11-16T13:53:12.287Z
+
+> ↩︎ result: @@ ok Marble API key authenticated (free read: 5190 credits); worlds draft 200, full 200; no paid job started
+> 05 → /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/w12b/05.png {"stage":"05","s":1
+> | APPROVED | mid river 700-1000 | 0.988 | 0.976 | 0.752 | 0.973 | 0.018 | 0.043 | 0.429 | 4.80 |
+> | APPROVED | near water 1000-1536 | 0.991 | 0.949 | 0.682 | 0.969 | 0.015 | 0.043 | 0.359 | 4.94 |
+> | W12b | far river 560-700 | 0.766 | 0.988 | 0.708 | 0.824 | 0.026 | 0.071 | 0.371 | 12.96 |
+> | W12b | mid river 700-1000 | 0.888 | 0.980 | 0.749 | 0.957 | 0.010 | 0.030 | 0.323 | 2.89 |
+> | W12b | near water 1000-1536 | 0.924 | 0.922 | 0.730 | 0.922 | 0.016 | 0.039 | 0.413 | 3.33 |
+
+### 🤖 Claude — 2026-11-16T13:53:14.293Z
+
+The World Labs key now authenticates: a free read shows 5,190 credits, and both worlds return HTTP 200. Here's W12b:
+
+### 🤖 Claude — 2026-11-16T13:53:15.487Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/mid_w12b.jpg"}`
+
+### 🧑 User — 2026-11-16T13:53:15.507Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:53:29.184Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float nS5 = vnoise(vec2(X * 1.25 + 4.1, v5 * 0.035 + 1.3));\n    float dS5 = abs(nS5 - 0.5) / max(fwidth(nS5), 1e-4);\n    float kS5 = smoothstep(0.5, 0.75, vnoise(vec2(X * 0.6 + 2.0, v5 * 0.06 + 7.0))) * mid5 * (1.0 - smoothstep(0.3, 0.8, fws));\n    c5 = mix(c5, mix(W5_CAQUA, W5_PLIGHT, pk5), (1.0 - smoothstep(2.0, 9.0, dS5)) * kS5 * 0.35);\n    c5 += mix(vec3(1.4, 1.9, 2.0), vec3(2.0, 1.5, 2.0), pk5) * (1.0 - smoothstep(0.8, 2.6, dS5)) * kS5 * 0.9;", "new_string": "    float nS5 = vnoise(vec …[+489 chars]`
+
+### 🧑 User — 2026-11-16T13:53:29.217Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:53:32.337Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=$S/w12c 2>&1 | tail -1 | cut -c1-60; C=qa/pilot05/wave11/compare; python3 -I tools/qa/water05_grain.py $S/g3.md APPROVED=$C/1_APPROVED_05.png W12c=$S/w12c/05.png | tail -6; for f in $C/1_APPROVED_05.png $S/w12c/05.png; do convert $f -crop 864x440+0+560 +repage miff:-; done | convert - -append -resize 75% $S/v/mid_w12c.jpg", "description": "Capture and measure W12c with more streaks", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T13:53:46.660Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-
+> | APPROVED | mid river 700-1000 | 0.988 | 0.976 | 0.752 | 0.973 | 0.018 | 0.043 | 0.429 | 4.80 |
+> | APPROVED | near water 1000-1536 | 0.991 | 0.949 | 0.682 | 0.969 | 0.015 | 0.043 | 0.359 | 4.94 |
+> | W12c | far river 560-700 | 0.706 | 1.000 | 0.695 | 0.788 | 0.028 | 0.072 | 0.396 | 16.26 |
+> | W12c | mid river 700-1000 | 0.874 | 0.984 | 0.742 | 0.957 | 0.010 | 0.031 | 0.337 | 3.19 |
+> | W12c | near water 1000-1536 | 0.924 | 0.922 | 0.730 | 0.922 | 0.016 | 0.039 | 0.413 | 3.33 |
+
+### 🤖 Claude — 2026-11-16T13:53:48.615Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/mid_w12c.jpg"}`
+
+### 🧑 User — 2026-11-16T13:53:48.640Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:54:12.255Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    // a few LONG smooth glossy streaks (approved mid field: long white / white-pink streaks along the current on both\n    // the cyan and the ribbons): contour lines of a smooth noise stretched ≈36x along the flow, ≈2-3 px wide, shown in\n    // long segments only, with a soft same-hue glow around a white core\n    float nS5 = vnoise(vec2(X * 1.25 + 4.1, v5 * 0.035 + 1.3)) * 3.0;      // 3 contour levels per noise unit\n    float dS5 = abs(fract(nS5) - 0.5) / max(fwidth(nS5), 1e-4);\n    float kS …[+1043 chars]`
+
+### 🧑 User — 2026-11-16T13:54:12.262Z
+
+> ↩︎ result: <tool_use_error>String to replace not found in file.
+> String:     // a few LONG smooth glossy streaks (approved mid field: long white / white-pink streaks along the current on both
+>     // the cyan and the ribbons): contour lines of a smooth noise stretched ≈36x along the flow, ≈2-3 px wide, shown in
+>     // long segments only, with a soft same-hue glow around a white core
+>     float nS5 = vnoise(vec2(X * 1.25 + 4.1, v5 * 0.035 + 1.3)) * 3.0;      // 3 contour levels per noise unit
+>     float dS5 = abs(fract(nS5) - 0.5) / max(fwidth(nS5), 1e-4);
+>     float kS5 = smoothstep(0.38, 0.62, vnoise(vec2(X * 0.6 + 2.0, v5 * 0.06 + 7.0))) * mid5 * (1.0 - smoothstep(0.3, 0.8, fws));
+>     c5 = mix(c5, mix(W5_CAQUA, W5_PLIGHT, pk5), (1.0 - smoothstep(2.0, 9.0, dS5)) * kS5 * 0.35);
+>     c5 += mix(vec3(1.4, 1.9, 2.0), vec3(2.0, 1.5, 2.0), pk5) * (1.0 - smoothstep(0.8, 2.6, dS5)) * kS5 * 0.9;
+> (note: Edit also tried swapping \uXXXX escapes and their characters; neither form matched, so the mismatch is likely elsewhere in old_string. Re-read the file and copy the exact surrounding text.)</tool_use_error>
+
+### 🤖 Claude — 2026-11-16T13:54:16.408Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  return vec2(max(core, spike * 0.7), halo);\n}\n#endif", "new_string": "  return vec2(max(core, spike * 0.7), halo);\n}\n#ifdef SILK05\n// W12 long streak along the current: lanes of constant X (k lanes per unit), one line per lane at a random offset,\n// lit where a slow noise along the lane passes its threshold (dens = lit share, lens-shaped ends).\n// returns x = ≈2 px white core, y = ≈8 px soft glow\nvec2 silk05Streak(float X, float v, float k, float seed, float dens) {\n  float g = X * k + se …[+444 chars]`
+
+### 🧑 User — 2026-11-16T13:54:16.449Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:54:19.762Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=$S/w12d 2>&1 | tail -1 | cut -c1-60; grep -o '\"errors\":\\[[^]]*\\]' qa/capture_log.json | tail -1; C=qa/pilot05/wave11/compare; python3 -I tools/qa/water05_grain.py $S/g4.md APPROVED=$C/1_APPROVED_05.png W12d=$S/w12d/05.png | tail -6; for f in $C/1_APPROVED_05.png $S/w12d/05.png; do convert $f -crop 864x440+0+560 +repage miff:-; done | convert - -append -resize 75% $S/v/mid_w12d.jpg", "description": "Capture and measure W12d lane streak …[+22 chars]`
+
+### 🧑 User — 2026-11-16T13:54:36.684Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-
+> | APPROVED | mid river 700-1000 | 0.988 | 0.976 | 0.752 | 0.973 | 0.018 | 0.043 | 0.429 | 4.80 |
+> | APPROVED | near water 1000-1536 | 0.991 | 0.949 | 0.682 | 0.969 | 0.015 | 0.043 | 0.359 | 4.94 |
+> | W12d | far river 560-700 | 0.706 | 1.000 | 0.695 | 0.788 | 0.028 | 0.072 | 0.396 | 16.26 |
+> | W12d | mid river 700-1000 | 0.874 | 0.984 | 0.742 | 0.957 | 0.010 | 0.031 | 0.337 | 3.19 |
+> | W12d | near water 1000-1536 | 0.924 | 0.922 | 0.730 | 0.922 | 0.016 | 0.039 | 0.413 | 3.33 |
+
+### 🤖 Claude — 2026-11-16T13:54:38.830Z
+
+The first edit didn't apply because the comment text had changed, so W12d is identical to W12c. Let me re-read the exact current block.
+
+### 🤖 Claude — 2026-11-16T13:54:39.790Z
+
+> 🔧 **Grep** `{"pattern": "LONG smooth glossy|nS5|dS5|kS5", "path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "output_mode": "content", "-n": true}`
+
+### 🧑 User — 2026-11-16T13:54:39.826Z
+
+> ↩︎ result: 1022:    // a few LONG smooth glossy streaks (approved mid field: long white / white-pink streaks along the current on both
+> 1025:    float nS5 = vnoise(vec2(X * 1.25 + 4.1, v5 * 0.035 + 1.3)) * 3.0;      // 3 contour levels per noise unit
+> 1026:    float dS5 = abs(fract(nS5) - 0.5) / max(fwidth(nS5), 1e-4);
+> 1027:    float kS5 = smoothstep(0.38, 0.62, vnoise(vec2(X * 0.6 + 2.0, v5 * 0.06 + 7.0))) * mid5 * (1.0 - smoothstep(0.3, 0.8, fws));
+> 1028:    c5 = mix(c5, mix(W5_CAQUA, W5_PLIGHT, pk5), (1.0 - smoothstep(2.0, 9.0, dS5)) * kS5 * 0.35);
+> 1029:    c5 += mix(vec3(1.4, 1.9, 2.0), vec3(2.0, 1.5, 2.0), pk5) * (1.0 - smoothstep(0.8, 2.6, dS5)) * kS5 * 1.1;
+
+### 🤖 Claude — 2026-11-16T13:54:41.312Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 1020, "limit": 10}`
+
+### 🧑 User — 2026-11-16T13:54:41.329Z
+
+> ↩︎ result: 1020	    // long smooth satin sheen along the crest of each broad swell (mid field), same hue as the water under it
+> 1021	    c5 = mix(c5, mix(W5_CAQUAW, W5_PPALE, pk5), silkHi * mid5 * 0.28);
+> 1022	    // a few LONG smooth glossy streaks (approved mid field: long white / white-pink streaks along the current on both
+> 1023	    // the cyan and the ribbons): contour lines of a smooth noise stretched ≈36x along the flow, ≈2-3 px wide, shown in
+> 1024	    // long segments only, with a soft same-hue glow around a white core
+> 1025	    float nS5 = vnoise(vec2(X * 1.25 + 4.1, v5 * 0.035 + 1.3)) * 3.0;      // 3 contour levels per noise unit
+> 1026	    float dS5 = abs(fract(nS5) - 0.5) / max(fwidth(nS5), 1e-4);
+> 1027	    float kS5 = smoothstep(0.38, 0.62, vnoise(vec2(X * 0.6 + 2.0, v5 * 0.06 + 7.0))) * mid5 * (1.0 - smoothstep(0.3, 0.8, fws));
+> 1028	    c5 = mix(c5, mix(W5_CAQUA, W5_PLIGHT, pk5), (1.0 - smoothstep(2.0, 9.0, dS5)) * kS5 * 0.35);
+> 1029	    c5 += mix(vec3(1.4, 1.9, 2.0), vec3(2.0, 1.5, 2.0), pk5) * (1.0 - smoothstep(0.8, 2.6, dS5)) * kS5 * 1.1;
+
+### 🤖 Claude — 2026-11-16T13:54:48.701Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float nS5 = vnoise(vec2(X * 1.25 + 4.1, v5 * 0.035 + 1.3)) * 3.0;      // 3 contour levels per noise unit\n    float dS5 = abs(fract(nS5) - 0.5) / max(fwidth(nS5), 1e-4);\n    float kS5 = smoothstep(0.38, 0.62, vnoise(vec2(X * 0.6 + 2.0, v5 * 0.06 + 7.0))) * mid5 * (1.0 - smoothstep(0.3, 0.8, fws));\n    c5 = mix(c5, mix(W5_CAQUA, W5_PLIGHT, pk5), (1.0 - smoothstep(2.0, 9.0, dS5)) * kS5 * 0.35);\n    c5 += mix(vec3(1.4, 1.9, 2.0), vec3(2.0, 1.5, 2.0), pk5) * (1.0 - smoothstep(0.8, 2.6, dS5)) *  …[+568 chars]`
+
+### 🧑 User — 2026-11-16T13:54:48.751Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:54:51.904Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=$S/w12d 2>&1 | tail -1 | cut -c1-60; grep -o '\"errors\":\\[[^]]*\\]' qa/capture_log.json | tail -1; C=qa/pilot05/wave11/compare; python3 -I tools/qa/water05_grain.py $S/g4.md APPROVED=$C/1_APPROVED_05.png W12d=$S/w12d/05.png | tail -6; for f in $C/1_APPROVED_05.png $S/w12d/05.png; do convert $f -crop 864x440+0+560 +repage miff:-; done | convert - -append -resize 75% $S/v/mid_w12d.jpg", "description": "Capture and measure W12d lane streak …[+22 chars]`
+
+### 🧑 User — 2026-11-16T13:55:09.196Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-
+> | APPROVED | mid river 700-1000 | 0.988 | 0.976 | 0.752 | 0.973 | 0.018 | 0.043 | 0.429 | 4.80 |
+> | APPROVED | near water 1000-1536 | 0.991 | 0.949 | 0.682 | 0.969 | 0.015 | 0.043 | 0.359 | 4.94 |
+> | W12d | far river 560-700 | 0.707 | 1.000 | 0.685 | 0.816 | 0.030 | 0.074 | 0.400 | 14.90 |
+> | W12d | mid river 700-1000 | 0.847 | 0.992 | 0.723 | 0.969 | 0.015 | 0.038 | 0.410 | 4.98 |
+> | W12d | near water 1000-1536 | 0.918 | 0.922 | 0.729 | 0.922 | 0.016 | 0.039 | 0.420 | 3.37 |
+
+### 🤖 Claude — 2026-11-16T13:55:11.534Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/mid_w12d.jpg"}`
+
+### 🧑 User — 2026-11-16T13:55:11.565Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:55:21.223Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    // a few LONG smooth glossy streaks (approved mid field: long white / white-pink streaks along the current on both\n    // the cyan and the ribbons): contour lines of a smooth noise stretched ≈36x along the flow, ≈2-3 px wide, shown in\n    // long segments only, with a soft same-hue glow around a white core\n", "new_string": "    // LONG smooth glossy streaks (approved mid field: long white / white-pink streaks along the current on both the\n    // cyan and the ribbons), lit in long lens-shape …[+14 chars]`
+
+### 🧑 User — 2026-11-16T13:55:21.255Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:55:22.630Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float flA = flowGlint(vec2(X * 1.6, v5 * 0.12), 0.6, 48.0, 4.6, 0.0, uTime);", "new_string": "    float flA = flowGlint(vec2(X * 1.6, v5 * 0.12), 0.8, 48.0, 4.6, 0.0, uTime);"}`
+
+### 🧑 User — 2026-11-16T13:55:22.665Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:55:26.633Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad && node scripts/capture.mjs 05 --q='silk05=1&puff05=1' --out=$S/w12e 2>&1 | tail -1 | cut -c1-60; grep -o '\"errors\":\\[[^]]*\\]' qa/capture_log.json | tail -1; C=qa/pilot05/wave11/compare; python3 -I tools/qa/water05_grain.py $S/g5.md APPROVED=$C/1_APPROVED_05.png T2=$C/2_CURRENT_T2_05.png RIVER05=$C/3_NEW_river05_05.png W12e=$S/w12e/05.png | grep -v \"^| APPROVED\\|^|---\\|^| image\" | head -0; cat $S/g5.md; convert $C/1_APPROVED_05.png $C/2_CURRENT_T2_05.png $S/w12e/05. …[+126 chars]`
+
+### 🧑 User — 2026-11-16T13:55:47.383Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-
+> | image | band | cyan S | cyan V | pink S | pink V | fine grain | broad flow | grain ratio | thin white % |
+> |---|---|---|---|---|---|---|---|---|---|
+> | APPROVED | far river 560-700 | 0.917 | 0.980 | 0.711 | 0.953 | 0.029 | 0.060 | 0.476 | 6.80 |
+> | APPROVED | mid river 700-1000 | 0.988 | 0.976 | 0.752 | 0.973 | 0.018 | 0.043 | 0.429 | 4.80 |
+> | APPROVED | near water 1000-1536 | 0.991 | 0.949 | 0.682 | 0.969 | 0.015 | 0.043 | 0.359 | 4.94 |
+> | T2 | far river 560-700 | 0.718 | 1.000 | 0.696 | 0.855 | 0.028 | 0.069 | 0.406 | 12.13 |
+> | T2 | mid river 700-1000 | 0.871 | 1.000 | 0.701 | 0.969 | 0.016 | 0.036 | 0.442 | 3.58 |
+> | T2 | near water 1000-1536 | 0.922 | 1.000 | 0.674 | 0.922 | 0.014 | 0.032 | 0.443 | 2.90 |
+> | RIVER05 | far river 560-700 | 0.669 | 1.000 | 0.680 | 0.824 | 0.031 | 0.075 | 0.411 | 14.68 |
+> | RIVER05 | mid river 700-1000 | 0.753 | 1.000 | 0.654 | 0.976 | 0.017 | 0.042 | 0.419 | 5.73 |
+> | RIVER05 | near water 1000-1536 | 0.789 | 0.933 | 0.718 | 0.925 | 0.020 | 0.044 | 0.456 | 4.13 |
+> | W12e | far river 560-700 | 0.698 | 1.000 | 0.683 | 0.816 | 0.030 | 0.074 | 0.401 | 15.14 |
+> | W12e | mid river 700-1000 | 0.846 | 0.9 …[+146 chars]
+
+### 🤖 Claude — 2026-11-16T13:55:49.400Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/tri_w12e.jpg"}`
+
+### 🧑 User — 2026-11-16T13:55:49.421Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:56:08.563Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad; C=qa/pilot05/wave11/compare; for f in $C/1_APPROVED_05.png $C/3_NEW_river05_05.png $S/w12e/05.png; do convert $f -crop 864x200+0+500 +repage miff:-; done | convert - -append -resize 75% $S/v/far_w12e.jpg", "description": "Crop far river band for three versions"}`
+
+### 🧑 User — 2026-11-16T13:56:08.768Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T13:56:10.794Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/scratchpad/v/far_w12e.jpg"}`
+
+### 🧑 User — 2026-11-16T13:56:10.822Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T13:56:22.821Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/wave12/tests qa/pilot05/wave12/factors qa/pilot05/wave12/compare && O=qa/pilot05/wave12 && (\nnode scripts/capture.mjs 05 --out=$O/tests/default >/dev/null 2>&1; echo default-done\nnode scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$O/tests/before >/dev/null 2>&1; echo before-done\nnode scripts/capture.mjs 05 --q='river05=1' --out=$O/tests/river05 >/dev/null 2>&1; echo river05-done\nnode scripts/capture.mjs 05 --q='silk05=1' --out=$O/factors/silk05 >/dev/null 2>&1; echo silk-done\nnode scripts/capture.mjs 05 --q='puff05=1' --out=$O/factors/puff05 >/ …[+652 chars]`
+
+### 🧑 User — 2026-11-16T13:56:22.855Z
+
+> ↩︎ result: Command running in background with ID: bzsbhvyzt. Output is being written to: /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/tasks/bzsbhvyzt.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-16T13:56:23.228Z
+
+> 🔧 **ToolSearch** `{"query": "select:ListConnectors", "max_results": 1}`
+
+### 🧑 User — 2026-11-16T13:56:23.237Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-16T13:56:24.238Z
+
+> 🔧 **ListConnectors** `{"keywords": ["world labs", "atlas", "worldlabs"]}`
+
+### 🧑 User — 2026-11-16T13:56:24.549Z
+
+> ↩︎ result: []
+
+### 🤖 Claude — 2026-11-16T13:56:30.201Z
+
+> 🔧 **Bash** `{"command": "grep -n '\"android\\|\"build\\|\"test' package.json; ls android/ builds/ 2>/dev/null | head -20; grep -rn \"search\\|query\\|VITE_\\|import.meta.env\" src/main.ts 2>/dev/null | head -10; ls android/app/src/main/ 2>/dev/null; grep -rn \"loadUrl\\|index.html\\|WebView\" android/app/src/main/java -r 2>/dev/null | head", "description": "Inspect Android build setup"}`
+
+### 🧑 User — 2026-11-16T13:56:30.282Z
+
+> ↩︎ result: 9:    "build": "tsc --noEmit && vite build",
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 17:    "android:sync": "npm run build && npx cap sync android",
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> 19:    "test:cinematic": "node scripts/cinematic-test.mjs"
+> android/:
+> app
+> build.gradle
+> capacitor.settings.gradle
+> gradle
+> gradle.properties
+> gradlew
+> gradlew.bat
+> local.properties
+> settings.gradle
+> variables.gradle
+> 
+> builds/:
+> rainbow-debug.apk
+> 7:  const q = new URLSearchParams(location.search);
+> AndroidManifest.xml
+> java
+> res
+
+### 🤖 Claude — 2026-11-16T13:56:42.627Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"import.meta.env\\|vite/client\" src tsconfig.json vite.config.* 2>/dev/null | head; ls -la builds/rainbow-debug.apk; git lfs ls-files | grep -i apk; cat android/local.properties 2>/dev/null | sed 's/=.*/=…/'; java -version 2>&1 | head -1", "description": "Check env typing, APK, Java"}`
+
+### 🧑 User — 2026-11-16T13:56:42.971Z
+
+> ↩︎ result: tsconfig.json:17:    "types": ["vite/client"]
+> -rw-r--r-- 1 root root 7339491 Nov 16 13:42 builds/rainbow-debug.apk
+> dca8d754b7 * builds/rainbow-debug.apk
+> sdk.dir=…
+> Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=42893 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|172.31.*|192.168.*|100.64.0.0/10|*.svc.cluster.local|*.svc.cluster.local -Djdk.http.auth.tunneling.disabledSchemes= -Djdk.http.auth.proxying.disabledSchemes=
+
+### 🤖 Claude — 2026-11-16T13:56:46.798Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "const q05 = (key: string): boolean => {\n  try {\n    return typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1';\n  } catch {\n    return false;\n  }\n};", "new_string": "/**\n * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05=\"silk05=1&puff05=1\" npm run android:debug` bakes\n * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.\n */\nconst BUILD_Q05: string = import.meta. …[+338 chars]`
+
+### 🧑 User — 2026-11-16T13:56:46.838Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-16T13:56:48.247Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && echo TSC_OK; cat /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/tasks/bzsbhvyzt.output", "description": "Typecheck and check capture progress"}`
+
+### 🧑 User — 2026-11-16T13:56:51.645Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-16T13:56:55.103Z
+
+The capture batch is still running. Meanwhile I'll write the missing wave-11 technical write-up, which the previous account never committed, from the code and the saved test results.
+
+### 🤖 Claude — 2026-11-16T13:57:10.154Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/wave11/NOTES.md", "content": "# Screen 05 — wave 11 (W11): narrow far-river channel + flow-map water (session `915f17cf`, 2026-11-16 12:47–13:32 UTC)\n\nBranch `claude/rainbow-3d-account-recovery-hfb8p0` (last save `088dd3f`, 13:37 UTC). The previous account ran out of\ncredits at 13:32 before writing this file; it was written by the next session (`ccr-451ea8c7-3nqlis`, 2026-11-16 ~14:30\nUTC) from the code, the saved evidence in this folder and the backed-up transcript\n(`backups/claude-sessions/915f17cf-eec0-5ae4-8e79-48acc1826719/transcript.md`) …[+3344 chars]`
+
+### 🧑 User — 2026-11-16T13:57:10.183Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/wave11/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T13:57:13.713Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,15p scripts/perf05.mjs | grep -n \"//\\|argv\" ; grep -n \"argv\\|--q\\|--out\\|opt\\.\" scripts/gameplay-test.mjs | head -8; cat /tmp/claude-0/-home-user-rainbow-/128ab5f6-c64f-55d7-bb6f-9279e02dca8d/tasks/bzsbhvyzt.output", "description": "Check perf and gameplay test options"}`
+
+### 🧑 User — 2026-11-16T13:57:13.759Z
+
+> ↩︎ result: 1:// Relative frame cost of Screen 05 URL-switch variants at the locked checkpoint (headless Chromium, WebGL2).
+> 2://   node scripts/perf05.mjs OUT.json [--size=864x1536] name=query ...
+> 5:const args = process.argv.slice(2); const out = args.shift();
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+
+### 🤖 Claude — 2026-11-16T13:57:15.031Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T13:57:15.046Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-16T13:57:15.481Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T13:57:15.499Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T13:57:15.931Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T13:57:15.946Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-16T13:57:16.631Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py; git log --oneline -3", "description": "Check autosave is still pushing"}`
+
+### 🧑 User — 2026-11-16T13:57:17.552Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-451ea8c7-3nqlis | scheduler daemon | last verified backup 2026-11-16T13:52:27+00:00 (4.8 min ago) | local 7c11351 remote 7c11351 (match) | uncommitted 5
+> 7c11351 autosave: Rainbow 2026-11-16 13:52 UTC
+> 2dd308e autosave: Rainbow 2026-11-16 13:47 UTC
+> 35faee8 autosave: Rainbow 2026-11-16 13:42 UTC
+
+### 🤖 Claude — 2026-11-16T13:57:20.172Z
+
+The autosave daemon is pushing every five minutes: latest is `7c11351`, and remote matches local. I'll wait for the capture batch to finish.
+
+### 🤖 Claude — 2026-11-16T13:57:20.573Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-16T13:57:20.581Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-16T13:57:24.042Z
+
+> 🔧 **Bash** `{"command": "until [ \"$(grep -c done qa/pilot05/wave12/tests/capture_run.txt 2>/dev/null)\" -ge 6 ] || ! pgrep -f \"capture.mjs\" >/dev/null; do sleep 3; done; cat qa/pilot05/wave12/tests/capture_run.txt; ls qa/pilot05/wave12/tests qa/pilot05/wave12/factors", "description": "Wait for first six captures to finish", "timeout": 600000}`
+

@@ -145,12 +145,18 @@ const FLOW05 = 1.3;
  * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
  * Guarded read: false in vite-node / workers (no `location`).
  */
+/**
+ * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+ * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+ */
+const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
 const q05 = (key: string): boolean => {
   try {
-    return typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1';
+    if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
   } catch {
-    return false;
+    /* no location (vite-node / workers) */
   }
+  return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
 };
 /**
  * Screen 05 test W11 (2026-11-16, qa/pilot05/wave11/NOTES.md) — ONE reversible demonstration `?river05=1` made of two
@@ -533,6 +539,21 @@ vec2 bolt05(vec2 g, float density, float Lpx, float Tpx, float seed) {
   float halo = exp(-length(vec2(p.x / (L * 0.75), y / (T * 2.5 + 5.0))) * 2.0) * max(0.0, 1.0 - abs(p.y) / limy);
   return vec2(max(core, spike * 0.7), halo);
 }
+#ifdef SILK05
+// W12 long streak along the current: lanes of constant X (k lanes per unit), one line per lane at a random offset,
+// lit where a slow noise along the lane passes its threshold (dens = lit share, lens-shaped ends).
+// returns x = ≈2 px white core, y = ≈8 px soft glow
+vec2 silk05Streak(float X, float v, float k, float seed, float dens) {
+  float g = X * k + seed;
+  float fw = max(fwidth(g), 1e-4);
+  float i = floor(g);
+  float h = hash12(vec2(i, seed + 1.7));
+  float dpx = abs(fract(g) - (0.3 + 0.4 * h)) / fw;            // px from this lane's line
+  float seg = vnoise(vec2(i * 1.7 + seed, v * (0.05 + 0.04 * h) + h * 9.0));
+  float on = smoothstep(1.0 - dens, 1.0 - dens + 0.22, seg);
+  return vec2(1.0 - smoothstep(0.6, 2.0, dpx), 1.0 - smoothstep(1.5, 8.0, dpx)) * on;
+}
+#endif
 #endif
 
 void main() {
@@ -1004,6 +1025,14 @@ void main() {
     c5 += mix(reflHue5, vec3(plum5), smoothstep(0.9, 1.0, plum5) * 0.6) * smoothstep(0.62, 0.97, plum5) * fres5 * uPanoK;
     // long smooth satin sheen along the crest of each broad swell (mid field), same hue as the water under it
     c5 = mix(c5, mix(W5_CAQUAW, W5_PPALE, pk5), silkHi * mid5 * 0.28);
+    // LONG smooth glossy streaks (approved mid field: long white / white-pink streaks along the current on both the
+    // cyan and the ribbons), lit in long lens-shaped segments
+    // (W12 it03: lines of constant streamline coordinate X — parallel to the current by construction; it02 used noise
+    // contours, which looped across the current like marbling) one line per lane, ≈2 px core + soft same-hue glow
+    float kS5 = mid5 * (1.0 - smoothstep(0.3, 0.8, fws));
+    vec2 sS5 = max(silk05Streak(X, v5, 2.2, 0.0, 0.4), silk05Streak(X, v5, 3.7, 5.3, 0.3) * 0.7) * kS5;
+    c5 = mix(c5, mix(W5_CAQUA, W5_PLIGHT, pk5), sS5.y * 0.4);
+    c5 += mix(vec3(1.4, 1.9, 2.0), vec3(2.0, 1.5, 2.0), pk5) * sS5.x * 1.1;
     #else
     c5 += mix(pano5, vec3(plum5), 0.55) * smoothstep(0.5, 0.95, plum5) * fres5 * uPanoK;
     #endif
@@ -1012,7 +1041,7 @@ void main() {
     // long glossy flares carried by the current (approved mid field: elongated white star streaks along the flow)
     #ifdef SILK05
     // W12: one sparse set of longer flares (selective white highlights) instead of two dense sets
-    float flA = flowGlint(vec2(X * 1.6, v5 * 0.12), 0.6, 48.0, 4.6, 0.0, uTime);
+    float flA = flowGlint(vec2(X * 1.6, v5 * 0.12), 0.8, 48.0, 4.6, 0.0, uTime);
     #else
     float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.85, 34.0, 4.8, 0.0, uTime);
     flA = max(flA, 0.85 * flowGlint(vec2(X * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.6, 18.0, 4.4, 0.0, uTime + 1.9));
@@ -1154,6 +1183,13 @@ void main() {
       float lit = clamp((c1u - c1) * 3.2 + 0.55, 0.0, 1.0);                 // top of each puff catches the light
       vec3 fo = mix(uFoamLav * 0.7, uFoam * 1.14, mix(0.62, dome * (0.45 + 0.55 * lit) + 0.25 * lit, f1));
       fo = mix(fo, vec3(0.5, 0.56, 1.05), (1.0 - smoothstep(0.03, 0.2, c2)) * f2 * 0.22);
+      #ifdef PUFF05
+      // W12: a bubbly surface like the bank lace and the approved foam (white bubble centres, lavender-blue rims)
+      // instead of a smooth snow-drift sheet
+      float cb = cells(vec2(lat * 3.4 + 0.7, s * 0.8));
+      float fb = 1.0 - smoothstep(0.1, 0.3, fl2 * 3.4);
+      fo = mix(fo, mix(uFoam * 1.2, uFoamLav * 0.72, smoothstep(0.2, 0.8, cb)) * (0.8 + 0.3 * lit), fb * 0.7);
+      #endif
       fo = mix(fo, vec3(0.36, 0.42, 0.98), (1.0 - smoothstep(0.0, 0.3, e2)) * 0.4);            // shaded waterline
       col = mix(col, col * vec3(0.55, 0.6, 0.9), (1.0 - smoothstep(0.0, 0.5, -e2)) * 0.5 * shOn * (1.0 - shelf));
       col = mix(col, fo, shelf);
