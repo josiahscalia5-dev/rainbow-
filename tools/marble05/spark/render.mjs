@@ -13,7 +13,7 @@ const srv = http.createServer((req, res) => {
 const port = srv.address().port;
 const browser = await chromium.launch({ args: ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
 const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
-page.on("console", (m) => { if (m.type() === "error") console.log("console:", m.text()); });
+page.on("console", (m) => { console.log("console:", m.type(), m.text()); });
 page.on("pageerror", (e) => console.log("pageerror:", e.message));
 await page.goto(`http://127.0.0.1:${port}/render.html?spz=${spz}&px=${px}&py=${py}&pz=${pz}`);
 await page.waitForFunction(() => window.__done === true, null, { timeout: 600000, polling: 500 });

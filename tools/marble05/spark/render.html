@@ -24,6 +24,6 @@ const splat = new SplatMesh({ url: q.get("spz") });
 splat.quaternion.set(1, 0, 0, 0);
 scene.add(splat);
 await splat.initialized;
-let n = 0;
-renderer.setAnimationLoop(() => { renderer.render(scene, cam); if (++n === 90) window.__done = true; });
+let n = 0; const t0 = performance.now(); console.log("initialized", (t0/1000).toFixed(1));
+renderer.setAnimationLoop(() => { renderer.render(scene, cam); n++; if (n % 2 === 0) console.log("frame", n, ((performance.now() - t0) / 1000).toFixed(1)); if (n === +(q.get("frames") || 12)) window.__done = true; });
 </script></body></html>

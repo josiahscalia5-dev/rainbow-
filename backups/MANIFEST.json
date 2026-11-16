@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 8264,
-   "sha256": "e915b4fe5ac2b940183d265dbe097f8b9ff917eeb26ab1b5b838c0b0321b319c"
+   "sha256": "1fcfe0cd805c36a49cd25d7c1790c73643e8440409dcdece454afa67130526a7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -6853,13 +6853,13 @@
   },
   {
    "path": "tools/marble05/spark/render.html",
-   "bytes": 1901,
-   "sha256": "ba7e55518dd8a97f51402d85c9a6e5a31207d23c2e6f63f1840babdacbf652ac"
+   "bytes": 2094,
+   "sha256": "1d7136c4962139d66990eee5816448a87403c1e23622cc39fb91769c5a4e3091"
   },
   {
    "path": "tools/marble05/spark/render.mjs",
-   "bytes": 1736,
-   "sha256": "f05680bb0b27e2b90f440dfa511b93c596b81d477ae024a4ed83392d07c965c2"
+   "bytes": 1720,
+   "sha256": "d1261a186963c288902df16907703c4c9f81b4f783cf862b9abe880c2313ae88"
   },
   {
    "path": "tools/marble05/splat_fit.py",
