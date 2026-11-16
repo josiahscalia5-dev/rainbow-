@@ -1353,3 +1353,276 @@ The test showed the oval idea itself was a misreading — the approved rings are
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/tube.ts'; t=open(p).read()\nold=\"export const OVAL05 = { K: qaNum('k05', 1.7), floorBelowWater: 0.18, shift: qaNum('sh05', -1.8) };\"\nnew=\"\"\"// wave 9b (coordinator): K = 1 (round). The \"ovals\" were a misreading of the approved image — each fit paired one\n// ring's SIDES with the next ring's TOP (ring A's top is hidden behind the HUD/title; the arc under the title is\n// ring B). Traced separately the rings are round: A r≈499 px centred (455,535), B r≈245 (465,455), C r≈148\n// (478,453), D r≈95 (490,460) about the VP (500,470). The oval/flo …[+3377 chars]`
 
+### 🧑 User — 2026-11-16T10:13:07.566Z
+
+> ↩︎ result: TSC_OK
+> 05 → /tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/r1/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":89,"tris":570647,"modules":{"water":"vfx/index.ts","b
+
+### 🤖 Claude — 2026-11-16T10:13:10.572Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/r1_cmp.png"}`
+
+### 🧑 User — 2026-11-16T10:13:10.739Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T10:13:22.501Z
+
+> 🔧 **Bash** `{"command": "sed -n 121,160p src/world/far05.ts | cut -c1-210; grep -n \"c0\\b\" src/world/far05.ts | head -12 | cut -c1-180", "description": "Check how the far river is positioned relative to the tunnel axis"}`
+
+### 🧑 User — 2026-11-16T10:13:22.546Z
+
+> ↩︎ result: /**
+>  * Layout of the far river at virtual depth Z. For small Z it is the REAL ribbon exactly as the eye would see it
+>  * there without the far section: at the seam the route is in its exit bend (heading ≈26° off the axis), so a
+>  * screen row cuts the ribbon diagonally — each band centre / bank edge curve l(s) of the real ribbon is intersected
+>  * with the row (axial = Z), widths divided by cos(heading). It blends (Z 2 → 10) into the designed FAR05_CORE path.
+>  */
+> export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number): FarRiverLayout {
+>   const q = new THREE.Vector3();
+>   const at = (s: number, l: number) => {
+>     const f = course.sample(s);
+>     q.copy(f.pos).addScaledVector(f.right, l).sub(ft.c0);
+>     return { ax: q.dot(ft.T), x: q.dot(ft.Rt), rx: f.right.dot(ft.Rt) };
+>   };
+>   // the real ribbon's band layout at s, relative to the route centre (ribbon frame, vCore = coreLateral)
+>   const relLay = (s: number) => bandLayout(0, course.widthAt(s) / 2, coreLateral(course, s), sbend05(s), s);
+>   const cross = (Z: number, lOf: (s: number) => number) => {
+>     let a = ft.sF - 8, b = ft.sF + 16;
+>     for (let i = 0; i < 36; i++) { const m = 0.5 * (a + b); if (at(m, lOf(m)).ax …[+1222 chars]
+
+### 🤖 Claude — 2026-11-16T10:13:55.287Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/environment.ts'; t=open(p).read()\nold=\"  const shift05 = (s: number) => OVAL05.shift * ovalW05(s);\"\nnew=\"\"\"  // wave 9b (round tunnel): the ref rings are centred LEFT of the vanishing point — A ≈45 px, B ≈35, C ≈22, D ≈10 —\n  // i.e. the near tunnel axis runs a little left of the eye. A parallel offset would also move the calibrated far\n  // block (coins, far river: path-camera), so the offset is full around ring A and eases to 0 before the seam.\n  // (−0.6 u: the river's right edge at its widest, ±5.6 u, still clears the wall foot, chord  …[+1059 chars]`
+
+### 🧑 User — 2026-11-16T10:13:57.960Z
+
+> ↩︎ result: TSC_OK
+> 236:export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+> 237-  const w = (b.width + b.groove + b.lipWidth) / 2;
+> 238-  const K = b.oval ?? 1;
+> 239-  const mArc = (3 * (K + 1) - Math.sqrt((3 * K + 1) * (K + 3))) / 2; // Ramanujan perimeter / 2π
+> 240-  const uniforms = {
+> 241-    uBandG: { value: new THREE.Vector4(w - b.width / 2, b.width / 2, -w + b.lipWidth / 2, b.lipWidth / 2) },
+> 242-    // ref ring #1: spot pitch ≈85 px at r 273 (≈20/turn), white core ≈12 px inside a yellow halo
+> 243-    uBandS: { value: new THREE.Vector4(...(b.spots ?? [20, 0.055, 1.6]), 0) },
+> 244-    uBandF: { value: new THREE.Vector2(...(b.fade ?? [44, 110])) },
+> 245-    uBandE: { value: new THREE.Vector3(K, mArc, (mArc - 1) / 2) },
+> 246-    uBcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
+> 247-    // wave 9: warmer, more saturated gold (coordinator: "bright glossy YELLOW-gold with orange edges, not rose/salmon";
+> 248-    // ref ring sides (250,127,70)/(251,142,57)/(235,115,5), ring #1 top between the bulbs (215,94,99)…(250,119,89);
+> 249-    // live it02 top read pale peach (240,153,123)): rose lip (215,95,100) → (226,92,74), crown (222,98,8 …[+3637 chars]
+
+### 🤖 Claude — 2026-11-16T10:14:04.305Z
+
+Ring layout now lines up with the approved picture. Next I'm matching the gold colour of the rings and the wall colour, which still look pale.
+
+### 🤖 Claude — 2026-11-16T10:14:11.990Z
+
+> 🔧 **Bash** `{"command": "S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && timeout 600 node scripts/capture.mjs 05 --out=\"$S/w/r2\" 2>&1 | tail -1 | cut -c1-120 && python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nS=\"$S\"\nA=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nL=np.asarray(Image.open(S+'/w/r2/05.png').convert('RGB')).astype(int)\ndef box(im,x0,y0,x1,y1):\n    r=im[y0:y1,x0:x1].reshape(-1,3); l=r.sum(1)\n    o=np.argsort(l); n=len(o)\n    f=lambda a,b: tuple(int(v) for v in r[o[int(n*a):max(int(n* …[+926 chars]`
+
+### 🧑 User — 2026-11-16T10:14:29.268Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/r2/05.png {"stage":"05","s":1
+> APPROVED ring B left side   dark (204, 73, 31) mid (223, 94, 67) bright (250, 165, 122) mean (224, 108, 76)
+> APPROVED ring B top         dark (169, 61, 93) mid (235, 111, 94) bright (253, 222, 161) mean (218, 126, 114)
+> APPROVED ring A left edge   dark (207, 72, 38) mid (208, 75, 97) bright (244, 112, 109) mean (216, 84, 90)
+> APPROVED ring C left        dark (186, 55, 76) mid (208, 80, 108) bright (238, 104, 113) mean (208, 79, 107)
+> APPROVED lid L1             dark (137, 32, 84) mid (218, 81, 77) bright (252, 189, 146) mean (200, 96, 105)
+> APPROVED wall left near     dark (110, 12, 90) mid (177, 51, 195) bright (243, 94, 243) mean (175, 57, 183)
+> APPROVED wall upper (A-B)   dark (102, 9, 120) mid (172, 45, 131) bright (244, 134, 191) mean (173, 61, 142)
+> APPROVED wall B-C top       dark (121, 19, 122) mid (153, 44, 190) bright (240, 91, 230) mean (165, 54, 182)
+> APPROVED wall far C-D       dark (123, 28, 138) mid (150, 48, 182) bright (229, 115, 192) mean (164, 63, 174)
+
+### 🤖 Claude — 2026-11-16T10:14:35.236Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/r2_cmp.png"}`
+
+### 🧑 User — 2026-11-16T10:14:35.414Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T10:14:57.275Z
+
+> 🔧 **Bash** `{"command": "S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nS=\"$S\"\nL=np.asarray(Image.open(S+'/w/r2/05.png').convert('RGB')).astype(int)\ndef box(im,x0,y0,x1,y1):\n    r=im[y0:y1,x0:x1].reshape(-1,3); l=r.sum(1)\n    o=np.argsort(l); n=len(o)\n    f=lambda a,b: tuple(int(v) for v in r[o[int(n*a):max(int(n*a)+1,int(n*b))]].mean(0).round())\n    return f\"dark {f(0.05,0.2)} mid {f(0.4,0.6)} bright {f(0.8,0.95)} mean {tuple(int(v) for v in r.mean(0).round())}\"\nprint('LIVE ring B left side  …[+572 chars]`
+
+### 🧑 User — 2026-11-16T10:14:57.566Z
+
+> ↩︎ result: LIVE ring B left side   dark (160, 57, 107) mid (248, 137, 103) bright (255, 200, 154) mean (221, 126, 120)
+> LIVE ring B top         dark (190, 74, 101) mid (231, 116, 91) bright (254, 200, 170) mean (223, 127, 114)
+> LIVE ring A left edge   dark (237, 155, 70) mid (249, 203, 103) bright (255, 236, 187) mean (248, 199, 114)
+> LIVE ring C left        dark (168, 52, 116) mid (245, 145, 131) bright (255, 203, 183) mean (223, 133, 137)
+> LIVE lid L1             dark (153, 53, 100) mid (210, 88, 98) bright (247, 189, 133) mean (203, 107, 109)
+> LIVE wall left near     dark (133, 11, 106) mid (179, 16, 121) bright (245, 129, 240) mean (179, 44, 145)
+> LIVE wall upper (A-B)   dark (85, 24, 142) mid (113, 39, 164) bright (249, 209, 157) mean (139, 76, 158)
+> LIVE wall B-C top       dark (147, 16, 151) mid (186, 66, 149) bright (255, 163, 249) mean (192, 81, 171)
+> LIVE wall far C-D       dark (156, 28, 133) mid (174, 46, 156) bright (255, 173, 255) mean (191, 76, 175)
+
+### 🤖 Claude — 2026-11-16T10:15:09.958Z
+
+> 🔧 **Bash** `{"command": "sed -n 296,372p src/world/materials.ts | cut -c1-250", "description": "Read the rest of the ring shading shader"}`
+
+### 🧑 User — 2026-11-16T10:15:09.995Z
+
+> ↩︎ result: // sign-robust: the forced-perspective rings are placed with a mirrored basis (inverted winding), so the
+>   // rendered side can face away; shade the camera-facing orientation of whatever side is drawn
+>   float nv = dot(N, V);
+>   float ndv = abs(nv);
+>   vec3 ax = normalize(vBandAx);
+>   ax *= sign(dot(ax, -V) + 1e-4);                // tube axis pointing away from the camera
+>   float nzv = dot(N * sign(nv + 1e-4), ax);      // -1 = flank facing the camera … 0 = crown
+>   // wave 8: only the near top arc (±30°, gone by ±55°) keeps the rose-red body of ref ring #1's top; the sides
+>   // and the deeper rings read gold: pale-yellow crown framed by orange (ref ring #2/#3 sides)
+>   float eAng = atan(vBandP.y, vBandP.x / uBandE.x);   // eccentric angle on the (oval) band
+>   float topArc = (1.0 - smoothstep(0.52, 0.96, abs(eAng - 1.5707963))) * (1.0 - deep);
+>   vec3 body = mix(mix(uBcGold, uBcPale, smoothstep(0.42, 0.62, ndv)), uBcCrown, topArc);
+>   body = mix(body, mix(uBcOrange, uBcGold, 0.5), deep * 0.55);      // deeper rings: orange with bright spots
+>   vec3 c = mix(uBcDark, mix(uBcLipS, uBcRose, topArc), smoothstep(0.03, 0.12, ndv));
+>   c = mix(c, uBcOrange, smoothstep(0.13, 0.22, ndv));
+>   c = mix(c …[+4037 chars]
+
+### 🤖 Claude — 2026-11-16T10:15:32.865Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^export function\\|^function\\|^export const\\|^const \" src/world/materials.ts | cut -c1-150", "description": "List the material functions"}`
+
+### 🧑 User — 2026-11-16T10:15:32.899Z
+
+> ↩︎ result: 74:const FAR_GLOW_PARS = `uniform vec3 uFarGlowColor; uniform vec3 uFarGlowRange; uniform vec3 uMidTint; uniform vec3 uMidRange;
+> 84:const FG_VIRTUAL_VERT_PARS = `#ifdef FG_VIRTUAL
+> 87:const FG_VIRTUAL_VERT = `#ifdef FG_VIRTUAL
+> 91:const FAR_GLOW_APPLY = (solid = '1.0') => `{ float sol = ${solid}; float mt = midTintK() * sol; diffuseColor.rgb = mix(diffuseColor.rgb, uMidTint, 
+> 94:function farGlowUniforms(g: FarGlow) {
+> 107:export function withFarGlow<T extends THREE.MeshStandardMaterial>(mat: T, g: FarGlow, key: string, virtualDepth = false): T {
+> 154:export function withTubeStrips<T extends THREE.MeshStandardMaterial>(mat: T, s: TubeStrips, source: 'attribute' | 'instance', key: string): T {
+> 207:const lin3 = (r: number, g: number, b: number) => new THREE.Vector3(r, g, b);
+> 236:export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+> 360:export function withLidShading<T extends THREE.MeshStandardMaterial>(mat: T, key: string): T {
+> 443:export function perforatedMetal(o: PerforatedOptions = {}): THREE.MeshStandardMaterial {
+> 620:const tubeEnvs: Partial<Record<'wall' | 'gold' | 'gold05', THREE.CubeTexture>> = {};
+> 623:export function washer …[+1136 chars]
+
+### 🤖 Claude — 2026-11-16T10:15:38.797Z
+
+Tunnel shape is settled. Now tuning the wall and ring colours toward the approved picture's violet walls and deeper copper-gold.
+
+### 🤖 Claude — 2026-11-16T10:15:40.464Z
+
+> 🔧 **Bash** `{"command": "awk 'NR>=443 && NR<=620' src/world/materials.ts | grep -n \"outgoingLight\\|opaque_fragment\\|interface PerforatedOptions\\|streaks\\|rimStrength\\|uniforms\\b\" | cut -c1-200 | head -30; grep -n \"interface PerforatedOptions\" -A 40 src/world/materials.ts | grep -n \"?:\" | cut -c1-170 | head -40", "description": "Find where the wall shader writes its final colour and its options"}`
+
+### 🧑 User — 2026-11-16T10:15:40.519Z
+
+> ↩︎ result: 20:  const uniforms = {
+> 25:    uStreaks: { value: o.streaks ?? 0.35 },
+> 32:    uRimStrength: { value: o.rimStrength ?? 0.55 },
+> 46:  mat.userData.perfUniforms = uniforms;
+> 48:    Object.assign(shader.uniforms, uniforms);
+> 3:10-  color?: THREE.ColorRepresentation;
+> 5:12-  holeColor?: THREE.ColorRepresentation;
+> 7:14-  slot?: number;
+> 9:16-  repeatU?: number;
+> 10:17-  repeatV?: number;
+> 12:19-  holeSize?: number;
+> 13:20-  emissive?: THREE.ColorRepresentation;
+> 14:21-  emissiveIntensity?: number;
+> 15:22-  metalness?: number;
+> 16:23-  roughness?: number;
+> 17:24-  side?: THREE.Side;
+> 19:26-  streaks?: number;
+> 21:28-  streakCount?: number;
+> 26:33-  slotHalf?: [number, number];
+> 28:35-  stagger?: boolean;
+> 30:37-  offsetV?: number;
+> 35:42-  relief?: { corrugation: number; bevel: number; bevelWidth?: number };
+> 37:44-  rimColor?: THREE.ColorRepresentation;
+> 38:45-  rimStrength?: number;
+> 40:47-  farGlow?: FarGlow;
+
+### 🤖 Claude — 2026-11-16T10:16:14.141Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/tube.ts'; t=open(p).read()\nold=\"const qaNum = (key: string, d: number) => {\"\nassert old in t; t=t.replace(old,\"export const qaNum = (key: string, d: number) => {\"); open(p,'w').write(t)\n\np='src/world/materials.ts'; t=open(p).read()\nold=\"export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {\"\nnew=\"\"\"/**\n * wave 9b (coordinator): final colour tint of a lit material, applied to `outgoingLight` after every other hook\n * (strips, far glow): out = (r·mul.r, g·mul.g + r·r2g, b·mul.b +  …[+2650 chars]`
+
+### 🧑 User — 2026-11-16T10:16:14.221Z
+
+> ↩︎ result: 9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasText
+> 10:import { type TubePath, BIG05, RING_A05, SHIFT05, buildTu
+
+### 🤖 Claude — 2026-11-16T10:16:25.616Z
+
+> 🔧 **Bash** `{"command": "sed -i \"9s/import { perforatedMetal, /import { perforatedMetal, withOutputTint, /\" src/world/environment.ts && sed -i \"10s/import { type TubePath, BIG05, RING_A05, SHIFT05, /import { type TubePath, qaNum, BIG05, RING_A05, SHIFT05, /\" src/world/environment.ts && npx tsc --noEmit && echo TSC_OK && S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && cat > \"$S/samp.py\" <<'EOF'\n\"\"\"samp.py img — colour stats of fixed 05 windows (dark / mid / bright thirds by luminance)\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nWIN = {\ …[+1507 chars]`
+
+### 🧑 User — 2026-11-16T10:16:30.883Z
+
+> ↩︎ result: The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). STOP what you are doing and wait for the user to tell you how to proceed. Correction to the text above: this call was stopped while running, not refused before it ran. It may have run in part or in full, and its changes may have been written. No permission prompt was involved. Work it started elsewhere (a remote command, a background process) may still be running, so check before starting the same work again. The instruction to stop and wait still stands.
+
+### 🧑 User — 2026-11-16T10:16:30.886Z
+
+[Request interrupted by user for tool use]
+
+### 🧑 User — 2026-11-16T10:16:30.909Z
+
+Claude, IMPORTANT CORRECTION about my Rainbow 3D game.
+
+Remember, I'm using my Google Flow videos for the beginning and ending of my game.
+
+The beginning video shows the girl putting the clothes and hidden Benny into the washing machine.
+
+The ending video shows the girl retrieving the towel and completes the story.
+
+I do NOT need you to spend time recreating those video scenes as fully detailed playable 3D artwork.
+
+Please focus your design specialists on the actual PLAYABLE GAMEPLAY, particularly Screens 03–09.
+
+My biggest priority is still Screen 05, Flow Into the Current. I want the real playable environment to match my approved artwork as closely as possible, ideally 90–95% if achievable.
+
+After Screen 05, concentrate on the other gameplay screens that look noticeably different from their approved references, especially 03, 04, 06, 07, 08 and 09.
+
+Use the existing Marble World Labs assets, Blender and Three.js to improve the visuals.
+
+IMPORTANT:
+
+- Preserve my Google Flow opening and ending videos.
+- Make the transition from the opening video into gameplay seamless.
+- Make gameplay transition naturally into the ending video.
+- Keep all gameplay mechanics and the 07→08 deep descent working.
+- Don't waste credits rebuilding scenes that my videos already cover.
+- Keep all ten specialist agents and the five-minute GitHub autosaves.
+
+Please prioritize the playable 3D environments and show me separate full-size comparisons against my approved gameplay screens.
+
+I want the playable game to look like the premium artwork I approved, not simply have the correct gameplay mechanics.
+
+### 🧑 User — 2026-11-16T10:16:37.768Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-16T10:16:45.990Z
+
+Claude, STOP and review Big Tunnel Test 1.
+
+I compared my APPROVED Screen 05, the BEFORE version and Big Tunnel Test 1.
+
+The BEFORE version looks CLOSER to my approved screen than Big Tunnel Test 1.
+
+I do NOT approve Big Tunnel Test 1.
+
+The bigger-tunnel experiment makes the gold rings look stretched horizontally and makes the tunnel look flatter and more oval.
+
+My approved tunnel is deep, beautifully rounded and cylindrical, with gold rings receding naturally into the distance.
+
+Please:
+
+1. Preserve the BEFORE version as our current preferred baseline.
+2. Do not merge Big Tunnel Test 1 into the working game.
+3. Do not simply enlarge the tunnel radius again.
+4. Measure the actual projected ring positions, widths, heights, spacing and vanishing point against my approved reference.
+5. Correct the tunnel geometry and perspective together while preserving the locked gameplay camera wherever possible.
+6. Keep the natural S-shaped river continuing into the golden light.
+7. Run another controlled test, changing one major geometric factor at a time.
+8. Show my approved image, BEFORE and the NEW test side by side.
+
+Only keep a test if its visual structure is clearly closer to my approved image, not just because the tunnel is technically larger.
+
+Keep all gameplay, specialists, Marble assets and five-minute GitHub backups protected.
+
+My goal is the exact look of my approved Screen 05, not a bigger tunnel for its own sake.
+

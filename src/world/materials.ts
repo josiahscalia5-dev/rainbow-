@@ -233,6 +233,29 @@ export interface BandShade {
    */
   oval?: number;
 }
+/**
+ * wave 9b (coordinator): final colour tint of a lit material, applied to `outgoingLight` after every other hook
+ * (strips, far glow): out = (r·mul.r, g·mul.g + r·r2g, b·mul.b + r·r2b). The 05 walls reflect a magenta
+ * environment and came out red-magenta ((179,16,121) near, (186,66,149) further in); the approved walls are
+ * violet-magenta ((177,51,195) near, (153,44,190) / (150,48,182) further in) — blue has to follow red.
+ */
+export function withOutputTint<T extends THREE.MeshStandardMaterial>(mat: T, t: { mul: [number, number, number]; r2g?: number; r2b?: number }, key: string): T {
+  const uniforms = { uOutMul: { value: new THREE.Vector3(...t.mul) }, uOutMix: { value: new THREE.Vector2(t.r2g ?? 0, t.r2b ?? 0) } };
+  const prev = mat.onBeforeCompile;
+  mat.onBeforeCompile = (shader, r) => {
+    prev.call(mat, shader, r);
+    Object.assign(shader.uniforms, uniforms);
+    shader.fragmentShader = shader.fragmentShader
+      .replace('void main() {', 'uniform vec3 uOutMul; uniform vec2 uOutMix;\nvoid main() {')
+      .replace('#include <opaque_fragment>', `outgoingLight = vec3(outgoingLight.r * uOutMul.x, outgoingLight.g * uOutMul.y + outgoingLight.r * uOutMix.x, outgoingLight.b * uOutMul.z + outgoingLight.r * uOutMix.y);
+#include <opaque_fragment>`);
+  };
+  const prevKey = mat.customProgramCacheKey.bind(mat);
+  mat.customProgramCacheKey = () => prevKey() + '|tint-' + key;
+  mat.userData.outTint = uniforms;
+  return mat;
+}
+
 export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
   const w = (b.width + b.groove + b.lipWidth) / 2;
   const K = b.oval ?? 1;

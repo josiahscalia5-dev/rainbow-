@@ -6,8 +6,8 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
-import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
-import { type TubePath, BIG05, RING_A05, buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, OVAL05 } from './tube';
+import { perforatedMetal, withOutputTint, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, type FarGlow, type TubeStrips } from './materials';
+import { type TubePath, qaNum, BIG05, RING_A05, SHIFT05, buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, OVAL05 } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry, farCoins05, farRiverMaterial05 } from './far05'; // path-camera (05 far tunnel block)
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
@@ -282,7 +282,13 @@ export function buildEnvironment(course: Course): Environment {
   };
   const floor05 = (s: number) => ({ y: -(big05Path.radius(s) - big05Path.depth(s)) - OVAL05.floorBelowWater, w: THREE.MathUtils.clamp(ovalW05(s) * 1.5, 0, 1) });
   // lateral offset of the 05 tunnel centre (OVAL05.shift), blended exactly like the oval
-  const shift05 = (s: number) => OVAL05.shift * ovalW05(s);
+  // wave 9b (round tunnel): the ref rings are centred LEFT of the vanishing point — A ≈45 px, B ≈35, C ≈22, D ≈10 —
+  // i.e. the near tunnel axis runs a little left of the eye. A parallel offset would also move the calibrated far
+  // block (coins, far river: path-camera), so the offset is full around ring A and eases to 0 before the seam.
+  // (−0.6 u: the river's right edge at its widest, ±5.6 u, still clears the wall foot, chord ±6.3 u)
+  const shift05 = (s: number) => (K05 > 1.0005 || big05
+    ? OVAL05.shift * ovalW05(s)
+    : SHIFT05 * THREE.MathUtils.smoothstep(s, s05 + 1, s05 + 9) * (1 - THREE.MathUtils.smoothstep(s, sCam05 + 26, sCam05 + 52)));
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
   // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
@@ -315,7 +321,9 @@ export function buildEnvironment(course: Course): Environment {
   };
   // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
   const strips05: TubeStrips = { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
-  const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
+  // wave 9b: violet-magenta walls (see withOutputTint); QA: ?wr=…&wg=…&wb=…&wr2g=…&wr2b=…
+  const wallTint05 = { mul: [qaNum('wr', 0.85), qaNum('wg', 1), qaNum('wb', 1)] as [number, number, number], r2g: qaNum('wr2g', 0.04), r2b: qaNum('wr2b', 0.5) };
+  const perf05Mat = withOutputTint(withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05'), wallTint05, 'wall05');
   const chunk = 40;
   const addWall = (a0: number, a1: number, mat: THREE.Material, shape: Pick<Parameters<typeof buildTubeGeometry>[3] & object, 'oval' | 'floor' | 'shift'> = {}, path: TubePath = perfPath) => {
     for (let a = a0; a < a1 - 0.01; a += chunk) {
@@ -443,7 +451,7 @@ export function buildEnvironment(course: Course): Environment {
     const level = -(big05Path.radius(sF05) - big05Path.depth(sF05)) + 0.04;
     const farLay = farRiverLayout(course, ft, level);
     // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
-    const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
+    const farWallMat = withOutputTint(withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v'), wallTint05, 'wall05v');
     const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
     const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial05(glow05)); // wave 9: far05.ts
     Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath: big05Path, level, farLay });

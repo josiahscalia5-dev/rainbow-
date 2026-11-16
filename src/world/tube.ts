@@ -186,7 +186,7 @@ export interface TubeGeoOptions {
  * (a parallel offset of a straight tunnel keeps its vanishing point), which also gives the ref's broad left bank.
  */
 // QA overrides (?k05=1.3&sh05=-1): compare cross-sections from the same build without editing the constants
-const qaNum = (key: string, d: number) => {
+export const qaNum = (key: string, d: number) => {
   const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;
   return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;
 };
@@ -213,6 +213,8 @@ export const BIG05 = { b: qaNum('b05', 0), hc: qaNum('hc05', 8.6), ringA: qaNum(
  * sides leave the frame at y≈330 like the reference and its top passes behind the HUD.
  */
 export const RING_A05 = qaNum('ringa', 20);
+/** wave 9b: lateral offset (units along `right`) of the near round 05 tunnel about ring A, eased to 0 before the far seam */
+export const SHIFT05 = qaNum('shift', -0.6);
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
   const radial = o.radial ?? 48;
