@@ -404,7 +404,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6781,
-   "sha256": "ea5ffe805e18a84ce633328f778782fc900b943046fd21a8a83b7707ffa75909"
+   "sha256": "e940f1dfc15f16d18ac16926c68c97a6e6f2c7d03176ade1c7d8011c227a254d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -425,6 +425,11 @@
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
    "bytes": 3520,
    "sha256": "7ca8d60ccce439f31609aa05a9a7364a5b4e28366b6dd840e2020810d3406ae0"
+  },
+  {
+   "path": "backups/TOOL_MANIFEST.json",
+   "bytes": 12434,
+   "sha256": "40c0d01099b446c255262e8075885c0b99f68a393bcd7d9723b5ca0c5d6a53cc"
   },
   {
    "path": "backups/autosave.config.json",
@@ -5722,6 +5727,11 @@
    "sha256": "0663a360e3d6a86abc3324a2ebd0e0327e6e87cf927526de701844e2b4b31f4c"
   },
   {
+   "path": "scripts/lib/pw-smoke.mjs",
+   "bytes": 1128,
+   "sha256": "86bf2ebdd082772e26331960359d71de0d62442282890c9d29958426135323a1"
+  },
+  {
    "path": "scripts/lib/pw.mjs",
    "bytes": 1419,
    "sha256": "67b5cb7270b3c5860146edc38b2ef454d05ba3c76100addd77f34316e56f7e61"
@@ -5748,8 +5758,8 @@
   },
   {
    "path": "scripts/setup-android-sdk.sh",
-   "bytes": 943,
-   "sha256": "61a42d0754503b8d59ad87c4a0d9e9d5f293b68d3f0aa221092897fbbed8b188"
+   "bytes": 1398,
+   "sha256": "fd953babaece3a8b4056e43d6498f0ae28955d9d841d7c5252809b1645f9f1bf"
   },
   {
    "path": "scripts/setup-blender.sh",
@@ -5765,6 +5775,11 @@
    "path": "scripts/triptych.py",
    "bytes": 837,
    "sha256": "e66d06a8ed653a6d7d7bfd65071be3764ce77725e3c66c4cb68843e646226129"
+  },
+  {
+   "path": "scripts/verify-assets.py",
+   "bytes": 14198,
+   "sha256": "65a17b8690397717d4780be57ee31633efdc19c9fa2818569b17d9bd4baa0d6c"
   },
   {
    "path": "scripts/water-lab.mjs",

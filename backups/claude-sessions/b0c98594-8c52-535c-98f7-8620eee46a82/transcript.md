@@ -1212,3 +1212,114 @@ All ten checksums match the documented ones. Writing `backups/AGENTS_STATUS.json
 > 23:Remaining approved budget: 4,440 credits.** Not yet bought: HQ mesh export (3,500 credits, US$2.80) — only if
 > 29:| draft `5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f` (op `4a549a9d-3de2-424b-8324-db24a8d1b9bd`, `marble-1.0-draft`) | `draft/` | `collider.glb`, `splats_100k.spz`, `splats_500k.spz`, `splats_full_res.spz` (26 MB), `splats_500k.ply` (free export),  …[+695 chars]
 
+### 🤖 Claude — 2026-11-16T10:50:27.151Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T10:50:27.160Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T10:50:27.553Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T10:50:27.564Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-16T10:51:10.847Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/TOOL_MANIFEST.json", "content": "{\n  \"_comment\": \"Machine-readable Rainbow tool manifest. Read by scripts/claude-bootstrap.sh (versions, packages, Marble worlds). Contains NO secrets: credentials are listed by name/host only. Update 'tested' when a session re-verifies a tool.\",\n  \"schema\": 1,\n  \"project\": \"RAINBOW - 11-screen 3D mobile game (Three.js + Vite + Capacitor Android)\",\n  \"repo\": \"josiahscalia5-dev/rainbow-\",\n  \"updated_utc\": \"2026-11-16T11:00:00+00:00\",\n  \"entry_points\": {\n    \"bootstrap\": \"bash scripts/claude- …[+12806 chars]`
+
+### 🧑 User — 2026-11-16T10:51:10.886Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/backups/TOOL_MANIFEST.json (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:51:28.115Z
+
+Now the Python helper that does the structured checks: LFS on GitHub, Marble files, agent checksums, backup-gap detection, and report writing.
+
+### 🤖 Claude — 2026-11-16T10:52:11.579Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/verify-assets.py", "content": "#!/usr/bin/env python3\n\"\"\"Rainbow recovery checks used by scripts/claude-bootstrap.sh (read-only; never changes git state).\n\n    python3 -I scripts/verify-assets.py lfs-remote [--download]   every LFS object of HEAD exists on GitHub\n                                                                   (--download: fetch each one, check SHA-256)\n    python3 -I scripts/verify-assets.py marble                     both Marble worlds' files present, real, checksummed\n    python3 -I scripts/verify-assets.py agents        …[+14456 chars]`
+
+### 🧑 User — 2026-11-16T10:52:11.615Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/verify-assets.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:52:13.351Z
+
+Quick test of each check before building the shell script around them:
+
+### 🤖 Claude — 2026-11-16T10:52:14.966Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; for c in agents marble \"gap --session-start 2026-11-16T10:40:30+00:00\"; do echo \"### $c\"; python3 -I scripts/verify-assets.py $c; echo \"exit=$?\"; done; echo \"### lfs-remote\"; time python3 -I scripts/verify-assets.py lfs-remote; echo \"exit=$?\"", "description": "Test agents, Marble, gap and LFS remote checks", "timeout": 300000}`
+
+### 🧑 User — 2026-11-16T10:52:16.128Z
+
+> ↩︎ result: ### agents
+>   washer-environment-modeler         idle    next: Screen 05 tests T2/T3 (near tunnel axis height, lateral offset) or col
+>   path-camera-transition-engineer    idle    next: far coin trail test on Screen 05; owns the locked STAGE_CAM['05'] and 
+>   water-fx-specialist                idle    next: water depth / flares test on Screen 05 after the geometry tests
+>   foam-bubbles-particles             idle    next: foam test on Screen 05 (apply it06 as its own URL-switch test)
+>   reference-match-director           idle    next: after Screen 05: ranked difference list per screen for 03, 04, 06, 07,
+>   playwright-visual-qa               idle    next: full-size approved | BEFORE | NEW comparisons for each accepted test
+>   benny-character-artist             idle    next: only if Benny's look must change (pink fluff, violet eyes, knitted sta
+>   cartoon-girl-character-artist      idle    next: not planned: the user's Google Flow videos cover the opening and endin
+>   animation-and-gameplay-engineer    idle    next: Flow video hand-over checks once the user uploads intro.mp4 / ending.m
+>   android-build-performance          idle    next: at the end: rebuild and verify the APK
+> @@ ok 10/10 specia …[+1756 chars]
+
+### 🤖 Claude — 2026-11-16T10:53:02.910Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,25p scripts/capture.mjs | grep -nE \"argv|out=|usage|Usage|//\" | head; grep -nE \"pass|console.log|writeFile\" scripts/gameplay-test.mjs | tail -8; grep -nE \"ringa|URLSearchParams\" src -r | head -5", "description": "Check capture/gameplay test CLI and output format"}`
+
+### 🧑 User — 2026-11-16T10:53:02.975Z
+
+> ↩︎ result: 2:// Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> 3://   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> 4://   node scripts/capture.mjs 03 07           → only those
+> 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 6://   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 11:const args = process.argv.slice(2);
+> 92:  out.checks.heartsLostOnWallBump = { pass: h.hearts < 5, hearts: h.hearts };
+> 98:result.pass = Object.values(result.checks).every((c) => c.pass) && errors.length === 0;
+> 99:writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
+> 117:  `* s strictly increasing every step: **${result.checks.continuousTravel.pass}** (${result.checks.continuousTravel.steps} steps)`,
+> 121:  ...Object.entries(result.checks).map(([k, v]) => `* ${v.pass ? '✅' : '❌'} **${k}** — ${JSON.stringify(Object.fromEntries(Object.entries(v).filter(([kk]) => kk !== 'pass' && kk !== 'finalState')))}`),
+> 125:writeFileSync('qa/07_to_08_continuity.md', md.joi …[+713 chars]
+
+### 🤖 Claude — 2026-11-16T10:53:06.815Z
+
+Now the small Playwright smoke test (headless Chromium + WebGL2, which the game needs):
+
+### 🤖 Claude — 2026-11-16T10:53:10.967Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/lib/pw-smoke.mjs", "content": "// Rainbow tool check: the preinstalled Playwright + Chromium start headless and give a WebGL2 context\n// (the same launch flags the capture and gameplay tests use). Prints one JSON line; exit 0 = ready.\n//   node scripts/lib/pw-smoke.mjs\nimport { loadPlaywright, CHROMIUM_ARGS } from './pw.mjs';\n\nconst t0 = Date.now();\ntry {\n  const { chromium } = loadPlaywright();\n  const browser = await chromium.launch({ args: CHROMIUM_ARGS });\n  const page = await browser.newPage();\n  const gl = await page.evaluate(() => {\n …[+629 chars]`
+
+### 🧑 User — 2026-11-16T10:53:10.994Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/lib/pw-smoke.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T10:53:11.669Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; node scripts/lib/pw-smoke.mjs", "description": "Run the Playwright WebGL2 smoke test"}`
+
+### 🧑 User — 2026-11-16T10:53:13.198Z
+
+> ↩︎ result: {"ok":true,"chromium":"153.0.8010.12","webgl2":"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)","ms":1444}
+
+### 🤖 Claude — 2026-11-16T10:53:15.523Z
+
+Playwright is ready (Chromium 153, WebGL2 via SwiftShader). Now I'll make the Android SDK script skip the download when the packages are already there; today it re-runs `sdkmanager` every time:
+
+### 🤖 Claude — 2026-11-16T10:53:21.064Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/setup-android-sdk.sh", "content": "#!/usr/bin/env bash\n# Installs the Android SDK pieces the Rainbow Capacitor build needs (idempotent: skips everything that is\n# already installed, so a second run makes no network calls).\n# Needs network access to dl.google.com. Java 17+ and Gradle come from the container image.\n#   bash scripts/setup-android-sdk.sh            -> /opt/android-sdk\nset -euo pipefail\nSDK=\"${ANDROID_HOME:-/opt/android-sdk}\"\nPLATFORM=\"${ANDROID_PLATFORM:-android-34}\"\nBUILD_TOOLS=\"${ANDROID_BUILD_TOOLS:-34.0.0}\"\nCLT=\"${ANDR …[+937 chars]`
+
+### 🧑 User — 2026-11-16T10:53:21.122Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/setup-android-sdk.sh has been updated successfully. (file state is current in your context — no need to Read it back)
+
