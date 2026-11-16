@@ -1626,3 +1626,136 @@ Keep all gameplay, specialists, Marble assets and five-minute GitHub backups pro
 
 My goal is the exact look of my approved Screen 05, not a bigger tunnel for its own sake.
 
+### 🤖 Claude — 2026-11-16T10:18:53.243Z
+
+Understood on both messages — stopping the bigger-tunnel direction now. I'll check nothing is still running from the interrupted step, then put the game back to your BEFORE version.
+
+### 🤖 Claude — 2026-11-16T10:18:56.378Z
+
+> 🔧 **Bash** `{"command": "echo \"== my processes still running:\"; pgrep -af \"capture.mjs|gameplay-test|node .*vite|chrome-headless|chromium\" | grep -v pgrep | cut -c1-120 || true; echo \"== git:\"; git status --short | head -12; git log --oneline -3 | cat; echo \"== src changed since BEFORE (aa35c8a):\"; git diff --stat aa35c8a -- src | tail -15; echo \"== anything else that renders changed since BEFORE:\"; git diff --stat aa35c8a -- . ':!backups' ':!qa' ':!src' ':!docs' | tail -8; echo \"== was src identical between aa35c8a and the wave-9 baseline capture (b34fd83)?\"; git diff --stat aa35c8a b34fd83 - …[+146 chars]`
+
+### 🧑 User — 2026-11-16T10:18:56.488Z
+
+> ↩︎ result: == my processes still running:
+> == git:
+> ffcd7be autosave: Rainbow 2026-11-16 10:17 UTC
+> 3d6035e autosave: Rainbow 2026-11-16 10:12 UTC
+> a32e9d9 autosave: Rainbow 2026-11-16 10:07 UTC
+> == src changed since BEFORE (aa35c8a):
+>  src/gameplay/coins.ts    |  49 ++++++++--
+>  src/vfx/foam.ts          |  68 +++++++++++---
+>  src/vfx/glsl.ts          |  38 ++++++++
+>  src/vfx/riderSplash.ts   |  32 +++++--
+>  src/vfx/waterRibbon.ts   | 228 ++++++++++++++++++++++++++++++++---------------
+>  src/world/environment.ts | 145 ++++++++++++++++++++++--------
+>  src/world/far05.ts       | 218 ++++++++++++++++++++++++++++++++++++++++++--
+>  src/world/materials.ts   |  60 ++++++++++---
+>  src/world/tube.ts        | 151 +++++++++++++++++++++++++++----
+>  9 files changed, 819 insertions(+), 170 deletions(-)
+> == anything else that renders changed since BEFORE:
+>  CLAUDE.md | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> == was src identical between aa35c8a and the wave-9 baseline capture (b34fd83)?
+>  src/vfx/foam.ts        | 53 ++++++++++++++++++++++++++++++++++++++------------
+>  src/vfx/riderSplash.ts | 17 +++++++++++-----
+>  2 files changed, 53 insertions(+), 17 deletions(-)
+> (end)
+
+### 🤖 Claude — 2026-11-16T10:19:07.097Z
+
+> 🔧 **Bash** `{"command": "echo \"baseline image added in:\"; git log --diff-filter=A --format='%h %ad %s' --date=format:'%H:%M' -- qa/pilot05/wave9/baseline/05.png | cat; echo \"commits around it:\"; git log --format='%h %ad %s' --date=format:'%H:%M' aa35c8a~1..f6de5c7 | cat; echo \"src diff aa35c8a→7b70f98 (merge):\"; git diff --stat aa35c8a 7b70f98 -- src | tail -2; echo \"foam NOTES pre-entry:\"; grep -n \"pre\\b\\|pre/\" qa/pilot05/wave9/foam/NOTES.md | head -5 | cut -c1-220", "description": "Find the exact code version that produced the BEFORE picture"}`
+
+### 🧑 User — 2026-11-16T10:19:09.520Z
+
+> ↩︎ result: baseline image added in:
+> bd3b1e6 02:20 autosave: Rainbow 2026-11-16 02:20 UTC
+> commits around it:
+> f6de5c7 02:44 autosave: Rainbow 2026-11-16 02:44 UTC
+> fe446c2 02:44 autosave: Rainbow 2026-11-16 02:43 UTC
+> 03b62bb 02:43 autosave: Rainbow 2026-11-16 02:43 UTC
+> 1c89ffd 02:38 autosave: Rainbow 2026-11-16 02:38 UTC
+> cc43ba0 02:33 autosave: Rainbow 2026-11-16 02:33 UTC
+> b34fd83 02:28 autosave: Rainbow 2026-11-16 02:28 UTC
+> 2a4d3b4 02:24 autosave: Rainbow 2026-11-16 02:24 UTC
+> 0515841 02:24 autosave: Rainbow 2026-11-16 02:24 UTC
+> 1e9c57a 02:24 autosave: Rainbow 2026-11-16 02:24 UTC
+> 0fe24db 02:24 autosave: Rainbow 2026-11-16 02:24 UTC
+> 319ca1f 02:23 autosave: Rainbow 2026-11-16 02:23 UTC
+> c821d91 02:22 autosave: Rainbow 2026-11-16 02:22 UTC
+> 7b70f98 02:21 resume: merge final wave-8 notes from origin/ccr-937c7fbb-htsrgt (f6e4071)
+> bd3b1e6 02:20 autosave: Rainbow 2026-11-16 02:20 UTC
+> 9b96362 02:17 autosave: Rainbow 2026-11-16 02:17 UTC
+> f6e4071 02:13 autosave: Rainbow 2026-11-16 02:13 UTC
+> 708e345 02:12 autosave: Rainbow 2026-11-16 02:12 UTC
+> aa35c8a 02:08 autosave: Rainbow 2026-11-16 02:08 UTC
+> src diff aa35c8a→7b70f98 (merge):
+> foam NOTES pre-entry:
+> 9:## Read at start (crops ref vs baseline, `pre/`, 4x cro …[+3 chars]
+
+### 🤖 Claude — 2026-11-16T10:19:31.104Z
+
+> 🔧 **Bash** `{"command": "S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && git diff --stat aa35c8a bd3b1e6 -- src | tail -1; mkdir -p qa/pilot05/wave9b/not_merged && git diff aa35c8a HEAD -- src > qa/pilot05/wave9b/not_merged/wave9_partial_and_coordinator_tests_vs_BEFORE.patch && wc -l qa/pilot05/wave9b/not_merged/*.patch && git checkout aa35c8a -- src && git status --short | head -12 && npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/capture.mjs 05 --out=\"$S/w/before_check\" 2>&1 | tail -1 | cut -c1-200 && python3 - <<EOF\nimport numpy as np\nfrom PIL …[+460 chars]`
+
+### 🧑 User — 2026-11-16T10:19:50.257Z
+
+> ↩︎ result: 1584 qa/pilot05/wave9b/not_merged/wave9_partial_and_coordinator_tests_vs_BEFORE.patch
+> M  src/gameplay/coins.ts
+> M  src/vfx/foam.ts
+> M  src/vfx/glsl.ts
+> M  src/vfx/riderSplash.ts
+> M  src/vfx/waterRibbon.ts
+> M  src/world/environment.ts
+> M  src/world/far05.ts
+> M  src/world/materials.ts
+> M  src/world/tube.ts
+> ?? qa/pilot05/wave9b/
+> TSC_OK
+> 05 → /tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/before_check/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/in
+> size (1536, 864, 3) (1536, 864, 3) | pixels differing by >8: 0 | max diff 0 | mean 0.0
+
+### 🤖 Claude — 2026-11-16T10:20:15.132Z
+
+BEFORE is restored exactly — a fresh capture matches your BEFORE picture pixel for pixel. Now measuring the rings in your approved picture and in BEFORE properly, as you asked.
+
+### 🤖 Claude — 2026-11-16T10:20:39.447Z
+
+> 🔧 **Bash** `{"command": "S=\"/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad\" && mkdir -p tools/qa && cat > tools/qa/ring_fit05.py <<'EOF'\n#!/usr/bin/env python3\n\"\"\"Screen 05: measure the projected gold rings (centre, radius, band thickness) in the approved image and in live\ncaptures, by fitting circles to the gold pixels of each ring's upper arc.\n\n    python3 -I tools/qa/ring_fit05.py OUT_DIR LABEL=image[:guessfile] ...\n\nA circle (cx, cy, r) is scored by the share of gold pixels on its arc above its own centre line (HUD bar, title\nbanner and everything outsid …[+5449 chars]`
+
+### 🧑 User — 2026-11-16T10:20:47.784Z
+
+> ↩︎ result: | image | ring | centre x | centre y | radius | band thick | radius ÷ next ring | gold share on arc |
+> |---|---|---|---|---|---|---|---|
+> | APPROVED | A | 474 | 529 | 492.5 | 64 | 2.06 | 1.0 |
+> | APPROVED | B | 477 | 447 | 239.5 | 38 | 1.60 | 0.97 |
+> | APPROVED | C | 491 | 458 | 150.0 | 23 | 1.69 | 0.98 |
+> | APPROVED | D | 493 | 464 | 88.5 | 12 | 1.74 | 1.0 |
+> | APPROVED | E | 503 | 466 | 51.0 | 15 | 2.17 | 1.0 |
+> | APPROVED | F | 501 | 473 | 23.5 | 50 | — | 1.0 |
+> | BEFORE | A | 505 | 426 | 374.0 | 69 | 1.64 | 0.98 |
+> | BEFORE | B | 506 | 440 | 227.5 | 42 | 1.49 | 0.94 |
+> | BEFORE | C | 502 | 455 | 153.0 | 17 | 1.59 | 0.93 |
+> | BEFORE | D | 500 | 470 | 96.5 | 10 | 2.33 | 1.0 |
+> | BEFORE | E | 497 | 484 | 41.5 | 56 | 3.07 | 1.0 |
+> | BEFORE | F | 492 | 465 | 13.5 | 78 | — | 1.0 |
+
+### 🤖 Claude — 2026-11-16T10:20:56.696Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b970f481-ce8a-5425-9ce8-c5468817acd1/scratchpad/w/overlay_pair.png"}`
+
+### 🧑 User — 2026-11-16T10:20:56.915Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T10:22:55.954Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const rings05\\|const lids05\\|const lid05 =\\|ringSlots05\" src/world/environment.ts | cut -c1-230", "description": "Locate the ring placement lines in the restored BEFORE code"}`
+
+### 🧑 User — 2026-11-16T10:22:55.987Z
+
+> ↩︎ result: 247:  const ringSlots05: number[] = [];
+> 248:  for (let s = sF05; s >= s05 + 2; s -= bay05) ringSlots05.unshift(s);
+> 249:  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5);
+> 278:    offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+> 341:  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -34, size: 2.2, thickness: 0.36, stretch: 1.0, sink: 0.1 };
+> 349:  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+

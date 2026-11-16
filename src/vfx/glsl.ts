@@ -135,44 +135,6 @@ float lensFlare(vec2 g, float density, float Lpx, float Tpx, float time) {
   float tw = 0.75 + 0.25 * sin(time * 3.0 + hs * 40.0);
   return (lens + 0.7 * glow) * tw;
 }
-// (wave 9, 05 near field) "Lightning" flare like ref 05's near-water bolts: a jagged white streak lying across the
-// flow (screen-horizontal ± ≈17° tilt), thick in the middle and tapering to points, with a Z-kink near both
-// ends, a short thin cross arm and a wide soft halo. g = world-anchored, advected cell grid; Lpx / Tpx = half
-// length / half core thickness in pixels (clamped so the bolt never crosses its cell border).
-// Returns x = core (≈1 on the white core), y = halo (0..1). Derivatives before the early-out (Android-safe).
-vec2 boltFlare(vec2 g, float density, float Lpx, float Tpx, float time) {
-  vec2 gx = dFdx(g);
-  vec2 gy = dFdy(g);
-  vec2 gi = floor(g);
-  float hs = hash12(gi + 4.17);
-  float det = gx.x * gy.y - gy.x * gx.y;
-  if (hs < 1.0 - density || abs(det) < 1e-12) return vec2(0.0);
-  vec2 dg = fract(g) - (vec2(hash12(gi + 2.3), hash12(gi + 6.9)) * 0.3 + 0.35);
-  vec2 p = vec2(gy.y * dg.x - gy.x * dg.y, gx.x * dg.y - gx.y * dg.x) / det;   // pixels
-  float limx = 0.3 / max(abs(gx.x) + abs(gx.y), 1e-6);
-  float limy = 0.3 / max(abs(gy.x) + abs(gy.y), 1e-6);
-  float L = min(Lpx * (0.6 + 0.8 * fract(hs * 37.0)), limx);
-  float T = min(Tpx * (0.7 + 0.6 * fract(hs * 53.0)), limy * 0.3);
-  float ang = (fract(hs * 91.0) - 0.5) * 0.6;
-  float ca = cos(ang), sa = sin(ang);
-  p = vec2(ca * p.x + sa * p.y, -sa * p.x + ca * p.y);
-  float x = p.x / L;
-  float ax = abs(x);
-  // Z-kink: the streak steps sideways by ≈1.4·T over a short run at |x| ≈ 0.3 (sharp lightning steps), plus a
-  // slight arch (it02: it01's soft 0.9·T kink read as a flat white "bat")
-  float kz = (fract(hs * 13.0) > 0.5 ? 1.4 : -1.4) * T;
-  float y = p.y - kz * (smoothstep(-0.36, -0.27, x) - smoothstep(0.27, 0.36, x)) - 0.25 * T * (1.0 - x * x);
-  float th = T * max(1.0 - x * x, 0.0);
-  float core = (1.0 - smoothstep(th * 0.4, th + 0.8, abs(y))) * step(ax, 1.0);
-  float arm = exp(-abs(p.x) * 0.9) * max(0.0, 1.0 - abs(p.y) / (0.3 * L));
-  core = max(core, arm * arm * 1.2);
-  // wide electric halo (ref: the bolts sit in a 15–25 px cyan glow)
-  float halo = exp(-abs(y) / (T * 3.0 + 5.0)) * max(0.0, 1.0 - ax * ax) + 0.6 * exp(-length(p) / (T * 4.0 + 6.0));
-  // (it03) the halo fades out inside its own cell (it02's halo was cut at the cell border: boxy light patches)
-  halo *= (1.0 - smoothstep(0.2, 0.34, abs(dg.x))) * (1.0 - smoothstep(0.2, 0.34, abs(dg.y)));
-  float tw = 0.8 + 0.2 * sin(time * 3.0 + hs * 40.0);
-  return vec2(core, min(halo, 1.0)) * tw;
-}
 `;
 
 /**

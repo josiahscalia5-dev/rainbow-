@@ -226,67 +226,30 @@ export interface BandShade {
   spots?: [number, number, number];
   /** view distance range over which the crown highlight fades to rose-copper (deeper rings) */
   fade?: [number, number];
-  /**
-   * wave 9: the band's local x is stretched by this aspect (ovalBandGeometry, 05 oval tunnel): the bulbs are spaced
-   * evenly along the ellipse (arc-length parameter s(E) ≈ m·E − c·sin 2E of the eccentric angle E) and the
-   * "top arc" is measured on E; 1 = circle (unchanged)
-   */
-  oval?: number;
 }
-/**
- * wave 9b (coordinator): final colour tint of a lit material, applied to `outgoingLight` after every other hook
- * (strips, far glow): out = (r·mul.r, g·mul.g + r·r2g, b·mul.b + r·r2b). The 05 walls reflect a magenta
- * environment and came out red-magenta ((179,16,121) near, (186,66,149) further in); the approved walls are
- * violet-magenta ((177,51,195) near, (153,44,190) / (150,48,182) further in) — blue has to follow red.
- */
-export function withOutputTint<T extends THREE.MeshStandardMaterial>(mat: T, t: { mul: [number, number, number]; r2g?: number; r2b?: number }, key: string): T {
-  const uniforms = { uOutMul: { value: new THREE.Vector3(...t.mul) }, uOutMix: { value: new THREE.Vector2(t.r2g ?? 0, t.r2b ?? 0) } };
-  const prev = mat.onBeforeCompile;
-  mat.onBeforeCompile = (shader, r) => {
-    prev.call(mat, shader, r);
-    Object.assign(shader.uniforms, uniforms);
-    shader.fragmentShader = shader.fragmentShader
-      .replace('void main() {', 'uniform vec3 uOutMul; uniform vec2 uOutMix;\nvoid main() {')
-      .replace('#include <opaque_fragment>', `outgoingLight = vec3(outgoingLight.r * uOutMul.x, outgoingLight.g * uOutMul.y + outgoingLight.r * uOutMix.x, outgoingLight.b * uOutMul.z + outgoingLight.r * uOutMix.y);
-#include <opaque_fragment>`);
-  };
-  const prevKey = mat.customProgramCacheKey.bind(mat);
-  mat.customProgramCacheKey = () => prevKey() + '|tint-' + key;
-  mat.userData.outTint = uniforms;
-  return mat;
-}
-
 export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
   const w = (b.width + b.groove + b.lipWidth) / 2;
-  const K = b.oval ?? 1;
-  const mArc = (3 * (K + 1) - Math.sqrt((3 * K + 1) * (K + 3))) / 2; // Ramanujan perimeter / 2π
   const uniforms = {
     uBandG: { value: new THREE.Vector4(w - b.width / 2, b.width / 2, -w + b.lipWidth / 2, b.lipWidth / 2) },
     // ref ring #1: spot pitch ≈85 px at r 273 (≈20/turn), white core ≈12 px inside a yellow halo
     uBandS: { value: new THREE.Vector4(...(b.spots ?? [20, 0.055, 1.6]), 0) },
     uBandF: { value: new THREE.Vector2(...(b.fade ?? [44, 110])) },
-    uBandE: { value: new THREE.Vector3(K, mArc, (mArc - 1) / 2) },
     uBcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
-    // wave 9: warmer, more saturated gold (coordinator: "bright glossy YELLOW-gold with orange edges, not rose/salmon";
-    // ref ring sides (250,127,70)/(251,142,57)/(235,115,5), ring #1 top between the bulbs (215,94,99)…(250,119,89);
-    // live it02 top read pale peach (240,153,123)): rose lip (215,95,100) → (226,92,74), crown (222,98,88) →
-    // (236,104,70), peak (252,190,120) → (254,212,108), halo (255,205,90) → (255,198,58), pale crown
-    // (252,206,130) → (253,208,98), gold (246,151,70) → (248,146,42), lip side (245,115,80) → (247,112,48)
-    uBcRose: { value: lin3(0.6352, 0.2039, 0.1692) }, // (226,92,74)
+    uBcRose: { value: lin3(0.5899, 0.2114, 0.2222) }, // (215,95,100)
     uBcOrange: { value: lin3(0.7352, 0.2871, 0.1269) }, // (240,120,40)
-    uBcCrown: { value: lin3(0.6983, 0.2384, 0.1688) }, // (236,104,70) coral-gold body between the spots
-    uBcPeak: { value: lin3(0.9515, 0.7291, 0.3277) }, // (254,212,108) highlight line
-    uBcHalo: { value: lin3(0.9282, 0.6401, 0.1939) }, // (255,198,58) yellow halo around each spot
+    uBcCrown: { value: lin3(0.6246, 0.22, 0.199) }, // (222,98,88) rose-gold body between the spots (ref (215–230,90–100,80–95))
+    uBcPeak: { value: lin3(0.9077, 0.602, 0.3465) }, // (252,190,120) highlight line
+    uBcHalo: { value: lin3(0.9439, 0.6846, 0.2725) }, // (255,205,90) yellow halo around each spot
     uBcGroove: { value: lin3(0.5618, 0.1695, 0.1159) }, // (214,79,44) orange-red groove line (ref ring #1 top y 200–202)
     uBcSpot: { value: lin3(1.6, 1.5, 1.3) }, // warm white, blooms a little
     // wave 8: the rings READ gold because their sides are a broad pale-yellow crown between saturated orange
     // lines (ref ring #2 left side, x 199→239: dark · peach-orange lip (245,115,80) · orange-red line (234,89,4)
     // · pale yellow (252,206,130) with white maxima · orange (246,151,70) · peach); only the near top arc
     // (ring #1, ≈11–1 o'clock) is rose-red between big white spots
-    uBcPale: { value: lin3(0.9367, 0.7023, 0.2956) }, // (253,208,98)
-    uBcGold: { value: lin3(0.8126, 0.385, 0.1406) }, // (248,146,42)
+    uBcPale: { value: lin3(0.931, 0.6926, 0.3911) }, // (252,206,130)
+    uBcGold: { value: lin3(0.8111, 0.4073, 0.193) }, // (246,151,70)
     uBcLine: { value: lin3(0.6601, 0.1926, 0.0761) }, // (234,89,4)
-    uBcLipS: { value: lin3(0.7632, 0.2632, 0.1366) }, // (247,112,48)
+    uBcLipS: { value: lin3(0.7599, 0.2745, 0.1948) }, // (245,115,80)
   };
   const prev = mat.onBeforeCompile;
   mat.onBeforeCompile = (shader, r) => {
@@ -304,7 +267,7 @@ vBandAx = (viewMatrix * modelMatrix * vec4(0.0, 0.0, 1.0, 0.0)).xyz;
     const fg = shader.fragmentShader.includes('float farGlowK()');
     shader.fragmentShader = shader.fragmentShader
       .replace('void main() {', `varying vec3 vBandP; varying vec3 vBandAx;
-uniform vec4 uBandG; uniform vec4 uBandS; uniform vec2 uBandF; uniform vec3 uBandE;
+uniform vec4 uBandG; uniform vec4 uBandS; uniform vec2 uBandF;
 uniform vec3 uBcDark; uniform vec3 uBcRose; uniform vec3 uBcOrange; uniform vec3 uBcCrown; uniform vec3 uBcPeak; uniform vec3 uBcGroove; uniform vec3 uBcSpot; uniform vec3 uBcHalo;
 uniform vec3 uBcPale; uniform vec3 uBcGold; uniform vec3 uBcLine; uniform vec3 uBcLipS;
 // The rider sees every band at a grazing angle, i.e. mostly its camera-facing flank: the colour therefore
@@ -325,8 +288,7 @@ vec3 bandShade(float deep, vec3 N, vec3 V){
   float nzv = dot(N * sign(nv + 1e-4), ax);      // -1 = flank facing the camera … 0 = crown
   // wave 8: only the near top arc (±30°, gone by ±55°) keeps the rose-red body of ref ring #1's top; the sides
   // and the deeper rings read gold: pale-yellow crown framed by orange (ref ring #2/#3 sides)
-  float eAng = atan(vBandP.y, vBandP.x / uBandE.x);   // eccentric angle on the (oval) band
-  float topArc = (1.0 - smoothstep(0.52, 0.96, abs(eAng - 1.5707963))) * (1.0 - deep);
+  float topArc = (1.0 - smoothstep(0.52, 0.96, abs(atan(vBandP.y, vBandP.x) - 1.5707963))) * (1.0 - deep);
   vec3 body = mix(mix(uBcGold, uBcPale, smoothstep(0.42, 0.62, ndv)), uBcCrown, topArc);
   body = mix(body, mix(uBcOrange, uBcGold, 0.5), deep * 0.55);      // deeper rings: orange with bright spots
   vec3 c = mix(uBcDark, mix(uBcLipS, uBcRose, topArc), smoothstep(0.03, 0.12, ndv));
@@ -345,8 +307,8 @@ vec3 bandShade(float deep, vec3 N, vec3 V){
   vec3 col = mix(uBcGroove, cl, inLip);
   col = mix(col, c, inMain);
   // marquee spots at fixed azimuths (12 o'clock = a spot): radial lines of spots into the VP
-  // evenly along the ellipse: arc length s(E) ≈ m·E − c·sin 2E (= E on a circle), 12 o'clock stays a spot
-  float t = (uBandE.y * (eAng - 1.5707963) - uBandE.z * sin(2.0 * eAng)) * uBandS.x / (6.2831853 * uBandE.y);
+  float phi = atan(vBandP.y, vBandP.x);
+  float t = (phi - 1.5707963) * uBandS.x / 6.2831853;
   float ft = min(fwidth(t), fwidth(fract(t + 0.5)));
   float d = fract(t + 0.5) - 0.5;
   float sw = uBandS.y + ft * 0.7, hw = uBandS.y * 3.0 + ft * 0.7;

@@ -8,7 +8,6 @@ import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
 import { canvasTexture } from '../world/materials';
 import { coreLateral } from '../vfx/waterRibbon';
-import { STAGE_CAM } from '../game/cameraRig';
 
 export const COIN_VALUE = 10;
 
@@ -22,16 +21,7 @@ export interface CoinDef { s: number; lat: number; h: number; stage: StageId; sc
  * so their face reads as a slightly flattened disc with the rim visible underneath, as in the ref.
  * Before the 05 checkpoint the trail keeps a plain C05.gap0 spacing (gameplay only, never in frame).
  */
-export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7, seamAxisLat: -0.2 };
-
-/**
- * wave 9 (path-camera): the 05 far seam — where the forced-perspective far tunnel starts at the 05 checkpoint
- * (environment.ts `sF05`, same formula: 54 u ahead of the checkpoint eye, ≥ 2.5 u before the 06 flare).
- */
-export function farSeam05(course: Course): number {
-  const sCam = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
-  return Math.min(sCam + 54, course.stage('06').s0 - 5.9 - 2.5);
-}
+export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
 
 function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h?: number, extra?: Partial<CoinDef>) => void) {
   const a = course.stage('05');
@@ -43,23 +33,7 @@ function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h
   for (let k = 0, s = sCp + C05.first; s < a.s1 - 3; k++) { ss.push(s); s += Math.min(C05.gapMax, C05.gap0 + k * C05.gapGrow); }
   // latK < 1: the trail winds with the cyan core but stays inside its middle (the core half width is
   // ≥ 2 u), so the far coins converge on the VP like the ref instead of swinging out to the pink bands
-  // wave 9: a coin past the far seam sits where, at the checkpoint, only the forced-perspective far river shows
-  // (the real ribbon's exit bend lies under it and swings right): it continues the visible trail instead — tunnel
-  // axis-lateral C05.seamAxisLat (ref coin #2 at (494, 531), 20 px; the old lateral put it at (555, 541)).
-  // Same s, same count, still on the water (half width ≈ 5.5 u there); the far coins (far05.ts) carry on beyond it.
-  const sSeam = farSeam05(course);
-  const ax = course.straightAxes.find((x) => sSeam >= x.s0 && sSeam <= x.s1);
-  for (const s of ss) {
-    let lat = C05.latK * coreLateral(course, s);
-    if (ax && s > sSeam) {
-      const T = ax.b.clone().sub(ax.a).normalize();
-      const Rt = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize().cross(T).negate();
-      const f = course.sample(s);
-      const rx = f.right.dot(Rt);
-      if (rx > 0.3) lat = (C05.seamAxisLat - f.pos.clone().sub(ax.a).dot(Rt)) / rx;
-    }
-    add('05', s, lat, C05.h, extra);
-  }
+  for (const s of ss) add('05', s, C05.latK * coreLateral(course, s), C05.h, extra);
 }
 
 export function coinLayout(course: Course): CoinDef[] {
@@ -95,14 +69,8 @@ export interface CoinSystem {
   resetUntil(s: number): void;
 }
 
-let visuals: { geo: THREE.BufferGeometry; materials: THREE.Material[] } | null = null;
-
-/**
- * The coin's geometry and [edge, face, face] materials, created once and shared by the real pickups and the
- * purely visual 05 far coins (far05.ts), so both look identical.
- */
-export function coinVisuals(): { geo: THREE.BufferGeometry; materials: THREE.Material[] } {
-  if (visuals) return visuals;
+export function createCoins(course: Course): CoinSystem {
+  const defs = coinLayout(course);
   const faceTex = canvasTexture(256, 256, (c, w, h) => {
     const g = c.createRadialGradient(w * 0.38, h * 0.32, 10, w / 2, h / 2, w * 0.55);
     g.addColorStop(0, '#ffe680');
@@ -149,14 +117,7 @@ export function coinVisuals(): { geo: THREE.BufferGeometry; materials: THREE.Mat
   // keeps a reflective sheen on top.
   const side = new THREE.MeshStandardMaterial({ color: '#6a4a00', metalness: 0.75, roughness: 0.3, emissive: '#ffffff', emissiveMap: edgeTex, emissiveIntensity: 1.0 });
   const face = new THREE.MeshStandardMaterial({ map: faceTex, color: '#7a5200', metalness: 0.7, roughness: 0.3, emissive: '#ffffff', emissiveMap: faceTex, emissiveIntensity: 1.15 });
-  visuals = { geo, materials: [side, face, face] };
-  return visuals;
-}
-
-export function createCoins(course: Course): CoinSystem {
-  const defs = coinLayout(course);
-  const { geo, materials } = coinVisuals();
-  const mesh = new THREE.InstancedMesh(geo, materials, defs.length);
+  const mesh = new THREE.InstancedMesh(geo, [side, face, face], defs.length);
   mesh.frustumCulled = false;
   const group = new THREE.Group();
   group.name = 'coins';

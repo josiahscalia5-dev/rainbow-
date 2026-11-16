@@ -399,7 +399,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6289,
-   "sha256": "2e91158ce02d1dacaf4ed50cdcc2607018830ef6cb5ceb2c51129f974ed9778c"
+   "sha256": "ac8f8a53246eda16fab5342d20af14f7948ec4db10840be2a6c562532d58b06f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -823,8 +823,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1236,
-   "sha256": "76d988dd35533734f244020493fc7cb12dbc0d285426caf00e19715088bc8d9c"
+   "bytes": 1246,
+   "sha256": "ce4033b8a7c7c2dba71d66e01f3bc87763cee366baf1744e98816561eb538986"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -5002,6 +5002,31 @@
    "sha256": "b19f40ec117779ae0c31f7aa36787f3af8685fa2e4956701fe1b5686c60963ac"
   },
   {
+   "path": "qa/pilot05/wave9b/not_merged/wave9_partial_and_coordinator_tests_vs_BEFORE.patch",
+   "bytes": 109104,
+   "sha256": "c8877130daa513f02273a31fb43436fd95342f666b09b0f13f3a7a9f12e8e0d4"
+  },
+  {
+   "path": "qa/pilot05/wave9b/rings/overlay_APPROVED.png",
+   "bytes": 1489500,
+   "sha256": "29ade7318d28d1b13b73d0ba4c2fadea835e58461eb6bd910da264d3714950eb"
+  },
+  {
+   "path": "qa/pilot05/wave9b/rings/overlay_BEFORE.png",
+   "bytes": 1065746,
+   "sha256": "1bc9fd39532399746676ecfcada36d1cb3c5b4cb3e0ed0eed1da37b156bc5552"
+  },
+  {
+   "path": "qa/pilot05/wave9b/rings/rings.json",
+   "bytes": 1163,
+   "sha256": "6ba262f22f71641d2d739e99baf737793b5a9b3177eb1de755a46b1abaf1c760"
+  },
+  {
+   "path": "qa/pilot05/wave9b/rings/rings.md",
+   "bytes": 782,
+   "sha256": "73d091620f3e562a9f7aa320754778f910d9d7c63a33395287b59b2aa61387b4"
+  },
+  {
    "path": "qa/report_metrics.json",
    "bytes": 1112,
    "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
@@ -5763,8 +5788,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 11680,
-   "sha256": "c2dfc7201fb7f41279773832e17f1ec22413f22948583ca8f62f7431aedd0c20"
+   "bytes": 9754,
+   "sha256": "ccfa96bb76f993750010813b788e999e441111aa70238b2ccf1d4b12705d3c7a"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -5813,13 +5838,13 @@
   },
   {
    "path": "src/vfx/foam.ts",
-   "bytes": 59242,
-   "sha256": "45a7d4017fe352680ddc0cdbd82fb14eac772a5a3b2298c6333a9a95f4faa6e4"
+   "bytes": 55913,
+   "sha256": "063a2e34b1aa82008c0e2d5de3122d5d6421f936c0cda243154f2e17e70d49ed"
   },
   {
    "path": "src/vfx/glsl.ts",
-   "bytes": 10604,
-   "sha256": "7101488d4feb1f93141b2c477f054c5e5f1c8b294ed13e74596be6535dec0a19"
+   "bytes": 8115,
+   "sha256": "1e1a135f0aff44d43643b48c9dc438f98bf9dde76b85e59cec48420dc514ae20"
   },
   {
    "path": "src/vfx/index.ts",
@@ -5833,8 +5858,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 21882,
-   "sha256": "93f833143d531af5f51725454757ffb1d9f47042c354041446d7d0fe11e8d050"
+   "bytes": 20504,
+   "sha256": "7e06994d707eed7ecdc1f163f5525c1b4eaf41b09040223dda7930af0d4c8a6d"
   },
   {
    "path": "src/vfx/spray.ts",
@@ -5843,8 +5868,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 54330,
-   "sha256": "be4f6df62dda0c7c1397d64ca92be20e7612b847f89cbb5289d7e824dfee26eb"
+   "bytes": 49579,
+   "sha256": "b7739c084ba42e653348937f993d77067e1707610017dfc4e9370980365db873"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -5858,13 +5883,13 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 57757,
-   "sha256": "bf4fed4f9c948bfdc73ffa2eb25275a038d5303f9671de778aa5474468b408e9"
+   "bytes": 50166,
+   "sha256": "180924bc8aa50f7fdceb9fd3f60107a0a46bfb549d0fd90fbf3a88d2f662da6c"
   },
   {
    "path": "src/world/far05.ts",
-   "bytes": 25621,
-   "sha256": "d4410333dda7b6c687e54ee89e61143fbf0f8c88291195543f9d2aae3b79f940"
+   "bytes": 12690,
+   "sha256": "4340a4b81f9cb3d68c66057dc33f083149e36aa66b4436b19a7380323b5f8a7a"
   },
   {
    "path": "src/world/laundryRoom.ts",
@@ -5873,8 +5898,8 @@
   },
   {
    "path": "src/world/materials.ts",
-   "bytes": 59908,
-   "sha256": "e344eb5e6154b05154e3a41a8e77e49ff560b5928d056f8ab1afa62bbc68b2fc"
+   "bytes": 57175,
+   "sha256": "92a143cd059c2659fb99444ed2e9c64a6177a3a22b5003db877d1b188f8d4461"
   },
   {
    "path": "src/world/towel.ts",
@@ -5883,8 +5908,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 48188,
-   "sha256": "21de29c2517623fd0c92c633d93e8035accf1b7ced28478f9db366c98f794ed9"
+   "bytes": 39856,
+   "sha256": "7698afd9d871b648a8eef26026b2f49555475d89d45d672d53cf27c2e07a8f22"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",
@@ -5940,6 +5965,11 @@
    "path": "tools/model-lab.ts",
    "bytes": 4451,
    "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tools/qa/ring_fit05.py",
+   "bytes": 5246,
+   "sha256": "d1e313ae272a568d0feb182e1fbeca18a9b39cd76d293d0d275c7bcdba928b7f"
   },
   {
    "path": "tools/water-lab.html",

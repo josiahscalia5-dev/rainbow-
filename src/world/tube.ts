@@ -168,53 +168,7 @@ export interface TubeGeoOptions {
    * multiplied by oval(s) (ref 05 rings are ovals ≈1.75 wider than tall), normals follow the ellipse
    */
   oval?: (s: number) => number;
-  /**
-   * wave 9 (05 oval): flat bank floor — wall points lower than floor(s).y (height above the tube centre along
-   * `up`) are lifted onto it, blended by floor(s).w (0 = untouched circle/ellipse, 1 = flat), so the wide oval
-   * tube has a level bank between the river edge and the wall foot instead of a trench below the water line
-   */
-  floor?: (s: number) => { y: number; w: number };
-  /** wave 9 (05): lateral offset of the cross-section centre along `right` (units; OVAL05.shift) */
-  shift?: (s: number) => number;
 }
-
-/**
- * wave 9 (environment): the 05 tunnel's oval cross-section, shared with the far block (ForcedTunnel, path-camera)
- * so the seam stays continuous: lateral stretch K of the `right` component, and the level bank floor
- * `floorBelowWater` units under the water line (see TubeGeoOptions.floor), and `shift`: lateral offset (along
- * `right`, units) of the 05 tunnel centre line — ref ring #1 is centred ≈67 px and ring #2 ≈24 px LEFT of the VP
- * (a parallel offset of a straight tunnel keeps its vanishing point), which also gives the ref's broad left bank.
- */
-// QA overrides (?k05=1.3&sh05=-1): compare cross-sections from the same build without editing the constants
-export const qaNum = (key: string, d: number) => {
-  const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;
-  return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;
-};
-// wave 9b (coordinator): K = 1 (round). The "ovals" were a misreading of the approved image — each fit paired one
-// ring's SIDES with the next ring's TOP (ring A's top is hidden behind the HUD/title; the arc under the title is
-// ring B). Traced separately the rings are round: A r≈499 px centred (455,535), B r≈245 (465,455), C r≈148
-// (478,453), D r≈95 (490,460) about the VP (500,470). The oval/floor/shift code stays for QA (?k05=1.7&sh05=-1.8).
-export const OVAL05 = { K: qaNum('k05', 1), floorBelowWater: 0.18, shift: qaNum('sh05', 0) };
-/**
- * wave 9b (coordinator): the BIG 05 tunnel. On the approved image the ring ellipses A/B/C (half-axes ≈490×270,
- * 284×170, 184×102 px) are centred ≈100 / 85 / 63 px ABOVE the vanishing point: the tunnel axis runs about half a
- * vertical radius above the eye. The wave-9 lateral stretch alone (vertical radius 7.6, axis at eye level) left every
- * ring top 50–110 px too low — a flat hall. `b` = vertical semi-axis of the 05 section (0 = off: the path's own
- * radius), `hc` = height of its centre line above the water; the lateral semi-axis is OVAL05.K · b. `ringA` =
- * depth of the one real ring ahead of the 05 checkpoint eye (ref ring A); `farRings` = virtual depths of the far
- * rings B, C, … (r_px ≈ 1278 · b / depth for the locked camera).
- */
-// (tested 2026-11-16: b 10 / hc 8.6 with K 1.67 puts the ring tops right but reads as a wide saucer, not the
-// approved round tunnel → OFF by default: b = 0. QA: ?b05=10&hc05=8.6&k05=1.67&ra05=47)
-export const BIG05 = { b: qaNum('b05', 0), hc: qaNum('hc05', 8.6), ringA: qaNum('ra05', 47), farRings: [75, 125, 194, 304, 473] };
-/**
- * wave 9b: depth (ahead of the locked 05 checkpoint eye) of the big near ring = ref ring A. r_px ≈ 10000 / depth:
- * the bay slot at depth 26 drew r≈385 (25 % too small, a ring floating inside the frame); depth 20 → r≈500, its
- * sides leave the frame at y≈330 like the reference and its top passes behind the HUD.
- */
-export const RING_A05 = qaNum('ringa', 20);
-/** wave 9b: lateral offset (units along `right`) of the near round 05 tunnel about ring A, eased to 0 before the far seam */
-export const SHIFT05 = qaNum('shift', -0.6);
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
   const radial = o.radial ?? 48;
@@ -235,21 +189,16 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
     const f = path.frame(s);
     const r = path.radius(s) + (o.inset ?? 0);
     const ov = o.oval ? o.oval(s) : 1;
-    const fl = o.floor ? o.floor(s) : null;
     c.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
-    if (o.shift) c.addScaledVector(f.right, o.shift(s));
     for (let j = 0; j <= radial; j++) {
       const th = -Math.PI / 2 - arc / 2 + (j / radial) * arc; // centred on the bottom
       d.copy(f.right).multiplyScalar(Math.cos(th) * ov).addScaledVector(f.up, Math.sin(th));
       const k = i * (radial + 1) + j;
       if (ax && au) { f.tan.toArray(ax, k * 3); f.up.toArray(au, k * 3); }
-      // flat bank floor (05 oval): lift the part below the water line onto a level floor
-      const lift = fl && fl.w > 0 && Math.sin(th) * r < fl.y ? (fl.y - Math.sin(th) * r) * fl.w : 0;
-      pos[k * 3] = c.x + d.x * r + f.up.x * lift;
-      pos[k * 3 + 1] = c.y + d.y * r + f.up.y * lift;
-      pos[k * 3 + 2] = c.z + d.z * r + f.up.z * lift;
+      pos[k * 3] = c.x + d.x * r;
+      pos[k * 3 + 1] = c.y + d.y * r;
+      pos[k * 3 + 2] = c.z + d.z * r;
       if (ov !== 1) d.copy(f.right).multiplyScalar(Math.cos(th) / ov).addScaledVector(f.up, Math.sin(th)).normalize();
-      if (lift > 0) d.lerp(f.up.clone().negate(), fl!.w).normalize();
       nor[k * 3] = ns * d.x; nor[k * 3 + 1] = ns * d.y; nor[k * 3 + 2] = ns * d.z;
       uv[k * 2] = j / radial;
       uv[k * 2 + 1] = s / vScale;
@@ -347,39 +296,10 @@ export type RingOpts = {
   tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number }; band?: BandOpts;
   /** wave 8: lateral stretch (see TubeGeoOptions.oval) — the ring's local x (= ∓right) is scaled by oval(s) */
   oval?: (s: number) => number;
-  /** wave 9: band rings only — lay the band on an ellipse of aspect K (ovalBandGeometry, constant band depth) */
-  bandOval?: number;
-  /** wave 9 (05): lateral offset of the ring centre along `right` (see TubeGeoOptions.shift) */
-  shift?: (s: number) => number;
 };
 
 export function bandGeometry(b: BandOpts): THREE.BufferGeometry {
   return roundBandGeometry(b.height, b.width, b.lipHeight, b.lipWidth, b.groove, b.segments);
-}
-
-/**
- * wave 9 (05 oval): the band laid on an ellipse (local x stretched by K, y unchanged) with a CONSTANT radial
- * profile — each vertex keeps its depth below the wall along the ellipse normal — so the oval ring is not
- * thicker at its sides (an instance x-scale would make the band K× deeper there). Use with a uniform
- * instance scale (r, r, 1); withBandShading(…, oval K) spaces the bulbs evenly along the ellipse.
- */
-export function ovalBandGeometry(b: BandOpts, K: number): THREE.BufferGeometry {
-  const g = bandGeometry(b);
-  if (K === 1) return g;
-  const pos = g.attributes.position as THREE.BufferAttribute, nor = g.attributes.normal as THREE.BufferAttribute;
-  for (let i = 0; i < pos.count; i++) {
-    const x = pos.getX(i), y = pos.getY(i);
-    const rho = Math.hypot(x, y), ph = Math.atan2(y, x);
-    const cx = Math.cos(ph), sy = Math.sin(ph);
-    const nl = Math.hypot(cx / K, sy), nx = cx / K / nl, ny = sy / nl; // outward ellipse normal
-    pos.setXY(i, K * cx - nx * (1 - rho), sy - ny * (1 - rho));
-    const ax = nor.getX(i), ay = nor.getY(i);
-    const nr = ax * cx + ay * sy, nt = -ax * sy + ay * cx; // radial / tangential parts on the circle
-    nor.setXY(i, nr * nx - nt * ny, nr * ny + nt * nx);
-  }
-  pos.needsUpdate = true; nor.needsUpdate = true;
-  g.computeBoundingSphere();
-  return g;
 }
 
 /** Instanced thick gold ring ribs placed perpendicular to the tube every `spacing` units. */
@@ -400,7 +320,7 @@ export function buildRings(
 export function buildRingsAt(path: TubePath, list: number[], material: THREE.Material, opts: RingOpts = {}, spacing = 9): THREE.InstancedMesh {
   const tube = opts.tube ?? 0.075;
   const collar = opts.band ?? opts.collar;
-  const geo = opts.band ? ovalBandGeometry(opts.band, opts.bandOval ?? 1) : opts.collar ? collarGeometry(opts.collar.depth, opts.collar.lip, opts.collar.width, opts.collar.segments) : new THREE.TorusGeometry(1, tube, 14, 72);
+  const geo = opts.band ? bandGeometry(opts.band) : opts.collar ? collarGeometry(opts.collar.depth, opts.collar.lip, opts.collar.width, opts.collar.segments) : new THREE.TorusGeometry(1, tube, 14, 72);
   const n = Math.max(1, list.length) * (opts.double ? 2 : 1);
   const mesh = new THREE.InstancedMesh(geo, material, n);
   const m = new THREE.Matrix4();
@@ -414,7 +334,6 @@ export function buildRingsAt(path: TubePath, list: number[], material: THREE.Mat
       const f = path.frame(ss);
       const r = path.radius(ss) - (opts.inset ?? 0.05) + (opts.extra ?? 0);
       c.copy(f.pos).addScaledVector(f.up, path.radius(ss) - path.depth(ss));
-      if (opts.shift) c.addScaledVector(f.right, opts.shift(ss));
       // (right, up, tan) is left-handed (right = tan × up), so the quaternion below is not the intended
       // frame: band rings (05 only) use the right-handed (−right, up, tan) so their lip really sits on the
       // camera side (−z); collar/torus rings (04/06/07) keep the legacy orientation unchanged
@@ -458,11 +377,9 @@ export function buildWallLids(
      * copper-gold half-disc lid standing out of the wall — flat underside, rounded edges, a straight
      * polished rim band and a flat top, like the ref's wall-mounted nozzle lids)
      */
-    shape?: 'hood' | 'dome' | 'slab' | 'puck';
+    shape?: 'hood' | 'dome' | 'slab';
     /** wave 8: lateral stretch of the wall the lids sit on (see TubeGeoOptions.oval) */
     oval?: (s: number) => number;
-    /** wave 9: lateral offset of the wall's centre (see TubeGeoOptions.shift) */
-    shift?: (s: number) => number;
   } = {},
 ): THREE.InstancedMesh {
   const geo = wallLidGeometry(opts.shape ?? 'hood', opts.thickness ?? 0.42);
@@ -481,25 +398,17 @@ export function buildWallLids(
       const f = path.frame(s);
       const r = path.radius(s);
       tubeCenterAt(path, s, c);
-      if (opts.shift) c.addScaledVector(f.right, opts.shift(s));
       dir.copy(f.right).multiplyScalar(Math.cos(ang) * side).addScaledVector(f.up, Math.sin(ang)).normalize();
       const sz = size * Math.min(1.4, r / 7.6);
-      // oval wall (wave 9): the lid sits on the ellipse point (K·r·cos a, r·sin a) and is oriented to the ellipse's
-      // normal (angle atan2(sin a, cos a / K)), so a puck lies flat on the stretched wall
-      const ov = opts.oval ? opts.oval(s) : 1;
-      const angN = opts.oval ? Math.atan2(Math.sin(ang), Math.cos(ang) / ov) : ang;
-      const tiltI = opts.oval ? angN + (tilt - ang) : tilt;
       // in the cross-section: +X points inward (radially, then drooped toward the stream), +Y is the
       // hood's top normal, +Z runs along the tube (the D's straight edge)
-      X.copy(f.right).multiplyScalar(-Math.cos(tiltI) * side).addScaledVector(f.up, -Math.sin(tiltI)).normalize();
-      Y.copy(f.right).multiplyScalar(-Math.sin(tiltI) * side).addScaledVector(f.up, Math.cos(tiltI)).normalize();
+      X.copy(f.right).multiplyScalar(-Math.cos(tilt) * side).addScaledVector(f.up, -Math.sin(tilt)).normalize();
+      Y.copy(f.right).multiplyScalar(-Math.sin(tilt) * side).addScaledVector(f.up, Math.cos(tilt)).normalize();
       Z.crossVectors(X, Y).normalize();
       basis.makeBasis(X, Y, Z);
       q.setFromRotationMatrix(basis);
-      if (opts.oval) {
-        p.copy(c).addScaledVector(f.right, Math.cos(ang) * side * r * ov).addScaledVector(f.up, Math.sin(ang) * r);
-        p.addScaledVector(f.right, -Math.cos(angN) * side * sz * (opts.sink ?? 0.12)).addScaledVector(f.up, -Math.sin(angN) * sz * (opts.sink ?? 0.12));
-      } else p.copy(c).addScaledVector(dir, r - sz * (opts.sink ?? 0.12));
+      p.copy(c).addScaledVector(dir, r - sz * (opts.sink ?? 0.12));
+      if (opts.oval) p.addScaledVector(f.right, (opts.oval(s) - 1) * r * Math.cos(ang) * side);
       if (opts.skip?.(s, p.clone().addScaledVector(X, sz * 0.5), sz)) continue;
       m.compose(p, q, new THREE.Vector3(sz, sz, sz * (opts.stretch ?? 1.25)));
       mesh.setMatrixAt(k++, m);
@@ -511,21 +420,8 @@ export function buildWallLids(
   return mesh;
 }
 
-/**
- * Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness.
- * 'puck' (wave 9, ref 05): a FULL round half-dome puck lying on the wall — local Y is its axis (the wall's
- * inward normal, droopDeg 90 in buildWallLids), the base (y = 0) sits on the wall and a short skirt runs into it;
- * a bulging rounded rim band, a rounded shoulder and a shallow dome (top highlight). h = dome height / radius.
- */
-export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab' | 'puck', h: number, segments?: number): THREE.BufferGeometry {
-  if (shape === 'puck') {
-    const prof: [number, number][] = [
-      [0, -0.3 * h], [0.97, -0.3 * h], [0.985, -0.04 * h], [1.0, 0.0], [1.025, 0.1 * h], [1.04, 0.24 * h], [1.035, 0.38 * h],
-      [1.015, 0.5 * h], [0.975, 0.6 * h], [0.92, 0.68 * h], [0.84, 0.76 * h], [0.72, 0.85 * h], [0.56, 0.93 * h],
-      [0.38, 0.98 * h], [0.19, 1.01 * h], [0, 1.02 * h],
-    ];
-    return new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), segments ?? 40);
-  }
+/** Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness. */
+export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segments?: number): THREE.BufferGeometry {
   // bottom → top so the lathe normals face outward
   const prof: [number, number][] = shape === 'dome'
     ? [
@@ -592,16 +488,7 @@ export class ForcedTunnel {
    * draws the far bays longer than the near ones (ring radii 288,192,122,85,66,54,45 px): one ring per
    * knot reproduces that while every bay keeps its slot rows and lid pair. Without knots Z = u.
    */
-  /**
-   * wave 9 (05 oval, environment OVAL05): lateral stretch of the cross-section (the near 05 walls/rings are ovals
-   * K wider than tall) and the level bank floor (wall points below `floorY`, measured along U from the centre line,
-   * are lifted onto it), so the far section continues the near one at the seam
-   */
-  readonly aspect: number;
-  readonly floorY: number | undefined;
-  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3, shape: { aspect?: number; floorY?: number } = {}) {
-    this.aspect = shape.aspect ?? 1;
-    this.floorY = shape.floorY;
+  constructor(readonly path: TubePath, readonly sF: number, eye: THREE.Vector3, readonly L: number, readonly zEnd: number, readonly knots: [number, number][] = [], axis?: THREE.Vector3) {
     const f = path.frame(sF);
     this.c0 = tubeCenterAt(path, sF);
     // `axis`: direction of the straight run the camera looks down (the path's tangent at sF may already
@@ -684,14 +571,8 @@ export class ForcedTunnel {
       const rOpen = this.path.radius(sReal) * 1.1 + 0.4;
       for (let j = 0; j <= radial; j++) {
         const th = -1.5 * Math.PI + (j / radial) * Math.PI * 2;
-        const K = this.aspect;
-        o.copy(this.Rt).multiplyScalar(Math.cos(th) * K * r0).addScaledVector(this.U, Math.sin(th) * r0);
-        // ellipse normal; the lifted bank floor faces down (outward), as the near 05 walls (buildTubeGeometry floor)
-        d.copy(this.Rt).multiplyScalar(Math.cos(th) / K).addScaledVector(this.U, Math.sin(th)).normalize();
-        if (this.floorY !== undefined && Math.sin(th) * r0 < this.floorY) {
-          o.addScaledVector(this.U, this.floorY - Math.sin(th) * r0);
-          d.copy(this.U).negate();
-        }
+        d.copy(this.Rt).multiplyScalar(Math.cos(th)).addScaledVector(this.U, Math.sin(th));
+        o.copy(d).multiplyScalar(r0);
         this.point(Z, o, p);
         const k = i * (radial + 1) + j;
         p.toArray(pos, k * 3);
@@ -700,7 +581,7 @@ export class ForcedTunnel {
         this.T.toArray(ax, k * 3); this.U.toArray(au, k * 3);
         ext[k] = Z - z;
         // open: just outside the real (flaring) tube wall at the same depth
-        o.copy(fr.right).multiplyScalar(Math.cos(th) * K).addScaledVector(fr.up, Math.sin(th)).multiplyScalar(rOpen).add(cr);
+        o.copy(fr.right).multiplyScalar(Math.cos(th)).addScaledVector(fr.up, Math.sin(th)).multiplyScalar(rOpen).add(cr);
         o.toArray(opn, k * 3);
       }
     }
@@ -737,7 +618,7 @@ export class ForcedTunnel {
     const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);
     const ext = new Float32Array(n), opn = new Float32Array(n * 3);
     const o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
-    const w = Math.sqrt(Math.max(0, this.R * this.R - level * level)) * 0.995 * widthFrac * this.aspect;
+    const w = Math.sqrt(Math.max(0, this.R * this.R - level * level)) * 0.995 * widthFrac;
     for (let i = 0; i < rows; i++) {
       const t = i / steps;
       const Dv = 1 / (1 / this.D0 - t * (1 / this.D0 - 1 / (this.D0 + this.zEnd)));
