@@ -394,7 +394,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 5349,
-   "sha256": "5a031787af5662b801caf647fa5854cc5432b14fd4fe56ccc0f23c0cd9c317e3"
+   "sha256": "43e33ea0f38be7a2588dbbcd303845bc34e13057be285121e8565066c299c878"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -818,8 +818,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1172,
-   "sha256": "7e58a94207651404900a4c6b2e93e270f73b69c1c7013c8deed26f612ea655b4"
+   "bytes": 5144,
+   "sha256": "90b50220c7307cee034b75216523aec9ee5b9a943e8279542bfd0d570805548d"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -3245,6 +3245,31 @@
    "path": "qa/pilot05/wave7/water/ride/s194_1.png",
    "bytes": 477442,
    "sha256": "e793ebfffd639c6333ae969bcb1fb778c4ef98c399a39f3d2f03f762ac4b5a63"
+  },
+  {
+   "path": "qa/pilot05/wave8/baseline/04.png",
+   "bytes": 1009749,
+   "sha256": "94e19bf636490f6bfff75b9e22a30d237bbd825c1794ae53eaa0715c93271505"
+  },
+  {
+   "path": "qa/pilot05/wave8/baseline/05.png",
+   "bytes": 1825075,
+   "sha256": "1c2547f339dcc3b99108e7766777de6b53386ea484e1172683f6ffb44441254e"
+  },
+  {
+   "path": "qa/pilot05/wave8/baseline/06.png",
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+  },
+  {
+   "path": "qa/pilot05/wave8/baseline/07.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/pilot05/wave8/baseline/08.png",
+   "bytes": 1428957,
+   "sha256": "4c5b9d985376ce5cccac3fa0e7594b661264446dc06bc88e40d2e56d8bae40ff"
   },
   {
    "path": "qa/report_metrics.json",
