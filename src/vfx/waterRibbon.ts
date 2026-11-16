@@ -204,7 +204,14 @@ export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
  * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
  * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
  */
-export const PROJ05: boolean = q05('proj05');
+/**
+ * Screen 05 FULL REFERENCE MATCH (`?match05=1`, 2026-11-16, qa/pilot05/full_reference_match/): one master switch that turns
+ * on every Screen-05 reference-match part (proj05 water + env05 tunnel / rings / fittings + hud05 + coins05 + benny05 +
+ * splash05m + bub05 …). `on05('part')` = that part's own switch OR the master switch. Default build: all off.
+ */
+export const MATCH05: boolean = q05('match05');
+export const on05 = (key: string): boolean => q05(key) || MATCH05;
+export const PROJ05: boolean = on05('proj05');
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
