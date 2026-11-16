@@ -397,6 +397,11 @@
    "sha256": "5b69d9f52dd4c54fa2f144594d3d8955a01d4ce0f817b643eab3705257e94049"
   },
   {
+   "path": "backups/BOOTSTRAP_REPORT.md",
+   "bytes": 3583,
+   "sha256": "25fefd7297dc0fa9289f8cd1855e54b178409f19ca8236448d9d235da8e2ab2f"
+  },
+  {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
    "bytes": 33034,
    "sha256": "6faf69ae2df7f2c13f845581c210f15e6aa67fb5bcbf428e3c65dfdf40d3d57f"
@@ -404,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6782,
-   "sha256": "30e9a11f64d99db4b70888885e27a18a147a505cce3bd088bd08fb5cc55565e2"
+   "sha256": "69b845707c411f115bda8d6ac77e130b66dfc71d1d7ac6307fd7d45ec92989a1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -5683,8 +5688,8 @@
   },
   {
    "path": "scripts/claude-bootstrap.sh",
-   "bytes": 28900,
-   "sha256": "17476c415701c5526b154839cce28ef86f374f44f9d7905d525fe0f711dd5a4b"
+   "bytes": 29435,
+   "sha256": "2190070199eb3535fe41be7f794d9f813c20503d1ea1d84a55f789481c86562b"
   },
   {
    "path": "scripts/cloud-env-setup.sh",
@@ -5723,8 +5728,8 @@
   },
   {
    "path": "scripts/install-autosave-scheduler.sh",
-   "bytes": 2420,
-   "sha256": "498295609d28f2b3c8bc9c085a302b6665bcb41bea7bf6838f0c0b1b1b6737b3"
+   "bytes": 2450,
+   "sha256": "a27a9826a534d7694c398b65260af58486b98ede185476bb427646c8aa4b74ad"
   },
   {
    "path": "scripts/landmarks05.py",
@@ -5743,8 +5748,8 @@
   },
   {
    "path": "scripts/rainbow-autosave.py",
-   "bytes": 19244,
-   "sha256": "4fd988693dd58215c19ada5be75675ea050b7cda382aee601de0920323ae3bf8"
+   "bytes": 19677,
+   "sha256": "9a5f1a1971604ceefdce75ae4d7db7b2ed731aa9f1070f8b4eae3466ee80e70f"
   },
   {
    "path": "scripts/reference.sha256",
@@ -5783,8 +5788,8 @@
   },
   {
    "path": "scripts/verify-assets.py",
-   "bytes": 14198,
-   "sha256": "65a17b8690397717d4780be57ee31633efdc19c9fa2818569b17d9bd4baa0d6c"
+   "bytes": 14698,
+   "sha256": "5a82f828168c2c9fc61ddd4a56d05af268159ab65a45c3172e14de3b35782147"
   },
   {
    "path": "scripts/water-lab.mjs",

@@ -224,6 +224,12 @@ def cmd_gap(session_start: str | None) -> int:
     for ln in lines:
         print("  " + ln)
     summary = next((ln for ln in lines if ln.startswith("GAP")), lines[0] if lines else "no earlier save found")
+    if any(ln.startswith("the previous session did not") for ln in lines):
+        summary += "; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save)"
+    if gaps:
+        longest = max(gaps, key=lambda g: g[1] - g[0])
+        summary += (f"; {len(gaps)} gap(s) > 10 min in the last 72 h of the autosave log, longest "
+                    f"{longest[0]:%m-%d %H:%M}-{longest[1]:%H:%M} UTC ({(longest[1] - longest[0]).total_seconds()/3600:.1f} h)")
     return done(status, summary)
 
 

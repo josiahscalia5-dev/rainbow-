@@ -20,7 +20,8 @@
 # Paid World Labs / Marble jobs are never started (only the free credit-balance read).
 set -uo pipefail
 ORIG_ARGS=("$@")
-MODE=full; DO_RESUME=1; DO_TOOLS=1; FULL_TESTS=0; CONTINUE=0
+MODE=full; DO_RESUME=1; DO_TOOLS=1; FULL_TESTS=0; CONTINUE=0; NO_AUTOSAVE=0
+UNSHALLOW_TIMEOUT=300; FETCH_TIMEOUT=180   # the SessionStart hook uses shorter limits
 for a in "$@"; do case "$a" in
   --check) MODE=check; DO_RESUME=0; DO_TOOLS=0 ;;
   --full) FULL_TESTS=1 ;;
@@ -30,6 +31,7 @@ for a in "$@"; do case "$a" in
   --env-setup) MODE=env-setup; DO_RESUME=0 ;;
   --no-tools|--skip-tools) DO_TOOLS=0 ;;
   --skip-resume) DO_RESUME=0 ;;
+  --no-autosave) NO_AUTOSAVE=1 ;;   # tests in a throw-away clone: never install the scheduler or push
   --continue) CONTINUE=1; DO_RESUME=0 ;;
   --tools) ;;   # legacy flag of resume-newest-work.sh: tools are installed by default now
   -h|--help) sed -n '2,22p' "${BASH_SOURCE[0]}"; exit 0 ;;
@@ -130,9 +132,9 @@ merge_one() {  # ref -> 0 merged | 1 conflict (aborted) | 2 refused
 step_resume() {
   local t merged="" conflicts="" refused="" total=0 contained=0 dirty ref; t=$(now)
   if [ "$(git rev-parse --is-shallow-repository 2>/dev/null)" = true ]; then
-    timeout 300 git fetch -q --unshallow origin 2>/dev/null || true
+    timeout "$UNSHALLOW_TIMEOUT" git fetch -q --unshallow origin 2>/dev/null || true
   fi
-  if ! timeout 180 git fetch -q origin '+refs/heads/*:refs/remotes/origin/*' 2>/dev/null; then
+  if ! timeout "$FETCH_TIMEOUT" git fetch -q origin '+refs/heads/*:refs/remotes/origin/*' 2>/dev/null; then
     rec resume "Resume newest work" fail "git fetch from GitHub failed (network / GitHub connection?)" "$t"; return
   fi
   if [ "$DO_RESUME" = 1 ]; then
@@ -165,7 +167,8 @@ step_resume() {
   for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin/ | grep -E '^origin/(ccr-|claude/)'); do
     total=$((total + 1)); git merge-base --is-ancestor "$ref" HEAD 2>/dev/null && contained=$((contained + 1))
   done
-  local msg="$contained/$total remote ccr-*/claude/* branches contained in HEAD $(git rev-parse --short HEAD)"
+  local msg head; head="$(git rev-parse --short HEAD)"
+  msg="$contained/$total remote ccr-*/claude/* branches contained in HEAD $head"
   [ -n "$merged" ] && msg="$msg; merged newer work from:$merged"
   if [ -n "$conflicts" ]; then
     rec resume "Resume newest work" fail "$msg; CONFLICT (merge aborted, nothing changed):$conflicts - merge by hand keeping both sides: git merge origin/<branch>" "$t"
@@ -208,8 +211,8 @@ step_refs() {
 }
 
 step_screens() {
-  local t n; t=$(now)
-  n=$(ls references/*.png 2>/dev/null | grep -cE '/(0[1-9]|1[01])_')
+  local t n=0 f; t=$(now)
+  for f in references/0[1-9]_*.png references/1[01]_*.png; do [ -f "$f" ] && n=$((n + 1)); done
   if [ "$n" -ge 11 ] && [ -f src/main.ts ] && [ -d src ]; then
     rec screens "Game: 11 screens + code" ok "$n approved screen references 01-11, source tree src/ ($(git ls-files src | wc -l) files), Android project android/, characters assets/models/*.glb" "$t"
   else rec screens "Game: 11 screens + code" fail "expected 11 references (01-11) and src/main.ts; found $n" "$t"; fi
@@ -404,7 +407,7 @@ hook)
   if [ "$src" = startup ] || [ ! -f "$LIVE/BOOTSTRAP_REPORT.json" ]; then
     exec 8>"$LIVE/bootstrap.lock"
     if flock -n 8; then
-      : > "$RES"
+      : > "$RES"; UNSHALLOW_TIMEOUT=150; FETCH_TIMEOUT=90
       { step_identity; pycheck gap "Backup gap since last session" gap --session-start "$(session_start)"; step_resume; } > "$LIVE/bootstrap-hook.log" 2>&1
       lfs_pull 240 >> "$LIVE/bootstrap-hook.log" 2>&1
       flock -u 8; exec 8>&-
@@ -455,7 +458,8 @@ fi
 start_tool_installs
 say "2 Game files: LFS binaries, references, screens, agents, Marble"
 step_lfs
-pycheck lfs_remote "Git LFS on GitHub" lfs-remote $([ "$FULL_TESTS" = 1 ] && echo --download)
+if [ "$FULL_TESTS" = 1 ]; then pycheck lfs_remote "Git LFS on GitHub" lfs-remote --download
+else pycheck lfs_remote "Git LFS on GitHub" lfs-remote; fi
 step_refs
 step_screens
 pycheck agents "Specialist agents" agents
@@ -466,7 +470,8 @@ step_node; step_npm; step_pylibs; step_playwright; step_media_tools; step_blende
 step_claude_config
 say "4 Tests"
 step_tests
-if [ "$MODE" != check ]; then say "5 Five-minute autosave"; step_autosave
+if [ "$NO_AUTOSAVE" = 1 ]; then rec autosave "Five-minute GitHub autosave" skip "--no-autosave: scheduler not touched, nothing pushed" "$(now)"
+elif [ "$MODE" != check ]; then say "5 Five-minute autosave"; step_autosave
 else
   t=$(now); out="$(python3 -I scripts/autosave-status.py 2>&1)"; rc=$?
   rec autosave "Five-minute GitHub autosave" "$([ "$rc" = 0 ] && echo ok || echo warn)" "$(head -1 <<<"$out")" "$t"

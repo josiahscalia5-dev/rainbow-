@@ -77,8 +77,14 @@ def now_utc() -> dt.datetime:
 
 def git(*args: str, check: bool = True, timeout: int = 180) -> subprocess.CompletedProcess:
     p = subprocess.run(["git", *args], cwd=REPO, capture_output=True, text=True, timeout=timeout)
+    if p.returncode != 0 and "index.lock" in p.stderr:
+        # another git process (LFS pull, a merge, the editor) holds the index for a moment: retry once
+        time.sleep(5)
+        p = subprocess.run(["git", *args], cwd=REPO, capture_output=True, text=True, timeout=timeout)
     if check and p.returncode != 0:
-        raise RuntimeError(f"git {' '.join(args)} failed ({p.returncode}): {p.stderr.strip()[:800]}")
+        # error text FIRST so the 300-character log column shows the cause, not the argument list
+        raise RuntimeError(f"git {args[0]} failed ({p.returncode}): {p.stderr.strip()[:500]} "
+                           f"[git {' '.join(args)[:160]}]")
     return p
 
 
