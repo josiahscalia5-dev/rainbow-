@@ -388,8 +388,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 7417,
-   "sha256": "54a040cb34897b09ce83728f0e6b949d1c4c3a9a2d6b012bbcf55e601a7cf1aa"
+   "bytes": 7228,
+   "sha256": "bf3dafcb8b64ee7241ecc5b5abb3a0e9fd88298a124ae2fcbbcc67e5c71ada50"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -409,7 +409,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 6783,
-   "sha256": "290a868ff8f13cda6894d037e0114a88ee26e5e5f486f284d2e0262186a01dc9"
+   "sha256": "b21be00251c14d66f28f3989446fc60cf797c0f1bc07f6e6e682eebfc5f9ae20"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -538,8 +538,8 @@
   },
   {
    "path": "docs/vfx/water.md",
-   "bytes": 9664,
-   "sha256": "cb3d0a5b6e2f6961fb3f30582443bd6c0728d3042432977006c34782cb8fa25e"
+   "bytes": 11810,
+   "sha256": "77e5632d1f162831aeaaa7f7770b3bf60222c4c0b61733f4e3ddfd302cbdce66"
   },
   {
    "path": "docs/vfx/water_01.png",
@@ -1272,6 +1272,41 @@
    "sha256": "73fb506973a1c6e77c9e41cbfacc4396edcd055259dbad37b3eccdbb432579a0"
   },
   {
+   "path": "qa/pilot05/wave10/compare/1_APPROVED_05.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/wave10/compare/2_T2_CURRENT_05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/wave10/compare/3_BEST_WATER_it04_05.png",
+   "bytes": 1761447,
+   "sha256": "330d1548f1bd2245908efbc57baa728a085bf35afa4a40824cee4f600281a4b8"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/05_APPROVED_CURRENT_NEW.png",
+   "bytes": 5489708,
+   "sha256": "df2645e4062e3822bbfa17091545345cca5efccc9f8bb2a30caa82b207d3ed85"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/05_NEW.png",
+   "bytes": 1761447,
+   "sha256": "330d1548f1bd2245908efbc57baa728a085bf35afa4a40824cee4f600281a4b8"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/DIFF05_all_iterations.md",
+   "bytes": 2533,
+   "sha256": "45eb96b94c2fc0a299d1eea47993cdf0f818377d003ad5d880b0d4706f7eab9f"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/NOTES.md",
+   "bytes": 10594,
+   "sha256": "2cb85f78639cb115ff68752c13b200a4e219a9dfd24857bdae10eecc6464eb4b"
+  },
+  {
    "path": "qa/pilot05/wave10/water/it01/05.png",
    "bytes": 1712268,
    "sha256": "1c8cdccd602f25ae5df2bc7b955c788bfcd04c7c214adf4a23a88295f5466801"
@@ -1315,6 +1350,41 @@
    "path": "qa/pilot05/wave10/water/it04_low/05.png",
    "bytes": 1610882,
    "sha256": "1da4417cd8d7b4b83789562b25d314f13fb3ef943e6bcc8a9b114327f8d4655c"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/ride/ride_seam_s170_176_182_off_top_on_bottom.png",
+   "bytes": 1361926,
+   "sha256": "9752ab5e1785581e4b0cbce519eb3e02555be9fb383c36ddfb514f712273b719"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/ride/ride_water05_s150-194.png",
+   "bytes": 1031723,
+   "sha256": "da2050917c5f63430c6c2ea0a336d5d86938d4874047f63b74795261fd960571"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/tests/04_off_on_diffmask.png",
+   "bytes": 455966,
+   "sha256": "619ae844226570b5c2cf8b7ff6dc238a198b3f3e9f2cae8c09ff48a19276e366"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/tests/continuity_stdout.txt",
+   "bytes": 754,
+   "sha256": "286f9e0be5408996f82a80444f7a14e63592eaeca77c55f3b8970bc4aa155697"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/tests/gameplay_default_stdout.txt",
+   "bytes": 468,
+   "sha256": "52b271a1958dc12a4be09c310103f9c2b4abf1cba9fc98a58fad3cae2cdb3f69"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/tests/gameplay_test_water05.json",
+   "bytes": 14632,
+   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/pilot05/wave10/water/tests/gameplay_water05_stdout.txt",
+   "bytes": 468,
+   "sha256": "52b271a1958dc12a4be09c310103f9c2b4abf1cba9fc98a58fad3cae2cdb3f69"
   },
   {
    "path": "qa/pilot05/wave3/benny/it00/05.png",

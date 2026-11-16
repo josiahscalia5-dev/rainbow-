@@ -121,3 +121,28 @@ pink/purple ball for Benny's scale and ride height only.
 * Foam puffs are smooth spheres; the references' foam is finer, cloudier soap lather.
 * Colours are tuned for NeutralToneMapping at exposure ≈1.0; changing tone mapping/exposure in the
   game will shift saturation.
+
+## Screen 05 test W10 (`?water05=1`, wave 10, not the default)
+
+One URL switch, read once at module load by `WATER05` in `src/vfx/waterRibbon.ts` (false in vite-node / without
+`location`). Off, every program and attribute is the previous one (`#ifdef WATER05` / `+ 0`), so the default build
+is pixel-identical. On, only Screen 05 changes (04 differs only inside the drum-exit opening where the 05 water is
+visible; 06/07 identical):
+
+* Ribbon 05 block (`FRAG`, `sw = 1`): colours sampled from the approved image and solved through exposure 0.86 →
+  Neutral → sRGB → grade (`W5_*` consts). Electric cyan with R ≈ 0 and aqua (G ≈ B) highlights; each band is a
+  hot-pink satin ribbon ramping to violet → periwinkle → blue into the core and to deep blue-violet toward the bank
+  (`tb` = band coordinate, −1 bank edge … +1 core edge). `brush05()` = flow-aligned anisotropic value noise
+  (3 octaves, 2 in LOW_Q, each faded before its cells drop under ≈4–8 px; finer octaves drift faster) giving
+  brushed lanes, soft highlight lanes and crisp lens-shaped white-aqua / white-pink streak cores. Same-hue Fresnel
+  only (a whitish Fresnel turned the river pastel). Near field: ∩-bowed travelling swells with aqua-white crest
+  arcs and `bolt05()` jagged lightning flares placed on the crest rows (derivatives before any early-out).
+* `coreShiftW10()` (CPU, `aCore` attribute and the far-block mirror): holds the visible core near the tunnel
+  line across the 05 exit bend (s 171–189) so it no longer jogs ≈70 px right in 18 rows at the seam. Coins are not
+  moved.
+* Far block (`far05.ts` `designW10`, `materials.ts` `farRiverMaterial`): body over the whole floor chord, the two
+  bands beside the winding core (`FAR05_CORE_W10`), same palette/ramp, purple-violet outer water, a narrow bubbly
+  foam rim instead of the flat lavender sheet behind the seam.
+* 05 splash (`riderSplash.ts` VERT5): thinner, slightly longer rope threads in a wider fan.
+Cost: 05 still 86 draw calls / 567,415 tris (low 425,525); the old 5-octave streak field is skipped under the
+switch. Evidence and numbers: `qa/pilot05/wave10/water/NOTES.md`.

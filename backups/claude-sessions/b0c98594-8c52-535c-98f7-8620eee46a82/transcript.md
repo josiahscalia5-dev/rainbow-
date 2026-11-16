@@ -4559,3 +4559,141 @@ Separately, your rideable river also sits further left near its end (depth 40–
 
 **Saved and verified on GitHub:** branch `ccr-251ed97c-ty2xvp`, commit `63962a631dab95734816fc112cec38e9f4da76c3`; GitHub matches the local copy, nothing uncommitted. The five-minute autosave keeps saving everything, including the specialist's work in progress and the Marble files.
 
+### 🧑 User — 2026-11-16T12:26:03.962Z
+
+<system-reminder>
+<tools-used-before-summary>Grep</tools-used-before-summary>
+</system-reminder>
+
+### 🧑 User — 2026-11-16T12:26:03.962Z
+
+<task-notification>
+<task-id>a7495236882471786</task-id>
+<tool-use-id>toolu_01MDcogmXzCzhBEmxT8kFt7E</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/tasks/a7495236882471786.output</output-file>
+<status>completed</status>
+<summary>Agent "Screen 05 water look test" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I've put all the Screen 05 water changes behind `?water05=1`. After four iterations the best one (it04) looks closer in the far river and in the water behind Benny. The middle of the river is only somewhat closer, so I would not call the whole picture clearly closer; it needs your yes/no at full size. The default game is unchanged: a fresh capture matches `qa/pilot05/current_default_05.png` exactly, HUD included.
+
+**What changed (switch on, Screen 05 only)**
+- **Colours:** taken from the approved image. The cyan is electric instead of pastel. Each pink band now fades through violet and periwinkle into the cyan, and the pink is hotter.
+- **Texture:** streaks run along the flow, with white-aqua and white-pink highlights. The faint whitish sheen that made the river look pastel is gone.
+- **Behind Benny:** the old fanning rays, small stars and flat white pills are replaced by curved highlight arcs with jagged lightning flares on them.
+- **Far river:** it now runs as one banded channel into the golden light, with no blob at the far end.
+  - The river centre used to jump right just before the far section. It is now held steady there. Coins are not moved.
+  - The far water spans the whole tunnel floor, with the pink bands beside the centre and dark purple water toward the banks.
+  - The flat pale wedge on the left of the far river is now dark water with a thin foam edge.
+- **Splash:** thinner, longer water threads in a wider fan, instead of the two white "wings".
+
+**Measured (approved / current / new)** — rough colour shares from `diff05.py`, not a fidelity score:
+
+| Area | Measure | Approved | Current | New |
+|---|---|---|---|---|
+| Middle river | cyan % | 23.3 | 38.7 | 29.0 |
+| Middle river | pink % | 20.4 | 25.2 | 22.3 |
+| Middle river | white % | 9.3 | 8.1 | 8.8 |
+| Middle river | saturation | 0.68 | 0.66 | 0.60 (worse) |
+| Behind Benny | cyan % | 32.1 | 49.1 | 47.5 |
+| Behind Benny | white % | 8.1 | 10.3 | 9.7 |
+| Behind Benny | saturation | 0.72 | 0.69 | 0.67 (worse) |
+| S-swing (px) | far | 231 | 192 | 219 |
+| S-swing (px) | middle | 360 | 271 | 310 |
+| S-swing (px) | near | 436 | 378 | 298 |
+
+The near S-swing number is unreliable: it moved 337 → 417 → 298 between iterations without any change to the band paths.
+
+Cost is unchanged at 86 draw calls and 567,415 triangles.
+
+**Tests**
+- With the switch on, 06 and 07 are identical. 04 differs only inside the tube opening where the 05 water shows; with bloom on there are also 1–2-level changes around it.
+- Low quality compiles with no errors. A ride from 150 to 194 into 06 is continuous.
+- `npx tsc --noEmit` and `test:continuity` both pass.
+- `gameplay-test.mjs` on the default build: 8/8, plunge drop 61.41.
+- `gameplay-test.mjs` takes no query parameters, so I ran a scratch copy with `water05=1` added: 8/8, plunge 61.41.
+
+**Still missing**
+- The middle bands are still wider and carry fewer bright streaks than the approved ones.
+- The approved far river is wider than our whole tunnel floor there; that is tunnel geometry, not water.
+- One far coin sits off the cyan centre.
+- The far river does not animate yet; that needs a clock hook in `environment.ts`, which I left alone.
+- The flares are smaller than the approved ones, and the splash has fewer droplets and less froth.
+- Low quality shows no flares at all with the switch on.
+
+**Files** (in `/home/user/rainbow-/`)
+- Code: `src/vfx/waterRibbon.ts`, `src/world/far05.ts`, `src/world/materials.ts`, `src/vfx/riderSplash.ts`
+- Docs: `docs/vfx/water.md` (new "Screen 05 test W10" section)
+- `qa/pilot05/wave10/water/NOTES.md`
+- `qa/pilot05/wave10/water/05_NEW.png`
+- `qa/pilot05/wave10/water/05_APPROVED_CURRENT_NEW.png`
+- `qa/pilot05/wave10/water/DIFF05_all_iterations.md`
+- `qa/pilot05/wave10/water/it01/` to `it04/`, `it04_low/`, `ride/`, `tests/`</result>
+<usage><subagent_tokens>449442</subagent_tokens><tool_uses>169</tool_uses><duration_ms>2472415</duration_ms></usage>
+</task-notification>
+
+### 🤖 Claude — 2026-11-16T12:26:10.232Z
+
+The water specialist has finished. Before showing you anything, I'll check its result myself. First: is the default game still unchanged, does gameplay pass, and how does its best version (it04) look beside your approved image?
+
+### 🤖 Claude — 2026-11-16T12:26:15.295Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w10; rm -rf $S; mkdir -p $S; npx tsc --noEmit && echo TSC_OK; timeout 600 node scripts/capture.mjs 05 --out=$S/def > /dev/null 2>&1; timeout 600 node scripts/capture.mjs 05 --out=$S/new --q=water05=1 > /dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -I - \"$S\" <<'PY'\nimport sys, numpy as np\nfrom PIL import Image, ImageChops\nS = sys.argv[1]\ndef d(a, b): return np.asarray(ImageChops.difference(Image.open(a).convert(\"RGB\"), Image.open(b).convert(\"RGB\")) …[+717 chars]`
+
+### 🧑 User — 2026-11-16T12:27:05.429Z
+
+> ↩︎ result: TSC_OK
+> default vs current_default: 3D scene max 0 | HUD max 0
+> my water05=1 capture vs specialist 05_NEW: max 0
+> gameplay (default) pass: True plunge 61.41 errors []
+>  M docs/vfx/water.md
+> ?? qa/pilot05/wave10/water/05_APPROVED_CURRENT_NEW.png
+> ?? qa/pilot05/wave10/water/05_NEW.png
+> ?? qa/pilot05/wave10/water/DIFF05_all_iterations.md
+> ?? qa/pilot05/wave10/water/NOTES.md
+
+### 🤖 Claude — 2026-11-16T12:27:15.223Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w10; python3 -I -c \"\nfrom PIL import Image, ImageDraw\nlabs=[('APPROVED','references/05_flow_into_the_current.png'),('T2 CURRENT','qa/pilot05/current_default_05.png'),('WATER it04','qa/pilot05/wave10/water/05_NEW.png')]\nims=[Image.open(p).convert('RGB').resize((864,1536)).resize((480,853)) for _,p in labs]\no=Image.new('RGB',(490*3,877),(15,15,20)); d=ImageDraw.Draw(o)\nfor i,(im,(l,_)) in enumerate(zip(ims,labs)): o.paste(im,(i*490,24)); d.text((i*490+4,6),l,fill=(255,25 …[+115 chars]`
+
+### 🧑 User — 2026-11-16T12:27:15.534Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T12:27:16.119Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b0c98594-8c52-535c-98f7-8620eee46a82/scratchpad/w10/three.jpg"}`
+
+### 🧑 User — 2026-11-16T12:27:16.233Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T12:27:30.894Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; D=qa/pilot05/wave10/compare; mkdir -p $D; cp references/05_flow_into_the_current.png $D/1_APPROVED_05.png; cp qa/pilot05/current_default_05.png $D/2_T2_CURRENT_05.png; cp qa/pilot05/wave10/water/05_NEW.png $D/3_BEST_WATER_it04_05.png; python3 -I -c \"\nfrom PIL import Image\nfor f in ('1_APPROVED_05','2_T2_CURRENT_05','3_BEST_WATER_it04_05'):\n    print(f, Image.open('$D/'+f+'.png').size)\"; cmp -s $D/1_APPROVED_05.png references/05_flow_into_the_current.png && echo \"approved copy byte-identical\"", "description": "Prepare the three separate full-size pict …[+6 chars]`
+
+### 🧑 User — 2026-11-16T12:27:31.019Z
+
+> ↩︎ result: 1_APPROVED_05 (864, 1536)
+> 2_T2_CURRENT_05 (864, 1536)
+> 3_BEST_WATER_it04_05 (864, 1536)
+> approved copy byte-identical
+
+### 🤖 Claude — 2026-11-16T12:27:32.599Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/pilot05/wave10/compare/1_APPROVED_05.png", "qa/pilot05/wave10/compare/2_T2_CURRENT_05.png", "qa/pilot05/wave10/compare/3_BEST_WATER_it04_05.png"], "caption": "Full size 864×1536, no grid: 1 APPROVED, 2 T2 CURRENT (the game now), 3 BEST WATER (iteration 4, ?water05=1; real playable 3D game).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-16T12:27:33.279Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/wave10/compare/1_APPROVED_05.png → file_uuid: 3a1c8e78-c14e-4803-afd5-470bbe4ef4fb
+>   /home/user/rainbow-/qa/pilot05/wave10/compare/2_T2_CURRENT_05.png → file_uuid: ca398ecc-4243-4cd5-93f3-356332b601cd
+>   /home/user/rainbow-/qa/pilot05/wave10/compare/3_BEST_WATER_it04_05.png → file_uuid: 76860dc7-c0f2-4376-8e49-3b60b8a605da
+
+### 🤖 Claude — 2026-11-16T12:27:51.476Z
+
+Sent. Before the next step I'll do a checkpoint save, and update the roster: the water specialist is done, and its result is the `?water05=1` candidate.
+
+### 🤖 Claude — 2026-11-16T12:27:57.027Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I - <<'PY'\nimport json\np = \"backups/AGENTS_STATUS.json\"; d = json.load(open(p))\nd[\"updated_utc\"] = \"2026-11-16T12:45:00+00:00\"; d[\"running_now\"] = []\nfor a in d[\"agents\"]:\n    if a[\"name\"] == \"water-fx-specialist\":\n        a[\"state\"] = \"idle\"\n        a[\"last_wave\"] = \"wave 10 DONE (it04 kept behind ?water05=1; candidate waiting for the user's yes/no)\"\n        a[\"unfinished_work\"] = \"qa/pilot05/wave10/water/NOTES.md -> 'Left undone' (mid bands wider/fewer streaks, far coin off-centre, far river not animated, flares s …[+912 chars]`
+
