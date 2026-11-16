@@ -778,17 +778,19 @@ void main() {
     cy = mix(cy, W5_CBRIGHT, smoothstep(0.5, 0.76, h5) * 0.85);
     cy = mix(cy, W5_CAQUA, bglow * 0.55);
     cy = mix(cy, W5_CAQUAW, bcore * 0.85);
-    cy += vec3(0.6, 0.9, 0.9) * bcore * bcore * 0.6;
+    cy += vec3(0.9, 1.1, 1.1) * bcore * bcore * 0.9;   // (it04) whiter streak cores
     // near field: thick glossy swells rolling past Benny, bowed around his track (approved: ∩ highlight arcs
     // ≈60–100 px apart behind him), bright glossy cyan body, crisp aqua-white crest lines broken into segments
-    float crestN = 0.0;
+    float crestN = 0.0, phN = 0.0;
     if (near5 > 0.0) {
       float dlN = lat - uBenny.y;
       // (it03) stronger ∩ bow (approved arcs drop ≈40–60 px over ±250 px), less random warp, deeper troughs, the
       // bright tier only on the crest side of each swell (approved near ladder p5 #0087E2, p50 #01A5FA, p75 #03C0FC)
       float ph = v5 * 12.0 + 9.0 * dlN * dlN / (1.0 + 0.25 * back) + 0.9 * vnoise(vec2(dlN * 0.9 + 3.0, v5 * 0.6));
+      phN = ph;
       float sv = 0.5 + 0.5 * sin(ph);
-      vec3 nb = mix(W5_CDEEP, W5_CDEEP2, smoothstep(0.0, 0.25, sv));
+      // (it04) softer troughs (it03 read as regular stripes)
+      vec3 nb = mix(mix(W5_CDEEP, W5_CDEEP2, 0.5), W5_CDEEP2, smoothstep(0.0, 0.25, sv));
       nb = mix(nb, W5_CMID, smoothstep(0.25, 0.6, sv));
       nb = mix(nb, W5_CBRIGHT, smoothstep(0.7, 1.0, sv) * 0.8);
       float seg = smoothstep(0.3, 0.58, vnoise(vec2(dlN * 1.4 + 9.0, v5 * 1.3)));
@@ -811,6 +813,7 @@ void main() {
     float pc = clamp(bcore + (sweep ? B5.z * 0.5 : 0.0), 0.0, 1.0);
     pk = mix(pk, W5_PPALE, pc * 0.75);
     pk = mix(pk, W5_PWHITE, pc * pc * 0.85);
+    pk += vec3(0.9, 0.6, 0.9) * pc * pc * pc * 0.6;   // (it04) white-pink streak cores burn brighter
     pk = mix(pk, W5_PDEEP, smoothstep(-0.2, -0.85, tb) * 0.35);
     // hue ramp across each band edge (approved: pink -> violet -> periwinkle -> blue -> cyan over ≈40 px)
     vec3 c5;
@@ -842,14 +845,17 @@ void main() {
     c5 += glintC * gl5 * (smoothstep(0.6, 0.92, H5) * 0.5 + bcore * 0.6);
     #ifndef LOW_Q
     // long glossy flares carried by the current (approved mid field: elongated white star streaks along the flow)
-    float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.8, 30.0, 4.6, 0.0, uTime);
-    flA = max(flA, 0.75 * flowGlint(vec2(X * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.5, 16.0, 4.2, 0.0, uTime + 1.9));
+    float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.85, 34.0, 4.8, 0.0, uTime);
+    flA = max(flA, 0.85 * flowGlint(vec2(X * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.6, 18.0, 4.4, 0.0, uTime + 1.9));
     // near: big flares lying across the flow on the swell crests + lens flares (white core, aqua glow)
     float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.8, 56.0, 5.0, 0.85, uTime + 2.7);
     // (it03) jagged lightning flares replace the flat lens pills (two cell sets so they never line up)
-    vec2 bz = bolt05(vec2(X * 1.3, v5 * 1.15 + 0.5 * sin(X * 3.1 + 0.4)), 0.55, 62.0, 5.5, 4.17);
-    vec2 bz2 = bolt05(vec2(X * 2.3 + 0.41, v5 * 2.0 + 0.7 * sin(X * 4.7 + 2.2)), 0.35, 34.0, 3.5, 9.31);
-    bz = max(bz, bz2 * 0.85);
+    // (it04) one row of cells per swell crest (cell centre on the crest line) so the flares sit ON the ∩ arcs
+    // like the approved, smaller cells across (it03 drew only ≈2 bolts in the near field)
+    float gC = (phN - 0.571) / 6.2832 + 0.5;
+    vec2 bz = bolt05(vec2(X * 2.4 + 0.3 * sin(gC * 2.1), gC), 0.7, 64.0, 6.5, 4.17);
+    vec2 bz2 = bolt05(vec2(X * 1.1 + 0.41, v5 * 2.0 + 0.7 * sin(X * 4.7 + 2.2)), 0.3, 40.0, 4.0, 9.31);
+    bz = max(bz, bz2 * 0.8);
     float boltN = near5 * (1.0 - pk5);
     c5 = mix(c5, W5_CAQUA, clamp(bz.y * 0.55, 0.0, 1.0) * boltN);
     c5 += vec3(2.0, 2.3, 2.4) * bz.x * boltN;

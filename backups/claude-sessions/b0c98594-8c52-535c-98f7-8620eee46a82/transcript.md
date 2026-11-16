@@ -4294,3 +4294,43 @@ The water specialist hasn't reported back yet, so it's still working. I can see 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; flock -w 120 backups/.autosave.lock -c true; python3 scripts/rainbow-autosave.py --reason manual:user-save-request 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"error\"'; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-251ed97c-ty2xvp | cut -f1); echo \"local  $L\"; echo \"remote $R\"; [ \"$L\" = \"$R\" ] && echo \"REMOTE == LOCAL\"; echo \"uncommitted: $(git status --short | wc -l)\"; python3 -I scripts/autosave-status.py | head -1; python3 -I scripts/verify-assets.py lfs-remote | tail -1", "description": "Verified save of ev …[+46 chars]`
 
+### 🧑 User — 2026-11-16T12:17:03.025Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "2f8cc4e25881f087884cf2f3e0ee231b1aa79aab",
+> local  2f8cc4e25881f087884cf2f3e0ee231b1aa79aab
+> remote 2f8cc4e25881f087884cf2f3e0ee231b1aa79aab
+> REMOTE == LOCAL
+> uncommitted: 0
+> AUTOSAVE OK | branch ccr-251ed97c-ty2xvp | scheduler daemon | last verified backup 2026-11-16T12:16:52+00:00 (0.1 min ago) | local 2f8cc4e remote 2f8cc4e (match) | uncommitted 0
+> @@ ok 24/24 LFS objects (184 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+
+### 🤖 Claude — 2026-11-16T12:17:09.000Z
+
+The water specialist is on iteration 3 of its 4 and still running. So far it's a modest improvement, not yet close to your approved image. Everything is saved to GitHub.
+
+**Better so far:**
+- The water shows flowing lines along the current instead of grainy sparkle.
+- The pink bands are a bit narrower and follow the flow more.
+- The water nearest the camera is a smoother, glossier cyan.
+- Measured in the middle of the river: cyan coverage went from 38.7 % to 30.5 % (your image: 23.3 %), and pink from 25.2 % to 22.6 % (yours: 20.4 %).
+
+**Still clearly different from your image:**
+- Your cyan is more brilliant, with strong white glints.
+- Your pink ribbons sweep in full S-curves.
+- The far river still bends right into a blob instead of winding into the golden light, and the numbers there have barely moved.
+
+All of this is behind a switch, so the game itself is unchanged. When the specialist finishes, I'll check its result myself and show you the real game at full size beside your approved image. I'll keep it only if it genuinely looks closer.
+
+**Saved to GitHub:**
+- Branch `ccr-251ed97c-ty2xvp`, commit `2f8cc4e25881f087884cf2f3e0ee231b1aa79aab`.
+- The GitHub copy matches the local copy exactly, with nothing uncommitted. That includes the specialist's unfinished code and its three test pictures.
+- All 24 large files (models, the Marble worlds) are confirmed on GitHub.
+- The five-minute autosave is running.
+
+### 🧑 User — 2026-11-16T12:17:10.245Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

@@ -136,8 +136,8 @@ export const FAR05_CORE_W10: [number, number][] = [
 function designW10(Z: number, chord: number): FarRiverRow {
   const hw = chord - 0.35;
   const core = Math.max(-hw + 1.2, Math.min(hw - 1.2, hermite(FAR05_CORE_W10, Z)));
-  const sep = 3.4 - 0.8 * smoothstep(60, 260, Z);
-  const w = 0.62 - 0.22 * smoothstep(40, 250, Z);
+  const sep = 3.9 - 0.9 * smoothstep(60, 260, Z);
+  const w = 0.85 - 0.3 * smoothstep(40, 250, Z);
   const cL = Math.max(-hw + w + 0.3, core - sep), cR = Math.min(hw - w - 0.3, core + sep);
   return { xB: 0, hw, cL, wL: w, cR, wR: w, core };
 }

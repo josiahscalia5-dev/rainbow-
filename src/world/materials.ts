@@ -938,7 +938,8 @@ float rivCells(vec2 p) {
   vec3 cy = mix(C_DEEP2, C_MID, smoothstep(0.1, 0.45, h5));
   cy = mix(cy, C_BRIGHT, smoothstep(0.5, 0.78, h5) * 0.85);
   cy = mix(cy, C_AQUAW, bco * 0.8);
-  vec3 ow = mix(O_DEEP * 0.82, O_BLUE, smoothstep(0.3, 0.75, h5));
+  // (it04) the approved far outer water is darker purple-violet (#7A2AD8 … #9837C3), not periwinkle
+  vec3 ow = mix(vec3(0.232, 0.099, 0.521), mix(V_OUT, O_BLUE, 0.4), smoothstep(0.3, 0.75, h5));
   vec3 pk = mix(P_DEEP, P_BODY, smoothstep(0.1, 0.45, h5));
   pk = mix(pk, P_LIGHT, exp(-pow((tb - 0.45) / 0.2, 2.0)) * 0.35);
   pk = mix(pk, P_PALE, bco * 0.75);
@@ -956,7 +957,7 @@ float rivCells(vec2 p) {
   }
   // (it03) beyond the bank the floor reads as deep violet water, not as a flat pale foam sheet (the lavender wedge
   // left of the seam); only a narrow bubbly foam rim (puff cells ≥ ≈6 px, lavender / blue shading) lines each bank
-  col = mix(col, O_DEEP * 0.6 + V_OUT * 0.25, smoothstep(0.15, 0.6, e));
+  col = mix(col, vec3(0.2, 0.08, 0.45), smoothstep(0.15, 0.6, e));
   float foamIn = smoothstep(-0.42, -0.12, e + bankN) * (1.0 - smoothstep(0.25, 0.55, e + bankN));
   if (foamIn > 0.0) {
     float c = rivCells(vec2(lat * 2.4, s * 0.9 + lat * 0.7));
