@@ -664,7 +664,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11052,
-   "sha256": "1130ad963ef30e056a3b79c64f2ca2e95d61dd24e3728850ab9045f03ca50cae"
+   "sha256": "baf052529dfd6ef9e027414eb24060d3bb143de16afca0128c80d6b171eb4f50"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1412,6 +1412,11 @@
    "sha256": "6b49c2bf9d237c346a206b7a8476e9481eb817424383ff89a24ecbe5df29c110"
   },
   {
+   "path": "qa/match/06/STATUS.md",
+   "bytes": 2188,
+   "sha256": "9a4e836ab72bdebfcb875afb6d6438350c9c9851bb66ccf89f260043c4ea0245"
+  },
+  {
    "path": "qa/match/06/gameplay_test_match06.json",
    "bytes": 14468,
    "sha256": "bb2d0f13f19ceb88c8937a05c0f7bd445e58ca573d8806222af11934d6b98a16"
@@ -1533,8 +1538,8 @@
   },
   {
    "path": "qa/match/06/proofs_r3.json",
-   "bytes": 621,
-   "sha256": "da32ba8c5d9dda824add2605419a905cc13b8872a84e9b3744ab27fc74c7c3c5"
+   "bytes": 991,
+   "sha256": "45532389bf0b63694a98bb27608204d9618f436d00964adb8a13b7365f3682fc"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",

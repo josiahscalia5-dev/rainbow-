@@ -1379,3 +1379,44 @@ HUD-bar-only noise (rows 21–104, max 6 levels); a repeat capture is 0 px full 
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/NOTES.md (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-17T17:48:28.951Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/SHARED_CHANGES.md", "content": "# Screen 06 — edits in SHARED files (all run ONLY under `?match06=1` / `matchall`; off = no change)\n\nDiff: `git diff 752d6d8..HEAD -- src/game src/world/course.ts src/gameplay` (line A base `752d6d8`). Round 3 changed no\nshared file (only `src/world/match06.ts` + `assets/textures/match06/`, `tools/match06/`, `qa/match/06/`).\n\n| file | what | guard |\n|---|---|---|\n| `src/game/match.ts` | ONE `MATCH_CAM['06']` line: `fov 62, roll 0, off06, dir06` (locked approved camera) | only read when `MATCH['06']` |\n| `src …[+1198 chars]`
+
+### 🧑 User — 2026-11-17T17:48:28.971Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/SHARED_CHANGES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T17:48:37.703Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/STATUS.md", "content": "# Screen 06 — STATUS (round 3, 2026-11-17)\n\n* **Assigned screen:** 06 · CREST THE RINSE ARCH (`references/06_crest_the_rinse_arch.png`)\n* **Assigned specialist:** Screen 06 workstream session (Screen 08 method; no project subagent launched this round)\n* **Working branch:** `claude/rainbow-s06-match-c3` — started from `581129e97eccfed7731365d9aaa13173a3bfaaf6`\n  (= `claude/rainbow-s06-match-c2` @ `2570f3ac` + one autosave), recorded before any change; `-c2` had no newer commits.\n* **Running-session status:** milestone  …[+1672 chars]`
+
+### 🧑 User — 2026-11-17T17:48:37.728Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/STATUS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T17:48:43.396Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='qa/match/06/proofs_r3.json'; d=json.load(open(p))\nd['default_06_repeat']=\"repeat single captures at HEAD after round-3 changes: 0 px full frame vs step-1 HEAD capture; one batch run (05 06 07 08) differed by 27 px in the HUD bar only (rows 21-104, <= 6 levels) = capture noise\"\nd['gameplay']=\"8/8, 91 coins / 2,240 default and with match06=1\"\nd['continuity']=\"npm run test:continuity unchanged (gaps 0)\"\nd['tsc']=\"clean\"\njson.dump(d,open(p,'w'),indent=1)\nEOF\ngit checkout -q -- qa/capture_log_1080x1920.json; git add qa/match/06 && gi …[+476 chars]`
+
+### 🧑 User — 2026-11-17T17:48:46.003Z
+
+> ↩︎ result: f0b10a4c756097908f16438215b69e46182e1ccc	refs/heads/claude/rainbow-s06-match-c3
+> f0b10a4c756097908f16438215b69e46182e1ccc
+
+### 🤖 Claude — 2026-11-17T17:48:47.137Z
+
+Notes committed. Waiting for the APK build to finish.
+
+### 🤖 Claude — 2026-11-17T17:48:48.892Z
+
+> 🔧 **Bash** `{"command": "sleep 1; cat /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/tasks/bccrn1zw6.output; tail -2 /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/apk.log", "description": "Check APK build progress"}`
+
+### 🧑 User — 2026-11-17T17:48:49.924Z
+
+> ↩︎ result: Starting a Gradle Daemon (subsequent builds will be faster)
+
+### 🤖 Claude — 2026-11-17T17:48:51.979Z
+
+Round 3 work is done and pushed. The Android APK is still building; I'll copy it into `builds/` and send the lead my status once the build finishes.
+
