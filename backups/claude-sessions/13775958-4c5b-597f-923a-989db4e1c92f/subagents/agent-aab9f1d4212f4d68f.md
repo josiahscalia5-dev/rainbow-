@@ -2344,3 +2344,61 @@ Let me write a camera-trace tool to measure the 08 settle and the 03→04 / 06 c
 > 16.8 03 66.2 lat 2.871 cam r 7.10 y -10.61 above-funnel 4.15 | benny r 1.46 y -16.32 above 4.33 fwd [-0.2932, -0.6588, -0.6928]
 > 16.9 03 67.2 lat 2.777 cam r 6.31 y -10.75 above-funnel 4.78 | ben …[+2758 chars]
 
+### 🤖 Claude — 2026-11-17T15:58:07.753Z
+
+> 🔧 **Bash** `{"command": "ls screenshots/ | head -20; python3 -c \"\nimport json; d=json.load(open('qa/gameplay_video/scan/match08/probe.json'))\nfor r in d['rows']:\n  if 27<=r['t']<=32.5: print(r['t'], r['s'], r['lat'], r['cam'])\"", "description": "List screenshots; print 06 camera positions"}`
+
+### 🧑 User — 2026-11-17T15:58:07.818Z
+
+> ↩︎ result: 01.png
+> 02.png
+> 03.png
+> 04.png
+> 05.png
+> 06.png
+> 07.png
+> 08.png
+> 09.png
+> 10.png
+> 1080x1920
+> 11.png
+> 27 187.303 0 [3.25, -40.43, -120.91]
+> 27.5 192.803 0 [2.2, -40.9, -126.6]
+> 28 198.303 0 [1.55, -39.83, -131.41]
+> 28.5 203.803 0 [0.34, -36.66, -135.32]
+> 29 209.303 0 [-0.28, -33.41, -139.77]
+> 29.5 214.803 0 [-1.23, -30.65, -145.01]
+> 30 220.303 0 [-1.52, -29.84, -150.85]
+> 30.5 225.803 0 [-0.1, -31.57, -156.4]
+> 31 231.303 0 [2.57, -35.03, -160.43]
+> 31.5 236.803 0 [4.74, -38.82, -163.85]
+> 32 242.304 0 [6.78, -42.11, -167.37]
+> 32.5 247.94 0 [9.03, -43.98, -170.76]
+
+### 🤖 Claude — 2026-11-17T15:58:09.656Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/screenshots/06.png"}`
+
+### 🧑 User — 2026-11-17T15:58:09.705Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:58:52.859Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/camClear.ts", "offset": 1, "limit": 20}`
+
+### 🧑 User — 2026-11-17T15:58:52.877Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?camclear=1` (also on under `?matchall=1`; OFF by default) — keep the ride view clear (user's Android gameplay
+> 3	 * recording, 2026-11-17, qa/gameplay_video/NOTES.md). Nothing in the scenery moves or changes colour; only what would
+> 4	 * block the view while riding is made see-through:
+> 5	 *  1. Benny cut-out: fragments of the "prop" occluders (gold rings, lids/hoods, gold torus lips and rims, foam banks)
+> 6	 *     that lie IN FRONT of Benny and inside his on-screen ellipse are dithered away, so a ring band or foam bank that
+> 7	 *     passes between the camera and Benny never hides him (06 rinse-arch rings, 07 plunge rings, 03/04 foam banks).
+> 8	 *  2. Lens clearance: the same occluders fade out (screen-door dither) within ~1.5 u of the camera, so the camera never
+> 9	 *     shows a frame-filling slice of a ring or a foam bank it passes through (06 / 07 full-frame gold, 03 / 04 sheets).
+> 10	 *  Walls, floors, water, the 05 near frame, the Screen 08 projection, Benny and coins are never touched, and both
+> 11	 *  effects only run in the ride (03–10), so the cinematics and the locked 05 / 08 views are unchanged (verified 0 px).
+> 12	 * Cost: one shared uniform block, one varying, ~12 …[+337 chars]
+

@@ -2258,3 +2258,23 @@ Fix the key path (report nests classes).
 > src/game/match.ts:15:const ALL = flag05('matchall');
 > src/gameplay/coins.ts:55:  const m08 = flag05('match08') || flag05('matchall');
 
+### 🤖 Claude — 2026-11-17T15:58:06.482Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/src/characters/benny/benny05.ts", "old_string": "/**\n * `?bake08=1` (2026-11-17, qa/match/08/benny08/NOTES.md): the maps RE-BAKED FROM THE APPROVED SCREEN 08 picture at the\n * locked 08 camera (assets/textures/benny08/: texels the 08 picture shows take its colours, every other texel keeps the\n * benny05 map, feathered seam) replace the benny05 maps. Only while the benny05 look itself is on (`?match08=1` …).\n */\nexport const BAKE08: boolean = BENNY05 && qv('bake08') === '1';", "new_string": " …[+931 chars]`
+
+### 🧑 User — 2026-11-17T15:58:06.528Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/src/characters/benny/benny05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:58:13.309Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && node scripts/capture.mjs 08 --q='match08=1' --out=$S/v_m08 2>&1 | tail -1 | cut -c1-40 && node scripts/capture.mjs 08 --q='match08=1&bake08=0' --out=$S/v_m08b0 2>&1 | tail -1 | cut -c1-40 && node scripts/capture.mjs 08 05 --out=$S/v_def 2>&1 | tail -1 | cut -c1-40; git checkout -- qa/capture_log.json", "description": "Typecheck and capture verification frames", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T15:58:13.339Z
+
+> ↩︎ result: This agent is isolated in the worktree /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f, but this command names git in a form too complex to verify that it stays inside the worktree. Refusing to run it — a worktree-isolated agent's git operations must target its own worktree. Split it into plain, separate commands and run them from /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f.
+
+### 🤖 Claude — 2026-11-17T15:58:17.473Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && node scripts/capture.mjs 08 --q='match08=1' --out=$S/v_m08 2>&1 | tail -1 | cut -c1-40 && node scripts/capture.mjs 08 --q='match08=1&bake08=0' --out=$S/v_m08b0 2>&1 | tail -1 | cut -c1-40 && node scripts/capture.mjs 08 05 --out=$S/v_def 2>&1 | tail -1 | cut -c1-40", "description": "Typecheck and capture verification frames", "timeout": 900000}`
+
