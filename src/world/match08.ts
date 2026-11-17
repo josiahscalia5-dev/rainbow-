@@ -10,7 +10,7 @@
  * Without the switch nothing in this file runs and the game is unchanged.
  */
 import * as THREE from 'three';
-import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
 
 interface Layout {
   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
@@ -187,6 +187,13 @@ export async function buildMatch08(): Promise<Match08> {
       o.scale.set(s.rx, s.ry, s.rx);
       o.position.set(...s.c);
     }
+  }
+
+  // QA only `&m08dbg=1`: every fitted surface in its own flat colour (which proxy carries which part of the frame)
+  if (flag05('m08dbg')) {
+    const pal = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ffffff', '#ff8000', '#8000ff', '#008040', '#804000', '#808080'];
+    group.children.forEach((o, i) => { (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });
+    console.log('m08dbg', group.children.map((o, i) => `${o.name}=${pal[i % pal.length]}`).join(' '));
   }
 
   // Benny's splash ring, cut from the ORIGINAL approved picture (white crest + droplets around his base; alpha = white,

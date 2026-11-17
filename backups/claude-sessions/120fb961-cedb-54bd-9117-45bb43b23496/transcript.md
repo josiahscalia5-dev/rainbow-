@@ -167,3 +167,238 @@ Let me look at the problem frames.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T19:28:29.478Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/coins08px/3_NEW_match08_coins08px.png"}`
+
+### 🧑 User — 2026-11-17T19:28:29.536Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:28:43.618Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow\\b\\|__rainbow =\" src -r | head; grep -n \"scene:\\|scene()\" src/game/Game.ts | head; cat assets/textures/match08/proj08.json | python3 -c \"import json,sys;d=json.load(sys.stdin);[print(k,v) for k,v in d.items() if k!='camera']\""}`
+
+### 🧑 User — 2026-11-17T19:28:43.713Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:776:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> floorY -113.6
+> chamber {'cx': 12.0, 'cy': -101.1, 'r': 13.5, 'zBack': -280.0, 'zDoor': -332.0}
+> arch {'z': -281.2164245171123, 'outer': {'cx': 12.376735924463707, 'cy': -111.01146278742368, 'r': 2.8785458098908463}, 'inner': {'cx': 12.388294771720878, 'cy': -110.98244622251975, 'r': 2.5653852087433306}, 'depth': 0.9, 'feetZ': [-281.1505024527194, -281.2823465815051], 'check_row600_px': [-126.32118588183108, 961.3329361523465]}
+> pipe {'cx': 12.376735924463707, 'cy': -111.01146278742368, 'r': 2.9185458098908463, 'z0': -266.80056164895825, 'z1': -281.2164245171123}
+> backwall {'z': -284.80056164895825, 'holeR': 4.298503804495194}
+> platform {'cx': 12.01853569828291, 'cz': -325.0, 'r': 8.545661353037843, 'topY': -109.49424440576783, 'rimBottomY': -110.56571929613797, 'legsBottomY': -112.42005720374493, 'floorY': -113.6, 'tiltDeg': 4.836197917371241, 'eyeElevDeg': -0.4244721316010628}
+> towel {'cx': …[+1152 chars]
+
+### 🤖 Claude — 2026-11-17T19:29:08.300Z
+
+> 🔧 **Bash** `{"command": "grep -n \"URLSearchParams\\|coins08px\\|flowplan\\|camclear\" src/game/match.ts src/game/*.ts | head -20; grep -n \"export\" src/game/match.ts | head"}`
+
+### 🧑 User — 2026-11-17T19:29:08.393Z
+
+> ↩︎ result: src/game/Game.ts:42:  const qs = new URLSearchParams(location.search);
+> src/game/Game.ts:68:  const flowPlan = flag05('flowplan'); // user's Google Flow plan: videos 01–03 + 09–11, playable 04–08 (see startFlowEnding)
+> src/game/Game.ts:409:    // `?flowplan=1` + an ending video: the playable game ends with 08; the Flow video covers 09–11
+> src/game/Game.ts:426:  // `?flowplan=1` (the user's production plan, lead r3 2026-11-17): 01–03 and 09–11 are Google Flow videos, 04–08 is the
+> src/game/Game.ts:515:      // `?flowplan=1`: the Flow video covers 01–03; underneath, the ride is held on the APPROVED 04 view (the 04
+> src/game/modules.ts:32:      const qp = new URLSearchParams(location.search).get('quality');
+> 13:export type MatchId = '02' | '03' | '04' | '06' | '07' | '08' | '09' | '10';
+> 14:export const MATCH_IDS: MatchId[] = ['02', '03', '04', '06', '07', '08', '09', '10'];
+> 16:export const MATCH: Record<MatchId, boolean> = Object.fromEntries(MATCH_IDS.map((id) => [id, ALL || flag05('match' + id)])) as Record<MatchId, boolean>;
+> 17:export const matchOn = (id: string): boolean => (MATCH as Record<string, boolean>)[id] === true;
+> 24:export const MATCH_CAM: Partial<Record<MatchId, Partial<CamPara …[+96 chars]
+
+### 🤖 Claude — 2026-11-17T19:29:10.389Z
+
+> 🔧 **Bash** `{"command": "grep -n \"flag05\" src/game/*.ts src/world/*.ts | head -5; grep -rn \"export function flag05\\|export const flag05\" src | head; git log --oneline -3 origin/claude/rainbow-s07-match-c3 2>/dev/null; git fetch origin claude/rainbow-s07-match-c3 2>&1|tail -1; git show a5d2b392 --stat | head -30"}`
+
+### 🧑 User — 2026-11-17T19:29:49.166Z
+
+> ↩︎ result: src/game/Game.ts:25:import { flag05 } from '../vfx/waterRibbon';
+> src/game/Game.ts:67:  const glow05 = flag05('glow05');
+> src/game/Game.ts:68:  const flowPlan = flag05('flowplan'); // user's Google Flow plan: videos 01–03 + 09–11, playable 04–08 (see startFlowEnding)
+> src/game/match.ts:7: * VITE_RAINBOW_Q05 (flag05).
+> src/game/match.ts:11:import { flag05 } from '../vfx/waterRibbon';
+> src/vfx/waterRibbon.ts:167:export const flag05 = q05;
+>  * [new branch]      claude/rainbow-s07-match-c3 -> origin/claude/rainbow-s07-match-c3
+> commit a5d2b392c4e88e020e21b228d3cb5d2a7d107a35
+> Author: Claude <noreply@anthropic.com>
+> Date:   Tue Nov 17 18:10:21 2026 +0000
+> 
+>     Screen 07 M2: m07fill (river tile instead of mirrored fill on the water), m07ang (picture only near the approved view direction), m07gold (solid rounded gold paddles) — moving frames + metrics
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_01Q46SCJx6kKaxMCCbLLqta3
+> 
+>  qa/match/07/m2/cap_fag/07.png                   | Bin 0 -> 2400783 bytes
+>  qa/match/07/m2/metrics_fag.json                 |  76 ++++++++++++++++++++++++
+>  qa/match/07/m2/motion_fag/d0_before_drop_8u.png | Bin 15 …[+999 chars]
+
+### 🤖 Claude — 2026-11-17T19:29:50.625Z
+
+> 🔧 **Bash** `{"command": "git show a5d2b392 -- src/world/match07.ts; git show a5d2b392^:src/world/match07.ts | grep -n \"m07ang\\|angK\\|uAng\" | head"}`
+
+### 🧑 User — 2026-11-17T19:29:50.703Z
+
+> ↩︎ result: commit a5d2b392c4e88e020e21b228d3cb5d2a7d107a35
+> Author: Claude <noreply@anthropic.com>
+> Date:   Tue Nov 17 18:10:21 2026 +0000
+> 
+>     Screen 07 M2: m07fill (river tile instead of mirrored fill on the water), m07ang (picture only near the approved view direction), m07gold (solid rounded gold paddles) — moving frames + metrics
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_01Q46SCJx6kKaxMCCbLLqta3
+> 
+> diff --git a/src/world/match07.ts b/src/world/match07.ts
+> index c8b2aa3..ed91320 100644
+> --- a/src/world/match07.ts
+> +++ b/src/world/match07.ts
+> @@ -14,6 +14,7 @@
+>   * post chain (PROJ05_INVERSE) and takes no fog. Without the switch nothing in this file runs and the game is unchanged.
+>   */
+>  import * as THREE from 'three';
+> +import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+>  import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
+>  
+>  interface Layout07 {
+> @@ -93,10 +94,12 @@ vec3 tileColor() {
+>    if (uGoldLit > 0.5) {
+>      vec3 nw = normalize(vN); vec3 vv = normalize(cameraPosition - vW);
+>      if (dot(nw, vv) < 0.0) nw = -nw;
+> -    float dif = 0.42 + 0.7 * max(dot(nw, uKey), 0.0);
+> -    floa …[+2029 chars]
+
+### 🤖 Claude — 2026-11-17T19:29:54.625Z
+
+Diagnosing the Screen 08 tears now: I'm adding a debug view that colours each fitted 3D surface separately, so I can see which surface carries the duplicated river and wall.
+
+### 🤖 Claude — 2026-11-17T19:29:55.371Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"camclear\" src | head; grep -n \"step\\|setSteer\\|goto\" src/game/Game.ts | sed -n 1,30p | grep -n \"api\\|=>\" | head"}`
+
+### 🧑 User — 2026-11-17T19:29:55.423Z
+
+> ↩︎ result: 1:33:const sm = (a: number, b: number, x: number) => THREE.MathUtils.smoothstep(x, a, b);
+> 2:552:  const stepSim = (dt: number) => {
+> 4:651:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 5:658:    const settle = (n: number, dt: number) => { for (let i = 0; i < n; i++) stepSim(dt); };
+> 12:701:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+
+### 🤖 Claude — 2026-11-17T19:30:02.279Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\ns=s.replace(\"import { PROJ05_INVERSE } from '../vfx/waterRibbon';\",\"import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';\")\ns=s.replace(\"\"\"  // Benny's splash ring, cut\"\"\",\"\"\"  // QA only `&m08dbg=1`: every fitted surface in its own flat colour (which proxy carries which part of the frame)\n  if (flag05('m08dbg')) {\n    const pal = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ffffff', '#ff8000', '#8000ff', '#008040', '#804000', '#808080'];\n    group.children.forEach((o, i) …[+541 chars]`
+
+### 🧑 User — 2026-11-17T19:30:02.361Z
+
+> ↩︎ result: 14:  page.on('pageerror', (e) => console.error('pageerror', e.message));
+> [This command modified 1 file you've previously read: src/world/match08.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T19:30:07.492Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match08/motion08.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"['s_left_steer', 40, -1], ['s_right_steer', 40, 1]];\"\"\",\"\"\"['s_left_steer', 40, -1], ['s_right_steer', 40, 1]];\n  // M08_SHOTS=full (scenery round, 2026-11-17): long hard steering both ways (Benny pressed against the side walls)\n  if (EXTRA) shots.push(['s_left_hard', 80, -1], ['s_right_hard', 80, 1], ['s_right_hard6u', 38, 1], ['s_right_hard10u', 63, 1]);\"\"\")\ns=s.replace(\"\"\"  page.on('pageerror', (e) => console.error('pageerror', e.message));\"\"\",\"\"\"  page.on('pageerror', (e …[+342 chars]`
+
+### 🧑 User — 2026-11-17T19:30:58.429Z
+
+> ↩︎ result: m08dbg m08_pipe=#ff0000 m08_arch=#00ff00 m08_backwall=#0000ff m08_chamber=#ffff00 m08_doorwall=#00ffff m08_floor=#ff00ff m08_platform_top=#ffffff m08_platform_rim=#ff8000 m08_platform_legs=#8000ff m08_towel=#008040 m08_spout_UL_dome=#804000 m08_spout_UL_under=#808080 m08_spout_UR_dome=#ff0000 m08_spout_UR_under=#00ff00 m08_spout_LL_dome=#0000ff m08_spout_LL_under=#ffff00 m08_spout_LR_dome=#00ffff m08_spout_LR_under=#ff00ff
+> f00_checkpoint s 392.23 lat 0.00 08
+> f03_forward3u s 395.01 lat 0.00 08
+> f06_forward6u s 398.02 lat 0.00 08
+> f10_forward10u s 401.98 lat 0.00 08
+> f15_forward15u s 407.05 lat 0.00 09
+> s_left_steer s 398.33 lat -1.85 08
+> s_right_steer s 398.33 lat 1.85 08
+> s_left_hard s 404.67 lat -2.28 09
+> s_right_hard s 404.67 lat 2.28 09
+> s_right_hard6u s 398.02 lat 1.85 08
+> s_right_hard10u s 401.98 lat 1.68 08
+
+### 🤖 Claude — 2026-11-17T19:31:01.539Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/08/scenery/dbg_ids && python3 -c \"\nfrom PIL import Image\nims=[Image.open(f+'.png').resize((288,512)) for f in ['f00_checkpoint','f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_steer']]\nW=Image.new('RGB',(288*6,512));[W.paste(im,(i*288,0)) for i,im in enumerate(ims)];W.save('/tmp/claude-0/-home-user-rainbow-/120fb961-cedb-54bd-9117-45bb43b23496/scratchpad/ids.png')\""}`
+
+### 🧑 User — 2026-11-17T19:31:01.881Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T19:31:03.084Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/120fb961-cedb-54bd-9117-45bb43b23496/scratchpad/ids.png"}`
+
+### 🧑 User — 2026-11-17T19:31:03.111Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:32:16.436Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/08 && python3 -c \"\nfrom PIL import Image\nfs=['f03_forward3u','f10_forward10u','s_right_steer']\nims=[Image.open('coins08px/motion_NEW/'+f+'.png').resize((432,768)) for f in fs]\nW=Image.new('RGB',(432*3,768));[W.paste(im,(i*432,0)) for i,im in enumerate(ims)];W.save('/tmp/claude-0/-home-user-rainbow-/120fb961-cedb-54bd-9117-45bb43b23496/scratchpad/new3.png')\nfor p in ['wall','gold','towel']: print(p, Image.open('../../../assets/textures/match08/patch_'+p+'.png').size)\n\""}`
+
+### 🧑 User — 2026-11-17T19:32:17.012Z
+
+> ↩︎ result: wall (512, 171)
+> gold (512, 136)
+> towel (384, 101)
+
+### 🤖 Claude — 2026-11-17T19:32:17.141Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/120fb961-cedb-54bd-9117-45bb43b23496/scratchpad/new3.png"}`
+
+### 🧑 User — 2026-11-17T19:32:17.202Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:32:57.774Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && sed -n 690,775p src/game/Game.ts"}`
+
+### 🧑 User — 2026-11-17T19:32:57.832Z
+
+> ↩︎ result: const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+>     freezeAt(t: number) { st.frozen = t; st.clock = t; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDef …[+4317 chars]
+
+### 🤖 Claude — 2026-11-17T19:33:03.635Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match08/lane08.mjs <<'EOF'\n// Screen 08 swim-lane probe (read-only): Benny's world position + the live camera while riding 08 straight / steering\n// hard left / right, to size the fitted pipe/arch proxies so Benny never rides into them. usage: node lane08.mjs [q]\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';\nconst Q = process.argv[2] ?? 'match08=1&coins08px=1';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5267);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = awa …[+907 chars]`
+
+### 🧑 User — 2026-11-17T19:33:15.189Z
+
+> ↩︎ result: steer 0
+> 0.00 08 391.43 0.00 12.21 -113.11 -282.09 12.85 -109.87 -274.80
+> 6.00 08 392.43 0.00 12.19 -113.17 -282.92 12.84 -109.87 -275.12
+> 12.00 08 393.41 0.00 12.16 -113.22 -283.90 12.83 -109.88 -275.78
+> 18.00 08 394.37 0.00 12.11 -113.21 -284.87 12.79 -109.88 -276.60
+> 24.00 08 395.32 0.00 12.04 -113.18 -285.82 12.74 -109.89 -277.49
+> 30.00 08 396.27 0.00 11.93 -113.15 -286.76 12.66 -109.89 -278.44
+> 36.00 08 397.23 0.00 11.77 -113.14 -287.70 12.56 -109.89 -279.44
+> 42.00 08 398.18 0.00 11.60 -113.17 -288.63 12.45 -109.89 -280.47
+> 48.00 08 399.13 0.00 11.43 -113.21 -289.57 12.34 -109.89 -281.54
+> 54.00 08 400.07 0.00 11.29 -113.23 -290.51 12.23 -109.90 -282.62
+> 60.00 08 401.02 0.00 11.18 -113.21 -291.46 12.10 -109.90 -283.69
+> 66.00 08 401.98 0.00 11.12 -113.15 -292.41 11.94 -109.90 -284.75
+> 72.00 08 402.93 0.00 11.10 -113.08 -293.37 11.74 -109.90 -285.79
+> 78.00 08 403.88 0.00 11.16 -113.04 -294.32 11.54 -109.90 -286.79
+> 84.00 09 404.82 0.00 11.28 -113.06 -295.27 11.35 -109.90 -287.77
+> 90.00 09 405.77 0.00 11.43 -113.12 -296.21 11.18 -109.90 -288.73
+> 96.00 09 406.73 0.00 11.61 -113.19 -297.14 11.06 -109.91 -289.69
+> 102.00 09 407.68 0.00 11.78 -113.21 -298.08 10.99 -109.91 -290.64
+> 108.00 09 408.63 0.00 1 …[+2922 chars]
+
