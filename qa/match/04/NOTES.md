@@ -133,3 +133,14 @@ Started from `4d1f5b25` (= `-c2` head `255ec5e6` + one transcript autosave). Lea
   `?match08=1` 08 0 px vs `qa/match/08/08_NEW_match08.png`; `?ringa=26&nearfloor05=0` 0 px vs the wave9 baseline.
 * Gameplay 8/8 with `--q=match04=1` (`gameplay_test_match04_m3.json`, samples identical to the M2 fal04 run, coins
   1,330 → 2,240 = 91 coins); default run 8/8 and `qa/gameplay_test.json` byte-identical.
+### Step 2 — approved river colours while riding (`&river04=0` = milestone-2 river), on by default under match04
+* Cause: the riding fallback `tile_river.png` was cut from the narrow river INSIDE the tunnel (9.5–14.8 u), which the
+  picture paints almost plain cyan. New `tools/match04/make_river04_m3.py` → `tile_river3.png`: the painted water AROUND
+  Benny (1.8–6.4 u ahead, ±4 u: pink swirl ribbons, cyan streams, foam banks; fal clean plate under Benny/coins — checked:
+  no brown marks where the coins were removed), gold ring pixels removed and refilled along the flow, seamless along the
+  slide; `tile_chev3.png` = the milestone-2 tile's glowing arrow only (alpha), laid on top with its own period (5.3 u vs
+  5.2 u, so the two never line up into an obvious repeat). Inside the tunnel the banks are drawn 1.3× closer to the walls.
+* Approved view: 4 px differ from the M2 fal04 picture (max 34 levels, the usual run-to-run pixels) → numbers unchanged.
+* Riding frames `motion_m3/step2_river/` (BEFORE = `motion_m2/NEW_fal04/`): pink ribbons + foam banks + arrows under
+  and around Benny at 3–20 u and when steering. Remaining: the flat water meets the tunnel wall in a hard straight edge
+  near the camera at 15–20 u (geometry, also in M2).
