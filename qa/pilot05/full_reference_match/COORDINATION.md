@@ -98,3 +98,18 @@ Its specialists are INTERRUPTED; this session is the coordinator now. Everything
 * Keep every source file syntactically valid at every moment (one broken module breaks everybody's captures).
 * A specialist cannot ask the user anything: decide by the order (`ORDER_USER_VERBATIM.md`) and the measurements, write
   open questions in your `NOTES.md` under "REQUESTS", and keep working.
+
+---
+## RESUMED 2026-11-17 ~00:10 UTC — account transfer, session 018Sg3AU, branch `ccr-694bda6a-x58ntq` (created from `b81cc34`)
+* `ccr-694bda6a-x58ntq` was created directly from `b81cc34` (= tip of `claude/approved-screen-implementation-g3loqu`,
+  verified by `git ls-remote`, no newer commit); bootstrap ran with `--skip-resume`. `claude/approved-screen-implementation-g3loqu`
+  and `ccr-8c4acadc-iybw0n` are now PROTECTED (autosave never pushes there). Not merged on purpose: `ccr-8c4acadc-iybw0n`
+  `0594138` (autosave status files only) and every `codex/*` branch.
+* Recovery proof (`recovery_s018/`): default capture = `qa/pilot05/current_default_05.png` (0 px differ); protected BEFORE
+  `?ringa=26&nearfloor05=0` = `qa/pilot05/wave9/baseline/05.png` (0 px); `?match05=1` = `stack_2340/05_match05.png` (0 px)
+  = the explicit STACK URL (0 px). Gameplay test 8/8 pass with the default and with `match05=1`.
+* The three specialists launched at 23:38 (env05, benny05, hud05/coins05) were INTERRUPTED after ~4 minutes, still in
+  their measuring step (scratchpad only, no file in the game changed). They are relaunched from the same brief.
+* Coordinator far-river state: `far1/` (E, F, LUT) baked 23:34 with `bake.py … far`. The "unseen texels released" block
+  in `bake.py` (blank mid-river patch while riding, added 23:41) has NOT been baked yet — the coordinator does that next
+  (needs a fresh probe: `node scripts/proj05-probe.mjs --raw=DIR`).

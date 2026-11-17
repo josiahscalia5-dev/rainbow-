@@ -524,7 +524,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "2017ba99b4db0125a4f00a2cf977ec134b6fac6168c586aa6066364ad5929058"
+   "sha256": "3c369abc0fefd3323d2b077f7b5ac6799af71d12da7ed7efe2608ea22622377b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1293,8 +1293,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/COORDINATION.md",
-   "bytes": 8524,
-   "sha256": "51bd487829b62b8ff220d6cd0fdecc28046d0aeea02723e99a87a76420811d7a"
+   "bytes": 9983,
+   "sha256": "a9c648fe7487b6c32d48e52ce56a73b62ebe93133d5ac0a3ba1313293446480f"
   },
   {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md",
@@ -1422,6 +1422,21 @@
    "sha256": "d59d19bd0eef41064c2ab5d7733f671e826a9ebce9370995f0379df5ccf29731"
   },
   {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/IMAGE1_ORIGINAL_APPROVED_05.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/IMAGE2_RECOVERED_experimental_match05_before_changes.png",
+   "bytes": 2180494,
+   "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/IMAGE2b_RECOVERED_protected_default_05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/recovery_s018/before_protected/05.png",
    "bytes": 1750841,
    "sha256": "dc8155f9ac7bccd80601245de6344de821ba9c966d89734da2236cb980bb1c07"
@@ -1463,8 +1478,68 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/log.txt",
-   "bytes": 0,
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   "bytes": 831,
+   "sha256": "0d9c93400afa286e094ff513dd012345b46d5d2f85b339196151d88ce1ecaa3e"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/move_00.png",
+   "bytes": 2180494,
+   "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/move_05.png",
+   "bytes": 1972216,
+   "sha256": "87f40c7fd66f632c14c7e4124bcf562abda5f52eaef9d4cc08ff5a54ac40eff2"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/move_10.png",
+   "bytes": 1975772,
+   "sha256": "63d23e7bc6914c202b205f2c30b30b2d516571e19c79a6962e82f265f33d110f"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/move_20.png",
+   "bytes": 1961491,
+   "sha256": "0ccdecf2e975fa05b5a1f98cc21841441bad31f892a7770810c78faa62fb5e9e"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/move_35.png",
+   "bytes": 1857744,
+   "sha256": "604a396dfc8c2c201e330d57a65973666b60f2b0360944ec1b05ca3d71b33699"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/move_log.json",
+   "bytes": 2228,
+   "sha256": "56722f0017043d3b6fc31574a0f1ff55a117debad558443d012f321421488f01"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/steer_L_025.png",
+   "bytes": 2009991,
+   "sha256": "b03f088637f4c1f6cfd1862472152eac7d650fa7025710f23f145bac75d4f2c6"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/steer_L_050.png",
+   "bytes": 1944070,
+   "sha256": "7be7b651974a53775248da1fb77f543d25aa52f1fa406b5684780a8ab10f02d3"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/steer_L_080.png",
+   "bytes": 1922543,
+   "sha256": "ae7eb9c4066b9024261d58e246953c5d890b92f597b824b4a4c4955c1ec987a9"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/steer_R_025.png",
+   "bytes": 1999538,
+   "sha256": "d78c4dfdcb586df179782fad87b08184f1d4758a85af4d55c4871b5ac690cc43"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/steer_R_050.png",
+   "bytes": 1978754,
+   "sha256": "bc01db76d43a274dc796fe0856731f52466df2c66fc8eb8e585d27f8f2bf44e8"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/steer_R_080.png",
+   "bytes": 1988698,
+   "sha256": "8c18ef46e1f9f9d32d362b671946debd22c7668b75f2cf68ca2c4c1fca11f22b"
   },
   {
    "path": "qa/pilot05/full_reference_match/recovery_s018/stack/05.png",

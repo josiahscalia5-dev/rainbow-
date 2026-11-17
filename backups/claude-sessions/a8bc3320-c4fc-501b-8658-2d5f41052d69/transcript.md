@@ -1839,3 +1839,208 @@ While the tests run, I'll check the Playwright MCP server itself, not just the l
 > gameplay default rc=0
 > gameplay match05 rc=0
 
+### 🤖 Claude — 2026-11-17T00:02:39.535Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nev=[json.loads(l) for l in open('backups/claude-sessions/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/transcript.sanitized.jsonl',errors='ignore') if l.strip()]\nout='/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/'\nfor d in ev:\n    c=(d.get('message') or {}).get('content')\n    if isinstance(c,list):\n        for b in c:\n            if b.get('type')=='tool_use' and b.get('name') in ('Agent','Task'):\n                i=b['input']; fn=out+'brief_'+i['subagent_type']+'.txt'\n                open(fn,'w').write(i['prompt']) …[+133 chars]`
+
+### 🧑 User — 2026-11-17T00:02:39.654Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/brief_washer-environment-modeler.txt 6337 True
+> /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/brief_benny-character-artist.txt 5405 True
+> /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/brief_animation-and-gameplay-engineer.txt 5621 True
+
+### 🤖 Claude — 2026-11-17T00:02:43.692Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/brief_washer-environment-modeler.txt"}`
+
+### 🧑 User — 2026-11-17T00:02:43.723Z
+
+> ↩︎ result: 1	You are the washer-environment-modeler for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work). You are executing the user's FINAL MASTER EXECUTION ORDER for Screen 05 ("05 · FLOW INTO THE CURRENT"): make the real playable 3D Screen 05 match the approved image `references/05_flow_into_the_current.png` (864 × 1536) as exactly as technically possible. This is an implementation order: do the work, measure, keep only what is closer. You cannot ask the user anything.
+> 2	
+> 3	READ FIRST (in this order, they are your rules):
+> 4	1. `qa/pilot05/full_reference_match/COORDINATION.md` — ALL of it, including the "RESUMED 23:40" section at the end (stack URL, render slots, file ownership, how to capture and measure).
+> 5	2. `qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md` — your parts: 3, 4, 5, 6, 12 (tunnel side), 14, and phases B and C of part 15.
+> 6	3. `qa/pilot05/proj/tunnel/NOTES.md` — the tunnel bake that already exists (`projwall05`, `projring05`, `projframe05`, `projlid05` in `src/vfx/proj05Tunnel.ts`, tools `tools/proj05/tunnel_rings.py`, `tunnel_bake.py`, `tunnel_common.py`, `frame_bake.py`, `lid_*.py`, `scripts/proj05-tunnel-probe.mjs`).
+> 7	4. `qa/ …[+5200 chars]
+
+### 🤖 Claude — 2026-11-17T00:02:50.226Z
+
+> 🔧 **Bash** `{"command": "for p in tools/proj05/bake.py assets/textures/water05/far1 src/vfx/waterRibbon.ts qa/pilot05/proj/near/NOTES.md; do echo \"== $p\"; git log --format='%h %cd' --date=format:'%H:%M:%S' -3 -- $p; done; ls -la assets/textures/water05/far1/; ls qa/pilot05/proj/ | head -30", "description": "Check when far-river bake code and textures changed"}`
+
+### 🧑 User — 2026-11-17T00:02:50.436Z
+
+> ↩︎ result: == tools/proj05/bake.py
+> b81cc34 23:44:48
+> 7017b7e 23:34:33
+> af40f62 18:50:44
+> == assets/textures/water05/far1
+> 7017b7e 23:34:33
+> == src/vfx/waterRibbon.ts
+> 67ee7bb 23:39:40
+> 7017b7e 23:34:33
+> c9c70b0 23:24:13
+> == qa/pilot05/proj/near/NOTES.md
+> 1596a2a 23:18:34
+> total 2368
+> drwxr-xr-x 2 root root    4096 Nov 16 23:53 .
+> drwxr-xr-x 3 root root    4096 Nov 16 23:53 ..
+> -rw-r--r-- 1 root root 2035970 Nov 16 23:53 proj05_E.png
+> -rw-r--r-- 1 root root  344553 Nov 16 23:53 proj05_F.png
+> -rw-r--r-- 1 root root   27412 Nov 16 23:53 proj05_lut.json
+> BRIEF_NEXT.md
+> BRIEF_SPECIALIST1.md
+> BRIEF_SPECIALIST1_VERBATIM.md
+> BRIEF_SPECIALIST2.md
+> NOTES.md
+> align
+> caps
+> clips
+> compare
+> feasibility
+> flow2
+> move
+> near
+> probe
+> status_1116_2330
+> steer
+> target
+> tests
+> tunnel
+
+### 🤖 Claude — 2026-11-17T00:02:57.830Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nev=[json.loads(l) for l in open('backups/claude-sessions/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/transcript.sanitized.jsonl',errors='ignore') if l.strip()]\nres={}\nfor d in ev:\n    c=(d.get('message') or {}).get('content')\n    if isinstance(c,list):\n        for b in c:\n            if b.get('type')=='tool_use' and b.get('name')=='Bash':\n                cmd=b['input'].get('command','')\n                if any(k in cmd for k in ('bake.py','proj05-move','far1','unseen','capture.mjs')):\n                    print('---', d.get('timestamp','')[11:19], c …[+74 chars]`
+
+### 🧑 User — 2026-11-17T00:02:58.004Z
+
+> ↩︎ result: --- 23:24:38 grep -nE "WARN|FAIL|GAP" backups/.live/bootstrap.log | head -20; sed -n 1,60p scripts/capture.mjs
+> --- 23:24:45 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -8; S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; mkdir -p $S/cap_full $S/cap_def; node scripts/capture.mjs 05 --q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1' --out=$S/cap_full 2>&1 | tail -3
+> --- 23:25:43 S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; sed -n 1,40p scripts/proj05-move.mjs; ls qa/pilot05/proj/near/ride_before qa/pilot05/proj/near/regression qa/pilot05/proj/near/tools qa/pilot05/proj/compare | head -60; git log --oneline -3 -- assets/textures/water05/proj05_T2.png src/vfx/waterRibbon.ts
+> --- 23:25:49 S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad; mkdir -p $S/ride_new; node scripts/proj05-move.mjs --q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1' --out=$S/ride_new --d=0,8,17,26,35 2>&1 | tail -6
+> --- 23:27:28 S=/tmp/claude-0/-home-user-rainbow-/b6a25bd2-ebea-59a3-94ed-b3db294c31e7/scratchpad;  …[+8252 chars]
+
+### 🤖 Claude — 2026-11-17T00:03:03.476Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/pilot05/proj/probe/ | head; grep -n \"filled\" tools/proj05/bake.py | head; grep -n \"^def finish\" -A30 tools/proj05/bake.py | grep -n \"filled\\|return\" ; sed -n 1,25p scripts/proj05-probe.mjs | grep -E '^//|^ \\*'", "description": "Check probe files and finish.filled in bake.py"}`
+
+### 🧑 User — 2026-11-17T00:03:03.534Z
+
+> ↩︎ result: total 1272
+> drwxr-xr-x  2 root root    4096 Nov 16 23:53 .
+> drwxr-xr-x 16 root root    4096 Nov 16 23:53 ..
+> -rw-r--r--  1 root root    1200 Nov 16 23:53 camera.json
+> -rw-r--r--  1 root root    1200 Nov 16 23:53 camera_proj05_session.json
+> -rw-r--r--  1 root root 1285808 Nov 16 23:53 river05_mesh.json
+> 15:coins are filled along the flow (s direction) in river space."""
+> 34:# coins are filled in the target from the user's artwork (make_target.py); the along-s hole filling below stays for gaps
+> 114:    filled = np.zeros_like(valid)
+> 130:        filled[hy, x] = True
+> 132:    if filled.any():
+> 134:        img[filled] = sm[filled]
+> 135:    valid = valid | filled
+> 136:    finish.filled = filled
+> 150:    fl = finish.filled.copy()
+> 172:realN = validN & ~finish.filled                    # texels that saw real approved water (not coin / gap fills)
+> 15:114-    filled = np.zeros_like(valid)
+> 31:130-        filled[hy, x] = True
+> // Screen 05 texture-projection probe (Specialist 1, 2026-11-16) — exact, read-only measurements of the REAL game.
+> //   node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe] [--raw=DIR for the float maps]
+> // Opens the game at the locked 05 checkpoint (time frozen,  …[+1247 chars]
+
+### 🤖 Claude — 2026-11-17T00:03:09.578Z
+
+`finish.filled` is set correctly, so the bake code is sound. Only the probe needs regenerating. Checking the test queue:
+
+### 🤖 Claude — 2026-11-17T00:03:12.019Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/botftfl7l.output; cd /home/user/rainbow- && R=qa/pilot05/full_reference_match/recovery_s018; python3 -c \"\nimport json\nfor n in ('default','match05'):\n    d=json.load(open('$R/tests/gameplay_'+n+'.json'))\n    print(n, {k:d[k] for k in d if k in ('ok','pass','errors','checks','failures')} if isinstance(d,dict) else d)\n\" 2>&1 | cut -c1-900", "description": "Check test queue and gameplay results"}`
+
+### 🧑 User — 2026-11-17T00:03:12.170Z
+
+> ↩︎ result: stack capture rc=0
+> gameplay default rc=0
+> gameplay match05 rc=0
+> default {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.027, 'coins': 2240, 'hearts': 5, 'paused': False, 'bennyY': -109.61, 'benn
+> match05 {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCame …[+664 chars]
+
+### 🤖 Claude — 2026-11-17T00:03:16.872Z
+
+> 🔧 **Bash** `{"command": "R=qa/pilot05/full_reference_match/recovery_s018; python3 -c \"\nimport json\nfor n in ('default','match05'):\n    d=json.load(open('$R/tests/gameplay_'+n+'.json'))\n    c=d['checks']; print(n, 'ALL PASS' if all(v.get('pass') for v in c.values() if isinstance(v,dict)) else 'FAIL', sorted(k for k,v in c.items() if isinstance(v,dict) and v.get('pass')), [k for k,v in c.items() if isinstance(v,dict) and not v.get('pass')], 'errors', d.get('errors'))\n\"; python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\npri …[+186 chars]`
+
+### 🧑 User — 2026-11-17T00:03:17.482Z
+
+> ↩︎ result: default ALL PASS ['continuousTravel', 'heartsLostOnWallBump', 'noCameraCut', 'noTeleport', 'pauseFreezes', 'plunge', 'realCoinPickups', 'victory'] [] errors []
+> match05 ALL PASS ['continuousTravel', 'heartsLostOnWallBump', 'noCameraCut', 'noTeleport', 'pauseFreezes', 'plunge', 'realCoinPickups', 'victory'] [] errors []
+> match05 vs explicit STACK: differing px 0
+
+### 🤖 Claude — 2026-11-17T00:03:30.494Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/full_reference_match/COORDINATION.md <<'EOF'\n\n---\n## RESUMED 2026-11-17 ~00:10 UTC — account transfer, session 018Sg3AU, branch `ccr-694bda6a-x58ntq` (created from `b81cc34`)\n* `ccr-694bda6a-x58ntq` was created directly from `b81cc34` (= tip of `claude/approved-screen-implementation-g3loqu`,\n  verified by `git ls-remote`, no newer commit); bootstrap ran with `--skip-resume`. `claude/approved-screen-implementation-g3loqu`\n  and `ccr-8c4acadc-iybw0n` are now PROTECTED (autosave never pushes there). Not merged on purpose: `ccr-8c4acadc-iybw0n`\n  `0594138` (au …[+1122 chars]`
+
+### 🧑 User — 2026-11-17T00:03:30.565Z
+
+> ↩︎ result: [exited with code 0]
+
+### 🤖 Claude — 2026-11-17T00:03:34.111Z
+
+> 🔧 **Bash** `{"command": "R=qa/pilot05/full_reference_match/recovery_s018; cat $R/tests/queue.log; tail -4 $R/move_match05/log.txt | cut -c1-300; ls $R/move_match05/; tail -3 $R/tests/continuity.log; python3 -c \"import json; d=json.load(open('qa/continuity_report.json')); print('continuity ok', d['ok'], 'drop', d['plunge']['verticalDrop'])\"; git status --short | head", "description": "Show movement and continuity results"}`
+
+### 🧑 User — 2026-11-17T00:03:34.201Z
+
+> ↩︎ result: stack capture rc=0
+> gameplay default rc=0
+> gameplay match05 rc=0
+> move rc=0
+> continuity rc=0
+> steer -1 0.8 -4.566
+> steer 1 0.25 0.705
+> steer 1 0.5 2.342
+> steer 1 0.8 4.556
+> log.txt
+> move_00.png
+> move_05.png
+> move_10.png
+> move_20.png
+> move_35.png
+> move_log.json
+> steer_L_025.png
+> steer_L_050.png
+> steer_L_080.png
+> steer_R_025.png
+> steer_R_050.png
+> steer_R_080.png
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+> continuity ok True drop 61.19
+>  M qa/pilot05/full_reference_match/COORDINATION.md
+>  M qa/pilot05/full_reference_match/recovery_s018/move_match05/log.txt
+> ?? qa/pilot05/full_reference_match/recovery_s018/move_match05/move_00.png
+> ?? qa/pilot05/full_reference_match/recovery_s018/move_match05/move_05.png
+> ?? qa/pilot05/full_reference_match/recovery_s018/move_match05/move_10.png
+> ?? qa/pilot05/full_reference_match/recovery_s018/move_match05/move_20.png
+> ?? qa/pilot05/full_reference_match/recovery_s018/move_match05/move_35.png
+> ?? qa/pilot05/full_reference_match/recovery_s018/move_match05/move_log.json
+> ?? qa/pilot05/full_reference_match/recovery_s018/move_match05/steer_L_025.png
+> ?? qa/pilot05/full_reference_match/recovery_s018/move_match05/steer_L_050.png
+
+### 🤖 Claude — 2026-11-17T00:03:40.495Z
+
+> 🔧 **Bash** `{"command": "R=qa/pilot05/full_reference_match/recovery_s018/move_match05 && python3 -I -c \"\nfrom PIL import Image\nfs=['move_00','move_10','move_20','move_35','steer_L_080','steer_R_080']\nW=Image.new('RGB',(6*288,512))\nfor i,f in enumerate(fs): W.paste(Image.open('$R/'+f+'.png').convert('RGB').resize((288,512)),(i*288,0))\nW.save('/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/move_strip.png')\"", "description": "Build a small strip of movement frames to inspect"}`
+
+### 🧑 User — 2026-11-17T00:03:41.354Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:03:45.317Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/move_strip.png"}`
+
+### 🧑 User — 2026-11-17T00:03:45.414Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:04:02.557Z
+
+> 🔧 **Bash** `{"command": "R=qa/pilot05/full_reference_match/recovery_s018 && cp references/05_flow_into_the_current.png \"$R/IMAGE1_ORIGINAL_APPROVED_05.png\" && cp $R/match05/05.png \"$R/IMAGE2_RECOVERED_experimental_match05_before_changes.png\" && cp $R/default/05.png \"$R/IMAGE2b_RECOVERED_protected_default_05.png\" && cmp references/05_flow_into_the_current.png \"$R/IMAGE1_ORIGINAL_APPROVED_05.png\" && sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK$' && timeout 600 python3 scripts/rainbow-autosave.py --reason manual:recovery-checkpoint --quiet; python3 -I scripts/autosave-status.py | head - …[+312 chars]`
+
