@@ -3,10 +3,11 @@
 // at true game speed however slow software WebGL is. Benny steers toward the coins like a player would.
 //   node scripts/record-screens.mjs                      → qa/recordings/full_playthrough.mp4 (01 → 11, whole game)
 //                                                           + one clip per screen qa/recordings/screen_01.mp4 … _11.mp4
-//   node scripts/record-screens.mjs --q=match08=1&coins08px=1 --from=07 --until=09 --name=screen_08_match08
+//   node scripts/record-screens.mjs '--q=match08=1&coins08px=1' --goto=08 --until=09 --name=screen_08_preferred_match08
 //                                                         → a ride segment with URL test switches
 // Options: --size=540x960 (viewport, CSS px, dpr 1) --fps=30 --out=DIR --name=BASE --q=SWITCHES
-//          --from=NN (start the ride at stage NN instead of the intro) --until=NN (stop when stage NN is reached)
+//          --from=NN (start the ride at stage NN instead of the intro) --goto=NN (start on screen NN's approved view)
+//          --until=NN (stop when stage NN is reached)
 //          --tail=SEC (keep recording after the victory, default 3) --noclips (skip the per-screen clips)
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -17,7 +18,7 @@ const [W, H] = (typeof opt.size === 'string' ? opt.size : '540x960').split('x').
 const FPS = Number(opt.fps ?? 30);
 const STEPS = Math.round(60 / FPS); // simulation runs at 60 Hz, one frame every STEPS steps
 const outDir = typeof opt.out === 'string' ? opt.out : 'qa/recordings';
-const name = typeof opt.name === 'string' ? opt.name : opt.from ? `ride_${opt.from}` : 'full_playthrough';
+const name = typeof opt.name === 'string' ? opt.name : opt.goto ? `ride_${opt.goto}` : opt.from ? `ride_${opt.from}` : 'full_playthrough';
 const tail = Number(opt.tail ?? 3);
 const q = typeof opt.q === 'string' ? opt.q : '';
 const frames = `node_modules/.rainbow-test/rec_${name}`;
@@ -37,11 +38,12 @@ const err = await page.evaluate(() => window.__error);
 if (err) throw new Error(err);
 await page.evaluate(() => document.fonts.ready);
 
-await page.evaluate((from) => {
+await page.evaluate(({ from, at }) => {
   const api = window.__rainbow;
-  if (from) { api.startRideAt(from); api.unfreeze(); } else api.restart();
+  // --goto=NN: start on screen NN's approved checkpoint view (earlier coins already collected), then ride on
+  if (at) { api.goto(at); api.unfreeze(); } else if (from) { api.startRideAt(from); api.unfreeze(); api.step(1, 1 / 60); } else api.restart();
   api.renderNow();
-}, opt.from || null);
+}, { from: opt.from || null, at: opt.goto || null });
 
 const log = [];
 const t0 = Date.now();
@@ -72,10 +74,10 @@ await browser.close();
 await vite.close();
 
 const enc = (out, start = 0, count = log.length) => execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-start_number', String(start), '-i', `${frames}/%05d.jpg`,
-  '-frames:v', String(count), '-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out]);
+  '-frames:v', String(count), '-c:v', 'libx264', '-preset', 'slow', '-crf', '23', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out]);
 enc(`${outDir}/${name}.mp4`);
 const clips = [];
-if (!opt.noclips && !opt.from) {
+if (!opt.noclips && !opt.from && !opt.goto) {
   // one clip per screen, cut at the exact frames where the game switches screens
   const ranges = [];
   for (const e of log) {
