@@ -218,3 +218,315 @@ Essentials: your branch is claude/rainbow-s05-match-c3, continued from claude/ra
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && for v in 1 2; do TGTFILL05=$v python3 -I tools/match05/make_target_vis.py $S/tf$v > $S/tf$v.log 2>&1 & done; wait; tail -2 $S/tf1.log; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nfor v in (1,2):\n  t=np.asarray(Image.open('$S/tf%d/target_05.png'%v).convert('RGB'))\n  Image.fromarray(t[600:1300,100:864]).save('$S/tf%d_crop.png'%v)\n\"", "description": "Build targets for both TGTFILL05 options"}`
 
+### 🧑 User — 2026-11-17T17:32:30.442Z
+
+> ↩︎ result: [1]-  Done                    TGTFILL05=$v python3 -I tools/match05/make_target_vis.py $S/tf$v > $S/tf$v.log 2>&1
+> [2]+  Done                    TGTFILL05=$v python3 -I tools/match05/make_target_vis.py $S/tf$v > $S/tf$v.log 2>&1
+>  "approved_vs_artwork_plain_mean_abs_visible_water": 39.50824848696288
+> }
+
+### 🤖 Claude — 2026-11-17T17:32:32.117Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/tf1_crop.png"}`
+
+### 🧑 User — 2026-11-17T17:32:32.157Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:32:32.695Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/tf2_crop.png"}`
+
+### 🧑 User — 2026-11-17T17:32:32.731Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:32:37.175Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"proj05-probe\\|bake.py\" qa/match/05/ qa/pilot05/proj/far*/NOTES.md 2>/dev/null | head; ls qa/pilot05/proj/ ; head -30 tools/proj05/bake.py", "description": "Find bake command details"}`
+
+### 🧑 User — 2026-11-17T17:32:37.272Z
+
+> ↩︎ result: qa/match/05/NOTES.md:18:* Re-bake: `python3 -I tools/proj05/bake.py <probe> <target> <out> far gapfill` (probe: `node scripts/proj05-probe.mjs
+> qa/match/05/INVENTORY.md:11:| tunnel bake: walls, rings, near gold frame, Blender paddles | `projwall05 projring05 projframe05 projlid05` | `src/vfx/proj05Tunnel.ts`, `tools/proj05/tunnel_bake.py` | `qa/pilot05/proj/tunnel/NOTES.md` |
+> BRIEF_NEXT.md
+> BRIEF_SPECIALIST1.md
+> BRIEF_SPECIALIST1_VERBATIM.md
+> BRIEF_SPECIALIST2.md
+> NOTES.md
+> align
+> caps
+> clips
+> compare
+> feasibility
+> flow2
+> move
+> near
+> probe
+> status_1116_2330
+> steer
+> target
+> tests
+> tunnel
+> """Screen 05 proj05 — bake the TARGET water image (tools/proj05/make_target.py) onto the REAL game river, in the
+> river's own coordinates (u across -1..1, s = arc length), using the live game's per-pixel river coordinates from the
+> locked 05 camera (scripts/proj05-probe.mjs -> uv_river.f32). Everything is anchored to the river, not to the camera.
+> 
+> usage: python3 -I tools/proj05/bake.py <probe_dir> <target_dir> <out_dir>
+> outputs (out_dir, default assets/textures/water05/):
+>   proj05_E.png   EXACT layer: the approved water at ~screen resolution; rows follow s with the locked view's own
+>                  density, columns spa …[+1666 chars]
+
+### 🤖 Claude — 2026-11-17T17:32:39.004Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/proj/probe | head; git log --all --oneline -S\"tgtvis05\" -- qa/match/05/NOTES.md | tail -2; grep -n \"raw=\" scripts/proj05-probe.mjs | head -5", "description": "Check existing probe data"}`
+
+### 🧑 User — 2026-11-17T17:32:39.084Z
+
+> ↩︎ result: camera.json
+> camera_proj05_session.json
+> river05_mesh.json
+> 30fa7306 Screen 05 M2: coin total verified (91 / 2,240, 0 px on every locked view), notes + shared changes
+> d9790281 Screen 05 milestone 1: ?tgtvis05=1 keeps visible approved water around Benny (whole 87.8 -> 89.2 % within 20)
+> 3://   node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe] [--raw=DIR for the float maps]
+> 21:const RAW = typeof opt.raw === 'string' ? opt.raw : OUT;   // the three 21 MB float maps (keep them out of git: --raw=scratch dir)
+
+### 🤖 Claude — 2026-11-17T17:32:42.515Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && node scripts/proj05-probe.mjs --q='proj05=1' --out=$S/probe --raw=$S/probe > $S/probe.log 2>&1; tail -3 $S/probe.log; ls $S/probe", "description": "Run river probe at locked 05 camera", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:33:04.169Z
+
+> ↩︎ result: probe → /tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/probe {"w":864,"h":1536,"uTime":12,"ribbonRows":240,"farVerts":2783,"farMorph":0,"foam":["foam_berm","Mesh","foam_flank","foam_rafts","foam_rim05"],"state":{"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]}}
+> camera.json
+> river05_mesh.json
+> uv_foam.f32
+> uv_river.f32
+> uv_scene.f32
+
+### 🤖 Claude — 2026-11-17T17:33:07.927Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && mkdir -p $S/tv0 && cp assets/textures/match05/tgtvis05/target_05.png assets/textures/match05/tgtvis05/fill_mask.png $S/tv0/ && ls qa/pilot05/proj/target/ 2>/dev/null | head; python3 -I tools/proj05/bake.py $S/probe $S/tv0 $S/bake0 far gapfill > $S/bake0.log 2>&1; tail -2 $S/bake0.log; cmp $S/bake0/proj05_E.png assets/textures/match05/tgtvis05/proj05_E.png && echo IDENTICAL", "description": "Verify re-bake reproduces committed E texture", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:33:08.427Z
+
+> ↩︎ result: Exit code 2
+> art_registered.png
+> coin_mask.png
+> correction.npz
+> fill_mask.png
+> report.json
+> target_05.png
+> water_mask.png
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/tv0/water_mask.png'
+> cmp: /tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/bake0/proj05_E.png: No such file or directory
+
+### 🤖 Claude — 2026-11-17T17:33:12.416Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && rm -rf $S/tv0 && python3 -I tools/match05/make_target_vis.py $S/tf0 > $S/tf0.log 2>&1; cmp $S/tf0/target_05.png assets/textures/match05/tgtvis05/target_05.png && echo TGT_IDENTICAL; grep -n \"correction\\|coin_mask\\|sys.argv\\[2\\]\\|tdir\" tools/proj05/bake.py | head", "description": "Rebuild default target and check bake inputs"}`
+
+### 🧑 User — 2026-11-17T17:33:19.597Z
+
+> ↩︎ result: TGT_IDENTICAL
+> 21:probe, tdir, out = sys.argv[1], sys.argv[2], sys.argv[3]
+> 33:wm = np.asarray(Image.open(os.path.join(tdir, "water_mask.png"))) > 127
+> 36:tgt = np.asarray(Image.open(os.path.join(tdir, "target_05.png")).convert("RGB"), np.float64) / 255
+> 42:if os.path.exists(os.path.join(tdir, "correction.npz")):
+> 43:    tgt = np.clip(tgt - np.load(os.path.join(tdir, "correction.npz"))["c"].astype(np.float64), 0, 1)
+
+### 🤖 Claude — 2026-11-17T17:33:23.095Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I tools/proj05/bake.py $S/probe $S/tf0 $S/bake0 far gapfill > $S/bake0.log 2>&1; tail -1 $S/bake0.log; cmp $S/bake0/proj05_E.png assets/textures/match05/tgtvis05/proj05_E.png && echo E_IDENTICAL", "description": "Re-bake default target and compare", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:33:34.125Z
+
+> ↩︎ result: Exit code 1
+> {"A_px": 18413, "E": [1024, 1459], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9344103409869774, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> /tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/bake0/proj05_E.png assets/textures/match05/tgtvis05/proj05_E.png differ: char 46, line 3
+
+### 🤖 Claude — 2026-11-17T17:33:37.979Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && cp qa/pilot05/proj/target/correction.npz $S/tf0/ && python3 -I tools/proj05/bake.py $S/probe $S/tf0 $S/bake0 far gapfill > $S/bake0.log 2>&1; cmp $S/bake0/proj05_E.png assets/textures/match05/tgtvis05/proj05_E.png && echo E_IDENTICAL || python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/bake0/proj05_E.png'),int);b=np.asarray(Image.open('assets/textures/match05/tgtvis05/proj05_E.png'),int)\nd=np.abs(a-b).max(-1); print((d>0).sum(), d.max())\"", "description": …[+63 chars]`
+
+### 🧑 User — 2026-11-17T17:33:49.649Z
+
+> ↩︎ result: E_IDENTICAL
+
+### 🤖 Claude — 2026-11-17T17:33:51.069Z
+
+The baseline reproduces byte for byte. Next I'm baking the two fill options.
+
+### 🤖 Claude — 2026-11-17T17:33:53.866Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && for v in 1 2; do cp $S/tf0/correction.npz $S/tf$v/; python3 -I tools/proj05/bake.py $S/probe $S/tf$v $S/bake$v far gapfill > $S/bake$v.log 2>&1; done; for v in 1 2; do for f in proj05_F.png proj05_lut.json; do cmp -s $S/bake$v/$f $S/bake0/$f && echo \"$v $f same\" || echo \"$v $f DIFF\"; done; done; grep -n \"TGTVIS05\\|tgtvis05\" src/vfx/waterRibbon.ts", "description": "Bake both fill options and locate switch code", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:34:16.744Z
+
+> ↩︎ result: 1 proj05_F.png DIFF
+> 1 proj05_lut.json same
+> 2 proj05_F.png DIFF
+> 2 proj05_lut.json same
+> 231: * `?tgtvis05=1` (Screen 05 agent, 2026-11-17, branch claude/rainbow-s05-match, qa/match/05/NOTES.md; explicit switch, NOT
+> 232: * in match05 yet): exact layer E from assets/textures/match05/tgtvis05/ — far2's E re-baked from a target in which the
+> 236:export const TGTVIS05: boolean = PROJGAP05 && q05('tgtvis05');
+> 1723:    E: TGTVIS05 ? new URL('../../assets/textures/match05/tgtvis05/proj05_E.png', import.meta.url).href
+
+### 🤖 Claude — 2026-11-17T17:34:21.939Z
+
+> 🔧 **Bash** `{"command": "sed -n 225,240p src/vfx/waterRibbon.ts; sed -n 1710,1735p src/vfx/waterRibbon.ts; S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad; python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfor v in (1,2):\n  a=np.asarray(Image.open('$S/bake%d/proj05_F.png'%v),int);b=np.asarray(Image.open('$S/bake0/proj05_F.png'),int)\n  d=np.abs(a-b).max(-1); print(v,'F',(d>0).sum(), d.max(), a.shape)\n  a=np.asarray(Image.open('$S/bake%d/proj05_E.png'%v),int);b=np.asarray(Image.open('$S/bake0/proj05_E.png'),int)\n  d=np.abs(a-b).max(-1); print(v,'E',(d>0).su …[+67 chars]`
+
+### 🧑 User — 2026-11-17T17:34:22.791Z
+
+> ↩︎ result: * assets/textures/water05/far2/ — far1's E with the gaps the locked eye never saw (wave back slopes) mirror-filled from
+>  * the approved texture (tools/proj05/bake.py … far gapfill). Riding no longer shows the coarse old tile through them as
+>  * dark torn stripes across the river. Needs projfar05 (far1 F + LUT).
+>  */
+> export const PROJGAP05: boolean = PROJFAR05 && on05('projgap05');
+> /**
+>  * `?tgtvis05=1` (Screen 05 agent, 2026-11-17, branch claude/rainbow-s05-match, qa/match/05/NOTES.md; explicit switch, NOT
+>  * in match05 yet): exact layer E from assets/textures/match05/tgtvis05/ — far2's E re-baked from a target in which the
+>  * 39,360 px of water the APPROVED picture shows around Benny's hat / shoulders keep the approved pixels instead of the
+>  * isolated-artwork fill (tools/match05/make_target_vis.py; registration, colour match, LUT, F unchanged). Needs projgap05.
+>  */
+> export const TGTVIS05: boolean = PROJGAP05 && q05('tgtvis05');
+> /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+> export const proj05Pending: Promise<unknown>[] = [];
+> 
+> /**
+>     (u.uPjRes.value as THREE.Vector2).copy(size);
+>     (u.uPjPost.value as THREE.Vec …[+2080 chars]
+
+### 🤖 Claude — 2026-11-17T17:34:25.996Z
+
+> 🔧 **Bash** `{"command": "grep -n \"proj05_F\\|far1/\\|q05 = \\|function q05\\|function on05\" src/vfx/*.ts src/world/*.ts | head", "description": "Find F texture loading"}`
+
+### 🧑 User — 2026-11-17T17:34:26.032Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:151:const q05 = (key: string): boolean => {
+> src/vfx/waterRibbon.ts:217: * block's layer F are baked a second time (assets/textures/water05/far1/) so that the far river also carries the approved
+> src/vfx/waterRibbon.ts:1691:/** `?proj05=1`: uniforms + GLSL for the far river block (materials.ts farRiverMaterial) — its baked layer proj05_F.png */
+> src/vfx/waterRibbon.ts:1698:    const tex = new THREE.TextureLoader().load(PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_F.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+> src/vfx/waterRibbon.ts:1705:  proj05Pending.push(fetch(PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_lut.json', import.meta.url).href : new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
+> src/vfx/waterRibbon.ts:1725:      : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+> src/vfx/waterRibbon.ts:1729:    lut: PROJFAR05 ? new …[+294 chars]
+
+### 🤖 Claude — 2026-11-17T17:34:30.373Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && cmp $S/bake0/proj05_F.png assets/textures/water05/far1/proj05_F.png && echo F0_eq_far1; sed -n 145,160p src/vfx/waterRibbon.ts; for v in 1 2; do d=assets/textures/match05/tgtfill05_$v; mkdir -p $d; cp $S/bake$v/proj05_E.png $S/bake$v/proj05_F.png $S/tf$v/target_05.png $S/tf$v/fill_mask.png $d/; done; ls -la assets/textures/match05/tgtfill05_2", "description": "Check F baseline and stage new textures"}`
+
+### 🧑 User — 2026-11-17T17:34:30.443Z
+
+> ↩︎ result: F0_eq_far1
+>  */
+> /**
+>  * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+>  * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+>  */
+> const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> const q05 = (key: string): boolean => {
+>   try {
+>     if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+>   } catch {
+>     /* no location (vite-node / workers) */
+>   }
+>   return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
+> };
+> /** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+> export const flag05 = q05;
+> total 4444
+> drwxr-xr-x 2 root root    4096 Nov 17 17:34 .
+> drwxr-xr-x 5 root root    4096 Nov 17 17:34 ..
+> -rw-r--r-- 1 root root   11184 Nov 17 17:34 fill_mask.png
+> -rw-r--r-- 1 root root 2004048 Nov 17 17:34 proj05_E.png
+> -rw-r--r-- 1 root root  342187 Nov 17 17:34 proj05_F.png
+> -rw-r--r-- 1 root root 2177829 Nov 17 17:34 target_05.png
+
+### 🤖 Claude — 2026-11-17T17:34:40.748Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\na=\"export const TGTVIS05: boolean = PROJGAP05 && q05('tgtvis05');\\n\"\nb=a+\"\"\"/**\n * `?tgtfill05=1|2` (Screen 05 agent, round 3, qa/match/05/NOTES.md \"Milestone 2 — 2.2\"; explicit switch, needs tgtvis05):\n * layers E + F re-baked from a target whose coin / Benny holes no longer carry the occluders' colours into the fill\n * (tools/match05/make_target_vis.py TGTFILL05=1|2) — removes the soft green-teal patches beside Benny while riding.\n * Off (default, or tgtvis05 off): nothing changes.\n */\nconst qv05 = ( …[+1516 chars]`
+
+### 🧑 User — 2026-11-17T17:34:43.614Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-17T17:34:46.110Z
+
+> 🔧 **Bash** `{"command": "head -15 scripts/capture.mjs | grep -n \"//\"; cat qa/match/05/INVENTORY.md | grep -in \"capture\" | head", "description": "Check capture script usage"}`
+
+### 🧑 User — 2026-11-17T17:34:46.147Z
+
+> ↩︎ result: 2:// Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> 3://   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> 4://   node scripts/capture.mjs 03 07           → only those
+> 5://   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> 6://   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> 7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> 4:Measure: `python3 -I tools/match05/metrics.py <capture> <prefix>` (same tool / masks as the 86.9 %; masks
+> 22:* **Fresh capture of `?match05=1` today (= `02_BEFORE_match05.png`): whole frame mean 8.96, within 20 levels 87.8 %,
+
+### 🤖 Claude — 2026-11-17T17:34:47.664Z
+
+> 🔧 **Bash** `{"command": "grep -n \"\\-\\-q\\|opt.q\\|location\\|query\" scripts/capture.mjs | head -8", "description": "Find capture query option"}`
+
+### 🧑 User — 2026-11-17T17:34:47.707Z
+
+> ↩︎ result: 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 37:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+
+### 🤖 Claude — 2026-11-17T17:34:48.759Z
+
+I'm capturing the locked Screen 05 view with each option and measuring both against the approved picture.
+
+### 🤖 Claude — 2026-11-17T17:34:51.761Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && for v in 0 1 2; do q=\"match05=1&tgtvis05=1\"; [ $v != 0 ] && q=\"$q&tgtfill05=$v\"; node scripts/capture.mjs 05 --q=\"$q\" --out=$S/cap$v > $S/cap$v.log 2>&1; done; cmp $S/cap0/05.png qa/match/05/03_NEW_match05_tgtvis05.png && echo M1_PRESERVED; for v in 1 2; do echo \"== $v\"; python3 -I tools/match05/metrics.py $S/cap$v/05.png $S/m$v\\_ | grep -E \"FULL|^water |^scenery|coins\"; done", "description": "Capture 05 with options and measure", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T17:35:49.184Z
+
+> ↩︎ result: M1_PRESERVED
+> == 1
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 8.71, 'within_10': 0.8055, 'within_20': 0.8872, 'ssim_lum': 0.8676, 'mean_signed_rgb': [-2.0, -0.2, 0.6]}
+> water                        px  480736  mean   4.28  <=10 0.933  <=20 0.960  ssim 0.943  signed [-2.5, -0.8, -0.1]
+> coins                        px   27437  mean  33.22  <=10 0.258  <=20 0.468  ssim 0.446  signed [-15.2, -4.4, 5.5]
+> == 2
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 8.46, 'within_10': 0.8064, 'within_20': 0.8888, 'ssim_lum': 0.8703, 'mean_signed_rgb': [-1.8, -0.1, 0.6]}
+> water                        px  480736  mean   3.99  <=10 0.934  <=20 0.963  ssim 0.948  signed [-2.4, -0.8, -0.2]
+> coins                        px   27437  mean  30.60  <=10 0.265  <=20 0.485  ssim 0.457  signed [-10.9, -2.7, 5.7]
+
+### 🤖 Claude — 2026-11-17T17:35:55.974Z
+
+Both new fills remove the teal discs, but the locked view scores a little lower than M1 (whole 89.2 → 88.9 %). I'm finding out where the loss sits.
+
+### 🤖 Claude — 2026-11-17T17:36:02.170Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np, json\nfrom scipy.ndimage import label\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'),float)\nc0=np.asarray(Image.open('$S/cap0/05.png').convert('RGB'),float); c2=np.asarray(Image.open('$S/cap2/05.png').convert('RGB'),float)\nd0=np.abs(c0-ap).mean(-1); d2=np.abs(c2-ap).mean(-1)\nch=np.abs(c2-c0).mean(-1)>2\nprint('changed px',ch.sum(),'err0',d0[ch].sum(),'err2',d2[ch].sum())\nlab,n=label(ch)\nidx=np. …[+704 chars]`
+
+### 🧑 User — 2026-11-17T17:36:03.659Z
+
+> ↩︎ result: changed px 48988 err0 1707659.0 err2 2170982.666666667
+> ['167198', np.int64(20839), np.int64(324), np.int64(715), np.int64(676), np.int64(1238), 'water']
+> ['65949', np.int64(2757), np.int64(357), np.int64(740), np.int64(1458), np.int64(1535), 'water']
+> ['45713', np.int64(1751), np.int64(112), np.int64(341), np.int64(1467), np.int64(1535), 'water']
+> ['26534', np.int64(5009), np.int64(149), np.int64(460), np.int64(1148), np.int64(1290), 'wake_splash']
+> ['23441', np.int64(2882), np.int64(400), np.int64(551), np.int64(489), np.int64(575), 'coins']
+> ['22107', np.int64(1939), np.int64(504), np.int64(593), np.int64(622), np.int64(700), 'coins']
+> ['17384', np.int64(1537), np.int64(673), np.int64(751), np.int64(1338), np.int64(1460), 'water']
+> ['14660', np.int64(1292), np.int64(444), np.int64(519), np.int64(590), np.int64(646), 'coins']
+> ['13429', np.int64(1163), np.int64(52), np.int64(148), np.int64(1408), np.int64(1535), 'water']
+> ['11348', np.int64(680), np.int64(735), np.int64(783), np.int64(1468), np.int64(1535), 'water']
+> ['7915', np.int64(1859), np.int64(216), np.int64(327), np.int64(870), np.int64(1052), 'water']
+> ['6516', np.int64(458), np.int64(54), np.int64(86), np.int64(725), np.int64(752), …[+9 chars]
+
+### 🤖 Claude — 2026-11-17T17:36:05.491Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/gain2.png"}`
+
+### 🧑 User — 2026-11-17T17:36:05.521Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:36:19.394Z
+
+> 🔧 **Bash** `{"command": "cat qa/match/05/move/new/move_log.json | head -c 300; echo; S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1&tgtfill05=2' --out=$S/move2 --d=0,3,6,12 --steer=-1,1 > $S/move2.log 2>&1; ls $S/move2; for f in move_00 move_12; do cmp -s $S/move2/$f.png qa/match/05/move/new/$f.png && echo \"$f same\" || echo \"$f diff\"; done", "description": "Capture riding/steering frames for option 2", "timeout": 900000}`
+

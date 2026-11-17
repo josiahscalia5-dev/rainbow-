@@ -517,6 +517,46 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/match05/tgtfill05_1/fill_mask.png",
+   "bytes": 11184,
+   "sha256": "67c92394e05e9069c60bba434b97d71257fbf1aae8d14889770671f224eb2db7"
+  },
+  {
+   "path": "assets/textures/match05/tgtfill05_1/proj05_E.png",
+   "bytes": 2007972,
+   "sha256": "b1c3d5557d4192a8f2aee6c2fefddb6b749fb0a7f36a041cc6c469545f8e4bdf"
+  },
+  {
+   "path": "assets/textures/match05/tgtfill05_1/proj05_F.png",
+   "bytes": 347941,
+   "sha256": "2c5ecae9602cd276f36527cde7d4f4c2f3c647468620b944adf755aa910c71f6"
+  },
+  {
+   "path": "assets/textures/match05/tgtfill05_1/target_05.png",
+   "bytes": 2178479,
+   "sha256": "f1c2cbf50a2d025f04d9f8de68d8715f90b42960ab2f22dde268060c036db1d9"
+  },
+  {
+   "path": "assets/textures/match05/tgtfill05_2/fill_mask.png",
+   "bytes": 11184,
+   "sha256": "67c92394e05e9069c60bba434b97d71257fbf1aae8d14889770671f224eb2db7"
+  },
+  {
+   "path": "assets/textures/match05/tgtfill05_2/proj05_E.png",
+   "bytes": 2004048,
+   "sha256": "400bb9e45cf4decd3665701f94676f177e07033a0343f21061882804aed34e5a"
+  },
+  {
+   "path": "assets/textures/match05/tgtfill05_2/proj05_F.png",
+   "bytes": 342187,
+   "sha256": "1672da4c17ec695cd154ff9654eb1de0c06fe875a7ecec08d27e6228b74e8024"
+  },
+  {
+   "path": "assets/textures/match05/tgtfill05_2/target_05.png",
+   "bytes": 2177829,
+   "sha256": "f18385757f018620f89122952cdab4cc06a23657a33fade43b6c2fc5eb1cdcd4"
+  },
+  {
    "path": "assets/textures/match05/tgtvis05/fill_mask.png",
    "bytes": 11184,
    "sha256": "67c92394e05e9069c60bba434b97d71257fbf1aae8d14889770671f224eb2db7"
@@ -678,8 +718,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 6275,
-   "sha256": "a3c5eafb1e196a1192ca29d9cf5e07405fcdd3673219e7007c7c181b24c53eae"
+   "bytes": 6782,
+   "sha256": "d4cdb65e4ac38d252d0afef2f178bb984dedf93fc0fa32eff2c7d2af6c9d9704"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -688,8 +728,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 13537,
-   "sha256": "6886f5d40664a5915e788ad719a548754c70f62b1d06759e1bd0ad41a2c3a1f6"
+   "bytes": 13545,
+   "sha256": "ad451bca450bd610f495f9fdfdac22c50a4e71602541ca110a87059ac3aad4f4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1153,8 +1193,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 4376,
-   "sha256": "062f9f169c8fb98bc58c067e416e7d9f310dd697f025f2c0ecd055d6a4c9daf6"
+   "bytes": 1236,
+   "sha256": "e5dcc17bc3a544b9cd2b0d04e6a5bcab2b454f1cf885d72933667fd6fda000a0"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -11308,8 +11348,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 107491,
-   "sha256": "f49661758259a7cc0dcbf71887836ff9f33854277e72038a767eab63df018cf8"
+   "bytes": 108775,
+   "sha256": "9dad0e4bfeaaf80957132b1318416ad951d6369cac1eb758e29c4abda88f1a5c"
   },
   {
    "path": "src/vfx/whirlpool.ts",
