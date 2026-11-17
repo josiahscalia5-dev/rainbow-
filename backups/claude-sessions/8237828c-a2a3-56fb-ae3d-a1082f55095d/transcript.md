@@ -3097,3 +3097,199 @@ The stash restore reported "No stash entries found". The five-minute autosave pr
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; cd $S/wt && timeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/def_before > $S/log2.txt 2>&1; timeout 900 node scripts/capture.mjs 07 08 09 10 --out=$S/m08_before \"--q=match08=1\" >> $S/log2.txt 2>&1; cd /home/user/rainbow- && python3 -I - $S <<'EOF'\nimport sys; import numpy as np; from PIL import Image\nS=sys.argv[1]\ndef n(a,b):\n    a=np.asarray(Image.open(a).convert(\"RGB\")).astype(int); b=np.asarray(Image.open(b).convert(\"RGB\")).astype(int)\n    return int((np.abs(a-b).max(2)>0 …[+530 chars]`
 
+### 🧑 User — 2026-11-17T17:52:48.225Z
+
+> ↩︎ result: 07 | default NEW code vs BEFORE code: 49712 / 2nd run 49712 | match08 NEW code vs BEFORE code: 56669 / 2nd run 56669
+> 08 | default NEW code vs BEFORE code: 36183 / 2nd run 36183 | match08 NEW code vs BEFORE code: 36325 / 2nd run 36325
+> 09 | default NEW code vs BEFORE code: 53570 / 2nd run 54667 | match08 NEW code vs BEFORE code: 51365 / 2nd run 51365
+> 10 | default NEW code vs BEFORE code: 52539 / 2nd run 52539 | match08 NEW code vs BEFORE code: 51756 / 2nd run 50108
+
+### 🤖 Claude — 2026-11-17T17:52:56.124Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; python3 -I - $S <<'EOF'\nimport sys; import numpy as np; from PIL import Image\nS=sys.argv[1]\na=np.asarray(Image.open(f\"{S}/def/08.png\").convert(\"RGB\")).astype(int); b=np.asarray(Image.open(f\"{S}/def_before/08.png\").convert(\"RGB\")).astype(int)\nm=np.abs(a-b).max(2); ys,xs=np.nonzero(m>0); print(\"bbox x\",xs.min(),xs.max(),\"y\",ys.min(),ys.max(),\"max diff\",m.max(),\"px>20:\",(m>20).sum())\nrows=(m>0).sum(1); print(\"rows with diffs:\", [i for i in range(0,1536,32) if rows[i:i+32].su …[+166 chars]`
+
+### 🧑 User — 2026-11-17T17:52:57.285Z
+
+> ↩︎ result: bbox x 104 760 y 33 207 max diff 242 px>20: 21823
+> rows with diffs: [32, 64, 96, 128, 160, 192]
+> !! android/local.properties
+> !! backups/.autosave.lock
+> !! backups/.live/
+
+### 🤖 Claude — 2026-11-17T17:53:03.199Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; python3 -I -c \"\nfrom PIL import Image; import sys\nS=sys.argv[1]; box=(90,20,780,215)\na=Image.open(S+'/def/08.png').crop(box); b=Image.open(S+'/def_before/08.png').crop(box)\nc=Image.new('RGB',(a.width,a.height*2+8),'white'); c.paste(a,(0,0)); c.paste(b,(0,a.height+8)); c.save(S+'/hud_cmp.png')\" $S", "description": "Crop HUD region from both captures"}`
+
+### 🧑 User — 2026-11-17T17:53:03.461Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:53:05.572Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp/hud_cmp.png"}`
+
+### 🧑 User — 2026-11-17T17:53:05.600Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:53:08.623Z
+
+Harmless: the temporary checkout can't load the HUD font (it borrows the main copy's packages through a link), so the top bar text renders in a fallback font. Comparing everything below the HUD bar:
+
+### 🤖 Claude — 2026-11-17T17:53:12.741Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; python3 -I - $S <<'EOF'\nimport sys; import numpy as np; from PIL import Image\nS=sys.argv[1]\ndef n(a,b,y0=216):\n    a=np.asarray(Image.open(a).convert(\"RGB\")).astype(int)[y0:]; b=np.asarray(Image.open(b).convert(\"RGB\")).astype(int)[y0:]\n    return int((np.abs(a-b).max(2)>0).sum())\nfor sc in (\"07\",\"08\",\"09\",\"10\"):\n    print(sc, \"| below HUD — default NEW vs BEFORE:\", n(f\"{S}/def/{sc}.png\",f\"{S}/def_before/{sc}.png\"),\n          \"(2nd run\", str(n(f\"{S}/def_head/{sc}.png …[+288 chars]`
+
+### 🧑 User — 2026-11-17T17:53:15.496Z
+
+> ↩︎ result: 07 | below HUD — default NEW vs BEFORE: 0 (2nd run 0) | match08 NEW vs BEFORE: 0 (2nd run 0)
+> 08 | below HUD — default NEW vs BEFORE: 0 (2nd run 0) | match08 NEW vs BEFORE: 0 (2nd run 0)
+> 09 | below HUD — default NEW vs BEFORE: 0 (2nd run 0) | match08 NEW vs BEFORE: 0 (2nd run 0)
+> 10 | below HUD — default NEW vs BEFORE: 1258 (2nd run 1258) | match08 NEW vs BEFORE: 732 (2nd run 0)
+
+### 🤖 Claude — 2026-11-17T17:53:25.027Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; git worktree remove --force $S/wt && git worktree prune && echo \"worktree removed\"; for sc in 08 09 10; do ref=$(ls references/${sc}_*.png); echo \"== $sc ($ref)\"; for v in m08 new; do python3 -I tools/qa/screen_match.py $ref $S/$v/$sc.png --label=$v 2>&1 | sed \"s#$S/##\"; done; done", "description": "Remove worktree; measure 08-10 vs approved"}`
+
+### 🧑 User — 2026-11-17T17:53:35.915Z
+
+> ↩︎ result: worktree removed
+> == 08 (references/08_final_spin_chamber.png)
+> m08    FULL |d|  14.4 <=20 0.833 SSIM 0.818 | BELOWHUD |d|   9.8 <=20 0.901 | LAYOUT |d|   5.5 <=20 0.918 | mean RGB approved [168.4, 108.6, 170.2] game [168.7, 109.4, 169.0]
+> new    FULL |d|  13.0 <=20 0.841 SSIM 0.823 | BELOWHUD |d|   8.2 <=20 0.910 | LAYOUT |d|   4.1 <=20 0.931 | mean RGB approved [168.4, 108.6, 170.2] game [168.3, 109.2, 169.3]
+> == 09 (references/09_ride_the_final_wave.png)
+> m08    FULL |d|  74.6 <=20 0.088 SSIM 0.215 | BELOWHUD |d|  75.3 <=20 0.089 | LAYOUT |d|  64.3 <=20 0.090 | mean RGB approved [140.6, 128.0, 198.2] game [182.5, 145.6, 229.3]
+> new    FULL |d|  74.6 <=20 0.088 SSIM 0.216 | BELOWHUD |d|  75.3 <=20 0.089 | LAYOUT |d|  64.3 <=20 0.088 | mean RGB approved [140.6, 128.0, 198.2] game [182.3, 145.2, 228.8]
+> == 10 (references/10_slide_into_hiding.png)
+> m08    FULL |d|  79.5 <=20 0.066 SSIM 0.198 | BELOWHUD |d|  80.4 <=20 0.065 | LAYOUT |d|  70.9 <=20 0.056 | mean RGB approved [147.1, 109.8, 198.5] game [202.8, 159.8, 214.5]
+> new    FULL |d|  78.8 <=20 0.065 SSIM 0.199 | BELOWHUD |d|  79.6 <=20 0.065 | LAYOUT |d|  70.1 <=20 0.053 | mean RGB approved [147.1, 109.8, 198.5] game [199.5, 159.9, 219.8 …[+1 chars]
+
+### 🤖 Claude — 2026-11-17T17:53:43.566Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; B=origin/claude/rainbow-s08-benny08-bake-c3; git show $B:qa/match/08/benny08/work/regions08.py > $S/regions08.py; head -30 $S/regions08.py | grep -n -E \"usage|argv|def |import|mask|json\" | head -15", "description": "Fetch the Benny specialist's region tool"}`
+
+### 🧑 User — 2026-11-17T17:53:43.613Z
+
+> ↩︎ result: 2:qa/match/08/scenery_metrics_*.json): SCENERY = not the HUD/title band (y < 190), not Benny + splash (x 220-650,
+> 8:usage: python3 -I regions08.py <capture.png> [<capture2.png> ...] [--json=OUT]"""
+> 9:import json, sys
+> 10:import numpy as np
+> 11:from PIL import Image
+> 12:from scipy.ndimage import gaussian_filter
+> 28:def ssim_map(a, b):
+
+### 🤖 Claude — 2026-11-17T17:53:47.602Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; cp $S/m08/08.png $S/08_match08.png; cp $S/new/08.png $S/08_coins08px.png; python3 -I $S/regions08.py $S/08_match08.png $S/08_coins08px.png --json=$S/regions.json > /dev/null 2>&1; python3 -I -c \"\nimport json,sys; d=json.load(open(sys.argv[1]))\nfor k,v in d.items():\n  print(k.split('/')[-1], ' | '.join(f\\\"{r} {v[r]['within_20']*100:.1f}%\\\" for r in ('scenery','scenery_nocoins','middle','benny+splash','whole')))\" $S/regions.json", "description": "Measure scenery/middle regions with and w …[+15 chars]`
+
+### 🧑 User — 2026-11-17T17:53:49.109Z
+
+> ↩︎ result: 08_match08.png scenery 97.3% | scenery_nocoins 99.0% | middle 90.6% | benny+splash 49.8% | whole 83.3%
+> 08_coins08px.png scenery 98.0% | scenery_nocoins 99.3% | middle 93.5% | benny+splash 51.6% | whole 84.1%
+
+### 🤖 Claude — 2026-11-17T17:53:52.061Z
+
+Scenery **97.3 → 98.0 %**, the middle band with the coin trail **90.6 → 93.5 %**, and nothing got worse. Now the gameplay test with the switch on (8/8 and all 91 coins collected):
+
+### 🤖 Claude — 2026-11-17T17:53:54.706Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/gameplay-test.mjs \"--q=match08=1&coins08px=1\" --out=qa/match/08/coins08px/gameplay_match08_coins08px.json > /dev/null 2>&1; echo \"exit $?\"; python3 -I -c \"\nimport json; d=json.load(open('qa/match/08/coins08px/gameplay_match08_coins08px.json'))\nc=d['checks']; print('pass', d['pass'], '|', sum(1 for v in c.values() if (v is True or (isinstance(v,dict) and v.get('pass')))), '/', len(c), '| coins', c['realCoinPickups'], '| drop', d['plunge']['verticalDrop'], '| errors', d['errors'])\"", "description": "Gameplay test with coins08px switch", "timeout": 96 …[+5 chars]`
+
+### 🧑 User — 2026-11-17T17:54:02.320Z
+
+> ↩︎ result: exit 0
+> pass True | 8 / 8 | coins {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91} | drop 61.31 | errors []
+
+### 🤖 Claude — 2026-11-17T17:54:05.729Z
+
+**Gameplay 8/8, all 91 coins collected (1,330 → 2,240), 07→08 drop intact (61.3 u), no errors.** Now moving-camera frames, since a coin that's right only in the still view isn't enough:
+
+### 🤖 Claude — 2026-11-17T17:54:06.729Z
+
+> 🔧 **Bash** `{"command": "ls tools/match08/; grep -l -i \"motion\\|steer\" tools/match08/*.mjs 2>/dev/null | head", "description": "Look for an existing Screen 08 motion tool"}`
+
+### 🧑 User — 2026-11-17T17:54:06.767Z
+
+> ↩︎ result: bennytree.mjs
+> coinlat.mjs
+> coinprobe08.mjs
+> coins08px.mjs
+> cointake.mjs
+> fit_proxies.py
+> motion08.mjs
+> probe08b.mjs
+> river_centre_px_approved08.json
+> river_proj.py
+> solve08.mjs
+> tools/match08/motion08.mjs
+
+### 🤖 Claude — 2026-11-17T17:54:08.353Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p tools/match08/motion08.mjs | grep -E \"^//|argv|--\" | head -15", "description": "Read motion08 usage"}`
+
+### 🧑 User — 2026-11-17T17:54:08.397Z
+
+> ↩︎ result: // Screen 08 moving-camera test (read-only): from the 08 checkpoint ride forward / steer with the real game sim and
+> // screenshot what the live camera sees. usage: node motion08.mjs <outDir> [q]
+> const OUT = process.argv[2]; const Q = process.argv[3] ?? 'match08=1';
+
+### 🤖 Claude — 2026-11-17T17:54:12.499Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/coins08px; timeout 1200 node tools/match08/motion08.mjs $O/motion_BEFORE \"match08=1\" > /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/mot.log 2>&1; timeout 1200 node tools/match08/motion08.mjs $O/motion_NEW \"match08=1&coins08px=1\" >> /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/mot.log 2>&1; ls $O/motion_NEW; git checkout -q -- qa/capture_log.json 2>/dev/null; tail -3 /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/mot.log", "description": "Render 08 moving f …[+53 chars]`
+
+### 🧑 User — 2026-11-17T17:55:32.906Z
+
+> ↩︎ result: f00_checkpoint.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f15_forward15u.png
+> motion.json
+> s_left_steer.png
+> s_right_steer.png
+> f15_forward15u s 407.04 lat 0.00 09
+> s_left_steer s 397.91 lat -1.85 08
+> s_right_steer s 397.89 lat 1.85 08
+
+### 🤖 Claude — 2026-11-17T17:55:38.052Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/coins08px; S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad; python3 -I - $O $S <<'EOF'\nimport sys\nfrom PIL import Image\nO,S=sys.argv[1],sys.argv[2]\nfr=[\"f03_forward3u\",\"f06_forward6u\",\"f10_forward10u\",\"s_left_steer\"]\ntiles=[]\nfor f in fr:\n    for v in (\"motion_BEFORE\",\"motion_NEW\"):\n        im=Image.open(f\"{O}/{v}/{f}.png\").convert(\"RGB\"); im=im.resize((im.width*300//im.height,300)); tiles.append(im)\nw=tiles[0].width; c=Image.new(\"RGB\",(w*8+70,300),\"white\")\nfor i,t in enumerate(tiles): c.paste(t,(i*(w+ …[+138 chars]`
+
+### 🧑 User — 2026-11-17T17:55:38.711Z
+
+> ↩︎ result: (1414, 300)
+
+### 🤖 Claude — 2026-11-17T17:55:40.311Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/motion_review.png"}`
+
+### 🧑 User — 2026-11-17T17:55:40.344Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:55:45.764Z
+
+The moving frames look right: coins ride on the river as before, now along the painted trail, with no stray coins at the far end. Saving the pictures, measurements and notes, then pushing:
+
+### 🤖 Claude — 2026-11-17T17:55:53.363Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/08/coins08px; S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp; cp references/08_final_spin_chamber.png $O/1_APPROVED_08.png; cp $S/m08/08.png $O/2_BEFORE_match08.png; cp $S/new/08.png $O/3_NEW_match08_coins08px.png; cp $S/regions.json $O/regions_BEFORE_NEW.json; for v in 2_BEFORE_match08 3_NEW_match08_coins08px; do python3 -I tools/qa/screen_match.py references/08_final_spin_chamber.png $O/$v.png --json=$O/screen_match_$v.json --label=$v > /dev/null; done; python3 -I - $O <<'EOF'\nimport sys,json; from PIL import Image\nO=sys.argv[ …[+1030 chars]`
+
+### 🧑 User — 2026-11-17T17:55:58.719Z
+
+> ↩︎ result: ok (2576, 1288)
+> 1_APPROVED_08.png
+> 1_APPROVED_08_cointrail_2x.png
+> 2_BEFORE_match08.png
+> 2_BEFORE_match08_cointrail_2x.png
+> 3_NEW_match08_coins08px.png
+> 3_NEW_match08_coins08px_cointrail_2x.png
+> gameplay_match08_coins08px.json
+> motion_BEFORE
+> motion_NEW
+> motion_sheet_top_BEFORE_bottom_NEW.png
+> probe_coins08px.json
+> regions_BEFORE_NEW.json
+> screen_match_2_BEFORE_match08.json
+> screen_match_3_NEW_match08_coins08px.json
+

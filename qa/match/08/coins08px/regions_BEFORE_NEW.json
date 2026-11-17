@@ -1,0 +1,76 @@
+{
+ "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp/08_match08.png": {
+  "scenery": {
+   "within_20": 0.973,
+   "ssim": 0.9588,
+   "mean_abs": 4.6
+  },
+  "upper": {
+   "within_20": 0.9888,
+   "ssim": 0.9684,
+   "mean_abs": 3.35
+  },
+  "middle": {
+   "within_20": 0.9063,
+   "ssim": 0.8899,
+   "mean_abs": 12.62
+  },
+  "lower": {
+   "within_20": 0.9923,
+   "ssim": 0.9843,
+   "mean_abs": 1.75
+  },
+  "scenery_nocoins": {
+   "within_20": 0.9898,
+   "ssim": 0.9756,
+   "mean_abs": 2.78
+  },
+  "benny+splash": {
+   "within_20": 0.4982,
+   "ssim": 0.4582,
+   "mean_abs": 39.13
+  },
+  "whole": {
+   "within_20": 0.8328,
+   "ssim": 0.8179,
+   "mean_abs": 14.42
+  }
+ },
+ "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/cp/08_coins08px.png": {
+  "scenery": {
+   "within_20": 0.9804,
+   "ssim": 0.9642,
+   "mean_abs": 3.36
+  },
+  "upper": {
+   "within_20": 0.9925,
+   "ssim": 0.9727,
+   "mean_abs": 2.95
+  },
+  "middle": {
+   "within_20": 0.9353,
+   "ssim": 0.9083,
+   "mean_abs": 7.38
+  },
+  "lower": {
+   "within_20": 0.9923,
+   "ssim": 0.9843,
+   "mean_abs": 1.75
+  },
+  "scenery_nocoins": {
+   "within_20": 0.9932,
+   "ssim": 0.9792,
+   "mean_abs": 2.38
+  },
+  "benny+splash": {
+   "within_20": 0.5161,
+   "ssim": 0.4696,
+   "mean_abs": 35.21
+  },
+  "whole": {
+   "within_20": 0.8407,
+   "ssim": 0.8234,
+   "mean_abs": 12.98
+  }
+ }
+}

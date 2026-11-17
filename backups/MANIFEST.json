@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11165,
-   "sha256": "a12c266bdbc12d5160f5f30a483bc87e489e0d1a24fbcc953da3e1b0a1cd975e"
+   "sha256": "e9fe45b386b9f48817e697156db7070f7c836e32bd3b236cb81136c0c9ab1387"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1502,9 +1502,144 @@
    "sha256": "b42632c392de097aeb934c16ebef7b594b7904b14b5ff8edf0c6885779286ae5"
   },
   {
+   "path": "qa/match/08/coins08px/1_APPROVED_08.png",
+   "bytes": 492730,
+   "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
+  },
+  {
+   "path": "qa/match/08/coins08px/1_APPROVED_08_cointrail_2x.png",
+   "bytes": 1164458,
+   "sha256": "2b20ff7355c5de89f4ae068c5b4dd2701f6cd2477051ac08b39a4871dae78acb"
+  },
+  {
+   "path": "qa/match/08/coins08px/2_BEFORE_match08.png",
+   "bytes": 2346273,
+   "sha256": "65abf7abbdc27b9b5173a06fda44dce77e63d3381c4ded02d5decccdc47c4019"
+  },
+  {
+   "path": "qa/match/08/coins08px/2_BEFORE_match08_cointrail_2x.png",
+   "bytes": 1083328,
+   "sha256": "9c24c0f9e8a26261b8dfe1727cf923f79d138af0ee7266d5f58c5753c73f3828"
+  },
+  {
+   "path": "qa/match/08/coins08px/3_NEW_match08_coins08px.png",
+   "bytes": 2343263,
+   "sha256": "e990d8d698df9213520bd272e28444dc87c13c2378925f2342accb2da9a093c7"
+  },
+  {
+   "path": "qa/match/08/coins08px/3_NEW_match08_coins08px_cointrail_2x.png",
+   "bytes": 1075029,
+   "sha256": "9dce4d68feb41e3417e0a04f766571d0a29f04ab738992461c0c95798cae345c"
+  },
+  {
+   "path": "qa/match/08/coins08px/gameplay_match08_coins08px.json",
+   "bytes": 14666,
+   "sha256": "e7d06ba84694483b2dc25392468c5b16d31707546c8d30da3afed40282c92e58"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_BEFORE/f00_checkpoint.png",
+   "bytes": 2358728,
+   "sha256": "7f325ee73a4860693cb102d6a3efa777b8cdf5b0353afd6fc785fb2a89298a44"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_BEFORE/f03_forward3u.png",
+   "bytes": 2378441,
+   "sha256": "ac93aadf5b837e0ea8949e037267b38bb5582da9439dae668ccbf70da96983ab"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_BEFORE/f06_forward6u.png",
+   "bytes": 2293114,
+   "sha256": "599aca5ed06439c521997c459231e7f8bcc56945d9f174b50a11f809b0968164"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_BEFORE/f10_forward10u.png",
+   "bytes": 2196995,
+   "sha256": "77405821b7e0d85b41919d504714c7751397eafdb277d60057be9ec39a54cbf4"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_BEFORE/f15_forward15u.png",
+   "bytes": 1575130,
+   "sha256": "071e71dbc831f886133057161b0f0fad5eb625b09ee04204c305f80624fd852d"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_BEFORE/motion.json",
+   "bytes": 782,
+   "sha256": "5cbd5750e81a4e9242b1256fc6f0f8c8075bf5a97b7fe0e3b7de089ff752252c"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_BEFORE/s_left_steer.png",
+   "bytes": 2262632,
+   "sha256": "15d0a88d3f489023b55765b3bff5a74e4ace6f2c6f02cb7b6a8fbd5dc39bb077"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_BEFORE/s_right_steer.png",
+   "bytes": 2285331,
+   "sha256": "f235268fd455666169649ffe7d146445987fef1f652b70b5f0cb73e5a862cc64"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_NEW/f00_checkpoint.png",
+   "bytes": 2356776,
+   "sha256": "c4cde25f19cf41ddd854a98d3abf057f1c51baa68980ad01fafeb30c2c06cf64"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_NEW/f03_forward3u.png",
+   "bytes": 2375508,
+   "sha256": "c09ca7641021c8d7e12f64c90ef74c38686766d471ad52355b7827d99448a1c2"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_NEW/f06_forward6u.png",
+   "bytes": 2282743,
+   "sha256": "5c6140b59d23b7748d1923230f2a71cf7cfae7003d265f1b277ed3a6db282d20"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_NEW/f10_forward10u.png",
+   "bytes": 2176495,
+   "sha256": "bef707352bbd958ff424d5f03c7a772b0bf046c4e76443bcc61dee6e91273840"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_NEW/f15_forward15u.png",
+   "bytes": 1541961,
+   "sha256": "47711c03c7f355f16b28c6de2cced2ce9c2a164fa6691fd10360aff984093ba4"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_NEW/motion.json",
+   "bytes": 781,
+   "sha256": "75bead0f93ce5d094fafc6fb197c2c2fdea38bdd36c7a958ade954c9c549ddd4"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_NEW/s_left_steer.png",
+   "bytes": 2255260,
+   "sha256": "a898120ac4b7fe248efb3ab220cd80c8e4f506696ab889fa5df564e7747bdb80"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_NEW/s_right_steer.png",
+   "bytes": 2279060,
+   "sha256": "026982d556f329a077455038f0110a940922ade388d36913c69c9477a0a80409"
+  },
+  {
+   "path": "qa/match/08/coins08px/motion_sheet_top_BEFORE_bottom_NEW.png",
+   "bytes": 6430719,
+   "sha256": "4d7d54a2662d5ed92c38b07c94b0ea70d86cf6cd718629b74acd38361546d2f2"
+  },
+  {
    "path": "qa/match/08/coins08px/probe_coins08px.json",
    "bytes": 2462,
    "sha256": "ee7133645038c263ac667afde7e0aae135a8b4910611e03f6df38e225a9f2e09"
+  },
+  {
+   "path": "qa/match/08/coins08px/regions_BEFORE_NEW.json",
+   "bytes": 1399,
+   "sha256": "dc6e69a47d09ef493085cbd5d7d82c3b54ee835e1511deb635e73c2f6a88ed86"
+  },
+  {
+   "path": "qa/match/08/coins08px/screen_match_2_BEFORE_match08.json",
+   "bytes": 547,
+   "sha256": "a796d6ea925062a18240eb131a36c4a3414d3428c9dc97dfa09158d3eaa2dfcc"
+  },
+  {
+   "path": "qa/match/08/coins08px/screen_match_3_NEW_match08_coins08px.json",
+   "bytes": 561,
+   "sha256": "73f05e7a863692f5d0841b95a5562d98f93c4029fde43b2a73674d873983e99e"
   },
   {
    "path": "qa/match/08/gameplay_test_match08.json",
