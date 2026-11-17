@@ -83,3 +83,29 @@ python3 -I tools/match08/river_proj.py cam08.json tools/match08/river_centre_px_
 python3 -I tools/match08/fit_proxies.py cam08.json assets/textures/match08/proj08.json
 node scripts/capture.mjs 08 --q=match08=1 --out=<dir>; node tools/match08/motion08.mjs <dir>
 ```
+
+## FINISH ROUND (user order "finish Screen 08 before Phase 2", 2026-11-17 ~14:15 UTC) — all behind `?match08=1`
+1. **Arch / unseen surfaces when moving**: no more flat fallback colour. Surfaces the approved picture never showed get
+   triplanar, mirrored tiles of material patches CUT FROM THE ARTWORK (`assets/textures/match08/patch_wall|gold|towel.png`:
+   slotted purple metal, gold band, terry towel); a stretch guard switches a surface to its patch where the moving camera
+   sees it ≥ 2.5–6× more face-on than the approved view did (ratio of incidence cosines = 1 in the approved view → that
+   view unchanged). Remaining: a darker purple band at the lower-left edge 3–6 u forward (near pipe at a steep angle).
+2. **Benny on 08** (Game.ts M08_BENNY, restored when leaving 08): beanie 0.86×, body 0.16 u higher out of the water,
+   white-and-purple knit stripes (crown tint), the approved picture's SPLASH RING cut from the original image
+   (`splash08.png|json`, white/low-saturation alpha, gold + fur excluded) as a camera-facing card riding with Benny 1.3 u in
+   front of him; the game's thin splash fans + spray hidden on 08. Benny + splash area 61.0 % → 64.5 % within 20 levels.
+   Not yet: his body is a little wider than painted and sits ≈30 px right; fur/face are the game model's. No files were
+   taken from line B (`ccr-b0757dec-dj6l1o` untouched); its `benny05` bake is Screen-05-specific.
+3. **Coins**: the nine picture coins face the approved camera (upright, ±3° wobble) at the painted size; any coin beyond
+   pickup reach slides along its own view ray (same pixel in the approved view) to the nearest depth within reach
+   (|lateral| ≤ 1.0, ≥ 0.3 above water) — fixes a search-range bug that had pinned five coins to one point.
+4. **Coin total preserved**: 91 coins (run total 2,240) exactly as the default game — the 8 coins the picture's 9 replace
+   go into the inlet just before the 08 view; coins sorted in river order under the switch. Gameplay 8/8 with the switch
+   and without (default test output byte-identical).
+5. **Measured FINAL** (`scenery_metrics_BEFORE_FINAL.json`): scenery 97.4 % within 20 levels (SSIM 0.959; upper 98.9 %,
+   middle 91.0 %, lower 99.2 %), Benny + splash 64.5 %, whole frame 83.0 % (SSIM 0.815), below HUD 89.8 %, layout 90.9 %.
+   BEFORE (current game): 3.3 / 2.9 / 4.0 %.
+6. **Android**: `builds/rainbow-debug-match08-2026-11-17.apk` (21.3 MB, `VITE_RAINBOW_Q05="match08=1" npm run
+   android:debug`, Git LFS) — the whole APK runs with the 08 switch on. NOT run on a phone: this cloud session has no
+   device or emulator (no adb device). Phone-size render (1080×1920, same 9:16) `08_NEW_match08_android1080x1920.png`.
+   Install: `adb install -r builds/rainbow-debug-match08-2026-11-17.apk` (or copy to the phone and open it).

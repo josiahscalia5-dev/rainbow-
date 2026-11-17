@@ -6332,3 +6332,25 @@ All coins are within reach now, but the run collected 90, one short. Replaying t
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T14:10:37.083Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='qa/match/08/NOTES.md'; s=open(p).read()\nadd='''\n## FINISH ROUND (user order \"finish Screen 08 before Phase 2\", 2026-11-17 ~14:15 UTC) — all behind `?match08=1`\n1. **Arch / unseen surfaces when moving**: no more flat fallback colour. Surfaces the approved picture never showed get\n   triplanar, mirrored tiles of material patches CUT FROM THE ARTWORK (`assets/textures/match08/patch_wall|gold|towel.png`:\n   slotted purple metal, gold band, terry towel); a stretch guard switches a surface to its patch where the moving camera\n   sees it ≥ 2.5–6× more fac …[+3335 chars]`
+
+### 🧑 User — 2026-11-17T14:10:40.831Z
+
+> ↩︎ result: notes updated
+> local  2f6aac7377c89cd3acf0e3214afe19559342af0b
+> remote 2f6aac7377c89cd3acf0e3214afe19559342af0b
+> 1
+> 13
+> LFS missing on GitHub: 0
+> key pieces: 0
+
+### 🤖 Claude — 2026-11-17T14:10:43.901Z
+
+GitHub matches local (`2f6aac7`), but one file is still uncommitted (a background save ran at the same moment). Saving again and confirming the notes and APK are in the commit:
+
+### 🤖 Claude — 2026-11-17T14:10:46.803Z
+
+> 🔧 **Bash** `{"command": "git status --porcelain; sleep 3; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Screen 08 finished round (notes)\" 2>&1 | grep -E '\"result\"|\"commit\"|skipping'; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; git status --porcelain | wc -l; git log --oneline -1 -- builds/rainbow-debug-match08-2026-11-17.apk; git show HEAD:qa/match/08/NOTES.md | grep -c \"FINISH ROUND\"; git lfs ls-files | grep -c match08", "description": "Finish the save and confirm files are committ …[+23 chars]`
+
