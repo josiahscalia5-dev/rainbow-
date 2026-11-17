@@ -109,3 +109,24 @@ ledger note) — not part of Image-Blaster.
   fal's reply text.
 * Next: the user tops up the fal balance (fal.ai → Dashboard → Billing), then the SAME single edit is re-run.
   World Labs untouched (7,000 credits).
+
+## Step 1 DONE (2026-11-17 12:25 UTC, after the user topped up fal) — ONE paid fal edit, waiting for the user's review
+* fal `fal-ai/nano-banana-2/edit`, request `01a1e977-fbf1-71c1-85c1-99f705c06551`, 26 s, 1 image, 2K, aspect 9:16 asked.
+  Same prompt as above (bubbles kept). Output `1-08-final-spin-chamber-plate_fal_nano-banana-2_2K.png` 1536×2752
+  (aspect 0.5581, not exactly 9:16 = 0.5625). Exact fal charge: see the fal dashboard (not returned by the API).
+* Original `references/08_final_spin_chamber.png` unchanged (sha256 ab7d0bc5…, 13/13 references OK).
+* Geometry (1,093 SIFT inliers on the kept scenery, median residual 0.39 px): uniform scale 0.992 (plate ≈0.8 %
+  zoomed in), shift +3.3 px, rotation 0.006° → perspective and layout preserved, no warping.
+  `08_plate_aligned_9x16_1536x2731.png` = the plate resampled once into the approved frame at 2K, exact 9:16
+  (0.9 % of pixels, thin left/right edge strips, filled by edge replication). Recommended World Labs input.
+* Numbers (`plate_vs_approved_08_metrics.json`, measures as tools/qa/screen_match.py), aligned plate vs approved:
+  KEPT scenery (everything except HUD band y<190, Benny box, coins): mean |dRGB| 8.57, 92.7 % within 20 levels,
+  73.1 % within 10, SSIM 0.901, blurred LAYOUT 100 % within 20. Bands: upper chamber 90.4 %, middle 87.8 %,
+  sides of Benny rows 93.7 %, bottom 98.8 % within 20. Colour: kept-area mean RGB 172/104/163 → 177/102/166,
+  saturation +2.9, brightness +3.3 (of 255). Whole frame incl. removed areas: 77.9 % within 20, SSIM 0.774.
+* Seen in close-ups (`closeup_*`): door, porthole, hinge, towel, platform, spouts, streams, rings, walls, foam, bubbles
+  = same design, fine detail re-rendered (porthole drops, towel terry pattern, perforation edges). HUD + banner area
+  → continued slot rows + top of the gold ring (invented, consistent). Coins → river streaks continued (invented).
+  Benny → river continued; a white splash crest stays across the river where his splash was (y ≈ 1060–1230) —
+  not part of the approved environment.
+* NEXT: user reviews; Step 2 (World Labs marble-1.1, ≈1,580 credits) only after the user's OK.

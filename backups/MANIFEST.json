@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "8d4f734fe6cd5186596c83b383b1b65e60dc86ea81d0cdfa7e8e622f2fd9249a"
+   "sha256": "bf420a0e3187951ca3a0efaeb5d541ef5b7b8b50f7319439bfaff6661483ece2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1017,14 +1017,59 @@
    "sha256": "82bda80d4f8c2a4ec7d013fd725fc64e2353f76b58250ca1ffacaa7d0db78071"
   },
   {
+   "path": "qa/imageblaster/08/08_plate_aligned_9x16_1536x2731.png",
+   "bytes": 6626202,
+   "sha256": "35bcff1019905aa8dff2dca5fd966ecf25fa8b76706a0d699e2f5ed7e71d4307"
+  },
+  {
+   "path": "qa/imageblaster/08/08_plate_alignment.json",
+   "bytes": 253,
+   "sha256": "65b561a969840f07dfd4d05ab263c8769d6f9e0d0310f320c434628e9ad43469"
+  },
+  {
+   "path": "qa/imageblaster/08/1-08-final-spin-chamber-plate_fal_nano-banana-2_2K.png",
+   "bytes": 6689302,
+   "sha256": "b86c716230d32fe3075839b30452d496e258fe0334c3648d90d967f00426db27"
+  },
+  {
    "path": "qa/imageblaster/08/NOTES.md",
-   "bytes": 10040,
-   "sha256": "e20ae2c506e87b8f9fb38a93c65b771ffed6f574b6d687ab0bc50888eaca4a54"
+   "bytes": 12204,
+   "sha256": "198703e6a0f3d34e5737d9363034af640ba03402f5059d896cf578eb00322696"
+  },
+  {
+   "path": "qa/imageblaster/08/closeup_benny_area_approved_top_plate_bottom.png",
+   "bytes": 971357,
+   "sha256": "cd4ba48087730c05d9adb451e9828b10197383540785ad71d3a16cda6d4d34bf"
+  },
+  {
+   "path": "qa/imageblaster/08/closeup_door_towel_platform_approved_top_plate_bottom.png",
+   "bytes": 2171897,
+   "sha256": "2ef3135cda07b8e6225059413ad614d829562468899338e152ade45b5e218582"
+  },
+  {
+   "path": "qa/imageblaster/08/closeup_lower_left_spout_river_approved_top_plate_bottom.png",
+   "bytes": 1644999,
+   "sha256": "a47c9a1bc2d85b1dc10fc56f4139c3cf4ec4033e6cd3b6e2b4af54bb6e3ebf6d"
+  },
+  {
+   "path": "qa/imageblaster/08/closeup_top_hud_area_approved_top_plate_bottom.png",
+   "bytes": 925203,
+   "sha256": "d5e1162c2d6d5a7a868eff2ca5f0f058c7946511eca42a7405aee00764b5e983"
+  },
+  {
+   "path": "qa/imageblaster/08/diff_map_kept_scenery_0to30.png",
+   "bytes": 1463733,
+   "sha256": "732ab7742d5ffd6932e0f8b38613fa648c79877168c1013a0d90caa9f883fa77"
   },
   {
    "path": "qa/imageblaster/08/image_analysis.json",
    "bytes": 7888,
    "sha256": "66a7e11a5364b51246a361491f2be7381de7d8a540291c48e73da232e2faf52f"
+  },
+  {
+   "path": "qa/imageblaster/08/plate_vs_approved_08_metrics.json",
+   "bytes": 3820,
+   "sha256": "aac3af6cae4cba225f355ed8afa6d0a51ed3e1e2fbc75c7831b06c438b905897"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
