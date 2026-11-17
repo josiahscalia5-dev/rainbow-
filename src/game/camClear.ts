@@ -21,17 +21,22 @@ export const CAMCLEAR = flag05('camclear') || flag05('matchall');
 /** cone radius (u) at the lens and at Benny: wide for big props (rings, funnel), Benny-sized for the foam banks */
 const R_PROP: [number, number] = [1.6, 2.2];
 const R_FOAM: [number, number] = [1.2, 1.5];
+/** lens clearance (u: fully hidden up to the first, fully shown from the second): props / foam chunks vs the long lather
+ *  berm, which the 03 ride passes ~3 u from (the white sheet over the view in the user's video at 4–5 s) */
+const LENS_NEAR = 'uCCZ.yz';
+const LENS_BERM = 'uCCZ.w * vec2(0.65, 1.0)';
 
-const fdecl = (r: [number, number]) => /* glsl */ `
+const fdecl = (r: [number, number], lens = LENS_NEAR) => /* glsl */ `
 uniform vec4 uCCB;   // Benny's centre in view space (xyz) + view depth of his front (w)
-uniform vec4 uCCZ;   // x: on (0/1), y: lens fade full (u), z: lens fade end (u)
+uniform vec4 uCCZ;   // x: on (0/1), y: lens fade full (u), z: lens fade end (u), w: berm fade end (u)
 varying vec3 vCCv;   // view-space position of this fragment
 float ccB2(vec2 a) { a = floor(a); return fract(dot(a, vec2(0.5, a.y * 0.75))); }
 float ccBayer(vec2 a) { return ccB2(0.5 * a) * 0.25 + ccB2(a); }
 void ccClip() {
   if (uCCZ.x < 0.5) return;
   float depth = -vCCv.z;
-  float keep = smoothstep(uCCZ.y, uCCZ.z, depth);
+  vec2 lz = ${lens};
+  float keep = smoothstep(lz.x, lz.y, depth);
   if (depth < uCCB.w) {
     vec3 B = uCCB.xyz;
     float t = clamp(dot(vCCv, B) / max(dot(B, B), 1e-4), 0.0, 1.0);
@@ -61,15 +66,15 @@ export interface CamClear {
 export function createCamClear(roots: { env: THREE.Object3D; foam?: THREE.Object3D | null }): CamClear {
   const U = {
     uCCB: { value: new THREE.Vector4(0, 0, -1, 0) },
-    uCCZ: { value: new THREE.Vector4(0, 0.7, 1.5, 0) },
+    uCCZ: { value: new THREE.Vector4(0, 0.7, 1.5, 3.4) },
   };
   const done = new WeakSet<THREE.Material>();
-  const patch = (m: THREE.Material, r: [number, number]) => {
+  const patch = (m: THREE.Material, r: [number, number], lens = LENS_NEAR) => {
     if (done.has(m)) return;
     done.add(m);
     const prevOBC = m.onBeforeCompile;
     const prevKey = m.customProgramCacheKey;
-    const decl = fdecl(r);
+    const decl = fdecl(r, lens);
     m.onBeforeCompile = function (this: THREE.Material, sh, rd) {
       prevOBC.call(this, sh, rd);
       const re = /void\s+main\s*\(\s*(void)?\s*\)\s*\{/;
@@ -84,15 +89,15 @@ export function createCamClear(roots: { env: THREE.Object3D; foam?: THREE.Object
       this.onBeforeCompile = prevOBC;
       const k = prevKey.call(this);
       this.onBeforeCompile = cur;
-      return `${k}|camclear2:${r.join(',')}`;
+      return `${k}|camclear3:${r.join(',')}:${lens === LENS_NEAR ? 'n' : 'b'}`;
     };
     m.needsUpdate = true;
   };
   const patched: string[] = [];
-  const take = (o: THREE.Object3D, r: [number, number]) => {
+  const take = (o: THREE.Object3D, r: [number, number], lens = LENS_NEAR) => {
     const mesh = o as THREE.Mesh;
     if (!mesh.isMesh) return;
-    for (const m of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) patch(m, r);
+    for (const m of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) patch(m, r, lens);
     patched.push(o.name || `${o.parent?.name ?? ''}/${(mesh.geometry as THREE.BufferGeometry).type}`);
   };
   // the washer world's props in the ride zones: instanced rings / collars / lids / hoods (04–07), gold torus lips, rims
@@ -114,7 +119,7 @@ export function createCamClear(roots: { env: THREE.Object3D; foam?: THREE.Object
   roots.foam?.traverse((o) => {
     if (o === roots.foam) return;
     if (['foam_flank', 'foam_rafts', 'foam_rim05'].includes(o.name)) return;
-    take(o, R_FOAM);
+    take(o, R_FOAM, o.name === 'foam_berm' ? LENS_BERM : LENS_NEAR);
   });
 
   const box = new THREE.Box3();
