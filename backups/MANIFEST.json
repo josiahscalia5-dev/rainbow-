@@ -663,8 +663,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11043,
-   "sha256": "ced2d3b56e915f17aacbbc749fef0aa4a0f91d51823d7e48ab93282e522889b2"
+   "bytes": 11044,
+   "sha256": "dd97f64ed9b9ed02d0638b46f6eea34c0280ceacbd67983424a73621f4fe96f8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1630,6 +1630,11 @@
    "path": "qa/match/07/m1/proofs_0px.json",
    "bytes": 272,
    "sha256": "135aac29d07746aef764606e635ffe2b471775adf0f58daad222a7823e0bcac7"
+  },
+  {
+   "path": "qa/match/07/m2/motion_fill/f00_checkpoint.png",
+   "bytes": 2302264,
+   "sha256": "3cca43a7cdbfcb650310cc8bd259428f5f6b4087c96803df13315f4a69e5b591"
   },
   {
    "path": "qa/match/07/m3/07_NEW_match07_r3.png",
@@ -8398,8 +8403,8 @@
   },
   {
    "path": "src/world/match07.ts",
-   "bytes": 11105,
-   "sha256": "30785adc53908deb70cf8ae85449eaa6239761004127268e48fec5b3e6f789f6"
+   "bytes": 12506,
+   "sha256": "b56b58ca8fdfbbbee1f7c897f3a192460ad3ad10315a66ffede0fdd9f4721801"
   },
   {
    "path": "src/world/match08.ts",
@@ -8555,6 +8560,11 @@
    "path": "tools/match07/axis07.py",
    "bytes": 1151,
    "sha256": "902848a038d0ba52a275a37d4bee3b8685257a1b5b97128272aa6ad474445c5c"
+  },
+  {
+   "path": "tools/match07/coinprobe07.mjs",
+   "bytes": 3063,
+   "sha256": "0df67779090489996752f755b21b86f99494b9522e32e4c383fbff3a2a7968e4"
   },
   {
    "path": "tools/match07/fit_proxies07.py",
