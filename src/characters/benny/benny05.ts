@@ -39,18 +39,22 @@ export const HAT05 = {
   /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body */
   shiftX: -0.028,
   /** extra backward tilt of the beanie (rad, about X; − = top toward his back) */
-  tilt: 0,
+  tilt: -0.05,
   /** crown dome shoulder taper (GLB build 0.18: r ∝ (1 − taper·t)); the approved dome is fuller near the top */
   crownTaper: 0.0,
   /** folded cuff band height */
   cuffH: 0.226,
   /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale */
   pomDX: -0.057,
-  pomDY: -0.0,
+  pomDY: -0.05,
   pomScale: 1.0,
   /** star: extra offset in hat-local units after following the cuff top */
-  starDY: 0.047,
+  starDY: 0.069,
   starDX: 0.0,
+  /** star face scale (its own x, y) */
+  starScale: [0.96, 0.89] as [number, number],
+  /** crown dome height (GLB 0.53) */
+  crownH: 0.58,
 };
 
 /** swim clip: factor on the body's side roll (z) */
@@ -67,7 +71,7 @@ function lathe(points: [number, number][], segs: number, v0: number, v1: number)
 }
 
 /** the GLB's beanie profiles (build.ts) with the HAT05 cuff height; u = once around (+Z front = 0, back = 0.5) */
-function hatGeometries(cuffH: number, taper: number): { brim: THREE.BufferGeometry; crown: THREE.BufferGeometry; yt: number; crownTop: number } {
+function hatGeometries(cuffH: number, taper: number, crownH: number): { brim: THREE.BufferGeometry; crown: THREE.BufferGeometry; yt: number; crownTop: number } {
   const yb = D.brimBottom;
   const yt = yb + cuffH;
   const bk = D.brimR / 0.778;
@@ -92,10 +96,10 @@ function hatGeometries(cuffH: number, taper: number): { brim: THREE.BufferGeomet
   const R0 = 0.705 * bk;
   const prof: [number, number][] = [];
   for (const t of [0, 0.08, 0.16, 0.25, 0.34, 0.43, 0.52, 0.6, 0.68, 0.75, 0.81, 0.86, 0.9, 0.935, 0.96, 0.98, 0.993, 1]) {
-    prof.push([R0 * Math.sqrt(Math.max(0, 1 - t * t)) * (1 - taper * t), crownY0 + t * D.crownH]);
+    prof.push([R0 * Math.sqrt(Math.max(0, 1 - t * t)) * (1 - taper * t), crownY0 + t * crownH]);
   }
-  const crown = lathe(prof, 96, crownY0, crownY0 + D.crownH);
-  return { brim, crown, yt, crownTop: crownY0 + D.crownH };
+  const crown = lathe(prof, 96, crownY0, crownY0 + crownH);
+  return { brim, crown, yt, crownTop: crownY0 + crownH };
 }
 
 /** a copy of the swim clip whose body side roll is scaled by ROLL05 (the cached GLB clips stay untouched) */
@@ -179,7 +183,7 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   hat.position.y -= HAT05.drop;
   hat.position.x += HAT05.shiftX;
   hat.rotation.x += HAT05.tilt;
-  const g = hatGeometries(HAT05.cuffH, HAT05.crownTaper);
+  const g = hatGeometries(HAT05.cuffH, HAT05.crownTaper, HAT05.crownH);
   const brim = get('hat_brim') as THREE.Mesh;
   const crown = get('hat_crown') as THREE.Mesh;
   brim.geometry = g.brim;
@@ -188,8 +192,9 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   const star = get('hat_star') as THREE.Mesh;
   star.position.y += dCuff + HAT05.starDY;
   star.position.x += HAT05.starDX;
+  star.scale.set(HAT05.starScale[0], HAT05.starScale[1], 1);
   const pom = get('pom')!;
-  pom.position.y += dCuff + HAT05.pomDY;
+  pom.position.y += dCuff + (HAT05.crownH - D.crownH) + HAT05.pomDY;
   pom.position.x += HAT05.pomDX;
   pom.scale.setScalar(HAT05.pomScale);
 
