@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T21:20Z",
+ "updated_utc": "2026-11-17T21:35Z",
  "updated_by_session": "session_013VHsJ9SbWPe9YXRvtUSngc",
  "running_now": [],
  "assignments_now": {
@@ -423,8 +423,8 @@
   "capacity_rule": "at most two specialist sessions at once (user)",
   "briefs": "docs/briefs/2026-11-17-r5/ (COMMON_RULES, S08_SCENERY, S08_BENNY); other workstreams use their r4 brief with -c5",
   "done": {
-   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (kept ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404 kotlin-stdlib-jdk8 1.9.10)",
-   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c6892676 (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central 429)"
+   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (keep ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404) — report REPORTS_ROUND5.md",
+   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c68926764849cdaf3e51acf823a06eafb0c522cc (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central 429) — report docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md"
   },
   "preview_branch": {
    "branch": "claude/rainbow-preview-all-c5",
@@ -439,10 +439,16 @@
     "08 Benny r5b": "fb72cc50",
     "05 M2 line B": "ebaf6cac"
    },
-   "tip": "03d4845a",
+   "tip": "69a1d474 (+ final save commit)",
    "preview_switches": "match04=1&match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&match06=1&match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&match08=1&coins08px=1",
-   "state": "verification running (continuity, gameplay default + all, default 0 px, each screen vs its own branch, all-switch captures)",
-   "next": "merge 08 scenery r1 final (60e7ffe8) + Benny r6 (c6892676) after verification; per-screen top-bar banner tuning; Benny on 04-07; moving-view work 07 -> 05 -> 06 -> 04"
+   "state": "VERIFIED with each screen's OWN switches: 04/05/07/08 pixel-identical to their branches, 06 identical except 1,098 faint px in the top bar; default identical to the lead; continuity ok; gameplay 8/8 91/2,240 default and all switches (coin fix 69a1d474). NOT usable with ALL switches together: likeness 04 81.8, 05 83.0, 06 84.3, 07 74.4, 08 29.5 % — 08 projected scene shifted vs camera (cause unknown; bisect of 08 + each other screen's switches interrupted by the user 21:23), 05 Benny look on every screen, hud05 not fitted to 04.",
+   "next": "1) bisect 08 breakage (match08&coins08px + each of 05set / 04 / 06 / 07set; tools/lead_r5/verify_preview.sh pattern); 2) per-screen Benny (05 look only where tuned) and per-screen top bar (04 layout, banner widths); 3) merge 08 scenery r1 final 60e7ffe8 + Benny r6 c6892676; 4) moving-view work 07 -> 05 -> 06 -> 04; APKs blocked by Maven Central in this environment",
+   "evidence": "qa/lead_r5/2026-11-17/README.md"
+  },
+  "sessions": {
+   "lead": "session_013VHsJ9SbWPe9YXRvtUSngc",
+   "08 scenery r1": "session_013VHsJAQsMA73qb7GCXdQ12 (idle, done)",
+   "08 Benny r6": "session_013VHsJAoze5D4wh6tk7r1hj (idle, done)"
   }
  }
 }

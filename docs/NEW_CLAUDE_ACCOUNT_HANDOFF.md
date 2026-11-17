@@ -46,6 +46,18 @@ stopped its check-ins. Per-workstream next tasks: unchanged from the ACCOUNT 4 s
 * Done on -c5: 08 scenery r1 `60e7ffe8` (kept `m08bw` + `m08fill`), 08 Benny r6 `c6892676` (`b08clump` + `b08yarn`).
   APK builds blocked in this environment (Maven Central 429 / 404).
 
+## STATE AT THE USER'S "SAVE EVERYTHING" ORDER (2026-11-17 ~21:35 UTC) — read this first
+* Lead `ccr-f983b317-2vt0zh` (this session) · combined preview `claude/rainbow-preview-all-c5` @ `69a1d474`+ · 08 scenery
+  `claude/rainbow-s08-scenery-c5` @ `60e7ffe8` (round 1 DONE) · 08 Benny `claude/rainbow-s08-benny08-bake-c5` @ `c6892676`
+  (round 6 DONE) · 07 / 06 / 05 / 04 / 08 camera `-c5` = their `-c4` tips (paused). No session running.
+* Specialists' final reports: `docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md`. All lead evidence (captures, metrics, clips,
+  test runs, preview verification): `qa/lead_r5/2026-11-17/README.md`. All-screens video + comparison:
+  `qa/screen_videos/2026-11-17/`.
+* Preview branch: correct with each screen's own switches; NOT usable with all switches together (Screen 08 drops to
+  29.5 %: its projected scene is shifted against the camera — cause not found; the user interrupted the bisect at 21:23
+  and said stop). Exact next steps: `backups/AGENTS_STATUS.json` → `round5_account5.preview_branch.next`.
+* APKs cannot be built in this environment right now (Maven Central 429 / 404 through the network proxy).
+
 ## Open lead question for the user — Screen 08 coins vs the ending video (`?flowplan=1`)
 Under `?match08=1&coins08px=1` the 9 painted coins lie at s 396.1 / 400.1 (in 08) and 405.2 / 407.7 / 410.6 / 412.7 (09
 stretch) + 3 more beyond s 418.5; the ending video starts at s 404.37 (start of 09). So Benny swims through 2 and the
