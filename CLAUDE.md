@@ -8,20 +8,22 @@ already ran before your first turn: it fetched every branch (since 2026-11-17 it
 any branch needs the user's OK; `--resume` re-enables the old merge only then), restored the Git LFS binaries, re-armed the five-minute autosave and
 started the full bootstrap in the background. Its summary ("RAINBOW SESSION START") is in your context.
 1. `bash scripts/claude-bootstrap.sh --status` → `backups/BOOTSTRAP_REPORT.md` (re-run when it says "still in progress").
-   No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh` yourself; from a branch without it:
-   `git fetch origin claude/rainbow-05-water-projection && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
+   No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh --skip-resume` yourself; from a branch without it:
+   `git fetch origin ccr-9c4a8ad6-xovgsx && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh --skip-resume`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
 2. Read **`backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md`** (newest, wins), `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
    `backups/TOOL_MANIFEST.json` and the current briefs: **`qa/pilot05/proj/`** (water texture projection — `NOTES.md` when it
    exists, `BRIEF_SPECIALIST1_VERBATIM.md`, `BRIEF_SPECIALIST2.md`), `qa/pilot05/wave12/NOTES.md`, `qa/pilot05/COORDINATION_WAVE9B.md`.
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup
    report of §4. Tell the user plainly about every failure and every backup GAP the bootstrap reports.
-The GitHub default branch is an OLD version. Newest work as of 2026-11-16 ~16:00 UTC: branch
-**`claude/rainbow-05-water-projection`** (the Screen 05 water-projection experiment; contains every other `ccr-*` /
-`claude/*` branch). `ccr-451ea8c7-3nqlis` (`97dda28`) = the user's current WORKING version (T2 default + W12 candidates),
-protected. `codex/*` branches hold Codex's separate water experiment: preserved, protected, **never merge them
-automatically** (the bootstrap only merges `ccr-*` / `claude/*`). The bootstrap's merge result always wins over this line. Ready-to-paste prompt for a
-new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`. The bootstrap checks before installing (Blender 5.3.0, Android SDK
+The GitHub default branch is an OLD version. **As of 2026-11-17 ~12:30 UTC there are TWO unmerged lines of game work**
+(details, differences and the safe merge procedure: `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md` §1):
+**line A** = `ccr-9c4a8ad6-xovgsx` (= `ccr-61131b9d-uj0oqb` + backup commits; Screen 07 measurements/camera, `?matchNN=1`
+audit 02–10, projection-water switches) and **line B** = `ccr-b0757dec-dj6l1o` (`a8c03f0`; the big Screen 05 full-reference
+match `?match05=1` with env05 / benny05 / hud05 / coins05 / splash05m / bub05 — measured 86.9 % of the whole frame within
+20 levels). **Never merge or cherry-pick between them without the user's explicit OK.** `ccr-451ea8c7-3nqlis` (`97dda28`)
+= older protected working version. `codex/*` branches hold Codex's separate water experiment: preserved, protected,
+**never merge them**. Ready-to-paste prompt for a new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`. The bootstrap checks before installing (Blender 5.3.0, Android SDK
 34, npm, Python libs, World Labs plugin): never reinstall a working tool by hand, never run `playwright install`.
 
 ## 2. Five-minute GitHub autosave — the user's standing order (2026-11-15/16), never ask about routine saves
@@ -69,6 +71,17 @@ update that file when its state changes. Tool versions, plugins, MCP servers, ho
 pushes or tests unless verified.
 
 ## 6. The game (authoritative brief `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`)
+**NEWEST USER ORDERS (2026-11-17) — win over everything older in this section:**
+* **Structure.** VIDEOS: 01 existing opening · 02 whirlpool tumble · 03 Whirlpool Twirl · 09 final wave · 10 return to
+  hiding · 11 existing ending. REAL PLAYABLE 3D: 04 Five Arrows · 05 Flow Into the Current · 06 Rinse Arch · 07 Washer
+  Tube · 08 Final Spin Chamber. Goal ≥ 9/10 (≥ 90 %) visual likeness of each playable screen to ITS approved picture.
+  Never regenerate a video, never spend paid-generation credits.
+* **Work on the VISUAL part only** (user's words: "I just want to work on the visual part of my approved screens,
+  nothing else … I want the scenery, just the look to match my exact approved screens"; "I don't like hear much about the
+  camera or the movements"). Spend effort on scenery, walls, rings, water, foam, colours, lighting, props, Benny's look.
+  Change camera framing only where the scenery cannot line up otherwise, and report results to the user in visual terms
+  (APPROVED | BEFORE | NEW full-size pictures + whole-frame numbers), not camera or movement details.
+
 Fresh isolated game: do not import anything from prior games. Preserve `references/*.png`,
 `references/water/05_water_isolated_original.png` (the user's original isolated Screen 05 water artwork) and
 `character_references/official_cartoon_girl_original.jpg` unchanged (`sha256sum -c scripts/reference.sha256`, 13 files).

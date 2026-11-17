@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 11776,
-   "sha256": "a19f1349ed609eabf998e89538d4a1968c10ee095e34f3593d8efbf3127e13e8"
+   "bytes": 13176,
+   "sha256": "f4f469af4df3f9cda1d82a5d6002f10a4b51e72c6ffc2a58b5fef38323481e9a"
   },
   {
    "path": "README_FIRST.md",
@@ -498,8 +498,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3822,
-   "sha256": "9946b624f50046d7a5509f649decdbcf1496f3352469990053555c4f72865831"
+   "bytes": 4010,
+   "sha256": "85235eb2cab7a0e12dace8225e3dc146c7f5b6d90287109f6ef5fd70ed43b3b9"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -508,8 +508,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 9692,
-   "sha256": "0de29025f5ba920397f00d7388c041d28bfb19180925b287c71867797beb5f5e"
+   "bytes": 9701,
+   "sha256": "8d192187a0ae418df28b1494237e71802b9363bad368440a0ef875c81e5f966d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7243,8 +7243,8 @@
   },
   {
    "path": "scripts/autosave-hook.sh",
-   "bytes": 1694,
-   "sha256": "1c478330207f5e7af2d231bc42f6c3902565831427617ff8db71c67c54bf196c"
+   "bytes": 1805,
+   "sha256": "5b078c23fa07ebe514c75a6fcf6e35e6e111577d1ffc203bc150bd229dc05bc5"
   },
   {
    "path": "scripts/autosave-status.py",
