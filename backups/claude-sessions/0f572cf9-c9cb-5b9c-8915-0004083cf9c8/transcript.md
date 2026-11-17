@@ -24,3 +24,7 @@ APPROVED | BEFORE | NEW as SEPARATE full-size pictures in `qa/match/07/` (no gri
 ## Saving + reporting + pace
 Five-minute autosave pushes this branch; also commit + push at each milestone and verify `git ls-remote origin refs/heads/claude/rainbow-s07-match` == HEAD (Git LFS uploads work). The usage limit is shared by all parallel sessions and Screen 08 has priority: work efficiently, one heavy render at a time, reuse the match08 tools. MILESTONE 1 = first NEW 07 at the approved view with numbers + a moving-camera check + STATUS.md pushed; then send the lead a short status with send_message (session_01AvQv6UXiBngewM8kSBwFfZ) and stop and wait. You may use the project specialists in .claude/agents/ (washer-environment-modeler, playwright-visual-qa, reference-match-director) as subagents inside your own session.
 
+### 🤖 Claude — 2026-11-17T16:03:32.934Z
+
+You've hit your 5-hour limit · resets 8:20pm (UTC)
+
