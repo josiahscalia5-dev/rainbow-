@@ -4,7 +4,7 @@
   "dist": 0,
   "steer": null,
   "frames": 0,
-  "s": 199.248,
+  "s": 199.187,
   "lat": 0,
   "stage": "06",
   "coins": 1680
@@ -14,7 +14,7 @@
   "dist": 3,
   "steer": null,
   "frames": 17,
-  "s": 202.124,
+  "s": 202.183,
   "lat": 0,
   "stage": "06",
   "coins": 1720
@@ -24,7 +24,7 @@
   "dist": 6,
   "steer": null,
   "frames": 33,
-  "s": 205.083,
+  "s": 205.194,
   "lat": 0,
   "stage": "06",
   "coins": 1740
@@ -34,7 +34,7 @@
   "dist": 10,
   "steer": null,
   "frames": 55,
-  "s": 209.114,
+  "s": 209.129,
   "lat": 0,
   "stage": "06",
   "coins": 1740
@@ -44,7 +44,7 @@
   "dist": 15,
   "steer": null,
   "frames": 82,
-  "s": 213.97,
+  "s": 214.024,
   "lat": 0,
   "stage": "06",
   "coins": 1740
@@ -54,7 +54,7 @@
   "dist": 20,
   "steer": null,
   "frames": 110,
-  "s": 219.103,
+  "s": 219.136,
   "lat": 0,
   "stage": "06",
   "coins": 1780
@@ -74,8 +74,8 @@
   "dist": 6,
   "steer": -1,
   "frames": 33,
-  "s": 204.99,
-  "lat": -2.733,
+  "s": 205.093,
+  "lat": -2.801,
   "stage": "06",
   "coins": 1720
  },
@@ -84,8 +84,8 @@
   "dist": 6,
   "steer": 1,
   "frames": 33,
-  "s": 205.015,
-  "lat": 2.74,
+  "s": 205.151,
+  "lat": 2.829,
   "stage": "06",
   "coins": 1740
  }

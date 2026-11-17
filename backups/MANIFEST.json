@@ -447,6 +447,11 @@
    "sha256": "3c22cb0a8c8762ec5c9c740984df3341b363b49957a546a3cb4671dfbcebef04"
   },
   {
+   "path": "assets/textures/match06/floormask06.png",
+   "bytes": 7824,
+   "sha256": "d53656d469323c03d0fd7e334c3fc1a34a9a160de5d23cda90cf10dd2c50253e"
+  },
+  {
    "path": "assets/textures/match06/path06.json",
    "bytes": 329,
    "sha256": "657af6fc2612f79c4531f96e7b81c0abd5b8c7d0eb64e2d97353d5a60431b2f4"
@@ -468,13 +473,13 @@
   },
   {
    "path": "assets/textures/match06/proj06.json",
-   "bytes": 1126,
-   "sha256": "6f2d5eabc22280c757b4dd30ddedab8476b78ae95554e0d525ab4f21cb3bb089"
+   "bytes": 1117,
+   "sha256": "6ec6c9d3da20d5f30a33740e523f315922be19a41ae500cef56490f6bc46ff6a"
   },
   {
    "path": "assets/textures/match06/tile_floor.png",
-   "bytes": 272755,
-   "sha256": "ad975689f94df6240648eec49c3f96a4dba07ea733a1a8fcebcb97c78ce3e543"
+   "bytes": 115393,
+   "sha256": "00991999c30a9ae768d1d21f41a88f4c0f614a9bb4f675308f587189e77906e1"
   },
   {
    "path": "assets/textures/match06/tile_tube.png",
@@ -654,7 +659,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10601,
-   "sha256": "ca0329ea83953dab106bc2dfbbfc3389156ca8cf227b2d92d0b90acc749cf71c"
+   "sha256": "4081467de34c9460ccb13380a5806e659e168e7c2cb6f4b8277478abbb5a4f04"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1363,53 +1368,53 @@
   },
   {
    "path": "qa/match/06/motion/f00_checkpoint.png",
-   "bytes": 2360638,
-   "sha256": "08981a3fefb34cd0b5b4cfcc057aa09bfaebe26f013b9f6426ee6421ac21b017"
+   "bytes": 2366002,
+   "sha256": "5e81d4e10a998476ff59ba4b4a013bb5c49efc0f2ad7b7e11b5c966df95d1bd0"
   },
   {
    "path": "qa/match/06/motion/f03_forward3u.png",
-   "bytes": 2131225,
-   "sha256": "e36d9e177255039bf9ddf47ce5bb0d9be3b1ededf65cb9635efe3f128b527bba"
+   "bytes": 2127243,
+   "sha256": "1042692fedf2dc4e47726577543b15fa107bbda238e63567e68476c90030cf6d"
   },
   {
    "path": "qa/match/06/motion/f06_forward6u.png",
-   "bytes": 1931751,
-   "sha256": "14a39a9c73b3818fcebd2344ff36e950482bad14ff0701469e24615771e99d69"
+   "bytes": 1889442,
+   "sha256": "f1ac6aff8812aa703c061f71f95fab497c1716766c2cbad19da2121291c5197b"
   },
   {
    "path": "qa/match/06/motion/f10_forward10u.png",
-   "bytes": 1696196,
-   "sha256": "8e46af7c727c2e330286c03cf7b52ca906ca5558649969c04acf29a1918201d9"
+   "bytes": 1696241,
+   "sha256": "238c030384854b3d54e3458dd7275a4aff85437dbbe0d3d9c3fdc1470f64378f"
   },
   {
    "path": "qa/match/06/motion/f15_forward15u.png",
-   "bytes": 1658387,
-   "sha256": "cd394361c97fdc7593abfd3bb0590dea129dbba2b482bc9243cbbbb196db656f"
+   "bytes": 1493607,
+   "sha256": "1a0eff7245d57325ace67cc4fa834cd74ee5161a9de7d2ef11bb19dc6ac6c36b"
   },
   {
    "path": "qa/match/06/motion/f20_forward20u.png",
-   "bytes": 1517676,
-   "sha256": "00f452b904160d9bd22caa8303966bb22b1cc6cf7e71f99ada0845ea9808ee82"
+   "bytes": 1532479,
+   "sha256": "e4cdbe6f1b50c77e94b894274057025f83eb34fab028b525966d93902863d3e5"
   },
   {
    "path": "qa/match/06/motion/f30_forward30u.png",
-   "bytes": 834720,
-   "sha256": "2535f9f38ac5f606029e7cd25e31d4769ca9a0631acd9a656e626a5d7c553f9d"
+   "bytes": 1369998,
+   "sha256": "acc0d392bd7acabfbb5250c32f4a0e5aeeb40c3a103f71b3ed4ffd718beb21f7"
   },
   {
    "path": "qa/match/06/motion/motion.json",
-   "bytes": 1281,
-   "sha256": "20a888f8ba1804bac63231649963de4dbda4d7fbbddc87b17c5462daca5d50f5"
+   "bytes": 1284,
+   "sha256": "de67f711a7899567d28092acb41becf2769243c3d9338d2f1f59091ef8de01fd"
   },
   {
    "path": "qa/match/06/motion/s_left_steer.png",
-   "bytes": 2024686,
-   "sha256": "92d10f1773064c0aaeba3d650acfc540d5d4385da870d461f40f39815f083e38"
+   "bytes": 1881874,
+   "sha256": "c8854b5c1d710a9e016c46f1611686775d81dbf554cfb57de4d82d409b2ff0c7"
   },
   {
    "path": "qa/match/06/motion/s_right_steer.png",
-   "bytes": 2027724,
-   "sha256": "09ac84f364d53f04a285012420a7ec3a72b33e95fd0725e68b9e9931fe31c2c4"
+   "bytes": 1914940,
+   "sha256": "201a4775b0204ed2c57eb89e5401385827e29fc82579812ddd29179b8d7a2ad9"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -8353,13 +8358,13 @@
   },
   {
    "path": "tools/match06/make_plate06.py",
-   "bytes": 3423,
-   "sha256": "3a002099defc0ad0cf7c2768659ec2ccf967626013301c1003d42534876e69bc"
+   "bytes": 4267,
+   "sha256": "b6c3f1ef08dc92fb9f69ace1c368c6af324c5266ef60e3dc47932fb09391d107"
   },
   {
    "path": "tools/match06/make_tiles06.py",
-   "bytes": 2556,
-   "sha256": "ece142a788351d81df1f79becdb76c5212fbd2355deb1fac92281e8110b868f1"
+   "bytes": 2615,
+   "sha256": "0b4346282a24c4b03a3a547d1e0b16f9aecce665cb0dd54905ddd594b8da8902"
   },
   {
    "path": "tools/match06/motion06.mjs",

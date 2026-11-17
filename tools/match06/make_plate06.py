@@ -46,3 +46,12 @@ cv2.imwrite(f"{out}/plate06_hybrid.png", plate)
 cv2.imwrite(f"{out}/plate06_fillmask.png", M)
 json.dump({"filled_share": float((M > 0).mean()), "coins_px": COINS}, open(f"{out}/plate06.json", "w"), indent=1)
 print("filled share", (M > 0).mean())
+# floor mask (white = painted WATER the river floor may carry; black = tunnel wall / the gap between the river loops /
+# the far descending river beyond the crest, which the game's near up-slope would otherwise show while riding)
+FM = np.full((H, W), 255, np.uint8)
+cv2.fillPoly(FM, [np.array([(0, 0), (W, 0), (W, 330), (520, 540), (470, 520), (400, 500), (300, 495), (200, 500), (100, 505), (0, 520)], np.int32)], 0)
+cv2.fillPoly(FM, [np.array([(295, 600), (320, 555), (380, 540), (460, 535), (520, 540), (W, 330), (W, 930), (770, 880), (680, 800),
+                            (580, 750), (450, 700), (380, 695), (320, 680), (298, 640)], np.int32)], 0)
+FM = cv2.GaussianBlur(FM, (0, 0), 4)
+cv2.imwrite(f"{out}/floormask06.png", cv2.resize(FM, (W // 2, H // 2), interpolation=cv2.INTER_AREA))
+print("floor mask water share", (FM > 127).mean())

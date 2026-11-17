@@ -22,11 +22,11 @@ tube = cv2.remap(A, (VP[0] + r * np.cos(TH)).astype(np.float32), (VP[1] - r * np
 cv2.imwrite(f"{d}/tile_tube.png", sharpen(tube).astype(np.uint8))
 TUBE_PERIOD = g.Fpx * g.R * (1 / R1 - 1 / R2)               # the tile's length along the tube at the painted ring spacing
 # floor: the painted cyan/pink water below Benny (ripples + streaks, no foam), mirrored in the shader
-flo = A[1250:1530, 150:720]
+flo = A[1330:1530, 270:620]                                  # streaks only (no ripple crest, foam or bubbles)
 cv2.imwrite(f"{d}/tile_floor.png", flo.astype(np.uint8))
 a0 = -math.asin(g.hA / g.R); a1 = math.pi - a0
 L = g.layout_json()
 L["tiles"] = {"tube": {"wallAngle": [a0, a1], "sectorDeg": ANG, "vp": VP, "r": [R1, R2], "period": TUBE_PERIOD, "anglePeriod": math.radians(ANG[1] - ANG[0])},
-              "floor": {"px": [150, 1250, 720, 1530], "lateralPeriod": 2 * g.Lf / 1.6, "period": (2 * g.Lf / 1.6) * 280 / 570}}
+              "floor": {"px": [270, 1330, 620, 1530], "lateralPeriod": 4.0, "period": 4.0 * 200 / 350}}
 json.dump(L, open(f"{d}/proj06.json", "w"), indent=1)
 print(json.dumps(L["tiles"]), "s0", L["s0"], "s1", L["s1"])
