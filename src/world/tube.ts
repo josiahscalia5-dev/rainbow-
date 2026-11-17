@@ -321,6 +321,19 @@ export function bandGeometry(b: BandOpts): THREE.BufferGeometry {
   return roundBandGeometry(b.height, b.width, b.lipHeight, b.lipWidth, b.groove, b.segments);
 }
 
+/**
+ * `?env05=1`: per-vertex attribute `aE5Skirt` = 1 on the band's skirt (the 1.03 points behind the wall line), 0 on the band
+ * itself — withEnv05Ring discards skirt fragments, so a band displaced further than its wall (env05 rings, right half)
+ * shows the wall behind the small gap instead of a stretched skirt strip. Call before any displacement.
+ */
+export function markBandSkirt(geo: THREE.BufferGeometry): THREE.BufferGeometry {
+  const p = geo.getAttribute('position') as THREE.BufferAttribute;
+  const a = new Float32Array(p.count);
+  for (let i = 0; i < p.count; i++) a[i] = Math.hypot(p.getX(i), p.getY(i)) > 1.001 ? 1 : 0;
+  geo.setAttribute('aE5Skirt', new THREE.BufferAttribute(a, 1));
+  return geo;
+}
+
 /** Instanced thick gold ring ribs placed perpendicular to the tube every `spacing` units. */
 export function buildRings(
   path: TubePath,
@@ -378,7 +391,7 @@ export function buildRingsAt(path: TubePath, list: number[], material: THREE.Mat
  * material (instanced shader path) is unchanged. `scale` = extra uniform radius factor (1 = on the wall).
  */
 export function buildWarpedBandRing(path: TubePath, s: number, material: THREE.Material, band: BandOpts, inset: number, warp?: TubeWarp, skirtWarp?: TubeWarp): THREE.InstancedMesh {
-  const geo = bandGeometry(band);
+  const geo = markBandSkirt(bandGeometry(band));
   const r = path.radius(s) - inset;
   if (warp) {
     const p = geo.getAttribute('position') as THREE.BufferAttribute;

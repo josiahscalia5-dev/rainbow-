@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
 import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
-import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, type TubeWarp } from './tube';
+import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, markBandSkirt, type TubeWarp } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
 import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
@@ -579,7 +579,7 @@ export function buildEnvironment(course: Course): Environment {
       // env05: thicker far bands (measured), the shared geometry displaced like the far wall (basis Rt, U, T: object x
       // runs along Rt), and the camera-projection ring atlas rows C … G by instance
       const bandF = { ...band05, height: E05.hFar, segments: 48 };
-      const geo = bandGeometry(bandF);
+      const geo = markBandSkirt(bandGeometry(bandF));
       const pa = geo.getAttribute('position') as THREE.BufferAttribute;
       for (let i = 0; i < pa.count; i++) {
         const thv = Math.atan2(pa.getY(i), pa.getX(i));

@@ -224,10 +224,29 @@ def main():
                 # them (rectify by h(u)), mirror-tile the straight bands, then re-apply h, which runs on as level
                 # rings round the unseen arc -> no zig-zag stripes when the beanie turns away from the 05 camera
                 h, est, cf = ring_shift(filled, seen, u0, u1)
-                rect = shift_rows(filled, np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0))
+                hs = np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0)
+                rect = shift_rows(filled, hs)
                 rect_t = rect[:, mirror_idx(TW, u0, u1)]
+                if '--topfill' in sys.argv:
+                    # rows above everything the 05 camera sees (dome top under the pom, visible when he tilts): the
+                    # approved shows a purple ring under the pom -> continue the topmost purple band's knit upward
+                    sr = shift_rows(seen[..., None].astype(float), hs)[..., 0]
+                    cov = sr[:, u0:u1].mean(1)
+                    r_top = int(np.nonzero(cov > 0.5)[0].min())
+                    pr = (rect[..., 2] - rect[..., 1]) / (rect[..., 2] + rect[..., 1] + 1e-3)
+                    prof = pr[:, u0:u1].mean(1)
+                    ok = np.nonzero(cov > 0.5)[0]
+                    thr = 0.5 * (prof[ok].max() + prof[ok].min())
+                    p0 = next(r for r in range(r_top, TH) if prof[r] > thr)
+                    p1 = next(r for r in range(p0, TH) if prof[r] <= thr)
+                    band = rect_t[p0 + 2:p1 - 2]
+                    nb = band.shape[0]
+                    for r in range(0, r_top):
+                        w = np.clip((r_top - r) / 3.0, 0, 1)
+                        rect_t[r] = w * band[(r_top - 1 - r) % nb] + (1 - w) * rect_t[r]
+                    extra['topfill'] = dict(r_top=r_top, purple_rows=[p0, p1])
                 tiled = shift_rows(rect_t, -h)
-                extra = dict(ring_fit_rows=[round(float(c), 2) for c in cf], ring_h_rows=dict(
+                extra.update(ring_fit_rows=[round(float(c), 2) for c in cf], ring_h_rows=dict(
                     u0=round(float(h[u0]), 1), centre=round(float(h[(u0 + u1) // 2]), 1), u1=round(float(h[u1 - 1]), 1)),
                     ring_est_cols=len(est))
             filled = wseen * filled + (1 - wseen) * tiled

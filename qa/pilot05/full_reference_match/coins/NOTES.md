@@ -7,7 +7,10 @@ Status at checkpoint (2026-11-17 ~00:50 UTC): layout and look are written in `sr
 ## Files changed / created
 | file | what | gated? |
 |---|---|---|
-| `src/gameplay/coins.ts` | `COINS05 = on05('coins05')`. LAYOUT: table `C05M` (15 measured coins [ds from `05_crest`, lat, scale]) replaces the 05 coins after the checkpoint (pre-checkpoint trail and all other screens' coins unchanged; every coin keeps its old bob/wobble phase via `CoinDef.phase`, so 06+ coins move exactly as before). Far coins carry `far: [checkpoint scale, checkpoint distance]` and grow to `C05M_NEAR(k)` (≤ C05.scale 0.9, capped by 0.85 × gap to the neighbour) once Benny is 15 u closer. LOOK: unlit `MeshBasicMaterial` + `PROJ05_INVERSE` (display colour in, post chain restores it), face map = `assets/textures/coins05/coin05_face.png`, edge = canvas texture with the approved edge-band colours and 64 milled ridges, coin thickness 0.13 (was 0.2). The face texture is pushed to `proj05Pending`, so the game waits for it before `ready`. | yes |
+| `src/gameplay/coins.ts` | `COINS05 = on05('coins05')`. LAYOUT (run #3 = v3): table `C05M`, 18 measured coins [ds from `05_crest`, lat, scale, h?] replace the 05 coins after the checkpoint (pre-checkpoint trail and all other screens' coins unchanged; every coin keeps its old bob / wobble phase via `CoinDef.phase`). Coins 7–18 are pulled in front of the far relief (own `h`). Far coins carry `far: [checkpoint scale, checkpoint distance]` and grow to `C05M_NEAR(k)` (≤ 0.9, capped by 0.85 × the 3-D gap to a neighbour) once Benny is 15 u closer. Measured coins face the straight 05 tube axis upright (`CoinDef.axis`), lean back 0.9 rad, wobble 0.06 rad. LOOK (`C05LOOK`): unlit `MeshBasicMaterial` + `PROJ05_INVERSE`, face map `coin05_face.png` (turned half a turn: v1 was upside down), edge = canvas texture from the approved band rows (zero-mean ridges, brighter sides), thickness 0.18, far tint toward (250, 235, 70) from 50 → 55 u camera distance. The face texture is pushed to `proj05Pending` (game waits before `ready`). | yes |
+| `qa/pilot05/full_reference_match/coins/measure_coins.py` | approved / game coin silhouettes (box centre, width, face / edge split) | tool |
+| `qa/pilot05/full_reference_match/coins/targets_v2.json` | solve targets v2 (18 coins, `occl` = pull hidden coins in front of the relief) | data |
+| `qa/pilot05/full_reference_match/hud/probe05.mjs` | `--solve` extended: occlusion-aware placement along the camera ray, returns h, round-trip check | tool |
 | `assets/textures/coins05/coin05_face.png` | approved nearest coin (face ellipse centre (474.0, 723.25), semi-axes 48.5 × 36.25) un-foreshortened to a 256² disc | only loaded when COINS05 |
 | `qa/pilot05/full_reference_match/coins/coin_bake.py` | makes the face texture | tool |
 
@@ -73,17 +76,46 @@ UPDATE ~01:05 UTC (run stopped for the account transfer): no coin change since t
    Rest of the coin-mask error = water round the coins (approved warmer by R +13–25) and the approved 1-px light rim:
    not coin geometry (water = coordinator). Official captures + gameplay: in progress.
 
+## RESULT (real game captures, 2026-11-17 ~01:44 UTC, `scripts/capture.mjs 05`, locked frame)
+* `coins/before.png` = STACK (fresh, = `stack_2340/05_match05.png`, 0 px), `coins/new.png` = STACK + `coins05=1`,
+  `coins/new_hud05_coins05.png` = STACK + both switches; metrics `coins/*_REGION_METRICS.json` / `*_FULL_FRAME_METRICS.json`.
+| | before (STACK) | new (STACK + coins05) |
+|---|---|---|
+| coins region, mean abs dRGB / within 20 / SSIM | 53.96 / 17.6 % / 0.266 | **28.30 / 50.5 % / 0.537** |
+| whole frame, mean / within 20 | 34.10 / 51.6 % | 33.50 / 52.3 % |
+| with hud05 too | | whole frame 29.26 / 57.9 % |
+| (for reference: `?match05=1` at recovery, coins05 v1) | | coins 42.58 / 30.3 % |
+* Coin silhouettes (face + milled edge; `coins/measure_coins.py`), approved | new: 1 426–522 × 686–771 | 426–521 × 687–770;
+  2 514–583 × 632–689 | 514–582 × 632–689; 3 454–509 × 591–634 | 454–508 × 590–635; 4 410–453 × 558–592 | 410–452 × 558–592;
+  5 451–480 × 535–557 | 450–480 × 534–558; 6 485–505 × 524–540 | 484–505 × 523–540; 7 510–527 × 515–531 | 510–527 × 515–529;
+  8 525–539 × 509–523 | 525–539 × 509–523; coins 9–18 (4–10 px) at their measured centres (`coinScreen`, ±1 px), all drawn.
+  Face / edge on coin 1's centre column: approved 74 / 12 px, new 73 / 11 px (v1: 79 / 7).
+* Per part, mean abs dRGB in the approved coin boxes: coin 1 21.6, 2 21.5, 3 23.9, 4 26.2, 5 30.5, 6 30.1, 7 38.2, 8 36.5,
+  far line (9–18) 40.7; approved-coin-coloured pixels 18.8 (STACK 54.2); the rest of the mask (water round the coins) 39.9.
+* Default build: 05 == `qa/pilot05/current_default_05.png` (0 px, `scripts/capture.mjs 04 05 06`, no switches).
+  Re-checked with the FINAL code (after the last hud.ts edit, ~01:50 UTC): 0 px differ; `npx tsc --noEmit` clean.
+* Other screens with `hud05=1&coins05=1` vs default: 04 and 06 change only in the coins themselves (> 8 levels: 04 x 344–432
+  / y 466–753, 06 x 166–307 / y 952–1131) + 1–2-level bloom spill; placement on 04 / 06 unchanged (same positions), the
+  coin LOOK (approved face, 0.18 thickness, milled edge, far tint) is global under the switch.
+* Gameplay `coins/gameplay.json` (STACK + hud05 + coins05): 8/8 pass; real pickups 1,330 → 2,330 (100 coins; default run
+  and v1 `match05`: 91), counter live. Ride frames `coins/move/move_{00,08,17,30,45}.png`: counter 1,420 → 1,430 → 1,450 →
+  1,460 while riding at lat 0; at d 30–45 (relief opened) the far coins read as a winding arc of small coins at the tube end.
+  `npm run -s test:continuity`: ok (outputs unchanged).
+
+## What still differs (and why)
+* Water round the coins (39.9 in the coin mask): the approved water there is warmer (R +13–25) and the approved coins have
+  a 1-px light rim / glints; the water is the coordinator's projected river, not coin geometry.
+* Far line 9–18 (40.7): 4–10-px coins inside the bright glow; the approved ones blend into the light (B up to 130).
+* Far coins 7–18 are not on the river surface: the end of the 05 tube is a forced-perspective relief ~1 u deep, so a real
+  coin can only be in front of it. They sit at ds 51.1–54.0, 0.5–2.2 u higher than the river coins (an arc rising into
+  the light, as in the approved picture), small (scale 0.16–0.76, growing only up to the 3-D gap to their neighbours).
+  A coin solved on the river beyond ds 55 would be invisible at the checkpoint. If the relief is ever replaced by real
+  geometry, re-solve with `probe05.mjs --solve=coins/targets_v2.json` (without `occl`) to put them back on the river.
+* Edge band: approved has irregular light streaks (wood-grain look); the game uses 64 regular ridges.
+
 ## Remaining, step by step
-1. Probe/capture: `node qa/pilot05/full_reference_match/hud/probe05.mjs --out=DIR new='<STACK>&coins05=1'` → check
-   `coinScreen` vs the table, the face orientation ($ upright), coin aspect / edge thickness vs approved (face 96 × 72.5,
-   edge ≈ 10 px for coin 1); adjust `C05.tilt` (05 only, under the switch) / `C05LOOK.thick` if needed; check the colours.
-2. Metrics before/after (`python3 -I tools/match05/metrics.py`), keep only what is closer; `coins/before.png`, `coins/new.png`.
-3. `node scripts/gameplay-test.mjs --q='<STACK>&hud05=1&coins05=1' --out=qa/pilot05/full_reference_match/coins/gameplay.json`
-   (all checks pass, counter counts up), `npm run -s test:continuity`,
-   `node scripts/proj05-move.mjs --q='<STACK>&hud05=1&coins05=1' --out=qa/pilot05/full_reference_match/coins/move --d=0,8,17`.
-4. Default identity: `node scripts/capture.mjs 05 --out=<scratch>` = `qa/pilot05/current_default_05.png`, then
-   `git checkout -q qa/capture_log.json`. Check 04 and 06 with `coins05=1` (the coin LOOK is global under the switch;
-   placement elsewhere unchanged).
+1. Nothing open for coins05 at the locked frame. Optional: approved coin glints (white sparkles above coins 1–3) as an
+   additive sprite, only if measured closer. Promotion to the default is the user's decision (not done).
 
 ## REQUESTS
-None so far.
+None.

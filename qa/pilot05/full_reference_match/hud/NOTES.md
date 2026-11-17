@@ -11,6 +11,8 @@ NOT been measured in a real game capture yet. The default build is untouched: ev
 | `assets/textures/hud05/{heart05,plus05,coin05,pause05}.png` + `hud05_icons.json` | static icon sprites cut from the approved picture (feathered rect/circle crops) | only loaded when HUD05 |
 | `qa/pilot05/full_reference_match/hud/icon_bake.py` | makes the sprites (`python3 -I qa/pilot05/full_reference_match/hud/icon_bake.py`) | tool |
 | `qa/pilot05/full_reference_match/hud/probe05.mjs` | real game probe: locked 05 frame (= capture.mjs), screenshots with and without the HUD, HUD rects, coinScreen, camera, coin (s, lat) solver `--solve=targets.json` | tool |
+| `src/ui/hud.ts` (run #3) | `H05` bar border 1, banner h 69 / track −0.6 / word 3 / dy −1; `RIM05` measured rim rows + `bands05()` (1-px inset bands), `HALO05` (approved light + dark halo round both pills), bar fill gradient by row, digits lavender gradient + drop-shadow, capsule line on its right end only. All inside `CSS05()` (only with hud05). | yes |
+| `qa/pilot05/full_reference_match/hud/hud_split.py` | HUD error split by part (icons, digits, rims, fills, banner text, outside the pills) | tool |
 | `qa/pilot05/full_reference_match/hud/harness.html` + `harness.mjs` | HUD-only harness: the real hud.ts over `harness_bg_stack_nohud.png` (no-HUD STACK capture of the same frame), no WebGL, no render slot; for fast CSS tuning only. Final numbers must come from real captures. | tool |
 
 The counter is still live: `setCoins(n)` writes `n.toLocaleString('en-US')` into `data-k="coins"`; 1,420 comes from
@@ -96,17 +98,51 @@ hX 162 cX 497.5 top 26.5; banner cx 433 y0 113 h 68 minW 626 size 44 weight 700 
   | + banner text 1 px up (approved caps start at row 132, game 133) | 19.45 | 70.7 % | measured row gradient / thin brown outline: no gain (31.19 / 31.43), not kept |
   | + banner word-spacing 3 px, letter-spacing −0.6 px (approved word gaps 13–14 px vs 8–11) | **18.21** | **71.8 %** | sweep of 14 pairs; sensitive to sub-pixel position (24.9–37.0); kept the best, letters moved 1–3 px toward approved |
   Ported to `src/ui/hud.ts` (H05 border 1 / banner h 69, track −0.6, word 3, dy −1; `RIM05` rows, `bands05()`, `HALO05`;
-  digits gradient + drop-shadow): harness 18.20 / 71.8 %. Real captures: in progress.
+  digits gradient + drop-shadow): harness 18.20 / 71.8 % (real captures: see RESULT below).
+  + heart capsule: violet line only on its right end (`border-right-color: rgba(175,58,205,0.9)`, no top / bottom / left line,
+  no inner glow; approved peak (164,68,193) / (200,63,211), the old lavender line (189,128,229) sat on the bar rim):
+  harness 18.10 / 72.0 % (bar rim 29.1 → 26.3). In `hud.ts`.
+
+## RESULT (real game captures, 2026-11-17 ~01:44 UTC, `scripts/capture.mjs 05`, locked frame)
+* `hud/before.png` = STACK (fresh; identical to `stack_2340/05_match05.png`, 0 px), `hud/new.png` = STACK + `hud05=1`;
+  metrics `hud/before_*.json`, `hud/new_*.json` (`tools/match05/metrics.py`). Real HUD = harness within 2 levels.
+| | before (STACK) | new (STACK + hud05) |
+|---|---|---|
+| HUD + text, mean abs dRGB / within 20 / SSIM | 62.23 / 13.4 % / 0.171 | **18.11 / 72.0 % / 0.794** |
+| whole frame, mean / within 20 | 34.10 / 51.6 % | 29.86 / 57.2 % |
+| with coins05 too (`coins/new_hud05_coins05.png`) | | whole frame 29.26 / 57.9 % |
+* Parts (`hud/hud_split.py`, new): icons 0.7–6.3, bar fill 9.4, banner fill 9.2, banner rim 20.5, bar rim 26.3,
+  banner text 24.9, digits 29.9 / 32.0, outside the pills (3-D scene inside the HUD mask) 39.0 = 28 % of the remaining error.
+* Element positions (frame px; glyph boxes = pixels brighter than the fill), approved | before | new:
+  | element | approved | before (STACK) | new (hud05) |
+  |---|---|---|---|
+  | bar box | x 33–825, y 13–100 | x 35.3–828.7, y 17.7–108.2 | x 33–825, y 13–100 |
+  | heart / plus / coin / pause icons | sprites cut from the approved picture | SVG / glyphs, other places | approved sprites at the measured boxes (error 0.7 / 1.1 / 6.3 / 5.1) |
+  | dividers | x 344 / 707 | x 363 / 716 | x 343 / 706 (2 px) |
+  | "5/5" digits | x 165–235, y 33–73 | x 154–249, y 45–78 | x 165–233, y 31–72 |
+  | counter "1,420" (live text) | x 497–617, y 36–74 | x 480–636, y 42–79 | x 498–617, y 35–73 |
+  | banner pill | x 120–746, y 113–181 | x 123–741, y 116–185 | x 120–746, y 113–181 |
+  | banner lettering | x 147–722, rows 131–159 | caps 138–160 | x 151–720, rows 132–158 |
+* Default build: `scripts/capture.mjs 04 05 06` without switches: 05 == `qa/pilot05/current_default_05.png` (0 px).
+  Re-checked with the FINAL code (after the last hud.ts edit, ~01:50 UTC): 0 px differ; `npx tsc --noEmit` clean.
+* Other screens with `hud05=1&coins05=1` (04, 06 vs default): the new HUD layout shows on every ride screen (global, gated);
+  the longer titles fit ("04 · THROUGH THE FIVE ARROWS" grows the pill past its 626 px minimum, still inside the frame;
+  "06 · CREST THE RINSE ARCH"). Below the HUD only the coins change (coin look, see coins/NOTES.md); hud05 alone changes
+  nothing below y 207 on 05 (rows 200–207 ≤ 4 levels = the default banner's glow tail it replaces).
+* Gameplay with both switches: `coins/gameplay.json` 8/8 pass (pause, travel, camera, plunge, real pickups 1,330 → 2,330,
+  victory, hearts); the counter is live text (`setCoins`), nothing hard-coded. `npm run -s test:continuity`: ok, outputs unchanged.
+
+## What still differs (and why)
+* Banner lettering 24.9 and digits 30–32: glyph SHAPES. The only font in the project is Baloo 2 (400–800, synthetic
+  italic); the approved lettering is a rounder, slightly narrower painted face with a brown outline and bevel. Measured
+  attempts that did not help: weight 600 digits (counter 31.4 → 50.0), weight 600 banner (earlier run), text stroke,
+  thin brown outline (31.19 → 31.43), per-row text gradient (no change). No new fonts / packages were added (rule).
+* Outside the pills (39.0): mostly the 3-D tunnel behind the HUD (walls / rings: env05 / coordinator), not the HUD.
+* Banner pill sides: the measured rim rows come from the top / bottom centre; the round ends use the same bands.
 
 ## Remaining, step by step
-1. (done in harness, see table) — optional: only further fine passes on the banner rim profile (approved top rim
-   113–118 soft 5-px ramp peaking at 114, bottom 172–182 with a lavender inner glow) if measured closer.
-2. Real captures (one at a time): `node qa/pilot05/full_reference_match/hud/probe05.mjs --out=DIR before='<STACK>' new='<STACK>&hud05=1'`
-   → copy to `hud/before.png`, `hud/new.png`; `python3 -I tools/match05/metrics.py hud/new.png hud/new_` (and before).
-3. Default identity: `node scripts/capture.mjs 05 --out=<scratch>` must equal `qa/pilot05/current_default_05.png` (0 px);
-   then `git checkout -q qa/capture_log.json` (allowed by COORDINATION rule 1).
-4. Other screens with the switch on: capture 04 and 06 with `hud05=1` vs without; describe (global layout change).
-5. Fill this file's final tables (approved | game | difference | cause | change | measured result).
+1. Optional: coin icon (6.3) and pause (5.1) sprite edges; numbers / lettering only with a font the project already has.
+2. Nothing else open for hud05. Promotion to the default is the user's decision (not done).
 
 ## REQUESTS
-None so far.
+None.

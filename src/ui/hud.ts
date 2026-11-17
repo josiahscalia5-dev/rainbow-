@@ -61,8 +61,9 @@ const CSS05 = () => `
   box-shadow: ${bands05(RIM05.barTop, 1)}, ${bands05(RIM05.barBottom, -1)}${H05.bar.shadow ? `, 0 ${U(2.5)} ${U(3)} rgba(120,10,150,0.6)` : ''}, ${HALO05}; }
 #hud.m05 .bar > * { position: absolute; display: block; margin: 0; }
 #hud.m05 .pill05 { left: ${U(-H05.bar.border)}; top: ${U(-H05.bar.border)}; width: ${U(331 - 33)}; height: ${U(H05.bar.y1 - H05.bar.y0)};
-  box-sizing: border-box; border-radius: ${U((H05.bar.y1 - H05.bar.y0) / 2)}; border: ${U(2)} solid rgba(214,160,255,0.8);
-  box-shadow: inset 0 0 ${U(3)} rgba(200,140,255,0.4); }
+  box-sizing: border-box; border-radius: ${U((H05.bar.y1 - H05.bar.y0) / 2)}; border: ${U(2)} solid transparent;
+  border-right-color: rgba(175,58,205,0.9); } /* run #3: only the capsule's right end is its own line (approved violet
+  peak (164,68,193) / (200,63,211)); its top / bottom / left lie on the bar rim (a lavender line there measured worse) */
 #hud.m05 .div05 { top: ${by(27)}; height: ${U(59)}; width: ${U(2)}; background: rgba(226,182,255,0.33); }
 #hud.m05 .d1 { left: ${bx(343)}; } #hud.m05 .d2 { left: ${bx(706)}; }
 #hud.m05 .num { top: ${by(H05.num.top)}; font-weight: ${H05.num.weight}; font-size: ${U(H05.num.size)}; line-height: 1; letter-spacing: ${U(H05.num.track)};

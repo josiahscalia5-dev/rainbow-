@@ -1,12 +1,12 @@
 {
- "wall_own_texels": 310999,
- "wall_seen_texels": 519130,
- "ring_own_texels": 59357,
- "ring_seen_texels": 156179,
- "wall_pixels_used": 244427,
- "wall_pixels_seen": 336556,
- "ring_pixels_used": 89401,
- "ring_pixels_seen": 150093,
- "feedback_wall_mean_abs_residual": 4.27,
- "feedback_ring_mean_abs_residual": 8.81
+ "wall_own_texels": 309298,
+ "wall_seen_texels": 519426,
+ "ring_own_texels": 62289,
+ "ring_seen_texels": 155262,
+ "wall_pixels_used": 244978,
+ "wall_pixels_seen": 338207,
+ "ring_pixels_used": 91783,
+ "ring_pixels_seen": 148165,
+ "feedback_wall_mean_abs_residual": 4.12,
+ "feedback_ring_mean_abs_residual": 8.53
 }

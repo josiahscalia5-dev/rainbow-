@@ -305,8 +305,9 @@ export function withEnv05Ring<T extends THREE.MeshStandardMaterial>(mat: T, row0
     const vMark = 'vBandP = position;';
     if (!shader.vertexShader.includes(vMark) || !shader.fragmentShader.includes('varying vec3 vBandP;')) { console.error('[rainbow] env05: band shader marker not found'); return; }
     shader.vertexShader = shader.vertexShader
-      .replace('void main() {', 'varying float vE5Inst;\nvoid main() {')
+      .replace('void main() {', 'varying float vE5Inst; attribute float aE5Skirt; varying float vE5Skirt;\nvoid main() {')
       .replace(vMark, `${vMark}
+vE5Skirt = aE5Skirt;
 #ifdef USE_INSTANCING
 vE5Inst = ${perInstance ? 'float(gl_InstanceID)' : '0.0'};
 #else
@@ -315,9 +316,10 @@ vE5Inst = 0.0;
     shader.fragmentShader = shader.fragmentShader
       .replace('void main() {', `uniform sampler2D uE5Ring; uniform vec3 uE5RingSize; uniform vec2 uE5RingP; uniform float uPtDbg;
 uniform vec4 uPjPost; uniform vec2 uPjRes;
-varying float vE5Inst;
+varying float vE5Inst; varying float vE5Skirt;
 ${PROJ05_INVERSE}
-void main() {`)
+void main() {
+  if (vE5Skirt > 0.001) discard;   // the skirt behind the wall line (tube.ts markBandSkirt): never drawn under env05`)
       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
 { // ?env05=1: this ring's row of the camera-projection ring atlas
   float e5row = floor(uE5RingP.x + vE5Inst + 0.5);

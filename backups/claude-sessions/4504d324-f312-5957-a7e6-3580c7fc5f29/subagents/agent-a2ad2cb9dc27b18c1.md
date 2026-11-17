@@ -1982,3 +1982,220 @@ Default build: **0 px differ** from `qa/pilot05/current_default_05.png`. Next th
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; timeout 2400 node scripts/capture.mjs 04 06 --out=$B/cap/off_0406 > $SP/cap_off.log 2>&1; echo off_rc=$?; timeout 2400 node scripts/capture.mjs 04 06 --q='benny05=1' --out=$B/cap/on_0406 > $SP/cap_on.log 2>&1; echo on_rc=$?; cp $SP/capture_log.bak qa/capture_log.json; tail -2 $SP/cap_on.log; ls $B/cap/off_0406 $B/cap/on_0406", "description": "Capture screens 04 and 06 with benny05 off and  …[+24 chars]`
 
+### 🧑 User — 2026-11-17T01:43:35.498Z
+
+> ↩︎ result: off_rc=0
+> on_rc=0
+> 04 → qa/pilot05/full_reference_match/benny/cap/on_0406/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":729858,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06 → qa/pilot05/full_reference_match/benny/cap/on_0406/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":72,"tris":560665,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> qa/pilot05/full_reference_match/benny/cap/off_0406:
+> 04.png
+> 06.png
+> 
+> qa/pilot05/full_reference_match/benny/cap/on_0406:
+> 04.png
+> 06.png
+
+### 🤖 Claude — 2026-11-17T01:43:41.233Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; python3 -I -c \"\nimport numpy as np; from PIL import Image\nfrom scipy import ndimage as ndi\nout=[]\nfor s in ('04','06'):\n  a=np.asarray(Image.open('$B/cap/off_0406/'+s+'.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$B/cap/on_0406/'+s+'.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).sum(-1)>0; ys,xs=np.nonzero(d)\n  print(s,'changed px',d.sum(),'bbox x',xs.min(),xs.max(),'y',ys.min(),ys.max())\n  x0,x1,y0,y1=max(0,xs.min()-30),min(864,xs.max()+30),max(0,ys.min()-30),min(1536,ys.max()+30)\n  out …[+439 chars]`
+
+### 🧑 User — 2026-11-17T01:43:43.021Z
+
+> ↩︎ result: 04 changed px 85079 bbox x 9 863 y 179 1292
+> 06 changed px 313630 bbox x 0 863 y 445 1535
+> (1173, 3466, 3)
+
+### 🤖 Claude — 2026-11-17T01:43:49.660Z
+
+Large changed areas (06: 313k px across the full width). Either Benny is very large in those frames or something outside Benny changes. Let me look before drawing conclusions.
+
+### 🤖 Claude — 2026-11-17T01:43:52.051Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/id0406.png'); im.resize((im.width*2//5, im.height*2//5)).save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/id0406s.png')\"", "description": "Downscale the 04/06 comparison sheet"}`
+
+### 🧑 User — 2026-11-17T01:43:52.416Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:43:54.390Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/id0406s.png"}`
+
+### 🧑 User — 2026-11-17T01:43:54.413Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:44:04.366Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; python3 -I -c \"\nimport numpy as np; from PIL import Image\nfrom scipy import ndimage as ndi\nfor s in ('04','06'):\n  a=np.asarray(Image.open('$B/cap/off_0406/'+s+'.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$B/cap/on_0406/'+s+'.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(-1)\n  big=d>40\n  lab,k=ndi.label(ndi.binary_dilation(big,iterations=6)); sz=ndi.sum(big,lab,range(1,k+1))\n  main=lab==1+int(np.argmax(sz))\n  ys,xs=np.nonzero(main); print(s,'Benny blob bbox x',xs.min(),xs.max(),'y', …[+432 chars]`
+
+### 🧑 User — 2026-11-17T01:44:05.124Z
+
+> ↩︎ result: 04 Benny blob bbox x 412 637 y 620 852 px 32648
+>    outside Benny(+25px): changed px 44484  >4 levels 0  >12 0  max 3
+> 06 Benny blob bbox x 108 634 y 909 1535 px 203611
+>    outside Benny(+25px): changed px 98098  >4 levels 2307  >12 0  max 10
+>    >4 outside bbox x 522 654 y 1048 1234
+
+### 🤖 Claude — 2026-11-17T01:44:11.915Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,30p scripts/proj05-move.mjs | grep -E \"^//|steer|--d|out\" | head -20", "description": "Read proj05-move usage notes"}`
+
+### 🧑 User — 2026-11-17T01:44:12.010Z
+
+> ↩︎ result: // Screen 05 projection test — MOVING CAMERA (2026-11-16). Starts at the locked 05 checkpoint and rides forward with
+> // the real game simulation (Benny + camera rig + course unchanged), capturing full-size frames.
+> //   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> // --d: distances ahead of the checkpoint (units of s) → DIR/move_<d>.png (shader clock frozen at 12: shows layout only)
+> // --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> // --still=SECONDS: water animation at the LOCKED camera (clock runs, camera still) → DIR/still/0000.png …
+> const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/move';
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+
+### 🤖 Claude — 2026-11-17T01:44:15.167Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 2400 node scripts/proj05-move.mjs --q=\"$STACK&benny05=1\" --out=$B/steer --d=0,8,17 --steer=-1,1 > $B/steer.log 2>&1; echo rc=$?; tail -5 $B/steer.log; ls $B/steer", "description": "Render steering frames with benny05 on", "timeout": 2400000}`
+
+### 🧑 User — 2026-11-17T01:44:58.331Z
+
+> ↩︎ result: rc=0
+> steer -1 0.5 -2.352
+> steer -1 0.8 -4.566
+> steer 1 0.25 0.705
+> steer 1 0.5 2.342
+> steer 1 0.8 4.556
+> move_00.png
+> move_08.png
+> move_17.png
+> move_log.json
+> steer_L_025.png
+> steer_L_050.png
+> steer_L_080.png
+> steer_R_025.png
+> steer_R_050.png
+> steer_R_080.png
+
+### 🤖 Claude — 2026-11-17T01:45:02.424Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; python3 -I -c \"\nimport numpy as np; from PIL import Image\nimport json\nnames=['move_08','move_17','steer_L_050','steer_L_080','steer_R_050','steer_R_080']\ncrops=[]\nfor n in names:\n  im=np.asarray(Image.open('$B/steer/'+n+'.png').convert('RGB'))\n  crops.append(im[650:1300,150:700])\nrow1=np.concatenate(crops[:3],1); row2=np.concatenate(crops[3:],1)\nImage.fromarray(np.concatenate([row1,row2],0)).resize((1650//2*1,1300//2*1)).save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad …[+70 chars]`
+
+### 🧑 User — 2026-11-17T01:45:02.989Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:45:04.865Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/steer.png"}`
+
+### 🧑 User — 2026-11-17T01:45:04.894Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:45:11.837Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$B/steer/steer_L_080.png').convert('RGB'))[700:1180,150:520]\nb=np.asarray(Image.open('$B/steer/move_08.png').convert('RGB'))[700:1180,250:620]\nImage.fromarray(np.concatenate([a,b],1)).save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/steerzoom.png')\"", "description": "Full-resolution crop of strong-roll steering frames"}`
+
+### 🧑 User — 2026-11-17T01:45:12.132Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:45:13.933Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/steerzoom.png"}`
+
+### 🧑 User — 2026-11-17T01:45:13.962Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:45:39.941Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "offset": 225, "limit": 45}`
+
+### 🧑 User — 2026-11-17T01:45:39.959Z
+
+> ↩︎ result: 225	                # rings round the unseen arc -> no zig-zag stripes when the beanie turns away from the 05 camera
+> 226	                h, est, cf = ring_shift(filled, seen, u0, u1)
+> 227	                rect = shift_rows(filled, np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0))
+> 228	                rect_t = rect[:, mirror_idx(TW, u0, u1)]
+> 229	                tiled = shift_rows(rect_t, -h)
+> 230	                extra = dict(ring_fit_rows=[round(float(c), 2) for c in cf], ring_h_rows=dict(
+> 231	                    u0=round(float(h[u0]), 1), centre=round(float(h[(u0 + u1) // 2]), 1), u1=round(float(h[u1 - 1]), 1)),
+> 232	                    ring_est_cols=len(est))
+> 233	            filled = wseen * filled + (1 - wseen) * tiled
+> 234	            extra['strip_u'] = [round(u0 / TW, 3), round(u1 / TW, 3)]
+> 235	        scale = float(max(1.0, np.percentile(filled, 99.7)))
+> 236	        stored = np.clip(filled / scale, 0, 1)
+> 237	        srgb = np.where(stored <= 0.0031308, stored * 12.92, 1.055 * stored ** (1 / 2.4) - 0.055)
+> 238	        Image.fromarray((srgb * 255 + 0.5).astype(np.uint8)).save(f'{out}/{name}.png')
+> 239	        Image.fromarray((seen * 255).astype(np.uint8)).save(f'{out}/{name …[+1394 chars]
+
+### 🤖 Claude — 2026-11-17T01:45:53.328Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "                rect = shift_rows(filled, np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0))\n                rect_t = rect[:, mirror_idx(TW, u0, u1)]", "new_string": "                hs = np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0)\n                rect = shift_rows(filled, hs)\n                rect_t = rect[:, mirror_idx(TW, u0, u1)]\n                if '--topfill' in sys.argv:\n                    # rows above everything the 05 camera s …[+1150 chars]`
+
+### 🧑 User — 2026-11-17T01:45:53.382Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T01:45:58.576Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; timeout 900 python3 $W/bake.py $W/s1 $W/s1/tex_top --topfill > $W/s1/bake_top.log 2>&1; echo rc=$?; python3 -I -c \"\nimport json; print(json.load(open('$W/s1/tex_top/bake_report.json'))['crown'])\"; python3 -I -c \"\nimport numpy as np; from PIL import Image\nW='$W'\nold=np.asarray(Image.open(W+'/s1/tex/crown.png').convert('RGB')).astype(int)\nnew=np.asarray(Image.open(W+'/s1/tex_top/crown.png').convert('RGB')).astype(int)\ninst=np.asarray(Image.open('assets/textures/benny05/crown.png').convert('RGB')).astype(i …[+618 chars]`
+
+### 🧑 User — 2026-11-17T01:46:03.040Z
+
+> ↩︎ result: rc=0
+> {'px': 15648, 'seen_texels': 25744, 'rejected_texels': 725, 'scale': 1.0, 'median_albedo': [0.221, 0.187, 0.243], 'ring_fit_rows': [-0.38, 144.7, -1970.7], 'ring_h_rows': {'u0': -35.4, 'centre': -0.4, 'u1': -6.0}, 'ring_est_cols': 48, 'strip_u': [0.383, 0.587]}
+> texels changed by topfill 46697  of which seen 2090
+
+### 🤖 Claude — 2026-11-17T01:46:14.400Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/bake.py'\ns=open(p).read()\na=\"\"\"                extra = dict(ring_fit_rows=\"\"\"\nb=\"\"\"                extra.update(ring_fit_rows=\"\"\"\nassert s.count(a)==1; s=s.replace(a,b)\na2=\"\"\"        extra = {}\n        if mode is not None:\"\"\"\nassert s.count(a2)==1\nopen(p,'w').write(s)\nEOF\ngrep -n \"extra.update(ring_fit_rows\" -A3 $W/bake.py | head -5; timeout 900 python3 $W/bake.py $W/s1 $W/s1/tex_top --topfill > $W/s1/bake_top.log 2>&1 …[+1037 chars]`
+
+### 🧑 User — 2026-11-17T01:46:19.950Z
+
+> ↩︎ result: 249:                extra.update(ring_fit_rows=[round(float(c), 2) for c in cf], ring_h_rows=dict(
+> 250-                    u0=round(float(h[u0]), 1), centre=round(float(h[(u0 + u1) // 2]), 1), u1=round(float(h[u1 - 1]), 1)),
+> 251-                    ring_est_cols=len(est))
+> 252-            filled = wseen * filled + (1 - wseen) * tiled
+> rc=0
+> {'r_top': 91, 'purple_rows': [112, 177]}
+> texels taken from topfill 40703
+
+### 🤖 Claude — 2026-11-17T01:46:32.542Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/crown_top.png"}`
+
+### 🧑 User — 2026-11-17T01:46:32.562Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:46:49.403Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; cp $W/f4/crown.png assets/textures/benny05/crown.png; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&benny05=1\" --out=$B/cap/new_f4 > $SP/cap_f4.log 2>&1; echo cap_rc=$?; cp $SP/capture_log.bak qa/capture_log.json; python3 -I tool …[+605 chars]`
+
+### 🧑 User — 2026-11-17T01:47:10.729Z
+
+> ↩︎ result: cap_rc=0
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 31.79, 'within_10': 0.4656, 'within_20': 0.5517, 'ssim_lum': 0.55, 'mean_signed_rgb': [2.3, 0.6, -1.1]}
+> benny_and_hat                px   93061  mean  19.24  <=10 0.587  <=20 0.730  ssim 0.655  signed [-5.6, -1.2, 1.1]
+> pom     12764   20.7  0.68    0.148  [124  20 23
+> crown   18362   17.1  0.76    0.176  [223 168 24
+> cuff    14689   14.6  0.81    0.120  [112  16 23
+> star     2683   24.4  0.73    0.037  [252 217  3
+> body    44566   20.9  0.71    0.520  [242  79 18
+> ALL 93061 19.24 0.73
+> px changed vs f3 792 (np.int64(334), np.int64(491), np.int64(868), np.int64(910))
+
+### 🤖 Claude — 2026-11-17T01:47:30.454Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/edge.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as ndi\nfrom parts import approved_parts\nfrom geom import load_uv\nP,a,m=approved_parts()\nuv=load_uv('qa/pilot05/full_reference_match/benny/work/s1/uv.f32'); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\ng=np.asarray(Image.op …[+941 chars]`
+
+### 🧑 User — 2026-11-17T01:47:31.348Z
+
+> ↩︎ result: body edge px 6754 game shows background 1992 mean err there 101.8  covered 4762 mean err 31.8
+>    share of region error: holes 0.113  covered edge 0.084
+> pom edge px 1318 game shows background 408 mean err there 89.6  covered 910 mean err 37.1
+>    share of region error: holes 0.02  covered edge 0.019
+> game Benny px outside approved mask 3782 mean err 48.2
+
