@@ -26,7 +26,7 @@ interface Layout04 {
 export interface Match04 {
   group: THREE.Group;
   bakeDepth(renderer: THREE.WebGLRenderer): void;
-  sync(renderer: THREE.WebGLRenderer, w: number, h: number): void;
+  sync(renderer: THREE.WebGLRenderer, w: number, h: number, camera?: THREE.Camera): void;
 }
 
 const VERT = /* glsl */ `
@@ -54,6 +54,12 @@ uniform float uPatchK;
 uniform vec3 uProjPos;
 uniform vec4 uPjPost;
 uniform vec2 uPjRes;
+uniform float uMode;          // 0 room wall / mouth ring: artwork patch; 1 tunnel wall: painted ring tile; 2 water: painted river tile
+uniform sampler2D uTile;
+uniform vec4 uTileA;          // mode 1: cx, cy, mouth z, ring period | mode 2: lateral half-width, along start, along length, -
+uniform float uLipS;
+uniform sampler2D uFill;      // plate04_fillmask: where the plate is a provisional fill (HUD, title, Benny, coins)
+uniform float uMoved;         // 0 in the approved view, 1 once the camera has moved away from it
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -66,8 +72,26 @@ vec3 patchColor() {
   return texture2D(uPatch, p.zy).rgb * n.x + texture2D(uPatch, p.xz).rgb * n.y + texture2D(uPatch, p.xy).rgb * n.z;
 }
 float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
+// milestone 2: world-anchored design tiles cut from the approved artwork for the views the picture never resolved
+vec3 tileColor(vec3 pc) {
+  if (uMode > 0.5 && uMode < 1.5) {
+    vec2 rel = vL.xy - uTileA.xy;
+    float psi = atan(-rel.x, rel.y);                       // 0 = tunnel top, seam at the bottom (under the water)
+    float ax = uTileA.z - vL.z;                            // distance down the tunnel from the mouth
+    vec2 uv = vec2(psi / 6.2831853 + 0.5, (ax - 7.1) / uTileA.w + uLipS);
+    return textureGrad(uTile, uv, vec2(dFdx(uv.x), dFdx(uv.y)) * vec2(step(abs(dFdx(uv.x)), 0.5), 1.0),
+                       vec2(dFdy(uv.x), dFdy(uv.y)) * vec2(step(abs(dFdy(uv.x)), 0.5), 1.0)).rgb;
+  }
+  if (uMode > 1.5) {
+    float along = -vL.z;                                    // down the slide from Benny's water point
+    vec2 uv = vec2(vL.x / (2.0 * uTileA.x) + 0.5, (along - uTileA.y) / uTileA.z);
+    float inRiver = 1.0 - smoothstep(0.9 * uTileA.x, uTileA.x, abs(vL.x));
+    return mix(pc, texture2D(uTile, uv).rgb, inRiver);
+  }
+  return pc;
+}
 void main() {
-  vec3 pc = patchColor();
+  vec3 pc = tileColor(patchColor());
   vec3 t = pc;
   vec3 nn = normalize(vN);
   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
@@ -84,14 +108,18 @@ void main() {
         float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
       }
-      t = mix(pc, texture2D(uPlate, uv).rgb, vis * keep);
+      // provisional fill (no painted pixels there) gives way to the painted tiles once the camera moves
+      float fill = uMode > 0.5 ? texture2D(uFill, uv).r * uMoved : 0.0;
+      t = mix(pc, texture2D(uPlate, uv).rgb, vis * keep * (1.0 - fill));
     }
   }
   gl_FragColor = vec4(pjInverse(t), 1.0);
 }`;
 
+const TILE04 = new URLSearchParams(location.search).get('tile04') !== '0'; // milestone-2 tiles (A/B: &tile04=0 = milestone 1)
 const tex = (f: string) => new URL(`../../assets/textures/match04/${f}`, import.meta.url).href;
 
+const _cp = new THREE.Vector3();
 export async function buildMatch04(): Promise<Match04> {
   const L: Layout04 = await fetch(tex('proj04.json')).then((r) => r.json());
   const plate = await new THREE.TextureLoader().loadAsync(tex('plate04_hybrid.png'));
@@ -110,7 +138,11 @@ export async function buildMatch04(): Promise<Match04> {
 
   const depthRT = new THREE.WebGLRenderTarget(1024, Math.round((1024 * H) / W), { depthBuffer: true });
   depthRT.depthTexture = new THREE.DepthTexture(depthRT.width, depthRT.height, THREE.UnsignedIntType);
+  const fillMask = await new THREE.TextureLoader().loadAsync(tex('plate04_fillmask.png'));
+  fillMask.colorSpace = THREE.NoColorSpace;
   const shared = {
+    uFill: { value: fillMask },
+    uMoved: { value: 0 },
     uPlate: { value: plate },
     uDepth: { value: depthRT.depthTexture as THREE.Texture },
     uUseDepth: { value: 0 },
@@ -125,11 +157,19 @@ export async function buildMatch04(): Promise<Match04> {
     t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping; t.anisotropy = 4; return t;
   };
   const [pGold, pWater, pWall] = await Promise.all([loadPatch('gold'), loadPatch('water'), loadPatch('wall')]);
-  const mat = (patch: THREE.Texture, k: number) => new THREE.ShaderMaterial({
+  const loadTile = async (name: string) => {
+    const t = await new THREE.TextureLoader().loadAsync(tex(`tile_${name}.png`));
+    t.colorSpace = THREE.NoColorSpace; t.flipY = false; t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8; t.needsUpdate = true; return t;
+  };
+  const [tRing, tRiver] = await Promise.all([loadTile('ring'), loadTile('river')]);
+  const tiles = await fetch(tex('tiles04.json')).then((r) => r.json());
+  const mat = (patch: THREE.Texture, k: number, mode = 0, tile: THREE.Texture | null = null, tileA = new THREE.Vector4()) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
-    uniforms: { ...shared, uPatch: { value: patch }, uPatchK: { value: k } },
+    extensions: { derivatives: true } as never,
+    uniforms: { ...shared, uPatch: { value: patch }, uPatchK: { value: k }, uMode: { value: TILE04 ? mode : 0 },
+      uTile: { value: tile ?? patch }, uTileA: { value: tileA }, uLipS: { value: tiles.ring?.lipS ?? 0 } },
   });
-  const M = { gold: mat(pGold, 1 / 1.6), water: mat(pWater, 1 / 2.2), wall: mat(pWall, 1 / 3.0) };
 
   // slide-local frame: x = world X, y = slide up U, z = -D (forward = -z); origin = Benny's water point on the path line
   const group = new THREE.Group();
@@ -141,10 +181,17 @@ export async function buildMatch04(): Promise<Match04> {
 
   const T = L.tube;
   const cx = T.ax - L.water[0], cy = T.h, z0 = -T.mouthS, len = 48;
+  const rv = tiles.river;
+  const M = {
+    gold: mat(pGold, 1 / 1.6),
+    tunnel: mat(pGold, 1 / 1.6, 1, tRing, new THREE.Vector4(cx, cy, z0, tiles.ring?.period_u ?? 6.5)),
+    water: mat(pWater, 1 / 2.2, 2, tRiver, new THREE.Vector4(rv.lateral[1], rv.alongFromBenny[0], rv.alongFromBenny[1] - rv.alongFromBenny[0], 0)),
+    wall: mat(pWall, 1 / 3.0),
+  };
   // gold-ring tunnel: cylinder from the mouth down the slide
   const tube = new THREE.CylinderGeometry(T.r, T.r, len, 128, 24, true);
   tube.rotateX(Math.PI / 2).translate(cx, cy, z0 - len / 2);
-  add(tube, M.gold, 'tube');
+  add(tube, M.tunnel, 'tube');
   // the big gold mouth ring (annulus, a little depth toward the camera)
   const ring = new THREE.Shape(); ring.absarc(0, 0, T.outerR, 0, Math.PI * 2, false);
   const hole = new THREE.Path(); hole.absarc(0, 0, T.r, 0, Math.PI * 2, true); ring.holes.push(hole);
@@ -179,7 +226,8 @@ export async function buildMatch04(): Promise<Match04> {
       renderer.setRenderTarget(prevRT);
       shared.uUseDepth.value = 1;
     },
-    sync(renderer, w, h) {
+    sync(renderer, w, h, camera?: THREE.Camera) {
+      if (camera) shared.uMoved.value = THREE.MathUtils.smoothstep(camera.getWorldPosition(_cp).distanceTo(proj.position), 0.3, 2.0);
       shared.uPjPost.value.x = renderer.toneMappingExposure;
       shared.uPjRes.value.set(w, h);
     },

@@ -26,5 +26,23 @@
    512,
    512
   ]
+ },
+ "ring": {
+  "psi": [
+   -3.141592653589793,
+   3.141592653589793
+  ],
+  "rowsAlongTunnel": "one ring period",
+  "sourceY": [
+   517,
+   575
+  ],
+  "size": [
+   1024,
+   192
+  ],
+  "period_u": 6.5,
+  "lipAxial_u": 7.1,
+  "lipS": 0.155
  }
 }

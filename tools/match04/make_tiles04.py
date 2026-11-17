@@ -36,3 +36,39 @@ cv2.imwrite(f"{d}/tile_river.png", sharpen(riv).astype(np.uint8))
 json.dump({"tunnel": {"angle": [0, math.pi], "axialFromMouth": TUN_A, "size": [256, 1024]}, "river": {"lateral": RIV_X, "alongFromBenny": RIV_A, "size": [512, 512]}},
           open(f"{d}/tiles04.json", "w"), indent=1)
 print("tiles written")
+
+# ---- milestone 2: tile_ring.png = ONE painted gold ring, straight and seamless along the tunnel ----------------------
+# The painted rings are not concentric with a straight cylinder (their centres drift toward the vanishing point), so an
+# unwrap through the cylinder gives wavy, smeared rings. Instead: the ring's cross-section (groove, lip, groove, polished
+# band) is read straight off the approved picture along the tunnel top (x 445-485, y RING_Y), and the angle-dependent
+# colour (side reflections, pink/violet glints, the long specular streaks) from a polar unwrap of the painted tunnel
+# around its drifting ring centres (axial mean over the near rings). tile = profile(s) x colour ratio(angle).
+# columns = psi -pi..pi (psi 0 = tunnel top, +pi/2 = left wall, seam at the bottom under the water), rows = one ring.
+RING_Y = (517, 575)
+prof = A[RING_Y[0]:RING_Y[1], 445:485].mean(1)                       # (rows, 3) BGR along the ring
+prof = cv2.resize(prof[None], (192, 1), interpolation=cv2.INTER_CUBIC)[0]  # 192 samples along one ring period
+n = 10; w = np.linspace(0, 1, n)[:, None]; prof[-n:] = prof[-n:] * (1 - w) + prof[0] * w   # seamless period
+VP, MC, RM = np.array([490., 690.]), np.array([434., 792.]), 347.0     # vanishing point, mouth-ring centre/radius (px)
+f = (H / 2) / t; zm = f * T["r"] / RM
+psi = np.linspace(-np.pi, np.pi, 1024, endpoint=False); ax = np.linspace(2.0, 12.0, 160)
+AX, PS = np.meshgrid(ax, psi)
+r = f * T["r"] / (zm + AX)
+c = VP[None, None] + (r / RM)[..., None] * (MC - VP)[None, None]
+th = PS + np.pi / 2                                                    # angle from +x (screen right), up positive
+u = (c[..., 0] + r * np.cos(th)).astype(np.float32); v = (c[..., 1] - r * np.sin(th)).astype(np.float32)
+pol = cv2.remap(A, u, v, cv2.INTER_LINEAR)
+g = np.median(pol, axis=1)                                             # (1024, 3) colour per angle
+low = np.cos(psi) < -0.35                      # under the water plane (never seen): reflect the wall above the waterline
+refl = np.where(psi > 0, np.pi - psi, -np.pi - psi)
+g[low] = g[np.round((refl[low] + np.pi) / (2 * np.pi) * 1024).astype(int) % 1024]
+top = np.argmin(np.abs(psi)); gt = g[max(0, top - 8):top + 8].mean(0)
+g = cv2.GaussianBlur(g[:, None], (1, 0), sigmaX=1, sigmaY=2)[:, 0]
+ratio = np.clip(g / np.maximum(gt, 1), 0.35, 3.0)
+ring = np.clip(prof[None, :, :] * ratio[:, None, :], 0, 255)           # (1024 psi, 192 s)
+ring = sharpen(ring.astype(np.float32), 1.2, 0.35)
+cv2.imwrite(f"{d}/tile_ring.png", np.ascontiguousarray(ring.transpose(1, 0, 2)).astype(np.uint8))  # rows = s, cols = psi
+meta = json.load(open(f"{d}/tiles04.json"))
+meta["ring"] = {"psi": [-math.pi, math.pi], "rowsAlongTunnel": "one ring period", "sourceY": RING_Y, "size": [1024, 192],
+                "period_u": 6.5, "lipAxial_u": 7.1, "lipS": round((526 - RING_Y[0]) / (RING_Y[1] - RING_Y[0]), 3)}
+json.dump(meta, open(f"{d}/tiles04.json", "w"), indent=1)
+print("ring tile written")

@@ -594,7 +594,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       if (!glow05 && !m08) bloom.strength = bloomS0;
       if (m04On) bloom.strength = 0;
       renderer.getDrawingBufferSize(dbs);
-      m04.sync(renderer, dbs.x, dbs.y);
+      m04.sync(renderer, dbs.x, dbs.y, camera);
     }
     renderer.info.reset();
     composer.render();
