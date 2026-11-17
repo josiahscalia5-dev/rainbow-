@@ -2224,3 +2224,37 @@ Fix the key path (report nests classes).
 
 > 🔧 **Bash** `{"command": "node qa/match/08/benny08/work/labviews08.mjs --out=qa/match/08/benny08/views 2>&1 | tail -4", "description": "Render 360 turntables CURRENT vs NEW", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T15:57:48.053Z
+
+> ↩︎ result: wrote qa/match/08/benny08/views/turntable_CURRENT.png
+> wrote qa/match/08/benny08/views/turntable_NEW.png
+
+### 🤖 Claude — 2026-11-17T15:57:49.812Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/views/turntable_CURRENT.png"}`
+
+### 🧑 User — 2026-11-17T15:57:49.842Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:57:50.425Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/views/turntable_NEW.png"}`
+
+### 🧑 User — 2026-11-17T15:57:50.460Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:57:58.026Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"matchall\" src --include=*.ts | head -10", "description": "Check what matchall switch does"}`
+
+### 🧑 User — 2026-11-17T15:57:58.061Z
+
+> ↩︎ result: src/characters/benny/benny05.ts:22:// branch it runs under `?benny05=1`, `?benny08=1` or the Screen 08 switch `?match08=1` (and `?matchall=1`); off: nothing runs
+> src/characters/benny/benny05.ts:23:const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
+> src/world/course.ts:320:  const m08 = flag05('match08') || flag05('matchall');
+> src/game/match.ts:4: *   src/vfx/waterRibbon.ts q05). `?matchall=1` = every screen switch below at once.
+> src/game/match.ts:15:const ALL = flag05('matchall');
+> src/gameplay/coins.ts:55:  const m08 = flag05('match08') || flag05('matchall');
+
