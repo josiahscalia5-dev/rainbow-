@@ -1969,3 +1969,54 @@ The APK build is still running. I'll send you the file as soon as it finishes.
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:apk-match05 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|rror|skip'; python3 -I scripts/autosave-status.py; git lfs ls-files | grep match05-2026; git lfs ls-files | wc -l", "description": "Push the APK via autosave and confirm it is stored in LFS", "timeout": 300000}`
 
+### 🧑 User — 2026-11-17T02:44:06.832Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "9f88af61821affef4a1351253df5006a4b91bd57",
+> AUTOSAVE OK | branch ccr-b0757dec-dj6l1o | scheduler daemon | last verified backup 2026-11-17T02:43:56+00:00 (0.2 min ago) | local 9f88af6 remote 9f88af6 (match) | uncommitted 1
+> ca139ac35d * builds/rainbow-debug-match05-2026-11-17.apk
+> 37
+
+### 🤖 Claude — 2026-11-17T02:44:08.646Z
+
+The APK is pushed to GitHub through Git LFS (commit `9f88af6`, push verified). Sending it to you:
+
+### 🤖 Claude — 2026-11-17T02:44:10.340Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/builds/rainbow-debug-match05-2026-11-17.apk"], "caption": "Rainbow APK (25 MB, Android 5.1+): the whole game, with Screen 05's newest look (?match05=1, the SCREEN 3 picture) built in. Debug build, so Android will ask you to allow installing from this source.", "status": "normal", "display": "attach"}`
+
+### 🧑 User — 2026-11-17T02:44:12.090Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/builds/rainbow-debug-match05-2026-11-17.apk → file_uuid: 8a7397c8-f6e1-4f6e-bcfd-408692995712
+
+### 🤖 Claude — 2026-11-17T02:44:17.769Z
+
+I've sent you the APK file, `rainbow-debug-match05-2026-11-17.apk` (25 MB). It's also saved on GitHub in `builds/`.
+
+**What's in it**
+- The whole game, all 11 screens, with Screen 05's newest look built in. That's the look in the SCREEN 3 picture.
+- It's built from the last saved version (commit `aefa92b`), so it doesn't include the splash and bubble work that's still in progress.
+
+**What I checked**
+- I captured Screen 05 from the exact game code packaged in the APK. It was 0 pixels different from SCREEN 3, with no errors.
+- All 70 game files inside the APK are identical to that code.
+- I couldn't run it on a phone or emulator here, so it's untested on a real device and I have no speed numbers from a phone yet.
+
+**Installing it**
+1. Open the file on your Android phone (Android 5.1 or newer).
+2. It's a test build, so Android will ask you to allow installing apps from that source. Allow it, then install. The app is called "Rainbow".
+3. If an older Rainbow test build is already on the phone and installing fails, uninstall the old one first.
+
+**Things you'll notice**
+- **Opening and ending:** your Google Flow videos aren't in the project, so the app plays the built-in 3D cinematic instead. To get your videos in, send me `intro.mp4` and `ending.mp4` (the ending one is optional) and I'll add them in the next build.
+- **Phone screens:** the game was captured and checked at 864×1536. On a phone with a different screen shape, Screen 05 won't line up exactly with your approved picture.
+
+When the splash and bubble work is finished and measured, I'll build a new APK with it.
+
+### 🧑 User — 2026-11-17T02:44:21.218Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

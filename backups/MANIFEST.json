@@ -654,7 +654,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12157,
-   "sha256": "044e8ac1aecdf5048013cd1899c09e69dd20bc70c9add9d9fb4905f290c2edf4"
+   "sha256": "c8a6770ce628f986b10c64c9caaeee3813769657ab670925d8f149923c79f4bc"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -11098,8 +11098,8 @@
   },
   {
    "path": "tools/splash05/probe.mjs",
-   "bytes": 4277,
-   "sha256": "32e918915b28f5c06d402f584f5dc99b01df7ebd8ef99ced7466425e923a5b80"
+   "bytes": 4406,
+   "sha256": "37a1ea19e623a6b4d4d5e66c092e03a7ed68072eab3cf65d08c2c05af547693c"
   },
   {
    "path": "tools/water-lab.html",

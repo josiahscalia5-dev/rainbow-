@@ -6,7 +6,7 @@
 //   * for every approved bubble centre (masks/bubbles_approved.json) the visible hits along its view ray
 //     (bubbles / splash / spray / transparent sprites skipped): distance + object chain,
 // and optionally (--bg=FILE) a screenshot with the 05 splash, the shared splash fan and the spray hidden
-// (the background the wake card is solved against).
+// (the background the wake card is solved against; --hide=name,name overrides the hidden object names).
 //   node tools/splash05/probe.mjs --q='match05=1' --out=probe.json [--bg=bg.png]
 import { readFileSync, writeFileSync } from 'node:fs';
 import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
@@ -16,6 +16,7 @@ const arg = (k, d = '') => (args.find((a) => a.startsWith(`--${k}=`)) ?? `--${k}
 const q = arg('q');
 const out = arg('out', 'probe.json');
 const bg = arg('bg');
+const hideList = arg('hide', 'rider_splash05,rider_splash,spray').split(',').filter(Boolean);
 const bubbles = JSON.parse(readFileSync('qa/pilot05/full_reference_match/masks/bubbles_approved.json', 'utf8'));
 
 const { chromium } = loadPlaywright();
@@ -53,11 +54,11 @@ try {
   writeFileSync(out, JSON.stringify(res, null, 1));
   console.log('probe →', out, JSON.stringify(res.splash05));
   if (bg) {
-    await page.evaluate(() => {
+    await page.evaluate((hideList) => {
       const { scene } = window.__rainbow.qa3d();
-      scene.traverse((o) => { if (['rider_splash05', 'rider_splash', 'spray'].includes(o.name)) o.visible = false; });
+      scene.traverse((o) => { if (hideList.includes(o.name)) o.visible = false; });
       window.__rainbow.drawList?.();
-    });
+    }, hideList);
     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
     await page.screenshot({ path: bg });
     console.log('bg →', bg);

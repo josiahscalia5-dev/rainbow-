@@ -1085,3 +1085,16 @@ The footprint fits a ~3.6 × 3.6 u card centred on Benny's waterline. Now let me
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T02:44:06.021Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='tools/splash05/probe.mjs'\ns=open(p).read()\ns=s.replace(\"const bg = arg('bg');\",\"const bg = arg('bg');\\nconst hideList = arg('hide', 'rider_splash05,rider_splash,spray').split(',').filter(Boolean);\")\ns=s.replace(\"\"\"    await page.evaluate(() => {\n      const { scene } = window.__rainbow.qa3d();\n      scene.traverse((o) => { if (['rider_splash05', 'rider_splash', 'spray'].includes(o.name)) o.visible = false; });\n      window.__rainbow.drawList?.();\n    });\"\"\",\"\"\"    await page.evaluate((hideList) => {\n      const {  …[+1010 chars]`
+
+### 🧑 User — 2026-11-17T02:44:21.673Z
+
+> ↩︎ result: 19:const hideList = arg('hide', 'rider_splash05,rider_splash,spray').split(',').filter(Boolean);
+> 57:    await page.evaluate((hideList) => {
+> 59:      scene.traverse((o) => { if (hideList.includes(o.name)) o.visible = false; });
+> 61:    }, hideList);
+> bg → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/bg_spray.png
+> spray-only px 1905 1592
+

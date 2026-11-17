@@ -1,18 +1,18 @@
 {
   "last_run": {
-    "time": "2026-11-17T02:43:23+00:00",
-    "reason": "hook:Stop",
+    "time": "2026-11-17T02:43:56+00:00",
+    "reason": "manual:apk-match05",
     "result": "committed+pushed",
-    "files_staged": 4,
+    "files_staged": 8,
     "pushed_verified": true,
     "branch": "ccr-b0757dec-dj6l1o",
-    "commit": "80a2555c5d7e32e1ec4948942ad59b9227f39829",
-    "duration_s": 7
+    "commit": "9f88af61821affef4a1351253df5006a4b91bd57",
+    "duration_s": 10
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-b0757dec-dj6l1o",
-  "last_verified_remote_sha": "80a2555c5d7e32e1ec4948942ad59b9227f39829",
-  "last_successful_backup_utc": "2026-11-17T02:43:23+00:00",
+  "last_verified_remote_sha": "9f88af61821affef4a1351253df5006a4b91bd57",
+  "last_successful_backup_utc": "2026-11-17T02:43:56+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=591); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-17T02:45:00+00:00"
