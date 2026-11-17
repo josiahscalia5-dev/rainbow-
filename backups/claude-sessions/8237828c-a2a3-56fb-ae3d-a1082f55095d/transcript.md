@@ -5100,3 +5100,64 @@ Save everything to my GitHub
 
 > 🔧 **Bash** `{"command": "git status --short | head; git diff --stat; python3 scripts/rainbow-autosave.py --reason manual:user-save 2>&1 | tail -3; git status --short | head -5; echo \"HEAD   $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-c0235034-ks6sx3 | cut -f1)\"", "description": "Save all work to GitHub and verify", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T18:06:28.331Z
+
+> ↩︎ result: M src/game/Game.ts
+> ?? qa/flowplan/
+> ?? scripts/flowplan-test.mjs
+>  src/game/Game.ts | 37 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+>   "commit": "52a941ff1bccd34fc6e545fbe5bd717a90eb46f0",
+>   "duration_s": 8
+> }
+> HEAD   52a941ff1bccd34fc6e545fbe5bd717a90eb46f0
+> remote 52a941ff1bccd34fc6e545fbe5bd717a90eb46f0
+
+### 🤖 Claude — 2026-11-17T18:06:31.237Z
+
+> 🔧 **Bash** `{"command": "git status --short | head; git show --stat HEAD | grep -E \"Game.ts|flowplan\" ; for b in s04-match-c3 s05-match-c3 s06-match-c3 s07-match-c3 s08-benny08-bake-c3 s08-camclear-c3; do echo \"$b $(git ls-remote origin refs/heads/claude/rainbow-$b | cut -c1-8)\"; done", "description": "Confirm clean tree and specialist branch tips"}`
+
+### 🧑 User — 2026-11-17T18:06:33.602Z
+
+> ↩︎ result: qa/flowplan/A_after_fade_04.png                    | Bin 0 -> 431120 bytes
+>  qa/flowplan/A_during_video.png                     | Bin 0 -> 237740 bytes
+>  qa/flowplan/B_after_ending_video_11.png            | Bin 0 -> 429818 bytes
+>  qa/flowplan/flowplan_test.json                     | 153 ++++++++++++++
+>  scripts/flowplan-test.mjs                          |  90 ++++++++
+>  src/game/Game.ts                                   |  37 ++++
+> s04-match-c3 d1e422fa
+> s05-match-c3 ebaf6cac
+> s06-match-c3 c088718b
+> s07-match-c3 1c8487ea
+> s08-benny08-bake-c3 97841126
+> s08-camclear-c3 c03f391c
+
+### 🤖 Claude — 2026-11-17T18:06:41.718Z
+
+Everything is saved on GitHub, and the copy there matches this session exactly.
+
+- **Lead branch:** `ccr-c0235034-ks6sx3` @ `52a941ff1bccd34fc6e545fbe5bd717a90eb46f0`. Nothing is left uncommitted.
+- **Six specialist branches:** each specialist saves to its own branch (its five-minute autosave keeps pushing while that session is active):
+
+| Branch | Latest save |
+|---|---|
+| `claude/rainbow-s04-match-c3` | `d1e422fa` |
+| `claude/rainbow-s05-match-c3` | `ebaf6cac` |
+| `claude/rainbow-s06-match-c3` | `c088718b` |
+| `claude/rainbow-s07-match-c3` | `1c8487ea` |
+| `claude/rainbow-s08-benny08-bake-c3` | `97841126` |
+| `claude/rainbow-s08-camclear-c3` | `c03f391c` |
+
+This save includes the Google Flow test switch (`?flowplan=1`) and its test.
+
+**Not finished:** my last change to that switch (starting Screen 04 at its approved view instead of the blocked first moment) was saved but not re-tested, because you stopped me mid-run. The earlier version passed all four checks. The default game is unaffected either way, since the switch only acts when your videos are present.
+
+The Screen 08 camera specialist also finished its milestone:
+- **Drain drop into Screen 04:** Benny now stays visible all the way down, apart from a see-through water veil over up to half of him for about 0.4 seconds.
+- **Walls and gold bands:** the pink wall (04), the drum wall and gold band (06) and the gold band (07) no longer fill the screen.
+- **Screen 08's approved view:** it takes over and holds as Benny rides in.
+- **Tests:** gameplay 8/8 with 91 coins / 2,240.
+- **APK:** `builds/rainbow-debug-08camclear-2026-11-17-r3.apk`, not tested on a phone.
+
+I've stopped, as you asked. The Screen 08 Benny and Screen 07 specialists were given their next milestones before you stopped me and may still be working; their autosaves keep pushing to their own branches. Tell me how you'd like to continue.
+
