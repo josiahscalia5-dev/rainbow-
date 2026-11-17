@@ -1,5 +1,5 @@
 {
-  "when": "2026-11-17T18:25:11.681Z",
+  "when": "2026-11-17T18:38:08.268Z",
   "clip": "node_modules/.rainbow-test/flow_test.webm",
   "errors": [],
   "A": {
@@ -23,17 +23,17 @@
     "after": {
       "mode": "ride",
       "stage": "04",
-      "s": 79.783,
+      "s": 79.846,
       "lat": 0,
       "coins": 1420,
       "hearts": 5,
       "paused": false,
-      "bennyY": -22.856,
+      "bennyY": -22.887,
       "bennyVisible": true,
       "cam": [
-        1.22,
+        1.23,
         -14.43,
-        -18
+        -18.05
       ]
     },
     "movesOn": true,
@@ -75,7 +75,7 @@
       "state": {
         "mode": "outro",
         "stage": "11",
-        "s": 404.911,
+        "s": 404.919,
         "lat": 0,
         "coins": 2230,
         "hearts": 5,
@@ -85,7 +85,7 @@
         "cam": [
           11.46,
           -109.91,
-          -287.53
+          -287.54
         ]
       }
     },
@@ -94,7 +94,7 @@
     "final": {
       "mode": "end",
       "stage": "11",
-      "s": 404.911,
+      "s": 404.919,
       "lat": 0,
       "coins": 2230,
       "hearts": 5,
@@ -138,7 +138,7 @@
       "lat": 0,
       "coins": 1330,
       "hearts": 5,
-      "paused": true,
+      "paused": false,
       "bennyY": -2.05,
       "bennyVisible": true,
       "cam": [
@@ -147,7 +147,64 @@
         -6.05
       ]
     },
-    "pass": true
+    "pass": false
   },
-  "pass": true
+  "E": {
+    "introHeld": {
+      "mode": "ride",
+      "stage": "04",
+      "s": 77.413,
+      "lat": 0,
+      "coins": 1420,
+      "hearts": 5,
+      "paused": true,
+      "bennyY": -21.872,
+      "bennyVisible": true,
+      "cam": [
+        0.72,
+        -14.48,
+        -15.82
+      ]
+    },
+    "handOver": {
+      "steps": 1683,
+      "state": {
+        "mode": "outro",
+        "stage": "11",
+        "s": 404.818,
+        "lat": -1.632,
+        "coins": 2230,
+        "hearts": 5,
+        "paused": true,
+        "bennyY": -112.683,
+        "bennyVisible": true,
+        "cam": [
+          10.21,
+          -109.89,
+          -287.27
+        ]
+      }
+    },
+    "endingShown": true,
+    "reachedVictory": true,
+    "final": {
+      "mode": "end",
+      "stage": "11",
+      "s": 404.818,
+      "lat": -1.632,
+      "coins": 2230,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -109.506,
+      "bennyVisible": false,
+      "cam": [
+        11.2,
+        -99.1,
+        -304
+      ]
+    },
+    "coinsTaken": 90,
+    "pass": false
+  },
+  "pass": false
 }

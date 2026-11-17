@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11651,
-   "sha256": "c40393d280e33a31a3415b5ec3de07aaaa68b72625f31ec8bec4163b96d86715"
+   "sha256": "5043556b4a4fa83a1e95489b9b24a92255a807b9a9ca8dc39f4d7add6d064c55"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1233,8 +1233,8 @@
   },
   {
    "path": "qa/flowplan/A_after_fade_04.png",
-   "bytes": 279293,
-   "sha256": "9fc5682eea2cef87d746f6a0573ae9227a3855b3c2336ec1a5e82ca7a88334f1"
+   "bytes": 277422,
+   "sha256": "a6888882f3ba62609b2a2c5d6f90c5067e51ed32ef07cc5e2fd2ade7b0ade964"
   },
   {
    "path": "qa/flowplan/A_during_video.png",
@@ -1243,13 +1243,13 @@
   },
   {
    "path": "qa/flowplan/B_after_ending_video_11.png",
-   "bytes": 428499,
-   "sha256": "7866487762acabe13c9118806e452d9fd3c436e66ba6920c88cd2b63817abbd4"
+   "bytes": 430476,
+   "sha256": "68a4f4af8b7fd67c3aa4b365bedde962e32817f0cf8e9181196625ebaeaaf89a"
   },
   {
    "path": "qa/flowplan/flowplan_test.json",
-   "bytes": 2741,
-   "sha256": "c5816e5a10533a40906a425051f4df37a2e9999cc2fafa869a5677bc969a3c5b"
+   "bytes": 3800,
+   "sha256": "efc5d5255c07338db07661cb2ddff7ae24ef0094d70500141a3a8b727401f093"
   },
   {
    "path": "qa/gameplay_test.json",
