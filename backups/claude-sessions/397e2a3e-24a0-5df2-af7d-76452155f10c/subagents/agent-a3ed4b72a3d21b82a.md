@@ -1505,3 +1505,130 @@ Same technique already exists in foam.ts. Applying it to the card.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"uniform mat4 projectionMatrix\" src/vfx/foam.ts | head -2; python3 - <<'EOF'\np='src/vfx/riderSplash.ts'\ns=open(p).read()\ns=s.replace(\"\"\"const CARD_FRAG = /* glsl */ `\nuniform sampler2D uTex;\"\"\",\"\"\"const CARD_FRAG = /* glsl */ `\nuniform mat4 projectionMatrix;\nuniform sampler2D uTex;\"\"\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit 2>&1 | head; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; node scripts/capture.mjs 05 --q='match05=1' --out=$S/c2 2>&1 | grep -i \"error\\|→\" | tail -3; cp $S/c …[+235 chars]`
 
+### 🧑 User — 2026-11-17T02:52:32.526Z
+
+> ↩︎ result: 381:uniform mat4 projectionMatrix;
+> 05 → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/c2/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":80,"tris":570386,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 9.58, 'within_10': 0.78, 'within_20': 0.869, 'ssim_lum': 0.8591, 'mean_signed_rgb': [-0.5, -1.0, -0.2]}
+> water                        px  480736  mean   6.62  <=10 0.883  <=20 0.919  ssim 0.924  signed [0.8, -2.6, -1.9]
+> foam_banks                   px   28862  mean   5.61  <=10 0.921  <=20 0.951  ssim 0.922  signed [-0.1, -4.2, -4.6]
+> benny_and_hat                px   93061  mean  19.22  <=10 0.587  <=20 0.730  ssim 0.658  signed [-5.8, -1.4, 0.9]
+> wake_splash                  px   83491  mean  14.59  <=10 0.590  <=20 0.775  ssim 0.770  signed [9.1, 5.1, 1.3]
+> bubbles                      px   29304  mean   2.08  <=10 0.975  <=20 0.997  ssim 0.986  signed [-0.8, -0.1, 0.1]
+
+### 🤖 Claude — 2026-11-17T02:52:34.809Z
+
+Wake now 14.59 / 77.5 % (whole frame 9.58 / 86.9 %). Let me see where the remaining wake error sits.
+
+### 🤖 Claude — 2026-11-17T02:52:40.848Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nS='$S'\nM='qa/pilot05/full_reference_match/masks'\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(float)\nc=np.asarray(Image.open(S+'/c2/05.png').convert('RGB')).astype(float)\nsim=np.asarray(Image.open(S+'/sim_white_under.png').convert('RGB')).astype(float)\nwm=np.asarray(Image.open(f'{M}/wake_splash.png').convert('L'))>127\nm=np.load('tools/splash05/work/wake_matte.n …[+695 chars]`
+
+### 🧑 User — 2026-11-17T02:52:41.586Z
+
+> ↩︎ result: cap vs sim wake mean 2.5998011761746778
+> matte>0.5       px  32333 mean   6.00 <=20 0.942 share 0.159 signed [-2.7 -1.8  0.6]
+> matte 0.05-0.5  px  17122 mean  20.02 <=20 0.674 share 0.281 signed [0.5 0.1 3.6]
+> no matte        px  34036 mean  20.01 <=20 0.667 share 0.559 signed [24.7 14.1  0.8]
+
+### 🤖 Claude — 2026-11-17T02:52:43.440Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/c2_err.png"}`
+
+### 🧑 User — 2026-11-17T02:52:43.474Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:53:05.448Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; node scripts/capture.mjs 05 --out=$S/def 2>&1 | grep -i \"error\\|→\" | tail -2; cp $S/capture_log.backup.json qa/capture_log.json; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/def/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('qa/pilot05/current_default_05.png').convert('RGB')).astype(int)\nprint('default vs current_default_05 differing px:', int((np.abs(a-b).sum(-1)>0).sum()))\n\"; git -C /home/user/rainbow- st …[+109 chars]`
+
+### 🧑 User — 2026-11-17T02:53:27.689Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/def/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> default vs current_default_05 differing px: 0
+
+### 🤖 Claude — 2026-11-17T02:53:31.432Z
+
+Default build: 0 px differ. Now the `before.png` with my explicit-0 switches (should equal cp3).
+
+### 🤖 Claude — 2026-11-17T02:53:35.697Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; D=qa/pilot05/full_reference_match/splash_bubbles; node scripts/capture.mjs 05 --q='match05=1&splash05m=0&bub05=0' --out=$S/before 2>&1 | grep -i \"error\\|→\" | tail -2; cp $S/capture_log.backup.json qa/capture_log.json; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/before/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png').conv …[+330 chars]`
+
+### 🧑 User — 2026-11-17T02:54:17.565Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/before/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":79,"tris":573552,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> before (match05 + splash05m=0 + bub05=0) vs cp3 differing px: 81744
+> before.png
+> before_FULL_FRAME_METRICS.json
+> before_REGION_METRICS.json
+
+### 🤖 Claude — 2026-11-17T02:54:19.806Z
+
+The explicit-off capture differs from cp3 by 81,744 px. Let me find where (another specialist is editing the walls right now).
+
+### 🤖 Claude — 2026-11-17T02:54:24.270Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nimport numpy as np, json\nfrom PIL import Image\nfrom scipy.ndimage import label\na=np.asarray(Image.open('$S/before/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png').convert('RGB')).astype(int)\nd=np.abs(a-b).sum(-1)>0\nidx=np.asarray(Image.open('qa/pilot05/full_reference_match/masks/region_index.png'))\nnames={v['id']:k for k,v in json.load(open('qa …[+397 chars]`
+
+### 🧑 User — 2026-11-17T02:54:24.984Z
+
+> ↩︎ result: gold_rings_and_front_frame 3728
+> purple_walls 46886
+> side_fittings 416
+> water 4938
+> foam_banks 1159
+> benny_and_hat 0
+> wake_splash 0
+> coins 1002
+> bubbles 8602
+> hud_and_text 11594
+> distant_tunnel_and_glow 3419
+> bbox 0 863 0 773
+> -rw-r--r-- 1 root root 22762 02:23 src/vfx/proj05Tunnel.ts
+> 
+> assets/textures/env05/:
+> total 18780
+> drwxr-xr-x  2 root root     4096 02:23 .
+> drwxr-xr-x 10 root root     4096 02:46 ..
+> -rw-r--r--  1 root root      314 02:23 bake_report.json
+> -rw-r--r--  1 root root      744 02:23 env05.json
+> -rw-r--r--  1 root root 14668755 02:23 feedback.npz
+> -rw-r--r--  1 root root      493 02:23 frame05.json
+> -rw-r--r--  1 root root    26900 02:23 frame05.png
+> -rw-r--r--  1 root root  1186748 02:53 ring05e.png
+> -rw-r--r--  1 root root  3320729 02:53 wall05e.png
+> 
+> src/world/:
+> total 264
+> drwxr-xr-x 2 root root  4096 02:23 .
+> drwxr-xr-x 9 root root  4096 02:23 ..
+> -rw-r--r-- 1 root root 29605 02:23 course.ts
+> -rw-r--r-- 1 root root 67403 02:23 environment.ts
+> -rw-r--r-- 1 root root 17902 02:23 far05.ts
+> -rw-r--r-- 1 root root  8308 02:23 laundryRoom.ts
+> -rw-r--r-- 1 root root 67390 02:23 materials.ts
+> -rw-r--r-- 1 root root  6281 02:23 towel.ts
+> -rw-r--r-- 1 root root 45481 02:23 tube.ts
+> 02:54
+
+### 🤖 Claude — 2026-11-17T02:54:35.453Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; D=qa/pilot05/full_reference_match/splash_bubbles; python3 -I -c \"\nimport json\nr=json.load(open('$D/before_REGION_METRICS.json'))['regions']; f=json.load(open('$D/before_FULL_FRAME_METRICS.json'))['whole_frame']\nprint('whole', f['mean_abs'], f['within_20'])\nfor k,v in r.items(): print(f'{k:28s} {v[\\\"mean_abs\\\"]:6.2f} {v[\\\"within_20\\\"]:.3f} {v[\\\"mean_signed_rgb\\\"]}')\n\"", "description": "Show before.png region metrics"}`
+
+### 🧑 User — 2026-11-17T02:54:35.508Z
+
+> ↩︎ result: whole 11.55 0.8396
+> gold_rings_and_front_frame     9.36 0.879 [-3.2, -0.9, 2.8]
+> purple_walls                   7.00 0.911 [-0.3, 0.9, -0.8]
+> side_fittings                  3.49 0.948 [-0.5, -0.3, 1.5]
+> water                          6.08 0.926 [0.9, -1.9, -0.9]
+> foam_banks                     2.84 0.987 [-0.2, -0.7, -1.0]
+> benny_and_hat                 19.24 0.730 [-5.7, -1.3, 1.0]
+> wake_splash                   41.48 0.389 [19.7, 15.8, 7.9]
+> coins                         27.23 0.519 [-9.3, -1.3, 4.9]
+> bubbles                       25.19 0.647 [-4.2, -15.0, -17.5]
+> hud_and_text                  17.18 0.737 [-4.0, -2.2, 2.5]
+> distant_tunnel_and_glow        2.65 0.971 [-0.2, 0.4, 1.0]
+

@@ -478,13 +478,13 @@
   },
   {
    "path": "assets/textures/env05/ring05e.png",
-   "bytes": 1164615,
-   "sha256": "1d5fc0fd1e5e55c1dd13ebfa5f96f28cc08c581527b0eb984a89d2cc4691497c"
+   "bytes": 1186748,
+   "sha256": "4cd5703def8f63fe83bfe670772a3d902f9c064b1d4936f1b8e691fb61b69654"
   },
   {
    "path": "assets/textures/env05/wall05e.png",
-   "bytes": 3249374,
-   "sha256": "eacc84b96be355304e4a78c3b9190796edee0e7ca3fba45a8b37d52fbf10b6a7"
+   "bytes": 3320729,
+   "sha256": "a4b0c37c7f53f5e2a274a405b3dc2247ae03328cd3bd76da5ced55bd12fb534b"
   },
   {
    "path": "assets/textures/hud05/coin05.png",
@@ -3712,6 +3712,36 @@
    "sha256": "e0019d0ea6f00eb109b79f9c2b7ef53c39ec8bc8757768822b4a5eed86675435"
   },
   {
+   "path": "qa/pilot05/full_reference_match/env/work/k0/05.png",
+   "bytes": 2226961,
+   "sha256": "d4b0730fd6b4c0503306978f46952aeadb14bd06b9f600183792b452647572a6"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/k0/FULL_FRAME_METRICS.json",
+   "bytes": 411,
+   "sha256": "5b7a8ab72596d5070b761a684ffbf9ca3fecb77d98c56872db5a4fc35b9c4de3"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/k0/REGION_METRICS.json",
+   "bytes": 2509,
+   "sha256": "0bf70924b10951e0b4bdb76e7c0fb9876fa1d9b93a6a84ed9d57b59c42a27ac0"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/k1/05.png",
+   "bytes": 2220333,
+   "sha256": "31ce10df93a1aa2bffd26f4d476a355c4745cb57bb9323f2d73cda572d4a79ef"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/k1/FULL_FRAME_METRICS.json",
+   "bytes": 411,
+   "sha256": "514592809751129613e50245d2c6836955ededf92add60252b22e91a6457ad37"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/k1/REGION_METRICS.json",
+   "bytes": 2505,
+   "sha256": "971abe2816d0711c0b2ecc47155c71dbf8804214a86c6682f18ee3670756ae47"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/env/work/probe/tunnel.json",
    "bytes": 5011,
    "sha256": "5870d27fb54975fd81b5435ced3fb15664edb895f374021726f21e2033350a57"
@@ -4265,6 +4295,21 @@
    "path": "qa/pilot05/full_reference_match/session_01VCMXob/m_REGION_METRICS.json",
    "bytes": 2557,
    "sha256": "5e52b06084f64179c5678d15d1076b6dee3ecdbdab85bc027056858eae7dd6fe"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/splash_bubbles/before.png",
+   "bytes": 2258950,
+   "sha256": "ca63e7a99640711b47ee701e60414263aa58924ce2350967a0b22a738ae64461"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/splash_bubbles/before_FULL_FRAME_METRICS.json",
+   "bytes": 418,
+   "sha256": "0c90f706d93f6d9d8eed8cff0269bac106ad7d0f157bcbdbef77c2d77cac159a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/splash_bubbles/before_REGION_METRICS.json",
+   "bytes": 2509,
+   "sha256": "19e9bb1814c447b8cf94588197366f32a89d02ab3ad4afa3d724b674a89228c9"
   },
   {
    "path": "qa/pilot05/full_reference_match/stack_2340/05_match05.png",
