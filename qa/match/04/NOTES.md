@@ -160,3 +160,16 @@ Started from `4d1f5b25` (= `-c2` head `255ec5e6` + one transcript autosave). Lea
 * Approved view (`04_NEW_m3_splash_864x1536.png`, `scenery_metrics_M2fal04_vs_M3splash.json`): whole frame 81.3 →
   **81.8 %** (SSIM 0.812 → 0.819), below HUD 88.9 → 89.5 %, scenery 98.1 → 98.2 %, **Benny area 21.1 → 25.3 %**
   (SSIM 0.139 → 0.207). Bands unchanged (100.0 / 96.9 / 97.7 %).
+### Step 5 — coins on the water (`&coinwater04=0` = floating coins of M1/M2), on by default under match04
+* The painted perspective puts the five coins 7–55 px higher than any water point Benny can reach (a coin resting on the
+  water at its painted spot is geometrically impossible in this picture), so in the APPROVED VIEW each coin stays at its
+  painted spot (unchanged), and as soon as the ride moves on (0.3 → 4 u past the 04 checkpoint) it settles onto the water
+  (centre = radius + 0.05 u). Height only: pickup position (s / lateral) unchanged. Shared edit `src/gameplay/coins.ts`
+  (optional `h1` / `settle` fields, used only by the `?match04=1` picture coins).
+* Riding frames `motion_m3/NEW/`: coins on the water at 3–20 u and when steering (BEFORE `motion_m2/NEW_fal04/`: floating).
+### Milestone 3 proofs (final, all switches at their defaults)
+* Approved view 0 px vs step 4 (`04_NEW_m3_splash_864x1536.png`) → whole 81.8 %, scenery 98.2 %, Benny 25.3 %.
+* Default 04 / 05, `?match08=1` 08, `?ringa=26&nearfloor05=0` → all 0 px. Gameplay 8/8 with `--q=match04=1`
+  (`gameplay_test_match04_m3_final.json`: 91 coins collected, 1,330 → 2,240); default 8/8, `qa/gameplay_test.json`
+  byte-identical. `npx tsc --noEmit -p .` clean.
+* A/B switches: `&fal04=0` (M2 fill), `&river04=0`, `&rings04=0`, `&splash04=0`, `&coinwater04=0`; `&tile04=0` = M1.
