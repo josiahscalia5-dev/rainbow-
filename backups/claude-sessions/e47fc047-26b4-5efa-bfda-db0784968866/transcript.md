@@ -4937,3 +4937,105 @@ Down to 2,544 pixels at the starting view (99 above 10 levels), and the riding r
 > blob x 851 y 818 w 7 h 7 area 15 max 1
 > blob x 832 y 809 w 5 h 7 area 11 max 1
 
+### 🤖 Claude — 2026-11-17T10:29:22.080Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport re\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold='''float pjNearK(float mE, float mN) {\n  if (uPjNear.x < 0.5) return 0.0;\n  float near = 1.0 - smoothstep(14.0, 20.0, 1.0 / max(gl_FragCoord.w, 1e-4));\n  return (1.0 - smoothstep(0.3, 0.55, mE)) * (1.0 - smoothstep(0.3, 0.55, mN)) * near;\n}'''\nnew='''float pjNearK(float u, float mE, float mN) {\n  if (uPjNear.x < 0.5) return 0.0;\n  float near = 1.0 - smoothstep(14.0, 20.0, 1.0 / max(gl_FragCoord.w, 1e-4));\n  float edge = 1.0 - smoothstep(0.88, 0.96, abs(u));     // not on the lifted outer ban …[+1239 chars]`
+
+### 🧑 User — 2026-11-17T10:29:59.388Z
+
+> ↩︎ result: replaced calls 6
+> NEW v8
+> efa-bfda-db0784968866/scratchpad/mvM/move_00.png detail  5.18  sat 0.710  pink 0.129  cyan 0.581  glint 0.0780  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvM/move_04.png detail  2.32  sat 0.774  pink 0.127  cyan 0.697  glint 0.0638  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvM/move_08.png detail  2.39  sat 0.752  pink 0.161  cyan 0.616  glint 0.0241  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvM/move_12.png detail  3.18  sat 0.764  pink 0.132  cyan 0.677  glint 0.0286  (222595 px)
+> efa-bfda-db0784968866/scratchpad/mvM/move_17.png detail  2.66  sat 0.843  pink 0.043  cyan 0.850  glint 0.0123  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvM/move_25.png detail  2.92  sat 0.787  pink 0.107  cyan 0.664  glint 0.0106  (224031 px)
+> locked view: OLD (no near) vs NEW v8 (differing px, >10, max) (2696, 110, 69)
+
+### 🤖 Claude — 2026-11-17T10:30:09.037Z
+
+Still about 2,700 pixels, so my guess about the bank edge was wrong. Rather than guess again, I'll zoom in on that strip in both versions.
+
+### 🤖 Claude — 2026-11-17T10:30:12.736Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nA=Image.open('$S/mvO/move_00.png').convert('RGB'); B=Image.open('$S/mvM/move_00.png').convert('RGB'); D=Image.open('$S/dbgJ/move_00.png').convert('RGB')\nb=(700,820,864,910)\nw,h=b[2]-b[0],b[3]-b[1]\nim=Image.new('RGB',(3*w*3+20,h*3),(255,255,255))\nfor i,x in enumerate([A,B,D]): im.paste(x.crop(b).resize((w*3,h*3),Image.NEAREST),(i*(w*3+10),0))\nim.save('$S/strip_zoom.png')\nEOF", "description": "Zoom the remaining difference strip" …[+1 chars]`
+
+### 🧑 User — 2026-11-17T10:30:13.134Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T10:30:14.087Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/strip_zoom.png"}`
+
+### 🧑 User — 2026-11-17T10:30:14.102Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:30:25.618Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I -c \"\nfrom PIL import Image\nim=Image.new('RGB',(3*432+20,768),(255,255,255))\nfor i,d in enumerate((8,17,25)): im.paste(Image.open('$S/mvM/move_%02d.png'%d).convert('RGB').resize((432,768),Image.LANCZOS),(i*442,0))\nim.save('$S/v8_sheet.png')\"", "description": "Build v8 riding sheet"}`
+
+### 🧑 User — 2026-11-17T10:30:26.225Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T10:30:26.866Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/v8_sheet.png"}`
+
+### 🧑 User — 2026-11-17T10:30:26.918Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:30:40.427Z
+
+> 🔧 **Bash** `{"command": "cp src/vfx/waterRibbon.ts /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/waterRibbon.v8.ts && python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold='''      if (uPjNear.x > 0.5) detW *= mix(1.0, wNx, pjNearK(u, mE, mN));'''\nnew='''      if (uPjNear.x > 0.5) detW *= mix(1.0, wNx, pjNearK(u, mE, mN) * 0.0);   // TEMP test: detail kept on the tile'''\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05 …[+766 chars]`
+
+### 🤖 Claude — 2026-11-17T10:30:41.480Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/det_cmp.png"}`
+
+### 🧑 User — 2026-11-17T10:31:06.255Z
+
+> ↩︎ result: v8 + detail on tile
+> efa-bfda-db0784968866/scratchpad/mvD/move_08.png detail  2.66  sat 0.750  pink 0.161  cyan 0.612  glint 0.0260  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvD/move_17.png detail  3.23  sat 0.840  pink 0.043  cyan 0.845  glint 0.0124  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvD/move_25.png detail  3.44  sat 0.784  pink 0.106  cyan 0.661  glint 0.0107  (224031 px)
+> 0
+
+### 🧑 User — 2026-11-17T10:31:06.286Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:31:22.889Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I -c \"\nfrom PIL import Image\nb=(0,1000,864,1460)\nims=[Image.open(p).convert('RGB').crop(b) for p in ['$S/mvL/move_17.png','$S/mvM/move_17.png']]\nw,h=ims[0].size\nim=Image.new('RGB',(w,2*h+10),(255,255,255)); im.paste(ims[0],(0,0)); im.paste(ims[1],(0,h+10)); im.save('$S/edge_gate_cmp.png')\"", "description": "Compare before and after the bank-edge rule"}`
+
+### 🧑 User — 2026-11-17T10:31:23.375Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T10:31:24.092Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/edge_gate_cmp.png"}`
+
+### 🧑 User — 2026-11-17T10:31:24.124Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:31:37.713Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold='''      float detW = 1.0 - wEx;\n      // the sharp tile carries its own streaks: no repeating detail on it (approached river only — locked view unchanged)\n      if (uPjNear.x > 0.5) detW *= mix(1.0, wNx, pjNearK(u, mE, mN));\n      tgt = clamp(tgt + det * uPjDS.z * detW, 0.0, 1.0);'''\nnew='''      tgt = clamp(tgt + det * uPjDS.z * (1.0 - wEx), 0.0, 1.0);   // (on the sharp near tile too: it adds its fine ripples)'''\nassert s.count(old)==1; s=s.replace(old,new)\nold='''        float detW0 = 1.0 - wE0;\n    …[+463 chars]`
+
+### 🧑 User — 2026-11-17T10:31:40.714Z
+
+> ↩︎ result: ok
+>  src/vfx/waterRibbon.ts | 22 +++++++++-------------
+>  1 file changed, 9 insertions(+), 13 deletions(-)
+
+### 🤖 Claude — 2026-11-17T10:31:54.548Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/fin && mkdir -p $S/fin/def $S/fin/bef $S/fin/combo && node scripts/capture.mjs 05 --out=$S/fin/def >/dev/null 2>&1; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/fin/bef >/dev/null 2>&1; node scripts/capture.mjs 05 --q=\"$B\" --out=$S/fin/combo >/dev/null 2>&1; git checkout qa/capture_log.json; node scripts/proj05-move.mjs --q=\"$B\" --out=$S/fin/still_old --still=1.82 --fps=6.6 >/dev/null 2>&1; nod …[+1049 chars]`
+

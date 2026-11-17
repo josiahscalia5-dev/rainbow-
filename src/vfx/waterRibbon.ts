@@ -405,10 +405,11 @@ uniform sampler2D uPjWT2;  // its flow map (?projflow05=2)
 // ?projnear05=1: 1 on river the camera has APPROACHED — within ≈14–20 units of the eye (1 / gl_FragCoord.w = view
 // depth) AND both the exact layer and the near layer magnified there. (The far river is magnified in the exact layer
 // only, steep far banks are far, the locked view is magnified nowhere in both: none of them changes.)
-float pjNearK(float mE, float mN) {
+float pjNearK(float u, float mE, float mN) {
   if (uPjNear.x < 0.5) return 0.0;
   float near = 1.0 - smoothstep(14.0, 20.0, 1.0 / max(gl_FragCoord.w, 1e-4));
-  return (1.0 - smoothstep(0.3, 0.55, mE)) * (1.0 - smoothstep(0.3, 0.55, mN)) * near;
+  float edge = 1.0 - smoothstep(0.88, 0.96, abs(u));     // not on the lifted outer bank edge (steep: always magnified)
+  return (1.0 - smoothstep(0.3, 0.55, mE)) * (1.0 - smoothstep(0.3, 0.55, mN)) * near * edge;
 }
 vec4 pjLut(float s) {
   float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
@@ -431,12 +432,12 @@ vec3 pjTarget(float u, float s, float mE, float mN, out float wE, out float wN) 
   wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam
   // ?projnear05=1: where the near layer (24 texels / unit) would be magnified, the sharp near tile takes over —
   // the same rule the exact layer already follows, so the locked view (nothing magnified) keeps the approved picture
-  if (uPjNear.x > 0.5) wN *= 1.0 - pjNearK(mE, mN);
+  if (uPjNear.x > 0.5) wN *= 1.0 - pjNearK(u, mE, mN);
   vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
   if (uPjNear.x > 0.5) {
     // ?projnear05=1: on the approached river the sharp near tile replaces the soft tile; elsewhere (the whole locked view,
     // the far river) the old tile stays, so the locked picture does not change
-    float kT = pjNearK(mE, mN);
+    float kT = pjNearK(u, mE, mN);
     t = mix(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, kT);
   }
   vec3 lay = mix(t, n.rgb, wN);
@@ -1419,7 +1420,7 @@ void main() {
       if (uPjFlow2.x > 0.5) {
         // ?projflow05=2: slide along the approved streaks (the S-curves), not straight down the river — the pink
         // ribbons stay where they are painted, only what lies along them travels; foam banks and bubbles stay still
-        vec2 fd = pjFlowDir(u, s, pjNearK(mE, mN));
+        vec2 fd = pjFlowDir(u, s, pjNearK(u, mE, mN));
         float k = fd.y / sqrt(1.0 + fd.x * fd.x * uPjFlow2.z * uPjFlow2.z);     // same speed along any direction
         float oA = (sA - s) * k, oB = (sB - s) * k;
         sA = s + oA; uA = u + fd.x * oA;
@@ -1433,17 +1434,12 @@ void main() {
       float wEx = mix(wEB, wEA, wA);
       float wNx = mix(wNB, wNA, wA);
       float det = mix(pjDetail(uB, sB), pjDetail(uA, sA), wA);
-      float detW = 1.0 - wEx;
-      // the sharp tile carries its own streaks: no repeating detail on it (approached river only — locked view unchanged)
-      if (uPjNear.x > 0.5) detW *= mix(1.0, wNx, pjNearK(mE, mN));
-      tgt = clamp(tgt + det * uPjDS.z * detW, 0.0, 1.0);
+      tgt = clamp(tgt + det * uPjDS.z * (1.0 - wEx), 0.0, 1.0);   // (on the sharp near tile too: it adds its fine ripples)
       if (uPjFlow2.x > 0.5 && uPjFlow2.w < 0.999) {
         // keep a share of the approved picture exactly where it is painted (the layout never dissolves)
         float wE0, wN0;
         vec3 t0 = pjTarget(u, s, mE, mN, wE0, wN0);
-        float detW0 = 1.0 - wE0;
-        if (uPjNear.x > 0.5) detW0 *= mix(1.0, wN0, pjNearK(mE, mN));
-        t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * detW0, 0.0, 1.0);
+        t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * (1.0 - wE0), 0.0, 1.0);
         tgt = mix(t0, tgt, uPjFlow2.w);
       }
       if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));
@@ -1462,7 +1458,7 @@ void main() {
         // (≈ 8–12 big flares below Benny); the sharp tile comes from the stretch just past them, so on the tile — and
         // only where the near layer would be magnified (the approached river) — they are added back, carried by the
         // current (the 05 flare set the default water was tuned with against the approved picture)
-        float wT = (1.0 - wNx) * (1.0 - wEx) * pjNearK(mE, mN);
+        float wT = (1.0 - wNx) * (1.0 - wEx) * pjNearK(u, mE, mN);
         // a few big flares (not a field of small stars: those read as snow on the sharp tile)
         float gB = flowGlint(vec2(lat * 1.3, v5 * 1.1 + 0.5 + 1.3 * sin(lat * 4.1 + 0.6)), 0.5, 40.0, 4.5, 0.7, uTime + 2.7);
         float gL = lensFlare(vec2(lat * 1.4 + 0.31, v5 * 1.2 + 1.7 * sin(lat * 2.3 + 1.0) + 0.9 * sin(lat * 5.9)), 0.22, 120.0, 7.0, uTime);
