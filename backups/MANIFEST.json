@@ -513,8 +513,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3965,
-   "sha256": "24cbf198ea49aece5c91feb95ec7739569c00a1f9a1642443c035a3c3c31db49"
+   "bytes": 4003,
+   "sha256": "70521b4b0bab64f17721dc7b0b9103af685a0f35ad50498c6f04e6bc338d404a"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -524,7 +524,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "a8e38cd5a0b69a1f2bf3a13fc71fad113ed372440413983d99880c7b6f577147"
+   "sha256": "2017ba99b4db0125a4f00a2cf977ec134b6fac6168c586aa6066364ad5929058"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1420,6 +1420,71 @@
    "path": "qa/pilot05/full_reference_match/masks/water.png",
    "bytes": 17337,
    "sha256": "d59d19bd0eef41064c2ab5d7733f671e826a9ebce9370995f0379df5ccf29731"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/before_protected/05.png",
+   "bytes": 1750841,
+   "sha256": "dc8155f9ac7bccd80601245de6344de821ba9c966d89734da2236cb980bb1c07"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/before_protected/log.txt",
+   "bytes": 250,
+   "sha256": "8863df602d47a20d22baa4e1c78ae0e946fa5ff38d3c6508a5ce479387fb6c69"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/default/05.png",
+   "bytes": 1746598,
+   "sha256": "2148c1d2a6d872676363fd84c76dfe6a7bcd608d194f4a1913b66ca24a68260d"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/default/log.txt",
+   "bytes": 241,
+   "sha256": "ada8c074f7defc506a63c0a8d923ff74ea1edca6162fdb8b16798c8eaaa1e033"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/match05/05.png",
+   "bytes": 2180494,
+   "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/match05/FULL_FRAME_METRICS.json",
+   "bytes": 423,
+   "sha256": "740266509279f69dbecff6bba75ef89239d9cb7746ca1cab1a8e433fcabb129b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/match05/REGION_METRICS.json",
+   "bytes": 2528,
+   "sha256": "f9f7fae6e7508623b23b8422942d72f3257ca55608cdc8fa4db69fd7c5a87193"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/match05/log.txt",
+   "bytes": 241,
+   "sha256": "964ba74e6a9f9ed7aad7cc56b909673842ee1c489f06f70748fc65d67e3b24c0"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/move_match05/log.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/stack/05.png",
+   "bytes": 2180494,
+   "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/stack/log.txt",
+   "bytes": 239,
+   "sha256": "cc51a8b0f87cbddc793cc2edcf2db5f93e54d074b34eced376918dfcee07b3fd"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/tests/gameplay_default.json",
+   "bytes": 14651,
+   "sha256": "98914b83205eb5f7b061c45321bb9cf034018eaefa6e37a97e3bc88be83a0fc0"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s018/tests/gameplay_match05.json",
+   "bytes": 14656,
+   "sha256": "08b702d1dbfce33fb55ee7d4a7f820bf8a11795e0eb2b6ff852e9b74dc65b39b"
   },
   {
    "path": "qa/pilot05/full_reference_match/stack_2340/05_match05.png",
@@ -6925,6 +6990,36 @@
    "path": "qa/tools_check/blender_2026-11-16/screen05_camera_lock_CYCLES.png",
    "bytes": 856391,
    "sha256": "2b628c15b730337cbf2cee894bc93075953d250638884cb17b42f02fa0169156"
+  },
+  {
+   "path": "qa/tools_check/blender_transfer_s018/REPORT.md",
+   "bytes": 3288,
+   "sha256": "3a7a6f1d4ff755b1a492e0b358f170c9386d4cde485dc7a4b2d0d3e3135e5ba3"
+  },
+  {
+   "path": "qa/tools_check/blender_transfer_s018/paddles_BLENDER_EEVEE.png",
+   "bytes": 202572,
+   "sha256": "138fa8fe94e5be0f7f56164beda0edf0ad1d75bd3eae3680a99e160159379834"
+  },
+  {
+   "path": "qa/tools_check/blender_transfer_s018/paddles_BLENDER_WORKBENCH.png",
+   "bytes": 191818,
+   "sha256": "27c3cffe5deb6022b698cc1892f7a7836c1f71e3131a77dead735fa86a2c3529"
+  },
+  {
+   "path": "qa/tools_check/blender_transfer_s018/paddles_CYCLES.png",
+   "bytes": 208353,
+   "sha256": "5010223a4d74d15c6b6f11dbcd20bf7f93c879340be0f60c8b75bfaecc4ab307"
+  },
+  {
+   "path": "qa/tools_check/blender_transfer_s018/results.json",
+   "bytes": 8534,
+   "sha256": "438163c069cdc60fa7f68e8f694c3ba7b36e97a273599bf8d673570a6720bf32"
+  },
+  {
+   "path": "qa/tools_check/blender_transfer_s018/verify_blender.py",
+   "bytes": 7691,
+   "sha256": "46628dede3f388f0e525237cffe07e4b19bb25188da6e4a08b4f1f8c2373d195"
   },
   {
    "path": "qa/worldlabs/05/05_env_mask.png",

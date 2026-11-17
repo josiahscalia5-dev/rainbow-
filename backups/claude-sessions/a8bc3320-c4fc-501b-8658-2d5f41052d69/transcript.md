@@ -1426,3 +1426,416 @@ Meanwhile I'll get the previous session's Blender test scripts ready to rerun.
 >         # frame the meshes
 >         bpy.ops.object.select_all(action="DESELE …[+3514 chars]
 
+### 🤖 Claude — 2026-11-16T23:57:38.627Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/tools_check/blender_transfer_s018/verify_blender.py", "content": "\"\"\"Blender restoration check for the account-transfer session 018Sg3AU (run headless):\n    blender -b --factory-startup --python qa/tools_check/blender_transfer_s018/verify_blender.py -- <out_dir>\nChecks: bpy, engines (Cycles / EEVEE / Workbench) with a real render each, every tracked .blend opens, the three game GLBs\nimport (lids05 = six Blender-built gold paddles), and a GLB export -> import round trip that compares the paddle geometry\n(vertex / face counts + rounded world-space ver …[+7088 chars]`
+
+### 🧑 User — 2026-11-16T23:57:38.810Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/tools_check/blender_transfer_s018/verify_blender.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T23:57:42.556Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/b3xi912d7.output; blender --version 2>&1 | head -3; which blender; readlink -f $(which blender)", "description": "Show Blender/Android results and version"}`
+
+### 🧑 User — 2026-11-16T23:57:42.804Z
+
+> ↩︎ result: OK   Blender                        Blender 5.3.0 (installed now) at /usr/local/bin/blender; headless bpy test OK
+>   OK   Android build tools            Android SDK platform 34 + build-tools 34.0.0 + platform-tools (installed now, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug
+> 
+> [exited with code 0]
+> Blender 5.3.0
+> 	build date: 2026-11-10
+> 	build time: 01:31:18
+> /usr/local/bin/blender
+> /opt/blender/blender
+
+### 🤖 Claude — 2026-11-16T23:57:45.457Z
+
+Blender 5.3.0 and Android SDK 34 / Java 21 are installed. Now the full Blender verification run:
+
+### 🤖 Claude — 2026-11-16T23:57:46.909Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && time (blender -b --factory-startup --python qa/tools_check/blender_transfer_s018/verify_blender.py -- qa/tools_check/blender_transfer_s018 2>&1 | grep -E '^(RENDER|BLEND|GLB|ROUNDTRIP|WROTE)|Error|Traceback' | cut -c1-400)", "description": "Run full headless Blender verification", "timeout": 600000}`
+
+### 🧑 User — 2026-11-16T23:58:08.700Z
+
+> ↩︎ result: EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> RENDER {'engine': 'BLENDER_EEVEE', 'ok': True, 'seconds': 18.9, 'file': 'qa/tools_check/blender_transfer_s018/paddles_BLENDER_EEVEE.png', 'camera': 'Cam05_game', 'mean': 0.7903, 'max': 0.7961, 'nonblack_share': 1.0}
+> BLEND {'file': 'qa/pilot05/marble_feas/blender/marble05_projection.blend', 'ok': True, 'objects': 4, 'meshes': 2, 'faces': 400788, 'cameras': ['Cam05_MarbleLocked', 'Cam05_MarbleMoved_1R']}
+> BLEND {'file': 'qa/pilot05/proj/tunnel/lid/lids05.blend', 'ok': True, 'objects': 7, 'meshes': 6, 'faces': 7149, 'cameras': ['Cam05_game']}
+> BLEND {'file': 'qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend', 'ok': True, 'objects': 32, 'meshes': 29, 'faces': 20096, 'cameras': ['Cam05']}
+> BLEND {'file': 'qa/pilot05/wave6/camera_lock/screen05_layout.blend', 'ok' …[+1772 chars]
+
+### 🤖 Claude — 2026-11-16T23:58:14.205Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('qa/tools_check/blender_transfer_s018/results.json'))\nprint(json.dumps(d['renders'],indent=1)); print([e for e in d['engines']])\n\"; ls -la qa/tools_check/blender_transfer_s018/", "description": "Inspect render results JSON"}`
+
+### 🧑 User — 2026-11-16T23:58:14.283Z
+
+> ↩︎ result: [
+>  {
+>   "engine": "BLENDER_WORKBENCH",
+>   "ok": false,
+>   "error": "engine not in this build"
+>  },
+>  {
+>   "engine": "BLENDER_EEVEE",
+>   "ok": true,
+>   "seconds": 18.9,
+>   "file": "qa/tools_check/blender_transfer_s018/paddles_BLENDER_EEVEE.png",
+>   "camera": "Cam05_game",
+>   "mean": 0.7903,
+>   "max": 0.7961,
+>   "nonblack_share": 1.0
+>  },
+>  {
+>   "engine": "CYCLES",
+>   "ok": false,
+>   "error": "engine not in this build"
+>  }
+> ]
+> ['BLENDER_EEVEE']
+> total 224
+> drwxr-xr-x 2 root root   4096 Nov 16 23:58 .
+> drwxr-xr-x 4 root root   4096 Nov 16 23:57 ..
+> -rw-r--r-- 1 root root 202572 Nov 16 23:58 paddles_BLENDER_EEVEE.png
+> -rw-r--r-- 1 root root   8114 Nov 16 23:58 results.json
+> -rw-r--r-- 1 root root   7192 Nov 16 23:57 verify_blender.py
+
+### 🤖 Claude — 2026-11-16T23:58:20.988Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/tools_check/blender_transfer_s018/paddles_BLENDER_EEVEE.png"}`
+
+### 🧑 User — 2026-11-16T23:58:21.010Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:58:25.201Z
+
+> 🔧 **Bash** `{"command": "blender -b --factory-startup --python-expr \"\nimport bpy\nbpy.ops.wm.open_mainfile(filepath='/home/user/rainbow-/qa/pilot05/proj/tunnel/lid/lids05.blend')\nsc=bpy.context.scene\nprint('ENGINES_LIVE', [e.identifier for e in sc.render.bl_rna.properties['engine'].enum_items])\nprint('ENGINE', sc.render.engine, 'cam', sc.camera.name if sc.camera else None)\nc=bpy.data.objects['Cam05_game']; print('CAM', tuple(round(x,2) for x in c.location), tuple(round(x,3) for x in c.rotation_euler), c.data.type, round(c.data.lens,2), c.data.sensor_fit, round(c.data.clip_start,3), c.data.clip_end)\ …[+452 chars]`
+
+### 🧑 User — 2026-11-16T23:58:25.887Z
+
+> ↩︎ result: ENGINES_LIVE ['BLENDER_EEVEE']
+> ENGINE BLENDER_EEVEE cam Cam05_game
+> CAM (1.92, 68.28, -37.94) (1.307, 0.002, 0.052) PERSP 19.97 VERTICAL 0.1 1000.0
+> MESH lid05_L1 (0.0, 0.0, 0.0) False ['lid05_approved']
+> MESH lid05_L2 (0.0, 0.0, 0.0) False ['lid05_approved']
+> MESH lid05_L3 (0.0, 0.0, 0.0) False ['lid05_approved']
+> MESH lid05_R1 (0.0, 0.0, 0.0) False ['lid05_approved']
+> MESH lid05_R2 (0.0, 0.0, 0.0) False ['lid05_approved']
+> MESH lid05_R3 (0.0, 0.0, 0.0) False ['lid05_approved']
+> MAT lid05_approved HASHED ['BSDF_PRINCIPLED', 'OUTPUT_MATERIAL', 'TEX_IMAGE']
+
+### 🤖 Claude — 2026-11-16T23:58:37.640Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/tools_check/blender_transfer_s018/verify_blender.py", "old_string": "def img_stats(path):\n    px = np.array(bpy.data.images.load(path).pixels[:], np.float32).reshape(-1, 4)\n    lum = px[:, :3].mean(1)\n    return {\"mean\": round(float(lum.mean()), 4), \"max\": round(float(lum.max()), 4), \"nonblack_share\": round(float((lum > 0.02).mean()), 4)}\n\n\n# 1. engines available in this build\nitems = bpy.types.RenderSettings.bl_rna.properties[\"engine\"].enum_items\nR[\"engines\"] = {e.identifier: True for e in items}", "new_string": "de …[+969 chars]`
+
+### 🧑 User — 2026-11-16T23:58:37.785Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/tools_check/blender_transfer_s018/verify_blender.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T23:58:39.192Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/tools_check/blender_transfer_s018/verify_blender.py", "old_string": "        R[\"renders\"].append({\"engine\": eng, \"ok\": os.path.exists(p) and st[\"nonblack_share\"] > 0.01, \"seconds\": round(time.time() - t, 1),", "new_string": "        R[\"renders\"].append({\"engine\": eng, \"ok\": os.path.exists(p) and st[\"foreground_share\"] > 0.005, \"seconds\": round(time.time() - t, 1),"}`
+
+### 🧑 User — 2026-11-16T23:58:39.340Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/tools_check/blender_transfer_s018/verify_blender.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T23:58:40.694Z
+
+> 🔧 **Bash** `{"command": "time (blender -b --factory-startup --python qa/tools_check/blender_transfer_s018/verify_blender.py -- qa/tools_check/blender_transfer_s018 2>&1 | grep -E '^(RENDER|ROUNDTRIP|WROTE)|Error:|Traceback' | grep -v EGL | cut -c1-600)", "description": "Re-run Blender verification with fixed engine probe", "timeout": 900000}`
+
+### 🧑 User — 2026-11-16T23:58:48.665Z
+
+> ↩︎ result: RENDER {'engine': 'BLENDER_WORKBENCH', 'ok': True, 'seconds': 1.9, 'file': 'qa/tools_check/blender_transfer_s018/paddles_BLENDER_WORKBENCH.png', 'camera': 'Cam05_game', 'background_rgb': [0.227, 0.227, 0.227], 'foreground_share': 0.0216}
+> RENDER {'engine': 'BLENDER_EEVEE', 'ok': True, 'seconds': 3.2, 'file': 'qa/tools_check/blender_transfer_s018/paddles_BLENDER_EEVEE.png', 'camera': 'Cam05_game', 'background_rgb': [0.796, 0.796, 0.796], 'foreground_share': 0.0193}
+> RENDER {'engine': 'CYCLES', 'ok': True, 'seconds': 0.6, 'file': 'qa/tools_check/blender_transfer_s018/paddles_CYCLES.png', 'camera': 'Cam05_game', 'background_rgb': [0.796, 0.796, 0.796], 'foreground_share': 0.0193}
+> ROUNDTRIP {'glb_bytes': 992168, 'src_meshes': ['lid05_L1', 'lid05_L2', 'lid05_L3', 'lid05_R1', 'lid05_R2', 'lid05_R3'], 'back_meshes': ['lid05_L1', 'lid05_L2', 'lid05_L3', 'lid05_R1', 'lid05_R2', 'lid05_R3'], 'blend_vs_roundtrip_identical': {'lid05_L1': True, 'lid05_L2': True, 'lid05_L3': True, 'lid05_R1': True, 'lid05_R2': True, 'lid05_R3': True}, 'blend_vs_game_glb_identical': {'lid05_L1': True, 'lid05_L2': True, 'lid05_L3': True, 'lid05_R1': True, 'lid05_R2': True, 'lid05_R3': True}}
+> WROTE qa/tools_check/ble …[+74 chars]
+
+### 🤖 Claude — 2026-11-16T23:59:00.200Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/tools_check/blender_transfer_s018 && md5sum *.png; python3 -c \"\nfrom PIL import Image, ImageChops\na=Image.open('paddles_BLENDER_EEVEE.png').convert('RGB'); b=Image.open('paddles_CYCLES.png').convert('RGB')\nprint('max diff eevee vs cycles', max(e[1] for e in ImageChops.difference(a,b).getextrema()))\"\ncd /home/user/rainbow- && blender -b --factory-startup --python-expr \"\nimport bpy, time, addon_utils\nprint('CYCLES_ADDON', addon_utils.check('cycles'))\nbpy.ops.wm.open_mainfile(filepath='/home/user/rainbow-/qa/pilot05/proj/tunnel/lid/lids05.blend')\n …[+654 chars]`
+
+### 🧑 User — 2026-11-16T23:59:01.612Z
+
+> ↩︎ result: 6bfc2f5df155ee30ba9861ff06c8d341  paddles_BLENDER_EEVEE.png
+> f156e9502c26a4e0b56decc5b73e510f  paddles_BLENDER_WORKBENCH.png
+> 84396b531f93c13732c88871b8b20736  paddles_CYCLES.png
+> max diff eevee vs cycles 73
+> CYCLES_ADDON (True, True)
+> ENGINE_NOW CYCLES
+> CYC_SECONDS 0.61
+
+### 🤖 Claude — 2026-11-16T23:59:08.304Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/tools_check/blender_transfer_s018 && python3 -c \"\nfrom PIL import Image\nims=[Image.open(f).convert('RGB').crop((0,100,432,300)) for f in ('paddles_BLENDER_WORKBENCH.png','paddles_BLENDER_EEVEE.png','paddles_CYCLES.png')]\nW=Image.new('RGB',(432,600)); [W.paste(im,(0,200*i)) for i,im in enumerate(ims)]\nW.save('/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/engines_strip.png')\"", "description": "Make strip of three engine renders for inspection"}`
+
+### 🧑 User — 2026-11-16T23:59:08.473Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-16T23:59:11.646Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/engines_strip.png"}`
+
+### 🧑 User — 2026-11-16T23:59:11.672Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-16T23:59:27.458Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/tools_check/blender_transfer_s018/REPORT.md", "content": "# Blender restoration check — account-transfer session 018Sg3AU (2026-11-16 ~23:58 UTC)\n\nBranch `ccr-694bda6a-x58ntq` (created from `b81cc34` = tip of `claude/approved-screen-implementation-g3loqu`).\nBlender was NOT in this fresh container; `bash scripts/claude-bootstrap.sh --skip-resume` installed it through\n`scripts/setup-blender.sh` (download.blender.org). Script: `verify_blender.py` (same folder), raw results `results.json`.\n\n    blender -b --factory-startup --python qa/tools_check/blender …[+2786 chars]`
+
+### 🧑 User — 2026-11-16T23:59:27.609Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/tools_check/blender_transfer_s018/REPORT.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-16T23:59:29.904Z
+
+> 🔧 **Bash** `{"command": "grep -E '^  (OK|WARN|FAIL|SKIP) ' /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/bootstrap.log | tail -5 | cut -c1-400; tail -3 /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/bootstrap.log | cut -c1-300; ps aux | grep claude-bootstrap | grep -v grep | wc -l", "description": "Check bootstrap test and autosave steps"}`
+
+### 🧑 User — 2026-11-16T23:59:29.976Z
+
+> ↩︎ result: OK   Blender                        Blender 5.3.0 (installed now) at /usr/local/bin/blender; headless bpy test OK
+>   OK   Android build tools            Android SDK platform 34 + build-tools 34.0.0 + platform-tools (installed now, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug
+>   OK   Claude hooks / plugins / MCP   hooks: SessionStart PreCompact Stop SessionEnd; Playwright MCP connected; plugins: claude-bridge claude-code-setup claude-md-management code-review code-simplifier commit-commands context7 feature-dev frontend-design playwright security-guidance superpowers typemux-cc typescript-native-lsp worldlabs ; MCP template .mcp.json.template (no secrets)
+>   OK   Build + game tests             tsc OK; continuity OK (all stage joins gap 0, 07->08 drop 61.19)
+>   OK   Five-minute GitHub autosave    AUTOSAVE OK | branch ccr-694bda6a-x58ntq | scheduler daemon | last verified backup 2026-11-16T23:57:30+00:00 (0.1 min ago) | local d942c4c remote d942c4c (match) | uncommitted 0
+> 
+> == Report
+> BOOTSTRAP PROBLEMS | branch ccr-694bda6a-x58ntq | HEAD d942c4c97744 | written: backups/BOOTSTRAP_REPORT.md
+> 0
+
+### 🤖 Claude — 2026-11-16T23:59:39.817Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/ccr-694bda6a-x58ntq)\"; git log --oneline -4; git show --stat HEAD | grep -E 'autosave.config|verify-assets|BOOTSTRAP' ; echo; cat ~/.rainbow-autosave/daemon.pid; ps -o pid,lstart,cmd -p $(cat ~/.rainbow-autosave/daemon.pid); tail -3 backups/BACKUP_LOG.md; git status --short | head", "description": "Verify remote SHA, daemon and autosave log"}`
+
+### 🧑 User — 2026-11-16T23:59:40.507Z
+
+> ↩︎ result: LOCAL  d942c4c97744c3643bd1ae4a6dbb1e7f679c6c4c
+> REMOTE d942c4c97744c3643bd1ae4a6dbb1e7f679c6c4c	refs/heads/ccr-694bda6a-x58ntq
+> d942c4c autosave: Rainbow 2026-11-16 23:57 UTC
+> b81cc34 autosave: Rainbow 2026-11-16 23:44 UTC
+> 67ee7bb autosave: Rainbow 2026-11-16 23:39 UTC
+> 6baa6f4 Merge branch 'ccr-8c4acadc-iybw0n' of https://github.com/josiahscalia5-dev/rainbow- into claude/approved-screen-implementation-g3loqu
+>  backups/autosave.config.json                       |   10 +-
+>  scripts/verify-assets.py                           |    5 +-
+> 
+> 2473
+>   PID                  STARTED CMD
+>  2473 Mon Nov 16 23:57:30 2026 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> | 2026-11-16T23:29:23+00:00 | daemon | committed+pushed | `ec719d422d0a` | `claude/approved-screen-implementation-g3loqu` | 6 | True |  |
+> | 2026-11-16T23:34:28+00:00 | daemon | committed+pushed | `7017b7e5bb85` | `claude/approved-screen-implementation-g3loqu` | 12 | True |  |
+> | 2026-11-16T23:39:36+00:00 | daemon | committed+pushed | `67ee7bb7867b` | `claude/approved-screen-implementation-g3loqu` | 18 | True |  |
+>  M backups/BOOTSTRAP_REPORT.md
+> ?? qa/tools_check/blender_transfer_s018/
+
+### 🤖 Claude — 2026-11-16T23:59:51.116Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-16T23:59:51.129Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-16T23:59:51.342Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-16T23:59:51.353Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-16T23:59:52.498Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p scripts/capture.mjs; echo ...; grep -n \"slot\\|SLOTS\\|MAX\" scripts/lib/pw.mjs | head", "description": "Read capture script header and render slot logic"}`
+
+### 🧑 User — 2026-11-16T23:59:52.551Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+2231 chars]
+
+### 🤖 Claude — 2026-11-16T23:59:57.516Z
+
+> 🔧 **Bash** `{"command": "R=qa/pilot05/full_reference_match/recovery_s018 && mkdir -p $R/default $R/before_protected $R/match05 && \\\nnode scripts/capture.mjs 05 --out=$R/default > $R/default/log.txt 2>&1; echo \"default rc=$?\"; \\\nnode scripts/capture.mjs 05 --out=$R/match05 --q='match05=1' > $R/match05/log.txt 2>&1; echo \"match05 rc=$?\"; \\\nnode scripts/capture.mjs 05 --out=$R/before_protected --q='ringa=26&nearfloor05=0' > $R/before_protected/log.txt 2>&1; echo \"before rc=$?\"; \\\ngit checkout -q -- qa/capture_log.json; tail -2 $R/match05/log.txt", "description": "Capture default, match05 and pr …[+47 chars]`
+
+### 🧑 User — 2026-11-17T00:01:01.563Z
+
+> ↩︎ result: default rc=0
+> match05 rc=0
+> before rc=0
+> 05 → qa/pilot05/full_reference_match/recovery_s018/match05/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":76,"tris":553856,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-17T00:01:09.968Z
+
+> 🔧 **Bash** `{"command": "R=qa/pilot05/full_reference_match/recovery_s018 && python3 -I - <<EOF\nfrom PIL import Image, ImageChops\nimport numpy as np\ndef d(a,b):\n    A=Image.open(a).convert('RGB'); B=Image.open(b).convert('RGB')\n    if A.size!=B.size: return f'size {A.size} vs {B.size}'\n    x=np.abs(np.asarray(A,int)-np.asarray(B,int)).max(2)\n    return f'max diff {x.max()}, differing px {(x>0).sum()}'\nR=\"$R\"\nprint('default  vs current_default_05.png :', d(R+'/default/05.png','qa/pilot05/current_default_05.png'))\nprint('BEFORE   vs wave9/baseline/05.png  :', d(R+'/before_protected/05.png','qa/pi …[+382 chars]`
+
+### 🧑 User — 2026-11-17T00:01:12.617Z
+
+> ↩︎ result: default  vs current_default_05.png : max diff 0, differing px 0
+> BEFORE   vs wave9/baseline/05.png  : max diff 0, differing px 0
+> match05  vs stack_2340/05_match05  : max diff 0, differing px 0
+> size (864, 1536)
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 34.1, 'within_10': 0.4286, 'within_20': 0.5157, 'ssim_lum': 0.5093, 'mean_signed_rgb': [2.9, -0.7, -0.6]}
+> gold_rings_and_front_frame   px  125730  mean  37.74  <=10 0.388  <=20 0.500  ssim 0.562  signed [-25.2, -26.9, 26.8]
+> purple_walls                 px  312706  mean  53.82  <=10 0.103  <=20 0.211  ssim 0.202  signed [6.4, 6.6, -18.8]
+> side_fittings                px   13776  mean  26.85  <=10 0.539  <=20 0.597  ssim 0.604  signed [-5.9, -0.3, 25.8]
+> water                        px  480736  mean   9.40  <=10 0.849  <=20 0.883  ssim 0.893  signed [4.7, -3.5, -4.5]
+> foam_banks                   px   28862  mean   8.43  <=10 0.897  <=20 0.927  ssim 0.897  signed [-0.1, -6.4, -8.9]
+> benny_and_hat                px   93061  mean  49.71  <=10 0.066  <=20 0.235  ssim 0.087  signed [-0.7, -14.6, 8.5]
+> wake_splash                  px   83491  mean  42.61  <=10 0.218  <=20 0.379  ssim 0.266  signed [21.2, 15.0, 8.0]
+> coins              …[+447 chars]
+
+### 🤖 Claude — 2026-11-17T00:01:30.864Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p scripts/gameplay-test.mjs | grep -E '^//' ; sed -n 1,20p scripts/proj05-move.mjs | grep -E '^//|^ \\*'", "description": "Read gameplay and movement script usage"}`
+
+### 🧑 User — 2026-11-17T00:01:30.926Z
+
+> ↩︎ result: // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> // Screen 05 projection test — MOVING CAMERA (2026-11-16). Starts at the locked 05 checkpoint and rides forward with
+> // the real game simulation (Benny + camera rig + course unchanged), capturing full-size frames.
+> //   node scripts/proj05-mov …[+424 chars]
+
+### 🤖 Claude — 2026-11-17T00:01:37.239Z
+
+> 🔧 **Bash** `{"command": "R=qa/pilot05/full_reference_match/recovery_s018 && STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' && mkdir -p $R/stack $R/tests $R/move_match05 && {\nnode scripts/capture.mjs 05 --out=$R/stack --q=\"$STACK\" > $R/stack/log.txt 2>&1; echo \"stack capture rc=$?\";\ngit checkout -q -- qa/capture_log.json;\nnode scripts/gameplay-test.mjs --q=qa=1 --out=$R/tests/gameplay_default.json > $R/tests/gameplay_default.log 2>&1; echo \"gameplay default rc=$?\";\nnode scripts/gameplay-test.mjs --q=match05=1 --out=$R/tests/gameplay_matc …[+478 chars]`
+
+### 🧑 User — 2026-11-17T00:01:37.316Z
+
+> ↩︎ result: Command running in background with ID: botftfl7l. Output is being written to: /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/botftfl7l.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T00:01:40.362Z
+
+While the tests run, I'll check the Playwright MCP server itself, not just the library, by having it open a page and probe WebGL2.
+
+### 🤖 Claude — 2026-11-17T00:01:41.103Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__plugin_playwright_playwright__browser_navigate,mcp__plugin_playwright_playwright__browser_evaluate,mcp__plugin_playwright_playwright__browser_close", "max_results": 3}`
+
+### 🧑 User — 2026-11-17T00:01:41.117Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-17T00:01:43.845Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_navigate** `{"url": "about:blank"}`
+
+### 🧑 User — 2026-11-17T00:01:54.726Z
+
+> ↩︎ result: ### Ran Playwright code
+> ```js
+> await page.goto('about:blank');
+> ```
+> ### Page
+> - Page URL: about:blank
+> ### Snapshot
+> - [Snapshot](.playwright-mcp/page-2026-11-17T00-01-54-707Z.yml)
+
+### 🤖 Claude — 2026-11-17T00:01:58.426Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_evaluate** `{"function": "() => { const c = document.createElement('canvas'); const g = c.getContext('webgl2'); if (!g) return 'NO WEBGL2'; const d = g.getExtension('WEBGL_debug_renderer_info'); return JSON.stringify({ webgl2: true, version: g.getParameter(g.VERSION), renderer: d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'n/a', ua: navigator.userAgent.match(/Chrome\\/[\\d.]+/)?.[0] }); }"}`
+
+### 🧑 User — 2026-11-17T00:02:06.016Z
+
+> ↩︎ result: ### Result
+> "{\"webgl2\":true,\"version\":\"WebGL 2.0 (OpenGL ES 3.0 Chromium)\",\"renderer\":\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\",\"ua\":\"Chrome/153.0.0.0\"}"
+> ### Ran Playwright code
+> ```js
+> await page.evaluate('() => { const c = document.createElement(\'canvas\'); const g = c.getContext(\'webgl2\'); if (!g) return \'NO WEBGL2\'; const d = g.getExtension(\'WEBGL_debug_renderer_info\'); return JSON.stringify({ webgl2: true, version: g.getParameter(g.VERSION), renderer: d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : \'n/a\', ua: navigator.userAgent.match(/Chrome\\/[\\d.]+/)?.[0] }); }');
+> ```
+
+### 🤖 Claude — 2026-11-17T00:02:08.289Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_close** `{}`
+
+### 🤖 Claude — 2026-11-17T00:02:10.921Z
+
+> 🔧 **Bash** `{"command": "rm -rf .playwright-mcp; echo \"tsc $(npx tsc -v)\"; echo \"vite $(node -p \"require('vite/package.json').version\")\"; echo \"three $(node -p \"require('three/package.json').version\")\"; echo \"capacitor core $(node -p \"require('@capacitor/core/package.json').version\") android $(node -p \"require('@capacitor/android/package.json').version\") cli $(npx cap --version 2>/dev/null)\"; java -version 2>&1 | grep -v JAVA_TOOL | head -1; git --version; git lfs version; python3 -c \"import numpy,PIL,cv2,scipy;print('numpy',numpy.__version__,'Pillow',PIL.__version__,'cv2',cv2.__version__ …[+187 chars]`
+
+### 🧑 User — 2026-11-17T00:02:16.710Z
+
+> ↩︎ result: ### Result
+> No open tabs. Navigate to a URL to create one.
+> ### Ran Playwright code
+> ```js
+> await page.close()
+> ```
+
+### 🧑 User — 2026-11-17T00:02:18.583Z
+
+> ↩︎ result: tsc Version 5.9.3
+> vite 5.4.21
+> node:internal/modules/cjs/loader:671
+>       throw e;
+>       ^
+> 
+> Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './package.json' is not defined by "exports" in /home/user/rainbow-/node_modules/three/package.json
+>     at exportsNotFound (node:internal/modules/esm/resolve:318:10)
+>     at packageExportsResolve (node:internal/modules/esm/resolve:665:9)
+>     at resolveExports (node:internal/modules/cjs/loader:664:36)
+>     at Function._findPath (node:internal/modules/cjs/loader:731:31)
+>     at Function._resolveFilename (node:internal/modules/cjs/loader:1415:27)
+>     at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+>     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+>     at Function._load (node:internal/modules/cjs/loader:1216:25)
+>     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+>     at Module.require (node:internal/modules/cjs/loader:1527:12) {
+>   code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+> }
+> 
+> Node.js v22.23.4
+> three 
+> capacitor core 6.2.3 android 6.2.3 cli 6.2.3
+> openjdk version "21.0.12.1" 2026-08-18
+> git version 2.43.0
+> git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+> numpy 2.5.3 Pillow 12.3.0 cv2 5.0.0 scipy 1.18.1
+> ffmpe …[+112 chars]
+
+### 🤖 Claude — 2026-11-17T00:02:23.158Z
+
+> 🔧 **Bash** `{"command": "grep '\"version\"' node_modules/three/package.json; ls node_modules/.bin/ | grep -c .; cat /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/botftfl7l.output", "description": "Get Three.js version and test queue progress"}`
+
+### 🧑 User — 2026-11-17T00:02:23.208Z
+
+> ↩︎ result: "version": "0.170.0",
+> 16
+> stack capture rc=0
+> gameplay default rc=0
+> gameplay match05 rc=0
+
