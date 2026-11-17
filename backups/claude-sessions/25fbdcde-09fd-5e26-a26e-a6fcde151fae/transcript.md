@@ -623,3 +623,249 @@ The colour mask picks up the pink river, so these numbers can't be trusted. I'll
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"\"\"      const [bx0, by0, bz0] = m08On ? M08_BENNY.body : [1, 1, 1];\n      const by = by0 * (m08On && b08Shape ? b08Shape.bh : 1);\n      const bx = bx0 * (m08On && b08Shape ? b08Shape.bw : 1), bz = bz0 * (m08On && b08Shape ? b08Shape.bw : 1);\n\"\"\",\"\"\"      const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];\n      if (b08Fur) {\n        b08Fur.o.position.copy(b08Fur.p); b08Fur.o.scale.copy(b08Fur.s);\n        if (m08On && b08Shape) { b08Fur.o.position.y += b08Shape.ly; b08Fur.o.scale.multiply(ne …[+1506 chars]`
 
+### 🧑 User — 2026-11-17T18:50:46.029Z
+
+> ↩︎ result: OK
+> j benny+splash <=20 59.8 % SSIM 0.505 mean 29.41
+> k benny+splash <=20 57.2 % SSIM 0.502 mean 32.19
+> l benny+splash <=20 62.7 % SSIM 0.540 mean 27.56
+
+### 🤖 Claude — 2026-11-17T18:50:47.733Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh/cmp_jkl.png"}`
+
+### 🧑 User — 2026-11-17T18:50:47.902Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T18:50:47.896Z
+
+[Image: original 2160x570, displayed at 2000x528. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T18:51:15.672Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"ly: qn('b08ly', 0) }\",\"ly: qn('b08ly', 0), tt: qn('b08tt', 1), tb: qn('b08tb', 1) }\",1)\ns=s.replace(\"\"\"  const b08Fur = b08FurO ? { o: b08FurO, p: b08FurO.position.clone(), s: b08FurO.scale.clone() } : null;\n\"\"\",\"\"\"  const b08Fur = b08FurO ? { o: b08FurO, p: b08FurO.position.clone(), s: b08FurO.scale.clone() } : null;\n  // taper: body fur geometry widened toward the brim (x tt at the top) and slimmed toward the water (x tb at the bottom);\n  // a second position buffer, swapped in only while Sc …[+1920 chars]`
+
+### 🧑 User — 2026-11-17T18:52:03.562Z
+
+> ↩︎ result: OK
+> m benny+splash <=20 62.0 % SSIM 0.544 mean 27.99
+> n benny+splash <=20 62.9 % SSIM 0.555 mean 27.77
+> o benny+splash <=20 61.6 % SSIM 0.538 mean 28.23
+
+### 🤖 Claude — 2026-11-17T18:52:05.744Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh/cmp_mo.png"}`
+
+### 🧑 User — 2026-11-17T18:52:05.954Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T18:52:05.950Z
+
+[Image: original 2160x570, displayed at 2000x528. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T18:52:16.159Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh && for v in \"p:b08bw=1&b08tt=1.12&b08tb=0.88&b08ay=0.04&b08ax=-0.04&b08ak=1.3\" \"q:b08bw=1&b08tt=1.12&b08tb=0.9&b08ay=0.06&b08ax=-0.02&b08ak=1.2\"; do n=${v%%:*}; node scripts/capture.mjs 08 --out=$S/$n --q=\"match08=1&b08shape=1&${v#*:}\" >$S/$n.log 2>&1; echo $n $(python3 -I qa/match/08/benny08/work/regions08.py $S/$n/08.png | grep -E \"benny\"); done; python3 -I -c \"\nfrom PIL import Image\nw=Image.new('RGB',(1080,380))\nfor i,n in enumerate(['appr','p','q']):\n  im=Image.open('$S/'+n+'/08 …[+205 chars]`
+
+### 🧑 User — 2026-11-17T18:52:45.304Z
+
+> ↩︎ result: p benny+splash <=20 60.9 % SSIM 0.533 mean 28.90
+> q benny+splash <=20 61.5 % SSIM 0.539 mean 28.37
+
+### 🤖 Claude — 2026-11-17T18:52:47.324Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh/cmp_pq.png"}`
+
+### 🧑 User — 2026-11-17T18:52:47.620Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T18:52:47.614Z
+
+[Image: original 2160x760, displayed at 2000x704. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T18:53:10.612Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\nold=\"\"\"  // benny08 round 5 (d) body shape (`?b08shape=1` probe / tuning: b08bw body width, b08ay/b08ax/b08ak arm raise / inward / size):\n  // wider round body under the brim, stubby arms seated high on the sides. Off unless the switch is set.\n  const B08SHAPE = !!b08 && B08R2 && qs.get('b08shape') === '1';\"\"\"\nnew=\"\"\"  // benny08 round 5 (d) body shape (qa/match/08/benny08/NOTES.md): body fur tapered — as wide as the brim right under it,\n  // slimmer toward the water — and the stubby arms seated higher, like t …[+1574 chars]`
+
+### 🧑 User — 2026-11-17T18:53:43.168Z
+
+> ↩︎ result: 1
+> OK
+> D vs m 0
+> R4 vs r4 0
+
+### 🤖 Claude — 2026-11-17T18:53:44.742Z
+
+Body shape is kept and r4 still reproduces pixel-for-pixel. Next, (c): the white hat stripes.
+
+### 🤖 Claude — 2026-11-17T18:53:45.693Z
+
+> 🔧 **Bash** `{"command": "sed -n 166,180p src/characters/benny/benny05.ts; ls assets/textures/benny08/", "description": "Find crown texture mapping"}`
+
+### 🧑 User — 2026-11-17T18:53:45.725Z
+
+> ↩︎ result: export const B08R3: boolean = BAKE08 && qv('b08r3') !== '0';
+> export const MAPS05: Record<string, { map: string; scale: number; normal?: string; normalScale?: number }> = {
+>   fur_body: { map: B08R3 ? 'body_r3.png' : 'body.png', scale: 1 },
+>   fur_armL: { map: 'armL.png', scale: 1 },
+>   fur_armR: { map: 'armR.png', scale: 1 },
+>   fur_pom: { map: 'pom.png', scale: 1 },
+>   hat_crown: { map: 'crown.png', scale: 1, normal: 'crown_n.png', normalScale: 0.8 },
+>   // round 3: crisper cuff ribs (work/crisp08.py --amount=1.2 → brim_r3.png; `?b08crisp=0` = round-2 brim.png)
+>   hat_brim: { map: B08R3 && qv('b08crisp') !== '0' ? 'brim_r3.png' : 'brim.png', scale: 1, normal: 'brim_n.png', normalScale: 0.8 },
+> };
+> /** star: base colour (linear) solved from the approved star pixels through the 05 light + post chain (bake_report
+>  *  star_albedo_linear; the GLB's orange emissive stays and is part of the solve) → lemon yellow on screen */
+> export const STAR05 = {
+>   color: [0.319, 0.39, 0.048] as [number, number, number],
+>   /** optional baked star map (planar UVs on the star's face plane, see starUVs): face, bevel rim and highlights from the
+> armL.png
+> armR.png
+> bake_report.json
+> body.png
+> body_r3.png
+> brim.png
+> brim_n …[+55 chars]
+
+### 🤖 Claude — 2026-11-17T18:53:57.615Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad && cat > qa/match/08/benny08/work/white08.py <<'EOF'\n\"\"\"Round 5 (c): whiter beanie stripes. Pixels of the crown map that belong to the white stripes (bright, low saturation)\nare pulled toward neutral white: chroma x (1-desat), brightness x gain. usage: white08.py --desat=0.5 --gain=1.05 [--out=crown_r5.png]\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\no = dict(a[2:].split('=') for a in sys.argv[1:] if a.startswith('--'))\nD, G = float(o.get('desat', 0.5)), float(o.get('gain',  …[+868 chars]`
+
+### 🧑 User — 2026-11-17T18:53:57.917Z
+
+> ↩︎ result: white texels 12714 of 262144 -> crown_r5.png
+
+### 🤖 Claude — 2026-11-17T18:54:02.246Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('assets/textures/benny08/crown.png').convert('RGB')).astype(int)\nmx=a.max(-1); mn=a.min(-1); s=(mx-mn)/np.maximum(mx,1)\nprint(Image.open('assets/textures/benny08/crown.png').mode, a.shape)\nfor lo,hi in [(0,.2),(.2,.35),(.35,.5),(.5,1)]:\n  m=(s>=lo)&(s<hi); print(lo,hi,m.mean().round(3), np.median(a[m],0) if m.any() else '')\n\"", "description": "Inspect crown map colour distribution"}`
+
+### 🧑 User — 2026-11-17T18:54:02.520Z
+
+> ↩︎ result: RGB (256, 1024, 3)
+> 0 0.2 0.568 [157. 153. 157.]
+> 0.2 0.35 0.025 [121.  99. 137.]
+> 0.35 0.5 0.017 [104.  73. 128.]
+> 0.5 1 0.316 [ 67.  19. 117.]
+
+### 🤖 Claude — 2026-11-17T18:54:07.530Z
+
+> 🔧 **Bash** `{"command": "grep -n \"crown\" qa/match/08/benny08/work/parts08.py | head -5", "description": "Find crown region definition"}`
+
+### 🧑 User — 2026-11-17T18:54:07.563Z
+
+> ↩︎ result: 1:"""APPROVED Screen 08 Benny part masks (pom / crown / cuff / star / body incl. arm nubs) + per-part error / colour stats.
+> 58:    crown = hat & ~pom & ~cuff & ~star & (yy >= CROWN_TOP)
+> 65:    m = pom | crown | cuff | star | body
+> 66:    return dict(pom=pom, crown=crown, cuff=cuff, star=star, body=body), a, m
+> 85:        cols = dict(pom=(0, 255, 0), crown=(0, 255, 255), cuff=(0, 0, 255), star=(255, 255, 0), body=(255, 0, 0))
+
+### 🤖 Claude — 2026-11-17T18:54:12.222Z
+
+> 🔧 **Bash** `{"command": "sed -n 60,80p qa/match/08/benny08/work/parts08.py; S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad; cat > $S/crownw.py <<'EOF'\nimport sys, importlib.util\nimport numpy as np\nfrom PIL import Image\nspec = importlib.util.spec_from_file_location('p', 'qa/match/08/benny08/work/parts08.py'); \nsrc = open('qa/match/08/benny08/work/parts08.py').read().split(\"if __name__\")[0]\ng = {}; exec(compile(src, 'parts08', 'exec'), g)\nfn = [v for k, v in g.items() if callable(v) and k.startswith('mask')] \nprint([k for k in g if callable(g[k])])\nEOF\npython …[+72 chars]`
+
+### 🧑 User — 2026-11-17T18:54:12.392Z
+
+> ↩︎ result: box = (xx >= 240) & (xx <= 640) & (yy >= 1030) & (yy <= 1240)
+>     pink = ndi.binary_closing((cls == 1) & box, np.ones((5, 5))) & box
+>     body = ndi.binary_fill_holes(biggest(pink))
+>     body = ndi.binary_closing(body, np.ones((9, 9)))
+>     body = ndi.binary_fill_holes(body) & ~hat
+>     m = pom | crown | cuff | star | body
+>     return dict(pom=pom, crown=crown, cuff=cuff, star=star, body=body), a, m
+> 
+> 
+> if __name__ == '__main__':
+>     P, a, m = approved_parts()
+>     args = [x for x in sys.argv[1:] if not x.startswith('--')]
+>     opt = dict(x[2:].split('=', 1) for x in sys.argv[1:] if x.startswith('--') and '=' in x)
+>     if args:
+>         c = load(args[0]); d = np.abs(c - a).mean(-1); tot = d[m].sum()
+>         print(f"{'part':6s} {'px':>6s} {'mean':>6s} {'<=20':>5s} {'share':>6s}  approved_med  game_med")
+>         for n, p in P.items():
+>             print(f"{n:6s} {p.sum():6d} {d[p].mean():6.1f} {(d[p] <= 20).mean():5.2f} {d[p].sum() / tot:6.3f}  "
+>                   f"{np.median(a[p], 0).astype(int)}  {np.median(c[p], 0).astype(int)}  bbox {bbox(p)}")
+>         print('ALL', int(m.sum()), round(float(d[m].mean()), 2), round(float((d[m] <= 20).mean()), 3))
+>     else:
+>             ~~~~^^^^^^^^^^^^^^^^^^ …[+125 chars]
+
+### 🤖 Claude — 2026-11-17T18:54:17.156Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad; cat > $S/crownw.py <<'EOF'\nimport sys\nsys.path.insert(0, 'qa/match/08/benny08/work')\nimport numpy as np\nimport parts08 as P8\nP, a, m = P8.approved_parts()\ncr = P['crown']\ndef stat(img, lab):\n    mx = img.max(-1); mn = img.min(-1); s = (mx - mn) / np.maximum(mx, 1)\n    w = cr & (s < 0.3) & (mx > 170)\n    print(lab, 'white px', int(w.sum()), 'median', np.median(img[w], 0).astype(int))\nstat(a, 'APPROVED')\nfor p in sys.argv[1:]: stat(P8.load(p), p.split('/')[-2])\nEOF\npython3 $S/crownw.py …[+83 chars]`
+
+### 🧑 User — 2026-11-17T18:54:18.815Z
+
+> ↩︎ result: APPROVED white px 6560 median [251 220 244]
+> D white px 6174 median [255 221 244]
+
+### 🤖 Claude — 2026-11-17T18:54:21.984Z
+
+Status: body shape done and kept. Now checking the white hat stripes. Their bright parts already match the painting in colour, so I'm comparing the shaded parts of the stripes.
+
+### 🤖 Claude — 2026-11-17T18:54:25.544Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad; cat >> $S/crownw.py <<'EOF'\ndef stat2(img, lab):\n    mx = img.max(-1); mn = img.min(-1); s = (mx - mn) / np.maximum(mx, 1)\n    for lo, hi in [(120, 200), (200, 240), (240, 256)]:\n        w = cr & (s < 0.35) & (mx >= lo) & (mx < hi)\n        print(' ', lab, lo, hi, int(w.sum()), np.median(img[w], 0).astype(int) if w.any() else '')\nstat2(a, 'APPR')\nfor p in sys.argv[1:]: stat2(P8.load(p), 'GAME')\nEOF\npython3 $S/crownw.py $S/sh/D/08.png | tail -6", "description": "Compare stripe colours by br …[+15 chars]`
+
+### 🧑 User — 2026-11-17T18:54:27.481Z
+
+> ↩︎ result: APPR 120 200 508 [186 131 173]
+>   APPR 200 240 1805 [223 172 207]
+>   APPR 240 256 4942 [255 231 251]
+>   GAME 120 200 21 [193 142 167]
+>   GAME 200 240 1083 [228 173 208]
+>   GAME 240 256 5329 [255 225 249]
+
+### 🤖 Claude — 2026-11-17T18:54:42.617Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/08/benny08/work/white08.py'; s=open(p).read()\ns=s.replace('\"\"\"Round 5 (c): whiter beanie stripes. Pixels of the crown map that belong to the white stripes (bright, low saturation)\\nare pulled toward neutral white: chroma x (1-desat), brightness x gain. usage: white08.py --desat=0.5 --gain=1.05 [--out=crown_r5.png]\"\"\"',\n '\"\"\"Round 5 (c): whiter beanie stripes. Crown-map texels of the white stripes (low saturation; the map whites are neutral\\ngrey ~157, the pink cast on screen comes from the 08 light) get per-channel gains that cancel the  …[+1621 chars]`
+
+### 🧑 User — 2026-11-17T18:55:05.551Z
+
+> ↩︎ result: white texels 151295 of 262144 -> crown_r5.png
+> OK
+>   APPR 240 256 4942 [255 231 251]
+>   GAME 120 200 28 [192 148 169]
+>   GAME 200 240 1222 [228 182 211]
+>   GAME 240 256 5239 [255 235 249]
+>   benny+splash  <=20  62.0 %  SSIM 0.544  mean  28.04
+> crown   13456   51.8  0.29  0.269  [215 163 237]  [220 181 238]  bbox {'x0': 304, 'x1': 561, 'y0': 936, 'y1': 1038, 'w': 258, 'h': 103, 'cx': 424.5, 'cy': 985.7, 'px': 13456}
+> ALL 71149 36.44 0.426
+> crown   13456   51.3  0.29  0.267  [215 163 237]  [221 176 238]  bbox {'x0': 304, 'x1': 561, 'y0': 936, 'y1': 1038, 'w': 258, 'h': 103, 'cx': 424.5, 'cy': 985.7, 'px': 13456}
+> ALL 71149 36.31 0.427
+
+### 🤖 Claude — 2026-11-17T18:55:09.602Z
+
+Rejected: the stripes change by only about 4 levels, which you can't see, and the shaded parts drift further from the painting. Reverting that switch.
+
+### 🤖 Claude — 2026-11-17T18:55:10.541Z
+
+> 🔧 **Bash** `{"command": "git checkout src/characters/benny/benny05.ts && rm assets/textures/benny08/crown_r5.png && git status --short | grep -v \"^?? backups\\|transcript\" | head", "description": "Revert rejected crown change"}`
+
+### 🧑 User — 2026-11-17T18:55:10.663Z
+
+> ↩︎ result: Updated 1 path from the index
+>  M qa/capture_log.json
+>  M src/game/Game.ts
+> ?? qa/match/08/benny08/work/white08.py
+
+### 🤖 Claude — 2026-11-17T18:55:12.127Z
+
+Committing the kept body shape, then looking at the jagged pale streaks on the arms.
+
+### 🤖 Claude — 2026-11-17T18:55:16.622Z
+
+> 🔧 **Bash** `{"command": "git checkout qa/capture_log.json; git add src/game/Game.ts qa/match/08/benny08/work/white08.py && git commit -qm \"Screen 08 Benny round 5 (d): body fur tapered (as wide as the brim under it, slimmer toward the water), arms seated higher; b08shape=0 = round 4 (0 px); (c) whiter stripes tested, rejected\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Kbt6BUy2s16F5FhJR2yJ6z\" && git push -q origin claude/rainbow-s08-benny08-bake-c4 2>&1|tail -1; python3 -I -c \"\nimport numpy as np; from PIL import Image\nfor n in ['armL', …[+379 chars]`
+
+### 🧑 User — 2026-11-17T18:55:19.373Z
+
+> ↩︎ result: Updated 1 path from the index
+> armL (128, 256, 3) whitish texels 235 0.72 % median pink [169.  92. 137.]
+> armR (128, 256, 3) whitish texels 105 0.32 % median pink [176.  98. 142.]
+> body_r3 (512, 1024, 3) whitish texels 2554 0.49 % median pink [169.  93. 135.]
+
+### 🤖 Claude — 2026-11-17T18:55:36.338Z
+
+> 🔧 **Bash** `{"command": "cat > qa/match/08/benny08/work/clean08.py <<'EOF'\n\"\"\"Round 5 (d, arm edges): pale / whitish texels baked into the fur maps (splash and highlight pixels of the approved\npicture picked up at the arm and body outlines) show as jagged pale streaks on the arm puffs. Texels whose saturation is\nbelow --sat (and that are bright) are refilled with the normalized blur of the surrounding good fur texels.\nusage: clean08.py [--sat=0.36] -> assets/textures/benny08/{armL,armR,body}_r5.png (from armL, armR, body_r3)\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nfrom scipy i …[+2606 chars]`
+

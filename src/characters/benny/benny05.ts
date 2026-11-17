@@ -164,10 +164,13 @@ const T = (f: string) => (BAKE08 ? new URL(`../../../assets/textures/benny08/${f
 /** benny08 round 3 (qa/match/08/benny08/NOTES.md): with the 08 maps, the body map with the dark strip under the cuff
  *  repaired (work/fixband08.py → body_r3.png); `?b08r3=0` = the round-2 body.png */
 export const B08R3: boolean = BAKE08 && qv('b08r3') !== '0';
+const B08CLEAN: boolean = B08R3 && qv('b08clean') !== '0';
 export const MAPS05: Record<string, { map: string; scale: number; normal?: string; normalScale?: number }> = {
-  fur_body: { map: B08R3 ? 'body_r3.png' : 'body.png', scale: 1 },
-  fur_armL: { map: 'armL.png', scale: 1 },
-  fur_armR: { map: 'armR.png', scale: 1 },
+  // round 5: pale splash / highlight texels at the arm and body outlines refilled with the surrounding fur
+  // (work/clean08.py → *_r5.png; `?b08clean=0` = round-4 maps)
+  fur_body: { map: B08R3 ? (B08CLEAN ? 'body_r5.png' : 'body_r3.png') : 'body.png', scale: 1 },
+  fur_armL: { map: B08CLEAN ? 'armL_r5.png' : 'armL.png', scale: 1 },
+  fur_armR: { map: B08CLEAN ? 'armR_r5.png' : 'armR.png', scale: 1 },
   fur_pom: { map: 'pom.png', scale: 1 },
   hat_crown: { map: 'crown.png', scale: 1, normal: 'crown_n.png', normalScale: 0.8 },
   // round 3: crisper cuff ribs (work/crisp08.py --amount=1.2 → brim_r3.png; `?b08crisp=0` = round-2 brim.png)
