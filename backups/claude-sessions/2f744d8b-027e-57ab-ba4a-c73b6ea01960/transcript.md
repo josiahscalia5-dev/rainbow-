@@ -2003,3 +2003,73 @@ Still waiting on you:
 3. **Screen 07:** should I restart it now to finish its half-done task?
 4. **Screens 04, 05 and 06:** which of these should resume after your review?
 
+### 🧑 User — 2026-11-17T18:59:00.784Z
+
+CLAUDIA — MY DECISIONS FOR SCREEN 08 AND THE REMAINING APPROVED SCREENS
+
+Thank you for restoring and protecting my Rainbow game.
+
+I've reviewed the Screen 08 comparisons and your progress report.
+
+Here are my decisions:
+
+1. BENNY — CONTINUE REFINING HIM
+
+Use Round 3b as the preferred starting point for now, but compare it carefully with Round 2, Round 4, and my original approved Benny before making the final choice.
+
+Do not mark Benny or Screen 08 approved yet.
+
+I want Benny's body to be rounder and fuller, like my approved picture. His soft pink fur, knitted purple-and-white beanie, ribbed cuff, pom-pom, gold star, and surrounding water splash should look as close to the original as technically possible.
+
+His fur should look soft and natural, not overly sharp or spiky.
+
+Please preserve whichever existing details already match best. Do not discard successful improvements.
+
+2. SCREEN 08 COINS — YES, KEEP THE IMPROVEMENT
+
+I approve keeping the "coins08px" improvement as the preferred test version.
+
+The coins should follow their positions in my original approved picture, with natural spacing along the S-shaped water.
+
+Keep the correct 91 coins and 2,240 total. Verify their appearance and collectibility during actual gameplay before final integration.
+
+3. SCREEN 07 — YES, CONTINUE
+
+Please resume Screen 07's unfinished milestone after the Screen 08 specialists reach safe saved checkpoints and account usage permits.
+
+Finish its water, foam, gold rings, coin positions, and moving-camera issues.
+
+Preserve the Screen 07-to-08 transition.
+
+4. SCREENS 04, 05, AND 06
+
+Continue all three eventually, prioritizing Screen 05's remaining visual differences, then Screen 06, then Screen 04.
+
+I want every approved playable screen completed—not just Screen 08.
+
+Because my Claude accounts have been running out of usage, use only as many parallel specialists as the account can safely support.
+
+5. GOOGLE FLOW
+
+Keep Screens 01–03 as opening videos, Screens 04–08 as playable 3D Android gameplay, and Screens 09–11 as ending videos.
+
+Do not generate or spend credits on Google Flow videos. I will supply those separately.
+
+6. SAVE EVERYTHING
+
+Keep every specialist's newest work saved to its own GitHub branch.
+
+Maintain the backup documents, APKs, original approved images, assets, and development notes.
+
+Do not merge Draft PR #16 or unfinished specialist branches without my approval.
+
+7. FINAL QUALITY
+
+My biggest priority is visual accuracy.
+
+I don't want only a good percentage score on a still screenshot. I want the scenery to remain beautiful and accurate when Benny swims forward, steers, and moves through each environment.
+
+Please show me separate full-size approved, before, and new images, plus moving-camera comparisons, before asking for final approval.
+
+Continue from our latest successful work without rebuilding or redesigning anything.
+
