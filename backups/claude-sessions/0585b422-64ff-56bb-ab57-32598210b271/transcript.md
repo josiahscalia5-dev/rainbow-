@@ -1565,3 +1565,11 @@ Audit: 91 coins, all 91 collected. Now pixel-checking screens 03–10 (on vs `co
 
 You've hit your 5-hour limit · resets 8:20pm (UTC)
 
+### 🧑 User — 2026-11-17T16:11:27.789Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-17T16:11:28.720Z
+
+You've hit your 5-hour limit · resets 8:20pm (UTC)
+
