@@ -434,7 +434,9 @@ export function buildEnvironment(course: Course): Environment {
     for (let i = 0; i + 1 < list.length; i++) segs.push({ v0: list[i] + ptHw05, v1: list[i + 1] - ptHw05, row: E05 ? (i + 2 === list.length ? PT_ROW.N1 : PT_ROW.N2) : PT_ROW.AB, t0: 0, t1: 1 });
     segs.push({ v0: ptA05 + ptHw05, v1: ptB05 - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
     // D0 of the far block is known further down; the eye sits (STAGE_CAM back) behind the crest, so depth(sF05) ≈ sF05 − sCam05 − 0.75
-    segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(59, sF05 - sCam05 - 0.75) });
+    // env05 run #4: the seam fraction from the env05 far ring C depth (as the far wall's segment) — with 59 here and
+    // E05.farDv[0] there, the BC rows t ≈ 0.64–0.74 were drawn on both walls (texel collisions on the seam circle)
+    segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(E05 ? E05.farDv[0] : 59, sF05 - sCam05 - 0.75) });
     withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
   }
   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
@@ -520,7 +522,15 @@ export function buildEnvironment(course: Course): Environment {
     if (E05) {
       const dZdu = (u: number) => (ft.zOfU(u + 0.01) - ft.zOfU(u - 0.01)) / 0.02;
       const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
-      const segs: WallSeg[] = [{ v0: sF05 - 1, v1: sF05 + uRing(0) - hwF / dZdu(uRing(0)), row: PT_ROW.BC, t0: ptSeam05(E05.farDv[0], D0), t1: 1 }];
+      // run #4: t passes through the seam fraction exactly AT the seam (v = sF05, u = 0), where the real wall's BC
+      // segment ends with the same t (it used to reach it 1 unit earlier → double-drawn texel rows on the seam circle)
+      const tSeam = ptSeam05(E05.farDv[0], D0), vC = sF05 + uRing(0) - hwF / dZdu(uRing(0));
+      const segs: WallSeg[] = [{ v0: sF05 - 1, v1: vC, row: PT_ROW.BC, t0: tSeam - (1 - tSeam) / (vC - sF05), t1: 1 }];
+      // the REAL wall just past the seam shows in a thin sliver along the seam circle: without a bay it tiled the AB row
+      // (texels of the near left wall → a torn orange-pink line); give it the far wall's BC mapping from the seam on
+      const rSeg = perf05Mat.userData.ptSeg as THREE.Vector4[] | undefined, rSegT = perf05Mat.userData.ptSegT as THREE.Vector3[] | undefined;
+      const free = rSeg ? rSeg.findIndex((v) => v.x >= 1e9) : -1;
+      if (rSeg && rSegT && free >= 0) { rSeg[free].set(sF05, vC, 0, 0); rSegT[free].set(PT_ROW.BC, tSeam, 1); }
       [PT_ROW.CD, PT_ROW.DE, PT_ROW.EF, PT_ROW.FG].forEach((row, n) => segs.push({ v0: sF05 + uRing(n) + hwF / dZdu(uRing(n)), v1: sF05 + uRing(n + 1) - hwF / dZdu(uRing(n + 1)), row, t0: 0, t1: 1 }));
       const uEnd = ft.uOfZ(zEnd);
       segs.push({ v0: sF05 + uRing(4) + hwF / dZdu(uRing(4)), v1: sF05 + uEnd, row: PT_ROW.GX, t0: 0, t1: 0.07 });

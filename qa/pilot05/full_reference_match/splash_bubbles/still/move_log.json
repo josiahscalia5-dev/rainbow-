@@ -1,0 +1,269 @@
+{
+ "q": "match05=1",
+ "frames": [
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0000.png",
+   "t": 12,
+   "s": 132.439,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0001.png",
+   "t": 12.0625,
+   "s": 132.441,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0002.png",
+   "t": 12.125,
+   "s": 132.442,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0003.png",
+   "t": 12.1875,
+   "s": 132.443,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0004.png",
+   "t": 12.25,
+   "s": 132.444,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0005.png",
+   "t": 12.3125,
+   "s": 132.445,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0006.png",
+   "t": 12.375,
+   "s": 132.446,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0007.png",
+   "t": 12.4375,
+   "s": 132.447,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0008.png",
+   "t": 12.5,
+   "s": 132.448,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0009.png",
+   "t": 12.5625,
+   "s": 132.449,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0010.png",
+   "t": 12.625,
+   "s": 132.45,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0011.png",
+   "t": 12.6875,
+   "s": 132.452,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0012.png",
+   "t": 12.75,
+   "s": 132.453,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0013.png",
+   "t": 12.8125,
+   "s": 132.454,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0014.png",
+   "t": 12.875,
+   "s": 132.455,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0015.png",
+   "t": 12.9375,
+   "s": 132.456,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0016.png",
+   "t": 13,
+   "s": 132.457,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0017.png",
+   "t": 13.0625,
+   "s": 132.458,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0018.png",
+   "t": 13.125,
+   "s": 132.459,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0019.png",
+   "t": 13.1875,
+   "s": 132.46,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0020.png",
+   "t": 13.25,
+   "s": 132.461,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0021.png",
+   "t": 13.3125,
+   "s": 132.463,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0022.png",
+   "t": 13.375,
+   "s": 132.464,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  },
+  {
+   "file": "qa/pilot05/full_reference_match/splash_bubbles/still/still/0023.png",
+   "t": 13.4375,
+   "s": 132.465,
+   "cam": [
+    1.92,
+    -37.94,
+    -68.28
+   ],
+   "lat": 0
+  }
+ ]
+}

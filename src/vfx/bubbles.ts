@@ -13,8 +13,26 @@
 import * as THREE from 'three';
 import { type Course, WORLD } from '../world/course';
 import { BERM_OUT } from './foam';
-import { coreLateral } from './waterRibbon';
+import { coreLateral, on05, flag05, proj05Pending } from './waterRibbon';
 import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+
+/** explicit `?<key>=0` switches a reference-match part off even under the master `?match05=1` (A/B captures) */
+const off05 = (key: string): boolean => {
+  try {
+    return typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '0';
+  } catch {
+    return false;
+  }
+};
+/**
+ * `?bub05=1` (on with `?match05=1`; foam-bubbles-particles, qa/pilot05/full_reference_match/splash_bubbles/NOTES.md):
+ * Screen 05's APPROVED bubbles as world-anchored, camera-facing transparent sprites (createApproved05 below). Default: the
+ * 16 approved bubbles the locked frame does not show at all (over the tunnel walls, beside the splash). `?bub05all=1`
+ * (explicit only): all 30 — for when the 14 bubbles painted into the projected water texture are removed from it (else
+ * they would be doubled). Off (default): nothing here runs.
+ */
+export const BUB05: boolean = on05('bub05') && !off05('bub05');
+const BUB05ALL: boolean = BUB05 && flag05('bub05all');
 
 const BIG_VERT = /* glsl */ `
 attribute float aSeed;
@@ -172,6 +190,141 @@ const MAX_PX_RIDE = 66;
 const MAX_PX_DRUM = 120;
 const MAX_PX_SMALL = 22;
 
+// ------------------------------------------------------------------------------------------------ 05 approved bubbles (bub05)
+/**
+ * `?bub05=1`: the approved Screen 05 bubbles (Part 11 of the user's order). Each one is a camera-facing sprite fixed in the
+ * world on its locked view ray, just in front of the first surface the ray meets (tools/splash05/bake.py), so it keeps its
+ * place in the tunnel while Benny rides, grows as he approaches and leaves the frame like a real floating bubble. Its
+ * texture is the approved bubble itself, solved as a premultiplied LINEAR layer (L, a) against the game's background through
+ * the inverse post chain: the locked frame shows the approved bubble, and elsewhere it stays transparent (light + a little
+ * cover: out = L + background · (1 − a)) over whatever is behind it. Alive: a slow bob and a slight swirl of the film colours,
+ * both exactly zero at the frozen QA clock (t = 12). The on-screen size is capped and the sprite fades out close to the
+ * camera (no giant occluding spheres). One instanced draw. Shown on Screen 05 only.
+ */
+const AB_VERT = /* glsl */ `
+attribute vec3 aC;       // world centre
+attribute float aR;      // quad half size (world units) = (approved radius + margin) at the locked depth
+attribute vec4 aRect;    // atlas rect of the L tile (uv); the alpha tile lies directly below it
+attribute float aSeed;
+uniform float uTime;
+uniform float uTLock;
+uniform float uFocal;    // projection[1][1] * 768: locked-frame pixels per unit at depth 1
+uniform float uMaxPx;
+uniform float uNear;
+uniform float uVis;
+varying vec2 vUv;
+varying float vH;
+varying float vA;
+varying float vSeed;
+void main() {
+  vec3 c = aC;
+  float w = 0.7 + 0.5 * aSeed;
+  c.y += 0.025 * (sin(uTime * w + aSeed * 6.283) - sin(uTLock * w + aSeed * 6.283));
+  vec4 cv = viewMatrix * vec4(c, 1.0);
+  float depth = max(-cv.z, 0.01);
+  float px = 2.0 * aR * uFocal / depth;
+  float R = aR * min(1.0, uMaxPx / max(px, 1e-3));
+  vA = smoothstep(uNear, uNear * 1.6, depth) * uVis;
+  vUv = vec2(aRect.x + (position.x * 0.5 + 0.5) * aRect.z, aRect.y + (0.5 - position.y * 0.5) * aRect.w);
+  vH = aRect.w;
+  vSeed = aSeed;
+  gl_Position = projectionMatrix * (cv + vec4(position.xy * R, 0.0, 0.0));
+}
+`;
+const AB_FRAG = /* glsl */ `
+uniform sampler2D uTex;
+uniform float uLmax;
+uniform float uTime;
+uniform float uTLock;
+varying vec2 vUv;
+varying float vH;
+varying float vA;
+varying float vSeed;
+void main() {
+  if (vA < 0.004) discard;
+  vec3 e = texture2D(uTex, vUv).rgb;
+  float a = texture2D(uTex, vUv + vec2(0.0, vH)).r;
+  vec3 L = e * e * uLmax;
+  // thin-film swirl: the bubble's own light turns slowly about the grey axis (pink <-> lavender <-> cyan), 0 at t_lock
+  float th = 0.45 * (sin(uTime * 0.8 + vSeed * 9.0) - sin(uTLock * 0.8 + vSeed * 9.0));
+  vec3 k = vec3(0.57735);
+  L = max(L * cos(th) + cross(k, L) * sin(th) + k * dot(k, L) * (1.0 - cos(th)), 0.0);
+  gl_FragColor = vec4(L, a) * vA;
+}
+`;
+
+interface Approved05 {
+  mesh: THREE.Mesh;
+  update(time: number, focusS: number, camera: THREE.Camera, vis: number): void;
+}
+
+function createApproved05(): Approved05 {
+  const MAXN = 30;
+  const quad = new THREE.PlaneGeometry(2, 2);
+  const geo = new THREE.InstancedBufferGeometry();
+  geo.index = quad.index;
+  geo.setAttribute('position', quad.getAttribute('position'));
+  const aC = new Float32Array(MAXN * 3), aR = new Float32Array(MAXN), aRect = new Float32Array(MAXN * 4), aSeed = new Float32Array(MAXN);
+  geo.setAttribute('aC', new THREE.InstancedBufferAttribute(aC, 3));
+  geo.setAttribute('aR', new THREE.InstancedBufferAttribute(aR, 1));
+  geo.setAttribute('aRect', new THREE.InstancedBufferAttribute(aRect, 4));
+  geo.setAttribute('aSeed', new THREE.InstancedBufferAttribute(aSeed, 1));
+  geo.instanceCount = 0;
+  const uniforms: Record<string, THREE.IUniform> = {
+    uTex: { value: null }, uLmax: { value: 2 }, uTime: { value: 0 }, uTLock: { value: 12 },
+    uFocal: { value: 1278 }, uMaxPx: { value: 84 }, uNear: { value: 1.6 }, uVis: { value: 0 },
+  };
+  const mat = new THREE.ShaderMaterial({
+    uniforms, vertexShader: AB_VERT, fragmentShader: AB_FRAG, transparent: true, depthWrite: false, fog: false,
+    blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor,
+    blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.name = 'bubbles_approved05';
+  mesh.frustumCulled = false;
+  mesh.renderOrder = 5;
+  mesh.visible = false;
+  interface Meta { i: number; group: string; center: number[]; R: number; atlas: number[] }
+  proj05Pending.push(Promise.all([
+    fetch(new URL('../../assets/textures/bub05/bub05.json', import.meta.url).href).then((r) => r.json()),
+    new Promise<THREE.Texture | null>((res) => {
+      new THREE.TextureLoader().load(new URL('../../assets/textures/bub05/bub05.png', import.meta.url).href, (t) => res(t), undefined, () => res(null));
+    }),
+  ]).then(([meta, tex]) => {
+    if (!tex) return;
+    tex.flipY = false;
+    tex.colorSpace = THREE.NoColorSpace;
+    tex.generateMipmaps = false;
+    tex.minFilter = THREE.LinearFilter;
+    tex.needsUpdate = true;
+    uniforms.uTex.value = tex;
+    uniforms.uLmax.value = meta.LMAX;
+    uniforms.uTLock.value = meta.t_lock;
+    const [AW, AH] = meta.atlas as number[];
+    let n = 0;
+    for (const b of meta.bubbles as Meta[]) {
+      if (b.group !== 'missing' && !BUB05ALL) continue;
+      aC.set(b.center, n * 3);
+      aR[n] = b.R;
+      aRect.set([b.atlas[0] / AW, b.atlas[1] / AH, b.atlas[2] / AW, b.atlas[3] / AH], n * 4);
+      aSeed[n] = ((b.i * 0.6180339) % 1);
+      n++;
+    }
+    for (const k of ['aC', 'aR', 'aRect', 'aSeed']) (geo.getAttribute(k) as THREE.InstancedBufferAttribute).needsUpdate = true;
+    geo.instanceCount = n;
+  }).catch(() => undefined));
+  return {
+    mesh,
+    update(time, _focusS, camera, vis) {
+      uniforms.uTime.value = time;
+      uniforms.uVis.value = vis;
+      const persp = camera as THREE.PerspectiveCamera;
+      if (persp.isPerspectiveCamera) uniforms.uFocal.value = persp.projectionMatrix.elements[5] * 768;
+      mesh.visible = vis > 0.004 && geo.instanceCount > 0 && uniforms.uTex.value !== null;
+    },
+  };
+}
+
 export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; sStart: number }): BubbleSystem {
   const quality = opts.quality;
   const ride = RIDE[quality];
@@ -215,6 +368,9 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
   small.frustumCulled = false;
   small.renderOrder = 4;
   group.add(small);
+  // `?bub05=1`: the approved 05 bubbles (world-anchored sprites, Screen 05 only)
+  const approved05 = BUB05 ? createApproved05() : null;
+  if (approved05) group.add(approved05.mesh);
 
   const mk = (): BubbleState => ({ s: 0, pos: new THREE.Vector3(), vel: new THREE.Vector3(), size: 1, phase: 0, age: 0, life: 1 });
   const bigS: BubbleState[] = Array.from({ length: nBig }, mk);
@@ -376,6 +532,10 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
       return out;
     },
     update(time, dt, focusS, camera, density = 1) {
+      if (approved05) {
+        const sm = (a: number, b: number, x: number) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+        approved05.update(time, focusS, camera, sm(st05.s0 + 2, st05.s0 + 5, focusS) * (1 - sm(st05.s1 - 5, st05.s1 - 2, focusS)));
+      }
       bigUniforms.uTime.value = time;
       ptUniforms.uTime.value = time;
       const persp = camera as THREE.PerspectiveCamera;

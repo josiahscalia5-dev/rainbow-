@@ -220,6 +220,9 @@ export function withProj05Wall<T extends THREE.MeshStandardMaterial>(mat: T, seg
   const seg = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector4(segs[i].v0, segs[i].v1, 0, 0) : new THREE.Vector4(1e9, 1e9, 0, 0)));
   const segT = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector3(segs[i].row, segs[i].t0, segs[i].t1) : new THREE.Vector3(0, 0, 0)));
   const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) } };
+  // env05 run #4: the bays stay editable until the first render (environment.ts adds the real wall's bay past the seam)
+  mat.userData.ptSeg = seg;
+  mat.userData.ptSegT = segT;
   const prev = mat.onBeforeCompile;
   mat.onBeforeCompile = (shader, r) => {
     prev.call(mat, shader, r);

@@ -8,7 +8,20 @@ rings, HUD, river, Benny …) keep the previous bake (tunnel05/wall05.png, ring0
 and filled from the same picture), offset-blended so no tone step shows. The texture stays anchored to the 3D tunnel.
 Colour feedback: `--capture=<05.png> --coords_all=<tunnel_coords_all.f32>` scatters (approved − capture) on pixels that
 show the surface and the approved surface, into `<out>/feedback.npz` (accumulated, damped), applied on the next bake.
-usage: python3 -I tools/env05/proj_bake.py <out_dir> [--coords=F] [--capture=PNG --coords_all=F] [--reset_feedback]"""
+Run #4 options (2026-11-17, session 01VCMXob; without them the bake is byte-identical to run #3):
+  --smoothfill   fallback fill (push-pull pyramid) upsampled bilinearly instead of nearest on the texels the locked camera
+                 does NOT see: the coarse levels drew flat square blocks that showed as flat facets while riding
+  --bubblefill   approved bubbles in front of the tunnel (masks/bubbles_approved.json): the approved picture is first
+                 inpainted in screen space with the best-matching shifted patch of the surrounding wall / ring (boundary
+                 SSD), so the wall continues behind the bubble (the bubble itself stays a bubble-specialist object)
+  --paintwater   tunnel pixels where the approved picture shows water / foam (bank misregistration, river gaps at the
+                 far bends, ring ends at the banks) take that approved pixel, like the foam apron on the lower wall
+  --paintbubbles tunnel pixels where the approved picture shows a bubble take that pixel (painted bubble on the wall /
+                 ring; alternative to --bubblefill, for as long as no 3D bubble is drawn there)
+  --paintfittings tunnel pixels where the approved picture shows a paddle / fitting the 3D paddle does not cover there
+                 (paddle outline slightly larger than the Blender tray) take that pixel
+usage: python3 -I tools/env05/proj_bake.py <out_dir> [--coords=F] [--capture=PNG --coords_all=F] [--reset_feedback]
+       [--smoothfill] [--bubblefill] [--paintwater]"""
 import json, math, os, sys
 import numpy as np
 from PIL import Image
@@ -50,7 +63,18 @@ for i, n in enumerate(RROWS):
 base_wall, base_ring = wall.copy(), ring.copy()
 
 
-def push_pull(val, wt, levels=9):
+def up2(est):
+    """cell-centred bilinear 2x upsampling (u periodic, v clamped)"""
+    p = np.concatenate([est[:1], est[:-1]], 0); n = np.concatenate([est[1:], est[-1:]], 0)
+    a = np.empty((est.shape[0] * 2,) + est.shape[1:], est.dtype)
+    a[0::2] = 0.75 * est + 0.25 * p; a[1::2] = 0.75 * est + 0.25 * n
+    p = np.roll(a, 1, 1); n = np.roll(a, -1, 1)
+    b = np.empty((a.shape[0], a.shape[1] * 2) + a.shape[2:], a.dtype)
+    b[:, 0::2] = 0.75 * a + 0.25 * p; b[:, 1::2] = 0.75 * a + 0.25 * n
+    return b
+
+
+def push_pull(val, wt, levels=9, smooth=False):
     """fill zero-weight texels of val (h, w, c) from coarser levels (weighted pyramid), u periodic"""
     pyr = [(val * wt[..., None], wt)]
     for _ in range(levels):
@@ -62,7 +86,7 @@ def push_pull(val, wt, levels=9):
     v, w = pyr[-1]
     est = v / np.maximum(w, 1e-6)[..., None]
     for v, w in reversed(pyr[:-1]):
-        up = np.repeat(np.repeat(est, 2, 0), 2, 1)
+        up = up2(est) if smooth else np.repeat(np.repeat(est, 2, 0), 2, 1)
         up = np.pad(up, ((0, v.shape[0] - up.shape[0]), (0, v.shape[1] - up.shape[1]), (0, 0)), mode="edge")
         a = np.clip(w, 0, 1)[..., None]
         est = a * (v / np.maximum(w, 1e-6)[..., None]) + (1 - a) * up
@@ -93,6 +117,115 @@ def load_coords(path):
 ap = np.asarray(Image.open("references/05_flow_into_the_current.png").convert("RGB"), np.float32)
 idx = np.asarray(Image.open(f"{MK}/region_index.png"))
 rid = {k: v["id"] for k, v in json.load(open(f"{MK}/regions.json"))["regions"].items()}
+report = {}
+coords = args.get("coords")
+if "bubblefill" in args:
+    # run #4: approved bubbles in front of the tunnel → inpaint the approved picture behind them (screen space) with the
+    # best-matching transformed patch of the surrounding tunnel: translations and rotations about the tunnel's screen
+    # centres (ring_model.json origin + each ring's fitted centre: rings and slot rows are circles about them), scored by
+    # SSD over a boundary annulus; Laplace-blended offset so no circular seam shows; class taken from the source
+    tunvis = None
+    if coords:
+        _c = np.fromfile(coords, np.float32).reshape(H, W, 4)[..., 3]
+        tunvis = (np.abs(_c - 77) < 1e-3) | (np.abs(_c - 78) < 1e-3)
+    tuncls = [rid[k] for k in ("purple_walls", "gold_rings_and_front_frame", "distant_tunnel_and_glow", "side_fittings")]
+    bubs = json.load(open(f"{MK}/bubbles_approved.json"))
+    rmb = json.load(open("qa/pilot05/proj/tunnel/model/ring_model.json"))
+    centres = [tuple(rmb["origin"])] + [(rmb["origin"][0] + 0.5 * (g["in"][1] + g["out"][1]), rmb["origin"][1] - 0.5 * (g["in"][2] + g["out"][2])) for n, g in rmb["rings"].items() if n in "ABCD"]
+    yy_, xx_ = np.mgrid[0:H, 0:W]
+    bubm = idx == rid["bubbles"]
+    for b in bubs:
+        bubm |= (xx_ - b["x"]) ** 2 + (yy_ - b["y"]) ** 2 <= (b["r"] + 3) ** 2
+    validsrc = np.isin(idx, tuncls) & ~bubm
+    ap0, idx0 = ap.copy(), idx.copy()
+    idx = idx.copy()
+    fills = []
+
+    def xform(cand, py, px):
+        if cand[0] == "t":
+            return py + cand[2], px + cand[1]
+        _, ccx, ccy, al = cand
+        c, s_ = math.cos(al), math.sin(al)
+        ex, ey = px - ccx, py - ccy
+        return ccy + s_ * ex + c * ey, ccx + c * ex - s_ * ey
+
+    def bilin(img, fy, fx):
+        y0 = np.clip(np.floor(fy).astype(int), 0, H - 2); x0 = np.clip(np.floor(fx).astype(int), 0, W - 2)
+        wy = np.clip(fy - y0, 0, 1)[:, None]; wx = np.clip(fx - x0, 0, 1)[:, None]
+        return (img[y0, x0] * (1 - wy) * (1 - wx) + img[y0, x0 + 1] * (1 - wy) * wx + img[y0 + 1, x0] * wy * (1 - wx) + img[y0 + 1, x0 + 1] * wy * wx)
+
+    for b in bubs:
+        cx, cy, R = b["x"], b["y"], b["r"] + 3
+        d2 = (xx_ - cx) ** 2 + (yy_ - cy) ** 2
+        hole = (d2 <= R * R) | ((idx0 == rid["bubbles"]) & (d2 <= (R + 4) ** 2))
+        need = hole & tunvis if tunvis is not None else hole
+        if need.sum() < max(20, 0.05 * hole.sum()):
+            continue
+        ann = (d2 <= (R + 8) ** 2) & ~hole & validsrc
+        ny, nx = np.nonzero(need); ay, ax = np.nonzero(ann)
+        if len(ay) < 30:
+            fills.append({"bubble": [cx, cy, b["r"]], "skipped": "no tunnel boundary"}); continue
+
+        def score(cand):
+            sy, sx = xform(cand, ny, nx)
+            iy, ix = np.rint(sy).astype(int), np.rint(sx).astype(int)
+            if iy.min() < 0 or ix.min() < 0 or iy.max() >= H or ix.max() >= W or not validsrc[iy, ix].all():
+                return None
+            ty, tx = xform(cand, ay, ax)
+            ty, tx = np.rint(ty).astype(int), np.rint(tx).astype(int)
+            ok = (ty >= 0) & (tx >= 0) & (ty < H) & (tx < W)
+            ok[ok] = validsrc[ty[ok], tx[ok]]
+            if ok.mean() < 0.7:
+                return None
+            e = ((ap0[ay[ok], ax[ok]] - ap0[ty[ok], tx[ok]]) ** 2).mean()
+            dy, dx = sy.mean() - ny.mean(), sx.mean() - nx.mean()
+            return e * (1 + 0.05 * math.hypot(dx, dy) / R)
+        Ra = int(np.ceil(R))
+        cands = [("t", dx, dy) for dy in range(-4 * Ra, 4 * Ra + 1, 2) for dx in range(-4 * Ra, 4 * Ra + 1, 2) if dx * dx + dy * dy >= (2 * R) ** 2]
+        for (ccx, ccy) in centres:
+            rho = math.hypot(cx - ccx, cy - ccy)
+            if rho < 3 * R:
+                continue
+            for d in range(int(2 * R), int(6 * R) + 1, 2):
+                cands += [("r", ccx, ccy, sg * d / rho) for sg in (1, -1)]
+        best = None
+        for cand in cands:
+            s_ = score(cand)
+            if s_ is not None and (best is None or s_ < best[0]):
+                best = (s_, cand)
+        if best is None:
+            fills.append({"bubble": [cx, cy, b["r"]], "skipped": "no valid source"}); continue
+        c0 = best[1]
+        refine = [("t", c0[1] + i, c0[2] + j) for i in (-1, 0, 1) for j in (-1, 0, 1)] if c0[0] == "t" else [("r", c0[1], c0[2], c0[3] + k * 0.5 / math.hypot(cx - c0[1], cy - c0[2])) for k in (-2, -1, 1, 2)]
+        for cand in refine:
+            s_ = score(cand)
+            if s_ is not None and s_ < best[0]:
+                best = (s_, cand)
+        cand = best[1]
+        # patch on the hole + its 1-px boundary, then a Laplace offset field (boundary = original − patch, low-passed)
+        bnd = binary_dilation(hole, iterations=1) & ~hole
+        y0b, y1b = max(0, cy - R - 4), min(H, cy + R + 5); x0b, x1b = max(0, cx - R - 4), min(W, cx + R + 5)
+        hc, bc = hole[y0b:y1b, x0b:x1b], bnd[y0b:y1b, x0b:x1b]
+        py, px = np.nonzero(hc | bc)
+        sy, sx = xform(cand, py + y0b, px + x0b)
+        patch = np.zeros((y1b - y0b, x1b - x0b, 3), np.float32)
+        patch[py, px] = bilin(ap0, sy, sx)
+        dif = np.where(bc[..., None], ap0[y0b:y1b, x0b:x1b] - patch, 0)
+        num = np.stack([gaussian_filter(dif[..., k], 2.0) for k in range(3)], -1); den = gaussian_filter(bc.astype(np.float32), 2.0)
+        off = np.where(bc[..., None], num / np.maximum(den, 1e-6)[..., None], 0)
+        off[hc] = (num / np.maximum(den, 1e-6)[..., None])[bc].mean(0)
+        for _ in range(300):
+            nb = (np.roll(off, 1, 0) + np.roll(off, -1, 0) + np.roll(off, 1, 1) + np.roll(off, -1, 1)) / 4
+            off[hc] = nb[hc]
+        hy, hx = np.nonzero(hc)
+        ap[hy + y0b, hx + x0b] = patch[hy, hx] + off[hy, hx]
+        iy, ix = xform(cand, hy + y0b, hx + x0b)
+        iy, ix = np.clip(np.rint(iy).astype(int), 0, H - 1), np.clip(np.rint(ix).astype(int), 0, W - 1)
+        idx[hy + y0b, hx + x0b] = np.where(validsrc[iy, ix], idx0[iy, ix], idx0[hy + y0b, hx + x0b])
+        fills.append({"bubble": [cx, cy, b["r"]], "transform": [cand[0]] + [round(float(v), 4) for v in cand[1:]], "rms": round(float(math.sqrt(best[0])), 1), "hole_px": int(hole.sum()), "tunnel_px": int(need.sum())})
+    report["bubblefill"] = fills
+    if "debug" in args:
+        Image.fromarray(np.clip(ap, 0, 255).astype(np.uint8)).save(os.path.join(out, "approved_bubblefill.png"))
 src_wall = (idx == rid["purple_walls"]) | (idx == rid["distant_tunnel_and_glow"])
 src_ring = (idx == rid["gold_rings_and_front_frame"]) | (idx == rid["distant_tunnel_and_glow"])
 if "regionmask" not in args:
@@ -112,15 +245,41 @@ if "regionmask" not in args:
     src_ring = src_ring | (tun & env)
     src_wall = src_wall | ((idx == rid["gold_rings_and_front_frame"]) & env)
 src_ring[1100:] = False                                           # the bottom gold frame is the camera-held near frame
-report = {}
+water_cls = np.zeros_like(src_wall)
+if "paintwater" in args:
+    water_cls |= (idx == rid["water"]) | (idx == rid["foam_banks"])
+if "paintbubbles" in args:
+    water_cls |= idx == rid["bubbles"]
+if "paintfittings" in args:
+    water_cls |= idx == rid["side_fittings"]
+water_cls[1100:] = False
 
 
-def bake(tex, base, coordm, srcm, a, wrap_u=True):
+def with_water(srcm, surfm):
+    """--paintwater / --paintbubbles: tunnel pixels (surfm) where the approved picture shows water / foam / a bubble take
+    that approved pixel (camera projection, like the foam apron on the lower wall)"""
+    return srcm | (water_cls & surfm)
+
+
+def splat_prio(shape, a, m_true, m_paint, vals):
+    """splat true-class pixels; painted (--paint*) pixels only on texels no true-class pixel reaches (a texel shared by
+    the two keeps the true wall / ring colour)"""
+    yy, xx = np.nonzero(m_true)
+    acc, ws = splat(shape, a[yy, xx, 0], a[yy, xx, 1], vals[yy, xx])
+    mp = m_paint & ~m_true
+    if mp.any():
+        yy, xx = np.nonzero(mp)
+        acc_p, ws_p = splat(shape, a[yy, xx, 0], a[yy, xx, 1], vals[yy, xx])
+        pm = ws <= 0.05
+        acc = acc + acc_p * pm[..., None]; ws = ws + ws_p * pm
+    return acc, ws
+
+
+def bake(tex, base, coordm, srcm, a, wrap_u=True, extra=None):
     """own texels = approved pixels; elsewhere base + the own-minus-base offset diffused with a falloff"""
     h, w = tex.shape[:2]
     m = coordm & srcm
-    yy, xx = np.nonzero(m)
-    acc, ws = splat((h, w), a[yy, xx, 0], a[yy, xx, 1], ap[yy, xx], wrap_u)
+    acc, ws = splat_prio((h, w), a, m, coordm & extra if extra is not None else np.zeros_like(m), ap)
     own = ws > 0.2
     ownc = acc / np.maximum(ws, 1e-6)[..., None]
     # texels the camera sees between splat hits (minified areas): interpolate the own colours (push-pull) within the
@@ -135,17 +294,22 @@ def bake(tex, base, coordm, srcm, a, wrap_u=True):
     dist = distance_transform_edt(~own)
     res = base + offd * np.exp(-dist / 10.0)[..., None]
     res[fill_pp] = pp[fill_pp]
+    if "smoothfill" in args:
+        # run #4: texels the locked camera does NOT see (they show while riding) get the bilinear pyramid fill — no
+        # square blocks; seen texels keep the run #3 fill so the locked frame does not change
+        res_s = base + push_pull(off, own.astype(np.float64), smooth=True) * np.exp(-dist / 10.0)[..., None]
+        res = np.where(seen[..., None], res, res_s)
     res[own] = ownc[own]
     return np.clip(res, 0, 255), own, seen
 
 
-coords = args.get("coords")
 if coords:
     a, wallm, ringm = load_coords(coords)
-    wall, own_w, seen_w = bake(wall, base_wall, wallm, src_wall, a)
-    ring, own_r, seen_r = bake(ring, base_ring, ringm, src_ring, a)
+    sw, sr = with_water(src_wall, wallm), with_water(src_ring, ringm)
+    wall, own_w, seen_w = bake(wall, base_wall, wallm, src_wall, a, extra=water_cls)
+    ring, own_r, seen_r = bake(ring, base_ring, ringm, src_ring, a, extra=water_cls)
     report.update(wall_own_texels=int(own_w.sum()), wall_seen_texels=int(seen_w.sum()), ring_own_texels=int(own_r.sum()), ring_seen_texels=int(seen_r.sum()),
-                  wall_pixels_used=int((wallm & src_wall).sum()), wall_pixels_seen=int(wallm.sum()), ring_pixels_used=int((ringm & src_ring).sum()), ring_pixels_seen=int(ringm.sum()))
+                  wall_pixels_used=int((wallm & sw).sum()), wall_pixels_seen=int(wallm.sum()), ring_pixels_used=int((ringm & sr).sum()), ring_pixels_seen=int(ringm.sum()))
 
 # ---------------------------------------------------------------- colour feedback (bloom spill etc.)
 fb_path = os.path.join(out, "feedback.npz")
@@ -157,9 +321,10 @@ if args.get("capture") and args.get("coords_all"):
     damp = float(args.get("damp", 0.8))
     for key, m, srcm, tex in (("wall", wm2, src_wall, wall), ("ring", rm2, src_ring, ring)):
         mm = m & srcm & ~hud
-        yy, xx = np.nonzero(mm)
+        yy, xx = np.nonzero(mm | (m & water_cls & ~hud))
         r = ap[yy, xx] - cap[yy, xx]
-        acc, ws = splat(tex.shape[:2], a2[yy, xx, 0], a2[yy, xx, 1], r)
+        res_img = np.zeros((H, W, 3), np.float32); res_img[yy, xx] = r
+        acc, ws = splat_prio(tex.shape[:2], a2, mm, m & water_cls & ~hud, res_img)
         ok = ws > 0.2
         d = np.where(ok[..., None], acc / np.maximum(ws, 1e-6)[..., None], 0)
         # low-pass the residual (bloom is smooth; per-texel noise would add speckle)
