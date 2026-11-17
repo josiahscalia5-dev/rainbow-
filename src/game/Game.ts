@@ -23,6 +23,8 @@ import { createCoins, COIN_VALUE } from '../gameplay/coins';
 import { createInput } from '../gameplay/input';
 import { RideCamera } from './cameraRig';
 import { flag05 } from '../vfx/waterRibbon';
+import { MATCH } from './match';
+import { buildMatch08 } from '../world/match08';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -101,6 +103,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const girl = await loadGirlRuntime();
   const coins = createCoins(course);
   scene.add(coins.group);
+  // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+  const m08 = MATCH['08'] ? await buildMatch08() : null;
+  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); }
+  const M08_HIDE = ['ribbon', 'foam', 'bubbles'];
+  let m08On = false;
+  let m08Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
   if (hidden.has('water')) water.group.visible = false;
@@ -151,6 +159,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     for (const [k, [a, b]] of Object.entries(zoneRanges)) {
       env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);
     }
+    if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
     const inDrum = i <= 1;
     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
   };
@@ -511,6 +520,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
     const time = st.frozen ?? st.clock;
     env.update(time, dt);
     water.update(time, dt, st.s, camera);
+    // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+    if (m08 && (m08On || m08Applied)) {
+      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+      m08Applied = m08On;
+    }
+    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
     fill.position.copy(camera.position);
     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
   };
@@ -524,6 +539,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
   // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins
   const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
   const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
+  const bloomS0 = bloom.strength;
+  const dbs = new THREE.Vector2();
   const st05 = course.stage('05');
   const render = () => {
     if (glow05) {
@@ -531,6 +548,13 @@ export async function startGame(canvas: HTMLCanvasElement) {
       bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
       bloom.radius = bloomBase.r + (bloom05.r - bloomBase.r) * w;
       bloom.threshold = bloomBase.t + (bloom05.t - bloomBase.t) * w;
+    }
+    // `?match08=1`: the approved artwork already carries its glow — no bloom on Screen 08 under the switch
+    if (m08) {
+      if (!glow05) bloom.strength = bloomS0;
+      if (m08On) bloom.strength = 0;
+      renderer.getDrawingBufferSize(dbs);
+      m08.sync(renderer, dbs.x, dbs.y);
     }
     renderer.info.reset();
     composer.render();

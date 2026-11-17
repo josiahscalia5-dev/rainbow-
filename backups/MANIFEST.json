@@ -392,6 +392,21 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/match08/cam08_locked.json",
+   "bytes": 704,
+   "sha256": "ea5800966e0d2822e5fe0da698ee42aa26b84ba7719ebb6d65dc957eba04d7e3"
+  },
+  {
+   "path": "assets/textures/match08/plate08_clean.png",
+   "bytes": 6591567,
+   "sha256": "b66ecf984a565122e79912fa22b5a96916298c093334d7bf316df8c88f763d57"
+  },
+  {
+   "path": "assets/textures/match08/proj08.json",
+   "bytes": 2936,
+   "sha256": "025688f1a9ce9894b1da0102b0491abfb750ed17c4b34755d3dcb44ea8febdea"
+  },
+  {
    "path": "assets/textures/tunnel05/frame05.json",
    "bytes": 492,
    "sha256": "550aa836537b2d9c75b444b1e7fc184d37ba5b37d54e306316fa606235aed533"
@@ -509,7 +524,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "2693ba83f2977bf48dd38bbc61601414d928e9b8c93a3486b28605feaa5b7ccc"
+   "sha256": "c667dccb965c2a57cf41c5419bf38eb439b67b0258fd604b4d84da7ae8c76f89"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7663,8 +7678,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 35459,
-   "sha256": "6143be7ba03569f64d6935eb00810b331cee105a69901633327163a1cfcfe2ee"
+   "bytes": 36769,
+   "sha256": "90842ab850887fc11199e3f44d524b87309c6c8ac65bde93fd8bba9c92563e65"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -7678,8 +7693,8 @@
   },
   {
    "path": "src/game/modules.ts",
-   "bytes": 5570,
-   "sha256": "eceb381c4c6b7fb5ef5ab4a203c68b1265415d5ea568bcc8398f5b4463d72049"
+   "bytes": 5708,
+   "sha256": "463b632268719d17b014354655bb75defd981a85f34a9295abc7e85a6c995d20"
   },
   {
    "path": "src/gameplay/coins.ts",
@@ -7805,6 +7820,11 @@
    "path": "src/world/laundryRoom.ts",
    "bytes": 8308,
    "sha256": "7c3a4cb22741c58f3c589239d07ffcf9097d6c4b8e59c99a72d7d8f689cc7679"
+  },
+  {
+   "path": "src/world/match08.ts",
+   "bytes": 9516,
+   "sha256": "2e9475d236fcff6a2d841b0135c11324b6ddf5acdbf06e2c2f3afb193d6e13d7"
   },
   {
    "path": "src/world/materials.ts",
@@ -7940,6 +7960,11 @@
    "path": "tools/match/ring_fit.py",
    "bytes": 2980,
    "sha256": "2ea5c23a56f3e1405fe102fe5fae6bbeea6e3f2c7c584501a3306a61c613e8c1"
+  },
+  {
+   "path": "tools/match08/fit_proxies.py",
+   "bytes": 6676,
+   "sha256": "00a2d0718b4686ecf46a315ad2a69ef2d69b4fd80d330303323bd3db0eb2efef"
   },
   {
    "path": "tools/model-lab.html",

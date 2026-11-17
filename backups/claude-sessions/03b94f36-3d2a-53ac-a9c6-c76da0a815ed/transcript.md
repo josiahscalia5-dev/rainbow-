@@ -4536,3 +4536,202 @@ The normal game is still pixel-identical (0 pixels differ). Here's the game's cu
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T13:24:41.316Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/match08 && cat > /home/user/rainbow-/tools/match08/fit_proxies.py <<'EOF'\n\"\"\"Screen 08 (?match08=1): solve the 3D proxy geometry from the APPROVED picture + the locked game camera.\nEvery proxy is placed by casting rays from the locked camera through measured picture points onto known surfaces\n(floor plane at Benny's water level, the chamber cylinder, the arch plane), so its silhouette matches the picture.\nusage: python3 -I tools/match08/fit_proxies.py <cam08.json> <out proj08.json>\ncam08.json: {\"mw\": camera.matrixWorld.elements (16, col …[+6407 chars]`
+
+### 🧑 User — 2026-11-17T13:24:41.549Z
+
+> ↩︎ result: {
+>  "arch": {
+>   "z": -280.12069623151456,
+>   "outer": {
+>    "cx": 12.988808235442962,
+>    "cy": -110.85596210715568,
+>    "r": 2.507555516283805
+>   },
+>   "inner": {
+>    "cx": 13.001766223836675,
+>    "cy": -110.83079758442005,
+>    "r": 2.2346775402974757
+>   },
+>   "depth": 0.9,
+>   "feetZ": [
+>    -280.05182578271587,
+>    -280.18956668031325
+>   ],
+>   "check_row600_px": [
+>    -127.05376399148534,
+>    959.6327332814258
+>   ]
+>  },
+>  "platform": {
+>   "topY": -109.93857142857144,
+>   "cx": 13.708542286127571,
+>   "cz": -280.6533607490857,
+>   "r": 5.615543116750634,
+>   "thick": 0.45,
+>   "legsTo": -113.11
+>  },
+>  "towel": {
+>   "cx": 13.620921416453374,
+>   "cz": -280.6533607490857,
+>   "w": 0.7682291649289308,
+>   "h": 0.5115810901968274,
+>   "d": 0.3226562492701509,
+>   "y0": -109.93857142857144
+>  },
+>  "checks": {
+>   "platform_centre_px": [
+>    563.7291817076045,
+>    575.8975317844664
+>   ],
+>   "towel_top_px": [
+>    546.6338176349061,
+>    464.6914805054815
+>   ],
+>   "arch_top_outer_px": [
+>    400.2724837215654,
+>    188.69187487539676
+>   ],
+>   "door_px": [
+>    481.7009267358235,
+>    414.1109694355053
+>   ],
+>   "camera_to_arch": 5.584714306357398,
+>   "camera_to_platform": 6.117378823928561
+>  }
+> }
+> UL r 3.83 dist 62.3 c [0.43, -101.46, -334.9]
+> UR r 2.57 dist 73.9 c …[+121 chars]
+
+### 🤖 Claude — 2026-11-17T13:26:39.563Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/match08/fit_proxies.py'; s=open(p).read()\nstart=s.index('# ---- platform:'); end=s.index('# ---- checks:')\nnew='''# ---- outer inlet pipe: the picture's walls OUTSIDE the arch are near the camera -> a pipe around the camera that ends\n# at the arch (radius = the arch's outer radius), so those rays hit close walls (big slots) as in the picture\nout[\"pipe\"] = {\"cx\": co[0], \"cy\": co[1], \"r\": co[2] + 0.04, \"z0\": float(C[2] + 8.0), \"z1\": zA}\n\n# ---- platform: at the game's platform depth (WORLD.platform z -325); width + top/rim rows from t …[+3622 chars]`
+
+### 🧑 User — 2026-11-17T13:26:39.780Z
+
+> ↩︎ result: fit v2 written
+> {"pipe": {"cx": 12.988808235442962, "cy": -110.85596210715568, "r": 2.547555516283805, "z0": -266.53598192515716, "z1": -280.12069623151456}, "platform": {"cx": 12.091483653433464, "cz": -325.0, "r": 8.594742312633969, "topY": -109.45003672029831, "rimBottomY": -110.52738424390732, "legsBottomY": -112.39179346479615, "floorY": -113.11, "tiltDeg": 4.881049875722069, "eyeElevDeg": -0.46932408995189184}, "towel": {"cx": 12.12830430485883, "cz": -324.0, "w": 6.994204182950803, "h": 2.9196937619664283, "y0": -109.18183169734903, "d": 3.2}, "checks": {"platform_centre_px": [478.61712912609016, 549.0012538020969], "towel_top_px": [479.36346322705083, 463.064107575226], "arch_top_outer_px": [400.2724837215654, 188.69187487539676], "door_px": [481.7009267358235, 414.1109694355053], "camera_to_arch": 5.584714306357398, "camera_to_platform": 50.46401807484284}}
+> UL rx 3.03 ry 1.57 dist 49.0 c [3.22, -103.25, -322.0]
+> UR rx 1.67 ry 1.55 dist 48.2 c [20.47, -104.78, -322.0]
+> LL rx 2.83 ry 2.17 dist 27.6 c [5.5, -112.93, -300.82]
+> LR rx 2.22 ry 2.15 dist 23.8 c [17.58, -113.39, -297.69]
+
+### 🤖 Claude — 2026-11-17T13:27:26.697Z
+
+> 🔧 **Bash** `{"command": "sed -n 505,545p src/game/Game.ts | cut -c1-190; grep -n -E \"^import|from './match'|MATCH\" src/game/Game.ts | head -40 | cut -c1-150; grep -n resolveJsonModule tsconfig.json; grep -n -E \"png\" .gitattributes", "description": "Read render loop, imports and config"}`
+
+### 🧑 User — 2026-11-17T13:27:26.757Z
+
+> ↩︎ result: if (st.mode === 'intro') introUpdate(dt);
+>     else if (st.mode === 'ride') rideUpdate(dt);
+>     else if (st.mode === 'outro' || st.mode === 'end') {
+>       outroUpdate(dt);
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water.update(time, dt, st.s, camera);
+>     fill.position.copy(camera.position);
+>     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+>   };
+> 
+>   let last = performance.now();
+>   let fps = 60;
+>   let running = !qaMode;
+>   let dirty = true;
+>   renderer.info.autoReset = false;
+>   // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the
+>   // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins
+>   const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
+>   const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
+>   const st05 = course.stage('05');
+>   const render = () => {
+>     if (glow05) {
+>       const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+>       bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
+>       bloom.radius = bloomBase.r + (bloom05.r - bloomBase.r) * w;
+>    …[+1564 chars]
+
+### 🤖 Claude — 2026-11-17T13:28:04.485Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/match08.ts", "content": "/**\n * `?match08=1` — Screen 08 approved-picture test (2026-11-17, qa/match/08/NOTES.md).\n * REAL 3D proxy geometry of the Final Spin Chamber, solved from the user's approved Screen 08 and the locked game\n * camera (tools/match08/fit_proxies.py → assets/textures/match08/proj08.json): inlet pipe, gold arch, chamber walls,\n * door wall, floor/river plane, platform (top tilted toward the camera as painted), towel and the four half-dome spouts.\n * Every surface is textured by camera projection of the CLEAN environment-only  …[+9135 chars]`
+
+### 🧑 User — 2026-11-17T13:28:04.543Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/match08.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T13:28:18.570Z
+
+Copying the clean artwork and the fitted layout into the game's assets. They're only loaded under `?match08=1`:
+
+### 🤖 Claude — 2026-11-17T13:28:22.723Z
+
+> 🔧 **Bash** `{"command": "mkdir -p assets/textures/match08 && cp qa/imageblaster/08/08_plate_CLEAN_aligned_9x16_1536x2731.png assets/textures/match08/plate08_clean.png && cp /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/proj08.json assets/textures/match08/proj08.json && cp /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/cam08.json assets/textures/match08/cam08_locked.json && ls -la assets/textures/match08; python3 -I - <<'EOF'\np='/home/user/rainbow-/src/world/match08.ts'; s=open(p).read()\ns=s.replace(\"      const clone = group …[+306 chars]`
+
+### 🧑 User — 2026-11-17T13:28:22.888Z
+
+> ↩︎ result: total 6456
+> drwxr-xr-x 2 root root    4096 Nov 17 13:28 .
+> drwxr-xr-x 5 root root    4096 Nov 17 13:28 ..
+> -rw-r--r-- 1 root root     704 Nov 17 13:28 cam08_locked.json
+> -rw-r--r-- 1 root root 6591567 Nov 17 13:28 plate08_clean.png
+> -rw-r--r-- 1 root root    2936 Nov 17 13:28 proj08.json
+> clone visible fix ok
+> 1657:    if (rt) size.set(rt.width, rt.height); else renderer.getDrawingBufferSize(size);
+> 1774:    if (rt) size.set(rt.width, rt.height); else renderer.getDrawingBufferSize(size);
+
+### 🤖 Claude — 2026-11-17T13:28:35.252Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]; s=s.replace(old,new)\nrep(\"import { flag05 } from '../vfx/waterRibbon';\\n\",\n    \"import { flag05 } from '../vfx/waterRibbon';\\nimport { MATCH } from './match';\\nimport { buildMatch08 } from '../world/match08';\\n\")\nrep(\"  const coins = createCoins(course);\\n  scene.add(coins.group);\\n\",\n    \"  const coins = createCoins(course);\\n  scene.add(coins.group);\\n\"\n    \"  // `?match08=1`: the approved Screen 08 scenery on fitted 3D geomet …[+1897 chars]`
+
+### 🧑 User — 2026-11-17T13:28:38.178Z
+
+> ↩︎ result: Exit code 2
+> Game.ts wired
+> src/game/Game.ts(523,58): error TS2339: Property 'parts' does not exist on type 'WaterLike'.
+> src/game/Game.ts(524,31): error TS2339: Property 'parts' does not exist on type 'WaterLike'.
+> src/game/Game.ts(524,68): error TS2339: Property 'parts' does not exist on type 'WaterLike'.
+
+### 🤖 Claude — 2026-11-17T13:28:40.572Z
+
+> 🔧 **Bash** `{"command": "grep -n -B2 -A14 \"interface WaterLike\\|type WaterLike\" src/game/modules.ts | head -30", "description": "Read the WaterLike type"}`
+
+### 🧑 User — 2026-11-17T13:28:40.613Z
+
+> ↩︎ result: 8-import type { BennyRuntime, GirlRuntime } from '../characters/types';
+> 9-
+> 10:export interface WaterLike {
+> 11-  group: THREE.Group;
+> 12-  update(time: number, dt: number, focusS: number, camera: THREE.Camera): void;
+> 13-  surfaceHeight(s: number, lateral: number, time: number): number;
+> 14-  wake(pos: THREE.Vector3, forward: THREE.Vector3, right: THREE.Vector3, speed: number, dt: number): void;
+> 15-  splash(pos: THREE.Vector3, up: THREE.Vector3, strength: number): void;
+> 16-}
+> 17-
+> 18-const vfxMods = import.meta.glob('../vfx/index.ts');
+> 19-const bennyMods = import.meta.glob('../characters/benny/runtime.ts');
+> 20-const girlMods = import.meta.glob('../characters/girl/runtime.ts');
+> 21-
+> 22-export const moduleStatus: Record<string, string> = {};
+> 23-
+> 24-export async function loadWater(course: Course): Promise<WaterLike> {
+
+### 🤖 Claude — 2026-11-17T13:28:46.614Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/modules.ts'; s=open(p).read()\nold=\"  splash(pos: THREE.Vector3, up: THREE.Vector3, strength: number): void;\\n}\\n\"\nnew=\"  splash(pos: THREE.Vector3, up: THREE.Vector3, strength: number): void;\\n  /** named sub-objects of the water system (src/vfx/index.ts `parts`), used by `?match08=1` */\\n  parts?: Record<string, THREE.Object3D>;\\n}\\n\"\nassert s.count(old)==1; open(p,'w').write(s.replace(old,new))\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"if (m08) for (const k of M08_HIDE) { const o = water.parts[k]; if (o) o.visible = !m0 …[+533 chars]`
+
+### 🧑 User — 2026-11-17T13:28:50.109Z
+
+> ↩︎ result: ok
+> tsc clean
+
+### 🤖 Claude — 2026-11-17T13:28:56.054Z
+
+Tightening one detail: outside Screen 08 the switch should leave the river, foam and bubbles alone. They're restored only once, when leaving 08:
+
+### 🤖 Claude — 2026-11-17T13:29:02.006Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\nold=\"    if (m08) for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }\\n\"\nnew=(\"    if (m08 && (m08On || m08Applied)) {\\n\"\n     \"      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }\\n\"\n     \"      m08Applied = m08On;\\n    }\\n\")\nassert s.count(old)==1; s=s.replace(old,new)\ns=s.replace(\"  let m08On = false;\\n\",\"  let m08On = false;\\n  let m08Applied = false;\\n\")\nopen(p,'w').write(s); print('ok')\nEOF\ntimeout 200 npx tsc --noEm …[+787 chars]`
+
