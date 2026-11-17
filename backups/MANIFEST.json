@@ -63,8 +63,8 @@
   },
   {
    "path": ".gitignore",
-   "bytes": 777,
-   "sha256": "4ea809676324c87a8b761193610c34db5a9ec3626478fdaafe5d4f14578fd930"
+   "bytes": 794,
+   "sha256": "b9b30864e721e0dafb22a32c62050c3a5940be9fb6ec92b1ea818e557e08f170"
   },
   {
    "path": ".mcp.json.template",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13066,
-   "sha256": "573a4e5801281a9bb85e46a1dc8153bd7678e9973e4dfb9f5519098f7618405b"
+   "sha256": "130af707b21fc249b75be4682927f2b87ed976627b907cca3beaad04d709d0d0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
