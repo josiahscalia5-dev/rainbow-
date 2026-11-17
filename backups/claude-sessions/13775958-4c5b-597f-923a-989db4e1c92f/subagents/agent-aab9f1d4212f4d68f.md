@@ -2503,3 +2503,44 @@ Now the 08 hold and a 06 aim correction, both only under `camclear`.
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad; timeout 1200 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=27.5 --t1=32.5 --dt=0.5 --size=180x355 --out=$SP/n06 > $SP/n06.log 2>&1; python3 -I tools/camclear/sheet.py $SP/n06/probe.json $SP/n06.png --cols=11", "description": "Render 06 frames with camclear", "timeout": 1260000}`
 
+### 🧑 User — 2026-11-17T16:00:51.899Z
+
+> ↩︎ result: Command was moved to the background (ID: bctwa0765) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/tasks/bctwa0765.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T16:00:56.431Z
+
+> 🔧 **Bash** `{"command": "git add src/game/camClear.ts src/game/Game.ts src/game/cameraRig.ts tools/camclear qa/gameplay_video/timeline qa/gameplay_video/trace qa/gameplay_video/scan/default/probe.json qa/gameplay_video/scan/match08/probe.json qa/gameplay_video/scan/default.log qa/gameplay_video/scan/match08.log && git status --short | grep -v '^??' | head -20", "description": "Stage WIP code, tools and measurement data"}`
+
+### 🧑 User — 2026-11-17T16:00:56.489Z
+
+> ↩︎ result: Exit code 1
+> The following paths are ignored by one of your .gitignore files:
+> qa/gameplay_video/scan/default.log
+> qa/gameplay_video/scan/match08.log
+> hint: Use -f if you really want to add them.
+> hint: Turn this message off by running
+> hint: "git config advice.addIgnoredFile false"
+
+### 🤖 Claude — 2026-11-17T16:01:00.244Z
+
+> 🔧 **Bash** `{"command": "git add src/game/camClear.ts src/game/Game.ts src/game/cameraRig.ts tools/camclear qa/gameplay_video/timeline qa/gameplay_video/trace qa/gameplay_video/scan/default/probe.json qa/gameplay_video/scan/match08/probe.json && git status --short | grep -v '^??'", "description": "Stage WIP files without ignored logs"}`
+
+### 🧑 User — 2026-11-17T16:01:00.306Z
+
+> ↩︎ result: A  qa/gameplay_video/scan/default/probe.json
+> A  qa/gameplay_video/scan/match08/probe.json
+> A  qa/gameplay_video/timeline/apk_rainbow-debug-match08-2026-11-17c-benny.json
+> A  qa/gameplay_video/timeline/apk_rainbow-debug.json
+> A  qa/gameplay_video/timeline/src_default.json
+> A  qa/gameplay_video/timeline/src_match08.json
+> A  qa/gameplay_video/trace/0304_before.json
+> A  qa/gameplay_video/trace/08_before.json
+> M  src/game/Game.ts
+> A  src/game/camClear.ts
+> M  src/game/cameraRig.ts
+> A  tools/camclear/camtrace.mjs
+> A  tools/camclear/probe.mjs
+> A  tools/camclear/ringpos.mjs
+> A  tools/camclear/sheet.py
+> A  tools/camclear/timeline.mjs
+

@@ -2381,3 +2381,54 @@ Fix the key path (report nests classes).
 > CURRENT FULL |d|  14.4 <=20 0.833 SSIM 0.818 | BELOWHUD |d|   9.8 <=20 0.901 | LAYOUT |d|   5.5 <=20 0.918 | mean RGB approved [168.4, 108.6, 170.2] game [168.7, 109.4, 169.0]
 > NEW    FULL |d|  14.1 <=20 0.843 SSIM 0.830 | BELOWHUD |d|   9.4 <=20 0.912 | LAYOUT |d|   5.2 <=20 0.922 | mean RGB approved [168.4, 108.6, 170.2] game [168.7, 108.9, 168.9]
 
+### 🤖 Claude — 2026-11-17T16:00:41.051Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/outside.py", "content": "import sys\nimport numpy as np\nfrom PIL import Image\nL = lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nd = np.abs(L(sys.argv[1]) - L(sys.argv[2])).sum(-1) > 0\nbox = np.zeros_like(d); box[840:1245, 220:650] = True\nhud = np.zeros_like(d); hud[:190] = True\nprint('changed px total', int(d.sum()), '| inside Benny box', int((d & box).sum()), '| HUD band y<190', int((d & hud).sum()),\n      '| elsewhere (scenery)', int((d & ~box & ~hud).sum()))\nys, xs = np. …[+104 chars]`
+
+### 🧑 User — 2026-11-17T16:00:41.078Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/outside.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:00:43.252Z
+
+> 🔧 **Bash** `{"command": "python3 -I /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/outside.py qa/match/08/benny08/CURRENT_08.png qa/match/08/benny08/NEW_08.png", "description": "Check that changes stay inside Benny's box"}`
+
+### 🧑 User — 2026-11-17T16:00:43.701Z
+
+> ↩︎ result: changed px total 57353 | inside Benny box 55073 | HUD band y<190 2280 | elsewhere (scenery) 0
+> HUD band changes bbox 98 765 108 131
+
+### 🤖 Claude — 2026-11-17T16:00:51.299Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I $S/sbs.py $S/v/hud.png 90 95 780 140 1.3 qa/match/08/benny08/CURRENT_08.png qa/match/08/benny08/NEW_08.png", "description": "Crop HUD band of both pictures"}`
+
+### 🧑 User — 2026-11-17T16:00:51.475Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:00:53.557Z
+
+> 🔧 **Bash** `{"command": "git status --short", "description": "Show changed files before WIP commit"}`
+
+### 🧑 User — 2026-11-17T16:00:53.596Z
+
+> ↩︎ result: M src/characters/benny/benny05.ts
+> ?? qa/match/08/benny08/APPROVED_08.png
+> ?? qa/match/08/benny08/CURRENT_08.png
+> ?? qa/match/08/benny08/CURRENT_08_1080x1920.png
+> ?? qa/match/08/benny08/NEW_08.png
+> ?? qa/match/08/benny08/NEW_08_1080x1920.png
+> ?? qa/match/08/benny08/closeup_APPROVED.png
+> ?? qa/match/08/benny08/closeup_CURRENT.png
+> ?? qa/match/08/benny08/closeup_NEW.png
+> ?? qa/match/08/benny08/compare_CURRENT_NEW.json
+> ?? qa/match/08/benny08/screen_match_CURRENT.json
+> ?? qa/match/08/benny08/screen_match_NEW.json
+> ?? qa/match/08/benny08/views/
+> ?? qa/match/08/benny08/work/labviews08.mjs
+> ?? qa/match/08/benny08/work/pictures08.py
+
+### 🤖 Claude — 2026-11-17T16:00:58.116Z
+
+> 🔧 **Bash** `{"command": "git add src/characters/benny/benny05.ts qa/match/08/benny08 && git commit -q -m \"WIP: Screen 08 Benny bake08 - comparison pictures, 360 views, match08 now uses the 08 maps (bake08=0 = previous)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6UXiBngewM8kSBwFfZ\" && git push -q origin claude/rainbow-s08-benny08-bake 2>&1 | tail -1; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s08-benny08-bake", "description": "WIP commit, push, verify remote", "timeout": 180000}`
+
