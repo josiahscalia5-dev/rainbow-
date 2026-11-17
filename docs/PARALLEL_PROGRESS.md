@@ -4,7 +4,7 @@
 game parallel restoration"), branch `ccr-5495e9c4-g0apvl` = continuation of the lead branch `ccr-d4240b15-rl1i72`
 (started from its newest commit `4156164`). Briefs for every workstream: `docs/briefs/2026-11-17-r2/`
 (`COMMON_RULES.md` + one file per workstream).
-Updated: 2026-11-17 ~16:43 UTC.
+Updated: 2026-11-17 ~16:46 UTC.
 
 ## What happened to round 1 (previous account)
 Round 1 (lead `session_01AvQv6UXiBngewM8kSBwFfZ` on the previous Claude account) launched four cloud sessions (04, 05,
@@ -36,13 +36,20 @@ or overwritten. Recommended: on the previous account, archive or stop those five
 | 06 Rinse Arch | screen-06 workstream — session `session_01VCMXocCdACTagSAjpsaqHT` | `claude/rainbow-s06-match-c2` (from `claude/rainbow-s06-match` @ `42c9b29`) | see below | `752d6d8` (no 06 work saved in round 1) | – | audit 5.0 % (current game) | everything (milestone 1) | – | MILESTONE 1 `?match06=1` | NOT approved |
 | 07 Washer Tube | screen-07 workstream — session `session_01VCMXoZAmTEuSmtFMN8ca5t` | `claude/rainbow-s07-match-c2` (from `claude/rainbow-s07-match` @ `49cf414`) | see below | `752d6d8` (+ earlier `qa/match/07/` camera + ring measurements) | approved-07 measurements (Benny box, 5 rings, best-fit render) | audit 6.7 % | everything (milestone 1); 07→08 drop must stay intact | – | MILESTONE 1 `?match07=1` | NOT approved |
 
-### Verified at 16:41 UTC (list_sessions + `git ls-remote`)
-* 04: RUNNING — continuation branch pushed (`claude/rainbow-s04-match-c2` @ `359e324`).
-* 06: RUNNING — continuation branch pushed (`claude/rainbow-s06-match-c2` @ `b7d85b2`).
-* 07, 08 camera: container ready (Blender, Android SDK, Playwright installed OK), brief queued — 04 and 06 went
-  through the same state minutes before they started.
-* 05, 08 Benny: container still cloning the repository (368 MB of Git LFS).
-(The lead updates this section as each session's first push to its `-c2` branch is verified.)
+### Verified at 16:45 UTC (list_sessions + `git ls-remote`)
+* 04: RUNNING — unwrapping the gold-ring tunnel texture; branch `claude/rainbow-s04-match-c2` @ `9e8948f`.
+* 06: RUNNING — Screen 06 baseline captured, next the Screen 08 baseline and the camera probe; `…-s06-match-c2` @ `b7d85b2`.
+* 07: RUNNING — measuring Benny's fur extent in the approved 07 picture; `…-s07-match-c2` @ `81bbc73`.
+* 08 camera: RUNNING — gameplay 8/8 with the camclear WIP, pixel-identity checks in progress; `…-s08-camclear-c2` @ `c006334`.
+* 08 Benny: container cloned, setup script installing tools — brief delivered when ready (not yet verified running).
+* 05: container still cloning the repository (line B history is the largest) — not yet verified running.
+
+### User orders 2026-11-17 ~16:45 UTC (sent to every running session; in `COMMON_RULES.md` @ `3dba412`)
+* Usage warning on the account: every specialist commits AND pushes at every safe checkpoint, and before stopping.
+* Screen 04 fal: exactly ONE paid edit; no retry — any additional paid attempt needs the user's approval.
+* No merges of unfinished work; the 13 approved images unchanged; never overwrite a successful reconstruction.
+* Screen 08 stays the highest priority for final approval.
+* APPROVED / BEFORE / NEW as separate full-size pictures as each screen improves.
 
 ## Restore verification (round 2, 2026-11-17 ~16:40 UTC, account 2)
 * Lead branch restored: this session started from `ccr-d4240b15-rl1i72` @ `4156164`; work continues on `ccr-5495e9c4-g0apvl`.
