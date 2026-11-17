@@ -32,6 +32,9 @@ export interface FurHandle {
     uClump: { value: number };
     uSoft: { value: number };
     uSoftEdge: { value: number };
+    uClumpScale: { value: number };
+    uClumpVar: { value: number };
+    uHi: { value: number };
   };
 }
 
@@ -56,6 +59,10 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
     uSoft: { value: 0 },
     /** benny08 round 3 (BENNY05 shader only): 0 = unchanged; >0 shorter fur at the silhouette */
     uSoftEdge: { value: 0 },
+    /** benny08 round 4 (BENNY05 shader only): tuft size (0.2 = unchanged), per-tuft tone, top-tip highlight (0 = off) */
+    uClumpScale: { value: 0.2 },
+    uClumpVar: { value: 0 },
+    uHi: { value: 0 },
   };
   const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, metalness: 0 });
   material.onBeforeCompile = (shader) => {
@@ -105,7 +112,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         varying float vLayer; varying vec3 vBase; varying float vLenMask;
         #ifdef BENNY05
         varying vec2 vB05Uv;
-        uniform float uClump; uniform float uSoft;
+        uniform float uClump; uniform float uSoft; uniform float uClumpScale; uniform float uClumpVar; uniform float uHi;
         #endif
         float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
         vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
@@ -116,8 +123,14 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         {
           vec3 q = vBase * uDensity;
           // clumping: strands lean toward low-frequency tuft centres as they rise → plush tufts
+          #ifdef BENNY05
+          // uClumpScale (benny08 round 4; 0.2 = unchanged): smaller = bigger tufts
+          vec3 qc = q * uClumpScale;
+          vec3 cc = (floor(qc) + 0.5 + (fhash3(floor(qc)) - 0.5) * 0.7) / uClumpScale;
+          #else
           vec3 qc = q * 0.2;
           vec3 cc = (floor(qc) + 0.5 + (fhash3(floor(qc)) - 0.5) * 0.7) / 0.2;
+          #endif
           #ifdef BENNY05
           q = mix(q, cc, vLayer * uClump);
           #else
@@ -148,6 +161,13 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           // → softer, less grainy fur at the same average tone
           if (uSoft > 0.0) { ao = mix(ao, 0.8, 0.6 * uSoft); hgt = mix(hgt, 0.5, uSoft); }
           diffuseColor.rgb *= mix(uRoot, uTip, smoothstep(0.0, 1.0, layer)) * ao * (0.92 + 0.16 * hgt);
+          // benny08 round 4 (0 = unchanged): per-tuft tone (clump-scale light/dark like painted fur) and a soft
+          // highlight on the upward-facing tuft tips (crown / shoulders), lifted toward white-pink
+          if (uClumpVar > 0.0) diffuseColor.rgb *= 1.0 + uClumpVar * (fhash(floor(qc) * 1.31 + 7.7) - 0.5);
+          if (uHi > 0.0) {
+            float up = smoothstep(-0.1, 0.35, normalize(vBase).y) * smoothstep(0.3, 1.0, layer);
+            diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * 1.25 + vec3(0.06, 0.04, 0.05), uHi * up);
+          }
           #else
           diffuseColor.rgb = mix(uRoot, uTip, smoothstep(0.0, 1.0, layer)) * ao * (0.92 + 0.16 * hgt);
           #endif
