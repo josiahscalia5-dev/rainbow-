@@ -187,7 +187,26 @@ export async function buildMatch08(): Promise<Match08> {
   //   lower half squared off (walls rise from the water at the lane edge instead of curving into it).
   //  `&m08bw=1`: the chamber's entrance wall sits flush behind the gold arch (was 3.6 u further in, where it rose out
   //   of the painted river and showed a stretched second copy of river / wall when riding forward).
-  const fixLane = flag05('m08lane'), fixBw = flag05('m08bw') || fixLane;
+  const fixLane = flag05('m08lane'), fixArch = !fixLane && flag05('m08arch'), fixBw = flag05('m08bw') || fixLane || fixArch;
+  // `&m08arch=1` (scenery round r6): inlet pipe, gold arch and entrance wall pushed AWAY from the approved viewpoint
+  // along the projector's own rays (×ARCH_K = 2.6), so the approved view stays the same picture while the camera, which
+  // passed only ~0.4 u inside the fitted arch ring when steering, gets ~2 u of room. A point whose ray meets the floor
+  // before ×ARCH_K stops on the floor (no gold or wall copied flat onto the floor; points already below it stay put).
+  const ARCH_K = Number(new URLSearchParams(location.search).get('m08archk') ?? '') || 2.6;
+  const VP = proj.position.clone();
+  const pushK = (v: THREE.Vector3) => {
+    const dy = v.y - VP.y;
+    if (v.y <= L.floorY) return 1;
+    if (dy >= 0) return ARCH_K;
+    return Math.min(ARCH_K, Math.max(1, ((L.floorY + 0.01 - VP.y) / dy)));
+  };
+  const pushV = (v: THREE.Vector3) => v.sub(VP).multiplyScalar(pushK(v.clone())).add(VP);
+  const pushGeo = (g: THREE.BufferGeometry) => {
+    if (!fixArch) return g;
+    const a = g.getAttribute('position') as THREE.BufferAttribute, v = new THREE.Vector3();
+    for (let i = 0; i < a.count; i++) { pushV(v.fromBufferAttribute(a, i)); a.setXYZ(i, v.x, v.y, v.z); }
+    a.needsUpdate = true; g.computeVertexNormals(); return g;
+  };
   const LANE_K = 1.45;
   const toView = new THREE.Matrix4();
   if (fixLane) {
@@ -214,8 +233,9 @@ export async function buildMatch08(): Promise<Match08> {
     pipe.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); pipe.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
     pipe.setIndex(idx); pipe.computeVertexNormals(); pipe.applyMatrix4(toView);
   } else {
-    pipe = new THREE.CylinderGeometry(L.pipe.r, L.pipe.r, pipeLen, 128, 8, true);
+    pipe = new THREE.CylinderGeometry(L.pipe.r, L.pipe.r, pipeLen, 128, fixArch ? 32 : 8, true);
     pipe.rotateX(Math.PI / 2).translate(L.pipe.cx, L.pipe.cy, (L.pipe.z0 + L.pipe.z1) / 2);
+    pushGeo(pipe);
   }
   add(pipe, M.wall, 'pipe');
   // gold arch: annulus at the chamber entrance, extruded toward the door
@@ -225,9 +245,12 @@ export async function buildMatch08(): Promise<Match08> {
   const archG = new THREE.ExtrudeGeometry(ring, { depth: L.arch.depth, bevelEnabled: false, curveSegments: 96 });
   archG.translate(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth);
   if (fixLane) archG.applyMatrix4(toView);
+  pushGeo(archG);
   add(archG, M.gold, 'arch');
   // the arch's back face (where the chamber starts) and its outer ring, after the optional lane scaling
   const archC = new THREE.Vector3(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.depth).applyMatrix4(toView);
+  // (m08arch: the entrance wall is built at the unpushed arch and pushed with it; the chamber starts at the pushed wall)
+  const chamberZ0 = fixArch ? VP.z + ARCH_K * (archC.z - VP.z) : archC.z;
   const archR = L.arch.outer.r * (fixLane ? LANE_K : 1);
   // back wall around the pipe mouth (closes the gap between pipe and chamber; seen only when moving in)
   // (m08bw: outer edge 3 u beyond the chamber wall so the bigger opening stays inside the outline — the rim is hidden
@@ -237,9 +260,9 @@ export async function buildMatch08(): Promise<Match08> {
   if (fixBw) bh.absarc(archC.x, archC.y, archR * 0.985, 0, Math.PI * 2, true);
   else bh.absarc(L.pipe.cx, L.pipe.cy, L.backwall.holeR, 0, Math.PI * 2, true);
   bw.holes.push(bh);
-  add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, fixBw ? archC.z - 0.02 : L.backwall.z), M.disc, 'backwall');
+  add(pushGeo(new THREE.ShapeGeometry(bw, 64).translate(0, 0, fixBw ? archC.z - 0.02 : L.backwall.z)), M.disc, 'backwall');
   // chamber walls (from the arch to the door wall) + the door wall
-  const chLen = archC.z - C.zDoor;
+  const chLen = chamberZ0 - C.zDoor;
   const ch = new THREE.CylinderGeometry(C.r, C.r, chLen, 160, 24, true);
   ch.rotateX(Math.PI / 2).translate(C.cx, C.cy, C.zDoor + chLen / 2);
   add(ch, M.drum, 'chamber');
