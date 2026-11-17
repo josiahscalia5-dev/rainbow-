@@ -623,8 +623,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 13248,
-   "sha256": "a6018b8226a4855289ac6684a144781a40c47dc53892e6f68d28f3fe44f1e0fd"
+   "bytes": 13438,
+   "sha256": "4a168e25e2c51404fdb842cf8a71da09acd0e4ef00ea1f6f7b0b44a4d880fb88"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2795,6 +2795,51 @@
    "path": "qa/match/08/scenery/r6/swim/t95_through_screen.png",
    "bytes": 2465295,
    "sha256": "addf82018da0a8fc6afb3145989268d41cc44403f64c1662faf0aee4a0bf2110"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/seam/base/f10_forward10u.png",
+   "bytes": 2450623,
+   "sha256": "f61aac01ac39d7fcd891efe911df26cdd07ade6004670ad7e5740e351e26757b"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/seam/base/motion.json",
+   "bytes": 880,
+   "sha256": "49866696ea9477d4396324ac73a5466afb1a74af8a20bf5ffa7edbe1009099fd"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/seam/base/t95_through_screen.png",
+   "bytes": 2465052,
+   "sha256": "4a01e882deb3bbc530ba2f5b9743a69a6d7bed2c84ab15b6e2940105bc2c88de"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/seam/k16/f10_forward10u.png",
+   "bytes": 2421429,
+   "sha256": "6f7cc08cfe23db38eaeb1b29ab00a574076debc3afc1acb81e7bda13714560aa"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/seam/k16/motion.json",
+   "bytes": 902,
+   "sha256": "b3598a39abce796c70a36a7f54020ad42c8cdf75f16a1671498d80f078edbf7b"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/seam/k16/t95_through_screen.png",
+   "bytes": 2434170,
+   "sha256": "f3434252872bcd794466def8114d3a6fb589af7792c2bbf2581ecaf9e15ffc72"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/seam/k22/f10_forward10u.png",
+   "bytes": 2398215,
+   "sha256": "ca11e0c19b7d741d9407e66301ee869c6261cea0d2eaa4656f55dc8edda9077e"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/seam/k22/motion.json",
+   "bytes": 902,
+   "sha256": "7b5f29f20e9efff74aa623b0132634eadd0b189356c772845a6c70159c2dfb5c"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/seam/k22/t95_through_screen.png",
+   "bytes": 2409322,
+   "sha256": "69ce6ad2b4b32f1265011a17fd8870a19d368c99664e3fd523709b43630c806d"
   },
   {
    "path": "qa/match/08/scenery_metrics_BEFORE_FINAL.json",
