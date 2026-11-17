@@ -598,8 +598,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3921,
-   "sha256": "3056de738fe30a104151b1c85be610a14e140c88703875b9b78ef1fc4de84acf"
+   "bytes": 3897,
+   "sha256": "51bfa28c77a595e002106da3741e8d03034e4b52f86c3082de68139be4aa6258"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10626,
-   "sha256": "10fdaee0c3f8fce9676a99523ca35bdb1b7a68197291c182779e58433098e7ed"
+   "bytes": 10635,
+   "sha256": "478a545de56d8c17151046c464c3b7e59bbec4e8c27489dd1714b1282dc1024c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1140,6 +1140,21 @@
    "path": "qa/gameplay_video/scan/match08/probe.json",
    "bytes": 103621,
    "sha256": "e224e8e25ff8d527dfd90bfc646ff0f5e56e4fe3d88288ef2f8420864c8bbf1a"
+  },
+  {
+   "path": "qa/gameplay_video/tests/gameplay_camclear.json",
+   "bytes": 14657,
+   "sha256": "d4f16af116cf87d1e52ce1cf7aa2872eca67188439a97f3f49278050cec69def"
+  },
+  {
+   "path": "qa/gameplay_video/tests/gameplay_default.json",
+   "bytes": 14632,
+   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/gameplay_video/tests/gameplay_match08_camclear.json",
+   "bytes": 14663,
+   "sha256": "6552f4ea9e4bb4897186dd87d0d7d306cc4b0228b773664a1b74ffdf293ce8e2"
   },
   {
    "path": "qa/gameplay_video/timeline/apk_rainbow-debug-match08-2026-11-17c-benny.json",
