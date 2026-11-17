@@ -22,6 +22,20 @@ merged or overwritten. Recommended for the user: on account 2 (and account 1) st
 | 06 Rinse Arch | `session_01Q46SCL2DLgtfbmDySmRvhY` | `claude/rainbow-s06-match-c3` (from `-c2` @ `2570f3ac`) | finish M1 `?match06=1`: measure, proofs, moving frames, prepared fal request, NOTES / STATUS, APK (`S06.md`) |
 | 07 Washer Tube | `session_01Q46SCJx6kKaxMCCbLLqta3` | `claude/rainbow-s07-match-c3` (from `-c2` @ `21a1fdd5`) | finish M1 `?match07=1` docs + proofs + APK, then M2 rings / water / foam / coins; 07→08 drop intact (`S07.md`) |
 
+### Results at ~18:00 UTC (all pushed; nothing approved, nothing merged)
+| Screen | Branch @ commit | Result (share within 20 levels vs the approved picture) | Pictures | State |
+|---|---|---|---|---|
+| 08 Benny | `…-s08-benny08-bake-c3` @ `e8e3ba79` | Benny + splash 49.8 → 57.2 (bake) → **65.7** (r2) → 65.3 % (r3/r3b: dark strip under the cuff removed, softer fur + outline, crisp cuff ribs, fuller splash ring); whole 83.3 → **85.4 %**; scenery 97.3 % unchanged; 8/8, 91 / 2,240; APK `builds/rainbow-debug-08benny-2026-11-17-r3b.apk` | `qa/match/08/benny08/r3/` | milestone done; paused (usage) |
+| 08 coins (lead) | `ccr-c0235034-ks6sx3` @ `2f87fa69` | `?match08=1&coins08px=1`: 9 picture coins on the painted spots (1–8 px, was 3–59 px), stage 10's 5 coins out of the 08 view; whole 83.3 → **84.1 %**, scenery 97.3 → **98.0 %**, middle band 90.6 → 93.5 %; 8/8, 91 / 2,240; switch off 0 px | `qa/match/08/coins08px/` | under review |
+| 08 camera | `…-s08-camclear-c3` @ `da2a7579` | `camclear=1`: 03→04 drain drop keeps Benny in view; video \| build \| camclear frames in progress | `qa/gameplay_video/` | RUNNING (Screen 08 priority) |
+| 04 | `…-s04-match-c3` @ `6c2655ae` | M3: whole 81.3 → **81.8 %**, scenery 98.1 → **98.2 %**, Benny area 21.1 → 25.3 % (approved splash card), coins settle on the water while riding, far tunnel 45–50 % sharper while riding; APK r3 | `qa/match/04/` | milestone done; paused (usage) |
+| 05 | `…-s05-match-c3` @ `b5edc524` | M2: `tgtfill05=3` removes the teal discs beside Benny while riding (water 96.5 % kept); `tgtwall05=1` right wall: whole 89.08 → **89.44 %**, walls 92.2 → 94.2 %; 8/8 ×3, 91 / 2,240 | `qa/match/05/` | milestone done; paused (usage) |
+| 06 | `…-s06-match-c3` @ `ec57bb09` | M1 `?match06=1`: scenery 4.1 → **98.8 %** (SSIM 0.987), whole 5.0 → **79.1 %**; moving camera fixed (painted-water floor tile once the view moves); fal clean plate PREPARED, not run; APK blocked by Maven Central HTTP 429 (retry later) | `qa/match/06/` | milestone done; paused (usage) |
+| 07 | `…-s07-match-c3` @ `2f6e7747` | M1 `?match07=1`: whole 6.7 → **80.1 %**, scenery 6.0 → **95.5 %**, tube/rings band 99.96 %, water + foam 95.6 %; 07→08 drop intact; APK `builds/rainbow-debug-07-2026-11-17-r3.apk` | `qa/match/07/` | M1 done; M2 NOT started (usage) |
+
+**Usage:** at ~17:55 UTC this account reported `allowed_warning` on its **7-day limit**. Per the user's rule, 04–07 and
+08 Benny saved and paused after their milestones; the 08 camera specialist continues (lean, push every step).
+
 The initial prompts of all six were not delivered by the session service (sessions idle after container setup); the lead
 re-sent each task with `send_message` at ~17:38 UTC.
 
