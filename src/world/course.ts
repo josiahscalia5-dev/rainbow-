@@ -191,7 +191,7 @@ export function meander05(u: number): number {
 }
 
 /** Generates the dense control polyline of the route (absolute coordinates). */
-function buildRoute(no08 = false): RouteData {
+function buildRoute(): RouteData {
   const pts: THREE.Vector3[] = [];
   const marks: Record<string, number> = {};
   const straight: RouteData['straight'] = [];
@@ -317,7 +317,7 @@ function buildRoute(no08 = false): RouteData {
   // `?match08=1` (src/world/match08.ts, qa/match/08/NOTES.md): the 08–10 stream follows the APPROVED picture's painted
   // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
   // eased in over the first 3 u after the inlet and out over the last 4 u into the platform. Off: the formulas below.
-  const m08 = !no08 && (flag05('match08') || flag05('matchall'));
+  const m08 = flag05('match08') || flag05('matchall');
   const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);
   const riverX = (z: number) => {
     if (z >= rz[0]) return rxs[0];
@@ -453,17 +453,6 @@ export class Course {
     // ---- dense frame table (pos, tangent, banked up) ----
     this.N = Math.ceil(this.length / 0.25) + 1;
     this.ds = this.length / (this.N - 1); // exact spacing so the last interval is not short
-    // `?match08=1` (scenery round r5, qa/match/08/scenery/NOTES.md): the 08 river path changes the course's total length,
-    // and with it this spacing — which shifted every frame-table sample on 03–07 slightly (04 / 07 changed over ~0.5 M px).
-    // Under the switch keep the DEFAULT build's spacing so everything before 08 is sampled exactly as without it.
-    if (flag05('match08') || flag05('matchall')) {
-      const dPts = buildRoute(true).points, dCurve = new THREE.CatmullRomCurve3(dPts, false, 'centripetal');
-      const dM = dPts.length * 24;
-      let dLen = 0, dPrev = dCurve.getPoint(0);
-      for (let i = 1; i <= dM; i++) { const p = dCurve.getPoint(i / dM); dLen = dLen + p.distanceTo(dPrev); dPrev = p; }
-      this.ds = dLen / (Math.ceil(dLen / 0.25));
-      this.N = Math.ceil(this.length / this.ds) + 1;
-    }
     this.P = new Float32Array(this.N * 3);
     this.T = new Float32Array(this.N * 3);
     this.U = new Float32Array(this.N * 3);

@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12549,
-   "sha256": "480c2fdb6d1d9d01308d6fbfc99f832a7ccf4fbea96a2ca3da2cae577fe4c3d3"
+   "sha256": "6f5d01ebbb766ed3a5de7b27811ee7da9cf99aaad2513a7f95fcea64a4792198"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8913,8 +8913,8 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 31660,
-   "sha256": "6f71c9ac42d0985a20618d926d04663f440703a8e072587af689c5da679de957"
+   "bytes": 30798,
+   "sha256": "42c17a6b293c4be17a78fec9d5dea064d3575c600a7da34a0e06014eb0380620"
   },
   {
    "path": "src/world/environment.ts",
@@ -8933,8 +8933,8 @@
   },
   {
    "path": "src/world/match08.ts",
-   "bytes": 19380,
-   "sha256": "c1a2e3bf373f4c2fc8a3b85fef01bc3c33f219f57ab7d7d5e5151e2a4f04c1d8"
+   "bytes": 16530,
+   "sha256": "51aaf0ed6f58ba66c1f4916f0404b8a3eeb6d0feb54aa43c35740530e91583e1"
   },
   {
    "path": "src/world/materials.ts",

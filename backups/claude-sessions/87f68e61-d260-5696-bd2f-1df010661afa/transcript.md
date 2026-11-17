@@ -1231,3 +1231,58 @@ Leaving the bubbles (water owner's file) as an open item. Committing the course 
 
 > 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && node scripts/capture.mjs --out=$P/all_new >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; git stash -q && git checkout -q 12fb8c5 -- src/world/match08.ts && node scripts/capture.mjs --out=$P/all_old >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; git checkout -q HEAD -- src/world/match08.ts && git stash pop -q && git status --short | head; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nfor s in ['%02d'%i for i in range(1,12)]:\n  a=np.asarray(Image.open('$P/all_n …[+309 chars]`
 
+### 🧑 User — 2026-11-17T20:51:00.730Z
+
+> ↩︎ result: No stash entries found.
+> 01 0 outside title rows 0
+> 02 0 outside title rows 0
+> 03 0 outside title rows 0
+> 04 0 outside title rows 0
+> 05 0 outside title rows 0
+> 06 0 outside title rows 0
+> 07 0 outside title rows 0
+> 08 0 outside title rows 0
+> 09 0 outside title rows 0
+> 10 1302 outside title rows 1302
+> 11 59155 outside title rows 59155
+
+### 🤖 Claude — 2026-11-17T20:51:05.276Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -4 && git show --stat HEAD | head -20 && grep -n \"tmpnocourse\\|buildRoute(true)\" src/world/course.ts", "description": "Check whether autosave committed course change"}`
+
+### 🧑 User — 2026-11-17T20:51:05.340Z
+
+> ↩︎ result: 8987a30 autosave: Rainbow 2026-11-17 20:47 UTC
+> 8c40b81 autosave: Rainbow 2026-11-17 20:42 UTC
+> 471d2e5 S08 scenery r5: m08fill world-anchored drum wall fill from the picture's pipe wall (0 px at approved view)
+> fbb8bd1 autosave: Rainbow 2026-11-17 20:37 UTC
+> commit 8987a3055bdcbe07a78c898e7847043d52bb930b
+> Author: Claude <noreply@anthropic.com>
+> Date:   Tue Nov 17 20:47:40 2026 +0000
+> 
+>     autosave: Rainbow 2026-11-17 20:47 UTC
+>     
+>     Automated Rainbow backup (daemon). 5 file(s) changed.
+>     Transcripts: refreshed (repo verified private)
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_013VHsJAQsMA73qb7GCXdQ12
+> 
+>  backups/BACKUP_LOG.md                              |   1 +
+>  backups/BACKUP_STATUS.json                         |  14 +-
+>  backups/CONVERSATION_INDEX.md                      |   2 +-
+>  backups/MANIFEST.json                              |   6 +-
+>  .../transcript.md                                  | 302 +++++++++++++++++++++
+>  .../transcript.sanitized.jsonl                     |  76 ++++++
+>  src/world/course.ts                                |  15 +-
+>  7 files changed, 403 insertions(+), 13 deletions(-)
+> 460:      const  …[+96 chars]
+
+### 🤖 Claude — 2026-11-17T20:51:09.125Z
+
+The autosave had already committed the course fix, so that "old" capture wasn't really old. Redoing it properly with both files from the start commit.
+
+### 🤖 Claude — 2026-11-17T20:51:13.574Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && git checkout -q 12fb8c5 -- src/world/course.ts src/world/match08.ts && node scripts/capture.mjs --out=$P/all_old >/dev/null 2>&1; git checkout -q HEAD -- src/world/course.ts src/world/match08.ts qa/capture_log.json && git status --short | head -3; node scripts/capture.mjs 10 11 --out=$P/all_new2 >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d,s:np.asarray(Image.open('$P/'+d+'/'+s+'.png').convert('RGB')).astype(int) …[+359 chars]`
+
