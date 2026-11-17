@@ -215,3 +215,7 @@ only to the new branch. Everything above still applies; the main session is the 
   distant 34.53/34.2 → 2.43/97.1; water 8.73/88.9 → 6.76/91.6; foam 7.99/92.9 → 5.73/95.0; Benny 44.31/26.0 → 20.29/70.8;
   coins 42.58/30.3 → 27.74/51.6; HUD 24.13/65.8 → 17.23/73.7; bubbles 29.84/61.4 → 25.95/64.5; wake 42.37/37.9 → 41.50/38.8
   (= wave 2's job). Default capture == `current_default_05.png` 0 px.
+* **~02:00 UTC — washer-environment-modeler FINISHED** (env05; `env/NOTES.md`): STACK → STACK+env05 whole 34.10/51.6 % → 18.83/73.9 %,
+  walls 6.46/92.2 %, gold 9.39/87.8 %, fittings 3.54/94.8 %, distant 2.43/97.1 %; `lids05e.glb`; default + protected BEFORE 0 px;
+  06/07 0 px; 04: 712 px inside its window onto the 05 tunnel. REQUEST to coordinator: black dotted seam on top of the left foam
+  bank (x 180–330, y 545–560), from `proj05Apron.ts` (also in STACK).

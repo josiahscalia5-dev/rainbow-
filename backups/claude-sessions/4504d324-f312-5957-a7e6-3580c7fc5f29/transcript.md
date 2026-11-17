@@ -2548,3 +2548,233 @@ The untracked files are committed and pushed: GitHub's branch is at `ad64b4c`, t
 
 One file is changed again: `benny/work/bake.py`. The Benny specialist is still writing to it right now. While the tunnel and Benny specialists work, new edits keep appearing between saves, so this warning will keep coming back until they finish. The five-minute autosave picks each edit up and pushes it.
 
+### 🧑 User — 2026-11-17T01:54:49.233Z
+
+<task-notification>
+<task-id>a9780416a29e85217</task-id>
+<tool-use-id>toolu_011QsnANTRfuGPqvyXgWnhgA</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/a9780416a29e85217.output</output-file>
+<status>completed</status>
+<summary>Agent "Env05 tunnel, rings, paddles" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I finished the walls, gold rings, warped-wall bake and the six paddles, and I also refitted the bottom gold frame. Every tunnel region is now much closer to the approved picture and none got worse than STACK. Foam is slightly worse than an intermediate version, which I explain below.
+
+**Numbers** (`tools/match05/metrics.py`, mean |ΔRGB| / share within 20 levels). BEFORE is the STACK capture; NEW is STACK with `env05=1`.
+
+| region | BEFORE (STACK) | at recovery (`match05=1`) | NEW |
+|---|---|---|---|
+| **whole frame** | 34.10 / 51.6 % | 29.14 / 57.0 % | **18.83 / 73.9 %** |
+| purple walls | 53.82 / 21.1 % | 52.85 / 21.1 % | **6.46 / 92.2 %** |
+| gold rings + front frame | 37.74 / 50.0 % | 32.98 / 50.7 % | **9.39 / 87.8 %** |
+| side fittings | 26.85 / 59.7 % | 44.87 / 39.4 % | **3.54 / 94.8 %** |
+| distant tunnel + glow | 29.79 / 45.1 % | 34.53 / 34.2 % | **2.43 / 97.1 %** |
+| water / foam / bubbles | 9.40 / 8.43 / 29.98 | 8.73 / 7.99 / 29.84 | 7.41 / 5.86 / 25.64 |
+
+Ring band-edge error in px, STACK → NEW: A 59.1 → 2.9, B 28.6 → 7.3, C 10.6 → 2.7, D 5.9 → 1.9. With `?match05=1` (everybody's parts) the whole frame is 11.89 / 83.6 %, with no console errors.
+
+**The recovery defects**
+- **Ring B's left-arc bulge:** it came from the wall weight being zero at the river bank on both sides. The left side wall now moves with its rings down to below the waterline, and the arc is smooth.
+- **Ring B's lower-right kink:** the right wall can't move at the bank. I first tried letting it move; it covered the right foam bank (foam 5.72 → 9.50), so I rejected that. Instead the rings get their own right-side weight and the strip behind each band is hidden. Cost: foam 5.72 → 5.86, because ring B's end now sits in front of 76 foam pixels.
+- **Paddles:** the six paddles were re-placed onto the moved wall and rebuilt in Blender as `assets/models/lids05e.glb`, which loads only under `env05`.
+- **Torn wall textures:** fixed by the camera-projection bake of the warped walls and rings. Two changes to the bake:
+  - Inside the approved ring bands the bake now also uses the rings' white-pink highlight pixels; the colour-class masks had been filling them in.
+  - Two colour-feedback passes, each kept only because it measured closer.
+- **Distant tunnel and glow:** the far rings and far wall are now baked from the approved picture and sit 0.45 u higher.
+- **Bottom gold frame:** this was 71 % of the remaining gold error. The three frame pieces are refitted to the approved outline and have their own bake.
+
+**Checks, all run on the final state**
+- Default build matches `qa/pilot05/current_default_05.png`: 0 px differ.
+- Protected BEFORE (`?ringa=26&amp;nearfloor05=0`) matches its baseline: 0 px.
+- STACK without `env05` is unchanged: 0 px.
+- Screens 06 and 07 with vs without `env05`: 0 px.
+- Gameplay test: 8/8 pass. Continuity test: ok. `npx tsc --noEmit` is clean.
+
+**Still different**
+- **Screen 04 is not fully unchanged:** 712 px differ (max 129), all inside 04's window onto the 05 tunnel. That's the same moved 3D tunnel seen from 04, similar to `projgap05`'s 832 px. It can't reach 0 px while the 05 geometry itself moves.
+- **Wall sharpness:** the remaining wall error is mostly at slot and ring edges, plus rings that don't land exactly on the painting's bands. The painted rings aren't a physically consistent set; ring A's right side is the worst.
+- **Ring B lower right:** a narrow smeared strip remains between the band and paddle R1.
+- **Bottom-right corner:** a sliver of about 20 × 25 px isn't covered by the frame. Wider corner pieces measured worse (9.74 vs 9.45), so I kept the narrower ones.
+- **While riding:** wall texture stretches at the near screen edges; STACK does this too.
+
+**Files changed**
+- Code:
+  - `/home/user/rainbow-/src/world/environment.ts`
+  - `/home/user/rainbow-/src/world/tube.ts`
+  - `/home/user/rainbow-/src/vfx/proj05Tunnel.ts`
+  - `/home/user/rainbow-/scripts/proj05-lid-raycast.mjs` (new `--q` option)
+- Tools:
+  - `/home/user/rainbow-/tools/env05/proj_bake.py`
+  - `/home/user/rainbow-/tools/env05/weight_study.py` (new)
+  - `/home/user/rainbow-/tools/env05/frame_fit.py` (new)
+  - `/home/user/rainbow-/tools/proj05/frame_bake.py` (new `--pieces` and `--corr` options)
+- Assets: `/home/user/rainbow-/assets/models/lids05e.glb` and everything in `/home/user/rainbow-/assets/textures/env05/`. The bake's state file `assets/textures/env05/feedback.npz` is 14.7 MB and isn't loaded by the game; the autosave will commit it.
+- Deliverables in `/home/user/rainbow-/qa/pilot05/full_reference_match/env/`: `NOTES.md` (results, mismatch table, relaunch steps), `before.png`, `new.png`, both metrics JSONs, `move/`, `gameplay.json`, `match05_integration.png`, `lid/`, `frame/`, `work/`.
+
+**REQUESTS**
+- No far-water re-bake is needed: the far river geometry is unchanged.
+- A black dotted seam along the top of the left foam bank (around x 180–330, y 545–560) is also in STACK. It comes from the foam strip / river edge (`proj05Apron.ts`), not from `env05`.
+- I added test-only URL knobs that work only under `env05`: `e05r0`, `e05r1`, `e05rr0`, `e05rr1`. Their defaults are the final state.</result>
+<usage><subagent_tokens>387365</subagent_tokens><tool_uses>147</tool_uses><duration_ms>2344073</duration_ms></usage>
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T01:54:54.559Z
+
+The tunnel specialist has finished: whole screen 73.9 % on the tunnel alone, and 83.6 % with everyone's parts combined. No tunnel region got worse, and the default game and your protected BEFORE are still pixel-identical. Benny is still running; you asked for pictures once both finish, so I'll wait for Benny before sending the next set.
+
+Meanwhile, the tunnel specialist reported a defect in my own area: a black dotted seam along the top of the left foam bank, coming from the water/foam strip code I own. I'll record its finish, then look at that seam.
+
+### 🤖 Claude — 2026-11-17T01:55:03.104Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; s=json.load(open(p))\ns['running_now']=[r for r in s['running_now'] if r['agent']!='washer-environment-modeler']\ns.setdefault('finished_this_session',[]).append({\"agent\":\"washer-environment-modeler\",\"switch\":\"env05\",\"finished\":\"2026-11-17 ~02:00 UTC, session 01Q46SCH\",\n \"result\":\"STACK -> STACK+env05: whole 34.10/51.6% -> 18.83/73.9%; walls 53.82/21.1 -> 6.46/92.2; gold 37.74/50.0 -> 9.39/87.8; fittings 26.85/59.7 -> 3.54/94.8; distant 29.79/45.1 -> 2.43/97.1; lids05e.glb; default + BEFORE 0 px; 06 …[+1483 chars]`
+
+### 🧑 User — 2026-11-17T01:55:03.393Z
+
+> ↩︎ result: ok
+> [This command modified 1 file you've previously read: qa/pilot05/full_reference_match/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T01:55:03.977Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/seam_cmp.png"}`
+
+### 🧑 User — 2026-11-17T01:55:04.001Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:55:13.425Z
+
+> 🔧 **Bash** `{"command": "wc -l src/vfx/proj05Apron.ts; sed -n 1,60p src/vfx/proj05Apron.ts; grep -n \"qa3d\\|pickAt\\|meshAt\\|idbuffer\\|id buffer\" src/game/Game.ts | head -10; ls scripts | grep -i probe", "description": "Read apron code and find probe tools"}`
+
+### 🧑 User — 2026-11-17T01:55:13.454Z
+
+> ↩︎ result: 112 src/vfx/proj05Apron.ts
+> /**
+>  * Screen 05 projection test (`?proj05=1`, qa/pilot05/proj/NOTES.md): a thin VISUAL-ONLY strip that hugs the tunnel wall
+>  * from the river's edge up ≈ 2.5 u, on 05 only. At the far bends the approved picture's fluffy foam banks lie beyond the
+>  * game river's edge (on the lower wall); this strip carries them (baked from the approved picture through the locked
+>  * camera: assets/textures/water05/proj05_A.png, tools/proj05/bake.py). No collisions, no gameplay: steering, coins and the
+>  * camera are untouched. Where it would be magnified (camera close) or where the approved picture shows no foam/water,
+>  * it dithers away and the wall shows as before. `?projbank05=0` leaves it out.
+>  * attribute aPj = (t · side, s): t 0 at the river edge → 1 at the top of the strip, side −1 left / +1 right.
+>  */
+> import * as THREE from 'three';
+> import type { Course } from '../world/course';
+> import type { TubePath } from '../world/tube';
+> import { tubeCenterAt } from '../world/tube';
+> import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending } from './waterRibbon';
+> 
+> /** s range covered by proj05_A.png (must match tools/proj05/bake.py: A_S0, A_S1) */
+> export const PJ_A_S0 = 126, PJ_A_S1 = 1 …[+2050 chars]
+
+### 🤖 Claude — 2026-11-17T01:55:19.374Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p scripts/capture.mjs | grep -vE \"^\\s*//\" | head -70; grep -n \"export\" scripts/lib/pw.mjs | head", "description": "Read capture script setup"}`
+
+### 🧑 User — 2026-11-17T01:55:19.409Z
+
+> ↩︎ result: #!/usr/bin/env node
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'string' ? opt.size.split('x').map(Number) : null;
+> const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> mkdirSync(outDir, { recursive: true });
+> mkdirSync('qa', { recursive: true });
+> 
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5201);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = { when: new Date().toISOString(), renderer: null, shots: [], errors: [] };
+> try {
+>    …[+2699 chars]
+
+### 🤖 Claude — 2026-11-17T01:55:28.177Z
+
+Next I'll write a small probe: load the game at the locked Screen 05 frame and cast a ray through each defective pixel, listing every mesh hit. That identifies which object draws each piece.
+
+### 🤖 Claude — 2026-11-17T01:55:40.131Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/match05/pixel_probe.mjs", "content": "#!/usr/bin/env node\n// Coordinator tool (Screen 05 full reference match): which 3D objects lie under given screen pixels of the locked 05\n// frame? Loads the game exactly like scripts/capture.mjs, goes to checkpoint 05, then raycasts through each pixel with the\n// live camera and lists every hit (name, parent chain, material type, distance, renderOrder, visible).\n//   node tools/match05/pixel_probe.mjs --q='match05=1' --px=185,570 --px=350,555 [--hide=<name substring>] [--shot=out.png]\n// Read-only: the game is …[+3006 chars]`
+
+### 🧑 User — 2026-11-17T01:55:40.191Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/match05/pixel_probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:55:41.433Z
+
+> 🔧 **Bash** `{"command": "node tools/match05/pixel_probe.mjs --q='match05=1' --px=185,570 --px=195,582 --px=345,550 --px=370,570 --px=250,551 --px=300,553 --px=245,618 --px=230,600 2>&1 | tail -60", "description": "Probe meshes under the defective pixels", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T01:55:56.311Z
+
+> ↩︎ result: px 185,570
+>    d 31.182  ro 0  ShaderMaterial  washer_world > proj05_apron
+>    d 34.628  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 195,582
+>    d 31.837  ro 0  ShaderMaterial  washer_world > proj05_apron
+>    d 35.066  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 345,550
+>    d 56.857  ro 0  MeshStandardMaterial  washer_world > zone_tubes > tube05_far_wall
+>    d 59.362  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 63.439  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 63.652  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 370,570
+>    d 57.318  ro 0  MeshStandardMaterial  washer_world > zone_tubes > tube05_far_wall
+>    d 57.448  ro 0  MeshStandardMaterial  washer_world > zone_tubes > tube05_far
+>    d 59.37  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 63.305  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 63.52  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 250,551
+>    d 37.254  ro 0  ShaderMaterial  washer_world > proj05_apron
+>    d 38.944  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 42.576  ro 0  MeshStandardMaterial  w …[+841 chars]
+
+### 🤖 Claude — 2026-11-17T01:56:15.388Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/probe; mkdir -p $S; for h in none proj05_apron tube05_far_wall foam_berm; do if [ $h = none ]; then node tools/match05/pixel_probe.mjs --q='match05=1' --px=1,1 --shot=$S/$h.png 2>&1 | tail -1; else node tools/match05/pixel_probe.mjs --q='match05=1' --px=1,1 --hide=$h --shot=$S/$h.png 2>&1 | tail -2; fi; done; python3 -I -c \"\nfrom PIL import Image\nS='$S';ims=[Image.open(f'{S}/{n}.png').convert('RGB').crop((140,500,400,650)) for n in ['none','proj05_apron','tube05_far_wall','foam_berm']]\nW,H=ims[ …[+279 chars]`
+
+### 🧑 User — 2026-11-17T01:57:25.076Z
+
+> ↩︎ result: shot → /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/probe/none.png
+> hidden objects: 1
+> shot → /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/probe/proj05_apron.png
+> hidden objects: 1
+> shot → /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/probe/tube05_far_wall.png
+> hidden objects: 1
+> shot → /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/probe/foam_berm.png
+
+### 🤖 Claude — 2026-11-17T01:57:26.606Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/probe/hide_cmp.png"}`
+
+### 🧑 User — 2026-11-17T01:57:26.621Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:57:52.398Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image;import numpy as np\na=np.asarray(Image.open('assets/textures/water05/proj05_A.png').convert('RGBA'),float)\nprint('size',a.shape)\nal=a[...,3];rgb=a[...,:3].mean(2)\nfor lo,hi in [(0,0),(1,64),(64,192),(192,254),(255,255)]:\n  m=(al>=lo)&(al<=hi)\n  print(f'alpha {lo}-{hi}: {int(m.sum())} texels, mean rgb {rgb[m].mean():.1f}' if m.any() else f'alpha {lo}-{hi}: 0')\n# opaque texels bordering transparent ones\nfrom scipy import ndimage\nedge=(al>0)&ndimage.binary_dilation(al==0)\nprint('opaque-edge texels',int(edge.sum()),'mean rgb',rgb[edge]. …[+252 chars]`
+
+### 🧑 User — 2026-11-17T01:57:52.745Z
+
+> ↩︎ result: size (768, 256, 4)
+> alpha 0-0: 163933 texels, mean rgb 0.1
+> alpha 1-64: 1182 texels, mean rgb 3.5
+> alpha 64-192: 1819 texels, mean rgb 141.6
+> alpha 192-254: 788 texels, mean rgb 178.6
+> alpha 255-255: 28947 texels, mean rgb 183.3
+> opaque-edge texels 2002 mean rgb 49.2 | interior opaque mean 183.3
+> 5: * camera: assets/textures/water05/proj05_A.png, tools/proj05/bake.py). No collisions, no gameplay: steering, coins and the
+> 16:/** s range covered by proj05_A.png (must match tools/proj05/bake.py: A_S0, A_S1) */
+> 27:uniform sampler2D uPjA;
+> 35:  vec4 a = texture2D(uPjA, uv);
+> 85:    uPjA: { value: null }, uPjAS: { value: new THREE.Vector4(PJ_A_S0, PJ_A_S1, 1, 1) },
+> 102:    new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_A.png', import.meta.url).href, (t) => {
+> 103:      t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter;
+> 105:      uniforms.uPjA.value = t;
+

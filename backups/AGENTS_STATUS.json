@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T02:00:00Z",
+ "updated_utc": "2026-11-17T02:05:00Z",
  "updated_by_session": "01Q46SCH (new account, branch claude/rainbow-account-transfer-npxahd)",
  "assignments_now": {
   "_note": "State at 2026-11-17 ~01:20 UTC (new account, session 01Q46SCH): the three specialists of running_now were RELAUNCHED from their briefs (header 'RESUMED RUN #3') + NOTES.md. If you are a LATER session, treat running_now as INTERRUPTED and relaunch each from qa/pilot05/full_reference_match/briefs/<agent>.md + its NOTES.md ('Remaining'). State: COORDINATION.md, newest RESUMED section.",
@@ -205,13 +205,6 @@
  ],
  "running_now": [
   {
-   "agent": "washer-environment-modeler",
-   "switch": "env05",
-   "launched": "2026-11-17 ~01:20 UTC, session 01Q46SCH (relaunch #3; the 01:00 run of session 01AvQv6S was interrupted after ~10 min)",
-   "continue_from": "qa/pilot05/full_reference_match/env/NOTES.md section 4 (a-e)",
-   "brief": "qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md"
-  },
-  {
    "agent": "benny-character-artist",
    "switch": "benny05",
    "launched": "2026-11-17 ~01:20 UTC, session 01Q46SCH (relaunch #3; the 01:00 run of session 01AvQv6S was interrupted after ~10 min)",
@@ -226,6 +219,14 @@
    "finished": "2026-11-17 ~02:00 UTC, session 01Q46SCH",
    "result": "STACK -> new: HUD + text 62.23/13.4% -> 18.11/72.0%; coins 53.96/17.6% -> 28.30/50.5% (all 18 coins drawn, approved centres, face art fixed); gameplay 8/8; default 0 px",
    "notes": "qa/pilot05/full_reference_match/hud/NOTES.md, coins/NOTES.md (nothing open)"
+  },
+  {
+   "agent": "washer-environment-modeler",
+   "switch": "env05",
+   "finished": "2026-11-17 ~02:00 UTC, session 01Q46SCH",
+   "result": "STACK -> STACK+env05: whole 34.10/51.6% -> 18.83/73.9%; walls 53.82/21.1 -> 6.46/92.2; gold 37.74/50.0 -> 9.39/87.8; fittings 26.85/59.7 -> 3.54/94.8; distant 29.79/45.1 -> 2.43/97.1; lids05e.glb; default + BEFORE 0 px; 06/07 0 px; 04 712 px (window onto 05 tunnel); gameplay 8/8",
+   "notes": "qa/pilot05/full_reference_match/env/NOTES.md",
+   "requests": "black dotted seam top of left foam bank x180-330 y545-560 from proj05Apron.ts (coordinator)"
   }
  ]
 }

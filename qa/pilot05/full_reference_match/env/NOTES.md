@@ -1,6 +1,7 @@
 # env05 — washer-environment-modeler (Screen 05 tunnel: rings, walls, fittings, far tunnel)
 
-Status: IN PROGRESS — stopped for the account transfer (2026-11-17 ~00:30 UTC by the file clock, session 018Sg3AU). Switch `env05` (`on05('env05')`, also on with
+Status: run #3 (session 01Q46SCH, 2026-11-17) DONE for the brief's focus (walls, rings, warped-wall bake, six paddles, far
+tunnel, + near frame) — current state = capture `work/f1/05.png` = `new.png` (= r4 + frame sigma_u 0.4); see §2b, §3–§7. Switch `env05` (`on05('env05')`, also on with
 `?match05=1`). STACK = `proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1`.
 
 ## 1. Measured (step A, done)
@@ -139,33 +140,59 @@ banks unshifted — limit of "nothing moves at the banks"); A side −0.70, up +
   Remaining wall-region error (r4): game wall px mean 4.0 (38 % of the region's error: edges / sharpness of the bake),
   game ring over approved wall 38,565 px mean 15.3 (29 %), other surfaces (paddle / foam / bubbles) 27,275 px mean 16.4 (22 %).
 
-## 3. In progress (stopped for the account transfer)
-* The cycle `probe (id) → probe (--coords) → proj_bake --coords → capture → metrics` for the refined knots was stopped
-  while still waiting for a render slot; it wrote nothing. The helper is in the (lost) scratchpad; its content:
-  `node scripts/proj05-tunnel-probe.mjs --q='<STACK>&env05=1' --out=env/work/<tag> --raw=<scratch>/raw_<tag>`, the
-  same with `--coords`, `python3 -I tools/env05/proj_bake.py assets/textures/env05 --coords=<raw>/tunnel_coords.f32`,
-  `node scripts/capture.mjs 05 --q='<STACK>&env05=1' --out=env/work/<tag>` + `git checkout -q qa/capture_log.json`,
-  `python3 -I tools/match05/metrics.py env/work/<tag>/05.png env/work/<tag>/`.
+## 3. Final verification of the r4 state (2026-11-17, run #3, all really run)
+* default `capture.mjs 05` == `qa/pilot05/current_default_05.png`: **0 px**; protected BEFORE `?ringa=26&nearfloor05=0` ==
+  `qa/pilot05/wave9/baseline/05.png`: **0 px**; STACK (no env05) == `recovery_s018/stack/05.png`: **0 px**.
+* 06 / 07, STACK vs STACK + env05: **0 px**. 04: **712 px** differ (max 129), all inside 04's window onto the 05 tunnel
+  (the same 3D 05 rings / walls seen from 04; was 1,158 px at e6).
+* `gameplay-test.mjs --q='<STACK>&env05=1'` → `env/gameplay.json`: pass, 8/8 checks, no errors. `npm run -s test:continuity`: ok.
+* Ride frames `env/move/move_{00,08,17,35}.png`: rings / walls / paddles solid and continuous, no flat cards.
+* `?match05=1` integration capture (everybody's parts): `env/match05_integration.png` (+ metrics): whole frame **11.89 / 83.6 %**
+  ≤20, no console errors; my regions there: walls 6.95, gold 9.43, fittings 3.54, distant 2.43.
+* Final files: `env/before.png`, `env/new.png` (= `work/f1/05.png`: r4 + frame bake sigma_u 1.0 → 0.4, gold 9.45 → 9.39,
+  whole frame 18.84 → 18.83), `before_*` / `new_*METRICS.json`.
 
-## 4. Remaining, step by step
-a. Run that cycle (tag e2). Check the ring table (`tools/env05/ring_table.py env/work/e2/tunnel.json <raw>/tunnel_id.f32 …`)
-   and the capture by eye (walls must not show gold ghosts; water / foam / bubbles regions must not get worse than
-   STACK: water 9.40, foam 8.43).
-b. If water/foam are unchanged, optionally lower the weight's start (e.g. sin th −0.45) to fix ring B's lower sides;
-   re-measure. Far VP (C/D 9 px low) only via a vertical upper-wall shift (+0.45) — skip unless clearly closer.
-c. Colour feedback: `node scripts/proj05-tunnel-probe.mjs --coords --all --q='<STACK>&env05=1' --raw=<raw>` then
-   `python3 -I tools/env05/proj_bake.py assets/textures/env05 --coords=<raw>/tunnel_coords.f32 --capture=env/work/e2/05.png --coords_all=<raw>/tunnel_coords_all.f32`,
-   capture again; keep only if closer (1–2 passes).
-d. Paddles: add `--q` to `scripts/proj05-lid-raycast.mjs` (it loads `?qa=1&dpr=1` only), raycast with
-   `--q='<STACK>&env05=1' --dir=env/lid` (copy `mesh2d.json` there), Blender
-   `blender -b --factory-startup -P tools/proj05/lid_blender.py -- env/lid assets/textures/tunnel05/lid05.png 58,311,864,532 assets/models/lids05e.glb 0.35`,
-   load `lids05e.glb` instead of `lids05.glb` when ENV05 (proj05Tunnel.ts). Needed because the right-side paddles
-   (R1/R2) sit on the upper wall that env05 moves left (they would sink into it).
-e. Deliverables in `env/`: `before.png` (= `recovery_s018/stack/05.png`), `new.png` (STACK + env05), region numbers
-   before → after, ride frames `node scripts/proj05-move.mjs --q='<STACK>&env05=1' --out=env/move --d=0,8,17,35`,
-   `node scripts/gameplay-test.mjs --q='<STACK>&env05=1' --out=qa/pilot05/full_reference_match/env/gameplay.json`,
-   `npm run -s test:continuity`; default pixel identity (`node scripts/capture.mjs 05 --out=<scratch>` vs
-   `qa/pilot05/current_default_05.png`, then `git checkout -q qa/capture_log.json`); 04 / 06 / 07 with vs without env05.
+## 4. Per mismatch (approved | game before | difference | cause | change | measured, STACK → r4)
+| mismatch | cause | change (all behind env05) | result |
+|---|---|---|---|
+| rings sit 0.6–1.0 u too far right; ring A draws a band where the approved shows wall | mesh placement | warped upper tunnel (`E05` knots) + asymmetric weight + ring weight + far `upFar` | ring edge error A 59.1 → 2.9, B 28.6 → 7.3, C 10.6 → 2.7, D 5.9 → 1.9 px |
+| ring B left arc S-kink / bulge at the bank (recovery capture) | weight 0 at the bank on both sides | left half: whole side wall moves (weight −0.95 … −0.5) | B left edge 18.0 → 7.3 px (analytic), smooth arc |
+| ring B lower-right arc kinked outward | the right wall must not move at the bank (river / foam) | ring-only right weight, skirt discarded | B 8.8 → 7.3 px; foam 5.72 → 5.86 (ring end in front of 76 foam px) |
+| perforation rows / bays misregistered, torn texture on both walls | texture (old bake on new geometry) | camera-projection bake `proj_bake.py` (+ ring-envelope source masks, 2 feedback passes) | walls 53.82 → **6.46** mean, 21 → **92 %** ≤20 |
+| rings blue-biased / peach | texture | same bake (ring atlas rows A … G) | gold region signed RGB −12.7/−6.7/+9.1 (e3) → −3.4/−1.0/+2.9 |
+| right paddles sunk, left float (side fittings WORSE at recovery 44.87) | paddles built for the old wall | `lids05e.glb` raycast onto the env05 wall | side fittings 26.85 → **3.54**, 60 → **95 %** |
+| distant tunnel + glow WORSE at recovery (34.53) | far rings with the plain ring-B atlas, no glow | far rings/wall baked from the approved picture, far rings `upFar` 0.45 | 29.79 → **2.43**, 45 → **97 %** |
+| bottom gold frame pieces the wrong shape / cut | camera-held frame outline | `frame_fit.py` pieces + `frame05.png` (env05) | gold region 37.74 → **9.45**, 50 → **88 %** |
 
-## 5. REQUESTS
-* none yet (far river geometry is NOT changed: knots kept, rings placed by tunnel coordinate).
+## 5. Still different (honest list)
+* Purple walls (r4 6.46): bake sharpness at slot / ring edges (game wall px mean 4.0 = 38 % of the region error); game
+  rings over approved wall 38,565 px (mean 15.3, ring edges not exactly where the painting has them: the painted rings are
+  not a physically consistent ring set — ring A's right side and the ring bands' widths); approved bubbles / foam in front
+  of the wall where the game has none (the wall behind them is filled, slightly blurry).
+* Ring B lower right: round now, but a narrow smeared strip remains between the band and paddle R1 (the band's far side
+  seen at a grazing angle, ring atlas v is axial so two layers share texels).
+* Bottom-right screen corner: ≈20 × 25 px sliver not covered by the frame (wider corner pieces measured worse).
+* While riding, wall texels that the checkpoint saw at grazing angles (screen edges) stretch (also in STACK).
+* 04 changes 712 px (its window onto the 05 tunnel).
+* Not mine and still the largest whole-frame errors: HUD + text, Benny, coins, wake / splash (other specialists).
+
+## 6. REQUESTS (coordinator)
+* Far river geometry is NOT changed (knots kept, far rings placed by tunnel coordinate) → no far-water re-bake needed.
+* A black dotted seam runs along the top of the left foam bank (e.g. x 180–330, y 545–560) in STACK as well (98 dark px
+  there in STACK, 32 with env05): it comes from the apron / river edge (`proj05Apron.ts`), not from env05.
+* QA knobs added under env05 only (URL, default values = the r4 state): `e05r0`, `e05r1` (wall right ramp), `e05rr0`, `e05rr1`
+  (ring right ramp). Nothing to do unless someone wants to re-test the rejected wall variant (`e05r0=-0.7&e05r1=0`).
+
+## 7. How to redo / continue (the next account relaunches from here)
+* Cycle (tag T): `node scripts/proj05-tunnel-probe.mjs --q='<STACK>&env05=1' --out=env/work/T --raw=<scratch>/raw_T`;
+  `python3 -I tools/env05/idviz.py <raw>/tunnel_id.f32 env/work/T/idviz.png 0.35`; `python3 -I tools/env05/ring_table.py env/work/T/tunnel.json <raw>/tunnel_id.f32 env/work/rings_T.json`;
+  same probe with `--coords`; `python3 -I tools/env05/proj_bake.py assets/textures/env05 --coords=<raw>/tunnel_coords.f32`;
+  capture `node scripts/capture.mjs 05 --q='<STACK>&env05=1' --out=env/work/T` (back up / restore `qa/capture_log.json`
+  with cp — no git); `python3 -I tools/match05/metrics.py env/work/T/05.png env/work/T/`. Feedback: probe `--coords --all`
+  then `proj_bake.py … --capture=env/work/T/05.png --coords_all=<raw>/tunnel_coords_all.f32` (accumulates
+  `assets/textures/env05/feedback.npz`; delete it before a fresh bake of a different geometry).
+* Frame: `python3 -I tools/env05/frame_fit.py env/frame/frame_fit.json` (then copy `pieces_after` into environment.ts
+  `frame05e`), `python3 -I tools/proj05/frame_bake.py assets/textures/env05 0.4 --pieces=env/frame/frame_fit.json --corr=env/frame/frame_correction.npy [--capture=<05.png>]`.
+* Paddles after any wall change: `node scripts/proj05-lid-raycast.mjs --q='<STACK>&env05=1' --dir=qa/pilot05/full_reference_match/env/lid`,
+  `blender -b --factory-startup -P tools/proj05/lid_blender.py -- qa/pilot05/full_reference_match/env/lid assets/textures/tunnel05/lid05.png 58,311,864,532 assets/models/lids05e.glb 0.35`.
+* Geometry without renders: `python3 -I tools/env05/weight_study.py <tunnel.json> <out_dir> cur "asym:l0,l1,r0,r1" …` (WS_FIT=1 fits side/up).

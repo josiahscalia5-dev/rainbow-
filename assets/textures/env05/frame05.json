@@ -27,12 +27,12 @@
    "h": 48,
    "visible": 0.272,
    "mean_rgb": [
-    218.6,
+    218.5,
     109.3,
     87.8
    ]
   }
  },
- "sigma_u": 1.0,
+ "sigma_u": 0.4,
  "note": "u = uv.x along the arc, v = uv.y across the band (0 = edge toward the stream)"
 }

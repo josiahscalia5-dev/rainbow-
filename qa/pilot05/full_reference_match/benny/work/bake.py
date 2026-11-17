@@ -226,8 +226,28 @@ def main():
                 h, est, cf = ring_shift(filled, seen, u0, u1)
                 hs = np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0)
                 rect = shift_rows(filled, hs)
+                topfill = '--topfill' in sys.argv
+                if topfill:
+                    # holes INSIDE the source strip (crown hidden behind the star): copy from the same rectified row
+                    # k knit periods (9 texels) away, so the mirrored copies round the hat carry no grey bar
+                    PER = 9
+                    covr = shift_rows(seen_weight(seen)[..., None], hs)[..., 0]
+                    st, cs = rect[:, u0:u1], covr[:, u0:u1] > 0.5
+                    Ls = u1 - u0
+                    for r in range(TH):
+                        if cs[r].mean() < 0.4:
+                            continue
+                        for x in np.nonzero(~cs[r])[0]:
+                            for k in range(1, Ls // PER):
+                                src = next((xx for xx in (x - k * PER, x + k * PER) if 0 <= xx < Ls and cs[r, xx]), None)
+                                if src is not None:
+                                    st[r, x] = st[r, src]
+                                    break
+                    rect[:, u0:u1] = st
                 rect_t = rect[:, mirror_idx(TW, u0, u1)]
-                if '--topfill' in sys.argv:
+                PADR = 64
+                pad_top = pad_bot = None
+                if topfill:
                     # rows above everything the 05 camera sees (dome top under the pom, visible when he tilts): the
                     # approved shows a purple ring under the pom -> continue the topmost purple band's knit upward
                     sr = shift_rows(seen[..., None].astype(float), hs)[..., 0]
@@ -239,27 +259,34 @@ def main():
                     thr = 0.5 * (prof[ok].max() + prof[ok].min())
                     p0 = next(r for r in range(r_top, TH) if prof[r] > thr)
                     p1 = next(r for r in range(p0, TH) if prof[r] <= thr)
-                    band = rect_t[p0 + 2:p1 - 2]
+                    band = rect_t[p0 + 2:p1 - 2].copy()
                     nb = band.shape[0]
                     for r in range(0, r_top):
                         w = np.clip((r_top - r) / 3.0, 0, 1)
                         rect_t[r] = w * band[(r_top - 1 - r) % nb] + (1 - w) * rect_t[r]
+                    pad_top = np.stack([band[(r_top - 1 - r) % nb] for r in range(-PADR, 0)])
                     extra['topfill'] = dict(r_top=r_top, purple_rows=[p0, p1])
                     # rows below everything the 05 camera sees (just above the cuff; shows from the front / from above):
-                    # continue the lower white band's knit downward instead of the flat hole fill
-                    # (source = the clean upper 24 rows of that band right under the purple band; its lower rows are
-                    # stitches compressed toward the cuff and tile as vertical streaks)
+                    # continue the lower white band's knit downward instead of the flat hole fill (source = 24 clean rows
+                    # just under the purple band's soft edge; its lower rows are stitches compressed toward the cuff)
                     r_bot = int(np.nonzero(cov > 0.5)[0].max())
                     q0 = next((r for r in range(p1, r_bot) if prof[r] <= thr), p1)
-                    wb = rect_t[q0 + 2:min(q0 + 26, r_bot)].copy()
+                    wb = rect_t[q0 + 5:min(q0 + 29, r_bot)].copy()
                     nw = wb.shape[0]
-                    r_b = q0 + 2 + nw
+                    r_b = q0 + 5 + nw
                     if nw >= 6:
                         for r in range(r_b, TH):
                             w = np.clip((r - r_b + 1) / 3.0, 0, 1)
                             rect_t[r] = w * wb[(r - r_b) % nw] + (1 - w) * rect_t[r]
-                    extra['botfill'] = dict(r_bot=r_bot, white_rows=[q0 + 2, q0 + 2 + nw], from_row=r_b)
-                tiled = shift_rows(rect_t, -h)
+                        pad_bot = np.stack([wb[(r - r_b) % nw] for r in range(TH, TH + PADR)])
+                    extra['botfill'] = dict(r_bot=r_bot, white_rows=[q0 + 5, q0 + 5 + nw], from_row=r_b)
+                if pad_top is not None and pad_bot is not None:
+                    # un-shift through a padded copy: the ring shift reads up to ~40 rows past the edges (clamping there
+                    # smeared vertical streaks)
+                    padded = np.concatenate([pad_top, rect_t, pad_bot], 0)
+                    tiled = shift_rows(padded, -h + PADR)[:TH]
+                else:
+                    tiled = shift_rows(rect_t, -h)
                 extra.update(ring_fit_rows=[round(float(c), 2) for c in cf], ring_h_rows=dict(
                     u0=round(float(h[u0]), 1), centre=round(float(h[(u0 + u1) // 2]), 1), u1=round(float(h[u1 - 1]), 1)),
                     ring_est_cols=len(est))

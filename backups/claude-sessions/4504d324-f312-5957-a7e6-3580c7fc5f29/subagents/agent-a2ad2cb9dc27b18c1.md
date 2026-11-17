@@ -2481,3 +2481,220 @@ Low tier works too: Benny + hat 50.63 → **22.22** (within 20: 22.6 % → 67.5 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T01:52:58.825Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/pilot05/full_reference_match/benny/work/f5/crown.png').convert('RGB').crop((40,100,240,256)).resize((600,468),Image.NEAREST)\nim.save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/f5zoom.png')\"", "description": "Zoom into the bottom-fill region of the crown map"}`
+
+### 🧑 User — 2026-11-17T01:52:58.930Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:53:01.098Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/f5zoom.png"}`
+
+### 🧑 User — 2026-11-17T01:53:01.115Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:53:16.700Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "offset": 218, "limit": 50}`
+
+### 🧑 User — 2026-11-17T01:53:16.714Z
+
+> ↩︎ result: 218	            wseen = seen_weight(seen)[..., None]
+> 219	            if mode == 'mirror':
+> 220	                # unseen texels: mirror-tile the well-seen strip around (knit ribs / fur tufts continue)
+> 221	                tiled = filled[:, mirror_idx(TW, u0, u1)]
+> 222	            else:
+> 223	                # 'rings': the approved stripes sag at his back (illustration bulge, measured per column); straighten
+> 224	                # them (rectify by h(u)), mirror-tile the straight bands, then re-apply h, which runs on as level
+> 225	                # rings round the unseen arc -> no zig-zag stripes when the beanie turns away from the 05 camera
+> 226	                h, est, cf = ring_shift(filled, seen, u0, u1)
+> 227	                hs = np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0)
+> 228	                rect = shift_rows(filled, hs)
+> 229	                rect_t = rect[:, mirror_idx(TW, u0, u1)]
+> 230	                if '--topfill' in sys.argv:
+> 231	                    # rows above everything the 05 camera sees (dome top under the pom, visible when he tilts): the
+> 232	                    # approved shows a purple ring under the pom -> continue the topmost purple band's knit upward
+> 233	     …[+2579 chars]
+
+### 🤖 Claude — 2026-11-17T01:53:29.803Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nimport numpy as np; from PIL import Image\nfrom scipy import ndimage as ndi\nt=np.asarray(Image.open('qa/pilot05/full_reference_match/benny/work/s1/tex/crown.png').convert('L')).astype(float)\ns=np.asarray(Image.open('qa/pilot05/full_reference_match/benny/work/s1/tex/crown_seen.png'))>0\nx=t[:,400:600]; m=s[:,400:600]\nhp=x-ndi.uniform_filter1d(x,15,axis=1)\nrows=[r for r in range(256) if m[r].mean()>0.9]\nac=np.zeros(30)\nfor r in rows:\n  v=hp[r]-hp[r].mean()\n  for d in range(1,30): ac[d]+=(v[:-d]*v[d:]).mean()\nprint('rows',len(rows),' …[+273 chars]`
+
+### 🧑 User — 2026-11-17T01:53:30.177Z
+
+> ↩︎ result: <string>:13: RuntimeWarning: invalid value encountered in divide
+> rows 0 best lag 5..25 5 [nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan
+>  nan nan nan]
+
+### 🤖 Claude — 2026-11-17T01:53:34.128Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nimport numpy as np; from PIL import Image\nfrom scipy import ndimage as ndi\nt=np.asarray(Image.open('qa/pilot05/full_reference_match/benny/work/s1/tex/crown.png').convert('L')).astype(float)\ns=np.asarray(Image.open('qa/pilot05/full_reference_match/benny/work/s1/tex/crown_seen.png'))>0\nx=t[:,420:580]; m=s[:,420:580]\nprint('row seen frac max',m.mean(1).max())\nhp=x-ndi.uniform_filter1d(x,15,axis=1)\nrows=[r for r in range(256) if m[r].mean()>0.6]\nac=np.zeros(30)\nfor r in rows:\n  v=hp[r]-hp[r].mean()\n  for d in range(1,30): ac[d]+=(v[ …[+200 chars]`
+
+### 🧑 User — 2026-11-17T01:53:34.503Z
+
+> ↩︎ result: row seen frac max 0.75
+> rows 71 best lag 5..25 9 [-3.26 -2.43 -1.    0.33  1.    0.92  0.34 -0.34 -0.8  -0.91 -0.66 -0.24
+>   0.18  0.39  0.28 -0.08 -0.45 -0.57 -0.35  0.13  0.63]
+
+### 🤖 Claude — 2026-11-17T01:53:37.964Z
+
+The knit column period is 9 texels (autocorrelation peaks at 9 / 18 / 25). Implementing the three fixes.
+
+### 🤖 Claude — 2026-11-17T01:53:51.136Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/bake.py'\ns=open(p).read()\nstart=s.index(\"                hs = np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0)\")\nend=s.index(\"                extra.update(ring_fit_rows=\")\nnew='''                hs = np.where((np.arange(TW) >= u0) & (np.arange(TW) < u1), h, 0.0)\n                rect = shift_rows(filled, hs)\n                topfill = '--topfill' in sys.argv\n                if topfill:\n                    # holes INSIDE the source strip (crown hidden behind the star): c …[+4252 chars]`
+
+### 🧑 User — 2026-11-17T01:53:51.212Z
+
+> ↩︎ result: ok
+> 122:def shift_rows(img3, h):
+> 123-    """out[r, u] = img3[r + h[u], u] (bilinear in r, clamped)"""
+> 124-    TH = img3.shape[0]
+> 125-    rr = np.arange(TH)[:, None] + h[None, :]
+> 126-    r0 = np.clip(np.floor(rr).astype(int), 0, TH - 1); r1 = np.clip(r0 + 1, 0, TH - 1); f = (rr - np.floor(rr))[..., None]
+> 127-    cols = np.arange(img3.shape[1])[None, :]
+> 128-    return img3[r0, cols] * (1 - f) + img3[r1, cols] * f
+> 129-
+> 130-def push_pull(num, den):
+
+### 🤖 Claude — 2026-11-17T01:53:58.302Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; timeout 900 python3 $W/bake.py $W/s1 $W/s1/tex_top3 --topfill > $W/s1/bake_top3.log 2>&1; echo rc=$?; tail -3 $W/s1/bake_top3.log | head -2; python3 -I -c \"\nimport json; c=json.load(open('$W/s1/tex_top3/bake_report.json'))['crown']; print(c.get('topfill'), c.get('botfill'))\"; python3 -I -c \"\nimport numpy as np; from PIL import Image\nfrom scipy import ndimage as ndi\nW='$W'\nold=np.asarray(Image.open(W+'/s1/tex/crown.png').convert('RGB')).astype(int)\nnew=np.asarray(Image.open(W+'/s1/tex_top3/crown.png').co …[+600 chars]`
+
+### 🧑 User — 2026-11-17T01:54:03.409Z
+
+> ↩︎ result: rc=1
+>     sel = (ids == pid) & ndi.binary_erosion(P[key], iterations=1) & ndi.binary_erosion(ids == pid, iterations=1) & valid & lit & okc[key]
+>                                             ~^^^^^
+> Traceback (most recent call last):
+>   File "<string>", line 2, in <module>
+>     import json; c=json.load(open('qa/pilot05/full_reference_match/benny/work/s1/tex_top3/bake_report.json'))['crown']; print(c.get('topfill'), c.get('botfill'))
+>                              ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> FileNotFoundError: [Errno 2] No such file or directory: 'qa/pilot05/full_reference_match/benny/work/s1/tex_top3/bake_report.json'
+> texels taken from fills 134969
+
+### 🤖 Claude — 2026-11-17T01:54:06.939Z
+
+Name clash: my pad size `P = 64` shadowed the approved-parts dict `P`, so the parts after the crown crashed. Renaming it and re-running.
+
+### 🤖 Claude — 2026-11-17T01:54:13.406Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/bake.py'\ns=open(p).read()\nfor a,b in [(\"                P = 64\\n\",\"                PADR = 64\\n\"),(\"for r in range(-P, 0)])\",\"for r in range(-PADR, 0)])\"),(\"for r in range(TH, TH + P)])\",\"for r in range(TH, TH + PADR)])\"),(\"tiled = shift_rows(padded, -h + P)[:TH]\",\"tiled = shift_rows(padded, -h + PADR)[:TH]\")]:\n    assert s.count(a)==1,a; s=s.replace(a,b)\nopen(p,'w').write(s)\nEOF\nrm -rf $W/s1/tex_top3; timeout 900 python3 $W/ …[+1050 chars]`
+
+### 🧑 User — 2026-11-17T01:54:19.073Z
+
+> ↩︎ result: rc=0
+> {'r_top': 91, 'purple_rows': [112, 177]} {'r_bot': 230, 'white_rows': [182, 206], 'from_row': 206}
+> texels taken from fills 134969
+
+### 🤖 Claude — 2026-11-17T01:54:21.026Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/crown_f5.png"}`
+
+### 🧑 User — 2026-11-17T01:54:21.052Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:54:29.896Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; cp $W/f5/crown.png assets/textures/benny05/crown.png; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&benny05=1\" --out=$B/cap/new_f5 > $SP/cap_f5.log 2>&1; echo cap_rc=$?; cp $SP/capture_log.bak qa/capture_log.json; python3 -I tool …[+314 chars]`
+
+### 🧑 User — 2026-11-17T01:55:09.550Z
+
+> ↩︎ result: cap_rc=0
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 31.79, 'within_10': 0.4656, 'within_20': 0.5517, 'ssim_lum': 0.5501, 'mean_signed_rgb': [2.3, 0.6, -1.1]}
+> benny_and_hat                px   93061  mean  19.24  <=10 0.587  <=20 0.730  ssim 0.655  signed [-5.7, -1.3, 1.0]
+> pom     12764   20.7  0.68    0.148  [124  20 23
+> crown   18362   17.2  0.76    0.177  [223 168 24
+> cuff    14689   14.4  0.81    0.118  [112  16 23
+> star     2683   24.5  0.73    0.037  [252 217  3
+> body    44566   20.9  0.71    0.520  [242  79 18
+> ALL 93061 19.24 0.73
+> wrote qa/pilot05/full_reference_match/benny/views/turntable_off.png
+> wrote qa/pilot05/full_reference_match/benny/views/turntable_on.png
+> wrote qa/pilot05/full_reference_match/benny/views/cmp_off.png
+> wrote qa/pilot05/full_reference_match/benny/views/cmp_on.png
+
+### 🤖 Claude — 2026-11-17T01:55:13.402Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nV='qa/pilot05/full_reference_match/benny/views/'\na=Image.open(V+'cmp_on.png').crop((432,0,432*5,768)); b=Image.open(V+'turntable_on.png')\no=Image.new('RGB',(max(a.width,b.width),a.height+b.height),(0,0,0)); o.paste(a,(0,0)); o.paste(b,(0,a.height)); o.resize((o.width//2,o.height//2)).save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/views_on.png')\"", "description": "Assemble identity and turntable sheets with switch on"}`
+
+### 🧑 User — 2026-11-17T01:55:13.583Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:55:15.519Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/views_on.png"}`
+
+### 🧑 User — 2026-11-17T01:55:15.541Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:55:25.637Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; timeout 1800 node scripts/capture.mjs 03 --out=$B/cap/off_03 > $SP/c03a.log 2>&1; echo a=$?; timeout 1800 node scripts/capture.mjs 03 --q='benny05=1' --out=$B/cap/on_03 > $SP/c03b.log 2>&1; echo b=$?; cp $SP/capture_log.bak qa/capture_log.json; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$B/cap/off_03/03.png').convert('RGB')).astype(int); b=np.asar …[+526 chars]`
+
+### 🧑 User — 2026-11-17T01:55:55.370Z
+
+> ↩︎ result: a=0
+> b=0
+> 03 changed >12 levels 74083 bbox 0 296 517 965
+> (488, 632, 3)
+
+### 🤖 Claude — 2026-11-17T01:55:57.306Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/c03.png"}`
+
+### 🧑 User — 2026-11-17T01:55:57.329Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:56:21.878Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; B=qa/pilot05/full_reference_match/benny; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; timeout 1800 node scripts/capture.mjs 05 --out=$SP/default05b > $SP/cdef2.log 2>&1; echo def=$?; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK\" --out=$SP/stack05 > $SP/cstack.log 2>&1; echo stack=$?; cp $SP/capture_log.bak  …[+697 chars]`
+
+### 🧑 User — 2026-11-17T01:57:02.448Z
+
+> ↩︎ result: tsc_rc=0
+> def=0
+> stack=0
+> default vs qa/pilot05/current_default_05.png differing px: 0
+> STACK now vs benny/before.png differing px: 0
+> STACK now vs stack_2340/05_match05.png differing px: 0
+
+### 🤖 Claude — 2026-11-17T01:57:04.406Z
+
+Default build 0 px different, and the STACK baseline still equals `before.png` (0 px), so the before → after comparison is valid. Final steering frames with the final maps, and the final `new.png`.
+
+### 🤖 Claude — 2026-11-17T01:57:10.056Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; cp $B/cap/new_f5/05.png $B/new.png; cp $B/cap/new_f5/REGION_METRICS.json $B/NEW_REGION_METRICS.json; cp $B/cap/new_f5/FULL_FRAME_METRICS.json $B/NEW_FULL_FRAME_METRICS.json; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; rm -rf $B/steer; timeout 2400 node scripts/proj05-move.mjs --q=\"$STACK&benny05=1\" --out=$B/steer --d=0,8,17 --steer=-1,1 > $B/steer.log 2>&1; echo rc=$?; ls $B/steer; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarr …[+607 chars]`
+
+### 🧑 User — 2026-11-17T01:57:51.377Z
+
+> ↩︎ result: rc=0
+> move_00.png
+> move_08.png
+> move_17.png
+> move_log.json
+> steer_L_025.png
+> steer_L_050.png
+> steer_L_080.png
+> steer_R_025.png
+> steer_R_050.png
+> steer_R_080.png
+> move_00 vs new.png differing px 0
+
+### 🤖 Claude — 2026-11-17T01:57:53.513Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/steer_final.png"}`
+
+### 🧑 User — 2026-11-17T01:57:53.549Z
+
+> ↩︎ result: [image]
+

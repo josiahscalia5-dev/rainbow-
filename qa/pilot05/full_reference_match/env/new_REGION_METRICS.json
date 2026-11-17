@@ -4,14 +4,14 @@
   "gold_rings_and_front_frame": {
    "px": 125730,
    "share_of_frame": 0.0947,
-   "mean_abs": 9.45,
-   "within_10": 0.7335,
-   "within_20": 0.8774,
-   "ssim_lum": 0.8199,
+   "mean_abs": 9.39,
+   "within_10": 0.7353,
+   "within_20": 0.8777,
+   "ssim_lum": 0.8211,
    "mean_signed_rgb": [
     -3.4,
     -1.0,
-    2.9
+    2.8
    ]
   },
   "purple_walls": {
@@ -43,8 +43,8 @@
   "water": {
    "px": 480736,
    "share_of_frame": 0.3622,
-   "mean_abs": 7.42,
-   "within_10": 0.8734,
+   "mean_abs": 7.41,
+   "within_10": 0.8736,
    "within_20": 0.9101,
    "ssim_lum": 0.9089,
    "mean_signed_rgb": [
