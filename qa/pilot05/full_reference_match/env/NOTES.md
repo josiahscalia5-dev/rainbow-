@@ -69,6 +69,47 @@ Status: IN PROGRESS — stopped for the account transfer (2026-11-17 ~00:30 UTC 
 banks unshifted — limit of "nothing moves at the banks"); A side −0.70, up +0.30. These values are now in `E05`
 (not yet probed). No env05 CAPTURE exists yet (no region numbers after the change yet).
 
+## 2b. RUN #3 (2026-11-17 ~01:25 UTC, session 01Q46SCH) — done so far, all behind `env05`, `npx tsc --noEmit` clean
+* **Weight (ring B left-arc bulge):** `tools/env05/weight_study.py` (new; analytic replica of the warped real rings A, B and
+  the far rings C..G through the probe camera, band edges vs `ring_model.json`, draws outlines on the approved picture)
+  showed the S-kink came from `e05Weight` = 0 at the river bank on BOTH sides. Now asymmetric (`environment.ts`): RIGHT
+  half unchanged smoothstep(sin th, −0.28, 0.05) (the displacement points INTO the tunnel there: must not cover river /
+  foam / apron); LEFT half smoothstep(sin th, −0.95, −0.5) (points OUT of the tunnel: the whole left side wall moves with
+  its rings down below the waterline). Ring A up 0.3 → 0.42 (fit), far rings + far wall `upFar` 0.45 (approved far rings
+  ≈9 px higher), seam knot up[54] = upFar, and the up displacement now fades to 0 toward the 05 → 06 junction like `side`.
+  Analytic edge error (px, mean, visible rays): A 13.7 → 7.8, B left arc 18.0 → 7.3, C 9.1 → 4.3, D 4.9 → 1.7.
+  Probe e3 (id buffer, `ring_table.py`, mean |edge| px, STACK → e2 → **e3**): A 59.1 → 10.0 → **2.9**, B 28.6 → 13.6 →
+  **8.8**, C 10.6 → 7.6 → **3.2**, D 5.9 → 4.7 → **2.2**, E 4.6 → 5.2 → **4.1**, F 4.9 → 5.1 → **4.3**, G 5.2 → 5.3 → **4.6**.
+  Silhouette agreement (`idviz.py`, approved walls+gold+distant shown as the same kind of game surface): STACK 0.516 →
+  **e3 0.646** (walls 0.636 → 0.755, gold 0.198 → 0.359).
+* **Paddles (step d):** `scripts/proj05-lid-raycast.mjs` takes `--q`; raycast with `<STACK>&env05=1` → `env/lid/raycast.json`
+  (6 paddles, 0 missed rays, 223 vertices on the far wall), Blender `lid_blender.py` → **`assets/models/lids05e.glb`**
+  (+ `env/lid/lids05.blend`); `proj05Tunnel.ts` loads `lids05e.glb` when ENV05, `lids05.glb` otherwise.
+* **Camera-projection bake (step a/c):** `tools/env05/proj_bake.py` with the e3 coords probe. Source masks widened (run #3):
+  inside the approved ring bands (`ring_model.json` edges ±2 px) rings take every tunnel-class approved pixel (the
+  white-pink marquee highlights are "purple walls" in the colour-class masks and were being FILLED), walls take the gold
+  slivers there; `--regionmask` = old behaviour. Colour feedback pass 1 (damp 0.8) kept (closer).
+* **Captures (real game, `capture.mjs 05`, metrics.py), STACK → env05:**
+  | region | STACK | e3 (bake) | e4 (+feedback) | e5 (env masks) | **e6 (env masks + feedback)** |
+  |---|---|---|---|---|---|
+  | whole frame mean / ≤20 | 34.10 / 51.6 % | 21.73 / 69.7 % | 21.63 / 69.9 % | 20.44 / 71.8 % | **20.34 / 72.0 %** |
+  | purple walls | 53.82 / 21.1 % | 11.73 / 83.7 % | 11.41 / 84.1 % | 7.33 / 91.1 % | **7.04 / 91.4 %** |
+  | gold rings + front frame | 37.74 / 50.0 % | 18.11 / 77.5 % | 18.05 / 77.8 % | 16.78 / 79.0 % | **16.75 / 79.2 %** |
+  | side fittings | 26.85 / 59.7 % | 11.56 / 80.6 % | 11.56 / 80.7 % | 4.15 / 93.6 % | **4.11 / 93.7 %** |
+  | distant tunnel + glow | 29.79 / 45.1 % | 2.62 / 97.3 % | 2.41 / 97.3 % | 2.64 / 97.3 % | **2.43 / 97.3 %** |
+  | water | 9.40 / 88.3 % | 9.22 | 9.22 | 9.21 | **9.21 / 88.5 %** |
+  | foam banks | 8.43 / 92.7 % | 5.85 | 5.85 | 5.72 | **5.72 / 94.9 %** |
+  | bubbles | 29.98 / 61.8 % | 26.84 | 26.81 | — | (see e6/REGION_METRICS.json) |
+  Gold region remaining error (e4): 71 % is the camera-held near FRAME at the bottom (y > 1100, 75k px, mean 21.4).
+* Ride frames `env/move/move_{00,08,17,35}.png` (STACK + env05) vs the same without env05: walls / rings stay solid, no
+  flat cards; stretched texels at the near screen edges when riding (texels seen at grazing angles from the checkpoint).
+* Checks (e6 state): default `capture.mjs 05` == `qa/pilot05/current_default_05.png` **0 px**; 06 and 07 STACK vs
+  STACK+env05 **0 px**; 04 STACK vs STACK+env05 **1,158 px** (max 134, mean 15.9 on the changed px), all inside 04's
+  window onto the 05 tunnel (x 313–863, y 213–964: the same 3D 05 rings / walls seen from 04; like `projgap05`'s 832 px).
+  `gameplay-test.mjs --q='<STACK>&env05=1'` → `env/gameplay.json` pass (8/8 checks); `npm run -s test:continuity` OK.
+* Deliverables so far: `env/before.png` (= recovery_s018/stack/05.png) + `before_*METRICS.json`, `env/new.png` (= e6) +
+  `new_*METRICS.json`.
+
 ## 3. In progress (stopped for the account transfer)
 * The cycle `probe (id) → probe (--coords) → proj_bake --coords → capture → metrics` for the refined knots was stopped
   while still waiting for a render slot; it wrote nothing. The helper is in the (lost) scratchpad; its content:

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// HUD harness runner (repo root): node qa/pilot05/full_reference_match/hud/harness.mjs --out=FILE.png [--q='hud05=1']
+// HUD harness runner (repo root): node qa/pilot05/full_reference_match/hud/harness.mjs --out=FILE.png [--q='hud05=1'] [--css=trial.css]
 // No WebGL, no render slot needed: a Vite dev server + one Chromium page at 864 x 1536.
 import { loadPlaywright, CHROMIUM_ARGS } from '../../../../scripts/lib/pw.mjs';
 const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
@@ -13,7 +13,8 @@ try {
   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
   const errs = [];
   page.on('pageerror', (e) => errs.push(e.message));
-  await page.goto(`${url}/qa/pilot05/full_reference_match/hud/harness.html?${opt.q ?? 'hud05=1'}`);
+  const css = opt.css ? '&css=' + encodeURIComponent((await import('node:fs')).readFileSync(opt.css, 'utf8')) : '';
+  await page.goto(`${url}/qa/pilot05/full_reference_match/hud/harness.html?${opt.q ?? 'hud05=1'}${css}`);
   await page.waitForFunction(() => window.__hudReady === true, null, { timeout: 120000 });
   await page.waitForTimeout(150);
   await page.screenshot({ path: opt.out ?? '/tmp/claude-0/hc05/harness.png' });

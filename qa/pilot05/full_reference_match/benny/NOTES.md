@@ -92,8 +92,23 @@ vertical stockinette columns + deep ribbed cuff.
   crown / cuff normal maps from RELATIVE luminance (stripe colour steps no longer become ridges).
 * Maps installed (NEW files): `assets/textures/benny05/{body,crown,crown_n,brim,brim_n,pom,armL,armR}.png` (1.3 MB) from
   `work/b2/tex` (bake_report.json there). `STAR05` = solved (0.317, 0.39, 0.048) linear. All scales 1.0 (p99.7 ≤ 1).
-* Next: b3 probe = shot0 with maps + calD/E/A/C with the final normal maps → re-bake WITHOUT `--normals` (keep normals) →
-  install → capture.
+* b3 (maps from b2 installed, probe frame): Benny + hat 49.71 → 25.01 mean, 23.5 → 62.5 % ≤20. Seen there: the approved cuff
+  is ROLLED vs ours (bottom edge rises 2.65° to the image-left, top 3–6 px higher) → crown showed where approved has cuff.
+* Geometry r8 / r9 / r9c (new HAT05 fields): `roll` 0.046 (hat about its own forward axis, his left up), cuffH 0.226 → 0.25,
+  crownH 0.58 → 0.556 (crown top + pom stay), shiftX −0.028 → −0.013, pomDX −0.057 → −0.034, starDY 0.069 / starDX 0.012,
+  star counter-rotated by +roll (its local +Z faces the camera; −roll measured star IoU 0.728 = wrong sign).
+  Part IoU b3 → r9c: pom 0.883 → 0.888, crown 0.817 → 0.861, cuff 0.781 → 0.867, star 0.802 → 0.803, body 0.860 → 0.863,
+  all 0.921 → 0.923; cuff edge slope residual 2.65° → 0.36°. Star box 481–553 × 916–983 vs approved 481–553 × 916–984.
+* Normal maps change per-pixel E by ±15 % (crown) / ±36 % (cuff) → bake r9 with `--normals`, install, re-calibrate (r9c, final
+  normals) and bake r9c WITHOUT `--normals` → installed. STAR05 = (0.319, 0.39, 0.048).
+* REAL capture `cap/new/05.png` (STACK + benny05): Benny + hat 49.71 → 22.80, ≤20 23.5 → 66.7 %, SSIM 0.087 → 0.574;
+  whole frame 34.10 → 32.04, 51.57 → 54.73 %. Approved-detail correlation (high-pass, interior) ≈0 → 0.49–0.72.
+* `work/refine.py` (iterative back-projection: rendered vs needed albedo per pixel of a REAL capture, splatted into the
+  bake's seen texels only, λ 0.8): step 1 (`work/f1`, capture `cap/new_f1`) 22.80 → 21.28 / 69.7 %; step 2 (`work/f2`,
+  capture `cap/new_f2`) → **20.37 / 71.2 % / SSIM 0.631**, whole frame **31.87 / 55.04 %**. INSTALLED = f2 albedo + r9 normals.
+  Pre-refine maps: `work/f1/in/`. Stopped at 2 steps (diminishing, avoid over-fitting the locked frame).
+* Next: star map (planar UVs on a benny05 copy of the star geometry, bake from approved incl. orange rim), then fur / pom
+  look check, steering frames, 04/06, default identity, gameplay.
 
 ## 4. Remaining, step by step
 1. (Geometry is done for now at r6 values, see section 2.) Run the bake session from the CURRENT geometry:

@@ -762,7 +762,13 @@ export class ForcedTunnel {
  * `framePiece` 0 = corner (uv.x = 1 at the cut), 1 = bottom lip. Measured reference edges: corner inner edge
  * (0,1210) · (65,1300) · (135,1400) · cut ≈ (150,1420); right mirrored; lip top edge ≈ y 1466 at x 432.
  */
-export function nearFrameGeometry(): THREE.BufferGeometry {
+/**
+ * one near-frame piece in reference px: annulus sector about (cx, cy), radius a0 … a0 + dir·w, angle th0 → th1 (deg, y up;
+ * uv.x 0 → 1). `?env05=1` passes its own pieces fitted to the approved outline (tools/env05/frame_fit.py).
+ */
+export type NearFramePiece = [cx: number, cy: number, a0: number, w: number, dir: 1 | -1, th0: number, th1: number];
+
+export function nearFrameGeometry(pieces?: { left: NearFramePiece; right: NearFramePiece; lip: NearFramePiece }): THREE.BufferGeometry {
   const pos: number[] = [], uv: number[] = [], piece: number[] = [], idx: number[] = [];
   const strip = (id: number, cx: number, cy: number, a0: number, b0: number, w: number, dir: 1 | -1, th0: number, th1: number, z0: number, nu: number, nv = 10) => {
     const base = pos.length / 3;
@@ -786,10 +792,16 @@ export function nearFrameGeometry(): THREE.BufferGeometry {
   };
   // corners: inner circle centre (432, 1060), r 457 (through the reference edge (0,1210) and the cut (150,1420)),
   // band 190 px outward; uv.x = 1 at the cut (θ −122° / −58°)
-  strip(0, 432, 1060, 457, 457, 190, 1, -163, -122, 40, 36);
-  strip(0, 432, 1060, 457, 457, 190, 1, -17, -58, 40, 36);
-  // bottom lip: circle centre (432, 2121), top edge radius 655, band 130 px inward (downward)
-  strip(1, 432, 2121, 655, 655, 130, -1, 122, 58, 0, 48);
+  if (pieces) {
+    for (const [id, p, z0, nu] of [[0, pieces.left, 40, 36], [0, pieces.right, 40, 36], [1, pieces.lip, 0, 48]] as [number, NearFramePiece, number, number][]) {
+      strip(id, p[0], p[1], p[2], p[2], p[3], p[4], p[5], p[6], z0, nu);
+    }
+  } else {
+    strip(0, 432, 1060, 457, 457, 190, 1, -163, -122, 40, 36);
+    strip(0, 432, 1060, 457, 457, 190, 1, -17, -58, 40, 36);
+    // bottom lip: circle centre (432, 2121), top edge radius 655, band 130 px inward (downward)
+    strip(1, 432, 2121, 655, 655, 130, -1, 122, 58, 0, 48);
+  }
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
   g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));

@@ -1433,3 +1433,328 @@ Normals are the r9 ones the calibration saw (hashes match). Updating STAR05 to t
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\na=\"export const STAR05 = { color: [0.321, 0.4, 0.049] as [number, number, number] };\"\nb=\"export const STAR05 = { color: [0.319, 0.39, 0.048] as [number, number, number] };\"\nassert s.count(a)==1; open(p,'w').write(s.replace(a,b))\nEOF\ntimeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; B=qa/pilot05/full_reference_match/benny; STACK='proj05=1&projwall0 …[+374 chars]`
 
+### 🧑 User — 2026-11-17T01:32:21.402Z
+
+> ↩︎ result: tsc_rc=0
+> cap_rc=0
+> 05 → qa/pilot05/full_reference_match/benny/cap/new/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":76,"tris":571440,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> total 2184
+> drwxr-xr-x 2 root root    4096 Nov 17 01:32 .
+> drwxr-xr-x 6 root root    4096 Nov 17 01:32 ..
+> -rw-r--r-- 1 root root 2228174 Nov 17 01:32 05.png
+
+### 🤖 Claude — 2026-11-17T01:32:24.735Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; W=$B/work; python3 -I tools/match05/metrics.py $B/cap/new/05.png $B/cap/new/ | grep -E \"FULL|Benny|benny\"; echo; python3 $W/parts.py $B/cap/new/05.png | grep -v \"^part\" | cut -c1-90; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$B/cap/new/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$W/r9c/restore.png').convert('RGB')).astype(int)\nd=np.abs(a-b).sum(-1)>0; print('capture vs probe frame: differing px',d.sum())\"", "description": "Measure the real capture r …[+31 chars]`
+
+### 🧑 User — 2026-11-17T01:32:26.789Z
+
+> ↩︎ result: FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 32.04, 'within_10': 0.4562, 'within_20': 0.5473, 'ssim_lum': 0.5443, 'mean_signed_rgb': [2.3, 0.6, -1.2]}
+> benny_and_hat                px   93061  mean  22.80  <=10 0.452  <=20 0.667  ssim 0.574  signed [-5.2, -0.3, 0.3]
+> 
+> pom     12764   25.2  0.60    0.152  [124  20 233]  [121  28 226]  bbox {'x0': 355, 'x1': 
+> crown   18362   21.4  0.71    0.185  [223 168 241]  [220 174 235]  bbox {'x0': 277, 'x1': 
+> cuff    14689   18.6  0.76    0.129  [112  16 235]  [115  20 230]  bbox {'x0': 277, 'x1': 
+> star     2683   37.0  0.41    0.047  [252 217  32]  [251 219  11]  bbox {'x0': 481, 'x1': 
+> body    44566   23.2  0.66    0.488  [242  79 181]  [238  79 179]  bbox {'x0': 234, 'x1': 
+> ALL 93061 22.8 0.667
+> capture vs probe frame: differing px 35315
+
+### 🤖 Claude — 2026-11-17T01:32:34.406Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; W=$B/work; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$B/cap/new/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$W/r9c/restore.png').convert('RGB')).astype(int)\nm=np.asarray(Image.open('qa/pilot05/full_reference_match/masks/benny_and_hat.png'))>0\nd=np.abs(a-b).sum(-1); ys,xs=np.nonzero(d>0)\nprint('diff px in benny mask',(d[m]>0).sum(),'of',m.sum(),' mean abs in mask',round(d[m].mean()/3,2),' max',d[m].max())\nprint('diff bbox y',ys.min(),ys.max(),'x',xs.mi …[+160 chars]`
+
+### 🧑 User — 2026-11-17T01:32:34.747Z
+
+> ↩︎ result: diff px in benny mask 34809 of 93061  mean abs in mask 2.0  max 172
+> diff bbox y 21 1031 x 59 805
+> 0 154
+> 128 0
+> 256 0
+> 384 0
+> 512 0
+> 640 0
+> 768 1669
+> 896 32596
+> 1024 896
+> 1152 0
+> 1280 0
+> 1408 0
+
+### 🤖 Claude — 2026-11-17T01:32:44.183Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; W=$B/work; python3 $W/parts.py $W/r9c/restore.png | grep -v \"^part\" | cut -c1-60; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$B/cap/new/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$W/r9c/restore.png').convert('RGB')).astype(int)\nd=np.abs(a-b).sum(-1)\nbig=d>60; ys,xs=np.nonzero(big); print('px >60:',big.sum(), 'bbox', (xs.min(),xs.max(),ys.min(),ys.max()) if len(xs) else None)\nc=np.concatenate([a[880:1000,260:600],b[880:1000,260:600],np.clip(d[880:1000 …[+270 chars]`
+
+### 🧑 User — 2026-11-17T01:32:45.501Z
+
+> ↩︎ result: pom     12764   25.2  0.60    0.147  [124  20 233]  [121  28
+> crown   18362   22.8  0.66    0.192  [223 168 241]  [219 174
+> cuff    14689   21.2  0.67    0.142  [112  16 235]  [115  22
+> star     2683   36.9  0.41    0.045  [252 217  32]  [251 222
+> body    44566   23.2  0.66    0.473  [242  79 181]  [238  79
+> ALL 93061 23.49 0.645
+> px >60: 875 bbox (np.int64(59), np.int64(805), np.int64(99), np.int64(1017))
+
+### 🤖 Claude — 2026-11-17T01:32:47.367Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/capdiff.png"}`
+
+### 🧑 User — 2026-11-17T01:32:47.392Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:32:56.209Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((214,760,634,1210))\nb=Image.open('qa/pilot05/full_reference_match/benny/before.png').convert('RGB').crop((214,760,634,1210))\nc=Image.open('qa/pilot05/full_reference_match/benny/cap/new/05.png').convert('RGB').crop((214,760,634,1210))\no=Image.new('RGB',(1260,450)); o.paste(a,(0,0)); o.paste(b,(420,0)); o.paste(c,(840,0)); o.save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/abc1.png')\"", "description":  …[+46 chars]`
+
+### 🧑 User — 2026-11-17T01:32:56.508Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:32:58.381Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/abc1.png"}`
+
+### 🧑 User — 2026-11-17T01:32:58.410Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:33:20.093Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blob2.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom geom import load_uv\nfrom parts import approved_parts\nfrom bake import fit_es, LUM, inv_chain\nW='qa/pilot05/full_reference_match/benny/work/'\nP,a,m=approved_parts()\nuv=load_uv(W+'r9c/uv.f32'); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\ng=np …[+870 chars]`
+
+### 🧑 User — 2026-11-17T01:33:22.679Z
+
+> ↩︎ result: 896 id0 - | id0 - | id0 - | crown s1 E2.88 g(170, 80, 217) a(228, 255, 255) | crown s1 E3.39 g(179, 119, 242) a(255, 222, 255) | crown s1 E3.05 g(149, 62, 219) a(101, 10, 212)
+> 906 id0 - | id0 - | - s0 E2.82 g(238, 210, 211) a(25, 213, 225) | crown s1 E3.33 g(114, 39, 235) a(127, 37, 212) | crown s1 E3.41 g(100, 25, 239) a(61, 0, 222) | crown s1 E3.14 g(138, 66, 220) a(175, 86, 238)
+> 916 id0 - | id0 - | crown s1 E2.78 g(255, 253, 225) a(251, 255, 255) | crown s1 E2.92 g(253, 217, 243) a(255, 192, 255) | crown s1 E3.01 g(207, 145, 240) a(255, 200, 255) | crown s0 E3.29 g(46, 16, 201) a(44, 0, 183)
+> 926 id0 - | crown s0 E2.68 g(255, 240, 204) a(137, 234, 251) | crown s1 E2.78 g(255, 248, 234) a(255, 251, 250) | crown s1 E2.91 g(248, 210, 223) a(238, 194, 211) | crown s1 E3.37 g(164, 94, 232) a(137, 48, 198) | crown s1 E2.59 g(137, 9, 238) a(145, 11, 254)
+> 936 id0 crown | crown s1 E2.44 g(255, 246, 218) a(253, 245, 255) | crown s1 E2.58 g(255, 248, 239) a(250, 249, 254) | crown s1 E2.68 g(255, 251, 247) a(255, 255, 251) | crown s1 E2.84 g(253, 227, 243) a(255, 227, 248) | crown s1 E2.59 g(251, 237, 249) a(255, 251, 245)
+> 946 id3 cuff | cuff s0 E2.33 g(255, 239, 202) a(195, 67, 203) | crown …[+648 chars]
+
+### 🤖 Claude — 2026-11-17T01:33:36.686Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/clipchk.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom geom import load_uv\nfrom parts import approved_parts\nfrom bake import fit_es, inv_chain\nW='qa/pilot05/full_reference_match/benny/work/'\nP,a,m=approved_parts()\nuv=load_uv(W+'r9c/uv.f32'); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\nE,S,n=f …[+713 chars]`
+
+### 🧑 User — 2026-11-17T01:33:39.887Z
+
+> ↩︎ result: crown needed albedo >1 frac per ch [0. 0. 0.]  <0 frac [0.011 0.096 0.   ]  p99 [0.43 0.58 0.51]
+> brim needed albedo >1 frac per ch [0. 0. 0.]  <0 frac [0.005 0.044 0.   ]  p99 [0.37 0.31 0.55]
+> body needed albedo >1 frac per ch [0.002 0.001 0.002]  <0 frac [0.002 0.005 0.005]  p99 [0.78 0.69 0.83]
+> pom needed albedo >1 frac per ch [0.    0.002 0.003]  <0 frac [0.003 0.025 0.   ]  p99 [0.61 0.57 0.84]
+> star needed albedo >1 frac per ch [0.    0.012 0.   ]  <0 frac [0.005 0.011 0.079]  p99 [0.51 1.08 0.26]
+> (302, 936) needed alb [0.34 0.42 0.55] E [2.95 2.34 1.89] S [0.058 0.045 0.033]
+> (312, 946) needed alb [0.25 0.18 0.33] E [2.89 2.29 2.  ] S [0.053 0.041 0.034]
+> (302, 956) needed alb [0.38 0.48 0.62] E [2.7  2.06 1.7 ] S [0.055 0.042 0.03 ]
+> (322, 936) needed alb [0.34 0.42 0.44] E [3.11 2.58 2.38] S [0.059 0.048 0.042]
+
+### 🤖 Claude — 2026-11-17T01:33:54.470Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/clipchk.py <<'EOF'\ng=np.asarray(Image.open('qa/pilot05/full_reference_match/benny/cap/new/05.png').convert('RGB'))/255.0\nLg=inv_chain(g); eff=(Lg-S)/np.maximum(E,1e-4)\ntex=np.asarray(Image.open(W+'r9c/tex/crown.png').convert('RGB'))/255.0\ntex=np.where(tex<=0.04045,tex/12.92,((tex+0.055)/1.055)**2.4)\nfor (x,y) in ((302,936),(312,946),(302,956),(322,936),(340,936),(420,930)):\n    u=uv[y,x,0]%1; v=uv[y,x,1]; tx=int(u*1024); ty=min(255,int((1-v)*256))\n    print((x,y) …[+564 chars]`
+
+### 🧑 User — 2026-11-17T01:33:58.390Z
+
+> ↩︎ result: (302, 936) needed [0.34 0.42 0.55] effective(rendered) [0.34 0.41 0.43] tex texel [0.37 0.43 0.47] uv 0.317 0.291
+> (312, 946) needed [0.25 0.18 0.33] effective(rendered) [0.33 0.33 0.41] tex texel [0.34 0.35 0.42] uv 0.355 0.249
+> (302, 956) needed [0.38 0.48 0.62] effective(rendered) [0.36 0.43 0.45] tex texel [0.37 0.44 0.45] uv 0.335 0.129
+> (322, 936) needed [0.34 0.42 0.44] effective(rendered) [0.34 0.4  0.42] tex texel [0.34 0.4  0.42] uv 0.368 0.355
+> (340, 936) needed [0.33 0.37 0.4 ] effective(rendered) [0.31 0.35 0.38] tex texel [0.3  0.32 0.37] uv 0.399 0.387
+> (420, 930) needed [-0.   -0.01  0.11] effective(rendered) [0.   0.   0.12] tex texel [0.   0.   0.11] uv 0.505 0.492
+> (302, 936) texels per px: x-step [3.79 1.26] y-step [ 1.5  -1.92]
+> (420, 930) texels per px: x-step [1.32 0.03] y-step [ 0.02 -2.06]
+
+### 🤖 Claude — 2026-11-17T01:34:18.113Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/decomp.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as ndi\nfrom parts import approved_parts\nP,a,m=approved_parts()\ng=np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(float)\nd=np.abs(g-a).mean(-1)\nab=ndi.gaussian_filter(a,(3,3,0)); gb=ndi.gaussian_filter(g,(3,3,0)); dl=np.abs(gb-ab).mean( …[+954 chars]`
+
+### 🧑 User — 2026-11-17T01:34:19.444Z
+
+> ↩︎ result: pom    mean  25.2 | lowfreq(blur3)  11.8 | edge band px   1318 mean  56.3 share 0.035 | interior mean  21.6 share 0.117 | signed [-6.7  2.2  0.6]
+> crown  mean  21.4 | lowfreq(blur3)  12.9 | edge band px   1825 mean  62.2 share 0.054 | interior mean  16.9 share 0.132 | signed [-5.2 -0.8  2.2]
+> cuff   mean  18.6 | lowfreq(blur3)  10.3 | edge band px    828 mean  54.4 share 0.021 | interior mean  16.4 share 0.107 | signed [ 1.7  4.2 -1.4]
+> star   mean  37.0 | lowfreq(blur3)  22.3 | edge band px      0 mean   0.0 share 0.000 | interior mean  37.0 share 0.047 | signed [-10.9  -8.1   5.4]
+> body   mean  23.2 | lowfreq(blur3)  13.7 | edge band px   6754 mean  53.3 share 0.170 | interior mean  17.8 share 0.318 | signed [-6.6 -1.9 -0.4]
+> ALL    mean  22.8 | lowfreq(blur3)  13.0 | edge band px  10725 mean  55.3 share 0.280 | interior mean  18.6 share 0.720 | signed [-5.2 -0.3  0.3]
+> 1030 body interior: game [234.  81. 181.] appr [231.  88. 182.] abs 18.1
+> 1050 body interior: game [234.  96. 194.] appr [239. 108. 201.] abs 21.8
+> 1070 body interior: game [243.  96. 195.] appr [246. 104. 202.] abs 17.6
+> 1090 body interior: game [243.  82. 178.] appr [245.  87. 184.] abs 14.2
+> 1110 body interior: game [235 …[+262 chars]
+
+### 🤖 Claude — 2026-11-17T01:34:51.086Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/sil.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom geom import load_uv\nfrom parts import approved_parts\nP,a,m=approved_parts()\nuv=load_uv(sys.argv[1]); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\nG=ids>0\npomA=P['pom']; pomG=ids==4\nprint('row | approved all x0-x1 | game all x0-x1 | dL dR')\nfor y in list(range(780,9 …[+756 chars]`
+
+### 🧑 User — 2026-11-17T01:34:51.860Z
+
+> ↩︎ result: row | approved all x0-x1 | game all x0-x1 | dL dR
+> 780 | 407 445 | 409 454 | 2 9
+> 795 | 380 474 | 375 473 | -5 -1
+> 810 | 367 486 | 370 484 | 3 -2
+> 825 | 361 493 | 362 492 | 1 -1
+> 840 | 357 496 | 359 495 | 2 -1
+> 855 | 361 495 | 360 498 | -1 3
+> 870 | 363 492 | 361 486 | -2 -6
+> 885 | 331 521 | 334 511 | 3 -10
+> 1000 | 283 566 | 284 563 | 1 -3
+> 1012 | 287 561 | 282 592 | -5 31
+> 1024 | 249 590 | 244 607 | -5 17
+> 1036 | 240 604 | 236 610 | -4 6
+> 1048 | 234 607 | 230 609 | -4 2
+> 1060 | 239 606 | 238 600 | -1 -6
+> 1072 | 247 595 | 252 568 | 5 -27
+> 1084 | 276 566 | 273 563 | -3 -3
+> 1096 | 280 563 | 272 567 | -8 4
+> 1108 | 285 559 | 278 559 | -7 0
+> 1120 | 288 554 | 286 554 | -2 0
+> 1132 | 295 547 | 289 545 | -6 -2
+> 1144 | 298 543 | 298 534 | 0 -9
+> 1156 | 305 534 | 316 531 | 11 -3
+> 1168 | 320 520 | 330 513 | 10 -7
+> 1180 | 349 485 | 357 501 | 8 16
+> 1192 | - | 371 442
+> bottom approved 1188 game 1198
+> extra game px outside approved mask 3782  approved px not covered by game 3684
+
+### 🤖 Claude — 2026-11-17T01:35:10.124Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/hf.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as ndi\nfrom parts import approved_parts\nP,a,m=approved_parts()\nedge=m&~ndi.binary_erosion(m,iterations=8)\nL=lambda x:(x*[0.2126,0.7152,0.0722]).sum(-1)\nfor f in sys.argv[1:]:\n    g=np.asarray(Image.open(f).convert('RGB')).astype(float)\n    print(f …[+588 chars]`
+
+### 🧑 User — 2026-11-17T01:35:12.584Z
+
+> ↩︎ result: new
+>   pom    hf std approved  33.9 game  27.1 corr  0.52
+>   crown  hf std approved  34.7 game  26.1 corr  0.72
+>   cuff   hf std approved  28.5 game  19.9 corr  0.57
+>   star   hf std approved  22.2 game  24.2 corr  0.04
+>   body   hf std approved  20.5 game  16.9 corr  0.49
+> qa/pilot05/full_reference_match/benny/before.png
+>   pom    hf std approved  33.9 game  18.2 corr -0.03
+>   crown  hf std approved  34.7 game  24.8 corr -0.01
+>   cuff   hf std approved  28.5 game  18.7 corr  0.01
+>   star   hf std approved  22.2 game  19.3 corr -0.06
+>   body   hf std approved  20.5 game  19.2 corr -0.00
+
+### 🤖 Claude — 2026-11-17T01:35:53.936Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/refine.py", "content": "\"\"\"benny05 bake refinement (one iterative back-projection step): the albedo the renderer actually produced in a REAL\ncapture of the installed maps is compared per pixel with the albedo the approved pixel needs, and the difference is\nsplatted back into the seen texels (ratio of sums, like bake.py) -> undoes the splat + texture filtering blur.\nusage: python3 refine.py <run_dir: uv.f32 + cal*.png of the SAME geometry / normals> <capture.png> <tex_in> <tex_out>\n       [--lam 0.8] [--parts b …[+3655 chars]`
+
+### 🧑 User — 2026-11-17T01:35:53.961Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/refine.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:35:55.786Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; mkdir -p $W/f1; cp assets/textures/benny05/*.png $W/f1/ 2>/dev/null; mkdir -p $W/f1/in && mv $W/f1/*.png $W/f1/in/; timeout 600 python3 $W/refine.py $W/r9c qa/pilot05/full_reference_match/benny/cap/new/05.png $W/f1/in $W/f1/out --lam 0.8", "description": "Run one back-projection refinement step on the maps"}`
+
+### 🧑 User — 2026-11-17T01:36:00.327Z
+
+> ↩︎ result: {
+>  "body": {
+>   "px": 34916,
+>   "texels": 29190,
+>   "mean_abs_corr": 0.0491,
+>   "mean_change": 0.0219,
+>   "pixel_err_before_lin": 0.0549
+>  },
+>  "crown": {
+>   "px": 15648,
+>   "texels": 26469,
+>   "mean_abs_corr": 0.0275,
+>   "mean_change": 0.0113,
+>   "pixel_err_before_lin": 0.0288
+>  },
+>  "brim": {
+>   "px": 12578,
+>   "texels": 20147,
+>   "mean_abs_corr": 0.0175,
+>   "mean_change": 0.0074,
+>   "pixel_err_before_lin": 0.0184
+>  },
+>  "pom": {
+>   "px": 10824,
+>   "texels": 11564,
+>   "mean_abs_corr": 0.0366,
+>   "mean_change": 0.0184,
+>   "pixel_err_before_lin": 0.0438
+>  },
+>  "armL": {
+>   "px": 1260,
+>   "texels": 1787,
+>   "mean_abs_corr": 0.0266,
+>   "mean_change": 0.0125,
+>   "pixel_err_before_lin": 0.0333
+>  },
+>  "armR": {
+>   "px": 1174,
+>   "texels": 1718,
+>   "mean_abs_corr": 0.0301,
+>   "mean_change": 0.0139,
+>   "pixel_err_before_lin": 0.0365
+>  }
+> }
+
+### 🤖 Claude — 2026-11-17T01:36:04.159Z
+
+The refinement counts more texels than the bake kept (e.g. body 29,190 vs 24,181): it would re-introduce the foam texels the bake rejected. I'll restrict corrections to the bake's own seen masks.
+
+### 🤖 Claude — 2026-11-17T01:36:08.673Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/refine.py'\ns=open(p).read()\na=\"        seen = cnt > 0.25\\n        corr\"\nb=\"        seen = cnt > 0.25\\n        if seen_dir:  # only texels the bake itself kept (its colour-family rejects stay filled)\\n            seen &= np.asarray(Image.open(f'{seen_dir}/{name}_seen.png')) > 0\\n        corr\"\nassert s.count(a)==1; s=s.replace(a,b)\na2=\"    only = sys.argv\"\nb2=\"    seen_dir = sys.argv[sys.argv.index('--seen') + 1] if '--seen' in sys.argv else None\\n    only = sys.argv\"\nassert  …[+607 chars]`
+
+### 🧑 User — 2026-11-17T01:36:13.686Z
+
+> ↩︎ result: body {'px': 34916, 'texels': 24181, 'mean_abs_corr': 0.0257, 'mean_change': 0.0127, 'pixel_err_before_lin': 0.0549}
+> crown {'px': 15648, 'texels': 25744, 'mean_abs_corr': 0.0272, 'mean_change': 0.0109, 'pixel_err_before_lin': 0.0288}
+> brim {'px': 12578, 'texels': 20027, 'mean_abs_corr': 0.017, 'mean_change': 0.0073, 'pixel_err_before_lin': 0.0184}
+> pom {'px': 10824, 'texels': 10486, 'mean_abs_corr': 0.0286, 'mean_change': 0.0139, 'pixel_err_before_lin': 0.0438}
+> armL {'px': 1260, 'texels': 1702, 'mean_abs_corr': 0.0221, 'mean_change': 0.011, 'pixel_err_before_lin': 0.0333}
+> armR {'px': 1174, 'texels': 1612, 'mean_abs_corr': 0.0248, 'mean_change': 0.0132, 'pixel_err_before_lin': 0.0365}
+
+### 🤖 Claude — 2026-11-17T01:36:16.343Z
+
+Now install the refined maps (originals kept in `work/f1/in` for a clean revert) and capture to verify.
+
+### 🤖 Claude — 2026-11-17T01:36:21.350Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; for f in body crown brim pom armL armR; do cp $W/f1/out/$f.png assets/textures/benny05/$f.png; done; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&benny05=1\" --out=$B/cap/new_f1 > $SP/cap_f1.log 2>&1; echo cap_rc=$?; cp $SP/captu …[+403 chars]`
+
+### 🧑 User — 2026-11-17T01:36:38.187Z
+
+> ↩︎ result: cap_rc=0
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 31.93, 'within_10': 0.4609, 'within_20': 0.5494, 'ssim_lum': 0.547, 'mean_signed_rgb': [2.3, 0.6, -1.2]}
+> benny_and_hat                px   93061  mean  21.28  <=10 0.519  <=20 0.697  ssim 0.612  signed [-5.2, -0.4, 0.3]
+> pom     12764   23.1  0.65    0.149  [124  20 23
+> crown   18362   19.5  0.74    0.181  [223 168 24
+> cuff    14689   16.7  0.78    0.124  [112  16 23
+> star     2683   37.0  0.41    0.050  [252 217  3
+> body    44566   22.0  0.68    0.496  [242  79 18
+> ALL 93061 21.28 0.697
+> new_f1
+>   pom    hf std approved  33.9 game  28.4 corr  0.58
+>   crown  hf std approved  34.7 game  27.5 corr  0.75
+>   cuff   hf std approved  28.5 game  21.0 corr  0.61
+>   star   hf std approved  22.2 game  24.2 corr  0.04
+>   body   hf std approved  20.5 game  17.5 corr  0.54
+
+### 🤖 Claude — 2026-11-17T01:36:46.586Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; timeout 600 python3 $W/refine.py $W/r9c $B/cap/new_f1/05.png $W/f1/out $W/f2 --lam 0.8 --seen $W/r9c/tex | python3 -I -c \"\nimport sys,json; d=json.load(sys.stdin)\nfor k,v in d.items(): print(k,v)\"; for f in body crown brim pom armL armR; do cp $W/f2/$f.png assets/textures/benny05/$f.png; done; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; STACK='proj05=1&projwall05=1&projring05=1&projf …[+494 chars]`
+
+### 🧑 User — 2026-11-17T01:37:07.977Z
+
+> ↩︎ result: body {'px': 34916, 'texels': 24181, 'mean_abs_corr': 0.0195, 'mean_change': 0.009, 'pixel_err_before_lin': 0.0504}
+> crown {'px': 15648, 'texels': 25744, 'mean_abs_corr': 0.0222, 'mean_change': 0.0079, 'pixel_err_before_lin': 0.0242}
+> brim {'px': 12578, 'texels': 20027, 'mean_abs_corr': 0.0136, 'mean_change': 0.0053, 'pixel_err_before_lin': 0.0151}
+> pom {'px': 10824, 'texels': 10486, 'mean_abs_corr': 0.0221, 'mean_change': 0.0099, 'pixel_err_before_lin': 0.0385}
+> armL {'px': 1260, 'texels': 1702, 'mean_abs_corr': 0.0179, 'mean_change': 0.0086, 'pixel_err_before_lin': 0.0295}
+> armR {'px': 1174, 'texels': 1612, 'mean_abs_corr': 0.0195, 'mean_change': 0.0099, 'pixel_err_before_lin': 0.0316}
+> cap_rc=0
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 31.87, 'within_10': 0.4634, 'within_20': 0.5504, 'ssim_lum': 0.5484, 'mean_signed_rgb': [2.3, 0.6, -1.2]}
+> benny_and_hat                px   93061  mean  20.37  <=10 0.556  <=20 0.712  ssim 0.631  signed [-5.2, -0.4, 0.4]
+> pom     12764   22.1  0.67    0.149  [124  20 23
+> crown   18362   18.3  0.75    0.177  [223 168 24
+> cuff    14689   15.5  0.80    0.120  [112  16 23
+> star     2683   37.0  0.41    0.052  [252 217  3
+> body    44566   21.4  0.70  …[+43 chars]
+

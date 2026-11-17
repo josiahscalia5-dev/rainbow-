@@ -10,6 +10,8 @@ const q = new URLSearchParams(location.search);
 const bg = document.getElementById('bg');
 bg.src = q.get('bg') || '/qa/pilot05/full_reference_match/hud/harness_bg_stack_nohud.png';
 const hud = createHud();
+// tuning only: extra CSS appended after the HUD's own rules (?css=<url-encoded rules>), so trial values never touch hud.ts
+if (q.get('css')) { const st = document.createElement('style'); st.textContent = q.get('css'); document.head.appendChild(st); }
 hud.setStage('05'); hud.setCoins(Number(q.get('coins') || 1420)); hud.setHearts(5); hud.setVisible(true);
 await bg.decode();
 await Promise.all([...document.querySelectorAll('#hud img')].map((i) => i.decode().catch(() => {})));
