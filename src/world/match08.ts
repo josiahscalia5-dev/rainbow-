@@ -26,6 +26,9 @@ interface Layout {
 
 export interface Match08 {
   group: THREE.Group;
+  /** the approved picture's splash ring around Benny (camera-facing card; Game places it at Benny + splashOffset) */
+  splash: THREE.Mesh;
+  splashOffset: THREE.Vector3;
   /** render the projector depth map once (needs the renderer); call after the group is in the scene */
   bakeDepth(renderer: THREE.WebGLRenderer): void;
   /** live post values for the inverse (exposure from the renderer, render size for the vignette inverse) */
@@ -186,8 +189,26 @@ export async function buildMatch08(): Promise<Match08> {
     }
   }
 
+  // Benny's splash ring, cut from the ORIGINAL approved picture (white crest + droplets around his base; alpha = white,
+  // low saturation): a card that rides with him, facing the camera, 1.3 u in front of his centre
+  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(new URL('../../assets/textures/match08/splash08.json', import.meta.url).href).then((r) => r.json());
+  const spTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/splash08.png', import.meta.url).href);
+  spTex.colorSpace = THREE.NoColorSpace;
+  const splash = new THREE.Mesh(new THREE.PlaneGeometry(SP.w, SP.h), new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, fog: false,
+    uniforms: { uTex: { value: spTex }, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes },
+    vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: `uniform sampler2D uTex; uniform vec4 uPjPost; uniform vec2 uPjRes; varying vec2 vUv;\n${PROJ05_INVERSE}
+void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragColor = vec4(pjInverse(c.rgb), c.a); }`,
+  }));
+  splash.name = 'm08_splash';
+  splash.visible = false;
+  splash.renderOrder = 5;
+
   return {
     group,
+    splash,
+    splashOffset: new THREE.Vector3(...SP.offset),
     bakeDepth(renderer) {
       const prevRT = renderer.getRenderTarget();
       const scene = new THREE.Scene();

@@ -105,8 +105,13 @@ export async function startGame(canvas: HTMLCanvasElement) {
   scene.add(coins.group);
   // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
   const m08 = MATCH['08'] ? await buildMatch08() : null;
-  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); }
-  const M08_HIDE = ['ribbon', 'foam', 'bubbles'];
+  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+  const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+  // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+  // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+  const M08_BENNY = { hat: 0.86, lift: 0.16, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+  const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
   let m08Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
@@ -526,6 +531,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
       m08Applied = m08On;
     }
     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+    if (m08 && b08 && b08Rest) {
+      b08.hat?.scale.setScalar(m08On ? b08Rest.hat * M08_BENNY.hat : b08Rest.hat);
+      if (b08.aux) b08.aux.position.y = b08Rest.y + (m08On ? M08_BENNY.lift : 0);
+      const cm = b08.crown?.material as THREE.MeshStandardMaterial | undefined;
+      cm?.color.copy(m08On ? M08_BENNY.crown : b08Rest.crown);
+      m08.splash.visible = m08On;
+      if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+    }
     fill.position.copy(camera.position);
     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
   };

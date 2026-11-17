@@ -5928,3 +5928,157 @@ Compiles. Adding the remaining items to the task list, then testing the locked v
 
 > 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/new5 --q=match08=1 2>&1 | tail -1 | cut -c1-60; cp $M/capture_log.bak qa/capture_log.json; timeout 900 node tools/match08/motion08.mjs $M/motion5 2>&1 | tail -2; python3 -I -c \"\nfrom PIL import Image\nnames=['f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_steer']\nims=[Image.open('$M/new5/08.png').convert('RGB').resize((288,512))]+[Image.open('$M/moti …[+301 chars]`
 
+### 🧑 User — 2026-11-17T13:55:29.515Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-
+> s_left_steer s 397.91 lat -1.85 08
+> s_right_steer s 397.90 lat 1.85 08
+
+### 🤖 Claude — 2026-11-17T13:55:34.246Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/motion5/montage.png"}`
+
+### 🧑 User — 2026-11-17T13:55:34.305Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:55:45.851Z
+
+> 🔧 **Bash** `{"command": "ls src/characters/benny/; grep -n -E \"name ===|getObjectByName|\\.name|hat|pom|beanie|stripe|scale\\.set|export (async )?function|export interface\" src/characters/benny/runtime.ts | head -30 | cut -c1-160", "description": "Inspect Benny's runtime and part names"}`
+
+### 🧑 User — 2026-11-17T13:55:45.931Z
+
+> ↩︎ result: benny-lab.html
+> benny-lab.ts
+> build.ts
+> fur.ts
+> runtime.ts
+> textures.ts
+> 31:export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {
+> 42: * Wave 4: 0.30 → 0.22 together with the ride lean, which shows more of his back: keeps the pom-pom top at the
+> 44: * Wave 5: 0.22 → 0.12. Measured in the live 05 capture with the re-exported GLB (flat-ID mask): 0.22 put the pom top at
+> 45: * 748 and the bottom at 1178; 0.12 gives bbox x 231–612 / y 766–1188, cuff bottom 1029, hat incl. pom 62 % / body 38 %
+> 58: * rear chase cameras (04–10: ≈ 25° above him) see the beanie and the plush back the way the references paint
+> 59: * them (≈ 10–12° above: knit stripes and cuff read as level bands, the dome as a tall cap, not a flat disc).
+> 71:export function createBennyRuntime(
+> 77:  root.name = 'Benny';
+> 85:    if (m.isMesh && m.name.startsWith('fur_') && m.userData?.fur) toReplace.push(m);
+> 96:  // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name
+> 105:        if (m.isMesh && m.name.startsWith(prefix)) (m.material as THREE.MeshStandardMaterial).color?.set(`#${hex}`);
+> 110:  const get = (n: string) => scene.getObjectBy …[+1195 chars]
+
+### 🤖 Claude — 2026-11-17T13:56:11.502Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cat > $M/bennytree.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright(); const vite = await startVite(5267); const browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 } });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&match08=1`);\n  await page.waitForFunction(() => window.__rainbow?.ready === true || window._ …[+930 chars]`
+
+### 🧑 User — 2026-11-17T13:56:28.668Z
+
+> ↩︎ result: Benny [Group] s=1.00
+>   AuxScene [Group] s=1.00
+>     benny_root [Object3D] s=1.00
+>       body [Object3D] s=1.00
+>         blushL [Mesh] mesh col=ffffff s=1.00
+>         blushR [Mesh] mesh col=ffffff s=1.00
+>         nose [Mesh] mesh col=7d2550 s=1.30
+>           mouth_happy [Mesh] mesh col=ffffff s=1.00
+>           mouth_dizzy [Mesh] mesh col=ffffff s=1.00
+>           mouth_peek [Mesh] mesh col=ffffff s=1.00
+>           palmL [Mesh] mesh col=ffffff s=1.00
+>           fur_armL [Mesh] mesh col=ffffff s=1.00
+>           palmR [Mesh] mesh col=ffffff s=1.00
+>           fur_armR [Mesh] mesh col=ffffff s=1.00
+>           soleL [Mesh] mesh col=ffffff s=1.00
+>           fur_footL [Mesh] mesh col=ffffff s=1.00
+>           soleR [Mesh] mesh col=ffffff s=1.00
+>           fur_footR [Mesh] mesh col=ffffff s=1.00
+>           hat_brim [Mesh] mesh col=7868a0 s=1.00
+>           hat_crown [Mesh] mesh col=eae6d6 s=1.00
+>           hat_star [Mesh] mesh col=ffc61c s=1.00
+>         fur_body [Mesh] mesh col=ffffff s=1.00
+
+### 🤖 Claude — 2026-11-17T13:56:36.914Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; sed -i 's#const lines = \\[\\]; const walk.*#const chain = (n) => { const o = b.getObjectByName(n); const a = []; let p = o; while (p \\&\\& p !== b) { a.push(p.name + \"(\" + p.type + \")\"); p = p.parent; } return n + \": \" + a.join(\" < \"); }; return [\"hat_crown\",\"hat_brim\",\"pom\",\"fur_body\",\"fur_armL\",\"eyeL_happy\"].map(chain).join(\"\\\\n\") + \"\\\\nmap crown: \" + !!b.getObjectByName(\"hat_crown\").material.map;#; s#walk(b, 0); return lines.slice(0, 70).join(.\\\\n.);##' $M/ …[+174 chars]`
+
+### 🧑 User — 2026-11-17T13:56:51.355Z
+
+> ↩︎ result: hat_crown: hat_crown(Mesh) < hat(Object3D) < body(Object3D) < benny_root(Object3D) < AuxScene(Group)
+> hat_brim: hat_brim(Mesh) < hat(Object3D) < body(Object3D) < benny_root(Object3D) < AuxScene(Group)
+> pom: pom(Object3D) < hat(Object3D) < body(Object3D) < benny_root(Object3D) < AuxScene(Group)
+> fur_body: fur_body(Mesh) < body(Object3D) < benny_root(Object3D) < AuxScene(Group)
+> fur_armL: fur_armL(Mesh) < armL(Object3D) < body(Object3D) < benny_root(Object3D) < AuxScene(Group)
+> eyeL_happy: eyeL_happy(Mesh) < eyeL(Object3D) < eyes(Object3D) < body(Object3D) < benny_root(Object3D) < AuxScene(Group)
+> map crown: true
+
+### 🤖 Claude — 2026-11-17T13:57:29.446Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && python3 -I - <<EOF\nimport json, math, numpy as np, cv2\nfrom PIL import Image\nA=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB'))\nx0,y0,x1,y1=130,1000,740,1300\ncrop=A[y0:y1,x0:x1].astype(np.float32)/255\nhsv=cv2.cvtColor((crop*255).astype(np.uint8),cv2.COLOR_RGB2HSV).astype(np.float32); S,V=hsv[...,1]/255,hsv[...,2]/255\na=np.clip((V-0.72)/0.18,0,1)*np.clip((0.36-S)/0.22,0,1)\nyy,xx=np.mgrid[y0:y1,x0:x1]\nell=((xx-432)/300.0)**2+((yy-11 …[+1668 chars]`
+
+### 🧑 User — 2026-11-17T13:57:29.854Z
+
+> ↩︎ result: card w 3.41 h 1.68 offset [ 0.3  -0.01  0.6 ] alpha>0.5 px 8605
+
+### 🤖 Claude — 2026-11-17T13:57:32.586Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/splash_preview.png"}`
+
+### 🧑 User — 2026-11-17T13:57:32.614Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:57:42.456Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\nim=np.asarray(Image.open('assets/textures/match08/splash08.png')).astype(np.float32)/255\nrgb,a=im[...,:3],im[...,3]\nhsv=cv2.cvtColor((rgb*255).astype(np.uint8),cv2.COLOR_RGB2HSV).astype(np.float32)\ngold=(hsv[...,0]>=5)&(hsv[...,0]<=40)&(hsv[...,1]>40); a[gold]=0\nH,W=a.shape; yy,xx=np.mgrid[:H,:W]\na[(yy<60)&(xx>150)&(xx<460)]=0                       # fur highlights above his base\na=cv2.GaussianB …[+371 chars]`
+
+### 🧑 User — 2026-11-17T13:57:42.807Z
+
+> ↩︎ result: alpha>0.5 px 7907
+
+### 🤖 Claude — 2026-11-17T13:58:11.562Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]; s=s.replace(old,new)\nrep('''export interface Match08 {\n  group: THREE.Group;''','''export interface Match08 {\n  group: THREE.Group;\n  /** the approved picture's splash ring around Benny (camera-facing card; Game places it at Benny + splashOffset) */\n  splash: THREE.Mesh;\n  splashOffset: THREE.Vector3;''')\nrep('''  return {\n    group,\n    bakeDepth(renderer) {''','''  // Benny's splash ring, cut from the ORIGINAL approved picture (white c …[+3698 chars]`
+
+### 🧑 User — 2026-11-17T13:58:15.313Z
+
+> ↩︎ result: wired
+> tsc clean
+
+### 🤖 Claude — 2026-11-17T13:58:20.731Z
+
+Compiles. Capturing and comparing Benny close up against your picture:
+
+### 🤖 Claude — 2026-11-17T13:58:24.981Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/new6 --q=match08=1 2>&1 | tail -1 | cut -c1-40; cp $M/capture_log.bak qa/capture_log.json; python3 -I -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/08_final_spin_chamber.png').convert('RGB').crop((180,800,700,1300)); b=Image.open('$M/new5/08.png').convert('RGB').crop((180,800,700,1300)); c=Image.open('$M/new6/08.png').convert('RGB').crop((180,800,70 …[+248 chars]`
+
+### 🧑 User — 2026-11-17T13:58:43.880Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-
+
+### 🤖 Claude — 2026-11-17T13:58:48.945Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/benny_cmp.png"}`
+
+### 🧑 User — 2026-11-17T13:58:48.992Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:59:20.692Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, math, numpy as np\ncam=json.load(open('assets/textures/match08/cam08_locked.json')); MW=np.array(cam['mw'],float).reshape(4,4).T; C=MW[:3,3]; R=MW[:3,:3]\nW,H=864,1536; t=math.tan(math.radians(cam['fov'])/2); asp=W/H\ndef ray(u,v):\n    xx_,yy_=u/W*2-1,1-v/H*2; d=[REDACTED-EMAIL]([xx_*t*asp,yy_*t,-1.0]); return d/np.linalg.norm(d)\nx0,y0,x1,y1=130,1000,740,1300\nB=np.array(cam['benny']); fwd=-R[:,2]; dB=float(np.dot(B-C,fwd))-1.3\ndef at(u,v): d=ray(u,v); return C+d*(dB/np.dot(d,fwd))\nc=at((x0+x1)/2,(y0+y1)/2); w=np.linalg.norm(at(x1,(y0+y1)/2)- …[+1772 chars]`
+
+### 🧑 User — 2026-11-17T13:59:44.882Z
+
+> ↩︎ result: card 1.3 u in front: w 3.07 h 1.51
+> 1
+> tsc clean
+> 08 → /tmp/claude-0/-home-user-rainbow-
+
+### 🤖 Claude — 2026-11-17T13:59:47.627Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/benny_cmp2.png"}`
+
+### 🧑 User — 2026-11-17T13:59:47.669Z
+
+> ↩︎ result: [image]
+

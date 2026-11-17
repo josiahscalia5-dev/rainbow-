@@ -437,6 +437,16 @@
    "sha256": "4ac472a53107aaa1c80f423e0511cf11f7f91add02009dd36188d2fa4ee32558"
   },
   {
+   "path": "assets/textures/match08/splash08.json",
+   "bytes": 344,
+   "sha256": "0a63c8786cbac1d30601b8c04837b3e3c5fff6df70cb374f377d6ffbef7ffd28"
+  },
+  {
+   "path": "assets/textures/match08/splash08.png",
+   "bytes": 430069,
+   "sha256": "40de047c30816519b8e21c4b925d3d0c5ba1602beab6a23f649cdc66e725f7dd"
+  },
+  {
    "path": "assets/textures/tunnel05/frame05.json",
    "bytes": 492,
    "sha256": "550aa836537b2d9c75b444b1e7fc184d37ba5b37d54e306316fa606235aed533"
@@ -554,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "ca7f47d4dd51029b5909e2b66031ee3797c4b7014408ae1911492356e5d73485"
+   "sha256": "f0ac9339784d20cba593600080f64e7411430ef9456a6b94452dd2e8cba7ca8b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7783,8 +7793,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 36769,
-   "sha256": "90842ab850887fc11199e3f44d524b87309c6c8ac65bde93fd8bba9c92563e65"
+   "bytes": 38052,
+   "sha256": "8f0ed2eb5cc7212de4140eb559a3652c6c0737a0ebc440eb5b0d0275947ed2d6"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -7928,8 +7938,8 @@
   },
   {
    "path": "src/world/match08.ts",
-   "bytes": 11453,
-   "sha256": "a5ee78f2516f24e92db8912f3966f06fb118a3e1245a09a48759b84d2ce6774d"
+   "bytes": 12979,
+   "sha256": "dc6796d383b4c090e5a92cf5cc6864804dc4f4c76ca092178001988fb8c6e10b"
   },
   {
    "path": "src/world/materials.ts",
