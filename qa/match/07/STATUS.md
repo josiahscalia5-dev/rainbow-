@@ -4,7 +4,7 @@
 * **Assigned specialist:** Screen 07 workstream session (round 3, account 3); no project subagent running
 * **Working branch:** `claude/rainbow-s07-match-c3` — started from `e34e02582e2730d944a20ff661b0cb4aed95330e`
   (= `claude/rainbow-s07-match-c2` @ `21a1fdd5` + one autosave; the -c2 branch had no newer commit at startup)
-* **Running-session status:** MILESTONE 1 finished and verified; waiting for the lead
+* **Running-session status:** MILESTONE 1 finished and verified (`412297e5`); PAUSED by the lead (weekly usage warning, 17:57 UTC) — MILESTONE 2 not started; waiting for the lead
 * **Latest verified commit:** see the final commit of this round in the lead status message (remote == HEAD checked after each push)
 * **Completed improvements:** camera solved to the approved view; real 3D tube / rings / paddles / water proxies fitted to
   the picture; the user's original pixels camera-projected (post chain undone); ring-structured wall tile + seamless river
