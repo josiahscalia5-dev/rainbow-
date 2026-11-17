@@ -3112,3 +3112,34 @@ I mentioned torn scenery in that caption without having looked at these frames, 
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 24); do out=$(python3 scripts/rainbow-autosave.py --reason manual:lead-r4 --message \"Lead r4: Benny 5b verified (0067fc7b, fuller round body per user decision), 08 scenery-in-motion started (session_01Kbt6BTJwPYVeZGGEUyEMXY), roster + progress\" 2>&1); echo \"$out\" | grep -q \"another autosave is running\" || break; sleep 5; done; echo \"$out\" | grep -E '\"commit\"|rror' | head -2; echo \"remote $(git ls-remote origin refs/heads/ccr-067047f0-up5d1m | cut -c1-12) local $(git rev-parse --short=12 HEAD)\"", "description": "Commit/push roster; verify remote equals  …[+26 chars]`
 
+### 🧑 User — 2026-11-17T19:24:13.323Z
+
+> ↩︎ result: "commit": "02aa087fc7d9873b9feb8260cb8346aafac2c35f",
+> remote 02aa087fc7d9 local 02aa087fc7d9
+
+### 🤖 Claude — 2026-11-17T19:24:22.039Z
+
+Benny's round with your new direction is finished, and I've sent you the comparison pictures above: your approved Benny, round 3b, and the new version, plus three frames of the new one swimming and steering.
+
+**How the new Benny compares to your picture:**
+- **Body shape:** much closer. He's now a full, round pink ball that is wider than the beanie brim, like yours (your picture's body is about 1.09× the brim width; round 3b was 0.93×, the new one is about 1.1×). To get there the body was made a little wider and the beanie a little smaller.
+- **Kept from round 3b:** the knitted beanie, ribbed cuff, gold star and splash.
+- **Still different:** the fur looks like streaky radial strands, not your painting's soft layered clumps, and there are pale streaks by his left arm. The pom-pom is spikier. The specialist reports that no setting change gets there; it needs a new fur treatment, which would be a later round.
+- **The score is lower (65.3 % → 62.2 % match):** the smaller beanie moves the pom-pom and star slightly off their painted spots. It was chosen because the body shape looks closer to yours.
+- **Earlier versions are all kept:** round 2, round 3b, round 4 and the slimmer-body test can each be switched back on.
+- **Phone build:** `rainbow-debug-08benny-2026-11-17-r5b.apk`, saved and not yet tested on a phone. Say if you want it sent.
+
+**Scenery around him:** the torn piece in the bottom third of the steering frames is the Screen 08 scenery problem, not Benny. The Benny specialist also noticed that turning on the Screen 08 match changes how Screens 04–07 look, which shouldn't happen. Both are now part of the scenery task.
+
+**Working now (two at a time):**
+- **Screen 07:** finishing its coins, water, foam and rings, with the 07→08 drop kept intact.
+- **Screen 08 scenery while moving:** fixing the tears and copied scenery, the pipe/arch that blocks Benny when he steers right, and the effect on Screens 04–07. It's still setting up; I sent its task a second time in case the first message is dropped.
+
+**Next in line:** Screens 05, 06 and 04.
+
+All work is saved on GitHub, nothing is merged, no paid jobs have run, and nothing is marked approved.
+
+### 🧑 User — 2026-11-17T19:24:23.764Z
+
+Yes u can send me my other mobile app screens apk file so I can see preview of them on my phone
+
