@@ -128,6 +128,9 @@ void main() {
       // M2 '?m07ang=1': painted relief (ring flanges, paddles) flattened on the proxy doubles when seen from another
       // direction: use the picture only where the view direction is close to the approved view's (identical there)
       if (uAng.x > 0.0) w *= smoothstep(uAng.y, uAng.x, dot(normalize(cameraPosition - vW), normalize(uProjPos - vW)));
+      // m07gold (round 4): the paddle blocks show the picture only near the approved view direction; seen from beside or
+      // below while passing they are solid polished gold (no picture of the wall smeared over their faces)
+      if (uGoldLit > 0.5 && uMode < 0.5) w *= smoothstep(0.970, 0.995, dot(normalize(cameraPosition - vW), normalize(uProjPos - vW)));
       t = mix(pc, texture2D(uPlate, uv).rgb, w);
     }
   }
@@ -144,15 +147,18 @@ export async function buildMatch07(): Promise<Match07> {
     t.wrapS = t.wrapT = wrap; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8;
     return t;
   };
-  const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-    load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load('tile_wall.png', THREE.RepeatWrapping),
-    load('tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
-    load('plate07_fillmask.png', THREE.ClampToEdgeWrapping),
-  ]);
   // MILESTONE 2 test switches (one factor each, qa/match/07/m2/NOTES.md); off = the MILESTONE 1 result unchanged
   const fixFill = flag05('m07fill');
   const fixAng = flag05('m07ang');
   const fixGold = flag05('m07gold');
+  const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)
+  const fixRiver = flag05('m07river'); // the river tile without the slice of painted gold ring (orange smears on the near water)
+  const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
+    load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load(fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),
+    load(fixRiver ? 'tile_river_clean.png' : 'tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
+    // m07fill (round 4): feathered inside the filled area so the river tile fades in without a hard-edged patch
+    load(fixFill ? 'plate07_fillmask_soft.png' : 'plate07_fillmask.png', THREE.ClampToEdgeWrapping),
+  ]);
 
   // the projector = the locked game camera the picture was matched to
   const [W, H] = L.camera.size;
