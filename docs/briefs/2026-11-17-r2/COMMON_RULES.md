@@ -52,6 +52,8 @@ views; one factor at a time, keep only what is measurably or visibly closer.
 ## Money and secrets
 No paid job (World Labs / Marble, fal.ai, Meshy, Rodin, …) unless your brief explicitly allows one AND the lead has sent
 you the go message. Never request credentials yourself, never print, log or commit a key.
+**User order 2026-11-17 ~16:45 UTC:** the Screen 04 fal authorisation covers exactly ONE paid edit. There is NO
+automatic retry: any additional paid attempt (for any screen) needs the user's explicit approval through the lead.
 
 ## Reporting (visual terms — the user does not want camera/movement jargon)
 * APPROVED | BEFORE | NEW as SEPARATE full-size pictures (no grid as the main result) + numbers from
@@ -69,6 +71,13 @@ you the go message. Never request credentials yourself, never print, log or comm
 ## Saving
 The five-minute autosave pushes your continuation branch. Also commit + push at each milestone with a clear message and
 verify `git ls-remote origin refs/heads/<continuation>` == HEAD (Git LFS for binaries).
+**User order 2026-11-17 ~16:45 UTC (account has a usage warning):** commit AND push at EVERY safe checkpoint — each
+verified sub-step (a measured improvement, a passing test round, a new set of comparison pictures, an updated STATUS.md)
+— not only at the end of the milestone; verify remote == HEAD after each push. Before you stop for any reason
+(milestone done, usage-limit warning, blocker), update `STATUS.md`, make a final commit + push and verify it.
+Never overwrite a successful reconstruction: a new attempt goes behind a new switch or into new files, and the previous
+result stays reproducible (e.g. `bake08=0`). Comparisons for the user: APPROVED, BEFORE and NEW as separate full-size
+pictures in your qa folder with clear names; list their paths in every status message.
 
 ## Pace (this account is already near its weekly usage limit; six sessions share it)
 Work efficiently: one heavy render at a time, reuse existing tools, no exploratory rewrites, at most one project
