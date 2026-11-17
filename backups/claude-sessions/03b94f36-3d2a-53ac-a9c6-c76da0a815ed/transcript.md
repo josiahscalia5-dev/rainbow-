@@ -5665,3 +5665,66 @@ The coins helped: scenery **95.4 → 96.8 %**, the middle area **83.5 → 90.1 %
 
 > 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; Q=qa/match/08; cd /home/user/rainbow- && cp $M/new4/08.png $Q/08_NEW_match08.png && python3 -I tools/qa/screen_match.py references/08_final_spin_chamber.png $Q/08_NEW_match08.png --label=NEW08c --json=$Q/08_NEW_screen_match.json | cut -c1-120 && python3 -I - <<'EOF'\np='qa/match/08/NOTES.md'; s=open(p).read()\nold=\"## Still to correct (visual)\\n1. **Coins**\"\nnew=(\"## Update 2026-11-17 ~14:05 UTC — the approved picture's coins (`?match08=1` only)\\n\"\n     \"The game's 08 + 09 coin rows a …[+1634 chars]`
 
+### 🧑 User — 2026-11-17T13:47:23.777Z
+
+> ↩︎ result: NEW08c FULL |d|  15.4 <=20 0.820 SSIM 0.796 | BELOWHUD |d|  11.0 <=20 0.887 | LAYOUT |d|   6.7 <=20 0.895 | mean RGB app
+> notes updated
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "a85ccf94a42b789bea03d32dff2b9850bcb6d7eb",
+> local  a85ccf94a42b789bea03d32dff2b9850bcb6d7eb
+> remote a85ccf94a42b789bea03d32dff2b9850bcb6d7eb
+> 0
+> 13
+
+### 🤖 Claude — 2026-11-17T13:47:26.670Z
+
+Here is the updated Screen 08 with your painted coins (full size):
+
+### 🤖 Claude — 2026-11-17T13:47:27.754Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/08_NEW_match08.png"], "caption": "NEW Screen 08 (?match08=1) with the approved picture's coins — scenery 96.8 % within 20 colour levels of your approved screen", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T13:47:28.614Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/08_NEW_match08.png → file_uuid: 7101e96e-ad8e-4ad6-8c3e-bf1ced98e65d
+
+### 🤖 Claude — 2026-11-17T13:47:40.661Z
+
+Your video plan is clear and now written into the project. I've also continued the Screen 08 work: your painted coins are now in the game, and the updated picture is above.
+
+**Opening and ending videos**
+- **Opening:** the girl carries the laundry, with Benny secretly hidden in the purple towel, loads it into the washer, closes it and walks away. That leads into the adventure.
+- **Ending:** Benny gets back into the towel before she notices, and she grabs it, unaware. It loops naturally back to the beginning.
+- **Recorded** in `docs/FLOW_VIDEO.md`, with a pointer in `CLAUDE.md`, so no future session rebuilds them as 3D.
+- **The rules there:**
+  - you make both videos in Google Flow; I never generate video or spend video credits
+  - your characters, colours, laundry room and style stay the same
+  - screens 04–08 stay real, playable 3D on Android
+  - the videos hand over smoothly into and out of the game
+  - your approved screens don't change
+
+The game already has the hand-off built in. It crossfades from your opening video into the live game and plays your ending video before the final frame. Your `intro.mp4` and `ending.mp4` aren't in the project yet; when they are, they slot straight in.
+
+**Screen 08 progress: coins**
+- **Real coins on your painted coins.** Your picture's nine coins are now real, collectible game coins, placed exactly where your painting shows them along the river. Before, they followed an old pattern.
+- **Higher match:**
+
+  | | Before coins fix | Now |
+  |---|---|---|
+  | Scenery within 20 colour levels | 95.4 % | **96.8 %** |
+  | Middle area (where the coins are) | 83.5 % | **90.1 %** |
+  | Whole screen, including Benny and the HUD | 80.6 % | **82.0 %** |
+
+- **Checks:** the gameplay test still passes 8/8, and the normal game is unchanged pixel for pixel.
+- **One trade-off:** a full run now collects 82 coins instead of 91, because your 9 painted coins replace 17 older ones on screens 08–09.
+- **Saved on GitHub:** commit `a85ccf9`, local and GitHub match.
+
+**Still to fix on Screen 08**
+1. **Benny's look:** his hat is bigger and his fur and splash differ from your painted Benny. Your other branch (`ccr-b0757dec-dj6l1o`) has the Screen 05 Benny artwork work that could be reused here once you decide about combining the branches.
+2. **Moving camera:** when the camera passes through the near gold arch, its inner sides show flat purple. I plan to fill those with extra matching artwork.
+3. **Coin spin:** the coins spin, so some are seen at an angle rather than face-on.
+
+Next I'll fix the arch's inner sides for smooth movement, unless you'd rather I start Phase 2 (the clean pictures for 04–07) now.
+
