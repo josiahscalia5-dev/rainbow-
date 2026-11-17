@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 14078,
-   "sha256": "97821aead028d10094b56621913a5a1edc6880219e1eeaf5e9671c1141e3ba4a"
+   "bytes": 15126,
+   "sha256": "bb1d74b76d0c6bd40f58b661ebf0673fb5510f3a78c3615bae50e694e446a101"
   },
   {
    "path": "README_FIRST.md",
@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 19687,
-   "sha256": "abb6cf8f94db90718cdad8830dac7d0338ffb10e610ab40dc18ba8759575cf46"
+   "bytes": 24460,
+   "sha256": "fdd270632e4a234ded573ba162f2356293a3dd87d1c865b7a8827d212dda595c"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -603,8 +603,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4239,
-   "sha256": "8e66d40c6bc0b9607dc0af3ca79fa3dcdba8d03a7c025c0ce3c1c0018a513ae7"
+   "bytes": 4278,
+   "sha256": "099dee8d2f569c27a3a19af68e9a494eaa0da8484c63015ab721e5377c193ee3"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11166,
-   "sha256": "dad017c135e888bb17cb6ea2d68fb487d8f60fb966873c331e66806ff34226a9"
+   "bytes": 11652,
+   "sha256": "e690877261826f12c8ddf9c1695f516b780f8544d968a02d285be4a1d549cc54"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -667,6 +667,16 @@
    "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
   },
   {
+   "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
+   "bytes": 26866168,
+   "sha256": "273e73c104ff8caac720873816d7a6bde01eb72616e5631e0aec8b0d9126f9e7"
+  },
+  {
+   "path": "builds/rainbow-debug-06-2026-11-17-r3.md",
+   "bytes": 785,
+   "sha256": "201bda4336aea8f192e38ae03a9714f8a504cf51092209c7f6e4302c714de7c6"
+  },
+  {
    "path": "builds/rainbow-debug-T2-default.apk",
    "bytes": 7664976,
    "sha256": "7f89d6ba94642ea7bab42c889ea3586bb0c4b1cbef0cd0818fbd3567213d2969"
@@ -708,18 +718,18 @@
   },
   {
    "path": "docs/FLOW_VIDEO.md",
-   "bytes": 4597,
-   "sha256": "6bc1006fbc1da91024fe46b31b6c5be652cdc84c4803beff2621af173ecade1e"
+   "bytes": 8763,
+   "sha256": "f790e632fe630608627924b118d02708577e3c889412ea9319b3b58d48e534b2"
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 13321,
-   "sha256": "8fd03d3f7961851952857e8d4d4c44a9ad8fff3621d72ec84ab0b0f2764a7b58"
+   "bytes": 25025,
+   "sha256": "621e1cb2e7726f0fa5b8dd9edb7d99dcacdb4e4cb9d737409da00d39af887c96"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 18855,
-   "sha256": "1a144a916f33f41701f2cd97bab158c0f0b5f57f2bc0b2037e029ccd6f994462"
+   "bytes": 29676,
+   "sha256": "65e80ad87741436d14f0835fa690a7055aa52ad5b870973d88ac2f5b9337ffad"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -795,6 +805,51 @@
    "path": "docs/briefs/2026-11-17-r3/S08_CAMERA.md",
    "bytes": 3284,
    "sha256": "33ebee839f754915eabf43d13d603418efec941f5928c01cbec24bc351b4abb2"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/COMMON_RULES.md",
+   "bytes": 4285,
+   "sha256": "84fbae15824e90e356104067aaa06adf9fea9769ca495affe6d853f9718867f6"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S04.md",
+   "bytes": 3411,
+   "sha256": "3babfbb67f1e2e6179169b727afcb00bd891fbed8d8d1cbdfba8cb18282437e8"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S05.md",
+   "bytes": 3812,
+   "sha256": "0317ed6f4e80f1293fff5d8bf730be6b7d5416b5bd55f6b6c36439616fbb17f4"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S06.md",
+   "bytes": 3531,
+   "sha256": "f61b6bde7c356ca649b8cb617db5445c00d15f6f097828c407b3fefbe0156c6e"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S07.md",
+   "bytes": 3509,
+   "sha256": "d111b1ebea065ae2a7a14f24e02d58dfbdb094b575386cd078541cfbc2ff1876"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S08_BENNY.md",
+   "bytes": 4201,
+   "sha256": "719ea37307d47723653a3ff5f6c047e4afa7858d85a0927281f780089a5a6617"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S08_CAMERA.md",
+   "bytes": 3491,
+   "sha256": "5e2d8bf226c3233a93b60128bdd250e333c3869edace2f4e940d676d13592c7c"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/S08_SCENERY.md",
+   "bytes": 5001,
+   "sha256": "a58f6d82d59364cfdc93751ddc708ffb9a34a294932cff77d729145866ff14ac"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r4/USER_DECISIONS.md",
+   "bytes": 3733,
+   "sha256": "4910ef54c611cd6a8ca60a7916283cbae5a2582517cb781dcb01357307c7fb7b"
   },
   {
    "path": "docs/characters/benny.md",
@@ -1213,23 +1268,23 @@
   },
   {
    "path": "qa/flowplan/A_after_fade_04.png",
-   "bytes": 431120,
-   "sha256": "0ff75fb4e798191638730d9b37467c2935584e7fc66041ac008d72213a8db896"
+   "bytes": 300035,
+   "sha256": "2826735652129c18ddc496341997d41a7cf958673274ba49a3a9343cf1a5edbe"
   },
   {
    "path": "qa/flowplan/A_during_video.png",
-   "bytes": 237740,
-   "sha256": "390e34591c9922a1f20eaaa820e67bd508bae1dd85efdef1c78766679b265302"
+   "bytes": 4894,
+   "sha256": "58505778fb21eaf33eabf442b1762cbd2993956ccfd38c9d187bf72b0239062e"
   },
   {
    "path": "qa/flowplan/B_after_ending_video_11.png",
-   "bytes": 429818,
-   "sha256": "00d0d11d939dc5ac7c26067760ae6ffa88e76d31a80931f0cf36797c9a292d50"
+   "bytes": 427753,
+   "sha256": "829d2c578e0ac3b7bfa0853566f691b87ff50e96886384562f8af5ad498f4180"
   },
   {
    "path": "qa/flowplan/flowplan_test.json",
-   "bytes": 2743,
-   "sha256": "026bb2e9440bc6297e29379846b750aa6ac2cc46d9e6940259814e513c9e8e41"
+   "bytes": 3904,
+   "sha256": "65a7022f3220c6bb0f8a0e73fed827670b8b1a5398fe7961cb70a7992792a0b3"
   },
   {
    "path": "qa/gameplay_test.json",
@@ -7422,6 +7477,16 @@
    "sha256": "e385eed982a53544c2d93138e58c65ae5a63d0072881d05a43b7ae393be35029"
   },
   {
+   "path": "qa/screen_videos/2026-11-17/08_match08_benny_r5b_ride.json",
+   "bytes": 11578,
+   "sha256": "034f09a8d4c02592bbd74d1692f2a24a0c7ef082ed9a6ea25b2907ed9ed0d46f"
+  },
+  {
+   "path": "qa/screen_videos/2026-11-17/08_match08_benny_r5b_ride.mp4",
+   "bytes": 3206534,
+   "sha256": "376907ddad7afec51e3a4342ad7fb6538de0328b74f37167c8b71469e1f83dd1"
+  },
+  {
    "path": "qa/worldlabs/05/05_env_mask.png",
    "bytes": 6175,
    "sha256": "11b77364bdeac15614ee648901b4e4b3b2a9cf2bdf8700024cc681dbf56be4a9"
@@ -8058,8 +8123,8 @@
   },
   {
    "path": "scripts/flowplan-test.mjs",
-   "bytes": 6507,
-   "sha256": "ffe38bbb388fdbd2345612b09e5bb25790a8dfbb182a785a69b4c4d0a6874d07"
+   "bytes": 9856,
+   "sha256": "ffad672df196bb6bee59b7a102e0029ab6f84eeda55ea3466d9b25f7f2cd74d2"
   },
   {
    "path": "scripts/gameplay-test.mjs",
@@ -8475,6 +8540,56 @@
    "path": "tools/imageblaster/render08.mjs",
    "bytes": 1924,
    "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
+  },
+  {
+   "path": "tools/lead_r4/coins08_probe.mjs",
+   "bytes": 2482,
+   "sha256": "6a7ba947875261d2f9e6209772344ac9bd1e2a59034b42369992ddf040463b5e"
+  },
+  {
+   "path": "tools/lead_r4/coins08_probe_full.json",
+   "bytes": 4519,
+   "sha256": "0c1f5d17419007248a6578410cc1b01ad41190572c69a3e5c9316f8aa191eac5"
+  },
+  {
+   "path": "tools/lead_r4/coins08_probe_full.mjs",
+   "bytes": 2456,
+   "sha256": "84d59c2a0c7fb88753a666aea93f74038a8d1ca242dd4115815bee1a95a4df2d"
+  },
+  {
+   "path": "tools/lead_r4/flowplan_diag.json",
+   "bytes": 1397,
+   "sha256": "f6be200c3394d6577cf3de8376befae6a8b6089a63c28e4ecf3f426d186e6152"
+  },
+  {
+   "path": "tools/lead_r4/flowplan_diag.mjs",
+   "bytes": 3466,
+   "sha256": "c4727ce0077c1def798278b92d1587d88b545487681404c2ff29c899b8fa7384"
+  },
+  {
+   "path": "tools/lead_r4/flowplan_e2e.json",
+   "bytes": 1454,
+   "sha256": "30b8dc93c778ef5f94e6032deb598a8851061756c58f5ab2a11a0307c7f5cbb5"
+  },
+  {
+   "path": "tools/lead_r4/flowplan_e2e_probe.mjs",
+   "bytes": 3672,
+   "sha256": "32d25d0f99b3e8d7f594f7f41831061370d86ccd9d135439ac34eba9e767ecd5"
+  },
+  {
+   "path": "tools/lead_r4/gameplay_coins08px.json",
+   "bytes": 14666,
+   "sha256": "e7d06ba84694483b2dc25392468c5b16d31707546c8d30da3afed40282c92e58"
+  },
+  {
+   "path": "tools/lead_r4/pixel_compare.txt",
+   "bytes": 546,
+   "sha256": "3518846d5b614432e269163ddf3e512a1c6fcbaf2bfb3d41ba971e28a1be5ed6"
+  },
+  {
+   "path": "tools/lead_r4/rec_clip.mjs",
+   "bytes": 2891,
+   "sha256": "a29e9a8e88c67f5cd84a5ce385d6a8c54646ee7f3e5444577a2bd9064f0ffe11"
   },
   {
    "path": "tools/make_env_geometry_ref.py",

@@ -1,5 +1,5 @@
 {
-  "when": "2026-11-17T18:03:04.845Z",
+  "when": "2026-11-17T18:47:12.944Z",
   "clip": "node_modules/.rainbow-test/flow_test.webm",
   "errors": [],
   "A": {
@@ -7,38 +7,38 @@
     "during": {
       "mode": "ride",
       "stage": "04",
-      "s": 70.413,
+      "s": 77.413,
       "lat": 0,
       "coins": 1420,
       "hearts": 5,
       "paused": true,
-      "bennyY": -19.221,
+      "bennyY": -21.872,
       "bennyVisible": true,
       "cam": [
-        6.51,
-        -10.07,
-        -16.68
+        0.72,
+        -14.48,
+        -15.82
       ]
     },
     "after": {
       "mode": "ride",
       "stage": "04",
-      "s": 72.821,
+      "s": 78.954,
       "lat": 0,
       "coins": 1420,
       "hearts": 5,
       "paused": false,
-      "bennyY": -19.934,
+      "bennyY": -22.465,
       "bennyVisible": true,
       "cam": [
-        6.3,
-        -10.58,
-        -16.08
+        1.11,
+        -14.36,
+        -17.18
       ]
     },
     "movesOn": true,
     "info": {
-      "s04": 70.41308465825975,
+      "s04": 77.41308465825975,
       "s09": 404.7896481881434,
       "total": 91,
       "before04": 9,
@@ -48,7 +48,7 @@
   },
   "B": {
     "info": {
-      "s04": 70.41308465825975,
+      "s04": 77.41308465825975,
       "s09": 404.7896481881434,
       "total": 91,
       "before04": 9,
@@ -75,7 +75,7 @@
       "state": {
         "mode": "outro",
         "stage": "11",
-        "s": 404.817,
+        "s": 404.823,
         "lat": 0,
         "coins": 2230,
         "hearts": 5,
@@ -85,7 +85,7 @@
         "cam": [
           11.48,
           -109.91,
-          -287.44
+          -287.45
         ]
       }
     },
@@ -94,12 +94,12 @@
     "final": {
       "mode": "end",
       "stage": "11",
-      "s": 404.817,
+      "s": 404.823,
       "lat": 0,
       "coins": 2230,
       "hearts": 5,
       "paused": false,
-      "bennyY": -109.564,
+      "bennyY": -109.565,
       "bennyVisible": false,
       "cam": [
         11.2,
@@ -147,6 +147,69 @@
         -6.05
       ]
     },
+    "observed": {
+      "videoEnded": false,
+      "t": 0.033221
+    },
+    "tries": 1,
+    "pass": true
+  },
+  "E": {
+    "introHeld": {
+      "mode": "ride",
+      "stage": "04",
+      "s": 77.413,
+      "lat": 0,
+      "coins": 1420,
+      "hearts": 5,
+      "paused": true,
+      "bennyY": -21.872,
+      "bennyVisible": true,
+      "cam": [
+        0.72,
+        -14.48,
+        -15.82
+      ]
+    },
+    "handOver": {
+      "steps": 1690,
+      "state": {
+        "mode": "outro",
+        "stage": "11",
+        "s": 404.829,
+        "lat": -1.632,
+        "coins": 2240,
+        "hearts": 5,
+        "paused": true,
+        "bennyY": -112.682,
+        "bennyVisible": true,
+        "cam": [
+          10.21,
+          -109.88,
+          -287.28
+        ]
+      },
+      "missed": []
+    },
+    "endingShown": true,
+    "reachedVictory": true,
+    "final": {
+      "mode": "end",
+      "stage": "11",
+      "s": 404.829,
+      "lat": -1.632,
+      "coins": 2240,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -109.506,
+      "bennyVisible": false,
+      "cam": [
+        11.2,
+        -99.1,
+        -304
+      ]
+    },
+    "coinsTaken": 91,
     "pass": true
   },
   "pass": true

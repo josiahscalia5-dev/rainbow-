@@ -12,18 +12,34 @@
   gameplay**; never rebuild the opening/ending as playable Marble or Three.js environments; the videos must hand over
   naturally into and out of the playable game (below); do not change the approved game screens.
 
-The game can play the user's Google Flow videos as silent cinematics and hand over to the real-time 3D
-game without a cut. Gameplay (03–10) is always real-time 3D; the videos only cover the cinematics.
+## The user's production split (2026-11-17, authoritative — supersedes older "playable 03–10" notes)
 
-## Where to put the files
-
-| File | Plays | Hand-off |
+| Screens | What they are | Made by |
 |---|---|---|
-| `public/video/intro.mp4` (or `.webm`) | at launch and on Replay, instead of the real-time 01 | the live 3D intro is held at the "girl walks away" moment (`T.cp01`) under the video, then revealed by a 0.7 s cross-fade and continued in real time: 02 Whirlpool Tumble → 03 ride |
-| `public/video/ending.mp4` (or `.webm`) — optional | when Benny reaches 11, before the victory frame | the real-time 11 frame (the official cartoon girl holds the towel, Benny hidden, **FINAL SPIN COMPLETE**) is revealed by a cross-fade |
+| **01–03** | Google Flow **opening video** (girl carries the laundry, Benny hidden in the purple towel, washer door closes, she walks away, Benny's adventure begins) | the user, in Google Flow |
+| **04–08** | **real playable 3D Android gameplay**: 04 Five Arrows · 05 Flow Into the Current · 06 Rinse Arch · 07 Washer Tube · 08 Final Spin Chamber | the game (six specialist workstreams) |
+| **09–11** | Google Flow **ending video** (Benny slips back into the towel before she notices; she picks it up, unaware) | the user, in Google Flow |
 
-If a file is missing, the real-time 3D cinematic plays instead. Videos are always muted and inline.
-Tap skips the video (after 0.6 s).
+This split is implemented behind the test switch **`?flowplan=1`** (`src/game/Game.ts`, lead r3). The **default build
+is unchanged**: without `flowplan=1` the game still plays its real-time fallback scenes for 01–03 and 09–11 exactly as
+before, and those fallbacks stay in the game until the user has tested the Flow hand-over and approved it.
+Claude never generates the videos and never spends video credits. **The real Flow files are NOT in the repository
+yet** — `public/video/` holds only a placeholder note.
+
+## How the hand-over works
+
+| File | Default build (no `flowplan`) | With `?flowplan=1` |
+|---|---|---|
+| `public/video/intro.mp4` (or `.webm`) | plays at launch / Replay instead of the real-time 01; the live 3D intro is held at the "girl walks away" moment (`T.cp01`) underneath, revealed by a 0.7 s cross-fade, then continues in real time: 02 Whirlpool Tumble → 03 ride | the video covers **01–03**; underneath, the ride is held **paused on the approved Screen 04 view** (04 checkpoint, 7 u into 04 — the first metres of 04 are the drain drop, whose view is still obstructed); the cross-fade reveals 04 and the ride continues in real time. Screen 03's 9 coins are credited (1,330 → 1,420) because the video replaces that stretch. |
+| `public/video/ending.mp4` (or `.webm`) — optional | plays when Benny reaches 11, before the victory frame; the real-time 11 frame (girl holds the towel, Benny hidden, **FINAL SPIN COMPLETE**) is revealed by a cross-fade | plays as soon as Benny **leaves 08** (start of 09): the video covers **09–11**; the 15 coins of 09–10 are credited, then the real-time 11 victory frame (Benny hidden, FINAL SPIN COMPLETE) follows |
+
+Coin rule under `flowplan`: only coins that are **not yet collected** in a video-covered stretch are credited, once
+(no double credit, no invented reward); a full run still ends at **91 coins / 2,240** (1,330 + 91 × 10). Verified
+end-to-end 2026-11-17 18:30 UTC (account 4): intro video → coin-seeking ride 04–08 → ending video → victory =
+exactly 2,240, 91/91 collected, no errors.
+
+If a file is missing, the real-time 3D cinematic plays instead (with or without `flowplan`). Videos are always muted
+and inline. Tap skips the video (after 0.6 s).
 
 ## Recommended export
 
@@ -41,11 +57,34 @@ Tap skips the video (after 0.6 s).
   "girl holds the towel" pose.
 * `.mp4` files are stored with Git LFS (see `.gitattributes`); the autosave backs them up automatically.
 
-## Status (2026-11-15, account 3)
+## Status (2026-11-17 ~18:30 UTC, account 4)
 
-No Flow video is in the repository yet: `public/video/` holds only a placeholder note, so the game plays the
-real-time 3D 01 opening. When the MP4 is ready, upload it and Claude will copy it to `public/video/intro.mp4`,
-run `npm run test:cinematic`, rebuild the APK and push. No code change is needed.
+No Flow video is in the repository yet: `public/video/` holds only a placeholder note, so every build plays the
+real-time 3D fallback opening/ending. When the user's MP4s are ready: copy them to `public/video/intro.mp4` /
+`ending.mp4`, run `npm run test:cinematic` and `node scripts/flowplan-test.mjs`, check on a real Android phone
+(MP4/H.264 cannot be tested in this Chromium), rebuild the APK and push. Making `flowplan` the default needs the
+user's approval.
+
+`node scripts/flowplan-test.mjs` → `qa/flowplan/flowplan_test.json`, checks A–E (re-run on the newest code
+2026-11-17 18:25 UTC: **all pass**):
+* A intro + flowplan: overlay shown, ride held paused on the approved 04 view, 03's coins credited, continues after the fade.
+* B ending + flowplan, entered with the QA jump `goto('08')`: hand-over at the start of 09, 09–10 credited, victory
+  with Benny hidden. Its final number (2,230) is NOT a run total: `goto` shows the approved screenshot's HUD value
+  2,040 (real count at that point 2,020) and the test then rides straight, missing 3 of 08's 7 coins.
+* C flowplan without video files: the real-time 01 opening plays exactly as before.
+* D default game (no flowplan) with an intro video: unchanged (held at 01).
+* E full run with both videos + flowplan, steering to the coins like `gameplay-test.mjs`: must end at exactly
+  **91 coins / 2,240**. The test takes control while the video still covers the paused ride (like a player steering
+  the moment 04 is revealed); without that, ~0.75 s of the fade rode unsteered and could pass one coin (2,230 seen
+  once, 18:45 UTC) — a test-harness gap, not a game rule.
+* Test race fixed 18:50 UTC: D (and E's start) read the state right after the overlay appears; on a busy machine that
+  read can land after the 2.5 s test clip has already ended (ride correctly released, overlay fading). D now re-opens
+  the page when it observes too late (max 3 tries) and records `observed` / `tries`.
+* Default build pixel check (18:40 UTC): all 11 screens captured at `c03a0f72` (just before flowplan) and at the tip.
+  02, 03, 06, 07, 08, 10 identical; every difference on 01, 04, 05, 09, 11 lies in areas that ALSO differ between two
+  captures of the same unchanged commit (animated title banner rows ~31–166; animated 01 / 11 areas) — capture
+  noise, not flowplan. The only source change is the 37 `flowPlan`-guarded lines in `Game.ts`; `flag05` is a pure
+  URL read.
 
 ## Testing
 

@@ -1,0 +1,256 @@
+{
+  "seek": {
+    "coins": 2240,
+    "takenTotal": 91,
+    "total": 91,
+    "stage08": [
+      {
+        "k": 79,
+        "s": 389.43,
+        "lat": 0.08,
+        "taken": true,
+        "pickedAt": {
+          "atS": 388.52,
+          "benLat": -0.07
+        }
+      },
+      {
+        "k": 80,
+        "s": 390.23,
+        "lat": 0.35,
+        "taken": true,
+        "pickedAt": {
+          "atS": 389.25,
+          "benLat": -0.08
+        }
+      },
+      {
+        "k": 81,
+        "s": 391.03,
+        "lat": 0.11,
+        "taken": true,
+        "pickedAt": {
+          "atS": 390.14,
+          "benLat": -0.03
+        }
+      },
+      {
+        "k": 82,
+        "s": 396.14,
+        "lat": -0.69,
+        "taken": true,
+        "pickedAt": {
+          "atS": 395.26,
+          "benLat": -0.9
+        }
+      },
+      {
+        "k": 83,
+        "s": 400.09,
+        "lat": 0.43,
+        "taken": true,
+        "pickedAt": {
+          "atS": 399.22,
+          "benLat": 0.53
+        }
+      },
+      {
+        "k": 84,
+        "s": 405.16,
+        "lat": 1.05,
+        "taken": true,
+        "pickedAt": {
+          "atS": 404.28,
+          "benLat": 1.2
+        }
+      },
+      {
+        "k": 85,
+        "s": 407.73,
+        "lat": -1.03,
+        "taken": true,
+        "pickedAt": {
+          "atS": 406.82,
+          "benLat": 0.21
+        }
+      },
+      {
+        "k": 86,
+        "s": 410.56,
+        "lat": -1.04,
+        "taken": true,
+        "pickedAt": {
+          "atS": 409.67,
+          "benLat": -1.44
+        }
+      },
+      {
+        "k": 87,
+        "s": 412.66,
+        "lat": 0.14,
+        "taken": true,
+        "pickedAt": {
+          "atS": 412.04,
+          "benLat": -1.03
+        }
+      },
+      {
+        "k": 88,
+        "s": 425.63,
+        "lat": 1.08,
+        "taken": true,
+        "pickedAt": {
+          "atS": 424.74,
+          "benLat": 1.1
+        }
+      },
+      {
+        "k": 89,
+        "s": 427.12,
+        "lat": -0.66,
+        "taken": true,
+        "pickedAt": {
+          "atS": 426.49,
+          "benLat": 0.54
+        }
+      },
+      {
+        "k": 90,
+        "s": 427.42,
+        "lat": 0.52,
+        "taken": true,
+        "pickedAt": {
+          "atS": 426.49,
+          "benLat": 0.54
+        }
+      }
+    ]
+  },
+  "straight": {
+    "coins": 2070,
+    "takenTotal": 74,
+    "total": 91,
+    "stage08": [
+      {
+        "k": 79,
+        "s": 389.43,
+        "lat": 0.08,
+        "taken": true,
+        "pickedAt": {
+          "atS": 388.52,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 80,
+        "s": 390.23,
+        "lat": 0.35,
+        "taken": true,
+        "pickedAt": {
+          "atS": 389.25,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 81,
+        "s": 391.03,
+        "lat": 0.11,
+        "taken": true,
+        "pickedAt": {
+          "atS": 390.14,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 82,
+        "s": 396.14,
+        "lat": -0.69,
+        "taken": true,
+        "pickedAt": {
+          "atS": 395.26,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 83,
+        "s": 400.09,
+        "lat": 0.43,
+        "taken": true,
+        "pickedAt": {
+          "atS": 399.22,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 84,
+        "s": 405.16,
+        "lat": 1.05,
+        "taken": true,
+        "pickedAt": {
+          "atS": 404.28,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 85,
+        "s": 407.73,
+        "lat": -1.03,
+        "taken": true,
+        "pickedAt": {
+          "atS": 406.82,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 86,
+        "s": 410.56,
+        "lat": -1.04,
+        "taken": true,
+        "pickedAt": {
+          "atS": 409.67,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 87,
+        "s": 412.66,
+        "lat": 0.14,
+        "taken": true,
+        "pickedAt": {
+          "atS": 411.73,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 88,
+        "s": 425.63,
+        "lat": 1.08,
+        "taken": true,
+        "pickedAt": {
+          "atS": 424.74,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 89,
+        "s": 427.12,
+        "lat": -0.66,
+        "taken": true,
+        "pickedAt": {
+          "atS": 426.24,
+          "benLat": 0
+        }
+      },
+      {
+        "k": 90,
+        "s": 427.42,
+        "lat": 0.52,
+        "taken": true,
+        "pickedAt": {
+          "atS": 426.49,
+          "benLat": 0
+        }
+      }
+    ]
+  }
+}

@@ -1,6 +1,122 @@
 # RAINBOW — parallel workstreams: lead progress report
 
-# ROUND 3 (account 3) — CURRENT
+# BACKUP VERIFICATION — 2026-11-17 ~19:45 UTC (user's urgent order: account 4 near its usage limit)
+* Development stopped; the lead's scheduled check-in (would have started Screen 05) disabled at 19:40. The one active
+  specialist (08 scenery) saved and stopped at a safe checkpoint; Benny, camera and 07 were already idle with their
+  milestones pushed (reported SHAs contained in their tips; only transcript autosaves after them).
+* Branch tips on GitHub at 19:44 UTC (full SHAs):
+  * lead `ccr-067047f0-up5d1m` → the commit that contains this section (see `git ls-remote`; reported to the user)
+  * `claude/rainbow-s08-scenery-c4` `a3f2a7065b8377bce15c06565c0290ef1c47149d`
+  * `claude/rainbow-s08-benny08-bake-c4` `b619d701ff97964e7bc54082624dab32f08fee67`
+  * `claude/rainbow-s08-camclear-c4` `a42140304915ea57d2d2c02493b066316207033b`
+  * `claude/rainbow-s04-match-c4` `d1e422faff67a37f837566301fb8abff0bac98db`
+  * `claude/rainbow-s05-match-c4` `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b`
+  * `claude/rainbow-s06-match-c4` `c088718bb9e3374583238f4ee93f25bdee600065`
+  * `claude/rainbow-s07-match-c4` `133d06f3c6359530e5745d16abcea758215238e3`
+  Account 4's idle containers may still add transcript-only autosaves to their own branches; take the newest tip.
+* Every `-c4` branch contains its full `-c3` history (ancestor check), nothing merged, no force-push.
+* 13/13 approved references byte-identical; 10/10 agent definitions present, SHA-256 unchanged.
+* Git LFS: **62 distinct objects** across the 8 branch tips, all downloaded from GitHub (775 MB local store), `git lfs fsck`
+  OK on all 8, 0 missing; lead branch 47/47 objects confirmed on GitHub LFS (batch API), incl. the new Screen 06 APK and
+  the Screen 08 test clip.
+* Secret scan of all 8 tips: no API keys (the only pattern hit is a `FAL_KEY=your-…` placeholder in a sanitized
+  transcript). Keys live only as environment network secrets (see the handoff).
+* Handoff for the next account: TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` (branch map, next tasks, `-c5`
+  restart procedure, key reconnection, what cannot transfer).
+
+# ROUND 4 (account 4) — CURRENT
+**Lead coordinator ("Lead Claudia") — round 4, account 4:** session `session_01Kbt6BTTnCGMUULjZoCLDTo` ("Rainbow game
+restoration"), branch **`ccr-067047f0-up5d1m`**, started from the round-3 lead branch `ccr-c0235034-ks6sx3` @ `ed23f9e5`
+(18:11 UTC, the newest commit). Briefs: `docs/briefs/2026-11-17-r4/`. Instructions: the user's 23-section transfer file
+(2026-11-17). Updated: 2026-11-17 ~18:40 UTC.
+
+## Why round 4
+Account 3 ran out of usage at ~18:13 UTC (seven sessions from 17:25). Its sessions live on another Claude account and
+cannot be reached from here; their containers may keep autosaving to the `-c3` branches. Round 4 continues on new
+**`-c4`** branches created from each `-c3` head (no `-c3` commit after 18:13; checked 18:29 UTC). Nothing merged,
+reset or force-pushed. Unpushed edits inside account 3's containers (if any) are NOT recoverable from here.
+
+## Branch mapping (old → new) and state
+| Workstream | Old branch @ newest commit | New branch (created 18:32 UTC, same commit) | State |
+|---|---|---|---|
+| Lead | `ccr-c0235034-ks6sx3` @ `ed23f9e5` | `ccr-067047f0-up5d1m` | running (this session) |
+| 08 Benny | `claude/rainbow-s08-benny08-bake-c3` @ `c64ff28b` (r4 done `71aa6d85`) | `claude/rainbow-s08-benny08-bake-c4` | **started 18:33** `session_01Kbt6BUy2s16F5FhJR2yJ6z` — round 5 (`S08_BENNY.md`) |
+| 08 camera | `claude/rainbow-s08-camclear-c3` @ `c03f391c` (r3 done `0f12867b`) | `claude/rainbow-s08-camclear-c4` | **started 18:33** `session_01Kbt6BTLnGMkLZVfNSYf45t` — round 4 (`S08_CAMERA.md`) |
+| 07 | `claude/rainbow-s07-match-c3` @ `72fb6129` (M2 half done `a5d2b392`) | `claude/rainbow-s07-match-c4` | paused — brief ready (`S07.md`: finish M2) |
+| 04 | `claude/rainbow-s04-match-c3` @ `d1e422fa` (M3 done `a4644789`) | `claude/rainbow-s04-match-c4` | paused — next M4 (r3 `NEXT_MILESTONES.md`) |
+| 05 (line B) | `claude/rainbow-s05-match-c3` @ `ebaf6cac` (M2 done `a96bfdf4`) | `claude/rainbow-s05-match-c4` | paused — next M3 (r3 `NEXT_MILESTONES.md`) |
+| 06 | `claude/rainbow-s06-match-c3` @ `c088718b` (M1 done `b993f6d5`) | `claude/rainbow-s06-match-c4` | paused — APK retry + M2 (r3 `NEXT_MILESTONES.md`) |
+
+Capacity: only the two Screen 08 workstreams run (user rule: Screen 08 first; account 3 was exhausted in < 1 h by
+seven sessions). 07 next when capacity allows; 04 / 05 / 06 milestones are complete and wait for the user's review.
+
+## Restore verification (round 4, 2026-11-17 18:23–18:40 UTC)
+* Newest remote commits read at 18:23 and again 18:29: the six specialist tips equal the transfer file's snapshot
+  except Screen 07 (`a5d2b392` → `72fb6129`, 18:13 autosave: coin probe `qa/match/07/m2/coins/probe_m1.json`).
+* 13/13 approved images byte-identical (`sha256sum -c scripts/reference.sha256`); 10/10 agent definitions present.
+* Git LFS: **57 distinct objects** across the lead + six `-c3` branches (45 / 46 / 39 / 44 / 45 / 47 / 45 per branch),
+  all 57 downloaded from GitHub (651 MB), `git lfs fsck` OK on all seven branches, 0 missing.
+* Tools (bootstrap): Blender 5.3.0, Android SDK 34 + build-tools 34.0.0 + Java 21 + Gradle 8.2.1, Node 22, Playwright
+  Chromium 153 (WebGL2 / SwiftShader), ffmpeg, ImageMagick, Python QA libs (numpy, Pillow, cv2, scipy) — OK.
+* Lead code `ed23f9e5`: tsc OK; continuity OK (joins gap 0); **gameplay 8/8** (91 coins, 1,330 → 2,240, victory,
+  07→08 drop 61.41 u).
+* `?flowplan=1` re-tested on the newest code (18:25): A–D pass. The old "2,230": test B enters with `goto('08')`, which
+  shows the approved screenshot's HUD value 2,040 (real count there 2,020) and then rides straight, missing 3 of 08's 7
+  coins — a test artifact, not a game bug. New check **E** (full run, both videos, coin-seeking ride) ends at exactly
+  **2,240, 91/91**. Two test-harness races found and fixed (18:50): D sometimes read the state after the 2.5 s clip
+  had ended (proved: `ended=true`, overlay fading, 1 of 3 runs); E rode ~0.75 s unsteered during the fade and once
+  passed a coin (2,230) — with control taken during the video, 2 / 2 probe runs and the test = 91 / 2,240, 0 missed.
+  Fixed test: A–E pass. FLOW_VIDEO.md rewritten for the 01–03 / 04–08 / 09–11 split. Real Flow videos are NOT in the
+  repository yet.
+* Default build vs the commit before flowplan (`c03a0f72`), all 11 screens: 02/03/06/07/08/10 identical; the
+  differences on 01/04/05/09/11 are confined to areas that also differ between two captures of the SAME commit
+  (animated title banner, animated 01/11 areas) → capture noise, not a game change.
+* Keys: this account's `rainbow-` environment had NO network secrets (World Labs free read HTTP 401). The user
+  re-entered both existing keys in the secure form. World Labs: `GET /credits` → **5,420** (unchanged), Screen 08 world
+  `32b5b2f4…` → 200 (same original account). fal: status of Screen 04 request `01a1ea70` → 200 COMPLETED (same fal
+  account; the dollar balance is dashboard-only). No paid job run. 06 / 07 fal plates: prepared, NOT approved, NOT run.
+* Not available: World Labs Atlas connector (optional, not needed — the direct API key works); context7 MCP failed to
+  connect (optional). No Android phone in the cloud: **no APK has been tested on a real phone.**
+
+## User decisions 2026-11-17 ~19:00 UTC (`docs/briefs/2026-11-17-r4/USER_DECISIONS.md`)
+* Benny: round 3b = preferred base (compare with r2 / r4 / approved); rounder, fuller body; soft natural fur. Sent to
+  the running Benny session 19:01 (its 18:55 "slimmer toward the water" taper stays as an off-by-default switch).
+* `coins08px` approved as the preferred test version; lead verified it in gameplay (8/8, 91 / 2,240; all 9 painted
+  coins physically picked up, even riding straight).
+* Queue (max two sessions at a time): 08 Benny + 08 camera (running) → 07 → 08 scenery-in-motion (new, lead finding
+  19:10: projected scenery tears/duplicates when moving 6 u or steering) → 05 → 06 → 04. Briefs ready for all.
+* Never merge PR #16 or unfinished branches without the user's OK. Google Flow split unchanged; no video credits.
+
+## Round-4 results / roster (updated 19:16 UTC)
+* **08 camera r4 DONE** (`claude/rainbow-s08-camclear-c4` @ `aa10fdbb`, 19:13, verified on GitHub): at the 03→04 drain
+  lip the picture no longer tilts (16° → 1°), Benny hidden max 44 → 25 % (default 100 %), frames > 25 % hidden 5 → 1;
+  in 08 missed coins no longer fill the lower third when steering off the coin line; 07's upper gold bands are the 07
+  tube's own rings 14–45 u ahead (Screen 07 scenery, left to the 07 workstream). Open → `S08_SCENERY.md`: steering hard
+  right into 08 rides into `m08_pipe` / `m08_arch`. 8/8, 91 / 2,240, drop 61.41 u; APK
+  `builds/rainbow-debug-08camclear-2026-11-17-r4.apk` (NOT phone-tested). Paused, waiting for the user.
+* **08 Benny round 5** (`…benny08-bake-c4`): report 19:09 (pre-decision taper kept, APK r5 = taper) — then switched to
+  the user's decision at 19:09: taper opt-in (`b08shape=1`), probing fuller round bodies on r3b (approved body ≈ 1.09×
+  the brim width vs r3b 0.93×; beanie ≈ 9 % too big). RUNNING. Its Draft PR #17 = review only.
+* **07 STARTED 19:14** `session_01Kbt6BT7VJEKLkAskyb5T9U` on `claude/rainbow-s07-match-c4` (finish M2, `S07.md`) —
+  RUNNING (coins + water patch, wall tile next).
+* **08 Benny round 5b DONE** (`…benny08-bake-c4` @ `0067fc7b`, 19:21, verified): user decision applied — r3b + a fuller,
+  rounder body (≈1.1× the brim width like the approved ≈1.09×; body fur ×1.04, beanie ×0.94) is the `?match08=1`
+  default; Benny + splash 65.3 → 62.2 % (visual choice; pom/star shift slightly with the smaller beanie); scenery 97.3 %
+  unchanged. Switches: r3b `b08full=0`, r4 `b08hi=1&b08pom=1&b08full=0`, taper `b08shape=1`, r2 `b08r3=0`. Open: the
+  painting's soft layered fur clumps + pom yarn tufts need a new fur model/bake (lead review: fur still reads as streaky
+  radial strands, pale streaks by the left arm, spiky pom). APK r5b NOT phone-tested. Pictures sent to the user 19:24.
+  Flag (→ 08 scenery brief): `?match08=1` changes screens 04–07 over much of the frame.
+* **08 scenery-in-motion STARTED 19:22** `session_01Kbt6BTJwPYVeZGGEUyEMXY` on `claude/rainbow-s08-scenery-c4`.
+* Next when a slot frees: 05 → 06 → 04.
+
+## Still waiting for the user
+* fal clean plates for 06 / 07 (one paid edit each, prepared, not run).
+* Making `?flowplan=1` default — after the user's Flow videos are uploaded and tested (note: 7 of the 9 coins painted
+  in the 08 picture lie past the 08→video hand-over, so under flowplan they are credited, not swum through).
+* camclear and every APK on a real phone.
+
+---
+# ROUND 3 (account 3) — history
 **Lead coordinator ("Lead Claudia") — round 3, account 3:** session `session_01Q46SCLi5xPVn25aRuxkVwK` ("Rainbow game
 restoration"), branch **`ccr-c0235034-ks6sx3`**, started from the round-2 lead branch `ccr-5495e9c4-g0apvl` @ `7db2982`
 (newer than the user's checkpoint `ef591fd`: autosaves 17:14 + 17:15 UTC). Briefs: `docs/briefs/2026-11-17-r3/`
