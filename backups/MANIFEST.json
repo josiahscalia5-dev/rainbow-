@@ -598,8 +598,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3934,
-   "sha256": "e2e3519f537c53665bbde271d113c5034f67de2a019bc006567757247b06b892"
+   "bytes": 4239,
+   "sha256": "8e66d40c6bc0b9607dc0af3ca79fa3dcdba8d03a7c025c0ce3c1c0018a513ae7"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11155,
-   "sha256": "0d9b68265fac79867134ec96b9ed495a495a90409915206703e3ac0276dfae6f"
+   "bytes": 11156,
+   "sha256": "5972ecd54f5a1bd94cd05a0f18593d8579452a2ba3b5755f76e84f51e890cf64"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -750,6 +750,41 @@
    "path": "docs/briefs/2026-11-17-r2/S08_CAMERA.md",
    "bytes": 3784,
    "sha256": "7b725e86c93df8a90c25f03cab66373f43f8cec5f0057d02f719483bb9ece1ff"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r3/COMMON_RULES.md",
+   "bytes": 2733,
+   "sha256": "d709a7696258e2840490ba079f035c478d89e8d754478cf4b88a03f16301c580"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r3/S04.md",
+   "bytes": 3166,
+   "sha256": "d018026fde5b90ce933848af96047541c65f5e04ab67745324464e74a7539ed2"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r3/S05.md",
+   "bytes": 3275,
+   "sha256": "2e89217d4a1aec4a0a7da5f340fdad8188a7bfda39e956e135012247eaa052b9"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r3/S06.md",
+   "bytes": 3081,
+   "sha256": "caf39fc5a746801538983982a28acd786be7fe99f1bbcd46e63c988e33e05c25"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r3/S07.md",
+   "bytes": 3107,
+   "sha256": "50574fd4c511e288d61e2f29b7147c14f561fcccddfbcc650a06f54b72852f28"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r3/S08_BENNY.md",
+   "bytes": 3725,
+   "sha256": "acb2b2c728072869bdff363fbf08a7887a279a8d1ef870e9c4b888f203c85ab2"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r3/S08_CAMERA.md",
+   "bytes": 3284,
+   "sha256": "33ebee839f754915eabf43d13d603418efec941f5928c01cbec24bc351b4abb2"
   },
   {
    "path": "docs/characters/benny.md",
