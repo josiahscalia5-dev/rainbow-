@@ -1636,3 +1636,147 @@ Now the bake script, adapted for 08 (seen texels from 08, unseen texels keep the
 > user	0m18.126s
 > sys	0m0.216s
 
+### 🤖 Claude — 2026-11-17T15:46:57.857Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/classgain08.py", "content": "\"\"\"benny08 beanie COLOURS from the approved Screen 08 picture without moving any stripe (benny-character-artist).\nWhy: at the locked 08 frame the game beanie sits ~18 px lower / ~13 px further right and is narrower than the painted one\n(part IoU pom 0.33, crown 0.39, cuff 0.32, star 0.06), so a per-pixel bake of the beanie paints the approved stripes\nacross the wrong rows (measured closer, but visibly broken stripes - test b1). Here each beanie colour CLASS t …[+4087 chars]`
+
+### 🧑 User — 2026-11-17T15:46:57.894Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/classgain08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:47:01.109Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I qa/match/08/benny08/work/classgain08.py $S/p1 $S/base_m08/08.png assets/textures/benny05 $S/g1 | python3 -c \"\nimport json,sys; d=json.load(sys.stdin)\nfor k,v in d.items():\n  for c,x in v['classes'].items(): print(k,c,x)\n  print(k,'clipped',v['clipped_share'])\"", "description": "Solve per-class beanie colour gains", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T15:47:09.158Z
+
+> ↩︎ result: crown white {'gain': [1.0705, 1.0417, 1.2022], 'approved_px': 6322, 'game_px': 6067, 'approved_median': [251, 220, 244], 'game_median': [244, 220, 235]}
+> crown purple {'gain': [0.9299, 0.4765, 0.9477], 'approved_px': 4710, 'game_px': 4380, 'approved_median': [130, 17, 233], 'game_median': [129, 28, 232]}
+> crown clipped 0.0
+> brim all {'gain': [0.9918, 0.6674, 1.0727], 'approved_px': 10086, 'game_px': 6780, 'approved_median': [116, 10, 234], 'game_median': [116, 19, 231]}
+> brim clipped 0.0
+> pom all {'gain': [0.9401, 0.603, 1.1192], 'approved_px': 10362, 'game_px': 6761, 'approved_median': [122, 13, 229], 'game_median': [123, 25, 225]}
+> pom clipped 0.00044
+> star all {'gain': [1.0617, 1.0826, 1.2423], 'approved_px': 1636, 'game_px': 1324, 'approved_median': [251, 212, 29], 'game_median': [247, 210, 26]}
+> star clipped 6e-05
+
+### 🤖 Claude — 2026-11-17T15:47:41.561Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='qa/match/08/benny08/work/bake08.py'; s=open(p).read()\nold='''    sc = ndi.binary_closing(seen, np.ones((5, 5)))\n    sc = ndi.binary_fill_holes(sc) if not wrap else sc\n    if wrap:\n        pad = np.concatenate([sc[:, -TW // 4:], sc, sc[:, :TW // 4]], 1)\n        dist = ndi.distance_transform_edt(pad)[:, TW // 4:TW // 4 + TW]\n    else:\n        dist = ndi.distance_transform_edt(sc)'''\nnew='''    q = TW // 4 if wrap else 0\n    pad = np.concatenate([seen[:, TW - q:], seen, seen[:, :q]], 1) if wrap else seen\n    pad = ndi.binary_fill_holes(ndi.binary_cl …[+2954 chars]`
+
+### 🧑 User — 2026-11-17T15:47:41.629Z
+
+> ↩︎ result: 3:@99ab17b): same inverse post chain, same per-pixel least-squares calibration (radiance = albedo*E + S over the
+> 4:unclipped calibration renders), same strict part correspondence + colour-family clean-up, bilinear splat, push-pull.
+> 8:    splash card in front) - all of it is IN the calibration renders, so E and S already contain the splash card and the
+> 13:       [--toned]   unseen texels = benny05 x the part's median 08/05 albedo ratio (inner seen texels, clamped 0.6-1.4):
+> 90:    """least-squares E, S per pixel and channel over the unclipped calibration renders; returns E, S, n_used"""
+> 149:    FP = {'body': 3.0}  # body: 3x wider feather (the 08/05 tone step fades over ~24 texels = 2.3 % of the way round)
+> 166:        sel = (ids == pid) & ndi.binary_erosion(P[key], iterations=1) & ndi.binary_erosion(ids == pid, iterations=1) & valid & lit & okc[key]
+> 176:        w, sc = feather_weight(seen, F * FP.get(name, 1.0), wrap)
+> 181:        ratio = (np.median(alb[inner], 0) / np.maximum(np.median(b05[inner], 0), 1e-4)) if inner.sum() > 50 else None
+> 182:        fill = b05 * np.clip(ratio, 0.6, 1.4)[None, None, :] if ('--toned' in sys.argv and ratio is not None) else b05
+> 194:                      …[+218 chars]
+
+### 🤖 Claude — 2026-11-17T15:47:50.470Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='qa/match/08/benny08/work/bake08.py'; s=open(p).read()\nold='''        fill = b05 * np.clip(ratio, 0.6, 1.4)[None, None, :] if ('--toned' in sys.argv and ratio is not None) else b05'''\nnew='''        if name in ('armL', 'armR') and body_ratio is not None:\n            ratio = body_ratio  # the arm nubs are body fur: one fur tone (their own few seen texels are edge-biased)\n        if name == 'body':\n            body_ratio = ratio\n        fill = b05 * np.clip(ratio, 0.6, 1.4)[None, None, :] if ('--toned' in sys.argv and ratio is not None) else b05'''\nass …[+626 chars]`
+
+### 🧑 User — 2026-11-17T15:47:57.448Z
+
+> ↩︎ result: body {'px': 26721, 'seen_texels': 24918, 'rejected_texels': 1440, 'weight_gt_0': 50483, 'weight_1': 27317, 'share_of_map_from_08': 0.0693, 'clipped_share': 0.0, 'median_albedo_08': [0.405, 0.124, 0.278], 'median_albedo_05_same_texels': [0.434, 0.15, 0.296], 'ratio_08_over_05': [0.958, 0.759, 0.848], 'unseen_fill': 'benny05 x ratio'}
+> armL {'px': 977, 'seen_texels': 1365, 'rejected_texels': 63, 'weight_gt_0': 3504, 'weight_1': 1605, 'share_of_map_from_08': 0.0734, 'clipped_share': 0.0, 'median_albedo_08': [0.452, 0.144, 0.312], 'median_albedo_05_same_texels': [0.429, 0.141, 0.275], 'ratio_08_over_05': [0.958, 0.759, 0.848], 'unseen_fill': 'benny05 x ratio'}
+> armR {'px': 608, 'seen_texels': 872, 'rejected_texels': 0, 'weight_gt_0': 2170, 'weight_1': 801, 'share_of_map_from_08': 0.042, 'clipped_share': 0.0, 'median_albedo_08': [0.269, 0.059, 0.183], 'median_albedo_05_same_texels': [0.386, 0.156, 0.347], 'ratio_08_over_05': [0.958, 0.759, 0.848], 'unseen_fill': 'benny05 x ratio'}
+
+### 🤖 Claude — 2026-11-17T15:48:03.896Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && cp $S/b2/{body,armL,armR}.png assets/textures/benny08/ && cp $S/g1/{crown,brim,pom,star}.png assets/textures/benny08/ && node scripts/capture.mjs 08 --q='match08=1&bake08=1' --out=$S/c_n2 2>&1 | tail -1 | cut -c1-120 && python3 -I qa/match/08/benny08/work/compare08.py $S/p1/uv.f32 CURRENT=$S/base_m08/08.png NEWb1=$S/c_b1/08.png NEW2=$S/c_n2/08.png 2>&1 | grep -v \"^        \"", "description": "Install NEW2 maps, capture, compare", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T15:48:22.971Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/c_n2/08.png {"stage":"08","s":3
+> part                      CURRENT                    |                    NEWb1                     |                     NEW2                    
+> pom      82.8   6.8% ssim 0.041 r 0.007 a 0.617      |  77.3  14.4% ssim 0.135 r 0.095 a 0.551      |  81.8   7.0% ssim 0.048 r 0.006 a 0.558     
+> crown    72.4  14.9% ssim 0.057 r -0.008 a 0.753     |  54.7  33.4% ssim 0.249 r 0.25 a 0.771       |  72.3  16.4% ssim 0.057 r -0.008 a 0.716    
+> cuff     75.6  12.9% ssim 0.051 r -0.009 a 0.973     |  67.7  30.7% ssim 0.229 r 0.122 a 0.878      |  74.6  14.7% ssim 0.057 r -0.013 a 0.937    
+> star    112.5   0.8% ssim 0.131 r 0.037 a 1.927      | 112.5   0.8% ssim 0.131 r 0.037 a 1.927      | 116.9   0.7% ssim 0.140 r 0.046 a 1.984     
+> body     36.0  34.5% ssim 0.143 r 0.066 a 1.084      |  24.0  64.4% ssim 0.520 r 0.406 a 0.96       |  25.8  61.9% ssim 0.520 r 0.421 a 0.92      
+> benny    57.9  22.5% ssim 0.097 r 0.022 a 0.869      |  46.7  44.3% ssim 0.357 r 0.219 a 0.814      |  52.7  36.3% ssim 0.281 r 0.121 a 0.796     
+> benny+splash   49.8% ssim 0.458 mean 39.13 |  58.7%  …[+568 chars]
+
+### 🤖 Claude — 2026-11-17T15:48:30.176Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/sbs.py", "content": "\"\"\"side-by-side crops for my own inspection: sbs.py out.png x0 y0 x1 y1 scale img1 img2 ...\"\"\"\nimport sys\nfrom PIL import Image\nout, x0, y0, x1, y1, k = sys.argv[1], *map(int, sys.argv[2:6]), float(sys.argv[6])\nims = [Image.open(p).convert('RGB').crop((x0, y0, x1, y1)) for p in sys.argv[7:]]\nw, h = int((x1 - x0) * k), int((y1 - y0) * k)\no = Image.new('RGB', (len(ims) * (w + 8), h), (255, 255, 255))\nfor i, im in enumerate(ims):\n    o.paste(im.resize((w, h), Image.L …[+43 chars]`
+
+### 🧑 User — 2026-11-17T15:48:30.201Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/sbs.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:48:32.627Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I $S/sbs.py $S/v/n2.png 240 840 620 1240 1.7 references/08_final_spin_chamber.png $S/base_m08/08.png $S/c_n2/08.png", "description": "Side-by-side approved/current/NEW2"}`
+
+### 🧑 User — 2026-11-17T15:48:33.174Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:48:35.262Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/n2.png"}`
+
+### 🧑 User — 2026-11-17T15:48:35.324Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:48:50.969Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/refine08.py", "content": "\"\"\"benny08 bake refinement (one iterative back-projection step). Adapted copy of line B's\nqa/pilot05/full_reference_match/benny/work/refine.py (read-only source, ccr-b0757dec-dj6l1o @99ab17b): the albedo the\nrenderer produced in a REAL capture of the installed maps is compared per pixel with the albedo the approved 08 pixel\nneeds; the difference is splatted back into the texels the bake SAW (its *_seen.png) -> undoes splat + texture-filter blur.\nusage: python3  …[+2462 chars]`
+
+### 🧑 User — 2026-11-17T15:48:51.000Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/refine08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:48:55.069Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I qa/match/08/benny08/work/refine08.py $S/p1 $S/c_n2/08.png assets/textures/benny08 $S/f1 --seen $S/b2 && python3 -I qa/match/08/benny08/work/classgain08.py $S/p1 $S/c_n2/08.png assets/textures/benny05 $S/g2 --prev $S/g1/classgain_report.json | python3 -c \"\nimport json,sys; d=json.load(sys.stdin)\nfor k,v in d.items():\n  for c,x in v['classes'].items(): print(k,c,x['gain'],'appr',x['approved_median'],'game(NEW2)',x['game_median'])\"", "description": "Refine body maps and iterate clas …[+28 chars]`
+
+### 🧑 User — 2026-11-17T15:49:08.634Z
+
+> ↩︎ result: Exit code 1
+> {"body": {"px": 26721, "texels": 24918, "mean_abs_corr": 0.0398, "mean_change": 0.0209}, "armL": {"px": 977, "texels": 1365, "mean_abs_corr": 0.0432, "mean_change": 0.0164}, "armR": {"px": 608, "texels": 872, "mean_abs_corr": 0.0366, "mean_change": 0.0134}}
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/classgain08.py", line 75, in <module>
+>     main()
+>     ~~~~^^
+>   File "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/classgain08.py", line 56, in main
+>     gk = gk * np.array(prev[name][cname]['gain'])
+>                        ~~~~~~~~~~^^^^^^^
+> KeyError: 'white'
+> Traceback (most recent call last):
+>   File "<string>", line 2, in <module>
+>     import json,sys; d=json.load(sys.stdin)
+>                        ~~~~~~~~~^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/json/__init__.py", line 298, in load
+>     return loads(fp.read(),
+>         cls=cls, object_hook=object_hook,
+>         parse_float=parse_float, parse_int=parse_int,
+>         parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+>   File "/usr/local/lib/python3.13/json/__init__.py", line 352,  …[+481 chars]
+
+### 🤖 Claude — 2026-11-17T15:49:09.824Z
+
+Fix the key path (report nests classes).
+
+### 🤖 Claude — 2026-11-17T15:49:13.883Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/gk = gk \\* np.array(prev\\[name\\]\\[cname\\]\\['gain'\\])/gk = gk * np.array(prev[name]['classes'][cname]['gain'])/\" qa/match/08/benny08/work/classgain08.py && S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I qa/match/08/benny08/work/classgain08.py $S/p1 $S/c_n2/08.png assets/textures/benny05 $S/g2 --prev $S/g1/classgain_report.json > $S/g2.log && python3 -c \"\nimport json; d=json.load(open('$S/g2/classgain_report.json'))\nfor k,v in d.items():\n  for c,x in v['classes'].items(): print(k,c,x['gain'],'appr',x['approved …[+119 chars]`
+
+### 🧑 User — 2026-11-17T15:49:22.386Z
+
+> ↩︎ result: crown white [1.1066, 1.0661, 1.2385] appr [251, 220, 244] game(NEW2) [246, 221, 255]
+> crown purple [0.8792, 0.3752, 0.9172] appr [130, 17, 233] game(NEW2) [132, 17, 233]
+> brim all [0.9695, 0.5921, 1.0748] appr [116, 10, 234] game(NEW2) [120, 8, 244]
+> pom all [0.9304, 0.5029, 1.1569] appr [122, 13, 229] game(NEW2) [124, 9, 244]
+> star all [1.0662, 1.086, 1.2539] appr [251, 212, 29] game(NEW2) [251, 217, 38]
+> [This command modified 1 file you've previously read: qa/match/08/benny08/work/classgain08.py. Call Read before editing.]
+
