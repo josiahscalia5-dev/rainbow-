@@ -259,7 +259,11 @@ export async function buildMatch08(): Promise<Match08> {
   // that end below the floor are hidden by it (the floor then shows their painted pixels: gold feet near the arch).
   const ARCH_K = Number(new URLSearchParams(location.search).get('m08archk') ?? '') || 2.6;
   const VP = proj.position.clone();
-  const pushK = (v: THREE.Vector3) => (v.y <= L.floorY ? 1 : 1 + (ARCH_K - 1) * THREE.MathUtils.smoothstep(v.y, L.floorY + 0.1, L.floorY + 0.9));
+  // `&m08sill=1` (r7): the unpushed water-level band stayed ~2.6× nearer than the rest of the ring, so riding 3 u forward
+  // the camera passed over it and it tore into gold / blue slabs along the frame bottom. Uniform push: the whole ring moves
+  // along its own rays (same approved picture); what ends below the water is hidden by the floor.
+  const sillOn = flag05('m08sill');
+  const pushK = (v: THREE.Vector3) => (sillOn ? ARCH_K : v.y <= L.floorY ? 1 : 1 + (ARCH_K - 1) * THREE.MathUtils.smoothstep(v.y, L.floorY + 0.1, L.floorY + 0.9));
   const pushV = (v: THREE.Vector3) => { const k = pushK(v); return v.sub(VP).multiplyScalar(k).add(VP); };
   const pushGeo = (g: THREE.BufferGeometry) => {
     if (!fixArch) return g;

@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3963,
-   "sha256": "6fd99bb09eef280fd4640e51024b06630a89bf35bbf5acd40a10cc4716508d11"
+   "bytes": 3988,
+   "sha256": "a287632cfe781af85453aec5c1e584940df2ba084b6e3f182b94ec20808fed0d"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13438,
-   "sha256": "4a168e25e2c51404fdb842cf8a71da09acd0e4ef00ea1f6f7b0b44a4d880fb88"
+   "sha256": "2d9e46f652a328e3e93e66c44e6def224e0fc3d462ba937e56050edc0fa13fee"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1214,7 +1214,7 @@
   {
    "path": "qa/capture_log.json",
    "bytes": 1187,
-   "sha256": "073afe331f8dfcfb4e151a0a4bd06352d72566239aa2f5bae4e7fe87e6207982"
+   "sha256": "8b137b66755f6382b393a1bec539a2542c5b04dd4bdaa48fefd7d7a5b0c5279a"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -2797,6 +2797,111 @@
    "sha256": "addf82018da0a8fc6afb3145989268d41cc44403f64c1662faf0aee4a0bf2110"
   },
   {
+   "path": "qa/match/08/scenery/r7/A1/a00_approved_view.png",
+   "bytes": 2609674,
+   "sha256": "f800e00e1c07d440ba992a179d8a6ff1610b4f19559d5a7dc6bbbb4e4be3aee3"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/f03_forward3u.png",
+   "bytes": 2536875,
+   "sha256": "082e06479f317e1724dc6abcca106db988a5e97f87f0e3acc3aed612a59eff2f"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/f06_forward6u.png",
+   "bytes": 2444245,
+   "sha256": "4beb307b4b8694ac2ab8a5660339372ec8b6f00a45e2c9f11dc816955e48cf54"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/f10_forward10u.png",
+   "bytes": 2418278,
+   "sha256": "a1bd843e6620d42785cb8549f18d0d7500ec0d5bdc8db81dc0a711faf3ad9295"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/f20_forward20u.png",
+   "bytes": 1729628,
+   "sha256": "69a0ea8a85bb85e28b13d2247c0fee81486bc7af7a75613f253924d94d388e01"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/motion.json",
+   "bytes": 4700,
+   "sha256": "c7dbe2bf6194f67cb3e885bf9c6ad37d695dddc6b426697f2a5fc6205eed160f"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/s_left_hard.png",
+   "bytes": 2387869,
+   "sha256": "812939508116ae941b1beb118cc78013c682772ba4dda91ab3e2da66a6601cf2"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/s_left_steer.png",
+   "bytes": 2516457,
+   "sha256": "8c78de2953a7badb63da5f98740cbebf884fa290d85c4562d51f7d0d65df471c"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/s_right_hard.png",
+   "bytes": 2510213,
+   "sha256": "25da6ede62c06bbbe681eea8c3a3697224c372f5deb327fb5d2c8313bf1fc940"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/s_right_steer.png",
+   "bytes": 2458019,
+   "sha256": "2023a0a3a1ea192b71573854fe234eadfa65702aa325dfe1cdb9d12fabc3ea52"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/t33_through_screen.png",
+   "bytes": 2483600,
+   "sha256": "c8276280cb7bd9d182b5db3cc54d9353055f7b3579abb6be389e713e7214e04b"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/t66_through_screen.png",
+   "bytes": 2437077,
+   "sha256": "09f8a7bed911ddfb82094197e9ae23f417524a68bbe942d7b10439ca961f50b9"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/A1/t95_through_screen.png",
+   "bytes": 2434464,
+   "sha256": "398f132a39f21666f19cca07e473d55d212a6dec7e6024aef2caa840487f1ce9"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/dbg/f03_forward3u.png",
+   "bytes": 351626,
+   "sha256": "1adafe1e899f979e4c5c7206ae1a57e6d973517522543e9f78712a9e3c1ee86f"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/dbg/motion.json",
+   "bytes": 1256,
+   "sha256": "5bd6f4e264a1eea6f5da24349370c7efd6788d54da035f4311aae277c06b0e84"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/dbg/s_left_hard.png",
+   "bytes": 360138,
+   "sha256": "3d7227169d2c19d34c13ef94aa7b0b7f75f200fd6be1d54455c534c1a50bfa43"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/dbg/s_right_hard.png",
+   "bytes": 444724,
+   "sha256": "06c6a79615dc3e149e5ab82251b51b30891b97f1f19d3a8fb81347c6363d8b48"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/noswim/08.png",
+   "bytes": 2600051,
+   "sha256": "02dcbfc64df70a4cd587f681cb606e32083539e1a262fc8356b088ee965e964f"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/seam/08.png",
+   "bytes": 2600051,
+   "sha256": "02dcbfc64df70a4cd587f681cb606e32083539e1a262fc8356b088ee965e964f"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/swim/08.png",
+   "bytes": 2600051,
+   "sha256": "02dcbfc64df70a4cd587f681cb606e32083539e1a262fc8356b088ee965e964f"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/swim2/08.png",
+   "bytes": 2600051,
+   "sha256": "02dcbfc64df70a4cd587f681cb606e32083539e1a262fc8356b088ee965e964f"
+  },
+  {
    "path": "qa/match/08/scenery/r7/seam/base/f10_forward10u.png",
    "bytes": 2450623,
    "sha256": "f61aac01ac39d7fcd891efe911df26cdd07ade6004670ad7e5740e351e26757b"
@@ -2840,6 +2945,31 @@
    "path": "qa/match/08/scenery/r7/seam/k22/t95_through_screen.png",
    "bytes": 2409322,
    "sha256": "69ce6ad2b4b32f1265011a17fd8870a19d368c99664e3fd523709b43630c806d"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/sill/f03_forward3u.png",
+   "bytes": 2496081,
+   "sha256": "62fea7be7877860c24942c3bed3746dbab48a0e015c81fc371d46cd9f5cebeaa"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/sill/f06_forward6u.png",
+   "bytes": 2443395,
+   "sha256": "dccde0936c47a2328b4f635b7cff1c2df31a920d93f3f416859332fdcd3a0d49"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/sill/motion.json",
+   "bytes": 1630,
+   "sha256": "023c6982a622347c8def49985d3e75dda42ed1847fd28dde8e38992f9d3c16f7"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/sill/s_left_steer.png",
+   "bytes": 2515653,
+   "sha256": "2ff4a7c923a7189650f4660c4234c9e467f179ca573ad93a87f4fe287ce3962c"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/sill/s_right_steer.png",
+   "bytes": 2457906,
+   "sha256": "cae31f884b552d899886add80f8b5603ab5e96af585314d9b912481c7630431e"
   },
   {
    "path": "qa/match/08/scenery_metrics_BEFORE_FINAL.json",
@@ -9483,8 +9613,8 @@
   },
   {
    "path": "src/world/match08.ts",
-   "bytes": 26808,
-   "sha256": "74ed440dd0f4e10031316a805cc683f7fa008bbf2b720d5ec3429d1e08902688"
+   "bytes": 27210,
+   "sha256": "1a12fc68bef7c0453236e1c19f06c61c61651ffc63f75cc66b187bf38590cc7c"
   },
   {
    "path": "src/world/materials.ts",
