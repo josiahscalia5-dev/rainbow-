@@ -32,8 +32,8 @@
 * Gameplay `node scripts/gameplay-test.mjs --q=$B7`: **8/8 pass, 91 coins collected, 1,330 → 2,240**, 07→08 drop
   61.31 u (`r7/proof/gameplay.json`).
 * `npm run test:continuity`: ok, 07→08 vertical drop 61.19 u, all boundary gaps 0.
-* Default build (no query), all 11 screens, current code vs untouched copy of the start code: PROOF_DEFAULT
-* 04–07 with `$B7` vs round-6 base set (parts I own this round): PROOF_LEAK
+* Default build (no query), all 11 screens, same scratch copy (src/assets/scripts + symlinked node_modules), start code `33b8f8b4` (`r7/proof/def_start`, rerun `def_start_rerun`) vs new code (`r7/proof/copy_new`): **0 px on 02–10**. 01 and 11 differ by 693 / 634 px, and they differ by the same amounts between two runs of IDENTICAL code (01: 693, 11: 588), so that is capture noise. (A first 'old' set was discarded: it was taken from an autosave HEAD that already held my edits.)
+* 04–07 with `$B7` vs round-6 base set (parts I own this round): **0 px on 04, 05, 06, 07** (`r7/proof/leak_r6` vs `leak_new`). Earlier owners' 04–07 differences under match08 (Benny, 07 coins, 04 bubbles) are unchanged: see SHARED_CHANGES.md.
 * Approved-view whole frame within 20 levels (frozen capture, incl. Benny / HUD / coins): r6 set 81.05 % → B7 81.05 %.
 
 ## Pictures (separate full-size files)
