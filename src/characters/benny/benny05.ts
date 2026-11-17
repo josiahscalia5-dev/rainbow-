@@ -274,6 +274,12 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   for (const f of furs) {
     const c = CLUMP05[f.mesh.name];
     if (c !== undefined) f.uniforms.uClump.value = c;
+    // benny08 round 3 (lead review: "fur hard, grainy, jagged fringe"): softer strands on body + arms (probe 65.3 -> 65.6 %),
+    // shorter fringe where the body turns edge-on (neutral number, smoother outline); `?b08soft=0` = off
+    if (B08R3 && qv('b08soft') !== '0' && /^fur_(body|arm)/.test(f.mesh.name)) {
+      f.uniforms.uSoft.value = 0.6;
+      if (f.mesh.name === 'fur_body') f.uniforms.uSoftEdge.value = 1.0;
+    }
     // benny08 round 3: the fur uniforms reachable from the mesh (Game.ts ?match08=1 Benny tweaks, QA probes); no render effect
     f.mesh.userData.furU = f.uniforms;
   }
