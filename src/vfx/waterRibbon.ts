@@ -220,6 +220,13 @@ export const PROJ05: boolean = on05('proj05');
  * first bake is used as before.
  */
 export const PROJFAR05: boolean = PROJ05 && on05('projfar05');
+/**
+ * `?proj05=1&projfar05=1&projgap05=1` (2026-11-17, session 018Sg3AU; on with `?match05=1`): the exact layer E from
+ * assets/textures/water05/far2/ — far1's E with the gaps the locked eye never saw (wave back slopes) mirror-filled from
+ * the approved texture (tools/proj05/bake.py … far gapfill). Riding no longer shows the coarse old tile through them as
+ * dark torn stripes across the river. Needs projfar05 (far1 F + LUT).
+ */
+export const PROJGAP05: boolean = PROJFAR05 && on05('projgap05');
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
@@ -424,6 +431,21 @@ uniform vec2 uPjT2S;       // start s, half period L (mirrored repeat: period 2 
 // how far ?projnear05=1 is engaged: 0 within 0.5 u of the locked checkpoint (the locked picture is the original
 // proj05 one EXACTLY, including its own hand-overs), 1 from 2 u of riding on
 float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }
+// ?projvp05=1 (2026-11-17, session 018Sg3AU; on with ?match05=1): VARIANCE-PRESERVING hand-over while riding. A plain
+// mix of two unrelated pictures of the water (exact layer E <-> crisp tile T2) halves their contrast in the hand-over
+// band: the rider saw a milky, smeared band mid-river (debug map ?projdbg05=1 = the green/red cross-fade). Here each
+// picture's deviation from the shared mean colour (x = on, yzw = mean of E and T2, display space) is blended and
+// rescaled by 1 / sqrt(w^2 + (1-w)^2), so the band keeps the approved water's contrast. Engaged by pjNearK() only:
+// at the locked checkpoint (pjNearK = 0) the picture is unchanged, pixel for pixel.
+uniform vec4 uPjVP;
+vec3 pjMixVP(vec3 a, vec3 b, float w) {
+  vec3 lin = mix(a, b, w);
+  float k = uPjVP.x * pjNearK();
+  if (k <= 0.0) return lin;
+  vec3 mu = uPjVP.yzw;
+  vec3 vp = clamp(mu + ((1.0 - w) * (a - mu) + w * (b - mu)) * inversesqrt(max(w * w + (1.0 - w) * (1.0 - w), 0.5)), 0.0, 1.0);
+  return mix(lin, vp, k);
+}
 vec4 pjLut(float s) {
   float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
   float i = floor(x);
@@ -449,10 +471,18 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
     // the crisp tile T2 by the same test as E (at the locked checkpoint mE = 1.3: wT2 = 0, the locked picture is the
     // old one exactly)
     float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));
-    t = mix(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
+    t = pjMixVP(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
     wN *= 1.0 - wT2;
   }
   vec3 lay = mix(t, n.rgb, wN);
+  if (uPjVP.x > 0.5 && pjNearK() > 0.0) {
+    // E's empty texels are black and its soft edge (a < 0.5) is darkened: only well-covered texels feed the
+    // variance-preserving blend (a darkened edge would otherwise be amplified into a dark fringe)
+    float wEv = wE * smoothstep(0.5, 0.95, e.a) / max(e.a, 1e-3);
+    wEv = mix(wE, clamp(wEv, 0.0, 1.0), pjNearK());
+    wE = wEv;
+    return pjMixVP(lay, e.rgb, wE);
+  }
   return mix(lay, e.rgb, wE);
 }
 float pjDetail(float u, float s) {
@@ -1683,7 +1713,8 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
   const urls = {
-    E: PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+    E: PROJGAP05 ? new URL('../../assets/textures/water05/far2/proj05_E.png', import.meta.url).href
+      : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
     N: new URL('../../assets/textures/water05/proj05_N.png', import.meta.url).href,
     T: new URL('../../assets/textures/water05/proj05_T.png', import.meta.url).href,
     D: new URL('../../assets/textures/water05/proj05_D.png', import.meta.url).href,
@@ -1721,6 +1752,9 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   // before; 1 is sharper than before in every band and showed no grain; 0 and 0.5 stay available for comparison).
   const NEAR = on05('projnear05');
   u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 1), 0, 1), 0, 0) };
+  // ?projvp05=1 (or ?match05=1): variance-preserving E <-> tile hand-over while riding (shader pjMixVP). Mean colour =
+  // midpoint of the means of E (0.379, 0.598, 0.912) and T2 (0.502, 0.533, 0.933), measured over their valid texels
+  u.uPjVP = { value: new THREE.Vector4(on05('projvp05') ? 1 : 0, 0.440, 0.566, 0.922) };
   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
   u.uPjT2S = { value: new THREE.Vector2(0, 1) };
   const loader = new THREE.TextureLoader();

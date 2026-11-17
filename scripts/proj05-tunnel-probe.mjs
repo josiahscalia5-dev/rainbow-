@@ -89,7 +89,15 @@ try {
     // --coords: no material is replaced; the projwall05 / projring05 shaders themselves write (texture u, v, 7 | 8, 77 | 78)
     const ptShared = COORDS ? (await import('/src/vfx/proj05Tunnel.ts')).proj05TunnelShared : null;
     if (ptShared) ptShared.uPtDbg.value = 1;
-    else for (const s of saved) if (s.cls) { s.o.material = mats[s.cls]; probed[s.cls] = (probed[s.cls] ?? 0) + 1; }
+    else {
+      // `?env05=1` builds every real 05 ring as its own one-instance mesh: tag 20 + mesh index (scene order) then
+      const ringMeshes = saved.filter((s) => s.cls === 'ring');
+      for (const s of saved) if (s.cls) {
+        const k = ringMeshes.indexOf(s);
+        s.o.material = s.cls === 'ring' && ringMeshes.length > 1 ? idMat(`vec4(atan(vPPos.y, vPPos.x), vPPos.z, 3.0, ${20 + k}.0 + floor(vPInst + 0.5))`, 'ring' + k) : mats[s.cls];
+        probed[s.cls] = (probed[s.cls] ?? 0) + 1;
+      }
+    }
     const bg = scene.background;
     scene.background = null;
     renderer.setRenderTarget(rt);
@@ -105,6 +113,7 @@ try {
     window.__probe = buf;
     // ring instances: world matrices of the real rings (centre, radius, axial position along the tube)
     const ringMesh = saved.find((s) => s.cls === 'ring')?.o;
+    const ringMeshesAll = saved.filter((s) => s.cls === 'ring').map((s) => s.o);
     const farRingMesh = saved.find((s) => s.cls === 'farRing')?.o;
     const inst = (mesh) => { if (!mesh) return []; mesh.updateMatrixWorld(); const out = []; for (let i = 0; i < mesh.count; i++) out.push(Array.from(mesh.instanceMatrix.array.slice(i * 16, i * 16 + 16))); return out; };
     const dbg = (await import('/src/world/far05.ts')).far05Debug;
@@ -120,7 +129,7 @@ try {
         sCam05: dbg.sCam05, s05: dbg.s05, sGlow05: dbg.sGlow05, sF05: dbg.sF05, bay05: dbg.bay05, rings05: dbg.rings05, ringDv: dbg.ringDv, knots: dbg.knots,
         realSeamRing: dbg.realSeamRing, D0: dbg.ft?.D0, L: dbg.ft?.L, zEnd: dbg.ft?.zEnd, R: dbg.ft?.R, band05: dbg.band05, band05near: dbg.band05near, eye: dbg.eye?.toArray?.(),
       },
-      ringInstances: inst(ringMesh), farRingInstances: inst(farRingMesh),
+      ringInstances: ringMeshesAll.length > 1 ? ringMeshesAll.flatMap((m) => inst(m)) : inst(ringMesh), farRingInstances: inst(farRingMesh),
       state: R.state(),
     };
   }, COORDS);

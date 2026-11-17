@@ -1,5 +1,9 @@
 # Paste this into Claude Code on the next Claude account
 
+> **NEWEST (2026-11-17, session 018Sg3AU): use `backups/HANDOFF_NEW_ACCOUNT.md` instead of this page** — branch
+> `ccr-694bda6a-x58ntq`, paste-ready prompt, and the old-default-branch trap. The text below is from an older account.
+
+
 (Updated 2026-11-16 ~16:00 UTC, during the Screen 05 water-projection experiment.)
 
 ## Before you paste (one-time, on the new account — these never travel through GitHub)

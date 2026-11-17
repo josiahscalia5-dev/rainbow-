@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BennyRuntime } from '../types';
 import { makeFur, type FurHandle, type FurParams } from './fur';
+import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
 
 const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
 
@@ -31,7 +32,9 @@ function defaultFurQuality(): 'high' | 'low' {
 export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Promise<BennyRuntime> {
   const src = await loadScene();
   const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
-  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality() });
+  // `?benny05=1` / `?match05=1` only: the maps baked from the approved Screen 05 (benny05.ts)
+  const maps05 = BENNY05 ? await loadBenny05Maps() : undefined;
+  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05 });
 }
 
 /**
@@ -71,7 +74,7 @@ function ridePitch(): number {
 export function createBennyRuntime(
   scene: THREE.Object3D,
   clips: THREE.AnimationClip[],
-  opts: { furQuality?: 'high' | 'low' } = {},
+  opts: { furQuality?: 'high' | 'low'; maps05?: Record<string, THREE.Texture | null> } = {},
 ): BennyRuntime {
   const root = new THREE.Group();
   root.name = 'Benny';
@@ -86,12 +89,16 @@ export function createBennyRuntime(
   });
   for (const m of toReplace) {
     const p = { ...(m.userData.fur as FurParams) };
+    if (BENNY05 && FUR05[m.name]) Object.assign(p, FUR05[m.name]);
     if (opts.furQuality === 'low') p.shells = Math.max(6, Math.round(p.shells * 0.6));
     const h = makeFur(m, p);
     m.parent!.add(h.mesh);
     m.parent!.remove(m);
     furs.push(h);
   }
+  // `?benny05=1` / `?match05=1`: the Screen-05 reference-matched look, on Benny himself (benny05.ts). Off: nothing runs.
+  const b05 = BENNY05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
+  if (BENNY05) clips = dampedClips(clips);
 
   // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name
   // starts with the given prefix (the GLB's own factors are the default; materials are shared by every clone)
@@ -216,7 +223,7 @@ export function createBennyRuntime(
   // ---- QA segmentation mask (`?bennyMask`, or window.__bennyQA.mask(true) in ?qa pages) ----
   if (typeof location !== 'undefined') {
     const qs = new URLSearchParams(location.search);
-    const qa = { mask: (on: boolean) => setMask(scene, furs, on), info: () => qaInfo(root, body) };
+    const qa = { mask: (on: boolean) => setMask(scene, furs, on), info: () => qaInfo(root, body), b05 };
     if (qs.has('qa') || qs.has('bennyMask')) (window as unknown as { __bennyQA?: typeof qa }).__bennyQA = qa;
     if (qs.has('bennyMask')) qa.mask(true);
   }

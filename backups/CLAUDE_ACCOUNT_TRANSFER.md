@@ -1,6 +1,26 @@
-# Rainbow — Claude account transfer guide (newest: session 01KS3bZt, branch `ccr-8c4acadc-iybw0n`, 2026-11-16 ~23:20 UTC)
+# Rainbow — Claude account transfer guide (newest: session 018Sg3AU, branch `ccr-694bda6a-x58ntq`, 2026-11-17 ~00:50 UTC)
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
+
+**Account transfer #2 of this session (2026-11-17 ~00:25 UTC): start from `backups/HANDOFF_NEW_ACCOUNT.md`.**
+
+## ▶ NEWEST (2026-11-16 23:51 → 2026-11-17, NEW Claude account, session `018Sg3AU…`, branch `ccr-694bda6a-x58ntq`) — READ THIS FIRST
+The previous account (branch `claude/approved-screen-implementation-g3loqu`, last commit `b81cc34`, 23:44 UTC) hit its limit.
+* **Transfer:** the session started on the OLD GitHub default branch (`81e639e`: no bootstrap, no Blender setup; its
+  SessionStart hook only started an old autosave that refused to push). `ccr-694bda6a-x58ntq` was re-created directly
+  from `b81cc34` (verified newest by `git ls-remote`); `claude-bootstrap.sh --skip-resume` (no merges). Not merged on
+  purpose: `ccr-8c4acadc-iybw0n` `0594138` (autosave status files only) and every `codex/*` branch. Source branch and
+  `ccr-8c4acadc-iybw0n` added to `protected_branches`; autosave `branch` = this branch.
+* **Verified here:** LFS 34/34 (+ GitHub LFS), references 13/13, 10/10 specialists unchanged, Blender 5.3.0 full check
+  (`qa/tools_check/blender_transfer_s018/REPORT.md`), Android SDK 34 + Java 21, Playwright MCP + WebGL2, tsc, continuity,
+  gameplay 8/8; default 05 / protected BEFORE / `?match05=1` captures 0 px different from their saved pictures
+  (`qa/pilot05/full_reference_match/recovery_s018/`). Fixed `scripts/verify-assets.py agents` (crashed on dict roster entries).
+* **Work:** Screen 05 full reference match continues — `qa/pilot05/full_reference_match/COORDINATION.md` (newest RESUMED
+  sections) + `coordinator/NOTES.md` (new water parts `projvp05`, `projgap05`, on with `match05`). Specialists relaunched
+  from `qa/pilot05/full_reference_match/briefs/*.md` (env05, benny05, hud05/coins05) — see `backups/AGENTS_STATUS.json`.
+* **Next account:** new sessions check out the OLD default branch. Until the user changes the GitHub default branch,
+  run first: `git fetch origin ccr-694bda6a-x58ntq && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`
+  (or create the session branch from the newest branch by `git ls-remote` and run `bash scripts/claude-bootstrap.sh --skip-resume`).
 
 ## ▶ NEWEST (2026-11-16 22:18 → ~23:20 UTC, NEW Claude account, session `01KS3bZt…`, branch `ccr-8c4acadc-iybw0n`) — READ THIS FIRST
 The previous account (branch `ccr-61131b9d-uj0oqb`, last commit `aea7e77`, 22:12 UTC) ran out of credits. This session:

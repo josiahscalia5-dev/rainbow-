@@ -149,6 +149,9 @@ export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3(
   return out.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
 }
 
+/** `?env05=1` wall / ring displacement, see TubeGeoOptions.warp */
+export type TubeWarp = (s: number, th: number, out: THREE.Vector2) => THREE.Vector2;
+
 export interface TubeGeoOptions {
   radial?: number;
   step?: number;
@@ -171,6 +174,12 @@ export interface TubeGeoOptions {
    * multiplied by oval(s) (ref 05 rings are ovals ≈1.75 wider than tall), normals follow the ellipse
    */
   oval?: (s: number) => number;
+  /**
+   * `?env05=1` (Screen 05 only, visual): displacement of the wall point at tunnel coordinate s and angle th (th as
+   * below: cos th → right, sin th → up), written into `out` as (along the frame's right, along its up), world units.
+   * Positions only; normals, uv and the strip attributes stay those of the circle. Undefined = unchanged geometry.
+   */
+  warp?: TubeWarp;
 }
 
 export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: TubeGeoOptions = {}): THREE.BufferGeometry {
@@ -187,6 +196,7 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
   const au = o.axisAttr ? new Float32Array(rings * (radial + 1) * 3) : null;
   const c = new THREE.Vector3();
   const d = new THREE.Vector3();
+  const wv = new THREE.Vector2();
   for (let i = 0; i < rings; i++) {
     const s = s0 + ((s1 - s0) * i) / (rings - 1);
     const f = path.frame(s);
@@ -201,6 +211,12 @@ export function buildTubeGeometry(path: TubePath, s0: number, s1: number, o: Tub
       pos[k * 3] = c.x + d.x * r;
       pos[k * 3 + 1] = c.y + d.y * r;
       pos[k * 3 + 2] = c.z + d.z * r;
+      if (o.warp) {
+        o.warp(s, th, wv);
+        pos[k * 3] += f.right.x * wv.x + f.up.x * wv.y;
+        pos[k * 3 + 1] += f.right.y * wv.x + f.up.y * wv.y;
+        pos[k * 3 + 2] += f.right.z * wv.x + f.up.z * wv.y;
+      }
       if (ov !== 1) d.copy(f.right).multiplyScalar(Math.cos(th) / ov).addScaledVector(f.up, Math.sin(th)).normalize();
       nor[k * 3] = ns * d.x; nor[k * 3 + 1] = ns * d.y; nor[k * 3 + 2] = ns * d.z;
       uv[k * 2] = j / radial;
@@ -350,6 +366,38 @@ export function buildRingsAt(path: TubePath, list: number[], material: THREE.Mat
     }
   }
   mesh.count = k;
+  mesh.instanceMatrix.needsUpdate = true;
+  mesh.frustumCulled = false;
+  return mesh;
+}
+
+/**
+ * `?env05=1` (Screen 05 only, visual): one band ring at tunnel coordinate s whose points are displaced sideways exactly
+ * like the warped wall (`TubeGeoOptions.warp`, same (s, th) convention), so the band keeps sitting on the wall. Same
+ * placement / basis as buildRingsAt with `band` (−right, up, tan), as a one-instance InstancedMesh so every ring
+ * material (instanced shader path) is unchanged. `scale` = extra uniform radius factor (1 = on the wall).
+ */
+export function buildWarpedBandRing(path: TubePath, s: number, material: THREE.Material, band: BandOpts, inset: number, warp?: TubeWarp): THREE.InstancedMesh {
+  const geo = bandGeometry(band);
+  const r = path.radius(s) - inset;
+  if (warp) {
+    const p = geo.getAttribute('position') as THREE.BufferAttribute;
+    const wv = new THREE.Vector2();
+    for (let i = 0; i < p.count; i++) {
+      const x = p.getX(i), y = p.getY(i);
+      // object (x, y) → world −right·x + up·y (times r): angle th with cos th = −x/ρ, sin th = y/ρ
+      warp(s, Math.atan2(y, -x), wv);
+      p.setXY(i, x - wv.x / r, y + wv.y / r);
+    }
+    p.needsUpdate = true;
+    geo.computeBoundingSphere();
+  }
+  const mesh = new THREE.InstancedMesh(geo, material, 1);
+  const f = path.frame(s);
+  const c = f.pos.clone().addScaledVector(f.up, path.radius(s) - path.depth(s));
+  const q = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(f.right.clone().negate(), f.up, f.tan));
+  mesh.setMatrixAt(0, new THREE.Matrix4().compose(c, q, new THREE.Vector3(r, r, 1)));
+  mesh.count = 1;
   mesh.instanceMatrix.needsUpdate = true;
   mesh.frustumCulled = false;
   return mesh;
@@ -570,12 +618,13 @@ export class ForcedTunnel {
     return out.copy(A).multiply(basis).multiply(new THREE.Matrix4().makeScale(s.x, s.y, s.z)).setPosition(p);
   }
   /** wall geometry: uv.y = sF + Z (virtual s, so slot rows continue), radial normals, morph target "open" */
-  geometry(radial = 72, steps = 72, inset = 0.004): THREE.BufferGeometry {
+  geometry(radial = 72, steps = 72, inset = 0.004, warp?: TubeWarp): THREE.BufferGeometry {
     const rows = steps + 1;
     const n = rows * (radial + 1);
     const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), uv = new Float32Array(n * 2);
     const ax = new Float32Array(n * 3), au = new Float32Array(n * 3), ext = new Float32Array(n), opn = new Float32Array(n * 3);
     const d = new THREE.Vector3(), o = new THREE.Vector3(), p = new THREE.Vector3(), cr = new THREE.Vector3();
+    const wv = new THREE.Vector2();
     const r0 = this.R * (1 - inset);
     for (let i = 0; i < rows; i++) {
       // uniform in projected radius (1/D): dense near the vanishing point where the rings crowd
@@ -591,6 +640,7 @@ export class ForcedTunnel {
         const th = -1.5 * Math.PI + (j / radial) * Math.PI * 2;
         d.copy(this.Rt).multiplyScalar(Math.cos(th)).addScaledVector(this.U, Math.sin(th));
         o.copy(d).multiplyScalar(r0);
+        if (warp) { warp(Z, th, wv); o.addScaledVector(this.Rt, wv.x).addScaledVector(this.U, wv.y); }  // `?env05=1` (virtual Z)
         this.point(Z, o, p);
         const k = i * (radial + 1) + j;
         p.toArray(pos, k * 3);

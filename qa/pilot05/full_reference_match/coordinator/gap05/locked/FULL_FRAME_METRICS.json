@@ -1,0 +1,19 @@
+{
+ "capture": "qa/pilot05/full_reference_match/coordinator/gap05/locked/05.png",
+ "whole_frame": {
+  "px": 1327104,
+  "share_of_frame": 1.0,
+  "mean_abs": 34.04,
+  "within_10": 0.4304,
+  "within_20": 0.517,
+  "ssim_lum": 0.5107,
+  "mean_signed_rgb": [
+   2.8,
+   -0.7,
+   -0.6
+  ]
+ },
+ "note": "whole frame = all 864x1536 pixels, nothing excluded; pixel statistics, not a perceptual score",
+ "mse": 3466.8,
+ "psnr_db": 12.73
+}
