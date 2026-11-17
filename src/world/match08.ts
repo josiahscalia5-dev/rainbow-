@@ -63,6 +63,10 @@ uniform sampler2D uFill;    // m08fill: world-anchored wall tile cut from the pi
 uniform float uFillMode;    // 0 off (triplanar patch), 1 drum wall (around the chamber axis), 2 flat disc (x/y)
 uniform vec2 uFillSize;     // tile size in world units (around, along)
 uniform vec3 uDrum;         // chamber axis x, y and radius
+uniform mat4 uProjVP;
+uniform float uSwim;        // m08swim (floor only): the painted river's banks spread to cover Benny's whole swim lane
+uniform sampler2D uRiv;     // 64 x 1: painted river centre x (r) and full width (g) along z
+uniform vec4 uRivZ;         // z at texel 0, z at texel 63, lane half-width to cover, floor y
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -84,6 +88,25 @@ vec3 fillColor() {
   } else q = vW.xy / uFillSize;
   return texture2D(uFill, q).rgb;
 }
+vec2 riv(float z) {
+  float f = clamp((z - uRivZ.x) / (uRivZ.y - uRivZ.x), 0.0, 1.0) * 63.0;
+  float i0 = floor(f);
+  vec2 a = texture2D(uRiv, vec2((i0 + 0.5) / 64.0, 0.5)).rg, b = texture2D(uRiv, vec2((min(i0 + 1.0, 63.0) + 0.5) / 64.0, 0.5)).rg;
+  return mix(a, b, f - i0);
+}
+// m08swim: lateral remap of a floor point. The middle of the painted river stays as painted, its banks (water edge,
+// foam) are spread out to the lane half-width, the floor beyond is pushed out and eased back over 2.5 u. World-anchored
+// (depends on the floor point only) and faded in with the camera's distance from the approved viewpoint.
+vec3 swimRemap(vec3 w, float mv) {
+  vec2 r = riv(w.z);
+  float hp = 0.5 * r.y, h = mix(hp, max(hp, uRivZ.z), mv);
+  if (h <= hp + 1e-3) return w;
+  float d = w.x - r.x, ad = abs(d), a = 0.45 * hp, e = h - hp, o;
+  if (ad <= a) o = ad;
+  else if (ad <= h) o = a + (ad - a) * (hp - a) / (h - a);
+  else o = ad - e * max(0.0, 1.0 - (ad - h) / 2.5);
+  return vec3(r.x + sign(d) * o, w.y, w.z);
+}
 void main() {
   // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)
   vec3 pc = patchColor();
@@ -94,8 +117,13 @@ void main() {
   vec3 nn = normalize(vN);
   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
   float keep = 1.0 - smoothstep(2.5, 6.0, cc / max(cp, 1e-3));
-  if (vProj.w > 0.0) {
-    vec3 ndc = vProj.xyz / vProj.w;
+  vec4 pj = vProj;
+  if (uSwim > 0.5) {
+    float ms = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
+    if (ms > 0.0) pj = uProjVP * vec4(swimRemap(vW, ms), 1.0);
+  }
+  if (pj.w > 0.0) {
+    vec3 ndc = pj.xyz / pj.w;
     vec2 uv = ndc.xy * 0.5 + 0.5;
     if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) {
       float vis = 1.0;
@@ -178,14 +206,33 @@ export async function buildMatch08(): Promise<Match08> {
     fillTex.colorSpace = THREE.NoColorSpace; fillTex.wrapS = fillTex.wrapT = THREE.RepeatWrapping; fillTex.anisotropy = 8;
     fillSize = new THREE.Vector2(FJ.w, FJ.h);
   }
-  const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0) => new THREE.ShaderMaterial({
+  // `&m08swim=1` (scenery round r6): Benny can steer ±2.22 u (+ his body) off the course centre, but the painted river is
+  // only 2–4 u wide over the first 8 u of the chamber, so hard steering put him on the purple floor. The floor material
+  // spreads the painted river's banks to the whole reachable lane (river08.json centre / width), approved view unchanged.
+  const swimOn = flag05('m08swim');
+  const RV: { z: number[]; x: number[]; width: number[] } = await fetch(new URL('../../assets/textures/match08/river08.json', import.meta.url).href).then((r) => r.json());
+  const rivData = new Float32Array(64 * 4);
+  const rz0 = RV.z[0], rz1 = RV.z[RV.z.length - 1];
+  for (let i = 0; i < 64; i++) {
+    const z = rz0 + ((rz1 - rz0) * i) / 63;
+    let k = 0; while (k < RV.z.length - 2 && RV.z[k + 1] > z) k++;
+    const f = THREE.MathUtils.clamp((z - RV.z[k]) / (RV.z[k + 1] - RV.z[k]), 0, 1);
+    rivData[i * 4] = RV.x[k] + (RV.x[k + 1] - RV.x[k]) * f;
+    rivData[i * 4 + 1] = RV.width[k] + (RV.width[k + 1] - RV.width[k]) * f;
+  }
+  const rivTex = new THREE.DataTexture(rivData, 64, 1, THREE.RGBAFormat, THREE.FloatType);
+  rivTex.minFilter = rivTex.magFilter = THREE.NearestFilter; rivTex.needsUpdate = true;
+  const SWIM_HALF = Number(new URLSearchParams(location.search).get('m08swimw') ?? '') || 2.95; // lat 2.22 + body ≈ 0.73
+  const rivZ = new THREE.Vector4(rz0, rz1, SWIM_HALF, L.floorY);
+  const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0, swimMode = 0) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
     uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k },
       uFill: { value: fillTex ?? patch }, uFillMode: { value: fill ? fillMode : 0 }, uFillSize: { value: fillSize },
-      uDrum: { value: new THREE.Vector3(L.chamber.cx, L.chamber.cy, L.chamber.r) } },
+      uDrum: { value: new THREE.Vector3(L.chamber.cx, L.chamber.cy, L.chamber.r) },
+      uSwim: { value: swimOn ? swimMode : 0 }, uRiv: { value: rivTex }, uRivZ: { value: rivZ } },
   });
   // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
-  const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
+  const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4, 0, 1), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
 
   const group = new THREE.Group();
   group.name = 'match08_projection';
