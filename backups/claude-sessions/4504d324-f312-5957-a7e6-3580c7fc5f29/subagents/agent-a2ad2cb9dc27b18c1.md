@@ -697,3 +697,7 @@ Held-out prediction error dropped from 6–16 % to 0.35–0.66 %, and the crown'
 > 440 [956, 930, 904]
 > 460 [954, 929, 90 …[+88 chars]
 
+### 🤖 Claude — 2026-11-17T01:21:44.994Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/chk.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom geom import load_uv\nfrom bake import fit_es, LUM, inv_chain, img\nuv=load_uv('qa/pilot05/full_reference_match/benny/work/b1/uv.f32'); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\ns=ids==5\nprint('star uv range u',uv[...,0][s].min(),uv[...,0][s].max(),' v',uv[...,1][s].m …[+742 chars]`
+
