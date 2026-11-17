@@ -246,3 +246,520 @@ The daemon autosaves whatever branch is checked out, so I'll pause it, switch to
 
 > 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/lfs-pull-lead.log | tail -3; git lfs ls-files | awk '{print $2}' | sort -u | wc -l; git lfs ls-files | grep -c ' - ' ; git lfs fsck 2>&1 | tail -2\nnohup setsid bash scripts/autosave-daemon.sh > /dev/null 2>&1 < /dev/null & \nsleep 1; ps aux | grep autosave-daemon | grep -v grep | wc -l", "description": "Check LFS restore on lead and re-arm autosave"}`
 
+### 🧑 User — 2026-11-17T23:23:21.513Z
+
+> ↩︎ result: EXIT 0
+> 1
+> 0
+> Git LFS fsck OK
+> [1]+  Done                    nohup setsid bash scripts/autosave-daemon.sh > /dev/null 2>&1 < /dev/null
+> 1
+
+### 🤖 Claude — 2026-11-17T23:23:24.141Z
+
+LFS on the lead: all real files, `fsck OK`. Autosave re-armed. Now the Screen 06 material — brief, status, and audit:
+
+### 🤖 Claude — 2026-11-17T23:23:25.497Z
+
+> 🔧 **Bash** `{"command": "S=origin/claude/rainbow-s06-match-c6; git show $S:docs/briefs/2026-11-17-r6/S06.md 2>/dev/null | head -60; echo \"=========STATUS\"; git show $S:qa/match/06/STATUS.md | head -90", "description": "Read Screen 06 brief and status on s06-c6"}`
+
+### 🧑 User — 2026-11-17T23:23:25.523Z
+
+> ↩︎ result: =========STATUS
+> # Screen 06 — STATUS (round 6, 2026-11-17) — paused by the lead, then the user (phone, ~22:30 UTC) asked to continue with
+> # existing assets: the open proofs below were completed (no Marble/fal use; Screen 06 needs no Marble files)
+> 
+> * **Branch:** `claude/rainbow-s06-match-c6`, started from `c088718bb9e3374583238f4ee93f25bdee600065` (startup check OK:
+>   remote == HEAD, autosave OK, 13 reference checksums OK).
+> * **Approval status:** NOTHING approved — only the user approves. Default build untouched (only `src/world/match06.ts`
+>   changed; it runs only under `?match06=1`).
+> 
+> ## Diagnosis (verified)
+> * `&m06dbg=1` at the approved view (`r6/debug_BEFORE_m06dbg/a00_approved_view.png`): the water floor covered the whole
+>   frame below the crest line, including the crest-loop hole, the right tunnel wall and the foam banks.
+> * Measured through the locked camera, the painted river is only **~4.5 u wide** at Benny (frame edges = lateral ±2.1 u,
+>   Benny ≈ 2 u). The game river is 7 u, and the old floor was 9 u wide. That is the "oversized flat water".
+> * The old floor tile was a 1 u × 2 u crop, mirrored across the river, which made the repeated chevrons.
+> 
+> ## Done (each behind its own s …[+3325 chars]
+
+### 🤖 Claude — 2026-11-17T23:23:26.195Z
+
+> 🔧 **Bash** `{"command": "cat docs/briefs/2026-11-17-r6/USER_DECISIONS.md | head -50", "description": "Read round-6 user decisions"}`
+
+### 🧑 User — 2026-11-17T23:23:26.224Z
+
+> ↩︎ result: # The user's order — 2026-11-17 ~21:45 UTC (account 6, "URGENT: GET ALL FIVE RAINBOW GAME SCREENS TO AT LEAST 8.5/10")
+> 
+> Binding for every workstream; extends the r5 and r4 USER_DECISIONS (still valid). Nothing is approved until the user says so.
+> 
+> 1. **Target:** at least **8.5/10 visual quality, ideally 9–9.5/10**, of the actual playable 3D game against the ORIGINAL
+>    approved images — **throughout gameplay, not just a still screenshot.** No redesign, no different scenery.
+> 2. **Only the five playable screens:** 04 Through the Five Arrows · 05 Flow Into the Current · 06 Crest the Rinse Arch ·
+>    07 Dive the Washer Tube · 08 Final Spin Chamber. Screens 01–03 and 09–11 are the user's Google Flow videos: no
+>    development time, no Marble credits on them.
+> 3. **World Labs Marble:** verify the connection with free checks only; no new worlds, no credits. Earlier Marble tests got
+>    colours/materials but changed depth, architecture and layout. Use existing Marble splats / meshes / panoramas /
+>    materials only as a supporting asset resource where useful — never as the authority for the game design; stop trying
+>    the same method if it cannot reproduce the approved layouts.
+> 4. **The real pro …[+3145 chars]
+
+### 🤖 Claude — 2026-11-17T23:23:33.925Z
+
+> 🔧 **Bash** `{"command": "git branch claude/rainbow-s06-match-c7 1e7b1112f07723a2ba8e503b94c341e75c0fdb03 && git worktree add -q /home/user/wt-s06 claude/rainbow-s06-match-c7 && cd /home/user/wt-s06 && git lfs pull 2>&1 | tail -1; ln -s /home/user/rainbow-/node_modules node_modules; git log --oneline -1; ls qa/match/06/r6/ qa/match/06/r6/NEW_moving qa/match/06/r6/BEFORE_lead 2>/dev/null | head -50; ls references/ | head -20", "description": "Create S06 c7 branch and worktree, list QA captures"}`
+
+### 🧑 User — 2026-11-17T23:23:38.154Z
+
+> ↩︎ result: 1e7b1112 autosave: Rainbow 2026-11-17 22:30 UTC
+> qa/match/06/r6/:
+> 06_BEFORE_M1_approved_view.png
+> 06_NEW_r6_approved_view.png
+> BEFORE_lead
+> NEW_moving
+> debug_BEFORE_m06dbg
+> gameplay_m06geo_flow.json
+> tile_river6_x3.png
+> water06_fit_check.png
+> 
+> qa/match/06/r6/BEFORE_lead:
+> a00_approved_view.jpg
+> f03_forward3u.jpg
+> f06_forward6u.jpg
+> f10_forward10u.jpg
+> f20_forward20u.jpg
+> motion.json
+> s_left_hard.jpg
+> s_left_steer.jpg
+> s_right_hard.jpg
+> s_right_steer.jpg
+> t33_through_screen.jpg
+> t66_through_screen.jpg
+> t95_through_screen.jpg
+> 
+> qa/match/06/r6/NEW_moving:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:23:40.399Z
+
+Let me look at the approved Screen 06 picture next to what the game currently renders while moving (contact sheet for my own inspection only):
+
+### 🤖 Claude — 2026-11-17T23:23:43.760Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06/qa/match/06/r6 && SP=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad; identify ../../../../references/06_crest_the_rinse_arch.png NEW_moving/a00_approved_view.png | cut -d' ' -f1-3; montage -label '%t' ../../../../references/06_crest_the_rinse_arch.png BEFORE_lead/f06_forward6u.jpg NEW_moving/a00_approved_view.png NEW_moving/f03_forward3u.png NEW_moving/f06_forward6u.png NEW_moving/f10_forward10u.png NEW_moving/f20_forward20u.png NEW_moving/t66_through_screen.png NEW_moving/s_right_hard.png NEW_moving/s_left_steer.png -tile 5x …[+142 chars]`
+
+### 🧑 User — 2026-11-17T23:23:44.410Z
+
+> ↩︎ result: ../../../../references/06_crest_the_rinse_arch.png JPEG 864x1536
+> NEW_moving/a00_approved_view.png PNG 864x1536
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:23:45.658Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/s06_sheet_c6.jpg"}`
+
+### 🧑 User — 2026-11-17T23:23:45.804Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T23:24:13.061Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && wc -l src/world/match06.ts src/world/*.ts src/*.ts 2>/dev/null | sort -n | tail -25; grep -n \"match06\" src/*.ts src/**/*.ts | grep -v \"^src/world/match06.ts\" | head -20", "description": "Survey code size and match06 hookup"}`
+
+### 🧑 User — 2026-11-17T23:24:13.116Z
+
+> ↩︎ result: 23 src/main.ts
+>    151 src/world/towel.ts
+>    190 src/world/laundryRoom.ts
+>    230 src/world/match08.ts
+>    319 src/world/match06.ts
+>    319 src/world/match06.ts
+>    321 src/world/far05.ts
+>    653 src/world/course.ts
+>    800 src/world/tube.ts
+>    915 src/world/environment.ts
+>   1199 src/world/materials.ts
+>   5120 total
+> src/game/Game.ts:28:import { buildMatch06 } from '../world/match06';
+> src/game/Game.ts:118:  // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
+> src/game/Game.ts:540:    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+> src/game/Game.ts:592:    // `?match06=1`: no bloom on Screen 06 under the switch (the artwork carries its own glow)
+> src/game/cameraRig.ts:32:  /** `?match06=1` only (src/game/match.ts): over the 06 stage the camera sits at Benny's water point + this world offset
+> src/game/cameraRig.ts:83:  /** `?match06=1`: off06 / dir06 in the river's level frame at the 06 checkpoint (computed once) */
+> src/game/cameraRig.ts:147:    // `?match06=1`: the approved Screen 06 view — at the 06 checkpoint (06 start + 10) the camera is exactly Benny +
+> src/game/match.ts: …[+1260 chars]
+
+### 🤖 Claude — 2026-11-17T23:24:14.567Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && sed -n 1,120p src/world/match06.ts", "description": "Read match06.ts first half"}`
+
+### 🧑 User — 2026-11-17T23:24:14.597Z
+
+> ↩︎ result: /**
+>  * `?match06=1` — Screen 06 approved-picture test (2026-11-17, qa/match/06/NOTES.md), the Screen 08 method.
+>  * REAL 3D proxy geometry of "Crest the Rinse Arch", built around the game's own 06 river (which under the switch follows
+>  * the painted river: course.ts + assets/textures/match06/path06.json) and seen from the locked approved-view camera
+>  * (tools/match06/fit_river06.py → cam06_locked.json; layout tools/match06/make_tiles06.py → proj06.json):
+>  *   * the perforated tunnel = a tube of radius R around the river (centre hA above the water) from behind the camera
+>  *     into 07, continued straight along the river's heading so the painted far rings stay concentric
+>  *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+>  *   * a dark end cap far down the tunnel
+>  * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+>  * provisionally filled locally: plate06_hybrid.png) from the locked camera, so the locked view shows the approved scenery
+>  * and a moving camera sees it on geometry (parallax). Surfaces the picture never showed (or showed edge-on / far smaller)
+>  * get R …[+4366 chars]
+
+### 🤖 Claude — 2026-11-17T23:24:15.124Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && sed -n 120,319p src/world/match06.ts", "description": "Read match06.ts second half"}`
+
+### 🧑 User — 2026-11-17T23:24:15.157Z
+
+> ↩︎ result: if (uUseDepth > 0.5) {
+>         float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
+>         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+>       }
+>       float w = vis * keep;
+>       // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels that are not water (G: the
+>       // tunnel wall seen through the crest loop / beside the river) or Benny's blurry provisional fill (R), the floor
+>       // shows the painted-water tile as soon as the camera leaves the approved view (the approved view is unchanged)
+>       if (uFloor > 0.5 && uUseMask > 0.5) {
+>         vec4 mk = texture2D(uMask, uv);
+>         float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+>         float inWater = uGeo > 0.5 ? 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al) : 1.0;
+>         w *= 1.0 - max(mk.r, mk.g) * away * inWater;
+>       }
+>       // r6 m06geo: painted WATER that lands on the tunnel wall (the crest-top water / far stream beside the narrow river)
+>       // shows the ring-structured wall tile once the camera leaves the approved view (the real river geometry carries
+>       // the water there)
+>       if (uFloor < 0.5 && uGeo > 0.5 && uUseM …[+10495 chars]
+
+### 🤖 Claude — 2026-11-17T23:24:23.894Z
+
+The tunnel is built around the river from `s0`→`s1` and then extended straight. Let me check the geometry numbers and how the camera behaves over the 06 stage:
+
+### 🤖 Claude — 2026-11-17T23:24:25.552Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && python3 -c \"\nimport json;L=json.load(open('assets/textures/match06/proj06.json'));print({k:L[k] for k in L if k not in('camera','tiles')});print(L['tiles']);print('campos',L['camera']['pos'],'fov',L['camera']['fov'])\"; sed -n 25,50p src/game/cameraRig.ts; sed -n 140,200p src/game/cameraRig.ts", "description": "Read 06 layout and camera rig code"}`
+
+### 🧑 User — 2026-11-17T23:24:25.626Z
+
+> ↩︎ result: {'note': 'Screen 06 proxy layout (tools/match06/geo06.py)', 'R': 7.5, 'hA': 3.0, 'sBack': -12.0, 'sAhead07': 34.0, 'ext': 260.0, 'sB': 198.91, 's0': 186.91, 's1': 276.8727903992245, 'Lfloor': 6.87386354243376}
+> {'tube': {'wallAngle': [-0.41151684606748806, 3.553109499657281], 'sectorDeg': [35.0, 140.0], 'vp': [660.0, 632.0], 'r': [110.0, 340.0], 'period': 58.95287321438412, 'anglePeriod': 1.8325957145940461}, 'floor': {'px': [150, 1250, 720, 1530], 'lateralPeriod': 8.5923294280422, 'period': 4.2207934032488}, 'floor2': {'s': [196.91, 197.85999999999999], 'lateral': [-1.05, 0.95], 'lateralPeriod': 2.0, 'period': 2.4727272727272727, 'pxPerU': 220, 'stretch': 4.0}, 'r6': {'note': 'r6 narrow river: water |l| <= Wc, foam bank Wc..Wb (raised hb), tunnel wall rising from Wb (tools/match06/make_river06.py)', 'Wc': 2.3, 'Wb': 3.6, 'hb': 0.18, 'river': {'s': [197.25, 197.95], 'lateral': [-1.5, 0.95], 'period': 2.275, 'pxPerU': 200, 'stretch': 5.0}, 'foamPeriod': 1.6, 'wallFrom': 0.35}}
+> campos [1.7205354776162962, -35.369414293064274, -132.64401919037763] fov 62.0
+>    *  shift (units along the view right) over the 07 stage; absent = no change */
+>   yaw07?: number;
+>   side07?: number;
+>   /** `?matc …[+5977 chars]
+
+### 🤖 Claude — 2026-11-17T23:24:56.364Z
+
+The geometry tells me the root cause. Let me confirm it with numbers from the running game, using the existing audit capture tool:
+
+### 🤖 Claude — 2026-11-17T23:24:57.257Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && ls tools/lead_r6/ tools/match06/; sed -n 1,60p tools/lead_r6/*.mjs 2>/dev/null | head -80", "description": "Inspect lead audit capture tool"}`
+
+### 🧑 User — 2026-11-17T23:24:57.301Z
+
+> ↩︎ result: tools/lead_r6/:
+> motion_audit.mjs
+> motion_metrics.py
+> 
+> tools/match06/:
+> coinrun06.mjs
+> coins06.py
+> fit_river06.py
+> fit_water06.py
+> geo06.py
+> make_floor06.py
+> make_masks06.py
+> make_plate06.py
+> make_river06.py
+> make_tiles06.py
+> measure06.py
+> motion06.mjs
+> overlay06.py
+> probe06.mjs
+> probe06_locked.json
+> solve_cam06.py
+> // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5270 + Number(SCREEN));
+> const browser = await chromium …[+2103 chars]
+
+### 🤖 Claude — 2026-11-17T23:25:01.568Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && grep -n \"__rainbow\" -A40 src/game/Game.ts | grep -E \"^\\S*-?\\s+[a-zA-Z_]+[:(,]\" | head -40; grep -n \"off06\\|dir06\" src/game/match.ts | head", "description": "Find debug API exposed on window.__rainbow"}`
+
+### 🧑 User — 2026-11-17T23:25:01.615Z
+
+> ↩︎ result: 33-const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> 27:  '06': { fov: 62, roll: 0, off06: [1.1796, 2.6793, 5.6776], dir06: [-0.19129, -0.18969, -0.96303] },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:25:03.507Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && grep -rn \"__rainbow\\s*=\" src | head -3; F=$(grep -rln \"__rainbow\\s*=\" src | head -1); L=$(grep -n \"__rainbow\\s*=\" $F | head -1 | cut -d: -f1); sed -n \"${L},$((L+45))p\" $F", "description": "Read window.__rainbow QA API"}`
+
+### 🧑 User — 2026-11-17T23:25:03.552Z
+
+> ↩︎ result: src/game/Game.ts:758:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+>   (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+>   return api;
+> }
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:25:04.688Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && sed -n 700,757p src/game/Game.ts", "description": "Read QA API object definition"}`
+
+### 🧑 User — 2026-11-17T23:25:04.724Z
+
+> ↩︎ result: const out: { i: number; x: number; y: number; d: number }[] = [];
+>       coins.defs.forEach((_, i) => {
+>         if (coins.collected[i]) return;
+>         mesh.getMatrixAt(i, m); m.decompose(p, q, sc);
+>         const c = p.clone().project(camera);
+>         if (c.z > 1 || c.z < -1) return;
+>         const e = p.clone().addScaledVector(right, 0.5 * sc.x).project(camera);
+>         const x = ((c.x + 1) / 2) * W, y = ((1 - c.y) / 2) * H;
+>         if (x < -50 || x > W + 50 || y < -50 || y > H + 50) return;
+>         out.push({ i, x: Math.round(x), y: Math.round(y), d: Math.round((e.x - c.x) * W) });
+>       });
+>       return out;
+>     },
+>     respawns() { return st.respawns; },
+>     /** QA (camera lock): the live render camera — world matrix (column-major), vertical fov, aspect, near/far */
+>     camera() {
+>       camera.updateMatrixWorld();
+>       const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+>       return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam.target.toArray() };
+>     },
+>     /** debug: Benny's projected screen position (N …[+2546 chars]
+
+### 🤖 Claude — 2026-11-17T23:25:18.532Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/probe06.mjs", "content": "// Read-only probe: Screen 06 course profile + where the tunnel ahead lands in the live camera frame.\n// Run from a checkout: node probe06.mjs <outJson> [query]\nimport { writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [OUT, Q = 'match06=1&m06geo=1&m06flow=1'] = process.argv.slice(2);\nconst { chromium } = loadPla …[+2507 chars]`
+
+### 🧑 User — 2026-11-17T23:25:18.564Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/probe06.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T23:25:21.486Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && SP=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad; timeout 400 node $SP/probe06.mjs $SP/probe06_c6.json 2>&1 | grep -v \"^\\s*$\" | tail -70", "description": "Probe Screen 06 course profile and camera framing", "timeout": 420000}`
+
+### 🧑 User — 2026-11-17T23:25:38.503Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> stage06 188.90987977543386 242.87279039922453 stage07 242.87279039922453
+> s 184.9 y -43.84 slope 1.1 head -14.3
+> s 186.9 y -43.72 slope 6.4 head -7.5
+> s 188.9 y -43.34 slope 17 head -5.2
+> s 190.9 y -42.59 slope 26.9 head -7.8
+> s 192.9 y -41.59 slope 33.5 head -9.3
+> s 194.9 y -40.43 slope 36.4 head -9.6
+> s 196.9 y -39.22 slope 36.6 head -9.1
+> s 198.9 y -38.05 slope 33.8 head -8
+> s 200.9 y -37.01 slope 28.4 head -6.7
+> s 202.9 y -36.17 slope 20.4 head -5.3
+> s 204.9 y -35.63 slope 10.5 head -3.9
+> s 206.9 y -35.46 slope 0.1 head -2
+> s 208.9 y -35.6 slope -8.1 head 0.5
+> s 210.9 y -35.99 slope -13.8 head 4
+> s 212.9 y -36.54 slop …[+2568 chars]
+
+### 🤖 Claude — 2026-11-17T23:26:39.857Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s08-scenery-c6:qa/match/08/scenery/STATUS.md 2>/dev/null | head -60; echo ======; sed -n 1,40p docs/briefs/2026-11-17-r6/S08_SCENERY.md", "description": "Read Screen 08 scenery status and brief"}`
+
+### 🧑 User — 2026-11-17T23:26:39.899Z
+
+> ↩︎ result: # Screen 08 scenery-in-motion — STATUS (round 6 = my round 2, PAUSED by lead order 2026-11-17 ~22:50 UTC)
+> 
+> * Branch `claude/rainbow-s08-scenery-c6`. **Start SHA `9a2a531a`** (lead's `700f09e1` + 2 transcript autosaves). Final SHA: `git log -1`.
+> * Every change is behind its own `?match08=1` sub-switch; default build code paths untouched (nothing runs without `match08`).
+> 
+> ## Done (round 6)
+> 1. **RESTORED lost code.** The round-5 autosave `48af969b` (20:52 UTC) captured a temporarily reverted working tree, so
+>    `m08fill` (`src/world/match08.ts`) and the 08-only sample-spacing guard (`src/world/course.ts`) were MISSING from the
+>    "final" round-1 commit `60e7ffe8` — the lead's r6 BEFORE audit therefore ran WITHOUT m08fill and WITH the 04–07 leak.
+>    Restored from my own commits `471d2e57` (match08.ts) and `8987a305` (course.ts). Frames of the real round-1 set:
+>    `qa/match/08/scenery/r6/R1_restored/` (lead's frames copied to `r6/lead_BEFORE/`, reproduced in `r6/BEFORE/`).
+> 2. **`&m08arch=1` (gold-band clipping) — KEEP.** Inlet pipe, gold arch and entrance wall pushed ×2.6 (`&m08archk=`) away
+>    from the approved viewpoint along the projector's own rays (same picture from the approved vi …[+5829 chars]
+
+### 🤖 Claude — 2026-11-17T23:26:44.206Z
+
+Now I'll write a short round-7 brief for the Screen 08 scenery specialist, push it, and launch it. It continues from its own exact "next step" on `-c6`.
+
+### 🤖 Claude — 2026-11-17T23:27:01.156Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r7/S08_SCENERY.md", "content": "# Round 7 (account 7) — SCREEN 08 SCENERY-IN-MOTION — one milestone, then stop\n\nYou are the SCREEN 08 SCENERY-IN-MOTION specialist (`washer-environment-modeler` role, `.claude/agents/`) of the user's\nEXISTING Rainbow Android game. Do NOT restart, redesign, rebuild or discard anything. Lead = account-7 session on branch\n`claude/rainbow-lead-c7` (started from the account-6 lead `ccr-4bd35b15-7z45t0` @ `dde3e9afd25cf3fb4ebff45359d3a72eb2f31363`).\n\n## Your branch: `claude/rainbow-s08-scenery-c7`\nCreate …[+3334 chars]`
+
+### 🧑 User — 2026-11-17T23:27:01.187Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r7/S08_SCENERY.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T23:27:05.505Z
+
+> 🔧 **Bash** `{"command": "git add docs/briefs/2026-11-17-r7/S08_SCENERY.md && git commit -q -m \"r7 brief: Screen 08 scenery-in-motion (account 7)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZsVTaecBXyvFd9EQGg\" && git push -q -u origin claude/rainbow-lead-c7 2>&1 | tail -2; git branch claude/rainbow-s08-scenery-c7 cf2e092b1ea0c63984d414b14c4bcdfeed8eec3b && git push -q origin claude/rainbow-s08-scenery-c7 claude/rainbow-s06-match-c7 2>&1 | tail -2; for b in claude/rainbow-lead-c7 claude/rainbow-s08-scenery-c7 claude/rainbow-s06-match-c7; …[+169 chars]`
+
+### 🧑 User — 2026-11-17T23:27:17.027Z
+
+> ↩︎ result: claude/rainbow-lead-c7 local 97255b712f93f56508adafb86280c13e98caaa9e remote 97255b712f93f56508adafb86280c13e98caaa9e
+> claude/rainbow-s08-scenery-c7 local cf2e092b1ea0c63984d414b14c4bcdfeed8eec3b remote cf2e092b1ea0c63984d414b14c4bcdfeed8eec3b
+> claude/rainbow-s06-match-c7 local 1e7b1112f07723a2ba8e503b94c341e75c0fdb03 remote 1e7b1112f07723a2ba8e503b94c341e75c0fdb03
+
+### 🤖 Claude — 2026-11-17T23:27:19.102Z
+
+All three `-c7` branches are on GitHub with remote == local. Launching the Screen 08 scenery specialist session:
+
+### 🤖 Claude — 2026-11-17T23:27:26.704Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s08-scenery-c7", "outcome_branch": "claude/rainbow-s08-scenery-c7", "title": "Rainbow r7 — Screen 08 scenery in motion (specialist)", "tags": ["rainbow-r7", "rainbow-s08-scenery"], "prompt": "You are the SCREEN 08 SCENERY-IN-MOTION specialist (washer-environment-modeler role) of the user's EXISTING Rainbow Android game, round 7 (account 7). Your checked-out branch is `claude/rainbow-s08-scenery-c7` (= `claude/rainbow-s08-scenery-c6` @ cf2e092b, its newest tip). Push ONLY this branch; never force- …[+1388 chars]`
+
+### 🧑 User — 2026-11-17T23:27:34.859Z
+
+> ↩︎ result: {"ccr":{"id":"session_01KS3bZvdzt2da5S21x21PqW", "title":"Rainbow r7 — Screen 08 scenery in motion (specialist)", "session_status":"SESSION_STATUS_PENDING", "created_at":"2026-11-17T23:27:34.757441Z", "updated_at":"2026-11-17T23:27:34.757441Z", "environment_id":"env_01FyZzgXX4jXDQx4THkh99d4", "session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-", "revision":"claude/rainbow-s08-scenery-c7"}}], "outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-", "branches":["claude/rainbow-s08-scenery-c7"]}}}], "model":"claude-opus-5-5"}, "origin":"claude_code_mcp_seed", "connection_status":"disconnected", "tags":["rainbow-r7", "rainbow-s08-scenery", "config:session-created", "config:auto-create-pr:draft", "config:meta-mcp-own-entry"], "environment_kind":"anthropic_cloud", "parent_session_id":"session_01KS3bZsVTaecBXyvFd9EQGg", "status_bucket":"SESSION_STATUS_BUCKET_WORKING", "configured_model":"claude-opus-5-5"}}
+
+### 🤖 Claude — 2026-11-17T23:27:41.176Z
+
+Specialist session created (`session_01KS3bZvdzt2da5S21x21PqW`). I'll check later that it actually picked up its brief. Now the Screen 06 camera fix. Let me look at the camera rig context:
+
+### 🤖 Claude — 2026-11-17T23:27:42.119Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && sed -n 1,24p src/game/cameraRig.ts; sed -n 76,140p src/game/cameraRig.ts; grep -n \"flag05\" src/game/match.ts | head -5", "description": "Read camera rig setup code"}`
+
+### 🧑 User — 2026-11-17T23:27:42.165Z
+
+> ↩︎ result: /**
+>  * Third-person ride camera: behind/above Benny, looking along his heading (the course tangent), or
+>  * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point
+>  * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.
+>  */
+> import * as THREE from 'three';
+> import { WORLD } from '../world/course';
+> import type { Course, StageId } from '../world/course';
+> import type { TubePath } from '../world/tube';
+> import { applyMatchCam } from './match';
+> 
+> export interface CamParams {
+>   back: number; // distance behind Benny
+>   up: number; // height above Benny's water point
+>   ahead: number; // look-at distance ahead
+>   lookUp: number; // look-at height
+>   fov: number;
+>   latFollow: number; // 1 = camera fully follows Benny's lateral offset
+>   roll: number; // 0..1 how much of the path bank the camera adopts
+>   /** 05 only: view yaw (deg) to the LEFT of the tunnel axis, i.e. the vanishing point sits right of centre */
+>   yaw?: number;
+>   /** 05 only: lateral dead zone (units): the camera holds the tunnel axis while Benny is within ~this of it */
+>   deadZone?: number;
+>   /** `?match07=1` only (src/game/match.ts): extra view y …[+4328 chars]
+
+### 🤖 Claude — 2026-11-17T23:28:10.774Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/game/cameraRig.ts", "old_string": "        if (!this.m06 || this.m06.s0 !== st6.s0) {\n          const sB = st6.s0 + 10, F = lvl(sB), o = new THREE.Vector3(...p6.off06), d = new THREE.Vector3(...p6.dir06).normalize();\n          this.m06 = { s0: st6.s0, o: [o.dot(F.R), o.dot(F.U), o.dot(F.T)], d: [d.dot(F.R), d.dot(F.U), d.dot(F.T)] };\n        }\n        const F = lvl(s), M = this.m06;\n        const cp6 = f.pos.clone().addScaledVector(f.right, lat * 0.5)\n          .addScaledVector(F.R, M.o[0]).addScaledVector(F.U, M.o[1]).addScaledV …[+1983 chars]`
+
+### 🧑 User — 2026-11-17T23:28:10.790Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-17T23:28:12.967Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/game/cameraRig.ts", "old_string": "import { applyMatchCam } from './match';\n", "new_string": "import { applyMatchCam } from './match';\nimport { flag05 } from '../vfx/waterRibbon';\n\n/** r7 `?match06=1&m06cam=1` only: Screen 06 camera frame = chord toward the river this far ahead (`&m06la=`, default 40) */\nconst M06_CAM = flag05('m06cam');\nconst M06_LA = (() => {\n  const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06la')) : NaN;\n  return Number.isFinite(v) && v > 5 ? v : 40;\n})();\n"}`
+
+### 🧑 User — 2026-11-17T23:28:12.983Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-17T23:28:14.336Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt-s06/src/game/cameraRig.ts", "offset": 150, "limit": 25}`
+
+### 🧑 User — 2026-11-17T23:28:14.361Z
+
+> ↩︎ result: 150	    // the same height above the water behind him and looks along the slope (a fixed world offset ends up under the water
+> 151	    // on the down-slope); half of Benny's steering offset. Blended in around the 06 start and out before 07 (absent = no change)
+> 152	    const p6 = STAGE_CAM['06'];
+> 153	    if (p6 && p6.off06 && p6.dir06) {
+> 154	      const st6 = this.course.stage('06');
+> 155	      const w6 = THREE.MathUtils.smoothstep(s, st6.s0 - 3, st6.s0 + 1.5) * (1 - THREE.MathUtils.smoothstep(s, st6.s1 - 10, st6.s1 - 1));
+> 156	      if (w6 > 0) {
+> 157	        const lvl = (x: number) => {
+> 158	          const T = this.course.sample(x - 3).tan.clone().add(this.course.sample(x).tan).add(this.course.sample(x + 3).tan).normalize();
+> 159	          const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+> 160	          return { T, U, R: new THREE.Vector3().crossVectors(T, U).normalize() };
+> 161	        };
+> 162	        if (!this.m06 || this.m06.s0 !== st6.s0) {
+> 163	          const sB = st6.s0 + 10, F = lvl(sB), o = new THREE.Vector3(...p6.off06), d = new THREE.Vector3(...p6.dir06).normalize();
+> 164	          this.m06 = { s0: st6.s0, o: [o.dot(F.R), o.dot(F.U), o.dot(F.T)], d: [d.do …[+571 chars]
+
+### 🤖 Claude — 2026-11-17T23:28:23.281Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/game/cameraRig.ts", "old_string": "        if (!this.m06 || this.m06.s0 !== st6.s0) {\n          const sB = st6.s0 + 10, F = lvl(sB), o = new THREE.Vector3(...p6.off06), d = new THREE.Vector3(...p6.dir06).normalize();\n          this.m06 = { s0: st6.s0, o: [o.dot(F.R), o.dot(F.U), o.dot(F.T)], d: [d.dot(F.R), d.dot(F.U), d.dot(F.T)] };\n        }\n        const F = lvl(s), M = this.m06;\n        const cp6 = f.pos.clone().addScaledVector(f.right, lat * 0.5)\n          .addScaledVector(F.R, M.o[0]).addScaledVector(F.U, M.o[1]).addScaledV …[+1991 chars]`
+
+### 🧑 User — 2026-11-17T23:28:23.330Z
+
+> ↩︎ result: The file /home/user/wt-s06/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T23:28:23.989Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt-s06/src/game/cameraRig.ts", "offset": 6, "limit": 6}`
+
+### 🧑 User — 2026-11-17T23:28:24.023Z
+
+> ↩︎ result: 6	import * as THREE from 'three';
+> 7	import { WORLD } from '../world/course';
+> 8	import type { Course, StageId } from '../world/course';
+> 9	import type { TubePath } from '../world/tube';
+> 10	import { applyMatchCam } from './match';
+> 11
+
+### 🤖 Claude — 2026-11-17T23:28:26.655Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/game/cameraRig.ts", "old_string": "import { applyMatchCam } from './match';\n", "new_string": "import { applyMatchCam } from './match';\nimport { flag05 } from '../vfx/waterRibbon';\n\n/** r7 `?match06=1&m06cam=1` only: Screen 06 camera frame = chord toward the river this far ahead (`&m06la=`, default 40) */\nconst M06_CAM = flag05('m06cam');\nconst M06_LA = (() => {\n  const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06la')) : NaN;\n  return Number.isFinite(v) && v > 5 ? v : 40;\n})();\n"}`
+
+### 🧑 User — 2026-11-17T23:28:26.693Z
+
+> ↩︎ result: The file /home/user/wt-s06/src/game/cameraRig.ts has been updated successfully.
+
