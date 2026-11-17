@@ -609,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10195,
-   "sha256": "89968cc0a53d55248ff4aff0599fc59dae050bf1a5c680cee06519e58e8ccd0f"
+   "sha256": "097f611ff9239db9d8b5e76ae1499cfdbb523d10c6621faf4d5810818f8b8fc8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -713,8 +713,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 6412,
-   "sha256": "0212be50a98cf027be51cf4d81291fb36fc2644ac1ce1d7dfe8d54c003c0ad58"
+   "bytes": 7405,
+   "sha256": "4fb9643d9c9bf4212096c0016a437f810ab7ef68ceeea1a43741735fcbac6425"
   },
   {
    "path": "docs/characters/benny.md",
@@ -1610,6 +1610,51 @@
    "path": "qa/match/audit/10_metrics.json",
    "bytes": 592,
    "sha256": "c2a7e116d72811073394e54a9ba394a926d9018ba4e79f67e357521c98b775c0"
+  },
+  {
+   "path": "qa/parallel_preview/04/1_APPROVED_04.png",
+   "bytes": 3121669,
+   "sha256": "dcaa9ab930da8b601b4b94102a10a8521781d4a05c42c0cb5acf42b563f7aa08"
+  },
+  {
+   "path": "qa/parallel_preview/04/2_BEFORE_game_04.png",
+   "bytes": 1446020,
+   "sha256": "01bac502b027253db67e3c7cd0c3d876aac1e6f56c503b5b609702f52f69cc74"
+  },
+  {
+   "path": "qa/parallel_preview/04/3_NEW_match04.png",
+   "bytes": 2862493,
+   "sha256": "82599eda64a762ad36119ec0e5dac50823cec1745cef1319ac625d7e6f5d952f"
+  },
+  {
+   "path": "qa/parallel_preview/04/4_NEW_moving_10u_forward.png",
+   "bytes": 1381288,
+   "sha256": "7b41331511721cab5a9ed8befd5a47d02357801d35fc052f551dbb1fada52632"
+  },
+  {
+   "path": "qa/parallel_preview/04/5_NEW_moving_20u_forward_stretch_issue.png",
+   "bytes": 1504142,
+   "sha256": "04b772910c0ebeedc90c4e4a89abfe7d91c2bb390a88f8f549b96cfe86b4448b"
+  },
+  {
+   "path": "qa/parallel_preview/05/1_APPROVED_05.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/parallel_preview/05/2_BEFORE_match05.png",
+   "bytes": 2281821,
+   "sha256": "b3ca57112328ece8fdc4a03ffc23e52b4d4b7d5cff6d0f1e42cd22e18ed13769"
+  },
+  {
+   "path": "qa/parallel_preview/05/3_NEW_match05_tgtvis05.png",
+   "bytes": 2286183,
+   "sha256": "2c47a77323aa6e485c564fd14c86713a01a6a45d3cde5aef5d6d1ff1f5e008ff"
+  },
+  {
+   "path": "qa/parallel_preview/README.md",
+   "bytes": 299,
+   "sha256": "4fcd7e03e446d20c0e88108ed1c1dc4fdad8845e102f310c4ab546b123c32c3f"
   },
   {
    "path": "qa/pilot05/05_before_81e639e.png",

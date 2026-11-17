@@ -2278,3 +2278,46 @@ Fix the key path (report nests classes).
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit -p . && echo TSC_OK && S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && node scripts/capture.mjs 08 --q='match08=1' --out=$S/v_m08 2>&1 | tail -1 | cut -c1-40 && node scripts/capture.mjs 08 --q='match08=1&bake08=0' --out=$S/v_m08b0 2>&1 | tail -1 | cut -c1-40 && node scripts/capture.mjs 08 05 --out=$S/v_def 2>&1 | tail -1 | cut -c1-40", "description": "Typecheck and capture verification frames", "timeout": 900000}`
 
+### 🧑 User — 2026-11-17T15:59:15.686Z
+
+> ↩︎ result: TSC_OK
+> 08 → /tmp/claude-0/-home-user-rainbow-
+> 08 → /tmp/claude-0/-home-user-rainbow-
+> 05 → /tmp/claude-0/-home-user-rainbow-
+
+### 🤖 Claude — 2026-11-17T15:59:20.756Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/pxdiff.py", "content": "\"\"\"pxdiff.py a.png b.png [a2 b2 ...]: number of differing pixels + bbox (and how many outside the HUD text rows 100-140)\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nL = lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\na = sys.argv[1:]\nfor i in range(0, len(a), 2):\n    d = np.abs(L(a[i]) - L(a[i + 1])).sum(-1) > 0\n    ys, xs = np.nonzero(d)\n    hud = np.zeros_like(d); hud[100:140] = True\n    print(f'{a[i]} vs {a[i + 1]}: {int(d.sum())} …[+151 chars]`
+
+### 🧑 User — 2026-11-17T15:59:20.779Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/pxdiff.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:59:23.953Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I $S/pxdiff.py $S/v_def/08.png qa/match/08/08_BEFORE_current_game.png $S/v_def/08.png $S/base_default/08.png $S/v_def/05.png qa/pilot05/current_default_05.png $S/v_m08/08.png $S/c_n5/08.png $S/v_m08b0/08.png $S/base_m08/08.png; git status --short", "description": "Pixel-compare verification captures"}`
+
+### 🧑 User — 2026-11-17T15:59:24.913Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v_def/08.png vs qa/match/08/08_BEFORE_current_game.png: 0 px differ
+> /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v_def/08.png vs /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/base_default/08.png: 0 px differ
+> /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v_def/05.png vs qa/pilot05/current_default_05.png: 0 px differ
+> /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v_m08/08.png vs /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/c_n5/08.png: 0 px differ
+> /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v_m08b0/08.png vs /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/base_m08/08.png: 0 px differ
+>  M qa/capture_log.json
+>  M src/characters/benny/benny05.ts
+> ?? qa/match/08/benny08/views/
+> ?? qa/match/08/benny08/work/labviews08.mjs
+
+### 🤖 Claude — 2026-11-17T15:59:33.857Z
+
+> 🔧 **Bash** `{"command": "git checkout -- qa/capture_log.json", "description": "Restore capture log"}`
+
+### 🧑 User — 2026-11-17T15:59:33.913Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:59:37.315Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && node scripts/capture.mjs 08 --q='match08=1' --size=1080x1920 --out=$S/v_m08_1080 2>&1 | tail -1 | cut -c1-40 && node scripts/capture.mjs 08 --q='match08=1&bake08=0' --size=1080x1920 --out=$S/v_m08b0_1080 2>&1 | tail -1 | cut -c1-40; ls qa/capture_log*", "description": "Capture 1080x1920 CURRENT and NEW pictures", "timeout": 600000}`
+

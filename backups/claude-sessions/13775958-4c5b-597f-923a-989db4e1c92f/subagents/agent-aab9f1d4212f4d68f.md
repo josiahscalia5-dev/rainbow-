@@ -2402,3 +2402,26 @@ Let me write a camera-trace tool to measure the 08 settle and the 03→04 / 06 c
 > 11	 *  effects only run in the ride (03–10), so the cinematics and the locked 05 / 08 views are unchanged (verified 0 px).
 > 12	 * Cost: one shared uniform block, one varying, ~12 …[+337 chars]
 
+### 🤖 Claude — 2026-11-17T15:59:17.737Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/camClear.ts", "content": "/**\n * `?camclear=1` (also on under `?matchall=1`; OFF by default) — keep the ride view clear (user's Android gameplay\n * recording, 2026-11-17, qa/gameplay_video/NOTES.md). Nothing in the scenery moves or changes colour; only what would\n * block the view while riding is made see-through:\n *  1. Line of sight to Benny: fragments of the \"prop\" occluders (gold rings, lids/hoods, gold torus lips and rims, the\n *     03 basin funnel and deck, foam banks) that lie IN FRONT of Benny …[+6749 chars]`
+
+### 🧑 User — 2026-11-17T15:59:17.795Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/camClear.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:59:25.493Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/    camClear?.update(camera, renderer, benny.root, st.mode === 'ride');/    camClear?.update(camera, benny.root, st.mode === 'ride');/\" src/game/Game.ts && grep -n \"camClear\" src/game/Game.ts && timeout 300 npx tsc --noEmit && echo tsc-ok", "description": "Update camclear call and type-check", "timeout": 320000}`
+
+### 🧑 User — 2026-11-17T15:59:28.379Z
+
+> ↩︎ result: 28:import { CAMCLEAR, createCamClear } from './camClear';
+> 118:  // `?camclear=1` (src/game/camClear.ts): rings / lids / gold lips / foam banks never hide Benny or fill the lens while
+> 120:  const camClear = CAMCLEAR ? createCamClear({ env: env.group, foam: water.parts?.foam }) : null;
+> 381:        if (camClear) camSnap = true;
+> 587:    camClear?.update(camera, benny.root, st.mode === 'ride');
+> 704:    camClear() { return camClear?.patched ?? null; },
+> tsc-ok
+> [This command modified 1 file you've previously read: src/game/Game.ts. Call Read before editing.]
+
