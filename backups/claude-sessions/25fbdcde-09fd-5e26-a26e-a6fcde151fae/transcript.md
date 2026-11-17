@@ -435,3 +435,191 @@ Step 1 pushed. Now the body shape (user's first priority) — let me look at app
 > 483:    qTrack('armR', tt, tt.map((t) => [Math.cos(pt(t) * 2) * 0.4, 0, -1.25 - Math.cos(pt(t) * 3) * 0.3])),
 > 494:    qTrack('armL', tp, tp.map((t) => [-1.15 + Math.sin(pp(t) * 2) * 0.05, 0, 0.35])),
 
+### 🤖 Claude — 2026-11-17T18:45:26.577Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/benny08/review_r5/2_r2_closeup.png"}`
+
+### 🧑 User — 2026-11-17T18:45:26.626Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:45:42.582Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\na='''  const b08Parts = b08 ?'''\nadd='''  // benny08 round 5 (d) body shape (`?b08shape=1` probe / tuning: b08bw body width, b08ay/b08ax/b08ak arm raise / inward / size):\n  // wider round body under the brim, stubby arms seated high on the sides. Off unless the switch is set.\n  const B08SHAPE = !!b08 && B08R2 && qs.get('b08shape') === '1';\n  const qn = (k: string, d: number) => { const v = Number(qs.get(k)); return qs.has(k) && Number.isFinite(v) ? v : d; };\n  const b08Shape = B08SHAPE ? { bw: qn('b08bw', 1.06), ay: q …[+1028 chars]`
+
+### 🧑 User — 2026-11-17T18:45:46.001Z
+
+> ↩︎ result: Exit code 2
+> src/game/Game.ts(68,9): error TS2451: Cannot redeclare block-scoped variable 'qn'.
+> src/game/Game.ts(131,9): error TS2451: Cannot redeclare block-scoped variable 'qn'.
+
+### 🤖 Claude — 2026-11-17T18:45:49.583Z
+
+> 🔧 **Bash** `{"command": "sed -n 68p src/game/Game.ts; sed -i '131d' src/game/Game.ts && sed -i 's/qn(.b08bw., 1.06)/qn2(\"b08bw\", 1.06)/; s/qn(.b08ay., 0.1)/qn2(\"b08ay\", 0.1)/; s/qn(.b08ax., 0.06)/qn2(\"b08ax\", 0.06)/; s/qn(.b08ak., 0.9)/qn2(\"b08ak\", 0.9)/' src/game/Game.ts && sed -i '130a\\  const qn2 = (k: string, d: number) => { const v = Number(qs.get(k)); return qs.has(k) \\&\\& Number.isFinite(v) ? v : d; };' src/game/Game.ts && sed -n 127,134p src/game/Game.ts && npx tsc --noEmit -p . && echo TSC OK", "description": "Rename helper to avoid clash and recheck types"}`
+
+### 🧑 User — 2026-11-17T18:45:52.737Z
+
+> ↩︎ result: const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+>   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+>   // benny08 round 5 (d) body shape (`?b08shape=1` probe / tuning: b08bw body width, b08ay/b08ax/b08ak arm raise / inward / size):
+>   // wider round body under the brim, stubby arms seated high on the sides. Off unless the switch is set.
+>   const B08SHAPE = !!b08 && B08R2 && qs.get('b08shape') === '1';
+>   const qn2 = (k: string, d: number) => { const v = Number(qs.get(k)); return qs.has(k) && Number.isFinite(v) ? v : d; };
+>   const b08Shape = B08SHAPE ? { bw: qn2("b08bw", 1.06), ay: qn2("b08ay", 0.1), ax: qn2("b08ax", 0.06), ak: qn2("b08ak", 0.9) } : null;
+>   const b08Arms = b08Shape ? ['armL', 'armR'].map((n) => { const o = benny.root.getObjectByName(n); return o ? { o, p: o.position.clone(), s: o.scale.clone(), side: n === 'armL' ? 1 : -1 } : null; }).filter((v) => v !== null) : [];
+>   const b08Parts = b08 ? Object.keys(M08_BENNY.parts).map( …[+180 chars]
+
+### 🤖 Claude — 2026-11-17T18:45:58.207Z
+
+> 🔧 **Bash** `{"command": "sed -i '/const qn2 = /d; s/qn2(\"\\(b08..\\)\"/qn('\"'\"'\\1'\"'\"'/g' src/game/Game.ts && grep -n \"b08bw\" src/game/Game.ts && npx tsc --noEmit -p . && echo TSC OK\n# arm joint world-ish check: is armL on screen-left? write a probe set\nS=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh; mkdir -p $S\nfor v in \"a:b08shape=1\" \"b:b08shape=1&b08bw=1.0&b08ay=0&b08ax=0&b08ak=1\"; do n=${v%%:*}; node scripts/capture.mjs 08 --out=$S/$n --q=\"match08=1&${v#*:}\" >/dev/null 2>&1; echo $n; python3 -I qa/match/08/benny08/work/regions08.py $S/$n/08.png  …[+116 chars]`
+
+### 🧑 User — 2026-11-17T18:46:34.089Z
+
+> ↩︎ result: 128:  // benny08 round 5 (d) body shape (`?b08shape=1` probe / tuning: b08bw body width, b08ay/b08ax/b08ak arm raise / inward / size):
+> 131:  const b08Shape = B08SHAPE ? { bw: qn('b08bw', 1.06), ay: qn('b08ay', 0.1), ax: qn('b08ax', 0.06), ak: qn('b08ak', 0.9) } : null;
+> TSC OK
+> a
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.57
+>   scenery_nocoins <=20  99.0 %  SSIM 0.976  mean   2.74
+>   benny+splash  <=20  62.1 %  SSIM 0.527  mean  27.81
+> b
+>   scenery       <=20  97.3 %  SSIM 0.959  mean   4.57
+>   scenery_nocoins <=20  99.0 %  SSIM 0.976  mean   2.74
+>   benny+splash  <=20  65.4 %  SSIM 0.594  mean  26.83
+
+### 🤖 Claude — 2026-11-17T18:46:37.270Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('$S/a/08.png').convert('RGB').crop((250,845,610,1225)); im.resize((720,760),Image.LANCZOS).save('$S/a_cu.png')\"", "description": "Make close-up of probe a"}`
+
+### 🧑 User — 2026-11-17T18:46:37.657Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T18:46:38.223Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh/a_cu.png"}`
+
+### 🧑 User — 2026-11-17T18:46:38.262Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:46:46.028Z
+
+Wider body + high arms gives the egg shape with the brim sitting right on it, but the arms came out too small. Next I'll probe arm size and height.
+
+### 🤖 Claude — 2026-11-17T18:46:49.537Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh && for v in \"c:b08bw=1.06&b08ay=0.06&b08ax=0.04&b08ak=1.0\" \"d:b08bw=1.04&b08ay=0.06&b08ax=0.04&b08ak=1.1\" \"e:b08bw=1.0&b08ay=0.06&b08ax=0.04&b08ak=1.1\" \"f:b08bw=1.06&b08ay=0&b08ax=0&b08ak=1\"; do n=${v%%:*}; node scripts/capture.mjs 08 --out=$S/$n --q=\"match08=1&b08shape=1&${v#*:}\" >/dev/null 2>&1; echo $n $(python3 -I qa/match/08/benny08/work/regions08.py $S/$n/08.png | grep -E \"benny\"); done", "description": "Probe four body/arm combinations", "timeout": 400000}`
+
+### 🧑 User — 2026-11-17T18:47:50.643Z
+
+> ↩︎ result: c benny+splash <=20 62.0 % SSIM 0.526 mean 27.89
+> d benny+splash <=20 62.5 % SSIM 0.538 mean 27.61
+> e benny+splash <=20 65.0 % SSIM 0.590 mean 26.69
+> f benny+splash <=20 62.0 % SSIM 0.527 mean 28.01
+
+### 🤖 Claude — 2026-11-17T18:47:53.866Z
+
+Widening the body alone costs about 3 points on the strict number. I'll measure the pink outline row by row against the approved picture to see why.
+
+### 🤖 Claude — 2026-11-17T18:47:59.413Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad && cat > $S/sil.py <<'EOF'\nimport sys\nfrom PIL import Image\nimport numpy as np\ndef pink(p):\n  a=np.asarray(Image.open(p).convert('RGB')).astype(int)[:, :]\n  r,g,b=a[...,0],a[...,1],a[...,2]\n  return (r>170)&(g<150)&(b>110)&(r>b)&(r-g>80)\nims=[pink(p) for p in sys.argv[1:]]\nprint('row  '+'  '.join(f'{p.split(\"/\")[-2][:6]:>13}' for p in sys.argv[1:]))\nfor y in range(1040,1240,12):\n  out=[]\n  for m in ims:\n    xs=np.nonzero(m[y,220:650])[0]+220\n    out.append(f'{xs.min():4d}-{xs.max(): …[+352 chars]`
+
+### 🧑 User — 2026-11-17T18:47:59.884Z
+
+> ↩︎ result: row           appr              b              f
+> 1040       -              -              -      
+> 1052  316- 546  10        -         320- 331  12
+> 1064  320- 549  69   285- 542 100   272- 548 122
+> 1076  275- 583 270   275- 583 251   275- 583 257
+> 1088  263- 590 277   263- 590 258   263- 590 266
+> 1100  263- 591 309   263- 591 299   263- 600 310
+> 1112  273- 578 280   273- 645 276   273- 645 283
+> 1124  304- 550 244   304- 593 266   304- 603 274
+> 1136  310- 548 231   310- 581 237   310- 588 245
+> 1148  310- 641 219   310- 643 226   310- 643 240
+> 1160  315- 531 209   315- 542 217   315- 549 231
+> 1172  333- 514 172   330- 537 204   325- 543 215
+> 1184  349- 488 129   345- 523 156   345- 523 162
+> 1196       -         355- 514  78   355- 515  89
+> 1208       -         364- 494  82   382- 495  79
+> 1220       -              -              -      
+> 1232  308- 319   6        -              -
+
+### 🤖 Claude — 2026-11-17T18:48:14.852Z
+
+The colour mask picks up the pink river, so these numbers can't be trusted. I'll compare the close-ups by eye instead.
+
+### 🤖 Claude — 2026-11-17T18:48:17.599Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh && python3 -I -c \"\nfrom PIL import Image\nw=Image.new('RGB',(1080,380))\nfor i,n in enumerate(['appr','b','d']):\n  im=Image.open('$S/'+n+'/08.png').convert('RGB').crop((250,845,610,1225)); w.paste(im,(i*360,0))\nw=w.resize((2160,760),Image.LANCZOS); w.save('$S/cmp_bd.png')\"", "description": "Side-by-side debug crop approved / r4 / probe d"}`
+
+### 🧑 User — 2026-11-17T18:48:18.227Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T18:48:18.652Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh/cmp_bd.png"}`
+
+### 🧑 User — 2026-11-17T18:48:18.993Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T18:48:18.989Z
+
+[Image: original 2160x760, displayed at 2000x704. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T18:48:36.153Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"ak: qn('b08ak', 0.9) }\",\"ak: qn('b08ak', 0.9), bh: qn('b08bh', 1) }\",1)\ns=s.replace(\"const [bx0, by, bz0] = m08On ? M08_BENNY.body : [1, 1, 1];\",\"const [bx0, by0, bz0] = m08On ? M08_BENNY.body : [1, 1, 1];\\n      const by = by0 * (m08On && b08Shape ? b08Shape.bh : 1);\",1)\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && echo OK; S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh && for v in \"g:b08bw=1.08&b08bh=0.9&b08ay=0.04&b08ax=0.02&b08ak=1.1\" \"h:b08bw=1. …[+661 chars]`
+
+### 🧑 User — 2026-11-17T18:49:21.631Z
+
+> ↩︎ result: OK
+> g benny+splash <=20 60.9 % SSIM 0.512 mean 28.51
+> h benny+splash <=20 61.4 % SSIM 0.518 mean 28.11
+> i benny+splash <=20 63.1 % SSIM 0.554 mean 27.48
+
+### 🤖 Claude — 2026-11-17T18:49:23.179Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh/cmp_gh.png"}`
+
+### 🧑 User — 2026-11-17T18:49:23.517Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T18:49:23.512Z
+
+[Image: original 2160x760, displayed at 2000x704. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T18:49:45.756Z
+
+> 🔧 **Bash** `{"command": "grep -n \"named(new THREE.Mesh\\|body.add\\|joint('body'\\|fur_body\" src/characters/benny/build.ts | head -20; grep -n \"fur_body\\|shell\" src/characters/benny/fur.ts | head -10", "description": "List body meshes in Benny build"}`
+
+### 🧑 User — 2026-11-17T18:49:45.796Z
+
+> ↩︎ result: 171:  const body = joint('body');
+> 204:  const bodyMesh = named(new THREE.Mesh(bodyGeo, bodyMat), 'fur_body');
+> 218:  body.add(bodyMesh);
+> 222:  body.add(eyes);
+> 236:    const happy = named(new THREE.Mesh(eyeGeo, eyeMatHappy), side > 0 ? 'eyeL_happy' : 'eyeR_happy');
+> 237:    const dizzy = named(new THREE.Mesh(eyeGeo, eyeMatDizzy), side > 0 ? 'eyeL_dizzy' : 'eyeR_dizzy');
+> 255:    const m = named(new THREE.Mesh(sphereDecal(new THREE.Vector3(0.6 * side, -0.24, 0.78), 0.3, 0.19, 0.775), blushMat), side > 0 ? 'blushL' : 'blushR');
+> 257:    body.add(m);
+> 260:  const nose = named(new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 8), std({ color: '#7d2550', roughness: 0.35 })), 'nose');
+> 263:  body.add(nose);
+> 266:  body.add(mouth);
+> 289:    body.add(a);
+> 294:    const arm = named(new THREE.Mesh(g, armMat), side > 0 ? 'fur_armL' : 'fur_armR');
+> 312:    body.add(f);
+> 315:    const foot = named(new THREE.Mesh(g, armMat), side > 0 ? 'fur_footL' : 'fur_footR');
+> 322:    const sole = named(new THREE.Mesh(new THREE.CircleGeometry(0.165, 28), std({ map: footTex, roughness: 0.55 })), side > 0 ? 'soleL' : 'soleR');
+> 333:  body.add(hat);
+> 420:  const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.pomR,  …[+895 chars]
+
+### 🤖 Claude — 2026-11-17T18:49:58.565Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"\"\"      const [bx0, by0, bz0] = m08On ? M08_BENNY.body : [1, 1, 1];\n      const by = by0 * (m08On && b08Shape ? b08Shape.bh : 1);\n      const bx = bx0 * (m08On && b08Shape ? b08Shape.bw : 1), bz = bz0 * (m08On && b08Shape ? b08Shape.bw : 1);\n\"\"\",\"\"\"      const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];\n      if (b08Fur) {\n        b08Fur.o.position.copy(b08Fur.p); b08Fur.o.scale.copy(b08Fur.s);\n        if (m08On && b08Shape) { b08Fur.o.position.y += b08Shape.ly; b08Fur.o.scale.multiply(ne …[+1506 chars]`
+

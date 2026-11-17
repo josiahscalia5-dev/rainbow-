@@ -125,6 +125,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
     sm.needsUpdate = true;
   }
   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+  // benny08 round 5 (d) body shape (`?b08shape=1` probe / tuning: b08bw body width, b08ay/b08ax/b08ak arm raise / inward / size):
+  // wider round body under the brim, stubby arms seated high on the sides. Off unless the switch is set.
+  const B08SHAPE = !!b08 && B08R2 && qs.get('b08shape') === '1';
+  const b08Shape = B08SHAPE ? { bw: qn('b08bw', 1.06), ay: qn('b08ay', 0.1), ax: qn('b08ax', 0.06), ak: qn('b08ak', 0.9), bh: qn('b08bh', 1), ly: qn('b08ly', 0) } : null;
+  // the body fur mesh only (beanie, face and arms are separate children of the body joint and stay put)
+  const b08FurO = b08Shape ? benny.root.getObjectByName('fur_body') : undefined;
+  const b08Fur = b08FurO ? { o: b08FurO, p: b08FurO.position.clone(), s: b08FurO.scale.clone() } : null;
+  const b08Arms = b08Shape ? ['armL', 'armR'].map((n) => { const o = benny.root.getObjectByName(n); return o ? { o, p: o.position.clone(), s: o.scale.clone(), side: n === 'armL' ? 1 : -1 } : null; }).filter((v) => v !== null) : [];
   const b08Parts = b08 ? Object.keys(M08_BENNY.parts).map((n) => { const o = benny.root.getObjectByName(n); return o ? { n, o, s: o.scale.clone(), p: o.position.clone(), rz: o.rotation.z } : null; }).filter((v) => v !== null) : [];
   const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, hatPos: (b08.hat?.position ?? new THREE.Vector3()).clone(), hatRz: b08.hat?.rotation.z ?? 0, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
@@ -549,6 +557,15 @@ export async function startGame(canvas: HTMLCanvasElement) {
     if (m08 && b08 && b08Rest) {
       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
       const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];
+      if (b08Fur) {
+        b08Fur.o.position.copy(b08Fur.p); b08Fur.o.scale.copy(b08Fur.s);
+        if (m08On && b08Shape) { b08Fur.o.position.y += b08Shape.ly; b08Fur.o.scale.multiply(new THREE.Vector3(b08Shape.bw, b08Shape.bh, b08Shape.bw)); }
+      }
+      for (const r of b08Arms) {
+        r.o.position.copy(r.p);
+        r.o.scale.copy(r.s);
+        if (m08On && b08Shape) { r.o.position.x -= r.side * b08Shape.ax; r.o.position.y += b08Shape.ay; r.o.scale.multiplyScalar(b08Shape.ak); }
+      }
       b08.body?.scale.set(b08Rest.body.x * bx, b08Rest.body.y * by, b08Rest.body.z * bz);
       const hk = m08On ? M08_BENNY.hat : 1;
       b08.hat?.scale.set(b08Rest.hat * hk / bx, b08Rest.hat * hk / by, b08Rest.hat * hk / bz);
