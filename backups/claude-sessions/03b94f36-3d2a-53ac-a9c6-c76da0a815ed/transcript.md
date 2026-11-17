@@ -5308,3 +5308,135 @@ Saving everything to GitHub with a named checkpoint and verifying:
 
 > 🔧 **Bash** `{"command": "timeout 600 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Screen 08 ?match08=1: approved scenery projected on fitted 3D geometry (camera solve, painted-river path, proxies, hybrid texture); scenery 95.4% within 20 levels; default unchanged\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|skipping|unstaged'; git status --porcelain | wc -l; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; sha256sum -c scripts/reference.sha256 2>/dev/null | grep -c ': OK'; echo \"key pieces …[+274 chars]`
 
+### 🧑 User — 2026-11-17T13:43:06.017Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "61a5e36981811e32daadd904fbf38fae1014962c",
+> 0
+> local  61a5e36981811e32daadd904fbf38fae1014962c
+> remote 61a5e36981811e32daadd904fbf38fae1014962c
+> 13
+> key pieces: 0
+> 61a5e36 Screen 08 ?match08=1: approved scenery projected on fitted 3D geometry (camera solve, painted-river path, proxies, hybrid texture); scenery 95.4% within 20 levels; default unchanged
+> d9e035d autosave: Rainbow 2026-11-17 13:34 UTC
+> 81562bb autosave: Rainbow 2026-11-17 13:29 UTC
+
+### 🤖 Claude — 2026-11-17T13:43:09.594Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/references/08_final_spin_chamber.png"], "caption": "1 of 3 — APPROVED Screen 08 (your original, unchanged)", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T13:43:10.237Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/references/08_final_spin_chamber.png → file_uuid: ca51b3cb-6493-43cb-9343-a222a44a26ed
+
+### 🤖 Claude — 2026-11-17T13:43:10.995Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/08_BEFORE_current_game.png"], "caption": "2 of 3 — BEFORE: the current game's Screen 08 (normal build, unchanged) — 3.3 % of the scenery within 20 colour levels of your picture", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T13:43:11.610Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/08_BEFORE_current_game.png → file_uuid: 6b61f4a1-5a43-40ce-a81c-2358c7db9e69
+
+### 🤖 Claude — 2026-11-17T13:43:12.351Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/08_NEW_match08.png"], "caption": "3 of 3 — NEW: real 3D game render with ?match08=1 (your artwork projected onto fitted 3D geometry, live Benny, coins and HUD) — 95.4 % of the scenery within 20 colour levels", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T13:43:13.128Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/08_NEW_match08.png → file_uuid: c644ab8d-47f0-4140-871c-8f8541738027
+
+### 🤖 Claude — 2026-11-17T13:43:17.339Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/motion/montage.png"], "caption": "Moving-camera test (real game simulation): top = checkpoint, 3 u and 6 u forward; bottom = 10 u forward, steering left, steering right. Interior holds with real parallax; flat purple patches appear at the edges once the camera passes the near gold arch.", "display": "render", "status": "normal"}`
+
+### 🤖 Claude — 2026-11-17T13:43:17.695Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T13:43:17.710Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🧑 User — 2026-11-17T13:43:17.914Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/motion/montage.png → file_uuid: 154c9d2f-8dfc-4279-b5d6-46b963ba4e9a
+
+### 🤖 Claude — 2026-11-17T13:43:35.969Z
+
+Phase 1 for Screen 08 is done: your approved scenery now sits on real 3D geometry in the game, behind the test switch `?match08=1`. The normal game is unchanged, pixel for pixel. Above are your three full-size previews (approved, current game, new) and the moving-camera montage.
+
+**How close it is to your approved Screen 08** (share of pixels within 20 colour levels):
+
+| | Current game | **New** |
+|---|---|---|
+| Scenery (everything except the HUD strip and Benny) | 3.3 % | **95.4 %** |
+| Upper chamber: door, porthole, towel, platform, rings, upper spouts | 2.1 % | **98.5 %** |
+| Lower river, foam, walls | 4.4 % | **98.5 %** |
+| Middle area: start of the river, lower spouts, coins | 3.0 % | **83.5 %** |
+| Whole screen, including Benny and the HUD | 4.0 % | **80.6 %** |
+
+**What I built**
+- **Real 3D shapes fitted to your picture:** the near pipe, gold arch, chamber walls, door wall, floor, a platform with rim and legs, the towel, and the four half-dome spouts. The chamber keeps the game's real dimensions, which already matched your picture.
+- **Corrected river:** I traced your painted S-river and rebuilt the game's river path to follow it, so Benny and the coins now ride inside your painted river.
+- **Your own pixels:** the texture is your original approved artwork everywhere it shows scenery (79 % of the picture). fal.ai's fill is used only where Benny, the HUD and the coins were removed.
+- **Colours:** the game's colour processing is cancelled out on these surfaces, so your colours appear as painted.
+
+**Moving camera and Android**
+- **Riding forward and steering:** the chamber keeps real 3D depth. The door grows, the spouts and platform shift correctly, and Benny stays in the river.
+- **One thing breaks:** once the camera passes the near gold arch, its edges show flat purple patches and some stretched gold. Those are surfaces your picture never showed. The fix is extra artwork for those inner faces and a proper metal material there.
+- **Android:** about half the draw calls of the current Screen 08 (81 vs 160) and a cheap shader. The texture needs compressing before release (about 22 MB uncompressed → 2–4 MB).
+- **Not yet tested on a real phone.** That's the next check.
+
+**Still to fix for higher similarity**
+1. Coin positions: the game's coins aren't where your painted coins are. They cause most of the middle-area gap.
+2. Benny's look: his hat is bigger and his fur and pose differ from your painted Benny.
+3. The arch's inner faces when the camera moves (above).
+
+**Checks:** the gameplay test passes 8/8 with and without the switch, and everything is saved on GitHub (commit `61a5e36`). Phase 1 spent no fal.ai or World Labs credits. Full details are in `qa/match/08/NOTES.md`.
+
+**Next:** once you've looked at the new Screen 08 and you're happy with the method, I'll start Phase 2. That's one fal.ai clean environment-only picture each for 04, 05, 06 and 07, each shown to you full-size, then the same 3D method for each screen. Or tell me first which Screen 08 issue to fix.
+
+### 🧑 User — 2026-11-17T13:43:40.368Z
+
+CLAUDIA — IMPORTANT REMINDER ABOUT MY OPENING AND ENDING VIDEOS
+
+I want to make sure you understand something about my approved Rainbow game screens.
+
+THE BEGINNING AND ENDING ARE GOOGLE FLOW VIDEOS, NOT PLAYABLE 3D GAMEPLAY SCREENS.
+
+BEGINNING VIDEO:
+
+A human girl is doing her laundry. Benny, my pink fluffy character, is secretly hidden inside a purple towel.
+
+She carries the laundry to the washing machine and puts the clothes and towel containing Benny inside.
+
+She doesn't know Benny is there.
+
+She closes the washing machine and walks away. Benny remains inside, and this leads into the magical washing-machine adventure.
+
+ENDING VIDEO:
+
+After Benny finishes his adventure, he must return to the laundry and hide inside the towel before the girl discovers he was missing.
+
+The girl comes back and grabs the towel, completely unaware of Benny's adventure.
+
+The ending must connect naturally to the beginning.
+
+IMPORTANT RULES:
+
+1. I want the opening and ending cinematic sequences made using Google Flow.
+2. Keep my approved characters, colors, laundry-room scenery, and overall visual style consistent.
+3. Screens 04–08 remain real, playable 3D Android gameplay, not videos.
+4. Don't waste time rebuilding the opening and ending cinematic scenes as playable Marble or Three.js environments.
+5. Make sure the Google Flow videos transition naturally into and out of the playable game.
+6. Do not change my currently approved game screens.
+
+Please continue your current Screen 08 visual-matching work. This message is simply to make sure the opening and ending video plan remains clear.
+
+My priority is matching ALL my approved screens, while keeping the video sequences separate from the real 3D gameplay.
+
