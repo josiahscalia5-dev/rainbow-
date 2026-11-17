@@ -5539,3 +5539,129 @@ Understood: the opening and ending stay Google Flow videos, and screens 04–08 
 >       c.moveTo(166, 90);
 >       c.bezierCurveTo(150, 66, 90, 64, 90, 98) …[+2140 chars]
 
+### 🤖 Claude — 2026-11-17T13:44:49.845Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, math, numpy as np\ncam=json.load(open('assets/textures/match08/cam08_locked.json')); MW=np.array(cam['mw'],float).reshape(4,4).T; C=MW[:3,3]; R=MW[:3,:3]\nW,H=864,1536; t=math.tan(math.radians(cam['fov'])/2); asp=W/H; f=(H/2)/t\ndef ray(u,v):\n    x,y=u/W*2-1,1-v/H*2; d=[REDACTED-EMAIL]([x*t*asp,y*t,-1.0]); return d/np.linalg.norm(d)\nWATER=-113.11\npainted=[(335,862,42),(400,786,35),(467,737,29),(497,686,24),(428,662,20),(383,633,18),(420,616,15),(454,608,13),(479,601,12)]\nout=[]\nfor cx,cy,r in painted:\n    d=ray(cx,cy+r); s=(WATER-C[1])/d[1] …[+666 chars]`
+
+### 🧑 User — 2026-11-17T13:44:50.006Z
+
+> ↩︎ result: coin px (335,862) r42 -> x 11.30 z -286.53  radius 0.40 u  scale 0.81  dist 12.3
+> coin px (400,786) r35 -> x 11.62 z -290.46  radius 0.44 u  scale 0.88  dist 16.0
+> coin px (467,737) r29 -> x 12.35 z -294.81  radius 0.46 u  scale 0.92  dist 20.3
+> coin px (497,686) r24 -> x 12.80 z -302.45  radius 0.52 u  scale 1.05  dist 27.8
+> coin px (428,662) r20 -> x 10.95 z -308.76  radius 0.53 u  scale 1.07  dist 34.2
+> coin px (383,633) r18 -> x 8.70 z -320.26  radius 0.64 u  scale 1.29  dist 45.8
+> coin px (420,616) r15 -> x 9.22 z -333.08  radius 0.69 u  scale 1.37  dist 58.5
+> coin px (454,608) r13 -> x 10.43 z -342.62  radius 0.69 u  scale 1.38  dist 67.9
+> coin px (479,601) r12 -> x 11.58 z -352.77  radius 0.73 u  scale 1.47  dist 78.1
+
+### 🤖 Claude — 2026-11-17T13:45:10.546Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"pick|dist|radius|< 1\\.|<= 1\\.\" src/gameplay/coins.ts | sed -n 1,12p | cut -c1-160; python3 -I - <<'EOF'\nimport json, math, numpy as np\ncam=json.load(open('assets/textures/match08/cam08_locked.json')); MW=np.array(cam['mw'],float).reshape(4,4).T; C=MW[:3,3]; R=MW[:3,:3]\nW,H=864,1536; t=math.tan(math.radians(cam['fov'])/2); asp=W/H; f=(H/2)/t\ndef ray(u,v):\n    x,y=u/W*2-1,1-v/H*2; d=[REDACTED-EMAIL]([x*t*asp,y*t,-1.0]); return d/np.linalg.norm(d)\nWATER=-113.11; FAR_Z=[-311.0,-312.5,-314.0,-315.5]\npainted=[(335,862,42),(400,786,35),(467,737,29),(497,686,24),(42 …[+1127 chars]`
+
+### 🧑 User — 2026-11-17T13:45:10.711Z
+
+> ↩︎ result: 2: * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 20: * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+> 66:  /** returns number of coins picked up this frame */
+> 166:      let picked = 0;
+> 172:        if (Math.abs(ds) < 1.0 && Math.abs(d.lat - lat) < 1.25) {
+> 175:          picked++;
+> 179:      return picked;
+> coin (335,862) -> x 11.30 z -286.53 h 0.40 scale 0.81
+> coin (400,786) -> x 11.62 z -290.46 h 0.44 scale 0.88
+> coin (467,737) -> x 12.35 z -294.81 h 0.46 scale 0.92
+> coin (497,686) -> x 12.80 z -302.45 h 0.52 scale 1.05
+> coin (428,662) -> x 10.95 z -308.76 h 0.53 scale 1.07
+> coin (383,633) -> x 9.55 z -311.00 h 1.17 scale 1.03
+> coin (420,616) -> x 10.50 z -312.50 h 1.58 scale 0.89
+> coin (454,608) -> x 11.45 z -314.00 h 1.76 scale 0.80
+> coin (479,601) -> x 12.18 z -315.50 h 1.93 scale 0.76
+
+### 🤖 Claude — 2026-11-17T13:45:14.323Z
+
+Pickup only checks distance along the river and sideways offset, not height, so all 9 coins stay collectible. Adding them to the coin layout, under the switch only:
+
+### 🤖 Claude — 2026-11-17T13:45:15.180Z
+
+> 🔧 **Bash** `{"command": "sed -n 36,44p src/gameplay/coins.ts | cut -c1-170; sed -n 1,14p src/gameplay/coins.ts | grep -n import", "description": "Read the coin layout header and imports"}`
+
+### 🧑 User — 2026-11-17T13:45:15.229Z
+
+> ↩︎ result: for (const s of ss) add('05', s, C05.latK * coreLateral(course, s), C05.h, extra);
+> }
+> 
+> export function coinLayout(course: Course): CoinDef[] {
+>   const out: CoinDef[] = [];
+>   const add = (stage: StageId, s: number, lat: number, h = 0.9, extra: Partial<CoinDef> = {}) => out.push({ s, lat, h, stage, ...extra });
+>   const st = (id: StageId) => course.stage(id);
+>   // 03 — spiral trail ahead of Benny toward the drain
+>   { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
+> 7:import * as THREE from 'three';
+> 8:import type { Course, StageId } from '../world/course';
+> 9:import { canvasTexture } from '../world/materials';
+> 10:import { coreLateral } from '../vfx/waterRibbon';
+
+### 🤖 Claude — 2026-11-17T13:45:24.514Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]; s=s.replace(old,new)\nrep(\"import { coreLateral } from '../vfx/waterRibbon';\\n\",\n    \"import { coreLateral, flag05 } from '../vfx/waterRibbon';\\nimport coins08 from '../../assets/textures/match08/coins08.json';\\n\")\nold08=\"  { const a = st('08'); for (let i = 0; i < 8; i++) add('08', a.s0 + 3 + i * 1.9, -0.6 + 0.9 * Math.sin(i * 0.8)); }\\n\"\nassert s.count(old08)==1\ns=s.replace(old08, \"  const m08 = flag05('match08') || flag05('matc …[+1389 chars]`
+
+### 🧑 User — 2026-11-17T13:45:28.384Z
+
+> ↩︎ result: coins.ts patched
+> 480:      const st = this.stageAtS(i * this.ds);
+> 514:    return this.sample(s).pos.x - this.line05x;
+> 517:  stageAtS(s: number): StageDef {
+> tsc clean
+
+### 🤖 Claude — 2026-11-17T13:45:34.701Z
+
+Compiles. Re-capturing the new Screen 08, re-checking the normal build, and re-measuring:
+
+### 🤖 Claude — 2026-11-17T13:45:43.070Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/new4 --q=match08=1 2>&1 | tail -1 | cut -c1-120; timeout 600 node scripts/capture.mjs 08 --out=$M/default4 2>&1 | tail -1 | cut -c1-30; cp $M/capture_log.bak qa/capture_log.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\na=np.asarray(Image.open('qa/match/audit/08_BEFORE_default.png').convert('RGB')).astype(int); b= …[+1317 chars]`
+
+### 🧑 User — 2026-11-17T13:46:20.790Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/new4/08.png {"stage":"08","
+> 08 → /tmp/claude-0/-home-use
+> default identical: 0 px differ
+> hybrid, old coins      scenery 95.4% SSIM 0.935 | middle 83.5% | whole frame 80.6% SSIM 0.783
+> hybrid, painted coins  scenery 96.8% SSIM 0.947 | middle 90.1% | whole frame 82.0% SSIM 0.796
+
+### 🤖 Claude — 2026-11-17T13:46:24.442Z
+
+The coins helped: scenery **95.4 → 96.8 %**, the middle area **83.5 → 90.1 %**, the whole screen **80.6 → 82.0 %**. The normal game is still pixel-identical. Checking it visually:
+
+### 🤖 Claude — 2026-11-17T13:46:27.218Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; python3 -I -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/08_final_spin_chamber.png').convert('RGB').crop((150,540,750,1260)).resize((400,480))\nb=Image.open('$M/new4/08.png').convert('RGB').crop((150,540,750,1260)).resize((400,480))\no=Image.new('RGB',(808,480),(255,255,255)); o.paste(a,(0,0)); o.paste(b,(408,0)); o.save('$M/coins_cmp.png')\"", "description": "Crop the coin area, approved vs new"}`
+
+### 🧑 User — 2026-11-17T13:46:27.594Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T13:46:31.045Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/coins_cmp.png"}`
+
+### 🧑 User — 2026-11-17T13:46:31.098Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:46:46.579Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/gameplay-test.mjs --q=match08=1 >/dev/null 2>&1; python3 -I -c \"\nimport json;d=json.load(open('qa/gameplay_test_switch.json'));c=d['checks'];print(sum(1 for v in c.values() if v.get('pass')),'/',len(c),'passed; coins',c['realCoinPickups']['startCoins'],'->',c['realCoinPickups']['endCoins'],'| errors',d.get('errors'))\"; mv -f qa/gameplay_test_switch.json qa/match/08/gameplay_test_match08.json; git status --short | grep -v \"^ M backups\\|claude-sessions\" | head", "description": "Re-run gameplay test with painted coins", "timeout": 960000}`
+
+### 🧑 User — 2026-11-17T13:46:56.310Z
+
+> ↩︎ result: 8 / 8 passed; coins 1330 -> 2150 | errors []
+>  M qa/match/08/gameplay_test_match08.json
+>  M src/gameplay/coins.ts
+> ?? assets/textures/match08/coins08.json
+
+### 🤖 Claude — 2026-11-17T13:47:10.302Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; Q=qa/match/08; cd /home/user/rainbow- && cp $M/new4/08.png $Q/08_NEW_match08.png && python3 -I tools/qa/screen_match.py references/08_final_spin_chamber.png $Q/08_NEW_match08.png --label=NEW08c --json=$Q/08_NEW_screen_match.json | cut -c1-120 && python3 -I - <<'EOF'\np='qa/match/08/NOTES.md'; s=open(p).read()\nold=\"## Still to correct (visual)\\n1. **Coins**\"\nnew=(\"## Update 2026-11-17 ~14:05 UTC — the approved picture's coins (`?match08=1` only)\\n\"\n     \"The game's 08 + 09 coin rows a …[+1634 chars]`
+

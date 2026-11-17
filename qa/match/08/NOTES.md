@@ -43,8 +43,18 @@ measure; check that it can work with a moving camera on Android. **Default build
 Pictures: `08_BEFORE_current_game.png`, `08_NEW_match08.png` (approved = `references/08_final_spin_chamber.png`).
 Gameplay test 8/8 both builds (`qa/gameplay_test.json` unchanged; `gameplay_test_match08.json`), tsc clean.
 
+## Update 2026-11-17 ~14:05 UTC — the approved picture's coins (`?match08=1` only)
+The game's 08 + 09 coin rows are replaced by the picture's nine coins where the picture shows them
+(`assets/textures/match08/coins08.json`: near five stand on the water from their bottom edge; the far four — beyond the
+platform front in 3D — pinned at the river end z −311…−315.5 with height from the picture; size from the picture;
+`src/gameplay/coins.ts` converts them to river s/lateral, still real pickups). Result (hybrid texture):
+SCENERY 95.4 % → **96.8 %** within 20 levels (SSIM 0.947), middle band 83.5 % → **90.1 %**, whole frame 80.6 % →
+**82.0 %** (SSIM 0.796). Gameplay 8/8; a full run now collects 82 coins instead of 91 (9 picture coins replace the 17
+of 08 + 09 under the switch). Default build 0 px. Coins still spin (seen at an angle), Benny's bigger hat covers the
+nearest one.
+
 ## Still to correct (visual)
-1. **Coins** — the game's coins (gameplay) sit along the new path but not on the painted coins' places/count → the
+1. **Coins** (done above, except spin/facing) — the game's coins (gameplay) sit along the new path but not on the painted coins' places/count → the
    middle band (83.5 %). Next: a measured 08 coin layout from the approved picture (like line B's `coins05`).
 2. **Benny's look** — the game Benny's hat is larger and his fur/pose differ from the painted Benny (Benny specialist
    work; line B has `benny05` for Screen 05 to reuse). Splash ring around him differs.

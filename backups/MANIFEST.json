@@ -397,6 +397,11 @@
    "sha256": "f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237"
   },
   {
+   "path": "assets/textures/match08/coins08.json",
+   "bytes": 2031,
+   "sha256": "0ca6c2595bae74b023c47a16a15676cf5b617e5b32a055307eec0ebe4becdacb"
+  },
+  {
    "path": "assets/textures/match08/plate08_clean.png",
    "bytes": 6591567,
    "sha256": "b66ecf984a565122e79912fa22b5a96916298c093334d7bf316df8c88f763d57"
@@ -534,7 +539,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "07703e5c892d33112662114346c7e87cc147aeb3105d8166a1f84037e7585cc7"
+   "sha256": "f3fe83d9d56a47ba2578d6b3a9c67c2278a84624f690ca222920cfb504b034b4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1268,23 +1273,23 @@
   },
   {
    "path": "qa/match/08/08_NEW_match08.png",
-   "bytes": 2303844,
-   "sha256": "5793905a78fb5fa52d83663b56d1c1a223346b599e4af972fc8848d6a8750c43"
+   "bytes": 2313288,
+   "sha256": "4e5fa58a54a192a54efdc879ef389f99182357950d9689653cae6450cf8e73fd"
   },
   {
    "path": "qa/match/08/08_NEW_screen_match.json",
-   "bytes": 592,
-   "sha256": "54bffc235e5b38ffd72af83945a39579faa7d2dc4c78ff6d4a8475f1d3018b1a"
+   "bytes": 523,
+   "sha256": "9c47c8c125bdbcdfb284efc1b479a5be954611fd2586530f6b39aa3b073cfa17"
   },
   {
    "path": "qa/match/08/NOTES.md",
-   "bytes": 6631,
-   "sha256": "51dcf913e403e17ad8a87d1dd9fe1eb9fcab7099a07f5efa557684b2a07b2425"
+   "bytes": 7564,
+   "sha256": "c647a5af968fa3dc01e961caf05283d1ac470b8250367e8224d344faf6173b8e"
   },
   {
    "path": "qa/match/08/gameplay_test_match08.json",
    "bytes": 14656,
-   "sha256": "6d6de3a5505ab1b859d8df3abee2a2f6906348f332561f9591cb2859f00691b0"
+   "sha256": "cb18f47327d515cb7134108224cfe7cd43341c0ddedc6703503456c2fcdd5671"
   },
   {
    "path": "qa/match/08/motion/f00_checkpoint.png",
@@ -7783,8 +7788,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 9754,
-   "sha256": "ccfa96bb76f993750010813b788e999e441111aa70238b2ccf1d4b12705d3c7a"
+   "bytes": 10603,
+   "sha256": "3a95ef305940417ca04f8a5ea64bc2a77c76a9333d4e5a2fb2682044037af9bf"
   },
   {
    "path": "src/gameplay/input.ts",

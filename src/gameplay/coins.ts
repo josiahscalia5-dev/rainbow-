@@ -7,7 +7,8 @@
 import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
 import { canvasTexture } from '../world/materials';
-import { coreLateral } from '../vfx/waterRibbon';
+import { coreLateral, flag05 } from '../vfx/waterRibbon';
+import coins08 from '../../assets/textures/match08/coins08.json';
 
 export const COIN_VALUE = 10;
 
@@ -51,9 +52,22 @@ export function coinLayout(course: Course): CoinDef[] {
   // 07 — winding trail, continuing down the plunge
   { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
   // 08 — S toward the platform
-  { const a = st('08'); for (let i = 0; i < 8; i++) add('08', a.s0 + 3 + i * 1.9, -0.6 + 0.9 * Math.sin(i * 0.8)); }
+  const m08 = flag05('match08') || flag05('matchall');
+  if (!m08) { const a = st('08'); for (let i = 0; i < 8; i++) add('08', a.s0 + 3 + i * 1.9, -0.6 + 0.9 * Math.sin(i * 0.8)); }
   // 09 — arc along the left (inside of the bend, under the wave)
-  { const a = st('09'); for (let i = 0; i < 9; i++) add('09', a.s0 + 1.5 + i * 1.7, -1.7 + i * 0.12); }
+  if (!m08) { const a = st('09'); for (let i = 0; i < 9; i++) add('09', a.s0 + 1.5 + i * 1.7, -1.7 + i * 0.12); }
+  // `?match08=1` (qa/match/08/NOTES.md): the approved picture's nine coins where the picture shows them
+  // (assets/textures/match08/coins08.json, from the locked 08 camera), instead of the 08 + 09 rows above
+  if (m08) {
+    const s0 = st('08').s0, s1 = st('10').s0;
+    for (const c of coins08.coins) {
+      let best = s0, bd = Infinity;
+      for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - c.x) ** 2 + (p.z - c.z) ** 2; if (d < bd) { bd = d; best = s; } }
+      const f = course.sample(best);
+      const lat = (c.x - f.pos.x) * f.right.x + (c.z - f.pos.z) * f.right.z;
+      add(course.stageAtS(best).id, best, lat, c.h, { scale: c.scale });
+    }
+  }
   // 10 — straight line into the towel tunnel
   { const a = st('10'); for (let i = 0; i < 5; i++) add('10', a.s0 + 1.5 + i * 2.0, -0.15); }
   return out;

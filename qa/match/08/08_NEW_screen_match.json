@@ -1,26 +1,26 @@
 {
- "label": "NEW08h",
+ "label": "NEW08c",
  "approved": "references/08_final_spin_chamber.png",
- "capture": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/new3/08.png",
+ "capture": "qa/match/08/08_NEW_match08.png",
  "size": [
   864,
   1536
  ],
  "FULL": {
-  "mean_abs": 17.37,
-  "within_10": 0.7516,
-  "within_20": 0.806,
-  "ssim_lum": 0.7833
+  "mean_abs": 15.45,
+  "within_10": 0.7652,
+  "within_20": 0.8204,
+  "ssim_lum": 0.7958
  },
  "BELOWHUD": {
-  "mean_abs": 13.19,
-  "within_10": 0.8254,
-  "within_20": 0.8705,
-  "ssim_lum": 0.8437
+  "mean_abs": 10.98,
+  "within_10": 0.8411,
+  "within_20": 0.887,
+  "ssim_lum": 0.858
  },
  "LAYOUT": {
-  "mean_abs": 8.83,
-  "within_20": 0.8765
+  "mean_abs": 6.7,
+  "within_20": 0.8955
  },
  "mean_rgb_approved": [
   168.4,
@@ -28,8 +28,8 @@
   170.2
  ],
  "mean_rgb_capture": [
-  170.1,
-  109.1,
-  167.1
+  168.9,
+  107.9,
+  170.4
  ]
 }
