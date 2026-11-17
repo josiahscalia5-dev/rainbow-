@@ -3013,3 +3013,15 @@ I've sent all six specialists the instruction to resume, but none is confirmed w
 
 The progress report has the stop and resume log (`docs/PARALLEL_PROGRESS.md`, pushed as `b200999`). As each session pushes, I'll confirm it's running. When each one reports, I'll show you the approved and new pictures as separate full‑size images.
 
+### 🧑 User — 2026-11-17T22:35:52.373Z
+
+<task-notification>
+<task-id>bgp9pixje</task-id>
+<summary>Monitor event: "first new push after resume on each of the six -c2 branches"</summary>
+<event>22:35 NEW PUSH s08-benny08-bake a4c6a5c -&gt; 679d609</event>
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T22:35:53.761Z
+
+The Screen 08 Benny specialist is confirmed working again: it pushed new work at 22:35 (`a4c6a5c` → `679d609`). Still waiting for first pushes from the other five.
+
