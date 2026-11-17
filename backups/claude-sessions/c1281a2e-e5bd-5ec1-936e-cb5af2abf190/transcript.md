@@ -368,3 +368,144 @@ I'm finding out how the game's screens can be recorded. Next I'll write a script
 >     fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;
 >     if (running) stepSi …[+7762 chars]
 
+### 🤖 Claude — 2026-11-17T20:26:15.933Z
+
+> 🔧 **Bash** `{"command": "sed -n 760,840p src/game/Game.ts; echo ----; grep -n \"recordVideo\\|webm\\|screenshot\" scripts/flowplan-test.mjs scripts/cinematic-test.mjs | head; echo ---; grep -n \"qaMode\\s*=\\|const qaMode\\|stepSim = \\|function stepSim\\|const T = \\|cp01\\|cp02\\|cp11\\|introEnd\\|outroEnd\" src/game/Game.ts | head -30", "description": "Read rest of QA API and timing constants"}`
+
+### 🧑 User — 2026-11-17T20:26:15.976Z
+
+> ↩︎ result: o.onAfterRender = (...a: Parameters<THREE.Object3D['onAfterRender']>) => { hits.set(key, (hits.get(key) ?? 0) + 1); prev.apply(o, a); };
+>       });
+>       render();
+>       for (const [o, prev] of hooked) o.onAfterRender = prev;
+>       return [...hits.entries()].sort((a, b) => b[1] - a[1]);
+>     },
+>     togglePause,
+>     /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
+>      *  per-pixel river UV / footprint renders. Nothing calls it in the game; rendering is unchanged. */
+>     qa3d() { return { scene, camera, renderer, composer }; },
+>     stats() {
+>       const i = renderer.info;
+>       return { fps: +fps.toFixed(1), calls: i.render.calls, triangles: i.render.triangles, geometries: i.memory.geometries, textures: i.memory.textures, modules: { ...moduleStatus }, courseLength: course.length };
+>     },
+>     course,
+>   };
+>   (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+>   return api;
+> }
+> ----
+> scripts/flowplan-test.mjs:14:const clip = 'node_modules/.rainbow-test/flow_test.webm';
+> scripts/flowplan-test.mjs:42:  await page.screenshot({ path: 'qa/flowplan/A_during_video.png' });
+> scripts/flowplan-test.mjs:45:  await page.screensh …[+1258 chars]
+
+### 🤖 Claude — 2026-11-17T20:26:19.508Z
+
+> 🔧 **Bash** `{"command": "sed -n 500,600p src/game/Game.ts; sed -n 36,60p src/game/Game.ts", "description": "Read stepSim and mode transitions"}`
+
+### 🧑 User — 2026-11-17T20:26:19.545Z
+
+> ↩︎ result: hud.onReplay(() => resetToIntro());
+>   input.onKey((k) => { if (k === 'p' || k === 'P' || k === 'Escape') togglePause(); });
+>   input.onTap(() => {
+>     if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }
+>   });
+> 
+>   // ---------------------------------------------------------------- optional Google Flow cinematics
+>   // public/video/intro.mp4 shows 01 (towel loaded, door closed, girl walks away). While it plays, the live
+>   // 3D intro is held on that same moment underneath, then revealed by a cross-fade and continued in real
+>   // time (02 tumble -> 03 ride). Without a video the real-time 01 cinematic plays. See src/ui/cinematicVideo.ts.
+>   const [introVideo, endingVideo] = await Promise.all([findCinematic('intro'), findCinematic('ending')]);
+>   cinematic.ending = endingVideo;
+>   const playIntroVideo = () => {
+>     if (!introVideo) return;
+>     if (flowPlan) {
+>       // `?flowplan=1`: the Flow video covers 01–03; underneath, the ride is held on the APPROVED 04 view (the 04
+>       // checkpoint, 7 u into 04 — the very start of 04 is the drain drop, whose view is still obstructed) and revealed by
+>       // the cross-fade (coins before it — 03's — ar …[+5122 chars]
+
+### 🤖 Claude — 2026-11-17T20:26:39.675Z
+
+> 🔧 **Bash** `{"command": "nproc; free -g | head -2; python3 -c \"\nimport json;d=json.load(open('qa/gameplay_test.json'));s=d['samples'];\nprev=None\nfor x in s:\n    if x['stage']!=prev: print(x['t'],x['stage'],x['s']); prev=x['stage']\nprint('last',s[-1]['t'],s[-1]['stage'])\n\"; grep -n \"setStage(\" src/game/Game.ts | head; git ls-remote origin refs/heads/ccr-32bfea9a-ea6he9 2>&1 | head -3", "description": "Check CPU, stage timings, remote branch state"}`
+
+### 🧑 User — 2026-11-17T20:26:40.278Z
+
+> ↩︎ result: 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0           7           0           7          14
+> 0.5 03 45.645
+> 3.5 04 74.238
+> 6.5 05 115.813
+> 13.5 06 192.986
+> 18.5 07 248.133
+> 30.5 08 391.491
+> 32 09 405.823
+> 34 10 423.885
+> last 35.5 10
+> 153:    hud.setStage(id);
+> 230:    if (t >= T.spin && st.stage === '01') { st.stage = '02'; hud.setStage('02'); }
+> 342:    setStage('03');
+> 382:    setStage(stageOf(st.s));
+> 419:    setStage('11');
+> 440:    setStage('11');
+> 497:  hud.setStage('03');
+> 521:      setStage('04');
+> 670:      setStage(stageOf(sTarget));
+> 4b326bfbde0561f70759071d77cc3a277849a503	refs/heads/ccr-32bfea9a-ea6he9
+
+### 🤖 Claude — 2026-11-17T20:26:58.826Z
+
+> 🔧 **Bash** `{"command": "grep -n \"setStage\" -A12 src/ui/hud.ts | head -40; grep -rn \"STAGE_NAMES\\|'Five Arrows'\\|Five Arrows\" src | head -5", "description": "Check what the HUD shows per stage"}`
+
+### 🧑 User — 2026-11-17T20:26:58.868Z
+
+> ↩︎ result: 76:  setStage(id: StageId): void;
+> 77-  setCoins(n: number): void;
+> 78-  setHearts(n: number, max?: number): void;
+> 79-  showVictory(v: boolean, animate?: boolean): void;
+> 80-  showPaused(v: boolean): void;
+> 81-  showHint(text: string | null): void;
+> 82-  flashHurt(): void;
+> 83-  onPause(cb: () => void): void;
+> 84-  onReplay(cb: () => void): void;
+> 85-  root: HTMLElement;
+> 86-}
+> 87-
+> 88-export function createHud(): Hud {
+> --
+> 123:    setStage(id) { $('title').textContent = `${id} · ${STAGE_TITLES[id]}`; },
+> 124-    setCoins(n) { $('coins').textContent = n.toLocaleString('en-US'); },
+> 125-    setHearts(n, max = 5) { $('hearts').textContent = `${n}/${max}`; },
+> 126-    showVictory(v, animate = true) {
+> 127-      victory.classList.toggle('hidden', !v);
+> 128-      victory.classList.toggle('pop', v && animate);
+> 129-      $('replay').classList.add('hidden');
+> 130-      if (v) setTimeout(() => { if (!victory.classList.contains('hidden')) $('replay').classList.remove('hidden'); }, 2600);
+> 131-    },
+> 132-    showPaused(v) { paused.classList.toggle('hidden', !v); },
+> 133-    showHint(t) { hint.classList.toggle('hidden', !t); hint.textContent = t ?? ''; },
+> 134-    flashHurt() { flash.style.background = 'rgba(255,8 …[+127 chars]
+
+### 🤖 Claude — 2026-11-17T20:27:01.367Z
+
+Writing the recording script now. It plays the game frame by frame and saves each screen as an MP4 video.
+
+### 🤖 Claude — 2026-11-17T20:27:03.432Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/Game.ts", "old_string": "    setSteer(v: number | null) { input.override = v; },", "new_string": "    setSteer(v: number | null) { input.override = v; },\n    /** QA (scripts/record-screens.mjs): restart the whole game at intro t = 0 with a live shader clock */\n    restart() { resetToIntro(); st.frozen = null; st.clock = 0; input.override = null; render(); dirty = false; return api.state(); },\n    /** QA (scripts/record-screens.mjs): render the current simulation state once (QA mode renders on demand only) */\n    renderNow()  …[+31 chars]`
+
+### 🧑 User — 2026-11-17T20:27:03.479Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T20:27:35.127Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/record-screens.mjs", "content": "#!/usr/bin/env node\n// Screen recordings of the REAL running game (headless Chromium, WebGL), rendered frame by frame so the video plays\n// at true game speed however slow software WebGL is. Benny steers toward the coins like a player would.\n//   node scripts/record-screens.mjs                      → qa/recordings/full_playthrough.mp4 (01 → 11, whole game)\n//                                                           + one clip per screen qa/recordings/screen_01.mp4 … _11.mp4\n//   node scripts/record-screens.mjs -- …[+5264 chars]`
+
+### 🧑 User — 2026-11-17T20:27:35.171Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/record-screens.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T20:27:39.685Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit && echo TSC_OK && timeout 600 node scripts/record-screens.mjs --from=05 --until=06 --name=speedtest --out=/tmp/claude-0/-home-user-rainbow-/c1281a2e-e5bd-5ec1-936e-cb5af2abf190/scratchpad/rec 2>&1 | tail -30", "description": "Typecheck and run a short speed test recording of screen 05", "timeout": 620000}`
+

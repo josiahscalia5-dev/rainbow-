@@ -697,6 +697,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
     freezeAt(t: number) { st.frozen = t; st.clock = t; },
     setSteer(v: number | null) { input.override = v; },
+    /** QA (scripts/record-screens.mjs): restart the whole game at intro t = 0 with a live shader clock */
+    restart() { resetToIntro(); st.frozen = null; st.clock = 0; input.override = null; render(); dirty = false; return api.state(); },
+    /** QA (scripts/record-screens.mjs): render the current simulation state once (QA mode renders on demand only) */
+    renderNow() { render(); dirty = false; },
     /** deterministic simulation: advance n steps of dt (no rendering needed) */
     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
     startRideAt(id: StageId = '03') {

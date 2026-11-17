@@ -604,7 +604,7 @@
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
    "bytes": 3887,
-   "sha256": "6666fb42b50023c73b03d71130df71d804e95c26ea49d27d5e234fd6bf2eb8f8"
+   "sha256": "431bbc495ad55067cdaa2735075c7014fe639b6e72413a32644c706cc0d3edcd"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12576,
-   "sha256": "685b0a86277c8d39f618c147c7ec71dbaa2b1475ed89ed6249588901591a68c0"
+   "sha256": "5640d50a7e8769069a8bbe01dad2b5be243071c6c75475b69d75dca2b55e6ae0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8212,6 +8212,11 @@
    "sha256": "9a5f1a1971604ceefdce75ae4d7db7b2ed731aa9f1070f8b4eae3466ee80e70f"
   },
   {
+   "path": "scripts/record-screens.mjs",
+   "bytes": 5702,
+   "sha256": "620b5c63fb53d7f490fa66795019873cfdd0d1a44ef7d836d495d59c0c8a5bf9"
+  },
+  {
    "path": "scripts/reference.sha256",
    "bytes": 1404,
    "sha256": "de11eecb546832139d797fbbb8878edc6e790c91e99f0167bf7725972e95a8f1"
@@ -8328,8 +8333,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 41017,
-   "sha256": "7afc74e9d3e75ec1a0fd276e4ccefabae729773fa0decac0464a9105cadd63a3"
+   "bytes": 41423,
+   "sha256": "3b95e523c127a8573ed02ff1caba29391b312c8767717ad5b4fa128613fb6303"
   },
   {
    "path": "src/game/cameraRig.ts",
