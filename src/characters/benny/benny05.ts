@@ -17,10 +17,10 @@
  *  4. Finer, denser, more clumped shell fur (soft tufts instead of coarse straight spikes).
  */
 import * as THREE from 'three';
-import { flag05 } from '../../vfx/waterRibbon';
-// ported from line B (ccr-b0757dec-dj6l1o @99ab17b, Screen 05 full-reference Benny) WITHOUT a merge (2026-11-17): on this
-// branch it runs under `?benny05=1`, `?benny08=1` or the Screen 08 switch `?match08=1` (and `?matchall=1`); off: nothing runs
-const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
+import { flag05, on05 as on05B } from '../../vfx/waterRibbon';
+// preview branch (line A + line B, user OK 2026-11-17 ~21:05 UTC): the benny05 look runs under line B's switches
+// (`?match05=1`, `?benny05=1`, …: on05B) AND line A's Screen 08 switches (`?benny08=1`, `?match08=1`, `?matchall=1`)
+const on05 = (key: string): boolean => on05B(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
 import type { FurHandle, FurParams } from './fur';
 
 export const BENNY05: boolean = on05('benny05');

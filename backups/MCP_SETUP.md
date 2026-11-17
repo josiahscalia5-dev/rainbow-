@@ -3,6 +3,19 @@
 Machine-readable list of every tool, plugin, MCP server, hook, host and credential (names only):
 **`backups/TOOL_MANIFEST.json`**. `scripts/claude-bootstrap.sh` checks and installs what is missing at session start.
 
+## Newest check — session 01AvQv6S (branch `claude/rainbow-restore-env-setup-bxn85h`, 2026-11-17 00:40–00:55 UTC, new account, personal environment `rainbow-`, limited network)
+| Tool | Tested result (really run) | On the next account |
+|---|---|---|
+| GitHub MCP + git proxy | `mcp__github__list_branches` → 26 branches; pushes verified (remote SHA == local) | connect GitHub + Claude GitHub App |
+| Playwright plugin MCP + Chromium 153 | `claude mcp list` → connected; `browser_navigate` + `browser_evaluate`: WebGL 2.0, ANGLE / SwiftShader | enable the `playwright` plugin if missing |
+| Blender 5.3.0 (CLI + Python) | present at session start (environment setup script); `scripts/verify-blender.py`: Workbench / EEVEE / Cycles renders, 7/7 `.blend`, 3 GLBs, GLB round trip 6/6; paddle, camera-lock and tunnel bake scripts ran | automatic (bootstrap) if `download.blender.org` is allowed |
+| Blender MCP (`mcp-for-blender`) | **NOT connected, not possible**: headless container, no display, no desktop add-on socket (`uvx` exists, nothing to connect to) | only on a desktop machine with Blender open |
+| Chrome DevTools MCP | not present in this environment (not listed by `claude mcp list`); not needed — Playwright covers it | — |
+| worldlabs plugin MCP (Atlas) | installed, **not connected** (proxy 403) — optional, not needed for Screen 05 | connector sign-in only for new World Labs work |
+| Marble World API | host `api.worldlabs.ai` not allowed here → network error (NOT a key problem); no key on this account | `request_credential` only if the user wants new Marble work |
+| Android SDK 34 + build-tools 34.0.0, Java 21, Capacitor 6.2.3 | present; APK not built in this check | automatic (bootstrap) if `dl.google.com` is allowed |
+| Meshy / Rodin | not installed, not needed, no credits | — |
+
 ## Newest check — session 01Kbt6BT (branch `ccr-251ed97c-ty2xvp`, 2026-11-16 10:40–11:20 UTC, `Default` environment, unrestricted)
 | Tool | Tested result | On the next account |
 |---|---|---|

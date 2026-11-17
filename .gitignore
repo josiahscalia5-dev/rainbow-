@@ -42,3 +42,4 @@ backups/.live/
 
 # Agent worktrees (each specialist works on its own branch there; never committed into the lead branch)
 .claude/worktrees/
+.playwright-mcp/

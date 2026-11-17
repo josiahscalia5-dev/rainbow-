@@ -5,12 +5,15 @@
 // real wall's end, the forced-perspective far wall.
 // Writes raycast.json: camera (position, matrixWorld, projection, fov, aspect) + per paddle per vertex the wall point,
 // the wall normal (toward the camera) and the ray direction. Read-only: nothing in the game changes.
-//   node scripts/proj05-lid-raycast.mjs [--dir=qa/pilot05/proj/tunnel/lid]
+//   node scripts/proj05-lid-raycast.mjs [--dir=qa/pilot05/proj/tunnel/lid] [--q='switches']
+// --q (2026-11-17, env05): the game's switches for this raycast, e.g. '<STACK>&env05=1' (the env05 wall is displaced, so
+// the paddles must be lifted onto THAT wall: qa/pilot05/full_reference_match/env/lid → assets/models/lids05e.glb).
 import { readFileSync, writeFileSync } from 'node:fs';
 import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
 
 const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
 const DIR = typeof opt.dir === 'string' ? opt.dir : 'qa/pilot05/proj/tunnel/lid';
+const Q = typeof opt.q === 'string' ? opt.q : '';
 const mesh2d = JSON.parse(readFileSync(`${DIR}/mesh2d.json`, 'utf8'));
 const { chromium } = loadPlaywright();
 const vite = await startVite(5245);
@@ -18,7 +21,7 @@ const browser = await chromium.launch({ args: CHROMIUM_ARGS });
 try {
   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
   page.on('pageerror', (e) => console.error('pageerror', e.message));
-  await page.goto(`${vite.url}/?qa=1&dpr=1`);
+  await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
   const res = await page.evaluate(async (mesh2d) => {
     const R = window.__rainbow; R.goto('05');
@@ -60,6 +63,6 @@ try {
       lids: out,
     };
   }, mesh2d);
-  writeFileSync(`${DIR}/raycast.json`, JSON.stringify(res));
+  writeFileSync(`${DIR}/raycast.json`, JSON.stringify({ ...res, q: Q }));
   console.log('walls', res.walls, 'far walls', res.farWalls, 'on far wall', res.onFar, 'missed rays', res.miss, Object.fromEntries(Object.entries(res.lids).map(([k, v]) => [k, v.P.length])));
 } finally { await browser.close(); await vite.close(); }

@@ -1,0 +1,1256 @@
+{
+ "camera": {
+  "matrixWorld": [
+   0.9986658287817988,
+   -0.0021497500655029284,
+   -0.05159400157207067,
+   0,
+   -0.011394273178140263,
+   0.9653330416232079,
+   -0.2607724856828803,
+   0,
+   0.05036599013525768,
+   0.26101244668624896,
+   0.9640206272235845,
+   0,
+   1.920288434729371,
+   -37.94339912418104,
+   -68.28062556286872,
+   1
+  ],
+  "projection": [
+   2.958719079734254,
+   0,
+   0,
+   0,
+   0,
+   1.664279482350518,
+   0,
+   0,
+   0,
+   0,
+   -1.0000833368057,
+   -1,
+   0,
+   0,
+   -0.10000416684028501,
+   0
+  ],
+  "fov": 62,
+  "aspect": 0.5625,
+  "near": 0.05,
+  "far": 1200,
+  "position": [
+   1.920288434729371,
+   -37.94339912418104,
+   -68.28062556286872
+  ],
+  "dir": [
+   -0.05036599013525768,
+   -0.26101244668624896,
+   -0.9640206272235845
+  ]
+ },
+ "splash05": {
+  "position": [
+   1.5287427304490002,
+   -41.78790299499228,
+   -74.70948481938812
+  ],
+  "quaternion": [
+   -0.020844583123843203,
+   -0.0018372769229370036,
+   0.012556715745543016,
+   0.9997021839816033
+  ],
+  "matrixWorld": [
+   0.9996779066063881,
+   0.025182546851994437,
+   0.0031499804946373603,
+   0,
+   -0.02502935776582772,
+   0.9988156644881576,
+   -0.041722890874318574,
+   0,
+   -0.004196938515119129,
+   0.04163061021804991,
+   0.9991242555358033,
+   0,
+   1.5287427304490002,
+   -41.78790299499228,
+   -74.70948481938812,
+   1
+  ],
+  "visible": true,
+  "uR": 0.6536532455807745,
+  "uStrength": 0.9835767967317393
+ },
+ "bubbles": [
+  {
+   "x": 51,
+   "y": 707,
+   "r": 28,
+   "hits": [
+    {
+     "d": 21.4121,
+     "obj": "washer_world > proj05_apron",
+     "p": [
+      -5.2182,
+      -42.3446,
+      -87.9822
+     ],
+     "transparent": false
+    },
+    {
+     "d": 21.4786,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -5.2403,
+      -42.3582,
+      -88.0434
+     ],
+     "transparent": false
+    },
+    {
+     "d": 23.0185,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -5.7537,
+      -42.6747,
+      -89.4603
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 93,
+   "y": 612,
+   "r": 23,
+   "hits": [
+    {
+     "d": 24.3556,
+     "obj": "washer_world > proj05_apron",
+     "p": [
+      -5.4741,
+      -41.2872,
+      -91.2445
+     ],
+     "transparent": false
+    },
+    {
+     "d": 26.6948,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -6.1843,
+      -41.6083,
+      -93.45
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 180,
+   "y": 572,
+   "r": 18,
+   "hits": [
+    {
+     "d": 30.7394,
+     "obj": "washer_world > proj05_apron",
+     "p": [
+      -5.4951,
+      -41.312,
+      -97.9214
+     ],
+     "transparent": false
+    },
+    {
+     "d": 34.2017,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -6.3303,
+      -41.6914,
+      -101.26
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 265,
+   "y": 538,
+   "r": 11,
+   "hits": [
+    {
+     "d": 40.0657,
+     "obj": "washer_world > proj05_apron",
+     "p": [
+      -5.2183,
+      -41.3622,
+      -107.5567
+     ],
+     "transparent": false
+    },
+    {
+     "d": 45.4443,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -6.1766,
+      -41.8211,
+      -112.8293
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 181,
+   "y": 673,
+   "r": 17,
+   "hits": [
+    {
+     "d": 22.7065,
+     "obj": "water_system > foam_banks > foam_berm",
+     "p": [
+      -3.5675,
+      -42.1487,
+      -89.9089
+     ],
+     "transparent": false
+    },
+    {
+     "d": 23.4011,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      -3.7354,
+      -42.2773,
+      -90.5706
+     ],
+     "transparent": false
+    },
+    {
+     "d": 23.8684,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      -3.8484,
+      -42.3638,
+      -91.0157
+     ],
+     "transparent": false
+    },
+    {
+     "d": 25.766,
+     "obj": "water_system > foam_banks > foam_berm",
+     "p": [
+      -4.307,
+      -42.7153,
+      -92.8232
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 83,
+   "y": 911,
+   "r": 31,
+   "hits": [
+    {
+     "d": 11.4654,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      -1.614,
+      -41.9993,
+      -78.4056
+     ],
+     "transparent": false
+    },
+    {
+     "d": 18.8976,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -3.905,
+      -44.6284,
+      -84.9688
+     ],
+     "transparent": false
+    },
+    {
+     "d": 19.6015,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -4.122,
+      -44.8773,
+      -85.5904
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 135,
+   "y": 988,
+   "r": 15,
+   "hits": [
+    {
+     "d": 9.77,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      -0.7083,
+      -41.9515,
+      -76.794
+     ],
+     "transparent": false
+    },
+    {
+     "d": 18.4877,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -3.0538,
+      -45.5279,
+      -84.3906
+     ],
+     "transparent": false
+    },
+    {
+     "d": 18.8891,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -3.1618,
+      -45.6926,
+      -84.7403
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 94,
+   "y": 1250,
+   "r": 32,
+   "hits": [
+    {
+     "d": 6.7726,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      0.0148,
+      -41.787,
+      -73.5213
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.2711,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.0948,
+      -46.0426,
+      -79.3236
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.2861,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.099,
+      -46.0511,
+      -79.3352
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.4873,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.1556,
+      -46.1653,
+      -79.4908
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 148,
+   "y": 1165,
+   "r": 11,
+   "hits": [
+    {
+     "d": 7.4104,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      0.0628,
+      -41.8252,
+      -74.3135
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.3579,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -1.6787,
+      -45.4645,
+      -79.9695
+     ],
+     "transparent": false
+    },
+    {
+     "d": 15.7133,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.0185,
+      -46.1745,
+      -81.0729
+     ],
+     "transparent": false
+    },
+    {
+     "d": 15.9397,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.0752,
+      -46.2931,
+      -81.2572
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 185,
+   "y": 1099,
+   "r": 8,
+   "hits": [
+    {
+     "d": 8.0621,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      0.0791,
+      -41.8632,
+      -75.0808
+     ],
+     "transparent": false
+    },
+    {
+     "d": 17.1243,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -1.9905,
+      -46.2692,
+      -82.7246
+     ],
+     "transparent": false
+    },
+    {
+     "d": 17.3644,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.0453,
+      -46.386,
+      -82.9271
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 795,
+   "y": 861,
+   "r": 30,
+   "hits": [
+    {
+     "d": 12.6477,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      4.7658,
+      -41.9752,
+      -79.9259
+     ],
+     "transparent": false
+    },
+    {
+     "d": 23.9043,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      7.2983,
+      -45.5636,
+      -90.2903
+     ],
+     "transparent": false
+    },
+    {
+     "d": 24.2444,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      7.3748,
+      -45.672,
+      -90.6035
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 734,
+   "y": 575,
+   "r": 14,
+   "hits": [
+    {
+     "d": 38.3296,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      8.7207,
+      -42.2294,
+      -105.7579
+     ],
+     "transparent": false
+    },
+    {
+     "d": 38.9834,
+     "obj": "washer_world > proj05_apron",
+     "p": [
+      8.8368,
+      -42.3025,
+      -106.3972
+     ],
+     "transparent": false
+    },
+    {
+     "d": 39.319,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      8.8963,
+      -42.34,
+      -106.7252
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 655,
+   "y": 561,
+   "r": 12,
+   "hits": [
+    {
+     "d": 54.7941,
+     "obj": "washer_world > zone_tubes > tube05_far_wall",
+     "p": [
+      8.4458,
+      -43.5633,
+      -122.3937
+     ],
+     "transparent": false
+    },
+    {
+     "d": 54.9531,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      8.4647,
+      -43.5796,
+      -122.5507
+     ],
+     "transparent": false
+    },
+    {
+     "d": 59.51,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      9.0074,
+      -44.0469,
+      -127.051
+     ],
+     "transparent": false
+    },
+    {
+     "d": 60.4146,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      9.1151,
+      -44.1397,
+      -127.9444
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 797,
+   "y": 618,
+   "r": 13,
+   "hits": [
+    {
+     "d": 32.4321,
+     "obj": "washer_world > proj05_apron",
+     "p": [
+      9.1674,
+      -42.5517,
+      -99.555
+     ],
+     "transparent": false
+    },
+    {
+     "d": 32.598,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      9.2045,
+      -42.5753,
+      -99.7149
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 823,
+   "y": 700,
+   "r": 19,
+   "hits": [
+    {
+     "d": 21.5466,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      7.1655,
+      -42.2785,
+      -88.7245
+     ],
+     "transparent": false
+    },
+    {
+     "d": 21.6816,
+     "obj": "water_system > foam_banks > foam_berm",
+     "p": [
+      7.1983,
+      -42.3057,
+      -88.8525
+     ],
+     "transparent": false
+    },
+    {
+     "d": 23.3877,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      7.6136,
+      -42.6489,
+      -90.4713
+     ],
+     "transparent": false
+    },
+    {
+     "d": 24.4976,
+     "obj": "water_system > foam_banks > foam_berm",
+     "p": [
+      7.8838,
+      -42.8722,
+      -91.5244
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 694,
+   "y": 831,
+   "r": 12,
+   "hits": [
+    {
+     "d": 13.747,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      4.0091,
+      -42.105,
+      -81.215
+     ],
+     "transparent": false
+    },
+    {
+     "d": 28.6839,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      6.2786,
+      -46.6268,
+      -95.2689
+     ],
+     "transparent": false
+    },
+    {
+     "d": 29.0979,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      6.3415,
+      -46.7522,
+      -95.6585
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 723,
+   "y": 1052,
+   "r": 16,
+   "hits": [
+    {
+     "d": 8.475,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      3.3732,
+      -41.7901,
+      -75.6913
+     ],
+     "transparent": false
+    },
+    {
+     "d": 19.493,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      5.262,
+      -46.7909,
+      -85.3256
+     ],
+     "transparent": false
+    },
+    {
+     "d": 19.7637,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      5.3084,
+      -46.9138,
+      -85.5623
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 719,
+   "y": 1207,
+   "r": 33,
+   "hits": [
+    {
+     "d": 6.9248,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      3.0616,
+      -41.7444,
+      -73.9553
+     ],
+     "transparent": false
+    },
+    {
+     "d": 16.3184,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      4.6098,
+      -46.9005,
+      -81.6532
+     ],
+     "transparent": false
+    },
+    {
+     "d": 16.5492,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      4.6478,
+      -47.0272,
+      -81.8424
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 803,
+   "y": 1246,
+   "r": 13,
+   "hits": [
+    {
+     "d": 6.711,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      3.401,
+      -41.7217,
+      -73.6258
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.4889,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      5.1171,
+      -46.1006,
+      -79.8206
+     ],
+     "transparent": false
+    },
+    {
+     "d": 15.2918,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      5.2942,
+      -46.5526,
+      -80.4601
+     ],
+     "transparent": false
+    },
+    {
+     "d": 15.5014,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      5.3405,
+      -46.6706,
+      -80.6269
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 657,
+   "y": 1133,
+   "r": 10,
+   "hits": [
+    {
+     "d": 7.5241,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      2.8409,
+      -41.7765,
+      -74.6894
+     ],
+     "transparent": false
+    },
+    {
+     "d": 18.0798,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      4.1325,
+      -47.1541,
+      -83.6803
+     ],
+     "transparent": false
+    },
+    {
+     "d": 18.3253,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      4.1626,
+      -47.2792,
+      -83.8894
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 600,
+   "y": 553,
+   "r": 9,
+   "hits": [
+    {
+     "d": 56.8136,
+     "obj": "washer_world > zone_tubes > tube05_far_river",
+     "p": [
+      6.3306,
+      -43.4605,
+      -124.6534
+     ],
+     "transparent": false
+    },
+    {
+     "d": 58.2732,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      6.4439,
+      -43.6022,
+      -126.1017
+     ],
+     "transparent": false
+    },
+    {
+     "d": 58.2833,
+     "obj": "washer_world > zone_tubes > tube05_far_wall",
+     "p": [
+      6.4447,
+      -43.6032,
+      -126.1117
+     ],
+     "transparent": false
+    },
+    {
+     "d": 60.2187,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      6.5949,
+      -43.7911,
+      -128.0322
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 56,
+   "y": 1017,
+   "r": 6,
+   "hits": [
+    {
+     "d": 9.4124,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      -1.1113,
+      -41.9273,
+      -76.2513
+     ],
+     "transparent": false
+    },
+    {
+     "d": 16.7338,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -3.4694,
+      -45.0261,
+      -82.4512
+     ],
+     "transparent": false
+    },
+    {
+     "d": 17.1962,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -3.6183,
+      -45.2218,
+      -82.8428
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 102,
+   "y": 675,
+   "r": 7,
+   "hits": [
+    {
+     "d": 24.0406,
+     "obj": "washer_world > proj05_apron",
+     "p": [
+      -5.2471,
+      -42.3696,
+      -90.7971
+     ],
+     "transparent": false
+    },
+    {
+     "d": 25.9702,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -5.8224,
+      -42.7248,
+      -92.6043
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 130,
+   "y": 670,
+   "r": 7,
+   "hits": [
+    {
+     "d": 25.594,
+     "obj": "washer_world > proj05_apron",
+     "p": [
+      -5.2045,
+      -42.5856,
+      -92.4207
+     ],
+     "transparent": false
+    },
+    {
+     "d": 27.925,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -5.8534,
+      -43.0084,
+      -94.6192
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 170,
+   "y": 1130,
+   "r": 6,
+   "hits": [
+    {
+     "d": 7.7338,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      0.0846,
+      -41.8443,
+      -74.7013
+     ],
+     "transparent": false
+    },
+    {
+     "d": 16.4446,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -1.9829,
+      -46.238,
+      -81.933
+     ],
+     "transparent": false
+    },
+    {
+     "d": 16.6765,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.038,
+      -46.355,
+      -82.1256
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 108,
+   "y": 1200,
+   "r": 6,
+   "hits": [
+    {
+     "d": 7.1473,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      -0.05,
+      -41.8088,
+      -73.9605
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.4854,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.0729,
+      -45.7773,
+      -79.792
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.9222,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.1933,
+      -46.0135,
+      -80.1391
+     ],
+     "transparent": false
+    },
+    {
+     "d": 15.1536,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -2.2571,
+      -46.1386,
+      -80.323
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 143,
+   "y": 1205,
+   "r": 6,
+   "hits": [
+    {
+     "d": 7.0628,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      0.1436,
+      -41.8052,
+      -73.921
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.4417,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -1.7126,
+      -45.8398,
+      -79.8137
+     ],
+     "transparent": false
+    },
+    {
+     "d": 15.1453,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -1.8896,
+      -46.2245,
+      -80.3756
+     ],
+     "transparent": false
+    },
+    {
+     "d": 15.3632,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      -1.9444,
+      -46.3436,
+      -80.5496
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 630,
+   "y": 1098,
+   "r": 6,
+   "hits": [
+    {
+     "d": 7.8733,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      2.7319,
+      -41.7949,
+      -75.0994
+     ],
+     "transparent": false
+    },
+    {
+     "d": 19.0768,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      3.8868,
+      -47.2755,
+      -84.8024
+     ],
+     "transparent": false
+    },
+    {
+     "d": 19.3415,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      3.9141,
+      -47.405,
+      -85.0316
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 668,
+   "y": 1176,
+   "r": 6,
+   "hits": [
+    {
+     "d": 7.1411,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      2.8451,
+      -41.7613,
+      -74.2442
+     ],
+     "transparent": false
+    },
+    {
+     "d": 17.1307,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      4.1389,
+      -47.1021,
+      -82.5864
+     ],
+     "transparent": false
+    },
+    {
+     "d": 17.3629,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      4.169,
+      -47.2262,
+      -82.7804
+     ],
+     "transparent": false
+    }
+   ]
+  },
+  {
+   "x": 659,
+   "y": 1362,
+   "r": 13,
+   "hits": [
+    {
+     "d": 5.9288,
+     "obj": "water_system > water_ribbon",
+     "p": [
+      2.6245,
+      -41.7135,
+      -72.8018
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.3728,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      3.6274,
+      -47.083,
+      -79.241
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.4338,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      3.6346,
+      -47.1218,
+      -79.2876
+     ],
+     "transparent": false
+    },
+    {
+     "d": 14.5639,
+     "obj": "washer_world > zone_tubes > Mesh",
+     "p": [
+      3.6501,
+      -47.2045,
+      -79.3868
+     ],
+     "transparent": false
+    }
+   ]
+  }
+ ],
+ "state": {
+  "mode": "ride",
+  "stage": "05",
+  "s": 132.438,
+  "lat": 0,
+  "coins": 1420,
+  "hearts": 5,
+  "paused": false,
+  "bennyY": -41.348,
+  "bennyVisible": true,
+  "cam": [
+   1.92,
+   -37.94,
+   -68.28
+  ]
+ }
+}

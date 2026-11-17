@@ -7,12 +7,12 @@ import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
 import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
-import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry, buildWarpedBandRing, markBandSkirt, type TubeWarp } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
 import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
-import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
@@ -289,7 +289,60 @@ export function buildEnvironment(course: Course): Environment {
   // the mid-tones toward saturated orange-gold while highlights stay bright. Default 0 = shader unchanged.
   const GOLD05 = qaNum05('gold05', 0) === 1;
   const TONE05: [number, number, number] = [1.35, 1.75, 1.3];
-  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+  const rings05base = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+  // `?env05=1` (washer-environment-modeler 2026-11-17, qa/pilot05/full_reference_match/env/NOTES.md): Screen-05-only,
+  // VISUAL-ONLY ring layout measured against the approved picture from the locked 05 camera (tools/env05/ring_fit.py:
+  // band edges along rays about the vanishing point). The approved rings sit 0.6–1.0 u further LEFT of the camera than
+  // the game's (and ring A 0.42 u higher); depth changes alone barely help (edge error A 46→24 px, B 26→24 px), the
+  // sideways placement does (A 52→1.7, B 26→4.1, C 12.5→1.5 px). So under the switch the UPPER tunnel (walls and rings
+  // above the river banks) is displaced sideways by `side` (and ring A's top by `up`) — a smooth bend, circular above
+  // the banks, nothing moves at or below the banks (river, foam, apron, floor, course and collisions untouched), the
+  // displacement is zero at the camera and before 06. Ring B 1.5 u nearer, far rings at the approved radii, band heights
+  // as measured. Camera, course, steering, coins: untouched. Off = exactly the previous layout.
+  const E05 = ENV05 ? {
+    dB: 38.35,                                    // ring B: tunnel coordinate − sCam05 (was 40)
+    hA: 0.09, hB: 0.12, hFar: 0.11,               // band crown heights (fraction of the radius; was 0.13 / 0.13 / 0.095)
+    farDv: [64.0, 104.7, 165.5, 235.2, 332.1],    // far rings C … G, virtual depths (was 59 / 97 / 161 / 222 / 322)
+    side: [[3, 0], [17, -0.715], [23, -0.715], [35, -0.95], [42, -0.95], [54, -0.6]] as [number, number][],
+    // run #3: ring A up 0.3 → 0.42 (weight_study.py fit with the new weight); the seam knot (54) = upFar so the real
+    // and the forced-perspective walls meet without a step
+    up: [[6, 0], [17, 0.42], [23, 0.42], [32, -0.23], [42, -0.23], [54, 0.45]] as [number, number][],
+    sideFar: -0.6,
+    // run #3: far rings C … G + far wall 0.45 u up (the approved far rings sit ≈9 px higher: C edge error 8.5 → 4.3 px)
+    upFar: 0.45,
+  } : null;
+  const rings05 = E05 ? rings05base.map((s) => (Math.abs(s - sCam05 - 40) < 1 ? sCam05 + E05.dB : s)) : rings05base;
+  /** piecewise smoothstep through [x, value] knots, flat outside */
+  const knotsAt05 = (k: [number, number][], x: number) => {
+    if (x <= k[0][0]) return k[0][1];
+    for (let i = 1; i < k.length; i++) if (x <= k[i][0]) return THREE.MathUtils.lerp(k[i - 1][1], k[i][1], THREE.MathUtils.smoothstep(x, k[i - 1][0], k[i][0]));
+    return k[k.length - 1][1];
+  };
+  /**
+   * env05: share of the displacement at wall angle th (cos th < 0 = screen left). RIGHT half: 0 at and below the river
+   * bank, 1 from the side wall up (the displacement points left = INTO the tunnel there, so it must not cover the river,
+   * foam or the foam apron). LEFT half (run #3): the displacement points OUT of the tunnel, so the whole side wall moves
+   * with the rings down to below the waterline (sin th −0.95 … −0.5, under the river): ring B's left arc stays a smooth
+   * circle (weight_study.py: B left edge error 18.0 → 7.3 px, A 11.7 → 3.2) instead of the S-kink at the bank.
+   */
+  const e05R0 = qaNum05('e05r0', -0.28), e05R1 = qaNum05('e05r1', 0.05);   // QA knobs (right-half ramp), env05 only
+  const e05Weight = (th: number) => (Math.cos(th) < 0
+    ? THREE.MathUtils.smoothstep(Math.sin(th), -0.95, -0.5)
+    : THREE.MathUtils.smoothstep(Math.sin(th), e05R0, e05R1));
+  /**
+   * env05 run #3: the RINGS' own weight. Left half = the wall's. Right half: the band follows the ring's circle further
+   * down than its wall may move (the wall there must not cover river / foam), its skirt stays on the wall
+   * (buildWarpedBandRing skirtWarp), so ring B's lower-right arc stays round instead of kinking outward at the bank.
+   */
+  const e05RR0 = qaNum05('e05rr0', -0.9), e05RR1 = qaNum05('e05rr1', -0.1);
+  const e05RingWeight = (th: number) => (Math.cos(th) < 0 ? e05Weight(th) : THREE.MathUtils.smoothstep(Math.sin(th), e05RR0, e05RR1));
+  const warpBy05 = (wf: (th: number) => number): TubeWarp => (s, th, out) => {
+    const d = s - sCam05, w = wf(th);
+    const fade = 1 - THREE.MathUtils.smoothstep(d, 54, sGlow05 - sCam05 - 0.5);   // 0 at the 05 → 06 junction
+    return out.set(knotsAt05(E05!.side, d) * fade * w, knotsAt05(E05!.up, d) * fade * w);
+  };
+  const warp05: TubeWarp | undefined = E05 ? warpBy05(e05Weight) : undefined;
+  const warp05ring: TubeWarp | undefined = E05 ? warpBy05(e05RingWeight) : undefined;
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
   // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
@@ -331,15 +384,15 @@ export function buildEnvironment(course: Course): Environment {
     : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
-  const addWall = (a0: number, a1: number, mat: THREE.Material) => {
+  const addWall = (a0: number, a1: number, mat: THREE.Material, warp?: TubeWarp) => {
     for (let a = a0; a < a1 - 0.01; a += chunk) {
       const b = Math.min(a1, a + chunk + 0.6);
-      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), mat));
+      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true, warp }), mat));
       // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
       zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
     }
   };
-  addWall(s05, sGlow05, perf05Mat);
+  addWall(s05, sGlow05, perf05Mat, warp05);
   addWall(sGlow05, s08, perfTubeMat);
   // 06/07 rings and the 04→05 junction collar (unchanged look)
   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
@@ -373,20 +426,31 @@ export function buildEnvironment(course: Course): Environment {
   const ptA05 = sCam05 + RING_A05_DEPTH;
   const ptB05 = rings05.find((s) => s > ptA05 + 1) ?? ptA05 + 20;
   const ptSeam05 = (dC: number, d0: number) => (d0 - (d0 - (sF05 - ptB05) + ptHw05)) / (dC - (band05.width + band05.groove + band05.lipWidth) / 2 - (d0 - (sF05 - ptB05) + ptHw05));
-  if (PROJWALL05) {
+  if (PROJWALL05 || E05) {
     const segs: WallSeg[] = [];
     const before = rings05.filter((s) => s < ptA05 - 1);
     const list = [(before[0] ?? ptA05) - bay05, ...before, ptA05];
-    for (let i = 0; i + 1 < list.length; i++) segs.push({ v0: list[i] + ptHw05, v1: list[i + 1] - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
+    // env05: the near bays get their own atlas rows (N1 = the bay in front of ring A, N2 = nearer), not a copy of AB
+    for (let i = 0; i + 1 < list.length; i++) segs.push({ v0: list[i] + ptHw05, v1: list[i + 1] - ptHw05, row: E05 ? (i + 2 === list.length ? PT_ROW.N1 : PT_ROW.N2) : PT_ROW.AB, t0: 0, t1: 1 });
     segs.push({ v0: ptA05 + ptHw05, v1: ptB05 - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
     // D0 of the far block is known further down; the eye sits (STAGE_CAM back) behind the crest, so depth(sF05) ≈ sF05 − sCam05 − 0.75
-    segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(59, sF05 - sCam05 - 0.75) });
+    // env05 run #4: the seam fraction from the env05 far ring C depth (as the far wall's segment) — with 59 here and
+    // E05.farDv[0] there, the BC rows t ≈ 0.64–0.74 were drawn on both walls (texel collisions on the seam circle)
+    segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(E05 ? E05.farDv[0] : 59, sF05 - sCam05 - 0.75) });
     withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
   }
   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
   // gold junction collar 04→05 (slightly heavier)
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
-  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
+  if (E05) {
+    // env05: every real 05 ring its own (warped) mesh, own band height and own row of the camera-projection ring atlas
+    for (const s of rings05) {
+      const isA = Math.abs(s - ptA05) < 0.5, isB = Math.abs(s - ptB05) < 0.5;
+      const band = { ...band05near, height: isA ? E05.hA : isB ? E05.hB : band05near.height };
+      const mat = withEnv05Ring(gold05('ring05', false, band), isA ? E5_RING_ROW.A : isB ? E5_RING_ROW.B : E5_RING_ROW.N, false, (band.width + band.groove + band.lipWidth) / 2, 'real');
+      zones.tubes.add(buildWarpedBandRing(perfPath, s, mat, band, 0.02, warp05ring, warp05));
+    }
+  } else zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
   const rings0607: number[] = [];
   for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
   zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
@@ -451,7 +515,28 @@ export function buildEnvironment(course: Course): Environment {
     const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);
     // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
     const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
-    if (PROJWALL05) {
+    // env05: far rings at the approved radii (virtual depths E05.farDv, placed by tunnel coordinate so the knots — and
+    // the far river built on them — stay exactly as they are); the far wall's upper part displaced like the real one
+    const uRing = (n: number) => (E05 ? ft.uOfZ(E05.farDv[n] - D0) : knots[n + 1][0]);
+    const warpFar: TubeWarp | undefined = E05 ? (_Z, th, out) => out.set(E05.sideFar * e05Weight(th), E05.upFar * e05Weight(th)) : undefined;
+    if (E05) {
+      const dZdu = (u: number) => (ft.zOfU(u + 0.01) - ft.zOfU(u - 0.01)) / 0.02;
+      const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
+      // run #4: t passes through the seam fraction exactly AT the seam (v = sF05, u = 0), where the real wall's BC
+      // segment ends with the same t (it used to reach it 1 unit earlier → double-drawn texel rows on the seam circle)
+      const tSeam = ptSeam05(E05.farDv[0], D0), vC = sF05 + uRing(0) - hwF / dZdu(uRing(0));
+      const segs: WallSeg[] = [{ v0: sF05 - 1, v1: vC, row: PT_ROW.BC, t0: tSeam - (1 - tSeam) / (vC - sF05), t1: 1 }];
+      // the REAL wall just past the seam shows in a thin sliver along the seam circle: without a bay it tiled the AB row
+      // (texels of the near left wall → a torn orange-pink line); give it the far wall's BC mapping from the seam on
+      const rSeg = perf05Mat.userData.ptSeg as THREE.Vector4[] | undefined, rSegT = perf05Mat.userData.ptSegT as THREE.Vector3[] | undefined;
+      const free = rSeg ? rSeg.findIndex((v) => v.x >= 1e9) : -1;
+      if (rSeg && rSegT && free >= 0) { rSeg[free].set(sF05, vC, 0, 0); rSegT[free].set(PT_ROW.BC, tSeam, 1); }
+      [PT_ROW.CD, PT_ROW.DE, PT_ROW.EF, PT_ROW.FG].forEach((row, n) => segs.push({ v0: sF05 + uRing(n) + hwF / dZdu(uRing(n)), v1: sF05 + uRing(n + 1) - hwF / dZdu(uRing(n + 1)), row, t0: 0, t1: 1 }));
+      const uEnd = ft.uOfZ(zEnd);
+      segs.push({ v0: sF05 + uRing(4) + hwF / dZdu(uRing(4)), v1: sF05 + uEnd, row: PT_ROW.GX, t0: 0, t1: 0.07 });
+      segs.push({ v0: sF05 + uEnd, v1: 1e9, row: PT_ROW.GX, t0: 0.07, t1: 0.07 });
+      withProj05Wall(farWallMat, segs, { anchor: sF05, period: bay05 }, 'far');
+    } else if (PROJWALL05) {
       // far bays in the wall's own coordinate v = sF05 + u (knots: u → virtual depth Z, piecewise linear)
       const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
       const slope = (i: number) => (knots[Math.min(i + 1, knots.length - 1)][1] - knots[Math.min(i + 1, knots.length - 1) - 1][1]) / (knots[Math.min(i + 1, knots.length - 1)][0] - knots[Math.min(i + 1, knots.length - 1) - 1][0]);
@@ -465,7 +550,7 @@ export function buildEnvironment(course: Course): Environment {
       segs.push({ v0: uEnd, v1: 1e9, row: PT_ROW.GX, t0: 0.07, t1: 0.07 });
       withProj05Wall(farWallMat, segs, { anchor: sF05, period: bay05 }, 'far');
     }
-    const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
+    const farWall = new THREE.Mesh(ft.geometry(64, 80, 0.004, warpFar), farWallMat);
     // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP
     const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
     const farLay = farRiverLayout(course, ft, level);
@@ -485,7 +570,7 @@ export function buildEnvironment(course: Course): Environment {
     const lidUs: number[] = [];
     for (let n = 0; n < ringDv.length; n++) {
       if (n === 0 && realSeamRing) continue;
-      const u = knots[n + 1][0];
+      const u = uRing(n);
       const op = openAt(u);
       ringItems.push({ u, o: new THREE.Vector3(), basis: ringBasis, s: new THREE.Vector3(rRing, rRing, 1), openPos: op.c, openScale: op.r / rRing });
       lidUs.push(ft.uOfZ(Math.max(0.5, knots[n + 1][1] - band05.width / 2 - lidSz * 1.05)));
@@ -499,7 +584,22 @@ export function buildEnvironment(course: Course): Environment {
         lidItems.push({ u, o, basis: new THREE.Matrix4().makeBasis(b.X, b.Y, b.Z), s: new THREE.Vector3(lidSz, lidSz, lidSz * lid05.stretch), openPos: op.c.clone().addScaledVector(dirOpen, op.r + lidSz * 1.5), openScale: 1 });
       }
     }
-    const farRings = new THREE.InstancedMesh(bandGeometry({ ...band05, segments: 48 }), PROJRING05 ? withProj05Ring(gold05('ring05v', true), false, band05.height, 'far') : gold05('ring05v', true), ringItems.length);
+    let farRings: THREE.InstancedMesh;
+    if (E05) {
+      // env05: thicker far bands (measured), the shared geometry displaced like the far wall (basis Rt, U, T: object x
+      // runs along Rt), and the camera-projection ring atlas rows C … G by instance
+      const bandF = { ...band05, height: E05.hFar, segments: 48 };
+      const geo = markBandSkirt(bandGeometry(bandF));
+      const pa = geo.getAttribute('position') as THREE.BufferAttribute;
+      for (let i = 0; i < pa.count; i++) {
+        const thv = Math.atan2(pa.getY(i), pa.getX(i));
+        const w = Math.hypot(pa.getX(i), pa.getY(i)) > 1.001 ? e05Weight(thv) : e05RingWeight(thv);   // skirt on the wall
+        pa.setXY(i, pa.getX(i) + (E05.sideFar * w) / rRing, pa.getY(i) + (E05.upFar * w) / rRing);
+      }
+      pa.needsUpdate = true;
+      geo.computeBoundingSphere();
+      farRings = new THREE.InstancedMesh(geo, withEnv05Ring(gold05('ring05v', true, bandF), E5_RING_ROW.C, true, (bandF.width + bandF.groove + bandF.lipWidth) / 2, 'far'), ringItems.length);
+    } else farRings = new THREE.InstancedMesh(bandGeometry({ ...band05, segments: 48 }), PROJRING05 ? withProj05Ring(gold05('ring05v', true), false, band05.height, 'far') : gold05('ring05v', true), ringItems.length);
     const farLids = new THREE.InstancedMesh(wallLidGeometry('slab', lid05.thickness, 16), lidMat05('lid05v', true), lidItems.length);
     // `?projlid05=1`: the approved small far paddles L3 / R3 are Blender trays (lids05.glb); the far slab pucks stay out
     if (PROJLID05) farLids.visible = false;
@@ -652,7 +752,10 @@ export function buildEnvironment(course: Course): Environment {
   // 06–11 never see it. It covers only the frame's bottom corners/edge (below Benny), never the course ahead.
   {
     // `?projframe05=1` (src/vfx/proj05Tunnel.ts): the approved gold band on the same frame; default unchanged
-    const frame = new THREE.Mesh(nearFrameGeometry(), PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial());
+    // `?env05=1`: the three pieces fitted to the approved frame outline (tools/env05/frame_fit.py → env/frame/frame_fit.json:
+    // approved frame px missed 13,796 → 3,786); their own approved-gold bake assets/textures/env05/frame05.png
+    const frame05e = ENV05 ? { left: [434, 1028, 456, 190, 1, -157, -127], right: [427, 1026, 453, 190, 1, -22.5, -55], lip: [423, 2118, 655, 130, -1, 122, 58] } as Parameters<typeof nearFrameGeometry>[0] : undefined;
+    const frame = new THREE.Mesh(nearFrameGeometry(frame05e), PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial());
     frame.name = 'tube05_near_frame';
     frame.frustumCulled = false;
     frame.matrixAutoUpdate = false;

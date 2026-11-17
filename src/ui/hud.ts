@@ -6,6 +6,85 @@ import '@fontsource/baloo-2/700.css';
 import '@fontsource/baloo-2/800.css';
 import type { StageId } from '../world/course';
 import { STAGE_TITLES } from '../world/course';
+import { on05 } from '../vfx/waterRibbon';
+
+/**
+ * `?hud05=1` (or `?match05=1`), Screen 05 full reference match (qa/pilot05/full_reference_match/hud/NOTES.md): the top
+ * bar and the level banner re-laid to the approved picture's measured pixels (864 x 1536 frame; 1 px = 1/15.36 u):
+ * bar x 33-825 / y 13-100 (opaque flat purple ~ (88, 2, 127), light rim), heart-section capsule x 33-331, dividers at
+ * x 344 and 707 (y 27-86), banner x 120-746 / y 113-181. The four static icons (heart, plus, coin, pause button) are
+ * sprites cut from the approved picture (qa/pilot05/full_reference_match/hud/icon_bake.py → assets/textures/hud05/);
+ * the hearts value, the coin counter and the level title stay live DOM text (the counter is never hard-coded).
+ * A global HUD change: with the switch on, every ride screen shows this layout (default build unchanged).
+ */
+const HUD05 = on05('hud05');
+const U = (px: number) => `calc(var(--u) * ${(px / 15.36 + 1e-5).toFixed(5)})`; // +1e-5: Chrome floors border widths
+/** approved icon sprite boxes (frame px; assets/textures/hud05/hud05_icons.json) */
+const ICON05 = {
+  heart05: { url: new URL('../../assets/textures/hud05/heart05.png', import.meta.url).href, box: [60, 21, 94, 74] },
+  plus05: { url: new URL('../../assets/textures/hud05/plus05.png', import.meta.url).href, box: [254, 28, 56, 49] },
+  coin05: { url: new URL('../../assets/textures/hud05/coin05.png', import.meta.url).href, box: [375, 13, 90, 89] },
+  pause05: { url: new URL('../../assets/textures/hud05/pause05.png', import.meta.url).href, box: [727, 9, 96, 96] },
+} as const;
+/** hud05 tuning (measured against the approved glyph boxes with qa/pilot05/full_reference_match/hud/harness.mjs) */
+const H05 = {
+  bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 1, shadow: true },
+  num: { size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },
+  banner: { cx: 433, y0: 113, h: 69, minW: 626, size: 44, weight: 700, track: -0.6, word: 3, skew: -4, italic: true, dy: -1, stroke: 0 },
+};
+/**
+ * run #3 (2026-11-17), measured rows of the approved picture (qa/pilot05/full_reference_match/hud/NOTES.md): the rims are
+ * 1-px bands (outer border row + stacked inset shadows offset down / up, so every band follows the round ends); the dark
+ * halo round both pills is the approved one (light pink 0-2 px, dark purple 3-6 px, gone by 8 px).
+ */
+const RIM05 = {
+  barTop: [[245, 166, 239], [245, 176, 248], [206, 108, 216], [230, 110, 244], [190, 55, 210], [147, 12, 177], [125, 10, 172], [100, 3, 155], [88, 2, 140]],
+  barBottom: [[234, 166, 250], [186, 117, 208], [114, 40, 140], [108, 17, 143], [105, 7, 144]],
+  bannerTop: [[255, 239, 228], [249, 198, 168], [231, 126, 125], [189, 62, 106], [133, 14, 119]],
+  bannerBottom: [[240, 146, 53], [252, 193, 135], [255, 210, 212], [144, 75, 158]],
+};
+const bands05 = (rows: number[][], dir: 1 | -1) => rows.map(([r, g, b], i) => `inset 0 ${U(dir * (i + 1))} 0 0 rgb(${r},${g},${b})`).join(', ');
+const HALO05 = `0 0 ${U(1)} ${U(2)} rgba(205,75,160,0.85), 0 0 ${U(2)} ${U(6.5)} rgba(110,0,110,0.72)`;
+/** absolute position inside the bar's padding box, from approved frame px */
+const bx = (x: number) => U(x - H05.bar.x0 - H05.bar.border);
+const by = (y: number) => U(y - H05.bar.y0 - H05.bar.border);
+const icon05 = (k: keyof typeof ICON05, cls = 'i05') => {
+  const { url, box: [l, t, w, h] } = ICON05[k];
+  return `<img class="${cls}" alt="" draggable="false" src="${url}" style="left:${bx(l)};top:${by(t)};width:${U(w)};height:${U(h)}">`;
+};
+const CSS05 = () => `
+#hud.m05 .bar { top: calc(${U(H05.bar.y0)} + env(safe-area-inset-top)); left: ${U(H05.bar.x0)}; right: ${U(864 - H05.bar.x1)};
+  height: ${U(H05.bar.y1 - H05.bar.y0)}; box-sizing: border-box; border-radius: ${U((H05.bar.y1 - H05.bar.y0) / 2)}; display: block;
+  background: linear-gradient(180deg, rgb(95,2,136) 0, rgb(93,2,134) ${U(12)}, rgb(93,2,130) ${U(16)}, rgb(91,2,128) ${U(20)}, rgb(90,2,126) ${U(28)},
+    rgb(89,2,125) ${U(40)}, rgb(88,2,125) ${U(66)}, rgb(90,2,129) ${U(72)}, rgb(94,2,131) ${U(76)}, rgb(102,5,138) ${U(80)}, rgb(110,10,145) ${U(85)});
+  border: ${U(H05.bar.border)} solid rgb(220,130,235); border-top-color: rgb(215,90,200); border-bottom-color: rgb(180,90,214);
+  box-shadow: ${bands05(RIM05.barTop, 1)}, ${bands05(RIM05.barBottom, -1)}${H05.bar.shadow ? `, 0 ${U(2.5)} ${U(3)} rgba(120,10,150,0.6)` : ''}, ${HALO05}; }
+#hud.m05 .bar > * { position: absolute; display: block; margin: 0; }
+#hud.m05 .pill05 { left: ${U(-H05.bar.border)}; top: ${U(-H05.bar.border)}; width: ${U(331 - 33)}; height: ${U(H05.bar.y1 - H05.bar.y0)};
+  box-sizing: border-box; border-radius: ${U((H05.bar.y1 - H05.bar.y0) / 2)}; border: ${U(2)} solid transparent;
+  border-right-color: rgba(175,58,205,0.9); } /* run #3: only the capsule's right end is its own line (approved violet
+  peak (164,68,193) / (200,63,211)); its top / bottom / left lie on the bar rim (a lavender line there measured worse) */
+#hud.m05 .div05 { top: ${by(27)}; height: ${U(59)}; width: ${U(2)}; background: rgba(226,182,255,0.33); }
+#hud.m05 .d1 { left: ${bx(343)}; } #hud.m05 .d2 { left: ${bx(706)}; }
+#hud.m05 .num { top: ${by(H05.num.top)}; font-weight: ${H05.num.weight}; font-size: ${U(H05.num.size)}; line-height: 1; letter-spacing: ${U(H05.num.track)};
+  white-space: nowrap; text-shadow: none; filter: drop-shadow(0 ${U(2)} ${U(1.5)} rgba(50,0,90,0.55));
+  background: linear-gradient(180deg, rgb(252,225,252) 18%, rgb(250,233,250) 25%, rgb(250,238,251) 40%, rgb(250,238,251) 70%, rgb(250,232,250) 75%, rgb(246,205,245) 79%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; }
+#hud.m05 .n05h { left: ${bx(H05.num.hX)}; } #hud.m05 .n05c { left: ${bx(H05.num.cX)}; }
+#hud.m05 .p05 { left: ${bx(ICON05.pause05.box[0])}; top: ${by(ICON05.pause05.box[1])}; width: ${U(ICON05.pause05.box[2])}; height: ${U(ICON05.pause05.box[3])};
+  border: 0; border-radius: 50%; background: none; gap: 0; padding: 0; }
+#hud.m05 .p05 img { position: absolute; inset: 0; width: 100%; height: 100%; }
+#hud.m05 .banner { left: ${U(H05.banner.cx)}; top: calc(${U(H05.banner.y0)} + env(safe-area-inset-top)); height: ${U(H05.banner.h)};
+  min-width: ${U(H05.banner.minW)}; box-sizing: border-box; padding: 0 ${U(12)}; justify-content: center; border-radius: ${U(H05.banner.h / 2)};
+  background: linear-gradient(180deg, rgb(99,3,147) 0%, rgb(96,3,144) 50%, rgb(94,3,140) 100%);
+  border: ${U(1)} solid rgb(245,160,150); border-top-color: rgb(255,169,232); border-bottom-color: rgb(214,105,38);
+  box-shadow: ${bands05(RIM05.bannerTop, 1)}, ${bands05(RIM05.bannerBottom, -1)}, ${HALO05}; }
+#hud.m05 .banner span { font-size: ${U(H05.banner.size)}; font-weight: ${H05.banner.weight}; position: relative; top: ${U(H05.banner.dy)}; letter-spacing: ${U(H05.banner.track)};
+  word-spacing: ${U(H05.banner.word)}; font-style: ${H05.banner.italic ? 'italic' : 'normal'};
+  transform: skewX(${H05.banner.skew}deg); line-height: 1;
+  background: linear-gradient(180deg, #fadcb2 0%, #f8d8aa 50%, #f6d2a2 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  ${H05.banner.stroke ? `-webkit-text-stroke: ${U(H05.banner.stroke)} rgba(105,25,85,0.9);` : ''} filter: drop-shadow(0 ${U(1.2)} 0 rgba(90,10,70,0.85)); }
+`;
 
 const CSS = `
 :root { --u: min(1vh, calc(100vw / 56.25)); }
@@ -87,17 +166,23 @@ export interface Hud {
 
 export function createHud(): Hud {
   const style = document.createElement('style');
-  style.textContent = CSS;
+  style.textContent = HUD05 ? CSS + CSS05() : CSS;
   document.head.appendChild(style);
   const root = document.createElement('div');
   root.id = 'hud';
+  if (HUD05) root.classList.add('m05');
+  const bar05 = `<div class="bar">
+      <i class="pill05"></i>${icon05('heart05')}<span class="num n05h" data-k="hearts">5/5</span>${icon05('plus05')}
+      <i class="div05 d1"></i>${icon05('coin05')}<span class="num n05c" data-k="coins">1,330</span><i class="div05 d2"></i>
+      <div class="pbtn p05" data-k="pause"><img alt="" draggable="false" src="${ICON05.pause05.url}"></div>
+    </div>`;
   root.innerHTML = `<div class="frame">
     <div class="flash"></div>
-    <div class="bar">
+    ${HUD05 ? bar05 : `<div class="bar">
       <div class="seg hearts">${HEART}<span class="num" data-k="hearts">5/5</span><span class="plus">+</span></div>
       <div class="seg coins">${COIN}<span class="num" data-k="coins">1,330</span></div>
       <div class="seg pause"><div class="pbtn" data-k="pause"><i></i><i></i></div></div>
-    </div>
+    </div>`}
     <div class="banner"><span data-k="title">03 · WHIRLPOOL TWIRL</span></div>
     <div class="victory hidden"><div class="laurel l">${LAUREL}</div><div class="laurel r">${LAUREL}</div><div class="pill"><span>FINAL SPIN<br>COMPLETE</span></div><div class="medal">${MEDAL}</div></div>
     <div class="replay hidden" data-k="replay">↻ Replay</div>

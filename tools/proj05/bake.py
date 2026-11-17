@@ -19,6 +19,13 @@ from PIL import Image
 from scipy.ndimage import gaussian_filter, gaussian_filter1d, binary_dilation, binary_erosion
 
 probe, tdir, out = sys.argv[1], sys.argv[2], sys.argv[3]
+# optional 4th argument "far" (`&projfar05=1`, 2026-11-16 late): FAR-RIVER FIX. Where the game's far river (ribbon beyond
+# S_FAR0 and the forced-perspective far block) is on screen but the approved picture shows something else there (bank
+# foam, wall), the old bake had no data and the game showed filler / the procedural far river (torn "flag" at the far
+# bend). With "far" those texels take the APPROVED pixels as they are, so the locked view shows the approved picture on
+# the whole far river. Only E, F and the LUT differ (out dir: assets/textures/water05/far1/).
+FARFIX = len(sys.argv) > 4 and sys.argv[4] == "far"
+S_FAR0 = 157.0
 os.makedirs(out, exist_ok=True)
 W, H = 864, 1536
 R = np.fromfile(os.path.join(probe, "uv_river.f32"), np.float32).reshape(H, W, 4).astype(np.float64)
@@ -27,12 +34,31 @@ wm = np.asarray(Image.open(os.path.join(tdir, "water_mask.png"))) > 127
 # coins are filled in the target from the user's artwork (make_target.py); the along-s hole filling below stays for gaps
 coin = np.zeros((H, W), bool)
 tgt = np.asarray(Image.open(os.path.join(tdir, "target_05.png")).convert("RGB"), np.float64) / 255
+if FARFIX:      # outside the approved water footprint the target IS the approved picture
+    here = os.path.dirname(os.path.abspath(__file__))
+    appr = np.asarray(Image.open(os.path.join(here, "..", "..", "references", "05_flow_into_the_current.png")).convert("RGB"), np.float64) / 255
+    tgt = np.where(wm[..., None], tgt, appr)
 # colour feedback from the live capture (tools/proj05/residual.py): what the bloom pass adds is taken out of the bake
 if os.path.exists(os.path.join(tdir, "correction.npz")):
     tgt = np.clip(tgt - np.load(os.path.join(tdir, "correction.npz"))["c"].astype(np.float64), 0, 1)
 U, S = R[..., 0], R[..., 1]
 S_CUT = 182.0                                   # the real ribbon ends behind the far block's seam
 use = surf & wm & (S < S_CUT)
+use_all = use
+if FARFIX:      # E only: the far ribbon also where the approved picture shows no water (N / T / D keep the water-only set)
+    useE = surf & (S < S_CUT) & (wm | (S > S_FAR0))
+    # match05 round 3 (Screen 05 agent, qa/match/05/NOTES.md 2.3; opt-in env, unset = unchanged): BAKE05_EXTRA_REGIONS =
+    # comma list of region names (qa/pilot05/full_reference_match/masks) where the near ribbon edge covers something the
+    # approved picture shows as NOT water (e.g. purple_walls: the right wall chunk) -> E carries those approved pixels too.
+    _xr = [r for r in os.environ.get("BAKE05_EXTRA_REGIONS", "").split(",") if r]
+    if _xr:
+        _M = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "qa", "pilot05", "full_reference_match", "masks")
+        _idx = np.asarray(Image.open(os.path.join(_M, "region_index.png")))
+        _rg = json.load(open(os.path.join(_M, "regions.json")))["regions"]
+        _xm = np.isin(_idx, [_rg[r]["id"] for r in _xr])
+        print("BAKE05_EXTRA_REGIONS", _xr, "texels added", int((surf & (S < S_CUT) & ~useE & _xm).sum()))
+        useE = useE | (surf & (S < S_CUT) & _xm)
+    use = useE
 ys, xs = np.nonzero(use)
 su, ss, sc, scoin = U[use], S[use], tgt[use], coin[use]
 # locked-view density along s (screen rows per unit s), per pixel
@@ -127,7 +153,64 @@ holeE, _ = splat(xE, yE, scoin[:, None].astype(float), WE, NE)
 wtE, _ = splat(xE, yE, (~scoin)[:, None].astype(float), WE, NE)
 E, validE = finish(accE, wtE[..., 0], holeE[..., 0], max_gap=int(NE * 0.35))
 alphaE = gaussian_filter(binary_erosion(validE, iterations=1).astype(float), 0.8)
+if FARFIX:
+    # water the locked eye never saw (behind wave crests, long interpolated runs along s): the straight interpolation
+    # shows as a flat blank patch as soon as Benny rides forward. Those texels are released (alpha 0) so the tile
+    # layers — the approved design, repeating — show there instead. Runs of <= UNSEEN_MIN rows stay (sub-texel gaps).
+    UNSEEN_MIN = 8
+    fl = finish.filled.copy()
+    run = np.zeros(fl.shape, np.int32)
+    for y in range(fl.shape[0]):                       # run length ending at y (down each column)
+        run[y] = np.where(fl[y], (run[y - 1] if y else 0) + 1, 0)
+    for y in range(fl.shape[0] - 2, -1, -1):           # spread the full run length back up the run
+        run[y] = np.where(fl[y] & fl[y + 1], np.maximum(run[y], run[y + 1]), run[y])
+    unseen = binary_erosion(run > UNSEEN_MIN, iterations=2)
+    alphaE = alphaE * (1.0 - np.clip(gaussian_filter(unseen.astype(float), 1.0) * 1.6, 0, 1))
+    print(json.dumps(dict(E_unseen_texels=int(unseen.sum()), E_texels=int(unseen.size))))
+    # measured 2026-11-17 (session 018Sg3AU): this finds 0 texels — E only interpolates COIN holes, and the scene has
+    # none, so nothing in E is an interpolated run. The blank / torn stripes while riding are the opposite case: gaps
+    # the locked eye never saw (wave back slopes) are EMPTY (alpha 0) and the coarse old tile shows through them.
+    # That is what "gapfill" below repairs.
 
+# optional extra argument "gapfill" (`&projgap05=1`, 2026-11-17, session 018Sg3AU): MIRROR-FILL of E's interior gaps.
+# Rows the locked eye never saw (behind wave crests: 3-48 rows typical, 28.5 rows per unit s) stay empty in E, so
+# while riding the coarse old tile shows through them as dark torn stripes across the river. Each gap of <= GAP_MAX
+# rows (per column, along s) is filled with the APPROVED texture reflected from both of its edges (above: rows y0,
+# y0-1, ...; below: rows y1, y1+1, ...), blended variance-preservingly so the middle keeps the water's contrast — real
+# streak detail, continuous at both edges, never a flat interpolated patch. Longer gaps stay to the tile. Texels the
+# locked eye saw are untouched (only their soft alpha edge next to a filled gap becomes solid).
+GAPFILL = "gapfill" in sys.argv[4:]
+if GAPFILL:
+    GAP_MAX = 100
+    Eg = E.copy(); vg = validE.copy(); n_fill = 0
+    for x in range(validE.shape[1]):
+        idx = np.nonzero(validE[:, x])[0]
+        if len(idx) < 2:
+            continue
+        for y0, y1 in zip(idx[:-1], idx[1:]):
+            g = int(y1 - y0 - 1)
+            if g < 1 or g > GAP_MAX:
+                continue
+            k = np.arange(1, g + 1)
+            sa = y0 - (k - 1); sb = y1 + (g - k)
+            sa = np.where((sa >= 0) & validE[np.clip(sa, 0, None), x], sa, y0)
+            sb = np.where((sb < validE.shape[0]) & validE[np.clip(sb, None, validE.shape[0] - 1), x], sb, y1)
+            A = E[sa, x]; B = E[sb, x]
+            t = (k / (g + 1.0))[:, None]
+            mu = 0.5 * (A.mean(0) + B.mean(0))
+            Eg[y0 + k, x] = np.clip(mu + ((1 - t) * (A - mu) + t * (B - mu)) / np.sqrt((1 - t) ** 2 + t ** 2), 0, 1)
+            vg[y0 + k, x] = True; n_fill += g
+    gf = vg & ~validE                                   # soften across u only inside the filled texels
+    sm = np.stack([gaussian_filter(Eg[..., i], (0.5, 1.2)) for i in range(3)], -1)
+    Eg[gf] = sm[gf]
+    E, validE = Eg, vg
+    alphaE = gaussian_filter(binary_erosion(validE, iterations=1).astype(float), 0.8)
+    print(json.dumps(dict(E_gapfilled_texels=int(n_fill), E_texels=int(validE.size))))
+
+if FARFIX:      # N / T / D: water-only samples, as before
+    use = use_all
+    ys, xs = np.nonzero(use)
+    su, ss, sc, scoin = U[use], S[use], tgt[use], coin[use]
 # ---------------------------------------------------------------- N (near, full width) layer
 sN0, sN1, dN, WN = 126.0, 166.0, 24, 512
 NN = int((sN1 - sN0) * dN)
@@ -201,7 +284,7 @@ D = np.clip(0.5 + hpw * 1.0, 0, 1)
 
 # ---------------------------------------------------------------- F (far river block) layer
 # the forced-perspective far river (far05.ts): its own coordinates (uv.x across the floor chord, virtual depth Z)
-farm = (np.abs(R[..., 2] - 3) < 0.01) & wm
+farm = (np.abs(R[..., 2] - 3) < 0.01) & (wm | FARFIX)
 fx_, fz_ = R[..., 0][farm], R[..., 1][farm]
 fcol, fcoin = tgt[farm], coin[farm]
 ZMAX = float(max(fz_.max(), 1.0)) if farm.any() else 400.0
@@ -212,6 +295,14 @@ holeF, _ = splat(xF, yF, fcoin[:, None].astype(float), WF_, HF_)
 wtF, _ = splat(xF, yF, (~fcoin)[:, None].astype(float), WF_, HF_)
 F_, validF = finish(accF, wtF[..., 0], holeF[..., 0], fill_sigma=1.5, max_gap=80, fill_all=True)
 alphaF = np.clip((gaussian_filter(validF.astype(float), 1.5) - 0.3) / 0.5, 0, 1)
+if FARFIX:      # the whole far block carries the bake (texels the locked eye never saw: nearest valid texel)
+    from scipy.ndimage import distance_transform_edt
+    okF = validF & np.isfinite(F_).all(-1)
+    if okF.any():
+        iy, ix = distance_transform_edt(~okF, return_distances=False, return_indices=True)
+        soft = np.stack([gaussian_filter(F_[iy, ix][..., i], 2.0) for i in range(3)], -1)
+        F_ = np.where(okF[..., None], F_, soft)
+        alphaF = np.ones_like(alphaF)
 
 # ---------------------------------------------------------------- A (bank strip) layer
 # the visual-only strip on the lower wall (src/vfx/proj05Apron.ts): x = 0.5 + 0.5 * t * side, y = s over [A_S0, A_S1]

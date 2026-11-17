@@ -3,7 +3,7 @@
 # Claude Code -> environment settings -> Setup script. It runs as root before Claude starts, from the folder
 # that holds the repository checkout, and installs TOOLS only (npm packages, Python QA libraries, Blender 5.3.0,
 # Android SDK 34, World Labs plugin), skipping anything already installed. It never touches git: the
-# repository's SessionStart hook (scripts/claude-bootstrap.sh --hook) merges newer work, restores Git LFS and
+# repository's SessionStart hook (scripts/claude-bootstrap.sh --hook) restores Git LFS, lists newer branches (never merges) and
 # re-arms the five-minute autosave. Every step is non-fatal so a session always starts.
 if [ -f rainbow-/scripts/claude-bootstrap.sh ]; then
   bash rainbow-/scripts/claude-bootstrap.sh --env-setup || echo "rainbow: env-setup reported problems"

@@ -148,20 +148,13 @@ const RIVER05_PAL = {
  * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
  */
 const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
-/**
- * `?match05=1` (2026-11-17): the user's one address for the approved Screen 05 — every 05 match switch at once (approved
- * water, tunnel walls, gold rings, near gold frame, Blender paddles, sharp riding water; flow along the streaks is
- * `projflow05=2`, read in attachProj05). Without it nothing changes.
- */
-const MATCH05_KEYS = ['proj05', 'projwall05', 'projring05', 'projframe05', 'projlid05', 'projnear05'];
 const q05 = (key: string): boolean => {
-  const hit = (qs: URLSearchParams) => qs.get(key) === '1' || (MATCH05_KEYS.includes(key) && qs.get('match05') === '1');
   try {
-    if (typeof location !== 'undefined' && hit(new URLSearchParams(location.search))) return true;
+    if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
   } catch {
     /* no location (vite-node / workers) */
   }
-  return BUILD_Q05 !== '' && hit(new URLSearchParams(BUILD_Q05));
+  return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
 };
 /** the same switch reader for other modules (Game.ts: `?glow05=1`) */
 export const flag05 = q05;
@@ -211,7 +204,58 @@ export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
  * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
  * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
  */
-export const PROJ05: boolean = q05('proj05');
+/**
+ * Screen 05 FULL REFERENCE MATCH (`?match05=1`, 2026-11-16, qa/pilot05/full_reference_match/): one master switch that turns
+ * on every Screen-05 reference-match part (proj05 water + env05 tunnel / rings / fittings + hud05 + coins05 + benny05 +
+ * splash05m + bub05 …). `on05('part')` = that part's own switch OR the master switch. Default build: all off.
+ */
+export const MATCH05: boolean = q05('match05');
+export const on05 = (key: string): boolean => q05(key) || MATCH05;
+export const PROJ05: boolean = on05('proj05');
+/**
+ * `?proj05=1&projfar05=1` (2026-11-16 late, tools/proj05/bake.py … far): FAR-RIVER FIX. The exact layer E and the far
+ * block's layer F are baked a second time (assets/textures/water05/far1/) so that the far river also carries the approved
+ * pixels where the approved picture shows bank foam / wall on top of the game's river (there the first bake had no data:
+ * torn filler and the procedural far river showed at the far bend). Nothing else changes; without the switch the
+ * first bake is used as before.
+ */
+export const PROJFAR05: boolean = PROJ05 && on05('projfar05');
+/**
+ * `?proj05=1&projfar05=1&projgap05=1` (2026-11-17, session 018Sg3AU; on with `?match05=1`): the exact layer E from
+ * assets/textures/water05/far2/ — far1's E with the gaps the locked eye never saw (wave back slopes) mirror-filled from
+ * the approved texture (tools/proj05/bake.py … far gapfill). Riding no longer shows the coarse old tile through them as
+ * dark torn stripes across the river. Needs projfar05 (far1 F + LUT).
+ */
+export const PROJGAP05: boolean = PROJFAR05 && on05('projgap05');
+/**
+ * `?tgtvis05=1` (Screen 05 agent, 2026-11-17, branch claude/rainbow-s05-match, qa/match/05/NOTES.md; explicit switch, NOT
+ * in match05 yet): exact layer E from assets/textures/match05/tgtvis05/ — far2's E re-baked from a target in which the
+ * 39,360 px of water the APPROVED picture shows around Benny's hat / shoulders keep the approved pixels instead of the
+ * isolated-artwork fill (tools/match05/make_target_vis.py; registration, colour match, LUT, F unchanged). Needs projgap05.
+ */
+export const TGTVIS05: boolean = PROJGAP05 && q05('tgtvis05');
+/**
+ * `?tgtfill05=3` (Screen 05 agent, round 3, qa/match/05/NOTES.md "Milestone 2 — 2.2"; explicit switch, needs tgtvis05):
+ * layers E + F re-baked from a target whose coin / Benny holes no longer carry the occluders' colours into the fill
+ * (tools/match05/make_target_vis.py TGTFILL05=3: coin holes only; options 1 / 2 rejected, see NOTES) — removes the soft green-teal patches beside Benny while riding.
+ * Off (default, or tgtvis05 off): nothing changes.
+ */
+const qv05 = (key: string): string => {
+  try {
+    const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;
+    if (v !== null) return v;
+  } catch {
+    /* no location */
+  }
+  return BUILD_Q05 !== '' ? new URLSearchParams(BUILD_Q05).get(key) ?? '' : '';
+};
+export const TGTFILL05: boolean = TGTVIS05 && qv05('tgtfill05') === '3';
+/**
+ * `?tgtwall05=1` (Screen 05 agent, round 3, NOTES "2.3"; needs tgtfill05=3): E + its LUT re-baked with
+ * BAKE05_EXTRA_REGIONS=purple_walls — where the near ribbon edge covers wall in the locked view (right wall chunk
+ * x 748-863 y 771-904 + small left pieces) E carries the approved wall pixels instead of stretched water.
+ */
+export const TGTWALL05: boolean = TGTFILL05 && q05('tgtwall05');
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
@@ -405,18 +449,31 @@ uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
 uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
 uniform vec2 uPjRes;       // render target size (vignette inverse)
 uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
-uniform vec4 uPjNear;      // ?projnear05=1: on, near-flare gain, near-layer texels (w, h)
-uniform sampler2D uPjT2;   // ?projnear05=1: the sharp near tile (mirrored repeat along s), used where E is magnified
-uniform vec2 uPjT2S;       // its start s, period
+// ?projnear05=1 (2026-11-16, tools/proj05/near_bake.py): the HIGH-RESOLUTION near tile T2 (≈110 texels per unit
+// instead of 24, mirrored repeat along s, mipmaps) takes over wherever the exact layer would be magnified while riding;
+// the old tile uPjT keeps its role where E / N have no data at the locked view. uPjNear: x = on, y = share of the
+// detail layer kept on T2, z = ride focus s (set every frame by vfx/index.ts), w = focus s of the locked checkpoint
+uniform vec4 uPjNear;
+uniform sampler2D uPjT2;   // near tile T2
 uniform sampler2D uPjWT2;  // its flow map (?projflow05=2)
-// ?projnear05=1: 1 on river the camera has APPROACHED — within ≈14–20 units of the eye (1 / gl_FragCoord.w = view
-// depth) AND both the exact layer and the near layer magnified there. (The far river is magnified in the exact layer
-// only, steep far banks are far, the locked view is magnified nowhere in both: none of them changes.)
-float pjNearK(float u, float mE, float mN) {
-  if (uPjNear.x < 0.5) return 0.0;
-  float near = 1.0 - smoothstep(14.0, 20.0, 1.0 / max(gl_FragCoord.w, 1e-4));
-  float edge = 1.0 - smoothstep(0.88, 0.96, abs(u));     // not on the lifted outer bank edge (steep: always magnified)
-  return (1.0 - smoothstep(0.3, 0.55, mE)) * (1.0 - smoothstep(0.3, 0.55, mN)) * near * edge;
+uniform vec2 uPjT2S;       // start s, half period L (mirrored repeat: period 2 L)
+// how far ?projnear05=1 is engaged: 0 within 0.5 u of the locked checkpoint (the locked picture is the original
+// proj05 one EXACTLY, including its own hand-overs), 1 from 2 u of riding on
+float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }
+// ?projvp05=1 (2026-11-17, session 018Sg3AU; on with ?match05=1): VARIANCE-PRESERVING hand-over while riding. A plain
+// mix of two unrelated pictures of the water (exact layer E <-> crisp tile T2) halves their contrast in the hand-over
+// band: the rider saw a milky, smeared band mid-river (debug map ?projdbg05=1 = the green/red cross-fade). Here each
+// picture's deviation from the shared mean colour (x = on, yzw = mean of E and T2, display space) is blended and
+// rescaled by 1 / sqrt(w^2 + (1-w)^2), so the band keeps the approved water's contrast. Engaged by pjNearK() only:
+// at the locked checkpoint (pjNearK = 0) the picture is unchanged, pixel for pixel.
+uniform vec4 uPjVP;
+vec3 pjMixVP(vec3 a, vec3 b, float w) {
+  vec3 lin = mix(a, b, w);
+  float k = uPjVP.x * pjNearK();
+  if (k <= 0.0) return lin;
+  vec3 mu = uPjVP.yzw;
+  vec3 vp = clamp(mu + ((1.0 - w) * (a - mu) + w * (b - mu)) * inversesqrt(max(w * w + (1.0 - w) * (1.0 - w), 0.5)), 0.0, 1.0);
+  return mix(lin, vp, k);
 }
 vec4 pjLut(float s) {
   float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
@@ -428,7 +485,7 @@ vec4 pjLut(float s) {
   return r;
 }
 // display-space target at (u, s): exact layer where it is sharp enough, else near / tile layout + detail
-vec3 pjTarget(float u, float s, float mE, float mN, out float wE, out float wN) {
+vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
   vec4 L = pjLut(s);
   vec2 eUV = vec2(0.5 + (u - L.y) / (2.0 * L.z), L.x);
   vec4 e = texture2D(uPjE, eUV);
@@ -437,17 +494,24 @@ vec3 pjTarget(float u, float s, float mE, float mN, out float wE, out float wN) 
   vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));
   vec4 n = texture2D(uPjN, nUV);
   wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam
-  // ?projnear05=1: where the near layer (24 texels / unit) would be magnified, the sharp near tile takes over —
-  // the same rule the exact layer already follows, so the locked view (nothing magnified) keeps the approved picture
-  if (uPjNear.x > 0.5) wN *= 1.0 - pjNearK(u, mE, mN);
   vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
   if (uPjNear.x > 0.5) {
-    // ?projnear05=1: on the approached river the sharp near tile replaces the soft tile; elsewhere (the whole locked view,
-    // the far river) the old tile stays, so the locked picture does not change
-    float kT = pjNearK(u, mE, mN);
-    t = mix(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, kT);
+    // ?projnear05=1: where the exact layer would be magnified, the 24-texel near layer and the old tile hand over to
+    // the crisp tile T2 by the same test as E (at the locked checkpoint mE = 1.3: wT2 = 0, the locked picture is the
+    // old one exactly)
+    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));
+    t = pjMixVP(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);
+    wN *= 1.0 - wT2;
   }
   vec3 lay = mix(t, n.rgb, wN);
+  if (uPjVP.x > 0.5 && pjNearK() > 0.0) {
+    // E's empty texels are black and its soft edge (a < 0.5) is darkened: only well-covered texels feed the
+    // variance-preserving blend (a darkened edge would otherwise be amplified into a dark fringe)
+    float wEv = wE * smoothstep(0.5, 0.95, e.a) / max(e.a, 1e-3);
+    wEv = mix(wE, clamp(wEv, 0.0, 1.0), pjNearK());
+    wE = wEv;
+    return pjMixVP(lay, e.rgb, wE);
+  }
   return mix(lay, e.rgb, wE);
 }
 float pjDetail(float u, float s) {
@@ -458,17 +522,19 @@ float pjDetail(float u, float s) {
 uniform sampler2D uPjWN;   // flow map of the near layer (R slope, G mask, B coverage)
 uniform sampler2D uPjWT;   // flow map of the periodic tile
 uniform vec4 uPjFlow2;     // streamline mode on, slope scale, river half width (u), share of the flowing picture
-vec2 pjFlowDir(float u, float s, float kT) {
+vec2 pjFlowDir(float u, float s, float mE) {
   float ny = (s - uPjNS.x) / (uPjNS.y - uPjNS.x);
   vec3 fn = texture2D(uPjWN, vec2(u * 0.5 + 0.5, ny)).rgb;
   vec3 ft = texture2D(uPjWT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
-  if (kT > 0.0) {
-    // the sharp near tile repeats MIRRORED along s: in every other period its streaks slant the other way
-    vec3 ft2 = texture2D(uPjWT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb;
-    if (mod(floor((s - uPjT2S.x) / uPjT2S.y), 2.0) > 0.5) ft2.r = 1.0 - ft2.r;
-    ft = mix(ft, ft2, kT);
-  }
   float wn = fn.b * smoothstep(0.0, 0.08, ny) * (1.0 - smoothstep(0.92, 1.0, ny));
+  if (uPjNear.x > 0.5) {
+    // T2's own streak direction where T2 is what is shown; a mirrored period runs its streaks mirrored
+    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));
+    vec3 f2 = texture2D(uPjWT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb;
+    if (mod(floor((s - uPjT2S.x) / uPjT2S.y), 2.0) > 0.5) f2.r = 1.0 - f2.r;
+    ft = mix(ft, f2, wT2);
+    wn *= 1.0 - wT2;
+  }
   vec2 f = mix(ft.rg, fn.rg, wn);
   return vec2((f.r - 0.5) / uPjFlow2.y, f.g);
 }
@@ -1414,10 +1480,23 @@ void main() {
       // smallest singular value of the texel-per-pixel Jacobian (robust to the shear of the per-row u range)
       vec2 ja = dFdx(tp), jb = dFdy(tp);
       float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);
-      // ?projnear05=1: the same measure for the near layer (its texels per screen pixel)
-      vec2 tpN = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x)) * uPjNear.zw;
-      vec2 na = dFdx(tpN), nb = dFdy(tpN);
-      float mN = abs(na.x * nb.y - na.y * nb.x) / max(max(length(na), length(nb)), 1e-5);
+      if (uPjNear.x > 0.5) {
+        // ?projnear05=1: the hand-over to the crisp tile must not follow the WAVES. The per-pixel Jacobian above swings
+        // with every wave crest (slopes facing the camera stretch the texture, back slopes compress it), which made the
+        // E -> tile hand-over flicker into horizontal stripes across the river once the tile no longer shows the same
+        // picture as E. Instead: the camera follows Benny, so a point d units past the locked checkpoint needs about
+        // the density the locked view had at the same distance from Benny (scripts/proj05-ride-probe.mjs). Ratio of
+        // what E stores here to what the locked view stored there (both straight from the LUT), × E's 1.3 margin:
+        // exactly 1.3 at the locked checkpoint, so the locked picture is unchanged.
+        float rideD = uPjNear.z - uPjNear.w;
+        float sr = max(s - rideD, uPjLutS.x + 0.31);
+        vec4 a0 = pjLut(s - 0.3), a1 = pjLut(s + 0.3), b0 = pjLut(sr - 0.3), b1 = pjLut(sr + 0.3);
+        float rS = (a1.x - a0.x) / max(b1.x - b0.x, 1e-6);
+        float rU = pjLut(sr).z / max(Lm.z, 1e-3);
+        // at the locked checkpoint the original per-pixel test stays in charge (exactly the approved locked picture);
+        // from 0.5 to 2 u of riding on the wave-free test takes over
+        mE = mix(mE, 1.3 * min(rS, rU), pjNearK());
+      }
       // two-phase flow toward the camera: layer A peaks with zero offset at phase 0.5 (the frozen QA clock)
       float ph = fract(uTime * uPjFlow.y + uPjFlow.z);
       float D = uPjFlow.x * uPjFlow.w;
@@ -1427,7 +1506,7 @@ void main() {
       if (uPjFlow2.x > 0.5) {
         // ?projflow05=2: slide along the approved streaks (the S-curves), not straight down the river — the pink
         // ribbons stay where they are painted, only what lies along them travels; foam banks and bubbles stay still
-        vec2 fd = pjFlowDir(u, s, pjNearK(u, mE, mN));
+        vec2 fd = pjFlowDir(u, s, mE);
         float k = fd.y / sqrt(1.0 + fd.x * fd.x * uPjFlow2.z * uPjFlow2.z);     // same speed along any direction
         float oA = (sA - s) * k, oB = (sB - s) * k;
         sA = s + oA; uA = u + fd.x * oA;
@@ -1435,18 +1514,24 @@ void main() {
       }
       float wA = 1.0 - abs(2.0 * ph - 1.0);
       float wEA, wEB, wNA, wNB;
-      vec3 tA = pjTarget(uA, sA, mE, mN, wEA, wNA);
-      vec3 tB = pjTarget(uB, sB, mE, mN, wEB, wNB);
+      vec3 tA = pjTarget(uA, sA, mE, wEA, wNA);
+      vec3 tB = pjTarget(uB, sB, mE, wEB, wNB);
       vec3 tgt = mix(tB, tA, wA);
       float wEx = mix(wEB, wEA, wA);
       float wNx = mix(wNB, wNA, wA);
       float det = mix(pjDetail(uB, sB), pjDetail(uA, sA), wA);
-      tgt = clamp(tgt + det * uPjDS.z * (1.0 - wEx), 0.0, 1.0);   // (on the sharp near tile too: it adds its fine ripples)
+      // ?projnear05=1: the crisp tile carries its own approved streaks — the detail layer stays on the near layer only
+      float dW = 1.0 - wEx;
+      float wT2m = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));   // share of T2 in the tile
+      dW *= 1.0 - (1.0 - wNx) * wT2m * (1.0 - uPjNear.y);
+      tgt = clamp(tgt + det * uPjDS.z * dW, 0.0, 1.0);
       if (uPjFlow2.x > 0.5 && uPjFlow2.w < 0.999) {
         // keep a share of the approved picture exactly where it is painted (the layout never dissolves)
         float wE0, wN0;
-        vec3 t0 = pjTarget(u, s, mE, mN, wE0, wN0);
-        t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * (1.0 - wE0), 0.0, 1.0);
+        vec3 t0 = pjTarget(u, s, mE, wE0, wN0);
+        float dW0 = 1.0 - wE0;
+        dW0 *= 1.0 - (1.0 - wN0) * wT2m * (1.0 - uPjNear.y);
+        t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * dW0, 0.0, 1.0);
         tgt = mix(t0, tgt, uPjFlow2.w);
       }
       if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));
@@ -1460,17 +1545,6 @@ void main() {
       float pjFd = pjF * (1.0 - wEx);              // the exact layer already carries the approved haze
       lin = (lin * (1.0 - pjFd) + fogColor * pjFd - fogColor * pjF) / max(1.0 - pjF, 0.05);
       #endif
-      if (uPjNear.x > 0.5) {
-        // ?projnear05=1: the approved near water is strewn with white 4-point flares, twinkling stars and lens flares
-        // (≈ 8–12 big flares below Benny); the sharp tile comes from the stretch just past them, so on the tile — and
-        // only where the near layer would be magnified (the approached river) — they are added back, carried by the
-        // current (the 05 flare set the default water was tuned with against the approved picture)
-        float wT = (1.0 - wNx) * (1.0 - wEx) * pjNearK(u, mE, mN);
-        // a few big flares (not a field of small stars: those read as snow on the sharp tile)
-        float gB = flowGlint(vec2(lat * 1.3, v5 * 1.1 + 0.5 + 1.3 * sin(lat * 4.1 + 0.6)), 0.5, 40.0, 4.5, 0.7, uTime + 2.7);
-        float gL = lensFlare(vec2(lat * 1.4 + 0.31, v5 * 1.2 + 1.7 * sin(lat * 2.3 + 1.0) + 0.9 * sin(lat * 5.9)), 0.22, 120.0, 7.0, uTime);
-        lin += (vec3(1.9, 2.1, 2.3) * gB * 1.2 + mix(vec3(0.3, 1.3, 2.1), vec3(2.3, 2.5, 2.6), smoothstep(0.55, 1.0, gL)) * gL * 1.2) * wT * uPjNear.y;
-      }
       col = mix(col, lin, pjK);
     }
   }
@@ -1643,14 +1717,14 @@ export function proj05Far() {
     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
   };
   proj05Pending.push(new Promise<void>((res) => {
-    const tex = new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+    const tex = new THREE.TextureLoader().load(TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_F.png', import.meta.url).href : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_F.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
       t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
       res();
     }, undefined, () => res());
     tex.flipY = false;
     u.uPjF.value = tex;
   }));
-  proj05Pending.push(fetch(new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
+  proj05Pending.push(fetch(PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_lut.json', import.meta.url).href : new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
   const size = new THREE.Vector2();
   const onBeforeRender = (renderer: THREE.WebGLRenderer) => {
     const rt = renderer.getRenderTarget();
@@ -1668,11 +1742,15 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
   const urls = {
-    E: new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+    E: TGTWALL05 ? new URL('../../assets/textures/match05/tgtwall05/proj05_E.png', import.meta.url).href
+      : TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_E.png', import.meta.url).href
+      : TGTVIS05 ? new URL('../../assets/textures/match05/tgtvis05/proj05_E.png', import.meta.url).href
+      : PROJGAP05 ? new URL('../../assets/textures/water05/far2/proj05_E.png', import.meta.url).href
+      : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
     N: new URL('../../assets/textures/water05/proj05_N.png', import.meta.url).href,
     T: new URL('../../assets/textures/water05/proj05_T.png', import.meta.url).href,
     D: new URL('../../assets/textures/water05/proj05_D.png', import.meta.url).href,
-    lut: new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href,
+    lut: TGTWALL05 ? new URL('../../assets/textures/match05/tgtwall05/proj05_lut.json', import.meta.url).href : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_lut.json', import.meta.url).href : new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href,
   };
   const empty = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1);
   empty.needsUpdate = true;
@@ -1690,21 +1768,27 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   // still, and `projflowmix05` (share of the picture that travels; default 0.5, 1 = all) keeps the rest of the approved
   // picture fixed where it is painted — measured (qa/pilot05/proj/flow2/NOTES.md): similarity to the unflowed design
   // over a cycle 0.72 (old flow) -> 0.93, never below 0.90; direction toward the camera in every tracked frame pair.
-  const FLOW2 = qs.get('projflow05') === '2' || (qs.get('match05') === '1' && qs.get('projflow05') === null);
+  const FLOW2 = qs.get('projflow05') === '2' || (MATCH05 && qs.get('projflow05') === null);   // master switch: streamline flow
   u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };
   u.uPjWN = { value: empty }; u.uPjWT = { value: empty };
-  // `&projnear05=1` (2026-11-17, tools/proj05/near_bake.py, qa/pilot05/proj/near/NOTES.md): the sharp near tile
-  // proj05_T2 (≈ 220 texels per unit, the approved crisp band just ahead of Benny, mirrored along s) takes over wherever
-  // the camera has approached the river (exact AND near layer magnified), plus the approved near-field flares — the
-  // riding view no longer melts into a pastel blur; the locked view (nothing magnified) is unchanged.
-  const NEAR = q05('projnear05');
-  u.uPjNear = { value: new THREE.Vector4(0, qn('projglint05', 1), 512, 960) };      // y: near-flare gain (`projglint05`)
-  u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
-  u.uPjT2S = { value: new THREE.Vector2(0, 1) };
   u.uPjFlow2 = { value: new THREE.Vector4(0, 2, 4.8, THREE.MathUtils.clamp(qn('projflowmix05', 0.5), 0, 1)) };
   u.uPjPost = { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) };
   u.uPjRes = { value: new THREE.Vector2(864, 1536) };
   u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };
+  // `&projnear05=1` (2026-11-16, tools/proj05/near_bake.py, qa/pilot05/proj/near/NOTES.md): while riding, the near
+  // river used the 24-texel near / tile layers (pastel smear 8–17 u into the ride); this adds the HIGH-RESOLUTION near
+  // tile T2 (the nearest approved water of the locked view, ≈110 texels per unit, bubbles removed, mirrored repeat +
+  // mipmaps) in its own sampler uPjT2 with its flow map uPjWT2. Within 0.5 u of the locked checkpoint nothing changes
+  // (pixel-identical locked picture). `projneardetail05` = share of the fine-streak detail layer kept on T2: default 1
+  // (measured on ride frames at 8 / 17 / 35 u: 0 left the stretch where the tile's source is soft — 8 u — softer than
+  // before; 1 is sharper than before in every band and showed no grain; 0 and 0.5 stay available for comparison).
+  const NEAR = on05('projnear05');
+  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 1), 0, 1), 0, 0) };
+  // ?projvp05=1 (or ?match05=1): variance-preserving E <-> tile hand-over while riding (shader pjMixVP). Mean colour =
+  // midpoint of the means of E (0.379, 0.598, 0.912) and T2 (0.502, 0.533, 0.933), measured over their valid texels
+  u.uPjVP = { value: new THREE.Vector4(on05('projvp05') ? 1 : 0, 0.440, 0.566, 0.922) };
+  u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
+  u.uPjT2S = { value: new THREE.Vector2(0, 1) };
   const loader = new THREE.TextureLoader();
   const load = (url: string, mip: boolean, repeat: boolean) =>
     new Promise<THREE.Texture>((res, rej) =>
@@ -1739,18 +1823,17 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
     (u.uPjTS.value as THREE.Vector2).set(lut.T.a, lut.T.L);
     const ds = u.uPjDS.value as THREE.Vector4;
     ds.x = lut.D.u1 - lut.D.u0; ds.y = lut.D.s1 - lut.D.s0;
-    (u.uPjNear.value as THREE.Vector4).set(0, (u.uPjNear.value as THREE.Vector4).y, N.image.width, N.image.height);
   }).then(() => {
     if (!NEAR) return undefined;
+    const mirrored = (t: THREE.Texture) => { t.wrapT = THREE.MirroredRepeatWrapping; t.needsUpdate = true; return t; };
     return Promise.all([
-      load(new URL('../../assets/textures/water05/proj05_T2.png', import.meta.url).href, true, false),
+      load(new URL('../../assets/textures/water05/proj05_T2.png', import.meta.url).href, true, false).then(mirrored),
       fetch(new URL('../../assets/textures/water05/proj05_near.json', import.meta.url).href).then((r) => r.json()),
-    ]).then(([T2, meta]) => {
-      T2.wrapT = THREE.MirroredRepeatWrapping;      // mirrored along s: seamless, the ribbons meander through the joins
-      T2.needsUpdate = true;
+    ]).then(([T2, near]) => {
       u.uPjT2.value = T2;
-      (u.uPjT2S.value as THREE.Vector2).set(meta.s0, meta.period);
-      (u.uPjNear.value as THREE.Vector4).x = 1;
+      (u.uPjT2S.value as THREE.Vector2).set(near.T2.a, near.T2.L);
+      const nv = u.uPjNear.value as THREE.Vector4;
+      nv.x = 1; nv.w = near.locked_focus_s;
     });
   }).then(() => {
     if (!FLOW2) return undefined;
@@ -1759,11 +1842,10 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
       tile(new URL('../../assets/textures/water05/proj05_WT.png', import.meta.url).href),
       fetch(new URL('../../assets/textures/water05/proj05_flow.json', import.meta.url).href).then((r) => r.json()),
       NEAR
-        ? load(new URL('../../assets/textures/water05/proj05_WT2.png', import.meta.url).href, false, false).then((t) => { t.wrapT = THREE.MirroredRepeatWrapping; t.needsUpdate = true; return t; })
-        : Promise.resolve(null),
+        ? load(new URL('../../assets/textures/water05/proj05_WT2.png', import.meta.url).href, false, false).then((t) => { t.wrapT = THREE.MirroredRepeatWrapping; return t; })
+        : Promise.resolve(empty),
     ]).then(([WN, WT, meta, WT2]) => {
-      u.uPjWN.value = WN; u.uPjWT.value = WT;
-      if (WT2) u.uPjWT2.value = WT2;
+      u.uPjWN.value = WN; u.uPjWT.value = WT; u.uPjWT2.value = WT2;
       const f2 = u.uPjFlow2.value as THREE.Vector4;
       f2.x = 1; f2.y = meta.scale; f2.z = meta.half_width_u;
     });

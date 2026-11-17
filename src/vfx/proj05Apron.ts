@@ -11,7 +11,12 @@ import * as THREE from 'three';
 import type { Course } from '../world/course';
 import type { TubePath } from '../world/tube';
 import { tubeCenterAt } from '../world/tube';
-import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending } from './waterRibbon';
+import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending, on05 } from './waterRibbon';
+
+/** `?projedge05=1` (on with `?match05=1`, coordinator 2026-11-17): edge-padded copy of proj05_A.png (tools/proj05/pad_alpha.py:
+ *  transparent / low-alpha texels take the colour of the nearest opaque texel, alpha unchanged) so bilinear filtering no
+ *  longer mixes black into the strip's edge: removes the dotted black line along the top of the left foam bank. */
+const PJEDGE05 = on05('projedge05');
 
 /** s range covered by proj05_A.png (must match tools/proj05/bake.py: A_S0, A_S1) */
 export const PJ_A_S0 = 126, PJ_A_S1 = 190;
@@ -99,7 +104,10 @@ export function createProj05Apron(course: Course, path: TubePath, s0: number, s1
   };
   // texture (absent until bake.py has produced it: then the strip simply draws nothing)
   proj05Pending.push(new Promise<void>((res) => {
-    new THREE.TextureLoader().load(new URL('../../assets/textures/water05/proj05_A.png', import.meta.url).href, (t) => {
+    const urlA = PJEDGE05
+      ? new URL('../../assets/textures/water05/proj05_A_pad.png', import.meta.url).href
+      : new URL('../../assets/textures/water05/proj05_A.png', import.meta.url).href;
+    new THREE.TextureLoader().load(urlA, (t) => {
       t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter;
       t.needsUpdate = true;
       uniforms.uPjA.value = t;
