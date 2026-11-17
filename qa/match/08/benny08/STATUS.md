@@ -8,6 +8,7 @@
 * **Completed improvements:** verification + documentation of bake and round 2; round 3: dark strip under the beanie cuff repaired in the body map (`body_r3.png`, `?b08r3=0` = previous)
 * **Latest visual measurements:** Benny + splash ≤20: pre-bake 49.8 % → bake 57.2 % → round 2 65.7 % → round 3 65.3 % (colour under the cuff closer, strands not pixel-aligned); scenery 97.3 % unchanged; whole 85.4 %
 * **Unfinished problems:** pom-pom spikier/more violet in the painting; arm puffs (size/position tests measured worse); noisy fur edge; APK not phone-tested
+* **Android:** `builds/rainbow-debug-08benny-2026-11-17-r3.apk` (`VITE_RAINBOW_Q05="match08=1"`, Git LFS) — NOT phone-tested (no device in the cloud)
 * **Test results:** tsc clean; default 0 px; `bake08=0&b08r2=0` = previous match08 0 px; gameplay 8/8 + 91 coins / 2,240 default and match08; motion OK; 04–07 only Benny changes
 * **Next task:** pom-pom look, fur edge softness — waiting for the lead
 * **Approval status:** under review
