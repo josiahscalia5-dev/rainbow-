@@ -437,19 +437,9 @@
    "sha256": "feb92165693dbd0301e5b3ec5941cce7b74d6819af0e665f49315d7e50855e64"
   },
   {
-   "path": "assets/textures/benny08/armL_r5.png",
-   "bytes": 18008,
-   "sha256": "ab227a0144d9128f4cf10dfbb25763440733adf5edb0f7d3775211621ff110da"
-  },
-  {
    "path": "assets/textures/benny08/armR.png",
    "bytes": 19097,
    "sha256": "30fab1fb5566fdf290c0dd1e80a669d7b4378b61fc43d214ccc74624ea43dd85"
-  },
-  {
-   "path": "assets/textures/benny08/armR_r5.png",
-   "bytes": 19250,
-   "sha256": "777f6e4076646d78210577b5fc9fc13717af09d52cbd5e14c9367196d07322d7"
   },
   {
    "path": "assets/textures/benny08/bake_report.json",
@@ -465,11 +455,6 @@
    "path": "assets/textures/benny08/body_r3.png",
    "bytes": 374647,
    "sha256": "b44cdab9d2f37000959d9cf9be2b04addb1872cf18384445f95a26944ee82a61"
-  },
-  {
-   "path": "assets/textures/benny08/body_r5.png",
-   "bytes": 362604,
-   "sha256": "626c4c6bf6bdabf871b7f7a5e81e69a8643d4a7565ada1596a300e344bb1b054"
   },
   {
    "path": "assets/textures/benny08/brim.png",
@@ -684,7 +669,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11556,
-   "sha256": "b3c9dfb55ba59ee45350aa69fe865a7abbc4679f92eaceda10b977bd44a0a050"
+   "sha256": "5b01092898dab4f0d78bc736b2a8e711ee97240b3ee278b16f9ac39879d68804"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1163,8 +1148,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1240,
-   "sha256": "9c7990c24458b0eea74786804a3dd7c67f04fa89d38e4cc27857b6cafbe206ec"
+   "bytes": 5204,
+   "sha256": "8a4f6243af21b8172e048d4445459d7113baa9724741edcb44f9cc56ce2a422e"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1950,6 +1935,71 @@
    "path": "qa/match/08/benny08/r4/views/turntable_NEW.png",
    "bytes": 753487,
    "sha256": "d36475d7695a7a0b3fa863c24c5ed73f3fa091b4ec6204c3df6f197adce1f034"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/default/04.png",
+   "bytes": 1437094,
+   "sha256": "374d564285681a4a62032dbf0480388e8dc3eee825ef5b7b8c640d180c017454"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/default/05.png",
+   "bytes": 2096531,
+   "sha256": "45282751451dbc29289168d3538b366f975196e98bff1cb871061925ee4fd6b5"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/default/06.png",
+   "bytes": 1845233,
+   "sha256": "31ff2ef46f0919c321c5f4dd3a1fc7b04c238cb1e887b6fba5fe0a2226d3b67f"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/default/07.png",
+   "bytes": 2119728,
+   "sha256": "200765fcad0eeeaca9221f1540d60d3beecb0357408687036544796949cede28"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/default/08.png",
+   "bytes": 1702437,
+   "sha256": "9b92158c1856388f997bbc92eed6adce1bf9ab3e6594f7d79745db0a857e980b"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/other_r4/04.png",
+   "bytes": 1442264,
+   "sha256": "f3c0ac8b56e6d8bfc3e9af5fdae08042841c5efdb1dca411f7e30c2c85c0eb21"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/other_screens/04.png",
+   "bytes": 1442264,
+   "sha256": "f3c0ac8b56e6d8bfc3e9af5fdae08042841c5efdb1dca411f7e30c2c85c0eb21"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/other_screens/05.png",
+   "bytes": 2130839,
+   "sha256": "0b5075a1d2dfe1a105daa339e755484ea89fcd37b9452206aee62c9bf34b570d"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/other_screens/06.png",
+   "bytes": 1943141,
+   "sha256": "a4204ba816f7aeaffc4bfcfc86b66042a53a0318781d14805681292ac1c4d99a"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/other_screens/07.png",
+   "bytes": 2164412,
+   "sha256": "36719b4faf5c47a1b4fd786f5c09daaade51b4e41b7e47e2a8139ad36f02d081"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/other_screens/08.png",
+   "bytes": 2604391,
+   "sha256": "30f6cfe0e916e930a133a110f68659ee53eb672aa7b0a7802a63038b3fa3ec1e"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/tests/gameplay_default.json",
+   "bytes": 14632,
+   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/match/08/benny08/r5/tests/gameplay_match08.json",
+   "bytes": 14649,
+   "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
   },
   {
    "path": "qa/match/08/benny08/review_r5/1_APPROVED_08_approved_view.png",
@@ -8743,8 +8793,8 @@
   },
   {
    "path": "src/characters/benny/benny05.ts",
-   "bytes": 22191,
-   "sha256": "c1c22ff5cbc3f7c67076bf058f8d65cb01db604652bf4c4d4ed68ad217c07a20"
+   "bytes": 21875,
+   "sha256": "a02a67ede41254b96fe2bfa441d3b790029ec1a09231e4fe427cf0aae422b46b"
   },
   {
    "path": "src/characters/benny/build.ts",

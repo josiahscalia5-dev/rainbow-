@@ -869,3 +869,230 @@ Committing the kept body shape, then looking at the jagged pale streaks on the a
 
 > 🔧 **Bash** `{"command": "cat > qa/match/08/benny08/work/clean08.py <<'EOF'\n\"\"\"Round 5 (d, arm edges): pale / whitish texels baked into the fur maps (splash and highlight pixels of the approved\npicture picked up at the arm and body outlines) show as jagged pale streaks on the arm puffs. Texels whose saturation is\nbelow --sat (and that are bright) are refilled with the normalized blur of the surrounding good fur texels.\nusage: clean08.py [--sat=0.36] -> assets/textures/benny08/{armL,armR,body}_r5.png (from armL, armR, body_r3)\"\"\"\nimport sys\nimport numpy as np\nfrom PIL import Image\nfrom scipy i …[+2606 chars]`
 
+### 🧑 User — 2026-11-17T18:55:55.905Z
+
+> ↩︎ result: armL -> armL_r5 refilled texels 1623
+> armR -> armR_r5 refilled texels 3108
+> body_r3 -> body_r5 refilled texels 70514
+> OK
+>   benny+splash  <=20  61.4 %  SSIM 0.537  mean  28.16
+
+### 🤖 Claude — 2026-11-17T18:55:58.468Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/sh/cmp_C.png"}`
+
+### 🧑 User — 2026-11-17T18:55:58.849Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T18:55:58.841Z
+
+[Image: original 2160x760, displayed at 2000x704. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T18:56:06.605Z
+
+> 🔧 **Bash** `{"command": "git checkout src/characters/benny/benny05.ts && rm assets/textures/benny08/*_r5.png && sed -n 276,290p src/characters/benny/benny05.ts", "description": "Revert cleanup, view fur uniform code"}`
+
+### 🧑 User — 2026-11-17T18:56:06.689Z
+
+> ↩︎ result: Updated 0 paths from the index
+> 
+>   // ---- fur clumping ----
+>   for (const f of furs) {
+>     const c = CLUMP05[f.mesh.name];
+>     if (c !== undefined) f.uniforms.uClump.value = c;
+>     // benny08 round 3 (lead review: "fur hard, grainy, jagged fringe"): softer strands on body + arms (probe 65.3 -> 65.6 %),
+>     // shorter fringe where the body turns edge-on (neutral number, smoother outline); `?b08soft=0` = off
+>     if (B08R3 && qv('b08soft') !== '0' && /^fur_(body|arm)/.test(f.mesh.name)) {
+>       f.uniforms.uSoft.value = 0.6;
+>       if (f.mesh.name === 'fur_body') f.uniforms.uSoftEdge.value = 1.0;
+>     }
+>     // benny08 round 4: lighter pink tips on the visible shoulders / upper body like the painted highlights (number neutral,
+>     // visibly closer); `?b08hi=0` = off
+>     if (B08R3 && qv('b08hi') !== '0' && f.mesh.name === 'fur_body') f.uniforms.uHi.value = 0.7;
+>     // benny08 round 3: the fur uniforms reachable from the mesh (Game.ts ?match08=1 Benny tweaks, QA probes); no render effect
+
+### 🤖 Claude — 2026-11-17T18:56:10.373Z
+
+> 🔧 **Bash** `{"command": "grep -c B08CLEAN src/characters/benny/benny05.ts; git status --short | grep -v \"backups\\|transcript\"; git log -1 --stat --format=%h | head", "description": "Check revert state"}`
+
+### 🧑 User — 2026-11-17T18:56:10.444Z
+
+> ↩︎ result: 4
+>  D assets/textures/benny08/armL_r5.png
+>  D assets/textures/benny08/armR_r5.png
+>  D assets/textures/benny08/body_r5.png
+>  M qa/capture_log.json
+> c73eb45
+> 
+>  assets/textures/benny08/armL_r5.png                | Bin 0 -> 18008 bytes
+>  assets/textures/benny08/armR_r5.png                | Bin 0 -> 19250 bytes
+>  assets/textures/benny08/body_r5.png                | Bin 0 -> 362604 bytes
+>  backups/BACKUP_LOG.md                              |   1 +
+>  backups/BACKUP_STATUS.json                         |  12 +-
+>  backups/CONVERSATION_INDEX.md                      |   2 +-
+>  backups/MANIFEST.json                              |  37 +++-
+>  .../transcript.md                                  | 246 +++++++++++++++++++++
+
+### 🤖 Claude — 2026-11-17T18:56:12.689Z
+
+The five-minute autosave committed the rejected experiment, so I'll undo it in a new commit (no history rewrite).
+
+### 🤖 Claude — 2026-11-17T18:56:16.141Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -4 && git checkout c73eb45~1 -- src/characters/benny/benny05.ts && grep -c B08CLEAN src/characters/benny/benny05.ts; git checkout qa/capture_log.json; git add -A assets/textures/benny08 src/characters/benny/benny05.ts && git commit -qm \"Screen 08 Benny round 5: map clean-up of pale arm/body texels tested and rejected (flattens the fur highlights; streaks come from lighting) — reverted, tool kept in work/clean08.py\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Kbt6BUy2s16F5FhJR2yJ6z\" && git status -- …[+140 chars]`
+
+### 🧑 User — 2026-11-17T18:56:16.421Z
+
+> ↩︎ result: c73eb45 autosave: Rainbow 2026-11-17 18:55 UTC
+> 5025863 Screen 08 Benny round 5 (d): body fur tapered (as wide as the brim under it, slimmer toward the water), arms seated higher; b08shape=0 = round 4 (0 px); (c) whiter stripes tested, rejected
+> c6d8d28 autosave: Rainbow 2026-11-17 18:50 UTC
+> 4f3eea7 autosave: Rainbow 2026-11-17 18:45 UTC
+> 0
+> Updated 1 path from the index
+> qa/match/08/benny08/work/clean08.py
+
+### 🤖 Claude — 2026-11-17T18:56:17.360Z
+
+Now the pom-pom tip test (a):
+
+### 🤖 Claude — 2026-11-17T18:56:23.472Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/characters/benny/benny05.ts'; s=open(p).read()\na=\"    if (B08R3 && qv('b08hi') !== '0' && f.mesh.name === 'fur_body') f.uniforms.uHi.value = 0.7;\\n\"\nassert a in s\ns=s.replace(a, a+\"    // benny08 round 5 (a) probe: lighter violet tuft tips on the pom-pom (`?b08pomhi=<v>`, QA only)\\n    if (B08R3 && qv('b08pomhi') && f.mesh.name === 'fur_pom') f.uniforms.uHi.value = Number(qv('b08pomhi'));\\n\",1)\nopen(p,'w').write(s)\nEOF\ngrep -n \"function qv\\|const qv\" src/characters/benny/benny05.ts | head -2; npx tsc --noEmit -p . && echo OK; S=/tmp/claude …[+776 chars]`
+
+### 🧑 User — 2026-11-17T18:57:05.918Z
+
+> ↩︎ result: 141:const qv = (key: string): string | null => {
+> OK
+> 0.7 benny+splash <=20 62.0 % SSIM 0.544 mean 27.99
+> pom     10761   51.9  0.22  0.216  [126  15 229]  [135  36 233]  bbox {'x0': 362, 'x1': 493, 'y0': 855, 'y1': 965, 'w': 132, 'h': 111, 'cx': 428.0, 'cy': 912.8, 'px': 10761}
+> 1.5 benny+splash <=20 61.9 % SSIM 0.544 mean 28.00
+> pom     10761   52.2  0.22  0.217  [126  15 229]  [137  39 233]  bbox {'x0': 362, 'x1': 493, 'y0': 855, 'y1': 965, 'w': 132, 'h': 111, 'cx': 428.0, 'cy': 912.8, 'px': 10761}
+> pom     10761   51.9  0.23  0.216  [126  15 229]  [132  32 232]  bbox {'x0': 362, 'x1': 493, 'y0': 855, 'y1': 965, 'w': 132, 'h': 111, 'cx': 428.0, 'cy': 912.8, 'px': 10761}
+
+### 🤖 Claude — 2026-11-17T18:57:13.129Z
+
+> 🔧 **Bash** `{"command": "git checkout src/characters/benny/benny05.ts && git status --short | grep -v \"backups\\|transcript\"; ls qa/match/08/benny08/r4/default qa/match/08/benny08/r4/tests; grep -rn \"gameplay\" qa/match/08/benny08/NOTES.md | head -3; ls scripts | grep -i -E \"game|play|test\" | head", "description": "Revert pom probe, find test tooling"}`
+
+### 🧑 User — 2026-11-17T18:57:13.258Z
+
+> ↩︎ result: Updated 1 path from the index
+>  M qa/capture_log.json
+> qa/match/08/benny08/r4/default:
+> 08.png
+> 
+> qa/match/08/benny08/r4/tests:
+> gameplay_match08.json
+> 39:  cuff 28, pom 23 %. Default 0 px; `b08hi=0&b08pom=0` == r3b 0 px; gameplay 8/8, 91 / 2,240; motion `r4/motion/montage_r4.png`;
+> 56:  star 50 %, crown 29 %, cuff 28 %, pom 22 %. Default 0 px, `b08r3=0` == round 2 0 px, gameplay 8/8 + 91 / 2,240.
+> aspect-test.mjs
+> cinematic-test.mjs
+> continuity-test.ts
+> gameplay-test.mjs
+
+### 🤖 Claude — 2026-11-17T18:57:15.032Z
+
+> 🔧 **Bash** `{"command": "head -c 600 qa/match/08/benny08/r4/tests/gameplay_match08.json; echo; sed -n 1,15p scripts/gameplay-test.mjs | grep -i -E \"usage|argv|q=|out\" ", "description": "Check gameplay test usage"}`
+
+### 🧑 User — 2026-11-17T18:57:15.077Z
+
+> ↩︎ result: {
+>   "checks": {
+>     "pauseFreezes": {
+>       "pass": true,
+>       "sBefore": 45.495,
+>       "sPaused": 45.495,
+>       "sAfter": 49.995
+>     },
+>     "continuousTravel": {
+>       "pass": true,
+>       "nonMonotonicSteps": 0,
+>       "steps": 2139,
+>       "respawns": 0
+>     },
+>     "noCameraCut": {
+>       "pass": true,
+>       "maxCameraJumpPerStep": 0.728
+>     },
+>     "noTeleport": {
+>       "pass": true,
+>       "maxBennyAltitudeJumpPerStep": 0.19,
+>       "at": {
+>         "s": 341.074,
+>         "s1": 341.274,
+>         "stage": "07",
+>         "y0": -75.243,
+>         "y1": -75.433,
+>         "t": 26.267
+>       }
+>     },
+>     "plu
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+
+### 🤖 Claude — 2026-11-17T18:57:18.122Z
+
+> 🔧 **Bash** `{"command": "T=qa/match/08/benny08/r5/tests; mkdir -p $T; node scripts/gameplay-test.mjs --q=match08=1 --out=$T/gameplay_match08.json > $T/m.log 2>&1; node scripts/gameplay-test.mjs --out=$T/gameplay_default.json > $T/d.log 2>&1; for f in $T/gameplay_*.json; do python3 -I -c \"\nimport json,sys; d=json.load(open('$f')); c=d['checks']; print('$f', sum(v.get('pass',False) for v in c.values()),'/',len(c), {k:v for k,v in d.items() if k in ('coins','score','collected','totalCoins','summary')})\"; done; tail -3 $T/m.log", "description": "Run gameplay tests with and without match08", "timeout": 9000 …[+3 chars]`
+
+### 🧑 User — 2026-11-17T18:57:34.635Z
+
+> ↩︎ result: qa/match/08/benny08/r5/tests/gameplay_default.json 8 / 8 {}
+> qa/match/08/benny08/r5/tests/gameplay_match08.json 8 / 8 {}
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-17T18:57:36.380Z
+
+> 🔧 **Bash** `{"command": "grep -o -E '\"(coins|score)[A-Za-z]*\": *[0-9]+' qa/match/08/benny08/r5/tests/gameplay_*.json | head", "description": "Extract coin and score totals"}`
+
+### 🧑 User — 2026-11-17T18:57:36.412Z
+
+> ↩︎ result: qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 2240
+> qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 1330
+> qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 1350
+> qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 1370
+> qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 1380
+> qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 1400
+> qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 1420
+> qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 1420
+> qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 1430
+> qa/match/08/benny08/r5/tests/gameplay_default.json:"coins": 1450
+
+### 🤖 Claude — 2026-11-17T18:57:39.700Z
+
+> 🔧 **Bash** `{"command": "for f in qa/match/08/benny08/r5/tests/gameplay_*.json; do python3 -I -c \"\nimport json; d=json.load(open('$f'))\ndef walk(o,p=''):\n  if isinstance(o,dict):\n    for k,v in o.items():\n      if k in ('collected','coinsCollected','pickups','coinCount','score','coins') and not isinstance(v,(dict,list)) and p.count('.')<2: print('$f'.split('/')[-1],p+k,v)\n      walk(v,p+k+'.')\nwalk(d)\" | head -6; done", "description": "Find coin count fields"}`
+
+### 🧑 User — 2026-11-17T18:57:39.784Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T18:57:41.665Z
+
+> 🔧 **Bash** `{"command": "grep -n -E '\"coins\": 2240|91' qa/match/08/benny08/r5/tests/gameplay_match08.json | head -5; grep -n -B3 '\"coins\": 2240' qa/match/08/benny08/r5/tests/gameplay_match08.json | head", "description": "Locate coin totals in json"}`
+
+### 🧑 User — 2026-11-17T18:57:41.703Z
+
+> ↩︎ result: 46:      "collected": 91
+> 55:        "coins": 2240,
+> 389:      "y": -41.091,
+> 659:      "coins": 1910
+> 752:        -91.58,
+> 52-        "stage": "11",
+> 53-        "s": 434.801,
+> 54-        "lat": -0.046,
+> 55:        "coins": 2240,
+> --
+> 896-        -110.02,
+> 897-        -310.84
+> 898-      ],
+> 899:      "coins": 2240
+> --
+
+### 🤖 Claude — 2026-11-17T18:57:44.430Z
+
+Progress: gameplay passes 8/8 with 91 coins / 2,240 points with match08, and 8/8 in the normal build too. Now checking that the normal build hasn't changed and that screens 04–07 only change Benny.
+
+### 🤖 Claude — 2026-11-17T18:57:48.996Z
+
+> 🔧 **Bash** `{"command": "grep -n '\"collected\"' qa/match/08/benny08/r5/tests/gameplay_default.json; R=qa/match/08/benny08/r5; node scripts/capture.mjs 08 04 05 06 07 --out=$R/default >/dev/null 2>&1; node scripts/capture.mjs 04 05 06 07 08 --out=$R/other_screens --q=\"match08=1\" >/dev/null 2>&1; node scripts/capture.mjs 04 05 06 07 --out=$R/other_r4 --q=\"match08=1&b08shape=0\" >/dev/null 2>&1; python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nR='qa/match/08/benny08/r5'\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nm=np.abs(L(f'{R}/default/08.png')-L('qa/match/08/benn …[+454 chars]`
+
