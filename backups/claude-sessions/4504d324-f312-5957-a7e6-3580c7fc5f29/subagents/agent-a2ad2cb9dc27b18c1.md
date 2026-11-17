@@ -701,3 +701,45 @@ Held-out prediction error dropped from 6–16 % to 0.35–0.66 %, and the crown'
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/chk.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom geom import load_uv\nfrom bake import fit_es, LUM, inv_chain, img\nuv=load_uv('qa/pilot05/full_reference_match/benny/work/b1/uv.f32'); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\ns=ids==5\nprint('star uv range u',uv[...,0][s].min(),uv[...,0][s].max(),' v',uv[...,1][s].m …[+742 chars]`
 
+### 🧑 User — 2026-11-17T01:21:48.417Z
+
+> ↩︎ result: star uv range u -0.18465723 0.20672643  v -0.12845317 1.0161077
+> 1 E lum pct 1/5/25/50 [0.389 0.595 0.914 1.195] frac < 0.4 med 0.018
+> 2 E lum pct 1/5/25/50 [1.49  1.796 2.294 2.75 ] frac < 0.4 med 0.0
+> 3 E lum pct 1/5/25/50 [0.533 0.826 1.318 1.767] frac < 0.4 med 0.034
+> 4 E lum pct 1/5/25/50 [0.538 0.663 0.956 1.325] frac < 0.4 med 0.009
+> 6 E lum pct 1/5/25/50 [0.413 0.588 0.987 1.42 ] frac < 0.4 med 0.048
+> 7 E lum pct 1/5/25/50 [0.423 0.534 0.88  1.351] frac < 0.4 med 0.053
+> low-E body px y range [1128.5 1174.  1188. ]
+> 392:  const starGeo = new THREE.ExtrudeGeometry(starShape(0.165, 0.083), {
+> 399:  starGeo.center();
+> 401:    new THREE.Mesh(starGeo, std({ color: C.gold, metalness: 0.12, roughness: 0.3, emissive: '#ffb800', emissiveIntensity: 0.22 })),
+> 402:    'hat_star',
+
+### 🤖 Claude — 2026-11-17T01:21:53.354Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "offset": 330, "limit": 110}`
+
+### 🧑 User — 2026-11-17T01:21:53.384Z
+
+> ↩︎ result: 330	  // ---------------- knitted beanie ----------------
+> 331	  const hat = joint('hat');
+> 332	  hat.rotation.x = D.hatTilt;
+> 333	  body.add(hat);
+> 334	  const yb = D.brimBottom;
+> 335	  const yt = yb + D.cuffH; // cuff top
+> 336	  const bk = D.brimR / 0.778; // profile scale (profiles were authored for a 0.778 brim)
+> 337	  const brimTex = ribbedBrimTextures();
+> 338	  // base-colour factors (wave 5): the tone-mapped scene light lifted the knit to lavender (live 05 cuff median #B248FF
+> 339	  // L167, ref 05 #6B0DEB L117; refs 03/07 also paint a deep-violet cuff). In-game A/B (?bennyTint): cuff ×#7868a0 →
+> 340	  // #620BEE L118; the crown gets a milder warm factor so the white stripes stay cream-white in every scene
+> 341	  const brimMat = std({ color: '#7868a0', map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(1.25, 1.25), roughness: 0.86 });
+> 342	  // inner lip hugs the skin at the brim height (sphere radius there ≈ 0.68)
+> 343	  const lip = Math.sqrt(D.skin * D.skin - yb * yb) + 0.012;
+> 344	  // chunky rolled cuff: rounded bottom and top edges, slight belly in the middle
+> 345	  const brim = named(
+> 346	    new THREE.Mesh(
+> 347	      lathe(
+> 348	        [
+> 349	          [li …[+5289 chars]
+
