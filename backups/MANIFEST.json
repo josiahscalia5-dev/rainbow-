@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 29584,
-   "sha256": "b9831666eec5f26c548f8d0e48110149b086cab4522d89e84d609de0f549ead2"
+   "bytes": 30813,
+   "sha256": "7c1f8087abe91e22d272977ecb727039d2cabc9ed4f80608f8e68b18faca0577"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12598,
-   "sha256": "d8295943a01e890ad362807f83f921fa5d3aed84e6045cee340848cf70942e8d"
+   "sha256": "c70592472e7f12105252ab7d06a3d5e3798c9c416837b14bbabc5fcb7702b3bf"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2220,6 +2220,11 @@
    "path": "qa/lead_r5/2026-11-17/tour_clips/clip_11_rec.json",
    "bytes": 15888,
    "sha256": "2630b9af8e961f837b2ae4d5c2952f09c81e87ac0df55be1441066deed0db747"
+  },
+  {
+   "path": "qa/lead_r6/2026-11-17/HEALTH_CHECK.md",
+   "bytes": 5858,
+   "sha256": "07c20bc036cd3f4c7ddced25981809d4b4d405c19e64c2565d2280509df84735"
   },
   {
    "path": "qa/lead_r6/2026-11-17/README.md",
