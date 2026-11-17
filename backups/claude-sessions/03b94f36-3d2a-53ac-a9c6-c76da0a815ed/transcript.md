@@ -6891,3 +6891,149 @@ The tag push reported "Everything up-to-date", and GitHub doesn't list the tag. 
 
 > 🔧 **Bash** `{"command": "cat >> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md <<'EOF'\n\n## 10. Restore test (2026-11-17 ~14:25 UTC, fresh clone from GitHub into an empty folder)\nClone of `ccr-9c4a8ad6-xovgsx` OK · Git LFS pull of the APK, the Screen 08 Marble world (4 splats, collider GLB, pano,\nthumbnail), the match08 textures and the 05 full-world splats: 10/10 files byte-identical to their LFS records ·\n13/13 approved images OK · 10 agents present · `scripts/setup-image-blaster.sh` rebuilt Image-Blaster (pinned commit,\npatch, bun install) and restored the 08 world files · `npm ci` + `tsc` clean · no API key  …[+1454 chars]`
 
+### 🧑 User — 2026-11-17T14:26:10.966Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "62c4971786184150f36e8eb7ebc889070c9a98fb",
+> HEAD   62c4971786184150f36e8eb7ebc889070c9a98fb
+> GitHub 62c4971786184150f36e8eb7ebc889070c9a98fb
+> MATCH
+> uncommitted 0
+> checkpoint 714f6502447149b8f1a1dd07159e412ed8df8c46
+> checkpoint contained in branch
+> refs 13/13 | agents 10 | LFS missing 0 | key pieces 0
+> AUTOSAVE OK | branch ccr-9c4a8ad6-xovgsx | scheduler daemon | last verified backup 2026-11-17T14:25:54+00:00 (0.3 min ago) | local 62c4971 remote 62c4971 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T14:26:26.080Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+**Final save**
+- **Repository:** https://github.com/josiahscalia5-dev/rainbow-
+- **Branch:** `ccr-9c4a8ad6-xovgsx`
+- **Latest commit:** `62c4971786184150f36e8eb7ebc889070c9a98fb`, with local and GitHub matching and nothing uncommitted.
+- **Checkpoint:** branch `backup/2026-11-17-screen08-transfer` at `714f650`, protected and contained in your branch. GitHub tags are blocked from this session, so I made a checkpoint branch instead.
+- **After this message:** the autosave may add one transcript-only save to your branch. Your game files won't change.
+
+**What's backed up**
+
+| Item | Status |
+|---|---|
+| Approved images | **13 of 13**, unchanged (checksums verified) |
+| Agents | **10** definitions in `.claude/agents/`; none running; status recorded |
+| World Labs Marble | Screen 08 world `32b5b2f4-…`: all four splat qualities, collider mesh, 360° panorama, thumbnail, prompt, camera fit, renders and scores. Both earlier Screen 05 worlds too. Credit ledger updated; **5,420 credits remain**. |
+| fal.ai | Both paid edits (raw outputs and request records), the aligned and clean pictures, the hybrid texture, and every approved-vs-edited comparison |
+| Image-Blaster | Pinned version, my small local change, and `scripts/setup-image-blaster.sh`, which rebuilds everything |
+| Screen 08 | `?match08=1`, all scores, notes and tools. The normal game is unchanged. **Still waiting for your approval.** |
+| Android | `builds/rainbow-debug-match08-2026-11-17.apk` **included** (21 MB). Built, **not yet tested on a phone**. |
+| Handoff | `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`: the paste-in prompt, your story and video plan, the 13-image checklist with scores, every method tried, next steps |
+
+**Restore test from a fresh copy downloaded from GitHub:** it worked.
+- all requested large files came back byte-identical
+- your 13 images checked out
+- all 10 agents are present
+- Image-Blaster rebuilt itself from the script
+- the game compiled cleanly
+- no API key appears anywhere in the saved files
+
+**API keys:** both work right now (free checks). Claude can't share stored keys between two Claude accounts, so you'll re-enter them once on the new account, in the secure form only. I made no purchases and turned on no automatic top-ups.
+
+**On your new Claude account**
+1. Connect GitHub in claude.ai and install the Claude GitHub App on the `rainbow-` repository.
+2. Start a Claude Code cloud session on that repository and paste the prompt from `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`.
+3. Approve the cloud-environment setup when asked. It covers the setup script and the allowed download sites for Blender, Android, Git LFS, World Labs and fal.ai.
+4. When the two secure key forms appear, enter your **World Labs** key and your **fal.ai** key, from the same accounts as before so your balances carry over.
+
+**What transfers**
+- **Fully backed up on GitHub:** all code, artwork, assets, Marble worlds, fal.ai images, the APK, notes, agents and scripts, plus saved copies of every session's transcript (secrets removed).
+- **Restored automatically:** tools such as Blender, the Android SDK and the project packages; Image-Blaster; the five-minute autosave, which restarts whenever a session starts and can't run while no session is open.
+- **Can't transfer:** your Claude login and chat history (claude.ai's settings let you export your data separately), the GitHub connection, the cloud environment with your API keys, connectors and plugins, and running programs.
+
+### 🧑 User — 2026-11-17T14:26:28.929Z
+
+CLAUDIA — SCREEN 08: APPROVE SCENERY METHOD, FINISH BENNY, THEN CONTINUE ALL APPROVED SCREENS
+
+I reviewed your latest Screen 08 results and the six previews.
+
+First, I'm very happy that the scenery is getting much closer to my ORIGINAL APPROVED SCREEN 08.
+
+The 97.4% scenery comparison is encouraging, and I approve the reconstruction method you've developed.
+
+However, I do not want Screen 08 marked as completely finished yet.
+
+My number-one priority remains making the actual game screen look as close as technically possible to my original approved artwork.
+
+1. FINISH BENNY'S VISUAL APPEARANCE
+
+Benny is still the biggest difference.
+
+Please improve him to match my approved image more closely:
+
+- Make his pink fluffy body rounder and match its approved proportions.
+- Reproduce the detailed, soft fur appearance.
+- Match the original purple-and-white knitted beanie, pom-pom, and yellow star.
+- Correct his horizontal position, which is approximately 30 pixels too far right.
+- Match his size and position relative to the water.
+- Improve the white curved splash around him so it resembles my original artwork.
+- Keep Benny as a usable animated 3D game character, not just a static picture.
+
+Check whether the Screen 05 Benny artwork on branch "ccr-b0757dec-dj6l1o" can help. Do not overwrite or blindly merge anything from that branch.
+
+2. PRESERVE THE SUCCESSFUL SCENERY
+
+Please do not accidentally change the beautiful scenery we've already achieved.
+
+Preserve the gold rings, purple metallic chamber, washer door, purple towel, platform, water spouts, bubbles, lighting, and exact S-shaped blue-and-pink river.
+
+Keep the successful camera alignment and the real 3D geometry.
+
+Do not spend additional Marble credits unless there's a clear technical reason.
+
+3. VERIFY GAMEPLAY AND ANDROID
+
+Preserve all 91 coins and the existing reward behavior.
+
+Keep the moving-camera improvements and address any remaining visible texture seams if possible.
+
+The Android APK has been built but not tested on a physical phone.
+
+Please make sure the APK is safely backed up and provide clear instructions for installing and testing it on my Android phone.
+
+Do not describe the physical Android test as passed until it has actually been performed.
+
+4. SAVE EVERYTHING BEFORE I CHANGE CLAUDE ACCOUNTS
+
+My GitHub branch is:
+
+"ccr-9c4a8ad6-xovgsx"
+
+Verify the correct repository and branch before saving.
+
+Preserve all current Screen 08 assets, code, Blender/Three.js geometry, texture projections, scripts, tools, agents, prompts, screenshots, APK files, QA results, and previous World Labs Marble assets.
+
+Commit and push all intended changes to GitHub and verify the remote commit.
+
+Prepare a complete handoff so another Claude account can continue from this exact point without rebuilding everything.
+
+If Benny cannot be improved further in this cloud session, document exactly what remains to be done and how the next Claudia can finish it. Do not falsely mark it as approved.
+
+5. CONTINUE ALL MY OTHER APPROVED SCREENS
+
+Once Screen 08 meets my expectations, I want you to continue with Screens 04, 05, 06, and 07 using the same successful reconstruction method.
+
+I want every approved playable screen to receive the same attention to scenery, lighting, architecture, colors, and visual quality.
+
+The beginning and ending Google Flow videos must also remain in the overall project plan.
+
+Do not forget any of my 13 original approved images.
+
+My priorities are:
+
+1. Preserve and finish Screen 08.
+2. Make Benny look closer to my approved character.
+3. Safely back up everything.
+4. Test the actual Android game.
+5. Continue the remaining approved screens one by one.
+
+I approve the reconstruction METHOD, but I want to personally approve the final Screen 08 before we move on.
+
