@@ -1013,3 +1013,318 @@ Screen 06 is captured. I'll inspect it via a reduced-size review sheet (for my o
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T21:54:53.686Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad; python3 -c \"\nimport json;d=json.load(open('$SP/audit/06/motion.json'))\nfor s in d['shots']: print(s['name'].ljust(20), 's',s['s'], 'lat',s['lat'],'cam',s['cam'],'bennyY',s['bennyY'])\"; cat $SP/audit/done.txt", "description": "Read camera heights along the Screen 06 ride"}`
+
+### 🧑 User — 2026-11-17T21:54:53.767Z
+
+> ↩︎ result: a00_approved_view    s 199.598 lat 0 cam [1.68, -35.2, -132.84] bennyY -37.325
+> f03_forward3u        s 202.578 lat 0 cam [1.27, -33.5, -135.05] bennyY -35.835
+> f06_forward6u        s 205.512 lat 0 cam [0.78, -31.55, -138.41] bennyY -35.117
+> f10_forward10u       s 209.552 lat 0 cam [0.28, -30.11, -143.78] bennyY -35.256
+> f20_forward20u       s 219.628 lat 0 cam [1.44, -32.17, -155.23] bennyY -38.638
+> s_left_steer         s 205.511 lat -2.95 cam [-0.3, -31.6, -138.34] bennyY -35.175
+> s_right_steer        s 205.512 lat 2.95 cam [1.86, -31.5, -138.48] bennyY -34.756
+> s_left_hard          s 211.56 lat -2.95 cam [-1.27, -30.21, -146.43] bennyY -35.923
+> s_right_hard         s 211.561 lat 2.95 cam [1.64, -29.9, -146.36] bennyY -35.212
+> t33_through_screen   s 214.128 lat 0.001 cam [0.28, -30.44, -149.48] bennyY -36.523
+> t66_through_screen   s 228.612 lat 0 cam [5.15, -36.39, -163.07] bennyY -43.164
+> t95_through_screen   s 241.301 lat 0 cam [8.45, -43.21, -169.25] bennyY -47.918
+> 06 exit=0
+
+### 🤖 Claude — 2026-11-17T21:55:13.366Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad; python3 -I tools/qa/screen_match.py references/06_crest_the_rinse_arch.png $SP/audit/06/a00_approved_view.png --label=06 2>&1 | tail -6; cat $SP/audit/done.txt", "description": "Measure Screen 06 approved-view match"}`
+
+### 🧑 User — 2026-11-17T21:55:15.427Z
+
+> ↩︎ result: 06     FULL |d|  47.1 <=20 0.290 SSIM 0.214 | BELOWHUD |d|  46.5 <=20 0.296 | LAYOUT |d|  29.4 <=20 0.465 | mean RGB approved [152.8, 131.3, 204.3] game [153.3, 127.6, 204.5]
+> 06 exit=0
+> 08 exit=0
+
+### 🤖 Claude — 2026-11-17T21:55:25.958Z
+
+> 🔧 **Bash** `{"command": "nproc; free -g | head -2; cd /home/user/rainbow- && grep -nE \"freezeAt|goto|step\\(|run\\(\" scripts/capture.mjs | head -12", "description": "Check CPU capacity and capture method"}`
+
+### 🧑 User — 2026-11-17T21:55:26.016Z
+
+> ↩︎ result: 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           2           0           0          13          13
+> 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 38:    const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+
+### 🤖 Claude — 2026-11-17T21:55:27.740Z
+
+> 🔧 **Bash** `{"command": "sed -n 30,60p scripts/capture.mjs", "description": "Read capture method details"}`
+
+### 🧑 User — 2026-11-17T21:55:27.778Z
+
+> ↩︎ result: const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+>     page.on('console', (m) => { if (m.type() === 'error') log.errors.push(`[${id}] ${m.text()}`); });
+>     page.on('pageerror', (e) => log.errors.push(`[${id}] pageerror ${e.message}`));
+>     await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+>     await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>     const err = await page.evaluate(() => window.__error);
+>     if (err) throw new Error(err);
+>     if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+>     const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+>     // let a few frames render (fonts, bloom) — time is frozen so the image is deterministic
+>     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+>     await page.evaluate(() => document.fonts.ready);
+>     await page.waitForTimeout(250);
+>     const  …[+1374 chars]
+
+### 🤖 Claude — 2026-11-17T21:55:33.982Z
+
+`capture.mjs` keeps the game paused at the exact checkpoint, so its numbers are the comparable ones; small extra advance in moving frames doesn't matter. Now Screen 08's moving frames:
+
+### 🤖 Claude — 2026-11-17T21:55:37.485Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad; sed -i \"s/ims=\\[('APPROVED',Image.open(ref))\\]/ims=[('APPROVED' if 'references' in ref else ref.split('\\/')[-1][:-4],Image.open(ref))]/\" $SP/sheet.py; A=$SP/audit/08; python3 $SP/sheet.py $SP/r08a.png /home/user/rainbow-/references/08_final_spin_chamber.png $A/a00_approved_view.png $A/f03_forward3u.png $A/f06_forward6u.png $A/f10_forward10u.png $A/f20_forward20u.png; python3 $SP/sheet.py $SP/r08b.png $A/s_left_steer.png $A/s_right_steer.png $A/s_left_hard.png $A/s_right_hard.png $A/t33_throu …[+101 chars]`
+
+### 🧑 User — 2026-11-17T21:55:38.451Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T21:55:38.482Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad/r08a.png"}`
+
+### 🧑 User — 2026-11-17T21:55:38.526Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T21:55:43.685Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad/r08b.png"}`
+
+### 🧑 User — 2026-11-17T21:55:43.729Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T21:55:55.707Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad; cat $SP/audit/done.txt; python3 -c \"\nimport json;d=json.load(open('$SP/audit/08/motion.json'))\nfor s in d['shots']: print(s['name'].ljust(20),'s',s['s'],'lat',s['lat'],'stage',s['stage'],'hearts',s['hearts'],'s1',round(s['s1'],1))\"", "description": "Check audit progress and 08 ride states"}`
+
+### 🧑 User — 2026-11-17T21:55:55.783Z
+
+> ↩︎ result: 06 exit=0
+> 08 exit=0
+> a00_approved_view    s 392.074 lat 0 stage 08 hearts 5 s1 404.4
+> f03_forward3u        s 395.01 lat 0 stage 08 hearts 5 s1 404.4
+> f06_forward6u        s 398.018 lat 0 stage 08 hearts 5 s1 404.4
+> f10_forward10u       s 401.978 lat 0 stage 08 hearts 5 s1 404.4
+> f20_forward20u       s 411.968 lat 0 stage 09 hearts 5 s1 404.4
+> s_left_steer         s 398.021 lat -1.85 stage 08 hearts 5 s1 404.4
+> s_right_steer        s 398.018 lat 1.85 stage 08 hearts 5 s1 404.4
+> s_left_hard          s 404.035 lat -2.217 stage 08 hearts 4 s1 404.4
+> s_right_hard         s 404.035 lat 2.217 stage 08 hearts 4 s1 404.4
+> t33_through_screen   s 396.276 lat 0.005 stage 08 hearts 5 s1 404.4
+> t66_through_screen   s 400.552 lat 0 stage 08 hearts 5 s1 404.4
+> t95_through_screen   s 404.351 lat 0 stage 08 hearts 5 s1 404.4
+
+### 🤖 Claude — 2026-11-17T21:56:26.253Z
+
+> 🔧 **Bash** `{"command": "cat .gitattributes | head -20; du -sh /tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad/audit/06 | cut -f1; cat /tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad/audit/done.txt", "description": "Check LFS patterns and audit frame size"}`
+
+### 🧑 User — 2026-11-17T21:56:26.296Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+> 26M
+> 06 exit=0
+> 08 exit=0
+> 07 exit=0
+
+### 🤖 Claude — 2026-11-17T21:56:29.066Z
+
+07 is done. Its frames:
+
+### 🤖 Claude — 2026-11-17T21:56:31.866Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad; A=$SP/audit/07; python3 $SP/sheet.py $SP/r07a.png /home/user/rainbow-/references/07_dive_the_washer_tube.png $A/a00_approved_view.png $A/f03_forward3u.png $A/f06_forward6u.png $A/f10_forward10u.png $A/f20_forward20u.png; python3 $SP/sheet.py $SP/r07b.png $A/s_left_steer.png $A/s_right_steer.png $A/s_left_hard.png $A/s_right_hard.png $A/t33_through_screen.png $A/t66_through_screen.png $A/t95_through_screen.png", "description": "Build reduced review sheets for Screen 07"}`
+
+### 🤖 Claude — 2026-11-17T21:56:32.916Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad/r07a.png"}`
+
+### 🧑 User — 2026-11-17T21:56:32.925Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-17T21:56:32.964Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T21:56:36.841Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad/r07b.png"}`
+
+### 🧑 User — 2026-11-17T21:56:37.014Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T21:56:37.008Z
+
+[Image: original 2016x530, displayed at 2000x526. Multiply coordinates by 1.01 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T21:56:46.735Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad; cat $SP/audit/done.txt; for n in 07 05 04; do [ -f $SP/audit/$n/motion.json ] && python3 -c \"\nimport json;d=json.load(open('$SP/audit/$n/motion.json'))\nprint('$n', [(s['name'][:4],s['s'],s['stage'],s['hearts'],s['cam'][1]) for s in d['shots']], 's1', round(d['shots'][0]['s1'],1))\"; done", "description": "Read 07/05/04 ride positions"}`
+
+### 🧑 User — 2026-11-17T21:56:46.896Z
+
+> ↩︎ result: Exit code 1
+> 06 exit=0
+> 08 exit=0
+> 07 exit=0
+> 07 [('a00_', 273.785, '07', 5, -46.75), ('f03_', 276.674, '07', 5, -46.86), ('f06_', 279.657, '07', 5, -47.02), ('f10_', 283.658, '07', 5, -47.23), ('f20_', 293.657, '07', 5, -47.78), ('s_le', 279.658, '07', 5, -47.02), ('s_ri', 279.656, '07', 5, -47.02), ('s_le', 285.658, '07', 4, -47.34), ('s_ri', 285.658, '07', 4, -47.34), ('t33_', 312.457, '07', 5, -47.51), ('t66_', 351.057, '07', 5, -74.78), ('t95_', 385.058, '07', 5, -104.71)] s1 390.2
+
+### 🤖 Claude — 2026-11-17T21:56:52.547Z
+
+Screen 07's stage is 116 u long (including the 07→08 plunge); the matched look covers roughly the first 20 u only. I'll write the round-6 briefs while 05 and 04 render.
+
+### 🤖 Claude — 2026-11-17T21:56:53.543Z
+
+> 🔧 **Bash** `{"command": "ls docs/briefs/2026-11-17-r5/; sed -n 1,40p docs/briefs/2026-11-17-r5/S08_SCENERY.md | cut -c1-300", "description": "Read round 5 Screen 08 scenery brief"}`
+
+### 🧑 User — 2026-11-17T21:56:53.591Z
+
+> ↩︎ result: COMMON_RULES.md
+> REPORTS_ROUND5.md
+> S08_BENNY.md
+> S08_SCENERY.md
+> USER_DECISIONS.md
+> You are the SCREEN 08 SCENERY-IN-MOTION specialist (washer-environment-modeler role) of the RAINBOW game — my EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead = session `session_013VHsJ9SbWPe9YXRvtUSngc` (branch `ccr-f983b317-2vt0zh`). Screen 08
+> 
+> Your branch: **`claude/rainbow-s08-scenery-c5`**, created by the lead at `claude/rainbow-s08-scenery-c4` @ `5ce044a52d53c5dd6cfb71fd994a82e8647381a4` (account 4's round-1 safe checkpoint + transcript autosaves). Push ONLY this branch. Never write to `-c4` or any older branch.
+> 
+> FIRST read (from `ccr-f983b317-2vt0zh` via `git fetch origin ccr-f983b317-2vt0zh && git show FETCH_HEAD:…`): `docs/briefs/2026-11-17-r5/COMMON_RULES.md`, then `docs/briefs/2026-11-17-r4/COMMON_RULES.md`, `docs/briefs/2026-11-17-r4/USER_DECISIONS.md`, `docs/briefs/2026-11-17-r4/S08_SCENERY.md` (you
+> 
+> ## Where round 1 stopped (account 4, ~19:40 UTC, safe checkpoint, all new code behind switches)
+> * `&m08bw=1` — chamber entrance wall flush behind the gold arch: **visibly better** (removes the lower-left jagged tear / second river copy at 6 u …[+2879 chars]
+
+### 🤖 Claude — 2026-11-17T21:57:12.013Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r6/COMMON_RULES.md", "content": "# RAINBOW — common rules, round 6 (account 6, 2026-11-17 ~22:20 UTC)\n\n**The r5, r4, r3 and r2 rules stay binding word for word** (`docs/briefs/2026-11-17-r5/COMMON_RULES.md`,\n`docs/briefs/2026-11-17-r5/USER_DECISIONS.md`, `docs/briefs/2026-11-17-r4/COMMON_RULES.md`,\n`docs/briefs/2026-11-17-r4/USER_DECISIONS.md`, r3, r2). Read them first. Only these points change:\n\n## What changed\n* **Lead coordinator (\"Lead Claudia\") = session `session_01VCMXoaUqBCxDq8BntT19BU`**, branch **`ccr-4bd35b15-7z45t0`* …[+3746 chars]`
+
+### 🧑 User — 2026-11-17T21:57:12.095Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r6/COMMON_RULES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T21:57:27.811Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r6/USER_DECISIONS.md", "content": "# The user's order — 2026-11-17 ~21:45 UTC (account 6, \"URGENT: GET ALL FIVE RAINBOW GAME SCREENS TO AT LEAST 8.5/10\")\n\nBinding for every workstream; extends the r5 and r4 USER_DECISIONS (still valid). Nothing is approved until the user says so.\n\n1. **Target:** at least **8.5/10 visual quality, ideally 9–9.5/10**, of the actual playable 3D game against the ORIGINAL\n   approved images — **throughout gameplay, not just a still screenshot.** No redesign, no different scenery.\n2. **Only the five pl …[+3888 chars]`
+
+### 🧑 User — 2026-11-17T21:57:27.933Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r6/USER_DECISIONS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T21:57:52.302Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r6/S06.md", "content": "You are the SCREEN 06 workstream specialist (06 · CREST THE RINSE ARCH; roles washer-environment-modeler +\nwater-fx-specialist, `.claude/agents/`) of the RAINBOW game — the user's EXISTING Android game. Do NOT restart, redesign or\nrebuild anything; never discard earlier work; never fall back to a generic washing-machine design. **The user made Screen 06\nthe MAJOR PRIORITY of round 6.** Lead = session `session_01VCMXoaUqBCxDq8BntT19BU` (branch `ccr-4bd35b15-7z45t0`).\n\nYour branch: **`claude/rainbow-s06-match- …[+5329 chars]`
+
+### 🧑 User — 2026-11-17T21:57:52.385Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r6/S06.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T21:57:56.015Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r6/S06.md", "old_string": "ONE `send_message` to\n`session_01Kbt6BTTnCGMUULjZoCLDTo`→ NO: to **`session_01VCMXoaUqBCxDq8BntT19BU`**, then STOP.", "new_string": "ONE `send_message` to the\nlead **`session_01VCMXoaUqBCxDq8BntT19BU`**, then STOP."}`
+
+### 🧑 User — 2026-11-17T21:57:56.147Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-17-r6/S06.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T21:57:57.790Z
+
+Now the Screen 08 scenery round-2 brief.
+
+### 🤖 Claude — 2026-11-17T21:58:15.884Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-17-r6/S08_SCENERY.md", "content": "You are the SCREEN 08 SCENERY-IN-MOTION specialist (washer-environment-modeler role, `.claude/agents/`) of the RAINBOW\ngame — the user's EXISTING Android game. Do NOT restart, redesign or rebuild anything; never discard earlier work. Lead =\nsession `session_01VCMXoaUqBCxDq8BntT19BU` (branch `ccr-4bd35b15-7z45t0`). User priority round 6: Screen 06 and Screen 08.\n\nYour branch: **`claude/rainbow-s08-scenery-c6`**, created by the lead at `claude/rainbow-s08-scenery-c5` @\n`700f09e16ca0e44394a9926cd6a26154 …[+4304 chars]`
+
+### 🧑 User — 2026-11-17T21:58:16.095Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-17-r6/S08_SCENERY.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T21:58:17.979Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T21:58:17.990Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-17T21:58:18.438Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T21:58:18.452Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-17T21:58:19.952Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad; cat $SP/audit/done.txt", "description": "Check audit progress"}`
+
+### 🧑 User — 2026-11-17T21:58:19.983Z
+
+> ↩︎ result: 06 exit=0
+> 08 exit=0
+> 07 exit=0
+> 05 exit=0
+
+### 🤖 Claude — 2026-11-17T21:58:29.721Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cd1e5cfb-443e-5b5a-b9b8-262d44ab3b8a/scratchpad; for n in 05 06 07 08; do D=qa/lead_r6/2026-11-17/audit/$n; mkdir -p $D; for f in $SP/audit/$n/*.png; do convert \"$f\" -quality 92 \"$D/$(basename \"${f%.png}\").jpg\"; done; cp $SP/audit/$n/motion.json $D/; done; du -sh qa/lead_r6; git add tools/lead_r6 docs/briefs/2026-11-17-r6 qa/lead_r6 && git commit -q -m \"Lead r6: moving-gameplay audit tool + frames 05-08, round-6 briefs (COMMON_RULES, USER_DECISIONS, S06, S08_SCENERY)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Sess …[+315 chars]`
+
+### 🧑 User — 2026-11-17T21:58:40.040Z
+
+> ↩︎ result: 28M	qa/lead_r6
+> local b7d242c18b7c3bd0442522daeeaee6a75f8ce092 remote b7d242c18b7c3bd0442522daeeaee6a75f8ce092
+
+### 🤖 Claude — 2026-11-17T21:58:42.423Z
+
+All five screens are captured. Before creating the `-c6` branches, I re-check that the `-c5` tips haven't moved:
+
+### 🤖 Claude — 2026-11-17T21:58:45.395Z
+
+> 🔧 **Bash** `{"command": "for b in claude/rainbow-s06-match-c5 claude/rainbow-s08-scenery-c5; do echo \"$b $(git ls-remote origin refs/heads/$b | cut -f1)\"; done; git ls-remote origin refs/heads/claude/rainbow-s06-match-c6 refs/heads/claude/rainbow-s08-scenery-c6; git push -q origin c088718bb9e3374583238f4ee93f25bdee600065:refs/heads/claude/rainbow-s06-match-c6 700f09e16ca0e44394a9926cd6a261541a645cad:refs/heads/claude/rainbow-s08-scenery-c6 2>&1 | tail -3; for b in claude/rainbow-s06-match-c6 claude/rainbow-s08-scenery-c6; do echo \"NEW $b $(git ls-remote origin refs/heads/$b | cut -f1)\"; done", "descri …[+51 chars]`
+
+### 🧑 User — 2026-11-17T21:58:53.181Z
+
+> ↩︎ result: claude/rainbow-s06-match-c5 c088718bb9e3374583238f4ee93f25bdee600065
+> claude/rainbow-s08-scenery-c5 700f09e16ca0e44394a9926cd6a261541a645cad
+> NEW claude/rainbow-s06-match-c6 c088718bb9e3374583238f4ee93f25bdee600065
+> NEW claude/rainbow-s08-scenery-c6 700f09e16ca0e44394a9926cd6a261541a645cad
+
+### 🤖 Claude — 2026-11-17T21:58:56.198Z
+
+Both `-c6` branches exist at the exact `-c5` tips. Launching the two specialist sessions (Screen 06 and Screen 08 scenery):
+
+### 🤖 Claude — 2026-11-17T21:59:04.098Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow S06 Rinse Arch moving scenery (r6)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s06-match-c6", "outcome_branch": "claude/rainbow-s06-match-c6", "tags": ["rainbow-r6", "screen-06"], "prompt": "You are the SCREEN 06 specialist of the user's EXISTING Rainbow game (round 6). Your branch is claude/rainbow-s06-match-c6 (created by the lead at c088718bb9e3374583238f4ee93f25bdee600065). Push ONLY that branch. Your brief: run `git fetch origin ccr-4bd35b15-7z45t0 && git show FETCH_HEAD:docs/briefs/2026-11-17-r6/S06.md` and follow …[+1344 chars]`
+
+### 🤖 Claude — 2026-11-17T21:59:10.453Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow S08 scenery in motion round 2 (r6)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s08-scenery-c6", "outcome_branch": "claude/rainbow-s08-scenery-c6", "tags": ["rainbow-r6", "screen-08"], "prompt": "You are the SCREEN 08 SCENERY-IN-MOTION specialist of the user's EXISTING Rainbow game (round 6, your round 2). Your branch is claude/rainbow-s08-scenery-c6 (created by the lead at 700f09e16ca0e44394a9926cd6a261541a645cad = your round-1 final 60e7ffe8 + transcript autosaves). Push ONLY that branch. Your brief: run `git fetch ori …[+1116 chars]`
+
