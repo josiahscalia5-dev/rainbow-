@@ -15,9 +15,84 @@
  */
 import * as THREE from 'three';
 import { PROJ05_INVERSE, flag05, proj05Pending } from './waterRibbon';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export const PROJWALL05: boolean = flag05('projwall05');
 export const PROJRING05: boolean = flag05('projring05');
+/** `?projframe05=1` (2026-11-16): the near gold frame (bottom corners + bottom lip) wears the approved gold band */
+export const PROJFRAME05: boolean = flag05('projframe05');
+/** `?projlid05=1` (2026-11-16): the approved paddles L1 L2 R1 R2 as Blender-built 3D trays on the real 05 wall */
+export const PROJLID05: boolean = flag05('projlid05');
+
+/**
+ * The approved paddle is a D-shaped TRAY (studied at 4× zoom: a thick polished gold rim whose INNER face shows above a
+ * lavender floor, a thin straight lip along the bottom). Half lathe toward local +X like wallLidGeometry: the D's
+ * straight edge lies on local Z (along the tube); the open side faces −Y (the camera / the stream), the closed back +Y
+ * (into the wall). Thickness h = tray depth (fraction of the size), centred on its thickness like the wall lids.
+ */
+export function trayLidGeometry(h: number, segments = 28): THREE.BufferGeometry {
+  const prof: [number, number][] = [
+    [0, 0.68 * h], [0.78, 0.68 * h], [0.84, 0.62 * h],         // floor (recessed from the open side), fillet
+    [0.855, 0.3 * h], [0.865, 0.06 * h], [0.9, 0.0],            // inner rim face down to the lip
+    [0.965, 0.0], [1.0, 0.06 * h], [1.025, 0.4 * h],            // rounded lip, outer bulge
+    [1.0, 0.85 * h], [0.95, h], [0, h],                          // closed back against the wall
+  ];
+  const geo = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), segments, 0, Math.PI);
+  geo.translate(0, -h * 0.5, 0);
+  return geo;
+}
+
+/**
+ * `?projlid05=1` (Blender pipeline, qa/pilot05/proj/tunnel/NOTES.md): the approved picture's four large paddles L1 L2 R1
+ * R2 (+ the small far pair L3 R3 on the far wall) as real 3D tray-blocks on the real 05 wall (assets/models/lids05.glb, built in Blender by tools/proj05/lid_blender.py
+ * from the approved outlines lifted onto the wall through the locked 05 camera). From the checkpoint their outline is the
+ * approved one; riding on, they show their real depth. They carry the approved paddle pixels (camera-projected UVs,
+ * assets/textures/tunnel05/lid05.png inside the GLB), shown through the post-chain inverse like the walls. The default
+ * paddle pairs and the far slab pucks are left out under the switch.
+ */
+let lids05Scene: THREE.Object3D | null = null;
+const lids05Ready: Promise<void> | null = PROJLID05
+  ? new GLTFLoader().loadAsync(new URL('../../assets/models/lids05.glb', import.meta.url).href).then((gltf) => {
+    gltf.scene.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      const map = (m.material as THREE.MeshStandardMaterial).map;
+      if (!map) return;
+      map.colorSpace = THREE.NoColorSpace;          // the texels ARE display values: the shader undoes the post chain
+      map.needsUpdate = true;
+      m.material = lidProjMaterial(map);
+      m.frustumCulled = false;
+    });
+    lids05Scene = gltf.scene;
+    lids05Scene.name = 'tube05_lids_blender';
+  }).catch((e) => { console.error('[rainbow] projlid05: lids05.glb failed', e); })
+  : null;
+if (lids05Ready) proj05Pending.push(lids05Ready);
+
+function lidProjMaterial(map: THREE.Texture): THREE.MeshBasicMaterial {
+  const mat = new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide, fog: false });
+  mat.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, shared);
+    shader.fragmentShader = shader.fragmentShader
+      .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes;
+${PROJ05_INVERSE}
+void main() {`)
+      .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+gl_FragColor = vec4(pjInverse(texture2D(map, vMapUv).rgb), 1.0);   // ?projlid05=1: the approved paddle pixels`);
+  };
+  mat.customProgramCacheKey = () => 'ptlid05';
+  mat.onBeforeRender = (renderer) => livePost(renderer);
+  return mat;
+}
+
+/** the group environment.ts adds under `?projlid05=1`; the Blender paddles join it once the GLB has loaded */
+export function lids05Group(): THREE.Group {
+  const g = new THREE.Group();
+  g.name = 'tube05_lids05';
+  const attach = () => { if (lids05Scene) g.add(lids05Scene); };
+  if (lids05Scene) attach(); else lids05Ready?.then(attach);
+  return g;
+}
 
 /** atlas rows of wall05.png (tools/proj05/tunnel_bake.py: ROWS) */
 export const PT_ROW = { AB: 0, BC: 1, CD: 2, DE: 3, EF: 4, FG: 5, GX: 6 } as const;
@@ -35,6 +110,10 @@ const shared = {
   uPtRows: { value: Array.from({ length: N_ROWS }, () => new THREE.Vector2(0, 1)) },
   uPtRing: { value: empty as THREE.Texture },
   uPtRingSize: { value: new THREE.Vector2(1, 1) },
+  uPtFrame: { value: empty as THREE.Texture },
+  /** frame05.png: (texture height, band rows NV, left y0, right y0); lip y0 in uPtFrameLip */
+  uPtFrameRows: { value: new THREE.Vector4(1, 1, 0, 0) },
+  uPtFrameLip: { value: 0 },
   /** QA only (scripts/proj05-tunnel-probe.mjs --coords): 1 = write the texture coordinates instead of the colour */
   uPtDbg: { value: 0 },
 };
@@ -76,10 +155,22 @@ function loadTextures() {
       shared.uPtRingSize.value.set(t.image.width, t.image.height);
     }));
   }
+  if (PROJFRAME05) {
+    jobs.push(Promise.all([
+      load(new URL('../../assets/textures/tunnel05/frame05.png', import.meta.url).href),
+      fetch(new URL('../../assets/textures/tunnel05/frame05.json', import.meta.url).href).then((r) => r.json()),
+    ]).then(([t, meta]) => {
+      t.wrapS = THREE.ClampToEdgeWrapping;          // the frame bands are open arcs, not closed rings
+      t.needsUpdate = true;
+      shared.uPtFrame.value = t;
+      shared.uPtFrameRows.value.set(meta.h, meta.rows.left.h, meta.rows.left.y0, meta.rows.right.y0);
+      shared.uPtFrameLip.value = meta.rows.lip.y0;
+    }));
+  }
   return Promise.all(jobs).catch((e) => { console.error('[rainbow] proj05 tunnel textures failed', e); });
 }
 // the game waits for these before `ready` (vfx/index.ts), so a capture never shows the 1×1 placeholder
-if (PROJWALL05 || PROJRING05) proj05Pending.push(loadTextures());
+if (PROJWALL05 || PROJRING05 || PROJFRAME05) proj05Pending.push(loadTextures());
 
 const size = new THREE.Vector2();
 function livePost(renderer: THREE.WebGLRenderer) {
@@ -167,5 +258,58 @@ if (uPtDbg > 0.5) gl_FragColor = vec4(gPtRingUv, 8.0, 78.0);`);
   mat.customProgramCacheKey = () => prevKey() + '|ptring-' + key;
   const prevRender = mat.onBeforeRender;
   mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };
+  return mat;
+}
+
+/**
+ * `?projframe05=1`: wrap nearFrameMaterial (src/world/materials.ts; geometry nearFrameGeometry in tube.ts). The frame
+ * is the existing camera-held 3D band (bottom corners + bottom lip); this only replaces its hand-picked palette with the
+ * approved gold band profile (tools/proj05/frame_bake.py: the approved picture sampled in the frame's own band
+ * coordinates, hidden parts filled, smoothed along the arc), shown through the post-chain inverse like the walls/rings.
+ * Which corner: the sign of the geometry's x (reference pixels from the frame centre).
+ */
+export function withProj05Frame<T extends THREE.MeshStandardMaterial>(mat: T): T {
+  /** tan(fov/2) / 768: reference px of depth → relative scale (environment.ts places the frame at depth d = 0.8) */
+  const frameK = { value: 0 };
+  const prev = mat.onBeforeCompile;
+  mat.onBeforeCompile = (shader, r) => {
+    prev.call(mat, shader, r);
+    Object.assign(shader.uniforms, shared);
+    const vMark = 'vFrUv = uv; vFrPiece = framePiece;';
+    const fMark = '#include <dithering_fragment>';
+    if (!shader.vertexShader.includes(vMark) || !shader.fragmentShader.includes(fMark)) {
+      console.error('[rainbow] projframe05: near-frame shader marker not found');
+      return;
+    }
+    // The frame stands toward the viewer (corner z0 40 + half-round bulge, reference px), so perspective pushed its
+    // outline ≈15–35 px outward from the measured reference edges. Pre-shrink x, y by the depth factor so every
+    // vertex projects onto its designed reference pixel (the band keeps its 3D bulge for the shading).
+    shader.uniforms.uPtFrameK = frameK;
+    shader.vertexShader = shader.vertexShader
+      .replace('void main() {', 'varying float vPtSide; uniform float uPtFrameK;\nvoid main() {')
+      .replace(vMark, `${vMark} vPtSide = position.x; transformed.xy *= 1.0 - transformed.z * uPtFrameK;`);
+    shader.fragmentShader = shader.fragmentShader
+      .replace('void main() {', `uniform sampler2D uPtFrame; uniform vec4 uPtFrameRows; uniform float uPtFrameLip; uniform float uPtDbg;
+uniform vec4 uPjPost; uniform vec2 uPjRes;
+varying float vPtSide;
+${PROJ05_INVERSE}
+void main() {`)
+      .replace(fMark, `${fMark}
+{ // ?projframe05=1: the approved gold band of this frame piece, in the band's own (along, across) coordinates
+  float y0 = vFrPiece > 0.5 ? uPtFrameLip : (vPtSide < 0.0 ? uPtFrameRows.z : uPtFrameRows.w);
+  float nv = uPtFrameRows.y;
+  vec2 fuv = vec2(clamp(vFrUv.x, 0.0, 1.0), (y0 + clamp(vFrUv.y * nv, 0.5, nv - 0.5)) / uPtFrameRows.x);
+  gl_FragColor = uPtDbg > 0.5 ? vec4(fuv, 9.0, 79.0) : vec4(pjInverse(texture2D(uPtFrame, fuv).rgb), 1.0);
+}`);
+  };
+  const prevKey = mat.customProgramCacheKey.bind(mat);
+  mat.customProgramCacheKey = () => prevKey() + '|ptframe';
+  const prevRender = mat.onBeforeRender;
+  mat.onBeforeRender = (renderer, scene, camera, ...rest) => {
+    livePost(renderer);
+    const pc = camera as THREE.PerspectiveCamera;
+    if (pc.isPerspectiveCamera) frameK.value = Math.tan(THREE.MathUtils.degToRad(pc.fov) / 2) / 768;
+    prevRender.call(mat, renderer, scene, camera, ...rest);
+  };
   return mat;
 }

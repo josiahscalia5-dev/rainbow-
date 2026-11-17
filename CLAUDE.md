@@ -4,14 +4,14 @@ This is an EXISTING, playable 11-screen 3D game. **Never restart it, never start
 
 ## 1. Every new session or new Claude account — recovery is automatic
 The SessionStart hook (`.claude/settings.json` → `scripts/autosave-hook.sh` → **`scripts/claude-bootstrap.sh --hook`**)
-already ran before your first turn: it fetched every branch, merged any newer `ccr-*`/`claude/*` branch (normal merges
-only; a conflicting merge is aborted and reported), restored the Git LFS binaries, re-armed the five-minute autosave and
+already ran before your first turn: it fetched every branch (since 2026-11-17 it merges NOTHING automatically — merging
+any branch needs the user's OK; `--resume` re-enables the old merge only then), restored the Git LFS binaries, re-armed the five-minute autosave and
 started the full bootstrap in the background. Its summary ("RAINBOW SESSION START") is in your context.
 1. `bash scripts/claude-bootstrap.sh --status` → `backups/BOOTSTRAP_REPORT.md` (re-run when it says "still in progress").
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh` yourself; from a branch without it:
    `git fetch origin claude/rainbow-05-water-projection && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
-2. Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
+2. Read **`backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md`** (newest, wins), `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
    `backups/TOOL_MANIFEST.json` and the current briefs: **`qa/pilot05/proj/`** (water texture projection — `NOTES.md` when it
    exists, `BRIEF_SPECIALIST1_VERBATIM.md`, `BRIEF_SPECIALIST2.md`), `qa/pilot05/wave12/NOTES.md`, `qa/pilot05/COORDINATION_WAVE9B.md`.
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup
@@ -87,7 +87,11 @@ kept only when clearly closer; never the oval / enlarged "big tunnel" (`qa/pilot
 Current default = **T2** (front ring A at 20 u + near tunnel 2 u lower, promoted 2026-11-16 under the user's rule
 "only if genuinely closer"; picture `qa/pilot05/current_default_05.png`) — **PROVISIONAL until the user approves the
 visual result** (user, 2026-11-16 ~11:50). Candidates waiting for the user: W2 `?wall05=1`, G1b `?gold05=1`, W10 `?water05=1`, S1 `?fars05=1`, W11 `?river05=1`
-(user: "too grainy"), **P1 `?proj05=1`** (the approved water itself baked onto the game river; `qa/pilot05/proj/NOTES.md`, 2026-11-16 ~18:45), **W12 `?silk05=1&puff05=1`** (newest water: smooth long streaks, deep cyan, bubbly foam banks;
+(user: "too grainy"), **tunnel bake `?projwall05=1&projring05=1&projframe05=1&projlid05=1`** (walls, rings, near gold frame, Blender paddles; with `proj05=1`;
+`qa/pilot05/proj/tunnel/NOTES.md`, 2026-11-16 ~20:50; paddles approved by the user ~21:45, NOT promoted), **water flow `&projflow05=2`** (flow along the
+approved streaks, design stays crisp: `qa/pilot05/proj/flow2/NOTES.md`), **sharp riding water `&projnear05=1`** (approved
+near tile + near flares where the camera has approached; 2–3× crisper while riding, start view unchanged:
+`qa/pilot05/proj/near/NOTES.md`, 2026-11-17), **P1 `?proj05=1`** (the approved water itself baked onto the game river; `qa/pilot05/proj/NOTES.md`, 2026-11-16 ~18:45), **W12 `?silk05=1&puff05=1`** (newest water: smooth long streaks, deep cyan, bubbly foam banks;
 `qa/pilot05/wave12/NOTES.md`; experiment APK via `VITE_RAINBOW_Q05`). The user's **BEFORE stays protected**:
 `?ringa=26&nearfloor05=0` reproduces `qa/pilot05/wave9/baseline/05.png` pixel-for-pixel (`claude-bootstrap.sh --full`
 checks both). No more tunnel-position experiments (user, 2026-11-16): next are the rings' polished gold, the purple

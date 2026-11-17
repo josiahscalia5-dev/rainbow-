@@ -1,4 +1,10 @@
-# Rainbow — Claude account transfer guide (newest: session 013VHsJB, branch `claude/rainbow-05-water-projection`, 2026-11-16 ~16:00 UTC)
+# Rainbow — Claude account transfer guide
+
+## ▶▶ NEWEST (2026-11-17 ~11:50 UTC, branch `ccr-61131b9d-uj0oqb`) — READ `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md` FIRST
+It wins over every older section below. Two unmerged lines of work exist (`ccr-61131b9d-uj0oqb` and
+`ccr-b0757dec-dj6l1o`); never merge them without the user's OK. Recover with `bash scripts/claude-bootstrap.sh --skip-resume`
+(the bootstrap no longer merges anything by default).
+
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
 

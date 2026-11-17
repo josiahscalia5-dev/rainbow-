@@ -423,6 +423,21 @@ export function buildWallLids(
   return mesh;
 }
 
+/**
+ * `?projlid05=1` (src/vfx/proj05Tunnel.ts): the matrix of ONE wall lid with its own parameters, the same placement as
+ * buildWallLids (which stays untouched for the default build): side ±1, angle above the axis, droop, size (already
+ * radius-scaled by the caller), stretch along the tube, sink into the wall.
+ */
+export function wallLidMatrix(path: TubePath, s: number, side: number, angDeg: number, droopDeg: number, size: number, stretch: number, sink: number, out = new THREE.Matrix4()): THREE.Matrix4 {
+  const f = path.frame(s);
+  const r = path.radius(s);
+  const c = tubeCenterAt(path, s, new THREE.Vector3());
+  const b = wallLidBasis(f, side, angDeg, droopDeg);
+  const p = c.addScaledVector(b.dir, r - size * sink);
+  const q = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(b.X, b.Y, b.Z));
+  return out.compose(p, q, new THREE.Vector3(size, size, size * stretch));
+}
+
 /** Profile of a wall lid (lathe, half revolution toward local +X), centred on its thickness. */
 export function wallLidGeometry(shape: 'hood' | 'dome' | 'slab', h: number, segments?: number): THREE.BufferGeometry {
   // bottom → top so the lathe normals face outward
