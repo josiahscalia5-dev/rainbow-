@@ -31,6 +31,9 @@ export interface Match04 {
   group: THREE.Group;
   bakeDepth(renderer: THREE.WebGLRenderer): void;
   sync(renderer: THREE.WebGLRenderer, w: number, h: number, camera?: THREE.Camera): void;
+  /** milestone 3: the approved splash around Benny (camera-facing card; Game places it at Benny + splashOffset); null = `&splash04=0` */
+  splash: THREE.Mesh | null;
+  splashOffset: THREE.Vector3;
 }
 
 const VERT = /* glsl */ `
@@ -146,6 +149,8 @@ const RIVER04 = TILE04 && new URLSearchParams(location.search).get('river04') !=
 // ring tile earlier; `&rings04=0` = milestone 2. `&keep04=a,b` overrides the hand-over for tests.
 const RINGS04 = TILE04 && new URLSearchParams(location.search).get('rings04') !== '0';
 const KEEP04 = (new URLSearchParams(location.search).get('keep04') ?? '1.5,2.6').split(',').map(Number);
+// milestone 3: Benny's splash cut from the approved picture (tools/match04/splash04.py); `&splash04=0` = none (milestone 2)
+const SPLASH04 = new URLSearchParams(location.search).get('splash04') !== '0';
 const tex = (f: string) => new URL(`../../assets/textures/match04/${f}`, import.meta.url).href;
 
 const _cp = new THREE.Vector3();
@@ -245,8 +250,27 @@ export async function buildMatch04(): Promise<Match04> {
   // far end cap of the tunnel (the glowing vanishing point)
   add(new THREE.CircleGeometry(T.r, 64).translate(cx, cy, zEnd), M.gold, 'tube_end');
 
+  let splash: THREE.Mesh | null = null;
+  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(tex('splash04.json')).then((r) => r.json());
+  if (SPLASH04) {
+    const spTex = await new THREE.TextureLoader().loadAsync(tex('splash04.png'));
+    spTex.colorSpace = THREE.NoColorSpace;
+    splash = new THREE.Mesh(new THREE.PlaneGeometry(SP.w, SP.h), new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, fog: false,
+      uniforms: { uTex: { value: spTex }, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes },
+      vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+      fragmentShader: `uniform sampler2D uTex; uniform vec4 uPjPost; uniform vec2 uPjRes; varying vec2 vUv;\n${PROJ05_INVERSE}
+void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragColor = vec4(pjInverse(c.rgb), c.a); }`,
+    }));
+    splash.name = 'm04_splash';
+    splash.visible = false;
+    splash.renderOrder = 5;
+  }
+
   return {
     group,
+    splash,
+    splashOffset: new THREE.Vector3(...SP.offset),
     bakeDepth(renderer) {
       const prevRT = renderer.getRenderTarget();
       const scene = new THREE.Scene();

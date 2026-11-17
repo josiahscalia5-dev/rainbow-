@@ -116,7 +116,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let m08On = false;
   // `?match04=1`: the approved Screen 04 scenery on fitted 3D geometry (src/world/match04.ts); off: nothing is built
   const m04 = MATCH['04'] ? await buildMatch04() : null;
-  if (m04) { m04.group.visible = false; scene.add(m04.group); m04.bakeDepth(renderer); }
+  if (m04) { m04.group.visible = false; scene.add(m04.group); m04.bakeDepth(renderer); if (m04.splash) scene.add(m04.splash); }
   let m04On = false;
   let m04Applied = false;
   let m08Applied = false;
@@ -558,6 +558,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
       cm?.color.copy(b08Rest.crown);
       m08.splash.visible = m08On;
       if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+    }
+    if (m04?.splash) {
+      m04.splash.visible = m04On;
+      if (m04On) { m04.splash.position.copy(benny.root.position).add(m04.splashOffset); m04.splash.quaternion.copy(camera.quaternion); }
     }
     fill.position.copy(camera.position);
     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));

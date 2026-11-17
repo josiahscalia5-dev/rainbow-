@@ -152,3 +152,11 @@ Started from `4d1f5b25` (= `-c2` head `255ec5e6` + one transcript autosave). Lea
 * Tunnel-area sharpness (y 200–900, mean gradient / Laplacian variance): 10 u 18.6 → 19.4 / 44 → 41; **15 u 16.7 → 24.2 /
   45 → 59; 20 u 17.0 → 25.6 / 24 → 82**. Frames `motion_m3/step3_rings/` vs `motion_m3/step2_river/`: the same painted
   ring repeats sharply all the way down instead of turning into haze, so the tunnel keeps one character while riding.
+### Step 4 — the approved splash under Benny (`&splash04=0` = none), on by default under match04
+* `tools/match04/splash04.py` cuts the white crest + droplets around Benny's base from the APPROVED picture (x 140–624,
+  y 1262–1442; alpha = bright + low saturation inside an ellipse, foam-bank bubbles at the lower right left out) →
+  `splash04.png` + `splash04.json`: a camera-facing card 1.0 u in front of Benny's root (as splash08), sized so it covers
+  the painted splash exactly in the approved view; it rides with Benny. Shared edit (Game.ts, inside `if (m04?.splash)`).
+* Approved view (`04_NEW_m3_splash_864x1536.png`, `scenery_metrics_M2fal04_vs_M3splash.json`): whole frame 81.3 →
+  **81.8 %** (SSIM 0.812 → 0.819), below HUD 88.9 → 89.5 %, scenery 98.1 → 98.2 %, **Benny area 21.1 → 25.3 %**
+  (SSIM 0.139 → 0.207). Bands unchanged (100.0 / 96.9 / 97.7 %).
