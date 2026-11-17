@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 14652,
-   "sha256": "69b07bafa54ae4e9b312064a4fd42e2423ef4bf5a595a078c18fbe7181ff4dec"
+   "bytes": 14784,
+   "sha256": "7c3333d8d1aa5c50bff7eee4def320172f5b6d8c011491010e8e7962a461e3ea"
   },
   {
    "path": "README_FIRST.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11651,
-   "sha256": "44584c0048a2162121112cd28e36692be51694d8857324868b94adab7c5c1eb3"
+   "sha256": "0d8d2895bd1fd1acface4ab139894cbda41246234b671cae111c88c2280d8f57"
   },
   {
    "path": "backups/CURRENT_STATE.md",
