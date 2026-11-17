@@ -58,7 +58,20 @@ UPDATE ~01:05 UTC (run stopped for the account transfer): no coin change since t
    behind the relief is pulled forward along its own camera ray to just in front of the first non-coin surface over its
    footprint, scale re-solved, depth order kept, round trip 0 px); `C05M` now 18 rows [ds, lat, scale, h?]: coins 1–6 on
    the river (h 1.2, ds 6.2–45.6), coins 7–18 at ds 51.1–54.0, h 1.73–3.38 (an arc rising into the light in front of the
-   relief), near size capped by the 3-D gap. `npx tsc --noEmit` clean. Real capture of v2: in progress.
+   relief), near size capped by the 3-D gap. `npx tsc --noEmit` clean.
+4. DONE — v2 real probe (/tmp/claude-0/hc05/r3/p2, `STACK&hud05=1&coins05=1`): all 18 coins drawn (first ray hit = coin);
+   silhouettes within ~1 px of approved (coin 1 426–521 × 687–770 vs 426–522 × 686–771; coin 2 514–583 × 632–689 both;
+   coin 8 525–539 × 509–523 both). Coins region 53.96 → 30.46 (≤20 17.6 → 45.5 %). Remaining: coins 5–7 YAWED (each coin
+   faced the local meander tangent + a ±0.18 rad wobble; approved coins face the camera squarely), edge band 5–17 levels
+   too green / blue (ridges not zero-mean), far coins too orange (approved core G 207 → 227 from coin 6 on, B up to 130).
+5. DONE — v3 (`coins.ts`, coins05 only): measured coins face the straight 05 tube axis with world-up (`CoinDef.axis`),
+   wobble 0.06 rad; edge texture from the approved band rows with zero-mean ridges and the measured side brightening
+   (×(1 + 0.55 |sin θ|^1.3)/1.15); far tint toward (250, 235, 70) by camera distance (0 at 50 u → 0.6 at 55 u, unlit
+   shader varying). Probe /tmp/claude-0/hc05/r3/p3: coins 30.46 → 28.30 (≤20 45.5 → 50.5 %); per coin (mean |ΔRGB| in the
+   approved silhouette box, v2 → v3): 1 24.7 → 21.6, 2 23.2 → 21.5, 3 25.2 → 23.9, 4 29.1 → 26.2, 5 47.0 → 30.5,
+   6 35.1 → 30.1, 7 50.1 → 38.2, 8 48.0 → 36.5, far line 42.0 → 40.7; coin-1 face 13.7 → 10.5, edge 30.7 → 22.9.
+   Rest of the coin-mask error = water round the coins (approved warmer by R +13–25) and the approved 1-px light rim:
+   not coin geometry (water = coordinator). Official captures + gameplay: in progress.
 
 ## Remaining, step by step
 1. Probe/capture: `node qa/pilot05/full_reference_match/hud/probe05.mjs --out=DIR new='<STACK>&coins05=1'` → check

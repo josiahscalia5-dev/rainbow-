@@ -377,7 +377,7 @@ export function buildRingsAt(path: TubePath, list: number[], material: THREE.Mat
  * placement / basis as buildRingsAt with `band` (−right, up, tan), as a one-instance InstancedMesh so every ring
  * material (instanced shader path) is unchanged. `scale` = extra uniform radius factor (1 = on the wall).
  */
-export function buildWarpedBandRing(path: TubePath, s: number, material: THREE.Material, band: BandOpts, inset: number, warp?: TubeWarp): THREE.InstancedMesh {
+export function buildWarpedBandRing(path: TubePath, s: number, material: THREE.Material, band: BandOpts, inset: number, warp?: TubeWarp, skirtWarp?: TubeWarp): THREE.InstancedMesh {
   const geo = bandGeometry(band);
   const r = path.radius(s) - inset;
   if (warp) {
@@ -386,7 +386,9 @@ export function buildWarpedBandRing(path: TubePath, s: number, material: THREE.M
     for (let i = 0; i < p.count; i++) {
       const x = p.getX(i), y = p.getY(i);
       // object (x, y) → world −right·x + up·y (times r): angle th with cos th = −x/ρ, sin th = y/ρ
-      warp(s, Math.atan2(y, -x), wv);
+      // `skirtWarp`: the skirt vertices (ρ > 1, behind the wall line) follow the WALL's displacement, the band itself
+      // `warp`, so a band displaced further than its wall stays joined to it by its (slanted) skirt
+      (skirtWarp && Math.hypot(x, y) > 1.001 ? skirtWarp : warp)(s, Math.atan2(y, -x), wv);
       p.setXY(i, x - wv.x / r, y + wv.y / r);
     }
     p.needsUpdate = true;

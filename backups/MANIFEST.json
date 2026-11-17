@@ -443,8 +443,8 @@
   },
   {
    "path": "assets/textures/env05/bake_report.json",
-   "bytes": 230,
-   "sha256": "1c4dd6e0bc4a78f6de4329d31fee949d0bd01785c8257279990dc41f82e14dec"
+   "bytes": 314,
+   "sha256": "5b626eef327c398ccdeaf8f96afc7b5b71e2c991683033e13511dc187c9dfcaa"
   },
   {
    "path": "assets/textures/env05/env05.json",
@@ -468,13 +468,13 @@
   },
   {
    "path": "assets/textures/env05/ring05e.png",
-   "bytes": 1162056,
-   "sha256": "244c4fec450fd6c193478a33470a6c11cf011a478ca2224104e19efc4bf87449"
+   "bytes": 1162201,
+   "sha256": "1ad18bf8c37cfcbbaed9254cc6436968bef208b3f2dcd7d019b8a15ec733ecb5"
   },
   {
    "path": "assets/textures/env05/wall05e.png",
-   "bytes": 3230012,
-   "sha256": "635a14706f5aab3e578b2f6184a2debd51d86b64a726223bde5e4fd73cc1b7d1"
+   "bytes": 3232919,
+   "sha256": "f623b0ea13854e7e3ae7468a1b4da5ab88fe8bb09536db67999e3a944c63244f"
   },
   {
    "path": "assets/textures/hud05/coin05.png",
@@ -649,7 +649,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11668,
-   "sha256": "39ef07ddbc17db827b2b9ef5362577d17315072fc2d50c0395cbda98bd2556a8"
+   "sha256": "17c2dad020e8b6ffb83ac4a1753238dca90840de099f41ec737d27f8cf2cee9c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2593,8 +2593,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/coins/NOTES.md",
-   "bytes": 7059,
-   "sha256": "57bc657beeedf0c36e0bf5c5d88f29a359545fc68eacc0141e45b70ea5d6eb03"
+   "bytes": 8611,
+   "sha256": "e300e03fc05bbb669a1fb0ccfe8502040b7dd30791daeaa88324690bcb6b73a4"
   },
   {
    "path": "qa/pilot05/full_reference_match/coins/coin_bake.py",
@@ -3153,8 +3153,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/hud/NOTES.md",
-   "bytes": 8935,
-   "sha256": "135ee8d080b16d0e8479f96e193b5531da810faff0c824d785888c85250e4cea"
+   "bytes": 11277,
+   "sha256": "46e04f1aebca776ddd25e9b0057259efa53309314dfbc96f5f0e2ef12cba5f61"
   },
   {
    "path": "qa/pilot05/full_reference_match/hud/harness.html",
@@ -9928,8 +9928,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 66515,
-   "sha256": "ef82e010382a1ffd7124c4ba1a93329ce68b8972cbac40a1a2a78d0d3060e632"
+   "bytes": 67373,
+   "sha256": "d0f8e8ed275fe646be6c5d5396cafd1eaadbb537c4aa5fbf57a98ebf9304d26e"
   },
   {
    "path": "src/world/far05.ts",
@@ -9953,8 +9953,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 44447,
-   "sha256": "0efb3e793024cd1f2815b3ce3b5bec08bf9b9e2b9f004c93c79890173216dfe6"
+   "bytes": 44744,
+   "sha256": "e7054997487ff8cdc110268d676a0968ef7bc777824b211be37576366ea4f151"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

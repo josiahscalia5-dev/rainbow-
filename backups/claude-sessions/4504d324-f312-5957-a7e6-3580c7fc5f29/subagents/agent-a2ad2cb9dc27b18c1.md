@@ -1943,3 +1943,9 @@ Now add the star as a bakeable part in `bake.py` (its approved mask, no colour-f
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; timeout 1800 node scripts/capture.mjs 05 --out=$SP/default05 > $SP/cap_def.log 2>&1; echo cap_rc=$?; cp $SP/capture_log.bak qa/capture_log.json; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$SP/default05/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('qa/pilot05/current_default_05.png').convert('RGB')).astype(int)\nprint('d …[+190 chars]`
 
+### 🧑 User — 2026-11-17T01:41:42.602Z
+
+> ↩︎ result: tsc_rc=0
+> cap_rc=0
+> default capture vs current_default_05.png differing px: 0 (1536, 864, 3) (1536, 864, 3)
+

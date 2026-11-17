@@ -329,11 +329,20 @@ export function buildEnvironment(course: Course): Environment {
   const e05Weight = (th: number) => (Math.cos(th) < 0
     ? THREE.MathUtils.smoothstep(Math.sin(th), -0.95, -0.5)
     : THREE.MathUtils.smoothstep(Math.sin(th), e05R0, e05R1));
-  const warp05: TubeWarp | undefined = E05 ? (s, th, out) => {
-    const d = s - sCam05, w = e05Weight(th);
+  /**
+   * env05 run #3: the RINGS' own weight. Left half = the wall's. Right half: the band follows the ring's circle further
+   * down than its wall may move (the wall there must not cover river / foam), its skirt stays on the wall
+   * (buildWarpedBandRing skirtWarp), so ring B's lower-right arc stays round instead of kinking outward at the bank.
+   */
+  const e05RR0 = qaNum05('e05rr0', -0.9), e05RR1 = qaNum05('e05rr1', -0.1);
+  const e05RingWeight = (th: number) => (Math.cos(th) < 0 ? e05Weight(th) : THREE.MathUtils.smoothstep(Math.sin(th), e05RR0, e05RR1));
+  const warpBy05 = (wf: (th: number) => number): TubeWarp => (s, th, out) => {
+    const d = s - sCam05, w = wf(th);
     const fade = 1 - THREE.MathUtils.smoothstep(d, 54, sGlow05 - sCam05 - 0.5);   // 0 at the 05 → 06 junction
-    return out.set(knotsAt05(E05.side, d) * fade * w, knotsAt05(E05.up, d) * fade * w);
-  } : undefined;
+    return out.set(knotsAt05(E05!.side, d) * fade * w, knotsAt05(E05!.up, d) * fade * w);
+  };
+  const warp05: TubeWarp | undefined = E05 ? warpBy05(e05Weight) : undefined;
+  const warp05ring: TubeWarp | undefined = E05 ? warpBy05(e05RingWeight) : undefined;
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
   // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
@@ -437,7 +446,7 @@ export function buildEnvironment(course: Course): Environment {
       const isA = Math.abs(s - ptA05) < 0.5, isB = Math.abs(s - ptB05) < 0.5;
       const band = { ...band05near, height: isA ? E05.hA : isB ? E05.hB : band05near.height };
       const mat = withEnv05Ring(gold05('ring05', false, band), isA ? E5_RING_ROW.A : isB ? E5_RING_ROW.B : E5_RING_ROW.N, false, (band.width + band.groove + band.lipWidth) / 2, 'real');
-      zones.tubes.add(buildWarpedBandRing(perfPath, s, mat, band, 0.02, warp05));
+      zones.tubes.add(buildWarpedBandRing(perfPath, s, mat, band, 0.02, warp05ring, warp05));
     }
   } else zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
   const rings0607: number[] = [];
@@ -573,7 +582,8 @@ export function buildEnvironment(course: Course): Environment {
       const geo = bandGeometry(bandF);
       const pa = geo.getAttribute('position') as THREE.BufferAttribute;
       for (let i = 0; i < pa.count; i++) {
-        const w = e05Weight(Math.atan2(pa.getY(i), pa.getX(i)));
+        const thv = Math.atan2(pa.getY(i), pa.getX(i));
+        const w = Math.hypot(pa.getX(i), pa.getY(i)) > 1.001 ? e05Weight(thv) : e05RingWeight(thv);   // skirt on the wall
         pa.setXY(i, pa.getX(i) + (E05.sideFar * w) / rRing, pa.getY(i) + (E05.upFar * w) / rRing);
       }
       pa.needsUpdate = true;
