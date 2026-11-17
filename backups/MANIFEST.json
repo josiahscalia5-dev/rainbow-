@@ -704,7 +704,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11053,
-   "sha256": "1774d5efe45be569f9d0c094f81fdc8915e9d6c78f84fa09a3b44cd10ab905df"
+   "sha256": "69aab8810419f1c72a4b39b64e1f6140d37cd39cec8c47aaae08aa69c0cc7bf3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1468,13 +1468,13 @@
   },
   {
    "path": "qa/match/04/NOTES.md",
-   "bytes": 15760,
-   "sha256": "0f3f6a39818340791ebc6b77b50154172133954ff8e300fca540744a61afa46c"
+   "bytes": 17133,
+   "sha256": "9a489c728b8a8e8f4ede302a4114ee25e846a042738a0cf7ac0942348c328d91"
   },
   {
    "path": "qa/match/04/SHARED_CHANGES.md",
-   "bytes": 2334,
-   "sha256": "f86956cdf0cc13fe4643d814587da63d1b89c98c4e34c4d5892f9e949f84ae21"
+   "bytes": 2728,
+   "sha256": "5a1ac9611306603e16ee72d81b8c1902e1da479c239e72ac37783aa2cb58f643"
   },
   {
    "path": "qa/match/04/STATUS.md",
@@ -1508,6 +1508,11 @@
   },
   {
    "path": "qa/match/04/gameplay_test_match04_m3.json",
+   "bytes": 14657,
+   "sha256": "110efa09172868567b1c5d88583957c00693ceaaca73a5b2b8ce906c7b49cfdd"
+  },
+  {
+   "path": "qa/match/04/gameplay_test_match04_m3_final.json",
    "bytes": 14657,
    "sha256": "110efa09172868567b1c5d88583957c00693ceaaca73a5b2b8ce906c7b49cfdd"
   },
@@ -1685,6 +1690,51 @@
    "path": "qa/match/04/motion_m2/NEW_fal04/s_right_steer.png",
    "bytes": 1731782,
    "sha256": "92fb2396409514bdab762d5593df7701d521a3e9e81b2a31eedbcfc7b3adb98d"
+  },
+  {
+   "path": "qa/match/04/motion_m3/NEW/f00_checkpoint.png",
+   "bytes": 2021242,
+   "sha256": "d7c563e26f99c829d2806f5a33e4a5ba26271787ee87143fe8afb2c98f562bf3"
+  },
+  {
+   "path": "qa/match/04/motion_m3/NEW/f03_forward3u.png",
+   "bytes": 1918385,
+   "sha256": "ae549959364df54830c1983553fc4be971112b77c1a0bc196bf56cbe39761d58"
+  },
+  {
+   "path": "qa/match/04/motion_m3/NEW/f06_forward6u.png",
+   "bytes": 1681547,
+   "sha256": "a49a7c505b29a784e56e0510494f5f22b8dd2b328bd693f74de572c6e8136bbb"
+  },
+  {
+   "path": "qa/match/04/motion_m3/NEW/f10_forward10u.png",
+   "bytes": 1376707,
+   "sha256": "8da9addc72e8054349093d84c2ed4e721f3a5a79a9e76ae9c52a37b863eb6b8b"
+  },
+  {
+   "path": "qa/match/04/motion_m3/NEW/f15_forward15u.png",
+   "bytes": 1450216,
+   "sha256": "9559b35dca3c4118c31345c51c09df25fbd2ab1713050f2ada3b6adbbfb1c0ee"
+  },
+  {
+   "path": "qa/match/04/motion_m3/NEW/f20_forward20u.png",
+   "bytes": 1470826,
+   "sha256": "4aad4e5174f7005b9028a6940a65959c8593d21b3652b07c45605ac87fd4e61b"
+  },
+  {
+   "path": "qa/match/04/motion_m3/NEW/motion.json",
+   "bytes": 1128,
+   "sha256": "77b099b0f9dcb355c71defc007d8ef2448f7171f75b878cd99eaf71e652beaa8"
+  },
+  {
+   "path": "qa/match/04/motion_m3/NEW/s_left_steer.png",
+   "bytes": 1685534,
+   "sha256": "7a88dd8e0e4eb4d16e2cf5f1f5d6687114206d799987eb3108b7a7b88ffcf261"
+  },
+  {
+   "path": "qa/match/04/motion_m3/NEW/s_right_steer.png",
+   "bytes": 1722541,
+   "sha256": "b60fc903066816e9e7fa20e377fce6adb30b1bd512b5ee1e446f1f571e48d92b"
   },
   {
    "path": "qa/match/04/motion_m3/step2_river/f00_checkpoint.png",
@@ -8413,8 +8463,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 13601,
-   "sha256": "94fd918f9577f073cea22f16d7d16d21cb20f58ab1f533653fe47f154dd4fa39"
+   "bytes": 14717,
+   "sha256": "80bb5a35d122497c57f25d116c5837eb7d66a410d79c53b6bb9de2ba23ea8e63"
   },
   {
    "path": "src/gameplay/input.ts",

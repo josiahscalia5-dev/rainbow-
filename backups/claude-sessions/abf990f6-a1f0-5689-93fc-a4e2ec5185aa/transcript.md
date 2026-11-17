@@ -901,3 +901,216 @@ The splash shows around Benny's base as in the approved picture. Whole frame 81.
 > 84:      return { s: best, lat: (x - f.pos.x) * f.right.x + (z - f.pos.z) * f.right.z, y: f.pos.y };
 > 88:      / …[+1121 chars]
 
+### 🤖 Claude — 2026-11-17T17:47:05.663Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,16p src/gameplay/coins.ts; sed -n 44,68p src/gameplay/coins.ts; grep -n \"export function flag05\" -A6 -r src | head", "description": "Read coins.ts match04 branch and flag helper"}`
+
+### 🧑 User — 2026-11-17T17:47:05.704Z
+
+> ↩︎ result: /**
+>  * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+>  * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+>  * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+>  * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+>  */
+> import * as THREE from 'three';
+> import type { Course, StageId } from '../world/course';
+> import { canvasTexture } from '../world/materials';
+> import { coreLateral, flag05 } from '../vfx/waterRibbon';
+> import coins08 from '../../assets/textures/match08/coins08.json';
+> import coins04 from '../../assets/textures/match04/coins04.json';
+> 
+> export const COIN_VALUE = 10;
+> 
+> /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+>   const st = (id: StageId) => course.stage(id);
+>   // 03 — spiral trail ahead of Benny toward the drain
+>   { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
+>   // 04 — along the left edge of the slide
+>   const m04 = flag05('match04') || flag05('matchall');
+>   if (!m04) { const a = st('04'); for (let i = 0; i < 8 …[+1324 chars]
+
+### 🤖 Claude — 2026-11-17T17:47:18.135Z
+
+> 🔧 **Bash** `{"command": "cat >> tools/match04/coins04.py <<'EOF'\n\n# ---- milestone 3 (`coins04_water.json`, default under match04; `&coinwater04=0` = the milestone-1/2 coins) -------------\n# The coins above float 1.5-2.7 u over the water (seen from the side while riding). Each coin now slides along its OWN\n# view ray (same painted pixel and painted size in the approved view: size scales with depth) to the point where its\n# bottom rests on the water (centre height = radius + 0.05) - allowed out to |lateral| <= LAT_W (still inside the tunnel's\n# water, and within pickup reach of Benny's steering range …[+1547 chars]`
+
+### 🧑 User — 2026-11-17T17:47:18.753Z
+
+> ↩︎ result: {'px': [175, 970, 112], 's': 79.41, 'lat': -1.595, 'h': 1.488, 'scale': 0.764, 'dist': 8.722}
+> {'px': [262, 872, 82], 's': 82.625, 'lat': -1.596, 'h': 1.681, 'scale': 0.756, 'dist': 11.784}
+> {'px': [330, 792, 58], 's': 87.551, 'lat': -1.599, 'h': 2.019, 'scale': 0.753, 'dist': 16.589}
+> {'px': [378, 742, 40], 's': 94.521, 'lat': -1.597, 'h': 2.383, 'scale': 0.735, 'dist': 23.487}
+> {'px': [423, 712, 26], 's': 110.119, 'lat': -1.594, 'h': 2.666, 'scale': 0.794, 'dist': 39.035}
+> water {'px': [175, 970, 112], 's': 82.902, 'lat': -2.449, 'h': 0.683, 'scale': 1.087, 'dist': 12.405, 'gapBelow': 0.14}
+> water {'px': [262, 872, 82], 's': 87.469, 'lat': -2.449, 'h': 0.958, 'scale': 1.075, 'dist': 16.755, 'gapBelow': 0.421}
+> water {'px': [330, 792, 58], 's': 94.44, 'lat': -2.45, 'h': 1.441, 'scale': 1.069, 'dist': 23.555, 'gapBelow': 0.907}
+> water {'px': [378, 742, 40], 's': 104.378, 'lat': -2.45, 'h': 1.957, 'scale': 1.045, 'dist': 33.39, 'gapBelow': 1.435}
+> water {'px': [423, 712, 26], 's': 111.996, 'lat': -1.691, 'h': 2.631, 'scale': 0.832, 'dist': 40.915, 'gapBelow': 2.215}
+
+### 🤖 Claude — 2026-11-17T17:47:29.907Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && cat > $S/coinshift.py <<'EOF'\nimport json, math, numpy as np\nL=json.load(open('assets/textures/match04/proj04.json'))\nW,H=L[\"camera\"][\"size\"]; t=math.tan(math.radians(L[\"camera\"][\"fov\"])/2); asp=W/H; F=(H/2)/t\nMW=np.array(L[\"camera\"][\"matrixWorld\"]).reshape(4,4).T; C=MW[:3,3]; R=MW[:3,:3]\nD,U,X,base=(np.array(L[k],float) for k in (\"D\",\"U\",\"X\",\"water\"))\ndef proj(P):\n    q=(P-C)@R; z=-q[2]; return np.array([(q[0]/z/(t*asp)+1)/2*W,(1-q[1]/z/t)/2*H]), z\nfor u,v,d in [(175 …[+663 chars]`
+
+### 🧑 User — 2026-11-17T17:47:37.589Z
+
+> ↩︎ result: (175, 970, 112) shift px 7.2 along 5.70 lat -2.45 scale 1.07 [180.2 975. ]
+> (262, 872, 82) shift px 18.9 along 11.18 lat -2.45 scale 1.14 [275.9 884.8]
+> (330, 792, 58) shift px 30.5 along 21.06 lat -2.45 scale 1.25 [352.5 812.5]
+> (378, 742, 40) shift px 34.6 along 37.34 lat -2.45 scale 1.37 [403.5 765.3]
+> (423, 712, 26) shift px 55.4 along 39.98 lat -2.00 scale 0.94 [420.7 767.3]
+
+### 🤖 Claude — 2026-11-17T17:47:52.142Z
+
+> 🔧 **Bash** `{"command": "git checkout -- tools/match04/coins04.py && rm -f assets/textures/match04/coins04_water.json && git status --short && sed -n 185,200p src/gameplay/coins.ts && sed -n 218,232p src/gameplay/coins.ts", "description": "Revert water-coin attempt and read coin render code"}`
+
+### 🧑 User — 2026-11-17T17:47:52.255Z
+
+> ↩︎ result: const place = (time: number) => {
+>     defs.forEach((d, i) => {
+>       const f = course.sample(d.s);
+>       let scale = 1;
+>       if (collected[i]) {
+>         if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+>         const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
+>         if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+>         scale = 1 + k * 0.8;
+>         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
+>       } else {
+>         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
+>       }
+>       back.copy(f.tan).negate();
+>       // `?match08=1` / `?match04=1` picture coins: the face turns toward the approved view's camera (upright, faced like the painted coins)
+>       if (d.faceTo) back.set(d.faceTo[0] - p.x, 0, d.faceTo[2] - p.z).normalize();
+>     defs,
+>     collected,
+>     update(time, _dt, s, lat) {
+>       let picked = 0;
+>       for (let i = 0; i < defs.length; i++) {
+>         if (collected[i]) continue;
+>         const d = defs[i];
+>         const ds …[+210 chars]
+
+### 🤖 Claude — 2026-11-17T17:47:55.365Z
+
+> 🔧 **Bash** `{"command": "grep -n \"place(\" src/gameplay/coins.ts; sed -n 232,250p src/gameplay/coins.ts; grep -n \"coins.update\\|coins.place\\|coins\\.\\w*(\" src/game/Game.ts | head", "description": "Find where coin placement runs"}`
+
+### 🧑 User — 2026-11-17T17:47:55.405Z
+
+> ↩︎ result: 214:  place(0);
+> 233:      place(time);
+> 238:      place(0);
+>       }
+>       place(time);
+>       return picked;
+>     },
+>     resetUntil(s) {
+>       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
+>       place(0);
+>     },
+>   };
+> }
+> 386:    const got = coins.update(st.clock, dt, st.s, st.lat);
+> 512:    coins.resetUntil(-1);
+> 655:      coins.resetUntil(sTarget + 0.5);
+> 689:      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+
+### 🤖 Claude — 2026-11-17T17:48:09.247Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a; s=s.replace(a,b)\nrep(\"\"\"export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }\"\"\",\n\"\"\"export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number];\n  /** `?match04=1` milestone 3: resting height on the water, reached while the ride moves from settle[0] to settle[1] (s) */\n  h1?:  …[+2503 chars]`
+
+### 🧑 User — 2026-11-17T17:48:11.701Z
+
+> ↩︎ result: TSC OK
+
+### 🤖 Claude — 2026-11-17T17:48:19.471Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && node scripts/capture.mjs 04 --q=match04=1 --out=$S/v5/cap >/dev/null 2>&1; node scripts/capture.mjs 04 05 --out=$S/v5/def >/dev/null 2>&1; node scripts/capture.mjs 08 --q=match08=1 --out=$S/v5/m08 >/dev/null 2>&1; node scripts/capture.mjs 05 --q=\"ringa=26&nearfloor05=0\" --out=$S/v5/base >/dev/null 2>&1; git checkout -- qa/capture_log.json; python3 -I $S/pxdiff.py qa/match/04/04_NEW_m3_splash_864x1536.png $S/v5/cap/04.png; python3 -I $S/pxdiff.py qa/match/04/04_BEFORE_current_game_864x1536.png  …[+323 chars]`
+
+### 🧑 User — 2026-11-17T17:49:22.169Z
+
+> ↩︎ result: ['cap', '04.png']: 0 px differ (all), 0 below y0, max 0
+> ['def', '04.png']: 0 px differ (all), 0 below y0, max 0
+> ['def', '05.png']: 0 px differ (all), 0 below y0, max 0
+> ['m08', '08.png']: 0 px differ (all), 0 below y0, max 0
+> ['base', '05.png']: 0 px differ (all), 0 below y0, max 0
+
+### 🤖 Claude — 2026-11-17T17:49:23.344Z
+
+All protected views are 0 px. Now the riding frames and the gameplay tests.
+
+### 🤖 Claude — 2026-11-17T17:49:26.888Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad && node tools/match04/motion04.mjs qa/match/04/motion_m3/NEW match04=1 2>&1 | tail -8; node scripts/gameplay-test.mjs --q=match04=1 > $S/v5/gp_m3.txt 2>&1; python3 -I -c \"\nimport json;d=json.load(open('qa/gameplay_test_switch.json'));print(d['pass'], sum(d['checks'].values()), len(d['checks']), max(x.get('coins',0) for x in d['samples']), d['errors'])\"; mv qa/gameplay_test_switch.json qa/match/04/gameplay_test_match04_m3_final.json; node scripts/gameplay-test.mjs > $S/v5/gp_def.txt 2>&1; grep -c …[+131 chars]`
+
+### 🧑 User — 2026-11-17T17:50:11.469Z
+
+> ↩︎ result: f00_checkpoint s 77.61 lat 0 04 coins 1330
+> f03_forward3u s 80.575 lat 0 04 coins 1330
+> f06_forward6u s 83.765 lat 0 04 coins 1330
+> f10_forward10u s 87.515 lat 0 04 coins 1330
+> f15_forward15u s 92.814 lat 0 04 coins 1330
+> f20_forward20u s 97.518 lat 0 04 coins 1330
+> s_left_steer s 83.534 lat -1.65 04 coins 1350
+> s_right_steer s 83.662 lat 1.65 04 coins 1330
+> Traceback (most recent call last):
+>   File "<string>", line 2, in <module>
+>     import json;d=json.load(open('qa/gameplay_test_switch.json'));print(d['pass'], sum(d['checks'].values()), len(d['checks']), max(x.get('coins',0) for x in d['samples']), d['errors'])
+>                                                                                    ~~~^^^^^^^^^^^^^^^^^^^^^^
+> TypeError: unsupported operand type(s) for +: 'int' and 'dict'
+> 1
+>  M src/gameplay/coins.ts
+> ?? qa/match/04/gameplay_test_match04_m3_final.json
+> ?? qa/match/04/motion_m3/NEW/
+
+### 🤖 Claude — 2026-11-17T17:50:13.758Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;d=json.load(open('qa/match/04/gameplay_test_match04_m3_final.json'));c=d['checks'];print(d['pass'], {k:v for k,v in c.items()}, max(x.get('coins',0) for x in d['samples']), d['errors'])\"; git diff --quiet qa/gameplay_test.json && echo default-gameplay-json-identical", "description": "Read gameplay results"}`
+
+### 🧑 User — 2026-11-17T17:50:13.844Z
+
+> ↩︎ result: True {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.027, 'coins': 2240, 'hearts': 4, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}} 2240 []
+> default-gameplay-json-identical
+
+### 🤖 Claude — 2026-11-17T17:50:15.543Z
+
+Gameplay 8/8 with and without the switch: 91 coins, 2,240, default output byte-identical. Looking at the riding frames.
+
+### 🤖 Claude — 2026-11-17T17:50:17.694Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/motion_m3/NEW && montage f03_forward3u.png f06_forward6u.png f10_forward10u.png f15_forward15u.png f20_forward20u.png s_left_steer.png s_right_steer.png -tile 7x1 -geometry 320x569+2+2 /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v5/strip.png", "description": "Montage final riding frames"}`
+
+### 🧑 User — 2026-11-17T17:50:18.430Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:50:18.902Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/v5/strip.png"}`
+
+### 🧑 User — 2026-11-17T17:50:19.097Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T17:50:19.088Z
+
+[Image: original 2268x573, displayed at 2000x505. Multiply coordinates by 1.13 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T17:50:22.343Z
+
+Coins now rest on the water while riding, and the splash rides along at Benny's base. Committing step 5, then the APK.
+
+### 🤖 Claude — 2026-11-17T17:50:32.836Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && cat >> qa/match/04/NOTES.md <<'EOF'\n### Step 5 — coins on the water (`&coinwater04=0` = floating coins of M1/M2), on by default under match04\n* The painted perspective puts the five coins 7–55 px higher than any water point Benny can reach (a coin resting on the\n  water at its painted spot is geometrically impossible in this picture), so in the APPROVED VIEW each coin stays at its\n  painted spot (unchanged), and as soon as the ride moves on (0.3 → 4 u past the 04 checkpoint) it settles onto the water\n  (centre = radius + 0.05 u). Height only: pickup  …[+2084 chars]`
+
+### 🧑 User — 2026-11-17T17:50:49.319Z
+
+> ↩︎ result: 6cbbaf6b8202b319a59c9ddcf103bd0a7f314c00	refs/heads/claude/rainbow-s04-match-c3
+> 6cbbaf6b8202b319a59c9ddcf103bd0a7f314c00
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> 25:  // 04 (2026-11-17, qa/match/04/NOTES.md): solved offline (tools/match04/solve_cam04.py) so Benny's box lands on the
+
+### 🤖 Claude — 2026-11-17T17:50:52.600Z
+
+> 🔧 **Bash** `{"command": "(VITE_RAINBOW_Q05=\"match04=1\" npm run android:debug > /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk.log 2>&1; echo exit $?) ; tail -3 /tmp/claude-0/-home-user-rainbow-/abf990f6-a1f0-5689-93fc-a4e2ec5185aa/scratchpad/apk.log; find android -name \"*.apk\" -newer src/gameplay/coins.ts | head", "description": "Build the debug APK with match04 switch", "timeout": 1200000}`
+
