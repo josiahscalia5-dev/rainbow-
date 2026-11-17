@@ -63,8 +63,8 @@
   },
   {
    "path": ".gitignore",
-   "bytes": 653,
-   "sha256": "53fed7146b3051bb134991448d2a4d6dabe46bc0aef7bcb7f7ac70327ad68480"
+   "bytes": 671,
+   "sha256": "804dc2b5a5d6f61f32602941496651d0d0b2bc1a0cbb5fb72187ad5d62bf4f9e"
   },
   {
    "path": ".mcp.json.template",
@@ -573,8 +573,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4003,
-   "sha256": "70521b4b0bab64f17721dc7b0b9103af685a0f35ad50498c6f04e6bc338d404a"
+   "bytes": 3927,
+   "sha256": "8e66dd79f667ee9b7c2def406cf65def382480ba722e5b270a5855097b919e7e"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -583,8 +583,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11170,
-   "sha256": "a6aae1887536c7cf7252e1b2cff5f02ece8bf39061a3991b77efdb22b7600840"
+   "bytes": 11179,
+   "sha256": "3061e1902049cb113e164d76d312005a5bbc1795e68b1e23b56eaf6cd21387f7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2170,6 +2170,21 @@
    "path": "qa/pilot05/full_reference_match/recovery_s018/tests/gameplay_match05.json",
    "bytes": 14656,
    "sha256": "08b702d1dbfce33fb55ee7d4a7f820bf8a11795e0eb2b6ff852e9b74dc65b39b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s01Av/05_match05_at_recovery.png",
+   "bytes": 2154090,
+   "sha256": "e5706b96c42cfb4d0bd1ce0281b1b50ef0f80705c721bca466b667beb87e2d22"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s01Av/match05_FULL_FRAME_METRICS.json",
+   "bytes": 461,
+   "sha256": "d49580273e0e411258e1479c9a7d0336010b4cccc506911596588f65be4f5153"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/recovery_s01Av/match05_REGION_METRICS.json",
+   "bytes": 2571,
+   "sha256": "4e4575f574f495e875be75c5bbb9bed4dfc6f7f437234619f49845966f48e0fe"
   },
   {
    "path": "qa/pilot05/full_reference_match/stack_2340/05_match05.png",
@@ -7675,6 +7690,26 @@
    "path": "qa/tools_check/blender_2026-11-16/screen05_camera_lock_CYCLES.png",
    "bytes": 856391,
    "sha256": "2b628c15b730337cbf2cee894bc93075953d250638884cb17b42f02fa0169156"
+  },
+  {
+   "path": "qa/tools_check/blender_restore_s01Av/paddles_BLENDER_EEVEE.png",
+   "bytes": 202572,
+   "sha256": "ff942bf174eccbc9d309db23a61d72c332a4e45e286d630774d5ca4549cf8dc7"
+  },
+  {
+   "path": "qa/tools_check/blender_restore_s01Av/paddles_BLENDER_WORKBENCH.png",
+   "bytes": 191818,
+   "sha256": "6dd593f06c19ef8d50db8ca0e4a208c7420088c35a3c06eeea9c041afe59ccb4"
+  },
+  {
+   "path": "qa/tools_check/blender_restore_s01Av/paddles_CYCLES.png",
+   "bytes": 208353,
+   "sha256": "96aac5206d103e5629df23c03055744f64f80b7aaa4e5e1d6665a527c9229332"
+  },
+  {
+   "path": "qa/tools_check/blender_restore_s01Av/results.json",
+   "bytes": 8535,
+   "sha256": "1fd636f26e2248db1dc739aec576c08204eb6b719574d1ab733ee0e1c01fffdd"
   },
   {
    "path": "qa/tools_check/blender_transfer_s018/REPORT.md",

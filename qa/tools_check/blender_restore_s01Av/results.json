@@ -1,0 +1,514 @@
+{
+ "blender": "5.3.0",
+ "build_date": "2026-11-10",
+ "bpy": true,
+ "background": true,
+ "engines": {
+  "BLENDER_WORKBENCH": true,
+  "BLENDER_EEVEE": true,
+  "CYCLES": true
+ },
+ "renders": [
+  {
+   "engine": "BLENDER_WORKBENCH",
+   "ok": true,
+   "seconds": 2.6,
+   "file": "qa/tools_check/blender_restore_s01Av/paddles_BLENDER_WORKBENCH.png",
+   "camera": "Cam05_game",
+   "background_rgb": [
+    0.227,
+    0.227,
+    0.227
+   ],
+   "foreground_share": 0.0216
+  },
+  {
+   "engine": "BLENDER_EEVEE",
+   "ok": true,
+   "seconds": 14.9,
+   "file": "qa/tools_check/blender_restore_s01Av/paddles_BLENDER_EEVEE.png",
+   "camera": "Cam05_game",
+   "background_rgb": [
+    0.796,
+    0.796,
+    0.796
+   ],
+   "foreground_share": 0.0193
+  },
+  {
+   "engine": "CYCLES",
+   "ok": true,
+   "seconds": 0.4,
+   "file": "qa/tools_check/blender_restore_s01Av/paddles_CYCLES.png",
+   "camera": "Cam05_game",
+   "background_rgb": [
+    0.796,
+    0.796,
+    0.796
+   ],
+   "foreground_share": 0.0193
+  }
+ ],
+ "blends": [
+  {
+   "file": "qa/pilot05/marble_feas/blender/marble05_projection.blend",
+   "ok": true,
+   "objects": 4,
+   "meshes": 2,
+   "faces": 400788,
+   "cameras": [
+    "Cam05_MarbleLocked",
+    "Cam05_MarbleMoved_1R"
+   ]
+  },
+  {
+   "file": "qa/pilot05/proj/tunnel/lid/lids05.blend",
+   "ok": true,
+   "objects": 7,
+   "meshes": 6,
+   "faces": 7149,
+   "cameras": [
+    "Cam05_game"
+   ]
+  },
+  {
+   "file": "qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+   "ok": true,
+   "objects": 32,
+   "meshes": 29,
+   "faces": 20096,
+   "cameras": [
+    "Cam05"
+   ]
+  },
+  {
+   "file": "qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+   "ok": true,
+   "objects": 18,
+   "meshes": 15,
+   "faces": 18304,
+   "cameras": [
+    "Cam05"
+   ]
+  },
+  {
+   "file": "qa/worldlabs/05/blender/screen05_layout.blend",
+   "ok": true,
+   "objects": 17,
+   "meshes": 15,
+   "faces": 18304,
+   "cameras": []
+  },
+  {
+   "file": "qa/worldlabs/05/pilot/draft/import/draft05.blend",
+   "ok": true,
+   "objects": 5,
+   "meshes": 2,
+   "faces": 44743,
+   "cameras": [
+    "rear_cam"
+   ]
+  },
+  {
+   "file": "qa/worldlabs/05/pilot/full/import/full05.blend",
+   "ok": true,
+   "objects": 5,
+   "meshes": 2,
+   "faces": 51254,
+   "cameras": [
+    "rear_cam"
+   ]
+  }
+ ],
+ "glbs": {
+  "assets/models/benny.glb": {
+   "ok": true,
+   "meshes": 27,
+   "names": [
+    "blushL",
+    "blushR",
+    "eyeL_dizzy",
+    "eyeL_happy",
+    "eyeR_dizzy",
+    "eyeR_happy",
+    "fur_armL",
+    "fur_armR",
+    "fur_body",
+    "fur_footL",
+    "fur_footR",
+    "fur_pom"
+   ],
+   "materials": 18,
+   "images": 12,
+   "armatures": 0,
+   "actions": 4
+  },
+  "assets/models/rainbow_girl.glb": {
+   "ok": true,
+   "meshes": 165,
+   "names": [
+    "back_pocket",
+    "back_pocket.001",
+    "bow_knot",
+    "bow_loop",
+    "bow_loop.001",
+    "bow_star",
+    "bow_tail",
+    "bow_tail.001",
+    "browL",
+    "browR",
+    "cargo_flapL",
+    "cargo_flapR"
+   ],
+   "materials": 26,
+   "images": 6,
+   "armatures": 0,
+   "actions": 9
+  },
+  "assets/models/lids05.glb": {
+   "ok": true,
+   "meshes": 6,
+   "names": [
+    "lid05_L1",
+    "lid05_L2",
+    "lid05_L3",
+    "lid05_R1",
+    "lid05_R2",
+    "lid05_R3"
+   ],
+   "materials": 1,
+   "images": 1,
+   "armatures": 0,
+   "actions": 0,
+   "paddles": {
+    "lid05_L1": {
+     "verts_unique": 1264,
+     "faces": 2560,
+     "tris": 2560,
+     "bbox_min": [
+      -5.3111,
+      87.6479,
+      -37.8866
+     ],
+     "bbox_max": [
+      -4.0715,
+      101.38,
+      -36.2556
+     ],
+     "pos_sha": "ee87b2253034fbbb"
+    },
+    "lid05_L2": {
+     "verts_unique": 428,
+     "faces": 872,
+     "tris": 872,
+     "bbox_min": [
+      -5.8064,
+      105.9286,
+      -39.9206
+     ],
+     "bbox_max": [
+      -5.1811,
+      124.583,
+      -37.8207
+     ],
+     "pos_sha": "7b371c111240e0a5"
+    },
+    "lid05_L3": {
+     "verts_unique": 92,
+     "faces": 180,
+     "tris": 180,
+     "bbox_min": [
+      -3.7352,
+      125.954,
+      -40.3366
+     ],
+     "bbox_max": [
+      -2.4289,
+      126.8115,
+      -39.3295
+     ],
+     "pos_sha": "8b906b92f64cbc9d"
+    },
+    "lid05_R1": {
+     "verts_unique": 1492,
+     "faces": 2994,
+     "tris": 2994,
+     "bbox_min": [
+      8.6494,
+      93.3616,
+      -41.1605
+     ],
+     "bbox_max": [
+      9.5798,
+      113.3893,
+      -37.5468
+     ],
+     "pos_sha": "a6140fabb719de49"
+    },
+    "lid05_R2": {
+     "verts_unique": 356,
+     "faces": 726,
+     "tris": 726,
+     "bbox_min": [
+      7.5853,
+      116.6677,
+      -39.1533
+     ],
+     "bbox_max": [
+      9.3582,
+      126.1887,
+      -36.9266
+     ],
+     "pos_sha": "6d8132324662bc1c"
+    },
+    "lid05_R3": {
+     "verts_unique": 104,
+     "faces": 208,
+     "tris": 208,
+     "bbox_min": [
+      5.4926,
+      126.0417,
+      -39.3566
+     ],
+     "bbox_max": [
+      7.2715,
+      126.9982,
+      -38.4899
+     ],
+     "pos_sha": "34ee8ddca3d56341"
+    }
+   }
+  }
+ },
+ "roundtrip": {
+  "glb_bytes": 992168,
+  "src_meshes": [
+   "lid05_L1",
+   "lid05_L2",
+   "lid05_L3",
+   "lid05_R1",
+   "lid05_R2",
+   "lid05_R3"
+  ],
+  "back_meshes": [
+   "lid05_L1",
+   "lid05_L2",
+   "lid05_L3",
+   "lid05_R1",
+   "lid05_R2",
+   "lid05_R3"
+  ],
+  "blend_vs_roundtrip_identical": {
+   "lid05_L1": true,
+   "lid05_L2": true,
+   "lid05_L3": true,
+   "lid05_R1": true,
+   "lid05_R2": true,
+   "lid05_R3": true
+  },
+  "blend_vs_game_glb_identical": {
+   "lid05_L1": true,
+   "lid05_L2": true,
+   "lid05_L3": true,
+   "lid05_R1": true,
+   "lid05_R2": true,
+   "lid05_R3": true
+  },
+  "src": {
+   "lid05_L1": {
+    "verts_unique": 1264,
+    "faces": 2456,
+    "tris": 2560,
+    "bbox_min": [
+     -5.3111,
+     87.6479,
+     -37.8866
+    ],
+    "bbox_max": [
+     -4.0715,
+     101.38,
+     -36.2556
+    ],
+    "pos_sha": "ee87b2253034fbbb"
+   },
+   "lid05_L2": {
+    "verts_unique": 428,
+    "faces": 814,
+    "tris": 872,
+    "bbox_min": [
+     -5.8064,
+     105.9286,
+     -39.9206
+    ],
+    "bbox_max": [
+     -5.1811,
+     124.583,
+     -37.8207
+    ],
+    "pos_sha": "7b371c111240e0a5"
+   },
+   "lid05_L3": {
+    "verts_unique": 92,
+    "faces": 154,
+    "tris": 180,
+    "bbox_min": [
+     -3.7352,
+     125.954,
+     -40.3366
+    ],
+    "bbox_max": [
+     -2.4289,
+     126.8115,
+     -39.3295
+    ],
+    "pos_sha": "8b906b92f64cbc9d"
+   },
+   "lid05_R1": {
+    "verts_unique": 1492,
+    "faces": 2876,
+    "tris": 2994,
+    "bbox_min": [
+     8.6494,
+     93.3616,
+     -41.1605
+    ],
+    "bbox_max": [
+     9.5798,
+     113.3893,
+     -37.5468
+    ],
+    "pos_sha": "a6140fabb719de49"
+   },
+   "lid05_R2": {
+    "verts_unique": 356,
+    "faces": 672,
+    "tris": 726,
+    "bbox_min": [
+     7.5853,
+     116.6677,
+     -39.1533
+    ],
+    "bbox_max": [
+     9.3582,
+     126.1887,
+     -36.9266
+    ],
+    "pos_sha": "6d8132324662bc1c"
+   },
+   "lid05_R3": {
+    "verts_unique": 104,
+    "faces": 177,
+    "tris": 208,
+    "bbox_min": [
+     5.4926,
+     126.0417,
+     -39.3566
+    ],
+    "bbox_max": [
+     7.2715,
+     126.9982,
+     -38.4899
+    ],
+    "pos_sha": "34ee8ddca3d56341"
+   }
+  },
+  "back": {
+   "lid05_L1": {
+    "verts_unique": 1264,
+    "faces": 2560,
+    "tris": 2560,
+    "bbox_min": [
+     -5.3111,
+     87.6479,
+     -37.8866
+    ],
+    "bbox_max": [
+     -4.0715,
+     101.38,
+     -36.2556
+    ],
+    "pos_sha": "ee87b2253034fbbb"
+   },
+   "lid05_L2": {
+    "verts_unique": 428,
+    "faces": 872,
+    "tris": 872,
+    "bbox_min": [
+     -5.8064,
+     105.9286,
+     -39.9206
+    ],
+    "bbox_max": [
+     -5.1811,
+     124.583,
+     -37.8207
+    ],
+    "pos_sha": "7b371c111240e0a5"
+   },
+   "lid05_L3": {
+    "verts_unique": 92,
+    "faces": 180,
+    "tris": 180,
+    "bbox_min": [
+     -3.7352,
+     125.954,
+     -40.3366
+    ],
+    "bbox_max": [
+     -2.4289,
+     126.8115,
+     -39.3295
+    ],
+    "pos_sha": "8b906b92f64cbc9d"
+   },
+   "lid05_R1": {
+    "verts_unique": 1492,
+    "faces": 2994,
+    "tris": 2994,
+    "bbox_min": [
+     8.6494,
+     93.3616,
+     -41.1605
+    ],
+    "bbox_max": [
+     9.5798,
+     113.3893,
+     -37.5468
+    ],
+    "pos_sha": "a6140fabb719de49"
+   },
+   "lid05_R2": {
+    "verts_unique": 356,
+    "faces": 726,
+    "tris": 726,
+    "bbox_min": [
+     7.5853,
+     116.6677,
+     -39.1533
+    ],
+    "bbox_max": [
+     9.3582,
+     126.1887,
+     -36.9266
+    ],
+    "pos_sha": "6d8132324662bc1c"
+   },
+   "lid05_R3": {
+    "verts_unique": 104,
+    "faces": 208,
+    "tris": 208,
+    "bbox_min": [
+     5.4926,
+     126.0417,
+     -39.3566
+    ],
+    "bbox_max": [
+     7.2715,
+     126.9982,
+     -38.4899
+    ],
+    "pos_sha": "34ee8ddca3d56341"
+   }
+  }
+ }
+}

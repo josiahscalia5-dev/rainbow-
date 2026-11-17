@@ -39,3 +39,5 @@ backups/.live/
 .idea/
 .vscode/
 *.blend1
+
+.playwright-mcp/
