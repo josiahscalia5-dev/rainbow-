@@ -148,13 +148,20 @@ const RIVER05_PAL = {
  * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
  */
 const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+/**
+ * `?match05=1` (2026-11-17): the user's one address for the approved Screen 05 — every 05 match switch at once (approved
+ * water, tunnel walls, gold rings, near gold frame, Blender paddles, sharp riding water; flow along the streaks is
+ * `projflow05=2`, read in attachProj05). Without it nothing changes.
+ */
+const MATCH05_KEYS = ['proj05', 'projwall05', 'projring05', 'projframe05', 'projlid05', 'projnear05'];
 const q05 = (key: string): boolean => {
+  const hit = (qs: URLSearchParams) => qs.get(key) === '1' || (MATCH05_KEYS.includes(key) && qs.get('match05') === '1');
   try {
-    if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+    if (typeof location !== 'undefined' && hit(new URLSearchParams(location.search))) return true;
   } catch {
     /* no location (vite-node / workers) */
   }
-  return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
+  return BUILD_Q05 !== '' && hit(new URLSearchParams(BUILD_Q05));
 };
 /** the same switch reader for other modules (Game.ts: `?glow05=1`) */
 export const flag05 = q05;
@@ -1683,14 +1690,14 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   // still, and `projflowmix05` (share of the picture that travels; default 0.5, 1 = all) keeps the rest of the approved
   // picture fixed where it is painted — measured (qa/pilot05/proj/flow2/NOTES.md): similarity to the unflowed design
   // over a cycle 0.72 (old flow) -> 0.93, never below 0.90; direction toward the camera in every tracked frame pair.
-  const FLOW2 = qs.get('projflow05') === '2';
+  const FLOW2 = qs.get('projflow05') === '2' || (qs.get('match05') === '1' && qs.get('projflow05') === null);
   u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };
   u.uPjWN = { value: empty }; u.uPjWT = { value: empty };
   // `&projnear05=1` (2026-11-17, tools/proj05/near_bake.py, qa/pilot05/proj/near/NOTES.md): the sharp near tile
   // proj05_T2 (≈ 220 texels per unit, the approved crisp band just ahead of Benny, mirrored along s) takes over wherever
   // the camera has approached the river (exact AND near layer magnified), plus the approved near-field flares — the
   // riding view no longer melts into a pastel blur; the locked view (nothing magnified) is unchanged.
-  const NEAR = qs.get('projnear05') === '1';
+  const NEAR = q05('projnear05');
   u.uPjNear = { value: new THREE.Vector4(0, qn('projglint05', 1), 512, 960) };      // y: near-flare gain (`projglint05`)
   u.uPjT2 = { value: empty }; u.uPjWT2 = { value: empty };
   u.uPjT2S = { value: new THREE.Vector2(0, 1) };

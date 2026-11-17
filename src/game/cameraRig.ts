@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import { WORLD } from '../world/course';
 import type { Course, StageId } from '../world/course';
 import type { TubePath } from '../world/tube';
+import { applyMatchCam } from './match';
 
 export interface CamParams {
   back: number; // distance behind Benny
@@ -35,6 +36,8 @@ export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
   '09': { back: 6.2, up: 3.7, ahead: 15, lookUp: 0.6, fov: 62, latFollow: 0.8, roll: 0.3 },
   '10': { back: 5.8, up: 3.4, ahead: 11, lookUp: 1.2, fov: 62, latFollow: 0.8, roll: 0.2 },
 };
+// `?matchNN=1` (src/game/match.ts): the approved picture's camera framing for that screen; no switch: no change
+applyMatchCam(STAGE_CAM);
 
 /** the blended (required) numeric keys; 05-only extras (yaw, deadZone) are read directly from STAGE_CAM */
 type BlendKey = 'back' | 'up' | 'ahead' | 'lookUp' | 'fov' | 'latFollow' | 'roll';
