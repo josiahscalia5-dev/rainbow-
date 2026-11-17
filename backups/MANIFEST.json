@@ -719,7 +719,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13546,
-   "sha256": "d84a39c6723c9d1bf08d435c8d01ae05497549f07788fdc3a0fd468dc053a8fc"
+   "sha256": "43b9ee8b1642f702f980273ad383c0481871425055988424684c1348ff98170b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -770,6 +770,11 @@
    "path": "backups/source-package/Rainbow_GitHub_Autosave_5_Minute_Claude_Prompt.md",
    "bytes": 11339,
    "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
+  },
+  {
+   "path": "builds/rainbow-debug-05-2026-11-17-r3.apk",
+   "bytes": 31923212,
+   "sha256": "88b380dc102017ed4c50b012c0909d53327761e7e732e653724399b65de27c80"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1447,6 +1452,21 @@
    "sha256": "8fa11a61937162a54081f54f33b33aa6fffb703cec55a77980e11400b8875e8d"
   },
   {
+   "path": "qa/match/05/r3_final/gameplay_default.json",
+   "bytes": 14655,
+   "sha256": "0da64db084852ec852424654b51ed4683d1390b744aca2d0a58e69cfb1e12b40"
+  },
+  {
+   "path": "qa/match/05/r3_final/gameplay_match05_1.json",
+   "bytes": 14655,
+   "sha256": "8a80232f7fd9a7dfd543f8e40e55293f1dcc90d370268683234817d8629744de"
+  },
+  {
+   "path": "qa/match/05/r3_final/gameplay_match05_tgtvis05_tgtfill05_tgtwall05.json",
+   "bytes": 14690,
+   "sha256": "2bb80adaf2f3e9cc94e42e75277d77f7e418ef2cad1dbaf51a41ea6baa4b9f3f"
+  },
+  {
    "path": "qa/match/05/r3_final/new_FULL_FRAME_METRICS.json",
    "bytes": 429,
    "sha256": "184b4c9110981bf19ec86b4904618619a9fe37e4925c56be2f7770c3b219aca6"
@@ -1520,6 +1540,71 @@
    "path": "qa/match/05/r3_final/riding_BEFORE_M1/steer_R_080.png",
    "bytes": 2046260,
    "sha256": "6dfa61c93dccb6ac1ba5f63b197b41ff1fcde30af07d44d7bb71104b84cd64d1"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/move_03.png",
+   "bytes": 2073950,
+   "sha256": "60c8a40ad9a90a39a304827c2068b5a0b3e9441fb6ce1ab112835bb547b7f9d5"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/move_06.png",
+   "bytes": 2042354,
+   "sha256": "c8803ea96706a3c417d0852b397153437558f63a6726edc921e278b1748f1af3"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/move_10.png",
+   "bytes": 2061611,
+   "sha256": "1297127ddbae0c090aa6e270e77f9a37793e51189b76b6be3d580f8384f13c53"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/move_15.png",
+   "bytes": 2066599,
+   "sha256": "b73644d95e6df533469fdd1a41b71213cad42dc1d5b5e2ea5ee75597b5b86f53"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/move_20.png",
+   "bytes": 2060452,
+   "sha256": "08eab47b6f768ba0f7c3192fdcb3c145503de906a47fe5cca94fb3e5e0f315be"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/move_log.json",
+   "bytes": 1966,
+   "sha256": "fd21303d696c2997d630db17fbe21257285a1a4fbc37f4b338ed2736f6095bbf"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/steer_L_025.png",
+   "bytes": 2097074,
+   "sha256": "9b2a50c6310c2d0687de6ad7f2c111406f97f747a871f121a6ea8fd837e771c9"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/steer_L_050.png",
+   "bytes": 2016617,
+   "sha256": "1015e4885f0099ab94b6cd283fc5ca03ba8303b61d26ea79d3daedd55bd002d8"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/steer_L_080.png",
+   "bytes": 1999362,
+   "sha256": "5dae72ceb7de6e2e43c4da83c7dc0c194c4ae2b19601aa9acff0e2f4b79102e3"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/steer_R_025.png",
+   "bytes": 2088129,
+   "sha256": "ead71e7c2fe7b1da78b78c5bfd5ce241f24905c8cfda722f7f961cedbdb7b043"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/steer_R_050.png",
+   "bytes": 2063342,
+   "sha256": "d14322ebf0810461942c521678de89dff847db79f8c361708f287d28870e1a54"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_NEW/steer_R_080.png",
+   "bytes": 2041075,
+   "sha256": "2e7ab06478713764c610a751bcbf39c53c1bcb8766c14efcd07b67975ec05e87"
+  },
+  {
+   "path": "qa/match/05/r3_final/riding_changed_px_gt8.json",
+   "bytes": 279,
+   "sha256": "19e31d5229bcdf6ea4977c28079b0bc3834ad43714725a05be98f3da49f68876"
   },
   {
    "path": "qa/match/05/r3_final/scenery_bands.txt",

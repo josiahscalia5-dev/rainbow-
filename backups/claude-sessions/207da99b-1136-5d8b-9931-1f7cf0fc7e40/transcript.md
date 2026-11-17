@@ -1391,3 +1391,195 @@ Scenery 93.3 → 93.7 % within 20 (mean 5.60 → 5.32). Now the final riding fra
 
 > 🔧 **Bash** `{"command": "D=qa/match/05/r3_final && node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1' --out=$D/riding_BEFORE_M1 --d=3,6,10,15,20 --steer=-1,1 > /dev/null 2>&1; node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1' --out=$D/riding_NEW --d=3,6,10,15,20 --steer=-1,1 > /dev/null 2>&1; ls $D/riding_NEW | tr '\\n' ' '; python3 -I -c \"\nfrom PIL import Image; import numpy as np, os, json\nD='$D'; r={}\nfor f in sorted(os.listdir(D+'/riding_NEW')):\n  if f.endswith('.png'):\n    a=np.asarray(Image.open(D+'/riding_BEFORE_M1/'+f).convert('RGB'),int);b=np.asarray(Image …[+245 chars]`
 
+### 🧑 User — 2026-11-17T17:53:13.595Z
+
+> ↩︎ result: move_03.png move_06.png move_10.png move_15.png move_20.png move_log.json steer_L_025.png steer_L_050.png steer_L_080.png steer_R_025.png steer_R_050.png steer_R_080.png {'move_03.png': 25860, 'move_06.png': 26666, 'move_10.png': 26763, 'move_15.png': 26289, 'move_20.png': 28450, 'steer_L_025.png': 22832, 'steer_L_050.png': 37805, 'steer_L_080.png': 57357, 'steer_R_025.png': 26348, 'steer_R_050.png': 45239, 'steer_R_080.png': 65307}
+
+### 🤖 Claude — 2026-11-17T17:53:18.315Z
+
+> 🔧 **Bash** `{"command": "D=qa/match/05/r3_final && S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nfrom PIL import Image\nfs=['move_10','move_20','steer_R_080']\nim=Image.new('RGB',(432*3+20,768*2+10),'white')\nfor i,f in enumerate(fs):\n  im.paste(Image.open('$D/riding_BEFORE_M1/%s.png'%f).convert('RGB').resize((432,768)),(i*442,0))\n  im.paste(Image.open('$D/riding_NEW/%s.png'%f).convert('RGB').resize((432,768)),(i*442,778))\nim.save('$S/final_move.png')\"", "description": "Overview of far riding frames"}`
+
+### 🧑 User — 2026-11-17T17:53:19.370Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:53:21.527Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/final_move.png"}`
+
+### 🧑 User — 2026-11-17T17:53:21.784Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:53:25.953Z
+
+Clear result in the riding frames: M1 (top) shows the green-teal blobs at 10 u, 20 u and steering right; NEW (bottom) has none. Running the protection proofs and gameplay tests next.
+
+### 🤖 Claude — 2026-11-17T17:53:30.702Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && rm -rf $S/pd $S/pb $S/pm $S/pn && node scripts/capture.mjs 05 --out=$S/pd > /dev/null 2>&1; node scripts/capture.mjs 05 --q=\"match05=1\" --out=$S/pb > /dev/null 2>&1; node scripts/capture.mjs 05 --q=\"match05=1&tgtvis05=1\" --out=$S/pm > /dev/null 2>&1; node scripts/capture.mjs 05 --q=\"ringa=26&nearfloor05=0\" --out=$S/pp > /dev/null 2>&1; cmp $S/pd/05.png qa/pilot05/current_default_05.png && echo DEFAULT_0px; cmp $S/pb/05.png qa/match/05/02_BEFORE_match05.png && echo BEFORE_match05_0px; cmp $ …[+264 chars]`
+
+### 🧑 User — 2026-11-17T17:54:42.882Z
+
+> ↩︎ result: DEFAULT_0px
+> BEFORE_match05_0px
+> M1_0px
+> PROTECTED_BEFORE_0px
+> continuity-test.ts
+> gameplay-test.mjs
+
+### 🤖 Claude — 2026-11-17T17:54:44.821Z
+
+> 🔧 **Bash** `{"command": "grep -n \"argv\\|--q\\|out\" scripts/gameplay-test.mjs | head -8; grep -n \"continuity\" package.json", "description": "Check test script options"}`
+
+### 🧑 User — 2026-11-17T17:54:44.861Z
+
+> ↩︎ result: 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 26:await page.waitForFunction(() => window.__rainbow?.ready, null, { timeout: 240000 });
+> 32:  const out = { checks: {}, samples: [], plunge: {} };
+> 44:  out.checks.pauseFreezes = { pass: Math.abs(sPaused - sBefore) < 1e-6 && sAfter > sPaused, sBefore, sPaused, sAfter };
+> 72:    if (yj > maxJump) { maxJump = yj; out.maxJumpAt = { s: st.s, s1: s1.s, stage: st.stage, y0: st.bennyY, y1: s1.bennyY, t: +t.toFixed(3) }; }
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+
+### 🤖 Claude — 2026-11-17T17:54:52.390Z
+
+> 🔧 **Bash** `{"command": "D=qa/match/05/r3_final && node scripts/gameplay-test.mjs --q=none05=0 --out=$D/gameplay_default.json > /tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/g0.log 2>&1; node scripts/gameplay-test.mjs --q=match05=1 --out=$D/gameplay_match05_1.json > /dev/null 2>&1; node scripts/gameplay-test.mjs \"--q=match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1\" --out=$D/gameplay_match05_tgtvis05_tgtfill05_tgtwall05.json > /dev/null 2>&1; for f in $D/gameplay_*.json; do python3 -I -c \"\nimport json,sys; o=json.load(open('$f')); c=o['checks']; p=sum(1 for v in c.value …[+322 chars]`
+
+### 🧑 User — 2026-11-17T17:55:16.837Z
+
+> ↩︎ result: gameplay_default.json 8/8 [('realCoinPickups', {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91})]
+> gameplay_match05_1.json 8/8 [('realCoinPickups', {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91})]
+> gameplay_match05_tgtvis05_tgtfill05_tgtwall05.json 8/8 [('realCoinPickups', {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91})]
+>  M qa/capture_log.json
+
+### 🤖 Claude — 2026-11-17T17:55:19.060Z
+
+Gameplay 8/8 in all three configurations, 91 coins / 2,240 each. Now the continuity test and the type check.
+
+### 🤖 Claude — 2026-11-17T17:55:20.509Z
+
+> 🔧 **Bash** `{"command": "git checkout -- qa/capture_log.json && npm run -s test:continuity 2>&1 | tail -4; npx tsc --noEmit -p . && echo TSC_OK; sha256sum -c scripts/reference.sha256 | grep -c \": OK\"", "description": "Continuity test, tsc, reference hashes", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T17:55:24.219Z
+
+> ↩︎ result: "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+> TSC_OK
+> 13
+
+### 🤖 Claude — 2026-11-17T17:55:26.463Z
+
+> 🔧 **Bash** `{"command": "npm run -s test:continuity 2>&1 | grep -i \"pass\\|fail\\|ok\\\"\" | head -5; git diff --stat HEAD -- qa/ | tail -2", "description": "Check continuity verdict", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T17:55:27.230Z
+
+> ↩︎ result: "ok": true,
+
+### 🤖 Claude — 2026-11-17T17:55:29.385Z
+
+Continuity is OK. Next is the APK build: checking how the earlier match05 APK was built.
+
+### 🤖 Claude — 2026-11-17T17:55:30.677Z
+
+> 🔧 **Bash** `{"command": "cat builds/rainbow-debug-match05-2026-11-17.md | head -20; grep -n \"match05\" src/**/*.ts src/*.ts 2>/dev/null | grep -i \"BUILD_Q05\\|VITE\\|on05\\|q05(\" | head -5", "description": "Read previous APK notes"}`
+
+### 🧑 User — 2026-11-17T17:55:30.725Z
+
+> ↩︎ result: # rainbow-debug-match05-2026-11-17.apk — EXPERIMENT build (not the default game)
+> 
+> * Built 2026-11-17 ~02:43 UTC, session 01VCMXob, from commit `aefa92b` (snapshot of the 156 build-input files, all verified
+>   identical to that commit). It holds no half-finished specialist work.
+> * Command: `VITE_RAINBOW_Q05="match05=1" npm run android:debug`, so Screen 05 shows the `?match05=1` look (checkpoint cp3:
+>   83.6 % of pixels within 20 levels of `references/05_flow_into_the_current.png`). All 11 screens are in it.
+> * Verified: Screen 05 captured from the packaged web bundle with NO URL switches == the `?match05=1` capture (0 px);
+>   the APK's 70 web files are byte-identical to that bundle.
+> * Package `com.rainbow.washergame` 1.0 (versionCode 1), minSdk 22, targetSdk 34, debug-signed (Android Debug certificate).
+>   SHA-256 `ca139ac35dfd40321916138dd6e6b59e1ef5408da6d42acf41b0975c07bb8b1b`, 25,034,941 bytes.
+> * The Google Flow videos are not in the repository (`public/video/` holds only a placeholder), so the opening and the
+>   ending play the real-time 3D cinematic fallback (`docs/FLOW_VIDEO.md`).
+> * Not tested on a phone or emulator (none here); no on-device performance numbers yet.
+> src/vfx/proj05T …[+164 chars]
+
+### 🤖 Claude — 2026-11-17T17:55:35.534Z
+
+> 🔧 **Bash** `{"command": "grep -n \"coins05tot\\|flag05\\|MATCH05\\|location\" src/gameplay/coins.ts | head -6; git add -A qa/match/05 tools/match05 && git commit -qm \"Screen 05 M2 round 3: final APPROVED | BEFORE (M1) | NEW numbers, riding frames 3-20 u + steering, gameplay 8/8 x3 (91 / 2,240), proofs 0 px\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCKjcx6k2Jb2JrspXSJ\"; git push -q origin claude/rainbow-s05-match-c3 2>&1|tail -1; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s05-match-c3", "description": "Checkpoin …[+38 chars]`
+
+### 🧑 User — 2026-11-17T17:55:41.447Z
+
+> ↩︎ result: 17: * `?coins05tot=1` (on with `?coins05=1` / `?match05=1`; explicit `=0` = off; Screen 05 agent 2026-11-17, qa/match/05/NOTES.md):
+> 36:  try { if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('coins05tot') === '0') return false; } catch { /* no location */ }
+> 37:  return on05('coins05tot');
+> 131:  /** `?coins05tot` only: lateral used by the pickup test instead of `lat` (drawn position unchanged) */
+> b5edc524cdfcb32aebbfbea7ee7ce1bd9fe042d3
+> b5edc524cdfcb32aebbfbea7ee7ce1bd9fe042d3	refs/heads/claude/rainbow-s05-match-c3
+
+### 🤖 Claude — 2026-11-17T17:55:42.402Z
+
+Checkpoint pushed (`b5edc52`). Building the APK now (one heavy job).
+
+### 🤖 Claude — 2026-11-17T17:55:44.881Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && VITE_RAINBOW_Q05=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1\" npm run android:debug > $S/apk.log 2>&1; echo exit $?; tail -5 $S/apk.log; find android -name \"*.apk\" -newer $S/apk.log -o -name \"*.apk\" -mmin -30 2>/dev/null | head", "description": "Build experiment APK with kept switches", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-17T17:57:20.962Z
+
+> ↩︎ result: exit 0
+> > Task :capacitor-cordova-android-plugins:bundleDebugAar
+> > Task :capacitor-cordova-android-plugins:assembleDebug
+> 
+> BUILD SUCCESSFUL in 1m 29s
+> 82 actionable tasks: 82 executed
+> android/app/build/outputs/apk/debug/app-debug.apk
+
+### 🤖 Claude — 2026-11-17T17:57:26.041Z
+
+> 🔧 **Bash** `{"command": "A=android/app/build/outputs/apk/debug/app-debug.apk && grep -l \"tgtfill05=3&tgtwall05=1\" dist/assets/*.js | head -2; unzip -l $A | grep -c \"assets/public/\"; unzip -l $A | grep -E \"proj05_E|proj05_lut\" | awk '{print $4}' | head; cp $A builds/rainbow-debug-05-2026-11-17-r3.apk && sha256sum builds/rainbow-debug-05-2026-11-17-r3.apk && stat -c %s builds/rainbow-debug-05-2026-11-17-r3.apk; git check-attr filter -- builds/rainbow-debug-05-2026-11-17-r3.apk", "description": "Verify APK contents and copy to builds"}`
+
+### 🧑 User — 2026-11-17T17:57:26.294Z
+
+> ↩︎ result: dist/assets/main-C8p_xNKf.js
+> 81
+> assets/public/assets/proj05_E-Bc5Zu5XQ.png
+> assets/public/assets/proj05_E-BmUIq7VA.png
+> assets/public/assets/proj05_E-CKXG2tdm.png
+> assets/public/assets/proj05_E-Cqz5vxtW.png
+> assets/public/assets/proj05_E-D-xqGgAB.png
+> assets/public/assets/proj05_E-DFJ3OZzy.png
+> assets/public/assets/proj05_lut-BXv9_ZY5.json
+> assets/public/assets/proj05_lut-Daarf_dC.json
+> assets/public/assets/proj05_lut-DnS-R26W.json
+> 88b380dc102017ed4c50b012c0909d53327761e7e732e653724399b65de27c80  builds/rainbow-debug-05-2026-11-17-r3.apk
+> 31923212
+> builds/rainbow-debug-05-2026-11-17-r3.apk: filter: lfs
+
+### 🤖 Claude — 2026-11-17T17:57:29.980Z
+
+The APK is LFS-tracked and its bundle includes the switches. To verify it, I'm capturing Screen 05 from the packaged bundle with no URL switch and comparing it to NEW.
+
+### 🤖 Claude — 2026-11-17T17:57:31.428Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && sed -n 25,40p scripts/capture.mjs", "description": "Read capture flow for reuse"}`
+
+### 🧑 User — 2026-11-17T17:57:31.480Z
+
+> ↩︎ result: const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = { when: new Date().toISOString(), renderer: null, shots: [], errors: [] };
+> try {
+>   for (const id of ids) {
+>     const [w, h] = size ?? NATIVE[id] ?? [864, 1536];
+>     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+>     page.on('console', (m) => { if (m.type() === 'error') log.errors.push(`[${id}] ${m.text()}`); });
+>     page.on('pageerror', (e) => log.errors.push(`[${id}] pageerror ${e.message}`));
+>     await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+>     await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>     const err = await page.evaluate(() => window.__error);
+>     if (err) throw new Error(err);
+>     if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+>     const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+>     // let a few frames render (font …[+141 chars]
+
