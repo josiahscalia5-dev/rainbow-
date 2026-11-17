@@ -500,3 +500,84 @@ Rendering the build at each problem moment of your video (match08 done; now with
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=16.6 --t1=18.6 --dt=0.1 --size=270x600 --out=$S/p_0304 > $S/p_0304.log 2>&1; python3 -c \"\nimport json\nd=json.load(open('$S/p_0304/probe.json'))\nfor r in d['rows']:\n  b=r.get('benny') or {}\n  print(r['t'],r['stage'],r['s'],r['cam'],'hid',b.get('hidden'),[ (o['obj'],o['onBenny']) for o in b.get('occluders',[])][:2], 'fg',b.get('fgFrame'),'dep',b.get('depth'))\"", "description": "Fine probe of 03-04 handoff with camclear", "timeout …[+10 chars]`
 
+### 🧑 User — 2026-11-17T17:40:47.346Z
+
+> ↩︎ result: 16.6 03 64.395 [9.43, -11.88, -14.09] hid 0.051 [] fg 0.4631 dep 7.29
+> 16.7 03 65.297 [9.19, -12.2, -13.46] hid 0.081 [('water_whirlpool < water_system', 0.035)] fg 0.4723 dep 7.08
+> 16.8 03 66.213 [8.79, -12.35, -13.42] hid 0.397 [('coins', 0.232), ('water_whirlpool < water_system', 0.069)] fg 0.4819 dep 6.75
+> 16.9 03 67.158 [8.36, -12.27, -14.06] hid 0.567 [('Mesh(MeshStandardMaterial#ffcf4d,1843v) < zone_basin < washer_world', 0.345), ('coins', 0.142)] fg 0.4916 dep 6.7
+> 17 03 68.143 [8.04, -11.96, -15.24] hid 0.217 [('Mesh(MeshStandardMaterial#ffcf4d,1843v) < zone_basin < washer_world', 0.105), ('water_ribbon < water_system', 0.013)] fg 0.6091 dep 7.36
+> 17.1 03 69.182 [7.95, -11.44, -16.6] hid 0.275 [('water_ribbon < water_system', 0.215), ('rider_splash < water_system', 0.034)] fg 0.653 dep 8.6
+> 17.2 03 70.284 [7.9, -10.86, -17.5] hid 0.607 [('water_ribbon < water_system', 0.598), ('rider_splash < water_system', 0.036)] fg 0.7354 dep 9.82
+> 17.3 04 71.456 [6.75, -10.51, -16.62] hid 0.812 [('water_ribbon < water_system', 0.812), ('rider_splash < water_system', 0.038)] fg 0.6358 dep 10.38
+> 17.4 04 72.701 [6.51, -10.65, -16.29] hid 1 [('water_ribbon < water_system', 1)] fg 0.6878 dep 11.01 …[+1428 chars]
+
+### 🤖 Claude — 2026-11-17T17:40:59.374Z
+
+> 🔧 **Bash** `{"command": "sed -n 240,300p src/game/cameraRig.ts && grep -n \"stage('04')\\|s0\\b\" src/game/course.ts | head -5 && grep -n \"rig.update\\|\\.update(dt\" src/game/Game.ts | head", "description": "Read rig update and usage"}`
+
+### 🧑 User — 2026-11-17T17:40:59.438Z
+
+> ↩︎ result: this.pos.lerp(dp, k);
+>     this.target.lerp(dt3, kt);
+>     this.up.lerp(du, kt).normalize();
+>     this.fov += (p.fov - this.fov) * (snap || !this.init ? 1 : Math.min(1, dt * 3));
+>     this.init = true;
+>     cam.position.copy(this.pos);
+>     cam.up.copy(this.up);
+>     cam.lookAt(this.target);
+>     if (Math.abs(cam.fov - this.fov) > 0.01) { cam.fov = this.fov; cam.updateProjectionMatrix(); }
+>   }
+> }
+> grep: src/game/course.ts: No such file or directory
+> 247:      benny.update(dt, { swim: 0, steer: 0, speed: 0, time: st.clock });
+> 272:      benny.update(dt, { swim: 0.4, steer: 0, speed: 8, time: st.clock, tumble: tumble < 0.99 });
+> 356:    input.update(dt);
+> 398:    benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
+> 403:    rideCam.update(dt, st.s, st.lat, camera, camSnap);
+> 438:    benny.update(dt, { swim: 0.2, steer: 0, speed: 2, time: st.clock });
+> 531:    girl.update(dt);
+
+### 🤖 Claude — 2026-11-17T17:41:12.205Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/cameraRig.ts'\ns=open(p).read()\nold=\"\"\"    this.pos.lerp(dp, k);\n    this.target.lerp(dt3, kt);\"\"\"\nnew=\"\"\"    this.pos.lerp(dp, k);\n    if (CAMCLEAR) this.clear0304(s, lat);\n    this.target.lerp(dt3, kt);\"\"\"\nassert s.count(old)==1\ns=s.replace(old,new)\nold2=\"\"\"  /** `?camclear=1` only — see desired() */\"\"\"\nnew2=\"\"\"  /**\n   * `?camclear=1` only — 03 → 04 drain drop: the view trails 10–13 u above and behind Benny while he falls through the\n   * drain chute, and the chute's own water (the stream ribbon's previous turn) pas …[+1059 chars]`
+
+### 🧑 User — 2026-11-17T17:41:16.109Z
+
+> ↩︎ result: src/game/Game.ts:406:    env.towel.setTent(sm(course.stage('09').s1 - 6, course.stage('10').s0 + 2, st.s));
+> src/game/cameraRig.ts:207:    const s3 = this.course.stage('03').s1;
+> src/game/modules.ts:83:  const s0 = course.stage('03').s0 - 2, s1 = course.length;
+> TSC_OK
+
+### 🤖 Claude — 2026-11-17T17:41:21.243Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && rm -rf $S/p_0304b && node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=16.6 --t1=18.8 --dt=0.1 --size=270x600 --out=$S/p_0304b > $S/p_0304b.log 2>&1; python3 -c \"\nimport json\nd=json.load(open('$S/p_0304b/probe.json'))\nfor r in d['rows']:\n  b=r.get('benny') or {}\n  print(r['t'],r['stage'],r['s'],'hid',b.get('hidden'),[ (o['obj'][:30],o['onBenny']) for o in b.get('occluders',[])][:2],'near2',r.get('near2'),'inside',r.get('inside'),'dep',b.get('depth'))\"; python3 -I tools/camclea …[+141 chars]`
+
+### 🧑 User — 2026-11-17T17:43:06.912Z
+
+> ↩︎ result: 16.6 03 64.395 hid 0.051 [] near2 0.2632 inside [{'dir': [0.58, 0.58, 0.58], 'd': 1.62, 'obj': 'Mesh < foam_whirlpool < foam_banks < water_system'}] dep 7.29
+> 16.7 03 65.297 hid 0.063 [('water_whirlpool < water_system', 0.021)] near2 0.3728 inside [{'dir': [0.58, 0.58, 0.58], 'd': 2.78, 'obj': 'Mesh < foam_whirlpool < foam_banks < water_system'}] dep 6.52
+> 16.8 03 66.213 hid 0.282 [('coins', 0.131)] near2 0.362 inside [] dep 5.47
+> 16.9 03 67.158 hid 0.702 [('Mesh(MeshStandardMaterial#ffcf', 0.324), ('coins', 0.269)] near2 0.1148 inside [] dep 5.24
+> 17 03 68.143 hid 0.219 [('Mesh(MeshStandardMaterial#ffcf', 0.062), ('water_ribbon < water_system', 0.019)] near2 0.0002 inside [] dep 5.33
+> 17.1 03 69.182 hid 0.299 [('water_ribbon < water_system', 0.242), ('rider_splash < water_system', 0.039)] near2 0 inside [] dep 5.43
+> 17.2 03 70.284 hid 0.881 [('water_ribbon < water_system', 0.878), ('rider_splash < water_system', 0.045)] near2 0.6508 inside [{'dir': [-1, 0, 0], 'd': 2.6, 'obj': 'Mesh < foam_banks < water_system'}] dep 5.39
+> 17.3 04 71.456 hid 0.477 [('water_ribbon < water_system', 0.47), ('rider_splash < water_system', 0.036)] near2 0.6815 inside [] dep 5.35
+> 17.4 04 72.701 hid 1 [('water_ …[+1362 chars]
+
+### 🤖 Claude — 2026-11-17T17:43:08.885Z
+
+First fix attempt (keeping the view closer to Benny at the drain drop) only partly works — the river still covers him for ~0.3 s. Looking at the frames to understand why.
+
+### 🤖 Claude — 2026-11-17T17:43:10.121Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/sheet0304b.png"}`
+
+### 🧑 User — 2026-11-17T17:43:10.394Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:43:28.766Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/cameraRig.ts'\ns=open(p).read()\na=s.index('  /**\\n   * `?camclear=1` only — 03 → 04 drain drop')\nb=s.index('  /** `?camclear=1` only — see desired() */')\nnew='''  /**\n   * `?camclear=1` only — 03 → 04 drain drop: the view trails 10–13 u above and beside Benny while he falls down the drain\n   * chute, so the chute's own falling water passes between the view and Benny for ~0.6 s (60–100 % of him hidden, a\n   * frame-filling striped sheet; the user's recording at 7 s). Over that stretch only, the smoothed view rides ON the\n   * stream 3.5 u behi …[+1451 chars]`
+

@@ -197,6 +197,22 @@ export class RideCamera {
     return p;
   }
 
+  /**
+   * `?camclear=1` only — 03 → 04 drain drop: the view trails 10–13 u above and beside Benny while he falls down the drain
+   * chute, so the chute's own falling water passes between the view and Benny for ~0.6 s (60–100 % of him hidden, a
+   * frame-filling striped sheet; the user's recording at 7 s). Over that stretch only, the smoothed view rides ON the
+   * stream 3.5 u behind Benny, 1.4 u above the water (the water he rides can then never come between), aim unchanged; it
+   * blends in and back out over a few metres of the ride. Off: unchanged.
+   */
+  private clear0304(s: number, lat: number) {
+    const s3 = this.course.stage('03').s1;
+    const w = THREE.MathUtils.smoothstep(s, s3 - 6, s3 - 3) * (1 - THREE.MathUtils.smoothstep(s, s3 + 6, s3 + 12));
+    if (w <= 0) return;
+    const f = this.course.sample(Math.max(0, s - 3.5));
+    const p = f.pos.clone().addScaledVector(f.right, lat).addScaledVector(f.up, 1.4);
+    this.pos.lerp(p, w);
+  }
+
   /** `?camclear=1` only — see desired() */
   private clear06(s: number, p: CamParams, benny: THREE.Vector3, outPos: THREE.Vector3, outTarget: THREE.Vector3) {
     const a = this.axis;
@@ -238,6 +254,7 @@ export class RideCamera {
     const k = snap || !this.init ? 1 : 1 - Math.exp(-dt * 7);
     const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
     this.pos.lerp(dp, k);
+    if (CAMCLEAR) this.clear0304(s, lat);
     this.target.lerp(dt3, kt);
     this.up.lerp(du, kt).normalize();
     this.fov += (p.fov - this.fov) * (snap || !this.init ? 1 : Math.min(1, dt * 3));
