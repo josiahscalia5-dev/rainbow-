@@ -109,13 +109,15 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
-  const M08_BENNY = { hat: 0.95, hatOff: [0.074, 0.083, -0.009] as const, hatRoll: -0.08, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const,
+  // `b08r2=0` (A/B): the benny08 round-2 look tweaks off -> the previous match08 Benny (with `bake08=0`: pixel-identical to 5965a01)
+  const B08R2 = qs.get('b08r2') !== '0';
+  const M08_BENNY = { hat: B08R2 ? 0.95 : 0.86, hatOff: (B08R2 ? [0.074, 0.083, -0.009] : [0, 0, 0]) as readonly [number, number, number], hatRoll: B08R2 ? -0.08 : 0, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const,
     // round 2: pom-pom ≈30 px left onto the painted one; star 1.2x, ≈13 px left / 10 px up (parent-local offsets)
     // beanie roll −0.08 rad (painted stripes run level); pom/star re-fitted after the roll (star counter-rolled)
-    parts: { pom: { k: 1, off: [0.1048, -0.0195, -0.0026], rz: 0 }, hat_star: { k: 1.2, off: [0.0371, 0.0076, -0.0015], rz: 0.08 } } as Record<string, { k: number; off: [number, number, number]; rz: number }>, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+    parts: (B08R2 ? { pom: { k: 1, off: [0.1048, -0.0195, -0.0026], rz: 0 }, hat_star: { k: 1.2, off: [0.0371, 0.0076, -0.0015], rz: 0.08 } } : {}) as Record<string, { k: number; off: [number, number, number]; rz: number }>, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
   // benny08 round 2 (qa/match/08/benny08/NOTES.md): the approved splash ring around Benny drawn stronger (alpha^0.3 x2,
   // capped at 1) — measured closer to the painted white crest; card texture, size and approved position unchanged
-  if (m08) {
+  if (m08 && B08R2) {
     const sm = m08.splash.material as THREE.ShaderMaterial;
     sm.fragmentShader = sm.fragmentShader.replace('if (c.a < 0.02) discard;', 'if (c.a < 0.02) discard; c.a = min(1.0, pow(c.a, 0.3) * 2.0);');
     sm.needsUpdate = true;

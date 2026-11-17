@@ -659,7 +659,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10640,
-   "sha256": "f64608d02787d5582ac68f2d5f6e0d041c0d43d2c0de60c98f761ec4c37febde"
+   "sha256": "2dd810dc95a7ef2b1ac73fd2d49e803d7ec6b30ada5dee1a8f221d0fd1f60a11"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1124,7 +1124,7 @@
   {
    "path": "qa/capture_log.json",
    "bytes": 1240,
-   "sha256": "d5735a0eb1021cc145740579ff0682b1d197db8c3514046b34a5d6b1987847eb"
+   "sha256": "ff777b6d331fd0c7a73f8714d6b08a3459e89b9a8b31cc6799cd49ee906f8fdd"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1490,6 +1490,46 @@
    "path": "qa/match/08/benny08/compare_CURRENT_NEW.json",
    "bytes": 9703,
    "sha256": "5cfd7da413bf9c263b4714278dcf62d06ec7321a8d55cdba2ab49db3161eca77"
+  },
+  {
+   "path": "qa/match/08/benny08/motion/f00_checkpoint.png",
+   "bytes": 2371900,
+   "sha256": "5d4b0719eb21fccbb1f0e8cbe080c198619b7e646522750cf70e5a040c0899d0"
+  },
+  {
+   "path": "qa/match/08/benny08/motion/f03_forward3u.png",
+   "bytes": 2385519,
+   "sha256": "cb0f19986b2bc8d2c877fc7602408a267fee7169fc277091892a5947bdc989b2"
+  },
+  {
+   "path": "qa/match/08/benny08/motion/f06_forward6u.png",
+   "bytes": 2302098,
+   "sha256": "f54ab58a6de17934fedcd768f319fb8a2b3c6ec2bba02f722c2ec162a5ef1bb1"
+  },
+  {
+   "path": "qa/match/08/benny08/motion/f10_forward10u.png",
+   "bytes": 2207057,
+   "sha256": "12a79bb94a1510264244b255ed3cdc33267ddb2e29adc27610bc1cb6c853bc40"
+  },
+  {
+   "path": "qa/match/08/benny08/motion/f15_forward15u.png",
+   "bytes": 1580084,
+   "sha256": "e5dbfe5be67e5a68f188ade34405e7cfddc5935663703ec90c3ebb8354fae781"
+  },
+  {
+   "path": "qa/match/08/benny08/motion/motion.json",
+   "bytes": 782,
+   "sha256": "dbc40f6354cb88a5b19b6003ee87ff681157018cd34dfdf8ee0a7f779e716d06"
+  },
+  {
+   "path": "qa/match/08/benny08/motion/s_left_steer.png",
+   "bytes": 2270157,
+   "sha256": "b9fc88808ab510897849c0a6763030b90a006bd65e76cefa02fea64571b57948"
+  },
+  {
+   "path": "qa/match/08/benny08/motion/s_right_steer.png",
+   "bytes": 2292635,
+   "sha256": "1ecc989adf8f6a971975166bd0a45c515722e93528bfa3f8033779f9bd6f2e4f"
   },
   {
    "path": "qa/match/08/benny08/screen_match_CURRENT.json",
@@ -8173,8 +8213,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 40512,
-   "sha256": "524b5a1ee4f2ec863dfc1ca79f27b91dde2f2b720931cd5ac45b7d422fd2b53b"
+   "bytes": 41122,
+   "sha256": "1c4821f7c309a4ba4fa4756b9f72814baa009d8004e11b44dcf6f5d69c8866e0"
   },
   {
    "path": "src/game/cameraRig.ts",
