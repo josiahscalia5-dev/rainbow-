@@ -1,4 +1,4 @@
-# Screen 04 — fal clean-plate request (PREPARED, NOT RUN — paid; needs the user's approval via the lead)
+# Screen 04 — fal clean-plate request — RUN ONCE 2026-11-17 16:56 UTC (request 01a1ea70-42d8-7943-b035-7bb5f129d872; result + record in `fal/`, see NOTES.md milestone 2 §5). No further fal call is authorised.
 
 Purpose: replace the PROVISIONAL local fill (OpenCV inpainting + mirrored artwork texture, 23.4 % of the frame:
 HUD bar, title banner, Benny, the five coins) in `assets/textures/match04/plate04_hybrid.png` with a clean

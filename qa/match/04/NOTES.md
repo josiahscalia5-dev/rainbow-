@@ -102,7 +102,18 @@ Same switch `?match04=1`; `&tile04=0` brings back milestone 1 for A/B. Only `src
    water tiles, mirrored fill under Benny when steering). Not fixed yet: the ring closest to the camera at 15–20 u is
    soft (one ring band is only 58 painted pixels tall), the big chevron right in front of the camera is soft for the
    same reason, and the painted water is still static (no flow).
-5. **fal clean plate:** NOT run — no "FAL READY" from the lead. Provisional fill stays (`FAL_PLATE_REQUEST.md`).
+5. **fal clean plate — RUN ONCE** after the lead's "FAL READY" (16:43 UTC; the user's one authorised edit, no retry):
+   re-checked first, no Screen 04 record on any branch / in Image-Blaster. ONE `fal-ai/nano-banana-2/edit` 2K call with
+   the prepared prompt, request id **`01a1ea70-42d8-7943-b035-7bb5f129d872`** (16:56:27 → 16:56:49 UTC). Result
+   `fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png` (1536×2752) + record `fal/fal_edit1_plate_request.json`. It
+   keeps the rings, porthole, towels and control panel, removes Benny, coins and title and continues the river and
+   chevrons; the HUD came back as an empty purple bar (covered by the game's HUD). `tools/match04/fal_plate04.py`:
+   ECC affine alignment (0.996; outside the mask 78.3 % → 94.5 % within 20 levels), colour matched around the mask,
+   composited ONLY inside `plate04_fillmask.png` → NEW file `plate04_hybrid_fal.png` (the M1/M2 plate is untouched).
+   Switch **`?match04=1&fal04=1`**: whole frame 79.9 → **81.3 %** (SSIM 0.798 → 0.812), scenery 97.6 → **98.1 %**
+   (SSIM 0.973), middle 95.7 → 96.9 %, lower 97.7 %, Benny area 16.5 → 21.1 % (`scenery_metrics_M2_vs_fal04.json`,
+   `04_NEW_m2_fal04_864x1536.png`); moving frames `motion_m2/NEW_fal04/` — continuous painted swirls under Benny
+   instead of the mirrored fill; gameplay 8/8, 91 coins (`gameplay_test_match04_fal04.json`).
 6. **Splash card under Benny:** not done this milestone.
 Proofs: default 04 capture 0 px different from the saved milestone-1 default capture (full frame); default 05 and
 `?match08=1` 08 0 px different below the HUD strip vs a checkout of the milestone-1 commit (the HUD strip differed only
