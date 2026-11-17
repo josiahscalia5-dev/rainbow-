@@ -598,8 +598,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4010,
-   "sha256": "85235eb2cab7a0e12dace8225e3dc146c7f5b6d90287109f6ef5fd70ed43b3b9"
+   "bytes": 3873,
+   "sha256": "3a392d0dc00baafca4ae45e3b02db49e540cb256c109f30e46d64a1ba77c6ba2"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
