@@ -6470,3 +6470,208 @@ Screen 08 is finished as far as I can take it from this cloud session. Above are
 
 **Next:** Phase 2 (Screens 04–07) uses the same method, starting with one fal.ai clean picture each, shown to you full-size. Tell me whether Screen 08 is close enough to move on, or whether Benny's body should be refined first. And if you install the APK, let me know how it runs on your phone.
 
+### 🧑 User — 2026-11-17T14:20:38.735Z
+
+CLAUDIA — EMERGENCY FULL BACKUP AND SEAMLESS ACCOUNT TRANSFER
+
+GITHUB BRANCH: "ccr-9c4a8ad6-xovgsx"
+
+I am preparing to switch to another Claude account that has available usage credits.
+
+Before switching, I want you to safeguard EVERYTHING we've completed so far and prepare the project so that my other Claude account can restore the entire working environment with as little manual setup as possible.
+
+THIS IS A SAVE-FIRST TASK. DO NOT RESTART, REDESIGN, OR REBUILD MY GAME.
+
+1. VERIFY GITHUB AND BACK UP ALL WORK
+
+- Verify the actual GitHub repository URL, current branch, latest commit SHA and remote connection.
+- Confirm that branch "ccr-9c4a8ad6-xovgsx" contains the latest intended project state.
+- Preserve my 13 original approved images completely unchanged.
+- Save all completed code, files, scripts, assets, documentation, experiments and progress.
+- Check for modified, untracked and ignored project files that contain important work.
+- Commit and push every safe, intended project file.
+- Verify the remote commit SHA and confirm nothing important remains uncommitted.
+- Create a clearly named backup checkpoint or tag without overwriting existing work.
+
+2. PRESERVE ALL WORLD LABS MARBLE ASSETS
+
+Back up every World Labs project asset we have generated or downloaded, including:
+
+- Marble world IDs and generation job IDs.
+- All four splat-quality exports and source files.
+- Collider meshes, available GLB files and geometry.
+- 360-degree panoramas and thumbnails.
+- Original input images and cleaned environment-only images.
+- Generation prompts, camera settings and model versions.
+- All comparison renders, scores and QA reports.
+- World Labs credit usage records and remaining-balance information.
+- Blender and Three.js reconstruction files.
+
+Verify that the actual binary assets are recoverable, not just file names or download links.
+
+Use Git LFS or suitable private artifact storage for large files. Do not assume that files stored outside GitHub are backed up.
+
+3. BACK UP IMAGE-BLASTER AND FAL.AI WORK
+
+Image-Blaster was installed separately at:
+
+"/home/user/neilsonnn/image-blaster"
+
+Save the installation instructions, source reference, exact version, dependencies, local modifications, setup scripts, prompts, comparison tools and reconstruction workflow.
+
+Preserve all fal.ai image edits, cleaned scenery plates and approved-versus-edited comparisons.
+
+Prepare a reproducible installation script so my next Claude account can rebuild Image-Blaster without manually repeating the entire setup.
+
+4. SAVE ALL AGENTS, SKILLS AND TOOLS
+
+Inventory every agent and verify the previously configured ten-agent setup, if it is still applicable.
+
+Preserve or recreate all required project-level agent definitions, reusable skills, instructions, tool configurations and installation scripts.
+
+Include tools and dependencies such as:
+
+- Blender and Three.js/WebGL.
+- Image-Blaster and its 3D viewer.
+- World Labs Marble API integration.
+- fal.ai API integration.
+- Playwright and Android screenshot/testing tools.
+- Camera-fitting and image-comparison scripts.
+- GitHub backup and autosave tooling.
+
+Place portable Claude project definitions in the appropriate ".claude/" folders and commit safe configuration files.
+
+Make the setup reproducible instead of relying on temporary cloud-session installations.
+
+5. PREPARE SECURE API KEY RECONNECTION
+
+I have already configured two working API keys:
+
+- World Labs Marble API key.
+- fal.ai API key, associated with the account where I added $10.
+
+I do not want to repeatedly search for these credentials and rebuild the integrations whenever I switch Claude accounts.
+
+IMPORTANT SECURITY REQUIREMENTS:
+
+- Never expose my API keys in chat, logs, screenshots, documentation or source code.
+- Never commit plaintext credentials, ".env" secrets, authentication tokens or session cookies to GitHub.
+- Check whether we can use a supported encrypted secrets manager that I control and can separately authorize from both Claude accounts.
+- If secure cross-account access is supported, explain the setup and ask me before configuring it.
+- Otherwise, prepare the new Claude account to request the API keys through secure input forms.
+- Verify both API connections using non-billable checks where available.
+- Document the necessary service endpoints, environment-variable names, proxy configuration and network permissions without storing secrets.
+- Make sure the new account uses my intended fal.ai and World Labs accounts, so I can continue accessing their existing balances.
+
+Do not automatically buy additional credits or enable automatic top-ups.
+
+6. PRESERVE THE COMPLETE PROJECT HISTORY AND CONTEXT
+
+Create a thorough project handoff in GitHub.
+
+Include:
+
+- Our game story and approved-screen sequence.
+- Which screens are real playable Android 3D environments.
+- Which opening and ending sequences are Google Flow videos.
+- All important decisions and user instructions.
+- The original approved-screen matching requirements.
+- Completed work, current status, problems and fixes.
+- Prior branches, relevant commits and tested approaches.
+- Image-Blaster, Marble and fal.ai successes and failures.
+- Every screen's visual similarity measurements.
+- Remaining work and exact next steps.
+
+Include all accessible relevant session notes, prompts and transcripts that can safely be saved.
+
+Do not claim that the complete Claude chat history has transferred unless that is technically supported. Explain how I can separately export it.
+
+7. PRESERVE SCREEN 08 EXACTLY AS IT STANDS
+
+Do not lose the successful Screen 08 reconstruction.
+
+Keep the completed scenery, camera alignment, projected textures, river path, coins, character adjustments, water effects and gameplay fixes.
+
+Preserve the "?match08=1" workflow and the unchanged normal game.
+
+Record the latest verified scores and testing status, including the reported 97.4% scenery match and remaining visual differences.
+
+Preserve the Android debug APK and its build instructions.
+
+Record that the APK was built, but an actual-device test had not yet been confirmed.
+
+Do not mark Screen 08 fully approved unless I personally approve it.
+
+8. PRESERVE THE PLAN FOR EVERY APPROVED SCREEN
+
+Do not limit the project to Screen 08.
+
+Maintain a complete checklist of all 13 approved images.
+
+After Screen 08 is accepted, continue the remaining playable 3D screens, including Screens 04, 05, 06 and 07.
+
+Use the successful method of fitting real 3D geometry to my approved artwork rather than relying on inaccurate automatic Marble reconstructions.
+
+Keep the Google Flow opening and ending video plans intact in "docs/FLOW_VIDEO.md".
+
+Do not accidentally mix the cinematic video workflow with playable Android 3D gameplay.
+
+9. RECREATE THE CLOUD ENVIRONMENT AUTOMATICALLY
+
+Prepare a safe bootstrap script and restoration guide for my next Claude account.
+
+The bootstrap should:
+
+- Confirm the correct GitHub repository, branch and commit.
+- Restore project dependencies and required tools.
+- Reinstall Image-Blaster if needed.
+- Restore all portable agents and skills.
+- Configure nonsecret environment settings.
+- Identify missing API credentials and request secure reconnection.
+- Restore access to the required network endpoints.
+- Verify original approved-image checksums.
+- Locate all World Labs and fal.ai assets.
+- Run essential compilation, rendering and gameplay tests.
+- Report missing dependencies or unrecoverable files.
+
+Enable safe, periodic autosaving during active work if supported, ideally every five minutes, and document how that process is restarted in a new environment.
+
+Do not assume background processes survive when a Claude cloud session ends.
+
+10. CREATE A ONE-MESSAGE RESUME PROMPT
+
+Write a file called:
+
+"docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md"
+
+Inside, include one complete prompt I can paste into my next Claude account.
+
+It should tell the new Claudia to locate my GitHub repository, check out branch "ccr-9c4a8ad6-xovgsx" at the latest verified saved commit, read the handoff, restore the agents and tools, reconnect credentials securely, and continue the unfinished work.
+
+I want my next Claudia to understand the project without requiring me to explain the entire game again.
+
+11. VERIFY THE BACKUP
+
+Before telling me the transfer is ready:
+
+- Verify the backup exists on GitHub.
+- Verify required large assets are recoverable.
+- Verify my original 13 approved images are unchanged.
+- Verify scripts, agents and handoff documents are present.
+- Test the restoration process in a clean environment if possible.
+- Confirm that no sensitive credentials have been included in tracked files.
+
+FINAL REPORT REQUIRED
+
+Tell me the exact repository URL, saved branch, latest commit SHA, number of agents preserved, total approved images preserved, World Labs assets backed up, fal.ai files backed up, and whether the APK is included.
+
+Tell me exactly what I must do on my other Claude account, including any permissions or secure credentials that need to be reauthorized.
+
+Clearly distinguish what is fully backed up, what can be automatically restored, and what cannot transfer between accounts.
+
+DO NOT SPEND NEW WORLD LABS OR FAL.AI CREDITS DURING THIS BACKUP TASK.
+
+My number-one priority is protecting all completed work, preserving my approved artwork, and making the transition to my other Claude account as seamless as technically possible.
+
+SAVE FIRST. VERIFY EVERYTHING. THEN PREPARE MY NEW ACCOUNT HANDOFF.
+
