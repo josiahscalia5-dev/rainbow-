@@ -109,7 +109,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
-  const M08_BENNY = { hat: 0.95, hatOff: [0.074, 0.083, -0.009] as const, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+  const M08_BENNY = { hat: 0.95, hatOff: [0.074, 0.083, -0.009] as const, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const,
+    // round 2: pom-pom ≈30 px left onto the painted one; star 1.2x, ≈13 px left / 10 px up (parent-local offsets)
+    parts: { pom: { k: 1, off: [0.1845, -0.0289, -0.0042] }, hat_star: { k: 1.2, off: [0.0848, 0.0465, -0.0045] } } as Record<string, { k: number; off: [number, number, number] }>, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
   // benny08 round 2 (qa/match/08/benny08/NOTES.md): the approved splash ring around Benny drawn stronger (alpha^0.3 x2,
   // capped at 1) — measured closer to the painted white crest; card texture, size and approved position unchanged
   if (m08) {
@@ -118,6 +120,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     sm.needsUpdate = true;
   }
   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+  const b08Parts = b08 ? Object.keys(M08_BENNY.parts).map((n) => { const o = benny.root.getObjectByName(n); return o ? { n, o, s: o.scale.clone(), p: o.position.clone() } : null; }).filter((v) => v !== null) : [];
   const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, hatPos: (b08.hat?.position ?? new THREE.Vector3()).clone(), body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
   let m08Applied = false;
@@ -549,6 +552,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
       if (b08.aux) {
         const off = new THREE.Vector3(m08On ? M08_BENNY.dx : 0, m08On ? M08_BENNY.lift : 0, 0).applyQuaternion(benny.root.quaternion.clone().invert());
         b08.aux.position.copy(b08Rest.pos).add(off);
+      }
+      for (const r of b08Parts) {
+        const t = M08_BENNY.parts[r.n];
+        r.o.scale.copy(r.s).multiplyScalar(m08On ? t.k : 1);
+        r.o.position.copy(r.p);
+        if (m08On) r.o.position.add(new THREE.Vector3(...t.off));
       }
       const cm = b08.crown?.material as THREE.MeshStandardMaterial | undefined;
       // (the ported benny05 maps carry the approved knit colours: no crown tint any more, the rest colour is kept)
