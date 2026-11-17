@@ -38,12 +38,13 @@ const rows = await page.evaluate(({ t0, t1, every, steerPlan, lock }) => {
     // roll: angle between the camera up and world up, measured around the view axis
     const upFlat = new V3(0, 1, 0).addScaledVector(f, -f.y).normalize();
     const roll = Math.atan2(new V3().crossVectors(upFlat, up).dot(f), upFlat.dot(up)) * 180 / Math.PI;
-    const r = { t: +(i / 60).toFixed(3), stage: st.stage, s: st.s, lat: st.lat, hearts: st.hearts, cam: camera.position.toArray().map((v) => +v.toFixed(3)), fwd: f.toArray().map((v) => +v.toFixed(4)), roll: +roll.toFixed(2), benny: b.toArray().map((v) => +v.toFixed(3)), fov: +camera.fov.toFixed(2) };
+    const r = { t: +(i / 60).toFixed(3), stage: st.stage, s: st.s, lat: st.lat, hearts: st.hearts, cam: camera.position.toArray().map((v) => +v.toFixed(3)), fwd: f.toArray().map((v) => +v.toFixed(4)), roll: +roll.toFixed(2), up: up.toArray().map((v) => +v.toFixed(4)), benny: b.toArray().map((v) => +v.toFixed(3)), fov: +camera.fov.toFixed(2) };
     if (st.stage === '08' || st.stage === '07' || st.stage === '09') {
       r.d08pos = +camera.position.distanceTo(lc).toFixed(3);
       r.d08dir = +(Math.acos(Math.min(1, f.dot(lf))) * 180 / Math.PI).toFixed(2);
       r.d08up = +(Math.acos(Math.min(1, up.dot(lup))) * 180 / Math.PI).toFixed(2);
     }
+    r.dbg = window.__ccdbg; window.__ccdbg = null;
     rows.push(r);
   }
   return rows;

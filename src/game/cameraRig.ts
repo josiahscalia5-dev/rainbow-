@@ -74,6 +74,8 @@ export class RideCamera {
   readonly up = new THREE.Vector3(0, 1, 0);
   fov = 70;
   private init = false;
+  /** `?camclear=1`: the 03 drain chute's fixed downhill heading (horizontal), for steadyUp0304 */
+  private lipHeading: THREE.Vector3 | null = null;
   /** optional straight tunnel axis + the s-range where the camera aligns to it */
   axis: { path: TubePath; s0: number; s1: number } | null = null;
 
@@ -203,11 +205,13 @@ export class RideCamera {
    * frame-filling striped sheet; the user's recording at 7 s). Over that stretch only, the smoothed view rides ON the
    * stream 3.5 u behind Benny, 1.4 u above the water (the water he rides can then never come between), aim unchanged; it
    * blends in and back out over a few metres of the ride. Off: unchanged.
+   * Round 4: the blend-in is spread over 6 u (was 2.5 u: a one-frame 18° jolt as the view swung over), and the
+   * returned weight steadies the picture's "up" over the lip (see steadyUp0304).
    */
-  private clear0304(s: number, lat: number) {
+  private clear0304(s: number, lat: number): number {
     const s3 = this.course.stage('03').s1;
-    const w = THREE.MathUtils.smoothstep(s, s3 - 4.5, s3 - 2) * (1 - THREE.MathUtils.smoothstep(s, s3 + 6, s3 + 12));
-    if (w <= 0) return;
+    const w = THREE.MathUtils.smoothstep(s, s3 - 8, s3 - 2) * (1 - THREE.MathUtils.smoothstep(s, s3 + 6, s3 + 12));
+    if (w <= 0) return 0;
     // world up, not the stream's own up: the chute water twists over the drain lip, and a view tied to its up would
     // swing underneath it
     const f = this.course.sample(Math.max(0, s - 3));
@@ -216,6 +220,37 @@ export class RideCamera {
     // aim at Benny (a little below his centre line ahead), so he stays in the frame while the view swings behind him
     const fb = this.course.sample(s + 1.5);
     this.target.lerp(fb.pos.clone().addScaledVector(fb.right, lat), w);
+    // never look down steeper than ~56° while the view swings over (it tipped to ~70° for a moment): same heading,
+    // aim point raised; Benny stays well inside the frame (at most ~15° below its centre)
+    const d = this.target.clone().sub(this.pos);
+    const h = Math.hypot(d.x, d.z), len = d.length();
+    const maxDown = 0.83 * len; // sin(56°)
+    if (-d.y > maxDown && h > 1e-3) {
+      const y = -maxDown, hh = Math.sqrt(len * len - y * y);
+      const lim = new THREE.Vector3(d.x / h * hh, y, d.z / h * hh);
+      this.target.copy(this.pos).add(d.lerp(lim, Math.min(1, w * 4)));
+    }
+    return w;
+  }
+
+  /**
+   * `?camclear=1` only — the picture's "up" over the 03 → 04 drain lip, anchored to the world instead of the twisting
+   * chute water: world up made square to the view, leaning toward the chute's fixed downhill heading as the view turns
+   * steeply down (so it is never undefined and can never flip), blended in with the drop weight `w`. Applied AFTER the
+   * usual easing of the up vector: it follows the view direction exactly, so the fast swing over the lip adds no tilt.
+   */
+  private steadyUp0304(w: number, up: THREE.Vector3) {
+    if (w <= 0) return;
+    if (!this.lipHeading) {
+      const t = this.course.sample(this.course.stage('03').s1).tan;
+      this.lipHeading = new THREE.Vector3(t.x, 0, t.z).normalize();
+    }
+    const d = this.target.clone().sub(this.pos).normalize();
+    const v = THREE.MathUtils.smoothstep(Math.abs(d.y), 0.9, 0.99);
+    const ref = new THREE.Vector3(0, 1, 0).multiplyScalar(1 - v).addScaledVector(this.lipHeading, v * Math.sign(-d.y || 1));
+    ref.addScaledVector(d, -ref.dot(d));
+    if (ref.lengthSq() < 1e-6) return;
+    up.lerp(ref.normalize(), w).normalize();
   }
 
   /** `?camclear=1` only — see desired() */
@@ -260,8 +295,9 @@ export class RideCamera {
     const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
     this.pos.lerp(dp, k);
     this.target.lerp(dt3, kt);
-    if (CAMCLEAR) this.clear0304(s, lat);
+    const w0304 = CAMCLEAR ? this.clear0304(s, lat) : 0;
     this.up.lerp(du, kt).normalize();
+    if (w0304 > 0) this.steadyUp0304(Math.min(1, w0304 * 4), this.up);
     this.fov += (p.fov - this.fov) * (snap || !this.init ? 1 : Math.min(1, dt * 3));
     this.init = true;
     cam.position.copy(this.pos);
