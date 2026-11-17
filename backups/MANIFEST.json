@@ -442,6 +442,11 @@
    "sha256": "ea8893358035815dcbaa23dc05983df111211d2f46a5c48dd85f8dbb8decbf63"
   },
   {
+   "path": "assets/textures/match06/coins06.json",
+   "bytes": 5090,
+   "sha256": "3c22cb0a8c8762ec5c9c740984df3341b363b49957a546a3cb4671dfbcebef04"
+  },
+  {
    "path": "assets/textures/match06/path06.json",
    "bytes": 329,
    "sha256": "657af6fc2612f79c4531f96e7b81c0abd5b8c7d0eb64e2d97353d5a60431b2f4"
@@ -463,18 +468,18 @@
   },
   {
    "path": "assets/textures/match06/proj06.json",
-   "bytes": 1019,
-   "sha256": "31c095fc69e1a9fa778d1379d7cbee8bcbd4d8d348340b85c2cf0fe829a51c09"
+   "bytes": 1126,
+   "sha256": "6f2d5eabc22280c757b4dd30ddedab8476b78ae95554e0d525ab4f21cb3bb089"
   },
   {
    "path": "assets/textures/match06/tile_floor.png",
-   "bytes": 454963,
-   "sha256": "103e12fb3c2493cf233620d357baa7e3feeb84053fc535de586c40b643e279dc"
+   "bytes": 272755,
+   "sha256": "ad975689f94df6240648eec49c3f96a4dba07ea733a1a8fcebcb97c78ce3e543"
   },
   {
    "path": "assets/textures/match06/tile_tube.png",
-   "bytes": 905477,
-   "sha256": "90752f1fd0d332cdabfdb56610a73fa81c87a3f3100b96814ca5f5880ff92d16"
+   "bytes": 870107,
+   "sha256": "6cb5ecf23b1a0b3bb9724fa8fd4e31d7344f0c05e9f08220f52f0af48df0d2e6"
   },
   {
    "path": "assets/textures/match08/cam08_locked.json",
@@ -648,8 +653,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10600,
-   "sha256": "fdee5d6e83587d836917e79d665ae463d82a749e39a9fa9a9b07e5ba6b5d6a4a"
+   "bytes": 10601,
+   "sha256": "1a74fd1a872d27b83333e9882ff17bb67c3e52c50e963b491c5e47c07ca97665"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1355,6 +1360,56 @@
    "path": "qa/imageblaster/08/world/renders/pano_straight_ahead_views.png",
    "bytes": 1101770,
    "sha256": "c2b30f78e3b7fb046f54a42e28295d093a2e1f6e8850e10dfaf229839075611b"
+  },
+  {
+   "path": "qa/match/06/motion/f00_checkpoint.png",
+   "bytes": 2354095,
+   "sha256": "80e74418af32450d310d166abf244dd8562cf8bda93c86c34a04831add617fc7"
+  },
+  {
+   "path": "qa/match/06/motion/f03_forward3u.png",
+   "bytes": 2144413,
+   "sha256": "665df69240cd60314e083cf99ac013b4f2f826d4cffc483a4cbb4c35962a2e6d"
+  },
+  {
+   "path": "qa/match/06/motion/f06_forward6u.png",
+   "bytes": 2071710,
+   "sha256": "591966c3dc3da96e386009763114eba9692a10222e777ffaaac0b97fb3668803"
+  },
+  {
+   "path": "qa/match/06/motion/f10_forward10u.png",
+   "bytes": 1869654,
+   "sha256": "11188f59c42acbc0004e7daa702d26b230f7e71db65c82708fc075d34301a6f6"
+  },
+  {
+   "path": "qa/match/06/motion/f15_forward15u.png",
+   "bytes": 1658387,
+   "sha256": "cd394361c97fdc7593abfd3bb0590dea129dbba2b482bc9243cbbbb196db656f"
+  },
+  {
+   "path": "qa/match/06/motion/f20_forward20u.png",
+   "bytes": 1517676,
+   "sha256": "00f452b904160d9bd22caa8303966bb22b1cc6cf7e71f99ada0845ea9808ee82"
+  },
+  {
+   "path": "qa/match/06/motion/f30_forward30u.png",
+   "bytes": 834720,
+   "sha256": "2535f9f38ac5f606029e7cd25e31d4769ca9a0631acd9a656e626a5d7c553f9d"
+  },
+  {
+   "path": "qa/match/06/motion/motion.json",
+   "bytes": 1281,
+   "sha256": "20a888f8ba1804bac63231649963de4dbda4d7fbbddc87b17c5462daca5d50f5"
+  },
+  {
+   "path": "qa/match/06/motion/s_left_steer.png",
+   "bytes": 2024686,
+   "sha256": "92d10f1773064c0aaeba3d650acfc540d5d4385da870d461f40f39815f083e38"
+  },
+  {
+   "path": "qa/match/06/motion/s_right_steer.png",
+   "bytes": 2027724,
+   "sha256": "09ac84f364d53f04a285012420a7ec3a72b33e95fd0725e68b9e9931fe31c2c4"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -7983,13 +8038,13 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 38856,
-   "sha256": "c9090ddb593d86a7ba77ec9706d2329e0f239a2e18baa9db10c5d0372c2a6401"
+   "bytes": 39917,
+   "sha256": "a329a5c37183530bae43fa00d165c2851b19833e9744cd810abc9d4d7e90cad6"
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 12396,
-   "sha256": "96b97cd21b9044881b53117a16bd74fe0ec97b0e8154e0c63c194d523f2e41b8"
+   "bytes": 13884,
+   "sha256": "fbc01fce294e6e152c278a226026f77e9a5b2d731559c4e25c1b4d0afc46995b"
   },
   {
    "path": "src/game/match.ts",
@@ -8003,8 +8058,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 12528,
-   "sha256": "c5bb03eaf037cf9696a528a32371fdf005def642044ce5dbc0ddab50d5657233"
+   "bytes": 13297,
+   "sha256": "a5b45d28b0f9954d7ae68b8ac888883992fcec47fda97cd46737967753d35a89"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -8125,6 +8180,11 @@
    "path": "src/world/laundryRoom.ts",
    "bytes": 8308,
    "sha256": "7c3a4cb22741c58f3c589239d07ffcf9097d6c4b8e59c99a72d7d8f689cc7679"
+  },
+  {
+   "path": "src/world/match06.ts",
+   "bytes": 10432,
+   "sha256": "034793b781f0f4224c7a81484e7167f56069ab86bdf0fc6c13d30ec5693a0a74"
   },
   {
    "path": "src/world/match08.ts",
@@ -8277,6 +8337,11 @@
    "sha256": "2ea5c23a56f3e1405fe102fe5fae6bbeea6e3f2c7c584501a3306a61c613e8c1"
   },
   {
+   "path": "tools/match06/coins06.py",
+   "bytes": 2539,
+   "sha256": "cd08f34fd1fd00f27bfcabe21f6e5e6be47970c6c58ac2a722d335901aec95f7"
+  },
+  {
    "path": "tools/match06/fit_river06.py",
    "bytes": 6483,
    "sha256": "85e55ef4d5858fc0631b6cdfc710944ea135c89dea4f196d7491301f8b05e2a7"
@@ -8293,8 +8358,13 @@
   },
   {
    "path": "tools/match06/make_tiles06.py",
-   "bytes": 2290,
-   "sha256": "d4d36f16b680434562c326b593b90b7f99ca0a73b356a10105fe3743f48aee1c"
+   "bytes": 2556,
+   "sha256": "ece142a788351d81df1f79becdb76c5212fbd2355deb1fac92281e8110b868f1"
+  },
+  {
+   "path": "tools/match06/motion06.mjs",
+   "bytes": 2183,
+   "sha256": "84c013d74ba40444182868d1570c2e8d471bfcc4fa287bb3de5614d8768ac3e9"
   },
   {
    "path": "tools/match06/overlay06.py",

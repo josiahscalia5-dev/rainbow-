@@ -911,3 +911,249 @@ The live game camera now matches the solved camera exactly. Committing this chec
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T17:00:31.608Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2, math\nA=cv2.imread('assets/textures/match06/plate06_hybrid.png').astype(np.float32)\nVP=(660,632)\nfor (r1,r2,a1,a2,name) in ((110,340,-60,140,'a'),(60,200,-80,160,'b')):\n    th=np.radians(np.linspace(a1,a2,1024)); lr=np.linspace(math.log(r1),math.log(r2),384)\n    LR,TH=np.meshgrid(lr,th); r=np.exp(LR)\n    u=(VP[0]+r*np.cos(TH)).astype(np.float32); v=(VP[1]-r*np.sin(TH)).astype(np.float32)\n    out=cv2.remap(A,u,v,cv2.INTER_CUBIC,borderMode=cv2.BORDER_REFLECT)\n    cv2.imwrite(f'/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9- …[+415 chars]`
+
+### 🧑 User — 2026-11-17T17:00:32.277Z
+
+> ↩︎ result: [ WARN:0@0.083] global loadsave.cpp:1089 imwrite_ Unsupported depth image for selected encoder is fallbacked to CV_8U.
+
+### 🤖 Claude — 2026-11-17T17:00:33.727Z
+
+Building the ring-structured wall tile for surfaces the picture never shows (unwrapping the painted tunnel around its vanishing point).
+
+### 🤖 Claude — 2026-11-17T17:00:34.728Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/polar.png"}`
+
+### 🧑 User — 2026-11-17T17:00:34.759Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:00:55.277Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match06/make_tiles06.py'; s=open(p).read()\nstart=s.index('A = cv2.imread'); end=s.index('L = g.layout_json()')\nnew='''A = cv2.imread(f\"{d}/plate06_hybrid.png\").astype(np.float32)\ndef sharpen(img, s=2.0, k=0.5): return np.clip(img + k * (img - cv2.GaussianBlur(img, (0, 0), s)), 0, 255)\n# tube: the painted tunnel unwrapped around its own vanishing point (rings are concentric there): rows = angle over the\n# clean upper-left wall sector (no river), cols = uniform in 1/r (= uniform in depth -> uniform along the tube), so the\n# gold rings become strai …[+2311 chars]`
+
+### 🧑 User — 2026-11-17T17:00:55.606Z
+
+> ↩︎ result: {"tube": {"wallAngle": [-0.41151684606748806, 3.553109499657281], "sectorDeg": [35.0, 140.0], "vp": [660.0, 632.0], "r": [110.0, 340.0], "period": 58.95287321438412, "anglePeriod": 1.8325957145940461}, "floor": {"px": [150, 1250, 720, 1530], "lateralPeriod": 8.5923294280422, "period": 4.2207934032488}} s0 186.91 s1 276.8727903992245
+
+### 🤖 Claude — 2026-11-17T17:00:59.528Z
+
+> 🔧 **Bash** `{"command": "grep -n \"pick\\|radius\\|dist\" src/gameplay/coins.ts | head -20; grep -n \"interface CoinDef\" -A12 src/gameplay/coins.ts", "description": "Check coin pickup radius and def"}`
+
+### 🧑 User — 2026-11-17T17:00:59.571Z
+
+> ↩︎ result: 2: * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 21: * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+> 72:      // keep every picture coin collectible: if it lies beyond pickup reach (|lateral| > 1.1), slide it along its own view
+> 77:        let pick: { k: number; r: typeof r; h: number } | null = null;
+> 80:          if (Math.abs(rq.lat) <= 1.0 && hq >= 0.3 && (!pick || Math.abs(k - 1) < Math.abs(pick.k - 1))) pick = { k, r: rq, h: hq };
+> 82:        if (pick) { r = pick.r; h = pick.h; scale = c.scale * pick.k; }
+> 102:  /** returns number of coins picked up this frame */
+> 205:      let picked = 0;
+> 214:          picked++;
+> 218:      return picked;
+> 16:export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+> 17-
+> 18-/**
+> 19- * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+> 20- * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+> 21- * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow) …[+543 chars]
+
+### 🤖 Claude — 2026-11-17T17:01:01.661Z
+
+> 🔧 **Bash** `{"command": "sed -n 196,222p src/gameplay/coins.ts; grep -n \"CylinderGeometry\\|coinGeo\\|new THREE.*Geometry\" src/gameplay/coins.ts | head", "description": "Read coin pickup test and size"}`
+
+### 🧑 User — 2026-11-17T17:01:01.697Z
+
+> ↩︎ result: mesh.instanceMatrix.needsUpdate = true;
+>   };
+>   place(0);
+> 
+>   return {
+>     group,
+>     defs,
+>     collected,
+>     update(time, _dt, s, lat) {
+>       let picked = 0;
+>       for (let i = 0; i < defs.length; i++) {
+>         if (collected[i]) continue;
+>         const d = defs[i];
+>         const ds = d.s - s;
+>         if (ds < -2 || ds > 2) continue;
+>         if (Math.abs(ds) < 1.0 && Math.abs(d.lat - lat) < 1.25) {
+>           collected[i] = 1;
+>           popT[i] = time;
+>           picked++;
+>         }
+>       }
+>       place(time);
+>       return picked;
+>     },
+>     resetUntil(s) {
+>       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
+>       place(0);
+> 149:  const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 48, 1);
+
+### 🤖 Claude — 2026-11-17T17:01:14.796Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match06/coins06.py <<'EOF'\n\"\"\"Screen 06 (?match06=1): the approved picture's 15 coins as real pickups at the painted spots (Screen 04/08 method).\nEach painted coin (centre px, width px) is a ray from the locked camera; the coin (1 u diameter x scale) sits where its\npainted size and its bottom edge on the river agree (bottom on the water). If that point lies beyond pickup reach\n(|lateral| > 1.6) or outside stage 06 (Benny + 1 .. 06 end - 0.5), it slides along its own view ray (same pixel in the\napproved view, size scaled with the depth so it still covers the pai …[+2326 chars]`
+
+### 🧑 User — 2026-11-17T17:01:19.879Z
+
+> ↩︎ result: {'px': [267.6, 716.1, 101], 's': 201.337, 'lat': -1.098, 'h': 0.322, 'scale': 0.632, 'dist': 8.0, 'fit': 0.006}
+> {'px': [178.6, 623.8, 82], 's': 201.514, 'lat': -1.595, 'h': 0.892, 'scale': 0.512, 'dist': 7.984, 'fit': 0.627}
+> {'px': [234.3, 548.1, 59], 's': 202.896, 'lat': -1.593, 'h': 0.725, 'scale': 0.431, 'dist': 9.341, 'fit': 0.503}
+> {'px': [319.6, 521.3, 43], 's': 205.635, 'lat': -1.598, 'h': 0.248, 'scale': 0.41, 'dist': 12.18, 'fit': 0.043}
+> {'px': [407.6, 534.0, 32], 's': 205.196, 'lat': -0.704, 'h': 0.145, 'scale': 0.29, 'dist': 11.58, 'fit': 0.0}
+> {'px': [505.9, 586.1, 22], 's': 203.592, 'lat': 0.276, 'h': 0.086, 'scale': 0.171, 'dist': 9.92, 'fit': 0.001}
+> {'px': [557.5, 623.0, 19], 's': 202.892, 'lat': 0.681, 'h': 0.07, 'scale': 0.138, 'dist': 9.26, 'fit': 0.001}
+> {'px': [594.8, 644.1, 19], 's': 202.555, 'lat': 0.941, 'h': 0.067, 'scale': 0.133, 'dist': 8.96, 'fit': 0.0}
+> {'px': [619.1, 654.7, 19], 's': 202.392, 'lat': 1.103, 'h': 0.066, 'scale': 0.131, 'dist': 8.82, 'fit': 0.0}
+> {'px': [642.7, 662.7, 16], 's': 216.947, 'lat': 0.01, 'h': 0.146, 'scale': 0.286, 'dist': 22.82, 'fit': 0.003}
+> {'px': [659.5, 668.0, 14], 's': 217.246, 'lat': 0.22, 'h': 0.127, 'scale': 0.252, 'dist':  …[+461 chars]
+
+### 🤖 Claude — 2026-11-17T17:02:07.429Z
+
+> 🔧 **Bash** `{"command": "sed -n 100,120p src/game/Game.ts; sed -n 524,580p src/game/Game.ts; grep -n \"createCoins\\|buildEnvironment\\|const course\" src/game/Game.ts | head", "description": "Read Game.ts hook locations"}`
+
+### 🧑 User — 2026-11-17T17:02:07.468Z
+
+> ↩︎ result: scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+>   const m08 = MATCH['08'] ? await buildMatch08() : null;
+>   if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+>   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+>   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+>   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+>   const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+>   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+>   const b08Rest = b08 ? { hat: b08.hat?.sca …[+3803 chars]
+
+### 🤖 Claude — 2026-11-17T17:02:10.047Z
+
+Texture plate, ring-structured wall tile and the 15 picture coins are prepared. Now writing the 3D geometry module `src/world/match06.ts` and its game hooks.
+
+### 🤖 Claude — 2026-11-17T17:02:45.459Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/match06.ts", "content": "/**\n * `?match06=1` — Screen 06 approved-picture test (2026-11-17, qa/match/06/NOTES.md), the Screen 08 method.\n * REAL 3D proxy geometry of \"Crest the Rinse Arch\", built around the game's own 06 river (which under the switch follows\n * the painted river: course.ts + assets/textures/match06/path06.json) and seen from the locked approved-view camera\n * (tools/match06/fit_river06.py → cam06_locked.json; layout tools/match06/make_tiles06.py → proj06.json):\n *   * the perforated tunnel = a tube of radius R around the rive …[+10165 chars]`
+
+### 🧑 User — 2026-11-17T17:02:45.494Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/match06.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T17:03:00.773Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match06.ts'; s=open(p).read()\ns=s.replace(\"const grid = (cols: number, vert: (s: number, j: number, fr: ReturnType<typeof frame>) => [THREE.Vector3, number], closed: boolean, sK: number) => {\",\"const grid = (cols: number, vert: (s: number, j: number, fr: ReturnType<typeof frame>) => [THREE.Vector3, number], sK: number) => {\")\ns=s.replace(\"    g.computeVertexNormals();\\n    void closed;\\n\",\"    g.computeVertexNormals();\\n\")\ns=s.replace(\"  }, true, TT.period), mat(tTube), 'tube');\",\"  }, TT.period), mat(tTube), 'tube');\")\ns=s.replac …[+3932 chars]`
+
+### 🧑 User — 2026-11-17T17:03:03.651Z
+
+> ↩︎ result: 486:      const st = this.stageAtS(i * this.ds);
+> 523:  stageAtS(s: number): StageDef {
+> TSC OK
+
+### 🤖 Claude — 2026-11-17T17:03:08.540Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad; mkdir -p $S/new1 && node scripts/capture.mjs 06 --q=match06=1 --out=$S/new1 2>&1 | tail -2; git checkout qa/capture_log.json; python3 -I tools/qa/screen_match.py references/06_crest_the_rinse_arch.png $S/new1/06.png --label=06 | tail -8", "description": "Capture first match06 result and measure", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:03:22.972Z
+
+> ↩︎ result: 06 → /tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/new1/06.png {"stage":"06","s":198.91,"y":-37.636,"calls":44,"tris":236659,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> Updated 1 path from the index
+> 06     FULL |d|  16.1 <=20 0.791 SSIM 0.785 | BELOWHUD |d|  11.8 <=20 0.856 | LAYOUT |d|   8.9 <=20 0.864 | mean RGB approved [152.8, 131.3, 204.3] game [154.3, 125.2, 204.6]
+
+### 🤖 Claude — 2026-11-17T17:03:24.888Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/new1/06.png"}`
+
+### 🧑 User — 2026-11-17T17:03:24.964Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:03:28.466Z
+
+First live result: whole frame **79.1 %** within 20 levels (BEFORE 5.0 %). Committing, then running the moving-camera test.
+
+### 🤖 Claude — 2026-11-17T17:03:31.772Z
+
+> 🔧 **Bash** `{"command": "git add src/world/match06.ts src/game/Game.ts src/gameplay/coins.ts tools/match06 assets/textures/match06 && git commit -qm \"Screen 06 match06 step 2: projected approved scenery on fitted tube + river floor, ring-structured tiles, picture coins as pickups (behind ?match06=1)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXocCdACTagSAjpsaqHT\" && git log --oneline -1 && sed 's/04/06/g; s/5268/5278/' <(git show origin/claude/rainbow-s04-match:tools/match04/motion04.mjs) > tools/match06/motion06.mjs && sed -n 1,3p tool …[+132 chars]`
+
+### 🧑 User — 2026-11-17T17:03:31.986Z
+
+> ↩︎ result: 836668e Screen 06 match06 step 2: projected approved scenery on fitted tube + river floor, ring-structured tiles, picture coins as pickups (behind ?match06=1)
+> // Screen 06 moving-camera test (read-only): from the 06 checkpoint ride forward / steer with the real game sim and
+> // screenshot what the live camera sees. usage: node tools/match06/motion06.mjs <outDir> [q]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> 17:  const shots = [['f00_checkpoint', 0, null], ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null],
+> 18-                 ['f20_forward20u', 20, null], ['s_left_steer', 6, -1], ['s_right_steer', 6, 1]];
+> 19-  for (const [name, dist, steer] of shots) {
+
+### 🤖 Claude — 2026-11-17T17:03:34.728Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match06/motion06.mjs'; s=open(p).read()\ns=s.replace(\"['f10_forward10u', 10, null],\\n                 ['f20_forward20u', 20, null],\",\"['f10_forward10u', 10, null],\\n                 ['f15_forward15u', 15, null], ['f20_forward20u', 20, null], ['f30_forward30u', 30, null],\")\nopen(p,'w').write(s)\nEOF\nmkdir -p qa/match/06/motion && node tools/match06/motion06.mjs qa/match/06/motion 2>&1 | tail -10", "description": "Run moving-camera test for match06", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:04:18.259Z
+
+> ↩︎ result: f00_checkpoint s 199.248 lat 0 06 coins 1680
+> f03_forward3u s 202.124 lat 0 06 coins 1720
+> f06_forward6u s 205.083 lat 0 06 coins 1740
+> f10_forward10u s 209.114 lat 0 06 coins 1740
+> f15_forward15u s 213.97 lat 0 06 coins 1740
+> f20_forward20u s 219.103 lat 0 06 coins 1780
+> f30_forward30u s 229.001 lat 0 06 coins 1780
+> s_left_steer s 204.99 lat -2.733 06 coins 1720
+> s_right_steer s 205.015 lat 2.74 06 coins 1740
+
+### 🤖 Claude — 2026-11-17T17:04:21.811Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nnames=['f03_forward3u','f06_forward6u','f10_forward10u','f15_forward15u','f20_forward20u','f30_forward30u','s_left_steer','s_right_steer']\nims=[Image.open(f'qa/match/06/motion/{n}.png').resize((288,512)) for n in names]\nc=Image.new('RGB',(288*4,1024))\nfor i,im in enumerate(ims): c.paste(im,((i%4)*288,(i//4)*512))\nc.save('/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/motion_sheet.png')\"", "description": "Make contact sheet of motion frames"}`
+
+### 🧑 User — 2026-11-17T17:04:22.738Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:04:24.642Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/motion_sheet.png"}`
+
+### 🧑 User — 2026-11-17T17:04:24.694Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:05:26.941Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\nold_start=s.index(\"    // `?match06=1`: the approved Screen 06 view\")\nold_end=s.index(\"    // 03 whirlpool: dynamic high angle\")\nnew='''    // `?match06=1`: the approved Screen 06 view — at the 06 checkpoint (06 start + 10) the camera is exactly Benny +\n    // off06 (world), looking along dir06, level. Both are stored in the river's LEVEL frame there (smoothed heading, world\n    // up, no bank) and carried rigidly along the river with Benny, so over the crest and down the far side the camera stays\n    // the  …[+2172 chars]`
+
+### 🧑 User — 2026-11-17T17:05:27.007Z
+
+> ↩︎ result: 8: *   * the river floor = the water surface across the tube (|lateral| <= Lfloor, meets the wall)
+> 29:  Lfloor: number;
+> 186:    const l = -L.Lfloor + (2 * L.Lfloor * j) / FC;
+
+### 🤖 Claude — 2026-11-17T17:05:31.195Z
+
+> 🔧 **Bash** `{"command": "sed -n 180,192p src/world/match06.ts", "description": "View floor construction lines"}`
+
+### 🧑 User — 2026-11-17T17:05:31.223Z
+
+> ↩︎ result: let a = th; if (a > TT.wallAngle[1]) a -= Math.PI * 2; // continuous over the wall (the part under the water is never seen)
+>     return [p, (a - TT.wallAngle[0]) / TT.anglePeriod];
+>   }, TT.period), mat(tTube), 'tube');
+>   // river floor across the tube
+>   const FC = 32;
+>   add(grid(FC, (_s, j, fr) => {
+>     const l = -L.Lfloor + (2 * L.Lfloor * j) / FC;
+>     return [fr.pos.clone().addScaledVector(fr.right, l), l / TF.lateralPeriod];
+>   }, TF.period), mat(tFloor), 'floor');
+>   // far end cap of the tunnel (the glowing vanishing point)
+>   const fe = frame(L.s1 + L.ext);
+>   const cap = new THREE.Mesh(new THREE.CircleGeometry(L.R, 64), mat(tTube));
+>   cap.geometry.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(cap.geometry.attributes.position.count * 2), 2));
+
