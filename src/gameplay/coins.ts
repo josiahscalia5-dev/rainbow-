@@ -17,19 +17,21 @@ const COINS05 = on05('coins05');
  * `?coins05tot=1` (on with `?coins05=1` / `?match05=1`; explicit `=0` = off; Screen 05 agent 2026-11-17, qa/match/05/NOTES.md):
  * COIN TOTAL KEPT = the default game's 91 coins / 2,240. The measured arrangement C05M (18 coins) replaces 7 default 05
  * coins after the checkpoint, so the run had 102 coins (100 reachable). With this switch:
- *  1. the two tiniest painted far coins (C05M rows 17 + 18, 4 / 3.5 px wide at the vanishing point, 0.27 u after the
- *     previous one but 0.25–0.5 u further sideways: not reachable even by the gameplay test's coin-seeking steering) are
- *     left out — the only change in the locked 05 view;
- *  2. the remaining 9 extra coins are taken out where NO locked screen view shows them: coins behind their own screen's
+ *  1. the two tiniest painted far coins (C05M rows 17 + 18, 4 / 3.5 px wide at the vanishing point) end the painted arc
+ *     that swings from lat +1.0 to −1.3 within 3 u: Benny (at lat +0.8…+0.2 there) cannot steer to them, so 2 of the 102
+ *     coins were never collectable. They stay DRAWN where the approved picture paints them (locked 05 view unchanged) and
+ *     are picked up on the stream centre line instead (pickLat = C05TOT_PICKLAT);
+ *  2. the 11 extra coins are taken out where NO locked screen view shows them: coins behind their own screen's
  *     checkpoint camera (already collected there): 06 (3) and 07 (4) (C05TOT_CP mirrors Game.ts CHECKPOINTS), and the
- *     last 2 coins of 06 behind its crest (C05TOT_END: hidden from the 06 view, behind the 07 camera).
+ *     last 4 coins of 06 behind its crest (C05TOT_END: hidden from the 06 view, behind the 07 camera).
  *     Rejected by pixel test: the 05 trail before the 05 checkpoint (the locked 04 view shows them), the coin behind the
  *     03 camera (seen in 01) and the one behind the 10 camera (seen far ahead in 08 and 09).
  * Reward per coin, pickup rule and every other coin are unchanged.
  */
-const C05TOT_DROP_MEAS = [16, 17];
+const C05TOT_PICK_MEAS = [16, 17];
+const C05TOT_PICKLAT = 0;
 const C05TOT_CP: [StageId, number, number][] = [['06', 10, 3], ['07', 26, 4]]; // [stage, checkpoint offset from s0, coins]
-const C05TOT_END: [StageId, number][] = [['06', 2]]; // [stage, last n coins]
+const C05TOT_END: [StageId, number][] = [['06', 4]]; // [stage, last n coins]
 const COINS05TOT = COINS05 && (() => {
   try { if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('coins05tot') === '0') return false; } catch { /* no location */ }
   return on05('coins05tot');
@@ -126,6 +128,8 @@ export interface CoinDef {
   /** coins05 only: unit forward direction the coin faces away from (instead of the local course tangent), with world-up
    *  as its up (no bank roll): the measured 05 coins face down the straight 05 tube axis, i.e. squarely at the camera */
   axis?: THREE.Vector3;
+  /** `?coins05tot` only: lateral used by the pickup test instead of `lat` (drawn position unchanged) */
+  pickLat?: number;
 }
 
 /**
@@ -219,13 +223,13 @@ export function coinLayout(course: Course): CoinDef[] {
   }));
   kept.splice(first, 0, ...meas);
   if (COINS05TOT) {
-    const dropMeas = new Set(C05TOT_DROP_MEAS.map((k) => meas[k]));
-    let extra = kept.length - dropMeas.size - out.length;
+    for (const k of C05TOT_PICK_MEAS) meas[k].pickLat = C05TOT_PICKLAT;
+    let extra = kept.length - out.length;
     const pick: CoinDef[] = [];
     const take = (list: CoinDef[], n: number) => { for (const d of list.slice(0, Math.min(n, extra))) { pick.push(d); extra--; } };
     for (const [id, off, n] of C05TOT_CP) { const a = st(id); take(kept.filter((d) => d.stage === id && d.s < a.s0 + off + 0.5), n); }
     for (const [id, n] of C05TOT_END) take(kept.filter((d) => d.stage === id).slice(-n), n);
-    if (extra === 0) { const drop = new Set([...dropMeas, ...pick]); return kept.filter((d) => !drop.has(d)); }
+    if (extra === 0) { const drop = new Set(pick); return kept.filter((d) => !drop.has(d)); }
   }
   return kept;
 }
@@ -368,7 +372,7 @@ export function createCoins(course: Course): CoinSystem {
         const d = defs[i];
         const ds = d.s - s;
         if (ds < -2 || ds > 2) continue;
-        if (Math.abs(ds) < 1.0 && Math.abs(d.lat - lat) < 1.25) {
+        if (Math.abs(ds) < 1.0 && Math.abs((d.pickLat ?? d.lat) - lat) < 1.25) {
           collected[i] = 1;
           popT[i] = time;
           picked++;

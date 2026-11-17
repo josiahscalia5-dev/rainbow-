@@ -1,4 +1,4 @@
-# Rainbow session — session eda5ef33-506c-5d2c-b37e-b781e608931b
+# Rainbow game Google Flow cinematic scenes — session eda5ef33-506c-5d2c-b37e-b781e608931b
 
 ### 🧑 User — 2026-11-17T16:46:34.284Z
 
@@ -411,4 +411,153 @@ Two of my coin picks (Screen 03 and Screen 10) still change other screens' pictu
 ### 🤖 Claude — 2026-11-17T16:55:06.947Z
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/gameplay/coins.ts'\nt=open(p).read()\nreps=[(\"\"\" *     checkpoint camera (already collected there): 03 (1), 06 (3), 07 (4), 10 (1) (C05TOT_CP mirrors Game.ts CHECKPOINTS).\n *     (Not the 05 trail before the 05 checkpoint: the locked 04 view shows those 3 coins far down its slide.)\"\"\",\n\"\"\" *     checkpoint camera (already collected there): 06 (3) and 07 (4) (C05TOT_CP mirrors Game.ts CHECKPOINTS), and the\n *     last 2 coins of 06 behind its crest (C05TOT_END: hidden from the 06 view, behind the 07 camera).\n *     Rejected by pixel test: the  …[+1772 chars]`
+
+### 🧑 User — 2026-11-17T16:57:27.568Z
+
+> ↩︎ result: TSC OK
+> 10 → /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/on/10.png {"stage":"10","s":423.018,"y":-112.84,"calls":283,"tris":420367,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 01 745 (np.int64(224), np.int64(847), np.int64(458), np.int64(1285))
+> 02 0 
+> 03 0 
+> 04 0 
+> 05 17 (np.int64(468), np.int64(476), np.int64(481), np.int64(485))
+> 06 0 
+> 07 0 
+> 08 0 
+> 09 0 
+> 10 1244 (np.int64(0), np.int64(633), np.int64(217), np.int64(1031))
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:57:37.877Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad && python3 -c \"\nimport numpy as np\nfrom PIL import Image\nfor n in ['10']:\n    a=Image.open(f'on/{n}.png').convert('RGB'); b=Image.open(f'off/{n}.png').convert('RGB')\n    d=np.abs(np.asarray(a).astype(int)-np.asarray(b).astype(int)).max(2)\n    print('max diff',d.max(), 'n>2',(d>2).sum())\n    w,h=a.size; c=Image.new('RGB',(w*3,h)); c.paste(a,(0,0)); c.paste(b,(w,0)); c.paste(Image.fromarray(((d>0)*255).astype('uint8')).convert('RGB'),(2*w,0))\n    c.resize((w,h//3)).save(f'cmp_{n}.png')\na=n …[+198 chars]`
+
+### 🧑 User — 2026-11-17T16:57:38.814Z
+
+> ↩︎ result: max diff 54 n>2 5
+> 01 max 46
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:57:40.369Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/cmp_10.png"}`
+
+### 🧑 User — 2026-11-17T16:57:40.384Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:57:46.654Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; mkdir -p $S/on2 $S/off3; timeout 900 node scripts/capture.mjs --q='match05=1' --out=$S/on2 01 10 2>&1 | tail -1; timeout 900 node scripts/capture.mjs --q='match05=1&coins05tot=0' --out=$S/off3 01 10 2>&1 | tail -1; cd $S && python3 -c \"\nimport numpy as np\nfrom PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nfor n in ['01','10']:\n    for x,y in [('on','on2'),('off','off3'),('on2','off3')]:\n        print(n,x,y,(np.abs(L(f'{x}/{n}.png')-L(f'{y}/{n}.png')).max( …[+102 chars]`
+
+### 🧑 User — 2026-11-17T16:58:43.044Z
+
+> ↩︎ result: 10 → /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/on2/10.png {"stage":"10","s":423.018,"y":-112.84,"calls":283,"tris":420367,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 10 → /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/off3/10.png {"stage":"10","s":423.018,"y":-112.84,"calls":283,"tris":422479,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 01 on on2 745
+> 01 off off3 745
+> 01 on2 off3 745
+> 10 on on2 0
+> 10 off off3 1244
+> 10 on2 off3 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:58:56.967Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; python3 -c \"\nimport numpy as np\nfrom PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nap=L('qa/match/05/01_APPROVED.png'); on=L('$S/on/05.png'); off=L('$S/off/05.png')\nprint(ap.shape,on.shape)\nm=np.abs(on-off).max(2)>0\nfor nm,x in [('on',on),('off',off)]: print(nm, np.abs(x-ap)[m].mean(), np.abs(x-ap)[455:510,440:505].mean())\nImage.fromarray(np.concatenate([np.kron(z[460:505,445:500],np.ones((8,8,1),int)) for z in (ap,off,on)],1).astype('uint8')).save('$S/ …[+88 chars]`
+
+### 🧑 User — 2026-11-17T16:58:57.565Z
+
+> ↩︎ result: (1536, 864, 3) (1536, 864, 3)
+> on 44.8235294117647 13.877016317016317
+> off 20.84313725490196 13.762983682983682
+
+### 🤖 Claude — 2026-11-17T16:58:59.366Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/coins_far.png"}`
+
+### 🧑 User — 2026-11-17T16:58:59.385Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:59:04.150Z
+
+The approved picture does show those two farthest coins, so dropping them makes Screen 05 less close. I'll look at keeping them visible and making them collectable instead.
+
+### 🤖 Claude — 2026-11-17T16:59:05.203Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const C05M\\b\\|const C05M =\" -A 24 src/gameplay/coins.ts | head -40; sed -n 355,380p src/gameplay/coins.ts", "description": "Read measured coin table and pickup code"}`
+
+### 🧑 User — 2026-11-17T16:59:05.236Z
+
+> ↩︎ result: 160:export const C05M: [number, number, number, number?][] = [
+> 161-  [6.177, -0.275, 0.963], [10.752, 0.146, 0.926], [16.528, -0.151, 0.98], [26.221, -0.653, 1.084], [43.068, -1.63, 1.196],
+> 162-  [45.624, -1.994, 0.881], [51.129, 0.094, 0.761, 1.733], [51.125, 0.723, 0.588, 1.93], [51.272, 1.027, 0.436, 2.14], [51.561, 1.02, 0.372, 2.398],
+> 163-  [51.901, 0.8, 0.351, 2.691], [52.265, 0.458, 0.286, 2.935], [52.608, 0.132, 0.243, 3.077], [52.927, -0.144, 0.222, 3.128], [53.214, -0.421, 0.223, 3.104],
+> 164-  [53.491, -0.738, 0.201, 3.136], [53.763, -1.025, 0.179, 3.251], [54.034, -1.279, 0.157, 3.375],
+> 165-];
+> 166-/** near size of the measured coins (C05.scale = the default 05 coin size), capped by the 3-D gap to the next coin */
+> 167-const C05M_NEAR = (k: number): number => {
+> 168-  const [ds, lat, , h = C05.h] = C05M[k];
+> 169-  const nb = [C05M[k - 1], C05M[k + 1]].filter(Boolean).map(([d2, l2, , h2 = C05.h]) => Math.hypot(d2 - ds, l2 - lat, h2 - h));
+> 170-  return Math.max(C05M[k][2], Math.min(C05.scale, 0.85 * Math.min(...nb)));
+> 171-};
+> 172-
+> 173-function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h?: number, extra?: Partial<CoinDef>) => void) {
+> 174-  const a = c …[+1376 chars]
+
+### 🤖 Claude — 2026-11-17T16:59:11.608Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node tools/match05/coin_audit.mjs --q='match05=1&coins05tot=0' 2>&1 | tail -1", "description": "Audit which coins are missed without the fix", "timeout": 620000}`
+
+### 🧑 User — 2026-11-17T16:59:18.617Z
+
+> ↩︎ result: {"total":102,"perStage":{"undefined":102},"collected":100,"missed":[{"s":186.2,"lat":-1.02},{"s":186.47,"lat":-1.28}]}
+
+### 🤖 Claude — 2026-11-17T16:59:27.224Z
+
+> 🔧 **Bash** `{"command": "sed 's/5233/5235/' tools/match05/coin_audit.mjs > /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/trace.mjs && cd /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad && python3 - <<'EOF'\np='trace.mjs'; t=open(p).read()\nt=t.replace(\"'../../scripts/lib/pw.mjs'\",\"'/home/user/rainbow-/scripts/lib/pw.mjs'\")\nt=t.replace(\"api.step(1, dt);\\n    }\",\"if (st.s > 182 && st.s < 188) (globalThis.tr ??= []).push([+st.s.toFixed(2), +st.lat.toFixed(2), next ? +next.lat.toFixed(2) : null]);\\n      api.step(1, dt);\\n    }\" …[+415 chars]`
+
+### 🧑 User — 2026-11-17T16:59:34.364Z
+
+> ↩︎ result: {"tr":[[182.17,-0.1,0.09],[182.9,0.24,1.02],[183.64,0.53,0.46],[184.37,0.75,-0.42],[185.1,0.82,-0.74],[185.84,0.73,-1.28],[186.57,0.5,-1.3],[187.3,0.17,-1.3]],"total":102,"perStage":{"undefined":102},"collected":100,"missed":[{"s":186.2,"lat":-1.02},{"s":186.47,"lat":-1.28}]}
+
+### 🤖 Claude — 2026-11-17T16:59:58.884Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export interface CoinDef\" -A 16 src/gameplay/coins.ts", "description": "Read CoinDef interface"}`
+
+### 🧑 User — 2026-11-17T16:59:58.913Z
+
+> ↩︎ result: 119:export interface CoinDef {
+> 120-  s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number;
+> 121-  /** coins05 only: bob / wobble phase (default: the coin's index, as before) */
+> 122-  phase?: number;
+> 123-  /** coins05 only: [scale at the 05 checkpoint, distance ahead of Benny at the checkpoint] — the coin shows `scale` from
+> 124-   *  15 u closer on (see C05M) */
+> 125-  far?: [number, number];
+> 126-  /** coins05 only: unit forward direction the coin faces away from (instead of the local course tangent), with world-up
+> 127-   *  as its up (no bank roll): the measured 05 coins face down the straight 05 tube axis, i.e. squarely at the camera */
+> 128-  axis?: THREE.Vector3;
+> 129-}
+> 130-
+> 131-/**
+> 132- * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+> 133- * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+> 134- * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+> 135- * so their face reads as a slightly flattened disc with the rim visible underneath, as in the ref.
+
+### 🤖 Claude — 2026-11-17T17:00:09.702Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/gameplay/coins.ts'\nt=open(p).read()\nreps=[\n(\"\"\"  axis?: THREE.Vector3;\n}\n\"\"\",\"\"\"  axis?: THREE.Vector3;\n  /** `?coins05tot` only: lateral used by the pickup test instead of `lat` (drawn position unchanged) */\n  pickLat?: number;\n}\n\"\"\",1),\n(\"\"\" *  1. the two tiniest painted far coins (C05M rows 17 + 18, 4 / 3.5 px wide at the vanishing point, 0.27 u after the\n *     previous one but 0.25–0.5 u further sideways: not reachable even by the gameplay test's coin-seeking steering) are\n *     left out — the only change in the locked 05  …[+2270 chars]`
+
+### 🧑 User — 2026-11-17T17:00:12.255Z
+
+> ↩︎ result: TSC OK
+>  qa/capture_log.json   | 132 +++++++++-----------------------------------------
+>  src/gameplay/coins.ts |  26 +++++-----
+>  2 files changed, 37 insertions(+), 121 deletions(-)
+
+### 🤖 Claude — 2026-11-17T17:00:17.037Z
+
+> 🔧 **Bash** `{"command": "git checkout qa/capture_log.json; timeout 600 node tools/match05/coin_audit.mjs --q='match05=1' 2>&1 | tail -1; S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; rm -rf $S/on; mkdir -p $S/on; timeout 900 node scripts/capture.mjs --q='match05=1' --out=$S/on 02 03 04 05 06 07 08 09 2>&1 | tail -1; cd $S && python3 -c \"\nimport numpy as np\nfrom PIL import Image\nfor i in range(2,10):\n    n=f'{i:02d}'\n    a=np.asarray(Image.open(f'on/{n}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'off/{n}.png').convert('RGB')).astype(int)\n    pr …[+120 chars]`
 
