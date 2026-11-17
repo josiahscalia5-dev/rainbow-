@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11544,
-   "sha256": "2b231cea654f45b96521b2870274eff4453fa256b9b94b8ae889217710c9c907"
+   "bytes": 11571,
+   "sha256": "0a75bc5ec05a5024b55b583568017e923a2ce932fb0cde0bd6c161e62edc8827"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -665,6 +665,11 @@
    "path": "builds/rainbow-debug-08camclear-2026-11-17-r3.apk",
    "bytes": 22882999,
    "sha256": "fa4ae363f2e181fa11dd8efa57a03aa5444b7dee14443c342f63127533130a47"
+  },
+  {
+   "path": "builds/rainbow-debug-08camclear-2026-11-17-r4.apk",
+   "bytes": 22883480,
+   "sha256": "93667373a7fe0ae0075e02ae4227ef45c78fd8ea83495cac752a0a7d9ca92aab"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1138,18 +1143,18 @@
   },
   {
    "path": "qa/gameplay_video/NOTES.md",
-   "bytes": 3903,
-   "sha256": "a5b8e913fd0692bbdfd46d636fcec6019b412b2b326fc0929e128e8bdcb20840"
+   "bytes": 4679,
+   "sha256": "c9846df4983e84d77dd79e5847235f07944e6a6414b69947c5aa72240248af2f"
   },
   {
    "path": "qa/gameplay_video/SHARED_CHANGES.md",
-   "bytes": 1376,
-   "sha256": "7c3bc3346c986dab10ed70dec82c75849b885f6a1fca3e68d505e36105a4a5c7"
+   "bytes": 1657,
+   "sha256": "e5d0abdb628e52977aa56593c1226388e19a565f987be809d4d8ec53f30f5f36"
   },
   {
    "path": "qa/gameplay_video/STATUS.md",
-   "bytes": 3247,
-   "sha256": "4691ba80ead0324c5be81fe3291eb016ba4b99ecff99512c99b20df186000939"
+   "bytes": 6134,
+   "sha256": "178463a5321e628209ab3f067f1587d85dca60297029e2ebcd7ee5176ed963b8"
   },
   {
    "path": "qa/gameplay_video/compare_r3/v04.0s_03_1_video.png",
@@ -2362,6 +2367,21 @@
    "sha256": "3e2af927fc8441a4cb11593b933b37c21f2e91ca9912bd6cf09f933b0486a03c"
   },
   {
+   "path": "qa/gameplay_video/moving_r4/sheet_steer-1.png",
+   "bytes": 6047221,
+   "sha256": "b4d92fa2623069c4cc400e0f2f903180ff6546c22faa00392d1bb4e336553fd4"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/sheet_steer0.png",
+   "bytes": 6150121,
+   "sha256": "a3cc93799cd59ee7e117218cd4a5d6dc5dea435a3b18ba8ed3e10d82a6a10d05"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/sheet_steer1.png",
+   "bytes": 6084237,
+   "sha256": "be2bfee1669bc670b0b55323015186d5e4e3fda80d8bb0db75f654cd150090b2"
+  },
+  {
    "path": "qa/gameplay_video/moving_r4/steer-1/f_000_t41.00.png",
    "bytes": 475832,
    "sha256": "96177d0324990c547a74b8f3bba225bc007efdefef04f53992960bddd1f34dbc"
@@ -2415,6 +2435,31 @@
    "path": "qa/gameplay_video/moving_r4/steer-1/f_010_t46.00.png",
    "bytes": 405205,
    "sha256": "93029d22400579a8c2067180715dcb2e3e89864b5804c738046e6df4976168b3"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer-1/f_011_t46.50.png",
+   "bytes": 461450,
+   "sha256": "0576cf769df4de7bf26908013b99964046b488a89ee8d3f4e310d72dbc7bd784"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer-1/f_012_t47.00.png",
+   "bytes": 456438,
+   "sha256": "87e21da9439efe0817cf7bf22eca16764984b410988c97801e7de8501c411a2a"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer-1/f_013_t47.50.png",
+   "bytes": 415256,
+   "sha256": "aa90063f31eab82c2ca08fb20fe4478a499cf113ad669df3f1d22fd4d5b4b6e9"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer-1/f_014_t48.00.png",
+   "bytes": 475179,
+   "sha256": "39bd3b8c249b385d8b335d8cd548af1a5fc0d9b8dee3030927884bb485c7efbe"
+  },
+  {
+   "path": "qa/gameplay_video/moving_r4/steer-1/probe.json",
+   "bytes": 21127,
+   "sha256": "6b555ad0b38d63dd7fbb389bef0931dcfc743b3f0fdac08423ea849ec74c5cc7"
   },
   {
    "path": "qa/gameplay_video/moving_r4/steer0/f_000_t41.00.png",
@@ -2590,6 +2635,61 @@
    "path": "qa/gameplay_video/scan/match08/probe.json",
    "bytes": 103621,
    "sha256": "e224e8e25ff8d527dfd90bfc646ff0f5e56e4fe3d88288ef2f8420864c8bbf1a"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/def_03.png",
+   "bytes": 356077,
+   "sha256": "df27bf1ca5b773727fb5ae6ac64a60a431ef2b8e72ddddfe46dc98ba4495ddf7"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/def_04.png",
+   "bytes": 391051,
+   "sha256": "ef4aa9876197d4694a7840ad0d1ee61f2e2eaa3170a9bd5ffa0f82f1e04c9a9f"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/def_05.png",
+   "bytes": 541321,
+   "sha256": "0a64601830dae909136cbd5eecdfc5e5a043af221967f810862031d321a1ffc4"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/def_06.png",
+   "bytes": 488322,
+   "sha256": "dd85756b87c4a6448bd858ce1a8b3cc0f8097b51caf6025495ea73a0d67cb4e4"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/def_07.png",
+   "bytes": 548236,
+   "sha256": "bc6e8190932b68d722bf59205dbce46e11a940068a0553d9f3927a9bd712d250"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/def_08.png",
+   "bytes": 446265,
+   "sha256": "6a7d187065657b4265424b388801fb54f19200a8ceec1df42ed811d7b36b248a"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/def_09.png",
+   "bytes": 467807,
+   "sha256": "4f5ec36bf648843ba303bfcd6e42fb341850efc58f49fe9be8956ff3e4dfab16"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/m07_07.png",
+   "bytes": 514853,
+   "sha256": "2715be7378da52a38295c03c5a445e0ebf82ee76540a0fa79c82e9bc26851a20"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/m07cc_07.png",
+   "bytes": 514853,
+   "sha256": "2715be7378da52a38295c03c5a445e0ebf82ee76540a0fa79c82e9bc26851a20"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/m08_08.png",
+   "bytes": 634844,
+   "sha256": "8a76bfbe9e222e9a296342896a8593e6f31068c21c7ca79bf31bae149f22b3e2"
+  },
+  {
+   "path": "qa/gameplay_video/stills_r4/m08cc_08.png",
+   "bytes": 634826,
+   "sha256": "5a9e6a4d95c3641e579f69b8493af17e92c2bd2dcb8af2fdd456fe4753713977"
   },
   {
    "path": "qa/gameplay_video/tests/gameplay_camclear.json",

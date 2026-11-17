@@ -1,4 +1,4 @@
-# Rainbow session — session d9f895bf-45eb-56d9-b25c-4cb6284b4b7e
+# Screen sharing display preview — session d9f895bf-45eb-56d9-b25c-4cb6284b4b7e
 
 ### 🧑 User — 2026-11-17T18:39:30.426Z
 
@@ -1380,4 +1380,159 @@ Gameplay 8/8, 91 coins / 2,240, drop unchanged, continuity gaps 0; the biggest o
 ### 🤖 Claude — 2026-11-17T19:08:05.370Z
 
 > 🔧 **Bash** `{"command": "rm -rf qa/gameplay_video/moving_r4 && for st in 0 1 -1; do if [ $st = 0 ]; then plan=\"--steer=0\"; else plan=\"--steerplan=0:0,43:$st\"; fi; timeout 1200 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=41 --t1=48 --dt=0.5 --size=360x800 $plan --out=qa/gameplay_video/moving_r4/steer$st >/dev/null 2>&1; python3 -c \"\nimport json\nd=json.load(open('qa/gameplay_video/moving_r4/steer$st/probe.json'))\nR=d['rows']; print('steer $st', 'max hidden %.0f%%'%(100*max(r['benny'].get('hidden',0) for r in R)), 'near2 max', max(r['near2'] for r in R), 'inside', sum(len(r['inside' …[+315 chars]`
+
+### 🧑 User — 2026-11-17T19:10:46.970Z
+
+> ↩︎ result: steer 0 max hidden 22% near2 max 0 inside 0 hearts 5 stages 07080910 []
+> steer 1 max hidden 45% near2 max 0 inside 0 hearts 2 stages 07080910 [(44.5, 0.453)]
+> steer -1 max hidden 29% near2 max 0.0019 inside 0 hearts 2 stages 07080910 [(45.5, 0.291)]
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/tools/camclear/sheet.py", line 11, in <module>
+>     probe, out = args[0], args[1]
+
+### 🤖 Claude — 2026-11-17T19:10:52.196Z
+
+> 🔧 **Bash** `{"command": "for st in 0 1 -1; do python3 tools/camclear/sheet.py qa/gameplay_video/moving_r4/steer$st/probe.json qa/gameplay_video/moving_r4/sheet_steer$st.png 2>&1 | tail -1; done; du -sh qa/gameplay_video/moving_r4; git add qa/gameplay_video/moving_r4 qa/gameplay_video/r07_band_distances_r4.json qa/gameplay_video/tests/r4_* src/game/camClear.ts src/game/Game.ts && git commit -qm \"camclear r4: missed coins no longer fill the view when steering off the coin line (08); moving check 07-08-09 straight/left/right; tests 8/8 91/2240\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClau …[+318 chars]`
+
+### 🧑 User — 2026-11-17T19:11:01.880Z
+
+> ↩︎ result: qa/gameplay_video/moving_r4/sheet_steer0.png (2160, 2502) 15 frames
+> qa/gameplay_video/moving_r4/sheet_steer1.png (2160, 2502) 15 frames
+> qa/gameplay_video/moving_r4/sheet_steer-1.png (2160, 2502) 15 frames
+> 39M	qa/gameplay_video/moving_r4
+> 3273b49
+> 3273b49
+
+### 🤖 Claude — 2026-11-17T19:11:03.309Z
+
+Pushed (`3273b49`). Building the APK with `match08=1&camclear=1`, the same way as round 3.
+
+### 🤖 Claude — 2026-11-17T19:11:04.520Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"apk\" qa/gameplay_video/NOTES.md qa/gameplay_video/STATUS.md | grep -i \"build\\|VITE\\|gradle\\|npm\" | head -5; grep -n \"VITE_RAINBOW\" -r scripts/*.sh package.json 2>/dev/null | head -5", "description": "Find APK build recipe"}`
+
+### 🧑 User — 2026-11-17T19:11:04.557Z
+
+> ↩︎ result: qa/gameplay_video/NOTES.md:46:* APK `builds/rainbow-debug-08camclear-2026-11-17-r3.apk`.
+> qa/gameplay_video/STATUS.md:22:* **APK:** `builds/rainbow-debug-08camclear-2026-11-17-r3.apk` (Git LFS, `match08=1&camclear=1` baked in, sha256 `fa4ae363…0a47`) — **NOT phone-tested** (no device in the cloud).
+
+### 🤖 Claude — 2026-11-17T19:11:06.568Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"VITE_RAINBOW_Q\\|android:debug\\|assembleDebug\" scripts package.json docs 2>/dev/null | head; grep -n \"\\\"android\\|\\\"build\\|apk\" package.json", "description": "Locate Android build scripts"}`
+
+### 🧑 User — 2026-11-17T19:11:06.626Z
+
+> ↩︎ result: scripts/claude-bootstrap.sh
+> scripts/apk-web-check.mjs
+> package.json
+> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md
+> 9:    "build": "tsc --noEmit && vite build",
+> 17:    "android:sync": "npm run build && npx cap sync android",
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+
+### 🤖 Claude — 2026-11-17T19:11:08.558Z
+
+> 🔧 **Bash** `{"command": "grep -n \"VITE_RAINBOW_Q\" docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head -3; grep -rn \"VITE_RAINBOW_Q\" src | head -3; git status --short | grep -v backups | head", "description": "Find env var for baked query"}`
+
+### 🧑 User — 2026-11-17T19:11:08.639Z
+
+> ↩︎ result: 65:`VITE_RAINBOW_Q05="match08=1" npm run android:debug`) — **built, NOT yet tested on a real phone.** Details and
+> src/vfx/waterRibbon.ts:147: * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+> src/vfx/waterRibbon.ts:150:const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> src/game/match.ts:7: * VITE_RAINBOW_Q05 (flag05).
+
+### 🤖 Claude — 2026-11-17T19:11:11.872Z
+
+> 🔧 **Bash** `{"command": "export ANDROID_HOME=${ANDROID_HOME:-/opt/android-sdk}; (VITE_RAINBOW_Q05=\"match08=1&camclear=1\" timeout 1500 npm run -s android:debug > /tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/apk.log 2>&1; echo exit $?); tail -3 /tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/apk.log; ls -la android/app/build/outputs/apk/debug/*.apk", "description": "Build debug APK with baked switches", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-17T19:12:37.834Z
+
+> ↩︎ result: exit 0
+> 
+> BUILD SUCCESSFUL in 1m 19s
+> 82 actionable tasks: 82 executed
+> -rw-r--r-- 1 root root 22883480 Nov 17 19:12 android/app/build/outputs/apk/debug/app-debug.apk
+
+### 🤖 Claude — 2026-11-17T19:12:43.332Z
+
+> 🔧 **Bash** `{"command": "cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug-08camclear-2026-11-17-r4.apk && sha256sum builds/rainbow-debug-08camclear-2026-11-17-r4.apk | cut -c1-64; S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; mkdir -p qa/gameplay_video/stills_r4 && cp $S/st_new/*.png qa/gameplay_video/stills_r4/; ls references | grep 08; ls qa/gameplay_video/lip_r4 | grep \"t17.10\\|t17.00\"; ls qa/gameplay_video/moving_r4/steer1 | grep \"t44.50\\|t45.00\"", "description": "Save APK and stills, list picture files"}`
+
+### 🧑 User — 2026-11-17T19:12:43.417Z
+
+> ↩︎ result: 93667373a7fe0ae0075e02ae4227ef45c78fd8ea83495cac752a0a7d9ca92aab
+> 08_final_spin_chamber.png
+> t17.00_1_default.png
+> t17.00_2_camclear_r3.png
+> t17.00_3_camclear_NEW.png
+> t17.10_1_default.png
+> t17.10_2_camclear_r3.png
+> t17.10_3_camclear_NEW.png
+> f_007_t44.50.png
+> f_008_t45.00.png
+
+### 🤖 Claude — 2026-11-17T19:12:46.443Z
+
+> 🔧 **SendUserFile** `{"files": ["references/08_final_spin_chamber.png", "qa/gameplay_video/stills_r4/m08cc_08.png", "qa/gameplay_video/moving_r4/steer1/f_008_t45.00.png", "qa/gameplay_video/moving_r4/steer-1/f_007_t44.50.png"], "caption": "Screen 08: 1 your APPROVED picture · 2 the game now (match08 + camclear), same view as before (0 px change) · 3 steering right into 08 · 4 steering left into 08 (the missed coins in the front are now thinned out instead of covering the lower third)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T19:12:47.400Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /home/user/rainbow-/references/08_final_spin_chamber.png → file_uuid: a788a8be-8022-46e2-adc9-279686c1e81e
+>   /home/user/rainbow-/qa/gameplay_video/stills_r4/m08cc_08.png → file_uuid: 5b69700e-a9e3-4ec4-8643-220dd06cd41d
+>   /home/user/rainbow-/qa/gameplay_video/moving_r4/steer1/f_008_t45.00.png → file_uuid: 88fbefb0-0285-44c2-9fb3-672d38e02358
+>   /home/user/rainbow-/qa/gameplay_video/moving_r4/steer-1/f_007_t44.50.png → file_uuid: 9a156fc0-d860-4754-a032-babb1f9f0572
+
+### 🤖 Claude — 2026-11-17T19:12:48.392Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/gameplay_video/lip_r4/t17.10_1_default.png", "qa/gameplay_video/lip_r4/t17.10_2_camclear_r3.png", "qa/gameplay_video/lip_r4/t17.10_3_camclear_NEW.png"], "caption": "03→04 drain drop, same moment: 1 normal build · 2 last round's fix · 3 NEW (view no longer tilts, less falling water over Benny, Benny inside the frame)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T19:12:48.820Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/gameplay_video/lip_r4/t17.10_1_default.png → file_uuid: 3860e36e-72b1-4a6d-ba8b-717fd5be59aa
+>   /home/user/rainbow-/qa/gameplay_video/lip_r4/t17.10_2_camclear_r3.png → file_uuid: a7e70e90-a680-4938-ad11-f1d45fd70f0b
+>   /home/user/rainbow-/qa/gameplay_video/lip_r4/t17.10_3_camclear_NEW.png → file_uuid: a7d7f6f4-ba1d-4b8d-913b-393858e1a18e
+
+### 🤖 Claude — 2026-11-17T19:12:50.224Z
+
+Now the docs (STATUS / NOTES / SHARED_CHANGES), then commit, push and report to the lead.
+
+### 🤖 Claude — 2026-11-17T19:13:12.022Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nst=open('qa/gameplay_video/STATUS.md').read()\nr4=\"\"\"# STATUS — Screen 08 camera specialist (`?camclear=1`), round 4\n\n* **Branch:** `claude/rainbow-s08-camclear-c4`, started from `5da9623f9aaa144e46e15e23c8248de11c6a90ab` (= `-c3` head `c03f391c` + one autosave of backups only). `-c3` had no newer commits at start.\n* **Status:** round-4 milestone done; stopped, waiting for the lead.\n* **Done (visual terms):**\n  - **03→04 drain drop:** the picture no longer tilts sideways as Benny goes over the drain lip (tilt up to 16° → ≤ 1°; the picture's \"up\" can no …[+4484 chars]`
+
+### 🧑 User — 2026-11-17T19:13:22.954Z
+
+> ↩︎ result: Uploading LFS objects: 100% (1/1), 23 MB | 0 B/s, done.
+> aa10fdbb6b7efa305edd0d3a40e2da4d0e9c074c
+> aa10fdbb6b7efa305edd0d3a40e2da4d0e9c074c
+> 93667373a7 * builds/rainbow-debug-08camclear-2026-11-17-r4.apk
+> 13
+
+### 🤖 Claude — 2026-11-17T19:13:31.379Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Kbt6BTTnCGMUULjZoCLDTo", "message": "S08 CAMERA r4 DONE — branch claude/rainbow-s08-camclear-c4 @ aa10fdbb6b7efa305edd0d3a40e2da4d0e9c074c (remote == HEAD verified). Start SHA 5da9623f (= -c3 c03f391c + 1 backups-only autosave).\nVISUAL:\n1. 03→04 drain lip: picture no longer tilts (tilt ≤1°, was 16°; \"up\" can't flip), no jolt, less falling water over Benny: hidden max 44%→25% (default 100%), frames >25% 5→1, Benny cut by screen edge 12→2. Frames every 0.1 s: qa/gameplay_video/lip_r4/t*_{1_default,2_camclear_r3,3_camclear_NEW}.png.\n2. 07 upper-screen gold bands: th …[+1114 chars]`
+
+### 🧑 User — 2026-11-17T19:13:39.730Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T19:13:47.421Z
+
+I've sent you the pictures above:
+
+- **Screen 08:** your approved picture, the game now, and the game while steering right and left.
+- **The drop from 03 into 04:** the same moment in three versions: the normal build, last round's fix, and the new version.
+
+**What changed since last round:**
+- **The drop from 03 into 04:** the picture no longer tilts sideways as Benny goes over the drain edge. It used to lean up to 16°; now it leans 1° at most and can't flip. Less of the falling water covers Benny: at the worst moment 25 % of him is hidden, down from 44 % last round (the normal build hides him completely). He also stays inside the screen instead of being cut off at the left edge.
+- **Screen 08 when you steer left or right:** coins Benny missed used to sit huge across the bottom third of the screen. They now fade out once they are closer to you than Benny is. Collecting coins works exactly as before.
+- **Your approved views haven't moved:** Screens 03–09 in the normal build, your 08 view and your 07 view are pixel-for-pixel the same as last round.
+- **Tests:** the gameplay tests pass 8 of 8, with 91 coins collected for a total of 2,240, and the big 07→08 drop is unchanged.
+
+**Two things I couldn't fix from my side (passed to the lead):**
+- **The gold bands across the top of Screen 07** are the tunnel's own big rings, far ahead of Benny, not something passing right in front of the view. Making them smaller would change how Screen 07 looks, so that's for the Screen 07 team.
+- **Steering hard right into Screen 08,** Benny rides into the right-hand pipe of the scenery and is about half hidden (45 % at the worst moment). That needs a fix in the Screen 08 scenery or Benny work.
+
+The new phone build is `builds/rainbow-debug-08camclear-2026-11-17-r4.apk`. It hasn't been tried on a real phone yet. Everything is saved to my branch `claude/rainbow-s08-camclear-c4` (commit `aa10fdb`), and I've confirmed GitHub has the same commit. I sent the lead one status message and I'm waiting for their next step.
 
