@@ -880,3 +880,101 @@ Looks right. Writing the notes, status, shared-change list and the (not run) fal
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/FAL_PLATE_REQUEST.md (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-17T15:56:15.065Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/NOTES.md", "content": "# Screen 04 — approved scenery on real 3D geometry (`?match04=1`, 2026-11-17, branch `claude/rainbow-s04-match`)\n\nMethod = Screen 08's (`qa/match/08/NOTES.md`). Approved picture `references/04_through_the_five_arrows.png` (unchanged,\n13/13 reference checksums OK). **Default build unchanged (0 px, verified). Status: in development — only the user approves.**\n\n## What `?match04=1` does (all behind the switch)\n1. **Camera** (`src/game/match.ts` MATCH_CAM['04'], `src/game/cameraRig.ts` off04/dir04): solved offline at the g …[+6229 chars]`
+
+### 🧑 User — 2026-11-17T15:56:15.094Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:56:23.718Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/STATUS.md", "content": "# Screen 04 — STATUS\n\n* **Assigned screen:** 04 · Through the Five Arrows (`?match04=1`)\n* **Active agent:** Screen 04 workstream session (Claude Code, branch below); lead = session_01AvQv6UXiBngewM8kSBwFfZ\n* **Git branch:** `claude/rainbow-s04-match` (from `ccr-9c4a8ad6-xovgsx` @ 752d6d8, line A; nothing merged)\n* **Completed work (milestone 1):** approved camera solved at FOV 62 (Benny box + vanishing point, < 0.2 px); real 3D\n  proxy geometry fitted to the picture (gold-ring tunnel, mouth ring, room wall, water pla …[+1487 chars]`
+
+### 🧑 User — 2026-11-17T15:56:23.746Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/STATUS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:56:29.609Z
+
+> 🔧 **Bash** `{"command": "git add src/world/match04.ts src/game/match.ts src/game/cameraRig.ts src/game/Game.ts src/gameplay/coins.ts assets/textures/match04 tools/match04 qa/match/04 && git status --short | head -20 && git commit -q -m \"Screen 04 match: milestone 1 (?match04=1, Screen 08 method)\n\nApproved camera solved at FOV 62, real 3D proxy geometry (gold-ring tunnel, mouth ring,\nroom wall, water plane) textured by camera projection of the original approved pixels\n(provisional local fill for HUD/title/Benny/coins), picture coins as real pickups.\nWhole frame 6.4 % -> 79.9 % within 20 levels, scene …[+494 chars]`
+
+### 🧑 User — 2026-11-17T15:56:32.453Z
+
+> ↩︎ result: A  qa/match/04/NOTES.md
+> A  qa/match/04/STATUS.md
+> branch 'claude/rainbow-s04-match' set up to track 'origin/claude/rainbow-s04-match'.
+> 8c1732ba33fb16582dd13fe1313e2df0ba5c31fc
+> 8c1732ba33fb16582dd13fe1313e2df0ba5c31fc	refs/heads/claude/rainbow-s04-match
+
+### 🤖 Claude — 2026-11-17T15:56:38.034Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/^\\* \\*\\*Latest saved commit:\\*\\* .*/* **Latest saved commit:** `8c1732ba33fb16582dd13fe1313e2df0ba5c31fc` (milestone 1, pushed + verified with git ls-remote; later autosaves on the same branch)/' qa/match/04/STATUS.md && git commit -q -am \"Screen 04 STATUS: milestone-1 commit SHA\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6UQ9kzB2yfcESLZjUB\" -- qa/match/04/STATUS.md && git push -q origin claude/rainbow-s04-match 2>&1 | tail -1; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s …[+125 chars]`
+
+### 🧑 User — 2026-11-17T15:56:38.942Z
+
+> ↩︎ result: fatal: paths 'qa/match/04/STATUS.md ...' with -a does not make sense
+> 8c1732ba33fb16582dd13fe1313e2df0ba5c31fc
+> 8c1732ba33fb16582dd13fe1313e2df0ba5c31fc	refs/heads/claude/rainbow-s04-match
+> AUTOSAVE OK | branch claude/rainbow-s04-match | scheduler daemon | last verified backup 2026-11-17T15:56:01+00:00 (0.6 min ago) | local 8c1732b remote 8c1732b (match) | uncommitted 1
+> [This command modified 1 file you've previously read: qa/match/04/STATUS.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T15:56:42.043Z
+
+> 🔧 **Bash** `{"command": "git commit -q -m \"Screen 04 STATUS: milestone-1 commit SHA\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6UQ9kzB2yfcESLZjUB\" -- qa/match/04/STATUS.md && git push -q origin claude/rainbow-s04-match 2>&1 | tail -1; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s04-match", "description": "Commit STATUS update and verify push"}`
+
+### 🧑 User — 2026-11-17T15:56:44.533Z
+
+> ↩︎ result: c55c4b20b767444d3811613d8d9b61baab795760
+> c55c4b20b767444d3811613d8d9b61baab795760	refs/heads/claude/rainbow-s04-match
+
+### 🤖 Claude — 2026-11-17T15:56:45.848Z
+
+Pushed and verified (remote = HEAD `c55c4b2`). Sending the milestone status to the lead session.
+
+### 🤖 Claude — 2026-11-17T15:56:54.438Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01AvQv6UXiBngewM8kSBwFfZ", "message": "Screen 04 workstream — MILESTONE 1 done, now waiting for instructions.\nBranch claude/rainbow-s04-match @ c55c4b20b767444d3811613d8d9b61baab795760 (pushed; git ls-remote == HEAD; milestone commit 8c1732b). Nothing merged/cherry-picked.\n?match04=1 (Screen 08 method): camera solved at FOV 62 (Benny box + tunnel vanishing point, <0.2 px), real 3D proxies fitted to the picture (gold-ring tunnel cylinder along the 32° slide, mouth ring, room wall, water plane, end cap), the user's ORIGINAL pixels camera-projected (inverse post chain, d …[+1569 chars]`
+
+### 🧑 User — 2026-11-17T15:57:03.871Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T15:57:16.579Z
+
+Milestone 1 for Screen 04 is finished. In the locked view, the `?match04=1` switch now shows your approved picture in the real 3D game. I've sent the status to the lead session, and I'm stopping here until it sends instructions.
+
+**Result** (your picture compared with the game; "within 20" means the share of pixels within 20 colour levels of yours):
+
+| | Before (current game) | New |
+|---|---|---|
+| Whole frame within 20 | 6.4 % | **79.9 %** (similarity score SSIM 0.32 → 0.80) |
+| Scenery only (no HUD, no Benny) | 5.1 % | **97.6 %** |
+| Room and top of the gold ring | 4.6 % | 100 % |
+| Tunnel, arrows and coins | 4.0 % | 95.7 % |
+| Water and foam | 6.4 % | 97.3 % |
+| Benny | 6.6 % | 16.5 % |
+
+The three pictures are separate full-size files (1080×1920) in `qa/match/04/`: `04_APPROVED.png`, `04_BEFORE_current_game.png` and `04_NEW_match04.png`.
+
+**How it's built:** the gold-ring tunnel, its big front ring, the room wall (porthole, towels, control panel) and the water are real 3D shapes. They are covered with your original picture's pixels, so the scenery shifts with depth as you ride. Your picture's five coins are real pickups at the painted spots, and the total stays 91 coins / 2,240 points.
+
+**Checks:**
+- With the switch off, Screens 04 and 05 are unchanged (0 pixels differ).
+- Screen 08 with its own switch on is also unchanged (0 pixels differ).
+- The gameplay test passes 8/8 with and without the switch.
+- The code type-checks cleanly and all 13 approved pictures are byte-identical.
+
+**What still looks different:**
+- **Benny** is the biggest gap. The game's hat is flatter, the pom-pom is smaller, and the white splash around his base is missing. The better-knit Benny look already exists for Screen 08. Turning it on for 04 needs a one-line change in a Benny file, which I'm not allowed to edit, so I've asked the lead.
+- **Where Benny, the coins and the HUD sit,** I used a temporary local fill. It shows under Benny once the camera moves. A paid clean-plate edit (one image from fal) is written up but not run: `qa/match/04/FAL_PLATE_REQUEST.md`. It needs your approval and a fal key on this account.
+- **When moving:**
+  - Deep inside the tunnel the walls show repeated tiles instead of rings.
+  - The water doesn't flow yet.
+  - Seen from the side, the coins float above the water.
+
+**Backup:** branch `claude/rainbow-s04-match`, commit `c55c4b20b767444d3811613d8d9b61baab795760`. The push is verified (GitHub matches the local copy) and the five-minute autosave reports OK. I'm not printing the "RAINBOW 3D BACKUP VERIFIED" line because one start-up check failed: World Labs couldn't be reached (the network refused the connection, so it's not a key problem). I didn't call World Labs or fal and spent no credits.
+
+Details and the commands to reproduce are in `qa/match/04/NOTES.md`. The status is in `qa/match/04/STATUS.md`, marked "under review". The changes to files shared with other screens are listed for the lead in `qa/match/04/SHARED_CHANGES.md`.
+
