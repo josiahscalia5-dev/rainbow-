@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 31778,
-   "sha256": "c7c8dc431a9c486aebf1755c9311535210816adcd3e40e7b08bd5d28ef1f248c"
+   "bytes": 32606,
+   "sha256": "305053377f56e7da8837b445b82746c8df1a6adc6c6a8e0590d0dba0972209e7"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12599,
-   "sha256": "adf299f2cb5d3b8c1cabf6655757999507c9be92b71e47caaa9c0b00428085b2"
+   "sha256": "06e19aa793e50eb564b284a56dd60765ddf0e50d84bc7a3cd490d26ce5fcdcc7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
