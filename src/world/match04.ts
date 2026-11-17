@@ -123,7 +123,7 @@ void main() {
 const TILE04 = new URLSearchParams(location.search).get('tile04') !== '0'; // milestone-2 tiles (A/B: &tile04=0 = milestone 1)
 // `&fal04=1`: the ONE fal clean plate (request 01a1ea70, qa/match/04/fal/) inside the fill mask instead of the provisional
 // fill (tools/match04/fal_plate04.py -> plate04_hybrid_fal.png); then the fill needs no hand-over to the river tile
-const FAL04 = new URLSearchParams(location.search).get('fal04') === '1';
+const FAL04 = new URLSearchParams(location.search).get('fal04') !== '0'; // milestone 3: on by default under match04; &fal04=0 = milestone 2
 const tex = (f: string) => new URL(`../../assets/textures/match04/${f}`, import.meta.url).href;
 
 const _cp = new THREE.Vector3();
