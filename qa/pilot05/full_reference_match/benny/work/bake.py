@@ -204,7 +204,7 @@ def main():
         # treated as unseen and filled from their neighbours, so the fur never carries grey-green blotches in motion
         R_, G_, B_ = alb[..., 0], alb[..., 1], alb[..., 2]
         fam = {'body': (G_ < 0.62 * R_) & (R_ > 0.12), 'pom': (G_ < 0.55 * B_) & (B_ > 0.08),
-               'cuff': (G_ < 0.6 * B_), 'crown': np.ones_like(seen)}[key]
+               'cuff': (G_ < 0.6 * B_), 'crown': alb.max(-1) > 0.1}[key]
         rejected = int((seen & ~fam).sum())
         seen &= fam
         alb = np.where(seen[..., None], alb, 0)

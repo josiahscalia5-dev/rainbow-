@@ -930,3 +930,7 @@ The knit columns (~10 texels per stitch column) and both stripe bands come throu
 > 218	  body.add(bodyMesh);
 > 219
 
+### 🤖 Claude — 2026-11-17T01:25:10.211Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/bake.py'\ns=open(p).read()\nold=\"'cuff': (G_ < 0.6 * B_), 'crown': np.ones_like(seen)}[key]\"\nnew=\"'cuff': (G_ < 0.6 * B_), 'crown': alb.max(-1) > 0.1}[key]\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s)\nEOF\nrm -rf $W/b2/tex; timeout 900 python3 $W/bake.py $W/b1,$W/b2 $W/b2/tex --normals > $W/b2/bake.log 2>&1; echo rc=$?; python3 -I -c \"\nimport json; d=json.load(open('$W/b2/tex/bake_report.json')); print(d['crown'])\"; …[+119 chars]`
+
