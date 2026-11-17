@@ -6711,3 +6711,608 @@ The extra pixels are small bubbles and spray particles that travel with Benny, s
 > user	0m1.559s
 > sys	0m0.375s
 
+### 🧑 User — 2026-11-17T11:22:37.495Z
+
+This session is being continued from a previous conversation that ran out of context. The summary below covers the earlier portion of the conversation.
+
+<system-reminder>
+<tools-used-before-summary>Agent, Bash, Edit, Grep, Read, ReadMcpResourceTool, ReadNotifications, SearchMcpRegistry, SearchPlugins, SendUserFile, ToolSearch, Write, mcp__claude-code-remote__send_later, mcp__claude-code-remote__subscribe_pr_activity, mcp__github__create_pull_request, mcp__github__list_pull_requests, mcp__github__pull_request_read, mcp__github__update_pull_request</tools-used-before-summary>
+</system-reminder>
+Summary:
+1. Primary Request and Intent:
+   - **Account transfer / recovery (msg 1)**: Restore branch `ccr-57af22a4-lsg7y7` at `e27c6fa0eac82a394f230d6e07e11bd529bbd666` (no automatic merges, no default promotion), restore tools (Blender 5.3.0, LFS, specialists, autosave), resume the interrupted Screen 05 tunnel colour measurement (exclude HUD), fix tunnel colour/seams/rings, provide approved | before | new full-size images, push to GitHub. Done (session branch `ccr-61131b9d-uj0oqb` created from e27c6fa).
+   - **Screen 05 work (msgs 4–11)**: paddles facing down with gold texture (done in Blender, user approved: "yes go fix the water swirls"); water swirls while riding (done: `?projflow05=2`, `?projnear05=1`); "Save everything to my GitHub" (done).
+   - **Msg 12 (all screens)**: match screens 02,03,04,06,07,08,09,10 each to its own approved reference at ≥9/10, real playable 3D, continuous; don't rebuild opening/ending videos; don't rebuild Screen 05 (keep `?match05=1` available/protected); use small number of specialists with file ownership; audit first, then 04 & 06; separate full-size APPROVED/BEFORE/NEW per screen; honest scores (not pixel % = visual score); moving tests; commit/push; autosave.
+   - **Msg 13 (CURRENT, overrides msg 12 structure)**:
+     (a) FINAL GAME STRUCTURE: 01 = user's existing opening video (do not recreate); 02 & 03 = NEW cinematic videos (refs `references/02_mascot_tumbles_in_whirlpool.png`, `references/03_whirlpool_twirl.png`; ~4 s each); 04, 05, 06, 07, 08 = REAL PLAYABLE 3D (must not become videos; ≥9/10 each vs own reference; Screen 05 preserved); 09 & 10 = NEW cinematic videos (refs `references/09_ride_the_final_wave.png` ~6 s, `references/10_slide_into_hiding.png` ~4 s); 11 = user's existing ending video. "DO NOT CHANGE THIS DIVISION WITHOUT ASKING ME." Preserve existing 02/03/09/10 code (don't delete until user approves new video sequence); implement video route reversibly; evaluate Google Flow image-to-video / Frames-to-Video with approved frames; CREDIT-SAVING: ONE short Screen 03 test first, show it, explain differences; if Flow can't preserve look, stop and use Blender 5.3.0 deterministic cinematics; "Do not buy another generator or spend paid credits without my permission."; if Claude can't operate Flow, prepare exact input frames, reference upload instructions and Flow-ready production prompt; portrait 9:16; HUD/coins via the game's HUD overlay using real saved state (cinematics must not fake coin collection); seamless handoffs (03 → 04 start, 08 → 09, 10 → ending video), Benny hidden from the girl, no black flashes, skippable with correct state; playable 04–08 substantial (extend route without redesigning compositions); check `public/video/` and playback code; create a video manifest (clip, source, duration, Android format, predecessor, successor, trigger); don't invent/silently replace the two original videos; report items 1–6 then begin implementation.
+     (b) SCREEN 07 STRUCTURE FIRST: user disagrees that 07 only differs in surfaces. Order: 1) Benny's exact position/size/camera-relative proportions; 2) tunnel perspective, gold-ring positions, vanishing point; 3) S-shaped water path curves/elevation; 4) foam-bank geometry (not covered by projection); 5) align real 3D coin trail to approved positions; 6) THEN projection/UV baking/textures. Do not bake Benny, coins or HUD into static textures (keep them real objects). Diagnose/remove object-removal artifacts and triangular texture problems. Screen 06: continue the environment specialist's work on correct approved geometry (perforated tunnel, NOT the generic rinse hall). Preserve 05→06→07 continuity. After the next meaningful correction give THREE separate full-size images: APPROVED SCREEN 07, BEFORE SCREEN 07, NEW REAL GAME SCREEN 07, plus a moving-gameplay test; measure whole-screen similarity AND individual geometry/camera differences; keep Screen 05 protected; verified five-minute backups. "DO NOT REBUILD FINISHED WORK. FIX THE REAL STRUCTURAL DIFFERENCES FIRST, THEN APPLY THE APPROVED ARTWORK."
+
+2. Key Technical Concepts:
+   - Three.js (r0.170) game, Vite dev server, Playwright headless Chromium (SwiftShader) captures at 864×1536 (03 native 727×1536), QA API `window.__rainbow` (goto(id), step, freezeAt, unfreeze, setSteer, state, qa3d() → {scene,camera,renderer,composer}, drawList, camera()), checkpoints in `src/game/Game.ts` CHECKPOINTS ('04': stage('04').s0+7, '06': s0+10, '07': s0+26, '08': s0+2, etc.).
+   - Post-chain inverse `PROJ05_INVERSE` / `pjInverse(t)` (undo grade → sRGB → Neutral tone map → exposure, vignette), uniforms `uPjPost` (exposure, saturation 1.36, contrast 1.15, vignette 0.18) and `uPjRes`.
+   - Camera-projection baking of the approved image onto real geometry in object coordinates (walls, rings, near frame, paddles, water layers E/N/T/D/F, near tile T2), flow maps via structure tensor, two-phase flow, magnification gates (smallest singular value of texel-per-pixel Jacobian: mE, mN), `pjNearK` gating.
+   - Blender 5.3.0 headless (bpy) pipeline: raycast → view-aligned tray meshes → GLB export (glTF +Y up; three (x,y,z) → Blender (x,-z,y)).
+   - URL test switches with default build byte-identical (verified by pixel diff); `flag05`/`q05` switch reader incl. `VITE_RAINBOW_Q05` build var; new `?matchNN=1`, `?matchall=1`, `?match05=1`.
+   - Metrics: `tools/proj05/screen_regions.py`, `tools/qa/screen_match.py` (FULL/BELOWHUD/LAYOUT), `tools/proj05/near_water_stats.py` (detail/sat/pink/cyan/glint), gameplay test (8 checks), continuity test, `sha256sum -c scripts/reference.sha256` (13 files).
+   - Git LFS for .glb/.blend/.mp4; five-minute autosave daemon (`scripts/rainbow-autosave.py`, `scripts/autosave-status.py`).
+   - Video system: `src/ui/cinematicVideo.ts` (`findCinematic(name)` looks for `./video/{name}.mp4|.webm`, returns null in `?qa`; `playCinematic(url,{onEnding,fadeMs=700,focus})` overlay z-index 50, tap to skip after 0.6 s, cover/fill fit), Game.ts `playIntroVideo` (holds live 3D at T.cp01, paused, cross-fade), `startRide` (st.s = stage('03').s0, setStage('03')), `startOutro` (plays ending video when s ≥ stage('11').s0, then real-time 11 frame).
+
+3. Files and Code Sections:
+   - **src/game/match.ts** (NEW, committed 54ec72f): per-screen switches + camera overrides.
+     ```ts
+     import type { CamParams } from './cameraRig';
+     import { flag05 } from '../vfx/waterRibbon';
+     export type MatchId = '02' | '03' | '04' | '06' | '07' | '08' | '09' | '10';
+     export const MATCH_IDS: MatchId[] = ['02','03','04','06','07','08','09','10'];
+     const ALL = flag05('matchall');
+     export const MATCH: Record<MatchId, boolean> = Object.fromEntries(MATCH_IDS.map((id) => [id, ALL || flag05('match' + id)])) as Record<MatchId, boolean>;
+     export const matchOn = (id: string): boolean => (MATCH as Record<string, boolean>)[id] === true;
+     export const MATCH_CAM: Partial<Record<MatchId, Partial<CamParams>>> = {
+       '07': { back: 9, up: 5.4, ahead: 22, lookUp: -1.8, fov: 62 },
+     };
+     export function applyMatchCam(stageCam: Partial<Record<string, CamParams>>): void {
+       for (const id of MATCH_IDS) { const o = MATCH_CAM[id]; if (!MATCH[id] || !o || !stageCam[id]) continue;
+         stageCam[id] = { ...(stageCam[id] as CamParams), ...o }; }
+     }
+     ```
+   - **src/game/cameraRig.ts**: added `import { applyMatchCam } from './match';` and after STAGE_CAM: `applyMatchCam(STAGE_CAM);`. STAGE_CAM values: 04 {back 8.5, up 5.2, ahead 14, lookUp -3, fov 66}, 05 {6.4,3.6,18,-1.92,62,yaw 2.96}, 06 {5.6,2.6,12,3.4,66}, 07 {6.4,4.1,18,1.8,62}, 08 {6.2,3.7,16,0.2,62}, 09, 10.
+   - **src/vfx/waterRibbon.ts**: 
+     - `q05` with `MATCH05_KEYS = ['proj05','projwall05','projring05','projframe05','projlid05','projnear05']` (`hit()` checks key==='1' or match05==='1'); `FLOW2 = qs.get('projflow05') === '2' || (qs.get('match05') === '1' && qs.get('projflow05') === null)`; `NEAR = q05('projnear05')`.
+     - Flow2: `uPjWN`, `uPjWT`, `uPjFlow2` (on, scale, half width, mix default `projflowmix05` 0.5), `pjFlowDir(u, s, kT)` with mirrored-period sign flip for WT2.
+     - Near tile: uniforms `uPjNear` (on, flare gain `projglint05`, N size), `uPjT2`, `uPjT2S`, `uPjWT2`; 
+       ```glsl
+       float pjNearK(float u, float mE, float mN) {
+         if (uPjNear.x < 0.5) return 0.0;
+         float near = 1.0 - smoothstep(14.0, 20.0, 1.0 / max(gl_FragCoord.w, 1e-4));
+         float edge = 1.0 - smoothstep(0.88, 0.96, abs(u));
+         return (1.0 - smoothstep(0.3, 0.55, mE)) * (1.0 - smoothstep(0.3, 0.55, mN)) * near * edge;
+       }
+       ```
+       pjTarget(u,s,mE,mN,out wE,out wN): `if (uPjNear.x > 0.5) wN *= 1.0 - pjNearK(u, mE, mN);` and T mix with T2 by `pjNearK`; mN computed from N texel coords derivatives; near flares (flowGlint gB density 0.5 L 40 stretch 4.5 horiz 0.7; lensFlare gL density 0.22) added to `lin` weighted by `wT = (1-wNx)(1-wEx)pjNearK`; detail layer kept on tile (original detail lines restored).
+   - **src/vfx/proj05Tunnel.ts**: PROJWALL05, PROJRING05, PROJFRAME05 (`withProj05Frame`), PROJLID05 (`lids05Group()` loads `assets/models/lids05.glb`, `lidProjMaterial`), `trayLidGeometry` (kept for fit script). Superseded LIDS05_FIT/buildLids05Fit removed.
+   - **src/world/environment.ts**: frame `PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial()`; `if (PROJLID05) zones.tubes.add(lids05Group()); else zones.tubes.add(buildWallLids(...))`; `if (PROJLID05) farLids.visible = false;`. The 05–07 tube = `straightTubePath(course, s05, s08, {window:30, taper:14, ...})`; 06 "arch hall" flares, river climbs wall; rings0607/lids0607 legacy.
+   - **src/world/tube.ts**: added `wallLidMatrix(path, s, side, angDeg, droopDeg, size, stretch, sink, out)`.
+   - **Tools/scripts created**: `tools/proj05/screen_regions.py`, `tools/proj05/frame_bake.py`, `tools/proj05/lid_mesh2d.py`, `scripts/proj05-lid-raycast.mjs`, `tools/proj05/lid_blender.py`, `scripts/proj05-lid-fit.mjs`, `tools/proj05/flow_bake.py` (importable: flow_of, save(A,...), debug(dbg,...), main()), `tools/proj05/near_bake.py` (args: assets dir [s0=132.2] [period=4.2] [--out] [--debug]), `tools/proj05/near_water_stats.py`, `tools/qa/screen_match.py`, `scripts/match-cam-try.mjs` (--id, --cands JSON, --q, --out; overrides STAGE_CAM at runtime via `import('/src/game/cameraRig.ts')`), `scripts/match-probe.mjs` (writes camera.json with viewProjection, depth.f32 = clip w of first static surface, dyn_mask.pgm, objects.json; isDyn regex `/benny|coin|bubble|spray|splash|particle|sparkle/`), `tools/match/bake.py` (NN_bg.png inpainted with cv2 TELEA, NN_depth.png 16-bit split R/G + A valid, NN.json; HUD boxes default "14,10,850,112;110,108,754,196"; coin detection by gold HSV compact blobs), `scripts/match-cam-fit.mjs` (grid + refine search of camera so rendered Benny bbox IoU matches target; renders at 1/4 res; now uses Benny's own materials and alpha).
+   - **scripts/proj05-move.mjs**: accidentally overwritten earlier, restored byte-identical from e27c6fa (options --d, --still, --steer, --zigzag, --clip; --d frames use frozen shader clock).
+   - **Assets**: `assets/textures/tunnel05/frame05.png/.json`, `lid05.png`, `assets/models/lids05.glb` (LFS), `qa/pilot05/proj/tunnel/lid/lids05.blend` (LFS), `assets/textures/water05/proj05_WN.png`, `proj05_WT.png`, `proj05_flow.json`, `proj05_T2.png` (2048×1024), `proj05_WT2.png`, `proj05_near.json`.
+   - **Notes/evidence**: `qa/pilot05/proj/tunnel/NOTES.md` (+frame/, lid/), `qa/pilot05/proj/flow2/NOTES.md`, `qa/pilot05/proj/near/NOTES.md` (+ride clips, stats), `qa/match/NOTES.md` (rules, file ownership: main session owns match.ts/matchProj.ts/match scripts/tools/match/screen_match.py/Screen 07; path-camera-transition-engineer owns course.ts 06 section, 06 parts of environment.ts, MATCH_CAM['06'] line, qa/match/06/; audit table), `qa/match/audit/NN_BEFORE_default.png` + `NN_metrics.json` for 02–10. CLAUDE.md candidate line updated (tunnel bake incl. projlid05, projflow05=2, projnear05).
+   - **docs/FLOW_VIDEO.md**, `public/video/PUT_FLOW_VIDEOS_HERE.txt` (only file in public/video).
+
+4. Errors and fixes:
+   - water_mask covered the near frame in frame_bake → hide = bluish (B > R−15) | magenta (B>0.62R & G<0.6R).
+   - matplotlib missing → cv2.pointPolygonTest.
+   - Paddle fits (bbox, then shape IoU, underside constraint, trays with droop −115 cutting into wall) produced wrong-looking paddles → switched to Blender camera-projection trays (user approved result).
+   - Raycast misses for deep L2/R2 → far-wall fallback.
+   - Overwrote scripts/proj05-move.mjs → restored from e27c6fa.
+   - Near tile versions: locked view changed (T→T2 swap at far end, detail gating, right-bank strip, steep far bank) → fixed with separate samplers, gating by both mE & mN, distance gate, edge gate; final locked diff 2,696 px (invisible).
+   - Flares too dense ("snow") → removed small-star layer, lower densities.
+   - Extra brace syntax error in fit script → removed.
+   - tools/match/bake.py first 07 bake: game Benny/coins at different positions than painted → half Benny left, Telea "triangular" fan artifacts (user called these out as "object-removal artifacts and triangular texture problems"; user instructed: fix structure first, don't bake Benny/coins/HUD into static textures).
+   - match-cam-fit: white MeshBasicMaterial on fur cards → huge masks; changed to Benny's own materials + alpha; still huge bbox (e.g. [132,536,864,1244]). Debug render (`$S/bmask.mjs`) showed Benny plus many scattered particle meshes (bubbles/splash droplets) also matched by `/benny/i` chain regex → alpha bbox x 69..755 y 538..1402. Fix pending: restrict to meshes under `benny_root` (body parts) or largest connected component.
+   - User interrupted the camera-fit run (tool use rejected mid-run); I killed leftover processes afterwards.
+
+5. Problem Solving:
+   - Solved: recovery verification; tunnel HUD-excluded measurement; near frame gold (NEARFRAME 61.5→18.1); paddles (LID 62.6→19.3); flow ghosting (SSIM 0.72→0.93); riding blur (detail 2–3× crisper); `?match05=1` alias (pixel-identical to full list); audit of 8 screens (scores 1.5–3.5/10; FULL within-20 4–9%); verified checkpoint at 33d0d19 (13/13 refs, tsc OK, default 04–08 pixel-identical).
+   - Findings: camera framing alone can't fix 04/06 (geometry differs); 07 game geometry is a purple tunnel with gold rings but differs (foam walls, Benny size/position, river path, rings) — user insists on structural fixes first.
+   - Approved 07 Benny box: full Benny (pom-pom to waterline, arms) ≈ x 200–640, y 790–1200 (color segmentation only gave hat-brim/body 268..585 × 985..1189). Game with MATCH_CAM['07'] (back 9, up 5.4): x 162..424, y 906..1204 (smaller, left).
+   - Ongoing: Benny mask for camera fit; Screen 06 structure by background specialist (path-camera-transition-engineer in a git worktree; will report branch + SHA; main session must merge, verify pixel identity, gameplay).
+
+6. All user messages:
+   - Msg 1: "CLAUDIA — RESTORE AND CONTINUE MY RAINBOW GAME ... branch "ccr-57af22a4-lsg7y7" ... commit "e27c6fa0eac82a394f230d6e07e11bd529bbd666" ... DO NOT restore from an older default branch ... If your environment requires creating a new working branch, create it FROM "ccr-57af22a4-lsg7y7" ... Do not merge other branches automatically. ... resume ... the top HUD overlay was incorrectly being counted ... Restore ... Blender ... five-minute GitHub autosave ... Do not overwrite protected versions, delete assets, reset history, or force-push. ... Preserve "?proj05=1" ... "?projwall05=1" "?projring05=1" ... Generate an actual playable Three.js screenshot at 864 × 1536 ... Do not claim that a water-only percentage represents the entire screen ... Provide: 1–8 ... Do not merge or promote the experimental Screen 05 to default until I visually approve it. ... DO THE RESTORATION, CONTINUE THE EXISTING WORK, AND PROTECT MY GAME."
+   - Msg 2: "And here is what you built me last chat we had before my credits ran out." (4 screenshots)
+   - Msg 3: "What does mine look like right now on my screen?"
+   - Msg 4: "So what do I have to do to make my exact approved screen? ... the water is not exactly like the approved screen ... how the water swirls ... the gold blocks ... on the side of the purple thing ... 3 on the purple machine part ... they're facing the wrong way. You have them upward ... they're down, they're not up ... What can I do? Please tell me."
+   - Msg 5: "do u think u should use Blender too make the process faster and more of chance to get my exact approved screen"
+   - Msg 6: "Do u think u should use Blender for this. Whatever plugin or anything I could use, server, to make it work and make my exact approved screen, I'll do anything."
+   - Msg 7: "When I say what plugins or servers, I'm saying all of them. I'm saying that maybe I don't even have any of them installed. I'm saying what's available on your Claudia plugin store that I can download to use."
+   - Msg 8: "go"
+   - Msg 9: "yes go fix the water swirls"
+   - Msg 10: "Save everything to my GitHub repository and  everything"
+   - Msg 11: "Continue"
+   - Msg 12: "Remember in the begginging it's the video part ... the girl throwing the clothes in the laundry machine Im putting a video in it instead ... the ending where the girl grabs the towels ... same for that too ... just build the rest of the screens ... CLAUDIA — RAINBOW 3D: MAKE EVERY REMAINING GAMEPLAY SCREEN MATCH MY APPROVED ARTWORK ..." (full long spec: 9/10 per screen; videos 01/11 not rebuilt; Screen 05 excluded, keep "?match05=1"; screens 02,03,04,06,07,08,09,10; real 3D; continuity; specialists; autosave; measurements steps A–F; acceptance; separate full-size screenshots; controlled order 04/06 first then 02,03,07,08,09,10; save; FINAL COMMAND).
+   - Msg 13: "CLAUDIA — RAINBOW FINAL GAME STRUCTURE: FOUR CINEMATIC SCREENS, FIVE REAL PLAYABLE SCREENS ... SCREEN 01 — EXISTING OPENING VIDEO ... SCREENS 02 AND 03 — NEW CINEMATIC VIDEOS ... SCREENS 04, 05, 06, 07 AND 08 — REAL PLAYABLE 3D GAME ... They MUST NOT become videos ... SCREENS 09 AND 10 — NEW CINEMATIC VIDEOS ... SCREEN 11 — EXISTING ENDING VIDEO ... DO NOT IMMEDIATELY DELETE ANY EXISTING GAMEPLAY ... Implement the new video-based route reversibly ... First evaluate Google Flow's image-to-video and Frames-to-Video ... IMPORTANT CREDIT-SAVING TEST ... create ONE short test using the approved Screen 03 reference ... If Google Flow cannot preserve the approved look, stop repeating unsuccessful generations. Use our already-installed Blender 5.3.0 ... Do not buy another generator or spend paid credits without my permission. If you cannot directly operate Google Flow, prepare the exact input frames, reference upload instructions and Flow-ready production prompt for me. ... HANDLE HUD AND COINS CORRECTLY ... The cinematics are noninteractive. They must not pretend that players are collecting coins they didn't actually earn ... flow is: Existing opening video → Screen 02 video → Screen 03 video → real 3D gameplay Screen 04 → Screen 05 → Screen 06 → Screen 07 → Screen 08 → Screen 09 video → Screen 10 video → existing ending video ... Allow players to skip ... KEEP THE PLAYABLE GAME LONG ENOUGH ... VIDEO FILE HANDOFF ... Create a video manifest ... VISUAL ACCEPTANCE REQUIREMENTS ... SAVE AND REPORT ... First save a verified checkpoint ... Then report 1–6 ... THEN BEGIN IMPLEMENTATION. FINAL COMMAND: ... DO NOT CHANGE THIS DIVISION WITHOUT ASKING ME." followed by "CLAUDIA — CORRECT THE STRUCTURAL DIFFERENCES BEFORE CONTINUING TEXTURE PROJECTION ... For Screen 07, follow this order: 1. Match Benny's exact position, size and camera-relative proportions ... 2. Match the tunnel perspective, gold-ring positions and vanishing point. 3. Reconstruct the winding S-shaped water path ... 4. Correct the foam-bank geometry ... 5. Align the actual 3D coin trail ... 6. THEN perform image projection, UV baking and texture refinements. Do not bake Benny, coins or HUD into the static environment textures ... Your projection tests currently show object-removal artifacts and triangular texture problems. Diagnose and remove those defects ... For Screen 06, continue the environment specialist's work on its correct approved geometry. Do not replace the approved perforated tunnel with the existing generic rinse hall. Preserve the real 3D continuity from Screen 05 through 06 into 07. After the next meaningful correction, give me THREE separate full-size images: APPROVED SCREEN 07 BEFORE SCREEN 07 NEW REAL GAME SCREEN 07 Also provide a moving-gameplay test ... Measure whole-screen similarity and individual geometry/camera differences ... Keep the proven Screen 05 implementation protected and maintain verified five-minute GitHub backups. DO NOT REBUILD FINISHED WORK. FIX THE REAL STRUCTURAL DIFFERENCES FIRST, THEN APPLY THE APPROVED ARTWORK."
+   - Security / safety constraints (from CLAUDE.md and user, remain in effect): "NEVER commit, print, log or paste API keys, passwords or tokens. The Marble World API key exists only as a Claude-environment network secret (host `api.worldlabs.ai`, header `WLT-Api-Key` ...). Check it with the free read `python3 -I scripts/verify-assets.py worldlabs` ... **Do not ask the user for a key unless that check reports HTTP 401/403** ... Only then call `request_credential` (host `api.worldlabs.ai`, header `WLT-Api-Key`)"; "Ask the user ONLY for real approvals: paid credits (World Labs / Marble jobs, Meshy, Rodin — name the job and its credits first) or changes that could lose existing work. No new Marble worlds without the user's OK"; "NEVER force-push, reset, rebase, rewrite history or push to `protected_branches`"; "Do not merge other branches automatically" (codex/* never merged); "Do not overwrite protected versions, delete assets, reset history, or force-push"; "Do not buy another generator or spend paid credits without my permission"; keep references byte-identical; never paste approved image over the screen; user email private.
+
+7. Pending Tasks:
+   - Screen 07 structural correction in the user's order: (1) Benny position/size via camera (MATCH_CAM['07']) — in progress; (2) tunnel perspective, gold-ring positions, VP (measure approved ring circles/VP; fit game rings behind `match07`); (3) S-river path (course.ts 07 section behind switch; keep 07→08 plunge); (4) foam-bank geometry (game's tall white foam walls → low banks like approved, only on 07 under switch); (5) coin trail aligned to approved; (6) then projection (generic projector `src/vfx/matchProj.ts` not yet written; use alpha-masked projection rather than Telea inpainting, keep Benny/coins/HUD as real objects). Deliver THREE separate full-size images (APPROVED/BEFORE/NEW 07) + moving test + whole-screen and geometry/camera metrics; gameplay 8/8; default pixel-identical.
+   - Screen 06: background specialist (path-camera-transition-engineer, worktree) rebuilding 06 as continuation of 05 tunnel behind `?match06=1`; when its completion notification arrives: review, merge its worktree branch into `ccr-61131b9d-uj0oqb` (normal merge), verify default pixel identity, `?match05=1` identity, gameplay 8/8, continuity; report to user.
+   - Cinematic route: video manifest (docs + `public/video/manifest.json`: clips intro(01), c02, c03, c09, c10, ending(11) with source, duration, format 9:16 H.264, predecessor/successor, trigger); reversible route switch (`?route=v2`): intro → c02 → c03 → gameplay starts at stage 04 start (3D held at 04 start pose under clips) → … → end of 08 triggers c09 → c10 → ending; missing clip → existing real-time fallback; HUD overlay above clips with real state; skip; keep old 02/03/09/10 code.
+   - Screen 03 Flow test pack (lowest cost): first frame = approved 03 (727×1536, pad to 9:16), last frame = real capture of the 04 start; Flow-ready prompt + upload instructions (user runs it; no paid credits by Claude); Blender/engine deterministic fallback if Flow fails.
+   - Later: 04 and 08 structure/matching; extend playable route 04–08; end-to-end test; per-screen deliverables with commit SHAs; confirm Screen 05 and videos untouched.
+   - Ask user to upload `intro.mp4` and `ending.mp4` to `public/video/`.
+   - Older remaining Screen 05 items (bank strip jagged edges, pink near Benny) — deprioritized.
+
+8. Current Work:
+   Working on Screen 07 step 1 (Benny position/size via camera framing). `scripts/match-cam-fit.mjs` searches STAGE_CAM['07'] overrides to match the rendered Benny bbox to the approved target `--target=200,790,640,1200`. After fixing the white-material issue (now hides non-Benny meshes, keeps Benny's own materials, reads alpha `px[(y*sw+x)*4+3] > 127`), the fit still returned huge boxes (best iou 0.348 `{"back":7.5,"up":3.6,"lookUp":-0.5,"ahead":14,"latFollow":0.9}` box [132,536,864,1244]). A debug script `$S/bmask.mjs` (scratchpad `/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad`) rendered meshes whose chain matches `/benny/i` at the match07 camera: the image shows Benny (body+hat around x 160–430, y 900–1210 at full res) plus many scattered small particle meshes (bubbles, splash droplets) across the frame, giving alpha bbox x 69..755 y 538..1402. Benny's body parts are all under `benny_root` (eyeL_happy, lash_*, blushL/R, nose, mouth_happy, palmL/R, fur_armL/R, soleL/R, fur_footL/R, hat_brim, hat_crown, hat_star, fur_pom, fur_body; hidden: eyeL_dizzy, mouth_dizzy, mouth_peek). The particles must be excluded (filter chain containing `benny_root`, or use the largest connected component of the mask). Verified checkpoint HEAD 33d0d19 = remote; working tree clean (scripts committed by autosave; latest fit-script edit may be uncommitted/autosaved).
+
+9. Optional Next Step:
+   Fix the Benny mask in `scripts/match-cam-fit.mjs` so only Benny's body (meshes under `benny_root`, or the largest connected component) is measured, re-run the Screen 07 camera fit against the approved Benny box (≈ x 200–640, y 790–1200), set `MATCH_CAM['07']` in `src/game/match.ts` to the best framing, verify default build pixel-identical and gameplay 8/8 with `?match07=1`, then proceed to step 2 (ring positions / vanishing point), producing the three separate full-size images and a moving test as the user requested: "For Screen 07, follow this order: 1. Match Benny's exact position, size and camera-relative proportions to the approved image. 2. Match the tunnel perspective, gold-ring positions and vanishing point. ... After the next meaningful correction, give me THREE separate full-size images: APPROVED SCREEN 07 BEFORE SCREEN 07 NEW REAL GAME SCREEN 07 Also provide a moving-gameplay test to show that the scenery doesn't fall apart when Benny swims forward." Also handle the 06 specialist's completion notification when it arrives (merge + verify), and then prepare the video manifest and the Screen 03 Flow test pack per "THEN BEGIN IMPLEMENTATION".
+
+If you need specific details from before compaction (like exact code snippets, error messages, or content you generated), read the full transcript at: /root/.claude/projects/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866.jsonl
+Continue the conversation from where it left off without asking the user any further questions. Resume directly — do not acknowledge the summary, do not recap what was happening, do not preface with "I'll continue" or similar. Pick up the last task as if the break never happened.
+
+The messages after this summary are the most recent messages from before compaction, kept verbatim. The summary was written without seeing them, so something it says has not happened yet may already have happened in them.
+
+### 🤖 Claude — 2026-11-17T11:22:48.353Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -5 && git status --short | head -20 && grep -n \"CamParams\\|yaw\\|latFollow\\|side\\b\\|lateral\" src/game/cameraRig.ts | head -60", "description": "Check git state and camera parameters"}`
+
+### 🧑 User — 2026-11-17T11:22:48.406Z
+
+> ↩︎ result: 8620901 autosave: Rainbow 2026-11-17 11:19 UTC
+> c49c1fb autosave: Rainbow 2026-11-17 11:15 UTC
+> 1128b2a autosave: Rainbow 2026-11-17 11:10 UTC
+> 33d0d19 autosave: Rainbow 2026-11-17 11:05 UTC
+> 066b2ff autosave: Rainbow 2026-11-17 11:00 UTC
+> 3: * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point
+> 12:export interface CamParams {
+> 18:  latFollow: number; // 1 = camera fully follows Benny's lateral offset
+> 20:  /** 05 only: view yaw (deg) to the LEFT of the tunnel axis, i.e. the vanishing point sits right of centre */
+> 21:  yaw?: number;
+> 22:  /** 05 only: lateral dead zone (units): the camera holds the tunnel axis while Benny is within ~this of it */
+> 26:export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+> 27:  '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+> 28:  '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+> 31:  // below and yawed ≈ 3° left of the axis; Benny's waterline 711 px below the VP → up/back ≈ 0.56.
+> 32:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> 33:  '06': { back:  …[+2138 chars]
+
+### 🤖 Claude — 2026-11-17T11:22:48.457Z
+
+> 🔧 **ReadNotifications** `{}`
+
+### 🧑 User — 2026-11-17T11:22:48.465Z
+
+> ↩︎ result: No queued notifications.
+
+### 🤖 Claude — 2026-11-17T11:23:06.298Z
+
+> 🔧 **Bash** `{"command": "git worktree list && python3 -I - <<'EOF'\nimport json\np='/root/.claude/projects/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866.jsonl'\nmsgs=[]\nfor line in open(p):\n    try: d=json.loads(line)\n    except: continue\n    if d.get('type')!='user': continue\n    c=d.get('message',{}).get('content')\n    if isinstance(c,str): t=c\n    elif isinstance(c,list): t='\\n'.join(x.get('text','') for x in c if isinstance(x,dict) and x.get('type')=='text')\n    else: continue\n    if 'FOUR CINEMATIC SCREENS' in t or 'CORRECT THE STRUCTURAL' in t: msgs.append(t)\nfor t in msgs[-2:] …[+195 chars]`
+
+### 🧑 User — 2026-11-17T11:23:06.548Z
+
+> ↩︎ result: /home/user/rainbow-  8620901 [ccr-61131b9d-uj0oqb]
+> LEN 10620
+> ual similarity for every screen.
+> 
+> Do not confuse RGB pixel-tolerance percentages with visual similarity scores.
+> 
+> Keep all approved references byte-identical.
+> 
+> Do not promote an incomplete result.
+> 
+> 9. SAVE AND REPORT
+> 
+> Use the existing ten specialist definitions, Blender, Three.js and visual testing pipeline as needed.
+> 
+> Keep the five-minute GitHub autosave running.
+> 
+> First save a verified checkpoint of the present game.
+> 
+> Then report:
+> 
+> 1. Confirmation of the nine-screen division.
+> 2. Which original videos are accessible and which files are missing.
+> 3. The safe video handoff/integration approach.
+> 4. The lowest-cost first Screen 03 cinematic test.
+> 5. Confirmation Screens 04–08 remain fully playable.
+> 6. Confirmation all approved images and Screen 05 improvements remain intact.
+> 
+> THEN BEGIN IMPLEMENTATION.
+> 
+> FINAL COMMAND: SCREENS 02, 03, 09 AND 10 ARE CINEMATIC VIDEOS. SCREENS 04, 05, 06, 07 AND 08 ARE REAL PLAYABLE 3D GAMEPLAY. SCREENS 01 AND 11 REMAIN MY EXISTING VIDEOS. DO NOT CHANGE THIS DIVISION WITHOUT ASKING ME.
+> CLAUDIA — CORRECT THE STRUCTURAL DIFFERENCES BEFORE CONTINUING TEXTURE PROJECTION
+> 
+> I've reviewed your Screen 07 co …[+5781 chars]
+
+### 🤖 Claude — 2026-11-17T11:23:09.935Z
+
+> 🔧 **ListAgents** `{}`
+
+### 🧑 User — 2026-11-17T11:23:09.958Z
+
+> ↩︎ result: This session is rainbow-50 [7b40b9] — the name other sessions use to message it (it is not listed below; a message to it would be a message to yourself).
+> 
+> No reachable agents — no other Claude session is running on this machine right now (peer messaging itself is available; a session appears here once it is started).
+
+### 🤖 Claude — 2026-11-17T11:23:14.986Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='/root/.claude/projects/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866.jsonl'\nlines=open(p).read().splitlines()\nfor n,line in enumerate(lines):\n    try: d=json.loads(line)\n    except: continue\n    m=d.get('message',{})\n    c=m.get('content')\n    if not isinstance(c,list): continue\n    for x in c:\n        if not isinstance(x,dict): continue\n        if x.get('type')=='tool_use' and x.get('name')=='Agent':\n            print(n,'AGENT CALL',json.dumps(x.get('input'))[:600]); print('---')\n        if x.get('type')=='tool_result': …[+311 chars]`
+
+### 🧑 User — 2026-11-17T11:23:15.549Z
+
+> ↩︎ result: 1981 AGENT CALL {"description": "Rebuild Screen 06 structure", "subagent_type": "path-camera-transition-engineer", "isolation": "worktree", "run_in_background": true, "prompt": "You are the Rainbow project's path-camera-transition-engineer. Work ONLY on the STRUCTURE of Screen 06 (\"Crest the Rinse Arch\") of an existing playable Three.js game, inside this git worktree. Read CLAUDE.md and qa/match/NOTES.md first (rules, audit, file ownership). Do not restart or redesign anything else.\n\nGOAL\nThe user's approved picture `references/06_crest_the_rinse_arch.png` (864x1536, never modify it) shows Screen 06 as t
+> ---
+> 1986 RESULT [{"type": "text", "text": "Async agent launched successfully. (This tool result is internal metadata \u2014 never quote or paste any part of it, including the agentId below, into a user-facing reply.)\nagentId: a1b82d141150e0ba7 (internal ID - do not mention to user. Use SendMessage with to: 'a1b82d141150e0ba7', summary: '<5-10 word recap>' to continue this agent.)\nThe agent is working in the bac
+> ---
+
+### 🤖 Claude — 2026-11-17T11:23:21.258Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='/root/.claude/projects/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866.jsonl'\nlines=open(p).read().splitlines()\nprint('total lines',len(lines))\nfor n,line in enumerate(lines[1986:],1986):\n    if 'a1b82d141150e0ba7' in line or 'task-notification' in line or 'task_notification' in line:\n        print(n, line[:1500]); print('---')\nEOF\nls -la .claude/worktrees 2>/dev/null; ls /tmp/claude-0 2>/dev/null | head", "description": "Look for the Screen 06 agent's status"}`
+
+### 🧑 User — 2026-11-17T11:23:21.759Z
+
+> ↩︎ result: <persisted-output>
+> Output too large (48.1KB). Full output saved to: /root/.claude/projects/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/tool-results/b13gphsqk.txt
+> 
+> Preview (first 2KB):
+> total lines 2180
+> 1986 {"parentUuid":"79d3e36d-b62c-4255-818f-e591280c81b6","isSidechain":false,"promptId":"d7a3b912-a66b-48c6-8342-72feed24c208","type":"user","message":{"role":"user","content":[{"tool_use_id":"toolu_01XTK3LhLe2vPXqPnr5ns3jX","type":"tool_result","content":[{"type":"text","text":"Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)\nagentId: a1b82d141150e0ba7 (internal ID - do not mention to user. Use SendMessage with to: 'a1b82d141150e0ba7', summary: '<5-10 word recap>' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using.\noutput_fi …[+547 chars]
+
+### 🤖 Claude — 2026-11-17T11:23:27.891Z
+
+> 🔧 **Bash** `{"command": "F=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/tasks/a1b82d141150e0ba7.output; ls -la --time-style=full-iso $F 2>&1; date -u; ps aux | grep -c \"[c]laude\" ; git -C /home/user/rainbow- branch -a --list '*worktree*' '*agent*' 2>/dev/null | head; git -C /home/user/rainbow- for-each-ref --sort=-committerdate --format='%(refname:short) %(committerdate:iso) %(objectname:short)' refs/heads | head -8", "description": "Check whether the Screen 06 specialist is still active"}`
+
+### 🧑 User — 2026-11-17T11:23:27.966Z
+
+> ↩︎ result: lrwxrwxrwx 1 root root 119 2026-11-17 11:00:14.213501221 +0000 /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/tasks/a1b82d141150e0ba7.output -> /root/.claude/projects/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/subagents/agent-a1b82d141150e0ba7.jsonl
+> Tue Nov 17 11:23:27 UTC 2026
+> 4
+> ccr-61131b9d-uj0oqb 2026-11-17 11:19:56 +0000 8620901
+> ccr-57af22a4-lsg7y7 2026-11-16 20:28:06 +0000 e27c6fa
+
+### 🤖 Claude — 2026-11-17T11:23:31.716Z
+
+> 🔧 **Bash** `{"command": "F=/root/.claude/projects/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/subagents/agent-a1b82d141150e0ba7.jsonl; ls -la --time-style=full-iso $F; wc -l < $F; python3 -I - \"$F\" <<'EOF'\nimport json,sys\nL=open(sys.argv[1]).read().splitlines()\n# only metadata of the last 3 entries: type, timestamp, tool names, cwd\nfor line in L[-3:]:\n    d=json.loads(line); m=d.get('message',{}); c=m.get('content')\n    names=[x.get('name') for x in c if isinstance(x,dict) and x.get('type')=='tool_use'] if isinstance(c,list) else []\n    print(d.get('type'), d.get('timestamp'), d.get( …[+105 chars]`
+
+### 🧑 User — 2026-11-17T11:23:31.802Z
+
+> ↩︎ result: -rw------- 1 root root 4778746 2026-11-17 11:06:28.349523461 +0000 /root/.claude/projects/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/subagents/agent-a1b82d141150e0ba7.jsonl
+> 155
+> assistant 2026-11-17T11:06:22.474Z /home/user/rainbow-/.claude/worktrees/agent-a1b82d141150e0ba7 ['Bash'] tool_use
+> user 2026-11-17T11:06:23.620Z /home/user/rainbow-/.claude/worktrees/agent-a1b82d141150e0ba7 [] None
+> user 2026-11-17T11:06:28.318Z /home/user/rainbow-/.claude/worktrees/agent-a1b82d141150e0ba7 [] None
+
+### 🤖 Claude — 2026-11-17T11:23:45.701Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - \"$S\" <<'EOF'\nimport json,sys\nS=sys.argv[1]\np='/root/.claude/projects/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866.jsonl'\nlines=open(p).read().splitlines()\nd=json.loads(lines[1981])\nfor x in d['message']['content']:\n    if isinstance(x,dict) and x.get('type')=='tool_use' and x.get('name')=='Agent':\n        open(S+'/agent06_prompt.txt','w').write(x['input']['prompt']); print('prompt chars',len(x['input']['prompt']))\nF='/root/.claude/projects/-home-user-rainbow-/ …[+551 chars]`
+
+### 🧑 User — 2026-11-17T11:23:46.146Z
+
+> ↩︎ result: prompt chars 5854
+> 2
+> I'll start by reading the project rules and the match notes, then explore the relevant code.
+> ----
+> Meanwhile, I'll write the course probe script with the Write tool.
+
+### 🤖 Claude — 2026-11-17T11:23:48.471Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/agent06_prompt.txt"}`
+
+### 🧑 User — 2026-11-17T11:23:48.495Z
+
+> ↩︎ result: 1	You are the Rainbow project's path-camera-transition-engineer. Work ONLY on the STRUCTURE of Screen 06 ("Crest the Rinse Arch") of an existing playable Three.js game, inside this git worktree. Read CLAUDE.md and qa/match/NOTES.md first (rules, audit, file ownership). Do not restart or redesign anything else.
+> 2	
+> 3	GOAL
+> 4	The user's approved picture `references/06_crest_the_rinse_arch.png` (864x1536, never modify it) shows Screen 06 as the CONTINUATION OF THE SCREEN 05 TUNNEL: a purple perforated metal tunnel with polished gold rings and gold wall paddles, a cyan-and-pink S-shaped river winding toward a deep vanishing point (upper centre-right, roughly x 560-620, y 470-560), coins along the river, Benny (pink fluffy mascot, purple knitted hat) centre-low (body roughly x 300-570, hat top y ~735, waterline y ~1170) with ripples round him, foam/bubbles along the banks. The current game's 06 (`qa/match/audit/06_BEFORE_default.png`) is a different place: the straight 05-07 tube (src/world/environment.ts, `straightTubePath(course, s05, s08, ...)`) FLARES into the "06 arch hall" and the river climbs the wall ("the stream climbs the wall (06 arch)"), the camera (`STAGE_CAM['06']` in src/ga …[+4726 chars]
+
+### 🤖 Claude — 2026-11-17T11:24:05.482Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad; python3 -I - \"$S\" <<'EOF'\nimport sys\nS=sys.argv[1]\np=open(S+'/agent06_prompt.txt').read()\nextra = \"\"\"\n\nRESTART NOTE (2026-11-17 11:25 UTC): a previous run of exactly this task was interrupted after ~6 minutes of exploration (nothing had been changed or committed). Start again from the top. To make sure nothing is lost if you are interrupted again: commit to your worktree branch after EVERY meaningful step (probe script, first course change, first environment change, camera line, deliver …[+597 chars]`
+
+### 🧑 User — 2026-11-17T11:24:05.547Z
+
+> ↩︎ result: 6680
+
+### 🤖 Claude — 2026-11-17T11:24:24.918Z
+
+> 🔧 **Agent** `{"description": "Rebuild Screen 06 structure", "subagent_type": "path-camera-transition-engineer", "isolation": "worktree", "run_in_background": true, "prompt": "You are the Rainbow project's path-camera-transition-engineer. Work ONLY on the STRUCTURE of Screen 06 (\"Crest the Rinse Arch\") of an existing playable Three.js game, inside this git worktree. Read CLAUDE.md and qa/match/NOTES.md first (rules, audit, file ownership). Do not restart or redesign anything else.\n\nGOAL\nThe user's approved picture `references/06_crest_the_rinse_arch.png` (864x1536, never modify it) shows Screen 06 as t …[+6278 chars]`
+
+### 🧑 User — 2026-11-17T11:24:26.628Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: aab010bb38c09ff18 (internal ID - do not mention to user. Use SendMessage with to: 'aab010bb38c09ff18', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/tasks/aab010bb38c09ff18.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T11:24:31.545Z
+
+> 🔧 **Bash** `{"command": "ls references/ | head -20 && ls qa/match/ qa/match/07 2>/dev/null | head -30 && python3 -I -c \"\nfrom PIL import Image; im=Image.open('references/07_tube_ride.png') if __import__('os').path.exists('references/07_tube_ride.png') else None; print(im.size if im else 'no')\"", "description": "List references and Screen 07 work files"}`
+
+### 🧑 User — 2026-11-17T11:24:31.668Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+> qa/match/:
+> NOTES.md
+> audit
+> no
+
+### 🤖 Claude — 2026-11-17T11:24:38.563Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "offset": 1, "limit": 200}`
+
+### 🧑 User — 2026-11-17T11:24:38.584Z
+
+> ↩︎ result: 1	/**
+> 2	 * Third-person ride camera: behind/above Benny, looking along his heading (the course tangent), or
+> 3	 * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point
+> 4	 * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.
+> 5	 */
+> 6	import * as THREE from 'three';
+> 7	import { WORLD } from '../world/course';
+> 8	import type { Course, StageId } from '../world/course';
+> 9	import type { TubePath } from '../world/tube';
+> 10	import { applyMatchCam } from './match';
+> 11	
+> 12	export interface CamParams {
+> 13	  back: number; // distance behind Benny
+> 14	  up: number; // height above Benny's water point
+> 15	  ahead: number; // look-at distance ahead
+> 16	  lookUp: number; // look-at height
+> 17	  fov: number;
+> 18	  latFollow: number; // 1 = camera fully follows Benny's lateral offset
+> 19	  roll: number; // 0..1 how much of the path bank the camera adopts
+> 20	  /** 05 only: view yaw (deg) to the LEFT of the tunnel axis, i.e. the vanishing point sits right of centre */
+> 21	  yaw?: number;
+> 22	  /** 05 only: lateral dead zone (units): the camera holds the tunnel axis while Benny is within ~this of it */
+> 23	  deadZone?: numbe …[+8610 chars]
+
+### 🤖 Claude — 2026-11-17T11:24:47.970Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && ls $S | head -50; ls assets/textures/match 2>/dev/null", "description": "List scratchpad and match texture files"}`
+
+### 🧑 User — 2026-11-17T11:24:48.015Z
+
+> ↩︎ result: Exit code 2
+> agent06_prompt.txt
+> agent06_prompt2.txt
+> agent06_texts.txt
+> audit
+> b1
+> b1_lids.png
+> b2
+> bake07
+> bake07_view.png
+> base
+> bef
+> bef3
+> bef5
+> benny07.json
+> benny07_boxes.png
+> blob_v6.png
+> bmask.mjs
+> bmask07.png
+> bmask07_view.png
+> cam04
+> cam04_sheet.png
+> cam06
+> cam06_sheet.png
+> cam07
+> cam07_sheet.png
+> ck
+> cmp3_bl.png
+> cmp3_br.png
+> cmp3_lip.png
+> cmp_bl4.png
+> cmp_botleft.png
+> cmp_botright.png
+> cmp_center.png
+> cmp_foam4.png
+> cmp_leftwall.png
+> cmp_rightwall.png
+> dbgA
+> dbgB
+> dbgJ
+> dbg_sheet.png
+> def
+> def2
+> def3
+> def5
+> det_cmp.png
+> diff_locked_v5.png
+> edge_f2.png
+> edge_gate_cmp.png
+> edge_overlay.png
+> f1
+
+### 🤖 Claude — 2026-11-17T11:24:51.158Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && cat $S/benny07.json | head -40; ls $S/cam07 | head; ls $S/fit07c 2>/dev/null", "description": "Read earlier Benny measurements for Screen 07"}`
+
+### 🧑 User — 2026-11-17T11:24:51.209Z
+
+> ↩︎ result: {'approved': [268, 985, 585, 1189], 'game_match07': [162, 906, 424, 1204]}cand_00.png
+> cand_01.png
+> cand_02.png
+> cands.json
+> fit.json
+
+### 🤖 Claude — 2026-11-17T11:24:53.670Z
+
+Working on Screen 07 step 1 now: rendering the fitted camera to compare Benny's size and position against your approved picture.
+
+### 🤖 Claude — 2026-11-17T11:24:57.973Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && timeout 600 node scripts/match-cam-try.mjs --id=07 --q=match07=1 --out=$S/cam07b --cands='[{\"back\":6.5,\"up\":2.8,\"lookUp\":1,\"ahead\":10,\"latFollow\":0.9}]' 2>&1 | tail -3 && python3 -I - \"$S\" <<'EOF'\nimport sys\nfrom PIL import Image\nS=sys.argv[1]\na=Image.open('references/07_dive_the_washer_tube.png').convert('RGB')\nb=Image.open('qa/match/audit/07_BEFORE_default.png').convert('RGB')\nc=Image.open(S+'/cam07b/cand_00.png').convert('RGB')\nW,H=432,768\nsheet=Image.new('RGB',(W*3+20,H), …[+230 chars]`
+
+### 🧑 User — 2026-11-17T11:25:13.079Z
+
+> ↩︎ result: 0 {"back":6.5,"up":2.8,"lookUp":1,"ahead":10,"latFollow":0.9} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam07b/cand_00.png
+
+### 🤖 Claude — 2026-11-17T11:25:14.282Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/s07_compare.png"}`
+
+### 🧑 User — 2026-11-17T11:25:14.337Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T11:25:36.768Z
+
+> 🔧 **Bash** `{"command": "wc -l src/world/environment.ts src/world/course.ts src/world/tube.ts src/game/Game.ts && grep -n \"rings0607\\|lids0607\\|gold05\\|band05\\|ringa\\|RING_A\\|foamWall\\|foamwall\\|FoamWall\\|bankFoam\\|buildWallLids\\|farLids\\|straightTubePath\\|zones\\.\\|'07'\\|s07\\|stage('07')\" src/world/environment.ts | head -80", "description": "Map the 05–07 tunnel builders in environment.ts"}`
+
+### 🧑 User — 2026-11-17T11:25:36.808Z
+
+> ↩︎ result: 915 src/world/environment.ts
+>    629 src/world/course.ts
+>    800 src/world/tube.ts
+>    696 src/game/Game.ts
+>   3040 total
+> 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 65:  zones.drumA.add(new THREE.Mesh(drumGeo, drumMat));
+> 75:  zones.drumA.add(new THREE.Mesh(backGeo, backMat));
+> 84:  zones.drumA.add(new THREE.Mesh(frontGeo, perforatedMetal({ color: '#f15ccd', slot: 0, repeatU: 8, repeatV: 8, holeSize: 0.0, side: THREE.DoubleSide, streaks: 0, metalness: 0.85, roughness: 0.18 })));
+> 88:  zones.drumA.add(ringA);
+> 91:  zones.drumA.add(ringA2);
+> 98:    zones.drumA.add(lifter);
+> 110:  zones.drumA.add(doorA);
+> 116:  zones.drumA.add(anchorA);
+> 120:  zones.drumA.add(sock, shirt);
+> 124:  zones.drumA.add(drumTowel.mesh);
+> 135:  zones.drumA.add(chute);
+> 136:  zones.drumA.add(buildRings(chutePath, sChute0 + 1.5, sChute1 - 1, 3.2, goldMat, { tube: 0.09 }));
+> 149:  zones.basin.add(new THREE.Mesh(funnelGeo, perforatedMetal({ color: '#e04fd0', slot: 0, repeatU: 60, repeatV: 22, holeSize: 0.3, side: THREE.DoubleSide, streaks: 0 })));
+> 155:    zones. …[+5491 chars]
+
+### 🤖 Claude — 2026-11-17T11:25:39.669Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 236, "limit": 200}`
+
+### 🧑 User — 2026-11-17T11:25:39.685Z
+
+> ↩︎ result: 236	  // the HEIGHT of the NEAR 05 tunnel around the front ring A. Measured (tools/qa/ring_fit05.py, tools/qa/axis05.ts,
+> 237	  // qa/pilot05/wave9b/T2/): the approved ring A centre is 59 px BELOW the vanishing point, BEFORE's 44 px ABOVE,
+> 238	  // while rings B, C, D already sit like the approved (slightly above). Lowering the WHOLE tunnel moved B–D
+> 239	  // away from the approved (rejected). T2 lowers only the tunnel up to ring A (26 u ahead of the eye) by
+> 240	  // ?nearfloor05=<d> units and blends back to BEFORE before ring B (40 u): radius 7.6, ring depths and spacing,
+> 241	  // ring B onward, the far block, camera, river and gameplay are untouched.
+> 242	  // PROMOTED 2026-11-16 ~11:45 UTC together with T1 (user: "only promote T2 if it is genuinely closer"): default 2.0 u
+> 243	  // with ring A at 20 u = ring A centre (502,478) r 433 vs approved (474,529) r 492 (BEFORE (505,426) r 374), its arc
+> 244	  // meets the right edge at y 241 (approved 229, BEFORE 321); B, C, D, 06, 07 pixel-identical (qa/pilot05/wave9b/T2b/).
+> 245	  // BEFORE = ?ringa=26&nearfloor05=0 (pixel-identical to qa/pilot05/wave9/baseline/05.png).
+> 246	  const qaNear05 = typeof location !== 'undefined' ? Number(new URL …[+16121 chars]
+
+### 🤖 Claude — 2026-11-17T11:25:40.922Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"foam\" src --include=*.ts -il | head -20 && grep -n \"class\\|export function\\|stage(\\|'07'\\|'06'\" src/vfx/foamBanks.ts 2>/dev/null | head -30", "description": "Locate the foam-bank code"}`
+
+### 🧑 User — 2026-11-17T11:25:40.971Z
+
+> ↩︎ result: src/world/environment.ts
+> src/world/materials.ts
+> src/world/course.ts
+> src/world/far05.ts
+> src/vfx/riderSplash.ts
+> src/vfx/bubbles.ts
+> src/vfx/index.ts
+> src/vfx/finalWave.ts
+> src/vfx/drumWater.ts
+> src/vfx/foam.ts
+> src/vfx/proj05Apron.ts
+> src/vfx/waterRibbon.ts
+> src/vfx/puddles.ts
+> src/vfx/flow05.ts
+> src/vfx/whirlpool.ts
+> src/vfx/glsl.ts
+> src/game/Game.ts
+
+### 🤖 Claude — 2026-11-17T11:25:43.891Z
+
+> 🔧 **Bash** `{"command": "wc -l src/vfx/foam.ts && grep -n \"export\\|stage\\|'0[5-8]'\\|height\\|wall\\|bank\" src/vfx/foam.ts | head -60 && grep -n \"foam\\|Foam\" src/vfx/index.ts | head -20", "description": "Inspect foam bank construction"}`
+
+### 🧑 User — 2026-11-17T11:25:43.928Z
+
+> ↩︎ result: 1120 src/vfx/foam.ts
+> 2: * Foam banks along the stream (refs 03–10) + whirlpool rim foam.
+> 3: *  - berm: ONE continuous lumpy lather bank per side, swept along the course (custom shader:
+> 5: *    faint iridescent rim). This is what makes the banks read as continuous foam, not cotton balls.
+> 9: *  - flank banks (05, wave 4): one CONTINUOUS cloud bank per side that continues the berm down both
+> 10: *    sides of the frame to Benny's level (ref 05: banks hugging BOTH edges y≈540–1300): a lather sheet
+> 26:export const BERM_IN = -0.6;
+> 27:export const BERM_OUT = 1.2;
+> 30:/** 0..1 lumpiness of the bank at (s, side) — CPU only, baked into the mesh and the puff placement */
+> 31:export function bermLump(s: number, side: number): number {
+> 34:/** CPU cellular "bubble dome" field (0..1) so the bank silhouette is a pile of round lumps */
+> 35:export function bermDomes(s: number, e: number, side: number): number {
+> 49:/** height (along course up) of the bank surface at e units outward from the edge */
+> 50:export function bermHeight(e: number, hw: number, lump: number): number {
+> 64:/** full bank surface height incl. bubble domes (shared by the mesh and the puff placement) */
+> 65:export function bermSurface(s:  …[+5898 chars]
+
+### 🤖 Claude — 2026-11-17T11:25:47.418Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/foam.ts", "offset": 530, "limit": 280}`
+
+### 🧑 User — 2026-11-17T11:25:47.440Z
+
+> ↩︎ result: 530	  }
+> 531	  return RIM_R[RIM_R.length - 1][1];
+> 532	}
+> 533	const BANK_CLEAR_RIDER = 1.3;
+> 534	const BANK_CLEAR_CORE = 1.45;
+> 535	
+> 536	/**
+> 537	 * wave 5: 0.4 in 05 (smooth ramps at the stage ends), 1 elsewhere. In 05 the stream-edge rim toward the VP
+> 538	 * is a LOW band of piled bubbles (ref ≈40–60 px); the full-height berm read as tall white heaps.
+> 539	 */
+> 540	function bermScale05(course: Course): (s: number) => number {
+> 541	  const st = course.stage('05');
+> 542	  const sm = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+> 543	  return (s) => 1 - 0.6 * sm(st.s0 - 6, st.s0 - 1, s) * (1 - sm(st.s1 - 1, st.s1 + 4, s));
+> 544	}
+> 545	/** squash the part of the bank above the stream's edge water level by k (k = 1: unchanged) */
+> 546	const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT + (h - EDGE_LIFT) * k : h);
+> 547	
+> 548	/** continuous lather bank along both stream edges (skips the 03 whirlpool interior) */
+> 549	function createBerm(course: Course, s0: number, s1: number, skip: [number, number], quality: 'high' | 'low') {
+> 550	  const hk = bermScale05(course);
+> 551	  const ds = quality === 'high …[+13295 chars]
+
+### 🤖 Claude — 2026-11-17T11:25:53.885Z
+
+> 🔧 **Bash** `{"command": "head -40 tools/qa/ring_fit05.py && ls tools/qa/ | head -40", "description": "Read the ring-fitting tool's usage"}`
+
+### 🧑 User — 2026-11-17T11:25:53.927Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Screen 05: measure the projected gold rings (centre, radius, band thickness) in the approved image and in live
+> captures, by fitting circles to the gold pixels of each ring's upper arc.
+> 
+>     python3 -I tools/qa/ring_fit05.py OUT_DIR LABEL=image[:guessfile] ...
+> 
+> A circle (cx, cy, r) is scored by the share of gold pixels on its arc above its own centre line (HUD bar, title
+> banner and everything outside the frame are skipped). Each ring starts from a rough guess and is refined by an
+> exhaustive local search; the radius reported is the middle of the gold band, `thick` its radial thickness.
+> Writes OUT_DIR/rings.json, rings.md and one overlay PNG per image (fitted circles drawn on the picture) so the
+> fit can be checked by eye. Raw geometry only — not a fidelity score.
+> """
+> import json, math, sys
+> from pathlib import Path
+> import numpy as np
+> from PIL import Image, ImageDraw
+> 
+> W, H = 864, 1536
+> GUESS = {
+>     # rough starting circles (cx, cy, r, search half-ranges dx, dy, dr)
+>     'ref': {'A': (455, 535, 499, 45, 70, 60), 'B': (465, 455, 245, 30, 40, 30), 'C': (478, 453, 150, 20, 25, 20),
+>             'D': (490, 460, 96, 14, 18, 14), 'E': (495, 464, 62, 10, 12, 9), 'F': (49 …[+930 chars]
+
+### 🤖 Claude — 2026-11-17T11:26:00.917Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - \"$S\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image, ImageDraw\nS=sys.argv[1]\na=np.asarray(Image.open('references/07_dive_the_washer_tube.png').convert('RGB')).astype(int)\nr,g,b=a[...,0],a[...,1],a[...,2]\nm=(r>160)&(r-b>70)&(g>45)\nvis=np.zeros(a.shape,np.uint8); vis[m]=(255,200,0); vis[~m]=(a[~m]*0.35).astype(np.uint8)\nim=Image.fromarray(vis); d=ImageDraw.Draw(im)\nfor x in range(0,864,100): d.line([(x,0),(x,1535)],fill=(0,255,255),width=1); d.text((x+2,2),str(x),fil …[+274 chars]`
+
+### 🧑 User — 2026-11-17T11:26:01.447Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T11:26:03.299Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/a07_gold.png"}`
+
+### 🧑 User — 2026-11-17T11:26:03.331Z
+
+> ↩︎ result: [image]
+
