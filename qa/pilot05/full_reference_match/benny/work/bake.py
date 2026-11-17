@@ -83,13 +83,17 @@ def main():
     valid = (E * LUM).sum(-1) > 0.03
     target = (Lt - S) / np.maximum(E, 1e-4)
     report = {}
+    from bennyseg import rgb2hsv, colour_classes
+    Hh, Ss, Vv = rgb2hsv(a8); cls = colour_classes(a8)
+    okc = {'body': ((Hh > 280) | (Hh < 20)) & (Ss > 0.2), 'crown': np.isin(cls, [2, 3]), 'cuff': (Hh > 230) & (Hh < 300) & (Ss > 0.35),
+           'pom': (Hh > 230) & (Hh < 320) & (Ss > 0.2)}
     star = (ids == 5) & ndi.binary_erosion(P['star'], iterations=1) & valid
     if star.sum():
         sa = np.median(target[star], 0)
         report['star_albedo_linear'] = [round(float(v), 3) for v in sa]
         report['star_px'] = int(star.sum())
     for pid, (name, key, TW, TH, strip) in PARTS.items():
-        sel = (ids == pid) & ndi.binary_erosion(P[key], iterations=1) & ndi.binary_erosion(ids == pid, iterations=1) & valid
+        sel = (ids == pid) & ndi.binary_erosion(P[key], iterations=1) & ndi.binary_erosion(ids == pid, iterations=1) & valid & okc[key]
         u = uvf[..., 0][sel] % 1.0; v = uvf[..., 1][sel]
         num_px = (Lt - S)[sel]; den_px = E[sel]
         num = np.zeros((TH, TW, 3)); den = np.zeros((TH, TW, 3)); cnt = np.zeros((TH, TW))
