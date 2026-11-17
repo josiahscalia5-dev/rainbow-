@@ -7546,3 +7546,42 @@ Starting with Benny as you asked. First a quick check for your gameplay recordin
 >   "commit": "7694d2fd66a09110771394041e9ba19da1aaa765",
 > HEAD 7694d2fd66a09110771394041e9ba19da1aaa765 GH 7694d2fd66a09110771394041e9ba19da1aaa765 uncommitted 0 refs 13/13
 
+### 🤖 Claude — 2026-11-17T14:51:35.641Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/08_NEW_match08.png"], "caption": "Screen 08 with the ported Benny: knitted beanie, ribbed cuff, yarn pom-pom, gold star, softer fur. Scenery unchanged.", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T14:51:36.390Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/08_NEW_match08.png → file_uuid: 2a1eba96-847c-495d-ab5f-594edb9e4d0e
+
+### 🤖 Claude — 2026-11-17T14:51:46.764Z
+
+Benny's surface detail on Screen 08 is improved: he now has the knitted beanie with stitches, white and purple stripes, a ribbed cuff, a yarn pom-pom, your gold star, and softer, denser fur. The full-size screen is above. Screen 08 is still waiting for your approval.
+
+**How I did it:** I copied only Benny's three code files and his 9 texture maps from `ccr-b0757dec-dj6l1o`, without merging. That branch is untouched (backup commits: this branch `25703fa`, the other branch `99ab17b`). This branch's Benny files hadn't changed since the two lines split, so nothing here was overwritten. The new Benny appears whenever the `?match08=1` test switch is on, on every screen, so he looks the same throughout the run.
+
+**Checks**
+
+| Check | Result |
+|---|---|
+| Scenery | still **97.4 %** within 20 colour levels (unchanged) |
+| Whole screen | 83.3 % |
+| Benny + splash area | 65.8 % (66.2 % before). This colour-tolerance score doesn't reward fine knit and fur detail, but up close he clearly looks more like your painted Benny. |
+| Gameplay | 8/8, all **91 coins (2,240)** |
+| Normal game | unchanged, pixel for pixel |
+| Saved on GitHub | `7694d2f` on `ccr-9c4a8ad6-xovgsx` (repository and branch verified, GitHub = local) |
+
+**Your gameplay recording:** it didn't reach me. There's no video anywhere in this session. Please upload it here, ideally the full clip or at least 30–45 seconds. Then I'll investigate each point you listed, frame by frame:
+- the washer parts and foam blocking the view
+- the gold structure and dark area at 34–37 s
+- whether the Screen 08 camera takes over at 38–40 s
+- the river, Benny, the coins, and seams or stutter
+
+**Not done yet**
+- **Benny in motion:** I haven't checked him moving on the other screens yet.
+- **APK:** the phone version doesn't include this new Benny yet. I'll rebuild it after fixing the problems from your recording.
+- **Optional:** re-bake Benny's colours from your Screen 08 picture specifically. The current maps come from Screen 05.
+
+After that I'll show you approved, new and moving-camera views, and ask for your Screen 08 approval before moving on to 04–07.
+
