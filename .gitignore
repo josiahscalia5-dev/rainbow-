@@ -32,6 +32,7 @@ android/.idea/
 backups/raw/
 backups/.autosave.lock
 backups/.tmp/
+backups/.live/
 
 # --- editor/OS ---
 .DS_Store
