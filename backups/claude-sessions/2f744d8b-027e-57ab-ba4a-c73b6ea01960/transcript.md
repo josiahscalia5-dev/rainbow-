@@ -1110,3 +1110,12 @@ The autosave script takes the lock and accepts `--message`; I'll commit through 
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:lead-r4 --message \"Lead r4 (account 4): round-4 briefs + -c4 branch mapping; FLOW_VIDEO.md = user's 01-03 / 04-08 / 09-11 split under ?flowplan=1 (default build unchanged); flowplan-test check E (full run with both videos must end at exactly 91 / 2,240; B's 2,230 explained: goto('08') shows the approved HUD value 2,040 and B rides straight)\" 2>&1 | tail -4; git log -1 --format='%h %s' | cut -c1-120; echo \"remote: $(git ls-remote origin refs/heads/ccr-067047f0-up5d1m | cut -c1-12)  local: $(git rev-parse --short=12 HEAD)\"", "d …[+87 chars]`
 
+### 🧑 User — 2026-11-17T18:33:06.047Z
+
+> ↩︎ result: "note": "following session branch 'ccr-067047f0-up5d1m' (config branch 'ccr-9c4a8ad6-xovgsx')",
+>   "commit": "da9505b72844e07537eeb8f5d0f0021077ede297",
+>   "duration_s": 10
+> }
+> da9505b7 Lead r4 (account 4): round-4 briefs + -c4 branch mapping; FLOW_VIDEO.md = user's 01-03 / 04-08 / 09-11 split un
+> remote: da9505b72844  local: da9505b72844
+
