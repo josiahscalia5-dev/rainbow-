@@ -653,8 +653,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3864,
-   "sha256": "cc23fd4342c66f09f9cc406a38e306fdf02ec5792727f5a75e613995d78e5e9d"
+   "bytes": 3867,
+   "sha256": "181c0f98130b76ef10e91551301624f5d19bca9bea259d47e8c94b901e27a1c2"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -663,8 +663,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11033,
-   "sha256": "97e57f446b943e933790a57f016c9aff59e607615ad9f934e2aca88202945e81"
+   "bytes": 11042,
+   "sha256": "f3f053da522075563eb58cee59da8dca54f23ad34da52a3c0b1d98f7ae65276e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1392,6 +1392,21 @@
    "sha256": "ca3c77a97d228ba901f1a5c444ee28efb40c920b3ffb5b22568630164c934a15"
   },
   {
+   "path": "qa/match/07/FAL_PLATE_REQUEST.md",
+   "bytes": 3083,
+   "sha256": "6c42d1592a04b2557d64a1f4fbef7698a5d8e5402bd06f5806272d034b0a0f74"
+  },
+  {
+   "path": "qa/match/07/NOTES.md",
+   "bytes": 5398,
+   "sha256": "1d2cab6c87df7a9f31effab35bd58440766c667c53baea9b285f983e8174392c"
+  },
+  {
+   "path": "qa/match/07/SHARED_CHANGES.md",
+   "bytes": 2464,
+   "sha256": "5846ce93f682d8a4d4f5cb9c847668c4102fdd3cd1fdc1c0661a28acbc4e7e91"
+  },
+  {
    "path": "qa/match/07/cam/approved_before_bestfit_halfres.png",
    "bytes": 1889227,
    "sha256": "61c21b1d6bd9d3e203747012dae1d4911fc7e2e51f7cb75e9c9919a5b6c101fd"
@@ -1605,6 +1620,16 @@
    "path": "qa/match/07/m1/proofs_0px.json",
    "bytes": 272,
    "sha256": "135aac29d07746aef764606e635ffe2b471775adf0f58daad222a7823e0bcac7"
+  },
+  {
+   "path": "qa/match/07/m3/continuity_default.json",
+   "bytes": 2696,
+   "sha256": "49576a5bbfdcd8a1ef2dbec617f0267b266790152519a7ee0b7a7c15a7bb62e7"
+  },
+  {
+   "path": "qa/match/07/m3/continuity_match07.json",
+   "bytes": 2708,
+   "sha256": "34ce26ccf8e999012c5e1d49c7eb4189f8eefaa096158e16eee0aedeb5647932"
   },
   {
    "path": "qa/match/07/metrics_BEFORE_NEW.json",
