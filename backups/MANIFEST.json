@@ -508,8 +508,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 9220,
-   "sha256": "36d757f1fe69ac2e0a16085cd17cdd16735cf2aba7aba1489ba1b6b43d3d0103"
+   "bytes": 9233,
+   "sha256": "946bc90ca9329fccb9a0d241e73ccb151463213f2d2bb5af5a32fdd138181878"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1010,6 +1010,26 @@
    "path": "qa/glb_validation.txt",
    "bytes": 293,
    "sha256": "82bda80d4f8c2a4ec7d013fd725fc64e2353f76b58250ca1ffacaa7d0db78071"
+  },
+  {
+   "path": "qa/match/07/geo_match07.json",
+   "bytes": 43046,
+   "sha256": "943d19c51c705156ec97e6159588222838238aa8461b6496b91a50b864b2cbe7"
+  },
+  {
+   "path": "qa/match/07/rings/approved.json",
+   "bytes": 536,
+   "sha256": "108b8fb0c258df4335aadbf1927c50826603c9c420018495ce8c285134d2f0eb"
+  },
+  {
+   "path": "qa/match/07/rings/approved.png",
+   "bytes": 2447320,
+   "sha256": "dc24661abbef9f5d685efe12096d2d0b48f90654a2e30b9909606feb233e4731"
+  },
+  {
+   "path": "qa/match/07/rings/guess_approved.json",
+   "bytes": 206,
+   "sha256": "73083d12ea3367af9171b0d877b9c85ed8fcaee88bda860d08bae7bb326fc7da"
   },
   {
    "path": "qa/match/NOTES.md",
@@ -7287,6 +7307,11 @@
    "sha256": "680761d9ee4e67f51e74482ca9b5afeceee6560f5f573c6ff8c0fab2cafcd358"
   },
   {
+   "path": "scripts/match-geo.mjs",
+   "bytes": 3990,
+   "sha256": "5f44e72acccf5080d7760d164d072e7c6c6935a4601498dbea7c12a4533a97ee"
+  },
+  {
    "path": "scripts/match-probe.mjs",
    "bytes": 6662,
    "sha256": "8954e400a84c114bc3426679257b91ec7fa0bceb15b886dc821e1af4c243a817"
@@ -7690,6 +7715,11 @@
    "path": "tools/match/bake.py",
    "bytes": 4468,
    "sha256": "ebeb633f96663ea6ec10530a103fcea80e3cf8bc5b791cd320761e7e6e0498de"
+  },
+  {
+   "path": "tools/match/ring_fit.py",
+   "bytes": 2980,
+   "sha256": "2ea5c23a56f3e1405fe102fe5fae6bbeea6e3f2c7c584501a3306a61c613e8c1"
   },
   {
    "path": "tools/model-lab.html",

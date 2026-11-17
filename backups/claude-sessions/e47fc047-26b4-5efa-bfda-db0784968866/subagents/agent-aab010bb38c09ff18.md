@@ -324,3 +324,809 @@ Now tube.ts, which defines `straightTubePath` (the 05-07 tunnel axis, where the 
 > 21	
 > 22	export function courseTubePath(course: Course, radius: (s: number) => number, depth: number | ((s: number) => number) = 0 …[+21182 chars]
 
+### 🤖 Claude — 2026-11-17T11:26:38.945Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/game/cameraRig.ts"}`
+
+### 🧑 User — 2026-11-17T11:26:38.964Z
+
+> ↩︎ result: 1	/**
+> 2	 * Third-person ride camera: behind/above Benny, looking along his heading (the course tangent), or
+> 3	 * along the straight tunnel axis inside the 05–07 tube so the gold rings converge to one vanishing point
+> 4	 * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.
+> 5	 */
+> 6	import * as THREE from 'three';
+> 7	import { WORLD } from '../world/course';
+> 8	import type { Course, StageId } from '../world/course';
+> 9	import type { TubePath } from '../world/tube';
+> 10	import { applyMatchCam } from './match';
+> 11	
+> 12	export interface CamParams {
+> 13	  back: number; // distance behind Benny
+> 14	  up: number; // height above Benny's water point
+> 15	  ahead: number; // look-at distance ahead
+> 16	  lookUp: number; // look-at height
+> 17	  fov: number;
+> 18	  latFollow: number; // 1 = camera fully follows Benny's lateral offset
+> 19	  roll: number; // 0..1 how much of the path bank the camera adopts
+> 20	  /** 05 only: view yaw (deg) to the LEFT of the tunnel axis, i.e. the vanishing point sits right of centre */
+> 21	  yaw?: number;
+> 22	  /** 05 only: lateral dead zone (units): the camera holds the tunnel axis while Benny is within ~this of it */
+> 23	  deadZone?: numbe …[+8610 chars]
+
+### 🤖 Claude — 2026-11-17T11:26:40.303Z
+
+> 🔧 **Grep** `{"pattern": "CHECKPOINTS|goto|tubeAxis|match|MATCH", "path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/game/Game.ts", "output_mode": "content"}`
+
+### 🧑 User — 2026-11-17T11:26:40.331Z
+
+> ↩︎ result: 112:  rideCam.axis = env.tubeAxis;
+> 380:    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+> 551:  const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+> 569:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 570:    const cp = CHECKPOINTS[id];
+> 611:    checkpoints: Object.keys(CHECKPOINTS),
+> 612:    goto: gotoCheckpoint,
+
+### 🤖 Claude — 2026-11-17T11:26:42.364Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/game/Game.ts", "offset": 530, "limit": 170}`
+
+### 🧑 User — 2026-11-17T11:26:42.388Z
+
+> ↩︎ result: 530	      const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+> 531	      bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
+> 532	      bloom.radius = bloomBase.r + (bloom05.r - bloomBase.r) * w;
+> 533	      bloom.threshold = bloomBase.t + (bloom05.t - bloomBase.t) * w;
+> 534	    }
+> 535	    renderer.info.reset();
+> 536	    composer.render();
+> 537	  };
+> 538	  const frame = () => {
+> 539	    const now = performance.now();
+> 540	    const dt = Math.min(0.05, (now - last) / 1000);
+> 541	    last = now;
+> 542	    fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;
+> 543	    if (running) stepSim(dt);
+> 544	    // QA mode renders on demand only (software WebGL is slow; frames are deterministic)
+> 545	    if (!qaMode || running || dirty) { render(); dirty = false; }
+> 546	    requestAnimationFrame(frame);
+> 547	  };
+> 548	  requestAnimationFrame(frame);
+> 549	
+> 550	  // ---------------------------------------------------------------- QA API
+> 551	  const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+> 552	    '01': { mode: 'intro', t: T.cp01 },
+> 553	    '02': { mode: 'intro', t: T.cp02 },
+> 554	    '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0 …[+8608 chars]
+
+### 🤖 Claude — 2026-11-17T11:26:43.973Z
+
+Now the QA scripts I'll be using: capture, match-cam-try, gameplay-test, proj05-move, and the continuity test.
+
+### 🤖 Claude — 2026-11-17T11:26:45.516Z
+
+> 🔧 **Bash** `{"command": "cat scripts/capture.mjs && echo ---- && cat scripts/match-cam-try.mjs && echo ---- && grep -n '\"' package.json | head -40", "description": "Show capture and camera-try scripts and package.json"}`
+
+### 🧑 User — 2026-11-17T11:26:45.567Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+7124 chars]
+
+### 🤖 Claude — 2026-11-17T11:26:48.795Z
+
+node_modules is missing in this worktree. I'll symlink it as instructed, then check how `startVite` picks its port (the main session may be capturing in parallel).
+
+### 🤖 Claude — 2026-11-17T11:26:50.390Z
+
+> 🔧 **Bash** `{"command": "ls -la node_modules 2>&1 | head -2; [ -e node_modules ] || ln -s /home/user/rainbow-/node_modules node_modules; ls -la node_modules | head -2; cat scripts/lib/pw.mjs", "description": "Symlink node_modules and show the Playwright helper"}`
+
+### 🧑 User — 2026-11-17T11:26:50.461Z
+
+> ↩︎ result: ls: cannot access 'node_modules': No such file or directory
+> lrwxrwxrwx 1 root root 32 Nov 17 11:26 node_modules -> /home/user/rainbow-/node_modules
+> // Resolve the Playwright that is pre-installed in this environment (global node_modules),
+> // falling back to a local install. Chromium launch flags give WebGL2 via SwiftShader headless.
+> import { createRequire } from 'node:module';
+> import { execSync } from 'node:child_process';
+> import { join } from 'node:path';
+> 
+> export function loadPlaywright() {
+>   try {
+>     return createRequire(import.meta.url)('playwright');
+>   } catch {
+>     const root = execSync('npm root -g').toString().trim();
+>     return createRequire(join(root, 'noop.js'))('playwright');
+>   }
+> }
+> 
+> export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolv …[+366 chars]
+
+### 🤖 Claude — 2026-11-17T11:26:56.843Z
+
+> 🔧 **Bash** `{"command": "cat vite.config.ts; ls -la /home/user/rainbow-/node_modules/.vite 2>/dev/null | head; git -C /home/user/rainbow- worktree list 2>/dev/null | head", "description": "Show vite config, vite cache and worktree list"}`
+
+### 🧑 User — 2026-11-17T11:26:56.882Z
+
+> ↩︎ result: This agent is isolated in the worktree /home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18, but this command redirects git to the shared checkout via -C. Refusing to run it — a worktree-isolated agent's git operations must target its own worktree. Run the equivalent from /home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18 without the redirect.
+
+### 🤖 Claude — 2026-11-17T11:26:58.305Z
+
+> 🔧 **Bash** `{"command": "cat vite.config.ts; ls -la node_modules/.vite 2>/dev/null | head", "description": "Show vite config and vite cache folder"}`
+
+### 🧑 User — 2026-11-17T11:26:58.346Z
+
+> ↩︎ result: import { defineConfig } from 'vite';
+> import { resolve } from 'node:path';
+> 
+> export default defineConfig({
+>   base: './',
+>   assetsInclude: ['**/*.glb'],
+>   server: { port: 5173, strictPort: false },
+>   build: {
+>     target: 'es2020',
+>     outDir: 'dist',
+>     assetsInlineLimit: 0,
+>     chunkSizeWarningLimit: 2000,
+>     rollupOptions: {
+>       input: {
+>         main: resolve(__dirname, 'index.html'),
+>       },
+>     },
+>   },
+> });
+> total 12
+> drwxr-xr-x   3 root root 4096 Nov 17 11:07 .
+> drwxr-xr-x 103 root root 4096 Nov 16 20:35 ..
+> drwxr-xr-x   2 root root 4096 Nov 17 11:07 deps
+
+### 🤖 Claude — 2026-11-17T11:27:13.866Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $SP/before && git rev-parse HEAD > $SP/before/HEAD.txt && (node scripts/capture.mjs 05 06 07 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$SP/before/default && node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$SP/before/ringa && node scripts/capture.mjs 05 --q='match05=1' --out=$SP/before/match05 && node scripts/capture.mjs 06 07 --q='match06=1' --out=$SP/before/match06_noop) > $SP/before/capture.log 2>&1; git checkout qa/capture_log.json; echo do …[+122 chars]`
+
+### 🧑 User — 2026-11-17T11:27:13.893Z
+
+> ↩︎ result: This agent is isolated in the worktree /home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18, but this command names git in a form too complex to verify that it stays inside the worktree. Refusing to run it — a worktree-isolated agent's git operations must target its own worktree. Split it into plain, separate commands and run them from /home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18.
+
+### 🤖 Claude — 2026-11-17T11:27:15.897Z
+
+> 🔧 **Bash** `{"command": "git rev-parse HEAD", "description": "Record the baseline commit SHA"}`
+
+### 🧑 User — 2026-11-17T11:27:15.923Z
+
+> ↩︎ result: 8620901ffeafd31deec8b39ea9ec144c00963633
+
+### 🤖 Claude — 2026-11-17T11:27:18.965Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $SP/before && (node scripts/capture.mjs 05 06 07 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$SP/before/default && node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$SP/before/ringa && node scripts/capture.mjs 05 --q='match05=1' --out=$SP/before/match05 && node scripts/capture.mjs 06 07 --q='match06=1' --out=$SP/before/match06_noop) > $SP/before/capture.log 2>&1; echo done >> $SP/before/capture.log", "description": "Capture pixel baselines before  …[+44 chars]`
+
+### 🧑 User — 2026-11-17T11:27:19.005Z
+
+> ↩︎ result: Command running in background with ID: bjblkzth6. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/tasks/bjblkzth6.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T11:27:21.111Z
+
+While the baselines render, I'll read the gameplay test, the move-frames script and the continuity test.
+
+### 🤖 Claude — 2026-11-17T11:27:22.255Z
+
+> 🔧 **Bash** `{"command": "cat scripts/gameplay-test.mjs", "description": "Show the gameplay test script"}`
+
+### 🧑 User — 2026-11-17T11:27:22.283Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> const optOut = (pr …[+6770 chars]
+
+### 🤖 Claude — 2026-11-17T11:27:23.511Z
+
+> 🔧 **Bash** `{"command": "cat scripts/proj05-move.mjs && echo ---- && cat scripts/continuity-test.ts | head -120", "description": "Show move-frames script and continuity test"}`
+
+### 🧑 User — 2026-11-17T11:27:23.547Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 projection test — MOVING CAMERA (2026-11-16). Starts at the locked 05 checkpoint and rides forward with
+> // the real game simulation (Benny + camera rig + course unchanged), capturing full-size frames.
+> //   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> // --d: distances ahead of the checkpoint (units of s) → DIR/move_<d>.png (shader clock frozen at 12: shows layout only)
+> // --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> // --still=SECONDS: water animation at the LOCKED camera (clock runs, camera still) → DIR/still/0000.png …
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const Q = typeof opt.q === 'string' ? opt.q : '';
+> const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/move';
+> const D = typeof opt.d === 'string' ? opt.d.split(',').map(Number) : [];
+>  …[+8089 chars]
+
+### 🤖 Claude — 2026-11-17T11:27:26.507Z
+
+Let me check how `flag05` reads switches (URL vs `VITE_RAINBOW_Q05`), since I'll want to run course math in node with match06 on.
+
+### 🤖 Claude — 2026-11-17T11:27:28.307Z
+
+> 🔧 **Grep** `{"pattern": "export (function|const) (flag05|q05)|VITE_RAINBOW_Q05", "path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/vfx/waterRibbon.ts", "output_mode": "content", "-n": true, "-A": 12}`
+
+### 🧑 User — 2026-11-17T11:27:28.340Z
+
+> ↩︎ result: 147: * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+> 148- * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+> 149- */
+> 150:const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> 151-/**
+> 152- * `?match05=1` (2026-11-17): the user's one address for the approved Screen 05 — every 05 match switch at once (approved
+> 153- * water, tunnel walls, gold rings, near gold frame, Blender paddles, sharp riding water; flow along the streaks is
+> 154- * `projflow05=2`, read in attachProj05). Without it nothing changes.
+> 155- */
+> 156-const MATCH05_KEYS = ['proj05', 'projwall05', 'projring05', 'projframe05', 'projlid05', 'projnear05'];
+> 157-const q05 = (key: string): boolean => {
+> 158-  const hit = (qs: URLSearchParams) => qs.get(key) === '1' || (MATCH05_KEYS.includes(key) && qs.get('match05') === '1');
+> 159-  try {
+> 160-    if (typeof location !== 'undefined' && hit(new URLSearchParams(location.search))) return true;
+> 161-  } catch {
+> 162-    /* no location (vite-node / workers) */
+> --
+> 167:export const flag05 = q05;
+> 168-/**
+> 169- * 05 texture advection relative t …[+969 chars]
+
+### 🤖 Claude — 2026-11-17T11:27:30.381Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/vfx/waterRibbon.ts", "offset": 157, "limit": 12}`
+
+### 🧑 User — 2026-11-17T11:27:30.395Z
+
+> ↩︎ result: 157	const q05 = (key: string): boolean => {
+> 158	  const hit = (qs: URLSearchParams) => qs.get(key) === '1' || (MATCH05_KEYS.includes(key) && qs.get('match05') === '1');
+> 159	  try {
+> 160	    if (typeof location !== 'undefined' && hit(new URLSearchParams(location.search))) return true;
+> 161	  } catch {
+> 162	    /* no location (vite-node / workers) */
+> 163	  }
+> 164	  return BUILD_Q05 !== '' && hit(new URLSearchParams(BUILD_Q05));
+> 165	};
+> 166	/** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+> 167	export const flag05 = q05;
+> 168	/**
+
+### 🤖 Claude — 2026-11-17T11:27:43.034Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^import\" src/vfx/waterRibbon.ts src/game/match.ts src/world/materials.ts src/world/far05.ts src/gameplay/coins.ts src/vfx/proj05Tunnel.ts src/vfx/flow05.ts src/vfx/proj05Apron.ts | grep -v \"from 'three'\"", "description": "List non-three imports of modules in the dependency chain"}`
+
+### 🧑 User — 2026-11-17T11:27:43.070Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:13:import type { Course, StageId } from '../world/course';
+> src/vfx/waterRibbon.ts:14:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> src/vfx/waterRibbon.ts:15:import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> src/game/match.ts:10:import type { CamParams } from './cameraRig';
+> src/game/match.ts:11:import { flag05 } from '../vfx/waterRibbon';
+> src/world/materials.ts:7:import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far } from '../vfx/waterRibbon';
+> src/world/materials.ts:8:import { FLOW05_GLSL } from '../vfx/flow05'; // W11 (?flow05=1): two-phase ripple sampling for the far river // Screen 05 water test W10 (?water05=1): far river look only
+> src/world/far05.ts:17:import type { Course } from './course';
+> src/world/far05.ts:18:import type { ForcedTunnel } from './tube';
+> src/world/far05.ts:19:import { tubeCenterAt } from './tube';
+> src/world/far05.ts:20:import { channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, WATER05 } from '../vfx/waterRibbon';
+> src/gameplay/coins.ts:8:import type { Course, StageId } from '../world/course';
+> src/gameplay/coins.ts:9:import { canvasTexture } from '../world/materials';
+> src …[+753 chars]
+
+### 🤖 Claude — 2026-11-17T11:27:45.334Z
+
+> 🔧 **Bash** `{"command": "cat $(dirname /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/tasks/x)/bjblkzth6.output 2>/dev/null | tail -5; cat /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/before/capture.log 2>/dev/null | tail -5", "description": "Check baseline capture progress"}`
+
+### 🧑 User — 2026-11-17T11:27:45.371Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 06 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/before/default/06.png {"stage":"06","s":198.924,"y":-37.452,"calls":52,"tris":426237,"modules":{"water":"vfx/index.ts","benny":"STAND-IN","girl":"STAND-IN"}}
+
+### 🤖 Claude — 2026-11-17T11:28:11.025Z
+
+> 🔧 **Bash** `{"command": "grep -m3 -n '\"benny\"' qa/capture_log.json; grep -n \"STAND-IN\" -r src | head -5", "description": "Check whether STAND-IN module status is normal"}`
+
+### 🧑 User — 2026-11-17T11:28:11.072Z
+
+> ↩︎ result: 41:          "benny": "assets/models/benny.glb",
+> src/game/modules.ts:43:  moduleStatus.water = 'STAND-IN';
+> src/game/modules.ts:59:  moduleStatus.benny = 'STAND-IN';
+> src/game/modules.ts:75:  moduleStatus.girl = 'STAND-IN';
+
+### 🤖 Claude — 2026-11-17T11:28:12.476Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/game/modules.ts"}`
+
+### 🧑 User — 2026-11-17T11:28:12.514Z
+
+> ↩︎ result: 1	/**
+> 2	 * Loads the specialist modules (water, Benny, girl) when present; otherwise returns simple stand-ins
+> 3	 * so the world/gameplay can be developed and tested independently. Stand-ins are logged loudly and
+> 4	 * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> 5	 */
+> 6	import * as THREE from 'three';
+> 7	import type { Course } from '../world/course';
+> 8	import type { BennyRuntime, GirlRuntime } from '../characters/types';
+> 9	
+> 10	export interface WaterLike {
+> 11	  group: THREE.Group;
+> 12	  update(time: number, dt: number, focusS: number, camera: THREE.Camera): void;
+> 13	  surfaceHeight(s: number, lateral: number, time: number): number;
+> 14	  wake(pos: THREE.Vector3, forward: THREE.Vector3, right: THREE.Vector3, speed: number, dt: number): void;
+> 15	  splash(pos: THREE.Vector3, up: THREE.Vector3, strength: number): void;
+> 16	}
+> 17	
+> 18	const vfxMods = import.meta.glob('../vfx/index.ts');
+> 19	const bennyMods = import.meta.glob('../characters/benny/runtime.ts');
+> 20	const girlMods = import.meta.glob('../characters/girl/runtime.ts');
+> 21	
+> 22	export const moduleStatus: Record<string, string> = {};
+> 23	
+> 24	export async function loadWater(course: Course): Promis …[+4779 chars]
+
+### 🤖 Claude — 2026-11-17T11:28:15.126Z
+
+Benny loaded as a STAND-IN here, whereas the tracked log shows `assets/models/benny.glb`. This worktree probably holds Git LFS pointer files instead of the real binaries. Let me check.
+
+### 🤖 Claude — 2026-11-17T11:28:16.675Z
+
+> 🔧 **Bash** `{"command": "ls -la assets/models/ | head -20 && head -c 150 assets/models/benny.glb; echo; ls -la /home/user/rainbow-/assets/models/ | head -20", "description": "Check whether model files are LFS pointers in the worktree"}`
+
+### 🧑 User — 2026-11-17T11:28:16.729Z
+
+> ↩︎ result: total 20
+> drwxr-xr-x 2 root root 4096 Nov 17 11:24 .
+> drwxr-xr-x 4 root root 4096 Nov 17 11:24 ..
+> -rw-r--r-- 1 root root  132 Nov 17 11:24 benny.glb
+> -rw-r--r-- 1 root root  131 Nov 17 11:24 lids05.glb
+> -rw-r--r-- 1 root root  132 Nov 17 11:24 rainbow_girl.glb
+> version https://git-lfs.github.com/spec/v1
+> oid sha256:40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1
+> size 1126892
+> 
+> total 5548
+> drwxr-xr-x 2 root root    4096 Nov 16 21:36 .
+> drwxr-xr-x 4 root root    4096 Nov 16 20:33 ..
+> -rw-r--r-- 1 root root 1126892 Nov 16 20:34 benny.glb
+> -rw-r--r-- 1 root root  992168 Nov 16 21:37 lids05.glb
+> -rw-r--r-- 1 root root 3546480 Nov 16 20:34 rainbow_girl.glb
+
+### 🤖 Claude — 2026-11-17T11:28:22.781Z
+
+The model files (and possibly textures) are LFS pointers in this worktree, so captures here would show a stand-in Benny. Let me list which tracked files are still pointers.
+
+### 🤖 Claude — 2026-11-17T11:28:24.382Z
+
+> 🔧 **Bash** `{"command": "grep -rl --include='*' -m1 \"git-lfs.github.com/spec/v1\" assets public references character_references src 2>/dev/null | head -50; echo; grep -rl \"git-lfs.github.com/spec/v1\" assets public references character_references src 2>/dev/null | wc -l", "description": "List LFS pointer files in game asset folders"}`
+
+### 🧑 User — 2026-11-17T11:28:24.451Z
+
+> ↩︎ result: assets/models/benny.glb
+> assets/models/lids05.glb
+> assets/models/rainbow_girl.glb
+> 
+> 3
+
+### 🤖 Claude — 2026-11-17T11:28:26.487Z
+
+Only the three GLB models are pointers. I'll materialize them from the shared local LFS store with `git lfs checkout` (no network, working tree stays clean).
+
+### 🤖 Claude — 2026-11-17T11:28:27.736Z
+
+> 🔧 **Bash** `{"command": "git lfs checkout assets/models/benny.glb assets/models/lids05.glb assets/models/rainbow_girl.glb", "description": "Materialize LFS model files in the worktree"}`
+
+### 🧑 User — 2026-11-17T11:28:27.913Z
+
+> ↩︎ result: Checking out LFS objects: 100% (3/3), 5.7 MB | 0 B/s, done.
+
+### 🤖 Claude — 2026-11-17T11:28:29.571Z
+
+> 🔧 **Bash** `{"command": "ls -la assets/models/ && git status --short | head", "description": "Verify model files are real and tree is clean"}`
+
+### 🧑 User — 2026-11-17T11:28:29.664Z
+
+> ↩︎ result: total 5548
+> drwxr-xr-x 2 root root    4096 Nov 17 11:24 .
+> drwxr-xr-x 4 root root    4096 Nov 17 11:24 ..
+> -rw-r--r-- 1 root root 1126892 Nov 17 11:28 benny.glb
+> -rw-r--r-- 1 root root  992168 Nov 17 11:28 lids05.glb
+> -rw-r--r-- 1 root root 3546480 Nov 17 11:28 rainbow_girl.glb
+> ?? node_modules
+
+### 🤖 Claude — 2026-11-17T11:28:48.332Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskStop,Monitor", "max_results": 2}`
+
+### 🧑 User — 2026-11-17T11:28:48.341Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-17T11:28:49.303Z
+
+> 🔧 **TaskStop** `{"task_id": "bjblkzth6"}`
+
+### 🧑 User — 2026-11-17T11:28:49.319Z
+
+> ↩︎ result: {"message":"Successfully stopped task: bjblkzth6 (SP=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $SP/before && (node scripts/capture.mjs 05 06 07 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$SP/before/default && node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$SP/before/ringa && node scripts/capture.mjs 05 --q='match05=1' --out=$SP/before/match05 && node scripts/capture.mjs 06 07 --q='match06=1' --out=$SP/before/match06_noop) > $SP/before/capture.log 2>&1; echo done >> $SP/before/capture.log)","task_id":"bjblkzth6","task_type":"local_bash","command":"SP=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $SP/before && (node scripts/capture.mjs 05 06 07 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$SP/before/default && node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$SP/before/ringa && node scripts/capture.mjs 05 --q='match05=1' --out=$SP/before/match05 && node scripts/capture.mjs 06 07 --q='match06=1' --out=$SP/before/match06_noop) > $SP/before/capture.log 2>&1; echo done >> $SP/before/capture.log"}
+
+### 🤖 Claude — 2026-11-17T11:28:50.645Z
+
+Let me make sure no orphaned Chromium/Vite processes from that job are left running, and restore the capture log if it was touched.
+
+### 🤖 Claude — 2026-11-17T11:28:51.645Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep -E \"capture.mjs|chrom\" | grep -v grep | grep -c . ; ps aux | grep -E \"node scripts/capture.mjs\" | grep -v grep | head", "description": "Check for leftover capture processes"}`
+
+### 🧑 User — 2026-11-17T11:28:51.693Z
+
+> ↩︎ result: 16
+
+### 🤖 Claude — 2026-11-17T11:28:52.599Z
+
+> 🔧 **Bash** `{"command": "git status --short", "description": "Show working tree status"}`
+
+### 🧑 User — 2026-11-17T11:28:52.637Z
+
+> ↩︎ result: M qa/capture_log.json
+> ?? node_modules
+
+### 🤖 Claude — 2026-11-17T11:28:54.348Z
+
+> 🔧 **Bash** `{"command": "ps -eo pid,ppid,etime,args | grep -E \"chrom|vite|node \" | grep -v grep | cut -c1-200 | head -30", "description": "Inspect running chromium and node processes"}`
+
+### 🧑 User — 2026-11-17T11:28:54.398Z
+
+> ↩︎ result: 120   101    01:26:56 npm exec chrome-devtools-mcp@1.6.0 --headless
+>   214   120    01:26:46 sh -c chrome-devtools-mcp --headless
+>   215   214    01:26:46 chrome-devtools-mcp
+>   217   216    01:26:46 node /root/.npm/_npx/a5b920f00216d246/node_modules/.bin/playwright-mcp --headless
+>   225   224    01:26:46 node /root/.npm/_npx/e0032c55e5791f19/node_modules/.bin/threejs-devtools-mcp
+>   259   215    01:26:43 /opt/node22/bin/node /root/.npm/_npx/bdd39d12a2040511/node_modules/chrome-devtools-mcp/build/src/telemetry/watchdog/main.js --parent-pid=215 --app-version=1.6.0 --os-type=3
+>   285   284    01:26:40 node /root/.npm/_npx/9833c18b2d85bc59/node_modules/.bin/playwright-mcp
+>   297   225    01:26:35 /opt/pw-browsers/chromium --no-sandbox --allow-pre-commit-input --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows -
+>   301     1    01:26:25 /opt/pw-browsers/chromium-1243/chrome-linux64/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/root/.config/google-chrome-for
+>   303     1    01:26:24 /opt/pw-browsers/chromium-1243/chrome-linux64/chrome_crashpad_handler --no-periodic-tasks --monitor-se …[+1883 chars]
+
+### 🤖 Claude — 2026-11-17T11:28:56.130Z
+
+Those are long-running MCP browsers, not mine; my capture job is gone. Restoring the tracked capture log.
+
+### 🤖 Claude — 2026-11-17T11:28:57.181Z
+
+> 🔧 **Bash** `{"command": "git checkout qa/capture_log.json && git status --short", "description": "Restore the tracked capture log"}`
+
+### 🧑 User — 2026-11-17T11:28:57.267Z
+
+> ↩︎ result: Updated 1 path from the index
+> ?? node_modules
+
+### 🤖 Claude — 2026-11-17T11:29:19.757Z
+
+> 🔧 **Bash** `{"command": "ls -a /home/user/rainbow-/node_modules | head -5; ls -a /home/user/rainbow-/node_modules | grep '^\\.' ; find /home/user/rainbow-/node_modules -path /home/user/rainbow-/node_modules/.vite -prune -o -type f -print | wc -l; du -sh /home/user/rainbow-/node_modules 2>/dev/null | tail -1; df -h /home/user | tail -1", "description": "Measure main node_modules size and dot entries"}`
+
+### 🧑 User — 2026-11-17T11:29:19.914Z
+
+> ↩︎ result: .
+> ..
+> .bin
+> .package-lock.json
+> .rainbow-bootstrap.sha256
+> .
+> ..
+> .bin
+> .package-lock.json
+> .rainbow-bootstrap.sha256
+> .vite
+> 4007
+> 103M	/home/user/rainbow-/node_modules
+> /dev/vda        252G   18G   21G  47% /
+
+### 🤖 Claude — 2026-11-17T11:29:21.332Z
+
+Only about 4,000 files (103 MB), so the hard-linked copy is quick.
+
+### 🤖 Claude — 2026-11-17T11:29:23.569Z
+
+> 🔧 **Bash** `{"command": "[ -L node_modules ] && rm node_modules && mkdir node_modules && for e in /home/user/rainbow-/node_modules/* /home/user/rainbow-/node_modules/.bin /home/user/rainbow-/node_modules/.package-lock.json; do cp -al \"$e\" node_modules/; done && ls -la node_modules | head -5 && find node_modules -type f | wc -l && ls node_modules/@fontsource/baloo-2/files | head -3 && stat -c '%h %n' node_modules/three/package.json", "description": "Replace symlink with hard-linked node_modules copy"}`
+
+### 🧑 User — 2026-11-17T11:29:23.846Z
+
+> ↩︎ result: total 468
+> drwxr-xr-x 102 root root  4096 Nov 17 11:29 .
+> drwxr-xr-x  17 root root  4096 Nov 17 11:29 ..
+> drwxr-xr-x   2 root root  4096 Nov 16 20:34 .bin
+> -rw-r--r--   2 root root 57585 Nov 16 20:34 .package-lock.json
+> 4006
+> baloo-2-devanagari-400-normal.woff
+> baloo-2-devanagari-400-normal.woff2
+> baloo-2-devanagari-500-normal.woff
+> 2 node_modules/three/package.json
+
+### 🤖 Claude — 2026-11-17T11:29:26.944Z
+
+Hard-linked copy in place (link count 2 confirms shared inodes, no extra disk). Let me confirm git ignores it now that it's a real directory.
+
+### 🤖 Claude — 2026-11-17T11:29:28.092Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -5; echo \"---\"; git check-ignore -v node_modules/three/package.json", "description": "Confirm node_modules is ignored by git"}`
+
+### 🧑 User — 2026-11-17T11:29:28.143Z
+
+> ↩︎ result: ---
+> .gitignore:2:node_modules/	node_modules/three/package.json
+
+### 🤖 Claude — 2026-11-17T11:29:29.805Z
+
+Working tree is clean and node_modules is ignored. Now I'll re-run the full baseline set in the background with real models and fonts.
+
+### 🤖 Claude — 2026-11-17T11:29:33.216Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && rm -rf $SP/before && mkdir -p $SP/before && (node scripts/capture.mjs 05 06 07 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$SP/before/default && node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$SP/before/ringa && node scripts/capture.mjs 05 --q='match05=1' --out=$SP/before/match05 && node scripts/capture.mjs 06 07 --q='match06=1' --out=$SP/before/match06_noop) > $SP/before/capture.log 2>&1; echo \"exit=$?\" >> $SP/before/capture.log; echo done >> $SP/bef …[+116 chars]`
+
+### 🧑 User — 2026-11-17T11:29:33.252Z
+
+> ↩︎ result: Command running in background with ID: b6jwxzfw3. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/tasks/b6jwxzfw3.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T11:29:36.893Z
+
+While that renders, let me find everything in src that refers specifically to stage 06 (or the arch), since those are the places a new 06 path could break.
+
+### 🤖 Claude — 2026-11-17T11:29:38.347Z
+
+> 🔧 **Grep** `{"pattern": "'06'|\"06\"|arch|s06|st06|stage\\('07'\\)|marks\\['07'\\]", "path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src", "output_mode": "content", "-n": true}`
+
+### 🧑 User — 2026-11-17T11:29:38.379Z
+
+> ↩︎ result: src/main.ts:7:  const q = new URLSearchParams(location.search);
+> src/gameplay/coins.ts:5: * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+> src/gameplay/coins.ts:50:  { const a = st('06'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 4 + i * ((a.s1 - a.s0 - 6) / n); add('06', s, -1.3 + 0.7 * Math.sin(i * 0.4)); } }
+> src/game/modules.ts:30:      const qp = new URLSearchParams(location.search).get('quality');
+> src/game/Game.ts:30:const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> src/game/Game.ts:40:  const qs = new URLSearchParams(location.search);
+> src/game/Game.ts:557:    '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+> src/game/Game.ts:558:    '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+> src/game/cameraRig.ts:33:  '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
+> src/game/match.ts:13:export type MatchId = '02' | '03' | '04' | '06' | '07' | '08' | '09' | '10';
+> src/game/match.ts:14:export const MATCH_IDS: MatchId[] = ['02', '03', '04', '06', '07', '08', '09', '10'];
+> src/vfx/glsl.ts:112:// the middle and tapering to points (half thickness T·(1 …[+7244 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:40.763Z
+
+Let me read coins.ts (06 coins sit "on the arch crest" at lateral -1.3) and the waterRibbon per-stage tables at lines 19 and 43.
+
+### 🤖 Claude — 2026-11-17T11:29:41.657Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/gameplay/coins.ts"}`
+
+### 🧑 User — 2026-11-17T11:29:41.673Z
+
+> ↩︎ result: 1	/**
+> 2	 * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 3	 * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+> 4	 * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+> 5	 * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+> 6	 */
+> 7	import * as THREE from 'three';
+> 8	import type { Course, StageId } from '../world/course';
+> 9	import { canvasTexture } from '../world/materials';
+> 10	import { coreLateral } from '../vfx/waterRibbon';
+> 11	
+> 12	export const COIN_VALUE = 10;
+> 13	
+> 14	/** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> 15	export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number }
+> 16	
+> 17	/**
+> 18	 * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+> 19	 * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+> 20	 * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+> 21	 * so their face re …[+9155 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:42.557Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/vfx/waterRibbon.ts", "limit": 146}`
+
+### 🧑 User — 2026-11-17T11:29:42.576Z
+
+> ↩︎ result: 1	/**
+> 2	 * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.
+> 3	 *
+> 4	 * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> 5	 * concave trough with raised frothy edges plus a short skirt under each edge (thickness).
+> 6	 * Shader: electric-cyan core with meandering hot-pink flow bands, advected white streaks and
+> 7	 * sparkles (two-phase flow-map advection so per-stage speeds never shear), Fresnel/haze
+> 8	 * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+> 9	 * glowing chevrons on the 04 slide, a dithered hand-over to the whirlpool surface in 03 and a
+> 10	 * drain-away for the 11 outro.
+> 11	 */
+> 12	import * as THREE from 'three';
+> 13	import type { Course, StageId } from '../world/course';
+> 14	import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 15	import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> 16	
+> 17	/** wave amplitude per stage (units); blended across boundaries */
+> 18	const AMP: Partial<Record<StageId, number>> = {
+> 19	  '02': 0.06, '03': 0.08, '04': 0.03, '05': 0.1, '06': 0.12, '07': 0.1, '08': 0.1, '09': 0.16, '10' …[+7501 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:44.964Z
+
+Let me find every consumer of `widthAt` (steering limits, wall bump, foam, ribbon), since the 06 width/offset choice feeds all of them.
+
+### 🤖 Claude — 2026-11-17T11:29:46.159Z
+
+> 🔧 **Grep** `{"pattern": "widthAt\\(", "path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src", "output_mode": "content", "-n": true}`
+
+### 🧑 User — 2026-11-17T11:29:46.199Z
+
+> ↩︎ result: src/game/modules.ts:87:    const w = course.widthAt(s) / 2;
+> src/game/Game.ts:341:    const halfW = course.widthAt(st.s) / 2;
+> src/vfx/flow05.ts:86:    const hwFull = course.widthAt(s) / 2;
+> src/vfx/waterRibbon.ts:4: * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+> src/vfx/waterRibbon.ts:180: *               (channel05 below). Visual only: course.ts, widthAt(), steering, coins and collisions are untouched.
+> src/vfx/waterRibbon.ts:221: * shelf (drawn by the ribbon shader on the same surface; Benny can still ride over it — widthAt() and the steering
+> src/vfx/waterRibbon.ts:228:  const hw = course.widthAt(s) / 2;
+> src/vfx/waterRibbon.ts:1517:    const hw = course.widthAt(s) / 2;
+> src/vfx/waterRibbon.ts:1632:      const hw = course.widthAt(s) / 2;
+> src/vfx/proj05Apron.ts:55:      const hw = course.widthAt(s) / 2;
+> src/vfx/foam.ts:565:    const hw = course.widthAt(s) / 2;
+> src/vfx/foam.ts:695:    const hw = course.widthAt(ss) / 2;
+> src/vfx/foam.ts:961:        const hw = course.widthAt(s) / 2;
+> src/vfx/bubbles.ts:313:        const hw = course.widthAt(s) / 2;
+> src/vfx/finalWave.ts:123:    const hw = course.widthAt(s) / 2;
+> src/world/course.ts:425:      // val …[+364 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:47.993Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/game/Game.ts", "offset": 300, "limit": 120}`
+
+### 🧑 User — 2026-11-17T11:29:48.024Z
+
+> ↩︎ result: 300	    if (t >= T.rideStart) startRide();
+> 301	  };
+> 302	
+> 303	  /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */
+> 304	  const cam02 = (b: THREE.Vector3) => {
+> 305	    const dA = WORLD.drumA;
+> 306	    const door = new THREE.Vector3(0, 0.3, dA.zDoor);
+> 307	    const away = b.clone().sub(door).normalize();
+> 308	    const pos = b.clone().addScaledVector(away, 3.0).add(new THREE.Vector3(0, 0.35, 0));
+> 309	    const rr = Math.hypot(pos.x, pos.y);
+> 310	    if (rr > 2.7) { pos.x *= 2.7 / rr; pos.y *= 2.7 / rr; }
+> 311	    pos.y = Math.max(pos.y, dA.waterY + 1.0);
+> 312	    pos.z = THREE.MathUtils.clamp(pos.z, dA.zBack + 0.4, dA.zDoor - 1);
+> 313	    const look = b.clone().lerp(door, 0.22).add(new THREE.Vector3(0, 0.45, 0));
+> 314	    return { pos, look };
+> 315	  };
+> 316	
+> 317	  const setFov = (f: number) => {
+> 318	    if (Math.abs(camera.fov - f) > 0.01) { camera.fov = f; camera.updateProjectionMatrix(); }
+> 319	  };
+> 320	
+> 321	  const startRide = () => {
+> 322	    st.mode = 'ride';
+> 323	    st.t = 0;
+> 324	    st.s = course.stage('03').s0;
+> 325	    st.lat = 0;
+> 326	    hud.setVisible(true);
+> 327	    setStage('03');
+> 328	    rideCam.pos.copy(camera.position);
+> 329	    rideCam.targ …[+4902 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:50.585Z
+
+Steering clamps to the river half-width and the heart loss fires past `halfW - 0.75`, so widthAt in 06 directly sets the steering range. Let me check `bennyPose` for anything 06-specific.
+
+### 🤖 Claude — 2026-11-17T11:29:52.077Z
+
+> 🔧 **Grep** `{"pattern": "const bennyPose|function bennyPose", "path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/game/Game.ts", "output_mode": "content", "-n": true, "-A": 25}`
+
+### 🧑 User — 2026-11-17T11:29:52.103Z
+
+> ↩︎ result: 166:  const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+> 167-    const f = course.sample(s);
+> 168-    const h = water.surfaceHeight(s, lat, time);
+> 169-    out.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h + benny.radius * 0.55);
+> 170-    const m = new THREE.Matrix4().makeBasis(new THREE.Vector3().crossVectors(f.up, f.tan).normalize(), f.up, f.tan);
+> 171-    out.quat.setFromRotationMatrix(m);
+> 172-    return f;
+> 173-  };
+> 174-
+> 175-  const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
+> 176-  const tmpV = new THREE.Vector3();
+> 177-  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+> 178-  const doorAOpen = -1.9, doorCOpen = -1.95;
+> 179-
+> 180-  // ---------------------------------------------------------------- intro (01–02)
+> 181-  const introUpdate = (dt: number) => {
+> 182-    const t = st.t;
+> 183-    const wc = (water as unknown as { controls?: { drumSwirl: number; drumAgitation: number; outro: number } }).controls;
+> 184-    if (wc) {
+> 185-      wc.drumAgitation = 0.35 + 0.65 * sm(T.spin - 0.5, T.spin + 0.8, t);
+> 186-      wc.drumSwirl = sm(T.spin,  …[+265 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:56.358Z
+
+Let me check whether the 05 far-tunnel river (far05.ts) samples the course near or past the 06 join, since smoothing there would change if 06 changes.
+
+### 🤖 Claude — 2026-11-17T11:29:57.857Z
+
+> 🔧 **Grep** `{"pattern": "course\\.(sample|offset05|widthAt|stage|marks)|sF|s1", "path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/world/far05.ts", "output_mode": "content", "-n": true}`
+
+### 🧑 User — 2026-11-17T11:29:57.882Z
+
+> ↩︎ result: 4: * straight tunnel (depth Z beyond the section start sF, offset o in the cross-section) and mapped to real
+> 13: * (s = sF + axial), so the far surface lands exactly on the real ribbon at the seam and covers the real
+> 202:    const f = course.sample(s);
+> 213:    let a = ft.sF - 8, b = ft.sF + 16;
+> 273:    const sReal = ft.sF + z;
+> 293:      uv[k * 2] = (x + ch) / (2 * ch); uv[k * 2 + 1] = ft.sF + ft.uOfZ(Z);
+
+### 🤖 Claude — 2026-11-17T11:29:59.757Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab010bb38c09ff18/src/world/far05.ts", "offset": 185, "limit": 100}`
+
+### 🧑 User — 2026-11-17T11:29:59.784Z
+
+> ↩︎ result: 185	];
+> 186	function designW11(Z: number, chord: number): FarRiverRow {
+> 187	  const c = hermite(FAR05_BODY_W11.map(([z, v]) => [z, v] as [number, number]), Z);
+> 188	  const hw = Math.min(hermite(FAR05_BODY_W11.map(([z, , h]) => [z, h] as [number, number]), Z), chord - 0.7 - Math.abs(c));
+> 189	  const off = 0.62 * hw, w = 0.19 * hw;
+> 190	  return { xB: c, hw, cL: c - off, wL: w, cR: c + off, wR: w, core: c };
+> 191	}
+> 192	
+> 193	/**
+> 194	 * Layout of the far river at virtual depth Z. For small Z it is the REAL ribbon exactly as the eye would see it
+> 195	 * there without the far section: at the seam the route is in its exit bend (heading ≈26° off the axis), so a
+> 196	 * screen row cuts the ribbon diagonally — each band centre / bank edge curve l(s) of the real ribbon is intersected
+> 197	 * with the row (axial = Z), widths divided by cos(heading). It blends (Z 2 → 10) into the designed FAR05_CORE path.
+> 198	 */
+> 199	export function farRiverLayout(course: Course, ft: ForcedTunnel, level: number): FarRiverLayout {
+> 200	  const q = new THREE.Vector3();
+> 201	  const at = (s: number, l: number) => {
+> 202	    const f = course.sample(s);
+> 203	    q.copy(f.pos).addScaledVector(f.right, l).sub(ft.c0);
+> 204	    re …[+4728 chars]
+
+### 🧑 User — 2026-11-17T11:30:45.179Z
+
+[Request interrupted by user]
+

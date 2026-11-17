@@ -7316,3 +7316,684 @@ Working on Screen 07 step 1 now: rendering the fitted camera to compare Benny's 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T11:26:49.685Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/match/ring_fit.py", "content": "#!/usr/bin/env python3\n\"\"\"Any screen: measure the projected gold tunnel rings (centre, radius) in an approved picture or a live capture by\nfitting circles to the gold pixels of each ring's visible arc (generic version of tools/qa/ring_fit05.py).\n\n    python3 -I tools/match/ring_fit.py IMAGE GUESSES.json OUT_PREFIX [--arc=8,172] [--hud=14,10,850,196]\n\nGUESSES.json: [[name, cx, cy, r, dx, dy, dr], ...] rough circles (full-frame px) and search half-ranges.\nA circle is scored by the share of gold pixels along its ar …[+2522 chars]`
+
+### 🧑 User — 2026-11-17T11:26:49.767Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/match/ring_fit.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T11:26:53.791Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p qa/match/07/rings && cat > qa/match/07/rings/guess_approved.json <<'EOF'\n[[\"R1\", 428, 602, 420, 60, 60, 60], [\"R2\", 557, 531, 314, 40, 40, 40], [\"R3\", 585, 545, 170, 30, 30, 30], [\"R4\", 607, 540, 107, 20, 20, 20], [\"R5\", 613, 547, 60, 12, 12, 12], [\"R6\", 620, 553, 33, 8, 8, 8]]\nEOF\ntime python3 -I tools/match/ring_fit.py references/07_dive_the_washer_tube.png qa/match/07/rings/guess_approved.json qa/match/07/rings/approved && python3 -I -c \"\nfrom PIL import Image; Image …[+189 chars]`
+
+### 🧑 User — 2026-11-17T11:26:56.222Z
+
+> ↩︎ result: R1 {'cx': 409, 'cy': 607, 'r': 456, 'score': 0.906}
+> R2 {'cx': 582, 'cy': 529, 'r': 303, 'score': 0.987}
+> R3 {'cx': 592, 'cy': 534, 'r': 187, 'score': 0.977}
+> R4 {'cx': 612, 'cy': 551, 'r': 118, 'score': 0.992}
+> R5 {'cx': 624, 'cy': 560, 'r': 72, 'score': 1.0}
+> R6 {'cx': 612, 'cy': 545, 'r': 25, 'score': 1.0}
+> 
+> real	0m2.232s
+> user	0m2.501s
+> sys	0m0.088s
+
+### 🤖 Claude — 2026-11-17T11:26:58.131Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/a07_rings.png"}`
+
+### 🧑 User — 2026-11-17T11:26:58.157Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T11:27:14.362Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && grep -n \"ringSpacing\\s*=\\|const tubeR\\|RING06_PHASE\\s*=\\|const s06\\|const s07\\|const s08\\|const s05\" src/world/environment.ts | head; cat > $S/guess_game.json <<'EOF'\n[[\"G1\", 430, 560, 420, 80, 80, 80], [\"G2\", 480, 520, 260, 60, 60, 60], [\"G3\", 490, 480, 170, 40, 40, 40], [\"G4\", 490, 470, 110, 25, 25, 25], [\"G5\", 490, 470, 70, 15, 15, 15]]\nEOF\npython3 -I tools/match/ring_fit.py $S/cam07b/cand_00.png $S/guess_game.json $S/game07_rings && python3 -I tools/match/ring_fit.py q …[+461 chars]`
+
+### 🧑 User — 2026-11-17T11:27:23.332Z
+
+> ↩︎ result: 181:  const tubeR = (s: number) => course.prop('tube', s);
+> 199:  const s08 = course.stage('08').s0;
+> 209:  const ringSpacing = 9.0;
+> 227:  const s06 = course.stage('06').s0;
+> 228:  const RING06_PHASE = 5.5643876;
+> G1 {'cx': 450, 'cy': 480, 'r': 468, 'score': 1.0}
+> G2 {'cx': 544, 'cy': 584, 'r': 230, 'score': 0.75}
+> G3 {'cx': 496, 'cy': 439, 'r': 165, 'score': 0.608}
+> G4 {'cx': 516, 'cy': 441, 'r': 82, 'score': 0.665}
+> G5 {'cx': 489, 'cy': 453, 'r': 80, 'score': 0.588}
+> G1 {'cx': 478, 'cy': 480, 'r': 476, 'score': 1.0}
+> G2 {'cx': 544, 'cy': 538, 'r': 231, 'score': 0.623}
+> G3 {'cx': 483, 'cy': 452, 'r': 130, 'score': 0.665}
+> G4 {'cx': 471, 'cy': 445, 'r': 117, 'score': 0.673}
+> G5 {'cx': 475, 'cy': 477, 'r': 54, 'score': 0.681}
+
+### 🤖 Claude — 2026-11-17T11:27:25.261Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/g07_rings.png"}`
+
+### 🧑 User — 2026-11-17T11:27:25.299Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T11:28:00.506Z
+
+> 🔧 **Bash** `{"command": "grep -n \"id: '0[4-9]'\\|id: '1[01]'\\|marks\\[\\|marks:\\|'07_\\|07_\\|plunge\" src/world/course.ts | head -50", "description": "Find Screen 06–08 course layout"}`
+
+### 🧑 User — 2026-11-17T11:28:00.555Z
+
+> ↩︎ result: 69:  plunge: { topY: -52, bottomY: -113.6 },
+> 101:  marks: Record<string, number>;
+> 194:  const marks: Record<string, number> = {};
+> 200:  const mark = (k: string) => (marks[k] = pts.length - 1);
+> 262:  // 06/07/plunge/08) is unchanged. tube.ts builds the 05 tunnel on the line.
+> 283:    V(s7.x + 3.2 * Math.sin(3 * Math.PI * t) * Math.sin(Math.PI * t), s7.y + (WORLD.plunge.topY - s7.y) * t, s7.z - 60 * t),
+> 285:  mark('07_plunge_top');
+> 297:  const drop = p0.y - WORLD.plunge.bottomY;
+> 300:  mark('07_plunge_mid_end');
+> 306:  mark('07_plunge_bottom');
+> 325:  smoothPolyline(pts, marks['03'], 2.2, 3);
+> 328:  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+> 365:  readonly marks: Record<string, number>; // arc-length of named marks
+> 409:    for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+> 410:    this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+> 489:    this.marks['05_crest'] = best;
+> 574:  plunge: { entryAltitude07: number; plungeTop: { s: number; y: number }; plungeMid: { s: number; y: number }; plungeBottom: { s: number; y: number }; inlet08: { s: number; y: number }; vertic …[+703 chars]
+
+### 🤖 Claude — 2026-11-17T11:28:01.778Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/course.ts", "offset": 190, "limit": 150}`
+
+### 🧑 User — 2026-11-17T11:28:01.803Z
+
+> ↩︎ result: 190	
+> 191	/** Generates the dense control polyline of the route (absolute coordinates). */
+> 192	function buildRoute(): RouteData {
+> 193	  const pts: THREE.Vector3[] = [];
+> 194	  const marks: Record<string, number> = {};
+> 195	  const straight: RouteData['straight'] = [];
+> 196	  const push = (p: THREE.Vector3) => {
+> 197	    if (pts.length && p.distanceTo(pts[pts.length - 1]) < 0.25) return;
+> 198	    pts.push(p);
+> 199	  };
+> 200	  const mark = (k: string) => (marks[k] = pts.length - 1);
+> 201	  const seg = (n: number, f: (t: number) => THREE.Vector3, skipFirst = true) => {
+> 202	    for (let i = skipFirst ? 1 : 0; i <= n; i++) push(f(i / n));
+> 203	  };
+> 204	
+> 205	  // ---- 01: Benny hidden in the towel, drum A front-left floor (camera looks toward the door) ----
+> 206	  const dA = WORLD.drumA;
+> 207	  const hc = V(0, -0.4, 0); // swirl axis
+> 208	  const th0 = Math.atan2(-2.0, 1.6);
+> 209	  push(V(1.6, -2.4, -2.2));
+> 210	  mark('01');
+> 211	  // ---- 02: whirlpool tumble — helix around the drum axis toward the back drain ----
+> 212	  const thEnd = -Math.PI / 2 - Math.PI * 2;
+> 213	  seg(26, (t) => {
+> 214	    const th = th0 + (thEnd - th0) * t;
+> 215	    const r = 2.56 + (3.9 - 2.56) * smooth(0, 1, t);
+> 216	    const z =  …[+6556 chars]
+
+### 🤖 Claude — 2026-11-17T11:28:46.365Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function straightTubePath\" -A 60 src/world/tube.ts | head -90; grep -n \"tube:\" src/world/course.ts | head; grep -n \"prop(\" src/world/course.ts | head -5", "description": "Read the straight tube path builder"}`
+
+### 🧑 User — 2026-11-17T11:28:46.419Z
+
+> ↩︎ result: 30:export function straightTubePath(
+> 31-  course: Course,
+> 32-  s0: number,
+> 33-  s1: number,
+> 34-  opts: { window: number; taper: number; baseRadius: (s: number) => number; floorExtra?: (s: number) => number },
+> 35-): TubePath {
+> 36-  const ds = 0.5;
+> 37-  const n = Math.ceil((s1 - s0) / ds) + 1;
+> 38-  const S = (i: number) => Math.min(s1, s0 + i * ds);
+> 39-  const axis: THREE.Vector3[] = [];
+> 40-  const cp: THREE.Vector3[] = [];
+> 41-  for (let i = 0; i < n; i++) cp.push(course.sample(S(i)).pos.clone());
+> 42-  for (let i = 0; i < n; i++) {
+> 43-    const s = S(i);
+> 44-    const taper = THREE.MathUtils.smoothstep(s, s0, s0 + opts.taper) * (1 - THREE.MathUtils.smoothstep(s, s1 - opts.taper, s1));
+> 45-    const W = opts.window * taper;
+> 46-    const k = Math.round(W / ds);
+> 47-    let x = 0, z = 0, wsum = 0;
+> 48-    for (let j = i - k; j <= i + k; j++) {
+> 49-      const jj = THREE.MathUtils.clamp(j, 0, n - 1);
+> 50-      const w = k === 0 ? 1 : 1 - Math.abs(j - i) / (k + 1);
+> 51-      x += cp[jj].x * w; z += cp[jj].z * w; wsum += w;
+> 52-    }
+> 53-    axis.push(new THREE.Vector3(x / wsum, cp[i].y, z / wsum));
+> 54-  }
+> 55-  // exact straight stretches (05 current): the axis is pulled onto the course's straight  …[+2890 chars]
+
+### 🤖 Claude — 2026-11-17T11:28:54.031Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 426, "limit": 120}`
+
+### 🧑 User — 2026-11-17T11:28:54.076Z
+
+> ↩︎ result: 426	  // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
+> 427	  {
+> 428	    // the checkpoint eye, exactly as RideCamera places it on the straight (cameraRig.ts, '05' block, lat 0)
+> 429	    const sC = course.marks['05_crest'];
+> 430	    const p5 = STAGE_CAM['05']!;
+> 431	    const af = perfPath.frame(sC);
+> 432	    const T = af.tan.clone();
+> 433	    const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+> 434	    const Rt = new THREE.Vector3().crossVectors(T, U).normalize();
+> 435	    const water = course.sample(sC).pos.clone();
+> 436	    const off = water.clone().sub(af.pos).dot(Rt);
+> 437	    const dz = p5.deadZone ?? 1;
+> 438	    const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
+> 439	    const eye = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - follow));
+> 440	    // wave 8: far rings at the reference radii 170 / 104 / 62 / 45 / 31 px about the VP (rays at 90/120/150°;
+> 441	    // live calibration r ≈ 10000/D) → virtual depth ≈ 59 / 97 / 161 / 222 / 322, then the warm throat. Ring n sits
+> 442	    // at tunnel coordinate u = bay05·(n + ½) (half a bay after the seam, then one b …[+8234 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:09.971Z
+
+> 🔧 **Bash** `{"command": "grep -n \"__rainbow\\s*=\\|__rainbow =\\|qa3d\\|course:\\|axis =\\|\\.axis\\b\" src/game/Game.ts src/main.ts 2>/dev/null | head -20; grep -n \"CHECKPOINTS\" -A 16 src/game/Game.ts | head -30", "description": "Find the QA API and checkpoint table"}`
+
+### 🧑 User — 2026-11-17T11:29:10.012Z
+
+> ↩︎ result: src/game/Game.ts:112:  rideCam.axis = env.tubeAxis;
+> src/game/Game.ts:687:    qa3d() { return { scene, camera, renderer, composer }; },
+> src/game/Game.ts:694:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> 551:  const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+> 552-    '01': { mode: 'intro', t: T.cp01 },
+> 553-    '02': { mode: 'intro', t: T.cp02 },
+> 554-    '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+> 555-    '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+> 556-    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+> 557-    '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+> 558-    '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+> 559-    '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+> 560-    '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+> 561-    '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
+> 562-    '11': { mode: 'outro', t: O.cp11 },
+> 563-    '07a_plunge_top': { mode: 'ride', s: course.marks['07_plunge_top'] - 1 },
+> 564-    '07b_plunge_mid': { mode: 'r …[+779 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:12.144Z
+
+> 🔧 **Bash** `{"command": "grep -n \"tubeAxis\" src/world/environment.ts | head -5 && sed -n 575,600p src/game/Game.ts && grep -n \"api = {\" -A 30 src/game/Game.ts | grep -n \"course\\|env\\b\\|env:\" | head", "description": "Check the tunnel axis range and checkpoint settling"}`
+
+### 🧑 User — 2026-11-17T11:29:12.185Z
+
+> ↩︎ result: 33:  tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> 695:    tubeAxis: { path: perfPath, s0: s05, s1: course.marks['07_plunge_top'] },
+>     input.override = 0;
+>     const settle = (n: number, dt: number) => { for (let i = 0; i < n; i++) stepSim(dt); };
+>     if (cp.mode === 'intro') {
+>       // replay the cinematic deterministically up to the checkpoint time
+>       const steps = Math.round((cp.t ?? 0) / (1 / 30));
+>       settle(steps, 1 / 30);
+>     } else {
+>       startRide();
+>       hud.showHint(null);
+>       const sTarget = cp.s ?? course.stage('11').s0;
+>       st.s = sTarget;
+>       st.lat = cp.lat ?? 0;
+>       coins.resetUntil(sTarget + 0.5);
+>       setStage(stageOf(sTarget));
+>       if (cp.mode === 'outro') {
+>         startOutro();
+>         settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const …[+190 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:53.229Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const api\" -A 40 src/game/Game.ts | head -60", "description": "List the QA API methods"}`
+
+### 🧑 User — 2026-11-17T11:29:53.300Z
+
+> ↩︎ result: 609:  const api = {
+> 610-    ready: true,
+> 611-    checkpoints: Object.keys(CHECKPOINTS),
+> 612-    goto: gotoCheckpoint,
+> 613-    run(v = true) { running = v; last = performance.now(); },
+> 614-    unfreeze() { st.frozen = null; input.override = null; },
+> 615-    /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+> 616-    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 617-    setSteer(v: number | null) { input.override = v; },
+> 618-    /** deterministic simulation: advance n steps of dt (no rendering needed) */
+> 619-    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 620-    startRideAt(id: StageId = '03') {
+> 621-      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+> 622-      return api.state();
+> 623-    },
+> 624-    state() {
+> 625-      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) …[+1443 chars]
+
+### 🤖 Claude — 2026-11-17T11:29:56.222Z
+
+> 🔧 **Bash** `{"command": "grep -n \"new Course\\|createCourse\\|buildCourse\\|export class Course\\|export function makeCourse\\|export const course\" src/game/Game.ts src/world/course.ts | head; grep -n \"export function\" src/world/course.ts | head -20", "description": "Find how the course object is created"}`
+
+### 🧑 User — 2026-11-17T11:29:56.270Z
+
+> ↩︎ result: src/game/Game.ts:94:  const course = new Course();
+> src/world/course.ts:361:export class Course {
+> 73:export function funnelY(r: number): number {
+> 183:export function meander05(u: number): number {
+> 578:export function validateContinuity(c: Course): ContinuityReport {
+
+### 🤖 Claude — 2026-11-17T11:30:14.460Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/match-geo.mjs", "content": "#!/usr/bin/env node\n// Any screen: read-only dump of the REAL 3D layout around a checkpoint (course centre line, river width, tube radius,\n// the straight-tube axis frames, the checkpoint camera and Benny), so structural fixes can be placed by measurement.\n//   node scripts/match-geo.mjs --id=07 [--q=match07=1] [--from=-10] [--to=70] [--step=1] [--out=qa/match/07/geo.json]\n// from/to are arc-length offsets from the stage start. Nothing in the game changes.\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { d …[+3526 chars]`
+
+### 🧑 User — 2026-11-17T11:30:14.530Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/match-geo.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T11:30:17.462Z
+
+> 🔧 **Bash** `{"command": "timeout 400 node scripts/match-geo.mjs --id=07 --q=match07=1 --out=qa/match/07/geo_match07.json 2>&1 | tail -3 && python3 -I - <<'EOF'\nimport json\ng=json.load(open('qa/match/07/geo_match07.json'))\nprint('marks', {k:round(v,2) for k,v in g['marks'].items() if k.startswith(('06','07','08'))})\nprint('cam', g['camera']['pos'], 'fwd', g['camera']['forward'], 'benny', g['benny'])\nfor r in g['rows'][::5]:\n    print(r['d'], 'pos', r['pos'], 'w', r['width'], 'tube', r['tube'], 'axis', r.get('axisPos'), 'axR', r.get('axisR'), 'dep', r.get('axisDepth'), 'atan', r.get('axisTan'))\nEOF", …[+90 chars]`
+
+### 🧑 User — 2026-11-17T11:30:38.286Z
+
+> ↩︎ result: geo 07 rows 81 stage {"s0":247.05710253588848,"s1":389.21995388030825,"width":5.6,"tube":7.2} state {"mode":"ride","stage":"07","s":273.057,"lat":0,"coins":1940,"hearts":5,"paused":false,"bennyY":-49.659,"bennyVisible":true,"cam":[11.26,-44.19,-192.84]} → qa/match/07/geo_match07.json
+> marks {'06': 188.92, '07': 247.06, '07_plunge_top': 310.41, '07_plunge_mid_end': 373.2, '07_plunge_bottom': 389.13, '08': 389.22}
+> cam [11.258, -44.1853, -192.8395] fwd [-0.0401, -0.2776, -0.9598] benny [10.1168, -49.5424, -201.6363]
+> -10 pos [7.0037, -45.6923, -167.7799] w 7 tube 15 axis [6.8151, -45.6916, -168.8608] axR 15 dep 1.874 atan [0.3263, -0.5402, -0.7757]
+> -5 pos [9.3863, -47.7391, -171.6334] w 6.972 tube 14.847 axis [8.4142, -47.738, -172.9053] axR 15 dep 2.095 atan [0.3274, -0.2755, -0.9038]
+> 0 pos [11.3372, -48.5348, -176.1522] w 6.3 tube 11.1 axis [9.755, -48.5344, -177.1299] axR 15 dep 2.171 atan [0.2587, -0.1019, -0.9606]
+> 5 pos [12.4544, -48.8796, -181.0113] w 5.628 tube 7.353 axis [10.7242, -48.8795, -181.5518] axR 14.792 dep 2.179 atan [0.1683, -0.0637, -0.9837]
+> 10 pos [13.2275, -49.1584, -185.9423] w 5.6 tube 7.2 axis [11.3098, -49.1584, -186.1525] axR 13.403 dep 2.179 atan [0.0866, -0. …[+1676 chars]
+
+### 🧑 User — 2026-11-17T11:30:45.177Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-17T11:30:45.255Z
+
+CLAUDIA — NEW INSTRUCTION: USE THE BEST TOOLS AVAILABLE TO REPRODUCE MY EXACT APPROVED GAME SCREENS
+
+READ THIS ENTIRE INSTRUCTION. THIS IS A CHANGE IN HOW I WANT MY RAINBOW GAME DEVELOPED.
+
+I am no longer limiting this project to what Claude Code can create by itself.
+
+My number-one goal is to make my real playable 3D Android game match my original approved screen images at 9/10 visual similarity or better.
+
+I am willing to use specialized software, websites, 3D modeling tools, AI-assisted modeling services, texture-painting applications or other legitimate resources outside Claude Code if they can produce a better result.
+
+If another tool can recreate my approved artwork more accurately, I want you to recommend it and explain exactly how its finished work can be imported into my existing Rainbow game.
+
+Do not restrict your approach to Claude Code just because that is where my project currently lives.
+
+1. MY EXISTING GAME MUST BE PRESERVED
+
+Repository:
+https://github.com/josiahscalia5-dev/rainbow-
+
+My previously verified working branch:
+"ccr-b0757dec-dj6l1o"
+
+Check the latest actual working branch and newest GitHub commit before making changes. If there is a newer working descendant containing current edits, use that instead of reverting to an older version.
+
+Protect my existing project and approved reference images.
+
+Keep five-minute GitHub autosave running.
+
+My game already uses Three.js, Blender, Playwright and the Android development pipeline.
+
+Do not start from scratch, change game engines, erase finished work or rebuild Screen 05.
+
+2. MY FINAL SCREEN STRUCTURE
+
+These are VIDEOS:
+
+- Screen 01 — existing girl-loading-the-washer video.
+- Screen 02 — animated tumble into the washer whirlpool.
+- Screen 03 — animated Whirlpool Twirl.
+- Screen 09 — animated final wave.
+- Screen 10 — animated return into hiding.
+- Screen 11 — existing girl-and-towel ending video.
+
+These are REAL PLAYABLE 3D:
+
+- Screen 04 — Through the Five Arrows.
+- Screen 05 — Flow Into the Current.
+- Screen 06 — Crest the Rinse Arch.
+- Screen 07 — Dive the Washer Tube.
+- Screen 08 — Final Spin Chamber.
+
+For Screens 02, 03, 09 and 10, an external video-generation or animation workflow may be appropriate.
+
+For Screens 04–08, a video or static image is NOT an acceptable substitute for real gameplay.
+
+Keep the transitions between cinematic videos and gameplay consistent.
+
+3. MY APPROVED IMAGES ARE THE AUTHORITY
+
+Open each original approved reference image at full resolution.
+
+For every playable screen, reproduce:
+
+- Exact camera composition and perspective.
+- Exact washing-machine architecture.
+- Exact tunnel or chamber shape.
+- Exact water-path curves and elevation.
+- Exact blue, pink, purple and gold appearance.
+- Gold-ring positions and metallic surfaces.
+- Water reflections, sparkles and highlights.
+- Foam banks, bubbles and splashes.
+- Benny's size, position, pink fur, knitted beanie, purple pom-pom and gold star.
+- Correct coin positions and sizes.
+- Correct HUD and screen title.
+- Correct depth, lighting and background details.
+
+Do not simply create scenery inspired by my image.
+
+Do not change the composition to make modeling easier.
+
+The real game must look very close to my approved artwork at the original camera, AND remain visually coherent while moving.
+
+4. SCREEN 07 IS THE FIRST TEST FOR A BETTER PRODUCTION METHOD
+
+I have compared my approved Screen 07 with the existing gameplay.
+
+The current problems include:
+
+- Incorrect winding river shape.
+- Incorrect camera perspective.
+- Benny too small and shifted sideways.
+- Foam walls too tall and visually different.
+- Incorrect tunnel proportions and ring alignment.
+- Missing or distorted projected texture details.
+- Visible polygon and texture artifacts.
+
+Do not describe these as merely surface-detail problems. The 3D geometry and camera must be corrected first.
+
+For Screen 07:
+
+STEP 1 — Measure the approved image's geometry, camera, water curves, character position and composition.
+
+STEP 2 — Inspect the existing real 3D scene, camera and gameplay spline.
+
+STEP 3 — Determine whether Blender can rebuild the required geometry accurately using the approved image as a reference.
+
+STEP 4 — If camera perspective is the main issue, evaluate fSpy or an equivalent camera-matching approach when the approved image contains sufficient perspective information.
+
+STEP 5 — Create or correct the actual 3D winding river, foam-bank geometry, tunnel, rings, scenery and coin path.
+
+STEP 6 — Project or paint approved-reference textures onto the corrected 3D surfaces.
+
+STEP 7 — Test the geometry from the approved camera and during actual movement.
+
+STEP 8 — Export the improved assets and integrate them into the existing Three.js game.
+
+STEP 9 — Produce a new full-size gameplay capture and compare it with the approved reference.
+
+Do not spend hours polishing textures over the wrong geometry.
+
+5. EXTERNAL TOOLS YOU ARE AUTHORIZED TO EVALUATE
+
+I want you to evaluate REAL tools that could improve the finished game.
+
+BLENDER 5.3.0
+
+Already available.
+
+Use its actual modeling, camera matching, UV projection, texture baking, spline/path creation, rendering and GLB export capabilities.
+
+fSpy
+
+Official website:
+https://fspy.io/
+
+Evaluate whether its perspective-matching workflow could help reconstruct an approved camera where appropriate.
+
+Do not claim it can recover unseen geometry automatically.
+
+ADOBE SUBSTANCE 3D PAINTER
+
+Evaluate it for painting the approved texture detail onto correctly modeled 3D surfaces, including difficult seams, metallic materials, foam and water-channel boundaries.
+
+Explain which outputs can be exported to Blender and Three.js.
+
+OTHER SPECIALIZED MODELING OR TEXTURE TOOLS
+
+Research additional credible options only when they address a specific blocker better than our existing Blender tools.
+
+AI-generated 3D assets may be useful as starting geometry, but do not mistake a visually attractive generated model for an accurate approved-screen reconstruction.
+
+Do not recommend World Labs, Meshy, Tripo, Rodin or another paid service simply because it exists. We have already experimented with several generators, and I want a concrete reason to use one again.
+
+For every recommendation, give me:
+
+1. The exact name and official website.
+2. Which visible problem on my approved screen it can solve.
+3. Whether it accepts reference images.
+4. Whether I can edit the generated 3D geometry.
+5. Whether it exports GLB, GLTF, FBX, OBJ, texture maps or another usable format.
+6. Whether its results can be integrated into my existing game.
+7. The likely technical limitations.
+8. Whether I must pay or use credits.
+9. The specific steps needed to transfer the result back to Claude Code.
+
+DO NOT SPEND MONEY OR GENERATION CREDITS WITHOUT MY PERMISSION.
+
+If you cannot access the outside tool directly, provide the exact manual workflow and the file I need to upload or export. Never claim to have tested a tool you have not actually used.
+
+6. EXTERNAL WORK MUST TRANSFER BACK INTO MY GAME
+
+This is non-negotiable.
+
+If I use another tool to reconstruct a scene, I want to bring that finished work into the Rainbow game I already have.
+
+Use suitable portable outputs such as:
+
+- GLB or GLTF geometry and materials.
+- FBX or OBJ where additional conversion is necessary.
+- PBR texture maps, with correct UVs.
+- Camera parameters and transforms.
+- Blender project files when useful.
+- Water-path spline control points.
+- Collision geometry and gameplay-path coordinates.
+- Animation clips where applicable.
+
+Do not rely on screenshots alone as the transferable result.
+
+When the external model is complete, import it into the existing Three.js game.
+
+Preserve gameplay logic, collisions, steering, collectible placement, animation and performance.
+
+Verify materials and textures in the actual Android-compatible rendering pipeline.
+
+If the external tool cannot supply genuinely transferable assets or scene data, tell me that before recommending it.
+
+7. ONE-SCREEN PROOF BEFORE EXPANDING
+
+Do not experiment with all five gameplay environments simultaneously.
+
+Use Screen 07 as the controlled proof of the new approach.
+
+First preserve its existing working version.
+
+Then rebuild or correct the problematic structures using the best available tools.
+
+Compare APPROVED, BEFORE and NEW at the same camera.
+
+Test moving gameplay.
+
+Only if this approach improves the whole scene meaningfully should you reuse it for Screens 04, 06 and 08.
+
+Screen 05 must remain protected.
+
+If the approach fails, document why and propose a different practical method instead of repeating the same unsuccessful experiment.
+
+8. STRICT 9/10 APPROVAL STANDARD
+
+My goal for every playable screen is 9/10 or better visual similarity to its own approved image.
+
+This is a visual acceptance goal, not a promise that a software algorithm can guarantee a 90% artistic match.
+
+Track measurements for:
+
+- Overall camera composition.
+- Environment geometry.
+- Water and foam layout.
+- Benny's visual appearance.
+- Coins and HUD.
+- Color and lighting.
+- Full-frame pixel differences.
+- Visual stability during moving gameplay.
+
+Do not call a screen finished simply because 90% of pixels fall within an arbitrary color tolerance.
+
+I want to inspect the actual results myself.
+
+For every major iteration, show three SEPARATE full-size images:
+
+APPROVED ORIGINAL.
+
+BEFORE — REAL GAME.
+
+NEW — REAL GAME.
+
+Also provide a moving-playable-game clip so I can see whether the scenery stays attractive outside the locked reference frame.
+
+9. PROTECT MY TIME AND CREDITS
+
+I do not want endless experiments with no useful result.
+
+Prioritize structural corrections that will create obvious visual improvements.
+
+Use the tools I already have when they are capable of doing the job.
+
+Only suggest a paid external service if it has a plausible technical advantage and an export path into my current game.
+
+Keep existing approved designs and completed improvements.
+
+Use my existing ten specialist definitions when useful, but don't launch unnecessary agents.
+
+Save meaningful progress to GitHub every five minutes while the session is running.
+
+If a technique is not improving the screen, stop and explain why instead of continuing to consume credits.
+
+10. IMPLEMENTATION REQUEST
+
+START WITH SCREEN 07.
+
+Give me a concise, evidence-based comparison of:
+
+A. Correcting the environment entirely in our existing Blender/Three.js system.
+
+B. Using Blender together with specialized camera-matching or texture-painting software.
+
+C. Using a verified external 3D modeling tool that provides transferable editable geometry.
+
+Select the strongest practical approach based on actual capabilities, cost and compatibility with Rainbow.
+
+Then BEGIN implementing the best approach that can be done with existing resources.
+
+If a paid tool or manual outside action is required, give me the exact tool, steps and expected deliverables before proceeding.
+
+MY FINAL GOAL:
+
+I want Screens 04, 05, 06, 07 and 08 to be real playable 3D Android gameplay matching my exact approved artwork at 9/10 visual similarity or better.
+
+I want the opening, whirlpool and ending cinematic sections to remain videos.
+
+I am open to using outside software whenever it is genuinely better.
+
+But EVERY finished playable environment must be transferable back into my existing Rainbow game.
+
+DO NOT GIVE ME ANOTHER GENERIC PLAN. PRODUCE A VERIFIED IMPROVEMENT TO SCREEN 07 AND SHOW ME THE ACTUAL RESULT.
+
+### 🤖 Claude — 2026-11-17T11:30:56.192Z
+
+> 🔧 **Bash** `{"command": "git fetch origin --quiet 2>&1 | tail -2; git for-each-ref --sort=-committerdate --format='%(refname:short) %(committerdate:iso) %(objectname:short)' refs/remotes/origin | head -8; git merge-base --is-ancestor origin/ccr-b0757dec-dj6l1o HEAD 2>&1 && echo \"b0757dec IS ancestor of HEAD\"; git log -1 --format='%H %cd' origin/ccr-b0757dec-dj6l1o 2>&1", "description": "Check the named branch against current work"}`
+
+### 🧑 User — 2026-11-17T11:31:10.878Z
+
+> ↩︎ result: origin/ccr-61131b9d-uj0oqb 2026-11-17 11:26:13 +0000 caed129
+> origin/ccr-b0757dec-dj6l1o 2026-11-17 03:36:00 +0000 a8c03f0
+> origin/claude/rainbow-account-transfer-npxahd 2026-11-17 02:23:03 +0000 89eacf0
+> origin/claude/rainbow-restore-env-setup-bxn85h 2026-11-17 01:09:31 +0000 9c50d67
+> origin/ccr-694bda6a-x58ntq 2026-11-17 00:36:13 +0000 4e140fa
+> origin/claude/approved-screen-implementation-g3loqu 2026-11-16 23:44:48 +0000 b81cc34
+> origin/ccr-8c4acadc-iybw0n 2026-11-16 23:39:17 +0000 0594138
+> origin/ccr-e546a360-cxmton 2026-11-16 23:20:39 +0000 48dc787
+> a8c03f06cf3cc2f3aeeff8c03af3f7d7f481c38d Tue Nov 17 03:36:00 2026 +0000
+
+### 🤖 Claude — 2026-11-17T11:31:14.122Z
+
+> 🔧 **Bash** `{"command": "mb=$(git merge-base HEAD origin/ccr-b0757dec-dj6l1o); echo base $mb; git log --oneline $mb..origin/ccr-b0757dec-dj6l1o | wc -l; git log --format='%h %s' $mb..origin/ccr-b0757dec-dj6l1o | grep -v autosave | head; git diff --stat $mb origin/ccr-b0757dec-dj6l1o | tail -5; git merge-base --is-ancestor e27c6fa origin/ccr-b0757dec-dj6l1o && echo \"b0757 contains e27c6fa\"", "description": "Compare the named branch with the current branch"}`
+
+### 🧑 User — 2026-11-17T11:31:15.229Z
+
+> ↩︎ result: base aea7e77469e4744f97fa3576c97bb952c76f1705
+> 139
+> cbf4d4d Merge newest source branch claude/rainbow-account-transfer-npxahd @ 89eacf0 (user-requested recovery)
+> 48424b0 resume: merge newer saved work from ccr-8c4acadc-iybw0n
+> b154ca1 Account-transfer FINAL backup: all specialists stopped cleanly, final notes, coordination + agent status
+> 898d678 Env specialist stopped for account transfer: final env05 notes
+> ff53163 Save in-progress specialist edits (hud05, env05)
+> 298460f Save latest in-progress specialist edit
+> 4fe5809 Save latest in-progress specialist edits
+> 8c69b8b Account-transfer backup: latest in-progress specialist edits (hud05, env05 ring table, benny r7)
+> f267ec4 Account-transfer backup (final): corrected handoff timestamps + latest specialist files
+> 072343c Account-transfer backup: COORDINATION + agent status with exact done/remaining per specialist, new-account handoff, env05 textures, latest specialist work
+>  tools/splash05/work/painted_clean_estimate.png     |  Bin 0 -> 2390883 bytes
+>  tools/splash05/work/probe.json                     | 1256 ++++++
+>  tools/splash05/work/target.npz                     |  Bin 0 -> 5792769 bytes
+>  tools/splash05/work/wake_matte.npy                  …[+107 chars]
+
+### 🤖 Claude — 2026-11-17T11:31:20.270Z
+
+> 🔧 **Bash** `{"command": "git log -1 --format='%h %cd %s' aea7e77; git log -1 --format='%h %cd %s' e27c6fa; git log --format='%h %cd %s' aea7e77..HEAD | grep -v autosave | head -5; git log --reverse --format='%h %cd' aea7e77..HEAD | head -2; git log --format='%h %cd %s' -3 origin/ccr-b0757dec-dj6l1o", "description": "Date the branch divergence"}`
+
+### 🧑 User — 2026-11-17T11:31:20.325Z
+
+> ↩︎ result: aea7e77 Mon Nov 16 22:13:27 2026 +0000 autosave: Rainbow 2026-11-16 22:12 UTC
+> e27c6fa Mon Nov 16 20:28:06 2026 +0000 autosave: Rainbow 2026-11-16 20:28 UTC
+> 54ec72f Tue Nov 17 10:59:03 2026 +0000 Match all screens: audit of 02-10, ?matchNN=1 switches, ?match05=1
+> 5e2686a Tue Nov 17 10:44:37 2026 +0000 Screen 05 water: ?projnear05=1 sharp approved water while riding
+> 4a2a325 Tue Nov 17 01:09:00 2026 +0000
+> e32309f Tue Nov 17 01:42:19 2026 +0000
+> a8c03f0 Tue Nov 17 03:36:00 2026 +0000 autosave: Rainbow 2026-11-17 03:35 UTC
+> 8daad89 Tue Nov 17 03:10:25 2026 +0000 autosave: Rainbow 2026-11-17 03:10 UTC
+> 1b53b1c Tue Nov 17 03:05:11 2026 +0000 autosave: Rainbow 2026-11-17 03:05 UTC
+
+### 🤖 Claude — 2026-11-17T11:31:26.152Z
+
+> 🔧 **Bash** `{"command": "git merge-tree --write-tree HEAD origin/ccr-b0757dec-dj6l1o 2>/dev/null | grep -c \"CONFLICT\"; git merge-tree --write-tree --name-only HEAD origin/ccr-b0757dec-dj6l1o 2>/dev/null | grep CONFLICT | head -10; git diff --stat aea7e77 origin/ccr-b0757dec-dj6l1o -- src | tail -12", "description": "Dry-run merge of the named branch for conflicts"}`
+
+### 🧑 User — 2026-11-17T11:31:26.263Z
+
+> ↩︎ result: 11
+> CONFLICT (content): Merge conflict in CLAUDE.md
+> CONFLICT (add/add): Merge conflict in assets/textures/water05/proj05_T2.png
+> CONFLICT (add/add): Merge conflict in assets/textures/water05/proj05_WT2.png
+> CONFLICT (add/add): Merge conflict in assets/textures/water05/proj05_near.json
+> CONFLICT (content): Merge conflict in backups/BACKUP_LOG.md
+> CONFLICT (content): Merge conflict in backups/BACKUP_STATUS.json
+> CONFLICT (content): Merge conflict in backups/CONVERSATION_INDEX.md
+> CONFLICT (content): Merge conflict in backups/MANIFEST.json
+> CONFLICT (add/add): Merge conflict in qa/pilot05/proj/near/NOTES.md
+> CONFLICT (content): Merge conflict in src/vfx/waterRibbon.ts
+>  src/gameplay/coins.ts           | 192 ++++++++++++++++++--
+>  src/ui/hud.ts                   |  91 +++++++++-
+>  src/vfx/bubbles.ts              | 162 ++++++++++++++++-
+>  src/vfx/index.ts                |   3 +
+>  src/vfx/proj05Apron.ts          |  12 +-
+>  src/vfx/proj05Tunnel.ts         |  97 ++++++++--
+>  src/vfx/riderSplash.ts          | 190 +++++++++++++++++++-
+>  src/vfx/spray.ts                |  10 ++
+>  src/vfx/waterRibbon.ts          | 149 ++++++++++++++--
+>  src/world/environment.ts        | 133 ++++++++++++--
+>  src/world/tube.ts      …[+81 chars]
+
