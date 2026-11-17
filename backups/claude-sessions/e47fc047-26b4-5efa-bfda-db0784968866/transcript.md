@@ -4371,3 +4371,102 @@ Refactor confirmed (all three outputs byte-identical). Now the near tile:
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/v0 $S/v4 && node scripts/proj05-move.mjs --q=\"$B\" --out=$S/v0 --still=1.82 --fps=6.6 2>&1 | grep -ci \"error\"; node scripts/proj05-move.mjs --q=\"$B&projflow05=2\" --out=$S/v4 --still=1.82 --fps=6.6 2>&1 | grep -ci \"error\"; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\ndef cmp(a,b):\n    A=np.asarray(Image.open(a).convert('RGB')).astype(int); B=np.asarray(Image.open(b).convert('RGB')).astype(int)\ …[+435 chars]`
 
+### 🧑 User — 2026-11-17T10:14:58.117Z
+
+> ↩︎ result: 0
+> 0
+> old flow, 12 running-clock frames, before vs after the near-tile shader change: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+> flow2,   12 running-clock frames, before vs after: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+### 🤖 Claude — 2026-11-17T10:15:07.505Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/mvO $S/mvN $S/mvNd && node scripts/proj05-move.mjs --q=\"$B\" --out=$S/mvO --d=0,4,8,12,17,25 2>&1 | grep -ci error; node scripts/proj05-move.mjs --q=\"$B&projnear05=1\" --out=$S/mvN --d=0,4,8,12,17,25 2>&1 | grep -ci error; node scripts/proj05-move.mjs --q=\"$B&projnear05=1&projdbg05=1\" --out=$S/mvNd --d=0,8,17 2>&1 | grep -ci error; ls $S/mvN; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\ndef cmp(a, …[+399 chars]`
+
+### 🧑 User — 2026-11-17T10:16:37.228Z
+
+> ↩︎ result: 0
+> 0
+> 0
+> move_00.png
+> move_04.png
+> move_08.png
+> move_12.png
+> move_17.png
+> move_25.png
+> move_log.json
+> locked view (d=0) old vs near: differing px, >10 levels (92610, 18874)
+
+### 🤖 Claude — 2026-11-17T10:16:45.693Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nA=np.asarray(Image.open('$S/mvO/move_00.png').convert('RGB')).astype(int); B=np.asarray(Image.open('$S/mvN/move_00.png').convert('RGB')).astype(int)\nd=np.abs(A-B).max(-1)\nys,xs=np.nonzero(d>10); print('rows of >10 diffs: min %d max %d, median %d; cols min %d max %d'%(ys.min(),ys.max(),np.median(ys),xs.min(),xs.max()))\nfor y0 in range(200,1536,200):\n    band=d[y0:y0+200]; print(y0, 'px>10:', int((band>10).sum()))\nim=Image.new('RG …[+387 chars]`
+
+### 🧑 User — 2026-11-17T10:16:46.629Z
+
+> ↩︎ result: rows of >10 diffs: min 24 max 1535, median 777; cols min 0 max 863
+> 200 px>10: 0
+> 400 px>10: 5408
+> 600 px>10: 4741
+> 800 px>10: 8500
+> 1000 px>10: 188
+> 1200 px>10: 22
+> 1400 px>10: 3
+
+### 🤖 Claude — 2026-11-17T10:16:46.848Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/locked_near_cmp.png"}`
+
+### 🧑 User — 2026-11-17T10:16:46.885Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:17:10.646Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/lkN && mkdir -p $S/lkN && node scripts/capture.mjs 05 --q=\"$B&projnear05=1\" --out=$S/lkN 2>&1 | grep -ci error; git checkout qa/capture_log.json; python3 -I tools/proj05/screen_regions.py $S/b2/05.png $S/lkN/05.png 2>&1 | sed \"s#$S/##\" | grep -E \"png|WATER|FRAME |FULL\"", "description": "Measure locked-view match with and without near tile", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T10:17:29.753Z
+
+> ↩︎ result: 0
+> Updated 1 path from the index
+> b2/05.png
+>   NEARFRAME px   90640  mean|d|  18.06  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   WATER     px  469357  mean|d|   8.32  <=10 0.885  <=20 0.930  SSIM 0.923  bias [1.5, -1.1, 1.2]
+>   FRAME     px 1157760  mean|d|  31.06  <=10 0.465  <=20 0.568  SSIM 0.555  bias [6.1, -1.6, -1.9]
+>   FULL      px 1327104  mean|d|  34.84  <=10 0.409  <=20 0.512  SSIM 0.507  bias [6.7, 1.8, 0.6]
+> lkN/05.png
+>   NEARFRAME px   90640  mean|d|  18.05  <=10 0.598  <=20 0.771  SSIM 0.815  bias [17.9, 3.0, -8.6]
+>   WATER     px  469357  mean|d|   8.36  <=10 0.883  <=20 0.929  SSIM 0.922  bias [1.3, -1.1, 1.1]
+>   FRAME     px 1157760  mean|d|  31.11  <=10 0.464  <=20 0.567  SSIM 0.554  bias [5.9, -1.6, -1.9]
+>   FULL      px 1327104  mean|d|  34.88  <=10 0.408  <=20 0.512  SSIM 0.506  bias [6.5, 1.7, 0.6]
+
+### 🤖 Claude — 2026-11-17T10:17:36.738Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nfor d in (8,17,25):\n    ims=[Image.open('$S/%s/move_%02d.png'%(k,d)).convert('RGB').resize((432,768),Image.LANCZOS) for k in ('mvO','mvN')]\n    im=Image.new('RGB',(2*432+10,768),(255,255,255)); im.paste(ims[0],(0,0)); im.paste(ims[1],(442,0)); im.save('$S/ride_near_%02d.png'%d)\nEOF", "description": "Build old vs new riding comparisons"}`
+
+### 🧑 User — 2026-11-17T10:17:37.640Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T10:17:37.985Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/ride_near_17.png"}`
+
+### 🧑 User — 2026-11-17T10:17:38.035Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:18:37.706Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/ride_near_08.png"}`
+
+### 🧑 User — 2026-11-17T10:18:37.735Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:18:38.309Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/ride_near_25.png"}`
+
+### 🧑 User — 2026-11-17T10:18:38.348Z
+
+> ↩︎ result: [image]
+
