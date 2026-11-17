@@ -564,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "9fe01639600f4f98be2e0fbccdd6d6961d7650ca7613374ce72975daffa84db1"
+   "sha256": "f21b51bf8c164c0fe13b3d9a56933e3aeff0792ef7fddbee0f368c451f411b77"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1422,6 +1422,11 @@
    "sha256": "a445dd91f58256f87b0dbd799f880b450521fece17cf98123c01066ff51f309a"
   },
   {
+   "path": "qa/pilot05/full_reference_match/benny/work/outline.py",
+   "bytes": 824,
+   "sha256": "ecdc4774d51827be782847dc277c44b37ffe47cffe8a2b7214b8e94d6ffea9ad"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/benny/work/parts.py",
    "bytes": 2764,
    "sha256": "2e8419310bf56cd3557e9f2b65fa1b7e48493bfa5099faafa9939a96f77d1c8f"
@@ -1495,6 +1500,11 @@
    "path": "qa/pilot05/full_reference_match/benny/work/r1/uv_vis.png",
    "bytes": 77935,
    "sha256": "6289ea6af0cd538a2dff41a8277c677cbb7515fd90593d66b734765fadaf4dcb"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r2/outline.png",
+   "bytes": 436396,
+   "sha256": "6114e9f12adbf15002b4f0ff48bd265ed4534c0442f28da748920bd453aa533c"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/r2/shot0.png",
@@ -8403,8 +8413,8 @@
   },
   {
    "path": "src/ui/hud.ts",
-   "bytes": 11796,
-   "sha256": "8f276df29ad1047573d7bf00e2e1308cdd0a74a93b25890700a672f915229bbe"
+   "bytes": 17331,
+   "sha256": "84e37938ee83912145a2ccf22fbd767688875eea2e52015295c63c1078ba8cd0"
   },
   {
    "path": "src/vfx/bubbles.ts",
@@ -8448,8 +8458,8 @@
   },
   {
    "path": "src/vfx/proj05Tunnel.ts",
-   "bytes": 17736,
-   "sha256": "263df89b9492b146e6551aaca3ca5007d5bc77ed207fb1d771cb06c9657d4dba"
+   "bytes": 21895,
+   "sha256": "bb67aa27a180cd203a7c9d4087f83e030a7cf8a63d92718988a03382db9ec261"
   },
   {
    "path": "src/vfx/puddles.ts",

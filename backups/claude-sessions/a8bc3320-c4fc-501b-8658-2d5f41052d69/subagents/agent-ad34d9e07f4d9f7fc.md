@@ -1486,3 +1486,44 @@ Now the new Benny-05 module.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; node $W/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$W/r2 $W/probe/shot0.shot.js $W/probe/uv.js 2>&1 | grep -v missing | tail -3; python3 $W/geom.py $W/r2/uv.f32", "description": "Probe iteration 2 geometry", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T00:22:32.905Z
+
+> ↩︎ result: shot0.shot.js null
+> uv.js {"saveAs":"uv.f32"}
+> done 16.374
+> part   | approved bbox x0-x1, y0-y1 (w x h) centre        | game
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 776-1198 (384x423) c(422.4,1007.6) 91704px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 355-501, 776-895 (147x120) c(428.3,840.1) 12134px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 292-553, 876-983 (262x108) c(409.7,934.0) 19235px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 278-568, 949-1031 (291x83) c(418.9,1000.5) 12800px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 480-555, 916-992 (76x77) c(517.6,957.0) 2920px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 999-1198 (384x200) c(421.0,1090.2) 44615px
+> pom IoU 0.876
+> crown IoU 0.785
+> cuff IoU 0.767
+> star IoU 0.709
+> body IoU 0.86
+> all IoU 0.915
+> GAME centre -760-781 P782-889 C890-983 U984-1031 B1032-1183 -1184-1199
+> APPR centre -760-777 B778-784 P785-899 C900-980 U981-1030 B1031-1162 -1163-1176 B1177-1184 -1185-1199
+> 780 APP 407-445 w39  GAME 413-451 w39
+> 795 APP 380-474 w95  GAME 382-471 w90
+> 810 APP 367-486 w120  GAME 374-482 w109
+> 825 APP 361-493 w133  GAME 368 …[+981 chars]
+
+### 🤖 Claude — 2026-11-17T00:23:07.066Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/full_reference_match/benny/work/outline.py <<'EOF'\nimport sys; sys.path.insert(0,'qa/pilot05/full_reference_match/benny'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny/work')\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as ndi\nfrom parts import approved_parts\nfrom geom import load_uv\nP,a,m=approved_parts()\nu=load_uv(sys.argv[1]); idm=np.rint(u[...,2]).astype(int); idm[np.abs(u[...,2]-idm)>0.01]=0\nG=dict(pom=idm==4,crown=idm==2,cuff=idm==3,star=idm==5,body=np.isin(idm,[1,6,7,8,9]))\no=a.copy()*0.55\ …[+579 chars]`
+
+### 🤖 Claude — 2026-11-17T00:23:07.525Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/r2/outline.png"}`
+
+### 🧑 User — 2026-11-17T00:23:08.432Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-17T00:23:08.446Z
+
+> ↩︎ result: [image]
+

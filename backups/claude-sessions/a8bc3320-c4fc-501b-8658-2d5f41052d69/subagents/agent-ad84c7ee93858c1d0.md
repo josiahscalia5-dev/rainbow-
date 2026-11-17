@@ -841,3 +841,34 @@ Now I have a clear diagnosis: the main ring error is lateral (approved rings sit
 > }
 > #include < …[+227 chars]
 
+### 🤖 Claude — 2026-11-17T00:22:36.013Z
+
+Now the shader side in proj05Tunnel.ts (env05 wall atlas rows and per-ring atlas).
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/vfx/proj05Tunnel.ts'\ns=open(p).read()\nrep=[\n(\"\"\"/** `?projlid05=1` (2026-11-16): the approved paddles L1 L2 R1 R2 as Blender-built 3D trays on the real 05 wall */\nexport const PROJLID05: boolean = flag05('projlid05');\"\"\",\n\"\"\"/** `?projlid05=1` (2026-11-16): the approved paddles L1 L2 R1 R2 as Blender-built 3D trays on the real 05 wall */\nexport const PROJLID05: boolean = flag05('projlid05');\n/**\n * `?env05=1` (2026-11-17, washer-environment-modeler, qa/pilot05/full_reference_match/env/NOTES.md): the 05 rings placed …[+5880 chars]`
+
+### 🧑 User — 2026-11-17T00:22:39.277Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:22:45.075Z
+
+Now the environment.ts changes (ring layout, warp, far rings), all behind `ENV05`.
+
+### 🤖 Claude — 2026-11-17T00:22:46.229Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"^import\\|tubeR\\b\\|const tubeR\" src/world/environment.ts | head -30; grep -n \"buildRingsAt\\|bandGeometry\\|buildTubeGeometry\" src/world/environment.ts | head", "description": "Check imports in environment.ts"}`
+
+### 🧑 User — 2026-11-17T00:22:46.275Z
+
+> ↩︎ result: 6:import * as THREE from 'three';
+> 7:import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+> 8:import { Course, WORLD, funnelY } from './course';
+> 9:import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
+> 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 11:import { STAGE_CAM } from '../game/cameraRig';
+> 12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> 13:import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
+> 14:import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+> 15:import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05 …[+1803 chars]
+
