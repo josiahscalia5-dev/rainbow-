@@ -883,3 +883,385 @@ The GitHub MCP connection works: it lists all 27 branches, and this session's br
 > ### Snapshot
 > - [Snapshot](.playwright-mcp/page-2026-11-17T01-13-04-207Z.yml)
 
+### 🧑 User — 2026-11-17T01:13:12.084Z
+
+> ↩︎ result: ### Result
+> {
+>   "webgl2": true,
+>   "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+>   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+>   "maxTex": 8192,
+>   "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36"
+> }
+> ### Ran Playwright code
+> ```js
+> await page.evaluate('() => { const c=document.createElement(\'canvas\'); const gl=c.getContext(\'webgl2\'); if(!gl) return \'NO WEBGL2\'; const d=gl.getExtension(\'WEBGL_debug_renderer_info\'); return {webgl2:true, version: gl.getParameter(gl.VERSION), renderer: d? gl.getParameter(d.UNMASKED_RENDERER_WEBGL): gl.getParameter(gl.RENDERER), maxTex: gl.getParameter(gl.MAX_TEXTURE_SIZE), ua: navigator.userAgent}; }');
+> ```
+
+### 🤖 Claude — 2026-11-17T01:13:14.100Z
+
+Playwright MCP works, with WebGL2 in headless Chromium 153 on SwiftShader (software GPU). Next I'll read the three specialists' briefs and notes so I can relaunch them from where they stopped.
+
+### 🤖 Claude — 2026-11-17T01:13:14.248Z
+
+> 🔧 **mcp__plugin_playwright_playwright__browser_close** `{}`
+
+### 🤖 Claude — 2026-11-17T01:13:16.005Z
+
+> 🔧 **Bash** `{"command": "wc -l qa/pilot05/full_reference_match/briefs/*.md qa/pilot05/full_reference_match/{env,benny,hud,coins}/NOTES.md; python3 -I -c \"\nimport json;s=json.load(open('backups/AGENTS_STATUS.json'));print(list(s.keys()));\nfor k in ('running_now','assignments_now'):\n  v=s.get(k); print('==',k); print(json.dumps(v,indent=1)[:2500])\"", "description": "Read agent status and file sizes"}`
+
+### 🧑 User — 2026-11-17T01:13:21.696Z
+
+> ↩︎ result: ### Result
+> No open tabs. Navigate to a URL to create one.
+> ### Ran Playwright code
+> ```js
+> await page.close()
+> ```
+
+### 🧑 User — 2026-11-17T01:13:21.737Z
+
+> ↩︎ result: 22 qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md
+>    22 qa/pilot05/full_reference_match/briefs/benny-character-artist.md
+>    26 qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md
+>   101 qa/pilot05/full_reference_match/env/NOTES.md
+>    96 qa/pilot05/full_reference_match/benny/NOTES.md
+>    91 qa/pilot05/full_reference_match/hud/NOTES.md
+>    59 qa/pilot05/full_reference_match/coins/NOTES.md
+>   417 total
+> ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05', 'stopped_at_transfer', 'running_now']
+> == running_now
+> [
+>  {
+>   "agent": "washer-environment-modeler",
+>   "switch": "env05",
+>   "launched": "2026-11-17 ~01:00 UTC, session 01AvQv6S",
+>   "continue_from": "qa/pilot05/full_reference_match/env/NOTES.md section 4 (a-e)",
+>   "brief": "qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md"
+>  },
+>  {
+>   "agent": "benny-character-artist",
+>   "switch": "benny05",
+>   "launched": "2026-11-17 ~01:00 UTC, session 01AvQv6S",
+>   "continue_from": "qa/pilot05/full_reference_match/benny/NOTES.md Remaining",
+>   "brief": "qa/pilot05/full_reference_match/briefs/benny-character-arti …[+2852 chars]
+
+### 🤖 Claude — 2026-11-17T01:13:23.102Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/boajr73id.output"}`
+
+### 🧑 User — 2026-11-17T01:13:23.122Z
+
+> ↩︎ result: 1	EXIT=0
+> 2	  OK   Repository + branch            josiahscalia5-dev/rainbow- on claude/rainbow-account-transfer-npxahd @ 19ddfb4 (session started from claude/rainbow-restore-env-setup-bxn85h)
+> 3	  OK   Newer saved work (no auto-merge) 22/23 remote ccr-*/claude/* branches contained in HEAD 19ddfb4; NOT merged (automatic merging is OFF, user's order 2026-11-17): ccr-61131b9d-uj0oqb@4a2a325 (1 commit(s), 0 file(s) outside backups/, 11-17 01:09 UTC); only autosave bookkeeping under backups/, no game work: nothing to do
+> 4	  OK   Backup gap since last session  previous save on GitHub: 9c50d67 2026-11-17 01:09 UTC (daemon) on claude/rainbow-account-transfer-npxahd, claude/rainbow-restore-env-setup-bxn85h; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 15 gap(s) > 10 min in the last 72 h of 
+> 5	  OK   Git LFS binaries (local)       34/34 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK
+> 6	  OK   Git LFS on GitHub              34/34 LFS objects (231 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> 7	  OK   Approved references            13/13 byte-identical (scripts/reference.sha256, incl. the offi …[+3013 chars]
+
+### 🤖 Claude — 2026-11-17T01:13:29.634Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;r=json.load(open('qa/tools_check/blender_restore_s01Av/results.json'));print(list(r.keys()) if isinstance(r,dict) else type(r))\nps=r.get('project_scripts') or r.get('scripts') or {k:v for k,v in r.items() if 'script' in k.lower() or 'lid' in k.lower() or 'camera' in k.lower() or 'bake' in k.lower()}\nprint(json.dumps(ps,indent=1)[:2500])\"; grep -n \"lid_blender\\|camera_lock\\|tunnel_bake\\|argv\\|--out\" scripts/verify-blender.py | head -20", "description": "See how project Blender scripts were tested before"}`
+
+### 🧑 User — 2026-11-17T01:13:29.705Z
+
+> ↩︎ result: ['blender', 'build_date', 'bpy', 'background', 'engines', 'renders', 'blends', 'glbs', 'roundtrip']
+> {}
+> 14:out = sys.argv[sys.argv.index("--") + 1]
+
+### 🤖 Claude — 2026-11-17T01:13:32.187Z
+
+> 🔧 **Bash** `{"command": "for f in tools/proj05/lid_blender.py tools/blender/camera_lock_05.py tools/proj05/tunnel_bake.py; do echo \"=== $f\"; sed -n 1,25p $f | grep -E \"^#|argv|Usage|usage|out|blender \" | head -12; done; grep -rn \"lid_blender\\|camera_lock_05\\|tunnel_bake\" backups/*.md qa/pilot05/proj/tunnel/NOTES.md 2>/dev/null | grep -i \"blender -b\\|python3\\|run\" | head -8", "description": "Read usage of project Blender scripts"}`
+
+### 🧑 User — 2026-11-17T01:13:32.221Z
+
+> ↩︎ result: === tools/proj05/lid_blender.py
+>   blender -b --factory-startup -P tools/proj05/lid_blender.py -- <lid_dir> <texture.png> <crop x0,y0,x1,y1> <out.glb> [depth]
+>   back  = the approved outline lifted onto the real 05 wall (raycast.json, step B), 0.02 u off the wall
+>   sides = along the camera rays, so from the locked 05 camera the outline is exactly the approved one; when Benny rides on,
+> argv = sys.argv[sys.argv.index("--") + 1:]
+> lid_dir, tex_path, crop_s, out_glb = argv[:4]
+> depth = float(argv[4]) if len(argv) > 4 else 0.35
+> === tools/blender/camera_lock_05.py
+>     npx vite-node scripts/export-river-05.ts -- --cam=X,Y,Z --look=X,Y,Z --fov=62      (river05_layout.json)
+>     blender -b --python tools/blender/build_05_river_scene.py -- --layout ... --out-dir OUT
+>     blender -b OUT/screen05_layout.blend --python tools/blender/camera_lock_05.py -- \
+>         --reference references/05_flow_into_the_current.png --out-dir qa/pilot05/wave6/camera_lock
+>   * renders a Workbench layout pass from Cam05 (transparent film) → camera_lock_render.png;
+> === tools/proj05/tunnel_bake.py
+>   ring05.png   the gold band of ring B unwrapped: u = theta / 360, v = 0 at the band's outer (camera-side) edge .. 1 inner.
+> usag …[+643 chars]
+
+### 🤖 Claude — 2026-11-17T01:13:34.833Z
+
+> 🔧 **Bash** `{"command": "git ls-files '*.blend' ; find qa -name ring_model.json | head -3; find qa -name 'correction.npz' | head -3", "description": "Find blend files and tunnel bake inputs"}`
+
+### 🧑 User — 2026-11-17T01:13:34.872Z
+
+> ↩︎ result: qa/pilot05/marble_feas/blender/marble05_projection.blend
+> qa/pilot05/proj/tunnel/lid/lids05.blend
+> qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend
+> qa/pilot05/wave6/camera_lock/screen05_layout.blend
+> qa/worldlabs/05/blender/screen05_layout.blend
+> qa/worldlabs/05/pilot/draft/import/draft05.blend
+> qa/worldlabs/05/pilot/full/import/full05.blend
+> qa/pilot05/proj/tunnel/model/ring_model.json
+> qa/pilot05/proj/target/correction.npz
+> qa/pilot05/proj/tunnel/model/correction.npz
+
+### 🤖 Claude — 2026-11-17T01:13:41.390Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blender_scripts && mkdir -p $S && \\\necho \"== 1 geometry: lid_blender.py (paddle GLB from approved outline)\"; ( time blender -b --factory-startup -P tools/proj05/lid_blender.py -- qa/pilot05/proj/tunnel/lid assets/textures/tunnel05/lid05.png 58,311,864,532 $S/lids05_rebuild.glb 0.35 ) 2>&1 | grep -E \"Error|Traceback|real|written|lid05\" | tail -5; cmp $S/lids05_rebuild.glb assets/models/lids05.glb && echo \"lids05.glb rebuilt BYTE-IDENTICAL to the game file\"; \\\necho \"== 2 camera: camera_loc …[+830 chars]`
+
+### 🧑 User — 2026-11-17T01:13:53.746Z
+
+> ↩︎ result: == 1 geometry: lid_blender.py (paddle GLB from approved outline)
+> 01:13:41 | INFO: Extracting primitive: lid05_L3
+> 01:13:41 | INFO: Extracting primitive: lid05_R1
+> 01:13:41 | INFO: Extracting primitive: lid05_R2
+> 01:13:41 | INFO: Extracting primitive: lid05_R3
+> real	0m0.622s
+> lids05.glb rebuilt BYTE-IDENTICAL to the game file
+> == 2 camera: camera_lock_05.py
+> real	0m0.399s
+> == 3 texture bake: tunnel_bake.py
+> 
+> real	0m11.264s
+> user	0m11.488s
+> sys	0m0.575s
+> ring05.png
+> tunnel05.json
+> wall05.png
+> ring05.png identical to game texture
+> wall05.png identical to game texture
+
+### 🤖 Claude — 2026-11-17T01:13:57.751Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blender_scripts && blender -b qa/pilot05/wave6/camera_lock/screen05_layout.blend --python tools/blender/camera_lock_05.py -- --reference references/05_flow_into_the_current.png --out-dir $S/camera_lock 2>&1 | tail -15", "description": "Show camera_lock_05.py full output", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T01:13:58.322Z
+
+> ↩︎ result: 00:00.319  blend            | Read blend: "/home/user/rainbow-/qa/pilot05/wave6/camera_lock/screen05_layout.blend"
+> usage: blender [-h] --camera CAMERA --landmarks LANDMARKS
+>                --reference REFERENCE --out-dir OUT_DIR
+> blender: error: the following arguments are required: --camera, --landmarks
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+
+### 🤖 Claude — 2026-11-17T01:13:59.787Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/wave6/camera_lock/ | head -30; grep -rn \"camera_lock_05.py\" qa/pilot05/wave6 --include=*.md | head -5", "description": "Find camera and landmarks inputs"}`
+
+### 🧑 User — 2026-11-17T01:13:59.815Z
+
+> ↩︎ result: README.md
+> camera05.json
+> camera_lock_markers.png
+> camera_lock_overlay.png
+> camera_lock_render.png
+> landmarks.json
+> landmarks_current_px.json
+> landmarks_ref_px.json
+> river05_layout.json
+> screen05_camera_lock.blend
+> screen05_layout.blend
+> screen05_layout.glb
+> screen05_layout_cam05.png
+> qa/pilot05/wave6/camera_lock/README.md:53:blender -b qa/pilot05/wave6/camera_lock/screen05_layout.blend --python tools/blender/camera_lock_05.py -- --camera qa/pilot05/wave6/camera_lock/camera05.json --landmarks qa/pilot05/wave6/camera_lock/landmarks.json --reference references/05_flow_into_the_current.png --out-dir qa/pilot05/wave6/camera_lock
+
+### 🤖 Claude — 2026-11-17T01:14:04.792Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blender_scripts && ( time blender -b qa/pilot05/wave6/camera_lock/screen05_layout.blend --python tools/blender/camera_lock_05.py -- --camera qa/pilot05/wave6/camera_lock/camera05.json --landmarks qa/pilot05/wave6/camera_lock/landmarks.json --reference references/05_flow_into_the_current.png --out-dir $S/camera_lock ) 2>&1 | grep -vE \"^\\s*$|Fra:|Sample\" | tail -8; ls $S/camera_lock; python3 -I -c \"\nfrom PIL import Image;import numpy as np\nfor n in ['camera_lock_render.png','camera_lock_overlay …[+382 chars]`
+
+### 🧑 User — 2026-11-17T01:14:06.864Z
+
+> ↩︎ result: Exit code 1
+> 00:01.558  render           | Saved: '/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blender_scripts/camera_lock/camera_lock_markers.png'
+> Info: Saved as "screen05_camera_lock.blend"
+> CAMERA_LOCK_OK {"blend": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blender_scripts/camera_lock/screen05_camera_lock.blend", "render": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blender_scripts/camera_lock/camera_lock_render.png", "markers": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blender_scripts/camera_lock/camera_lock_markers.png", "resolution": [864, 1536], "vfov": 62}
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+> Blender quit
+> real	0m1.785s
+> user	0m3.438s
+> sys	0m0.342s
+> camera_lock_markers.png
+> camera_lock_render.png
+> screen05_camera_lock.blend
+> Traceback (most recent call last):
+>   File "<string>", line 4, in <module>
+>     a=np.asarray(Image.open('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/blender_scripts/camera_lock/'+n).convert('RGBA'),int);b=np.asarray(Image.open('qa/pilot05/wave6/came …[+568 chars]
+
+### 🤖 Claude — 2026-11-17T01:14:11.880Z
+
+> 🔧 **Bash** `{"command": "cd /home/user && ( time bash rainbow-/scripts/cloud-env-setup.sh ) 2>&1 | tail -15; echo \"EXIT=$?\"", "description": "Test cloud setup script from checkout parent", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-17T01:14:14.343Z
+
+> ↩︎ result: == Rainbow env-setup: tools (/home/user/rainbow-)
+>   OK   Node.js                        v22.23.4, npm 10.9.9
+>   OK   npm dependencies               node_modules up to date with package-lock.json (npm ci skipped)
+>   OK   Python QA libraries            Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK
+>   OK   Playwright + Chromium          headless Chromium 153.0.8010.12 with WebGL2 (SwiftShader); preinstalled, never reinstall
+>   OK   ffmpeg / ImageMagick           ffmpeg 6.1.1-3ubuntu5, ImageMagick 6.9.12-98 (Flow video + image checks)
+>   OK   Blender                        Blender 5.3.0 (present) at /usr/local/bin/blender; headless bpy test OK
+>   OK   Android build tools            Android SDK platform 34 + build-tools 34.0.0 + platform-tools (present, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug
+>   WARN World Labs integration         Marble API not reachable (HTTP <urlopen error Tunnel connection failed: 403 Forbidden>): network/API problem, NOT a key problem - do not ask the user for a new key; retry later; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no pa …[+106 chars]
+
+### 🤖 Claude — 2026-11-17T01:14:18.584Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🤖 Claude — 2026-11-17T01:14:18.641Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/cloud-env-setup.sh"}`
+
+### 🧑 User — 2026-11-17T01:14:18.660Z
+
+> ↩︎ result: 1	#!/usr/bin/env bash
+> 2	# Rainbow (josiahscalia5-dev/rainbow-) cloud-environment setup script: paste it into claude.ai ->
+> 3	# Claude Code -> environment settings -> Setup script. It runs as root before Claude starts, from the folder
+> 4	# that holds the repository checkout, and installs TOOLS only (npm packages, Python QA libraries, Blender 5.3.0,
+> 5	# Android SDK 34, World Labs plugin), skipping anything already installed. It never touches git: the
+> 6	# repository's SessionStart hook (scripts/claude-bootstrap.sh --hook) restores Git LFS, lists newer branches (never merges) and
+> 7	# re-arms the five-minute autosave. Every step is non-fatal so a session always starts.
+> 8	if [ -f rainbow-/scripts/claude-bootstrap.sh ]; then
+> 9	  bash rainbow-/scripts/claude-bootstrap.sh --env-setup || echo "rainbow: env-setup reported problems"
+> 10	elif [ -d rainbow- ]; then   # old checkout (e.g. the old default branch) without the bootstrap
+> 11	  (cd rainbow- && npm ci --no-audit --no-fund > /dev/null 2>&1) || echo "rainbow: npm ci failed"
+> 12	  (cd rainbow- && bash scripts/setup-blender.sh) || echo "rainbow: blender setup failed"
+> 13	  (cd rainbow- && bash scripts/setup-android-sdk.sh) || echo "rainbow: andr …[+40 chars]
+
+### 🧑 User — 2026-11-17T01:14:31.038Z
+
+> ↩︎ result: {"environment_id":"env_011GYWx1dC7ECwmz9xBmAYFU","name":"rainbow-","description":"Created by Claude (session cse_01Q46SCHg5514fc1pQPNRkw4): Rainbow game environment: allow Blender 5.3.0 and Android SDK 34 downloads.","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"limited","allow_mcp_servers":true,"allow_package_managers":true,"allowed_hosts":["download.blender.org","dl.google.com"]},"environment_variable_names":null,"has_setup_script":false,"setup_script":"","repositories":["josiahscalia5-dev/rainbow-"],"network_secrets":[],"is_current":true,"editable_by_you":true,"session_has_repository":true,"note":"Edits made with update_environment change the stored environment; see that tool for when each kind of change takes effect. `setup_script` is returned only for an environment you can edit (`setup_script_withheld` / `description_withheld` mean the organization's compliance settings keep the stored text out of this tool — they refuse a `setup_script`, `new_name` or `new_description` edit too — or that this could not be checked right now, in which case calling again may return it). `other_cloud_environ …[+809 chars]
+
+### 🤖 Claude — 2026-11-17T01:14:36.174Z
+
+> 🔧 **mcp__claude-code-remote__update_environment** `{"environment_name": "rainbow-", "applies_to": "my personal environment: all of my future sessions that use it, not only this one", "reason": "Install Blender 5.3.0 and Android SDK 34 automatically at the start of every Rainbow session.", "script_change": "adds a setup script", "setup_script": "#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-) cloud-environment setup script: paste it into claude.ai ->\n# Claude Code -> environment settings -> Setup script. It runs as root before Claude starts, from the folder\n# that holds the repository checkout, and installs TOOLS only (npm package …[+923 chars]`
+
+### 🧑 User — 2026-11-17T01:14:46.170Z
+
+> ↩︎ result: {"environment_id":"env_011GYWx1dC7ECwmz9xBmAYFU","name":"rainbow-","scope":"personal","updated":true,"setup_script_replaced":true,"note":"Saved to the environment. The setup script runs the next time a container is built fresh, not on a normal resume; to use the change now, run its commands in this session, from the directory the script starts in, and tell the user it is unproven until a fresh session starts on this environment."}
+
+### 🤖 Claude — 2026-11-17T01:14:47.066Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T01:14:47.076Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-17T01:14:47.518Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T01:14:47.526Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-17T01:14:47.964Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T01:14:47.974Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-17T01:14:48.368Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T01:14:48.378Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-17T01:14:48.914Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md"}`
+
+### 🧑 User — 2026-11-17T01:14:48.928Z
+
+> ↩︎ result: 1	RESUMED RUN (account transfer, 2026-11-17 ~00:08 UTC, session 018Sg3AU, working branch ccr-694bda6a-x58ntq created from b81cc34): your previous run of EXACTLY the brief below was interrupted after about 4 minutes while you were still measuring; its scratchpad is lost and no game file had been changed by you. Read COORDINATION.md including BOTH "RESUMED" sections at the end (the newest one, 2026-11-17, records the recovery proof). If qa/pilot05/full_reference_match/env/NOTES.md already exists, continue from it and do not redo finished steps; otherwise start at your first step. The recovered stack capture (pixel-identical to stack_2340/05_match05.png and to ?match05=1) is also at qa/pilot05/full_reference_match/recovery_s018/stack/05.png. The coordinator (main session) is re-baking the far-river water textures (assets/textures/water05/far1/, its own files) at the same time and also uses render slots: captures can wait for a slot, that is normal. Keep temporary files in your own folder under qa/pilot05/full_reference_match/ or under /tmp/claude-0/ (not in the repository root).
+> 2	
+> 3	----- ORIGINAL BRIEF (unchanged) -----
+> 4	You are the washer-environment-modeler for the existing RAINB …[+6340 chars]
+
+### 🤖 Claude — 2026-11-17T01:14:49.324Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/env/NOTES.md"}`
+
+### 🧑 User — 2026-11-17T01:14:49.347Z
+
+> ↩︎ result: 1	# env05 — washer-environment-modeler (Screen 05 tunnel: rings, walls, fittings, far tunnel)
+> 2	
+> 3	Status: IN PROGRESS — stopped for the account transfer (2026-11-17 ~00:30 UTC by the file clock, session 018Sg3AU). Switch `env05` (`on05('env05')`, also on with
+> 4	`?match05=1`). STACK = `proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1`.
+> 5	
+> 6	## 1. Measured (step A, done)
+> 7	* BEFORE = STACK capture `recovery_s018/stack/05.png` (= `stack_2340/05_match05.png`, byte-identical). Region numbers
+> 8	  (`python3 -I tools/match05/metrics.py`, `env/work/before_*.json`): whole frame mean 34.1 / ≤20 51.6 %; purple walls
+> 9	  53.8 / 21.1 %; gold rings + frame 37.7 / 50.0 %; side fittings 26.9 / 59.7 %; distant tunnel 29.8 / 45.1 %.
+> 10	* Probe of STACK (`node scripts/proj05-tunnel-probe.mjs --q='<STACK>' --out=env/work/probe --raw=<scratch>`): game rings
+> 11	  real r@12u (instance 1), A (s = sCam05 + 20), B (sCam05 + 40); far rings at virtual depth 59/97/161/222/322.
+> 12	* Where the tunnel error comes from (`tools/env05/err_by_surface.py`, probe id buffer): purple-wall region: game WALL
+> 13	  153,207 px mean 56.6 (52 % of the region's error = perforatio …[+7893 chars]
+
+### 🤖 Claude — 2026-11-17T01:14:54.545Z
+
+> 🔧 **Bash** `{"command": "D=qa/pilot05/full_reference_match; sed -n 1,8p $D/briefs/benny-character-artist.md | cut -c1-600; echo; echo \"=== BENNY NOTES (status + remaining)\"; grep -n \"^#\\|Status\" $D/benny/NOTES.md | head -20; awk '/^## .*[Rr]emaining/,0' $D/benny/NOTES.md | head -40", "description": "Read Benny brief and remaining steps"}`
+
+### 🧑 User — 2026-11-17T01:14:54.589Z
+
+> ↩︎ result: RESUMED RUN (account transfer, 2026-11-17 ~00:08 UTC, session 018Sg3AU, working branch ccr-694bda6a-x58ntq created from b81cc34): your previous run of EXACTLY the brief below was interrupted after about 4 minutes while you were still measuring; its scratchpad is lost and no game file had been changed by you. Read COORDINATION.md including BOTH "RESUMED" sections at the end (the newest one, 2026-11-17, records the recovery proof). If qa/pilot05/full_reference_match/benny/NOTES.md already exists, continue from it and do not redo finished steps; otherwise start at your first step. The recovered s
+> 
+> ----- ORIGINAL BRIEF (unchanged) -----
+> You are the benny-character-artist for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work). You are executing the user's FINAL MASTER EXECUTION ORDER for Screen 05 ("05 · FLOW INTO THE CURRENT"): make the real playable 3D Screen 05 match the approved image `references/05_flow_into_the_current.png` (864 × 1536) as exactly as technically possible. This is an implementation order: do the work, measure, keep only what is closer. You cannot ask the user anything.
+> 
+> READ FIRST (they are your rules):
+> 1. `qa/pilot05/full_refere …[+2883 chars]
+
+### 🤖 Claude — 2026-11-17T01:14:57.724Z
+
+> 🔧 **Bash** `{"command": "D=qa/pilot05/full_reference_match; echo \"=== HUD remaining\"; awk '/^## .*[Rr]emaining/,0' $D/hud/NOTES.md | head -30; echo \"=== COINS remaining\"; awk '/^## .*[Rr]emaining/,0' $D/coins/NOTES.md | head -25; echo \"=== b1 contents\"; ls $D/benny/work/b1 | head; ls $D/benny/work/b1/tex 2>/dev/null | head -3; echo \"=== env e2\"; ls $D/env/work/e2", "description": "Read HUD and coins remaining steps"}`
+
+### 🧑 User — 2026-11-17T01:14:57.776Z
+
+> ↩︎ result: === HUD remaining
+> ## Remaining, step by step
+> 1. (done in harness, see table) — optional: only further fine passes on the banner rim profile (approved top rim
+>    113–118 soft 5-px ramp peaking at 114, bottom 172–182 with a lavender inner glow) if measured closer.
+> 2. Real captures (one at a time): `node qa/pilot05/full_reference_match/hud/probe05.mjs --out=DIR before='<STACK>' new='<STACK>&hud05=1'`
+>    → copy to `hud/before.png`, `hud/new.png`; `python3 -I tools/match05/metrics.py hud/new.png hud/new_` (and before).
+> 3. Default identity: `node scripts/capture.mjs 05 --out=<scratch>` must equal `qa/pilot05/current_default_05.png` (0 px);
+>    then `git checkout -q qa/capture_log.json` (allowed by COORDINATION rule 1).
+> 4. Other screens with the switch on: capture 04 and 06 with `hud05=1` vs without; describe (global layout change).
+> 5. Fill this file's final tables (approved | game | difference | cause | change | measured result).
+> 
+> ## REQUESTS
+> None so far.
+> === COINS remaining
+> ## Remaining, step by step
+> 1. Probe/capture: `node qa/pilot05/full_reference_match/hud/probe05.mjs --out=DIR new='<STACK>&coins05=1'` → check
+>    `coinScreen` vs the table, the face orientation ($ upright), coin aspect …[+1016 chars]
+
+### 🤖 Claude — 2026-11-17T01:15:27.103Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nD='qa/pilot05/full_reference_match/briefs/'\ncommon=(\"RESUMED RUN #3 (NEW Claude account, 2026-11-17 ~01:20 UTC, session 01Q46SCH, working branch \"\n\"claude/rainbow-account-transfer-npxahd = everything of claude/rainbow-restore-env-setup-bxn85h incl. its last commit 9c50d67). \"\n\"Your run relaunched at ~01:00 UTC (session 01AvQv6S) was interrupted after ~10 minutes when that account ran out of credits; \"\n\"processes and scratchpads never survive. Everything it wrote into the repository is still here. \"\n\"Tools re-verified in THIS session (really run) …[+3890 chars]`
+
+### 🧑 User — 2026-11-17T01:15:27.162Z
+
+> ↩︎ result: briefs updated
+> RESUMED RUN #3 (NEW Claude account, 2026-11-17 ~01:20 UTC, session 01Q46SCH, working branch claude/rainbow-account-transfer-npxahd = everything of claude/rainbow-restore-env-setup-bxn85h incl. its last commit 9c50d67). Your run relaunched at ~01:00 UTC (session 01AvQv6S) was interrupted after ~10 mi
+
+### 🤖 Claude — 2026-11-17T01:15:27.999Z
+
+Now the coordination section the briefs point to, then the three launches.
+
+### 🤖 Claude — 2026-11-17T01:15:37.057Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/full_reference_match/COORDINATION.md <<'EOF'\n\n---\n## RESUMED 2026-11-17 ~01:20 UTC — NEW ACCOUNT, session 01Q46SCH, branch `claude/rainbow-account-transfer-npxahd` — CURRENT\nStarted from `82f2f5b` on `claude/rainbow-restore-env-setup-bxn85h` (contains the user's last verified commit `4a19ed9`); that\nbranch's newest commit `9c50d67` (backups/ status + 2 transcript lines, no game file) merged on the user's request\n(\"if it has newer commits, recover those too\"). `claude/rainbow-restore-env-setup-bxn85h` is PROTECTED now; the autosave pushes\nonly to the new  …[+1897 chars]`
+
+### 🧑 User — 2026-11-17T01:15:37.109Z
+
+> ↩︎ result: ok
+

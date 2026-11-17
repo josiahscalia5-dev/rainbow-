@@ -573,8 +573,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 5722,
-   "sha256": "5ed946dd0b1a06a3dd151ec0a21e45311eccb806ac35fa9286d215e7b77413b2"
+   "bytes": 5502,
+   "sha256": "0d11213221dab1a4e84d3d8dd3889f43afb373acf4c5f8693c98acf1ad88e959"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -584,7 +584,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11667,
-   "sha256": "b397265f32100d59b2c249549a13bcabfadfd5ab789262b60314c34f2d994131"
+   "sha256": "e503d249679ccf9c05089c177e19a7777300db73ca8be677f0cbccd44ae41b12"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1358,8 +1358,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/COORDINATION.md",
-   "bytes": 19654,
-   "sha256": "8c7a9a90f926df38ebef1792a822dd55ced739638da1c8163a9c856f71c0de25"
+   "bytes": 21981,
+   "sha256": "a296803579f7e826e8be85aa94aefe8cf6c905584a16495d6c0765b4b1b27955"
   },
   {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_2026-11-17.md",
@@ -1698,18 +1698,18 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md",
-   "bytes": 6807,
-   "sha256": "1f711f37984df9b3660c97347539ce8e645356f447b99f077f33c4d7e7d42416"
+   "bytes": 9200,
+   "sha256": "98ce2e279a70d9478aae41ad2f2ff79f36404136cdd620397c8d8ffcc006d930"
   },
   {
    "path": "qa/pilot05/full_reference_match/briefs/benny-character-artist.md",
-   "bytes": 6571,
-   "sha256": "7f6d9460890e255ad4387073f4b11d0e0821766041ec25eb533a3035d2f4dcf0"
+   "bytes": 8922,
+   "sha256": "286c10435f1b22457c838961cab8852ecf9e110f8a5f39528f31c1612a01b8b2"
   },
   {
    "path": "qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md",
-   "bytes": 7498,
-   "sha256": "8ceed70c0f6db4243646078c8480ba34e7d3f25a0590564887a2e4fd3a378596"
+   "bytes": 10146,
+   "sha256": "7d32ee4780c694ad0d034836f22b519a25c97ff2190b22ed5ca69faf998b5284"
   },
   {
    "path": "qa/pilot05/full_reference_match/coins/NOTES.md",
@@ -3048,8 +3048,8 @@
   },
   {
    "path": "qa/pilot05/proj/tunnel/lid/lids05.blend",
-   "bytes": 269334,
-   "sha256": "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0"
+   "bytes": 269335,
+   "sha256": "3e9521aa1c38691cb6b2089d8d3a1afd7d1bef5e98f3cd5e7c5c52e85e3aad19"
   },
   {
    "path": "qa/pilot05/proj/tunnel/lid/mesh2d.json",

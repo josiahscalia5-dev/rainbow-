@@ -185,3 +185,25 @@ above still applies. This session's main session is the coordinator.
 * Coordinator next: integration capture of all finished parts in `?match05=1`, the order's deliverables (03_NEW,
   04_DIFFERENCE, 05_OVERLAY, VISUAL_AUDIT.md, metrics JSON, REMAINING_DIFFERENCES.md), then wave 2 (foam-bubbles-particles:
   `splash05m`, `bub05`), last android-build-performance. Nothing is promoted to the default without the user's approval.
+
+---
+## RESUMED 2026-11-17 ~01:20 UTC — NEW ACCOUNT, session 01Q46SCH, branch `claude/rainbow-account-transfer-npxahd` — CURRENT
+Started from `82f2f5b` on `claude/rainbow-restore-env-setup-bxn85h` (contains the user's last verified commit `4a19ed9`); that
+branch's newest commit `9c50d67` (backups/ status + 2 transcript lines, no game file) merged on the user's request
+("if it has newer commits, recover those too"). `claude/rainbow-restore-env-setup-bxn85h` is PROTECTED now; the autosave pushes
+only to the new branch. Everything above still applies; the main session is the coordinator.
+* **New account had no cloud environment:** `download.blender.org` / `dl.google.com` were refused (proxy 403) → personal
+  environment `rainbow-` created (those two hosts, package managers + MCP allowed, setup script `scripts/cloud-env-setup.sh`
+  saved; it runs at the next fresh container). Blender 5.3.0 + Android SDK 34 installed with the project scripts.
+* **Re-verified, really run:** full bootstrap `--skip-resume` all OK (World Labs WARN: host not allowed, optional); Blender renders
+  Workbench / EEVEE / Cycles, 7/7 `.blend`, 3 GLBs, round trip; project scripts: `lid_blender.py` → `lids05.glb` byte-identical,
+  `tunnel_bake.py` → `wall05.png` / `ring05.png` identical, `camera_lock_05.py` CAMERA_LOCK_OK; GitHub MCP `list_branches` (27);
+  Playwright MCP + WebGL2 (SwiftShader).
+* The user uploaded the approved picture again (pixel-identical to `references/05_flow_into_the_current.png`) and asked for
+  "the same background ... same scenery ... same everything ... at least 90 %, 95 %".
+* The 01:00 relaunch of the three specialists ran ~10 minutes; on disk from it: `env/work/e2/` + `env/work/rings_e2.json` +
+  `tools/env05/idviz.py`; `benny/work/b1/` calibration shots; `hud/probe05.mjs` edit. No game source changed in that window.
+* **Relaunched ~01:20 UTC** (briefs updated with header "RESUMED RUN #3"): washer-environment-modeler (`env05`),
+  benny-character-artist (`benny05`), animation-and-gameplay-engineer (`hud05`, `coins05`). Ownership unchanged.
+* Coordinator next: fresh `?match05=1` capture + metrics now, then integration of the specialists' finished parts, wave 2
+  (foam-bubbles-particles: `splash05m`, `bub05`), the order's deliverables, Android APK last. Nothing promoted to the default.

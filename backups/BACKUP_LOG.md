@@ -467,3 +467,4 @@ Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8567f56ef76fa3ef
 | 2026-11-17T01:10:35+00:00 | daemon | committed+pushed | `2b17318bac8d` | `claude/rainbow-account-transfer-npxahd` | 4 | True |  |
 | 2026-11-17T01:10:57+00:00 | bootstrap:background | committed+pushed | `dab17bf9853a` | `claude/rainbow-account-transfer-npxahd` | 4 | True |  |
 | 2026-11-17T01:12:28+00:00 | manual:start | committed+pushed | `19ddfb4dcbc7` | `claude/rainbow-account-transfer-npxahd` | 5 | True |  |
+| 2026-11-17T01:13:09+00:00 | bootstrap:full | committed+pushed | `60ed5ff244a0` | `claude/rainbow-account-transfer-npxahd` | 4 | True |  |
