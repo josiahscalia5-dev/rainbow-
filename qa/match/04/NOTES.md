@@ -121,3 +121,15 @@ in that temporary checkout's own run); `?ringa=26&nearfloor05=0` vs `qa/pilot05/
 `node scripts/gameplay-test.mjs` 8/8 without and with `--q=match04=1` (`gameplay_test_match04_m2.json`, coins
 1,330 → 2,240 = 91 coins); `npx tsc --noEmit -p .` clean; references 13/13 OK.
 Reproduce: `python3 -I tools/match04/make_tiles04.py assets/textures/match04`; `node tools/match04/motion04.mjs <dir> [q]`.
+
+## Milestone 3 (2026-11-17 ~17:40 UTC, account 3, branch `claude/rainbow-s04-match-c3`)
+Started from `4d1f5b25` (= `-c2` head `255ec5e6` + one transcript autosave). Lead = session_01Q46SCLi5xPVn25aRuxkVwK.
+### Step 1 — fal04 on by default under `?match04=1` (autosave `255ec5e6`), verified
+* `?match04=1` capture = milestone-2 `&fal04=1` picture (`04_NEW_m2_fal04_864x1536.png`): **0 px different** → numbers
+  unchanged (whole 81.3 %, scenery 98.1 %, SSIM 0.973).
+* `?match04=1&fal04=0` = milestone 2 without fal: 4 px differ (max 43 levels) from the saved M2 picture — the same 4-pixel
+  run-to-run difference already seen between M1 and M2 captures; otherwise identical.
+* Default build 04 0 px vs `04_BEFORE_current_game_864x1536.png`; default 05 0 px vs `qa/pilot05/current_default_05.png`;
+  `?match08=1` 08 0 px vs `qa/match/08/08_NEW_match08.png`; `?ringa=26&nearfloor05=0` 0 px vs the wave9 baseline.
+* Gameplay 8/8 with `--q=match04=1` (`gameplay_test_match04_m3.json`, samples identical to the M2 fal04 run, coins
+  1,330 → 2,240 = 91 coins); default run 8/8 and `qa/gameplay_test.json` byte-identical.
