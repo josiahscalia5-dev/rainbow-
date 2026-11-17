@@ -64,6 +64,7 @@ uniform sampler2D uTile;
 uniform vec3 uProjPos;
 uniform vec4 uPjPost;
 uniform vec2 uPjRes;
+uniform vec3 uDbg;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -93,6 +94,7 @@ void main() {
     }
   }
   gl_FragColor = vec4(pjInverse(t), 1.0);
+  if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
 }`;
 
 const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
@@ -134,7 +136,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   const [tTube, tFloor] = await Promise.all([loadTile('tube'), loadTile('floor')]);
   const mat = (tile: THREE.Texture) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
-    uniforms: { ...shared, uTile: { value: tile } },
+    uniforms: { ...shared, uTile: { value: tile }, uDbg: { value: new THREE.Vector3() } },
   });
 
   // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
@@ -197,6 +199,13 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   cap.name = 'm06_end'; cap.frustumCulled = false;
   group.add(cap);
 
+  // QA only: `&m06dbg=1` tints the tube green and the river floor red (which proxy surface a pixel comes from)
+  if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06dbg') === '1') {
+    group.traverse((o) => {
+      const u = ((o as THREE.Mesh).material as THREE.ShaderMaterial)?.uniforms?.uDbg;
+      if (u) u.value.set(o.name === 'm06_floor' ? 1 : 0, o.name === 'm06_floor' ? 0 : 1, 0);
+    });
+  }
   return {
     group,
     bakeDepth(renderer) {

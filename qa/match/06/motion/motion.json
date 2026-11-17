@@ -4,7 +4,7 @@
   "dist": 0,
   "steer": null,
   "frames": 0,
-  "s": 199.248,
+  "s": 199.026,
   "lat": 0,
   "stage": "06",
   "coins": 1680
@@ -14,68 +14,68 @@
   "dist": 3,
   "steer": null,
   "frames": 17,
-  "s": 202.124,
+  "s": 202.198,
   "lat": 0,
   "stage": "06",
-  "coins": 1720
+  "coins": 1690
  },
  {
   "name": "f06_forward6u",
   "dist": 6,
   "steer": null,
   "frames": 33,
-  "s": 205.083,
+  "s": 205.195,
   "lat": 0,
   "stage": "06",
-  "coins": 1740
+  "coins": 1700
  },
  {
   "name": "f10_forward10u",
   "dist": 10,
   "steer": null,
   "frames": 55,
-  "s": 209.114,
+  "s": 209.199,
   "lat": 0,
   "stage": "06",
-  "coins": 1740
+  "coins": 1700
  },
  {
   "name": "f15_forward15u",
   "dist": 15,
   "steer": null,
   "frames": 82,
-  "s": 213.97,
+  "s": 213.985,
   "lat": 0,
   "stage": "06",
-  "coins": 1740
+  "coins": 1720
  },
  {
   "name": "f20_forward20u",
   "dist": 20,
   "steer": null,
   "frames": 110,
-  "s": 219.103,
+  "s": 219.254,
   "lat": 0,
   "stage": "06",
-  "coins": 1780
+  "coins": 1800
  },
  {
   "name": "f30_forward30u",
   "dist": 30,
   "steer": null,
   "frames": 164,
-  "s": 229.001,
+  "s": 228.997,
   "lat": 0,
   "stage": "06",
-  "coins": 1780
+  "coins": 1800
  },
  {
   "name": "s_left_steer",
   "dist": 6,
   "steer": -1,
   "frames": 33,
-  "s": 204.99,
-  "lat": -2.733,
+  "s": 205.013,
+  "lat": -2.749,
   "stage": "06",
   "coins": 1720
  },
@@ -84,9 +84,9 @@
   "dist": 6,
   "steer": 1,
   "frames": 33,
-  "s": 205.015,
-  "lat": 2.74,
+  "s": 205.054,
+  "lat": 2.766,
   "stage": "06",
-  "coins": 1740
+  "coins": 1680
  }
 ]
