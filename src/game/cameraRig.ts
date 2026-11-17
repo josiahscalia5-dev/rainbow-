@@ -206,11 +206,16 @@ export class RideCamera {
    */
   private clear0304(s: number, lat: number) {
     const s3 = this.course.stage('03').s1;
-    const w = THREE.MathUtils.smoothstep(s, s3 - 6, s3 - 3) * (1 - THREE.MathUtils.smoothstep(s, s3 + 6, s3 + 12));
+    const w = THREE.MathUtils.smoothstep(s, s3 - 4.5, s3 - 2) * (1 - THREE.MathUtils.smoothstep(s, s3 + 6, s3 + 12));
     if (w <= 0) return;
-    const f = this.course.sample(Math.max(0, s - 3.5));
-    const p = f.pos.clone().addScaledVector(f.right, lat).addScaledVector(f.up, 1.4);
+    // world up, not the stream's own up: the chute water twists over the drain lip, and a view tied to its up would
+    // swing underneath it
+    const f = this.course.sample(Math.max(0, s - 3));
+    const p = f.pos.clone().addScaledVector(f.right, lat).add(new THREE.Vector3(0, 1.6, 0));
     this.pos.lerp(p, w);
+    // aim at Benny (a little below his centre line ahead), so he stays in the frame while the view swings behind him
+    const fb = this.course.sample(s + 1.5);
+    this.target.lerp(fb.pos.clone().addScaledVector(fb.right, lat), w);
   }
 
   /** `?camclear=1` only — see desired() */
@@ -254,8 +259,8 @@ export class RideCamera {
     const k = snap || !this.init ? 1 : 1 - Math.exp(-dt * 7);
     const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
     this.pos.lerp(dp, k);
-    if (CAMCLEAR) this.clear0304(s, lat);
     this.target.lerp(dt3, kt);
+    if (CAMCLEAR) this.clear0304(s, lat);
     this.up.lerp(du, kt).normalize();
     this.fov += (p.fov - this.fov) * (snap || !this.init ? 1 : Math.min(1, dt * 3));
     this.init = true;
