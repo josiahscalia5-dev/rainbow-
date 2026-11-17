@@ -88,6 +88,8 @@ export function coinLayout(course: Course): CoinDef[] {
     const sIn = st('08').s0;
     for (let i = 0; i < 8; i++) { const s = sIn - 4 + i * 0.8; add(course.stageAtS(s).id, s, 0.35 * Math.sin(i * 1.3)); }
   }
+  // `?match08=1`: river order (the coins above were appended out of order)
+  if (m08) out.sort((a, b) => a.s - b.s);
   // 10 — straight line into the towel tunnel
   { const a = st('10'); for (let i = 0; i < 5; i++) add('10', a.s0 + 1.5 + i * 2.0, -0.15); }
   return out;

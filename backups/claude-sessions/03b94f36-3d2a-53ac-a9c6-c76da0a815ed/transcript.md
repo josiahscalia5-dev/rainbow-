@@ -6172,3 +6172,163 @@ Still 89. Listing every coin past the checkpoint with no upper limit, to see exa
 > 68:    const jump = Math.hypot(s1.cam[0] - camPrev.v[0], s1.cam[1] - camPrev.v[1], s1.cam[2] - camPrev.v[2]);
 > 70:    camPrev.v = s1.cam;
 
+### 🤖 Claude — 2026-11-17T14:05:16.769Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && sed -i 's/for (let k = 0.5; k <= 1.8; k += 0.01) {/for (let k = 0.2; k <= 1.8; k += 0.01) {/' src/gameplay/coins.ts && grep -c \"k = 0.2; k <= 1.8\" src/gameplay/coins.ts && timeout 200 npx tsc --noEmit && echo tsc clean; timeout 400 node $M/coinlat.mjs 2>&1 | tail -1 | python3 -I -c \"import sys,json; d=json.loads(sys.stdin.read()); print([c for c in d if abs(c[2])>1.0 or c[0] in (73,74,75,76,77)])\"; timeout 900 node scripts/gameplay-test.mjs --q=match08=1 >/dev/nul …[+470 chars]`
+
+### 🧑 User — 2026-11-17T14:05:43.754Z
+
+> ↩︎ result: 1
+> tsc clean
+> [[73, 411.13, -0.99], [74, 406.88, -0.89], [75, 425.48, -0.97], [76, 423.78, -0.15], [77, 425.13, 0.85]]
+> gameplay match08: 8 / 8 | coins 1330 -> 2230 (default 2240) | errors []
+
+### 🤖 Claude — 2026-11-17T14:05:52.266Z
+
+All coins are within reach now, but the run collected 90, one short. Replaying the ride from the chamber entrance in the live game to see exactly which coin Benny passes without collecting:
+
+### 🤖 Claude — 2026-11-17T14:05:58.970Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cat > $M/cointake.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright(); const vite = await startVite(5269); const browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry { const page = await browser.newPage({ viewport: { width: 432, height: 768 } });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&match08=1`);\n  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__erro …[+895 chars]`
+
+### 🧑 User — 2026-11-17T14:06:12.794Z
+
+> ↩︎ result: [] end s 434.801 outro
+> benny lat by s {"387":0,"388":0,"389":0,"390":0,"391":0,"392":0,"393":0,"394":0,"395":0,"396":0,"397":0,"398":0,"399":0,"400":0,"401":0,"402":0,"403":0,"404":0,"405":0,"406":0,"407":0,"408":0,"409":0,"410":0,"411":0,"412":0,"413":0,"414":0,"415":0,"416":0,"417":0,"418":0,"419":0,"420":0,"421":0,"422":0,"423":0,"424":0,"425":0,"426":0,"427":0,"428":0,"429":0,"430":0,"431":0,"432":0}
+
+### 🤖 Claude — 2026-11-17T14:06:21.620Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"setSteer|bump|steer\" scripts/gameplay-test.mjs | head -12 | cut -c1-200", "description": "Find the steering in the gameplay test"}`
+
+### 🧑 User — 2026-11-17T14:06:21.672Z
+
+> ↩︎ result: 7://  * real coin pickups update the counter; steering into the foam wall costs a heart
+> 35:  api.setSteer(0);
+> 46:  // ---- full run 03 → 11 with a coin-seeking steering policy
+> 56:  // steering policy: weave gently so Benny crosses coin lines (real pickups)
+> 60:    // coin-seeking: steer toward the lateral offset of the next untaken coin within 12 units
+> 63:    api.setSteer(Math.max(-1, Math.min(1, (want - st.lat) * 0.9)));
+> 91:  // ---- hearts: hold steer into the wall in 05
+> 93:  api.setSteer(1);
+> 97:  api.setSteer(null);
+> 118:  '(deterministic 60 Hz simulation, coin-seeking steering). Frames: `qa/continuity/07a…07d.png`',
+
+### 🤖 Claude — 2026-11-17T14:06:24.877Z
+
+> 🔧 **Bash** `{"command": "sed -n 56,64p scripts/gameplay-test.mjs | cut -c1-200", "description": "Read the coin-seeking steering policy"}`
+
+### 🧑 User — 2026-11-17T14:06:24.927Z
+
+> ↩︎ result: // steering policy: weave gently so Benny crosses coin lines (real pickups)
+>   while (steps < 60 * 120) {
+>     const st = api.state();
+>     if (st.mode !== 'ride') break;
+>     // coin-seeking: steer toward the lateral offset of the next untaken coin within 12 units
+>     const next = api.coinDefs().find((d) => !d.taken && d.s > st.s + 0.5 && d.s < st.s + 12);
+>     const want = next ? next.lat : 0;
+>     api.setSteer(Math.max(-1, Math.min(1, (want - st.lat) * 0.9)));
+>     const s1 = api.step(1, dt);
+
+### 🤖 Claude — 2026-11-17T14:06:41.772Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\nold=\"    for (let i = 0; i < 8; i++) { const s = sIn - 4 + i * 0.8; add(course.stageAtS(s).id, s, 0.35 * Math.sin(i * 1.3)); }\\n  }\\n\"\nnew=old+\"  // `?match08=1`: river order (the coins above were appended out of order)\\n  if (m08) out.sort((a, b) => a.s - b.s);\\n\"\nassert s.count(old)==1; open(p,'w').write(s.replace(old,new)); print('sorted under switch')\nEOF\ngrep -n \"return out;\" src/gameplay/coins.ts | head -3; timeout 200 npx tsc --noEmit && echo tsc clean; timeout 900 node scripts/gameplay-test.mj …[+829 chars]`
+
+### 🧑 User — 2026-11-17T14:07:03.483Z
+
+> ↩︎ result: sorted under switch
+> 95:  return out;
+> tsc clean
+> gameplay match08: 8 / 8 | coins 1330 -> 2240 (default 2240) | errors []
+> gameplay default: 8 / 8 | coins -> 2240
+
+### 🤖 Claude — 2026-11-17T14:07:09.211Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"android\" package.json | cut -c1-200; grep -rn \"VITE_RAINBOW_Q05\" src/vfx/waterRibbon.ts | head -3 | cut -c1-200; ls builds/ | tail -5; adb devices 2>&1 | head -3", "description": "Check the APK build script and devices"}`
+
+### 🧑 User — 2026-11-17T14:07:09.280Z
+
+> ↩︎ result: 17:    "android:sync": "npm run build && npx cap sync android",
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> 22:    "@capacitor/android": "^6.2.0",
+> 147: * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+> 150:const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> rainbow-debug-T2-default.apk
+> rainbow-debug-w12-water.apk
+> rainbow-debug.apk
+> /bin/bash: line 2: adb: command not found
+
+### 🤖 Claude — 2026-11-17T14:07:17.489Z
+
+> 🔧 **Bash** `{"command": "export ANDROID_HOME=/opt/android-sdk ANDROID_SDK_ROOT=/opt/android-sdk && VITE_RAINBOW_Q05=\"match08=1\" timeout 1500 npm run android:debug > /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/apk_build.log 2>&1; echo \"exit=$?\"; tail -5 /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/apk_build.log; ls -la android/app/build/outputs/apk/debug/ 2>&1 | tail -2", "description": "Build the Android APK with the Screen 08 switch", "timeout": 1600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T14:07:17.527Z
+
+> ↩︎ result: Command running in background with ID: byweazgue. Output is being written to: /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/tasks/byweazgue.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T14:07:20.992Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && sleep 1; cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/final --q=match08=1 2>&1 | tail -1 | cut -c1-160; timeout 600 node scripts/capture.mjs 08 --out=$M/final_android --q=match08=1 --size=1080x1920 2>&1 | tail -1 | cut -c1-60; cp $M/capture_log.bak qa/capture_log.json; python3 -I tools/qa/screen_match.py references/08_final_spin_chamber.png $M/final/08.png --label=FINAL08 --json=$M/final_metrics.json | cut -c1-140", "desc …[+79 chars]`
+
+### 🧑 User — 2026-11-17T14:08:15.308Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/final/08.png {"stage":"08","s":391.427,"y":-113.112,"calls":80,"tri
+> 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-
+> FINAL08 FULL |d|  14.6 <=20 0.830 SSIM 0.815 | BELOWHUD |d|  10.0 <=20 0.898 | LAYOUT |d|   5.9 <=20 0.909 | mean RGB approved [168.4, 108.6
+
+### 🤖 Claude — 2026-11-17T14:08:30.439Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && python3 -I - <<EOF\nimport numpy as np, json\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nA=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB'),float)\ndef ssim_map(a,b):\n    la,lb=(a*[0.2126,0.7152,0.0722]).sum(-1),(b*[0.2126,0.7152,0.0722]).sum(-1); s=1.5; C1,C2=(0.01*255)**2,(0.03*255)**2\n    ma,mb=gaussian_filter(la,s),gaussian_filter(lb,s); va,vb=gaussian_filter(la*la,s)-ma*ma,gaussian_filter(lb*lb,s)-mb*mb; cab=ga …[+1991 chars]`
+
+### 🧑 User — 2026-11-17T14:10:02.519Z
+
+> ↩︎ result: scenery       BEFORE   3.3%  FINAL  97.4%  SSIM 0.959
+> upper         BEFORE   2.1%  FINAL  98.9%  SSIM 0.968
+> middle        BEFORE   3.0%  FINAL  91.0%  SSIM 0.894
+> lower         BEFORE   4.4%  FINAL  99.2%  SSIM 0.981
+> benny+splash  BEFORE   2.9%  FINAL  64.5%  SSIM 0.619
+> whole         BEFORE   4.0%  FINAL  83.0%  SSIM 0.815
+> 9
+
+### 🤖 Claude — 2026-11-17T14:10:07.292Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/tasks/byweazgue.output | tail -4; cd /home/user/rainbow- && ls -la android/app/build/outputs/apk/debug/*.apk 2>&1 | tail -1 && cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug-match08-2026-11-17.apk && git check-attr filter -- builds/rainbow-debug-match08-2026-11-17.apk && unzip -l builds/rainbow-debug-match08-2026-11-17.apk | grep -E \"plate08|proj08|coins08|splash08\" | head -5; git status --short | grep -v \"claude-sessions\\|BACKUP\\|MANIFEST\\|CONVERSATION\" | head", "descripti …[+54 chars]`
+
+### 🧑 User — 2026-11-17T14:10:07.439Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 21271427 Nov 17 14:09 app-debug.apk
+> -rw-r--r-- 1 root root      372 Nov 17 14:10 output-metadata.json
+> 
+> [exited with code 0]
+> -rw-r--r-- 1 root root 21271427 Nov 17 14:09 android/app/build/outputs/apk/debug/app-debug.apk
+> builds/rainbow-debug-match08-2026-11-17.apk: filter: lfs
+>   6078171  1981-01-01 01:01   assets/public/assets/plate08_hybrid-qzEzbQ98.png
+>      2987  1981-01-01 01:01   assets/public/assets/proj08-Beso53XN.json
+>       344  1981-01-01 01:01   assets/public/assets/splash08-By3Fvs1v.json
+>    430069  1981-01-01 01:01   assets/public/assets/splash08-Dtf040OD.png
+>  M qa/capture_log_1080x1920.json
+>  M qa/match/08/08_NEW_match08.png
+>  M qa/match/08/08_NEW_screen_match.json
+>  M qa/match/08/gameplay_test_match08.json
+>  M qa/match/08/motion/f03_forward3u.png
+>  M qa/match/08/motion/f06_forward6u.png
+>  M qa/match/08/motion/f10_forward10u.png
+>  M qa/match/08/motion/montage.png
+>  M qa/match/08/motion/s_left_steer.png
+>  M qa/match/08/motion/s_right_steer.png
+
+### 🤖 Claude — 2026-11-17T14:10:14.416Z
+
+> 🔧 **Bash** `{"command": "git checkout -- qa/capture_log_1080x1920.json && git status --short qa/capture_log_1080x1920.json | wc -l", "description": "Restore the overwritten capture log"}`
+
+### 🧑 User — 2026-11-17T14:10:14.513Z
+
+> ↩︎ result: 0
+
+### 🤖 Claude — 2026-11-17T14:10:14.823Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/motion/montage.png"}`
+
+### 🧑 User — 2026-11-17T14:10:14.878Z
+
+> ↩︎ result: [image]
+

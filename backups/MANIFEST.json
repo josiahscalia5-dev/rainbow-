@@ -564,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "501320d5fbf897095ac09699a6070ac3c00f297a17356031a57618e4f88f6521"
+   "sha256": "52ba710c7d0b3b7239d17b018f273ec88af0d3ba15d42ac72309cd028a02ebc3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -620,6 +620,11 @@
    "path": "builds/rainbow-debug-T2-default.apk",
    "bytes": 7664976,
    "sha256": "7f89d6ba94642ea7bab42c889ea3586bb0c4b1cbef0cd0818fbd3567213d2969"
+  },
+  {
+   "path": "builds/rainbow-debug-match08-2026-11-17.apk",
+   "bytes": 21271427,
+   "sha256": "913d53e2b2e15e43098338e221d64afc67718f30eb87bca390a90af110f6e9fb"
   },
   {
    "path": "builds/rainbow-debug-w12-water.apk",
@@ -1298,13 +1303,18 @@
   },
   {
    "path": "qa/match/08/08_NEW_match08.png",
-   "bytes": 2313288,
-   "sha256": "4e5fa58a54a192a54efdc879ef389f99182357950d9689653cae6450cf8e73fd"
+   "bytes": 2304420,
+   "sha256": "73612f6135dd53488fcd39a57bcabf38b9bbbfac31004ccf2ef06a116c9db5a0"
+  },
+  {
+   "path": "qa/match/08/08_NEW_match08_android1080x1920.png",
+   "bytes": 3368843,
+   "sha256": "d9f2d621e215524c8bd57945d8847d8e73b391baf2ec0f19c410c0f50a9bb076"
   },
   {
    "path": "qa/match/08/08_NEW_screen_match.json",
-   "bytes": 523,
-   "sha256": "9c47c8c125bdbcdfb284efc1b479a5be954611fd2586530f6b39aa3b073cfa17"
+   "bytes": 593,
+   "sha256": "2ec41545d41572f93819e99e3efbf7e1c3e70348a6c21fb2ef88db7adb217513"
   },
   {
    "path": "qa/match/08/NOTES.md",
@@ -1313,8 +1323,8 @@
   },
   {
    "path": "qa/match/08/gameplay_test_match08.json",
-   "bytes": 14651,
-   "sha256": "8c25927d1f78ef990a7c51f1423667e2886e05f39a90e3c62d834406b9ac31af"
+   "bytes": 14649,
+   "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
   },
   {
    "path": "qa/match/08/motion/f00_checkpoint.png",
@@ -1323,18 +1333,18 @@
   },
   {
    "path": "qa/match/08/motion/f03_forward3u.png",
-   "bytes": 2063362,
-   "sha256": "eb3682fc9a5f55b391fe66fb73ef340f1efa6dbdc7c22cd93ebb5d011e42b398"
+   "bytes": 2230666,
+   "sha256": "43698a66e1b1d17eb9403bb5cc516181144f93c6477cd6f3a5c13bb797232e09"
   },
   {
    "path": "qa/match/08/motion/f06_forward6u.png",
-   "bytes": 1781563,
-   "sha256": "9b471bd719201f27b78f24e070a60e511b509241714637b8d6e6afd9b6cca1b5"
+   "bytes": 2159643,
+   "sha256": "16ebb875ef264fb020f6ce2fd84feb628da0870ca17f22239af13c9a87594985"
   },
   {
    "path": "qa/match/08/motion/f10_forward10u.png",
-   "bytes": 1786028,
-   "sha256": "3fb9b8742bcd9c38d161e4dc75bfb7ca5735a80e10c6a7deec0d0d213af99467"
+   "bytes": 2062428,
+   "sha256": "b1bb1d8fe06cfda3b5bc1cc2695b1789cfef827c39af7833176e3ff03b951fc2"
   },
   {
    "path": "qa/match/08/motion/f15_forward15u.png",
@@ -1343,8 +1353,8 @@
   },
   {
    "path": "qa/match/08/motion/montage.png",
-   "bytes": 1651525,
-   "sha256": "c099fd74e69df04fbac29837cc7ba43367631af89f86b7ee2b08aaf792b53c04"
+   "bytes": 1879329,
+   "sha256": "16447ff7bd663b30faf8aba0464656404dad83092740205eb6edc3db016035d8"
   },
   {
    "path": "qa/match/08/motion/motion.json",
@@ -1353,13 +1363,18 @@
   },
   {
    "path": "qa/match/08/motion/s_left_steer.png",
-   "bytes": 1838945,
-   "sha256": "425f013d9dd534da1be4aa7b77e2052ce94520ea9a6fcbd34b4b10bf18e4e00f"
+   "bytes": 2145894,
+   "sha256": "25b3abd6e2ba7724b54ef4a7cf76d6d1ac90a21590f05a0e4f476fca23520e6e"
   },
   {
    "path": "qa/match/08/motion/s_right_steer.png",
-   "bytes": 1828416,
-   "sha256": "c078e44cd23ead8e6ffa3176d10aaeb8dcbc182e66ac2c300225d35cb11f1c7b"
+   "bytes": 2148488,
+   "sha256": "d07187a9bd619ef60a97c72176167435950f21e450539a3804738bc5aa5d5124"
+  },
+  {
+   "path": "qa/match/08/scenery_metrics_BEFORE_FINAL.json",
+   "bytes": 1031,
+   "sha256": "40a66131239f1e031b32d495cfc8a9af21a899b5b9c7b199625dea76c137e881"
   },
   {
    "path": "qa/match/08/scenery_metrics_BEFORE_NEW.json",
@@ -7813,8 +7828,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 12410,
-   "sha256": "91ab94d34de57ddc2fb7762996e7315d3bab854be6ab4ef0ea146b98c45cb457"
+   "bytes": 12528,
+   "sha256": "c5bb03eaf037cf9696a528a32371fdf005def642044ce5dbc0ddab50d5657233"
   },
   {
    "path": "src/gameplay/input.ts",
