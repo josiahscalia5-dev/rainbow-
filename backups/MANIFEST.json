@@ -679,7 +679,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11495,
-   "sha256": "650e5ef12935f3765e07ecd32a783b13167e9ed27f4fb8a7e2bae163308f7514"
+   "sha256": "4d38fcfc608eeb2be303a2caf248c78dcb766a5c2b3af6c62359c6e375048600"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -735,6 +735,11 @@
    "path": "builds/rainbow-debug-07-2026-11-17-r3.apk",
    "bytes": 26977292,
    "sha256": "a2ad08180fae22b05ee75bb0659e61c11ef7fd0da6fb2e1f0c23d9650bc32e59"
+  },
+  {
+   "path": "builds/rainbow-debug-07-2026-11-17-r4.apk",
+   "bytes": 28247605,
+   "sha256": "5a918a8c45f0d634010160fcfccbf0291296199108a48f3598cb77d791591689"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1418,18 +1423,18 @@
   },
   {
    "path": "qa/match/07/NOTES.md",
-   "bytes": 5398,
-   "sha256": "1d2cab6c87df7a9f31effab35bd58440766c667c53baea9b285f983e8174392c"
+   "bytes": 6459,
+   "sha256": "cc0053b234bd8235385c23bb4df3fc2081b7b5ddb7090f8a32d53f4bcca7b8b0"
   },
   {
    "path": "qa/match/07/SHARED_CHANGES.md",
-   "bytes": 2464,
-   "sha256": "5846ce93f682d8a4d4f5cb9c847668c4102fdd3cd1fdc1c0661a28acbc4e7e91"
+   "bytes": 3197,
+   "sha256": "1b6f4036bd23ecc56478acc55f7d8883a062a52c12fff5a76ab76281ee334091"
   },
   {
    "path": "qa/match/07/STATUS.md",
-   "bytes": 3236,
-   "sha256": "470fe9c46c122afedd991ce994542f4161f5f52c015778b7146c9b57df904c9c"
+   "bytes": 4224,
+   "sha256": "105704363e729d7540c15986a42a8b056014271694dc557d08c01a68b8e18305"
   },
   {
    "path": "qa/match/07/cam/approved_before_bestfit_halfres.png",
@@ -2015,6 +2020,21 @@
    "path": "qa/match/07/m2r4/motion_k5/s_right_steer.png",
    "bytes": 2321379,
    "sha256": "e63b83571987f122a583733292d13cf9b21254ea7c7577bd92906983e8c23e29"
+  },
+  {
+   "path": "qa/match/07/m2r4/pictures/1_APPROVED_07.png",
+   "bytes": 494067,
+   "sha256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9"
+  },
+  {
+   "path": "qa/match/07/m2r4/pictures/2_BEFORE_M1_07.png",
+   "bytes": 2408044,
+   "sha256": "ca3c77a97d228ba901f1a5c444ee28efb40c920b3ffb5b22568630164c934a15"
+  },
+  {
+   "path": "qa/match/07/m2r4/pictures/3_NEW_M2_07.png",
+   "bytes": 2629856,
+   "sha256": "fcf1af3e022828ef40f79f6026a6d368e7e7d85b7ef84a782b8cd448567858a4"
   },
   {
    "path": "qa/match/07/m2r4/proofs_0px_r4.json",
