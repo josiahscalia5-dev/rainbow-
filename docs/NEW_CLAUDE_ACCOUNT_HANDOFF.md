@@ -5,6 +5,11 @@ its newest commit; `ccr-067047f0-up5d1m` @ `7d1318ec` = r4 lead, its last commit
 round-6 order: `docs/briefs/2026-11-17-r6/USER_DECISIONS.md` (≥ 8.5/10 THROUGHOUT GAMEPLAY; 06 major priority, then 08).
 If account 6 runs out: `-c7` branches from each NEWEST `-c6` tip (or `-c5` tip where no `-c6` exists).
 
+## PAUSED BY THE USER ~22:30 UTC (save credits)
+Both specialists were told to checkpoint, push and stop (take the NEWEST commit of each `-c6` branch). Marble CDN host
+still blocked (the allowlist request was denied at the prompt); APK builds still fail on intermittent Maven Central 404s
+through this network (details: `backups/AGENTS_STATUS.json` → `round6_account6.paused_by_user_2026_11_17_2230`).
+
 ## Branch map (round 6; nothing merged into production, no -c5 or older branch written)
 | Role | Branch | Started at | State |
 |---|---|---|---|
