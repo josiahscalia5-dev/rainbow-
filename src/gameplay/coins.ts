@@ -19,7 +19,10 @@ const COINS05 = on05('coins05');
  * approved coin's edge-band colours; both are drawn unlit through the post-chain inverse PROJ05_INVERSE, so the screen
  * shows the approved yellow-gold instead of the tone-mapped orange. The game waits for the texture before `ready`.
  */
-const C05LOOK = { thick: 0.13 };
+/** measured on the approved coins 1-4 (silhouettes, qa/pilot05/full_reference_match/coins/measure_coins.py): face height /
+ *  width 0.76 -> 0.66 and edge band / width 0.11-0.13 => thickness ~0.18 u per 1-u coin and ~0.1 rad more lean-back than
+ *  C05.tilt (game v1: faces 6-9 px too tall, edges 2-5 px too thin) */
+const C05LOOK = { thick: 0.18, tilt: 0.9 };
 let face05: THREE.Texture | null = null;
 if (COINS05) {
   proj05Pending.push(new Promise<void>((res) => {
