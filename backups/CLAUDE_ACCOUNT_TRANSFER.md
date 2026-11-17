@@ -2,6 +2,8 @@
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
 
+**Account transfer #2 of this session (2026-11-17 ~00:55 UTC): start from `backups/HANDOFF_NEW_ACCOUNT.md`.**
+
 ## ▶ NEWEST (2026-11-16 23:51 → 2026-11-17, NEW Claude account, session `018Sg3AU…`, branch `ccr-694bda6a-x58ntq`) — READ THIS FIRST
 The previous account (branch `claude/approved-screen-implementation-g3loqu`, last commit `b81cc34`, 23:44 UTC) hit its limit.
 * **Transfer:** the session started on the OLD GitHub default branch (`81e639e`: no bootstrap, no Blender setup; its

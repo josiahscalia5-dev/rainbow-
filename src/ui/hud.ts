@@ -18,7 +18,7 @@ import { on05 } from '../vfx/waterRibbon';
  * A global HUD change: with the switch on, every ride screen shows this layout (default build unchanged).
  */
 const HUD05 = on05('hud05');
-const U = (px: number) => `calc(var(--u) * ${(px / 15.36).toFixed(4)})`;
+const U = (px: number) => `calc(var(--u) * ${(px / 15.36 + 1e-5).toFixed(5)})`; // +1e-5: Chrome floors border widths
 /** approved icon sprite boxes (frame px; assets/textures/hud05/hud05_icons.json) */
 const ICON05 = {
   heart05: { url: new URL('../../assets/textures/hud05/heart05.png', import.meta.url).href, box: [60, 21, 94, 74] },
@@ -29,7 +29,7 @@ const ICON05 = {
 /** hud05 tuning (measured against the approved glyph boxes with qa/pilot05/full_reference_match/hud/harness.mjs) */
 const H05 = {
   bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 2 },
-  num: { size: 51.6, weight: 800, track: 0.0, hX: 165, cX: 498, top: 25 },
+  num: { size: 53, weight: 800, track: 0.0, hX: 165, cX: 498, top: 28.5 },
   banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, track: 0.0, skew: -8, italic: true },
 };
 /** absolute position inside the bar's padding box, from approved frame px */
@@ -58,7 +58,7 @@ const CSS05 = () => `
   border: 0; border-radius: 50%; background: none; gap: 0; padding: 0; }
 #hud.m05 .p05 img { position: absolute; inset: 0; width: 100%; height: 100%; }
 #hud.m05 .banner { left: ${U(H05.banner.cx)}; top: calc(${U(H05.banner.y0)} + env(safe-area-inset-top)); height: ${U(H05.banner.h)};
-  min-width: ${U(H05.banner.minW)}; box-sizing: border-box; padding: 0 ${U(24)}; justify-content: center; border-radius: ${U(H05.banner.h / 2)};
+  min-width: ${U(H05.banner.minW)}; box-sizing: border-box; padding: 0 ${U(12)}; justify-content: center; border-radius: ${U(H05.banner.h / 2)};
   background: linear-gradient(180deg, rgb(99,3,147) 0%, rgb(96,3,144) 50%, rgb(94,3,140) 100%);
   border: ${U(2.5)} solid rgb(250,214,168); box-shadow: inset 0 0 0 ${U(1)} rgba(205,112,86,0.85); }
 #hud.m05 .banner span { font-size: ${U(H05.banner.size)}; letter-spacing: ${U(H05.banner.track)}; font-style: ${H05.banner.italic ? 'italic' : 'normal'};

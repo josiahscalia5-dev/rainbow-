@@ -39,14 +39,16 @@ export const HAT05 = {
   /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body */
   shiftX: -0.028,
   /** extra backward tilt of the beanie (rad, about X; − = top toward his back) */
-  tilt: -0.05,
+  tilt: 0,
   /** crown dome shoulder taper (GLB build 0.18: r ∝ (1 − taper·t)); the approved dome is fuller near the top */
   crownTaper: 0.0,
   /** folded cuff band height */
   cuffH: 0.226,
   /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale */
   pomDX: -0.057,
-  pomDY: -0.05,
+  pomDY: -0.083,
+  /** toward his back (−Z ≈ toward the rear chase camera): the approved pom-pom overhangs the crown's back slope */
+  pomDZ: -0.06,
   pomScale: 1.0,
   /** star: extra offset in hat-local units after following the cuff top */
   starDY: 0.069,
@@ -196,6 +198,7 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   const pom = get('pom')!;
   pom.position.y += dCuff + (HAT05.crownH - D.crownH) + HAT05.pomDY;
   pom.position.x += HAT05.pomDX;
+  pom.position.z += HAT05.pomDZ;
   pom.scale.setScalar(HAT05.pomScale);
 
   // ---- fur clumping ----

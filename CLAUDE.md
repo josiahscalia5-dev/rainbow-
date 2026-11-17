@@ -11,7 +11,7 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh` yourself; from a branch without it:
    `git fetch origin ccr-694bda6a-x58ntq && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
-2. Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
+2. Read **`backups/HANDOFF_NEW_ACCOUNT.md`** first, then `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
    `backups/TOOL_MANIFEST.json` and the current briefs: **`qa/pilot05/proj/`** (water texture projection — `NOTES.md` when it
    exists, `BRIEF_SPECIALIST1_VERBATIM.md`, `BRIEF_SPECIALIST2.md`), `qa/pilot05/wave12/NOTES.md`, `qa/pilot05/COORDINATION_WAVE9B.md`.
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup

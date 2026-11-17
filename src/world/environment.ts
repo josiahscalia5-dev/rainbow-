@@ -495,17 +495,7 @@ export function buildEnvironment(course: Course): Environment {
     // the far river built on them — stay exactly as they are); the far wall's upper part displaced like the real one
     const uRing = (n: number) => (E05 ? ft.uOfZ(E05.farDv[n] - D0) : knots[n + 1][0]);
     const warpFar: TubeWarp | undefined = E05 ? (_Z, th, out) => out.set(E05.sideFar * e05Weight(th), 0) : undefined;
-    if (E05 && !PROJWALL05) {
-      const dZdu = (u: number) => (ft.zOfU(u + 0.01) - ft.zOfU(u - 0.01)) / 0.02;
-      const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
-      const segs: WallSeg[] = [{ v0: sF05 - 1, v1: sF05 + uRing(0) - hwF / dZdu(uRing(0)), row: PT_ROW.BC, t0: ptSeam05(E05.farDv[0], D0), t1: 1 }];
-      [PT_ROW.CD, PT_ROW.DE, PT_ROW.EF, PT_ROW.FG].forEach((row, n) => segs.push({ v0: sF05 + uRing(n) + hwF / dZdu(uRing(n)), v1: sF05 + uRing(n + 1) - hwF / dZdu(uRing(n + 1)), row, t0: 0, t1: 1 }));
-      const uEnd = ft.uOfZ(zEnd);
-      segs.push({ v0: sF05 + uRing(4) + hwF / dZdu(uRing(4)), v1: sF05 + uEnd, row: PT_ROW.GX, t0: 0, t1: 0.07 });
-      segs.push({ v0: sF05 + uEnd, v1: 1e9, row: PT_ROW.GX, t0: 0.07, t1: 0.07 });
-      withProj05Wall(farWallMat, segs, { anchor: sF05, period: bay05 }, 'far');
-    }
-    if (PROJWALL05 && E05) {
+    if (E05) {
       const dZdu = (u: number) => (ft.zOfU(u + 0.01) - ft.zOfU(u - 0.01)) / 0.02;
       const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
       const segs: WallSeg[] = [{ v0: sF05 - 1, v1: sF05 + uRing(0) - hwF / dZdu(uRing(0)), row: PT_ROW.BC, t0: ptSeam05(E05.farDv[0], D0), t1: 1 }];
