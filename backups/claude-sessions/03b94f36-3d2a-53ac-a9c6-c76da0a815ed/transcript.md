@@ -1477,3 +1477,58 @@ One unexpected result: `ccr-b0757dec-dj6l1o` moved from `a8c03f0` to `65f3a89` d
 > json ok
 > AUTOSAVE OK | branch ccr-9c4a8ad6-xovgsx | scheduler daemon | last verified backup 2026-11-17T11:51:07+00:00 (0.4 min ago) | local a0fc20f remote a0fc20f (match) | uncommitted 0
 
+### 🤖 Claude — 2026-11-17T11:52:00.746Z
+
+RAINBOW GITHUB BACKUP VERIFIED
+
+**Final save**
+- **Branches:** `ccr-61131b9d-uj0oqb` (yours) and `ccr-9c4a8ad6-xovgsx` (this session's) are at the same commit.
+- **Commit:** `a0fc20f81cee44ae24df667c4a6911d9f9d9aa2d`. Local and GitHub match on both branches, checked directly against GitHub.
+- **History kept:** your branch was only moved forward. Your earlier verified commit `8620901…` is still included, and nothing was overwritten or merged.
+- **Nothing left unsaved:** no uncommitted files and no untracked files.
+- **Git LFS:** all 36 model, texture and video files are real files locally, and a test push found none missing on GitHub.
+- **Your approved pictures:** all 13 match their checksums. Ten specialist definitions are saved, the TypeScript check passes, and the five-minute autosave is running and matches GitHub.
+
+**Your Marble API key — please read**
+- **Not used and not saved.** I didn't use the key, and it is in no file and no commit (checked). The automatic transcript backup now blanks it out, and the autosave refuses to save any file that still contains it.
+- **Please replace it.** It has been in this chat, so create a new key on World Labs and disable this one.
+- **It wouldn't speed things up.** Your earlier Marble test showed it can't reproduce the exact layout of an approved picture. Your Screen 05 is closer than Marble got because the game uses your own artwork.
+- **If you want a Marble job later:** I'll name the job and its credits first. You then type the new key into the secure form, never into the chat.
+
+**Two lines of work — your decision needed, nothing merged**
+- **Line A** (`ccr-61131b9d-uj0oqb`): the Screen 07 measurements, the audit of screens 02–10, and some Screen 05 water switches.
+- **Line B** (`ccr-b0757dec-dj6l1o`): your big Screen 05 visual match. It reached **86.9 %** of the screen within close colour range of your approved picture, up from 57 %. It has 13 times more work than line A.
+- **Line B is still running:** another Claude session on your old account is still saving to line B. At 11:48 UTC it added a full-game Screen 05 video. Let it finish saving before you close it.
+- **A test merge shows 14 conflicting files.** One is a game code file, and both lines have their own version of the "sharp riding water". You need to choose which one to keep.
+- **Safe plan when you say yes:** first show you both Screen 05 versions next to your approved picture. Then build on line B in a new branch, and bring in line A's Screen 07 work. The steps are in the handoff file.
+
+**Specialists**
+- **Running in this session:** none.
+- **Line B — two unfinished:**
+  - tunnel walls/rings: needs re-measuring, then two small far-left patches
+  - splash/bubbles: its listed "Remaining" items
+- **Line B — Benny's look:** round 1 is done (73 %); round 2 (fur, colour, pom-pom) is waiting.
+- **Line B — HUD and coins:** finished.
+- **Line A — Screen 06 specialist:** never started.
+- Each one's exact next step is in `backups/AGENTS_STATUS.json`.
+
+**What I changed**
+- **Handoff file:** `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md` now records your visual-only priority word for word, both lines, the conflicts, the specialists, the setup, and what needs your sign-in.
+- **New-account prompt:** `backups/START_NEW_CLAUDE_ACCOUNT.md` is rewritten. The old one still said branches merge automatically.
+- **No automatic merging:** confirmed off on both lines, and one stale comment that said otherwise is fixed.
+- **Rules file:** `CLAUDE.md` now has your 6-video / 5-playable plan and the rule to work on scenery and look only.
+- **Protected branches:** finished branches and all `codex/*` branches are now protected from autosave.
+
+**Gaps and sign-ins**
+- **World Labs:** this environment doesn't allow `api.worldlabs.ai` and holds no key, so the Marble check failed on the network, not on a key. Nothing in the game needs it.
+- **Atlas connector:** not connected in this session.
+- **context7:** failed to connect (optional).
+- **Earlier backup gaps:** your previous session ended without a final backup, and overnight there were gaps of up to 4.3 hours while no session was open.
+- **On the new account, set up again:**
+  - GitHub, plus the Claude GitHub App on the repo
+  - a cloud environment: allowed hosts `download.blender.org`, `dl.google.com`, `lfs.github.com`; setup script `scripts/cloud-env-setup.sh`
+  - World Labs only if you approve a paid job
+- **After this message:** the autosave may add one transcript-only save to `ccr-9c4a8ad6-xovgsx`. Your game files are the same on both branches.
+
+**On the new account**, paste the prompt from `backups/START_NEW_CLAUDE_ACCOUNT.md`. It restores everything without merging, shows you both Screen 05 versions, and then works only on making screens 04–08 look like your approved pictures.
+
