@@ -5595,3 +5595,185 @@ SAVE ALL WORK TO GITHUB.
 
 START IMPLEMENTING THE ACTUAL GAME, NOT ANOTHER ROUND OF GENERAL PLANNING.
 
+### 🤖 Claude — 2026-11-17T10:46:09.286Z
+
+This is a big job, so I'll do it in the controlled order you asked for: verify the starting point, audit all eight screens against their approved pictures, then start with Screens 04 and 06. First I'll check the branch, the autosave, the two videos and `?match05=1`.
+
+### 🤖 Claude — 2026-11-17T10:46:11.286Z
+
+> 🔧 **Bash** `{"command": "git rev-parse --abbrev-ref HEAD && git rev-parse HEAD && git ls-remote origin refs/heads/ccr-61131b9d-uj0oqb && git status --short | wc -l && python3 -I scripts/autosave-status.py; echo \"--- match05:\"; grep -rn \"match05\" src scripts tools 2>/dev/null | head -5; echo \"--- flag05 impl:\"; grep -n \"export function flag05\" -A8 src/vfx/waterRibbon.ts | head -14", "description": "Verify branch, autosave and match05 switch"}`
+
+### 🧑 User — 2026-11-17T10:46:12.273Z
+
+> ↩︎ result: ccr-61131b9d-uj0oqb
+> f626a99d360f150f8f4ab8fddcc5f4e5e3f7ff0d
+> f626a99d360f150f8f4ab8fddcc5f4e5e3f7ff0d	refs/heads/ccr-61131b9d-uj0oqb
+> 0
+> AUTOSAVE OK | branch ccr-61131b9d-uj0oqb | scheduler daemon | last verified backup 2026-11-17T10:45:18+00:00 (0.9 min ago) | local f626a99 remote f626a99 (match) | uncommitted 0
+> --- match05:
+> --- flag05 impl:
+
+### 🤖 Claude — 2026-11-17T10:46:13.043Z
+
+> 🔧 **Bash** `{"command": "ls docs/ 2>/dev/null; echo \"--- FLOW_VIDEO.md head:\"; sed -n 1,60p docs/FLOW_VIDEO.md 2>/dev/null; echo \"--- video files in repo:\"; git ls-files | grep -iE \"\\.(mp4|webm|mov|m4v)$\" | grep -v \"^qa/\" | head -20; ls -la public 2>/dev/null | head; ls references/", "description": "Check video hand-over docs and video assets"}`
+
+### 🧑 User — 2026-11-17T10:46:13.124Z
+
+> ↩︎ result: FLOW_VIDEO.md
+> characters
+> path_graph.md
+> reference_inventory.md
+> vfx
+> --- FLOW_VIDEO.md head:
+> # Google Flow opening / ending videos
+> 
+> The game can play the user's Google Flow videos as silent cinematics and hand over to the real-time 3D
+> game without a cut. Gameplay (03–10) is always real-time 3D; the videos only cover the cinematics.
+> 
+> ## Where to put the files
+> 
+> | File | Plays | Hand-off |
+> |---|---|---|
+> | `public/video/intro.mp4` (or `.webm`) | at launch and on Replay, instead of the real-time 01 | the live 3D intro is held at the "girl walks away" moment (`T.cp01`) under the video, then revealed by a 0.7 s cross-fade and continued in real time: 02 Whirlpool Tumble → 03 ride |
+> | `public/video/ending.mp4` (or `.webm`) — optional | when Benny reaches 11, before the victory frame | the real-time 11 frame (the official cartoon girl holds the towel, Benny hidden, **FINAL SPIN COMPLETE**) is revealed by a cross-fade |
+> 
+> If a file is missing, the real-time 3D cinematic plays instead. Videos are always muted and inline.
+> Tap skips the video (after 0.6 s).
+> 
+> ## Recommended export
+> 
+> * Portrait 9:16 (1080×1920 or 720×1280) is best. Any ratio works edge to edge with no black bars and no stretching
+>   (`c …[+2785 chars]
+
+### 🤖 Claude — 2026-11-17T10:46:23.196Z
+
+> 🔧 **Bash** `{"command": "ls -la public/video/ && cat public/video/* 2>/dev/null | head -5; echo \"---\"; grep -rn \"flag05\\b\\|function flag05\\|const flag05\\|function q05\\|const q05\" src/vfx/waterRibbon.ts | head -6", "description": "Inspect video folder and switch parser"}`
+
+### 🧑 User — 2026-11-17T10:46:23.251Z
+
+> ↩︎ result: total 12
+> drwxr-xr-x 2 root root 4096 Nov 16 20:33 .
+> drwxr-xr-x 3 root root 4096 Nov 16 20:33 ..
+> -rw-r--r-- 1 root root  158 Nov 16 20:33 PUT_FLOW_VIDEOS_HERE.txt
+> Drop the Google Flow clips here: intro.mp4 (required for the video opening) and ending.mp4 (optional).
+> See docs/FLOW_VIDEO.md. Files are stored with Git LFS.
+> ---
+> 151:const q05 = (key: string): boolean => {
+> 160:export const flag05 = q05;
+
+### 🤖 Claude — 2026-11-17T10:46:25.287Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 140, "limit": 24}`
+
+### 🧑 User — 2026-11-17T10:46:25.313Z
+
+> ↩︎ result: 140	 * colours sampled from the approved image and solved through the post chain), flow-aligned brushed streaks with
+> 141	 * aqua / white-pink cores, deep-blue outer water, glossy near swells; the far river block (far05.ts / materials.ts)
+> 142	 * and the 05 splash follow the same switch. Off (default): every shader and geometry is byte-for-byte the previous
+> 143	 * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+> 144	 * Guarded read: false in vite-node / workers (no `location`).
+> 145	 */
+> 146	/**
+> 147	 * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+> 148	 * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+> 149	 */
+> 150	const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> 151	const q05 = (key: string): boolean => {
+> 152	  try {
+> 153	    if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+> 154	  } catch {
+> 155	    /* no location (vite-node / workers) */
+> 156	  }
+> 157	  return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(ke …[+375 chars]
+
+### 🤖 Claude — 2026-11-17T10:46:26.680Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"get('proj\\|get(\\\"proj\\|qs.get('projflow05')\\|qs.get('projnear05')\\|qs.get('projglint05')\\|qs.get('projbank05')\\|get('projbank05')\" src | cut -c1-160 | head -20", "description": "Find every direct proj05 switch read"}`
+
+### 🧑 User — 2026-11-17T10:46:26.725Z
+
+> ↩︎ result: src/world/environment.ts:518:    if (PROJ05 && (typeof location === 'undefined' || new URLSearchParams(location.search).get('projbank05') !== '0')) {
+> src/vfx/waterRibbon.ts:1686:  const FLOW2 = qs.get('projflow05') === '2';
+> src/vfx/waterRibbon.ts:1687:  u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1
+> src/vfx/waterRibbon.ts:1693:  const NEAR = qs.get('projnear05') === '1';
+> src/vfx/waterRibbon.ts:1700:  u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };
+
+### 🤖 Claude — 2026-11-17T10:46:38.965Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport glob\nfor p in sorted(glob.glob('references/*.png')): im=Image.open(p); print(p.split('/')[-1], im.size)\"; grep -n \"NATIVE\" scripts/capture.mjs | head -3; S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && rm -rf $S/audit && mkdir -p $S/audit/before && time node scripts/capture.mjs 02 03 04 06 07 08 09 10 --out=$S/audit/before 2>&1 | cut -c1-150; git checkout qa/capture_log.json; ls $S/audit/before", "description": "Capture all eight screens from the real game", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T10:48:30.198Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png (864, 1536)
+> 02_mascot_tumbles_in_whirlpool.png (864, 1536)
+> 03_whirlpool_twirl.png (727, 1536)
+> 04_through_the_five_arrows.png (864, 1536)
+> 05_flow_into_the_current.png (864, 1536)
+> 06_crest_the_rinse_arch.png (864, 1536)
+> 07_dive_the_washer_tube.png (864, 1536)
+> 08_final_spin_chamber.png (864, 1536)
+> 09_ride_the_final_wave.png (864, 1536)
+> 10_slide_into_hiding.png (864, 1536)
+> 11_safely_home_final_victory.png (864, 1536)
+> 14:const NATIVE = { '03': [727, 1536] };
+> 29:    const [w, h] = size ?? NATIVE[id] ?? [864, 1536];
+> 02 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/audit/before/02.png {"stage":"02","s":8.756,"y":1.181,"calls"
+> 03 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/audit/before/03.png {"stage":"03","s":48.495,"y":-13.425,"cal
+> 04 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/audit/before/04.png {"stage":"04","s":77.413,"y":-21.896,"cal
+> 06 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/audit/before/06.png {"stage":"06","s":198.924,"y":-37.452,"ca
+> 07 → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4- …[+671 chars]
+
+### 🤖 Claude — 2026-11-17T10:48:48.411Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/qa/screen_match.py", "content": "\"\"\"Any screen — APPROVED reference vs real-game capture, measured three ways (never one invented 'fidelity score'):\n  FULL      every pixel: mean |dRGB| (0-255), share within 10 / 20 levels, luminance SSIM (7x7 Gaussian)\n  BELOWHUD  the same below the HUD bar + title (rows >= 13 % of the height)\n  LAYOUT    both images blurred (sigma 8 px) first: colour + composition independent of fine detail / exact edges\n            (mean |dRGB| and share within 20 levels) — a big gap between FULL and LAYOUT means the right thi …[+2634 chars]`
+
+### 🧑 User — 2026-11-17T10:48:48.489Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/qa/screen_match.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T10:48:53.666Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p $S/audit/json && for id in 02 03 04 06 07 08 09 10; do ref=$(ls references/${id}_*.png); python3 -I tools/qa/screen_match.py $ref $S/audit/before/$id.png --json=$S/audit/json/$id.json --label=$id; done; python3 -I - <<EOF\nfrom PIL import Image\nimport glob\nS='$S'\nrefs={i:glob.glob(f'references/{i}_*.png')[0] for i in ['02','03','04','06','07','08','09','10']}\npairs=[('02','03'),('04','06'),('07','08'),('09','10')]\nfor a,b in pairs:\n    tiles=[]\n    for i in (a,b):\n        for p  …[+521 chars]`
+
+### 🧑 User — 2026-11-17T10:49:06.069Z
+
+> ↩︎ result: 02     FULL |d|  75.1 <=20 0.050 SSIM 0.199 | BELOWHUD |d|  75.8 <=20 0.051 | LAYOUT |d|  66.1 <=20 0.059 | mean RGB approved [179.0, 126.5, 214.3] game [194.6, 122.5, 194.6]
+> 03     FULL |d|  68.0 <=20 0.088 SSIM 0.282 | BELOWHUD |d|  68.1 <=20 0.085 | LAYOUT |d|  59.9 <=20 0.069 | mean RGB approved [179.2, 152.0, 192.0] game [219.9, 186.8, 200.5]
+> 04     FULL |d|  74.0 <=20 0.064 SSIM 0.318 | BELOWHUD |d|  76.5 <=20 0.052 | LAYOUT |d|  70.1 <=20 0.047 | mean RGB approved [179.3, 132.6, 168.6] game [209.6, 160.6, 195.0]
+> 06     FULL |d|  81.6 <=20 0.050 SSIM 0.177 | BELOWHUD |d|  84.3 <=20 0.041 | LAYOUT |d|  70.2 <=20 0.059 | mean RGB approved [152.8, 131.3, 204.3] game [169.5, 78.7, 195.1]
+> 07     FULL |d|  74.3 <=20 0.067 SSIM 0.187 | BELOWHUD |d|  75.9 <=20 0.058 | LAYOUT |d|  59.4 <=20 0.085 | mean RGB approved [165.5, 116.4, 188.7] game [199.1, 124.0, 204.0]
+> 08     FULL |d|  84.2 <=20 0.040 SSIM 0.204 | BELOWHUD |d|  86.3 <=20 0.034 | LAYOUT |d|  75.9 <=20 0.022 | mean RGB approved [168.4, 108.6, 170.2] game [203.2, 125.0, 226.9]
+> 09     FULL |d|  78.3 <=20 0.073 SSIM 0.218 | BELOWHUD |d|  79.5 <=20 0.071 | LAYOUT |d|  69.0 <=20 0.070 | mean RGB approved [140.6, 128.0, 198.2] gam …[+270 chars]
+
+### 🤖 Claude — 2026-11-17T10:49:11.271Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/audit/pair_04_06.png"}`
+
+### 🧑 User — 2026-11-17T10:49:11.312Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:49:11.979Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/audit/pair_02_03.png"}`
+
+### 🧑 User — 2026-11-17T10:49:12.012Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:49:12.630Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/audit/pair_07_08.png"}`
+
+### 🧑 User — 2026-11-17T10:49:12.667Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:49:13.238Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/audit/pair_09_10.png"}`
+
+### 🧑 User — 2026-11-17T10:49:13.307Z
+
+> ↩︎ result: [image]
+
