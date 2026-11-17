@@ -339,3 +339,136 @@ Tests pass (8/8, 91 coins / 2,240, drop 61 u). Now doing the pixel-identity chec
 
 > 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/base; S=$(dirname $B)/px; mkdir -p $S; head -c 60 $B/assets/textures/match08/plate08_hybrid.png | file -; \n(cd $B && node scripts/capture.mjs --out=$S/base_default >$S/l1 2>&1 && node scripts/capture.mjs 08 --q=match08=1 --out=$S/base_m08 >$S/l2 2>&1)\ncd /home/user/rainbow- && node scripts/capture.mjs --out=$S/head_default >$S/l3 2>&1; node scripts/capture.mjs 08 --q=match08=1 --out=$S/head_m08 >$S/l4 2>&1; node scripts/capture.mjs 08 --q=match08=1\\&camclear=1 --out=$S/head_m08cc >$S/l5 2>&1; ls …[+80 chars]`
 
+### 🧑 User — 2026-11-17T16:47:38.793Z
+
+> ↩︎ result: /dev/stdin: PNG image data, 1536 x 2731, 8-bit/color RGB, non-interlaced
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/l1
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/l2
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/l3
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/l4
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/l5
+> 
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/base_default:
+> 01.png
+> 02.png
+> 03.png
+> 04.png
+> 05.png
+> 06.png
+> 07.png
+> 08.png
+> 09.png
+> 10.png
+> 11.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/base_m08:
+> 08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_default:
+> 01.png
+> 02.png
+> 03.png
+> 04.png
+> 05.png
+> 06.png
+> 07.png
+> 08.png
+> 09.png
+> 10.png
+> 11.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_m08:
+> 08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_m08cc:
+> 08.png
+
+### 🤖 Claude — 2026-11-17T16:47:43.344Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px; cat > $S/../pxdiff.py <<'EOF'\nimport sys,numpy as np\nfrom PIL import Image\na=np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(int);b=np.asarray(Image.open(sys.argv[2]).convert('RGB')).astype(int)\nif a.shape!=b.shape: print(sys.argv[2],'SHAPE',a.shape,b.shape);sys.exit()\nd=(np.abs(a-b).max(2)>0).sum();print(f\"{sys.argv[2].split('px/')[-1]}: {d} px different\")\nEOF\nfor i in 01 02 03 04 05 06 07 08 09 10 11; do python3 -I $S/../pxdiff.py $S/base_default/$i.png $S/head_default/$i.p …[+199 chars]`
+
+### 🧑 User — 2026-11-17T16:47:47.303Z
+
+> ↩︎ result: head_default/01.png: 0 px different
+> head_default/02.png: 0 px different
+> head_default/03.png: 33450 px different
+> head_default/04.png: 70991 px different
+> head_default/05.png: 65683 px different
+> head_default/06.png: 49429 px different
+> head_default/07.png: 49712 px different
+> head_default/08.png: 39519 px different
+> head_default/09.png: 54667 px different
+> head_default/10.png: 50367 px different
+> head_default/11.png: 50808 px different
+> head_m08/08.png: 39489 px different
+> head_m08cc/08.png: 95157 px different
+
+### 🤖 Claude — 2026-11-17T16:47:49.069Z
+
+Differences found — first checking whether the capture itself is repeatable (same build twice).
+
+### 🤖 Claude — 2026-11-17T16:47:51.222Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/base; S=$(dirname $B)/px; (cd $B && node scripts/capture.mjs 03 08 --out=$S/base_default2 >/dev/null 2>&1); for i in 03 08; do python3 -I $S/../pxdiff.py $S/base_default/$i.png $S/base_default2/$i.png; done; cd $B && git status --short | head; git -C $B log -1 --format=%h", "description": "Check capture determinism on baseline", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T16:48:20.165Z
+
+> ↩︎ result: base_default2/03.png: 0 px different
+> base_default2/08.png: 0 px different
+>  M qa/capture_log.json
+> ?? node_modules
+> 5965a01
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:48:22.618Z
+
+> 🔧 **Bash** `{"command": "git diff --stat 5965a01 HEAD -- src assets public index.html vite.config.ts | tail -15; git status --short | head", "description": "List source changes since baseline"}`
+
+### 🧑 User — 2026-11-17T16:48:22.681Z
+
+> ↩︎ result: src/game/Game.ts      |  12 ++++-
+>  src/game/camClear.ts  | 142 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  src/game/cameraRig.ts |  58 ++++++++++++++++++++-
+>  3 files changed, 209 insertions(+), 3 deletions(-)
+>  M qa/capture_log.json
+
+### 🤖 Claude — 2026-11-17T16:48:30.359Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/base; cd $B && git lfs ls-files | awk '{print $3}' | while read f; do head -c 40 \"$f\" | grep -q \"git-lfs\" && echo STUB $f; done | head; cd /home/user/rainbow- && git lfs ls-files | awk '{print $3}' | while read f; do head -c 40 \"$f\" | grep -q \"git-lfs\" && echo HSTUB $f; done | head; S=$(dirname $B)/px; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/base_default/03.png').convert('RGB')).astype(int);b=np.asarray(Image.open('$S/head_default/03.png'). …[+208 chars]`
+
+### 🧑 User — 2026-11-17T16:48:31.014Z
+
+> ↩︎ result: (1536, 727) 28 174 113 615 233 59.39808669656203
+
+### 🤖 Claude — 2026-11-17T16:48:33.405Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px; python3 -I -c \"\nfrom PIL import Image\nfor n in ['base_default','head_default']:\n  Image.open('$S/'+n+'/03.png').crop((0,0,727,220)).save('$S/'+n+'_03top.png')\n\"", "description": "Crop diff region for viewing"}`
+
+### 🧑 User — 2026-11-17T16:48:33.627Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:48:35.189Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/base_default_03top.png"}`
+
+### 🧑 User — 2026-11-17T16:48:35.209Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:48:35.797Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_default_03top.png"}`
+
+### 🧑 User — 2026-11-17T16:48:35.818Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:48:39.796Z
+
+The difference is only the HUD font (the baseline copy couldn't load fonts through a linked folder) — fixing the baseline setup and re-capturing.
+
+### 🤖 Claude — 2026-11-17T16:48:42.910Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/base; S=$(dirname $B)/px; cd $B && rm node_modules && npm ci --silent >/dev/null 2>&1; ls node_modules | wc -l; rm -rf $S/base_default $S/base_m08 $S/base_default2; node scripts/capture.mjs --out=$S/base_default >/dev/null 2>&1; node scripts/capture.mjs 08 --q=match08=1 --out=$S/base_m08 >/dev/null 2>&1; for i in 01 02 03 04 05 06 07 08 09 10 11; do python3 -I $S/../pxdiff.py $S/base_default/$i.png $S/head_default/$i.png; done; python3 -I $S/../pxdiff.py $S/base_m08/08.png $S/head_m08/08.png; pytho …[+136 chars]`
+
