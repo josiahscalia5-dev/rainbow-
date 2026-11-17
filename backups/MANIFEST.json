@@ -482,6 +482,21 @@
    "sha256": "4b02ce9760eaea9a873705dbb34420415c7bf197d4dfb4b17a06365f6a656368"
   },
   {
+   "path": "assets/textures/match04/tile_river.png",
+   "bytes": 510921,
+   "sha256": "1fe4ca94ebeab8049ea65468e81e522e49c89c0bfee4a09933967e131669ab2f"
+  },
+  {
+   "path": "assets/textures/match04/tile_tunnel.png",
+   "bytes": 290642,
+   "sha256": "d0938e1060be37385b9b53cd5d5a34bb489445b170e586a03cdb568df60343c6"
+  },
+  {
+   "path": "assets/textures/match04/tiles04.json",
+   "bytes": 264,
+   "sha256": "68164a220ef145b0202a8b68bbc329b99f2083c7756be35e09fc2ccbe5ceb3cf"
+  },
+  {
    "path": "assets/textures/match08/cam08_locked.json",
    "bytes": 684,
    "sha256": "f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237"
@@ -654,7 +669,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10151,
-   "sha256": "d93b6bbb361bb611579f58f338f90b2f723a939fac9d1b0227f413d30d11edc1"
+   "sha256": "9ba4b9ade66d46b7f620de40b0bfd18d4c71a21a6d0e2e3403bd41f189696e97"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8405,6 +8420,11 @@
    "path": "tools/match04/make_plate04.py",
    "bytes": 3100,
    "sha256": "f0fc864fe04dc2385e4cf5b217f8b229a6b24876641ea848777486c294f593a1"
+  },
+  {
+   "path": "tools/match04/make_tiles04.py",
+   "bytes": 2770,
+   "sha256": "c6945fb24389ab3aa4ef06a15e52dcc40977bb95fde553935396a2ef1d9b52f6"
   },
   {
    "path": "tools/match04/metrics04.py",
