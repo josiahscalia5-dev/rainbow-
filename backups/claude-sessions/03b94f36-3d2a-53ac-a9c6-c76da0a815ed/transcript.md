@@ -3152,3 +3152,93 @@ Everything is saved on GitHub in `qa/imageblaster/08/`, including close-ups of e
 
 **For all your screens:** after you approve Screen 08's approach, I'll do the same for the other playable screens, **04, 05, 06 and 07**. That's one fal.ai edit each, shown to you the same way, before any World Labs world. Screens 01, 02, 03, 09, 10 and 11 are videos in your plan; tell me if you also want environment-only versions of those.
 
+### 🧑 User — 2026-11-17T12:50:45.796Z
+
+Choose Option B.
+
+Please do one more fal.ai edit on Screen 08 before using World Labs Marble.
+
+What to change
+
+Remove only the leftover white splash crest where Benny was.
+
+What to preserve exactly
+
+Do not change anything else unless absolutely necessary:
+
+- keep the same environment
+- keep the same river flow
+- keep the same towel
+- keep the same door, porthole, hinge, platform, spouts, rings, wall slots, foam, bubbles, and lighting
+- keep the same camera framing and perspective
+- keep the exact 9:16 aligned version for Marble
+
+Important
+
+My goal is maximum similarity to my approved screen.
+Because Marble may introduce additional differences, I want the cleanest possible environment-only source image before step 2.
+
+After the splash-only cleanup, show me the updated full-size preview.
+If it looks good, then proceed to World Labs Marble for Screen 08.
+
+Also, once this Screen 08 process is proven, I want the same process used for my other approved playable screens too.
+
+### 🤖 Claude — 2026-11-17T12:51:15.032Z
+
+Option B it is. I'll do one more fal.ai edit to remove the splash crest, then keep every pixel outside the crest exactly as in the first edit, so nothing else drifts. First, the autosave reported a problem when the session resumed; checking it:
+
+### 🤖 Claude — 2026-11-17T12:51:16.041Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py | head -3; tail -3 backups/BACKUP_LOG.md | cut -c1-160; pgrep -fa autosave-daemon | head -2", "description": "Check the autosave status after resume"}`
+
+### 🧑 User — 2026-11-17T12:51:17.276Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-9c4a8ad6-xovgsx | scheduler daemon | last verified backup 2026-11-17T12:47:29+00:00 (3.8 min ago) | local c5e99fe remote c5e99fe (match) | uncommitted 0
+> | 2026-11-17T12:29:09+00:00 | manual:checkpoint | committed+pushed | `e9067fc8b2a0` | `ccr-9c4a8ad6-xovgsx` | 14 | True |  |
+> | 2026-11-17T12:30:30+00:00 | hook:Stop | committed+pushed | `b9895f9bc5cb` | `ccr-9c4a8ad6-xovgsx` | 4 | True |  |
+> | 2026-11-17T12:30:44+00:00 | daemon | no-change | `b9895f9bc5cb` | `ccr-9c4a8ad6-xovgsx` | 0 | True |  |
+> 160 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+
+### 🤖 Claude — 2026-11-17T12:51:26.435Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/neilsonnn/image-blaster && SRC=worlds/rainbow-08-final-spin-chamber/source && cp -p /home/user/rainbow-/qa/imageblaster/08/08_plate_aligned_9x16_1536x2731.png $SRC/2-08-final-spin-chamber-plate-aligned.png && export NODE_USE_ENV_PROXY=1 WORLD_LABS_API_KEY=[REDACTED] FAL_KEY=proxy-injected && timeout 900 node .claude/scripts/image-edit/generate-edit.mjs \\\n  --image $SRC/2-08-final-spin-chamber-plate-aligned.png \\\n  --prompt \"remove the following from the image: the white splash crest of water spray, droplets and white foam spikes that crosses the river in the low …[+916 chars]`
+
+### 🧑 User — 2026-11-17T12:51:58.252Z
+
+> ↩︎ result: "output_image": "worlds/rainbow-08-final-spin-chamber/source/3-08-final-spin-chamber-plate-nosplash.png",
+>   "request_metadata": "worlds/rainbow-08-final-spin-chamber/source/.3-08-final-spin-chamber-plate-nosplash-request.json"
+> 0-08-final-spin-chamber.json
+> 0-08-final-spin-chamber.png
+> 1-08-final-spin-chamber-plate.png
+> 2-08-final-spin-chamber-plate-aligned.png
+> 3-08-final-spin-chamber-plate-nosplash.png
+> {'status': 'completed', 'request_id': '01a1e98f-f07f-7e42-ab22-c7e268dc85a3', 'endpoint': 'fal-ai/nano-banana-2/edit', 'submitted_at': '2026-11-17T12:51:26.650Z', 'completed_at': '2026-11-17T12:51:58.179Z'}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T12:52:02.634Z
+
+fal.ai finished in 32 seconds. Next I line its output up with the aligned version and map exactly what changed. Only the crest area will be taken from this new edit:
+
+### 🤖 Claude — 2026-11-17T12:52:14.252Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/cmp08b; mkdir -p $S; SRC=/home/user/neilsonnn/image-blaster/worlds/rainbow-08-final-spin-chamber/source; cd $S && python3 -I - <<EOF\nimport json, numpy as np, cv2\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nB=np.asarray(Image.open('$SRC/2-08-final-spin-chamber-plate-aligned.png').convert('RGB'))   # edit-1 aligned 1536x2731\nE=Image.open('$SRC/3-08-final-spin-chamber-plate-nosplash.png').convert('RGB')\nprint('edit2 size', E.size, 'aspect %.4f'%(E.size[0]/E.size[1]))\nEs=np. …[+1997 chars]`
+
+### 🧑 User — 2026-11-17T12:52:22.247Z
+
+> ↩︎ result: edit2 size (1536, 2752) aspect 0.5581
+> align: inliers 1573 median residual 0.54 px scale 0.9923 0.9923 shift 5.7 0.2
+> mean change inside crest box 14.6, outside 6.6
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T12:52:26.643Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/cmp08b/crest_before_after.png"}`
+
+### 🧑 User — 2026-11-17T12:52:26.714Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T12:52:52.301Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/cmp08b; SRC=/home/user/neilsonnn/image-blaster/worlds/rainbow-08-final-spin-chamber/source; cd $S && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter, binary_dilation, binary_opening, label\nB=np.asarray(Image.open('$SRC/2-08-final-spin-chamber-plate-aligned.png').convert('RGB')).astype(np.float32)\nE=np.asarray(Image.open('$S/edit2_aligned.png').convert('RGB')).astype(np.float32)\nH,W=B.shape[:2]\nd=gaussian_filter(np.abs(E-B).mean(-1),3 …[+1820 chars]`
+
