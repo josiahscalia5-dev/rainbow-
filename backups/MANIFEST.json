@@ -689,7 +689,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12606,
-   "sha256": "ee27119b27514381d6cb9ef1a72ad5332e3dc907fd42d55b7d00bf168032e179"
+   "sha256": "f9a124d836844033c5f5e48de65f06611ee4129a973da618cdc26aa46ee179ee"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1260,6 +1260,16 @@
    "path": "qa/match/05/before_REGION_METRICS.json",
    "bytes": 2544,
    "sha256": "9beea70a40b9ea036cedeaec3dd2901e7499f3025baf9f35cc9daa40275e1472"
+  },
+  {
+   "path": "qa/match/05/gameplay_m2_match05_1.json",
+   "bytes": 14657,
+   "sha256": "a9856bd47c10315112fa4ce2536e4ecf49e8e2a268e42370f18cb53ce3d5821e"
+  },
+  {
+   "path": "qa/match/05/gameplay_m2_match05_1_tgtvis05_1.json",
+   "bytes": 14668,
+   "sha256": "fce743adfd06f94626d95c1bcd67e1f29d60bf60f30822f7e360d65a57740a3a"
   },
   {
    "path": "qa/match/05/gameplay_match05_1.json",
@@ -11198,8 +11208,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 21015,
-   "sha256": "0b6eb488c8a1cc0135721d4b37cc3f6b03daadeaa75cee39d7bc3f9998eb891f"
+   "bytes": 23077,
+   "sha256": "7e2e77a45927899418cb56fa3dd88bef342347173338938a9576a50982db3c8e"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -11490,6 +11500,11 @@
    "path": "tools/marble05/splatlib.py",
    "bytes": 5026,
    "sha256": "8edae45854b1842e90865bfb84d4598e5aa35f08f4330d343c188e0213e129fe"
+  },
+  {
+   "path": "tools/match05/coin_audit.mjs",
+   "bytes": 1720,
+   "sha256": "7e0000df40ab50a8b117989d53223b253f4f8a7336f00f83914f45738b901b6e"
   },
   {
    "path": "tools/match05/make_target_vis.py",
