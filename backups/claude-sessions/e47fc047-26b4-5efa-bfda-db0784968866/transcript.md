@@ -5156,3 +5156,442 @@ The code and textures were already committed by the five-minute autosave. Commit
 
 > 🔧 **Bash** `{"command": "git commit -q -F - <<'EOF'\nScreen 05 water: ?projnear05=1 sharp approved water while riding\n\nThe approved water was crisp only from the locked start view; riding on, the\nnear water came from 24 texel/unit layers and melted into a pastel blur.\n- tools/proj05/near_bake.py -> proj05_T2.png: a sharp tile (≈220 texels/unit)\n  built only from approved pixels of the crisp band in front of Benny; sides\n  borrowed from where they are visible, right bank mirrored from the left,\n  bubbles / foam islands filled along the streaks, mirrored repeat between the\n  ribbons' straight points …[+1167 chars]`
 
+### 🧑 User — 2026-11-17T10:44:43.647Z
+
+> ↩︎ result: branch 'ccr-61131b9d-uj0oqb' set up to track 'origin/ccr-61131b9d-uj0oqb'.
+> 4
+> 5e2686af4026fdc04a7cd626ac4df398b4112574
+> 5e2686af4026fdc04a7cd626ac4df398b4112574	refs/heads/ccr-61131b9d-uj0oqb
+> 166f5f9 autosave: Rainbow 2026-11-17 10:34 UTC
+> AUTOSAVE OK | branch ccr-61131b9d-uj0oqb | scheduler daemon | last verified backup 2026-11-17T10:39:30+00:00 (5.2 min ago) | local 5e2686a remote 5e2686a (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T10:44:47.576Z
+
+The push is verified (GitHub = `5e2686a`), but four files still show as changed locally. Checking which:
+
+### 🤖 Claude — 2026-11-17T10:44:48.231Z
+
+> 🔧 **Bash** `{"command": "git status --short; git diff --stat | tail -3", "description": "List remaining uncommitted files"}`
+
+### 🧑 User — 2026-11-17T10:44:48.277Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T10:44:51.503Z
+
+> 🔧 **Bash** `{"command": "git rev-parse HEAD; git ls-remote origin refs/heads/ccr-61131b9d-uj0oqb; git log --oneline -3; git show HEAD:src/vfx/waterRibbon.ts | grep -c \"pjNearK(u, mE, mN)\"; git show HEAD:src/vfx/waterRibbon.ts | grep -c \"TEMP test\"", "description": "Confirm final state is on GitHub"}`
+
+### 🧑 User — 2026-11-17T10:44:52.518Z
+
+> ↩︎ result: d1b7ebb12da0c5a32fdabd624ace12f3af490ab1
+> d1b7ebb12da0c5a32fdabd624ace12f3af490ab1	refs/heads/ccr-61131b9d-uj0oqb
+> d1b7ebb autosave: Rainbow 2026-11-17 10:44 UTC
+> 5e2686a Screen 05 water: ?projnear05=1 sharp approved water while riding
+> e6e89f0 autosave: Rainbow 2026-11-17 10:39 UTC
+> 4
+> 0
+
+### 🤖 Claude — 2026-11-17T10:44:55.994Z
+
+Everything is on GitHub: commit `d1b7ebb` (the five-minute autosave right after my commit), with the final shader and no leftover test code. Sending you the full-size pictures and the ride clip:
+
+### 🤖 Claude — 2026-11-17T10:44:58.947Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/pilot05/proj/near/1_APPROVED.png", "/home/user/rainbow-/qa/pilot05/proj/near/2_BEFORE_riding_17_units_ahead.png", "/home/user/rainbow-/qa/pilot05/proj/near/3_NEW_projnear05_riding_17_units_ahead.png", "/home/user/rainbow-/qa/pilot05/proj/near/ride/NEW_riding_25_units_ahead.png", "/home/user/rainbow-/qa/pilot05/proj/near/ride/NEW_ride_3s_flow_running.mp4"], "caption": "1 = your approved Screen 05 · 2 = BEFORE: Benny 17 units into the ride (the water has melted into a pastel blur) · 3 = NEW: same moment with the sharp water · 4 = NEW, 25 units in · 5 = NEW 3-se …[+116 chars]`
+
+### 🧑 User — 2026-11-17T10:45:00.147Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/proj/near/1_APPROVED.png → file_uuid: f8247717-a578-44ce-9156-c30b515797fa
+>   /home/user/rainbow-/qa/pilot05/proj/near/2_BEFORE_riding_17_units_ahead.png → file_uuid: 423cca31-8733-4499-aafe-764f98362364
+>   /home/user/rainbow-/qa/pilot05/proj/near/3_NEW_projnear05_riding_17_units_ahead.png → file_uuid: 515db7a2-d081-4672-b6fb-ff858479e651
+>   /home/user/rainbow-/qa/pilot05/proj/near/ride/NEW_riding_25_units_ahead.png → file_uuid: 4d51e0af-fe19-4841-a8fd-e25c98f41e5a
+>   /home/user/rainbow-/qa/pilot05/proj/near/ride/NEW_ride_3s_flow_running.mp4 → file_uuid: 973834bb-9c08-4c53-895a-382f7f0f662e
+
+### 🤖 Claude — 2026-11-17T10:45:15.807Z
+
+The water near Benny no longer melts into a pastel blur while riding. It stays crisp, glossy cyan with your pink swirl ribbons on both sides and white star sparkles. I sent you your approved picture, the before and after at the same moment 17 units into the ride, the after at 25 units, and a 3-second clip of the ride with the water flowing.
+
+**How it works:** the sharp detail in your painting exists only in the stretch of water just in front of Benny. I built a seamless, high-resolution tile from exactly those painted pixels. The game uses it only for water the camera has come close to, which is where the old layers had to be stretched into a blur.
+
+**Measured on the water around and below Benny:**
+- **While riding with the water flowing:** 2–3× crisper than before. The colour strength is at your painting's level.
+- **Honest limit:** it reaches about half of your painting's crispness. That's the most detail your picture holds for that stretch of water.
+- **Starting view:** unchanged. Your-water match is still 88.5 % within 10 colour levels.
+
+**Checks:**
+- **Protected versions:** your default game, the protected BEFORE and every earlier test switch are pixel-identical.
+- **Gameplay:** with everything switched on, all 8 checks pass and the stages join without gaps.
+
+**Still different from your painting:**
+- **Pink near Benny:** at some moments the water right around him is mostly cyan, while your painting has more pink there.
+- **River-bank strips:** the strips beside the river (the existing low-resolution bank strip) show as lighter wedges with hard edges, more noticeable now that the water next to them is sharp.
+- **Repeating pattern:** if you look for it, you can see the tile repeat every few metres.
+
+To see it all together, use this test address. Nothing becomes your default until you approve it:
+`?proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1`
+
+Everything is saved to GitHub on branch `ccr-61131b9d-uj0oqb` at commit `d1b7ebb12da0c5a32fdabd624ace12f3af490ab1`, and GitHub shows the same commit. While the environment was closed overnight, the five-minute autosave couldn't run: there were gaps from 01:42 to 05:43 and from 05:43 to about 10:00 UTC. Nothing was lost. I've stopped the scheduled checks on pull request #11 because nothing happens there; a comment on it or a message from you brings me back.
+
+Does the riding water look right to you? If yes, I'd fix the hard-edged bank strips next, then the pink near Benny.
+
+### 🧑 User — 2026-11-17T10:45:18.692Z
+
+Remember in the begginging   it's the video part   
+Make sure that the begginging of the girl throwing the clothes in the laundry machine Im putting a video in it instead so don't worry about that part and the ending where the girl grabs the towels etc with the pink cartoon character same for that too 
+And make  and make sure that you work on the other parts of the game. Like, you know, besides the very beginning, you know, the very beginning where the girl grabs clothes and throws in the laundry machine, the very beginning of the scenery of a game, and then the very ending where she grabs a towel, where the pink character goes to his final destination, so he isn't. So she tries to get there before she knows that he's gone. Those are both videos, so you don't have to worry about building those. Just build the rest of the screens of the game, and make sure it looks exactly like my approved screen.
+CLAUDIA — RAINBOW 3D: MAKE EVERY REMAINING GAMEPLAY SCREEN MATCH MY APPROVED ARTWORK
+
+READ THIS ENTIRE INSTRUCTION BEFORE CHANGING ANYTHING. THIS IS AN IMPLEMENTATION ORDER.
+
+I want you to finish matching all my remaining Rainbow 3D Android gameplay screens to their ORIGINAL APPROVED IMAGES.
+
+My target is at least 9/10 visual similarity for EACH individual gameplay screen, while preserving real playable 3D functionality.
+
+Do not redesign my approved screens, replace their artwork with new concepts, or start the game over.
+
+1. TWO SCENES ARE ALREADY VIDEOS — DO NOT REBUILD THEM
+
+OPENING VIDEO — ALREADY CREATED
+
+The girl handles her laundry, places the clothes and towel into the washing machine, and loads the hidden pink character without noticing him.
+
+I already have the opening video.
+
+Do not generate new screenshots, rebuild that cinematic, or spend credits recreating it.
+
+Preserve the existing video and its transition into gameplay.
+
+ENDING VIDEO — ALREADY CREATED
+
+After the washing-machine adventure, Benny must get back into hiding before the girl notices he is missing.
+
+The ending shows the girl returning and picking up the towel/clothing containing the hidden character.
+
+I already have this ending video.
+
+Do not generate new pictures or rebuild the ending cinematic.
+
+Keep the existing video and its story continuity.
+
+Locate the existing video assets and preserve them. If the video files aren't accessible in the repository, document where they need to be connected. Do not invent replacement footage.
+
+The approved reference images associated with Screens 01 and 11 must remain saved and untouched. If either includes a separate playable segment, preserve that gameplay, but do not reconstruct the existing videos.
+
+2. SCREEN 05 IS EXCLUDED FROM THIS NEW TASK
+
+DO NOT REBUILD SCREEN 05 — FLOW INTO THE CURRENT.
+
+We have spent extensive time matching Screen 05 to my approved artwork.
+
+Preserve all of its existing improvements, including:
+
+- Purple metallic washing-machine tunnel.
+- Gold rings and paddles.
+- Cyan-and-pink S-shaped flowing water.
+- Foam banks.
+- Benny and his knitted hat.
+- HUD, coins, water textures and visual effects.
+- All finished and unfinished Screen 05 specialist work.
+
+Keep its "?match05=1" implementation available and protected.
+
+Do not overwrite its Blender assets, shaders or reference image.
+
+Screen 04 must connect into Screen 05, and Screen 06 must continue naturally from Screen 05, but do not redesign Screen 05 to accomplish this.
+
+3. THESE ARE THE GAMEPLAY SCREENS I WANT YOU TO MATCH
+
+The exact approved reference images already exist in my repository.
+
+SCREEN 02 — MASCOT TUMBLES IN WHIRLPOOL
+
+"references/02_mascot_tumbles_in_whirlpool.png"
+
+SCREEN 03 — WHIRLPOOL TWIRL
+
+"references/03_whirlpool_twirl.png"
+
+SCREEN 04 — THROUGH THE FIVE ARROWS
+
+"references/04_through_the_five_arrows.png"
+
+SCREEN 06 — CREST THE RINSE ARCH
+
+"references/06_crest_the_rinse_arch.png"
+
+SCREEN 07 — DIVE THE WASHER TUBE
+
+"references/07_dive_the_washer_tube.png"
+
+SCREEN 08 — FINAL SPIN CHAMBER
+
+"references/08_final_spin_chamber.png"
+
+SCREEN 09 — RIDE THE FINAL WAVE
+
+"references/09_ride_the_final_wave.png"
+
+SCREEN 10 — SLIDE INTO HIDING
+
+"references/10_slide_into_hiding.png"
+
+ALL EIGHT GAMEPLAY SCREENS MUST BE MATCHED TO THEIR OWN APPROVED REFERENCE.
+
+Do not copy the Screen 05 tunnel onto other screens unless their own approved artwork explicitly contains the same scenery.
+
+Each approved reference is the authority for its own screen.
+
+4. EXACT APPROVED VISUAL DESIGN — NON-NEGOTIABLE
+
+Open and visually inspect EACH original approved image.
+
+Reconstruct every visible part of the scene as closely as technically possible:
+
+- Exact environment and scenery.
+- Same tunnel or chamber shapes.
+- Same architecture and machinery.
+- Same water colors, textures, curves and movement.
+- Same metallic surfaces, reflections and highlights.
+- Same foam, bubbles, splashes and particle effects.
+- Same coins and collectibles.
+- Same character size, appearance and position.
+- Same knitted hat, pom-pom and star.
+- Same camera perspective and framing.
+- Same background depth and lighting.
+- Same HUD, level numbers and text.
+- Same placement and proportions of important objects.
+
+Do not replace the approved design with your own artistic interpretation.
+
+Do not make something merely similar or attractive.
+
+I WANT MY EXACT APPROVED ARTWORK REPRODUCED IN MY REAL PLAYABLE GAME.
+
+If an element cannot be matched precisely in moving 3D, document the limitation and implement the closest practical solution.
+
+5. REAL PLAYABLE 3D — NOT JUST A PICTURE
+
+This is extremely important.
+
+Do not substitute a video, a flat static screenshot, or a full-screen image pretending to be gameplay.
+
+Use our existing Three.js and Blender system to construct real 3D environments.
+
+Reference-image projection and UV texture baking are allowed on actual 3D geometry where they improve the match, but the scene must still function correctly when the character and camera move.
+
+Preserve:
+
+- Player steering and controls.
+- Water movement and swimming physics.
+- Coin collection.
+- Collisions and obstacles.
+- Character animation.
+- Camera following and turning.
+- Existing power-ups and gameplay features.
+- HUD counters.
+- Android portrait gameplay.
+- Smooth movement between screens.
+
+The character should move naturally through the washing-machine adventure at an exciting but controllable pace.
+
+Do not turn these eight gameplay screens into disconnected static pictures.
+
+6. EVERY SCENE MUST FLOW INTO THE NEXT
+
+My game should feel like one continuous adventure.
+
+The route must work in this order:
+
+Opening video → Screen 02 → Screen 03 → Screen 04 → existing Screen 05 → Screen 06 → Screen 07 → Screen 08 → Screen 09 → Screen 10 → ending video.
+
+Make sure the character's movement and the environment transitions connect naturally.
+
+Do not teleport Benny into unrelated scenery.
+
+Do not suddenly change his appearance, camera angle or swimming direction without the transition shown in the approved references.
+
+Maintain a consistent game-world scale.
+
+At every transition, test how the final seconds of one section connect with the first seconds of the next.
+
+Do not modify the existing opening or ending videos.
+
+7. USE MY EXISTING BLENDER AND DESIGN SPECIALISTS
+
+My Rainbow repository already has ten specialist-agent definitions.
+
+Restore and use the existing specialists as needed for:
+
+- Washing-machine environments and 3D architecture.
+- Character art and animation.
+- Water and fluid visual effects.
+- Foam, bubbles and splashes.
+- Lighting and materials.
+- Coins, collectibles and HUD.
+- Gameplay and camera transitions.
+- Playwright visual comparison.
+- Android performance and testing.
+
+Blender 5.3.0, Three.js, Playwright and the project scripts already exist.
+
+Verify the necessary tools are operational before assigning work.
+
+Do not create redundant agents or start ten expensive agents simultaneously.
+
+Use a small number of independent specialists, coordinate their file ownership, and save their work regularly.
+
+KEEP MY FIVE-MINUTE GITHUB AUTOSAVE RUNNING.
+
+Before beginning, verify the latest working branch and commit. Preserve previous work and never auto-merge unrelated branches.
+
+8. MATCH EACH SCREEN USING ACTUAL MEASUREMENTS
+
+I do not want endless experimentation without visible improvement.
+
+For every gameplay screen:
+
+STEP A — INSPECT
+
+Open the original approved image and the latest actual game capture.
+
+Identify every significant difference.
+
+STEP B — MEASURE
+
+Compare the complete screen and important regions:
+
+- Environment.
+- Character.
+- Water.
+- Colors and lighting.
+- HUD.
+- Coins.
+- Bubbles and splashes.
+- Camera composition.
+
+STEP C — IMPLEMENT
+
+Fix the most important visual differences using the existing 3D game.
+
+STEP D — VERIFY
+
+Capture the real game at the approved reference camera.
+
+Measure again and visually compare.
+
+Keep improvements; reject regressions.
+
+STEP E — TEST MOVEMENT
+
+Take additional real gameplay frames after the camera and character have moved.
+
+Ensure the approved scenery still looks correct from moving viewpoints.
+
+STEP F — SAVE
+
+Commit and push the finished work to GitHub.
+
+Do not promote unfinished experiments to protected default gameplay.
+
+9. MY ACCEPTANCE TARGET
+
+My goal is:
+
+9/10 OR BETTER VISUAL SIMILARITY FOR EACH GAMEPLAY SCREEN.
+
+Do not claim that 90% of pixels within a color tolerance automatically means 9/10 visual similarity.
+
+Report both measured image differences and a separate honest visual assessment.
+
+A screen must also remain playable and maintain continuity with adjacent screens.
+
+Do not declare a screen complete simply because one small area looks correct.
+
+If the result is below my goal, identify the remaining problems and continue improving them where technically practical.
+
+If additional work produces little improvement, tell me before consuming more credits.
+
+10. SHOW ME SEPARATE FULL-SIZE SCREENSHOTS
+
+For each gameplay screen, show me three separate portrait images:
+
+1. APPROVED ORIGINAL IMAGE
+
+2. CURRENT GAME — BEFORE CORRECTIONS
+
+3. NEW REAL GAME — AFTER CORRECTIONS
+
+Make the images large enough for me to inspect.
+
+Do not put all the previews into one small collage.
+
+Number and label each screen clearly.
+
+Also provide a short moving-gameplay verification for each completed section.
+
+Don't replace actual game captures with generated pictures.
+
+11. WORK IN A CONTROLLED ORDER
+
+First audit all eight remaining gameplay screens against their approved images.
+
+Then repair the scenes in a controlled sequence, prioritizing continuity with the existing Screen 05 and the largest visual differences.
+
+Do not spend all my credits simultaneously rebuilding eight screens.
+
+Complete and verify manageable batches, commit their progress, and continue.
+
+As a practical starting point, check Screens 04 and 06 first because they connect directly to our already improved Screen 05.
+
+Then continue through Screens 02, 03, 07, 08, 09 and 10, maintaining the correct overall sequence.
+
+Do not skip any approved gameplay screen.
+
+12. SAVE EVERYTHING AND GIVE ME REAL PROOF
+
+Keep all approved reference images untouched.
+
+Keep all previous completed game systems and character assets.
+
+Use the current existing repository and latest verified working branch.
+
+Preserve all ten specialist definitions.
+
+Save every five minutes while the session is active.
+
+For each completed screen, provide:
+
+- The screen number and approved reference filename.
+- Its completed 3D game implementation.
+- Separate full-size before/after screenshots.
+- Visual similarity assessment.
+- Pixel measurements and important remaining differences.
+- Gameplay and continuity test results.
+- GitHub commit SHA.
+- Confirmation that Screen 05 and the original videos were not altered.
+
+After all eight screens are finished, perform an end-to-end Android gameplay test from the opening video through the final video.
+
+FINAL COMMAND:
+
+DO NOT REBUILD MY OPENING VIDEO.
+
+DO NOT REBUILD MY ENDING VIDEO.
+
+DO NOT REBUILD SCREEN 05.
+
+MATCH SCREENS 02, 03, 04, 06, 07, 08, 09 AND 10 TO THEIR OWN ORIGINAL APPROVED IMAGES.
+
+KEEP THEM REAL PLAYABLE 3D GAMEPLAY.
+
+PRESERVE THE CONTINUOUS STORY AND CAMERA FLOW.
+
+USE MY EXISTING BLENDER, TEN SPECIALISTS, THREE.JS AND VISUAL TESTING SYSTEM.
+
+AIM FOR AT LEAST 9/10 VISUAL SIMILARITY ON EACH SCREEN.
+
+SAVE ALL WORK TO GITHUB.
+
+START IMPLEMENTING THE ACTUAL GAME, NOT ANOTHER ROUND OF GENERAL PLANNING.
+
