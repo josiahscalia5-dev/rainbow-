@@ -1093,8 +1093,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1196,
-   "sha256": "1cddabf9ac083a31e8a9c5a971d55bddca1ae7276bb3bfad5393b0de64efa5ef"
+   "bytes": 3169,
+   "sha256": "3fbec93433121a8f0247c30b370ea754cb5c071b826a698de54a3468465c4484"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1575,6 +1575,11 @@
    "path": "qa/pilot05/full_reference_match/benny/cap/new_s1/REGION_METRICS.json",
    "bytes": 2522,
    "sha256": "bd67c345f9b05ea3a31c2ec7edd2212ca150981fb2437e768f12f66155273377"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/off_0406/04.png",
+   "bytes": 1006508,
+   "sha256": "69a7228ada62930f4db2344580774936da1f8e240b439ed8670e971697219914"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/b1/calA.png",
@@ -3102,6 +3107,26 @@
    "sha256": "9421eee4a0b17fb52a2d8d33865731662186d674bd0fdd63acd21495818f7e1d"
   },
   {
+   "path": "qa/pilot05/full_reference_match/env/work/r2/idviz.png",
+   "bytes": 2087299,
+   "sha256": "164eeeb1ae41ac45a060db61cf12a7e27c185e5505193e8dec28c18e451409f5"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/r2/idviz.txt",
+   "bytes": 1207,
+   "sha256": "38cb2310b2d0fff8721afd6a067c82b7218a110f202fd11535e57fa203b40216"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/r2/rings.txt",
+   "bytes": 1115,
+   "sha256": "e49f657ef4381bd012149289592c5247ede04957323e7dd94477fb2617e8ce12"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/r2/tunnel.json",
+   "bytes": 5020,
+   "sha256": "7b73a4a49757d3c9149f98b3ef462178b802d525a8f89f311e61e2a27c8496af"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/env/work/ring_fit.json",
    "bytes": 3398,
    "sha256": "0e00abac06a570cc5c8b3c96c5e4b5095591456df07138bb4370a6c1a98fe90e"
@@ -3130,6 +3155,11 @@
    "path": "qa/pilot05/full_reference_match/env/work/rings_r1.json",
    "bytes": 3324,
    "sha256": "0c0c0fd70c9db2215cc69d41bc0ba4846eea652543f54aa7dc16ec34ced8a384"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/rings_r2.json",
+   "bytes": 3323,
+   "sha256": "1c6fb1ca050e8912b7a22d77896898d26e37bd8cc23618fd181e5bc7f98ad416"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/work/rm_overlay.png",

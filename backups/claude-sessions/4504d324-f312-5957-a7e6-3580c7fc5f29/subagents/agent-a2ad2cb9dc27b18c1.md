@@ -1949,3 +1949,36 @@ Now add the star as a bakeable part in `bake.py` (its approved mask, no colour-f
 > cap_rc=0
 > default capture vs current_default_05.png differing px: 0 (1536, 864, 3) (1536, 864, 3)
 
+### 🤖 Claude — 2026-11-17T01:41:49.358Z
+
+Default build: **0 px differ** from `qa/pilot05/current_default_05.png`. Next the identity check on screens 04 and 06 (switch on vs off). Let me check how `capture.mjs` takes several stages.
+
+### 🤖 Claude — 2026-11-17T01:41:50.007Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,40p scripts/capture.mjs", "description": "Read capture script argument handling"}`
+
+### 🧑 User — 2026-11-17T01:41:50.031Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+1688 chars]
+
+### 🤖 Claude — 2026-11-17T01:41:54.253Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; timeout 2400 node scripts/capture.mjs 04 06 --out=$B/cap/off_0406 > $SP/cap_off.log 2>&1; echo off_rc=$?; timeout 2400 node scripts/capture.mjs 04 06 --q='benny05=1' --out=$B/cap/on_0406 > $SP/cap_on.log 2>&1; echo on_rc=$?; cp $SP/capture_log.bak qa/capture_log.json; tail -2 $SP/cap_on.log; ls $B/cap/off_0406 $B/cap/on_0406", "description": "Capture screens 04 and 06 with benny05 off and  …[+24 chars]`
+
