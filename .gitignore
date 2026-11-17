@@ -32,9 +32,13 @@ android/.idea/
 backups/raw/
 backups/.autosave.lock
 backups/.tmp/
+backups/.live/
 
 # --- editor/OS ---
 .DS_Store
 .idea/
 .vscode/
 *.blend1
+
+# Agent worktrees (each specialist works on its own branch there; never committed into the lead branch)
+.claude/worktrees/

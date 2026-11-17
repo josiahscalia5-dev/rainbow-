@@ -1,0 +1,49 @@
+{
+  "world_id": "c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9",
+  "display_name": "Rainbow 05 full (approved tunnel)",
+  "tags": null,
+  "assets": {
+    "mesh": {
+      "collider_mesh_url": "https://cdn.marble.worldlabs.ai/c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9/55c120a8.glb",
+      "hq_mesh_url": null,
+      "full_res_mesh_url": null
+    },
+    "imagery": {
+      "pano_url": "https://cdn.marble.worldlabs.ai/c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9/c49d3a08-9bb4-4a39-b0ff-db96e37c00c7_panos/rgb_0.png"
+    },
+    "splats": {
+      "spz_urls": {
+        "500k": "https://cdn.marble.worldlabs.ai/c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9/4ed1efe3-b392-44ed-b8ff-8d03dbc1e61f_ceramic_500k.spz",
+        "100k": "https://cdn.marble.worldlabs.ai/c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9/5341cb2a-a5fa-4892-99a5-0d1bb53dbc33_dust_100k.spz",
+        "150k": "https://cdn.marble.worldlabs.ai/c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9/030bf0d8-cf6b-4ceb-95b1-7e117b3b7ef5_ceramic_150k.spz",
+        "full_res": "https://cdn.marble.worldlabs.ai/c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9/fffcc5e9-4ede-41b6-b3b5-111bee60ea9f_ceramic.spz"
+      },
+      "semantics_metadata": {
+        "metric_scale_factor": 1.5618600845336914,
+        "ground_plane_offset": 0.9745106101036072
+      }
+    },
+    "thumbnail_url": "https://cdn.marble.worldlabs.ai/c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9/c7515e1d-9645-4496-9b32-03bcfc86c3c7_sand_mpi/thumbnail.webp",
+    "caption": "The scene is an enclosed, fantastical environment, rendered in a hyper-realistic yet whimsical style, conveying a sense of vibrant energy and surreal wonder. The overall tone is playful and immersive, with an abundance of vivid colors and dynamic textures. The primary feature of the scene is a long, straight, cylindrical tunnel, resembling the interior of a washing-machine drum, stretching into a bright, warm-golden vanishing point. The tunnel walls are a deep, glossy metallic magenta and violet, streaked with long white-pink specular highlights that run along the length of the tunnel. Regular rows of dark, capsule-shaped perforation slots are evenly spaced around the circumference of the walls, situated between the ring bands. About ten evenly spaced, identical, circular, polished reflective yellow-gold ring bands, each featuring a flat surface with a double lip, divide the tunnel into equal bays, progressively shrinking in size towards the vanishing point. Within each bay, just above the waterline, one small copper-gold half-dome fitting is mounted on each side wall. The tunnel floor is entirely filled, wall to wall, by a broad, thick, glossy electric-cyan river, with hot-pink swirling bands that meander in smooth S-bends toward the distant vanishing point. The river exhibits white-blue reflections and numerous star-shaped glints on its surface. Banks of soft white foam line both sides of the river, from which transparent, iridescent soap bubbles gently rise. The entire scene maintains consistent proportions, perspective, and an identical vibrant color palette throughout. "
+  },
+  "created_at": "2026-11-16T00:57:03Z",
+  "updated_at": "2026-11-16T01:02:02Z",
+  "permission": {
+    "public": false,
+    "allowed_readers": [],
+    "allowed_writers": [],
+    "allow_id_access": false
+  },
+  "world_prompt": {
+    "text_prompt": "The scene is an enclosed, fantastical environment, rendered in a hyper-realistic yet whimsical style, conveying a sense of vibrant energy and surreal wonder. The overall tone is playful and immersive, with an abundance of vivid colors and dynamic textures. The primary feature of the scene is a long, straight, cylindrical tunnel, resembling the interior of a washing-machine drum, stretching into a bright, warm-golden vanishing point. The tunnel walls are a deep, glossy metallic magenta and violet, streaked with long white-pink specular highlights that run along the length of the tunnel. Regular rows of dark, capsule-shaped perforation slots are evenly spaced around the circumference of the walls, situated between the ring bands. About ten evenly spaced, identical, circular, polished reflective yellow-gold ring bands, each featuring a flat surface with a double lip, divide the tunnel into equal bays, progressively shrinking in size towards the vanishing point. Within each bay, just above the waterline, one small copper-gold half-dome fitting is mounted on each side wall. The tunnel floor is entirely filled, wall to wall, by a broad, thick, glossy electric-cyan river, with hot-pink swirling bands that meander in smooth S-bends toward the distant vanishing point. The river exhibits white-blue reflections and numerous star-shaped glints on its surface. Banks of soft white foam line both sides of the river, from which transparent, iridescent soap bubbles gently rise. The entire scene maintains consistent proportions, perspective, and an identical vibrant color palette throughout. The 360 scene is faultless.",
+    "type": "image",
+    "image_prompt": {
+      "uri": "https://cdn.marble.worldlabs.ai/api/media-assets/gHKJIfxRbuXhrwcAImRBMaXa45o2/91dfda61-141d-4152-8f9b-6f02d6af46ac/2_geometry_reference_05.png",
+      "data_base64": null,
+      "extension": "png"
+    },
+    "is_pano": false
+  },
+  "world_marble_url": "https://marble.worldlabs.ai/world/c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9",
+  "model": "marble-1.1"
+}
