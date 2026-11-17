@@ -598,8 +598,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3882,
-   "sha256": "dcda686bc8e90d29ba6027aa535cbf9519a43fb86f235b8d07fcc19ad46ad720"
+   "bytes": 3887,
+   "sha256": "6c102ee34b963fabae0211cf5927684d483d0f9c67ed90ba65927f3aa14c4615"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11534,
-   "sha256": "ecfc0267ab4d20c2a23b54e90fd67b192c377d3c1b919a9d55cb5f7179541484"
+   "bytes": 11543,
+   "sha256": "7580c4636347ee5b01e687acbd949a99b998569fbd6b1fbe5c0b34abf3929c12"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9058,8 +9058,8 @@
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 16106,
-   "sha256": "bf913063b5885234d7a053f98fe54760b46dd98041d7a2125ce24afe900b06cc"
+   "bytes": 18289,
+   "sha256": "6c59cdfaf58536f57a3110a12ce7e4bfa736a25faa5a2c255792716e2ce53edf"
   },
   {
    "path": "src/game/match.ts",
@@ -9248,8 +9248,8 @@
   },
   {
    "path": "tools/camclear/camtrace.mjs",
-   "bytes": 3692,
-   "sha256": "6e32c2f93c1d19eef61ec5665087a4c17713025cb0ce2889a8c4ccdda1fd8226"
+   "bytes": 3787,
+   "sha256": "a5791f9942910bd696d957d87aa72facea44bf02ab0bc639fa9ebdc9107e9b79"
   },
   {
    "path": "tools/camclear/probe.mjs",
