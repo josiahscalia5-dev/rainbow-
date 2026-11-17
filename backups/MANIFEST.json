@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 15243,
-   "sha256": "ee546dd2681a81ec059fc726b35d26b588efab71987d6d6f372925abbb80eb38"
+   "bytes": 15452,
+   "sha256": "5656ee2c052cc032103c9829b189f0549f6c89cc968170b4d604e6e415ba432d"
   },
   {
    "path": "README_FIRST.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12598,
-   "sha256": "ed23280a921efde15b9774225cff9d352a16d5633ef8c5be9a9da9df2fad1aee"
+   "sha256": "88fa02d390724c513733083ca5e32def44aecfe9e79571369c07c01ebbcbd26a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -723,13 +723,13 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 31528,
-   "sha256": "ce272c741687a42320719d76996e0dbcfcbe31a0976491254e93f1b314ef5502"
+   "bytes": 35409,
+   "sha256": "44d450fb5467243b68b1827d3cbcfc93022b402b80b9572e46fe92d3605b3555"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 30910,
-   "sha256": "6a0531551e5dcfc2311cb5363e9eb466a0ec093d1a28f5924cf7835821226044"
+   "bytes": 31952,
+   "sha256": "4eac53d8d28a2151b3874c12a8e077e146ed44612728bc3da4d5be203cc10845"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -878,8 +878,8 @@
   },
   {
    "path": "docs/briefs/2026-11-17-r6/COMMON_RULES.md",
-   "bytes": 4226,
-   "sha256": "998228c98dfd01b70b2e71f873a606f42d85afdacfd474bb498f6b37a2454e0f"
+   "bytes": 4851,
+   "sha256": "c955f87309f72821b807bc87ec7cbc07a59e0fdcd29de8df47fba1b3fcb31c7e"
   },
   {
    "path": "docs/briefs/2026-11-17-r6/S06.md",
@@ -2220,6 +2220,11 @@
    "path": "qa/lead_r5/2026-11-17/tour_clips/clip_11_rec.json",
    "bytes": 15888,
    "sha256": "2630b9af8e961f837b2ae4d5c2952f09c81e87ac0df55be1441066deed0db747"
+  },
+  {
+   "path": "qa/lead_r6/2026-11-17/README.md",
+   "bytes": 6678,
+   "sha256": "00aa735d9531a7241710ef6f61512642daead2f5cf438a2d2910b8635fb9be1e"
   },
   {
    "path": "qa/lead_r6/2026-11-17/approved_view_exact/04_NOW_newest_version.png",
