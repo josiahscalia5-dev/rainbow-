@@ -140,3 +140,36 @@ and its LUT change with it → `assets/textures/match05/tgtwall05/proj05_E.png` 
 Variant walls + bubbles (paint the approved bubble on the ribbon too): bubbles 5.35 / 92.4 %, rejected.
 Riding / steering (`r3_wall/riding_NEW/`, crops `r3_wall/crop_riding_top_BEFORE_bottom_NEW.png`): the wall slots stay
 readable where the smear was, no sliding artefacts seen. Open: the bubble looks dimmer than approved.
+
+## 2.4 Bottom-left gold ring arc (near frame, left corner piece) — investigated, nothing kept
+`pixel_probe`: the front surface is the camera-held near frame (`tube05_near_frame`, env05 pieces). Error map
+(`r3_final` crops in the session): the outline matches the approved frame within a few px except the straight radial cut
+of the left piece; the remaining difference is the approved frame's dark steel inner bevel + blue reflections, which the
+along-arc-smoothed band texture (`tools/proj05/frame_bake.py`, sigma_u) cannot carry. One factor tried: a slanted cut
+(`tools/match05/frame_cut_fit.py`: separate end angles at the inner / outer band edge) — best fit −127.75° / −126.0°
+improves the mask objective by only 478 of 15,392 px (3 %), below what the region masks can resolve (they label parts of
+the gold as water). Not implemented: no measurable gain. Next idea (not started): bake the cut end of the left piece
+without along-arc smoothing (bevel detail), behind its own switch.
+
+## 2.5 Coin faces — proposal for the lead (shared `coins.ts`, nothing changed): see SHARED_CHANGES.md
+
+## 2.6 Wake water between the filaments — not started (time / usage).
+
+## Round-3 result (APPROVED `01_APPROVED.png` | BEFORE M1 `03_NEW_match05_tgtvis05.png` | NEW `r3_final/03_NEW_match05_tgtvis05_tgtfill05_tgtwall05.png`)
+Switches: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1` (explicit, NOT inside match05; the user decides).
+| | BEFORE M1 | NEW |
+|---|---|---|
+| whole frame mean / ≤10 / ≤20 / SSIM (metrics.py) | 8.09 / 81.0 % / 89.15 % / 0.877 | **7.93 / 81.4 % / 89.44 % / 0.879** |
+| screen_match.py FULL / BELOWHUD / LAYOUT ≤20 | 89.1 % / 91.3 % / 95.6 % | **89.4 % / 91.6 % / 95.9 %** |
+| scenery (no Benny / HUD / coins) mean / ≤20 | 5.60 / 93.3 % | **5.32 / 93.7 %** |
+| water / purple walls ≤20 | 96.5 % / 92.2 % | 96.5 % / **94.2 %** |
+| coins / bubbles ≤20 | 52.0 % / 97.4 % | 48.6 % / 93.4 % (coin-hole rims; the big bubble shows the dark wall through it) |
+Riding / steering: `r3_final/riding_BEFORE_M1/` vs `r3_final/riding_NEW/` (forward 3 / 6 / 10 / 15 / 20 u, steering L/R
+0.25 / 0.5 / 0.8 s); changed px per frame `r3_final/riding_changed_px_gt8.json`. By eye: the green-teal blobs of BEFORE
+(clearly at 10 u, 20 u and steering) are gone; wall slots instead of the pink smear on the right.
+Proofs: default 05 == `qa/pilot05/current_default_05.png` 0 px; `?match05=1` == `02_BEFORE_match05.png` 0 px;
+`?match05=1&tgtvis05=1` == `03_NEW_match05_tgtvis05.png` 0 px; line-A protected `?ringa=26&nearfloor05=0` ==
+`qa/pilot05/wave9/baseline/05.png` 0 px; gameplay 8/8 default / match05 / NEW, each 91 coins 1,330 → 2,240
+(`r3_final/gameplay_*.json`); continuity ok; tsc clean; references 13/13. (No `match08` exists on line B.)
+`tools/match05/screen_match.py` = unchanged copy of line A's `tools/qa/screen_match.py` (read with `git show`).
+APK: `builds/rainbow-debug-05-2026-11-17-r3.apk` (+ `.md`), packaged bundle == NEW 0 px, NOT phone-tested.

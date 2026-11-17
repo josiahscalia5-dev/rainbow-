@@ -1,11 +1,13 @@
-# Screen 05 — STATUS
+# Screen 05 — STATUS (round 3)
 
-* **Assigned screen:** 05 · FLOW INTO THE CURRENT (`?match05=1` line B)
-* **Active agent:** Screen 05 workstream agent (session on branch `claude/rainbow-s05-match`; lead = session_01AvQv6UXiBngewM8kSBwFfZ)
-* **Git branch:** `claude/rainbow-s05-match` (from line B `ccr-b0757dec-dj6l1o` @ 99ab17b; never merged with line A)
-* **Completed work:** INVENTORY.md; Milestone 1 `?tgtvis05=1` — the 28,620 px of water the approved picture shows around Benny's hat / shoulders now come from the approved picture instead of the isolated-artwork fill (re-baked exact water layer, 16 px safety margin from Benny chosen by the steering test). Pictures: `01_APPROVED.png`, `02_BEFORE_match05.png`, `03_NEW_match05_tgtvis05.png`, `move/before|new/`.
-* **Visual accuracy measurements (locked frame, tools/match05/metrics.py):** whole frame within 20 levels 87.8 % → **89.2 %**, mean 8.96 → 8.09, SSIM 0.869 → 0.877; scenery (no Benny / HUD / coins) 91.6 % → **93.3 %**; water 92.8 % → 96.5 %. Pixel statistics, not a perceptual score.
-* **Remaining issues:** soft teal patch beside Benny while riding (old fill edge); right wall chunk and bottom-left gold ring arc; coin faces (mean 27); Benny (19) and HUD (17) belong to other agents; wake water between filaments.
-* **Latest saved commit:** `d9790281a79120cc7f65e8f0a481e3cce4fd640b` (milestone 1, remote verified == HEAD) + later autosaves
-* **Next task:** wait for the lead / user; then item 1 of NOTES.md "Next".
-* **Status:** under review (not approved — only the user approves).
+* **Assigned screen:** 05 · FLOW INTO THE CURRENT (line B, `?match05=1`)
+* **Assigned specialist:** Screen 05 workstream agent (round 3, account 3); no subagent used
+* **Working branch:** `claude/rainbow-s05-match-c3`, started from `claude/rainbow-s05-match-c2` @ `fd94023f005b61a111139b0f4000d797f1abe97a` (recorded before any change); never merged with line A
+* **Running-session status:** milestone 2 finished; stopped and waiting for the lead (session_01Q46SCLi5xPVn25aRuxkVwK)
+* **Latest verified commit:** see the last commit on `claude/rainbow-s05-match-c3` (remote == HEAD verified at every push; milestone commits `f966bec`, `0359dc9`, `b5edc52` + the final STATUS commit)
+* **Completed improvements:** M1 `tgtvis05` (approved water around Benny) kept. M2.1 coin total 91 / 2,240 re-checked (3 gameplay runs). M2.2 `?tgtfill05=3`: the soft green-teal patches beside Benny while riding (coin-hole fill carrying coin colours) are gone. M2.3 `?tgtwall05=1`: the right wall chunk shows the approved purple wall with dark slots instead of stretched pink water. M2.4 bottom-left ring arc: investigated, nothing kept (no measurable gain). M2.5 coin look: proposal in SHARED_CHANGES.md (face colour already matches). Pictures: APPROVED `qa/match/05/01_APPROVED.png` | BEFORE (M1) `qa/match/05/03_NEW_match05_tgtvis05.png` | NEW `qa/match/05/r3_final/03_NEW_match05_tgtvis05_tgtfill05_tgtwall05.png`; riding `qa/match/05/r3_final/riding_BEFORE_M1/` vs `riding_NEW/`.
+* **Latest visual measurements (locked frame, pixel statistics, not a perceptual score):** whole frame within 20 levels 89.15 % → **89.44 %**, mean 8.09 → 7.93, SSIM 0.877 → 0.879; scenery 93.3 % → **93.7 %**; purple walls 92.2 % → 94.2 %; water 96.5 % (kept); coins 52.0 % → 48.6 % and bubbles 97.4 % → 93.4 % (worse, see problems). screen_match.py FULL 89.1 → 89.4 %, BELOWHUD 91.3 → 91.6 %, LAYOUT 95.6 → 95.9 %.
+* **Unfinished problems:** soft cyan rings around the coins in the locked view (hole fill; game coin rims); the big bubble at the right wall looks dimmer (dark wall through it); bottom-left frame bevel detail; wake water between the filaments (not started); coin edge look (needs the lead's decision, shared coins.ts).
+* **Test results:** default 05 0 px; `?match05=1` 0 px vs BEFORE; M1 0 px; protected `?ringa=26&nearfloor05=0` 0 px; gameplay 8/8 default / match05 / NEW, 91 coins 1,330 → 2,240 each; continuity ok; `npx tsc --noEmit -p .` clean; references 13/13. APK `builds/rainbow-debug-05-2026-11-17-r3.apk` built, packaged bundle == NEW 0 px — **NOT phone-tested**.
+* **Next task:** wait for the lead / user. Candidates: coin-hole rings (smaller coin holes behind a switch, moving test decides), bubble brightness at the right wall, wake water.
+* **Approval status:** under review (NOT approved — only the user approves)
