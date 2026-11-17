@@ -450,3 +450,249 @@ Startup check passed (branch `claude/rainbow-s06-match-c6`, remote == HEAD, 13 r
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T22:15:20.884Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match06/fit_water06.py'\ns=open(p).read()\ns=s.replace(\"\"\"# never narrower than Benny's lane needs to look (keep >= 1.6 u each side of the centre) and never wider than default+1\nlo = np.clip(lo, -half_def - 1.0, -1.6); hi = np.clip(hi, 1.6, half_def + 1.0)\"\"\",\"\"\"# never narrower than the game river itself (Benny steers up to |lat| 2.95 and must stay on water) and never wider than\n# the r3 floor (river + 1 u bank)\nlo = np.clip(lo, -half_def - 1.0, -half_def); hi = np.clip(hi, half_def, half_def + 1.0)\"\"\")\nopen(p,'w').write(s)\nEOF\npython …[+238 chars]`
+
+### 🧑 User — 2026-11-17T22:15:21.579Z
+
+> ↩︎ result: s  186.91 seen 0 vis 0.00 inw 0.00 lo  -4.31 hi   4.31 def 4.34
+> s  192.91 seen 0 vis 0.00 inw 0.00 lo  -3.58 hi   3.58 def 3.57
+> s  198.91 seen 1 vis 0.31 inw 0.31 lo  -4.50 hi   4.50 def 3.50
+> s  204.91 seen 1 vis 0.55 inw 0.34 lo  -4.11 hi   3.50 def 3.50
+> s  210.91 seen 0 vis 0.14 inw 0.07 lo  -3.50 hi   3.50 def 3.50
+> s  216.91 seen 1 vis 0.53 inw 0.12 lo  -3.50 hi   3.50 def 3.50
+> s  222.91 seen 1 vis 0.60 inw 0.27 lo  -4.50 hi   3.50 def 3.50
+> s  228.91 seen 1 vis 0.37 inw 0.27 lo  -4.50 hi   3.50 def 3.50
+> s  234.91 seen 0 vis 0.00 inw 0.00 lo  -3.50 hi   3.50 def 3.50
+> s  240.91 seen 0 vis 0.00 inw 0.00 lo  -3.31 hi   3.31 def 3.32
+> s  246.91 seen 0 vis 0.00 inw 0.00 lo  -2.85 hi   2.85 def 2.85
+> s  252.91 seen 0 vis 0.08 inw 0.00 lo  -2.80 hi   2.80 def 2.80
+> s  258.91 seen 0 vis 0.22 inw 0.00 lo  -2.80 hi   2.80 def 2.80
+> s  264.91 seen 0 vis 0.23 inw 0.00 lo  -2.80 hi   2.80 def 2.80
+> s  270.91 seen 1 vis 0.26 inw 0.00 lo  -2.80 hi   2.80 def 2.80
+> floor footprint px: OLD 184832 outside painted water 109637 | NEW 178088 outside painted water 106887
+
+### 🤖 Claude — 2026-11-17T22:15:36.469Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nfor f in ['tile_floor2','tile_floor','tile_tube','mask06','plate06_hybrid']:\n  im=Image.open('assets/textures/match06/'+f+'.png');print(f,im.size,im.mode)\n\"; sed -n 1,80p tools/match06/make_floor06.py", "description": "Inspect tile textures and floor tile tool"}`
+
+### 🧑 User — 2026-11-17T22:15:36.563Z
+
+> ↩︎ result: tile_floor2 (440, 136) RGB
+> tile_floor (570, 280) RGB
+> tile_tube (384, 1024) RGB
+> mask06 (864, 1536) RGB
+> plate06_hybrid (864, 1536) RGB
+> """Screen 06 (?match06=1, r3 2026-11-17): river-floor tile v2 = the painted water just below Benny (s = Benny - 2.0 ..
+> Benny - 1.05, lateral -1.05 .. 0.95: streaks + ripples, no foam / bubbles / fill) RECTIFIED through the locked camera into
+> the floor's own (lateral, s) coordinates, then made seamless along s (the last 35 % cross-faded into the start) so the
+> shader can REPEAT it along the river instead of mirroring it (the mirrored perspective crop of r2 drew kaleidoscope
+> diamonds + floating foam blobs on the water while riding). Laterally it stays mirrored (streaks run along the river).
+> usage: python3 -I tools/match06/make_floor06.py <probe06.json> <cam06_locked.json> <dir>   -> <dir>/tile_floor2.png"""
+> import json, sys
+> import numpy as np, cv2
+> sys.path.insert(0, __file__.rsplit("/", 1)[0])
+> from geo06 import Geo
+> g = Geo(sys.argv[1], sys.argv[2]); d = sys.argv[3]
+> A = cv2.imread(f"{d}/plate06_hybrid.png").astype(np.float32)
+> S0, S1, L0, L1, PX = g.sB - 2.0, g.sB - 1.05, -1.05, 0.95, 220        # PX = tile pixels per world unit (no bubbles at the sides)
+> S …[+1226 chars]
+
+### 🤖 Claude — 2026-11-17T22:15:51.996Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad && python3 -c \"\nimport cv2;A=cv2.imread('assets/textures/match06/plate06_hybrid.png');cv2.imwrite('$S/bottom.png',A[1150:1536]);cv2.imwrite('$S/tf2.png',cv2.imread('assets/textures/match06/tile_floor2.png'))\"", "description": "Crop bottom river strip for inspection"}`
+
+### 🧑 User — 2026-11-17T22:15:52.212Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T22:15:54.220Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad/bottom.png"}`
+
+### 🧑 User — 2026-11-17T22:15:54.239Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:16:14.295Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport sys,json,numpy as np\nsys.path.insert(0,'tools/match06')\nfrom geo06 import Geo\ng=Geo('tools/match06/probe06_locked.json','assets/textures/match06/cam06_locked.json')\nprint('sB',g.sB,'cam',g.C)\nfor s in [196,197,197.5,198,198.5,199,199.5,200,201,203]:\n  for l in [-4.5,0,4.5]:\n    u,v,z=g.proj(g.floor(np.array([s]),np.array([l])))\n    print(s,l,int(u[0]),int(v[0]),round(float(z[0]),2),end=' | ')\n  print()\nEOF", "description": "Project floor points to find visible near rows"}`
+
+### 🧑 User — 2026-11-17T22:16:14.403Z
+
+> ↩︎ result: sB 198.91 cam [   1.72053548  -35.36941429 -132.64401919]
+> 196 -4.5 -916 1839 -4.4 | 196 0 387 1876 -4.23 | 196 4.5 1803 1917 -4.05 | 
+> 197 -4.5 -717 1503 -5.13 | 197 0 400 1530 -4.89 | 197 4.5 1632 1560 -4.66 | 
+> 197.5 -4.5 -636 1371 -5.5 | 197.5 0 406 1391 -5.23 | 197.5 4.5 1561 1413 -4.96 | 
+> 198 -4.5 -565 1255 -5.87 | 198 0 411 1269 -5.57 | 198 4.5 1498 1285 -5.27 | 
+> 198.5 -4.5 -501 1152 -6.24 | 198.5 0 417 1161 -5.91 | 198.5 4.5 1442 1172 -5.59 | 
+> 199 -4.5 -442 1062 -6.62 | 199 0 422 1067 -6.27 | 199 4.5 1392 1073 -5.91 | 
+> 199.5 -4.5 -389 982 -7.01 | 199.5 0 427 984 -6.62 | 199.5 4.5 1345 986 -6.24 | 
+> 200 -4.5 -341 912 -7.4 | 200 0 433 910 -6.99 | 200 4.5 1303 908 -6.58 | 
+> 201 -4.5 -254 797 -8.2 | 201 0 443 789 -7.74 | 201 4.5 1229 780 -7.29 | 
+> 203 -4.5 -112 645 -9.92 | 203 0 464 628 -9.37 | 203 4.5 1114 609 -8.82 |
+
+### 🤖 Claude — 2026-11-17T22:17:02.471Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport sys,numpy as np,cv2\nsys.path.insert(0,'tools/match06')\nfrom geo06 import Geo\ng=Geo('tools/match06/probe06_locked.json','assets/textures/match06/cam06_locked.json')\nA=cv2.imread('assets/textures/match06/plate06_hybrid.png')\n# foam detection: bright + low saturation\nhsv=cv2.cvtColor(A,cv2.COLOR_BGR2HSV)\nfoam=(hsv[...,1]<70)&(hsv[...,2]>170)\nfor s in [198.2,198.6,199.0,199.6,200.2,201,202,203,204]:\n  L=np.linspace(-4.5,4.5,181)\n  u,v,z=g.proj(g.floor(np.full_like(L,s),L))\n  ok=(u>=0)&(u<864)&(v>=0)&(v<1536)\n  row=''.join(('F' if foam[int(v[i]) …[+165 chars]`
+
+### 🧑 User — 2026-11-17T22:17:02.648Z
+
+> ↩︎ result: 198.2               ~~~~F~~~~~~~F~~~~FF             
+>  198.6              FF~~~~~FFFFFF~~~~~~~             
+>  199.0             F~~~~~~~~~FF~~~~~~~~~~            
+>  199.6            ~~~~~~~~~~~FF~~~~~~~~~~            
+>  200.2           ~~F~~~F~~~FFFFF~~~~~~F~~~           
+>  201.0          ~~~~~~~~~~~~~~FFF~~F~~~F~~           
+>  202.0        ~~~F~~~~~~~~~~FF~~~~~~FF~~~~~          
+>  203.0      ~~~~~F~~~F~F~~~~~~~~~~~~~~~~~~~~         
+>  204.0    ~~~~FF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+### 🤖 Claude — 2026-11-17T22:17:34.983Z
+
+> 🔧 **Bash** `{"command": "grep -n \"m06\\|match06\" src/game/Game.ts src/game/cameraRig.ts src/game/match.ts | head -40", "description": "Find match06 hooks in shared files"}`
+
+### 🧑 User — 2026-11-17T22:17:35.012Z
+
+> ↩︎ result: src/game/Game.ts:28:import { buildMatch06 } from '../world/match06';
+> src/game/Game.ts:118:  // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
+> src/game/Game.ts:119:  const m06 = MATCH['06'] ? await buildMatch06(course) : null;
+> src/game/Game.ts:120:  if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
+> src/game/Game.ts:121:  let m06On = false;
+> src/game/Game.ts:122:  let m06Applied = false;
+> src/game/Game.ts:174:    if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
+> src/game/Game.ts:540:    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+> src/game/Game.ts:541:    if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+> src/game/Game.ts:542:      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On; }
+> src/game/Game.ts:543:      m06Applied = m06On;
+> src/game/Game.ts:592:    // `?match06=1`: no bloom on Screen 06 under the switch (the artwork carries its own glow)
+> src/game/Game.ts:593:    if (m06) {
+> src/game/Game.ts:595:      if (m06On) bloom.strengt …[+1011 chars]
+
+### 🤖 Claude — 2026-11-17T22:17:35.924Z
+
+Now the texture tool for the river water and foam bank (built from the approved painting).
+
+### 🤖 Claude — 2026-11-17T22:17:51.436Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/match06/make_river06.py", "content": "\"\"\"Screen 06 (?match06=1, r6 2026-11-17): river-water + foam-bank tiles for the NARROW fitted river (`&m06geo=1`,\n`&m06flow=1`, qa/match/06/NOTES.md r6).\nMeasured through the locked camera: the painted river is only ~4.5 u wide at Benny (the frame edges at Benny's row are\nlateral -2.1 .. +2.1, foam banks right there) while the game river is 7 u (+1 u bank) — the r3 floor was 2x too wide.\n* tile_river6.png: the painted water just below Benny's wake (s = Benny-1.66 .. Benny-0.96, lateral -1.5 .. +1.5: cyan\n  c …[+3161 chars]`
+
+### 🧑 User — 2026-11-17T22:17:51.461Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/match06/make_river06.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T22:17:54.301Z
+
+> 🔧 **Bash** `{"command": "cp assets/textures/match06/proj06.json /tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad/proj06_before.json && python3 -I tools/match06/make_river06.py tools/match06/probe06_locked.json assets/textures/match06/cam06_locked.json assets/textures/match06 qa/match/06/r6 && git diff --stat assets/textures/match06/proj06.json", "description": "Build river and foam tiles"}`
+
+### 🧑 User — 2026-11-17T22:17:54.690Z
+
+> ↩︎ result: tile_river6 (91, 600, 3) tile_foam6 (168, 104, 3) {'note': 'r6 narrow river: water |l| <= Wc, foam bank Wc..Wb (raised hb), tunnel wall rising from Wb (tools/match06/make_river06.py)', 'Wc': 2.3, 'Wb': 3.6, 'hb': 0.18, 'river': {'s': [197.25, 197.95], 'lateral': [-1.5, 1.5], 'period': 2.275, 'pxPerU': 200, 'stretch': 5.0}, 'foamPeriod': 1.6, 'wallFrom': 0.35}
+>  assets/textures/match06/proj06.json | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
+
+### 🤖 Claude — 2026-11-17T22:17:55.631Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r6/tile_river6_x3.png"}`
+
+### 🧑 User — 2026-11-17T22:17:55.654Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:18:03.288Z
+
+> 🔧 **Bash** `{"command": "cp /tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad/proj06_before.json assets/textures/match06/proj06.json && sed -i 's/S0, S1, L0, L1, PX = g.sB - 1.66, g.sB - 0.96, -1.5, 1.5, 200/S0, S1, L0, L1, PX = g.sB - 1.66, g.sB - 0.96, -1.5, 0.95, 200   # right of +0.95: inpainted bubble blur/' tools/match06/make_river06.py && sed -i 's/lateral -1.5 .. +1.5: cyan/lateral -1.5 .. +0.95: cyan/' tools/match06/make_river06.py && python3 -I tools/match06/make_river06.py tools/match06/probe06_locked.json assets/textures/match06/cam06_locked.json assets/textures …[+92 chars]`
+
+### 🧑 User — 2026-11-17T22:18:03.617Z
+
+> ↩︎ result: tile_river6 (91, 490, 3) tile_foam6 (168, 104, 3) {'note': 'r6 narrow river: water |l| <= Wc, foam bank Wc..Wb (raised hb), tunnel wall rising from Wb (tools/match06/make_river06.py)', 'Wc': 2.3, 'Wb': 3.6, 'hb': 0.18, 'river': {'s': [197.25, 197.95], 'lateral': [-1.5, 0.95], 'period': 2.275, 'pxPerU': 200, 'stretch': 5.0}, 'foamPeriod': 1.6, 'wallFrom': 0.35}
+> [This command modified 1 file you've previously read: tools/match06/make_river06.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T22:18:29.148Z
+
+Now the switch-guarded geometry + material in `src/world/match06.ts`.
+
+### 🤖 Claude — 2026-11-17T22:19:00.257Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt,(a,s.count(a))\n    s=s.replace(a,b)\nrep(\"\"\"    floor2?: { lateralPeriod: number; period: number };\n  };\"\"\",\"\"\"    floor2?: { lateralPeriod: number; period: number };\n    r6?: { Wc: number; Wb: number; hb: number; river: { period: number }; foamPeriod: number };\n  };\"\"\")\nrep(\"\"\"attribute vec2 aTile;\nvarying vec4 vProj;\nvarying vec3 vW;\nvarying vec3 vN;\nvarying vec2 vTile;\nvoid main() {\n  vec4 wp = modelMatrix * vec4(position, 1.0);\ …[+8067 chars]`
+
+### 🧑 User — 2026-11-17T22:19:02.635Z
+
+> ↩︎ result: 262:  const FC = 32;
+> TSC_OK
+
+### 🤖 Claude — 2026-11-17T22:19:08.313Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\na=\"\"\"    const p = fr.pos.clone().addScaledVector(fr.right, lx).addScaledVector(fr.up, ly);\"\"\"\nb=\"\"\"    const p = GEO ? fr.pos.clone().addScaledVector(fr.right, lx).addScaledVector(fr.up, ly)\n      : fr.pos.clone().addScaledVector(fr.up, L.hA).addScaledVector(fr.right, L.R * Math.cos(th)).addScaledVector(fr.up, L.R * Math.sin(th));\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nsed -n 268,300p src/world/match06.ts; npx tsc --noEmit -p . && echo TSC_OK", "description": "Keep origina …[+51 chars]`
+
+### 🧑 User — 2026-11-17T22:19:10.507Z
+
+> ↩︎ result: const l = -half + (2 * half * j) / FC;
+>     const p = fr.pos.clone().addScaledVector(fr.right, l);
+>     if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
+>     return [p, l / TF.lateralPeriod, l];
+>   }, TF.period), mat(tFloor, true), 'floor');
+>   // far end cap of the tunnel (the glowing vanishing point)
+>   const fe = frame(L.s1 + L.ext);
+>   const cap = new THREE.Mesh(new THREE.CircleGeometry(L.R, 64), mat(tTube));
+>   cap.geometry.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(cap.geometry.attributes.position.count * 2), 2));
+>   cap.position.copy(fe.pos).addScaledVector(fe.up, L.hA);
+>   cap.lookAt(cap.position.clone().sub(T1));
+>   cap.name = 'm06_end'; cap.frustumCulled = false;
+>   group.add(cap);
+> 
+>   // QA only: `&m06dbg=1` tints the tube green and the river floor red (which proxy surface a pixel comes from)
+>   if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06dbg') === '1') {
+>     group.traverse((o) => {
+>       const u = ((o as THREE.Mesh).material as THREE.ShaderMaterial)?.uniforms?.uDbg;
+>       if (u) u.value.set(o.name === 'm06_floor' ? 1 : 0, …[+553 chars]
+
+### 🤖 Claude — 2026-11-17T22:19:11.834Z
+
+Now the moving audit with the new geometry (debug colours first, then real look).
+
+### 🤖 Claude — 2026-11-17T22:19:15.590Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad && cat > $S/sheet.py <<'EOF'\nimport sys\nfrom PIL import Image\nd=sys.argv[1]; names=['a00_approved_view','f03_forward3u','f06_forward6u','f10_forward10u','f20_forward20u','s_left_steer','s_right_steer','s_left_hard','s_right_hard','t33_through_screen','t66_through_screen','t95_through_screen']\nims=[Image.open(f'{d}/{n}.png').convert('RGB').resize((216,384)) for n in names]\nW=Image.new('RGB',(216*6,768))\nfor i,im in enumerate(ims): W.paste(im,((i%6)*216,(i//6)*384))\nW.save(f'{d}/sheet.png')\nE …[+203 chars]`
+
+### 🧑 User — 2026-11-17T22:20:04.040Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T22:20:05.706Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad/geo/sheet.png"}`
+
+### 🧑 User — 2026-11-17T22:20:05.773Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:20:11.595Z
+
+Big visible change: the river now reads as the painted cyan/magenta water with foam banks and tunnel walls at the sides. Checking full-size frames.
+
+### 🤖 Claude — 2026-11-17T22:20:12.792Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad/geo/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-17T22:20:12.831Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:20:13.447Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad/geo/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-17T22:20:13.492Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:20:28.321Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/967783a9-db07-5bcd-afd0-6d162b0dac1c/scratchpad/geo/s_right_steer.png"}`
+
+### 🧑 User — 2026-11-17T22:20:28.361Z
+
+> ↩︎ result: [image]
+

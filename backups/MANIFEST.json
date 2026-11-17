@@ -473,8 +473,8 @@
   },
   {
    "path": "assets/textures/match06/proj06.json",
-   "bytes": 1332,
-   "sha256": "220f85a9135fafe75804add061e00ce53f4787cf0705fb1b52f8baa058d37327"
+   "bytes": 1736,
+   "sha256": "121f901e41312adfdd2a0a0e2d2040491613aeeaaae306215bb15b4879083198"
   },
   {
    "path": "assets/textures/match06/tile_floor.png",
@@ -487,14 +487,24 @@
    "sha256": "e4e5fe91aa80f107dc433bad7a41b2dc78c694137258695c9f70ae0c71f26c8a"
   },
   {
+   "path": "assets/textures/match06/tile_foam6.png",
+   "bytes": 29844,
+   "sha256": "bb60e44fd1426f5e8bfffbfed1d2c5b58070ee65c9e681b07da51524515180ee"
+  },
+  {
+   "path": "assets/textures/match06/tile_river6.png",
+   "bytes": 79967,
+   "sha256": "89599101fd6cc6c9c02afd6e8cd382d13dbf01dcb77475dc021fd3533178ab9d"
+  },
+  {
    "path": "assets/textures/match06/tile_tube.png",
    "bytes": 870107,
    "sha256": "6cb5ecf23b1a0b3bb9724fa8fd4e31d7344f0c05e9f08220f52f0af48df0d2e6"
   },
   {
    "path": "assets/textures/match06/water06.json",
-   "bytes": 4998,
-   "sha256": "b933c9f1d51b6e1860e94a62d20955764d675727cc28f6b895155c8a021b41cb"
+   "bytes": 4953,
+   "sha256": "d9a015595afe2d3b00decbdcdd3529c0be8894bc820fa99452fcf5cff73dfff3"
   },
   {
    "path": "assets/textures/match08/cam08_locked.json",
@@ -669,7 +679,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11502,
-   "sha256": "f155efa561ed7f32b16fedb705633dfe67e1f559d4960d3100c5be98195493f2"
+   "sha256": "82bef907edc72f0f3246ff9b36668b827dc8a49f762cfa1f06558a0bb54b4b3d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1612,9 +1622,14 @@
    "sha256": "057987bc1c22545dc27a30f55773a8f04dbf69648a94ba4d3966f62c87fbaa04"
   },
   {
+   "path": "qa/match/06/r6/tile_river6_x3.png",
+   "bytes": 594190,
+   "sha256": "756a5dcdad494a2d01455a6af66fb142673337eedf6a9145ab40da5e785c3909"
+  },
+  {
    "path": "qa/match/06/r6/water06_fit_check.png",
-   "bytes": 2580293,
-   "sha256": "8d0330f23f4e892e8f6ef5a79ff30377cbbc297927793136371e34088803d718"
+   "bytes": 2558213,
+   "sha256": "08b5eb6a2abd21eedd1ffe4a1f87e6cd5c692dc322769bf9037c8f3be7d1ef83"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -8393,8 +8408,8 @@
   },
   {
    "path": "src/world/match06.ts",
-   "bytes": 12698,
-   "sha256": "4fa87fd2211696dc8ca0ec0b3246f73e2caec68e012ea29e1e037ab0f2508219"
+   "bytes": 16514,
+   "sha256": "3281e5a1e60a1ae63be66ba82a44ec9f1159a3bd255d8b02d4ae41c7d0f1a1b7"
   },
   {
    "path": "src/world/match08.ts",
@@ -8573,8 +8588,8 @@
   },
   {
    "path": "tools/match06/fit_water06.py",
-   "bytes": 6353,
-   "sha256": "eef84eb9aae09b14f3f61db542dd549a25db60d6f8265ed224e92711c129907a"
+   "bytes": 6397,
+   "sha256": "a41db6f9c72c7f79b6e3902a914dd09f57a1f6562a25548fe6e6a4383ce54f27"
   },
   {
    "path": "tools/match06/geo06.py",
@@ -8595,6 +8610,11 @@
    "path": "tools/match06/make_plate06.py",
    "bytes": 3423,
    "sha256": "3a002099defc0ad0cf7c2768659ec2ccf967626013301c1003d42534876e69bc"
+  },
+  {
+   "path": "tools/match06/make_river06.py",
+   "bytes": 3606,
+   "sha256": "af68197d57140db3edf7da61f8cf33a7144634070ef26fc72ca2cc3a8360a242"
   },
   {
    "path": "tools/match06/make_tiles06.py",

@@ -74,8 +74,9 @@ for i in range(len(S)):
     lo[i], hi[i] = Ls[a], Ls[b]
 # rows not seen by the projector: the game river's own half-width (no extra bank)
 lo = np.where(seen, lo, -half_def); hi = np.where(seen, hi, half_def)
-# never narrower than Benny's lane needs to look (keep >= 1.6 u each side of the centre) and never wider than default+1
-lo = np.clip(lo, -half_def - 1.0, -1.6); hi = np.clip(hi, 1.6, half_def + 1.0)
+# never narrower than the game river itself (Benny steers up to |lat| 2.95 and must stay on water) and never wider than
+# the r3 floor (river + 1 u bank)
+lo = np.clip(lo, -half_def - 1.0, -half_def); hi = np.clip(hi, half_def, half_def + 1.0)
 # smooth along s (no jagged banks); 1 u window
 k = int(round(1.0 / ds)) | 1
 ker = np.ones(k) / k

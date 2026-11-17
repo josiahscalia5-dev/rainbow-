@@ -83,6 +83,27 @@
    "period": 2.4727272727272727,
    "pxPerU": 220,
    "stretch": 4.0
+  },
+  "r6": {
+   "note": "r6 narrow river: water |l| <= Wc, foam bank Wc..Wb (raised hb), tunnel wall rising from Wb (tools/match06/make_river06.py)",
+   "Wc": 2.3,
+   "Wb": 3.6,
+   "hb": 0.18,
+   "river": {
+    "s": [
+     197.25,
+     197.95
+    ],
+    "lateral": [
+     -1.5,
+     0.95
+    ],
+    "period": 2.275,
+    "pxPerU": 200,
+    "stretch": 5.0
+   },
+   "foamPeriod": 1.6,
+   "wallFrom": 0.35
   }
  }
 }

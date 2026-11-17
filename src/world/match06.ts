@@ -31,6 +31,7 @@ interface Layout06 {
     tube: { wallAngle: [number, number]; period: number; anglePeriod: number };
     floor: { lateralPeriod: number; period: number };
     floor2?: { lateralPeriod: number; period: number };
+    r6?: { Wc: number; Wb: number; hb: number; river: { period: number }; foamPeriod: number };
   };
 }
 
@@ -43,15 +44,18 @@ export interface Match06 {
 const VERT = /* glsl */ `
 uniform mat4 uProjVP;
 attribute vec2 aTile;
+attribute vec2 aLS;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
 varying vec2 vTile;
+varying vec2 vLS;
 void main() {
   vec4 wp = modelMatrix * vec4(position, 1.0);
   vProj = uProjVP * wp;
   vW = wp.xyz;
   vTile = aTile;
+  vLS = aLS;
   vN = normalize(mat3(modelMatrix) * normal);
   gl_Position = projectionMatrix * viewMatrix * wp;
 }`;
@@ -69,17 +73,39 @@ uniform vec3 uDbg;
 uniform sampler2D uMask;
 uniform float uFloor;
 uniform float uUseMask;
+// r6 (qa/match/06/NOTES.md): uGeo = narrow fitted river (lateral |l| <= Wc water, Wc..Wb foam bank); uR6 = river material
+// built from the approved painted water, world-anchored and flowing downstream (uR6p = Wc, Wb, river period, foam period)
+uniform float uGeo;
+uniform float uR6;
+uniform vec4 uR6p;
+uniform float uTime;
+uniform sampler2D uRiver;
+uniform sampler2D uFoam;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
 varying vec2 vTile;
+varying vec2 vLS;
 ${PROJ05_INVERSE}
 float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
 void main() {
   // ring-structured tile in the surface's own coordinates (mirrored repeat: no seams)
   vec3 pc = texture2D(uTile, vTile).rgb;
-  vec3 t = pc;
   vec3 nn = normalize(vN);
+  float al = abs(vLS.x);
+  if (uR6 > 0.5 && uFloor > 0.5) {
+    float sF = vLS.y - uTime * 1.2;
+    float ax = clamp(vLS.x / (2.0 * uR6p.x) + 0.5, 0.0, 1.0);
+    vec3 r1 = texture2D(uRiver, vec2(ax, sF / uR6p.z)).rgb;
+    vec3 r2 = texture2D(uRiver, vec2(ax, sF / (uR6p.z * 1.37) + 0.43)).rgb;
+    float bw = 0.5 + 0.5 * sin(vLS.y * 0.37 + vLS.x * 0.6) * sin(vLS.y * 0.13 + 1.7);
+    vec3 riv = mix(r1, r2, smoothstep(0.25, 0.75, bw));
+    float fr = pow(1.0 - abs(dot(nn, normalize(cameraPosition - vW))), 4.0);
+    riv += fr * 0.22 * vec3(0.9, 0.85, 1.0);
+    vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
+    pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
+  }
+  vec3 t = pc;
   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
   // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
   // no more magnified than the approved view did (incidence-cosine ratio x distance ratio = 1 in the approved view)
@@ -101,7 +127,8 @@ void main() {
       if (uFloor > 0.5 && uUseMask > 0.5) {
         vec4 mk = texture2D(uMask, uv);
         float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
-        w *= 1.0 - max(mk.r, mk.g) * away;
+        float inWater = uGeo > 0.5 ? 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al) : 1.0;
+        w *= 1.0 - max(mk.r, mk.g) * away * inWater;
       }
       t = mix(pc, texture2D(uPlate, uv).rgb, w);
     }
@@ -140,6 +167,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
     uPjRes: { value: new THREE.Vector2(W, H) },
     uProjPos: { value: proj.position.clone() },
+    uTime: { value: 0 },
   };
   const loadTile = async (name: string) => {
     const t = await loader.loadAsync(tex(`tile_${name}.png`));
@@ -151,12 +179,29 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   const TF2 = !v2 ? L.tiles.floor2 : undefined;
   const [tTube, tFloor] = await Promise.all([loadTile('tube'), loadTile(TF2 ? 'floor2' : 'floor')]);
   if (TF2) tFloor.wrapT = THREE.RepeatWrapping; // seamless along the river (mirrored only across it)
+  // r6 switches (each its own factor): `&m06geo=1` narrow river + foam banks + tunnel walls down to the banks;
+  // `&m06flow=1` river / foam material from the approved painted water, flowing (needs m06geo)
+  const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
+  const R6 = !v2 ? L.tiles.r6 : undefined;
+  const GEO = !!R6 && qs?.get('m06geo') === '1';
+  const FLOW = GEO && qs?.get('m06flow') === '1';
   const mask = v2 ? null : await loader.loadAsync(tex('mask06.png'));
   if (mask) { mask.colorSpace = THREE.NoColorSpace; mask.generateMipmaps = false; mask.minFilter = THREE.LinearFilter; }
+  let tRiver: THREE.Texture | null = null, tFoam: THREE.Texture | null = null;
+  if (FLOW) {
+    [tRiver, tFoam] = await Promise.all([loader.loadAsync(tex('tile_river6.png')), loader.loadAsync(tex('tile_foam6.png'))]);
+    for (const t of [tRiver, tFoam]) {
+      t.colorSpace = THREE.NoColorSpace; t.wrapS = THREE.ClampToEdgeWrapping; t.wrapT = THREE.RepeatWrapping;
+      t.anisotropy = 8; t.minFilter = THREE.LinearMipmapLinearFilter;
+    }
+  }
+  const r6p = new THREE.Vector4(R6?.Wc ?? 0, R6?.Wb ?? 1, (R6?.river.period ?? 1), R6?.foamPeriod ?? 1);
   const mat = (tile: THREE.Texture, floor = false) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
     uniforms: { ...shared, uTile: { value: tile }, uDbg: { value: new THREE.Vector3() }, uMask: { value: mask },
-      uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 } },
+      uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 },
+      uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
+      uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile } },
   });
 
   // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
@@ -171,11 +216,11 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   for (let s = L.s1; s <= L.s1 + L.ext + 1e-6; s += 2) sList.push(s);
 
   // grid helper: rows along s, columns across (closed ring for the tube)
-  const grid = (cols: number, vert: (s: number, j: number, fr: ReturnType<typeof frame>) => [THREE.Vector3, number], sK: number) => {
-    const pos: number[] = [], tile: number[] = [], idx: number[] = [];
+  const grid = (cols: number, vert: (s: number, j: number, fr: ReturnType<typeof frame>) => [THREE.Vector3, number, number?], sK: number) => {
+    const pos: number[] = [], tile: number[] = [], idx: number[] = [], ls: number[] = [];
     for (const s of sList) {
       const fr = frame(s);
-      for (let j = 0; j <= cols; j++) { const [p, a] = vert(s, j, fr); pos.push(p.x, p.y, p.z); tile.push(a, s / sK); }
+      for (let j = 0; j <= cols; j++) { const [p, a, l] = vert(s, j, fr); pos.push(p.x, p.y, p.z); tile.push(a, s / sK); ls.push(l ?? 0, s); }
     }
     const n = cols + 1;
     for (let i = 0; i < sList.length - 1; i++) for (let j = 0; j < cols; j++) {
@@ -185,6 +230,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
     g.setAttribute('aTile', new THREE.Float32BufferAttribute(tile, 2));
+    g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
     g.setIndex(idx);
     g.computeVertexNormals();
     return g;
@@ -196,19 +242,33 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   const TT = L.tiles.tube, TF = TF2 ?? L.tiles.floor;
   const RAD = 128;
   // tunnel tube around the river: angle 0 = right, pi/2 = up; tile angle coordinate starts at the right bank
+  // r6 `m06geo`: the tube's lower walls are drawn in so they rise straight from the foam banks (|l| = Wb at the water
+  // line) instead of meeting the water 3.3 u further out under a 2x too wide water slab; above yTop the tube is unchanged
+  const Lw = Math.sqrt(L.R * L.R - L.hA * L.hA), yTop = L.hA + L.R * Math.sin((20 * Math.PI) / 180);
   add(grid(RAD, (_s, j, fr) => {
     const th = (j / RAD) * Math.PI * 2;
-    const p = fr.pos.clone().addScaledVector(fr.up, L.hA).addScaledVector(fr.right, L.R * Math.cos(th)).addScaledVector(fr.up, L.R * Math.sin(th));
+    let lx = L.R * Math.cos(th);
+    const ly = L.hA + L.R * Math.sin(th);
+    if (GEO && R6) {
+      const t = Math.min(1, Math.max(0, (yTop - ly) / yTop)), k = t * t * (3 - 2 * t);
+      lx -= Math.sign(lx) * k * (Lw - R6.Wb);
+    }
+    const p = GEO ? fr.pos.clone().addScaledVector(fr.right, lx).addScaledVector(fr.up, ly)
+      : fr.pos.clone().addScaledVector(fr.up, L.hA).addScaledVector(fr.right, L.R * Math.cos(th)).addScaledVector(fr.up, L.R * Math.sin(th));
     let a = th; if (a > TT.wallAngle[1]) a -= Math.PI * 2; // continuous over the wall (the part under the water is never seen)
     return [p, (a - TT.wallAngle[0]) / TT.anglePeriod];
   }, TT.period), mat(tTube), 'tube');
   // river floor: the game river's own width + 1 u of foam bank each side (the painted gap between the river loops then
   // lands on the tunnel beyond, not on a wide water slab), never wider than the tube
   const FC = 32;
+  // r6 `m06geo`: the painted river is only ~4.5 u wide at Benny (tools/match06/make_river06.py): water |l| <= Wc, then a
+  // slightly raised foam bank to Wb where the tunnel wall starts (the game river and steering are unchanged)
   add(grid(FC, (s, j, fr) => {
-    const half = Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
+    const half = GEO && R6 ? R6.Wb : Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
     const l = -half + (2 * half * j) / FC;
-    return [fr.pos.clone().addScaledVector(fr.right, l), l / TF.lateralPeriod];
+    const p = fr.pos.clone().addScaledVector(fr.right, l);
+    if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
+    return [p, l / TF.lateralPeriod, l];
   }, TF.period), mat(tFloor, true), 'floor');
   // far end cap of the tunnel (the glowing vanishing point)
   const fe = frame(L.s1 + L.ext);
@@ -244,6 +304,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     },
     sync(renderer, w, h) {
       shared.uPjPost.value.x = renderer.toneMappingExposure;
+      if (FLOW) shared.uTime.value = performance.now() / 1000;
       shared.uPjRes.value.set(w, h);
     },
   };
