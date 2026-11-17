@@ -1,12 +1,12 @@
 {
  "note": "tools/splash05/bake.py: wake card texture (top: sqrt(L/LMAX) premultiplied linear RGB, bottom: alpha)",
  "org": [
-  147,
+  144,
   1004
  ],
  "size": [
-  573,
-  292
+  578,
+  293
  ],
  "LMAX": 2.0,
  "frame": [
@@ -33,6 +33,6 @@
  ],
  "strength": 0.9835767967317393,
  "uR": 0.6536532455807745,
- "matte_px": 32373,
+ "matte_px": 44570,
  "t_lock": 12.0
 }

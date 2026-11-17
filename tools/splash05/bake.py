@@ -29,7 +29,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 from PIL import Image
-from scipy.ndimage import gaussian_filter, binary_dilation, distance_transform_edt
+from scipy.ndimage import gaussian_filter, binary_dilation, distance_transform_edt, maximum_filter
 import cv2
 from post import forward, inverse, grid
 
@@ -96,11 +96,19 @@ def ray(x, y):
 only = args.get("only", "")
 # ------------------------------------------------------------------------------------------------ wake card
 if only in ("", "wake"):
-    Lw, aw = solve(target, bg, xy)
     sat = lambda im: (im.max(-1) - im.min(-1)) / np.maximum(im.max(-1), 1e-3)
     lum = lambda im: im @ [0.2126, 0.7152, 0.0722]
-    mw = np.clip((sat(bg) - sat(ap) + 0.02) / 0.2, 0, 1) * np.clip((lum(ap) - lum(bg)) / 0.08, 0, 1)
-    mw = gaussian_filter(mw, 0.7)
+    # whiteness matte (approved less saturated + brighter than the game's water), grown by 1 px so the filaments' soft
+    # edges come along (measured in simulation: wake 14.7 -> 11.6 mean); water-hue differences are left out on purpose
+    mw = np.clip((sat(bg) - sat(ap) + 0.05) / 0.15, 0, 1) * np.clip((lum(ap) - lum(bg)) / 0.05, 0, 1)
+    mw = gaussian_filter(maximum_filter(mw, 3), 0.7)
+    # foam cover: any alpha above the minimal one reproduces the locked frame exactly (L grows with it); white spray gets
+    # a >= COVER x whiteness, so over other water (hot pink while steering) it stays white instead of tinting pink
+    COVER = float(args.get("cover", 0.5))
+    tL, bL = inverse(target, xy), inverse(bg, xy)
+    aw = np.clip(((bL - tL) / np.maximum(bL, 1e-4)).max(-1), 0, 1)
+    aw = np.maximum(aw, COVER * mw)
+    Lw = np.clip(tL - bL * (1 - aw[..., None]), 0, None)
     # band under the body: from 40 px inside to 30 px below the approved silhouette's bottom edge (rows > 1080)
     bot = np.full(W, -1)
     for x in np.nonzero(bm.any(0))[0]:

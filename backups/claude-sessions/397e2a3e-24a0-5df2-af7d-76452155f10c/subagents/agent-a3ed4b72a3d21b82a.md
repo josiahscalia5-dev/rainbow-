@@ -1784,3 +1784,176 @@ Changes reach y = 0, so something else (walls, HUD) also changed between the two
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; D=qa/pilot05/full_reference_match/splash_bubbles; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nD='$D'\nrow=[]\nfor f in ['move_05','steer_L_080','steer_R_080']:\n    a=np.asarray(Image.open(f'{D}/move/{f}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'{D}/move_before/{f}.png').convert('RGB')).astype(int)\n    d=(np.abs(a-b).sum(-1)>12)\n    m=np.zeros_like(a); m[d]=[255,255,0]\n    trip=np.concatenate([b,a,(b*0.4+m*0.6).astype(int)],1)\n    r …[+285 chars]`
 
+### 🧑 User — 2026-11-17T02:59:51.337Z
+
+> ↩︎ result: -rw-r--r--  1 root root      493 02:23:25 frame05.json
+> -rw-r--r--  1 root root    26900 02:23:25 frame05.png
+> -rw-r--r--  1 root root  1176700 02:57:53 ring05e.png
+> -rw-r--r--  1 root root  3291754 02:57:53 wall05e.png
+> 02:59:51
+
+### 🤖 Claude — 2026-11-17T02:59:53.530Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/movediff.png"}`
+
+### 🧑 User — 2026-11-17T02:59:53.708Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:59:59.659Z
+
+The white stripes are in the before frames too (the river's near tile, not mine). Let me inspect my splash and bubbles at full resolution while moving.
+
+### 🤖 Claude — 2026-11-17T03:00:03.706Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; D=qa/pilot05/full_reference_match/splash_bubbles; python3 -I -c \"\nfrom PIL import Image\nD='$D'\na=Image.open(f'{D}/move/move_05.png').crop((200,780,700,1150))\nb=Image.open(f'{D}/move/steer_L_050.png').crop((0,830,500,1200))\nc=Image.open(f'{D}/move/steer_R_050.png').crop((364,830,864,1200))\nd=Image.open(f'{D}/move/move_20.png').crop((200,700,700,1070))\no=Image.new('RGB',(1010,750))\nfor i,im in enumerate([a,b,c,d]): o.paste(im,((i%2)*510,(i//2)*380))\no.save('$S/mov …[+68 chars]`
+
+### 🧑 User — 2026-11-17T03:00:04.191Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T03:00:05.971Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/move_zoom.png"}`
+
+### 🧑 User — 2026-11-17T03:00:06.016Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T03:00:32.587Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='tools/splash05/bake.py'\ns=open(p).read()\nold=\"\"\"    Lw, aw = solve(target, bg, xy)\n    sat = lambda im: (im.max(-1) - im.min(-1)) / np.maximum(im.max(-1), 1e-3)\n    lum = lambda im: im @ [0.2126, 0.7152, 0.0722]\n    mw = np.clip((sat(bg) - sat(ap) + 0.02) / 0.2, 0, 1) * np.clip((lum(ap) - lum(bg)) / 0.08, 0, 1)\n    mw = gaussian_filter(mw, 0.7)\n\"\"\"\nnew=\"\"\"    sat = lambda im: (im.max(-1) - im.min(-1)) / np.maximum(im.max(-1), 1e-3)\n    lum = lambda im: im @ [0.2126, 0.7152, 0.0722]\n    mw = np.clip((sat(bg) - sat(ap) …[+1176 chars]`
+
+### 🧑 User — 2026-11-17T03:01:05.145Z
+
+> ↩︎ result: wake card [147, 1004] [573, 292] matte>0.5 px 32373
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 9.4, 'within_10': 0.7784, 'within_20': 0.8702, 'ssim_lum': 0.8627, 'mean_signed_rgb': [-0.6, -0.6, 0.3]}
+> water                        px  480736  mean   5.95  <=10 0.893  <=20 0.928  ssim 0.933  signed [0.8, -2.1, -0.9]
+> foam_banks                   px   28862  mean   2.82  <=10 0.957  <=20 0.987  ssim 0.961  signed [-0.2, -0.8, -0.9]
+> benny_and_hat                px   93061  mean  19.22  <=10 0.587  <=20 0.730  ssim 0.658  signed [-5.8, -1.4, 0.9]
+> wake_splash                  px   83491  mean  14.60  <=10 0.590  <=20 0.775  ssim 0.770  signed [9.1, 5.1, 1.3]
+> bubbles                      px   29304  mean   8.05  <=10 0.731  <=20 0.864  ssim 0.957  signed [-4.3, 4.3, 2.7]
+
+### 🤖 Claude — 2026-11-17T03:01:16.574Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/splash05/rebake.sh", "content": "#!/usr/bin/env bash\n# Screen 05 wake card + approved bubbles: re-solve against the CURRENT game (run after any change behind them: env05 walls /\n# rings, the water05 texture, Benny). ~30 s, one render slot. Writes assets/textures/splash05/* and assets/textures/bub05/*.\n#   bash tools/splash05/rebake.sh [extra bake.py args, e.g. --only=bub]\n# 1. probe the locked frame with the master switch but WITHOUT the splash / bubble parts (and the old splash + spray hidden)\n# 2. solve the layers against that background (tools/s …[+308 chars]`
+
+### 🧑 User — 2026-11-17T03:01:16.654Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/splash05/rebake.sh (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T03:01:19.725Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; ls -la --time-style=+%H:%M:%S assets/textures/env05/ | tail -3; date +%H:%M:%S; bash tools/splash05/rebake.sh 2>&1 | grep -E \"wake card|atlas|bg →\"; node scripts/capture.mjs 05 --q='match05=1' --out=$S/c5 2>&1 | grep -i \"error\" ; cp $S/capture_log.backup.json qa/capture_log.json; python3 -I tools/match05/metrics.py $S/c5/05.png $S/c5/ | grep -E \"FULL|wake|bubbles|water|foam|benny\"", "description": "Run rebake script and recapture", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-17T03:02:37.915Z
+
+> ↩︎ result: -rw-r--r--  1 root root    26900 02:23:25 frame05.png
+> -rw-r--r--  1 root root  1176700 02:57:53 ring05e.png
+> -rw-r--r--  1 root root  3291754 02:57:53 wall05e.png
+> 03:01:20
+> bg → tools/splash05/work/bg.png
+> wake card [147, 1004] [573, 292] matte>0.5 px 32373
+> atlas 512 382
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 10.16, 'within_10': 0.7642, 'within_20': 0.8576, 'ssim_lum': 0.8424, 'mean_signed_rgb': [-0.4, -0.6, 0.2]}
+> water                        px  480736  mean   5.96  <=10 0.893  <=20 0.928  ssim 0.933  signed [0.8, -2.1, -0.9]
+> foam_banks                   px   28862  mean   2.84  <=10 0.956  <=20 0.987  ssim 0.960  signed [-0.2, -0.8, -0.9]
+> benny_and_hat                px   93061  mean  19.22  <=10 0.587  <=20 0.730  ssim 0.658  signed [-5.8, -1.4, 0.9]
+> wake_splash                  px   83491  mean  14.60  <=10 0.590  <=20 0.775  ssim 0.770  signed [9.1, 5.1, 1.3]
+> bubbles                      px   29304  mean   2.05  <=10 0.975  <=20 0.997  ssim 0.985  signed [-0.8, -0.1, 0.1]
+
+### 🤖 Claude — 2026-11-17T03:02:40.597Z
+
+Bubbles back to 2.05. The whole frame moved (10.16) because the walls changed under everyone; let me confirm it's not mine by looking at all regions.
+
+### 🤖 Claude — 2026-11-17T03:02:43.145Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I tools/match05/metrics.py tools/splash05/work/bg.png $S/bgw_ | grep -E \"FULL|purple|gold|hud|distant|side\"; python3 -I tools/match05/metrics.py $S/c5/05.png $S/c5/ | grep -E \"purple|gold|hud|distant|side\"", "description": "Compare wall-related regions bg vs new"}`
+
+### 🧑 User — 2026-11-17T03:02:45.462Z
+
+> ↩︎ result: FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 11.87, 'within_10': 0.7357, 'within_20': 0.8301, 'ssim_lum': 0.8091, 'mean_signed_rgb': [-2.4, -1.3, 0.4]}
+> gold_rings_and_front_frame   px  125730  mean   9.75  <=10 0.730  <=20 0.873  ssim 0.813  signed [-3.5, -1.3, 2.9]
+> purple_walls                 px  312706  mean  10.54  <=10 0.751  <=20 0.849  ssim 0.801  signed [0.3, 1.4, -1.0]
+> side_fittings                px   13776  mean   3.56  <=10 0.890  <=20 0.947  ssim 0.908  signed [-0.5, -0.3, 1.5]
+> hud_and_text                 px  125488  mean  17.23  <=10 0.574  <=20 0.737  ssim 0.799  signed [-4.0, -2.2, 2.5]
+> distant_tunnel_and_glow      px    6513  mean   2.43  <=10 0.926  <=20 0.971  ssim 0.936  signed [-0.2, 0.4, 1.0]
+> gold_rings_and_front_frame   px  125730  mean   9.74  <=10 0.730  <=20 0.873  ssim 0.814  signed [-3.5, -1.3, 2.9]
+> purple_walls                 px  312706  mean  10.46  <=10 0.752  <=20 0.850  ssim 0.803  signed [0.3, 1.4, -1.0]
+> side_fittings                px   13776  mean   3.56  <=10 0.890  <=20 0.947  ssim 0.908  signed [-0.5, -0.3, 1.5]
+> hud_and_text                 px  125488  mean  17.23  <=10 0.574  <=20 0.737  ssim 0.799  signed [-4.0, -2.2, 2.5]
+> dista …[+108 chars]
+
+### 🤖 Claude — 2026-11-17T03:03:12.688Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; cat > $S/sim3.py <<'EOF'\nimport sys\nsys.path.insert(0, 'tools/splash05')\nimport numpy as np\nfrom PIL import Image\nfrom post import forward, inverse, grid\nfrom scipy.ndimage import gaussian_filter, binary_dilation, distance_transform_edt, maximum_filter\nM = 'qa/pilot05/full_reference_match/masks'\nap = np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'), float) / 255\nbg = np.asarray(Image.open('tools/splash05/work/bg.png').convert('RGB') …[+2784 chars]`
+
+### 🧑 User — 2026-11-17T03:03:15.023Z
+
+> ↩︎ result: current      14.71 0.771
+> looser       13.842 0.782
+> dilate1      12.353 0.808
+> looser+dil   11.602 0.817
+> base+addBright 12.506 0.798
+> v4+addBright 10.899 0.826
+
+### 🤖 Claude — 2026-11-17T03:03:17.124Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/sim3.png"}`
+
+### 🧑 User — 2026-11-17T03:03:17.179Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T03:03:30.478Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='tools/splash05/bake.py'\ns=open(p).read()\nold=\"\"\"    mw = np.clip((sat(bg) - sat(ap) + 0.02) / 0.2, 0, 1) * np.clip((lum(ap) - lum(bg)) / 0.08, 0, 1)\n    mw = gaussian_filter(mw, 0.7)\n\"\"\"\nnew=\"\"\"    # whiteness matte (approved less saturated + brighter than the game's water), grown by 1 px so the filaments' soft\n    # edges come along (measured in simulation: wake 14.7 -> 11.6 mean); water-hue differences are left out on purpose\n    mw = np.clip((sat(bg) - sat(ap) + 0.05) / 0.15, 0, 1) * np.clip((lum(ap) - lum(bg)) / 0.0 …[+870 chars]`
+
+### 🧑 User — 2026-11-17T03:04:02.520Z
+
+> ↩︎ result: wake card [144, 1004] [578, 293] matte>0.5 px 44570
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 10.12, 'within_10': 0.7672, 'within_20': 0.8578, 'ssim_lum': 0.8412, 'mean_signed_rgb': [-0.5, -0.5, 0.2]}
+> purple_walls                 px  312706  mean  11.07  <=10 0.736  <=20 0.839  ssim 0.788  signed [-0.1, 1.2, -1.1]
+> water                        px  480736  mean   5.97  <=10 0.892  <=20 0.928  ssim 0.932  signed [0.8, -2.1, -0.9]
+> foam_banks                   px   28862  mean   3.00  <=10 0.955  <=20 0.985  ssim 0.959  signed [-0.4, -1.1, -0.9]
+> benny_and_hat                px   93061  mean  19.22  <=10 0.587  <=20 0.730  ssim 0.658  signed [-5.8, -1.4, 0.9]
+> wake_splash                  px   83491  mean  11.57  <=10 0.702  <=20 0.820  ssim 0.811  signed [9.6, 7.0, 1.4]
+> bubbles                      px   29304  mean   2.05  <=10 0.975  <=20 0.997  ssim 0.985  signed [-0.8, -0.1, 0.1]
+
+### 🤖 Claude — 2026-11-17T03:04:06.842Z
+
+Wake 14.60 → 11.57 mean (77.5 → 82.0 %). Foam banks moved 2.84 → 3.00; I need to know whether that's my card or the walls changing again.
+
+### 🤖 Claude — 2026-11-17T03:04:11.396Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nS='$S'\na=np.asarray(Image.open(S+'/c5/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open(S+'/c6/05.png').convert('RGB')).astype(int)\nfm=np.asarray(Image.open('qa/pilot05/full_reference_match/masks/foam_banks.png').convert('L'))>127\ncard=np.zeros(fm.shape,bool); card[1004:1004+293,144:144+578]=True\nd=np.abs(a-b).sum(-1)>0\nprint('c5->c6 changed px', d.sum(), 'inside card rect', (d&card).sum(), 'out …[+301 chars]`
+
+### 🧑 User — 2026-11-17T03:04:11.911Z
+
+> ↩︎ result: c5->c6 changed px 53545 inside card rect 44569 outside 8976
+> foam px changed inside card rect 0 outside card 107
+> -rw-r--r--  1 root root 14668755 02:23:25 feedback.npz
+> -rw-r--r--  1 root root      493 02:23:25 frame05.json
+> -rw-r--r--  1 root root    26900 02:23:25 frame05.png
+> -rw-r--r--  1 root root  1176700 02:57:53 ring05e.png
+> -rw-r--r--  1 root root  3291754 02:57:53 wall05e.png
+
+### 🤖 Claude — 2026-11-17T03:04:15.816Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; find src assets/textures tools -newer tools/splash05/rebake.sh -type f 2>/dev/null | grep -v \"splash05\\|bub05\" | head -20; date +%H:%M:%S", "description": "List files changed recently by others"}`
+
+### 🧑 User — 2026-11-17T03:04:15.872Z
+
+> ↩︎ result: src/world/environment.ts
+> src/vfx/proj05Tunnel.ts
+> assets/textures/env05/feedback.npz
+> assets/textures/env05/ring05e.png
+> assets/textures/env05/bake_report.json
+> assets/textures/env05/wall05e.png
+> tools/env05/remap_feedback.py
+> 03:04:15
+
+### 🤖 Claude — 2026-11-17T03:04:22.969Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; D=qa/pilot05/full_reference_match/splash_bubbles; time node scripts/proj05-move.mjs --q='match05=1' --out=$D/still --still=1.5 --fps=16 2>&1 | grep -i \"error\\|still frames\"; ls $D/still/still | wc -l", "description": "Capture locked-camera animation frames", "timeout": 1200000}`
+
