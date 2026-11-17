@@ -250,6 +250,12 @@ const qv05 = (key: string): string => {
   return BUILD_Q05 !== '' ? new URLSearchParams(BUILD_Q05).get(key) ?? '' : '';
 };
 export const TGTFILL05: boolean = TGTVIS05 && qv05('tgtfill05') === '3';
+/**
+ * `?tgtwall05=1` (Screen 05 agent, round 3, NOTES "2.3"; needs tgtfill05=3): E + its LUT re-baked with
+ * BAKE05_EXTRA_REGIONS=purple_walls — where the near ribbon edge covers wall in the locked view (right wall chunk
+ * x 748-863 y 771-904 + small left pieces) E carries the approved wall pixels instead of stretched water.
+ */
+export const TGTWALL05: boolean = TGTFILL05 && q05('tgtwall05');
 /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
 export const proj05Pending: Promise<unknown>[] = [];
 
@@ -1736,14 +1742,15 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
   const urls = {
-    E: TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_E.png', import.meta.url).href
+    E: TGTWALL05 ? new URL('../../assets/textures/match05/tgtwall05/proj05_E.png', import.meta.url).href
+      : TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_E.png', import.meta.url).href
       : TGTVIS05 ? new URL('../../assets/textures/match05/tgtvis05/proj05_E.png', import.meta.url).href
       : PROJGAP05 ? new URL('../../assets/textures/water05/far2/proj05_E.png', import.meta.url).href
       : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
     N: new URL('../../assets/textures/water05/proj05_N.png', import.meta.url).href,
     T: new URL('../../assets/textures/water05/proj05_T.png', import.meta.url).href,
     D: new URL('../../assets/textures/water05/proj05_D.png', import.meta.url).href,
-    lut: PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_lut.json', import.meta.url).href : new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href,
+    lut: TGTWALL05 ? new URL('../../assets/textures/match05/tgtwall05/proj05_lut.json', import.meta.url).href : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_lut.json', import.meta.url).href : new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href,
   };
   const empty = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1);
   empty.needsUpdate = true;

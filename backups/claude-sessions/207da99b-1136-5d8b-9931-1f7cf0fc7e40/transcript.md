@@ -682,3 +682,259 @@ Both new fills remove the teal discs, but the locked view scores a little lower 
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && node scripts/capture.mjs 05 --out=$S/cd > /dev/null 2>&1; node scripts/capture.mjs 05 --q=\"match05=1\" --out=$S/cb > /dev/null 2>&1; node scripts/capture.mjs 05 --q=\"match05=1&tgtvis05=1&tgtfill05=3\" --out=$S/c3b > /dev/null 2>&1; cmp $S/cd/05.png qa/pilot05/current_default_05.png && echo DEFAULT_0px; cmp $S/cb/05.png qa/match/05/02_BEFORE_match05.png && echo BEFORE_0px; cmp $S/c3b/05.png $S/cap3/05.png && echo NEW_REPRO", "description": "Verify default, BEFORE and NEW reproduce", "timeout":  …[+7 chars]`
 
+### 🧑 User — 2026-11-17T17:42:18.478Z
+
+> ↩︎ result: DEFAULT_0px
+> BEFORE_0px
+> NEW_REPRO
+
+### 🤖 Claude — 2026-11-17T17:42:19.637Z
+
+Now the notes and the commit.
+
+### 🤖 Claude — 2026-11-17T17:42:32.398Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/match/05/NOTES.md <<'EOF'\n\n---\n# Milestone 2 continued (round 3, account 3, branch `claude/rainbow-s05-match-c3`, started from `fd94023f`)\n\n## 2.2 Soft green-teal patches beside Benny while riding — `?tgtfill05=3` (needs `match05=1&tgtvis05=1`)\nCause (seen in `target_05.png`): the pyramid blend that fills the target's holes used the APPROVED picture as its\n\"outside\" side, so the coarse levels carried the occluders' colours (yellow coins, pink Benny) into each small hole →\ndull green-teal discs where the painted coins sit. In the locked view the game coins cover …[+2519 chars]`
+
+### 🧑 User — 2026-11-17T17:42:35.270Z
+
+> ↩︎ result: f966bec48746bd7bdeba9608d83c3f95eb28e2f1
+> f966bec48746bd7bdeba9608d83c3f95eb28e2f1	refs/heads/claude/rainbow-s05-match-c3
+
+### 🤖 Claude — 2026-11-17T17:42:37.176Z
+
+Step 1 is pushed (`f966bec`, remote == HEAD). Next is item 2, the right wall chunk.
+
+### 🤖 Claude — 2026-11-17T17:42:42.632Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np, json\nap=Image.open('references/05_flow_into_the_current.png').convert('RGB'); c=Image.open('$S/cap3/05.png').convert('RGB')\nbox=(700,700,864,980)\na=ap.crop(box).resize((328,560),0); b=c.crop(box).resize((328,560),0)\nim=Image.new('RGB',(666,560),'white'); im.paste(a,(0,0)); im.paste(b,(338,0)); im.save('$S/wall_cmp.png')\nA=np.asarray(ap,float); C=np.asarray(c,float); d=np.abs(A-C).mean(-1)\nidx=np.asarray(Image.open('qa/pilot05/ful …[+551 chars]`
+
+### 🧑 User — 2026-11-17T17:42:43.297Z
+
+> ↩︎ result: chunk mean 26.45117845117845 0.5921717171717171 err sum 314240.0
+> {'purple_walls': 5959, 'water': 1030, 'foam_banks': 1998, 'bubbles': 2893}
+> signed [15.37575758 18.19949495 15.89276094]
+> qa/match/05/INVENTORY.md:43:4. Right wall chunk x 772–861, y 773–904 (mean 57, game darker); lower-left bottom-ring arc x 54–159, y 1329–1533 (mean 51,
+
+### 🤖 Claude — 2026-11-17T17:42:45.119Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/wall_cmp.png"}`
+
+### 🧑 User — 2026-11-17T17:42:45.152Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:42:49.781Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,15p tools/match05/pixel_probe.mjs; grep -n \"uv_scene\\|uv_foam\" scripts/proj05-probe.mjs | head -5", "description": "Check pixel probe tool"}`
+
+### 🧑 User — 2026-11-17T17:42:49.828Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Coordinator tool (Screen 05 full reference match): which 3D objects lie under given screen pixels of the locked 05
+> // frame? Loads the game exactly like scripts/capture.mjs, goes to checkpoint 05, then raycasts through each pixel with the
+> // live camera and lists every hit (name, parent chain, material type, distance, renderOrder, visible).
+> //   node tools/match05/pixel_probe.mjs --q='match05=1' --px=185,570 --px=350,555 [--hide=<name substring>] [--shot=out.png]
+> // Read-only: the game is not changed. --hide makes matching objects invisible before --shot (diagnostics only).
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const q = (args.find((a) => a.startsWith('--q=')) ?? '--q=').slice(4);
+> const pxs = args.filter((a) => a.startsWith('--px=')).map((a) => a.slice(5).split(',').map(Number));
+> const hide = args.filter((a) => a.startsWith('--hide=')).map((a) => a.slice(7));
+> const shot = (args.find((a) => a.startsWith('--shot=')) ?? '').slice(7);
+> 
+> const { chromium } = loadPlaywright();
+> 9://   uv_scene.f32     the same, but every other static object of the scene (walls, rings, lids, far wall,  …[+241 chars]
+
+### 🤖 Claude — 2026-11-17T17:42:52.152Z
+
+> 🔧 **Bash** `{"command": "node tools/match05/pixel_probe.mjs --q='match05=1&tgtvis05=1&tgtfill05=3' --px=820,800 --px=840,850 --px=800,880 --px=850,780 2>&1 | grep -v \"^\\s*$\" | head -60", "description": "Raycast objects under right wall chunk", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:43:06.313Z
+
+> ↩︎ result: px 820,800
+>    d 15.938  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 25.063  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 25.415  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 840,850
+>    d 13.153  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 21.378  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 22.857  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 23.184  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 800,880
+>    d 11.979  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 21.496  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 23.125  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 23.45  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 850,780
+>    d 17.26  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 24.822  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+
+### 🤖 Claude — 2026-11-17T17:43:13.837Z
+
+The water surface itself extends over that wall chunk, and the wall's dark slots are painted over with stretched pink water. I'm checking what the real wall behind it looks like.
+
+### 🤖 Claude — 2026-11-17T17:43:17.941Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && node tools/match05/pixel_probe.mjs --q='match05=1&tgtvis05=1&tgtfill05=3' --px=820,800 --hide=water_ribbon --shot=$S/noribbon.png > /dev/null 2>&1; python3 -I -c \"\nfrom PIL import Image\nap=Image.open('references/05_flow_into_the_current.png').convert('RGB'); c=Image.open('$S/cap3/05.png').convert('RGB'); n=Image.open('$S/noribbon.png').convert('RGB')\nbox=(640,640,864,1000); w,h=224*2,360*2\nim=Image.new('RGB',(w*3+20,h),'white')\nfor i,x in enumerate((ap,c,n)): im.paste(x.crop(box).resize((w …[+130 chars]`
+
+### 🧑 User — 2026-11-17T17:43:35.949Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:43:37.810Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/wall3.png"}`
+
+### 🧑 User — 2026-11-17T17:43:37.878Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:43:42.620Z
+
+> 🔧 **Bash** `{"command": "grep -n \"wm\\b\\|wm \\|wm)\\|FARFIX\\|GAPFILL\\|gapfill\" tools/proj05/bake.py | head -40", "description": "Find water mask usage in bake"}`
+
+### 🧑 User — 2026-11-17T17:43:42.668Z
+
+> ↩︎ result: 27:FARFIX = len(sys.argv) > 4 and sys.argv[4] == "far"
+> 33:wm = np.asarray(Image.open(os.path.join(tdir, "water_mask.png"))) > 127
+> 37:if FARFIX:      # outside the approved water footprint the target IS the approved picture
+> 40:    tgt = np.where(wm[..., None], tgt, appr)
+> 46:use = surf & wm & (S < S_CUT)
+> 48:if FARFIX:      # E only: the far ribbon also where the approved picture shows no water (N / T / D keep the water-only set)
+> 49:    useE = surf & (S < S_CUT) & (wm | (S > S_FAR0))
+> 145:if FARFIX:
+> 162:    # That is what "gapfill" below repairs.
+> 164:# optional extra argument "gapfill" (`&projgap05=1`, 2026-11-17, session 018Sg3AU): MIRROR-FILL of E's interior gaps.
+> 171:GAPFILL = "gapfill" in sys.argv[4:]
+> 172:if GAPFILL:
+> 197:    print(json.dumps(dict(E_gapfilled_texels=int(n_fill), E_texels=int(validE.size))))
+> 199:if FARFIX:      # N / T / D: water-only samples, as before
+> 276:farm = (np.abs(R[..., 2] - 3) < 0.01) & (wm | FARFIX)
+> 287:if FARFIX:      # the whole far block carries the bake (texels the locked eye never saw: nearest valid texel)
+> 300:apm = (np.abs(R[..., 2] - 5) < 0.01) & wm
+
+### 🤖 Claude — 2026-11-17T17:43:52.545Z
+
+> 🔧 **Bash** `{"command": "sed -n 28,60p tools/proj05/bake.py", "description": "Read bake surface selection"}`
+
+### 🧑 User — 2026-11-17T17:43:52.575Z
+
+> ↩︎ result: S_FAR0 = 157.0
+> os.makedirs(out, exist_ok=True)
+> W, H = 864, 1536
+> R = np.fromfile(os.path.join(probe, "uv_river.f32"), np.float32).reshape(H, W, 4).astype(np.float64)
+> surf = np.abs(R[..., 2] - 1) < 0.01
+> wm = np.asarray(Image.open(os.path.join(tdir, "water_mask.png"))) > 127
+> # coins are filled in the target from the user's artwork (make_target.py); the along-s hole filling below stays for gaps
+> coin = np.zeros((H, W), bool)
+> tgt = np.asarray(Image.open(os.path.join(tdir, "target_05.png")).convert("RGB"), np.float64) / 255
+> if FARFIX:      # outside the approved water footprint the target IS the approved picture
+>     here = os.path.dirname(os.path.abspath(__file__))
+>     appr = np.asarray(Image.open(os.path.join(here, "..", "..", "references", "05_flow_into_the_current.png")).convert("RGB"), np.float64) / 255
+>     tgt = np.where(wm[..., None], tgt, appr)
+> # colour feedback from the live capture (tools/proj05/residual.py): what the bloom pass adds is taken out of the bake
+> if os.path.exists(os.path.join(tdir, "correction.npz")):
+>     tgt = np.clip(tgt - np.load(os.path.join(tdir, "correction.npz"))["c"].astype(np.float64), 0, 1)
+> U, S = R[..., 0], R[..., 1]
+> S_CUT = 182.0                           …[+747 chars]
+
+### 🤖 Claude — 2026-11-17T17:43:58.904Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nimport numpy as np, json\nfrom PIL import Image\nfrom scipy.ndimage import label\nR=np.fromfile('$S/probe/uv_river.f32',np.float32).reshape(1536,864,4)\nsurf=np.abs(R[...,2]-1)<0.01; wm=np.asarray(Image.open('$S/tf3/water_mask.png'))>127\nm=surf&~wm&(R[...,1]<157)\nidx=np.asarray(Image.open('qa/pilot05/full_reference_match/masks/region_index.png'))\nnames={v['id']:k for k,v in json.load(open('qa/pilot05/full_reference_match/masks/regions.json'))['regions'].items()}\nprint('tota …[+500 chars]`
+
+### 🧑 User — 2026-11-17T17:43:59.888Z
+
+> ↩︎ result: total 11472 {'gold_rings_and_front_frame': 7, 'purple_walls': 7920, 'coins': 172, 'bubbles': 3373}
+> 720 145 220 673 703
+> 310 75 124 704 726
+> 111 0 24 757 774
+> 6663 748 863 771 904
+
+### 🤖 Claude — 2026-11-17T17:44:04.186Z
+
+The ribbon covers 7,920 px of wall (6,663 in the right chunk). I'm adding an opt-in bake option (env `BAKE05_EXTRA_REGIONS`, default unchanged) and testing walls only.
+
+### 🤖 Claude — 2026-11-17T17:44:12.751Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/proj05/bake.py'; s=open(p).read()\na=\"\"\"    useE = surf & (S < S_CUT) & (wm | (S > S_FAR0))\n\"\"\"\nb=\"\"\"    useE = surf & (S < S_CUT) & (wm | (S > S_FAR0))\n    # match05 round 3 (Screen 05 agent, qa/match/05/NOTES.md 2.3; opt-in env, unset = unchanged): BAKE05_EXTRA_REGIONS =\n    # comma list of region names (qa/pilot05/full_reference_match/masks) where the near ribbon edge covers something the\n    # approved picture shows as NOT water (e.g. purple_walls: the right wall chunk) -> E carries those approved pixels too.\n    _xr = [r for r in os. …[+1304 chars]`
+
+### 🧑 User — 2026-11-17T17:44:38.003Z
+
+> ↩︎ result: Exit code 1
+> DEFAULT_REPRO
+> BAKE05_EXTRA_REGIONS ['purple_walls'] texels added 7920
+> {"E_gapfilled_texels": 71183, "E_texels": 1491968}
+> F_same
+> /tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/bakeW/proj05_lut.json /tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/bake3/proj05_lut.json differ: char 221, line 1
+
+### 🤖 Claude — 2026-11-17T17:44:40.803Z
+
+The LUT changes too (the wider u range per row), so the game must load the new LUT with the new E. I'm checking how much it changes.
+
+### 🤖 Claude — 2026-11-17T17:44:44.752Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nimport json\na=json.load(open('$S/bake3/proj05_lut.json')); b=json.load(open('$S/bakeW/proj05_lut.json'))\nfor k in a:\n  if a[k]!=b[k]:\n    va,vb=a[k],b[k]\n    if isinstance(va,list) and len(va)==len(vb):\n      import numpy as np; A=np.array(va,float); B=np.array(vb,float); dd=np.abs(A-B); print(k, A.shape, 'n diff', int((dd>1e-9).sum()), 'max', dd.max())\n    else: print(k, str(va)[:200], '|', str(vb)[:200])\n\"; grep -n \"lut\\b\\|uPjLut\\b\\|l.E\\|lut.E\\|\\.sE\\|Lut\" s …[+82 chars]`
+
+### 🧑 User — 2026-11-17T17:44:44.856Z
+
+> ↩︎ result: E {'s0': 129.71197937011718, 's1': 180.97108032226564, 'n': 1024, 'width': 1024, 'height': 1459, 'V': [0.0, 0.0103539, 0.0206547, 0.0308636, 0.0409477, 0.0508808, 0.0606441, 0.0702253, 0.0796174, 0.0888 | {'s0': 129.71197937011718, 's1': 180.97108032226564, 'n': 1024, 'width': 1024, 'height': 1457, 'V': [0.0, 0.0103683, 0.0206834, 0.0309066, 0.0410047, 0.0509517, 0.0607286, 0.070323, 0.0797283, 0.08894
+> 433:uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+> 434:uniform vec4 uPjLutS;      // s0, s1, lut texels, unused
+> 472:vec4 pjLut(float s) {
+> 473:  float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
+> 475:  vec4 a = texture2D(uPjLut, vec2((i + 0.5) / uPjLutS.z, 0.5));
+> 476:  vec4 b = texture2D(uPjLut, vec2((min(i + 1.0, uPjLutS.z - 1.0) + 0.5) / uPjLutS.z, 0.5));
+> 478:  r.w = step(uPjLutS.x, s) * step(s, uPjLutS.y);
+> 483:  vec4 L = pjLut(s);
+> 1472:      vec4 Lm = pjLut(s);
+> 1486:        float sr = max(s - rideD, uPjLutS.x + 0.31);
+> 1487:        vec4 a0 = pjLut(s - 0.3), a1 = pjLut(s + 0.3), b0 = pjLut(sr - 0.3), b1 = pjLut(sr + 0.3);
+> 1489:        float rU = pjLut(sr).z / max(Lm.z, 1e-3);
+> 1721:  proj05Pending.push(fe …[+883 chars]
+
+### 🤖 Claude — 2026-11-17T17:44:58.117Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && d=assets/textures/match05/tgtwall05; mkdir -p $d && cp $S/bakeW/proj05_E.png $S/bakeW/proj05_lut.json $d/ && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\na=\"export const TGTFILL05: boolean = TGTVIS05 && qv05('tgtfill05') === '3';\\n\"\nb=a+\"\"\"/**\n * `?tgtwall05=1` (Screen 05 agent, round 3, NOTES \"2.3\"; needs tgtfill05=3): E + its LUT re-baked with\n * BAKE05_EXTRA_REGIONS=purple_walls — where the near ribbon edge covers wall in the locked view (right wall chunk\n * x  …[+1506 chars]`
+
+### 🧑 User — 2026-11-17T17:45:21.111Z
+
+> ↩︎ result: TSC_OK
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 7.93, 'within_10': 0.8137, 'within_20': 0.8944, 'ssim_lum': 0.8791, 'mean_signed_rgb': [-1.8, -0.3, 0.3]}
+> purple_walls                 px  312706  mean   5.27  <=10 0.867  <=20 0.942  ssim 0.916  signed [-1.0, -0.1, -1.4]
+> water                        px  480736  mean   3.55  <=10 0.939  <=20 0.965  ssim 0.957  signed [-2.4, -0.6, -0.2]
+> foam_banks                   px   28862  mean   2.65  <=10 0.960  <=20 0.989  ssim 0.967  signed [-0.2, -0.6, -0.7]
+> bubbles                      px   29304  mean   5.02  <=10 0.864  <=20 0.934  ssim 0.956  signed [-1.7, -2.3, -1.1]
+> purple_walls                 px  312706  mean   6.42  <=10 0.846  <=20 0.922  ssim 0.897  signed [-0.3, 0.8, -0.7]
+> foam_banks                   px   28862  mean   2.66  <=10 0.959  <=20 0.989  ssim 0.963  signed [-0.2, -0.6, -0.7]
+> bubbles                      px   29304  mean   3.09  <=10 0.934  <=20 0.974  ssim 0.979  signed [-1.3, -0.7, -0.0]
+
+### 🤖 Claude — 2026-11-17T17:45:23.782Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/wallW.png"}`
+
+### 🧑 User — 2026-11-17T17:45:23.835Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:45:34.506Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && BAKE05_EXTRA_REGIONS=purple_walls,bubbles python3 -I tools/proj05/bake.py $S/probe $S/tf3 $S/bakeWB far gapfill 2>&1 | grep EXTRA; cp -r assets/textures/match05/tgtwall05 $S/tgtwall05_walls; cp $S/bakeWB/proj05_E.png $S/bakeWB/proj05_lut.json assets/textures/match05/tgtwall05/; node scripts/capture.mjs 05 --q=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1\" --out=$S/capWB > /dev/null 2>&1; python3 -I tools/match05/metrics.py $S/capWB/05.png $S/mWB_ | grep -E \"FULL|^water |purple|bubbles\"", "de …[+72 chars]`
+
+### 🧑 User — 2026-11-17T17:46:07.191Z
+
+> ↩︎ result: BAKE05_EXTRA_REGIONS ['purple_walls', 'bubbles'] texels added 11293
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 7.93, 'within_10': 0.8132, 'within_20': 0.8943, 'ssim_lum': 0.8793, 'mean_signed_rgb': [-1.9, -0.3, 0.3]}
+> purple_walls                 px  312706  mean   5.26  <=10 0.867  <=20 0.942  ssim 0.916  signed [-1.0, -0.2, -1.4]
+> water                        px  480736  mean   3.55  <=10 0.940  <=20 0.965  ssim 0.957  signed [-2.4, -0.6, -0.2]
+> bubbles                      px   29304  mean   5.35  <=10 0.833  <=20 0.924  ssim 0.962  signed [-2.0, -2.4, -0.8]
+
+### 🤖 Claude — 2026-11-17T17:46:09.854Z
+
+The bubbles variant doesn't help, so I'm going back to walls only and checking the riding frames for any sliding wall slots.
+
+### 🤖 Claude — 2026-11-17T17:46:14.896Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && cp $S/tgtwall05_walls/* assets/textures/match05/tgtwall05/ && cmp assets/textures/match05/tgtwall05/proj05_E.png $S/bakeW/proj05_E.png && echo WALLS_RESTORED && node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1' --out=$S/moveW --d=0,3,6,12 --steer=-1,1 > /dev/null 2>&1; cmp $S/moveW/move_00.png $S/capW/05.png && echo LOCKED_SAME; python3 -I -c \"\nfrom PIL import Image\nfs=['move_03','move_06','steer_L_050','steer_R_050']\nbox=(560,560,864,1100); w,h=304,540\nim=Imag …[+340 chars]`
+

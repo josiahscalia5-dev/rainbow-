@@ -47,6 +47,17 @@ use = surf & wm & (S < S_CUT)
 use_all = use
 if FARFIX:      # E only: the far ribbon also where the approved picture shows no water (N / T / D keep the water-only set)
     useE = surf & (S < S_CUT) & (wm | (S > S_FAR0))
+    # match05 round 3 (Screen 05 agent, qa/match/05/NOTES.md 2.3; opt-in env, unset = unchanged): BAKE05_EXTRA_REGIONS =
+    # comma list of region names (qa/pilot05/full_reference_match/masks) where the near ribbon edge covers something the
+    # approved picture shows as NOT water (e.g. purple_walls: the right wall chunk) -> E carries those approved pixels too.
+    _xr = [r for r in os.environ.get("BAKE05_EXTRA_REGIONS", "").split(",") if r]
+    if _xr:
+        _M = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "qa", "pilot05", "full_reference_match", "masks")
+        _idx = np.asarray(Image.open(os.path.join(_M, "region_index.png")))
+        _rg = json.load(open(os.path.join(_M, "regions.json")))["regions"]
+        _xm = np.isin(_idx, [_rg[r]["id"] for r in _xr])
+        print("BAKE05_EXTRA_REGIONS", _xr, "texels added", int((surf & (S < S_CUT) & ~useE & _xm).sum()))
+        useE = useE | (surf & (S < S_CUT) & _xm)
     use = useE
 ys, xs = np.nonzero(use)
 su, ss, sc, scoin = U[use], S[use], tgt[use], coin[use]

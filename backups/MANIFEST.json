@@ -552,6 +552,16 @@
    "sha256": "a481cba3d19b02460ebfeef509095321c142edebbfe8350ed36a0928b29d9607"
   },
   {
+   "path": "assets/textures/match05/tgtwall05/proj05_E.png",
+   "bytes": 2032073,
+   "sha256": "5ecb59d7e4e1faff078c26da017b39ecd898d157f0a40da0ea5aba3f1fda82d7"
+  },
+  {
+   "path": "assets/textures/match05/tgtwall05/proj05_lut.json",
+   "bytes": 27021,
+   "sha256": "c2b82fd9062995b575831f950771d483eed5137c343f812e0ffc08e865e6d653"
+  },
+  {
    "path": "assets/textures/splash05/wake05.json",
    "bytes": 695,
    "sha256": "0752075b0f4f7544a87faf47d5f0ea140393a46c29b598168a2f204989fe6fa9"
@@ -708,8 +718,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 13545,
-   "sha256": "3f98abf046f086ef21dd5a1a2fd23002a096d2b6849840644dc75cd5bfd48c37"
+   "bytes": 13546,
+   "sha256": "3de9d2ce26f414053062c3a706a73214558a4fcf03fac0f56d35c87a8fc3d84b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1173,8 +1183,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1234,
-   "sha256": "8b6157af5ea1b943563962ca1083f2f33e80e0cf2cf187084a8e7b3fff4a0515"
+   "bytes": 1237,
+   "sha256": "ed3e5c7dcf0657ba3cb5fe554548347197631e79fa4fbd5c5b3596a9624901e8"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1258,8 +1268,8 @@
   },
   {
    "path": "qa/match/05/NOTES.md",
-   "bytes": 7620,
-   "sha256": "1cae2f0f6f5577138d8c2081899a47f251931ee32710b8cef71522865c5ebca8"
+   "bytes": 10052,
+   "sha256": "5e626c27f9e8abf32230a70f72af0541eec9cd5c9ad9df0d1d9b9d03de7fb130"
   },
   {
    "path": "qa/match/05/SHARED_CHANGES.md",
@@ -11408,8 +11418,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 108544,
-   "sha256": "fff78071c1851980db0e777f12b81fd667041e008dac47cf73f8f4ac7e7c6886"
+   "bytes": 109154,
+   "sha256": "f2807679974bebacadef76eb63ae3aa4731d0f34ea343f1463b2c7203a80a880"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -11648,8 +11658,8 @@
   },
   {
    "path": "tools/proj05/bake.py",
-   "bytes": 20228,
-   "sha256": "76b5c8ff1bad74c0bebc62b9b9c270f4db87484095cceec404570a476e6de744"
+   "bytes": 21183,
+   "sha256": "1deea8554b272bb79b080201dcffbefdbc9284eeaa3ee28082f5930ea936ea4c"
   },
   {
    "path": "tools/proj05/flow_bake.py",
