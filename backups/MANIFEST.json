@@ -518,18 +518,18 @@
   },
   {
    "path": "assets/textures/match05/tgtvis05/fill_mask.png",
-   "bytes": 11500,
-   "sha256": "c1316ad2cec9bcc04aa64ae4a674f453de7e13d78e2910f424bbf83a858754da"
+   "bytes": 11184,
+   "sha256": "67c92394e05e9069c60bba434b97d71257fbf1aae8d14889770671f224eb2db7"
   },
   {
    "path": "assets/textures/match05/tgtvis05/proj05_E.png",
-   "bytes": 2068966,
-   "sha256": "fb3a680ff2948e25c0efa98061c147159a0f4e07661f33c6705ac8d06b1507bd"
+   "bytes": 2049274,
+   "sha256": "63efc091f4fabf6239921a0a4e2a1d4c474b87c5898d2e2aeb4c6cb815b430b5"
   },
   {
    "path": "assets/textures/match05/tgtvis05/target_05.png",
-   "bytes": 2207070,
-   "sha256": "a196be34eadb95cf8294abe010c98b321f28d6d51873b5b3af544f5a69c134f9"
+   "bytes": 2197747,
+   "sha256": "a481cba3d19b02460ebfeef509095321c142edebbfe8350ed36a0928b29d9607"
   },
   {
    "path": "assets/textures/splash05/wake05.json",
@@ -689,7 +689,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12605,
-   "sha256": "d3072d8416c9eddbdfe2a2d68efb14597d7f168201458698516f43be48a85f1f"
+   "sha256": "226577b934d03c10d016e1f5b6e09b41fc417b3546d8ed0ee75f750373d081cb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1153,8 +1153,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1237,
-   "sha256": "1a632ea9852e5d312b4c71166d4f721b7327803eabae0abbe7e4d7f01a3b1855"
+   "bytes": 1239,
+   "sha256": "ad792a4ce102dcd69bda96963919e66b7c97c8977f363be391fa5db2f311b809"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -11328,8 +11328,8 @@
   },
   {
    "path": "tools/match05/make_target_vis.py",
-   "bytes": 8421,
-   "sha256": "4ecc6a3bfd58fa2a518bd20c89f2db00e4c820f0ec61b897aca942d3e3a3a38c"
+   "bytes": 8716,
+   "sha256": "272b36d60633737b582da5e328646bd4b2c8a59b0cf9f75d842b18b4ef1faa2a"
   },
   {
    "path": "tools/match05/metrics.py",

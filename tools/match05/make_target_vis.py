@@ -47,7 +47,11 @@ _M = "qa/pilot05/full_reference_match/masks"
 _idx = np.asarray(Image.open(f"{_M}/region_index.png"))
 _wid = _json.load(open(f"{_M}/regions.json"))["regions"]["water"]["id"]
 from scipy.ndimage import binary_erosion
-vis = binary_erosion(_idx == _wid, iterations=3) & (rows >= 700) & (rows < 1100)
+_marg = int(os.environ.get("TGTVIS05_MARGIN", "16"))
+_names = _json.load(open(f"{_M}/regions.json"))["regions"]
+_occ = np.isin(_idx, [_names[k]["id"] for k in ("benny_and_hat", "wake_splash", "bubbles", "coins")])
+from scipy.ndimage import distance_transform_edt as _edt
+vis = binary_erosion(_idx == _wid, iterations=3) & (_edt(~_occ) > _marg) & (rows >= 700) & (rows < 1100)
 print("tgtvis05: pixels returned to APPROVED", int((hole & vis).sum()))
 holeC = hole & ~vis   # used ONLY for the final composite (registration + colour match keep the original hole)
 

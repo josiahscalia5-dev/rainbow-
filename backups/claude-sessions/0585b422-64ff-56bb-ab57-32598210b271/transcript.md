@@ -681,3 +681,121 @@ Capturing the current `?match05=1` frame as BEFORE and measuring it.
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; for v in b n; do q='match05=1'; [ $v = n ] && q='match05=1&tgtvis05=1'; node scripts/proj05-move.mjs --q=\"$q\" --out=$S/mv_$v --d=0,3,6,12 --steer=-1,1 > $S/mv_$v.log 2>&1; done; ls $S/mv_n; python3 -I - <<EOF\nimport numpy as np,glob,os\nfrom PIL import Image\nS=\"$S\"\nfor f in sorted(glob.glob(S+\"/mv_n/*.png\")):\n  b=np.asarray(Image.open(f.replace(\"mv_n\",\"mv_b\")).convert(\"RGB\"),float); n=np.asarray(Image.open(f).convert(\"RGB\"),float)\n  d=np.abs(b-n).max(-1); print(os.path.basename( …[+120 chars]`
 
+### 🧑 User — 2026-11-17T15:47:06.256Z
+
+> ↩︎ result: move_00.png
+> move_03.png
+> move_06.png
+> move_12.png
+> move_log.json
+> steer_L_025.png
+> steer_L_050.png
+> steer_L_080.png
+> steer_R_025.png
+> steer_R_050.png
+> steer_R_080.png
+> move_00.png px changed 39574
+> move_03.png px changed 64456
+> move_06.png px changed 52139
+> move_12.png px changed 0
+> steer_L_025.png px changed 66160
+> steer_L_050.png px changed 106293
+> steer_L_080.png px changed 12883
+> steer_R_025.png px changed 65696
+> steer_R_050.png px changed 109503
+> steer_R_080.png px changed 19075
+
+### 🤖 Claude — 2026-11-17T15:47:11.537Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; python3 -I - <<EOF\nfrom PIL import Image\nS=\"$S\"\nfor fr in [\"steer_L_050\",\"steer_R_050\",\"move_03\"]:\n  box=(60,600,864,1300); w=box[2]-box[0]; h=box[3]-box[1]\n  o=Image.new(\"RGB\",(w*2+10,h),(255,255,255))\n  o.paste(Image.open(f\"{S}/mv_b/{fr}.png\").convert(\"RGB\").crop(box),(0,0)); o.paste(Image.open(f\"{S}/mv_n/{fr}.png\").convert(\"RGB\").crop(box),(w+10,0))\n  o.resize((o.width*6//10,h*6//10)).save(f\"{S}/cmp_{fr}.png\")\nEOF", "description": "Make before/new crops of moving fra …[+5 chars]`
+
+### 🧑 User — 2026-11-17T15:47:12.113Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:47:12.487Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/cmp_steer_L_050.png"}`
+
+### 🧑 User — 2026-11-17T15:47:12.504Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:47:13.092Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/cmp_steer_R_050.png"}`
+
+### 🧑 User — 2026-11-17T15:47:13.103Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:47:22.601Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np=\"tools/match05/make_target_vis.py\"; s=open(p).read()\na='vis = binary_erosion(_idx == _wid, iterations=3) & (rows >= 700) & (rows < 1100)\\n'\nb='''_marg = int(os.environ.get(\"TGTVIS05_MARGIN\", \"3\"))\n_names = _json.load(open(f\"{_M}/regions.json\"))[\"regions\"]\n_occ = np.isin(_idx, [_names[k][\"id\"] for k in (\"benny_and_hat\", \"wake_splash\", \"bubbles\", \"coins\")])\nfrom scipy.ndimage import distance_transform_edt as _edt\nvis = binary_erosion(_idx == _wid, iterations=3) & (_edt(~_occ) > _marg) & (rows >= 700) & (rows < 1100)\n'''\nassert s.c …[+179 chars]`
+
+### 🧑 User — 2026-11-17T15:47:22.657Z
+
+> ↩︎ result: 50:_marg = int(os.environ.get("TGTVIS05_MARGIN", "3"))
+> 54:vis = binary_erosion(_idx == _wid, iterations=3) & (_edt(~_occ) > _marg) & (rows >= 700) & (rows < 1100)
+
+### 🤖 Claude — 2026-11-17T15:47:29.932Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; cat > $S/run_m.sh <<'EOF'\nset -e\nM=$1; S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad\nrm -rf $S/t$M $S/bk$M; mkdir -p $S/t$M $S/bk$M $S/c$M\nTGTVIS05_MARGIN=$M python3 -I tools/match05/make_target_vis.py $S/t$M | head -1\ncp qa/pilot05/proj/target/correction.npz $S/t$M/\npython3 -I tools/proj05/bake.py $S/probe $S/t$M $S/bk$M far gapfill > /dev/null\ncp $S/bk$M/proj05_E.png assets/textures/match05/tgtvis05/proj05_E.png\nnode scripts/capture.mjs 05 --q='match …[+357 chars]`
+
+### 🧑 User — 2026-11-17T15:49:40.401Z
+
+> ↩︎ result: == M 16
+> tgtvis05: pixels returned to APPROVED 28620
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 8.09, 'within_10': 0.8104, 'within_20': 0.8915, 'ssim_lum': 0.8773, 'mean_signed_rgb': [-1.6, -0.0, 0.5]}
+> == M 32
+> tgtvis05: pixels returned to APPROVED 18486
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 8.38, 'within_10': 0.8038, 'within_20': 0.8866, 'ssim_lum': 0.8744, 'mean_signed_rgb': [-1.3, -0.2, 0.4]}
+
+### 🤖 Claude — 2026-11-17T15:49:44.317Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; python3 -I - <<EOF\nfrom PIL import Image\nS=\"$S\"\nfor fr in [\"steer_L_050\",\"steer_R_050\"]:\n  box=(60,600,864,1300); w=box[2]-box[0]; h=box[3]-box[1]\n  srcs=[f\"{S}/mv_b/{fr}.png\",f\"{S}/mv16/{fr}.png\",f\"{S}/mv32/{fr}.png\"]\n  o=Image.new(\"RGB\",(w*3+20,h),(255,255,255))\n  for i,f in enumerate(srcs): o.paste(Image.open(f).convert(\"RGB\").crop(box),(i*(w+10),0))\n  o.resize((o.width//2,h//2)).save(f\"{S}/m_{fr}.png\")\nEOF", "description": "Compare before / M16 / M32 steering crops"}`
+
+### 🧑 User — 2026-11-17T15:49:44.885Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:49:45.512Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/m_steer_R_050.png"}`
+
+### 🧑 User — 2026-11-17T15:49:45.531Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:49:46.119Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/m_steer_L_050.png"}`
+
+### 🧑 User — 2026-11-17T15:49:46.149Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:49:51.778Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; python3 -I - <<EOF\nfrom PIL import Image\nS=\"$S\"\nbox=(420,680,860,1060); w=box[2]-box[0]\no=Image.new(\"RGB\",(w*3+20,box[3]-box[1]),(255,255,255))\nfor i,f in enumerate([f\"{S}/mv_b/steer_L_050.png\",f\"{S}/mv_n/steer_L_050.png\",f\"{S}/mv16/steer_L_050.png\"]): o.paste(Image.open(f).convert(\"RGB\").crop(box),(i*(w+10),0))\no.save(f\"{S}/z16.png\")\nEOF", "description": "Full-res crop: before / M3 / M16"}`
+
+### 🧑 User — 2026-11-17T15:49:52.118Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:49:52.878Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/z16.png"}`
+
+### 🧑 User — 2026-11-17T15:49:52.904Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:50:00.594Z
+
+M16 margin is clean while steering (no silhouette ghost; at least as clean as BEFORE) and still clearly closer locked. Finalising it and running the safety proofs.
+
+### 🤖 Claude — 2026-11-17T15:50:08.151Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; cp $S/bk16/proj05_E.png assets/textures/match05/tgtvis05/proj05_E.png; cp $S/t16/target_05.png $S/t16/fill_mask.png assets/textures/match05/tgtvis05/; sed -i 's/os.environ.get(\"TGTVIS05_MARGIN\", \"3\")/os.environ.get(\"TGTVIS05_MARGIN\", \"16\")/' tools/match05/make_target_vis.py; mkdir -p $S/pf; node scripts/capture.mjs 05 --out=$S/pf/def > /dev/null 2>&1; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/pf/bef > /dev/null 2>&1; node scripts/capture.mjs 05 --q='match05=1&tgtvis …[+1115 chars]`
+
