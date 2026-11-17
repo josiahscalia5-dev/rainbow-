@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 14784,
-   "sha256": "7c3333d8d1aa5c50bff7eee4def320172f5b6d8c011491010e8e7962a461e3ea"
+   "bytes": 15126,
+   "sha256": "bb1d74b76d0c6bd40f58b661ebf0673fb5510f3a78c3615bae50e694e446a101"
   },
   {
    "path": "README_FIRST.md",
@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 23881,
-   "sha256": "5b19fe5ee9444ed44c8dd420f30a7d99d07bb2ea324f42424e16fb7fa846b747"
+   "bytes": 24460,
+   "sha256": "fdd270632e4a234ded573ba162f2356293a3dd87d1c865b7a8827d212dda595c"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11652,
-   "sha256": "6b706e01e34ed140d675328b4d1ac4313e726d6e1f56a4d20d6284dec5ceeb25"
+   "sha256": "f6704b7255e08a5158e8b8a542c9659e4dc9b2008344f12c4e86a442b5e59329"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -723,8 +723,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 13321,
-   "sha256": "8fd03d3f7961851952857e8d4d4c44a9ad8fff3621d72ec84ab0b0f2764a7b58"
+   "bytes": 24323,
+   "sha256": "d4fc68c82002d13eb13e351555feb8e27db8813d2c6c614cff094803d550f57f"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",

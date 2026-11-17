@@ -11,7 +11,10 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh --skip-resume` yourself; from a branch without it:
    `git fetch origin ccr-9c4a8ad6-xovgsx && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh --skip-resume`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
-2. Read **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** (NEWEST, 2026-11-17 ~14:30 UTC: Screen 08 method, keys, Image-Blaster), then **`backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md`**, `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
+2. Read the TOP section of **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** ("ACCOUNT 4 → NEXT ACCOUNT", 2026-11-17 ~19:45 UTC:
+   lead branch `ccr-067047f0-up5d1m`, the 8-branch map with SHAs, every workstream's next task, how to restart them on
+   `-c5` branches, key reconnection), `docs/PARALLEL_PROGRESS.md` (ROUND 4) and `docs/briefs/2026-11-17-r4/`; the older
+   parts of that handoff (Screen 08 method, keys, Image-Blaster, ~14:30 UTC) remain valid background. Then **`backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md`**, `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
    `backups/TOOL_MANIFEST.json` and the current briefs: **`qa/pilot05/proj/`** (water texture projection — `NOTES.md` when it
    exists, `BRIEF_SPECIALIST1_VERBATIM.md`, `BRIEF_SPECIALIST2.md`), `qa/pilot05/wave12/NOTES.md`, `qa/pilot05/COORDINATION_WAVE9B.md`.
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup

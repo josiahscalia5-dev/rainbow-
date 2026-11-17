@@ -1,20 +1,9 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-17T19:25Z",
+  "updated_utc": "2026-11-17T19:47Z",
   "updated_by_session": "session_01Kbt6BTTnCGMUULjZoCLDTo",
   "running_now": [
-    {
-      "agent": "washer-environment-modeler (Screen 07 workstream)",
-      "workstream": "Screen 07 finish milestone 2 (m07fill/m07ang/m07gold verify, coins at painted spots, rings/water/foam while moving, 07->08 drop intact)",
-      "session": "session_01Kbt6BT7VJEKLkAskyb5T9U",
-      "where": "own cloud container (account 4, environment rainbow-)",
-      "branch": "claude/rainbow-s07-match-c4",
-      "continued_from": "claude/rainbow-s07-match-c3 @ 72fb6129",
-      "started_utc": "2026-11-17T19:14Z",
-      "notes": "qa/match/07/NOTES.md",
-      "brief": "docs/briefs/2026-11-17-r4/S07.md on ccr-067047f0-up5d1m"
-    },
     {
       "agent": "washer-environment-modeler (Screen 08 scenery in motion)",
       "workstream": "Screen 08 scenery while moving: projected picture tears/duplicates at 6 u forward and when steering; right pipe/arch blocks Benny steering right; match08 changing 04-07",
@@ -24,7 +13,8 @@
       "continued_from": "ccr-067047f0-up5d1m @ 60c25025",
       "started_utc": "2026-11-17T19:22Z",
       "notes": "qa/match/08/scenery/NOTES.md",
-      "brief": "docs/briefs/2026-11-17-r4/S08_SCENERY.md on ccr-067047f0-up5d1m"
+      "brief": "docs/briefs/2026-11-17-r4/S08_SCENERY.md on ccr-067047f0-up5d1m",
+      "state": "told to save + stop at ~19:41 UTC (user backup order); see qa/match/08/scenery/STATUS.md on its branch"
     }
   ],
   "assignments_now": {
@@ -385,6 +375,21 @@
       "when_utc": "2026-11-17T19:21Z",
       "result": "round 5b per user decision: r3b + fuller rounder body (body ~1.1x brim width like approved; body fur x1.04, beanie x0.94) = match08 default; Benny+splash 65.3 -> 62.2 % (visual choice), scenery 97.3 % unchanged; switches: r3b b08full=0, r4 b08hi=1&b08pom=1&b08full=0, taper b08shape=1 (opt-in), r2 b08r3=0; open: soft fur clumps + pom yarn tufts need a new fur model/bake; APK r5b not phone-tested; flag: match08 changes 04-07 over much of the frame",
       "state": "paused, waiting for the user"
+    },
+    {
+      "agent": "washer-environment-modeler (Screen 07 workstream)",
+      "session": "session_01Kbt6BT7VJEKLkAskyb5T9U",
+      "branch": "claude/rainbow-s07-match-c4",
+      "commit": "fd703ee10fb66be9963fc12fbcc8b18f5df2449a",
+      "when_utc": "2026-11-17T19:37Z",
+      "result": "M2 done: kept match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1 (mirrored near-water diamond gone, doubled upper-left band gone, solid gold paddles, no gold smear steering right, far coins tidy); still view unchanged (scenery 95.55 %); 8/8, 91/2,240; drop ~61 u; APK builds/rainbow-debug-07-2026-11-17-r4.apk not phone-tested; Draft PR #18 review only",
+      "state": "idle, waiting"
     }
-  ]
+  ],
+  "backup_2026_11_17_1945": {
+    "why": "user order: account 4 near its usage limit — save everything, no more development",
+    "scheduled_checkin": "trig_01CAGS7pWQYyNtb9LAeLDoZz disabled 19:40 UTC (it would have started Screen 05)",
+    "handoff": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md top section",
+    "restart": "new -c5 branches from each -c4 tip; briefs docs/briefs/2026-11-17-r4/"
+  }
 }

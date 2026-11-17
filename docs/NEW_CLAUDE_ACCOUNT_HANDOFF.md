@@ -1,4 +1,113 @@
-# RAINBOW — new Claude account handoff (written 2026-11-17 ~14:30 UTC, session 03b94f36)
+# ▶▶ NEWEST — ACCOUNT 4 → NEXT ACCOUNT HANDOFF (2026-11-17 ~19:45 UTC, lead session `session_01Kbt6BTTnCGMUULjZoCLDTo`)
+
+Written at the user's urgent backup order (account 4 near its usage limit). Everything below this section is OLDER
+history. Repository **https://github.com/josiahscalia5-dev/rainbow-** (ONE repo, all branches). The SHAs below were
+verified on GitHub at writing time; sessions of account 4 may still autosave transcripts afterwards — always take the
+**newest** remote commit (`git ls-remote origin refs/heads/<branch>`), never an older one.
+
+## ▶ PASTE THIS INTO THE NEXT CLAUDE ACCOUNT (one message)
+> CLAUDIA — continue my EXISTING Rainbow game from GitHub (`josiahscalia5-dev/rainbow-`). Do NOT restart, redesign,
+> rebuild, merge, force-push or delete anything. Lead branch to continue from: `ccr-067047f0-up5d1m` (newest commit).
+> Read `CLAUDE.md`, then the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`, `docs/PARALLEL_PROGRESS.md` (ROUND 4),
+> `docs/briefs/2026-11-17-r4/` (COMMON_RULES, USER_DECISIONS, one brief per workstream) and `docs/FLOW_VIDEO.md`.
+> Do a read-only restore audit first (branch tips, 13 reference checksums, 10 agents, Git LFS fetch + fsck, tsc,
+> gameplay 8/8, `node scripts/flowplan-test.mjs` A–E), reconnect my SAME World Labs + fal.ai keys only through the
+> secure credential form if the free reads fail, then continue the seven specialist workstreams on NEW `-c5` branches
+> (one per workstream, from each `-c4` tip), at most two sessions at a time. No paid jobs, no Google Flow generation.
+
+## Branch map (8 branches to preserve; nothing merged)
+| Role | Branch | Last verified full SHA (≈19:41 UTC) | State | Latest milestone |
+|---|---|---|---|---|
+| Lead (Claudia) | `ccr-067047f0-up5d1m` | see `docs/PARALLEL_PROGRESS.md` "Backup verification" (final) | this session | restore r4, flowplan test E + race fixes, decisions, briefs, coins08px verified, Screen 06 APK |
+| 08 Benny | `claude/rainbow-s08-benny08-bake-c4` | `b619d701ff97964e7bc54082624dab32f08fee67` | idle, done | round 5b `0067fc7b`: r3b + fuller rounder body (user decision) |
+| 08 camera | `claude/rainbow-s08-camclear-c4` | `a42140304915ea57d2d2c02493b066316207033b` | idle, done | round 4 `aa10fdbb`: drain-lip tilt 16°→1°, Benny hidden 44→25 %, missed coins fade |
+| 08 scenery in motion | `claude/rainbow-s08-scenery-c4` | final SHA in `docs/PARALLEL_PROGRESS.md` "Backup verification" | stopped mid-round 1 (diagnosis) | — (see its `qa/match/08/scenery/STATUS.md`) |
+| 07 Washer Tube | `claude/rainbow-s07-match-c4` | `133d06f3c6359530e5745d16abcea758215238e3` | idle, done | M2 `fd703ee1` |
+| 04 Five Arrows | `claude/rainbow-s04-match-c4` | `d1e422faff67a37f837566301fb8abff0bac98db` | paused | M3 `a4644789` |
+| 05 Flow (LINE B) | `claude/rainbow-s05-match-c4` | `ebaf6cac71812ad5c00a9088ba48b6febdb42b2b` | paused | M2 `a96bfdf4` |
+| 06 Rinse Arch | `claude/rainbow-s06-match-c4` | `c088718bb9e3374583238f4ee93f25bdee600065` | paused | M1 `b993f6d5` |
+Older protected branches (never write): every `-c3`, `-c2` and original workstream branch, `ccr-c0235034-ks6sx3`,
+`ccr-5495e9c4-g0apvl`, `ccr-d4240b15-rl1i72`, `ccr-9c4a8ad6-xovgsx` (line A), `ccr-b0757dec-dj6l1o` (line B),
+`codex/*`, `ccr-6f431adf-7h0m8y` (original). Draft PRs #16 (lead), #17 (Benny), #18 (07) and #2–#15: review only,
+NEVER merge or close without the user.
+
+## Per workstream: result → exact next task (briefs: `docs/briefs/2026-11-17-r4/S*.md`, user rules: `USER_DECISIONS.md`)
+* **08 Benny** — r5b (`?match08=1` default): r3b + body ≈1.1× the brim width (approved ≈1.09×; body fur ×1.04, beanie
+  ×0.94). Benny+splash 65.3 → 62.2 % (visual choice), scenery 97.3 %. Switches: r3b `b08full=0`, r4
+  `b08hi=1&b08pom=1&b08full=0`, taper `b08shape=1` (opt-in, wrong direction), r2 `b08r3=0`. Pictures
+  `qa/match/08/benny08/review_r5/final/` (1_APPROVED / 2_BEFORE_r3b / 3_NEW + moving). APK
+  `builds/rainbow-debug-08benny-2026-11-17-r5b.apk`. **Next:** the painting's soft layered fur clumps + pom-pom yarn
+  tufts (needs a new fur clump model or bake — parameter tweaks all measured worse); pale streaks by the left arm.
+* **08 camera** — r4 (`?camclear=1`): see branch `qa/gameplay_video/STATUS.md`, frames `lip_r4/`, `moving_r4/`. APK
+  `builds/rainbow-debug-08camclear-2026-11-17-r4.apk`. **Next:** wait for the user's phone verdict; the 07 bands are
+  Screen 07 scenery; the right pipe/arch block belongs to the 08 scenery workstream.
+* **08 scenery in motion** — **Next:** finish round 1 of `S08_SCENERY.md` from its STATUS: the projected picture tears /
+  duplicates the river + wall at 6 u forward and when steering, a gold band fragment top-left, Benny rides into the right
+  pipe/arch steering hard right, and `?match08=1` changes screens 04–07 over much of the frame (04 ≈510k px, 07 ≈560k
+  px — must be 08-only). Fix with THE METHOD (projection only where valid + world-anchored tiles from the approved
+  picture), approved fixed view unchanged.
+* **08 coins (lead)** — `?match08=1&coins08px=1` = the USER-PREFERRED coin version (lives on the lead branch only).
+  Verified: 8/8, 91 / 2,240, all 9 painted coins physically picked up even riding straight. Under `?flowplan=1` 7 of the
+  9 lie past the 08→video hand-over (credited, not swum through).
+* **07** — M2 kept `?match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1` (mirrored near-water diamond gone,
+  doubled upper-left band gone, solid gold paddles, no gold smear steering right, far trail coins tidy); still view
+  unchanged (scenery 95.55 %, whole 80.06 %). Pictures `qa/match/07/m2r4/pictures/`, moving `qa/match/07/m2r4/motion_k5/`.
+  APK `builds/rainbow-debug-07-2026-11-17-r4.apk`. **Next (M3):** far coin row flatter than the painted line; near water
+  while steering = repeating stream tile, less detail; purple perforated patches far off; thin slivers on far paddle
+  sides at 10 u; passing paddle lower face purple at 20 u. Flag to re-check: protected 05 BEFORE differed from
+  `qa/pilot05/wave9/baseline/05.png` by 32,280 px in the 07 container at its UNCHANGED start commit (pre-existing,
+  probably machine rendering differences — verify in the lead container).
+* **05 (line B, never merge with line A)** — M2: whole 89.44 %, scenery 93.7 %, water 96.5 %. APK
+  `builds/rainbow-debug-05-2026-11-17-r3.apk`. **Next:** M3 per `S05.md` (coin-hole rings, right-wall bubble, lower-left
+  gold frame bevel, wake water, moving checks). User priority among 04/05/06: **05 first**.
+* **06** — M1: scenery 98.8 %, whole 79.1 %. APK built by the lead: `builds/rainbow-debug-06-2026-11-17-r3.apk` (lead
+  branch). **Next:** M2 per `S06.md` (floor/river tile repetition while moving, tile-only river from ~10 u, far coin trail).
+* **04** — M3: scenery 98.2 %, whole 81.8 %. APK `builds/rainbow-debug-04-2026-11-17-r3.apk`. **Next:** M4 per `S04.md`
+  (hard water/wall edge at 15–20 u, ~4.7 u swirl-tile repeat, water flow along the painted streaks, coins at painted spots).
+* **User's order of work:** 08 (Benny, camera, scenery) → 07 → 05 → 06 → 04, at most two sessions at once (usage).
+  Nothing is approved; final approval only after full-size APPROVED / BEFORE / NEW + moving-view comparisons.
+
+## How to restart the workstreams on the next account (exact procedure)
+1. For each workstream create a NEW branch `<old>-c5` from the newest `-c4` tip (`git push origin <sha>:refs/heads/<new>`)
+   — account 4's containers may keep autosaving to `-c4`; never write to the same branch from two accounts. Lead: the
+   new session's own branch, started from the newest `ccr-067047f0-up5d1m` commit.
+2. `create_session` per workstream (source_revision = outcome_branch = its `-c5` branch, same `rainbow-` style
+   environment) with the text of its brief from `docs/briefs/2026-11-17-r4/` (replace `-c4` by `-c5` and the lead session
+   id by the new lead's id). **Initial prompts were dropped twice on account 4:** check `list_events` (kinds user/assistant)
+   after setup and re-send the task with `send_message` if the session sits idle with no conversation.
+3. Max two sessions at a time; each finishes ONE milestone, pushes, verifies remote == HEAD, reports once, stops.
+
+## Keys and paid services (never in git, chat or APKs)
+* Secrets do NOT transfer between Claude accounts. On account 4 the `rainbow-` environment started with NO secrets
+  (World Labs free read = HTTP 401); the user re-entered both through `request_credential`:
+  - World Labs Marble: host `api.worldlabs.ai`, header `WLT-Api-Key`, no prefix.
+  - fal.ai: host `queue.fal.run`, header `Authorization`, prefix `Key`. Downloads of fal results come from
+    `v3.fal.media` / `v3b.fal.media` (add to the environment's allowed hosts only when a user-approved job needs them).
+* Free verification reads (no credits): `python3 -I scripts/verify-assets.py worldlabs` (expect **5,420** credits; the two
+  old Screen 05 pilot worlds return 404 — files are in Git LFS); `curl https://api.worldlabs.ai/marble/v1/worlds/32b5b2f4-32bc-4fa5-80a5-861129a528c8`
+  → 200 (Screen 08 world = same account); `curl https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status`
+  → 200 COMPLETED (same fal account; the dollar balance is dashboard-only; the user bought $10).
+* Scripts that read keys from variables: placeholders only — `WORLD_LABS_API_KEY=proxy-injected`, `FAL_KEY=proxy-injected`,
+  `NODE_USE_ENV_PROXY=1`; the proxy injects the real header. Image-Blaster: `bash scripts/setup-image-blaster.sh`
+  (+ `tools/imageblaster/image-blaster-local.patch`; not installed in account 4's lead container, only needed for paid jobs).
+* Paid ledger: World Labs 7,000 → 5,420 (Screen 08 world, 1,580); fal: two Screen 08 edits + ONE Screen 04 clean plate
+  (request `01a1ea70`, DONE — reuse `qa/match/04/fal/`). Screen 06 / 07 fal plates PREPARED, NOT approved, NOT run.
+  No paid job ran on account 4.
+
+## Google Flow plan (`docs/FLOW_VIDEO.md`)
+01–03 opening video · 04–08 playable 3D · 09–11 ending video, behind `?flowplan=1` (default build unchanged; real-time
+fallback scenes kept). `node scripts/flowplan-test.mjs` → A–E pass (E = full run with both videos = exactly 91 coins /
+2,240). The user's real `public/video/intro.mp4` / `ending.mp4` are NOT in the repo yet; never generate videos.
+
+## What could NOT be transferred (state it to the user)
+Claude login and chat history (sanitized transcripts are autosaved under `backups/claude-sessions/`; this section is the
+summary), live sessions and their containers (account 4's lead + 5 specialist sessions stay on account 4), environment
+secrets and settings (re-enter keys; environment setup script = `scripts/cloud-env-setup.sh`), the optional World Labs
+Atlas connector and context7 MCP (not needed). No APK has been tested on a real phone. Uncommitted edits inside account 4
+containers after their last autosave (if any) are not recoverable.
+
+---
+# OLDER: RAINBOW — new Claude account handoff (written 2026-11-17 ~14:30 UTC, session 03b94f36)
 
 Repository **https://github.com/josiahscalia5-dev/rainbow-** · branch **`ccr-9c4a8ad6-xovgsx`** · backup tag
 **`backup/2026-11-17-screen08-transfer`** (checkpoint branch; GitHub tags are blocked from this session) (the verified commit; the branch may carry newer autosaves of this session's transcript).
