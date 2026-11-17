@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11651,
-   "sha256": "d4c6108adb6904d03e0443d799a23b91bd50532d0111b08ea49417cb42ed447e"
+   "sha256": "9a1d395fa42c5217607e3d3a21856f0085578b65ccfe797898558a1df781586a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -665,6 +665,16 @@
    "path": "backups/source-package/Rainbow_GitHub_Autosave_5_Minute_Claude_Prompt.md",
    "bytes": 11339,
    "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
+  },
+  {
+   "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
+   "bytes": 26866168,
+   "sha256": "273e73c104ff8caac720873816d7a6bde01eb72616e5631e0aec8b0d9126f9e7"
+  },
+  {
+   "path": "builds/rainbow-debug-06-2026-11-17-r3.md",
+   "bytes": 785,
+   "sha256": "201bda4336aea8f192e38ae03a9714f8a504cf51092209c7f6e4302c714de7c6"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",

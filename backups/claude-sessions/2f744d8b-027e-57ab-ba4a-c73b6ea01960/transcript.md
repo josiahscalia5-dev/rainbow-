@@ -3186,3 +3186,104 @@ Starting the 06 build in the background first.
 
 > 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk && mkdir -p $O && for spec in \"claude/rainbow-s04-match-c4:builds/rainbow-debug-04-2026-11-17-r3.apk:Rainbow-Screen04-FiveArrows.apk\" \"claude/rainbow-s05-match-c4:builds/rainbow-debug-05-2026-11-17-r3.apk:Rainbow-Screen05-FlowIntoTheCurrent.apk\" \"claude/rainbow-s07-match-c4:builds/rainbow-debug-07-2026-11-17-r3.apk:Rainbow-Screen07-WasherTube.apk\" \"claude/rainbow-s08-benny08-bake-c4:builds/rainbow-debug-08benny-2026-11-17-r5b.apk:Rainbow-Screen08-Benny-fuller-r5b.apk\"; do IFS=: read b f …[+849 chars]`
 
+### 🧑 User — 2026-11-17T19:26:06.127Z
+
+> ↩︎ result: Rainbow-Screen04-FiveArrows.apk 29M CHECKSUM_OK zip-ok
+> Rainbow-Screen05-FlowIntoTheCurrent.apk 31M CHECKSUM_OK zip-ok
+> Rainbow-Screen07-WasherTube.apk 26M CHECKSUM_OK zip-ok
+> Rainbow-Screen08-Benny-fuller-r5b.apk 24M CHECKSUM_OK zip-ok
+> 
+>   switch, 91 coins / 2,240, default output byte-identical; tsc clean; references 13/13 OK. APK
+>   `builds/rainbow-debug-04-2026-11-17-r3.apk` (`VITE_RAINBOW_Q05="match04=1"`, all M3 parts, Git LFS) — NOT phone-tested.
+> # rainbow-debug-05-2026-11-17-r3.apk — Screen 05 EXPERIMENT build (not the default game)
+> * Command: `VITE_RAINBOW_Q05="match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1" npm run android:debug` — Screen 05 shows
+> * **Android:** `builds/rainbow-debug-07-2026-11-17-r3.apk` (debug, `VITE_RAINBOW_Q05="match07=1"`, Git LFS, sha256 a2ad08180fae22b0…) — NOT phone-tested (no device in the cloud)
+
+### 🤖 Claude — 2026-11-17T19:26:07.688Z
+
+All four ready-made APKs are complete (checksums match GitHub, files intact). Sending them now while Screen 06 builds.
+
+### 🤖 Claude — 2026-11-17T19:26:11.985Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen04-FiveArrows.apk", "/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen05-FlowIntoTheCurrent.apk", "/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen07-WasherTube.apk", "/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen08-Benny-fuller-r5b.apk"], "caption": "Test builds, one per screen (debug, not yet tested on a real phone): Screen 04 …[+276 chars]`
+
+### 🧑 User — 2026-11-17T19:26:15.802Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen04-FiveArrows.apk → file_uuid: fa3df6e0-8b2d-43de-afe6-3b525f8c7ea4
+>   /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen05-FlowIntoTheCurrent.apk → file_uuid: 405366fa-f5f6-4481-b8c0-1d106619f794
+>   /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen07-WasherTube.apk → file_uuid: e06422cb-d8c3-4de2-887a-40d3db2e3163
+>   /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen08-Benny-fuller-r5b.apk → file_uuid: 0800adde-7b50-4063-abde-82967f41d3c4
+
+### 🤖 Claude — 2026-11-17T19:26:17.176Z
+
+Now waiting for the Screen 06 build to finish.
+
+### 🤖 Claude — 2026-11-17T19:26:19.113Z
+
+> 🔧 **Bash** `{"command": "L=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk06_build.log; until grep -q \"^exit \" $L 2>/dev/null; do sleep 10; done; grep -E \"BUILD (SUCCESSFUL|FAILED)|429|error|^exit\" $L | tail -6", "description": "Wait for the Screen 06 APK build to finish", "timeout": 1500000}`
+
+### 🧑 User — 2026-11-17T19:27:49.251Z
+
+> ↩︎ result: - Improved suggestions to resolve errors in console output
+> BUILD SUCCESSFUL in 1m 42s
+> exit 0
+
+### 🤖 Claude — 2026-11-17T19:27:52.257Z
+
+Screen 06 built successfully. Before sending, I'm checking the APK has the Screen 06 match switched on inside it and is properly signed.
+
+### 🤖 Claude — 2026-11-17T19:27:56.694Z
+
+> 🔧 **Bash** `{"command": "W=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/wt06; O=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk; A=$(ls $W/android/app/build/outputs/apk/debug/*.apk | head -1); cp $A $O/Rainbow-Screen06-RinseArch.apk; python3 -I -c \"\nimport zipfile,sys,re\nz=zipfile.ZipFile(sys.argv[1]); n=z.namelist()\njs=[x for x in n if x.startswith('assets/public/') and x.endswith('.js')]\nhit=[x for x in js if b'match06=1' in z.read(x)]\nprint('zip ok' if z.testzip() is None else 'zip BAD','| dex',('classes.dex' in n),'| js f …[+461 chars]`
+
+### 🧑 User — 2026-11-17T19:27:57.562Z
+
+> ↩︎ result: zip ok | dex True | js files 6 | bundle carries match06=1: True
+> match06 textures in apk: 0
+> Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+> 26M
+> 273e73c104ff8caa
+
+### 🤖 Claude — 2026-11-17T19:28:01.172Z
+
+The game code has the Screen 06 switch on. The "0 textures" line could just be how the build renames image files, so I'm confirming the Screen 06 artwork is really inside.
+
+### 🤖 Claude — 2026-11-17T19:28:04.476Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk; W=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/wt06; ls $W/assets/textures/match06/ | head -8; python3 -I -c \"\nimport zipfile,sys\nz=zipfile.ZipFile(sys.argv[1]); n=z.namelist()\nimgs=[x for x in n if x.startswith('assets/public/') and x.rsplit('.',1)[-1] in ('png','jpg','webp','ktx2','json')]\nprint('images/json in app:',len(imgs)); print([x.split('/')[-1] for x in imgs if '06' in x.split('/')[-1]][:12])\" $O/Rainbow-Screen06-RinseArch.apk", "description …[+53 chars]`
+
+### 🧑 User — 2026-11-17T19:28:04.556Z
+
+> ↩︎ result: cam06_locked.json
+> coins06.json
+> mask06.png
+> path06.json
+> plate06.json
+> plate06_fillmask.png
+> plate06_hybrid.png
+> proj06.json
+> images/json in app: 46
+> ['cam06_locked-LuDzOkUI.json', 'coins06-DCHZWNuN.json', 'mask06-B-wYnMeG.png', 'path06-BQ8bJBWs.json', 'plate06-BM9FFlfm.json', 'plate06_fillmask-BImf3K_W.png', 'plate06_hybrid-D9xSpVGv.png', 'proj06-DTorZsm1.json']
+
+### 🤖 Claude — 2026-11-17T19:28:06.301Z
+
+The Screen 06 artwork and settings are all inside the app, the switch is on, and it's properly signed. Sending it.
+
+### 🤖 Claude — 2026-11-17T19:28:08.405Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen06-RinseArch.apk"], "caption": "Screen 06 (Crest the Rinse Arch) test build: built just now from its last saved milestone, with Screen 06 rebuilt from your approved picture. Debug build, not yet tested on a real phone.", "status": "normal", "display": "attach"}`
+
+### 🧑 User — 2026-11-17T19:28:15.683Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen06-RinseArch.apk → file_uuid: 81dc717b-03df-4fec-8c0a-17d343733678
+
+### 🤖 Claude — 2026-11-17T19:28:21.711Z
+
+Saving the Screen 06 APK to GitHub on my lead branch (the 06 workstream is paused, so I don't write to its branch), with a note on exactly how it was built. Then cleaning up the temporary copy.
+
+### 🤖 Claude — 2026-11-17T19:28:30.416Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk && grep -n \"apk\" .gitattributes | head -2 && cp $O/Rainbow-Screen06-RinseArch.apk builds/rainbow-debug-06-2026-11-17-r3.apk && cat > builds/rainbow-debug-06-2026-11-17-r3.md <<'EOF'\n# rainbow-debug-06-2026-11-17-r3.apk — Screen 06 test build (not the default game)\n\n* Built by the lead (account 4, 2026-11-17 ~19:30 UTC) from `claude/rainbow-s06-match-c4` @ `c088718b` (= Screen 06\n  milestone 1, `-c3` tip) in a temporary worktree; no branch was changed. Round 3's own build attempt was block …[+1304 chars]`
+
