@@ -598,8 +598,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4010,
-   "sha256": "85235eb2cab7a0e12dace8225e3dc146c7f5b6d90287109f6ef5fd70ed43b3b9"
+   "bytes": 3873,
+   "sha256": "701fcabbdec91480df2d5646098a09daafed289ede303b135ed1e8d75fea24f3"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -609,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10150,
-   "sha256": "5f43da7622c753815c525c9b30392ab970f8d4821bb8060e84988b010f16d69a"
+   "sha256": "69c904f00ffa28b2467e0ccf1ca288f7c23eb4889ea88a8e8e64f17d8e3b6d1f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8235,6 +8235,26 @@
    "path": "tools/match/ring_fit.py",
    "bytes": 2980,
    "sha256": "2ea5c23a56f3e1405fe102fe5fae6bbeea6e3f2c7c584501a3306a61c613e8c1"
+  },
+  {
+   "path": "tools/match04/bennypts04.mjs",
+   "bytes": 1995,
+   "sha256": "7d0a20d564d10cdc70fd5f80678f9e20579adac03d902a388b0a3dd265f1e78c"
+  },
+  {
+   "path": "tools/match04/fit_proxies04.py",
+   "bytes": 3864,
+   "sha256": "e0cad149f655d250bcb51f945f751d0b7c98de1275e82dda52ea2c85e5014e38"
+  },
+  {
+   "path": "tools/match04/probe04.mjs",
+   "bytes": 2015,
+   "sha256": "3f6b3d13cb041caef0749f248ae6df9bf715acd7eb807befc60b27d7afa25ad0"
+  },
+  {
+   "path": "tools/match04/solve_cam04.py",
+   "bytes": 2625,
+   "sha256": "8c87fc251a8490738c8d4e0f501a926d9923d25b74f21487ab04c9515fa15acc"
   },
   {
    "path": "tools/match08/bennytree.mjs",
