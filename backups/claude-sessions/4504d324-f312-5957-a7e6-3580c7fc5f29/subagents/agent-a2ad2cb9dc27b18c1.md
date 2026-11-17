@@ -2199,3 +2199,70 @@ Large changed areas (06: 313k px across the full width). Either Benny is very la
 >    share of region error: holes 0.02  covered edge 0.019
 > game Benny px outside approved mask 3782 mean err 48.2
 
+### 🤖 Claude — 2026-11-17T01:47:35.506Z
+
+Fringe holes (game shows water where the approved has fur) are 1,992 px at ~102 error, 11 % of the region error. Let me see where they cluster before deciding on a fur change.
+
+### 🤖 Claude — 2026-11-17T01:47:39.900Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/edge.py <<'EOF'\nhole=edge&P['body']&(ids==0)\nlab,k=ndi.label(ndi.binary_dilation(hole,iterations=3)); sz=ndi.sum(hole,lab,range(1,k+1))\nfor i in np.argsort(sz)[::-1][:8]:\n    ys,xs=np.nonzero((lab==i+1)&hole); print('hole cluster px',int(sz[i]),'x',xs.min(),xs.max(),'y',ys.min(),ys.max())\nEOF\npython3 /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/edge.py | tail -8", "description": "Locate fringe hole clusters on the body"}`
+
+### 🧑 User — 2026-11-17T01:47:40.950Z
+
+> ↩︎ result: hole cluster px 981 x 463 608 y 1050 1187
+> hole cluster px 448 x 288 361 y 1118 1182
+> hole cluster px 172 x 237 277 y 1055 1089
+> hole cluster px 144 x 380 457 y 1178 1188
+> hole cluster px 95 x 375 398 y 784 800
+> hole cluster px 33 x 422 430 y 775 782
+> hole cluster px 24 x 557 564 y 1002 1022
+> hole cluster px 21 x 404 415 y 777 785
+
+### 🤖 Claude — 2026-11-17T01:48:00.452Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"fur_body: { density\" src/characters/benny/benny05.ts; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\na=\"  fur_body: { density: 96, shells: 24, length: 0.11, gravity: 0.16 },\"\nb=\"  // gravity 0.16 → 0.08 (fur test g1): the droop narrowed the lower sides and pushed the bottom 10 px below the approved\\n  fur_body: { density: 96, shells: 24, length: 0.11, gravity: 0.08 },\"\nassert s.count(a)==1; open(p,'w').write(s.replace(a,b))\nEOF\ntimeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; W=qa/pilot05/full_reference_matc …[+1339 chars]`
+
+### 🧑 User — 2026-11-17T01:48:37.277Z
+
+> ↩︎ result: 27:  fur_body: { density: 96, shells: 24, length: 0.11, gravity: 0.16 },
+> tsc_rc=0
+> done 33.131
+> rc=0
+> sed: couldn't edit /dev/null: not a regular file
+> s1 body edge holes 1992  all mask px not covered 3684  game px outside mask 3782  IoU 0.9229  bottom 1198
+> g1 body edge holes 2072  all mask px not covered 3799  game px outside mask 3748  IoU 0.922  bottom 1194
+> [This command modified 1 file you've previously read: src/characters/benny/benny05.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T01:48:43.413Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\na=\"  // gravity 0.16 → 0.08 (fur test g1): the droop narrowed the lower sides and pushed the bottom 10 px below the approved\\n  fur_body: { density: 96, shells: 24, length: 0.11, gravity: 0.08 },\"\nb=\"  // (test g1, gravity 0.08: bottom 1198 → 1194 px but fringe holes 1,992 → 2,072, IoU 0.9229 → 0.9220 → rejected, kept 0.16)\\n  fur_body: { density: 96, shells: 24, length: 0.11, gravity: 0.16 },\"\nassert s.count(a)==1; open(p,'w').write(s.replace(a,b))\nEOF\ntimeout 300 npx tsc - …[+130 chars]`
+
+### 🧑 User — 2026-11-17T01:48:49.045Z
+
+> ↩︎ result: tsc_rc=0
+> 
+> /** shell-fur overrides (merged over the GLB's userData.fur) */
+> export const FUR05: Record<string, Partial<FurParams>> = {
+>   // (test g1, gravity 0.08: bottom 1198 → 1194 px but fringe holes 1,992 → 2,072, IoU 0.9229 → 0.9220 → rejected, kept 0.16)
+>   fur_body: { density: 96, shells: 24, length: 0.11, gravity: 0.16 },
+>   fur_armL: { density: 120, shells: 12, length: 0.05 },
+>   fur_armR: { density: 120, shells: 12, length: 0.05 },
+>   fur_pom: { density: 64, shells: 18, length: 0.12, gravity: 0.03 },
+> };
+> /** strand clumping toward tuft centres (fur.ts default 0.42) */
+> const CLUMP05: Record<string, number> = { fur_body: 0.55, fur_pom: 0.6 };
+> 
+> /** beanie geometry (hat-local units; GLB build: brimBottom 0.22, cuffH 0.265, pom 0.12 above the crown apex) */
+> export const HAT05 = {
+>   /** whole beanie lowered along the body's up axis */
+>   drop: 0.028,
+>   /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body
+
+### 🤖 Claude — 2026-11-17T01:48:53.271Z
+
+Now the low tier (Android phones get `quality=low` by default: body shells 24 → 14), since the maps were solved at high tier.
+
+### 🤖 Claude — 2026-11-17T01:48:57.467Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&benny05=1&quality=low\" --out=$B/cap/new_low > $SP/cap_low.log 2>&1; echo low_rc=$?; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&quality=low\" --out=$B/cap/before_low > $SP/c …[+307 chars]`
+

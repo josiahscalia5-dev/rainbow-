@@ -109,6 +109,35 @@ banks unshifted — limit of "nothing moves at the banks"); A side −0.70, up +
   `gameplay-test.mjs --q='<STACK>&env05=1'` → `env/gameplay.json` pass (8/8 checks); `npm run -s test:continuity` OK.
 * Deliverables so far: `env/before.png` (= recovery_s018/stack/05.png) + `before_*METRICS.json`, `env/new.png` (= e6) +
   `new_*METRICS.json`.
+* **Near gold FRAME (gold region: 71 % of its remaining error was the camera-held bottom frame):** `tools/env05/frame_fit.py`
+  (new) fits the three frame pieces (annulus sectors in reference px, tube.ts `nearFrameGeometry`) to the approved frame
+  outline (approved frame px missed 13,796 → 3,786, approved water px covered 29,057 → 19,218 — part of that "water" is
+  blue-white highlights ON the approved frame). `nearFrameGeometry(pieces?)` (default call unchanged); environment.ts passes
+  the fitted pieces under ENV05; `tools/proj05/frame_bake.py --pieces= --corr=` bakes `assets/textures/env05/frame05.png`
+  (+ .json, sigma_u 1.0 instead of 3, own feedback file `env/frame/frame_correction.npy`, 1 feedback pass);
+  `proj05Tunnel.ts` loads it under ENV05. Corner width 240 (to cover the two screen corners) measured worse (9.74 vs 9.45) →
+  kept 190 (a ≈20 × 25 px sliver at the bottom-right screen corner stays uncovered).
+  e7 (frame) gold 16.75 → 9.45, water 9.21 → 7.44 (the frame no longer covers approved water); e9 (+ frame feedback) 9.39.
+* **Ring B lower-RIGHT arc (kinked outward at the bank, the right wall must not move there):** tried the wall's right ramp
+  lower (`?e05r0=-0.7&e05r1=0`, QA knobs kept): walls 7.04 → 6.64 but foam 5.72 → 9.50 (the wall covers the right foam
+  bank) → REJECTED. Instead the RINGS get their own right-half weight (`e05RingWeight`: smoothstep(sin th, −0.9, −0.1),
+  QA knobs `e05rr0` / `e05rr1`): the band follows its circle down to the bank while the wall stays; the band's skirt
+  vertices follow the wall (`buildWarpedBandRing(…, skirtWarp)`) and are DISCARDED in the env05 ring shader
+  (`tube.ts markBandSkirt` → attribute `aE5Skirt`), so no stretched skirt strip shows (r2 had one); the wall shows through
+  the small gap. Ring B edge error 8.8 → 7.3 px.
+* Captures r2 (ring weight), r3 (+ skirt discard), r4 (+ ring/wall colour feedback pass 2) — **r4 is the current state**:
+  | region | STACK | e9 | **r4** |
+  |---|---|---|---|
+  | whole frame mean / ≤20 | 34.10 / 51.6 % | 19.00 / 73.7 % | **18.84 / 73.9 %** |
+  | purple walls | 53.82 / 21.1 % | 7.04 / 91.4 % | **6.46 / 92.2 %** |
+  | gold rings + front frame | 37.74 / 50.0 % | 9.39 / 87.7 % | **9.45 / 87.7 %** |
+  | side fittings | 26.85 / 59.7 % | 4.11 / 93.7 % | **3.54 / 94.8 %** |
+  | distant tunnel + glow | 29.79 / 45.1 % | 2.43 / 97.3 % | **2.43 / 97.1 %** |
+  | water | 9.40 / 88.3 % | 7.43 / 91.0 % | **7.42 / 91.0 %** |
+  | foam banks | 8.43 / 92.7 % | 5.72 / 94.9 % | **5.86 / 94.8 %** (ring B's lower end now in front of 76 more foam px) |
+  | bubbles | 29.98 / 61.8 % | 26.22 / 64.5 % | **25.64 / 64.7 %** |
+  Remaining wall-region error (r4): game wall px mean 4.0 (38 % of the region's error: edges / sharpness of the bake),
+  game ring over approved wall 38,565 px mean 15.3 (29 %), other surfaces (paddle / foam / bubbles) 27,275 px mean 16.4 (22 %).
 
 ## 3. In progress (stopped for the account transfer)
 * The cycle `probe (id) → probe (--coords) → proj_bake --coords → capture → metrics` for the refined knots was stopped

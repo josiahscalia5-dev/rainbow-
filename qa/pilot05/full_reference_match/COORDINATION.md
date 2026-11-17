@@ -207,3 +207,11 @@ only to the new branch. Everything above still applies; the main session is the 
   benny-character-artist (`benny05`), animation-and-gameplay-engineer (`hud05`, `coins05`). Ownership unchanged.
 * Coordinator next: fresh `?match05=1` capture + metrics now, then integration of the specialists' finished parts, wave 2
   (foam-bubbles-particles: `splash05m`, `bub05`), the order's deliverables, Android APK last. Nothing promoted to the default.
+* **~02:00 UTC — animation-and-gameplay-engineer FINISHED** (hud05 + coins05; numbers in `hud/NOTES.md`, `coins/NOTES.md`; 18 coins,
+  far coins pulled in front of the forced-perspective far backdrop, face art was upside down; gameplay 8/8; default 0 px).
+  **Checkpoint cp1** (`coordinator/checkpoints/cp1_match05_hud_coins_done.png`, `?match05=1` with every part as on disk: hud05 +
+  coins05 finished, env05 + benny05 IN PROGRESS): whole frame **29.14 / 57.0 % → 11.96 / 83.4 %** within 20, SSIM 0.558 → 0.813.
+  Regions (recovery → cp1, mean / ≤20): walls 52.85/21.1 → 6.95/91.2; gold 32.98/50.7 → 9.43/87.8; fittings 44.87/39.4 → 3.54/94.8;
+  distant 34.53/34.2 → 2.43/97.1; water 8.73/88.9 → 6.76/91.6; foam 7.99/92.9 → 5.73/95.0; Benny 44.31/26.0 → 20.29/70.8;
+  coins 42.58/30.3 → 27.74/51.6; HUD 24.13/65.8 → 17.23/73.7; bubbles 29.84/61.4 → 25.95/64.5; wake 42.37/37.9 → 41.50/38.8
+  (= wave 2's job). Default capture == `current_default_05.png` 0 px.

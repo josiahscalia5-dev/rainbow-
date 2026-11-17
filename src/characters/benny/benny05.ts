@@ -24,6 +24,7 @@ export const BENNY05: boolean = on05('benny05');
 
 /** shell-fur overrides (merged over the GLB's userData.fur) */
 export const FUR05: Record<string, Partial<FurParams>> = {
+  // (test g1, gravity 0.08: bottom 1198 → 1194 px but fringe holes 1,992 → 2,072, IoU 0.9229 → 0.9220 → rejected, kept 0.16)
   fur_body: { density: 96, shells: 24, length: 0.11, gravity: 0.16 },
   fur_armL: { density: 120, shells: 12, length: 0.05 },
   fur_armR: { density: 120, shells: 12, length: 0.05 },

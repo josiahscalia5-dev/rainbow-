@@ -628,8 +628,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 17531,
-   "sha256": "20bcd995ae6010105c8e3f194cf0160d1a3a8281dc0a1cc7ae8a1ed16d491b34"
+   "bytes": 17575,
+   "sha256": "0f69c1ebd57ce7a71c694702fc53d8792d39486b910e0a3f720c2c8377edd156"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -648,8 +648,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11668,
-   "sha256": "b2e4b05884d64a6a03dd34a9a7a75fa61989697f69248efdb7ce9eb5847301c0"
+   "bytes": 11669,
+   "sha256": "627117d3697fe5a4a107c4a94bab578fd53c75a057933cfe889122abee856764"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1093,8 +1093,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1196,
-   "sha256": "1cddabf9ac083a31e8a9c5a971d55bddca1ae7276bb3bfad5393b0de64efa5ef"
+   "bytes": 1199,
+   "sha256": "a3477cc5978ab3d602367839792ca4a853353ac3264f87eb1260ed3994bd9d00"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1423,8 +1423,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/COORDINATION.md",
-   "bytes": 21981,
-   "sha256": "a296803579f7e826e8be85aa94aefe8cf6c905584a16495d6c0765b4b1b27955"
+   "bytes": 22975,
+   "sha256": "8675807d27372e118b784179ef6a9962460c55f0fd6d3350fa81f482f2709252"
   },
   {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_2026-11-17.md",
@@ -1575,6 +1575,11 @@
    "path": "qa/pilot05/full_reference_match/benny/cap/new_f4/REGION_METRICS.json",
    "bytes": 2520,
    "sha256": "b434e0769149617df2b78d39995976743ca23bed3a9481648443ed5b4c98ced7"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/new_low/05.png",
+   "bytes": 2226575,
+   "sha256": "d8600255088ab96d7865a9e07d90eb4a6307800886b2f9d37c6031e80f16f429"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/cap/new_s1/05.png",
@@ -2035,6 +2040,41 @@
    "path": "qa/pilot05/full_reference_match/benny/work/fur_x3.png",
    "bytes": 158558,
    "sha256": "de709035ab6e37d38c333fb1257483f006916ff4489d5bd02c8f7eebeea5a34a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/g1/calA.png",
+   "bytes": 2194365,
+   "sha256": "cdbb19e897953d709e20eff4345c2e4aa8ce6eb0889a44656c7e2fdb95ba2de9"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/g1/calC.png",
+   "bytes": 2187519,
+   "sha256": "8a1167b1103efb5cb1905bf51241b907aada4975b7310bacd98da6053a376bd2"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/g1/calD.png",
+   "bytes": 2175940,
+   "sha256": "ed68866c3b7db43b472811e725f7add2c1ff434afbb625b61fe1a5fc12ac9f64"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/g1/calE.png",
+   "bytes": 2186143,
+   "sha256": "d7a81ad1de5420ea96a528c9da373c5248e891e143dade839e462dfa1e005d4c"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/g1/restore.png",
+   "bytes": 2236756,
+   "sha256": "8afb6faf4e49eaecd80c91c58587a42a2b67f8f608f285a81edb8fd26b60a1b1"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/g1/shot0.png",
+   "bytes": 2236756,
+   "sha256": "8afb6faf4e49eaecd80c91c58587a42a2b67f8f608f285a81edb8fd26b60a1b1"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/g1/uv.f32",
+   "bytes": 3379200,
+   "sha256": "09a4c2eaae92762b6afe817622b102afbb5a09180bcc2ed44c729147e5636a74"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/game_hat_x3.png",
@@ -2882,6 +2922,21 @@
    "sha256": "a7d715387714745e8f937a06dc9ddd78ec63f50fd03402ce77776f03de6df258"
   },
   {
+   "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp1_FULL_FRAME_METRICS.json",
+   "bytes": 450,
+   "sha256": "db1309c31c221b5dc0736a852ff252f8d8c1edd347587de3537cf88360530537"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp1_REGION_METRICS.json",
+   "bytes": 2542,
+   "sha256": "c8073eef18a986ce8320cebc57a4577b22eb781f9dc4353faaccce93cec76c6e"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp1_match05_hud_coins_done.png",
+   "bytes": 2258000,
+   "sha256": "c24984ff428a81a214a2d1783cae48b77ae7a48bf3d22c3b380e51d2391875ee"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/coordinator/gameplay_vp_gap.json",
    "bytes": 14768,
    "sha256": "9e6ade3db5abbedb5ba682b7a3bb26509dbfadfede323598cf0c0604a95e0def"
@@ -3038,8 +3093,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/env/NOTES.md",
-   "bytes": 13257,
-   "sha256": "49a168bad72366ae254ac06d2b3a2fa273c3a3fa7acad39778859bd944568c99"
+   "bytes": 16179,
+   "sha256": "0bd55b49bbe05698b6499566db3bdee2f56d275f0dbd2930fee21b3acfa5975b"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/before.png",
@@ -10138,8 +10193,8 @@
   },
   {
    "path": "src/characters/benny/benny05.ts",
-   "bytes": 18256,
-   "sha256": "89c2ee3ecf55f3d53e849f3af90ce60e4ff1ea8fd83f46c315a1464f849df965"
+   "bytes": 18390,
+   "sha256": "a46a0a84b2fcef43cdbfc3e1187fdeb38219d3149fb24a89e0cba9a60d7c3f8e"
   },
   {
    "path": "src/characters/benny/build.ts",

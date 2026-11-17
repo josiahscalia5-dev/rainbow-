@@ -2195,3 +2195,155 @@ One file shows as changed: `qa/capture_log.json`. The capture script writes to i
 
 While the three specialists are working, new files keep appearing between saves. The five-minute autosave keeps saving and verifying them, so this warning will keep coming back until they finish.
 
+### 🧑 User — 2026-11-17T01:48:00.129Z
+
+<system-reminder>
+<tools-used-before-summary>Edit</tools-used-before-summary>
+</system-reminder>
+
+### 🧑 User — 2026-11-17T01:48:00.129Z
+
+<task-notification>
+<task-id>ae2100bc45217d150</task-id>
+<tool-use-id>toolu_01VZLEmiJ2Xt9jDCcVEbUEzs</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/ae2100bc45217d150.output</output-file>
+<status>completed</status>
+<summary>Agent "HUD05 + coins05 finish" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Both parts are finished and verified in real game captures. HUD + text went from 62.23 to 18.11 mean |dRGB| and coins from 53.96 to 28.30. The default build is still pixel-identical and the gameplay test passes.
+
+## Numbers (`tools/match05/metrics.py`, locked 05 frame, `scripts/capture.mjs`)
+
+| region | before (STACK) | new | at recovery (`match05`, v1) |
+|---|---|---|---|
+| HUD + text (mean / within 20 levels / SSIM) | 62.23 / 13.4 % / 0.171 | **18.11 / 72.0 % / 0.794** (STACK + hud05) | 24.13 / 65.8 % |
+| coins | 53.96 / 17.6 % / 0.266 | **28.30 / 50.5 % / 0.537** (STACK + coins05) | 42.58 / 30.3 % |
+| whole frame | 34.10 / 51.6 % | hud05 only 29.86 / 57.2 %; coins05 only 33.50 / 52.3 %; both **29.26 / 57.9 %** | |
+
+The fresh STACK capture is identical to `stack_2340/05_match05.png` (0 px differ). The other regions do not change, except purple walls 53.82 → 53.56 because the new HUD halo reaches into them.
+
+## What changed
+**HUD** (each step measured in the harness, which matches the real capture within 2 levels):
+- Approved dark halo around both pills: HUD 24.76 → 22.29.
+- Banner and bar rims rebuilt from the approved pixel rows, 1-px bands that follow the round ends: banner rim 51.7 → 20.5, bar rim 41.9 → 26.3.
+- Lavender gradient on the digits.
+- Banner text 1 px higher, wider word gaps, slightly tighter letters.
+- Heart-capsule line only on its right end.
+
+**Coins:**
+- The approved coins 7-15 were invisible. The far end of the 05 tube is a forced-perspective backdrop only about 1 u deep, about 58.4 u from the camera, and those coins sat behind it.
+- The solver now pulls each hidden coin forward along its own camera ray to just in front of the backdrop. All 18 coins are drawn, including 3 tiny ones newly found at the vanishing point. They project exactly onto the approved centres (0 px solver error).
+- The coin face art was upside down; fixed.
+- Tilt 0.9 rad and thickness 0.18, so face and edge are 73 / 11 px against the approved 74 / 12 px.
+- The measured coins now face the camera squarely, as in the approved picture. Before, they followed the river's bends, so coins 5-7 were turned sideways.
+- Edge band colours rebuilt from the approved coin.
+- Far coins tint yellower with distance.
+
+Coin outlines now land within about 1 px of the approved ones (coin 1: x 426-521, y 687-770 against approved x 426-522, y 686-771; coins 2 and 8 match exactly).
+
+## HUD element positions (approved | before | new)
+| element | approved | before | new |
+|---|---|---|---|
+| bar | x 33-825, y 13-100 | x 35-829, y 18-108 | x 33-825, y 13-100 |
+| "5/5" | x 165-235, y 33-73 | x 154-249, y 45-78 | x 165-233, y 31-72 |
+| counter "1,420" | x 497-617, y 36-74 | x 480-636, y 42-79 | x 498-617, y 35-73 |
+| banner pill | x 120-746, y 113-181 | x 123-741, y 116-185 | x 120-746, y 113-181 |
+| banner lettering | x 147-722, y 131-159 | — | x 151-720, y 132-158 |
+
+The counter is still live text; nothing is hard-coded.
+
+## Checks
+- **Default build:** the 05 capture without switches equals `qa/pilot05/current_default_05.png` with 0 px differing, re-checked after my last edit. `npx tsc --noEmit` is clean.
+- **Screens 04 and 06 with both switches on:**
+  - The new HUD appears on every ride screen; the longer titles fit.
+  - Below the HUD only the coins' look changes; the bloom spreads that by 1-2 levels.
+  - Coin positions on 04 and 06 are unchanged.
+- **Gameplay test** (`coins/gameplay.json`): 8/8 pass. Real pickups take the counter from 1,330 to 2,330, 100 coins (91 in the default run).
+- **Ride frames** (`coins/move/`): the counter climbs 1,420 → 1,460 while riding.
+- **`npm run -s test:continuity`:** ok, and its output files are unchanged.
+- `qa/capture_log.json` was restored by file copy; I ran no git commands.
+
+## Still different, and why
+- **Banner lettering (24.9) and digits (30-32):** the letter shapes differ. Baloo 2 is the only font in the project. Weight 600, outlines, text stroke and colour gradients all measured worse or no better.
+- **Around the HUD pills (39.0):** this is mostly the 3D tunnel behind the HUD, which belongs to the environment work.
+- **Water around the coins (39.9):** the approved water there is warmer, and it is the coordinator's projected river.
+- **Far coins 7-18:** they cannot sit on the river surface because a real coin can only be drawn in front of that backdrop.
+  - They float 0.5-2.2 u higher than the near coins and are small.
+  - During the ride they read as a short winding arc of small coins at the end of the tube.
+  - If the backdrop is ever replaced by real geometry, re-solve with `probe05.mjs --solve=coins/targets_v2.json` without the `occl` option.
+
+## Files changed
+- `src/ui/hud.ts`, `src/gameplay/coins.ts`. Everything is behind `on05('hud05')` / `on05('coins05')`.
+- Tools:
+  - `hud/probe05.mjs` (occlusion-aware solve)
+  - `hud/harness.mjs` and `hud/harness.html` (`--css` trial option)
+  - new `hud/hud_split.py`
+  - new `coins/measure_coins.py`
+  - new `coins/targets_v2.json`
+- Deliverables (all under `qa/pilot05/full_reference_match/`):
+  - `hud/before.png`, `hud/new.png`
+  - `coins/before.png`, `coins/new.png`, `coins/new_hud05_coins05.png`
+  - the metric JSON files next to them
+  - `coins/gameplay.json`, `coins/move/`
+- `hud/NOTES.md` and `coins/NOTES.md` are fully updated with tables, what still differs, and nothing left open.
+
+## Requests
+None. I did not update `backups/AGENTS_STATUS.json` because it is outside my files.</result>
+<usage><subagent_tokens>387930</subagent_tokens><tool_uses>170</tool_uses><duration_ms>1921726</duration_ms></usage>
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T01:48:06.555Z
+
+The HUD/coins specialist has finished, and its results are measured in real game captures. Next I'll take a combined `?match05=1` checkpoint capture with everyone's current work, measure the whole screen and check that the default build is untouched.
+
+### 🤖 Claude — 2026-11-17T01:48:11.219Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | tail -3 && echo TSC_OK; S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap; R=qa/pilot05/full_reference_match/coordinator/checkpoints; mkdir -p $R\nnode scripts/capture.mjs 05 --q='match05=1' --out=$S/cp1 2>&1 | tail -1 | cut -c1-80; git checkout -q qa/capture_log.json\ncp $S/cp1/05.png $R/cp1_match05_hud_coins_done.png\npython3 -I tools/match05/metrics.py $R/cp1_match05_hud_coins_done.png $R/cp1_ 2>&1 | tail -13\nnode scripts/capture.mjs 05 --out=$S/cp1_default 2>&1 | tail -1 | cut -c1-40; git checkout -q qa/capture_log …[+392 chars]`
+
+### 🧑 User — 2026-11-17T01:48:57.349Z
+
+> ↩︎ result: TSC_OK
+> 05 → /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/sc
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 11.96, 'within_10': 0.7432, 'within_20': 0.8341, 'ssim_lum': 0.8126, 'mean_signed_rgb': [-0.0, -0.5, -0.2]}
+> gold_rings_and_front_frame   px  125730  mean   9.43  <=10 0.734  <=20 0.878  ssim 0.821  signed [-3.2, -0.9, 2.8]
+> purple_walls                 px  312706  mean   6.95  <=10 0.833  <=20 0.912  ssim 0.884  signed [-0.4, 0.8, -0.9]
+> side_fittings                px   13776  mean   3.54  <=10 0.890  <=20 0.948  ssim 0.910  signed [-0.5, -0.3, 1.5]
+> water                        px  480736  mean   6.76  <=10 0.879  <=20 0.916  ssim 0.917  signed [0.9, -2.4, -1.9]
+> foam_banks                   px   28862  mean   5.73  <=10 0.920  <=20 0.950  ssim 0.920  signed [-0.2, -4.3, -4.7]
+> benny_and_hat                px   93061  mean  20.29  <=10 0.546  <=20 0.708  ssim 0.619  signed [-6.0, -1.1, 1.0]
+> wake_splash                  px   83491  mean  41.50  <=10 0.221  <=20 0.388  ssim 0.266  signed [19.7, 15.9, 7.9]
+> coins                        px   27437  mean  27.74  <=10 0.277  <=20 0.516  ssim 0.543  signed [-9.6, -1.8, 4.2]
+> bubbles                       …[+403 chars]
+
+### 🤖 Claude — 2026-11-17T01:49:00.580Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/checkpoints/cp1_match05_hud_coins_done.png"}`
+
+### 🧑 User — 2026-11-17T01:49:00.636Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:49:12.690Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; s=json.load(open(p))\ns['running_now']=[r for r in s['running_now'] if r['agent']!='animation-and-gameplay-engineer']\ns.setdefault('finished_this_session',[]).append({\"agent\":\"animation-and-gameplay-engineer\",\"switch\":\"hud05, coins05\",\"finished\":\"2026-11-17 ~02:00 UTC, session 01Q46SCH\",\n \"result\":\"STACK -> new: HUD + text 62.23/13.4% -> 18.11/72.0%; coins 53.96/17.6% -> 28.30/50.5% (all 18 coins drawn, approved centres, face art fixed); gameplay 8/8; default 0 px\",\n \"notes\":\"qa/pilot05/full_r …[+1318 chars]`
+
+### 🧑 User — 2026-11-17T01:49:12.742Z
+
+> ↩︎ result: ok
+> done
+
+### 🤖 Claude — 2026-11-17T01:49:14.902Z
+
+> 🔧 **SendUserFile** `{"files": ["references/05_flow_into_the_current.png", "qa/pilot05/full_reference_match/recovery_s01Q4/05_match05_at_recovery.png", "qa/pilot05/full_reference_match/coordinator/checkpoints/cp1_match05_hud_coins_done.png"], "caption": "Screen 05, three separate full-size pictures: 1) ORIGINAL APPROVED, 2) playable game BEFORE corrections (?match05=1 at recovery), 3) playable game NOW (?match05=1 checkpoint: HUD + coins finished, tunnel and Benny still being refined). Real game captures at the approved camera.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T01:49:15.776Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/references/05_flow_into_the_current.png → file_uuid: e9eaa8be-da8d-44ce-98ac-ea768ad91982
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/recovery_s01Q4/05_match05_at_recovery.png → file_uuid: 73558a4e-d2af-4063-8941-5f71874b08f8
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/checkpoints/cp1_match05_hud_coins_done.png → file_uuid: 17851968-d8ce-4a69-a6c8-ebe04922e89e
+
+### 🤖 Claude — 2026-11-17T01:49:18.396Z
+
+> 🔧 **Bash** `{"command": "flock -w 180 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:checkpoint-cp1 2>&1 | grep -E '\"commit\"|\"pushed_verified\"|\"error\"|skipping'; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"", "description": "Save checkpoint and verify push", "timeout": 300000}`
+
