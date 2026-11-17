@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 11681,
-   "sha256": "86fedbc0af38b4bf5a0d903a0f62d593c18aefe7021d3735e972d45ccc22546d"
+   "bytes": 11776,
+   "sha256": "a19f1349ed609eabf998e89538d4a1968c10ee095e34f3593d8efbf3127e13e8"
   },
   {
    "path": "README_FIRST.md",
@@ -488,8 +488,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 11548,
-   "sha256": "8f9c55e3841656811407d7a54cd212a73b484f16d48499eb5ea0116b4905ad8e"
+   "bytes": 9361,
+   "sha256": "96dd1b1ebf1bad08df879414bb3a3eb9601a7e487d1de0187dad238587fcd0ec"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -503,18 +503,23 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 50868,
-   "sha256": "70694bc40c3028e31e2226aa0ff7988631e24b0313451bdc655d3d1461db86bc"
+   "bytes": 51185,
+   "sha256": "47a6a20b6e9e8fd1b70a8137dcfc38475e29a27c87edb493ccf6a405e35101e1"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 9233,
-   "sha256": "946bc90ca9329fccb9a0d241e73ccb151463213f2d2bb5af5a32fdd138181878"
+   "bytes": 9220,
+   "sha256": "87b7e008215c1bd8c74e4044a7e5bcf3a80fdaed0d2e3142c20df0728e1db0cb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
    "bytes": 13213,
    "sha256": "33581981c6c7c666b714050f719402bf358d0ed96f8e168fa89ceea8fa69e12e"
+  },
+  {
+   "path": "backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
+   "bytes": 11094,
+   "sha256": "ff4002614b39109df627c46dcc444429f1386e3b468b18ae2261eeba50d473f1"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1010,6 +1015,41 @@
    "path": "qa/glb_validation.txt",
    "bytes": 293,
    "sha256": "82bda80d4f8c2a4ec7d013fd725fc64e2353f76b58250ca1ffacaa7d0db78071"
+  },
+  {
+   "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
+   "bytes": 6684,
+   "sha256": "191567d369371ca4af86667a10439438230f65bed0db42d90efba8b7d340b43f"
+  },
+  {
+   "path": "qa/match/07/cam/approved_before_bestfit_halfres.png",
+   "bytes": 1889227,
+   "sha256": "61c21b1d6bd9d3e203747012dae1d4911fc7e2e51f7cb75e9c9919a5b6c101fd"
+  },
+  {
+   "path": "qa/match/07/cam/benny_boxes_v1.txt",
+   "bytes": 74,
+   "sha256": "b0877a75b8f606c9437f7a34377c11187034cacecea001d177c4515178f03736"
+  },
+  {
+   "path": "qa/match/07/cam/benny_mask_debug.png",
+   "bytes": 187093,
+   "sha256": "e339cc8963022b520dbab92fc676d41f990ab4608a3a302a381c4a0e1d24e0f4"
+  },
+  {
+   "path": "qa/match/07/cam/best_fit_render.png",
+   "bytes": 1641539,
+   "sha256": "1f8a223c5bbd5419e28d213143b44c3b876675a8534e321c2eb5d6dedcdb54a1"
+  },
+  {
+   "path": "qa/match/07/cam/bmask_debug.mjs",
+   "bytes": 1818,
+   "sha256": "fca40489554e7dc8b5177d4f98bc3e2f527b14740d3d59a1668b1245910cae52"
+  },
+  {
+   "path": "qa/match/07/cam/fit_largest_blob.json",
+   "bytes": 4253,
+   "sha256": "12a623f48d948c124bc944fc6585688592fbe3c85e8a46ae9771ae049bea7eb7"
   },
   {
    "path": "qa/match/07/geo_match07.json",
@@ -7233,8 +7273,8 @@
   },
   {
    "path": "scripts/claude-bootstrap.sh",
-   "bytes": 30119,
-   "sha256": "ec3d99fa255dab72b6232dc426d480328957b6cc94634bb03ba5b9a75ef086c7"
+   "bytes": 30486,
+   "sha256": "3279d06b3141058bd15fa41f22c384ead7613946df6c8f99d6a10863df8accf7"
   },
   {
    "path": "scripts/cloud-env-setup.sh",
@@ -7463,8 +7503,8 @@
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 9285,
-   "sha256": "8d456d3382b4b37bbd4e1d501bdd2024fd0044a6cfa3acd75951ad6ce303da28"
+   "bytes": 10306,
+   "sha256": "e234574b36bd24956b26b02434a49034c3c341a37f8e7b07f67a0d52a002f749"
   },
   {
    "path": "src/game/match.ts",
