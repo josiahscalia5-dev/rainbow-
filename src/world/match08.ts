@@ -85,7 +85,9 @@ vec3 fillColor() {
   return texture2D(uFill, q).rgb;
 }
 void main() {
-  vec3 pc = uFillMode > 0.5 ? fillColor() : patchColor();
+  // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)
+  vec3 pc = patchColor();
+  if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
   vec3 t = pc;
   // stretch guard: the projection is used where the current view sees the surface no more face-on than the approved
   // view did (ratio of the two incidence cosines); in the approved view itself the ratio is 1 -> pure projection
@@ -99,17 +101,18 @@ void main() {
       float vis = 1.0;
       if (uUseDepth > 0.5) {
         float zf = linZ(ndc.z * 0.5 + 0.5);
-        if (uFillMode > 0.5) {
-          // m08fill: soft hand-over to the fill (5 x 5 taps over ~3 % of the frame) instead of a hard shadow line
-          vis = 0.0;
+        float zs = linZ(texture2D(uDepth, uv).r);
+        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+        // m08fill: once the camera has left the approved viewpoint, a soft hand-over to the fill (5 x 5 taps over ~3 %
+        // of the frame) instead of a hard shadow line; at the viewpoint itself the exact single-tap test (view unchanged)
+        float mv = uFillMode > 0.5 ? smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)) : 0.0;
+        if (mv > 0.0) {
+          float sv = 0.0;
           for (int i = -2; i <= 2; i++) for (int j = -2; j <= 2; j++) {
-            float zs = linZ(texture2D(uDepth, uv + vec2(float(i), float(j) * 0.5625) * 0.007).r);
-            vis += 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+            float zt = linZ(texture2D(uDepth, uv + vec2(float(i), float(j) * 0.5625) * 0.007).r);
+            sv += 1.0 - smoothstep(0.015 * zt, 0.04 * zt + 0.05, zf - zt);
           }
-          vis = smoothstep(0.0, 1.0, vis / 25.0);
-        } else {
-          float zs = linZ(texture2D(uDepth, uv).r);
-          vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+          vis = mix(vis, smoothstep(0.0, 1.0, sv / 25.0), mv);
         }
       }
       t = mix(pc, texture2D(uPlate, uv).rgb, vis * keep);
