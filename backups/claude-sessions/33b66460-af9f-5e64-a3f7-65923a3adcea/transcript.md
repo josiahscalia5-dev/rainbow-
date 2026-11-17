@@ -1092,3 +1092,173 @@ Found the bug: in `pushV` the vector was shifted before its push factor was comp
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T22:20:06.734Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ni=s.index('  const pushK = (v: THREE.Vector3) => {'); j=s.index('  const pushV =')\ns=s[:i]+'''  const pushK = (v: THREE.Vector3) => (v.y <= L.floorY ? 1 : 1 + (ARCH_K - 1) * THREE.MathUtils.smoothstep(v.y, L.floorY + 0.1, L.floorY + 0.9));\n'''+s[j:]\ns=s.replace(\"\"\"  // passed only ~0.4 u inside the fitted arch ring when steering, gets ~2 u of room. A point whose ray meets the floor\n  // before ×ARCH_K stops on the floor (no gold or wall copied flat onto the floor; points already below i …[+980 chars]`
+
+### 🧑 User — 2026-11-17T22:20:17.897Z
+
+> ↩︎ result: 212:  const pushK = (v: THREE.Vector3) => (v.y <= L.floorY ? 1 : 1 + (ARCH_K - 1) * THREE.MathUtils.smoothstep(v.y, L.floorY + 0.1, L.floorY + 0.9));
+> 213-  const pushV = (v: THREE.Vector3) => { const k = pushK(v); return v.sub(VP).multiplyScalar(k).add(VP); };
+> 1
+> qa/match/08/scenery/r6/proof/arch/08.png: diff px 167610  >20 levels 448  max 243  bbox x0-863 y0-1535
+
+### 🤖 Claude — 2026-11-17T22:20:22.493Z
+
+> 🔧 **Bash** `{"command": "rm -rf qa/match/08/scenery/r6/arch && timeout 600 node tools/lead_r6/motion_audit.mjs 08 qa/match/08/scenery/r6/arch 'match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1' 2>&1 | grep -i error | head; cd qa/match/08/scenery/r6 && python3 -c \"\nfrom PIL import Image\nD='/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/'\nnames=['f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_steer','s_left_hard','s_right_hard','t66_through_screen']\nW=Image.new('RGB',(288*4,512*2))\nfor i,n in enumerate(names): W.paste(Image.open('arch/'+n+'.p …[+164 chars]`
+
+### 🧑 User — 2026-11-17T22:21:04.769Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T22:21:06.498Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/arch_u.png"}`
+
+### 🧑 User — 2026-11-17T22:21:06.634Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:21:13.586Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && git add -A src/world/match08.ts qa/match/08/scenery/r6 && git commit -qm \"S08 scenery r6: m08arch uniform x2.6 push along projector rays + fine-tessellated arch/entrance wall; water-level sill kept (Benny underside as painted)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXobk8x9PXbYb8rpUaPP\" && git push -q origin claude/rainbow-s08-scenery-c6 2>&1|tail -1; git log --oneline -1", "description": "Commit and push m08arch"}`
+
+### 🧑 User — 2026-11-17T22:21:19.913Z
+
+> ↩︎ result: ca781c36 S08 scenery r6: m08arch uniform x2.6 push along projector rays + fine-tessellated arch/entrance wall; water-level sill kept (Benny underside as painted)
+
+### 🤖 Claude — 2026-11-17T22:21:41.472Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uniform vec3 uDrum;\\|^void main() {\\|  vec3 pc = patchColor();\\|if (vProj.w > 0.0) {\\|vec3 ndc = vProj.xyz / vProj.w;\\|const M = {\\|uDrum: { value\" src/world/match08.ts", "description": "Locate shader insertion points"}`
+
+### 🧑 User — 2026-11-17T22:21:41.496Z
+
+> ↩︎ result: 43:void main() {
+> 65:uniform vec3 uDrum;         // chamber axis x, y and radius
+> 87:void main() {
+> 89:  vec3 pc = patchColor();
+> 97:  if (vProj.w > 0.0) {
+> 98:    vec3 ndc = vProj.xyz / vProj.w;
+> 185:      uDrum: { value: new THREE.Vector3(L.chamber.cx, L.chamber.cy, L.chamber.r) } },
+> 188:  const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
+> 347:void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragColor = vec4(pjInverse(c.rgb), c.a); }`,
+
+### 🤖 Claude — 2026-11-17T22:21:43.227Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/match08.ts", "offset": 86, "limit": 36}`
+
+### 🧑 User — 2026-11-17T22:21:43.243Z
+
+> ↩︎ result: 86	}
+> 87	void main() {
+> 88	  // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)
+> 89	  vec3 pc = patchColor();
+> 90	  if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
+> 91	  vec3 t = pc;
+> 92	  // stretch guard: the projection is used where the current view sees the surface no more face-on than the approved
+> 93	  // view did (ratio of the two incidence cosines); in the approved view itself the ratio is 1 -> pure projection
+> 94	  vec3 nn = normalize(vN);
+> 95	  float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
+> 96	  float keep = 1.0 - smoothstep(2.5, 6.0, cc / max(cp, 1e-3));
+> 97	  if (vProj.w > 0.0) {
+> 98	    vec3 ndc = vProj.xyz / vProj.w;
+> 99	    vec2 uv = ndc.xy * 0.5 + 0.5;
+> 100	    if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) {
+> 101	      float vis = 1.0;
+> 102	      if (uUseDepth > 0.5) {
+> 103	        float zf = linZ(ndc.z * 0.5 + 0.5);
+> 104	        float zs = linZ(texture2D(uDepth, uv).r);
+> 105	        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+> 106	        // m08fill: once the camera has left the  …[+852 chars]
+
+### 🤖 Claude — 2026-11-17T22:22:03.690Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ns=s.replace(\"\"\"uniform vec3 uDrum;         // chamber axis x, y and radius\n\"\"\",\"\"\"uniform vec3 uDrum;         // chamber axis x, y and radius\nuniform float uSwim;        // m08swim (floor only): the painted river's banks spread to cover Benny's whole swim lane\nuniform sampler2D uRiv;     // 64 x 1: painted river centre x (r) and full width (g) along z\nuniform vec4 uRivZ;         // z at texel 0, z at texel 63, lane half-width to cover, floor y\n\"\"\",1)\ns=s.replace(\"\"\"void main() {\n  // m08fill fades …[+3742 chars]`
+
+### 🧑 User — 2026-11-17T22:22:05.853Z
+
+> ↩︎ result: OK
+
+### 🤖 Claude — 2026-11-17T22:22:11.571Z
+
+> 🔧 **Bash** `{"command": "timeout 600 node tools/lead_r6/motion_audit.mjs 08 qa/match/08/scenery/r6/swim 'match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1' 2>&1 | grep -i error | head; cd qa/match/08/scenery/r6 && python3 -c \"\nfrom PIL import Image\nD='/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/'\nnames=['s_right_hard','s_left_hard','s_right_steer','f06_forward6u']\nW=Image.new('RGB',(324*4,576*2))\nfor i,n in enumerate(names):\n  for j,d in enumerate(['arch','swim']): W.paste(Image.open(d+'/'+n+'.png').convert('RGB').resize((324,576)),(i*324,j*576))\nW.s …[+96 chars]`
+
+### 🧑 User — 2026-11-17T22:22:43.252Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T22:22:45.238Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/swim.png"}`
+
+### 🧑 User — 2026-11-17T22:22:45.276Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:22:48.340Z
+
+Shader failed to compile (scenery vanished). Getting the compile error.
+
+### 🤖 Claude — 2026-11-17T22:22:53.950Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && cat > /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/err.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { chromium } = loadPlaywright(); const vite = await startVite(5298);\nconst b = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const p = await b.newPage({ viewport: { width: 432, height: 768 } });\n  p.on('console', (m) => { const t = m.text(); if (/error|ERROR/i.test( …[+585 chars]`
+
+### 🧑 User — 2026-11-17T22:23:02.084Z
+
+> ↩︎ result: THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+> 
+> Material Name: 
+> Material Type: ShaderMaterial
+> 
+> Program Info Log: Fragment shader is not compiled.
+> 
+> FRAGMENT
+> 
+> ERROR: 0:152: 'uProjVP' : undeclared identifier
+> 
+> > 152:     if (ms > 0.0) pj = uProjVP * vec4(swimRemap(vW, ms), 1.0);
+
+### 🤖 Claude — 2026-11-17T22:23:08.990Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ns=s.replace(\"uniform float uSwim;        // m08swim\",\"uniform mat4 uProjVP;\\nuniform float uSwim;        // m08swim\",1)\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . && node /tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/err.mjs 'match08=1&m08swim=1&m08fill=1&m08arch=1&m08bw=1' 2>&1 | grep -v \"^\\s*[0-9]*:\" | head -5; timeout 600 node tools/lead_r6/motion_audit.mjs 08 qa/match/08/scenery/r6/swim 'match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1' 2>&1 | grep -i er …[+525 chars]`
+
+### 🧑 User — 2026-11-17T22:24:02.612Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T22:24:04.439Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/swim.png"}`
+
+### 🧑 User — 2026-11-17T22:24:04.607Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:24:07.759Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/scenery/r6/swim/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-17T22:24:07.793Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:24:20.753Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && git add -A src/world/match08.ts qa/match/08/scenery/r6 && git commit -qm \"S08 scenery r6: m08swim — floor spreads the painted river's banks over Benny's whole swim lane (world-anchored, fades in off the approved viewpoint)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXobk8x9PXbYb8rpUaPP\" && git push -q origin claude/rainbow-s08-scenery-c6 2>&1|tail -1; cd qa/match/08/scenery/r6 && python3 -c \"\nfrom PIL import Image\nD='/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3ad …[+345 chars]`
+
+### 🧑 User — 2026-11-17T22:24:26.724Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T22:24:29.193Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/33b66460-af9f-5e64-a3f7-65923a3adcea/scratchpad/ceil.png"}`
+
+### 🧑 User — 2026-11-17T22:24:29.235Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T22:24:48.193Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && grep -n \"fillSize = new THREE.Vector2(FJ.w, FJ.h);\" src/world/match08.ts && python3 - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\no=\"    fillSize = new THREE.Vector2(FJ.w, FJ.h);\"\ns=s.replace(o,\"\"\"    // `&m08seam=1` (r6): the tile came from the NEAR pipe wall; on the chamber drum its slots looked denser than the painted\n    // chamber wall beside them (a visible slot-size change at the hand-over) -> scale the tile (×m08seamk, default 1.6)\n    const seamK = flag05('m08seam') ? Number(new URLSearchParams(location.search).get('m08seamk')  …[+2061 chars]`
+

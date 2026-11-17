@@ -204,7 +204,10 @@ export async function buildMatch08(): Promise<Match08> {
     const FJ: { w: number; h: number } = await fetch(new URL('../../assets/textures/match08/fill_drum.json', import.meta.url).href).then((r) => r.json());
     fillTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/fill_drum.png', import.meta.url).href);
     fillTex.colorSpace = THREE.NoColorSpace; fillTex.wrapS = fillTex.wrapT = THREE.RepeatWrapping; fillTex.anisotropy = 8;
-    fillSize = new THREE.Vector2(FJ.w, FJ.h);
+    // `&m08seam=1` (r6): the tile came from the NEAR pipe wall; on the chamber drum its slots looked denser than the painted
+    // chamber wall beside them (a visible slot-size change at the hand-over) -> scale the tile (×m08seamk, default 1.6)
+    const seamK = flag05('m08seam') ? Number(new URLSearchParams(location.search).get('m08seamk') ?? '') || 1.6 : 1;
+    fillSize = new THREE.Vector2(FJ.w * seamK, FJ.h * seamK);
   }
   // `&m08swim=1` (scenery round r6): Benny can steer ±2.22 u (+ his body) off the course centre, but the painted river is
   // only 2–4 u wide over the first 8 u of the chamber, so hard steering put him on the purple floor. The floor material
