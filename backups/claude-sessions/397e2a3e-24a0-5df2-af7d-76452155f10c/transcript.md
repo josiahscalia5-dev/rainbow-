@@ -548,3 +548,164 @@ Your newest commit `89eacf0` is now included. Next, reading the handoff notes, s
 
 > 🔧 **Bash** `{"command": "tail -25 backups/.live/bootstrap.log; echo ---; which blender; ls /opt/android-sdk 2>/dev/null; curl -sS -o /dev/null -w \"blender-host %{http_code}\\n\" -m 10 -I https://download.blender.org/ ; curl -sS -o /dev/null -w \"google-host %{http_code}\\n\" -m 10 -I https://dl.google.com/", "description": "Check bootstrap log, Blender/Android presence, and host reachability"}`
 
+### 🧑 User — 2026-11-17T02:25:29.787Z
+
+> ↩︎ result: {"environment_id":"env_01SZWowwtiRzZSLYLzrYrZBL","name":"Default","description":"","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":false,"setup_script":"","network_secrets":[{"hosts":["api.worldlabs.ai"],"header_names":["WLT-Api-Key"],"name":"api.worldlabs.ai"}],"is_current":true,"editable_by_you":true,"session_has_repository":true,"note":"Edits made with update_environment change the stored environment; see that tool for when each kind of change takes effect. `setup_script` is returned only for an environment you can edit (`setup_script_withheld` / `description_withheld` mean the organization's compliance settings keep the stored text out of this tool — they refuse a `setup_script`, `new_name` or `new_description` edit too — or that this could not be checked right now, in which case calling again may return it). `other_cloud_environments` lists the user's other cloud environments (`other_cloud_environments_not_shown` counts any left out; the field is absent when they could not be read). create_environment refuses a name already  …[+862 chars]
+
+### 🧑 User — 2026-11-17T02:25:30.383Z
+
+> ↩︎ result: full  world c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9 (marble-1.1): 8 LFS + 13 files
+>         qa/worldlabs: 71 tracked files; ledger, prompt, input reference and 5 scripts checked
+>   OK   Marble World Labs assets       both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250
+>   OK   World Labs integration         Marble API key authenticated (free read: 5190 credits); worlds draft 200, full 200; no paid job started; plugin worldlabs@worldlabs installed now; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started
+> 
+> == 3 Tools (installed only when missing)
+>   OK   Node.js                        v22.23.4, npm 10.9.9
+>   OK   npm dependencies               npm ci done (99 packages; cache ~/.npm reused)
+>   OK   Python QA libraries            installed: opencv-python-headless scipy; Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK
+>   OK   Playwright + Chromium          headless Chromium 153.0.8010.12 with WebGL2 (SwiftShader); preinstalled, never reinstall
+>   OK   ffmpeg / ImageMagick           ffmpeg 6.1.1-3ubuntu5, ImageMagick 6.9.12-9 …[+2479 chars]
+
+### 🤖 Claude — 2026-11-17T02:26:00.120Z
+
+> 🔧 **Bash** `{"command": "wc -l scripts/cloud-env-setup.sh && awk 'length>200{print \"LONG LINE \" NR}' scripts/cloud-env-setup.sh; cat scripts/cloud-env-setup.sh; echo; git log --oneline -3; git status --short | head -5", "description": "Show the cloud environment setup script"}`
+
+### 🧑 User — 2026-11-17T02:26:00.184Z
+
+> ↩︎ result: 15 scripts/cloud-env-setup.sh
+> #!/usr/bin/env bash
+> # Rainbow (josiahscalia5-dev/rainbow-) cloud-environment setup script: paste it into claude.ai ->
+> # Claude Code -> environment settings -> Setup script. It runs as root before Claude starts, from the folder
+> # that holds the repository checkout, and installs TOOLS only (npm packages, Python QA libraries, Blender 5.3.0,
+> # Android SDK 34, World Labs plugin), skipping anything already installed. It never touches git: the
+> # repository's SessionStart hook (scripts/claude-bootstrap.sh --hook) restores Git LFS, lists newer branches (never merges) and
+> # re-arms the five-minute autosave. Every step is non-fatal so a session always starts.
+> if [ -f rainbow-/scripts/claude-bootstrap.sh ]; then
+>   bash rainbow-/scripts/claude-bootstrap.sh --env-setup || echo "rainbow: env-setup reported problems"
+> elif [ -d rainbow- ]; then   # old checkout (e.g. the old default branch) without the bootstrap
+>   (cd rainbow- && npm ci --no-audit --no-fund > /dev/null 2>&1) || echo "rainbow: npm ci failed"
+>   (cd rainbow- && bash scripts/setup-blender.sh) || echo "rainbow: blender setup failed"
+>   (cd rainbow- && bash scripts/setup-android-sdk.sh) || echo "rainbow: andr …[+267 chars]
+
+### 🤖 Claude — 2026-11-17T02:26:01.956Z
+
+The autosave already pushed my merge (`fe531e6`). Testing the setup script the way a fresh container runs it — from the folder above the checkout:
+
+### 🤖 Claude — 2026-11-17T02:26:03.066Z
+
+> 🔧 **Bash** `{"command": "cd /home/user && time bash rainbow-/scripts/cloud-env-setup.sh 2>&1 | tail -20; echo \"exit=${PIPESTATUS[0]}\"", "description": "Run the environment setup script as a fresh container would", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T02:26:06.397Z
+
+> ↩︎ result: == Rainbow env-setup: tools (/home/user/rainbow-)
+>   OK   Node.js                        v22.23.4, npm 10.9.9
+>   OK   npm dependencies               node_modules up to date with package-lock.json (npm ci skipped)
+>   OK   Python QA libraries            Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK
+>   OK   Playwright + Chromium          headless Chromium 153.0.8010.12 with WebGL2 (SwiftShader); preinstalled, never reinstall
+>   OK   ffmpeg / ImageMagick           ffmpeg 6.1.1-3ubuntu5, ImageMagick 6.9.12-98 (Flow video + image checks)
+>   OK   Blender                        Blender 5.3.0 (present) at /usr/local/bin/blender; headless bpy test OK
+>   OK   Android build tools            Android SDK platform 34 + build-tools 34.0.0 + platform-tools (present, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug
+>   OK   World Labs integration         Marble API key authenticated (free read: 5190 credits); worlds draft 200, full 200; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started
+> 
+> real	0m3.296s
+> user	0m1.810s
+> sys	0m0.463s
+> exit=0
+> Shell cwd …[+33 chars]
+
+### 🤖 Claude — 2026-11-17T02:26:16.799Z
+
+> 🔧 **mcp__claude-code-remote__create_environment** `{"name": "rainbow-", "scope": "personal", "reason": "Rainbow game environment: Blender, Android SDK and Git LFS hosts plus the project setup script.", "switch_session": "network_only", "leave_statement": "network secrets of the current environment stop being sent to: api.worldlabs.ai (can take up to an hour)", "allowed_hosts": ["download.blender.org", "dl.google.com", "lfs.github.com"], "allow_package_managers": true, "allow_mcp_servers": true, "repositories": ["josiahscalia5-dev/rainbow-"], "setup_script": "#!/usr/bin/env bash\n# Rainbow (josiahscalia5-dev/rainbow-) cloud-environment setup sc …[+816 chars]`
+
+### 🧑 User — 2026-11-17T02:26:47.001Z
+
+> ↩︎ result: {"environment_id":"env_01LN2RLuvitKKXx9z4iJoMN5","name":"rainbow-","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"limited","allow_mcp_servers":true,"allow_package_managers":true,"allowed_hosts":["download.blender.org","dl.google.com","lfs.github.com"]},"environment_variable_names":[],"has_setup_script":true,"repositories":["josiahscalia5-dev/rainbow-"],"repositories_saved":true,"used_in_this_session":true,"network_rules_pending":false,"note":"The environment was created and THIS session now uses it. Hosts on its list normally work through the session's HTTPS proxy within seconds, and from then on credentials saved on the previous environment are no longer used in this session. If a host on the list is still refused after a minute, the proxy has not picked up the change yet: it does so when its cached view of this session expires (up to about an hour), and until then the previous environment's hosts and credentials apply. Connections that are already open keep their earlier reach. Tools that bypass the proxy keep this machine's earlier network rules until the machine is replaced. The environment  …[+545 chars]
+
+### 🤖 Claude — 2026-11-17T02:26:51.283Z
+
+Approved — `rainbow-` is created and this session now runs on it. Testing the restricted network for real (allowed hosts must pass, an unlisted host must be refused), plus Git/LFS access:
+
+### 🤖 Claude — 2026-11-17T02:26:53.933Z
+
+> 🔧 **Bash** `{"command": "for u in https://download.blender.org/release/ https://dl.google.com/android/repository/repository2-1.xml https://lfs.github.com/ https://registry.npmjs.org/three https://pypi.org/simple/numpy/ https://example.com/; do printf \"%-60s \" \"$u\"; curl -sS -o /dev/null -w \"%{http_code}\\n\" -m 15 \"$u\" 2>&1 | tail -1; done; echo \"--- git\"; git ls-remote origin refs/heads/ccr-b0757dec-dj6l1o; git rev-parse HEAD; git lfs ls-files | wc -l; timeout 120 git lfs fsck 2>&1 | tail -1", "description": "Test allowed and blocked hosts plus Git and LFS access", "timeout": 200000}`
+
+### 🤖 Claude — 2026-11-17T02:26:54.688Z
+
+> 🔧 **Grep** `{"pattern": "protected_branches", "path": "/home/user/rainbow-/scripts", "output_mode": "content", "head_limit": 20}`
+
+### 🧑 User — 2026-11-17T02:26:55.904Z
+
+> ↩︎ result: https://download.blender.org/release/                        200
+> https://dl.google.com/android/repository/repository2-1.xml   200
+> https://lfs.github.com/                                      302
+> https://registry.npmjs.org/three                             200
+> https://pypi.org/simple/numpy/                               200
+> https://example.com/                                         000
+> --- git
+> fe531e60f149280ee2a1b0c7afacc11c802cfa38	refs/heads/ccr-b0757dec-dj6l1o
+> fe531e60f149280ee2a1b0c7afacc11c802cfa38
+> 36
+> Git LFS fsck OK
+
+### 🧑 User — 2026-11-17T02:26:55.948Z
+
+> ↩︎ result: scripts/autosave-status.py:38:    if branch in CFG.get("protected_branches", []):
+> scripts/autosave-status.py:69:        "uncommitted_files": ndirty, "protected_branches": CFG.get("protected_branches", []),
+> scripts/claude-bootstrap.sh:24:# Never pushes to backups/autosave.config.json -> protected_branches. Never reads, prints or stores credentials.
+> scripts/claude-bootstrap.sh:101:  prot="$(python3 -I -c 'import json,sys; c=json.load(open(sys.argv[1])); print("yes" if sys.argv[2] in c.get("protected_branches",[]) else "no")' \
+> scripts/rainbow-autosave.py:270:        if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+
+### 🤖 Claude — 2026-11-17T02:27:00.789Z
+
+> 🔧 **Bash** `{"command": "sed -n 262,280p scripts/rainbow-autosave.py; sed -n 95,110p scripts/claude-bootstrap.sh", "description": "Read how autosave chooses and protects branches"}`
+
+### 🧑 User — 2026-11-17T02:27:00.823Z
+
+> ↩︎ result: try:
+>         # ---- 1. identity checks -------------------------------------------------------
+>         url = git("remote", "get-url", CFG["remote_name"]).stdout.strip()
+>         if CFG["remote_url_must_contain"] not in url:
+>             raise RuntimeError(f"remote URL {url!r} is not the verified Rainbow repo; refusing to back up")
+>         branch = git("symbolic-ref", "--short", "HEAD").stdout.strip()
+>         row["branch"] = branch
+>         if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+>             raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
+>         if branch != CFG["branch"]:
+>             # A new cloud session gets a fresh working-branch name. Follow it only when it matches an
+>             # explicitly allowed session-branch pattern (protected branches were rejected above).
+>             pats = CFG.get("session_branch_patterns", [])
+>             if not any(fnmatch.fnmatchcase(branch, p) for p in pats):
+>                 raise RuntimeError(f"current branch {branch!r} != verified branch {CFG['branch']!r} and matches no "
+>                                    f"session_branch_patterns {p …[+1265 chars]
+
+### 🤖 Claude — 2026-11-17T02:27:06.843Z
+
+> 🔧 **Bash** `{"command": "head -c 300 backups/autosave.config.json | cat -A | head -5 | cut -c1-80; flock -w 60 backups/.autosave.lock python3 -I - <<'EOF'\nimport json, pathlib\np = pathlib.Path(\"backups/autosave.config.json\")\nraw = p.read_text()\nc = json.loads(raw)\nsrc = \"claude/rainbow-account-transfer-npxahd\"\nc[\"branch\"] = \"ccr-b0757dec-dj6l1o\"\nif src not in c[\"protected_branches\"]:\n    c[\"protected_branches\"].append(src)\nc[\"commit_trailer\"] = \"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\\nClaude-Session: https://claude.ai/code/session_01VCMXobH7GXDyZXLL7scHBn\"\ninden …[+414 chars]`
+
+### 🧑 User — 2026-11-17T02:27:06.913Z
+
+> ↩︎ result: {$
+>   "project": "RAINBOW \u2014 11-screen 3D mobile game",$
+>   "repo_full_name": "josiahscalia5-dev/rainbow-",$
+>   "remote_name": "origin",$
+>   "remote_url_must_contain": "github.com/josiahscalia5-dev/rainbow-",$
+> indent 2 | branch ccr-b0757dec-dj6l1o | protected 27 | source protected: True
+>  backups/autosave.config.json | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+
+### 🤖 Claude — 2026-11-17T02:27:09.919Z
+
+> 🔧 **Bash** `{"command": "flock -w 60 backups/.autosave.lock python3 -I -c \"\nimport json,pathlib;p=pathlib.Path('backups/autosave.config.json');c=json.loads(p.read_text());p.write_text(json.dumps(c,indent=2)+'\\n')\"; git diff backups/autosave.config.json | grep '^[-+]' | cut -c1-160", "description": "Rewrite config with original escaping and show diff"}`
+
+### 🧑 User — 2026-11-17T02:27:09.989Z
+
+> ↩︎ result: --- a/backups/autosave.config.json
+> +++ b/backups/autosave.config.json
+> -  "branch": "claude/rainbow-account-transfer-npxahd",
+> +  "branch": "ccr-b0757dec-dj6l1o",
+> -  "commit_trailer": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCHg5514fc1pQPNRkw4",
+> +  "commit_trailer": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXobH7GXDyZXLL7scHBn",
+> -    "claude/rainbow-restore-env-setup-bxn85h"
+> +    "claude/rainbow-restore-env-setup-bxn85h",
+> +    "claude/rainbow-account-transfer-npxahd"
+
