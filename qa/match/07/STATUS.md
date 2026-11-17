@@ -23,6 +23,7 @@
 * **Test results (round 3 re-run):** 0 px default 06/07/08 vs pre-change `3c7fca9`, `?match08=1` 08 0 px, protected 05
   BEFORE 0 px (`m3/proofs_0px_r3.json`); continuity all joins gap 0, drop 61.19 u / 61.02 u (`m3/continuity_*.json`);
   gameplay 8/8 with and without `match07=1`, 91 coins collected, total 2,240 both (`m3/gameplay_*.json`); tsc clean
+* **Android:** `builds/rainbow-debug-07-2026-11-17-r3.apk` (debug, `VITE_RAINBOW_Q05="match07=1"`, Git LFS, sha256 a2ad08180fae22b0…) — NOT phone-tested (no device in the cloud)
 * **Next task:** MILESTONE 2 (one factor at a time): gold rings to the bright end, pink-and-blue water, bubbles + tall
   foam walls, coins at the painted spots — consistent while moving (fix the 20 u doubled rings and the 3 u mirrored tile)
 * **Approval status:** under review (only the user approves)
