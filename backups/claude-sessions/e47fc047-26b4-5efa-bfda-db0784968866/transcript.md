@@ -4470,3 +4470,340 @@ Refactor confirmed (all three outputs byte-identical). Now the near tile:
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T10:19:04.932Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/proj05/near_water_stats.py", "content": "\"\"\"Screen 05 — does the water NEAR Benny look like the approved water while riding? While the camera moves, the water\nunder and around Benny is a different stretch of river than in the approved picture, so a pixel match means nothing;\nthis compares how the water LOOKS, on the same screen region of every frame and of the approved picture:\n  detail    mean |luminance - blur(sigma 2 px)|      — crisp streaks and glints (a pastel blur scores low)\n  sat       mean HSV saturation                       — vivid pi …[+2452 chars]`
+
+### 🧑 User — 2026-11-17T10:19:04.995Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/proj05/near_water_stats.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T10:19:07.936Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && echo \"APPROVED\"; python3 -I tools/proj05/near_water_stats.py references/05_flow_into_the_current.png | sed \"s#.*05_flow#approved 05_flow#\"; echo \"OLD (no near tile)\"; python3 -I tools/proj05/near_water_stats.py $S/mvO/move_*.png | sed \"s#$S/##\"; echo \"NEW (projnear05=1)\"; python3 -I tools/proj05/near_water_stats.py $S/mvN/move_*.png | sed \"s#$S/##\"", "description": "Compare near-water sharpness and colour vs approved"}`
+
+### 🧑 User — 2026-11-17T10:19:11.671Z
+
+> ↩︎ result: APPROVED
+> approved 05_flow_into_the_current.png          detail  6.13  sat 0.743  pink 0.129  cyan 0.581  glint 0.0912  (222394 px)
+> OLD (no near tile)
+> efa-bfda-db0784968866/scratchpad/mvO/move_00.png detail  5.18  sat 0.710  pink 0.129  cyan 0.581  glint 0.0780  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_04.png detail  2.32  sat 0.774  pink 0.127  cyan 0.698  glint 0.0646  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_08.png detail  2.07  sat 0.740  pink 0.350  cyan 0.435  glint 0.0499  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_12.png detail  1.93  sat 0.780  pink 0.114  cyan 0.760  glint 0.0588  (222594 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_17.png detail  1.38  sat 0.720  pink 0.123  cyan 0.695  glint 0.0014  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_25.png detail  1.26  sat 0.756  pink 0.347  cyan 0.489  glint 0.0047  (224031 px)
+> NEW (projnear05=1)
+> efa-bfda-db0784968866/scratchpad/mvN/move_00.png detail  5.19  sat 0.710  pink 0.129  cyan 0.581  glint 0.0778  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvN/move_04.png detail  2.38  sat 0.776  pink 0.138  cyan 0.684  glint 0.0625  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvN/mo …[+456 chars]
+
+### 🤖 Claude — 2026-11-17T10:19:47.188Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I -c \"\nfrom PIL import Image\nb=(0,1000,864,1460)\nims=[Image.open(p).convert('RGB').crop(b) for p in ['references/05_flow_into_the_current.png','$S/mvN/move_17.png']]\nw,h=ims[0].size\nim=Image.new('RGB',(w,2*h+10),(255,255,255)); im.paste(ims[0],(0,0)); im.paste(ims[1],(0,h+10)); im.save('$S/near_bottom_cmp.png')\"", "description": "Crop bottom water approved vs new ride frame"}`
+
+### 🧑 User — 2026-11-17T10:19:47.580Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T10:19:48.092Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/near_bottom_cmp.png"}`
+
+### 🧑 User — 2026-11-17T10:19:48.136Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:20:03.506Z
+
+> 🔧 **Bash** `{"command": "grep -n \"glint\\|star\\|sparkle\\|arm\\b\\|float arm\" src/vfx/waterRibbon.ts | sed -n 1,60p | cut -c1-170", "description": "Find the water shader's star glint code"}`
+
+### 🧑 User — 2026-11-17T10:20:03.561Z
+
+> ↩︎ result: 7: * sparkles (two-phase flow-map advection so per-stage speeds never shear), Fresnel/haze
+> 8: * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+> 105: * streaks/crests/glints added on top lift the rendered cyan median to ≈#06A7FF (ref 05 #039FF6).
+> 202: *   glints, luminance high-pass) — E fades to N/T + D wherever the camera magnifies it (no stretching).
+> 351:uniform vec3 uChevron;    // start s, spacing, enabled
+> 352:uniform vec2 uOutro;      // amount, chamber start s
+> 394:uniform vec2 uPjTS;        // start s, period L
+> 473:// the slots spread apart into sparse crisp glints instead of wide parallel light stripes (the
+> 490:// returns: x = height 0..1 (shading + bump), y = white glint lines, z = mid strands, w = fine strands
+> 793:    // (smooth minimum: a hard min() put a visible corner in the band where the clamp starts)
+> 952:    // ---- white star glints (4-point, twinkling, carried by the flow) ----
+> 956:    float sparkle = step(0.9, hs) * smoothstep(0.22, 0.0, length(fract(g) - 0.5)) * (0.5 + 0.5 * sin(uTime * 7.0 + hs * 40.0));
+> 957:    col += vec3(1.3) * sparkle;
+> 960:    float glint = starGlint(vec2(lat * 0.55, (s - vSpeed * uTime * 0.55) * …[+1180 chars]
+
+### 🤖 Claude — 2026-11-17T10:20:06.219Z
+
+> 🔧 **Bash** `{"command": "sed -n 1255,1300p src/vfx/waterRibbon.ts; grep -n \"float starGlint\\|vec2 starField\\|float starField\" src/vfx/waterRibbon.ts; sed -n \"$(grep -n 'float starGlint' src/vfx/waterRibbon.ts | cut -d: -f1),+22p\" src/vfx/waterRibbon.ts", "description": "Read the twinkling star glint code"}`
+
+### 🧑 User — 2026-11-17T10:20:06.285Z
+
+> ↩︎ result: Exit code 1
+>     #else
+>     // (wave 8) all flares sit on the streak coordinate X, so they streak with the current on every bend
+>     // (it06: twice as many rows along the flow, longer arms — ref mid field glitters with flares)
+>     float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.8, 22.0, 3.8, 0.0, uTime);
+>     // near: big flares lying across the fanning flow (ref 05: ≈8–12 bright 80–150 px flares below Benny)
+>     // + a smaller set (rows bent by a smooth across-flow warp so they never line up)
+>     float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.9, 38.0, 4.5, 0.45, uTime + 2.7);
+>     flB = max(flB, flowGlint(vec2(X * 2.7 + 0.37, v5 * 2.1 + 1.6 * sin(X * 5.3 + 2.0)), 0.65, 22.0, 4.0, 0.35, uTime + 0.9) * 0.8);
+>     // many small twinkling 4-point stars, clustered on the light lanes
+>     float flC = flowGlint(vec2(X * 7.0, v5 * 4.5 + 0.3 + 1.7 * sin(X * 13.0 + 0.7)), 0.75, 7.0, 2.6, 0.6, uTime + 1.3);
+>     flC *= 0.5 + 1.6 * smoothstep(-0.1, 0.3, lane);
+>     // lens flares across the near water (thin white core, cyan glow)
+>     // (it06: it05 near p95 lum 203 vs ref 246 → bigger, brighter near flares)
+>     float lz = lensFlare(vec2(X * 1.8, v5 * 1.6 + 1.1 *  …[+2141 chars]
+
+### 🤖 Claude — 2026-11-17T10:20:20.052Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^float flowGlint\\|^float lensFlare\\|^float starGlint\\|^#ifdef\\|^#ifndef\\|^#endif\\|^#else\\|^  #ifdef\\|^  #endif\\|^  #else\" src/vfx/waterRibbon.ts | sed -n 1,80p", "description": "Map shader ifdef blocks and glint functions"}`
+
+### 🧑 User — 2026-11-17T10:20:20.102Z
+
+> ↩︎ result: 267:#ifdef FARW05
+> 270:#endif
+> 287:  #ifdef FARW05
+> 289:  #endif
+> 363:#ifdef FLOWMAP05
+> 371:#endif
+> 382:#ifdef FARW05
+> 384:#endif
+> 386:#ifdef PROJ05
+> 449:#ifdef FLOWMAP05
+> 451:#endif
+> 497:  #ifdef LOW_Q
+> 499:  #else
+> 501:  #endif
+> 512:  #endif
+> 543:#ifdef LOW_Q
+> 545:#else
+> 547:#endif
+> 574:#ifdef WATER05
+> 582:#ifdef SILK05
+> 586:#else
+> 589:#endif
+> 597:#ifdef SILK05
+> 599:#else
+> 601:#endif
+> 615:  #ifdef LOW_Q
+> 617:  #else
+> 619:  #endif
+> 661:#ifdef SILK05
+> 675:#endif
+> 676:#endif
+> 693:  #ifdef FARW05
+> 697:  #endif
+> 720:  #ifdef LOW_Q
+> 723:  #endif
+> 852:  #endif
+> 972:#ifdef WATER05
+> 1193:#else
+> 1279:#endif
+> 1280:  #ifdef FARW05
+> 1323:  #endif
+> 1378:  #ifdef PROJ05
+> 1441:  #endif
+
+### 🤖 Claude — 2026-11-17T10:20:22.693Z
+
+> 🔧 **Bash** `{"command": "grep -n \"flowGlint(vec2\\|lensFlare(vec2 \\|float flowGlint\\|float lensFlare\\|float starGlint\" src/vfx/waterRibbon.ts | head -5; sed -n 574,600p src/vfx/waterRibbon.ts; sed -n 940,972p src/vfx/waterRibbon.ts", "description": "Read glint function definitions and default star code"}`
+
+### 🧑 User — 2026-11-17T10:20:22.740Z
+
+> ↩︎ result: 1169:    float flA = flowGlint(vec2(X * 1.6, v5 * 0.12), 0.8, 48.0, 4.6, 0.0, uTime);
+> 1171:    float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.85, 34.0, 4.8, 0.0, uTime);
+> 1172:    flA = max(flA, 0.85 * flowGlint(vec2(X * 4.3 + 0.37, v5 * 0.31 + 2.1), 0.6, 18.0, 4.4, 0.0, uTime + 1.9));
+> 1175:    float flB = flowGlint(vec2(X * 1.6, v5 * 1.4 + 0.5 + 1.3 * sin(X * 4.1 + 0.6)), 0.8, 56.0, 5.0, 0.85, uTime + 2.7);
+> 1258:    float flA = flowGlint(vec2(X * 2.0, v5 * 0.15), 0.8, 22.0, 3.8, 0.0, uTime);
+> #ifdef WATER05
+> // ---- W10 (?water05=1): approved-image palette, shader-linear values solved through exposure 0.86 → Neutral →
+> // sRGB → grade (sat 1.36 / con 1.15), bloom ignored. Cyan has R ≈ 0 and aqua (G ≈ B) highlights like the approved;
+> // the bands ramp hot pink → violet → periwinkle → cyan on the core side and → deep blue toward the banks.
+> const vec3 W5_CDEEP = vec3(0.058, 0.197, 0.379);   // #0068AD
+> const vec3 W5_CDEEP2 = vec3(0.062, 0.290, 0.572);  // #0086D8
+> const vec3 W5_CMID = vec3(0.066, 0.424, 0.747);    // #00A8F5
+> const vec3 W5_CBRIGHT = vec3(0.088, 0.567, 0.825); // #00C4FB
+> #ifdef SILK05
+> // W12: red-free aqua / blue tones (approved cyan pixels have S ≈ 0.99 even in the brigh …[+3031 chars]
+
+### 🤖 Claude — 2026-11-17T10:20:27.545Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"float flowGlint\\|float lensFlare\\|float starGlint\" src | head; grep -n \"X = \\|float X\\b\\|float v5\\|float near5\\|float lane\\b\\|float lane =\" src/vfx/waterRibbon.ts | head -12", "description": "Find glint helper definitions and their inputs"}`
+
+### 🧑 User — 2026-11-17T10:20:27.589Z
+
+> ↩︎ result: src/vfx/glsl.ts:60:float starGlint(vec2 g, float density, float L, float stretch, float time) {
+> src/vfx/glsl.ts:82:float flowGlint(vec2 g, float density, float L, float stretch, float horiz, float time) {
+> src/vfx/glsl.ts:116:float lensFlare(vec2 g, float density, float Lpx, float Tpx, float time) {
+> 548:vec3 speedStreaks(float X, float v, float fwX, float fwV) {
+> 549:  float lane = 0.0, dash = 0.0, fine = 0.5, nPrev = 0.6;
+> 611:vec4 brush05(float X, float v, float fwX, float fwV, float drift) {
+> 612:  float lane = vnoise(vec2(X * 1.1 + 2.3, v * 0.03 + 3.0)) - 0.5;
+> 665:vec2 silk05Streak(float X, float v, float k, float seed, float dens) {
+> 732:  float v5 = s - uTime * uFlow05;             // 05 advected arc length (one constant speed: no shear)
+> 822:  // X = across-flow coordinate (units): ahead of Benny it follows the S-band midline, normalised by the band
+> 830:  float X = (lat - mix(M + sbend + 0.5 * (cLc + cRc), uBenny.y, nearW)) * mix(3.0 / hS, 1.0, nearW) / (1.0 + 0.7 * back);
+> 978:    float near5 = 1.0 - smoothstep(0.006, 0.024, fws);
+> 980:    float near5 = 1.0 - smoothstep(0.0075, 0.014, fws);
+> 1195:    float near5 = 1.0 - smoothstep(0.0075, 0.014, fws);
+> 1198:    float lane = SS.x * (1 …[+32 chars]
+
+### 🤖 Claude — 2026-11-17T10:20:29.029Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/glsl.ts", "offset": 55, "limit": 90}`
+
+### 🧑 User — 2026-11-17T10:20:29.059Z
+
+> ↩︎ result: 55	  vec3 grad = sign(det) * (dhx * r1 + dhy * r2);
+> 56	  return normalize(abs(det) * n - grad);
+> 57	}
+> 58	// g: cell coordinates (world-anchored); density: probability a cell holds a star; L: arm length px;
+> 59	// stretch: horizontal (g.x) arm length relative to the vertical one (ref 05 glints are wide flares)
+> 60	float starGlint(vec2 g, float density, float L, float stretch, float time) {
+> 61	  vec2 gi = floor(g);
+> 62	  float hs = hash12(gi + 7.31);
+> 63	  if (hs < 1.0 - density) return 0.0;
+> 64	  vec2 cpp = max(fwidth(g), vec2(1e-4));           // cells per pixel
+> 65	  vec2 c = vec2(hash12(gi + 3.1), hash12(gi + 5.7)) * 0.5 + 0.25;
+> 66	  vec2 px = (fract(g) - c) / cpp;                   // offset in pixels
+> 67	  vec2 lim = 0.24 / cpp;                            // never cross the cell border
+> 68	  float l = L * (0.55 + 0.9 * fract(hs * 37.0));
+> 69	  float ax = exp(-abs(px.y) * 0.75) * max(0.0, 1.0 - abs(px.x) / min(l * stretch, lim.x));
+> 70	  float ay = exp(-abs(px.x) * 0.8) * max(0.0, 1.0 - abs(px.y) / min(l, lim.y));
+> 71	  float core = exp(-dot(px, px) * 0.05) * 1.6;
+> 72	  float tw = 0.55 + 0.45 * pow(0.5 + 0.5 * sin(time * 5.0 + hs * 60.0), 2.0);
+> 73	  return ((ax * ax + ay * ay) * 1.6 + core)  …[+4445 chars]
+
+### 🤖 Claude — 2026-11-17T10:20:58.957Z
+
+> 🔧 **Bash** `{"command": "grep -n \"  float lat\\b\\|  float lat =\\|float lat =\\|  float fws\\|float fws =\\|uniform float uFlow05\\|float v5 =\" src/vfx/waterRibbon.ts | head; awk 'NR>=700 && NR<=735' src/vfx/waterRibbon.ts | grep -n \"{\\|}\" | head -20", "description": "Check scope of lat, v5, fws in the water shader"}`
+
+### 🧑 User — 2026-11-17T10:20:59.025Z
+
+> ↩︎ result: 362:uniform float uFlow05;
+> 692:  float lat = u * hw;                         // lateral units in the ribbon frame
+> 713:  float fws = fwidth(s);
+> 732:  float v5 = s - uTime * uFlow05;             // 05 advected arc length (one constant speed: no shear)
+
+### 🤖 Claude — 2026-11-17T10:21:00.755Z
+
+> 🔧 **Bash** `{"command": "sed -n 682,735p src/vfx/waterRibbon.ts", "description": "Read main-function variable setup"}`
+
+### 🧑 User — 2026-11-17T10:21:00.786Z
+
+> ↩︎ result: if (vHide < 0.5) discard;
+>   float cutFoam = 1.0 - smoothstep(0.5, 0.85, vHide);
+>   // 11 outro: the stream drains away in the chamber, leaving puddles
+>   if (uOutro.x > 0.0 && s > uOutro.y - 2.0) {
+>     float n = vnoise(vec2(u * 3.0, s * 0.35)) * 0.7 + 0.3;
+>     if (n < uOutro.x * 1.15) discard;
+>   }
+> 
+>   // ---- channel layout: winding cyan core between two hot-pink S-bands, cyan again outside ----
+>   float hw = vHalfW;
+>   float lat = u * hw;                         // lateral units in the ribbon frame
+>   #ifdef FARW05
+>   // W11: the band layout lives in the visible channel (narrower than the ribbon where a foam shelf lines the bank)
+>   float chC = vChan.x;
+>   hw = vChan.y;
+>   #endif
+>   // core centre: free drifting meander on 04/06/07 (freeK = 1); on 05 (freeK = 0) pinned to the
+>   // course's own S-meander, amplified (vCore = CORE_SWING · offset05), so the coins stay on cyan
+>   float freeK = vStyle.w;
+>   float sw = 1.0 - freeK;                     // weight of the 05 river look (1 on 05 only)
+>   float M = meander(s, hw) * freeK + vCore;
+>   float x = lat - M;                          // lateral units in the core's frame
+>   // 05: the pink bands swing a further ±1.05 u about the core (a stationary λ≈2 …[+1886 chars]
+
+### 🤖 Claude — 2026-11-17T10:21:25.655Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "      float pjFd = pjF * (1.0 - wEx);              // the exact layer already carries the approved haze\n      lin = (lin * (1.0 - pjFd) + fogColor * pjFd - fogColor * pjF) / max(1.0 - pjF, 0.05);\n      #endif", "new_string": "      float pjFd = pjF * (1.0 - wEx);              // the exact layer already carries the approved haze\n      lin = (lin * (1.0 - pjFd) + fogColor * pjFd - fogColor * pjF) / max(1.0 - pjF, 0.05);\n      #endif\n      if (uPjNear.x > 0.5) {\n        // ?projnear05=1: the app …[+1185 chars]`
+
+### 🧑 User — 2026-11-17T10:21:25.751Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-17T10:21:33.402Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold=\"uniform vec4 uPjNear;      // ?projnear05=1: on, unused, near-layer texels (w, h) — the tile sampler holds the sharp tile T2\"\nnew=\"uniform vec4 uPjNear;      // ?projnear05=1: on, near-flare gain, near-layer texels (w, h) — the tile sampler holds the sharp tile T2\"\nassert old in s; s=s.replace(old,new)\nold=\"  u.uPjNear = { value: new THREE.Vector4(0, 0, 512, 960) };\"\nnew=\"  u.uPjNear = { value: new THREE.Vector4(0, qn('projglint05', 1), 512, 960) };      // y: near-flare gain (`projglint05`)\"\nass …[+1237 chars]`
+
+### 🧑 User — 2026-11-17T10:22:13.595Z
+
+> ↩︎ result: ok
+> NEW + flares
+> efa-bfda-db0784968866/scratchpad/mvG/move_00.png detail  5.21  sat 0.709  pink 0.129  cyan 0.581  glint 0.0782  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvG/move_04.png detail  2.56  sat 0.767  pink 0.133  cyan 0.684  glint 0.0670  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvG/move_08.png detail  5.04  sat 0.621  pink 0.064  cyan 0.633  glint 0.0720  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvG/move_12.png detail  5.91  sat 0.593  pink 0.075  cyan 0.634  glint 0.1094  (222651 px)
+> efa-bfda-db0784968866/scratchpad/mvG/move_17.png detail  5.15  sat 0.621  pink 0.017  cyan 0.733  glint 0.1098  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvG/move_25.png detail  5.82  sat 0.600  pink 0.073  cyan 0.598  glint 0.0837  (224031 px)
+> locked view: near tile without vs with flares (differing px, >10) (194854, 8777)
+
+### 🤖 Claude — 2026-11-17T10:22:22.336Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nA=np.asarray(Image.open('$S/mvN/move_00.png').convert('RGB')).astype(int); B=np.asarray(Image.open('$S/mvG/move_00.png').convert('RGB')).astype(int)\nd=np.abs(A-B).max(-1)\nfor y0 in range(0,1536,256): print('rows',y0,y0+256,'px>0',int((d[y0:y0+256]>0).sum()),'px>10',int((d[y0:y0+256]>10).sum()))\nim=Image.new('RGB',(3*432+20,768),(255,255,255))\nfor i,p in enumerate(['$S/mvG/move_00.png','$S/mvG/move_17.png','$S/mvN/move_17.png']):  …[+179 chars]`
+
+### 🤖 Claude — 2026-11-17T10:22:23.148Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/flare_cmp.png"}`
+
+### 🧑 User — 2026-11-17T10:22:23.449Z
+
+> ↩︎ result: rows 0 256 px>0 37 px>10 0
+> rows 256 512 px>0 9609 px>10 0
+> rows 512 768 px>0 59191 px>10 187
+> rows 768 1024 px>0 78174 px>10 8402
+> rows 1024 1280 px>0 44311 px>10 183
+> rows 1280 1536 px>0 3532 px>10 5
+
+### 🧑 User — 2026-11-17T10:22:23.513Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:23:01.420Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold='''  if (uPjNear.x > 0.5) wN *= smoothstep(0.3, 0.55, mN);'''\nnew='''  // (only where the exact layer is magnified too: the river the camera has actually approached — nothing changes on the\n  // locked view, where the exact layer is never magnified)\n  if (uPjNear.x > 0.5) wN *= mix(1.0, smoothstep(0.3, 0.55, mN), 1.0 - smoothstep(0.3, 0.55, mE));'''\nassert s.count(old)==1; s=s.replace(old,new)\nold='''        float wT = (1.0 - wNx) * (1.0 - wEx) * (1.0 - smoothstep(0.3, 0.55, mN));\n        float gB = flow …[+2499 chars]`
+
+### 🤖 Claude — 2026-11-17T10:23:02.570Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/v3_sheet.png"}`
+
+### 🧑 User — 2026-11-17T10:23:37.716Z
+
+> ↩︎ result: ok
+> NEW v3
+> efa-bfda-db0784968866/scratchpad/mvH/move_00.png detail  5.18  sat 0.710  pink 0.129  cyan 0.581  glint 0.0780  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvH/move_04.png detail  2.33  sat 0.774  pink 0.127  cyan 0.696  glint 0.0633  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvH/move_08.png detail  2.39  sat 0.745  pink 0.118  cyan 0.628  glint 0.0243  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvH/move_12.png detail  3.27  sat 0.741  pink 0.113  cyan 0.693  glint 0.0402  (222596 px)
+> efa-bfda-db0784968866/scratchpad/mvH/move_17.png detail  2.66  sat 0.804  pink 0.042  cyan 0.842  glint 0.0270  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvH/move_25.png detail  3.11  sat 0.767  pink 0.110  cyan 0.667  glint 0.0197  (224031 px)
+> locked view: OLD (no near) vs NEW v3 (differing px, >10) (53427, 12692)
+
+### 🧑 User — 2026-11-17T10:23:37.757Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:23:50.530Z
+
+> 🔧 **Bash** `{"command": "sed -n 330,400p src/vfx/waterRibbon.ts | grep -n \"sampler2D\\|samplerCube\\|#ifdef\\|#endif\" ; grep -n \"sampler2D\\|samplerCube\" src/vfx/glsl.ts | head", "description": "Count texture samplers active in the water shader"}`
+
+### 🧑 User — 2026-11-17T10:23:50.573Z
+
+> ↩︎ result: 34:#ifdef FLOWMAP05
+> 36:uniform sampler2D uFlowMap;
+> 37:uniform sampler2D uRipple;
+> 39:uniform sampler2D uPano;
+> 42:#endif
+> 53:#ifdef FARW05
+> 55:#endif
+> 57:#ifdef PROJ05
+> 58:uniform sampler2D uPjE;    // exact layer (rgb = approved display colour, a = valid)
+> 59:uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+> 62:uniform sampler2D uPjN;    // near layer, full width (a = coverage)
+> 64:uniform sampler2D uPjT;    // periodic tile (repeat along s)
+> 66:uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
+

@@ -398,7 +398,7 @@ uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
 uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
 uniform vec2 uPjRes;       // render target size (vignette inverse)
 uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
-uniform vec4 uPjNear;      // ?projnear05=1: on, unused, near-layer texels (w, h) — the tile sampler holds the sharp tile T2
+uniform vec4 uPjNear;      // ?projnear05=1: on, near-flare gain, near-layer texels (w, h) — the tile sampler holds the sharp tile T2
 vec4 pjLut(float s) {
   float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
   float i = floor(x);
@@ -420,7 +420,9 @@ vec3 pjTarget(float u, float s, float mE, float mN, out float wE, out float wN) 
   wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam
   // ?projnear05=1: where the near layer (24 texels / unit) would be magnified, the sharp near tile takes over —
   // the same rule the exact layer already follows, so the locked view (nothing magnified) keeps the approved picture
-  if (uPjNear.x > 0.5) wN *= smoothstep(0.3, 0.55, mN);
+  // (only where the exact layer is magnified too: the river the camera has actually approached — nothing changes on the
+  // locked view, where the exact layer is never magnified)
+  if (uPjNear.x > 0.5) wN *= mix(1.0, smoothstep(0.3, 0.55, mN), 1.0 - smoothstep(0.3, 0.55, mE));
   vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
   vec3 lay = mix(t, n.rgb, wN);
   return mix(lay, e.rgb, wE);
@@ -1435,6 +1437,17 @@ void main() {
       float pjFd = pjF * (1.0 - wEx);              // the exact layer already carries the approved haze
       lin = (lin * (1.0 - pjFd) + fogColor * pjFd - fogColor * pjF) / max(1.0 - pjF, 0.05);
       #endif
+      if (uPjNear.x > 0.5) {
+        // ?projnear05=1: the approved near water is strewn with white 4-point flares, twinkling stars and lens flares
+        // (≈ 8–12 big flares below Benny); the sharp tile comes from the stretch just past them, so on the tile — and
+        // only where the near layer would be magnified (the approached river) — they are added back, carried by the
+        // current (the 05 flare set the default water was tuned with against the approved picture)
+        float wT = (1.0 - wNx) * (1.0 - wEx) * (1.0 - smoothstep(0.3, 0.55, mN)) * (1.0 - smoothstep(0.3, 0.55, mE));
+        // a few big flares (not a field of small stars: those read as snow on the sharp tile)
+        float gB = flowGlint(vec2(lat * 1.3, v5 * 1.1 + 0.5 + 1.3 * sin(lat * 4.1 + 0.6)), 0.45, 38.0, 4.5, 0.45, uTime + 2.7);
+        float gL = lensFlare(vec2(lat * 1.8, v5 * 1.6 + 1.1 * sin(lat * 3.3 + 1.0)), 0.45, 120.0, 7.0, uTime);
+        lin += (vec3(1.9, 2.1, 2.3) * gB * 1.2 + mix(vec3(0.3, 1.3, 2.1), vec3(2.3, 2.5, 2.6), smoothstep(0.55, 1.0, gL)) * gL * 1.2) * wT * uPjNear.y;
+      }
       col = mix(col, lin, pjK);
     }
   }
@@ -1661,7 +1674,7 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   // approved crisp band just ahead of Benny, mirrored along s) replaces the soft tile in the same sampler, and takes over
   // wherever the near layer would be magnified — the riding view no longer melts into a pastel blur.
   const NEAR = qs.get('projnear05') === '1';
-  u.uPjNear = { value: new THREE.Vector4(0, 0, 512, 960) };
+  u.uPjNear = { value: new THREE.Vector4(0, qn('projglint05', 1), 512, 960) };      // y: near-flare gain (`projglint05`)
   u.uPjFlow2 = { value: new THREE.Vector4(0, 2, 4.8, THREE.MathUtils.clamp(qn('projflowmix05', 0.5), 0, 1)) };
   u.uPjPost = { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) };
   u.uPjRes = { value: new THREE.Vector2(864, 1536) };
@@ -1700,7 +1713,7 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
     (u.uPjTS.value as THREE.Vector2).set(lut.T.a, lut.T.L);
     const ds = u.uPjDS.value as THREE.Vector4;
     ds.x = lut.D.u1 - lut.D.u0; ds.y = lut.D.s1 - lut.D.s0;
-    (u.uPjNear.value as THREE.Vector4).set(0, 0, N.image.width, N.image.height);
+    (u.uPjNear.value as THREE.Vector4).set(0, (u.uPjNear.value as THREE.Vector4).y, N.image.width, N.image.height);
   }).then(() => {
     if (!NEAR) return undefined;
     return Promise.all([

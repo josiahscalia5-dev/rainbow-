@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "1571ca60988289659dabec522f787e7f6c99080b06274f9b0b2449d4356b7171"
+   "sha256": "79f759653c604deb9a6aafcc9a00cab3e02ea5269d8f2aa3b30c5e6adb97752a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7363,8 +7363,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 99840,
-   "sha256": "dfc02f249cc19173abec1925cd6520f9a7e4f11d43d87b4d670d3045a5207e4b"
+   "bytes": 101276,
+   "sha256": "6a7ad2927d4a4873eafd844ad7802e9c43e7ac5b55bcc916d16939d7cc2daa60"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -7555,6 +7555,11 @@
    "path": "tools/proj05/near_bake.py",
    "bytes": 8429,
    "sha256": "48eba044495c58bfade27d87911d92de7727111c8752a587581a03116e9585d2"
+  },
+  {
+   "path": "tools/proj05/near_water_stats.py",
+   "bytes": 2907,
+   "sha256": "b3eed1ac5892ea4da25d4f99951d183419a567788848b4a6bb8548f17e8a10cb"
   },
   {
    "path": "tools/proj05/residual.py",
