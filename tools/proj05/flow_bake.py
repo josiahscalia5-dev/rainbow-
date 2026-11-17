@@ -8,21 +8,18 @@ straight down the river (which doubles the pink ribbons, the foam banks and the 
 Method: structure tensor of luminance + red (pink vs cyan) on an isotropic resampling (PX px per world unit), the
 streak direction = eigenvector of the smaller eigenvalue; slopes are averaged with coherence weights (normalised
 convolution, sigma SMOOTH u) so flat or lumpy areas inherit the direction of the streaks around them.
-usage: python3 -I tools/proj05/flow_bake.py <assets/textures/water05> [half_width_u=4.8] [--debug=DIR]"""
+usage: python3 -I tools/proj05/flow_bake.py <assets/textures/water05> [half_width_u=4.8] [--debug=DIR]
+(importable: flow_of / save are reused by tools/proj05/near_bake.py)"""
 import json, os, sys
 import numpy as np, cv2
 from PIL import Image
 from scipy.ndimage import gaussian_filter, binary_opening, binary_dilation
 
-pos = [a for a in sys.argv[1:] if not a.startswith("--")]
-dbg = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--debug=")), None)
-A = pos[0]
-HW = float(pos[1]) if len(pos) > 1 else 4.8          # river half width (world units) ≈ course.widthAt(05) / 2
+HW = 4.8                                              # river half width (world units) ≈ course.widthAt(05) / 2
 PX = 24.0                                             # isotropic working resolution, px per world unit
 SCALE = 2.0                                           # R = 0.5 + m * SCALE  (|m| <= 0.25 u per s unit)
 SMOOTH = 0.9                                          # world units
 OUT_W = 128
-lut = json.load(open(os.path.join(A, "proj05_lut.json")))
 
 
 def flow_of(rgb, cov, length_u, wrap):
@@ -71,13 +68,13 @@ def flow_of(rgb, cov, length_u, wrap):
     return m, mask, np.clip(cv, 0, 1), img
 
 
-def save(name, m, mask, coh, out_h):
+def save(A, name, m, mask, coh, out_h):
     enc = np.stack([np.clip(0.5 + m * SCALE, 0, 1), mask, np.clip(coh, 0, 1)], -1).astype(np.float32)
     enc = cv2.resize(enc, (OUT_W, out_h), interpolation=cv2.INTER_AREA)
     Image.fromarray(np.clip(enc * 255 + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(A, name))
 
 
-def debug(tag, img, m, mask):
+def debug(dbg, tag, img, m, mask):
     if not dbg:
         return
     os.makedirs(dbg, exist_ok=True)
@@ -93,18 +90,30 @@ def debug(tag, img, m, mask):
     Image.fromarray(v[::-1]).save(os.path.join(dbg, f"flow_{tag}.png"))            # far end on top, as on screen
 
 
-rep = {}
-N = np.asarray(Image.open(os.path.join(A, "proj05_N.png")).convert("RGBA")).astype(np.float32)
-m, mask, coh, img = flow_of(N[..., :3], N[..., 3] / 255.0, lut["N"]["s1"] - lut["N"]["s0"], wrap=False)
-save("proj05_WN.png", m, mask, coh, 240)
-debug("N", img, m, mask)
-rep["N"] = dict(mean_abs_slope_world=round(float(np.abs(m * HW)[(mask > 0.5) & (coh > 0.5)].mean()), 3), flow_area_of_covered=round(float((mask > 0.5)[coh > 0.5].mean()), 3))
-T = np.asarray(Image.open(os.path.join(A, "proj05_T.png")).convert("RGB")).astype(np.float32)
-m, mask, coh, img = flow_of(T, np.ones(T.shape[:2], np.float32), lut["T"]["L"], wrap=True)
-save("proj05_WT.png", m, mask, coh, 84)
-debug("T", img, m, mask)
-rep["T"] = dict(mean_abs_slope_world=round(float(np.abs(m * HW)[mask > 0.5].mean()), 3), flow_area=round(float((mask > 0.5).mean()), 3))
-meta = dict(scale=SCALE, half_width_u=HW, note="R = 0.5 + m * scale (m = du/ds along the approved streaks), G = flow mask, B = layer coverage", **rep)
-with open(os.path.join(A, "proj05_flow.json"), "w") as f:
-    json.dump(meta, f, indent=1)
-print(json.dumps(meta))
+def main():
+    global HW
+    pos = [a for a in sys.argv[1:] if not a.startswith("--")]
+    dbg = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--debug=")), None)
+    A = pos[0]
+    if len(pos) > 1:
+        HW = float(pos[1])
+    lut = json.load(open(os.path.join(A, "proj05_lut.json")))
+    rep = {}
+    N = np.asarray(Image.open(os.path.join(A, "proj05_N.png")).convert("RGBA")).astype(np.float32)
+    m, mask, coh, img = flow_of(N[..., :3], N[..., 3] / 255.0, lut["N"]["s1"] - lut["N"]["s0"], wrap=False)
+    save(A, "proj05_WN.png", m, mask, coh, 240)
+    debug(dbg, "N", img, m, mask)
+    rep["N"] = dict(mean_abs_slope_world=round(float(np.abs(m * HW)[(mask > 0.5) & (coh > 0.5)].mean()), 3), flow_area_of_covered=round(float((mask > 0.5)[coh > 0.5].mean()), 3))
+    T = np.asarray(Image.open(os.path.join(A, "proj05_T.png")).convert("RGB")).astype(np.float32)
+    m, mask, coh, img = flow_of(T, np.ones(T.shape[:2], np.float32), lut["T"]["L"], wrap=True)
+    save(A, "proj05_WT.png", m, mask, coh, 84)
+    debug(dbg, "T", img, m, mask)
+    rep["T"] = dict(mean_abs_slope_world=round(float(np.abs(m * HW)[mask > 0.5].mean()), 3), flow_area=round(float((mask > 0.5).mean()), 3))
+    meta = dict(scale=SCALE, half_width_u=HW, note="R = 0.5 + m * scale (m = du/ds along the approved streaks), G = flow mask, B = layer coverage", **rep)
+    with open(os.path.join(A, "proj05_flow.json"), "w") as f:
+        json.dump(meta, f, indent=1)
+    print(json.dumps(meta))
+
+
+if __name__ == "__main__":
+    main()

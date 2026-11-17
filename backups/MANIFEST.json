@@ -452,6 +452,11 @@
    "sha256": "88c1c11eba2ab561e87b65cd7dd72dbe69207c0f754a03b589071754d296770a"
   },
   {
+   "path": "assets/textures/water05/proj05_T2.png",
+   "bytes": 1980413,
+   "sha256": "afc94d9699978778c3851c6eff7bb42d56a624a1a7ad419408de5289932be80a"
+  },
+  {
    "path": "assets/textures/water05/proj05_WN.png",
    "bytes": 16503,
    "sha256": "8797a53143be9a389c761c787b6e4b05b5e7485b9ba1c4f220d0ac3c33a48ffa"
@@ -462,6 +467,11 @@
    "sha256": "deace5099a807c8a266e1e2e1ca7ad96464fa8334ef18a4493c5d094dfa30a39"
   },
   {
+   "path": "assets/textures/water05/proj05_WT2.png",
+   "bytes": 4196,
+   "sha256": "f3836d1b257efaf0b23efc5f3ad8c2b8620093f740d51e8650f2d608cbd55611"
+  },
+  {
    "path": "assets/textures/water05/proj05_flow.json",
    "bytes": 288,
    "sha256": "b329550db97fe8167f8d06f9837723c03dfb19de4fe27c6e6f98dbc3ffab6a3e"
@@ -470,6 +480,11 @@
    "path": "assets/textures/water05/proj05_lut.json",
    "bytes": 27503,
    "sha256": "a91d9e565b409f2fb7a74c4d6e8ec7b3826992906f610f331fb23cec08851c91"
+  },
+  {
+   "path": "assets/textures/water05/proj05_near.json",
+   "bytes": 365,
+   "sha256": "fc6d517b5eee991e8ef32bbd2ff62aaded72198acd9447952ed80edab6f144dc"
   },
   {
    "path": "backups/AGENTS_STATUS.json",
@@ -494,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "aae4012517fb389d2c2b682c37952663724faecccad45c5543a414033f0a666b"
+   "sha256": "8d9ae87b228468fe21e3fac09bedb962b78a33ec7d1e5d34217e231f2d15e5d2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7503,8 +7518,8 @@
   },
   {
    "path": "tools/proj05/flow_bake.py",
-   "bytes": 6657,
-   "sha256": "737cb23a7c1d85a6221aebaa811684d8bc391b4f927a77794abe448152818636"
+   "bytes": 6941,
+   "sha256": "dea2ef34577665d052cc713a3089e10f1ec574e17b11145b5d08a8574cd492b0"
   },
   {
    "path": "tools/proj05/frame_bake.py",
@@ -7535,6 +7550,11 @@
    "path": "tools/proj05/match_metrics.py",
    "bytes": 2001,
    "sha256": "8f2530ac64a0f692ec495382b769784cf5ab6f0986145b0643018274b2205dcc"
+  },
+  {
+   "path": "tools/proj05/near_bake.py",
+   "bytes": 5705,
+   "sha256": "3360089083f6c732593e79f9bf653256421c31583224626dd0bf505ffe933ea6"
   },
   {
    "path": "tools/proj05/residual.py",
