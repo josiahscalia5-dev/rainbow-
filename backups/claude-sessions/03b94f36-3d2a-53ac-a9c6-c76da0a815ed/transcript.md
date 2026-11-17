@@ -2471,3 +2471,51 @@ No secrets in the notes, and all 13 approved references are unchanged. Saving to
 
 > 🔧 **Bash** `{"command": "timeout 400 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Image-Blaster Screen 08 test: setup + readiness record, analysis, plan (no paid generation run)\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"'; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; git status --porcelain | wc -l", "description": "Commit the test record and verify the push", "timeout": 450000}`
 
+### 🧑 User — 2026-11-17T12:09:10.085Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "cdc1a4e247b9d968ff93b3bbb3c07d6b7a645644",
+> local  cdc1a4e247b9d968ff93b3bbb3c07d6b7a645644
+> remote cdc1a4e247b9d968ff93b3bbb3c07d6b7a645644
+> 0
+
+### 🤖 Claude — 2026-11-17T12:09:29.858Z
+
+Image-Blaster is installed and ready in a separate folder, and both keys are saved securely and verified. **Nothing paid has run** — the paid steps wait for your OK.
+
+**Where things stand**
+- **Separate folder:** Image-Blaster is in `/home/user/neilsonnn/image-blaster`, outside your game. Your game wasn't touched. Your Screen 08 picture was copied in and is byte-identical to the original, which is unchanged.
+- **Tools:** Node 22 and bun were already installed. The 3D viewer installs, starts at `http://localhost:5173/`, and passes all 13 of its tests.
+- **Free scene description:** I wrote it in Image-Blaster's format; it becomes the instructions sent to World Labs.
+- **Saved to GitHub:** the plan, prompts and test results are in `qa/imageblaster/08/NOTES.md` (commit `cdc1a4e`). The Image-Blaster folder itself isn't backed up, so the notes include how to rebuild it.
+
+**What was blocking it, and how I fixed it**
+- **The blocker:** this cloud environment's network blocked every World Labs and fal.ai address.
+- **Download addresses:** with your approval I allowed the three hosts the results come from.
+- **Keys:** you saved a World Labs key and a fal.ai key through the secure form. They're not in chat, any file or GitHub; the `.env` file holds placeholders only.
+- **Both keys work (free checks):** World Labs reports **7,000 credits**, and fal.ai accepted its key.
+- **Only on this Claude account:** these settings belong to this account's `rainbow-` environment. On your new account you'd repeat the two key forms and the three hosts (a few minutes; the notes list them).
+
+**Steps that need your approval**
+
+| Step | What happens | Cost |
+|---|---|---|
+| 1 · Environment-only picture | fal.ai's image editor makes a copy of your Screen 08 without the top HUD, title banner, Benny, coins and bubbles, kept at your 9:16 portrait shape. I show you approved vs edited copy full-size first. | fal.ai, 1 image edit. I couldn't open fal.ai's price page from here; check it at https://fal.ai/models/fal-ai/nano-banana-2/edit before approving (usually a few cents — unverified). |
+| 2 · Marble 3D world | World Labs builds the 3D chamber from the edited copy (`marble-1.1`, about 5 minutes). | About **1,580 credits** — what this model actually charged on 2026-11-16 per your ledger, ≈ US$1.26. A rough draft would be 230 credits but needs a one-line change. |
+| 3 · Compare | Render the world from the approved camera view, then show approved / edited copy / Marble as separate full-size pictures with similarity numbers. Save the files in `qa/imageblaster/08/`. | Free |
+| 4 · Optional props | Separate 3D models of the towel, platform, washer door and spout fixture. | fal.ai, per object (price unverified — I couldn't open the page); I'll ask first. |
+
+The edited copy in step 1 is redrawn by AI, so it could alter details like the rings or the door. If it does, we reject it rather than use it.
+
+**What you'll get: real 3D models vs splats**
+- **Splats (`.spz`):** these carry the actual look — purple metal, gold rings, door, towel, water, foam, lighting. They look best from your approved camera view and worse as you move away, and hidden areas are invented. They can't be edited like 3D models, but they can be displayed in Three.js.
+- **Real 3D models:**
+  - a rough, untextured model of the whole room (`.glb`), good for layout and scale in Blender but not for looks
+  - if you approve step 4, textured models of single props
+- **360° panorama:** usable as a lighting/reflection backdrop.
+
+Based on your earlier Screen 05 Marble test, expect the right perspective from the original view, not an exact copy of the picture. It's a reference and a source of parts.
+
+**Should I run step 1 (the environment-only picture)?** I'll show it to you before step 2 spends any World Labs credits. Or tell me to run steps 1 and 2 together.
+
