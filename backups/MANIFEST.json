@@ -674,7 +674,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12158,
-   "sha256": "373342d4b173f20c454f9a3767f0685840383aa48cd4ab59d0532c951f6d1dc2"
+   "sha256": "b8d7622f1c719321161fdb73e6b1c0acaf321bc165299b837dc3fb7da1581da7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -750,6 +750,16 @@
    "path": "builds/rainbow-debug.apk",
    "bytes": 7339491,
    "sha256": "dca8d754b769bad4b8d92e89fcdfc73eaff0e4c55f5cca8ca31c7ef4eaad9b25"
+  },
+  {
+   "path": "builds/rainbow-full-game-match05-2026-11-17.md",
+   "bytes": 1257,
+   "sha256": "0d68e1784288e70ce5b6a0e5fc4e1080835f43aabc5863a3c742b99c26de1c63"
+  },
+  {
+   "path": "builds/rainbow-full-game-match05-2026-11-17.mp4",
+   "bytes": 76574637,
+   "sha256": "70d02de5fb8b79c730ba97eeaf1f26e6756c939ac87c94ab6cb151a2dafe89fb"
   },
   {
    "path": "capacitor.config.ts",
@@ -11495,6 +11505,16 @@
    "path": "tools/splash05/work/wake_matte.npy",
    "bytes": 10616960,
    "sha256": "43590e82c792ce5f3c08db757b45964f0cadb83c1d42079ef53863242ac9ef6e"
+  },
+  {
+   "path": "tools/video/capture_dist.mjs",
+   "bytes": 2701,
+   "sha256": "ac9442cb6d7eaaf9db604712822c4a60036556721ec9bc2f01fd04ab566d462b"
+  },
+  {
+   "path": "tools/video/record_full.mjs",
+   "bytes": 5210,
+   "sha256": "b18bde01a08ccf411f1fab950e000fd6042dea3840abd73a8f19582cb1fafd9a"
   },
   {
    "path": "tools/water-lab.html",
