@@ -550,3 +550,133 @@ Probed the live game at the 06 checkpoint (Benny, camera, river path). Now traci
 
 > ↩︎ result: (Bash completed with no output)
 
+### 🤖 Claude — 2026-11-17T16:44:43.741Z
+
+Camera solved (Benny's box within ~13 px, coin trail within a few px for most coins). Now checking how the game's river lines up with the painted river.
+
+### 🤖 Claude — 2026-11-17T16:44:44.678Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/overlay_river.png"}`
+
+### 🧑 User — 2026-11-17T16:44:44.865Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:45:44.519Z
+
+> 🔧 **Bash** `{"command": "grep -n \"smoothPolyline\\b\" src/world/course.ts | head -3; grep -n \"zones\\b\\|zones\\.\" src/world/environment.ts | head -20; grep -n \"zones\" src/game/Game.ts | head", "description": "Check zones and smoothing"}`
+
+### 🧑 User — 2026-11-17T16:45:44.567Z
+
+> ↩︎ result: 110: * `u` along the line (0 … L05). It is applied to the route AFTER smoothPolyline, so it is exact (the
+> 343:  smoothPolyline(pts, marks['03'], 2.2, 3);
+> 358:function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+> 31:  zones: Record<'drumA' | 'basin' | 'tubes' | 'chamber', THREE.Group>;
+> 44:  const zones = {
+> 50:  Object.entries(zones).forEach(([k, g]) => { g.name = 'zone_' + k; root.add(g); });
+> 65:  zones.drumA.add(new THREE.Mesh(drumGeo, drumMat));
+> 75:  zones.drumA.add(new THREE.Mesh(backGeo, backMat));
+> 84:  zones.drumA.add(new THREE.Mesh(frontGeo, perforatedMetal({ color: '#f15ccd', slot: 0, repeatU: 8, repeatV: 8, holeSize: 0.0, side: THREE.DoubleSide, streaks: 0, metalness: 0.85, roughness: 0.18 })));
+> 88:  zones.drumA.add(ringA);
+> 91:  zones.drumA.add(ringA2);
+> 98:    zones.drumA.add(lifter);
+> 110:  zones.drumA.add(doorA);
+> 116:  zones.drumA.add(anchorA);
+> 120:  zones.drumA.add(sock, shirt);
+> 124:  zones.drumA.add(drumTowel.mesh);
+> 135:  zones.drumA.add(chute);
+> 136:  zones.drumA.add(buildRings(chutePath, sChute0 + 1.5, sChute1 - 1, 3.2, goldMat, { tube: 0.09 }));
+> 149:  zones.basin.add(new THREE.Mesh(funnelGeo, perforatedMetal({ color: '#e04fd0', slo …[+540 chars]
+
+### 🤖 Claude — 2026-11-17T16:45:46.393Z
+
+> 🔧 **Bash** `{"command": "sed -n 150,175p src/game/Game.ts; grep -n \"zones.tubes.add\\|06\\|arch\" src/world/environment.ts | head -40", "description": "Inspect zone ranges and 06 environment parts"}`
+
+### 🧑 User — 2026-11-17T16:45:46.434Z
+
+> ↩︎ result: if (st.stage === id) return;
+>     st.stage = id;
+>     hud.setStage(id);
+>     updateZones();
+>   };
+> 
+>   const zoneRanges: Record<keyof typeof env.zones, [StageId, StageId]> = {
+>     drumA: ['01', '02'],
+>     basin: ['02', '05'],
+>     tubes: ['03', '09'],
+>     chamber: ['07', '11'],
+>   };
+>   const updateZones = () => {
+>     const i = STAGE_ORDER.indexOf(st.stage);
+>     for (const [k, [a, b]] of Object.entries(zoneRanges)) {
+>       env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);
+>     }
+>     if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
+>     const inDrum = i <= 1;
+>     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
+>   };
+> 
+>   // girl placement helpers (she lives in laundry-room local frames)
+>   const placeGirl = (room: 'A' | 'C', local: THREE.Vector3, yaw: number) => {
+>     const anchor = room === 'A' ? env.roomA.anchor : env.roomC.anchor;
+>     if (girl.root.parent !== anchor) anchor.add(girl.root);
+> 4: * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).
+> 188:  zones.tubes.add(goldPipe);
+> 189:  zones.tubes.add(buildRings(gol …[+3771 chars]
+
+### 🤖 Claude — 2026-11-17T16:47:12.937Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match06/fit_river06.py <<'EOF'\n\"\"\"Screen 06 (?match06=1): joint fit of the approved camera AND a 06 river-path correction so the game's river runs\nalong the PAINTED river (Screen 08 method: river path following the painted water).\nPath correction (course.ts, 06 segment only, seg parameter t in [0,1]): dx(t), dy(t) = sin^2(pi t) * (c0 + c1 cos(pi t)\n+ c2 cos(2 pi t)) -> value AND slope are 0 at both ends, so the 05->06 join and the whole 07 / plunge / 08 route stay\nexactly where they are. Targets on references/06_crest_the_rinse_arch.png (864x1536):\n  * Benny's …[+5676 chars]`
+
+### 🧑 User — 2026-11-17T16:48:45.303Z
+
+> ↩︎ result: {"off06": [1.1835152906392226, 2.6385388491880364, 5.631504492343863], "fwd": [-0.19200648727379668, -0.19744617375872486, -0.9613264363954716], "path06": {"dx": [0.5603180312893996, 1.1705554894576808, -0.1343603699547425], "dy": [-2.2041289924375387, -0.9951125059234152, 2.8374888251944927]}, "err": 841.8796668823643, "box": [198.05793712620996, 737.7462121194484, 642.7057821760843, 1164.055022023954], "coin_chain_px": 73.65288166925613, "crest_px": 0.0, "vp": [658.5485886559213, 633.6049311001636]}
+> 
+> real	1m32.273s
+> user	1m19.190s
+> sys	0m12.258s
+
+### 🤖 Claude — 2026-11-17T16:48:54.793Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad; cat > tools/match06/overlay06.py <<'EOF'\n\"\"\"debug overlay: the game river (centre + edges, corrected by path06) projected from the locked 06 camera onto the\napproved picture. usage: python3 -I tools/match06/overlay06.py <probe06.json> <cam06.json> <out.png> [probe already corrected: 1]\"\"\"\nimport json, sys, math\nimport numpy as np, cv2\nd = json.load(open(sys.argv[1])); cam = json.load(open(sys.argv[2])); applied = len(sys.argv) > 4\nW, H = cam[\"size\"]; t = math.tan(math.radians(cam[\"f …[+1213 chars]`
+
+### 🧑 User — 2026-11-17T16:48:55.566Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:48:57.402Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/overlay_r1.png"}`
+
+### 🧑 User — 2026-11-17T16:48:57.593Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:49:09.928Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^import\\|flag05\" src/world/course.ts | head; mkdir -p assets/textures/match06 && S=/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad && python3 -I -c \"\nimport json;c=json.load(open('$S/cam06_r1.json'));json.dump({'note':'Screen 06 river correction under ?match06=1 (tools/match06/fit_river06.py; course.ts 06 segment: dx,dy = sin^2(pi t)(c0 + c1 cos(pi t) + c2 cos(2 pi t)))','dx':c['path06']['dx'],'dy':c['path06']['dy']},open('assets/textures/match06/path06.json','w'),indent=1)\"; cat assets/textures/match06/path06.json", "description":  …[+42 chars]`
+
+### 🧑 User — 2026-11-17T16:49:10.045Z
+
+> ↩︎ result: 14:import * as THREE from 'three';
+> 15:import { flag05 } from '../vfx/waterRibbon';
+> 16:import river08 from '../../assets/textures/match08/river08.json';
+> 320:  const m08 = flag05('match08') || flag05('matchall');
+> {
+>  "note": "Screen 06 river correction under ?match06=1 (tools/match06/fit_river06.py; course.ts 06 segment: dx,dy = sin^2(pi t)(c0 + c1 cos(pi t) + c2 cos(2 pi t)))",
+>  "dx": [
+>   0.5603180312893996,
+>   1.1705554894576808,
+>   -0.1343603699547425
+>  ],
+>  "dy": [
+>   -2.2041289924375387,
+>   -0.9951125059234152,
+>   2.8374888251944927
+>  ]
+> }
+
+### 🤖 Claude — 2026-11-17T16:49:19.052Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\ns=s.replace(\"import river08 from '../../assets/textures/match08/river08.json';\",\"import river08 from '../../assets/textures/match08/river08.json';\\nimport path06 from '../../assets/textures/match06/path06.json';\",1)\nold='''  const s6 = pts[pts.length - 1].clone();\n  seg(34, (t) =>\n    V(\n      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),\n      s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),\n      s6.z - 46 * t,\n     …[+1386 chars]`
+

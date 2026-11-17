@@ -14,6 +14,7 @@
 import * as THREE from 'three';
 import { flag05 } from '../vfx/waterRibbon';
 import river08 from '../../assets/textures/match08/river08.json';
+import path06 from '../../assets/textures/match06/path06.json';
 
 export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
 export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
@@ -271,10 +272,15 @@ function buildRoute(): RouteData {
   mark('06');
   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
   const s6 = pts[pts.length - 1].clone();
+  // `?match06=1` (src/world/match06.ts, qa/match/06/NOTES.md): the 06 river follows the APPROVED picture's painted river
+  // (correction fitted with the locked 06 camera, assets/textures/match06/path06.json); value and slope are 0 at both
+  // ends, so the 05->06 join and the whole 07 / plunge / 08 route are unchanged. Off: d06 = 0 (default route).
+  const m06 = flag05('match06') || flag05('matchall');
+  const d06 = (c: number[], t: number) => (m06 ? Math.sin(Math.PI * t) ** 2 * (c[0] + c[1] * Math.cos(Math.PI * t) + c[2] * Math.cos(2 * Math.PI * t)) : 0);
   seg(34, (t) =>
     V(
-      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),
-      s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),
+      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t) + d06(path06.dx, t),
+      s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t) + d06(path06.dy, t),
       s6.z - 46 * t,
     ),
   );

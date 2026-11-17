@@ -1,0 +1,13 @@
+{
+ "note": "Screen 06 river correction under ?match06=1 (tools/match06/fit_river06.py; course.ts 06 segment: dx,dy = sin^2(pi t)(c0 + c1 cos(pi t) + c2 cos(2 pi t)))",
+ "dx": [
+  0.5603180312893996,
+  1.1705554894576808,
+  -0.1343603699547425
+ ],
+ "dy": [
+  -2.2041289924375387,
+  -0.9951125059234152,
+  2.8374888251944927
+ ]
+}

@@ -437,6 +437,11 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/match06/path06.json",
+   "bytes": 327,
+   "sha256": "9c23143eb37b8ae1f61c9673e51749033ab213c6f4e739f46594080a5032bce4"
+  },
+  {
    "path": "assets/textures/match08/cam08_locked.json",
    "bytes": 684,
    "sha256": "f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237"
@@ -609,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10600,
-   "sha256": "59b04215a6a39aa688197724f6dd449d27acae75d9260938b58f313e2a224029"
+   "sha256": "60b0c75f880a9d8e2f837bdf49093ed91c931f53a6d5098583632fb89d2ce53e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -8068,8 +8073,8 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 30798,
-   "sha256": "42c17a6b293c4be17a78fec9d5dea064d3575c600a7da34a0e06014eb0380620"
+   "bytes": 31467,
+   "sha256": "9cb7ed1aa8c2f1cf9d65a255cdea659fa51cce25aaa1053e22e8055aa0eee3d4"
   },
   {
    "path": "src/world/environment.ts",
@@ -8235,6 +8240,16 @@
    "path": "tools/match/ring_fit.py",
    "bytes": 2980,
    "sha256": "2ea5c23a56f3e1405fe102fe5fae6bbeea6e3f2c7c584501a3306a61c613e8c1"
+  },
+  {
+   "path": "tools/match06/fit_river06.py",
+   "bytes": 5784,
+   "sha256": "7980e12ee237e17d2089ae95a6e2dc67d96623b3abcbf95c82f9a16612b30465"
+  },
+  {
+   "path": "tools/match06/overlay06.py",
+   "bytes": 1460,
+   "sha256": "9e87a3a90df222a0b8f4e65b37cde6cd58e239f17e85333a1e50848ba75589c3"
   },
   {
    "path": "tools/match06/probe06.mjs",
