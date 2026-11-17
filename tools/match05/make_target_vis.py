@@ -104,7 +104,25 @@ def pyr_blend(a_, b_, m_, levels=6):
 from scipy.ndimage import binary_erosion
 inner = binary_erosion(holeC, iterations=5)
 mask = np.clip(gaussian_filter(inner.astype(float), 3.0) * 1.15, 0, 1).astype(np.float32)
-blend = pyr_blend(appr.astype(np.float32), fill.astype(np.float32), mask)
+# coinfill05 (milestone 2, env TGTFILL05=1): the approved side of the pyramid blend carried the OCCLUDERS' colours
+# (yellow coins, pink Benny) into the coarse levels of every small hole -> dull green-teal discs where the coins sit.
+# With TGTFILL05=1 the approved side already holds the fill inside the hole, so the blend only harmonises the rim.
+# TGTFILL05=2: the approved side inside the hole = the visible approved water around it spread in by normalised
+# convolution (no occluder colour, smooth low frequencies continuous with the rim); the texture still comes from the fill.
+_tf = os.environ.get("TGTFILL05")
+if _tf == "2":
+    _vis = (~binary_dilation(hole, iterations=2)).astype(np.float32)
+    _num = np.stack([gaussian_filter(appr[..., i].astype(np.float32) * _vis, 12) for i in range(3)], -1)
+    _den = gaussian_filter(_vis, 12)[..., None]
+    for _big in (40, 120):
+        _lo = _den[..., 0] < 0.05
+        _n2 = np.stack([gaussian_filter(appr[..., i].astype(np.float32) * _vis, _big) for i in range(3)], -1)
+        _d2 = gaussian_filter(_vis, _big)[..., None]
+        _num[_lo] = _n2[_lo]; _den[_lo] = _d2[_lo]
+    _aside = np.where(holeC[..., None], _num / np.maximum(_den, 1e-4), appr)
+else:
+    _aside = np.where(holeC[..., None], fill, appr) if _tf == "1" else appr
+blend = pyr_blend(_aside.astype(np.float32), fill.astype(np.float32), mask)
 tgt = np.where(holeC[..., None], np.clip(blend, 0, 255), appr).astype(np.uint8)
 
 Image.fromarray(tgt).save(os.path.join(out, "target_05.png"))
