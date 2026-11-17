@@ -146,3 +146,15 @@ node scripts/capture.mjs 08 --q=match08=1 --out=<dir>; node tools/match08/motion
 * Still to do before asking for approval: user's gameplay-video findings (camera obstructions by washer parts/foam,
   34–37 s gold structure + dark region at a transition, 38–40 s whether the 08 camera engages) — needs the recording
   (not received in this session); optional re-bake of the maps from the 08 picture with the locked 08 camera.
+
+## BENNY CHECK ROUND (2026-11-17 ~15:20 UTC)
+* Moving (real sim, ported Benny): `motion/montage_ported_benny.png`, `*_ported_benny.png` — beanie knit, pom, star and fur
+  stay on the 3D model while swimming / steering (maps are baked into his UVs, not projected).
+* Screens 04–07 with `?match08=1` vs default (`other_screens/`): the scenery is unchanged; the only changed regions are
+  Benny + his wake (new beanie/pom/fur, damped swim roll) and a few coin-sized spots (coin pose). 04 3.5 %, 05 8.0 %,
+  06 14.7 %, 07 10.3 % of pixels — the largest connected change on every screen is Benny's own box.
+* Re-bake of the maps from the 08 picture: NOT done this round (needs line B's bake pipeline + calibration renders at the
+  locked 08 camera; plan in BENNY ROUND → NEXT). Current maps = line B's, baked from the approved 05 Benny.
+* APK with the ported Benny: `builds/rainbow-debug-match08-2026-11-17c-benny.apk` (earlier `…17.apk`, `…17b.apk` kept).
+  Not phone-tested. Gameplay 8/8, 91 coins / 2,240 (previous round, code since then unchanged except docs).
+* Gameplay video from the user: not received in this session yet.
