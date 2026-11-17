@@ -2371,3 +2371,13 @@ Fix the key path (report nests classes).
 >         CURRENT: approved [118, 10, 234] game [177, 83, 222] | overlap 4419 px: 39.5 / 25.8% approved [102, 7, 232] game [127, 29, 233]
 >         NEW: approved [118, 10, 234] game [175, 75, 226] | overlap 4419 px: 37.64 / 29.1% approved [102,  …[+2199 chars]
 
+### 🤖 Claude — 2026-11-17T16:00:32.709Z
+
+> 🔧 **Bash** `{"command": "python3 -I /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/pxdiff.py qa/match/08/benny08/CURRENT_08.png qa/match/08/benny08/NEW_08.png && python3 -I tools/qa/screen_match.py references/08_final_spin_chamber.png qa/match/08/benny08/CURRENT_08.png --label=CURRENT --json=qa/match/08/benny08/screen_match_CURRENT.json && python3 -I tools/qa/screen_match.py references/08_final_spin_chamber.png qa/match/08/benny08/NEW_08.png --label=NEW --json=qa/match/08/benny08/screen_match_NEW.json", "description": "Locate changed pixels and run screen_match"}`
+
+### 🧑 User — 2026-11-17T16:00:35.517Z
+
+> ↩︎ result: qa/match/08/benny08/CURRENT_08.png vs qa/match/08/benny08/NEW_08.png: 57353 px differ, bbox x98-765 y108-1231, outside HUD-text rows 100-140: 55073
+> CURRENT FULL |d|  14.4 <=20 0.833 SSIM 0.818 | BELOWHUD |d|   9.8 <=20 0.901 | LAYOUT |d|   5.5 <=20 0.918 | mean RGB approved [168.4, 108.6, 170.2] game [168.7, 109.4, 169.0]
+> NEW    FULL |d|  14.1 <=20 0.843 SSIM 0.830 | BELOWHUD |d|   9.4 <=20 0.912 | LAYOUT |d|   5.2 <=20 0.922 | mean RGB approved [168.4, 108.6, 170.2] game [168.7, 108.9, 168.9]
+

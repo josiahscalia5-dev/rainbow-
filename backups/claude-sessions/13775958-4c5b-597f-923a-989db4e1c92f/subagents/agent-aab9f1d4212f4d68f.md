@@ -2495,3 +2495,11 @@ Now the 08 hold and a 06 aim correction, both only under `camclear`.
 
 > 🔧 **Bash** `{"command": "timeout 300 npx tsc --noEmit && echo tsc-ok", "description": "Type-check after camera changes", "timeout": 320000}`
 
+### 🧑 User — 2026-11-17T16:00:28.921Z
+
+> ↩︎ result: tsc-ok
+
+### 🤖 Claude — 2026-11-17T16:00:38.954Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad; timeout 1200 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=27.5 --t1=32.5 --dt=0.5 --size=180x355 --out=$SP/n06 > $SP/n06.log 2>&1; python3 -I tools/camclear/sheet.py $SP/n06/probe.json $SP/n06.png --cols=11", "description": "Render 06 frames with camclear", "timeout": 1260000}`
+
