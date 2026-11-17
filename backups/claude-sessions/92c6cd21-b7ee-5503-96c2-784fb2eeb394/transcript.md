@@ -1605,3 +1605,119 @@ Correcting the comment: the light actually comes from the viewer's side and abov
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad && cat > $S/pick20.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5281);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\nconst page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\nawait page.goto(`${vite.url}/?qa=1&dpr=1&match07=1`);\nawait page.waitForFunction(() => window.__rainbow?.ready === true, null …[+1776 chars]`
 
+### 🧑 User — 2026-11-17T18:07:56.692Z
+
+> ↩︎ result: [{"x":150,"y":250,"hits":[["Mesh","laundry_room",150.9,"",1],["m07_tube","match07_projection",29.4,"",1],["m07_water","match07_projection",28.8,"",1],["m07_paddle2","match07_projection",11.2,"",1]]},{"x":250,"y":200,"hits":[["Mesh","laundry_room",152.7,"",1],["m07_tube","match07_projection",30,"",1],["m07_water","match07_projection",29.2,"",1],["m07_paddle2","match07_projection",11.2,"",1]]},{"x":300,"y":300,"hits":[["Mesh","laundry_room",157,"",1],["m07_tube","match07_projection",30.7,"",1],["m07_water","match07_projection",30.2,"",1],["m07_paddle2","match07_projection",11.1,"",1]]},{"x":120,"y":330,"hits":[["Mesh","laundry_room",151.8,"",1],["m07_tube","match07_projection",29.4,"",1],["m07_water","match07_projection",29,"",1],["m07_paddle2","match07_projection",11.1,"",1]]},{"x":420,"y":470,"hits":[["Mesh","laundry_room",163.1,"",1],["Mesh","laundry_room",208.9,"",1],["Mesh","laundry_room",163.3,"",1],["m07_tube","match07_projection",31.9,"",1],["m07_water","match07_projection",31.7,"",1],["m07_paddle3","match07_projection",30.5,"",1]]}]
+
+### 🤖 Claude — 2026-11-17T18:08:08.270Z
+
+> 🔧 **Bash** `{"command": "ls node_modules/three/examples/jsm/geometries/ | grep -i round; grep -rn \"examples/jsm\" src --include=*.ts | head -3", "description": "Check RoundedBoxGeometry availability and usage"}`
+
+### 🧑 User — 2026-11-17T18:08:08.319Z
+
+> ↩︎ result: RoundedBoxGeometry.js
+> src/characters/girl/runtime.ts:6:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> src/characters/benny/runtime.ts:6:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> src/world/laundryRoom.ts:7:import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+
+### 🤖 Claude — 2026-11-17T18:08:09.610Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/match07.ts", "offset": 84, "limit": 20}`
+
+### 🧑 User — 2026-11-17T18:08:09.636Z
+
+> ↩︎ result: 84	    float a = atan(vL.y - uTube.y, vL.x - uTube.x);
+> 85	    if (a < -1.5707963) a += 6.2831853;
+> 86	    float v = clamp((a - uTheta.x) / (uTheta.y - uTheta.x), 0.0, 1.0);
+> 87	    float u = fract((-vL.z - uTube.z) / uTube.w);
+> 88	    return texture2D(uTile, vec2(u, v)).rgb;
+> 89	  }
+> 90	  vec3 n = abs(normalize(vN)); n /= max(n.x + n.y + n.z, 1e-4);
+> 91	  vec3 p = vL * uPatchK;
+> 92	  vec3 g = texture2D(uTile, p.zy).rgb * n.x + texture2D(uTile, p.xz).rgb * n.y + texture2D(uTile, p.xy).rgb * n.z;
+> 93	  if (uGoldLit > 0.5) {
+> 94	    vec3 nw = normalize(vN); vec3 vv = normalize(cameraPosition - vW);
+> 95	    if (dot(nw, vv) < 0.0) nw = -nw;
+> 96	    float dif = 0.42 + 0.7 * max(dot(nw, uKey), 0.0);
+> 97	    float spec = pow(max(dot(reflect(-uKey, nw), vv), 0.0), 18.0);
+> 98	    float rim = pow(1.0 - max(dot(nw, vv), 0.0), 3.0);
+> 99	    g = g * dif + vec3(1.0, 0.86, 0.55) * (0.55 * spec + 0.35 * rim);
+> 100	  }
+> 101	  return g;
+> 102	}
+> 103	float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
+
+### 🤖 Claude — 2026-11-17T18:08:20.467Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\nrep=[\n(\"\"\"    float dif = 0.42 + 0.7 * max(dot(nw, uKey), 0.0);\n    float spec = pow(max(dot(reflect(-uKey, nw), vv), 0.0), 18.0);\n    float rim = pow(1.0 - max(dot(nw, vv), 0.0), 3.0);\n    g = g * dif + vec3(1.0, 0.86, 0.55) * (0.55 * spec + 0.35 * rim);\"\"\",\"\"\"    // saturated polished gold (the painted paddles' orange-gold), the patch only adds texture variation\n    float lum = dot(g, vec3(0.299, 0.587, 0.114));\n    float dif = 0.25 + 0.85 * max(dot(nw, uKey), 0.0);\n    float spec = pow(max(dot(reflec …[+1477 chars]`
+
+### 🧑 User — 2026-11-17T18:09:38.621Z
+
+> ↩︎ result: TSC_CLEAN
+
+### 🤖 Claude — 2026-11-17T18:09:40.768Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad/gold20.png"}`
+
+### 🧑 User — 2026-11-17T18:09:40.818Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:09:50.637Z
+
+> 🔧 **Bash** `{"command": "Q=\"match07=1&m07fill=1&m07ang=1&m07gold=1\" && node scripts/capture.mjs 07 --q=\"$Q\" --out=qa/match/07/m2/cap_fag > /dev/null 2>&1; git checkout -- qa/capture_log.json; python3 -I tools/match07/metrics07.py references/07_dive_the_washer_tube.png qa/match/07/07_NEW_match07.png qa/match/07/m2/cap_fag/07.png qa/match/07/m2/metrics_fag.json >/dev/null; python3 -c \"\nimport json;d=json.load(open('qa/match/07/m2/metrics_fag.json'))\nprint({k:(d['BEFORE'][k]['within_20'],d['NEW'][k]['within_20'],d['NEW'][k]['ssim']) for k in d['NEW']})\"; S=/tmp/claude-0/-home-user-rainbow-/92c6cd21-b …[+574 chars]`
+
+### 🧑 User — 2026-11-17T18:10:07.214Z
+
+> ↩︎ result: {'FULL': (0.8006, 0.7989, 0.7876), 'BELOWHUD': (0.8672, 0.8654, 0.8513), 'SCENERY': (0.9554, 0.9543, 0.9475), 'upper_tunnel_rings_paddles_y200_560': (0.9996, 0.9996, 0.9973), 'middle_river_coins_far_rings_y560_900': (0.9035, 0.9019, 0.8917), 'lower_water_foam_y900_1536_noBenny': (0.9564, 0.9549, 0.947), 'BENNY': (0.1661, 0.1582, 0.087)}
+
+### 🤖 Claude — 2026-11-17T18:10:09.284Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad/fag.png"}`
+
+### 🧑 User — 2026-11-17T18:10:09.473Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:10:20.513Z
+
+> 🔧 **Bash** `{"command": "git add src/world/match07.ts qa/match/07/m2 && git commit -q -m \"Screen 07 M2: m07fill (river tile instead of mirrored fill on the water), m07ang (picture only near the approved view direction), m07gold (solid rounded gold paddles) — moving frames + metrics\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCJx6kKaxMCCbLLqta3\" && git push -q origin claude/rainbow-s07-match-c3; git ls-remote origin refs/heads/claude/rainbow-s07-match-c3 | cut -c1-12; git rev-parse --short=12 HEAD", "description": "Commit verified M2 st …[+18 chars]`
+
+### 🧑 User — 2026-11-17T18:10:26.880Z
+
+> ↩︎ result: a5d2b392c4e8
+> a5d2b392c4e8
+
+### 🤖 Claude — 2026-11-17T18:10:28.173Z
+
+Pushed (`a5d2b392`). Now the coin probe (item 3): where the coins land in the approved view vs the painted coins.
+
+### 🤖 Claude — 2026-11-17T18:10:29.973Z
+
+> 🔧 **Bash** `{"command": "node tools/match07/coinprobe07.mjs --out=qa/match/07/m2/coins/probe_m1.json > /dev/null 2>&1; echo $?; python3 -c \"\nimport json;d=json.load(open('qa/match/07/m2/coins/probe_m1.json'))\nprint('painted',d['painted'])\nfor c in d['coins']: print(c['i'],c['s'],c['lat'],c['taken'],c['px'],c['scale'],c['dist'],c['nearestPainted'])\"", "description": "Run the coin probe in the approved 07 view", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T18:10:41.614Z
+
+> ↩︎ result: 0
+> painted [[610, 823], [506, 744], [480, 678], [531, 650], [596, 634], [627, 625], [652, 625], [667, 616]]
+> 47 279.1 0.05 False [614, 810] 0.904 11.96 {'d': 14, 'p': [610, 823]}
+> 48 284.02 -0.08 False [510, 737] 0.84 16.68 {'d': 8, 'p': [506, 744]}
+> 49 292 0.15 False [483, 678] 0.917 24.59 {'d': 3, 'p': [480, 678]}
+> 50 299.04 -0.3 False [533, 652] 0.927 31.37 {'d': 3, 'p': [531, 650]}
+> 51 301.28 0.29 False [598, 636] 0.719 33.02 {'d': 3, 'p': [596, 634]}
+> 52 303.4 -0.05 False [628, 624] 0.49 35 {'d': 1, 'p': [627, 625]}
+> 53 305.58 -0.22 False [653, 622] 0.461 37.03 {'d': 3, 'p': [652, 625]}
+> 54 307.62 0.09 False [668, 613] 0.425 39.04 {'d': 3, 'p': [667, 616]}
+> 55 308.52 -0.28 False [653, 613] 1 39.91 {'d': 12, 'p': [652, 625]}
+> 56 314.06 0.22 False [644, 624] 1 45.62 {'d': 8, 'p': [652, 625]}
+> 57 319.61 0.66 False [643, 680] 1 51.05 {'d': 56, 'p': [652, 625]}
+> 58 325.15 0.94 False [642, 766] 1 55.68 {'d': 65, 'p': [610, 823]}
+> 59 330.7 0.99 False [636, 863] 1 59.36 {'d': 48, 'p': [610, 823]}
+> 60 336.25 0.8 False [626, 954] 1 62.93 {'d': 132, 'p': [610, 823]}
+> 61 341.79 0.41 False [613, 1038] 1 66.68 {'d': 215, 'p': [610, 823]}
+> 62 347.34 -0.08 False [600, 1114] 1 70.63 {'d': 291, 'p': [610, 823]} …[+1968 chars]
+
+### 🤖 Claude — 2026-11-17T18:10:42.135Z
+
+You've hit your 5-hour limit · resets 10:20pm (UTC)
+
