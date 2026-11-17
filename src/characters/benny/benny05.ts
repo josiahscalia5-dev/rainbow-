@@ -137,7 +137,24 @@ export function dampedClips(clips: THREE.AnimationClip[]): THREE.AnimationClip[]
 }
 
 // ------------------------------------------------------------------ baked maps
-const T = (f: string) => new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href;
+/** URL / build-time switch value (`?key=…`, or VITE_RAINBOW_Q05 in packaged builds); null when absent */
+const qv = (key: string): string | null => {
+  try {
+    if (typeof location !== 'undefined') { const v = new URLSearchParams(location.search).get(key); if (v !== null) return v; }
+  } catch {
+    /* no location */
+  }
+  const b: string = (import.meta as unknown as { env?: Record<string, string> }).env?.VITE_RAINBOW_Q05 ?? '';
+  return b ? new URLSearchParams(b).get(key) : null;
+};
+/**
+ * `?bake08=1` (2026-11-17, qa/match/08/benny08/NOTES.md): the maps RE-BAKED FROM THE APPROVED SCREEN 08 picture at the
+ * locked 08 camera (assets/textures/benny08/: texels the 08 picture shows take its colours, every other texel keeps the
+ * benny05 map, feathered seam) replace the benny05 maps. Only while the benny05 look itself is on (`?match08=1` …).
+ */
+export const BAKE08: boolean = BENNY05 && qv('bake08') === '1';
+// two literal paths (not one `${dir}` template): Vite then bundles only these two folders
+const T = (f: string) => (BAKE08 ? new URL(`../../../assets/textures/benny08/${f}`, import.meta.url).href : new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href);
 /** part → baked albedo (sRGB PNG) + colour factor (the map stores albedo / factor so it fits 0..1) + optional normal map */
 export const MAPS05: Record<string, { map: string; scale: number; normal?: string; normalScale?: number }> = {
   fur_body: { map: 'body.png', scale: 1 },
