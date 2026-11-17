@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12576,
-   "sha256": "09241bb3d23b776514660bc614620a059f2815482cf6d6739ab383309b1a596a"
+   "sha256": "7ab0c83504fa58d30382a9b6c546da54d47333a12c4c499756b0ece64e66f4c6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7467,6 +7467,11 @@
    "sha256": "73d091620f3e562a9f7aa320754778f910d9d7c63a33395287b59b2aa61387b4"
   },
   {
+   "path": "qa/recordings/full_playthrough.json",
+   "bytes": 1782,
+   "sha256": "994dd299a8e99c3bd3363f5e4528e517529494dcde96503fe8a893e22231aa81"
+  },
+  {
    "path": "qa/recordings/full_playthrough.mp4",
    "bytes": 36019064,
    "sha256": "b203680ae4e9a1f9ceb551fa0ed4b0950731f4dd77d9126408ab4dd3da8950b7"
@@ -7493,8 +7498,23 @@
   },
   {
    "path": "qa/recordings/screen_05.mp4",
-   "bytes": 3407920,
-   "sha256": "df98b3dd46ca91e52ca8b0f137bb5d701d2274c66f87b1ffcc2b0bf298f7e91b"
+   "bytes": 5978159,
+   "sha256": "f58639582b74fda0eb5b07b7a9cf6c6cd675479f40bbc80c36abd2fde2291494"
+  },
+  {
+   "path": "qa/recordings/screen_06.mp4",
+   "bytes": 4185830,
+   "sha256": "b0efa62d917ab7ab5d914d6651fdd82bf104762f6a4fa423e2c7c3dcf97becc2"
+  },
+  {
+   "path": "qa/recordings/screen_07.mp4",
+   "bytes": 11168100,
+   "sha256": "be3a7203a627bec09bf2a9b983cc91661a6bd986ec186944b5d04af3da2f679f"
+  },
+  {
+   "path": "qa/recordings/screen_08.mp4",
+   "bytes": 1361924,
+   "sha256": "59a91fa72f366fcbdd4622d99f9abeee1444146260ed31b02feb2c8784282851"
   },
   {
    "path": "qa/recordings/screen_08_preferred_match08.json",
@@ -7505,6 +7525,21 @@
    "path": "qa/recordings/screen_08_preferred_match08.mp4",
    "bytes": 984091,
    "sha256": "2c7655007113b65ebf89f7bddeb490232c957615d1571643ee12dd98b57b9afa"
+  },
+  {
+   "path": "qa/recordings/screen_09.mp4",
+   "bytes": 1201768,
+   "sha256": "d348a4a67308ee5c1b740651392b53a58de6125cb1e8d9ae6c8ea04c7064f046"
+  },
+  {
+   "path": "qa/recordings/screen_10.mp4",
+   "bytes": 1177347,
+   "sha256": "3a8e438ec64fc42f634d67a423b0603d41cbc812c706660c91e2d9c2a4f9161f"
+  },
+  {
+   "path": "qa/recordings/screen_11.mp4",
+   "bytes": 1479984,
+   "sha256": "ed4db9087bdd64bd6314ae5bfd62f85af0fc7857b09f10be030021f42255a5f3"
   },
   {
    "path": "qa/report_metrics.json",

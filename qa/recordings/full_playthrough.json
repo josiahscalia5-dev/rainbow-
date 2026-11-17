@@ -1,0 +1,90 @@
+{
+  "when": "2026-11-17T20:56:29.853Z",
+  "query": null,
+  "size": [
+    540,
+    960
+  ],
+  "fps": 30,
+  "frames": 1699,
+  "seconds": 56.63,
+  "video": "qa/recordings/full_playthrough.mp4",
+  "clips": [
+    {
+      "screen": "01",
+      "file": "qa/recordings/screen_01.mp4",
+      "seconds": 7.43,
+      "fromSecond": 0
+    },
+    {
+      "screen": "02",
+      "file": "qa/recordings/screen_02.mp4",
+      "seconds": 6.57,
+      "fromSecond": 7.43
+    },
+    {
+      "screen": "03",
+      "file": "qa/recordings/screen_03.mp4",
+      "seconds": 3.23,
+      "fromSecond": 14
+    },
+    {
+      "screen": "04",
+      "file": "qa/recordings/screen_04.mp4",
+      "seconds": 3.2,
+      "fromSecond": 17.23
+    },
+    {
+      "screen": "05",
+      "file": "qa/recordings/screen_05.mp4",
+      "seconds": 6.73,
+      "fromSecond": 20.43
+    },
+    {
+      "screen": "06",
+      "file": "qa/recordings/screen_06.mp4",
+      "seconds": 5.27,
+      "fromSecond": 27.17
+    },
+    {
+      "screen": "07",
+      "file": "qa/recordings/screen_07.mp4",
+      "seconds": 11.87,
+      "fromSecond": 32.43
+    },
+    {
+      "screen": "08",
+      "file": "qa/recordings/screen_08.mp4",
+      "seconds": 1.63,
+      "fromSecond": 44.3
+    },
+    {
+      "screen": "09",
+      "file": "qa/recordings/screen_09.mp4",
+      "seconds": 1.63,
+      "fromSecond": 45.93
+    },
+    {
+      "screen": "10",
+      "file": "qa/recordings/screen_10.mp4",
+      "seconds": 2.1,
+      "fromSecond": 47.57
+    },
+    {
+      "screen": "11",
+      "file": "qa/recordings/screen_11.mp4",
+      "seconds": 6.97,
+      "fromSecond": 49.67
+    }
+  ],
+  "final": {
+    "f": 1698,
+    "stage": "11",
+    "mode": "end",
+    "s": 435.183,
+    "coins": 2240,
+    "hearts": 5
+  },
+  "renderSeconds": 1465,
+  "errors": []
+}
