@@ -1,6 +1,6 @@
 # Rainbow — Claude account transfer guide
 
-## ▶▶ NEWEST (refreshed 2026-11-17 ~12:40 UTC, branch `ccr-9c4a8ad6-xovgsx` = `ccr-61131b9d-uj0oqb` + backups) — READ `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md` FIRST
+## ▶▶ NEWEST (refreshed 2026-11-17 ~11:50 UTC, branch `ccr-9c4a8ad6-xovgsx` = `ccr-61131b9d-uj0oqb` + backups) — READ `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md` FIRST
 It wins over every older section below. Two unmerged lines of work exist (line A `ccr-9c4a8ad6-xovgsx` / `ccr-61131b9d-uj0oqb`
 and line B `ccr-b0757dec-dj6l1o`, which holds the big Screen 05 visual match); never merge them without the user's OK.
 Recover with `bash scripts/claude-bootstrap.sh --skip-resume` (the bootstrap no longer merges anything by default).

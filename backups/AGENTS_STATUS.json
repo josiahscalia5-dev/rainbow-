@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T12:40:00Z",
+ "updated_utc": "2026-11-17T11:50:00Z",
  "updated_by_session": "03b94f36 (branch ccr-9c4a8ad6-xovgsx, account-transfer backup)",
  "running_now": [],
  "assignments_now": {

@@ -1,8 +1,8 @@
-# RAINBOW — new-account handoff (refreshed 2026-11-17 ~12:30 UTC) — READ THIS FIRST
+# RAINBOW — new-account handoff (refreshed 2026-11-17 ~11:50 UTC) — READ THIS FIRST
 
 Rainbow is an EXISTING playable 3D Android game (Three.js + Vite + TypeScript, Blender 5.3.0, Playwright, Android).
 Never restart it, never change engines, never rebuild Screen 05 from scratch, never modify `references/` (13 files,
-`sha256sum -c scripts/reference.sha256`). Every fact below was re-checked in session 03b94f36 (2026-11-17 ~12:00–12:30 UTC).
+`sha256sum -c scripts/reference.sha256`). Every fact below was re-checked in session 03b94f36 (2026-11-17 ~11:40–11:50 UTC).
 
 ## 0. The user's newest priority (2026-11-17, verbatim excerpt) — this decides what to work on
 > "Please make sure that my approved screens that you're working on, make sure you're working on the visual part. I don't
@@ -29,7 +29,7 @@ Repository: https://github.com/josiahscalia5-dev/rainbow-
 * **Split point** `aea7e77` (2026-11-16 22:13 UTC). A has 34 commits B lacks; B has 139 commits A lacks.
 * **Latest Screen 05 visual improvements = line B.** **Latest Screen 07 camera/geometry work = line A.**
 * **Dry-run merge** (`git merge-tree --write-tree --name-only HEAD origin/ccr-b0757dec-dj6l1o`, changes nothing), re-run
-  2026-11-17 ~12:15: **14 conflicting files** — `CLAUDE.md`, `src/vfx/waterRibbon.ts` (the only game source file both
+  2026-11-17 ~11:45: **14 conflicting files** — `CLAUDE.md`, `src/vfx/waterRibbon.ts` (the only game source file both
   changed), `assets/textures/water05/proj05_T2.png`, `proj05_WT2.png`, `proj05_near.json`, `tools/proj05/near_bake.py`,
   `qa/pilot05/proj/near/NOTES.md`, `scripts/claude-bootstrap.sh`, and 6 `backups/` status files.
 * **Naming clash:** both lines define `?match05=1` with different meanings, and both built their own `?projnear05=1`.
@@ -133,7 +133,7 @@ setup script `scripts/cloud-env-setup.sh`.
    `api.worldlabs.ai` (header `WLT-Api-Key`) via the secure credential form, and only for a paid job the user approved.
    On the current account the `rainbow-` environment has NO World Labs key and does not allow `api.worldlabs.ai`
    (bootstrap: proxy 403 = network, not a key problem). Nothing in the game needs it.
-   On 2026-11-17 ~12:35 UTC the user pasted a Marble key into the chat. It was NOT used and NOT saved anywhere in the
+   On 2026-11-17 ~11:47 UTC the user pasted a Marble key into the chat. It was NOT used and NOT saved anywhere in the
    repo (transcript export redacts it; verified 0 occurrences in files and commits). The user was advised to rotate
    it. Never use a key from chat; Marble jobs need the user's OK for the named job + credits first.
 4. Optional: context7 MCP (failed to connect in this session: proxy tunnel error). Playwright MCP comes with the

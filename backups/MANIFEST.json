@@ -74,7 +74,7 @@
   {
    "path": "CLAUDE.md",
    "bytes": 13176,
-   "sha256": "f4f469af4df3f9cda1d82a5d6002f10a4b51e72c6ffc2a58b5fef38323481e9a"
+   "sha256": "5838396ce9be9b07350371401ebaf98a943390aed9fa653999095dcc8676798a"
   },
   {
    "path": "README_FIRST.md",
@@ -489,7 +489,7 @@
   {
    "path": "backups/AGENTS_STATUS.json",
    "bytes": 12063,
-   "sha256": "3d8fd47853673857172208d8ad4f2f6e7764810c3d16aea43e1e9612ef5e78ca"
+   "sha256": "15f4e33e78631fb6bc62612d3f4307a34b819e64b2f61193eb029527652473ba"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -504,12 +504,12 @@
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
    "bytes": 51514,
-   "sha256": "41b64ee6baa5c9317cb938b812f40e04aef528fbd901a413a01603958a716544"
+   "sha256": "67091b6abe3ce1311d1bc4da3612d4515cd92f34cf65c02a4353932915589704"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "a30691bf180d95006cc7df90dbdc1f65d7d9040e236fbefe16c02ebfad293403"
+   "sha256": "4a833168db4cc96388f8eb1ac6689400da289d72f01b29f8dfa3f6274cb344c6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -519,7 +519,7 @@
   {
    "path": "backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
    "bytes": 16378,
-   "sha256": "64ea6ee9e0d544e40efdcd03e1f7685f02c20b00637cb0c518af874a3df480d4"
+   "sha256": "cbdca936c4923e9acc0d7532af11a51fa2495350a5dd66c951f65382e75f3efb"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -534,7 +534,7 @@
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
    "bytes": 4224,
-   "sha256": "1723b5eeeb698a077158eec7fe4061451c0b55b7ba2cf17d5b8803fb8f6bdc51"
+   "sha256": "ac3860c8cbe7102af99cec6601e5472b32fc7140d2ffe0e25c29790e237627bf"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -544,7 +544,7 @@
   {
    "path": "backups/autosave.config.json",
    "bytes": 6789,
-   "sha256": "927783fe8d2a0f2a9ac28e30db997ec9e7b278335bb46456cc28f5010b73cf27"
+   "sha256": "4ed415586def137ecf38a71642b2e6505fafa241d4b332e7ef42b1fb0eb8fc82"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",

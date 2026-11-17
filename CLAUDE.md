@@ -16,7 +16,7 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
    exists, `BRIEF_SPECIALIST1_VERBATIM.md`, `BRIEF_SPECIALIST2.md`), `qa/pilot05/wave12/NOTES.md`, `qa/pilot05/COORDINATION_WAVE9B.md`.
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup
    report of §4. Tell the user plainly about every failure and every backup GAP the bootstrap reports.
-The GitHub default branch is an OLD version. **As of 2026-11-17 ~12:30 UTC there are TWO unmerged lines of game work**
+The GitHub default branch is an OLD version. **As of 2026-11-17 ~11:50 UTC there are TWO unmerged lines of game work**
 (details, differences and the safe merge procedure: `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md` §1):
 **line A** = `ccr-9c4a8ad6-xovgsx` (= `ccr-61131b9d-uj0oqb` + backup commits; Screen 07 measurements/camera, `?matchNN=1`
 audit 02–10, projection-water switches) and **line B** = `ccr-b0757dec-dj6l1o` (`a8c03f0`; the big Screen 05 full-reference

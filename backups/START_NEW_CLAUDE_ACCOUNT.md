@@ -1,6 +1,6 @@
 # Paste this into Claude Code on the next Claude account
 
-(Updated 2026-11-17 ~12:40 UTC, session 03b94f36. Replaces the 2026-11-16 version, whose hook description — "merges every
+(Updated 2026-11-17 ~11:50 UTC, session 03b94f36. Replaces the 2026-11-16 version, whose hook description — "merges every
 newer branch" — is no longer true: since 2026-11-17 NOTHING is merged automatically.)
 
 ## Before you paste (one-time, on the new account — these never travel through GitHub)

@@ -1336,3 +1336,59 @@ Making the final named checkpoint now (autosave with a message: it commits, push
 
 > 🔧 **Bash** `{"command": "timeout 400 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Account transfer checkpoint 2: refreshed handoff (two unmerged lines, 14-file dry-run conflicts, line B specialists), visual-only priority, new-account prompt without auto-merge, protected finished branches\" 2>&1 | tail -12", "description": "Commit and push the final named checkpoint", "timeout": 420000}`
 
+### 🧑 User — 2026-11-17T11:49:55.911Z
+
+> ↩︎ result: {
+>   "time": "2026-11-17T11:49:48+00:00",
+>   "reason": "manual:checkpoint",
+>   "result": "committed+pushed",
+>   "files_staged": 9,
+>   "pushed_verified": true,
+>   "branch": "ccr-9c4a8ad6-xovgsx",
+>   "commit": "22c69368b5adfa94ae5eb636273211477ed81317",
+>   "duration_s": 7
+> }
+
+### 🤖 Claude — 2026-11-17T11:49:58.798Z
+
+The clock shows 11:49 UTC, but I wrote "~12:30–12:40 UTC" timestamps in the new docs. Correcting them so the record is accurate:
+
+### 🤖 Claude — 2026-11-17T11:50:00.557Z
+
+> 🔧 **Bash** `{"command": "date -u '+%H:%M UTC'; grep -n -E \"12:[0-4][0-9] UTC|12:00–12:30|~12:[0-9]{2}\" CLAUDE.md backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md backups/START_NEW_CLAUDE_ACCOUNT.md backups/CLAUDE_ACCOUNT_TRANSFER.md backups/AGENTS_STATUS.json backups/autosave.config.json | cut -c1-170", "description": "Find the wrong timestamps in the new docs"}`
+
+### 🧑 User — 2026-11-17T11:50:00.610Z
+
+> ↩︎ result: 11:50 UTC
+> CLAUDE.md:19:The GitHub default branch is an OLD version. **As of 2026-11-17 ~12:30 UTC there are TWO unmerged lines of game work**
+> backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md:1:# RAINBOW — new-account handoff (refreshed 2026-11-17 ~12:30 UTC) — READ THIS FIRST
+> backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md:5:`sha256sum -c scripts/reference.sha256`). Every fact below was re-checked in session 03b94f36 (2026-11-17 ~12:00–12:30 UTC).
+> backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md:32:  2026-11-17 ~12:15: **14 conflicting files** — `CLAUDE.md`, `src/vfx/waterRibbon.ts` (the only game source file both
+> backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md:136:   On 2026-11-17 ~12:35 UTC the user pasted a Marble key into the chat. It was NOT used and NOT saved anywhere in the
+> backups/START_NEW_CLAUDE_ACCOUNT.md:3:(Updated 2026-11-17 ~12:40 UTC, session 03b94f36. Replaces the 2026-11-16 version, whose hook description — "merges every
+> backups/CLAUDE_ACCOUNT_TRANSFER.md:3:## ▶▶ NEWEST (refreshed 2026-11-17 ~12:40 UTC, branch `ccr-9c4a8ad6-xovgsx` = `ccr-61131b9d-uj0oqb` + backups) — READ `backups/
+> backups/autosave.config.json:74:  "original_branch_note": "PROTECTED, never pushed to by the autosave: ccr-6f …[+61 chars]
+
+### 🤖 Claude — 2026-11-17T11:50:07.071Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/As of 2026-11-17 ~12:30 UTC there are/As of 2026-11-17 ~11:50 UTC there are/' CLAUDE.md && sed -i 's/(refreshed 2026-11-17 ~12:30 UTC)/(refreshed 2026-11-17 ~11:50 UTC)/; s/2026-11-17 ~12:00–12:30 UTC/2026-11-17 ~11:40–11:50 UTC/; s/2026-11-17 ~12:15: \\*\\*14/2026-11-17 ~11:45: **14/; s/On 2026-11-17 ~12:35 UTC the user/On 2026-11-17 ~11:47 UTC the user/' backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md && sed -i 's/(Updated 2026-11-17 ~12:40 UTC, session/(Updated 2026-11-17 ~11:50 UTC, session/' backups/START_NEW_CLAUDE_ACCOUNT.md && sed -i 's/(refreshed 2026-11-17 ~12:40 UTC …[+695 chars]`
+
+### 🧑 User — 2026-11-17T11:50:07.231Z
+
+> ↩︎ result: ok
+> CLAUDE.md:0
+> backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md:0
+> backups/START_NEW_CLAUDE_ACCOUNT.md:0
+> backups/CLAUDE_ACCOUNT_TRANSFER.md:0
+> backups/AGENTS_STATUS.json:0
+> backups/autosave.config.json:0
+> [This command modified 4 files you've previously read: backups/CLAUDE_ACCOUNT_TRANSFER.md, backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md, CLAUDE.md, backups/START_NEW_CLAUDE_ACCOUNT.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T11:50:09.403Z
+
+Timestamps corrected. Final checkpoint, then the fast-forward push to `ccr-61131b9d-uj0oqb`. Git refuses a non-fast-forward without force, so this can't overwrite anything.
+
+### 🤖 Claude — 2026-11-17T11:50:12.451Z
+
+> 🔧 **Bash** `{"command": "timeout 400 python3 scripts/rainbow-autosave.py --reason manual:end --message \"Account transfer final checkpoint: handoff timestamps corrected\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"branch\"'; H=$(git rev-parse HEAD); git merge-base --is-ancestor 051ef8308378a447f4095e71e6cfbb0b742399b9 $H && echo \"051ef83 (ccr-61131b9d tip) is ancestor of HEAD -> fast-forward\"; for i in 1 2 3 4; do git push origin \"$H:refs/heads/ccr-61131b9d-uj0oqb\" 2>&1 | tail -2 && break; sleep $((i*2)); done", "description": "Final checkpoint and fast-forward the user's branch", "ti …[+15 chars]`
+
