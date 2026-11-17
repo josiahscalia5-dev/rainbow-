@@ -2741,3 +2741,35 @@ The notes update isn't in a commit yet (a background save ran at the same moment
 
 > 🔧 **Bash** `{"command": "sleep 5; timeout 400 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Image-Blaster 08 step 1: blocked by fal balance (nothing generated, nothing charged); Node proxy fix recorded\" 2>&1 | tail -12 | grep -E 'result|commit|pushed|skipping|error'; git status --porcelain | wc -l; git show HEAD:qa/imageblaster/08/NOTES.md | grep -c \"Exhausted balance\"; echo \"remote $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; echo \"local  $(git rev-parse HEAD)\"", "description": "Retry saving the notes and verify on GitHub", "timeout": 450000}`
 
+### 🧑 User — 2026-11-17T12:12:49.821Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "aef743e7946976a7ab1a9fad789a6819b61ffe9f",
+> 0
+> 1
+> remote aef743e7946976a7ab1a9fad789a6819b61ffe9f
+> local  aef743e7946976a7ab1a9fad789a6819b61ffe9f
+
+### 🤖 Claude — 2026-11-17T12:12:58.890Z
+
+Step 1 didn't run: fal.ai refused the edit because your fal.ai account has no balance left. No image was created and nothing was charged, so I have no edited image to preview or compare yet.
+
+fal.ai's exact reply: **"User is locked. Reason: Exhausted balance. Top up your balance at fal.ai/dashboard/billing."** Your fal.ai key itself works; only the account balance is empty.
+
+**What happened**
+- **First attempt:** it never left this machine. Node's built-in web requests don't use this container's proxy unless `NODE_USE_ENV_PROXY=1` is set. I set it and confirmed with two free checks that fal.ai and World Labs are both reachable.
+- **Next attempt:** fal.ai refused it with the reply above.
+- **Small change in the separate Image-Blaster folder:** I made its error message include fal.ai's reply, since it was hiding the reason. Your game wasn't touched.
+- **Your original Screen 08:** unchanged (same checksum; all 13 approved images OK).
+- **World Labs:** not used; still 7,000 credits.
+- **Notes on GitHub:** this is recorded in `qa/imageblaster/08/NOTES.md` (commit `aef743e`).
+
+**What you need to do**
+1. Go to **fal.ai → Dashboard → Billing** (https://fal.ai/dashboard/billing) and add a small balance. One image edit at 2K usually costs cents, but I couldn't open fal.ai's price page from here to confirm.
+2. Tell me "fal topped up". I'll re-send the same single approved edit (portrait 9:16, 2K, Benny + his splash, HUD, banner and coins removed, bubbles and all scenery kept). Then I'll show your original and the edited picture as two separate full-size previews, with a comparison of every difference.
+
+One thing to know about my instructions to fal.ai: I asked it to remove the white splash directly around Benny along with him. A splash with nothing making it would turn into a white blob in the 3D world. The other foam and water stay. Tell me if you'd rather keep that splash.
+
+I'm stopping here. World Labs won't be used until you approve the edited image.
+
