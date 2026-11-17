@@ -21,7 +21,7 @@ def project(p):
     return np.array([(q[0] / (-q[2]) / (t * asp) + 1) / 2 * W, (1 - q[1] / (-q[2]) / t) / 2 * H])
 
 # known world surfaces (src/world/course.ts WORLD + the live game)
-FLOOR_Y = -113.11                        # Benny's water level at the 08 checkpoint (river + painted floor plane)
+FLOOR_Y = -113.6                         # chamber floor (WORLD.chamber.floorY): painted river/floor plane, just under Benny's water line
 CH = dict(cx=12.0, cy=-101.1, r=13.5, zBack=-280.0, zDoor=-332.0)
 
 def hit_plane_y(u, v, y):
@@ -57,6 +57,10 @@ out["arch"]["check_row600_px"] = [float(project([co[0] - dx, yy, zA])[0]), float
 # ---- outer inlet pipe: the picture's walls OUTSIDE the arch are near the camera -> a pipe around the camera that ends
 # at the arch (radius = the arch's outer radius), so those rays hit close walls (big slots) as in the picture
 out["pipe"] = {"cx": co[0], "cy": co[1], "r": co[2] + 0.04, "z0": float(C[2] + 8.0), "z1": zA}
+# back wall behind the arch: deep enough that Benny (≈2 u long, centre ≈7 u ahead) passes in front of it, hole wide enough
+# that no ray through the arch opening hits it (so it never shows in the locked view)
+zbw = float(C[2] - 10.0)
+out["backwall"] = {"z": zbw, "holeR": float(ci[2] * (C[2] - zbw) / (C[2] - zA) + 0.3)}
 
 # ---- platform: at the game's platform depth (WORLD.platform z -325); width + top/rim rows from the picture.
 # Its painted top is seen from above while the game eye is ~level with it, so the top disc is tilted toward the camera

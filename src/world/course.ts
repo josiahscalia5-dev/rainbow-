@@ -12,6 +12,8 @@
  * and tangent are continuous by construction; `validateContinuity()` measures it anyway.
  */
 import * as THREE from 'three';
+import { flag05 } from '../vfx/waterRibbon';
+import river08 from '../../assets/textures/match08/river08.json';
 
 export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
 export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
@@ -311,16 +313,32 @@ function buildRoute(): RouteData {
   // ---- 08–10: Final Spin Chamber — winding stream toward the platform & towel ----
   const s8 = pts[pts.length - 1].clone();
   const plat = WORLD.platform;
-  seg(14, (t) => V(s8.x + 3.6 * Math.sin(2 * Math.PI * t) * Math.sin(Math.PI * t), s8.y, s8.z - 15 * t));
+  const end = V(plat.center.x, plat.topY + 0.45, plat.center.z + 0.6);
+  // `?match08=1` (src/world/match08.ts, qa/match/08/NOTES.md): the 08–10 stream follows the APPROVED picture's painted
+  // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
+  // eased in over the first 3 u after the inlet and out over the last 4 u into the platform. Off: the formulas below.
+  const m08 = flag05('match08') || flag05('matchall');
+  const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);
+  const riverX = (z: number) => {
+    if (z >= rz[0]) return rxs[0];
+    for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); return rxs[i - 1] + (rxs[i] - rxs[i - 1]) * a; }
+    return rxs[rxs.length - 1];
+  };
+  const x08 = (z: number, xDefault: number) => {
+    if (!m08) return xDefault;
+    const wIn = smooth(0, 3, s8.z - z), wOut = smooth(0, 4, z - end.z);
+    return s8.x + (riverX(z) - s8.x) * wIn * wOut + (end.x - s8.x) * (1 - wOut);
+  };
+  seg(14, (t) => V(x08(s8.z - 15 * t, s8.x + 3.6 * Math.sin(2 * Math.PI * t) * Math.sin(Math.PI * t)), s8.y, s8.z - 15 * t));
   mark('09');
   const s9 = pts[pts.length - 1].clone();
-  seg(14, (t) => V(s9.x - 3.2 * Math.sin(Math.PI * t), s9.y + 0.1 * t, s9.z - 15 * t));
+  seg(14, (t) => V(x08(s9.z - 15 * t, s9.x - 3.2 * Math.sin(Math.PI * t)), s9.y + 0.1 * t, s9.z - 15 * t));
   mark('10');
   const s10 = pts[pts.length - 1].clone();
-  const end = V(plat.center.x, plat.topY + 0.45, plat.center.z + 0.6);
-  seg(10, (t) =>
-    V(s10.x + (end.x - s10.x) * t, s10.y + (end.y - s10.y) * smooth(0.3, 1, t), s10.z + (end.z - s10.z) * t),
-  );
+  seg(10, (t) => {
+    const z = s10.z + (end.z - s10.z) * t;
+    return V(x08(z, s10.x + (end.x - s10.x) * t), s10.y + (end.y - s10.y) * smooth(0.3, 1, t), z);
+  });
   mark('11');
   smoothPolyline(pts, marks['03'], 2.2, 3);
   // 05 meander: exact lateral offset from the straight tunnel line (after smoothing, see S05)

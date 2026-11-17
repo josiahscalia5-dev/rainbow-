@@ -18,6 +18,7 @@ interface Layout {
   chamber: { cx: number; cy: number; r: number; zBack: number; zDoor: number };
   arch: { z: number; outer: { cx: number; cy: number; r: number }; inner: { cx: number; cy: number; r: number }; depth: number };
   pipe: { cx: number; cy: number; r: number; z0: number; z1: number };
+  backwall: { z: number; holeR: number };
   platform: { cx: number; cz: number; r: number; topY: number; rimBottomY: number; floorY: number; tiltDeg: number };
   towel: { cx: number; cz: number; w: number; h: number; y0: number; d: number };
   spouts: Record<string, { c: [number, number, number]; rx: number; ry: number }>;
@@ -121,9 +122,9 @@ export async function buildMatch08(): Promise<Match08> {
   add(archG, M.gold, 'arch');
   // back wall around the pipe mouth (closes the gap between pipe and chamber; seen only when moving in)
   const bw = new THREE.Shape(); bw.absarc(C.cx, C.cy, C.r, 0, Math.PI * 2, false);
-  const bh = new THREE.Path(); bh.absarc(L.pipe.cx, L.pipe.cy, L.pipe.r, 0, Math.PI * 2, true); bw.holes.push(bh);
-  add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, L.arch.z - L.arch.depth - 0.02), M.wall, 'backwall');
-  // chamber walls + the door wall
+  const bh = new THREE.Path(); bh.absarc(L.pipe.cx, L.pipe.cy, L.backwall.holeR, 0, Math.PI * 2, true); bw.holes.push(bh);
+  add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, L.backwall.z), M.wall, 'backwall');
+  // chamber walls (from the arch to the door wall) + the door wall
   const chLen = (L.arch.z - L.arch.depth) - C.zDoor;
   const ch = new THREE.CylinderGeometry(C.r, C.r, chLen, 160, 24, true);
   ch.rotateX(Math.PI / 2).translate(C.cx, C.cy, C.zDoor + chLen / 2);

@@ -393,8 +393,8 @@
   },
   {
    "path": "assets/textures/match08/cam08_locked.json",
-   "bytes": 704,
-   "sha256": "ea5800966e0d2822e5fe0da698ee42aa26b84ba7719ebb6d65dc957eba04d7e3"
+   "bytes": 17,
+   "sha256": "3e55181011b5ddc492b53dba6295045f86343f8e9603150c61779d6650cd2194"
   },
   {
    "path": "assets/textures/match08/plate08_clean.png",
@@ -403,8 +403,13 @@
   },
   {
    "path": "assets/textures/match08/proj08.json",
-   "bytes": 2936,
-   "sha256": "025688f1a9ce9894b1da0102b0491abfb750ed17c4b34755d3dcb44ea8febdea"
+   "bytes": 3008,
+   "sha256": "0d76da58b5207491680328321fea629778d2847038a8ba698b0b81045614ee05"
+  },
+  {
+   "path": "assets/textures/match08/river08.json",
+   "bytes": 5716,
+   "sha256": "a8271f738e2611e42907d1ca78d198e68ce8490351619b170d62fd779eb3a107"
   },
   {
    "path": "assets/textures/tunnel05/frame05.json",
@@ -524,7 +529,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "c667dccb965c2a57cf41c5419bf38eb439b67b0258fd604b4d84da7ae8c76f89"
+   "sha256": "2a67c137374120450e50e07f0148e5518a5c07dd6208bf74bf11aa599724fcb1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7803,8 +7808,8 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 29605,
-   "sha256": "d1957d911bf2091e6b4ff13f3dca4e568ae0fc836e0fccdc6b254ea29aaab0af"
+   "bytes": 30798,
+   "sha256": "42c17a6b293c4be17a78fec9d5dea064d3575c600a7da34a0e06014eb0380620"
   },
   {
    "path": "src/world/environment.ts",
@@ -7823,8 +7828,8 @@
   },
   {
    "path": "src/world/match08.ts",
-   "bytes": 9516,
-   "sha256": "2e9475d236fcff6a2d841b0135c11324b6ddf5acdbf06e2c2f3afb193d6e13d7"
+   "bytes": 9581,
+   "sha256": "ba673c49fca606dfa5741b951166ce88ee3a416566fa67bc41dc876d1d7dca31"
   },
   {
    "path": "src/world/materials.ts",
@@ -7963,8 +7968,8 @@
   },
   {
    "path": "tools/match08/fit_proxies.py",
-   "bytes": 6676,
-   "sha256": "00a2d0718b4686ecf46a315ad2a69ef2d69b4fd80d330303323bd3db0eb2efef"
+   "bytes": 7025,
+   "sha256": "8a597d4ddc6a4f1463bff812e281a2cb7249f6ab669ed9c7bf58adb3730897b9"
   },
   {
    "path": "tools/model-lab.html",

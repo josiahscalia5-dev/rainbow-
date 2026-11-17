@@ -4735,3 +4735,190 @@ Tightening one detail: outside Screen 08 the switch should leave the river, foam
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\nold=\"    if (m08) for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }\\n\"\nnew=(\"    if (m08 && (m08On || m08Applied)) {\\n\"\n     \"      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }\\n\"\n     \"      m08Applied = m08On;\\n    }\\n\")\nassert s.count(old)==1; s=s.replace(old,new)\ns=s.replace(\"  let m08On = false;\\n\",\"  let m08On = false;\\n  let m08Applied = false;\\n\")\nopen(p,'w').write(s); print('ok')\nEOF\ntimeout 200 npx tsc --noEm …[+787 chars]`
 
+### 🧑 User — 2026-11-17T13:29:40.733Z
+
+> ↩︎ result: ok
+> tsc clean
+> 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/new1/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":81,"tris":384667,"modules":{"water":"vfx/index.ts
+> 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-
+> default still identical: 0 px differ
+
+### 🤖 Claude — 2026-11-17T13:29:42.745Z
+
+The normal game is still pixel-identical. The new Screen 08 rendered without errors, using fewer draw calls than before (81 vs 160). Looking at it:
+
+### 🤖 Claude — 2026-11-17T13:29:44.034Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/new1/08.png"}`
+
+### 🧑 User — 2026-11-17T13:29:44.122Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:30:20.056Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; python3 -I -c \"\nfrom PIL import Image\na=Image.open('$M/new1/08.png').crop((220,820,700,1260)); b=Image.open('/home/user/rainbow-/references/08_final_spin_chamber.png').convert('RGB').crop((220,820,700,1260))\no=Image.new('RGB',(970,440),(255,255,255)); o.paste(b,(0,0)); o.paste(a,(490,0)); o.save('$M/benny_zoom.png')\"", "description": "Crop Benny in approved vs new"}`
+
+### 🧑 User — 2026-11-17T13:30:20.499Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T13:30:23.298Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/benny_zoom.png"}`
+
+### 🧑 User — 2026-11-17T13:30:23.334Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:31:00.332Z
+
+> 🔧 **Bash** `{"command": "sed -n 305,340p src/world/course.ts | cut -c1-200", "description": "Read the 08 river path definition"}`
+
+### 🧑 User — 2026-11-17T13:31:00.393Z
+
+> ↩︎ result: });
+>   mark('07_plunge_bottom');
+>   const p3 = pts[pts.length - 1].clone();
+>   const zIn = WORLD.chamber.zBack;
+>   seg(4, (t) => V(p3.x, p3.y, p3.z + (zIn - p3.z) * t));
+>   mark('08');
+>   // ---- 08–10: Final Spin Chamber — winding stream toward the platform & towel ----
+>   const s8 = pts[pts.length - 1].clone();
+>   const plat = WORLD.platform;
+>   seg(14, (t) => V(s8.x + 3.6 * Math.sin(2 * Math.PI * t) * Math.sin(Math.PI * t), s8.y, s8.z - 15 * t));
+>   mark('09');
+>   const s9 = pts[pts.length - 1].clone();
+>   seg(14, (t) => V(s9.x - 3.2 * Math.sin(Math.PI * t), s9.y + 0.1 * t, s9.z - 15 * t));
+>   mark('10');
+>   const s10 = pts[pts.length - 1].clone();
+>   const end = V(plat.center.x, plat.topY + 0.45, plat.center.z + 0.6);
+>   seg(10, (t) =>
+>     V(s10.x + (end.x - s10.x) * t, s10.y + (end.y - s10.y) * smooth(0.3, 1, t), s10.z + (end.z - s10.z) * t),
+>   );
+>   mark('11');
+>   smoothPolyline(pts, marks['03'], 2.2, 3);
+>   // 05 meander: exact lateral offset from the straight tunnel line (after smoothing, see S05)
+>   const dir05 = L05.clone().normalize();
+>   for (let i = marks['05'] + 1; i < marks['06']; i++) {
+>     const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
+>     pts[i].x += meander05(u …[+378 chars]
+
+### 🤖 Claude — 2026-11-17T13:31:50.409Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; python3 -I - <<EOF\nimport numpy as np, cv2, json\nfrom PIL import Image, ImageDraw\nP=np.asarray(Image.open('$M/clean864.png').convert('RGB'))\nhsv=cv2.cvtColor(P,cv2.COLOR_RGB2HSV); h,s,v=[hsv[...,i].astype(int) for i in range(3)]\ncyan=((h>=80)&(h<=105)&(s>90)&(v>170)).astype(np.uint8)\ncyan=cv2.morphologyEx(cyan,cv2.MORPH_OPEN,np.ones((5,5),np.uint8))\npts=[]\nprev=None\nfor y in range(1530,600,-10):\n    xs=np.where(cyan[y])[0]\n    if len(xs)<8: continue\n    # largest connected run clus …[+746 chars]`
+
+### 🧑 User — 2026-11-17T13:31:50.870Z
+
+> ↩︎ result: 93
+> [(1530, 524), (1490, 540), (1450, 506), (1410, 582), (1370, 478), (1330, 519), (1290, 490), (1250, 499), (1210, 505), (1170, 444), (1130, 488), (1090, 539), (1050, 556), (1010, 550), (970, 521), (930, 380), (890, 386), (850, 354), (810, 367), (770, 431), (730, 506), (690, 491), (650, 374), (610, 468)]
+
+### 🤖 Claude — 2026-11-17T13:31:55.399Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/river_centre.png"}`
+
+### 🧑 User — 2026-11-17T13:31:55.438Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:32:15.423Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; python3 -I - <<EOF\nimport numpy as np, cv2, json\nfrom PIL import Image, ImageDraw\nP=np.asarray(Image.open('$M/clean864.png').convert('RGB'))\nhsv=cv2.cvtColor(P,cv2.COLOR_RGB2HSV); h,s,v=[hsv[...,i].astype(int) for i in range(3)]\nwater=(((h>=78)&(h<=108)&(s>70)&(v>160)) | ((h>=150)&(h<=176)&(s>90)&(v>225))).astype(np.uint8)\n# only inside the gold arch and below the platform rim\nyy,xx=np.mgrid[:1536,:864]\ninside=((xx-432)/440.0)**2+((yy-720)/560.0)**2<1.0\nwater&=inside.astype(np.uint8); …[+1148 chars]`
+
+### 🧑 User — 2026-11-17T13:32:16.045Z
+
+> ↩︎ result: 84
+> [(1272, 440, 362, 506), (1224, 429, 243, 616), (1176, 437, 268, 606), (1128, 481, 331, 652), (1080, 506, 342, 674), (1032, 506, 346, 682), (984, 434, 198, 649), (936, 417, 209, 628), (888, 363, 181, 522), (840, 345, 182, 508), (792, 387, 249, 527), (744, 476, 357, 604), (696, 488, 406, 615), (648, 396, 273, 489)]
+
+### 🤖 Claude — 2026-11-17T13:32:19.151Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/river_mask_centre.png"}`
+
+### 🧑 User — 2026-11-17T13:32:19.191Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:32:33.418Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && python3 -I - <<EOF\nimport json, math, numpy as np\ncam=json.load(open('$M/cam08.json')); MW=np.array(cam['mw'],float).reshape(4,4).T; C=MW[:3,3]; R=MW[:3,:3]\nW,H=864,1536; t=math.tan(math.radians(cam['fov'])/2); asp=W/H\ndef ray(u,v):\n    x,y=u/W*2-1,1-v/H*2; d=[REDACTED-EMAIL]([x*t*asp,y*t,-1.0]); return d/np.linalg.norm(d)\nFY=-113.6\npts=json.load(open('$M/river_centre_px.json'))\nout=[]\nfor y,c,a,b in pts:\n    d=ray(c,y); s=(FY-C[1])/d[1]; p=C+s*d\n    da=ray …[+639 chars]`
+
+### 🧑 User — 2026-11-17T13:32:33.600Z
+
+> ↩︎ result: z -280.80  x 13.12  width 0.76
+> z -281.21  x 13.07  width 2.00
+> z -281.67  x 13.02  width 2.17
+> z -282.20  x 13.15  width 2.19
+> z -282.82  x 13.38  width 2.23
+> z -283.52  x 13.47  width 2.46
+> z -284.33  x 13.45  width 2.69
+> z -285.26  x 12.91  width 3.96
+> z -286.40  x 12.61  width 4.03
+> z -287.79  x 12.19  width 4.86
+> z -289.54  x 11.54  width 4.11
+> z -291.83  x 11.17  width 4.52
+> z -294.95  x 11.45  width 4.52
+> z -299.42  x 12.50  width 5.25
+> z -306.18  x 13.24  width 5.11
+> z -317.54  x 10.93  width 7.00
+> z -341.57  x 7.76  width 10.46
+> z range -280.80077437872325 -375.3996967519982
+
+### 🤖 Claude — 2026-11-17T13:32:53.367Z
+
+> 🔧 **Bash** `{"command": "grep -n \"from '../world/course'\\|from '../world\" src/vfx/waterRibbon.ts | head -3; grep -n -A8 \"export function flag05\\|export const flag05\\|function q05\" src/vfx/waterRibbon.ts | head -24 | cut -c1-180; grep -n \"^import\" src/world/course.ts", "description": "Check flag helper and import cycle risk"}`
+
+### 🧑 User — 2026-11-17T13:32:53.441Z
+
+> ↩︎ result: 13:import type { Course, StageId } from '../world/course';
+> 167:export const flag05 = q05;
+> 168-/**
+> 169- * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the
+> 170- * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026-11-16: "scroll the
+> 171- * texture so the water flows toward the camera"): 0.5 — slower than the ride, so the streaks stream TOWARD the camera
+> 172- * at half the ride speed while still moving downstream in the world.
+> 173- */
+> 174-export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 175-/**
+> 14:import * as THREE from 'three';
+
+### 🤖 Claude — 2026-11-17T13:32:58.774Z
+
+No runtime import cycle (the water module only imports type names from the course). Adding the painted-river path to the course, active only under `?match08=1`:
+
+### 🤖 Claude — 2026-11-17T13:33:09.886Z
+
+> 🔧 **Bash** `{"command": "cp /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/river08.json assets/textures/match08/river08.json && python3 -I - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:70]; s=s.replace(old,new)\nrep(\"import * as THREE from 'three';\\n\",\n    \"import * as THREE from 'three';\\nimport { flag05 } from '../vfx/waterRibbon';\\nimport river08 from '../../assets/textures/match08/river08.json';\\n\")\nrep(\"\"\"  seg(14, (t) => V(s8.x + 3.6 * Math.sin(2 * Math.PI * t) * Math.sin(Mat …[+2347 chars]`
+
+### 🧑 User — 2026-11-17T13:33:13.737Z
+
+> ↩︎ result: course.ts patched
+> 82:const smooth = (a: number, b: number, x: number) => {
+> 358:function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+> tsc clean
+
+### 🤖 Claude — 2026-11-17T13:33:38.239Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/match08/fit_proxies.py'; s=open(p).read()\ns=s.replace(\"FLOOR_Y = -113.11                        # Benny's water level at the 08 checkpoint (river + painted floor plane)\",\n            \"FLOOR_Y = -113.6                         # chamber floor (WORLD.chamber.floorY): painted river/floor plane, just under Benny's water line\")\ns=s.replace('''out[\"pipe\"] = {\"cx\": co[0], \"cy\": co[1], \"r\": co[2] + 0.04, \"z0\": float(C[2] + 8.0), \"z1\": zA}''',\n'''out[\"pipe\"] = {\"cx\": co[0], \"cy\": co[1], \"r\": co[2] + 0.04, \"z0\": float(C[2] + 8.0),  …[+3095 chars]`
+
+### 🧑 User — 2026-11-17T13:34:02.632Z
+
+> ↩︎ result: ok
+> Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     import json;d=json.load(open('/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/cam08.json'));print('iter 1 cam',d['cam'],'benny',d['benny'])
+>                   ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/json/__init__.py", line 298, in load
+>     return loads(fp.read(),
+>         cls=cls, object_hook=object_hook,
+>         parse_float=parse_float, parse_int=parse_int,
+>         parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+>   File "/usr/local/lib/python3.13/json/__init__.py", line 352, in loads
+>     return _default_decoder.decode(s)
+>            ~~~~~~~~~~~~~~~~~~~~~~~^^^
+>   File "/usr/local/lib/python3.13/json/decoder.py", line 345, in decode
+>     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+>                ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/json/decoder.py", line 363, in raw_decode
+>     raise JSONDecodeError("Expecting value", s, err.value) from None
+> json.decoder.JSONDecodeError: Expecting value: line 1 col …[+6705 chars]
+
