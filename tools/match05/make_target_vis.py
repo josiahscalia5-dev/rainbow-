@@ -110,7 +110,9 @@ mask = np.clip(gaussian_filter(inner.astype(float), 3.0) * 1.15, 0, 1).astype(np
 # TGTFILL05=2: the approved side inside the hole = the visible approved water around it spread in by normalised
 # convolution (no occluder colour, smooth low frequencies continuous with the rim); the texture still comes from the fill.
 _tf = os.environ.get("TGTFILL05")
-if _tf == "2":
+# TGTFILL05=3 (round 3): option 2 ONLY inside the coin holes (the green-teal discs seen while steering); the Benny dome
+# and the bottom ring keep the default blend (option 2 left a hard, flat edge around the dome when Benny steers aside).
+if _tf in ("2", "3"):
     _vis = (~binary_dilation(hole, iterations=2)).astype(np.float32)
     _num = np.stack([gaussian_filter(appr[..., i].astype(np.float32) * _vis, 12) for i in range(3)], -1)
     _den = gaussian_filter(_vis, 12)[..., None]
@@ -119,7 +121,8 @@ if _tf == "2":
         _n2 = np.stack([gaussian_filter(appr[..., i].astype(np.float32) * _vis, _big) for i in range(3)], -1)
         _d2 = gaussian_filter(_vis, _big)[..., None]
         _num[_lo] = _n2[_lo]; _den[_lo] = _d2[_lo]
-    _aside = np.where(holeC[..., None], _num / np.maximum(_den, 1e-4), appr)
+    _sel = holeC if _tf == "2" else (holeC & coins & ~binary_dilation(benny, iterations=2))
+    _aside = np.where(_sel[..., None], _num / np.maximum(_den, 1e-4), appr)
 else:
     _aside = np.where(holeC[..., None], fill, appr) if _tf == "1" else appr
 blend = pyr_blend(_aside.astype(np.float32), fill.astype(np.float32), mask)

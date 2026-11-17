@@ -517,44 +517,24 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
-   "path": "assets/textures/match05/tgtfill05_1/fill_mask.png",
+   "path": "assets/textures/match05/tgtfill05_3/fill_mask.png",
    "bytes": 11184,
    "sha256": "67c92394e05e9069c60bba434b97d71257fbf1aae8d14889770671f224eb2db7"
   },
   {
-   "path": "assets/textures/match05/tgtfill05_1/proj05_E.png",
-   "bytes": 2007972,
-   "sha256": "b1c3d5557d4192a8f2aee6c2fefddb6b749fb0a7f36a041cc6c469545f8e4bdf"
+   "path": "assets/textures/match05/tgtfill05_3/proj05_E.png",
+   "bytes": 2031177,
+   "sha256": "0630658852d436f310aaba6105c3b1f6ae6bc429da04aa387aed07fc01f273e4"
   },
   {
-   "path": "assets/textures/match05/tgtfill05_1/proj05_F.png",
-   "bytes": 347941,
-   "sha256": "2c5ecae9602cd276f36527cde7d4f4c2f3c647468620b944adf755aa910c71f6"
-  },
-  {
-   "path": "assets/textures/match05/tgtfill05_1/target_05.png",
-   "bytes": 2178479,
-   "sha256": "f1c2cbf50a2d025f04d9f8de68d8715f90b42960ab2f22dde268060c036db1d9"
-  },
-  {
-   "path": "assets/textures/match05/tgtfill05_2/fill_mask.png",
-   "bytes": 11184,
-   "sha256": "67c92394e05e9069c60bba434b97d71257fbf1aae8d14889770671f224eb2db7"
-  },
-  {
-   "path": "assets/textures/match05/tgtfill05_2/proj05_E.png",
-   "bytes": 2004048,
-   "sha256": "400bb9e45cf4decd3665701f94676f177e07033a0343f21061882804aed34e5a"
-  },
-  {
-   "path": "assets/textures/match05/tgtfill05_2/proj05_F.png",
+   "path": "assets/textures/match05/tgtfill05_3/proj05_F.png",
    "bytes": 342187,
    "sha256": "1672da4c17ec695cd154ff9654eb1de0c06fe875a7ecec08d27e6228b74e8024"
   },
   {
-   "path": "assets/textures/match05/tgtfill05_2/target_05.png",
-   "bytes": 2177829,
-   "sha256": "f18385757f018620f89122952cdab4cc06a23657a33fade43b6c2fc5eb1cdcd4"
+   "path": "assets/textures/match05/tgtfill05_3/target_05.png",
+   "bytes": 2195260,
+   "sha256": "968218d28e5bfa532f4c43bccb9f796fb0f7fc2a06c2492ba88acaf9023fdaa2"
   },
   {
    "path": "assets/textures/match05/tgtvis05/fill_mask.png",
@@ -729,7 +709,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13545,
-   "sha256": "ad451bca450bd610f495f9fdfdac22c50a4e71602541ca110a87059ac3aad4f4"
+   "sha256": "3f98abf046f086ef21dd5a1a2fd23002a096d2b6849840644dc75cd5bfd48c37"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1193,8 +1173,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1236,
-   "sha256": "e5dcc17bc3a544b9cd2b0d04e6a5bcab2b454f1cf885d72933667fd6fda000a0"
+   "bytes": 1234,
+   "sha256": "8b6157af5ea1b943563962ca1083f2f33e80e0cf2cf187084a8e7b3fff4a0515"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1450,6 +1430,86 @@
    "path": "qa/match/05/new_REGION_METRICS.json",
    "bytes": 2488,
    "sha256": "2ef0bdf3601d1453322a3ca7d02f17179b49ccdb2b583b99d5a4cb6530b92a70"
+  },
+  {
+   "path": "qa/match/05/r3_teal/03_NEW_tgtfill05_3.png",
+   "bytes": 2284496,
+   "sha256": "918e695c46af9689f0136bc7b907752a2e60299dbe46c6e5eabe44d9f5d72151"
+  },
+  {
+   "path": "qa/match/05/r3_teal/m3_FULL_FRAME_METRICS.json",
+   "bytes": 455,
+   "sha256": "b13204bf0685866bc5b70ba3862f51304192ed22e3f843e47c36542c10c6c3b3"
+  },
+  {
+   "path": "qa/match/05/r3_teal/m3_REGION_METRICS.json",
+   "bytes": 2543,
+   "sha256": "20988f31e8e3a337a809fdc1c7c8920642c63fc30cfa5cc3c5e889526117dcee"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_BEFORE_M1/move_03.png",
+   "bytes": 2077537,
+   "sha256": "4310bbe9504620aa8ff4d20b23d979b2ea8f7af2735984f855ace03cef81cef3"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_BEFORE_M1/move_06.png",
+   "bytes": 2049841,
+   "sha256": "e1d14c4c25ba33f18aae1587cc6d3f462cc8a707f2329be284a70717dae25332"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_BEFORE_M1/steer_L_050.png",
+   "bytes": 2025530,
+   "sha256": "3aed890f56a37a6ada572ec21bf8e3dc4e8110e58f4439558af17d0cf271b50a"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_BEFORE_M1/steer_L_080.png",
+   "bytes": 2004011,
+   "sha256": "679cb4e3cb44f2cd0bb3f430c4a6ac93481178b45d9a5223be62d2ec731c81d0"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_BEFORE_M1/steer_R_050.png",
+   "bytes": 2065044,
+   "sha256": "175cf3fc456e3b9774a15c25b04d6cc2e20fcdf601475f5d173edacfe252fb6d"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_BEFORE_M1/steer_R_080.png",
+   "bytes": 2045737,
+   "sha256": "e209efa2b516339162c70de0138c1627b66daa2bba9d9a8680e0a1d4b34342c8"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_NEW/move_03.png",
+   "bytes": 2075880,
+   "sha256": "d1d217c9e7f6291564005bbaa592107eb2b9673537f6a8be68cb029828a95862"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_NEW/move_06.png",
+   "bytes": 2048229,
+   "sha256": "b84eeb456096084482048614976d6db61a37d8ad67eb0b321d0d23518e7f48d1"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_NEW/steer_L_050.png",
+   "bytes": 2022795,
+   "sha256": "ab3238cd0af0b59ec35c3507071f62314110fd4934e037a4952b98ff58441c04"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_NEW/steer_L_080.png",
+   "bytes": 2000935,
+   "sha256": "24ff4a3e17180b7fddbeacec51bfe31a14fb695d163445f858830e7dcfe251c4"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_NEW/steer_R_050.png",
+   "bytes": 2062638,
+   "sha256": "804802e223ec12d8e605f442c49d7a69eec61f3a16701503801a72eebf7a3fa2"
+  },
+  {
+   "path": "qa/match/05/r3_teal/riding_NEW/steer_R_080.png",
+   "bytes": 2041195,
+   "sha256": "3cab9b777b6f0a04c9be9a11da10203b578134e7a755e1b713ef5468177e6cbe"
+  },
+  {
+   "path": "qa/match/05/r3_teal/side_by_side_steer_L_050_M1_left_NEW_right.png",
+   "bytes": 1142209,
+   "sha256": "2ddc6fd7f6a3078d9d1249bafb693175a2001e92c832b9a8b74de567ab84cf06"
   },
   {
    "path": "qa/match/05/scenery_bands.txt",
@@ -11348,8 +11408,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 108775,
-   "sha256": "9dad0e4bfeaaf80957132b1318416ad951d6369cac1eb758e29c4abda88f1a5c"
+   "bytes": 108544,
+   "sha256": "fff78071c1851980db0e777f12b81fd667041e008dac47cf73f8f4ac7e7c6886"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -11558,8 +11618,8 @@
   },
   {
    "path": "tools/match05/make_target_vis.py",
-   "bytes": 10006,
-   "sha256": "edd0bbcc4111e422087ea1f5a869c8a41e90c17ef5951005d55c0f3e5b708528"
+   "bytes": 10344,
+   "sha256": "274b49ddf249f102e53963b123ffaf41c821a66532cfa386ccb655828be935dc"
   },
   {
    "path": "tools/match05/metrics.py",

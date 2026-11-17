@@ -530,3 +530,155 @@ Both new fills remove the teal discs, but the locked view scores a little lower 
 
 > 🔧 **Bash** `{"command": "cat qa/match/05/move/new/move_log.json | head -c 300; echo; S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1&tgtfill05=2' --out=$S/move2 --d=0,3,6,12 --steer=-1,1 > $S/move2.log 2>&1; ls $S/move2; for f in move_00 move_12; do cmp -s $S/move2/$f.png qa/match/05/move/new/$f.png && echo \"$f same\" || echo \"$f diff\"; done", "description": "Capture riding/steering frames for option 2", "timeout": 900000}`
 
+### 🧑 User — 2026-11-17T17:37:16.716Z
+
+> ↩︎ result: {
+>  "q": "match05=1&tgtvis05=1",
+>  "frames": [
+>   {
+>    "file": "qa/match/05/move/new/move_00.png",
+>    "d": 0,
+>    "s": 132.438,
+>    "cam": [
+>     1.92,
+>     -37.94,
+>     -68.28
+>    ],
+>    "lat": 0
+>   },
+>   {
+>    "file": "qa/match/05/move/new/move_03.png",
+>    "d": 3,
+>    "s": 135.555,
+>    "cam": [
+>     1.94,
+>     -38
+> move_00.png
+> move_03.png
+> move_06.png
+> move_12.png
+> move_log.json
+> steer_L_025.png
+> steer_L_050.png
+> steer_L_080.png
+> steer_R_025.png
+> steer_R_050.png
+> steer_R_080.png
+> move_00 diff
+> move_12 diff
+
+### 🤖 Claude — 2026-11-17T17:37:22.491Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1' --out=$S/move0 --d=0,3,6,12 --steer=-1,1 > $S/move0.log 2>&1; python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfor f in ['move_00','move_03','move_06','move_12','steer_L_025','steer_L_050','steer_L_080','steer_R_025','steer_R_050','steer_R_080']:\n  a=np.asarray(Image.open('$S/move0/%s.png'%f).convert('RGB'),int);b=np.asarray(Image.open('$S/move2/%s.png'%f).convert('RGB'),int)\n  print(f,(np.abs(a-b).max(-1)>8).sum())\n\"", "des …[+78 chars]`
+
+### 🧑 User — 2026-11-17T17:38:17.836Z
+
+> ↩︎ result: move_00 37241
+> move_03 34968
+> move_06 29734
+> move_12 17576
+> steer_L_025 33920
+> steer_L_050 62456
+> steer_L_080 47715
+> steer_R_025 48002
+> steer_R_050 57273
+> steer_R_080 42815
+
+### 🤖 Claude — 2026-11-17T17:38:21.556Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nfrom PIL import Image\nfor f in ['steer_L_050','steer_R_050','move_03']:\n  a=Image.open('$S/move0/%s.png'%f).convert('RGB').crop((100,450,864,1300)); b=Image.open('$S/move2/%s.png'%f).convert('RGB').crop((100,450,864,1300))\n  im=Image.new('RGB',(764*2+10,850),'white'); im.paste(a,(0,0)); im.paste(b,(774,0)); im.save('$S/cmp_%s.png'%f)\n\"", "description": "Side-by-side crops M1 vs option 2"}`
+
+### 🧑 User — 2026-11-17T17:38:22.799Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:38:24.354Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/cmp_steer_L_050.png"}`
+
+### 🧑 User — 2026-11-17T17:38:24.402Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:38:24.959Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/cmp_steer_R_050.png"}`
+
+### 🧑 User — 2026-11-17T17:38:25.041Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:38:41.770Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match05/make_target_vis.py'; s=open(p).read()\na='''if _tf == \"2\":'''\nb='''# TGTFILL05=3 (round 3): option 2 ONLY inside the coin holes (the green-teal discs seen while steering); the Benny dome\n# and the bottom ring keep the default blend (option 2 left a hard, flat edge around the dome when Benny steers aside).\nif _tf in (\"2\", \"3\"):'''\nassert s.count(a)==1; s=s.replace(a,b)\na2='''    _aside = np.where(holeC[..., None], _num / np.maximum(_den, 1e-4), appr)'''\nb2='''    _sel = holeC if _tf == \"2\" else (holeC & coins & ~binary_dilation(benn …[+957 chars]`
+
+### 🧑 User — 2026-11-17T17:39:19.137Z
+
+> ↩︎ result: OPT2_SAME
+
+### 🤖 Claude — 2026-11-17T17:39:26.209Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/\\['1', '2'\\].includes(qv05('tgtfill05'))/['1', '2', '3'].includes(qv05('tgtfill05'))/; s#      : TGTVIS05 ? new URL('../../assets/textures/match05/tgtvis05/proj05_E.png'#      : TGTFILL05 === '3' ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_E.png', import.meta.url).href\\n      : TGTVIS05 ? new URL('../../assets/textures/match05/tgtvis05/proj05_E.png'#; s#: TGTFILL05 === '2' ? new URL('../../assets/textures/match05/tgtfill05_2/proj05_F.png', import.meta.url).href :#: TGTFILL05 === '2' ? new URL('../../assets/textures/match05/tgtfill05_2/proj05_F.png', i …[+772 chars]`
+
+### 🧑 User — 2026-11-17T17:39:47.361Z
+
+> ↩︎ result: 2
+> TSC_OK
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 8.16, 'within_10': 0.8101, 'within_20': 0.8908, 'ssim_lum': 0.8749, 'mean_signed_rgb': [-1.7, -0.0, 0.5]}
+> water                        px  480736  mean   3.55  <=10 0.939  <=20 0.965  ssim 0.956  signed [-2.4, -0.6, -0.2]
+> coins                        px   27437  mean  30.51  <=10 0.265  <=20 0.485  ssim 0.457  signed [-10.8, -2.8, 5.6]
+
+### 🤖 Claude — 2026-11-17T17:39:53.793Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nimport json; r=json.load(open('qa/match/05/new_REGION_METRICS.json'))['regions']; print('M1 coins',r['coins']); print(json.load(open('qa/match/05/new_FULL_FRAME_METRICS.json'))['whole_frame'])\"; node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1&tgtfill05=3' --out=$S/move3 --d=0,3,6,12 --steer=-1,1 > /dev/null 2>&1; python3 -I -c \"\nfrom PIL import Image\nfor f in ['steer_L_050','steer_R_050','steer_L_080','move_06']:\n  a=Image.open('$S/move0/%s.png'%f).convert('RGB').cr …[+286 chars]`
+
+### 🧑 User — 2026-11-17T17:40:46.546Z
+
+> ↩︎ result: M1 coins {'px': 27437, 'share_of_frame': 0.0207, 'mean_abs': 27.11, 'within_10': 0.2789, 'within_20': 0.5195, 'ssim_lum': 0.5499, 'mean_signed_rgb': [-9.2, -1.3, 4.8]}
+> {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 8.09, 'within_10': 0.8104, 'within_20': 0.8915, 'ssim_lum': 0.8773, 'mean_signed_rgb': [-1.6, -0.0, 0.5]}
+
+### 🤖 Claude — 2026-11-17T17:40:48.201Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/cmp3_steer_L_050.png"}`
+
+### 🧑 User — 2026-11-17T17:40:48.252Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:40:48.855Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/cmp3_steer_R_050.png"}`
+
+### 🧑 User — 2026-11-17T17:40:48.907Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:40:59.447Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && D=qa/match/05/r3_teal && mkdir -p $D/riding_BEFORE_M1 $D/riding_NEW && cp $S/cap3/05.png $D/03_NEW_tgtfill05_3.png && cp $S/m3_*.json $D/ && for f in move_03 move_06 steer_L_050 steer_R_050 steer_L_080 steer_R_080; do cp $S/move0/$f.png $D/riding_BEFORE_M1/; cp $S/move3/$f.png $D/riding_NEW/; done; cp $S/cmp3_steer_L_050.png $D/side_by_side_steer_L_050_M1_left_NEW_right.png; rm -rf assets/textures/match05/tgtfill05_1; git check-attr filter -- $D/03_NEW_tgtfill05_3.png assets/textures/match05/tgt …[+126 chars]`
+
+### 🧑 User — 2026-11-17T17:40:59.552Z
+
+> ↩︎ result: qa/match/05/r3_teal/03_NEW_tgtfill05_3.png: filter: unspecified
+> assets/textures/match05/tgtfill05_3/proj05_E.png: filter: unspecified
+> 27M	qa/match/05/r3_teal
+> 4.4M	assets/textures/match05/tgtfill05_2
+> 4.4M	assets/textures/match05/tgtfill05_3
+
+### 🤖 Claude — 2026-11-17T17:41:08.349Z
+
+> 🔧 **Bash** `{"command": "rm -rf assets/textures/match05/tgtfill05_2 && python3 - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\ns=s.replace(\"    E: TGTFILL05 === '1' ? new URL('../../assets/textures/match05/tgtfill05_1/proj05_E.png', import.meta.url).href\\n      : TGTFILL05 === '2' ? new URL('../../assets/textures/match05/tgtfill05_2/proj05_E.png', import.meta.url).href\\n      : TGTFILL05 === '3' ?\",\"    E: TGTFILL05 ?\")\ns=s.replace(\"TGTFILL05 === '1' ? new URL('../../assets/textures/match05/tgtfill05_1/proj05_F.png', import.meta.url).href : TGTFILL05 === '2' ? new URL('../../assets/textur …[+830 chars]`
+
+### 🧑 User — 2026-11-17T17:41:11.628Z
+
+> ↩︎ result: 238: * `?tgtfill05=3` (Screen 05 agent, round 3, qa/match/05/NOTES.md "Milestone 2 — 2.2"; explicit switch, needs tgtvis05):
+> 240: * (tools/match05/make_target_vis.py TGTFILL05=3: coin holes only; options 1 / 2 rejected, see NOTES) — removes the soft green-teal patches beside Benny while riding.
+> 252:export const TGTFILL05: boolean = TGTVIS05 && qv05('tgtfill05') === '3';
+> 1714:    const tex = new THREE.TextureLoader().load(TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_F.png', import.meta.url).href : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_F.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_F.png', import.meta.url).href, (t) => {
+> 1739:    E: TGTFILL05 ? new URL('../../assets/textures/match05/tgtfill05_3/proj05_E.png', import.meta.url).href
+> TSC_OK
+
+### 🤖 Claude — 2026-11-17T17:41:17.254Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && node scripts/capture.mjs 05 --out=$S/cd > /dev/null 2>&1; node scripts/capture.mjs 05 --q=\"match05=1\" --out=$S/cb > /dev/null 2>&1; node scripts/capture.mjs 05 --q=\"match05=1&tgtvis05=1&tgtfill05=3\" --out=$S/c3b > /dev/null 2>&1; cmp $S/cd/05.png qa/pilot05/current_default_05.png && echo DEFAULT_0px; cmp $S/cb/05.png qa/match/05/02_BEFORE_match05.png && echo BEFORE_0px; cmp $S/c3b/05.png $S/cap3/05.png && echo NEW_REPRO", "description": "Verify default, BEFORE and NEW reproduce", "timeout":  …[+7 chars]`
+
