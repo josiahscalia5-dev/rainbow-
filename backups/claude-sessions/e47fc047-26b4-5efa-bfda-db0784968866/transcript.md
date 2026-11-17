@@ -8417,3 +8417,74 @@ Pushed. Now the final end-of-session save through the autosave script, then full
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | tail -3; L=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-61131b9d-uj0oqb | cut -f1); echo \"local  $L\"; echo \"remote $R\"; [ \"$L\" = \"$R\" ] && echo MATCH; git status --porcelain | wc -l; git status --porcelain --ignored | grep -v \"^!! node_modules\\|^!! dist\" | head -8; python3 -I scripts/autosave-status.py | head -2; sha256sum -c scripts/reference.sha256 | grep -c ': OK'; git diff --quiet e27c6fa HEAD -- references character_references && echo \"references unchanged since e27c6fa\"; …[+255 chars]`
 
+### 🧑 User — 2026-11-17T11:34:40.400Z
+
+> ↩︎ result: "commit": "ff8762966a732df733ff74745df2f2b4c16deb41",
+>   "duration_s": 15
+> }
+> local  ff8762966a732df733ff74745df2f2b4c16deb41
+> remote ff8762966a732df733ff74745df2f2b4c16deb41
+> MATCH
+> 0
+> !! android/local.properties
+> !! backups/.autosave.lock
+> !! backups/.live/
+> !! tools/proj05/__pycache__/
+> AUTOSAVE OK | branch ccr-61131b9d-uj0oqb | scheduler daemon | last verified backup 2026-11-17T11:34:16+00:00 (0.3 min ago) | local ff87629 remote ff87629 (match) | uncommitted 0
+> 13
+> references unchanged since e27c6fa
+> 10
+> LFS stubs: 0
+> 0
+
+### 🤖 Claude — 2026-11-17T11:34:57.398Z
+
+RAINBOW GITHUB BACKUP VERIFIED
+
+**Final save**
+- **Branch:** `ccr-61131b9d-uj0oqb`. Your previous SHA `8620901…` is included; there were several autosaves after it.
+- **Local and GitHub:** both `ff8762966a732df733ff74745df2f2b4c16deb41`, so they match (checked directly against GitHub).
+- **Nothing left unsaved:** no uncommitted or untracked project files. The only ignored files are disposable logs, caches and the computer-specific `android/local.properties`.
+- **Git LFS:** no placeholder files left locally. A test push found nothing missing on GitHub, so every model and texture binary is uploaded.
+- **Approved images:** all 13 pass their checksums and are unchanged.
+- **Specialists:** all ten definitions are in `.claude/agents/`, unchanged.
+- **Five-minute autosave:** running, last verified save matches GitHub.
+
+**Two branches hold different work, and I did not merge them**
+- `ccr-b0757dec-dj6l1o` (latest commit `a8c03f0`) contains every other recent Rainbow branch. It has 139 commits of Screen 05 work this branch lacks: HUD, coins, bubbles, splash and spray, ring table, Benny r7, and its own separate version of the sharp riding water.
+- This branch has work that one lacks: the Screen 05 paddles, water flow, sharp riding water and `?match05=1` switch, the audit of Screens 02–10, and the Screen 07 measurements and camera work.
+- A test merge shows 11 conflicts, including two different versions of the Screen 05 sharp riding water. You need to choose between those, so nothing will be merged until you say so. The handoff file lists the safe steps for combining both when you're ready.
+
+**Automatic merging is turned off**
+- `scripts/claude-bootstrap.sh` no longer merges anything when a session starts; it only fetches.
+- Merging only happens with a new `--resume` option, to be used with your OK. `CLAUDE.md` now says the same.
+- Recover on the new account with `bash scripts/claude-bootstrap.sh --skip-resume`.
+
+**Handoff file: `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md`**
+- It covers:
+  - the repo and both branches, and how they differ
+  - your 6-video / 5-playable game structure
+  - the Screen 07 measurements, camera-fit result and exact next steps
+  - specialist status and the brief to relaunch the Screen 06 specialist
+  - tool setup: Blender 5.3.0, Node 22, TypeScript, Playwright/Chromium, Git LFS, Android SDK 34 + Java, FFmpeg, Python image libraries
+  - which connections need you to sign in again on the new account: GitHub, the World Labs connector (its key goes into a secure form, never into files), and context7 (optional)
+  - the next commands to run
+- I also put a pointer to it at the top of the old transfer guide and in `CLAUDE.md`.
+
+**What was not finished — please note**
+- **Screen 06 specialist:** it was stopped by the interruptions twice and never saved any work, so nothing was lost. Its brief is saved at `qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt`; no agents are running now.
+- **Screen 07:**
+  - **Done:** measured your approved picture: Benny's box, the five gold rings, and the vanishing point near x 615, y 550.
+  - **Camera:** the best camera so far gets Benny the right size, but he is still about 100 px too far left.
+  - **New camera adjustment:** saved in the code but not switched on, so the game looks exactly as before.
+  - **Rings, foam, river, coins, texture:** not started yet.
+  - **No new Screen 07 images:** I don't have the approved / before / new set to show you yet.
+- **Not written yet:** the A/B/C tool comparison (fSpy, Substance 3D Painter, 3D generators). The facts I gathered are in the handoff, and I haven't tested any of those tools.
+- **Not built yet:** the video hand-over list, the switchable video route, and the Screen 03 Flow test pack.
+- **Your videos:** your opening and ending videos (`intro.mp4`, `ending.mp4`) are still not in the repository.
+- **No credits spent:** no video was made and no paid credits were used.
+
+### 🧑 User — 2026-11-17T11:35:00.362Z
+
+save everything to my GitHub.
+
