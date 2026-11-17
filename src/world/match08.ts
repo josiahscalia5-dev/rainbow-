@@ -59,6 +59,10 @@ uniform float uPatchK;      // patch repeats per world unit
 uniform vec3 uProjPos;      // projector (approved view) position
 uniform vec4 uPjPost;
 uniform vec2 uPjRes;
+uniform sampler2D uFill;    // m08fill: world-anchored wall tile cut from the picture's near pipe wall (unwrap08.py)
+uniform float uFillMode;    // 0 off (triplanar patch), 1 drum wall (around the chamber axis), 2 flat disc (x/y)
+uniform vec2 uFillSize;     // tile size in world units (around, along)
+uniform vec3 uDrum;         // chamber axis x, y and radius
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -70,8 +74,18 @@ vec3 patchColor() {
   return texture2D(uPatch, p.zy).rgb * n.x + texture2D(uPatch, p.xz).rgb * n.y + texture2D(uPatch, p.xy).rgb * n.z;
 }
 float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
+vec3 fillColor() {
+  vec2 q;
+  if (uFillMode < 1.5) {
+    // angle from straight down: the wrap of atan lies under the floor, never seen
+    float a = atan(vW.x - uDrum.x, -(vW.y - uDrum.y));
+    float n = floor(6.2831853 * uDrum.z / uFillSize.x + 0.5);  // whole tiles around the drum: no seam
+    q = vec2(a / 6.2831853 * n, vW.z / uFillSize.y);
+  } else q = vW.xy / uFillSize;
+  return texture2D(uFill, q).rgb;
+}
 void main() {
-  vec3 pc = patchColor();
+  vec3 pc = uFillMode > 0.5 ? fillColor() : patchColor();
   vec3 t = pc;
   // stretch guard: the projection is used where the current view sees the surface no more face-on than the approved
   // view did (ratio of the two incidence cosines); in the approved view itself the ratio is 1 -> pure projection
@@ -84,8 +98,19 @@ void main() {
     if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) {
       float vis = 1.0;
       if (uUseDepth > 0.5) {
-        float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
-        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+        float zf = linZ(ndc.z * 0.5 + 0.5);
+        if (uFillMode > 0.5) {
+          // m08fill: soft hand-over to the fill (5 x 5 taps over ~3 % of the frame) instead of a hard shadow line
+          vis = 0.0;
+          for (int i = -2; i <= 2; i++) for (int j = -2; j <= 2; j++) {
+            float zs = linZ(texture2D(uDepth, uv + vec2(float(i), float(j) * 0.5625) * 0.007).r);
+            vis += 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+          }
+          vis = smoothstep(0.0, 1.0, vis / 25.0);
+        } else {
+          float zs = linZ(texture2D(uDepth, uv).r);
+          vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+        }
       }
       t = mix(pc, texture2D(uPlate, uv).rgb, vis * keep);
     }
@@ -127,12 +152,24 @@ export async function buildMatch08(): Promise<Match08> {
     t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping; t.anisotropy = 4; return t;
   };
   const [pWall, pGold, pTowel] = await Promise.all([loadPatch('wall'), loadPatch('gold'), loadPatch('towel')]);
-  const mat = (fallback: string, patch: THREE.Texture, k: number) => new THREE.ShaderMaterial({
+  // `&m08fill=1` (scenery round): chamber surfaces the picture never showed get a world-anchored tile of the picture's
+  // own wall (no mirrored kaleidoscope); see tools/match08/unwrap08.py and qa/match/08/scenery/NOTES.md
+  const fill = flag05('m08fill');
+  let fillTex: THREE.Texture | null = null, fillSize = new THREE.Vector2(1, 1);
+  if (fill) {
+    const FJ: { w: number; h: number } = await fetch(new URL('../../assets/textures/match08/fill_drum.json', import.meta.url).href).then((r) => r.json());
+    fillTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/fill_drum.png', import.meta.url).href);
+    fillTex.colorSpace = THREE.NoColorSpace; fillTex.wrapS = fillTex.wrapT = THREE.RepeatWrapping; fillTex.anisotropy = 8;
+    fillSize = new THREE.Vector2(FJ.w, FJ.h);
+  }
+  const mat = (fallback: string, patch: THREE.Texture, k: number, fillMode = 0) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
-    uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k } },
+    uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k },
+      uFill: { value: fillTex ?? patch }, uFillMode: { value: fill ? fillMode : 0 }, uFillSize: { value: fillSize },
+      uDrum: { value: new THREE.Vector3(L.chamber.cx, L.chamber.cy, L.chamber.r) } },
   });
   // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
-  const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), floor: mat('#9c55c8', pWall, 1 / 2.4), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
+  const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
 
   const group = new THREE.Group();
   group.name = 'match08_projection';
@@ -197,13 +234,13 @@ export async function buildMatch08(): Promise<Match08> {
   if (fixBw) bh.absarc(archC.x, archC.y, archR * 0.985, 0, Math.PI * 2, true);
   else bh.absarc(L.pipe.cx, L.pipe.cy, L.backwall.holeR, 0, Math.PI * 2, true);
   bw.holes.push(bh);
-  add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, fixBw ? archC.z - 0.02 : L.backwall.z), M.wall, 'backwall');
+  add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, fixBw ? archC.z - 0.02 : L.backwall.z), M.disc, 'backwall');
   // chamber walls (from the arch to the door wall) + the door wall
   const chLen = archC.z - C.zDoor;
   const ch = new THREE.CylinderGeometry(C.r, C.r, chLen, 160, 24, true);
   ch.rotateX(Math.PI / 2).translate(C.cx, C.cy, C.zDoor + chLen / 2);
-  add(ch, M.wall, 'chamber');
-  add(new THREE.CircleGeometry(C.r, 96).translate(C.cx, C.cy, C.zDoor), M.wall, 'doorwall');
+  add(ch, M.drum, 'chamber');
+  add(new THREE.CircleGeometry(C.r, 96).translate(C.cx, C.cy, C.zDoor), M.disc, 'doorwall');
   // floor / river plane at Benny's water level, from behind the camera to the door wall
   const fl = new THREE.PlaneGeometry(2 * C.r, L.pipe.z0 - C.zDoor, 32, 64);
   fl.rotateX(-Math.PI / 2).translate(C.cx, L.floorY, (L.pipe.z0 + C.zDoor) / 2);

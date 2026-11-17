@@ -1,0 +1,90 @@
+[
+ {
+  "name": "f00_checkpoint",
+  "frames": 0,
+  "steer": null,
+  "s": 392.085,
+  "lat": 0,
+  "stage": "08"
+ },
+ {
+  "name": "f03_forward3u",
+  "frames": 19,
+  "steer": null,
+  "s": 395.01,
+  "lat": 0,
+  "stage": "08"
+ },
+ {
+  "name": "f06_forward6u",
+  "frames": 38,
+  "steer": null,
+  "s": 398.017,
+  "lat": 0,
+  "stage": "08"
+ },
+ {
+  "name": "f10_forward10u",
+  "frames": 63,
+  "steer": null,
+  "s": 401.975,
+  "lat": 0,
+  "stage": "08"
+ },
+ {
+  "name": "f15_forward15u",
+  "frames": 95,
+  "steer": null,
+  "s": 407.044,
+  "lat": 0,
+  "stage": "09"
+ },
+ {
+  "name": "s_left_steer",
+  "frames": 40,
+  "steer": -1,
+  "s": 398.334,
+  "lat": -1.85,
+  "stage": "08"
+ },
+ {
+  "name": "s_right_steer",
+  "frames": 40,
+  "steer": 1,
+  "s": 398.335,
+  "lat": 1.85,
+  "stage": "08"
+ },
+ {
+  "name": "s_left_hard",
+  "frames": 80,
+  "steer": -1,
+  "s": 404.668,
+  "lat": -2.28,
+  "stage": "09"
+ },
+ {
+  "name": "s_right_hard",
+  "frames": 80,
+  "steer": 1,
+  "s": 404.668,
+  "lat": 2.28,
+  "stage": "09"
+ },
+ {
+  "name": "s_right_hard6u",
+  "frames": 38,
+  "steer": 1,
+  "s": 398.018,
+  "lat": 1.85,
+  "stage": "08"
+ },
+ {
+  "name": "s_right_hard10u",
+  "frames": 63,
+  "steer": 1,
+  "s": 401.977,
+  "lat": 1.681,
+  "stage": "08"
+ }
+]

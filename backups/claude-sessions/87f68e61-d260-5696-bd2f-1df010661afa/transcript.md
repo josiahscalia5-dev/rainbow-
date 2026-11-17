@@ -454,3 +454,295 @@ Base is deterministic (0 px between two captures), but `m08bw` changes 13,374 px
 > floorY -113.6
 > cam [12.848382064991654, -109.86620136268614, -274.80056164895825]
 
+### 🤖 Claude — 2026-11-17T20:32:26.050Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/match08 && cat > /home/user/rainbow-/tools/match08/unwrap08.py <<'EOF'\n\"\"\"Screen 08 scenery fill (2026-11-17, qa/match/08/scenery/NOTES.md): unroll the chamber drum wall as the approved\nplate shows it (angle x depth along the drum) to measure the slot pattern and pick a world-anchored fill tile.\nusage: python3 -I tools/match08/unwrap08.py <outDir>\"\"\"\nimport json, math, sys, numpy as np\nfrom PIL import Image\nout = sys.argv[1]\nL = json.load(open('assets/textures/match08/proj08.json'))\nplate = np.asarray(Image.open('assets/textures/mat …[+2388 chars]`
+
+### 🧑 User — 2026-11-17T20:32:26.393Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/tools/match08/unwrap08.py", line 22, in <module>
+>     from matplotlib.path import Path as MPath
+> ModuleNotFoundError: No module named 'matplotlib'
+
+### 🤖 Claude — 2026-11-17T20:32:31.324Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match08/unwrap08.py';s=open(p).read()\ns=s.replace(\"\"\"from matplotlib.path import Path as MPath\nopening = MPath(np.stack([rx, ry], -1))\"\"\",\"\"\"from PIL import ImageDraw\nom = Image.new('L', (Wp, Hp), 0); ImageDraw.Draw(om).polygon(list(zip(rx.tolist(), ry.tolist())), fill=255)\nom = np.asarray(om) > 0\"\"\")\ns=s.replace(\"\"\"ok &= opening.contains_points(np.stack([px.ravel(), py.ravel()], -1)).reshape(px.shape)\n\"\"\",\"\"\"ok &= om[np.clip(py, 0, Hp - 1).astype(int), np.clip(px, 0, Wp - 1).astype(int)]\n\"\"\")\nopen(p,'w').write(s)\nEOF\nS …[+295 chars]`
+
+### 🧑 User — 2026-11-17T20:32:32.057Z
+
+> ↩︎ result: visible cells 195040 of 1296000 angle range (deg) -180.0 179.75000000000003
+
+### 🤖 Claude — 2026-11-17T20:32:33.726Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/du_small.png"}`
+
+### 🧑 User — 2026-11-17T20:32:33.746Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:32:49.349Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image;im=Image.open('$S/drum_unrolled.png');im.crop((0,150,680,900)).save('$S/du_crop.png')\"", "description": "Crop visible unrolled region"}`
+
+### 🧑 User — 2026-11-17T20:32:49.519Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T20:32:50.502Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/du_crop.png"}`
+
+### 🧑 User — 2026-11-17T20:32:50.523Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:32:59.303Z
+
+The deep drum is too foreshortened to give a sharp source. The near pipe walls (crisp slots in the picture's corners) are the better source — unrolling those instead.
+
+### 🤖 Claude — 2026-11-17T20:33:05.709Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && cat >> tools/match08/unwrap08.py <<'EOF'\n# --- the near inlet pipe (crisp slots in the picture's outer frame): unrolled at 1 cell = 1 cm of wall\nPp = L['pipe']; NTp = int(2 * math.pi * Pp['r'] / 0.01); NZp = int((Pp['z0'] - Pp['z1']) / 0.01)\nthp = np.linspace(-np.pi, np.pi, NTp, endpoint=False); zp = np.linspace(Pp['z0'], Pp['z1'], NZp)\nT, Z = np.meshgrid(thp, zp)\nP = np.stack([Pp['cx'] + Pp['r'] * np.cos(T), Pp['cy'] + Pp['r'] * np.sin(T), Z], -1)\npx, py, dz = project(P)\nok = (dz > 0.3)  …[+675 chars]`
+
+### 🧑 User — 2026-11-17T20:33:07.041Z
+
+> ↩︎ result: visible cells 195040 of 1296000 angle range (deg) -180.0 179.75000000000003
+> pipe cells (1441, 1833, 3) visible 164805
+> (1833, 1441)
+
+### 🤖 Claude — 2026-11-17T20:33:09.059Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/pu_small.png"}`
+
+### 🧑 User — 2026-11-17T20:33:09.082Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:33:14.855Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nim=Image.open('$S/pipe_unrolled.png');a=np.asarray(im)\nok=a.max(2)>0;ys,xs=np.nonzero(ok[:, 900:]);print(xs.min()+900,xs.max()+900,ys.min(),ys.max())\nim.crop((1100,1150,1650,1441)).save('$S/pu_crop.png')\"", "description": "Crop right pipe slot grid"}`
+
+### 🧑 User — 2026-11-17T20:33:15.148Z
+
+> ↩︎ result: 1127 1594 1162 1440
+
+### 🤖 Claude — 2026-11-17T20:33:16.151Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/pu_crop.png"}`
+
+### 🧑 User — 2026-11-17T20:33:16.172Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:33:27.427Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$S/pipe_unrolled.png').convert('L')).astype(float)\nr=a[1250:1440,1180:1520]; print('nonzero frac',(r>0).mean())\ng=r-r.mean()\nF=np.fft.fft2(g);ac=np.real(np.fft.ifft2(F*np.conj(F)));ac/=ac[0,0]\n# z period: rows\ncol=ac[:,0];print('z ac peaks',[ (i,round(col[i],2)) for i in range(20,120) if col[i]==col[max(i-3,0):i+4].max() and col[i]>0.1])\nrow=ac[0,:];print('th ac peaks',[ (i,round(row[i],2)) for i in range(15 …[+121 chars]`
+
+### 🧑 User — 2026-11-17T20:33:27.648Z
+
+> ↩︎ result: nonzero frac 0.9842260061919504
+> z ac peaks [(49, np.float64(0.47)), (95, np.float64(0.34))]
+> th ac peaks [(30, np.float64(0.14))]
+
+### 🤖 Claude — 2026-11-17T20:33:33.795Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$S/pipe_unrolled.png').convert('L')).astype(float)\nr=a[1250:1440,1180:1520];g=r-r.mean()\nF=np.fft.fft2(g);ac=np.real(np.fft.ifft2(F*np.conj(F)));ac/=ac[0,0]\nac=np.fft.fftshift(ac);cy,cx=np.array(ac.shape)//2\nfor dy in (0,47,48,49,50,96,97,98):\n  rr=ac[cy+dy,cx-80:cx+81];i=np.argsort(rr)[::-1][:4];print(dy,[(int(j-80),round(float(rr[j]),2)) for j in i])\n\"", "description": "2D autocorrelation peaks"}`
+
+### 🧑 User — 2026-11-17T20:33:33.986Z
+
+> ↩︎ result: Exit code 1
+> 0 [(0, 1.0), (1, 0.93), (-1, 0.93), (2, 0.84)]
+> 47 [(1, 0.47), (2, 0.47), (0, 0.46), (3, 0.45)]
+> 48 [(1, 0.48), (2, 0.48), (0, 0.47), (3, 0.46)]
+> 49 [(1, 0.49), (2, 0.48), (0, 0.47), (3, 0.47)]
+> 50 [(1, 0.48), (2, 0.48), (0, 0.47), (3, 0.46)]
+> Traceback (most recent call last):
+>   File "<string>", line 9, in <module>
+>     rr=ac[cy+dy,cx-80:cx+81];i=np.argsort(rr)[::-1][:4];print(dy,[(int(j-80),round(float(rr[j]),2)) for j in i])
+>        ~~^^^^^^^^^^^^^^^^^^^
+> IndexError: index 191 is out of bounds for axis 0 with size 190
+
+### 🤖 Claude — 2026-11-17T20:33:42.240Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$S/pipe_unrolled.png').convert('L')).astype(float)\nr=a[1250:1440,1180:1520];g=r-r.mean(1,keepdims=True)\n# per-row ac along theta, averaged\nF=np.fft.fft(g,axis=1);ac=np.real(np.fft.ifft(F*np.conj(F),axis=1)).mean(0);ac/=ac[0]\nprint([(i,round(ac[i],3)) for i in range(10,200) if ac[i]==ac[i-3:i+4].max()])\n\"", "description": "Theta period from row autocorrelation"}`
+
+### 🧑 User — 2026-11-17T20:33:42.473Z
+
+> ↩︎ result: [(30, np.float64(0.095)), (53, np.float64(-0.086)), (59, np.float64(-0.088)), (76, np.float64(-0.079)), (99, np.float64(-0.02)), (138, np.float64(-0.009)), (170, np.float64(0.003))]
+
+### 🤖 Claude — 2026-11-17T20:34:06.885Z
+
+> 🔧 **Bash** `{"command": "cat >> tools/match08/unwrap08.py <<'EOF'\n# --- fill tile (m08fill): 3 slot rows (z period 0.49 u, autocorrelation) x 3 u of the right pipe wall, wrap edges\n# feathered with the picture's own continuation, colours matched to the visible chamber wall (gold excluded)\nPZ, R0, C0, TW, FE = 49, 1292, 1200, 300, 24\nsrc = img  # pipe_unrolled, 1 cm cells\nt = src[R0:R0 + 3 * PZ + FE, C0:C0 + TW + FE].copy()\nassert (t.max(2) > 0).mean() > 0.995, 'tile leaves the visible pipe area'\nw = np.linspace(0, 1, FE)[None, :, None]\nt[:, :FE] = t[:, :FE] * w + t[:, TW:TW + FE] * (1 - w)\nt = t[ …[+1317 chars]`
+
+### 🧑 User — 2026-11-17T20:34:08.138Z
+
+> ↩︎ result: Exit code 1
+> visible cells 195040 of 1296000 angle range (deg) -180.0 179.75000000000003
+> pipe cells (1441, 1833, 3) visible 164805
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/tools/match08/unwrap08.py", line 62, in <module>
+>     t[:FE] = t[:FE] * w + t[3 * PZ:3 * PZ + FE] * (1 - w)
+>                           ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+> ValueError: operands could not be broadcast together with shapes (2,300,3) (24,1,1)
+
+### 🤖 Claude — 2026-11-17T20:34:08.141Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/tile2x2.png"}`
+
+### 🧑 User — 2026-11-17T20:34:08.159Z
+
+> ↩︎ result: File does not exist. Note: your current working directory is /home/user/rainbow-.
+
+### 🤖 Claude — 2026-11-17T20:34:15.057Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/PZ, R0, C0, TW, FE = 49, 1292, 1200, 300, 24/PZ, R0, C0, TW, FE = 49, 1268, 1200, 300, 24/' tools/match08/unwrap08.py && python3 -I tools/match08/unwrap08.py /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image;t=Image.open('assets/textures/match08/fill_drum.png');k=Image.new('RGB',(t.width*2,t.height*2))\n[k.paste(t,(x,y)) for x in (0,t.width) for y in (0,t.height)];k.save('/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/tile2x2.png')\"", "description": "Rebuild tile w …[+19 chars]`
+
+### 🧑 User — 2026-11-17T20:34:16.591Z
+
+> ↩︎ result: visible cells 195040 of 1296000 angle range (deg) -180.0 179.75000000000003
+> pipe cells (1441, 1833, 3) visible 164805
+> tile (147, 300, 3) chamber wall mean [182.3  79.  184.1] std [48.3 61.3 64.3] gold px excluded 45882
+
+### 🤖 Claude — 2026-11-17T20:34:18.311Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/tile2x2.png"}`
+
+### 🧑 User — 2026-11-17T20:34:18.331Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:34:21.400Z
+
+Visible ghosting at the tile's side join — choosing the tile width where the slot pattern lines up best.
+
+### 🤖 Claude — 2026-11-17T20:34:24.509Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$S/pipe_unrolled.png').convert('L')).astype(float)\nbest=[]\nfor C0 in range(1160,1260,4):\n for TW in range(180,330):\n  if C0+TW+24>1560: continue\n  A=a[1268:1415,C0:C0+24];B=a[1268:1415,C0+TW:C0+TW+24]\n  if (A==0).any() or (B==0).any(): continue\n  best.append((np.abs(A-B).mean(),C0,TW))\nbest.sort();print(best[:6])\n\"", "description": "Search best seamless tile width"}`
+
+### 🧑 User — 2026-11-17T20:34:24.715Z
+
+> ↩︎ result: [(np.float64(27.97250566893424), 1236, 219), (np.float64(28.485544217687075), 1236, 218), (np.float64(28.964569160997733), 1236, 217), (np.float64(29.388038548752835), 1236, 216), (np.float64(29.735544217687075), 1236, 215), (np.float64(30.073979591836736), 1236, 214)]
+
+### 🤖 Claude — 2026-11-17T20:34:28.713Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/PZ, R0, C0, TW, FE = 49, 1268, 1200, 300, 24/PZ, R0, C0, TW, FE = 49, 1268, 1236, 219, 40/' tools/match08/unwrap08.py && python3 -I tools/match08/unwrap08.py /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad 2>&1 | tail -2", "description": "Rebuild tile with best width"}`
+
+### 🧑 User — 2026-11-17T20:34:29.935Z
+
+> ↩︎ result: ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+> ValueError: operands could not be broadcast together with shapes (26,219,3) (40,1,1)
+
+### 🤖 Claude — 2026-11-17T20:34:36.301Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match08/unwrap08.py';s=open(p).read()\ns=s.replace(\"w = np.linspace(0, 1, FE)[:, None, None]\\nt[:FE] = t[:FE] * w + t[3 * PZ:3 * PZ + FE] * (1 - w)\",\"FV = 24\\nw = np.linspace(0, 1, FV)[:, None, None]\\nt[:FV] = t[:FV] * w + t[3 * PZ:3 * PZ + FV] * (1 - w)\")\ns=s.replace(\"t = src[R0:R0 + 3 * PZ + FE, C0:C0 + TW + FE].copy()\",\"t = src[R0:R0 + 3 * PZ + 24, C0:C0 + TW + FE].copy()\")\nopen(p,'w').write(s)\nEOF\npython3 -I tools/match08/unwrap08.py /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad 2>&1 | tail -1 && py …[+358 chars]`
+
+### 🤖 Claude — 2026-11-17T20:34:37.403Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/tile2x2.png"}`
+
+### 🧑 User — 2026-11-17T20:34:37.732Z
+
+> ↩︎ result: tile (147, 219, 3) chamber wall mean [182.3  79.  184.1] std [48.3 61.3 64.3] gold px excluded 45882
+
+### 🧑 User — 2026-11-17T20:34:37.744Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:34:41.731Z
+
+Tile looks right (only a soft join). Now wiring it into the shader behind `&m08fill=1`, for the chamber drum, door wall and entrance wall only.
+
+### 🤖 Claude — 2026-11-17T20:34:54.640Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts';s=open(p).read()\ns=s.replace(\"\"\"uniform vec2 uPjRes;\nvarying vec4 vProj;\"\"\",\"\"\"uniform vec2 uPjRes;\nuniform sampler2D uFill;    // m08fill: world-anchored wall tile cut from the picture's near pipe wall (unwrap08.py)\nuniform float uFillMode;    // 0 off (triplanar patch), 1 drum wall (around the chamber axis), 2 flat disc (x/y)\nuniform vec2 uFillSize;     // tile size in world units (around, along)\nuniform vec3 uDrum;         // chamber axis x, y and radius\nvarying vec4 vProj;\"\"\",1)\ns=s.replace(\"\"\"void main() {\n   …[+3026 chars]`
+
+### 🧑 User — 2026-11-17T20:34:56.886Z
+
+> ↩︎ result: 111:  const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
+> 158:      uDrum: { value: new THREE.Vector3(L.chamber.cx, L.chamber.cy, L.chamber.r) } },
+> 166:  const C = L.chamber;
+
+### 🤖 Claude — 2026-11-17T20:34:59.076Z
+
+tsc clean. Rendering moving frames with `m08bw=1&m08fill=1`.
+
+### 🤖 Claude — 2026-11-17T20:35:02.742Z
+
+> 🔧 **Bash** `{"command": "M08_SHOTS=full timeout 900 node tools/match08/motion08.mjs qa/match/08/scenery/motion_fill_r5 'match08=1&coins08px=1&m08bw=1&m08fill=1' 2>&1 | grep -i \"error\" | head; S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image\nfor n in ['f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_hard6u']:\n  ims=[Image.open(f'qa/match/08/scenery/{d}/{n}.png').convert('RGB').resize((432,768)) for d in ['motion_bw_r5','motion_fill_r5']]\n  k=Image.new('RGB',(864,768));[k.paste(im,(i*432,0)) for i,im in e …[+115 chars]`
+
+### 🤖 Claude — 2026-11-17T20:35:03.889Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/fl_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-17T20:35:46.518Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-17T20:35:46.548Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:35:54.697Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nims=[Image.open(f'qa/match/08/scenery/{d}/f06_forward6u.png').convert('RGB').crop((0,0,864,520)) for d in ['motion_bw_r5','motion_fill_r5']]\nk=Image.new('RGB',(864,1040));k.paste(ims[0],(0,0));k.paste(ims[1],(0,520));k.save('$S/fl_top.png')\nfor im in ims: a=np.asarray(im).astype(float)[130:250,0:300].reshape(-1,3);print(a.mean(0).round(0))\"", "description": "Zoom ceiling region comparison"}`
+
+### 🧑 User — 2026-11-17T20:35:55.117Z
+
+> ↩︎ result: [168.  47. 142.]
+> [170.  74. 172.]
+
+### 🤖 Claude — 2026-11-17T20:35:55.845Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/fl_top.png"}`
+
+### 🧑 User — 2026-11-17T20:35:55.884Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:36:06.918Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('qa/match/08/scenery/motion_fill_r5/f06_forward6u.png').convert('RGB')).astype(float)\ndef st(r):x=r.reshape(-1,3);return x.mean(0).round(0),x.std(0).round(0)\nprint('fill  ceiling',st(a[200:230,0:150]),st(a[200:230,720:864]))\nprint('proj  wall   ',st(a[280:330,0:60]),st(a[300:360,820:864]))\n\"", "description": "Measure fill vs projected colors"}`
+
+### 🧑 User — 2026-11-17T20:36:07.163Z
+
+> ↩︎ result: fill  ceiling (array([181.,  74., 175.]), array([39., 38., 42.])) (array([185.,  77., 184.]), array([42., 41., 48.]))
+> proj  wall    (array([181.,  74., 179.]), array([40., 39., 45.])) (array([182.,  76., 185.]), array([40., 40., 47.]))
+
+### 🤖 Claude — 2026-11-17T20:36:13.415Z
+
+Colours now match (fill 181/74/175 vs painted wall 181/74/179); what remains is a sharp change of pattern at the arch's shadow line. Softening that line (multi-tap visibility, fill surfaces only).
+
+### 🤖 Claude — 2026-11-17T20:36:20.867Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts';s=open(p).read()\nold=\"\"\"      if (uUseDepth > 0.5) {\n        float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);\n        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);\n      }\"\"\"\nnew=\"\"\"      if (uUseDepth > 0.5) {\n        float zf = linZ(ndc.z * 0.5 + 0.5);\n        if (uFillMode > 0.5) {\n          // m08fill: soft hand-over to the fill (5 x 5 taps over ~3 % of the frame) instead of a hard shadow line\n          vis = 0.0;\n          for (int i = -2; i <= 2; i++) for (int j = -2; j <=  …[+1204 chars]`
+
+### 🤖 Claude — 2026-11-17T20:36:22.119Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/fl_f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-17T20:37:07.743Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-17T20:37:07.768Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:37:10.384Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/fl_s_left_steer.png"}`
+
+### 🧑 User — 2026-11-17T20:37:10.419Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:37:10.976Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/fl_f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-17T20:37:11.006Z
+
+> ↩︎ result: [image]
+
