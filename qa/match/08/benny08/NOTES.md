@@ -23,6 +23,21 @@ y 840–1245; scenery = y ≥ 190 outside that box; share of pixels within 20 le
    Tested and REJECTED (measured worse): body fur grown higher under the cuff (bald threshold +0.03…+0.15: no change);
    arm puffs 1.25× / 1.5× (64.8 / 64.5 %), raised +0.12 / +0.24 (64.8 / 64.1 %), 1.15× raised + wider (64.0 %).
 
+## Round 3b (lead review of the 2x close-ups, captures `r3b/`)
+* Fur: `fur.ts` uniforms `uSoft` (root occlusion + per-strand variation pulled toward their mean) and `uSoftEdge`
+  (shorter fur where the body turns edge-on → softer outline); BENNY05 shader only, 0 = unchanged. Used at 0.6 on
+  body + arms, edge 1.0 on body (`?b08soft=0` = off). Probe: 65.3 → 65.6 % (edge neutral, smoother outline).
+  Rejected (worse): fur length ×0.7 / ×0.5 (63.5 / 62.4 %), density ×0.7 (61.9 %), more clumping (63.3 %), lighter roots (65.1 %).
+  Row-by-row body colour already matches the painting; the difference is graininess (std 45 vs 28 at the shoulders).
+* Hat: on-screen colours already match (painted whites are pinkish too: 249/215/242 vs ours 255/219/244); the painted
+  knit has more contrast. Cuff ribs sharpened (`work/crisp08.py --amount=1.2` → `brim_r3.png`, `?b08crisp=0` = off):
+  visibly crisper vertical ribs like the painting, measured −0.3 pt (kept for the visible match). Crown and pom
+  sharpening: not clearly closer, measured worse → not used.
+* Splash ring: alpha^0.2 × 2.5 (round 2: ^0.3 × 2) → fuller white foam ring, 65.5 → 65.7 % (Game.ts, `b08r3=0` = round 2).
+* Combined NEW (`r3b/NEW_08.png`): Benny + splash 65.3 % (SSIM 0.595), scenery 97.3 %, whole 85.4 %; parts body 75 %,
+  star 50 %, crown 29 %, cuff 28 %, pom 22 %. Default 0 px, `b08r3=0` == round 2 0 px, gameplay 8/8 + 91 / 2,240.
+  Close-ups (x 110–770, y 820–1320, 2×): `r3b/closeup2x_APPROVED.png`, `closeup2x_CURRENT_round2.png`, `closeup2x_NEW_r3b.png`.
+
 ## Numbers (round 3 captures, `r3/`)
 | Benny on 08 | URL | Benny + splash ≤20 | SSIM | whole ≤20 | scenery ≤20 |
 |---|---|---|---|---|---|
