@@ -326,3 +326,89 @@ The coin fix now drops coins only from behind each screen's checkpoint camera: 0
 
 > 🔧 **Bash** `{"command": "grep -n \"opt\\.\\(q\\|query\\)\" scripts/capture.mjs | head -3; S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; mkdir -p $S/on $S/off; (timeout 900 node scripts/capture.mjs --q='match05=1' --out=$S/on 01 02 03 04 05 06 07 08 09 10 11 && timeout 900 node scripts/capture.mjs --q='match05=1&coins05tot=0' --out=$S/off 01 02 03 04 05 06 07 08 09 10 11) 2>&1 | tail -4", "description": "Capture all screens with and without coin total fix", "timeout": 1850000}`
 
+### 🧑 User — 2026-11-17T16:53:24.849Z
+
+> ↩︎ result: 33:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 08 → /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/off/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":168,"tris":629943,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 09 → /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/off/09.png {"stage":"09","s":407.29,"y":-113.215,"calls":317,"tris":656683,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 10 → /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/off/10.png {"stage":"10","s":423.018,"y":-112.84,"calls":283,"tris":422479,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 11 → /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/off/11.png {"stage":"11","s":435.192,"y":-109.565,"calls":274,"tris":250631,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-17T16:53:28.013Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad && python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nfor i in range(1,12):\n    n=f\"{i:02d}\"\n    a=np.asarray(Image.open(f\"on/{n}.png\").convert('RGB')).astype(int); b=np.asarray(Image.open(f\"off/{n}.png\").convert('RGB')).astype(int)\n    m=np.abs(a-b).max(2)>0\n    if m.sum():\n        ys,xs=np.nonzero(m); print(n,m.sum(),\"box x\",xs.min(),xs.max(),\"y\",ys.min(),ys.max())\n    else: print(n,0)\nEOF", "description": "Pixel-diff each screen on vs off"}`
+
+### 🧑 User — 2026-11-17T16:53:29.983Z
+
+> ↩︎ result: 01 745 box x 224 847 y 458 1285
+> 02 0
+> 03 0
+> 04 0
+> 05 17 box x 468 476 y 481 485
+> 06 0
+> 07 0
+> 08 3817 box x 0 664 y 191 1091
+> 09 13601 box x 118 863 y 253 1249
+> 10 0
+> 11 17316 box x 0 828 y 354 1526
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:53:36.523Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; mkdir -p $S/off2; timeout 900 node scripts/capture.mjs --q='match05=1&coins05tot=0' --out=$S/off2 01 08 09 11 2>&1 | tail -1; cd $S && python3 -c \"\nimport numpy as np\nfrom PIL import Image\nfor n in ['01','08','09','11']:\n    a=np.asarray(Image.open(f'off/{n}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'off2/{n}.png').convert('RGB')).astype(int)\n    print(n,(np.abs(a-b).max(2)>0).sum())\n\"", "description": "Check capture determinism for differing screens", "timeout": 920000}`
+
+### 🧑 User — 2026-11-17T16:54:28.914Z
+
+> ↩︎ result: 11 → /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/off2/11.png {"stage":"11","s":435.192,"y":-109.565,"calls":274,"tris":250631,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 01 0
+> 08 0
+> 09 0
+> 11 52298
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:54:36.092Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad && python3 -c \"\nimport numpy as np\nfrom PIL import Image\nfor n in ['01','08','09']:\n    a=Image.open(f'on/{n}.png').convert('RGB'); b=Image.open(f'off/{n}.png').convert('RGB')\n    d=np.abs(np.asarray(a).astype(int)-np.asarray(b).astype(int)).max(2)>0\n    w,h=a.size; c=Image.new('RGB',(w*3,h)); c.paste(a,(0,0)); c.paste(b,(w,0)); c.paste(Image.fromarray((d*255).astype('uint8')).convert('RGB'),(2*w,0))\n    c.resize((w*3//3,h//3)).save(f'cmp_{n}.png')\n\"", "description": "Build side-by-side  …[+13 chars]`
+
+### 🧑 User — 2026-11-17T16:54:37.033Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T16:54:38.525Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/cmp_08.png"}`
+
+### 🧑 User — 2026-11-17T16:54:38.547Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:54:39.080Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad/cmp_01.png"}`
+
+### 🧑 User — 2026-11-17T16:54:39.105Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:54:52.586Z
+
+Two of my coin picks (Screen 03 and Screen 10) still change other screens' pictures. I'm swapping them for coins hidden beyond Screen 06's crest and checking why particles shift.
+
+### 🤖 Claude — 2026-11-17T16:54:53.329Z
+
+> 🔧 **Bash** `{"command": "grep -n \"random\\|defs.length\\|\\.length\" src/gameplay/coins.ts | head -20", "description": "Look for randomness tied to coin count"}`
+
+### 🧑 User — 2026-11-17T16:54:53.356Z
+
+> ↩︎ result: 101:  return canvasTexture(256, band.length, (c, w) => {
+> 220:    let extra = kept.length - dropMeas.size - out.length;
+> 297:  const mesh = new THREE.InstancedMesh(geo, mats, defs.length);
+> 302:  const collected = new Uint8Array(defs.length);
+> 303:  const popT = new Float32Array(defs.length).fill(-1);
+> 362:      for (let i = 0; i < defs.length; i++) {
+> 378:      for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
+
+### 🤖 Claude — 2026-11-17T16:55:06.947Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/gameplay/coins.ts'\nt=open(p).read()\nreps=[(\"\"\" *     checkpoint camera (already collected there): 03 (1), 06 (3), 07 (4), 10 (1) (C05TOT_CP mirrors Game.ts CHECKPOINTS).\n *     (Not the 05 trail before the 05 checkpoint: the locked 04 view shows those 3 coins far down its slide.)\"\"\",\n\"\"\" *     checkpoint camera (already collected there): 06 (3) and 07 (4) (C05TOT_CP mirrors Game.ts CHECKPOINTS), and the\n *     last 2 coins of 06 behind its crest (C05TOT_END: hidden from the 06 view, behind the 07 camera).\n *     Rejected by pixel test: the  …[+1772 chars]`
+
