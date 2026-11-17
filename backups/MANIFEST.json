@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12598,
-   "sha256": "1514d37fe1ed1cf5fbaf0b1163e50d71cd9ebaac6a7542b919833570b03a492e"
+   "sha256": "0bf05caed2d3ab37d4ca4004741a4903576453f2009f4240f9fb865f5d0bace5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -9727,9 +9727,19 @@
    "sha256": "34e3624cbe581a6dbb98964c059d27cef2acba6744aeecc80e32b349854b1ddb"
   },
   {
+   "path": "tools/lead_r6/bisect_preview08.mjs",
+   "bytes": 2017,
+   "sha256": "2d96785e861219e992dbef72c9e24ed008ab80569ffecb6abc1979e88d544d31"
+  },
+  {
    "path": "tools/lead_r6/motion_audit.mjs",
    "bytes": 2965,
    "sha256": "45fcca22b4c0688fd8b3689032709f6dd309a8e801a502baec9b6c1cbd7f4f71"
+  },
+  {
+   "path": "tools/lead_r6/motion_metrics.py",
+   "bytes": 1639,
+   "sha256": "8b7fe03e6dfa5ac495b43e795ffc70dacd6c263ae88deb748dbae1f97ec80045"
   },
   {
    "path": "tools/make_env_geometry_ref.py",
