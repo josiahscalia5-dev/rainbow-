@@ -36,10 +36,16 @@ const CLUMP05: Record<string, number> = { fur_body: 0.55, fur_pom: 0.6 };
 export const HAT05 = {
   /** whole beanie lowered along the body's up axis */
   drop: 0.028,
+  /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body */
+  shiftX: -0.028,
+  /** extra backward tilt of the beanie (rad, about X; − = top toward his back) */
+  tilt: 0,
+  /** crown dome shoulder taper (GLB build 0.18: r ∝ (1 − taper·t)); the approved dome is fuller near the top */
+  crownTaper: 0.0,
   /** folded cuff band height */
   cuffH: 0.226,
   /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale */
-  pomDX: -0.04,
+  pomDX: -0.057,
   pomDY: -0.0,
   pomScale: 1.0,
   /** star: extra offset in hat-local units after following the cuff top */
@@ -61,7 +67,7 @@ function lathe(points: [number, number][], segs: number, v0: number, v1: number)
 }
 
 /** the GLB's beanie profiles (build.ts) with the HAT05 cuff height; u = once around (+Z front = 0, back = 0.5) */
-function hatGeometries(cuffH: number): { brim: THREE.BufferGeometry; crown: THREE.BufferGeometry; yt: number; crownTop: number } {
+function hatGeometries(cuffH: number, taper: number): { brim: THREE.BufferGeometry; crown: THREE.BufferGeometry; yt: number; crownTop: number } {
   const yb = D.brimBottom;
   const yt = yb + cuffH;
   const bk = D.brimR / 0.778;
@@ -86,7 +92,7 @@ function hatGeometries(cuffH: number): { brim: THREE.BufferGeometry; crown: THRE
   const R0 = 0.705 * bk;
   const prof: [number, number][] = [];
   for (const t of [0, 0.08, 0.16, 0.25, 0.34, 0.43, 0.52, 0.6, 0.68, 0.75, 0.81, 0.86, 0.9, 0.935, 0.96, 0.98, 0.993, 1]) {
-    prof.push([R0 * Math.sqrt(Math.max(0, 1 - t * t)) * (1 - 0.18 * t), crownY0 + t * D.crownH]);
+    prof.push([R0 * Math.sqrt(Math.max(0, 1 - t * t)) * (1 - taper * t), crownY0 + t * D.crownH]);
   }
   const crown = lathe(prof, 96, crownY0, crownY0 + D.crownH);
   return { brim, crown, yt, crownTop: crownY0 + D.crownH };
@@ -171,7 +177,9 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   // ---- beanie geometry ----
   const hat = get('hat')!;
   hat.position.y -= HAT05.drop;
-  const g = hatGeometries(HAT05.cuffH);
+  hat.position.x += HAT05.shiftX;
+  hat.rotation.x += HAT05.tilt;
+  const g = hatGeometries(HAT05.cuffH, HAT05.crownTaper);
   const brim = get('hat_brim') as THREE.Mesh;
   const crown = get('hat_crown') as THREE.Mesh;
   brim.geometry = g.brim;
@@ -208,11 +216,13 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
     if (fur) {
       const d = mat.defines ?? (mat.defines = {});
       d.BENNY05 = '';
-      // root → tip shading only as a relative factor on the baked colour
-      fur.uniforms.uRoot.value.setRGB(0.86, 0.86, 0.86);
-      fur.uniforms.uTip.value.setRGB(1, 1, 1);
     }
     if (tex) {
+      if (fur) {
+        // root → tip shading only as a relative factor on the baked colour
+        fur.uniforms.uRoot.value.setRGB(0.86, 0.86, 0.86);
+        fur.uniforms.uTip.value.setRGB(1, 1, 1);
+      }
       mat.map = tex;
       mat.color.setScalar(spec.scale);
       if (!fur) {
@@ -221,11 +231,8 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
         if (n) mat.normalScale.setScalar(spec.normalScale ?? 1);
       }
     } else if (fur) {
-      // no bake yet: keep the GLB colours through the multiply path
-      const p = (m.userData.fur ?? {}) as FurParams;
+      // no bake yet: keep the GLB root / tip colours through the multiply path
       mat.map = white;
-      fur.uniforms.uRoot.value.set(p.root ?? '#e6468c');
-      fur.uniforms.uTip.value.set(p.tip ?? '#fd80b4');
     } else if (m.name === 'hat_crown' && mat.map) {
       mat.map = mat.map.clone();
       mat.map.repeat.x = 4; // GLB crown texture was authored for a 4× u repeat
