@@ -705,3 +705,312 @@ Bake verified (0 px proofs, 8/8, 91 coins). Now testing Benny's look one factor 
 > 28:    return np.asarray(im) > 0
 > 66:    return dict(pom=pom, crown=crown, cuff=cuff, star=star, body=body), a, m
 
+### 🤖 Claude — 2026-11-17T16:51:21.032Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && sed -i 's/^P = approved_parts(); /P = approved_parts()[0]; /' $S/m.py && python3 -I $S/m.py $S/v/cur/08.png $S/h/out/hat_*.png"}`
+
+### 🧑 User — 2026-11-17T16:51:24.436Z
+
+> ↩︎ result: 08.png box  49.8%/0.458 whole  83.3%/0.818 hat  10.8%/0.054 parts  22.5%/0.097 pom:6.7 crown:14.9 cuff:12.9 star:0.8 body:34.5
+> hat_0.86.png box  57.2%/0.553 whole  84.3%/0.830 hat  11.5%/0.056 parts  40.7%/0.329 pom:6.7 crown:15.8 cuff:14.3 star:0.8 body:71.4
+> hat_0.95.png box  57.2%/0.545 whole  84.2%/0.829 hat  15.4%/0.053 parts  42.1%/0.321 pom:10.8 crown:20.0 cuff:18.9 star:1.6 body:70.0
+> hat_1.00.png box  56.7%/0.540 whole  84.2%/0.829 hat  16.0%/0.059 parts  42.4%/0.324 pom:11.9 crown:21.0 cuff:18.6 star:1.5 body:70.0
+> hat_1.06.png box  55.8%/0.529 whole  84.1%/0.827 hat  17.2%/0.057 parts  43.2%/0.325 pom:11.6 crown:20.7 cuff:23.0 star:6.7 body:70.2
+
+### 🤖 Claude — 2026-11-17T16:51:34.547Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && cd $S/h && rm -f *.shot.js && cat > b_fn.js <<'EOF'\nconst B=Q.scene.getObjectByName('Benny'), h=B.getObjectByName('hat'), cam=Q.camera, V=()=>new cam.position.constructor();\nconst W=864,H=1536; const px=(v)=>{const p=v.clone().project(cam);return [(p.x+1)/2*W,(1-p.y)/2*H];};\nconst c=h.getWorldPosition(V()); const r=c.clone().add(V().set(1,0,0).applyQuaternion(cam.quaternion));\nwindow.__ppu=px(r)[0]-px(c)[0];\nwindow.__set=(k,dxp,dyp)=>{h.scale.copy(window.__h0).multiplyScalar(k/0.86); h.posi …[+798 chars]`
+
+### 🧑 User — 2026-11-17T16:51:59.323Z
+
+> ↩︎ result: b_fn.js 165.73213735736977
+> p_0.95,-10,-15.png box  59.1%/0.557 whole  84.5%/0.831 hat  20.3%/0.078 parts  46.0%/0.344 pom:13.3 crown:23.7 cuff:27.2 star:14.4 body:72.6
+> p_1.00,-13,-18.png box  57.9%/0.547 whole  84.3%/0.830 hat  18.2%/0.070 parts  45.1%/0.340 pom:13.8 crown:15.7 cuff:29.1 star:16.0 body:73.0
+> p_1.00,-8,-12.png box  57.9%/0.546 whole  84.3%/0.829 hat  18.8%/0.064 parts  45.0%/0.336 pom:13.0 crown:18.4 cuff:28.9 star:13.0 body:72.2
+> p_1.06,-13,-22.png box  55.4%/0.528 whole  84.0%/0.826 hat  14.1%/0.051 parts  43.0%/0.331 pom:11.2 crown:9.5 cuff:25.6 star:10.6 body:73.2
+> p_1.10,-13,-26.png box  53.8%/0.518 whole  83.7%/0.824 hat  11.9%/0.049 parts  41.9%/0.328 pom:10.2 crown:8.3 cuff:21.3 star:2.7 body:73.4
+
+### 🤖 Claude — 2026-11-17T16:52:03.043Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && python3 -c \"\nfrom PIL import Image\nB=(250,845,610,1225)\nps=['references/08_final_spin_chamber.png','$S/v/new/08.png','$S/h/out2/p_0.95,-10,-15.png']\no=Image.new('RGB',(360*3*2//1,380*2))\nfor i,p in enumerate(ps): o.paste(Image.open(p).convert('RGB').crop(B).resize((720,760)),(i*720,0))\no.resize((1080,380)).save('$S/c.png')\""}`
+
+### 🧑 User — 2026-11-17T16:52:03.418Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:52:03.993Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad/c.png"}`
+
+### 🧑 User — 2026-11-17T16:52:04.023Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:52:11.467Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && cd $S/h && echo \"window.__set(0.95,-10,-15); const h=Q.scene.getObjectByName('Benny').getObjectByName('hat'); return [h.position.toArray(), window.__hp.toArray(), h.position.clone().sub(window.__hp).toArray()];\" > z.js && cd /home/user/rainbow- && node qa/match/08/benny08/work/probe08.mjs --q=match08=1 --out=$S/h/o3 $S/h/a_init.js $S/h/b_fn.js $S/h/z.js 2>&1 | grep \"^z.js\""}`
+
+### 🧑 User — 2026-11-17T16:52:24.978Z
+
+> ↩︎ result: z.js [[0.06095645973325149,0.05520174517187827,-0.009328275817097166],[-0.013,-0.028,0],[0.07395645973325149,0.08320174517187827,-0.009328275817097166]]
+
+### 🤖 Claude — 2026-11-17T16:52:33.388Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"const M08_BENNY = { hat: 0.86, lift\",\"const M08_BENNY = { hat: 0.95, hatOff: [0.074, 0.083, -0.009] as const, lift\",1)\ns=s.replace(\"const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, \",\"const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, hatPos: (b08.hat?.position ?? new THREE.Vector3()).clone(), \",1)\nold=\"      b08.hat?.scale.set(b08Rest.hat * hk / bx, b08Rest.hat * hk / by, b08Rest.hat * hk / bz);\\n\"\nnew=old+\"      // benny08 round 2 (qa/match/08/benny08/NOTES.md): beanie 0.95x and seated ≈15 …[+658 chars]`
+
+### 🧑 User — 2026-11-17T16:52:53.849Z
+
+> ↩︎ result: 112:  const M08_BENNY = { hat: 0.95, hatOff: [0.074, 0.083, -0.009] as const, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+> 114:  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, hatPos: (b08.hat?.position ?? new THREE.Vector3()).clone(), body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
+> 541:      if (b08.hat) { const [ox, oy, oz] = m08On ? M08_BENNY.hatOff : [0, 0, 0]; b08.hat.position.set(b08Rest.hatPos.x + ox, b08Rest.hatPos.y + oy, b08Rest.hatPos.z + oz); }
+> 08 → /tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-
+> 23004 px differ, max 241, box x308-559 y852-1075
+> 08.png box  59.1%/0.557 whole  84.5%/0.831 hat  20.3%/0.077 parts  46.1%/0.344 pom:13.3 crown:23.7 cuff:27.3 star:14.7 body:72.6
+
+### 🤖 Claude — 2026-11-17T16:53:00.678Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && cd $S/h && echo \"const B=Q.scene.getObjectByName('Benny'); const out=new Set(); B.traverse(o=>{}); const R2=window.__rainbow; const anims=(B.animations||[]).concat(Q.benny?.clips||[]); let names=[]; Q.scene.traverse(o=>{ if(o.animations&&o.animations.length) names.push(o.name+':'+o.animations.map(c=>c.name+'['+c.tracks.map(t=>t.name).filter(n=>n.startsWith('hat')).join(',')+']').join(';'));}); return names;\" > t.js && cd /home/user/rainbow- && node qa/match/08/benny08/work/probe08.mjs --q=matc …[+67 chars]`
+
+### 🧑 User — 2026-11-17T16:53:13.471Z
+
+> ↩︎ result: t.js []
+
+### 🤖 Claude — 2026-11-17T16:53:15.049Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"'hat'\\|\\\"hat\\\"\\|hat\\.position\\|hat\\.\\(rotation\\|scale\\)\" src --include=*.ts | grep -v \"^src/game/Game.ts:11[34]\" | head"}`
+
+### 🧑 User — 2026-11-17T16:53:15.088Z
+
+> ↩︎ result: src/characters/benny/benny05.ts:245:  const hat = get('hat')!;
+> src/characters/benny/benny05.ts:246:  hat.position.y -= HAT05.drop;
+> src/characters/benny/benny05.ts:247:  hat.position.x += HAT05.shiftX;
+> src/characters/benny/benny05.ts:248:  hat.rotation.x += HAT05.tilt;
+> src/characters/benny/benny05.ts:249:  hat.rotation.z += HAT05.roll;
+> src/characters/benny/build.ts:331:  const hat = joint('hat');
+> src/characters/benny/build.ts:332:  hat.rotation.x = D.hatTilt;
+> src/game/Game.ts:541:      if (b08.hat) { const [ox, oy, oz] = m08On ? M08_BENNY.hatOff : [0, 0, 0]; b08.hat.position.set(b08Rest.hatPos.x + ox, b08Rest.hatPos.y + oy, b08Rest.hatPos.z + oz); }
+> src/game/modules.ts:110:  hat.position.y = 0.12;
+
+### 🤖 Claude — 2026-11-17T16:53:19.057Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && sed -n 235,252p src/characters/benny/benny05.ts; node qa/match/08/benny08/work/probe08.mjs --q=match08=1 --out=$S/h/o5 $S/h/a_init.js 2>&1 | grep \"^a_init\""}`
+
+### 🧑 User — 2026-11-17T16:53:32.082Z
+
+> ↩︎ result: /** QA: constant linear albedo k on every baked part (+ star), or null = back to the baked maps */
+>   calib(k: number | null): void;
+> }
+> 
+> /**
+>  * Apply the corrected look to a freshly cloned Benny scene (after the fur upgrade). `maps` from loadBenny05Maps().
+>  */
+> export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Record<string, THREE.Texture | null>): Benny05Handle {
+>   const get = (n: string) => scene.getObjectByName(n);
+>   // ---- beanie geometry ----
+>   const hat = get('hat')!;
+>   hat.position.y -= HAT05.drop;
+>   hat.position.x += HAT05.shiftX;
+>   hat.rotation.x += HAT05.tilt;
+>   hat.rotation.z += HAT05.roll;
+>   const g = hatGeometries(HAT05.cuffH, HAT05.crownTaper, HAT05.crownH);
+>   const brim = get('hat_brim') as THREE.Mesh;
+>   const crown = get('hat_crown') as THREE.Mesh;
+> a_init.js [[1.0106382978723405,0.95,1.0106382978723405],[0.061,0.05500000000000001,-0.009],"body"]
+
+### 🤖 Claude — 2026-11-17T16:53:37.961Z
+
+> 🔧 **Bash** `{"command": "git add src/game/Game.ts qa/match/08/benny08/tests && git commit -qm \"Screen 08 Benny round 2: beanie 0.95x seated ~15 px higher/~10 px left under ?match08=1 (Benny+splash 57.2 -> 59.1 % within 20); bake WIP verified (default 0 px, bake08=0 0 px vs 5965a01, gameplay 8/8, 91 coins)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoYuzD1BetvXyVLKxre\" && git push -q origin HEAD 2>&1 | tail -1; git ls-remote origin refs/heads/claude/rainbow-s08-benny08-bake-c2 | cut -c1-12; git rev-parse --short=12 HEAD"}`
+
+### 🧑 User — 2026-11-17T16:53:40.588Z
+
+> ↩︎ result: 56fa72a34b52
+> 56fa72a34b52
+
+### 🤖 Claude — 2026-11-17T16:53:41.783Z
+
+Checkpoint pushed (`56fa72a`). Next factor: the fur colour — the approved fur is a lighter, even pink; ours is darker magenta at the bottom/sides.
+
+### 🤖 Claude — 2026-11-17T16:53:45.887Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && python3 - <<EOF\nimport sys; sys.path.insert(0,'qa/match/08/benny08/work')\nimport numpy as np\nfrom PIL import Image\nfrom parts08 import approved_parts\nP=approved_parts()[0]; b=P['body']\nA=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB'),float)\nC=np.asarray(Image.open('$S/v/r1/08.png').convert('RGB'),float)\nys,xs=np.nonzero(b); print('body box',xs.min(),xs.max(),ys.min(),ys.max())\n# vertical profile of median colour in bands\nfor y0 in range(ys.min(),ys.max(),2 …[+296 chars]`
+
+### 🧑 User — 2026-11-17T16:53:47.401Z
+
+> ↩︎ result: body box 262 594 1056 1206
+> 1056 [243  77 185] [218  57 178]
+> 1081 [249  94 199] [244  89 191]
+> 1106 [248  81 185] [247  82 184]
+> 1131 [245  69 169] [244  68 167]
+> 1156 [224  52 153] [224  53 152]
+> 1181 [164  39 142] [180  41 141]
+> x 262 [242  81 185] [230 103 201]
+> x 302 [242  92 196] [245  92 188]
+> x 342 [243  69 168] [241  70 168]
+> x 382 [244  61 160] [240  59 157]
+> x 422 [244  61 161] [240  60 160]
+> x 462 [240  57 159] [234  56 160]
+> x 502 [239  72 183] [225  61 176]
+> x 542 [243  92 205] [224  57 182]
+> x 582 [245 113 222] [150 150 230]
+
+### 🤖 Claude — 2026-11-17T16:53:55.162Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && python3 - <<EOF\nimport numpy as np\nfrom PIL import Image\nA=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB'),float)\nC=np.asarray(Image.open('$S/v/r1/08.png').convert('RGB'),float)\ndef pink(X):\n  r,g,b=X[...,0],X[...,1],X[...,2]; return (r>170)&(g<140)&(b>110)&(r-g>90)\nB=(240,840,640,1245)\npa,pc=pink(A),pink(C)\no=np.zeros(A.shape,np.uint8); o[pa&pc]=(200,200,200); o[pa&~pc]=(255,0,0); o[~pa&pc]=(0,120,255)\nImage.fromarray(o[B[1]:B[3],B[0]:B[2]]).resize((800,81 …[+240 chars]`
+
+### 🧑 User — 2026-11-17T16:53:55.543Z
+
+> ↩︎ result: A 30330 x 263 593 y 1040 1244 cx 424.91533135509394 cy 1124.3709198813056
+> C 34992 x 261 599 y 1040 1244 cx 426.688385916781 cy 1132.584333561957
+
+### 🤖 Claude — 2026-11-17T16:53:56.214Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad/sil.png"}`
+
+### 🧑 User — 2026-11-17T16:53:56.244Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:54:00.298Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"splash08\\|1\\.7\" src --include=*.ts | grep -i splash | head"}`
+
+### 🧑 User — 2026-11-17T16:54:00.334Z
+
+> ↩︎ result: src/world/match08.ts:194:  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(new URL('../../assets/textures/match08/splash08.json', import.meta.url).href).then((r) => r.json());
+> src/world/match08.ts:195:  const spTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/splash08.png', import.meta.url).href);
+> src/vfx/riderSplash.ts:166:      const h = (x: number) => { const v = Math.sin(x * 127.1 + side * 311.7) * 43758.5453; return v - Math.floor(v); };
+> src/vfx/riderSplash.ts:167:      const a = Math.min(1, Math.max(0, (i + h(i * 1.7)) / perSide));
+> src/vfx/riderSplash.ts:308:    float th = mix(1.7, 0.3, a) + (hs(seed * 3.1) - 0.5) * 0.12;
+> src/vfx/riderSplash.ts:409:    const h = (x: number) => { const v = Math.sin(x * 127.1 + side * 311.7) * 43758.5453; return v - Math.floor(v); };
+> src/vfx/riderSplash.ts:412:        const a = Math.min(1, Math.max(0, (i + h(i * 1.7 + salt)) / count));
+
+### 🤖 Claude — 2026-11-17T16:54:01.442Z
+
+> 🔧 **Bash** `{"command": "sed -n 190,225p src/world/match08.ts; cat assets/textures/match08/splash08.json"}`
+
+### 🧑 User — 2026-11-17T16:54:01.485Z
+
+> ↩︎ result: }
+> 
+>   // Benny's splash ring, cut from the ORIGINAL approved picture (white crest + droplets around his base; alpha = white,
+>   // low saturation): a card that rides with him, facing the camera, 1.3 u in front of his centre
+>   const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(new URL('../../assets/textures/match08/splash08.json', import.meta.url).href).then((r) => r.json());
+>   const spTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/splash08.png', import.meta.url).href);
+>   spTex.colorSpace = THREE.NoColorSpace;
+>   const splash = new THREE.Mesh(new THREE.PlaneGeometry(SP.w, SP.h), new THREE.ShaderMaterial({
+>     transparent: true, depthWrite: false, fog: false,
+>     uniforms: { uTex: { value: spTex }, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes },
+>     vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+>     fragmentShader: `uniform sampler2D uTex; uniform vec4 uPjPost; uniform vec2 uPjRes; varying vec2 vUv;\n${PROJ05_INVERSE}
+> void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragColor = vec4(pjInverse(c.rgb), c.a); …[+1107 chars]
+
+### 🤖 Claude — 2026-11-17T16:54:11.326Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && mkdir -p $S/sp && cd $S/sp && cat > a.js <<'EOF'\nconst s=Q.scene.getObjectByName('m08_splash'); window.__fs0=s.material.fragmentShader;\nwindow.__sp=(g,k)=>{s.material.fragmentShader=window.__fs0.replace('if (c.a < 0.02) discard;',`if (c.a < 0.02) discard; c.a = min(1.0, pow(c.a, ${g.toFixed(3)}) * ${k.toFixed(3)});`); s.material.needsUpdate=true; Q.composer.render(); return [g,k];};\nreturn [s.visible, s.material.fragmentShader.length];\nEOF\nfor v in \"1,1\" \"0.7,1\" \"0.5,1\" \"0.7,1.3\" \" …[+253 chars]`
+
+### 🧑 User — 2026-11-17T16:54:36.483Z
+
+> ↩︎ result: a.js [true,1196]
+> s_0.5,1.png box  60.5%/0.570 whole  84.7%/0.833 hat  20.3%/0.077 parts  46.5%/0.351 pom:13.3 crown:23.7 cuff:27.3 star:14.7 body:73.5
+> s_0.7,1.3.png box  60.6%/0.569 whole  84.7%/0.833 hat  20.3%/0.077 parts  46.5%/0.350 pom:13.3 crown:23.7 cuff:27.3 star:14.7 body:73.6
+> s_0.7,1.png box  59.8%/0.564 whole  84.6%/0.832 hat  20.3%/0.077 parts  46.3%/0.348 pom:13.3 crown:23.7 cuff:27.3 star:14.7 body:73.1
+> s_1,1.5.png box  60.1%/0.564 whole  84.6%/0.832 hat  20.3%/0.077 parts  46.4%/0.347 pom:13.3 crown:23.7 cuff:27.3 star:14.7 body:73.2
+> s_1,1.png box  59.1%/0.557 whole  84.5%/0.831 hat  20.3%/0.077 parts  46.1%/0.344 pom:13.3 crown:23.7 cuff:27.3 star:14.7 body:72.6
+
+### 🤖 Claude — 2026-11-17T16:54:40.693Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && cd $S/sp && rm s_*.js && for v in \"0.5,1.3\" \"0.4,1.5\" \"0.3,2\" \"0.5,2\"; do echo \"return window.__sp($v);\" > \"s_$v.shot.js\"; done; cd /home/user/rainbow- && node qa/match/08/benny08/work/probe08.mjs --q=match08=1 --out=$S/sp/o2 $S/sp/a.js $S/sp/s_*.shot.js >/dev/null 2>&1; python3 -I $S/m.py $S/sp/o2/*.png | cut -c1-60"}`
+
+### 🧑 User — 2026-11-17T16:55:04.611Z
+
+> ↩︎ result: s_0.3,2.png box  63.3%/0.583 whole  85.1%/0.834 hat  20.3%/0
+> s_0.4,1.5.png box  62.2%/0.579 whole  84.9%/0.834 hat  20.3%
+> s_0.5,1.3.png box  61.4%/0.575 whole  84.8%/0.833 hat  20.3%
+> s_0.5,2.png box  62.3%/0.579 whole  85.0%/0.834 hat  20.3%/0
+
+### 🤖 Claude — 2026-11-17T16:55:06.065Z
+
+The approved splash ring is stronger than ours — boosting the splash card's opacity keeps raising the score (59.1 → 63.3 %). Checking visually that it still looks like a splash, not a white blob.
+
+### 🤖 Claude — 2026-11-17T16:55:08.711Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && python3 -c \"\nfrom PIL import Image\nB=(160,960,720,1320)\nps=['references/08_final_spin_chamber.png','$S/sp/o/s_1,1.png','$S/sp/o2/s_0.5,1.3.png','$S/sp/o2/s_0.3,2.png']\no=Image.new('RGB',(560*4,360))\nfor i,p in enumerate(ps): o.paste(Image.open(p).convert('RGB').crop(B),(i*560,0))\no.resize((1400,225)).save('$S/c2.png')\""}`
+
+### 🧑 User — 2026-11-17T16:55:09.134Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:55:09.913Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad/c2.png"}`
+
+### 🧑 User — 2026-11-17T16:55:09.936Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:55:15.937Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const m08\\b\\|let m08\\b\\|m08 =\" src/game/Game.ts | head"}`
+
+### 🧑 User — 2026-11-17T16:55:15.968Z
+
+> ↩︎ result: 107:  const m08 = MATCH['08'] ? await buildMatch08() : null;
+
+### 🤖 Claude — 2026-11-17T16:55:21.704Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\nanchor=\"  const b08 = m08 ?\"\nadd='''  // benny08 round 2 (qa/match/08/benny08/NOTES.md): the approved splash ring around Benny drawn stronger (alpha^0.3 x2,\n  // capped at 1) — measured closer to the painted white crest; card texture, size and approved position unchanged\n  if (m08) {\n    const sm = m08.splash.material as THREE.ShaderMaterial;\n    sm.fragmentShader = sm.fragmentShader.replace('if (c.a < 0.02) discard;', 'if (c.a < 0.02) discard; c.a = min(1.0, pow(c.a, 0.3) * 2.0);');\n    sm.needsUpdate = true;\n  } …[+413 chars]`
+
+### 🧑 User — 2026-11-17T16:55:41.725Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-
+> 08.png box  63.3%/0.583 whole  85.1%/0.834 hat  20.3%/0.077 parts  47.8%/0.359 pom:13.3 crown:23.7 cuff:27.3 star:14.7 body:76.2
+> 0 px differ
+
+### 🤖 Claude — 2026-11-17T16:55:47.303Z
+
+> 🔧 **Bash** `{"command": "git add src/game/Game.ts && git commit -qm \"Screen 08 Benny round 2: approved splash ring drawn stronger under ?match08=1 (Benny+splash 59.1 -> 63.3 % within 20, whole 85.1 %)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoYuzD1BetvXyVLKxre\" && git push -q origin HEAD 2>&1|tail -1; grep -n \"POM_ELL\\|COINS =\" qa/match/08/benny08/work/parts08.py | head -3; grep -n \"pom\" src/characters/benny/benny05.ts | head -20"}`
+
+### 🧑 User — 2026-11-17T16:55:49.614Z
+
+> ↩︎ result: 21:POM_ELL = (426, 908, 68, 58)  # cx, cy, rx, ry (pom-pom yarn ball, read off the gridded crop)
+> 22:COINS = [(335, 862, 42), (400, 786, 35)]
+> 39:    cx, cy, rx, ry = POM_ELL
+> 8: *  1. Beanie geometry (visual only, hat-local): cuff band thinner and the whole beanie a little lower on the head, pom-pom
+> 10: *  2. Swim-clip body roll damped (the clip's ±0.05 rad side wobble tipped the beanie ~13 px sideways at the pom; the
+> 13: *     knit stitches / stripes / ribbed cuff, the pom-pom yarn, the cotton-candy fur colour and its shading. The maps are
+> 34:  fur_pom: { density: 64, shells: 18, length: 0.12, gravity: 0.03 },
+> 37:const CLUMP05: Record<string, number> = { fur_body: 0.55, fur_pom: 0.6 };
+> 39:/** beanie geometry (hat-local units; GLB build: brimBottom 0.22, cuffH 0.265, pom 0.12 above the crown apex) */
+> 55:  /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale (r8: pomDX −0.057 → −0.034 against the roll) */
+> 56:  pomDX: -0.034,
+> 57:  pomDY: -0.016,
+> 58:  /** toward his back (−Z ≈ toward the rear chase camera): the approved pom-pom overhangs the crown's back slope */
+> 59:  pomDZ: -0.16,
+> 60:  pomScale: 0.97,
+> 69:  /** crown dome height (GLB 0.53; r8: 0.58 → 0.556 so the thick …[+494 chars]
+
+### 🤖 Claude — 2026-11-17T16:55:58.398Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && mkdir -p $S/g && cd $S/g && cat > fn.js <<'EOF'\nconst B=Q.scene.getObjectByName('Benny'), cam=Q.camera, V=()=>new cam.position.constructor();\nconst W=864,H=1536; const px=(v)=>{const p=v.clone().project(cam);return [(p.x+1)/2*W,(1-p.y)/2*H];};\nwindow.__rest={};\nwindow.__obj=(n,k,dxp,dyp,render=true)=>{const o=B.getObjectByName(n); if(!window.__rest[n]) window.__rest[n]={s:o.scale.clone(),p:o.position.clone()};\n const r=window.__rest[n]; o.scale.copy(r.s).multiplyScalar(k); o.position.copy(r …[+910 chars]`
+
+### 🧑 User — 2026-11-17T16:56:23.451Z
+
+> ↩︎ result: p_1,0,0.shot.js ["pom",1,0,0,[456.1,912.7],[0,0,0]]
+> p_1.15,0,-8.shot.js ["pom",1.15,0,-8,[456.1,904.7],[0.0074,0.0492,-0.0024]]
+> p_1.15,0,0.shot.js ["pom",1.15,0,0,[456.1,912.7],[0,0,0]]
+> p_1.3,0,-16.shot.js ["pom",1.3,0,-16,[456.1,896.7],[0.0148,0.0983,-0.0047]]
+> p_1.3,0,-8.shot.js ["pom",1.3,0,-8,[456.1,904.7],[0.0074,0.0492,-0.0024]]
+> p_1,0,0.png box  63.3%/0.583 whole  85.1%/0.834 hat  20.3%/0.077 parts  47.8%/0.359 pom:13.3 crown:23.7 cuff:27.3 star:14.7 body:76.2
+> p_1.15,0,-8.png box  62.7%/0.575 whole  85.0%/0.833 hat  20.7%/0.079 parts  48.0%/0.360 pom:14.7 crown:23.6 cuff:27.3 star:14.7 body:76.2
+> p_1.15,0,0.png box  62.9%/0.578 whole  85.0%/0.834 hat  20.8%/0.082 parts  48.1%/0.361 pom:15.9 crown:22.9 cuff:27.3 star:14.7 body:76.2
+> p_1.3,0,-16.png box  62.1%/0.570 whole  84.9%/0.832 hat  21.1%/0.084 parts  48.2%/0.363 pom:16.6 crown:23.2 cuff:27.3 star:14.7 body:76.2
+> p_1.3,0,-8.png box  62.1%/0.570 whole  84.9%/0.832 hat  20.8%/0.076 parts  48.0%/0.358 pom:16.6 crown:22.3 cuff:27.3 star:14.7 body:76.2
+
+### 🤖 Claude — 2026-11-17T16:56:25.684Z
+
+Pom-pom sits ~30 px right of the painted one. Testing a left shift.
+
+### 🤖 Claude — 2026-11-17T16:56:28.537Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/32d32625-a30f-5fc6-9627-d6f2c5c14890/scratchpad && cd $S/g && rm -f p_*.js && for v in \"1,-30,0\" \"1,-20,0\" \"1.15,-30,0\" \"1.15,-25,-5\"; do echo \"return window.__obj('pom',$v);\" > \"p_$v.shot.js\"; done; cd /home/user/rainbow- && node qa/match/08/benny08/work/probe08.mjs --q=match08=1 --out=$S/g/o2 $S/g/fn.js $S/g/p_*.shot.js 2>&1 | grep \"^p_\" ; python3 -I $S/m.py $S/g/o2/*.png | cut -c1-150"}`
+
