@@ -1,8 +1,8 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T21:35Z",
- "updated_by_session": "session_013VHsJ9SbWPe9YXRvtUSngc",
+ "updated_utc": "2026-11-17T22:15Z",
+ "updated_by_session": "session_01VCMXoaUqBCxDq8BntT19BU",
  "running_now": [],
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
@@ -450,5 +450,33 @@
    "08 scenery r1": "session_013VHsJAQsMA73qb7GCXdQ12 (idle, done)",
    "08 Benny r6": "session_013VHsJAoze5D4wh6tk7r1hj (idle, done)"
   }
+ },
+ "round6_account6": {
+  "lead": {
+   "session": "session_01VCMXoaUqBCxDq8BntT19BU",
+   "branch": "ccr-4bd35b15-7z45t0",
+   "started_from": "ccr-f983b317-2vt0zh @ cbc571356d261144c2ac3b4092de4fc4a9d5ffe6"
+  },
+  "note_old_lead": "ccr-067047f0-up5d1m @ 7d1318ec (user named it as lead) = r4 lead; its only commit after the r5 fork is a transcript/log autosave (no game file) -> nothing lost",
+  "branches_c6": {
+   "claude/rainbow-s06-match-c6": "c088718bb9e3374583238f4ee93f25bdee600065",
+   "claude/rainbow-s08-scenery-c6": "700f09e16ca0e44394a9926cd6a261541a645cad",
+   "claude/rainbow-preview-all-c6": "from 965e4ef9 (preview-c5 tip) + lead fix of the 08 all-switches conflict (see preview_fix)"
+  },
+  "sessions": {
+   "S06 r6": "session_01VCMXobyXNaU99Bgt9q6WBM (brief docs/briefs/2026-11-17-r6/S06.md)",
+   "S08 scenery r6": "session_01VCMXobk8x9PXbYb8rpUaPP (brief docs/briefs/2026-11-17-r6/S08_SCENERY.md; received brief, working)"
+  },
+  "paused_c5_tips": {
+   "08 Benny": "claude/rainbow-s08-benny08-bake-c5 @ ae7abe5b (r6 c6892676 awaits user visual verdict)",
+   "08 camera": "claude/rainbow-s08-camclear-c5 @ 18687513 (phone verdict pending)",
+   "07": "claude/rainbow-s07-match-c5 @ 835a72db",
+   "05": "claude/rainbow-s05-match-c5 @ ebaf6cac",
+   "04": "claude/rainbow-s04-match-c5 @ d1e422fa"
+  },
+  "keys_2026_11_17_2155": "World Labs key = ORIGINAL Screen 08 account (5,420 credits; world 32b5b2f4 -> 200; 05 pilot worlds 404). fal.ai = same paid account (01a1ea70 COMPLETED). Free reads only, no paid job.",
+  "usage": "account shows seven_day allowed_warning (resets ~2026-11-23): no further specialist launches this round; one milestone each then stop",
+  "audit": "qa/lead_r6/2026-11-17/ (README.md): 12 moving shots per screen via tools/lead_r6/motion_audit.mjs + exact approved views; metrics tools/lead_r6/motion_metrics.py",
+  "preview_fix": "cause of 08 at 29.5 % with all switches = match07=1 alone: course.ts x07 ease-out never finished before the 07 plunge top -> 0.49 u sideways shift of the plunge + whole 08 path vs the world-fixed projected 08 chamber. Fix on claude/rainbow-preview-all-c6 (match07-guarded fade to the default path over the last 4 u before the plunge top). Same fix needed on the 07 branch when it resumes."
  }
 }
