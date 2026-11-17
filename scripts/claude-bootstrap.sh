@@ -8,7 +8,8 @@
 #   bash scripts/claude-bootstrap.sh --full     full + browser gameplay test + Screen 05 BEFORE pixel check
 #                                               + fresh download of every LFS object from GitHub (SHA-256)
 #   bash scripts/claude-bootstrap.sh --status   last report + autosave verdict (instant)
-#   options: --no-tools (skip Blender/Android/pip/plugin installs)  --skip-resume (no fetch/merge)
+#   options: --no-tools (skip Blender/Android/pip/plugin installs)  --skip-resume (no merge; the DEFAULT since
+#            2026-11-17)  --resume (merge newer ccr-*/claude/* branches — only with the user's explicit OK)
 #   internal: --hook (SessionStart hook)  --background (rest of the hook run)  --env-setup (cloud setup script)
 #
 # New account, any start branch (the GitHub default branch is an OLD version):
@@ -20,7 +21,8 @@
 # Paid World Labs / Marble jobs are never started (only the free credit-balance read).
 set -uo pipefail
 ORIG_ARGS=("$@")
-MODE=full; DO_RESUME=1; DO_TOOLS=1; FULL_TESTS=0; CONTINUE=0; NO_AUTOSAVE=0
+MODE=full; DO_RESUME=0;   # 2026-11-17 (user): NO automatic merges; --resume opts in, only with the user's OK
+ DO_TOOLS=1; FULL_TESTS=0; CONTINUE=0; NO_AUTOSAVE=0
 UNSHALLOW_TIMEOUT=300; FETCH_TIMEOUT=180   # the SessionStart hook uses shorter limits
 for a in "$@"; do case "$a" in
   --check) MODE=check; DO_RESUME=0; DO_TOOLS=0 ;;
@@ -31,6 +33,7 @@ for a in "$@"; do case "$a" in
   --env-setup) MODE=env-setup; DO_RESUME=0 ;;
   --no-tools|--skip-tools) DO_TOOLS=0 ;;
   --skip-resume) DO_RESUME=0 ;;
+  --resume) DO_RESUME=1 ;;   # merge newer ccr-*/claude/* branches: ONLY after the user authorised it
   --no-autosave) NO_AUTOSAVE=1 ;;   # tests in a throw-away clone: never install the scheduler or push
   --continue) CONTINUE=1; DO_RESUME=0 ;;
   --tools) ;;   # legacy flag of resume-newest-work.sh: tools are installed by default now
@@ -175,7 +178,7 @@ step_resume() {
   elif [ -n "$refused" ]; then
     rec resume "Resume newest work" fail "$msg; merge refused for:$refused (see git status)" "$t"
   elif [ "$contained" != "$total" ]; then
-    rec resume "Resume newest work" warn "$msg; not merged ($([ "$DO_RESUME" = 1 ] && echo 'unsaved edits or busy lock' || echo 'check mode')): run bash scripts/claude-bootstrap.sh" "$t"
+    rec resume "Resume newest work" warn "$msg; not merged ($([ "$DO_RESUME" = 1 ] && echo 'unsaved edits or busy lock' || echo 'automatic merge disabled (use --resume only with the user'\''s OK)')): run bash scripts/claude-bootstrap.sh" "$t"
   else
     rec resume "Resume newest work" ok "$msg" "$t"
   fi

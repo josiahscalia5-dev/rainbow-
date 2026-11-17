@@ -4,14 +4,14 @@ This is an EXISTING, playable 11-screen 3D game. **Never restart it, never start
 
 ## 1. Every new session or new Claude account — recovery is automatic
 The SessionStart hook (`.claude/settings.json` → `scripts/autosave-hook.sh` → **`scripts/claude-bootstrap.sh --hook`**)
-already ran before your first turn: it fetched every branch, merged any newer `ccr-*`/`claude/*` branch (normal merges
-only; a conflicting merge is aborted and reported), restored the Git LFS binaries, re-armed the five-minute autosave and
+already ran before your first turn: it fetched every branch (since 2026-11-17 it merges NOTHING automatically — merging
+any branch needs the user's OK; `--resume` re-enables the old merge only then), restored the Git LFS binaries, re-armed the five-minute autosave and
 started the full bootstrap in the background. Its summary ("RAINBOW SESSION START") is in your context.
 1. `bash scripts/claude-bootstrap.sh --status` → `backups/BOOTSTRAP_REPORT.md` (re-run when it says "still in progress").
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh` yourself; from a branch without it:
    `git fetch origin claude/rainbow-05-water-projection && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
-2. Read `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
+2. Read **`backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md`** (newest, wins), `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
    `backups/TOOL_MANIFEST.json` and the current briefs: **`qa/pilot05/proj/`** (water texture projection — `NOTES.md` when it
    exists, `BRIEF_SPECIALIST1_VERBATIM.md`, `BRIEF_SPECIALIST2.md`), `qa/pilot05/wave12/NOTES.md`, `qa/pilot05/COORDINATION_WAVE9B.md`.
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup

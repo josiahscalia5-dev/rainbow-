@@ -21,6 +21,10 @@ export interface CamParams {
   yaw?: number;
   /** 05 only: lateral dead zone (units): the camera holds the tunnel axis while Benny is within ~this of it */
   deadZone?: number;
+  /** `?match07=1` only (src/game/match.ts): extra view yaw (deg, + = look LEFT → scene moves right) and camera side
+   *  shift (units along the view right) over the 07 stage; absent = no change */
+  yaw07?: number;
+  side07?: number;
 }
 
 export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
@@ -103,6 +107,20 @@ export class RideCamera {
     outPos.copy(straightPos).lerp(curvedPos, Math.max(pitchBend, 0.35));
     outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(upPos, p.lookUp);
     outUp.set(0, 1, 0).lerp(up, p.roll).normalize();
+    // `?match07=1`: approved-picture framing in 07 — yaw the view and shift the camera sideways (both 0 / absent by default)
+    const p7 = STAGE_CAM['07'];
+    if (p7 && (p7.yaw07 || p7.side07)) {
+      const st7 = this.course.stage('07');
+      const sTop = this.course.marks['07_plunge_top'];
+      const w7 = THREE.MathUtils.smoothstep(s, st7.s0 + 2, st7.s0 + 10) * (1 - THREE.MathUtils.smoothstep(s, sTop - 12, sTop - 2));
+      if (w7 > 0) {
+        const fwd = outTarget.clone().sub(outPos);
+        fwd.applyAxisAngle(outUp, THREE.MathUtils.degToRad((p7.yaw07 ?? 0) * w7));
+        const side = new THREE.Vector3().crossVectors(fwd, outUp).normalize().multiplyScalar((p7.side07 ?? 0) * w7);
+        outPos.add(side);
+        outTarget.copy(outPos).add(fwd);
+      }
+    }
     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
     // drain and the porthole wall (Benny left, drain lower-right as in the reference)
     const st3 = this.course.stage('03');
