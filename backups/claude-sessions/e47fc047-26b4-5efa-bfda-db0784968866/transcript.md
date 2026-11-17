@@ -4807,3 +4807,133 @@ Refactor confirmed (all three outputs byte-identical). Now the near tile:
 > 64:uniform sampler2D uPjT;    // periodic tile (repeat along s)
 > 66:uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
 
+### 🤖 Claude — 2026-11-17T10:24:36.684Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\n# 1) uniforms\nold='''uniform vec4 uPjNear;      // ?projnear05=1: on, near-flare gain, near-layer texels (w, h) — the tile sampler holds the sharp tile T2'''\nnew='''uniform vec4 uPjNear;      // ?projnear05=1: on, near-flare gain, near-layer texels (w, h)\nuniform sampler2D uPjT2;   // ?projnear05=1: the sharp near tile (mirrored repeat along s), used where E is magnified\nuniform vec2 uPjT2S;       // its start s, period\nuniform sampler2D uPjWT2;  // its flow map (?projflow05=2)'''\nassert s.count(old)==1; s=s …[+7197 chars]`
+
+### 🧑 User — 2026-11-17T10:25:13.753Z
+
+> ↩︎ result: ok
+> NEW v4
+> efa-bfda-db0784968866/scratchpad/mvI/move_00.png detail  5.18  sat 0.710  pink 0.129  cyan 0.581  glint 0.0780  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvI/move_04.png detail  2.32  sat 0.774  pink 0.127  cyan 0.697  glint 0.0638  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvI/move_08.png detail  2.38  sat 0.752  pink 0.161  cyan 0.617  glint 0.0241  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvI/move_12.png detail  3.17  sat 0.765  pink 0.132  cyan 0.678  glint 0.0286  (222595 px)
+> efa-bfda-db0784968866/scratchpad/mvI/move_17.png detail  2.67  sat 0.843  pink 0.043  cyan 0.850  glint 0.0124  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvI/move_25.png detail  3.02  sat 0.793  pink 0.112  cyan 0.666  glint 0.0121  (224031 px)
+> locked view: OLD (no near) vs NEW v4 (differing px, >10) (37729, 3391)
+
+### 🤖 Claude — 2026-11-17T10:25:26.487Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold='''      if (uPjNear.x > 0.5) detW *= wNx;            // the sharp tile carries its own streaks: no repeating detail on it'''\nnew='''      // the sharp tile carries its own streaks: no repeating detail on it (approached river only — locked view unchanged)\n      if (uPjNear.x > 0.5) detW *= mix(1.0, wNx, 1.0 - smoothstep(0.3, 0.55, mE));'''\nassert s.count(old)==1; s=s.replace(old,new)\nold='''        if (uPjNear.x > 0.5) detW0 *= wN0;'''\nnew='''        if (uPjNear.x > 0.5) detW0 *= mix(1.0, wN0, 1.0 - smoot …[+1129 chars]`
+
+### 🧑 User — 2026-11-17T10:26:02.564Z
+
+> ↩︎ result: ok
+> NEW v5
+> efa-bfda-db0784968866/scratchpad/mvJ/move_00.png detail  5.18  sat 0.710  pink 0.129  cyan 0.581  glint 0.0780  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvJ/move_04.png detail  2.32  sat 0.774  pink 0.127  cyan 0.697  glint 0.0638  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvJ/move_08.png detail  2.40  sat 0.752  pink 0.161  cyan 0.617  glint 0.0241  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvJ/move_12.png detail  3.19  sat 0.765  pink 0.132  cyan 0.678  glint 0.0286  (222595 px)
+> efa-bfda-db0784968866/scratchpad/mvJ/move_17.png detail  2.68  sat 0.843  pink 0.043  cyan 0.850  glint 0.0124  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvJ/move_25.png detail  3.02  sat 0.793  pink 0.112  cyan 0.666  glint 0.0121  (224031 px)
+> locked view: OLD (no near) vs NEW v5 (differing px, >10, row range, max level diff) (31058, 3103, (21, 1287), 201)
+
+### 🤖 Claude — 2026-11-17T10:26:09.671Z
+
+Still about 31k pixels differ, some by up to 201 levels, so something strong is changing locally. I'll map exactly where.
+
+### 🤖 Claude — 2026-11-17T10:26:15.617Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/dbgJ && node scripts/proj05-move.mjs --q=\"$B&projnear05=1&projdbg05=1\" --out=$S/dbgJ --d=0 2>&1 | grep -ci error; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nA=np.asarray(Image.open('$S/mvO/move_00.png').convert('RGB')).astype(int); B=np.asarray(Image.open('$S/mvJ/move_00.png').convert('RGB')).astype(int)\nd=np.abs(A-B).max(-1)\nheat=np.zeros(A.shape,np.uint8); heat[...,0]=np.clip(d*4,0,255); heat[ …[+505 chars]`
+
+### 🤖 Claude — 2026-11-17T10:26:16.969Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/diff_locked_v5.png"}`
+
+### 🧑 User — 2026-11-17T10:26:32.849Z
+
+> ↩︎ result: 0
+> >10 px bbox x 39 863 y 24 865
+
+### 🧑 User — 2026-11-17T10:26:32.879Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:27:03.629Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\n# helper after the uniforms\nold='''uniform sampler2D uPjWT2;  // its flow map (?projflow05=2)\n'''\nnew='''uniform sampler2D uPjWT2;  // its flow map (?projflow05=2)\n// ?projnear05=1: 1 on river the camera has APPROACHED — both the exact layer and the near layer magnified there. (The\n// far river is magnified in the exact layer only, the locked view nowhere in both: neither changes.)\nfloat pjNearK(float mE, float mN) {\n  return uPjNear.x > 0.5 ? (1.0 - smoothstep(0.3, 0.55, mE)) * (1.0 - smoothstep(0.3, 0.55, …[+3148 chars]`
+
+### 🧑 User — 2026-11-17T10:27:41.181Z
+
+> ↩︎ result: ok
+> NEW v6
+> efa-bfda-db0784968866/scratchpad/mvK/move_00.png detail  5.18  sat 0.710  pink 0.129  cyan 0.581  glint 0.0780  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvK/move_04.png detail  2.32  sat 0.774  pink 0.127  cyan 0.697  glint 0.0638  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvK/move_08.png detail  2.39  sat 0.752  pink 0.161  cyan 0.616  glint 0.0241  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvK/move_12.png detail  3.18  sat 0.764  pink 0.132  cyan 0.677  glint 0.0286  (222595 px)
+> efa-bfda-db0784968866/scratchpad/mvK/move_17.png detail  2.66  sat 0.843  pink 0.043  cyan 0.850  glint 0.0123  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvK/move_25.png detail  2.92  sat 0.787  pink 0.107  cyan 0.664  glint 0.0106  (224031 px)
+> locked view: OLD (no near) vs NEW v6 (differing px, >10, max) (11900, 442, 200)
+
+### 🤖 Claude — 2026-11-17T10:27:43.525Z
+
+Down to 11,900 pixels (442 above 10 levels), with one spot still changing strongly. Locating it:
+
+### 🤖 Claude — 2026-11-17T10:27:49.325Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\nA=np.asarray(Image.open('$S/mvO/move_00.png').convert('RGB')).astype(int); B=np.asarray(Image.open('$S/mvK/move_00.png').convert('RGB')).astype(int)\nd=np.abs(A-B).max(-1)\nn,lab,st,cen=cv2.connectedComponentsWithStats((d>10).astype(np.uint8),8)\norder=np.argsort(-st[1:,4])[:8]+1\nfor k in order: print('blob', 'x',st[k,0],'y',st[k,1],'w',st[k,2],'h',st[k,3],'area',st[k,4],'max',int(d[lab==k].max()))\nys,xs=np.nonzero(d>0); print …[+465 chars]`
+
+### 🧑 User — 2026-11-17T10:27:49.825Z
+
+> ↩︎ result: blob x 622 y 554 w 24 h 25 area 322 max 200
+> blob x 805 y 863 w 40 h 3 area 79 max 18
+> blob x 858 y 862 w 6 h 4 area 19 max 69
+> blob x 802 y 99 w 4 h 3 area 4 max 35
+> blob x 59 y 100 w 3 h 2 area 4 max 31
+> blob x 642 y 605 w 2 h 2 area 3 max 105
+> blob x 438 y 536 w 2 h 3 area 3 max 76
+> blob x 804 y 25 w 2 h 2 area 2 max 22
+> all >0: rows [350 579 865] cols [417 656 849]
+
+### 🤖 Claude — 2026-11-17T10:27:50.576Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/blob_v6.png"}`
+
+### 🧑 User — 2026-11-17T10:27:50.591Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:28:21.416Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold='''// ?projnear05=1: 1 on river the camera has APPROACHED — both the exact layer and the near layer magnified there. (The\n// far river is magnified in the exact layer only, the locked view nowhere in both: neither changes.)\nfloat pjNearK(float mE, float mN) {\n  return uPjNear.x > 0.5 ? (1.0 - smoothstep(0.3, 0.55, mE)) * (1.0 - smoothstep(0.3, 0.55, mN)) : 0.0;\n}'''\nnew='''// ?projnear05=1: 1 on river the camera has APPROACHED — within ≈14–20 units of the eye (1 / gl_FragCoord.w = view\n// depth) AND both …[+1449 chars]`
+
+### 🧑 User — 2026-11-17T10:28:58.878Z
+
+> ↩︎ result: ok
+> NEW v7
+> efa-bfda-db0784968866/scratchpad/mvL/move_00.png detail  5.18  sat 0.710  pink 0.129  cyan 0.581  glint 0.0780  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvL/move_04.png detail  2.32  sat 0.774  pink 0.127  cyan 0.697  glint 0.0638  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvL/move_08.png detail  2.39  sat 0.752  pink 0.161  cyan 0.616  glint 0.0241  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvL/move_12.png detail  3.18  sat 0.764  pink 0.132  cyan 0.677  glint 0.0286  (222595 px)
+> efa-bfda-db0784968866/scratchpad/mvL/move_17.png detail  2.66  sat 0.843  pink 0.043  cyan 0.850  glint 0.0123  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvL/move_25.png detail  2.92  sat 0.787  pink 0.107  cyan 0.664  glint 0.0106  (224031 px)
+> locked view: OLD (no near) vs NEW v7 (differing px, >10, max) (2544, 99, 152)
+
+### 🤖 Claude — 2026-11-17T10:29:02.240Z
+
+Down to 2,544 pixels at the starting view (99 above 10 levels), and the riding results are unchanged. One more look at where the last ones are:
+
+### 🤖 Claude — 2026-11-17T10:29:05.595Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\nA=np.asarray(Image.open('$S/mvO/move_00.png').convert('RGB')).astype(int); B=np.asarray(Image.open('$S/mvL/move_00.png').convert('RGB')).astype(int)\nd=np.abs(A-B).max(-1)\nn,lab,st,cen=cv2.connectedComponentsWithStats((d>0).astype(np.uint8),8)\norder=np.argsort(-st[1:,4])[:6]+1\nfor k in order: print('blob x',st[k,0],'y',st[k,1],'w',st[k,2],'h',st[k,3],'area',st[k,4],'max',int(d[lab==k].max()))\nEOF", "description": "List remai …[+35 chars]`
+
+### 🧑 User — 2026-11-17T10:29:06.099Z
+
+> ↩︎ result: blob x 758 y 861 w 106 h 7 area 416 max 69
+> blob x 833 y 774 w 31 h 23 area 311 max 6
+> blob x 842 y 767 w 14 h 9 area 35 max 1
+> blob x 849 y 796 w 15 h 11 area 31 max 1
+> blob x 851 y 818 w 7 h 7 area 15 max 1
+> blob x 832 y 809 w 5 h 7 area 11 max 1
+
