@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 11526,
-   "sha256": "61faf5cdd559c2a7fba9cc677cd856ac491babdd94ab1c361322d923d9964dca"
+   "bytes": 11681,
+   "sha256": "86fedbc0af38b4bf5a0d903a0f62d593c18aefe7021d3735e972d45ccc22546d"
   },
   {
    "path": "README_FIRST.md",
@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "82e4201a816b95dcde2e0fcd9c0b8cd75e9e3b57dda96a7f7f584a4f8a039e51"
+   "sha256": "ba4d5dbbda2e7c785b2ced0ef6338fc827cc68a4766898c017ed4797a58e9def"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1548,8 +1548,8 @@
   },
   {
    "path": "qa/pilot05/proj/flow2/NOTES.md",
-   "bytes": 5435,
-   "sha256": "9de0ea95de376df4bab69bba327b3e64732589a3269d6894431b315750bbcb5d"
+   "bytes": 5457,
+   "sha256": "36cb4415f8b9cd7ca20cf3df01c54abd286709e4ee12dd765425dbb41d46d8f9"
   },
   {
    "path": "qa/pilot05/proj/flow2/flow_direction_map_N.png",
@@ -1650,6 +1650,86 @@
    "path": "qa/pilot05/proj/move/move_log.json",
    "bytes": 1573,
    "sha256": "1a2c8237bc1971681d6fa9b079ceab343626f1adc631f1635f46ac941b7f38a9"
+  },
+  {
+   "path": "qa/pilot05/proj/near/1_APPROVED.png",
+   "bytes": 484196,
+   "sha256": "d3f339d49199598e03541c15a3ec6f7fa6342f40de650361c44ab4301bfb44dd"
+  },
+  {
+   "path": "qa/pilot05/proj/near/2_BEFORE_riding_17_units_ahead.png",
+   "bytes": 1845988,
+   "sha256": "cba277535eb29442d73310d374bd5c9ee1ed83dcd3b462fd89ae09a4452175e2"
+  },
+  {
+   "path": "qa/pilot05/proj/near/3_NEW_projnear05_riding_17_units_ahead.png",
+   "bytes": 1969385,
+   "sha256": "24a3e1bae2807b611e5af5c8bbec83d01b59c116e182f6583160f7035fc778e5"
+  },
+  {
+   "path": "qa/pilot05/proj/near/NEAR_WATER_STATS.json",
+   "bytes": 3173,
+   "sha256": "5cbb7bfc5f349746d101be012015b97ecbfbd20a4b91654e02d600d5a28a287f"
+  },
+  {
+   "path": "qa/pilot05/proj/near/NOTES.md",
+   "bytes": 5663,
+   "sha256": "889744b0a6b12591ff7eb02cbf640013a1b118fa39ea25117bef5265d7da56cd"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride/BEFORE_ride_3s_flow_running.mp4",
+   "bytes": 4783875,
+   "sha256": "58ce0e56bb904757fb721b7afde6ceece6061cbf11f7295b162d9b368fdd2d89"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride/BEFORE_riding_08_units_ahead.png",
+   "bytes": 1891541,
+   "sha256": "c4750a2bfbb7146f49ab86d42c00655a89c53dbeb97549ef81845b4ec4fb2eda"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride/BEFORE_riding_25_units_ahead.png",
+   "bytes": 1814499,
+   "sha256": "1fc2c3bd85480472d52c6aca5dd15d289929a4b3aea68528ba6ddb957eda8e03"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride/NEW_locked_start_view.png",
+   "bytes": 2163580,
+   "sha256": "f22122e228a740582dfd55cc32a3728b679edcdd1e665c36df97d4f560ae538c"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride/NEW_ride_3s_flow_running.mp4",
+   "bytes": 5511211,
+   "sha256": "a00a92747c93ba2d44bf520bfb2952a9ea5d689e214bf4670643864096e36507"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride/NEW_riding_08_units_ahead.png",
+   "bytes": 1949089,
+   "sha256": "613e0725ccbf522e943094b95a0078f666255808491389ae80de4142379e18b8"
+  },
+  {
+   "path": "qa/pilot05/proj/near/ride/NEW_riding_25_units_ahead.png",
+   "bytes": 1942784,
+   "sha256": "361565591a61c5aabae25e246b3278d7ce29606d0e21572545964779aa87ee0d"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tests/gameplay_projnear05.json",
+   "bytes": 14733,
+   "sha256": "aab79a73bff377f175b37e7f76223eff3068b558056b96ab7350517711f3184a"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile/approved_water_in_river_coordinates_far_on_top.png",
+   "bytes": 392898,
+   "sha256": "07ec75886c483e1a8a1a545c9c5d698669286fabb34cdab87219e63712b541ec"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile/bubbles_found_in_exact_layer.png",
+   "bytes": 604397,
+   "sha256": "275e4eadb92c4c5a6a642e2e2309f78966277427a8493e7c0ebaddf3169a0e0b"
+  },
+  {
+   "path": "qa/pilot05/proj/near/tile/near_tile_three_periods_far_on_top.png",
+   "bytes": 509222,
+   "sha256": "aceca0ecb93ea82e1efae4c814232ab8926aae121d2946bd59376761cf31936c"
   },
   {
    "path": "qa/pilot05/proj/probe/camera.json",

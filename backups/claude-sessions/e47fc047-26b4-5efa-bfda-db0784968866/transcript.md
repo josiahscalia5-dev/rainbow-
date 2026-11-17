@@ -5052,3 +5052,107 @@ Still about 2,700 pixels, so my guess about the bank edge was wrong. Rather than
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && node scripts/proj05-move.mjs --q=\"$B&projnear05=1\" --out=$S/fin/mvN --d=0,4,8,12,17,25 >/dev/null 2>&1; node scripts/proj05-move.mjs --q=\"$B&projnear05=1&projflow05=2\" --out=$S/fin/rideN --clip=3 --fps=24 2>&1 | tail -1; node scripts/proj05-move.mjs --q=\"$B&projflow05=2\" --out=$S/fin/rideO --clip=3 --fps=24 2>&1 | tail -1; mkdir -p $S/fin/lk && node scripts/capture.mjs 05 --q=\"$B&projnear05=1&projflow05=2\" --out=$S/fin/l …[+819 chars]`
 
+### 🧑 User — 2026-11-17T10:43:11.720Z
+
+> ↩︎ result: clip frames 72
+> clip frames 72
+> Updated 1 path from the index
+> OLD ride (no near)
+> efa-bfda-db0784968866/scratchpad/mvO/move_00.png detail  5.18  sat 0.710  pink 0.129  cyan 0.581  glint 0.0780  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_04.png detail  2.32  sat 0.774  pink 0.127  cyan 0.698  glint 0.0646  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_08.png detail  2.07  sat 0.740  pink 0.350  cyan 0.435  glint 0.0499  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_12.png detail  1.93  sat 0.780  pink 0.114  cyan 0.760  glint 0.0588  (222594 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_17.png detail  1.38  sat 0.720  pink 0.123  cyan 0.695  glint 0.0014  (224031 px)
+> efa-bfda-db0784968866/scratchpad/mvO/move_25.png detail  1.26  sat 0.756  pink 0.347  cyan 0.489  glint 0.0047  (224031 px)
+> NEW ride (projnear05=1)
+> bfda-db0784968866/scratchpad/fin/mvN/move_00.png detail  5.18  sat 0.710  pink 0.129  cyan 0.581  glint 0.0780  (224031 px)
+> bfda-db0784968866/scratchpad/fin/mvN/move_04.png detail  2.32  sat 0.774  pink 0.127  cyan 0.697  glint 0.0638  (224031 px)
+> bfda-db0784968866/scratchpad/fin/mvN/move_08.png detail  2.66  sat 0.750  pink 0.161  cyan 0.612  glint 0 …[+2028 chars]
+
+### 🤖 Claude — 2026-11-17T10:43:23.734Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/pilot05/proj/near/tests && node scripts/gameplay-test.mjs --q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1' --out=qa/pilot05/proj/near/tests/gameplay_projnear05.json >/dev/null 2>&1; python3 -I -c \"\nimport json; d=json.load(open('qa/pilot05/proj/near/tests/gameplay_projnear05.json'))\nprint('gameplay pass', d.get('pass'), sum(v['pass'] for v in d['checks'].values()), '/', len(d['checks']), {k:v['pass'] for k,v in d['checks'].items()}, 'errors', d.get('errors'))\"; npm run -s test:continuity 2>&1 | grep -o '\"[0-9][0-9]->[0-9 …[+184 chars]`
+
+### 🧑 User — 2026-11-17T10:43:32.015Z
+
+> ↩︎ result: gameplay pass True 8 / 8 {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True} errors []
+> "01->02 gap=0 "02->03 gap=-0.0001 "03->04 gap=0 "04->05 gap=0 "05->06 gap=0 "06->07 gap=0 "07->08 gap=0 "08->09 gap=0 "09->10 gap=0 "10->11 gap=0 
+> 13
+
+### 🤖 Claude — 2026-11-17T10:43:37.049Z
+
+All 8 gameplay checks pass with every switch on, all stage joins are continuous, and your 13 reference pictures are untouched. Saving the evidence, measurements and notes into the repository:
+
+### 🤖 Claude — 2026-11-17T10:43:47.755Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && D=qa/pilot05/proj/near && mkdir -p $D/ride $D/tile && cp references/05_flow_into_the_current.png $D/1_APPROVED.png && cp $S/mvO/move_17.png $D/2_BEFORE_riding_17_units_ahead.png && cp $S/fin/mvN/move_17.png $D/3_NEW_projnear05_riding_17_units_ahead.png && cp $S/mvO/move_25.png $D/ride/BEFORE_riding_25_units_ahead.png && cp $S/fin/mvN/move_25.png $D/ride/NEW_riding_25_units_ahead.png && cp $S/mvO/move_08.png $D/ride/BEFORE_riding_08_units_ahead.png && cp $S/fin/mvN/move_08.png $D/ride/NEW_riding_ …[+1992 chars]`
+
+### 🧑 User — 2026-11-17T10:43:59.761Z
+
+> ↩︎ result: 19 rows
+>  qa/pilot05/proj/near:
+>  4228
+> 4096 .
+> 4096 ..
+> 484196 1_APPROVED.png
+> 1845988 2_BEFORE_riding_17_units_ahead.png
+> 1969385 3_NEW_projnear05_riding_17_units_ahead.png
+> 3173 NEAR_WATER_STATS.json
+> 4096 ride
+> 4096 tests
+> 4096 tile
+>  
+>  qa/pilot05/proj/near/ride:
+>  19604
+> 4096 .
+> 4096 ..
+> 4783875 BEFORE_ride_3s_flow_running.mp4
+> 1891541 BEFORE_riding_08_units_ahead.png
+> 1814499 BEFORE_riding_25_units_ahead.png
+> 2163580 NEW_locked_start_view.png
+> 5511211 NEW_ride_3s_flow_running.mp4
+> 1949089 NEW_riding_08_units_ahead.png
+> 1942784 NEW_riding_25_units_ahead.png
+
+### 🤖 Claude — 2026-11-17T10:44:22.388Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/proj/near/NOTES.md", "content": "# Screen 05 water while RIDING — `?proj05=1&projnear05=1` (2026-11-17 ~10:00–11:30 UTC)\n\nUser: \"go fix the water swirls\" → part 2 of `../flow2/NOTES.md`: the approved water is crisp only from the locked\nstart view; as Benny rides on, the water near him came from 24-texel-per-unit layers and melted into a pastel blur.\nTest switch only — the default build, the protected BEFORE and every earlier switch are pixel-identical (below).\nFull test URL: `?proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&proj …[+5179 chars]`
+
+### 🧑 User — 2026-11-17T10:44:22.503Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/proj/near/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T10:44:27.342Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='CLAUDE.md'; s=open(p).read()\na='''**water flow `&projflow05=2`** (flow along the\napproved streaks, design stays crisp; riding blur diagnosed, near-tile plan NOT built: `qa/pilot05/proj/flow2/NOTES.md`)'''\nb='''**water flow `&projflow05=2`** (flow along the\napproved streaks, design stays crisp: `qa/pilot05/proj/flow2/NOTES.md`), **sharp riding water `&projnear05=1`** (approved\nnear tile + near flares where the camera has approached; 2–3× crisper while riding, start view unchanged:\n`qa/pilot05/proj/near/NOTES.md`, 2026-11-17)'''\nassert a in s; s=s.rep …[+785 chars]`
+
+### 🧑 User — 2026-11-17T10:44:27.963Z
+
+> ↩︎ result: ok
+> M  CLAUDE.md
+> M  qa/pilot05/proj/flow2/NOTES.md
+> A  qa/pilot05/proj/near/1_APPROVED.png
+> A  qa/pilot05/proj/near/2_BEFORE_riding_17_units_ahead.png
+> A  qa/pilot05/proj/near/3_NEW_projnear05_riding_17_units_ahead.png
+> A  qa/pilot05/proj/near/NEAR_WATER_STATS.json
+> A  qa/pilot05/proj/near/NOTES.md
+> A  qa/pilot05/proj/near/ride/BEFORE_ride_3s_flow_running.mp4
+> A  qa/pilot05/proj/near/ride/BEFORE_riding_08_units_ahead.png
+> A  qa/pilot05/proj/near/ride/BEFORE_riding_25_units_ahead.png
+> A  qa/pilot05/proj/near/ride/NEW_locked_start_view.png
+> A  qa/pilot05/proj/near/ride/NEW_ride_3s_flow_running.mp4
+> A  qa/pilot05/proj/near/ride/NEW_riding_08_units_ahead.png
+> A  qa/pilot05/proj/near/ride/NEW_riding_25_units_ahead.png
+> A  qa/pilot05/proj/near/tests/gameplay_projnear05.json
+> A  qa/pilot05/proj/near/tile/approved_water_in_river_coordinates_far_on_top.png
+> A  qa/pilot05/proj/near/tile/bubbles_found_in_exact_layer.png
+> A  qa/pilot05/proj/near/tile/near_tile_three_periods_far_on_top.png
+
+### 🤖 Claude — 2026-11-17T10:44:30.504Z
+
+The code and textures were already committed by the five-minute autosave. Committing the evidence and notes with a descriptive message, then pushing and verifying on GitHub:
+
+### 🤖 Claude — 2026-11-17T10:44:37.351Z
+
+> 🔧 **Bash** `{"command": "git commit -q -F - <<'EOF'\nScreen 05 water: ?projnear05=1 sharp approved water while riding\n\nThe approved water was crisp only from the locked start view; riding on, the\nnear water came from 24 texel/unit layers and melted into a pastel blur.\n- tools/proj05/near_bake.py -> proj05_T2.png: a sharp tile (≈220 texels/unit)\n  built only from approved pixels of the crisp band in front of Benny; sides\n  borrowed from where they are visible, right bank mirrored from the left,\n  bubbles / foam islands filled along the streaks, mirrored repeat between the\n  ribbons' straight points …[+1167 chars]`
+
