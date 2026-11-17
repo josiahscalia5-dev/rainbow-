@@ -581,3 +581,114 @@ First fix attempt (keeping the view closer to Benny at the drain drop) only part
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/cameraRig.ts'\ns=open(p).read()\na=s.index('  /**\\n   * `?camclear=1` only — 03 → 04 drain drop')\nb=s.index('  /** `?camclear=1` only — see desired() */')\nnew='''  /**\n   * `?camclear=1` only — 03 → 04 drain drop: the view trails 10–13 u above and beside Benny while he falls down the drain\n   * chute, so the chute's own falling water passes between the view and Benny for ~0.6 s (60–100 % of him hidden, a\n   * frame-filling striped sheet; the user's recording at 7 s). Over that stretch only, the smoothed view rides ON the\n   * stream 3.5 u behi …[+1451 chars]`
 
+### 🧑 User — 2026-11-17T17:45:13.212Z
+
+> ↩︎ result: TSC_OK
+> 16.6 03 64.395 hid 0.051 [] near2 0.2632 inside ['Mesh < foam_whirlpool < foam_b'] dep 7.29
+> 16.7 03 65.297 hid 0.033 [] near2 0.1934 inside [] dep 4.54
+> 16.8 03 66.213 hid None [] near2 0.3845 inside [] dep 3.13
+> 16.9 03 67.158 hid 0.016 [] near2 0.2484 inside [] dep 3.53
+> 17 03 68.143 hid 0.611 [('water_ribbon < water_system', 0.605), ('rider_splash < water_system', 0.049)] near2 0.6642 inside [] dep 3.92
+> 17.1 03 69.182 hid 0.31 [('water_ribbon < water_system', 0.277), ('rider_splash < water_system', 0.035)] near2 0.5117 inside [] dep 4.12
+> 17.2 03 70.284 hid 0.211 [('water_ribbon < water_system', 0.164), ('rider_splash < water_system', 0.023)] near2 0.3123 inside [] dep 4.09
+> 17.3 04 71.456 hid 0.075 [('water_ribbon < water_system', 0.023)] near2 0.1685 inside [] dep 3.91
+> 17.4 04 72.701 hid 0.05 [] near2 0.1227 inside [] dep 3.63
+> 17.5 04 74.014 hid 0.087 [] near2 0.1661 inside [] dep 3.54
+> 17.6 04 75.381 hid 0.075 [] near2 0.2052 inside [] dep 3.64
+> 17.7 04 76.777 hid 0.064 [] near2 0.1823 inside [] dep 3.72
+> 17.8 04 78.177 hid 0.057 [] near2 0.1194 inside ['Mesh < foam_banks < water_syst'] dep 3.93
+> 17.9 04 79.577 hid 0.044 [('Mesh(MeshStandardMaterial#ffcf', 0.027)] near2 0.0198  …[+760 chars]
+
+### 🤖 Claude — 2026-11-17T17:45:14.630Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/sheet0304c.png"}`
+
+### 🧑 User — 2026-11-17T17:45:15.324Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T17:45:15.318Z
+
+[Image: original 2430x1268, displayed at 2000x1044. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T17:45:29.185Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/cameraRig.ts'\ns=open(p).read()\ns=s.replace(\"\"\"    if (CAMCLEAR) this.clear0304(s, lat);\n    this.target.lerp(dt3, kt);\"\"\",\"\"\"    this.target.lerp(dt3, kt);\n    if (CAMCLEAR) this.clear0304(s, lat);\"\"\")\nold=\"\"\"    const p = f.pos.clone().addScaledVector(f.right, lat).addScaledVector(f.up, 1.4);\n    this.pos.lerp(p, w);\n  }\"\"\"\nnew=\"\"\"    const p = f.pos.clone().addScaledVector(f.right, lat).addScaledVector(f.up, 1.4);\n    this.pos.lerp(p, w);\n    // aim a little ahead of Benny down the stream, so he stays in the frame whi …[+1296 chars]`
+
+### 🧑 User — 2026-11-17T17:47:26.297Z
+
+> ↩︎ result: TSC_OK
+> 16.3 03 hid 0.016 [('coins', 0.013)] near2 0 dep 7.28
+> 16.4 03 hid 0.25 [('coins', 0.244)] near2 0.0006 dep 7.39
+> 16.5 03 hid 0.046 [] near2 0.0848 dep 7.39
+> 16.6 03 hid 0.051 [] near2 0.2632 dep 7.29
+> 16.7 03 hid 0.038 [] near2 0.1883 dep 4.82
+> 16.8 03 hid 0.254 [] near2 0.1186 dep 3.82
+> 16.9 03 hid 0.013 [] near2 0.0053 dep 3.71
+> 17 03 hid None [] near2 0.5816 dep 3.68
+> 17.1 03 hid 1 [('water_ribbon < water_syst', 1), ('rider_splash < water_syst', 0.082)] near2 0.9287 dep 3.78
+> 17.2 03 hid 0.551 [('water_ribbon < water_syst', 0.53), ('rider_splash < water_syst', 0.054)] near2 0.7008 dep 3.9
+> 17.3 04 hid 0.15 [('water_ribbon < water_syst', 0.095)] near2 0.2623 dep 3.98
+> 17.4 04 hid 0.057 [] near2 0.1059 dep 3.88
+> 17.5 04 hid 0.066 [] near2 0.101 dep 3.78
+> 17.6 04 hid 0.065 [] near2 0.1214 dep 3.77
+> 17.7 04 hid 0.059 [] near2 0.106 dep 3.75
+> 17.8 04 hid 0.058 [] near2 0.0646 dep 3.93
+> 17.9 04 hid 0.045 [('Mesh(MeshStandardMaterial', 0.028)] near2 0 dep 4.54
+> 18 04 hid 0.088 [('Mesh(MeshStandardMaterial', 0.063)] near2 0 dep 6.15
+> 18.1 04 hid 0.072 [('Mesh(MeshStandardMaterial', 0.037)] near2 0 dep 9.02
+> 18.2 04 hid 0.058 [('Mesh(MeshStandardMaterial', 0.021)] near2 0 dep 10.92
+> 18.3 04 hid 0.07 …[+220 chars]
+
+### 🤖 Claude — 2026-11-17T17:47:27.902Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/sheet0304d.png"}`
+
+### 🧑 User — 2026-11-17T17:47:28.648Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T17:47:28.641Z
+
+[Image: original 2430x1268, displayed at 2000x1044. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T17:47:43.530Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/cameraRig.ts'\ns=open(p).read()\nold_a=s[s.index(\"    const w = THREE.MathUtils.smoothstep(s, s3 - 6, s3 - 3) * (1 - THREE.MathUtils.smoothstep(s, s3 + 6, s3 + 12));\"):s.index(\"  /** `?camclear=1` only — see desired() */\")]\nnew_a=\"\"\"    const w = THREE.MathUtils.smoothstep(s, s3 - 4.5, s3 - 2) * (1 - THREE.MathUtils.smoothstep(s, s3 + 6, s3 + 12));\n    if (w <= 0) return;\n    // world up, not the stream's own up: the chute water twists over the drain lip, and a view tied to its up would\n    // swing underneath it\n    const f = this.course …[+1553 chars]`
+
+### 🧑 User — 2026-11-17T17:49:46.134Z
+
+> ↩︎ result: /**
+>    * `?camclear=1` only — 03 → 04 drain drop: the view trails 10–13 u above and beside Benny while he falls down the drain
+>    * chute, so the chute's own falling water passes between the view and Benny for ~0.6 s (60–100 % of him hidden, a
+>    * frame-filling striped sheet; the user's recording at 7 s). Over that stretch only, the smoothed view rides ON the
+>    * stream 3.5 u behind Benny, 1.4 u above the water (the water he rides can then never come between), aim unchanged; it
+>    * blends in and back out over a few metres of the ride. Off: unchanged.
+>    */
+>   private clear0304(s: number, lat: number) {
+>     const s3 = this.course.stage('03').s1;
+>     const w = THREE.MathUtils.smoothstep(s, s3 - 4.5, s3 - 2) * (1 - THREE.MathUtils.smoothstep(s, s3 + 6, s3 + 12));
+>     if (w <= 0) return;
+>     // world up, not the stream's own up: the chute water twists over the drain lip, and a view tied to its up would
+>     // swing underneath it
+>     const f = this.course.sample(Math.max(0, s - 3));
+>     const p = f.pos.clone().addScaledVector(f.right, lat).add(new THREE.Vector3(0, 1.6, 0));
+>     this.pos.lerp(p, w);
+>     // aim at Benny (a little below his centre line ahead), so he stays in the frame wh …[+2100 chars]
+
+### 🤖 Claude — 2026-11-17T17:49:47.589Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/sheet0304e.png"}`
+
+### 🧑 User — 2026-11-17T17:49:48.274Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T17:49:48.266Z
+
+[Image: original 2430x1268, displayed at 2000x1044. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T17:49:57.428Z
+
+> 🔧 **Bash** `{"command": "git add src/game/cameraRig.ts tools/camclear/vidmap.py tools/camclear/triptych.py qa/gameplay_video/compare_r3 && git commit -qm \"camclear r3: 03->04 drain drop keeps Benny in view (camclear-guarded) + video|build|camclear comparison frames\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCLvd1Cb5N4WHTHcHB4\" && git push -q origin claude/rainbow-s08-camclear-c3 && git rev-parse HEAD && git ls-remote origin refs/heads/claude/rainbow-s08-camclear-c3; sed -n 1,25p scripts/gameplay-test.mjs | grep -n \"argv\\|q=\\|out\"  …[+105 chars]`
+
