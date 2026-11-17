@@ -633,8 +633,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 17794,
-   "sha256": "782ab386a6ea25b9a2c512a9c2f2df0c89be52278f661c74fcd528b25dc986e6"
+   "bytes": 18422,
+   "sha256": "da7e4a0e424590aa573418909c7133b691011ba5db562c21ba4f0e61a5b3aeba"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -654,7 +654,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11677,
-   "sha256": "25402e2c9f460caa78038eb8808e256387472bba2621b2d1fb499bb4d0b39b96"
+   "sha256": "f062dd71a8dc7a828cef245485a7b5bfa6894f84aca1d1cbd18f6d8247706845"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1428,8 +1428,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/COORDINATION.md",
-   "bytes": 23449,
-   "sha256": "c420d64235dafa9f2bdcf4e7ef151455983589b20bbb2733da042bd7d58f1ac7"
+   "bytes": 24192,
+   "sha256": "8fda9f1a3cea117feba54ae9e141e6110b48dad7099ebbd03c116acd79d4617b"
   },
   {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_2026-11-17.md",
@@ -3205,6 +3205,21 @@
    "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp2_match05_now.png",
    "bytes": 2256472,
    "sha256": "841d02f833dfb48ee7bbe5c34bd6b02063ed75ad06e50783ab44094aec570e8a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_FULL_FRAME_METRICS.json",
+   "bytes": 451,
+   "sha256": "d0ef9e94a56a27f11db58f3d9c66bdda886cdd47b0e78f051b4ed3217f14413e"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_REGION_METRICS.json",
+   "bytes": 2545,
+   "sha256": "39149bc1b9515cb8ec9086018967ff3bde47ce25b8683828911f0e0f2c8a6fa1"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png",
+   "bytes": 2263523,
+   "sha256": "0f54806ae0545ff94978d4440637fa2c591f502c9ea3581d63b40cff1cf8699a"
   },
   {
    "path": "qa/pilot05/full_reference_match/coordinator/edge05/stack_projedge05.png",

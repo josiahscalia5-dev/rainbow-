@@ -219,3 +219,9 @@ only to the new branch. Everything above still applies; the main session is the 
   walls 6.46/92.2 %, gold 9.39/87.8 %, fittings 3.54/94.8 %, distant 2.43/97.1 %; `lids05e.glb`; default + protected BEFORE 0 px;
   06/07 0 px; 04: 712 px inside its window onto the 05 tunnel. REQUEST to coordinator: black dotted seam on top of the left foam
   bank (x 180–330, y 545–560), from `proj05Apron.ts` (also in STACK).
+* **~02:15 UTC — benny-character-artist FINISHED** (benny05; `benny/NOTES.md`): Benny + hat 49.71 / 23.5 % → 19.24 / 73.0 %.
+  `projedge05` (coordinator: dotted black line on the left foam bank, `coordinator/NOTES.md`) added to `match05`.
+  **Checkpoint cp3** (`coordinator/checkpoints/cp3_match05_benny_tunnel_done.png`, `?match05=1`): whole frame **11.87 / 83.6 %**
+  within 20 (recovery 29.14 / 57.0 %). Default 0 px (one run had the known 152-px HUD-corner flicker; re-run 0 px), protected
+  BEFORE 0 px. washer-environment-modeler resumed for two small chunks at the left far bend. **Wave 2 launched:**
+  foam-bubbles-particles (`splash05m`, `bub05`), brief `briefs/foam-bubbles-particles.md`. Worst region now: wake / splash 38.9 %.

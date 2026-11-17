@@ -1,12 +1,12 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T02:05:00Z",
+ "updated_utc": "2026-11-17T02:15:00Z",
  "updated_by_session": "01Q46SCH (new account, branch claude/rainbow-account-transfer-npxahd)",
  "assignments_now": {
   "_note": "State at 2026-11-17 ~01:20 UTC (new account, session 01Q46SCH): the three specialists of running_now were RELAUNCHED from their briefs (header 'RESUMED RUN #3') + NOTES.md. If you are a LATER session, treat running_now as INTERRUPTED and relaunch each from qa/pilot05/full_reference_match/briefs/<agent>.md + its NOTES.md ('Remaining'). State: COORDINATION.md, newest RESUMED section.",
   "coordinator (main session)": "Environment restored + verified; default / BEFORE / STACK pixel-identical; first real match05 capture measured (whole frame 29.14 / 57.0 %, recovery_s01Av/). NEXT: integrate finished specialist parts into ?match05=1, order deliverables, then wave 2 (foam-bubbles-particles) and the Android APK + performance.",
-  "foam-bubbles-particles": "WAVE 2, not launched yet: splash05m (Benny wake, order part 8) + bub05 (approved bubbles as real 3D / sprites, part 11). Files riderSplash.ts, bubbles.ts, foam.ts, spray.ts; folder qa/pilot05/full_reference_match/splash_bubbles/",
+  "foam-bubbles-particles": "WAVE 2 RUNNING since ~02:15 UTC (brief qa/pilot05/full_reference_match/briefs/foam-bubbles-particles.md)",
   "android-build-performance": "LAST: experiment APK + performance after the visual parts are in (order parts 18, 19)",
   "previous_assignments": {
    "_note": "State at 2026-11-16 ~15:55 UTC (urgent backup). A running specialist does NOT survive the end of a session or an account switch: if you are a new session, treat 'running' as INTERRUPTED and relaunch from the brief.",
@@ -205,11 +205,18 @@
  ],
  "running_now": [
   {
-   "agent": "benny-character-artist",
-   "switch": "benny05",
-   "launched": "2026-11-17 ~01:20 UTC, session 01Q46SCH (relaunch #3; the 01:00 run of session 01AvQv6S was interrupted after ~10 min)",
-   "continue_from": "qa/pilot05/full_reference_match/benny/NOTES.md Remaining",
-   "brief": "qa/pilot05/full_reference_match/briefs/benny-character-artist.md"
+   "agent": "washer-environment-modeler",
+   "switch": "env05",
+   "launched": "2026-11-17 ~02:10 UTC follow-up (same run, resumed)",
+   "continue_from": "env/NOTES.md: left wall chunk x165-200 y553-592, far-wall chunk + far-river wedge x325-400 y528-590",
+   "brief": "qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md"
+  },
+  {
+   "agent": "foam-bubbles-particles",
+   "switch": "splash05m, bub05",
+   "launched": "2026-11-17 ~02:15 UTC, session 01Q46SCH (wave 2, first run)",
+   "continue_from": "qa/pilot05/full_reference_match/splash_bubbles/NOTES.md (create)",
+   "brief": "qa/pilot05/full_reference_match/briefs/foam-bubbles-particles.md"
   }
  ],
  "finished_this_session": [
@@ -227,6 +234,14 @@
    "result": "STACK -> STACK+env05: whole 34.10/51.6% -> 18.83/73.9%; walls 53.82/21.1 -> 6.46/92.2; gold 37.74/50.0 -> 9.39/87.8; fittings 26.85/59.7 -> 3.54/94.8; distant 29.79/45.1 -> 2.43/97.1; lids05e.glb; default + BEFORE 0 px; 06/07 0 px; 04 712 px (window onto 05 tunnel); gameplay 8/8",
    "notes": "qa/pilot05/full_reference_match/env/NOTES.md",
    "requests": "black dotted seam top of left foam bank x180-330 y545-560 from proj05Apron.ts (coordinator)"
+  },
+  {
+   "agent": "benny-character-artist",
+   "switch": "benny05",
+   "finished": "2026-11-17 ~02:15 UTC, session 01Q46SCH",
+   "result": "Benny + hat 49.71/23.5% -> 19.24/73.0% (body 71, crown 76, cuff 81, pom 68, star 73 % within 20); maps assets/textures/benny05/*.png; default 0 px; gameplay 8/8",
+   "notes": "qa/pilot05/full_reference_match/benny/NOTES.md",
+   "requests": "arm pose + body bottom over the splash = wave 2 (splash05m)"
   }
  ]
 }

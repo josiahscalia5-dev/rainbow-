@@ -2898,3 +2898,109 @@ The switch is in and type-checks clean. Next I'll compare the comparison stack w
 
 > 🔧 **Bash** `{"command": "flock -w 180 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:projedge05 2>&1 | grep -E '\"commit\"|\"pushed_verified\"|\"error\"|skipping'; echo \"uncommitted: $(git status --short | wc -l)\"; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"", "description": "Save the fix and verify push", "timeout": 300000}`
 
+### 🧑 User — 2026-11-17T01:59:49.452Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "e7b9a4fd7687efcdb683a5703e050812e4c1af98",
+> uncommitted: 0
+> LOCAL  e7b9a4fd7687efcdb683a5703e050812e4c1af98
+> REMOTE e7b9a4fd7687efcdb683a5703e050812e4c1af98
+
+### 🤖 Claude — 2026-11-17T02:00:03.469Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | tail -3 && echo TSC_OK; S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap; R=qa/pilot05/full_reference_match/coordinator/checkpoints\nnode scripts/capture.mjs 05 --q='match05=1' --out=$S/cp3 2>&1 | tail -1 | cut -c1-30; grep -c '\"errors\": \\[\\]' qa/capture_log.json; git checkout -q qa/capture_log.json\ncp $S/cp3/05.png $R/cp3_match05_benny_tunnel_done.png\npython3 -I tools/match05/metrics.py $R/cp3_match05_benny_tunnel_done.png $R/cp3_ 2>&1 | sed -E 's/ssim.*signed.*//; s/, .ssim_lum.*//'\nnode scripts/capture.mjs 05 …[+701 chars]`
+
+### 🧑 User — 2026-11-17T02:00:50.684Z
+
+> ↩︎ result: TSC_OK
+> 05 → /tmp/claude-0/-home-use
+> 1
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 11.87, 'within_10': 0.7463, 'within_20': 0.8357, '
+> gold_rings_and_front_frame   px  125730  mean   9.36  <=10 0.736  <=20 0.879  
+> purple_walls                 px  312706  mean   6.92  <=10 0.833  <=20 0.913  
+> side_fittings                px   13776  mean   3.54  <=10 0.890  <=20 0.948  
+> water                        px  480736  mean   6.75  <=10 0.880  <=20 0.916  
+> foam_banks                   px   28862  mean   5.62  <=10 0.921  <=20 0.951  
+> benny_and_hat                px   93061  mean  19.24  <=10 0.587  <=20 0.730  
+> wake_splash                  px   83491  mean  41.48  <=10 0.221  <=20 0.389  
+> coins                        px   27437  mean  27.67  <=10 0.277  <=20 0.516  
+> bubbles                      px   29304  mean  25.89  <=10 0.580  <=20 0.645  
+> hud_and_text                 px  125488  mean  17.23  <=10 0.574  <=20 0.737  
+> distant_tunnel_and_glow      px    6513  mean   2.43  <=10 0.926  <=20 0.971  
+> 05 → /tmp/claude-0
+> 05 → /tmp/claude-0
+> DEFAULT vs protected default px: 152
+> BEFORE ?ringa=26&nearfloor05=0 vs baseline px: 0
+
+### 🤖 Claude — 2026-11-17T02:00:57.418Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cap; python3 -I -c \"\nfrom PIL import Image;import numpy as np\na=np.asarray(Image.open('$S/cp3_default/05.png').convert('RGB'),int);b=np.asarray(Image.open('qa/pilot05/current_default_05.png').convert('RGB'),int)\nm=(a!=b).any(2);ys,xs=np.nonzero(m);d=np.abs(a-b).max(2)[m]\nprint('bbox x',xs.min(),xs.max(),'y',ys.min(),ys.max(),'max',d.max(),'mean',round(d.mean(),1))\"; node scripts/capture.mjs 05 --out=$S/cp3_default2 2>&1 | tail -1 | cut -c1-20; git checkout -q qa/capture_log.json; python3 -I - …[+325 chars]`
+
+### 🧑 User — 2026-11-17T02:01:08.975Z
+
+> ↩︎ result: bbox x 59 805 y 21 104 max 33 mean 2.8
+> 05 → /tmp/claude-0
+> DEFAULT run 2 vs protected default px: 0
+
+### 🤖 Claude — 2026-11-17T02:01:10.998Z
+
+That was the same one-off flicker at the HUD bar's rounded corners as earlier; the re-capture is 0 px. The default game is intact. I'll look at the combined capture myself before sending it.
+
+### 🤖 Claude — 2026-11-17T02:01:11.548Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png"}`
+
+### 🧑 User — 2026-11-17T02:01:11.596Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:01:14.707Z
+
+> 🔧 **SendUserFile** `{"files": ["references/05_flow_into_the_current.png", "qa/pilot05/full_reference_match/recovery_s01Q4/05_match05_at_recovery.png", "qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png"], "caption": "Screen 05, three separate full-size pictures: 1) ORIGINAL APPROVED, 2) playable game BEFORE corrections, 3) playable game NOW, after the tunnel, Benny, HUD and coins work (real capture at the approved camera, ?match05=1).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T02:01:15.474Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/references/05_flow_into_the_current.png → file_uuid: 6573e0e9-ab8e-4bc6-8444-e5b4b03801f0
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/recovery_s01Q4/05_match05_at_recovery.png → file_uuid: 067b47fd-29cc-4ec1-af6d-83ea9fe703d7
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png → file_uuid: 801ecdd7-d3ce-4747-9fc0-61b04151e30a
+
+### 🤖 Claude — 2026-11-17T02:01:16.922Z
+
+Now the fourth step you ordered: launching the splash and bubble specialist, and recording Benny's finish.
+
+### 🤖 Claude — 2026-11-17T02:01:26.172Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; s=json.load(open(p))\ns['running_now']=[r for r in s['running_now'] if r['agent']!='benny-character-artist']\ns.setdefault('finished_this_session',[]).append({\"agent\":\"benny-character-artist\",\"switch\":\"benny05\",\"finished\":\"2026-11-17 ~02:15 UTC, session 01Q46SCH\",\n \"result\":\"Benny + hat 49.71/23.5% -> 19.24/73.0% (body 71, crown 76, cuff 81, pom 68, star 73 % within 20); maps assets/textures/benny05/*.png; default 0 px; gameplay 8/8\",\n \"notes\":\"qa/pilot05/full_reference_match/benny/NOTES.md\",\ …[+1964 chars]`
+
+### 🧑 User — 2026-11-17T02:01:26.231Z
+
+> ↩︎ result: ok
+> ok
+> [This command modified 1 file you've previously read: qa/pilot05/full_reference_match/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T02:01:35.576Z
+
+> 🔧 **Agent** `{"description": "Wave 2 splash + bubbles", "subagent_type": "foam-bubbles-particles", "prompt": "You are the foam-bubbles-particles specialist for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work).\n\nYour complete task is written in `qa/pilot05/full_reference_match/briefs/foam-bubbles-particles.md`. Read that file FIRST and in full; it is your brief. Then read:\n- `qa/pilot05/full_reference_match/COORDINATION.md`: all of it, especially the newest sections at the end, including checkpoint cp3 and who owns which files.\n- `qa/pilot05/full_reference_match/ORD …[+2111 chars]`
+
+### 🧑 User — 2026-11-17T02:01:35.595Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a2f22e175b60e8a44 (internal ID - do not mention to user. Use SendMessage with to: 'a2f22e175b60e8a44', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/a2f22e175b60e8a44.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T02:01:37.065Z
+
+> 🔧 **TaskUpdate** `{"taskId": "8", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T02:01:37.078Z
+
+> ↩︎ result: Updated task #8 status
+
+### 🤖 Claude — 2026-11-17T02:01:39.014Z
+
+> 🔧 **Bash** `{"command": "flock -w 180 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:checkpoint-cp3 2>&1 | grep -E '\"commit\"|\"pushed_verified\"|\"error\"|skipping'; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"", "description": "Save checkpoint cp3 and verify push", "timeout": 300000}`
+
