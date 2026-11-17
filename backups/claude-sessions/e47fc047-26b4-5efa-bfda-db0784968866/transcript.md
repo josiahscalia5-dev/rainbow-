@@ -6661,3 +6661,53 @@ Starting implementation, Screen 07 structure first, in your order. Step 1 is Ben
 > user	0m1.514s
 > sys	0m0.378s
 
+### 🤖 Claude — 2026-11-17T11:15:52.079Z
+
+Still far too large, so something else is being drawn with Benny. I'll render that mask once at full size and look at it, rather than keep guessing.
+
+### 🤖 Claude — 2026-11-17T11:16:00.073Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && cat > $S/bmask.mjs <<'EOF'\nimport { writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5259);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&match07=1`);\n  await page.waitFo …[+1521 chars]`
+
+### 🧑 User — 2026-11-17T11:16:13.736Z
+
+> ↩︎ result: [["eyeL_happy<eyeL<eyes<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.19",false,0],["lash_L_05<eyeL<eyes<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.04",false,0],["lash_L_085<eyeL<eyes<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.04",false,0],["eyeR_happy<eyeR<eyes<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.19",false,0],["lash_R_05<eyeR<eyes<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.04",false,0],["lash_R_085<eyeR<eyes<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.04",false,0],["blushL<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.17",true,0],["blushR<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.17",true,0],["nose<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.03",false,0],["mouth_happy<mouth<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.20",false,0.5],["palmL<armL<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.07",false,0],["fur_armL<armL<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.14",false,0],["palmR<armR<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.07",false,0],["fur_armR<armR<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.14",false,0],["soleL<footL<body<benny_root<AuxScene<Benny<Scene<","Mesh","0.17",false,0],["fur_footL<foot …[+300 chars]
+
+### 🤖 Claude — 2026-11-17T11:16:18.802Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/bmask07.png').convert('RGBA'))\nal=a[...,3]>127; ys,xs=np.nonzero(al); print('alpha bbox x',xs.min(),xs.max(),'y',ys.min(),ys.max(),'share',round(float(al.mean()),3))\nrgb=a[...,:3].astype(int); nonblack=(rgb.sum(-1)>30); ys,xs=np.nonzero(nonblack); print('nonblack bbox x',xs.min(),xs.max(),'y',ys.min(),ys.max(),'share',round(float(nonblack.mean()),3))\nImage.fromarray(a).convert('RGB').resize((432,768)).sav …[+80 chars]`
+
+### 🧑 User — 2026-11-17T11:16:19.094Z
+
+> ↩︎ result: alpha bbox x 69 755 y 538 1402 share 0.037
+> nonblack bbox x 27 843 y 527 1487 share 0.038
+
+### 🤖 Claude — 2026-11-17T11:16:20.075Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/bmask07_view.png"}`
+
+### 🧑 User — 2026-11-17T11:16:20.109Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T11:16:27.729Z
+
+The extra pixels are small bubbles and spray particles that travel with Benny, scattered around him. I'll make the search use only the largest connected blob (Benny himself), then re-run it.
+
+### 🤖 Claude — 2026-11-17T11:16:36.238Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='scripts/match-cam-fit.mjs'; s=open(p).read()\nold=\"\"\"      let x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1;\n      for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) if (px[(y * sw + x) * 4 + 3] > 127) { const Y = sh - 1 - y; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, Y); y1 = Math.max(y1, Y); }\"\"\"\nnew=\"\"\"      // largest connected blob only (Benny's trail bubbles / spray travel with him and would inflate the box)\n      const on = new Uint8Array(sw * sh), lab = new Int32Array(sw * sh);\n      for (let y = 0; y < sh; y++) for ( …[+1447 chars]`
+
+### 🧑 User — 2026-11-17T11:19:51.011Z
+
+> ↩︎ result: ok
+> iou 0.577 {"back":6.5,"up":2.8,"lookUp":1,"ahead":10,"latFollow":0.9} box [112,776,532,1232]
+> iou 0.557 {"back":6.5,"up":2.8,"lookUp":1,"ahead":8,"latFollow":0.9} box [124,756,516,1220]
+> iou 0.553 {"back":6.5,"up":2.5,"lookUp":1,"ahead":10,"latFollow":0.9} box [108,740,528,1192]
+> iou 0.545 {"back":6.5,"up":2.8,"lookUp":1,"ahead":10,"latFollow":1.05} box [112,776,508,1224]
+> iou 0.543 {"back":6.1,"up":2.8,"lookUp":1,"ahead":10,"latFollow":0.9} box [96,776,536,1256]
+> 
+> real	3m14.708s
+> user	0m1.559s
+> sys	0m0.375s
+

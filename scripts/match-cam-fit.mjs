@@ -49,8 +49,24 @@ try {
       scene.background = bg;
       for (const [o, v, m] of saved) { o.visible = v; o.material = m; }
       const px = new Uint8Array(sw * sh * 4); renderer.readRenderTargetPixels(rt, 0, 0, sw, sh, px);
+      // largest connected blob only (Benny's trail bubbles / spray travel with him and would inflate the box)
+      const on = new Uint8Array(sw * sh), lab = new Int32Array(sw * sh);
+      for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) on[(sh - 1 - y) * sw + x] = px[(y * sw + x) * 4 + 3] > 127 ? 1 : 0;
+      let best = null, nl = 0;
+      const stack = [];
+      for (let i0 = 0; i0 < sw * sh; i0++) {
+        if (!on[i0] || lab[i0]) continue;
+        nl++; let n = 0, bx0 = 1e9, by0 = 1e9, bx1 = -1, by1 = -1;
+        stack.push(i0); lab[i0] = nl;
+        while (stack.length) {
+          const i = stack.pop(), x = i % sw, y = (i / sw) | 0; n++;
+          bx0 = Math.min(bx0, x); bx1 = Math.max(bx1, x); by0 = Math.min(by0, y); by1 = Math.max(by1, y);
+          for (const j of [i - 1, i + 1, i - sw, i + sw]) if (j >= 0 && j < sw * sh && on[j] && !lab[j] && Math.abs((j % sw) - x) <= 1) { lab[j] = nl; stack.push(j); }
+        }
+        if (!best || n > best.n) best = { n, bx0, by0, bx1, by1 };
+      }
       let x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1;
-      for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) if (px[(y * sw + x) * 4 + 3] > 127) { const Y = sh - 1 - y; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, Y); y1 = Math.max(y1, Y); }
+      if (best) { x0 = best.bx0; y0 = best.by0; x1 = best.bx1; y1 = best.by1; }
       if (x1 < 0) { out.push({ cand, iou: 0, box: null }); continue; }
       const b = [x0 * 4, y0 * 4, (x1 + 1) * 4, (y1 + 1) * 4];
       const ix = Math.max(0, Math.min(b[2], T[2]) - Math.max(b[0], T[0])), iy = Math.max(0, Math.min(b[3], T[3]) - Math.max(b[1], T[1]));

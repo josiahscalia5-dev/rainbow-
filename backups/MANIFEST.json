@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "943102da5fabf314d372ec21a9cce7619775d420703c709fbb0cce4059c49e06"
+   "sha256": "fb10627549bc7a7fa6f4f2e6efe5218295786daf2da482067cc1b3c12dc373ef"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7278,8 +7278,8 @@
   },
   {
    "path": "scripts/match-cam-fit.mjs",
-   "bytes": 5324,
-   "sha256": "68f20634808bde7eee279630ca929e4b603097cf534e2c75effea080aec599b7"
+   "bytes": 6211,
+   "sha256": "5aa68fe8796a3341f7dceb10813daefa5e6ae4407cfc4e4bd329b5ec4a7b007e"
   },
   {
    "path": "scripts/match-cam-try.mjs",
