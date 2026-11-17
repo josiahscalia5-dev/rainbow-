@@ -517,6 +517,21 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/match05/tgtvis05/fill_mask.png",
+   "bytes": 11500,
+   "sha256": "c1316ad2cec9bcc04aa64ae4a674f453de7e13d78e2910f424bbf83a858754da"
+  },
+  {
+   "path": "assets/textures/match05/tgtvis05/proj05_E.png",
+   "bytes": 2068966,
+   "sha256": "fb3a680ff2948e25c0efa98061c147159a0f4e07661f33c6705ac8d06b1507bd"
+  },
+  {
+   "path": "assets/textures/match05/tgtvis05/target_05.png",
+   "bytes": 2207070,
+   "sha256": "a196be34eadb95cf8294abe010c98b321f28d6d51873b5b3af544f5a69c134f9"
+  },
+  {
    "path": "assets/textures/splash05/wake05.json",
    "bytes": 695,
    "sha256": "0752075b0f4f7544a87faf47d5f0ea140393a46c29b598168a2f204989fe6fa9"
@@ -663,8 +678,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 5684,
-   "sha256": "6f081deb5912b8c526c40896e8c9d02f7767464b95ab165a9c7c53b2a41b8889"
+   "bytes": 5451,
+   "sha256": "de4693673c30d15ca26e47671c8a875d8830f701cec232505db5fe40d51a5241"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -674,7 +689,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12605,
-   "sha256": "b1f4c0fd957ed0a42d8cdd8e24df73eb9fcb292c92bb3a584f73a92d692beaa8"
+   "sha256": "d3072d8416c9eddbdfe2a2d68efb14597d7f168201458698516f43be48a85f1f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1139,7 +1154,7 @@
   {
    "path": "qa/capture_log.json",
    "bytes": 1237,
-   "sha256": "3c54a60d29fee13967636cf261718044487bd01f219a0361e1f9423dcb78b90e"
+   "sha256": "1a632ea9852e5d312b4c71166d4f721b7327803eabae0abbe7e4d7f01a3b1855"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1200,6 +1215,26 @@
    "path": "qa/glb_validation.txt",
    "bytes": 293,
    "sha256": "82bda80d4f8c2a4ec7d013fd725fc64e2353f76b58250ca1ffacaa7d0db78071"
+  },
+  {
+   "path": "qa/match/05/before_FULL_FRAME_METRICS.json",
+   "bytes": 456,
+   "sha256": "76bfca29db995f555150b572570912fc745ed5f30d125c192e1619f79954b859"
+  },
+  {
+   "path": "qa/match/05/before_REGION_METRICS.json",
+   "bytes": 2544,
+   "sha256": "9beea70a40b9ea036cedeaec3dd2901e7499f3025baf9f35cc9daa40275e1472"
+  },
+  {
+   "path": "qa/match/05/new_FULL_FRAME_METRICS.json",
+   "bytes": 455,
+   "sha256": "b16bbd5f003b5b1a499691ac35e430470acb3592be9a5605c8181baebc483bdd"
+  },
+  {
+   "path": "qa/match/05/new_REGION_METRICS.json",
+   "bytes": 2543,
+   "sha256": "8f7a2632778bfb24df7ddf99aef0f69758e7513dafa27ea87970ca939b7435e2"
   },
   {
    "path": "qa/pilot05/05_before_81e639e.png",
@@ -11093,8 +11128,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 106827,
-   "sha256": "f0a2e315145d21e925ed311eee7b130abaa8129f97882a1bb270372e12858f6c"
+   "bytes": 107491,
+   "sha256": "f49661758259a7cc0dcbf71887836ff9f33854277e72038a767eab63df018cf8"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -11290,6 +11325,11 @@
    "path": "tools/marble05/splatlib.py",
    "bytes": 5026,
    "sha256": "8edae45854b1842e90865bfb84d4598e5aa35f08f4330d343c188e0213e129fe"
+  },
+  {
+   "path": "tools/match05/make_target_vis.py",
+   "bytes": 8421,
+   "sha256": "4ecc6a3bfd58fa2a518bd20c89f2db00e4c820f0ec61b897aca942d3e3a3a38c"
   },
   {
    "path": "tools/match05/metrics.py",

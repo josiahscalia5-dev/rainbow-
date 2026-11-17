@@ -306,3 +306,378 @@ Capturing the current `?match05=1` frame as BEFORE and measuring it.
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; mkdir -p $S/cap_m qa/match/05 && time node scripts/capture.mjs 05 --q='match05=1' --out=$S/cap_m 2>&1 | tail -3 && python3 -I tools/match05/metrics.py $S/cap_m/05.png qa/match/05/before_ 2>&1", "description": "Capture match05 and measure regions", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T15:42:21.405Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/cap_m/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":80,"tris":570386,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> real	0m19.256s
+> user	0m1.642s
+> sys	0m0.653s
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 8.96, 'within_10': 0.7937, 'within_20': 0.8782, 'ssim_lum': 0.8685, 'mean_signed_rgb': [-0.5, -0.6, 0.2]}
+> gold_rings_and_front_frame   px  125730  mean   9.12  <=10 0.740  <=20 0.882  ssim 0.825  signed [-3.0, -0.8, 2.3]
+> purple_walls                 px  312706  mean   6.42  <=10 0.846  <=20 0.922  ssim 0.897  signed [-0.3, 0.8, -0.7]
+> side_fittings                px   13776  mean   2.94  <=10 0.902  <=20 0.959  ssim 0.923  signed [-0.3, -0.1, 1.0]
+> water                        px  480736  mean   5.94  <=10 0.893  <=20 0.928  ssim 0.933  signed [0.8, -2.1, -0.9]
+> foam_banks                   px   28862  mean   2.66  <=10 0.959  <=20 0.989  ssim 0.965  signed [-0.2, -0.6, -0.7]
+> benny_and_hat                px   93061  mean  19.22  <=10 0.587  <=20 0.730  ssim 0.658  signed [-5.8, -1.4, 0.9]
+> wake_splash                  px …[+541 chars]
+
+### 🤖 Claude — 2026-11-17T15:42:32.267Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; cat > $S/blobs.py <<'EOF'\nimport json,sys,numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as nd\nM=\"qa/pilot05/full_reference_match/masks\"\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\"),float)\nc=np.asarray(Image.open(sys.argv[1]).convert(\"RGB\"),float)\nidx=np.asarray(Image.open(f\"{M}/region_index.png\"))\nnames={v[\"id\"]:k for k,v in json.load(open(f\"{M}/regions.json\"))[\"regions\"].items()}\nd=np.abs(c-ap).mean(-1)\nbad=nd.binary_op …[+576 chars]`
+
+### 🧑 User — 2026-11-17T15:42:32.822Z
+
+> ↩︎ result: (55667, 216, 677, 711, 1232, 'water', 56.77324686678522, [12, -14, -1])
+> (22340, 3, 54, 861, 294, 'hud_and_text', 37.91186213070725, [-9, -7, 3])
+> (13220, 26, 3, 776, 108, 'hud_and_text', 42.28908219868886, [-28, -4, -15])
+> (5964, 398, 477, 548, 646, 'coins', 40.430471719204114, [-10, -11, -1])
+> (5036, 772, 773, 861, 904, 'purple_walls', 57.17619804077311, [36, 41, 38])
+> (2552, 228, 130, 342, 163, 'hud_and_text', 48.40229885057472, [-7, -11, 10])
+> (2284, 54, 1329, 159, 1533, 'water', 51.12157034442498, [-56, 4, 45])
+> (2238, 504, 624, 590, 701, 'coins', 40.485701519213585, [-41, 2, 16])
+> (1803, 592, 1171, 712, 1224, 'wake_splash', 41.50656313551489, [27, 0, -2])
+> (1767, 349, 131, 445, 163, 'hud_and_text', 38.46877947557065, [1, -5, 7])
+> (1698, 568, 1477, 741, 1533, 'gold_rings_and_front_frame', 54.5051040439733, [-92, 11, 56])
+> (1650, 675, 1338, 752, 1471, 'gold_rings_and_front_frame', 44.610707070707065, [-29, -27, 47])
+> (1608, 456, 131, 534, 163, 'hud_and_text', 47.83893034825871, [-7, -12, -2])
+
+### 🤖 Claude — 2026-11-17T15:42:38.279Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nap=Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\"); c=Image.open(\"$S/cap_m/05.png\").convert(\"RGB\")\na=np.asarray(ap,float); b=np.asarray(c,float); d=(np.abs(a-b).mean(-1)>20)\nbox=(150,600,864,1300)\nw=box[2]-box[0]; h=box[3]-box[1]\no=Image.new(\"RGB\",(w*3,h))\no.paste(ap.crop(box),(0,0)); o.paste(c.crop(box),(w,0))\nm=np.zeros_like(a); m[d]=(255,0,0); o.paste(Image.fromarray((a*0.4+m*0.6).astype(np.uint8 …[+132 chars]`
+
+### 🧑 User — 2026-11-17T15:42:38.787Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:42:38.934Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/mid.png"}`
+
+### 🧑 User — 2026-11-17T15:42:38.976Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:42:45.848Z
+
+> 🔧 **Bash** `{"command": "head -60 tools/proj05/bake.py; grep -n \"mask\\|hidden\\|benny\" tools/proj05/bake.py | head -60; ls assets/textures/water05 assets/textures/water05/*/ | head -40", "description": "Inspect proj05 bake masks"}`
+
+### 🧑 User — 2026-11-17T15:42:45.909Z
+
+> ↩︎ result: """Screen 05 proj05 — bake the TARGET water image (tools/proj05/make_target.py) onto the REAL game river, in the
+> river's own coordinates (u across -1..1, s = arc length), using the live game's per-pixel river coordinates from the
+> locked 05 camera (scripts/proj05-probe.mjs -> uv_river.f32). Everything is anchored to the river, not to the camera.
+> 
+> usage: python3 -I tools/proj05/bake.py <probe_dir> <target_dir> <out_dir>
+> outputs (out_dir, default assets/textures/water05/):
+>   proj05_E.png   EXACT layer: the approved water at ~screen resolution; rows follow s with the locked view's own
+>                  density, columns span the locked view's visible u-range per row (lookup in proj05_lut.json); alpha = valid
+>   proj05_N.png   NEAR layer: same water, full river width, uniform 24 texels per unit of s for s in [sN0, sN1]; alpha = coverage
+>   proj05_T.png   TILE layer: seamless periodic copy of the full-width mid river (s period L) for the rest of Screen 05
+>   proj05_D.png   DETAIL layer: luminance high-pass of the sharpest near water (the approved streaks / glints), seamless
+>                  in u and s, 0.5 = no change
+>   proj05_F.png   FAR layer: the far river block (far05.ts) in its own (uv.x …[+3416 chars]
+
+### 🤖 Claude — 2026-11-17T15:42:47.673Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,200p tools/proj05/make_target.py | grep -v '^\\s*$' | head -90", "description": "Read make_target.py"}`
+
+### 🧑 User — 2026-11-17T15:42:47.708Z
+
+> ↩︎ result: """Screen 05 proj05 — TARGET water image in the approved frame (864x1536, sRGB), from the user's own pictures only:
+>   * where the approved picture shows its water (not hidden by Benny + splash, coins, HUD): the APPROVED pixels;
+>   * under Benny + splash and the bottom gold ring arcs: the user's ORIGINAL isolated water artwork, registered onto the approved water with dense
+>     optical flow (banks / bands line up), colour-matched and blended in with a multi-band blend inside the hidden area (no invented texture);
+>   * the coins too (an along-the-flow interpolation in river space was tried first: it drew straight stripes);
+>     coin_mask.png is kept for the metrics.
+> usage: python3 -I tools/proj05/make_target.py <out_dir>
+> outputs: target_05.png (RGB), water_mask.png (approved water footprint), fill_mask.png (pixels taken from the artwork),
+>          art_registered.png, report.json"""
+> import json, os, sys
+> import numpy as np, cv2
+> from PIL import Image
+> from scipy.ndimage import gaussian_filter, binary_dilation, binary_closing, label
+> out = sys.argv[1]; os.makedirs(out, exist_ok=True)
+> appr = np.asarray(Image.open("references/05_flow_into_the_current.png").convert("RGB"))
+> art = np.asarray(Image. …[+5128 chars]
+
+### 🤖 Claude — 2026-11-17T15:42:52.085Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/proj/; ls qa/pilot05/proj/target* 2>/dev/null | head", "description": "Locate target dir"}`
+
+### 🧑 User — 2026-11-17T15:42:52.118Z
+
+> ↩︎ result: BRIEF_NEXT.md
+> BRIEF_SPECIALIST1.md
+> BRIEF_SPECIALIST1_VERBATIM.md
+> BRIEF_SPECIALIST2.md
+> NOTES.md
+> align
+> caps
+> clips
+> compare
+> feasibility
+> flow2
+> move
+> near
+> probe
+> status_1116_2330
+> steer
+> target
+> tests
+> tunnel
+> art_registered.png
+> coin_mask.png
+> correction.npz
+> fill_mask.png
+> report.json
+> target_05.png
+> water_mask.png
+
+### 🤖 Claude — 2026-11-17T15:42:59.396Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; python3 -I - <<EOF\nimport json,numpy as np\nfrom PIL import Image\nM=\"qa/pilot05/full_reference_match/masks\"\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\"),float)\nc=np.asarray(Image.open(\"$S/cap_m/05.png\").convert(\"RGB\"),float)\nidx=np.asarray(Image.open(f\"{M}/region_index.png\"))\nR=json.load(open(f\"{M}/regions.json\"))[\"regions\"]\nfill=np.asarray(Image.open(\"qa/pilot05/proj/target/fill_mask.png\"))>127\ntg=np.asarray(Image.open(\"qa/pilot05/p …[+739 chars]`
+
+### 🧑 User — 2026-11-17T15:42:59.943Z
+
+> ↩︎ result: water fill 57916 34.65 err*px 2006624 <=20 0.465
+> water nofill 422820 2.01 err*px 850614 <=20 0.992
+> wake_splash fill 83491 11.57 err*px 966293 <=20 0.82
+> benny_and_hat fill 93061 19.22 err*px 1788540 <=20 0.73
+> coins fill 27437 27.24 err*px 747486 <=20 0.519
+> total err 11895623 in fill 6189333
+> target vs approved in water&fill mean 45.1
+
+### 🤖 Claude — 2026-11-17T15:43:12.779Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; python3 -I - <<EOF\nimport json,numpy as np\nfrom PIL import Image\nM=\"qa/pilot05/full_reference_match/masks\"\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\"),float)\nc=np.asarray(Image.open(\"$S/cap_m/05.png\").convert(\"RGB\"),float)\nidx=np.asarray(Image.open(f\"{M}/region_index.png\"))\nR=json.load(open(f\"{M}/regions.json\"))[\"regions\"]\nfill=np.asarray(Image.open(\"qa/pilot05/proj/target/fill_mask.png\"))>127\nd=np.abs(c-ap).mean(-1)\nm=(idx==R[\"wa …[+480 chars]`
+
+### 🧑 User — 2026-11-17T15:43:13.333Z
+
+> ↩︎ result: bbox 0 863 760 1535
+> 400 0 -
+> 500 0 -
+> 600 0 -
+> 700 6619 37.1
+> 800 18342 39.5
+> 900 15358 41.5
+> 1000 1528 20.8
+> 1100 55 17.4
+> 1200 1310 60.1
+> 1300 3282 18.4
+> 1400 6957 22.1
+> 1500 4465 16.4
+> 225: * assets/textures/water05/far2/ — far1's E with the gaps the locked eye never saw (wave back slopes) mirror-filled from
+> 1716:    E: PROJGAP05 ? new URL('../../assets/textures/water05/far2/proj05_E.png', import.meta.url).href
+> 1717:      : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+
+### 🤖 Claude — 2026-11-17T15:43:13.532Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/wfill.png"}`
+
+### 🧑 User — 2026-11-17T15:43:13.562Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:43:21.712Z
+
+> 🔧 **Bash** `{"command": "cat assets/textures/water05/far2/README.md; grep -n \"gapfill\\|sys.argv\\|GAPFILL\" tools/proj05/bake.py | head -20; grep -rn \"bake.py\" qa/pilot05/proj/NOTES.md | head -5; cat qa/pilot05/proj/target/report.json | head -20", "description": "Read far2 README and bake invocations"}`
+
+### 🧑 User — 2026-11-17T15:43:21.761Z
+
+> ↩︎ result: # far2 — exact layer E with mirror-filled gaps (`?projgap05=1`, on with `?match05=1`)
+> 
+> `proj05_E.png` = `python3 -I tools/proj05/bake.py <probe> qa/pilot05/proj/target <out> far gapfill` (2026-11-17, session
+> 018Sg3AU; probe: `node scripts/proj05-probe.mjs --q='proj05=1' --raw=<dir>`). Same as `../far1/proj05_E.png` except the
+> 72,607 texels the locked eye never saw (wave back slopes, gaps of <= 100 rows along s) are filled with the approved texture
+> mirrored from both gap edges. Not one texel that held approved data changed colour. F and the LUT are byte-identical to
+> far1 and are still loaded from there.
+> 21:probe, tdir, out = sys.argv[1], sys.argv[2], sys.argv[3]
+> 27:FARFIX = len(sys.argv) > 4 and sys.argv[4] == "far"
+> 162:    # That is what "gapfill" below repairs.
+> 164:# optional extra argument "gapfill" (`&projgap05=1`, 2026-11-17, session 018Sg3AU): MIRROR-FILL of E's interior gaps.
+> 171:GAPFILL = "gapfill" in sys.argv[4:]
+> 172:if GAPFILL:
+> 197:    print(json.dumps(dict(E_gapfilled_texels=int(n_fill), E_texels=int(validE.size))))
+> 19:* Layers (`tools/proj05/bake.py` → `assets/textures/water05/`, 2.9 MB):
+> 127:python3 -I tools/proj05/bake.py DIR qa/pilot05/proj/target assets/textures/wate …[+571 chars]
+
+### 🤖 Claude — 2026-11-17T15:43:31.374Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; mkdir -p $S/probe $S/tgt0; (node scripts/proj05-probe.mjs --q='proj05=1' --raw=$S/probe > $S/probe.log 2>&1 &) ; python3 -I tools/proj05/make_target.py $S/tgt0 2>&1 | tail -2; for f in target_05.png fill_mask.png water_mask.png; do cmp $S/tgt0/$f qa/pilot05/proj/target/$f && echo \"$f identical\"; done", "description": "Run probe; reproduce target", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T15:43:38.146Z
+
+> ↩︎ result: "approved_vs_artwork_plain_mean_abs_visible_water": 39.50824848696288
+> }
+> target_05.png identical
+> fill_mask.png identical
+> water_mask.png identical
+
+### 🤖 Claude — 2026-11-17T15:43:48.916Z
+
+> 🔧 **Bash** `{"command": "mkdir -p tools/match05 && python3 -I - <<'EOF'\nsrc=open(\"tools/proj05/make_target.py\").read()\nold=\"hole = (benny | ringb | coins) & ~hud          # Benny + splash, the bottom ring and the coins: filled from the artwork\\n\"\nassert old in src\nnew=old+'''# ---- match05 tgtvis05 (Screen 05 agent, 2026-11-17): the \"benny\" dome above (env-mask blob, rows >= 760) also covers\n#      water that the APPROVED picture shows (region \"water\" of qa/pilot05/full_reference_match/masks, rows 700-1100,\n#      i.e. around Benny's hat / shoulders). Those pixels are visible approved water …[+1188 chars]`
+
+### 🧑 User — 2026-11-17T15:43:49.015Z
+
+> ↩︎ result: 48:from scipy.ndimage import binary_erosion
+> 49:vis = binary_erosion(_idx == _wid, iterations=3) & (rows >= 700) & (rows < 1100)
+> 99:from scipy.ndimage import binary_erosion
+
+### 🤖 Claude — 2026-11-17T15:43:52.363Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; mkdir -p $S/tgt1 && python3 -I tools/match05/make_target_vis.py $S/tgt1 2>&1 | grep -v '^ \"' ; cp qa/pilot05/proj/target/correction.npz $S/tgt1/; cat $S/probe.log | tail -3; ls $S/probe", "description": "Build new target, check probe"}`
+
+### 🧑 User — 2026-11-17T15:43:59.241Z
+
+> ↩︎ result: tgtvis05: pixels returned to APPROVED 39360
+> {
+> }
+> probe → qa/pilot05/proj/probe {"w":864,"h":1536,"uTime":12,"ribbonRows":240,"farVerts":2783,"farMorph":0,"foam":["foam_berm","Mesh","foam_flank","foam_rafts","foam_rim05"],"state":{"mode":"ride","stage":"05","s":132.438,"lat":0,"coins":1420,"hearts":5,"paused":false,"bennyY":-41.348,"bennyVisible":true,"cam":[1.92,-37.94,-68.28]}}
+> uv_foam.f32
+> uv_river.f32
+> uv_scene.f32
+
+### 🤖 Claude — 2026-11-17T15:44:04.559Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; git status --short | head; mkdir -p $S/b0 $S/b1; python3 -I tools/proj05/bake.py $S/probe qa/pilot05/proj/target $S/b0 far gapfill 2>&1 | tail -2 && cmp $S/b0/proj05_E.png assets/textures/water05/far2/proj05_E.png && echo E_REPRODUCED; python3 -I tools/proj05/bake.py $S/probe $S/tgt1 $S/b1 far gapfill 2>&1 | tail -2; for f in proj05_F.png proj05_lut.json; do cmp $S/b1/$f assets/textures/water05/far1/$f && echo \"$f same as far1\"; done", "description": "Reproduce far2 bake, bake new target", "time …[+13 chars]`
+
+### 🧑 User — 2026-11-17T15:44:23.708Z
+
+> ↩︎ result: Exit code 1
+>  M backups/BOOTSTRAP_REPORT.md
+>  M qa/pilot05/proj/probe/camera.json
+> ?? tools/match05/make_target_vis.py
+> {"E_gapfilled_texels": 72607, "E_texels": 1494016}
+> {"A_px": 18413, "E": [1024, 1459], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9344103409869774, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> E_REPRODUCED
+> {"E_gapfilled_texels": 72609, "E_texels": 1494016}
+> {"A_px": 18470, "E": [1024, 1459], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9343507700051406, "N_valid": 0.7803609212239583, "samples": 772247, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> /tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/b1/proj05_F.png assets/textures/water05/far1/proj05_F.png differ: char 46, line 3
+> /tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/b1/proj05_lut.json assets/textures/water05/far1/proj05_lut.json differ: char 242, line 1
+
+### 🤖 Claude — 2026-11-17T15:44:29.587Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; git checkout qa/pilot05/proj/probe/camera.json; for f in proj05_F.png proj05_lut.json; do cmp $S/b0/$f assets/textures/water05/far1/$f && echo \"b0 $f same\"; cmp $S/b0/$f $S/b1/$f && echo \"b0/b1 $f same\"; done; python3 -I - <<EOF\nimport json\na=json.load(open(\"$S/b0/proj05_lut.json\"));b=json.load(open(\"$S/b1/proj05_lut.json\"))\nfor k in a:\n  if a[k]!=b[k]: print(k, str(a[k])[:120], \"|\", str(b[k])[:120])\nEOF\npython3 -I -c \"\nimport numpy as np;from PIL import Image\na=np.asarray(Image …[+210 chars]`
+
+### 🧑 User — 2026-11-17T15:44:30.278Z
+
+> ↩︎ result: Updated 1 path from the index
+> b0 proj05_F.png same
+> /tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/b0/proj05_F.png /tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/b1/proj05_F.png differ: char 46, line 3
+> b0 proj05_lut.json same
+> /tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/b0/proj05_lut.json /tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/b1/proj05_lut.json differ: char 242, line 1
+> E {'s0': 129.71197937011718, 's1': 180.97108032226564, 'n': 1024, 'width': 1024, 'height': 1459, 'V': [0.0, 0.0103539, 0.0 | {'s0': 129.71197937011718, 's1': 180.97108032226564, 'n': 1024, 'width': 1024, 'height': 1459, 'V': [0.0, 0.0103542, 0.0
+> E texels changed 677385 of 1494016
+
+### 🤖 Claude — 2026-11-17T15:44:43.012Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np=\"tools/match05/make_target_vis.py\"; s=open(p).read()\ns=s.replace(\"hole = hole & ~vis\\n\",\"holeC = hole & ~vis   # used ONLY for the final composite (registration + colour match keep the original hole)\\n\")\ns=s.replace(\"Benny + splash really hide. Margin:\",\"Benny + splash really hide. The optical-flow registration and the colour match keep the ORIGINAL hole\\n#      (identical fill elsewhere); only the composite below uses holeC. Margin:\")\nfor a,b in [(\"inner = binary_erosion(hole, iterations=5)\",\"inner = binary_erosion(holeC, iterations=5)\" …[+1340 chars]`
+
+### 🧑 User — 2026-11-17T15:44:58.414Z
+
+> ↩︎ result: tgtvis05: pixels returned to APPROVED 39360
+> WM_SAME
+> {"A_px": 18413, "E": [1024, 1459], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9344103409869774, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> LUT_SAME
+> E texels changed 233852 of 1494016
+> target px changed 140970
+
+### 🤖 Claude — 2026-11-17T15:45:03.150Z
+
+> 🔧 **Bash** `{"command": "sed -n 195,240p src/vfx/waterRibbon.ts; sed -n 1708,1722p src/vfx/waterRibbon.ts", "description": "Read switch definitions in waterRibbon.ts"}`
+
+### 🧑 User — 2026-11-17T15:45:03.204Z
+
+> ↩︎ result: /**
+>  * Screen 05 PROJECTION test (`?proj05=1`, 2026-11-16, qa/pilot05/proj/NOTES.md): the user's APPROVED Screen 05 water,
+>  * baked into the REAL river's own coordinates (u across, s along; tools/proj05/bake.py from the locked 05 camera), so
+>  * it is anchored to the river, not to the camera. Four layers, all from the user's pictures (approved image; the
+>  * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
+>  *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+>  *   glints, luminance high-pass) — E fades to N/T + D wherever the camera magnifies it (no stretching).
+>  * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+>  * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
+>  * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+>  */
+> /**
+>  * Screen 05 FULL REFERENCE MATCH (`?match05=1`, 2026-11-16, qa/pilot05/full_reference_match/): one master switch that turns
+>  * on every Screen-05 reference-match part (proj05 wa …[+3578 chars]
+
+### 🤖 Claude — 2026-11-17T15:45:11.917Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; mkdir -p assets/textures/match05/tgtvis05 && cp $S/b1/proj05_E.png assets/textures/match05/tgtvis05/ && cp $S/tgt1/target_05.png $S/tgt1/fill_mask.png assets/textures/match05/tgtvis05/ && python3 -I - <<'EOF'\np=\"src/vfx/waterRibbon.ts\"; s=open(p).read()\na=\"export const PROJGAP05: boolean = PROJFAR05 && on05('projgap05');\\n\"\nb=a+\"\"\"/**\n * `?tgtvis05=1` (Screen 05 agent, 2026-11-17, branch claude/rainbow-s05-match, qa/match/05/NOTES.md; explicit switch, NOT\n * in match05 yet): exact lay …[+1232 chars]`
+
+### 🧑 User — 2026-11-17T15:45:29.910Z
+
+> ↩︎ result: 151:const q05 = (key: string): boolean => {
+> TSC_OK
+> 05 → /tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/sc
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 7.79, 'within_10': 0.8149, 'within_20': 0.8952, 'ssim_lum': 0.8819, 'mean_signed_rgb': [-1.5, 0.1, 0.5]}
+> gold_rings_and_front_frame   px  125730  mean   9.12  <=10 0.740  <=20 0.882  ssim 0.825  signed [-3.0, -0.8, 2.3]
+> purple_walls                 px  312706  mean   6.42  <=10 0.846  <=20 0.922  ssim 0.897  signed [-0.3, 0.8, -0.7]
+> side_fittings                px   13776  mean   2.94  <=10 0.902  <=20 0.959  ssim 0.923  signed [-0.3, -0.1, 1.0]
+> water                        px  480736  mean   2.85  <=10 0.951  <=20 0.975  ssim 0.969  signed [-2.0, -0.2, -0.1]
+> foam_banks                   px   28862  mean   2.66  <=10 0.959  <=20 0.989  ssim 0.965  signed [-0.2, -0.6, -0.7]
+> benny_and_hat                px   93061  mean  18.81  <=10 0.587  <=20 0.730  ssim 0.665  signed [-5.0, -1.0, 1.1]
+> wake_splash                  px   83491  mean  11.48  <=10 0.704  <=20 0.821  ssim 0.812  signed [9.3, 6.9, 1.4]
+> coins                        px   27437  mean  26.37  <=10 0.279  <=20 0.520  ssim 0.552  signed [-9.9,  …[+355 chars]
+
+### 🤖 Claude — 2026-11-17T15:45:35.263Z
+
+> 🔧 **Bash** `{"command": "ls scripts | grep -i -E \"move|steer|ride\"; sed -n 1,25p scripts/proj05-move.mjs 2>/dev/null", "description": "Find moving/steering capture scripts"}`
+
+### 🧑 User — 2026-11-17T15:45:35.303Z
+
+> ↩︎ result: proj05-move.mjs
+> proj05-ride-probe.mjs
+> #!/usr/bin/env node
+> // Screen 05 projection test — MOVING CAMERA (2026-11-16). Starts at the locked 05 checkpoint and rides forward with
+> // the real game simulation (Benny + camera rig + course unchanged), capturing full-size frames.
+> //   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> // --d: distances ahead of the checkpoint (units of s) → DIR/move_<d>.png (shader clock frozen at 12: shows layout only)
+> // --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> // --still=SECONDS: water animation at the LOCKED camera (clock runs, camera still) → DIR/still/0000.png …
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const Q = typeof opt.q === 'string' ? opt.q : '';
+> const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/move';
+> const D = typeof opt.d === 'string' …[+682 chars]
+
+### 🤖 Claude — 2026-11-17T15:45:37.111Z
+
+> 🔧 **Bash** `{"command": "sed -n 25,90p scripts/proj05-move.mjs | grep -n \"lat\\|steer\\|opt\\.\" | head -20; ls qa/pilot05/full_reference_match/splash_bubbles/move | head", "description": "Check steering options of move script"}`
+
+### 🧑 User — 2026-11-17T15:45:37.150Z
+
+> ↩︎ result: 5:    log.frames.push({ file, ...extra, s: st.s, cam: st.cam, lat: st.lat });
+> 11:      // ride with the real simulation until s >= s0 + d (shader clock stays frozen: only the camera moves)
+> 17:  if (opt.still) {
+> 19:    const n = Math.round(Number(opt.still) * fps);
+> 27:  if (opt.steer) {
+> 28:    // Benny steers from the locked checkpoint: hold left / right, frames at 0.25 / 0.5 / 0.8 s (real simulation)
+> 29:    for (const dir of String(opt.steer).split(',').map(Number)) {
+> 35:        await shot(`${OUT}/steer_${dir < 0 ? 'L' : 'R'}_${String(Math.round(t * 100)).padStart(3, '0')}.png`, { steer: dir, t });
+> 36:        console.log('steer', dir, t, JSON.stringify(log.frames.at(-1).lat));
+> 40:  if (opt.zigzag) {
+> 41:    // a steering clip with the clock running: left, right, left (flow + Benny moving across the water)
+> 43:    const n = Math.round(Number(opt.zigzag) * fps);
+> 49:      await shot(`${OUT}/zigzag/${String(i).padStart(4, '0')}.png`, { t: 12 + (i + 1) / fps, steer: dir });
+> 53:  if (opt.clip) {
+> 55:    const n = Math.round(Number(opt.clip) * fps);
+> move_00.png
+> move_05.png
+> move_10.png
+> move_20.png
+> move_log.json
+> steer_L_025.png
+> steer_L_050.png
+> steer_L_080.png
+> steer_R_025.png
+> steer_R_050.png
+
+### 🤖 Claude — 2026-11-17T15:45:41.630Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; for v in b n; do q='match05=1'; [ $v = n ] && q='match05=1&tgtvis05=1'; node scripts/proj05-move.mjs --q=\"$q\" --out=$S/mv_$v --d=0,3,6,12 --steer=-1,1 > $S/mv_$v.log 2>&1; done; ls $S/mv_n; python3 -I - <<EOF\nimport numpy as np,glob,os\nfrom PIL import Image\nS=\"$S\"\nfor f in sorted(glob.glob(S+\"/mv_n/*.png\")):\n  b=np.asarray(Image.open(f.replace(\"mv_n\",\"mv_b\")).convert(\"RGB\"),float); n=np.asarray(Image.open(f).convert(\"RGB\"),float)\n  d=np.abs(b-n).max(-1); print(os.path.basename( …[+120 chars]`
+
