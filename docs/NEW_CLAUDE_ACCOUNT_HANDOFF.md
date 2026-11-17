@@ -31,8 +31,8 @@ stopped its check-ins. Per-workstream next tasks: unchanged from the ACCOUNT 4 s
   ffmpeg, ImageMagick, Python QA libs — all OK (bootstrap). context7 + design MCP servers fail to connect (optional).
 * **Keys:** this account's `rainbow-` environment has a World Labs key that authenticates (free read **5,190** credits)
   but it is the user's OTHER World Labs account (it sees the Screen 05 pilot worlds; the Screen 08 world `32b5b2f4…` reads
-  404). Account 4's key (5,420 credits, Screen 08 world) is NOT on this environment. fal.ai: NO key on this environment
-  and `queue.fal.run` not in its network allowlist. Neither blocks current work (no paid jobs approved).
+  404). Account 4's key (5,420 credits, Screen 08 world) is NOT on this environment. fal.ai: RECONNECTED 20:40 UTC by the user via the secure form (host `queue.fal.run`, `Authorization: Key …`); free read of request `01a1ea70` → 200 COMPLETED = the SAME fal account. (Before that: no key
+  and `queue.fal.run` blocked.) Neither blocks current work (no paid jobs approved).
 * Launch trap seen again: both new sessions sat idle with no task until the brief was re-sent with `send_message`.
 
 ## Open lead question for the user — Screen 08 coins vs the ending video (`?flowplan=1`)
