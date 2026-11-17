@@ -7142,3 +7142,23 @@ First, a read-only look at what the Screen 05 Benny work on `ccr-b0757dec-dj6l1o
 
 > 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && sleep 60; timeout 900 node scripts/gameplay-test.mjs --q=match08=1 >/dev/null 2>&1; python3 -I -c \"\nimport json;d=json.load(open('qa/gameplay_test_switch.json'));c=d['checks'];print('gameplay match08:',sum(1 for v in c.values() if v.get('pass')),'/',len(c),'| coins',c['realCoinPickups']['startCoins'],'->',c['realCoinPickups']['endCoins'],'| errors',d.get('errors'))\"; mv -f qa/gameplay_test_switch.json qa/match/08/gameplay_test_match08.json; cp qa/capture_log.json $ …[+769 chars]`
 
+### 🧑 User — 2026-11-17T14:32:00.906Z
+
+> ↩︎ result: gameplay match08: 8 / 8 | coins 1330 -> 2240 | errors []
+> 08 → /tmp/
+> default identical: 0 px differ
+> NEW08  FULL |d|  14.2 <=20 0.834 SSIM 0.819 | BELOWHUD |d|   9.6 <=20 0.902 | LAYOUT |d|   5.4 <=20 0.914 | me
+
+### 🤖 Claude — 2026-11-17T14:32:26.069Z
+
+> 🔧 **Bash** `{"command": "cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug-match08-2026-11-17b.apk && ls -la builds/rainbow-debug-match08-2026-11-17b.apk | awk '{print $5}' && cat >> qa/match/08/NOTES.md <<'EOF'\n\n## BENNY ROUND (user, 2026-11-17 ~14:40 UTC: \"method approved, Screen 08 NOT finished — finish Benny\") — `?match08=1` only\n* Placement measured on the pink-fur component (approved vs game): centre x 428 vs 432, box x 263–593 vs 265–587, top\n  1049 vs 1050 (before: centre 393 — he was ≈23–35 px LEFT, not right as I had written earlier). Game.ts M08_BENNY:\n  `dx 0.22` …[+4058 chars]`
+
+### 🧑 User — 2026-11-17T14:32:26.186Z
+
+> ↩︎ result: 21702137
+> handoff updated
+
+### 🤖 Claude — 2026-11-17T14:32:33.233Z
+
+> 🔧 **Bash** `{"command": "echo \"repo $(git remote get-url origin) branch $(git branch --show-current)\"; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Screen 08 Benny round: placed on the painted Benny (fur centre 432 vs 428), rounder body, stronger approved splash; Benny+splash 66.2%, scenery 97.4%; APK 17b; handoff + install guide\" 2>&1 | grep -E '\"result\"|\"commit\"'; sleep 2; [ \"$(git status --porcelain | wc -l)\" = 0 ] || timeout 600 python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | grep -E '\"result\"|\"commit\"'; H=$(git rev-parse HEAD); R=$ …[+714 chars]`
+

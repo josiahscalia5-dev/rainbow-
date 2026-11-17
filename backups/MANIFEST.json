@@ -564,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "6056f99ba8044a093e93f6ffba16c7aef6a6392c0867555cc7a90a31550bd234"
+   "sha256": "cd21a535cab6f63860d2f400ac2f66f6906274d6fc5af2cb89c82470f7dea2b3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -627,6 +627,11 @@
    "sha256": "913d53e2b2e15e43098338e221d64afc67718f30eb87bca390a90af110f6e9fb"
   },
   {
+   "path": "builds/rainbow-debug-match08-2026-11-17b.apk",
+   "bytes": 21702137,
+   "sha256": "020009a783edf698b04f37c483bc526b9c0fafe52278335492fcbf4d9747f356"
+  },
+  {
    "path": "builds/rainbow-debug-w12-water.apk",
    "bytes": 7391867,
    "sha256": "fdbf9c695e1ef8550c61f51b4dace45c59bdcd69be917c0e280a5a3abe808211"
@@ -653,8 +658,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 12140,
-   "sha256": "9395b09279a5c263d557e808d2b2ccc880e3345044eef92110c8265def176431"
+   "bytes": 13321,
+   "sha256": "8fd03d3f7961851952857e8d4d4c44a9ad8fff3621d72ec84ab0b0f2764a7b58"
   },
   {
    "path": "docs/characters/benny.md",
@@ -1323,8 +1328,8 @@
   },
   {
    "path": "qa/match/08/08_NEW_match08.png",
-   "bytes": 2304420,
-   "sha256": "73612f6135dd53488fcd39a57bcabf38b9bbbfac31004ccf2ef06a116c9db5a0"
+   "bytes": 2305979,
+   "sha256": "b18bb9893c1833f7746e6c795ffadbf374974c6fd4aeb049247b165675fa1192"
   },
   {
    "path": "qa/match/08/08_NEW_match08_android1080x1920.png",
@@ -1333,13 +1338,13 @@
   },
   {
    "path": "qa/match/08/08_NEW_screen_match.json",
-   "bytes": 593,
-   "sha256": "2ec41545d41572f93819e99e3efbf7e1c3e70348a6c21fb2ef88db7adb217513"
+   "bytes": 523,
+   "sha256": "88ac7d002ebe8cdec5d338e887011dae1707891171b2891111e2a3a671fa870c"
   },
   {
    "path": "qa/match/08/NOTES.md",
-   "bytes": 10384,
-   "sha256": "b9133da554f41a486ae49bd1c8cb1b63435e115b39bb1830fa92e885a9ce8733"
+   "bytes": 12682,
+   "sha256": "51fced25010d548d70435cd651f6a22853f384ef4c7a99ee242e094b8671e580"
   },
   {
    "path": "qa/match/08/gameplay_test_match08.json",

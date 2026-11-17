@@ -56,10 +56,12 @@ the user's ORIGINAL pixels + fal clean plate only where Benny/HUD/coins were rem
 projected with a post-chain inverse · unseen surfaces = tiles cut from the artwork (`patch_*.png`) + stretch guard ·
 Benny: beanie 0.86×, white stripes, lifted 0.16 u, approved splash ring card (`splash08.*`) · the picture's 9 coins at
 the painted spots, facing the camera, all collectible; coin total kept at 91 (2,240) · bloom off on 08.
-Scores (`qa/match/08/scenery_metrics_BEFORE_FINAL.json`): scenery 97.4 % (SSIM 0.959), upper 98.9 %, middle 91.0 %,
-lower 99.2 %, Benny + splash 64.5 %, whole frame 83.0 % (BEFORE 4.0 %). Gameplay test 8/8 both builds.
-Remaining: Benny's body slightly wider + ≈30 px right of the painted one; darker band at the lower-left edge 3–6 u
-forward; coins wobble ±3°. APK `builds/rainbow-debug-match08-2026-11-17.apk` (Git LFS, built with
+Scores: scenery 97.4 % (SSIM 0.959), upper 98.9 %, middle 91.0 %, lower 99.2 %, Benny + splash **66.2 %** (Benny round,
+2026-11-17 ~14:45: placed on the painted Benny, rounder body, stronger approved splash), whole frame **83.4 %** (BEFORE 4.0 %).
+**User status: the METHOD is approved; Screen 08 itself is NOT approved — finish Benny's fur/knit detail first
+(plan: `qa/match/08/NOTES.md` → BENNY ROUND → NEXT, port line B's benny05 bake as an 08 variant, never merge).** Gameplay test 8/8 both builds.
+Remaining: Benny's fur/knit/pom surface detail (position + size now match); darker band at the lower-left edge 3–6 u
+forward; coins wobble ±3°. APK `builds/rainbow-debug-match08-2026-11-17b.apk` (newest; `…-17.apk` = previous; Git LFS, built with
 `VITE_RAINBOW_Q05="match08=1" npm run android:debug`) — **built, NOT yet tested on a real phone.** Details and
 reproduction: `qa/match/08/NOTES.md`. **Not approved by the user yet.**
 
@@ -129,3 +131,12 @@ thumbnail), the match08 textures and the 05 full-world splats: 10/10 files byte-
 13/13 approved images OK · 10 agents present · `scripts/setup-image-blaster.sh` rebuilt Image-Blaster (pinned commit,
 patch, bun install) and restored the 08 world files · `npm ci` + `tsc` clean · no API key text in any tracked file.
 Not tested here: a different Claude account (needs the manual steps of §5) and a real Android phone.
+
+## 11. Install + test the APK on an Android phone (not done yet — no phone in the cloud)
+1. On GitHub open `builds/rainbow-debug-match08-2026-11-17b.apk` on branch `ccr-9c4a8ad6-xovgsx` → **Download** (LFS
+   file, ~21 MB). Or with a computer: `git lfs pull --include=builds/rainbow-debug-match08-2026-11-17b.apk`.
+2. Phone: Settings → Security/Apps → allow "Install unknown apps" for your browser/files app; open the APK → Install.
+   (Computer + USB debugging: `adb install -r builds/rainbow-debug-match08-2026-11-17b.apk`.)
+3. Play through to 08 · FINAL SPIN CHAMBER (this APK has the Screen 08 switch built in). Check: the chamber looks like
+   the approved picture, Benny rides the S-river, coins collect, frame rate feels smooth, no crash.
+4. Report back (screenshot from the phone helps). Only then may the Android test be called passed.

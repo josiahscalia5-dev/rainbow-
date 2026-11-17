@@ -109,3 +109,24 @@ node scripts/capture.mjs 08 --q=match08=1 --out=<dir>; node tools/match08/motion
    android:debug`, Git LFS) — the whole APK runs with the 08 switch on. NOT run on a phone: this cloud session has no
    device or emulator (no adb device). Phone-size render (1080×1920, same 9:16) `08_NEW_match08_android1080x1920.png`.
    Install: `adb install -r builds/rainbow-debug-match08-2026-11-17.apk` (or copy to the phone and open it).
+
+## BENNY ROUND (user, 2026-11-17 ~14:40 UTC: "method approved, Screen 08 NOT finished — finish Benny") — `?match08=1` only
+* Placement measured on the pink-fur component (approved vs game): centre x 428 vs 432, box x 263–593 vs 265–587, top
+  1049 vs 1050 (before: centre 393 — he was ≈23–35 px LEFT, not right as I had written earlier). Game.ts M08_BENNY:
+  `dx 0.22` (world, visual offset of AuxScene only — gameplay position, pickups and camera unchanged), `lift 0.06`,
+  body scale (0.94, 1.0, 0.94) with the beanie counter-scaled (beanie 0.86×), white knit stripes; splash card alpha
+  strengthened (×1.7, γ 0.85) and kept at its approved-picture position (not moved with dx).
+* Result: Benny + splash 64.5 % → **66.2 %** (SSIM 0.636); scenery unchanged **97.4 %**; whole frame **83.4 %**
+  (SSIM 0.819), below HUD 90.2 %. Gameplay 8/8, **91 coins / 2,240** (same as the default game). Default 0 px.
+* STILL DIFFERENT (needs the next step): surface detail — the painting's soft shaded magenta fur, the beanie's visible knit
+  stitches / ribbed cuff / thicker white stripes, the pom-pom yarn, the star's shape.
+* NEXT (plan for the next session — do NOT merge line B): port line B's `benny05` work as an 08 variant.
+  Line B (`ccr-b0757dec-dj6l1o`, read-only) has `src/characters/benny/benny05.ts` (beanie geometry fixes, swim-roll
+  damping, finer shell fur FUR05, albedo maps baked from the APPROVED pixels into each part's UV space via
+  `qa/pilot05/full_reference_match/benny/work/bake.py`, calibration renders through the live post chain) + hooks in
+  `runtime.ts` and `fur.ts` (`#ifdef BENNY05`). Steps: (1) back up both branches (they are on GitHub; note SHAs);
+  (2) `git show origin/ccr-b0757dec-dj6l1o:<file>` the three source files + `tools`/bake scripts into a NEW branch
+  from this one; (3) adapt the flag to `match08` (or a new `benny08`) and replace `on05` with this branch's `flag05`;
+  (4) re-run the bake with the 08 approved picture and the locked 08 camera (`assets/textures/match08/cam08_locked.json`)
+  → `assets/textures/benny08/*.png`; (5) verify default 0 px, 05/07 unchanged, Benny+splash score, gameplay 8/8, motion.
+* Android: `builds/rainbow-debug-match08-2026-11-17b.apk` (this round; the earlier `…-17.apk` kept). NOT phone-tested.
