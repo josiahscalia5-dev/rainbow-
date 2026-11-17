@@ -12,9 +12,16 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
 const clip = 'node_modules/.rainbow-test/flow_test.webm';
-if (!existsSync(clip)) {
+// Race fix (account 5, 2026-11-17 ~20:30 UTC): A and D must observe the hold WHILE the clip still plays. In this
+// container (headless Chromium 157, SwiftShader) the first 3D frames keep the page's main thread busy for 8–11 s after
+// `ready`, so waitForSelector returns only after the 2.5 s clip has already ended (probe: overlay present at ready,
+// selector resolved 8.5–11 s later, video at t=2.52). A and D therefore use a 20 s clip; assertions are unchanged.
+// B and E keep the 2.5 s clip (they do not read the state during the video).
+const clipLong = 'node_modules/.rainbow-test/flow_test_20s.webm';
+for (const [f, d] of [[clip, 2.5], [clipLong, 20]]) {
+  if (existsSync(f)) continue;
   mkdirSync('node_modules/.rainbow-test', { recursive: true });
-  execSync(`ffmpeg -hide_banner -loglevel error -y -f lavfi -i color=c=0x8a2be2:s=360x640:d=2.5 -c:v libvpx -b:v 300k -an ${clip}`);
+  execSync(`ffmpeg -hide_banner -loglevel error -y -f lavfi -i color=c=0x8a2be2:s=360x640:d=${d} -c:v libvpx -b:v 300k -an ${f}`);
 }
 mkdirSync('qa/flowplan', { recursive: true });
 const { chromium } = loadPlaywright();
@@ -35,7 +42,7 @@ const courseInfo = (page) => page.evaluate(() => {
 });
 try {
   // ---- A. intro video + flowplan
-  let page = await open(`&flowplan=1&introVideo=/${clip}`, 'A');
+  let page = await open(`&flowplan=1&introVideo=/${clipLong}`, 'A');
   const shownA = await page.waitForSelector('[data-cinematic]', { timeout: 15000 }).then(() => true).catch(() => false);
   const infoA = await courseInfo(page);
   const duringA = await page.evaluate(() => window.__rainbow.state());
@@ -80,7 +87,7 @@ try {
   // fading, ride correctly released) — that observation says nothing about the hold, so re-open (max 3 tries).
   let shownD = false, duringD = null, seenD = null, triesD = 0;
   for (; triesD < 3; triesD++) {
-    page = await open(`&introVideo=/${clip}`, 'D');
+    page = await open(`&introVideo=/${clipLong}`, 'D');
     shownD = await page.waitForSelector('[data-cinematic]', { timeout: 15000 }).then(() => true).catch(() => false);
     ({ st: duringD, seen: seenD } = await page.evaluate(() => {
       const v = document.querySelector('[data-cinematic] video');

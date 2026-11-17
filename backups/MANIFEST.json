@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12116,
-   "sha256": "0320d967d307dd15445065864a3bf8b888c4816ef65b5ef8e7128eadb2cde768"
+   "sha256": "c49eddd45c4ee6344199d527f9ce32298e9cbd22fcc6957db6c4aba6cbd42e28"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -855,6 +855,16 @@
    "path": "docs/briefs/2026-11-17-r5/COMMON_RULES.md",
    "bytes": 4872,
    "sha256": "2810dfb1fb1ba430d9a6e8c45b478d411c7fd4a83ce54a98fb28580c084371ff"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r5/S08_BENNY.md",
+   "bytes": 5037,
+   "sha256": "7c5c06d9e695a40b9213e7f52577090b78e872147b668a13ee4d5c90eadc61f9"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r5/S08_SCENERY.md",
+   "bytes": 5683,
+   "sha256": "b250ed345f4dd98b29ced589af5a58f22ab054e6e5a9554319ec9a25dedc13c9"
   },
   {
    "path": "docs/characters/benny.md",
@@ -1273,18 +1283,18 @@
   },
   {
    "path": "qa/flowplan/A_after_fade_04.png",
-   "bytes": 300035,
-   "sha256": "2826735652129c18ddc496341997d41a7cf958673274ba49a3a9343cf1a5edbe"
+   "bytes": 337510,
+   "sha256": "e460c6e2bac2b67abe454a7c26e1fc71ff876283b7f2ee44c693ed4084831648"
   },
   {
    "path": "qa/flowplan/A_during_video.png",
-   "bytes": 4894,
-   "sha256": "58505778fb21eaf33eabf442b1762cbd2993956ccfd38c9d187bf72b0239062e"
+   "bytes": 11780,
+   "sha256": "f974886066c7e24c76d456a871910c039a6d03cbe6124dceb5690bebf7bb995f"
   },
   {
    "path": "qa/flowplan/B_after_ending_video_11.png",
-   "bytes": 427753,
-   "sha256": "829d2c578e0ac3b7bfa0853566f691b87ff50e96886384562f8af5ad498f4180"
+   "bytes": 530271,
+   "sha256": "d1b6d611398969f40a1e20b22d4bcfdd9461b0316e563d09ce998d257565e7b1"
   },
   {
    "path": "qa/flowplan/flowplan_test.json",
@@ -8128,8 +8138,8 @@
   },
   {
    "path": "scripts/flowplan-test.mjs",
-   "bytes": 9856,
-   "sha256": "ffad672df196bb6bee59b7a102e0029ab6f84eeda55ea3466d9b25f7f2cd74d2"
+   "bytes": 10537,
+   "sha256": "17e6f06c2d553bbb0ea61d85517f8e786ac6250d10c77ff8e90679a9dd637c42"
   },
   {
    "path": "scripts/gameplay-test.mjs",
