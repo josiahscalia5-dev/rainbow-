@@ -938,3 +938,456 @@ The bubbles variant doesn't help, so I'm going back to walls only and checking t
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && cp $S/tgtwall05_walls/* assets/textures/match05/tgtwall05/ && cmp assets/textures/match05/tgtwall05/proj05_E.png $S/bakeW/proj05_E.png && echo WALLS_RESTORED && node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1' --out=$S/moveW --d=0,3,6,12 --steer=-1,1 > /dev/null 2>&1; cmp $S/moveW/move_00.png $S/capW/05.png && echo LOCKED_SAME; python3 -I -c \"\nfrom PIL import Image\nfs=['move_03','move_06','steer_L_050','steer_R_050']\nbox=(560,560,864,1100); w,h=304,540\nim=Imag …[+340 chars]`
 
+### 🧑 User — 2026-11-17T17:47:15.168Z
+
+> ↩︎ result: WALLS_RESTORED
+> LOCKED_SAME
+
+### 🤖 Claude — 2026-11-17T17:47:17.062Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/wall_move.png"}`
+
+### 🧑 User — 2026-11-17T17:47:17.142Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:47:20.531Z
+
+No sliding artifacts in the riding frames; the wall slots stay readable where the smear was. Keeping `tgtwall05=1` and committing.
+
+### 🤖 Claude — 2026-11-17T17:47:32.500Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && D=qa/match/05/r3_wall && mkdir -p $D/riding_NEW && cp $S/capW/05.png $D/03_NEW_tgtwall05.png && cp $S/mW_*.json $D/ && cp $S/wallW.png $D/crop_APPROVED_BEFORE_NEW.png && cp $S/wall_move.png $D/crop_riding_top_BEFORE_bottom_NEW.png && for f in move_03 move_06 steer_L_050 steer_R_050; do cp $S/moveW/$f.png $D/riding_NEW/; done && cat >> qa/match/05/NOTES.md <<'EOF'\n\n## 2.3 Right wall chunk — `?tgtwall05=1` (needs `tgtfill05=3`)\nCause (`tools/match05/pixel_probe.mjs`): at x 748–863 y 771–904 the …[+2126 chars]`
+
+### 🧑 User — 2026-11-17T17:47:37.019Z
+
+> ↩︎ result: 0359dc94bd8363e5de62494c727965c45ae59dbf
+> 0359dc94bd8363e5de62494c727965c45ae59dbf	refs/heads/claude/rainbow-s05-match-c3
+
+### 🤖 Claude — 2026-11-17T17:47:38.507Z
+
+Step 2 is pushed (`0359dc9`). Next is item 3, the bottom-left gold ring arc.
+
+### 🤖 Claude — 2026-11-17T17:47:43.011Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nap=Image.open('references/05_flow_into_the_current.png').convert('RGB'); c=Image.open('$S/capW/05.png').convert('RGB')\nbox=(0,1250,300,1536); w,h=600,572\nim=Image.new('RGB',(w*2+10,h),'white')\nfor i,x in enumerate((ap,c)): im.paste(x.crop(box).resize((w,h),0),(i*(w+10),0))\nim.save('$S/ring_cmp.png')\nA=np.asarray(ap,float);C=np.asarray(c,float); sl=(slice(1329,1534),slice(54,160)); d=np.abs(A-C).mean(-1)[sl]; print(d.mean(),(d<=20) …[+279 chars]`
+
+### 🧑 User — 2026-11-17T17:47:59.547Z
+
+> ↩︎ result: 10.68021168890934 0.8436723423838012 [-8.85283019  0.34459273  4.76884491]
+> px 100,1400
+>    d 0.88  ro 2  MeshStandardMaterial  washer_world > zone_tubes > tube05_near_frame
+>    d 5.892  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 12.977  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 13.158  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 80,1480
+>    d 0.884  ro 2  MeshStandardMaterial  washer_world > zone_tubes > tube05_near_frame
+>    d 5.572  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 12.353  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 12.52  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 130,1350
+>    d 6.113  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 13.528  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 13.711  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+
+### 🤖 Claude — 2026-11-17T17:48:02.092Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/ring_cmp.png"}`
+
+### 🧑 User — 2026-11-17T17:48:02.146Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:48:09.798Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"tube05_near_frame\" src/ | head; grep -n \"env05\" qa/match/05/INVENTORY.md | head -5", "description": "Find near frame code"}`
+
+### 🧑 User — 2026-11-17T17:48:09.862Z
+
+> ↩︎ result: src/world/environment.ts:759:    frame.name = 'tube05_near_frame';
+> 12:| env05: warped walls, ring fit (sideways offsets), far tunnel, fittings | `env05` | `src/world/tube.ts`, env05 tools | `full_reference_match/env/NOTES.md` (rings A–G fitted to 0.3–4 px) |
+> 21:  env05's 02:53 re-bake).
+
+### 🤖 Claude — 2026-11-17T17:48:11.551Z
+
+> 🔧 **Bash** `{"command": "sed -n 700,800p src/world/environment.ts", "description": "Read near frame construction"}`
+
+### 🧑 User — 2026-11-17T17:48:11.589Z
+
+> ↩︎ result: hinge2.position.y -= 4.8;
+>   zones.chamber.add(doorC, hinge, hinge2);
+>   // laundry room C (beyond the door, toward -Z)
+>   const roomC = buildLaundryRoom({ floorDrop: 14.25, palette: 'soft', foldingTable: true });
+>   const anchorC = new THREE.Group();
+>   anchorC.position.set(doorCenterC.x, doorCenterC.y, C.zDoor - 1.0);
+>   anchorC.rotation.y = Math.PI;
+>   anchorC.add(roomC.group);
+>   zones.chamber.add(anchorC);
+>   // platform
+>   const P = WORLD.platform;
+>   const platTopMat = perforatedMetal({ color: '#d556df', emissive: '#a02cb8', emissiveIntensity: 0.3, slot: 0, repeatU: 70, repeatV: 9, holeSize: 0.42, side: THREE.DoubleSide, metalness: 0.8 });
+>   const platTop = new THREE.Mesh(new THREE.CylinderGeometry(P.radius, P.radius, 0.35, 72, 1, false), platTopMat);
+>   platTop.position.set(P.center.x, P.topY - 0.18, P.center.z);
+>   zones.chamber.add(platTop);
+>   const platRim = new THREE.Mesh(new THREE.TorusGeometry(P.radius, 0.28, 14, 96), goldMat);
+>   platRim.rotation.x = Math.PI / 2;
+>   platRim.position.set(P.center.x, P.topY - 0.15, P.center.z);
+>   zones.chamber.add(platRim);
+>   for (let i = 0; i < 4; i++) {
+>     const a = Math.PI / 4 + (i * Math.PI) / 2;
+>     const top = new THREE.Vector3(P.center.x + Ma …[+5059 chars]
+
+### 🤖 Claude — 2026-11-17T17:48:15.344Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function nearFrameGeometry\" -A60 src/world/*.ts | head -90; ls qa/pilot05/full_reference_match/env/frame/ tools/env05/ 2>/dev/null", "description": "Read nearFrameGeometry and fit tools"}`
+
+### 🧑 User — 2026-11-17T17:48:15.385Z
+
+> ↩︎ result: src/world/tube.ts:786:export function nearFrameGeometry(pieces?: { left: NearFramePiece; right: NearFramePiece; lip: NearFramePiece }): THREE.BufferGeometry {
+> src/world/tube.ts-787-  const pos: number[] = [], uv: number[] = [], piece: number[] = [], idx: number[] = [];
+> src/world/tube.ts-788-  const strip = (id: number, cx: number, cy: number, a0: number, b0: number, w: number, dir: 1 | -1, th0: number, th1: number, z0: number, nu: number, nv = 10) => {
+> src/world/tube.ts-789-    const base = pos.length / 3;
+> src/world/tube.ts-790-    for (let i = 0; i <= nu; i++) {
+> src/world/tube.ts-791-      const th = THREE.MathUtils.degToRad(th0 + ((th1 - th0) * i) / nu);
+> src/world/tube.ts-792-      for (let j = 0; j <= nv; j++) {
+> src/world/tube.ts-793-        const t = j / nv;
+> src/world/tube.ts-794-        const a = a0 + dir * t * w, b = b0 + dir * t * w;
+> src/world/tube.ts-795-        const xs = cx + a * Math.cos(th), ys = cy - b * Math.sin(th); // screen px (y down)
+> src/world/tube.ts-796-        pos.push(xs - 432, 768 - ys, z0 + w * 0.22 * Math.sin(Math.PI * t));
+> src/world/tube.ts-797-        uv.push(i / nu, t);
+> src/world/tube.ts-798-        piece.push(id);
+> src/world/tube.ts-799-      }
+> src/worl …[+3164 chars]
+
+### 🤖 Claude — 2026-11-17T17:48:20.542Z
+
+> 🔧 **Bash** `{"command": "cat qa/pilot05/full_reference_match/env/frame/frame_fit.json | head -40; sed -n 1,30p tools/env05/frame_fit.py", "description": "Read frame fit result and tool"}`
+
+### 🧑 User — 2026-11-17T17:48:20.585Z
+
+> ↩︎ result: {
+>  "pieces_before": {
+>   "left": [
+>    432,
+>    1060,
+>    457,
+>    190,
+>    1,
+>    -163,
+>    -122
+>   ],
+>   "right": [
+>    432,
+>    1060,
+>    457,
+>    190,
+>    1,
+>    -17,
+>    -58
+>   ],
+>   "lip": [
+>    432,
+>    2121,
+>    655,
+>    130,
+>    -1,
+>    122,
+>    58
+>   ]
+>  },
+>  "pieces_after": {
+>   "left": [
+>    434.0,
+>    1028.0,
+>    456.0,
+>    190.0,
+>    1.0,
+>    -157.0,
+>    -127.0
+>   ],
+> """env05 — fit the camera-held near gold FRAME (src/world/tube.ts nearFrameGeometry: two bottom-corner bands + the bottom
+> lip, designed in reference pixels; the vertex shader makes every vertex land on its designed pixel) to the approved
+> picture's frame outline. A piece = annulus sector about (cx, cy): radius a0 … a0 + dir·w, angle th0 … th1 (degrees,
+> y up). Objective per piece: approved frame pixels the piece misses + approved WATER pixels it covers (bubbles, foam,
+> splash, Benny in front of the frame are ignored: the game draws its own there). Coordinate search from the current
+> design. Writes the fitted pieces (+ before / after numbers) to <out.json>.
+> usage: python3 -I tools/env05/frame_fit.py <out.json>"""
+> import json, sys
+> import numpy as np
+> from PIL import Image
+> 
+> W, H = 864, 1536
+> M = "qa/pilot05/full_reference_match/masks"
+> idx = np.asarray …[+661 chars]
+
+### 🤖 Claude — 2026-11-17T17:48:24.531Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && sed -n 30,80p tools/env05/frame_fit.py", "description": "Read rest of frame fit tool"}`
+
+### 🧑 User — 2026-11-17T17:48:24.584Z
+
+> ↩︎ result: cx, cy, a0, w, d, t0, t1 = p
+>     rho = np.hypot(xx - cx, cy - yy)
+>     th = np.degrees(np.arctan2(cy - yy, xx - cx))
+>     lo, hi = (a0, a0 + w) if d > 0 else (a0 - w, a0)
+>     tl, th_ = min(t0, t1), max(t0, t1)
+>     return (rho >= lo) & (rho <= hi) & (th >= tl) & (th <= th_)
+> 
+> 
+> REG = {n: region(list(map(float, p))) for n, p in CUR.items()}
+> 
+> 
+> def cost_joint(regs):
+>     m = np.zeros((H, W), bool)
+>     for r in regs.values(): m |= r
+>     m &= low
+>     return int((pos & ~m).sum()), int((neg & m).sum())
+> 
+> 
+> P = {n: list(map(float, p)) for n, p in CUR.items()}
+> miss0, over0 = cost_joint(REG)
+> best = miss0 + over0
+> steps = {0: [8, 4, 2, 1], 1: [8, 4, 2, 1], 2: [8, 4, 2, 1], 5: [2, 1, 0.5], 6: [2, 1, 0.5]}
+> for it in range(5):
+>     improved = False
+>     for name in CUR:
+>         for k, sl in steps.items():
+>             for st in sl:
+>                 for sgn in (1, -1):
+>                     q = list(P[name]); q[k] += sgn * st
+>                     regs = dict(REG); regs[name] = region(q)
+>                     c = sum(cost_joint(regs))
+>                     if c < best:
+>                         best, P[name], REG, improved = c, q, regs, True
+>     print("iteration", it, "cost", best)
+>     if not improved: break
+> miss1, ove …[+349 chars]
+
+### 🤖 Claude — 2026-11-17T17:48:32.445Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I - <<EOF\nimport json, numpy as np\nfrom PIL import Image\nW,H=864,1536\nM=\"qa/pilot05/full_reference_match/masks\"\nidx=np.asarray(Image.open(f\"{M}/region_index.png\")); rid={k:v[\"id\"] for k,v in json.load(open(f\"{M}/regions.json\"))[\"regions\"].items()}\nyy,xx=np.mgrid[0:H,0:W].astype(float)\ndef region(p):\n    cx,cy,a0,w,d,t0,t1=p; rho=np.hypot(xx-cx,cy-yy); th=np.degrees(np.arctan2(cy-yy,xx-cx))\n    lo,hi=(a0,a0+w) if d>0 else (a0-w,a0); return (rho>=lo)&(rho<=hi)&(th>=min( …[+689 chars]`
+
+### 🧑 User — 2026-11-17T17:48:32.927Z
+
+> ↩︎ result: left zone: water covered 7557 frame missed 1501
+> {'gold_rings_and_front_frame': 27557, 'water': 55479, 'wake_splash': 970, 'bubbles': 1794}
+
+### 🤖 Claude — 2026-11-17T17:48:35.224Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/frame_mask.png"}`
+
+### 🧑 User — 2026-11-17T17:48:35.251Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:48:44.841Z
+
+The region masks match the frame outline fairly well, so I'm checking the real pixel differences along the frame edge at full zoom.
+
+### 🤖 Claude — 2026-11-17T17:48:49.528Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'),float); c=np.asarray(Image.open('$S/capW/05.png').convert('RGB'),float)\nd=np.abs(ap-c).mean(-1)\nz=(slice(1300,1536),slice(0,240))\nv=np.zeros(d.shape+(3,),np.uint8); v[d>40]=[255,0,0]; v[(d>20)&(d<=40)]=[255,160,0]\ng=(ap.mean(-1)*0.4).astype(np.uint8)\no=np.where(v.any(-1,keepdims=True),v,np.stack([g]*3,-1))\nim=np.concatenate([ap[z].astype(np.uint8), …[+216 chars]`
+
+### 🧑 User — 2026-11-17T17:48:50.236Z
+
+> ↩︎ result: err>20 px in box 5476
+
+### 🤖 Claude — 2026-11-17T17:48:52.502Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/ring_err.png"}`
+
+### 🧑 User — 2026-11-17T17:48:52.536Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:49:11.418Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"frame05.png\\|frame05\" src/ tools/env05/*.py | grep -v \"^.*://\" | head -12", "description": "Find frame texture bake"}`
+
+### 🧑 User — 2026-11-17T17:49:11.470Z
+
+> ↩︎ result: src/world/environment.ts:754:    // `?projframe05=1` (src/vfx/proj05Tunnel.ts): the approved gold band on the same frame; default unchanged
+> src/world/environment.ts:756:    // approved frame px missed 13,796 → 3,786); their own approved-gold bake assets/textures/env05/frame05.png
+> src/world/environment.ts:757:    const frame05e = ENV05 ? { left: [434, 1028, 456, 190, 1, -157, -127], right: [427, 1026, 453, 190, 1, -22.5, -55], lip: [423, 2118, 655, 130, -1, 122, 58] } as Parameters<typeof nearFrameGeometry>[0] : undefined;
+> src/world/environment.ts:758:    const frame = new THREE.Mesh(nearFrameGeometry(frame05e), PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial());
+> src/vfx/proj05Tunnel.ts:24:/** `?projframe05=1` (2026-11-16): the near gold frame (bottom corners + bottom lip) wears the approved gold band */
+> src/vfx/proj05Tunnel.ts:25:export const PROJFRAME05: boolean = flag05('projframe05');
+> src/vfx/proj05Tunnel.ts:129:  /** frame05.png: (texture height, band rows NV, left y0, right y0); lip y0 in uPtFrameLip */
+> src/vfx/proj05Tunnel.ts:188:      load(ENV05 ? new URL('../../assets/textures/env05/frame05.png', import.meta.url).href : new URL('../../assets/textures/ …[+667 chars]
+
+### 🤖 Claude — 2026-11-17T17:49:13.541Z
+
+> 🔧 **Bash** `{"command": "sed -n 340,420p src/vfx/proj05Tunnel.ts; cat assets/textures/env05/frame05.json; grep -ln \"frame05\" tools/*/*.py", "description": "Read frame shader and bake metadata"}`
+
+### 🧑 User — 2026-11-17T17:49:13.592Z
+
+> ↩︎ result: /**
+>  * `?projframe05=1`: wrap nearFrameMaterial (src/world/materials.ts; geometry nearFrameGeometry in tube.ts). The frame
+>  * is the existing camera-held 3D band (bottom corners + bottom lip); this only replaces its hand-picked palette with the
+>  * approved gold band profile (tools/proj05/frame_bake.py: the approved picture sampled in the frame's own band
+>  * coordinates, hidden parts filled, smoothed along the arc), shown through the post-chain inverse like the walls/rings.
+>  * Which corner: the sign of the geometry's x (reference pixels from the frame centre).
+>  */
+> export function withProj05Frame<T extends THREE.MeshStandardMaterial>(mat: T): T {
+>   /** tan(fov/2) / 768: reference px of depth → relative scale (environment.ts places the frame at depth d = 0.8) */
+>   const frameK = { value: 0 };
+>   const prev = mat.onBeforeCompile;
+>   mat.onBeforeCompile = (shader, r) => {
+>     prev.call(mat, shader, r);
+>     Object.assign(shader.uniforms, shared);
+>     const vMark = 'vFrUv = uv; vFrPiece = framePiece;';
+>     const fMark = '#include <dithering_fragment>';
+>     if (!shader.vertexShader.includes(vMark) || !shader.fragmentShader.includes(fMark)) {
+>       console.error('[rainbow] projframe05: near-f …[+2448 chars]
+
+### 🤖 Claude — 2026-11-17T17:49:20.014Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p tools/proj05/frame_bake.py; grep -n \"ENV05\\|1028\\|argv\\|frame_fit\" tools/proj05/frame_bake.py | head", "description": "Read frame bake tool header"}`
+
+### 🧑 User — 2026-11-17T17:49:20.055Z
+
+> ↩︎ result: """Screen 05 near gold frame bake (`?projframe05=1`, src/vfx/proj05Tunnel.ts): the approved picture's two bottom-corner
+> gold bands and the bottom gold lip, unwrapped into the frame mesh's OWN band coordinates (src/world/tube.ts
+> nearFrameGeometry: uv.x along the arc, uv.y across the band 0 = edge toward the stream; reference-pixel geometry), so the
+> existing 3D frame wears the approved gold instead of the hand-picked palette that renders pale cream.
+> Hidden texels (bubbles, foam, water, splash in front of the gold) are filled along the band; the result is then
+> smoothed ALONG the arc (sigma_u) so it is the band's material profile + broad lighting, not a pixel copy.
+> Atlas frame05.png, rows top-down: left corner (NV) | gutter | right corner (NV) | gutter | bottom lip (NV); NU columns.
+> usage: python3 -I tools/proj05/frame_bake.py <out_dir> [sigma_u_texels] [--capture=05.png [--gain=0.8] [--reset=1]]
+>        [--pieces=<frame_fit.json> --corr=<correction.npy>]   (env05, 2026-11-17: the pieces fitted by tools/env05/frame_fit.py,
+>        "pieces_after"; own colour-feedback file; out_dir assets/textures/env05)"""
+> import json, math, os, sys
+> import numpy as np, cv2
+> from PIL import Image
+> from scipy …[+1862 chars]
+
+### 🤖 Claude — 2026-11-17T17:49:42.783Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && cat > tools/match05/frame_cut_fit.py <<'EOF'\n\"\"\"Screen 05 round 3 (`?framecut05=1`): the near gold frame's LEFT corner piece ends in a straight RADIAL cut\n(tools/env05/frame_fit.py pieces_after: th1 = -127 deg at both band edges). The approved frame's cut is slanted: at the\nbottom of the screen the gold reaches ~40 px further right. Here the end angle may differ between the inner edge (th1,\nt = 0) and the outer edge (thOut, t = 1); everything else of the piece stays as fitted. Same object …[+1763 chars]`
+
+### 🧑 User — 2026-11-17T17:49:50.322Z
+
+> ↩︎ result: {"before": {"th1": -127.0, "thOut": -127.0, "missed_and_covered": [8651, 6741]}, "after": {"th1": -127.75, "thOut": -126.0, "missed_and_covered": [8326, 6588]}}
+
+### 🤖 Claude — 2026-11-17T17:50:06.522Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np, json\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'),float); c=np.asarray(Image.open('$S/capW/05.png').convert('RGB'),float)\nM='qa/pilot05/full_reference_match/masks'; idx=np.asarray(Image.open(M+'/region_index.png')); rid={k:v['id'] for k,v in json.load(open(M+'/regions.json'))['regions'].items()}\nm=idx==rid['coins']\ngold=lambda a:(a[...,0]>150)&(a[...,0]-a[...,2]>60)\nboth=m&gold(ap)&gold(c)\npr …[+625 chars]`
+
+### 🧑 User — 2026-11-17T17:50:07.161Z
+
+> ↩︎ result: coin px 27437 gold in both 14524
+> approved mean [240.5 194.2  51.9] p10/p90 luma [122.  161.  203.7] sat 0.786
+> game mean [241.1 190.5  47.5] p10/p90 luma [120. 159. 198.] sat 0.805
+> 293:  const side = new THREE.MeshStandardMaterial({ color: '#6a4a00', metalness: 0.75, roughness: 0.3, emissive: '#ffffff', emissiveMap: edgeTex, emissiveIntensity: 1.0 });
+> 294:  const face = new THREE.MeshStandardMaterial({ map: faceTex, color: '#7a5200', metalness: 0.7, roughness: 0.3, emissive: '#ffffff', emissiveMap: faceTex, emissiveIntensity: 1.15 });
+
+### 🤖 Claude — 2026-11-17T17:50:09.506Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/coins_cmp.png"}`
+
+### 🧑 User — 2026-11-17T17:50:09.544Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:50:17.135Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=[np.asarray(Image.open(p).convert('RGB'))[470:790,390:600] for p in ('references/05_flow_into_the_current.png','$S/cap0/05.png','$S/capW/05.png')]\nim=np.concatenate(a,1); Image.fromarray(im).resize((im.shape[1]*2,im.shape[0]*2),0).save('$S/coins_cmp3.png')\"", "description": "Coin crops approved, M1, NEW"}`
+
+### 🧑 User — 2026-11-17T17:50:17.628Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:50:19.941Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad/coins_cmp3.png"}`
+
+### 🧑 User — 2026-11-17T17:50:19.973Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:50:41.289Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p tools/qa/screen_match.py | grep -v \"^import\"; ls builds/ | grep -i \"05\" | tail -5; grep -rn \"match08\" src/ | head -2", "description": "Check screen_match usage and existing builds"}`
+
+### 🧑 User — 2026-11-17T17:50:41.342Z
+
+> ↩︎ result: sed: can't read tools/qa/screen_match.py: No such file or directory
+> rainbow-debug-match05-2026-11-17.apk
+> rainbow-debug-match05-2026-11-17.md
+> rainbow-full-game-match05-2026-11-17.md
+> rainbow-full-game-match05-2026-11-17.mp4
+
+### 🤖 Claude — 2026-11-17T17:50:44.018Z
+
+`tools/qa/screen_match.py` exists only on line A. I'll read it there and use an unchanged copy in my own folder (allowed, and noted in NOTES).
+
+### 🤖 Claude — 2026-11-17T17:50:45.278Z
+
+> 🔧 **Bash** `{"command": "git show FETCH_HEAD:tools/qa/screen_match.py > tools/match05/screen_match.py && sed -n 1,30p tools/match05/screen_match.py | grep -v \"^import\\|^from\"; wc -l tools/match05/screen_match.py; grep -n \"import\" tools/match05/screen_match.py", "description": "Copy screen_match tool from line A"}`
+
+### 🧑 User — 2026-11-17T17:50:45.352Z
+
+> ↩︎ result: """Any screen — APPROVED reference vs real-game capture, measured three ways (never one invented 'fidelity score'):
+>   FULL      every pixel: mean |dRGB| (0-255), share within 10 / 20 levels, luminance SSIM (7x7 Gaussian)
+>   BELOWHUD  the same below the HUD bar + title (rows >= 13 % of the height)
+>   LAYOUT    both images blurred (sigma 8 px) first: colour + composition independent of fine detail / exact edges
+>             (mean |dRGB| and share within 20 levels) — a big gap between FULL and LAYOUT means the right things are
+>             roughly in the right places but details / edges differ; a bad LAYOUT means the scene itself differs
+> usage: python3 -I tools/qa/screen_match.py <approved.png> <capture.png> [--json=OUT] [--label=NAME]"""
+> 
+> args = [a for a in sys.argv[1:] if not a.startswith("--")]
+> opt = dict(a[2:].split("=", 1) for a in sys.argv[1:] if a.startswith("--") and "=" in a)
+> ap = Image.open(args[0]).convert("RGB")
+> cp = Image.open(args[1]).convert("RGB")
+> if cp.size != ap.size:
+>     cp = cp.resize(ap.size, Image.LANCZOS)
+> A, C = np.asarray(ap, float), np.asarray(cp, float)
+> H, W = A.shape[:2]
+> 
+> 
+> def ssim_map(a, b):
+>     la, lb = (a * [0.2126, 0.7152, 0.0722]).sum(-1), (b * [0.2126, 0.7 …[+517 chars]
+
+### 🤖 Claude — 2026-11-17T17:50:50.381Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && D=qa/match/05/r3_final && mkdir -p $D && cp $S/capW/05.png $D/03_NEW_match05_tgtvis05_tgtfill05_tgtwall05.png && R=references/05_flow_into_the_current.png && for p in \"02_BEFORE_M1 qa/match/05/03_NEW_match05_tgtvis05.png\" \"03_NEW $D/03_NEW_match05_tgtvis05_tgtfill05_tgtwall05.png\" \"00_BEFORE_match05 qa/match/05/02_BEFORE_match05.png\"; do set -- $p; python3 -I tools/match05/screen_match.py $R $2 --json=$D/screen_match_$1.json --label=$1 | tail -4; done; python3 -I tools/match05/metrics.py $ …[+168 chars]`
+
+### 🧑 User — 2026-11-17T17:50:56.904Z
+
+> ↩︎ result: 02_BEFORE_M1 FULL |d|   8.1 <=20 0.891 SSIM 0.877 | BELOWHUD |d|   6.9 <=20 0.913 | LAYOUT |d|   3.4 <=20 0.956 | mean RGB approved [151.2, 124.1, 192.3] game [150.1, 124.5, 192.8]
+> 03_NEW FULL |d|   7.9 <=20 0.894 SSIM 0.879 | BELOWHUD |d|   6.7 <=20 0.916 | LAYOUT |d|   3.3 <=20 0.959 | mean RGB approved [151.2, 124.1, 192.3] game [149.9, 124.2, 192.6]
+> 00_BEFORE_match05 FULL |d|   9.0 <=20 0.878 SSIM 0.869 | BELOWHUD |d|   7.9 <=20 0.897 | LAYOUT |d|   4.3 <=20 0.941 | mean RGB approved [151.2, 124.1, 192.3] game [151.4, 123.9, 192.5]
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 7.93, 'within_10': 0.8137, 'within_20': 0.8944, 'ssim_lum': 0.8791, 'mean_signed_rgb': [-1.8, -0.3, 0.3]}
+
+### 🤖 Claude — 2026-11-17T17:50:59.760Z
+
+> 🔧 **Bash** `{"command": "head -5 qa/match/05/scenery_bands.txt; python3 -I -c \"\nimport json;print(list(json.load(open('qa/pilot05/full_reference_match/masks/regions.json'))['regions']))\"", "description": "Check scenery measure definition"}`
+
+### 🧑 User — 2026-11-17T17:50:59.824Z
+
+> ↩︎ result: SCENERY = whole frame minus benny_and_hat, hud_and_text, coins ( 1081118 px ); BAND = rows
+> BEFORE match05: scenery mean 6.66, within 20 91.6 %
+>    bands (within 20 %): 0-192:74.3 192-384:95.1 384-576:93.7 576-768:91.7 768-960:79.3 960-1152:85.9 1152-1344:90.5 1344-1536:92.1
+> NEW match05+tgtvis05: scenery mean 5.60, within 20 93.3 %
+>    bands (within 20 %): 0-192:74.3 192-384:95.1 384-576:93.7 576-768:91.8 768-960:87.2 960-1152:88.5 1152-1344:90.5 1344-1536:92.1
+> ['gold_rings_and_front_frame', 'purple_walls', 'side_fittings', 'water', 'foam_banks', 'benny_and_hat', 'wake_splash', 'coins', 'bubbles', 'hud_and_text', 'distant_tunnel_and_glow']
+
+### 🤖 Claude — 2026-11-17T17:51:05.297Z
+
+> 🔧 **Bash** `{"command": "D=qa/match/05/r3_final && python3 -I -c \"\nfrom PIL import Image; import numpy as np, json\nM='qa/pilot05/full_reference_match/masks'; idx=np.asarray(Image.open(M+'/region_index.png')); rid={k:v['id'] for k,v in json.load(open(M+'/regions.json'))['regions'].items()}\nsc=~np.isin(idx,[rid[k] for k in ('benny_and_hat','hud_and_text','coins')])\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'),float)\nout=[]\nfor nm,p in (('BEFORE M1 tgtvis05','qa/match/05/03_NEW_match05_tgtvis05.png'),('NEW +tgtfill05=3 +tgtwall05','$D/03_NEW_match05_tgtvis05_tgtfi …[+538 chars]`
+
+### 🧑 User — 2026-11-17T17:51:05.932Z
+
+> ↩︎ result: BEFORE M1 tgtvis05: scenery mean 5.60, within 20 93.3 %
+>    bands (within 20 %): 0-192:76.1 192-384:95.1 384-576:96.0 576-768:96.6 768-960:91.5 960-1152:95.1 1152-1344:91.6 1344-1536:92.1
+> NEW +tgtfill05=3 +tgtwall05: scenery mean 5.32, within 20 93.7 %
+>    bands (within 20 %): 0-192:76.1 192-384:95.1 384-576:96.0 576-768:97.0 768-960:94.7 960-1152:95.1 1152-1344:91.6 1344-1536:92.1
+
+### 🤖 Claude — 2026-11-17T17:51:08.663Z
+
+Scenery 93.3 → 93.7 % within 20 (mean 5.60 → 5.32). Now the final riding frames (forward 3/6/10/15/20 u plus steering) for BEFORE (M1) and NEW.
+
+### 🤖 Claude — 2026-11-17T17:51:12.371Z
+
+> 🔧 **Bash** `{"command": "D=qa/match/05/r3_final && node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1' --out=$D/riding_BEFORE_M1 --d=3,6,10,15,20 --steer=-1,1 > /dev/null 2>&1; node scripts/proj05-move.mjs --q='match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1' --out=$D/riding_NEW --d=3,6,10,15,20 --steer=-1,1 > /dev/null 2>&1; ls $D/riding_NEW | tr '\\n' ' '; python3 -I -c \"\nfrom PIL import Image; import numpy as np, os, json\nD='$D'; r={}\nfor f in sorted(os.listdir(D+'/riding_NEW')):\n  if f.endswith('.png'):\n    a=np.asarray(Image.open(D+'/riding_BEFORE_M1/'+f).convert('RGB'),int);b=np.asarray(Image …[+245 chars]`
+
