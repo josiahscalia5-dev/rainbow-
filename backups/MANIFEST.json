@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 26563,
-   "sha256": "1ba031e0fe3ac95117826d8ff49c2224b16eee4230485f7ed2fbd3ad62bd47e2"
+   "bytes": 26345,
+   "sha256": "4175a2d5c26caecbe0056f8a5c86500e1fddd6e10918798a722620e816256b81"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12116,
-   "sha256": "a957ee7092b0a2f4363eb4cf75827702145a430b11f0090b024dcd35d342e5e7"
+   "sha256": "6ac2457ddde0edaaf740e9be52ea56e811a10645593707594ca72b83be5a5f55"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -723,8 +723,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 29216,
-   "sha256": "6efd5b3110e3587cafe1ab24d655554d815b8376a11caae24f39fc4fe7550376"
+   "bytes": 30371,
+   "sha256": "2064ba9bbcda0072b9dfdaf94c13de820d57e371151076c3a1e3562485d6bfce"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
