@@ -1062,3 +1062,11 @@ Notifications are queued for this session (more may arrive before you read them)
 
 You've hit your 5-hour limit · resets 8:20pm (UTC)
 
+### 🧑 User — 2026-11-17T16:14:16.295Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-17T16:14:17.342Z
+
+You've hit your 5-hour limit · resets 8:20pm (UTC)
+
