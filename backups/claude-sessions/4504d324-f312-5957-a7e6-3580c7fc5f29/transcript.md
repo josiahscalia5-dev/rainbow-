@@ -2347,3 +2347,47 @@ The HUD/coins specialist has finished, and its results are measured in real game
 
 > 🔧 **Bash** `{"command": "flock -w 180 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:checkpoint-cp1 2>&1 | grep -E '\"commit\"|\"pushed_verified\"|\"error\"|skipping'; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"", "description": "Save checkpoint and verify push", "timeout": 300000}`
 
+### 🧑 User — 2026-11-17T01:49:29.982Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "f9dd9a98509a41d6547ac494369d7e86ace2781f",
+> LOCAL  f9dd9a98509a41d6547ac494369d7e86ace2781f
+> REMOTE f9dd9a98509a41d6547ac494369d7e86ace2781f
+
+### 🤖 Claude — 2026-11-17T01:49:38.889Z
+
+The HUD/coins specialist has finished, and I've sent you the three separate full-size pictures: your approved screen, the game before corrections, and the game now (`?match05=1`). The "now" picture is a real capture at the approved camera and includes everyone's current work. The tunnel and Benny specialists are still refining theirs.
+
+**Whole screen: 57.0 % → 83.4 % of pixels within 20 colour levels** (average colour difference 29.1 → 12.0).
+
+| Area | Before | Now |
+|---|---|---|
+| Purple tunnel walls | 21 % | **91 %** |
+| Gold rings + front frame | 51 % | **88 %** |
+| Side paddles | 39 % | **95 %** |
+| Distant tunnel + glow | 34 % | **97 %** |
+| Benny + hat | 26 % | **71 %** |
+| HUD + banner | 66 % | **74 %** |
+| Coins | 30 % | **52 %** |
+| Bubbles | 61 % | 65 % |
+| Splash behind Benny | 38 % | 39 % (not started yet) |
+| Water | 89 % | 92 % (not broken) |
+| Foam banks | 93 % | 95 % (not broken) |
+
+- **HUD and coins (finished):** the HUD bar and banner now sit at your approved positions to within a pixel or two, and the coin counter still counts up while playing. All the coins along your trail are drawn, including three tiny ones at the vanishing point, each at its approved screen spot, and the upside-down coin face is fixed. The gameplay test passed 8/8.
+- **Default game:** still pixel-identical to your protected version.
+
+**Still visibly different:**
+- **Splash behind Benny:** still the spiky white "wings" instead of your fan-shaped spray; the splash/bubble specialist handles that next.
+- **Benny:** his fur is still hotter pink and spikier than your soft fluff, and the pom-pom is spikier. The Benny specialist is still working.
+- **Tunnel:** a few small rough patches near the right-hand paddles remain.
+- **Far coins:** the far coins (7–18) float slightly higher than they would on the river surface. A coin can only be drawn in front of the painted far end of the tunnel, so that is the closest possible placement.
+- **Banner and numbers:** the lettering differs slightly, because Baloo 2 is the only font in the project.
+
+The checkpoint is saved to GitHub (`f9dd9a9`, verified). The splash/bubble specialist starts when the tunnel and Benny specialists finish, and I'll send the next set of pictures then.
+
+### 🧑 User — 2026-11-17T01:49:40.193Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

@@ -649,7 +649,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11669,
-   "sha256": "627117d3697fe5a4a107c4a94bab578fd53c75a057933cfe889122abee856764"
+   "sha256": "df4278f84aecce102ef44e28f7559c0b6e46481430a45044c5047e9775b5c143"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1093,8 +1093,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1199,
-   "sha256": "a3477cc5978ab3d602367839792ca4a853353ac3264f87eb1260ed3994bd9d00"
+   "bytes": 1196,
+   "sha256": "1cddabf9ac083a31e8a9c5a971d55bddca1ae7276bb3bfad5393b0de64efa5ef"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1477,6 +1477,21 @@
    "sha256": "161770458c98ecaf1e732aff95911a8bd68826e298868143e15a3e2df1a28f5b"
   },
   {
+   "path": "qa/pilot05/full_reference_match/benny/cap/before_low/05.png",
+   "bytes": 2167769,
+   "sha256": "0a818fbd7b281ea4b09b2f6017131560e74701fd3f5d9e7b951b2d70e8e03976"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/before_low/FULL_FRAME_METRICS.json",
+   "bytes": 422,
+   "sha256": "870c4bf997ae21287ecb9bcad55925862abf5725bcc7277252dc91d65277c926"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/before_low/REGION_METRICS.json",
+   "bytes": 2527,
+   "sha256": "c54c3cbc267ec6e2d50c45d7f670d43435c1a9a231112ce7377130632f20cb5f"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/benny/cap/before_mask/05.png",
    "bytes": 2026280,
    "sha256": "da69cb3c45f0def40a0aef303ffffee0a45497214816f63ab24a772e19f51cfc"
@@ -1580,6 +1595,16 @@
    "path": "qa/pilot05/full_reference_match/benny/cap/new_low/05.png",
    "bytes": 2226575,
    "sha256": "d8600255088ab96d7865a9e07d90eb4a6307800886b2f9d37c6031e80f16f429"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/new_low/FULL_FRAME_METRICS.json",
+   "bytes": 416,
+   "sha256": "ea30b85abc6d379dbaa48b46357ea915f0739e1d698bcfe4f08beb65a439fbdd"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/new_low/REGION_METRICS.json",
+   "bytes": 2523,
+   "sha256": "8fb966ad251da109c07daf26bcff9ef766511d72519383c04a366d76eafea85f"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/cap/new_s1/05.png",

@@ -2266,3 +2266,14 @@ Now the low tier (Android phones get `quality=low` by default: body shells 24 �
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&benny05=1&quality=low\" --out=$B/cap/new_low > $SP/cap_low.log 2>&1; echo low_rc=$?; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&quality=low\" --out=$B/cap/before_low > $SP/c …[+307 chars]`
 
+### 🧑 User — 2026-11-17T01:49:37.188Z
+
+> ↩︎ result: low_rc=0
+> blow_rc=0
+> == before_low
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 34.29, 'within_10': 0.421, 'within_20': 0.5142, 'ssim_lum': 0.5059, 'mean_signed_rgb': [1.7, -1.4, -0.8]}
+> benny_and_hat                px   93061  mean  50.63  <=10 0.063  <=20 0.226  ssim 0.085  signed [-3.1, -17.0, 7.1]
+> == new_low
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 32.13, 'within_10': 0.453, 'within_20': 0.547, 'ssim_lum': 0.542, 'mean_signed_rgb': [0.9, -0.0, -1.4]}
+> benny_and_hat                px   93061  mean  22.22  <=10 0.513  <=20 0.675  ssim 0.589  signed [-9.8, -1.7, -1.1]
+
