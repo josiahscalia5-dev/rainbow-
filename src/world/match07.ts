@@ -14,7 +14,7 @@
  * post chain (PROJ05_INVERSE) and takes no fog. Without the switch nothing in this file runs and the game is unchanged.
  */
 import * as THREE from 'three';
-import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
 
 interface Layout07 {
   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
@@ -63,6 +63,9 @@ uniform vec4 uRiver;      // lateral min, lateral max, along min, along max
 uniform vec3 uProjPos;
 uniform vec4 uPjPost;
 uniform vec2 uPjRes;
+uniform sampler2D uFill;   // M2 '?m07fill=1': provisional-fill mask of the plate (1 = filled, not original pixels)
+uniform float uFillTile;  // 1 = on the water, filled plate pixels give way to the river tile
+uniform vec2 uAng;        // M2 '?m07ang=1': view-vs-projector angle cosines (full plate above x, tile below y); x < 0 = off
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -105,7 +108,13 @@ void main() {
         float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
       }
-      t = mix(pc, texture2D(uPlate, uv).rgb, vis * keep);
+      float w = vis * keep;
+      // M2 '?m07fill=1': on the water, the provisional fill (Benny / coins in the picture) gives way to the river tile
+      if (uFillTile > 0.5 && uMode > 1.5) w *= 1.0 - texture2D(uFill, uv).r;
+      // M2 '?m07ang=1': painted relief (ring flanges, paddles) flattened on the proxy doubles when seen from another
+      // direction: use the picture only where the view direction is close to the approved view's (identical there)
+      if (uAng.x > 0.0) w *= smoothstep(uAng.y, uAng.x, dot(normalize(cameraPosition - vW), normalize(uProjPos - vW)));
+      t = mix(pc, texture2D(uPlate, uv).rgb, w);
     }
   }
   gl_FragColor = vec4(pjInverse(t), 1.0);
@@ -121,10 +130,14 @@ export async function buildMatch07(): Promise<Match07> {
     t.wrapS = t.wrapT = wrap; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8;
     return t;
   };
-  const [plate, tWall, tRiver, pGold] = await Promise.all([
+  const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
     load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load('tile_wall.png', THREE.RepeatWrapping),
     load('tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
+    load('plate07_fillmask.png', THREE.ClampToEdgeWrapping),
   ]);
+  // MILESTONE 2 test switches (one factor each, qa/match/07/m2/NOTES.md); off = the MILESTONE 1 result unchanged
+  const fixFill = flag05('m07fill');
+  const fixAng = flag05('m07ang');
 
   // the projector = the locked game camera the picture was matched to
   const [W, H] = L.camera.size;
@@ -157,6 +170,9 @@ export async function buildMatch07(): Promise<Match07> {
     uGroupInv: { value: groupInv },
     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
     uPjRes: { value: new THREE.Vector2(W, H) },
+    uFill: { value: fillMask },
+    uFillTile: { value: fixFill ? 1 : 0 },
+    uAng: { value: fixAng ? new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(6)), Math.cos(THREE.MathUtils.degToRad(14))) : new THREE.Vector2(-1, -1) },
     uProjPos: { value: proj.position.clone() },
     uTube: { value: new THREE.Vector4(T.ax, T.h, TL.wall.along[0], TL.wall.bay) },
     // unwrap rows: image row 0 = theta1 (left water line) = v 1 (three flips images), last row = theta0 (right water line)
