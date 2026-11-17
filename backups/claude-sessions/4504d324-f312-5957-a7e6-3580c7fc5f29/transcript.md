@@ -1896,3 +1896,51 @@ Everything is committed and pushed. GitHub's copy of the branch is now at `75919
 
 The three specialists are still working and will keep writing new files. The five-minute autosave picks those up continuously, so short periods with unsaved changes between saves are normal.
 
+### 🧑 User — 2026-11-17T01:26:13.908Z
+
+show me the new Screen 05 screenshots when ready
+
+### 🤖 Claude — 2026-11-17T01:26:19.116Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; for f in env benny hud coins; do echo \"--- $f NOTES last modified $(stat -c '%y' qa/pilot05/full_reference_match/$f/NOTES.md | cut -c12-16)\"; done; git status --short -- src | head; ls -t qa/pilot05/full_reference_match/{env,benny,hud,coins}/ 2>/dev/null | head -0; find qa/pilot05/full_reference_match/{env,benny,hud,coins} -newer qa/pilot05/full_reference_match/briefs/foam-bubbles-particles.md -name '05.png' | head", "description": "Check specialist progress via files"}`
+
+### 🧑 User — 2026-11-17T01:26:19.167Z
+
+> ↩︎ result: 01:26
+> --- env NOTES last modified 01:10
+> --- benny NOTES last modified 01:25
+> --- hud NOTES last modified 01:10
+> --- coins NOTES last modified 01:10
+>  M src/characters/benny/benny05.ts
+> qa/pilot05/full_reference_match/env/work/e3/05.png
+
+### 🤖 Claude — 2026-11-17T01:26:21.375Z
+
+> 🔧 **TaskCreate** `{"subject": "Integrate specialist results + send approved/BEFORE/NEW", "description": "On each specialist completion: fresh ?match05=1 capture, whole-frame + region metrics vs recovery_s01Q4 baseline, default + protected BEFORE identity, send 3 separate full-size images to user.", "activeForm": "Integrating specialist results"}`
+
+### 🧑 User — 2026-11-17T01:26:21.394Z
+
+> ↩︎ result: Task #7 created successfully: Integrate specialist results + send approved/BEFORE/NEW
+
+### 🤖 Claude — 2026-11-17T01:26:22.451Z
+
+> 🔧 **TaskCreate** `{"subject": "Launch wave 2 foam-bubbles-particles after 3 specialists finish", "description": "Brief at qa/pilot05/full_reference_match/briefs/foam-bubbles-particles.md (splash05m, bub05).", "activeForm": "Launching splash/bubble specialist"}`
+
+### 🧑 User — 2026-11-17T01:26:22.469Z
+
+> ↩︎ result: Task #8 created successfully: Launch wave 2 foam-bubbles-particles after 3 specialists finish
+
+### 🤖 Claude — 2026-11-17T01:26:25.938Z
+
+The new screenshots aren't ready yet; all three specialists are still working:
+- **Tunnel/environment:** has taken its first test capture of the new tunnel layout and is still measuring it against your image.
+- **Benny:** is baking his beanie, fur and star textures and wiring them into his code.
+- **HUD/coins:** hasn't saved anything new to its notes or images since the relaunch (the last update is from before it started).
+
+I won't show unfinished test captures as results. When a specialist finishes, I'll take a fresh full-size game capture at the approved camera and measure the whole frame. Then I'll send you the three separate pictures (approved, before, new) with the measured numbers, including any area that got worse.
+
+### 🧑 User — 2026-11-17T01:26:25.970Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

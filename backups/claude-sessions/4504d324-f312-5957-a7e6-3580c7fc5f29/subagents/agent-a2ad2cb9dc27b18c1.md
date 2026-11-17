@@ -934,3 +934,209 @@ The knit columns (~10 texels per stitch column) and both stripe bands come throu
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/work/bake.py'\ns=open(p).read()\nold=\"'cuff': (G_ < 0.6 * B_), 'crown': np.ones_like(seen)}[key]\"\nnew=\"'cuff': (G_ < 0.6 * B_), 'crown': alb.max(-1) > 0.1}[key]\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s)\nEOF\nrm -rf $W/b2/tex; timeout 900 python3 $W/bake.py $W/b1,$W/b2 $W/b2/tex --normals > $W/b2/bake.log 2>&1; echo rc=$?; python3 -I -c \"\nimport json; d=json.load(open('$W/b2/tex/bake_report.json')); print(d['crown'])\"; …[+119 chars]`
 
+### 🧑 User — 2026-11-17T01:25:15.937Z
+
+> ↩︎ result: rc=0
+> {'px': 15586, 'seen_texels': 25361, 'rejected_texels': 695, 'scale': 1.0, 'median_albedo': [0.221, 0.189, 0.24], 'ring_fit_rows': [0.02, 200.75, -1875.43], 'ring_h_rows': {'u0': -38.6, 'centre': 0.0, 'u1': 1.6}, 'ring_est_cols': 48, 'strip_u': [0.391, 0.59]}
+
+### 🤖 Claude — 2026-11-17T01:25:20.258Z
+
+The fix took (695 dark texels rejected, ring fit stable at −38.6 / 0 / +1.6 rows). Installing the maps as new files and setting the solved star colour.
+
+### 🤖 Claude — 2026-11-17T01:25:21.654Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; for f in body crown crown_n brim brim_n pom armL armR; do cp $W/b2/tex/$f.png assets/textures/benny05/$f.png; done; ls -la assets/textures/benny05/; du -sh assets/textures/benny05", "description": "Copy baked maps into new benny05 asset folder"}`
+
+### 🧑 User — 2026-11-17T01:25:21.703Z
+
+> ↩︎ result: total 1256
+> drwxr-xr-x 2 root root   4096 Nov 17 01:25 .
+> drwxr-xr-x 8 root root   4096 Nov 17 01:25 ..
+> -rw-r--r-- 1 root root  17348 Nov 17 01:25 armL.png
+> -rw-r--r-- 1 root root  16466 Nov 17 01:25 armR.png
+> -rw-r--r-- 1 root root 238279 Nov 17 01:25 body.png
+> -rw-r--r-- 1 root root 134648 Nov 17 01:25 brim.png
+> -rw-r--r-- 1 root root 182368 Nov 17 01:25 brim_n.png
+> -rw-r--r-- 1 root root 249148 Nov 17 01:25 crown.png
+> -rw-r--r-- 1 root root 307739 Nov 17 01:25 crown_n.png
+> -rw-r--r-- 1 root root 111096 Nov 17 01:25 pom.png
+> 1.3M	assets/textures/benny05
+
+### 🤖 Claude — 2026-11-17T01:25:23.608Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "/** star: solved base colour (linear) */\nexport const STAR05 = { color: [1, 0.62, 0.03] as [number, number, number] };", "new_string": "/** star: base colour (linear) solved from the approved star pixels through the 05 light + post chain (bake_report\n *  star_albedo_linear; the GLB's orange emissive stays and is part of the solve) → lemon yellow on screen */\nexport const STAR05 = { color: [0.317, 0.39, 0.048] as [number, number, number] };"}`
+
+### 🧑 User — 2026-11-17T01:25:23.648Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:25:29.803Z
+
+Now type-check, then one probe session that gives both the first look with the baked maps (shot0) and the re-calibration with the final normal maps installed (k = 0.05 / 0.1 / 0.2 / 0.4).
+
+### 🤖 Claude — 2026-11-17T01:25:30.460Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?", "description": "Type-check the project"}`
+
+### 🧑 User — 2026-11-17T01:25:33.817Z
+
+> ↩︎ result: tsc_rc=0
+
+### 🤖 Claude — 2026-11-17T01:25:36.895Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1500 node $B/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$B/b3 $B/probe/shot0.shot.js $B/probe/uv.js $B/probe/calD.shot.js $B/probe/calE.shot.js $B/probe/calA.shot.js $B/probe/calC.shot.js $B/probe/restore.shot.js > $B/b3.log 2>&1; echo rc=$? >> $B/b3.log", "description": "Probe with baked maps plus recalibration renders", "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T01:25:36.922Z
+
+> ↩︎ result: Command running in background with ID: bz5vzovr6. Output is being written to: /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/bz5vzovr6.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-17T01:25:38.575Z
+
+Meanwhile I'll record progress in NOTES.md (the next account relaunches from it).
+
+### 🤖 Claude — 2026-11-17T01:25:48.781Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md", "old_string": "## 4. Remaining, step by step\n1. (Geometry is done for now at r6 values, see section 2.) Run the bake session from the CURRENT geometry:", "new_string": "## 3b. RESUMED RUN #3 (session 01Q46SCH, 2026-11-17 ~01:20 UTC) — progress log\n* b1 (01:00 run) = CURRENT geometry (geom.py on b1/uv.f32: pom 355–500 × 775–907, IoU pom/crown/cuff/star/body/all\n  0.883/0.817/0.781/0.802/0.86/0.921). b2 = shot0 + calD (k 0.05) + calE (k 0.1): shot0 byte-identical to b1/shot0\n  (probe is  …[+2031 chars]`
+
+### 🧑 User — 2026-11-17T01:25:48.824Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:25:50.644Z
+
+While the probe runs, let me check how `capture.mjs` treats `qa/capture_log.json`, since I must not use git to restore it.
+
+### 🤖 Claude — 2026-11-17T01:25:51.651Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"capture_log\" scripts/capture.mjs | head; ls -la qa/capture_log.json; sed -n 1,40p tools/match05/metrics.py | head -40", "description": "Check capture log handling and metrics tool header"}`
+
+### 🧑 User — 2026-11-17T01:25:51.691Z
+
+> ↩︎ result: 3://   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> 58:  writeFileSync(opt.plunge ? 'qa/continuity/capture_log.json' : `qa/capture_log${size ? '_' + size.join('x') : ''}.json`, JSON.stringify(log, null, 2));
+> -rw-r--r-- 1 root root 1196 Nov 17 01:17 qa/capture_log.json
+> """Screen 05 full reference match — whole-frame and per-region comparison of a REAL game capture with the APPROVED image.
+> Masks: qa/pilot05/full_reference_match/masks/region_index.png (tools/match05/regions.py; every pixel in exactly one region).
+> Per region and for the whole frame: pixels, mean |dRGB| (0-255, mean over channels), share within 10 / 20 levels,
+> luminance SSIM (Gaussian sigma 1.5), mean signed RGB (capture - approved: colour contamination).
+> These are pixel statistics, NOT a universal "visual similarity percentage"; each number is reported next to its mask.
+> usage: python3 -I tools/match05/metrics.py <capture.png> <out_prefix> [--proof <before.png>]
+>   -> <out_prefix>REGION_METRICS.json, <out_prefix>FULL_FRAME_METRICS.json
+>   --proof also writes 04_DIFFERENCE.png and 05_OVERLAY.png next to the prefix"""
+> import json, sys, os
+> import numpy as np
+> from PIL import I …[+2089 chars]
+
+### 🤖 Claude — 2026-11-17T01:25:56.082Z
+
+`capture.mjs` rewrites `qa/capture_log.json` on every capture; since I may not use git, I'll snapshot that file before each capture and put the snapshot back afterwards. Waiting for the probe now.
+
+### 🤖 Claude — 2026-11-17T01:25:56.988Z
+
+> 🔧 **Bash** `{"command": "sleep 45; cat /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/b3.log 2>/dev/null | tail -12", "description": "Check probe progress after a short wait"}`
+
+### 🧑 User — 2026-11-17T01:25:56.994Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 45 followed by: cat /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/b3.log tail -12. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-17T01:25:59.005Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/b3.log 2>/dev/null | tail -12; ls /tmp/rainbow-render-slot-* 2>/dev/null; for d in /tmp/rainbow-render-slot-*; do cat $d/* 2>/dev/null; echo; done", "description": "Check probe log and render slot owners"}`
+
+### 🧑 User — 2026-11-17T01:25:59.080Z
+
+> ↩︎ result: loaded 3.712
+> shot0.shot.js null
+> uv.js {"saveAs":"uv.f32"}
+> calD.shot.js "calD"
+> calE.shot.js "calE"
+> /tmp/rainbow-render-slot-0:
+> pid
+> 
+> /tmp/rainbow-render-slot-1:
+> pid
+> 9171
+> 9257
+
+### 🤖 Claude — 2026-11-17T01:26:00.689Z
+
+It's rendering the calibration steps. I'll wait for the completion notification.
+
+### 🤖 Claude — 2026-11-17T01:26:01.040Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-17T01:26:01.048Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-17T01:26:02.936Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"^rc=\" /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/b3.log; do sleep 2; done; tail -5 /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/b3.log", "description": "Wait until the b3 probe finishes", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T01:26:02.968Z
+
+> ↩︎ result: Command running in background with ID: bl8rczbwv. Output is being written to: /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/bl8rczbwv.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T01:26:04.267Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/b3.log", "description": "Show the b3 probe log"}`
+
+### 🧑 User — 2026-11-17T01:26:04.324Z
+
+> ↩︎ result: loaded 3.712
+> shot0.shot.js null
+> uv.js {"saveAs":"uv.f32"}
+> calD.shot.js "calD"
+> calE.shot.js "calE"
+> calA.shot.js "calA"
+> calC.shot.js "calC"
+
+### 🤖 Claude — 2026-11-17T01:26:06.236Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"^rc=\" /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/b3.log; do sleep 2; done; cat /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/b3.log", "description": "Block until the b3 probe completes", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T01:26:10.320Z
+
+> ↩︎ result: loaded 3.712
+> shot0.shot.js null
+> uv.js {"saveAs":"uv.f32"}
+> calD.shot.js "calD"
+> calE.shot.js "calE"
+> calA.shot.js "calA"
+> calC.shot.js "calC"
+> restore.shot.js "restored"
+> done 31.166
+> rc=0
+
+### 🤖 Claude — 2026-11-17T01:26:11.384Z
+
+No "missing baked map" warnings, so all 8 maps loaded. Now the first measurement of the baked look (probe frame) against BEFORE and b1 (geometry-only).
+
+### 🤖 Claude — 2026-11-17T01:26:14.874Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; md5sum $W/b3/shot0.png $W/b3/restore.png; for f in qa/pilot05/full_reference_match/benny/before.png $W/b1/shot0.png $W/b3/shot0.png; do echo \"== $f\"; python3 $W/parts.py $f | grep -v \"^part\"; done; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((214,760,634,1210))\nb=Image.open('$W/b3/shot0.png').convert('RGB').crop((214,760,634,1210))\no=Image.new('RGB',(840,450)); o.paste(a,(0,0)); o.paste(b,(420,0)); o.save('/tmp/claude-0/-home-user-rai …[+144 chars]`
+
+### 🧑 User — 2026-11-17T01:26:18.005Z
+
+> ↩︎ result: 939ac41be5f9b51455d62663d2db6d6d  qa/pilot05/full_reference_match/benny/work/b3/shot0.png
+> 939ac41be5f9b51455d62663d2db6d6d  qa/pilot05/full_reference_match/benny/work/b3/restore.png
+> == qa/pilot05/full_reference_match/benny/before.png
+> pom     12764   56.8  0.15    0.157  [124  20 233]  [129  15 255]  bbox {'x0': 355, 'x1': 499, 'y0': 778, 'y1': 899, 'w': 145, 'h': 122, 'cx': 428.1, 'cy': 843.0, 'px': 12764}
+> crown   18362   65.2  0.24    0.259  [223 168 241]  [132  93 238]  bbox {'x0': 277, 'x1': 574, 'y0': 801, 'y1': 994, 'w': 298, 'h': 194, 'cx': 415.5, 'cy': 928.5, 'px': 18362}
+> cuff    14689   47.3  0.26    0.150  [112  16 235]  [ 92   0 236]  bbox {'x0': 277, 'x1': 573, 'y0': 936, 'y1': 1031, 'w': 297, 'h': 96, 'cx': 420.5, 'cy': 995.0, 'px': 14689}
+> star     2683   69.8  0.10    0.041  [252 217  32]  [255 191  63]  bbox {'x0': 481, 'x1': 553, 'y0': 916, 'y1': 984, 'w': 73, 'h': 69, 'cx': 518.7, 'cy': 952.1, 'px': 2683}
+> body    44566   40.9  0.25    0.394  [242  79 181]  [255  72 178]  bbox {'x0': 234, 'x1': 608, 'y0': 775, 'y1': 1188, 'w': 375, 'h': 414, 'cx': 420.5, 'cy': 1085.8, 'px': 44566}
+> ALL 93061 49.71 0.235
+> == qa/pilot05/full_reference_match/benny/work/b1/shot0.png
+> pom    …[+1853 chars]
+
+### 🤖 Claude — 2026-11-17T01:26:22.818Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/side_b3.png"}`
+
+### 🧑 User — 2026-11-17T01:26:22.843Z
+
+> ↩︎ result: [image]
+

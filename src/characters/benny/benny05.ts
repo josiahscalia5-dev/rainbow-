@@ -138,8 +138,9 @@ export const MAPS05: Record<string, { map: string; scale: number; normal?: strin
   hat_crown: { map: 'crown.png', scale: 1, normal: 'crown_n.png', normalScale: 0.8 },
   hat_brim: { map: 'brim.png', scale: 1, normal: 'brim_n.png', normalScale: 0.8 },
 };
-/** star: solved base colour (linear) */
-export const STAR05 = { color: [1, 0.62, 0.03] as [number, number, number] };
+/** star: base colour (linear) solved from the approved star pixels through the 05 light + post chain (bake_report
+ *  star_albedo_linear; the GLB's orange emissive stays and is part of the solve) → lemon yellow on screen */
+export const STAR05 = { color: [0.317, 0.39, 0.048] as [number, number, number] };
 
 let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
 /** load every baked map once (missing files → null: that part keeps its GLB look) */

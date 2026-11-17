@@ -74,6 +74,27 @@ vertical stockinette columns + deep ribbed cuff.
 * Tools: `work/measure.py`, `work/parts.py` (approved part masks + per-part error), `work/bands.py`, `work/geom.py <uv.f32>`,
   `work/outline.py <uv.f32> <out.png>`.
 
+## 3b. RESUMED RUN #3 (session 01Q46SCH, 2026-11-17 ~01:20 UTC) — progress log
+* b1 (01:00 run) = CURRENT geometry (geom.py on b1/uv.f32: pom 355–500 × 775–907, IoU pom/crown/cuff/star/body/all
+  0.883/0.817/0.781/0.802/0.86/0.921). b2 = shot0 + calD (k 0.05) + calE (k 0.1): shot0 byte-identical to b1/shot0
+  (probe is deterministic → b1 + b2 = one calibration set).
+* FOUND: the old 2-point fit (k 0.2 / 0.6) was wrong: at k 0.6 (and partly 0.4) crown / cuff / star clip at display 255,
+  so E was underestimated and S overestimated (crown S 0.38 → really 0.05; crown E really 2.75). Held-out prediction
+  of the k 0.4 render: 6–16 % error → **0.35–0.66 %** with the new per-pixel least-squares fit over all unclipped renders
+  (`bake.py fit_es`, display 3..246 in every channel). Bloom is faded out on 05, so radiance is linear in albedo.
+* FOUND: the approved stripes curve much more than the dome's rings at this camera (purple band top 906 / 923 / 915 px at
+  x 360 / 440 / 480; game ring v=0.5 at 930 / 931 / 927) and rise to the image-left (illustration bulge + tilt). No rigid
+  hat move gives that. Bake keeps the approved stripe course where the camera sees it and `rings` fill: stripes rectified
+  by the measured per-column shift h(u) (normalised cross-correlation, robust quadratic), mirror-tiled straight, h re-applied,
+  then continued as level rings round the unseen arc (no 4× zig-zag when the beanie turns). Mirror tiling for body / pom / cuff.
+* Bake clean-ups: pixels lit < 45 % of the part median (behind translucent water) skipped; texels outside the part's colour
+  family (approved foam over the fur, star outline on the crown) treated as unseen (body 5,069, pom 1,057, crown 695 texels);
+  crown / cuff normal maps from RELATIVE luminance (stripe colour steps no longer become ridges).
+* Maps installed (NEW files): `assets/textures/benny05/{body,crown,crown_n,brim,brim_n,pom,armL,armR}.png` (1.3 MB) from
+  `work/b2/tex` (bake_report.json there). `STAR05` = solved (0.317, 0.39, 0.048) linear. All scales 1.0 (p99.7 ≤ 1).
+* Next: b3 probe = shot0 with maps + calD/E/A/C with the final normal maps → re-bake WITHOUT `--normals` (keep normals) →
+  install → capture.
+
 ## 4. Remaining, step by step
 1. (Geometry is done for now at r6 values, see section 2.) Run the bake session from the CURRENT geometry:
    `node qa/pilot05/full_reference_match/benny/work/bennyprobe.mjs --q='<STACK>&benny05=1' --out=qa/pilot05/full_reference_match/benny/work/b1 work/probe/uv.js work/probe/calA.shot.js work/probe/calB.shot.js work/probe/restore.shot.js`
