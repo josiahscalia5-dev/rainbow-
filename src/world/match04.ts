@@ -64,6 +64,7 @@ uniform vec4 uTileA;          // mode 1: cx, cy, mouth z, ring period | mode 2: 
 uniform float uLipS;
 uniform sampler2D uFill;      // plate04_fillmask: where the plate is a provisional fill (HUD, title, Benny, coins)
 uniform float uMoved;         // 0 in the approved view, 1 once the camera has moved away from it
+uniform vec2 uKeep;           // stretch-guard hand-over (milestone 2: 2.5..6; milestone 3 tunnel wall: earlier, sharper rings)
 uniform float uR3;            // milestone 3 river (&river04=0 = milestone 2): swirl tile from the painted water around Benny
 uniform sampler2D uRiv3;      //   tile_river3.png (pink ribbons, cyan streams, foam banks)
 uniform vec4 uRiv3A;          //   lateral half-width, along start, along length, mouth distance down the slide
@@ -116,7 +117,7 @@ void main() {
   // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
   // no more magnified than the approved view did (incidence-cosine ratio x distance ratio = 1 in the approved view)
   float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, vW) / max(distance(cameraPosition, vW), 1e-3));
-  float keep = 1.0 - smoothstep(2.5, 6.0, mag);
+  float keep = 1.0 - smoothstep(uKeep.x, uKeep.y, mag);
   if (vProj.w > 0.0) {
     vec3 ndc = vProj.xyz / vProj.w;
     vec2 uv = ndc.xy * 0.5 + 0.5;
@@ -141,6 +142,10 @@ const FAL04 = new URLSearchParams(location.search).get('fal04') !== '0'; // mile
 // milestone 3 (qa/match/04/NOTES.md): river design from the painted water around Benny + the chevron arrows on top;
 // `&river04=0` = milestone-2 river tile
 const RIVER04 = TILE04 && new URLSearchParams(location.search).get('river04') !== '0';
+// milestone 3: the tunnel wall hands over from the (soft, glowy when magnified) painted far rings to the sharp painted
+// ring tile earlier; `&rings04=0` = milestone 2. `&keep04=a,b` overrides the hand-over for tests.
+const RINGS04 = TILE04 && new URLSearchParams(location.search).get('rings04') !== '0';
+const KEEP04 = (new URLSearchParams(location.search).get('keep04') ?? '1.5,2.6').split(',').map(Number);
 const tex = (f: string) => new URL(`../../assets/textures/match04/${f}`, import.meta.url).href;
 
 const _cp = new THREE.Vector3();
@@ -196,6 +201,7 @@ export async function buildMatch04(): Promise<Match04> {
     extensions: { derivatives: true } as never,
     uniforms: { ...shared, uPatch: { value: patch }, uPatchK: { value: k }, uMode: { value: TILE04 ? mode : 0 },
       uTile: { value: tile ?? patch }, uTileA: { value: tileA }, uLipS: { value: tiles.ring?.lipS ?? 0 },
+      uKeep: { value: mode === 1 && RINGS04 ? new THREE.Vector2(KEEP04[0], KEEP04[1]) : new THREE.Vector2(2.5, 6.0) },
       uR3: { value: RIVER04 ? 1 : 0 }, uRiv3: { value: tRiv3 }, uRiv3A: { value: riv3A } },
   });
 

@@ -144,3 +144,11 @@ Started from `4d1f5b25` (= `-c2` head `255ec5e6` + one transcript autosave). Lea
 * Riding frames `motion_m3/step2_river/` (BEFORE = `motion_m2/NEW_fal04/`): pink ribbons + foam banks + arrows under
   and around Benny at 3–20 u and when steering. Remaining: the flat water meets the tunnel wall in a hard straight edge
   near the camera at 15–20 u (geometry, also in M2).
+### Step 3 — sharper far rings (`&rings04=0` = milestone 2; `&keep04=a,b` test override), on by default under match04
+* Cause: deep in the tunnel the rings ahead still came from the approved picture's FAR rings, magnified 2–2.5× (soft,
+  glowy haze). The tunnel wall now hands over from the projection to the sharp painted ring tile at magnification
+  1.5–2.6 instead of 2.5–6 (tunnel wall only; room, mouth ring and water unchanged). The approved view (magnification 1)
+  is unchanged: 4 px vs the M2 fal04 picture, max 34 levels.
+* Tunnel-area sharpness (y 200–900, mean gradient / Laplacian variance): 10 u 18.6 → 19.4 / 44 → 41; **15 u 16.7 → 24.2 /
+  45 → 59; 20 u 17.0 → 25.6 / 24 → 82**. Frames `motion_m3/step3_rings/` vs `motion_m3/step2_river/`: the same painted
+  ring repeats sharply all the way down instead of turning into haze, so the tunnel keeps one character while riding.
