@@ -929,3 +929,305 @@ Game.ts restores everything when leaving 08, so I'm isolating the cause empirica
 
 > 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && node scripts/capture.mjs 04 07 --out=$P/def2 >/dev/null 2>&1; node scripts/capture.mjs 04 07 \"--q=benny08=1\" --out=$P/bn >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d,s:np.asarray(Image.open('$P/'+d+'/'+s+'.png').convert('RGB')).astype(int)\nfor s in ['04','07']:\n  for d in ['def2','bn','m08']:\n    x=np.abs(L(d,s)-L('def',s)).max(2);print(s,d,int((x>0).sum()),int((x>20).sum()))\"", "description": "Test determ …[+48 chars]`
 
+### 🧑 User — 2026-11-17T20:43:12.513Z
+
+> ↩︎ result: 04 def2 0 0
+> 04 bn 87903 22988
+> 04 m08 510057 38403
+> 07 def2 0 0
+> 07 bn 248903 102275
+> 07 m08 571751 123214
+
+### 🤖 Claude — 2026-11-17T20:43:18.100Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d,s:np.asarray(Image.open('$P/'+d+'/'+s+'.png').convert('RGB')).astype(int)\nfor s in ['04','07']:\n  x=np.abs(L('m08',s)-L('bn',s)).max(2);print(s,'m08 vs bn',int((x>0).sum()),int((x>20).sum()), 'max',x.max())\n  m=np.zeros(x.shape+(3,),np.uint8);m[...,0]=np.minimum(x*8,255);m[...,1]=np.minimum(x*8,255)\n  k=Image.new('RGB',(864,768));k.paste(Image.fromarray(L('m08',s).astype('uint8')).resize((432,768)),(0,0));k.paste(Image. …[+121 chars]`
+
+### 🧑 User — 2026-11-17T20:43:18.947Z
+
+> ↩︎ result: 04 m08 vs bn 511370 35539 max 255
+> 07 m08 vs bn 529696 111946 max 255
+
+### 🤖 Claude — 2026-11-17T20:43:19.231Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap/iso_04.png"}`
+
+### 🧑 User — 2026-11-17T20:43:19.264Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:43:25.915Z
+
+> 🔧 **Bash** `{"command": "grep -n \"bakeDepth(r\\|sync(r\" -A16 src/world/match08.ts | grep -v \"^--$\" | head -45", "description": "Read bakeDepth and sync code"}`
+
+### 🧑 User — 2026-11-17T20:43:25.955Z
+
+> ↩︎ result: 33:  bakeDepth(renderer: THREE.WebGLRenderer): void;
+> 34-  /** live post values for the inverse (exposure from the renderer, render size for the vignette inverse) */
+> 35:  sync(renderer: THREE.WebGLRenderer, w: number, h: number): void;
+> 36-}
+> 37-
+> 38-const VERT = /* glsl */ `
+> 39-uniform mat4 uProjVP;
+> 40-varying vec4 vProj;
+> 41-varying vec3 vW;
+> 42-varying vec3 vN;
+> 43-void main() {
+> 44-  vec4 wp = modelMatrix * vec4(position, 1.0);
+> 45-  vProj = uProjVP * wp;
+> 46-  vW = wp.xyz;
+> 47-  vN = normalize(mat3(modelMatrix) * normal);
+> 48-  gl_Position = projectionMatrix * viewMatrix * wp;
+> 49-}`;
+> 50-
+> 51-const FRAG = /* glsl */ `
+> 302:    bakeDepth(renderer) {
+> 303-      const prevRT = renderer.getRenderTarget();
+> 304-      const scene = new THREE.Scene();
+> 305-      const clone = group.clone(true);
+> 306-      clone.visible = true;
+> 307-      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+> 308-      scene.add(clone);
+> 309-      renderer.setRenderTarget(depthRT);
+> 310-      renderer.clear();
+> 311-      renderer.render(scene, proj);
+> 312-      renderer.setRenderTarget(prevRT);
+> 313-      shared.uUseDep …[+187 chars]
+
+### 🤖 Claude — 2026-11-17T20:43:31.283Z
+
+> 🔧 **Bash** `{"command": "grep -n \"CatmullRom\\|getPointAt\\|arcLengthDivisions\\|getSpacedPoints\\|getLength\\|function smoothPolyline\" src/world/course.ts | head; grep -n \"coins08\\|benny\\|flag05('match08')\" src/vfx/*.ts src/world/*.ts | grep -v match08.ts | head", "description": "Check course curve parameterization"}`
+
+### 🧑 User — 2026-11-17T20:43:31.323Z
+
+> ↩︎ result: 227:  const chute = new THREE.CatmullRomCurve3(chuteCtrl, false, 'centripetal');
+> 358:function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+> 380:  readonly curve: THREE.CatmullRomCurve3;
+> 398:    this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+> src/vfx/index.ts:7: *   water.update(time, dt, bennyS, camera);
+> src/vfx/index.ts:8: *   water.wake(bennyBodyCentre, forward, right, speed, dt);   // centre of the (lifted) body, not the root
+> src/vfx/index.ts:29:/** Benny's outer (fur) radius near the waterline: skin 0.7 + fur 0.12 + lower-body bulge (benny/build.ts BENNY_DIMS) */
+> src/world/course.ts:320:  const m08 = flag05('match08') || flag05('matchall');
+
+### 🤖 Claude — 2026-11-17T20:43:32.664Z
+
+> 🔧 **Bash** `{"command": "sed -n 355,440p src/world/course.ts", "description": "Read Course class parameterization"}`
+
+### 🧑 User — 2026-11-17T20:43:32.693Z
+
+> ↩︎ result: * Removes tangent kinks where independently generated segments meet; the 02 tumble helix
+>  * (before `from`) is left untouched.
+>  */
+> function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+>   for (let pass = 0; pass < passes; pass++) {
+>     const cum: number[] = [0];
+>     for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
+>     const out = pts.map((p) => p.clone());
+>     for (let i = from + 1; i < pts.length - 1; i++) {
+>       const acc = new THREE.Vector3();
+>       let wsum = 0;
+>       for (let j = i - 12; j <= i + 12; j++) {
+>         if (j < from || j >= pts.length) continue;
+>         const d = cum[j] - cum[i];
+>         const w = Math.exp(-(d * d) / (2 * sigma * sigma));
+>         acc.addScaledVector(pts[j], w);
+>         wsum += w;
+>       }
+>       out[i].copy(acc.divideScalar(wsum));
+>     }
+>     for (let i = from + 1; i < pts.length - 1; i++) pts[i].copy(out[i]);
+>   }
+> }
+> 
+> export class Course {
+>   readonly curve: THREE.CatmullRomCurve3;
+>   readonly length: number;
+>   readonly stages: StageDef[];
+>   readonly marks: Record<string, number>; // arc-length of named marks
+>   /** straight tunnel stretches (05 current) — see StraightAxis */ …[+2201 chars]
+
+### 🤖 Claude — 2026-11-17T20:43:38.710Z
+
+Benny's port (Benny specialist's files) explains part of the 04–07 change; bisecting the rest with a temporary local switch in the course (reverted afterwards).
+
+### 🤖 Claude — 2026-11-17T20:43:44.710Z
+
+> 🔧 **Bash** `{"command": "cp src/world/course.ts /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/course.bak && sed -i \"320s/.*/  const m08 = (flag05('match08') || flag05('matchall')) \\&\\& !flag05('tmpnocourse');/\" src/world/course.ts && sed -n 320p src/world/course.ts && P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && node scripts/capture.mjs 04 07 \"--q=match08=1&coins08px=1&tmpnocourse=1\" --out=$P/nc >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; cp /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df0106 …[+549 chars]`
+
+### 🧑 User — 2026-11-17T20:44:10.389Z
+
+> ↩︎ result: const m08 = (flag05('match08') || flag05('matchall')) && !flag05('tmpnocourse');
+> 04 nc vs def 90305 25705
+> 04 bn vs def 87903 22988
+> 04 nc vs bn 94087 22614
+> 07 nc vs def 261011 110021
+> 07 bn vs def 248903 102275
+> 07 nc vs bn 188610 98138
+> [This command modified 1 file you've previously read: src/world/course.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T20:44:14.975Z
+
+The course's 08 river path is the main cause on 04 (510k → 90k px when disabled; the remaining ≈90k is Benny). Finding why an 08-only path change reaches 04.
+
+### 🤖 Claude — 2026-11-17T20:44:15.823Z
+
+> 🔧 **Bash** `{"command": "grep -n \"this.N\\b\\|this.ds\\|this.N =\\|this.ds =\" src/world/course.ts | head", "description": "Find sampling table definitions"}`
+
+### 🧑 User — 2026-11-17T20:44:15.854Z
+
+> ↩︎ result: 454:    this.N = Math.ceil(this.length / 0.25) + 1;
+> 455:    this.ds = this.length / (this.N - 1); // exact spacing so the last interval is not short
+> 456:    this.P = new Float32Array(this.N * 3);
+> 457:    this.T = new Float32Array(this.N * 3);
+> 458:    this.U = new Float32Array(this.N * 3);
+> 461:    for (let i = 0; i < this.N; i++) {
+> 462:      const s = Math.min(this.length, i * this.ds);
+> 471:    for (let i = 0; i < this.N; i++) {
+> 477:      const i0 = Math.max(0, i - 4), i1 = Math.min(this.N - 1, i + 4);
+> 478:      const k = tan[i1].clone().sub(tan[i0]).divideScalar((i1 - i0) * this.ds);
+
+### 🤖 Claude — 2026-11-17T20:44:27.765Z
+
+> 🔧 **Bash** `{"command": "grep -n \"function buildRoute\\|buildRoute(\" src/world/course.ts; sed -n 440,470p src/world/course.ts", "description": "Read buildRoute and sampling code"}`
+
+### 🧑 User — 2026-11-17T20:44:27.805Z
+
+> ↩︎ result: 194:function buildRoute(): RouteData {
+> 397:    const route = buildRoute();
+>       def('03', m['03'], m['04'], { width: 7, speed: 9, refCoins: 1330, bank: 2.2 }),
+>       def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+>       // 05: level current (ref 05 shows no tilt) → weak curvature banking. `width` is the hand-over
+>       // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
+>       def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+>       def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
+>       def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
+>       def('08', m['08'], m['09'], { width: 4.8, speed: 9.5, refCoins: 2040 }),
+>       def('09', m['09'], m['10'], { width: 6.4, speed: 9.5, refCoins: 2280 }),
+>       def('10', m['10'], m['11'], { width: 3.8, speed: 7.5, refCoins: 2500 }),
+>       def('11', m['11'], this.length, { width: 3, interactive: false, speed: 0, refCoins: 2500 }),
+>     ];
+> 
+>     // ---- dense frame table (pos, tangent …[+767 chars]
+
+### 🤖 Claude — 2026-11-17T20:44:39.968Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/course.ts';s=open(p).read()\na=\"function buildRoute(): RouteData {\"\nassert s.count(a)==1\ns=s.replace(a,\"function buildRoute(no08 = false): RouteData {\")\na=\"  const m08 = flag05('match08') || flag05('matchall');\\n  const rz\"\nassert s.count(a)==1\ns=s.replace(a,\"  const m08 = !no08 && (flag05('match08') || flag05('matchall'));\\n  const rz\")\na=\"\"\"    this.N = Math.ceil(this.length / 0.25) + 1;\n    this.ds = this.length / (this.N - 1); // exact spacing so the last interval is not short\"\"\"\nassert s.count(a)==1\ns=s.replace(a,\"\"\" …[+1171 chars]`
+
+### 🧑 User — 2026-11-17T20:44:40.032Z
+
+> ↩︎ result: const route = buildRoute();
+>     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+>     // arc-length table over curve parameter u
+>     const M = route.points.length * 24;
+>     const us: number[] = [0];
+>     const ls: number[] = [0];
+>     let prev = this.curve.getPoint(0);
+>     for (let i = 1; i <= M; i++) {
+>       const u = i / M;
+>       const p = this.curve.getPoint(u);
+>       ls.push(ls[i - 1] + p.distanceTo(prev));
+>       us.push(u);
+>       prev = p;
+>     }
+> 390:  private readonly N: number;
+> 391:  private readonly ds: number;
+
+### 🤖 Claude — 2026-11-17T20:44:46.137Z
+
+> 🔧 **Bash** `{"command": "sed -n 194,310p src/world/course.ts | grep -c \"random\"; npx tsc --noEmit -p . 2>&1|tail -2; P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && node scripts/capture.mjs 04 05 06 07 \"--q=match08=1&coins08px=1\" --out=$P/m08b >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d,s:np.asarray(Image.open('$P/'+d+'/'+s+'.png').convert('RGB')).astype(int)\nfor s in ['04','05','06','07']:\n  x=np.abs(L('m08b',s)-L('def',s)).max(2);print(s,'m08 fixed vs def',int((x>0).sum()),i …[+88 chars]`
+
+### 🧑 User — 2026-11-17T20:45:38.022Z
+
+> ↩︎ result: 0
+> 04 m08 fixed vs def 234213 33125
+> 05 m08 fixed vs def 373431 97186
+> 06 m08 fixed vs def 349464 186249
+> 07 m08 fixed vs def 274333 116203
+
+### 🤖 Claude — 2026-11-17T20:45:45.797Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d,s:np.asarray(Image.open('$P/'+d+'/'+s+'.png').convert('RGB')).astype(int)\ns='04';x=np.abs(L('m08b',s)-L('nc',s)).max(2);print('m08b vs nc',int((x>0).sum()),int((x>20).sum()))\nm=np.zeros(x.shape+(3,),np.uint8);m[...,0]=np.minimum(x*8,255);m[...,1]=m[...,0]\nImage.fromarray(m).resize((432,768)).save('$P/iso2.png')\"; grep -n \"this.length\\|course.length\" src/vfx/*.ts src/world/*.ts src/game/*.ts | grep -v \"^src/world/cou …[+69 chars]`
+
+### 🧑 User — 2026-11-17T20:45:46.200Z
+
+> ↩︎ result: m08b vs nc 173344 7494
+> src/vfx/bubbles.ts:308:          course.sample(Math.min(course.length, Math.max(opts.sStart, s)), fi);
+> src/vfx/bubbles.ts:311:        s = Math.min(course.length - 0.3, Math.max(opts.sStart, s));
+> src/vfx/bubbles.ts:397:          const s = Math.min(course.length, focusS + 1 + k * k * 0.06 + k * 0.5);
+> src/vfx/bubbles.ts:444:        const behind = b.s < Math.min(focusS, course.length - 32) - (isBig ? 3 : 2);
+> src/vfx/index.ts:73:  const ribbon = createRibbon(course, { s0: ribbonS0, s1: course.length, quality });
+> src/vfx/index.ts:86:  const foam = createFoam(course, { s0: ribbonS0, s1: course.length, quality, height: (s, lat, t) => ribbon.heightAt(s, lat, t) });
+> src/vfx/index.ts:206:          const f = course.sample(Math.min(course.length, Math.max(0, focusS)));
+> src/vfx/index.ts:220:      const s = Math.min(course.length, Math.max(0, focus + d.dot(f0.tan)));
+> src/world/environment.ts:400:      const ss = THREE.MathUtils.clamp(s + ds, 0, course.length);
+> src/game/Game.ts:772:      return { fps: +fps.toFixed(1), calls: i.render.calls, triangles: i.render.triangles, geometries: i.memory.geometries, textures: i.memory.textures, modules: { ...moduleStatus }, courseLength: …[+17 chars]
+
+### 🤖 Claude — 2026-11-17T20:45:46.750Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap/iso2.png"}`
+
+### 🧑 User — 2026-11-17T20:45:46.773Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:45:55.108Z
+
+The spacing fix removes the global shimmer (04: 510k → 234k px; >20 levels mostly Benny now). The rest is bubble placement + Benny. Attributing 05/06 too.
+
+### 🤖 Claude — 2026-11-17T20:45:59.816Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && node scripts/capture.mjs 05 06 \"--q=benny08=1\" --out=$P/bn >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d,s:np.asarray(Image.open('$P/'+d+'/'+s+'.png').convert('RGB')).astype(int)\nfor s in ['04','05','06','07']:\n  x=np.abs(L('bn',s)-L('def',s)).max(2);y=np.abs(L('m08b',s)-L('bn',s)).max(2)\n  print(s,'benny-port vs def',int((x>0).sum()),int((x>20).sum()),'| m08 vs benny-port',int((y>0).sum()),int((y>20).sum()) …[+368 chars]`
+
+### 🤖 Claude — 2026-11-17T20:46:00.766Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap/rest.png"}`
+
+### 🧑 User — 2026-11-17T20:46:25.465Z
+
+> ↩︎ result: 04 benny-port vs def 87903 22988 | m08 vs benny-port 233225 30095
+> 05 benny-port vs def 356990 88651 | m08 vs benny-port 150222 87028
+> 06 benny-port vs def 313956 172075 | m08 vs benny-port 276566 167654
+> 07 benny-port vs def 248903 102275 | m08 vs benny-port 205565 104795
+
+### 🧑 User — 2026-11-17T20:46:25.482Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:46:30.412Z
+
+Under `match08`, the remaining 04–07 differences are now: Benny (the Benny port, Benny specialist's files), coins on 07 (lead's `coins.ts`), and a few bubbles on 04. Checking the bubbles.
+
+### 🤖 Claude — 2026-11-17T20:46:31.034Z
+
+> 🔧 **Bash** `{"command": "sed -n 296,315p src/vfx/bubbles.ts", "description": "Read bubble placement code"}`
+
+### 🧑 User — 2026-11-17T20:46:31.065Z
+
+> ↩︎ result: ray.copy(view.dir).addScaledVector(view.right, xn * view.tanH).addScaledVector(view.up, yn * view.tanV);
+>       // distance (along the view axis) to the water plane under Benny
+>       const den = ray.dot(f0.up);
+>       let Dw = den < -1e-3 ? tmp2.copy(f0.pos).sub(view.pos).dot(f0.up) / den : 40;
+>       Dw = Math.min(40, Math.max(3, Dw));
+>       D = Math.max(3.9, Dw * rnd(isBig ? 0.55 : 0.6, 0.92));
+>       // keep inside the tube: shorten the ray while the point is beyond the bank top
+>       let s = focusS;
+>       for (let k = 0; k < 4; k++) {
+>         tmp.copy(view.pos).addScaledVector(ray, D);
+>         s = focusS;
+>         for (let it = 0; it < 2; it++) {
+>           course.sample(Math.min(course.length, Math.max(opts.sStart, s)), fi);
+>           s += tmp2.copy(tmp).sub(fi.pos).dot(fi.tan);
+>         }
+>         s = Math.min(course.length - 0.3, Math.max(opts.sStart, s));
+>         course.sample(s, fi);
+>         const hw = course.widthAt(s) / 2;
+>         const lat = tmp2.copy(tmp).sub(fi.pos).dot(fi.right);
+>         if (Math.abs(lat) <= hw + BERM_OUT + 0.3) break;
+
+### 🤖 Claude — 2026-11-17T20:46:37.646Z
+
+Leaving the bubbles (water owner's file) as an open item. Committing the course fix, then the default-build 0 px proof (all 11 screens, before vs after my change).
+
+### 🤖 Claude — 2026-11-17T20:46:41.903Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && node scripts/capture.mjs --out=$P/all_new >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; git stash -q && git checkout -q 12fb8c5 -- src/world/match08.ts && node scripts/capture.mjs --out=$P/all_old >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; git checkout -q HEAD -- src/world/match08.ts && git stash pop -q && git status --short | head; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nfor s in ['%02d'%i for i in range(1,12)]:\n  a=np.asarray(Image.open('$P/all_n …[+309 chars]`
+
