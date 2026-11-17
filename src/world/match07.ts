@@ -14,6 +14,7 @@
  * post chain (PROJ05_INVERSE) and takes no fog. Without the switch nothing in this file runs and the game is unchanged.
  */
 import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { PROJ05_INVERSE, flag05 } from '../vfx/waterRibbon';
 
 interface Layout07 {
@@ -93,10 +94,12 @@ vec3 tileColor() {
   if (uGoldLit > 0.5) {
     vec3 nw = normalize(vN); vec3 vv = normalize(cameraPosition - vW);
     if (dot(nw, vv) < 0.0) nw = -nw;
-    float dif = 0.42 + 0.7 * max(dot(nw, uKey), 0.0);
-    float spec = pow(max(dot(reflect(-uKey, nw), vv), 0.0), 18.0);
-    float rim = pow(1.0 - max(dot(nw, vv), 0.0), 3.0);
-    g = g * dif + vec3(1.0, 0.86, 0.55) * (0.55 * spec + 0.35 * rim);
+    // saturated polished gold (the painted paddles' orange-gold), the patch only adds texture variation
+    float lum = dot(g, vec3(0.299, 0.587, 0.114));
+    float dif = 0.25 + 0.85 * max(dot(nw, uKey), 0.0);
+    float spec = pow(max(dot(reflect(-uKey, nw), vv), 0.0), 24.0);
+    float rim = pow(1.0 - max(dot(nw, vv), 0.0), 2.0);
+    g = vec3(1.0, 0.58, 0.18) * (0.55 + 0.6 * lum) * dif + vec3(1.0, 0.9, 0.62) * (0.8 * spec + 0.45 * rim);
   }
   return g;
 }
@@ -219,7 +222,8 @@ export async function buildMatch07(): Promise<Match07> {
     const lx = q.dot(X), ly = q.dot(U), lz = -q.dot(Dv);
     const ang = Math.atan2(ly - T.h, lx - T.ax);
     const depth = 1.2, w = p.w;
-    const g = new THREE.BoxGeometry(w, depth, w * 0.42);
+    // M2 '?m07gold=1': rounded block (bevelled edges catch the light and read as solid metal while passing close)
+    const g = fixGold ? new RoundedBoxGeometry(w, depth, w * 0.42, 4, Math.min(0.3, w * 0.12)) : new THREE.BoxGeometry(w, depth, w * 0.42);
     const o = add(g, M.gold, 'paddle' + i);
     o.position.set(T.ax + (T.r - depth / 2 + 0.05) * Math.cos(ang), T.h + (T.r - depth / 2 + 0.05) * Math.sin(ang), lz);
     o.rotation.z = ang - Math.PI / 2; // local +y along the radius (out of the wall toward the axis)
