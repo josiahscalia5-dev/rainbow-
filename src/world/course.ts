@@ -299,7 +299,11 @@ function buildRoute(): RouteData {
     let xt = rx[0];
     if (z <= zEnd) xt = rx[rx.length - 1];
     else for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); xt = rx[i - 1] + (rx[i] - rx[i - 1]) * a; break; }
-    const w = smooth(0, 10, z0 + 12 - z) * (1 - smooth(0, 4, zEnd - z));
+    // Lead r6 fix (2026-11-17, preview-c6): the painted river runs to the plunge top, so the ease-out above never
+    // finished and a ~0.49 u sideways residual moved the plunge and ALL of Screen 08 (whose projected chamber is fixed
+    // in the world) → 08 fell to 25 % with match07 on. Also return to the default path over the last 4 u before the
+    // plunge top (z = s7.z - 60), so the plunge and 08 are identical with and without match07.
+    const w = smooth(0, 10, z0 + 12 - z) * (1 - smooth(0, 4, zEnd - z)) * smooth(0, 4, z - (s7.z - 60));
     return xDefault + (xt - xDefault) * w;
   };
   seg(32, (t) =>
