@@ -8,7 +8,16 @@ rings, HUD, river, Benny …) keep the previous bake (tunnel05/wall05.png, ring0
 and filled from the same picture), offset-blended so no tone step shows. The texture stays anchored to the 3D tunnel.
 Colour feedback: `--capture=<05.png> --coords_all=<tunnel_coords_all.f32>` scatters (approved − capture) on pixels that
 show the surface and the approved surface, into `<out>/feedback.npz` (accumulated, damped), applied on the next bake.
-usage: python3 -I tools/env05/proj_bake.py <out_dir> [--coords=F] [--capture=PNG --coords_all=F] [--reset_feedback]"""
+Run #4 options (2026-11-17, session 01VCMXob; without them the bake is byte-identical to run #3):
+  --smoothfill   fallback fill (push-pull pyramid) upsampled bilinearly instead of nearest: the coarse levels drew flat
+                 square blocks that showed as flat facets wherever the camera sees a non-own texel
+  --bubblefill   approved bubbles in front of the tunnel (masks/bubbles_approved.json): the approved picture is first
+                 inpainted in screen space with the best-matching shifted patch of the surrounding wall / ring (boundary
+                 SSD), so the wall continues behind the bubble (the bubble itself stays a bubble-specialist object)
+  --paintwater   tunnel pixels where the approved picture shows water / foam (bank misregistration, river gaps at the
+                 far bends, ring ends at the banks) take that approved pixel, like the foam apron on the lower wall
+usage: python3 -I tools/env05/proj_bake.py <out_dir> [--coords=F] [--capture=PNG --coords_all=F] [--reset_feedback]
+       [--smoothfill] [--bubblefill] [--paintwater]"""
 import json, math, os, sys
 import numpy as np
 from PIL import Image

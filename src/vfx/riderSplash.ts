@@ -17,7 +17,25 @@
  */
 import * as THREE from 'three';
 import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
-import { WATER05 } from './waterRibbon'; // Screen 05 water test W10 (?water05=1): thinner, wider splash threads
+import { WATER05, on05, proj05Pending } from './waterRibbon'; // Screen 05 water test W10 (?water05=1): thinner, wider splash threads
+
+/** explicit `?<key>=0` switches a reference-match part off even under the master `?match05=1` (A/B captures) */
+const off05 = (key: string): boolean => {
+  try {
+    return typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '0';
+  } catch {
+    return false;
+  }
+};
+/**
+ * `?splash05m=1` (on with `?match05=1`; foam-bubbles-particles, qa/pilot05/full_reference_match/splash_bubbles/NOTES.md):
+ * Screen 05's splash becomes the APPROVED splash — a low fan of white-blue filaments, droplets and the bright foam collar
+ * under Benny — carried by a card lying on the water in Benny's frame (createWakeCard05 below) instead of the two
+ * "angel wing" fans of straight white rope streaks. Off (default): nothing here runs.
+ */
+export const SPLASH05M: boolean = on05('splash05m') && !off05('splash05m');
+/** live state of the 05 wake card, read by spray.ts (under SPLASH05M the small wake droplets step aside on 05) */
+export const wake05State = { active: 0 };
 
 /**
  * Jet layout shared with the spray droplets (index.ts): across a = 0 (outer, most sideways jet) … 1
@@ -386,6 +404,7 @@ void main() {
 
 /** wave 8: the 05 splash (same API as the shared fan) */
 export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
+  if (SPLASH05M) return createWakeCard05();
   const nRope = quality === 'high' ? 44 : 20;
   const nJet = quality === 'high' ? 40 : 16;
   const nFroth = quality === 'high' ? 16 : 8;
@@ -458,6 +477,158 @@ export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
       const v = dt > 0 ? s + (target - s) * Math.min(1, dt * 6) : target;
       uniforms.uStrength.value = v;
       mesh.visible = v > 0.01;
+    },
+  };
+}
+
+// ------------------------------------------------------------------------------------------------ 05 wake card (splash05m)
+/**
+ * `?splash05m=1`: the approved Screen 05 splash (Part 8 of the user's order: low fan-shaped white-blue spray from Benny's
+ * base, fine droplets, curved filaments, foam collar and bright water under the body — not straight spiky streaks).
+ * A flat card on the water in Benny's frame (placed every frame like the fans above: water surface under his lifted body
+ * centre, side / up / back basis), so it moves, steers and turns with him. Its texture (assets/textures/splash05/wake05.png,
+ * tools/splash05/bake.py) holds the approved splash as a premultiplied LINEAR layer (L, a) solved against the game's own
+ * water through the inverse post chain, so it blends as light + a little cover over whatever water is under it:
+ * out = L + water · (1 − a). Each fragment finds its texel by projecting its local position with the LOCKED 05 camera
+ * (uLock: Benny frame → clip), i.e. the card is the approved splash camera-projected onto real geometry attached to Benny.
+ * Animated: two-phase flow pushes the spray outward from his base (phase locked so the frozen QA clock t = 12 shows the
+ * approved pixels), and it scales with the ride strength. One draw, 2 triangles, no per-frame CPU work besides placement.
+ */
+const CARD_VERT = /* glsl */ `
+varying vec3 vLocal;
+void main() {
+  vLocal = position;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+const CARD_FRAG = /* glsl */ `
+uniform sampler2D uTex;
+uniform mat4 uLock;      // Benny frame -> clip of the locked 05 camera
+uniform vec4 uRect;      // texture origin x, y and size x, y (locked-frame pixels)
+uniform vec2 uFrame;     // locked frame size (864, 1536)
+uniform float uLmax;
+uniform float uTime;
+uniform float uStrength; // 1 = the locked ride strength
+uniform vec2 uFlowO;     // locked-frame pixel the spray streams away from (Benny's base)
+uniform vec3 uFlow;      // stream distance per cycle (px), cycles per second, phase (locks t = 12 to the approved pixels)
+varying vec3 vLocal;
+vec4 tap(vec2 px) {
+  vec2 uv = (px - uRect.xy) / uRect.zw;
+  if (uv.x <= 0.0 || uv.y <= 0.0 || uv.x >= 1.0 || uv.y >= 1.0) return vec4(0.0);
+  vec3 e = texture2D(uTex, vec2(uv.x, uv.y * 0.5)).rgb;
+  float a = texture2D(uTex, vec2(uv.x, 0.5 + uv.y * 0.5)).r;
+  return vec4(e * e * uLmax, a);
+}
+void main() {
+  vec4 c = uLock * vec4(vLocal, 1.0);
+  if (c.w <= 1e-4) discard;
+  vec2 ndc = c.xy / c.w;
+  vec2 px = vec2((ndc.x * 0.5 + 0.5) * uFrame.x, (0.5 - ndc.y * 0.5) * uFrame.y);
+  vec2 dv = px - uFlowO;
+  vec2 dir = dv / max(length(dv), 1.0);
+  float p = fract(uTime * uFlow.y + uFlow.z);
+  float q = fract(p + 0.5);
+  float wA = 1.0 - abs(2.0 * p - 1.0);
+  vec4 o = tap(px - dir * (p - 0.5) * uFlow.x) * wA + tap(px - dir * (q - 0.5) * uFlow.x) * (1.0 - wA);
+  o *= uStrength;
+  if (o.a < 0.002 && max(o.r, max(o.g, o.b)) < 0.002) discard;
+  gl_FragColor = o;
+}
+`;
+
+/** card footprint on the water (Benny frame, units): covers the locked splash rays (x ±1.6, back −1.6 … 1.5) */
+const CARD_HALF = 1.8;
+/** card height above the waterline point (units): clears the ripples so the water does not cut holes into it */
+const CARD_LIFT = 0.04;
+
+function createWakeCard05(): RiderSplash {
+  const geo = new THREE.PlaneGeometry(CARD_HALF * 2, CARD_HALF * 2, 1, 1);
+  geo.rotateX(-Math.PI / 2);
+  geo.translate(0, CARD_LIFT, 0);
+  const uniforms: Record<string, THREE.IUniform> = {
+    uTex: { value: null },
+    uLock: { value: new THREE.Matrix4() },
+    uRect: { value: new THREE.Vector4(0, 0, 1, 1) },
+    uFrame: { value: new THREE.Vector2(864, 1536) },
+    uLmax: { value: 2 },
+    uTime: { value: 0 },
+    uStrength: { value: 0 },
+    uFlowO: { value: new THREE.Vector2(423, 1060) },
+    uFlow: { value: new THREE.Vector3(12, 1.4, 0) },
+  };
+  const mat = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: CARD_VERT,
+    fragmentShader: CARD_FRAG,
+    transparent: true,
+    depthWrite: false,
+    fog: false,
+    blending: THREE.CustomBlending,
+    blendSrc: THREE.OneFactor,
+    blendDst: THREE.OneMinusSrcAlphaFactor,
+    blendSrcAlpha: THREE.OneFactor,
+    blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+  });
+  mat.polygonOffset = true;
+  mat.polygonOffsetFactor = -2;
+  mat.polygonOffsetUnits = -4;
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.name = 'rider_splash05';
+  mesh.frustumCulled = false;
+  mesh.renderOrder = 3;
+  mesh.visible = false;
+  let sLock = 1;
+  let loaded = false;
+  proj05Pending.push(Promise.all([
+    fetch(new URL('../../assets/textures/splash05/wake05.json', import.meta.url).href).then((r) => r.json()),
+    new Promise<THREE.Texture | null>((res) => {
+      new THREE.TextureLoader().load(new URL('../../assets/textures/splash05/wake05.png', import.meta.url).href, (t) => res(t), undefined, () => res(null));
+    }),
+  ]).then(([meta, tex]) => {
+    if (!tex) return;
+    tex.flipY = false;
+    tex.colorSpace = THREE.NoColorSpace;
+    tex.generateMipmaps = false;
+    tex.minFilter = THREE.LinearFilter;
+    tex.needsUpdate = true;
+    uniforms.uTex.value = tex;
+    (uniforms.uLock.value as THREE.Matrix4).fromArray(meta.lock);
+    (uniforms.uRect.value as THREE.Vector4).set(meta.org[0], meta.org[1], meta.size[0], meta.size[1]);
+    (uniforms.uFrame.value as THREE.Vector2).set(meta.frame[0], meta.frame[1]);
+    uniforms.uLmax.value = meta.LMAX;
+    // flow phase: the frozen QA clock (t_lock) sits at the full-weight, zero-offset point of phase A
+    const f = uniforms.uFlow.value as THREE.Vector3;
+    f.z = 0.5 - ((meta.t_lock * f.y) % 1);
+    sLock = meta.strength;
+    loaded = true;
+  }).catch(() => undefined));
+  const basis = new THREE.Matrix4();
+  const back = new THREE.Vector3();
+  const sideV = new THREE.Vector3();
+  let target = 0;
+  let fed = false;
+  let s = 0;
+  return {
+    mesh,
+    uniforms,
+    place(center, forward, up, _radius, strength) {
+      back.copy(forward).multiplyScalar(-1);
+      sideV.crossVectors(up, back).normalize();
+      basis.makeBasis(sideV, up, back);
+      mesh.quaternion.setFromRotationMatrix(basis);
+      mesh.position.copy(center);
+      target = strength;
+      fed = true;
+    },
+    update(time, dt) {
+      uniforms.uTime.value = time;
+      if (!fed) target = 0;
+      fed = false;
+      s = dt > 0 ? s + (target - s) * Math.min(1, dt * 6) : target;
+      // full approved splash from 95 % of the locked ride strength up, thinner when Benny slows down
+      uniforms.uStrength.value = Math.min(1, s / (0.95 * sLock));
+      mesh.visible = loaded && s > 0.01;
+      wake05State.active = mesh.visible ? 1 : 0;
     },
   };
 }

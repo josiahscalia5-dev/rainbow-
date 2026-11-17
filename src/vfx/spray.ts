@@ -4,6 +4,14 @@
  */
 import * as THREE from 'three';
 import { FRAG_TAIL, withFog } from './glsl';
+import { SPLASH05M, wake05State } from './riderSplash';
+
+/**
+ * `?splash05m=1` (on with `?match05=1`): while the Screen 05 wake card is live (riderSplash.ts createWakeCard05, which
+ * carries the approved splash's own droplets), the small wake droplets (size < WAKE_DROP: index.ts wake() emits
+ * 0.012–0.05) are not drawn; landing splashes (0.06–0.16) and the final-wave crest spray (0.08–0.2) are unchanged.
+ */
+const WAKE_DROP = 0.055;
 
 const VERT = /* glsl */ `
 attribute float aSize;
@@ -78,6 +86,7 @@ export function createSpray(quality: 'high' | 'low'): Spray {
       const persp = camera as THREE.PerspectiveCamera;
       const vh = (typeof window !== 'undefined' ? window.innerHeight : 800) * (typeof window !== 'undefined' ? Math.min(2, window.devicePixelRatio || 1) : 1);
       uniforms.uScale.value = persp.isPerspectiveCamera ? vh / (2 * Math.tan(THREE.MathUtils.degToRad(persp.fov) / 2)) : 600;
+      const hideWake = SPLASH05M && wake05State.active > 0;
       for (let i = 0; i < N; i++) {
         if (age[i] > life[i]) { alpha[i] = 0; continue; }
         age[i] += dt;
@@ -87,6 +96,7 @@ export function createSpray(quality: 'high' | 'low'): Spray {
         pos[i * 3 + 2] += vel[i * 3 + 2] * dt;
         const k = age[i] / life[i];
         alpha[i] = k < 1 ? Math.min(1, (1 - k) * 2.5) : 0;
+        if (hideWake && size[i] < WAKE_DROP) alpha[i] = 0;
       }
       geo.attributes.position.needsUpdate = true;
       geo.attributes.aSize.needsUpdate = true;

@@ -437,6 +437,16 @@
    "sha256": "932bbbd451e36b7129938b581cef4f8060730cefd4e7ed47c08df32909193cce"
   },
   {
+   "path": "assets/textures/bub05/bub05.json",
+   "bytes": 11262,
+   "sha256": "f8c6e294e9eaebb65b4575f3852ce764f4bea8a367c39767a674da29d82421e0"
+  },
+  {
+   "path": "assets/textures/bub05/bub05.png",
+   "bytes": 143425,
+   "sha256": "fc20452a2abfb3af3aea218b1247f3507de527550b67cbef4df515608ce10f49"
+  },
+  {
    "path": "assets/textures/coins05/coin05_face.png",
    "bytes": 74119,
    "sha256": "2f03d8fd31e3d6949aeaa614efdabf434990d0f8e3c2d054ef7d4c21c461d385"
@@ -505,6 +515,16 @@
    "path": "assets/textures/marble05_env_1024.jpg",
    "bytes": 51147,
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
+  },
+  {
+   "path": "assets/textures/splash05/wake05.json",
+   "bytes": 695,
+   "sha256": "050ed98c9bd3c574163d0fa5c9a866a2bb493b9793d0ec218f1ba3bc700cd1ea"
+  },
+  {
+   "path": "assets/textures/splash05/wake05.png",
+   "bytes": 180755,
+   "sha256": "caea6b05fb1e726f3bd00e597107c3ff45071b8b0a3a6768d1c01e43e5030919"
   },
   {
    "path": "assets/textures/tunnel05/frame05.json",
@@ -654,7 +674,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12157,
-   "sha256": "560aba5605bf93962e829459c0261b9bea100b2a68142e3de3870989df8dd077"
+   "sha256": "ead3e364f8a5d2a78649943476eed9baa1a7e7fc1a6b684b3cad6e4f31926033"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -10673,8 +10693,8 @@
   },
   {
    "path": "src/vfx/bubbles.ts",
-   "bytes": 22169,
-   "sha256": "42821ec0e90c60d5ea2683c36232099efdba3301dc88aa2d81e27345086470cb"
+   "bytes": 29895,
+   "sha256": "e9315ad625b0b150b716ba77e68b77a90b09c11fc284f8a30528e5105e7429e7"
   },
   {
    "path": "src/vfx/drumWater.ts",
@@ -10723,13 +10743,13 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 21474,
-   "sha256": "5c7ca776b9e2f8f6aae4ef58aea2b6782e6e952d5cac97ecdb4ddad13910528c"
+   "bytes": 29190,
+   "sha256": "08a2a8262c2d893986c074f7c7bd2460d641d17ed2f0a6213dece8f88e54023f"
   },
   {
    "path": "src/vfx/spray.ts",
-   "bytes": 3737,
-   "sha256": "79649fa8d284943986414c09989d296805aa799db5da963979e7dfc3e088fd79"
+   "bytes": 4301,
+   "sha256": "153f93760d97c5f4ce3350a6288c5b50e30b715498012d1d8040d5566c6e61db"
   },
   {
    "path": "src/vfx/waterRibbon.ts",
@@ -10823,8 +10843,8 @@
   },
   {
    "path": "tools/env05/proj_bake.py",
-   "bytes": 10988,
-   "sha256": "99f1a6f23fa067cea36555c7778400525325224cb709807cc6049c77d7152929"
+   "bytes": 11946,
+   "sha256": "2a7cb6f48c72209880d252453b97edcf445862b581106af00baf184332ea9565"
   },
   {
    "path": "tools/env05/ring_fit.py",
@@ -11087,6 +11107,11 @@
    "sha256": "bcc428708b8f8f556e2c25844bc995d0732ad8ac3c5f8d269a021449b44dd6e4"
   },
   {
+   "path": "tools/splash05/bake.py",
+   "bytes": 10267,
+   "sha256": "9fe5917960d36a8bc8d4031d77238f78fca5472afb20d7fa7ef9fb8b93aa3e72"
+  },
+  {
    "path": "tools/splash05/bubble_audit.py",
    "bytes": 3379,
    "sha256": "5f9e53afcd3309aa58df6f67dbe6304878097e07d8deab4e9b2237def45f85d9"
@@ -11100,6 +11125,21 @@
    "path": "tools/splash05/probe.mjs",
    "bytes": 4406,
    "sha256": "37a1ea19e623a6b4d4d5e66c092e03a7ed68072eab3cf65d08c2c05af547693c"
+  },
+  {
+   "path": "tools/splash05/work/painted_clean_estimate.png",
+   "bytes": 2390883,
+   "sha256": "f7401d048d239798ce2dcb50ddb41de52662a1d5b2cbab6818840493657f26cf"
+  },
+  {
+   "path": "tools/splash05/work/target.npz",
+   "bytes": 5792769,
+   "sha256": "680bb703dc71103fb810f60f111d6685e06df66fc09bcaf6166af1ee0fe07151"
+  },
+  {
+   "path": "tools/splash05/work/wake_matte.npy",
+   "bytes": 10616960,
+   "sha256": "380d78acd5cdb763630642d593e12571d4e49e4e2631e97cda9409b92702953e"
   },
   {
    "path": "tools/water-lab.html",

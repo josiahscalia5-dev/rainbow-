@@ -1098,3 +1098,175 @@ The footprint fits a ~3.6 × 3.6 u card centred on Benny's waterline. Now let me
 > bg → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/bg_spray.png
 > spray-only px 1905 1592
 
+### 🤖 Claude — 2026-11-17T02:44:39.164Z
+
+The live spray adds ~1,900 px of droplets at non-approved positions in the locked frame. Now the per-bubble audit against the splash-free capture, to classify painted vs. missing bubbles cleanly.
+
+### 🤖 Claude — 2026-11-17T02:44:41.311Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I tools/splash05/bubble_audit.py $S/bg_nosplash.png $S/bgns_ --sheet | sort -t'#' -k2 -n | head -40", "description": "Audit bubbles on splash-free capture"}`
+
+### 🧑 User — 2026-11-17T02:44:42.951Z
+
+> ↩︎ result: # 0 ( 51, 707) r28 px  2821 mean  71.68 <=20 0.12 signed [0.8, -50.3, -80.9] lum A 156.3 G 114.7 ring  25.1 on purple_walls
+> disks px 32578 weighted mean 26.39
+> # 1 ( 93, 612) r23 px  1961 mean  58.80 <=20 0.22 signed [-31.5, -66.3, -41.7] lum A 155.1 G  98.0 ring   4.3 on purple_walls
+> # 2 (180, 572) r18 px  1257 mean  39.84 <=20 0.38 signed [-9.7, -47.7, -25.7] lum A 152.5 G 114.5 ring   4.1 on purple_walls
+> # 3 (265, 538) r11 px   529 mean  48.98 <=20 0.28 signed [-21.0, -38.1, -37.4] lum A 135.3 G 100.9 ring   7.2 on purple_walls
+> # 4 (181, 673) r17 px  1129 mean  46.57 <=20 0.23 signed [13.1, -25.4, -21.7] lum A 153.9 G 137.0 ring  24.4 on purple_walls
+> # 5 ( 83, 911) r31 px  3409 mean   2.46 <=20 1.00 signed [-0.1, -0.1, 0.0] lum A 173.3 G 173.3 ring   1.4 on water
+> # 6 (135, 988) r15 px   901 mean   3.94 <=20 1.00 signed [-0.6, -0.1, -0.0] lum A 183.8 G 183.6 ring   1.5 on water
+> # 7 ( 94,1250) r32 px  3625 mean   3.11 <=20 1.00 signed [-2.7, -0.6, -0.2] lum A 180.3 G 179.3 ring   1.8 on water
+> # 8 (148,1165) r11 px   529 mean  14.63 <=20 0.80 signed [-24.3, -6.1, -0.5] lum A 176.1 G 166.5 ring   4.0 on water
+> # 9 (185,1099) r 8 px   317 mean  38.89 <=20 0.42 signed [-67.4, -33.7, -9. …[+2460 chars]
+
+### 🤖 Claude — 2026-11-17T02:46:20.982Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/splash05/bake.py", "content": "\"\"\"Screen 05 wake card + approved bubble sprites (foam-bubbles-particles, switches `splash05m` / `bub05`).\n\nBoth effects carry the APPROVED picture's own splash / bubble pixels as a premultiplied LINEAR layer (L, a) that the game\nblends over whatever lies behind it (out = L + background * (1 - a), CustomBlending ONE / ONE_MINUS_SRC_ALPHA, no fog, no\nbloom on 05). L and a are solved per pixel against a real game capture of the locked 05 frame WITHOUT them (`--bg`), through\nthe exact inverse of the post chain (tools/ …[+10337 chars]`
+
+### 🧑 User — 2026-11-17T02:46:21.088Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/splash05/bake.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T02:46:28.204Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='tools/splash05/bake.py'\ns=open(p).read()\ns=s.replace('''def solve(tgt, back):\n    \"\"\"most transparent premultiplied linear layer (L, a) with forward(L + inverse(back)(1 - a)) = tgt\"\"\"\n    tL, bL = inverse(tgt, xy), inverse(back, xy)''','''def solve(tgt, back, pxy):\n    \"\"\"most transparent premultiplied linear layer (L, a) with forward(L + inverse(back)(1 - a)) = tgt\"\"\"\n    tL, bL = inverse(tgt, pxy), inverse(back, pxy)''')\ns=s.replace(\"    Lw, aw = solve(target, bg)\\n\",\"    Lw, aw = solve(target, bg, xy)\\n\")\ns …[+606 chars]`
+
+### 🧑 User — 2026-11-17T02:46:32.180Z
+
+> ↩︎ result: wake card [147, 1004] [573, 292] matte>0.5 px 32373
+> # 0 missing r28 depth  17.43 R 0.457 alpha 0.19 hit washer_world > proj05_apron
+> # 1 missing r23 depth  19.88 R 0.443 alpha 0.09 hit washer_world > proj05_apron
+> # 2 missing r18 depth  25.35 R 0.466 alpha 0.09 hit washer_world > proj05_apron
+> # 3 missing r11 depth  33.25 R 0.429 alpha 0.12 hit washer_world > proj05_apron
+> # 4 missing r17 depth  18.89 R 0.333 alpha 0.23 hit ystem > foam_banks > foam_berm
+> # 5 painted r31 depth   9.90 R 0.283 alpha 0.14 hit water_system > water_ribbon
+> # 6 painted r15 depth   8.45 R 0.135 alpha 0.05 hit water_system > water_ribbon
+> # 7 painted r32 depth   5.54 R 0.162 alpha 0.28 hit water_system > water_ribbon
+> # 8 painted r11 depth   6.23 R 0.080 alpha 0.02 hit water_system > water_ribbon
+> # 9 missing r 8 depth   6.90 R 0.073 alpha 0.01 hit water_system > water_ribbon
+> #10 missing r30 depth  10.32 R 0.286 alpha 0.25 hit water_system > water_ribbon
+> #11 missing r14 depth  31.37 R 0.479 alpha 0.11 hit sher_world > zone_tubes > Mesh
+> #12 missing r12 depth  45.31 R 0.620 alpha 0.17 hit > zone_tubes > tube05_far_wall
+> #13 missing r13 depth  26.34 R 0.381 alpha 0.09 hit washer_world > proj05_apron
+> #14 painted r19 dep …[+1277 chars]
+
+### 🤖 Claude — 2026-11-17T02:47:31.142Z
+
+Bake works: bubble alphas are small (0.01–0.28, mostly additive light), card texture 573 × 292. Now the runtime code. Let me check the GLSL helpers first.
+
+### 🤖 Claude — 2026-11-17T02:47:32.224Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"export\" src/vfx/glsl.ts; grep -n \"FRAG_TAIL =\" -A8 src/vfx/glsl.ts; grep -n \"createWater\\|water.ready\\|\\.ready\" src/game/Game.ts | head", "description": "Check GLSL helpers and ready wiring"}`
+
+### 🧑 User — 2026-11-17T02:47:32.275Z
+
+> ↩︎ result: 4:export const NOISE_GLSL = /* glsl */ `
+> 46:export const FRAG_FX_GLSL = /* glsl */ `
+> 146:export const PALETTE = {
+> 159:export function withFog<T extends Record<string, THREE.IUniform>>(u: T): T & typeof THREE.UniformsLib.fog {
+> 164:export const FRAG_TAIL = /* glsl */ `
+> 164:export const FRAG_TAIL = /* glsl */ `
+> 165-  #include <tonemapping_fragment>
+> 166-  #include <colorspace_fragment>
+> 167-  #include <fog_fragment>
+> 168-`;
+
+### 🤖 Claude — 2026-11-17T02:47:33.667Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"ready\" src/main.ts src/game/*.ts | grep -i \"water\\|ready\" | head", "description": "Find where water.ready is awaited"}`
+
+### 🧑 User — 2026-11-17T02:47:33.711Z
+
+> ↩︎ result: src/game/Game.ts:528:  // `?proj05=1` / `?match05=1` (`post05`): on Screen 05 the reference-baked surfaces already carry the approved picture's
+> src/game/Game.ts:619:    ready: true,
+> src/game/modules.ts:35:      const ready = (w as { ready?: Promise<void> }).ready;
+> src/game/modules.ts:36:      if (ready) await ready;
+
+### 🤖 Claude — 2026-11-17T02:47:35.670Z
+
+Now the wake card in `riderSplash.ts` (behind `splash05m`, Screen 05 only via `createRiderSplash05`).
+
+### 🤖 Claude — 2026-11-17T02:47:40.671Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "import { WATER05 } from './waterRibbon'; // Screen 05 water test W10 (?water05=1): thinner, wider splash threads", "new_string": "import { WATER05, on05, proj05Pending } from './waterRibbon'; // Screen 05 water test W10 (?water05=1): thinner, wider splash threads\n\n/** explicit `?<key>=0` switches a reference-match part off even under the master `?match05=1` (A/B captures) */\nconst off05 = (key: string): boolean => {\n  try {\n    return typeof location !== 'undefined' && new URLSearchParams(loca …[+773 chars]`
+
+### 🧑 User — 2026-11-17T02:47:40.754Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T02:47:42.223Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/riderSplash.ts", "old_string": "/** wave 8: the 05 splash (same API as the shared fan) */\nexport function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {\n  const nRope", "new_string": "/** wave 8: the 05 splash (same API as the shared fan) */\nexport function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {\n  if (SPLASH05M) return createWakeCard05();\n  const nRope"}`
+
+### 🧑 User — 2026-11-17T02:47:42.298Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/riderSplash.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T02:48:08.697Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> src/vfx/riderSplash.ts <<'EOF'\n\n// ------------------------------------------------------------------------------------------------ 05 wake card (splash05m)\n/**\n * `?splash05m=1`: the approved Screen 05 splash (Part 8 of the user's order: low fan-shaped white-blue spray from Benny's\n * base, fine droplets, curved filaments, foam collar and bright water under the body — not straight spiky streaks).\n * A flat card on the water in Benny's frame (placed every frame like the fans above: water surface under his lifted body\n * centre, side / up / bac …[+6372 chars]`
+
+### 🧑 User — 2026-11-17T02:48:11.128Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T02:48:14.048Z
+
+Now spray.ts: under `splash05m`, the small wake droplets step aside while the 05 card is live (landing splashes stay).
+
+### 🤖 Claude — 2026-11-17T02:48:18.958Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/vfx/spray.ts'\ns=open(p).read()\ns=s.replace(\"\"\"import { FRAG_TAIL, withFog } from './glsl';\n\"\"\",\"\"\"import { FRAG_TAIL, withFog } from './glsl';\nimport { SPLASH05M, wake05State } from './riderSplash';\n\n/**\n * `?splash05m=1` (on with `?match05=1`): while the Screen 05 wake card is live (riderSplash.ts createWakeCard05, which\n * carries the approved splash's own droplets), the small wake droplets (size < WAKE_DROP: index.ts wake() emits\n * 0.012–0.05) are not drawn; landing splashes (0.06–0.16) and the final-wave cres …[+765 chars]`
+
+### 🧑 User — 2026-11-17T02:48:21.254Z
+
+> ↩︎ result: 11: * carries the approved splash's own droplets), the small wake droplets (size < WAKE_DROP: index.ts wake() emits
+> 14:const WAKE_DROP = 0.055;
+> 89:      const hideWake = SPLASH05M && wake05State.active > 0;
+> 99:        if (hideWake && size[i] < WAKE_DROP) alpha[i] = 0;
+
+### 🤖 Claude — 2026-11-17T02:48:24.013Z
+
+Now the approved bubble sprites in `bubbles.ts` (behind `bub05`; the 14 texture-painted ones only with explicit `?bub05all=1`).
+
+### 🤖 Claude — 2026-11-17T02:48:28.870Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/vfx/bubbles.ts'\ns=open(p).read()\ns=s.replace(\"\"\"import { coreLateral } from './waterRibbon';\nimport { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';\n\"\"\",\"\"\"import { coreLateral, on05, flag05, proj05Pending } from './waterRibbon';\nimport { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';\n\n/** explicit `?<key>=0` switches a reference-match part off even under the master `?match05=1` (A/B captures) */\nconst off05 = (key: string): boolean => {\n  try {\n    return typeof location !== 'undefined' && new URLSearchParams( …[+915 chars]`
+
+### 🧑 User — 2026-11-17T02:48:28.936Z
+
+> ↩︎ result: 193:export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; sStart: number }): BubbleSystem {
+
+### 🤖 Claude — 2026-11-17T02:48:57.490Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/vfx/bubbles.ts'\ns=open(p).read()\ncode = r'''\n// ------------------------------------------------------------------------------------------------ 05 approved bubbles (bub05)\n/**\n * `?bub05=1`: the approved Screen 05 bubbles (Part 11 of the user's order). Each one is a camera-facing sprite fixed in the\n * world on its locked view ray, just in front of the first surface the ray meets (tools/splash05/bake.py), so it keeps its\n * place in the tunnel while Benny rides, grows as he approaches and leaves the frame like a real floati …[+6981 chars]`
+
+### 🧑 User — 2026-11-17T02:49:00.047Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T02:49:03.546Z
+
+tsc clean. First real capture with both parts on (`?match05=1`). I'll back up `qa/capture_log.json` first, as instructed.
+
+### 🤖 Claude — 2026-11-17T02:49:06.550Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; cp qa/capture_log.json $S/capture_log.backup.json; time node scripts/capture.mjs 05 --q='match05=1' --out=$S/c1 2>&1 | tail -3; cp $S/capture_log.backup.json qa/capture_log.json; python3 -I tools/match05/metrics.py $S/c1/05.png $S/c1/ | grep -v \"^FULL\" ; python3 -I -c \"\nimport json; print(json.load(open('$S/c1/FULL_FRAME_METRICS.json'))['whole_frame'])\"", "description": "Capture match05 with new parts and measure", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T02:49:22.628Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/c1/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":80,"tris":570386,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 
+> real	0m14.983s
+> user	0m1.643s
+> sys	0m0.391s
+> gold_rings_and_front_frame   px  125730  mean   9.35  <=10 0.736  <=20 0.879  ssim 0.823  signed [-3.2, -0.9, 2.7]
+> purple_walls                 px  312706  mean   6.86  <=10 0.834  <=20 0.914  ssim 0.888  signed [-0.4, 0.8, -0.9]
+> side_fittings                px   13776  mean   3.54  <=10 0.890  <=20 0.948  ssim 0.910  signed [-0.5, -0.3, 1.5]
+> water                        px  480736  mean   6.62  <=10 0.883  <=20 0.919  ssim 0.924  signed [0.8, -2.6, -1.9]
+> foam_banks                   px   28862  mean   5.61  <=10 0.921  <=20 0.951  ssim 0.922  signed [-0.1, -4.2, -4.6]
+> benny_and_hat                px   93061  mean  19.22  <=10 0.587  <=20 0.730  ssim 0.658  signed [-5.8, -1.4, 0.9]
+> wake_splash                  px   83491  mean  17.25  <=10 0.538  <=20 0.720  ssim 0.708  signed [7.1, 2.4, 1.4]
+> coins                        px   27437  mean  27.66  <=10 0.277  <=20 0.516  ssi …[+535 chars]
+
