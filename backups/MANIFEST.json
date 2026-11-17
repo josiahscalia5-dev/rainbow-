@@ -488,8 +488,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 9361,
-   "sha256": "96dd1b1ebf1bad08df879414bb3a3eb9601a7e487d1de0187dad238587fcd0ec"
+   "bytes": 12063,
+   "sha256": "3d8fd47853673857172208d8ad4f2f6e7764810c3d16aea43e1e9612ef5e78ca"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -503,13 +503,13 @@
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
-   "bytes": 51185,
-   "sha256": "47a6a20b6e9e8fd1b70a8137dcfc38475e29a27c87edb493ccf6a405e35101e1"
+   "bytes": 51514,
+   "sha256": "41b64ee6baa5c9317cb938b812f40e04aef528fbd901a413a01603958a716544"
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 9701,
-   "sha256": "8d192187a0ae418df28b1494237e71802b9363bad368440a0ef875c81e5f966d"
+   "bytes": 9702,
+   "sha256": "a30691bf180d95006cc7df90dbdc1f65d7d9040e236fbefe16c02ebfad293403"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -518,8 +518,8 @@
   },
   {
    "path": "backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
-   "bytes": 11094,
-   "sha256": "ff4002614b39109df627c46dcc444429f1386e3b468b18ae2261eeba50d473f1"
+   "bytes": 16378,
+   "sha256": "64ea6ee9e0d544e40efdcd03e1f7685f02c20b00637cb0c518af874a3df480d4"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -533,8 +533,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 6639,
-   "sha256": "f3827d2eb50406e2fd54ebab473197f1b06d6dff7a1549f1ae87489bd1dc4020"
+   "bytes": 4224,
+   "sha256": "1723b5eeeb698a077158eec7fe4061451c0b55b7ba2cf17d5b8803fb8f6bdc51"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -543,8 +543,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 6193,
-   "sha256": "26aad5e5f2bc13c98e5e9db2145eb58252356c1e32751204a4ed38fcc3f9b576"
+   "bytes": 6789,
+   "sha256": "927783fe8d2a0f2a9ac28e30db997ec9e7b278335bb46456cc28f5010b73cf27"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",

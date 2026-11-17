@@ -1,20 +1,59 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17T11:33:53Z",
- "updated_by_session": "ccr-61131b9d-uj0oqb (account transfer 2026-11-17)",
+ "updated_utc": "2026-11-17T12:40:00Z",
+ "updated_by_session": "03b94f36 (branch ccr-9c4a8ad6-xovgsx, account-transfer backup)",
  "running_now": [],
  "assignments_now": {
-  "_read_first": "backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
-  "path-camera-transition-engineer": {
-   "task": "Screen 06 structure behind ?match06=1 (continuation of the 05 tunnel)",
-   "state": "NOT STARTED - launched twice, stopped by interruptions before any commit; nothing to merge",
-   "relaunch": "Agent tool, subagent_type path-camera-transition-engineer, isolation worktree, background, prompt = qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt"
+  "_read_first": "backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md (section 5 = every specialist's exact state and next step)",
+  "_user_priority_2026-11-17": "VISUAL ONLY: scenery and look of the playable screens 04-08 must match their approved pictures (>= 90 %); do not report camera/movement details; show APPROVED | BEFORE | NEW full size + whole-frame numbers",
+  "_two_lines": "line A = ccr-9c4a8ad6-xovgsx (= ccr-61131b9d-uj0oqb), line B = ccr-b0757dec-dj6l1o (a8c03f0). NOT merged; user must approve.",
+  "line_B_washer-environment-modeler": {
+   "switch": "env05",
+   "state": "INTERRUPTED ~03:10 UTC 2026-11-17 mid wall/ring feedback re-bake (unmeasured)",
+   "next": "re-capture ?match05=1 + metrics; keep the 03:05/03:10 bake only if not worse (walls 92 %, gold 88 %); then left-far-bend chunks (left wall x165-200 y553-592; far wall + far-river wedge x325-400 y528-590)",
+   "brief": "qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md",
+   "notes": "qa/pilot05/full_reference_match/env/NOTES.md section 7",
+   "branch": "ccr-b0757dec-dj6l1o"
   },
-  "main_session_screen07": {
-   "state": "measurement done, camera code hook (yaw07/side07) added but inactive",
-   "next": "see handoff section 4"
-  }
+  "line_B_foam-bubbles-particles": {
+   "switch": "splash05m, bub05",
+   "state": "INTERRUPTED ~03:10 UTC; c2 whole 86.9 %, wake 77.5 %, bubbles 99.7 %",
+   "next": "splash_bubbles/NOTES.md 'Remaining' + REQUEST 1 (remove 14 painted bubbles, then bub05all) + REQUEST 2 (cyan water between wake filaments)",
+   "brief": "qa/pilot05/full_reference_match/briefs/foam-bubbles-particles.md",
+   "notes": "qa/pilot05/full_reference_match/splash_bubbles/NOTES.md",
+   "branch": "ccr-b0757dec-dj6l1o"
+  },
+  "line_B_benny-character-artist": {
+   "switch": "benny05",
+   "state": "round 1 FINISHED (Benny + hat 23.5 % -> 73.0 %); round 2 QUEUED",
+   "next": "fur softness / colour / pom-pom",
+   "notes": "qa/pilot05/full_reference_match/benny/NOTES.md",
+   "branch": "ccr-b0757dec-dj6l1o"
+  },
+  "line_B_animation-and-gameplay-engineer": {
+   "switch": "hud05, coins05",
+   "state": "FINISHED (gameplay 8/8, default 0 px)",
+   "next": "only look fixes on request (coins ~52 %, HUD ~74 %)",
+   "branch": "ccr-b0757dec-dj6l1o"
+  },
+  "line_B_android-build-performance": {
+   "state": "match05 debug APK built 02:44 UTC (builds/rainbow-debug-match05-2026-11-17.apk)",
+   "next": "final APK + performance after the visual parts",
+   "branch": "ccr-b0757dec-dj6l1o"
+  },
+  "line_A_path-camera-transition-engineer": {
+   "task": "Screen 06 behind ?match06=1",
+   "state": "NOT STARTED (two launches stopped before any commit; nothing to merge)",
+   "relaunch": "only if the user wants parallel work; brief qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt (structure-first: re-read against the visual-only priority)",
+   "branch": "ccr-9c4a8ad6-xovgsx"
+  },
+  "line_A_main_session_screen07": {
+   "state": "approved 07 measured (Benny box, 5 rings, VP); isolated-Benny mask (largest blob) done; best framing IoU 0.577, ~100 px left; yaw07/side07 hook inactive",
+   "next": "visual: gold rings (real R1/R2 + forced far block R3-R5 + warm glow), purple walls, low foam, paddles upper-left, S-river look, behind ?match07=1",
+   "branch": "ccr-9c4a8ad6-xovgsx"
+  },
+  "others": "water-fx-specialist idle (W12 'Left undone' on request); reference-match-director + playwright-visual-qa = main-session roles; cartoon-girl-character-artist not planned"
  },
  "current_focus": "Screen 05 water \u2014 NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
  "agents": [

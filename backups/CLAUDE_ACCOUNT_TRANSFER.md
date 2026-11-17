@@ -1,9 +1,11 @@
 # Rainbow — Claude account transfer guide
 
-## ▶▶ NEWEST (2026-11-17 ~11:50 UTC, branch `ccr-61131b9d-uj0oqb`) — READ `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md` FIRST
-It wins over every older section below. Two unmerged lines of work exist (`ccr-61131b9d-uj0oqb` and
-`ccr-b0757dec-dj6l1o`); never merge them without the user's OK. Recover with `bash scripts/claude-bootstrap.sh --skip-resume`
-(the bootstrap no longer merges anything by default).
+## ▶▶ NEWEST (refreshed 2026-11-17 ~12:40 UTC, branch `ccr-9c4a8ad6-xovgsx` = `ccr-61131b9d-uj0oqb` + backups) — READ `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md` FIRST
+It wins over every older section below. Two unmerged lines of work exist (line A `ccr-9c4a8ad6-xovgsx` / `ccr-61131b9d-uj0oqb`
+and line B `ccr-b0757dec-dj6l1o`, which holds the big Screen 05 visual match); never merge them without the user's OK.
+Recover with `bash scripts/claude-bootstrap.sh --skip-resume` (the bootstrap no longer merges anything by default).
+User priority since 2026-11-17: VISUAL ONLY — the scenery / look of the playable screens 04–08 must match the approved
+pictures (≥ 90 %). Paste-ready prompt: `backups/START_NEW_CLAUDE_ACCOUNT.md`.
 
 
 Rainbow is an EXISTING, playable 11-screen 3D Android game. Never restart it.
