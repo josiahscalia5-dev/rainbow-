@@ -12,3 +12,8 @@ Base before camclear: commit `5965a01`. Everything below runs ONLY when `camclea
 | `src/game/cameraRig.ts` `clear0304()` (**round 3, new**) | 03→04 drain drop: over ~18 u of ride the view rides on the stream 3 u behind Benny, 1.6 u above, aimed at him | `if (CAMCLEAR)` in `update()` |
 
 No change to Benny files, HUD, coins, course, gameplay rules, or any match04–08 scenery/texture file.
+
+
+## Round 4
+* `src/game/cameraRig.ts`: camclear-guarded `clear0304` tuning + `steadyUp0304` (03→04 lip only; off = unchanged, 0 px).
+* `src/game/camClear.ts` + `Game.ts` (createCamClear gets `coins`): camclear-only coin fade between lens and Benny. Coin pickup logic untouched.

@@ -1,3 +1,20 @@
+# STATUS — Screen 08 camera specialist (`?camclear=1`), round 4
+
+* **Branch:** `claude/rainbow-s08-camclear-c4`, started from `5da9623f9aaa144e46e15e23c8248de11c6a90ab` (= `-c3` head `c03f391c` + one autosave of backups only). `-c3` had no newer commits at start.
+* **Status:** round-4 milestone done; stopped, waiting for the lead.
+* **Done (visual terms):**
+  - **03→04 drain drop:** the picture no longer tilts sideways as Benny goes over the drain lip (tilt up to 16° → ≤ 1°; the picture's "up" can no longer flip), no one-frame jolt (biggest single-step view jump 1.0 u → 0.73 u, same as the normal build), and less falling water over Benny: share of Benny hidden max 44 % → 25 % (normal build 100 %), frames > 25 % hidden 5 → 1, frames with Benny cut by the screen edge 12 → 2. Frames every 0.1 s, 16.6–17.6 s: `qa/gameplay_video/lip_r4/t<time>_{1_default,2_camclear_r3,3_camclear_NEW}.png` (r3 frames: HUD font fallback only).
+  - **08 while steering left/right:** coins Benny missed sat huge in the front, over the lower third of the picture (the view holds the approved 08 picture while he rides away). Now coins nearer to the lens than Benny fade out (pickup unchanged).
+* **Not changed by me (needs another workstream, told the lead):**
+  - **07 gold bands across the upper screen** are the 07 tube's own big rings 14–45 u AHEAD (raycast, `qa/gameplay_video/r07_band_distances_r4.json`), not something passing the lens. Thinning them changes the 07 scenery look → Screen 07 workstream. A trial fade of overhead rings within 7 u changed 0 % (reverted).
+  - **08 steering hard right:** Benny rides into the right-hand pipe/arch of the 08 picture geometry (`m08_pipe`, `m08_arch`, his centre 0.5 u below its surface; 45 % of him hidden at 44.5 s) → 08 scenery / Benny workstream (lateral limit or geometry).
+* **Moving check 07→08→09 (`match08=1&camclear=1`)**, `qa/gameplay_video/moving_r4/sheet_steer{0,1,-1}.png` + frames: straight max 22 % of Benny hidden, nothing within 2 u of the lens, camera never inside a mesh; left max 29 %; right max 45 % (the pipe above). Steering into walls costs hearts (game rule).
+* **Proofs:** `npx tsc --noEmit` clean; gameplay 8/8, 91 coins / 2,240, 07→08 drop 61.41 u (`camclear=1`) / 61.31 u (`match08=1&camclear=1`), identical to r3 (`qa/gameplay_video/tests/r4_*.json`); continuity all joins gap 0; still views vs r3 (`qa/gameplay_video/stills_r4/`): default 03–09, `match08=1` 08 with and without camclear, `match07=1` 07 with and without camclear — **0 px** below the HUD (HUD differs only by the comparison copy's font fallback); `match07=1` vs `match07=1&camclear=1` 0 px; 13 reference images OK.
+* **APK:** `builds/rainbow-debug-08camclear-2026-11-17-r4.apk` (Git LFS, `match08=1&camclear=1` baked in, sha256 `93667373…2aab`) — **NOT phone-tested**.
+* **Approval status:** under review.
+
+---
+
 # STATUS — Screen 08 camera specialist (`?camclear=1`), round 3
 
 * **Assigned screen:** 08 (+ view blockers along the whole ride seen in the user's phone recording)

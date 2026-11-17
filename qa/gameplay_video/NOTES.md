@@ -44,3 +44,12 @@ Tools: `tools/camclear/*` (probe.mjs = real-time frames from app start, timeline
   drain lip; (c) **kept:** ride on the stream 3 u behind, 1.6 u world-up, aimed at Benny.
 * Wider see-through cone (R_PROP 2.2→2.7) tested and reverted: no gain (the 07 43.75 s "hidden" share is the screen edge).
 * APK `builds/rainbow-debug-08camclear-2026-11-17-r3.apk`.
+
+
+## Round 4 (2026-11-17, `-c4`)
+* `cameraRig.ts` (camclear only): `clear0304` blend 6 u (was 2.5), view 3.4 u above the water (was 1.6), aimed at Benny
+  (s + 0.5, was s + 1.5), pitch limited to ~56° down; new `steadyUp0304` sets the picture's up from world up made square to
+  the view (falls back to the chute's fixed downhill heading if the view goes near-vertical), applied after the usual
+  easing. Trace: `qa/gameplay_video/lip_r4/view_trace_*.json` (`tools/camclear/camtrace.mjs` now records `up`).
+* `camClear.ts`: coins patched with a 'lens' variant — fade where nearer than Benny's front depth (−3 … −0.8 u).
+* 07 upper-screen bands = distant rings (14–45 u) → Screen 07 workstream. 08 hard-right: Benny inside `m08_pipe`/`m08_arch` → 08 workstream.
