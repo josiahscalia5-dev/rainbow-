@@ -588,8 +588,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 14237,
-   "sha256": "d5f2cfbf73105f508d799ff7c70e38afb353c8bc5bccf982c02acfd32644bf70"
+   "bytes": 16544,
+   "sha256": "6d9a16e908958c463a339abe323b393902027087b2a46e969b969b743930d874"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10663,
-   "sha256": "c7ba8ef7c05be13b5b971b44f5a9954cb551831d9b453ceaa771a2e868190d86"
+   "bytes": 10664,
+   "sha256": "3ba64950d86a9770cbb1b9fe3b64537f991f541732b9c9a78ed6084e0be8bc86"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -713,8 +713,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 7405,
-   "sha256": "4fb9643d9c9bf4212096c0016a437f810ab7ef68ceeea1a43741735fcbac6425"
+   "bytes": 9114,
+   "sha256": "f201bb0ccf6308a16e5a5c4040ab752fae5d7aeab6d45a379670009a0922d78a"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -7968,8 +7968,8 @@
   },
   {
    "path": "scripts/verify-assets.py",
-   "bytes": 16572,
-   "sha256": "38e4f7c6ff79b419f956652aeb0aa083319ebb3e1d6b4acdd9fe5cd280da52cd"
+   "bytes": 16679,
+   "sha256": "0ac0b69b777a58b9a175a4ecfdd22bec944e22cb1f77d04ab4f2af00ff1c76ae"
   },
   {
    "path": "scripts/water-lab.mjs",
