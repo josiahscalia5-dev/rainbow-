@@ -496,9 +496,12 @@ export function createRiderSplash05(quality: 'high' | 'low'): RiderSplash {
  */
 const CARD_VERT = /* glsl */ `
 varying vec3 vLocal;
+varying vec3 vView;
 void main() {
   vLocal = position;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  vView = mv.xyz;
+  gl_Position = projectionMatrix * mv;
 }
 `;
 const CARD_FRAG = /* glsl */ `
@@ -511,7 +514,9 @@ uniform float uTime;
 uniform float uStrength; // 1 = the locked ride strength
 uniform vec2 uFlowO;     // locked-frame pixel the spray streams away from (Benny's base)
 uniform vec3 uFlow;      // stream distance per cycle (px), cycles per second, phase (locks t = 12 to the approved pixels)
+uniform float uBias;     // depth bias toward the camera (units): the river's vertex waves must not cut holes into the card
 varying vec3 vLocal;
+varying vec3 vView;
 vec4 tap(vec2 px) {
   vec2 uv = (px - uRect.xy) / uRect.zw;
   if (uv.x <= 0.0 || uv.y <= 0.0 || uv.x >= 1.0 || uv.y >= 1.0) return vec4(0.0);
@@ -532,14 +537,19 @@ void main() {
   vec4 o = tap(px - dir * (p - 0.5) * uFlow.x) * wA + tap(px - dir * (q - 0.5) * uFlow.x) * (1.0 - wA);
   o *= uStrength;
   if (o.a < 0.002 && max(o.r, max(o.g, o.b)) < 0.002) discard;
+  vec4 cb = projectionMatrix * vec4(vView * (1.0 - uBias / max(length(vView), uBias + 0.1)), 1.0);
+  gl_FragDepth = 0.5 * cb.z / cb.w + 0.5;
   gl_FragColor = o;
 }
 `;
 
 /** card footprint on the water (Benny frame, units): covers the locked splash rays (x ±1.6, back −1.6 … 1.5) */
 const CARD_HALF = 1.8;
-/** card height above the waterline point (units): clears the ripples so the water does not cut holes into it */
+/** card height above the waterline point (units) */
 const CARD_LIFT = 0.04;
+/** depth bias toward the camera (units, gl_FragDepth): the river's vertex waves (± ≈ 0.25 u around Benny) stay behind the
+ *  card, while his fur and anything else clearly in front of it still hides it */
+const CARD_BIAS = 0.4;
 
 function createWakeCard05(): RiderSplash {
   const geo = new THREE.PlaneGeometry(CARD_HALF * 2, CARD_HALF * 2, 1, 1);
@@ -555,6 +565,7 @@ function createWakeCard05(): RiderSplash {
     uStrength: { value: 0 },
     uFlowO: { value: new THREE.Vector2(423, 1060) },
     uFlow: { value: new THREE.Vector3(12, 1.4, 0) },
+    uBias: { value: CARD_BIAS },
   };
   const mat = new THREE.ShaderMaterial({
     uniforms,
@@ -569,9 +580,6 @@ function createWakeCard05(): RiderSplash {
     blendSrcAlpha: THREE.OneFactor,
     blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
   });
-  mat.polygonOffset = true;
-  mat.polygonOffsetFactor = -2;
-  mat.polygonOffsetUnits = -4;
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = 'rider_splash05';
   mesh.frustumCulled = false;

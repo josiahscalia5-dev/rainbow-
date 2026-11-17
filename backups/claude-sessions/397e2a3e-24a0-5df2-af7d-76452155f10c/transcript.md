@@ -2095,3 +2095,321 @@ I'll record a video of the whole game, start to finish, from the same build that
 > 627:    /** deterministic simulation: advance n steps of dt (no rendering needed) */
 > 703:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
 
+### 🤖 Claude — 2026-11-17T02:49:30.539Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 600, "limit": 105}`
+
+### 🧑 User — 2026-11-17T02:49:30.552Z
+
+> ↩︎ result: 600	        settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+> 601	      } else {
+> 602	        // settle camera springs without moving Benny: run with speed frozen
+> 603	        const s0 = st.s;
+> 604	        for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+> 605	        rideCam.update(0, st.s, st.lat, camera, true);
+> 606	      }
+> 607	    }
+> 608	    // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+> 609	    const refId = (id.slice(0, 2) as StageId);
+> 610	    st.coins = course.stage(refId).refCoins || START_COINS;
+> 611	    hud.setCoins(st.coins);
+> 612	    hud.setHearts(5);
+> 613	    render();
+> 614	    dirty = false;
+> 615	    return { stage: st.stage, s: st.s, y: benny.root.position.y };
+> 616	  };
+> 617	
+> 618	  const api = {
+> 619	    ready: true,
+> 620	    checkpoints: Object.keys(CHECKPOINTS),
+> 621	    goto: gotoCheckpoint,
+> 622	    run(v = true) { running = v; last = performance.now(); },
+> 623	    unfreeze() { st.frozen = null; input.override = null; },
+> 624	    /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+> 625	    freezeAt(t: number) { st.frozen = t; st.clock = …[+5522 chars]
+
+### 🤖 Claude — 2026-11-17T02:49:31.736Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p scripts/cinematic-test.mjs | grep -v \"^import\" | head -25; grep -n \"ffmpeg\\|mp4\\|frames\" scripts/cinematic-test.mjs scripts/proj05-move.mjs | head -10", "description": "Read cinematic test script header and video use"}`
+
+### 🧑 User — 2026-11-17T02:49:31.786Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Verifies the optional Google Flow cinematic hand-off in the REAL game build (headless Chromium):
+> //   1. with an intro video: overlay plays, the live 3D intro is held underneath, the overlay fades out and
+> //      the game continues in real time from 01 into the 03 ride (no slideshow, no stuck state);
+> //   2. without a video: no overlay, the real-time 01 cinematic starts at t = 0 (fallback).
+> // Usage: node scripts/cinematic-test.mjs [path-to-test-video-under-project-root]
+> // Writes qa/cinematic_test.json. Chromium here has no H.264, so the default test clip is VP8 WebM.
+> 
+> const clip = process.argv[2] ?? 'node_modules/.rainbow-test/intro.webm';
+> if (!existsSync(clip)) {
+>   mkdirSync('node_modules/.rainbow-test', { recursive: true });
+>   execSync(`ffmpeg -hide_banner -loglevel error -y -f lavfi -i color=c=0x8a2be2:s=360x640:d=2.5 -c:v libvpx -b:v 300k -an ${clip}`);
+> }
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5203);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const out = { when: new Date().toISOString(), clip, withVideo: {}, withoutVideo: {}, errors: [] };
+> const ready = (page) => page.waitForFunction(() => window.__rainb …[+1631 chars]
+
+### 🤖 Claude — 2026-11-17T02:49:39.311Z
+
+> 🔧 **Bash** `{"command": "grep -n \"requestAnimationFrame\\|const stepSim\\|function stepSim\\|const render =\\|function render\\|st.mode ===\\|mode = '\\|running\\b\" src/game/Game.ts | head -40", "description": "Locate main loop, simulation step and game modes"}`
+
+### 🧑 User — 2026-11-17T02:49:39.337Z
+
+> ↩︎ result: 322:    st.mode = 'ride';
+> 400:    st.mode = 'outro';
+> 451:    if (t >= O.badge && st.mode === 'outro') {
+> 453:      st.mode = 'end';
+> 467:    if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }
+> 490:    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+> 501:  const stepSim = (dt: number) => {
+> 505:    if (st.mode === 'intro') introUpdate(dt);
+> 506:    else if (st.mode === 'ride') rideUpdate(dt);
+> 507:    else if (st.mode === 'outro' || st.mode === 'end') {
+> 520:  let running = !qaMode;
+> 532:  const render = () => {
+> 552:    if (running) stepSim(dt);
+> 554:    if (!qaMode || running || dirty) { render(); dirty = false; }
+> 555:    requestAnimationFrame(frame);
+> 557:  requestAnimationFrame(frame);
+> 622:    run(v = true) { running = v; last = performance.now(); },
+
+### 🤖 Claude — 2026-11-17T02:49:40.020Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,110p scripts/proj05-move.mjs", "description": "Read how the ride clip records frames"}`
+
+### 🧑 User — 2026-11-17T02:49:40.051Z
+
+> ↩︎ result: }
+>   if (opt.still) {
+>     mkdirSync(`${OUT}/still`, { recursive: true });
+>     const n = Math.round(Number(opt.still) * fps);
+>     await page.evaluate(() => window.__rainbow.goto('05'));
+>     for (let i = 0; i < n; i++) {
+>       await page.evaluate(([t]) => { const R = window.__rainbow; R.freezeAt(t); R.step(1, 1e-4); }, [12 + i / fps]);
+>       await shot(`${OUT}/still/${String(i).padStart(4, '0')}.png`, { t: 12 + i / fps });
+>     }
+>     console.log('still frames', n);
+>   }
+>   if (opt.steer) {
+>     // Benny steers from the locked checkpoint: hold left / right, frames at 0.25 / 0.5 / 0.8 s (real simulation)
+>     for (const dir of String(opt.steer).split(',').map(Number)) {
+>       await page.evaluate(() => window.__rainbow.goto('05'));
+>       let tPrev = 0;
+>       for (const t of [0.25, 0.5, 0.8]) {
+>         await page.evaluate(([dir, n]) => { const R = window.__rainbow; R.setSteer(dir); R.step(n, 1 / 60); }, [dir, Math.round((t - tPrev) * 60)]);
+>         tPrev = t;
+>         await shot(`${OUT}/steer_${dir < 0 ? 'L' : 'R'}_${String(Math.round(t * 100)).padStart(3, '0')}.png`, { steer: dir, t });
+>         console.log('steer', dir, t, JSON.stringify(log.frames.at(-1).lat));
+>       }
+>     }
+>   }
+>   if (opt.zig …[+1430 chars]
+
+### 🤖 Claude — 2026-11-17T02:49:47.823Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts", "offset": 380, "limit": 180}`
+
+### 🧑 User — 2026-11-17T02:49:47.846Z
+
+> ↩︎ result: 380	    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+> 381	    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
+> 382	    // camera
+> 383	    rideCam.update(dt, st.s, st.lat, camera);
+> 384	    // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)
+> 385	    env.towel.setTent(sm(course.stage('09').s1 - 6, course.stage('10').s0 + 2, st.s));
+> 386	    // girl at the counter behind the door glass in 10 (back turned — never sees Benny)
+> 387	    if (st.stage === '09' || st.stage === '10') {
+> 388	      placeGirl('C', env.roomC.spots.table.clone(), 0.25);
+> 389	      girl.play('laundryCounter', { fade: 0.3 });
+> 390	    }
+> 391	    env.doorC.rotation.y = 0;
+> 392	    st.log.push({ t: st.clock, s: st.s, y: benny.root.position.y, stage: st.stage });
+> 393	    if (st.log.length > 20000) st.log.shift();
+> 394	    if (st.s >= course.stage('11').s0 - 0.01) startOutro();
+> 395	  };
+> 396	
+> 397	  // ---------------------------------------------------------------- outro (11)
+> 398	  const cinematic = { ending: null as string | null };
+> 399	  const startOutro = () => {
+> 400	    st.mode = 'outro';
+> 401	  …[+8113 chars]
+
+### 🤖 Claude — 2026-11-17T02:49:49.837Z
+
+In test mode the game only redraws on request. Checking how the existing ride-clip script forces a redraw before each frame:
+
+### 🤖 Claude — 2026-11-17T02:49:50.895Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,39p scripts/proj05-move.mjs; grep -n \"T = {\\|rideStart\\|const O = {\\|badge:\" src/game/Game.ts | head -8", "description": "Read the frame shot helper and cinematic timings"}`
+
+### 🧑 User — 2026-11-17T02:49:50.931Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 projection test — MOVING CAMERA (2026-11-16). Starts at the locked 05 checkpoint and rides forward with
+> // the real game simulation (Benny + camera rig + course unchanged), capturing full-size frames.
+> //   node scripts/proj05-move.mjs --q='proj05=1' --out=DIR [--d=0,1,2,4,8,16,30,50] [--clip=SECONDS --fps=24]
+> // --d: distances ahead of the checkpoint (units of s) → DIR/move_<d>.png (shader clock frozen at 12: shows layout only)
+> // --clip: a riding clip with the shader clock running (flow animation) → DIR/clip/0000.png … (encode with ffmpeg)
+> // --still=SECONDS: water animation at the LOCKED camera (clock runs, camera still) → DIR/still/0000.png …
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const Q = typeof opt.q === 'string' ? opt.q : '';
+> const OUT = typeof opt.out === 'string' ? opt.out : 'qa/pilot05/proj/move';
+> const D = typeof opt.d === 'string' ? opt.d.split(',').map(Number) : [];
+>  …[+2180 chars]
+
+### 🤖 Claude — 2026-11-17T02:50:10.102Z
+
+> 🔧 **Bash** `{"command": "grep -n \"setSteer\\|coinDefs\\|autopilot\\|hearts\" scripts/gameplay-test.mjs | head -12; grep -n \"hearts\\|respawn\\|hazard\\|obstacle\" src/game/Game.ts | head -12", "description": "Look for autopilot steering and hazard logic"}`
+
+### 🧑 User — 2026-11-17T02:50:10.138Z
+
+> ↩︎ result: 35:  api.setSteer(0);
+> 61:    const next = api.coinDefs().find((d) => !d.taken && d.s > st.s + 0.5 && d.s < st.s + 12);
+> 63:    api.setSteer(Math.max(-1, Math.min(1, (want - st.lat) * 0.9)));
+> 91:  // ---- hearts: hold steer into the wall in 05
+> 93:  api.setSteer(1);
+> 96:  out.checks.heartsLostOnWallBump = { pass: h.hearts < 5, hearts: h.hearts };
+> 97:  api.setSteer(null);
+> 6: *                   5 hearts (bumping the foam walls costs one), pause/resume.
+> 124:    hearts: 5,
+> 130:    respawns: 0,
+> 349:      st.hearts = Math.max(0, st.hearts - 1);
+> 350:      hud.setHearts(st.hearts);
+> 355:      if (st.hearts === 0) {
+> 356:        // restart this stage with full hearts (checkpoint), coins kept
+> 357:        st.hearts = 5;
+> 361:        st.respawns++;
+> 460:  hud.setHearts(st.hearts);
+> 490:    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+> 634:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+
+### 🤖 Claude — 2026-11-17T02:50:11.720Z
+
+> 🔧 **Bash** `{"command": "sed -n 55,70p scripts/gameplay-test.mjs", "description": "Read the gameplay test's coin-chasing autopilot"}`
+
+### 🧑 User — 2026-11-17T02:50:11.750Z
+
+> ↩︎ result: const camPrev = { v: prev.cam };
+>   // steering policy: weave gently so Benny crosses coin lines (real pickups)
+>   while (steps < 60 * 120) {
+>     const st = api.state();
+>     if (st.mode !== 'ride') break;
+>     // coin-seeking: steer toward the lateral offset of the next untaken coin within 12 units
+>     const next = api.coinDefs().find((d) => !d.taken && d.s > st.s + 0.5 && d.s < st.s + 12);
+>     const want = next ? next.lat : 0;
+>     api.setSteer(Math.max(-1, Math.min(1, (want - st.lat) * 0.9)));
+>     const s1 = api.step(1, dt);
+>     steps++; t += dt;
+>     const ds = s1.s - st.s;
+>     if (ds <= 0 && s1.mode === 'ride') nonMonotonic++;
+>     const jump = Math.hypot(s1.cam[0] - camPrev.v[0], s1.cam[1] - camPrev.v[1], s1.cam[2] - camPrev.v[2]);
+>     maxCamJump = Math.max(maxCamJump, jump);
+>     camPrev.v = s1.cam;
+
+### 🤖 Claude — 2026-11-17T02:50:37.841Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/record_full.mjs", "content": "// Record the WHOLE game (01 intro cinematic -> 03..10 ride -> 11 victory) from a BUILT bundle (the web app inside the APK).\n// Deterministic: the real game simulation is advanced in fixed steps (1/60 s), one frame rendered every 1/fps s, so the\n// video plays at true game speed even though software WebGL renders slowly here. Steering = the coin-seeking policy of\n// scripts/gameplay-test.mjs (what a player does: steer toward the next coin). No URL experiment switche …[+4823 chars]`
+
+### 🧑 User — 2026-11-17T02:50:37.916Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/record_full.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T02:50:39.101Z
+
+First a dry run (simulation only, no rendering) to get the game's real length, plus a 30-frame test to measure how long each rendered frame takes:
+
+### 🤖 Claude — 2026-11-17T02:50:42.346Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad; cd $S && node record_full.mjs $S/apkbuild $S/rec_dry --dry 2>&1 | tail -4 && python3 -I -c \"\nimport json;l=json.load(open('$S/rec_dry/record_log.json'));print('segments',{k:v['t'] for k,v in l['segments'].items()});f=l['frames'][-1];print('end coins',f['coins'],'hearts',f['hearts'])\"; time node record_full.mjs $S/apkbuild $S/rec_test --max=30 2>&1 | tail -2", "description": "Dry-run full game length and time a 30-frame test", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T02:51:12.866Z
+
+> ↩︎ result: frame 1350 t=45.0s ride 08 s=396.481 coins=2140 hearts=5 elapsed=8s
+> frame 1500 t=50.0s outro 11 s=435.183 coins=2330 hearts=5 elapsed=8s
+> frame 1650 t=55.0s end 11 s=435.183 coins=2330 hearts=5 elapsed=8s
+> DONE frames 1735 video seconds 57.83 wall seconds 8 errors 0
+> segments {'intro:01': 0, 'intro:02': 7.4, 'ride:03': 13.97, 'ride:04': 17.2, 'ride:05': 20.4, 'ride:06': 27.13, 'ride:07': 32.4, 'ride:08': 44.27, 'ride:09': 45.9, 'ride:10': 47.53, 'outro:11': 49.63, 'end:11': 53.57}
+> end coins 2330 hearts 5
+> frame 0 t=0.0s intro 01 s=0 coins=1330 hearts=5 elapsed=7s
+> DONE frames 30 video seconds 1 wall seconds 21 errors 0
+> 
+> real	0m21.083s
+> user	0m1.386s
+> sys	0m0.488s
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T02:51:19.547Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/rec_test/frames/00029.jpg"}`
+
+### 🧑 User — 2026-11-17T02:51:19.561Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:51:21.328Z
+
+The frame renders correctly: the opening, with the girl seen through the washer door. Starting the full recording in HD (720×1280, 30 fps). I expect about 25–35 minutes:
+
+### 🤖 Claude — 2026-11-17T02:51:23.686Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad; rm -rf $S/rec_test $S/rec_dry; cd $S && node record_full.mjs $S/apkbuild $S/rec_full --w=720 --h=1280 --fps=30 --hold=3 > $S/rec_full.log 2>&1; echo \"exit=$?\"; tail -3 $S/rec_full.log", "description": "Record the full game at 720x1280, 30 fps", "timeout": 5400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T02:51:23.718Z
+
+> ↩︎ result: Command running in background with ID: b9qym4m7o. Output is being written to: /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/tasks/b9qym4m7o.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-17T02:51:26.379Z
+
+While it records, checking the video encoder and whether the game has sound (frame-by-frame recording captures picture only):
+
+### 🤖 Claude — 2026-11-17T02:51:28.918Z
+
+> 🔧 **Bash** `{"command": "ffmpeg -hide_banner -encoders 2>/dev/null | grep -E \"libx264|libvpx-vp9|aac\" | head; cd /home/user/rainbow- && grep -rln \"AudioContext\\|new Audio(\\|\\.mp3\\|\\.ogg\\|howler\" src | head; ls public assets | grep -i -E \"audio|sound|music\" ; sleep 0; tail -2 /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/rec_full.log", "description": "Check encoders and whether the game has audio"}`
+
+### 🧑 User — 2026-11-17T02:51:29.266Z
+
+> ↩︎ result: V....D libx264              libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)
+>  V....D libx264rgb           libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 RGB (codec h264)
+>  V....D libvpx-vp9           libvpx VP9 (codec vp9)
+>  A....D aac                  AAC (Advanced Audio Coding)
+
+### 🤖 Claude — 2026-11-17T02:51:33.589Z
+
+The game has no sound at all (no audio code or sound files), so a silent video is accurate. The H.264 encoder is available for a phone-friendly MP4. Checking how the repository stores `.mp4` files:
+
+### 🤖 Claude — 2026-11-17T02:51:35.289Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"mp4\\|webm\\|jpg\" .gitattributes; tail -2 /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/rec_full.log", "description": "Check LFS rules for video files and recording progress"}`
+
+### 🧑 User — 2026-11-17T02:51:35.348Z
+
+> ↩︎ result: 1:# Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> 12:*.mp4   filter=lfs diff=lfs merge=lfs -text
+> 13:*.webm  filter=lfs diff=lfs merge=lfs -text
+> frame 0 t=0.0s intro 01 s=0 coins=1330 hearts=5 elapsed=10s
+
+### 🤖 Claude — 2026-11-17T02:51:41.021Z
+
+I'm recording the full game video now, from the opening through the ending. I'll send you the MP4 as soon as it's encoded; I expect about 25–35 minutes.
+
+- **Same game as the APK:** it's recorded from the exact game code inside the APK I sent you, so Screen 05 shows the newest look.
+- **Length:** about 58 seconds at real game speed. The opening cinematic runs to 14 s, the ride through screens 03–10 runs to about 50 s, then the ending and the "FINAL SPIN COMPLETE" victory screen.
+- **Who's playing:** Benny is steered by the game's built-in test autopilot, which heads for the next coin like a player would. In a test run he collected 1,000 coins and lost no hearts.
+- **Opening and ending:** your Google Flow videos aren't in the project, so the opening and ending are the game's own 3D cinematics.
+- **Sound:** the video is silent, because the game currently has no sound or music.
+- **Quality:** it's 720×1280 HD portrait at 30 fps. This machine has no graphics card, so I render it frame by frame, and the video still plays at true game speed.
+
+The splash and bubble specialist and the tunnel specialist are still working; the recording slows them down a little while it runs.
+
+### 🧑 User — 2026-11-17T02:51:44.071Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

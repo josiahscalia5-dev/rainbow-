@@ -674,7 +674,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12157,
-   "sha256": "ead3e364f8a5d2a78649943476eed9baa1a7e7fc1a6b684b3cad6e4f31926033"
+   "sha256": "27974087bba0cbdfac152cc5a2456fbac41c86c9795b2676eb2e6f3f0f2869a5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1128,8 +1128,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1196,
-   "sha256": "1cddabf9ac083a31e8a9c5a971d55bddca1ae7276bb3bfad5393b0de64efa5ef"
+   "bytes": 1972,
+   "sha256": "89481a9c4c943cc27d30aaa6b752ba0d34e891868d1e129be0546c4acebd5f32"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -10743,8 +10743,8 @@
   },
   {
    "path": "src/vfx/riderSplash.ts",
-   "bytes": 29190,
-   "sha256": "08a2a8262c2d893986c074f7c7bd2460d641d17ed2f0a6213dece8f88e54023f"
+   "bytes": 29643,
+   "sha256": "08669c6981c83af16de2da4d3b892bead7334828d907f31496cf38f6fd372ab5"
   },
   {
    "path": "src/vfx/spray.ts",
@@ -10843,8 +10843,8 @@
   },
   {
    "path": "tools/env05/proj_bake.py",
-   "bytes": 11946,
-   "sha256": "2a7cb6f48c72209880d252453b97edcf445862b581106af00baf184332ea9565"
+   "bytes": 16272,
+   "sha256": "de9ec28ddd0433bf5a0d09e3cb5b5c5a99e9f6eda89e4636ddef7fc266a9e585"
   },
   {
    "path": "tools/env05/ring_fit.py",

@@ -1270,3 +1270,218 @@ tsc clean. First real capture with both parts on (`?match05=1`). I'll back up `q
 > wake_splash                  px   83491  mean  17.25  <=10 0.538  <=20 0.720  ssim 0.708  signed [7.1, 2.4, 1.4]
 > coins                        px   27437  mean  27.66  <=10 0.277  <=20 0.516  ssi …[+535 chars]
 
+### 🤖 Claude — 2026-11-17T02:49:31.651Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nS='$S'\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(float)\nc=np.asarray(Image.open(S+'/c1/05.png').convert('RGB')).astype(float)\nsim=np.asarray(Image.open(S+'/sim_white_under.png').convert('RGB')).astype(float)\nwm=np.asarray(Image.open('qa/pilot05/full_reference_match/masks/wake_splash.png').convert('L'))>127\nd=np.abs(c-ap).mean(-1); ds=np.abs(sim-ap).mean(-1);  …[+389 chars]`
+
+### 🧑 User — 2026-11-17T02:49:32.341Z
+
+> ↩︎ result: cap vs sim in wake: mean 5.249959077425512 >20 0.0853385394832976
+
+### 🤖 Claude — 2026-11-17T02:49:33.976Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/c1_wake.png"}`
+
+### 🧑 User — 2026-11-17T02:49:34.014Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:49:45.123Z
+
+Capture matches the simulation except a patch at the lower right (x ≈ 460–690, y ≈ 1210–1280) and Benny's silhouette edge. Let me find what else changed versus the background capture.
+
+### 🤖 Claude — 2026-11-17T02:49:50.078Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nimport numpy as np, json\nfrom PIL import Image\nfrom scipy.ndimage import label\nS='$S'\nc=np.asarray(Image.open(S+'/c1/05.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open(S+'/bg_nosplash.png').convert('RGB')).astype(int)\nm=np.load('tools/splash05/work/wake_matte.npy')>0.003\nB=json.load(open('assets/textures/bub05/bub05.json'))['bubbles']\nyy,xx=np.mgrid[0:1536,0:864]\nfor bb in B:\n    if bb['group']=='missing': m|=(np.abs(xx-bb['x'])<=bb[' …[+386 chars]`
+
+### 🧑 User — 2026-11-17T02:49:50.821Z
+
+> ↩︎ result: changed px total 50832 outside my layers 0
+
+### 🤖 Claude — 2026-11-17T02:49:55.756Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nS='$S'\nims=[Image.open(p).convert('RGB').crop((440,1150,720,1320)) for p in ['references/05_flow_into_the_current.png',S+'/c1/05.png',S+'/sim_white_under.png',S+'/bg_nosplash.png']]\no=Image.new('RGB',(280*2+10,170*2+10))\nfor i,im in enumerate(ims): o.paste(im,((i%2)*290,(i//2)*180))\no=o.resize((o.width*2,o.height*2),Image.NEAREST); o.save(S+'/notch.png')\n\"", "description": "Zoom on lower-right difference r …[+7 chars]`
+
+### 🧑 User — 2026-11-17T02:49:56.157Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T02:49:58.093Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/notch.png"}`
+
+### 🧑 User — 2026-11-17T02:49:58.114Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:50:15.816Z
+
+The card's lower-right part is cut along straight edges that coincide with a seam already present in the background — something in front of the card at the water level. Let me identify it.
+
+### 🤖 Claude — 2026-11-17T02:50:17.114Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; node tools/match05/pixel_probe.mjs --q='match05=1' --px=600,1260 --px=540,1245 --px=300,1230 --px=640,1200 2>&1 | tail -30", "description": "Probe objects under clipped card pixels", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T02:50:29.093Z
+
+> ↩︎ result: px 600,1260
+>    d 6.356  ro 3  ShaderMaterial transparent  water_system > rider_splash05
+>    d 6.483  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 14.479  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 15.881  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 16.089  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 540,1245
+>    d 6.439  ro 3  ShaderMaterial transparent  water_system > rider_splash05
+>    d 6.567  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 14.572  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 16.196  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 16.413  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 300,1230
+>    d 6.606  ro 3  ShaderMaterial transparent  water_system > rider_splash05
+>    d 6.725  ro 0  ShaderMaterial  water_system > water_ribbon
+>    d 14.439  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 15.844  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+>    d 16.052  ro 0  MeshStandardMaterial  washer_world > zone_tubes > Mesh
+> px 640,1200
+>    d 6.799  ro 3  ShaderMaterial transparent  water_system > rider_splas …[+213 chars]
+
+### 🤖 Claude — 2026-11-17T02:50:37.724Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"uBenny\" src/vfx/waterRibbon.ts | head -30", "description": "Find Benny-related water displacement"}`
+
+### 🧑 User — 2026-11-17T02:50:37.759Z
+
+> ↩︎ result: 371:uniform vec3 uBenny;      // s, lateral (units), strength
+> 372:uniform float uBennyR;    // Benny's waterline radius (units)
+> 805:  float db = s - uBenny.x;
+> 852:    if (vStyle.x > 0.0 && uBenny.z > 0.0) {
+> 895:  float nearW = uBenny.z > 0.0 ? sw * smoothstep(5.0, 0.5, db) : 0.0;
+> 896:  float X = (lat - mix(M + sbend + 0.5 * (cLc + cRc), uBenny.y, nearW)) * mix(3.0 / hS, 1.0, nearW) / (1.0 + 0.7 * back);
+> 925:  float wake = (vStyle.x > 0.0 && uBenny.z > 0.0) ? sw * vStyle.x : 0.0;
+> 926:  float dlB = lat - uBenny.y;
+> 1126:      float dlN = lat - uBenny.y;
+> 1306:      float dlN = lat - uBenny.y;
+> 1409:  if (uBenny.z > 0.0) {
+> 1410:    float du = lat - uBenny.y;
+> 1411:    float dv = s - uBenny.x;
+> 1412:    float rb = uBennyR;
+> 1415:      float k = uBenny.z;
+> 1630:    uBenny: { value: new THREE.Vector3(0, 0, 0) },
+> 1631:    uBennyR: { value: 0.7 },
+
+### 🤖 Claude — 2026-11-17T02:50:39.037Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1395,1440p src/vfx/waterRibbon.ts", "description": "Read ribbon vertex displacement near Benny"}`
+
+### 🧑 User — 2026-11-17T02:50:39.073Z
+
+> ↩︎ result: float c = cells(vec2(lat * 3.2, (s - vSpeed * uTime * 0.35) * 3.2));
+>     vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
+>     col = mix(col, foamCol, edge * smoothstep(0.05, 0.4, c + edge * 0.3));
+>   }
+>   col = mix(col, uFoamLav * 0.92, vSkirt);
+>   float cutC = cells(vec2(u * vHalfW * 4.0, s * 3.6));
+>   col = mix(col, mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, cutC)), cutFoam);
+> 
+>   // ---- Benny: ripple rings and a V wake on the surface ----
+>   // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water
+>   // around and behind him stays glossy electric cyan as in ref 05.) There is deliberately NO white
+>   // contact band at the waterline: the old contact -> uFoam mix drew a white elliptical rim that the
+>   // fur fringe turned into the jagged "splash artifact" under Benny (wave-3 correction 7). Only a
+>   // faint cyan brightening marks the waterline.
+>   if (uBenny.z > 0.0) {
+>     float du = lat - uBenny.y;
+>     float dv = s - uBenny.x;
+>     float rb = uBennyR;
+>     float d = length(vec2(du, dv));
+>     if (d < rb * 8.0) {
+>       float k = uBenny.z;
+>       float rr = max(0.0, d - rb * 0.92);
+>       float rings = smoothstep(0.75, 1 …[+1380 chars]
+
+### 🤖 Claude — 2026-11-17T02:50:47.266Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 255,300p src/vfx/waterRibbon.ts; grep -n \"PROJ05\" src/vfx/waterRibbon.ts | sed -n 1,60p | grep -i \"amp\\|wave\\|height\\|lift\" ", "description": "Read wave amplitude and height functions"}`
+
+### 🧑 User — 2026-11-17T02:50:47.323Z
+
+> ↩︎ result: export function ampAt(course: Course, s: number): number {
+>   let v = 0, w = 0;
+>   for (const st of course.stages) {
+>     const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+>     if (a > 0) { v += (AMP[st.id] ?? 0.08) * a; w += a; }
+>   }
+>   let amp = w > 0 ? v / w : 0.08;
+>   // calm the long straight of the deep plunge (fast sheet flow)
+>   const pt = course.marks['07_plunge_top'], pb = course.marks['07_plunge_bottom'];
+>   if (pt !== undefined) amp *= 1 - 0.6 * smooth(pt, pt + 8, s) * (1 - smooth(pb - 8, pb, s));
+>   return amp;
+> }
+> 
+> function smooth(a: number, b: number, x: number) {
+>   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+>   return t * t * (3 - 2 * t);
+> }
+> 
+> /** CPU mirror of the vertex displacement (keep in sync with VERT). */
+> export function ribbonWave(u: number, s: number, t: number, amp: number): number {
+>   const au = Math.min(1, Math.abs(u));
+>   const trough = EDGE_LIFT * au * au * au;
+>   return trough + amp * (0.6 * Math.sin(s * 0.9 - t * 2.4 + u * 1.7) + 0.4 * Math.sin(s * 0.41 + t * 1.5 - u * 2.3));
+> }
+> 
+> const VERT = /* glsl */ `
+> attribute vec2 aUV;      // x = u (-1..1 across), y = s (arc length)
+> attribute float aHalfW;
+> attribute float aSpeed;
+> at …[+792 chars]
+
+### 🤖 Claude — 2026-11-17T02:51:11.844Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"logarithmicDepthBuffer\\|new THREE.WebGLRenderer\" src | head; grep -rn \"gl_FragDepth\" src | head -3", "description": "Check depth buffer settings"}`
+
+### 🧑 User — 2026-11-17T02:51:11.916Z
+
+> ↩︎ result: src/render/env.ts:49:  const renderer = new THREE.WebGLRenderer({
+> src/vfx/foam.ts:406:  gl_FragDepth = 0.5 * clip.z / clip.w + 0.5;
+
+### 🤖 Claude — 2026-11-17T02:51:13.292Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 46,56p src/render/env.ts; sed -n 395,410p src/vfx/foam.ts", "description": "Check renderer options and existing FragDepth use"}`
+
+### 🧑 User — 2026-11-17T02:51:13.325Z
+
+> ↩︎ result: /** Standard renderer setup used by the game and the tools. */
+> export function createRenderer(canvas: HTMLCanvasElement, opts: { preserveDrawingBuffer?: boolean } = {}): THREE.WebGLRenderer {
+>   const renderer = new THREE.WebGLRenderer({
+>     canvas,
+>     antialias: true,
+>     alpha: false,
+>     powerPreference: 'high-performance',
+>     preserveDrawingBuffer: !!opts.preserveDrawingBuffer,
+>   });
+>   renderer.outputColorSpace = THREE.SRGBColorSpace;
+>   float d = length(vP);
+>   float ang = atan(vP.y, vP.x);
+>   float nS = clamp(floor(px / 8.0), 5.0, 16.0);
+>   float sc = abs(sin(ang * nS * 0.5 + vInst.y * 31.0));
+>   float amp = 0.11 * smoothstep(16.0, 34.0, px) * smoothstep(0.45, -0.35, vP.y / max(d, 1e-3));
+>   float R = 1.0 - amp * (1.0 - sc);
+>   if (d > R) discard;
+>   vec2 q = vP / R;
+>   float z = sqrt(max(1.0 - dot(q, q), 0.0));
+>   vec3 Nv = vec3(q, z);
+>   vec4 clip = projectionMatrix * vec4(vCv + vR * vec3(vP, z * R), 1.0);
+>   gl_FragDepth = 0.5 * clip.z / clip.w + 0.5;
+>   // wave 7 ramp: white top caps, lavender-white bodies, periwinkle / blue undersides; lower / side silhouette = the
+>   // blue-violet crevice between piled bubbles; inner / lower bubbles of a pile (ambient occlusion vInst.x) bluer
+>   //  …[+212 chars]
+
+### 🤖 Claude — 2026-11-17T02:51:14.257Z
+
+Same technique already exists in foam.ts. Applying it to the card.
+
+### 🤖 Claude — 2026-11-17T02:51:25.060Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/vfx/riderSplash.ts'\ns=open(p).read()\ns=s.replace(\"\"\"const CARD_VERT = /* glsl */ `\nvarying vec3 vLocal;\nvoid main() {\n  vLocal = position;\n  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n`;\"\"\",\"\"\"const CARD_VERT = /* glsl */ `\nvarying vec3 vLocal;\nvarying vec3 vView;\nvoid main() {\n  vLocal = position;\n  vec4 mv = modelViewMatrix * vec4(position, 1.0);\n  vView = mv.xyz;\n  gl_Position = projectionMatrix * mv;\n}\n`;\"\"\")\ns=s.replace(\"\"\"uniform vec3 uFlow;      // stream distan …[+2280 chars]`
+
