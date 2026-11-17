@@ -664,7 +664,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11044,
-   "sha256": "dd97f64ed9b9ed02d0638b46f6eea34c0280ceacbd67983424a73621f4fe96f8"
+   "sha256": "06905cae99516a4a986fa9d9ce45ea96f07ab5151ae365ec00f2bd3339e1e265"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1635,6 +1635,21 @@
    "path": "qa/match/07/m2/motion_fill/f00_checkpoint.png",
    "bytes": 2302264,
    "sha256": "3cca43a7cdbfcb650310cc8bd259428f5f6b4087c96803df13315f4a69e5b591"
+  },
+  {
+   "path": "qa/match/07/m2/motion_fill/f03_forward3u.png",
+   "bytes": 2134392,
+   "sha256": "025a68c28c35abc13610b8500edf8c36dcd76bd6000a654ea2ec20c09ef868f8"
+  },
+  {
+   "path": "qa/match/07/m2/motion_fill/f06_forward6u.png",
+   "bytes": 2011730,
+   "sha256": "fb8957476564bc3f52cc8f0d624c45a9879be02a76fbc831e24b35cf1b0d3a6d"
+  },
+  {
+   "path": "qa/match/07/m2/motion_fill/f10_forward10u.png",
+   "bytes": 1916646,
+   "sha256": "803a9aed9bfa1fd326d3bfc4908f68ee572e3d219240f581341404d5a628ae8c"
   },
   {
    "path": "qa/match/07/m3/07_NEW_match07_r3.png",
