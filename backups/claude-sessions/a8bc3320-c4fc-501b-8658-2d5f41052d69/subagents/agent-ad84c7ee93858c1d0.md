@@ -523,3 +523,148 @@ Deliver in `qa/pilot05/full_reference_match/env/` as the brief says. Your final 
 > 512	    // `axis`: direction of the straight run the camera looks down (the path's tangent at sF may already
 > 513	    // be easing toward the next s …[+13408 chars]
 
+### 🤖 Claude — 2026-11-17T00:07:47.705Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB')\na.crop((0,100,864,800)).save('qa/pilot05/full_reference_match/env/work/ap_top.png')\nb=Image.open('qa/pilot05/full_reference_match/stack_2340/05_match05.png').convert('RGB')\nb.crop((0,100,864,800)).save('qa/pilot05/full_reference_match/env/work/st_top.png')\n\"; cat /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/probe1.log", "description": "Crop top regions of approved and stack"}`
+
+### 🧑 User — 2026-11-17T00:07:48.517Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:07:50.634Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/env/work/ap_top.png"}`
+
+### 🧑 User — 2026-11-17T00:07:50.692Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:07:59.322Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/env/work/st_top.png"}`
+
+### 🧑 User — 2026-11-17T00:07:59.371Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:09:36.384Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/probe1.log; python3 -I -c \"\nimport json; m=json.load(open('qa/pilot05/proj/tunnel/model/ring_model.json'))\nfor k,v in m['rings'].items(): print(k, [round(x,1) for x in v['in']], [round(x,1) for x in v['out']])\nfor k,v in m['report'].items(): print(k,v)\n\"; python3 -I -c \"\nfrom PIL import Image\na=Image.open('qa/pilot05/proj/tunnel/model/ring_model_overlay.png'); a.resize((432,768)).save('qa/pilot05/full_reference_match/env/work/rm_overlay.png')\"", "description": "C …[+38 chars]`
+
+### 🧑 User — 2026-11-17T00:09:36.665Z
+
+> ↩︎ result: probed {"wall":2,"ring":1,"farWall":1,"farRing":1,"farLid":1} tunnel {"sCam05":126.03830202823289,"s05":114.68830202823243,"sGlow05":183.02412082521383,"sF05":180.0383020282329,"bay05":14,"rings05":[124.03830202823289,138.0383020282329,146.0383020282329,166.0383020282329],"ringDv":[59,97,161,222,322],"knots":[[0,0],[7,5.751032430368738],[21,43.75103243036874],[35,107.75103243036874],[49,168.75103243036875],[63,268.75103243036875]],"realSeamRing":false,"D0":53.24896756963126,"L":6,"zEnd":376.75103243036875,"R":7.6,"band05":{"height":0.095,"width":0.78,"lipHeight":0.045,"lipWidth":0.26,"groove":0.07},"band05near":{"height":0.13,"width":0.8,"lipHeight":0.065,"lipWidth":0.32,"groove":0.1},"eye":[1.920288434729371,-37.94339912418104,-68.28062556286872]}
+> 
+> real	0m32.888s
+> user	0m2.191s
+> sys	0m0.665s
+> A [443.6, -29.5, -39.1, 0.0, 0.0] [507.3, -33.7, -44.8, 0.0, 0.0]
+> B [231.7, -28.4, 3.4, -3.1, 6.6] [271.2, -33.7, 3.0, -4.5, 9.5]
+> C [141.7, -11.3, 5.8, -2.5, 1.9] [155.8, -11.3, 16.2, 1.7, 2.1]
+> D [87.4, -5.6, -2.3, -2.3, 1.8] [94.8, -6.5, 4.5, 0.3, 2.1]
+> E [53.0, 0.0, 2.0, -0.0, -0.0] [61.0, -0.0, 2.0, -0.0, 0.0]
+> F [37.0, 0.0, 1.0, -0.0, 0.0] [43.0, -0.0, 1.0, -0.0, -0.0]
+> G [25.5, -0.0, -0.0, -0. …[+1192 chars]
+
+### 🤖 Claude — 2026-11-17T00:09:41.266Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/env/work/rm_overlay.png"}`
+
+### 🧑 User — 2026-11-17T00:09:41.297Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:09:49.940Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad; ls -la $S/raw; python3 -I -c \"\nimport numpy as np\na=np.fromfile('$S/raw/tunnel_id.f32',np.float32).reshape(1536,864,4)\ncls=np.round(a[...,2]).astype(int); tag=np.round(a[...,3]).astype(int)\nimport collections\nu,c=np.unique(cls*1000+np.where(a[...,3]>=10,tag,0),return_counts=True)\nfor x,y in zip(u,c): print(x//1000, x%1000, y)\n\"", "description": "Inspect probe id buffer classes"}`
+
+### 🧑 User — 2026-11-17T00:09:50.214Z
+
+> ↩︎ result: total 20744
+> drwxr-xr-x 2 root root     4096 Nov 17 00:07 .
+> drwx------ 7 root root     4096 Nov 17 00:07 ..
+> -rw-r--r-- 1 root root 21233664 Nov 17 00:07 tunnel_id.f32
+> 0 0 151795
+> 1 0 668908
+> 1 10 251429
+> 2 0 12419
+> 2 10 55898
+> 3 0 170
+> 3 21 3953
+> 3 22 120260
+> 3 23 42111
+> 4 20 12478
+> 4 21 4335
+> 4 22 1793
+> 4 23 1007
+> 4 24 548
+
+### 🤖 Claude — 2026-11-17T00:10:41.739Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/env05; cat > /home/user/rainbow-/tools/env05/err_by_surface.py <<'EOF'\n\"\"\"Screen 05 env05: where does the tunnel error come from? Per approved region (masks/region_index.png), split the\npixels by the surface the GAME shows there (probe id buffer tunnel_id.f32 from scripts/proj05-tunnel-probe.mjs) and\nreport mean |dRGB| per (region, game surface).\nusage: python3 -I tools/env05/err_by_surface.py <capture.png> <tunnel_id.f32>\"\"\"\nimport json, sys\nimport numpy as np\nfrom PIL import Image\nM = \"qa/pilot05/full_reference_match/masks\"\ncap …[+1605 chars]`
+
+### 🧑 User — 2026-11-17T00:10:43.042Z
+
+> ↩︎ result: == gold_rings_and_front_frame: 125730 px, mean 37.7
+>    game shows far0         2308 px  mean   32.4  share of region error 0.016
+>    game shows far1          429 px  mean   42.2  share of region error 0.004
+>    game shows far2          226 px  mean   46.3  share of region error 0.002
+>    game shows farwall      1938 px  mean   85.5  share of region error 0.035
+>    game shows other       75477 px  mean   21.4  share of region error 0.341
+>    game shows ringA       14161 px  mean   40.0  share of region error 0.119
+>    game shows ringB        7792 px  mean   37.1  share of region error 0.061
+>    game shows wall        23399 px  mean   85.6  share of region error 0.422
+> == purple_walls: 312706 px, mean 53.8
+>    game shows far0         9090 px  mean   54.2  share of region error 0.029
+>    game shows far1         3519 px  mean   52.2  share of region error 0.011
+>    game shows far2          360 px  mean   35.1  share of region error 0.001
+>    game shows farwall     45540 px  mean   33.9  share of region error 0.092
+>    game shows other       24271 px  mean   18.3  share of region error 0.026
+>    game shows ring@12u     2884 px  mean   73.8  share of region error 0.013
+>    game shows ringA       44545  …[+1207 chars]
+
+### 🤖 Claude — 2026-11-17T00:11:45.805Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/tools/env05/ringproj.py <<'EOF'\n\"\"\"Screen 05 env05 — ring projection model (Python replica of the game's 05 gold rings seen from the locked camera).\nCamera + ring instances come from scripts/proj05-tunnel-probe.mjs (tunnel.json); the band profile replicates\nsrc/world/tube.ts roundBandGeometry. Screen polar coordinates about O (tools/proj05/tunnel_common.O), image angle\ntheta (0 = right, counter-clockwise), radius in px of the 864x1536 frame.\"\"\"\nimport json, math\nimport numpy as np\n\nW, H = 864, 1536\nO = (497.0, 468.0)\n\n\ndef band_profile(h …[+7867 chars]`
+
+### 🧑 User — 2026-11-17T00:11:46.610Z
+
+> ↩︎ result: Exit code 1
+> ring game   rays |  APPROVED centre  r_mid  band |      GAME centre  r_mid  band | dr_in dr_out |d|
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/tools/env05/ring_table.py", line 48, in <module>
+>     print(f"{n:4s} {r['game']:5s} {r['rays_compared']:5d} | {str(A['centre']):>16s} {A['r_mid']:6.1f} {A['band_px_median']:5.1f} | {str(G['centre']):>16s} {G['r_mid']:6.1f} {G['band_px_median']:5.1f} | {r['d_r_in_mean']:5.1f} {r['d_r_out_mean']:5.1f} {r['abs_d_edges_mean']:5.1f}")
+>                    ^^^^^^^^^^^^^^
+> TypeError: unsupported format string passed to dict.__format__
+
+### 🤖 Claude — 2026-11-17T00:11:52.977Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i 's/{n:4s} {r\\[.game.\\]:5s}/{n:4s} {str(r[\"game\"]):5s}/' tools/env05/ring_table.py; sed -i 's/for n, r in rows.items():/for n, r in rows.items():\\n    r = dict(r); r[\"game\"] = r.pop(\"game\") if isinstance(r.get(\"game\"), str) else r[\"game\"]/' tools/env05/ring_table.py; python3 - <<'EOF'\np='/home/user/rainbow-/tools/env05/ring_table.py'\ns=open(p).read()\ns=s.replace('row = {\"game\": key,','row = {\"key\": key,')\ns=s.replace('''    r = dict(r); r[\"game\"] = r.pop(\"game\") if isinstance(r.get(\"game\"), str) else r[\"game\"]\\n''','')\ns …[+483 chars]`
+
+### 🧑 User — 2026-11-17T00:11:53.673Z
+
+> ↩︎ result: ring game   rays |  APPROVED centre  r_mid  band |      GAME centre  r_mid  band | dr_in dr_out |d|
+> A    r22      36 | [np.float64(463.7), np.float64(507.5)]  475.5  65.4 | [np.float64(419.3), np.float64(525.4)]  384.6  87.5 | -67.7 -50.5  59.1
+> B    r23     453 | [np.float64(468.1), np.float64(460.9)]  249.6  40.0 | [np.float64(504.6), np.float64(451.2)]  236.1  38.5 |  -9.3 -10.5  28.6
+> C    f0      507 | [np.float64(486.4), np.float64(457.0)]  149.2  20.4 | [np.float64(498.5), np.float64(465.4)]  162.1  17.5 |  10.9   9.0  10.6
+> D    f1      497 | [np.float64(491.5), np.float64(466.0)]   90.8  11.7 | [np.float64(498.9), np.float64(471.3)]   98.3  10.0 |   5.6   5.0   5.9
+> E    f2      565 | [np.float64(497.0), np.float64(466.0)]   57.0   8.0 | [np.float64(498.8), np.float64(474.8)]   59.5   6.0 |   1.0  -1.1   4.6
+> F    f3      589 | [np.float64(497.0), np.float64(467.0)]   40.0   6.0 | [np.float64(499.0), np.float64(476.1)]   43.3   4.5 |   1.7   0.1   4.9
+> G    f4      637 | [np.float64(497.0), np.float64(468.0)]   28.0   5.0 | [np.float64(499.0), np.float64(476.9)]   30.0   3.0 |   1.0  -0.9   5.2
+
+### 🤖 Claude — 2026-11-17T00:12:50.154Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nb=Image.open('qa/pilot05/full_reference_match/stack_2340/05_match05.png').convert('RGB')\nim=Image.new('RGB',(300*2+10+264*2+10,1200)); \nim.paste(a.crop((0,100,300,1300)),(0,0)); im.paste(b.crop((0,100,300,1300)),(310,0))\nim.paste(a.crop((600,100,864,1300)),(620,0)); im.paste(b.crop((600,100,864,1300)),(894,0))\nim.resize((im.width*2//3, 800)).save('qa/pilot05/full_reference_match/env/work/edges.png')\n\"", "description": "Crop left/right edge  …[+23 chars]`
+
+### 🧑 User — 2026-11-17T00:12:50.579Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:12:53.322Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/env/work/edges.png"}`
+
+### 🧑 User — 2026-11-17T00:12:53.360Z
+
+> ↩︎ result: [image]
+

@@ -2397,3 +2397,194 @@ Before probing, I need the exact switches the original bake's probe used, otherw
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && mkdir -p $S/ride_dbg && node scripts/proj05-move.mjs --q='match05=1&projdbg05=1' --out=$S/ride_dbg --d=10,20 2>&1 | tail -1 | cut -c1-80; R=qa/pilot05/full_reference_match/recovery_s018/move_match05; python3 -I -c \"\nfrom PIL import Image\nims=[Image.open(p).convert('RGB').crop((0,380,864,1100)).resize((432,360)) for p in ('$R/move_10.png','$S/ride_dbg/move_10.png','$R/move_20.png','$S/ride_dbg/move_20.png')]\nW=Image.new('RGB',(864+8,728),(255,255,255))\nfor i,im in enumerate(ims): W.paste(im, …[+128 chars]`
 
+### 🧑 User — 2026-11-17T00:07:54.370Z
+
+> ↩︎ result: move 20 {"file":"/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f4
+
+### 🤖 Claude — 2026-11-17T00:07:57.610Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/dbg_grid.png"}`
+
+### 🧑 User — 2026-11-17T00:07:57.653Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:08:20.477Z
+
+> 🔧 **Bash** `{"command": "grep -n \"vec3 pjTarget\\|float pjNearK\\|vec3 pjDetail\\|vec4 pjLut\" src/vfx/waterRibbon.ts", "description": "Locate water shader helper functions"}`
+
+### 🧑 User — 2026-11-17T00:08:20.524Z
+
+> ↩︎ result: 426:float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }
+> 427:vec4 pjLut(float s) {
+> 437:vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
+
+### 🤖 Claude — 2026-11-17T00:08:23.246Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 395, "limit": 110}`
+
+### 🧑 User — 2026-11-17T00:08:23.271Z
+
+> ↩︎ result: 395	varying vec3 vPosW;
+> 396	varying vec3 vNormalW;
+> 397	#ifdef FARW05
+> 398	varying vec2 vChan;
+> 399	#endif
+> 400	#include <fog_pars_fragment>
+> 401	#ifdef PROJ05
+> 402	uniform sampler2D uPjE;    // exact layer (rgb = approved display colour, a = valid)
+> 403	uniform sampler2D uPjLut;  // s -> (V, centre u, half range u) for uPjE (float, nearest)
+> 404	uniform vec4 uPjLutS;      // s0, s1, lut texels, unused
+> 405	uniform vec2 uPjESize;     // uPjE texels
+> 406	uniform sampler2D uPjN;    // near layer, full width (a = coverage)
+> 407	uniform vec2 uPjNS;        // s0, s1
+> 408	uniform sampler2D uPjT;    // periodic tile (repeat along s)
+> 409	uniform vec2 uPjTS;        // start s, period L
+> 410	uniform sampler2D uPjD;    // detail (luminance high-pass, 0.5 = none), repeats in u and s
+> 411	uniform vec4 uPjDS;        // tile width (u), tile length (s), gain, unused
+> 412	uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
+> 413	uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
+> 414	uniform vec2 uPjRes;       // render target size (vignette inverse)
+> 415	uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = t …[+5276 chars]
+
+### 🤖 Claude — 2026-11-17T00:08:49.491Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nt=np.asarray(Image.open('qa/pilot05/proj/target/target_05.png').convert('RGB'),float)/255\nm=np.asarray(Image.open('qa/pilot05/proj/target/water_mask.png'))>127\na=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB'),float)/255\nprint('water px', m.sum(), 'target mean', t[m].mean(0).round(4), 'approved mean', a[m].mean(0).round(4), 'target std', t[m].std(0).round(3))\nfor n in ('proj05_E','proj05_T','proj05_T2'):\n    x=np.asarray(Image.open(f'assets/textures/water05/{n}.png').convert('RGBA'),f …[+256 chars]`
+
+### 🧑 User — 2026-11-17T00:08:50.482Z
+
+> ↩︎ result: water px 805007 target mean [0.3859 0.5937 0.9061] approved mean [0.5199 0.5593 0.8228] target std [0.372 0.217 0.122]
+> proj05_E (1458, 1024, 4) mean [0.379  0.5983 0.9123] std [0.376 0.219 0.113]
+> proj05_T (336, 512, 4) mean [0.5373 0.588  0.9378] std [0.36  0.221 0.058]
+> proj05_T2 (768, 1024, 4) mean [0.5019 0.5326 0.9327] std [0.4   0.251 0.062]
+
+### 🤖 Claude — 2026-11-17T00:09:05.909Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nx=np.asarray(Image.open('assets/textures/water05/far1/proj05_E.png').convert('RGBA'),float)/255\na=x[...,3]\nfor lo,hi in ((0,0.01),(0.01,0.3),(0.3,0.7),(0.7,0.99),(0.99,1.01)):\n    s=(a>=lo)&(a<hi); print(f'alpha [{lo},{hi}) texels {s.sum():8d} rgb mean', x[...,:3][s].mean(0).round(3) if s.any() else '-')\n\"; grep -n \"u.uPjNear = \" src/vfx/waterRibbon.ts", "description": "Check E layer colours in transparent texels"}`
+
+### 🧑 User — 2026-11-17T00:09:06.415Z
+
+> ↩︎ result: alpha [0,0.01) texels   148699 rgb mean [0.015 0.023 0.034]
+> alpha [0.01,0.3) texels    46911 rgb mean [0.18  0.303 0.42 ]
+> alpha [0.3,0.7) texels    18733 rgb mean [0.398 0.68  0.911]
+> alpha [0.7,0.99) texels    25401 rgb mean [0.469 0.612 0.878]
+> alpha [0.99,1.01) texels  1254272 rgb mean [0.378 0.597 0.913]
+> 1723:  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 1), 0, 1), 0, 0) };
+
+### 🤖 Claude — 2026-11-17T00:09:33.094Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }", "new_string": "float pjNearK() { return uPjNear.x > 0.5 ? smoothstep(0.5, 2.0, abs(uPjNear.z - uPjNear.w)) : 0.0; }\n// ?projvp05=1 (2026-11-17, session 018Sg3AU; on with ?match05=1): VARIANCE-PRESERVING hand-over while riding. A plain\n// mix of two unrelated pictures of the water (exact layer E <-> crisp tile T2) halves their contrast in the hand-over\n// band: the rider saw a milky, smeared ban …[+730 chars]`
+
+### 🧑 User — 2026-11-17T00:09:33.264Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T00:09:37.554Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));\n    t = mix(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);\n    wN *= 1.0 - wT2;\n  }\n  vec3 lay = mix(t, n.rgb, wN);\n  return mix(lay, e.rgb, wE);\n}", "new_string": "    float wT2 = pjNearK() * (1.0 - smoothstep(0.3, 0.55, mE));\n    t = pjMixVP(t, texture2D(uPjT2, vec2(u * 0.5 + 0.5, (s - uPjT2S.x) / uPjT2S.y)).rgb, wT2);\n    wN *= 1.0 - wT2;\n  }\n  vec3 lay = mix(t, n.rgb, wN);\n  if (uPjVP.x > 0 …[+447 chars]`
+
+### 🧑 User — 2026-11-17T00:09:37.744Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T00:09:43.338Z
+
+Now the uniform itself, set in `attachProj05` next to the riding-water uniforms:
+
+### 🤖 Claude — 2026-11-17T00:09:46.143Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 1), 0, 1), 0, 0) };", "new_string": "  u.uPjNear = { value: new THREE.Vector4(0, THREE.MathUtils.clamp(qn('projneardetail05', 1), 0, 1), 0, 0) };\n  // ?projvp05=1 (or ?match05=1): variance-preserving E <-> tile hand-over while riding (shader pjMixVP). Mean colour =\n  // midpoint of the means of E (0.379, 0.598, 0.912) and T2 (0.502, 0.533, 0.933), measured over their valid texels\n  u.uPjVP = { value: new THR …[+62 chars]`
+
+### 🧑 User — 2026-11-17T00:09:46.320Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T00:09:47.343Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | tail -3; echo \"tsc rc=$?\"; grep -n \"uPjNear.x = \\|uPjNear.value.x\\|uPjNear.value.set\" src/vfx/*.ts | head", "description": "Type-check and confirm projnear uniform wiring"}`
+
+### 🧑 User — 2026-11-17T00:09:50.525Z
+
+> ↩︎ result: tsc rc=0
+
+### 🤖 Claude — 2026-11-17T00:10:02.968Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/full_reference_match/coordinator/vp05 && mkdir -p $O/locked_def $O/locked_vp $O/ride_vp && STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' && \\\nnode scripts/capture.mjs 05 --out=$O/locked_def > $O/locked_def/log.txt 2>&1; echo def rc=$?; \\\nnode scripts/capture.mjs 05 --out=$O/locked_vp --q=\"$STACK&projvp05=1\" > $O/locked_vp/log.txt 2>&1; echo vp rc=$?; git checkout -q -- qa/capture_log.json; \\\nnode scripts/proj05-move.mjs --q=\"$STACK&projvp05=1\" --out=$O/ride_vp --d=5,10,20 > $O/ride_vp/log.txt 2>&1; …[+576 chars]`
+
+### 🧑 User — 2026-11-17T00:11:23.651Z
+
+> ↩︎ result: def rc=0
+> vp rc=0
+> ride rc=0
+> default vs current_default_05: 0 px differ
+> STACK+vp locked vs recovered STACK: 0 px differ
+
+### 🤖 Claude — 2026-11-17T00:11:43.096Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/full_reference_match/coordinator/vp05 && S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && B=qa/pilot05/full_reference_match/recovery_s018/move_match05 && python3 -I - <<EOF\nimport numpy as np, json\nfrom PIL import Image\nfrom scipy.ndimage import uniform_filter\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(float)\ndef lstd(img, k=9):\n    y=img@[0.299,0.587,0.114]; m=uniform_filter(y,k); return np.sqrt(np.maximum(uniform_filter(y*y,k)-m*m,0))\ndef sat(img): mx=img.max(-1); mn=img.min(-1); return (mx-mn)/np.maximum …[+1271 chars]`
+
+### 🧑 User — 2026-11-17T00:11:48.308Z
+
+> ↩︎ result: APPROVED water (locked): local std 17.7  saturation 0.698
+> d=10 {"band": {"px": 97143, "std_before": 11.5, "std_after": 13.4, "sat_before": 0.672, "sat_after": 0.735, "changed_px": 88100}, "pure_E": {"px": 86218, "std_before": 11.3, "std_after": 11.8, "sat_before": 0.709, "sat_after": 0.712, "changed_px": 16130}, "tile": {"px": 333270, "std_before": 9.8, "std_after": 9.9, "sat_before": 0.792, "sat_after": 0.795, "changed_px": 51147}, "all_water": {"px": 516631, "std_before": 10.4, "std_after": 10.9, "sat_before": 0.755, "sat_after": 0.77, "changed_px": 155377}, "changed_outside_water": 830}
+> d=20 {"band": {"px": 43556, "std_before": 13.6, "std_after": 17.0, "sat_before": 0.543, "sat_after": 0.586, "changed_px": 34399}, "pure_E": {"px": 22829, "std_before": 12.7, "std_after": 13.8, "sat_before": 0.643, "sat_after": 0.648, "changed_px": 5941}, "tile": {"px": 492700, "std_before": 10.3, "std_after": 10.4, "sat_before": 0.754, "sat_after": 0.755, "changed_px": 19907}, "all_water": {"px": 559085, "std_before": 10.7, "std_after": 11.0, "sat_before": 0.733, "sat_after": 0.737, "changed_px": 60247}, "changed_outside_water": 155}
+
+### 🤖 Claude — 2026-11-17T00:11:58.803Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/full_reference_match/coordinator/vp05 && S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && B=qa/pilot05/full_reference_match/recovery_s018/move_match05 && python3 -I -c \"\nfrom PIL import Image\nbox=(0,470,864,760)\na=Image.open('$B/move_10.png').convert('RGB').crop(box); b=Image.open('$O/ride_vp/move_10.png').convert('RGB').crop(box)\nW=Image.new('RGB',(864,290*2+10),(255,255,255)); W.paste(a,(0,0)); W.paste(b,(0,300)); W.save('$S/vp_d10.png')\"", "description": "Crop band region before/after at 10 units"}`
+
+### 🧑 User — 2026-11-17T00:11:59.212Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:12:02.887Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/vp_d10.png"}`
+
+### 🧑 User — 2026-11-17T00:12:02.925Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:12:18.809Z
+
+> 🔧 **Bash** `{"command": "sed -n 95,140p tools/proj05/bake.py", "description": "Read bake finish() gap-filling logic"}`
+
+### 🧑 User — 2026-11-17T00:12:18.853Z
+
+> ↩︎ result: xi, yi = x0 + dx, y0 + dy
+>         ok = (xi >= 0) & (xi < Wt) & (yi >= 0) & (yi < Ht)
+>         np.add.at(acc, (yi[ok], xi[ok]), col[ok] * ww[ok, None]); np.add.at(wt, (yi[ok], xi[ok]), ww[ok])
+>     return acc, wt
+> 
+> def finish(acc, wt, holew, fill_sigma=1.2, along_axis=0, max_gap=400, fill_all=False):
+>     """normalise; fill tiny gaps by normalised blur; coin holes by linear interpolation along s (axis 0)."""
+>     img = acc / np.maximum(wt, 1e-9)[..., None]
+>     valid = wt > 0.2
+>     hole = holew > np.maximum(wt, 1e-9) * 0.5         # coin pixels dominate this texel
+>     valid &= ~hole
+>     blur_w = gaussian_filter(valid.astype(float), fill_sigma)
+>     blur_c = np.stack([gaussian_filter(np.where(valid, img[..., i], 0), fill_sigma) for i in range(img.shape[2])], -1)
+>     gap = (~valid) & (blur_w > 0.12) & ~binary_dilation(hole, iterations=1)
+>     img[gap] = (blur_c / np.maximum(blur_w, 1e-6)[..., None])[gap]
+>     valid = valid | gap
+>     # coin holes: interpolate along s (columns), between valid texels at both ends
+>     hole_t = (binary_dilation(hole, iterations=2) & ~valid | hole) if not fill_all else (~valid | hole)
+>     Ht, Wt = valid.shape
+>     filled = np.zeros_like(valid)
+>     for x in range(Wt): …[+992 chars]
+
+### 🤖 Claude — 2026-11-17T00:12:32.979Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('assets/textures/water05/far1/proj05_E.png'))[...,3]>127\nH,W=a.shape\nruns=[]\nfor x in range(W):\n    c=a[:,x]; idx=np.nonzero(c)[0]\n    if len(idx)<2: continue\n    g=np.diff(idx)-1; runs+=list(g[g>0])\nruns=np.array(runs)\nprint('E rows', H, 'rows per unit s', round(H/(180.97-129.71),1), 'interior gaps', len(runs))\nfor lo,hi in ((1,3),(3,6),(6,12),(12,24),(24,48),(48,100),(100,10000)):\n    m=(runs>=lo)&(runs<hi); print(f'gap {lo:>3}-{hi:<5} rows: {m.sum():7d} gaps, {runs[m].sum():8d} texels …[+70 chars]`
+
+### 🧑 User — 2026-11-17T00:12:33.273Z
+
+> ↩︎ result: E rows 1459 rows per unit s 28.5 interior gaps 5519
+> gap   1-3     rows:     474 gaps,      771 texels
+> gap   3-6     rows:    1547 gaps,     5787 texels
+> gap   6-12    rows:    1169 gaps,     9691 texels
+> gap  12-24    rows:    1235 gaps,    20994 texels
+> gap  24-48    rows:     901 gaps,    28138 texels
+> gap  48-100   rows:     183 gaps,    10979 texels
+> gap 100-10000 rows:      10 gaps,     1787 texels
+

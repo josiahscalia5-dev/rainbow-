@@ -803,3 +803,319 @@ I'll start by reading the brief in full.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T00:07:45.565Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/pilot05/full_reference_match/recovery_s018; cat stack/log.txt tests/queue.log move_match05/log.txt; sed -n 1,80p /home/user/rainbow-/scripts/lib/pw.mjs", "description": "Check capture logs and render slot helper"}`
+
+### 🧑 User — 2026-11-17T00:07:45.669Z
+
+> ↩︎ result: 05 → qa/pilot05/full_reference_match/recovery_s018/stack/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":76,"tris":553856,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> stack capture rc=0
+> gameplay default rc=0
+> gameplay match05 rc=0
+> move rc=0
+> continuity rc=0
+> move 0 {"file":"qa/pilot05/full_reference_match/recovery_s018/move_match05/move_00.png","d":0,"s":132.438,"cam":[1.92,-37.94,-68.28],"lat":0}
+> move 5 {"file":"qa/pilot05/full_reference_match/recovery_s018/move_match05/move_05.png","d":5,"s":137.572,"cam":[1.97,-38.1,-71.98],"lat":0}
+> move 10 {"file":"qa/pilot05/full_reference_match/recovery_s018/move_match05/move_10.png","d":10,"s":142.522,"cam":[2.02,-38.3,-76.84],"lat":0}
+> move 20 {"file":"qa/pilot05/full_reference_match/recovery_s018/move_match05/move_20.png","d":20,"s":152.605,"cam":[1.93,-38.72,-86.86],"lat":0}
+> move 35 {"file":"qa/pilot05/full_reference_match/recovery_s018/move_match05/move_35.png","d":35,"s":167.455,"cam":[1.34,-39.33,-101.67],"lat":0}
+> steer -1 0.25 -0.714
+> steer -1 0.5 -2.352
+> steer -1 0.8 -4.566
+> steer 1 0.25 0.705
+> steer 1 0.5 2.342
+> steer 1 0.8 4.556
+> // Resolve the Playwright that is pre-insta …[+3115 chars]
+
+### 🤖 Claude — 2026-11-17T00:07:55.505Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/full_reference_match/benny/work/seg_ref.py <<'EOF'\nimport sys; sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom bennyseg import *\na=load(REF); m=np.asarray(Image.open(MASK))>0\ncls=colour_classes(a); cls[~m]=0\npal=np.array([[0,0,0],[255,0,0],[0,0,255],[0,255,255],[0,0,0]],np.uint8)\npal[4]=[255,255,0]\no=pal[cls]; o[~m]=(a[~m]*0.3).astype(np.uint8)\nImage.fromarray(o).crop((200,740,640,1220)).save('qa/pilot05/full_reference_match/benny/work/ref_classes.png')\nfor k,n in enumerate …[+227 chars]`
+
+### 🤖 Claude — 2026-11-17T00:07:55.958Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/ref_classes.png"}`
+
+### 🧑 User — 2026-11-17T00:07:56.544Z
+
+> ↩︎ result: other 501
+> pink 41816
+> purple 35532
+> white 12923
+> yellow 2289
+
+### 🧑 User — 2026-11-17T00:07:56.561Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:08:07.646Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/full_reference_match/benny/work/profile.py <<'EOF'\nimport sys; sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom bennyseg import *\na=load(REF); m=np.asarray(Image.open(MASK))>0\ncls=colour_classes(a)\nys,xs=np.nonzero(m); print('mask bbox',xs.min(),xs.max(),ys.min(),ys.max(), 'cx',xs.mean().round(1),'cy',ys.mean().round(1))\n# centre column class runs\ncx=int(sys.argv[1]) if len(sys.argv)>1 else 424\ncol=cls[:,cx-6:cx+7]\nnames='o P U W Y'.split()\nprev=None; start=None\nfor y in r …[+582 chars]`
+
+### 🧑 User — 2026-11-17T00:08:08.540Z
+
+> ↩︎ result: Exit code 1
+> mask bbox 234 608 775 1188 cx 423.4 cy 1003.3
+> 760-776 - (17)
+> 777-778 W (2)
+> 779-790 P (12)
+> 791-798 U (8)
+> 799-799 P (1)
+> 800-898 U (99)
+> 899-921 W (23)
+> 922-955 U (34)
+> 956-980 W (25)
+> 981-1030 U (50)
+> 1031-1162 P (132)
+> 1163-1179 - (17)
+> 1180-1182 U (3)
+> 1183-1194 -
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/profile.py", line 23, in <module>
+>     print(y, r.min(), r.max(), r.max()-r.min()+1)
+>              ~~~~~^^
+>   File "/usr/local/lib/python3.13/site-packages/numpy/_core/_methods.py", line 45, in _amin
+>     return umr_minimum(a, axis, None, out, keepdims, initial, where)
+> ValueError: zero-size array to reduction operation minimum which has no identity
+
+### 🤖 Claude — 2026-11-17T00:08:27.792Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/full_reference_match/benny/work/measure.py <<'EOF'\n\"\"\"measure approved vs game Benny: bbox per part, centre-column band runs, row widths.\nusage: measure.py <game_capture.png> <game_mask_capture.png> [cx]\"\"\"\nimport sys, json; sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom bennyseg import *\ncap, mcap = sys.argv[1], sys.argv[2]\na=load(REF); m=np.asarray(Image.open(MASK))>0\ng=load(cap); gm=load(mcap)\nR,G,B=gm[...,0],gm[...,1],gm[...,2]\nbody=(R>150)&(G<60)&(B<60)\npom=(G> …[+2108 chars]`
+
+### 🧑 User — 2026-11-17T00:08:29.269Z
+
+> ↩︎ result: {
+> "game": {
+> "all": {
+> "x0": 0,
+> "x1": 863,
+> "y0": 1,
+> "y1": 1535,
+> "w": 864,
+> "h": 1535,
+> "cx": 419.9,
+> "cy": 982.8,
+> "px": 130640
+> },
+> "hat": {
+> "x0": 38,
+> "x1": 832,
+> "y0": 521,
+> "y1": 1465,
+> "w": 795,
+> "h": 945,
+> "cx": 422.5,
+> "cy": 946.2,
+> "px": 73702
+> },
+> "pom": {
+> "x0": 333,
+> "x1": 480,
+> "y0": 764,
+> "y1": 892,
+> "w": 148,
+> "h": 129,
+> "cx": 406.0,
+> "cy": 829.7,
+> "px": 12179
+> },
+> "crown": {
+> "x0": 38,
+> "x1": 832,
+> "y0": 521,
+> "y1": 1465,
+> "w": 795,
+> "h": 945,
+> "cx": 426.2,
+> "cy": 963.3,
+> "px": 43797
+> },
+> "cuff": {
+> "x0": 176,
+> "x1": 560,
+> "y0": 587,
+> "y1": 1026,
+> "w": 385,
+> "h": 440,
+> "cx": 408.8,
+> "cy": 990.8,
+> "px": 14856
+> },
+> "star": {
+> "x0": 470,
+> "x1": 545,
+> "y0": 909,
+> "y1": 984,
+> "w": 76,
+> "h": 76,
+> "cx": 507.9,
+> "cy": 949.5,
+> "px": 2870
+> },
+> "body": {
+> "x0": 0,
+> "x1": 863,
+> "y0": 1,
+> "y1": 1535,
+> "w": 864,
+> "h": 1535,
+> "cx": 416.4,
+> "cy": 1030.2,
+> "px": 56938
+> }
+> },
+> "approved": {
+> "all": {
+> "x0": 234,
+> "x1": 608,
+> "y0": 775,
+> "y1": 1188,
+> "w": 375,
+> "h": 414,
+> "cx": 423.4,
+> "cy": 1003.3,
+> "px": 93061
+> },
+> "star": {
+> "x0": 482,
+> "x1": 552,
+> "y0": 917,
+> "y1": 983,
+> "w": 71,
+> "h": 67,
+> "cx": 519.1,
+> "cy": 953.1,
+> "px": 2289
+> }
+> }
+> }
+> GAME centre column [(740, 745, 'crown_o'), (746, 771, '-'), (772, 880, 'pom'), (881, 891, 'crown_U'), (892, 910, 'crown_W'), (911, 943, 'crown …[+1871 chars]
+
+### 🤖 Claude — 2026-11-17T00:08:39.415Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cd qa/pilot05/full_reference_match/benny/work; python3 - <<'EOF'\nimport re\ns=open('measure.py').read()\ns=s.replace(\"R,G,B=gm[...,0],gm[...,1],gm[...,2]\",\"R,G,B=gm[...,0],gm[...,1],gm[...,2]\\nchg=np.abs(gm-g).sum(-1)>40\\nR=np.where(chg,R,128);G=np.where(chg,G,128);B=np.where(chg,B,128)\")\nopen('measure.py','w').write(s)\nEOF\ncd /home/user/rainbow-; python3 qa/pilot05/full_reference_match/benny/work/measure.py qa/pilot05/full_reference_match/benny/before.png qa/pilot05/full_reference_match/benny/cap/before_mask/05.png 2>&1 | python3 -c \"\nimport sy …[+181 chars]`
+
+### 🧑 User — 2026-11-17T00:08:41.060Z
+
+> ↩︎ result: {game: {all: {x0: 229, x1: 614, y0: 764, y1: 1192, w: 386, h: 429, cx: 417.7, cy: 1003.2, px: 93293 }, hat: {x0: 270, x1: 560, y0: 764, y1: 1026, w: 291, h: 263, cx: 412.2, cy: 922.2, px: 47444 }, pom: {x0: 333, x1: 480, y0: 764, y1: 892, w: 148, h: 
+> 129, cx: 406.0, cy: 829.7, px: 12179 }, crown: {x0: 285, x1: 542, y0: 866, y1: 970, w: 258, h: 105, cx: 403.5, cy: 923.5, px: 17569 }, cuff: {x0: 270, x1: 560, y0: 930, y1: 1026, w: 291, h: 97, cx: 409.3, cy: 991.5, px: 14826 }, star: {x0: 470, x1: 5
+> 45, y0: 909, y1: 984, w: 76, h: 76, cx: 507.9, cy: 949.5, px: 2870 }, body: {x0: 229, x1: 614, y0: 988, y1: 1192, w: 386, h: 205, cx: 423.4, cy: 1087.0, px: 45849 } }, approved: {all: {x0: 234, x1: 608, y0: 775, y1: 1188, w: 375, h: 414, cx: 423.4, c
+> y: 1003.3, px: 93061 }, star: {x0: 482, x1: 552, y0: 917, y1: 983, w: 71, h: 67, cx: 519.1, cy: 953.1, px: 2289 } } } GAME centre column [(740, 771, '-'), (772, 880, 'pom'), (881, 891, 'crown_U'), (892, 910, 'crown_W'), (911, 943, 'crown_U'), (944, 9
+> 68, 'crown_W'), (969, 1024, 'cuff'), (1025, 1182, 'body'), (1183, 1183, '-'), (1184, 1184, 'body'), (1185, 1199, '-')] 770 APP -  GAME 369-429 w61 780 APP 407-445 w39  GAME 362-449 w88 790 APP 385 …[+1642 chars]
+
+### 🤖 Claude — 2026-11-17T00:09:03.296Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/full_reference_match/benny/work/refparts.py <<'EOF'\nimport sys; sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as ndi\nfrom bennyseg import *\na=load(REF); m=np.asarray(Image.open(MASK))>0\ncls=colour_classes(a)\nH,S,V=rgb2hsv(a)\nyy,xx=np.mgrid[:1536,:864]\npink=(cls==1)&m\n# body = mask below the hat: the cuff bottom boundary = lowest purple-ribbed row per column\npur=ndi.binary_closing((cls==2)&m,np.ones((5,5)))\nwht=ndi.binary_closing((cls==3)&m&(yy<1035) …[+551 chars]`
+
+### 🧑 User — 2026-11-17T00:09:04.516Z
+
+> ↩︎ result: purple comp 12 14689 995.0 {'x0': 277, 'x1': 573, 'y0': 936, 'y1': 1031, 'w': 297, 'h': 96, 'cx': 420.5, 'cy': 995.0, 'px': 14689}
+> purple comp 2 12750 843.1 {'x0': 355, 'x1': 499, 'y0': 778, 'y1': 899, 'w': 145, 'h': 122, 'cx': 428.2, 'cy': 843.1, 'px': 12750}
+> purple comp 8 7228 926.9 {'x0': 317, 'x1': 540, 'y0': 886, 'y1': 957, 'w': 224, 'h': 72, 'cx': 420.8, 'cy': 926.9, 'px': 7228}
+> purple comp 45 2613 1151.3 {'x0': 379, 'x1': 598, 'y0': 1069, 'y1': 1188, 'w': 220, 'h': 120, 'cx': 496.1, 'cy': 1151.3, 'px': 2613}
+> purple comp 56 466 1165.7 {'x0': 298, 'x1': 361, 'y0': 1143, 'y1': 1182, 'w': 64, 'h': 40, 'cx': 327.0, 'cy': 1165.7, 'px': 466}
+> purple comp 48 92 1075.4 {'x0': 250, 'x1': 275, 'y0': 1071, 'y1': 1088, 'w': 26, 'h': 18, 'cx': 265.1, 'cy': 1075.4, 'px': 92}
+> purple comp 16 19 1026.6 {'x0': 558, 'x1': 567, 'y0': 1024, 'y1': 1029, 'w': 10, 'h': 6, 'cx': 563.1, 'cy': 1026.6, 'px': 19}
+> purple comp 4 18 786.2 {'x0': 389, 'x1': 393, 'y0': 784, 'y1': 788, 'w': 5, 'h': 5, 'cx': 390.9, 'cy': 786.2, 'px': 18}
+> white comp 87 10512 931.6 {'x0': 281, 'x1': 531, 'y0': 876, 'y1': 981, 'w': 251, 'h': 106, 'cx': 401.1, 'cy': 931.6, 'px': 10512}
+> white comp 94 399 934.4 {'x0': 529, 'x1': 569,  …[+577 chars]
+
+### 🤖 Claude — 2026-11-17T00:09:31.344Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 600,700p src/game/Game.ts; sed -n 160,180p src/game/Game.ts; sed -n 360,380p src/game/Game.ts", "description": "Read Game.ts debug API and Benny pose code"}`
+
+### 🧑 User — 2026-11-17T00:09:31.397Z
+
+> ↩︎ result: settle(Math.round((cp.t ?? 0) / (1 / 30)), 1 / 30);
+>       } else {
+>         // settle camera springs without moving Benny: run with speed frozen
+>         const s0 = st.s;
+>         for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+>         rideCam.update(0, st.s, st.lat, camera, true);
+>       }
+>     }
+>     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
+>     const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+>     freezeAt(t: number) { st.frozen = t; st.clock = t; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps …[+7194 chars]
+
+### 🤖 Claude — 2026-11-17T00:09:55.568Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/probe; cat > /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bennyprobe.mjs <<'EOF'\n#!/usr/bin/env node\n// benny-character-artist QA probe: load the real game once, goto(05), then for each step file evaluate its JS\n// (an async function body with `R` = window.__rainbow, `Q` = R.qa3d()) and optionally screenshot.\n//   node bennyprobe.mjs --q='<query>' --out=DIR step1.js [step2.js ...]   (a step whose name ends in .shot.js screenshots)\nimport { writeFileSync, readFileSync, mkdirSync } from 'n …[+3892 chars]`
+
+### 🧑 User — 2026-11-17T00:09:55.614Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T00:09:59.212Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; time node qa/pilot05/full_reference_match/benny/work/bennyprobe.mjs --q=\"$STACK\" --out=qa/pilot05/full_reference_match/benny/work/probe qa/pilot05/full_reference_match/benny/work/probe/info.js 2>&1 | tail -5", "description": "Run probe to get camera and Benny pose info", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T00:10:20.016Z
+
+> ↩︎ result: loaded 3.541
+> info.js {"body":{"px":[420.1,1030.5],"w":[1.514,-41.2,-74.734]},"hat":{"px":[420.1,1030.5],"w":[1.514,-41.2,-74.734]},"pom":{"px":[406.8,836],"w":[1.435,-40.128,-74.919]},"hat_star":{"px":[507.9,946.6],"w":[1.988,-40.505,-74.301]},"armL":{"px":[294.4,1047],"w":[0.81,-41.311,-74.72]},"armR":{"px":[549,1035.6],"w":[2.226,-41.206,-74.718]},"eyes":{"px":[420.1,1030.5],"w":[1.514,-41.2,-74.734]},"bodyUp":[-0.071,0.965,-0.253],"bodyFwd":[0.02,-0.252,-0.967],"bodyRight":[-0.997,-0.074,-0.001],"camFwd":[-0.05,-0.261,-0.964],"camRight":[0.999,-0.002,-0.052],"camUp":[-0.011,0.965,-0.261],"cam":[1.92,-37.943,-68.281],"fov":62,"rootScale":[1,1,1],"bodyLocalQ":[0.1069,-0.0027,-0.0244,0.994],"hatLocal":[0,0,0],"pxPerUnit":180.4}
+> done 20.123
+> 
+> real	0m20.717s
+> user	0m1.417s
+> sys	0m0.416s
+
+### 🤖 Claude — 2026-11-17T00:10:40.938Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/full_reference_match/benny/work/parts.py <<'EOF'\n\"\"\"approved part masks (colour components inside masks/benny_and_hat.png) + per-part error / colour stats.\nusage: parts.py <capture.png> [<mask_capture.png>]\"\"\"\nimport sys; sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as ndi\nfrom bennyseg import *\ndef approved_parts():\n    a=load(REF); m=np.asarray(Image.open(MASK))>0\n    cls=colour_classes(a); yy,xx=np.mgrid[:1536,:864]\n    pur=ndi.binary_closin …[+2558 chars]`
+
+### 🧑 User — 2026-11-17T00:10:42.712Z
+
+> ↩︎ result: part       px   mean  <=20 share_of_err  approved_med  game_med(at approved px)
+> pom     12764   56.8  0.15    0.157  [124  20 233]  [129  15 255]  bbox {'x0': 355, 'x1': 499, 'y0': 778, 'y1': 899, 'w': 145, 'h': 122, 'cx': 428.1, 'cy': 843.0, 'px': 12764}
+> crown   18362   65.2  0.24    0.259  [223 168 241]  [132  93 238]  bbox {'x0': 277, 'x1': 574, 'y0': 801, 'y1': 994, 'w': 298, 'h': 194, 'cx': 415.5, 'cy': 928.5, 'px': 18362}
+> cuff    14689   47.3  0.26    0.150  [112  16 235]  [ 92   0 236]  bbox {'x0': 277, 'x1': 573, 'y0': 936, 'y1': 1031, 'w': 297, 'h': 96, 'cx': 420.5, 'cy': 995.0, 'px': 14689}
+> star     2683   69.8  0.10    0.041  [252 217  32]  [255 191  63]  bbox {'x0': 481, 'x1': 553, 'y0': 916, 'y1': 984, 'w': 73, 'h': 69, 'cx': 518.7, 'cy': 952.1, 'px': 2683}
+> body    44566   40.9  0.25    0.394  [242  79 181]  [255  72 178]  bbox {'x0': 234, 'x1': 608, 'y0': 775, 'y1': 1188, 'w': 375, 'h': 414, 'cx': 420.5, 'cy': 1085.8, 'px': 44566}
+> ALL 93061 49.71 0.235
+> game body 45849 median [255  70 177] mean [254  68 177]
+> game pom 12179 median [141   0 255] mean [138  20 254]
+> game cuff 14826 median [ 89   0 247] mean [ 90   6 238]
+> game crown 17569 median [214 144 238] mean [181 114  …[+283 chars]
+
+### 🤖 Claude — 2026-11-17T00:11:03.896Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/full_reference_match/benny/work/bands.py <<'EOF'\nimport sys; sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom PIL import Image\nfrom scipy import ndimage as ndi\nfrom bennyseg import *\na=load(REF); g=load(sys.argv[1])\ndef runs_at(img,x,y0=860,y1=1045):\n    cls=colour_classes(img)\n    col=cls[:,x-3:x+4]\n    lab=[]\n    for y in range(y0,y1):\n        v=np.bincount(col[y],minlength=5); lab.append('oPUWY'[v.argmax()])\n    # smooth: median filter\n    s=''.join(lab)\n    res=[];prev=None;st=y0\n    for …[+990 chars]`
+
+### 🧑 User — 2026-11-17T00:11:11.245Z
+
+> ↩︎ result: 300 APP  o860-927 W928-931 P932-935 U949-954 W955-960 U963-1005 P1006-1025 W1028-1037 P1038-1043
+> 300 GAME o860-921 U922-936 W939-964 U965-1017 P1018-1044
+> 325 APP  o860-891 W892-897 U898-921 W923-963 U964-1014 P1015-1044
+> 325 GAME o860-892 W893-909 U910-943 W944-968 U969-1023 P1024-1044
+> 350 APP  o860-869 W870-899 U900-939 W940-969 U970-1022 P1023-1044
+> 350 GAME U860-868 W869-873 U874-892 W893-912 U913-945 W946-970 U971-1025 P1026-1044
+> 375 APP  U860-883 W888-911 U912-946 W947-975 U976-1027 P1028-1044
+> 375 GAME U860-893 W894-912 U913-946 W947-970 U971-1026 P1027-1044
+> 400 APP  U860-893 W894-918 U919-952 W953-977 U978-1029 P1030-1044
+> 400 GAME U860-893 W894-912 U913-945 W946-970 U971-1025 P1026-1044
+> 425 APP  U860-899 W900-921 U922-955 W956-980 U981-1029 P1030-1044
+> 425 GAME U860-891 W892-910 U911-943 W944-968 U969-1024 P1025-1044
+> 450 APP  U860-896 W899-920 U921-953 W954-978 U979-1030 P1031-1044
+> 450 GAME U860-888 W889-907 U908-941 W942-966 U967-1022 P1023-1044
+> 475 APP  U860-889 W890-917 U918-950 W951-977 U978-1027 P1028-1044
+> 475 GAME o860-869 U870-884 W885-903 U904-934 Y935-940 o941-944 W945-962 U963-1018 P1019-1044
+> 500 APP  o860-867 W868-908 U909-934 Y936-939 Y942-954 o955-959 Y960-982 U985- …[+573 chars]
+
