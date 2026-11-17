@@ -1780,3 +1780,161 @@ Fix the key path (report nests classes).
 > star all [1.0662, 1.086, 1.2539] appr [251, 212, 29] game(NEW2) [251, 217, 38]
 > [This command modified 1 file you've previously read: qa/match/08/benny08/work/classgain08.py. Call Read before editing.]
 
+### 🤖 Claude — 2026-11-17T15:49:41.573Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/classgain08.py", "offset": 40, "limit": 25}`
+
+### 🧑 User — 2026-11-17T15:49:41.594Z
+
+> ↩︎ result: 40	    H, W = ids.shape
+> 41	    rep = {}
+> 42	    for name, key, gid, classes in SPEC:
+> 43	        gp = ndi.binary_erosion(ids == gid, iterations=1) & valid
+> 44	        gp &= El > 0.45 * np.median(El[gp])
+> 45	        ap = ndi.binary_erosion(P[key], iterations=1)
+> 46	        gains = {}
+> 47	        for cname, k in classes.items():
+> 48	            a_sel = ap & (ca == k) if k is not None else ap
+> 49	            g_sel = gp & (cg == k) if k is not None else gp
+> 50	            med = np.median(a8[a_sel], 0)  # approved display colour of this class (0-255)
+> 51	            T = inv_chain(np.broadcast_to(med / 255.0, (H, W, 3)).copy())
+> 52	            tgt = (T - S)[g_sel] / np.maximum(E[g_sel], 1e-4)
+> 53	            now = (Lg - S)[g_sel] / np.maximum(E[g_sel], 1e-4)
+> 54	            gk = np.median(tgt, 0) / np.maximum(np.median(now, 0), 1e-4)
+> 55	            if prev:
+> 56	                gk = gk * np.array(prev[name]['classes'][cname]['gain'])
+> 57	            gains[cname] = dict(gain=[round(float(v), 4) for v in gk], approved_px=int(a_sel.sum()), game_px=int(g_sel.sum()),
+> 58	                                approved_median=med.astype(int).tolist(), game_median=np.median(g8[g_sel], 0).astype(int).tolist())
+> 59	      …[+398 chars]
+
+### 🤖 Claude — 2026-11-17T15:49:46.429Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/classgain08.py", "old_string": "            gk = np.median(tgt, 0) / np.maximum(np.median(now, 0), 1e-4)\n            if prev:\n                gk = gk * np.array(prev[name]['classes'][cname]['gain'])", "new_string": "            gk = np.median(tgt, 0) / np.maximum(np.median(now, 0), 1e-4)\n            if prev and '--display' in sys.argv:\n                # secant step on the DISPLAY medians (the per-pixel albedo median overshoots blue near 255 / in the grade):\n          …[+348 chars]`
+
+### 🧑 User — 2026-11-17T15:49:46.460Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/classgain08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T15:49:51.432Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && sed -i 's|usage: python3 -I classgain08.py <run_dir> <current_capture.png> <in_maps_dir> <out_dir> \\[--prev gains.json\\]|usage: python3 -I classgain08.py <run_dir> <current_capture.png> <in_maps_dir> <out_dir> [--prev gains.json [--display]]|' qa/match/08/benny08/work/classgain08.py && python3 -I qa/match/08/benny08/work/classgain08.py $S/p1 $S/c_n2/08.png assets/textures/benny05 $S/g2 --prev $S/g1/classgain_report.json --display > $S/g2.log && python3 -c \"\nimport json; d=json.load(open('$S/ …[+414 chars]`
+
+### 🧑 User — 2026-11-17T15:50:13.303Z
+
+> ↩︎ result: crown white [1.1104, 1.0332, 1.1096]
+> crown purple [0.9056, 0.4765, 0.9477]
+> brim all [0.9357, 0.7978, 0.9943]
+> pom all [0.9141, 0.8222, 0.9976]
+> star all [1.0617, 1.0381, 0.8627]
+> 08 → /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-
+> [This command modified 1 file you've previously read: qa/match/08/benny08/work/classgain08.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T15:50:25.844Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='qa/match/08/benny08/work/compare08.py'; s=open(p).read()\nold='''if __name__ == '__main__':'''\nnew='''CLASSES = [('crown white', 'crown', 2, 3), ('crown purple', 'crown', 2, 2), ('cuff', 'cuff', 3, None), ('pom', 'pom', 4, None),\n           ('star', 'star', 5, None), ('body fur', 'body', 1, 1)]\n\n\ndef class_colours(A, C, P, ids):\n    \"\"\"colour of each beanie / fur colour CLASS, placement-free: approved = that class inside the approved part,\n    game = that class inside the game's own part (UV ids) -> median colour and the mean |difference| of the\ …[+1970 chars]`
+
+### 🧑 User — 2026-11-17T15:50:25.885Z
+
+> ↩︎ result: This agent is isolated in the worktree /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f, but this command is too complex to verify that it stays inside the worktree. Refusing to run it — a worktree-isolated agent's git operations must target its own worktree. Split it into plain, separate commands and run them from /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f.
+
+### 🤖 Claude — 2026-11-17T15:50:28.023Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/compare08.py", "offset": 50, "limit": 40}`
+
+### 🧑 User — 2026-11-17T15:50:28.046Z
+
+> ↩︎ result: 50	    caps = [a.split('=', 1) for a in sys.argv[1:] if '=' in a and not a.startswith('--')]
+> 51	    opt = dict(a[2:].split('=', 1) for a in sys.argv[1:] if a.startswith('--') and '=' in a)
+> 52	    P, a8, m = approved_parts()
+> 53	    ids = game_ids(load_uv(uv))
+> 54	    A = a8.astype(float)
+> 55	    res = {}
+> 56	    for lab, p in caps:
+> 57	        C = np.asarray(Image.open(p).convert('RGB'), float)
+> 58	        res[lab] = dict(capture=p, parts=table(A, C, P, ids), regions=regions(p))
+> 59	    hdr = f"{'part':7s} " + ' | '.join(f'{lab:^44s}' for lab, _ in caps)
+> 60	    print(hdr)
+> 61	    for part in list(P) + ['benny']:
+> 62	        cells = []
+> 63	        for lab, _ in caps:
+> 64	            r = res[lab]['parts'][part]
+> 65	            cells.append(f"{r['mean_abs']:5.1f} {100 * r['within_20']:5.1f}% ssim {r['ssim']:.3f} r {r['detail_r']} a {r['detail_amp']}")
+> 66	        print(f'{part:7s} ' + ' | '.join(f'{c:44s}' for c in cells))
+> 67	        for lab, _ in caps:
+> 68	            r = res[lab]['parts'][part]
+> 69	            ov = r.get('overlap')
+> 70	            print(f"        {lab}: approved {r['approved_median']} game {r['game_median']}" +
+> 71	                  (f" | overlap {ov['px']} px: {ov['mean_abs']} / {1 …[+485 chars]
+
+### 🤖 Claude — 2026-11-17T15:50:30.657Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/compare08.py", "old_string": "        res[lab] = dict(capture=p, parts=table(A, C, P, ids), regions=regions(p))", "new_string": "        res[lab] = dict(capture=p, parts=table(A, C, P, ids), classes=class_colours(A, C, P, ids), regions=regions(p))"}`
+
+### 🧑 User — 2026-11-17T15:50:30.681Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/compare08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T15:50:33.559Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/compare08.py", "old_string": "    for reg in ['benny+splash', 'scenery', 'upper', 'middle', 'lower', 'whole']:", "new_string": "    for cl, *_ in CLASSES:\n        print(f'{cl:13s} ' + ' | '.join(f\"{lab}: {res[lab]['classes'][cl]['game_median']} vs {res[lab]['classes'][cl]['approved_median']} \"\n                                         f\"med {res[lab]['classes'][cl]['median_diff']:.1f} pct {res[lab]['classes'][cl]['percentile_diff']:.1f}\" for lab, _ in caps))\n    for …[+75 chars]`
+
+### 🧑 User — 2026-11-17T15:50:33.582Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/compare08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T15:50:38.762Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/compare08.py", "old_string": "if __name__ == '__main__':", "new_string": "CLASSES = [('crown white', 'crown', 2, 3), ('crown purple', 'crown', 2, 2), ('cuff', 'cuff', 3, None), ('pom', 'pom', 4, None),\n           ('star', 'star', 5, None), ('body fur', 'body', 1, 1)]\n\n\ndef class_colours(A, C, P, ids):\n    \"\"\"colour of each beanie / fur colour CLASS, placement-free: approved = that class inside the approved part, game =\n    that class inside the game's own part (U …[+937 chars]`
+
+### 🧑 User — 2026-11-17T15:50:38.787Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/compare08.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T15:50:42.261Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/match/08/benny08/work/compare08.py /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1/uv.f32 CUR=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/base_m08/08.png N2=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/c_n2/08.png N3=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/c_n3/08.png", "description": "Compare CURRENT, NEW2, NEW3 incl. class colours"}`
+
+### 🧑 User — 2026-11-17T15:50:48.728Z
+
+> ↩︎ result: part                        CUR                      |                      N2                      |                      N3                     
+> pom      82.8   6.8% ssim 0.041 r 0.007 a 0.617      |  81.8   7.0% ssim 0.048 r 0.006 a 0.558      |  81.7   7.3% ssim 0.044 r 0.007 a 0.592     
+>         CUR: approved [126, 15, 229] game [60, 166, 239] | overlap 4524 px: 56.47 / 16.0% approved [86, 6, 209] game [148, 45, 234]
+>         N2: approved [126, 15, 229] game [61, 166, 243] | overlap 4524 px: 54.01 / 16.6% approved [86, 6, 209] game [148, 25, 253]
+>         N3: approved [126, 15, 229] game [59, 166, 239] | overlap 4524 px: 53.93 / 17.2% approved [86, 6, 209] game [143, 37, 236]
+> crown    72.4  14.9% ssim 0.057 r -0.008 a 0.753     |  72.3  16.4% ssim 0.057 r -0.008 a 0.716     |  73.0  15.9% ssim 0.057 r -0.007 a 0.73     
+>         CUR: approved [215, 163, 237] game [159, 99, 235] | overlap 6871 px: 66.74 / 18.4% approved [204, 133, 232] game [205, 150, 239]
+>         N2: approved [215, 163, 237] game [160, 82, 239] | overlap 6871 px: 66.83 / 20.9% approved [204, 133, 232] game [210, 135, 246]
+>         N3: approved [215, 163, 237] game [157, 84, 236] | overlap 6871 px: 67.39 / 20.1% ap …[+3692 chars]
+
+### 🤖 Claude — 2026-11-17T15:51:09.081Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I $S/sbs.py $S/v/n3.png 240 840 620 1240 1.7 references/08_final_spin_chamber.png $S/base_m08/08.png $S/c_n3/08.png", "description": "Side-by-side approved/current/NEW3"}`
+
+### 🧑 User — 2026-11-17T15:51:09.652Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:51:11.673Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/n3.png"}`
+
+### 🧑 User — 2026-11-17T15:51:11.721Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:51:19.355Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && cp assets/textures/benny05/{pom,star}.png assets/textures/benny08/ && node scripts/capture.mjs 08 --q='match08=1&bake08=1' --out=$S/c_n4 2>&1 | tail -1 | cut -c1-50 && python3 -I qa/match/08/benny08/work/refine08.py $S/p1 $S/c_n4/08.png assets/textures/benny08 $S/f2 --seen $S/b2 && cp $S/f2/{body,armL,armR}.png assets/textures/benny08/ && node scripts/capture.mjs 08 --q='match08=1&bake08=1' --out=$S/c_n5 2>&1 | tail -1 | cut -c1-50 && python3 -I qa/match/08/benny08/work/compare08.py $S/p1/uv.f32 …[+169 chars]`
+
+### 🧑 User — 2026-11-17T15:52:03.702Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-/13775958-
+> {"body": {"px": 26721, "texels": 24918, "mean_abs_corr": 0.0264, "mean_change": 0.0125}, "armL": {"px": 977, "texels": 1365, "mean_abs_corr": 0.0373, "mean_change": 0.0136}, "armR": {"px": 608, "texels": 872, "mean_abs_corr": 0.0304, "mean_change": 0.0105}}
+> 08 → /tmp/claude-0/-home-user-rainbow-/13775958-
+> part                        CUR                      |                      N4                      |                      N5                     
+> pom      82.8   6.8% ssim 0.041 r 0.007 a 0.617      |  82.8   6.8% ssim 0.041 r 0.007 a 0.617      |  82.8   6.8% ssim 0.041 r 0.007 a 0.617     
+> crown    72.4  14.9% ssim 0.057 r -0.008 a 0.753     |  72.8  15.8% ssim 0.057 r -0.007 a 0.73      |  72.8  15.8% ssim 0.057 r -0.007 a 0.73     
+> cuff     75.6  12.9% ssim 0.051 r -0.009 a 0.973     |  75.3  14.3% ssim 0.054 r -0.011 a 0.957     |  75.3  14.3% ssim 0.054 r -0.011 a 0.957    
+> star    112.5   0.8% ssim 0.131 r 0.037 a 1.927      | 114.9   0.8% ssim 0.138 r 0.047 a 1.98       | 114.9   0.8% ssim 0.138 r 0.047 a 1.98      
+> body     36.0  34.5% ssim 0.143 r 0.066 a 1.084      |  22.6  68.2% ssim 0.589 r 0.49 a 0.956       |  21.2   …[+1879 chars]
+

@@ -2030,3 +2030,131 @@ Let me write the timeline script that runs either the current source (Vite) or a
 > 17M	qa/gameplay_video/scan/match08
 > 12K	qa/gameplay_video/scan/match08.log
 
+### 🤖 Claude — 2026-11-17T15:50:01.061Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/camClear.ts", "content": "/**\n * `?camclear=1` (also on under `?matchall=1`; OFF by default) — keep the ride view clear (user's Android gameplay\n * recording, 2026-11-17, qa/gameplay_video/NOTES.md). Nothing in the scenery moves or changes colour; only what would\n * block the view while riding is made see-through:\n *  1. Benny cut-out: fragments of the \"prop\" occluders (gold rings, lids/hoods, gold torus lips and rims, foam banks)\n *     that lie IN FRONT of Benny and inside his on-screen ellipse are d …[+6693 chars]`
+
+### 🧑 User — 2026-11-17T15:50:01.090Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/camClear.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:50:13.254Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; d=json.load(open('qa/gameplay_test.json')); print(d['checks']['continuousTravel'], d['checks']['noCameraCut'], d['checks']['realCoinPickups'])\"; ls qa/match/08/ | grep -i gameplay", "description": "Check gameplay test respawns and coin results"}`
+
+### 🧑 User — 2026-11-17T15:50:13.322Z
+
+> ↩︎ result: {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0} {'pass': True, 'maxCameraJumpPerStep': 0.728} {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+> gameplay_test_match08.json
+
+### 🤖 Claude — 2026-11-17T15:50:14.421Z
+
+Now the Game.ts hooks (behind the switch).
+
+### 🤖 Claude — 2026-11-17T15:50:16.116Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts", "old_string": "import { buildMatch08 } from '../world/match08';", "new_string": "import { buildMatch08 } from '../world/match08';\nimport { CAMCLEAR, createCamClear } from './camClear';"}`
+
+### 🧑 User — 2026-11-17T15:50:16.156Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:50:18.915Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts", "old_string": "  let m08On = false;\n  let m08Applied = false;", "new_string": "  let m08On = false;\n  let m08Applied = false;\n  // `?camclear=1` (src/game/camClear.ts): rings / lids / gold lips / foam banks never hide Benny or fill the lens while\n  // riding; respawn re-frames the camera at once instead of flying it back through the tube. Off: nothing is created.\n  const camClear = CAMCLEAR ? createCamClear({ env: env.group, foam: water.parts?.foam }) : null;\n  let camSna …[+12 chars]`
+
+### 🧑 User — 2026-11-17T15:50:18.947Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:50:20.865Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts", "old_string": "        st.s = stg.s0;\n        st.lat = 0;\n        st.respawns++;", "new_string": "        st.s = stg.s0;\n        st.lat = 0;\n        st.respawns++;\n        if (camClear) camSnap = true;"}`
+
+### 🧑 User — 2026-11-17T15:50:20.906Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:50:22.869Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts", "old_string": "    rideCam.update(dt, st.s, st.lat, camera);\n    // towel: folded", "new_string": "    rideCam.update(dt, st.s, st.lat, camera, camSnap);\n    camSnap = false;\n    // towel: folded"}`
+
+### 🧑 User — 2026-11-17T15:50:22.906Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:50:24.568Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts", "old_string": "    renderer.info.reset();\n    composer.render();", "new_string": "    camClear?.update(camera, renderer, benny.root, st.mode === 'ride');\n    renderer.info.reset();\n    composer.render();"}`
+
+### 🧑 User — 2026-11-17T15:50:24.614Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:50:29.649Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts", "old_string": "    respawns() { return st.respawns; },", "new_string": "    respawns() { return st.respawns; },\n    /** QA: `?camclear=1` patched occluders (null = switch off) */\n    camClear() { return camClear?.patched ?? null; },"}`
+
+### 🧑 User — 2026-11-17T15:50:29.680Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/game/Game.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:50:31.052Z
+
+> 🔧 **Bash** `{"command": "timeout 300 npx tsc --noEmit 2>&1 | head -20; echo tsc-exit $?", "description": "Type-check the project", "timeout": 320000}`
+
+### 🧑 User — 2026-11-17T15:50:33.586Z
+
+> ↩︎ result: tsc-exit 0
+
+### 🤖 Claude — 2026-11-17T15:50:43.545Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/camclear/probe.mjs'\ns=open(p).read()\ns=s.replace(\"const w = Math.max(1, Math.round(size.x / 2)), h = Math.max(1, Math.round(size.y / 2));\",\"// full drawing-buffer size: the camclear Benny ellipse is in drawing-buffer pixels\\n    const w = Math.max(1, Math.round(size.x)), h = Math.max(1, Math.round(size.y));\")\n# steering plan: --steerplan=t0:v,t1:v (piecewise constant from each time)\ns=s.replace(\"const steer = arg('steer') === '' ? null : Number(arg('steer'));\",\"const steer = arg('steer') === '' ? null : Number(arg('steer'));\\nconst steerPla …[+1397 chars]`
+
+### 🧑 User — 2026-11-17T15:50:43.628Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T15:50:48.868Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/camclear/probe.mjs'\ns=open(p).read()\nold=\"\"\"    for (let i = 0; i < n; i++) { const tt = tNow + i / 60; await page.evaluate(([v, k]) => { window.__rainbow.setSteer(v); window.__rainbow.step(k, 1 / 60); }, [steerAt(tt), 1]); }\"\"\"\nnew=\"\"\"    const plan = Array.from({ length: n }, (_, i) => steerAt(tNow + i / 60));\n    await page.evaluate((plan) => { for (const v of plan) { window.__rainbow.setSteer(v); window.__rainbow.step(1, 1 / 60); } }, plan);\"\"\"\ns=s.replace(old,new)\nopen(p,'w').write(s)\nEOF\nnode --check tools/camclear/probe.mjs && …[+62 chars]`
+
+### 🧑 User — 2026-11-17T15:50:48.956Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T15:50:50.656Z
+
+Quick first look at the fix on the worst moments (07 plunge, 06, 03/04), BEFORE vs NEW.
+
+### 🤖 Claude — 2026-11-17T15:50:54.015Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad; timeout 900 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --times=14.5,17.5,18,28,31.5,32,40,41,42,43.5 --size=270x532 --out=$SP/t_new 2>&1 | tail -12; python3 -c \"\nimport json; d=json.load(open('$SP/t_new/probe.json')); print(len(d['patched']), d['patched'][:40])\"", "description": "First camclear test at key obstruction moments", "timeout": 960000}`
+
+### 🧑 User — 2026-11-17T15:51:36.569Z
+
+> ↩︎ result: {"t":14.5,"mode":"ride","stage":"03","s":45.495,"near2":0,"near05":0,"bennyHidden":0.297,"inside":0}
+> {"t":17.5,"mode":"ride","stage":"04","s":74.014,"near2":0,"near05":0,"bennyHidden":0.795,"inside":0}
+> {"t":18,"mode":"ride","stage":"04","s":80.977,"near2":0.0217,"near05":0,"top":{"obj":"foam_berm < foam_banks < water_system","share":0.0217},"bennyHidden":0.113,"inside":0}
+> {"t":28,"mode":"ride","stage":"06","s":198.303,"near2":0,"near05":0,"bennyHidden":0.033,"inside":0}
+> {"t":31.5,"mode":"ride","stage":"06","s":236.803,"near2":0.252,"near05":0.2149,"top":{"obj":"Mesh(MeshStandardMaterial#ffc890,1552v) < zone_tubes < washer_world","share":0.252},"bennyHidden":0.041,"inside":0}
+> {"t":32,"mode":"ride","stage":"06","s":242.304,"near2":0,"near05":0,"bennyHidden":0.377,"inside":0}
+> {"t":40,"mode":"ride","stage":"07","s":337.874,"near2":0,"near05":0,"bennyHidden":0.03,"inside":0}
+> {"t":41,"mode":"ride","stage":"07","s":349.874,"near2":0,"near05":0,"bennyHidden":0.039,"inside":0}
+> {"t":42,"mode":"ride","stage":"07","s":361.874,"near2":0,"near05":0.8188,"bennyHidden":0.032,"inside":0}
+> {"t":43.5,"mode":"ride","stage":"07","s":379.874,"near2":0.4723,"near05":0,"top":{"obj":"Mesh(MeshStandardMateri …[+1238 chars]
+
+### 🤖 Claude — 2026-11-17T15:51:59.870Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/camClear.ts'\ns=open(p).read()\nold_decl=s[s.index(\"const DECL = /* glsl */ `\"):s.index(\"export interface CamClear\")]\nnew_decl='''const FDECL = /* glsl */ `\nuniform vec4 uCCE;   // Benny ellipse: centre px (gl_FragCoord), radii px\nuniform vec4 uCCZ;   // x: view depth of Benny's front (u), y: on (0/1), z: near-fade full (u), w: near-fade end (u)\nvarying float vCCw;  // view depth of this fragment (gl_Position.w of the vertex stage)\nfloat ccB2(vec2 a) { a = floor(a); return fract(dot(a, vec2(0.5, a.y * 0.75))); }\nfloat ccBayer(vec2 a) { retu …[+2572 chars]`
+
+### 🧑 User — 2026-11-17T15:52:02.815Z
+
+> ↩︎ result: 19:const FDECL = /* glsl */ `
+> 68:      sh.fragmentShader = sh.fragmentShader.replace(re, (s) => `${FDECL}\n${s}\n  ccClip();\n`);
+> tsc-ok
+
+### 🤖 Claude — 2026-11-17T15:52:07.909Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad; timeout 900 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --times=14.5,17.5,18,28,31.5,32,40,41,42,43.5 --size=270x532 --out=$SP/t_new 2>&1 | tail -12 | cut -c1-200; python3 -I tools/camclear/sheet.py $SP/t_new/probe.json $SP/t_new_sheet.png --cols=10", "description": "Rerun camclear test frames and sheet", "timeout": 960000}`
+

@@ -1262,3 +1262,80 @@ I saved a copy of your video in the repository. I cut the last second, because i
 
 When both Screen 08 specialists finish, I'll combine their work and run the checks: the 97.4 % scenery match, 91 coins, gameplay and left/right steering, and all 13 images. Then I'll build the APK and show you the approved screen, the new game screen and the moving-camera comparisons, each separately at full size, for your approval.
 
+### 🧑 User — 2026-11-17T15:51:52.969Z
+
+Claudia, thank you for restoring my project, receiving the video, and coordinating the parallel agents.
+
+Please continue the work currently underway.
+
+My highest priority is still making my actual playable 3D game look as close as technically possible to my ORIGINAL APPROVED screens.
+
+Please make sure the camera specialist fixes the confirmed obstructions in Screens 04, 06, and 07, as well as the Screen 08 transition.
+
+I want the player to have a clear view of Benny and the approved scenery during gameplay, without the camera passing through objects or showing stretched textures.
+
+Keep the Screen 08 Benny specialist working on his appearance, while preserving the successful 97.4% scenery comparison.
+
+Allow the Screen 04 and Screen 05 agents to continue independently. Start Screens 06 and 07 when safe and practical.
+
+Do not merge unfinished work or change my original approved screens.
+
+Once the specialists finish, show me the actual improved game screens, their moving-camera tests, and updated comparison results.
+
+Remember: Screen 08 still needs my final approval, and I want every remaining approved gameplay screen to receive the same level of visual accuracy and quality.
+
+Please continue and keep all progress safely backed up to GitHub.
+
+### 🤖 Claude — 2026-11-17T15:51:56.279Z
+
+Passing your fix list to the camera specialist now: clear view of Benny and the scenery, no camera inside objects, no stretched textures.
+
+### 🤖 Claude — 2026-11-17T15:52:01.544Z
+
+> 🔧 **SendMessage** `{"to": "aab9f1d4212f4d68f", "summary": "User confirms fix scope: 04, 06, 07, 08 transition", "message": "User order (2026-11-17 ~15:55 UTC): FIX the confirmed obstructions — Screen 04 (7–9 s: white sheet + camera inside the pink wall), Screen 06 (18–20 s: drum wall + gold band filling the view), Screen 07 (33–37 s: gold ring band filling the frame), and the Screen 08 transition (07→08 descent + the 08 camera settling while 08 is on screen; 08 is visible only ~2 s in the recording). Also the 03 white sheet at 4 s if it's the same mechanism. Goal in the user's words: \"a clear view of Benny and  …[+983 chars]`
+
+### 🧑 User — 2026-11-17T15:52:01.560Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aab9f1d4212f4d68f at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aab9f1d4212f4d68f","name":"aab9f1d4212f4d68f","ref":"e63845"}}
+
+### 🤖 Claude — 2026-11-17T15:52:04.193Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin claude/rainbow-s08-benny08-bake claude/rainbow-s08-camclear claude/rainbow-s04-match claude/rainbow-s05-match 2>&1 | tail -3; for b in claude/rainbow-s08-benny08-bake claude/rainbow-s08-camclear claude/rainbow-s04-match claude/rainbow-s05-match; do echo \"$b: $(git ls-remote origin refs/heads/$b | cut -c1-12) $(git log -1 --format='%cd %s' --date=format:%H:%M origin/$b 2>/dev/null | cut -c1-90)\"; done; git worktree list; echo \"local $(git rev-parse --short HEAD) remote $(git ls-remote origin refs/heads/ccr-d4240b15-rl1i72 | cut -c1-7)\"", "description": "Chec …[+45 chars]`
+
+### 🧑 User — 2026-11-17T15:52:07.201Z
+
+> ↩︎ result: fatal: couldn't find remote ref claude/rainbow-s08-benny08-bake
+> claude/rainbow-s08-benny08-bake:  
+> claude/rainbow-s08-camclear:  
+> claude/rainbow-s04-match: 95167e9da599 
+> claude/rainbow-s05-match: 6eaff01cbfa6 
+> /home/user/rainbow-                                            ac4ceae [ccr-d4240b15-rl1i72]
+> /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f  5965a01 [claude/rainbow-s08-benny08-bake] locked
+> /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f  5965a01 [claude/rainbow-s08-camclear] locked
+> local ac4ceae remote ac4ceae
+
+### 🤖 Claude — 2026-11-17T15:52:17.835Z
+
+Everything is moving, and the lead backup is verified (local and GitHub both at `ac4ceae`).
+
+**Your fix list went to the camera specialist:** Screen 04 (camera inside the pink wall, white sheet), Screen 06 (drum wall and gold band filling the view), Screen 07 (gold ring band filling the frame), and the Screen 08 transition, plus the similar white sheet on 03 at 4 s. The aim is a clear view of Benny and your scenery, with no camera inside objects and no stretched textures.
+
+These rules hold for every fix:
+- Your approved scenery is not moved or redesigned, and the approved Screen 05 and 08 views must stay pixel-identical.
+- The default game stays unchanged, and the 91 coins and gameplay are preserved.
+- For each problem moment you'll get three separate full-size pictures: your recording, the current game and the fixed game. Each also gets a moving sequence and a measured "how much of the view is blocked" number.
+
+| Workstream | Branch | Now |
+|---|---|---|
+| 08 Benny | `claude/rainbow-s08-benny08-bake` | working; nothing pushed yet (first save comes when the re-bake is done) |
+| 08 camera / obstructions | `claude/rainbow-s08-camclear` | working; nothing pushed yet (first save comes after the diagnosis) |
+| 04 | `claude/rainbow-s04-match` | working, saving to GitHub |
+| 05 | `claude/rainbow-s05-match` | working, saving to GitHub |
+| 06, 07 | – | my check-back at 16:30 UTC starts them if 04 and 05 have a safe checkpoint and the usage limit allows |
+
+The two Screen 08 specialists' work is only on this machine until they push. Each is set to push and confirm the upload at every milestone.
+
+Nothing is merged into `ccr-9c4a8ad6-xovgsx`, your 13 approved images are untouched, and no Marble or fal credits are being spent.
+
+When both Screen 08 specialists finish, I'll combine their work and re-check the 97.4 % scenery match, 91 coins, gameplay and steering. Then I'll build the APK and show you the approved screens, the new game screens, the moving-camera tests and the updated numbers, each separately at full size. Screen 08 waits for your approval.
+
