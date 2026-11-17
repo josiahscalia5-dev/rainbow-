@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 13176,
-   "sha256": "5838396ce9be9b07350371401ebaf98a943390aed9fa653999095dcc8676798a"
+   "bytes": 13244,
+   "sha256": "1ca7e95c4aa30de5b68ba005a7cf4abf218a816ff85dc8e4cc59111a370b1dc6"
   },
   {
    "path": "README_FIRST.md",
@@ -488,8 +488,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 12063,
-   "sha256": "15f4e33e78631fb6bc62612d3f4307a34b819e64b2f61193eb029527652473ba"
+   "bytes": 12165,
+   "sha256": "9513f886e39587f4f2074ac2e1d927775946fa146f381aee2b7b00d9caa9f2ca"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "4a833168db4cc96388f8eb1ac6689400da289d72f01b29f8dfa3f6274cb344c6"
+   "sha256": "83f1951b42b90758b888af8f43cb10f1340b398f2a4ed1cc376760d395cc7211"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -518,8 +518,8 @@
   },
   {
    "path": "backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
-   "bytes": 16378,
-   "sha256": "cbdca936c4923e9acc0d7532af11a51fa2495350a5dd66c951f65382e75f3efb"
+   "bytes": 16737,
+   "sha256": "c172efcb44069acef237a955577a9956df2583c3f37b4dac233d45cc300928d3"
   },
   {
    "path": "backups/MCP_SETUP.md",

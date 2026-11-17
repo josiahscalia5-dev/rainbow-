@@ -19,7 +19,7 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
 The GitHub default branch is an OLD version. **As of 2026-11-17 ~11:50 UTC there are TWO unmerged lines of game work**
 (details, differences and the safe merge procedure: `backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md` §1):
 **line A** = `ccr-9c4a8ad6-xovgsx` (= `ccr-61131b9d-uj0oqb` + backup commits; Screen 07 measurements/camera, `?matchNN=1`
-audit 02–10, projection-water switches) and **line B** = `ccr-b0757dec-dj6l1o` (`a8c03f0`; the big Screen 05 full-reference
+audit 02–10, projection-water switches) and **line B** = `ccr-b0757dec-dj6l1o` (`a8c03f0`, then `65f3a89` 11:48 UTC from its still-running session `01VCMXob`; the big Screen 05 full-reference
 match `?match05=1` with env05 / benny05 / hud05 / coins05 / splash05m / bub05 — measured 86.9 % of the whole frame within
 20 levels). **Never merge or cherry-pick between them without the user's explicit OK.** `ccr-451ea8c7-3nqlis` (`97dda28`)
 = older protected working version. `codex/*` branches hold Codex's separate water experiment: preserved, protected,

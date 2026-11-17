@@ -1392,3 +1392,65 @@ Timestamps corrected. Final checkpoint, then the fast-forward push to `ccr-61131
 
 > 🔧 **Bash** `{"command": "timeout 400 python3 scripts/rainbow-autosave.py --reason manual:end --message \"Account transfer final checkpoint: handoff timestamps corrected\" 2>&1 | grep -E '\"result\"|\"commit\"|\"pushed_verified\"|\"branch\"'; H=$(git rev-parse HEAD); git merge-base --is-ancestor 051ef8308378a447f4095e71e6cfbb0b742399b9 $H && echo \"051ef83 (ccr-61131b9d tip) is ancestor of HEAD -> fast-forward\"; for i in 1 2 3 4; do git push origin \"$H:refs/heads/ccr-61131b9d-uj0oqb\" 2>&1 | tail -2 && break; sleep $((i*2)); done", "description": "Final checkpoint and fast-forward the user's branch", "ti …[+15 chars]`
 
+### 🧑 User — 2026-11-17T11:50:22.475Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "branch": "ccr-9c4a8ad6-xovgsx",
+>   "commit": "2821346fe4c9ad53eacb0cd9fca87adf40a8286b",
+> 051ef83 (ccr-61131b9d tip) is ancestor of HEAD -> fast-forward
+> To https://github.com/josiahscalia5-dev/rainbow-
+>    051ef83..2821346  2821346fe4c9ad53eacb0cd9fca87adf40a8286b -> ccr-61131b9d-uj0oqb
+
+### 🤖 Claude — 2026-11-17T11:50:23.327Z
+
+Pushed. Now the full fresh verification of everything the final report depends on:
+
+### 🤖 Claude — 2026-11-17T11:50:30.378Z
+
+> 🔧 **Bash** `{"command": "H=$(git rev-parse HEAD); echo \"branch: $(git branch --show-current)\"; echo \"local HEAD:              $H\"; echo \"remote ccr-9c4a8ad6:     $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; echo \"remote ccr-61131b9d:     $(git ls-remote origin refs/heads/ccr-61131b9d-uj0oqb | cut -f1)\"; echo \"remote ccr-b0757dec:     $(git ls-remote origin refs/heads/ccr-b0757dec-dj6l1o | cut -f1) (untouched? expect a8c03f0…)\"; git merge-base --is-ancestor 8620901ffeafd31deec8b39ea9ec144c00963633 $H && echo \"previously verified 8620901 contained: yes\"; echo \"uncommitted: …[+1040 chars]`
+
+### 🧑 User — 2026-11-17T11:50:41.722Z
+
+> ↩︎ result: branch: ccr-9c4a8ad6-xovgsx
+> local HEAD:              2821346fe4c9ad53eacb0cd9fca87adf40a8286b
+> remote ccr-9c4a8ad6:     2821346fe4c9ad53eacb0cd9fca87adf40a8286b
+> remote ccr-61131b9d:     2821346fe4c9ad53eacb0cd9fca87adf40a8286b
+> remote ccr-b0757dec:     65f3a89552c3fe7663c0b0b136706588dea052d5 (untouched? expect a8c03f0…)
+> previously verified 8620901 contained: yes
+> uncommitted: 0  untracked: 0
+> references: 13/13 OK
+> agents: 10 files
+> LFS stubs locally: 0 of 36
+> LFS objects missing on GitHub (dry-run push): 0
+> key pieces in tree: 0, in commits since 11:40: 0
+> tsc: clean
+> AUTOSAVE OK | branch ccr-9c4a8ad6-xovgsx | scheduler daemon | last verified backup 2026-11-17T11:50:12+00:00 (0.5 min ago) | local 2821346 remote 2821346 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T11:50:44.804Z
+
+One unexpected result: `ccr-b0757dec-dj6l1o` moved from `a8c03f0` to `65f3a89` during this session. I never pushed to it, so something else did. Inspecting it without changing anything:
+
+### 🤖 Claude — 2026-11-17T11:50:47.313Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin ccr-b0757dec-dj6l1o:refs/remotes/origin/ccr-b0757dec-dj6l1o 2>&1; git merge-base --is-ancestor a8c03f0 65f3a89 && echo \"a8c03f0 is ancestor of 65f3a89 (normal fast-forward, nothing overwritten)\"; git log --format='%h %ci %an | %s' a8c03f0..65f3a89 | head -15; echo \"count: $(git rev-list --count a8c03f0..65f3a89)\"; git log -1 --format='%b' 65f3a89 | grep -i -E 'session|co-authored' | head -3; echo \"--- non-backup files changed:\"; git diff --stat a8c03f0 65f3a89 -- . ':!backups' | tail -8", "description": "Inspect the new commits on the line B branch"}`
+
+### 🧑 User — 2026-11-17T11:50:48.431Z
+
+> ↩︎ result: a8c03f0 is ancestor of 65f3a89 (normal fast-forward, nothing overwritten)
+> 65f3a89 2026-11-17 11:48:12 +0000 Claude | autosave: Rainbow 2026-11-17 11:48 UTC
+> a46de64 2026-11-17 11:46:54 +0000 Claude | autosave: Rainbow 2026-11-17 11:45 UTC
+> count: 2
+> Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+> Claude-Session: https://claude.ai/code/session_01VCMXobH7GXDyZXLL7scHBn
+> --- non-backup files changed:
+>  builds/rainbow-full-game-match05-2026-11-17.md  | 13 ++++
+>  builds/rainbow-full-game-match05-2026-11-17.mp4 |  3 +
+>  tools/video/capture_dist.mjs                    | 47 ++++++++++++++
+>  tools/video/record_full.mjs                     | 83 +++++++++++++++++++++++++
+>  4 files changed, 146 insertions(+)
+
+### 🤖 Claude — 2026-11-17T11:51:07.309Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md'; s=open(p).read()\nold=\"| **B** | **`ccr-b0757dec-dj6l1o`** (`a8c03f06cf3cc2f3aeeff8c03af3f7d7f481c38d`, 2026-11-17 03:36 UTC) |\"\nnew=(\"| **B** | **`ccr-b0757dec-dj6l1o`** (`a8c03f06cf3cc2f3aeeff8c03af3f7d7f481c38d` at 03:36 UTC; **still being extended**: session \"\n     \"`01VCMXob` on the old account autosaved `65f3a89` at 11:48 UTC — full-game `?match05=1` video \"\n     \"`builds/rainbow-full-game-match05-2026-11-17.mp4|.md` + `tools/video/record_full.mjs`, `capture_dist.mjs`. Always re-check …[+1542 chars]`
+

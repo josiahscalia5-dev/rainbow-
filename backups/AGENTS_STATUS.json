@@ -7,7 +7,7 @@
  "assignments_now": {
   "_read_first": "backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md (section 5 = every specialist's exact state and next step)",
   "_user_priority_2026-11-17": "VISUAL ONLY: scenery and look of the playable screens 04-08 must match their approved pictures (>= 90 %); do not report camera/movement details; show APPROVED | BEFORE | NEW full size + whole-frame numbers",
-  "_two_lines": "line A = ccr-9c4a8ad6-xovgsx (= ccr-61131b9d-uj0oqb), line B = ccr-b0757dec-dj6l1o (a8c03f0). NOT merged; user must approve.",
+  "_two_lines": "line A = ccr-9c4a8ad6-xovgsx (= ccr-61131b9d-uj0oqb), line B = ccr-b0757dec-dj6l1o (a8c03f0 at 03:36; its session 01VCMXob was STILL autosaving at 11:48 UTC -> 65f3a89, full-game match05 video). NOT merged; user must approve.",
   "line_B_washer-environment-modeler": {
    "switch": "env05",
    "state": "INTERRUPTED ~03:10 UTC 2026-11-17 mid wall/ring feedback re-bake (unmeasured)",
