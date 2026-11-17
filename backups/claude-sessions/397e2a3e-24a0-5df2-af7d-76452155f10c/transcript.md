@@ -1176,3 +1176,140 @@ All 10 specialist definitions match their saved SHA-256 fingerprints. Now relaun
 >   /home/user/rainbow-/qa/pilot05/full_reference_match/session_01VCMXob/SCREEN2_BEFORE_specialists_proj05.png → file_uuid: 3acf2cfb-49e2-4440-8364-aebf4866d46a
 >   /home/user/rainbow-/qa/pilot05/full_reference_match/session_01VCMXob/SCREEN3_NOW_match05_restored.png → file_uuid: d4ed0603-69a6-4ebb-95b9-fb3bb6e5ea78
 
+### 🤖 Claude — 2026-11-17T02:34:23.133Z
+
+Your three pictures are sent. Running a final backup verification, and checking whether this branch needs a draft pull request:
+
+### 🤖 Claude — 2026-11-17T02:34:25.586Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:startup-report 2>&1 | grep -E '\"commit\"|error' ; python3 -I scripts/autosave-status.py; echo \"remote $(git ls-remote origin refs/heads/ccr-b0757dec-dj6l1o | cut -f1)\"; echo \"local  $(git rev-parse HEAD)\"; git lfs ls-files | wc -l; ls .github/pull_request_template.md .github/PULL_REQUEST_TEMPLATE 2>/dev/null; git remote show origin 2>/dev/null | grep \"HEAD branch\"", "description": "Force a verified autosave and check PR template", "timeout": 180000}`
+
+### 🤖 Claude — 2026-11-17T02:34:26.141Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_pull_requests,mcp__github__create_pull_request", "max_results": 2}`
+
+### 🧑 User — 2026-11-17T02:34:34.568Z
+
+> ↩︎ result: "commit": "aefa92b6eb177cd4d44b6488715231db9b541d2c",
+> AUTOSAVE OK | branch ccr-b0757dec-dj6l1o | scheduler daemon | last verified backup 2026-11-17T02:34:25+00:00 (0.1 min ago) | local aefa92b remote aefa92b (match) | uncommitted 0
+> remote aefa92b6eb177cd4d44b6488715231db9b541d2c
+> local  aefa92b6eb177cd4d44b6488715231db9b541d2c
+> 36
+>   HEAD branch: ccr-6f431adf-7h0m8y
+
+### 🧑 User — 2026-11-17T02:34:34.576Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-17T02:34:36.697Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "state": "open", "fields": ["number", "title", "head", "base", "draft"], "perPage": 20}`
+
+### 🧑 User — 2026-11-17T02:34:37.588Z
+
+> ↩︎ result: [{"base":{"ref":"claude/approved-screen-implementation-g3loqu","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"b81cc34ae55d616e8d1cd931e51e491d67dc2b34"},"draft":true,"head":{"ref":"ccr-694bda6a-x58ntq","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"4e140fa68307d51e4a9aca0b6ff9a2cf78595d6b"},"number":13,"title":"DO NOT MERGE — Screen 05 account-transfer recovery + far-river riding fixes (experimental)"},{"base":{"ref":"ccr-61131b9d-uj0oqb","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"aea7e77469e4744f97fa3576c97bb952c76f1705"},"draft":true,"head":{"ref":"ccr-8c4acadc-iybw0n","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"05941383f2b9e17a909a44483a4ec81656a954d7"},"number":12,"title":"DO NOT MERGE — Rainbow session ccr-8c4acadc: account transfer + Screen 05 ?projnear05 near-water (in progress)"},{"base":{"ref":"ccr-57af22a4-lsg7y7","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"e27c6fa0eac82a394f230d6e07e11bd529bbd666"},"draft":true,"head":{"ref":"ccr-61131b9d-uj0oqb","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"99690f1b6ef501cbd7e3ec3becdb2e7399929ce1"},"number":11,"title":"Screen 05 tunnel: near gold frame, Blender padd …[+3668 chars]
+
+### 🤖 Claude — 2026-11-17T02:34:39.797Z
+
+Previous sessions each opened a "DO NOT MERGE" draft PR stacked on the branch before them. Following that convention, so the diff shows only this session's work:
+
+### 🤖 Claude — 2026-11-17T02:34:46.303Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "title": "DO NOT MERGE — Rainbow session ccr-b0757dec: account transfer + Screen 05 splash/bubbles (in progress)", "head": "ccr-b0757dec-dj6l1o", "base": "claude/rainbow-account-transfer-npxahd", "draft": true, "body": "**Do not merge.** Working branch of the new Claude account's session; the five-minute autosave pushes here. Nothing is merged automatically.\n\n## What this branch holds\n- Recovery from `claude/rainbow-account-transfer-npxahd` (`c20d879` + newest `89eacf0`, merged on the user's request). That branch is now protected in `backup …[+1003 chars]`
+
+### 🧑 User — 2026-11-17T02:34:48.370Z
+
+> ↩︎ result: {"id":"5349387403","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/14"}
+
+### 🤖 Claude — 2026-11-17T02:34:50.069Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 14}`
+
+### 🧑 User — 2026-11-17T02:34:51.715Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#14. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🤖 Claude — 2026-11-17T02:34:58.197Z
+
+Subscribed: I'll be woken by any activity on PR #14. One last check of this session's bootstrap rows for Git LFS before I write the report:
+
+### 🤖 Claude — 2026-11-17T02:34:59.544Z
+
+> 🔧 **Bash** `{"command": "grep -E \"^\\| (Git LFS|Approved|Game:|Android|Specialist|Build)\" backups/BOOTSTRAP_REPORT.md | cut -d'|' -f2-4 | cut -c1-200", "description": "Read LFS, Android and test rows from bootstrap report"}`
+
+### 🧑 User — 2026-11-17T02:34:59.571Z
+
+> ↩︎ result: Git LFS binaries (local) | OK | 36/36 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK 
+>  Git LFS on GitHub | OK | 36/36 LFS objects (232 MB, 17 Marble/World Labs) confirmed on GitHub LFS 
+>  Approved references | OK | 13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference) 
+>  Game: 11 screens + code | OK | 11 approved screen references 01-11, source tree src/ (44 files), Android project android/, characters assets/models/*.glb 
+>  Specialist agents | OK | 10/10 specialist definitions present; all SHA-256 unchanged; running: washer-environment-modeler (recorded running = INTERRUPTED unless relaunched this session), foam-bubbles
+>  Android build tools | OK | Android SDK platform 34 + build-tools 34.0.0 + platform-tools (installed now, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug 
+>  Build + game tests | OK | tsc OK; continuity OK (all stage joins gap 0, 07->08 drop 61.19)
+
+### 🤖 Claude — 2026-11-17T02:35:27.453Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+Everything is recovered from your latest branch, the tools work on this new account, and the work on the splash and bubbles has restarted. Your finished work is unchanged.
+
+**Branches**
+- **Your source branch:** `claude/rainbow-account-transfer-npxahd`, newest commit `89eacf0708aa7252782c06c7ee9ff84d30e57f89`. That is one autosave newer than `c20d879` and it only touched backup notes. I merged it in because you asked for the newest commit, and that branch is now protected.
+- **New working branch:** `ccr-b0757dec-dj6l1o` at `aefa92b6eb177cd4d44b6488715231db9b541d2c`. The copy on GitHub matches my local copy.
+- I opened draft PR #14, marked "DO NOT MERGE", like your earlier sessions. I'm watching it.
+- **Not merged:** `ccr-61131b9d-uj0oqb` has 5 newer commits, but they only contain backup bookkeeping. It stays protected.
+
+**Cloud environment**
+- This account had no `rainbow-` environment, so I created one and you approved it. It allows `download.blender.org`, `dl.google.com` and `lfs.github.com`, plus package managers and MCP servers. Its setup script is `scripts/cloud-env-setup.sh`.
+- I tested the network for real: all the allowed sites answered, and a site that isn't allowed was blocked.
+- I ran the setup script by hand and it passed. It only runs automatically when a new session starts, so it isn't proven on a fresh machine until your next session starts there. **Start future sessions in the `rainbow-` environment.**
+- Your World Labs key is saved only on your Default environment, so it isn't used in this session. Screen 05 doesn't need it.
+
+**Blender 5.3.0: working.** The Workbench, EEVEE and Cycles test renders passed, and Blender's Python (`bpy`) works.
+- There are now **8** `.blend` files, not 7: the tunnel specialist added `env/lid/lids05.blend`. All 8 open.
+- Benny's model, the girl's model and the six paddles load, and exporting then re-importing the models gives the same shapes.
+- I ran your own Blender scripts on copies, so no approved file was touched:
+  - The camera lock passed.
+  - The tunnel texture bake gives pixel-identical wall and ring textures.
+  - The paddle rebuild gives a file byte-identical to the game's.
+- Blender MCP is **not connected**, and can't be on this cloud machine because it has no screen. Running Blender from the command line with Python is the tested method.
+
+**Other tools and connections**
+- **GitHub MCP works:** it listed 28 branches. Git push works.
+- **Git LFS:** there are 36 large files now, not 34, because of the new paddle files. All 36 are on this machine and confirmed on GitHub.
+- **Playwright MCP and Chromium:** WebGL2 works, using software rendering.
+- **Android:** SDK 34, build-tools 34.0.0 and Java 21 are ready. The APK hasn't been built yet; that's the last step.
+- **Ready:** Node, npm, TypeScript, Three.js/Vite, Python with NumPy, Pillow, SciPy and OpenCV, FFmpeg. The TypeScript check and the stage-continuity test pass.
+- **Optional, not used for Screen 05:** Context7 needs you to sign in, the Spector debugging tool failed to connect, and the World Labs plugin's MCP is switched off.
+
+**Specialists**
+- All 10 definitions are present and match their saved fingerprints.
+- The HUD/coins, tunnel and Benny specialists had finished their main work, so I didn't restart them.
+- The previous account ran out of credits a few minutes after starting the splash-and-bubble specialist, and it hadn't saved anything. I relaunched it from its brief.
+- I relaunched the tunnel specialist only for its two unfinished small wall patches at the left far bend, plus any rough textures or visible polygon edges it can prove better.
+- I'm holding Benny's fur, colour and pom-pom pass until the splash is done, to keep to two agents at a time and save credits.
+
+**Five-minute autosave:** running and pushing to the new branch, and the latest push was checked. The previous session ended without its end-of-session backup. Its last autosave was at 02:23 UTC, and the game state matches that save exactly.
+
+**Screen 05: restored exactly.** I took fresh captures of the real game:
+- The default game and your protected BEFORE are both 0 pixels different from their saved pictures.
+- `?match05=1` is 0 pixels different from the last checkpoint. **83.6 %** of pixels are within 20 colour levels of your approved picture. This is a strict pixel measurement, not a 9/10 visual score.
+- Weakest areas now:
+
+| Area | Pixels within 20 colour levels |
+|---|---|
+| Splash behind Benny | 38.9 % |
+| Coins | 51.6 % |
+| Bubbles | 64.5 % |
+| Benny and his hat | 73.0 % |
+
+I've sent the three separate full-size pictures: your original approved Screen 05, the game before the specialists' work (43.2 %), and the game now.
+
+**Nothing needs your approval right now.** When the two specialists finish, I'll put their work into `?match05=1` and keep only what measures closer. Then I'll test moving gameplay, check that the default game and your BEFORE are unchanged, and send you the three new pictures. After that come the Benny pass and the Android APK with a performance check.
+
+### 🧑 User — 2026-11-17T02:35:30.054Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

@@ -653,8 +653,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 12148,
-   "sha256": "40e5e291d1220560b7fbe79a880e56ff32bf8c0bfdfac8b84b0128d68026b2db"
+   "bytes": 12149,
+   "sha256": "11ed0332af60f11c7a15cec7d863e2499aeea8ff7070e48061bd1db3c9df5442"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -11070,6 +11070,11 @@
    "path": "tools/qa/water05_grain.py",
    "bytes": 3836,
    "sha256": "bcc428708b8f8f556e2c25844bc995d0732ad8ac3c5f8d269a021449b44dd6e4"
+  },
+  {
+   "path": "tools/splash05/bubble_audit.py",
+   "bytes": 3379,
+   "sha256": "5f9e53afcd3309aa58df6f67dbe6304878097e07d8deab4e9b2237def45f85d9"
   },
   {
    "path": "tools/water-lab.html",

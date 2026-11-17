@@ -442,3 +442,224 @@ Let me look at the approved image, the current capture (cp3), and the masks.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T02:34:27.299Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; cd /home/user/rainbow-; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nS='$S'\nM='qa/pilot05/full_reference_match/masks'\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(float)\ncp=np.asarray(Image.open('qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png').convert('RGB')).astype(float)\nwm=np.asarray(Image.open(f'{M}/wake_splash.png').convert('L'))>127\nbm=np.asarray(Image.open(f'{M}/benny_and_hat.png …[+563 chars]`
+
+### 🧑 User — 2026-11-17T02:34:27.975Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T02:34:29.444Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/wake_mask.png"}`
+
+### 🧑 User — 2026-11-17T02:34:29.478Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:34:34.603Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/water/05_water_isolated_original.png'); print(im.size, im.mode)\n\"; ls assets/textures/water05/ | head -50; ls qa/pilot05/proj/ | head", "description": "Inspect isolated water reference and water05 textures"}`
+
+### 🧑 User — 2026-11-17T02:34:34.697Z
+
+> ↩︎ result: (941, 1672) RGBA
+> far1
+> far2
+> proj05_A.png
+> proj05_A_pad.png
+> proj05_D.png
+> proj05_E.png
+> proj05_F.png
+> proj05_N.png
+> proj05_T.png
+> proj05_T2.png
+> proj05_WN.png
+> proj05_WT.png
+> proj05_WT2.png
+> proj05_flow.json
+> proj05_lut.json
+> proj05_near.json
+> BRIEF_NEXT.md
+> BRIEF_SPECIALIST1.md
+> BRIEF_SPECIALIST1_VERBATIM.md
+> BRIEF_SPECIALIST2.md
+> NOTES.md
+> align
+> caps
+> clips
+> compare
+> feasibility
+
+### 🤖 Claude — 2026-11-17T02:34:37.418Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/water/05_water_isolated_original.png')\nbg=Image.new('RGBA',im.size,(0,0,0,255)); bg.alpha_composite(im); bg.convert('RGB').resize((470,836)).save('$S/iso.png')\n\"; grep -n \"bubble\\|splash\\|wake\" qa/pilot05/proj/NOTES.md | head -40", "description": "Render isolated water reference and grep proj notes"}`
+
+### 🧑 User — 2026-11-17T02:34:37.653Z
+
+> ↩︎ result: 15:  Benny + splash, the coins and the bottom gold ring, the user's ORIGINAL isolated artwork
+> 37:`?proj05=1` on · `&projfoam05=1` keep the 3D foam · `&projbub05=1` keep the game bubbles · `&projbank05=0` no bank strip · `&projflow05=0` no flow · `&projflowd05=` flow distance ·
+> 56:not the water texture but what the user asked to keep unchanged or what is geometry: Benny's splash, the game's
+> 57:bubbles (other positions than the approved ones), the coins (other far positions), the bottom gold ring (T2 front ring
+> 60:Next levers, one at a time, each as its own switch: hide or reposition the 05 bubbles; a visual-only bank widening
+> 70:  (fixed on the way: a hard N→T seam, blocky tile fill, a Jacobian test fooled by shear, a bubble in the detail tile).
+> 72:  camera — phase correlation: 100 % of frame pairs move down the screen mid-river, 61 % near Benny where his splash
+> 88:picture shows its water or foam (registered water footprint minus what the approved picture hides: Benny + splash,
+> 102:2. The game's own bubbles thin out to none while Benny is on 05 (ramped over 3 u at both joins; the approved bubbles
+> 103:   are in the texture) → 90.8 %. `?projbub05=1` keeps them. Other screens' bubbles  …[+133 chars]
+
+### 🤖 Claude — 2026-11-17T02:34:39.016Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/iso.png"}`
+
+### 🧑 User — 2026-11-17T02:34:39.035Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T02:34:41.706Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,120p qa/pilot05/proj/NOTES.md", "description": "Read projection notes"}`
+
+### 🧑 User — 2026-11-17T02:34:41.736Z
+
+> ↩︎ result: # Screen 05 — `?proj05=1`: the APPROVED water projected onto the real playable river
+> 
+> Session `012NR93Q…`, 2026-11-16 ~17:30–18:45 UTC, branch `ccr-e546a360-cxmton` (experiment branch; the user's
+> working version `ccr-451ea8c7-3nqlis` and the default build are untouched). No Marble credits, no Marble API call.
+> The main session did Specialist 1's assignment (projection / bake) and the first part of Specialist 2's
+> (flow animation); instructions for the specialists to continue: `BRIEF_NEXT.md`.
+> 
+> ## What it is
+> The user's approved Screen 05 water, baked into the GAME river's own coordinates (u across −1..1, s = arc length)
+> from the locked 05 camera, using the live game's per-pixel river coordinates (`scripts/proj05-probe.mjs`). The
+> texture is anchored to the river, not to the camera — a real textured 3D river, nothing pasted over the screen.
+> Marble was not used (its reconstructed surface is distorted: `qa/pilot05/marble_feas/NOTES.md`).
+> 
+> * Source pixels (`tools/proj05/make_target.py` → `target/`): the APPROVED picture wherever its water is visible; under
+>   Benny + splash, the coins and the bottom gold ring, the user's ORIGINAL isolated artwork
+>   (`references/water/05_water_isolated_origi …[+8345 chars]
+
+### 🤖 Claude — 2026-11-17T02:34:47.564Z
+
+Now step A: per-bubble measurement. Let me build a measurement tool and crops.
+
+### 🤖 Claude — 2026-11-17T02:34:48.715Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/splash05 /home/user/rainbow-/qa/pilot05/full_reference_match/splash_bubbles; ls /home/user/rainbow-/tools/match05/ /home/user/rainbow-/scripts/ | head -80", "description": "Create my folders, list tools and scripts"}`
+
+### 🧑 User — 2026-11-17T02:34:48.769Z
+
+> ↩︎ result: /home/user/rainbow-/scripts/:
+> apk-web-check.mjs
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> cinematic-test.mjs
+> claude-bootstrap.sh
+> cloud-env-setup.sh
+> compare.py
+> continuity-test.ts
+> export-models.mjs
+> export-river-05.ts
+> export_claude_sessions.py
+> flow05-dump.ts
+> gameplay-test.mjs
+> install-autosave-scheduler.sh
+> landmarks05.py
+> lib
+> perf05.mjs
+> proj05-lid-fit.mjs
+> proj05-lid-raycast.mjs
+> proj05-move.mjs
+> proj05-probe.mjs
+> proj05-ride-probe.mjs
+> proj05-tunnel-probe.mjs
+> rainbow-autosave.py
+> reference.sha256
+> resume-newest-work.sh
+> screen_report.py
+> setup-android-sdk.sh
+> setup-blender.sh
+> setup-worldlabs-plugin.sh
+> triptych.py
+> verify-assets.py
+> verify-blender.py
+> water-lab.mjs
+> 
+> /home/user/rainbow-/tools/match05/:
+> metrics.py
+> pixel_probe.mjs
+> regions.py
+
+### 🤖 Claude — 2026-11-17T02:34:50.176Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat scripts/capture.mjs | head -150; cat scripts/lib/pw.mjs | head -60", "description": "Read capture script and render slot lib"}`
+
+### 🧑 User — 2026-11-17T02:34:50.209Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+6223 chars]
+
+### 🤖 Claude — 2026-11-17T02:34:50.733Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 150,400p scripts/capture.mjs", "description": "Read rest of capture script"}`
+
+### 🧑 User — 2026-11-17T02:34:50.771Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T02:35:05.863Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/splash05/bubble_audit.py", "content": "\"\"\"Screen 05 bubbles audit (foam-bubbles-particles, `bub05`): for each of the 30 APPROVED bubbles\n(qa/pilot05/full_reference_match/masks/bubbles_approved.json, {x, y, r} in approved pixels) compare the approved picture\nwith a real game capture inside the bubble disk (r + 2 px): mean |dRGB|, share within 20 levels, signed RGB, and the\nsame numbers for a ring just outside the disk (what surrounds it). Also writes a contact sheet approved | game per bubble.\nusage: python3 -I tools/splash05/bubble_audit.py <capt …[+2999 chars]`
+
+### 🧑 User — 2026-11-17T02:35:05.943Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/splash05/bubble_audit.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T02:35:08.086Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I tools/splash05/bubble_audit.py qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png $S/cp3_ --sheet", "description": "Run per-bubble audit on cp3 capture"}`
+
+### 🧑 User — 2026-11-17T02:35:09.590Z
+
+> ↩︎ result: # 0 ( 51, 707) r28 px  2821 mean  71.68 <=20 0.12 signed [0.8, -50.3, -80.9] lum A 156.3 G 114.7 ring  25.1 on purple_walls
+> #10 (795, 861) r30 px  3209 mean  40.19 <=20 0.26 signed [-26.7, 8.6, 3.1] lum A 165.6 G 166.3 ring  34.8 on purple_walls
+> # 1 ( 93, 612) r23 px  1961 mean  58.80 <=20 0.22 signed [-31.5, -66.3, -41.7] lum A 155.1 G  98.0 ring   4.3 on purple_walls
+> # 4 (181, 673) r17 px  1129 mean  46.57 <=20 0.23 signed [13.1, -25.4, -21.7] lum A 153.9 G 137.0 ring  24.4 on purple_walls
+> # 2 (180, 572) r18 px  1257 mean  39.84 <=20 0.38 signed [-9.7, -47.7, -25.7] lum A 152.5 G 114.5 ring   4.1 on purple_walls
+> #11 (734, 575) r14 px   797 mean  53.13 <=20 0.19 signed [-14.0, -57.3, -29.3] lum A 153.2 G 107.1 ring  23.3 on purple_walls
+> #13 (797, 618) r13 px   709 mean  59.49 <=20 0.22 signed [-37.0, -48.7, -61.4] lum A 133.0 G  85.9 ring   8.6 on purple_walls
+> #17 (719,1207) r33 px  3853 mean   8.83 <=20 0.89 signed [-14.1, -5.0, -1.2] lum A 181.7 G 175.0 ring   6.5 on water
+> # 3 (265, 538) r11 px   529 mean  48.98 <=20 0.28 signed [-21.0, -38.1, -37.4] lum A 135.3 G 100.9 ring   7.2 on purple_walls
+> #12 (655, 561) r12 px   613 mean  38.07 <=20 0.28 signed [7.4, -19.5, -19.0] lum A  …[+2454 chars]
+
+### 🤖 Claude — 2026-11-17T02:35:11.215Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/cp3_bubbles_sheet.png"}`
+
+### 🧑 User — 2026-11-17T02:35:11.234Z
+
+> ↩︎ result: [image]
+
