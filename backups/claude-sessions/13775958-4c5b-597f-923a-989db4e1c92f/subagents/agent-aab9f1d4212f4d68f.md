@@ -881,3 +881,387 @@ Let me write the timeline script that runs either the current source (Vite) or a
 > src/vfx/foam.ts:639:  group.name = 'foam_banks';
 > src/vfx/foam.ts:773:  whirlGroup.name = 'foam_whirlpool'; …[+1459 chars]
 
+### 🤖 Claude — 2026-11-17T15:33:49.145Z
+
+> 🔧 **Bash** `{"command": "grep -n \"surfaceHeight\" src/vfx/*.ts | head; grep -n \"lift\\|radius\" src/characters/benny/runtime.ts | head -20; python3 -c \"import PIL, numpy; print(PIL.__version__, numpy.__version__)\"", "description": "Check water surface API and Benny lift"}`
+
+### 🧑 User — 2026-11-17T15:33:49.423Z
+
+> ↩︎ result: src/vfx/index.ts:12: *   course.pointAt(s, lateral, water.surfaceHeight(s, lateral, time) + BENNY_RIDE_OFFSET)
+> src/vfx/index.ts:46:  surfaceHeight(s: number, lateral: number, time: number): number;
+> src/vfx/index.ts:134:  const surfaceHeight = (s: number, lateral: number, t: number): number => {
+> src/vfx/index.ts:170:    surfaceHeight,
+> src/vfx/index.ts:228:      const above = d.dot(f.up) - surfaceHeight(s, lateral, curTime);
+> 41: * Ride height. The game places the root at water surface + radius·0.55 (≈ 0.44), which buried the lower
+> 43: * lifted inside the root so he sits ON the water like refs 04–10: only the bottom of the fur and the
+> 52:/** QA A/B hook: `?bennyLift=<units>` overrides the ride lift (e.g. 0 = the game's raw placement) */
+> 63: * Eased in with the ride lift; cinematics (01 peek, 02 tumble, 11 hide) keep him upright. The game can scale it
+> 157:  let lift = 0;
+> 158:  const liftMax = rideLift();
+> 180:    const liftTarget = tumble || peek ? 0 : liftMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+> 181:    lift += (liftTarget - lift) * (1 - Math.exp(-dt * 7));
+> 182:    scene.position.y = lift;
+> 183:    // ride lean into the current (see BENNY_RIDE_PITCH), on the same ease as the li …[+74 chars]
+
+### 🤖 Claude — 2026-11-17T15:35:18.485Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/tools/camclear/probe.mjs", "content": "#!/usr/bin/env node\n// Obstruction probe on the REAL running game: plays the game from app start (intro t = 0, no tap) with the game's own\n// 60 Hz simulation and, every --dt seconds of game time between --t0 and --t1, saves the frame the phone shows\n// (full post chain + HUD) and measures it:\n//   near2 / near05  share of the frame covered by anything (meshes, foam, particles) within 2 u / 0.5 u of the camera\n//                   (camera.far clipped render, every object wit …[+13597 chars]`
+
+### 🧑 User — 2026-11-17T15:35:18.531Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/tools/camclear/probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:35:26.279Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/camclear/probe.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"    const size = renderer.getDrawingBufferSize(new camera.position.constructor.prototype.constructor().constructor === V3 ? { x: 0, y: 0, set(x, y) { this.x = x; this.y = y; return this; } } : null);\"\"\",\"\"\"    const size = renderer.getDrawingBufferSize({ x: 0, y: 0, set(x, y) { this.x = x; this.y = y; return this; }, floor() { this.x = Math.floor(this.x); this.y = Math.floor(this.y); return this; } });\"\"\")\ns=s.replace(\"\"\"        const box = new (Object.getPrototypeOf(scene).constructo …[+952 chars]`
+
+### 🧑 User — 2026-11-17T15:35:26.345Z
+
+> ↩︎ result: 66:    const size = renderer.getDrawingBufferSize({ x: 0, y: 0, set(x, y) { this.x = x; this.y = y; return this; }, floor() { this.x = Math.floor(this.x); this.y = Math.floor(this.y); return this; } });
+
+### 🤖 Claude — 2026-11-17T15:35:32.645Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/scene.traverse((o) => { if (!found \\&\\& o.isMesh) found = o; });/scene.traverse((o) => { if (!found \\&\\& o.isMesh \\&\\& !o.isInstancedMesh \\&\\& !o.isSkinnedMesh) found = o; });/' tools/camclear/probe.mjs && grep -n \"found = o\" tools/camclear/probe.mjs && time timeout 900 node tools/camclear/probe.mjs --times=8,18.5,35,40 --out=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1 2>&1 | tail -20", "description": "Test probe script on four sample times", "timeout": 960000}`
+
+### 🧑 User — 2026-11-17T15:35:54.180Z
+
+> ↩︎ result: 216:  scene.traverse((o) => { if (!found && o.isMesh && !o.isInstancedMesh && !o.isSkinnedMesh) found = o; });
+> {"t":8,"mode":"intro","stage":"02","s":1.37,"near2":0.0023,"near05":0,"top":{"obj":"bubbles_small < bubbles < water_system","share":0.0023},"bennyHidden":0.359,"inside":0}
+> {"t":18.5,"mode":"ride","stage":"04","s":87.977,"near2":0,"near05":0,"bennyHidden":0.033,"inside":0}
+> {"t":35,"mode":"ride","stage":"07","s":277.874,"near2":0,"near05":0,"bennyHidden":0.054,"inside":0}
+> {"t":40,"mode":"ride","stage":"07","s":337.874,"near2":0,"near05":0,"bennyHidden":0.643,"inside":0}
+> 
+> real	0m21.467s
+> user	0m1.589s
+> sys	0m0.408s
+> [This command modified 1 file you've previously read: tools/camclear/probe.mjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T15:35:55.649Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1/f_003_t40.00.png"}`
+
+### 🧑 User — 2026-11-17T15:35:55.666Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:35:56.262Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1/f_000_t8.00.png"}`
+
+### 🧑 User — 2026-11-17T15:35:56.282Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:36:08.893Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1/f_001_t18.50.png"}`
+
+### 🧑 User — 2026-11-17T15:36:08.907Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:36:09.550Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1/f_002_t35.00.png"}`
+
+### 🧑 User — 2026-11-17T15:36:09.571Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:36:13.284Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/tools/camclear/probe.mjs", "offset": 55, "limit": 110}`
+
+### 🧑 User — 2026-11-17T15:36:13.305Z
+
+> ↩︎ result: 55	await page.evaluate(() => {
+> 56	  const api = window.__rainbow;
+> 57	  const { scene, camera, renderer, composer } = api.qa3d();
+> 58	  const RT = composer.renderTarget1.constructor;
+> 59	  const Color = scene.background.constructor;
+> 60	  const V3 = camera.position.constructor;
+> 61	  const KEY = new Color(0, 1, 0);
+> 62	  const LAYER = 30;
+> 63	  const named = (o) => { const a = []; let c = o; while (c && c !== scene) { a.push(c.name || (c.isMesh || c.isPoints ? `${c.type}(${c.material?.name || c.material?.type || ''}${c.material?.color ? '#' + c.material.color.getHexString() : ''},${c.geometry?.attributes?.position?.count ?? 0}v)` : c.type)); c = c.parent; } return a.slice(0, 4).join(' < '); };
+> 64	  let rt = null;
+> 65	  const grab = (setup, teardown) => {
+> 66	    const size = renderer.getDrawingBufferSize({ x: 0, y: 0, set(x, y) { this.x = x; this.y = y; return this; }, floor() { this.x = Math.floor(this.x); this.y = Math.floor(this.y); return this; } });
+> 67	    const w = Math.max(1, Math.round(size.x / 2)), h = Math.max(1, Math.round(size.y / 2));
+> 68	    if (!rt || rt.width !== w || rt.height !== h) { rt?.dispose(); rt = new RT(w, h); }
+> 69	    const bg = scene.background, far = camera.far,  …[+5334 chars]
+
+### 🤖 Claude — 2026-11-17T15:36:34.178Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/camclear/probe.mjs'\ns=open(p).read()\na=s.index(\"      // Benny occlusion\")\nb=s.index(\"      } else res.benny = { visible: false };\")\nnew='''      // Benny occlusion\n      const benny = scene.getObjectByName('Benny');\n      if (benny && benny.visible) {\n        const A = grab(null, null);\n        const B = grab(() => { benny.visible = false; }, () => { benny.visible = true; });\n        const C = grab(() => { camera.layers.set(LAYER); onLayer(benny, true); }, () => onLayer(benny, false));\n        const mask = new Uint8Array(C.w * C.h);\n     …[+4478 chars]`
+
+### 🧑 User — 2026-11-17T15:36:34.272Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T15:36:39.203Z
+
+> 🔧 **Bash** `{"command": "time timeout 900 node tools/camclear/probe.mjs --times=8,40 --out=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1 2>&1 | tail -5; python3 -c \"\nimport json; d=json.load(open('/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1/probe.json'))\nfor r in d['rows']: print(r['t'], json.dumps(r.get('benny')), r.get('inside'), r.get('ray'))\"", "description": "Test updated probe on two sample times", "timeout": 960000}`
+
+### 🧑 User — 2026-11-17T15:36:58.547Z
+
+> ↩︎ result: {"t":8,"mode":"intro","stage":"02","s":1.37,"near2":0.0023,"near05":0,"top":{"obj":"bubbles_small < bubbles < water_system","share":0.0023},"bennyHidden":0.359,"inside":0}
+> {"t":40,"mode":"ride","stage":"07","s":337.874,"near2":0,"near05":0,"bennyHidden":0.643,"inside":0}
+> 
+> real	0m19.279s
+> user	0m1.362s
+> sys	0m0.336s
+> 8 {"maskShare": 0.2654, "hidden": 0.359, "box": [0.23, 0.525, 1, 1], "depth": 3.55, "fgFrame": 0.143, "fgOnBenny": 0.297, "occluders": [{"obj": "water_drumA_surface < water_drumA < water_system", "onBenny": 0.283}, {"obj": "bubbles_small < bubbles < water_system", "onBenny": 0.013}], "centreY": -2.032, "bottomY": -3.261, "rootY": -2.032, "surfaceY": -2.5, "surfaceObj": "water_drumA_surface < water_drumA < water_system", "bottomAboveSurface": -0.761, "centreAboveSurface": 0.468} [] {'centre': [{'d': 10.18, 'obj': 'Mesh<Group<doorA_pivot<zone_drumA<washer_world', 'p': [-0.1, -0.15, 4.05]}, {'d': 90.09, 'obj': 'Mesh<laundry_room<Group<zone_drumA<washer_world', 'p': [-7.57, 6.9, 83.29]}]}
+> 40 {"maskShare": 0.0489, "hidden": 0.643, "box": [0.319, 0.621, 0.681, 0.854], "depth": 8.61, "fgFrame": 0.3255, "fgOnBenny": 0.636, "occluders": [{"obj": "Mesh(MeshStandardMaterial#ffc890,15 …[+424 chars]
+
+### 🤖 Claude — 2026-11-17T15:37:11.081Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/camclear/probe.mjs'\ns=open(p).read()\nold_a='''        let minY = Infinity;\n        benny.updateMatrixWorld(true);'''\nnew_a='''        // measured along Benny's own up axis (= the course up; the plunge is steep, world-vertical would overstate it)\n        const U = new V3(0, 1, 0).applyQuaternion(benny.quaternion).normalize();\n        let minY = Infinity;\n        benny.updateMatrixWorld(true);'''\ns=s.replace(old_a,new_a)\ns=s.replace(\"const p = new V3(cx, cy, cz).applyMatrix4(o.matrixWorld); if (p.y < minY) minY = p.y;\",\"const p = new V3(cx, cy …[+1105 chars]`
+
+### 🧑 User — 2026-11-17T15:37:11.175Z
+
+> ↩︎ result: 171:        let minY = Infinity;
+> 178:            const p = new V3(cx, cy, cz).applyMatrix4(o.matrixWorld).dot(U); if (p < minY) minY = p;
+> 192:          if (h) { const hs = h.point.dot(U); res.benny.surfaceY = +h.point.y.toFixed(3); res.benny.surfaceObj = named(h.object); res.benny.bottomAboveSurface = +(minY - hs).toFixed(3); res.benny.centreAboveSurface = +(bc.dot(U) - hs).toFixed(3); }
+
+### 🤖 Claude — 2026-11-17T15:37:14.231Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/gameplay_video/scan && timeout 3000 node tools/camclear/probe.mjs --t0=0 --t1=54 --dt=0.5 --out=qa/gameplay_video/scan/default > qa/gameplay_video/scan/default.log 2>&1; echo done; tail -3 qa/gameplay_video/scan/default.log", "description": "Full 0-54 s obstruction scan of default build", "timeout": 3100000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T15:37:14.280Z
+
+> ↩︎ result: Command running in background with ID: bm8kaxddd. Output is being written to: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/tasks/bm8kaxddd.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T15:37:17.377Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ffc890\\|ring\\|Ring\" src/world/environment.ts | head -60; grep -n \"ffc890\" -r src | head", "description": "Locate gold ring geometry in environment"}`
+
+### 🧑 User — 2026-11-17T15:37:17.421Z
+
+> ↩︎ result: 3: * Drum A (01–02) → chute → whirlpool basin room (03) → gold ring pipe (04) → perforated current tube
+> 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 15:import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+> 85:  // gold door ring (thick) + chrome inner lip
+> 86:  const ringA = new THREE.Mesh(new THREE.TorusGeometry(dA.doorRadius + 0.35, 0.48, 24, 96), goldMat);
+> 87:  ringA.position.set(0, 0, dA.zDoor - 0.1);
+> 88:  zones.drumA.add(ringA);
+> 89:  const ringA2 = new THREE.Mesh(new THREE.TorusGeometry(dA.doorRadius + 1.15, 0.22, 16, 96), goldSoft);
+> 90:  ringA2.position.set(0, 0, dA.zDoor - 0.15);
+> 91:  zones.drumA.add(ringA2);
+> 106:  const doorRingA = new THREE.Mesh(new THREE.TorusGeometry(dA.doorRadius + 0.2, 0.42, 20, 80), chromeMat);
+> 108:  doorAInner.add(doorRingA, doorGlassA);
+> 136:  zones.drumA.add(buildRings(chutePath, sChute0 + 1.5, sChute1 - 1, 3.2, goldMat, { tube: 0.09 }));
+> 1 …[+4937 chars]
+
+### 🤖 Claude — 2026-11-17T15:37:19.620Z
+
+> 🔧 **Bash** `{"command": "sed -n 340,470p src/world/environment.ts", "description": "Read 06/07 rings and plunge construction"}`
+
+### 🧑 User — 2026-11-17T15:37:19.679Z
+
+> ↩︎ result: }
+>   };
+>   addWall(s05, sGlow05, perf05Mat);
+>   addWall(sGlow05, s08, perfTubeMat);
+>   // 06/07 rings and the 04→05 junction collar (unchanged look)
+>   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+>   ringMat.envMap = goldEnv;
+>   ringMat.envMapIntensity = 1.3;
+>   // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
+>   // copper only on the shadowed side — from a yellow F0, little flat emissive (it flattened the band to
+>   // one orange) and the rounded double-lip band (bandGeometry) whose crown, groove and lip catch the
+>   // strip lights as marquee spots
+>   const goldEnv05 = washerTubeEnv('gold05');
+>   const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
+>   // wave 7: the band colour is the stylised cross-section of withBandShading (materials.ts); the PBR/env
+>   // result underneath only feeds the depth buffer now
+>   // wave 8: the real (near) ring is thicker — ref ring #1 top spans y 188–230 (lip 8 px · groove 3 · body 17 ·
+>   // turned-away flank 7 · contour) w …[+8921 chars]
+
+### 🤖 Claude — 2026-11-17T15:37:32.173Z
+
+> 🔧 **Bash** `{"command": "grep -n \"perfPath\\|const goldPath\\|courseTubePath\" src/world/environment.ts | head -20; grep -n \"export function courseTubePath\" -A40 src/world/tube.ts | head -60", "description": "Inspect perforated tube path definition"}`
+
+### 🧑 User — 2026-11-17T15:37:32.223Z
+
+> ↩︎ result: 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 130:  const chutePath = courseTubePath(course, () => 2.25, 0.55);
+> 186:  const goldPath = courseTubePath(course, r04, 0.9);
+> 251:  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR, floorExtra: floorExtra05 });
+> 319:    envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
+> 326:    flow05Shared.uPanoRot.value.copy(marblePanoMatrix05(perfPath.frame(sCam05).tan));
+> 337:      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), mat));
+> 339:      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+> 388:  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
+> 389:  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: …[+3109 chars]
+
+### 🤖 Claude — 2026-11-17T15:37:34.710Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cd /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f && wc -l qa/gameplay_video/scan/default.log; tail -2 qa/gameplay_video/scan/default.log | cut -c1-300", "description": "Check scan progress"}`
+
+### 🧑 User — 2026-11-17T15:37:34.717Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cd /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f wc -l qa/gameplay_video/scan/default.log tail -2 qa/gameplay_video/scan/default.log cut -c1-300. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-17T15:37:36.792Z
+
+> 🔧 **Bash** `{"command": "wc -l qa/gameplay_video/scan/default.log; tail -2 qa/gameplay_video/scan/default.log | cut -c1-300", "description": "Check scan progress"}`
+
+### 🧑 User — 2026-11-17T15:37:36.820Z
+
+> ↩︎ result: 10 qa/gameplay_video/scan/default.log
+> {"t":4,"mode":"intro","stage":"01","s":0,"near2":0.0024,"near05":0,"top":{"obj":"bubbles_small < bubbles < water_system","share":0.0024},"inside":0}
+> {"t":4.5,"mode":"intro","stage":"01","s":0,"near2":0.0035,"near05":0,"top":{"obj":"bubbles_small < bubbles < water_system","share":0.0035},"bennyHidden":0.814,"inside":0}
+
+### 🤖 Claude — 2026-11-17T15:37:39.629Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/src/world/match08.ts"}`
+
+### 🧑 User — 2026-11-17T15:37:39.656Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?match08=1` — Screen 08 approved-picture test (2026-11-17, qa/match/08/NOTES.md).
+> 3	 * REAL 3D proxy geometry of the Final Spin Chamber, solved from the user's approved Screen 08 and the locked game
+> 4	 * camera (tools/match08/fit_proxies.py → assets/textures/match08/proj08.json): inlet pipe, gold arch, chamber walls,
+> 5	 * door wall, floor/river plane, platform (top tilted toward the camera as painted), towel and the four half-dome spouts.
+> 6	 * Every surface is textured by camera projection of the CLEAN environment-only artwork (Benny, HUD, coins removed;
+> 7	 * qa/imageblaster/08/) from that locked camera, so the locked view shows the approved scenery and a moving camera sees
+> 8	 * it on geometry (parallax). Surfaces the projector cannot see (behind props) get a plain fallback colour instead of
+> 9	 * a smeared copy (projector depth test). The shader undoes the game's post chain (PROJ05_INVERSE) and takes no fog.
+> 10	 * Without the switch nothing in this file runs and the game is unchanged.
+> 11	 */
+> 12	import * as THREE from 'three';
+> 13	import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 14	
+> 15	interface Layout {
+> 16	  camera: { matrixWorld: number[]; fov: number; size: [number …[+12584 chars]
+
+### 🤖 Claude — 2026-11-17T15:37:46.992Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p src/vfx/foam.ts", "description": "Read foam module header"}`
+
+### 🧑 User — 2026-11-17T15:37:47.022Z
+
+> ↩︎ result: /**
+>  * Foam banks along the stream (refs 03–10) + whirlpool rim foam.
+>  *  - berm: ONE continuous lumpy lather bank per side, swept along the course (custom shader:
+>  *    two-scale cellular soap bubbles with derivative bump lighting, lavender crevices, pores,
+>  *    faint iridescent rim). This is what makes the banks read as continuous foam, not cotton balls.
+>  *  - puffs: instanced bubble puffs sitting ON the berm crest (silhouette lumps), in ~40-unit chunks
+>  *    so only chunks near Benny are drawn; quality 'low' halves density and uses 20-tri puffs.
+>  *  - foam rings on the whirlpool rim and along its spiral bands (rotating with the swirl)
+>  *  - flank banks (05, wave 4): one CONTINUOUS cloud bank per side that continues the berm down both
+>  *    sides of the frame to Benny's level (ref 05: banks hugging BOTH edges y≈540–1300): a lather sheet
+>  *    (berm shader, 1 draw) + world-anchored instanced puffs (1 draw), fitted to the frame edges from
+>  *    the camera each frame. Replaces wave 3's floating "flank"/"wake" raft clumps, which read as round
+>  *    islands on open water. Fixed pools, no per-frame allocation.
+>  */
+> import * as THREE from 'three';
+> import { type Course, WORLD, funnelY }  …[+2416 chars]
+
+### 🤖 Claude — 2026-11-17T15:37:50.169Z
+
+> 🔧 **Bash** `{"command": "wc -l qa/gameplay_video/scan/default.log; python3 - <<'EOF'\nimport json\nfor l in open('qa/gameplay_video/scan/default.log'):\n    try: r=json.loads(l)\n    except: continue\n    print(r['t'], r['mode'], r['stage'], r.get('near2'), r.get('near05'), (r.get('top') or {}).get('obj','')[:50], (r.get('top') or {}).get('share'), r.get('bennyHidden'), r.get('inside'))\nEOF", "description": "Summarise scan progress so far"}`
+
+### 🧑 User — 2026-11-17T15:37:50.225Z
+
+> ↩︎ result: 19 qa/gameplay_video/scan/default.log
+> 0 intro 01 1 0.0881 purple_towel < zone_drumA < washer_world 1 0.006 0
+> 0.5 intro 01 0.0069 0 bubbles_small < bubbles < water_system 0.0069 None 0
+> 1 intro 01 0.0056 0 bubbles_small < bubbles < water_system 0.0056 None 0
+> 1.5 intro 01 0.0187 0 water_drumA_surface < water_drumA < water_system 0.011 None 0
+> 2 intro 01 0.0335 0 water_drumA_surface < water_drumA < water_system 0.0265 None 0
+> 2.5 intro 01 0.0055 0 bubbles_small < bubbles < water_system 0.0054 None 0
+> 3 intro 01 0.004 0 bubbles_small < bubbles < water_system 0.004 None 0
+> 3.5 intro 01 0.0024 0 bubbles_small < bubbles < water_system 0.0024 None 0
+> 4 intro 01 0.0024 0 bubbles_small < bubbles < water_system 0.0024 None 0
+> 4.5 intro 01 0.0035 0 bubbles_small < bubbles < water_system 0.0035 0.814 0
+> 5 intro 01 0.0064 0 bubbles_small < bubbles < water_system 0.004 0.217 0
+> 5.5 intro 01 0.0045 0 bubbles_small < bubbles < water_system 0.0045 0.155 0
+> 6 intro 01 0.0024 0 bubbles_small < bubbles < water_system 0.0024 0.126 0
+> 6.5 intro 01 0.0036 0 bubbles_small < bubbles < water_system 0.0033 0.137 0
+> 7 intro 01 0.0093 0 bubbles_big < bubbles < water_system 0.0059 0.127 0
+> 7.5 intro 02 0.0034 0 bubbles_small …[+236 chars]
+
+### 🤖 Claude — 2026-11-17T15:37:55.142Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_000_t0.00.png"}`
+
+### 🧑 User — 2026-11-17T15:37:55.160Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:37:55.747Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_018_t9.00.png"}`
+
+### 🧑 User — 2026-11-17T15:37:55.771Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:38:07.465Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_015_t7.50.png"}`
+
+### 🧑 User — 2026-11-17T15:38:07.483Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:38:08.075Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_017_t8.50.png"}`
+
+### 🧑 User — 2026-11-17T15:38:08.095Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:38:30.202Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function buildRingsAt\" -A45 src/world/tube.ts | head -70", "description": "Read buildRingsAt implementation"}`
+
+### 🧑 User — 2026-11-17T15:38:30.237Z
+
+> ↩︎ result: 323:export function buildRingsAt(path: TubePath, list: number[], material: THREE.Material, opts: RingOpts = {}, spacing = 9): THREE.InstancedMesh {
+> 324-  const tube = opts.tube ?? 0.075;
+> 325-  const collar = opts.band ?? opts.collar;
+> 326-  const geo = opts.band ? bandGeometry(opts.band) : opts.collar ? collarGeometry(opts.collar.depth, opts.collar.lip, opts.collar.width, opts.collar.segments) : new THREE.TorusGeometry(1, tube, 14, 72);
+> 327-  const n = Math.max(1, list.length) * (opts.double ? 2 : 1);
+> 328-  const mesh = new THREE.InstancedMesh(geo, material, n);
+> 329-  const m = new THREE.Matrix4();
+> 330-  const q = new THREE.Quaternion();
+> 331-  const basis = new THREE.Matrix4();
+> 332-  const c = new THREE.Vector3();
+> 333-  let k = 0;
+> 334-  for (const s of list) {
+> 335-    for (let dbl = 0; dbl < (opts.double ? 2 : 1); dbl++) {
+> 336-      const ss = s + dbl * spacing * 0.16;
+> 337-      const f = path.frame(ss);
+> 338-      const r = path.radius(ss) - (opts.inset ?? 0.05) + (opts.extra ?? 0);
+> 339-      c.copy(f.pos).addScaledVector(f.up, path.radius(ss) - path.depth(ss));
+> 340-      // (right, up, tan) is left-handed (right = tan × up), so the quaternion below is not the intended
+> 341-      //  …[+1598 chars]
+
+### 🤖 Claude — 2026-11-17T15:38:37.998Z
+
+> 🔧 **Bash** `{"command": "wc -l < qa/gameplay_video/scan/default.log", "description": "Check scan progress count"}`
+
+### 🧑 User — 2026-11-17T15:38:38.024Z
+
+> ↩︎ result: 39
+
+### 🤖 Claude — 2026-11-17T15:38:42.259Z
+
+> 🔧 **Bash** `{"command": "git log --format='%h %ad %s' --date=format:'%m-%d %H:%M' | grep -v autosave | head -40; git log --all --oneline -i --grep='occlu\\|obstruct\\|camclear\\|clipping' | head", "description": "Show non-autosave commit history and obstruction-related commits"}`
+
+### 🧑 User — 2026-11-17T15:38:42.314Z
+
+> ↩︎ result: 0d6f669 11-17 15:18 Full save on user request: code, assets, agents, Marble worlds, APKs, QA, docs, sanitized chat transcripts
+> 91ae1ca 11-17 15:13 Screen 08 Benny check: motion frames, 04-07 with the ported Benny, close-ups, APK 17c with ported Benny
+> 7694d2f 11-17 14:51 Screen 08: port line B benny05 (knit beanie, yarn pom, star, finer fur) without merge, under ?match08=1; default unchanged; 91 coins
+> 2246c34 11-17 14:32 Screen 08 Benny round: placed on the painted Benny (fur centre 432 vs 428), rounder body, stronger approved splash; Benny+splash 66.2%, scenery 97.4%; APK 17b; handoff + install guide
+> 62c4971 11-17 14:26 Account transfer verified: restore test from a fresh clone passed
+> db0b833 11-17 14:23 Handoff: checkpoint branch backup/2026-11-17-screen08-transfer
+> 714f650 11-17 14:22 Account transfer: docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, scripts/setup-image-blaster.sh, Image-Blaster patch + fal request records, match08 tools
+> aa8cf44 11-17 14:10 Screen 08 finished round (notes)
+> a85ccf9 11-17 13:47 Screen 08 ?match08=1: approved picture's coins placed where the picture shows them (scenery 96.8%); Flow video story recorded in docs/FLOW_VIDEO.md
+> 61a5e36 11-17 13:42 Screen 08 ?match08= …[+4138 chars]
+

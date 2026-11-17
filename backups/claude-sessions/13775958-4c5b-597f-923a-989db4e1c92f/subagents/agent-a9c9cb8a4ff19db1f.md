@@ -924,3 +924,405 @@ Decision (CURRENT or NEW, or partial) with the numbers table; paths of the full-
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && node scripts/capture.mjs 08 05 --out=$S/base_default 2>&1 | tail -3 && node scripts/capture.mjs 08 --q=match08=1 --out=$S/base_m08 2>&1 | tail -2; python3 -c \"\nimport json;d=json.load(open('qa/capture_log.json'));print('errors',len(d['errors']))\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nS='$S'\nfor a,b in [(S+'/base_default/05.png','qa/pilot05/current_default_05.png'),(S+'/base_m08/08.png','qa/match/08/08_NEW_match08.png'),(S+ …[+239 chars]`
 
+### 🧑 User — 2026-11-17T15:34:13.242Z
+
+> ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/base_default/08.png {"stage":"08","s":391.22,"y":-113.113,"calls":160,"tris":610707,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/base_default/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 08 → /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/base_m08/08.png {"stage":"08","s":391.427,"y":-113.112,"calls":80,"tris":398676,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> errors 0
+> ['base_default', '05.png'] qa/pilot05/current_default_05.png px diff 0
+> ['base_m08', '08.png'] qa/match/08/08_NEW_match08.png px diff 2280
+> ['base_default', '08.png'] qa/match/08/08_BEFORE_current_game.png px diff 0
+
+### 🤖 Claude — 2026-11-17T15:34:17.632Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/probe", "description": "Create benny08 work folders"}`
+
+### 🧑 User — 2026-11-17T15:34:17.665Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:34:28.793Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/regions08.py", "content": "\"\"\"Screen 08 region numbers, approved vs capture (same regions as tools/imageblaster/plate_compare.py and\nqa/match/08/scenery_metrics_*.json): SCENERY = not the HUD/title band (y < 190), not Benny + splash (x 220-650,\ny 840-1245), not the nine painted coins (+10 px); bands upper 190-600 / middle 600-840 / lower 840+ (scenery only);\nBENNY+SPLASH = the box x 220-650, y 840-1245; WHOLE = every pixel. Measures: mean |dRGB|, share within 20 levels,\nluminance SSIM ( …[+2255 chars]`
+
+### 🧑 User — 2026-11-17T15:34:28.830Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/regions08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:34:31.212Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I qa/match/08/benny08/work/regions08.py $S/base_m08/08.png qa/match/08/08_NEW_match08.png", "description": "Validate region metrics against recorded numbers"}`
+
+### 🧑 User — 2026-11-17T15:34:32.735Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/base_m08/08.png
+>   scenery       <=20  99.0 %  SSIM 0.976  mean   2.78
+>   upper         <=20  99.1 %  SSIM 0.970  mean   3.16
+>   middle        <=20  98.2 %  SSIM 0.966  mean   4.44
+>   lower         <=20  99.2 %  SSIM 0.984  mean   1.75
+>   benny+splash  <=20  49.8 %  SSIM 0.458  mean  39.13
+>   whole         <=20  83.3 %  SSIM 0.818  mean  14.42
+> qa/match/08/08_NEW_match08.png
+>   scenery       <=20  99.0 %  SSIM 0.976  mean   2.78
+>   upper         <=20  99.1 %  SSIM 0.970  mean   3.16
+>   middle        <=20  98.2 %  SSIM 0.966  mean   4.44
+>   lower         <=20  99.2 %  SSIM 0.984  mean   1.75
+>   benny+splash  <=20  49.8 %  SSIM 0.458  mean  39.13
+>   whole         <=20  83.3 %  SSIM 0.818  mean  14.42
+
+### 🤖 Claude — 2026-11-17T15:34:39.611Z
+
+> 🔧 **Bash** `{"command": "grep -rl \"benny+splash\\|Benny + splash\\|bennysplash\\|benny_splash\" --include=*.py --include=*.mjs --include=*.md --include=*.json . 2>/dev/null | grep -v node_modules | head; ls qa/match/08/motion qa/match/08/other_screens | head -30; find . -path ./node_modules -prune -o -name \"*mask*08*\" -print -o -name \"*08*mask*\" -print | head", "description": "Search for the Benny+splash mask definition"}`
+
+### 🧑 User — 2026-11-17T15:34:39.707Z
+
+> ↩︎ result: ./backups/claude-sessions/eae80a1c-be41-5f1a-858b-469afcc249da/transcript.md
+> ./backups/claude-sessions/e47fc047-26b4-5efa-bfda-db0784968866/transcript.md
+> ./backups/claude-sessions/025fdfec-0536-5765-8355-e6c259e1aa5d/transcript.md
+> ./backups/claude-sessions/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/transcript.md
+> ./backups/claude-sessions/d2bbe275-7784-5e9e-8462-91d5dedde771/transcript.md
+> ./backups/claude-sessions/51775b34-51ba-5918-b385-cd11374f9ebd/transcript.md
+> ./backups/claude-sessions/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/transcript.md
+> ./qa/worldlabs/05/PILOT_PLAN.md
+> ./qa/pilot05/proj/near/NOTES.md
+> ./qa/pilot05/proj/near/NEAR_WATER_STATS.json
+> qa/match/08/motion:
+> f00_checkpoint.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f06_forward6u_ported_benny.png
+> f10_forward10u.png
+> f15_forward15u.png
+> montage.png
+> montage_ported_benny.png
+> motion.json
+> s_left_steer.png
+> s_left_steer_ported_benny.png
+> s_right_steer.png
+> s_right_steer_ported_benny.png
+> 
+> qa/match/08/other_screens:
+> 04_with_match08_benny.png
+> 05_with_match08_benny.png
+> 06_with_match08_benny.png
+> 07_with_match08_benny.png
+> ./qa/imageblaster/08/08_clean_blend_mask.png
+
+### 🤖 Claude — 2026-11-17T15:34:42.069Z
+
+> 🔧 **Bash** `{"command": "grep -n \"benny+splash\" backups/claude-sessions/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/transcript.md | head -10", "description": "Find the metric definition in session transcript"}`
+
+### 🧑 User — 2026-11-17T15:34:42.101Z
+
+> ↩︎ result: 6288:> benny+splash  BEFORE   2.9%  FINAL  64.5%  SSIM 0.619
+
+### 🤖 Claude — 2026-11-17T15:34:44.400Z
+
+> 🔧 **Bash** `{"command": "sed -n 6230,6290p backups/claude-sessions/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/transcript.md | cut -c1-400", "description": "Read the metric computation context"}`
+
+### 🧑 User — 2026-11-17T15:34:44.434Z
+
+> ↩︎ result: >     const s1 = api.step(1, dt);
+> 
+> ### 🤖 Claude — 2026-11-17T14:06:41.772Z
+> 
+> > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\nold=\"    for (let i = 0; i < 8; i++) { const s = sIn - 4 + i * 0.8; add(course.stageAtS(s).id, s, 0.35 * Math.sin(i * 1.3)); }\\n  }\\n\"\nnew=old+\"  // `?match08=1`: river order (the coins above were appended out of order)\\n  if (m08) out.sort((a, b) => a.s - b.s);\\n\"\nassert s.count(old)==1; ope
+> 
+> ### 🧑 User — 2026-11-17T14:07:03.483Z
+> 
+> > ↩︎ result: sorted under switch
+> > 95:  return out;
+> > tsc clean
+> > gameplay match08: 8 / 8 | coins 1330 -> 2240 (default 2240) | errors []
+> > gameplay default: 8 / 8 | coins -> 2240
+> 
+> ### 🤖 Claude — 2026-11-17T14:07:09.211Z
+> 
+> > 🔧 **Bash** `{"command": "grep -n -E \"android\" package.json | cut -c1-200; grep -rn \"VITE_RAINBOW_Q05\" src/vfx/waterRibbon.ts | head -3 | cut -c1-200; ls builds/ | tail -5; adb devices 2>&1 | head -3", "description": "Check the APK build script and devices"}`
+> 
+> ### 🧑 User — 2026-11-17T14:07:09.280Z
+> 
+> > ↩︎ result: 17:    "android:sync": "npm run build && npx cap sync android",
+> > 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembl …[+2818 chars]
+
+### 🤖 Claude — 2026-11-17T15:34:47.684Z
+
+> 🔧 **Bash** `{"command": "grep -n \"FINAL08\\|benny+splash\" backups/claude-sessions/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/transcript.md | head; awk 'NR==6274' backups/claude-sessions/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/transcript.md | cut -c1-3000", "description": "Extract full metric command from transcript"}`
+
+### 🧑 User — 2026-11-17T15:34:47.722Z
+
+> ↩︎ result: 6270:> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && sleep 1; cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/final --q=match08=1 2>&1 | tail -1 | cut -c1-160; timeout 600 node scripts/capture.mjs 08 --out=$M/final_android --q=match08=1 --size=1080x1920 2>&1 | tail -1 | cut -c1-60; cp $M/capture_log.bak qa/capture_log.json; python3 -I tools/qa/screen_match.py references/08_final_spin_chamber.png $M/final/08.png --label=FINAL08 --json=$M/final_metrics.json | cut -c1-140", "desc …[+79 chars]`
+> 6276:> FINAL08 FULL |d|  14.6 <=20 0.830 SSIM 0.815 | BELOWHUD |d|  10.0 <=20 0.898 | LAYOUT |d|   5.9 <=20 0.909 | mean RGB approved [168.4, 108.6
+> 6288:> benny+splash  BEFORE   2.9%  FINAL  64.5%  SSIM 0.619
+> > ↩︎ result: 08 → /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/final/08.png {"stage":"08","s":391.427,"y":-113.112,"calls":80,"tri
+
+### 🤖 Claude — 2026-11-17T15:34:50.209Z
+
+> 🔧 **Bash** `{"command": "awk 'NR>=6280 && NR<=6282' backups/claude-sessions/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/transcript.md | cut -c1-4000", "description": "Read the metric python snippet"}`
+
+### 🧑 User — 2026-11-17T15:34:50.241Z
+
+> ↩︎ result: > 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && python3 -I - <<EOF\nimport numpy as np, json\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nA=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB'),float)\ndef ssim_map(a,b):\n    la,lb=(a*[0.2126,0.7152,0.0722]).sum(-1),(b*[0.2126,0.7152,0.0722]).sum(-1); s=1.5; C1,C2=(0.01*255)**2,(0.03*255)**2\n    ma,mb=gaussian_filter(la,s),gaussian_filter(lb,s); va,vb=gaussian_filter(la*la,s)-ma*ma,gaussian_filter(lb*lb,s)-mb*mb; cab=ga …[+1991 chars]`
+> 
+> ### 🧑 User — 2026-11-17T14:10:02.519Z
+
+### 🤖 Claude — 2026-11-17T15:34:54.076Z
+
+> 🔧 **Bash** `{"command": "grep -n \"830:1230\\|840:1245\\|850:1230\\|bmask\\|benny_box\\|bbox_b\\|260:600\\|1216\" backups/claude-sessions/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/transcript.md | cut -c1-300 | head -20", "description": "Search transcript for Benny mask coordinates"}`
+
+### 🧑 User — 2026-11-17T15:34:54.111Z
+
+> ↩︎ result: 466:> benny_boxes_v1.txt
+> 469:> bmask_debug.mjs
+> 4281:> ↩︎ result: {"bennyAABB":[[11.953653007933069,-114.01053920671792,-282.79281671278613],[14.040939837514363,-111.49764042984106,-280.78551353411154]],"bennyCenter":[12.997296422723716,-112.75408981827948,-281.7891651234488],"curAABBbox":[266.3603574043248,921.94794523679,784.9258048751291,1
+> 4301:> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/game/match.ts", "old_string": "  '07': { back: 9, up: 5.4, ahead: 22, lookUp: -1.8, fov: 62 },\n};", "new_string": "  '07': { back: 9, up: 5.4, ahead: 22, lookUp: -1.8, fov: 62 },\n  // 08 (2026-11-17, qa/match/08/NOT
+> 7098:> now       fur centre x  416.6 y 1120.0 | box x 252-577 y 1031-1216 | width 325 height 185
+
+### 🤖 Claude — 2026-11-17T15:35:06.134Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nA=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB'),float)\nC=np.asarray(Image.open('$S/base_m08/08.png').convert('RGB'),float)\nd=np.abs(A-C).mean(-1); H,W=d.shape; yy,xx=np.mgrid[:H,:W]\ndef p(m): return round(100*(d[m]<=20).mean(),1)\nfor name,box in [('box840',(840,1245,220,650)),('appbox',(850,1210,260,600)),('gamebox',(843,1216,266,594))]:\n  y0,y1,x0,x1=box; b=np.zeros((H,W),bool); b[y0:y1,x0:x1]=Tru …[+430 chars]`
+
+### 🧑 User — 2026-11-17T15:35:06.781Z
+
+> ↩︎ result: box840 benny 49.8 scen 97.3 up 98.9 mid 90.6 low 99.2
+> appbox benny 39.0 scen 96.2 up 98.9 mid 90.6 low 96.7
+> gamebox benny 38.0 scen 96.3 up 98.9 mid 90.6 low 96.9
+> ell 430 1030 215 200 benny 41.1 scen 96.6 mid 90.8 low 97.5
+> ell 430 1040 200 190 benny 37.1 scen 96.3 mid 90.6 low 96.8
+
+### 🤖 Claude — 2026-11-17T15:35:21.931Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && cp $S/lineB/qa/pilot05/full_reference_match/benny/bennyseg.py $S/v/ && python3 -I - <<EOF\nimport sys; sys.path.insert(0,'$S/v')\nimport numpy as np\nfrom PIL import Image\nfrom bennyseg import rgb2hsv, colour_classes\na=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB')).astype(float)\ncls=colour_classes(a)\npal=np.array([[40,40,40],[255,0,0],[0,0,255],[0,255,255],[255,255,0]],np.uint8)\no=pal[cls]\nim=Image.fromarray(o).crop((200,820,660,1260)); im.resize((920,880),Im …[+106 chars]`
+
+### 🧑 User — 2026-11-17T15:35:22.804Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:35:24.452Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/appr_cls.png"}`
+
+### 🧑 User — 2026-11-17T15:35:24.470Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:35:42.494Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/bennyseg08.py", "content": "\"\"\"Benny part segmentation helpers for the APPROVED Screen 08 picture (benny-character-artist, 2026-11-17).\nAdapted copy of line B's qa/pilot05/full_reference_match/benny/bennyseg.py (ccr-b0757dec-dj6l1o @99ab17b, read-only):\nsame colour classes / HSV / bbox helpers, reference switched to Screen 08. No mask file is needed: parts08.py builds\nthe approved Benny part masks from the 08 picture itself (colour components inside Benny's box).\"\"\"\nimport numpy as n …[+1597 chars]`
+
+### 🧑 User — 2026-11-17T15:35:42.524Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/bennyseg08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:35:48.344Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport sys; sys.path.insert(0,'qa/match/08/benny08/work')\nimport numpy as np\nfrom scipy import ndimage as ndi\nfrom bennyseg08 import *\na=load(REF); cls=colour_classes(a); yy,xx=np.mgrid[:H,:W]\nbox=(xx>=240)&(xx<=640)&(yy>=840)&(yy<=1240)\npur=ndi.binary_closing((cls==2)&box,np.ones((5,5)))&box\nlab,k=ndi.label(pur); sz=ndi.sum(pur,lab,range(1,k+1)); cy=ndi.mean(yy,lab,range(1,k+1))\nfor i in np.argsort(sz)[::-1][:8]: print('purple',int(sz[i]),round(cy[i],1),bbox(lab==i+1))\npink=ndi.binary_closing((cls==1)&box,np.ones((5,5)))&box\nlab,k=ndi.label(pink);  …[+312 chars]`
+
+### 🧑 User — 2026-11-17T15:35:49.414Z
+
+> ↩︎ result: purple 12539 1032.9 {'x0': 240, 'x1': 559, 'y0': 967, 'y1': 1067, 'w': 320, 'h': 101, 'cx': 402.1, 'cy': 1032.9, 'px': 12539}
+> purple 10389 915.9 {'x0': 364, 'x1': 494, 'y0': 859, 'y1': 967, 'w': 131, 'h': 109, 'cx': 429.5, 'cy': 915.9, 'px': 10389}
+> purple 6374 965.1 {'x0': 240, 'x1': 526, 'y0': 840, 'y1': 1007, 'w': 287, 'h': 168, 'cx': 386.3, 'cy': 965.1, 'px': 6374}
+> purple 5479 867.1 {'x0': 503, 'x1': 624, 'y0': 840, 'y1': 908, 'w': 122, 'h': 69, 'cx': 566.4, 'cy': 867.1, 'px': 5479}
+> purple 2995 1186.7 {'x0': 310, 'x1': 590, 'y0': 1109, 'y1': 1214, 'w': 281, 'h': 106, 'cx': 456.4, 'cy': 1186.7, 'px': 2995}
+> purple 1337 1229.4 {'x0': 273, 'x1': 372, 'y0': 1212, 'y1': 1240, 'w': 100, 'h': 29, 'cx': 325.7, 'cy': 1229.4, 'px': 1337}
+> purple 754 849.8 {'x0': 448, 'x1': 490, 'y0': 840, 'y1': 863, 'w': 43, 'h': 24, 'cx': 469.0, 'cy': 849.8, 'px': 754}
+> purple 533 864.4 {'x0': 626, 'x1': 640, 'y0': 840, 'y1': 894, 'w': 15, 'h': 55, 'cx': 635.0, 'cy': 864.4, 'px': 533}
+> pink 34562 1122.4 {'x0': 262, 'x1': 594, 'y0': 1047, 'y1': 1206, 'w': 333, 'h': 160, 'cx': 425.3, 'cy': 1122.4, 'px': 34562}
+> pink 4763 961.4 {'x0': 240, 'x1': 341, 'y0': 899, 'y1': 1012, 'w': 102, 'h': 114, 'cx': 282.9, 'cy':  …[+362 chars]
+
+### 🤖 Claude — 2026-11-17T15:35:59.553Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image, ImageDraw\nS='/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v'\na=Image.open('references/08_final_spin_chamber.png').convert('RGB')\nx0,y0,x1,y1=270,840,600,1080\nc=a.crop((x0,y0,x1,y1)).resize(((x1-x0)*3,(y1-y0)*3),Image.LANCZOS)\nd=ImageDraw.Draw(c)\nfor x in range(x0,x1,10):\n  d.line([((x-x0)*3,0),((x-x0)*3,c.height)],fill=(0,0,0) if x%50 else (255,255,0),width=1)\n  if x%50==0: d.text(((x-x0)*3+2,2),str(x),fill=(255,255,0))\nfor y in range(y0,y1,10):\n  d.line([(0,(y-y0)*3),(c …[+210 chars]`
+
+### 🧑 User — 2026-11-17T15:35:59.985Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:36:01.422Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/hat_grid.png"}`
+
+### 🧑 User — 2026-11-17T15:36:01.456Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:36:42.327Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/parts08.py", "content": "\"\"\"APPROVED Screen 08 Benny part masks (pom / crown / cuff / star / body incl. arm nubs) + per-part error / colour stats.\nAdapted from line B's qa/pilot05/full_reference_match/benny/work/parts.py (read-only source, ccr-b0757dec-dj6l1o @99ab17b).\nThe 08 picture has no hand mask: the hat silhouette is an envelope polygon read off a 3x gridded crop of the approved\npicture (x 297-560, y 852-1072), the parts inside it come from the colour classes; the body is the big  …[+4638 chars]`
+
+### 🧑 User — 2026-11-17T15:36:42.359Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/parts08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:36:44.908Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/match/08/benny08/work/parts08.py --png=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/parts08.png", "description": "Build approved 08 part masks and preview"}`
+
+### 🧑 User — 2026-11-17T15:36:46.372Z
+
+> ↩︎ result: pom {'x0': 362, 'x1': 493, 'y0': 855, 'y1': 965, 'w': 132, 'h': 111, 'cx': 428.0, 'cy': 912.8, 'px': 10761}
+> crown {'x0': 304, 'x1': 561, 'y0': 852, 'y1': 1062, 'w': 258, 'h': 211, 'cx': 424.9, 'cy': 975.2, 'px': 14969}
+> cuff {'x0': 296, 'x1': 559, 'y0': 1000, 'y1': 1074, 'w': 264, 'h': 75, 'cx': 425.0, 'cy': 1044.9, 'px': 13894}
+> star {'x0': 478, 'x1': 536, 'y0': 971, 'y1': 1026, 'w': 59, 'h': 56, 'cx': 509.8, 'cy': 1000.4, 'px': 1829}
+> body {'x0': 262, 'x1': 594, 'y0': 1068, 'y1': 1206, 'w': 333, 'h': 139, 'cx': 425.5, 'cy': 1127.4, 'px': 31949}
+
+### 🤖 Claude — 2026-11-17T15:36:48.152Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/parts08.png"}`
+
+### 🧑 User — 2026-11-17T15:36:48.175Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:37:07.493Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image, ImageDraw\nS='/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v'\na=Image.open('references/08_final_spin_chamber.png').convert('RGB')\ndef grid(x0,y0,x1,y1,out,src=a,k=3):\n  c=src.crop((x0,y0,x1,y1)).resize(((x1-x0)*k,(y1-y0)*k),Image.LANCZOS)\n  d=ImageDraw.Draw(c)\n  for x in range(x0 - x0%10 + 10,x1,10):\n    d.line([((x-x0)*k,0),((x-x0)*k,c.height)],fill=(0,0,0) if x%50 else (255,255,0),width=1)\n    if x%50==0: d.text(((x-x0)*k+2,2),str(x),fill=(255,255,0))\n  for y in range(y0 …[+309 chars]`
+
+### 🧑 User — 2026-11-17T15:37:07.953Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T15:37:09.791Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/body_grid.png"}`
+
+### 🧑 User — 2026-11-17T15:37:09.831Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:37:18.178Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/parts08.py", "old_string": "HAT_POLY = [(299, 1070), (296, 1040), (299, 1012), (309, 999), (322, 980), (334, 962), (346, 948), (358, 940),\n            (358, 915), (361, 893), (371, 872), (390, 858), (425, 852), (460, 856), (481, 868), (492, 888),\n            (494, 915), (494, 936), (507, 943), (522, 953), (536, 968), (548, 988), (556, 1008), (561, 1040),\n            (559, 1070), (430, 1074)]", "new_string": "HAT_POLY = [(300, 1048), (296, 1030), (299, 1012), (309, 999) …[+435 chars]`
+
+### 🧑 User — 2026-11-17T15:37:18.208Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/parts08.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:37:19.986Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/parts08.py", "old_string": "    crown = hat & ~pom & ~cuff & ~star\n    # body", "new_string": "    crown = hat & ~pom & ~cuff & ~star & (yy >= CROWN_TOP)\n    # body"}`
+
+### 🧑 User — 2026-11-17T15:37:20.007Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/parts08.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:37:21.981Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/match/08/benny08/work/parts08.py --png=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/parts08.png", "description": "Rebuild approved part masks"}`
+
+### 🧑 User — 2026-11-17T15:37:23.460Z
+
+> ↩︎ result: pom {'x0': 362, 'x1': 493, 'y0': 855, 'y1': 965, 'w': 132, 'h': 111, 'cx': 428.0, 'cy': 912.8, 'px': 10761}
+> crown {'x0': 304, 'x1': 561, 'y0': 936, 'y1': 1038, 'w': 258, 'h': 103, 'cx': 424.5, 'cy': 985.7, 'px': 13456}
+> cuff {'x0': 296, 'x1': 559, 'y0': 1000, 'y1': 1064, 'w': 264, 'h': 65, 'cx': 424.9, 'cy': 1038.9, 'px': 10718}
+> star {'x0': 478, 'x1': 536, 'y0': 971, 'y1': 1026, 'w': 59, 'h': 56, 'cx': 509.8, 'cy': 1000.4, 'px': 1829}
+> body {'x0': 262, 'x1': 594, 'y0': 1056, 'y1': 1206, 'w': 333, 'h': 151, 'cx': 425.7, 'cy': 1123.1, 'px': 34385}
+
+### 🤖 Claude — 2026-11-17T15:37:25.244Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/v/parts08.png"}`
+
+### 🧑 User — 2026-11-17T15:37:25.267Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:37:34.464Z
+
+> 🔧 **Bash** `{"command": "grep -n \"qa3d\\|composer\" src/game/Game.ts | head -20; grep -n \"goto\\b\\|goto:\" src/game/Game.ts | head -5", "description": "Check qa3d exposure and composer"}`
+
+### 🧑 User — 2026-11-17T15:37:34.495Z
+
+> ↩︎ result: 61:  const composer = new EffectComposer(renderer);
+> 62:  composer.addPass(new RenderPass(scene, camera));
+> 79:  if (useBloom) composer.addPass(bloom);
+> 80:  composer.addPass(new OutputPass());
+> 81:  composer.addPass(createGradePass());
+> 87:    composer.setSize(w, h);
+> 581:    composer.render();
+> 732:    qa3d() { return { scene, camera, renderer, composer }; },
+> 657:    goto: gotoCheckpoint,
+
+### 🤖 Claude — 2026-11-17T15:37:35.753Z
+
+Now the probe harness (adapted for Screen 08).
+
+### 🤖 Claude — 2026-11-17T15:37:45.718Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/probe08.mjs", "content": "#!/usr/bin/env node\n// benny08 QA probe (adapted copy of line B's qa/pilot05/full_reference_match/benny/work/bennyprobe.mjs, read-only\n// source ccr-b0757dec-dj6l1o @99ab17b): load the real game ONCE with the Screen 08 switch, goto('08') exactly like\n// scripts/capture.mjs, then for each step file evaluate its JS (async function body with `R` = window.__rainbow,\n// `Q` = R.qa3d()) and screenshot steps whose name ends in .shot.js. Re-renders only via Q.composer.ren …[+2531 chars]`
+
+### 🧑 User — 2026-11-17T15:37:45.749Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/probe08.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:37:51.247Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/probe && printf \"return null;\\n\" > shot0.shot.js && printf \"return { saveAs: 'uv.f32', b64: window.__bennyQA.b05.uvPass(Q.renderer, Q.scene, Q.camera, [220, 820, 440, 440]) };\\n\" > uv.js && for p in \"calD 0.05\" \"calE 0.1\" \"calA 0.2\" \"calC 0.4\" \"calB 0.6\"; do set -- $p; printf \"window.__bennyQA.b05.calib(%s); Q.composer.render(); return '%s';\\n\" $2 $1 > $1.shot.js; done && printf \"window.__bennyQA.b05.calib(null); Q.composer.render(); return 'restored';\\n\" > restore.shot. …[+227 chars]`
+
+### 🧑 User — 2026-11-17T15:37:51.305Z
+
+> ↩︎ result: ==> calA.shot.js <==
+> window.__bennyQA.b05.calib(0.2); Q.composer.render(); return 'calA';
+> 
+> ==> calB.shot.js <==
+> window.__bennyQA.b05.calib(0.6); Q.composer.render(); return 'calB';
+> 
+> ==> calC.shot.js <==
+> window.__bennyQA.b05.calib(0.4); Q.composer.render(); return 'calC';
+> 
+> ==> calD.shot.js <==
+> window.__bennyQA.b05.calib(0.05); Q.composer.render(); return 'calD';
+> 
+> ==> calE.shot.js <==
+> window.__bennyQA.b05.calib(0.1); Q.composer.render(); return 'calE';
+> 
+> ==> info.js <==
+> const { scene, camera } = Q;
+> const B = scene.getObjectByName('Benny');
+> 
+> ==> restore.shot.js <==
+> window.__bennyQA.b05.calib(null); Q.composer.render(); return 'restored';
+> 
+> ==> shot0.shot.js <==
+> return null;
+> 
+> ==> uv.js <==
+> return { saveAs: 'uv.f32', b64: window.__bennyQA.b05.uvPass(Q.renderer, Q.scene, Q.camera, [220, 820, 440, 440]) };
+
+### 🤖 Claude — 2026-11-17T15:37:57.622Z
+
+> 🔧 **Bash** `{"command": "P=qa/match/08/benny08/work/probe && O=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1 && time node qa/match/08/benny08/work/probe08.mjs --q='match08=1' --out=$O $P/shot0.shot.js $P/info.js $P/uv.js $P/calD.shot.js $P/calE.shot.js $P/calA.shot.js $P/calC.shot.js $P/calB.shot.js $P/restore.shot.js 2>&1 | cut -c1-600", "description": "Run 08 probe: UV pass and calibration renders", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T15:38:26.801Z
+
+> ↩︎ result: loaded 5.057
+> shot0.shot.js null
+> info.js {"body":{"px":[434.1,1089.1],"w":[12.476,-113.026,-282.091]},"hat":{"px":[435.6,1094.1],"w":[12.485,-113.054,-282.085]},"pom":{"px":[463.4,944],"w":[12.649,-112.118,-282.104]},"hat_star":{"px":[524.5,1033.2],"w":[13.008,-112.518,-281.719]},"armL":{"px":[323.3,1086.8],"w":[11.806,-113.017,-282.071]},"armR":{"px":[543.3,1111.7],"w":[13.134,-113.15,-282.082]},"eyes":{"px":[434.1,1089.1],"w":[12.476,-113.026,-282.091]},"bodyUp":[0.094,0.965,-0.247],"bodyFwd":[-0.033,-0.244,-0.969],"bodyRight":[-0.995,0.1,0.009],"camFwd":[-0.052,-0.162,-0.985],"camRight":[0.999,0,-0.053],"camUp":[-0.009,0.9
+> uv.js {"saveAs":"uv.f32"}
+> calD.shot.js "calD"
+> calE.shot.js "calE"
+> calA.shot.js "calA"
+> calC.shot.js "calC"
+> calB.shot.js "calB"
+> restore.shot.js "restored"
+> done 28.618
+> 
+> real	0m29.127s
+> user	0m3.499s
+> sys	0m0.578s
+
+### 🤖 Claude — 2026-11-17T15:38:31.850Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nb=L('$S/base_m08/08.png')\nfor n in ['shot0','restore','calD','calA','calB']:\n  d=np.abs(L('$S/p1/'+n+'.png')-b).sum(-1); ys,xs=np.nonzero(d)\n  print(n,'px diff vs capture',(d>0).sum(), (xs.min(),xs.max(),ys.min(),ys.max()) if len(xs) else '')\nu=np.fromfile('$S/p1/uv.f32',np.float32).reshape(440,440,4)[::-1]\nids=np.rint(u[...,2]).astype(int); print('ids',np.unique( …[+83 chars]`
+
+### 🧑 User — 2026-11-17T15:38:32.766Z
+
+> ↩︎ result: shot0 px diff vs capture 2280 (np.int64(98), np.int64(765), np.int64(108), np.int64(131))
+> restore px diff vs capture 2280 (np.int64(98), np.int64(765), np.int64(108), np.int64(131))
+> calD px diff vs capture 66644 (np.int64(98), np.int64(765), np.int64(108), np.int64(1231))
+> calA px diff vs capture 66616 (np.int64(98), np.int64(765), np.int64(108), np.int64(1231))
+> calB px diff vs capture 66622 (np.int64(98), np.int64(765), np.int64(108), np.int64(1231))
+> ids (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]), array([127569,  34665,  11217,   7708,   7645,   1505,   1549,   1608,
+>           105,     29]))
+
