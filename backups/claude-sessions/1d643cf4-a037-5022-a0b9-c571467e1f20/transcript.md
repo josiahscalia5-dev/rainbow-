@@ -3795,3 +3795,641 @@ The two Screen 08 specialists are already working: Benny's soft fur clumps and p
 > fb72cc50: conflicts=0  
 > ebaf6cac: conflicts=0
 
+### 🤖 Claude — 2026-11-17T21:06:06.033Z
+
+> 🔧 **Bash** `{"command": "W=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt; git worktree add -b claude/rainbow-preview-all-c5 $W/preview HEAD >/dev/null 2>&1; cd $W/preview && git config user.name >/dev/null; echo \"start $(git rev-parse --short HEAD) on $(git branch --show-current)\"; M=\"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJ9SbWPe9YXRvtUSngc\"; for p in \"d1e422faff67a37f837566301fb8abff0bac98db Screen-04-M3\" \"c088718bb9e3374583238f4ee93f25bdee600065 Screen-06-M1\" \"835a72dbb5abad1067b538c79 …[+1107 chars]`
+
+### 🧑 User — 2026-11-17T21:06:17.907Z
+
+> ↩︎ result: start f6dddac4 on claude/rainbow-preview-all-c5
+> CONFLICT Screen-04-M3:  
+> On branch claude/rainbow-preview-all-c5
+> nothing to commit, working tree clean
+> CONFLICT Screen-06-M1:  
+> On branch claude/rainbow-preview-all-c5
+> nothing to commit, working tree clean
+> CONFLICT Screen-07-M2:  
+> On branch claude/rainbow-preview-all-c5
+> nothing to commit, working tree clean
+> CONFLICT Screen-08-camera-r4:  
+> On branch claude/rainbow-preview-all-c5
+> nothing to commit, working tree clean
+> CONFLICT Screen-08-scenery-r1-checkpoint: backups/BACKUP_LOG.md backups/BACKUP_STATUS.json backups/BOOTSTRAP_REPORT.md backups/CONVERSATION_INDEX.md backups/MANIFEST.json 
+>      resolved (kept lead's backup files)
+> CONFLICT Screen-08-Benny-r5b:  
+> On branch claude/rainbow-preview-all-c5
+> nothing to commit, working tree clean
+> CONFLICT Screen-05-M2-lineB:  
+> On branch claude/rainbow-preview-all-c5
+> nothing to commit, working tree clean
+> 38f5142a Preview: combine Screen-08-scenery-r1-checkpoint (5ce044a5) — user OK 2026-11-17 ~21:05 UTC
+> f6dddac4 User decisions r5: hud05 to all screens, one combined preview branch (line A + B allowed there only),
+> 9f32c2c6 Lead r5: all-screens APPROVED vs NOW tour video + measured comparison (no game c …[+337 chars]
+
+### 🤖 Claude — 2026-11-17T21:06:21.398Z
+
+Only the scenery merge went in. The others stopped for a reason other than a conflict. Let me read the merge log rather than guess:
+
+### 🤖 Claude — 2026-11-17T21:06:23.380Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/merge_Screen-04-M3.log | head -20; echo ===; cat /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/merge_Screen-05-M2-lineB.log | head -10", "description": "Read merge failure logs"}`
+
+### 🧑 User — 2026-11-17T21:06:23.422Z
+
+> ↩︎ result: fatal: refusing to merge unrelated histories
+> ===
+> fatal: refusing to merge unrelated histories
+
+### 🤖 Claude — 2026-11-17T21:06:27.833Z
+
+"Unrelated histories" most likely means this cloud checkout is a **shallow clone** (only recent history downloaded), so git can't see the shared ancestor. Checking:
+
+### 🤖 Claude — 2026-11-17T21:06:28.985Z
+
+> 🔧 **Bash** `{"command": "git rev-parse --is-shallow-repository; git rev-list --count HEAD; for c in d1e422fa ebaf6cac fb72cc50; do echo \"$c merge-base: $(git merge-base HEAD $c 2>&1 | head -1)\"; done", "description": "Check whether the clone is shallow"}`
+
+### 🧑 User — 2026-11-17T21:06:29.070Z
+
+> ↩︎ result: true
+> 72
+> d1e422fa merge-base: 
+> ebaf6cac merge-base: 
+> fb72cc50 merge-base:
+
+### 🤖 Claude — 2026-11-17T21:06:40.116Z
+
+> 🔧 **Bash** `{"command": "df -h / | tail -1; timeout 3000 git fetch --unshallow origin ccr-f983b317-2vt0zh > /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/unshallow.log 2>&1; echo \"exit=$?\"; git rev-parse --is-shallow-repository; git rev-list --count HEAD; for c in d1e422fa c088718b 835a72db 18687513 fb72cc50 ebaf6cac; do echo \"$c base: $(git merge-base HEAD $c 2>&1 | cut -c1-10)\"; done; df -h / | tail -1", "description": "Download full git history to enable merges", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T21:06:40.147Z
+
+> ↩︎ result: Command running in background with ID: b97lzxmq6. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/tasks/b97lzxmq6.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T21:06:41.521Z
+
+> 🔧 **TaskCreate** `{"subject": "Build combined preview branch claude/rainbow-preview-all-c5", "description": "Unshallow repo; merge s04, s06, s07, camclear, scenery, Benny r5b, s05 line B into preview branch from lead; resolve conflicts keeping all switch-guarded code; push", "activeForm": "Building combined preview branch"}`
+
+### 🧑 User — 2026-11-17T21:06:41.538Z
+
+> ↩︎ result: Task #9 created successfully: Build combined preview branch claude/rainbow-preview-all-c5
+
+### 🤖 Claude — 2026-11-17T21:06:42.870Z
+
+> 🔧 **TaskCreate** `{"subject": "Verify preview branch: tests + 0 px per screen", "description": "tsc, continuity, gameplay 8/8 91/2240 default + all switches, flowplan; default 0 px vs lead; each screen match view 0 px vs its own branch", "activeForm": "Verifying preview branch"}`
+
+### 🧑 User — 2026-11-17T21:06:42.881Z
+
+> ↩︎ result: Task #10 created successfully: Verify preview branch: tests + 0 px per screen
+
+### 🤖 Claude — 2026-11-17T21:06:44.276Z
+
+> 🔧 **TaskCreate** `{"subject": "Global matched top bar (hud05 on all screens) + combined switch", "description": "hudmatch switch enabling hud05 layout on 04-08 with per-screen title banner widths; one preview switch set; measure gain; APPROVED/BEFORE/NEW", "activeForm": "Matching the top bar on all screens"}`
+
+### 🧑 User — 2026-11-17T21:06:44.299Z
+
+> ↩︎ result: Task #11 created successfully: Global matched top bar (hud05 on all screens) + combined switch
+
+### 🤖 Claude — 2026-11-17T21:06:46.687Z
+
+> 🔧 **TaskUpdate** `{"taskId": "9", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-17T21:06:46.698Z
+
+> ↩︎ result: Updated task #9 status
+
+### 🤖 Claude — 2026-11-17T21:06:48.126Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"matchall\" src --include=*.ts | cut -c1-200 | head; for c in d1e422fa c088718b 835a72db ebaf6cac fb72cc50; do echo \"== $c\"; git grep -n \"matchall\" $c -- src | cut -c1-180 | head -4; done", "description": "Look for existing combined matchall switch"}`
+
+### 🧑 User — 2026-11-17T21:06:48.199Z
+
+> ↩︎ result: src/characters/benny/benny05.ts:22:// branch it runs under `?benny05=1`, `?benny08=1` or the Screen 08 switch `?match08=1` (and `?matchall=1`); off: nothing runs
+> src/characters/benny/benny05.ts:23:const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
+> src/world/course.ts:320:  const m08 = flag05('match08') || flag05('matchall');
+> src/game/match.ts:4: *   src/vfx/waterRibbon.ts q05). `?matchall=1` = every screen switch below at once.
+> src/game/match.ts:15:const ALL = flag05('matchall');
+> src/gameplay/coins.ts:56:  const m08 = flag05('match08') || flag05('matchall');
+> == d1e422fa
+> d1e422fa:src/characters/benny/benny05.ts:22:// branch it runs under `?benny05=1`, `?benny08=1` or the Screen 08 switch `?match08=1` (and `?matchall=1`); off: nothing runs
+> d1e422fa:src/characters/benny/benny05.ts:23:const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
+> d1e422fa:src/game/match.ts:4: *   src/vfx/waterRibbon.ts q05). `?matchall=1` = every screen switch below at once.
+> d1e422fa:src/game/match.ts:15:const ALL = flag05('matchall');
+> == c088718b
+> c088718b:src/characters/benny/benny05.t …[+1674 chars]
+
+### 🤖 Claude — 2026-11-17T21:06:51.437Z
+
+Line A already has a `?matchall=1` switch ("every screen switch at once") and the newer Benny code, so the combined preview can build on that. The full history download finished:
+
+### 🤖 Claude — 2026-11-17T21:06:53.473Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/tasks/b97lzxmq6.output; cd /home/user/rainbow- && for c in d1e422fa c088718b 835a72db 18687513 fb72cc50 ebaf6cac; do b=$(git merge-base HEAD $c 2>/dev/null); echo \"$c base=${b:0:8} lead-ahead=$(git rev-list --count $b..HEAD 2>/dev/null) branch-ahead=$(git rev-list --count $b..$c 2>/dev/null)\"; done", "description": "Show unshallow result and merge bases"}`
+
+### 🧑 User — 2026-11-17T21:06:53.599Z
+
+> ↩︎ result: /dev/vda        252G   22G   18G  56% /
+> exit=0
+> false
+> 636
+> d1e422fa base: 752d6d8086
+> c088718b base: 752d6d8086
+> 835a72db base: 752d6d8086
+> 18687513 base: 5965a01b47
+> fb72cc50 base: 5965a01b47
+> ebaf6cac base: aea7e77469
+> /dev/vda        252G   22G   18G  56% /
+> 
+> [exited with code 0]
+> d1e422fa base=752d6d80 lead-ahead=119 branch-ahead=38
+> c088718b base=752d6d80 lead-ahead=119 branch-ahead=30
+> 835a72db base=752d6d80 lead-ahead=119 branch-ahead=50
+> 18687513 base=5965a01b lead-ahead=116 branch-ahead=39
+> fb72cc50 base=5965a01b lead-ahead=116 branch-ahead=57
+> ebaf6cac base=aea7e774 lead-ahead=208 branch-ahead=174
+
+### 🤖 Claude — 2026-11-17T21:07:06.306Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && M=\"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJ9SbWPe9YXRvtUSngc\"; for p in \"d1e422faff67a37f837566301fb8abff0bac98db Screen-04-M3\" \"c088718bb9e3374583238f4ee93f25bdee600065 Screen-06-M1\" \"835a72dbb5abad1067b538c79b1f759b06e2cbeb Screen-07-M2\" \"18687513e3a35e553472a05ae7fb626c2f8108ce Screen-08-camera-r4\" \"fb72cc5052df908b994afeb41e7f598abc24e18d Screen-08-Benny-r5b\"; do set -- $p; L=/tmp/claude-0/-home-us …[+889 chars]`
+
+### 🧑 User — 2026-11-17T21:07:08.022Z
+
+> ↩︎ result: CONFLICT Screen-04-M3 backups=5 code=[src/gameplay/coins.ts]
+>      CODE CONFLICT — stopping here
+> A  assets/textures/match04/cam04_locked.json
+> A  assets/textures/match04/coins04.json
+> A  assets/textures/match04/patch_gold.png
+> A  assets/textures/match04/patch_wall.png
+> A  assets/textures/match04/patch_water.png
+> 38f5142a Preview: combine Screen-08-scenery-r1-checkpoint (5ce044a5) — user OK 2026-11-17 ~21:05 U
+> f6dddac4 User decisions r5: hud05 to all screens, one combined preview branch (line A + B allowed th
+> 9f32c2c6 Lead r5: all-screens APPROVED vs NOW tour video + measured comparison (no game change)
+> c6f8133f autosave: Rainbow 2026-11-17 21:00 UTC
+> 3d9f0596 autosave: Rainbow 2026-11-17 20:55 UTC
+> 7efe8e40 autosave: Rainbow 2026-11-17 20:50 UTC
+> ef4b3ee9 autosave: Rainbow 2026-11-17 20:45 UTC
+> 67d06301 autosave: Rainbow 2026-11-17 20:40 UTC
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:07:12.692Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && grep -n \"<<<<<<<\\|=======\\|>>>>>>>\" src/gameplay/coins.ts; awk '/<<<<<<</,/>>>>>>>/' src/gameplay/coins.ts | head -80", "description": "Show the coins.ts merge conflict"}`
+
+### 🧑 User — 2026-11-17T21:07:12.743Z
+
+> ↩︎ result: 12:<<<<<<< HEAD
+> 14:=======
+> 16:>>>>>>> d1e422faff67a37f837566301fb8abff0bac98db
+> <<<<<<< HEAD
+> import coins08px from '../../assets/textures/match08/coins08px.json';
+> =======
+> import coins04 from '../../assets/textures/match04/coins04.json';
+> >>>>>>> d1e422faff67a37f837566301fb8abff0bac98db
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:07:14.409Z
+
+A trivial conflict: both sides added one import line. Keeping both:
+
+### 🤖 Claude — 2026-11-17T21:07:18.807Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && python3 -I - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\nold=\"\"\"<<<<<<< HEAD\nimport coins08px from '../../assets/textures/match08/coins08px.json';\n=======\nimport coins04 from '../../assets/textures/match04/coins04.json';\n>>>>>>> d1e422faff67a37f837566301fb8abff0bac98db\n\"\"\"\nassert s.count(old)==1\ns=s.replace(old,\"import coins08px from '../../assets/textures/match08/coins08px.json';\\nimport coins04 from '../../assets/textures/match04/coins04.json';\\n\")\nopen( …[+387 chars]`
+
+### 🧑 User — 2026-11-17T21:07:19.217Z
+
+> ↩︎ result: 0
+> 0
+> bb776d35 Preview: combine Screen-04-M3 (d1e422fa) — user OK 2026-11-17 ~21:05 UTC
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:07:20.919Z
+
+Screen 04 is combined. Continuing with 06, 07, camera and Benny:
+
+### 🤖 Claude — 2026-11-17T21:07:29.356Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && M=\"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJ9SbWPe9YXRvtUSngc\"; for p in \"c088718bb9e3374583238f4ee93f25bdee600065 Screen-06-M1\" \"835a72dbb5abad1067b538c79b1f759b06e2cbeb Screen-07-M2\" \"18687513e3a35e553472a05ae7fb626c2f8108ce Screen-08-camera-r4\" \"fb72cc5052df908b994afeb41e7f598abc24e18d Screen-08-Benny-r5b\"; do set -- $p; L=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpa …[+790 chars]`
+
+### 🧑 User — 2026-11-17T21:07:29.733Z
+
+> ↩︎ result: CONFLICT Screen-06-M1 backups=5 code=[qa/capture_log.json src/game/Game.ts src/game/cameraRig.ts src/game/match.ts src/gameplay/coins.ts]
+>      CODE CONFLICT — stopping here
+> bb776d35 Preview: combine Screen-04-M3 (d1e422fa) — user OK 2026-11-17 ~21:05 UTC
+> 38f5142a Preview: combine Screen-08-scenery-r1-checkpoint (5ce044a5) — user OK 2026-11-17 ~21:05 U
+> f6dddac4 User decisions r5: hud05 to all screens, one combined preview branch (line A + B allowed th
+> 9f32c2c6 Lead r5: all-screens APPROVED vs NOW tour video + measured comparison (no game change)
+> c6f8133f autosave: Rainbow 2026-11-17 21:00 UTC
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:07:32.559Z
+
+Screen 06 conflicts with Screen 04 in five shared files: both specialists added their own switch-guarded blocks at the same spots. Let me see them all:
+
+### 🤖 Claude — 2026-11-17T21:07:35.191Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && for f in src/game/Game.ts src/game/cameraRig.ts src/game/match.ts src/gameplay/coins.ts; do echo \"################ $f\"; awk '/^<<<<<<< /{p=1; print \"@@ line \" NR} p{print} /^>>>>>>> /{p=0}' $f | cut -c1-230; done 2>&1 | head -150", "description": "Show all Screen 06 merge conflicts"}`
+
+### 🧑 User — 2026-11-17T21:07:35.257Z
+
+> ↩︎ result: ################ src/game/Game.ts
+> @@ line 28
+> <<<<<<< HEAD
+> import { buildMatch04 } from '../world/match04';
+> =======
+> import { buildMatch06 } from '../world/match06';
+> >>>>>>> c088718bb9e3374583238f4ee93f25bdee600065
+> @@ line 184
+> <<<<<<< HEAD
+>     if (m04) { m04On = st.stage === '04'; m04.group.visible = m04On; if (m04On) { env.zones.basin.visible = false; env.zones.tubes.visible = false; } }
+> =======
+>     if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
+> >>>>>>> c088718bb9e3374583238f4ee93f25bdee600065
+> @@ line 590
+> <<<<<<< HEAD
+>     // `?match04=1` on Screen 04: the projected scenery carries the approved river, arrows, foam and bubbles
+>     if (m04 && (m04On || m04Applied) && !(m08 && m08On)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m04On; }
+>       m04Applied = m04On;
+> =======
+>     // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+>     if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On; }
+>       m06Applied = m06On;
+> >>>>>>> c088718bb9e3374583238f4ee9 …[+2988 chars]
+
+### 🤖 Claude — 2026-11-17T21:07:47.092Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && awk 'NR>=585 && NR<=615' src/game/Game.ts; echo ----------; awk 'NR>=650 && NR<=680' src/game/Game.ts", "description": "Show Game.ts conflict context with trailing lines"}`
+
+### 🧑 User — 2026-11-17T21:07:47.151Z
+
+> ↩︎ result: // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+>     if (m08 && (m08On || m08Applied)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+>       m08Applied = m08On;
+>     }
+> <<<<<<< HEAD
+>     // `?match04=1` on Screen 04: the projected scenery carries the approved river, arrows, foam and bubbles
+>     if (m04 && (m04On || m04Applied) && !(m08 && m08On)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m04On; }
+>       m04Applied = m04On;
+> =======
+>     // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+>     if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On; }
+>       m06Applied = m06On;
+> >>>>>>> c088718bb9e3374583238f4ee93f25bdee600065
+>     }
+>     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+>     if (m08 && b08 && b08Rest) {
+>       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid),  …[+2006 chars]
+
+### 🤖 Claude — 2026-11-17T21:08:12.266Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && python3 -I - <<'EOF'\nimport re\ndef resolve(path, fn):\n    s = open(path).read()\n    pat = re.compile(r'<<<<<<< HEAD\\n(.*?)=======\\n(.*?)>>>>>>> [0-9a-f]+\\n', re.S)\n    n = [0]\n    def rep(m):\n        n[0] += 1\n        return fn(n[0], m.group(1), m.group(2))\n    s2 = pat.sub(rep, s)\n    assert '<<<<<<<' not in s2 and '>>>>>>>' not in s2, path\n    open(path, 'w').write(s2); print(path, 'resolved', n[0])\n# Game.ts: 1 import (both), 2 one-liners (both), 3 water-hide blocks …[+1451 chars]`
+
+### 🧑 User — 2026-11-17T21:08:13.678Z
+
+> ↩︎ result: src/game/Game.ts resolved 4
+> src/game/cameraRig.ts resolved 1
+> src/game/match.ts resolved 1
+> src/gameplay/coins.ts resolved 2
+> 36:  /** `?match06=1` only (src/game/match.ts): over the 06 stage the camera sits at Benny's water point + this world offset
+> 37:   *  and looks along the fixed world direction dir06 (the approved picture's view over the crest into the tunnel);
+> 39:  off06?: [number, number, number];
+> 40:  dir06?: [number, number, number];
+> 87:  /** `?match06=1`: off06 / dir06 in the river's level frame at the 06 checkpoint (computed once) */
+> 88:  private m06: { s0: number; o: number[]; d: number[] } | null = null;
+> 151:    // `?match06=1`: the approved Screen 06 view — at the 06 checkpoint (06 start + 10) the camera is exactly Benny +
+> 152:    // off06 (world), looking along dir06, level. Both are stored in the river's LEVEL frame there (smoothed heading, world
+> error TS2688: Cannot find type definition file for 'vite/client'.
+>   The file is in the program because:
+>     Entry point of type library 'vite/client' specified in compilerOptions
+> tsc exit=2
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:08:16.193Z
+
+The tsc error is only because this new worktree has no `node_modules` yet. Hard-linking it in and re-checking:
+
+### 🤖 Claude — 2026-11-17T21:08:18.495Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && cp -al /home/user/rainbow-/node_modules node_modules && npx tsc --noEmit 2>&1 | tail -5; echo \"tsc exit=${PIPESTATUS[0]}\"; git status --short | grep -v \"^M  \\|^A  \\|^D  \\|^R  \" | head", "description": "Add node_modules to preview worktree and run tsc", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T21:08:21.279Z
+
+> ↩︎ result: tsc exit=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:08:23.981Z
+
+TypeScript is clean with 04 and 06 combined. Committing and continuing with 07, camera and Benny:
+
+### 🤖 Claude — 2026-11-17T21:08:31.377Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && git commit -q --no-edit && git log --oneline -1 | cut -c1-90; M=\"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJ9SbWPe9YXRvtUSngc\"; for p in \"835a72dbb5abad1067b538c79b1f759b06e2cbeb Screen-07-M2\" \"18687513e3a35e553472a05ae7fb626c2f8108ce Screen-08-camera-r4\" \"fb72cc5052df908b994afeb41e7f598abc24e18d Screen-08-Benny-r5b\"; do set -- $p; L=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scrat …[+761 chars]`
+
+### 🧑 User — 2026-11-17T21:08:32.282Z
+
+> ↩︎ result: 8719196e Preview: combine Screen-06-M1 (c088718b) — user OK 2026-11-17 ~21:05 UTC
+> CONFLICT Screen-07-M2 backups=5 code=[qa/capture_log.json src/game/Game.ts src/game/cameraRig.ts src/game/match.ts src/gameplay/coins.ts src/world/course.ts]
+>      CODE CONFLICT — stopping here
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:08:36.555Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && for f in src/game/Game.ts src/game/cameraRig.ts src/game/match.ts src/gameplay/coins.ts src/world/course.ts; do echo \"################ $f\"; awk '/^<<<<<<< /{p=1; print \"@@ line \" NR} p{print} /^>>>>>>> /{p=0; getline; print \"   [after] \" $0; getline; print \"   [after] \" $0}' $f | cut -c1-200; done 2>&1 | head -190", "description": "Show Screen 07 merge conflicts with trailing context"}`
+
+### 🧑 User — 2026-11-17T21:08:36.606Z
+
+> ↩︎ result: ################ src/game/Game.ts
+> @@ line 28
+> <<<<<<< HEAD
+> import { buildMatch04 } from '../world/match04';
+> import { buildMatch06 } from '../world/match06';
+> =======
+> import { buildMatch07 } from '../world/match07';
+> >>>>>>> 835a72dbb5abad1067b538c79b1f759b06e2cbeb
+>    [after] import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+>    [after] 
+> @@ line 129
+> <<<<<<< HEAD
+>   // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
+>   const m06 = MATCH['06'] ? await buildMatch06(course) : null;
+>   if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
+>   let m06On = false;
+>   let m06Applied = false;
+> =======
+>   // `?match07=1`: the approved Screen 07 scenery on fitted 3D geometry (src/world/match07.ts), shown from 12 u before the
+>   // 07 checkpoint until 8 u before the plunge top (the 07→08 drop keeps the game's own tube); off: nothing is built
+>   const m07 = MATCH['07'] ? await buildMatch07() : null;
+>   if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
+>   const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
+>   const m07Range = [course.stage('07').s0 …[+8131 chars]
+
+### 🤖 Claude — 2026-11-17T21:08:57.918Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && python3 -I - <<'EOF'\nimport re\ndef resolve(path, fn):\n    s = open(path).read()\n    pat = re.compile(r'<<<<<<< HEAD\\n(.*?)=======\\n(.*?)>>>>>>> [0-9a-f]+\\n', re.S)\n    n = [0]\n    def rep(m):\n        n[0] += 1\n        return fn(n[0], m.group(1), m.group(2))\n    s2 = pat.sub(rep, s)\n    assert '<<<<<<<' not in s2 and '>>>>>>>' not in s2, path\n    open(path, 'w').write(s2); print(path, 'resolved', n[0])\ndef game(i, a, b):\n    if i in (1, 2): return a + b\n    if i == 3: …[+1512 chars]`
+
+### 🧑 User — 2026-11-17T21:09:01.007Z
+
+> ↩︎ result: src/game/Game.ts resolved 3
+> src/game/cameraRig.ts resolved 2
+> src/game/match.ts resolved 1
+> src/gameplay/coins.ts resolved 2
+> src/world/course.ts resolved 1
+> 130:    const p7 = STAGE_CAM['07'];
+> 160:    const p6 = STAGE_CAM['06'];
+> 190:        const cp7 = benny.clone().add(new THREE.Vector3(...p7.off07));
+> tsc exit=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:09:07.443Z
+
+Clean again: tsc passes and every block has its variables. Committing and continuing with camera and Benny:
+
+### 🤖 Claude — 2026-11-17T21:09:14.350Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && git commit -q --no-edit && git log --oneline -1 | cut -c1-90; M=\"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJ9SbWPe9YXRvtUSngc\"; for p in \"18687513e3a35e553472a05ae7fb626c2f8108ce Screen-08-camera-r4\" \"fb72cc5052df908b994afeb41e7f598abc24e18d Screen-08-Benny-r5b\"; do set -- $p; L=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/merge_$2.log; if git merge --no-ff --no-edit -m \"Pr …[+699 chars]`
+
+### 🧑 User — 2026-11-17T21:09:16.114Z
+
+> ↩︎ result: da49881c Preview: combine Screen-07-M2 (835a72db) — user OK 2026-11-17 ~21:05 UTC
+> CONFLICT Screen-08-camera-r4 backups=5 code=[qa/capture_log.json src/game/Game.ts src/game/cameraRig.ts]
+>      CODE CONFLICT — stopping here
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:09:20.211Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && for f in src/game/Game.ts src/game/cameraRig.ts; do echo \"################ $f\"; awk '/^<<<<<<< /{p=1; print \"@@ line \" NR} p{print} /^>>>>>>> /{p=0; getline; print \"   [after] \" $0; getline; print \"   [after] \" $0}' $f | cut -c1-220; done 2>&1 | head -150", "description": "Show camera r4 merge conflicts"}`
+
+### 🧑 User — 2026-11-17T21:09:20.259Z
+
+> ↩︎ result: ################ src/game/Game.ts
+> @@ line 28
+> <<<<<<< HEAD
+> import { buildMatch04 } from '../world/match04';
+> import { buildMatch06 } from '../world/match06';
+> import { buildMatch07 } from '../world/match07';
+> =======
+> import { CAMCLEAR, createCamClear } from './camClear';
+> >>>>>>> 18687513e3a35e553472a05ae7fb626c2f8108ce
+>    [after] import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+>    [after] 
+> @@ line 130
+> <<<<<<< HEAD
+>   // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
+>   const m06 = MATCH['06'] ? await buildMatch06(course) : null;
+>   if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
+>   let m06On = false;
+>   let m06Applied = false;
+>   // `?match07=1`: the approved Screen 07 scenery on fitted 3D geometry (src/world/match07.ts), shown from 12 u before the
+>   // 07 checkpoint until 8 u before the plunge top (the 07→08 drop keeps the game's own tube); off: nothing is built
+>   const m07 = MATCH['07'] ? await buildMatch07() : null;
+>   if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
+>   const M07_HIDE = ['ribbon', 'foam', 'bubbl …[+5702 chars]
+
+### 🤖 Claude — 2026-11-17T21:09:33.818Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && python3 -I - <<'EOF'\nimport re\nfor path in ('src/game/Game.ts', 'src/game/cameraRig.ts'):\n    s = open(path).read()\n    pat = re.compile(r'<<<<<<< HEAD\\n(.*?)=======\\n(.*?)>>>>>>> [0-9a-f]+\\n', re.S)\n    n = len(pat.findall(s))\n    s2 = pat.sub(lambda m: m.group(1) + m.group(2), s)\n    assert '<<<<<<<' not in s2 and '>>>>>>>' not in s2\n    open(path, 'w').write(s2); print(path, 'resolved', n)\nEOF\ngit checkout --ours -- qa/capture_log.json; for f in $(git diff --name-only …[+995 chars]`
+
+### 🧑 User — 2026-11-17T21:09:38.334Z
+
+> ↩︎ result: src/game/Game.ts resolved 3
+> src/game/cameraRig.ts resolved 1
+> tsc exit=0
+> e0ddee57 Preview: combine Screen-08-camera-r4 (18687513) — user OK 2026-11-17 ~21:05 UTC
+> CONFLICT Benny: qa/capture_log.json  (+5 backups)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:09:42.850Z
+
+Benny merged with no code conflicts at all (only a log file and backups). Committing, then the last and hardest one, Screen 05's line B:
+
+### 🤖 Claude — 2026-11-17T21:09:49.021Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && for f in $(git diff --name-only --diff-filter=U); do git checkout --ours -- \"$f\" && git add \"$f\"; done; npx tsc --noEmit 2>&1 | tail -3; echo \"tsc exit=${PIPESTATUS[0]}\"; git commit -q --no-edit && git log --oneline -1 | cut -c1-90; M=\"Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_013VHsJ9SbWPe9YXRvtUSngc\"; if git merge --no-ff --no-edit -m \"Preview: combine Screen-05-M2-lineB (ebaf6cac) — user OK 2026-11-17 ~21:05 UT …[+602 chars]`
+
+### 🧑 User — 2026-11-17T21:09:56.245Z
+
+> ↩︎ result: tsc exit=0
+> 2abff690 Preview: combine Screen-08-Benny-r5b (fb72cc50) — user OK 2026-11-17 ~21:05 UTC
+> CONFLICTS 05:
+> .gitignore
+> CLAUDE.md
+> assets/textures/water05/proj05_T2.png
+> assets/textures/water05/proj05_WT2.png
+> assets/textures/water05/proj05_near.json
+> qa/capture_log.json
+> qa/pilot05/proj/near/NOTES.md
+> scripts/autosave-hook.sh
+> scripts/claude-bootstrap.sh
+> scripts/verify-assets.py
+> src/characters/benny/benny05.ts
+> src/characters/benny/fur.ts
+> src/game/Game.ts
+> src/gameplay/coins.ts
+> src/vfx/waterRibbon.ts
+> tools/proj05/near_bake.py
+> (+9 backups)
+>   src/characters/benny/benny05.ts: 5 hunks
+>   src/characters/benny/fur.ts: 7 hunks
+>   src/game/Game.ts: 1 hunks
+>   src/gameplay/coins.ts: 6 hunks
+>   src/vfx/waterRibbon.ts: 8 hunks
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T21:10:13.122Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && for f in src/characters/benny/benny05.ts src/characters/benny/fur.ts src/game/Game.ts src/gameplay/coins.ts src/vfx/waterRibbon.ts; do echo \"## $f\"; awk -v F=$f '/^<<<<<<< /{s=NR; o=0; t=0; side=1; next} /^=======/{ if(s){side=2; next} } /^>>>>>>> /{ if(s){printf \"  hunk @%d: ours %d lines, theirs %d lines\\n\", s, o, t; s=0}; next} { if(s){ if(side==1) o++; else t++ } }' $f; done; echo; echo \"== which side changed each file since the common base\"; B=$(git merge-base HEAD ebaf6c …[+423 chars]`
+
+### 🧑 User — 2026-11-17T21:10:13.271Z
+
+> ↩︎ result: ## src/characters/benny/benny05.ts
+>   hunk @20: ours 4 lines, theirs 1 lines
+>   hunk @144: ours 29 lines, theirs 4 lines
+>   hunk @184: ours 2 lines, theirs 1 lines
+>   hunk @293: ours 11 lines, theirs 0 lines
+>   hunk @335: ours 2 lines, theirs 0 lines
+> ## src/characters/benny/fur.ts
+>   hunk @33: ours 5 lines, theirs 0 lines
+>   hunk @61: ours 8 lines, theirs 0 lines
+>   hunk @84: ours 1 lines, theirs 1 lines
+>   hunk @102: ours 7 lines, theirs 0 lines
+>   hunk @128: ours 1 lines, theirs 1 lines
+>   hunk @150: ours 1 lines, theirs 0 lines
+>   hunk @180: ours 11 lines, theirs 1 lines
+> ## src/game/Game.ts
+>   hunk @25: ours 7 lines, theirs 1 lines
+> ## src/gameplay/coins.ts
+>   hunk @10: ours 6 lines, theirs 1 lines
+>   hunk @130: ours 3 lines, theirs 13 lines
+>   hunk @323: ours 2 lines, theirs 26 lines
+>   hunk @438: ours 1 lines, theirs 1 lines
+>   hunk @456: ours 12 lines, theirs 16 lines
+>   hunk @507: ours 1 lines, theirs 1 lines
+> ## src/vfx/waterRibbon.ts
+>   hunk @459: ours 12 lines, theirs 25 lines
+>   hunk @524: ours 4 lines, theirs 6 lines
+>   hunk @557: ours 1 lines, theirs 1 lines
+>   hunk @1525: ours 4 lines, theirs 17 lines
+>   hunk @1558: ours 1 lines, theirs 1 lines
+>   hunk @1576: ours 6 lines, theirs 12 lines
+>   hun …[+404 chars]
+
+### 🤖 Claude — 2026-11-17T21:10:17.856Z
+
+Benny's code was copied from line B into line A earlier, so most of the Benny "conflicts" are line A's **additions** (Benny rounds 2–5b) next to small line-B edits. Let me read those hunks exactly:
+
+### 🤖 Claude — 2026-11-17T21:10:19.660Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && for f in src/characters/benny/benny05.ts src/characters/benny/fur.ts; do echo \"################ $f\"; awk '/^<<<<<<< /{p=1; print \"@@ line \" NR} p{print} /^>>>>>>> /{p=0}' $f | cut -c1-210; done 2>&1 | head -170", "description": "Show Benny code conflict hunks"}`
+
+### 🧑 User — 2026-11-17T21:10:19.731Z
+
+> ↩︎ result: ################ src/characters/benny/benny05.ts
+> @@ line 20
+> <<<<<<< HEAD
+> import { flag05 } from '../../vfx/waterRibbon';
+> // ported from line B (ccr-b0757dec-dj6l1o @99ab17b, Screen 05 full-reference Benny) WITHOUT a merge (2026-11-17): on this
+> // branch it runs under `?benny05=1`, `?benny08=1` or the Screen 08 switch `?match08=1` (and `?matchall=1`); off: nothing runs
+> const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
+> =======
+> import { on05 } from '../../vfx/waterRibbon';
+> >>>>>>> ebaf6cac71812ad5c00a9088ba48b6febdb42b2b
+> @@ line 144
+> <<<<<<< HEAD
+> /** URL / build-time switch value (`?key=…`, or VITE_RAINBOW_Q05 in packaged builds); null when absent */
+> const qv = (key: string): string | null => {
+>   try {
+>     if (typeof location !== 'undefined') { const v = new URLSearchParams(location.search).get(key); if (v !== null) return v; }
+>   } catch {
+>     /* no location */
+>   }
+>   const b: string = (import.meta as unknown as { env?: Record<string, string> }).env?.VITE_RAINBOW_Q05 ?? '';
+>   return b ? new URLSearchParams(b).get(key) : null;
+> };
+> /**
+>  * Maps RE-BAKED FROM THE APPROVED SCREEN 08 picture at the locked 08 camera (2026-11-17,  …[+6874 chars]
+
+### 🤖 Claude — 2026-11-17T21:10:38.429Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && sed -n 136,160p src/characters/benny/fur.ts; echo \"==== line B fur.ts same region\"; git show ebaf6cac:src/characters/benny/fur.ts | grep -n \"#if\\|#endif\\|#else\" | head; echo \"==== line A (HEAD) fur.ts\"; git show HEAD:src/characters/benny/fur.ts | grep -n \"#if\\|#endif\\|#else\" | head; echo \"==== exports\"; for r in HEAD ebaf6cac; do echo \"-- $r\"; git show $r:src/vfx/waterRibbon.ts | grep -n \"^export const on05\\|^export function on05\\|^export const flag05\\|^export fun …[+133 chars]`
+
+### 🧑 User — 2026-11-17T21:10:38.485Z
+
+> ↩︎ result: )
+>       .replace(
+>         '#include <color_fragment>',
+>         `#include <color_fragment>
+>         {
+>           vec3 q = vBase * uDensity;
+>           // clumping: strands lean toward low-frequency tuft centres as they rise → plush tufts
+>           #ifdef BENNY05
+>           // uClumpScale (benny08 round 4; 0.2 = unchanged): smaller = bigger tufts
+>           vec3 qc = q * uClumpScale;
+>           vec3 cc = (floor(qc) + 0.5 + (fhash3(floor(qc)) - 0.5) * 0.7) / uClumpScale;
+>           #else
+>           vec3 qc = q * 0.2;
+>           vec3 cc = (floor(qc) + 0.5 + (fhash3(floor(qc)) - 0.5) * 0.7) / 0.2;
+> <<<<<<< HEAD
+>           #endif
+> =======
+> >>>>>>> ebaf6cac71812ad5c00a9088ba48b6febdb42b2b
+>           #ifdef BENNY05
+>           q = mix(q, cc, vLayer * uClump);
+>           #else
+>           q = mix(q, cc, vLayer * 0.42);
+>           #endif
+>           vec3 cell = floor(q);
+>           float best = 10.0; float hgt = 0.0;
+> ==== line B fur.ts same region
+> 64:        #ifdef BENNY05
+> 66:        #endif`,
+> 77:        #ifdef BENNY05
+> 79:        #endif
+> 93:        #ifdef BENNY05
+> 96:        #endif
+> 108:          #ifdef BENNY05
+> 110:          #else
+> 112:          #endif
+> 131:          #ifdef BENNY05
+> ==== line A (HEAD) fur.ts
+> 77:        # …[+431 chars]
+
+### 🤖 Claude — 2026-11-17T21:10:54.910Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && for f in src/game/Game.ts src/gameplay/coins.ts; do echo \"################ $f\"; awk '/^<<<<<<< /{p=1; print \"@@ line \" NR} p{print} /^>>>>>>> /{p=0; getline; print \"   [after] \" $0}' $f | cut -c1-230; done 2>&1 | head -160", "description": "Show Game.ts and coins.ts line B conflicts"}`
+
+### 🧑 User — 2026-11-17T21:10:54.953Z
+
+> ↩︎ result: ################ src/game/Game.ts
+> @@ line 25
+> <<<<<<< HEAD
+> import { flag05 } from '../vfx/waterRibbon';
+> import { MATCH } from './match';
+> import { buildMatch08 } from '../world/match08';
+> import { buildMatch04 } from '../world/match04';
+> import { buildMatch06 } from '../world/match06';
+> import { buildMatch07 } from '../world/match07';
+> import { CAMCLEAR, createCamClear } from './camClear';
+> =======
+> import { flag05, on05 } from '../vfx/waterRibbon';
+> >>>>>>> ebaf6cac71812ad5c00a9088ba48b6febdb42b2b
+>    [after] import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+> ################ src/gameplay/coins.ts
+> @@ line 10
+> <<<<<<< HEAD
+> import { coreLateral, flag05 } from '../vfx/waterRibbon';
+> import coins08 from '../../assets/textures/match08/coins08.json';
+> import coins08px from '../../assets/textures/match08/coins08px.json';
+> import coins04 from '../../assets/textures/match04/coins04.json';
+> import coins06 from '../../assets/textures/match06/coins06.json';
+> import coins07 from '../../assets/textures/match07/coins07.json';
+> =======
+> import { coreLateral, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
+> >>>>>>> ebaf6cac71812ad5c00a9088ba48b6febdb42b2b
+>    [aft …[+5500 chars]
+
+### 🤖 Claude — 2026-11-17T21:11:10.902Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/wt/preview && awk '/^<<<<<<< /{p=1; print \"@@ line \" NR} p{print} /^>>>>>>> /{p=0; getline; print \"   [after] \" $0}' src/vfx/waterRibbon.ts | cut -c1-240 | head -150; grep -n \"const ph\\b\\|const ph =\\|let ph\" src/gameplay/coins.ts", "description": "Show waterRibbon.ts line B conflicts"}`
+
