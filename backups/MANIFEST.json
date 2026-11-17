@@ -447,6 +447,11 @@
    "sha256": "e83a3bde70caeb08470cee8aab0f7d80c5fe8b1af789b5143ce80e0574f6b553"
   },
   {
+   "path": "assets/textures/match06/mask06.png",
+   "bytes": 30442,
+   "sha256": "88e570fc9fbd38ff67e77fdad9c5f86d95a1498e469abfc962491ed16c4e6a65"
+  },
+  {
    "path": "assets/textures/match06/path06.json",
    "bytes": 329,
    "sha256": "657af6fc2612f79c4531f96e7b81c0abd5b8c7d0eb64e2d97353d5a60431b2f4"
@@ -468,13 +473,18 @@
   },
   {
    "path": "assets/textures/match06/proj06.json",
-   "bytes": 1126,
-   "sha256": "6f2d5eabc22280c757b4dd30ddedab8476b78ae95554e0d525ab4f21cb3bb089"
+   "bytes": 1332,
+   "sha256": "220f85a9135fafe75804add061e00ce53f4787cf0705fb1b52f8baa058d37327"
   },
   {
    "path": "assets/textures/match06/tile_floor.png",
    "bytes": 272755,
    "sha256": "ad975689f94df6240648eec49c3f96a4dba07ea733a1a8fcebcb97c78ce3e543"
+  },
+  {
+   "path": "assets/textures/match06/tile_floor2.png",
+   "bytes": 101002,
+   "sha256": "e4e5fe91aa80f107dc433bad7a41b2dc78c694137258695c9f70ae0c71f26c8a"
   },
   {
    "path": "assets/textures/match06/tile_tube.png",
@@ -654,7 +664,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11052,
-   "sha256": "1835ccb12150dd70212562b5f77bdbfbcb9b6bf936ad6e7514983dea1d451cb6"
+   "sha256": "14c07cad11ac29611509b4af53e1ef440d790daac629b37b8f9289cc7a718843"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1385,6 +1395,11 @@
    "path": "qa/match/06/gameplay_test_match06.json",
    "bytes": 14468,
    "sha256": "bb2d0f13f19ceb88c8937a05c0f7bd445e58ca573d8806222af11934d6b98a16"
+  },
+  {
+   "path": "qa/match/06/masks06_check.png",
+   "bytes": 2521252,
+   "sha256": "ef0077ed34d9a8be880a6fcd00ec2a0cae952b41163eb90a8482f4b79a6a4260"
   },
   {
    "path": "qa/match/06/motion/f00_checkpoint.png",
@@ -8218,8 +8233,8 @@
   },
   {
    "path": "src/world/match06.ts",
-   "bytes": 11272,
-   "sha256": "a49874289300d90e3837a75612f92caf559f0eda7ccc2329e6896d2421d78d6c"
+   "bytes": 12698,
+   "sha256": "4fa87fd2211696dc8ca0ec0b3246f73e2caec68e012ea29e1e037ab0f2508219"
   },
   {
    "path": "src/world/match08.ts",
@@ -8390,6 +8405,16 @@
    "path": "tools/match06/geo06.py",
    "bytes": 3299,
    "sha256": "3f96f1a2ee2d14c7c29ab95e8283ab5a1b1c15f126ee1e026969e4eff980e5bb"
+  },
+  {
+   "path": "tools/match06/make_floor06.py",
+   "bytes": 2294,
+   "sha256": "8999101b6e0bae56d4139edd9c1379a2fca00b2fd90f78abb0d2bf3ebd9dedf1"
+  },
+  {
+   "path": "tools/match06/make_masks06.py",
+   "bytes": 2427,
+   "sha256": "e8a8b0c651936226b44c848d73b401d7f2503723bbe2e01b2f99f8e8538f6f8d"
   },
   {
    "path": "tools/match06/make_plate06.py",

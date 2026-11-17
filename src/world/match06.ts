@@ -30,6 +30,7 @@ interface Layout06 {
   tiles: {
     tube: { wallAngle: [number, number]; period: number; anglePeriod: number };
     floor: { lateralPeriod: number; period: number };
+    floor2?: { lateralPeriod: number; period: number };
   };
 }
 
@@ -65,6 +66,9 @@ uniform vec3 uProjPos;
 uniform vec4 uPjPost;
 uniform vec2 uPjRes;
 uniform vec3 uDbg;
+uniform sampler2D uMask;
+uniform float uFloor;
+uniform float uUseMask;
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -90,7 +94,16 @@ void main() {
         float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
       }
-      t = mix(pc, texture2D(uPlate, uv).rgb, vis * keep);
+      float w = vis * keep;
+      // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels that are not water (G: the
+      // tunnel wall seen through the crest loop / beside the river) or Benny's blurry provisional fill (R), the floor
+      // shows the painted-water tile as soon as the camera leaves the approved view (the approved view is unchanged)
+      if (uFloor > 0.5 && uUseMask > 0.5) {
+        vec4 mk = texture2D(uMask, uv);
+        float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+        w *= 1.0 - max(mk.r, mk.g) * away;
+      }
+      t = mix(pc, texture2D(uPlate, uv).rgb, w);
     }
   }
   gl_FragColor = vec4(pjInverse(t), 1.0);
@@ -133,10 +146,17 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping; t.anisotropy = 8;
     t.minFilter = THREE.LinearMipmapLinearFilter; return t;
   };
-  const [tTube, tFloor] = await Promise.all([loadTile('tube'), loadTile('floor')]);
-  const mat = (tile: THREE.Texture) => new THREE.ShaderMaterial({
+  // r3 (2026-11-17, qa/match/06/NOTES.md): masks + rectified repeating floor tile; `&m06v=2` = the round-2 result
+  const v2 = typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06v') === '2';
+  const TF2 = !v2 ? L.tiles.floor2 : undefined;
+  const [tTube, tFloor] = await Promise.all([loadTile('tube'), loadTile(TF2 ? 'floor2' : 'floor')]);
+  if (TF2) tFloor.wrapT = THREE.RepeatWrapping; // seamless along the river (mirrored only across it)
+  const mask = v2 ? null : await loader.loadAsync(tex('mask06.png'));
+  if (mask) { mask.colorSpace = THREE.NoColorSpace; mask.generateMipmaps = false; mask.minFilter = THREE.LinearFilter; }
+  const mat = (tile: THREE.Texture, floor = false) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
-    uniforms: { ...shared, uTile: { value: tile }, uDbg: { value: new THREE.Vector3() } },
+    uniforms: { ...shared, uTile: { value: tile }, uDbg: { value: new THREE.Vector3() }, uMask: { value: mask },
+      uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 } },
   });
 
   // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
@@ -173,7 +193,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   const group = new THREE.Group();
   group.name = 'match06_projection';
   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm06_' + name; o.frustumCulled = false; group.add(o); return o; };
-  const TT = L.tiles.tube, TF = L.tiles.floor;
+  const TT = L.tiles.tube, TF = TF2 ?? L.tiles.floor;
   const RAD = 128;
   // tunnel tube around the river: angle 0 = right, pi/2 = up; tile angle coordinate starts at the right bank
   add(grid(RAD, (_s, j, fr) => {
@@ -189,7 +209,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     const half = Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
     const l = -half + (2 * half * j) / FC;
     return [fr.pos.clone().addScaledVector(fr.right, l), l / TF.lateralPeriod];
-  }, TF.period), mat(tFloor), 'floor');
+  }, TF.period), mat(tFloor, true), 'floor');
   // far end cap of the tunnel (the glowing vanishing point)
   const fe = frame(L.s1 + L.ext);
   const cap = new THREE.Mesh(new THREE.CircleGeometry(L.R, 64), mat(tTube));

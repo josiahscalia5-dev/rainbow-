@@ -1002,3 +1002,184 @@ Building a proper top-down water tile from the approved picture (to remove the m
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T17:38:27.442Z
+
+Confirmed: the river-floor surface is wider than the painted river beyond the crest, so it carries painted tunnel rings that later appear flat under Benny. I'll mask the floor to the painted water.
+
+### 🤖 Claude — 2026-11-17T17:38:30.594Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image, ImageDraw\nim=Image.open('references/06_crest_the_rinse_arch.png').convert('RGB').crop((0,380,864,1000))\nd=ImageDraw.Draw(im)\nfor x in range(0,864,50): d.line([(x,0),(x,8)],fill=(255,255,0)); d.text((x+1,10),str(x),fill=(255,255,0))\nfor y in range(400,1000,50): d.line([(0,y-380),(8,y-380)],fill=(255,255,0)); d.text((10,y-380),str(y),fill=(255,255,0))\nim.save('/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/mid.png')\"", "description": "Crop approved picture middle with pixel ruler"}`
+
+### 🧑 User — 2026-11-17T17:38:30.810Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T17:38:31.693Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/mid.png"}`
+
+### 🧑 User — 2026-11-17T17:38:31.734Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:38:57.630Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nm=np.asarray(Image.open('assets/textures/match06/plate06_fillmask.png').convert('L'))\nprint(m.shape, np.unique(m)[:10]); ys,xs=np.nonzero(m>127); print('fill bbox',xs.min(),xs.max(),ys.min(),ys.max(), (m>127).mean())\np=Image.open('assets/textures/match06/plate06_hybrid.png').convert('RGB').crop((100,500,800,1400)).resize((350,450)); \nmm=Image.fromarray(m).crop((100,500,800,1400)).resize((350,450)).convert('RGB')\no=Image.new('RGB',(700,450));o.paste(p,(0,0));o.paste(mm,(350,0));o.save('/tmp/claude-0/-home-user-rainbow …[+166 chars]`
+
+### 🧑 User — 2026-11-17T17:38:57.843Z
+
+> ↩︎ result: (1536, 864) [  0 255]
+> fill bbox 27 833 7 1193 0.23869191864390432
+> """Screen 06 (?match06=1): texture plate = the user's ORIGINAL approved pixels; PROVISIONAL local fill (OpenCV Telea
+> inpainting + high frequencies of mirrored artwork patches) only where the HUD bar, title banner, Benny (above his
+> ripples) and the 15 painted coins are (the game draws those itself). The ripples/splash round Benny stay (scenery).
+> A fal nano-banana-2/edit clean plate is prepared (qa/match/06/FAL_PLATE_REQUEST.md) but NOT run.
+> usage: python3 -I tools/match06/make_plate06.py <approved.png> <out dir>"""
+> import sys, json
+> import numpy as np, cv2
+> 
+> src, out = sys.argv[1], sys.argv[2]
+> A = cv2.imread(src, cv2.IMREAD_COLOR); H, W = A.shape[:2]
+> M = np.zeros((H, W), np.uint8)
+> # HUD bar + title banner (rounded pills)
+> cv2.rectangle(M, (30, 10), (830, 104), 255, -1)
+> cv2.rectangle(M, (128, 110), (736, 188), 255, -1)
+> # Benny: pom-pom, beanie (with star), body + paws, down to where his fur meets the ripples
+> cv2.ellipse(M, (415, 805), (92, 80), 0, 0, 360, 255, -1)
+> cv2.ellipse(M, (415, 935), (162, 90), 0, 0, 360, 255, -1)
+> cv2.ellipse(M, (420, 1085), (222, 100), 0, 0, 360, 255, -1)
+> cv2.ellipse(M, (420, 1150), (140, 40), 0,  …[+558 chars]
+
+### 🤖 Claude — 2026-11-17T17:38:58.731Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/fill.png"}`
+
+### 🧑 User — 2026-11-17T17:38:58.751Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:39:18.587Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/match06/make_masks06.py", "content": "\"\"\"Screen 06 (?match06=1, r3 2026-11-17): masks on the approved picture (864x1536) for the moving camera.\n  R = Benny's provisional fill (plate06_fillmask.png inside Benny's box): the river floor shows the painted-water tile\n      there instead of the blurry fill (the game Benny covers it in the approved view; seen from 3 u forward it was a\n      white smear on the water)\n  G = parts of the river FLOOR's footprint where the picture shows NO water (the tunnel wall seen through the river's\n      crest loop, th …[+1960 chars]`
+
+### 🧑 User — 2026-11-17T17:39:18.611Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/match06/make_masks06.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T17:39:21.743Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/match06/make_masks06.py assets/textures/match06 qa/match/06 && python3 -I -c \"\nfrom PIL import Image\nImage.open('qa/match/06/masks06_check.png').crop((150,450,864,1050)).save('/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/mchk.png')\"", "description": "Generate masks and a check crop"}`
+
+### 🧑 User — 2026-11-17T17:39:22.174Z
+
+> ↩︎ result: fill px 168567 no-water px 72108
+
+### 🤖 Claude — 2026-11-17T17:39:22.790Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/mchk.png"}`
+
+### 🧑 User — 2026-11-17T17:39:22.829Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:39:41.646Z
+
+Now the river-floor tile: replacing the mirrored perspective crop with a top-down, seamless tile rectified from the painted water just below Benny.
+
+### 🤖 Claude — 2026-11-17T17:39:53.055Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match06/make_floor06.py <<'EOF'\n\"\"\"Screen 06 (?match06=1, r3 2026-11-17): river-floor tile v2 = the painted water just below Benny (s = Benny - 2.0 ..\nBenny - 1.05, lateral -1.4 .. 1.4: streaks + ripples, no foam / bubbles / fill) RECTIFIED through the locked camera into\nthe floor's own (lateral, s) coordinates, then made seamless along s (the last 35 % cross-faded into the start) so the\nshader can REPEAT it along the river instead of mirroring it (the mirrored perspective crop of r2 drew kaleidoscope\ndiamonds + floating foam blobs on the water while riding). L …[+2039 chars]`
+
+### 🧑 User — 2026-11-17T17:39:53.433Z
+
+> ↩︎ result: tile_floor2 (136, 616, 3) {'s': [196.91, 197.85999999999999], 'lateral': [-1.4, 1.4], 'lateralPeriod': 2.8, 'period': 0.6181818181818182, 'pxPerU': 220}
+
+### 🤖 Claude — 2026-11-17T17:39:55.166Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/fl2.png"}`
+
+### 🧑 User — 2026-11-17T17:39:55.182Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:40:04.827Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport sys,numpy as np,cv2\nsys.path.insert(0,'tools/match06')\nfrom geo06 import Geo\ng=Geo('tools/match06/probe06_locked.json','assets/textures/match06/cam06_locked.json')\nA=cv2.imread('assets/textures/match06/plate06_hybrid.png').astype(np.float32)\nS0,S1,L0,L1,PX=g.sB-2.0,g.sB-1.05,-1.05,0.95,220\nss=np.linspace(S1,S0,int((S1-S0)*PX)); ll=np.linspace(L0,L1,int((L1-L0)*PX))\nSS,LL=np.meshgrid(ss,ll,indexing='ij'); u,v,_=g.proj(g.floor(SS.ravel(),LL.ravel()))\nT=cv2.remap(A,u.reshape(SS.shape).astype(np.float32),v.reshape(SS.shape).astype(np.float32),cv2.I …[+497 chars]`
+
+### 🧑 User — 2026-11-17T17:40:04.992Z
+
+> ↩︎ result: left gradient dir deg 82.8 -> streak dir 172.8
+> mid gradient dir deg -41.1 -> streak dir 48.9
+> right gradient dir deg -59.2 -> streak dir 30.8
+
+### 🤖 Claude — 2026-11-17T17:40:15.146Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/match06/make_floor06.py'; t=open(p).read()\nt=t.replace('S0, S1, L0, L1, PX = g.sB - 2.0, g.sB - 1.05, -1.4, 1.4, 220          # PX = tile pixels per world unit',\n 'S0, S1, L0, L1, PX = g.sB - 2.0, g.sB - 1.05, -1.05, 0.95, 220        # PX = tile pixels per world unit (no bubbles at the sides)\\nSTRETCH = 4.0                       # laid 4x longer along the river: the painted streaks fan out diagonally; stretched they run\\n                                    # with the flow and the repeat period becomes ~2.5 u instead of 0.6 u')\nt=t.replace('\"per …[+445 chars]`
+
+### 🧑 User — 2026-11-17T17:40:15.356Z
+
+> ↩︎ result: tile_floor2 (136, 440, 3) {'s': [196.91, 197.85999999999999], 'lateral': [-1.05, 0.95], 'lateralPeriod': 2.0, 'period': 2.4727272727272727, 'pxPerU': 220, 'stretch': 4.0}
+
+### 🤖 Claude — 2026-11-17T17:40:19.450Z
+
+Wiring the masks and new floor tile into `match06.ts` (with `&m06v=2` keeping the round-2 result reproducible).
+
+### 🤖 Claude — 2026-11-17T17:40:34.614Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/match06.ts'; t=open(p).read()\ndef rep(a,b):\n    global t\n    assert a in t, a[:60]; t=t.replace(a,b,1)\nrep(\"\"\"    floor: { lateralPeriod: number; period: number };\n  };\"\"\",\"\"\"    floor: { lateralPeriod: number; period: number };\n    floor2?: { lateralPeriod: number; period: number };\n  };\"\"\")\nrep(\"\"\"uniform vec3 uDbg;\nvarying vec4 vProj;\"\"\",\"\"\"uniform vec3 uDbg;\nuniform sampler2D uMask;\nuniform float uFloor;\nuniform float uUseMask;\nvarying vec4 vProj;\"\"\")\nrep(\"\"\"      t = mix(pc, texture2D(uPlate, uv).rgb, …[+3756 chars]`
+
+### 🧑 User — 2026-11-17T17:40:36.693Z
+
+> ↩︎ result: 33:    floor2?: { lateralPeriod: number; period: number };
+> 69:uniform sampler2D uMask;
+> 101:        vec4 mk = texture2D(uMask, uv);
+> 119:uniform sampler2D uMask;
+> 124:    if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0 && texture2D(uMask, uv).g > 0.5) discard;
+> 167:  const TF2 = !v2 ? L.tiles.floor2 : undefined;
+> 168:  const [tTube, tFloor] = await Promise.all([loadTile('tube'), loadTile(TF2 ? 'floor2' : 'floor')]);
+> 174:    uniforms: { ...shared, uTile: { value: tile }, uDbg: { value: new THREE.Vector3() }, uMask: { value: mask },
+> 256:            uniforms: { uProjVP: shared.uProjVP, uMask: { value: mask } } })
+> TSC_OK
+
+### 🤖 Claude — 2026-11-17T17:40:45.161Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad; timeout 900 node tools/match06/motion06.mjs $SP/m3 >/dev/null 2>&1; python3 -I tools/match06/measure06.py references/06_crest_the_rinse_arch.png R2=qa/match/06/06_NEW_match06.png R3=$SP/m3/f00_checkpoint.png; python3 -I -c \"\nfrom PIL import Image\nP='$SP/m3/'\nn=['f00_checkpoint','f03_forward3u','f06_forward6u','f10_forward10u','f15_forward15u','f20_forward20u','f30_forward30u','s_left_steer','s_right_steer']\no=Image.new('RGB',(5*288,2*512))\nfor i,k in enumerate(n): o.paste(Image.open(P+k+'.p …[+181 chars]`
+
+### 🧑 User — 2026-11-17T17:41:16.284Z
+
+> ↩︎ result: R2         whole  79.1% ssim 0.785 | scenery  98.8% ssim 0.987 | upper  97.8% ssim 0.976 | middle  98.4% ssim 0.983 | lower  99.8% ssim 0.998 | benny+splash  55.2% ssim 0.525
+> R3         whole  73.5% ssim 0.683 | scenery  93.1% ssim 0.875 | upper  97.3% ssim 0.961 | middle  92.0% ssim 0.856 | lower  89.7% ssim 0.801 | benny+splash  47.0% ssim 0.393
+
+### 🤖 Claude — 2026-11-17T17:41:21.143Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/motion3.png"}`
+
+### 🧑 User — 2026-11-17T17:41:21.299Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:41:43.057Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/match06.ts'; t=open(p).read()\ndef rep(a,b):\n    global t\n    assert a in t, a[:70]; t=t.replace(a,b,1)\nrep(\"\"\"      // r3 masks (tools/match06/make_masks06.py): on the river floor, no painted-tunnel pixels (G: cut away, they belong\n      // to the tube behind) and no blurry Benny fill (R: the painted-water tile instead)\n      if (uFloor > 0.5 && uUseMask > 0.5) {\n        vec4 mk = texture2D(uMask, uv);\n        if (mk.g > 0.5) discard;\n        w *= 1.0 - mk.r;\n      }\"\"\",\"\"\"      // r3 masks (tools/match06/make_masks06.py): wher …[+1532 chars]`
+
+### 🧑 User — 2026-11-17T17:41:45.136Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-17T17:41:51.087Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad; rm -rf $SP/m3; timeout 900 node tools/match06/motion06.mjs $SP/m3 >/dev/null 2>&1; timeout 900 node tools/match06/motion06.mjs $SP/m2 'match06=1&m06v=2' >/dev/null 2>&1; python3 -I tools/match06/measure06.py references/06_crest_the_rinse_arch.png R2=$SP/m2/f00_checkpoint.png R3=$SP/m3/f00_checkpoint.png; python3 -I -c \"\nfrom PIL import Image\nP='$SP/m3/'\nn=['f00_checkpoint','f03_forward3u','f06_forward6u','f10_forward10u','f15_forward15u','f20_forward20u','f30_forward30u','s_left_steer','s_rig …[+284 chars]`
+
+### 🧑 User — 2026-11-17T17:42:52.150Z
+
+> ↩︎ result: R2         whole  69.5% ssim 0.593 | scenery  87.6% ssim 0.762 | upper  96.0% ssim 0.940 | middle  81.0% ssim 0.637 | lower  82.2% ssim 0.643 | benny+splash  44.3% ssim 0.312
+> R3         whole  66.1% ssim 0.532 | scenery  83.6% ssim 0.686 | upper  94.5% ssim 0.917 | middle  75.2% ssim 0.500 | lower  76.4% ssim 0.538 | benny+splash  41.0% ssim 0.254
+
+### 🤖 Claude — 2026-11-17T17:42:55.562Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/motion3.png"}`
+
+### 🧑 User — 2026-11-17T17:42:55.707Z
+
+> ↩︎ result: [image]
+
