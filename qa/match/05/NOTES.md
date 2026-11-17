@@ -94,3 +94,30 @@ Verified (final code, commit after 75ec501):
 * Default `capture.mjs 05` == `qa/pilot05/current_default_05.png` 0 px; protected `?ringa=26&nearfloor05=0` ==
   `qa/pilot05/wave9/baseline/05.png` 0 px; `match05=1` == `02_BEFORE_match05.png` 0 px; `match05=1&tgtvis05=1` ==
   `03_NEW_match05_tgtvis05.png` 0 px (milestone-1 water around Benny preserved).
+
+---
+# Milestone 2 continued (round 3, account 3, branch `claude/rainbow-s05-match-c3`, started from `fd94023f`)
+
+## 2.2 Soft green-teal patches beside Benny while riding — `?tgtfill05=3` (needs `match05=1&tgtvis05=1`)
+Cause (seen in `target_05.png`): the pyramid blend that fills the target's holes used the APPROVED picture as its
+"outside" side, so the coarse levels carried the occluders' colours (yellow coins, pink Benny) into each small hole →
+dull green-teal discs where the painted coins sit. In the locked view the game coins cover them; as soon as Benny steers
+the discs show on the water (`move/new/steer_L_050.png`).
+Tool: `tools/match05/make_target_vis.py` env `TGTFILL05` (default unset reproduces the tgtvis05 target byte-identical;
+re-bake `python3 -I tools/proj05/bake.py <probe> <target dir + qa/pilot05/proj/target/correction.npz> <out> far gapfill`
+reproduces `assets/textures/match05/tgtvis05/proj05_E.png` byte-identical — verified first). E **and** F are re-baked
+(F carries the far coin holes). Textures: `assets/textures/match05/tgtfill05_3/`.
+
+| option (one at a time) | locked whole mean / ≤20 / SSIM | water ≤20 | riding / steering by eye | decision |
+|---|---|---|---|---|
+| M1 (tgtvis05) | 8.09 / 89.15 % / 0.877 | 96.5 % | green-teal discs beside Benny | BEFORE |
+| 1: fill as the blend's outside side in every hole | 8.71 / 88.72 % / 0.868 | 96.0 % | discs gone, hard seams | rejected |
+| 2: visible water spread into every hole (normalised convolution) | 8.46 / 88.88 % / 0.870 | 96.3 % | discs gone, but a hard flat edge around the big Benny patch | rejected |
+| **3: option 2 only inside the coin holes, Benny patch + bottom ring as M1** | **8.16 / 89.08 % / 0.875** | **96.5 %** (3.55) | discs gone, Benny patch as M1 | **kept as switch** |
+
+Option 3's locked loss (−0.07 pt) lies only in the coin region (mean 27.1 → 30.5): the painted coin rims around the game
+coins were partly coin-coloured fill before — a coin "ghost" while riding. Same rule as M1's margin choice: the moving
+test decides. Pictures: `r3_teal/03_NEW_tgtfill05_3.png`, `r3_teal/riding_BEFORE_M1/`, `r3_teal/riding_NEW/`
+(forward 3 / 6 u, steering L / R 0.5 / 0.8 s), `r3_teal/side_by_side_steer_L_050_M1_left_NEW_right.png` (crop only).
+Proofs: default 05 == `current_default_05.png` 0 px; `match05=1` == `02_BEFORE_match05.png` 0 px;
+`match05=1&tgtvis05=1` == `03_NEW_match05_tgtvis05.png` 0 px; tsc clean.
