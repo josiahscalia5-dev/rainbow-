@@ -664,7 +664,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10592,
-   "sha256": "34ada6a4c7d47011a8f45adcf1d9628a6bd0c354ea50db5c08ff6c92d882312d"
+   "sha256": "7bf8d15269fc3cbd41cc92897b12837fe7ccbc7202f0015a24eca0448d201255"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -818,8 +818,8 @@
   },
   {
    "path": "docs/path_graph.md",
-   "bytes": 4595,
-   "sha256": "667877a42d21905b642db3699b291322c47fb4dd56454f0c297d0d876df0eca0"
+   "bytes": 4602,
+   "sha256": "72ae99874cbd127de60a25ba87af76757ceebe3b4c5cde9e1f8c0c27497f4693"
   },
   {
    "path": "docs/reference_inventory.md",
@@ -1178,8 +1178,8 @@
   },
   {
    "path": "qa/continuity_report.json",
-   "bytes": 2696,
-   "sha256": "49576a5bbfdcd8a1ef2dbec617f0267b266790152519a7ee0b7a7c15a7bb62e7"
+   "bytes": 2708,
+   "sha256": "34ce26ccf8e999012c5e1d49c7eb4189f8eefaa096158e16eee0aedeb5647932"
   },
   {
    "path": "qa/gameplay_test.json",
@@ -1377,6 +1377,21 @@
    "sha256": "191567d369371ca4af86667a10439438230f65bed0db42d90efba8b7d340b43f"
   },
   {
+   "path": "qa/match/07/07_APPROVED.png",
+   "bytes": 494067,
+   "sha256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9"
+  },
+  {
+   "path": "qa/match/07/07_BEFORE_current_game.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/match/07/07_NEW_match07.png",
+   "bytes": 2408044,
+   "sha256": "ca3c77a97d228ba901f1a5c444ee28efb40c920b3ffb5b22568630164c934a15"
+  },
+  {
    "path": "qa/match/07/cam/approved_before_bestfit_halfres.png",
    "bytes": 1889227,
    "sha256": "61c21b1d6bd9d3e203747012dae1d4911fc7e2e51f7cb75e9c9919a5b6c101fd"
@@ -1425,6 +1440,26 @@
    "path": "qa/match/07/m1/cam07.json",
    "bytes": 1127,
    "sha256": "b63350616673bd309162135053a63bd1f74f0625f09c9608af9a0dd64506a4de"
+  },
+  {
+   "path": "qa/match/07/m1/continuity_default.json",
+   "bytes": 754,
+   "sha256": "286f9e0be5408996f82a80444f7a14e63592eaeca77c55f3b8970bc4aa155697"
+  },
+  {
+   "path": "qa/match/07/m1/continuity_match07.json",
+   "bytes": 761,
+   "sha256": "b47423222bdc01c2f81a7b2a6b556051dc46336b6161a71a6ac228e1529784c2"
+  },
+  {
+   "path": "qa/match/07/m1/gameplay_default.json",
+   "bytes": 14632,
+   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/match/07/m1/gameplay_match07.json",
+   "bytes": 14642,
+   "sha256": "36394db79e44c4ce1f359d0308e36f437b0223190b9cf1dee2f6beb64e3a4e7b"
   },
   {
    "path": "qa/match/07/m1/motion/d0_before_drop_8u.png",
@@ -1548,8 +1583,8 @@
   },
   {
    "path": "qa/match/07/m1/new/07.png",
-   "bytes": 2406403,
-   "sha256": "d42ca91660d4bf1f5e59ffd154d2999ee0d74ae4da795240208375e20a5f4192"
+   "bytes": 2408044,
+   "sha256": "ca3c77a97d228ba901f1a5c444ee28efb40c920b3ffb5b22568630164c934a15"
   },
   {
    "path": "qa/match/07/m1/probe_default.json",
@@ -1565,6 +1600,16 @@
    "path": "qa/match/07/m1/proj07.json",
    "bytes": 3114,
    "sha256": "f5f3d0c8e471d5be152b8794f6b76880cd3f24ffef3dd8a10c411d80d9d30875"
+  },
+  {
+   "path": "qa/match/07/m1/proofs_0px.json",
+   "bytes": 272,
+   "sha256": "135aac29d07746aef764606e635ffe2b471775adf0f58daad222a7823e0bcac7"
+  },
+  {
+   "path": "qa/match/07/metrics_BEFORE_NEW.json",
+   "bytes": 1361,
+   "sha256": "51069ab753484816dd70f61ddd7a7d50d81e7ffa9eee2c04efa6010ab5bf68c4"
   },
   {
    "path": "qa/match/07/rings/approved.json",
@@ -8470,6 +8515,11 @@
    "path": "tools/match07/make_plate07.py",
    "bytes": 6072,
    "sha256": "4f1dac163e1af93c2d8ae53a9c05d5d46bdc68db0dd2e781eb8a03050567dbb2"
+  },
+  {
+   "path": "tools/match07/metrics07.py",
+   "bytes": 2231,
+   "sha256": "66172d0205a29b670672b4858381d9619259ccd8a1dfd0be0c60c0328506c9f6"
   },
   {
    "path": "tools/match07/motion07.mjs",
