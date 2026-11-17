@@ -979,3 +979,130 @@ Path now follows the painted S-river and the eight painted coins are real pickup
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T16:52:04.150Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/match07.ts", "content": "/**\n * `?match07=1` — Screen 07 approved-picture test (2026-11-17, qa/match/07/NOTES.md), the Screen 08 method.\n * REAL 3D proxy geometry of \"Dive the Washer Tube\", solved from the user's approved Screen 07 and the locked game camera\n * (tools/match07/solve_cam07.py → cam07_locked.json, tools/match07/fit_proxies07.py → proj07.json): the purple tube (a\n * cylinder along the game's 07 tube axis, radius and ring depths fitted to the painted gold rings), the water plane at\n * Benny's water level (the painted S-river, foam …[+10984 chars]`
+
+### 🧑 User — 2026-11-17T16:52:04.195Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/match07.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T16:52:20.902Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\nold=\"\"\"  // the unwrap rows run from the left water line (top row = theta1) to the right one; uTheta = (theta1, theta0) maps\n  // angle theta1 -> v 0 ... wait: three flips images (row 0 = v 1), so v = (a - theta0) / (theta1 - theta0) reads row 0 at theta1\n  shared.uTheta.value.set(TL.wall.theta[0], TL.wall.theta[1]);\n\"\"\"\nassert old in s; s=s.replace(old,\"\")\ns=s.replace(\"    uTheta: { value: new THREE.Vector2(TL.wall.theta[1], TL.wall.theta[0]) },\",\"    // unwrap rows: image row 0 = theta1 (left water li …[+2795 chars]`
+
+### 🧑 User — 2026-11-17T16:52:24.162Z
+
+> ↩︎ result: TSC OK
+
+### 🤖 Claude — 2026-11-17T16:52:27.968Z
+
+Proxy scene wired in behind `?match07=1`. First live capture now.
+
+### 🤖 Claude — 2026-11-17T16:52:29.372Z
+
+> 🔧 **Bash** `{"command": "node scripts/capture.mjs 07 --q=match07=1 --out=qa/match/07/m1/new 2>&1 | tail -2; git checkout qa/capture_log.json; python3 -I tools/qa/screen_match.py references/07_dive_the_washer_tube.png qa/match/07/m1/new/07.png | tail -1", "description": "Capture NEW Screen 07 and measure"}`
+
+### 🧑 User — 2026-11-17T16:52:46.131Z
+
+> ↩︎ result: 07 → qa/match/07/m1/new/07.png {"stage":"07","s":273.056,"y":-49.66,"calls":153,"tris":282909,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> Updated 1 path from the index
+> qa/match/07/m1/new/07.png FULL |d|  45.5 <=20 0.303 SSIM 0.225 | BELOWHUD |d|  44.1 <=20 0.319 | LAYOUT |d|  25.1 <=20 0.555 | mean RGB approved [165.5, 116.4, 188.7] game [167.9, 116.2, 190.5]
+
+### 🤖 Claude — 2026-11-17T16:52:47.317Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/m1/new/07.png"}`
+
+### 🧑 User — 2026-11-17T16:52:47.379Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:53:02.229Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image; import numpy as np\nA=np.asarray(Image.open('references/07_dive_the_washer_tube.png').convert('RGB')).astype(int)\nB=np.asarray(Image.open('qa/match/07/m1/new/07.png').convert('RGB')).astype(int)\nd=np.abs(A-B).mean(-1)\nprint('cols mean diff', [round(d[300:1400,x].mean(),1) for x in range(800,864,4)])\nprint('rows', [round(d[y,100:800].mean(),1) for y in range(200,1500,100)])\nim=Image.fromarray(np.clip(d*3,0,255).astype(np.uint8)); im.resize((432,768)).save('/tmp/claude-0/-home-user-rainbow-/a3deea37-90b0-51c8-b1a0-dd017c2eb7e7/scratchpad …[+79 chars]`
+
+### 🧑 User — 2026-11-17T16:53:02.602Z
+
+> ↩︎ result: cols mean diff [np.float64(36.9), np.float64(38.1), np.float64(39.8), np.float64(38.7), np.float64(37.0), np.float64(36.9), np.float64(38.3), np.float64(38.6), np.float64(41.7), np.float64(44.4), np.float64(42.1), np.float64(43.6), np.float64(45.7), np.float64(47.5), np.float64(46.6), np.float64(51.0)]
+> rows [np.float64(36.7), np.float64(33.7), np.float64(33.5), np.float64(25.5), np.float64(38.2), np.float64(44.4), np.float64(56.1), np.float64(52.4), np.float64(68.4), np.float64(42.5), np.float64(57.1), np.float64(28.8), np.float64(49.0)]
+
+### 🤖 Claude — 2026-11-17T16:53:03.287Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a3deea37-90b0-51c8-b1a0-dd017c2eb7e7/scratchpad/diff.png"}`
+
+### 🧑 User — 2026-11-17T16:53:03.300Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:53:12.883Z
+
+> 🔧 **Bash** `{"command": "node tools/match07/probe07.mjs 'match07=1' > qa/match/07/m1/probe_match07.json && python3 -I -c \"\nimport json,numpy as np\nd=json.load(open('qa/match/07/m1/probe_match07.json')); c=json.load(open('assets/textures/match07/proj07.json'))\nprint('water live', d['water'], 'proj base', c['water'])\nL=np.array(d['cam']['matrixWorld']).reshape(4,4).T; P=np.array(c['camera']['matrixWorld']).reshape(4,4).T\nprint('pos live',L[:3,3],'proj',P[:3,3]); print('fwd live',-L[:3,2],'proj',-P[:3,2]); print('fov',d['cam']['fov'],d['cam']['width'],d['cam']['height'])\"", "description": "Compare liv …[+40 chars]`
+
+### 🧑 User — 2026-11-17T16:53:25.753Z
+
+> ↩︎ result: water live [10.4168, -50.027, -201.5368] proj base [10.2734, -50.022, -201.4474]
+> pos live [  10.92892508  -46.75507845 -195.95074402] proj [  10.7855166  -46.7501043 -195.8610803]
+> fwd live [-0.10650004 -0.22977008 -0.96740036] proj [-0.10650175 -0.22976766 -0.96740074]
+> fov 62 864 1536
+
+### 🤖 Claude — 2026-11-17T16:53:40.547Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match07/river_iter07.py <<'EOF'\n\"\"\"Screen 07: one correction round for the painted river path. The course smooths the bent 07 polyline, which pulls the\nlive path off the painted centre points; compare the live path (probe with ?match07=1) at each target's z with the\ntarget and pre-compensate the stored points (iterate 2-4 rounds until the error is < 0.01 u). Targets are kept in\nriver07.json \"target_x\"; \"x\" holds the compensated points course.ts reads.\nusage: python3 -I tools/match07/river_iter07.py <probe_match07.json> <river07.json>\"\"\"\nimport json, sys …[+985 chars]`
+
+### 🧑 User — 2026-11-17T16:54:18.946Z
+
+> ↩︎ result: max |err| 0.939800299188752 [-0.141  0.577 -0.137 -0.373 -0.801  0.197  0.369  0.626  0.94 ]
+> max |err| 0.5536356298923781 [-0.02   0.368 -0.132  0.03  -0.554  0.21   0.079  0.114  0.404]
+> max |err| 0.40111787335143134 [-0.007  0.212 -0.157  0.145 -0.401  0.266 -0.008 -0.085  0.202]
+> max |err| 0.3197927350637002 [-0.003  0.131 -0.15   0.169 -0.32   0.317 -0.024 -0.153  0.136]
+> [10.2514, -50.0151, -201.3235]
+
+### 🤖 Claude — 2026-11-17T16:54:28.590Z
+
+> 🔧 **Bash** `{"command": "for i in 1 2; do node tools/match07/probe07.mjs 'match07=1' > qa/match/07/m1/probe_match07.json; python3 -I tools/match07/river_iter07.py qa/match/07/m1/probe_match07.json assets/textures/match07/river07.json; done; node tools/match07/probe07.mjs 'match07=1' > qa/match/07/m1/probe_match07.json; cat > tools/match07/lock_projector07.py <<'EOF'\n\"\"\"Screen 07: lock the projector to the LIVE ?match07=1 checkpoint camera (as Screen 08 did): after the river path is\nbent, the checkpoint water point moves by ~0.1 u, so the projector must be the camera the game really renders from.\nusa …[+796 chars]`
+
+### 🧑 User — 2026-11-17T16:55:03.591Z
+
+> ↩︎ result: max |err| 0.349722380728112 [-0.002  0.089 -0.131  0.164 -0.293  0.35  -0.026 -0.185  0.11 ]
+> max |err| 0.36702695425835863 [-0.002  0.065 -0.109  0.154 -0.3    0.367 -0.026 -0.203  0.097]
+> projector locked to live camera at [10.742419545874256, -46.73982623151742, -195.6769038094448] water [10.2304, -50.0117, -201.2636]
+
+### 🤖 Claude — 2026-11-17T16:55:06.819Z
+
+River path now passes within 0.3 u of the painted centre line; projector locked to the live camera. Re-capturing.
+
+### 🤖 Claude — 2026-11-17T16:55:08.580Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/match07/make_plate07.py references/07_dive_the_washer_tube.png assets/textures/match07/proj07.json assets/textures/match07/coins07.json assets/textures/match07 && node scripts/capture.mjs 07 --q=match07=1 --out=qa/match/07/m1/new 2>&1 | tail -1; git checkout qa/capture_log.json; python3 -I tools/qa/screen_match.py references/07_dive_the_washer_tube.png qa/match/07/m1/new/07.png | tail -1", "description": "Rebuild tiles and recapture with locked projector"}`
+
+### 🧑 User — 2026-11-17T16:55:25.399Z
+
+> ↩︎ result: filled share 0.2206
+> 07 → qa/match/07/m1/new/07.png {"stage":"07","s":273.056,"y":-49.644,"calls":153,"tris":282909,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> Updated 1 path from the index
+> qa/match/07/m1/new/07.png FULL |d|  14.7 <=20 0.803 SSIM 0.792 | BELOWHUD |d|  10.0 <=20 0.871 | LAYOUT |d|   7.4 <=20 0.881 | mean RGB approved [165.5, 116.4, 188.7] game [168.6, 114.7, 188.8]
+
+### 🤖 Claude — 2026-11-17T16:55:26.948Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/m1/new/07.png"}`
+
+### 🧑 User — 2026-11-17T16:55:27.016Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:55:31.306Z
+
+Static view: **80.3 % of the whole frame within 20 levels (SSIM 0.79)** vs BEFORE 6.7 %. Committing a checkpoint, then the moving-camera test.
+
+### 🤖 Claude — 2026-11-17T16:55:34.108Z
+
+> 🔧 **Bash** `{"command": "git add src/world/match07.ts src/game/Game.ts src/game/match.ts src/game/cameraRig.ts src/world/course.ts src/gameplay/coins.ts tools/match07 assets/textures/match07 qa/match/07/m1 && git commit -qm \"Screen 07 ?match07=1 milestone 1 (WIP): solved camera, fitted tube/paddles/water proxies, original pixels projected, painted river path + picture coins\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXoZAmTEuSmtFMN8ca5t\" && git push -q origin claude/rainbow-s07-match-c2 2>&1 | tail -1; git log --oneline -1", "descriptio …[+37 chars]`
+
+### 🧑 User — 2026-11-17T16:55:37.220Z
+
+> ↩︎ result: 6289072 Screen 07 ?match07=1 milestone 1 (WIP): solved camera, fitted tube/paddles/water proxies, original pixels projected, painted river path + picture coins
+
+### 🤖 Claude — 2026-11-17T16:55:47.108Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match07/motion07.mjs <<'EOF'\n// Screen 07 moving-camera test (read-only): from the 07 checkpoint ride forward / steer with the real game sim and\n// screenshot what the live camera sees; plus the start of the 07→08 drop. usage: node tools/match07/motion07.mjs <outDir> [q]\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';\nconst OUT = process.argv[2]; const Q = process.argv[3] ?? 'match07=1';\nmkdirSync(OUT, { recursive: true });\nconst { chromium } = loadPlaywright();\nconst vite  …[+2204 chars]`
+

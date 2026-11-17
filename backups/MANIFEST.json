@@ -468,23 +468,23 @@
   },
   {
    "path": "assets/textures/match07/proj07.json",
-   "bytes": 3114,
-   "sha256": "f5f3d0c8e471d5be152b8794f6b76880cd3f24ffef3dd8a10c411d80d9d30875"
+   "bytes": 3515,
+   "sha256": "0551d41ce98bd16a2d9bfe01e7410f9135f7f267742cd68d4d51575c1345cb2d"
   },
   {
    "path": "assets/textures/match07/river07.json",
-   "bytes": 875,
-   "sha256": "fcae75881ec71e9d9e0488ddb730f6fffef5b4910cbd93d7ecb724b7f737886f"
+   "bytes": 1085,
+   "sha256": "d0f1c66662b3211170f862a944a8ac20c1d1ac9c7a11408955c3c584bd4fe30d"
   },
   {
    "path": "assets/textures/match07/tile_river.png",
-   "bytes": 620340,
-   "sha256": "3bc048150885e44a8d5323ebf3b50d881d839324a3481ea7c9d9bbff6bc11d3b"
+   "bytes": 620070,
+   "sha256": "1d3585a7862f47b64e0d8f87b3cb2262afea4145c7e12fb65dfeadb6140058ac"
   },
   {
    "path": "assets/textures/match07/tile_wall.png",
-   "bytes": 882484,
-   "sha256": "5ce1f521f4ff1717603098135371d521a2b578b3bf0f2973bd220b21083ca550"
+   "bytes": 878381,
+   "sha256": "b79ef258b3e09145662f60702824ab852c08deb6c8c8c81b70e355a48e1df78c"
   },
   {
    "path": "assets/textures/match07/tiles07.json",
@@ -663,8 +663,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10591,
-   "sha256": "ead302fbfae9d0928bda0551a40232646194bb97ed89e68645b94841bc364b4b"
+   "bytes": 10592,
+   "sha256": "1a2a8c2dd65b731268e87067a875d10184d8f211817fe9c487f37275d6ca1b5c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1427,9 +1427,64 @@
    "sha256": "b63350616673bd309162135053a63bd1f74f0625f09c9608af9a0dd64506a4de"
   },
   {
+   "path": "qa/match/07/m1/motion/d0_before_drop_8u.png",
+   "bytes": 1558965,
+   "sha256": "d9a3b7731de14ea0a78271c8343ec951210b0680723cbf5574c781191f7c48ea"
+  },
+  {
+   "path": "qa/match/07/m1/motion/d1_drop_start.png",
+   "bytes": 1595418,
+   "sha256": "baa50e900da9bcda4bf66d988d80c823bcc5ca1e56aa7adb60119d0588469ea3"
+  },
+  {
+   "path": "qa/match/07/m1/motion/f00_checkpoint.png",
+   "bytes": 2310406,
+   "sha256": "5e142e6439380441aeea6ada617d5b206bbe7374d127ca26ee89e7b9a7c806b4"
+  },
+  {
+   "path": "qa/match/07/m1/motion/f03_forward3u.png",
+   "bytes": 2214377,
+   "sha256": "446fceddc8035239710645e7a4149d4fb5ef264897059dddfcf6f498b02125e9"
+  },
+  {
+   "path": "qa/match/07/m1/motion/f06_forward6u.png",
+   "bytes": 2003394,
+   "sha256": "882cffbd79a703ebe51e106698a3fb2c957681b39b068811d61b71ba9dd347ce"
+  },
+  {
+   "path": "qa/match/07/m1/motion/f10_forward10u.png",
+   "bytes": 1911722,
+   "sha256": "74c890c9169c1bdc49ff2c9160d989d701b8ca22bbe66609ee81c7d1cb82d30b"
+  },
+  {
+   "path": "qa/match/07/m1/motion/f20_forward20u.png",
+   "bytes": 1880256,
+   "sha256": "6495b685d39c5796431c197777e120e3d241a61d695b5f92447ff95dd66e1fa0"
+  },
+  {
+   "path": "qa/match/07/m1/motion/s_left_steer.png",
+   "bytes": 2035944,
+   "sha256": "6a87af1072f0f172859522a232a54f5300560d8d330b4941fcf53b0e729a82c8"
+  },
+  {
+   "path": "qa/match/07/m1/motion/s_right_steer.png",
+   "bytes": 1976158,
+   "sha256": "9c3a6433e2448653625526104b94d73ed899cf089117d778d8d49607911f608e"
+  },
+  {
+   "path": "qa/match/07/m1/new/07.png",
+   "bytes": 2406403,
+   "sha256": "d42ca91660d4bf1f5e59ffd154d2999ee0d74ae4da795240208375e20a5f4192"
+  },
+  {
    "path": "qa/match/07/m1/probe_default.json",
    "bytes": 208571,
    "sha256": "8bacbb6079a425e532a902a59eefd2453915388870e36587c1ce8e4e9247ed69"
+  },
+  {
+   "path": "qa/match/07/m1/probe_match07.json",
+   "bytes": 210671,
+   "sha256": "83cd6f838d6b95d8f322a3282977e1bc2f018e37bb88285a6ab80f66e3d9a21e"
   },
   {
    "path": "qa/match/07/m1/proj07.json",
@@ -8023,8 +8078,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 38856,
-   "sha256": "c9090ddb593d86a7ba77ec9706d2329e0f239a2e18baa9db10c5d0372c2a6401"
+   "bytes": 40480,
+   "sha256": "737efcc8775aaf821ca554ad6d9713a19ea68951a012c2b1fee5bdda0c2f03a6"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -8165,6 +8220,11 @@
    "path": "src/world/laundryRoom.ts",
    "bytes": 8308,
    "sha256": "7c3a4cb22741c58f3c589239d07ffcf9097d6c4b8e59c99a72d7d8f689cc7679"
+  },
+  {
+   "path": "src/world/match07.ts",
+   "bytes": 11105,
+   "sha256": "30785adc53908deb70cf8ae85449eaa6239761004127268e48fec5b3e6f789f6"
   },
   {
    "path": "src/world/match08.ts",
@@ -8327,9 +8387,19 @@
    "sha256": "9f3e921762f7993159c46a5417e3c44f227c52951272f921fc679e5f38562446"
   },
   {
+   "path": "tools/match07/lock_projector07.py",
+   "bytes": 779,
+   "sha256": "1516018cc1bbe96c8e601b5bc72f090e86a6ceff07fb8fdc435cb4f3fa429ada"
+  },
+  {
    "path": "tools/match07/make_plate07.py",
    "bytes": 5693,
    "sha256": "37a449d8693134561dfbdb6399084ec82c1ba6798c2e805912e894286909be98"
+  },
+  {
+   "path": "tools/match07/motion07.mjs",
+   "bytes": 2589,
+   "sha256": "26eb7bcdabe18b8e77e8b976c75d98eb51c758a30170967400c8793d88e5f6f4"
   },
   {
    "path": "tools/match07/probe07.mjs",
@@ -8340,6 +8410,11 @@
    "path": "tools/match07/river_coins07.py",
    "bytes": 3344,
    "sha256": "0792d60dac6ccba01b1a091883e981363db153a649b945253e8dc1c50f970d73"
+  },
+  {
+   "path": "tools/match07/river_iter07.py",
+   "bytes": 971,
+   "sha256": "1151b54a0fb0b0b914eb28517045c2993d7a5965db7a9bdcead3feaf2b9447a6"
   },
   {
    "path": "tools/match07/solve_cam07.py",
