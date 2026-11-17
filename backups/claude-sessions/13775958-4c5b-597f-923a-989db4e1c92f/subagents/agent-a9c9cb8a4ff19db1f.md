@@ -1326,3 +1326,77 @@ Now the probe harness (adapted for Screen 08).
 > ids (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]), array([127569,  34665,  11217,   7708,   7645,   1505,   1549,   1608,
 >           105,     29]))
 
+### 🤖 Claude — 2026-11-17T15:38:54.537Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/geom08.py", "content": "\"\"\"game part geometry from a UV pass (uv.f32 of rect 220,820,440,440 at the locked 08 frame) vs the approved 08 parts.\nAdapted from line B's qa/pilot05/full_reference_match/benny/work/geom.py (read-only source, ccr-b0757dec-dj6l1o @99ab17b).\nusage: python3 -I geom08.py <uv.f32>\"\"\"\nimport sys, os\nsys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))\nimport numpy as np\nfrom bennyseg08 import bbox, W as FW, H as FH\n\nX0, Y0, W, H = 220, 820, 440, 440\ …[+1160 chars]`
+
+### 🧑 User — 2026-11-17T15:38:54.570Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/geom08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:38:56.841Z
+
+> 🔧 **Bash** `{"command": "python3 -I qa/match/08/benny08/work/geom08.py /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1/uv.f32", "description": "Compare game vs approved part geometry at 08"}`
+
+### 🧑 User — 2026-11-17T15:38:58.300Z
+
+> ↩︎ result: part   | approved                                             | game
+> all    | 262-594, 855-1206 (333x352) c(427.8,1049.5) 71149px  | 267-599, 890-1242 (333x353) c(436.8,1081.7) 66031px
+> pom    | 362-493, 855-965 (132x111) c(428.0,912.8) 10761px    | 407-520, 890-989 (114x100) c(463.2,940.2) 7645px
+> crown  | 304-561, 936-1038 (258x103) c(424.5,985.7) 13456px   | 344-547, 955-1051 (204x97) c(438.4,1007.1) 11217px
+> cuff   | 296-559, 1000-1064 (264x65) c(424.9,1038.9) 10718px  | 329-557, 1007-1088 (229x82) c(438.4,1056.7) 7708px
+> star   | 478-536, 971-1026 (59x56) c(509.8,1000.4) 1829px     | 498-551, 1007-1061 (54x55) c(523.7,1035.4) 1505px
+> body   | 262-594, 1056-1206 (333x151) c(425.7,1123.1) 34385px | 267-599, 1038-1242 (333x205) c(427.3,1139.2) 37956px
+> pom IoU 0.326 approved px covered by the same game part 0.42
+> crown IoU 0.386 approved px covered by the same game part 0.511
+> cuff IoU 0.315 approved px covered by the same game part 0.412
+> star IoU 0.063 approved px covered by the same game part 0.108
+> body IoU 0.722 approved px covered by the same game part 0.882
+> all IoU 0.729 approved px covered by the same game part 0.813
+
+### 🤖 Claude — 2026-11-17T15:39:58.430Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport sys; sys.path.insert(0,'qa/match/08/benny08/work')\nimport numpy as np\nfrom geom08 import load_uv, game_ids\nu=load_uv('/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/p1/uv.f32'); ids=game_ids(u)\nfor pid in range(1,8):\n  m=ids==pid; uu=u[...,0][m]%1; vv=u[...,1][m]\n  print(pid, m.sum(), 'u',np.percentile(uu,[1,50,99]).round(3),'v',np.percentile(vv,[1,50,99]).round(3), 'layer', np.unique(np.round(u[...,3][m],2))[:5])\nEOF", "description": "Inspect UV ranges per part in 08 view"}`
+
+### 🧑 User — 2026-11-17T15:39:58.925Z
+
+> ↩︎ result: 1 34665 u [0.548 0.748 0.951] v [0.159 0.419 0.581] layer [0.   0.04 0.09 0.13 0.17]
+> 2 11217 u [0.272 0.479 0.72 ] v [0.087 0.453 0.843] layer [0.]
+> 3 7708 u [0.281 0.494 0.715] v [0.16  0.631 0.975] layer [0.]
+> 4 7645 u [0.534 0.747 0.966] v [0.277 0.541 0.887] layer [0.   0.06 0.12 0.18 0.24]
+> 5 1505 u [0.062 0.451 0.863] v [0.077 0.457 0.895] layer [0.]
+> 6 1549 u [0.404 0.609 0.829] v [0.155 0.487 0.74 ] layer [0.   0.09 0.18 0.27 0.36]
+> 7 1608 u [0.457 0.671 0.888] v [0.147 0.48  0.732] layer [0.   0.09 0.18 0.27 0.36]
+
+### 🤖 Claude — 2026-11-17T15:40:00.147Z
+
+Now the bake script, adapted for 08 (seen texels from 08, unseen texels keep the benny05 maps with a feathered seam).
+
+### 🤖 Claude — 2026-11-17T15:40:38.210Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/bake08.py", "content": "\"\"\"benny08 bake: APPROVED Screen-08 pixels -> albedo maps in each Benny part's own UV space.\nAdapted copy of line B's qa/pilot05/full_reference_match/benny/work/bake.py (read-only source, ccr-b0757dec-dj6l1o\n@99ab17b): same inverse post chain, same per-pixel least-squares calibration (radiance = albedo*E + S over the\nunclipped calibration renders), same strict part correspondence + colour-family clean-up, bilinear splat, push-pull.\nDifferences for 08:\n  * refere …[+9717 chars]`
+
+### 🧑 User — 2026-11-17T15:40:38.252Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/qa/match/08/benny08/work/bake08.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:40:46.354Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && time python3 -I qa/match/08/benny08/work/bake08.py $S/p1 $S/b1 2>&1 | python3 -c \"\nimport json,sys; d=json.load(sys.stdin)\nfor k,v in d.items():\n  if isinstance(v,dict): print(k, {kk:vv for kk,vv in v.items()})\n\"", "description": "Run first 08 bake into scratch", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T15:40:52.670Z
+
+> ↩︎ result: body {'px': 26721, 'seen_texels': 24918, 'rejected_texels': 1440, 'weight_gt_0': 48052, 'weight_1': 29528, 'share_of_map_from_08': 0.0709, 'clipped_share': 0.0, 'median_albedo_08': [0.405, 0.124, 0.278], 'median_albedo_05_same_texels': [0.434, 0.15, 0.296], 'ratio_08_over_05': [0.971, 0.822, 0.904]}
+> crown {'px': 5586, 'seen_texels': 8829, 'rejected_texels': 314, 'weight_gt_0': 34525, 'weight_1': 19087, 'share_of_map_from_08': 0.0999, 'clipped_share': 0.0, 'median_albedo_08': [0.188, 0.142, 0.211], 'median_albedo_05_same_texels': [0.162, 0.102, 0.223], 'ratio_08_over_05': [0.89, 0.567, 0.917]}
+> brim {'px': 3831, 'seen_texels': 6528, 'rejected_texels': 0, 'weight_gt_0': 19351, 'weight_1': 13496, 'share_of_map_from_08': 0.1228, 'clipped_share': 0.0, 'median_albedo_08': [0.047, 0.011, 0.203], 'median_albedo_05_same_texels': [0.065, 0.02, 0.227], 'ratio_08_over_05': [0.841, 0.54, 0.944]}
+> pom {'px': 4099, 'seen_texels': 5179, 'rejected_texels': 584, 'weight_gt_0': 11218, 'weight_1': 2355, 'share_of_map_from_08': 0.039, 'clipped_share': 0.0, 'median_albedo_08': [0.053, 0.014, 0.235], 'median_albedo_05_same_texels': [0.12, 0.033, 0.314], 'ratio_08_over_05': [0.809, 0.852, 0.906]}
+> armL {'px' …[+906 chars]
+
+### 🤖 Claude — 2026-11-17T15:41:15.537Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/src/characters/benny/benny05.ts", "old_string": "// ------------------------------------------------------------------ baked maps\nconst T = (f: string) => new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href;", "new_string": "// ------------------------------------------------------------------ baked maps\n/** URL / build-time switch value (`?key=…`, or VITE_RAINBOW_Q05 in packaged builds); null when absent */\nconst qv = (key: string): string | null => {\n  try {\n    if (type …[+1037 chars]`
+
+### 🧑 User — 2026-11-17T15:41:15.582Z
+
+> ↩︎ result: The file /home/user/rainbow-/.claude/worktrees/agent-a9c9cb8a4ff19db1f/src/characters/benny/benny05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+

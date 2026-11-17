@@ -1265,3 +1265,285 @@ Let me write the timeline script that runs either the current source (Vite) or a
 > a85ccf9 11-17 13:47 Screen 08 ?match08=1: approved picture's coins placed where the picture shows them (scenery 96.8%); Flow video story recorded in docs/FLOW_VIDEO.md
 > 61a5e36 11-17 13:42 Screen 08 ?match08= …[+4138 chars]
 
+### 🤖 Claude — 2026-11-17T15:38:52.126Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-17T15:38:52.135Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-17T15:38:55.834Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nfor l in open('qa/gameplay_video/scan/default.log'):\n    try: r=json.loads(l)\n    except: continue\n    if r['t']<9.5: continue\n    print(r['t'], r['mode'], r['stage'], r.get('near2'), r.get('near05'), (r.get('top') or {}).get('obj','')[:60], (r.get('top') or {}).get('share'), r.get('bennyHidden'), r.get('inside'))\nEOF", "description": "Summarise scan rows after 9.5 s"}`
+
+### 🧑 User — 2026-11-17T15:38:55.878Z
+
+> ↩︎ result: 9.5 intro 02 0.5673 0 Benny 0.5673 0.073 0
+> 10 intro 02 0.7729 0 Benny 0.7727 0.056 0
+> 10.5 intro 02 0.3451 0 Benny 0.3328 0.069 0
+> 11 intro 02 0.1836 0 water_drumA_surface < water_drumA < water_system 0.1791 1 0
+> 11.5 intro 02 0.5518 0 water_drumA_surface < water_drumA < water_system 0.5518 1 0
+> 12 intro 02 0.6294 0.031 water_drumA_swirl < water_drumA < water_system 0.4158 0.454 0
+> 12.5 intro 02 0 0  None 0.06 0
+> 13 intro 02 0.0961 0 water_ribbon < water_system 0.0856 0.074 0
+> 13.5 intro 02 0.1659 0 Mesh(MeshStandardMaterial#e94ad0,1369v) < zone_drumA < washe 0.1141 0.041 0
+> 14 ride 03 0.1292 0 water_ribbon < water_system 0.1239 0.101 0
+> 14.5 ride 03 0 0  None 1 1
+> 15 ride 03 0 0  None 0.081 0
+> 15.5 ride 03 0 0  None 0.003 0
+> 16 ride 03 0 0  None 0.001 0
+> 16.5 ride 03 0.0901 0 water_whirlpool < water_system 0.0901 0.034 0
+> 17 ride 03 0.0115 0 water_whirlpool < water_system 0.0115 0.169 0
+> 17.5 ride 04 0 0  None 1 0
+> 18 ride 04 0.0345 0 foam_berm < foam_banks < water_system 0.0345 0.662 0
+> 18.5 ride 04 0 0  None 0.033 0
+> 19 ride 04 0 0  None 0.038 0
+> 19.5 ride 04 0 0  None 0.026 0
+> 20 ride 04 0 0  None 0.016 0
+> 20.5 ride 05 0 0  None 0.006 0
+> 21 ride 05 0 0  None 0.002 0
+> 21.5 ride 05 0.0112 0 tube05_near …[+377 chars]
+
+### 🤖 Claude — 2026-11-17T15:38:58.455Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_029_t14.50.png"}`
+
+### 🧑 User — 2026-11-17T15:38:58.471Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:38:59.161Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_035_t17.50.png"}`
+
+### 🧑 User — 2026-11-17T15:38:59.177Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:38:59.820Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_036_t18.00.png"}`
+
+### 🧑 User — 2026-11-17T15:38:59.849Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:39:09.130Z
+
+> 🔧 **Monitor** `{"command": "until [ -f /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/probe.json ]; do sleep 5; done; echo scan-finished; tail -c 300 /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default.log", "description": "default scan completion", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-17T15:39:09.170Z
+
+> ↩︎ result: Monitor started (task bbe9hhsdb, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-17T15:39:16.859Z
+
+> 🔧 **Bash** `{"command": "grep -n \"whirlGroup\\|rimR\\|const rim\\|basin\" src/vfx/foam.ts | head -30; grep -n \"basin\" src/world/course.ts | head -20", "description": "Inspect whirlpool foam and basin definitions"}`
+
+### 🧑 User — 2026-11-17T15:39:16.902Z
+
+> ↩︎ result: 460:  whirlGroup: THREE.Group;
+> 523:function rimR(ds: number): number {
+> 772:  const whirlGroup = new THREE.Group();
+> 773:  whirlGroup.name = 'foam_whirlpool';
+> 774:  const b = WORLD.basin;
+> 775:  whirlGroup.position.set(b.center.x, 0, b.center.z);
+> 784:      const r = b.rimRadius - 0.7 + (rand() - 0.4) * 1.3;
+> 792:    const r = b.rimRadius - 0.4 + (rand() - 0.5) * 0.6;
+> 800:    const r = 3.0 + rand() * (b.rimRadius - 3.6);
+> 806:  build(wl, whirlGroup, st03.s0 - 30, st04.s0 + 25);
+> 807:  group.add(whirlGroup);
+> 882:  const rim05 = new THREE.InstancedMesh(rafts.geometry, bub.mat, Math.max(1, imp05.length));
+> 976:          pxIn = 214 + (rimR(ds) * (0.85 + 0.3 * lump) - 214) * kz;
+> 1056:        const rimK = side > 0 ? sm(1.4, 2.6, ds) : 0;
+> 1084:    whirlGroup,
+> 1108:      // rotate whirlpool foam about the basin axis with the swirl (θ decreasing = course direction)
+> 1109:      whirlGroup.rotation.y = -time * 0.45 * ((Math.PI * 2) / 3);
+> 5: * The route starts inside Drum A (scene 01/02), drains through a chute into the whirlpool basin (03),
+> 30:  /** enclosing tube radius (0 = open environment such as a drum/basin/chamber) */
+> 67:  basin: { center: new THREE.Vector3(2, -16, -19), rimRadius: 11.5, rimY:  …[+263 chars]
+
+### 🤖 Claude — 2026-11-17T15:39:26.954Z
+
+> 🔧 **Bash** `{"command": "sed -n 60,140p src/world/environment.ts", "description": "Read drum A / chute environment construction"}`
+
+### 🧑 User — 2026-11-17T15:39:26.979Z
+
+> ↩︎ result: const drumLen = dA.zDoor - dA.zBack;
+>   const drumGeo = new THREE.CylinderGeometry(dA.radius, dA.radius, drumLen, 96, 24, true);
+>   drumGeo.rotateX(Math.PI / 2);
+>   drumGeo.translate(0, 0, (dA.zDoor + dA.zBack) / 2);
+>   const drumMat = perforatedMetal({ color: '#f04fc8', emissive: '#c22aa6', emissiveIntensity: 0.3, slot: 0, repeatU: 54, repeatV: 15, holeSize: 0.44, streaks: 0.15 });
+>   zones.drumA.add(new THREE.Mesh(drumGeo, drumMat));
+>   // back wall with the drain opening
+>   const backShape = new THREE.Shape();
+>   backShape.absarc(0, 0, dA.radius, 0, Math.PI * 2, false);
+>   const drainHole = new THREE.Path();
+>   drainHole.absarc(-0.3, -3.05, 1.85, 0, Math.PI * 2, true);
+>   backShape.holes.push(drainHole);
+>   const backGeo = new THREE.ShapeGeometry(backShape, 48);
+>   backGeo.translate(0, 0, dA.zBack);
+>   const backMat = perforatedMetal({ color: '#e544c4', slot: 0, repeatU: 9, repeatV: 9, holeSize: 0.4, side: THREE.DoubleSide, streaks: 0 });
+>   zones.drumA.add(new THREE.Mesh(backGeo, backMat));
+>   // front wall annulus
+>   const frontShape = new THREE.Shape();
+>   frontShape.absarc(0, 0, dA.radius, 0, Math.PI * 2, false);
+>   const doorHole = new THREE.Path();
+>   doorHole.absarc(0, 0, dA.doorRadius, 0, M …[+3273 chars]
+
+### 🤖 Claude — 2026-11-17T15:39:37.401Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/tools/camclear/sheet.py", "content": "#!/usr/bin/env python3\n\"\"\"Contact sheet of probe frames with labels (game time, stage, near-zone share, Benny hidden share).\nusage: python3 -I tools/camclear/sheet.py <probe.json> <out.png> [t0 t1] [--cols=N] [--label=TEXT]\n\"\"\"\nimport json\nimport sys\nfrom PIL import Image, ImageDraw, ImageFont\n\nargs = [a for a in sys.argv[1:] if not a.startswith('--')]\nopts = dict(a[2:].split('=', 1) for a in sys.argv[1:] if a.startswith('--') and '=' in a)\nprobe, out = args[0], ar …[+1532 chars]`
+
+### 🧑 User — 2026-11-17T15:39:37.432Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/tools/camclear/sheet.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:39:39.924Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nfor l in open('qa/gameplay_video/scan/default.log'):\n    try: r=json.loads(l)\n    except: continue\n    if r['t']<24: continue\n    print(r['t'], r['mode'], r['stage'], r.get('near2'), r.get('near05'), (r.get('top') or {}).get('obj','')[:60], (r.get('top') or {}).get('share'), r.get('bennyHidden'), r.get('inside'))\nEOF", "description": "Summarise scan rows after 24 s"}`
+
+### 🧑 User — 2026-11-17T15:39:39.977Z
+
+> ↩︎ result: 24 ride 05 0.0604 0 tube05_near_frame < zone_tubes < washer_world 0.0604 0.002 0
+> 24.5 ride 05 0.0604 0 tube05_near_frame < zone_tubes < washer_world 0.0604 0.018 0
+> 25 ride 05 0 0  None 0.004 0
+> 25.5 ride 05 0 0  None 0.01 0
+> 26 ride 05 0 0  None 0.018 0
+> 26.5 ride 05 0 0  None 0.01 0
+> 27 ride 05 0 0  None 0.003 0
+> 27.5 ride 06 0 0  None 0.006 0
+> 28 ride 06 0 0  None 0.357 0
+> 28.5 ride 06 0 0  None 0.029 0
+> 29 ride 06 0 0  None 0.075 0
+> 29.5 ride 06 0 0  None 0.13 0
+> 30 ride 06 0 0  None 0.094 0
+> 30.5 ride 06 0 0  None 0.067 0
+> 31 ride 06 0 0  None 0.206 0
+> 31.5 ride 06 0.9989 0.6125 Mesh(MeshStandardMaterial#ffc890,1552v) < zone_tubes < washe 0.9989 1 0
+> 32 ride 06 0 0  None 0.428 0
+> 32.5 ride 07 0.0406 0 Mesh(MeshStandardMaterial#ffc890,1552v) < zone_tubes < washe 0.0406 0.001 0
+> 33 ride 07 0 0  None 0.017 0
+> 33.5 ride 07 0 0  None 0.015 0
+> 34 ride 07 0 0  None 0.01 0
+> 34.5 ride 07 0 0  None 0.002 0
+> 35 ride 07 0 0  None 0.054 0
+> 35.5 ride 07 0 0  None 0.009 0
+> 36 ride 07 0 0  None 0.005 0
+> 36.5 ride 07 0 0  None 0.012 0
+> 37 ride 07 0 0  None 0.006 0
+
+### 🤖 Claude — 2026-11-17T15:39:42.968Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_063_t31.50.png"}`
+
+### 🧑 User — 2026-11-17T15:39:42.987Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:39:43.681Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_064_t32.00.png"}`
+
+### 🧑 User — 2026-11-17T15:39:43.697Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:39:44.336Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_056_t28.00.png"}`
+
+### 🧑 User — 2026-11-17T15:39:44.360Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:40:09.023Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_049_t24.50.png"}`
+
+### 🧑 User — 2026-11-17T15:40:09.044Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:40:09.624Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/.claude/worktrees/agent-aab9f1d4212f4d68f/qa/gameplay_video/scan/default/f_052_t26.00.png"}`
+
+### 🧑 User — 2026-11-17T15:40:09.645Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:40:24.247Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nfor l in open('qa/gameplay_video/scan/default.log'):\n    try: r=json.loads(l)\n    except: continue\n    if r['t']<37.5: continue\n    print(r['t'], r['mode'], r['stage'], r.get('near2'), r.get('near05'), (r.get('top') or {}).get('obj','')[:60], (r.get('top') or {}).get('share'), r.get('bennyHidden'), r.get('inside'))\nEOF", "description": "Summarise scan rows after 37.5 s"}`
+
+### 🧑 User — 2026-11-17T15:40:24.310Z
+
+> ↩︎ result: 37.5 ride 07 0 0  None 0.007 0
+> 38 ride 07 0 0  None 0.127 0
+> 38.5 ride 07 0 0  None 0.105 0
+> 39 ride 07 0 0  None 0.244 0
+> 39.5 ride 07 0 0  None 0.023 0
+> 40 ride 07 0 0  None 0.643 0
+> 40.5 ride 07 0 0  None 0.015 0
+> 41 ride 07 0 0  None 0.409 0
+> 41.5 ride 07 0 0  None 0.004 0
+> 42 ride 07 1 0.9555 Mesh(MeshStandardMaterial#ffc890,1552v) < zone_tubes < washe 1 1 0
+> 42.5 ride 07 0 0  None 0.013 0
+> 43 ride 07 0 0  None 0.045 0
+> 43.5 ride 07 0.9785 0 Mesh(MeshStandardMaterial#ffc890,1552v) < zone_tubes < washe 0.9785 1 0
+> 44 ride 07 0 0  None 0.001 0
+> 44.5 ride 08 0 0  None 0.004 0
+> 45 ride 08 0 0  None 0.063 0
+> 45.5 ride 08 0 0  None 0.019 0
+> 46 ride 09 0 0  None 0.016 0
+> 46.5 ride 09 0.0174 0 spray < water_system 0.0174 0.003 0
+> 47 ride 09 0 0  None 0.034 0
+> 47.5 ride 09 0 0  None 0.004 0
+> 48 ride 10 0 0  None 0.127 0
+> 48.5 ride 10 0 0  None 0.037 0
+> 49 ride 10 0 0  None 0.474 0
+> 49.5 ride 10 0 0  None 0.033 0
+> 50 outro 11 0 0  None 0.055 0
+> 50.5 outro 11 0 0  None None 0
+> 51 outro 11 0 0  None None 0
+> 51.5 outro 11 0 0  None None 0
+> 52 outro 11 0 0  None None 0
+> 52.5 outro 11 0 0  None None 0
+> 53 outro 11 0 0  None None 0
+> 53.5 outro 11 0 0  None None 0
+> 54 end 11 0 0  None None 0
+
+### 🤖 Claude — 2026-11-17T15:40:35.687Z
+
+> 🔧 **Bash** `{"command": "timeout 3000 node tools/camclear/probe.mjs --q=match08=1 --t0=12 --t1=54 --dt=0.5 --out=qa/gameplay_video/scan/match08 > qa/gameplay_video/scan/match08.log 2>&1; echo done", "description": "Obstruction scan of match08 build 12-54 s", "timeout": 3100000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T15:40:35.717Z
+
+> ↩︎ result: Command running in background with ID: byqr0rfhb. Output is being written to: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/tasks/byqr0rfhb.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T15:40:38.990Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nd=json.load(open('qa/gameplay_video/scan/default/probe.json'))\nfor r in d['rows']:\n    b=r.get('benny') or {}\n    if r['t'] in (14.0,14.5,15,16.5,17,17.5,18,28,31,31.5,32,39,40,41,42,43.5,45,48,49) :\n        print(r['t'], r['stage'], 'near', r.get('nearBy'), '\\n   occ', b.get('occluders'), 'hid', b.get('hidden'), 'fgOnB', b.get('fgOnBenny'), 'depth', b.get('depth'), '\\n   water', b.get('bottomAboveSurface'), b.get('centreAboveSurface'), b.get('surfaceObj'), '\\n   inside', r.get('inside'))\nEOF", "description": "Print obstruction details for k …[+11 chars]`
+
+### 🧑 User — 2026-11-17T15:40:39.042Z
+
+> ↩︎ result: 14 03 near [{'obj': 'water_ribbon < water_system', 'share': 0.1239}, {'obj': 'foam_berm < foam_banks < water_system', 'share': 0.0055}, {'obj': 'Mesh(ShaderMaterial,240v) < foam_banks < water_system', 'share': 0.0029}] 
+>    occ [] hid 0.101 fgOnB 0.005 depth 6.8 
+>    water -0.46 0.438 water_ribbon < water_system 
+>    inside []
+> 14.5 03 near [] 
+>    occ [{'obj': 'foam_berm < foam_banks < water_system', 'onBenny': 1}, {'obj': 'water_ribbon < water_system', 'onBenny': 0.345}, {'obj': 'rider_splash < water_system', 'onBenny': 0.041}] hid 1 fgOnB 1 depth 7.56 
+>    water -1.495 -0.478 water_ribbon < water_system 
+>    inside [{'dir': [-0.58, -0.58, -0.58], 'd': 2.42, 'obj': 'Mesh < foam_banks < water_system'}]
+> 15 03 near [] 
+>    occ [{'obj': 'rider_splash < water_system', 'onBenny': 0.028}] hid 0.081 fgOnB 0.028 depth 7.18 
+>    water -1.773 -0.769 water_ribbon < water_system 
+>    inside []
+> 16.5 03 near [{'obj': 'water_whirlpool < water_system', 'share': 0.0901}, {'obj': 'Mesh(MeshStandardMaterial#e04fd0,3977v) < zone_basin < washer_world', 'share': 0.0022}] 
+>    occ [] hid 0.034 fgOnB 0.002 depth 7.28 
+>    water -1.76 -0.789 water_ribbon < water_system 
+>    inside []
+> 17 03 near [{'obj': 'water_whirlpo …[+4293 chars]
+

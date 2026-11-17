@@ -588,8 +588,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 12444,
-   "sha256": "15ab55cfc56c157f028ad92e6d819a1c90f6b597ed248255395e0c3e2b2a60c8"
+   "bytes": 14237,
+   "sha256": "d5f2cfbf73105f508d799ff7c70e38afb353c8bc5bccf982c02acfd32644bf70"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -609,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10190,
-   "sha256": "b46616ca108c7c3b09f93584e8694266169ee60de2e1fa001b53d09829ef5217"
+   "sha256": "bd045523a9afef15de233542e3538dea5372fa8fb8d0db708114b3c21acc0970"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -710,6 +710,11 @@
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
    "bytes": 13321,
    "sha256": "8fd03d3f7961851952857e8d4d4c44a9ad8fff3621d72ec84ab0b0f2764a7b58"
+  },
+  {
+   "path": "docs/PARALLEL_PROGRESS.md",
+   "bytes": 4787,
+   "sha256": "5ecd90bacf591d5d8c6c9efeef70eaaaa4bfef992900e3050f75656927f04c33"
   },
   {
    "path": "docs/characters/benny.md",
