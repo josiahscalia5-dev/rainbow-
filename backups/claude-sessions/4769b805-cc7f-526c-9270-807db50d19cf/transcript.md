@@ -710,3 +710,266 @@ Camera is bit-identical, so the change may be run-to-run noise in Benny's fur/sp
 > 648	        for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
 > 649	        rideCam. …[+463 chars]
 
+### 🤖 Claude — 2026-11-17T16:56:24.826Z
+
+> 🔧 **Bash** `{"command": "grep -n \"camera\\b\\|camera\\.\\|camera)\" src/game/Game.ts | sed -n 1,80p | grep -v \"^\\s*//\" | head -50", "description": "Find camera-dependent simulation code"}`
+
+### 🧑 User — 2026-11-17T16:56:24.869Z
+
+> ↩︎ result: 61:  const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+> 63:  composer.addPass(new RenderPass(scene, camera));
+> 90:    camera.aspect = w / h;
+> 91:    camera.updateProjectionMatrix();
+> 119:  // riding; respawn re-frames the camera at once instead of flying it back through the tube. Off: nothing is created.
+> 246:      benny.root.quaternion.setFromEuler(new THREE.Euler(0, Math.PI + 0.25, 0)); // facing the camera (inside drum)
+> 265:      // tumble = rolling cartwheels seen by the camera: face the lens, roll around the view axis
+> 294:      camera.position.set(0.85, -1.05, -6.05);
+> 295:      camera.up.set(0, 1, 0);
+> 296:      camera.lookAt(-0.05, -0.2, dA.zDoor);
+> 303:      camera.position.copy(p01.lerp(c2.pos, k2));
+> 304:      camera.up.set(0, 1, 0);
+> 305:      camera.lookAt(l01.lerp(c2.look, k2));
+> 308:      // chute chase cam, blending into the ride camera framing for 03
+> 314:      camera.position.lerp(back.lerp(rp, kk * kk), 0.15);
+> 315:      camera.up.set(0, 1, 0);
+> 316:      camera.lookAt(look.lerp(rt, kk * kk));
+> 322:  /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */
+> 337:    if (Math.abs(camera.fov - f) > 0.01) { camera.fov = f; camera.u …[+2666 chars]
+
+### 🤖 Claude — 2026-11-17T16:56:39.222Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"update(time: number, dt: number, s: number, cam\\|cam\\.\\(position\\|quaternion\\|matrixWorld\\)\" src/vfx src/game/modules.ts 2>/dev/null | head -20", "description": "Find camera use in water update"}`
+
+### 🧑 User — 2026-11-17T16:56:39.268Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:56:41.237Z
+
+> 🔧 **Grep** `{"pattern": "update\\(\\s*time[^)]*camera|camera\\.position|camera\\.quaternion|camera\\.getWorld", "path": "/home/user/rainbow-/src", "output_mode": "content", "glob": "!game/Game.ts"}`
+
+### 🧑 User — 2026-11-17T16:56:41.268Z
+
+> ↩︎ result: src/game/modules.ts:12:  update(time: number, dt: number, focusS: number, camera: THREE.Camera): void;
+> src/vfx/foam.ts:471:  update(time: number, dt: number, focusS: number, outro?: number, camera?: THREE.Camera): void;
+> src/vfx/foam.ts:1097:    update(time, dt, focusS, outro = 0, camera) {
+> src/vfx/index.ts:7: *   water.update(time, dt, bennyS, camera);
+> src/vfx/index.ts:44:  update(time: number, dt: number, focusS: number, camera: THREE.Camera): void;
+> src/vfx/index.ts:172:    update(time, dt, focusS, camera) {
+> src/vfx/index.ts:195:      foam.update(time, dt, focusS, controls.outro, camera);
+> src/vfx/index.ts:199:      bubbles.update(time, dt, focusS, camera, (1 - 0.7 * controls.outro) * bub05);
+> src/vfx/bubbles.ts:139:  update(time: number, dt: number, focusS: number, camera: THREE.Camera, density?: number): void;
+> src/vfx/bubbles.ts:378:    update(time, dt, focusS, camera, density = 1) {
+> src/vfx/bubbles.ts:386:        camera.getWorldPosition(view.pos);
+> src/vfx/bubbles.ts:387:        camera.getWorldDirection(view.dir);
+
+### 🤖 Claude — 2026-11-17T16:56:54.150Z
+
+The tiny 08 difference comes from the floating soap bubbles, which spawn relative to the view during the test tool's short lead-in. Proving that by capturing with the water effects hidden.
+
+### 🤖 Claude — 2026-11-17T16:56:56.499Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad; node scripts/capture.mjs 08 --q=match08=1\\&hide=water --out=$S/px/hw0 >/dev/null 2>&1; node scripts/capture.mjs 08 --q=match08=1\\&camclear=1\\&hide=water --out=$S/px/hw1 >/dev/null 2>&1; python3 -I $S/pxdiff.py $S/px/hw0/08.png $S/px/hw1/08.png", "description": "Prove diff is from water/bubbles only", "timeout": 400000}`
+
+### 🧑 User — 2026-11-17T16:57:23.171Z
+
+> ↩︎ result: hw1/08.png: 57948 px different
+
+### 🤖 Claude — 2026-11-17T16:57:27.765Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/hw0/08.png').convert('RGB')).astype(int);b=np.asarray(Image.open('$S/hw1/08.png').convert('RGB')).astype(int)\nm=np.abs(a-b).max(2);ys,xs=np.nonzero(m);print(ys.min(),ys.max(),xs.min(),xs.max(),m.max(),(m>5).sum())\nEOF\ngrep -n \"rideCam\\.\\(pos\\|target\\)\\|camera.position\" src/game/Game.ts src/characters/benny/*.ts 2>/dev/null | head", "description": "Locate diff with water hidden"}`
+
+### 🧑 User — 2026-11-17T16:57:28.167Z
+
+> ↩︎ result: 108 1299 98 765 12 14
+> src/game/Game.ts:294:      camera.position.set(0.85, -1.05, -6.05);
+> src/game/Game.ts:303:      camera.position.copy(p01.lerp(c2.pos, k2));
+> src/game/Game.ts:314:      camera.position.lerp(back.lerp(rp, kk * kk), 0.15);
+> src/game/Game.ts:347:    rideCam.pos.copy(camera.position);
+> src/game/Game.ts:348:    rideCam.target.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(10));
+> src/game/Game.ts:468:    camera.position.copy(rp.lerp(camPos, k));
+> src/game/Game.ts:557:    fill.position.copy(camera.position);
+> src/game/Game.ts:558:    sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+> src/game/Game.ts:678:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+> src/game/Game.ts:709:      return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam …[+20 chars]
+
+### 🤖 Claude — 2026-11-17T16:57:37.816Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/hw0/08.png').convert('RGB')).astype(int);b=np.asarray(Image.open('$S/hw1/08.png').convert('RGB')).astype(int)\nm=np.abs(a-b).max(2)\nim=np.concatenate([a,np.stack([np.clip(m*40,0,255)]*3,2)],1).astype('uint8')\nImage.fromarray(im).resize((864,768)).save('$S/hw_diff.png')\nEOF", "description": "Side-by-side diff map with water hidden"}`
+
+### 🧑 User — 2026-11-17T16:57:38.490Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T16:57:39.891Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/hw_diff.png"}`
+
+### 🧑 User — 2026-11-17T16:57:39.922Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:57:44.167Z
+
+> 🔧 **Bash** `{"command": "grep -n \"rideCam\\.\\|b08Rest\\|m08\\.\\(splash\\|update\\|tick\\)\" src/game/Game.ts | head -30", "description": "Find rideCam and Benny-08 state uses"}`
+
+### 🧑 User — 2026-11-17T16:57:44.205Z
+
+> ↩︎ result: 109:  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+> 115:  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
+> 130:  rideCam.axis = env.tubeAxis;
+> 313:      rideCam.desired(Math.max(course.stage('03').s0, sB), 0, rp, rt, ru);
+> 347:    rideCam.pos.copy(camera.position);
+> 348:    rideCam.target.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(10));
+> 349:    rideCam.fov = camera.fov;
+> 403:    rideCam.update(dt, st.s, st.lat, camera, camSnap);
+> 467:    rideCam.desired(sEnd, 0, rp, rt, ru);
+> 541:    if (m08 && b08 && b08Rest) {
+> 544:      b08.body?.scale.set(b08Rest.body.x * bx, b08Rest.body.y * by, b08Rest.body.z * bz);
+> 546:      b08.hat?.scale.set(b08Rest.hat * hk / bx, b08Rest.hat * hk / by, b08Rest.hat * hk / bz);
+> 549:        b08.aux.position.copy(b08Rest.pos).add(off);
+> 553:      cm?.color.copy(b08Rest.crown);
+> 554:      m08.spla …[+451 chars]
+
+### 🤖 Claude — 2026-11-17T16:57:46.815Z
+
+> 🔧 **Bash** `{"command": "grep -n \"benny\\.\\(update\\|tick\\|animate\\)\\|coins\\.update\\|hud\\.update\" src/game/Game.ts | head; grep -rn \"camera\\|Camera\" src/characters/benny/*.ts | grep -v \"^\\s*//\" | head", "description": "Check Benny update and camera dependence"}`
+
+### 🧑 User — 2026-11-17T16:57:46.856Z
+
+> ↩︎ result: 247:      benny.update(dt, { swim: 0, steer: 0, speed: 0, time: st.clock });
+> 272:      benny.update(dt, { swim: 0.4, steer: 0, speed: 8, time: st.clock, tumble: tumble < 0.99 });
+> 385:    const got = coins.update(st.clock, dt, st.s, st.lat);
+> 398:    benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
+> 438:    benny.update(dt, { swim: 0.2, steer: 0, speed: 2, time: st.clock });
+> src/characters/benny/benny-lab.ts:6: * views=game      → the stage-05 ride camera exactly as in Game/cameraRig (back 6.4, up 4.1, look 18 ahead
+> src/characters/benny/benny-lab.ts:7: *                   1.8 up, fov 62, 9:16) + a lower reference-like rear camera + rear 3/4 + front, with an
+> src/characters/benny/benny-lab.ts:38:  /** explicit camera (Benny root at origin, faces +Z); overrides yaw/pitch/dist */
+> src/characters/benny/benny-lab.ts:54:          ? // proportion check: rear views at the ride height (lifted) at 12° / 18° / 24° / 28° camera elevation,
+> src/characters/benny/benny-lab.ts:59:          ? // wave 4: ONE full-size 864×1536 frame with the live stage-05 camera relative to Benny's root, taken
+> src/characters/benny/benny-lab.ts:74:              // stage 05 ride camera (cameraRig ST …[+538 chars]
+
+### 🤖 Claude — 2026-11-17T16:57:50.493Z
+
+Narrowing down the last tiny 08 difference (looking at what the view-follow keeps between frames).
+
+### 🤖 Claude — 2026-11-17T16:57:51.103Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/cameraRig.ts", "offset": 235, "limit": 30}`
+
+### 🧑 User — 2026-11-17T16:57:51.130Z
+
+> ↩︎ result: 235	  update(dt: number, s: number, lat: number, cam: THREE.PerspectiveCamera, snap = false) {
+> 236	    const dp = new THREE.Vector3(), dt3 = new THREE.Vector3(), du = new THREE.Vector3();
+> 237	    const p = this.desired(s, lat, dp, dt3, du);
+> 238	    const k = snap || !this.init ? 1 : 1 - Math.exp(-dt * 7);
+> 239	    const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
+> 240	    this.pos.lerp(dp, k);
+> 241	    this.target.lerp(dt3, kt);
+> 242	    this.up.lerp(du, kt).normalize();
+> 243	    this.fov += (p.fov - this.fov) * (snap || !this.init ? 1 : Math.min(1, dt * 3));
+> 244	    this.init = true;
+> 245	    cam.position.copy(this.pos);
+> 246	    cam.up.copy(this.up);
+> 247	    cam.lookAt(this.target);
+> 248	    if (Math.abs(cam.fov - this.fov) > 0.01) { cam.fov = this.fov; cam.updateProjectionMatrix(); }
+> 249	  }
+> 250	}
+> 251
+
+### 🤖 Claude — 2026-11-17T16:58:00.845Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"camera\\|\\.sync(\" src/world/match08*.ts src/world/match08/ 2>/dev/null | grep -v \"^\\S*:\\s*\\*\\|//\" | head -15; sed -n 536,560p src/game/Game.ts", "description": "Check match08 for camera-dependent state"}`
+
+### 🧑 User — 2026-11-17T16:58:00.887Z
+
+> ↩︎ result: src/world/match08.ts:16:  camera: { matrixWorld: number[]; fov: number; size: [number, number] };
+> src/world/match08.ts:29:  /** the approved picture's splash ring around Benny (camera-facing card; Game places it at Benny + splashOffset) */
+> src/world/match08.ts:79:  float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
+> src/world/match08.ts:104:  const [W, H] = L.camera.size;
+> src/world/match08.ts:105:  const proj = new THREE.PerspectiveCamera(L.camera.fov, W / H, 0.2, 160);
+> src/world/match08.ts:106:  proj.matrixWorld.fromArray(L.camera.matrixWorld);
+>     if (m08 && (m08On || m08Applied)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+>       m08Applied = m08On;
+>     }
+>     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+>     if (m08 && b08 && b08Rest) {
+>       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
+>       const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];
+>       b08.body?.scale.set(b08Rest.body.x * bx, b08Rest.body.y * by, b08R …[+929 chars]
+
+### 🤖 Claude — 2026-11-17T16:58:12.734Z
+
+> 🔧 **Bash** `{"command": "grep -n \"hidden.has\\|hidden\\b\" src/game/Game.ts | head; grep -n \"scene.add\" src/vfx/index.ts | head", "description": "Check what hide= can hide"}`
+
+### 🧑 User — 2026-11-17T16:58:12.778Z
+
+> ↩︎ result: 3: *   intro  (01–02)  real-time cinematic: the girl drops the towel bundle (Benny hidden) into Drum A,
+> 7: *   outro  (11)     real-time victory cinematic: Benny is hidden under the towel; the SAME girl opens the
+> 123:  const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+> 124:  if (hidden.has('water')) water.group.visible = false;
+> 125:  if (hidden.has('coins')) coins.group.visible = false;
+> 126:  const zoneHidden = (k: string) => hidden.has(k);
+> 227:    // --- towel bundle flies from her hands into the drum, Benny hidden inside
+> 433:    // Benny finishes sliding under the tent and is hidden (still there, just unseen)
+> 5: *   scene.add(water.group);
+
+### 🤖 Claude — 2026-11-17T16:58:30.513Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad; cp src/game/Game.ts $S/Game.ts.bak; python3 - <<'EOF'\np='src/game/Game.ts';s=open(p).read()\na=\"    camClear?.update(camera, benny.root, st.mode === 'ride');\\n\"\ns=s.replace(a,a+\"    fill.position.copy(camera.position); sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));\\n\",1)\nopen(p,'w').write(s)\nEOF\nnode scripts/capture.mjs 08 --q=match08=1 --out=$S/px/fx0 >/dev/null 2>&1; node scripts/capture.mjs 08 --q=match08=1\\&camclear=1 --out=$S/px/fx1 >/dev/null 2>&1; …[+196 chars]`
+
+### 🧑 User — 2026-11-17T16:59:00.311Z
+
+> ↩︎ result: fx1/08.png: 14043 px different
+
+### 🤖 Claude — 2026-11-17T16:59:02.789Z
+
+> 🔧 **Bash** `{"command": "grep -n \"sun\\.\\|fill\\.\\|camera\\.\\(position\\|quaternion\\)\" src/game/Game.ts | grep -v \"^\\s*//\" | head -20", "description": "Find all per-frame camera-following placements"}`
+
+### 🧑 User — 2026-11-17T16:59:02.823Z
+
+> ↩︎ result: 55:  sun.position.set(0.3, 1, 0.45);
+> 57:  scene.add(sun.target);
+> 294:      camera.position.set(0.85, -1.05, -6.05);
+> 303:      camera.position.copy(p01.lerp(c2.pos, k2));
+> 314:      camera.position.lerp(back.lerp(rp, kk * kk), 0.15);
+> 347:    rideCam.pos.copy(camera.position);
+> 348:    rideCam.target.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(10));
+> 468:    camera.position.copy(rp.lerp(camPos, k));
+> 555:      if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+> 557:    fill.position.copy(camera.position);
+> 558:    sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+> 678:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+> 709:      return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), t …[+266 chars]
+
+### 🤖 Claude — 2026-11-17T16:59:08.448Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad; python3 - <<'EOF'\np='src/game/Game.ts';s=open(p).read()\na=\"    camClear?.update(camera, benny.root, st.mode === 'ride');\\n\"\ns=s.replace(a,a+\"    fill.position.copy(camera.position); sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10)); if (m08 && m08On) m08.splash.quaternion.copy(camera.quaternion);\\n\",1)\nopen(p,'w').write(s)\nEOF\nnode scripts/capture.mjs 08 --q=match08=1 --out=$S/px/fy0 >/dev/null 2>&1; node scripts/capture.mjs 08 --q=match08=1\\&camclear=1 --o …[+226 chars]`
+
+### 🧑 User — 2026-11-17T16:59:37.841Z
+
+> ↩︎ result: fy1/08.png: 0 px different
+
+### 🤖 Claude — 2026-11-17T16:59:47.275Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad; node scripts/capture.mjs 03 04 05 06 07 09 10 --q=camclear=1 --out=$S/px/head_cc >/dev/null 2>&1; for i in 03 04 05 06 07 09 10; do python3 -I $S/pxdiff.py $S/px/head_default/$i.png $S/px/head_cc/$i.png; done", "description": "Capture still views with camclear on", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:01:23.385Z
+
+> ↩︎ result: head_cc/03.png: 0 px different
+> head_cc/04.png: 315779 px different
+> head_cc/05.png: 0 px different
+> head_cc/06.png: 1277525 px different
+> head_cc/07.png: 0 px different
+> head_cc/09.png: 0 px different
+> head_cc/10.png: 2386 px different
+
+### 🤖 Claude — 2026-11-17T17:01:28.071Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px; python3 -I -c \"\nfrom PIL import Image\nfor i in ['04','06']:\n  a=Image.open('$S/head_default/'+i+'.png');b=Image.open('$S/head_cc/'+i+'.png')\n  w,h=a.size;im=Image.new('RGB',(w*2+10,h),'white');im.paste(a,(0,0));im.paste(b,(w+10,0));im.resize(((w*2+10)//3,h//3)).save('$S/cmp_'+i+'.png')\n\"", "description": "Side-by-side 04/06 default vs camclear"}`
+
+### 🧑 User — 2026-11-17T17:01:28.612Z
+
+> ↩︎ result: (Bash completed with no output)
+

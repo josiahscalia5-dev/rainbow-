@@ -1,49 +1,313 @@
 {
-  "when": "2026-11-17T16:55:54.127Z",
+  "when": "2026-11-17T16:59:47.919Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
-      "id": "08",
-      "file": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/m08_r2/08.png",
+      "id": "03",
+      "file": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_cc/03.png",
       "size": [
-        864,
+        727,
         1536
       ],
       "checkpoint": {
-        "stage": "08",
-        "s": 391.4265062048909,
-        "y": -113.11179297539425
+        "stage": "03",
+        "s": 48.49515264641385,
+        "y": -13.42545317847804
       },
       "state": {
         "mode": "ride",
-        "stage": "08",
-        "s": 391.427,
-        "lat": 0,
-        "coins": 2040,
+        "stage": "03",
+        "s": 48.495,
+        "lat": 0.3,
+        "coins": 1330,
         "hearts": 5,
         "paused": false,
-        "bennyY": -113.112,
+        "bennyY": -13.425,
         "bennyVisible": true,
         "cam": [
-          12.85,
-          -109.87,
-          -274.8
+          -0.36,
+          -8.77,
+          -19.15
         ]
       },
       "stats": {
-        "fps": 59.7,
-        "calls": 80,
-        "triangles": 398676,
-        "geometries": 108,
-        "textures": 55,
+        "fps": 60.2,
+        "calls": 95,
+        "triangles": 713386,
+        "geometries": 110,
+        "textures": 43,
         "modules": {
           "water": "vfx/index.ts",
           "benny": "assets/models/benny.glb",
           "girl": "assets/models/rainbow_girl.glb"
         },
-        "courseLength": 434.80128046909186,
-        "firstFrameCalls": 158,
-        "firstFrameTriangles": 399612
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 173,
+        "firstFrameTriangles": 714322
+      }
+    },
+    {
+      "id": "04",
+      "file": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_cc/04.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "04",
+        "s": 77.41308465825975,
+        "y": -21.89573584663209
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "04",
+        "s": 77.413,
+        "lat": 0,
+        "coins": 1330,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -21.896,
+        "bennyVisible": true,
+        "cam": [
+          0.72,
+          -14.48,
+          -15.82
+        ]
+      },
+      "stats": {
+        "fps": 60.4,
+        "calls": 97,
+        "triangles": 712274,
+        "geometries": 112,
+        "textures": 43,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 175,
+        "firstFrameTriangles": 713210
+      }
+    },
+    {
+      "id": "05",
+      "file": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_cc/05.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "05",
+        "s": 132.4383020282329,
+        "y": -41.348424102617486
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "05",
+        "s": 132.438,
+        "lat": 0,
+        "coins": 1420,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -41.348,
+        "bennyVisible": true,
+        "cam": [
+          1.92,
+          -37.94,
+          -68.28
+        ]
+      },
+      "stats": {
+        "fps": 60.1,
+        "calls": 86,
+        "triangles": 567415,
+        "geometries": 102,
+        "textures": 43,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 164,
+        "firstFrameTriangles": 568351
+      }
+    },
+    {
+      "id": "06",
+      "file": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_cc/06.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "06",
+        "s": 198.92412082521383,
+        "y": -37.45172218622444
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 198.924,
+        "lat": 0,
+        "coins": 1680,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -37.452,
+        "bennyVisible": true,
+        "cam": [
+          0.95,
+          -38.81,
+          -132.79
+        ]
+      },
+      "stats": {
+        "fps": 60.3,
+        "calls": 77,
+        "triangles": 579861,
+        "geometries": 95,
+        "textures": 43,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 155,
+        "firstFrameTriangles": 580797
+      }
+    },
+    {
+      "id": "07",
+      "file": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_cc/07.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 273.0571025358885,
+        "y": -49.65896042624035
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 273.057,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -49.659,
+        "bennyVisible": true,
+        "cam": [
+          10.93,
+          -45.6,
+          -195.35
+        ]
+      },
+      "stats": {
+        "fps": 61.6,
+        "calls": 181,
+        "triangles": 660599,
+        "geometries": 192,
+        "textures": 54,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 259,
+        "firstFrameTriangles": 661535
+      }
+    },
+    {
+      "id": "09",
+      "file": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_cc/09.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "09",
+        "s": 407.2896481881434,
+        "y": -113.21539341753795
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "09",
+        "s": 407.29,
+        "lat": 0,
+        "coins": 2280,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -113.215,
+        "bennyVisible": true,
+        "cam": [
+          10.82,
+          -109.92,
+          -291.09
+        ]
+      },
+      "stats": {
+        "fps": 60.3,
+        "calls": 309,
+        "triangles": 637447,
+        "geometries": 322,
+        "textures": 57,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 368,
+        "firstFrameTriangles": 638155
+      }
+    },
+    {
+      "id": "10",
+      "file": "/tmp/claude-0/-home-user-rainbow-/4769b805-cc7f-526c-9270-807db50d19cf/scratchpad/px/head_cc/10.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "10",
+        "s": 423.0175862766973,
+        "y": -112.83955253201734
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "10",
+        "s": 423.018,
+        "lat": 0,
+        "coins": 2500,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -112.84,
+        "bennyVisible": true,
+        "cam": [
+          10.55,
+          -110.15,
+          -306.89
+        ]
+      },
+      "stats": {
+        "fps": 60.2,
+        "calls": 282,
+        "triangles": 400383,
+        "geometries": 287,
+        "textures": 46,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 282,
+        "firstFrameTriangles": 400383
       }
     }
   ],
