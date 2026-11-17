@@ -1044,3 +1044,69 @@ Same copy, NEW vs OLD code: 0 px on 03 and 08. The earlier difference comes from
 
 > 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/oldtree; P=/home/user/rainbow-/qa/match/08/scenery/r7/proof; cd /home/user/rainbow- && git show 33b8f8b4:src/world/match08.ts > $O/src/world/match08.ts && git diff --quiet 33b8f8b4 HEAD -- src/world/course.ts src/game src/main.ts 2>/dev/null; rm -rf $P/def_old $P/copy_old01_a $P/copy_old01_b $P/copy_new_rerun; cd $O && timeout 2400 node scripts/capture.mjs --out=$P/def_start >/dev/null 2>&1; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB' …[+225 chars]`
 
+### 🧑 User — 2026-11-17T23:53:40.046Z
+
+> ↩︎ result: [('01', 693), ('02', 0), ('03', 70), ('04', 0), ('05', 0), ('06', 0), ('07', 0), ('08', 594), ('09', 0), ('10', 0), ('11', 634)]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:53:43.293Z
+
+Against the true start code, 03 shows 70 px and 08 shows 594 px. Checking whether that's run-to-run noise.
+
+### 🤖 Claude — 2026-11-17T23:53:46.495Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/oldtree; P=/home/user/rainbow-/qa/match/08/scenery/r7/proof; cd $O && timeout 1200 node scripts/capture.mjs 03 08 --out=$P/def_start_rerun >/dev/null 2>&1; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nfor f in ['03','08']:\n  a=L('$P/def_start/'+f+'.png'); b=L('$P/def_start_rerun/'+f+'.png'); n=L('$P/copy_new/'+f+'.png')\n  print(f,'start rerun',int((np.abs(a-b).max(2)>0).sum()),'rerun-vs-new',int((np.abs(b-n).max(2)>0). …[+84 chars]`
+
+### 🧑 User — 2026-11-17T23:54:07.489Z
+
+> ↩︎ result: 03 start rerun 70 rerun-vs-new 0
+> 08 start rerun 594 rerun-vs-new 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:54:16.647Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/08/scenery/STATUS.md'; s=open(p).read()\ns=s.replace(\"current code vs untouched copy of the start code: PROOF_DEFAULT\",\n\"same scratch copy (src/assets/scripts + symlinked node_modules), start code `33b8f8b4` (`r7/proof/def_start`, rerun `def_start_rerun`) vs new code (`r7/proof/copy_new`): **0 px on 02–10**. 01 and 11 differ by 693 / 634 px, and they differ by the same amounts between two runs of IDENTICAL code (01: 693, 11: 588), so that is capture noise. (A first 'old' set was discarded: it was taken from an autosave HEAD that already held my e …[+1031 chars]`
+
+### 🧑 User — 2026-11-17T23:54:20.246Z
+
+> ↩︎ result: 0
+> dafa37528630f833f938309e77bb0dee8695de34
+> dafa37528630f833f938309e77bb0dee8695de34	refs/heads/claude/rainbow-s08-scenery-c7
+> AUTOSAVE OK | branch claude/rainbow-s08-scenery-c7 | scheduler daemon | last verified backup 2026-11-17T23:53:24+00:00 (0.9 min ago) | local dafa375 remote dafa375 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T23:54:33.300Z
+
+The Screen 08 round-7 milestone is finished and pushed. Screen 08 now looks better while Benny is moving, but I'd rate it about **7 / 10** while swimming, not yet the 8.5 goal.
+
+**What changed.** Each fix is behind its own switch, and the normal game is unchanged.
+- **Ceiling slots (`m08seam`, kept at ×1.6):** before, the generated ceiling was a fine dense mesh, much smaller than the painted wall slots it meets. Now the slots are the same size as the painted chamber wall. ×2.2 was a little too coarse.
+- **Torn bottom edge (`m08sill`, new):** riding 3 u forward showed broken gold and blue slabs along the bottom of the screen. They came from the gold ring's lowest band staying too close to the camera. That frame now shows clean water at the bottom.
+- **Towel (`m08towel`, new):** when steering hard, a rectangle of door-window picture sat on top of the towel. That is gone; the window now runs cleanly behind the towel.
+- The second river you can see when steering hard right is the painted S-river's own near bend, which the coins follow. It isn't a copy, so I left it.
+
+**Approved view (whole picture within 20 colour levels):** 81.05 % before, 81.05 % now.
+- The swim fix and the ceiling fix change 0 px.
+- The bottom-edge fix changes 22,799 px in the bottom strip and lowers the whole-picture score by 0.01 %; side by side the two crops look the same.
+- The towel fix changes 6,328 px, and those pixels are closer to your approved picture.
+
+**Checks**
+- Type check passes.
+- Gameplay test: 8/8 checks pass, 91 coins collected, 2,240 at the end, 07→08 drop 61.31 u.
+- Continuity test passes (drop 61.19 u, no gaps between screens).
+- Normal game: 0 px changed on screens 02–10 compared with the code at session start. 01 and 11 change by a few hundred pixels even between two runs of the same code, so that is capture noise.
+- My parts change nothing on screens 04–07.
+
+**Moving rating (my own judgement, separate from the pixel numbers)**
+- Straight ahead: about 7.5 / 10.
+- Normal steering: about 7 / 10.
+- Hard steering: about 6 / 10. The water close to the camera is stretched and blurry, the nearest spouts are cut off at the screen edge, and the picture is tinted pink by the "heart lost" flash. That heart loss comes from the existing foam-wall rule, which I didn't change.
+
+**Next step:** sharper near-camera water while steering hard (the same method as `projnear05` on Screen 05), then the spouts' flat undersides.
+
+**Pictures** (separate full-size files):
+- APPROVED: `references/08_final_spin_chamber.png`
+- BEFORE: `qa/match/08/scenery/r6/R1_restored/`
+- NEW: `qa/match/08/scenery/r7/NEW/` (12 moving shots)
+
+Branch `claude/rainbow-s08-scenery-c7` @ `dafa37528630f833f938309e77bb0dee8695de34`, and GitHub has the same commit. The five-minute autosave reports OK with nothing uncommitted. I didn't recheck the full bootstrap report this session, so I'm not giving the full backup-verified report. Stopping here as the brief says.
+
