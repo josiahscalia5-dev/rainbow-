@@ -1322,3 +1322,22 @@ I'll read the brief first.
 > ban 112 [166.  21. 140.] [162.  29. 108.]
 > ban 114 [255. 234. 215.] [255. …[+1439 chars]
 
+### 🤖 Claude — 2026-11-17T00:21:54.056Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/hud/icon_bake.py", "content": "\"\"\"Screen 05 HUD (hud05): cut the four static HUD ICONS out of the approved picture (heart, white plus, coin, pause button)\nas RGBA sprites for src/ui/hud.ts. Live values (hearts \"5/5\", the coin counter, the level title) stay DOM text.\nEach sprite is a rectangle / circle of the approved pixels around the icon, measured on\nreferences/05_flow_into_the_current.png (864 x 1536). Inside the top bar the approved background is a flat purple\n(mean ~ (88, 2, 127), std ~5 levels), the same colour t …[+1869 chars]`
+
+### 🧑 User — 2026-11-17T00:21:54.226Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/hud/icon_bake.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:21:57.401Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I qa/pilot05/full_reference_match/hud/icon_bake.py", "description": "Bake HUD icon sprites from approved image"}`
+
+### 🧑 User — 2026-11-17T00:21:57.600Z
+
+> ↩︎ result: heart05 {'left': 60, 'top': 21, 'width': 94, 'height': 74}
+> plus05 {'left': 254, 'top': 28, 'width': 56, 'height': 49}
+> coin05 {'left': 375, 'top': 13, 'width': 90, 'height': 89}
+> pause05 {'left': 727, 'top': 9, 'width': 96, 'height': 96}
+

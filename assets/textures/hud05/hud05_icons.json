@@ -1,0 +1,26 @@
+{
+ "heart05": {
+  "left": 60,
+  "top": 21,
+  "width": 94,
+  "height": 74
+ },
+ "plus05": {
+  "left": 254,
+  "top": 28,
+  "width": 56,
+  "height": 49
+ },
+ "coin05": {
+  "left": 375,
+  "top": 13,
+  "width": 90,
+  "height": 89
+ },
+ "pause05": {
+  "left": 727,
+  "top": 9,
+  "width": 96,
+  "height": 96
+ }
+}

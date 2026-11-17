@@ -392,6 +392,31 @@
    "sha256": "2f03d8fd31e3d6949aeaa614efdabf434990d0f8e3c2d054ef7d4c21c461d385"
   },
   {
+   "path": "assets/textures/hud05/coin05.png",
+   "bytes": 19280,
+   "sha256": "a3959329bb1d6ed6b69d7efcafa30f8aabc86c9ab5a481f6c81bf757a4f4c52f"
+  },
+  {
+   "path": "assets/textures/hud05/heart05.png",
+   "bytes": 13744,
+   "sha256": "458a070c4686a971b57bd2ad1ea93b75cac653b0833b79d117bf01064085ba12"
+  },
+  {
+   "path": "assets/textures/hud05/hud05_icons.json",
+   "bytes": 302,
+   "sha256": "160ff0a694d5c177fdd3c40ddabde7582c0c857d88eda11e1896f66ec1499de3"
+  },
+  {
+   "path": "assets/textures/hud05/pause05.png",
+   "bytes": 21448,
+   "sha256": "f9569bcad56374d2237b2fa407a83710c68ef7ded6fdcf61889659b163db3c07"
+  },
+  {
+   "path": "assets/textures/hud05/plus05.png",
+   "bytes": 4933,
+   "sha256": "465b3caf2b474018ed8b579e3cfe2ed712c9faa18cf0d2deecc237422403df14"
+  },
+  {
    "path": "assets/textures/marble05_env_1024.jpg",
    "bytes": 51147,
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
@@ -539,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "346aa1925b8eb633468bdc3c191bae4f1cbb3f47f1784a9f0175d14c6b1cf787"
+   "sha256": "855ad0043d7725f5f82d085955758df4ec54c5fdc4c76c1c38b904d8f27ecca7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1750,6 +1775,11 @@
    "path": "qa/pilot05/full_reference_match/env/work/st_top.png",
    "bytes": 1038559,
    "sha256": "72a83fd23c72ba60cac6e7798fe02cdf162a42a7908e2e6a37c44d8623aca84d"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/hud/icon_bake.py",
+   "bytes": 2282,
+   "sha256": "48c68510a78a5dc1f5514f1c82a4e06e27eb44f4875d453472022ba001cc7949"
   },
   {
    "path": "qa/pilot05/full_reference_match/hud/probe05.mjs",
