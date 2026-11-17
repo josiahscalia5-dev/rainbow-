@@ -271,6 +271,8 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   for (const f of furs) {
     const c = CLUMP05[f.mesh.name];
     if (c !== undefined) f.uniforms.uClump.value = c;
+    // benny08 round 3: the fur uniforms reachable from the mesh (Game.ts ?match08=1 Benny tweaks, QA probes); no render effect
+    f.mesh.userData.furU = f.uniforms;
   }
 
   // ---- materials (own copies: the cached GLB materials are shared by every clone) ----
