@@ -1485,3 +1485,15 @@ Same technique already exists in foam.ts. Applying it to the card.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/vfx/riderSplash.ts'\ns=open(p).read()\ns=s.replace(\"\"\"const CARD_VERT = /* glsl */ `\nvarying vec3 vLocal;\nvoid main() {\n  vLocal = position;\n  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n`;\"\"\",\"\"\"const CARD_VERT = /* glsl */ `\nvarying vec3 vLocal;\nvarying vec3 vView;\nvoid main() {\n  vLocal = position;\n  vec4 mv = modelViewMatrix * vec4(position, 1.0);\n  vView = mv.xyz;\n  gl_Position = projectionMatrix * mv;\n}\n`;\"\"\")\ns=s.replace(\"\"\"uniform vec3 uFlow;      // stream distan …[+2280 chars]`
 
+### 🧑 User — 2026-11-17T02:51:52.830Z
+
+> ↩︎ result: console errors: [
+>   '[05] THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false\n' +
+>     "ERROR: 0:89: 'projectionMatrix' : undeclared identifier\n" +
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 11.0, 'within_10': 0.7578, 'within_20': 0.8463, 'ssim_lum': 0.8315, 'mean_signed_rgb': [-2.4, -1.7, -0.0]}
+> water                        px  480736  mean   6.63  <=10 0.883  <=20 0.919  ssim 0.923  signed [0.8, -2.6, -1.9]
+> foam_banks                   px   28862  mean   5.61  <=10 0.921  <=20 0.951  ssim 0.922  signed [-0.1, -4.2, -4.6]
+> benny_and_hat                px   93061  mean  19.22  <=10 0.587  <=20 0.730  ssim 0.656  signed [-5.8, -1.4, 0.9]
+> wake_splash                  px   83491  mean  37.02  <=10 0.239  <=20 0.414  ssim 0.338  signed [-21.1, -6.4, 4.4]
+> bubbles                      px   29304  mean   2.08  <=10 0.975  <=20 0.997  ssim 0.986  signed [-0.8, -0.1, 0.1]
+
