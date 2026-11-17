@@ -1165,3 +1165,115 @@ Bootstrap edits are in; now pointing the autosave at the new working branch, pro
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'PYEOF'\nimport json, os, pathlib\np = pathlib.Path('backups/autosave.config.json'); c = json.loads(p.read_text())\nc['branch'] = 'claude/rainbow-restore-env-setup-bxn85h'\nc['source_branch'] = 'ccr-694bda6a-x58ntq'\nc['auto_merge_on_session_start'] = False\nc['auto_merge_note'] = (\"User's order 2026-11-17: the SessionStart hook and scripts/claude-bootstrap.sh never merge a branch \"\n                        \"on their own; they fetch and LIST newer ccr-*/claude/* branches. Merging happens only on the user's \"\n                        \"request: bash scripts/claud …[+2228 chars]`
 
+### 🧑 User — 2026-11-17T00:47:07.517Z
+
+> ↩︎ result: branch claude/rainbow-restore-env-setup-bxn85h | protected 25 | last ccr-694bda6a-x58ntq
+> # SessionStart -> scripts/claude-bootstrap.sh --hook: lists newer branches (NEVER merges), restores Git LFS, re-arms the
+> #   five-minute autosave, prints a short recovery summary for Claude and runs the full bootstrap in the background.
+> AUTOSAVE OK | branch claude/rainbow-restore-env-setup-bxn85h | scheduler daemon | last verified backup 2026-11-17T00:45:01+00:00 (1.7 min ago) | local 2ff3801 remote 2ff3801 (match) | uncommitted 5
+> exit=0
+>   OK   Repository + branch            josiahscalia5-dev/rainbow- on claude/rainbow-restore-env-setup-bxn85h @ 2ff3801 (session started from ccr-694bda6a-x58ntq)
+>   OK   Newer saved work (no auto-merge) 22/22 remote ccr-*/claude/* branches contained in HEAD 2ff3801; nothing newer on GitHub; nothing merged
+>   OK   Backup gap since last session  previous save on GitHub: 4e140fa 2026-11-17 00:36 UTC (hook:Stop) on ccr-694bda6a-x58ntq, claude/rainbow-restore-env-setup-bxn85h; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 14 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-16 03:22-09:28 UTC (6 …[+3883 chars]
+
+### 🤖 Claude — 2026-11-17T00:47:24.204Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad/nomerge_test && rm -rf $S && URL=\"$(git remote get-url origin)\" && GIT_LFS_SKIP_SMUDGE=1 git clone -q --shared --no-checkout . $S && cd $S && git remote set-url origin \"$URL\" && GIT_LFS_SKIP_SMUDGE=1 git checkout -q -b claude/test-nomerge-old f4dc72b && cp /home/user/rainbow-/scripts/claude-bootstrap.sh /home/user/rainbow-/scripts/verify-assets.py scripts/ && BEFORE_HEAD=$(git rev-parse HEAD) && echo \"test clone on $(git branch --show-current) @ ${BEFORE_HEAD:0:7} (older than the newest saved  …[+918 chars]`
+
+### 🧑 User — 2026-11-17T00:47:36.751Z
+
+> ↩︎ result: test clone on claude/test-nomerge-old @ f4dc72b (older than the newest saved work on purpose)
+>   OK   Repository + branch            josiahscalia5-dev/rainbow- on claude/test-nomerge-old @ f4dc72b (session started from ccr-694bda6a-x58ntq)
+>       not in HEAD: claude/rainbow-restore-env-setup-bxn85h @ a630c55: 7 commit(s), 12 file(s) outside backups/
+>       not in HEAD: ccr-694bda6a-x58ntq @ 4e140fa: 1 commit(s), 0 file(s) outside backups/
+>       not in HEAD: ccr-8c4acadc-iybw0n @ 0594138: 1 commit(s), 0 file(s) outside backups/
+>   WARN Newer saved work (no auto-merge) 19/22 remote ccr-*/claude/* branches contained in HEAD f4dc72b; NOT merged (automatic merging is OFF, user's order 2026-11-17): claude/rainbow-restore-env-setup-bxn85h@a630c55 (7 commit(s), 12 file(s) outside backups/, 11-17 00:47 UTC); ccr-694bda6a-x58ntq@4e140fa (1 commit(s), 0 file(s) outside backups/, 11-17 00:36 UTC); ccr-8c4acadc-iybw0n@0594138 (1 commit(s), 0 file(s) outside backups/, 11-16 23:39 UTC); THIS CHECKOUT IS BEHIND ccr-694bda6a-x58ntq (same line of work): the session probably started from an old branch - follow backups/HANDOFF_NEW_ACCOUNT.md, tell the user
+> --- same run WITHOUT --check (default mode = what …[+365 chars]
+
+### 🤖 Claude — 2026-11-17T00:47:56.794Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad/nomerge_test && cd $S && awk '/^# -+ modes$/{exit} {print}' scripts/claude-bootstrap.sh > ../harness.sh && echo 'echo \"MODE=$MODE DO_RESUME=$DO_RESUME\"; step_identity; step_resume' >> ../harness.sh && git -c user.name=test -c user.email=[REDACTED-EMAIL] -c commit.gpgsign=false commit -q -am \"test only: new bootstrap in the throw-away clone\" && B=$(git rev-parse HEAD) && echo \"=== A. exactly what the SessionStart hook runs first (--hook), older checkout:\" && RAINBOW_ROOT=$S bash ../harness.sh  …[+1080 chars]`
+
+### 🧑 User — 2026-11-17T00:48:01.258Z
+
+> ↩︎ result: === A. exactly what the SessionStart hook runs first (--hook), older checkout:
+> MODE=hook DO_RESUME=0
+>   WARN Newer saved work (no auto-merge) 19/22 remote ccr-*/claude/* branches contained in HEAD c5314fc; NOT merged (automatic merging is OFF, user's order 2026-11-17): claude/rainbow-restore-env-setup-bxn85h@a630c55 (7 commit(s), 12 file(s) outside backups/, 11-17 00:47 UTC); ccr-694bda6a-x58ntq@4e140fa (1 commit(s), 0 file(s) o
+>     -> HEAD unchanged (c5314fc), merge commits added: 0
+> === B. plain run (no option):
+> MODE=full DO_RESUME=0
+>     -> HEAD unchanged
+> === C. explicit --resume (only on the user's request) still merges:
+> MODE=full DO_RESUME=1
+>       merging origin/ccr-8c4acadc-iybw0n (0594138, 2026-11-16 23:39)
+>       merging origin/ccr-694bda6a-x58ntq (4e140fa, 2026-11-17 00:36)
+>       merging origin/claude/rainbow-restore-env-setup-bxn85h (a630c55, 2026-11-17 00:47)
+>   OK   Newer saved work (no auto-merge) 22/22 remote ccr-*/claude/* branches contained in HEAD f81b0be; merged (on request, --resume): ccr-8c4acadc-iybw0n ccr-694bda6a-x58ntq claude/rainbow-restore-env-setup-bxn85h; nothing newer on GitHub; nothing merged
+>     -> merge commits added in the throw-away clone: 4
+> origin	http …[+88 chars]
+
+### 🤖 Claude — 2026-11-17T00:48:09.752Z
+
+> 🔧 **Bash** `{"command": "sed -i 's|    rec resume \"Newer saved work (no auto-merge)\" ok \"$msg; nothing newer on GitHub; nothing merged\" \"$t\"|    rec resume \"Newer saved work (no auto-merge)\" ok \"$msg; nothing newer on GitHub$([ -z \"$merged\" ] \\&\\& echo \"; nothing merged\")\" \"$t\"|' scripts/claude-bootstrap.sh && bash -n scripts/claude-bootstrap.sh && grep -n 'nothing newer on GitHub' scripts/claude-bootstrap.sh | cut -c1-200; F=qa/pilot05/full_reference_match; wc -l $F/briefs/*.md $F/env/NOTES.md $F/benny/NOTES.md $F/hud/NOTES.md $F/coins/NOTES.md $F/coordinator/NOTES.md; echo; cat $F/brie …[+126 chars]`
+
+### 🧑 User — 2026-11-17T00:48:09.794Z
+
+> ↩︎ result: 203:    rec resume "Newer saved work (no auto-merge)" ok "$msg; nothing newer on GitHub$([ -z "$merged" ] && echo "; nothing merged")" "$t"
+>    22 qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md
+>    22 qa/pilot05/full_reference_match/briefs/benny-character-artist.md
+>    26 qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md
+>   101 qa/pilot05/full_reference_match/env/NOTES.md
+>    96 qa/pilot05/full_reference_match/benny/NOTES.md
+>    91 qa/pilot05/full_reference_match/hud/NOTES.md
+>    59 qa/pilot05/full_reference_match/coins/NOTES.md
+>    38 qa/pilot05/full_reference_match/coordinator/NOTES.md
+>   455 total
+> 
+> RESUMED RUN (account transfer, 2026-11-17 ~00:08 UTC, session 018Sg3AU, working branch ccr-694bda6a-x58ntq created from b81cc34): your previous run of EXACTLY the brief below was interrupted after about 4 minutes while you were still measuring; its scratchpad is lost and no game file had been changed by you. Read COORDINATION.md including BOTH "RESUMED" sections at the end (the newest one, 2026-11-17, records the recovery proof). If qa/pilot05/full_reference_match/env/NOTES.md already exists, continue from it and do not redo finished steps; otherwi …[+7024 chars]
+
+### 🤖 Claude — 2026-11-17T00:48:11.382Z
+
+> 🔧 **Bash** `{"command": "F=qa/pilot05/full_reference_match; echo \"#################### ENV NOTES\"; cat $F/env/NOTES.md; echo \"#################### COORDINATOR NOTES\"; cat $F/coordinator/NOTES.md", "description": "Read the environment specialist's and coordinator's handoff notes"}`
+
+### 🧑 User — 2026-11-17T00:48:11.418Z
+
+> ↩︎ result: #################### ENV NOTES
+> # env05 — washer-environment-modeler (Screen 05 tunnel: rings, walls, fittings, far tunnel)
+> 
+> Status: IN PROGRESS — stopped for the account transfer (2026-11-17 ~00:30 UTC by the file clock, session 018Sg3AU). Switch `env05` (`on05('env05')`, also on with
+> `?match05=1`). STACK = `proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1`.
+> 
+> ## 1. Measured (step A, done)
+> * BEFORE = STACK capture `recovery_s018/stack/05.png` (= `stack_2340/05_match05.png`, byte-identical). Region numbers
+>   (`python3 -I tools/match05/metrics.py`, `env/work/before_*.json`): whole frame mean 34.1 / ≤20 51.6 %; purple walls
+>   53.8 / 21.1 %; gold rings + frame 37.7 / 50.0 %; side fittings 26.9 / 59.7 %; distant tunnel 29.8 / 45.1 %.
+> * Probe of STACK (`node scripts/proj05-tunnel-probe.mjs --q='<STACK>' --out=env/work/probe --raw=<scratch>`): game rings
+>   real r@12u (instance 1), A (s = sCam05 + 20), B (sCam05 + 40); far rings at virtual depth 59/97/161/222/322.
+> * Where the tunnel error comes from (`tools/env05/err_by_surface.py`, probe id buffer): purple-wall region: game WALL
+>   153,207 px mean 56.6 (52 % of the region's error = perforati …[+11897 chars]
+
+### 🤖 Claude — 2026-11-17T00:49:09.031Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'PYEOF'\nimport pathlib, json, os\ndef patch(path, pairs):\n    p = pathlib.Path(path); s = p.read_text()\n    for old, new in pairs:\n        assert s.count(old) == 1, f\"{path}: count {s.count(old)} for {old[:60]!r}\"\n        s = s.replace(old, new)\n    p.write_text(s)\n\n# ------------------------------------------------------------------ CLAUDE.md\npatch('CLAUDE.md', [\n (\"\"\"already ran before your first turn: it fetched every branch, merged any newer `ccr-*`/`claude/*` branch (normal merges\nonly; a conflicting merge is aborted and reported), restored the  …[+9362 chars]`
+
+### 🧑 User — 2026-11-17T00:49:09.211Z
+
+> ↩︎ result: docs ok
+>   animation-and-gameplay-engineer    interrupted next: Flow video hand-over checks once the user uploads intro.mp4 / ending.m
+>   android-build-performance          idle    next: at the end: rebuild and verify the APK
+> @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: washer-environment-modeler (recorded running = INTERRUPTED unless relaunched this session), benny-character-artist (recorded running = INTERRUPTED unless relaunched this session), animation-and-gameplay-engineer (recorded running = INTERRUPTED unless relaunched this session)
+
+### 🤖 Claude — 2026-11-17T00:49:18.612Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nu=Image.open('/root/.claude/uploads/c85b9efb-7963-5a97-9c4e-da811e450f6b/7e26693c-image.jpg').convert('RGB')\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nprint('upload',u.size,'reference',r.size)\nif u.size!=r.size: u=u.resize(r.size, Image.LANCZOS)\nd=np.abs(np.asarray(u,np.int16)-np.asarray(r,np.int16)).max(2)\nprint('mean abs diff %.2f levels | pixels within 20 levels: %.1f %% | within 10: %.1f %%'%(np.abs(np.asarray(u,np.int16)-np.asarray(r,np.int16)).mean(), (d<=20).mean()*100,(d<=10) …[+198 chars]`
+
+### 🧑 User — 2026-11-17T00:49:18.854Z
+
+> ↩︎ result: upload (864, 1536) reference (864, 1536)
+> mean abs diff 0.00 levels | pixels within 20 levels: 100.0 % | within 10: 100.0 %
+> 13
+
+### 🤖 Claude — 2026-11-17T00:49:28.596Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:restore-checkpoint 2>&1 | tail -4; echo \"--- status\"; python3 -I scripts/autosave-status.py | head -3; echo \"--- remote vs local\"; B=$(git branch --show-current); echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/$B | cut -f1)\"; echo \"source ccr-694bda6a-x58ntq remote: $(git ls-remote origin refs/heads/ccr-694bda6a-x58ntq | cut -f1) (must stay 4e140fa)\"; git status --short | head -5; echo \"--- refs\"; sha256sum -c scripts/reference.sha256 2>/dev/null | grep -c ': OK$'; echo \"--- lfs\" …[+291 chars]`
+

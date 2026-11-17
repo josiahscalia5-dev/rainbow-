@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 12177,
-   "sha256": "e756f529bb6de7765c25615d41baa77c1c4e1616ca7f1a5544039df5f0c01086"
+   "bytes": 13332,
+   "sha256": "23d4f8bd03e0c5bbbaffd6bb2539c033a137b5455122dc3c03515bf4a1d6302c"
   },
   {
    "path": "README_FIRST.md",
@@ -563,8 +563,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 16217,
-   "sha256": "4beacb98a0c591420f7ebf4afd94e658967cac5d11a7a7979075de3bb1fcbe55"
+   "bytes": 17380,
+   "sha256": "6d9331d39e7e1086848a91ac86deac7c584d5ac7f5dc4989f6f9fb4d5d865861"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -573,8 +573,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3927,
-   "sha256": "8e66dd79f667ee9b7c2def406cf65def382480ba722e5b270a5855097b919e7e"
+   "bytes": 4923,
+   "sha256": "446f69f585276fb855fdf87753e0267bd7ac17c6f579a9aa96aa162a3726bccb"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -584,7 +584,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11179,
-   "sha256": "f0cad18f1c1d4b50847d4cc19393fcce7cd70e86945d2ec19904d9599ef55b05"
+   "sha256": "222f3cbc63500e2a492011e1d54f444b94fcbd98c5abfba426690cbe0301fcd8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1358,8 +1358,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/COORDINATION.md",
-   "bytes": 16219,
-   "sha256": "26e7f550826684503c297d2b8e4e791da2a59c97a19ba93b6bbc80686d85414e"
+   "bytes": 19654,
+   "sha256": "8c7a9a90f926df38ebef1792a822dd55ced739638da1c8163a9c856f71c0de25"
   },
   {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md",
@@ -8338,8 +8338,8 @@
   },
   {
    "path": "scripts/claude-bootstrap.sh",
-   "bytes": 37281,
-   "sha256": "acda6601eb89cbc5df73a411c1caeccc91e1baed1ac615ad0efe2e45a42bcad1"
+   "bytes": 37311,
+   "sha256": "a4611d4a9326f285fc0148c694e6a2d69b956009d4cb566b7542167e42e71b26"
   },
   {
    "path": "scripts/cloud-env-setup.sh",

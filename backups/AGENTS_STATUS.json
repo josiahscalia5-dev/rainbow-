@@ -1,11 +1,11 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-17 ~00:25 UTC",
- "updated_by_session": "session_018Sg3AUAHEh1rEALJbwfawQ (branch ccr-694bda6a-x58ntq) \u2014 ACCOUNT TRANSFER",
+ "updated_utc": "2026-11-17 ~01:00 UTC",
+ "updated_by_session": "session_01AvQv6S7KgQVrwzruK4eB4o (branch claude/rainbow-restore-env-setup-bxn85h) - NEW ACCOUNT, specialists relaunched",
  "assignments_now": {
-  "_note": "State at 2026-11-17 ~00:25 UTC: ACCOUNT TRANSFER. The three specialists in stopped_at_transfer were STOPPED cleanly; each wrote a checkpoint NOTES.md. New account: backups/HANDOFF_NEW_ACCOUNT.md, then COORDINATION.md section \"STATE AT ACCOUNT TRANSFER 2026-11-17\", relaunch each from its brief + NOTES.md.",
-  "coordinator (main session)": "DONE: projvp05 + projgap05 (dark torn streaks, E-layer gaps, blending) measured, coordinator/NOTES.md. NEXT: gaps > 100 rows, riding contrast, then integrate all switches and produce the order deliverables (03_NEW, 04_DIFFERENCE, 05_OVERLAY, VISUAL_AUDIT.md, metrics JSON)",
+  "_note": "State at 2026-11-17 ~01:00 UTC (new account, session 01AvQv6S): the three specialists of stopped_at_transfer were RELAUNCHED from their briefs + NOTES.md (see running_now). If you are a LATER session, treat running_now as INTERRUPTED and relaunch each from qa/pilot05/full_reference_match/briefs/<agent>.md + its NOTES.md ('Remaining'). State: qa/pilot05/full_reference_match/COORDINATION.md, newest RESUMED section.",
+  "coordinator (main session)": "Environment restored + verified; default / BEFORE / STACK pixel-identical; first real match05 capture measured (whole frame 29.14 / 57.0 %, recovery_s01Av/). NEXT: integrate finished specialist parts into ?match05=1, order deliverables, then wave 2 (foam-bubbles-particles) and the Android APK + performance.",
   "foam-bubbles-particles": "WAVE 2, not launched yet: splash05m (Benny wake, order part 8) + bub05 (approved bubbles as real 3D / sprites, part 11). Files riderSplash.ts, bubbles.ts, foam.ts, spray.ts; folder qa/pilot05/full_reference_match/splash_bubbles/",
   "android-build-performance": "LAST: experiment APK + performance after the visual parts are in (order parts 18, 19)",
   "previous_assignments": {
@@ -173,7 +173,7 @@
    "notes": "qa/pilot05/full_reference_match/env/NOTES.md",
    "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
    "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
-   "state": "STOPPED cleanly for the account transfer (~00:50 UTC 2026-11-17); final notes written; relaunch from brief + NOTES.md",
+   "state": "RELAUNCHED 2026-11-17 ~01:00 UTC by session 01AvQv6S (new account) from brief + NOTES.md; a later session must treat it as INTERRUPTED again",
    "done_at_transfer": "step A measured + ring fit; env05 code written (tube.ts warp, proj05Tunnel.ts, environment.ts E05); assets/textures/env05 NOT created yet",
    "next": "steps a-f in env/NOTES.md (textures first)",
    "relaunch": "brief qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
@@ -185,7 +185,7 @@
    "notes": "qa/pilot05/full_reference_match/benny/NOTES.md",
    "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
    "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
-   "state": "STOPPED cleanly for the account transfer (~00:50 UTC 2026-11-17); final notes written; relaunch from brief + NOTES.md",
+   "state": "RELAUNCHED 2026-11-17 ~01:00 UTC by session 01AvQv6S (new account) from brief + NOTES.md; a later session must treat it as INTERRUPTED again",
    "done_at_transfer": "measured; geometry iteration r2 (IoU 0.915); benny05.ts / runtime.ts / fur.ts written; maps not baked",
    "next": "steps 1-5 in benny/NOTES.md (iteration 3, bake.py, maps)",
    "relaunch": "brief qa/pilot05/full_reference_match/briefs/benny-character-artist.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
@@ -197,11 +197,33 @@
    "notes": "qa/pilot05/full_reference_match/hud/NOTES.md, coins/NOTES.md",
    "launched": "2026-11-17 ~00:08 UTC (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)",
    "brief": "qa/pilot05/full_reference_match/COORDINATION.md (incl. RESUMED 23:40 section) + ORDER_USER_VERBATIM.md",
-   "state": "STOPPED cleanly for the account transfer (~00:50 UTC 2026-11-17); final notes written; relaunch from brief + NOTES.md",
+   "state": "RELAUNCHED 2026-11-17 ~01:00 UTC by session 01AvQv6S (new account) from brief + NOTES.md; a later session must treat it as INTERRUPTED again",
    "done_at_transfer": "HUD measured + hud05 markup/CSS/sprites written; 15 coins measured + solved (C05M), coin face texture; no real capture yet",
    "next": "hud/NOTES.md + coins/NOTES.md Remaining lists",
    "relaunch": "brief qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md + \"read your NOTES.md first; continue from Remaining; do not redo finished steps\""
   }
  ],
- "running_now": []
+ "running_now": [
+  {
+   "agent": "washer-environment-modeler",
+   "switch": "env05",
+   "launched": "2026-11-17 ~01:00 UTC, session 01AvQv6S",
+   "continue_from": "qa/pilot05/full_reference_match/env/NOTES.md section 4 (a-e)",
+   "brief": "qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md"
+  },
+  {
+   "agent": "benny-character-artist",
+   "switch": "benny05",
+   "launched": "2026-11-17 ~01:00 UTC, session 01AvQv6S",
+   "continue_from": "qa/pilot05/full_reference_match/benny/NOTES.md Remaining",
+   "brief": "qa/pilot05/full_reference_match/briefs/benny-character-artist.md"
+  },
+  {
+   "agent": "animation-and-gameplay-engineer",
+   "switch": "hud05, coins05",
+   "launched": "2026-11-17 ~01:00 UTC, session 01AvQv6S",
+   "continue_from": "qa/pilot05/full_reference_match/hud/NOTES.md + coins/NOTES.md Remaining",
+   "brief": "qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md"
+  }
+ ]
 }

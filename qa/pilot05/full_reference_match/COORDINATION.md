@@ -148,3 +148,40 @@ all in-progress specialist code present; every specialist change is behind its o
   a real capture. coins05: 15 coins solved onto the course, approved face texture — NOT yet captured. See `hud/`, `coins/` NOTES.
 * benny05: geometry iteration (part IoU all 0.893 → 0.921, star bbox now 481–553 × 916–983 vs approved 481–553 × 916–984);
   `benny/work/bake.py` written, NOT run → no baked maps, no look change yet. See `benny/NOTES.md` §4.
+
+---
+## RESUMED 2026-11-17 ~01:00 UTC — NEW ACCOUNT, session 01AvQv6S, branch `claude/rainbow-restore-env-setup-bxn85h` — CURRENT
+Started from `ccr-694bda6a-x58ntq` @ `4e140fa` (now PROTECTED; the autosave pushes only to the new branch). Everything
+above still applies. This session's main session is the coordinator.
+* **Environment re-verified, all really run** (`backups/BOOTSTRAP_REPORT.md`, `qa/tools_check/blender_restore_s01Av/`):
+  Blender 5.3.0 at `/usr/local/bin/blender` (bpy, Workbench / EEVEE / Cycles renders, 7/7 `.blend`, 3 GLBs, GLB round trip;
+  `tools/proj05/lid_blender.py` rebuilt `lids05.glb` byte-identical), Playwright Chromium + WebGL2 (SwiftShader), Node 22,
+  Python numpy / Pillow / OpenCV / SciPy, ffmpeg, Android SDK 34 + Java 21. Blender MCP: not possible headless → CLI.
+* **Game state at recovery (fresh captures, 2026-11-17 00:45 UTC):** default == `qa/pilot05/current_default_05.png` (0 px);
+  protected BEFORE `?ringa=26&nearfloor05=0` == `qa/pilot05/wave9/baseline/05.png` (0 px); STACK == `stack_2340/05_match05.png`
+  (0 px). **First real `?match05=1` capture with every specialist part on** = `recovery_s01Av/05_match05_at_recovery.png`
+  (it loads; env05 textures load). `tools/match05/metrics.py`, STACK → match05:
+  | region | STACK mean / ≤20 | match05 at recovery mean / ≤20 | owner |
+  |---|---|---|---|
+  | whole frame | 34.10 / 51.6 % | **29.14 / 57.0 %** | |
+  | HUD + text | 62.23 / 13.4 % | **24.13 / 65.8 %** (first REAL capture of hud05) | hud05 |
+  | coins | 53.96 / 17.6 % | 42.58 / 30.3 % | coins05 |
+  | Benny + hat | 49.71 / 23.5 % | 44.31 / 26.0 % (geometry only, maps not baked) | benny05 |
+  | gold rings + front frame | 37.74 / 50.0 % | 32.98 / 50.7 % | env05 |
+  | purple walls | 53.82 / 21.1 % | 52.85 / 21.1 % | env05 |
+  | **side fittings** | 26.85 / 59.7 % | **44.87 / 39.4 % (WORSE: paddles not yet on the moved wall)** | env05 |
+  | **distant tunnel + glow** | 29.79 / 45.1 % | **34.53 / 34.2 % (WORSE)** | env05 |
+  | water | 9.40 / 88.3 % | 8.73 / 88.9 % | coordinator |
+  | foam banks | 8.43 / 92.7 % | 7.99 / 92.9 % | coordinator |
+  | wake / splash | 42.61 / 37.9 % | 42.37 / 37.9 % | wave 2 |
+  | bubbles | 29.98 / 61.8 % | 29.84 / 61.4 % | wave 2 |
+  Seen by eye in that capture: env05 walls show ragged / torn texture edges on the left wall (x 0–260, y 300–720) and the
+  right wall (x 690–864, y 150–650); ring B's left arc bulges (not a clean circle); right-side paddles are gone (sunk into
+  the moved wall), left paddles float; Benny's beanie has flat stripes (no knit yet), the pom is darker / spikier and the
+  body fur hotter pink than approved; only 6 coins read clearly (approved shows the trail on to the vanishing point).
+* **Relaunched ~01:00 UTC from brief + NOTES.md (continue from "Remaining", nothing redone):** washer-environment-modeler
+  (`env05`), benny-character-artist (`benny05`), animation-and-gameplay-engineer (`hud05`, `coins05`). File ownership as in
+  the tables above. Render slots: still 2 game renders at once for everybody (`scripts/lib/pw.mjs`).
+* Coordinator next: integration capture of all finished parts in `?match05=1`, the order's deliverables (03_NEW,
+  04_DIFFERENCE, 05_OVERLAY, VISUAL_AUDIT.md, metrics JSON, REMAINING_DIFFERENCES.md), then wave 2 (foam-bubbles-particles:
+  `splash05m`, `bub05`), last android-build-performance. Nothing is promoted to the default without the user's approval.

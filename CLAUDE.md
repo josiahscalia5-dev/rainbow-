@@ -4,12 +4,16 @@ This is an EXISTING, playable 11-screen 3D game. **Never restart it, never start
 
 ## 1. Every new session or new Claude account — recovery is automatic
 The SessionStart hook (`.claude/settings.json` → `scripts/autosave-hook.sh` → **`scripts/claude-bootstrap.sh --hook`**)
-already ran before your first turn: it fetched every branch, merged any newer `ccr-*`/`claude/*` branch (normal merges
-only; a conflicting merge is aborted and reported), restored the Git LFS binaries, re-armed the five-minute autosave and
-started the full bootstrap in the background. Its summary ("RAINBOW SESSION START") is in your context.
+already ran before your first turn: it fetched every branch and LISTED what is newer on GitHub — **it never merges
+anything** (user's order 2026-11-17: no automatic merges; merge only when the user asks, with
+`bash scripts/claude-bootstrap.sh --resume`; `codex/*` never) — restored the Git LFS binaries, re-armed the five-minute
+autosave and started the full bootstrap in the background (tools, Blender install + real render / GLB check
+`scripts/verify-blender.py`, the ten specialist definitions, MCP connections, tests, logins the user must renew).
+Its summary ("RAINBOW SESSION START") is in your context. If it says "THIS CHECKOUT IS BEHIND …", the session started
+from an old branch: follow `backups/HANDOFF_NEW_ACCOUNT.md` and tell the user.
 1. `bash scripts/claude-bootstrap.sh --status` → `backups/BOOTSTRAP_REPORT.md` (re-run when it says "still in progress").
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh` yourself; from a branch without it:
-   `git fetch origin ccr-694bda6a-x58ntq && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
+   `git fetch origin claude/rainbow-restore-env-setup-bxn85h && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
 2. Read **`backups/HANDOFF_NEW_ACCOUNT.md`** first, then `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
    `backups/TOOL_MANIFEST.json` and the current briefs: **`qa/pilot05/proj/`** (water texture projection — `NOTES.md` when it
@@ -17,15 +21,21 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
 3. Check connectors yourself (ToolSearch `World_Labs_Atlas`, `github`, `playwright`) and give the user the backup
    report of §4. Tell the user plainly about every failure and every backup GAP the bootstrap reports.
 The GitHub default branch is an OLD version (a new session starts THERE: no bootstrap, no Blender setup — run the
-fetch line above first). Newest work as of 2026-11-17 ~00:25 UTC: branch **`ccr-694bda6a-x58ntq`** (session `018Sg3AU…`,
-created from `b81cc34`; Screen 05 full reference match: `qa/pilot05/full_reference_match/COORDINATION.md`). Before it:
+fetch line above first). Newest work as of 2026-11-17 ~01:00 UTC: branch **`claude/rainbow-restore-env-setup-bxn85h`**
+(new Claude account, session `01AvQv6S…`, started from `ccr-694bda6a-x58ntq` @ `4e140fa`; environment restore, no-auto-merge
+bootstrap, Screen 05 full reference match continued: `qa/pilot05/full_reference_match/COORDINATION.md`, newest "RESUMED"
+section). Before it: **`ccr-694bda6a-x58ntq`** (session `018Sg3AU…`, created from `b81cc34`; protected). Before that:
 **`ccr-8c4acadc-iybw0n`** (new Claude account, session `01KS3bZt…`; fast-forwarded from `ccr-61131b9d-uj0oqb` @ `aea7e77`; Screen 05
 riding-water experiment `&projnear05=1` IN PROGRESS: `qa/pilot05/proj/near/NOTES.md`; contains every other `ccr-*` /
 `claude/*` branch). `ccr-451ea8c7-3nqlis` (`97dda28`) = the user's current WORKING version (T2 default + W12 candidates),
 protected. `codex/*` branches hold Codex's separate water experiment: preserved, protected, **never merge them
-automatically** (the bootstrap only merges `ccr-*` / `claude/*`). The bootstrap's merge result always wins over this line. Ready-to-paste prompt for a
+automatically** (nothing is merged automatically at all; `--resume`, on the user's request, merges only `ccr-*` / `claude/*`). Ready-to-paste prompt for a
 new account: `backups/START_NEW_CLAUDE_ACCOUNT.md`. The bootstrap checks before installing (Blender 5.3.0, Android SDK
 34, npm, Python libs, World Labs plugin): never reinstall a working tool by hand, never run `playwright install`.
+Blender MCP (`mcp-for-blender`) needs a desktop Blender with its add-on socket: in the headless cloud container it is NOT
+connected — never report it as connected; Blender command line + Python is the tested integration. On a NEW Claude account
+the cloud environment does not exist yet: Blender / Android downloads need hosts `download.blender.org` + `dl.google.com`
+(propose the environment with `scripts/cloud-env-setup.sh` as its setup script; the user approves a card).
 
 ## 2. Five-minute GitHub autosave — the user's standing order (2026-11-15/16), never ask about routine saves
 * `scripts/rainbow-autosave.py` runs every 5 minutes while the cloud environment is active (loop daemon

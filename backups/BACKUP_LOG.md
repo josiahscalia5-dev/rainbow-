@@ -460,3 +460,4 @@ Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8567f56ef76fa3ef
 | 2026-11-17T00:39:54+00:00 | daemon | committed+pushed | `854201007e74` | `claude/rainbow-restore-env-setup-bxn85h` | 4 | True |  |
 | 2026-11-17T00:40:19+00:00 | bootstrap:background | committed+pushed | `44d35897165e` | `claude/rainbow-restore-env-setup-bxn85h` | 4 | True |  |
 | 2026-11-17T00:45:01+00:00 | daemon | committed+pushed | `2ff380197cb7` | `claude/rainbow-restore-env-setup-bxn85h` | 13 | True |  |
+| 2026-11-17T00:47:00+00:00 | bootstrap:full | committed+pushed | `a630c5567f74` | `claude/rainbow-restore-env-setup-bxn85h` | 9 | True |  |

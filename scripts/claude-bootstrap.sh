@@ -200,7 +200,7 @@ step_resume() {
       rec resume "Newer saved work (no auto-merge)" ok "$msg only autosave bookkeeping under backups/, no game work: nothing to do" "$t"
     fi
   else
-    rec resume "Newer saved work (no auto-merge)" ok "$msg; nothing newer on GitHub; nothing merged" "$t"
+    rec resume "Newer saved work (no auto-merge)" ok "$msg; nothing newer on GitHub$([ -z "$merged" ] && echo "; nothing merged")" "$t"
   fi
 }
 
