@@ -48,6 +48,9 @@ and context7 connector sign-ins.
 * Experimental master switch `?match05=1` = STACK + coordinator water parts + every specialist part.
   STACK = `proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1`.
   Whole frame at the locked camera (STACK): mean |ΔRGB| 34.1, 51.6 % of pixels within 20 levels — NOT a 95 % match.
+  ⚠ `assets/textures/env05/` (env specialist step a, + `tools/env05/proj_bake.py` step c) appeared at ~00:57 UTC, just
+  before the transfer, and was NOT yet checked in a real capture: before relying on `?match05=1`, capture it once; if
+  the env05 part fails, A/B with STACK + the individual switches (`projvp05`, `projgap05`, `benny05`, `hud05`, `coins05`).
 * Coordinator (main session) — the task worked on last: **dark torn water streaks / E-layer gaps / blending**:
   DONE + measured, behind switches, on with match05: `projvp05` (variance-preserving E ↔ tile hand-over while riding,
   `src/vfx/waterRibbon.ts` `pjMixVP`) and `projgap05` (mirror-filled wave-back-slope gaps,

@@ -46,10 +46,10 @@ export const HAT05 = {
   cuffH: 0.226,
   /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale */
   pomDX: -0.057,
-  pomDY: -0.083,
+  pomDY: -0.016,
   /** toward his back (−Z ≈ toward the rear chase camera): the approved pom-pom overhangs the crown's back slope */
-  pomDZ: -0.06,
-  pomScale: 1.0,
+  pomDZ: -0.16,
+  pomScale: 0.97,
   /** star: extra offset in hat-local units after following the cuff top */
   starDY: 0.069,
   starDX: 0.0,

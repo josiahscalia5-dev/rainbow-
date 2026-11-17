@@ -29,8 +29,8 @@ const ICON05 = {
 /** hud05 tuning (measured against the approved glyph boxes with qa/pilot05/full_reference_match/hud/harness.mjs) */
 const H05 = {
   bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 2 },
-  num: { size: 53, weight: 800, track: 0.0, hX: 165, cX: 498, top: 28.5 },
-  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, track: 0.0, skew: -8, italic: true },
+  num: { size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },
+  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 800, track: 0.0, skew: -8, italic: true, dy: 0 },
 };
 /** absolute position inside the bar's padding box, from approved frame px */
 const bx = (x: number) => U(x - H05.bar.x0 - H05.bar.border);
@@ -61,7 +61,7 @@ const CSS05 = () => `
   min-width: ${U(H05.banner.minW)}; box-sizing: border-box; padding: 0 ${U(12)}; justify-content: center; border-radius: ${U(H05.banner.h / 2)};
   background: linear-gradient(180deg, rgb(99,3,147) 0%, rgb(96,3,144) 50%, rgb(94,3,140) 100%);
   border: ${U(2.5)} solid rgb(250,214,168); box-shadow: inset 0 0 0 ${U(1)} rgba(205,112,86,0.85); }
-#hud.m05 .banner span { font-size: ${U(H05.banner.size)}; letter-spacing: ${U(H05.banner.track)}; font-style: ${H05.banner.italic ? 'italic' : 'normal'};
+#hud.m05 .banner span { font-size: ${U(H05.banner.size)}; font-weight: ${H05.banner.weight}; position: relative; top: ${U(H05.banner.dy)}; letter-spacing: ${U(H05.banner.track)}; font-style: ${H05.banner.italic ? 'italic' : 'normal'};
   transform: skewX(${H05.banner.skew}deg); line-height: 1;
   background: linear-gradient(180deg, #fff6d8 0%, #ffe9b0 45%, #f6cf8c 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
   filter: drop-shadow(0 ${U(1.2)} 0 rgba(90,10,70,0.85)); }
