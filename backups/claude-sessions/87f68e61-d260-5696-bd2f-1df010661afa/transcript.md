@@ -1286,3 +1286,282 @@ The autosave had already committed the course fix, so that "old" capture wasn't 
 
 > 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && git checkout -q 12fb8c5 -- src/world/course.ts src/world/match08.ts && node scripts/capture.mjs --out=$P/all_old >/dev/null 2>&1; git checkout -q HEAD -- src/world/course.ts src/world/match08.ts qa/capture_log.json && git status --short | head -3; node scripts/capture.mjs 10 11 --out=$P/all_new2 >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d,s:np.asarray(Image.open('$P/'+d+'/'+s+'.png').convert('RGB')).astype(int) …[+359 chars]`
 
+### 🧑 User — 2026-11-17T20:53:44.469Z
+
+> ↩︎ result: 01 old vs new 693
+> 02 old vs new 0
+> 03 old vs new 0
+> 04 old vs new 0
+> 05 old vs new 0
+> 06 old vs new 0
+> 07 old vs new 0
+> 08 old vs new 0
+> 09 old vs new 0
+> 10 old vs new 1302 | new vs new(2nd capture) 1302
+> 11 old vs new 0 | new vs new(2nd capture) 59155
+
+### 🤖 Claude — 2026-11-17T20:53:49.462Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d,s:np.asarray(Image.open('$P/'+d+'/'+s+'.png').convert('RGB')).astype(int)\nfor s in ['01','10']:\n  ys,xs=np.nonzero(np.abs(L('all_new',s)-L('all_old',s)).max(2)>0);print(s,'rows',ys.min(),ys.max(),'cols',xs.min(),xs.max())\"", "description": "Locate 01/10 residual diffs"}`
+
+### 🧑 User — 2026-11-17T20:53:49.964Z
+
+> ↩︎ result: 01 rows 441 1283 cols 146 839
+> 10 rows 206 1005 cols 0 666
+
+### 🤖 Claude — 2026-11-17T20:53:54.958Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && node scripts/capture.mjs 01 --out=$P/n01 >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d:np.asarray(Image.open('$P/'+d+'/01.png').convert('RGB')).astype(int)\nprint('new vs new2',int((np.abs(L('all_new')-L('n01')).max(2)>0).sum()),'old vs new2',int((np.abs(L('all_old')-L('n01')).max(2)>0).sum()))\"", "description": "Check 01 capture nondeterminism", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T20:54:06.829Z
+
+> ↩︎ result: new vs new2 0 old vs new2 693
+
+### 🤖 Claude — 2026-11-17T20:54:12.695Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && git checkout -q 12fb8c5 -- src/world/course.ts src/world/match08.ts && node scripts/capture.mjs 01 --out=$P/o01 >/dev/null 2>&1; git checkout -q HEAD -- src/world/course.ts src/world/match08.ts qa/capture_log.json; git status --short|head -3; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda d:np.asarray(Image.open('$P/'+d+'/01.png').convert('RGB')).astype(int)\nprint('old vs old2',int((np.abs(L('all_old')-L('o01')).max(2)>0).sum()),'old2 vs new',int((np.abs(L('o01')-L('n01' …[+87 chars]`
+
+### 🧑 User — 2026-11-17T20:54:24.252Z
+
+> ↩︎ result: old vs old2 693 old2 vs new 0
+
+### 🤖 Claude — 2026-11-17T20:54:27.046Z
+
+Default build proven unchanged on all 11 screens (01/10/11 vary only between two captures of the same build; a re-capture matches 0 px). Now gameplay / drop / continuity tests with `match08`.
+
+### 🤖 Claude — 2026-11-17T20:54:28.479Z
+
+> 🔧 **Bash** `{"command": "ls scripts/ | grep -i \"gameplay\\|contin\\|drop\\|test\\|play\" ; grep -rln \"91\\b.*2,240\\|2240\" qa/match/08/*.md docs/briefs 2>/dev/null | head -3; grep -n \"gameplay\\|8/8\\|2,240\\|continuity\" qa/match/08/NOTES.md | head -10", "description": "Find gameplay/continuity test scripts"}`
+
+### 🧑 User — 2026-11-17T20:54:28.526Z
+
+> ↩︎ result: aspect-test.mjs
+> cinematic-test.mjs
+> continuity-test.ts
+> flowplan-test.mjs
+> gameplay-test.mjs
+> qa/match/08/NOTES.md
+> docs/briefs/2026-11-17-r4/S06.md
+> docs/briefs/2026-11-17-r4/S04.md
+> 44:Gameplay test 8/8 both builds (`qa/gameplay_test.json` unchanged; `gameplay_test_match08.json`), tsc clean.
+> 50:`src/gameplay/coins.ts` converts them to river s/lateral, still real pickups). Result (hybrid texture):
+> 52:**82.0 %** (SSIM 0.796). Gameplay 8/8; a full run now collects 82 coins instead of 91 (9 picture coins replace the 17
+> 57:1. **Coins** (done above, except spin/facing) — the game's coins (gameplay) sit along the new path but not on the painted coins' places/count → the
+> 102:4. **Coin total preserved**: 91 coins (run total 2,240) exactly as the default game — the 8 coins the picture's 9 replace
+> 103:   go into the inlet just before the 08 view; coins sorted in river order under the switch. Gameplay 8/8 with the switch
+> 116:  `dx 0.22` (world, visual offset of AuxScene only — gameplay position, pickups and camera unchanged), `lift 0.06`,
+> 120:  (SSIM 0.819), below HUD 90.2 %. Gameplay 8/8, **91 coins / 2,240** (same as the default game). Default 0 px.
+> 131:  → `assets/textures/benny08/*.png`; (5) ve …[+204 chars]
+
+### 🤖 Claude — 2026-11-17T20:54:30.750Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,15p scripts/gameplay-test.mjs | grep -n \"usage\\|argv\\|out\\|Q\\b\" ; sed -n 1,12p scripts/continuity-test.ts | head -12; grep -n \"continuity-test\\|gameplay-test\" package.json", "description": "Check test script usage"}`
+
+### 🧑 User — 2026-11-17T20:54:30.797Z
+
+> ↩︎ result: 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> /**
+>  * Route continuity + altitude test (run: npm run test:continuity).
+>  * Writes qa/continuity_report.json and docs/path_graph.md (altitude chart), exits 1 on failure.
+>  */
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { Course, validateContinuity, WORLD } from '../src/world/course';
+> 
+> const c = new Course();
+> const r = validateContinuity(c);
+> mkdirSync('qa', { recursive: true });
+> mkdirSync('docs', { recursive: true });
+> writeFileSync('qa/continuity_report.json', JSON.stringify({ length: c.length, marks: c.marks, ...r }, null, 2));
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+
+### 🤖 Claude — 2026-11-17T20:54:33.222Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function flag05\\|export const flag05\" -A8 src/vfx/waterRibbon.ts | head -14", "description": "Check how flag05 reads switches"}`
+
+### 🧑 User — 2026-11-17T20:54:33.253Z
+
+> ↩︎ result: 167:export const flag05 = q05;
+> 168-/**
+> 169- * 05 texture advection relative to the stage speed. Default 1.3 (>1: the current overtakes Benny, so relative to the
+> 170- * riding camera the pattern drifts slowly AWAY toward the light). Test `?flowcam05=1` (user 2026-11-16: "scroll the
+> 171- * texture so the water flows toward the camera"): 0.5 — slower than the ride, so the streaks stream TOWARD the camera
+> 172- * at half the ride speed while still moving downstream in the world.
+> 173- */
+> 174-export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 175-/**
+
+### 🤖 Claude — 2026-11-17T20:54:34.757Z
+
+> 🔧 **Bash** `{"command": "grep -n \"function q05\\|const q05\" -A10 src/vfx/waterRibbon.ts | head -14", "description": "Read q05 implementation"}`
+
+### 🧑 User — 2026-11-17T20:54:34.797Z
+
+> ↩︎ result: 157:const q05 = (key: string): boolean => {
+> 158-  const hit = (qs: URLSearchParams) => qs.get(key) === '1' || (MATCH05_KEYS.includes(key) && qs.get('match05') === '1');
+> 159-  try {
+> 160-    if (typeof location !== 'undefined' && hit(new URLSearchParams(location.search))) return true;
+> 161-  } catch {
+> 162-    /* no location (vite-node / workers) */
+> 163-  }
+> 164-  return BUILD_Q05 !== '' && hit(new URLSearchParams(BUILD_Q05));
+> 165-};
+> 166-/** the same switch reader for other modules (Game.ts: `?glow05=1`) */
+> 167-export const flag05 = q05;
+
+### 🤖 Claude — 2026-11-17T20:54:38.636Z
+
+> 🔧 **Bash** `{"command": "npx vite-node scripts/continuity-test.ts 2>&1 | tail -4; cp qa/continuity_report.json /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cont_def.json; VITE_RAINBOW_Q05='match08=1&coins08px=1&m08bw=1&m08fill=1' npx vite-node scripts/continuity-test.ts 2>&1 | tail -4; python3 -c \"\nimport json;r=json.load(open('qa/continuity_report.json'));print({k:v for k,v in r.items() if k not in('marks',) and not isinstance(v,(list,dict))})\"; git checkout -q -- qa/continuity_report.json docs/path_graph.md 2>/dev/null; git status --short | head", "description": " …[+60 chars]`
+
+### 🧑 User — 2026-11-17T20:54:40.368Z
+
+> ↩︎ result: "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+>   "09->10 gap=0 dT=0.099 y=-113.49",
+>   "10->11 gap=0 dT=0.019 y=-110.16"
+>  ]
+> }
+> {'length': 434.80128046909147, 'ok': True, 'maxStepTangentDeg': 6.21, 'maxStepPos': 0.2543}
+
+### 🤖 Claude — 2026-11-17T20:54:45.086Z
+
+> 🔧 **Bash** `{"command": "VITE_RAINBOW_Q05='match08=1&coins08px=1&m08bw=1&m08fill=1' npx vite-node scripts/continuity-test.ts 2>&1 | grep -i \"07->08\\|drop\\|gap=[^0]\\|\\\"ok\\\"\" | head; git checkout -q -- qa/continuity_report.json docs/path_graph.md; grep -n \"07->08\\|drop\" /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cont_def.json | head -4", "description": "Check 07-08 drop in both", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T20:54:45.964Z
+
+> ↩︎ result: "ok": true,
+>   "verticalDrop": 61.2,
+>   "02->03 gap=-0.0001 dT=0.654 y=-11.87",
+>   "04->05 gap=-0.0002 dT=0.214 y=-40.63",
+>   "07->08 gap=0 dT=0.305 y=-113.5",
+
+### 🤖 Claude — 2026-11-17T20:54:47.606Z
+
+Continuity OK with the switches (gap 0, 07→08 drop 61.2 u). Running the gameplay test (match08 alone, and with my kept switches).
+
+### 🤖 Claude — 2026-11-17T20:54:50.605Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && for v in a:\"match08=1&coins08px=1\" b:\"match08=1&coins08px=1&m08bw=1&m08fill=1\"; do n=${v%%:*}; q=${v#*:}; timeout 900 node scripts/gameplay-test.mjs \"--q=$q\" --out=$S/gp_$n.json 2>&1 | tail -3; done; python3 -c \"\nimport json\nfor n in 'ab':\n  r=json.load(open('$S/gp_'+n+'.json'));print(n,{k:v for k,v in r.items() if not isinstance(v,(list,dict))})\"", "description": "Gameplay tests with switches", "timeout": 1900000}`
+
+### 🧑 User — 2026-11-17T20:55:03.225Z
+
+> ↩︎ result: },
+>  "errors": []
+> }
+>  },
+>  "errors": []
+> }
+> a {'pass': True, 'query': 'match08=1&coins08px=1'}
+> b {'pass': True, 'query': 'match08=1&coins08px=1&m08bw=1&m08fill=1'}
+
+### 🤖 Claude — 2026-11-17T20:55:06.347Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nimport json\nfor n in 'ab':\n  r=json.load(open('$S/gp_'+n+'.json'))\n  print(n,json.dumps(r)[:900])\"", "description": "Inspect gameplay results detail"}`
+
+### 🧑 User — 2026-11-17T20:55:06.399Z
+
+> ↩︎ result: a {"checks": {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 341.074, "s1": 341.274, "stage": "07", "y0": -75.243, "y1": -75.433, "t": 26.267}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.29999999999956, "t08": 30.29999999999956, "yTop": -51.835, "yBottom": -113.144, "y08": -113.144, "travelTimeTopToInlet": 6.6, "verticalDrop": 61.31}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}, "victory": {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 434.801, "lat": -0.06, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -109.608, "bennyVisible":
+> b {"checks": {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltit …[+605 chars]
+
+### 🤖 Claude — 2026-11-17T20:55:10.421Z
+
+All gameplay checks pass in both (91 coins / 2,240, drop 61.3 u). The course fix also changes sample spacing on 08 itself, so re-checking the approved view against the earlier capture.
+
+### 🤖 Claude — 2026-11-17T20:55:14.776Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap && for v in base5:\"\" bwfill5:\"&m08bw=1&m08fill=1\"; do n=${v%%:*}; q=${v#*:}; node scripts/capture.mjs 08 \"--q=match08=1&coins08px=1$q\" --out=$P/$n >/dev/null 2>&1; done; git checkout -q -- qa/capture_log.json; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda n:np.asarray(Image.open('$P/'+n+'/08.png').convert('RGB')).astype(int)\nr=np.asarray(Image.open('references/08_final_spin_chamber.png').convert('RGB').resize((864,1536),Image.LANCZOS)).astype(int)\nfor n in ['base5', …[+342 chars]`
+
+### 🧑 User — 2026-11-17T20:55:36.696Z
+
+> ↩︎ result: base5 vs pre-fix base 0 0 within20 81.04
+> bwfill5 vs pre-fix base 13374 249 within20 81.04
+> bwfill5 vs base5 13374 249
+
+### 🤖 Claude — 2026-11-17T20:55:41.522Z
+
+Approved view is unchanged by the course fix (0 px). Adding a 20 u forward shot to my motion tool and rendering the final BEFORE / NEW moving sets.
+
+### 🤖 Claude — 2026-11-17T20:55:47.166Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/\\['f15_forward15u', 95, null\\], /['f15_forward15u', 95, null], ['f20_forward20u', 127, null], /\" tools/match08/motion08.mjs && grep -c f20 tools/match08/motion08.mjs && for v in BEFORE:\"match08=1&coins08px=1\" NEW:\"match08=1&coins08px=1&m08bw=1&m08fill=1\"; do n=${v%%:*}; q=${v#*:}; M08_SHOTS=full timeout 900 node tools/match08/motion08.mjs qa/match/08/scenery/final_r5/moving_$n \"$q\" 2>&1 | grep -E \"f20|error\"; done; P=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/cap; D=qa/match/08/scenery/final_r5; cp references/08_final_sp …[+347 chars]`
+
+### 🧑 User — 2026-11-17T20:57:22.846Z
+
+> ↩︎ result: 1
+> f20_forward20u s 412.11 lat 0.00 09
+> f20_forward20u s 412.11 lat 0.00 09
+> qa/match/08/scenery/final_r5:
+> 1_APPROVED_original.png
+> 2_BEFORE_match08.png
+> 3_NEW_match08_m08bw_m08fill.png
+> gp_a.json
+> gp_b.json
+> moving_BEFORE
+> moving_NEW
+> 
+> qa/match/08/scenery/final_r5/moving_NEW:
+> f00_checkpoint.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f15_forward15u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_hard10u.png
+> s_right_hard6u.png
+> s_right_steer.png
+
+### 🤖 Claude — 2026-11-17T20:57:26.737Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad && python3 -c \"\nfrom PIL import Image\nfor n in ['f20_forward20u','f10_forward10u']:\n  ims=[Image.open(f'qa/match/08/scenery/final_r5/moving_{d}/{n}.png').convert('RGB').resize((432,768)) for d in ['BEFORE','NEW']]\n  k=Image.new('RGB',(864,768));[k.paste(im,(i*432,0)) for i,im in enumerate(ims)];k.save('$S/fin_'+n+'.png')\"", "description": "Make final check sheets"}`
+
+### 🧑 User — 2026-11-17T20:57:27.194Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T20:57:27.836Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/fin_f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-17T20:57:27.881Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:57:30.152Z
+
+At 20 u Benny is already in Screen 09 (projection off), so both are the same there. Now the APK build — checking the project's build route.
+
+### 🤖 Claude — 2026-11-17T20:57:31.303Z
+
+> 🔧 **Bash** `{"command": "grep -n \"apk\\|android\" package.json | head; ls builds/ | tail -5; grep -rn \"VITE_RAINBOW_Q05.*apk\\|build-apk\\|assembleDebug\" scripts/*.sh 2>/dev/null | head -5", "description": "Find APK build route"}`
+
+### 🧑 User — 2026-11-17T20:57:31.355Z
+
+> ↩︎ result: 17:    "android:sync": "npm run build && npx cap sync android",
+> 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> 22:    "@capacitor/android": "^6.2.0",
+> rainbow-debug-match08-2026-11-17.apk
+> rainbow-debug-match08-2026-11-17b.apk
+> rainbow-debug-match08-2026-11-17c-benny.apk
+> rainbow-debug-w12-water.apk
+> rainbow-debug.apk
+
+### 🤖 Claude — 2026-11-17T20:57:33.423Z
+
+> 🔧 **Bash** `{"command": "grep -n \"match08-2026-11-17c\\|android:debug\\|VITE_RAINBOW_Q05\" qa/match/08/NOTES.md | head -5", "description": "How earlier 08 APK was built"}`
+
+### 🧑 User — 2026-11-17T20:57:33.453Z
+
+> ↩︎ result: 76:* Next: `npm run android:debug` with `VITE_RAINBOW_Q05=match08=1` (the APK reads the same keys) and a device FPS run.
+> 108:6. **Android**: `builds/rainbow-debug-match08-2026-11-17.apk` (21.3 MB, `VITE_RAINBOW_Q05="match08=1" npm run
+> 109:   android:debug`, Git LFS) — the whole APK runs with the 08 switch on. NOT run on a phone: this cloud session has no
+> 158:* APK with the ported Benny: `builds/rainbow-debug-match08-2026-11-17c-benny.apk` (earlier `…17.apk`, `…17b.apk` kept).
+
+### 🤖 Claude — 2026-11-17T20:57:36.663Z
+
+> 🔧 **Bash** `{"command": "(VITE_RAINBOW_Q05='match08=1&coins08px=1&m08bw=1&m08fill=1' timeout 1500 npm run android:debug > /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk.log 2>&1; echo exit $?); tail -3 /tmp/claude-0/-home-user-rainbow-/87f68e61-d260-5696-bd2f-1df010661afa/scratchpad/apk.log; ls -la android/app/build/outputs/apk/debug/*.apk", "description": "Build APK with kept switches", "timeout": 1600000}`
+

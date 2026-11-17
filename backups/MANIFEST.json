@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12549,
-   "sha256": "6f5d01ebbb766ed3a5de7b27811ee7da9cf99aaad2513a7f95fcea64a4792198"
+   "sha256": "fba9acd6e491420665b058cd315c77035aa13a15d2fecee1d7f8776f6db75cdc"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1930,6 +1930,161 @@
    "path": "qa/match/08/scenery/dbg_lane/s_right_steer.png",
    "bytes": 386114,
    "sha256": "3727052027aa1ec4ada93c8103a92e14a89346ad73d9cc3514387e7b42d23961"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/1_APPROVED_original.png",
+   "bytes": 492730,
+   "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/2_BEFORE_match08.png",
+   "bytes": 2601017,
+   "sha256": "674fde73214b1628691c327868758d66276553a52bc4a22988045bf752270c13"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/3_NEW_match08_m08bw_m08fill.png",
+   "bytes": 2600838,
+   "sha256": "19914679b06306bf03d9bf58081650ba0318d895c30501e01dc5466b56c870d2"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/gp_a.json",
+   "bytes": 14666,
+   "sha256": "e7d06ba84694483b2dc25392468c5b16d31707546c8d30da3afed40282c92e58"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/gp_b.json",
+   "bytes": 14684,
+   "sha256": "6192d315a9d3a5710fc6417d0a0512a635f3fd614a8ae42dd001421e6af6c9cb"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/f00_checkpoint.png",
+   "bytes": 2617995,
+   "sha256": "86235477a4e063c19de06557009dfa2ca3e71213264513c8e9456ae5a9998257"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/f03_forward3u.png",
+   "bytes": 2597189,
+   "sha256": "5518cee6eab06204e9e6da8b46dd7cc67bb540ed53e5103a30fb3e6685318921"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/f06_forward6u.png",
+   "bytes": 2530000,
+   "sha256": "9398b38821c1acf1f3880db362e92320ee144fa25bcb43f22e34e09f0bcf0fb9"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/f10_forward10u.png",
+   "bytes": 2430061,
+   "sha256": "71e37ffee8288c2d9daf18ff956941af27b0dd7470a345897b81cfe4fb08b759"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/f15_forward15u.png",
+   "bytes": 1841538,
+   "sha256": "02176c1090a77ab2384473d994a5fec8ec2702a4a50cc21617fa57fbf3f8530f"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/f20_forward20u.png",
+   "bytes": 1738081,
+   "sha256": "f05e20e88cd06dac249bbb9deae69387219323825adb329764e4e6868038426f"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/motion.json",
+   "bytes": 1342,
+   "sha256": "264fe0bed7ee54ebbaff1d34499b61d65907f589c0dba6ed458ff8d351b17951"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/s_left_hard.png",
+   "bytes": 1736382,
+   "sha256": "9a8d593ca6cc8e72c37cab8a89cc5fd834879bb6955a608c3463643c1437a48f"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/s_left_steer.png",
+   "bytes": 2563138,
+   "sha256": "faf43038b25edbf32f17f0529a5269cd00fade435b5038a0740fa15fd5751654"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/s_right_hard.png",
+   "bytes": 1858292,
+   "sha256": "0d83150b2c8c0def7e26e593b73a70a0fac176b7775342542c2c64e3cf746a55"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/s_right_hard10u.png",
+   "bytes": 2485036,
+   "sha256": "01af31e9ff6d2baa3de4ab35a5c92ac9cb6ec2e1b0d3b73df4692b9edb49dad1"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/s_right_hard6u.png",
+   "bytes": 2512383,
+   "sha256": "f0ec148301fcd9401d9c62a20f2750134d13296d00e69534141666211e00fec1"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_BEFORE/s_right_steer.png",
+   "bytes": 2504620,
+   "sha256": "c69ce398f549b70dc0a5664d2a37a51a272bda9b7166ffb0cdb008a399a4415d"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/f00_checkpoint.png",
+   "bytes": 2615780,
+   "sha256": "e4f11e2d6ccf21db82438fa0aa2a8292e5b7951292a5752bf0ca42949d219a5a"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/f03_forward3u.png",
+   "bytes": 2593609,
+   "sha256": "238fd8bcc6ef55fa3d9684cb388c718e4e464fea819973025fc882f74d421831"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/f06_forward6u.png",
+   "bytes": 2501891,
+   "sha256": "e827f0067e8300dc36ffda929d8731ccdd756fae26522f6222f73fe517271b90"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/f10_forward10u.png",
+   "bytes": 2429302,
+   "sha256": "59838f52840aa38531671743c50181f000e4ad6202cd09df4a4df0bfcf1b604f"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/f15_forward15u.png",
+   "bytes": 1844338,
+   "sha256": "6ec6d61c0b4f1f6cd445a3d4865c32939a937536926fdc6e9e9de45da9ca12f8"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/f20_forward20u.png",
+   "bytes": 1738379,
+   "sha256": "5492e0e87ebb6e83ce51b0eb0b68aa3eb7402cac87fb21c88d0f61069457e2cc"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/motion.json",
+   "bytes": 1341,
+   "sha256": "77f21a018bba6d1e21d8dcbf34f693fe313357f9d113ced34abc3be7cf4b8472"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/s_left_hard.png",
+   "bytes": 1735862,
+   "sha256": "63e367f32f3b34b0df82f9276d09becce2654370a546350ba4e3eafdce6d3aa8"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/s_left_steer.png",
+   "bytes": 2536172,
+   "sha256": "a47d042abeeb3b52cf4e971ad82b2cc64c97c21a930c8c61ac23771aafaa1f29"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/s_right_hard.png",
+   "bytes": 1858506,
+   "sha256": "8d5e043895ab81030bd8be812cb9db6d888e9abe329ab31df74f3f840be915e0"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/s_right_hard10u.png",
+   "bytes": 2483797,
+   "sha256": "8cea9e1a31139fa40e252cd21d06315a6b55228425e1ff3511343c3eec724718"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/s_right_hard6u.png",
+   "bytes": 2504252,
+   "sha256": "83d7e2f53cd5e30e11190ff63ed041c92ec83d2acd157c24f17d8aa8b47b534f"
+  },
+  {
+   "path": "qa/match/08/scenery/final_r5/moving_NEW/s_right_steer.png",
+   "bytes": 2499023,
+   "sha256": "9796ed608f27db310c923528bd05de48219b007704cbecd79bcfee27412d7f20"
   },
   {
    "path": "qa/match/08/scenery/motion_BEFORE/f00_checkpoint.png",
@@ -9118,8 +9273,8 @@
   },
   {
    "path": "tools/match08/motion08.mjs",
-   "bytes": 2346,
-   "sha256": "d32468795b0445562ce691853dee5c289b2fc8365a2e34900608418e71c38612"
+   "bytes": 2377,
+   "sha256": "d4e61545e250ad9a35884e433f29ed0053f3a8efc89aa6b837470d14ca0c25f5"
   },
   {
    "path": "tools/match08/probe08b.mjs",

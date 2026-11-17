@@ -16,7 +16,7 @@ try {
   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
   const shots = [['f00_checkpoint', 0, null], ['f03_forward3u', 19, null], ['f06_forward6u', 38, null], ['f10_forward10u', 63, null],
-                 ['f15_forward15u', 95, null], ['s_left_steer', 40, -1], ['s_right_steer', 40, 1]];
+                 ['f15_forward15u', 95, null], ['f20_forward20u', 127, null], ['s_left_steer', 40, -1], ['s_right_steer', 40, 1]];
   // M08_SHOTS=full (scenery round, 2026-11-17): long hard steering both ways (Benny pressed against the side walls)
   if (EXTRA) shots.push(['s_left_hard', 80, -1], ['s_right_hard', 80, 1], ['s_right_hard6u', 38, 1], ['s_right_hard10u', 63, 1]);
   for (const [name, n, steer] of shots) {
