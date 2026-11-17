@@ -5777,3 +5777,182 @@ This is a big job, so I'll do it in the controlled order you asked for: verify t
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T10:50:36.197Z
+
+> 🔧 **Bash** `{"command": "grep -n \"STAGE_CAM\" src/game/cameraRig.ts | head -5; sed -n \"$(grep -n 'export const STAGE_CAM' src/game/cameraRig.ts | cut -d: -f1),+45p\" src/game/cameraRig.ts", "description": "Read per-screen camera framing settings"}`
+
+### 🧑 User — 2026-11-17T10:50:36.251Z
+
+> ↩︎ result: 25:export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+> 39:/** the blended (required) numeric keys; 05-only extras (yaw, deadZone) are read directly from STAGE_CAM */
+> 47:    const p = STAGE_CAM[st.id];
+> 54:  if (w === 0) return { ...(STAGE_CAM['03'] as CamParams) };
+> 122:    const p5 = STAGE_CAM['05'] as CamParams;
+> export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+>   '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+>   '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+>   // 05: level rear chase down the straight current tube, camera ON the tunnel axis (rings concentric).
+>   // Ref 05 measured at vFOV 62: VP (498, 479) → view pitched atan((up-lookUp)/(ahead+back)) ≈ 12.7°
+>   // below and yawed ≈ 3° left of the axis; Benny's waterline 711 px below the VP → up/back ≈ 0.56.
+>   '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+>   '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
+>   '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
+>   '08': { back: 6 …[+1592 chars]
+
+### 🤖 Claude — 2026-11-17T10:51:57.866Z
+
+> 🔧 **Bash** `{"command": "grep -n \"CHECKPOINTS\\b\\|const CHECKPOINTS\\|function gotoCheckpoint\\|hide=\\|get('hide')\\|qs.get(\\\"hide\\\")\" src/game/Game.ts | head -12; grep -rn \"get('hide')\\|'hide'\" src --include=*.ts | head -5; grep -n \"vWorld\\|modelMatrix \\* vec4\\|worldPosition\" src/vfx/waterRibbon.ts | head -8", "description": "Find checkpoints, hide switch and water world position"}`
+
+### 🧑 User — 2026-11-17T10:51:57.917Z
+
+> ↩︎ result: 104:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> 105:  const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+> 551:  const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+> 570:    const cp = CHECKPOINTS[id];
+> 611:    checkpoints: Object.keys(CHECKPOINTS),
+> src/game/Game.ts:105:  const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+> 295:  vec4 wp = modelMatrix * vec4(p, 1.0);
+
+### 🤖 Claude — 2026-11-17T10:52:00.000Z
+
+> 🔧 **Bash** `{"command": "sed -n 96,135p src/game/Game.ts; sed -n 545,600p src/game/Game.ts", "description": "Read hide handling and checkpoint definitions"}`
+
+### 🧑 User — 2026-11-17T10:52:00.056Z
+
+> ↩︎ result: scene.add(env.group);
+>   const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+>   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+>   if (hidden.has('water')) water.group.visible = false;
+>   if (hidden.has('coins')) coins.group.visible = false;
+>   const zoneHidden = (k: string) => hidden.has(k);
+>   const hud = createHud();
+>   const input = createInput(canvas);
+>   const rideCam = new RideCamera(course);
+>   rideCam.axis = env.tubeAxis;
+> 
+>   // ---------------------------------------------------------------- state
+>   const st = {
+>     mode: 'intro' as Mode,
+>     t: 0, // time within the current mode
+>     clock: 0, // global animation time (shaders)
+>     frozen: null as number | null, // QA: freeze shader time
+>     s: 0,
+>     lat: 0,
+>     vlat: 0,
+>     coins: START_COINS,
+>     hearts: 5,
+>     paused: false,
+>     stage: '01' as StageId,
+>     bumpCooldown: 0,
+>     edgeTime: 0,
+>     twirl: 0,
+>     respawns: 0,
+>     log: [] as { t: number; s: number; y: …[+2770 chars]
+
+### 🤖 Claude — 2026-11-17T10:53:03.910Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/scripts/match-cam-try.mjs", "content": "#!/usr/bin/env node\n// Any screen: try camera framings at a checkpoint WITHOUT changing the game: overrides STAGE_CAM[stage] (and optionally\n// the checkpoint position along the river) in the running page, captures the locked checkpoint frame for each candidate.\n//   node scripts/match-cam-try.mjs --id=06 --out=DIR --cands='[{\"back\":8,\"up\":4.5,\"ahead\":16,\"lookUp\":-1,\"fov\":62},...]'\n//        [--q='extra=1'] [--ds=0]   (ds: shift the checkpoint along the river, units)\n// Writes DIR/cand_<i>.png and DIR/can …[+2137 chars]`
+
+### 🧑 User — 2026-11-17T10:53:04.015Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/scripts/match-cam-try.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T10:53:08.359Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && node scripts/match-cam-try.mjs --id=06 --out=$S/cam06 --cands='[{},{\"back\":8,\"up\":4.6,\"ahead\":18,\"lookUp\":-1.5,\"fov\":62},{\"back\":9.5,\"up\":5.5,\"ahead\":20,\"lookUp\":-2.5,\"fov\":62},{\"back\":7,\"up\":4.0,\"ahead\":16,\"lookUp\":0,\"fov\":62}]' 2>&1 | tail -4; python3 -I - <<EOF\nfrom PIL import Image\nS='$S'\nims=[Image.open('references/06_crest_the_rinse_arch.png').convert('RGB')]+[Image.open(f'{S}/cam06/cand_{i:02d}.png').convert('RGB') for i in range(4)]\nout=Image.new('RGB',( …[+230 chars]`
+
+### 🤖 Claude — 2026-11-17T10:53:09.610Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam06_sheet.png"}`
+
+### 🧑 User — 2026-11-17T10:53:31.908Z
+
+> ↩︎ result: 0 {} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam06/cand_00.png
+> 1 {"back":8,"up":4.6,"ahead":18,"lookUp":-1.5,"fov":62} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam06/cand_01.png
+> 2 {"back":9.5,"up":5.5,"ahead":20,"lookUp":-2.5,"fov":62} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam06/cand_02.png
+> 3 {"back":7,"up":4,"ahead":16,"lookUp":0,"fov":62} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam06/cand_03.png
+
+### 🧑 User — 2026-11-17T10:53:31.942Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:53:47.513Z
+
+> 🔧 **Bash** `{"command": "grep -n \"06\\b\\|'06'\\|s06\\|hall06\\|rinse\\|arch\" src/world/environment.ts | grep -v \"^\\s*//\" | head -40", "description": "Locate the 06 environment construction"}`
+
+### 🧑 User — 2026-11-17T10:53:47.565Z
+
+> ↩︎ result: 4: * (05) → arch hall (06) → washer tube + deep plunge (07) → Final Spin Chamber (08–11).
+> 197:  // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+> 208:  // 06/07 ring bays (unchanged): gold bands every 9 units, 4 circumferential slot rows per bay
+> 223:  // STAGE ANCHORS (wave 6): the 06/07 ring bays, hood lids and slot rows are laid out from the 06 STAGE
+> 225:  // 06/07 rings, lids or slot rows along the tube. The phases reproduce the pre-wave-6 layout exactly
+> 226:  // (measured on that course: first 06/07 ring 5.5644 u after the 06 start; slot-row phase 0.96618 there).
+> 227:  const s06 = course.stage('06').s0;
+> 231:  const rowOffset0607 = (((ROW06_PHASE - s06 * rowRepeat0607) % 1) + 1) % 1;
+> 234:  // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
+> 244:  // meets the right edge at y 241 (approved 229, BEFORE 321); B, C, D, 06, 07 pixel-identical (qa/pilot05/wave9b/T2b/).
+> 246:  const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 2) : 2;
+> 256:  // The straight only runs ≈56 units ahead of that eye before it flares into the 06 hall, so the real bays
+> 262:  const sGlow05 = co …[+1765 chars]
+
+### 🤖 Claude — 2026-11-17T10:53:49.104Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/environment.ts", "offset": 195, "limit": 70}`
+
+### 🧑 User — 2026-11-17T10:53:49.135Z
+
+> ↩︎ result: 195	
+> 196	  // =====================================================================================
+> 197	  // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+> 198	  // =====================================================================================
+> 199	  const s08 = course.stage('08').s0;
+> 200	  const pinkFlow = pinkFlowMaterial();
+> 201	  // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+> 202	  // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+> 203	  // hot magenta near → violet mid-tunnel → warm yellow-white core at the vanishing point
+> 204	  const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+> 205	  const wallGlow: FarGlow = { ...tubeGlow, mid: { color: '#8a3cf0', near: 10, far: 42, amount: 0.55 } };
+> 206	  const tubeEnv = washerTubeEnv('wall');
+> 207	  const goldEnv = washerTubeEnv('gold');
+> 208	  // 06/07 ring bays (unchanged): gold bands every 9 units, 4 circumferential slot rows per bay
+> 209	  const ringSpacing = 9.0;
+> 210	  const slotRowsPerBay = 4;
+> 211	  // analytic strip lights along the tunnel (28 around: ref 05 shows ≈12–16 m …[+4865 chars]
+
+### 🤖 Claude — 2026-11-17T10:54:15.040Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && node scripts/match-cam-try.mjs --id=04 --out=$S/cam04 --cands='[{},{\"back\":7,\"up\":4.2,\"ahead\":20,\"lookUp\":-1.5,\"fov\":62},{\"back\":7,\"up\":4.2,\"ahead\":20,\"lookUp\":-1.5,\"fov\":62,\"__ds\":8}]' 2>&1 | tail -3; node scripts/match-cam-try.mjs --id=07 --out=$S/cam07 --cands='[{},{\"back\":7.5,\"up\":4.6,\"ahead\":20,\"lookUp\":-1.0,\"fov\":62},{\"back\":9,\"up\":5.4,\"ahead\":22,\"lookUp\":-1.8,\"fov\":62}]' 2>&1 | tail -3; python3 -I - <<EOF\nfrom PIL import Image\nS='$S'\nfor sid,re …[+509 chars]`
+
+### 🤖 Claude — 2026-11-17T10:54:16.437Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam07_sheet.png"}`
+
+### 🤖 Claude — 2026-11-17T10:54:17.057Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam04_sheet.png"}`
+
+### 🧑 User — 2026-11-17T10:54:55.523Z
+
+> ↩︎ result: 0 {} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam04/cand_00.png
+> 1 {"back":7,"up":4.2,"ahead":20,"lookUp":-1.5,"fov":62} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam04/cand_01.png
+> 2 {"back":7,"up":4.2,"ahead":20,"lookUp":-1.5,"fov":62,"__ds":8} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam04/cand_02.png
+> 0 {} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam07/cand_00.png
+> 1 {"back":7.5,"up":4.6,"ahead":20,"lookUp":-1,"fov":62} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam07/cand_01.png
+> 2 {"back":9,"up":5.4,"ahead":22,"lookUp":-1.8,"fov":62} → /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/cam07/cand_02.png
+
+### 🧑 User — 2026-11-17T10:54:55.549Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T10:54:55.557Z
+
+> ↩︎ result: [image]
+
