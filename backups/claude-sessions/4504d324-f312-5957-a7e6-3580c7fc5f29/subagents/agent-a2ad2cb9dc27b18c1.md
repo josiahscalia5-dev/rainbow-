@@ -1931,3 +1931,15 @@ Now add the star as a bakeable part in `bake.py` (its approved mask, no colour-f
 > ALL 93061 19.35 0.73
 > px changed vs an4 2573
 
+### 🤖 Claude — 2026-11-17T01:41:15.026Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "        // 16 (three.js clamps to the GPU's maximum): keeps the knit stitches on the beanie's grazing flanks (4 blurred them out)\n        t.anisotropy = 16;", "new_string": "        // tested 16: 2,573 px changed, region numbers identical (19.35) → kept at 4\n        t.anisotropy = 4;"}`
+
+### 🧑 User — 2026-11-17T01:41:15.083Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T01:41:18.784Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; timeout 1800 node scripts/capture.mjs 05 --out=$SP/default05 > $SP/cap_def.log 2>&1; echo cap_rc=$?; cp $SP/capture_log.bak qa/capture_log.json; python3 -I -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('$SP/default05/05.png').convert('RGB')).astype(int); b=np.asarray(Image.open('qa/pilot05/current_default_05.png').convert('RGB')).astype(int)\nprint('d …[+190 chars]`
+

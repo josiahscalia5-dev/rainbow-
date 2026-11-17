@@ -77,6 +77,27 @@ Current tunables in `src/ui/hud.ts` (`H05`): bar x0 33 y0 13 x1 825 y1 100 borde
 hX 162 cX 497.5 top 26.5; banner cx 433 y0 113 h 68 minW 626 size 44 weight 700 skew −4 italic dy 0 stroke 0.
 `npx tsc --noEmit` clean after the last edit.
 
+## RUN #3 (session 01Q46SCH, 2026-11-17 ~01:20 UTC) — progress
+* `probe05.mjs` still runs (edited in the 01:00 run: `--vis` coin visibility; extended now with occlusion-aware coin
+  solving, see coins/NOTES.md). First REAL capture of hud05 (`STACK&hud05=1&coins05=1`, probe /tmp/claude-0/hc05/r3/p2):
+  HUD + text 24.76 / 65.6 % = exactly the harness number (harness vs real capture: max 2 levels in the HUD mask).
+* New tool `hud/hud_split.py`: splits the HUD error into icons / numbers / bar rim / bar fill / banner text / rim / fill /
+  outside (HUD-mask pixels outside both pills). At 24.76: outside 58.7 (31 % of the HUD error), banner text 31.2 (25 %),
+  banner rim 51.7 (11 %), bar fill 10.2 (9 %), bar rim 41.9 (7 %), numbers 31.8 / 34.0 (10 %), icons 1–7.
+* `harness.mjs --css=FILE`: trial CSS appended in the harness page only (trial values never touch hud.ts / other
+  agents' captures). Measured trials (HUD mask mean, harness):
+  | step | HUD mean | ≤20 | what |
+  |---|---:|---:|---|
+  | start (= real capture) | 24.76 | 65.6 % | |
+  | + dark halo round both pills (approved: light pink 0–2 px, dark purple (139–147, 25–32, 114–118) 3–6 px, gone by 8 px) | 22.29 | 67.0 % | a1 → a8 (a4 single dark ring 22.99; a8 light + dark ring best) |
+  | + banner rim from measured rows (1-px border + inset bands; pill 69 px tall: approved 113–181) | 20.43 | 70.1 % | banner rim 51.7 → 20.7 |
+  | + bar rim from measured rows (1-px border + 9 top / 5 bottom bands, fill gradient by row) | 19.68 | 70.7 % | bar rim 41.9 → 29.1 |
+  | + digits: lavender-white gradient fill (approved (250,235,250), pink bottom (246,200,245)) | 19.56 | 70.8 % | weight 600 REJECTED: counter 31.4 → 50.0 |
+  | + banner text 1 px up (approved caps start at row 132, game 133) | 19.45 | 70.7 % | measured row gradient / thin brown outline: no gain (31.19 / 31.43), not kept |
+  | + banner word-spacing 3 px, letter-spacing −0.6 px (approved word gaps 13–14 px vs 8–11) | **18.21** | **71.8 %** | sweep of 14 pairs; sensitive to sub-pixel position (24.9–37.0); kept the best, letters moved 1–3 px toward approved |
+  Ported to `src/ui/hud.ts` (H05 border 1 / banner h 69, track −0.6, word 3, dy −1; `RIM05` rows, `bands05()`, `HALO05`;
+  digits gradient + drop-shadow): harness 18.20 / 71.8 %. Real captures: in progress.
+
 ## Remaining, step by step
 1. (done in harness, see table) — optional: only further fine passes on the banner rim profile (approved top rim
    113–118 soft 5-px ramp peaking at 114, bottom 172–182 with a lavender inner glow) if measured closer.
