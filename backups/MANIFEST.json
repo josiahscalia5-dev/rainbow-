@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 15126,
-   "sha256": "bb1d74b76d0c6bd40f58b661ebf0673fb5510f3a78c3615bae50e694e446a101"
+   "bytes": 15243,
+   "sha256": "ee546dd2681a81ec059fc726b35d26b588efab71987d6d6f372925abbb80eb38"
   },
   {
    "path": "README_FIRST.md",
@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 24460,
-   "sha256": "fdd270632e4a234ded573ba162f2356293a3dd87d1c865b7a8827d212dda595c"
+   "bytes": 26563,
+   "sha256": "1ba031e0fe3ac95117826d8ff49c2224b16eee4230485f7ed2fbd3ad62bd47e2"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12116,
-   "sha256": "c49eddd45c4ee6344199d527f9ce32298e9cbd22fcc6957db6c4aba6cbd42e28"
+   "sha256": "00b7672dbf4933c3350a75680fa164e6c2d60254f1c642232376a19b82fc7554"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -723,13 +723,13 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 25025,
-   "sha256": "621e1cb2e7726f0fa5b8dd9edb7d99dcacdb4e4cb9d737409da00d39af887c96"
+   "bytes": 29064,
+   "sha256": "27bf0c51c66e2aa4209f788faa01befa623c46ec152ff9816ec77679d8a9b0e8"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 29676,
-   "sha256": "65e80ad87741436d14f0835fa690a7055aa52ad5b870973d88ac2f5b9337ffad"
+   "bytes": 30910,
+   "sha256": "6a0531551e5dcfc2311cb5363e9eb466a0ec093d1a28f5924cf7835821226044"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -1298,8 +1298,8 @@
   },
   {
    "path": "qa/flowplan/flowplan_test.json",
-   "bytes": 3904,
-   "sha256": "65a7022f3220c6bb0f8a0e73fed827670b8b1a5398fe7961cb70a7992792a0b3"
+   "bytes": 3901,
+   "sha256": "e8ac5a7c55168e8d37147aee2ecb9dfe409bca5074a11ecca9044a7fec6609f4"
   },
   {
    "path": "qa/gameplay_test.json",
