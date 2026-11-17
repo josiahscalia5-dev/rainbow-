@@ -692,3 +692,107 @@ First fix attempt (keeping the view closer to Benny at the drain drop) only part
 
 > 🔧 **Bash** `{"command": "git add src/game/cameraRig.ts tools/camclear/vidmap.py tools/camclear/triptych.py qa/gameplay_video/compare_r3 && git commit -qm \"camclear r3: 03->04 drain drop keeps Benny in view (camclear-guarded) + video|build|camclear comparison frames\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCLvd1Cb5N4WHTHcHB4\" && git push -q origin claude/rainbow-s08-camclear-c3 && git rev-parse HEAD && git ls-remote origin refs/heads/claude/rainbow-s08-camclear-c3; sed -n 1,25p scripts/gameplay-test.mjs | grep -n \"argv\\|q=\\|out\"  …[+105 chars]`
 
+### 🧑 User — 2026-11-17T17:50:06.583Z
+
+> ↩︎ result: 491c2d56c1fefa0b70e58bb4213e8d30781ae279
+> 491c2d56c1fefa0b70e58bb4213e8d30781ae279	refs/heads/claude/rainbow-s08-camclear-c3
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+
+### 🤖 Claude — 2026-11-17T17:50:09.917Z
+
+> 🔧 **Bash** `{"command": "O=qa/gameplay_video/tests && node scripts/gameplay-test.mjs --q=camclear=1 --out=$O/r3_gameplay_camclear.json 2>&1 | tail -3; node scripts/gameplay-test.mjs --q=match08=1\\&camclear=1 --out=$O/r3_gameplay_match08_camclear.json 2>&1 | tail -3; node scripts/gameplay-test.mjs --out=$O/r3_gameplay_default.json 2>&1 | tail -3; npm run -s test:continuity 2>&1 | tail -4", "description": "Run gameplay and continuity tests", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:50:41.217Z
+
+> ↩︎ result: },
+>  "errors": []
+> }
+>  },
+>  "errors": []
+> }
+>  },
+>  "errors": []
+> }
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+
+### 🤖 Claude — 2026-11-17T17:50:44.167Z
+
+> 🔧 **Bash** `{"command": "for f in qa/gameplay_video/tests/r3_*.json; do python3 -c \"\nimport json,sys;d=json.load(open('$f'));\nprint('$f', {k:d[k] for k in d if k in ('pass','passed','summary','coins','score','total','drop','ok')} or list(d.keys()))\"; done; npm run -s test:continuity 2>&1 | grep -i \"drop\\|ok\\|07->08\" | head", "description": "Summarise test results", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T17:50:45.320Z
+
+> ↩︎ result: qa/gameplay_video/tests/r3_gameplay_camclear.json {'pass': True}
+> qa/gameplay_video/tests/r3_gameplay_default.json {'pass': True}
+> qa/gameplay_video/tests/r3_gameplay_match08_camclear.json {'pass': True}
+>  "ok": true,
+>   "verticalDrop": 61.19,
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+
+### 🤖 Claude — 2026-11-17T17:50:48.610Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nfor n in ['camclear','default','match08_camclear']:\n  d=json.load(open('qa/gameplay_video/tests/r3_gameplay_'+n+'.json'))\n  s=json.dumps(d)\n  import re\n  print(n, len([c for c in d.get('checks',[]) if c.get('ok', c.get('pass'))]) if isinstance(d.get('checks'),list) else '', re.findall(r'\\\"(coins?\\w*|score|total\\w*|run\\w*)\\\": ([0-9.]+)',s)[:8])\"", "description": "Extract coin totals from tests"}`
+
+### 🧑 User — 2026-11-17T17:50:48.698Z
+
+> ↩︎ result: camclear  [('coins', '2240'), ('coins', '1330'), ('coins', '1350'), ('coins', '1370'), ('coins', '1380'), ('coins', '1400'), ('coins', '1420'), ('coins', '1420')]
+> default  [('coins', '2240'), ('coins', '1330'), ('coins', '1350'), ('coins', '1370'), ('coins', '1380'), ('coins', '1400'), ('coins', '1420'), ('coins', '1420')]
+> match08_camclear  [('coins', '2240'), ('coins', '1330'), ('coins', '1350'), ('coins', '1370'), ('coins', '1380'), ('coins', '1400'), ('coins', '1420'), ('coins', '1420')]
+
+### 🤖 Claude — 2026-11-17T17:50:52.314Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nd=json.load(open('qa/gameplay_video/tests/r3_gameplay_match08_camclear.json'))\nprint({k:(v if not isinstance(v,(list,dict)) else (len(v) if isinstance(v,list) else list(v)[:12])) for k,v in d.items()})\ns=json.dumps(d); import re; print(re.findall(r'\\\"(collected|coinCount|picked|pickups|91|n\\w*)\\\": (\\d+)',s)[:10])\"; grep -n \"91\\|2240\\|2,240\" scripts/gameplay-test.mjs | head", "description": "Confirm 91 coins / 2240"}`
+
+### 🧑 User — 2026-11-17T17:50:52.426Z
+
+> ↩︎ result: {'checks': ['pauseFreezes', 'continuousTravel', 'noCameraCut', 'noTeleport', 'plunge', 'realCoinPickups', 'victory', 'heartsLostOnWallBump'], 'samples': 71, 'plunge': ['tTop', 'tBottom', 't08', 'yTop', 'yBottom', 'y08', 'travelTimeTopToInlet', 'verticalDrop'], 'maxJumpAt': ['s', 's1', 'stage', 'y0', 'y1', 't'], 'errors': 0, 'pass': True, 'query': 'match08=1&camclear=1'}
+> [('nonMonotonicSteps', '0'), ('collected', '91')]
+
+### 🤖 Claude — 2026-11-17T17:51:02.994Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && T=14.54,17.66,28.12,42,44.5,44.88,45.62,46.75 && node tools/camclear/probe.mjs --q=match08=1 --times=$T --size=360x800 --nometrics --out=$S/v_m08 >/dev/null 2>&1; node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --times=44.5,44.88,45.62,46.75 --size=360x800 --nometrics --out=$S/v_cc >/dev/null 2>&1; python3 - <<EOF\nimport json\nfrom PIL import Image, ImageChops\ndef px(a,b):\n  d=ImageChops.difference(Image.open(a).convert('RGB'),Image.open(b).convert('RGB')).convert('L')\n  return sum( …[+567 chars]`
+
+### 🧑 User — 2026-11-17T17:51:48.922Z
+
+> ↩︎ result: <stdin>:5: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+> match08 no-camclear t 14.53 px diff vs before-fix 0
+> match08 no-camclear t 17.67 px diff vs before-fix 0
+> match08 no-camclear t 28.12 px diff vs before-fix 0
+> match08 no-camclear t 42 px diff vs before-fix 0
+> match08 no-camclear t 44.5 px diff vs before-fix 0
+> match08 no-camclear t 44.88 px diff vs before-fix 0
+> match08 no-camclear t 45.62 px diff vs before-fix 0
+> match08 no-camclear t 46.75 px diff vs before-fix 0
+> match08+camclear t 44.5 px diff vs before-fix 2262
+> match08+camclear t 44.88 px diff vs before-fix 0
+> match08+camclear t 45.62 px diff vs before-fix 0
+> match08+camclear t 46.75 px diff vs before-fix 30910
+
+### 🤖 Claude — 2026-11-17T17:51:58.276Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad && python3 - <<EOF\nimport json\nfrom PIL import Image, ImageChops\nold={r['t']:r['file'] for r in json.load(open('$S/p_cc/probe.json'))['rows']}\nfor r in json.load(open('$S/v_cc/probe.json'))['rows']:\n  a=Image.open(r['file']).convert('RGB'); b=Image.open(old[r['t']]).convert('RGB')\n  d=ImageChops.difference(a,b); print(r['t'], d.getbbox(), max(d.convert('L').getextrema()))\n  if r['t']==46.75:\n    w,h=a.size; s=Image.new('RGB',(w*3,h)); s.paste(b,(0,0)); s.paste(a,(w,0)); s.paste(d.point(lamb …[+104 chars]`
+
+### 🧑 User — 2026-11-17T17:51:58.742Z
+
+> ↩︎ result: 44.5 (96, 756, 265, 775) 149
+> 44.88 None 0
+> 45.62 None 0
+> 46.75 (0, 0, 360, 800) 172
+
+### 🤖 Claude — 2026-11-17T17:52:00.918Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/diff4675.png"}`
+
+### 🧑 User — 2026-11-17T17:52:00.978Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:52:09.142Z
+
+> 🔧 **Bash** `{"command": "O=qa/gameplay_video/moving_r3 && for st in 0 -1 1; do node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=40 --t1=47.5 --dt=0.25 --steer=$st --size=270x600 --out=$O/steer$st >/dev/null 2>&1; python3 -c \"\nimport json\nd=json.load(open('$O/steer$st/probe.json'))\nbad=[(r['t'],r['stage'],round(100*((r.get('benny') or {}).get('hidden') or 0)),round(100*(r.get('near2') or 0)),[i['obj'][:20] for i in r.get('inside') or []]) for r in d['rows'] if ((r.get('benny') or {}).get('hidden') or 0)>0.25 or (r.get('near2') or 0)>0.2 or r.get('inside') or (r.get('benny') is None and r[' …[+358 chars]`
+
