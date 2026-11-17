@@ -34,3 +34,13 @@ Other still views with `camclear=1` (no match switch): 03, 05, 07, 09 0 px; 04 a
 pieces in front of Benny thinned; 06: view inside the tube, Benny large and central).
 
 Tools: `tools/camclear/*` (probe.mjs = real-time frames from app start, timeline.mjs, camtrace.mjs).
+
+## Round 3 (branch `claude/rainbow-s08-camclear-c3`, 2026-11-17 ~17:30–18:10 UTC)
+* Side by side for every problem moment of the user's video: `compare_r3/` (tools `vidmap.py` = video→game time per stage,
+  `triptych.py`). Still visible in camclear: 03→04 drain drop (chute water covers Benny). 04 at 8 s pink wall, 06 drum
+  wall/gold band, 07 gold band filling the frame: already fixed by round-2 camclear. 08 view engages at 44.5 s and holds; 09–11 clean.
+* Fix `clear0304()` (cameraRig.ts, camclear only). Tried in order: (a) keep the view ≤ 5.5 u from Benny → still hidden
+  100 % at 17.4–17.5 s; (b) ride on the stream with the stream's own up → view flips under the twisting chute water at the
+  drain lip; (c) **kept:** ride on the stream 3 u behind, 1.6 u world-up, aimed at Benny.
+* Wider see-through cone (R_PROP 2.2→2.7) tested and reverted: no gain (the 07 43.75 s "hidden" share is the screen edge).
+* APK `builds/rainbow-debug-08camclear-2026-11-17-r3.apk`.
