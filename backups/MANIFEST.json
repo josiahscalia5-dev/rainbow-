@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "e32a96f00ee88f79be66534b5169c25f169ac1e258e1df1d9f388f0e00075334"
+   "sha256": "703459896d331bf6abc9a7e94618b796646664082d5f50268d81603fa725d743"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1017,6 +1017,16 @@
    "sha256": "82bda80d4f8c2a4ec7d013fd725fc64e2353f76b58250ca1ffacaa7d0db78071"
   },
   {
+   "path": "qa/imageblaster/08/08_clean_blend_mask.png",
+   "bytes": 58282,
+   "sha256": "9c6a15d1f95fc6b982d0e59e159bca6480e66e3e1d96068be224760675ea01f9"
+  },
+  {
+   "path": "qa/imageblaster/08/08_plate_CLEAN_aligned_9x16_1536x2731.png",
+   "bytes": 6591567,
+   "sha256": "b66ecf984a565122e79912fa22b5a96916298c093334d7bf316df8c88f763d57"
+  },
+  {
    "path": "qa/imageblaster/08/08_plate_aligned_9x16_1536x2731.png",
    "bytes": 6626202,
    "sha256": "35bcff1019905aa8dff2dca5fd966ecf25fa8b76706a0d699e2f5ed7e71d4307"
@@ -1032,14 +1042,29 @@
    "sha256": "b86c716230d32fe3075839b30452d496e258fe0334c3648d90d967f00426db27"
   },
   {
+   "path": "qa/imageblaster/08/3-08-plate-nosplash_fal_edit2_raw.png",
+   "bytes": 6599984,
+   "sha256": "e131fc29b3eaa07f071065bd19eb475e5d7039c4157a77c53c778fe1bfd2bd83"
+  },
+  {
    "path": "qa/imageblaster/08/NOTES.md",
    "bytes": 12204,
    "sha256": "198703e6a0f3d34e5737d9363034af640ba03402f5059d896cf578eb00322696"
   },
   {
+   "path": "qa/imageblaster/08/clean_plate_vs_approved_08_metrics.json",
+   "bytes": 3809,
+   "sha256": "c0fc908841b5b08160a3be7b597c2c3adb0b57f42fe96091aaff6c6f01cadc02"
+  },
+  {
    "path": "qa/imageblaster/08/closeup_benny_area_approved_top_plate_bottom.png",
    "bytes": 971357,
    "sha256": "cd4ba48087730c05d9adb451e9828b10197383540785ad71d3a16cda6d4d34bf"
+  },
+  {
+   "path": "qa/imageblaster/08/closeup_crest_before_top_after_bottom.png",
+   "bytes": 1495222,
+   "sha256": "3ee66e05cef5ff8161f7b9d8ad7f10f037f12798e52a62d4d88f245b00105999"
   },
   {
    "path": "qa/imageblaster/08/closeup_door_towel_platform_approved_top_plate_bottom.png",
