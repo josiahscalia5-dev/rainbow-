@@ -282,8 +282,8 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
       if (f.mesh.name === 'fur_body') f.uniforms.uSoftEdge.value = 1.0;
     }
     // benny08 round 4: lighter pink tips on the visible shoulders / upper body like the painted highlights (number neutral,
-    // visibly closer); `?b08hi=0` = off
-    if (B08R3 && qv('b08hi') !== '0' && f.mesh.name === 'fur_body') f.uniforms.uHi.value = 0.7;
+    // visibly closer); since round 5 (user 19:00: r3b is the base) OPT-IN: `?b08hi=1` = on
+    if (B08R3 && qv('b08hi') === '1' && f.mesh.name === 'fur_body') f.uniforms.uHi.value = 0.7;
     // benny08 round 3: the fur uniforms reachable from the mesh (Game.ts ?match08=1 Benny tweaks, QA probes); no render effect
     f.mesh.userData.furU = f.uniforms;
   }
@@ -314,8 +314,8 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
       }
       mat.map = tex;
       mat.color.setScalar(spec.scale);
-      // benny08 round 4: lighter, more violet pom-pom like the painting (pom 22 -> 23 % within 20); `?b08pom=0` = off
-      if (B08R3 && qv('b08pom') !== '0' && m.name === 'fur_pom') mat.color.setRGB(1.12, 1.0, 1.06);
+      // benny08 round 4: lighter, more violet pom-pom like the painting (pom 22 -> 23 % within 20); since round 5 OPT-IN (r3b base): `?b08pom=1` = on
+      if (B08R3 && qv('b08pom') === '1' && m.name === 'fur_pom') mat.color.setRGB(1.12, 1.0, 1.06);
       if (!fur) {
         const n = spec.normal ? maps[spec.normal] : null;
         mat.normalMap = n;

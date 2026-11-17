@@ -125,6 +125,34 @@ export async function startGame(canvas: HTMLCanvasElement) {
     sm.needsUpdate = true;
   }
   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+  // benny08 round 5 body shape (qa/match/08/benny08/NOTES.md), two presets on the same machinery:
+  //  `?b08shape=1` = the 18:55 taper (body fur x1.12 at the top -> x0.92 at the bottom, arms raised; user: wrong way, OFF by default)
+  //  `b08full` (DEFAULT under match08, user 19:00: "rounder and fuller like the approved picture"): body fur x1.04 wider,
+  //  beanie x0.94 so the body is wider than the brim, arms +0.03 up and x1.15 (stubby, high); `?b08full=0` = off
+  // Tuning (QA only): b08tt/b08tb taper top/bottom, b08bw/b08bh body fur width/height, b08ly fur lift, b08ay/b08ax/b08ak arms.
+  const B08TAPER = qs.get('b08shape') === '1';
+  const B08FULL = !B08TAPER && qs.get('b08full') !== '0';
+  const B08SHAPE = !!b08 && B08R2 && qs.get('b08r3') !== '0' && (B08TAPER || B08FULL);
+  const b08P = B08TAPER ? { bw: 1, ay: 0.04, ax: 0, ak: 1.1, bh: 1, ly: 0, tt: 1.12, tb: 0.92, hk: 1 } : { bw: 1.04, ay: 0.03, ax: 0, ak: 1.15, bh: 1, ly: 0, tt: 1, tb: 1, hk: 0.94 };
+  const b08Shape = B08SHAPE ? { bw: qn('b08bw', b08P.bw), ay: qn('b08ay', b08P.ay), ax: qn('b08ax', b08P.ax), ak: qn('b08ak', b08P.ak), bh: qn('b08bh', b08P.bh), ly: qn('b08ly', b08P.ly), tt: qn('b08tt', b08P.tt), tb: qn('b08tb', b08P.tb), hk: qn('b08hk', b08P.hk) } : null;
+  // the body fur mesh only (beanie, face and arms are separate children of the body joint and stay put)
+  const b08FurO = b08Shape ? benny.root.getObjectByName('fur_body') : undefined;
+  const b08Fur = b08FurO ? { o: b08FurO, p: b08FurO.position.clone(), s: b08FurO.scale.clone() } : null;
+  // taper: body fur geometry widened toward the brim (x tt at the top) and slimmed toward the water (x tb at the bottom);
+  // a second position buffer, swapped in only while Screen 08 is shown (the shared geometry is otherwise untouched)
+  const b08Taper = (() => {
+    const g = (b08FurO as THREE.Mesh | undefined)?.geometry;
+    if (!g || !b08Shape || (b08Shape.tt === 1 && b08Shape.tb === 1)) return null;
+    const orig = g.getAttribute('position') as THREE.BufferAttribute;
+    const t = orig.clone();
+    g.computeBoundingBox(); const y0 = g.boundingBox!.min.y, y1 = g.boundingBox!.max.y;
+    for (let i = 0; i < t.count; i++) {
+      const u = THREE.MathUtils.smoothstep(t.getY(i), y0, y1); const k = b08Shape.tb + (b08Shape.tt - b08Shape.tb) * u;
+      t.setX(i, t.getX(i) * k); t.setZ(i, t.getZ(i) * k);
+    }
+    return { g, orig, t };
+  })();
+  const b08Arms = b08Shape ? ['armL', 'armR'].map((n) => { const o = benny.root.getObjectByName(n); return o ? { o, p: o.position.clone(), s: o.scale.clone(), side: n === 'armL' ? 1 : -1 } : null; }).filter((v) => v !== null) : [];
   const b08Parts = b08 ? Object.keys(M08_BENNY.parts).map((n) => { const o = benny.root.getObjectByName(n); return o ? { n, o, s: o.scale.clone(), p: o.position.clone(), rz: o.rotation.z } : null; }).filter((v) => v !== null) : [];
   const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, hatPos: (b08.hat?.position ?? new THREE.Vector3()).clone(), hatRz: b08.hat?.rotation.z ?? 0, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
@@ -549,8 +577,18 @@ export async function startGame(canvas: HTMLCanvasElement) {
     if (m08 && b08 && b08Rest) {
       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
       const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];
+      if (b08Fur) {
+        b08Fur.o.position.copy(b08Fur.p); b08Fur.o.scale.copy(b08Fur.s);
+        if (b08Taper) b08Taper.g.setAttribute('position', m08On ? b08Taper.t : b08Taper.orig);
+        if (m08On && b08Shape) { b08Fur.o.position.y += b08Shape.ly; b08Fur.o.scale.multiply(new THREE.Vector3(b08Shape.bw, b08Shape.bh, b08Shape.bw)); }
+      }
+      for (const r of b08Arms) {
+        r.o.position.copy(r.p);
+        r.o.scale.copy(r.s);
+        if (m08On && b08Shape) { r.o.position.x -= r.side * b08Shape.ax; r.o.position.y += b08Shape.ay; r.o.scale.multiplyScalar(b08Shape.ak); }
+      }
       b08.body?.scale.set(b08Rest.body.x * bx, b08Rest.body.y * by, b08Rest.body.z * bz);
-      const hk = m08On ? M08_BENNY.hat : 1;
+      const hk = m08On ? M08_BENNY.hat * (b08Shape ? b08Shape.hk : 1) : 1;
       b08.hat?.scale.set(b08Rest.hat * hk / bx, b08Rest.hat * hk / by, b08Rest.hat * hk / bz);
       // benny08 round 2 (qa/match/08/benny08/NOTES.md): beanie 0.95x and seated ≈15 px higher / ≈10 px further left (body-local offset)
       if (b08.hat) { const [ox, oy, oz] = m08On ? M08_BENNY.hatOff : [0, 0, 0]; b08.hat.position.set(b08Rest.hatPos.x + ox, b08Rest.hatPos.y + oy, b08Rest.hatPos.z + oz); b08.hat.rotation.z = b08Rest.hatRz + (m08On ? M08_BENNY.hatRoll : 0); }

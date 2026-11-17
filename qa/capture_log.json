@@ -1,10 +1,54 @@
 {
-  "when": "2026-11-17T17:39:45.628Z",
+  "when": "2026-11-17T19:14:57.938Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
+      "id": "08",
+      "file": "qa/match/08/benny08/r5b/default/08.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "08",
+        "s": 391.21995388030825,
+        "y": -113.11321459802053
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "08",
+        "s": 391.22,
+        "lat": 0,
+        "coins": 2040,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -113.113,
+        "bennyVisible": true,
+        "cam": [
+          12.03,
+          -108.74,
+          -276
+        ]
+      },
+      "stats": {
+        "fps": 77.9,
+        "calls": 160,
+        "triangles": 610707,
+        "geometries": 173,
+        "textures": 53,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 238,
+        "firstFrameTriangles": 611643
+      }
+    },
+    {
       "id": "04",
-      "file": "qa/match/08/benny08/r3/other_default/04.png",
+      "file": "qa/match/08/benny08/r5b/default/04.png",
       "size": [
         864,
         1536
@@ -31,7 +75,7 @@
         ]
       },
       "stats": {
-        "fps": 60.2,
+        "fps": 70.4,
         "calls": 97,
         "triangles": 712274,
         "geometries": 112,
@@ -48,7 +92,7 @@
     },
     {
       "id": "05",
-      "file": "qa/match/08/benny08/r3/other_default/05.png",
+      "file": "qa/match/08/benny08/r5b/default/05.png",
       "size": [
         864,
         1536
@@ -75,7 +119,7 @@
         ]
       },
       "stats": {
-        "fps": 60.3,
+        "fps": 68.3,
         "calls": 86,
         "triangles": 567415,
         "geometries": 102,
@@ -92,7 +136,7 @@
     },
     {
       "id": "06",
-      "file": "qa/match/08/benny08/r3/other_default/06.png",
+      "file": "qa/match/08/benny08/r5b/default/06.png",
       "size": [
         864,
         1536
@@ -119,7 +163,7 @@
         ]
       },
       "stats": {
-        "fps": 60.5,
+        "fps": 71,
         "calls": 72,
         "triangles": 543081,
         "geometries": 93,
@@ -136,7 +180,7 @@
     },
     {
       "id": "07",
-      "file": "qa/match/08/benny08/r3/other_default/07.png",
+      "file": "qa/match/08/benny08/r5b/default/07.png",
       "size": [
         864,
         1536
@@ -163,7 +207,7 @@
         ]
       },
       "stats": {
-        "fps": 60.1,
+        "fps": 68,
         "calls": 181,
         "triangles": 660599,
         "geometries": 192,
