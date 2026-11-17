@@ -161,8 +161,11 @@ export const BAKE08: boolean =
 // two literal paths (not one `${dir}` template): Vite then bundles only these two folders
 const T = (f: string) => (BAKE08 ? new URL(`../../../assets/textures/benny08/${f}`, import.meta.url).href : new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href);
 /** part → baked albedo (sRGB PNG) + colour factor (the map stores albedo / factor so it fits 0..1) + optional normal map */
+/** benny08 round 3 (qa/match/08/benny08/NOTES.md): with the 08 maps, the body map with the dark strip under the cuff
+ *  repaired (work/fixband08.py → body_r3.png); `?b08r3=0` = the round-2 body.png */
+export const B08R3: boolean = BAKE08 && qv('b08r3') !== '0';
 export const MAPS05: Record<string, { map: string; scale: number; normal?: string; normalScale?: number }> = {
-  fur_body: { map: 'body.png', scale: 1 },
+  fur_body: { map: B08R3 ? 'body_r3.png' : 'body.png', scale: 1 },
   fur_armL: { map: 'armL.png', scale: 1 },
   fur_armR: { map: 'armR.png', scale: 1 },
   fur_pom: { map: 'pom.png', scale: 1 },

@@ -29,10 +29,19 @@ w = np.clip(np.minimum((y - y0) / 8.0, (y1 - y) / 6.0), 0, 1)
 g = np.clip(T[None, :] / np.maximum(Ls, 1), 1.0, 1.7)
 G = 1 + (g - 1) * w
 B = np.clip(A * G[..., None], 0, 255)
+if opt.get('mode', 'copy') == 'copy':
+    # fur detail: the band rows take the fur rows just below them (shifted down by the band height), blended by w —
+    # strands keep their downward direction; the lifted tone above stays as the low-pass base
+    sh = y1 - y0 + 2
+    idx = np.clip(np.arange(H) + sh, 0, H - 1)
+    Cp = A[idx]
+    hp = Cp - np.stack([gaussian_filter(Cp[..., c], (3, 10), mode=('nearest', 'wrap')) for c in range(3)], -1)
+    lo = np.stack([gaussian_filter(B[..., c], (3, 10), mode=('nearest', 'wrap')) for c in range(3)], -1)
+    B = np.clip(B * (1 - w[..., None]) + (lo + hp) * w[..., None], 0, 255)
 # whitish splash specks inside the band (low saturation, bright) → local median fur colour
 mx, mn = B.max(-1), B.min(-1)
 sat = (mx - mn) / np.maximum(mx, 1)
-band = (y >= y0 - 10) & (y <= y1 + 40)
+band = (y >= y0 - 10) & (y <= y1 + int(opt.get("speck_below", 10)))
 speck = band & (sat < 0.30) & (mx > 150)
 speck = gaussian_filter(speck.astype(float), 1.0) > 0.15
 med = np.stack([median_filter(B[..., c], size=9, mode='wrap') for c in range(3)], -1)
