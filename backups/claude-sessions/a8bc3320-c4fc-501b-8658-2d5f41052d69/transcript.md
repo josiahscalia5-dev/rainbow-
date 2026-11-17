@@ -2938,3 +2938,96 @@ I'll prepend this session's hand-over section to the transfer guide and update t
 
 > 🔧 **ToolSearch** `{"query": "select:mcp__github__create_pull_request,mcp__github__list_pull_requests", "max_results": 2}`
 
+### 🧑 User — 2026-11-17T00:20:17.740Z
+
+> ↩︎ result: LOCAL 203e2e16485a039c9198fdbe4b0089d10617ac2c REMOTE 203e2e16485a039c9198fdbe4b0089d10617ac2c
+
+### 🧑 User — 2026-11-17T00:20:17.750Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-17T00:20:26.759Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "josiahscalia5-dev:ccr-694bda6a-x58ntq", "state": "open", "fields": ["number", "title", "html_url"]}`
+
+### 🧑 User — 2026-11-17T00:20:27.732Z
+
+> ↩︎ result: []
+
+### 🤖 Claude — 2026-11-17T00:20:41.691Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "title": "DO NOT MERGE — Screen 05 account-transfer recovery + far-river riding fixes (experimental)", "head": "ccr-694bda6a-x58ntq", "base": "claude/approved-screen-implementation-g3loqu", "draft": true, "body": "**Draft for tracking only. Do not merge or promote: the owner has not approved the Screen 05 visual.**\n\n## Recovery (account transfer)\n- Working branch `ccr-694bda6a-x58ntq` created directly from `b81cc34` (tip of `claude/approved-screen-implementation-g3loqu`, verified newest with `git ls-remote`). Bootstrap ran with `--skip-resu …[+2250 chars]`
+
+### 🧑 User — 2026-11-17T00:20:43.837Z
+
+> ↩︎ result: {"id":"5347785899","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/13"}
+
+### 🤖 Claude — 2026-11-17T00:20:46.645Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 13}`
+
+### 🧑 User — 2026-11-17T00:20:47.967Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#13. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🤖 Claude — 2026-11-17T00:20:52.832Z
+
+I'll track the remaining integration step, then hand over while the specialists work.
+
+### 🤖 Claude — 2026-11-17T00:20:54.585Z
+
+> 🔧 **TaskCreate** `{"subject": "Integrate specialist results into match05 + full-frame proof", "description": "When env05 / benny05 / hud05+coins05 report: verify default 0 px, review their NOTES numbers, combined match05 capture, metrics, 03_NEW/04_DIFFERENCE/05_OVERLAY, gameplay + continuity, autosave verify, then splash/bubbles wave 2.", "activeForm": "Waiting on specialists"}`
+
+### 🧑 User — 2026-11-17T00:20:54.596Z
+
+> ↩︎ result: Task #8 created successfully: Integrate specialist results into match05 + full-frame proof
+
+### 🤖 Claude — 2026-11-17T00:21:10.654Z
+
+Recovery is done and checked, and Screen 05 work has resumed. Three specialists are still running in the background. Nothing has been promoted: everything new is behind URL switches, and the default game is pixel-identical to your saved one.
+
+**Recovered and saved**
+- Your source branch `claude/approved-screen-implementation-g3loqu` is still at `b81cc34`, the commit you gave me; there is nothing newer. I started a new working branch, `ccr-694bda6a-x58ntq`, directly from it.
+- Latest save: `203e2e16485a039c9198fdbe4b0089d10617ac2c`, and GitHub shows the same commit. The five-minute autosave is running on the new branch, and your source branch is now protected from it.
+- Draft PR [#13](https://github.com/josiahscalia5-dev/rainbow-/pull/13) is marked DO NOT MERGE and shows only this session's changes. I'm watching it.
+
+**Tools**
+- Blender 5.3.0 is installed. I actually ran it headless:
+  - renders in Workbench, EEVEE and Cycles;
+  - all 7 `.blend` files open;
+  - `benny.glb`, `rainbow_girl.glb` and `lids05.glb` (6 paddles) import;
+  - exporting and re-importing the paddles keeps their geometry exactly.
+- Blender MCP is not connected and can't be here: it needs Blender's desktop window, and this cloud machine has no screen. The command-line Blender above does the real modelling, rendering and import/export work.
+- GitHub and Playwright MCP are connected and tested. Playwright renders WebGL2 in Chromium 153.
+- Node, TypeScript, Vite, Three.js, Capacitor, Android SDK 34 with Java 21, Python's image libraries, Git LFS (34/34 files) and ffmpeg all checked out. I haven't built an APK yet; that's the Android specialist's last step.
+
+**Screen 05 recovery**
+- The default game, your protected BEFORE and the `?match05=1` stack each match their saved pictures exactly (0 pixels differ). `?match05=1` turns on the full experimental stack correctly.
+- Gameplay passes 8/8 and the stage-continuity test passes; I also captured moving and steering frames.
+- The whole screen is still 51.6% of pixels within 20 colour levels of your approved image. That is far from a 95% visual match.
+
+**Far-river work, continued**
+- The previous session's last fix wouldn't have worked: when I ran it, it found nothing to change. The real causes showed up when riding forward:
+  - a blur where two different water pictures were blended;
+  - dark torn stripes where the starting camera never saw behind the wave crests.
+- I fixed both behind two new switches, `projvp05` and `projgap05`, both on with `?match05=1`:
+  - **Torn stripes:** 3,063 → 62 pixels at 10 units ahead.
+  - **Blurred band:** its contrast rose toward your approved water's level (11.5 → 13.4 at 10 units, 13.6 → 17.0 at 20; your image is 17.7).
+  - **Whole screen at the locked camera:** improved only slightly, 51.57% → 51.70%.
+- Screen 06 is unchanged. Screen 04 changes on 832 pixels, all in the distant view where it looks into the Screen 05 river.
+- I sent you the full-size images: your original, the recovered game, the new render, and riding frames before and after.
+
+**Specialists**
+- All 10 definitions are present and unchanged.
+- The three cut off at 23:42 (tunnel and rings, Benny, HUD and coins) hadn't changed any game files, so I relaunched them from their original briefs. When they report I'll check their numbers, run the combined capture and tests, and then start the splash and bubbles specialist.
+
+**Needs your decision**
+- **GitHub default branch:** new sessions start on it, and it's still the first account's old version, with none of the Blender or tool restore. That's how this session started. If you set it to `ccr-694bda6a-x58ntq` (GitHub → Settings → Branches), the automatic SessionStart restore works every time. Until then, the first step in a new session is the bootstrap command now written at the top of `backups/CLAUDE_ACCOUNT_TRANSFER.md`.
+- **Optional:** your Marble API key doesn't transfer between accounts (it fails with 401), and the World Labs Atlas connector needs sign-in in claude.ai's connector settings. Neither is needed for Screen 05, and no credits were spent.
+
+### 🧑 User — 2026-11-17T00:21:12.797Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

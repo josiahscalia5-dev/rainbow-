@@ -539,7 +539,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "1e6db07d522342a0fb7a9a37e9d25b86cce00ca2539eab353158de20a26577f4"
+   "sha256": "22c1233092812ca111a54ec1936fe1e8b9264e258c75245d80d9c2be1b4fbe76"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1382,6 +1382,11 @@
    "sha256": "9ac529ed9d7571dc1ee5979959a12d64f8bb9c9f9cc8292a0fadc6b59a52766e"
   },
   {
+   "path": "qa/pilot05/full_reference_match/benny/work/geom.py",
+   "bytes": 2257,
+   "sha256": "80c7e9927f10c49061675078785face9493b88cdcc7f93aadca1cd4d6a638415"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/benny/work/mask_crop.png",
    "bytes": 184145,
    "sha256": "a58defaf3710524a5ead4e38b4d78a3eedd1a01c1619fc6aaf66302269d690a6"
@@ -1430,6 +1435,41 @@
    "path": "qa/pilot05/full_reference_match/benny/work/profile.py",
    "bytes": 907,
    "sha256": "dae10a9ea2fbec8a87d496ff42502844a66c8e8ed5910d3ee3279f6ef5763d39"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r1/calA.png",
+   "bytes": 2199198,
+   "sha256": "f4ba132c3cf05247f97cf8478c72f69df4b03d4fbe990dd0a3e1372c79ec2c16"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r1/calB.png",
+   "bytes": 2171183,
+   "sha256": "e7fb894eadcc243a4f6d630e234d1a0bd2989396a978c5b44de42f00a096046f"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r1/combo.png",
+   "bytes": 800326,
+   "sha256": "62b0c498419d4e353e3c68a3695909ce034b762ee89107581e1ea553c026d4ac"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r1/restore.png",
+   "bytes": 2178943,
+   "sha256": "8c29dba6322f4ae5977c0303d1e489671076fd65589fe1be5bc635c18c0a5a29"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r1/shot0.png",
+   "bytes": 2178943,
+   "sha256": "8c29dba6322f4ae5977c0303d1e489671076fd65589fe1be5bc635c18c0a5a29"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r1/uv.f32",
+   "bytes": 3379200,
+   "sha256": "95d748cdee356e26804b62a93a131fb68adfd78a7ac83fb04dedaab35f7baf19"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/r1/uv_vis.png",
+   "bytes": 77935,
+   "sha256": "6289ea6af0cd538a2dff41a8277c677cbb7515fd90593d66b734765fadaf4dcb"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/ref_classes.png",
@@ -8428,8 +8468,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 43432,
-   "sha256": "ab6620d86483d02bc5ea96a28d55c69700e096efe388ab70cb3642ba9f019ea5"
+   "bytes": 43726,
+   "sha256": "34a78fc5b7e321a8ecfc2e72bb300fcf6a8009017e618149c96aa81266b963f8"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

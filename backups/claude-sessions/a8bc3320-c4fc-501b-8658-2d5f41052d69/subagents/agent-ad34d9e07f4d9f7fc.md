@@ -1400,3 +1400,75 @@ Now the new Benny-05 module.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; time node $W/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$W/r1 $W/probe/shot0.shot.js $W/probe/info.js $W/probe/uv.js $W/probe/calA.shot.js $W/probe/calB.shot.js $W/probe/restore.shot.js 2>&1 | tail -12", "description": "Run first bake probe session with benny05 on", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T00:20:28.428Z
+
+> ↩︎ result: console: [benny05] missing baked map armR.png
+> console: [benny05] missing baked map brim.png
+> console: [benny05] missing baked map body.png
+> console: [benny05] missing baked map crown.png
+> loaded 3.774
+> shot0.shot.js null
+> info.js {"body":{"px":[420.1,1030.5],"w":[1.514,-41.2,-74.734]},"hat":{"px":[420.3,1035.6],"w":[1.515,-41.228,-74.727]},"pom":{"px":[421.2,847.8],"w":[1.514,-40.189,-74.903]},"hat_star":{"px":[512.5,953.8],"w":[2.012,-40.541,-74.295]},"armL":{"px":[293.7,1043],"w":[0.807,-41.287,-74.721]},"armR":{"px":[548.8,1039.7],"w":[2.226,-41.23,-74.717]},"eyes":{"px":[420.1,1030.5],"w":[1.514,-41.2,-74.734]},"bodyUp":[-0.038,0.967,-0.253],"bodyFwd":[0.013,-0.253,-0.967],"bodyRight":[-0.999,-0.04,-0.003],"camFwd":[-0.05,-0.261,-0.964],"camRight":[0.999,-0.002,-0.052],"camUp":[-0.011,0.965,-0.261],"cam":[1.92,-37.943,-68.281],"fov":62,"rootScale":[1,1,1],"bodyLocalQ":[0.1069,-0.0008,-0.0073,0.9942],"hatLocal":[0,-0.028,0],"pxPerUnit":180.4}
+> uv.js {"saveAs":"uv.f32"}
+> calA.shot.js "calA"
+> calB.shot.js "calB"
+> restore.shot.js "restored"
+> done 30.593
+> 
+> real	0m31.184s
+> user	0m3.739s
+> sys	0m0.440s
+
+### 🤖 Claude — 2026-11-17T00:20:35.423Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; python3 -c \"\nimport numpy as np\nfrom PIL import Image\nu=np.fromfile('$W/r1/uv.f32',np.float32).reshape(480,440,4)[::-1]\nprint('ids',np.unique(np.round(u[...,2],3))[:20])\nfor i in range(1,11):\n  m=np.isclose(u[...,2],i)\n  if m.sum(): \n    ys,xs=np.nonzero(m); print(i,m.sum(),'x',xs.min()+200,xs.max()+200,'y',ys.min()+740,ys.max()+740,'u',u[...,0][m].min().round(3),u[...,0][m].max().round(3),'v',u[...,1][m].min().round(3),u[...,1][m].max().round(3))\nimg=np.zeros((480,440,3),np.uint8)\nimg[...,0]=(u[...,0 …[+539 chars]`
+
+### 🧑 User — 2026-11-17T00:20:36.011Z
+
+> ↩︎ result: ids [0. 1. 2. 3. 4. 5. 6. 7. 8. 9.]
+> 1 40660 x 264 575 y 997 1198 u 0.521 0.999 v 0.113 0.585
+> 2 17418 x 289 546 y 880 983 u 0.23 0.778 v 0.083 0.888
+> 3 12995 x 272 563 y 949 1031 u 0.224 0.791 v 0.008 0.976
+> 4 12419 x 347 496 y 778 900 u 0.001 0.999 v 0.292 0.996
+> 5 2930 x 475 550 y 916 992 u -0.192 0.208 v -0.129 1.017
+> 6 1864 x 230 283 y 1017 1073 u 0.35 0.847 v 0.096 0.781
+> 7 2092 x 560 613 y 1009 1068 u 0.4 0.9 v 0.074 0.771
+> 8 1 x 344 344 y 1166 1166 u 0.544 0.544 v 0.245 0.245
+> 9 7 x 494 511 y 1157 1169 u 0.811 0.899 v 0.367 0.477
+
+### 🤖 Claude — 2026-11-17T00:20:38.438Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/r1/combo.png"}`
+
+### 🧑 User — 2026-11-17T00:20:38.471Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:20:58.839Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > qa/pilot05/full_reference_match/benny/work/geom.py <<'EOF'\n\"\"\"game part geometry from a UV pass (uv.f32 of rect 200,740,440,480) vs approved parts. usage: geom.py <uv.f32>\"\"\"\nimport sys; sys.path.insert(0,'qa/pilot05/full_reference_match/benny'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny/work')\nimport numpy as np\nfrom bennyseg import bbox\nfrom parts import approved_parts\nX0,Y0,W,H=200,740,440,480\ndef load_uv(p):\n    u=np.fromfile(p,np.float32).reshape(H,W,4)[::-1]\n    full=np.zeros((1536,864,4),np.float32); full[Y0:Y0+H,X …[+1999 chars]`
+
+### 🧑 User — 2026-11-17T00:21:00.015Z
+
+> ↩︎ result: part   | approved bbox x0-x1, y0-y1 (w x h) centre        | game
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 778-1198 (384x421) c(419.8,1009.1) 90386px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 347-496, 778-900 (150x123) c(420.1,841.6) 12419px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 289-546, 880-983 (258x104) c(404.1,936.2) 17418px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 272-563, 949-1031 (292x83) c(413.1,1000.2) 12995px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 475-550, 916-992 (76x77) c(512.0,957.1) 2930px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 997-1198 (384x202) c(421.8,1090.2) 44624px
+> pom IoU 0.834
+> crown IoU 0.73
+> cuff IoU 0.72
+> star IoU 0.615
+> body IoU 0.853
+> all IoU 0.893
+> GAME centre -760-781 P782-897 C898-982 U983-1030 B1031-1183 -1184-1199
+> APPR centre -760-777 B778-784 P785-899 C900-980 U981-1030 B1031-1162 -1163-1176 B1177-1184 -1185-1199
+> 780 APP 407-445 w39  GAME 412-442 w31
+> 795 APP 380-474 w95  GAME 372-463 w92
+> 810 APP 367-486 w120  GAME 364-475 w112
+> 825 APP 361-493 w133  GAME 357-483 w127
+> 840 APP 357-496 w140  GAME 355-484 w130
+> 855 APP  …[+923 chars]
+

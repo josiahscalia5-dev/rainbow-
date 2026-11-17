@@ -803,3 +803,41 @@ Now I have a clear diagnosis: the main ring error is lateral (approved rings sit
 > 137:      const tan = A.tan.clone().lerp(B.tan, f).normalize();
 > 139:      up.addScaledVector(tan, -up.dot(tan)).normalize();
 
+### 🤖 Claude — 2026-11-17T00:20:17.267Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/world/tube.ts'\ns=open(p).read()\nrep=[\n(\"\"\"   * `?env05=1` (Screen 05 only, visual): sideways displacement (world units along the frame's `right`) of the wall point\n   * at tunnel coordinate s and angle th (th as below: cos th → right, sin th → up). Positions only; normals, uv and the\n   * strip attributes stay those of the circle. Undefined = unchanged geometry.\n   */\n  warp?: (s: number, th: number) => number;\"\"\",\n\"\"\"   * `?env05=1` (Screen 05 only, visual): displacement of the wall point at tunnel coordinate s an …[+3597 chars]`
+
+### 🧑 User — 2026-11-17T00:20:21.913Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:21:00.324Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 315,345p src/world/materials.ts; grep -n \"export function withFarGlow\" -A 40 src/world/materials.ts | grep -n \"dithering\\|gl_FragColor\\|fog\" | head", "description": "Read rest of band shading and far glow hooks"}`
+
+### 🧑 User — 2026-11-17T00:21:00.381Z
+
+> ↩︎ result: float phi = atan(vBandP.y, vBandP.x);
+>   float t = (phi - 1.5707963) * uBandS.x / 6.2831853;
+>   float ft = min(fwidth(t), fwidth(fract(t + 0.5)));
+>   float d = fract(t + 0.5) - 0.5;
+>   float sw = uBandS.y + ft * 0.7, hw = uBandS.y * 3.0 + ft * 0.7;
+>   float sp = exp(-d * d / (sw * sw)) * mix(1.0, uBandS.y / sw, 0.6);
+>   float halo = exp(-d * d / (hw * hw));
+>   float across = inMain * smoothstep(0.25, 0.5, ndv) * (1.0 - smoothstep(0.93, 0.99, abs(m))) + inLip * (1.0 - inMain) * 0.4 * smoothstep(0.2, 0.4, ndv);
+>   col = mix(col, uBcHalo, halo * across * 0.8);
+>   col += uBcSpot * sp * across * uBandS.z * (1.0 - 0.4 * deep);
+>   return col;
+> }
+> void main() {`)
+>       .replace('#include <opaque_fragment>', `{
+>   float bDist = length(vViewPosition);
+> ${fg ? '  bDist = fgDist();' : ''}
+>   vec3 bc = bandShade(smoothstep(uBandF.x, uBandF.y, bDist), normalize(normal), normalize(vViewPosition));
+> ${b.tone ? `  bc = pow(clamp(bc, 0.0, 1.0), vec3(${b.tone.map((x) => x.toFixed(3)).join(', ')})) + max(bc - 1.0, vec3(0.0));` : ''}
+> ${fg ? `  float bfg = farGlowK(); float bmt = midTintK();
+>   bc = mix(bc, uFarGlowColor * 0.9, min(1.0, bfg * 0.55)) + uFarGlowColor * bfg * 0.25;` : ''}
+>   outgoingLight = bc;
+> }
+> #include < …[+227 chars]
+
