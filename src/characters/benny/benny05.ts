@@ -170,7 +170,8 @@ export const MAPS05: Record<string, { map: string; scale: number; normal?: strin
   fur_armR: { map: 'armR.png', scale: 1 },
   fur_pom: { map: 'pom.png', scale: 1 },
   hat_crown: { map: 'crown.png', scale: 1, normal: 'crown_n.png', normalScale: 0.8 },
-  hat_brim: { map: 'brim.png', scale: 1, normal: 'brim_n.png', normalScale: 0.8 },
+  // round 3: crisper cuff ribs (work/crisp08.py --amount=1.2 → brim_r3.png; `?b08crisp=0` = round-2 brim.png)
+  hat_brim: { map: B08R3 && qv('b08crisp') !== '0' ? 'brim_r3.png' : 'brim.png', scale: 1, normal: 'brim_n.png', normalScale: 0.8 },
 };
 /** star: base colour (linear) solved from the approved star pixels through the 05 light + post chain (bake_report
  *  star_albedo_linear; the GLB's orange emissive stays and is part of the solve) → lemon yellow on screen */

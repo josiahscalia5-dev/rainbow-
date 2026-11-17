@@ -119,7 +119,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
   // capped at 1) — measured closer to the painted white crest; card texture, size and approved position unchanged
   if (m08 && B08R2) {
     const sm = m08.splash.material as THREE.ShaderMaterial;
-    sm.fragmentShader = sm.fragmentShader.replace('if (c.a < 0.02) discard;', 'if (c.a < 0.02) discard; c.a = min(1.0, pow(c.a, 0.3) * 2.0);');
+    // round 3 (`b08r3=0` = round 2): alpha^0.2 x2.5 — fuller white foam ring (Benny+splash 65.5 -> 65.7 %)
+    const sa = qs.get('b08r3') !== '0' ? 'pow(c.a, 0.2) * 2.5' : 'pow(c.a, 0.3) * 2.0';
+    sm.fragmentShader = sm.fragmentShader.replace('if (c.a < 0.02) discard;', `if (c.a < 0.02) discard; c.a = min(1.0, ${sa});`);
     sm.needsUpdate = true;
   }
   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
