@@ -2253,3 +2253,193 @@ The game currently plays your intro video and then returns to live 3D at 02. Scr
 
 I'll send each screen's APPROVED | BEFORE | NEW pictures as separate full-size images when its specialist reports back.
 
+### 🧑 User — 2026-11-17T17:33:54.701Z
+
+I stopped the old sessions on my previous account Claudia, I noticed you haven't asked me to reconnect my World Labs Marble API key.
+
+Can you please verify whether my existing World Labs API key is already securely connected to this new Claude account?
+
+My previous World Labs balance was 5,420 credits.
+
+Please perform a free, non-billable API check and confirm:
+
+1. Whether the API key is actually working.
+2. Whether it connects to my original World Labs account.
+3. My current usable credit balance.
+4. Whether all six parallel specialist sessions can use the same authorized World Labs configuration when needed.
+5. Whether my existing fal.ai API key is also connected.
+
+Do not display either API key or run any paid generation.
+
+If a key is missing, ask me to reconnect it through a secure form.
+
+I want to reuse my existing accounts and credits without repeating unnecessary setup.
+
+### 🤖 Claude — 2026-11-17T17:34:02.337Z
+
+I'll run the free checks now. Nothing paid, and no key will be printed.
+
+### 🤖 Claude — 2026-11-17T17:34:03.491Z
+
+> 🔧 **Bash** `{"command": "grep -n -i -E \"api.worldlabs.ai|credits|/marble|def .*worldlabs|urlopen|WLT\" scripts/verify-assets.py | head -30", "description": "See which free endpoints the World Labs check uses"}`
+
+### 🧑 User — 2026-11-17T17:34:03.522Z
+
+> ↩︎ result: 76:        with urllib.request.urlopen(req, timeout=60) as r:
+> 93:                with urllib.request.urlopen(dreq, timeout=300) as fh:
+> 154:                      f"{len(tracked)} files tracked under qa/worldlabs; credits spent {b['spent_credits']} of cap {b['user_cap_credits']}")
+> 183:def cmd_worldlabs() -> int:
+> 184:    """Free, read-only Marble World API checks (no credits): balance + both pilot worlds. The key is injected by
+> 187:    api = "https://api.worldlabs.ai/marble/v1"
+> 192:            with urllib.request.urlopen(urllib.request.Request(api + path), timeout=25) as r:
+> 199:    code, d = get("/credits")
+> 202:                            "(request_credential host api.worldlabs.ai, header WLT-Api-Key) - never chat or git")
+> 212:    return done(status, f"Marble API key authenticated (free read: {d.get('remaining_credits', '?'):.0f} credits); worlds "
+
+### 🤖 Claude — 2026-11-17T17:34:06.396Z
+
+> 🔧 **Bash** `{"command": "sed -n 183,215p scripts/verify-assets.py; python3 -I -c \"\nimport json;d=json.load(open('backups/TOOL_MANIFEST.json'))\ns=json.dumps(d)\nimport re\nprint(sorted(set(re.findall(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',s))))\"; grep -rhoE \"world_id[\\\"': ]+[0-9a-f-]{36}\" qa/worldlabs qa/imageblaster 2>/dev/null | sort -u | head", "description": "Read the check code and list known world IDs"}`
+
+### 🧑 User — 2026-11-17T17:34:06.666Z
+
+> ↩︎ result: def cmd_worldlabs() -> int:
+>     """Free, read-only Marble World API checks (no credits): balance + both pilot worlds. The key is injected by
+>     the Claude environment's proxy (network secret); this never reads, prints or stores it. Only an HTTP 401/403
+>     means the key must be reconnected — anything else (network, timeout, 5xx) is NOT a key problem."""
+>     api = "https://api.worldlabs.ai/marble/v1"
+>     man = json.loads((REPO / "backups" / "TOOL_MANIFEST.json").read_text())["marble_worldlabs"]
+> 
+>     def get(path: str):
+>         try:
+>             with urllib.request.urlopen(urllib.request.Request(api + path), timeout=25) as r:
+>                 return r.status, json.loads(r.read() or b"{}")
+>         except urllib.error.HTTPError as e:
+>             return e.code, {}
+>         except Exception as e:
+>             return None, {"error": str(e)[:100]}
+> 
+>     code, d = get("/credits")
+>     if code in (401, 403):
+>         return done("fail", f"Marble API authentication FAILED (HTTP {code}): reconnect with the secure credential form "
+>                             "(request_credential host api.worldlabs.ai, header WLT-Api-Key) - never chat or git")
+>     if code != 200:
+>         return done("warn", f"Marble  …[+941 chars]
+
+### 🤖 Claude — 2026-11-17T17:34:11.417Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;d=json.load(open('backups/TOOL_MANIFEST.json'))\ns=json.dumps(d,indent=1)\nfor i in ['12a08430','4a549a9d','f0be2178','32b5b2f4']:\n  for ln in s.splitlines():\n    if i in ln: print(i,'|',ln.strip()[:200])\n\"; grep -rn \"32b5b2f4\" --include=*.md --include=*.json qa/worldlabs qa/imageblaster 2>/dev/null | head -3", "description": "Identify the other recorded World Labs IDs"}`
+
+### 🧑 User — 2026-11-17T17:34:11.475Z
+
+> ↩︎ result: 12a08430 | "operation_id": "12a08430-f687-4a09-bdc7-3a469c76363d",
+> 4a549a9d | "operation_id": "4a549a9d-3de2-424b-8324-db24a8d1b9bd",
+> f0be2178 | "world_id": "f0be2178-4291-4f90-848f-6506b53cc87d",
+> qa/worldlabs/05/pilot/LEDGER.md:62:| 12:54 | `worlds:generate` **marble-1.1**, Screen 08 environment-only clean plate (Image-Blaster test, user-approved) → world `32b5b2f4-32bc-4fa5-80a5-861129a528c8`, op `0de603c2-c44f-47d1-b3c6-be4c05506dce` | done ≈5.5 min; files in `qa/imageblaster/08/world/` | 7,000 → **5,420** | **1,580** |
+> qa/imageblaster/08/NOTES.md:146:  above. World `32b5b2f4-32bc-4fa5-80a5-861129a528c8`, operation `0de603c2-c44f-47d1-b3c6-be4c05506dce`, ≈5.5 min.
+> qa/imageblaster/08/world/0-world-request.json:55:   "world_id": "32b5b2f4-32bc-4fa5-80a5-861129a528c8",
+
+### 🤖 Claude — 2026-11-17T17:34:21.510Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, urllib.request, urllib.error\napi=\"https://api.worldlabs.ai/marble/v1\"\ndef get(p):\n    try:\n        with urllib.request.urlopen(urllib.request.Request(api+p), timeout=30) as r: return r.status, json.loads(r.read() or b\"{}\")\n    except urllib.error.HTTPError as e: return e.code, {}\n    except Exception as e: return None, {\"error\": str(e)[:80]}\nc,d=get(\"/credits\")\nprint(\"GET /credits ->\", c, \"| fields:\", sorted(d.keys()))\nprint(\"   remaining_credits:\", d.get(\"remaining_credits\"), {k:v for k,v in d.items() if k!=\"remaining_c …[+872 chars]`
+
+### 🧑 User — 2026-11-17T17:34:22.867Z
+
+> ↩︎ result: GET /credits -> 200 | fields: ['remaining_credits']
+>    remaining_credits: 5420.0 {}
+> GET Screen 08 Image-Blaster world (12:54 today): HTTP 200 {'display_name': 'rainbow-08-final-spin-chamber', 'created_at': '2026-11-17T12:54:13Z', 'model': 'marble-1.1'}
+> GET its operation: HTTP 200 {'created_at': '2026-11-17T12:54:13Z', 'done': True}
+> GET world f0be2178: HTTP 404 {}
+> GET old 05 pilot draft: HTTP 404 {}
+> GET old 05 pilot full: HTTP 429 {}
+
+### 🤖 Claude — 2026-11-17T17:34:25.576Z
+
+Key confirmed working on your original account. Now checking whether the six specialist sessions can use it too. Each one runs a startup self-check and saves the result to its own branch:
+
+### 🤖 Claude — 2026-11-17T17:34:27.627Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin 'refs/heads/claude/rainbow-s0*-c3:refs/remotes/origin/claude/rainbow-s0*-c3' 2>&1 | tail -2; for b in $(git for-each-ref --format='%(refname:short)' 'refs/remotes/origin/claude/rainbow-s0*-c3'); do echo \"== $b @ $(git rev-parse --short $b)\"; git show $b:backups/BOOTSTRAP_REPORT.md 2>/dev/null | grep -E \"^Generated|World Labs integration\" | cut -c1-260; done", "description": "Read World Labs check result from each -c3 session"}`
+
+### 🧑 User — 2026-11-17T17:34:30.840Z
+
+> ↩︎ result: == origin/claude/rainbow-s05-match-c3 @ 690b9509
+> Generated 2026-11-17 16:47 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `claude/rainbow-s05-match-c2`.
+> | World Labs integration | WARN | Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas
+> == origin/claude/rainbow-s06-match-c3 @ d96934b7
+> Generated 2026-11-17 17:28 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `claude/rainbow-s06-match-c3`.
+> | World Labs integration | WARN | Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas
+> == origin/claude/rainbow-s07-match-c3 @ 6777771c
+> Generated 2026-11-17 17:29 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `claude/rainbow-s07-match-c3`.
+> | World Labs integration | WARN | Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@ …[+994 chars]
+
+### 🤖 Claude — 2026-11-17T17:34:40.631Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s04-match-c2:qa/match/04/fal/fal_edit1_plate_request.json | python3 -I -c \"\nimport json,sys; d=json.load(sys.stdin)\ndef walk(o,p=''):\n  if isinstance(o,dict):\n    for k,v in o.items(): walk(v,p+'.'+k)\n  elif isinstance(o,list):\n    for i,v in enumerate(o[:3]): walk(v,p+f'[{i}]')\n  else:\n    if any(s in p.lower() for s in ('url','request','id','model','endpoint','status','time')) and 'key' not in p.lower(): print(p, '=', str(o)[:140])\nwalk(d)\" | head -20", "description": "Read Screen 04 fal request record (no secrets)"}`
+
+### 🧑 User — 2026-11-17T17:34:40.705Z
+
+> ↩︎ result: .provider = fal-ai/nano-banana-2/edit
+> .endpoint = fal-ai/nano-banana-2/edit
+> .status = completed
+> .request_id = 01a1ea70-42d8-7943-b035-7bb5f129d872
+> .downloaded_files[0].source.url = https://v3b.fal.media/files/b/0ab2da52/Neka43ZqEibUAlxWlfn6U_pjTdse0N.png
+> .downloaded_files[0].source.width = 1536
+> .result.images[0].url = https://v3b.fal.media/files/b/0ab2da52/Neka43ZqEibUAlxWlfn6U_pjTdse0N.png
+> .result.images[0].width = 1536
+> .provider_alias = nano-banana
+
+### 🤖 Claude — 2026-11-17T17:34:46.558Z
+
+> 🔧 **Bash** `{"command": "for u in \\\n \"https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status\" \\\n \"https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status\"; do \\\n code=$(curl -sS -o /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/fal.json -w '%{http_code}' \"$u\"); echo \"GET .../requests/${u##*/requests/} -> HTTP $code\"; python3 -I -c \"import json,sys\ntry: d=json.load(open(sys.argv[1])); print('   ', {k:d[k] for k in ('status','queue_position','request_id') if k in d} or str(d)[: …[+468 chars]`
+
+### 🧑 User — 2026-11-17T17:34:47.115Z
+
+> ↩︎ result: GET .../requests/00000000-0000-0000-0000-000000000000/status -> HTTP 404
+>     {'status': 'NOT_FOUND'}
+> GET .../requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status -> HTTP 200
+>     {'status': 'COMPLETED', 'request_id': '01a1ea70-42d8-7943-b035-7bb5f129d872'}
+> without the injected key (control): HTTP 404
+
+### 🤖 Claude — 2026-11-17T17:34:59.230Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/PARALLEL_PROGRESS.md", "old_string": "* Atlas connector (claude.ai connector `World_Labs_Atlas`) is NOT connected", "new_string": "* Key re-check for the user (~17:40 UTC, free reads only): World Labs `GET /credits` 200 → **5,420**; the Screen 08\n  Image-Blaster world `32b5b2f4…` (\"rainbow-08-final-spin-chamber\", created 12:54 today, the job that took the balance\n  7,000 → 5,420) reads back 200 → same original account. fal: status of the Screen 04 request `01a1ea70` = 200\n  COMPLETED with the injected key, 404 without it → same …[+381 chars]`
+
+### 🧑 User — 2026-11-17T17:34:59.302Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/PARALLEL_PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T17:35:03.871Z
+
+> 🔧 **Bash** `{"command": "git add docs/PARALLEL_PROGRESS.md && git commit -q -m \"Lead r3: World Labs + fal key verification (free reads, same accounts)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCLi5xPVn25aRuxkVwK\" 2>&1 | tail -1; git push -q origin HEAD:ccr-c0235034-ks6sx3 2>&1 | tail -1; [ \"$(git ls-remote origin refs/heads/ccr-c0235034-ks6sx3 | cut -f1)\" = \"$(git rev-parse HEAD)\" ] && echo \"remote == HEAD $(git rev-parse --short HEAD)\"", "description": "Commit verification note and verify push"}`
+
+### 🧑 User — 2026-11-17T17:35:06.588Z
+
+> ↩︎ result: remote == HEAD c83b8f1b
+
+### 🤖 Claude — 2026-11-17T17:35:13.610Z
+
+Both keys are already connected to this account and work, so you don't need to reconnect anything. I only ran free reads: no key was shown and nothing was paid for.
+
+**1. Is the World Labs key working?** Yes. The free balance check was accepted.
+
+**2. Is it your original World Labs account?** Yes. The key can read back the Screen 08 world (`rainbow-08-final-spin-chamber`) that was made today at 12:54 on your original account. That's the job that took your balance from 7,000 to 5,420. The two old Screen 05 pilot worlds still return "not found", as before; their files are safe in Git LFS.
+
+**3. Current World Labs balance:** **5,420 credits**, unchanged.
+
+**4. Can all six specialist sessions use it?** Yes.
+- Both keys are saved as secure secrets on your `rainbow-` cloud environment. Every one of the six sessions runs on that environment, so they all use the same keys automatically.
+- The 06, 07 and Benny sessions each checked World Labs from their own container this round and got 5,420 credits.
+- 04, 05 and the camera session are on the same environment but hadn't saved their own check yet.
+- The "401" you might see in a new container's setup log appears before the keys are attached, not because a key is wrong.
+- All sessions are under orders to run no paid job without your OK.
+
+**5. Is your fal.ai key connected?** Yes, and it's your existing account.
+- The Screen 04 edit made earlier today shows as completed when read with this key, and can't be found without it. So the key belongs to the account that made that edit.
+- I can't read your remaining fal balance; fal only shows it on its website dashboard.
+
+I recorded these results in `docs/PARALLEL_PROGRESS.md` and pushed to GitHub (`c83b8f1b`).
+
+The connection to World Labs' Atlas tool in your claude.ai settings still isn't connected. It's optional; the API key covers everything we use.
+
+Thank you for stopping the old sessions. A check-in fires in a couple of minutes to confirm that the Screen 04 and Screen 08 camera sessions are working; I'll tell you the result.
+
