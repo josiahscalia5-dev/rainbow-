@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9220,
-   "sha256": "6b2288bb5ff10bd22378f93e31f7e0d9345a24fc9e6164101c303d0993034c67"
+   "sha256": "bae028dca58e3235019fbccbc62fa3dbca6d8aae2232e40e3911bc8cf23f230a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1010,6 +1010,91 @@
    "path": "qa/glb_validation.txt",
    "bytes": 293,
    "sha256": "82bda80d4f8c2a4ec7d013fd725fc64e2353f76b58250ca1ffacaa7d0db78071"
+  },
+  {
+   "path": "qa/match/NOTES.md",
+   "bytes": 5569,
+   "sha256": "5b06b7ab7e4c341859a146637a0dd25753267ddc1c46e6de2dbeda352efc43d8"
+  },
+  {
+   "path": "qa/match/audit/02_BEFORE_default.png",
+   "bytes": 1406471,
+   "sha256": "d312a4f686692509d189950db7bad579eac356193c05a87e670a1dbd2b3ee5c4"
+  },
+  {
+   "path": "qa/match/audit/02_metrics.json",
+   "bytes": 600,
+   "sha256": "99ba580de5b1c797c7230bf9d581ca5148e67c29e53cb3378e1b583aafcc2e7b"
+  },
+  {
+   "path": "qa/match/audit/03_BEFORE_default.png",
+   "bytes": 689327,
+   "sha256": "70b33b54649c5640c5f8310b2ea33d10b30ad0547bfe6f386890370d9cb1084c"
+  },
+  {
+   "path": "qa/match/audit/03_metrics.json",
+   "bytes": 591,
+   "sha256": "0f599bb703dc0dd683d1a10fcc41c7a055fbe7e43c3a9cf12ab283dbad4146c6"
+  },
+  {
+   "path": "qa/match/audit/04_BEFORE_default.png",
+   "bytes": 1006508,
+   "sha256": "69a7228ada62930f4db2344580774936da1f8e240b439ed8670e971697219914"
+  },
+  {
+   "path": "qa/match/audit/04_metrics.json",
+   "bytes": 597,
+   "sha256": "ea16ce41b31ca57e1a594a6cd752a2bc0a8d995500e1a1ba76ba23ed57f496e8"
+  },
+  {
+   "path": "qa/match/audit/06_BEFORE_default.png",
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+  },
+  {
+   "path": "qa/match/audit/06_metrics.json",
+   "bytes": 595,
+   "sha256": "07efc81b5b6187f9c76d303591ab4fff04dedd4ab7067e44649f1abd0e1cca72"
+  },
+  {
+   "path": "qa/match/audit/07_BEFORE_default.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/match/audit/07_metrics.json",
+   "bytes": 596,
+   "sha256": "3558e002fe139130c249722eb2cb69b6b9b71c287fb2c9cc4663d8723743d643"
+  },
+  {
+   "path": "qa/match/audit/08_BEFORE_default.png",
+   "bytes": 1428957,
+   "sha256": "4c5b9d985376ce5cccac3fa0e7594b661264446dc06bc88e40d2e56d8bae40ff"
+  },
+  {
+   "path": "qa/match/audit/08_metrics.json",
+   "bytes": 594,
+   "sha256": "789adf5c26ed6bf93213314bd27f22db6dca30c805b26a88630a6288de3bea3e"
+  },
+  {
+   "path": "qa/match/audit/09_BEFORE_default.png",
+   "bytes": 1478102,
+   "sha256": "6c5ea3f332e82cffdb91e69030a369f70391d3f24906322bb22b026d632f9ce8"
+  },
+  {
+   "path": "qa/match/audit/09_metrics.json",
+   "bytes": 595,
+   "sha256": "0e3acf894dbf1d74e298132672406ea0dafc01391b89ae69c96c4b89c661397f"
+  },
+  {
+   "path": "qa/match/audit/10_BEFORE_default.png",
+   "bytes": 1397779,
+   "sha256": "78d9001c6cb68cbf14950d089286b3cc2c01a3b47f00396c80e0681eb2c6c7cc"
+  },
+  {
+   "path": "qa/match/audit/10_metrics.json",
+   "bytes": 592,
+   "sha256": "c2a7e116d72811073394e54a9ba394a926d9018ba4e79f67e357521c98b775c0"
   },
   {
    "path": "qa/pilot05/05_before_81e639e.png",
@@ -7343,8 +7428,13 @@
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 9105,
-   "sha256": "ce017bd50ca169b6f6f868108a176deed47738474d16518225cef9632a2d6806"
+   "bytes": 9285,
+   "sha256": "8d456d3382b4b37bbd4e1d501bdd2024fd0044a6cfa3acd75951ad6ce303da28"
+  },
+  {
+   "path": "src/game/match.ts",
+   "bytes": 1982,
+   "sha256": "f264d0de5788bfb580428a3591e13498f8c67c3324eec280330b68be988424bd"
   },
   {
    "path": "src/game/modules.ts",
@@ -7448,8 +7538,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 102596,
-   "sha256": "3c4b8e1c96681fc9d74767bd457317c6b2899f46ecc160b8d0d38f67f4355069"
+   "bytes": 103167,
+   "sha256": "3473eba1ca1ad61ce0db651701854a15c2c9355f1b691013f1b8eaf894799552"
   },
   {
    "path": "src/vfx/whirlpool.ts",

@@ -5956,3 +5956,138 @@ This is a big job, so I'll do it in the controlled order you asked for: verify t
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T10:56:33.423Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/game/match.ts", "content": "/**\n * \"Match my approved picture\" test switches for the gameplay screens (2026-11-17, qa/match/NOTES.md).\n *   `?match02=1` … `?match10=1`  one screen each (05 has its own set; `?match05=1` turns all of those on — see\n *   src/vfx/waterRibbon.ts q05). `?matchall=1` = every screen switch below at once.\n * Every change a screen makes lives behind its switch: with no switch the game is byte-for-byte the default build\n * (verified by pixel comparison after every change). Packaged experiment builds read the same keys from\n  …[+1482 chars]`
+
+### 🧑 User — 2026-11-17T10:56:33.492Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/game/match.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T10:56:34.497Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,24p src/game/cameraRig.ts | grep -n \"^import\\|^export\" ; grep -n \"^};\" src/game/cameraRig.ts | head -2", "description": "Check cameraRig imports and STAGE_CAM end"}`
+
+### 🧑 User — 2026-11-17T10:56:34.545Z
+
+> ↩︎ result: 6:import * as THREE from 'three';
+> 7:import { WORLD } from '../world/course';
+> 8:import type { Course, StageId } from '../world/course';
+> 9:import type { TubePath } from '../world/tube';
+> 11:export interface CamParams {
+> 37:};
+
+### 🤖 Claude — 2026-11-17T10:56:38.354Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^import\" src/vfx/waterRibbon.ts; grep -rn \"from '../game/cameraRig'\\|from './cameraRig'\" src | head", "description": "Check for import cycles via waterRibbon"}`
+
+### 🧑 User — 2026-11-17T10:56:38.394Z
+
+> ↩︎ result: 12:import * as THREE from 'three';
+> 13:import type { Course, StageId } from '../world/course';
+> 14:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 15:import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> src/world/environment.ts:11:import { STAGE_CAM } from '../game/cameraRig';
+> src/game/match.ts:10:import type { CamParams } from './cameraRig';
+> src/game/Game.ts:24:import { RideCamera } from './cameraRig';
+
+### 🤖 Claude — 2026-11-17T10:56:40.312Z
+
+No import cycles. Now the one-line hook in the camera rig. Without a match switch it changes nothing:
+
+### 🤖 Claude — 2026-11-17T10:56:48.226Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\nold=\"import type { TubePath } from '../world/tube';\\n\"\nnew=\"import type { TubePath } from '../world/tube';\\nimport { applyMatchCam } from './match';\\n\"\nassert s.count(old)==1; s=s.replace(old,new)\ni=s.index('export const STAGE_CAM')\nj=s.index('\\n};\\n',i)+4\ns=s[:j]+\"// `?matchNN=1` (src/game/match.ts): the approved picture's camera framing for that screen; no switch: no change\\napplyMatchCam(STAGE_CAM);\\n\"+s[j:]\nopen(p,'w').write(s); print('ok')\nEOF\nsed -n 36,42p src/game/cameraRig.ts; python3 - …[+1782 chars]`
+
+### 🧑 User — 2026-11-17T10:56:51.577Z
+
+> ↩︎ result: ok
+>   '09': { back: 6.2, up: 3.7, ahead: 15, lookUp: 0.6, fov: 62, latFollow: 0.8, roll: 0.3 },
+>   '10': { back: 5.8, up: 3.4, ahead: 11, lookUp: 1.2, fov: 62, latFollow: 0.8, roll: 0.2 },
+> };
+> // `?matchNN=1` (src/game/match.ts): the approved picture's camera framing for that screen; no switch: no change
+> applyMatchCam(STAGE_CAM);
+> 
+> /** the blended (required) numeric keys; 05-only extras (yaw, deadZone) are read directly from STAGE_CAM */
+> ok
+> TSC_DONE
+
+### 🤖 Claude — 2026-11-17T10:56:56.112Z
+
+Typecheck passes. Next I'll verify that the default game is unchanged and that `?match05=1` gives exactly the same picture as the full list of Screen 05 switches:
+
+### 🤖 Claude — 2026-11-17T10:57:01.764Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && rm -rf $S/m1 && mkdir -p $S/m1/def $S/m1/m05 $S/m1/list $S/m1/m07 && node scripts/capture.mjs 05 07 --out=$S/m1/def >/dev/null 2>&1; node scripts/capture.mjs 05 --q='match05=1' --out=$S/m1/m05 >/dev/null 2>&1; node scripts/capture.mjs 05 --q='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projnear05=1&projflow05=2' --out=$S/m1/list >/dev/null 2>&1; node scripts/capture.mjs 07 --q='match07=1' --out=$S/m1/m07 >/dev/null 2>&1; git checkout qa/capture_log.json; python3 -I - <<EOF\nimpo …[+682 chars]`
+
+### 🧑 User — 2026-11-17T10:58:28.166Z
+
+> ↩︎ result: Updated 1 path from the index
+> default 05 vs session start: 0
+> default 07 vs audit capture: 0
+> ?match05=1 vs the full 05 switch list: 0
+> ?match07=1 vs default 07 (camera framing changes): 1277888
+
+### 🤖 Claude — 2026-11-17T10:58:35.012Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && mkdir -p qa/match/audit && for id in 02 03 04 06 07 08 09 10; do cp $S/audit/before/$id.png qa/match/audit/${id}_BEFORE_default.png; cp $S/audit/json/$id.json qa/match/audit/${id}_metrics.json; done && ls qa/match/audit | wc -l", "description": "Save audit captures and metrics into repo"}`
+
+### 🧑 User — 2026-11-17T10:58:35.182Z
+
+> ↩︎ result: 16
+
+### 🤖 Claude — 2026-11-17T10:58:57.812Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/NOTES.md", "content": "# Match every gameplay screen to its approved picture (started 2026-11-17)\n\nUser order (2026-11-17): match Screens 02, 03, 04, 06, 07, 08, 09, 10 to their own approved pictures\n(`references/NN_*.png`), at least 9/10 each, real playable 3D, continuous story; do NOT rebuild the opening / ending\nvideos (01, 11) and do NOT rebuild Screen 05 (its work stays as is; `?match05=1` = all its switches). Order: audit all\neight, then 04 and 06 (they touch 05), then 02, 03, 07, 08, 09, 10; batches, commit as you go.\n\n## Rules for ever …[+5078 chars]`
+
+### 🧑 User — 2026-11-17T10:58:57.895Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T10:59:03.270Z
+
+> 🔧 **Bash** `{"command": "git add src/game/match.ts src/game/cameraRig.ts src/vfx/waterRibbon.ts scripts/match-cam-try.mjs tools/qa/screen_match.py qa/match && git commit -q -F - <<'EOF'\nMatch all screens: audit of 02-10, ?matchNN=1 switches, ?match05=1\n\n- qa/match/: audit of the eight remaining gameplay screens vs their approved\n  pictures (real captures, tools/qa/screen_match.py numbers, honest visual\n  scores 1.5-3.5/10), file ownership for parallel work, the video status\n- src/game/match.ts: ?match02..?match10 / ?matchall switches and per-screen\n  camera framing (applyMatchCam in cameraRig); no  …[+635 chars]`
+
+### 🧑 User — 2026-11-17T10:59:07.870Z
+
+> ↩︎ result: branch 'ccr-61131b9d-uj0oqb' set up to track 'origin/ccr-61131b9d-uj0oqb'.
+> 54ec72f2cab1d8ae78fd8b1057eb404f6dc663a9
+> 54ec72f2cab1d8ae78fd8b1057eb404f6dc663a9	refs/heads/ccr-61131b9d-uj0oqb
+
+### 🤖 Claude — 2026-11-17T10:59:20.629Z
+
+The audit and the shared switches are on GitHub (`54ec72f`). Before starting the specialist, one practical check: their test captures and mine must not collide on the same local web-server port.
+
+### 🤖 Claude — 2026-11-17T10:59:21.575Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export async function startVite\\|strictPort\\|port\" scripts/lib/pw.mjs | head -12; grep -n \"startVite(\" scripts/capture.mjs scripts/gameplay-test.mjs | head", "description": "Check how test scripts choose server ports"}`
+
+### 🧑 User — 2026-11-17T10:59:21.628Z
+
+> ↩︎ result: 3:import { createRequire } from 'node:module';
+> 4:import { execSync } from 'node:child_process';
+> 5:import { join } from 'node:path';
+> 7:export function loadPlaywright() {
+> 9:    return createRequire(import.meta.url)('playwright');
+> 16:export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 19:export async function startVite(port = 5199) {
+> 20:  const { createServer } = await import('vite');
+> 21:  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 23:  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 27:export async function waitDone(page, timeoutMs = 180000) {
+> scripts/capture.mjs:24:const vite = await startVite(5201);
+> scripts/gameplay-test.mjs:20:const vite = await startVite(5213);
+
+### 🤖 Claude — 2026-11-17T10:59:49.001Z
+
+> 🔧 **Agent** `{"description": "Rebuild Screen 06 structure", "subagent_type": "path-camera-transition-engineer", "isolation": "worktree", "run_in_background": true, "prompt": "You are the Rainbow project's path-camera-transition-engineer. Work ONLY on the STRUCTURE of Screen 06 (\"Crest the Rinse Arch\") of an existing playable Three.js game, inside this git worktree. Read CLAUDE.md and qa/match/NOTES.md first (rules, audit, file ownership). Do not restart or redesign anything else.\n\nGOAL\nThe user's approved picture `references/06_crest_the_rinse_arch.png` (864x1536, never modify it) shows Screen 06 as t …[+5450 chars]`
+
+### 🧑 User — 2026-11-17T11:00:14.155Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a1b82d141150e0ba7 (internal ID - do not mention to user. Use SendMessage with to: 'a1b82d141150e0ba7', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/tasks/a1b82d141150e0ba7.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
