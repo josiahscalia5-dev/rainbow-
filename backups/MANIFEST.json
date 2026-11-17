@@ -679,7 +679,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11495,
-   "sha256": "088629d5c27ac9983e623f0b26614f1793f52fc5ba8ac7bde4decacac192fa51"
+   "sha256": "650e5ef12935f3765e07ecd32a783b13167e9ed27f4fb8a7e2bae163308f7514"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1872,6 +1872,26 @@
    "sha256": "fcf1af3e022828ef40f79f6026a6d368e7e7d85b7ef84a782b8cd448567858a4"
   },
   {
+   "path": "qa/match/07/m2r4/continuity_default.json",
+   "bytes": 2696,
+   "sha256": "49576a5bbfdcd8a1ef2dbec617f0267b266790152519a7ee0b7a7c15a7bb62e7"
+  },
+  {
+   "path": "qa/match/07/m2r4/gameplay_def.json",
+   "bytes": 14660,
+   "sha256": "d26e8781883ab3cbb4008d397a26b814498ce4f40e3b48e6fc8dde97301335bc"
+  },
+  {
+   "path": "qa/match/07/m2r4/gameplay_k5.json",
+   "bytes": 14693,
+   "sha256": "8b87253e0ff42ee6ffefe34f75525045515db5d93321a1fb5e3f463d07a9ba1f"
+  },
+  {
+   "path": "qa/match/07/m2r4/gameplay_m07.json",
+   "bytes": 14642,
+   "sha256": "36394db79e44c4ce1f359d0308e36f437b0223190b9cf1dee2f6beb64e3a4e7b"
+  },
+  {
    "path": "qa/match/07/m2r4/metrics_k5.json",
    "bytes": 1357,
    "sha256": "76cbc04091e89ced24e8ab1888a073b5caa6e9925f992977f478307852f12ec5"
@@ -1995,6 +2015,11 @@
    "path": "qa/match/07/m2r4/motion_k5/s_right_steer.png",
    "bytes": 2321379,
    "sha256": "e63b83571987f122a583733292d13cf9b21254ea7c7577bd92906983e8c23e29"
+  },
+  {
+   "path": "qa/match/07/m2r4/proofs_0px_r4.json",
+   "bytes": 625,
+   "sha256": "fedec2e59b5ff569255860157fbf413c09b42c4218d32d18e5462d732c23aea7"
   },
   {
    "path": "qa/match/07/m3/07_NEW_match07_r3.png",

@@ -1062,3 +1062,257 @@ Now the 0-px proofs: capture the current tree and the start commit `72fb6129` si
 
 > 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof\nrun(){ (cd $1 && timeout 900 node scripts/capture.mjs $3 --out=$P/$2 ${4:+\"--q=$4\"} >/dev/null 2>&1; git checkout -q qa/capture_log.json 2>/dev/null); }\nR=/home/user/rainbow-; O=$P/old\nrun $R cur_def \"06 07 08\"; run $O old_def \"06 07 08\"\nrun $R cur_m08 08 match08=1; run $O old_m08 08 match08=1\nrun $R cur_m07 07 match07=1; run $O old_m07 07 match07=1\nrun $R cur_05 05 \"ringa=26&nearfloor05=0\"\nls $P/*/", "description": "Capture proof screenshots current vs old", "timeout": 3600000 …[+1 chars]`
 
+### 🧑 User — 2026-11-17T19:31:51.004Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof/cur_05/:
+> 05.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof/cur_def/:
+> 06.png
+> 07.png
+> 08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof/cur_m07/:
+> 07.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof/cur_m08/:
+> 08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof/old/:
+> CLAUDE.md
+> README_FIRST.md
+> REFERENCE_ORDER.md
+> Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> START_HERE_PASTE_TO_CLAUDE.md
+> TOOL_SETUP_AND_VERIFICATION.md
+> VISUAL_QA_CHECKLIST.md
+> android
+> assets
+> backups
+> builds
+> capacitor.config.ts
+> character_references
+> docs
+> index.html
+> node_modules
+> package-lock.json
+> package.json
+> public
+> qa
+> references
+> screenshots
+> scripts
+> src
+> tools
+> tsconfig.json
+> vite.config.ts
+> 
+> /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof/old_def/:
+> 06.png
+> 07.png
+> 08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof/old_m07/:
+> 07.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-8 …[+50 chars]
+
+### 🤖 Claude — 2026-11-17T19:31:56.907Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof; cd /home/user/rainbow- && python3 - <<E\nimport numpy as np, json\nfrom PIL import Image\nP='$P'\ndef d(a,b):\n  A=np.asarray(Image.open(a).convert('RGB')).astype(int);B=np.asarray(Image.open(b).convert('RGB')).astype(int)\n  m=(A!=B).any(2); ys=np.where(m.any(1))[0]\n  return int(m.sum()), ([int(ys.min()),int(ys.max())] if len(ys) else None), int(np.abs(A-B).max())\nr={}\nfor k,a,b in [('default_06','cur_def/06','old_def/06'),('default_07','cur_def/07','old_def/07'),('default_08','cur_def/0 …[+577 chars]`
+
+### 🧑 User — 2026-11-17T19:31:58.424Z
+
+> ↩︎ result: {"default_06": [39918, [33, 204], 243], "default_07": [53061, [33, 204], 242], "default_08": [34999, [33, 204], 242], "match08_08": [35008, [33, 204], 242], "match07_07": [53210, [33, 204], 242], "05_ringa26_nearfloor0_vs_wave9_baseline": [128689, [0, 1121], 72]}
+
+### 🤖 Claude — 2026-11-17T19:32:02.429Z
+
+Default/match08/match07 differ only inside the title-banner rows 33–204 (the known capture-to-capture banner variation). The 05 check needs a same-method comparison against the start commit.
+
+### 🤖 Claude — 2026-11-17T19:32:06.885Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof; cd $P/old && timeout 900 node scripts/capture.mjs 05 --out=$P/old_05 \"--q=ringa=26&nearfloor05=0\" >/dev/null 2>&1; git checkout -q qa/capture_log.json; cd /home/user/rainbow- && grep -n \"wave9/baseline\" scripts/claude-bootstrap.sh | head -5; python3 - <<E\nimport numpy as np\nfrom PIL import Image\nP='$P'\nA=np.asarray(Image.open(P+'/cur_05/05.png').convert('RGB')).astype(int);B=np.asarray(Image.open(P+'/old_05/05.png').convert('RGB')).astype(int)\nm=(A!=B).any(2);print('cur vs old 05',m …[+350 chars]`
+
+### 🧑 User — 2026-11-17T19:32:26.208Z
+
+> ↩︎ result: 366:  local cur=qa/pilot05/current_default_05.png before=qa/pilot05/wave9/baseline/05.png bq="ringa=26&nearfloor05=0" d1 d2
+> cur vs old 05 56947
+> 07 outside banner 0
+
+### 🤖 Claude — 2026-11-17T19:32:27.768Z
+
+> 🔧 **Bash** `{"command": "sed -n 355,400p scripts/claude-bootstrap.sh", "description": "Read bootstrap 05 baseline check"}`
+
+### 🧑 User — 2026-11-17T19:32:27.806Z
+
+> ↩︎ result: if [ "${out%% *}" = True ]; then
+>     rec tests "Build + game tests" ok "tsc OK; continuity OK (all stage joins gap 0, 07->08 drop ${out##* })" "$t"
+>   else rec tests "Build + game tests" fail "tsc OK; continuity test failed (backups/.live/continuity.log)" "$t"; fi
+>   [ "$FULL_TESTS" = 1 ] || return 0
+>   t=$(now)
+>   if timeout 900 node scripts/gameplay-test.mjs > "$LIVE/gameplay.log" 2>&1; then
+>     drop="$(python3 -I -c 'import json; d=json.load(open("qa/gameplay_test.json")); p=d.get("plunge") or {}; print(p.get("verticalDrop", p) if isinstance(p,dict) else p)' 2>/dev/null)"
+>     rec gameplay "Browser gameplay test" ok "pass: all checks (coins, hearts, pause, steering, no camera cut, victory), 07->08 plunge $drop, errors []" "$t"
+>   else rec gameplay "Browser gameplay test" fail "node scripts/gameplay-test.mjs failed (backups/.live/gameplay.log)" "$t"; fi
+>   # Screen 05: the default build must equal the current accepted picture (qa/pilot05/current_default_05.png),
+>   # and the user's protected BEFORE must still be reproducible through its URL switches
+>   local cur=qa/pilot05/current_default_05.png before=qa/pilot05/wave9/baseline/05.png bq="ringa=26&nearfloor05=0" d1 d2
+>   t=$(now)
+>   rm -rf  …[+2290 chars]
+
+### 🤖 Claude — 2026-11-17T19:32:35.875Z
+
+> 🔧 **Bash** `{"command": "P=/tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/proof; cd /home/user/rainbow- && timeout 900 node scripts/capture.mjs 05 --out=$P/cur_05b \"--q=ringa=26&nearfloor05=0\" >/dev/null 2>&1; git checkout -q qa/capture_log.json; python3 - <<E\nimport numpy as np\nfrom PIL import Image\nP='$P'\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\ndef rep(n,a,b):\n  A,B=L(a),L(b); m=(A!=B).any(2); ys=np.where(m.any(1))[0]; xs=np.where(m.any(0))[0]\n  mb=m.copy(); mb[31:205]=False\n  print(n, m.sum(), (ys.min(),ys.max(),xs.min(),xs.max()) if …[+416 chars]`
+
+### 🧑 User — 2026-11-17T19:32:55.044Z
+
+> ↩︎ result: cur vs cur2 0 None outside banner 0 max 0
+> cur vs old 56947 (np.int64(33), np.int64(204), np.int64(68), np.int64(795)) outside banner 0 max 242
+> cur2 vs base 128689 (np.int64(0), np.int64(1121), np.int64(7), np.int64(863)) outside banner 32280 max 72
+> old vs base 143130 (np.int64(0), np.int64(1121), np.int64(7), np.int64(863)) outside banner 32280 max 242
+
+### 🤖 Claude — 2026-11-17T19:33:00.534Z
+
+> 🔧 **Bash** `{"command": "grep -n \"argv\\|--q\" scripts/gameplay-test.mjs | head -5; grep -n \"argv\\|q=\" scripts/continuity-test.ts | head -5; ls qa/match/07/m3/", "description": "Check test script options"}`
+
+### 🧑 User — 2026-11-17T19:33:00.588Z
+
+> ↩︎ result: 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 07_NEW_match07_r3.png
+> continuity_default.json
+> continuity_match07.json
+> gameplay_default.json
+> gameplay_match07.json
+> proofs_0px_r3.json
+
+### 🤖 Claude — 2026-11-17T19:33:02.449Z
+
+> 🔧 **Bash** `{"command": "head -30 scripts/continuity-test.ts | grep -n \"q\\b\\|search\\|flag\\|usage\" | head; grep -rn \"continuity_match07\" qa/match/07/*.md tools/match07 2>/dev/null | head -3", "description": "How continuity was run with match07"}`
+
+### 🧑 User — 2026-11-17T19:33:02.486Z
+
+> ↩︎ result: qa/match/07/NOTES.md:57:  `match07=1`, min pitch −70° (`m3/continuity_default.json`, `m3/continuity_match07.json`, identical to round 2).
+
+### 🤖 Claude — 2026-11-17T19:33:03.604Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"continuity\" qa/match/07/m1/*.json 2>/dev/null | head -2; head -c 600 qa/match/07/m3/continuity_match07.json; echo; sed -n 1,25p scripts/continuity-test.ts", "description": "Inspect continuity test header"}`
+
+### 🧑 User — 2026-11-17T19:33:03.668Z
+
+> ↩︎ result: {
+>   "length": 436.09825672809046,
+>   "marks": {
+>     "10": 420.9320725871596,
+>     "11": 436.09825672809046,
+>     "01": 0,
+>     "02_drain": 22.765736347312888,
+>     "03": 40.99515264641385,
+>     "04": 70.4130846582597,
+>     "05": 114.68830202823246,
+>     "06": 188.92412082521415,
+>     "07": 247.0556340077653,
+>     "07_plunge_top": 312.41331806416747,
+>     "07_plunge_mid_end": 374.13919823028107,
+>     "07_plunge_bottom": 390.07116765883507,
+>     "08": 390.16171026286344,
+>     "09": 405.7313918424028,
+>     "05_crest": 132.43830202823293
+>   },
+>   "ok": true,
+>   "boundaries": [
+>     {
+>       "from": "01",
+>       "to": 
+> /**
+>  * Route continuity + altitude test (run: npm run test:continuity).
+>  * Writes qa/continuity_report.json and docs/path_graph.md (altitude chart), exits 1 on failure.
+>  */
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { Course, validateContinuity, WORLD } from '../src/world/course';
+> 
+> const c = new Course();
+> const r = validateContinuity(c);
+> mkdirSync('qa', { recursive: true });
+> mkdirSync('docs', { recursive: true });
+> writeFileSync('qa/continuity_report.json', JSON.stringify({ length: c.length, marks: c.marks, ...r }, null, 2));
+> 
+> // altitude chart (ASCII) + per-stage table
+> const r …[+694 chars]
+
+### 🤖 Claude — 2026-11-17T19:33:11.149Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/07/m2r4 && npx tsx scripts/continuity-test.ts > /dev/null 2>&1; echo cont=$?; python3 -c \"\nimport json;d=json.load(open('qa/continuity_report.json'));print(d['ok'], {k:v for k,v in d.items() if 'plunge' in k.lower() or 'drop' in k.lower()} or list(d)[:12])\"; cp qa/continuity_report.json $O/continuity_default.json; git checkout -q qa/continuity_report.json docs/path_graph.md 2>/dev/null\nfor v in \"def:nodefault07=1\" \"m07:match07=1\" \"k5:match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1\"; do n=${v%%:*}; q=${v#*:}; timeout 900 node scripts/gameplay-test …[+200 chars]`
+
+### 🧑 User — 2026-11-17T19:33:40.143Z
+
+> ↩︎ result: cont=0
+> True {'plunge': {'entryAltitude07': -48.53, 'plungeTop': {'s': 310.41, 'y': -52.31}, 'plungeMid': {'s': 349.77, 'y': -83.56}, 'plungeBottom': {'s': 389.13, 'y': -113.49}, 'inlet08': {'s': 389.22, 'y': -113.5}, 'verticalDrop': 61.19, 'minPitchDeg': -70}}
+> def rc=0
+>  },
+>  "errors": []
+> }
+> m07 rc=0
+>  },
+>  "errors": []
+> }
+> k5 rc=0
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-17T19:33:43.311Z
+
+> 🔧 **Bash** `{"command": "for n in def m07 k5; do python3 -c \"\nimport json,sys;d=json.load(open('qa/match/07/m2r4/gameplay_$n.json'))\nks=list(d); c=d.get('checks') or d.get('results')\np=sum(1 for x in (c.values() if isinstance(c,dict) else c) if (x.get('pass') if isinstance(x,dict) else x)) if c else None\nprint('$n', p, len(c) if c else None, {k:d[k] for k in ks if k in ('coins','coinsCollected','score','finalCoins','pass','ok')})\" ; done; python3 -c \"import json;d=json.load(open('qa/match/07/m2r4/gameplay_k5.json'));print(list(d))\"; git status --short | head", "description": "Summarise gameplay re …[+7 chars]`
+
+### 🧑 User — 2026-11-17T19:33:43.489Z
+
+> ↩︎ result: def 8 8 {'pass': True}
+> m07 8 8 {'pass': True}
+> k5 8 8 {'pass': True}
+> ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> ?? qa/match/07/m2r4/continuity_default.json
+> ?? qa/match/07/m2r4/gameplay_def.json
+> ?? qa/match/07/m2r4/gameplay_k5.json
+> ?? qa/match/07/m2r4/gameplay_m07.json
+> ?? qa/match/07/m2r4/proofs_0px_r4.json
+
+### 🤖 Claude — 2026-11-17T19:33:46.840Z
+
+> 🔧 **Bash** `{"command": "rm -f qa/match/07/m2r4/gameplay_*.log; for n in def m07 k5; do python3 -c \"\nimport json;d=json.load(open('qa/match/07/m2r4/gameplay_$n.json'))\nprint('$n', json.dumps([ (k if isinstance(d['checks'],dict) else None) for k in d['checks']])[:300]); c=d['checks']\nit=c.items() if isinstance(c,dict) else enumerate(c)\nfor k,x in it:\n  s=json.dumps(x)\n  if 'coin' in s.lower(): print('  ',s[:300])\nprint('  drop',d['plunge'].get('verticalDrop') if isinstance(d['plunge'],dict) else d['plunge'])\"; done", "description": "Show coin checks and drop"}`
+
+### 🧑 User — 2026-11-17T19:33:47.011Z
+
+> ↩︎ result: def ["pauseFreezes", "continuousTravel", "noCameraCut", "noTeleport", "plunge", "realCoinPickups", "victory", "heartsLostOnWallBump"]
+>    {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}
+>    {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -109.61, "bennyVisible": false, "cam": [11.2, -99.1, -304]}}
+>   drop 61.41
+> m07 ["pauseFreezes", "continuousTravel", "noCameraCut", "noTeleport", "plunge", "realCoinPickups", "victory", "heartsLostOnWallBump"]
+>    {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}
+>    {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 436.098, "lat": -0.026, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -109.608, "bennyVisible": false, "cam": [11.2, -99.1, -304]}}
+>   drop 61.13
+> k5 ["pauseFreezes", "continuousTravel", "noCameraCut", "noTeleport", "plunge", "realCoinPickups", "victory", "heartsLostOnWallBump"]
+>    {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}
+>    {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 436.098, "lat": -0.026, "coins": 2240, "hearts": 5, "paused": false,  …[+84 chars]
+
+### 🤖 Claude — 2026-11-17T19:33:50.692Z
+
+All proofs pass. Now the pictures, docs and APK. Checking how the r3 APK was built.
+
+### 🤖 Claude — 2026-11-17T19:33:51.739Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"apk\\|VITE_\" qa/match/07/STATUS.md | head -12; ls builds | grep 07; grep -rn \"VITE_RAINBOW\" src/vfx/waterRibbon.ts | head -5", "description": "Find APK build recipe"}`
+
+### 🧑 User — 2026-11-17T19:33:51.795Z
+
+> ↩︎ result: 26:* **Android:** `builds/rainbow-debug-07-2026-11-17-r3.apk` (debug, `VITE_RAINBOW_Q05="match07=1"`, Git LFS, sha256 a2ad08180fae22b0…) — NOT phone-tested (no device in the cloud)
+> rainbow-debug-07-2026-11-17-r3.apk
+> 147: * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+> 150:const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+
+### 🤖 Claude — 2026-11-17T19:33:54.905Z
+
+> 🔧 **Bash** `{"command": "grep -n '\"android:debug\"' package.json; (VITE_RAINBOW_Q05=\"match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1\" timeout 1500 npm run android:debug > /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/apk.log 2>&1; echo rc=$?); tail -5 /tmp/claude-0/-home-user-rainbow-/5269c062-7f72-5f3f-892e-7eb31565a054/scratchpad/apk.log; git status --short | head -20", "description": "Build debug APK with kept switches", "timeout": 1600000}`
+
