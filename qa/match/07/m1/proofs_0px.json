@@ -1,0 +1,10 @@
+{
+ "note": "pixels differing (any channel) vs the pre-change commit 3c7fca9 (worktree captures) / the protected 05 baseline",
+ "differing_px": {
+  "default_06": 0,
+  "default_07": 0,
+  "default_08": 0,
+  "match08_08": 0,
+  "05_ringa26_nearfloor0_vs_wave9_baseline": 0
+ }
+}
