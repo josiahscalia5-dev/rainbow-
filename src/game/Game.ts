@@ -109,9 +109,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
-  const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+  const M08_BENNY = { hat: 0.95, hatOff: [0.074, 0.083, -0.009] as const, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
-  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
+  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, hatPos: (b08.hat?.position ?? new THREE.Vector3()).clone(), body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
   let m08Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
@@ -537,6 +537,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
       b08.body?.scale.set(b08Rest.body.x * bx, b08Rest.body.y * by, b08Rest.body.z * bz);
       const hk = m08On ? M08_BENNY.hat : 1;
       b08.hat?.scale.set(b08Rest.hat * hk / bx, b08Rest.hat * hk / by, b08Rest.hat * hk / bz);
+      // benny08 round 2 (qa/match/08/benny08/NOTES.md): beanie 0.95x and seated ≈15 px higher / ≈10 px further left (body-local offset)
+      if (b08.hat) { const [ox, oy, oz] = m08On ? M08_BENNY.hatOff : [0, 0, 0]; b08.hat.position.set(b08Rest.hatPos.x + ox, b08Rest.hatPos.y + oy, b08Rest.hatPos.z + oz); }
       if (b08.aux) {
         const off = new THREE.Vector3(m08On ? M08_BENNY.dx : 0, m08On ? M08_BENNY.lift : 0, 0).applyQuaternion(benny.root.quaternion.clone().invert());
         b08.aux.position.copy(b08Rest.pos).add(off);
