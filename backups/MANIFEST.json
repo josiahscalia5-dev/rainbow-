@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11651,
-   "sha256": "a1cf022e7081cbe794df12bfc6cce83ae1d525162d97fcaed1be521c1d094093"
+   "sha256": "c40393d280e33a31a3415b5ec3de07aaaa68b72625f31ec8bec4163b96d86715"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1238,8 +1238,8 @@
   },
   {
    "path": "qa/flowplan/A_during_video.png",
-   "bytes": 4894,
-   "sha256": "58505778fb21eaf33eabf442b1762cbd2993956ccfd38c9d187bf72b0239062e"
+   "bytes": 4543,
+   "sha256": "ab3e65a480c36e58374fbf390df4f5e6486b63d234b1e1de571cf7d972b95dd6"
   },
   {
    "path": "qa/flowplan/B_after_ending_video_11.png",
