@@ -6827,3 +6827,67 @@ The tag push reported "Everything up-to-date", and GitHub doesn't list the tag. 
 
 > 🔧 **Bash** `{"command": "sed -i -e 's#backup tag\\n##' -e 's#\\*\\*`backup-2026-11-17-screen08`\\*\\*#**`backup/2026-11-17-screen08-transfer`** (checkpoint branch; GitHub tags are blocked from this session)#' -e 's#(tag `backup-2026-11-17-screen08`#(checkpoint branch `backup/2026-11-17-screen08-transfer`#' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md && grep -c \"backup-2026-11-17-screen08\\b\" docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md; grep -n \"screen08-transfer\" docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | cut -c1-120; python3 -I -c \"\nimport json;p='backups/autosave.config.json';raw=open(p).read();c=json.loads(raw)\nc['prot …[+626 chars]`
 
+### 🧑 User — 2026-11-17T14:23:40.921Z
+
+> ↩︎ result: 0
+> 4:**`backup/2026-11-17-screen08-transfer`** (checkpoint branch; GitHub tags are blocked from this session) (the verified
+> 9:> 1. Repository `josiahscalia5-dev/rainbow-`: check out branch `ccr-9c4a8ad6-xovgsx` (checkpoint branch `backup/2026-1
+> protected 22
+>   "result": "committed+pushed",
+>   "commit": "db0b833327ca084e7d559355b008a7e21ddf85ea",
+> [This command modified 1 file you've previously read: docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T14:23:53.447Z
+
+> 🔧 **Bash** `{"command": "T=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/restore_test; rm -rf $T && mkdir -p $T && cd $T && GIT_LFS_SKIP_SMUDGE=1 timeout 600 git clone -q --branch ccr-9c4a8ad6-xovgsx https://github.com/josiahscalia5-dev/rainbow- repo 2>&1 | tail -2; cd repo && echo \"clone HEAD $(git rev-parse --short HEAD)\"; timeout 900 git lfs pull --include=\"builds/rainbow-debug-match08-2026-11-17.apk,qa/imageblaster/08/world/*,assets/textures/match08/*,qa/worldlabs/05/pilot/full/*.spz\" 2>&1 | tail -1; echo \"LFS files restored: $(git lfs ls-files | grep -E 'match …[+1129 chars]`
+
+### 🧑 User — 2026-11-17T14:25:04.654Z
+
+> ↩︎ result: clone HEAD db0b833
+> LFS files restored: 10 real / 14
+> objects: repair: moving corrupt objects to /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/restore_test/repo/.git/lfs/bad
+> references: 13/13
+> 10
+> handoff + scripts present
+> Image-Blaster ready at /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/restore_test/ib (4acb43b); world rainbow-08-final-spin-chamber restored.
+> Scripts need: NODE_USE_ENV_PROXY=1 (Node fetch ignores HTTPS_PROXY otherwise). Free key checks:
+>   curl -sS https://api.worldlabs.ai/marble/v1/credits      # JSON with remaining_credits
+>   curl -sS -o /dev/null -w '%{http_code}' https://queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status   # 404 = key accepted
+> 8
+> clean clone: npm ci + tsc OK
+> key pieces in clone: 0
+> secret-pattern hits: 19
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T14:25:18.310Z
+
+> 🔧 **Bash** `{"command": "T=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/restore_test/repo; cd $T && git lfs ls-files | grep -E 'match08|imageblaster/08/world|worldlabs/05/pilot/full' | awk '$2!=\"*\"{print \"NOT REAL:\", $3}'; ls .git/lfs/bad 2>/dev/null | head; for i in 1 2; do timeout 900 git lfs pull --include=\"builds/rainbow-debug-match08-2026-11-17.apk,qa/imageblaster/08/world/*,qa/worldlabs/05/pilot/full/*.spz\" 2>&1 | tail -1; done; echo \"after retry: $(git lfs ls-files | grep -E 'match08|imageblaster/08/world|worldlabs/05/pilot/full' | awk '$2==\"*\"' | wc -l …[+531 chars]`
+
+### 🧑 User — 2026-11-17T14:25:21.058Z
+
+> ↩︎ result: NOT REAL: qa/worldlabs/05/pilot/full/collider.glb
+> NOT REAL: qa/worldlabs/05/pilot/full/import/full05.blend
+> NOT REAL: qa/worldlabs/05/pilot/full/import/full05_underlay.glb
+> NOT REAL: qa/worldlabs/05/pilot/full/splats_500k.ply
+> after retry: 10 real / 14
+> objects: repair: moving corrupt objects to /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/restore_test/repo/.git/lfs/bad
+> --- secret-pattern files (matched text masked):
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T14:25:38.983Z
+
+> 🔧 **Bash** `{"command": "T=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/restore_test/repo; cd $T && ok=0; bad=0; for f in $(git lfs ls-files -n | grep -E 'match08|imageblaster/08/world|worldlabs/05/pilot/full/.*spz'); do want=$(git show HEAD:\"$f\" | awk '/^oid sha256:/{print substr($2,8)}'); [ -z \"$want\" ] && continue; have=$(sha256sum \"$f\" | cut -d' ' -f1); if [ \"$want\" = \"$have\" ]; then ok=$((ok+1)); else bad=$((bad+1)); echo \"MISMATCH $f\"; fi; done; echo \"LFS files byte-verified: $ok OK, $bad mismatched\"; ls -la .git/lfs/bad 2>&1 | head -3; du -sh build …[+336 chars]`
+
+### 🧑 User — 2026-11-17T14:25:40.641Z
+
+> ↩︎ result: LFS files byte-verified: 10 OK, 0 mismatched
+> total 8
+> drwxr-xr-x 2 root root 4096 Nov 17 14:24 .
+> drwxr-xr-x 6 root root 4096 Nov 17 14:24 ..
+> 21M 29M 
+> origin LFS missing: 0
+
+### 🤖 Claude — 2026-11-17T14:25:54.792Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md <<'EOF'\n\n## 10. Restore test (2026-11-17 ~14:25 UTC, fresh clone from GitHub into an empty folder)\nClone of `ccr-9c4a8ad6-xovgsx` OK · Git LFS pull of the APK, the Screen 08 Marble world (4 splats, collider GLB, pano,\nthumbnail), the match08 textures and the 05 full-world splats: 10/10 files byte-identical to their LFS records ·\n13/13 approved images OK · 10 agents present · `scripts/setup-image-blaster.sh` rebuilt Image-Blaster (pinned commit,\npatch, bun install) and restored the 08 world files · `npm ci` + `tsc` clean · no API key  …[+1454 chars]`
+

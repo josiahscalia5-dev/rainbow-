@@ -122,3 +122,10 @@ still being extended by its own session) — never merged; the user decides (pro
 width/position, lower-left band. 4. Phase 2: fal clean plates for 04, 05, 06, 07 (one edit each, approved), then the
 Screen 08 method per screen (camera solve → geometry fit → hybrid texture → coins → Benny → motion test → APK).
 5. Line B merge decision for 05 (user).
+
+## 10. Restore test (2026-11-17 ~14:25 UTC, fresh clone from GitHub into an empty folder)
+Clone of `ccr-9c4a8ad6-xovgsx` OK · Git LFS pull of the APK, the Screen 08 Marble world (4 splats, collider GLB, pano,
+thumbnail), the match08 textures and the 05 full-world splats: 10/10 files byte-identical to their LFS records ·
+13/13 approved images OK · 10 agents present · `scripts/setup-image-blaster.sh` rebuilt Image-Blaster (pinned commit,
+patch, bun install) and restored the 08 world files · `npm ci` + `tsc` clean · no API key text in any tracked file.
+Not tested here: a different Claude account (needs the manual steps of §5) and a real Android phone.

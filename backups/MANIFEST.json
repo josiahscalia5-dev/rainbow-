@@ -564,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "0d3881aecd53e66789f3d542021098c20b0760b804234da0c0208564c3035ffb"
+   "sha256": "3f8b5b2ad906094becd0356eff40b55563116f95e789df84016194868ab2d58f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -653,8 +653,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 11475,
-   "sha256": "2d8ef195132991ea4c95a31117a9d3d525e4a26ad638e71f41000d6b0f294abf"
+   "bytes": 12140,
+   "sha256": "9395b09279a5c263d557e808d2b2ccc880e3345044eef92110c8265def176431"
   },
   {
    "path": "docs/characters/benny.md",
