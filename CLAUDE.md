@@ -76,6 +76,8 @@ pushes or tests unless verified.
   hiding · 11 existing ending. REAL PLAYABLE 3D: 04 Five Arrows · 05 Flow Into the Current · 06 Rinse Arch · 07 Washer
   Tube · 08 Final Spin Chamber. Goal ≥ 9/10 (≥ 90 %) visual likeness of each playable screen to ITS approved picture.
   Never regenerate a video, never spend paid-generation credits.
+* **Opening + ending = Google Flow videos made by the user** (girl loads the towel with hidden Benny / Benny hides back in
+  the towel and she grabs it — story and hand-over rules: `docs/FLOW_VIDEO.md`). Never rebuild them as 3D scenes.
 * **Work on the VISUAL part only** (user's words: "I just want to work on the visual part of my approved screens,
   nothing else … I want the scenery, just the look to match my exact approved screens"; "I don't like hear much about the
   camera or the movements"). Spend effort on scenery, walls, rings, water, foam, colours, lighting, props, Benny's look.

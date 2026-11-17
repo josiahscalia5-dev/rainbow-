@@ -1,5 +1,17 @@
 # Google Flow opening / ending videos
 
+## The user's story and rules (2026-11-17 — authoritative)
+* **Opening (Google Flow video):** a human girl does her laundry; Benny (pink, fluffy) is secretly hidden inside a
+  purple towel. She carries the laundry to the washing machine and puts the clothes and the towel with Benny inside,
+  not knowing he is there, closes the washer and walks away. Benny stays inside → the magical washing-machine adventure.
+* **Ending (Google Flow video):** after his adventure Benny must get back into the laundry and hide inside the towel
+  before the girl notices he was missing. She comes back and grabs the towel, unaware of his adventure. The ending
+  must connect naturally to the beginning (same girl, towel, laundry room, washer).
+* Rules: both made with Google Flow (by the user — Claude never generates videos or spends video credits); keep the
+  approved characters, colours, laundry-room scenery and style; **screens 04–08 stay real playable 3D Android
+  gameplay**; never rebuild the opening/ending as playable Marble or Three.js environments; the videos must hand over
+  naturally into and out of the playable game (below); do not change the approved game screens.
+
 The game can play the user's Google Flow videos as silent cinematics and hand over to the real-time 3D
 game without a cut. Gameplay (03–10) is always real-time 3D; the videos only cover the cinematics.
 

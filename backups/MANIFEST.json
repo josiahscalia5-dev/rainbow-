@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 13736,
-   "sha256": "7ee0af33d9cdb0ac15014809c758deaea206360249e4ccb4d756c7405c2fde7d"
+   "bytes": 13975,
+   "sha256": "c52d98f2f4154e67036424f5cb8e5871f51697cc6f58b2128ee7c2da866b8700"
   },
   {
    "path": "README_FIRST.md",
@@ -534,7 +534,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "55e990f53f8f9ede81618158bb4df96fd5c65e1f3633aafd9e5eb393f9919d60"
+   "sha256": "07703e5c892d33112662114346c7e87cc147aeb3105d8166a1f84037e7585cc7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "docs/FLOW_VIDEO.md",
-   "bytes": 3420,
-   "sha256": "14389b8657a550e1d358c67272effc4e76cde1345b32e60db1b29103b93072f6"
+   "bytes": 4597,
+   "sha256": "6bc1006fbc1da91024fe46b31b6c5be652cdc84c4803beff2621af173ecade1e"
   },
   {
    "path": "docs/characters/benny.md",

@@ -5440,3 +5440,102 @@ Please continue your current Screen 08 visual-matching work. This message is sim
 
 My priority is matching ALL my approved screens, while keeping the video sequences separate from the real 3D gameplay.
 
+### 🤖 Claude — 2026-11-17T13:43:59.478Z
+
+Understood: the opening and ending stay Google Flow videos, and screens 04–08 stay real, playable 3D. I'll record your story beats in the project files so no future session rebuilds them as 3D, then continue the Screen 08 work. First, the existing video hand-over document:
+
+### 🤖 Claude — 2026-11-17T13:44:00.285Z
+
+> 🔧 **Bash** `{"command": "wc -l docs/FLOW_VIDEO.md && sed -n 1,30p docs/FLOW_VIDEO.md | cut -c1-200", "description": "Read the Flow video hand-over document"}`
+
+### 🧑 User — 2026-11-17T13:44:00.341Z
+
+> ↩︎ result: 50 docs/FLOW_VIDEO.md
+> # Google Flow opening / ending videos
+> 
+> The game can play the user's Google Flow videos as silent cinematics and hand over to the real-time 3D
+> game without a cut. Gameplay (03–10) is always real-time 3D; the videos only cover the cinematics.
+> 
+> ## Where to put the files
+> 
+> | File | Plays | Hand-off |
+> |---|---|---|
+> | `public/video/intro.mp4` (or `.webm`) | at launch and on Replay, instead of the real-time 01 | the live 3D intro is held at the "girl walks away" moment (`T.cp01`) under the video, then revealed by 
+> | `public/video/ending.mp4` (or `.webm`) — optional | when Benny reaches 11, before the victory frame | the real-time 11 frame (the official cartoon girl holds the towel, Benny hidden, **FINAL SPIN 
+> 
+> If a file is missing, the real-time 3D cinematic plays instead. Videos are always muted and inline.
+> Tap skips the video (after 0.6 s).
+> 
+> ## Recommended export
+> 
+> * Portrait 9:16 (1080×1920 or 720×1280) is best. Any ratio works edge to edge with no black bars and no stretching
+>   (`chooseVideoFit` in `src/ui/cinematicVideo.ts`):
+>   * **cover**: the clip is cropped to the phone when at least 78% of it stays visible. A 9:16 clip keeps 80% of its
+>     width on a 20:9 phon …[+858 chars]
+
+### 🤖 Claude — 2026-11-17T13:44:10.514Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='docs/FLOW_VIDEO.md'; s=open(p).read()\nhead=\"# Google Flow opening / ending videos\\n\"\nadd=head+'''\n## The user's story and rules (2026-11-17 — authoritative)\n* **Opening (Google Flow video):** a human girl does her laundry; Benny (pink, fluffy) is secretly hidden inside a\n  purple towel. She carries the laundry to the washing machine and puts the clothes and the towel with Benny inside,\n  not knowing he is there, closes the washer and walks away. Benny stays inside → the magical washing-machine adventure.\n* **Ending (Google Flow video):** after hi …[+1324 chars]`
+
+### 🧑 User — 2026-11-17T13:44:10.590Z
+
+> ↩︎ result: docs updated
+
+### 🤖 Claude — 2026-11-17T13:44:15.933Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"export function createCoins|defs\\.push|const defs|lat:|height|HOVER|hover|stage\\(|\\.s0|refCoins|function layout|for \\(const st\" src/gameplay/coins.ts | head -30 | cut -c1-170; wc -l src/gameplay/coins.ts", "description": "Find the coin layout code"}`
+
+### 🧑 User — 2026-11-17T13:44:15.991Z
+
+> ↩︎ result: 2: * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 15:export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number }
+> 26:function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h?: number, extra?: Partial<CoinDef>) => void) {
+> 27:  const a = course.stage('05');
+> 32:  for (let s = sCp - 1; s > a.s0 + 6; s -= C05.preGap) ss.unshift(s);
+> 41:  const add = (stage: StageId, s: number, lat: number, h = 0.9, extra: Partial<CoinDef> = {}) => out.push({ s, lat, h, stage, ...extra });
+> 42:  const st = (id: StageId) => course.stage(id);
+> 44:  { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
+> 46:  { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }
+> 50:  { const a = st('06'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 4 + i * ((a.s1 - a.s0 - 6) / n); add('06', s, -1.3 + 0.7 * Math.sin(i * 0.4)); } }
+> 52:  { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
+> 54:  { const a =  …[+431 chars]
+
+### 🤖 Claude — 2026-11-17T13:44:29.736Z
+
+> 🔧 **Bash** `{"command": "sed -n 59,110p src/gameplay/coins.ts | grep -n -E \"Geometry|radius|scale|h \\+|\\.h|up,|position|matrix|return out|C05|coins05\\(\" | cut -c1-170 | head -20; grep -n \"realCoinPickups\" -A6 scripts/gameplay-test.mjs | grep -E \"pass|>\" | head -5 | cut -c1-200", "description": "Read coin size, placement and test criterion"}`
+
+### 🧑 User — 2026-11-17T13:44:29.800Z
+
+> ↩︎ result: 1:  return out;
+> 88:  out.checks.realCoinPickups = { pass: endState.coins > startCoins, startCoins, endCoins: endState.coins, collected: (endState.coins - startCoins) / 10 };
+> 89-  out.checks.victory = { pass: fin.mode === 'end' && fin.stage === '11' && fin.bennyVisible === false, finalState: fin };
+
+### 🤖 Claude — 2026-11-17T13:44:32.357Z
+
+> 🔧 **Bash** `{"command": "sed -n 72,130p src/gameplay/coins.ts | cut -c1-170", "description": "Read coin geometry and instance placement"}`
+
+### 🧑 User — 2026-11-17T13:44:32.419Z
+
+> ↩︎ result: export function createCoins(course: Course): CoinSystem {
+>   const defs = coinLayout(course);
+>   const faceTex = canvasTexture(256, 256, (c, w, h) => {
+>     const g = c.createRadialGradient(w * 0.38, h * 0.32, 10, w / 2, h / 2, w * 0.55);
+>     g.addColorStop(0, '#ffe680');
+>     g.addColorStop(0.45, '#ffcf2a');
+>     g.addColorStop(1, '#e89200');
+>     c.fillStyle = g;
+>     c.beginPath(); c.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2); c.fill();
+>     // raised inner rim: dark groove + bright lip
+>     c.lineWidth = 9;
+>     c.strokeStyle = '#c98200'; c.beginPath(); c.arc(w / 2 + 2, h / 2 + 2, w * 0.4, 0, Math.PI * 2); c.stroke();
+>     c.strokeStyle = '#fff0a0'; c.beginPath(); c.arc(w / 2 - 1, h / 2 - 1, w * 0.4, 0, Math.PI * 2); c.stroke();
+>     // embossed "$" drawn as vector strokes (font-independent: identical on every Android device):
+>     // light bevel up-left, dark bevel down-right, deep-gold glyph on top
+>     const dollar = (dx: number, dy: number, col: string, lw: number) => {
+>       c.save(); c.translate(dx, dy);
+>       c.strokeStyle = col; c.lineCap = 'round'; c.lineJoin = 'round';
+>       c.lineWidth = lw;
+>       c.beginPath();
+>       c.moveTo(166, 90);
+>       c.bezierCurveTo(150, 66, 90, 64, 90, 98) …[+2140 chars]
+
