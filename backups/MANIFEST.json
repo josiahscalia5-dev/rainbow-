@@ -664,7 +664,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11043,
-   "sha256": "391120cbf8278920a7ea3e147d60c7e42b2a39ff2d805c789d0b58c89d1867d7"
+   "sha256": "7df1abd3b51a8e0b2ab30c6b79630c3fbc1cbf54206f23e1be52a17ac69fffff"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -715,6 +715,11 @@
    "path": "backups/source-package/Rainbow_GitHub_Autosave_5_Minute_Claude_Prompt.md",
    "bytes": 11339,
    "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
+  },
+  {
+   "path": "builds/rainbow-debug-07-2026-11-17-r3.apk",
+   "bytes": 26977292,
+   "sha256": "a2ad08180fae22b05ee75bb0659e61c11ef7fd0da6fb2e1f0c23d9650bc32e59"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1408,8 +1413,8 @@
   },
   {
    "path": "qa/match/07/STATUS.md",
-   "bytes": 2959,
-   "sha256": "2bcbeaefc961efeb5f6be6d43efe706541239e5d9a6d32f6ad1cb2b3f53f7130"
+   "bytes": 3141,
+   "sha256": "e89a64c42618f7167d8ebd7f9b9bc33a855f71d1075d4c8190f11e96f0fb6383"
   },
   {
    "path": "qa/match/07/cam/approved_before_bestfit_halfres.png",
