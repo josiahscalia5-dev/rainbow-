@@ -137,15 +137,41 @@ export function dampedClips(clips: THREE.AnimationClip[]): THREE.AnimationClip[]
 }
 
 // ------------------------------------------------------------------ baked maps
-const T = (f: string) => new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href;
+/** URL / build-time switch value (`?key=…`, or VITE_RAINBOW_Q05 in packaged builds); null when absent */
+const qv = (key: string): string | null => {
+  try {
+    if (typeof location !== 'undefined') { const v = new URLSearchParams(location.search).get(key); if (v !== null) return v; }
+  } catch {
+    /* no location */
+  }
+  const b: string = (import.meta as unknown as { env?: Record<string, string> }).env?.VITE_RAINBOW_Q05 ?? '';
+  return b ? new URLSearchParams(b).get(key) : null;
+};
+/**
+ * Maps RE-BAKED FROM THE APPROVED SCREEN 08 picture at the locked 08 camera (2026-11-17, qa/match/08/benny08/NOTES.md;
+ * assets/textures/benny08/: body + arm fur baked from the 08 pixels where the picture shows them, the rest of the fur the
+ * benny05 map in the 08 fur tone; crown + cuff = benny05 knit with the 08 colours; pom-pom, star, normals = benny05).
+ * Measured closer to the approved 08 Benny than the benny05 maps -> the DEFAULT of the Screen 08 switches (`?match08=1`,
+ * `?matchall=1`, `?benny08=1`). `?bake08=0` = the previous benny05 maps (A/B); `?bake08=1` = the 08 maps with any switch
+ * of this file (e.g. `?benny05=1&bake08=1`). Only while the benny05 look itself is on; the default build never gets here.
+ */
+const BAKE08_Q = qv('bake08');
+export const BAKE08: boolean =
+  BENNY05 && (BAKE08_Q === '1' || (BAKE08_Q !== '0' && (flag05('match08') || flag05('matchall') || flag05('benny08'))));
+// two literal paths (not one `${dir}` template): Vite then bundles only these two folders
+const T = (f: string) => (BAKE08 ? new URL(`../../../assets/textures/benny08/${f}`, import.meta.url).href : new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href);
 /** part → baked albedo (sRGB PNG) + colour factor (the map stores albedo / factor so it fits 0..1) + optional normal map */
+/** benny08 round 3 (qa/match/08/benny08/NOTES.md): with the 08 maps, the body map with the dark strip under the cuff
+ *  repaired (work/fixband08.py → body_r3.png); `?b08r3=0` = the round-2 body.png */
+export const B08R3: boolean = BAKE08 && qv('b08r3') !== '0';
 export const MAPS05: Record<string, { map: string; scale: number; normal?: string; normalScale?: number }> = {
-  fur_body: { map: 'body.png', scale: 1 },
+  fur_body: { map: B08R3 ? 'body_r3.png' : 'body.png', scale: 1 },
   fur_armL: { map: 'armL.png', scale: 1 },
   fur_armR: { map: 'armR.png', scale: 1 },
   fur_pom: { map: 'pom.png', scale: 1 },
   hat_crown: { map: 'crown.png', scale: 1, normal: 'crown_n.png', normalScale: 0.8 },
-  hat_brim: { map: 'brim.png', scale: 1, normal: 'brim_n.png', normalScale: 0.8 },
+  // round 3: crisper cuff ribs (work/crisp08.py --amount=1.2 → brim_r3.png; `?b08crisp=0` = round-2 brim.png)
+  hat_brim: { map: B08R3 && qv('b08crisp') !== '0' ? 'brim_r3.png' : 'brim.png', scale: 1, normal: 'brim_n.png', normalScale: 0.8 },
 };
 /** star: base colour (linear) solved from the approved star pixels through the 05 light + post chain (bake_report
  *  star_albedo_linear; the GLB's orange emissive stays and is part of the solve) → lemon yellow on screen */
@@ -249,6 +275,17 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   for (const f of furs) {
     const c = CLUMP05[f.mesh.name];
     if (c !== undefined) f.uniforms.uClump.value = c;
+    // benny08 round 3 (lead review: "fur hard, grainy, jagged fringe"): softer strands on body + arms (probe 65.3 -> 65.6 %),
+    // shorter fringe where the body turns edge-on (neutral number, smoother outline); `?b08soft=0` = off
+    if (B08R3 && qv('b08soft') !== '0' && /^fur_(body|arm)/.test(f.mesh.name)) {
+      f.uniforms.uSoft.value = 0.6;
+      if (f.mesh.name === 'fur_body') f.uniforms.uSoftEdge.value = 1.0;
+    }
+    // benny08 round 4: lighter pink tips on the visible shoulders / upper body like the painted highlights (number neutral,
+    // visibly closer); since round 5 (user 19:00: r3b is the base) OPT-IN: `?b08hi=1` = on
+    if (B08R3 && qv('b08hi') === '1' && f.mesh.name === 'fur_body') f.uniforms.uHi.value = 0.7;
+    // benny08 round 3: the fur uniforms reachable from the mesh (Game.ts ?match08=1 Benny tweaks, QA probes); no render effect
+    f.mesh.userData.furU = f.uniforms;
   }
 
   // ---- materials (own copies: the cached GLB materials are shared by every clone) ----
@@ -277,6 +314,8 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
       }
       mat.map = tex;
       mat.color.setScalar(spec.scale);
+      // benny08 round 4: lighter, more violet pom-pom like the painting (pom 22 -> 23 % within 20); since round 5 OPT-IN (r3b base): `?b08pom=1` = on
+      if (B08R3 && qv('b08pom') === '1' && m.name === 'fur_pom') mat.color.setRGB(1.12, 1.0, 1.06);
       if (!fur) {
         const n = spec.normal ? maps[spec.normal] : null;
         mat.normalMap = n;
