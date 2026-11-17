@@ -1,6 +1,61 @@
 # RAINBOW — parallel workstreams: lead progress report
 
-# ROUND 3 (account 3) — CURRENT
+# ROUND 4 (account 4) — CURRENT
+**Lead coordinator ("Lead Claudia") — round 4, account 4:** session `session_01Kbt6BTTnCGMUULjZoCLDTo` ("Rainbow game
+restoration"), branch **`ccr-067047f0-up5d1m`**, started from the round-3 lead branch `ccr-c0235034-ks6sx3` @ `ed23f9e5`
+(18:11 UTC, the newest commit). Briefs: `docs/briefs/2026-11-17-r4/`. Instructions: the user's 23-section transfer file
+(2026-11-17). Updated: 2026-11-17 ~18:40 UTC.
+
+## Why round 4
+Account 3 ran out of usage at ~18:13 UTC (seven sessions from 17:25). Its sessions live on another Claude account and
+cannot be reached from here; their containers may keep autosaving to the `-c3` branches. Round 4 continues on new
+**`-c4`** branches created from each `-c3` head (no `-c3` commit after 18:13; checked 18:29 UTC). Nothing merged,
+reset or force-pushed. Unpushed edits inside account 3's containers (if any) are NOT recoverable from here.
+
+## Branch mapping (old → new) and state
+| Workstream | Old branch @ newest commit | New branch (created 18:32 UTC, same commit) | State |
+|---|---|---|---|
+| Lead | `ccr-c0235034-ks6sx3` @ `ed23f9e5` | `ccr-067047f0-up5d1m` | running (this session) |
+| 08 Benny | `claude/rainbow-s08-benny08-bake-c3` @ `c64ff28b` (r4 done `71aa6d85`) | `claude/rainbow-s08-benny08-bake-c4` | **started 18:33** `session_01Kbt6BUy2s16F5FhJR2yJ6z` — round 5 (`S08_BENNY.md`) |
+| 08 camera | `claude/rainbow-s08-camclear-c3` @ `c03f391c` (r3 done `0f12867b`) | `claude/rainbow-s08-camclear-c4` | **started 18:33** `session_01Kbt6BTLnGMkLZVfNSYf45t` — round 4 (`S08_CAMERA.md`) |
+| 07 | `claude/rainbow-s07-match-c3` @ `72fb6129` (M2 half done `a5d2b392`) | `claude/rainbow-s07-match-c4` | paused — brief ready (`S07.md`: finish M2) |
+| 04 | `claude/rainbow-s04-match-c3` @ `d1e422fa` (M3 done `a4644789`) | `claude/rainbow-s04-match-c4` | paused — next M4 (r3 `NEXT_MILESTONES.md`) |
+| 05 (line B) | `claude/rainbow-s05-match-c3` @ `ebaf6cac` (M2 done `a96bfdf4`) | `claude/rainbow-s05-match-c4` | paused — next M3 (r3 `NEXT_MILESTONES.md`) |
+| 06 | `claude/rainbow-s06-match-c3` @ `c088718b` (M1 done `b993f6d5`) | `claude/rainbow-s06-match-c4` | paused — APK retry + M2 (r3 `NEXT_MILESTONES.md`) |
+
+Capacity: only the two Screen 08 workstreams run (user rule: Screen 08 first; account 3 was exhausted in < 1 h by
+seven sessions). 07 next when capacity allows; 04 / 05 / 06 milestones are complete and wait for the user's review.
+
+## Restore verification (round 4, 2026-11-17 18:23–18:40 UTC)
+* Newest remote commits read at 18:23 and again 18:29: the six specialist tips equal the transfer file's snapshot
+  except Screen 07 (`a5d2b392` → `72fb6129`, 18:13 autosave: coin probe `qa/match/07/m2/coins/probe_m1.json`).
+* 13/13 approved images byte-identical (`sha256sum -c scripts/reference.sha256`); 10/10 agent definitions present.
+* Git LFS: **57 distinct objects** across the lead + six `-c3` branches (45 / 46 / 39 / 44 / 45 / 47 / 45 per branch),
+  all 57 downloaded from GitHub (651 MB), `git lfs fsck` OK on all seven branches, 0 missing.
+* Tools (bootstrap): Blender 5.3.0, Android SDK 34 + build-tools 34.0.0 + Java 21 + Gradle 8.2.1, Node 22, Playwright
+  Chromium 153 (WebGL2 / SwiftShader), ffmpeg, ImageMagick, Python QA libs (numpy, Pillow, cv2, scipy) — OK.
+* Lead code `ed23f9e5`: tsc OK; continuity OK (joins gap 0); **gameplay 8/8** (91 coins, 1,330 → 2,240, victory,
+  07→08 drop 61.41 u).
+* `?flowplan=1` re-tested on the newest code (18:25): A–D pass. The old "2,230": test B enters with `goto('08')`, which
+  shows the approved screenshot's HUD value 2,040 (real count there 2,020) and then rides straight, missing 3 of 08's 7
+  coins — a test artifact, not a game bug. New check **E** (full run, both videos, coin-seeking ride) ends at exactly
+  **2,240, 91/91** (probe 18:30). FLOW_VIDEO.md rewritten for the 01–03 / 04–08 / 09–11 split. Real Flow videos are
+  NOT in the repository yet.
+* Keys: this account's `rainbow-` environment had NO network secrets (World Labs free read HTTP 401). The user
+  re-entered both existing keys in the secure form. World Labs: `GET /credits` → **5,420** (unchanged), Screen 08 world
+  `32b5b2f4…` → 200 (same original account). fal: status of Screen 04 request `01a1ea70` → 200 COMPLETED (same fal
+  account; the dollar balance is dashboard-only). No paid job run. 06 / 07 fal plates: prepared, NOT approved, NOT run.
+* Not available: World Labs Atlas connector (optional, not needed — the direct API key works); context7 MCP failed to
+  connect (optional). No Android phone in the cloud: **no APK has been tested on a real phone.**
+
+## Waiting for the user
+* Screen 08: Benny r2 vs r3b vs r4 (review set coming in round 5); keep `coins08px`? camclear on the phone.
+* Screens 04 / 05 / 06: milestone results to review; which to resume. Screen 07: resume M2 when capacity allows?
+* fal clean plates for 06 / 07 (one paid edit each, prepared, not run).
+* Making `?flowplan=1` default — after the user's Flow videos are uploaded and tested.
+
+---
+# ROUND 3 (account 3) — history
 **Lead coordinator ("Lead Claudia") — round 3, account 3:** session `session_01Q46SCLi5xPVn25aRuxkVwK` ("Rainbow game
 restoration"), branch **`ccr-c0235034-ks6sx3`**, started from the round-2 lead branch `ccr-5495e9c4-g0apvl` @ `7db2982`
 (newer than the user's checkpoint `ef591fd`: autosaves 17:14 + 17:15 UTC). Briefs: `docs/briefs/2026-11-17-r3/`

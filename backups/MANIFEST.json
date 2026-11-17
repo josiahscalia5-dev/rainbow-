@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 19687,
-   "sha256": "abb6cf8f94db90718cdad8830dac7d0338ffb10e610ab40dc18ba8759575cf46"
+   "bytes": 22334,
+   "sha256": "c0d121494b740f136246f3ecc265a1500422172390132ecfd60c93c318fe01fe"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11651,
-   "sha256": "8c4bee77de8a95c69cbca8d2941d0ba91def24b39852ebd01e9fd9d0be4e3615"
+   "sha256": "a1cf022e7081cbe794df12bfc6cce83ae1d525162d97fcaed1be521c1d094093"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -718,8 +718,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 18855,
-   "sha256": "1a144a916f33f41701f2cd97bab158c0f0b5f57f2bc0b2037e029ccd6f994462"
+   "bytes": 23897,
+   "sha256": "c4a5537cc7051768a22bd711468afd1111a894979ed4e51b0475544909f0aee9"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "docs/briefs/2026-11-17-r4/S08_BENNY.md",
-   "bytes": 3267,
-   "sha256": "bdb111cc9ede17973634d792fc17fd5030b43b1d950b10f75d4949dfb31b9b6e"
+   "bytes": 3851,
+   "sha256": "40940bb04b0429fe3cb25c17e9b28f2213589ef93d096a30531b2255b0543295"
   },
   {
    "path": "docs/briefs/2026-11-17-r4/S08_CAMERA.md",
