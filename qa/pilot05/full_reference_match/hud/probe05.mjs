@@ -75,7 +75,7 @@ try {
             s = Math.min(sCp + (t.dsMax ?? T.sMax), Math.max(sCp + (t.dsMin ?? 1), s)); lat = Math.max(-(t.latMax ?? 3.6), Math.min(t.latMax ?? 3.6, lat));
           }
           const p = P(s, lat, h); const [x, y] = proj(p); const d1 = dia(p);
-          out.push({ ...t, s: +s.toFixed(3), ds: +(s - sCp).toFixed(3), lat: +lat.toFixed(3), h: +(t.h ?? T.h).toFixed(3), x: +x.toFixed(1), y: +y.toFixed(1), d_at_scale1: +d1.toFixed(2), scale: +(t.w / d1).toFixed(3), dist: +p.distanceTo(camera.position).toFixed(2), bob: h - (t.h ?? T.h) });
+          out.push({ ...t, tx: t.x, ty: t.y, s: +s.toFixed(3), ds: +(s - sCp).toFixed(3), lat: +lat.toFixed(3), h: +(t.h ?? T.h).toFixed(3), x: +x.toFixed(1), y: +y.toFixed(1), d_at_scale1: +d1.toFixed(2), scale: +(t.w / d1).toFixed(3), dist: +p.distanceTo(camera.position).toFixed(2), bob: h - (t.h ?? T.h) });
         }
         if (T.occl) {
           // Occlusion-aware placement (2026-11-17): a coin whose natural spot is hidden (the far 05 tunnel is a forced-
@@ -94,7 +94,7 @@ try {
           };
           const { tiltSin = 0.79, thick = 0.18, safety = 0.15, step = 0.2 } = T.occl;
           for (const o of out) {
-            const dh = Math.min(hitD(o.x, o.y), hitD(o.x - o.w / 2, o.y), hitD(o.x + o.w / 2, o.y), hitD(o.x, o.y - 0.45 * o.w), hitD(o.x, o.y + 0.45 * o.w));
+            const dh = Math.min(hitD(o.tx, o.ty), hitD(o.tx - o.w / 2, o.ty), hitD(o.tx + o.w / 2, o.ty), hitD(o.tx, o.ty - 0.45 * o.w), hitD(o.tx, o.ty + 0.45 * o.w));
             const margin = (sc) => 0.5 * sc * tiltSin + 0.5 * thick * sc + safety;
             o.dHit = +dh.toFixed(2);
             o.dMax = dh - margin(o.scale * Math.min(1, (dh - 0.5) / o.dist));
@@ -108,7 +108,7 @@ try {
           }
           for (const o of out) {
             if (!o.occluded) continue;
-            const p = cam.clone().addScaledVector(ray(o.x, o.y), o.dNew);
+            const p = cam.clone().addScaledVector(ray(o.tx, o.ty), o.dNew);
             const fr = frameOf(p, o.s);
             const d1 = dia(p); const [x, y] = proj(p);
             Object.assign(o, { s: +fr.s.toFixed(3), ds: +(fr.s - sCp).toFixed(3), lat: +fr.lat.toFixed(3), h: +(fr.h - o.bob).toFixed(3), x: +x.toFixed(1), y: +y.toFixed(1), d_at_scale1: +d1.toFixed(2), scale: +(o.w / d1).toFixed(3), dist: +o.dNew.toFixed(2) });

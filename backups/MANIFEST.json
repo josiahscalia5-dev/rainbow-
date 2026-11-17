@@ -589,7 +589,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11668,
-   "sha256": "c2fea5cf64cd4f433fcb912a10054da26af507dbde4edc5d4d2107481d18699c"
+   "sha256": "4b66430f19faf5aa48eebca31afcecea778ab203f5824b8da5a73409eb28ea75"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1477,6 +1477,81 @@
    "sha256": "5cca7adb590d265ad2da17286b6288d9ef2d9891d2c5b1471737a7c0fb3b6128"
   },
   {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/armL.png",
+   "bytes": 17348,
+   "sha256": "0f01d34322ad719e718159f2970f8e1e582dfe942abc0828b5477d58b768a654"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/armL_seen.png",
+   "bytes": 1338,
+   "sha256": "da023fcab5b77b6b982587de90be103f19ce947096e5470192ba96c52b6da9ce"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/armR.png",
+   "bytes": 16466,
+   "sha256": "0dd4234d33dad76da80210ed925a0af4dea9ef88b4ead3e7f02ef6f9795bc5a0"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/armR_seen.png",
+   "bytes": 1240,
+   "sha256": "8914a4334ea81d516d91f73a89219a90f87e3a8d191b06ebd724628ca540589c"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/bake_report.json",
+   "bytes": 1273,
+   "sha256": "2f630ccda79dc7b4888ac67aec96e78afca23f398ad25aa1de42be9cd17d34bf"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/body.png",
+   "bytes": 238279,
+   "sha256": "30911133e07cea9975558122b5aa75783d58db166c7692af824b6efd9505b8a9"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/body_seen.png",
+   "bytes": 13249,
+   "sha256": "9ff45013bf9247e819ba1fa8f81dad04a66ca985fa8b36f4c31e00b4ff2af182"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/brim.png",
+   "bytes": 134648,
+   "sha256": "2aa48d2a1ae9d094598157ce931cb049a480ca475b48446a954844cbcc7570d0"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/brim_n.png",
+   "bytes": 182368,
+   "sha256": "5653d55b148ebcfc9b8da06f75d948d55c85b965b9f313df9fa89308cdca4f5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/brim_seen.png",
+   "bytes": 5924,
+   "sha256": "4ddba4561e719f7bde8056df3fe57624bc95e84b28872f7b7b47070afeac2152"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/crown.png",
+   "bytes": 291600,
+   "sha256": "029a85b2a87e9552f9fb507bf714d22ab3c881528ad8219b2a7f3b32022dcb10"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/crown_n.png",
+   "bytes": 350742,
+   "sha256": "8dc7b70842c40563308e145121c06cf81c36cbab8f5bf1cf024e2344976093c9"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/crown_seen.png",
+   "bytes": 10544,
+   "sha256": "fc7a3c93513bd726f10be9a5ce45aceceee51e3b82e09703a0a2a8ab759781e7"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/pom.png",
+   "bytes": 111096,
+   "sha256": "9c2644a05fd9fd125e055715af296919b8078cdd507fb40542fc520758fd91e2"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b2/tex/pom_seen.png",
+   "bytes": 5916,
+   "sha256": "4698a2071c80510a98ec7e1c9534cfa0683216dec692c646c4c59f0acd753b1a"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/benny/work/bake.py",
    "bytes": 13982,
    "sha256": "295b86d0ef458e1bf10687e86c03ba4932a92d573219e3a89adfb916fd05b728"
@@ -1767,6 +1842,11 @@
    "sha256": "3c17621548894af0cfb78eb4715e5bc2f98c4cfbd32fc6a53edfb38d44e7f737"
   },
   {
+   "path": "qa/pilot05/full_reference_match/coins/targets_v2.json",
+   "bytes": 1345,
+   "sha256": "ad75c9ac7c9011a9eb2640c6df994f42b0462b9acf892dd5c188d0299b1da2a6"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/coordinator/IMAGE3_NEW_locked_STACK+projvp05+projgap05.png",
    "bytes": 2179834,
    "sha256": "8fc91c4b688122bef831ae283a5aade20db06ba976c6cfa159662e5df2b5bead"
@@ -1987,6 +2067,26 @@
    "sha256": "7b73a4a49757d3c9149f98b3ef462178b802d525a8f89f311e61e2a27c8496af"
   },
   {
+   "path": "qa/pilot05/full_reference_match/env/work/e3/idviz.png",
+   "bytes": 2087825,
+   "sha256": "f1da2f50dd95797592e763737f5b0d9f7da889470f408bd0a55c90209c5b02b8"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/e3/idviz.txt",
+   "bytes": 1207,
+   "sha256": "37a4403d92f5fdc69ddf2219444ab1552c7f97275805cf43c267dd75bc5d4dde"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/e3/rings.txt",
+   "bytes": 1115,
+   "sha256": "f9e11ec4df632691d72f5d1a4c05e93cebb37a6b6c124e93aa0adb8caecf8714"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/e3/tunnel.json",
+   "bytes": 5020,
+   "sha256": "7b73a4a49757d3c9149f98b3ef462178b802d525a8f89f311e61e2a27c8496af"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/env/work/edges.png",
    "bytes": 1157688,
    "sha256": "dcc251bc618511f05dca04af7de5dabdbb5b24f878c27536a05b9458d265ea0b"
@@ -2020,6 +2120,11 @@
    "path": "qa/pilot05/full_reference_match/env/work/rings_e2.json",
    "bytes": 3336,
    "sha256": "4e1fc459251f76d0d19e0ae25769654b67decd3038083dbefcf162f3c868090e"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/rings_e3.json",
+   "bytes": 3322,
+   "sha256": "e65533b0cded621796b3ca77cd62a34e96b15d2346c83bcd6423869385e31a8c"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/work/rm_overlay.png",
@@ -2068,8 +2173,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/hud/probe05.mjs",
-   "bytes": 10689,
-   "sha256": "a4e5ff1b23cd217d69e513f36dd0d46c88284ef06dae0e20226165a1cfb225e3"
+   "bytes": 10719,
+   "sha256": "a1f1f5d4c7a7d4ba1e8f4d6a99c0be8b30fe3a07161c87c575f7f9f856314ba1"
   },
   {
    "path": "qa/pilot05/full_reference_match/masks/benny_and_hat.png",

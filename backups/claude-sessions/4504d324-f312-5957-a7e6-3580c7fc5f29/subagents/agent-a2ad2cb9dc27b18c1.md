@@ -859,3 +859,74 @@ The knit columns (~10 texels per stitch column) and both stripe bands come throu
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; rm -rf $W/b2/tex; timeout 900 python3 $W/bake.py $W/b1,$W/b2 $W/b2/tex --normals 2>&1 | python3 -I -c \"\nimport sys,json; t=sys.stdin.read(); i=t.find('{'); print(t[:i]); d=json.loads(t[i:]); \nfor k,v in d.items(): print(k, v)\"; python3 -I -c \"\nfrom PIL import Image\nd='$W/b2/tex/'\nims=[Image.open(d+f).convert('RGB') for f in ['crown.png','brim.png','body.png','pom.png']]\nW=1024; hs=[int(i.height*W/i.width) for i in ims]; H=sum(hs)+40\no=Image.new('RGB',(W,H),(40,40,40)); y=0\nfor i,h in zip(ims,hs):\n  o …[+215 chars]`
 
+### 🧑 User — 2026-11-17T01:24:35.002Z
+
+> ↩︎ result: star_albedo_linear [0.317, 0.39, 0.048]
+> star_px 2195
+> body {'px': 34888, 'seen_texels': 24040, 'rejected_texels': 5069, 'scale': 1.0, 'median_albedo': [0.427, 0.15, 0.289], 'strip_u': [0.632, 0.862]}
+> crown {'px': 15586, 'seen_texels': 26056, 'rejected_texels': 0, 'scale': 1.0, 'median_albedo': [0.215, 0.18, 0.236], 'ring_fit_rows': [-0.65, 216.85, -1734.75], 'ring_h_rows': {'u0': -41.7, 'centre': -0.7, 'u1': 3.2}, 'ring_est_cols': 50, 'strip_u': [0.383, 0.591]}
+> brim {'px': 11076, 'seen_texels': 17618, 'rejected_texels': 57, 'scale': 1.0, 'median_albedo': [0.057, 0.024, 0.23], 'strip_u': [0.384, 0.632]}
+> pom {'px': 10846, 'seen_texels': 10555, 'rejected_texels': 1057, 'scale': 1.0, 'median_albedo': [0.111, 0.042, 0.323], 'strip_u': [0.633, 0.889]}
+> armL {'px': 1260, 'seen_texels': 1702, 'rejected_texels': 85, 'scale': 1.0, 'median_albedo': [0.398, 0.133, 0.28]}
+> armR {'px': 1173, 'seen_texels': 1612, 'rejected_texels': 105, 'scale': 1.0, 'median_albedo': [0.431, 0.15, 0.315]}
+
+### 🤖 Claude — 2026-11-17T01:24:36.908Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/tex_b2c.png"}`
+
+### 🧑 User — 2026-11-17T01:24:36.946Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:24:57.409Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"furData(\" src/characters/benny/build.ts; grep -n \"function furData\" -A8 src/characters/benny/build.ts; grep -n \"pinkSkin\\|furRoot\\|furTip\\|pomRoot\\|pomTip\\|gold:\" src/characters/benny/build.ts | head", "description": "Read fur defaults from the Benny builder"}`
+
+### 🧑 User — 2026-11-17T01:24:57.454Z
+
+> ↩︎ result: 134:function furData(o: {
+> 205:  bodyMesh.userData = furData({
+> 297:    arm.userData = furData({ length: 0.055, density: 96, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.04 });
+> 317:    foot.userData = furData({
+> 422:  pomMesh.userData = furData({ length: 0.12, density: 88, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.05 });
+> 134:function furData(o: {
+> 135-  length: number;
+> 136-  density: number;
+> 137-  shells: number;
+> 138-  root: string;
+> 139-  tip: string;
+> 140-  bald?: [number, number, number, number]; // dir (mesh-local) + dot threshold → no fur beyond it
+> 141-  short?: [number, number, number, number, number, number]; // dir + t0,t1 + min factor
+> 142-  gravity?: number;
+> 176:  const bodyMat = std({ color: C.pinkSkin, roughness: 0.92, metalness: 0 });
+> 282:  const armMat = std({ color: C.pinkSkin, roughness: 0.92 });
+> 420:  const pomMesh = named(new THREE.Mesh(new THREE.SphereGeometry(D.pomR, 32, 24), std({ color: C.pomRoot, roughness: 0.95 })), 'fur_pom');
+> 422:  pomMesh.userData = furData({ length: 0.12, density: 88, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.05 });
+
+### 🤖 Claude — 2026-11-17T01:24:58.855Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/characters/benny/build.ts", "offset": 200, "limit": 20}`
+
+### 🧑 User — 2026-11-17T01:24:58.880Z
+
+> ↩︎ result: 200	      deformBody(s.copy(d).multiplyScalar(D.skin), a);
+> 201	      p.setXYZ(i, a.x, a.y, a.z);
+> 202	    }
+> 203	  }
+> 204	  const bodyMesh = named(new THREE.Mesh(bodyGeo, bodyMat), 'fur_body');
+> 205	  bodyMesh.userData = furData({
+> 206	    length: D.fur,
+> 207	    density: 64,
+> 208	    shells: 20,
+> 209	    root: C.pinkRoot,
+> 210	    tip: C.pinkTip,
+> 211	    // bald under the beanie: dot(normal, hatUp) > brimBottom/skin (+ a little overlap)
+> 212	    // (wave 4: +0.07 → full-length fur tucks under the cuff edge; +0.03 left a bare pink collar under the cuff once
+> 213	    // the ride lean shows the back of the ball)
+> 214	    bald: [hatUp.x, hatUp.y, hatUp.z, (D.brimBottom + 0.07) / D.skin],
+> 215	    short: [FACE_DIR.x, FACE_DIR.y, FACE_DIR.z, 0.74, 0.93, 0.26],
+> 216	    gravity: 0.1,
+> 217	  });
+> 218	  body.add(bodyMesh);
+> 219
+
