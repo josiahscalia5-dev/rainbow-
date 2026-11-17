@@ -1917,3 +1917,17 @@ Now add the star as a bakeable part in `bake.py` (its approved mask, no colour-f
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1800 node scripts/capture.mjs 05 --q=\"$STACK&benny05=1\" --out=$B/cap/new_an16 > $SP/cap_an.log 2>&1; echo cap_rc=$?; cp $SP/capture_log.bak qa/capture_log.json; python3 -I tool …[+527 chars]`
 
+### 🧑 User — 2026-11-17T01:41:04.930Z
+
+> ↩︎ result: tsc_rc=0
+> cap_rc=0
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 31.8, 'within_10': 0.4657, 'within_20': 0.5517, 'ssim_lum': 0.5498, 'mean_signed_rgb': [2.3, 0.6, -1.1]}
+> benny_and_hat                px   93061  mean  19.35  <=10 0.588  <=20 0.730  ssim 0.652  signed [-5.3, -0.6, 1.0]
+> pom     12764   21.4  0.68    0.152  [124  20 23
+> crown   18362   17.2  0.76    0.175  [223 168 24
+> cuff    14689   14.6  0.81    0.119  [112  16 23
+> star     2683   24.4  0.73    0.036  [252 217  3
+> body    44566   20.9  0.71    0.518  [242  79 18
+> ALL 93061 19.35 0.73
+> px changed vs an4 2573
+

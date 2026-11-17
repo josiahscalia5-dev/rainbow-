@@ -649,7 +649,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11668,
-   "sha256": "65025f487db04e891bcab6cea2cb0d6f943c18bad7f473316c79f3ee65903c7c"
+   "sha256": "3afc7c874c3568de5a7d9ba87f2d1bdbaa0e771c30a9551093779761fed1f753"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1093,8 +1093,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1193,
-   "sha256": "7b3720f323d78175472dc722237ad4a9f35205b2a2bc856ed8c5e6ff686751bb"
+   "bytes": 1196,
+   "sha256": "1cddabf9ac083a31e8a9c5a971d55bddca1ae7276bb3bfad5393b0de64efa5ef"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -1500,6 +1500,21 @@
    "path": "qa/pilot05/full_reference_match/benny/cap/new/REGION_METRICS.json",
    "bytes": 2518,
    "sha256": "0591438279ad12ef2d330755be8f7fa3674f5b6e4d824b7738dd4dba83c77be6"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/new_an16/05.png",
+   "bytes": 2235463,
+   "sha256": "5ce1330c846064a5caabbe97dfee68916be2c5ce05d9cbfeba0ad357628ade91"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/new_an16/FULL_FRAME_METRICS.json",
+   "bytes": 418,
+   "sha256": "34a364de4904c1b8d1e50d74cde2bf6a8efc226fc98861894fa0170c910e984a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/cap/new_an16/REGION_METRICS.json",
+   "bytes": 2524,
+   "sha256": "1a96972a124ad2f95948472283377e79e410343a17aba70b49ac654d7100b993"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/cap/new_f1/05.png",
@@ -3050,6 +3065,16 @@
    "path": "qa/pilot05/full_reference_match/env/work/r1/05.png",
    "bytes": 2214307,
    "sha256": "c3cef275c1dac75aec7d4912cbf1c741103ffaa038c3ae369850236c5e8c0d15"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/r1/FULL_FRAME_METRICS.json",
+   "bytes": 412,
+   "sha256": "bc9d943b7d166bb28bed2b6747ad2c714e5c4afa3d4876dc9e4ffe0f5580598f"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/r1/REGION_METRICS.json",
+   "bytes": 2505,
+   "sha256": "282f5804a487b149df64f83032b5ba890f9d6c999d805d9e1a8567e6ba60ac79"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/work/r1/bake.txt",
