@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12994,
-   "sha256": "252b9b69f3326e01d3585c2ff25f28722f248cb0ef06f7292342d8cc40c13588"
+   "sha256": "74029bd1b1eaa896dc42efd4fe30d42ded4ae8758c95f29cd9530b40b0cc11d9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1823,13 +1823,13 @@
   },
   {
    "path": "qa/match/08/scenery/SHARED_CHANGES.md",
-   "bytes": 1074,
-   "sha256": "72566688c060f37493e359db0c2ff9a85ed75cd8aca781aa9fe571912ab7a9db"
+   "bytes": 1460,
+   "sha256": "83335b910ab6db42945006909f42eacc1ceb7565e7e7a17299eb420026c8db6c"
   },
   {
    "path": "qa/match/08/scenery/STATUS.md",
-   "bytes": 1670,
-   "sha256": "0a0a4d5e9bbe8b359f2fa31a1f644c5f26c0e922db2ccf7ae8e3d8d7961b533d"
+   "bytes": 3394,
+   "sha256": "ad5037f06f058fdcf3ae88f5e75578f3d99aa11e987794b9e85dca78b26dfd69"
   },
   {
    "path": "qa/match/08/scenery/dbg_ids/f00_checkpoint.png",
