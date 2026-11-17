@@ -1,0 +1,76 @@
+{
+ "BEFORE": {
+  "FULL": {
+   "within_20": 0.0641,
+   "mean_abs": 73.97,
+   "ssim": 0.3184
+  },
+  "BELOWHUD": {
+   "within_20": 0.0523,
+   "mean_abs": 76.47,
+   "ssim": 0.3187
+  },
+  "SCENERY": {
+   "within_20": 0.0505,
+   "mean_abs": 76.51,
+   "ssim": 0.3411
+  },
+  "upper_room_ringtop_y200_560": {
+   "within_20": 0.0458,
+   "mean_abs": 75.24,
+   "ssim": 0.303
+  },
+  "middle_tunnel_arrows_coins_y560_960": {
+   "within_20": 0.0402,
+   "mean_abs": 83.65,
+   "ssim": 0.3123
+  },
+  "lower_water_foam_y960_1536_noBenny": {
+   "within_20": 0.0642,
+   "mean_abs": 70.79,
+   "ssim": 0.4016
+  },
+  "BENNY": {
+   "within_20": 0.0659,
+   "mean_abs": 76.18,
+   "ssim": 0.1541
+  }
+ },
+ "NEW": {
+  "FULL": {
+   "within_20": 0.7992,
+   "mean_abs": 13.87,
+   "ssim": 0.7981
+  },
+  "BELOWHUD": {
+   "within_20": 0.8791,
+   "mean_abs": 8.59,
+   "ssim": 0.8625
+  },
+  "SCENERY": {
+   "within_20": 0.976,
+   "mean_abs": 2.15,
+   "ssim": 0.9665
+  },
+  "upper_room_ringtop_y200_560": {
+   "within_20": 0.9998,
+   "mean_abs": 0.85,
+   "ssim": 0.9957
+  },
+  "middle_tunnel_arrows_coins_y560_960": {
+   "within_20": 0.9573,
+   "mean_abs": 2.81,
+   "ssim": 0.943
+  },
+  "lower_water_foam_y960_1536_noBenny": {
+   "within_20": 0.9733,
+   "mean_abs": 2.63,
+   "ssim": 0.9637
+  },
+  "BENNY": {
+   "within_20": 0.1649,
+   "mean_abs": 56.16,
+   "ssim": 0.0952
+  }
+ }
+}

@@ -71,7 +71,10 @@ void main() {
   vec3 t = pc;
   vec3 nn = normalize(vN);
   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
-  float keep = 1.0 - smoothstep(2.5, 6.0, cc / max(cp, 1e-3));
+  // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
+  // no more magnified than the approved view did (incidence-cosine ratio x distance ratio = 1 in the approved view)
+  float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, vW) / max(distance(cameraPosition, vW), 1e-3));
+  float keep = 1.0 - smoothstep(2.5, 6.0, mag);
   if (vProj.w > 0.0) {
     vec3 ndc = vProj.xyz / vProj.w;
     vec2 uv = ndc.xy * 0.5 + 0.5;

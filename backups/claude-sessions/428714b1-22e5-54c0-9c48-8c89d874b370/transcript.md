@@ -684,3 +684,199 @@ Now at 80.5 % whole frame / 88.5 % below the HUD. Next: scenery-only metrics and
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T15:51:02.757Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import cv2;print(cv2.__version__, hasattr(cv2,'xphoto'))\"", "description": "Check OpenCV contrib availability"}`
+
+### 🧑 User — 2026-11-17T15:51:02.892Z
+
+> ↩︎ result: 5.0.0 False
+
+### 🤖 Claude — 2026-11-17T15:51:20.625Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match04/make_plate04.py'; s=open(p).read()\ns=s.replace(\"\"\"fill = cv2.inpaint(A, M, 9, cv2.INPAINT_TELEA)\n# soften the filled area a little (inpainting streaks) and feather the seam\nsoft = cv2.GaussianBlur(fill, (0, 0), 3)\na = cv2.GaussianBlur(M.astype(np.float32) / 255, (0, 0), 2)[..., None]\nplate = (A * (1 - a) + (fill * 0.5 + soft * 0.5) * a).astype(np.uint8)\nplate = np.where(M[..., None] > 0, (fill * 0.5 + soft * 0.5).astype(np.uint8), plate)\n\"\"\",\"\"\"fill = cv2.inpaint(A, M, 9, cv2.INPAINT_TELEA)\n# texture the large fills: low frequen …[+1439 chars]`
+
+### 🧑 User — 2026-11-17T15:51:23.230Z
+
+> ↩︎ result: filled share 0.22973029996141975
+
+### 🤖 Claude — 2026-11-17T15:51:25.378Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/plate_crop.png"}`
+
+### 🧑 User — 2026-11-17T15:51:25.408Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:51:30.160Z
+
+Status: improving the provisional fill under Benny (texture from a water area of the artwork instead of a smear); then the 0-px proofs and gameplay tests.
+
+### 🤖 Claude — 2026-11-17T15:51:33.625Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/cv2.ellipse(M, (392, 1290), (212, 128)/cv2.ellipse(M, (392, 1290), (224, 130)/; s/tex\\[200:\\] = hi(tiled(A\\[1290:1420, 600:780\\], H - 200, W))            # swirling water (Benny, coins)/tex[200:] = hi(tiled(A[1110:1250, 30:180], H - 200, W))             # swirling cyan\\/pink water left of Benny (Benny, coins)/' tools/match04/make_plate04.py && python3 -I tools/match04/make_plate04.py references/04_through_the_five_arrows.png assets/textures/match04 && python3 -c \"\nfrom PIL import Image;a=Image.open('assets/textures/match04/plate04_hybrid.png');a.crop((100,850,700, …[+198 chars]`
+
+### 🧑 User — 2026-11-17T15:51:36.037Z
+
+> ↩︎ result: filled share 0.23377369068287038
+
+### 🤖 Claude — 2026-11-17T15:51:37.928Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/plate_crop.png"}`
+
+### 🧑 User — 2026-11-17T15:51:37.949Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:51:48.539Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match04.ts'; s=open(p).read()\nold=\"\"\"  float keep = 1.0 - smoothstep(2.5, 6.0, cc / max(cp, 1e-3));\"\"\"\nnew=\"\"\"  // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and\n  // no more magnified than the approved view did (incidence-cosine ratio x distance ratio = 1 in the approved view)\n  float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, vW) / max(distance(cameraPosition, vW), 1e-3));\n  float keep = 1.0 - smoothstep(2.5, 6.0, mag);\"\"\"\nassert old in s; s=s.replace(old,ne …[+914 chars]`
+
+### 🧑 User — 2026-11-17T15:52:47.898Z
+
+> ↩︎ result: TSC OK
+> 04 → /tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/new3/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":47,"tris":170432,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> NEW3   FULL |d|  13.9 <=20 0.799 SSIM 0.798 | BELOWHUD |d|   8.6 <=20 0.879 | LAYOUT |d|   5.6 <=20 0.900 | mean RGB approved [179.3, 132.6, 168.6] game [181.5, 132.1, 170.0]
+> f00_checkpoint s 77.679 lat 0 04 coins 1330
+> f03_forward3u s 80.616 lat 0 04 coins 1330
+> f06_forward6u s 83.597 lat 0 04 coins 1330
+> f10_forward10u s 87.602 lat 0 04 coins 1330
+> f20_forward20u s 97.518 lat 0 04 coins 1330
+> s_left_steer s 83.543 lat -1.65 04 coins 1350
+> s_right_steer s 83.546 lat 1.65 04 coins 1330
+
+### 🤖 Claude — 2026-11-17T15:52:49.718Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/motion_strip.png"}`
+
+### 🧑 User — 2026-11-17T15:52:49.765Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:52:56.820Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/cv2.imwrite(f\"{out}\\/patch_water.png\", A\\[1300:1420, 620:760\\])    # swirling cyan\\/pink water/cv2.imwrite(f\"{out}\\/patch_water.png\", A[1110:1250, 30:180])     # swirling cyan\\/pink water (no foam)/' tools/match04/make_plate04.py && grep -n patch_water tools/match04/make_plate04.py && python3 -I tools/match04/make_plate04.py references/04_through_the_five_arrows.png assets/textures/match04 && head -30 scripts/gameplay-test.mjs | grep -n \"argv\\|q=\\|out\\|json\" ", "description": "Fix water patch crop; check gameplay test args"}`
+
+### 🧑 User — 2026-11-17T15:52:59.306Z
+
+> ↩︎ result: 42:cv2.imwrite(f"{out}/patch_water.png", A[1110:1250, 30:180])     # swirling cyan/pink water (no foam)
+> filled share 0.23377369068287038
+> 10:// Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 26:await page.waitForFunction(() => window.__rainbow?.ready, null, { timeout: 240000 });
+
+### 🤖 Claude — 2026-11-17T15:53:04.207Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad && mkdir -p $S/after $S/after08 && node scripts/capture.mjs 04 05 --out=$S/after 2>&1 | tail -2 && node scripts/capture.mjs 08 --q=match08=1 --out=$S/after08 2>&1 | tail -1; cp $S/capture_log.bak qa/capture_log.json; python3 -c \"\nimport numpy as np;from PIL import Image\nfor a,b in [('base/04','after/04'),('base/05','after/05'),('base08/08','after08/08')]:\n  A=np.asarray(Image.open('$S/'+a+'.png').convert('RGB')).astype(int);B=np.asarray(Image.open('$S/'+b+'.png').convert('RGB')).astype(int)\n   …[+143 chars]`
+
+### 🧑 User — 2026-11-17T15:53:50.082Z
+
+> ↩︎ result: 04 → /tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/after/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":712274,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 05 → /tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/after/05.png {"stage":"05","s":132.438,"y":-41.348,"calls":86,"tris":567415,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 08 → /tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/after08/08.png {"stage":"08","s":391.427,"y":-113.112,"calls":80,"tris":398676,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> base/04 px different: 0
+> base/05 px different: 0
+> base08/08 px different: 0
+
+### 🤖 Claude — 2026-11-17T15:53:51.297Z
+
+Default 04/05 and Screen 08 (`?match08=1`) are all 0 px different. Now running the gameplay tests with and without the switch.
+
+### 🤖 Claude — 2026-11-17T15:53:54.294Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad && cp qa/gameplay_test.json $S/gt.bak; cp qa/07_to_08_continuity.md $S/cont.bak 2>/dev/null; node scripts/gameplay-test.mjs --out=$S/gt_default.json 2>&1 | tail -4; node scripts/gameplay-test.mjs --q=match04=1 --out=qa/match/04/gameplay_test_match04.json 2>&1 | tail -4; cmp $S/gt_default.json $S/gt.bak && echo \"default output byte-identical\"; git status --short", "description": "Run gameplay tests with and without match04", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T15:54:10.126Z
+
+> ↩︎ result: "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+> default output byte-identical
+>  M assets/textures/match04/patch_water.png
+>  M assets/textures/match04/plate04.json
+>  M assets/textures/match04/plate04_fillmask.png
+>  M assets/textures/match04/plate04_hybrid.png
+>  M qa/match/04/motion/f00_checkpoint.png
+>  M qa/match/04/motion/f03_forward3u.png
+>  M qa/match/04/motion/f06_forward6u.png
+>  M qa/match/04/motion/f10_forward10u.png
+>  M qa/match/04/motion/f20_forward20u.png
+>  M qa/match/04/motion/motion.json
+>  M qa/match/04/motion/s_left_steer.png
+>  M qa/match/04/motion/s_right_steer.png
+>  M src/world/match04.ts
+>  M tools/match04/make_plate04.py
+> ?? qa/match/04/gameplay_test_match04.json
+
+### 🤖 Claude — 2026-11-17T15:54:13.936Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nfor f in ['qa/gameplay_test.json','qa/match/04/gameplay_test_match04.json']:\n  d=json.load(open(f)); ks=list(d.keys()); print(f, ks[:12])\n  for k in ('passed','total','checks','summary','coinsTotal','coins'):\n    if k in d: print(' ',k, d[k] if not isinstance(d[k],list) else [ (c.get('name'),c.get('ok',c.get('pass'))) for c in d[k]])\n\" ; git log --oneline -3", "description": "Inspect gameplay test results"}`
+
+### 🧑 User — 2026-11-17T15:54:13.999Z
+
+> ↩︎ result: qa/gameplay_test.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass']
+>   checks {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.027, 'coins': 2240, 'hearts': 5, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}}
+> qa/match/04/gameplay_test_match04.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+>   checks {'pa …[+1118 chars]
+
+### 🤖 Claude — 2026-11-17T15:54:20.214Z
+
+Gameplay 8/8 with and without the switch, 91 coins / 2,240 in both runs. Now the final full-size pictures and the region metrics.
+
+### 🤖 Claude — 2026-11-17T15:54:35.476Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match04/metrics04.py <<'EOF'\n\"\"\"Screen 04: approved vs capture by region (same measures as tools/qa/screen_match.py: share within 20 levels, SSIM).\nSCENERY = below the HUD/title (rows >= 13 %) without Benny (his ellipses from tools/match04/make_plate04.py).\nusage: python3 -I tools/match04/metrics04.py <approved.png> <before.png> <new.png> <out.json>\"\"\"\nimport json, sys\nimport numpy as np, cv2\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nap = Image.open(sys.argv[1]).convert(\"RGB\"); W, H = ap.size\nload = lambda p: np.asarray(Image.open …[+3362 chars]`
+
+### 🧑 User — 2026-11-17T15:55:25.159Z
+
+> ↩︎ result: 04 → /tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/final/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":47,"tris":170432,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → /tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/final1080/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":47,"tris":170432,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 04 → /tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/before1080/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":97,"tris":712274,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> NEW    FULL |d|  13.9 <=20 0.799 SSIM 0.798 | BELOWHUD |d|   8.6 <=20 0.879 | LAYOUT |d|   5.6 <=20 0.900 | mean RGB approved [179.3, 132.6, 168.6] game [181.5, 132.1, 170.0]
+> NEW1080 FULL |d|  14.2 <=20 0.799 SSIM 0.795 | BELOWHUD |d|   8.9 <=20 0.879 | LAYOUT |d|   5.6 <=20 0.901 | mean RGB approved [179.3, 132.6, 168.6] game [181.4, 132.1, 169.9]
+> FULL                     …[+830 chars]
+
+### 🤖 Claude — 2026-11-17T15:55:28.411Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/04_NEW_match04.png"}`
+
+### 🧑 User — 2026-11-17T15:55:28.757Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:55:30.957Z
+
+Looks right. Writing the notes, status, shared-change list and the (not run) fal request, then committing.
+
+### 🤖 Claude — 2026-11-17T15:55:31.967Z
+
+> 🔧 **Bash** `{"command": "sha256sum -c scripts/reference.sha256 2>&1 | grep -c OK; git diff --stat src/game src/gameplay; git rev-parse HEAD", "description": "Verify references and list shared diffs"}`
+
+### 🧑 User — 2026-11-17T15:55:32.030Z
+
+> ↩︎ result: 13
+> 95167e9da599bb91c04341754b92231c65437e92
+
+### 🤖 Claude — 2026-11-17T15:55:40.706Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/SHARED_CHANGES.md", "content": "# Screen 04 (`?match04=1`) — edits to SHARED files, for the lead's approval\n\nEvery edit is additive and runs ONLY when `match04` (or `matchall`) is on. Without the switch: default 04 and 05\ncaptures 0 px different, `?match08=1` 08 capture 0 px different, default gameplay-test output byte-identical\n(verified 2026-11-17, see NOTES.md).\n\n| File | Edit | Runs when |\n|---|---|---|\n| `src/game/match.ts` | `MATCH_CAM['04'] = { fov: 62, roll: 0, off04, dir04 }` (one line + comment) | `MATCH['04']` (applyMatchCam mer …[+1489 chars]`
+
+### 🧑 User — 2026-11-17T15:55:40.735Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/SHARED_CHANGES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:55:48.603Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/FAL_PLATE_REQUEST.md", "content": "# Screen 04 — fal clean-plate request (PREPARED, NOT RUN — paid; needs the user's approval via the lead)\n\nPurpose: replace the PROVISIONAL local fill (OpenCV inpainting + mirrored artwork texture, 23.4 % of the frame:\nHUD bar, title banner, Benny, the five coins) in `assets/textures/match04/plate04_hybrid.png` with a clean\nenvironment-only plate, exactly as Screen 08 did (`qa/imageblaster/08/`). The final texture stays a HYBRID: the user's\noriginal pixels everywhere they show scenery + the fal plate only ins …[+1687 chars]`
+
+### 🧑 User — 2026-11-17T15:55:48.635Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/FAL_PLATE_REQUEST.md (file state is current in your context — no need to Read it back)
+

@@ -458,23 +458,23 @@
   },
   {
    "path": "assets/textures/match04/patch_water.png",
-   "bytes": 25973,
-   "sha256": "c1a9606db5cf76eac0f4a97639a83840a55c7e55167d67ca1a753eff2acf660e"
+   "bytes": 42344,
+   "sha256": "88c5ce39e680dcb86ce127c6845c05ecec9c35ef95f3dc7fd11074585701c0d8"
   },
   {
    "path": "assets/textures/match04/plate04.json",
    "bytes": 214,
-   "sha256": "dee4b15744b1263801f253e4b49da30f4a17f044bbeebf9a0fd5d44bb8259374"
+   "sha256": "757bdc26dc0338b239c83c8f165736753c67de594a3e743f9b3bc9a791f6c90e"
   },
   {
    "path": "assets/textures/match04/plate04_fillmask.png",
-   "bytes": 8533,
-   "sha256": "d07665869479f0fe685f7643432537b009c7dab1bc5d784c21de60f5a779068e"
+   "bytes": 8535,
+   "sha256": "7035e9e148e260216daee0aac29348777a1b9ca6c420ee1e5531cd3770a31f2f"
   },
   {
    "path": "assets/textures/match04/plate04_hybrid.png",
-   "bytes": 2133573,
-   "sha256": "1936158038bc3f0c9d6f65c0f250e503f7b80e205b4fb96f1271cfe4d578314a"
+   "bytes": 2323612,
+   "sha256": "d4b9696d7c13fdb7fc929c75fc6d379f375c630e5f56f8ea9661a6ca5e80aec7"
   },
   {
    "path": "assets/textures/match04/proj04.json",
@@ -653,8 +653,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10150,
-   "sha256": "850c7f7b9db772ec5a4db9543efdbbceef6ab5ccc0cb1270b5c90f4b5bc003d7"
+   "bytes": 10151,
+   "sha256": "44645ee4a302997fbcf5487d4349189f03e12c4d09106f87c0939e547bf8fb4d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1362,44 +1362,94 @@
    "sha256": "c2b30f78e3b7fb046f54a42e28295d093a2e1f6e8850e10dfaf229839075611b"
   },
   {
+   "path": "qa/match/04/04_APPROVED.png",
+   "bytes": 3121669,
+   "sha256": "dcaa9ab930da8b601b4b94102a10a8521781d4a05c42c0cb5acf42b563f7aa08"
+  },
+  {
+   "path": "qa/match/04/04_BEFORE_current_game.png",
+   "bytes": 1446020,
+   "sha256": "01bac502b027253db67e3c7cd0c3d876aac1e6f56c503b5b609702f52f69cc74"
+  },
+  {
+   "path": "qa/match/04/04_BEFORE_current_game_864x1536.png",
+   "bytes": 1006508,
+   "sha256": "69a7228ada62930f4db2344580774936da1f8e240b439ed8670e971697219914"
+  },
+  {
+   "path": "qa/match/04/04_NEW_match04.png",
+   "bytes": 2862493,
+   "sha256": "82599eda64a762ad36119ec0e5dac50823cec1745cef1319ac625d7e6f5d952f"
+  },
+  {
+   "path": "qa/match/04/04_NEW_match04_864x1536.png",
+   "bytes": 2068900,
+   "sha256": "86a0e4c105c1c83a58af93e7852564b842100a85257b6cc463b7bd49b0523157"
+  },
+  {
+   "path": "qa/match/04/04_NEW_screen_match.json",
+   "bytes": 536,
+   "sha256": "f4edf7e682faa32010fce3962d88f6cbcfecdb5d5faccdbace78be9862392291"
+  },
+  {
+   "path": "qa/match/04/FAL_PLATE_REQUEST.md",
+   "bytes": 2182,
+   "sha256": "7d4db8a253afc38a67c830883cf1600c64c12fbe3b5a44eaecf4645988964544"
+  },
+  {
+   "path": "qa/match/04/SHARED_CHANGES.md",
+   "bytes": 2002,
+   "sha256": "58e1774244df5e606d1432c700205078b639ca91222ff23f1740cbe5bcad243e"
+  },
+  {
+   "path": "qa/match/04/gameplay_test_match04.json",
+   "bytes": 14657,
+   "sha256": "110efa09172868567b1c5d88583957c00693ceaaca73a5b2b8ce906c7b49cfdd"
+  },
+  {
    "path": "qa/match/04/motion/f00_checkpoint.png",
-   "bytes": 1960788,
-   "sha256": "ea80e6f0e7f817ca1792f26c4f7cfa50646ec4f5e90ded51a78582b2976dbb77"
+   "bytes": 2004684,
+   "sha256": "6a313f75cb481730dfe3785a1d036b54f52f4c41d11a2f38a2e9267719625066"
   },
   {
    "path": "qa/match/04/motion/f03_forward3u.png",
-   "bytes": 1789973,
-   "sha256": "72a1a910ea8afca7075583b7e8f59e5111aa7856ca834fbc9060fe7196451b68"
+   "bytes": 1916280,
+   "sha256": "4b5118e0fbe38c62d41f461d2806c36d9e71920cc74e0432df0b45aa9700b996"
   },
   {
    "path": "qa/match/04/motion/f06_forward6u.png",
-   "bytes": 1626309,
-   "sha256": "fa8efbae2b482a8157c5cfe0af3929ee779dc056e0d1b1d68c281699936263f1"
+   "bytes": 1688685,
+   "sha256": "adbb0620e304e6f076b4810a66facb1e338301c4d24b7a247588cfcb3fb7746b"
   },
   {
    "path": "qa/match/04/motion/f10_forward10u.png",
-   "bytes": 1323029,
-   "sha256": "d382e1096de552f41e0f49f1fb7f27af2a99eda10d5e0f563a5c75284818f18f"
+   "bytes": 1381288,
+   "sha256": "7b41331511721cab5a9ed8befd5a47d02357801d35fc052f551dbb1fada52632"
   },
   {
    "path": "qa/match/04/motion/f20_forward20u.png",
-   "bytes": 1116924,
-   "sha256": "ed80fb66ba8a2085f0a8596c129922db3b420047515832c55ea8cd23d59ebd3c"
+   "bytes": 1504142,
+   "sha256": "04b772910c0ebeedc90c4e4a89abfe7d91c2bb390a88f8f549b96cfe86b4448b"
   },
   {
    "path": "qa/match/04/motion/motion.json",
    "bytes": 987,
-   "sha256": "af73a4f9613f2b885a03ee16b92e664c9418ef36b248c62680c1e1f90b6896e3"
+   "sha256": "d22605987d780f4029ab6f4756110fc9b9a0376db1cc3f593c5f5914765160a2"
   },
   {
    "path": "qa/match/04/motion/s_left_steer.png",
-   "bytes": 1597845,
-   "sha256": "2deb12a98a25b2d324547f11f85b6f9827ced30165414e95fc0405979aefd030"
+   "bytes": 1689474,
+   "sha256": "381e07b480b2654eeaef54d92043385b916d493ebca106ae736765c3a2276dcd"
   },
   {
    "path": "qa/match/04/motion/s_right_steer.png",
-   "bytes": 1656845,
-   "sha256": "e6cae09beb1c2b4a46c2e0b475b3b8d5c674e9e13b4c1d64298f044eda48644e"
+   "bytes": 1732878,
+   "sha256": "dc8e61111df0f36479ceae13cf51337386c6f54159f5c0ee23b4e97e27b217a9"
+  },
+  {
+   "path": "qa/match/04/scenery_metrics_BEFORE_NEW.json",
+   "bytes": 1341,
+   "sha256": "b96b63fea012f1ea6d437251816ab71af8715436167085ad85fc4c54a5c2f630"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -8173,8 +8223,8 @@
   },
   {
    "path": "src/world/match04.ts",
-   "bytes": 8895,
-   "sha256": "8c83ccb085e3c49cc89a9b507f77b9def545161ce6ae16148d74b930ac56e50b"
+   "bytes": 9221,
+   "sha256": "0c82f1ee7517079902859bf40196278d0a51f7390e228806fb5a5fa538995dc7"
   },
   {
    "path": "src/world/match08.ts",
@@ -8343,8 +8393,13 @@
   },
   {
    "path": "tools/match04/make_plate04.py",
-   "bytes": 2392,
-   "sha256": "b5cb0db886412cdef0bac730b81e560d5c93be8049fe45dd9ed0eee8ee3b5ffd"
+   "bytes": 3100,
+   "sha256": "f0fc864fe04dc2385e4cf5b217f8b229a6b24876641ea848777486c294f593a1"
+  },
+  {
+   "path": "tools/match04/metrics04.py",
+   "bytes": 2233,
+   "sha256": "ac1458e347f213dc92eafed31f949017dce120ef82090bff04d62e6a0464811d"
   },
   {
    "path": "tools/match04/motion04.mjs",
