@@ -39,3 +39,6 @@ backups/.live/
 .idea/
 .vscode/
 *.blend1
+
+# Agent worktrees (each specialist works on its own branch there; never committed into the lead branch)
+.claude/worktrees/
