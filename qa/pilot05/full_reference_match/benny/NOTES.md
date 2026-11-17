@@ -38,37 +38,58 @@ fuller near the top); (d) colours: fur hot/saturated with clipped R, flat; strip
 vertical stockinette columns + deep ribbed cuff.
 
 ## 2. Changed files (all behind `on05('benny05')`; default build: no code path runs, shaders compile identically)
-* `src/characters/benny/benny05.ts` (NEW): `BENNY05` flag, `FUR05` fur overrides, `HAT05` beanie geometry (drop 0.028,
-  shiftX −0.028, cuffH 0.226, crownTaper 0, pomDX −0.057, starDY 0.047, tilt 0), `ROLL05` 0.3 (swim body roll damping via
-  a cloned clip), `MAPS05` baked-map table (assets/textures/benny05/*.png — NOT YET BAKED, missing files are tolerated:
-  console warning, GLB look kept), `STAR05` colour, QA hooks `uvPass()` (float target: uv, part id, shell layer) and
-  `calib(k)` (constant albedo for the two calibration renders).
+* `src/characters/benny/benny05.ts` (NEW): `BENNY05` flag, `FUR05` fur overrides (not tuned yet), `CLUMP05`, `HAT05`
+  beanie geometry, CURRENT values after iterations r1–r7: drop 0.028, shiftX −0.028, tilt 0, crownTaper 0, cuffH 0.226,
+  crownH 0.58, brimW 1.0 (plus a fuller rolled cuff top edge in the profile), pomDX −0.057, pomDY −0.016, pomDZ −0.16,
+  pomScale 0.97, starDY 0.069, starDX 0, starScale (0.96, 0.89). `ROLL05` 0.3 (swim body roll damping via a cloned clip),
+  `MAPS05` baked-map table (assets/textures/benny05/*.png — NOT YET BAKED, missing files are tolerated: console warning,
+  GLB colours kept), `STAR05` colour (placeholder, not solved yet), QA hooks `uvPass()` (float target: uv, part id,
+  shell layer) and `calib(k)` (constant albedo for the two calibration renders).
+* Geometry iterations (UV-pass part IoU vs approved: pom / crown / cuff / star / body / all):
+  r1 (drop+cuffH+roll) 0.834/0.73/0.72/0.615/0.853/0.893 · r2 (+shiftX, taper 0, pomDX) 0.876/0.785/0.767/0.709/0.86/0.915 ·
+  r3 (+tilt −0.05, crownH 0.58) cuff 0.62 → tilt REJECTED · r4 (tilt 0, crownH 0.58, star scale, starDY 0.069)
+  0.823/0.784/0.776/0.801/0.86/0.919 · r5 (pom lower + back) 0.861/0.81/… · r6 (pomDY −0.016, pomDZ −0.16, pomScale 0.97)
+  **0.883/0.817/0.776/0.801/0.86/0.921 (= current geometry)** · r7 (brimW 1.02) no gain on cuff, body −0.003 → brimW
+  back to 1.0 (the fuller cuff top edge of r7 is kept; its effect alone is not measured separately).
+  r6 boxes: pom 355–500 × 775–907 c(426.1,840.5) vs approved 355–499 × 778–899 c(428.1,843.0); cuff 278–568 × 948–1031
+  vs 277–573 × 936–1031; star 481–553 × 916–983 (73×68) vs 481–553 × 916–984 (73×69); centre column game pom 781–896,
+  crown 897–983, cuff 984–1031, fur from 1032 (approved 785–899 / 900–980 / 981–1030 / 1031).
 * `src/characters/benny/runtime.ts`: imports benny05; `loadBenny` awaits `loadBenny05Maps()` only when BENNY05;
   fur overrides + `applyBenny05` + `dampedClips` only when BENNY05; `window.__bennyQA.b05` exposed (null when off).
 * `src/characters/benny/fur.ts`: `#ifdef BENNY05` paths (uv varying, multiply baked map instead of root/tip colours,
   `uClump` uniform) and `BENNY_UV` QA output; program cache key unchanged when the defines are absent.
 * `assets/models/benny.glb`: untouched. No other files touched.
 
-## 3. In progress
+## 3. In progress (stopped for the account transfer, nothing half-written)
 * Probe harness `benny/work/bennyprobe.mjs` (loads the game once, goto 05, runs step files in `work/probe/`, takes
-  screenshots; ~20–30 s; uses a render slot). `work/r1` = first benny05 probe incl. UV pass + calibration renders
-  (calA k=0.2, calB k=0.6); `work/r2` = geometry iteration 2 (current numbers above). Tools: `work/measure.py`,
-  `work/parts.py`, `work/bands.py`, `work/geom.py <uv.f32>`, `work/outline.py <uv.f32> <out.png>`.
+  screenshots; ~20–30 s; uses a render slot; re-renders ONLY via `Q.composer.render()`. Never call goto twice in one
+  session, because the mixer phase and lift ease advance). Step files: `shot0.shot.js`, `info.js`, `uv.js` (saves `uv.f32` =
+  Float32 RGBA of rect x200 y740 w440 h480), `calA.shot.js` (k=0.2), `calB.shot.js` (k=0.6), `restore.shot.js`.
+  Runs: `work/r1` (first probe incl. calA/calB, OLD geometry, do not bake from it), `work/r2`…`work/r7` geometry
+  iterations (shot0 + uv.f32 + outline.png).
+* `work/bake.py` is WRITTEN (python syntax checked) but NOT RUN yet: inverse post chain, E/S calibration, strict part
+  correspondence + approved colour filters, bilinear splat, push-pull fill, mirror tiling of the central strip for unseen
+  texels, `--normals` writes crown_n / brim_n from approved luminance high-pass, `bake_report.json` (scales, star albedo).
+  The bake session `work/b1` was started and then STOPPED while it was still waiting for a render slot (no output, b1 is empty).
+* Tools: `work/measure.py`, `work/parts.py` (approved part masks + per-part error), `work/bands.py`, `work/geom.py <uv.f32>`,
+  `work/outline.py <uv.f32> <out.png>`.
 
 ## 4. Remaining, step by step
-1. Geometry iteration 3: star scale (≈0.96, 0.89) + up ≈4 px; try crown a bit taller (crownH 0.58 with pomDY −0.05) and
-   hat tilt ≈ −0.05 for the cuff corner rows; keep only what raises part IoU (geom.py).
-2. Bake (`work/bake.py`, to write): from UV pass + calA/calB + approved: per pixel L=inverse post chain (port of
-   PROJ05_INVERSE: vignette 0.18, contrast 1.15, saturation 1.36, sRGB, Neutral, exposure 0.86; bloom is off on 05 with
-   proj05), E=(L_B−L_A)/0.4, S=L_A−0.2E, albedo=(L_approved−S)/E, strict part correspondence (approved part mask = game
-   part id), splat into each part's UV texture (body 1024×512, crown 1024×256, brim 1024×128, pom 512×256, arms 256×128),
-   fill unseen texels from seen knit / fur, normal maps for crown / brim from approved luminance detail → write
-   `assets/textures/benny05/*.png` (new files), set MAPS05 scales + STAR05 colour.
-3. Re-run probe (UV pass + calib again with final normal maps), re-bake once.
-4. Real captures: `node scripts/capture.mjs 05 --q='<STACK>&benny05=1' --out=benny/cap/new` → `benny/new.png`;
-   metrics `python3 -I tools/match05/metrics.py`; default capture must equal `qa/pilot05/current_default_05.png`
-   (then `git checkout -q qa/capture_log.json`).
-5. 04 and 06 with benny05 on (identity check), steering frames (`scripts/proj05-move.mjs … --d=0,8,17 --steer=-1,1`),
+1. (Geometry is done for now at r6 values, see section 2.) Run the bake session from the CURRENT geometry:
+   `node qa/pilot05/full_reference_match/benny/work/bennyprobe.mjs --q='<STACK>&benny05=1' --out=qa/pilot05/full_reference_match/benny/work/b1 work/probe/uv.js work/probe/calA.shot.js work/probe/calB.shot.js work/probe/restore.shot.js`
+   (step paths with the full `qa/pilot05/full_reference_match/benny/` prefix), then
+   `python3 qa/pilot05/full_reference_match/benny/work/bake.py qa/pilot05/full_reference_match/benny/work/b1 qa/pilot05/full_reference_match/benny/work/b1/tex --normals`.
+   Inspect the textures (`*_seen.png`, the tiling seams, white/purple stripe fidelity) and `bake_report.json`.
+2. Copy the maps to NEW files `assets/textures/benny05/{body,crown,crown_n,brim,brim_n,pom,armL,armR}.png`; put each
+   `scale` from bake_report into `MAPS05`, and `star_albedo_linear` into `STAR05` (clamp to ≤1, or lower the star emissive
+   and re-calibrate). Optional: give the feet a map with the body's mean albedo (identity on front views).
+3. Re-run the bake session (the calibration now sees the final normal maps) and re-bake once, then copy again.
+4. Fur look: tune `FUR05` / `CLUMP05` (finer, denser, softer silhouette) with one or two probe shots. Check low tier too.
+5. Real captures: `node scripts/capture.mjs 05 --q='<STACK>&benny05=1' --out=qa/pilot05/full_reference_match/benny/cap/new`
+   → copy to `benny/new.png`; `python3 -I tools/match05/metrics.py benny/new.png benny/cap/new/`; `work/parts.py` per part;
+   default capture (`node scripts/capture.mjs 05 --out=<scratch>`) must equal `qa/pilot05/current_default_05.png`
+   (0 px), then `git checkout -q qa/capture_log.json`. Keep only changes that lower the region error / raise whole frame.
+6. 04 and 06 with benny05 on (identity check), steering frames (`scripts/proj05-move.mjs … --d=0,8,17 --steer=-1,1`),
    gameplay test → `benny/gameplay.json`; finish this file (per-mismatch table, before → after).
 
 ## 5. REQUESTS

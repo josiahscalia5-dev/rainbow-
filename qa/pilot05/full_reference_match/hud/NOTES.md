@@ -47,14 +47,39 @@ within 20 levels 13 %; whole frame 34.1 / 51.6 %.
   Baloo 2 800 italic + skewX(−8°), 44 px, cream → gold gradient, dark drop shadow. Only font in the project: Baloo 2
   (400–800, no real italic: the browser slants it synthetically).
 
-## In progress right now
-Running the HUD harness (default vs hud05) to measure glyph boxes and tune `H05.num.top`, `H05.num.size`,
-`H05.banner.size/track/skew` against the approved glyph boxes above.
+## UPDATE after checkpoint (run stopped for the account transfer, ~01:05 UTC)
+Harness tuning is DONE (HUD-only harness, i.e. the real hud.ts over the no-HUD STACK capture; NOT yet a real game capture).
+The harness composite with the default HUD gives exactly the real STACK HUD number (62.23), so the harness is faithful.
+HUD-region numbers in the harness (mask `hud_and_text`, 125,488 px; mean |ΔRGB|, share within 20 levels):
+| step | HUD mean | ≤20 | bar part | banner part | whole frame |
+|---|---:|---:|---:|---:|---:|
+| default HUD (= STACK) | 62.23 | 13.3 % | 64.57 | 58.60 | 34.10 |
+| hud05 first layout (Baloo 800, 1-px border bug) | 32.75 | 58.7 % | 30.01 | 37.00 | 31.31 |
+| + digits 53 px / top 28.5, banner padding 12 | 27.56 | 64.3 % | 21.91 | 36.32 | 30.82 |
+| + numbers weight 700, x/y aligned to approved glyphs | 27.02 | | 21.03 | 36.32 | |
+| + banner weight 700, skew −4° | 26.65 | 64.9 % | 20.96 | 35.48 | 30.74 |
+| + bar rim glow (top 3 px + 8 px inset glow), per-side rim colours, bar drop shadow | 25.00 | 65.7 % | 18.22 | 35.51 | 30.58 |
+| + flatter banner text colour (measured approved fill ≈ (248, 216, 168)) | 24.88 | | 18.22 | 35.21 | |
+| + banner text dy 0 (FINAL in hud.ts now) | **24.76** | | 18.22 | 34.91 | ≈30.6 |
+Tried and REJECTED (worse, measured): Baloo 600 (banner 38.10, numbers 19.75 bar), −webkit-text-stroke 1.5 px (36.64),
+banner size 43/45 with tracking ±0.4 (36.31 / 37.84), no italic + skew −12° (43.50), bar without drop shadow (19.24).
+The 600 weight import was removed again (no extra font load).
+
+Glyph boxes now (harness) vs approved: "5" 165–187 × 36–68 (approved 165–187 × 36–68, exact); counter "1" 498–513 ×
+36–67 (approved 498–511 × 36–68), counter end x 617 (approved 617); banner text x 150–735 incl. rim pixels, first glyph
+"0" 150–174 × 132–158 (approved 148–171 × 133–159): Baloo 2 700 strokes are heavier / wider than the approved lettering,
+the remaining banner error is mostly glyph-shape edges (font limit: only Baloo 2 is in the project).
+Remaining error split (harness, before the last two steps): scene pixels outside the pill shapes but inside the HUD mask
+rectangles = 29 % of the HUD error (bar corners 62.3, banner corners 62.1; that is the 3D scene, not the HUD); bar
+pill interior 15.9; banner pill 31.0 (rim 59.8, text edges 41.6, fill 24.7).
+
+Current tunables in `src/ui/hud.ts` (`H05`): bar x0 33 y0 13 x1 825 y1 100 border 2 shadow on; num size 53 weight 700
+hX 162 cX 497.5 top 26.5; banner cx 433 y0 113 h 68 minW 626 size 44 weight 700 skew −4 italic dy 0 stroke 0.
+`npx tsc --noEmit` clean after the last edit.
 
 ## Remaining, step by step
-1. Harness: `node qa/pilot05/full_reference_match/hud/harness.mjs --out=/tmp/…/h.png` (hud05) and `--q=x=1` (default);
-   measure with `/tmp/claude-0/hc05/hudmeasure.py` logic (colour boxes: white digits in bar, cream banner glyphs) and the
-   HUD-mask metric; tune H05 numbers/banner until glyph boxes match the table; keep only what lowers the HUD-region error.
+1. (done in harness, see table) — optional: only further fine passes on the banner rim profile (approved top rim
+   113–118 soft 5-px ramp peaking at 114, bottom 172–182 with a lavender inner glow) if measured closer.
 2. Real captures (one at a time): `node qa/pilot05/full_reference_match/hud/probe05.mjs --out=DIR before='<STACK>' new='<STACK>&hud05=1'`
    → copy to `hud/before.png`, `hud/new.png`; `python3 -I tools/match05/metrics.py hud/new.png hud/new_` (and before).
 3. Default identity: `node scripts/capture.mjs 05 --out=<scratch>` must equal `qa/pilot05/current_default_05.png` (0 px);

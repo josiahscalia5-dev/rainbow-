@@ -39,7 +39,9 @@ edge band (231,164,29) → (147,96,53) over ~10 px; game coin 1 face (255, 222�
 Region numbers BEFORE (STACK): coins 27,437 px, mean |ΔRGB| 54.0, within 20 levels 18 %.
 
 ## In progress right now
-First real capture with `coins05=1` not yet taken (HUD harness running first).
+UPDATE ~01:05 UTC (run stopped for the account transfer): no coin change since the checkpoint; the first real capture with
+`coins05=1` has still NOT been taken. `src/gameplay/coins.ts` typechecks (`npx tsc --noEmit` clean). Step 1 below is next.
+(The autosave at 00:28 already contains coins.ts, coin05_face.png and the hud05 sprites.)
 
 ## Remaining, step by step
 1. Probe/capture: `node qa/pilot05/full_reference_match/hud/probe05.mjs --out=DIR new='<STACK>&coins05=1'` → check

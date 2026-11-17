@@ -1,6 +1,6 @@
 # env05 — washer-environment-modeler (Screen 05 tunnel: rings, walls, fittings, far tunnel)
 
-Status: IN PROGRESS (checkpoint 2026-11-17 ~00:45 UTC, session 018Sg3AU). Switch `env05` (`on05('env05')`, also on with
+Status: IN PROGRESS — stopped for the account transfer (2026-11-17 ~00:30 UTC by the file clock, session 018Sg3AU). Switch `env05` (`on05('env05')`, also on with
 `?match05=1`). STACK = `proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1`.
 
 ## 1. Measured (step A, done)
@@ -34,36 +34,68 @@ Status: IN PROGRESS (checkpoint 2026-11-17 ~00:45 UTC, session 018Sg3AU). Switch
   WITHOUT sideways offsets (depth + height only) the fit barely improves: A 46 → 24, B 26 → 24, C 12.5 → 10.9 px.
   => the dominant ring error is SIDEWAYS: the approved rings sit 0.6–1.0 u further LEFT of the camera than the game's.
 
-## 2. Changed (all behind `env05`; default and STACK-without-env05 unchanged by construction; tsc clean)
-* `src/world/tube.ts`: optional `TubeGeoOptions.warp` (type `TubeWarp`) in buildTubeGeometry; optional `warp` arg of
-  `ForcedTunnel.geometry`; new `buildWarpedBandRing`. All optional / unused by default → identical geometry.
-* `src/vfx/proj05Tunnel.ts`: `ENV05` flag; `PT_ROW` + N1, N2 (N_ROWS = 9 only under env05, else 7); `E5_RING_ROW`;
-  `withEnv05Ring` (ring atlas row per ring, u = angle, v = axial; debug coords like the other probes); texture loading of
-  `assets/textures/env05/wall05e.png`, `ring05e.png`, `env05.json` ONLY under env05.
-* `src/world/environment.ts`: `E05` layout block (ring B at sCam05 + 38.5, band heights, far ring virtual depths,
-  sideways `side` knots −0.715 @A, −1.006 @B, −0.6 far; `up` +0.42 around ring A), `warp05` (upper tunnel only: weight
-  smoothstep(sin th, −0.28, 0.05) → 0 at/below the banks: river, foam, apron, floor untouched), real rings as warped
-  single meshes with `withEnv05Ring`, far rings by tunnel coordinate (knots and far river unchanged), far wall warp, env05
-  wall segs (near bays N1/N2). NOTE: the far-wall segs block is written twice (`E05 && !PROJWALL05` and
-  `PROJWALL05 && E05`) — harmless duplicate, to be merged.
-* New tools: `tools/env05/err_by_surface.py`, `ringproj.py`, `ring_table.py`, `ring_validate.py`, `ring_fit.py`.
+## 2. Changed (all behind `env05`; default and STACK-without-env05 unchanged by construction; `npx tsc --noEmit` clean)
+* `src/world/tube.ts`: `type TubeWarp`; optional `TubeGeoOptions.warp` in buildTubeGeometry (positions only); optional
+  `warp` arg of `ForcedTunnel.geometry`; new `buildWarpedBandRing` (one-instance InstancedMesh). Unused by default.
+* `src/vfx/proj05Tunnel.ts`: `ENV05` flag; `PT_ROW` + N1, N2 (N_ROWS = 9 only under env05, else 7); `E5_RING_ROW`
+  (A 0, B 1, C..G 2..6, N 7); `withEnv05Ring(mat, row0, perInstance, halfW, key)` (ring atlas: u = object angle
+  atan(y, x), v = axial (z + w) / 2w; final colour via pjInverse; uPtDbg → writes (uv, 8, 78) for the coords probe);
+  under env05 the wall atlas is `assets/textures/env05/wall05e.png` + `env05.json`, ring atlas `ring05e.png`.
+* `src/world/environment.ts`: `E05` block (current values: dB 38.35; hA 0.09, hB 0.12, hFar 0.11; farDv 64.0 / 104.7 /
+  165.5 / 235.2 / 332.1; side knots (depth from sCam05 → u) [3,0] [17,−0.715] [23,−0.715] [35,−0.95] [42,−0.95]
+  [54,−0.6]; up knots [6,0] [17,0.3] [23,0.3] [32,−0.23] [42,−0.23] [54,0]; sideFar −0.6), `knotsAt05`, `e05Weight`
+  (smoothstep(sin th, −0.28, 0.05): 0 at/below the river banks), `warp05` (real 05 walls, real rings; fades to 0 between
+  sF05 and sGlow05), real rings as warped single meshes + `withEnv05Ring`, far rings placed by `uRing(n)` =
+  ft.uOfZ(farDv − D0) (knots / far river unchanged), far ring geometry displaced by sideFar·weight, far wall
+  `ft.geometry(64, 80, 0.004, warpFar)`, env05 wall segs (near bays N1/N2; far segs from uRing). Duplicate far-segs
+  block merged.
+* `scripts/proj05-tunnel-probe.mjs`: when several real 05 ring meshes exist (env05), id tag = 20 + mesh index (scene
+  order: s 124, 138, A, B), ringInstances = all meshes. One ring mesh (default / STACK) → behaviour unchanged.
+* `assets/textures/env05/` (new): `wall05e.png` (2048 × 992, rows AB BC CD DE EF FG GX N1 N2), `ring05e.png`
+  (2048 × 384, 8 rows × 48), `env05.json` — currently ONLY the BASE (previous bake re-laid out; no projection yet).
+* New tools: `tools/env05/err_by_surface.py`, `ringproj.py`, `ring_table.py`, `ring_validate.py`, `ring_fit.py`,
+  `warp_fit.py` (fit side/up of a warped real ring), `proj_bake.py` (base atlases; `--coords=` camera-projection splat;
+  `--capture= --coords_all=` colour feedback into `assets/textures/env05/feedback.npz`).
 
-## 3. In progress
-* `assets/textures/env05/` does NOT exist yet → a capture with `env05=1` will fail to load textures until step 4a runs.
+### Measured after the first env05 geometry (probe e1, before the knot refinement; id buffer, mean band-edge error px)
+| ring | STACK | env05 e1 |
+|---|---|---|
+| A | 53.6 | 6.6 |
+| B | 27.4 | 14.4 |
+| C | 10.6 | 7.6 |
+| D | 5.9 | 4.7 |
+| E / F / G | 4.6 / 4.9 / 5.2 | 5.2 / 5.1 / 5.3 (circle guesses; far VP still ≈9 px low) |
+`warp_fit.py` on e1: B needs side −0.95, up −0.23, axial −0.16 (→ ≈9.9 px; the weight leaves B's lower sides near the
+banks unshifted — limit of "nothing moves at the banks"); A side −0.70, up +0.30. These values are now in `E05`
+(not yet probed). No env05 CAPTURE exists yet (no region numbers after the change yet).
+
+## 3. In progress (stopped for the account transfer)
+* The cycle `probe (id) → probe (--coords) → proj_bake --coords → capture → metrics` for the refined knots was stopped
+  while still waiting for a render slot; it wrote nothing. The helper is in the (lost) scratchpad; its content:
+  `node scripts/proj05-tunnel-probe.mjs --q='<STACK>&env05=1' --out=env/work/<tag> --raw=<scratch>/raw_<tag>`, the
+  same with `--coords`, `python3 -I tools/env05/proj_bake.py assets/textures/env05 --coords=<raw>/tunnel_coords.f32`,
+  `node scripts/capture.mjs 05 --q='<STACK>&env05=1' --out=env/work/<tag>` + `git checkout -q qa/capture_log.json`,
+  `python3 -I tools/match05/metrics.py env/work/<tag>/05.png env/work/<tag>/`.
 
 ## 4. Remaining, step by step
-a. Initial env05 textures: `wall05e.png` = old `tunnel05/wall05.png` atlas + rows N1, N2 (copy of AB) with `env05.json`
-   (wall rows incl. N1/N2, ring {w, h, rowH}); `ring05e.png` = 8 rows (A,B,C..G,N) from `tunnel05/ring05.png`.
-b. Probe env05 (`--q='<STACK>&env05=1'`): ring table again (id buffer; real rings are now separate meshes → probe needs
-   per-mesh tags), refine knots if needed.
-c. Camera-projection bake `tools/env05/proj_bake.py`: `--coords` probe → scatter approved pixels (purple_walls /
-   distant tunnel masks for walls, gold mask for rings) into the atlases; holes filled from the old bake, offset-blended.
-d. Lids: re-run the paddle pipeline onto the warped wall (scripts/proj05-lid-raycast.mjs needs `--q`) → `assets/models/lids05e.glb`,
-   loaded under env05 (right-side paddles would otherwise sink into the shifted wall).
-e. Capture NEW (`node scripts/capture.mjs 05 --q='<STACK>&env05=1' --out=env/new`), metrics, colour feedback pass.
-f. Default pixel identity (`node scripts/capture.mjs 05 --out=<scratch>` vs `qa/pilot05/current_default_05.png`,
-   then `git checkout -q qa/capture_log.json`); 04/06/07 with env05 vs without; proj05-move frames d=0,8,17,35;
-   gameplay-test; `npm run -s test:continuity`.
+a. Run that cycle (tag e2). Check the ring table (`tools/env05/ring_table.py env/work/e2/tunnel.json <raw>/tunnel_id.f32 …`)
+   and the capture by eye (walls must not show gold ghosts; water / foam / bubbles regions must not get worse than
+   STACK: water 9.40, foam 8.43).
+b. If water/foam are unchanged, optionally lower the weight's start (e.g. sin th −0.45) to fix ring B's lower sides;
+   re-measure. Far VP (C/D 9 px low) only via a vertical upper-wall shift (+0.45) — skip unless clearly closer.
+c. Colour feedback: `node scripts/proj05-tunnel-probe.mjs --coords --all --q='<STACK>&env05=1' --raw=<raw>` then
+   `python3 -I tools/env05/proj_bake.py assets/textures/env05 --coords=<raw>/tunnel_coords.f32 --capture=env/work/e2/05.png --coords_all=<raw>/tunnel_coords_all.f32`,
+   capture again; keep only if closer (1–2 passes).
+d. Paddles: add `--q` to `scripts/proj05-lid-raycast.mjs` (it loads `?qa=1&dpr=1` only), raycast with
+   `--q='<STACK>&env05=1' --dir=env/lid` (copy `mesh2d.json` there), Blender
+   `blender -b --factory-startup -P tools/proj05/lid_blender.py -- env/lid assets/textures/tunnel05/lid05.png 58,311,864,532 assets/models/lids05e.glb 0.35`,
+   load `lids05e.glb` instead of `lids05.glb` when ENV05 (proj05Tunnel.ts). Needed because the right-side paddles
+   (R1/R2) sit on the upper wall that env05 moves left (they would sink into it).
+e. Deliverables in `env/`: `before.png` (= `recovery_s018/stack/05.png`), `new.png` (STACK + env05), region numbers
+   before → after, ride frames `node scripts/proj05-move.mjs --q='<STACK>&env05=1' --out=env/move --d=0,8,17,35`,
+   `node scripts/gameplay-test.mjs --q='<STACK>&env05=1' --out=qa/pilot05/full_reference_match/env/gameplay.json`,
+   `npm run -s test:continuity`; default pixel identity (`node scripts/capture.mjs 05 --out=<scratch>` vs
+   `qa/pilot05/current_default_05.png`, then `git checkout -q qa/capture_log.json`); 04 / 06 / 07 with vs without env05.
 
 ## 5. REQUESTS
 * none yet (far river geometry is NOT changed: knots kept, rings placed by tunnel coordinate).
