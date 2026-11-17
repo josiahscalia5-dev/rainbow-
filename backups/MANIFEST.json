@@ -63,8 +63,8 @@
   },
   {
    "path": ".gitignore",
-   "bytes": 653,
-   "sha256": "53fed7146b3051bb134991448d2a4d6dabe46bc0aef7bcb7f7ac70327ad68480"
+   "bytes": 777,
+   "sha256": "4ea809676324c87a8b761193610c34db5a9ec3626478fdaafe5d4f14578fd930"
   },
   {
    "path": ".mcp.json.template",
@@ -432,6 +432,56 @@
    "sha256": "932bbbd451e36b7129938b581cef4f8060730cefd4e7ed47c08df32909193cce"
   },
   {
+   "path": "assets/textures/benny08/armL.png",
+   "bytes": 19221,
+   "sha256": "feb92165693dbd0301e5b3ec5941cce7b74d6819af0e665f49315d7e50855e64"
+  },
+  {
+   "path": "assets/textures/benny08/armR.png",
+   "bytes": 19097,
+   "sha256": "30fab1fb5566fdf290c0dd1e80a669d7b4378b61fc43d214ccc74624ea43dd85"
+  },
+  {
+   "path": "assets/textures/benny08/bake_report.json",
+   "bytes": 5097,
+   "sha256": "9529200b4ccd61cafffad51293152e52cdce205a5ada5e09144ff76ca7b9941a"
+  },
+  {
+   "path": "assets/textures/benny08/body.png",
+   "bytes": 324120,
+   "sha256": "b3a85dee202b712f85ec6eb57c94f6970140e98282ee2d4b80cc3a7c329cbbe0"
+  },
+  {
+   "path": "assets/textures/benny08/brim.png",
+   "bytes": 195886,
+   "sha256": "4f4d7a0d0f418e21c4ec4d995537a1316deef321f7428939cf35db943c94a406"
+  },
+  {
+   "path": "assets/textures/benny08/brim_n.png",
+   "bytes": 185217,
+   "sha256": "316550a43fb5f03b8be21beb7fdf20fee44eb5fa0741e6fa7522b3fa65a75af2"
+  },
+  {
+   "path": "assets/textures/benny08/crown.png",
+   "bytes": 374422,
+   "sha256": "7ae0bcdcb8265f6a013f38896fb80d29428cf374b1ced4e613168dcd10c85974"
+  },
+  {
+   "path": "assets/textures/benny08/crown_n.png",
+   "bytes": 294541,
+   "sha256": "e91874b81cf1ad64227011b24cca8c4b29ef644f2805056bbb1894160ef84a38"
+  },
+  {
+   "path": "assets/textures/benny08/pom.png",
+   "bytes": 145907,
+   "sha256": "38c806472caf72506ded6fb1b3ed6f8e3394a6acdb55e6673f0c2283aa0b8f3a"
+  },
+  {
+   "path": "assets/textures/benny08/star.png",
+   "bytes": 49535,
+   "sha256": "932bbbd451e36b7129938b581cef4f8060730cefd4e7ed47c08df32909193cce"
+  },
+  {
    "path": "assets/textures/marble05_env_1024.jpg",
    "bytes": 51147,
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
@@ -608,8 +658,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10182,
-   "sha256": "e747477af98bbfb6561a10621b9e2449f513454ed88ee0a5b6411add0ca7e696"
+   "bytes": 10436,
+   "sha256": "e96f377db508a7aeb6ba5386ff6a504b7469ed7e87bda3b173f6955132b67344"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1395,6 +1445,176 @@
    "path": "qa/match/08/NOTES.md",
    "bytes": 15448,
    "sha256": "b04464dda833785f164c882ab26ab25c59ed7a25f1a4dff745db737ac4d79dc8"
+  },
+  {
+   "path": "qa/match/08/benny08/APPROVED_08.png",
+   "bytes": 492730,
+   "sha256": "ab7d0bc5777bc9b262ec0563839a51663d4ec271e4a099c8d417b2de5f498e14"
+  },
+  {
+   "path": "qa/match/08/benny08/CURRENT_08.png",
+   "bytes": 2346255,
+   "sha256": "c174030b230f5fb4f5172a9efea39a4f3760cd1ce8e132f74b1b437a06f3bdd9"
+  },
+  {
+   "path": "qa/match/08/benny08/CURRENT_08_1080x1920.png",
+   "bytes": 3437138,
+   "sha256": "39a4e6f542f37ed775b56b7342a7891eefd52d08ebc0805e7eb877a4d9ab644d"
+  },
+  {
+   "path": "qa/match/08/benny08/NEW_08.png",
+   "bytes": 2342285,
+   "sha256": "210c2cfb2e86187f31c01a215a97337ea73cf590fc7cf7fa08133c6ccd05425a"
+  },
+  {
+   "path": "qa/match/08/benny08/NEW_08_1080x1920.png",
+   "bytes": 3434125,
+   "sha256": "94c04ee5b36fa7e91373587d0d02bff6036820689e9ab00287c1d317ce3d76f2"
+  },
+  {
+   "path": "qa/match/08/benny08/closeup_APPROVED.png",
+   "bytes": 1643386,
+   "sha256": "33b83c2285d74c2a4114c70b2977bd3e94dfa66a46b19a1159e304c1f8e5b95d"
+  },
+  {
+   "path": "qa/match/08/benny08/closeup_CURRENT.png",
+   "bytes": 1655936,
+   "sha256": "4972123c9397981b90c104debf48fd2f95291882b7680f1adf810d6989228952"
+  },
+  {
+   "path": "qa/match/08/benny08/closeup_NEW.png",
+   "bytes": 1623999,
+   "sha256": "a857f43833b90d08c33b6866e5898b1118201f9ab098c18e7c6bbe090b9a3a8f"
+  },
+  {
+   "path": "qa/match/08/benny08/compare_CURRENT_NEW.json",
+   "bytes": 9703,
+   "sha256": "5cfd7da413bf9c263b4714278dcf62d06ec7321a8d55cdba2ab49db3161eca77"
+  },
+  {
+   "path": "qa/match/08/benny08/screen_match_CURRENT.json",
+   "bytes": 530,
+   "sha256": "9b1d4dda713fe8d2befbb55a6867df2084a64adaae138394b30e9ff8565120ae"
+  },
+  {
+   "path": "qa/match/08/benny08/screen_match_NEW.json",
+   "bytes": 522,
+   "sha256": "a1433089bf20846e8ffaf004d17ace16629b570355cec4242bb6690520f8a7de"
+  },
+  {
+   "path": "qa/match/08/benny08/views/turntable_CURRENT.png",
+   "bytes": 788795,
+   "sha256": "cf0368558509338d0d1241aa90f3cd50f2cc43c1d55278ea77f2f10dd9f34d18"
+  },
+  {
+   "path": "qa/match/08/benny08/views/turntable_NEW.png",
+   "bytes": 782596,
+   "sha256": "33b3c13bf751297cc96c3a87effe4ee7b77e9d6ca00514d4370fa6f7f1d220a1"
+  },
+  {
+   "path": "qa/match/08/benny08/work/bake08.py",
+   "bytes": 10911,
+   "sha256": "c6f0213ebacab88aedb976970b3d3ec5dc2540766e41640701400e9c30aa00c6"
+  },
+  {
+   "path": "qa/match/08/benny08/work/bennyseg08.py",
+   "bytes": 1997,
+   "sha256": "a90d20a0413d2c82310fc1d8713d9dfdc28ed51707b2495c9d8acd0cde9820f7"
+  },
+  {
+   "path": "qa/match/08/benny08/work/classgain08.py",
+   "bytes": 4927,
+   "sha256": "2f7ef2dff2da360f8e2db5af36dcf3b542029f4127edc6f019ea31672f28460d"
+  },
+  {
+   "path": "qa/match/08/benny08/work/compare08.py",
+   "bytes": 6059,
+   "sha256": "d26f2e2324fc2f07c60b2f85de58cfe583888510b728d1d53f6fc7dc191a0d2e"
+  },
+  {
+   "path": "qa/match/08/benny08/work/geom08.py",
+   "bytes": 1582,
+   "sha256": "54af4f4ee0d3f46483bf97ca1d9ae902862539000e3a2b799d2f7a1c1400e6b7"
+  },
+  {
+   "path": "qa/match/08/benny08/work/labviews08.mjs",
+   "bytes": 1886,
+   "sha256": "ff99e7879a35e9098068080f38b5ca7318adf57a89a27e168a9f9e4d5f5fecc7"
+  },
+  {
+   "path": "qa/match/08/benny08/work/parts08.py",
+   "bytes": 5153,
+   "sha256": "fd5605d590ce5cbc5dee55931fe06a801cc03ac001ea4612588c53ae4c160cf1"
+  },
+  {
+   "path": "qa/match/08/benny08/work/pictures08.py",
+   "bytes": 1190,
+   "sha256": "b43d5d4c8ba29306fb4c8b48f59805213e3a4960523603bd9fc2860edc517ec9"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe/calA.shot.js",
+   "bytes": 69,
+   "sha256": "3dd40f84abbb7e4a5d9e25a551637ddeca3a945e073c7f37a21cf92151b1e0fc"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe/calB.shot.js",
+   "bytes": 69,
+   "sha256": "f5287c40270bc1456822bd3ac7c3b50e669f54757dc3b0fe1815e2ef19a3356f"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe/calC.shot.js",
+   "bytes": 69,
+   "sha256": "7ea7fce0ba41e0d6d6354928fb2d611e1cd69aab08aa98de7d0e63f34287dd21"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe/calD.shot.js",
+   "bytes": 70,
+   "sha256": "0c75638036fc805d73552d1fa36773638353e83911be5c663cabc4b26f786076"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe/calE.shot.js",
+   "bytes": 69,
+   "sha256": "c400c1b80fc89b15dece73e8d0600e10098f64304cd830b5e21ce05fbcceb43d"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe/info.js",
+   "bytes": 1600,
+   "sha256": "72367d74e4f21791e5bdb1efde360b642394fc88cd42386a862bd235e94d8ad0"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe/restore.shot.js",
+   "bytes": 74,
+   "sha256": "01d51d8d2eeee57790a77065ad70ec0fdb99c76a598169fdc85018a1cde3bc5b"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe/shot0.shot.js",
+   "bytes": 13,
+   "sha256": "3750eb1fea554f6c4d616b2bb160de0c4dbe1f53038b41458212f882368c9244"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe/uv.js",
+   "bytes": 116,
+   "sha256": "f7148bfa19d67f133ef89ffb1cfc6409e79048ac78316232ecb9791a0bfba816"
+  },
+  {
+   "path": "qa/match/08/benny08/work/probe08.mjs",
+   "bytes": 2954,
+   "sha256": "f76af069c005ef6504acd784f9b4169a25a27f762c8a122efe935d9d95895d59"
+  },
+  {
+   "path": "qa/match/08/benny08/work/refine08.py",
+   "bytes": 2873,
+   "sha256": "f1f1ba148c275960d939e3a9f7d0ec5e3fb4d31912d7cfac32419de5736e2575"
+  },
+  {
+   "path": "qa/match/08/benny08/work/reg08.py",
+   "bytes": 5316,
+   "sha256": "418a4ad217923a4b8131fa1ad93f8a36bf7f3eb6df09aa6afd8b2063583f799e"
+  },
+  {
+   "path": "qa/match/08/benny08/work/regions08.py",
+   "bytes": 2849,
+   "sha256": "0cd7224af7f937ffe6e45fd43f2efcd60ba5b88f142c9173500d1670936ebc0e"
   },
   {
    "path": "qa/match/08/benny_APPROVED_closeup.png",
@@ -7888,8 +8108,8 @@
   },
   {
    "path": "src/characters/benny/benny05.ts",
-   "bytes": 18758,
-   "sha256": "b03ac60c2e4d711beed90a36c01249e5354d51ce37a09a96a992ccb916ead914"
+   "bytes": 20346,
+   "sha256": "291a30913f785f62c3823f6201b6b561e6f2841743a8122924c00cf9bb07016d"
   },
   {
    "path": "src/characters/benny/build.ts",
