@@ -9,6 +9,10 @@
  * shows the approved scenery and a moving camera sees it on geometry (parallax). Surfaces the picture never showed (or
  * showed edge-on) get mirrored tiles of material patches cut from the artwork (stretch guard + projector depth test).
  * The shader undoes the game's post chain (PROJ05_INVERSE) and takes no fog.
+ * Milestone 2 (qa/match/04/NOTES.md): the tunnel wall's fallback is ONE painted gold ring (tile_ring.png) repeating
+ * straight along the tunnel, the water's fallback is the painted river with its chevron arrows (tile_river.png),
+ * both anchored to the world; under Benny the provisional fill gives way to the painted river once the camera moves.
+ * `&tile04=0` = milestone 1 (A/B).
  * Without the switch nothing in this file runs and the game is unchanged.
  */
 import * as THREE from 'three';

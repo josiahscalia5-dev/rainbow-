@@ -77,3 +77,36 @@ node scripts/capture.mjs 04 --q=match04=1 --out=<dir>; node tools/match04/motion
 python3 -I tools/match04/metrics04.py references/04_through_the_five_arrows.png <before.png> <new.png> <out.json>
 ```
 (`off04` / `dir04` in match.ts = `off04` / `fwd` of cam04_locked.json.)
+
+## Milestone 2 (2026-11-17 ~17:30 UTC, branch `claude/rainbow-s04-match-c2`) — the screen while riding
+Same switch `?match04=1`; `&tile04=0` brings back milestone 1 for A/B. Only `src/world/match04.ts`, `tools/match04/`,
+`assets/textures/match04/` changed (+ the `camera` argument of `m04.sync` in Game.ts, inside `if (m04)`).
+1. **Deep tunnel = real gold rings, no smears, no mirrored copies.** The painted rings are not concentric with a straight
+   tube (their centres drift toward the vanishing point), so an unwrap through the tube gave wavy, smeared rings (the
+   saved `tile_tunnel.png`, kept but unused). New `tile_ring.png` (`make_tiles04.py`): ONE painted ring — groove, lip,
+   groove, polished band — read straight off the picture along the tunnel top (x 445–485, y 517–575), times the painted
+   colour at every angle around the tunnel (side reflections, pink/violet glints, long highlights; polar unwrap around the
+   drifting ring centres). It repeats every 6.5 u along the tunnel, anchored to the world, phase set so a lip sits where
+   the painted near rings are (≈ 1, 7.1, 13.6 u past the mouth). Used only where the stretch guard drops the projection.
+2. **Water under / around Benny = the painted river.** The water plane's fallback is now `tile_river.png` (the approved
+   cyan river with its chevron arrow unwrapped from 9.5–14.8 u ahead of Benny, lateral ±4 u, now seamless — the earlier
+   cross-fade left a seam line), anchored to the world; outside ±4 u the old patch stays. Where the plate is a provisional
+   fill (the area painted under Benny) the painted river replaces the fill once the camera has moved > 0.3–2 u from the
+   approved view (water only; the coin fills on the bank stay — the tile there looked like brown barrels).
+3. **Approved view unchanged:** 4 of 1,327,104 pixels differ from milestone 1 (max 47 levels); whole frame 79.9 %
+   (SSIM 0.798), scenery 97.6 % (SSIM 0.967), bands 100.0 / 95.7 / 97.3 %, Benny 16.5 % — identical to milestone 1
+   (`scenery_metrics_M1_M2.json`, `04_NEW_m2_864x1536.png`).
+4. **Moving frames** (`motion_m2/BEFORE_milestone1/` vs `motion_m2/NEW/`, full size 864×1536, forward 3/6/10/15/20 u,
+   steering left/right at 6 u): NEW shows ring structure all the way down the tunnel at 10–20 u (BEFORE: kaleidoscope of
+   mirrored gold tiles) and the painted river with chevrons under and in front of Benny (BEFORE: mirrored pink/white
+   water tiles, mirrored fill under Benny when steering). Not fixed yet: the ring closest to the camera at 15–20 u is
+   soft (one ring band is only 58 painted pixels tall), the big chevron right in front of the camera is soft for the
+   same reason, and the painted water is still static (no flow).
+5. **fal clean plate:** NOT run — no "FAL READY" from the lead. Provisional fill stays (`FAL_PLATE_REQUEST.md`).
+6. **Splash card under Benny:** not done this milestone.
+Proofs: default 04 capture 0 px different from the saved milestone-1 default capture (full frame); default 05 and
+`?match08=1` 08 0 px different below the HUD strip vs a checkout of the milestone-1 commit (the HUD strip differed only
+in that temporary checkout's own run); `?ringa=26&nearfloor05=0` vs `qa/pilot05/wave9/baseline/05.png` 0 px;
+`node scripts/gameplay-test.mjs` 8/8 without and with `--q=match04=1` (`gameplay_test_match04_m2.json`, coins
+1,330 → 2,240 = 91 coins); `npx tsc --noEmit -p .` clean; references 13/13 OK.
+Reproduce: `python3 -I tools/match04/make_tiles04.py assets/textures/match04`; `node tools/match04/motion04.mjs <dir> [q]`.
