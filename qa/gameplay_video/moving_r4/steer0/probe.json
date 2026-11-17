@@ -50,7 +50,8 @@
   "foam_banks/IcosahedronGeometry",
   "foam_banks/IcosahedronGeometry",
   "foam_banks/IcosahedronGeometry",
-  "foam_whirlpool/IcosahedronGeometry"
+  "foam_whirlpool/IcosahedronGeometry",
+  "coins/CylinderGeometry"
  ],
  "rows": [
   {
@@ -75,7 +76,7 @@
    "nearBy": [],
    "benny": {
     "maskShare": 0.0613,
-    "hidden": 0.036,
+    "hidden": 0.033,
     "box": [
      0.272,
      0.64,
@@ -83,8 +84,8 @@
      0.867
     ],
     "depth": 8.56,
-    "fgFrame": 0.1363,
-    "fgOnBenny": 0.005,
+    "fgFrame": 0.1361,
+    "fgOnBenny": 0.002,
     "occluders": [],
     "centreY": -83.51,
     "up": [

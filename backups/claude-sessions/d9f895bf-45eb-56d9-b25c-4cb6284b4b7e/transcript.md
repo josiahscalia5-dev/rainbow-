@@ -1280,3 +1280,104 @@ Coin fix works (right steer: clear; left: the coins beside Benny are thinned). N
 > 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
 > capture.mjs
 
+### 🤖 Claude — 2026-11-17T19:05:23.349Z
+
+> 🔧 **Bash** `{"command": "(timeout 1500 node scripts/gameplay-test.mjs --q=camclear=1 --out=qa/gameplay_video/tests/r4_gameplay_camclear.json 2>&1 | tail -4); (timeout 1500 node scripts/gameplay-test.mjs --q=match08=1\\&camclear=1 --out=qa/gameplay_video/tests/r4_gameplay_match08_camclear.json 2>&1 | tail -4); timeout 600 npm run -s test:continuity 2>&1 | tail -6", "description": "Run gameplay tests and continuity test", "timeout": 3600000}`
+
+### 🧑 User — 2026-11-17T19:05:38.706Z
+
+> ↩︎ result: "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+>   "verticalDrop": 61.31
+>  },
+>  "errors": []
+> }
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+>   "08->09 gap=0 dT=0.12 y=-113.59",
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+
+### 🤖 Claude — 2026-11-17T19:05:41.549Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nfor f in ['qa/gameplay_video/tests/r3_gameplay_camclear.json','qa/gameplay_video/tests/r4_gameplay_camclear.json','qa/gameplay_video/tests/r4_gameplay_match08_camclear.json']:\n  d=json.load(open(f)); \n  ks=list(d.keys()); print(f, ks[:12])\n\" ; python3 -c \"\nimport json;d=json.load(open('qa/gameplay_video/tests/r4_gameplay_camclear.json')); print(json.dumps(d)[:1500])\"", "description": "Inspect gameplay test results"}`
+
+### 🧑 User — 2026-11-17T19:05:41.639Z
+
+> ↩︎ result: qa/gameplay_video/tests/r3_gameplay_camclear.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> qa/gameplay_video/tests/r4_gameplay_camclear.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> qa/gameplay_video/tests/r4_gameplay_match08_camclear.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> {"checks": {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 360.074, "s1": 360.274, "stage": "07", "y0": -93.088, "y1": -93.278, "t": 27.85}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.283333333332894, "t08": 30.283333333332894, "yTop": -51.836, "yBottom": -113.243, "y08": -113.243, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.41}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}, "victory": {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "co …[+674 chars]
+
+### 🤖 Claude — 2026-11-17T19:05:45.365Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nfor f in ['r3_gameplay_default','r3_gameplay_camclear','r3_gameplay_match08_camclear','r4_gameplay_camclear','r4_gameplay_match08_camclear']:\n  d=json.load(open('qa/gameplay_video/tests/'+f+'.json')); c=d['checks']\n  print(f, sum(v['pass'] for v in c.values()),'/',len(c), c['realCoinPickups']['collected'], c['realCoinPickups']['endCoins'], c['plunge']['verticalDrop'], c['noCameraCut']['maxCameraJumpPerStep'])\"", "description": "Compare r3 vs r4 test numbers"}`
+
+### 🧑 User — 2026-11-17T19:05:45.435Z
+
+> ↩︎ result: r3_gameplay_default 8 / 8 91 2240 61.41 0.728
+> r3_gameplay_camclear 8 / 8 91 2240 61.41 1.005
+> r3_gameplay_match08_camclear 8 / 8 91 2240 61.31 1.005
+> r4_gameplay_camclear 8 / 8 91 2240 61.41 0.728
+> r4_gameplay_match08_camclear 8 / 8 91 2240 61.31 0.728
+
+### 🤖 Claude — 2026-11-17T19:05:49.045Z
+
+Gameplay 8/8, 91 coins / 2,240, drop unchanged, continuity gaps 0; the biggest one-step camera jump dropped 1.0 → 0.73 u. Now the 0-px picture checks against round 3.
+
+### 🤖 Claude — 2026-11-17T19:05:56.244Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; cat > $S/still.mjs <<'EOF'\n// still views via goto(id) for several queries; usage: node still.mjs <repoRoot> <outDir> <port>\nconst [root, out, port] = process.argv.slice(2);\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(root + '/scripts/lib/pw.mjs');\nimport { mkdirSync } from 'node:fs';\nmkdirSync(out, { recursive: true });\nprocess.chdir(root);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(Number(port));\nconst b = await chromium.launch({ args: CHRO …[+1205 chars]`
+
+### 🧑 User — 2026-11-17T19:07:38.891Z
+
+> ↩︎ result: 11
+
+### 🤖 Claude — 2026-11-17T19:07:43.680Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; cd /home/user/rainbow- && grep -n \"goto\" src/game/Game.ts | head -2; python3 -c \"\nfrom PIL import Image\nimport numpy as np,os\nfor f in sorted(os.listdir('$S/st_new')):\n  a=np.asarray(Image.open('$S/st_new/'+f).convert('RGB')).astype(int); b=np.asarray(Image.open('$S/st_r3/'+f).convert('RGB')).astype(int)\n  d=np.abs(a-b).max(2); m=d>0\n  m2=m.copy(); m2[25:170]=False\n  print(f, 'px differ', int(m.sum()), 'outside title rows', int(m2.sum()), 'max', int(d.max()))\"", "description": "Pixel-co …[+24 chars]`
+
+### 🧑 User — 2026-11-17T19:07:44.225Z
+
+> ↩︎ result: 622:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 665:    goto: gotoCheckpoint,
+> def_03.png px differ 8544 outside title rows 703 max 225
+> def_04.png px differ 8000 outside title rows 753 max 210
+> def_05.png px differ 7184 outside title rows 708 max 235
+> def_06.png px differ 9815 outside title rows 726 max 239
+> def_07.png px differ 7177 outside title rows 726 max 237
+> def_08.png px differ 9392 outside title rows 746 max 242
+> def_09.png px differ 6784 outside title rows 792 max 228
+> m07_07.png px differ 7082 outside title rows 689 max 237
+> m07cc_07.png px differ 7082 outside title rows 689 max 237
+> m08_08.png px differ 9268 outside title rows 691 max 239
+> m08cc_08.png px differ 9268 outside title rows 691 max 239
+
+### 🤖 Claude — 2026-11-17T19:07:48.766Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; python3 -c \"\nfrom PIL import Image\nimport numpy as np,os\nfor f in ['def_08.png','m08cc_08.png','m07cc_07.png']:\n  a=np.asarray(Image.open('$S/st_new/'+f).convert('RGB')).astype(int); b=np.asarray(Image.open('$S/st_r3/'+f).convert('RGB')).astype(int)\n  m=np.abs(a-b).max(2)>0; ys,xs=np.nonzero(m); \n  print(f, 'rows', sorted(set((ys//25*25).tolist())), 'x', xs.min(), xs.max())\"", "description": "Locate the differing pixels"}`
+
+### 🧑 User — 2026-11-17T19:07:49.035Z
+
+> ↩︎ result: def_08.png rows [0, 25, 50, 75] x 19 340
+> m08cc_08.png rows [0, 25, 50, 75] x 45 314
+> m07cc_07.png rows [0, 25, 50, 75] x 35 323
+
+### 🤖 Claude — 2026-11-17T19:07:54.740Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nfor x,y in [('m08_08','m08cc_08'),('m07_07','m07cc_07'),('def_08','m08_08')]:\n  m=np.abs(L('$S/st_new/'+x+'.png')-L('$S/st_new/'+y+'.png')).max(2)>0; print(x,'vs',y,int(m.sum()))\nimport os\nprint('new vs r3 below HUD (rows>=100):',{f:int((np.abs(L('$S/st_new/'+f)-L('$S/st_r3/'+f)).max(2)[100:]>0).sum()) for f in sorted(os.listdir('$S/st_new'))})\"", "description": "Cross-ch …[+16 chars]`
+
+### 🧑 User — 2026-11-17T19:07:55.352Z
+
+> ↩︎ result: m08_08 vs m08cc_08 13649
+> m07_07 vs m07cc_07 0
+> def_08 vs m08_08 280583
+> new vs r3 below HUD (rows>=100): {'def_03.png': 0, 'def_04.png': 0, 'def_05.png': 0, 'def_06.png': 0, 'def_07.png': 0, 'def_08.png': 0, 'def_09.png': 0, 'm07_07.png': 0, 'm07cc_07.png': 0, 'm08_08.png': 0, 'm08cc_08.png': 0}
+
+### 🤖 Claude — 2026-11-17T19:08:05.370Z
+
+> 🔧 **Bash** `{"command": "rm -rf qa/gameplay_video/moving_r4 && for st in 0 1 -1; do if [ $st = 0 ]; then plan=\"--steer=0\"; else plan=\"--steerplan=0:0,43:$st\"; fi; timeout 1200 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=41 --t1=48 --dt=0.5 --size=360x800 $plan --out=qa/gameplay_video/moving_r4/steer$st >/dev/null 2>&1; python3 -c \"\nimport json\nd=json.load(open('qa/gameplay_video/moving_r4/steer$st/probe.json'))\nR=d['rows']; print('steer $st', 'max hidden %.0f%%'%(100*max(r['benny'].get('hidden',0) for r in R)), 'near2 max', max(r['near2'] for r in R), 'inside', sum(len(r['inside' …[+315 chars]`
+
