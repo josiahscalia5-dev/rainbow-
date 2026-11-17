@@ -598,8 +598,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3880,
-   "sha256": "b647eba128103c443c0128172d93f357f560db67bb64f6d3b47570bc8864229c"
+   "bytes": 3864,
+   "sha256": "cc23fd4342c66f09f9cc406a38e306fdf02ec5792727f5a75e613995d78e5e9d"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10582,
-   "sha256": "c5d46323d5c4cfcac2a33182266740869492c35e8aa6fd09a986592f74d2dc52"
+   "bytes": 10591,
+   "sha256": "6e4a1c886ffe43c73979627b49bd01787b4f74be248d20c1c011ee4153ce028d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1355,6 +1355,26 @@
    "path": "qa/match/07/geo_match07.json",
    "bytes": 43046,
    "sha256": "943d19c51c705156ec97e6159588222838238aa8461b6496b91a50b864b2cbe7"
+  },
+  {
+   "path": "qa/match/07/m1/before/07.png",
+   "bytes": 1786768,
+   "sha256": "26756c178488d83d7eae93acaa027604fcbf4eea06c1620796a1bdacde44b1df"
+  },
+  {
+   "path": "qa/match/07/m1/cam/07.png",
+   "bytes": 1610740,
+   "sha256": "b8a1c4d8ca0201be1b011efce06d7ffd8ba767337f417a3b5ef2129f8ea3a5b4"
+  },
+  {
+   "path": "qa/match/07/m1/cam07.json",
+   "bytes": 1127,
+   "sha256": "b63350616673bd309162135053a63bd1f74f0625f09c9608af9a0dd64506a4de"
+  },
+  {
+   "path": "qa/match/07/m1/probe_default.json",
+   "bytes": 208571,
+   "sha256": "8bacbb6079a425e532a902a59eefd2453915388870e36587c1ce8e4e9247ed69"
   },
   {
    "path": "qa/match/07/rings/approved.json",
@@ -7948,13 +7968,13 @@
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 11333,
-   "sha256": "c0012b277fd871049ee08d763c15b870523d0df73f96f0008965e449700bbee8"
+   "bytes": 12451,
+   "sha256": "4809d87ee445aac94bd61f531fc686730464a88b4733a79611e253fdb92e396e"
   },
   {
    "path": "src/game/match.ts",
-   "bytes": 2322,
-   "sha256": "640cd7e53ac698d88d03e0fc985502e44bdb5e64461f506666ebde0d7d0971dc"
+   "bytes": 2627,
+   "sha256": "6d4d5b6c14983d9e5b45b8ef2e89d21f4e9e4176b1618bd27b0f1b1b35a13345"
   },
   {
    "path": "src/game/modules.ts",
@@ -8235,6 +8255,21 @@
    "path": "tools/match/ring_fit.py",
    "bytes": 2980,
    "sha256": "2ea5c23a56f3e1405fe102fe5fae6bbeea6e3f2c7c584501a3306a61c613e8c1"
+  },
+  {
+   "path": "tools/match07/axis07.py",
+   "bytes": 1151,
+   "sha256": "902848a038d0ba52a275a37d4bee3b8685257a1b5b97128272aa6ad474445c5c"
+  },
+  {
+   "path": "tools/match07/probe07.mjs",
+   "bytes": 2444,
+   "sha256": "aa2606e7e11105eec9ce925e248c85904545299c5a9ebed72331cd6493d1d35e"
+  },
+  {
+   "path": "tools/match07/solve_cam07.py",
+   "bytes": 2904,
+   "sha256": "017ba1a762de75fb4b69da5d3a2963ab4ba532d274b89f6123d38ea27b772b73"
   },
   {
    "path": "tools/match08/bennytree.mjs",

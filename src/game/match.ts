@@ -22,7 +22,9 @@ export const matchOn = (id: string): boolean => (MATCH as Record<string, boolean
  * Measured with scripts/match-cam-try.mjs; one line per screen (owner: that screen's worker).
  */
 export const MATCH_CAM: Partial<Record<MatchId, Partial<CamParams>>> = {
-  '07': { back: 9, up: 5.4, ahead: 22, lookUp: -1.8, fov: 62 },
+  // 07 (2026-11-17, qa/match/07/NOTES.md): solved offline (tools/match07/solve_cam07.py) so Benny's box lands on the approved
+  // picture (208,780-640,1210) and the tube axis' vanishing point on the painted ring centre (612,548); camera = Benny's water point + off07
+  '07': { fov: 62, roll: 0, off07: [0.5121, 3.2719, 5.5863], dir07: [-0.1065, -0.22977, -0.9674] },
   // 08 (2026-11-17, qa/match/08/NOTES.md): solved in the live game so Benny's box, the door centre and the platform land
   // on the approved picture (266,843-594,1216 vs 260,850-600,1210; door 489,399 vs 490,400; platform 483,565 vs 480,560)
   '08': { fov: 62, roll: 0, off08: [0.686, 3.697, 7.115], aim08: [9.812, -119.291, -332.288] },
