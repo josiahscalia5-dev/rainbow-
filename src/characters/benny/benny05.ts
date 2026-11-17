@@ -163,6 +163,12 @@ const T = (f: string) => (BAKE08 ? new URL(`../../../assets/textures/benny08/${f
 /** part → baked albedo (sRGB PNG) + colour factor (the map stores albedo / factor so it fits 0..1) + optional normal map */
 /** benny08 round 3 (qa/match/08/benny08/NOTES.md): with the 08 maps, the body map with the dark strip under the cuff
  *  repaired (work/fixband08.py → body_r3.png); `?b08r3=0` = the round-2 body.png */
+/** QA number switch (benny08 round 6 tuning) */
+const qf = (k: string, d: number): number => { const v = qv(k); const n = v === null ? NaN : Number(v); return Number.isFinite(n) ? n : d; };
+/** benny08 round 6 (qa/match/08/benny08/NOTES.md): soft layered body-fur clumps (`b08clump`) and yarn-tuft pom-pom
+ *  (`b08yarn`) — DEFAULT on the round-5b path only (match08 with b08full on, taper off); `=0` = off (r5b), `=1` forces on.
+ *  The r3b / r4 / r2 / taper URLs (b08full=0, b08r3=0, b08shape=1) are therefore unchanged. */
+const r6on = (k: string): boolean => { const v = qv(k); return v === '1' || (v !== '0' && qv('b08full') !== '0' && qv('b08shape') !== '1'); };
 export const B08R3: boolean = BAKE08 && qv('b08r3') !== '0';
 export const MAPS05: Record<string, { map: string; scale: number; normal?: string; normalScale?: number }> = {
   fur_body: { map: B08R3 ? 'body_r3.png' : 'body.png', scale: 1 },
@@ -284,6 +290,18 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
     // benny08 round 4: lighter pink tips on the visible shoulders / upper body like the painted highlights (number neutral,
     // visibly closer); since round 5 (user 19:00: r3b is the base) OPT-IN: `?b08hi=1` = on
     if (B08R3 && qv('b08hi') === '1' && f.mesh.name === 'fur_body') f.uniforms.uHi.value = 0.7;
+    // benny08 round 6 (`b08clump`, default on the r5b path, `?b08clump=0` = off): soft layered fur clumps on body + arms (fur.ts uTuft) instead
+    // of thin radial strands. QA tuning: b08cs clump size, b08cc comb, b08csh shading, b08cp dome power, b08cf fine, b08ct tip
+    if (B08R3 && r6on('b08clump') && (f.mesh.name === 'fur_body' || (qv('b08carm') === '1' && /^fur_arm/.test(f.mesh.name)))) {
+      f.uniforms.uTuft.value.set(1, qf('b08cs', 0.3), qf('b08cc', 0.3), qf('b08csh', 0.15));
+      f.uniforms.uTuft2.value.set(qf('b08cp', 1.0), qf('b08cf', 0.1), qf('b08ct', 0), 0);
+    }
+    // benny08 round 6 (`b08yarn`, default on the r5b path, `?b08yarn=0` = off): pom-pom as shaded yarn tufts — pointed clumps straight out from
+    // the ball, dark gaps between them, light-violet tips (fur.ts uTuft). QA tuning: b08ys size, b08yp point, b08ysh, b08yt, b08yf
+    if (B08R3 && r6on('b08yarn') && f.mesh.name === 'fur_pom') {
+      f.uniforms.uTuft.value.set(1, qf('b08ys', 0.4), 0, qf('b08ysh', 0.4));
+      f.uniforms.uTuft2.value.set(qf('b08yp', 1.4), qf('b08yf', 0.08), qf('b08yt', 0.25), 1);
+    }
     // benny08 round 3: the fur uniforms reachable from the mesh (Game.ts ?match08=1 Benny tweaks, QA probes); no render effect
     f.mesh.userData.furU = f.uniforms;
   }

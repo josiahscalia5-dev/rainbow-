@@ -658,8 +658,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3903,
-   "sha256": "d2fb7906cc3ddb72b301464b261d67694b8b5804bb49bd5a28f20d66fc153326"
+   "bytes": 3942,
+   "sha256": "0e153ae6aeb81cb484f0fbf0ac2be54b442596b555d8ec4953d5e019355f5fb3"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -669,7 +669,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12006,
-   "sha256": "1b0a4b031f47c0d2f561349457ba24abd08786e753b3eb0fde04c1ac0299a649"
+   "sha256": "852f6c6cd51955c7f107eb2fae7cb55bb615eba7961d63b37e3aa29e19ade1b0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1158,8 +1158,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5170,
-   "sha256": "293e82e55508776792c89f6ad50fd59771806b44f92044b55b54cb9083b38124"
+   "bytes": 1238,
+   "sha256": "2c06195b3c0053640a75b87ebb51a5d4a5eacdde73afbe6246b0b47912879864"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -8983,8 +8983,8 @@
   },
   {
    "path": "src/characters/benny/benny05.ts",
-   "bytes": 21958,
-   "sha256": "cee2a0274f09b9d4687bee60a58a009761c2b736e44935d59a7dc1adf1274ba4"
+   "bytes": 23741,
+   "sha256": "2ac3a19c93d3d3b11ac3b7dacb582c333fbf0e6cba486eb807917d1e2e76eb60"
   },
   {
    "path": "src/characters/benny/build.ts",
@@ -8993,8 +8993,8 @@
   },
   {
    "path": "src/characters/benny/fur.ts",
-   "bytes": 9736,
-   "sha256": "c35c08f76fa2130d9a318349d598c3d4ae157a62b16d2e17a1701bd5ecdbbc20"
+   "bytes": 12764,
+   "sha256": "8f5a0c7eb6a058d357f92b9ca64fafa84683e819737751dc56bf3a023e8d0a39"
   },
   {
    "path": "src/characters/benny/runtime.ts",

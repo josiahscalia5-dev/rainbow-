@@ -35,6 +35,8 @@ export interface FurHandle {
     uClumpScale: { value: number };
     uClumpVar: { value: number };
     uHi: { value: number };
+    uTuft: { value: THREE.Vector4 };
+    uTuft2: { value: THREE.Vector4 };
   };
 }
 
@@ -63,6 +65,13 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
     uClumpScale: { value: 0.2 },
     uClumpVar: { value: 0 },
     uHi: { value: 0 },
+    /** benny08 round 6 (BENNY05 shader only; x = 0 → unchanged): soft layered fur CLUMPS instead of thin strands.
+     *  x on (1), y clump cells per strand cell (smaller = bigger clumps), z comb (clump tips drawn downward / outward),
+     *  w clump shading (dark gaps between clumps, lighter rounded clump bodies) */
+    uTuft: { value: new THREE.Vector4(0, 0.33, 0.6, 0.35) },
+    /** x dome power (<1 rounded clumps, >1 pointed yarn tufts), y fine-strand texture inside a clump, z tip lift toward
+     *  white-pink / light violet, w comb direction (0 = down like shingles, 1 = straight out along the normal) */
+    uTuft2: { value: new THREE.Vector4(0.6, 0.06, 0.12, 0) },
   };
   const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, metalness: 0 });
   material.onBeforeCompile = (shader) => {
@@ -113,6 +122,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         #ifdef BENNY05
         varying vec2 vB05Uv;
         uniform float uClump; uniform float uSoft; uniform float uClumpScale; uniform float uClumpVar; uniform float uHi;
+        uniform vec4 uTuft; uniform vec4 uTuft2;
         #endif
         float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
         vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
@@ -120,6 +130,42 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
       .replace(
         '#include <color_fragment>',
         `#include <color_fragment>
+        #ifdef BENNY05
+        if (uTuft.x > 0.0) {
+          // benny08 round 6: soft layered clumps (painted fur): big jittered cells, each a rounded dome whose outer
+          // layers shrink toward the clump's core and are combed down, so neighbouring clumps overlap like shingles
+          vec3 nb = normalize(vBase);
+          vec3 comb = normalize(mix(vec3(0.0, -1.0, 0.0) - nb * dot(vec3(0.0, -1.0, 0.0), nb) + nb * 0.001, nb, uTuft2.w));
+          vec3 q = vBase * uDensity * uTuft.y - comb * vLayer * uTuft.z;
+          float best = 10.0, second = 10.0; vec3 bc = vec3(0.0);
+          for (int k = 0; k < 8; k++) {
+            vec3 o = vec3(float(k & 1), float((k >> 1) & 1), float((k >> 2) & 1));
+            vec3 c = floor(q - 0.5) + o;
+            vec3 jp = c + 0.5 + (fhash3(c) - 0.5) * 0.9;
+            float d = length(q - jp);
+            if (d < best) { second = best; best = d; bc = c; } else if (d < second) second = d;
+          }
+          float th = fhash(bc * 1.7 + 3.1);
+          float layer = vLayer;
+          float edge = second - best; // 0 on the border between two clumps
+          if (layer > 0.001) {
+            if (vLenMask < 0.05) discard;
+            float clumpH = 0.7 + 0.3 * th;
+            float u = clamp(layer / clumpH, 0.0, 1.0);
+            float radius = 0.95 * pow(max(1.0 - u, 0.0), uTuft2.x);
+            if (layer > clumpH || best > radius) discard;
+          }
+          // gentle shading: darker in the gaps between clumps and at the roots, lighter on the rounded clump bodies
+          float body = smoothstep(0.0, 0.45, edge);
+          float ao = mix(0.62, 1.0, smoothstep(0.0, 0.8, layer));
+          float sh = mix(1.0 - uTuft.w, 1.0, body) * ao * (0.95 + 0.1 * th);
+          // fine strand texture inside a clump (along the comb direction), no discards → soft, not grainy
+          vec3 fq = vBase * uDensity * 2.0;
+          sh *= 1.0 - uTuft2.y + uTuft2.y * 2.0 * fhash(floor(fq - comb * dot(fq, comb)));
+          diffuseColor.rgb *= mix(uRoot, uTip, smoothstep(0.0, 1.0, layer)) * sh;
+          diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * 1.2 + vec3(0.05, 0.04, 0.06), uTuft2.z * smoothstep(0.5, 1.0, layer));
+        } else
+        #endif
         {
           vec3 q = vBase * uDensity;
           // clumping: strands lean toward low-frequency tuft centres as they rise → plush tufts
