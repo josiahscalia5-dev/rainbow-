@@ -15,7 +15,7 @@
   enable of the ported benny05 look needs the lead's OK); provisional fill visible under/in front of Benny when moving
   (fal plate pending approval); tunnel walls deep inside show mirrored tiles instead of ring structure; water is static;
   coins float above the water when seen from the side.
-* **Latest saved commit:** see `git log -1 origin/claude/rainbow-s04-match` (milestone-1 commit "Screen 04 match: milestone 1")
+* **Latest saved commit:** `8c1732ba33fb16582dd13fe1313e2df0ba5c31fc` (milestone 1, pushed + verified with git ls-remote; later autosaves on the same branch)
 * **Next task:** wait for the lead's instructions (proposed: ring-structured tunnel texture for the inside, splash card,
   benny05 look under match04 if approved, fal plate if the user approves the paid edit, water flow).
 * **Status:** under review
