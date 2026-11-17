@@ -709,3 +709,276 @@ Approved — `rainbow-` is created and this session now runs on it. Testing the 
 > +    "claude/rainbow-restore-env-setup-bxn85h",
 > +    "claude/rainbow-account-transfer-npxahd"
 
+### 🤖 Claude — 2026-11-17T02:27:12.232Z
+
+Clean 3-line change. Now forcing a save to prove the push works under the new config, while checking what the interrupted splash/bubble specialist left on disk:
+
+### 🤖 Claude — 2026-11-17T02:27:14.045Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:protect-source-branch 2>&1 | tail -4; python3 -I scripts/autosave-status.py; echo \"remote: $(git ls-remote origin refs/heads/ccr-b0757dec-dj6l1o | cut -f1)  local: $(git rev-parse HEAD)\"; ps aux | grep -c \"[a]utosave-daemon\"", "description": "Run a manual autosave and verify remote matches HEAD", "timeout": 180000}`
+
+### 🤖 Claude — 2026-11-17T02:27:16.531Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/pilot05/full_reference_match && ls; echo \"--- briefs\"; ls briefs; echo \"--- foam/splash dirs\"; ls -d */ ; for d in splash bubbles foam wave2 splash05m bub05; do [ -d \"$d\" ] && { echo \"## $d\"; find $d -newer briefs/foam-bubbles-particles.md -type f | head -20; }; done; git -C /home/user/rainbow- log --since=\"2026-11-17 02:10\" --name-only --format=\"%h %s\" -- src | head -30", "description": "Find wave 2 specialist progress on disk"}`
+
+### 🧑 User — 2026-11-17T02:27:21.042Z
+
+> ↩︎ result: "branch": "ccr-b0757dec-dj6l1o",
+>   "commit": "13aff9f5879537325d1da2d2088e8f2c5d0be3c8",
+>   "duration_s": 6
+> }
+> AUTOSAVE OK | branch ccr-b0757dec-dj6l1o | scheduler daemon | last verified backup 2026-11-17T02:27:14+00:00 (0.1 min ago) | local 13aff9f remote 13aff9f (match) | uncommitted 0
+> remote: 13aff9f5879537325d1da2d2088e8f2c5d0be3c8  local: 13aff9f5879537325d1da2d2088e8f2c5d0be3c8
+> 1
+
+### 🧑 User — 2026-11-17T02:27:21.079Z
+
+> ↩︎ result: 01_APPROVED.png
+> 02_BEFORE.png
+> COORDINATION.md
+> ORDER_USER_2026-11-17.md
+> ORDER_USER_VERBATIM.md
+> before
+> benny
+> briefs
+> coins
+> coordinator
+> env
+> hud
+> masks
+> recovery_s018
+> recovery_s01Av
+> recovery_s01Q4
+> stack_2340
+> --- briefs
+> animation-and-gameplay-engineer.md
+> benny-character-artist.md
+> foam-bubbles-particles.md
+> washer-environment-modeler.md
+> --- foam/splash dirs
+> before/
+> benny/
+> briefs/
+> coins/
+> coordinator/
+> env/
+> hud/
+> masks/
+> recovery_s018/
+> recovery_s01Av/
+> recovery_s01Q4/
+> stack_2340/
+
+### 🤖 Claude — 2026-11-17T02:27:24.826Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/briefs/foam-bubbles-particles.md"}`
+
+### 🧑 User — 2026-11-17T02:27:24.844Z
+
+> ↩︎ result: 1	WAVE 2 LAUNCH (2026-11-17, session 01Q46SCH, branch claude/rainbow-account-transfer-npxahd). The user's order of 2026-11-17 ~01:23 UTC
+> 2	(verbatim: `qa/pilot05/full_reference_match/ORDER_USER_2026-11-17.md`, last section) says: "FOURTH: Complete the splash and bubble
+> 3	specialist work after the current specialists finish ... Preserve the water and foam improvements already achieved. Do not break their
+> 4	appearance while fixing other components." If `qa/pilot05/full_reference_match/splash_bubbles/NOTES.md` already exists, you are a
+> 5	RELAUNCH: read it first and continue from its "Remaining" list; do not redo finished steps.
+> 6	
+> 7	----- ORIGINAL BRIEF -----
+> 8	You are the foam-bubbles-particles specialist for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work).
+> 9	You are executing the user's FINAL MASTER EXECUTION ORDER for Screen 05 ("05 · FLOW INTO THE CURRENT"): make the real playable 3D
+> 10	Screen 05 match the approved image `references/05_flow_into_the_current.png` (864 × 1536) as exactly as technically possible. The
+> 11	approved picture is the ONLY visual target: no redesign, no different artistic interpretation. Do the work, measure, keep only  …[+6697 chars]
+
+### 🤖 Claude — 2026-11-17T02:27:25.746Z
+
+> 🔧 **Bash** `{"command": "grep -n -i -A12 \"remaining\\|left far bend\\|two small\" env/NOTES.md | tail -45; echo \"=== coordinator\"; grep -n -i -B2 -A10 \"projedge05\" coordinator/NOTES.md | head -40", "description": "Read tunnel specialist remaining work and projedge05 notes"}`
+
+### 🧑 User — 2026-11-17T02:27:25.783Z
+
+> ↩︎ result: 104:  Gold region remaining error (e4): 71 % is the camera-held near FRAME at the bottom (y > 1100, 75k px, mean 21.4).
+> 105-* Ride frames `env/move/move_{00,08,17,35}.png` (STACK + env05) vs the same without env05: walls / rings stay solid, no
+> 106-  flat cards; stretched texels at the near screen edges when riding (texels seen at grazing angles from the checkpoint).
+> 107-* Checks (e6 state): default `capture.mjs 05` == `qa/pilot05/current_default_05.png` **0 px**; 06 and 07 STACK vs
+> 108-  STACK+env05 **0 px**; 04 STACK vs STACK+env05 **1,158 px** (max 134, mean 15.9 on the changed px), all inside 04's
+> 109-  window onto the 05 tunnel (x 313–863, y 213–964: the same 3D 05 rings / walls seen from 04; like `projgap05`'s 832 px).
+> 110-  `gameplay-test.mjs --q='<STACK>&env05=1'` → `env/gameplay.json` pass (8/8 checks); `npm run -s test:continuity` OK.
+> 111-* Deliverables so far: `env/before.png` (= recovery_s018/stack/05.png) + `before_*METRICS.json`, `env/new.png` (= e6) +
+> 112-  `new_*METRICS.json`.
+> 113:* **Near gold FRAME (gold region: 71 % of its remaining error was the camera-held bottom frame):** `tools/env05/frame_fit.py`
+> 114-  (new) fits the three frame pieces (annulus sectors in ref …[+4299 chars]
+
+### 🤖 Claude — 2026-11-17T02:27:28.987Z
+
+> 🔧 **Bash** `{"command": "tail -25 env/NOTES.md; echo; ls -t env/work | head -5; find env -newer coordinator/NOTES.md -type f | head; echo \"== benny remaining\"; grep -n -i -A8 \"^## .*remaining\\|Remaining\" benny/NOTES.md | tail -20", "description": "Check tunnel specialist final notes and Benny remaining items"}`
+
+### 🧑 User — 2026-11-17T02:27:29.032Z
+
+> ↩︎ result: * Bottom-right screen corner: ≈20 × 25 px sliver not covered by the frame (wider corner pieces measured worse).
+> * While riding, wall texels that the checkpoint saw at grazing angles (screen edges) stretch (also in STACK).
+> * 04 changes 712 px (its window onto the 05 tunnel).
+> * Not mine and still the largest whole-frame errors: HUD + text, Benny, coins, wake / splash (other specialists).
+> 
+> ## 6. REQUESTS (coordinator)
+> * Far river geometry is NOT changed (knots kept, far rings placed by tunnel coordinate) → no far-water re-bake needed.
+> * A black dotted seam runs along the top of the left foam bank (e.g. x 180–330, y 545–560) in STACK as well (98 dark px
+>   there in STACK, 32 with env05): it comes from the apron / river edge (`proj05Apron.ts`), not from env05.
+> * QA knobs added under env05 only (URL, default values = the r4 state): `e05r0`, `e05r1` (wall right ramp), `e05rr0`, `e05rr1`
+>   (ring right ramp). Nothing to do unless someone wants to re-test the rejected wall variant (`e05r0=-0.7&e05r1=0`).
+> 
+> ## 7. How to redo / continue (the next account relaunches from here)
+> * Cycle (tag T): `node scripts/proj05-tunnel-probe.mjs --q='<STACK>&env05=1' --out=env/work/T --raw=<scratch>/raw_T`;
+>   ` …[+2990 chars]
+
+### 🤖 Claude — 2026-11-17T02:27:31.943Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"chunk\\|165–200\\|325–400\\|wedge\" env/NOTES.md | head; ls -lt --time-style=+%H:%M env/work | head -4; ls -lt --time-style=+%H:%M coordinator/checkpoints | head -5", "description": "Check whether the two leftover tunnel chunks were done"}`
+
+### 🧑 User — 2026-11-17T02:27:31.981Z
+
+> ↩︎ result: total 7560
+> -rw-r--r-- 1 root root 2227283 02:23 side_top.png
+> -rw-r--r-- 1 root root 1038559 02:23 st_top.png
+> drwxr-xr-x 2 root root    4096 02:23 r4
+> total 6648
+> -rw-r--r-- 1 root root 2263523 02:23 cp3_match05_benny_tunnel_done.png
+> -rw-r--r-- 1 root root 2258000 02:23 cp1_match05_hud_coins_done.png
+> -rw-r--r-- 1 root root     438 02:23 cp2_FULL_FRAME_METRICS.json
+> -rw-r--r-- 1 root root    2530 02:23 cp2_REGION_METRICS.json
+
+### 🤖 Claude — 2026-11-17T02:27:47.113Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && ls qa/tools_check/ | tail -5; ls qa/tools_check/blender_restore_s01Av/ 2>/dev/null | head -20; grep -rn \"camera_lock_05\\|tunnel_bake.py\\|lid_blender\" qa/tools_check/*/*.md 2>/dev/null | head -8; find . -name \"*.blend\" -not -path \"./node_modules/*\" | head -12", "description": "Find previous Blender project-script test commands"}`
+
+### 🧑 User — 2026-11-17T02:27:47.177Z
+
+> ↩︎ result: blender_2026-11-16
+> blender_restore_s01Av
+> blender_transfer_s018
+> paddles_BLENDER_EEVEE.png
+> paddles_BLENDER_WORKBENCH.png
+> paddles_CYCLES.png
+> results.json
+> qa/tools_check/blender_2026-11-16/REPORT.md:24:project's Blender tools do (`tools/proj05/lid_blender.py`, `tools/blender/*`).
+> qa/tools_check/blender_transfer_s018/REPORT.md:25:project's tools use (`tools/proj05/lid_blender.py`, `tools/blender/*`).
+> ./qa/worldlabs/05/blender/screen05_layout.blend
+> ./qa/worldlabs/05/pilot/full/import/full05.blend
+> ./qa/worldlabs/05/pilot/draft/import/draft05.blend
+> ./qa/pilot05/full_reference_match/env/lid/lids05.blend
+> ./qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend
+> ./qa/pilot05/wave6/camera_lock/screen05_layout.blend
+> ./qa/pilot05/proj/tunnel/lid/lids05.blend
+> ./qa/pilot05/marble_feas/blender/marble05_projection.blend
+
+### 🤖 Claude — 2026-11-17T02:27:50.605Z
+
+> 🔧 **Bash** `{"command": "ls tools/proj05/ tools/blender/ 2>/dev/null | head -40; find . -name \"camera_lock_05*\" -not -path \"./node_modules/*\"; head -30 tools/proj05/tunnel_bake.py | grep -n -i \"usage\\|argv\\|out\" ", "description": "List project Blender tool scripts and their usage"}`
+
+### 🧑 User — 2026-11-17T02:27:50.651Z
+
+> ↩︎ result: tools/blender/:
+> build_05_river_scene.py
+> camera_lock_05.py
+> import_world_asset.py
+> make_synthetic_tunnel.py
+> marble05_projection.py
+> render_05_proof.py
+> 
+> tools/proj05/:
+> bake.py
+> flow_bake.py
+> frame_bake.py
+> frame_metrics.py
+> lid_blender.py
+> lid_mesh2d.py
+> make_target.py
+> match_metrics.py
+> near_bake.py
+> near_bubbles.json
+> near_fillmask.py
+> near_fillmask_src.png
+> near_metrics.py
+> pad_alpha.py
+> residual.py
+> screen_regions.py
+> tunnel_bake.py
+> tunnel_common.py
+> tunnel_residual.py
+> tunnel_rings.py
+> water_metrics.py
+> ./tools/blender/camera_lock_05.py
+> 7:  ring05.png   the gold band of ring B unwrapped: u = theta / 360, v = 0 at the band's outer (camera-side) edge .. 1 inner.
+> 9:usage: python3 -I tools/proj05/tunnel_bake.py <model_dir with ring_model.json> <out_dir> [correction.npz]"""
+> 17:model_dir, out = sys.argv[1], sys.argv[2]
+> 18:corr_path = sys.argv[3] if len(sys.argv) > 3 else None
+> 19:os.makedirs(out, exist_ok=True)
+
+### 🤖 Claude — 2026-11-17T02:27:53.554Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/blendertest && mkdir -p $S && head -25 tools/blender/camera_lock_05.py | grep -n -i \"usage\\|argv\\|--\\|out\" | head; grep -n \"argv\\|usage\" tools/proj05/lid_blender.py | head -5; ls qa/pilot05/proj/tunnel/*.json qa/pilot05/proj/tunnel/ 2>/dev/null | head -20", "description": "Read camera-lock and paddle script usage"}`
+
+### 🧑 User — 2026-11-17T02:27:53.610Z
+
+> ↩︎ result: 4:    npx vite-node scripts/export-river-05.ts -- --cam=X,Y,Z --look=X,Y,Z --fov=62      (river05_layout.json)
+> 5:    blender -b --python tools/blender/build_05_river_scene.py -- --layout ... --out-dir OUT
+> 6:    blender -b OUT/screen05_layout.blend --python tools/blender/camera_lock_05.py -- \
+> 7:        --camera qa/pilot05/wave6/camera_lock/camera05.json \
+> 8:        --landmarks qa/pilot05/wave6/camera_lock/landmarks.json \
+> 9:        --reference references/05_flow_into_the_current.png --out-dir qa/pilot05/wave6/camera_lock
+> 19:  * renders a Workbench layout pass from Cam05 (transparent film) → camera_lock_render.png;
+> 16:argv = sys.argv[sys.argv.index("--") + 1:]
+> 17:lid_dir, tex_path, crop_s, out_glb = argv[:4]
+> 18:depth = float(argv[4]) if len(argv) > 4 else 0.35
+> qa/pilot05/proj/tunnel/:
+> NOTES.md
+> frame
+> lid
+> model
+> probe
+
+### 🤖 Claude — 2026-11-17T02:28:04.004Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/blendertest && rm -rf $S && mkdir -p $S/camlock $S/lid $S/tb && cp qa/pilot05/wave6/camera_lock/screen05_layout.blend $S/camlock/ && cp -r qa/pilot05/full_reference_match/env/lid/. $S/lid/ && \\\n( blender -b $S/camlock/screen05_layout.blend --python tools/blender/camera_lock_05.py -- --camera qa/pilot05/wave6/camera_lock/camera05.json --landmarks qa/pilot05/wave6/camera_lock/landmarks.json --reference references/05_flow_into_the_current.png --out-dir $S/camlock > $S/camlock.log 2>&1; echo \"camloc …[+741 chars]`
+
+### 🧑 User — 2026-11-17T02:28:17.813Z
+
+> ↩︎ result: lid exit=0
+> 
+> Blender quit
+> sha256sum: /lids05e.glb: No such file or directory
+>       1 978793113ee9433255f396e0a226e82218ab2a61c4687a503a475755aaa014a9
+> camlock exit=0
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+> CAMERA_LOCK_OK {"blend": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/blendertest/camlock/screen05_camera_lock.blend", "render": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/blendertest/camlock/camera_lock_render.png", "markers": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/blendertest/camlock/camera_lock_markers.png", "resolution": [864, 1536], "vfov": 62}
+> tunnel_bake exit=0
+> }
+> atlas 2048 592 ring 2048 64
+> ring05.png
+> tunnel05.json
+> wall05.png
+> [1]-  Done                    S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/blendertest && rm -rf $S && mkdir -p $S/camlock $S/lid $S/tb && cp qa/pilot05 …[+855 chars]
+
+### 🤖 Claude — 2026-11-17T02:28:25.543Z
+
+> 🔧 **Bash** `{"command": "git diff --stat qa/pilot05/proj/tunnel/model/bake_report.json; git diff qa/pilot05/proj/tunnel/model/bake_report.json | grep '^[-+]' | head -8; ls -d /tb /lid /lid.log /tb.log /lids05e.glb 2>/dev/null", "description": "Inspect the accidental report change and stray outputs"}`
+
+### 🧑 User — 2026-11-17T02:28:25.589Z
+
+> ↩︎ result: Exit code 2
+>  qa/pilot05/proj/tunnel/model/bake_report.json | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> --- a/qa/pilot05/proj/tunnel/model/bake_report.json
+> +++ b/qa/pilot05/proj/tunnel/model/bake_report.json
+> - },
+> - "correction": "qa/pilot05/proj/tunnel/model/correction.npz"
+> + }
+> /lid.log
+> /tb
+> /tb.log
+
+### 🤖 Claude — 2026-11-17T02:28:28.706Z
+
+Only my test's side effect (it dropped the `correction` line). Restoring that file, removing my stray outputs, and redoing both tests properly:
+
+### 🤖 Claude — 2026-11-17T02:28:34.114Z
+
+> 🔧 **Bash** `{"command": "git checkout -- qa/pilot05/proj/tunnel/model/bake_report.json && rm -rf /tb /lid.log /tb.log && git status --short | grep -v \"^ M backups/\"; \nS=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/blendertest; mkdir -p $S/model $S/tb2 $S/lid && cp -r qa/pilot05/proj/tunnel/model/. $S/model/ && cp -r qa/pilot05/full_reference_match/env/lid/. $S/lid/\npython3 -I tools/proj05/tunnel_bake.py $S/model $S/tb2 $S/model/correction.npz > $S/tb2.log 2>&1; echo \"tunnel_bake exit=$?\"\nfor f in wall05.png ring05.png; do python3 -I -c \"\nimport sys,numpy as np …[+719 chars]`
+

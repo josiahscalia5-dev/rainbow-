@@ -61,6 +61,5 @@
    0.1,
    359.9
   ]
- },
- "correction": "qa/pilot05/proj/tunnel/model/correction.npz"
+ }
 }
