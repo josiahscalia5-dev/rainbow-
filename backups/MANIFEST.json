@@ -509,7 +509,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9702,
-   "sha256": "ff7444b20ffa2eae255e830d0237f6eeb578741a5171028484ee278cdff21f72"
+   "sha256": "de4162ec296612e8cc9ea119b87c08d2a3e557581554ad25ed9c77b2f8dc7cca"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1015,6 +1015,16 @@
    "path": "qa/glb_validation.txt",
    "bytes": 293,
    "sha256": "82bda80d4f8c2a4ec7d013fd725fc64e2353f76b58250ca1ffacaa7d0db78071"
+  },
+  {
+   "path": "qa/imageblaster/08/NOTES.md",
+   "bytes": 8582,
+   "sha256": "a5a1a0056763bed751a98b8c3b73400d4cc8b12a230ae0c06ae3fb68ef72cd7d"
+  },
+  {
+   "path": "qa/imageblaster/08/image_analysis.json",
+   "bytes": 7888,
+   "sha256": "66a7e11a5364b51246a361491f2be7381de7d8a540291c48e73da232e2faf52f"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
