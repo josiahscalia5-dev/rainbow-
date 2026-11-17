@@ -3283,3 +3283,98 @@ While waiting, let me check how Screen 05's line-B HUD match (`hud05`) was built
 
 > 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; for f in references/[01][0-9]_*.png; do n=$(basename $f | cut -c1-2); python3 -I tools/qa/screen_match.py $f $R/cap/default/$n.png --label=${n}def --json=$R/metrics/${n}def.json | cut -c1-120; done", "description": "Measure the default game on all 11 screens"}`
 
+### 🧑 User — 2026-11-17T20:40:18.786Z
+
+> ↩︎ result: 01def  FULL |d|  65.7 <=20 0.074 SSIM 0.279 | BELOWHUD |d|  64.9 <=20 0.081 | LAYOUT |d|  56.3 <=20 0.076 | mean RGB app
+> 02def  FULL |d|  75.1 <=20 0.050 SSIM 0.199 | BELOWHUD |d|  75.8 <=20 0.051 | LAYOUT |d|  66.1 <=20 0.059 | mean RGB app
+> 03def  FULL |d|  68.0 <=20 0.088 SSIM 0.282 | BELOWHUD |d|  68.1 <=20 0.085 | LAYOUT |d|  59.9 <=20 0.069 | mean RGB app
+> 04def  FULL |d|  74.0 <=20 0.064 SSIM 0.318 | BELOWHUD |d|  76.5 <=20 0.052 | LAYOUT |d|  70.1 <=20 0.047 | mean RGB app
+> 05def  FULL |d|  55.4 <=20 0.185 SSIM 0.231 | BELOWHUD |d|  54.2 <=20 0.194 | LAYOUT |d|  38.4 <=20 0.269 | mean RGB app
+> 06def  FULL |d|  81.6 <=20 0.050 SSIM 0.177 | BELOWHUD |d|  84.3 <=20 0.041 | LAYOUT |d|  70.2 <=20 0.059 | mean RGB app
+> 07def  FULL |d|  74.3 <=20 0.067 SSIM 0.187 | BELOWHUD |d|  75.9 <=20 0.058 | LAYOUT |d|  59.4 <=20 0.085 | mean RGB app
+> 08def  FULL |d|  84.2 <=20 0.040 SSIM 0.204 | BELOWHUD |d|  86.3 <=20 0.034 | LAYOUT |d|  75.9 <=20 0.022 | mean RGB app
+> 09def  FULL |d|  78.3 <=20 0.073 SSIM 0.218 | BELOWHUD |d|  79.5 <=20 0.071 | LAYOUT |d|  69.0 <=20 0.070 | mean RGB app
+> 10def  FULL |d|  79.6 <=20 0.074 SSIM 0.199 | BELOWHUD |d|  80.8 <=20 0.073 | LAYOUT |d|  72.0 <=20 0.072 | mea …[+130 chars]
+
+### 🤖 Claude — 2026-11-17T20:40:27.684Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; python3 -I - <<EOF\nfrom PIL import Image\nimport glob\nR='$R'\nrefs={p.split('/')[-1][:2]:p for p in glob.glob('references/[01][0-9]_*.png')}\nW,H=216,384\nfor grp,ids in (('a',['04','05','06','07','08']),):\n    sheet=Image.new('RGB',(len(ids)*(W+8),2*H+8),(20,8,40))\n    for i,k in enumerate(ids):\n        sheet.paste(Image.open(refs[k]).convert('RGB').resize((W,H)),(i*(W+8),0))\n        sheet.paste(Image.open(f'{R}/cap/default/{k}.png').convert('RGB').resize((W,H)),(i*(W+8),H+8))\n    sheet.sa …[+129 chars]`
+
+### 🧑 User — 2026-11-17T20:40:28.090Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T20:40:30.535Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/inspect/default_a.jpg"}`
+
+### 🧑 User — 2026-11-17T20:40:30.561Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:40:45.055Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; tail -4 $R/cap/done.txt; for d in $R/clips/*/; do echo \"$(basename $d): $(ls $d | grep -c jpg)/151\"; done; grep '^{' $R/clips/log.txt; date -u +%H:%M", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-17T20:40:45.206Z
+
+> ↩︎ result: cap s06 exit=0
+> cap s07 exit=0
+> cap s08b exit=0
+> cap default exit=0
+> 01: 23/151
+> 04: 129/151
+> 20:40
+
+### 🤖 Claude — 2026-11-17T20:40:50.188Z
+
+About 150 of roughly 1,660 frames are done, with two lanes running in parallel. Waiting for the recording to finish:
+
+### 🤖 Claude — 2026-11-17T20:40:52.608Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; until grep -q ALLDONE $R/cap/done.txt 2>/dev/null; do sleep 20; done; grep '^{' $R/clips/log.txt; for d in $R/clips/*/; do echo \"$(basename $d): $(ls $d | grep -c jpg)\"; done", "description": "Wait for all clips to finish recording", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T20:40:52.641Z
+
+> ↩︎ result: Command running in background with ID: b3lknuihd. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/tasks/b3lknuihd.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T20:40:55.669Z
+
+While that runs, a quick look at the two Screen 08 specialists' progress on GitHub:
+
+### 🤖 Claude — 2026-11-17T20:40:57.359Z
+
+> 🔧 **Bash** `{"command": "for b in claude/rainbow-s08-scenery-c5 claude/rainbow-s08-benny08-bake-c5; do timeout 120 git fetch -q origin $b 2>/dev/null; echo \"== $b\"; git log --format='  %h %ci %s' -6 FETCH_HEAD | grep -v \"autosave\" | head -4; git log -1 --format='  newest: %h %ci' FETCH_HEAD; done", "description": "Check specialist branch progress", "timeout": 300000}`
+
+### 🧑 User — 2026-11-17T20:41:12.557Z
+
+> ↩︎ result: == claude/rainbow-s08-scenery-c5
+>   471d2e57 2026-11-17 20:40:12 +0000 S08 scenery r5: m08fill world-anchored drum wall fill from the picture's pipe wall (0 px at approved view)
+>   45b0c439 2026-11-17 20:29:36 +0000 S08 scenery r5: real-texture moving frames for m08bw and m08lane
+>   newest: 471d2e57 2026-11-17 20:40:12 +0000
+> == claude/rainbow-s08-benny08-bake-c5
+>   6d64eeaf 2026-11-17 20:39:30 +0000 Screen 08 Benny round 6: soft layered body-fur clumps (b08clump) + yarn-tuft pom-pom (b08yarn), review_r6 pictures + tests
+>   newest: 6d64eeaf 2026-11-17 20:39:30 +0000
+
+### 🤖 Claude — 2026-11-17T20:41:24.053Z
+
+> 🔧 **Bash** `{"command": "git show 6d64eeaf:qa/match/08/benny08/STATUS.md 2>/dev/null | head -20 | cut -c1-300; git show --stat 6d64eeaf | tail -5", "description": "Read Benny round 6 status"}`
+
+### 🧑 User — 2026-11-17T20:41:24.176Z
+
+> ↩︎ result: # STATUS — Screen 08 Benny (round 5, account 4)
+> 
+> * **Assigned screen:** 08 · Final Spin Chamber (`?match08=1`)
+> * **Assigned specialist:** benny-character-artist (Screen 08 Benny specialist)
+> * **Working branch:** `claude/rainbow-s08-benny08-bake-c4` — started from `2901025fbc24a95e4d8b1dad44d4604fe1e6b39a` (= `-c3` head `c64ff28b` + one autosave)
+> * **Running-session status:** round 5b (user decisions 19:00) done, waiting for the lead
+> * **Latest verified commit:** see the lead message / `git log` (pushed, remote == HEAD verified)
+> * **Completed improvements:** bake; round 2; round 3/3b; round 4 shoulder highlight + lighter pom; round 5 review set; round 5b: r3b base + fuller rounder body wider than the brim, smaller beanie, stubby high arms (`b08full=0` off); taper opt-in `b08shape=1`
+> * **Latest visual measurements:** Benny+splash ≤20: r2 65.7, r3b 65.3, r4 65.4, r5 taper 62.0, **r5b NEW 62.2 %** (visual choice, lower number); scenery 97.3 % unchanged; whole 85.0 %
+> * **Unfinished problems:** pom yarn tufts; large soft painted fur clumps (need a new fur model/bake); pale jagged fur tips at the arm edges (lighting)
+> * **Android:** `builds/rainbow-debug-08benny-2026-11-17-r5b.apk` (r3/r3b …[+773 chars]
+
+### 🤖 Claude — 2026-11-17T20:41:30.848Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; until grep -q ALLDONE $R/cap/done.txt 2>/dev/null; do sleep 20; done; grep '^{' $R/clips/log.txt", "description": "Block until all clips are recorded", "timeout": 1800000}`
+
