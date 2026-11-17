@@ -369,7 +369,21 @@ export async function buildMatch08(): Promise<Match08> {
   add(new THREE.CylinderGeometry(P.r * 0.85, P.r * 0.85, skH, 96, 1, true).translate(P.cx, P.rimBottomY - skH / 2, P.cz), M.plat, 'platform_legs');
   // towel on the platform
   const T = L.towel;
-  add(new THREE.BoxGeometry(T.w, T.h, T.d, 4, 4, 4).translate(T.cx, T.y0 + T.h / 2, T.cz), M.towel, 'towel');
+  if (flag05('m08towel')) {
+    // `&m08towel=1` (r7): the box's top / side faces were visible from the approved viewpoint and carried the door
+    // window painted just above / beside the towel, so a moving camera saw a rectangular slab of door pixels on the
+    // towel. Back corners now lie on the projector rays through the front corners (a frustum away from the viewpoint):
+    // from the approved view only the front face shows (= the painted towel), the door wall behind gets its own pixels.
+    const zF = T.cz + T.d / 2, zB = T.cz - T.d / 2, kB = (zB - VP.z) / (zF - VP.z);
+    const F = (u: number, v: number) => new THREE.Vector3(T.cx - T.w / 2 + T.w * u, T.y0 + T.h * v, zF);
+    const Bk = (u: number, v: number) => F(u, v).sub(VP).multiplyScalar(kB).add(VP);
+    const side = (e: (t: number) => [number, number]) => (t: number, s: number) => F(...e(t)).lerp(Bk(...e(t)), s);
+    add(gridGeo([
+      [8, 8, F], [8, 8, (u, v) => Bk(1 - u, v)],
+      [8, 4, side((t) => [t, 1])], [8, 4, side((t) => [1 - t, 0])],
+      [8, 4, side((t) => [0, 1 - t])], [8, 4, side((t) => [1, t])],
+    ]), M.towel, 'towel');
+  } else add(new THREE.BoxGeometry(T.w, T.h, T.d, 4, 4, 4).translate(T.cx, T.y0 + T.h / 2, T.cz), M.towel, 'towel');
   // four half-dome spouts (flat perforated underside down)
   for (const [k, s] of Object.entries(L.spouts)) {
     const dome = new THREE.SphereGeometry(1, 48, 16, 0, Math.PI * 2, 0, Math.PI / 2);

@@ -416,3 +416,432 @@ Running the debug-colour render of f03 to identify which proxy forms the broken 
 > 08 s_left_steer s 398.018 lat -1.85 stage 08 frames 38
 > 08 s_right_steer s 398.018 lat 1.85 stage 08 frames 38
 
+### 🤖 Claude — 2026-11-17T23:37:53.814Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/sill.png"}`
+
+### 🧑 User — 2026-11-17T23:37:53.995Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T23:37:55.955Z
+
+With `m08sill`, the torn bottom strip at forward 3 u is gone (clean water), and the other shots are unchanged. Proving the approved view next.
+
+### 🤖 Claude — 2026-11-17T23:38:00.020Z
+
+> 🔧 **Bash** `{"command": "B='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1'; P=qa/match/08/scenery/r7/proof; timeout 900 node scripts/capture.mjs 08 \"--q=$B&m08sill=1\" --out=$P/sill 2>&1 | tail -1 | cut -c1-80; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\na=L('$P/seam/08.png'); b=L('$P/sill/08.png'); r=L('references/08_final_spin_chamber.png')\nd=np.abs(a-b).max(2); m=d>0; print('changed',int(m.sum()),'>20',int((d>20).sum()))\nif m.any():\n  ea=np.abs(a-r).mean(2)[m].mean(); eb=np.abs(b-r).mean(2)[m].me …[+360 chars]`
+
+### 🧑 User — 2026-11-17T23:38:10.734Z
+
+> ↩︎ result: 08 → qa/match/08/scenery/r7/proof/sill/08.png {"stage":"08","s":391.427,"y":-1
+> changed 22799 >20 600
+> mean err vs approved on changed px: before 6.78 after 7.99
+> bbox 0 863 1137 1535
+> seam whole-frame within 20 levels 81.05%
+> sill whole-frame within 20 levels 81.04%
+
+### 🤖 Claude — 2026-11-17T23:38:24.009Z
+
+> 🔧 **Bash** `{"command": "P=qa/match/08/scenery/r7/proof; python3 -c \"\nfrom PIL import Image\nW=Image.new('RGB',(864*3+20,400),'white')\nfor i,p in enumerate(['references/08_final_spin_chamber.png','$P/seam/08.png','$P/sill/08.png']): W.paste(Image.open(p).convert('RGB').crop((0,1136,864,1536)),(i*874,0))\nW.resize((W.width//2,200)).save('/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/sill_av.png')\"", "description": "Crop approved-view bottom: approved / seam / sill"}`
+
+### 🧑 User — 2026-11-17T23:38:24.220Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T23:38:26.482Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/sill_av.png"}`
+
+### 🧑 User — 2026-11-17T23:38:26.505Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T23:38:30.213Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/scenery/r7/A1/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-17T23:38:30.270Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T23:38:37.453Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/scenery/r7/A1/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-17T23:38:37.497Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T23:39:19.561Z
+
+> 🔧 **Bash** `{"command": "sed -n 150,170p src/world/match08.ts; python3 -c \"\nimport json; d=json.load(open('assets/textures/match08/proj08.json')); print({k:d[k] for k in d if k in ('towel','platform','camera','proj')} if 'towel' in d else list(d)[:20])\"; grep -n \"L = \\|const L\\b\\|L: \" src/world/match08.ts | head", "description": "Inspect gridGeo and towel layout values"}`
+
+### 🧑 User — 2026-11-17T23:39:19.629Z
+
+> ↩︎ result: }`;
+> 
+> /** several (nu × nv) vertex grids f(u, v) → one indexed geometry (m08arch: fine tessellation for per-vertex pushes) */
+> function gridGeo(parts: [number, number, (u: number, v: number) => THREE.Vector3][]): THREE.BufferGeometry {
+>   const pos: number[] = [], idx: number[] = [];
+>   for (const [nu, nv, f] of parts) {
+>     const b = pos.length / 3;
+>     for (let j = 0; j <= nv; j++) for (let i = 0; i <= nu; i++) { const p = f(i / nu, j / nv); pos.push(p.x, p.y, p.z); }
+>     for (let j = 0; j < nv; j++) for (let i = 0; i < nu; i++) { const a = b + j * (nu + 1) + i, c = a + nu + 1; idx.push(a, c, a + 1, c, c + 1, a + 1); }
+>   }
+>   const g = new THREE.BufferGeometry();
+>   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+>   return g;
+> }
+> 
+> export async function buildMatch08(): Promise<Match08> {
+>   const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
+>   const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_hybrid.png', import.meta.url).href);
+>   plate.colorSpace = THREE.NoColorSpace; // raw display values: the sha …[+1019 chars]
+
+### 🤖 Claude — 2026-11-17T23:39:31.942Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/world/match08.ts", "old_string": "  add(new THREE.BoxGeometry(T.w, T.h, T.d, 4, 4, 4).translate(T.cx, T.y0 + T.h / 2, T.cz), M.towel, 'towel');", "new_string": "  if (flag05('m08towel')) {\n    // `&m08towel=1` (r7): the box's top / side faces were visible from the approved viewpoint and carried the door\n    // window painted just above / beside the towel, so a moving camera saw a rectangular slab of door pixels on the\n    // towel. Back corners now lie on the projector rays through the front corners (a frustum away from the viewpo …[+876 chars]`
+
+### 🧑 User — 2026-11-17T23:39:31.980Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/world/match08.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T23:39:35.447Z
+
+> 🔧 **Bash** `{"command": "grep -n \"side:\" src/world/match08.ts | head -5; npx tsc --noEmit 2>&1 | tail -5; echo tsc=$?", "description": "Check material sides and typecheck"}`
+
+### 🧑 User — 2026-11-17T23:39:37.516Z
+
+> ↩︎ result: 231:    vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
+> 401:    group.children.forEach((o, i) => { (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });
+> 430:      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+> tsc=0
+
+### 🤖 Claude — 2026-11-17T23:39:42.691Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad; B='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1'; SHOTS=s_left_hard,s_right_hard,f10 timeout 900 node $S/audit_sel.mjs 08 qa/match/08/scenery/r7/towel \"$B&m08towel=1\" 2>&1 | grep -v \"^$\" | tail -3; python3 -c \"\nfrom PIL import Image\nW=Image.new('RGB',(3*440,2*330),'white')\nfor i,s in enumerate(['s_left_hard','s_right_hard','f10_forward10u']):\n  for j,d in enumerate(['A1','towel']): W.paste(Image.open(f'qa/match/08/scenery/r7/{d}/{s}.png').convert('RGB'). …[+190 chars]`
+
+### 🧑 User — 2026-11-17T23:40:00.727Z
+
+> ↩︎ result: 08 f10_forward10u s 402.082 lat 0 stage 08 frames 63
+> 08 s_left_hard s 404.035 lat -2.217 stage 08 frames 76
+> 08 s_right_hard s 404.036 lat 2.217 stage 08 frames 76
+
+### 🤖 Claude — 2026-11-17T23:40:02.967Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/towel.png"}`
+
+### 🧑 User — 2026-11-17T23:40:03.006Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T23:40:11.051Z
+
+> 🔧 **Bash** `{"command": "B='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1'; P=qa/match/08/scenery/r7/proof; timeout 900 node scripts/capture.mjs 08 \"--q=$B&m08towel=1\" --out=$P/towel 2>&1 | tail -1 | cut -c1-60; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\na=L('$P/sill/08.png'); b=L('$P/towel/08.png'); r=L('references/08_final_spin_chamber.png')\nd=np.abs(a-b).max(2); m=d>0; print('changed',int(m.sum()),'>20',int((d>20).sum()))\nif m.any():\n  print('mean err on changed px: before %.2f after  …[+314 chars]`
+
+### 🧑 User — 2026-11-17T23:40:22.803Z
+
+> ↩︎ result: 08 → qa/match/08/scenery/r7/proof/towel/08.png {"stage":"0
+> changed 6328 >20 52
+> mean err on changed px: before 5.30 after 4.84
+> bbox 384 574 459 542
+> towel whole-frame within 20 levels 81.05%
+
+### 🤖 Claude — 2026-11-17T23:40:29.379Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,12p scripts/capture.mjs; grep -n \"test:continuity\\|\\\"test\" package.json", "description": "Check capture usage and test scripts"}`
+
+### 🧑 User — 2026-11-17T23:40:29.414Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 19:    "test:cinematic": "node scripts/cinematic-test.mjs"
+
+### 🤖 Claude — 2026-11-17T23:40:38.689Z
+
+> 🔧 **Bash** `{"command": "P=qa/match/08/scenery/r7/proof; R6='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1'; B=\"$R6&m08seam=1&m08sill=1&m08towel=1\"\n{ timeout 2400 node scripts/capture.mjs --out=$P/def_new; timeout 1200 node scripts/capture.mjs 04 05 06 07 \"--q=$B\" --out=$P/leak_new; timeout 1200 node scripts/capture.mjs 04 05 06 07 \"--q=$R6\" --out=$P/leak_r6; cp src/world/match08.ts /tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/match08.new.ts; git show HEAD:src/world/match08.ts > src/world/match08.ts; timeout 2400 node scripts/capture.mjs --out=$P/d …[+361 chars]`
+
+### 🧑 User — 2026-11-17T23:40:38.727Z
+
+> ↩︎ result: Command running in background with ID: bobiyaa5q. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/tasks/bobiyaa5q.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T23:40:46.205Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"scripts/capture.mjs\" ; sleep 1; cat /tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/proofs.log | tail -3; git diff --stat", "description": "Stop background capture and check tree"}`
+
+### 🧑 User — 2026-11-17T23:40:47.310Z
+
+> ↩︎ result: qa/capture_log.json  | 10 +++++-----
+>  src/world/match08.ts | 16 +++++++++++++++-
+>  2 files changed, 20 insertions(+), 6 deletions(-)
+
+### 🤖 Claude — 2026-11-17T23:40:53.066Z
+
+> 🔧 **Bash** `{"command": "git checkout qa/capture_log.json && grep -c \"\" src/world/match08.ts && du -sh --exclude=.git --exclude=node_modules . 2>/dev/null; du -sh src assets public 2>/dev/null; ls", "description": "Confirm my edits intact and check sizes"}`
+
+### 🧑 User — 2026-11-17T23:40:53.151Z
+
+> ↩︎ result: Updated 1 path from the index
+> 443
+> 2.7G	.
+> 928K	src
+> 27M	assets
+> 12K	public
+> CLAUDE.md
+> README_FIRST.md
+> REFERENCE_ORDER.md
+> Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> START_HERE_PASTE_TO_CLAUDE.md
+> TOOL_SETUP_AND_VERIFICATION.md
+> VISUAL_QA_CHECKLIST.md
+> android
+> assets
+> backups
+> builds
+> capacitor.config.ts
+> character_references
+> docs
+> index.html
+> node_modules
+> package-lock.json
+> package.json
+> public
+> qa
+> references
+> screenshots
+> scripts
+> src
+> tools
+> tsconfig.json
+> vite.config.ts
+
+### 🤖 Claude — 2026-11-17T23:40:57.692Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/oldtree && rm -rf $O && mkdir -p $O && cp -r src assets public index.html package.json tsconfig.json vite.config.ts scripts references character_references $O/ && ln -s /home/user/rainbow-/node_modules $O/node_modules && git show HEAD:src/world/match08.ts > $O/src/world/match08.ts && diff <(git show HEAD:src/world/match08.ts) $O/src/world/match08.ts && echo old-ok; grep -rn \"import.meta.glob\\|\\.\\./\\.\\./qa\\|tools/\" src | head -3", "description": "Create isolated copy with old match08.ts"}`
+
+### 🧑 User — 2026-11-17T23:40:57.760Z
+
+> ↩︎ result: old-ok
+> src/characters/types.ts:3:/** What a procedural character builder returns; exported 1:1 to GLB by tools/model-lab. */
+> src/world/match08.ts:4: * camera (tools/match08/fit_proxies.py → assets/textures/match08/proj08.json): inlet pipe, gold arch, chamber walls,
+> src/world/match08.ts:200:  // own wall (no mirrored kaleidoscope); see tools/match08/unwrap08.py and qa/match/08/scenery/NOTES.md
+
+### 🤖 Claude — 2026-11-17T23:41:03.055Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad; P=/home/user/rainbow-/qa/match/08/scenery/r7/proof; R6='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1'; B=\"$R6&m08seam=1&m08sill=1&m08towel=1\"\ncd /home/user/rainbow- && timeout 2400 node scripts/capture.mjs --out=$P/def_new > $S/p1.log 2>&1; git checkout -q qa/capture_log.json\ncd $S/oldtree && timeout 2400 node scripts/capture.mjs --out=$P/def_old > $S/p2.log 2>&1\ncd /home/user/rainbow- && timeout 1200 node scripts/capture.mjs 04 05 06 07 \"--q=$B\" --out=$P/leak_new > $S/p3.log …[+303 chars]`
+
+### 🧑 User — 2026-11-17T23:41:03.089Z
+
+> ↩︎ result: Command running in background with ID: b1q0kx3ta. Output is being written to: /tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/tasks/b1q0kx3ta.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-17T23:41:05.356Z
+
+While those run, checking how the gameplay and continuity tests pick ports so they don't collide.
+
+### 🤖 Claude — 2026-11-17T23:41:06.821Z
+
+> 🔧 **Bash** `{"command": "grep -n \"startVite(\" scripts/capture.mjs scripts/gameplay-test.mjs; grep -n \"argv\\|location.search\\|query\\|RAINBOW_Q\" scripts/gameplay-test.mjs | head; head -20 scripts/continuity-test.ts | grep -n \"match08\\|query\" ", "description": "Check ports and gameplay-test query handling"}`
+
+### 🧑 User — 2026-11-17T23:41:06.856Z
+
+> ↩︎ result: scripts/capture.mjs:24:const vite = await startVite(5201);
+> scripts/gameplay-test.mjs:20:const vite = await startVite(5213);
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 103:if (optQ) result.query = optQ;
+> 107:  console.log(JSON.stringify({ query: optQ, out: f, pass: result.pass, checks: Object.fromEntries(Object.entries(result.checks).map(([k, v]) => [k, v.pass])), plunge: result.plunge, errors }, null, 1));
+
+### 🤖 Claude — 2026-11-17T23:41:09.541Z
+
+> 🔧 **Bash** `{"command": "B='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'; timeout 1800 node scripts/gameplay-test.mjs \"--q=$B\" --out=qa/match/08/scenery/r7/proof/gameplay.json 2>&1 | tail -30", "description": "Gameplay test with the kept switch set", "timeout": 2000000}`
+
+### 🧑 User — 2026-11-17T23:41:17.350Z
+
+> ↩︎ result: {
+>  "query": "match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1",
+>  "out": "qa/match/08/scenery/r7/proof/gameplay.json",
+>  "pass": true,
+>  "checks": {
+>   "pauseFreezes": true,
+>   "continuousTravel": true,
+>   "noCameraCut": true,
+>   "noTeleport": true,
+>   "plunge": true,
+>   "realCoinPickups": true,
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.29999999999956,
+>   "t08": 30.29999999999956,
+>   "yTop": -51.835,
+>   "yBottom": -113.145,
+>   "y08": -113.145,
+>   "travelTimeTopToInlet": 6.6,
+>   "verticalDrop": 61.31
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-17T23:41:19.850Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; d=json.load(open('qa/match/08/scenery/r7/proof/gameplay.json'))\ndef f(o,p=''):\n  if isinstance(o,dict):\n    for k,v in o.items():\n      if any(s in k.lower() for s in ('coin','score','total')): print(p+k, json.dumps(v)[:200])\n      f(v,p+k+'.')\nf(d)\" | head -20", "description": "Extract coin count and score"}`
+
+### 🧑 User — 2026-11-17T23:41:19.901Z
+
+> ↩︎ result: checks.realCoinPickups {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}
+> checks.realCoinPickups.startCoins 1330
+> checks.realCoinPickups.endCoins 2240
+> checks.victory.finalState.coins 2240
+
+### 🤖 Claude — 2026-11-17T23:41:21.118Z
+
+Gameplay 8/8, 91 coins, 2,240, 07→08 drop 61.31 u. Now continuity.
+
+### 🤖 Claude — 2026-11-17T23:41:21.916Z
+
+> 🔧 **Bash** `{"command": "timeout 1200 npm run -s test:continuity 2>&1 | tail -15", "description": "Run continuity test", "timeout": 1300000}`
+
+### 🧑 User — 2026-11-17T23:41:22.994Z
+
+> ↩︎ result: },
+>  "maxStepTangentDeg": 6.241,
+>  "boundaries": [
+>   "01->02 gap=0 dT=0.249 y=-2.4",
+>   "02->03 gap=-0.0001 dT=0.673 y=-11.87",
+>   "03->04 gap=0 dT=0.932 y=-19.41",
+>   "04->05 gap=0 dT=0.246 y=-40.63",
+>   "05->06 gap=0 dT=0.281 y=-43.35",
+>   "06->07 gap=0 dT=0.114 y=-48.53",
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+>   "08->09 gap=0 dT=0.12 y=-113.59",
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+
+### 🤖 Claude — 2026-11-17T23:41:24.760Z
+
+> 🔧 **Bash** `{"command": "timeout 1200 npm run -s test:continuity 2>&1 | grep -in \"pass\\|fail\\|drop\" | head", "description": "Check continuity pass/fail line", "timeout": 1300000}`
+
+### 🧑 User — 2026-11-17T23:41:25.619Z
+
+> ↩︎ result: 22:  "verticalDrop": 61.19,
+
+### 🤖 Claude — 2026-11-17T23:41:28.611Z
+
+> 🔧 **Bash** `{"command": "timeout 1200 npm run -s test:continuity > /tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/cont.log 2>&1; echo exit=$?; head -25 /tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/cont.log", "description": "Continuity exit code and header", "timeout": 1300000}`
+
+### 🧑 User — 2026-11-17T23:41:29.372Z
+
+> ↩︎ result: exit=0
+> {
+>  "ok": true,
+>  "length": 435.2,
+>  "plunge": {
+>   "entryAltitude07": -48.53,
+>   "plungeTop": {
+>    "s": 310.41,
+>    "y": -52.31
+>   },
+>   "plungeMid": {
+>    "s": 349.77,
+>    "y": -83.56
+>   },
+>   "plungeBottom": {
+>    "s": 389.13,
+>    "y": -113.49
+>   },
+>   "inlet08": {
+>    "s": 389.22,
+>    "y": -113.5
+>   },
+>   "verticalDrop": 61.19,
+>   "minPitchDeg": -70
+>  },
+>  "maxStepTangentDeg": 6.241,
+
+### 🤖 Claude — 2026-11-17T23:41:30.874Z
+
+Continuity: ok, 07→08 drop 61.19 u, all boundaries gap 0. Waiting for the default/leak captures.
+
+### 🤖 Claude — 2026-11-17T23:41:32.566Z
+
+> 🔧 **Bash** `{"command": "sleep 5; S=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad; ls /home/user/rainbow-/qa/match/08/scenery/r7/proof/; tail -1 $S/p*.log 2>/dev/null | cut -c1-60", "description": "Check capture progress"}`
+
+### 🧑 User — 2026-11-17T23:41:37.607Z
+
+> ↩︎ result: def_new
+> gameplay.json
+> noswim
+> seam
+> sill
+> swim
+> swim2
+> towel
+
+### 🤖 Claude — 2026-11-17T23:41:40.222Z
+
+While the proof captures run, starting the final 12-shot NEW audit (different port).
+
+### 🤖 Claude — 2026-11-17T23:41:41.730Z
+
+> 🔧 **Bash** `{"command": "B='match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1'; timeout 2400 node tools/lead_r6/motion_audit.mjs 08 qa/match/08/scenery/r7/NEW \"$B\" 2>&1 | tail -12", "description": "Final 12-shot moving audit with kept switches", "timeout": 2600000}`
+
+### 🧑 User — 2026-11-17T23:42:53.206Z
+
+> ↩︎ result: 08 a00_approved_view s 392.063 lat 0 stage 08 frames 0
+> 08 f03_forward3u s 395.011 lat 0 stage 08 frames 19
+> 08 f06_forward6u s 398.019 lat 0 stage 08 frames 38
+> 08 f10_forward10u s 401.976 lat 0 stage 08 frames 63
+> 08 f20_forward20u s 411.952 lat 0 stage 09 frames 126
+> 08 s_left_steer s 398.019 lat -1.85 stage 08 frames 38
+> 08 s_right_steer s 398.018 lat 1.85 stage 08 frames 38
+> 08 s_left_hard s 404.035 lat -2.217 stage 08 frames 76
+> 08 s_right_hard s 404.068 lat 2.22 stage 08 frames 76
+> 08 t33_through_screen s 396.276 lat 0.005 stage 08 frames 27
+> 08 t66_through_screen s 400.57 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 404.352 lat 0 stage 08 frames 78
+
+### 🤖 Claude — 2026-11-17T23:42:59.843Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/08/scenery && ls r6/R1_restored | head -20; python3 -c \"\nfrom PIL import Image\nimport os\nS='/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/'\nn=['f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_steer','s_left_hard','s_right_hard','t95_through_screen']\nW=Image.new('RGB',(8*220,2*400),'white')\nfor i,s in enumerate(n):\n  for j,d in enumerate(['r6/R1_restored','r7/NEW']):\n    p=f'{d}/{s}.png'\n    if os.path.exists(p): W.paste(Image.open(p).convert('RGB').resize((216,384)),(i*220,j*400)) …[+77 chars]`
+
+### 🧑 User — 2026-11-17T23:43:00.661Z
+
+> ↩︎ result: a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion.json
+> s_left_hard.png
+> s_left_steer.png
+> s_right_hard.png
+> s_right_steer.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+
+### 🤖 Claude — 2026-11-17T23:43:02.896Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/before_new.png"}`
+
+### 🧑 User — 2026-11-17T23:43:03.073Z
+
+> ↩︎ result: [image]
+
