@@ -1345,3 +1345,412 @@ Three specialists are relaunched and working. Saving a checkpoint, then I'll giv
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:specialists-relaunched --quiet >/dev/null 2>&1; python3 -I scripts/autosave-status.py | head -2; B=$(git branch --show-current); echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/$B | cut -f1)\"; tail -3 backups/BACKUP_LOG.md | cut -c1-220; date -u '+now %Y-%m-%d %H:%M UTC'", "description": "Save a checkpoint and confirm the GitHub commit matches", "timeout": 900000}`
 
+### 🧑 User — 2026-11-17T00:51:20.028Z
+
+> ↩︎ result: AUTOSAVE OK | branch claude/rainbow-restore-env-setup-bxn85h | scheduler daemon | last verified backup 2026-11-17T00:51:12+00:00 (0.1 min ago) | local 4a19ed9 remote 4a19ed9 (match) | uncommitted 0
+> local  4a19ed94c22beb7bd4addb3c15463e2b1fd475e9
+> remote 4a19ed94c22beb7bd4addb3c15463e2b1fd475e9
+> | 2026-11-17T00:47:00+00:00 | bootstrap:full | committed+pushed | `a630c5567f74` | `claude/rainbow-restore-env-setup-bxn85h` | 9 | True |  |
+> | 2026-11-17T00:49:28+00:00 | manual:restore-checkpoint | committed+pushed | `43d4061f37fb` | `claude/rainbow-restore-env-setup-bxn85h` | 9 | True |  |
+> | 2026-11-17T00:50:08+00:00 | daemon | committed+pushed | `da1cfbdf2fb0` | `claude/rainbow-restore-env-setup-bxn85h` | 4 | True |  |
+> now 2026-11-17 00:51 UTC
+
+### 🤖 Claude — 2026-11-17T00:51:35.861Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+## Startup confirmation
+
+**Recovered work**
+- Source branch `ccr-694bda6a-x58ntq`, newest commit `4e140fa68307d51e4a9aca0b6ff9a2cf78595d6b`. Your reported `f4dc72b` is its direct parent; one autosave ran after it.
+- New working branch: `claude/rainbow-restore-env-setup-bxn85h`.
+- Latest checkpoint `4a19ed94c22beb7bd4addb3c15463e2b1fd475e9`; GitHub and local match. The source branch is untouched and now protected.
+
+**One thing went against your instruction before my first turn:** the old session-start hook merged `ccr-8c4acadc-iybw0n` on its own. I checked what came in: one autosave commit touching three backup log files and no game file. I left it in place rather than rewrite history.
+
+**Tools tested this session**
+
+| Item | Result |
+|---|---|
+| Blender 5.3.0 | Runs headless; Python `bpy` loads |
+| Rendering | Workbench, EEVEE and Cycles each produced a real render |
+| Blender files and models | 7/7 `.blend` open; `benny.glb`, `rainbow_girl.glb` and `lids05.glb` (six paddles) import |
+| GLB export and re-import | 6/6 paddles geometry-identical |
+| Camera, texture and geometry scripts | All three ran; the paddle script rebuilt `lids05.glb` byte-for-byte |
+| Blender MCP | **Not connected.** This cloud container has no desktop Blender, so the add-on socket cannot exist. Blender command line + Python is the working route. |
+| GitHub MCP | Connected; listed all 26 branches |
+| Playwright MCP | Connected; WebGL2 confirmed in Chromium 153 |
+| Android and build tools | SDK 34, build-tools 34.0.0, Java 21 and Capacitor 6.2.3 are present; no APK built yet this session |
+| Other tools | Node 22, TypeScript 5.9.3, Vite 5.4.21, Three.js 0.170, NumPy, Pillow, OpenCV, SciPy and FFmpeg present; TypeScript check and continuity test pass |
+| Git LFS | 34/34 real files, all confirmed on GitHub |
+| Approved images | 13/13 unchanged |
+| Chrome DevTools MCP | Not available in this environment; not needed |
+
+**Specialists**
+- All ten definitions are present and unchanged.
+- Relaunched from their saved notes, not from the start: tunnel and gold rings, Benny and his hat, HUD and coins. They are running now.
+- Splash/bubbles and Android are held until their turn.
+
+**Session start from now on**
+- It no longer merges anything automatically. I tested this on a deliberately old copy: it reported the newer branches and left the checkout unchanged. Merging now happens only with an explicit `--resume`.
+- It now also runs the full Blender render and GLB check, verifies the ten specialists, lists every MCP connection, and reports any login you need to renew.
+- This account's cloud environment already installs Blender and the Android SDK before Claude starts.
+- On a future new account that environment will not exist. Blender needs `download.blender.org` allowed there; the bootstrap now says so if the install fails.
+
+**Autosave**
+- Running every five minutes on the new branch; four verified pushes so far this session.
+
+**Needs your authorization**
+- Nothing required.
+- Optional: World Labs Atlas and the Marble API are not reachable from this environment. They are not needed for Screen 05, so I did not ask for a key or spend credits.
+
+## Screen 05 at recovery
+
+- The default build and your protected BEFORE both reproduce their saved pictures exactly (0 pixels differ).
+- `?match05=1` loads with every specialist part on. Whole screen: 57.0 % of pixels within tolerance of your approved image, up from 51.6 % for the previous stack.
+- HUD went from 13 % to 66 %; coins from 18 % to 30 %.
+- Two areas got worse with the unfinished tunnel work: side paddles (60 % → 39 %) and the distant tunnel (45 % → 34 %). The tunnel specialist's first job is to fix those.
+
+I'm continuing with the coordinator work while the specialists run.
+
+### 🤖 Claude — 2026-11-17T00:51:37.286Z
+
+> 🔧 **Bash** `{"command": "tail -30 qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md | cut -c1-200; echo ...; grep -n \"^## \\|^# \\|^PART\\|^Part\" qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md | head -50", "description": "Look at how the user's order file is structured before recording today's message"}`
+
+### 🧑 User — 2026-11-17T00:51:37.347Z
+
+> ↩︎ result: 1. Which parts now match my approved image closely.
+> 2. Which parts remain different.
+> 3. What you changed in the actual game.
+> 4. What the whole-screen measurements say.
+> 5. Whether Screen 05 still functions properly.
+> 6. Whether the default and original working versions remain protected.
+> 7. The exact files and full-size previews I should inspect.
+> 
+> DO NOT MERGE OR PROMOTE ANYTHING UNTIL I APPROVE THE FINAL VISUAL.
+> 
+> ---
+> 
+> FINAL INSTRUCTION
+> 
+> This is my final, authoritative specification for Screen 05.
+> 
+> I do not want another generic plan, another unnecessary software recommendation, another Marble reconstruction, or another series of questions about whether I want stricter instructions.
+> 
+> I WANT THE ACTUAL EXISTING GAME SCENE MODIFIED UNTIL IT REPRODUCES MY APPROVED SCREEN 05 AS FAITHFULLY AS POSSIBLE.
+> 
+> Take responsibility for the detailed comparison. Do not expect me to repeatedly point out the same mismatches.
+> 
+> Use my approved artwork as the source of truth.
+> 
+> Make actual changes, verify the improvements, and present full-size evidence.
+> 
+> The completed result must be recognizable as MY EXACT APPROVED SCREEN 05—not Claudia's artistic interpretation of it.
+> 
+> EXECUTE THIS INSTRUCTION. DO THE WO …[+1108 chars]
+
+### 🤖 Claude — 2026-11-17T00:51:44.000Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md", "offset": 623, "limit": 160}`
+
+### 🧑 User — 2026-11-17T00:51:44.019Z
+
+> ↩︎ result: 623	PART 15 — EXECUTION ORDER
+> 624	
+> 625	Carry out the corrections in this order:
+> 626	
+> 627	PHASE A — COMPLETE VISUAL AUDIT
+> 628	
+> 629	Take the approved artwork and latest game render at the exact same 864 × 1536 resolution, camera, seed, checkpoint and rendering conditions.
+> 630	
+> 631	Produce a comprehensive discrepancy report covering every major object and effect described above.
+> 632	
+> 633	Identify which 3–5 mismatches create the largest visible whole-screen differences.
+> 634	
+> 635	Do not stop at the audit. Immediately use it to guide implementation.
+> 636	
+> 637	PHASE B — GOLDEN RINGS AND PURPLE TUNNEL
+> 638	
+> 639	Correct gold materials, purple metal, rings, perforations, side fittings, reflections, geometry appearance and tunnel depth.
+> 640	
+> 641	Preserve the improved water.
+> 642	
+> 643	PHASE C — FOREGROUND RING AND WATER EDGES
+> 644	
+> 645	Correct the front ring's visible silhouette only if it improves the full picture.
+> 646	
+> 647	Preserve the improved reference-projected water and far-bank foam.
+> 648	
+> 649	Remove visible seams and problematic occlusions.
+> 650	
+> 651	PHASE D — BENNY AND SPLASH
+> 652	
+> 653	Match the character silhouette, knit detail, hat, pom-pom, fur, body position and water wake.
+> 654	
+> 655	PHAS …[+4198 chars]
+
+### 🤖 Claude — 2026-11-17T00:51:44.775Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md", "offset": 854, "limit": 30}`
+
+### 🧑 User — 2026-11-17T00:51:44.797Z
+
+> ↩︎ result: 854	PART 22 — EXACT FINAL DELIVERABLES
+> 855	
+> 856	Save your work under a clearly named folder such as:
+> 857	
+> 858	"qa/pilot05/full_reference_match/"
+> 859	
+> 860	Include:
+> 861	
+> 862	- "01_APPROVED.png"
+> 863	- "02_BEFORE.png"
+> 864	- "03_NEW.png"
+> 865	- "04_DIFFERENCE.png"
+> 866	- "05_OVERLAY.png"
+> 867	- "VISUAL_AUDIT.md"
+> 868	- "REGION_METRICS.json"
+> 869	- "FULL_FRAME_METRICS.json"
+> 870	- "REMAINING_DIFFERENCES.md"
+> 871	- "IMPLEMENTATION_NOTES.md"
+> 872	- Moving-game frames and clips
+> 873	- Gameplay and continuity test results
+> 874	- GitHub branch, full commit SHA and remote-push verification
+> 875	
+> 876	Use the actual real-game capture script, "scripts/capture.mjs", and the existing projection/QA utilities as appropriate.
+> 877	
+> 878	Do not create fabricated before-and-after images.
+> 879	
+> 880	Give me a clear final report explaining:
+> 881	
+> 882	1. Which parts now match my approved image closely.
+> 883	2. Which parts remain different.
+
+### 🤖 Claude — 2026-11-17T00:52:00.802Z
+
+> 🔧 **Bash** `{"command": "wc -l tools/match05/*.py && sed -n 1,40p tools/match05/metrics.py && ls qa/pilot05/full_reference_match/masks | head -20 && ls qa/pilot05/full_reference_match/before qa/pilot05/full_reference_match/stack_2340 && grep -rn \"04_DIFFERENCE\\|05_OVERLAY\" tools scripts --include=*.py --include=*.mjs -l | head", "description": "Inspect the existing whole-screen metrics tool and masks"}`
+
+### 🧑 User — 2026-11-17T00:52:00.873Z
+
+> ↩︎ result: 55 tools/match05/metrics.py
+>    99 tools/match05/regions.py
+>   154 total
+> """Screen 05 full reference match — whole-frame and per-region comparison of a REAL game capture with the APPROVED image.
+> Masks: qa/pilot05/full_reference_match/masks/region_index.png (tools/match05/regions.py; every pixel in exactly one region).
+> Per region and for the whole frame: pixels, mean |dRGB| (0-255, mean over channels), share within 10 / 20 levels,
+> luminance SSIM (Gaussian sigma 1.5), mean signed RGB (capture - approved: colour contamination).
+> These are pixel statistics, NOT a universal "visual similarity percentage"; each number is reported next to its mask.
+> usage: python3 -I tools/match05/metrics.py <capture.png> <out_prefix> [--proof <before.png>]
+>   -> <out_prefix>REGION_METRICS.json, <out_prefix>FULL_FRAME_METRICS.json
+>   --proof also writes 04_DIFFERENCE.png and 05_OVERLAY.png next to the prefix"""
+> import json, sys, os
+> import numpy as np
+> from PIL import Image, ImageDraw
+> from scipy.ndimage import gaussian_filter
+> M = "qa/pilot05/full_reference_match/masks"
+> cap, pre = sys.argv[1], sys.argv[2]
+> ap = np.asarray(Image.open("references/05_flow_into_the_current.png").convert("RGB"), float)
+> c = np.asarray(Im …[+2317 chars]
+
+### 🤖 Claude — 2026-11-17T00:52:06.585Z
+
+> 🔧 **Bash** `{"command": "grep -ln \"ccr-694bda6a-x58ntq\" *.md backups/*.md backups/*.json docs/*.md 2>/dev/null; echo ---; sed -n 1,40p backups/START_NEW_CLAUDE_ACCOUNT.md | cut -c1-260; echo ---; python3 -I -c \"\nimport json;d=json.load(open('backups/TOOL_MANIFEST.json'));print(list(d.keys()));print(json.dumps(d.get('tools',{}).get('blender'),indent=1)[:600]);print(json.dumps(d.get('mcp_servers', d.get('mcp')),indent=1)[:1500])\"", "description": "Find the handoff documents that name the newest branch and inspect the tool manifest"}`
+
+### 🧑 User — 2026-11-17T00:52:06.654Z
+
+> ↩︎ result: CLAUDE.md
+> backups/AGENTS_STATUS.md
+> backups/BACKUP_LOG.md
+> backups/BOOTSTRAP_REPORT.md
+> backups/CLAUDE_ACCOUNT_TRANSFER.md
+> backups/CONVERSATION_INDEX.md
+> backups/HANDOFF_NEW_ACCOUNT.md
+> backups/START_NEW_CLAUDE_ACCOUNT.md
+> backups/autosave.config.json
+> ---
+> # Paste this into Claude Code on the next Claude account
+> 
+> > **NEWEST (2026-11-17, session 018Sg3AU): use `backups/HANDOFF_NEW_ACCOUNT.md` instead of this page** — branch
+> > `ccr-694bda6a-x58ntq`, paste-ready prompt, and the old-default-branch trap. The text below is from an older account.
+> 
+> 
+> (Updated 2026-11-16 ~16:00 UTC, during the Screen 05 water-projection experiment.)
+> 
+> ## Before you paste (one-time, on the new account — these never travel through GitHub)
+> 1. claude.ai → connect **GitHub** to the new Claude account and install the **Claude GitHub App** on the private repo
+>    `josiahscalia5-dev/rainbow-` (https://github.com/josiahscalia5-dev/rainbow-).
+> 2. Enable the **playwright** plugin if it is not already on. Optional: Settings → Connectors → **World Labs Atlas**
+>    (only for new World Labs tasks; the game does not need it).
+> 3. Start a Claude Code cloud session on `josiahscalia5-dev/rainbow-`; pick branch
+>    **`claude/rainbow-05-wate …[+3875 chars]
+
+### 🤖 Claude — 2026-11-17T00:52:07.903Z
+
+Now the handoff documents, so a future session or account restores from this branch without the old trap.
+
+### 🤖 Claude — 2026-11-17T00:52:56.451Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'PYEOF'\nimport pathlib, json, os\n# ------------------------------------------------------------------ HANDOFF_NEW_ACCOUNT.md: new top section\np = pathlib.Path('backups/HANDOFF_NEW_ACCOUNT.md'); old = p.read_text()\nnew_top = \"\"\"# RAINBOW — new-account handoff (rewritten 2026-11-17 ~00:55 UTC by session 01AvQv6S)\n\n**Branch to recover: `claude/rainbow-restore-env-setup-bxn85h`** on `josiahscalia5-dev/rainbow-`. Take its NEWEST commit\n(`git ls-remote origin refs/heads/claude/rainbow-restore-env-setup-bxn85h`): the five-minute autosave keeps pushing until\nthe  …[+12877 chars]`
+
+### 🧑 User — 2026-11-17T00:53:01.951Z
+
+> ↩︎ result: ok
+> # RAINBOW — new-account handoff (rewritten 2026-11-17 ~00:55 UTC by session 01AvQv6S)
+> 
+> **Branch to recover: `claude/rainbow-restore-env-setup-bxn85h`** on `josiahscalia5-dev/rainbow-`. Take its NEWEST commit
+> (`git ls-remote origin refs/heads/claude/rainbow-restore-env-setup-bxn85h`): the five-minute autosave keeps pushing until
+> the container closes. It was started from `ccr-694bda6a-x58ntq` @ `4e140fa` (previous account; PROTECTED now).
+> tsc exit 0
+
+### 🤖 Claude — 2026-11-17T00:53:15.119Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad && python3 -I - <<EOF\nimport numpy as np, json\nfrom PIL import Image\nfrom scipy.ndimage import label\nM=\"qa/pilot05/full_reference_match/masks\"\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\"),float)\nc=np.asarray(Image.open(\"$S/cap/match05/05.png\").convert(\"RGB\"),float)\nidx=np.asarray(Image.open(f\"{M}/region_index.png\"))\nnames={v[\"id\"]:k for k,v in json.load(open(f\"{M}/regions.json\"))[\"regions\"].items()}\nd=np.abs(c-ap).mean(-1)\nwid=[i for …[+1217 chars]`
+
+### 🧑 User — 2026-11-17T00:53:16.503Z
+
+> ↩︎ result: water px 480736 bad(>20) 53146 11.1%
+>  rows  400- 541: water px   5017 bad   2425 (48.3%)  left-third     0 mid  2106 right   319
+>  rows  542- 683: water px  54311 bad   4651 ( 8.6%)  left-third   482 mid  2753 right  1416
+>  rows  684- 825: water px  81432 bad   6107 ( 7.5%)  left-third    55 mid  5804 right   248
+>  rows  826- 967: water px  78484 bad  14576 (18.6%)  left-third  1779 mid  8105 right  4692
+>  rows  968-1109: water px  63046 bad   3999 ( 6.3%)  left-third  1920 mid   171 right  1908
+>  rows 1110-1251: water px  39581 bad    820 ( 2.1%)  left-third   645 mid     0 right   175
+>  rows 1252-1393: water px  87450 bad   4489 ( 5.1%)  left-third  2512 mid    17 right  1960
+>  rows 1394-1535: water px  71415 bad  16079 (22.5%)  left-third  8205 mid  2629 right  5245
+> largest connected bad blobs (px, bbox x0-x1,y0-y1, mean err, signed rgb):
+>    17809 (np.int64(461), np.int64(649), np.int64(760), np.int64(1009)) 60.7 [np.float64(59.0), np.float64(-49.0), np.float64(-14.0)]
+>    8689 (np.int64(59), np.int64(327), np.int64(1329), np.int64(1535)) 83.4 [np.float64(122.0), np.float64(12.0), np.float64(-60.0)]
+>    5921 (np.int64(336), np.int64(769), np.int64(1430), np.int64(1535)) 56.1 [np.float64( …[+966 chars]
+
+### 🤖 Claude — 2026-11-17T00:53:22.463Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad/all_bad.png"}`
+
+### 🧑 User — 2026-11-17T00:53:22.539Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:53:32.914Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\na=Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\"); m=Image.open(\"$S/cap/match05/05.png\").convert(\"RGB\"); s=Image.open(\"$S/cap/stack/05.png\").convert(\"RGB\")\nbox=(120,720,760,1300)\nw=box[2]-box[0]; h=box[3]-box[1]\nout=Image.new(\"RGB\",(w*3+20,h),(0,0,0))\nfor i,im in enumerate((a,s,m)): out.paste(im.crop(box),(i*(w+10),0))\nout.save(\"$S/benny_crop_approved_stack_match05.png\"); print(out.size)\nEOF", "description": "M …[+75 chars]`
+
+### 🧑 User — 2026-11-17T00:53:33.321Z
+
+> ↩︎ result: (1940, 580)
+
+### 🤖 Claude — 2026-11-17T00:53:34.092Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad/benny_crop_approved_stack_match05.png"}`
+
+### 🧑 User — 2026-11-17T00:53:34.134Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:53:52.434Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uRider\\|riderPos\\|uWake\\|bowWave\\|uBow\\|ripple\" src/vfx/waterRibbon.ts | head -40; echo ----; grep -n \"class \\|export function\\|new THREE.Mesh\\|RingGeometry\\|CircleGeometry\\|PlaneGeometry\\|on05(\" src/vfx/riderSplash.ts | head -40; wc -l src/vfx/riderSplash.ts src/vfx/waterRibbon.ts src/vfx/proj05Apron.ts", "description": "Search the water and splash code for the effect that distorts the water around Benny"}`
+
+### 🧑 User — 2026-11-17T00:53:52.479Z
+
+> ↩︎ result: 8: * reflection, specular glints, cellular soap-foam fringe, Benny ripple rings + V-wake, the five
+> 175: *               a tileable ripple normal / height map (the three.js Water2 technique, without its render passes) —
+> 176: *               animated ripples, glossy highlights and the Marble panorama's reflection follow the S-curves.
+> 182: *  `?silk05=1`  WATER MATERIAL: the user found river05 "too grainy" — one broad ripple octave on a longer tile, the fine
+> 183: *               brushed cores / ripple crests / second flare set mostly removed, highlights and panorama reflections
+> 386:// W11 (?flow05=1): flow map from the river's curves + tileable ripple map (flow05.ts), Marble panorama reflection
+> 818:  // flowing band edges (the advected strand texture). 05: only a soft travelling ripple, so the band
+> 1006:    // ---- foreground ripple crests: pixel-thin lines bowed upstream around the core, in short
+> 1007:    // segments, so the near water reads as moving glossy ripples, not soft horizontal bars
+> 1062:    // ---- W11 flow map: the local flow of the river, baked from its own curves (flow05.ts), carries the ripple map
+> 1063:    // downstream in two cross-faded phases (three.js Water2). The r …[+1447 chars]
+
+### 🤖 Claude — 2026-11-17T00:54:03.075Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad && python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\na=Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\"); b=Image.open(\"qa/pilot05/full_reference_match/02_BEFORE.png\").convert(\"RGB\"); s=Image.open(\"$S/cap/stack/05.png\").convert(\"RGB\")\nbox=(120,720,760,1300)\nw=box[2]-box[0]; h=box[3]-box[1]\nout=Image.new(\"RGB\",(w*3+20,h),(0,0,0))\nfor i,im in enumerate((a,b,s)): out.paste(im.crop(box),(i*(w+10),0))\nout.save(\"$S/benny_crop_approved_before_stack.png\" …[+923 chars]`
+
+### 🧑 User — 2026-11-17T00:54:03.830Z
+
+> ↩︎ result: BEFORE proj05 water px in box 178729 bad 27495 | whole water bad 69120
+> STACK water px in box 178729 bad 26505 | whole water bad 56206
+> match05 water px in box 178729 bad 25391 | whole water bad 53146
+> 216: * `?proj05=1&projfar05=1` (2026-11-16 late, tools/proj05/bake.py … far): FAR-RIVER FIX. The exact layer E and the far
+> 222:export const PROJFAR05: boolean = PROJ05 && on05('projfar05');
+> 224: * `?proj05=1&projfar05=1&projgap05=1` (2026-11-17, session 018Sg3AU; on with `?match05=1`): the exact layer E from
+> 227: * dark torn stripes across the river. Needs projfar05 (far1 F + LUT).
+> 229:export const PROJGAP05: boolean = PROJFAR05 && on05('projgap05');
+> 423:// ?projnear05=1 (2026-11-16, tools/proj05/near_bake.py): the HIGH-RESOLUTION near tile T2 (≈110 texels per unit
+> 431:// how far ?projnear05=1 is engaged: 0 within 0.5 u of the locked checkpoint (the locked picture is the original
+> 470:    // ?projnear05=1: where the exact layer would be magnified, the 24-texel near layer and the old tile hand over to
+> 1455:        // ?projnear05=1: the hand-over to the crisp tile must not follow the WAVES. The per-pixel Jacobian above swings
+> 1494:      // ?projnear05=1: the crisp tile carries its own appr …[+1124 chars]
+
+### 🤖 Claude — 2026-11-17T00:54:04.207Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad/benny_crop_approved_before_stack.png"}`
+
+### 🧑 User — 2026-11-17T00:54:04.254Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:54:18.767Z
+
+Looking into a visible mismatch I found in the water right around Benny (a lens-like disc where the approved picture has clean cyan water) while the specialists work on their parts.
+
+### 🤖 Claude — 2026-11-17T00:54:19.607Z
+
+> 🔧 **Bash** `{"command": "sed -n 1396,1500p src/vfx/waterRibbon.ts | cut -c1-240", "description": "Read the water shader section that draws effects around Benny"}`
+
+### 🧑 User — 2026-11-17T00:54:19.655Z
+
+> ↩︎ result: vec3 foamCol = mix(uFoam * 1.15, uFoamLav * 0.85, smoothstep(0.25, 0.75, c));
+>     col = mix(col, foamCol, edge * smoothstep(0.05, 0.4, c + edge * 0.3));
+>   }
+>   col = mix(col, uFoamLav * 0.92, vSkirt);
+>   float cutC = cells(vec2(u * vHalfW * 4.0, s * 3.6));
+>   col = mix(col, mix(uFoam * 1.2, uFoamLav * 0.8, smoothstep(0.2, 0.7, cutC)), cutFoam);
+> 
+>   // ---- Benny: ripple rings and a V wake on the surface ----
+>   // (the 3D splash crown, spray fan and foam belong to riderSplash/spray/foam; here the water
+>   // around and behind him stays glossy electric cyan as in ref 05.) There is deliberately NO white
+>   // contact band at the waterline: the old contact -> uFoam mix drew a white elliptical rim that the
+>   // fur fringe turned into the jagged "splash artifact" under Benny (wave-3 correction 7). Only a
+>   // faint cyan brightening marks the waterline.
+>   if (uBenny.z > 0.0) {
+>     float du = lat - uBenny.y;
+>     float dv = s - uBenny.x;
+>     float rb = uBennyR;
+>     float d = length(vec2(du, dv));
+>     if (d < rb * 8.0) {
+>       float k = uBenny.z;
+>       float rr = max(0.0, d - rb * 0.92);
+>       float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothste …[+5019 chars]
+
+### 🤖 Claude — 2026-11-17T00:54:27.785Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad && STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' && (time node scripts/capture.mjs 05 --q=\"$STACK&projdbg05=1\" --out=$S/cap/dbg) 2>&1 | grep -E \"real|error|Error\" ; git checkout -q qa/capture_log.json; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('$S/cap/dbg/05.png').convert('RGB'); im.crop((120,720,760,1300)).save('$S/dbg_crop.png'); im.resize((432,768)).save('$S/dbg_small.png')\"", "description": "Capture the water layer d …[+85 chars]`
+
+### 🤖 Claude — 2026-11-17T00:54:28.951Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c85b9efb-7963-5a97-9c4e-da811e450f6b/scratchpad/dbg_crop.png"}`
+
+### 🧑 User — 2026-11-17T00:54:41.673Z
+
+> ↩︎ result: real	0m13.553s
+
+### 🧑 User — 2026-11-17T00:54:41.688Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T00:54:52.373Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-17T00:54:52.416Z
+
+And also, can you try to see if Blender or something or whatever can make my pink character very, very almost 100% identical to my pink character? So they look exactly like my approved screen does.
+Make sure you save everything to my GitHub repository.
+
+### 🤖 Claude — 2026-11-17T00:54:52.887Z
+
+You've hit your 5-hour limit · resets 5:30am (UTC)
+

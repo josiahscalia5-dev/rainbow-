@@ -372,3 +372,115 @@ FINAL MESSAGE TO ME (the coordinator): measured before → after numbers for the
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T00:52:25.828Z
+
+> 🔧 **Bash** `{"command": "(npx tsc --noEmit -p . ; echo \"tsc rc=$?\") 2>&1 | tail -5; ps aux | grep -E \"capture|probe|vite|chrom\" | grep -v grep | awk '{print $2, $11, $12, $13, $14, $15}' | head -20; sed -n 1,80p scripts/lib/pw.mjs", "description": "Type-check project and list running render processes"}`
+
+### 🤖 Claude — 2026-11-17T00:52:27.303Z
+
+> 🔧 **Bash** `{"command": "grep -n \"bloom\\|Bloom\" src/game/Game.ts | head -30; grep -n \"userData.fur\\|fur:\" src/characters/benny/build.ts | head -20; grep -n \"PROJ05_INVERSE\" -A 40 src/vfx/waterRibbon.ts | head -80", "description": "Check bloom on stage 05, fur defaults, inverse chain"}`
+
+### 🧑 User — 2026-11-17T00:52:29.063Z
+
+> ↩︎ result: tsc rc=0
+> 2578 /opt/pw-browsers/chromium --no-sandbox --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling
+> 2581 /opt/pw-browsers/chromium-1243/chrome-linux64/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/root/.config/google-chrome-for-testing/Crash Reports
+> 2583 /opt/pw-browsers/chromium-1243/chrome-linux64/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/root/.config/google-chrome-for-testing/Crash Reports
+> 2586 /opt/pw-browsers/chromium-1243/chrome-linux64/chrome --type=zygote --no-zygote-sandbox --no-sandbox --headless
+> 2587 /opt/pw-browsers/chromium-1243/chrome-linux64/chrome --type=zygote --no-sandbox --headless --crashpad-handler-pid=0
+> 2606 /opt/pw-browsers/chromium-1243/chrome-linux64/chrome --type=gpu-process --no-sandbox --disable-dev-shm-usage --disable-breakpad
+> 2609 /opt/pw-browsers/chromium-1243/chrome-linux64/chrome --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none
+> 2629 /opt/pw-browsers/chromium-1243/chrome-linux64/chrome --type=utility --utility-sub-type=storage.moj …[+5040 chars]
+
+### 🧑 User — 2026-11-17T00:52:29.094Z
+
+> ↩︎ result: 14:import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+> 62:  // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
+> 63:  // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear
+> 69:  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', glow05 ? 1.0 : 0.2), qn('bloomR', glow05 ? 0.4 : 0.35), qn('bloomT', glow05 ? 2.6 : 0.94));
+> 76:  const useBloom = qs.get('bloom') !== '0';
+> 77:  if (useBloom) composer.addPass(bloom);
+> 86:    bloom.resolution.set(w / 2, h / 2);
+> 523:  // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the
+> 525:  const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
+> 526:  const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
+> 529:  // own glow, and the bloom pass only adds a pink veil over the pure cyan (measured: +10 red on the water) — so the bloom
+> 535:      bloom.strength = bloomBase.s * (1 - w);
+> 536:      bloom.enabled = bloom.strength > 0.002;
+> 540:      bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
+>  …[+4032 chars]
+
+### 🤖 Claude — 2026-11-17T00:52:33.821Z
+
+> 🔧 **Bash** `{"command": "P=qa/pilot05/full_reference_match/benny/work/probe && printf \"window.__bennyQA.b05.calib(0.4); Q.composer.render(); return 'calC';\\n\" > $P/calC.shot.js && STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' && time node qa/pilot05/full_reference_match/benny/work/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=qa/pilot05/full_reference_match/benny/work/b1 $P/shot0.shot.js $P/info.js $P/uv.js $P/calA.shot.js $P/calB.shot.js $P/calC.shot.js $P/restore.shot.js 2>&1 | tail -20", "description": "Run Benny bake probe session b1", "t …[+16 chars]`
+
+### 🧑 User — 2026-11-17T00:53:05.714Z
+
+> ↩︎ result: console: [benny05] missing baked map brim.png
+> console: [benny05] missing baked map crown.png
+> console: [benny05] missing baked map brim_n.png
+> console: [benny05] missing baked map crown_n.png
+> console: [benny05] missing baked map pom.png
+> console: [benny05] missing baked map armL.png
+> console: [benny05] missing baked map armR.png
+> console: [benny05] missing baked map body.png
+> loaded 4.185
+> shot0.shot.js null
+> info.js {"body":{"px":[420.1,1030.5],"w":[1.514,-41.2,-74.734]},"hat":{"px":[425.3,1035.5],"w":[1.543,-41.226,-74.727]},"pom":{"px":[427.3,844.6],"w":[1.556,-40.12,-74.754]},"hat_star":{"px":[517.9,949.4],"w":[2.039,-40.519,-74.3]},"armL":{"px":[293.7,1043],"w":[0.807,-41.287,-74.721]},"armR":{"px":[548.8,1039.7],"w":[2.226,-41.23,-74.717]},"eyes":{"px":[420.1,1030.5],"w":[1.514,-41.2,-74.734]},"bodyUp":[-0.038,0.967,-0.253],"bodyFwd":[0.013,-0.253,-0.967],"bodyRight":[-0.999,-0.04,-0.003],"camFwd":[-0.05,-0.261,-0.964],"camRight":[0.999,-0.002,-0.052],"camUp":[-0.011,0.965,-0.261],"cam":[1.92,-37.943,-68.281],"fov":62,"rootScale":[1,1,1],"bodyLocalQ":[0.1069,-0.0008,-0.0073,0.9942],"hatLocal":[-0.028,-0.028,0],"pxPerUnit":180.4}
+> uv.js {"saveAs":"uv.f32"}
+> calA.shot.js "calA"
+> calB.shot …[+112 chars]
+
+### 🤖 Claude — 2026-11-17T00:53:17.629Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/b05/an1.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny/work')\nimport numpy as np\nfrom PIL import Image\nfrom bake import inv_chain, img, LUM\nfrom geom import load_uv\nfrom parts import approved_parts\nrun='qa/pilot05/full_reference_match/benny/work/b1'\nuvf=load_uv(f'{run}/uv.f32'); ids=np.rint(uvf[...,2]).astype(int); ids[np.abs(uvf[...,2]-ids)>0.01]=0\nLa,Lb,Lc=[inv_chain(img(f'{run}/cal{k}.png')) for k in 'ABC']\nE=(Lb-La)/0.4; S=La-0.2*E\npred=0.4*E+S\nnames={1: …[+1409 chars]`
+
+### 🧑 User — 2026-11-17T00:53:20.691Z
+
+> ↩︎ result: body   px  40651 u 0.521..0.999 (p5 0.603 p95 0.918) v 0.113..0.586 layer mean 0.45  E med [1.357 1.035 1.312] S med [0.042 0.028 0.037] lin-err [0.0479 0.0239 0.0336] Lc mean [0.658 0.468 0.616]
+> crown  px  19628 u 0.227..0.779 (p5 0.328 p95 0.689) v 0.076..0.915 layer mean 0.00  E med [0.985 1.095 1.057] S med [0.488 0.347 0.4  ] lin-err [0.166  0.1385 0.1603] Lc mean [1.043 0.923 0.991]
+> brim   px  13305 u 0.224..0.798 (p5 0.344 p95 0.680) v 0.008..0.975 layer mean 0.00  E med [1.244 1.085 1.286] S med [0.231 0.114 0.168] lin-err [0.128  0.0839 0.1187] Lc mean [0.883 0.673 0.845]
+> pom    px  12760 u 0.015..1.000 (p5 0.587 p95 0.930) v 0.251..0.996 layer mean 0.41  E med [1.337 1.106 1.299] S med [0.068 0.039 0.051] lin-err [0.0704 0.0459 0.0561] Lc mean [0.728 0.558 0.676]
+> star   px   2529 u -0.185..0.207 (p5 -0.123 p95 0.142) v -0.128..1.016 layer mean 0.00  E med [0.828 0.955 1.263] S med [0.518 0.265 0.202] lin-err [0.106  0.0761 0.0962] Lc mean [0.966 0.724 0.811]
+> armL   px   1864 u 0.350..0.847 (p5 0.424 p95 0.771) v 0.096..0.781 layer mean 0.37  E med [1.368 1.204 1.309] S med [0.062 0.043 0.05 ] lin-err [0.0679 0.0471 0.0557] Lc mean [0.722 0.584 0.678]
+> armR   px   2092 u 0. …[+1361 chars]
+
+### 🤖 Claude — 2026-11-17T00:53:35.019Z
+
+> 🔧 **Bash** `{"command": "grep -n \"emissive\\|sheen\\|roughness\\|metalness\\|envMapIntensity\" src/characters/benny/build.ts | head -40; grep -n \"emissive\\|envMapIntensity\\|traverse\" src/game/Game.ts | head -20; python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nrun='/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/b1'\nfor k in ['shot0','calA','calC','calB']:\n    a=np.asarray(Image.open(f'{run}/{k}.png').convert('RGB')).astype(int)\n    for nm,(x,y) in dict(crownW=(424,905),crownP=(424,930),cuff=(424,1005),pom=(428,840),body=(424,1100),bodyTop=(424,1045),star=(517,950)). …[+286 chars]`
+
+### 🧑 User — 2026-11-17T00:53:35.696Z
+
+> ↩︎ result: 176:  const bodyMat = std({ color: C.pinkSkin, roughness: 0.92, metalness: 0 });
+> 226:  const eyeMatHappy = std({ map: eyeTexture('happy'), roughness: 0.12, metalness: 0 });
+> 227:  const eyeMatDizzy = std({ map: eyeTexture('dizzy'), roughness: 0.12, metalness: 0 });
+> 228:  const lashMat = std({ color: '#241036', roughness: 0.5 });
+> 253:  const blushMat = std({ map: blushTexture(), transparent: true, depthWrite: false, roughness: 0.8 });
+> 260:  const nose = named(new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 8), std({ color: '#7d2550', roughness: 0.35 })), 'nose');
+> 273:        std({ map: mouthTexture(kind), alphaTest: 0.5, roughness: 0.4, side: THREE.DoubleSide }),
+> 282:  const armMat = std({ color: C.pinkSkin, roughness: 0.92 });
+> 300:      new THREE.Mesh(new THREE.CircleGeometry(0.07, 24), std({ map: palmTex, roughness: 0.6 })),
+> 322:    const sole = named(new THREE.Mesh(new THREE.CircleGeometry(0.165, 28), std({ map: footTex, roughness: 0.55 })), side > 0 ? 'soleL' : 'soleR');
+> 341:  const brimMat = std({ color: '#7868a0', map: brimTex.map, normalMap: brimTex.normalMap, normalScale: new THREE.Vector2(1.25, 1.25), roughness: 0.86 });
+> 370:  const crownMat = std({ color: '#eae6d6', map:  …[+1263 chars]
+
+### 🤖 Claude — 2026-11-17T00:53:51.217Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/b05/calA_crop.png"}`
+
+### 🧑 User — 2026-11-17T00:53:51.240Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:53:51.555Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/b05/uvvis.png"}`
+
+### 🧑 User — 2026-11-17T00:53:51.584Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T00:54:52.375Z
+
+[Request interrupted by user]
+

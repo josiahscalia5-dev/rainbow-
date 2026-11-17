@@ -1,7 +1,8 @@
 # Paste this into Claude Code on the next Claude account
 
-> **NEWEST (2026-11-17, session 018Sg3AU): use `backups/HANDOFF_NEW_ACCOUNT.md` instead of this page** — branch
-> `ccr-694bda6a-x58ntq`, paste-ready prompt, and the old-default-branch trap. The text below is from an older account.
+> **NEWEST (2026-11-17, session 01AvQv6S): use `backups/HANDOFF_NEW_ACCOUNT.md` instead of this page** — branch
+> `claude/rainbow-restore-env-setup-bxn85h`, three start steps, what a new account must reconnect. Since 2026-11-17 the
+> SessionStart hook never merges branches (the text below, from an older account, still describes the old auto-merge).
 
 
 (Updated 2026-11-16 ~16:00 UTC, during the Screen 05 water-projection experiment.)

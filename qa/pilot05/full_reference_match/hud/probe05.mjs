@@ -80,11 +80,27 @@ try {
         return out;
       }, targets);
     }
+    if (opt.vis) {
+      // coin visibility: what does the camera ray through each on-screen coin centre hit first? (coins = InstancedMesh)
+      info.coinVis = await page.evaluate(() => {
+        const R = window.__rainbow; const W = 864, H = 1536;
+        return R.coinScreen().map((c) => {
+          const hits = R.probe((c.x / W) * 2 - 1, 1 - (c.y / H) * 2);
+          return { ...c, first: hits[0]?.obj ?? null, d0: hits[0]?.d ?? null, hits: hits.map((h) => `${h.obj}@${h.d}`) };
+        });
+      });
+    }
     info.errors = errors;
     writeFileSync(`${OUT}/${tag}.json`, JSON.stringify(info, null, 1));
     await page.evaluate(() => { document.getElementById('hud').style.visibility = 'hidden'; });
     await page.waitForTimeout(100);
     await page.screenshot({ path: `${OUT}/${tag}_nohud.png` });
+    if (opt.vis) {
+      // the same frame without the coin mesh (QA only): the difference to _nohud.png = the coin pixels really drawn
+      await page.evaluate(() => { const R = window.__rainbow; R.qa3d().scene.getObjectByName('coins').visible = false; R.drawList(); });
+      await page.waitForTimeout(100);
+      await page.screenshot({ path: `${OUT}/${tag}_nohud_nocoins.png` });
+    }
     console.log(tag, '→', `${OUT}/${tag}.png`, 'coins', info.coinsText, 'errors', errors.length);
     await page.close();
   }

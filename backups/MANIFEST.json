@@ -583,8 +583,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11179,
-   "sha256": "f8e093c4544adc0e0656309838b0a513fff84f2528f444f118254fad87f967ca"
+   "bytes": 11180,
+   "sha256": "c611dab71df2f48d4c8efeb48efbe1b9aa7a89957ec847b35759eaf92ba450d5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -593,13 +593,13 @@
   },
   {
    "path": "backups/HANDOFF_NEW_ACCOUNT.md",
-   "bytes": 6036,
-   "sha256": "c7e2a8b66d1268f0a02c3bf3c2b460a6a9b1af7bbea2bc0587f3f7b65ae8a353"
+   "bytes": 11508,
+   "sha256": "bef9cfc0f5128d2b601361bf81870954f9a6e2e2c2ed3f3a17ec484a5e16b835"
   },
   {
    "path": "backups/MCP_SETUP.md",
-   "bytes": 7240,
-   "sha256": "decc1b02c62920e62191fca97ff674cdcd7a51498c5988b579f3e62b18758e5c"
+   "bytes": 9064,
+   "sha256": "c20eff5063d6ccfea939fda1db364606b3bd7f26e89f379c65aac6906e90aac2"
   },
   {
    "path": "backups/RECOVERY.md",
@@ -608,13 +608,13 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 6874,
-   "sha256": "f7c49b57120f67eb077041953f54549c2df7491887c8876bf99abf6154bee865"
+   "bytes": 6994,
+   "sha256": "a4c8091d44a970ff06f271f633d6fddeb50776cd31dc2ddaedaf8c4dadd91b57"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
-   "bytes": 17557,
-   "sha256": "d2183d6ea7a80eb32ce23ac63886d216b0490a7b6883edfd7bffca90a85306bb"
+   "bytes": 19398,
+   "sha256": "f15f76fb0f7089b7b4bc266fb833db8ad2b43514d70afe9b080e494a241423b3"
   },
   {
    "path": "backups/autosave.config.json",
@@ -1362,6 +1362,11 @@
    "sha256": "8c7a9a90f926df38ebef1792a822dd55ced739638da1c8163a9c856f71c0de25"
   },
   {
+   "path": "qa/pilot05/full_reference_match/ORDER_USER_2026-11-17.md",
+   "bytes": 2357,
+   "sha256": "74e3fe135c1550b83cc0835f1012803df8af9850d0ed671c9dd47661f9bacb31"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md",
    "bytes": 31323,
    "sha256": "3df36f29da952e40d3137b98136b85690953cfd55a936dcd3841c40974eb4a35"
@@ -1415,6 +1420,36 @@
    "path": "qa/pilot05/full_reference_match/benny/cap/hide/05.png",
    "bytes": 2180494,
    "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b1/calA.png",
+   "bytes": 2202525,
+   "sha256": "9c583c36036249c2c64cc60d4b3120d98ca1fc0123be869719f6c811fcbe956a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b1/calB.png",
+   "bytes": 2172830,
+   "sha256": "1f7090c86fdd7504ca976c735cfb821e6054ca49628c41b61eb34752cddd1c8b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b1/calC.png",
+   "bytes": 2195203,
+   "sha256": "7b9a59c32ec0b5b8c4e83b51fc068e41b050653701a59a821ac8a16aaccf205e"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b1/restore.png",
+   "bytes": 2180915,
+   "sha256": "5cca7adb590d265ad2da17286b6288d9ef2d9891d2c5b1471737a7c0fb3b6128"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b1/shot0.png",
+   "bytes": 2180915,
+   "sha256": "5cca7adb590d265ad2da17286b6288d9ef2d9891d2c5b1471737a7c0fb3b6128"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/b1/uv.f32",
+   "bytes": 3379200,
+   "sha256": "9f897330995c303ca9e2cd5d347e7d65daec778cae02a05b6487203f70487760"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/bake.py",
@@ -1475,6 +1510,11 @@
    "path": "qa/pilot05/full_reference_match/benny/work/probe/calB.shot.js",
    "bytes": 69,
    "sha256": "f5287c40270bc1456822bd3ac7c3b50e669f54757dc3b0fe1815e2ef19a3356f"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/probe/calC.shot.js",
+   "bytes": 69,
+   "sha256": "7ea7fce0ba41e0d6d6354928fb2d611e1cd69aab08aa98de7d0e63f34287dd21"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/probe/info.js",
@@ -1877,6 +1917,16 @@
    "sha256": "d9f70f39731246687d15509575f79288a1951935a8a478911664c9a9d0c87baf"
   },
   {
+   "path": "qa/pilot05/full_reference_match/env/work/e2/idviz.png",
+   "bytes": 1272228,
+   "sha256": "a3cc2acc404e236baa50811f793169dabe94aa6eb58e7c72e1a3a68fac72aa1c"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/e2/tunnel.json",
+   "bytes": 5020,
+   "sha256": "7b73a4a49757d3c9149f98b3ef462178b802d525a8f89f311e61e2a27c8496af"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/env/work/edges.png",
    "bytes": 1157688,
    "sha256": "dcc251bc618511f05dca04af7de5dabdbb5b24f878c27536a05b9458d265ea0b"
@@ -1905,6 +1955,11 @@
    "path": "qa/pilot05/full_reference_match/env/work/rings_e1.json",
    "bytes": 3333,
    "sha256": "95f03b916591d66235a7cda9ba584d2fb146a878815c4bc8593c17c7969e1308"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/rings_e2.json",
+   "bytes": 3336,
+   "sha256": "4e1fc459251f76d0d19e0ae25769654b67decd3038083dbefcf162f3c868090e"
   },
   {
    "path": "qa/pilot05/full_reference_match/env/work/rm_overlay.png",
@@ -1953,8 +2008,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/hud/probe05.mjs",
-   "bytes": 6730,
-   "sha256": "58046ae1787530ab2168ca91432f013e0e49de079cbb890dbb27c723fbef7913"
+   "bytes": 7634,
+   "sha256": "dfc8b123c69dfc407c7a50ead1dc60442434b6392dd2925a3a619f6e9b83b532"
   },
   {
    "path": "qa/pilot05/full_reference_match/masks/benny_and_hat.png",
@@ -8745,6 +8800,11 @@
    "path": "tools/env05/err_by_surface.py",
    "bytes": 1726,
    "sha256": "e46a38b660ddf5adcd0c53b46bfd8009b4a041a879bec7babc98fc3e3e3357d6"
+  },
+  {
+   "path": "tools/env05/idviz.py",
+   "bytes": 3294,
+   "sha256": "4c7ed4ef96671b84ddf1f73205b1b971253f5f578689a205c052eb8831fc90a6"
   },
   {
    "path": "tools/env05/proj_bake.py",

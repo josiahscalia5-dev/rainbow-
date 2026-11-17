@@ -1,4 +1,66 @@
-# RAINBOW — new-account handoff (written 2026-11-17 ~00:25 UTC by session 018Sg3AU)
+# RAINBOW — new-account handoff (rewritten 2026-11-17 ~00:55 UTC by session 01AvQv6S)
+
+**Branch to recover: `claude/rainbow-restore-env-setup-bxn85h`** on `josiahscalia5-dev/rainbow-`. Take its NEWEST commit
+(`git ls-remote origin refs/heads/claude/rainbow-restore-env-setup-bxn85h`): the five-minute autosave keeps pushing until
+the container closes. It was started from `ccr-694bda6a-x58ntq` @ `4e140fa` (previous account; PROTECTED now).
+
+## Start of a new session / account — 3 steps
+1. **Check where you are.** `git branch --show-current; git log --oneline -1`. The SessionStart summary
+   ("RAINBOW SESSION START") is in your context. Since 2026-11-17 the hook **never merges**; it lists newer branches.
+   * It says `nothing newer on GitHub` → you are on the newest work. Go to step 2.
+   * It says `THIS CHECKOUT IS BEHIND <branch>` or you see no summary at all (the GitHub default branch
+     `ccr-6f431adf-7h0m8y` is the first account's OLD version without any bootstrap) → move the session branch to the
+     newest work (the session branch then holds only commits that are already on GitHub, so nothing is lost):
+     ```bash
+     cd /home/user/rainbow-
+     git status --short                                   # must be empty; if not, stop and look first
+     git fetch origin claude/rainbow-restore-env-setup-bxn85h
+     git checkout -B "$(git branch --show-current)" FETCH_HEAD
+     ```
+   Tip for the user: start the cloud session ON the newest branch (branch picker), or make it the GitHub default branch
+   (GitHub → Settings → Branches) — then this step is never needed.
+2. `bash scripts/claude-bootstrap.sh --skip-resume` (≈ 25 s when the tools exist; installs what is missing): LFS, 13
+   references, 10 specialists, npm, Python libs, Playwright + WebGL2, Blender 5.3.0 + real render / GLB check
+   (`scripts/verify-blender.py`), Android SDK 34, MCP list, tests, autosave. Report: `backups/BOOTSTRAP_REPORT.md`.
+3. Edit `backups/autosave.config.json`: `branch` = the new session branch, `commit_trailer` = your attribution lines,
+   add the previous session branch to `protected_branches`, extend `branch_history_note`. Then
+   `python3 scripts/rainbow-autosave.py --reason manual:start` and confirm `git ls-remote` == `git rev-parse HEAD`.
+Never merge `codex/*` or other branches unless the user asks (`bash scripts/claude-bootstrap.sh --resume` is the only
+merge path and is on request only). Never force-push, reset or delete.
+
+## What a new ACCOUNT must reconnect (nothing of this travels through GitHub)
+* GitHub connection + Claude GitHub App on the repository (required; if you can read the repo it works).
+* `playwright` plugin (required; `claude mcp list` → connected).
+* **Cloud environment.** On the account of session 01AvQv6S a personal environment `rainbow-` exists: hosts
+  `download.blender.org`, `dl.google.com`, `api.atlas.worldlabs.ai`, package managers + MCP servers allowed, and a setup
+  script that installs Blender 5.3.0 + Android SDK 34 before Claude starts (so Blender is "present" at session start).
+  A NEW account has no such environment: without `download.blender.org` the Blender install fails. Then propose one
+  (`create_environment`, personal, those hosts, setup script = `scripts/cloud-env-setup.sh`; the user approves a card).
+* Optional, NOT needed for Screen 05: World Labs Atlas connector sign-in; Marble API key (host `api.worldlabs.ai` is not
+  allowed on this environment → the free check reports a NETWORK error, which is not a key problem; ask with
+  `request_credential` only if the user wants new World Labs work). Blender MCP needs a desktop Blender: not possible in
+  the cloud container, never report it as connected — Blender CLI + Python is the tested integration.
+
+## Verified in session 01AvQv6S (2026-11-17 00:40–00:50 UTC, all actually run)
+Blender 5.3.0: bpy, Workbench / EEVEE / Cycles renders, 7/7 `.blend`, `benny.glb` 27 meshes, `rainbow_girl.glb` 165,
+`lids05.glb` 6 paddles, GLB export → import 6/6 geometry-identical (`qa/tools_check/blender_restore_s01Av/`);
+`tools/proj05/lid_blender.py` rebuilt `lids05.glb` byte-identically; `tools/blender/camera_lock_05.py` and
+`tools/proj05/tunnel_bake.py` ran. GitHub MCP `list_branches` (26 branches) + verified pushes; Playwright MCP navigate +
+WebGL2 (ANGLE / SwiftShader, Chromium 153); Node 22.23.4, npm 10.9.9, TypeScript 5.9.3, Vite 5.4.21, Three.js 0.170.0,
+Capacitor 6.2.3, Android SDK 34 + build-tools 34.0.0 + adb, Java 21, Git LFS 3.4.1 (34/34 real + on GitHub LFS), Python
+3.13 numpy 2.5.3 / Pillow 12.3.0 / OpenCV 5.0.0 / SciPy 1.18.1, ffmpeg 6.1.1; tsc + continuity OK. Not built this
+session: the Android APK (last step of Screen 05).
+
+## Screen 05 — where everything stands
+`qa/pilot05/full_reference_match/COORDINATION.md`, NEWEST section ("RESUMED 2026-11-17 ~01:00 UTC — NEW ACCOUNT"):
+recovery numbers, who is running, what is next. Specialists never survive a session: relaunch the ones in
+`backups/AGENTS_STATUS.json` → `running_now` from `qa/pilot05/full_reference_match/briefs/<agent>.md` + their `NOTES.md`
+("Remaining"), never from scratch. Target = `references/05_flow_into_the_current.png` (the user uploaded it again on
+2026-11-17: pixel-identical; words in `qa/pilot05/full_reference_match/ORDER_USER_2026-11-17.md`). Nothing is promoted to
+the default build until the user approves the picture; default and the protected BEFORE must stay pixel-identical.
+
+---
+# OLDER HANDOFF (session 018Sg3AU, 2026-11-17 ~00:25 UTC) — kept for history; its branch is now protected
 
 **Branch to recover: `ccr-694bda6a-x58ntq`** on `josiahscalia5-dev/rainbow-`. Take its NEWEST commit
 (`git ls-remote origin refs/heads/ccr-694bda6a-x58ntq`): the five-minute autosave kept pushing until this session's
