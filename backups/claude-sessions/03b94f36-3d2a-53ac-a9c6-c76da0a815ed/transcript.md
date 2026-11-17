@@ -7037,3 +7037,108 @@ My priorities are:
 
 I approve the reconstruction METHOD, but I want to personally approve the final Screen 08 before we move on.
 
+### 🤖 Claude — 2026-11-17T14:26:53.327Z
+
+Your approval of the reconstruction method is recorded, and Screen 08 stays open until you approve the final result. Working on Benny now; the scenery, camera and geometry stay untouched.
+
+First, a read-only look at what the Screen 05 Benny work on `ccr-b0757dec-dj6l1o` actually contains, without merging anything:
+
+### 🤖 Claude — 2026-11-17T14:26:55.236Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin ccr-b0757dec-dj6l1o 2>/dev/null; B=origin/ccr-b0757dec-dj6l1o; echo \"line B tip: $(git rev-parse --short $B)\"; git show $B:src/characters/benny/benny05.ts | sed -n 1,30p | cut -c1-170; git show $B:qa/pilot05/full_reference_match/benny/NOTES.md | grep -i -E \"approach|bake|uv|projection|result|remaining|switch\" | head -12 | cut -c1-200", "description": "Inspect line B's Benny work read-only"}`
+
+### 🧑 User — 2026-11-17T14:27:07.106Z
+
+> ↩︎ result: line B tip: 99ab17b
+> /**
+>  * Screen 05 FULL REFERENCE MATCH — Benny (`?benny05=1`, or the master `?match05=1`; qa/pilot05/full_reference_match/benny/).
+>  *
+>  * Applied to Benny HIMSELF (every screen sees the same corrected character while the switch is on), on top of the
+>  * unchanged canonical assets/models/benny.glb, rig and clips. Off (default): nothing in this file runs, every material,
+>  * geometry and shader program is the previous one.
+>  *
+>  *  1. Beanie geometry (visual only, hat-local): cuff band thinner and the whole beanie a little lower on the head, pom-pom
+>  *     lower and slightly toward his right, star re-seated — measured against the approved picture at the locked 05 frame.
+>  *  2. Swim-clip body roll damped (the clip's ±0.05 rad side wobble tipped the beanie ~13 px sideways at the pom; the
+>  *     approved Benny rides upright). Pitch bob, paddling, feet, steering lean and every gameplay transform are unchanged.
+>  *  3. Albedo maps baked from the APPROVED pixels into each part's own UV space (tools: benny/work/bake.py): the beanie's
+>  *     knit stitches / stripes / ribbed cuff, the pom-pom yarn, the cotton-candy fur colour and its shading. The maps are
+>  *     solved through th …[+2403 chars]
+
+### 🤖 Claude — 2026-11-17T14:27:40.290Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\np='assets/textures/match08/splash08.png'; im=np.asarray(Image.open(p)).astype(np.float32)/255\na=np.clip(im[...,3]*1.7,0,1)**0.85; im[...,3]=a\nImage.fromarray((im*255).astype(np.uint8),'RGBA').save(p); print('splash alpha strengthened')\np='src/game/Game.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:70]; s=s.replace(old,new)\nrep(\"const M08_BENNY = { hat: 0.86, lift: 0.16, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };\",\n    \"const M08_BENNY = { hat: 0.86, lift: 0. …[+2953 chars]`
+
+### 🧑 User — 2026-11-17T14:28:02.505Z
+
+> ↩︎ result: splash alpha strengthened
+> Benny tweaks wired
+> tsc clean
+> 08 → /tmp/claude-0/-home-use
+
+### 🤖 Claude — 2026-11-17T14:28:07.458Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/benny_cmp3.png"}`
+
+### 🧑 User — 2026-11-17T14:28:07.512Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T14:28:25.995Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/dx: -0.2, body: \\[0.94, 1.06, 0.94\\]/dx: 0.15, body: [0.94, 1.06, 0.94]/\" src/game/Game.ts && grep -c \"dx: 0.15\" src/game/Game.ts && sed -i \"s/≈30 px left (world −x), lifted/≈23 px right (world +x, measured fur centroid), lifted/\" src/game/Game.ts; timeout 200 npx tsc --noEmit && echo tsc clean; M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/b3 --q=match08=1 2>&1 | tail -1 | cut -c1-20; cp $M/capture_log.bak qa/capture_log.json; py …[+892 chars]`
+
+### 🧑 User — 2026-11-17T14:28:46.861Z
+
+> ↩︎ result: 1
+> tsc clean
+> 08 → /tmp/claude-0
+> approved  fur centre x  428.0 y 1123.0 | box x 263-593 y 1049-1200 | width 330 height 151
+> before    fur centre x  392.6 y 1116.9 | box x 222-566 y 1028-1211 | width 344 height 183
+> now       fur centre x  416.6 y 1120.0 | box x 252-577 y 1031-1216 | width 325 height 185
+
+### 🤖 Claude — 2026-11-17T14:29:06.514Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/const M08_BENNY = { hat: 0.86, lift: 0.16, dx: 0.15, body: \\[0.94, 1.06, 0.94\\]/const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.22, body: [0.94, 1.0, 0.94]/\" src/game/Game.ts && grep -c \"lift: 0.06, dx: 0.22\" src/game/Game.ts; timeout 200 npx tsc --noEmit && echo tsc clean; M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/b4 --q=match08=1 2>&1 | tail -1 | cut -c1-20; cp $M/capture_log.bak qa/capture_log.json; python3 -I - <<EOF\nimpor …[+1677 chars]`
+
+### 🧑 User — 2026-11-17T14:29:28.973Z
+
+> ↩︎ result: 1
+> tsc clean
+> 08 → /tmp/claude-0
+> approved  fur centre x  428.0 box x 263-593 y 1049-1200 | Benny+splash 100.0% SSIM 1.000 | scenery 100.0% | whole 100.0%
+> before    fur centre x  392.6 box x 222-566 y 1028-1211 | Benny+splash  64.5% SSIM 0.619 | scenery  97.4% | whole  83.0%
+> now       fur centre x  432.1 box x 265-587 y 1050-1219 | Benny+splash  60.6% SSIM 0.543 | scenery  96.8% | whole  82.2%
+
+### 🤖 Claude — 2026-11-17T14:29:48.493Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/ m08.splash.position.x += M08_BENNY.dx;//\" src/game/Game.ts && grep -c \"splash.position.x += \" src/game/Game.ts; timeout 200 npx tsc --noEmit && echo tsc clean; M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/b5 --q=match08=1 2>&1 | tail -1 | cut -c1-20; cp $M/capture_log.bak qa/capture_log.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\nA=np.asarray(Image.open('references/ …[+1379 chars]`
+
+### 🧑 User — 2026-11-17T14:30:10.768Z
+
+> ↩︎ result: 0
+> tsc clean
+> 08 → /tmp/claude-0
+> before  Benny+splash  64.5% SSIM 0.619 | scenery  97.4% SSIM 0.959 | whole  83.0% SSIM 0.815
+> now     Benny+splash  66.2% SSIM 0.636 | scenery  97.4% SSIM 0.959 | whole  83.4% SSIM 0.819
+
+### 🤖 Claude — 2026-11-17T14:30:14.010Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/benny_cmp5.png"}`
+
+### 🧑 User — 2026-11-17T14:30:14.061Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T14:30:25.595Z
+
+> 🔧 **Bash** `{"command": "export ANDROID_HOME=/opt/android-sdk ANDROID_SDK_ROOT=/opt/android-sdk && VITE_RAINBOW_Q05=\"match08=1\" timeout 1500 npm run android:debug > /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/apk_build2.log 2>&1; echo \"exit=$?\"; ls -la android/app/build/outputs/apk/debug/app-debug.apk", "description": "Rebuild the Screen 08 APK with the Benny fixes", "timeout": 1600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T14:30:25.643Z
+
+> ↩︎ result: Command running in background with ID: b8rcp6rnw. Output is being written to: /tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/tasks/b8rcp6rnw.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T14:30:31.507Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && sleep 60; timeout 900 node scripts/gameplay-test.mjs --q=match08=1 >/dev/null 2>&1; python3 -I -c \"\nimport json;d=json.load(open('qa/gameplay_test_switch.json'));c=d['checks'];print('gameplay match08:',sum(1 for v in c.values() if v.get('pass')),'/',len(c),'| coins',c['realCoinPickups']['startCoins'],'->',c['realCoinPickups']['endCoins'],'| errors',d.get('errors'))\"; mv -f qa/gameplay_test_switch.json qa/match/08/gameplay_test_match08.json; cp qa/capture_log.json $ …[+769 chars]`
+

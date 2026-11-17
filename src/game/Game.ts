@@ -109,9 +109,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
-  const M08_BENNY = { hat: 0.86, lift: 0.16, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
-  const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
-  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
+  const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.22, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+  const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
   let m08Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
@@ -532,8 +532,15 @@ export async function startGame(canvas: HTMLCanvasElement) {
     }
     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
     if (m08 && b08 && b08Rest) {
-      b08.hat?.scale.setScalar(m08On ? b08Rest.hat * M08_BENNY.hat : b08Rest.hat);
-      if (b08.aux) b08.aux.position.y = b08Rest.y + (m08On ? M08_BENNY.lift : 0);
+      // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
+      const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];
+      b08.body?.scale.set(b08Rest.body.x * bx, b08Rest.body.y * by, b08Rest.body.z * bz);
+      const hk = m08On ? M08_BENNY.hat : 1;
+      b08.hat?.scale.set(b08Rest.hat * hk / bx, b08Rest.hat * hk / by, b08Rest.hat * hk / bz);
+      if (b08.aux) {
+        const off = new THREE.Vector3(m08On ? M08_BENNY.dx : 0, m08On ? M08_BENNY.lift : 0, 0).applyQuaternion(benny.root.quaternion.clone().invert());
+        b08.aux.position.copy(b08Rest.pos).add(off);
+      }
       const cm = b08.crown?.material as THREE.MeshStandardMaterial | undefined;
       cm?.color.copy(m08On ? M08_BENNY.crown : b08Rest.crown);
       m08.splash.visible = m08On;
