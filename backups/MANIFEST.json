@@ -649,7 +649,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11669,
-   "sha256": "df4278f84aecce102ef44e28f7559c0b6e46481430a45044c5047e9775b5c143"
+   "sha256": "d9d2c7883fb9c49fb208e4e7bc8f2e19e8c04adc04593c2eebc69b16d02a772d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1640,6 +1640,11 @@
    "path": "qa/pilot05/full_reference_match/benny/cap/on_0406/06.png",
    "bytes": 1636547,
    "sha256": "1c2479f4cbe487c0c8a3f4f0081620ed97f1170eb701f1df47273153c788fb80"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/gameplay.json",
+   "bytes": 14755,
+   "sha256": "289b16df1024833c8565ac5a0ee6f962637a8e8cc8e6398421dc469962ecc72f"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/steer/move_00.png",

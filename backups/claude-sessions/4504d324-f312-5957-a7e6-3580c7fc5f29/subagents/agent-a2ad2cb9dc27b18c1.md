@@ -2277,3 +2277,11 @@ Now the low tier (Android phones get `quality=low` by default: body shells 24 �
 > FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 32.13, 'within_10': 0.453, 'within_20': 0.547, 'ssim_lum': 0.542, 'mean_signed_rgb': [0.9, -0.0, -1.4]}
 > benny_and_hat                px   93061  mean  22.22  <=10 0.513  <=20 0.675  ssim 0.589  signed [-9.8, -1.7, -1.1]
 
+### 🤖 Claude — 2026-11-17T01:49:40.097Z
+
+Low tier works too: Benny + hat 50.63 → **22.22** (within 20: 22.6 % → 67.5 %); a little behind high tier (19.24) because the maps were solved there. Now the gameplay test with the switch on.
+
+### 🤖 Claude — 2026-11-17T01:49:41.799Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 2400 node scripts/gameplay-test.mjs --q=\"$STACK&benny05=1\" --out=$B/gameplay.json > $B/gameplay.log 2>&1; echo rc=$?; tail -15 $B/gameplay.log", "description": "Run gameplay test with benny05 on", "timeout": 2400000}`
+
