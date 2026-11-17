@@ -74,7 +74,17 @@ user's approval.
 * C flowplan without video files: the real-time 01 opening plays exactly as before.
 * D default game (no flowplan) with an intro video: unchanged (held at 01).
 * E full run with both videos + flowplan, steering to the coins like `gameplay-test.mjs`: must end at exactly
-  **91 coins / 2,240**.
+  **91 coins / 2,240**. The test takes control while the video still covers the paused ride (like a player steering
+  the moment 04 is revealed); without that, ~0.75 s of the fade rode unsteered and could pass one coin (2,230 seen
+  once, 18:45 UTC) — a test-harness gap, not a game rule.
+* Test race fixed 18:50 UTC: D (and E's start) read the state right after the overlay appears; on a busy machine that
+  read can land after the 2.5 s test clip has already ended (ride correctly released, overlay fading). D now re-opens
+  the page when it observes too late (max 3 tries) and records `observed` / `tries`.
+* Default build pixel check (18:40 UTC): all 11 screens captured at `c03a0f72` (just before flowplan) and at the tip.
+  02, 03, 06, 07, 08, 10 identical; every difference on 01, 04, 05, 09, 11 lies in areas that ALSO differ between two
+  captures of the same unchanged commit (animated title banner rows ~31–166; animated 01 / 11 areas) — capture
+  noise, not flowplan. The only source change is the 37 `flowPlan`-guarded lines in `Game.ts`; `flag05` is a pure
+  URL read.
 
 ## Testing
 

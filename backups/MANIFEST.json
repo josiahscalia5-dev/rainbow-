@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11651,
-   "sha256": "5043556b4a4fa83a1e95489b9b24a92255a807b9a9ca8dc39f4d7add6d064c55"
+   "sha256": "dea24d993679553fdf900c5d3d16f76d1dffee53f126e65eff0f67816005ba5e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -708,8 +708,8 @@
   },
   {
    "path": "docs/FLOW_VIDEO.md",
-   "bytes": 7698,
-   "sha256": "71c0a0fc9613904aedd755fda371b90c7044cb9735151ce94b186c63b1b652c7"
+   "bytes": 8763,
+   "sha256": "f790e632fe630608627924b118d02708577e3c889412ea9319b3b58d48e534b2"
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
@@ -718,8 +718,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 23897,
-   "sha256": "c4a5537cc7051768a22bd711468afd1111a894979ed4e51b0475544909f0aee9"
+   "bytes": 24545,
+   "sha256": "97905e03a7eb83d6ee0905f4de6d63779992064a53c03c668330957d2b057c4e"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -1233,23 +1233,23 @@
   },
   {
    "path": "qa/flowplan/A_after_fade_04.png",
-   "bytes": 277422,
-   "sha256": "a6888882f3ba62609b2a2c5d6f90c5067e51ed32ef07cc5e2fd2ade7b0ade964"
+   "bytes": 300035,
+   "sha256": "2826735652129c18ddc496341997d41a7cf958673274ba49a3a9343cf1a5edbe"
   },
   {
    "path": "qa/flowplan/A_during_video.png",
-   "bytes": 4543,
-   "sha256": "ab3e65a480c36e58374fbf390df4f5e6486b63d234b1e1de571cf7d972b95dd6"
+   "bytes": 4894,
+   "sha256": "58505778fb21eaf33eabf442b1762cbd2993956ccfd38c9d187bf72b0239062e"
   },
   {
    "path": "qa/flowplan/B_after_ending_video_11.png",
-   "bytes": 430476,
-   "sha256": "68a4f4af8b7fd67c3aa4b365bedde962e32817f0cf8e9181196625ebaeaaf89a"
+   "bytes": 427753,
+   "sha256": "829d2c578e0ac3b7bfa0853566f691b87ff50e96886384562f8af5ad498f4180"
   },
   {
    "path": "qa/flowplan/flowplan_test.json",
-   "bytes": 3800,
-   "sha256": "efc5d5255c07338db07661cb2ddff7ae24ef0094d70500141a3a8b727401f093"
+   "bytes": 3904,
+   "sha256": "8dc607b8656ea408f25d44c7717e3a67b6601a353bab95950d2f233d4734ed58"
   },
   {
    "path": "qa/gameplay_test.json",
@@ -8078,8 +8078,8 @@
   },
   {
    "path": "scripts/flowplan-test.mjs",
-   "bytes": 8851,
-   "sha256": "5e411f4ef7873f35f0102c4d3b75e938bc701664732509517063ffc606f12949"
+   "bytes": 9856,
+   "sha256": "ffad672df196bb6bee59b7a102e0029ab6f84eeda55ea3466d9b25f7f2cd74d2"
   },
   {
    "path": "scripts/gameplay-test.mjs",

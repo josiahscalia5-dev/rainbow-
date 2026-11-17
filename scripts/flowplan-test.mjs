@@ -76,25 +76,37 @@ try {
   await page.close();
 
   // ---- D. default game (no flowplan) with an intro video: unchanged behaviour (held at 01)
-  page = await open(`&introVideo=/${clip}`, 'D');
-  const shownD = await page.waitForSelector('[data-cinematic]', { timeout: 15000 }).then(() => true).catch(() => false);
-  const duringD = await page.evaluate(() => window.__rainbow.state());
-  out.D = { overlayShown: shownD, during: duringD, pass: shownD && duringD.mode === 'intro' && duringD.paused === true };
-  await page.close();
+  // Race fix (account 4, 18:50 UTC): on a busy machine the read can land AFTER the 2.5 s clip has ended (overlay
+  // fading, ride correctly released) — that observation says nothing about the hold, so re-open (max 3 tries).
+  let shownD = false, duringD = null, seenD = null, triesD = 0;
+  for (; triesD < 3; triesD++) {
+    page = await open(`&introVideo=/${clip}`, 'D');
+    shownD = await page.waitForSelector('[data-cinematic]', { timeout: 15000 }).then(() => true).catch(() => false);
+    ({ st: duringD, seen: seenD } = await page.evaluate(() => {
+      const v = document.querySelector('[data-cinematic] video');
+      return { st: window.__rainbow.state(), seen: { videoEnded: !!v?.ended, t: v?.currentTime ?? null } };
+    }));
+    await page.close();
+    if (!shownD || !seenD.videoEnded) break;
+  }
+  out.D = { overlayShown: shownD, during: duringD, observed: seenD, tries: triesD + 1,
+    pass: shownD && !seenD.videoEnded && duringD.mode === 'intro' && duringD.paused === true };
 
   // ---- E. full run with BOTH videos + flowplan (account 4, 2026-11-17): intro -> held on 04 -> real coin-seeking ride
   //      04..08 (same steering rule as gameplay-test.mjs) -> ending video -> victory. Must end at exactly 91 / 2,240.
   //      (B's final number is not a run total: goto('08') shows the approved HUD value 2,040 and B rides straight.)
+  //      The test takes control WHILE the video still covers the paused ride (run(false)), like a player who steers
+  //      the moment 04 is revealed; otherwise ~0.75 s of the fade rides unsteered and can pass a coin (2,230 seen).
   page = await open(`&flowplan=1&introVideo=/${clip}&endingVideo=/${clip}`, 'E');
   await page.waitForSelector('[data-cinematic]', { timeout: 15000 });
-  const introE = await page.evaluate(() => window.__rainbow.state());
-  await page.waitForSelector('[data-cinematic]', { state: 'detached', timeout: 30000 });
   await page.evaluate(() => window.__rainbow.run(false));
+  const introE = await page.evaluate(() => window.__rainbow.state());
+  await page.waitForFunction(() => window.__rainbow.state().paused === false, null, { timeout: 30000 });
   const driveE = await page.evaluate(() => {
     const a = window.__rainbow, dt = 1 / 60;
     for (let i = 0; i < 60 * 120; i++) {
       const st = a.state();
-      if (st.mode !== 'ride') return { steps: i, state: st };
+      if (st.mode !== 'ride') return { steps: i, state: st, missed: a.coinDefs().filter((d) => !d.taken && d.s < a.course.stage('09').s0).map((d) => ({ s: +d.s.toFixed(2), lat: +d.lat.toFixed(2) })) };
       const next = a.coinDefs().find((d) => !d.taken && d.s > st.s + 0.5 && d.s < st.s + 12);
       a.setSteer(Math.max(-1, Math.min(1, ((next ? next.lat : 0) - st.lat) * 0.9)));
       a.step(1, dt);
@@ -108,7 +120,7 @@ try {
   const finE = await page.evaluate(() => window.__rainbow.state());
   const takenE = await page.evaluate(() => window.__rainbow.coinDefs().filter((d) => d.taken).length);
   out.E = { introHeld: introE, handOver: driveE, endingShown: shownE, reachedVictory: endE, final: finE, coinsTaken: takenE,
-    pass: introE.stage === '04' && introE.paused === true && !!driveE && driveE.state.stage === '11' && shownE && endE
+    pass: introE.stage === '04' && !!driveE && driveE.state.stage === '11' && driveE.missed.length === 0 && shownE && endE
       && finE.coins === 2240 && takenE === 91 && finE.bennyVisible === false };
   await page.close();
 } finally {

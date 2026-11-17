@@ -39,8 +39,14 @@ seven sessions). 07 next when capacity allows; 04 / 05 / 06 milestones are compl
 * `?flowplan=1` re-tested on the newest code (18:25): A–D pass. The old "2,230": test B enters with `goto('08')`, which
   shows the approved screenshot's HUD value 2,040 (real count there 2,020) and then rides straight, missing 3 of 08's 7
   coins — a test artifact, not a game bug. New check **E** (full run, both videos, coin-seeking ride) ends at exactly
-  **2,240, 91/91** (probe 18:30). FLOW_VIDEO.md rewritten for the 01–03 / 04–08 / 09–11 split. Real Flow videos are
-  NOT in the repository yet.
+  **2,240, 91/91**. Two test-harness races found and fixed (18:50): D sometimes read the state after the 2.5 s clip
+  had ended (proved: `ended=true`, overlay fading, 1 of 3 runs); E rode ~0.75 s unsteered during the fade and once
+  passed a coin (2,230) — with control taken during the video, 2 / 2 probe runs and the test = 91 / 2,240, 0 missed.
+  Fixed test: A–E pass. FLOW_VIDEO.md rewritten for the 01–03 / 04–08 / 09–11 split. Real Flow videos are NOT in the
+  repository yet.
+* Default build vs the commit before flowplan (`c03a0f72`), all 11 screens: 02/03/06/07/08/10 identical; the
+  differences on 01/04/05/09/11 are confined to areas that also differ between two captures of the SAME commit
+  (animated title banner, animated 01/11 areas) → capture noise, not a game change.
 * Keys: this account's `rainbow-` environment had NO network secrets (World Labs free read HTTP 401). The user
   re-entered both existing keys in the secure form. World Labs: `GET /credits` → **5,420** (unchanged), Screen 08 world
   `32b5b2f4…` → 200 (same original account). fal: status of Screen 04 request `01a1ea70` → 200 COMPLETED (same fal
