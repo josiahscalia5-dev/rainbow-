@@ -977,3 +977,70 @@ Committed and pushed `26b7acac` (remote matches). The default-build and 04–07 
 
 > 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/oldtree; P=/home/user/rainbow-/qa/match/08/scenery/r7/proof; cp /home/user/rainbow-/src/world/match08.ts $O/src/world/match08.ts && cd $O && timeout 1200 node scripts/capture.mjs 03 08 --out=$P/copy_new >/dev/null 2>&1; timeout 1200 node scripts/capture.mjs 03 08 --out=$P/copy_old2 >/dev/null 2>&1; cd /home/user/rainbow- && git show HEAD~0:src/world/match08.ts >/dev/null; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nfor  …[+217 chars]`
 
+### 🧑 User — 2026-11-17T23:48:38.739Z
+
+> ↩︎ result: 03 copy_new-vs-def_old 0
+> 08 copy_new-vs-def_old 0
+
+### 🤖 Claude — 2026-11-17T23:48:42.127Z
+
+Same copy, NEW vs OLD code: 0 px on 03 and 08. The earlier difference comes from the scratch copy's environment, not my code. Running all 11 screens this way for the full proof.
+
+### 🤖 Claude — 2026-11-17T23:48:45.089Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/oldtree; P=/home/user/rainbow-/qa/match/08/scenery/r7/proof; rm -rf $P/copy_old2 $P/copy_new; cd $O && timeout 2400 node scripts/capture.mjs --out=$P/copy_new >/dev/null 2>&1; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nprint([(f'{i:02d}',int((np.abs(L('$P/copy_new/%02d.png'%i)-L('$P/def_old/%02d.png'%i)).max(2)>0).sum())) for i in range(1,12)])\"", "description": "Full 11-screen default proof in the same copy", "timeou …[+12 chars]`
+
+### 🧑 User — 2026-11-17T23:50:39.907Z
+
+> ↩︎ result: [('01', 693), ('02', 0), ('03', 0), ('04', 0), ('05', 0), ('06', 0), ('07', 0), ('08', 0), ('09', 0), ('10', 0), ('11', 617)]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:50:43.441Z
+
+02–10 are 0 px. 01 and 11 differ by a few hundred pixels; screen 11 already varies between two runs of the same code. Checking 01 the same way.
+
+### 🤖 Claude — 2026-11-17T23:50:46.414Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/oldtree; P=/home/user/rainbow-/qa/match/08/scenery/r7/proof; cd $O && timeout 1200 node scripts/capture.mjs 01 11 --out=$P/copy_new_rerun >/dev/null 2>&1; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nfor f in ['01','11']: print(f,'same code rerun',int((np.abs(L('$P/copy_new/'+f+'.png')-L('$P/copy_new_rerun/'+f+'.png')).max(2)>0).sum()))\"", "description": "Check 01/11 run-to-run noise with identical code", "timeout": 130 …[+5 chars]`
+
+### 🧑 User — 2026-11-17T23:51:05.332Z
+
+> ↩︎ result: 01 same code rerun 0
+> 11 same code rerun 588
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:51:08.655Z
+
+01 is stable with the same code (0 px) but differs by 693 px between old and new code. Checking whether the old code's 01 is stable too.
+
+### 🤖 Claude — 2026-11-17T23:51:13.076Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/oldtree; P=/home/user/rainbow-/qa/match/08/scenery/r7/proof; cd /home/user/rainbow- && git show HEAD~1:src/world/match08.ts > $O/src/world/match08.ts; git show 33b8f8b4:src/world/match08.ts | diff -q - $O/src/world/match08.ts && echo is-start-code; cd $O && for r in a b; do timeout 900 node scripts/capture.mjs 01 --out=$P/copy_old01_$r >/dev/null 2>&1; done; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\na=L('$P/copy_old01 …[+322 chars]`
+
+### 🧑 User — 2026-11-17T23:51:30.586Z
+
+> ↩︎ result: Files - and /tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/oldtree/src/world/match08.ts differ
+> old a-b 693 old a-def_old 0 old a-new 693 max diff new-old 46
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:51:37.841Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -8 -- src/world/match08.ts; git diff --stat 33b8f8b4 HEAD -- src/", "description": "Check which commits touched match08.ts"}`
+
+### 🧑 User — 2026-11-17T23:51:37.886Z
+
+> ↩︎ result: 3485f927 autosave: Rainbow 2026-11-17 23:43 UTC
+> 5221c282 autosave: Rainbow 2026-11-17 23:37 UTC
+> 16ef60f6 autosave: Rainbow 2026-11-17 22:24 UTC
+> 1788973b S08 scenery r6: m08swim — floor spreads the painted river's banks over Benny's whole swim lane (world-anchored, fades in off the approved viewpoint)
+> ca781c36 S08 scenery r6: m08arch uniform x2.6 push along projector rays + fine-tessellated arch/entrance wall; water-level sill kept (Benny underside as painted)
+> 8c7a7f4f autosave: Rainbow 2026-11-17 22:19 UTC
+> 0f8f649a autosave: Rainbow 2026-11-17 22:14 UTC
+> fb6e35ac S08 scenery r6: m08arch — pipe/arch/entrance wall pushed along the projector rays (x2.6, floor-capped): gold ring sweeps past whole instead of edge slivers
+>  src/world/match08.ts | 22 ++++++++++++++++++++--
+>  1 file changed, 20 insertions(+), 2 deletions(-)
+
+### 🤖 Claude — 2026-11-17T23:51:44.874Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/dbe78f5c-8886-5589-a469-e5785f4abd6f/scratchpad/oldtree; P=/home/user/rainbow-/qa/match/08/scenery/r7/proof; cd /home/user/rainbow- && git show 33b8f8b4:src/world/match08.ts > $O/src/world/match08.ts && git diff --quiet 33b8f8b4 HEAD -- src/world/course.ts src/game src/main.ts 2>/dev/null; rm -rf $P/def_old $P/copy_old01_a $P/copy_old01_b $P/copy_new_rerun; cd $O && timeout 2400 node scripts/capture.mjs --out=$P/def_start >/dev/null 2>&1; python3 -c \"\nimport numpy as np; from PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB' …[+225 chars]`
+

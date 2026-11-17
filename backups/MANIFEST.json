@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13447,
-   "sha256": "0457f714ee5a8e491846d78e7628d51042091e0c4fb55423ef8ccc1ac104a21b"
+   "sha256": "548c1638f29a6ba8a3b9eb74e5dc0f512c28c783f1a34845d6681eda0772ae9f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2947,14 +2947,59 @@
    "sha256": "06c6a79615dc3e149e5ab82251b51b30891b97f1f19d3a8fb81347c6363d8b48"
   },
   {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/01.png",
+   "bytes": 1476205,
+   "sha256": "99d64faa19e812c5856dfaf652193619f4d21769a1c2e7c1bba0e0fda0a63591"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/02.png",
+   "bytes": 1775052,
+   "sha256": "a8b0e41ab44d8fc4640e1954f1196ccd2dc2b988026d4e172e7b4a1a7ba428a0"
+  },
+  {
    "path": "qa/match/08/scenery/r7/proof/copy_new/03.png",
    "bytes": 1108258,
    "sha256": "7a8548ac9fe4cf993c6063945ef61b5520b181154b05b6a41c5c7f25aedfc181"
   },
   {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/04.png",
+   "bytes": 1435791,
+   "sha256": "ae440e9013e173bd85969b75451e036cf9e5024695a85197903171a67e063bcc"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/05.png",
+   "bytes": 2092710,
+   "sha256": "6c8e096a7f55fcce7d5b7dade588e8705203ec769ca40744717de683f3826ccb"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/06.png",
+   "bytes": 1844972,
+   "sha256": "2f1cc894879fed9d0153daf1c49ba236fb8e505f40d92af06b2ad51b1f306ff1"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/07.png",
+   "bytes": 2115935,
+   "sha256": "3aa759b301820c301ddd38d561f6c44d986ea473b59085f424347e1838b654e5"
+  },
+  {
    "path": "qa/match/08/scenery/r7/proof/copy_new/08.png",
    "bytes": 1699264,
    "sha256": "259e22c0dcd62a681af061c827efc3ca850c31ef9ea46f109f1630b729e5cfc4"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/09.png",
+   "bytes": 1784429,
+   "sha256": "e8fb758f5bda1087008326df0d7be1c2fe178f08e135fe3030840872ea9eb391"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/10.png",
+   "bytes": 1705373,
+   "sha256": "23bea3bada53b590105542a6391f498891fc6356e2e3d7aa70ea24654eed4ef8"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/11.png",
+   "bytes": 1798719,
+   "sha256": "655bbd0904da1c61c2ef79a356969df01c5f338595c68a70b8dcef30dcd73532"
   },
   {
    "path": "qa/match/08/scenery/r7/proof/def_new/01.png",
@@ -3027,59 +3072,49 @@
    "sha256": "18216d213b0150b3d77ef6885a63506d7a55cd6edc5ee15be834e4a3160750bb"
   },
   {
-   "path": "qa/match/08/scenery/r7/proof/def_old/01.png",
+   "path": "qa/match/08/scenery/r7/proof/def_start/01.png",
    "bytes": 1476465,
    "sha256": "836512d0517a5028ac34b24f5ce629ec7c3998b7ebe18f1797654e2e203349b4"
   },
   {
-   "path": "qa/match/08/scenery/r7/proof/def_old/02.png",
+   "path": "qa/match/08/scenery/r7/proof/def_start/02.png",
    "bytes": 1775052,
    "sha256": "a8b0e41ab44d8fc4640e1954f1196ccd2dc2b988026d4e172e7b4a1a7ba428a0"
   },
   {
-   "path": "qa/match/08/scenery/r7/proof/def_old/03.png",
-   "bytes": 1108258,
-   "sha256": "7a8548ac9fe4cf993c6063945ef61b5520b181154b05b6a41c5c7f25aedfc181"
+   "path": "qa/match/08/scenery/r7/proof/def_start/03.png",
+   "bytes": 1108226,
+   "sha256": "6b67fc92317d4dae51fc0fe60cceff772ff00bf05499a6876d794ec120e61d24"
   },
   {
-   "path": "qa/match/08/scenery/r7/proof/def_old/04.png",
+   "path": "qa/match/08/scenery/r7/proof/def_start/04.png",
    "bytes": 1435791,
    "sha256": "ae440e9013e173bd85969b75451e036cf9e5024695a85197903171a67e063bcc"
   },
   {
-   "path": "qa/match/08/scenery/r7/proof/def_old/05.png",
+   "path": "qa/match/08/scenery/r7/proof/def_start/05.png",
    "bytes": 2092710,
    "sha256": "6c8e096a7f55fcce7d5b7dade588e8705203ec769ca40744717de683f3826ccb"
   },
   {
-   "path": "qa/match/08/scenery/r7/proof/def_old/06.png",
+   "path": "qa/match/08/scenery/r7/proof/def_start/06.png",
    "bytes": 1844972,
    "sha256": "2f1cc894879fed9d0153daf1c49ba236fb8e505f40d92af06b2ad51b1f306ff1"
   },
   {
-   "path": "qa/match/08/scenery/r7/proof/def_old/07.png",
+   "path": "qa/match/08/scenery/r7/proof/def_start/07.png",
    "bytes": 2115935,
    "sha256": "3aa759b301820c301ddd38d561f6c44d986ea473b59085f424347e1838b654e5"
   },
   {
-   "path": "qa/match/08/scenery/r7/proof/def_old/08.png",
-   "bytes": 1699264,
-   "sha256": "259e22c0dcd62a681af061c827efc3ca850c31ef9ea46f109f1630b729e5cfc4"
+   "path": "qa/match/08/scenery/r7/proof/def_start/08.png",
+   "bytes": 1699139,
+   "sha256": "bc0e8136eb6798acfb95e81f4d20f3db326c544120974935338d82078ab9dad2"
   },
   {
-   "path": "qa/match/08/scenery/r7/proof/def_old/09.png",
+   "path": "qa/match/08/scenery/r7/proof/def_start/09.png",
    "bytes": 1784429,
    "sha256": "e8fb758f5bda1087008326df0d7be1c2fe178f08e135fe3030840872ea9eb391"
-  },
-  {
-   "path": "qa/match/08/scenery/r7/proof/def_old/10.png",
-   "bytes": 1705373,
-   "sha256": "23bea3bada53b590105542a6391f498891fc6356e2e3d7aa70ea24654eed4ef8"
-  },
-  {
-   "path": "qa/match/08/scenery/r7/proof/def_old/11.png",
-   "bytes": 1798715,
-   "sha256": "81ee9d1153d76e470358dee1e5c47e43a6c168084c5159455cab9d6dbc4076bf"
   },
   {
    "path": "qa/match/08/scenery/r7/proof/gameplay.json",
