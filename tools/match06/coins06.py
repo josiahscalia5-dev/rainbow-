@@ -17,11 +17,21 @@ def local(P):
     return ss[i] + q @ FT[i], q @ FR[i], q @ FU[i]
 out = []
 for u, v, w, h in COINS:
-    r = g.ray(u, v); best = None
+    r = g.ray(u, v); best = None; sols = []
     for k in np.arange(1.0, 120, 0.02):
         P = g.C + k * r; sc = w * k / g.Fpx; s, lat, hh = local(P)
         e = abs(hh - 0.5 * sc) + 10 * max(abs(lat) - 1.6, 0) + 10 * max(sLo - s, 0) + 10 * max(s - sHi, 0)
-        if best is None or e < best[0]: best = (e, k, P, sc, s, lat, hh)
+        cand = (e, k, P, sc, s, lat, hh)
+        if best is None or e < best[0]: best = cand
+        if e < 0.05:                                # on-the-water crossings, grouped by contiguous depth
+            if sols and k - sols[-1][-1][1] < 0.05: sols[-1].append(cand)
+            else: sols.append([cand])
+    # r3 (2026-11-17): the river crests, so a ray through the painted coin TRAIL crosses the near water first and the far
+    # river again further on. A near crossing that makes the coin smaller than 0.2 of a coin is the wrong one (the trail
+    # is painted on the far river, like its other coins at ~23 u): take the farthest crossing instead.
+    if sols:
+        near = min(sols[0], key=lambda c: c[0])
+        best = near if near[3] >= 0.2 else min(sols[-1], key=lambda c: c[0])
     e, k, P, sc, s, lat, hh = best
     if e > 0.05:                                    # no on-the-water spot within reach: nearest reachable depth on the ray
         pick = None
