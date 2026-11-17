@@ -8,11 +8,13 @@ exactly where they are. Targets on references/06_crest_the_rinse_arch.png (864x1
     centre 0.9 u above the water)
   * the painted river's top edge at the crest (y >= 505): the river centre line may not rise above it
   * the painted tunnel's vanishing point (660,630) for the 07 direction (weak)
-usage: python3 -I tools/match06/fit_river06.py <probe06.json> <out cam06.json> [<prev cam06.json> to keep the offsets]"""
+usage: python3 -I tools/match06/fit_river06.py <probe06.json> <out cam06.json> [<prev cam06.json> = offsets applied in the probe] [--fixpath]
+--fixpath: keep the applied offsets, solve the camera only (final lock: the camera then matches the route the game really has)"""
 import json, sys, math
 import numpy as np
 from scipy.optimize import minimize
 
+FIX = '--fixpath' in sys.argv; sys.argv = [a for a in sys.argv if a != '--fixpath']
 d = json.load(open(sys.argv[1]))
 F = d["frames"]; fs = np.array([f["s"] for f in F]); fp = np.array([f["pos"] for f in F])
 fu = np.array([f["up"] for f in F]); fr = np.array([f["right"] for f in F])
@@ -46,7 +48,8 @@ def route(x):
     p = base.copy(); p[:, 0] += np.where(in6, bump(x[5:8], tseg), 0); p[:, 1] += np.where(in6, bump(x[8:11], tseg), 0); return p
 def parts(x):
     p = route(x)
-    shift = np.array([bump(x[5:8], tB), bump(x[8:11], tB), 0.0])
+    # the probe already carries prev: Benny / his water point move by the CHANGE of the correction at his t
+    shift = np.array([bump(x[5:8], tB) - bump(prev["dx"], tB), bump(x[8:11], tB) - bump(prev["dy"], tB), 0.0])
     water = water0 + shift; C = water + x[:3]; R = basis(x[3], x[4])
     pb, _ = proj(R, C, P0 + shift)
     box = np.array([pb[:, 0].min(), pb[:, 1].min(), pb[:, 0].max(), pb[:, 1].max()])
@@ -68,7 +71,13 @@ def err(x):
 c0 = json.load(open(sys.argv[3])) if len(sys.argv) > 3 else None
 x0s = [[1.07, 2.6, 5.8, math.atan2(-0.172, 0.968), math.asin(-0.182)] + prev["dx"] + prev["dy"]]
 x0s += [[1.07, 2.6, 5.8, -0.18, -0.18, -1, 0, 0, -2, 0, 0], [0.8, 3.0, 6.0, -0.15, -0.2, -2, -1, 0, -3, -1, 0]]
-best = None
+if FIX:
+    xp = np.array(prev["dx"] + prev["dy"], float)
+    full = lambda y: np.concatenate([y, xp])
+    r = minimize(lambda y: err(full(y)) - 20 * np.square(xp).sum(), x0s[0][:5], method="Nelder-Mead", options=dict(maxiter=40000, xatol=1e-8, fatol=1e-8))
+    x0s = []; best = r; best.x = full(r.x)
+else:
+    best = None
 for x0 in x0s:
     r = minimize(err, x0, method="Powell", options=dict(maxiter=60000, xtol=1e-5, ftol=1e-7))
     r = minimize(err, r.x, method="Nelder-Mead", options=dict(maxiter=60000, xatol=1e-7, fatol=1e-7))

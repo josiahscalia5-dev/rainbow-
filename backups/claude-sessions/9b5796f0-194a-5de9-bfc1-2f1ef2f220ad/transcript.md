@@ -680,3 +680,88 @@ Camera solved (Benny's box within ~13 px, coin trail within a few px for most co
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\ns=s.replace(\"import river08 from '../../assets/textures/match08/river08.json';\",\"import river08 from '../../assets/textures/match08/river08.json';\\nimport path06 from '../../assets/textures/match06/path06.json';\",1)\nold='''  const s6 = pts[pts.length - 1].clone();\n  seg(34, (t) =>\n    V(\n      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),\n      s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),\n      s6.z - 46 * t,\n     …[+1386 chars]`
 
+### 🧑 User — 2026-11-17T16:50:40.513Z
+
+> ↩︎ result: 10:    "resolveJsonModule": true,
+> {"off06": [1.2033121458740084, 2.7680270812715317, 5.683503362637548], "fwd": [-0.19439553797947293, -0.19903286211673554, -0.9605187632791417], "path06": {"dx": [1.8090653045032092, 1.083359097270602, 0.11888634833059313], "dy": [-2.4205601867130095, -1.0620576706382763, 2.8541284304245726]}, "err": 829.7085139163491, "box": [205.188571869855, 733.113527168895, 637.6534788045388, 1169.1443927099162], "coin_chain_px": 102.3081671367331, "crest_px": 0.0, "vp": [661.5712063516781, 633.1290452888927]}
+
+### 🤖 Claude — 2026-11-17T16:50:45.538Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad; for r in 2 3; do python3 -I -c \"\nimport json;c=json.load(open('$S/cam06_r$r.json'));p=json.load(open('assets/textures/match06/path06.json'));p['dx']=c['path06']['dx'];p['dy']=c['path06']['dy'];json.dump(p,open('assets/textures/match06/path06.json','w'),indent=1)\"; node tools/match06/probe06.mjs match06=1 > $S/probe06_r$r.json && python3 -I tools/match06/fit_river06.py $S/probe06_r$r.json $S/cam06_r$((r+1)).json $S/cam06_r$r.json; done", "description": "Iterate camera/path fit two more rounds",  …[+18 chars]`
+
+### 🧑 User — 2026-11-17T16:53:40.269Z
+
+> ↩︎ result: {"off06": [1.1960891250665366, 2.7602796445736586, 5.6705914155622725], "fwd": [-0.19252557088721656, -0.19660242754751933, -0.9613955429670837], "path06": {"dx": [0.7733913997488591, 1.3038901551640083, -0.5906122938777453], "dy": [-2.819112144128244, -0.9110721635124, 2.79632407010735]}, "err": 810.1637860745036, "box": [205.1274871735997, 732.2511877648196, 635.2936378168217, 1171.3082693694842], "coin_chain_px": 104.34729736817883, "crest_px": 0.0, "vp": [659.7165069139149, 632.7217992570388]}
+> {"off06": [1.1930185255639234, 2.7823152229060923, 5.673059370879875], "fwd": [-0.19195608329996913, -0.19864087738158095, -0.9610903515888665], "path06": {"dx": [-0.5188100588487665, -0.004872728933266117, 0.0617360505474504], "dy": [-2.628077177562031, -1.8582478859511888, 3.5090220275257673]}, "err": 1034.5269555819004, "box": [203.88419040792203, 732.4384551391281, 634.5714228218083, 1171.589771435768], "coin_chain_px": 141.95240081000253, "crest_px": 0.0, "vp": [659.2537264458551, 629.4676262263517]}
+
+### 🤖 Claude — 2026-11-17T16:53:51.522Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match06/fit_river06.py'; s=open(p).read()\ns=s.replace('usage: python3 -I tools/match06/fit_river06.py <probe06.json> <out cam06.json> [<prev cam06.json> to keep the offsets]\"\"\"',\n 'usage: python3 -I tools/match06/fit_river06.py <probe06.json> <out cam06.json> [<prev cam06.json> = offsets applied in the probe] [--fixpath]\\n--fixpath: keep the applied offsets, solve the camera only (final lock: the camera then matches the route the game really has)\"\"\"')\ns=s.replace(\"d = json.load(open(sys.argv[1]))\",\"FIX = '--fixpath' in sys.argv; sys.argv =  …[+943 chars]`
+
+### 🧑 User — 2026-11-17T16:53:53.485Z
+
+> ↩︎ result: {"note":"Screen06rivercorrectionunder?match06=1(tools/match06/fit_river06.py;course.ts06segment:dx,dy=sin^2(pit)(c0+c1cos(pit)+c2cos(2pit)))","dx":[0.7733913997488591,1.3038901551640083,-0.5906122938777453],"dy":[-2.819112144128244,-0.9110721635124,2.79632407010735]}
+> {"off06": [1.1700742180002148, 2.737732663518403, 5.77923442067813], "fwd": [-0.1872811680796331, -0.18571932477404945, -0.9645901183861461], "path06": {"dx": [0.7733913997488591, 1.3038901551640083, -0.5906122938777453], "dy": [-2.819112144128244, -0.9110721635124, 2.79632407010735]}, "err": 857.0046565946658, "box": [208.77836093989623, 735.1636565463057, 634.5799205649092, 1170.1011770965945], "coin_chain_px": 178.0573090871789, "crest_px": 0.0, "vp": [651.886853552505, 646.361247017651]}
+
+### 🤖 Claude — 2026-11-17T16:53:55.572Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad/overlay_lock.png"}`
+
+### 🧑 User — 2026-11-17T16:53:55.770Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T16:54:00.592Z
+
+Camera locked: Benny's box within ~4 px, the river crest and the coin trail line up with the painted river. Now wiring the 06 camera into the game behind `?match06=1`.
+
+### 🤖 Claude — 2026-11-17T16:54:01.390Z
+
+> 🔧 **Bash** `{"command": "sed -n 60,145p src/game/cameraRig.ts", "description": "Read camera rig update code"}`
+
+### 🧑 User — 2026-11-17T16:54:01.433Z
+
+> ↩︎ result: const a = THREE.MathUtils.smoothstep(s, st.s0 - blend, st.s0 + blend) * (1 - THREE.MathUtils.smoothstep(s, st.s1 - blend, st.s1 + blend));
+>     if (a <= 0) continue;
+>     for (const k of KEYS) acc[k] += p[k] * a;
+>     w += a;
+>   }
+>   if (w === 0) return { ...(STAGE_CAM['03'] as CamParams) };
+>   for (const k of KEYS) acc[k] /= w;
+>   return acc;
+> }
+> 
+> export class RideCamera {
+>   readonly pos = new THREE.Vector3();
+>   readonly target = new THREE.Vector3();
+>   readonly up = new THREE.Vector3(0, 1, 0);
+>   fov = 70;
+>   private init = false;
+>   /** optional straight tunnel axis + the s-range where the camera aligns to it */
+>   axis: { path: TubePath; s0: number; s1: number } | null = null;
+> 
+>   constructor(private course: Course) {}
+> 
+>   /** desired pose for Benny at (s, lateral) */
+>   desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
+>     const p = camParamsAt(this.course, s);
+>     const f = this.course.sample(s);
+>     const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+>     const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+>     let up = f.up.clone();
+>     if (this.axis) {
+>       const a = this.axis;
+>       co …[+3591 chars]
+
+### 🤖 Claude — 2026-11-17T16:54:11.886Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\nold='''  aim08?: [number, number, number];\n}'''\nnew='''  aim08?: [number, number, number];\n  /** `?match06=1` only (src/game/match.ts): over the 06 stage the camera sits at Benny's water point + this world offset\n   *  and looks along the fixed world direction dir06 (the approved picture's view over the crest into the tunnel);\n   *  absent = no change */\n  off06?: [number, number, number];\n  dir06?: [number, number, number];\n}'''\nassert old in s; s=s.replace(old,new,1)\nold2='''    // 03 whirlpool: dynamic hi …[+1101 chars]`
+
+### 🧑 User — 2026-11-17T16:54:11.985Z
+
+> ↩︎ result: [1.1700742180002148, 2.737732663518403, 5.77923442067813] [-0.1872811680796331, -0.18571932477404945, -0.9645901183861461]
+
+### 🤖 Claude — 2026-11-17T16:54:21.588Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match06/fit_river06.py'; s=open(p).read()\nold='    shift = np.array([bump(x[5:8], tB), bump(x[8:11], tB), 0.0])'\nnew='    # the probe already carries prev: Benny / his water point move by the CHANGE of the correction at his t\\n    shift = np.array([bump(x[5:8], tB) - bump(prev[\"dx\"], tB), bump(x[8:11], tB) - bump(prev[\"dy\"], tB), 0.0])'\nassert old in s; s=s.replace(old,new); open(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/9b5796f0-194a-5de9-bfc1-2f1ef2f220ad/scratchpad; python3 -I tools/match06/fit_river06.py $S/probe06_r3.json $S …[+101 chars]`
+

@@ -438,8 +438,8 @@
   },
   {
    "path": "assets/textures/match06/path06.json",
-   "bytes": 327,
-   "sha256": "9c23143eb37b8ae1f61c9673e51749033ab213c6f4e739f46594080a5032bce4"
+   "bytes": 321,
+   "sha256": "32f33c581b486bcdd8b96ab4aa171d6113df4f197c49262195a055302a4ce868"
   },
   {
    "path": "assets/textures/match08/cam08_locked.json",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10600,
-   "sha256": "60b0c75f880a9d8e2f837bdf49093ed91c931f53a6d5098583632fb89d2ce53e"
+   "sha256": "79b9f75a76b4308377795ad0a5e77176f48c35f88838877a1d5377255b7bc7a4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7953,8 +7953,8 @@
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 11333,
-   "sha256": "c0012b277fd871049ee08d763c15b870523d0df73f96f0008965e449700bbee8"
+   "bytes": 12396,
+   "sha256": "96b97cd21b9044881b53117a16bd74fe0ec97b0e8154e0c63c194d523f2e41b8"
   },
   {
    "path": "src/game/match.ts",
@@ -8243,8 +8243,8 @@
   },
   {
    "path": "tools/match06/fit_river06.py",
-   "bytes": 5784,
-   "sha256": "7980e12ee237e17d2089ae95a6e2dc67d96623b3abcbf95c82f9a16612b30465"
+   "bytes": 6483,
+   "sha256": "85e55ef4d5858fc0631b6cdfc710944ea135c89dea4f196d7491301f8b05e2a7"
   },
   {
    "path": "tools/match06/overlay06.py",

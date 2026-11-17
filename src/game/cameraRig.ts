@@ -29,6 +29,11 @@ export interface CamParams {
    *  offset and looks at the fixed world point aim08 (the approved picture's view toward the door); absent = no change */
   off08?: [number, number, number];
   aim08?: [number, number, number];
+  /** `?match06=1` only (src/game/match.ts): over the 06 stage the camera sits at Benny's water point + this world offset
+   *  and looks along the fixed world direction dir06 (the approved picture's view over the crest into the tunnel);
+   *  absent = no change */
+  off06?: [number, number, number];
+  dir06?: [number, number, number];
 }
 
 export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
@@ -135,6 +140,19 @@ export class RideCamera {
         outPos.lerp(benny.clone().add(new THREE.Vector3(...p8.off08)), w8);
         outTarget.lerp(new THREE.Vector3(...p8.aim08), w8);
         outUp.lerp(new THREE.Vector3(0, 1, 0), w8).normalize();
+      }
+    }
+    // `?match06=1`: the approved Screen 06 view — camera at Benny + off06 (world), looking along dir06, level; blended in
+    // around the 06 start and out before 07 (absent = no change)
+    const p6 = STAGE_CAM['06'];
+    if (p6 && p6.off06 && p6.dir06) {
+      const st6 = this.course.stage('06');
+      const w6 = THREE.MathUtils.smoothstep(s, st6.s0 - 3, st6.s0 + 1.5) * (1 - THREE.MathUtils.smoothstep(s, st6.s1 - 10, st6.s1 - 1));
+      if (w6 > 0) {
+        const cp6 = benny.clone().add(new THREE.Vector3(...p6.off06));
+        outPos.lerp(cp6, w6);
+        outTarget.lerp(cp6.addScaledVector(new THREE.Vector3(...p6.dir06), 10), w6);
+        outUp.lerp(new THREE.Vector3(0, 1, 0), w6).normalize();
       }
     }
     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
