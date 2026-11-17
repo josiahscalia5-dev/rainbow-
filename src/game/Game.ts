@@ -110,6 +110,13 @@ export async function startGame(canvas: HTMLCanvasElement) {
   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
   const M08_BENNY = { hat: 0.95, hatOff: [0.074, 0.083, -0.009] as const, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+  // benny08 round 2 (qa/match/08/benny08/NOTES.md): the approved splash ring around Benny drawn stronger (alpha^0.3 x2,
+  // capped at 1) — measured closer to the painted white crest; card texture, size and approved position unchanged
+  if (m08) {
+    const sm = m08.splash.material as THREE.ShaderMaterial;
+    sm.fragmentShader = sm.fragmentShader.replace('if (c.a < 0.02) discard;', 'if (c.a < 0.02) discard; c.a = min(1.0, pow(c.a, 0.3) * 2.0);');
+    sm.needsUpdate = true;
+  }
   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
   const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, hatPos: (b08.hat?.position ?? new THREE.Vector3()).clone(), body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
