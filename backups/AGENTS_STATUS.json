@@ -1,20 +1,9 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-17T19:16Z",
+  "updated_utc": "2026-11-17T19:25Z",
   "updated_by_session": "session_01Kbt6BTTnCGMUULjZoCLDTo",
   "running_now": [
-    {
-      "agent": "benny-character-artist",
-      "workstream": "Screen 08 Benny round 5 (variant review set r2/r3b/r4, pom yarn tufts, softer fur clumps, brighter hat stripes)",
-      "session": "session_01Kbt6BUy2s16F5FhJR2yJ6z",
-      "where": "own cloud container (account 4, environment rainbow-)",
-      "branch": "claude/rainbow-s08-benny08-bake-c4",
-      "continued_from": "claude/rainbow-s08-benny08-bake-c3 @ c64ff28b",
-      "started_utc": "2026-11-17T18:33Z",
-      "notes": "qa/match/08/benny08/NOTES.md",
-      "brief": "docs/briefs/2026-11-17-r4/S08_BENNY.md on ccr-067047f0-up5d1m"
-    },
     {
       "agent": "washer-environment-modeler (Screen 07 workstream)",
       "workstream": "Screen 07 finish milestone 2 (m07fill/m07ang/m07gold verify, coins at painted spots, rings/water/foam while moving, 07->08 drop intact)",
@@ -25,6 +14,17 @@
       "started_utc": "2026-11-17T19:14Z",
       "notes": "qa/match/07/NOTES.md",
       "brief": "docs/briefs/2026-11-17-r4/S07.md on ccr-067047f0-up5d1m"
+    },
+    {
+      "agent": "washer-environment-modeler (Screen 08 scenery in motion)",
+      "workstream": "Screen 08 scenery while moving: projected picture tears/duplicates at 6 u forward and when steering; right pipe/arch blocks Benny steering right; match08 changing 04-07",
+      "session": "session_01Kbt6BTJwPYVeZGGEUyEMXY",
+      "where": "own cloud container (account 4, environment rainbow-)",
+      "branch": "claude/rainbow-s08-scenery-c4",
+      "continued_from": "ccr-067047f0-up5d1m @ 60c25025",
+      "started_utc": "2026-11-17T19:22Z",
+      "notes": "qa/match/08/scenery/NOTES.md",
+      "brief": "docs/briefs/2026-11-17-r4/S08_SCENERY.md on ccr-067047f0-up5d1m"
     }
   ],
   "assignments_now": {
@@ -375,6 +375,15 @@
       "commit": "aa10fdbb6b7efa305edd0d3a40e2da4d0e9c074c",
       "when_utc": "2026-11-17T19:13Z",
       "result": "camclear r4: 03->04 lip tilt 16->1 deg, Benny hidden max 44->25 %, missed coins fade between lens and Benny in 08; 07 upper bands = 07 tube rings 14-45 u ahead (Screen 07 scenery); open: steering hard right into 08 rides into m08_pipe/m08_arch (08 scenery workstream). 8/8, 91/2,240, APK r4 not phone-tested",
+      "state": "paused, waiting for the user"
+    },
+    {
+      "agent": "benny-character-artist",
+      "session": "session_01Kbt6BUy2s16F5FhJR2yJ6z",
+      "branch": "claude/rainbow-s08-benny08-bake-c4",
+      "commit": "0067fc7be277571a51f11220bf12475036477d8e",
+      "when_utc": "2026-11-17T19:21Z",
+      "result": "round 5b per user decision: r3b + fuller rounder body (body ~1.1x brim width like approved; body fur x1.04, beanie x0.94) = match08 default; Benny+splash 65.3 -> 62.2 % (visual choice), scenery 97.3 % unchanged; switches: r3b b08full=0, r4 b08hi=1&b08pom=1&b08full=0, taper b08shape=1 (opt-in), r2 b08r3=0; open: soft fur clumps + pom yarn tufts need a new fur model/bake; APK r5b not phone-tested; flag: match08 changes 04-07 over much of the frame",
       "state": "paused, waiting for the user"
     }
   ]

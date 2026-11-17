@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 23033,
-   "sha256": "1695701c4c7d4490a9fa0160aa1e2b69e561a2721cb1d2287baa06d6ecae4337"
+   "bytes": 23881,
+   "sha256": "5b19fe5ee9444ed44c8dd420f30a7d99d07bb2ea324f42424e16fb7fa846b747"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11651,
-   "sha256": "c74e0cd76f546c5aa53e25eca98eb560e00985b4d872884fa9562db9b7b90cd3"
+   "sha256": "7face10b6de0b3a6373fd90a0db5b7a2cdb07ca7c6c08624fe727ee41aaa8625"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -718,8 +718,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 26609,
-   "sha256": "4377154feaa31512ec5893a08ae4185b244e5462894b5529220b11ff8ee37549"
+   "bytes": 27566,
+   "sha256": "a6ba5d8d52b9f98b9cc4129c5d382b72f7a70195e1b683e313c44962247e53cf"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",

@@ -73,8 +73,17 @@ seven sessions). 07 next when capacity allows; 04 / 05 / 06 milestones are compl
 * **08 Benny round 5** (`…benny08-bake-c4`): report 19:09 (pre-decision taper kept, APK r5 = taper) — then switched to
   the user's decision at 19:09: taper opt-in (`b08shape=1`), probing fuller round bodies on r3b (approved body ≈ 1.09×
   the brim width vs r3b 0.93×; beanie ≈ 9 % too big). RUNNING. Its Draft PR #17 = review only.
-* **07 STARTED 19:14** `session_01Kbt6BT7VJEKLkAskyb5T9U` on `claude/rainbow-s07-match-c4` (finish M2, `S07.md`).
-* Next when a slot frees: 08 scenery-in-motion → 05 → 06 → 04.
+* **07 STARTED 19:14** `session_01Kbt6BT7VJEKLkAskyb5T9U` on `claude/rainbow-s07-match-c4` (finish M2, `S07.md`) —
+  RUNNING (coins + water patch, wall tile next).
+* **08 Benny round 5b DONE** (`…benny08-bake-c4` @ `0067fc7b`, 19:21, verified): user decision applied — r3b + a fuller,
+  rounder body (≈1.1× the brim width like the approved ≈1.09×; body fur ×1.04, beanie ×0.94) is the `?match08=1`
+  default; Benny + splash 65.3 → 62.2 % (visual choice; pom/star shift slightly with the smaller beanie); scenery 97.3 %
+  unchanged. Switches: r3b `b08full=0`, r4 `b08hi=1&b08pom=1&b08full=0`, taper `b08shape=1`, r2 `b08r3=0`. Open: the
+  painting's soft layered fur clumps + pom yarn tufts need a new fur model/bake (lead review: fur still reads as streaky
+  radial strands, pale streaks by the left arm, spiky pom). APK r5b NOT phone-tested. Pictures sent to the user 19:24.
+  Flag (→ 08 scenery brief): `?match08=1` changes screens 04–07 over much of the frame.
+* **08 scenery-in-motion STARTED 19:22** `session_01Kbt6BTJwPYVeZGGEUyEMXY` on `claude/rainbow-s08-scenery-c4`.
+* Next when a slot frees: 05 → 06 → 04.
 
 ## Still waiting for the user
 * fal clean plates for 06 / 07 (one paid edit each, prepared, not run).
