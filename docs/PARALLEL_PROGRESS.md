@@ -1,54 +1,68 @@
 # RAINBOW — parallel workstreams: lead progress report
 
-Lead coordinator: session `session_01AvQv6UXiBngewM8kSBwFfZ` ("Rainbow game restoration and parallel agents"), lead
-branch `ccr-d4240b15-rl1i72` (contains `ccr-9c4a8ad6-xovgsx` @ `752d6d8`).
-**User order 2026-11-17 ~15:46 UTC (supersedes the earlier "save to ccr-9c4a8ad6-xovgsx"):** new session work goes to
-`ccr-d4240b15-rl1i72` and each specialist's own branch until the user has reviewed it; nothing unfinished is merged into
-the original project branch `ccr-9c4a8ad6-xovgsx`.
-Updated: 2026-11-17 ~16:00 UTC.
+**Lead coordinator ("Lead Claudia") — round 2, account 2:** session `session_01VCMXob2ipUeLE1o7yXNSsZ` ("Rainbow Android
+game parallel restoration"), branch `ccr-5495e9c4-g0apvl` = continuation of the lead branch `ccr-d4240b15-rl1i72`
+(started from its newest commit `4156164`). Briefs for every workstream: `docs/briefs/2026-11-17-r2/`
+(`COMMON_RULES.md` + one file per workstream).
+Updated: 2026-11-17 ~16:43 UTC.
 
-## User gameplay recording (received 15:45 UTC)
-`qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4` (trimmed: the last second showed the phone's
-notification shade; original 49.8 s, 720×1602, 30 fps, sha256 `8501d078…`, kept out of git) + 1 fps sheets
-`user_video_1fps_00-23s.png`, `user_video_1fps_24-48s.png`. Lead's first read: 03 at 4–6 s (white sheet over the view),
-04 at 7–10 s (white sheet, then the whole frame inside a pink wall at 8 s), 05 11–16 s, 06 17–25 s (drum wall + gold
-band fill the view 18–20 s), 07 26–37 s (gold ring band fills the frame 33–36 s), **08 38–39 s = the match08
-reconstruction** (so the recording is from a match08 APK), 09 40 s, 10 41–43 s, 11 44–48 s (girl + towel,
-FINAL SPIN COMPLETE). Analysis: camera specialist, `qa/gameplay_video/NOTES.md` on `claude/rainbow-s08-camclear`.
+## What happened to round 1 (previous account)
+Round 1 (lead `session_01AvQv6UXiBngewM8kSBwFfZ` on the previous Claude account) launched four cloud sessions (04, 05,
+06, 07) and two Screen 08 subagents between 15:33 and 16:03 UTC. **All of them stopped at ~16:01 UTC: "You've hit your
+5-hour limit · resets 8:20pm (UTC)"** (read from their saved transcripts). Their containers kept autosaving to the old
+branches (last: 04 at 16:27). Everything they wrote is on GitHub. Because they may wake up after 20:20 UTC, round 2
+continues on separate **`…-c2` continuation branches** created from each old branch's newest commit — nothing is merged
+or overwritten. Recommended: on the previous account, archive or stop those five sessions so they cannot duplicate work.
 
-## Rules for every workstream
-* Own branch, own worktree / own cloud container. No merges or cherry-picks between line A (`ccr-9c4a8ad6-xovgsx`) and
-  line B (`ccr-b0757dec-dj6l1o`); no pushes to protected branches (`backups/autosave.config.json`).
-* Shared systems (Benny `src/characters/benny/*`, gameplay, camera `cameraRig.ts`/`match.ts`, `course.ts`, `Game.ts`,
-  coins, HUD `src/ui/*`, the 13 approved images) — only minimal, switch-guarded edits, each listed in the agent's
-  SHARED_CHANGES / NOTES for the lead's approval. Benny belongs to the Screen 08 Benny specialist only.
-* Default build stays 0 px different; Screen 08 under `?match08=1` stays unchanged for 04–07 agents; 91 coins / 2,240.
-* No paid World Labs / fal job without the user's explicit OK (job + cost named first). Keys are on the environment
-  (secure form, 2026-11-17 ~15:42 UTC): World Labs 5,420 credits (free read), fal key accepted (free 404 check).
-* Nothing is "approved" until the user says so. Screens 04–07 are integrated only after the user approves Screen 08
-  and that screen.
+## Rules for every workstream (full text: `docs/briefs/2026-11-17-r2/COMMON_RULES.md`)
+* Own branch, own cloud container. No merges / cherry-picks between line A (`ccr-9c4a8ad6-xovgsx` and its descendants)
+  and line B (`ccr-b0757dec-dj6l1o`, the 05 branches); no pushes to protected branches; `codex/*` never.
+* Shared systems (Benny = Screen 08 Benny specialist only; HUD; gameplay; camera; `course.ts`; `Game.ts`; coins; the 13
+  approved images): only minimal, switch-guarded edits listed in each agent's `SHARED_CHANGES.md` for the lead.
+* Default build 0 px; `?match08=1` unchanged for the 04–07 agents; 91 coins / 2,240; gameplay 8/8; continuity gap 0.
+* No paid job without the user's OK. The only authorised paid job: ONE fal clean-plate edit for Screen 04 (not run yet;
+  gated by the lead's "FAL READY" message).
+* Nothing is "approved" until the user says so. Integration only after the user approves Screen 08 and that screen.
+* Each session does ONE milestone, pushes, reports to the lead with `send_message`, then stops and waits (usage budget).
 
-## Status
-| Screen | Active agent | Where | Git branch | Completed work | Visual accuracy | Remaining issues | Latest saved commit | Next task | Status |
-|---|---|---|---|---|---|---|---|---|---|
-| 08 Benny | benny-character-artist (subagent, own worktree) | lead container | `claude/rainbow-s08-benny08-bake` | started 15:33 UTC: re-bake Benny's maps from the APPROVED 08 picture | before: Benny+splash 65.8 %, scenery 97.4 %, whole 83.3 % | fur/knit/pom/star surface detail | – | CURRENT vs NEW bake comparison, keep the closer | in development |
-| 08 camera / video | path-camera-transition-engineer (subagent, own worktree) | lead container | `claude/rainbow-s08-camclear` | started 15:34 UTC: reproduce the user's gameplay-video windows (7–9, 18–20, 34–37, 38–40, 40–47 s) | – | foam / washer geometry / gold structures obstructing the view (user video) | – | timeline per build, fix only what newer builds still show (`camclear=1`) | in development |
-| 08 integration | lead | lead container | `ccr-d4240b15-rl1i72` → `ccr-9c4a8ad6-xovgsx` | restore verified (see below) | 97.4 % scenery (method approved, screen NOT approved) | waits for the two 08 specialists | `1663b59` (autosave) | integrate, gameplay + steering, 91 coins, APK, full-size previews, motion comparisons | in development |
-| 04 Five Arrows | screen-04 cloud session `session_01AvQv6UQ9kzB2yfcESLZjUB` | own container | `claude/rainbow-s04-match` (from line A `752d6d8`) | MILESTONE 1 (15:57 UTC, `8c1732b`, verified by the lead): camera solve, fitted proxies, original pixels projected, picture's 5 coins (total 91 / 2,240 kept) | scenery 5.1 % → **97.6 %** within 20 (SSIM 0.967); whole 6.4 → 79.9 %; Benny area 16.5 % | moving 10–20 u: tunnel interior smeared, water under Benny mirrored tiles; Benny look (use `benny08=1`); provisional fill (23.4 %) until a fal plate is approved | `8b0bf4c` | MILESTONE 2: moving quality (ring-structured tunnel tiles, painted water while riding), splash card | in development (milestone 1 under review) |
-| 05 Flow Into the Current | screen-05 cloud session `session_01AvQv6ShfugNq5opq6Bd1MX` | own container | `claude/rainbow-s05-match` (from line B `99ab17b`) | MILESTONE 1 (15:56 UTC, `d979028`, verified by the lead): INVENTORY + `?tgtvis05=1` (approved water kept around Benny's hat/shoulders) | whole frame 87.8 % → **89.2 %** within 20 (SSIM 0.869 → 0.877), scenery 91.6 → 93.3 %, water 92.8 → 96.5 % | **match05 run has 100 coins / 2,330 — must become 91 / 2,240 before any integration**; teal patch beside Benny while riding; right wall chunk; bottom-left ring arc | `7336e72` | MILESTONE 2: coin total 91 / 2,240, moving quality, then wall/ring | in development (milestone 1 under review) |
-| 06 Rinse Arch | screen-06 cloud session `session_01AvQv6SAwTuXwWRiSwgKaoH` | own container | `claude/rainbow-s06-match` (from line A `752d6d8`) | started 15:57 UTC (after 05 reached milestone 1) | audit 5.0 % | everything (Phase 2); obstruction fixes stay with the camera specialist (`camclear`) | – | MILESTONE 1: first `?match06=1` at the approved view + numbers + motion check | in development |
-| 07 Washer Tube | screen-07 cloud session `session_01AvQv6SiGdDhWH1exHdH8xX` | own container | `claude/rainbow-s07-match` (from line A `752d6d8`) | started 15:59 UTC (after 04 reached milestone 1); reuses `qa/match/07/` camera + ring measurements | audit 6.7 % | everything (Phase 2); 07→08 drop must stay intact; obstruction fixes stay with `camclear` | – | MILESTONE 1: first `?match07=1` + numbers + motion check | in development |
+## Status per screen
+| Screen | Assigned specialist | Working branch (continued from) | Running-session status | Latest verified commit | Completed improvements | Latest visual measurements | Unfinished problems | Test results | Next task | Approval status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 08 Benny | benny-character-artist — session `session_01VCMXoYuzD1BetvXyVLKxre` | `claude/rainbow-s08-benny08-bake-c2` (from `claude/rainbow-s08-benny08-bake` @ `6392658`) | see "Verified at" below | `6392658` (round 1 WIP) | ported benny05 look (knit beanie, pom, star, shell fur); Benny maps re-baked from the APPROVED 08 picture (`?bake08=1`; match08 now uses them) | whole frame 83.3 → **84.3 %** within 20 levels, below HUD 90.1 → 91.2 % (CURRENT → NEW bake); scenery 97.4 % | fur shading, knit/cuff/stripes, pom yarn, star shape, splash look; NOTES.md missing | round 1: gameplay 8/8, 91 / 2,240 (before the bake) | verify bake, NOTES, one-factor look rounds, motion + 04–07 check | NOT approved |
+| 08 camera / video | path-camera-transition-engineer — session `session_01VCMXobqY9gmdQoEnarNz81` | `claude/rainbow-s08-camclear-c2` (from `claude/rainbow-s08-camclear` @ `5547670`) | see below | `5547670` (round 1 WIP) | `?camclear=1` obstruction fixes for 04/06/07/08 (`camClear.ts`), timelines of source + both APKs, probe scans | – (not measured yet) | white sheet 03/04, pink wall 04, drum wall 06, gold band 07, 08 view engagement; NOTES.md missing | not yet run on the WIP | verify WIP, video-moment comparisons, moving check 07→08→09 | NOT approved |
+| 08 integration | lead | `ccr-5495e9c4-g0apvl` | running (this session) | see `git log` | restore verified; keys reconnected; round 2 launched | scenery 97.4 %, whole 83.4 % (method approved, screen NOT approved) | waits for the two 08 specialists | bootstrap OK; tsc + continuity OK | integrate 08 specialists after review, APK, full-size previews | NOT approved |
+| 04 Five Arrows | screen-04 workstream — session `session_01VCMXoZnQahSncyyVnBsDQS` | `claude/rainbow-s04-match-c2` (from `claude/rainbow-s04-match` @ `e0bad9c`) | see below | `8c1732b` milestone 1 (+ autosaves to `e0bad9c`) | milestone 1: camera solve, fitted proxies, original pixels projected, picture's 5 coins (91 / 2,240 kept); ring-structured tunnel tiles written (not wired) | scenery 5.1 → **97.6 %** within 20 (SSIM 0.967); whole 6.4 → 79.9 %; Benny area 16.5 % | smeared gold tunnel at 10–20 u; mirrored water under Benny; provisional fill (23.4 %) until the fal plate | milestone 1: gameplay 8/8, default 0 px | MILESTONE 2 (tiles, water, motion, the one fal plate when "FAL READY") | NOT approved |
+| 05 Flow Into the Current | screen-05 workstream (line B) — session `session_01VCMXoYy3mTRHhDGP8mZcTw` | `claude/rainbow-s05-match-c2` (from `claude/rainbow-s05-match` @ `90129c8`) | see below | `d979028` milestone 1 (+ autosaves to `90129c8`) | milestone 1 `?tgtvis05=1` (approved water around Benny); coin-total fix `coins05tot` written (audit 91 coins, all collected) | whole 87.8 → **89.2 %**, scenery 91.6 → **93.3 %**, water 92.8 → **96.5 %** within 20 | coin fix changes 2,296 px on 04 + 17 px on 05 (unexplained); teal patch beside Benny; right wall chunk; bottom-left ring arc | coin audit 91 / 91 collected; gameplay re-test pending | MILESTONE 2 (91 / 2,240 verified, keep tgtvis05, scenery fixes) | NOT approved |
+| 06 Rinse Arch | screen-06 workstream — session `session_01VCMXocCdACTagSAjpsaqHT` | `claude/rainbow-s06-match-c2` (from `claude/rainbow-s06-match` @ `42c9b29`) | see below | `752d6d8` (no 06 work saved in round 1) | – | audit 5.0 % (current game) | everything (milestone 1) | – | MILESTONE 1 `?match06=1` | NOT approved |
+| 07 Washer Tube | screen-07 workstream — session `session_01VCMXoZAmTEuSmtFMN8ca5t` | `claude/rainbow-s07-match-c2` (from `claude/rainbow-s07-match` @ `49cf414`) | see below | `752d6d8` (+ earlier `qa/match/07/` camera + ring measurements) | approved-07 measurements (Benny box, 5 rings, best-fit render) | audit 6.7 % | everything (milestone 1); 07→08 drop must stay intact | – | MILESTONE 1 `?match07=1` | NOT approved |
 
-## Restore verification (2026-11-17 ~15:25 UTC, this account)
-* Repository `josiahscalia5-dev/rainbow-`, branch `ccr-9c4a8ad6-xovgsx` @ `752d6d8` (contains `7694d2f` and the later
-  Benny-check + full-save commits); session branch `ccr-d4240b15-rl1i72` = the same + autosaves.
-* 13/13 approved images byte-identical (`sha256sum -c scripts/reference.sha256`); 10/10 specialists present.
-* Git LFS: 44/44 files real locally (APKs, Marble splats/collider/pano, match08 + benny05 textures, models).
-* Autosave: daemon running, remote SHA == local HEAD.
-* World Labs: key re-entered via the secure form; free read 5,420 credits (same account). fal: key accepted (free 404).
-  Image-Blaster restored (`/home/user/neilsonnn/image-blaster` @ 4acb43b, 08 world restored). Download hosts
-  `cdn.marble.worldlabs.ai`, `v3.fal.media`, `v3b.fal.media` are not on this environment's allowlist yet (only needed
-  after an approved paid job). World Labs plugin MCP server: not connected (proxy refused its host).
+### Verified at 16:41 UTC (list_sessions + `git ls-remote`)
+* 04: RUNNING — continuation branch pushed (`claude/rainbow-s04-match-c2` @ `359e324`).
+* 06: RUNNING — continuation branch pushed (`claude/rainbow-s06-match-c2` @ `b7d85b2`).
+* 07, 08 camera: container ready (Blender, Android SDK, Playwright installed OK), brief queued — 04 and 06 went
+  through the same state minutes before they started.
+* 05, 08 Benny: container still cloning the repository (368 MB of Git LFS).
+(The lead updates this section as each session's first push to its `-c2` branch is verified.)
+
+## Restore verification (round 2, 2026-11-17 ~16:40 UTC, account 2)
+* Lead branch restored: this session started from `ccr-d4240b15-rl1i72` @ `4156164`; work continues on `ccr-5495e9c4-g0apvl`.
+* Newest remote commits found: lead `4156164` (16:18) · `claude/rainbow-s04-match` `e0bad9c` (16:27, autosave after
+  `8c1732b` milestone 1 + tunnel tiles) · `claude/rainbow-s05-match` `90129c8` (16:23, after `d979028` milestone 1 +
+  coin-total fix) · `claude/rainbow-s06-match` `42c9b29` (16:22, transcripts only) · `claude/rainbow-s07-match` `49cf414`
+  (16:23, transcripts only) · `claude/rainbow-s08-benny08-bake` `6392658` (16:00, bake WIP) · `claude/rainbow-s08-camclear`
+  `5547670` (16:01, camclear WIP) · `ccr-9c4a8ad6-xovgsx` `752d6d8` (15:18).
+* 13/13 approved images byte-identical; 10/10 specialist definitions present with unchanged SHA-256.
+* Git LFS: 45/45 real files locally, 45/45 confirmed on GitHub LFS (368 MB; includes the user's gameplay video).
+* Tools: Blender 5.3.0, Android SDK 34 + build-tools 34.0.0 + Java 21, Node 22, Playwright Chromium (WebGL2), ffmpeg,
+  ImageMagick, Python QA libs — all OK. tsc OK; continuity OK (07→08 drop 61.19).
+* World Labs: key saved via the secure form on the `rainbow-` environment; free read **5,420 credits** (same account).
+  The two old Screen 05 pilot world records return 404 from the API; their files are complete in Git LFS.
+* fal.ai: key saved via the secure form; free check HTTP 404 = key accepted. Download hosts `v3.fal.media`,
+  `v3b.fal.media` added to the environment (for the one authorised Screen 04 edit). No paid job run.
+* Autosave: daemon running on `ccr-5495e9c4-g0apvl`, remote SHA == local HEAD.
+* Bootstrap "Specialist agents" check crashed on the round-1 roster format (objects instead of names) — fixed in
+  `scripts/verify-assets.py`; now OK.
 
 ## Waiting for the user
-* Paid: ONE fal `nano-banana-2/edit` clean plate for Screen 04 (`qa/match/04/FAL_PLATE_REQUEST.md` on `claude/rainbow-s04-match`), replacing the provisional local fill (23.4 % of the frame). Not run. Needs the fal download hosts `v3.fal.media`, `v3b.fal.media` allowed when approved.
+* Screen 08: approval of the whole screen (method approved; screen NOT approved).
+* Previous account: archive/stop its five old sessions so they don't wake at 20:20 UTC and duplicate work.

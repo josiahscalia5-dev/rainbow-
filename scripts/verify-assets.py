@@ -167,7 +167,8 @@ def cmd_agents() -> int:
         print(f"  {a['name']:34} {a['state']:7} next: {a['relaunch_when'][:70]}")
     extra = sorted(x.stem for x in (REPO / ".claude" / "agents").glob("*.md")) if (REPO / ".claude" / "agents").is_dir() else []
     unknown = [x for x in extra if x not in {a["name"] for a in roster["agents"]}]
-    running = roster.get("running_now") or []
+    running = [r if isinstance(r, str) else f"{r.get('agent', '?')} ({r.get('branch', '?')})"
+               for r in (roster.get("running_now") or [])]
     for pr in problems:
         print("  PROBLEM:", pr)
     if problems:

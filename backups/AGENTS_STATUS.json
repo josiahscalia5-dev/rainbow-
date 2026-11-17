@@ -1,40 +1,74 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-17T15:41:17Z",
-  "updated_by_session": "session_01AvQv6UXiBngewM8kSBwFfZ (lead, parallel workstreams; report docs/PARALLEL_PROGRESS.md)",
+  "updated_utc": "2026-11-17T16:45:00Z",
+  "updated_by_session": "session_01VCMXob2ipUeLE1o7yXNSsZ (lead, account 2, round 2; report docs/PARALLEL_PROGRESS.md)",
   "running_now": [
     {
       "agent": "benny-character-artist",
-      "workstream": "Screen 08 Benny re-bake from the approved 08 picture",
-      "where": "lead container, own git worktree",
-      "branch": "claude/rainbow-s08-benny08-bake",
-      "started_utc": "2026-11-17T15:33Z",
-      "notes": "qa/match/08/benny08/NOTES.md"
+      "workstream": "Screen 08 Benny look (bake08 maps, fur, beanie, pom, star, splash)",
+      "session": "session_01VCMXoYuzD1BetvXyVLKxre",
+      "where": "own cloud container (account 2)",
+      "branch": "claude/rainbow-s08-benny08-bake-c2",
+      "continued_from": "claude/rainbow-s08-benny08-bake @ 6392658",
+      "started_utc": "2026-11-17T16:35Z",
+      "notes": "qa/match/08/benny08/NOTES.md",
+      "brief": "docs/briefs/2026-11-17-r2/ on ccr-5495e9c4-g0apvl"
     },
     {
       "agent": "path-camera-transition-engineer",
-      "workstream": "Screen 08 / user gameplay video: obstruction windows 7-9, 18-20, 34-37, 38-40, 40-47 s",
-      "where": "lead container, own git worktree",
-      "branch": "claude/rainbow-s08-camclear",
-      "started_utc": "2026-11-17T15:34Z",
-      "notes": "qa/gameplay_video/NOTES.md"
+      "workstream": "Screen 08 camera / gameplay-video obstructions (?camclear=1)",
+      "session": "session_01VCMXobqY9gmdQoEnarNz81",
+      "where": "own cloud container (account 2)",
+      "branch": "claude/rainbow-s08-camclear-c2",
+      "continued_from": "claude/rainbow-s08-camclear @ 5547670",
+      "started_utc": "2026-11-17T16:35Z",
+      "notes": "qa/gameplay_video/NOTES.md",
+      "brief": "docs/briefs/2026-11-17-r2/ on ccr-5495e9c4-g0apvl"
     },
     {
-      "agent": "screen-04 cloud session",
-      "session": "session_01AvQv6UQ9kzB2yfcESLZjUB",
-      "workstream": "Screen 04 ?match04=1 (08 method)",
-      "branch": "claude/rainbow-s04-match",
-      "started_utc": "2026-11-17T15:37Z",
-      "notes": "qa/match/04/STATUS.md"
+      "agent": "screen-04 workstream",
+      "workstream": "Screen 04 ?match04=1 milestone 2 (tunnel tiles, water under Benny, motion, 1 authorised fal plate)",
+      "session": "session_01VCMXoZnQahSncyyVnBsDQS",
+      "where": "own cloud container (account 2)",
+      "branch": "claude/rainbow-s04-match-c2",
+      "continued_from": "claude/rainbow-s04-match @ e0bad9c",
+      "started_utc": "2026-11-17T16:35Z",
+      "notes": "qa/match/04/STATUS.md",
+      "brief": "docs/briefs/2026-11-17-r2/ on ccr-5495e9c4-g0apvl"
     },
     {
-      "agent": "screen-05 cloud session",
-      "session": "session_01AvQv6ShfugNq5opq6Bd1MX",
-      "workstream": "Screen 05 continue line B ?match05=1",
-      "branch": "claude/rainbow-s05-match",
-      "started_utc": "2026-11-17T15:37Z",
-      "notes": "qa/match/05/STATUS.md"
+      "agent": "screen-05 workstream (line B)",
+      "workstream": "Screen 05 ?match05=1 milestone 2 (91 coins / 2,240, keep tgtvis05 water, scenery)",
+      "session": "session_01VCMXoYy3mTRHhDGP8mZcTw",
+      "where": "own cloud container (account 2)",
+      "branch": "claude/rainbow-s05-match-c2",
+      "continued_from": "claude/rainbow-s05-match @ 90129c8",
+      "started_utc": "2026-11-17T16:35Z",
+      "notes": "qa/match/05/STATUS.md",
+      "brief": "docs/briefs/2026-11-17-r2/ on ccr-5495e9c4-g0apvl"
+    },
+    {
+      "agent": "screen-06 workstream",
+      "workstream": "Screen 06 ?match06=1 milestone 1",
+      "session": "session_01VCMXocCdACTagSAjpsaqHT",
+      "where": "own cloud container (account 2)",
+      "branch": "claude/rainbow-s06-match-c2",
+      "continued_from": "claude/rainbow-s06-match @ 42c9b29",
+      "started_utc": "2026-11-17T16:35Z",
+      "notes": "qa/match/06/STATUS.md",
+      "brief": "docs/briefs/2026-11-17-r2/ on ccr-5495e9c4-g0apvl"
+    },
+    {
+      "agent": "screen-07 workstream",
+      "workstream": "Screen 07 ?match07=1 milestone 1 (07->08 drop protected)",
+      "session": "session_01VCMXoZAmTEuSmtFMN8ca5t",
+      "where": "own cloud container (account 2)",
+      "branch": "claude/rainbow-s07-match-c2",
+      "continued_from": "claude/rainbow-s07-match @ 49cf414",
+      "started_utc": "2026-11-17T16:35Z",
+      "notes": "qa/match/07/STATUS.md",
+      "brief": "docs/briefs/2026-11-17-r2/ on ccr-5495e9c4-g0apvl"
     }
   ],
   "assignments_now": {
@@ -225,5 +259,10 @@
     "next_instructions": "qa/pilot05/proj/BRIEF_NEXT.md",
     "locked_result": "approved-water pixels within 20 levels 25.9% -> 93.4% (96.8% without the T2-ring-covered corners), SSIM 0.31 -> 0.92, mean 46.1 -> 8.7",
     "checks": "default pixel-identical; 06/07 identical with proj05; gameplay 8/8; continuity OK; relative frame cost 0.98x"
+  },
+  "previous_round_stopped": {
+    "when_utc": "2026-11-17T16:01Z",
+    "why": "previous Claude account hit its 5-hour usage limit (resets 20:20 UTC); its sessions (lead session_01AvQv6UXiBngewM8kSBwFfZ, 04 ...UQ9kzB2yfcESLZjUB, 05 ...ShfugNq5opq6Bd1MX, 06 ...SAwTuXwWRiSwgKaoH, 07 ...SiGdDhWH1exHdH8xX) and its two 08 subagents stopped; their containers kept autosaving to the old branches",
+    "rule": "round 2 continues on *-c2 continuation branches; never merge the old branches into them"
   }
 }
