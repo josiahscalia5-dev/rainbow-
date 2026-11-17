@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13066,
-   "sha256": "d75292731dc634f6b22e6b12c39e78ab1a3f51b911870b975027fee3a78f8df8"
+   "sha256": "4352d3ddde9774cbae35041f2f5f1a9d172587452840a4bf3fe3d55750828126"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -895,6 +895,11 @@
    "path": "docs/briefs/2026-11-17-r6/USER_DECISIONS.md",
    "bytes": 4374,
    "sha256": "d5e53eb9ab71ddb37c8267ce9ed9315983724435a74aef977fc3fb34b2ad1348"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r7/S07.md",
+   "bytes": 4215,
+   "sha256": "66ed00e097202e4fa89ac59cd8d15eec0d6cdd9da6365f60d94fe5b1af3f68ff"
   },
   {
    "path": "docs/briefs/2026-11-17-r7/S08_SCENERY.md",
