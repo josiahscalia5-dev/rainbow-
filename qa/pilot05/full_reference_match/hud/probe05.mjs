@@ -75,7 +75,48 @@ try {
             s = Math.min(sCp + (t.dsMax ?? T.sMax), Math.max(sCp + (t.dsMin ?? 1), s)); lat = Math.max(-(t.latMax ?? 3.6), Math.min(t.latMax ?? 3.6, lat));
           }
           const p = P(s, lat, h); const [x, y] = proj(p); const d1 = dia(p);
-          out.push({ ...t, s: +s.toFixed(3), ds: +(s - sCp).toFixed(3), lat: +lat.toFixed(3), x: +x.toFixed(1), y: +y.toFixed(1), d_at_scale1: +d1.toFixed(2), scale: +(t.w / d1).toFixed(3), dist: +p.distanceTo(camera.position).toFixed(2) });
+          out.push({ ...t, s: +s.toFixed(3), ds: +(s - sCp).toFixed(3), lat: +lat.toFixed(3), h: +(t.h ?? T.h).toFixed(3), x: +x.toFixed(1), y: +y.toFixed(1), d_at_scale1: +d1.toFixed(2), scale: +(t.w / d1).toFixed(3), dist: +p.distanceTo(camera.position).toFixed(2), bob: h - (t.h ?? T.h) });
+        }
+        if (T.occl) {
+          // Occlusion-aware placement (2026-11-17): a coin whose natural spot is hidden (the far 05 tunnel is a forced-
+          // perspective relief only ~1 u deep, ~58.4 u from the checkpoint camera) is pulled forward ALONG ITS OWN CAMERA RAY to
+          // just in front of the first non-coin surface over its footprint: same screen centre, scale re-solved for the new
+          // distance, course (s, lat, h) read back from the course frame. Pulled coins keep their depth order (step T.occl.step).
+          const cam = camera.position.clone();
+          const ndc = (x, y) => [(x / W) * 2 - 1, 1 - (y / H) * 2];
+          const ray = (x, y) => { const [nx, ny] = ndc(x, y); return new V3(nx, ny, 0.5).unproject(camera).sub(cam).normalize(); };
+          const hitD = (x, y) => { const [nx, ny] = ndc(x, y); const hs = R.probe(nx, ny).filter((q) => !q.obj.includes('<coins<')); return hs.length ? hs[0].d : Infinity; };
+          const frameOf = (p, s0) => {
+            let s = s0;
+            for (let it = 0; it < 40; it++) { const f = c.sample(s); const g = p.clone().sub(f.pos).dot(f.tan); s += g; if (Math.abs(g) < 1e-6) break; }
+            const f = c.sample(s); const v = p.clone().sub(f.pos);
+            return { s, lat: v.dot(f.right), h: v.dot(f.up) };
+          };
+          const { tiltSin = 0.79, thick = 0.18, safety = 0.15, step = 0.2 } = T.occl;
+          for (const o of out) {
+            const dh = Math.min(hitD(o.x, o.y), hitD(o.x - o.w / 2, o.y), hitD(o.x + o.w / 2, o.y), hitD(o.x, o.y - 0.45 * o.w), hitD(o.x, o.y + 0.45 * o.w));
+            const margin = (sc) => 0.5 * sc * tiltSin + 0.5 * thick * sc + safety;
+            o.dHit = +dh.toFixed(2);
+            o.dMax = dh - margin(o.scale * Math.min(1, (dh - 0.5) / o.dist));
+            o.occluded = o.dist > o.dMax;
+          }
+          for (let k = out.length - 1; k >= 0; k--) {
+            const o = out[k];
+            if (!o.occluded) continue;
+            const nxt = out[k + 1];
+            o.dNew = Math.min(o.dMax, nxt?.occluded ? nxt.dNew - step : Infinity);
+          }
+          for (const o of out) {
+            if (!o.occluded) continue;
+            const p = cam.clone().addScaledVector(ray(o.x, o.y), o.dNew);
+            const fr = frameOf(p, o.s);
+            const d1 = dia(p); const [x, y] = proj(p);
+            Object.assign(o, { s: +fr.s.toFixed(3), ds: +(fr.s - sCp).toFixed(3), lat: +fr.lat.toFixed(3), h: +(fr.h - o.bob).toFixed(3), x: +x.toFixed(1), y: +y.toFixed(1), d_at_scale1: +d1.toFixed(2), scale: +(o.w / d1).toFixed(3), dist: +o.dNew.toFixed(2) });
+            // round trip: rebuild the point from (s, lat, h + bob) exactly as coins.ts does and re-project
+            const q = P(fr.s, fr.lat, fr.h); const [qx, qy] = proj(q);
+            o.roundTripPx = +Math.hypot(qx - o.x, qy - o.y).toFixed(3);
+          }
+          for (const o of out) { o.dMax = +o.dMax.toFixed(2); if (o.dNew) o.dNew = +o.dNew.toFixed(2); o.bob = +o.bob.toFixed(4); }
         }
         return out;
       }, targets);

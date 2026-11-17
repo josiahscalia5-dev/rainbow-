@@ -831,3 +831,31 @@ The knit columns (~10 texels per stitch column) and both stripe bands come throu
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T01:24:18.412Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "    uu = np.arange(TW)\n    xx = (uu - uc) / TW\n    h = cf[0] + cf[1] * xx + cf[2] * xx * xx\n    a0, a1 = h[u0], h[u1 - 1]\n    # unseen arc u1 .. u0 + TW: linear from a1 to a0\n    span = (u0 + TW) - (u1 - 1)\n    for u in list(range(u1, TW)) + list(range(0, u0)):\n        t = ((u - (u1 - 1)) % TW) / span\n        h[u] = a1 + (a0 - a1) * t\n    return h, est, cf", "new_string": "    uu = np.arange(TW)\n    xx = (uu - uc) / TW\n    h = np.clip(cf[0] + cf[1] * xx + cf[2 …[+531 chars]`
+
+### 🧑 User — 2026-11-17T01:24:18.443Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:24:22.289Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "        seen = cnt > 0.25\n        alb = np.where(seen[..., None], num / np.maximum(den, 1e-6), 0)", "new_string": "        seen = cnt > 0.25\n        alb = np.where(seen[..., None], num / np.maximum(den, 1e-6), 0)\n        # colour family check per texel (approved foam / spray over the fur, mixed edge pixels): such texels are\n        # treated as unseen and filled from their neighbours, so the fur never carries grey-green blotches in motion\n        R_, G_, B_ = alb[.. …[+356 chars]`
+
+### 🧑 User — 2026-11-17T01:24:22.339Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:24:23.791Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "        report[name] = dict(px=int(sel.sum()), seen_texels=int(seen.sum()), scale=round(scale, 3),", "new_string": "        report[name] = dict(px=int(sel.sum()), seen_texels=int(seen.sum()), rejected_texels=rejected, scale=round(scale, 3),"}`
+
+### 🧑 User — 2026-11-17T01:24:23.824Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:24:29.284Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; rm -rf $W/b2/tex; timeout 900 python3 $W/bake.py $W/b1,$W/b2 $W/b2/tex --normals 2>&1 | python3 -I -c \"\nimport sys,json; t=sys.stdin.read(); i=t.find('{'); print(t[:i]); d=json.loads(t[i:]); \nfor k,v in d.items(): print(k, v)\"; python3 -I -c \"\nfrom PIL import Image\nd='$W/b2/tex/'\nims=[Image.open(d+f).convert('RGB') for f in ['crown.png','brim.png','body.png','pom.png']]\nW=1024; hs=[int(i.height*W/i.width) for i in ims]; H=sum(hs)+40\no=Image.new('RGB',(W,H),(40,40,40)); y=0\nfor i,h in zip(ims,hs):\n  o …[+215 chars]`
+
