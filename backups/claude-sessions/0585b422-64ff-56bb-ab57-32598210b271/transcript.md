@@ -799,3 +799,349 @@ M16 margin is clean while steering (no silhouette ghost; at least as clean as BE
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; cp $S/bk16/proj05_E.png assets/textures/match05/tgtvis05/proj05_E.png; cp $S/t16/target_05.png $S/t16/fill_mask.png assets/textures/match05/tgtvis05/; sed -i 's/os.environ.get(\"TGTVIS05_MARGIN\", \"3\")/os.environ.get(\"TGTVIS05_MARGIN\", \"16\")/' tools/match05/make_target_vis.py; mkdir -p $S/pf; node scripts/capture.mjs 05 --out=$S/pf/def > /dev/null 2>&1; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/pf/bef > /dev/null 2>&1; node scripts/capture.mjs 05 --q='match05=1&tgtvis …[+1115 chars]`
 
+### 🧑 User — 2026-11-17T15:51:52.749Z
+
+> ↩︎ result: default vs current_default_05 0
+> BEFORE vs wave9 baseline 155
+> match05 now vs my BEFORE capture 0
+> NEW vs M16 capture 0
+> 04 match05 vs +tgtvis05 1923
+> 06 match05 vs +tgtvis05 0
+
+### 🤖 Claude — 2026-11-17T15:52:00.081Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; cp src/vfx/waterRibbon.ts $S/wr_mine.ts; git show HEAD:src/vfx/waterRibbon.ts > src/vfx/waterRibbon.ts; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/pf/bef0 > /dev/null 2>&1; cp $S/wr_mine.ts src/vfx/waterRibbon.ts; git diff --stat; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nS=\"$S\"\nA=np.asarray(Image.open(f\"{S}/pf/bef0/05.png\").convert(\"RGB\"),int);B=np.asarray(Image.open(f\"{S}/pf/bef/05.png\").convert(\"RGB\"),int);W=np.asarray(Image.open(\"qa/pilot …[+374 chars]`
+
+### 🧑 User — 2026-11-17T15:52:11.869Z
+
+> ↩︎ result: Exit code 1
+>  qa/capture_log.json | 40 ++++++++++++++++++++--------------------
+>  1 file changed, 20 insertions(+), 20 deletions(-)
+> HEAD-code BEFORE vs mine 155  HEAD-code vs baseline 0
+> Traceback (most recent call last):
+>   File "<stdin>", line 6, in <module>
+>   File "/usr/local/lib/python3.13/site-packages/numpy/_core/_methods.py", line 45, in _amin
+>     return umr_minimum(a, axis, None, out, keepdims, initial, where)
+> ValueError: zero-size array to reduction operation minimum which has no identity
+
+### 🤖 Claude — 2026-11-17T15:52:20.948Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; git log --oneline -3; git checkout qa/capture_log.json; node scripts/capture.mjs 05 --q='ringa=26&nearfloor05=0' --out=$S/pf/bef2 > /dev/null 2>&1; git checkout qa/capture_log.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nS=\"$S\"\nW=np.asarray(Image.open(\"qa/pilot05/wave9/baseline/05.png\").convert(\"RGB\"),int)\nfor f in (\"bef\",\"bef0\",\"bef2\"):\n  A=np.asarray(Image.open(f\"{S}/pf/{f}/05.png\").convert(\"RGB\"),int); print(f,int((A!=W).any(-1).sum()))\nA=np.asarray(I …[+569 chars]`
+
+### 🧑 User — 2026-11-17T15:52:35.360Z
+
+> ↩︎ result: 6eaff01 autosave: Rainbow 2026-11-17 15:51 UTC
+> 4855784 autosave: Rainbow 2026-11-17 15:46 UTC
+> 39fc3f9 autosave: Rainbow 2026-11-17 15:42 UTC
+> Updated 1 path from the index
+> Updated 1 path from the index
+> bef 155
+> bef0 0
+> bef2 0
+> bef diff bbox 59 805 21 104 37
+> 04 diff bbox 242 444 391 713 max 185 >10: 560
+
+### 🤖 Claude — 2026-11-17T15:52:42.774Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; ls references/ | head -14; python3 -I - <<EOF\nimport numpy as np,glob\nfrom PIL import Image\nS=\"$S\"\nr=Image.open(glob.glob(\"references/04_*.png\")[0]).convert(\"RGB\")\nA=np.asarray(Image.open(f\"{S}/pf/a04/04.png\").convert(\"RGB\"),float);B=np.asarray(Image.open(f\"{S}/pf/b04/04.png\").convert(\"RGB\"),float)\nprint(r.size, A.shape)\nif r.size==(A.shape[1],A.shape[0]):\n  R=np.asarray(r,float); d=(A!=B).any(-1)\n  print(\"on changed px: mean|d| to approved 04: before\",round(np.abs(A-R).me …[+388 chars]`
+
+### 🧑 User — 2026-11-17T15:52:43.220Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+> (864, 1536) (1536, 864, 3)
+> on changed px: mean|d| to approved 04: before 117.87 new 120.47
+
+### 🤖 Claude — 2026-11-17T15:52:44.894Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad/z04.png"}`
+
+### 🧑 User — 2026-11-17T15:52:44.915Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:52:48.054Z
+
+Screen 04 boundary view: 1,923 px change in its far window onto the 05 river (only with the switch on; default 04 untouched). Now gameplay tests.
+
+### 🤖 Claude — 2026-11-17T15:52:48.853Z
+
+> 🔧 **Bash** `{"command": "grep -n \"opt.q\\|--q\\|process.argv\" scripts/gameplay-test.mjs | head -5", "description": "Check gameplay test query option"}`
+
+### 🧑 User — 2026-11-17T15:52:48.881Z
+
+> ↩︎ result: 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+
+### 🤖 Claude — 2026-11-17T15:52:52.544Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; for q in \"match05=1\" \"match05=1&tgtvis05=1\"; do node scripts/gameplay-test.mjs --q=\"$q\" --out=qa/match/05/gameplay_$(echo $q | tr '&=' '__').json 2>&1 | tail -3; done; node scripts/gameplay-test.mjs --q=\"qa=1\" --out=$S/gp_def.json 2>&1 | tail -2; git status --short | grep -v backups", "description": "Run gameplay tests with/without switch", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T15:53:10.904Z
+
+> ↩︎ result: },
+>  "errors": []
+> }
+>  },
+>  "errors": []
+> }
+>  "errors": []
+> }
+> ?? qa/match/05/gameplay_match05_1.json
+> ?? qa/match/05/gameplay_match05_1_tgtvis05_1.json
+
+### 🤖 Claude — 2026-11-17T15:53:15.676Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; for f in qa/match/05/gameplay_match05_1.json qa/match/05/gameplay_match05_1_tgtvis05_1.json $S/gp_def.json; do python3 -I -c \"\nimport json,sys;j=json.load(open(sys.argv[1]))\nks=list(j.keys());print(sys.argv[1].split('/')[-1],ks[:12])\nt=j.get('tests') or j.get('results') or []\nif isinstance(t,list): print(' pass',sum(1 for x in t if x.get('pass') or x.get('ok')),'/',len(t))\nelif isinstance(t,dict): print(' pass',sum(1 for x in t.values() if (x.get('pass') if isinstance(x,dict) else x)),'/',le …[+164 chars]`
+
+### 🧑 User — 2026-11-17T15:53:15.769Z
+
+> ↩︎ result: gameplay_match05_1.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+>  pass 0 / 0
+>   {'pass': True}
+> gameplay_match05_1_tgtvis05_1.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+>  pass 0 / 0
+>   {'pass': True}
+> gp_def.json ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+>  pass 0 / 0
+>   {'pass': True}
+
+### 🤖 Claude — 2026-11-17T15:53:20.193Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; for f in qa/match/05/gameplay_match05_1.json qa/match/05/gameplay_match05_1_tgtvis05_1.json $S/gp_def.json; do python3 -I -c \"\nimport json,sys;j=json.load(open(sys.argv[1]));c=j['checks']\nprint(type(c).__name__, len(c), 'passed', sum(1 for x in (c.values() if isinstance(c,dict) else c) if (x.get('pass') if isinstance(x,dict) else x)))\nprint([ (x.get('name'),x.get('detail','')[:60] if isinstance(x.get('detail'),str) else x.get('value')) for x in (c if isinstance(c,list) else [])][:8] if isinsta …[+113 chars]`
+
+### 🧑 User — 2026-11-17T15:53:20.276Z
+
+> ↩︎ result: dict 8 passed 8
+> [('pauseFreezes', {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}), ('continuousTravel', {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}), ('noCameraCut', {'pass': True, 'maxCameraJumpPerStep': 0.728}), ('noTeleport', {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 
+> dict 8 passed 8
+> [('pauseFreezes', {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}), ('continuousTravel', {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}), ('noCameraCut', {'pass': True, 'maxCameraJumpPerStep': 0.728}), ('noTeleport', {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 
+> dict 8 passed 8
+> [('pauseFreezes', {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}), ('continuousTravel', {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}), ('noCameraCut', {'pass': True, 'maxCameraJumpPerStep': 0.728}), ('noTeleport', {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274,  …[+49 chars]
+
+### 🤖 Claude — 2026-11-17T15:53:22.556Z
+
+> 🔧 **Bash** `{"command": "for f in qa/match/05/gameplay_match05_1.json qa/match/05/gameplay_match05_1_tgtvis05_1.json; do python3 -I -c \"\nimport json,sys;c=json.load(open(sys.argv[1]))['checks']\nfor k,v in c.items():\n  s=json.dumps(v)\n  if 'coin' in s.lower(): print(k, s[:300])\n\" $f; done", "description": "Find coin totals in gameplay results"}`
+
+### 🧑 User — 2026-11-17T15:53:22.619Z
+
+> ↩︎ result: realCoinPickups {"pass": true, "startCoins": 1330, "endCoins": 2330, "collected": 100}
+> victory {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "coins": 2330, "hearts": 5, "paused": false, "bennyY": -109.61, "bennyVisible": false, "cam": [11.2, -99.1, -304]}}
+> realCoinPickups {"pass": true, "startCoins": 1330, "endCoins": 2330, "collected": 100}
+> victory {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "coins": 2330, "hearts": 5, "paused": false, "bennyY": -109.61, "bennyVisible": false, "cam": [11.2, -99.1, -304]}}
+
+### 🤖 Claude — 2026-11-17T15:53:26.229Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; python3 -I -c \"\nimport json;c=json.load(open('$S/gp_def.json'))['checks'];print(c['realCoinPickups'])\"; grep -rn \"2,330\\|2330\\|collected 100\\|100 coins\" qa/pilot05/full_reference_match/coins/NOTES.md | head -3", "description": "Default coin numbers; coins notes"}`
+
+### 🧑 User — 2026-11-17T15:53:26.291Z
+
+> ↩︎ result: {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+> 100:* Gameplay `coins/gameplay.json` (STACK + hud05 + coins05): 8/8 pass; real pickups 1,330 → 2,330 (100 coins; default run
+
+### 🤖 Claude — 2026-11-17T15:53:29.938Z
+
+Gameplay 8/8 with and without the switch; coins identical (default 91 / 2,240; `match05` 100 / 2,330 by its existing coins05 layout, unchanged by my switch). Writing deliverables now.
+
+### 🤖 Claude — 2026-11-17T15:53:35.862Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0585b422-64ff-56bb-ab57-32598210b271/scratchpad; D=qa/match/05; cp references/05_flow_into_the_current.png $D/01_APPROVED.png; cp $S/cap_m/05.png $D/02_BEFORE_match05.png; cp $S/pf/new/05.png $D/03_NEW_match05_tgtvis05.png; rm -f $D/new_*; python3 -I tools/match05/metrics.py $D/03_NEW_match05_tgtvis05.png $D/new_ > /dev/null; mkdir -p $D/move/before $D/move/new; for f in move_00 move_03 move_06 move_12 steer_L_025 steer_L_050 steer_L_080 steer_R_025 steer_R_050 steer_R_080; do cp $S/mv_b/$f.png $D/move/before/; done; node scripts/proj05-move.mjs …[+733 chars]`
+
+### 🧑 User — 2026-11-17T15:54:19.298Z
+
+> ↩︎ result: {'move_00.png': 34784, 'move_03.png': 46535, 'move_06.png': 40148, 'move_12.png': 0, 'steer_L_025.png': 44698, 'steer_L_050.png': 62441, 'steer_L_080.png': 0, 'steer_R_025.png': 36632, 'steer_R_050.png': 74217, 'steer_R_080.png': 4392}
+> 13
+> 45M	qa/match/05
+> 4.1M	assets/textures/match05
+
+### 🤖 Claude — 2026-11-17T15:54:24.387Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin ccr-9c4a8ad6-xovgsx && git show FETCH_HEAD:qa/match/08/NOTES.md | head -45; for p in qa/pilot05/proj/near/NOTES.md qa/pilot05/proj/flow2/NOTES.md qa/pilot05/wave12/NOTES.md; do echo \"== $p\"; git show FETCH_HEAD:$p 2>/dev/null | head -8; done", "description": "Read line A 08 method notes read-only"}`
+
+### 🧑 User — 2026-11-17T15:54:24.985Z
+
+> ↩︎ result: # Screen 08 — approved scenery on real 3D geometry (`?match08=1`, 2026-11-17, session 03b94f36)
+> 
+> User order (2026-11-17): apply the cleaned environment-only Screen 08 artwork to the actual 3D game environment behind a
+> test switch; real geometry + texture projection (not a flat picture); match camera, proportions, architecture,
+> waterway, colours, lighting; correct mismatched geometry; APPROVED | BEFORE | NEW as separate full-size pictures;
+> measure; check that it can work with a moving camera on Android. **Default build unchanged (0 px, verified).**
+> 
+> ## What `?match08=1` does (all behind the switch; files)
+> 1. **Camera** (`src/game/match.ts` MATCH_CAM['08'], `src/game/cameraRig.ts` off08/aim08): solved in the live game so
+>    Benny's box, the door and the platform land on the approved picture at the game's own 62° FOV (Benny box
+>    266,843–594,1216 vs approved 260,850–600,1210; door 489,399 vs 490,400; platform 483,565 vs 480,560). The game's
+>    chamber proportions already agree with the picture — only the camera was off. Camera: Benny + offset, aimed at the
+>    door, level (no bank roll); blended in before the checkpoint, out before 09.
+> 2. **Waterway** (`src/world/course.ts`, `assets/t …[+4615 chars]
+
+### 🤖 Claude — 2026-11-17T15:54:26.155Z
+
+Now writing INVENTORY, NOTES, STATUS and SHARED_CHANGES.
+
+### 🤖 Claude — 2026-11-17T15:54:28.556Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json\nfor f in ['qa/match/05/before_REGION_METRICS.json','qa/match/05/new_REGION_METRICS.json']:\n  r=json.load(open(f))['regions']; print(f.split('/')[-1]); [print(f'  {k:26s} {v[\\\"mean_abs\\\"]:6.2f} {v[\\\"within_20\\\"]*100:5.1f} {v[\\\"ssim_lum\\\"]:.3f}') for k,v in r.items()]\nfor f in ['qa/match/05/before_FULL_FRAME_METRICS.json','qa/match/05/new_FULL_FRAME_METRICS.json']: print(json.load(open(f))['whole_frame'])\n\"", "description": "Print final metrics for docs"}`
+
+### 🧑 User — 2026-11-17T15:54:28.611Z
+
+> ↩︎ result: before_REGION_METRICS.json
+>   gold_rings_and_front_frame   9.12  88.2 0.825
+>   purple_walls                 6.42  92.2 0.897
+>   side_fittings                2.94  95.9 0.923
+>   water                        5.94  92.8 0.933
+>   foam_banks                   2.66  98.9 0.965
+>   benny_and_hat               19.22  73.0 0.658
+>   wake_splash                 11.57  82.0 0.811
+>   coins                       27.24  51.9 0.549
+>   bubbles                      3.09  97.4 0.979
+>   hud_and_text                17.20  73.7 0.799
+>   distant_tunnel_and_glow      2.43  97.1 0.936
+> new_REGION_METRICS.json
+>   gold_rings_and_front_frame   9.12  88.2 0.825
+>   purple_walls                 6.42  92.2 0.897
+>   side_fittings                2.94  95.9 0.923
+>   water                        3.55  96.5 0.958
+>   foam_banks                   2.66  98.9 0.965
+>   benny_and_hat               19.20  73.0 0.659
+>   wake_splash                 11.55  82.0 0.811
+>   coins                       27.11  51.9 0.550
+>   bubbles                      3.09  97.4 0.979
+>   hud_and_text                17.20  73.7 0.799
+>   distant_tunnel_and_glow      2.43  97.1 0.936
+> {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 8.96, 'within_10': 0.7937, 'within_20': 0. …[+220 chars]
+
+### 🤖 Claude — 2026-11-17T15:54:34.493Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF' | tee qa/match/05/scenery_bands.txt\nimport json,numpy as np\nfrom PIL import Image\nM=\"qa/pilot05/full_reference_match/masks\"\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\"),float)\nidx=np.asarray(Image.open(f\"{M}/region_index.png\")); R=json.load(open(f\"{M}/regions.json\"))[\"regions\"]\nexcl=np.isin(idx,[R[k][\"id\"] for k in (\"benny_and_hat\",\"hud_and_text\",\"coins\")])\nprint(\"SCENERY = whole frame minus benny_and_hat, hud_and_text, coins (\", int((~excl).sum()),\"px ); BAND = rows\")\nfor nm,f in ((\"BEFORE …[+486 chars]`
+
+### 🧑 User — 2026-11-17T15:54:34.974Z
+
+> ↩︎ result: SCENERY = whole frame minus benny_and_hat, hud_and_text, coins ( 1081118 px ); BAND = rows
+> BEFORE match05: scenery mean 6.66, within 20 91.6 %
+>    bands (within 20 %): 0-192:74.3 192-384:95.1 384-576:93.7 576-768:91.7 768-960:79.3 960-1152:85.9 1152-1344:90.5 1344-1536:92.1
+> NEW match05+tgtvis05: scenery mean 5.60, within 20 93.3 %
+>    bands (within 20 %): 0-192:74.3 192-384:95.1 384-576:93.7 576-768:91.8 768-960:87.2 960-1152:88.5 1152-1344:90.5 1344-1536:92.1
+
+### 🤖 Claude — 2026-11-17T15:54:53.481Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/05/INVENTORY.md", "content": "# Screen 05 — inventory of existing work (2026-11-17, Screen 05 agent, branch `claude/rainbow-s05-match`)\n\nBase: line B `ccr-b0757dec-dj6l1o` @ `99ab17b` (+ autosaves). Line A (`ccr-9c4a8ad6-xovgsx`) read only, nothing taken over.\nMeasure: `python3 -I tools/match05/metrics.py <capture> <prefix>` (same tool / masks as the 86.9 %; masks\n`qa/pilot05/full_reference_match/masks/`, 864 × 1536, pixel statistics, not a perceptual score).\n\n## What exists (all behind switches; default build = T2, unchanged)\n| part | switch  …[+3352 chars]`
+
+### 🧑 User — 2026-11-17T15:54:53.533Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/05/INVENTORY.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:55:14.312Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/05/NOTES.md", "content": "# Screen 05 — Milestone 1: `?tgtvis05=1` (visible approved water around Benny keeps the APPROVED pixels)\n\nSession: Screen 05 agent, 2026-11-17 ~15:40–16:40 UTC, branch `claude/rainbow-s05-match`. One factor, one switch.\nTest URL: `?match05=1&tgtvis05=1` (the switch is explicit and NOT inside `match05`; the user decides).\n\n## Finding (measured)\n`tools/proj05/make_target.py` builds the water target = approved pixels where the approved water is visible, the user's\nisolated original artwork (registered) where Benny + spla …[+4349 chars]`
+
+### 🧑 User — 2026-11-17T15:55:14.339Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/05/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:55:17.312Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/05/SHARED_CHANGES.md", "content": "# Screen 05 agent — edits outside my own folders (for the lead)\n\n| file | change | guard | default build |\n|---|---|---|---|\n| `src/vfx/waterRibbon.ts` | new `export const TGTVIS05 = PROJGAP05 && q05('tgtvis05')` + its doc comment; in `attachProj05` the E texture url picks `assets/textures/match05/tgtvis05/proj05_E.png` when TGTVIS05 | explicit `?tgtvis05=1` (needs proj05 + projfar05 + projgap05, e.g. `?match05=1`) | 0 px (verified) |\n\nNone of `match.ts`, `cameraRig.ts`, `course.ts`, `Game.ts`, `coins.ts` touc …[+45 chars]`
+
+### 🧑 User — 2026-11-17T15:55:17.334Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/05/SHARED_CHANGES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:55:23.713Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/05/STATUS.md", "content": "# Screen 05 — STATUS\n\n* **Assigned screen:** 05 · FLOW INTO THE CURRENT (`?match05=1` line B)\n* **Active agent:** Screen 05 workstream agent (session on branch `claude/rainbow-s05-match`; lead = session_01AvQv6UXiBngewM8kSBwFfZ)\n* **Git branch:** `claude/rainbow-s05-match` (from line B `ccr-b0757dec-dj6l1o` @ 99ab17b; never merged with line A)\n* **Completed work:** INVENTORY.md; Milestone 1 `?tgtvis05=1` — the 28,620 px of water the approved picture shows around Benny's hat / shoulders now come from the approved pictur …[+1029 chars]`
+
+### 🧑 User — 2026-11-17T15:55:23.747Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/05/STATUS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:55:30.146Z
+
+> 🔧 **Bash** `{"command": "git checkout qa/capture_log.json 2>/dev/null; npx tsc --noEmit -p . && echo TSC_OK; git add qa/match/05 tools/match05 assets/textures/match05 src/vfx/waterRibbon.ts && git status --short | grep -v '^??' | head -50 | wc -l && git commit -qm \"Screen 05 milestone 1: ?tgtvis05=1 keeps visible approved water around Benny (whole 87.8 -> 89.2 % within 20)\n\nInventory, NOTES, STATUS, SHARED_CHANGES in qa/match/05; switch-guarded E layer re-bake; default 0 px, BEFORE 0 px, gameplay 8/8.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/ses …[+250 chars]`
+
+### 🧑 User — 2026-11-17T15:55:39.840Z
+
+> ↩︎ result: TSC_OK
+> 35
+> branch 'claude/rainbow-s05-match' set up to track 'origin/claude/rainbow-s05-match'.
+> d9790281a79120cc7f65e8f0a481e3cce4fd640b
+> d9790281a79120cc7f65e8f0a481e3cce4fd640b	refs/heads/claude/rainbow-s05-match
+
+### 🤖 Claude — 2026-11-17T15:55:45.080Z
+
+> 🔧 **Bash** `{"command": "git ls-remote origin refs/heads/ccr-b0757dec-dj6l1o; sed -i 's|^\\* \\*\\*Latest saved commit:\\*\\*.*|* **Latest saved commit:** `d9790281a79120cc7f65e8f0a481e3cce4fd640b` (milestone 1, remote verified == HEAD) + later autosaves|' qa/match/05/STATUS.md && git commit -qam \"Screen 05 STATUS: milestone 1 commit SHA\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6ShfugNq5opq6Bd1MX\" && git push -q origin claude/rainbow-s05-match 2>&1|tail -1; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s05-match …[+105 chars]`
+
+### 🧑 User — 2026-11-17T15:55:48.801Z
+
+> ↩︎ result: 99ab17b2a6b505937777a5c15477e08cc339664b	refs/heads/ccr-b0757dec-dj6l1o
+> 7336e72722177544777f66f8fd888747a1dee9f6
+> 7336e72722177544777f66f8fd888747a1dee9f6	refs/heads/claude/rainbow-s05-match
+> AUTOSAVE OK | branch claude/rainbow-s05-match | scheduler daemon | last verified backup 2026-11-17T15:51:42+00:00 (4.1 min ago) | local 7336e72 remote 7336e72 (match) | uncommitted 0
+> [This command modified 1 file you've previously read: qa/match/05/STATUS.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T15:55:50.506Z
+
+Milestone 1 is pushed and verified (`7336e72`, remote matches). Line B has no new commits. Sending the lead my status now.
+
+### 🤖 Claude — 2026-11-17T15:55:57.710Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01AvQv6UXiBngewM8kSBwFfZ", "message": "Screen 05 agent — MILESTONE 1 done, branch claude/rainbow-s05-match @ 7336e72 (milestone commit d979028), remote verified == HEAD. Line B ccr-b0757dec-dj6l1o unchanged (99ab17b), nothing merged, line A only read.\nFresh BEFORE `?match05=1`: whole 8.96 mean / 87.8 % within 20 / SSIM 0.869 (the 86.9 % figure predates env05's re-bake).\nFinding: 57,916 px of water the APPROVED shows plainly around Benny's hat/shoulders were filled from the isolated artwork (make_target's oversized \"Benny dome\"), 17 % of all frame error.\nNEW switch  …[+1015 chars]`
+
+### 🧑 User — 2026-11-17T15:56:19.172Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T15:56:34.602Z
+
+I've finished milestone 1 of Screen 05: one change that is clearly closer to your approved picture, both standing still and while Benny moves. It's behind a new test switch, `?tgtvis05=1`, which is **not** part of `?match05=1`; it's on only when you add it to the URL. The default build is unchanged. It's under review: nothing is approved until you approve it.
+
+**What was wrong:** the water texture filled a large dome around Benny with your original water artwork. But in the approved picture you can see plain water around his hat and shoulders. That patch was about 58,000 pixels and caused 17 % of all the remaining difference in the frame.
+
+**The fix:** that visible water now uses your approved picture's own pixels. Only the area Benny really covers still uses the artwork. Only the river's main water texture was re-made; before swapping it, I checked that the same process reproduces the current texture exactly.
+
+I first kept your approved pixels right up to Benny's outline (3 px from his fur). That scored best when standing still (89.5 %), but when Benny steered aside it left a faint bright outline of him painted on the water. So I kept a 16 px gap around him instead. At 16 px the steering frames show no outline.
+
+| Your approved picture vs the game, start view | Before (`?match05=1`) | New (`?match05=1&tgtvis05=1`) |
+|---|---|---|
+| Whole frame, pixels within 20 levels | 87.8 % | **89.2 %** |
+| Scenery only (no Benny, HUD or coins) | 91.6 % | **93.3 %** |
+| Water | 92.8 % | **96.5 %** |
+| SSIM (a structural-similarity score) | 0.869 | 0.877 |
+
+The other parts of the frame are unchanged. These are pixel statistics, not an overall likeness score. The 86.9 % from earlier notes was measured before the walls were re-done; today's starting point is 87.8 %.
+
+**Checks run:**
+- Default build and your protected BEFORE (`?ringa=26&nearfloor05=0`): identical pixel for pixel. One of three BEFORE captures had 155 differing pixels, only in the HUD rows. The unchanged code did the same, so it's a capture glitch, not this change.
+- Screen 06 is identical with the switch on. Screen 04 changes in 1,923 pixels, only in its distant view of the Screen 05 river.
+- The gameplay test passes 8 of 8, with and without the switch. Coins are unchanged by the switch: 91 / 2,240 in the default build, and 100 / 2,330 with `?match05=1` because of its existing coin layout.
+- The type check is clean and all 13 reference images are unchanged.
+
+**Remaining differences:**
+- A soft teal patch next to Benny while riding. It's left over from the old fill and was already visible in BEFORE.
+- A darker wall section on the right, and the gold ring curve at the bottom left.
+- The coin faces.
+- Benny and the HUD belong to other agents.
+
+**Backup:** everything is saved on `claude/rainbow-s05-match` at `7336e72`, and GitHub matches. The five-minute autosave shows OK, line B has no new commits, and nothing was merged. I'm not printing the full backup-verified line because I didn't re-run every bootstrap check this session; the bootstrap report I saw was still in progress. I sent the lead this status and am stopping here as instructed.
+
+Files are in `qa/match/05/`:
+- 01_APPROVED.png
+- 02_BEFORE_match05.png
+- 03_NEW_match05_tgtvis05.png
+- move/before/ and move/new/ (moving and steering frames)
+- NOTES.md
+- STATUS.md
+- INVENTORY.md
+
