@@ -117,7 +117,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let m08Applied = false;
   // `?camclear=1` (src/game/camClear.ts): rings / lids / gold lips / foam banks never hide Benny or fill the lens while
   // riding; respawn re-frames the camera at once instead of flying it back through the tube. Off: nothing is created.
-  const camClear = CAMCLEAR ? createCamClear({ env: env.group, foam: water.parts?.foam }) : null;
+  const camClear = CAMCLEAR ? createCamClear({ env: env.group, foam: water.parts?.foam, coins: coins.group }) : null;
   let camSnap = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));

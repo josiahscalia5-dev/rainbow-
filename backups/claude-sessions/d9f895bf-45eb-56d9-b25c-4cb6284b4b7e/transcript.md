@@ -1050,3 +1050,233 @@ Working on 07: adding a camclear-only fade for gold ring arcs close above the le
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && timeout 600 node $S/band.mjs 2>&1 | tail -1 > qa/gameplay_video/r07_band_distances_r4.json; for st in 0 1 -1; do echo \"== steer $st\"; if [ $st = -1 ]; then plan=\"--steerplan=0:0,43:-1\"; else plan=\"--steer=$st\"; fi; timeout 1200 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=41 --t1=48 --dt=0.5 --size=360x800 $plan --out=qa/gameplay_video/moving_r4/steer$st 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],round(r['s'] …[+189 chars]`
 
+### 🧑 User — 2026-11-17T19:01:40.015Z
+
+> ↩︎ result: == steer 0
+> 41 07 349.9 hidden 0.036 near2 0 inside 0
+> 41.5 07 355.9 hidden 0.024 near2 0 inside 0
+> 42 07 361.9 hidden 0.034 near2 0 inside 0
+> 42.5 07 367.9 hidden 0.056 near2 0 inside 0
+> 43 07 373.9 hidden 0.104 near2 0 inside 0
+> 43.5 07 379.9 hidden 0.013 near2 0 inside 0
+> 44 07 385.9 hidden 0.215 near2 0 inside 0
+> 44.5 08 391.4 hidden 0.225 near2 0 inside 0
+> 45 08 396.2 hidden 0.11 near2 0 inside 0
+> 45.5 08 401.0 hidden 0.201 near2 0 inside 0
+> 46 09 405.7 hidden 0.108 near2 0 inside 0
+> 46.5 09 410.5 hidden 0.017 near2 0 inside 0
+> 47 09 415.2 hidden 0.06 near2 0 inside 0
+> 47.5 10 419.6 hidden 0.018 near2 0 inside 0
+> 48 10 423.5 hidden 0.02 near2 0 inside 0
+> == steer 1
+> 41 07 285.6 hidden 0.19 near2 0 inside 0
+> 41.5 07 291.6 hidden 0.075 near2 0 inside 0
+> 42 07 297.6 hidden 0.127 near2 0 inside 0
+> 42.5 07 303.6 hidden 0.105 near2 0 inside 0
+> 43 07 309.6 hidden 0.247 near2 0 inside 0
+> 43.5 07 315.6 hidden 0.231 near2 0 inside 0
+> 44 07 321.6 hidden 0.273 near2 0 inside 0
+> 44.5 07 327.6 hidden 0.236 near2 0 inside 0
+> 45 07 333.6 hidden 0.157 near2 0 inside 0
+> 45.5 07 339.6 hidden 0.139 near2 0 inside 0
+> 46 07 248.6 hidden 0.026 near2 0 inside 0
+> 46.5 07 254.6 hidden 0.128 near2 0 inside 0
+> 47 07 260.6 hidden 0.2 …[+763 chars]
+
+### 🤖 Claude — 2026-11-17T19:01:44.875Z
+
+> 🔧 **Bash** `{"command": "rm -rf qa/gameplay_video/moving_r4/steer1 && timeout 1200 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --t0=41 --t1=48 --dt=0.5 --size=360x800 --steerplan=0:0,43:1 --out=qa/gameplay_video/moving_r4/steer1 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],round(r['s'],1),'hidden',r.get('bennyHidden'),'near2',r.get('near2'),'inside',r.get('inside'))\n  except: pass\"; du -sh qa/gameplay_video/moving_r4", "description": "Rerun right steering from 43 s", "timeout": 1500000}`
+
+### 🧑 User — 2026-11-17T19:02:37.749Z
+
+> ↩︎ result: 41 07 349.9 hidden 0.036 near2 0 inside 0
+> 41.5 07 355.9 hidden 0.024 near2 0 inside 0
+> 42 07 361.9 hidden 0.034 near2 0 inside 0
+> 42.5 07 367.9 hidden 0.056 near2 0 inside 0
+> 43 07 373.9 hidden 0.104 near2 0 inside 0
+> 43.5 07 379.9 hidden 0.065 near2 0 inside 0
+> 44 07 385.9 hidden 0.052 near2 0 inside 0
+> 44.5 08 391.4 hidden 0.453 near2 0 inside 0
+> 45 08 396.2 hidden 0.134 near2 0 inside 0
+> 45.5 08 401.0 hidden 0.021 near2 0 inside 0
+> 46 09 405.7 hidden 0.219 near2 0 inside 0
+> 46.5 09 410.5 hidden 0.133 near2 0 inside 0
+> 47 09 415.2 hidden 0.149 near2 0 inside 0
+> 47.5 10 419.6 hidden 0.05 near2 0 inside 0
+> 48 10 423.5 hidden 0.095 near2 0 inside 0
+> 21M	qa/gameplay_video/moving_r4
+
+### 🤖 Claude — 2026-11-17T19:02:39.401Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/gameplay_video/moving_r4/steer1/f_007_t44.50.png"}`
+
+### 🧑 User — 2026-11-17T19:02:39.427Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:02:46.873Z
+
+> 🔧 **Bash** `{"command": "ls qa/gameplay_video/moving_r3/ | head; python3 -c \"\nimport json,glob\nfor f in glob.glob('qa/gameplay_video/moving_r3/*/probe.json'):\n  d=json.load(open(f)); print(f, d.get('steer'), d.get('steerPlan'), [(r['t'],r['benny'].get('hidden')) for r in d['rows'] if 44<=r['t']<=46])\"", "description": "Compare with r3 moving check"}`
+
+### 🧑 User — 2026-11-17T19:02:46.937Z
+
+> ↩︎ result: sheet_steer-1.png
+> sheet_steer0.png
+> sheet_steer1.png
+> steer-1
+> steer0
+> steer1
+> qa/gameplay_video/moving_r3/steer-1/probe.json -1 None [(44, 0.294), (44.25, 0.342), (44.5, 0.221), (44.75, 0.205), (45, 0.19), (45.25, 0.188), (45.5, 0.22), (45.75, 0.227), (46, 0.032)]
+> qa/gameplay_video/moving_r3/steer1/probe.json 1 None [(44, 0.27), (44.25, 0.352), (44.5, 0.233), (44.75, 0.223), (45, 0.154), (45.25, 0.138), (45.5, 0.138), (45.75, 0.178), (46, 0.025)]
+> qa/gameplay_video/moving_r3/steer0/probe.json 0 None [(44, 0.216), (44.25, 0.207), (44.5, 0.223), (44.75, 0.039), (45, 0.102), (45.25, 0.121), (45.5, 0.198), (45.75, 0.058), (46, 0.105)]
+
+### 🤖 Claude — 2026-11-17T19:02:51.763Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nd=json.load(open('qa/gameplay_video/moving_r4/steer1/probe.json'))\nr=[r for r in d['rows'] if r['t']==44.5][0]\nprint({k:v for k,v in r.items() if k not in ('file',)})\" | cut -c1-1500; python3 -c \"\nimport json\nd=json.load(open('qa/gameplay_video/moving_r3/steer1/probe.json')); print([(r['t'],round(r['s'],1),r.get('lat')) for r in d['rows'] if 43<=r['t']<=45])\"", "description": "Inspect 44.5 s right-steer frame data"}`
+
+### 🧑 User — 2026-11-17T19:02:51.864Z
+
+> ↩︎ result: {'t': 44.5, 'mode': 'ride', 'stage': '08', 's': 391.354, 'lat': 1.957, 'coins': 1840, 'hearts': 4, 'paused': False, 'bennyY': -113.174, 'bennyVisible': True, 'cam': [13.09, -109.34, -273.73], 'near2': 0, 'near05': 0, 'nearBy': [], 'benny': {'maskShare': 0.0447, 'hidden': 0.453, 'box': [0.686, 0.61, 1, 0.813], 'depth': 8.58, 'fgFrame': 0.5398, 'fgOnBenny': 0.264, 'occluders': [{'obj': 'm08_pipe < match08_projection', 'onBenny': 0.158}, {'obj': 'm08_splash', 'onBenny': 0.128}], 'centreY': -113.114, 'up': [-0.141, 0.99, -0.013], 'rootY': -113.174, 'surfaceY': -112.619, 'surfaceObj': 'm08_arch < match08_projection', 'bottomAboveSurface': -1.489, 'centreAboveSurface': -0.499}, 'ray': {'centre': [{'d': 21.33, 'obj': 'Mesh<coins<Scene', 'p': [12.02, -113.05, -294.72]}, {'d': 24.52, 'obj': 'm08_floor<match08_projection<Scene', 'p': [11.86, -113.6, -297.85]}]}, 'inside': []}
+> [(43, 309.6, 2.25), (43.25, 312.6, 2.25), (43.5, 315.6, 2.25), (43.75, 318.6, 2.25), (44, 321.6, 2.25), (44.25, 324.6, 2.25), (44.5, 327.6, 2.25), (44.75, 330.6, 2.25), (45, 333.6, 2.25)]
+
+### 🤖 Claude — 2026-11-17T19:03:00.267Z
+
+Moving check 07→08→09 done for straight / left / right. Steering hard right into 08 reveals Benny sinking into the 08 right arch/pipe — checking whether that's camera-related or scenery.
+
+### 🤖 Claude — 2026-11-17T19:03:02.864Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\na=Image.open('qa/gameplay_video/moving_r4/steer0/f_007_t44.50.png'); b=Image.open('qa/gameplay_video/moving_r4/steer-1/f_007_t44.50.png'); c=Image.open('qa/gameplay_video/moving_r4/steer1/f_008_t45.00.png')\no=Image.new('RGB',(540,400));[o.paste(x.resize((180,400)),(i*180,0)) for i,x in enumerate([a,b,c])];o.save('/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/peek08.png')\"", "description": "Peek at 08 frames straight/left/right"}`
+
+### 🧑 User — 2026-11-17T19:03:03.022Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T19:03:04.443Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/peek08.png"}`
+
+### 🧑 User — 2026-11-17T19:03:04.466Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:03:15.447Z
+
+> 🔧 **Bash** `{"command": "grep -n \"coins\" src/game/Game.ts | head -12; grep -n \"name = \\|InstancedMesh\\|new THREE.Mesh\" src/gameplay/coins.ts | head", "description": "Find coin objects"}`
+
+### 🧑 User — 2026-11-17T19:03:15.480Z
+
+> ↩︎ result: 22:import { createCoins, COIN_VALUE } from '../gameplay/coins';
+> 105:  const coins = createCoins(course);
+> 106:  scene.add(coins.group);
+> 122:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> 125:  if (hidden.has('coins')) coins.group.visible = false;
+> 141:    coins: START_COINS,
+> 375:        // restart this stage with full hearts (checkpoint), coins kept
+> 384:    // coins
+> 385:    const got = coins.update(st.clock, dt, st.s, st.lat);
+> 386:    if (got) { st.coins += got * COIN_VALUE; hud.setCoins(st.coins); }
+> 480:  hud.setCoins(st.coins);
+> 511:    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+> 154:  const side = new THREE.MeshStandardMaterial({ color: '#6a4a00', metalness: 0.75, roughness: 0.3, emissive: '#ffffff', emissiveMap: edgeTex, emissiveIntensity: 1.0 });
+> 155:  const face = new THREE.MeshStandardMaterial({ map: faceTex, color: '#7a5200', metalness: 0.7, roughness: 0.3, emissive: '#ffffff', emissiveMap: faceTex, emissiveIntensity: 1.15 });
+> 156:  const mesh = new THREE.InstancedMesh(geo, [side, face, face], defs.length);
+> 159:  group.name = 'coins';
+
+### 🤖 Claude — 2026-11-17T19:03:28.962Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/camClear.ts'\ns=open(p).read()\na=\"\"\"const fdecl = (r: [number, number]) => /* glsl */ `\"\"\"\nb=\"\"\"/** `lens` = lens-clearance only (coins): no Benny cone, faded out within COIN_LENS (u) of the lens */\nconst COIN_LENS: [number, number] = [2.2, 4.2];\nconst fdecl = (r: [number, number] | 'lens') => /* glsl */ `\"\"\"\nassert a in s; s=s.replace(a,b)\na=\"\"\"  float keep = smoothstep(uCCZ.y, uCCZ.z, depth);\n  if (depth < uCCB.w) {\"\"\"\nb=\"\"\"${r === 'lens' ? `  float keep = smoothstep(${COIN_LENS[0].toFixed(3)}, ${COIN_LENS[1].toFixed(3) …[+1887 chars]`
+
+### 🧑 User — 2026-11-17T19:03:31.649Z
+
+> ↩︎ result: 6:  const coins = createCoins(course);
+> 7:  scene.add(coins.group);
+> 19:  // `?camclear=1` (src/game/camClear.ts): rings / lids / gold lips / foam banks never hide Benny or fill the lens while
+> 21:  const camClear = CAMCLEAR ? createCamClear({ env: env.group, foam: water.parts?.foam, coins: coins.group }) : null;
+> 23:  // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+> TSC
+
+### 🤖 Claude — 2026-11-17T19:03:37.285Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad && for st in -1 1; do timeout 1200 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --times=44.5,45,45.5 --size=360x800 --steerplan=0:0,43:$st --out=$S/coin$st 2>&1 | python3 -c \"\nimport sys,json\nfor l in sys.stdin:\n  try: r=json.loads(l); print(r['t'],r['stage'],'hidden',r.get('bennyHidden'))\n  except: print(l[:200])\"; done; python3 -c \"\nfrom PIL import Image\na=Image.open('$S/coin-1/f_000_t44.50.png'); c=Image.open('$S/coin1/f_001_t45.00.png')\no=Image.new('RGB',(360,400));[o.past …[+166 chars]`
+
+### 🧑 User — 2026-11-17T19:04:13.946Z
+
+> ↩︎ result: 44.5 08 hidden 0.195
+> 45 08 hidden 0.101
+> 45.5 08 hidden 0.291
+> 44.5 08 hidden 0.453
+> 45 08 hidden 0.134
+> 45.5 08 hidden 0.021
+
+### 🤖 Claude — 2026-11-17T19:04:15.554Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/peekc.png"}`
+
+### 🧑 User — 2026-11-17T19:04:15.571Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:04:23.932Z
+
+Fade too short-ranged (the big coins are 4–8 u out). Switching to: coins nearer to the lens than Benny himself fade out (only missed coins sit there).
+
+### 🤖 Claude — 2026-11-17T19:04:30.800Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/camClear.ts'\ns=open(p).read()\na=\"\"\"${r === 'lens' ? `  float keep = smoothstep(${COIN_LENS[0].toFixed(3)}, ${COIN_LENS[1].toFixed(3)}, depth);\"\"\"\nb=\"\"\"${r === 'lens' ? `  float keep = max(smoothstep(${COIN_LENS[0].toFixed(3)}, ${COIN_LENS[1].toFixed(3)}, depth - uCCB.w), 0.0);\"\"\"\nassert a in s; s=s.replace(a,b)\na=\"\"\"/** `lens` = lens-clearance only (coins): no Benny cone, faded out within COIN_LENS (u) of the lens */\nconst COIN_LENS: [number, number] = [2.2, 4.2];\"\"\"\nb=\"\"\"/** `lens` (coins): no cone — a coin fades out once …[+1075 chars]`
+
+### 🧑 User — 2026-11-17T19:05:11.737Z
+
+> ↩︎ result: TSC
+> 44.5 08 hidden 0.195
+> 45 08 hidden 0.101
+> 45.5 08 hidden 0.291
+> 44.5 08 hidden 0.453
+> 45 08 hidden 0.134
+> 45.5 08 hidden 0.021
+
+### 🤖 Claude — 2026-11-17T19:05:13.535Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/d9f895bf-45eb-56d9-b25c-4cb6284b4b7e/scratchpad/peekc.png"}`
+
+### 🧑 User — 2026-11-17T19:05:13.556Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:05:17.453Z
+
+Coin fix works (right steer: clear; left: the coins beside Benny are thinned). Now running the proof checks (0 px, gameplay 8/8, continuity).
+
+### 🤖 Claude — 2026-11-17T19:05:18.656Z
+
+> 🔧 **Bash** `{"command": "ls qa/gameplay_video/tests/; grep -n \"0 px\\|pixdiff\\|zero\\|compare\" qa/gameplay_video/NOTES.md | head -12; ls scripts | grep -i \"gameplay\\|continuity\\|pixel\\|diff\\|shots\" | head", "description": "Find how r3 ran proofs"}`
+
+### 🧑 User — 2026-11-17T19:05:18.693Z
+
+> ↩︎ result: gameplay_camclear.json
+> gameplay_default.json
+> gameplay_match08_camclear.json
+> r3_gameplay_camclear.json
+> r3_gameplay_default.json
+> r3_gameplay_match08_camclear.json
+> 23:| Default build vs commit `5965a01` (before camclear), 11 screens | 02–06, 08, 09: **0 px**. 01, 07, 10, 11 differ by the same amounts between two captures of the OLD build itself (capture noise: 689 / 43 / ≤3,645 / ≤52,298 px), so 0 px attributable to camclear |
+> 24:| `match08=1` 08 view vs `5965a01` | **0 px** |
+> 25:| `match08=1&camclear=1` 08 view vs `5965a01` | camera matrix bit-identical, scenery 0 px; 55,668 px differ by ≤12 colour levels (14 px > 5) on Benny, his splash card and the coins |
+> 30:With the light + splash card placed from the final view (temporary local test, not kept) the two pictures are **0 px**
+> 33:Other still views with `camclear=1` (no match switch): 03, 05, 07, 09 0 px; 04 and 06 change on purpose (04: foam/ring
+> 39:* Side by side for every problem moment of the user's video: `compare_r3/` (tools `vidmap.py` = video→game time per stage,
+> continuity-test.ts
+> gameplay-test.mjs
+
+### 🤖 Claude — 2026-11-17T19:05:20.583Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p scripts/gameplay-test.mjs | grep -n \"Usage\\|argv\\|--\" | head; grep -n \"continuity\" package.json; ls scripts | grep -i \"match-shot\\|shot\\|capture\\|still\" | head", "description": "Test script usage"}`
+
+### 🧑 User — 2026-11-17T19:05:20.626Z
+
+> ↩︎ result: 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> capture.mjs
+

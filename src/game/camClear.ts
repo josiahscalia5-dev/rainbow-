@@ -22,7 +22,10 @@ export const CAMCLEAR = flag05('camclear') || flag05('matchall');
 const R_PROP: [number, number] = [1.6, 2.2];
 const R_FOAM: [number, number] = [1.2, 1.5];
 
-const fdecl = (r: [number, number]) => /* glsl */ `
+/** `lens` (coins): no cone — a coin fades out once it is nearer to the lens than Benny's front (between COIN_LENS[0] and
+ *  [1] u relative to that depth), i.e. only coins he has missed and that are passing the view */
+const COIN_LENS: [number, number] = [-3.0, -0.8];
+const fdecl = (r: [number, number] | 'lens') => /* glsl */ `
 uniform vec4 uCCB;   // Benny's centre in view space (xyz) + view depth of his front (w)
 uniform vec4 uCCZ;   // x: on (0/1), y: lens fade full (u), z: lens fade end (u)
 varying vec3 vCCv;   // view-space position of this fragment
@@ -31,11 +34,12 @@ float ccBayer(vec2 a) { return ccB2(0.5 * a) * 0.25 + ccB2(a); }
 void ccClip() {
   if (uCCZ.x < 0.5) return;
   float depth = -vCCv.z;
-  float keep = smoothstep(uCCZ.y, uCCZ.z, depth);
-  if (depth < uCCB.w) {
+${r === 'lens' ? `  float keep = max(smoothstep(${COIN_LENS[0].toFixed(3)}, ${COIN_LENS[1].toFixed(3)}, depth - uCCB.w), 0.0);
+  if (false) {` : `  float keep = smoothstep(uCCZ.y, uCCZ.z, depth);
+  if (depth < uCCB.w) {`}
     vec3 B = uCCB.xyz;
     float t = clamp(dot(vCCv, B) / max(dot(B, B), 1e-4), 0.0, 1.0);
-    float rr = mix(${r[0].toFixed(3)}, ${r[1].toFixed(3)}, t);
+    float rr = mix(${r === 'lens' ? '0.0' : r[0].toFixed(3)}, ${r === 'lens' ? '0.0' : r[1].toFixed(3)}, t);
     keep = min(keep, smoothstep(0.72 * rr, rr, length(vCCv - B * t)));
   }
   if (keep < ccBayer(gl_FragCoord.xy) + 0.03125) discard;
@@ -58,13 +62,13 @@ export interface CamClear {
   patched: string[];
 }
 
-export function createCamClear(roots: { env: THREE.Object3D; foam?: THREE.Object3D | null }): CamClear {
+export function createCamClear(roots: { env: THREE.Object3D; foam?: THREE.Object3D | null; coins?: THREE.Object3D | null }): CamClear {
   const U = {
     uCCB: { value: new THREE.Vector4(0, 0, -1, 0) },
     uCCZ: { value: new THREE.Vector4(0, 0.7, 1.5, 0) },
   };
   const done = new WeakSet<THREE.Material>();
-  const patch = (m: THREE.Material, r: [number, number]) => {
+  const patch = (m: THREE.Material, r: [number, number] | 'lens') => {
     if (done.has(m)) return;
     done.add(m);
     const prevOBC = m.onBeforeCompile;
@@ -84,12 +88,12 @@ export function createCamClear(roots: { env: THREE.Object3D; foam?: THREE.Object
       this.onBeforeCompile = prevOBC;
       const k = prevKey.call(this);
       this.onBeforeCompile = cur;
-      return `${k}|camclear2:${r.join(',')}`;
+      return `${k}|camclear2:${Array.isArray(r) ? r.join(',') : r}`;
     };
     m.needsUpdate = true;
   };
   const patched: string[] = [];
-  const take = (o: THREE.Object3D, r: [number, number]) => {
+  const take = (o: THREE.Object3D, r: [number, number] | 'lens') => {
     const mesh = o as THREE.Mesh;
     if (!mesh.isMesh) return;
     for (const m of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) patch(m, r);
@@ -116,6 +120,10 @@ export function createCamClear(roots: { env: THREE.Object3D; foam?: THREE.Object
     if (['foam_flank', 'foam_rafts', 'foam_rim05'].includes(o.name)) return;
     take(o, R_FOAM);
   });
+
+  // coins (round 4): a coin Benny missed passes the lens huge (08 while the view holds the approved picture and Benny
+  // steers off the coin line: big coins over the lower third) — coins fade out within ~2–4 u of the lens. Pickup unchanged.
+  roots.coins?.traverse((o) => take(o, 'lens'));
 
   const box = new THREE.Box3();
   const c = new THREE.Vector3();
