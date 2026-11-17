@@ -3287,3 +3287,28 @@ Saving the Screen 06 APK to GitHub on my lead branch (the 06 workstream is pause
 
 > 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk && grep -n \"apk\" .gitattributes | head -2 && cp $O/Rainbow-Screen06-RinseArch.apk builds/rainbow-debug-06-2026-11-17-r3.apk && cat > builds/rainbow-debug-06-2026-11-17-r3.md <<'EOF'\n# rainbow-debug-06-2026-11-17-r3.apk — Screen 06 test build (not the default game)\n\n* Built by the lead (account 4, 2026-11-17 ~19:30 UTC) from `claude/rainbow-s06-match-c4` @ `c088718b` (= Screen 06\n  milestone 1, `-c3` tip) in a temporary worktree; no branch was changed. Round 3's own build attempt was block …[+1304 chars]`
 
+### 🧑 User — 2026-11-17T19:28:46.400Z
+
+> ↩︎ result: 15:*.apk   filter=lfs diff=lfs merge=lfs -text
+>   "commit": "f5f73c998197683aa4c8d2300f8d90cb419deea8",
+> remote f5f73c998197 local f5f73c998197
+> 273e73c104 * builds/rainbow-debug-06-2026-11-17-r3.apk
+
+### 🤖 Claude — 2026-11-17T19:28:56.211Z
+
+I've sent you test builds for every playable screen. Install one at a time: they share the same app name, so each new install replaces the previous one. None of them has been tested on a real phone yet.
+
+| File | Shows (only this screen is rebuilt from your approved picture) | When it appears while playing |
+|---|---|---|
+| `Rainbow-Screen04-FiveArrows.apk` | Screen 04: gold tunnel, painted river, splash under Benny | about 7–10 s in |
+| `Rainbow-Screen05-FlowIntoTheCurrent.apk` | Screen 05: your approved water around Benny, plus the walls | about 10–18 s in |
+| `Rainbow-Screen06-RinseArch.apk` | Screen 06: built just now (its earlier build had failed on a temporary download error) | about 18–20 s in |
+| `Rainbow-Screen07-WasherTube.apk` | Screen 07: tube, rings, pink and blue water. This is its milestone-1 version; the milestone being worked on now isn't built yet | about 33–36 s in |
+| `Rainbow-Screen08-Benny-fuller-r5b.apk` | Screen 08 with the new fuller, rounder Benny | about 38–40 s in |
+
+The times come from your 49-second gameplay recording, so play through from the start to reach each screen. Everything else in each build is the regular game, including the built-in opening and ending scenes.
+
+The Screen 06 build is saved to GitHub with a note of exactly how it was made. The other four were already saved.
+
+When you try them, tell me what looks wrong on your phone: how each screen looks while Benny swims and steers, any blank or stretched areas, and whether it runs smoothly. That's the real-phone check none of these builds has had yet.
+
