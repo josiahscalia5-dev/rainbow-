@@ -689,3 +689,54 @@ Now step A: per-bubble measurement. Let me build a measurement tool and crops.
 > try {
 >    …[+6844 chars]
 
+### 🤖 Claude — 2026-11-17T02:35:56.525Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"uPjPost\\|uPjRes\\|export function\\|export const\" src/vfx/waterRibbon.ts | head -60; grep -n \"uPjPost\\|PROJ05_INVERSE\\|import\" src/vfx/proj05Apron.ts | head -20", "description": "Find post uniform plumbing in waterRibbon"}`
+
+### 🧑 User — 2026-11-17T02:35:56.580Z
+
+> ↩︎ result: 21:export const EDGE_LIFT = 0.28;
+> 71:export const CORE_SWING = 0.9;
+> 72:export function coreLateral(course: Course, s: number): number {
+> 79:export const sbend05 = (s: number) => 1.05 * Math.sin(s * 0.31 - 0.834) + 0.18 * Math.sin(s * 0.62 + 0.6);
+> 90:export function coreShiftW10(course: Course, s: number): number {
+> 160:export const flag05 = q05;
+> 167:export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 189:export const SILK05: boolean = q05('silk05');
+> 190:export const PUFF05: boolean = q05('puff05');
+> 191:export const RIVER05: boolean = SILK05 || PUFF05 || q05('river05');
+> 192:export const FARW05: boolean = RIVER05 || q05('farw05');
+> 193:export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+> 194:export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
+> 212:export const MATCH05: boolean = q05('match05');
+> 213:export const on05 = (key: string): boolean => q05(key) || MATCH05;
+> 214:export const PROJ05: boolean = on05('proj05');
+> 222:export const PROJFAR05: boolean = PROJ05 && on05('projfar05');
+> 229:export const PROJGAP05: boolean = PROJFAR05 && on05('projgap05');
+> 231:export const proj05Pending: Promise<unknown>[] = [];
+> 242:export function channel05(course: Course, s: n …[+2275 chars]
+
+### 🤖 Claude — 2026-11-17T02:35:57.810Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,140p src/vfx/proj05Apron.ts", "description": "Read proj05Apron as a pattern for inverse use"}`
+
+### 🧑 User — 2026-11-17T02:35:57.845Z
+
+> ↩︎ result: /**
+>  * Screen 05 projection test (`?proj05=1`, qa/pilot05/proj/NOTES.md): a thin VISUAL-ONLY strip that hugs the tunnel wall
+>  * from the river's edge up ≈ 2.5 u, on 05 only. At the far bends the approved picture's fluffy foam banks lie beyond the
+>  * game river's edge (on the lower wall); this strip carries them (baked from the approved picture through the locked
+>  * camera: assets/textures/water05/proj05_A.png, tools/proj05/bake.py). No collisions, no gameplay: steering, coins and the
+>  * camera are untouched. Where it would be magnified (camera close) or where the approved picture shows no foam/water,
+>  * it dithers away and the wall shows as before. `?projbank05=0` leaves it out.
+>  * attribute aPj = (t · side, s): t 0 at the river edge → 1 at the top of the strip, side −1 left / +1 right.
+>  */
+> import * as THREE from 'three';
+> import type { Course } from '../world/course';
+> import type { TubePath } from '../world/tube';
+> import { tubeCenterAt } from '../world/tube';
+> import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending, on05 } from './waterRibbon';
+> 
+> /** `?projedge05=1` (on with `?match05=1`, coordinator 2026-11-17): edge-padded copy of proj05_A.png (tools/proj05/pad_alpha.py:
+>  *  transparent  …[+4916 chars]
+
