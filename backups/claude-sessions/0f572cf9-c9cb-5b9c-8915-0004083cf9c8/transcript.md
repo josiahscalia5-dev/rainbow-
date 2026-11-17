@@ -28,3 +28,11 @@ Five-minute autosave pushes this branch; also commit + push at each milestone an
 
 You've hit your 5-hour limit · resets 8:20pm (UTC)
 
+### 🧑 User — 2026-11-17T16:11:34.082Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-17T16:11:34.791Z
+
+You've hit your 5-hour limit · resets 8:20pm (UTC)
+
