@@ -402,3 +402,107 @@ Diagnosing the Screen 08 tears now: I'm adding a debug view that colours each fi
 > 102.00 09 407.68 0.00 11.78 -113.21 -298.08 10.99 -109.91 -290.64
 > 108.00 09 408.63 0.00 1 …[+2922 chars]
 
+### 🤖 Claude — 2026-11-17T19:33:28.064Z
+
+> 🔧 **Bash** `{"command": "git fetch origin claude/rainbow-s08-camclear-c4 2>&1|tail -1; git show aa10fdbb --stat | head -40; git ls-tree -r --name-only aa10fdbb qa/gameplay_video/moving_r4/steer1/ | head -30"}`
+
+### 🧑 User — 2026-11-17T19:33:32.825Z
+
+> ↩︎ result: * [new branch]      claude/rainbow-s08-camclear-c4 -> origin/claude/rainbow-s08-camclear-c4
+> commit aa10fdbb6b7efa305edd0d3a40e2da4d0e9c074c
+> Author: Claude <noreply@anthropic.com>
+> Date:   Tue Nov 17 19:13:12 2026 +0000
+> 
+>     camclear r4: STATUS/NOTES/SHARED_CHANGES, still views, APK (match08=1&camclear=1, NOT phone-tested)
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_01Kbt6BTLnGMkLZVfNSYf45t
+> 
+>  builds/rainbow-debug-08camclear-2026-11-17-r4.apk |   3 +++
+>  qa/gameplay_video/NOTES.md                        |   9 +++++++++
+>  qa/gameplay_video/SHARED_CHANGES.md               |   5 +++++
+>  qa/gameplay_video/STATUS.md                       |  17 +++++++++++++++++
+>  qa/gameplay_video/stills_r4/def_03.png            | Bin 0 -> 356077 bytes
+>  qa/gameplay_video/stills_r4/def_04.png            | Bin 0 -> 391051 bytes
+>  qa/gameplay_video/stills_r4/def_05.png            | Bin 0 -> 541321 bytes
+>  qa/gameplay_video/stills_r4/def_06.png            | Bin 0 -> 488322 bytes
+>  qa/gameplay_video/stills_r4/def_07.png            | Bin 0 -> 548236 bytes
+>  qa/gameplay_video/stills_r4/def_08.png            | Bin 0 -> 446265 bytes
+>  qa/gameplay_video/ …[+1217 chars]
+
+### 🤖 Claude — 2026-11-17T19:33:36.587Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/120fb961-cedb-54bd-9117-45bb43b23496/scratchpad; for f in f_006_t44.00 f_007_t44.50; do git show aa10fdbb:qa/gameplay_video/moving_r4/steer1/$f.png > $S/$f.png; done; git show aa10fdbb:qa/gameplay_video/moving_r4/steer1/probe.json | python3 -c \"import json,sys;d=json.load(sys.stdin);print(json.dumps(d)[:1500])\"; python3 -c \"\nfrom PIL import Image;S='$S'\na=Image.open(S+'/f_006_t44.00.png');b=Image.open(S+'/f_007_t44.50.png');print(a.size)\nW=Image.new('RGB',(a.width*2,a.height));W.paste(a,(0,0));W.paste(b,(a.width,0));W.thumbnail((1000,1000) …[+25 chars]`
+
+### 🧑 User — 2026-11-17T19:33:36.942Z
+
+> ↩︎ result: {"q": "match08=1&camclear=1", "apk": null, "size": [360, 800], "steer": null, "steerPlan": [[0, 0], [43, 1]], "patched": ["zone_basin/LatheGeometry", "zone_basin/TorusGeometry", "zone_basin/TorusGeometry", "zone_basin/TorusGeometry", "zone_basin/TorusGeometry", "zone_basin/ShapeGeometry", "zone_basin/TorusGeometry", "zone_basin/TorusGeometry", "zone_basin/TorusGeometry", "zone_basin/TorusGeometry", "zone_basin/TorusGeometry", "zone_basin/TorusGeometry", "zone_basin/TorusGeometry", "zone_tubes/TorusGeometry", "zone_tubes/TorusGeometry", "zone_tubes/TorusGeometry", "zone_tubes/TorusGeometry", "zone_tubes/TorusGeometry", "zone_tubes/LatheGeometry", "zone_tubes/LatheGeometry", "zone_tubes/LatheGeometry", "zone_tubes/LatheGeometry", "zone_tubes/LatheGeometry", "tube05_far", "tube05_far", "foam_berm", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/IcosahedronGeometry", "foam_banks/Icosahe …[+311 chars]
+
+### 🤖 Claude — 2026-11-17T19:33:38.498Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/120fb961-cedb-54bd-9117-45bb43b23496/scratchpad/cc.png"}`
+
+### 🧑 User — 2026-11-17T19:33:38.529Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T19:35:34.008Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/match08.ts", "offset": 136, "limit": 30}`
+
+### 🧑 User — 2026-11-17T19:35:34.033Z
+
+> ↩︎ result: 136	
+> 137	  const group = new THREE.Group();
+> 138	  group.name = 'match08_projection';
+> 139	  const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm08_' + name; group.add(o); return o; };
+> 140	  const C = L.chamber;
+> 141	
+> 142	  // inlet pipe around the camera, ending at the arch (the picture's near walls outside the arch)
+> 143	  const pipeLen = L.pipe.z0 - L.pipe.z1;
+> 144	  const pipe = new THREE.CylinderGeometry(L.pipe.r, L.pipe.r, pipeLen, 128, 8, true);
+> 145	  pipe.rotateX(Math.PI / 2).translate(L.pipe.cx, L.pipe.cy, (L.pipe.z0 + L.pipe.z1) / 2);
+> 146	  add(pipe, M.wall, 'pipe');
+> 147	  // gold arch: annulus at the chamber entrance, extruded toward the door
+> 148	  const ring = new THREE.Shape(); ring.absarc(0, 0, L.arch.outer.r, 0, Math.PI * 2, false);
+> 149	  const hole = new THREE.Path(); hole.absarc(L.arch.inner.cx - L.arch.outer.cx, L.arch.inner.cy - L.arch.outer.cy, L.arch.inner.r, 0, Math.PI * 2, true);
+> 150	  ring.holes.push(hole);
+> 151	  const archG = new THREE.ExtrudeGeometry(ring, { depth: L.arch.depth, bevelEnabled: false, curveSegments: 96 });
+> 152	  archG.translate(L.arch.outer.cx, L.arch.outer.cy, L.arch.z - L.arch.d …[+1041 chars]
+
+### 🤖 Claude — 2026-11-17T19:35:55.459Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match08.ts'\ns=open(p).read()\nold=s[s.index(\"  // inlet pipe around the camera, ending at the arch\"):s.index(\"  // chamber walls (from the arch to the door wall) + the door wall\")]\nnew='''  // Scenery-in-motion round (2026-11-17, qa/match/08/scenery/NOTES.md). Every proxy surface shows exactly the approved\n  // picture from the approved view (projection), so the near proxies can be reshaped / enlarged ABOUT THE APPROVED\n  // VIEWPOINT without changing that view; only what a moving camera sees changes.\n  //  `&m08lane=1`: inlet pipe + gold a …[+4074 chars]`
+
+### 🧑 User — 2026-11-17T19:35:59.938Z
+
+> ↩︎ result: 198:  add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, fixBw ? archC.z - 0.02 : L.backwall.z), M.wall, 'backwall');
+> 200:  const chLen = archC.z - C.zDoor;
+> 201:  const ch = new THREE.CylinderGeometry(C.r, C.r, chLen, 160, 24, true);
+> 202:  ch.rotateX(Math.PI / 2).translate(C.cx, C.cy, C.zDoor + chLen / 2);
+
+### 🤖 Claude — 2026-11-17T19:36:07.421Z
+
+> 🔧 **Bash** `{"command": "D=qa/match/08/scenery; for v in \"BEFORE:\" \"bw:&m08bw=1\" \"lane:&m08lane=1\"; do n=${v%%:*}; q=${v#*:}; M08_SHOTS=full timeout 600 node tools/match08/motion08.mjs $D/motion_$n \"match08=1&coins08px=1$q\" 2>&1 | grep -c \"s \" ; done; ls $D"}`
+
+### 🧑 User — 2026-11-17T19:38:07.502Z
+
+> ↩︎ result: 11
+> Command did not complete within its 120s timeout and was moved to the background (ID: bsyuadoxc). Output is being written to: /tmp/claude-0/-home-user-rainbow-/120fb961-cedb-54bd-9117-45bb43b23496/tasks/bsyuadoxc.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T19:38:13.039Z
+
+> 🔧 **Bash** `{"command": "sleep 100; cat /tmp/claude-0/-home-user-rainbow-/120fb961-cedb-54bd-9117-45bb43b23496/tasks/bsyuadoxc.output"}`
+
+### 🧑 User — 2026-11-17T19:38:13.049Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 100 followed by: cat /tmp/claude-0/-home-user-rainbow-/120fb961-cedb-54bd-9117-45bb43b23496/tasks/bsyuadoxc.output. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-17T19:38:14.648Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/assets/textures/match08/patch_wall.png"}`
+
+### 🧑 User — 2026-11-17T19:38:14.672Z
+
+> ↩︎ result: [image]
+
