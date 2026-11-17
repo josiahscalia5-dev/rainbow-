@@ -663,8 +663,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11042,
-   "sha256": "9963b695d0611ad9d3d4f5c6b60604edd421cb1bc5fae468dc4124fcc104977e"
+   "bytes": 11043,
+   "sha256": "6736a62cd700e0c733395b898ace6468d3cf3c320cb9609c6b813a07366c39a3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1407,6 +1407,11 @@
    "sha256": "5846ce93f682d8a4d4f5cb9c847668c4102fdd3cd1fdc1c0661a28acbc4e7e91"
   },
   {
+   "path": "qa/match/07/STATUS.md",
+   "bytes": 2914,
+   "sha256": "3b0f6da02dc35e66aa25c82455c05ce40ad3d293558944b40ae78b9928054b28"
+  },
+  {
    "path": "qa/match/07/cam/approved_before_bestfit_halfres.png",
    "bytes": 1889227,
    "sha256": "61c21b1d6bd9d3e203747012dae1d4911fc7e2e51f7cb75e9c9919a5b6c101fd"
@@ -1635,6 +1640,16 @@
    "path": "qa/match/07/m3/continuity_match07.json",
    "bytes": 2708,
    "sha256": "34ce26ccf8e999012c5e1d49c7eb4189f8eefaa096158e16eee0aedeb5647932"
+  },
+  {
+   "path": "qa/match/07/m3/gameplay_default.json",
+   "bytes": 14632,
+   "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/match/07/m3/gameplay_match07.json",
+   "bytes": 14642,
+   "sha256": "36394db79e44c4ce1f359d0308e36f437b0223190b9cf1dee2f6beb64e3a4e7b"
   },
   {
    "path": "qa/match/07/m3/proofs_0px_r3.json",
