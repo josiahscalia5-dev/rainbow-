@@ -719,7 +719,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13546,
-   "sha256": "43b9ee8b1642f702f980273ad383c0481871425055988424684c1348ff98170b"
+   "sha256": "583699e8e6453b89df43a3a4795b46c8e3c719ace6ddfd991a7d41e372bd3cc4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -775,6 +775,11 @@
    "path": "builds/rainbow-debug-05-2026-11-17-r3.apk",
    "bytes": 31923212,
    "sha256": "88b380dc102017ed4c50b012c0909d53327761e7e732e653724399b65de27c80"
+  },
+  {
+   "path": "builds/rainbow-debug-05-2026-11-17-r3.md",
+   "bytes": 921,
+   "sha256": "d7fa26028992d765e12032cfaa33fb66fc1a6861f39a44788539482b62057f65"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1273,18 +1278,18 @@
   },
   {
    "path": "qa/match/05/NOTES.md",
-   "bytes": 11692,
-   "sha256": "4e1203a1d1a5d0a579e586c1f04b18c343b9d301e5079643d7dfb4f1659df8d9"
+   "bytes": 14679,
+   "sha256": "8cc6b1ed2a1127b842c5047ef17a57d1bd6bffb6982a18a5106d142d73dca9a2"
   },
   {
    "path": "qa/match/05/SHARED_CHANGES.md",
-   "bytes": 948,
-   "sha256": "b2bd848de79a0017ebd6c8aabe2955bcaaf64de0f010e806c44ff13652dde854"
+   "bytes": 2441,
+   "sha256": "8f5736912eb31e2f394d2a6439729aae737b43578f7c24c77d9d93c8f5fe096c"
   },
   {
    "path": "qa/match/05/STATUS.md",
-   "bytes": 1560,
-   "sha256": "97d6cf35afd89f0179ee098d1c4904aedf1279c951d59877f0993211ef4d5ab4"
+   "bytes": 2873,
+   "sha256": "c27fb7a4b0d0080ea0fafb53e38019c8ccd3c82674f15795b149cbf5e8c94a8c"
   },
   {
    "path": "qa/match/05/before_FULL_FRAME_METRICS.json",

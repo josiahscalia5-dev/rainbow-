@@ -1583,3 +1583,145 @@ The APK is LFS-tracked and its bundle includes the switches. To verify it, I'm c
 >     const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
 >     // let a few frames render (font …[+141 chars]
 
+### 🤖 Claude — 2026-11-17T17:57:34.655Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && sed -n 40,52p scripts/capture.mjs", "description": "Read rest of capture step"}`
+
+### 🧑 User — 2026-11-17T17:57:34.710Z
+
+> ↩︎ result: await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+>     await page.evaluate(() => document.fonts.ready);
+>     await page.waitForTimeout(250);
+>     const name = /^\d\d$/.test(id) ? `${id}.png` : `${id}.png`;
+>     await page.screenshot({ path: `${outDir}/${name}`, timeout: 180000 });
+>     const stats = await page.evaluate(() => window.__rainbow.stats());
+>     // The first frame after load also counts one-time GPU work (three converts each cube env map to PMREM on
+>     // first use). Render once more (after the screenshot) and report that per-frame cost as calls/tris.
+>     const firstFrame = { calls: stats.calls, triangles: stats.triangles };
+>     await page.evaluate(() => window.__rainbow.drawList?.());
+>     const steady = await page.evaluate(() => window.__rainbow.stats());
+>     Object.assign(stats, { calls: steady.calls, triangles: steady.triangles, firstFrameCalls: firstFrame.calls, firstFrameTriangles: firstFrame.triangles });
+>     const state = await page.evaluate(() => window.__rainbow.state());
+
+### 🤖 Claude — 2026-11-17T17:57:42.461Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/207da99b-1136-5d8b-9931-1f7cf0fc7e40/scratchpad && mkdir -p $S/apkchk && (cd dist && python3 -m http.server 5299 >/dev/null 2>&1 &) ; sleep 0; cat > $S/apkchk/cap.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst b = await chromium.launch({ args: CHROMIUM_ARGS });\nconst p = await b.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\nawait p.goto('http://127.0.0.1:5299/?qa=1&dpr=1');\nawait p.waitForFunction(() => window.__ra …[+1008 chars]`
+
+### 🧑 User — 2026-11-17T17:57:57.165Z
+
+> ↩︎ result: BUNDLE_EQ_NEW
+> Terminated
+
+### 🤖 Claude — 2026-11-17T17:58:00.934Z
+
+The packaged bundle with no URL switch is pixel-identical to NEW. Now the docs: APK note, NOTES, SHARED_CHANGES (with the coin proposal) and a rewritten STATUS.md.
+
+### 🤖 Claude — 2026-11-17T17:58:24.783Z
+
+> 🔧 **Bash** `{"command": "cat > builds/rainbow-debug-05-2026-11-17-r3.md <<'EOF'\n# rainbow-debug-05-2026-11-17-r3.apk — Screen 05 EXPERIMENT build (not the default game)\n\n* Built 2026-11-17 (round 3, branch `claude/rainbow-s05-match-c3`, from commit `b5edc524`).\n* Command: `VITE_RAINBOW_Q05=\"match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1\" npm run android:debug` — Screen 05 shows\n  `?match05=1` + milestone 1 (`tgtvis05`) + round-3 `tgtfill05=3` (no green-teal coin-hole patches while riding) +\n  `tgtwall05` (approved right wall chunk). All 11 screens are in it; every other screen as in `?match05=1`.\n* …[+5063 chars]`
+
+### 🧑 User — 2026-11-17T17:58:24.896Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T17:58:28.979Z
+
+> 🔧 **Bash** `{"command": "grep -E \"^coins|^bubbles\" qa/match/05/r3_final/new_metrics.txt", "description": "Verify coin/bubble numbers"}`
+
+### 🧑 User — 2026-11-17T17:58:29.016Z
+
+> ↩︎ result: coins                        px   27437  mean  30.38  <=10 0.266  <=20 0.486  ssim 0.459  signed [-11.0, -3.0, 5.3]
+> bubbles                      px   29304  mean   5.02  <=10 0.864  <=20 0.934  ssim 0.956  signed [-1.7, -2.3, -1.1]
+
+### 🤖 Claude — 2026-11-17T17:58:30.443Z
+
+Numbers check out (coins 48.6 %). Now STATUS.md, then the final commit.
+
+### 🤖 Claude — 2026-11-17T17:58:46.536Z
+
+> 🔧 **Bash** `{"command": "sed -i 's#| coins / bubbles ≤20 | 52.0 % / 97.4 % | 48.5 % / 93.4 %#| coins / bubbles ≤20 | 52.0 % / 97.4 % | 48.6 % / 93.4 %#' qa/match/05/NOTES.md && cat > qa/match/05/STATUS.md <<'EOF'\n# Screen 05 — STATUS (round 3)\n\n* **Assigned screen:** 05 · FLOW INTO THE CURRENT (line B, `?match05=1`)\n* **Assigned specialist:** Screen 05 workstream agent (round 3, account 3); no subagent used\n* **Working branch:** `claude/rainbow-s05-match-c3`, started from `claude/rainbow-s05-match-c2` @ `fd94023f005b61a111139b0f4000d797f1abe97a` (recorded before any change); never merged with line A\ …[+3212 chars]`
+
+### 🧑 User — 2026-11-17T17:58:49.703Z
+
+> ↩︎ result: A  builds/rainbow-debug-05-2026-11-17-r3.md
+> M  qa/match/05/NOTES.md
+> M  qa/match/05/SHARED_CHANGES.md
+> M  qa/match/05/STATUS.md
+> a96bfdf406bf3eae215e3a5d3c2095a9efc2e961
+> a96bfdf406bf3eae215e3a5d3c2095a9efc2e961	refs/heads/claude/rainbow-s05-match-c3
+> 88b380dc10 * builds/rainbow-debug-05-2026-11-17-r3.apk
+> AUTOSAVE OK | branch claude/rainbow-s05-match-c3 | scheduler daemon | last verified backup 2026-11-17T17:57:32+00:00 (1.3 min ago) | local a96bfdf remote a96bfdf (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-17T17:58:53.350Z
+
+Pushed `a96bfdf` (remote == HEAD, autosave OK, APK in LFS). Last, a quick check of the line-B branches, then the single status to the lead.
+
+### 🤖 Claude — 2026-11-17T17:58:54.362Z
+
+> 🔧 **Bash** `{"command": "git ls-remote origin refs/heads/claude/rainbow-s05-match-c2 refs/heads/claude/rainbow-s05-match refs/heads/ccr-b0757dec-dj6l1o", "description": "Check line-B branches for new commits"}`
+
+### 🧑 User — 2026-11-17T17:58:54.705Z
+
+> ↩︎ result: e0e81306ed00e9d6cb32ef9e9aa4f3256e0970d2	refs/heads/ccr-b0757dec-dj6l1o
+> 90129c84ab536f035841aeb239212b398d3659d0	refs/heads/claude/rainbow-s05-match
+> fd94023f005b61a111139b0f4000d797f1abe97a	refs/heads/claude/rainbow-s05-match-c2
+
+### 🤖 Claude — 2026-11-17T17:59:05.203Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCLi5xPVn25aRuxkVwK", "message": "S05 round 3 (line B), MILESTONE 2 DONE. Branch claude/rainbow-s05-match-c3, start fd94023f, final a96bfdf406bf3eae215e3a5d3c2095a9efc2e961 (remote == HEAD, autosave OK).\nNEW switches (explicit, not inside match05): ?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1\n1 Teal patch: cause = coin-hole fill carried the coin colours -> green-teal discs when Benny steers. tgtfill05=3 removes them (riding frames 10/20 u + steering clearly cleaner). 2 Right wall chunk: the near water ribbon covered the wall; tgtwall05 bakes the approved wall sl …[+1579 chars]`
+
+### 🧑 User — 2026-11-17T17:59:13.573Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:59:24.888Z
+
+I finished the Screen 05 round-3 milestone and sent the lead one status message; I've now stopped to wait for them. Nothing here is approved; only you approve.
+
+The new look sits behind its own switches, `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1`. The normal game and the milestone-1 result are unchanged.
+
+**What changed**
+1. **Teal patch beside Benny:** the water fill under the painted coins kept some coin colour. That showed as soft green-teal blobs whenever Benny steered or rode forward. `tgtfill05=3` removes them, and in the riding frames (10 u, 20 u, steering) they're gone.
+2. **Right wall chunk:** the water surface covered that piece of wall and painted stretched pink water over it. `tgtwall05` puts the approved purple wall with its dark slots there. I saw nothing sliding in the riding frames.
+3. **Bottom-left gold ring arc:** I tried reshaping the frame's cut end, but the gain was too small to measure, so I kept nothing. What's left is the frame's dark inner edge and reflections, which the current gold texture can't show.
+4. **Moving water between the streaks:** not started, to save usage.
+5. **Coin faces:** the colour already matches the approved picture closely, so I didn't touch the shared `coins.ts`. The rest of the gap is the coin edge and the rings below. I wrote a proposal for the lead in `qa/match/05/SHARED_CHANGES.md`.
+
+**Numbers on the fixed view (pixel statistics, not a quality score)**
+
+| | Before (milestone 1) | New |
+|---|---|---|
+| Whole frame within 20 levels | 89.15 % | 89.44 % |
+| Scenery (no Benny, HUD, coins) | 93.3 % | 93.7 % |
+| Purple walls | 92.2 % | 94.2 % |
+| Water | 96.5 % | 96.5 % |
+| Coins | 52.0 % | 48.6 % (worse) |
+| Bubbles | 97.4 % | 93.4 % (worse) |
+
+**Remaining problems:**
+- Faint cyan rings show around the coins on the fixed view.
+- The big bubble at the right wall now looks dimmer, because the darker wall shows through it.
+
+**Checks:** with no switch, Screen 05 is pixel-identical to before. So are your protected BEFORE picture and the milestone-1 result. Gameplay passed 8/8 in all three versions (normal, `match05` alone, and the new look), each with 91 coins / 2,240. The 07→08 continuity test, the type check and the 13 approved images all pass.
+
+**APK:** I built one, and Screen 05 from it is pixel-identical to the new capture. It has not been tested on a phone; there's no device in the cloud.
+
+Everything is pushed to `claude/rainbow-s05-match-c3` at commit `a96bfdf406bf3eae215e3a5d3c2095a9efc2e961`, and the remote matches it. The `-c2` branch has no newer commits. Nothing was merged.
+
+Files are in `qa/match/05/`:
+- 01_APPROVED.png
+- 03_NEW_match05_tgtvis05.png (before)
+- r3_final/03_NEW_match05_tgtvis05_tgtfill05_tgtwall05.png (new)
+- r3_final/riding_BEFORE_M1/ and r3_final/riding_NEW/ (riding and steering frames)
+- STATUS.md
+- builds/rainbow-debug-05-2026-11-17-r3.apk (in the repo root)
+
+### 🧑 User — 2026-11-17T17:59:27.249Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (message from another Claude session: 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
