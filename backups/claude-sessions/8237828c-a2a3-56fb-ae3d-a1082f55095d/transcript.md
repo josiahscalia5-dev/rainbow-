@@ -3293,3 +3293,1406 @@ The moving frames look right: coins ride on the river as before, now along the p
 > screen_match_2_BEFORE_match08.json
 > screen_match_3_NEW_match08_coins08px.json
 
+### 🤖 Claude — 2026-11-17T17:56:15.309Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/08/coins08px/NOTES.md", "content": "# Screen 08 — coins on the painted spots (`?match08=1&coins08px=1`) — lead, round 3, 2026-11-17 ~18:00 UTC\n\nStatus: **under review** (the user approves; nothing is promoted). Default build and `?match08=1` unchanged.\n\n## What was wrong (found while comparing the Benny pictures)\n* The nine picture coins of `?match08=1` landed **3–59 px** away from the painted coins (probe:\n  `node tools/match08/coinprobe08.mjs`): the near three ≈0.4 u too low (their height was measured from the painted water\n  level, y −113.1 …[+3413 chars]`
+
+### 🧑 User — 2026-11-17T17:56:15.352Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/08/coins08px/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T17:56:20.168Z
+
+> 🔧 **Bash** `{"command": "git add qa/match/08/coins08px tools/match08/coins08px.mjs tools/match08/coinprobe08.mjs assets/textures/match08/coins08px.json src/gameplay/coins.ts && git commit -q -m \"Screen 08 ?match08=1&coins08px=1: picture coins on the painted spots (1-8 px, was 3-59 px), no extra far coins; scenery 97.3 -> 98.0 %, whole 83.3 -> 84.1 %; 8/8, 91 / 2,240; switch off 0 px\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCLi5xPVn25aRuxkVwK\" 2>&1|tail -1; git push -q origin HEAD:ccr-c0235034-ks6sx3 2>&1|tail -1; [ \"$(git ls-remote …[+219 chars]`
+
+### 🧑 User — 2026-11-17T17:56:22.704Z
+
+> ↩︎ result: remote == HEAD 2f87fa6954fa12474c411ca4cca8a160525257cb
+> 0
+
+### 🤖 Claude — 2026-11-17T17:56:26.425Z
+
+Pushed and verified on GitHub (`2f87fa69`). Here's this Screen 08 coin milestone as three separate full-size pictures, then close-ups of the coin trail and the moving-camera sheet:
+
+### 🤖 Claude — 2026-11-17T17:56:27.624Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/coins08px/1_APPROVED_08.png"], "caption": "Coins 1 · Screen 08 ORIGINAL APPROVED (full size)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:56:28.077Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/coins08px/1_APPROVED_08.png → file_uuid: 1fdf85c1-1180-4376-b973-d440083b4781
+
+### 🤖 Claude — 2026-11-17T17:56:29.077Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/coins08px/2_BEFORE_match08.png"], "caption": "Coins 2 · PREVIOUS game (?match08=1): coins 3–59 px off their painted spots + 5 extra coins far down the river. Whole 83.3 % · scenery 97.3 %", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:56:29.771Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/coins08px/2_BEFORE_match08.png → file_uuid: 754a7194-334a-4657-adae-d29d0c7026a0
+
+### 🤖 Claude — 2026-11-17T17:56:30.827Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/coins08px/3_NEW_match08_coins08px.png"], "caption": "Coins 3 · NEW real 3D (?match08=1&coins08px=1): all 9 coins on the painted spots (1–8 px), no extra coins. Whole 84.1 % · scenery 98.0 % · gameplay 8/8, 91 coins / 2,240", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:56:31.491Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/coins08px/3_NEW_match08_coins08px.png → file_uuid: 0ed71436-fe04-4878-9402-b03287dd16ac
+
+### 🤖 Claude — 2026-11-17T17:56:32.530Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/coins08px/1_APPROVED_08_cointrail_2x.png", "/home/user/rainbow-/qa/match/08/coins08px/2_BEFORE_match08_cointrail_2x.png", "/home/user/rainbow-/qa/match/08/coins08px/3_NEW_match08_coins08px_cointrail_2x.png"], "caption": "Coin trail close-ups (2×): APPROVED · PREVIOUS · NEW", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:56:33.279Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/match/08/coins08px/1_APPROVED_08_cointrail_2x.png → file_uuid: 078e1bd6-5442-4790-90ec-55420a841646
+>   /home/user/rainbow-/qa/match/08/coins08px/2_BEFORE_match08_cointrail_2x.png → file_uuid: a832857c-3465-424a-9cc3-b82ffbbbdc61
+>   /home/user/rainbow-/qa/match/08/coins08px/3_NEW_match08_coins08px_cointrail_2x.png → file_uuid: 7cc3eca1-3171-4500-b5bd-52d3352b4e57
+
+### 🤖 Claude — 2026-11-17T17:56:33.979Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/coins08px/motion_sheet_top_BEFORE_bottom_NEW.png"], "caption": "Moving camera on Screen 08: top row PREVIOUS, bottom row NEW — start view, forward 3/6/10/15 u, steering left/right. Coins ride on the painted trail; no stray far cluster.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:56:34.829Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/coins08px/motion_sheet_top_BEFORE_bottom_NEW.png → file_uuid: 331ecc2c-5188-496a-95f1-46d4ece7e65b
+
+### 🤖 Claude — 2026-11-17T17:56:37.088Z
+
+Updating the progress report and checking the sessions and this account's usage:
+
+### 🤖 Claude — 2026-11-17T17:56:37.244Z
+
+> 🔧 **mcp__claude-code-remote__get_session** `{}`
+
+### 🧑 User — 2026-11-17T17:56:37.440Z
+
+> ↩︎ result: {"ccr":{"id":"session_01Q46SCLi5xPVn25aRuxkVwK", "title":"Rainbow game restoration", "session_status":"SESSION_STATUS_RUNNING", "created_at":"2026-11-17T17:17:24.412945Z", "updated_at":"2026-11-17T17:55:33.394320Z", "environment_id":"env_011GYWx1dC7ECwmz9xBmAYFU", "session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-", "revision":"refs/heads/ccr-5495e9c4-g0apvl"}}], "outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-", "branches":["ccr-c0235034-ks6sx3"]}}}], "model":"claude-opus-5-5", "effort_level":"ultracode"}, "origin":"android", "connection_status":"connected", "tags":["config:agent-config-recorded", "config:auto-create-pr:draft", "config:meta-mcp-own-entry"], "task_summary":"gameplay 8/8, 91/91 coins; now capturing moving-camera frames", "external_metadata":{"autocompact_state":{"effective_window":980000, "enabled":true, "enforced":true, "source":"model-default", "threshold":901600}, "container_cc_version":"2.1.326", "context_usage":{"max_tokens":1000000, "used_tokens":286252}, "cross_session_inbound":"available", "current_branches":{"":"ccr-c0235034-ks6sx3"}, "last_served_model":"claude-opus-5-5", "rate …[+1276 chars]
+
+### 🤖 Claude — 2026-11-17T17:56:39.307Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin 'refs/heads/claude/rainbow-s0*-c3:refs/remotes/origin/claude/rainbow-s0*-c3' 2>&1|tail -1; for b in $(git for-each-ref --format='%(refname:short)' 'refs/remotes/origin/claude/rainbow-s0*-c3'); do echo \"== ${b#origin/} @ $(git rev-parse --short $b) $(git log -1 --format=%ci $b | cut -c12-16)\"; git log -6 --format='   %h %s' $b | grep -v autosave | head -3 | cut -c1-230; done", "description": "Latest real commits per specialist branch"}`
+
+### 🧑 User — 2026-11-17T17:57:09.569Z
+
+> ↩︎ result: == claude/rainbow-s04-match-c3 @ 6c2655ae 17:55
+>    a4644789 Screen 04 milestone 3 done: STATUS, APPROVED/BEFORE/NEW pictures, debug APK r3 (match04=1, not phone-tested)
+>    6cbbaf6b Screen 04 M3 step 5: picture coins settle onto the water while riding (approved view unchanged; &coinwater04=0 = off); final proofs, motion frames
+>    d93d65ed Screen 04 M3 step 4: approved splash under Benny as a card cut from the picture (&splash04=0 = none); whole 81.3->81.8 %, Benny 21.1->25.3 %
+> == claude/rainbow-s05-match-c3 @ b5edc524 17:55
+>    b5edc524 Screen 05 M2 round 3: final APPROVED | BEFORE (M1) | NEW numbers, riding frames 3-20 u + steering, gameplay 8/8 x3 (91 / 2,240), proofs 0 px
+>    0359dc94 Screen 05 M2.3: ?tgtwall05=1 approved wall on the near ribbon edge (right wall chunk); whole 89.08 -> 89.44 %, walls 92.2 -> 94.2 % within 20
+>    f966bec4 Screen 05 M2.2: ?tgtfill05=3 removes the green-teal coin-hole discs beside Benny while riding (locked water 96.5 % kept, whole 89.15 -> 89.08 %)
+> == claude/rainbow-s06-match-c3 @ ec57bb09 17:50
+>    b993f6d5 Screen 06 r3: APK blocked (Maven Central HTTP 429), recorded in NOTES/STATUS
+>    f0b10a4c Screen 06 r3 step 4-5: final NEW captures (incl. Android s …[+1010 chars]
+
+### 🤖 Claude — 2026-11-17T17:57:24.406Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCGVVo94Weug9VM7yDG", "priority": "next", "message": "Lead (session_01Q46SCLi5xPVn25aRuxkVwK): the account shows a WEEKLY usage-limit warning. The user's rule: save everything, keep Screen 08 going, pause the other screens. Please: finish only the step you are on, make sure STATUS.md is current, commit + push, verify `git ls-remote` == HEAD, send me ONE short status (picture paths, numbers, SHA, open problems) if you haven't already, then STOP and do not start new work until I message you. Thank you — milestone 3 looks good on GitHub."}`
+
+### 🧑 User — 2026-11-17T17:57:24.739Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:57:26.954Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCKjcx6k2Jb2JrspXSJ", "priority": "next", "message": "Lead (session_01Q46SCLi5xPVn25aRuxkVwK): the account shows a WEEKLY usage-limit warning. The user's rule: save everything, keep Screen 08 going, pause the other screens. Please: finish only the step you are on, make sure STATUS.md is current, commit + push, verify `git ls-remote` == HEAD, send me ONE short status (picture paths, numbers, SHA, open problems) if you haven't already, then STOP and do not start new work until I message you."}`
+
+### 🧑 User — 2026-11-17T17:57:27.238Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:57:29.862Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCL2DLgtfbmDySmRvhY", "priority": "next", "message": "Lead (session_01Q46SCLi5xPVn25aRuxkVwK): the account shows a WEEKLY usage-limit warning. The user's rule: save everything, keep Screen 08 going, pause the other screens. Please: finish only the step you are on, make sure STATUS.md is current, commit + push, verify `git ls-remote` == HEAD, send me ONE short status (picture paths, numbers, SHA, open problems — incl. the APK blocked by Maven Central 429) if you haven't already, then STOP and do not start new work until I message you."}`
+
+### 🧑 User — 2026-11-17T17:57:30.145Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:57:32.606Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCJx6kKaxMCCbLLqta3", "priority": "next", "message": "Lead (session_01Q46SCLi5xPVn25aRuxkVwK): the account shows a WEEKLY usage-limit warning. The user's rule: save everything, keep Screen 08 going, pause the other screens. Please do NOT start milestone 2: finish only the step you are on, make sure STATUS.md is current, commit + push, verify `git ls-remote` == HEAD, send me ONE short status (picture paths, numbers, SHA, open problems) if you haven't already, then STOP and wait until I message you."}`
+
+### 🧑 User — 2026-11-17T17:57:32.904Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:57:36.560Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCJxXZNaUL12aCQ6mX4", "priority": "next", "message": "Lead (session_01Q46SCLi5xPVn25aRuxkVwK): the account shows a WEEKLY usage-limit warning; Screen 08 stays the priority, but usage must be conserved. Please: finish the step you are on, commit + push + verify, send me ONE status with the APPROVED | PREVIOUS | NEW (round 3b) picture paths and numbers, then stop and wait for my next message (I'll show the user your round 3b and come back with their feedback). FYI the lead branch has a switch-guarded coin fix `?match08=1&coins08px=1` (ccr-c0235034-ks6sx3 @ 2f87fa69)  …[+59 chars]`
+
+### 🧑 User — 2026-11-17T17:57:36.840Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:57:43.797Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01Q46SCLvd1Cb5N4WHTHcHB4", "priority": "later", "message": "Lead (session_01Q46SCLi5xPVn25aRuxkVwK): the account shows a WEEKLY usage-limit warning. Screen 08 is the user's top priority, so continue your milestone, but work lean (one render at a time) and commit + push + verify after EVERY verified step so nothing can be lost if the limit is reached. When the milestone is done, send me ONE status in visual terms (picture paths: video | build | camclear) and stop."}`
+
+### 🧑 User — 2026-11-17T17:57:44.097Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:57:45.004Z
+
+> 🔧 **Bash** `{"command": "B=origin/claude/rainbow-s08-benny08-bake-c3; git diff --name-only 672f9919 $B | grep -v -E 'transcript|backups/' | grep -E '\\.(png|json|md)$' | grep -v probe | head -30", "description": "Find Benny round 3b pictures and notes"}`
+
+### 🧑 User — 2026-11-17T17:57:45.046Z
+
+> ↩︎ result: assets/textures/benny08/brim_r3.png
+> qa/capture_log.json
+> qa/match/08/benny08/NOTES.md
+> qa/match/08/benny08/SHARED_CHANGES.md
+> qa/match/08/benny08/STATUS.md
+> qa/match/08/benny08/r3/APPROVED_08.png
+> qa/match/08/benny08/r3/BEFORE_prebake_08.png
+> qa/match/08/benny08/r3/CURRENT_08.png
+> qa/match/08/benny08/r3/NEW_08.png
+> qa/match/08/benny08/r3/closeup_APPROVED.png
+> qa/match/08/benny08/r3/closeup_BEFORE_prebake.png
+> qa/match/08/benny08/r3/closeup_CURRENT.png
+> qa/match/08/benny08/r3/closeup_NEW.png
+> qa/match/08/benny08/r3/motion/f00_checkpoint.png
+> qa/match/08/benny08/r3/motion/f03_forward3u.png
+> qa/match/08/benny08/r3/motion/f06_forward6u.png
+> qa/match/08/benny08/r3/motion/f10_forward10u.png
+> qa/match/08/benny08/r3/motion/f15_forward15u.png
+> qa/match/08/benny08/r3/motion/montage_r3.png
+> qa/match/08/benny08/r3/motion/motion.json
+> qa/match/08/benny08/r3/motion/s_left_steer.png
+> qa/match/08/benny08/r3/motion/s_right_steer.png
+> qa/match/08/benny08/r3/other_default/04.png
+> qa/match/08/benny08/r3/other_default/05.png
+> qa/match/08/benny08/r3/other_default/06.png
+> qa/match/08/benny08/r3/other_default/07.png
+> qa/match/08/benny08/r3/other_screens/04.png
+> qa/match/08/benny08/r3/other_screens/05.png
+> qa/match/08/benny08/r3/oth …[+61 chars]
+
+### 🤖 Claude — 2026-11-17T17:57:46.771Z
+
+> 🔧 **Bash** `{"command": "B=origin/claude/rainbow-s08-benny08-bake-c3; git show $B:qa/match/08/benny08/STATUS.md | sed -n 1,40p | cut -c1-400", "description": "Read Benny specialist STATUS"}`
+
+### 🧑 User — 2026-11-17T17:57:46.801Z
+
+> ↩︎ result: # STATUS — Screen 08 Benny (round 3)
+> 
+> * **Assigned screen:** 08 · Final Spin Chamber (`?match08=1`)
+> * **Assigned specialist:** benny-character-artist (Screen 08 Benny specialist)
+> * **Working branch:** `claude/rainbow-s08-benny08-bake-c3` — started from `a4c6a5cc8cd5d435614a4bc8f8424540f944dfc7` (`-c2` head)
+> * **Running-session status:** milestone done, waiting for the lead
+> * **Latest verified commit:** see the lead message / `git log` (pushed, remote == HEAD verified)
+> * **Completed improvements:** verification + documentation of bake and round 2; round 3: dark strip under the beanie cuff repaired (`body_r3.png`); round 3b: softer fur + outline, crisp cuff ribs, fuller splash ring (`?b08r3=0` = round 2)
+> * **Latest visual measurements:** Benny + splash ≤20: pre-bake 49.8 % → bake 57.2 % → round 2 65.7 % → round 3/3b 65.3 % (visibly closer: no dark band, softer fur, crisper ribs; strands not pixel-aligned); scenery 97.3 % unchanged; whole 85.4 %
+> * **Unfinished problems:** pom-pom spikier/more violet in the painting; arm puffs (size/position tests measured worse); noisy fur edge; APK not phone-tested
+> * **Android:** `builds/rainbow-debug-08benny-2026-11-17-r3b.apk (round 3b; r3.apk kept …[+374 chars]
+
+### 🤖 Claude — 2026-11-17T17:57:49.293Z
+
+The Benny specialist finished **round 3b** (softer fur and outline, crisper hat-cuff ribs, fuller splash ring) after my review. Let me look at its newest close-up before showing you:
+
+### 🤖 Claude — 2026-11-17T17:57:52.240Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b; mkdir -p $S; B=origin/claude/rainbow-s08-benny08-bake-c3; for f in NEW_08 closeup_NEW closeup_APPROVED closeup_BEFORE_prebake; do git show $B:qa/match/08/benny08/r3/$f.png > $S/$f.png; done; python3 -I -c \"\nfrom PIL import Image; import sys\nfor f in ('closeup_APPROVED','closeup_BEFORE_prebake','closeup_NEW','NEW_08'): print(f, Image.open(sys.argv[1]+'/'+f+'.png').size)\" $S", "description": "Extract Benny round 3b pictures"}`
+
+### 🧑 User — 2026-11-17T17:57:52.351Z
+
+> ↩︎ result: closeup_APPROVED (860, 880)
+> closeup_BEFORE_prebake (860, 880)
+> closeup_NEW (860, 880)
+> NEW_08 (864, 1536)
+
+### 🤖 Claude — 2026-11-17T17:57:54.213Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b/closeup_NEW.png"}`
+
+### 🧑 User — 2026-11-17T17:57:54.256Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:57:57.573Z
+
+Round 3b is visibly closer: the fur is softer, the cuff shows real knitted ribs, and the splash ring is fuller. Sending it as approved | previous | new close-ups plus the new full frame:
+
+### 🤖 Claude — 2026-11-17T17:57:59.319Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b/closeup_APPROVED.png"], "caption": "Benny 1 · APPROVED (close-up)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:57:59.969Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b/closeup_APPROVED.png → file_uuid: d2285c04-31b7-42ca-b10a-9ec81d7e435a
+
+### 🤖 Claude — 2026-11-17T17:58:01.368Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b/closeup_BEFORE_prebake.png"], "caption": "Benny 2 · PREVIOUS game Benny (before this work) — Benny + splash 49.8 %", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:58:01.866Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b/closeup_BEFORE_prebake.png → file_uuid: 4d58f216-3d60-4c56-9f7a-095e91e8c8cd
+
+### 🤖 Claude — 2026-11-17T17:58:03.768Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b/closeup_NEW.png"], "caption": "Benny 3 · NEW round 3b (newest, real animated 3D): softer fur + outline, crisp knitted cuff ribs, fuller splash ring — Benny + splash 65.3 %", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:58:04.284Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b/closeup_NEW.png → file_uuid: aa2b82c9-e4b3-4f59-8281-00efc38afc96
+
+### 🤖 Claude — 2026-11-17T17:58:05.969Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b/NEW_08.png"], "caption": "Screen 08 NEW full frame with Benny round 3b — whole 85.4 %, scenery 97.3 % (coin fix not included here; it lives on the lead branch and combines after your approval)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:58:06.727Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/b3b/NEW_08.png → file_uuid: 934b2f2a-8979-497b-8a7c-5c1eedd03501
+
+### 🤖 Claude — 2026-11-17T17:58:08.307Z
+
+Updating the progress report with every workstream's latest result. Reading their status files:
+
+### 🤖 Claude — 2026-11-17T17:58:10.470Z
+
+> 🔧 **Bash** `{"command": "for p in \"s04-match-c3:qa/match/04/STATUS.md\" \"s05-match-c3:qa/match/05/STATUS.md\" \"s06-match-c3:qa/match/06/STATUS.md\" \"s07-match-c3:qa/match/07/STATUS.md\" \"s08-camclear-c3:qa/gameplay_video/STATUS.md\"; do b=${p%%:*}; f=${p#*:}; echo \"=== $b\"; git show origin/claude/rainbow-$b:$f 2>/dev/null | grep -E \"Latest visual measurements|Completed improvements|Unfinished problems|Android|Running-session\" | cut -c1-520; done", "description": "Read key status lines for each screen"}`
+
+### 🧑 User — 2026-11-17T17:58:10.518Z
+
+> ↩︎ result: === s04-match-c3
+> * **Running-session status:** milestone 3 finished, pushed; stopped and waiting for the lead
+> * **Completed improvements:** M1 camera solve + 3D proxies + original pixels; M2 ring tunnel + painted river tiles + ONE fal
+> * **Latest visual measurements:** approved view (864×1536, `tools/match04/metrics04.py`): whole frame 81.3 → **81.8 %**
+> * **Unfinished problems:** near the camera at 15–20 u the flat water meets the tunnel wall in a hard straight edge; the
+> === s05-match-c3
+> === s06-match-c3
+> * **Running-session status:** milestone 1 finished, status sent to the lead, stopped and waiting.
+> * **Completed improvements:** locked approved camera + river along the painted river (r2); projected approved scenery on
+> * **Latest visual measurements (within 20 levels):** scenery 4.1 % → **98.8 %** (SSIM 0.987); whole frame 5.0 % →
+> * **Unfinished problems:** provisional local fill (fal clean plate prepared, needs the user's OK); floor tile repetition
+> === s07-match-c3
+> * **Running-session status:** MILESTONE 1 finished and verified; waiting for the lead
+> * **Completed improvements:** camera solved to the approved view; real 3D tube / rings / paddles / water proxies fitted to
+> * **Latest  …[+414 chars]
+
+### 🤖 Claude — 2026-11-17T17:58:13.257Z
+
+> 🔧 **Bash** `{"command": "git show origin/claude/rainbow-s04-match-c3:qa/match/04/STATUS.md | grep -A3 \"Latest visual\" | cut -c1-600; echo ===06; git show origin/claude/rainbow-s06-match-c3:qa/match/06/STATUS.md | grep -A3 \"Latest visual\" | cut -c1-500; echo ===07; git show origin/claude/rainbow-s07-match-c3:qa/match/07/STATUS.md | grep -A6 \"Latest visual\" | cut -c1-400; echo ===05; git show origin/claude/rainbow-s05-match-c3:qa/match/05/STATUS.md | head -14 | cut -c1-500", "description": "Read measurement lines for 04-07"}`
+
+### 🧑 User — 2026-11-17T17:58:13.308Z
+
+> ↩︎ result: * **Latest visual measurements:** approved view (864×1536, `tools/match04/metrics04.py`): whole frame 81.3 → **81.8 %**
+>   within 20 levels (SSIM 0.812 → 0.819), scenery 98.1 → **98.2 %** (SSIM 0.973), bands 100.0 / 96.9 / 97.7 %, Benny area
+>   21.1 → **25.3 %**. Tunnel sharpness while riding (mean gradient): 15 u 16.7 → 24.2, 20 u 17.0 → 25.6.
+>   Pictures: APPROVED `04_APPROVED.png`, BEFORE (M2) `04_BEFORE_m2_864x1536.png`, NEW `04_NEW_m3_864x1536.png`; riding
+> ===06
+> * **Latest visual measurements (within 20 levels):** scenery 4.1 % → **98.8 %** (SSIM 0.987); whole frame 5.0 % →
+>   **79.1 %** (SSIM 0.785); upper 97.8 %, middle 98.4 %, lower 99.8 %, Benny box 55.2 %.
+> * **Unfinished problems:** provisional local fill (fal clean plate prepared, needs the user's OK); floor tile repetition
+>   (soft chevrons) and tile-only river from ~10 u; far trail coins face the approved camera; game HUD/Benny differ from
+> ===07
+> * **Latest visual measurements** (`tools/match07/metrics07.py`, share within 20 levels, BEFORE → NEW):
+>   whole frame 6.7 % → **80.1 %** (SSIM 0.19 → 0.79); scenery without HUD/Benny 6.0 % → **95.5 %** (SSIM 0.95);
+>   tube/rings/paddles band 3.8 % → 99.96 %; river/coins/far rings 6.1  …[+1991 chars]
+
+### 🤖 Claude — 2026-11-17T17:58:28.400Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/PARALLEL_PROGRESS.md", "old_string": "The initial prompts of all six were not delivered by the session service", "new_string": "### Results at ~18:00 UTC (all pushed; nothing approved, nothing merged)\n| Screen | Branch @ commit | Result (share within 20 levels vs the approved picture) | Pictures | State |\n|---|---|---|---|---|\n| 08 Benny | `…-s08-benny08-bake-c3` @ `e8e3ba79` | Benny + splash 49.8 → 57.2 (bake) → **65.7** (r2) → 65.3 % (r3/r3b: dark strip under the cuff removed, softer fur + outline, crisp cuff ribs, fuller splas …[+2208 chars]`
+
+### 🧑 User — 2026-11-17T17:58:28.451Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/PARALLEL_PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T17:58:32.194Z
+
+> 🔧 **Bash** `{"command": "git add docs/PARALLEL_PROGRESS.md && git commit -q -m \"Lead r3: progress at ~18:00 UTC (all six milestones' results, coin fix, weekly-usage pause of 04-07)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCLi5xPVn25aRuxkVwK\" 2>&1|tail -1; git push -q origin HEAD:ccr-c0235034-ks6sx3 2>&1|tail -1; [ \"$(git ls-remote origin refs/heads/ccr-c0235034-ks6sx3|cut -f1)\" = \"$(git rev-parse HEAD)\" ] && echo \"remote == HEAD $(git rev-parse --short HEAD)\"", "description": "Commit progress report and verify push"}`
+
+### 🧑 User — 2026-11-17T17:58:34.842Z
+
+> ↩︎ result: remote == HEAD a611d928
+
+### 🤖 Claude — 2026-11-17T17:58:41.555Z
+
+Pushed (`a611d928`). Screens 04, 05, 06 and 07 have each finished a milestone, so per your rule I'll send their APPROVED | PREVIOUS | NEW pictures too. Collecting the files from each branch:
+
+### 🤖 Claude — 2026-11-17T17:58:43.056Z
+
+> 🔧 **Bash** `{"command": "for p in \"s04-match-c3:qa/match/04\" \"s05-match-c3:qa/match/05\" \"s06-match-c3:qa/match/06\" \"s07-match-c3:qa/match/07\"; do b=${p%%:*}; d=${p#*:}; echo \"=== $b\"; git ls-tree --name-only origin/claude/rainbow-$b $d/ | grep -E '\\.png$' | head -20; done", "description": "List top-level comparison pictures for 04-07"}`
+
+### 🧑 User — 2026-11-17T17:58:43.098Z
+
+> ↩︎ result: === s04-match-c3
+> qa/match/04/04_APPROVED.png
+> qa/match/04/04_BEFORE_current_game.png
+> qa/match/04/04_BEFORE_current_game_864x1536.png
+> qa/match/04/04_BEFORE_m2_864x1536.png
+> qa/match/04/04_NEW_m2_864x1536.png
+> qa/match/04/04_NEW_m2_fal04_864x1536.png
+> qa/match/04/04_NEW_m3_864x1536.png
+> qa/match/04/04_NEW_m3_splash_864x1536.png
+> qa/match/04/04_NEW_match04.png
+> qa/match/04/04_NEW_match04_864x1536.png
+> === s05-match-c3
+> qa/match/05/01_APPROVED.png
+> qa/match/05/02_BEFORE_match05.png
+> qa/match/05/03_NEW_match05_tgtvis05.png
+> === s06-match-c3
+> qa/match/06/06_BEFORE_current_game.png
+> qa/match/06/06_NEW_match06.png
+> qa/match/06/06_NEW_match06_android1080x1920.png
+> qa/match/06/masks06_check.png
+> === s07-match-c3
+> qa/match/07/07_APPROVED.png
+> qa/match/07/07_BEFORE_current_game.png
+> qa/match/07/07_NEW_match07.png
+
+### 🤖 Claude — 2026-11-17T17:58:47.090Z
+
+> 🔧 **Bash** `{"command": "git diff --name-only fd94023f origin/claude/rainbow-s05-match-c3 | grep -E '\\.png$' | grep -v -E 'move|motion|ride|steer' | head -15; git show origin/claude/rainbow-s05-match-c3 --stat --format='%s' | head -3", "description": "Find Screen 05 round-3 result pictures"}`
+
+### 🧑 User — 2026-11-17T17:58:47.190Z
+
+> ↩︎ result: assets/textures/match05/tgtfill05_3/fill_mask.png
+> assets/textures/match05/tgtfill05_3/proj05_E.png
+> assets/textures/match05/tgtfill05_3/proj05_F.png
+> assets/textures/match05/tgtfill05_3/target_05.png
+> assets/textures/match05/tgtwall05/proj05_E.png
+> qa/match/05/r3_final/03_NEW_match05_tgtvis05_tgtfill05_tgtwall05.png
+> qa/match/05/r3_teal/03_NEW_tgtfill05_3.png
+> qa/match/05/r3_wall/03_NEW_tgtwall05.png
+> qa/match/05/r3_wall/crop_APPROVED_BEFORE_NEW.png
+> qa/match/05/r3_wall/crop_riding_top_BEFORE_bottom_NEW.png
+> Screen 05 M2 round 3: final APPROVED | BEFORE (M1) | NEW numbers, riding frames 3-20 u + steering, gameplay 8/8 x3 (91 / 2,240), proofs 0 px
+> 
+>  qa/match/05/r3_final/gameplay_default.json         | 947 +++++++++++++++++++++
+
+### 🤖 Claude — 2026-11-17T17:58:53.785Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m; mkdir -p $S; g(){ git show origin/claude/rainbow-$1:$2 > $S/$3; }; \ng s04-match-c3 qa/match/04/04_APPROVED.png 04_1_APPROVED.png; g s04-match-c3 qa/match/04/04_BEFORE_m2_864x1536.png 04_2_PREVIOUS_m2.png; g s04-match-c3 qa/match/04/04_NEW_m3_864x1536.png 04_3_NEW_m3.png\ng s05-match-c3 qa/match/05/01_APPROVED.png 05_1_APPROVED.png; g s05-match-c3 qa/match/05/03_NEW_match05_tgtvis05.png 05_2_PREVIOUS_m1.png; g s05-match-c3 qa/match/05/r3_final/03_NEW_match05_tgtvis05_tgtfill05_tgtwall05.png 05_3 …[+742 chars]`
+
+### 🧑 User — 2026-11-17T17:58:54.002Z
+
+> ↩︎ result: 04_1_APPROVED.png (1080, 1920)
+> 04_2_PREVIOUS_m2.png (864, 1536)
+> 04_3_NEW_m3.png (864, 1536)
+> 05_1_APPROVED.png (864, 1536)
+> 05_2_PREVIOUS_m1.png (864, 1536)
+> 05_3_NEW_m2.png (864, 1536)
+> 06_1_APPROVED.png (864, 1536)
+> 06_2_PREVIOUS_game.png (864, 1536)
+> 06_3_NEW_match06.png (864, 1536)
+> 07_1_APPROVED.png (864, 1536)
+> 07_2_PREVIOUS_game.png (864, 1536)
+> 07_3_NEW_match07.png (864, 1536)
+> 06 approved = reference
+
+### 🤖 Claude — 2026-11-17T17:58:59.252Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/04_1_APPROVED.png", "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/04_2_PREVIOUS_m2.png", "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/04_3_NEW_m3.png"], "caption": "Screen 04 · APPROVED | PREVIOUS (milestone 2) | NEW (milestone 3, ?match04=1): whole 81.3 → 81.8 %, scenery 98.1 → 98.2 %; approved splash under Benny, coins sit on the water, far tunnel sharper while riding", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:58:59.940Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/04_1_APPROVED.png → file_uuid: caacf6ff-5f63-4cca-b7eb-e0c7daada1d3
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/04_2_PREVIOUS_m2.png → file_uuid: 4c5a77fa-cacb-4645-93b9-5d5d1a7901ae
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/04_3_NEW_m3.png → file_uuid: 58344067-2a8a-4ac9-ab6f-955fb1ec4bf2
+
+### 🤖 Claude — 2026-11-17T17:59:02.604Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/05_1_APPROVED.png", "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/05_2_PREVIOUS_m1.png", "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/05_3_NEW_m2.png"], "caption": "Screen 05 · APPROVED | PREVIOUS (milestone 1) | NEW (milestone 2): teal patch beside Benny removed while riding, approved right wall; whole 89.2 → 89.4 %, walls 92.2 → 94.2 %, improved water kept; 91 coins / 2,240", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:59:03.298Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/05_1_APPROVED.png → file_uuid: c9d66eaf-b26f-4779-a295-2565a5069467
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/05_2_PREVIOUS_m1.png → file_uuid: a54c88fa-6946-4762-a65f-4ee9142ecc28
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/05_3_NEW_m2.png → file_uuid: c70d6416-7dad-42a9-b28a-5547798716d5
+
+### 🤖 Claude — 2026-11-17T17:59:05.462Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/06_1_APPROVED.png", "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/06_2_PREVIOUS_game.png", "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/06_3_NEW_match06.png"], "caption": "Screen 06 · APPROVED | PREVIOUS game | NEW real 3D (?match06=1, first milestone): scenery 4.1 → 98.8 %, whole 5.0 → 79.1 %", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:59:06.497Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/06_1_APPROVED.png → file_uuid: 518570b1-f46b-4813-9e52-84e5e0dd94fc
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/06_2_PREVIOUS_game.png → file_uuid: a4b51c57-5e47-4583-8d2c-af780f7eb542
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/06_3_NEW_match06.png → file_uuid: 93f292b7-7e48-4d1d-8dab-08bd5c6624cc
+
+### 🤖 Claude — 2026-11-17T17:59:08.456Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/07_1_APPROVED.png", "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/07_2_PREVIOUS_game.png", "/tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/07_3_NEW_match07.png"], "caption": "Screen 07 · APPROVED | PREVIOUS game | NEW real 3D (?match07=1, first milestone): scenery 6.0 → 95.5 %, whole 6.7 → 80.1 %; 07→08 drop intact", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-17T17:59:09.195Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/07_1_APPROVED.png → file_uuid: 7d8b741d-95c7-4c19-a6ee-efadba9fdaaf
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/07_2_PREVIOUS_game.png → file_uuid: 32f1041d-2c94-4862-93e7-6a6ea4102780
+>   /tmp/claude-0/-home-user-rainbow-/8237828c-a2a3-56fb-ae3d-a1082f55095d/scratchpad/m/07_3_NEW_match07.png → file_uuid: 2028d9bc-143b-4638-817e-9ff5536b6e4f
+
+### 🤖 Claude — 2026-11-17T17:59:27.692Z
+
+All six specialists received their instructions and worked through their milestones, including Screen 04 and the replacement Screen 08 camera specialist. I've sent you approved | previous | new pictures for Benny, the Screen 08 coins, and Screens 04–07.
+
+**This account is now near its weekly usage limit** (a warning, not stopped). Following your rule, 04, 05, 06, 07 and the Benny specialist saved and pushed their finished milestones and are paused. The Screen 08 camera specialist keeps working and pushes after every step.
+
+**Screen 08 Benny** (pictures sent: newest round 3b, the earlier round 3, plus your approved and the previous game):
+- **What's closer:** the hat is now wide like the painting, with level stripes and ribbed knit on the cuff. The pom-pom and star sit on their painted spots, the dark strip under the cuff is gone, the fur is softer, and the splash ring is fuller.
+- **Numbers:** the Benny + splash area went from 49.8 % to 65.3 % (65.7 % in round 2). The whole frame went from 83.3 % to 85.4 %. The scenery stayed at 97.3 %.
+- **Round 2 vs 3b:** round 3b looks closer to me but measures 0.4 points lower, because individual fur strands can't line up pixel-for-pixel with the painting.
+- **What still differs:** the fur is still a hotter pink and spikier at the edges than your soft painted fur. The pom-pom is darker and fuzzier, and the white hat bands look slightly pink.
+- **APK:** `rainbow-debug-08benny-2026-11-17-r3b.apk`, not tested on a phone.
+
+**Screen 08 coins** (pictures and moving-camera sheet sent): while comparing the Benny pictures, I found the coin trail never matched your painting. The nine coins were 3–59 px off their painted spots, and five of Screen 10's coins showed as an extra cluster far down the river.
+- **Fix:** with the test switch `&coins08px=1`, all nine sit on the painted spots (within 1–8 px) and the extra coins are gone.
+- **Numbers:** scenery 97.3 % → 98.0 %, whole frame 83.3 % → 84.1 %.
+- **Proofs:** gameplay 8/8 and still 91 coins / 2,240. Your current Screen 08 is unchanged when the switch is off.
+- **Where it lives:** the lead branch. It combines with Benny's work only once you approve both.
+
+**Screens 04–07** (three full-size pictures each sent):
+
+| Screen | Result | Whole frame | Scenery |
+|---|---|---|---|
+| 04 | approved splash under Benny, coins sit on the water, sharper far tunnel while riding | 81.3 % → 81.8 % | 98.1 % → 98.2 % |
+| 05 | teal patch beside Benny gone, approved right wall; improved water and 91 coins kept | 89.2 % → 89.4 % | walls 92.2 % → 94.2 % |
+| 06 | first real 3D match of your approved picture | 5.0 % → 79.1 % | 4.1 % → 98.8 % |
+| 07 | first real 3D match; big 07→08 drop intact | 6.7 % → 80.1 % | 6.0 % → 95.5 % |
+
+All of them pass gameplay 8/8 with 91 coins / 2,240. Screen 06's APK build was blocked by a temporary download limit and needs a retry later.
+
+The Google Flow plan is untouched: 09 and 10 are unchanged, and nothing was merged or approved. Everything is on GitHub (lead `a611d928`), and `docs/PARALLEL_PROGRESS.md` is updated.
+
+**Decisions for you:**
+1. Keep the Screen 08 coin fix (`coins08px`) for the final version?
+2. Benny: round 3b (softer look) or round 2 (highest number)?
+3. Screens 06 and 07 each have a prepared fal "clean background" edit (one paid image edit each, not run). It would replace the temporary fill where Benny and the coins were painted. Approve or skip?
+4. Which paused screens, if any, should resume now despite the weekly-limit warning? Otherwise only the Screen 08 camera specialist keeps working.
+
+### 🧑 User — 2026-11-17T17:59:32.390Z
+
+CLAUDIA — COMPLETE RAINBOW GAME RESTORATION, ALL SIX PARALLEL AGENTS, WORLD LABS MARBLE, FAL.AI AND CONTINUATION FROM MY LATEST GITHUB BRANCH
+
+URGENT: MY PREVIOUS CLAUDE ACCOUNT HAS RUN OUT OF USAGE CREDITS. RESTORE MY EXISTING GAME AND CONTINUE WITHOUT STARTING OVER.
+
+I am switching to this Claude account because it has available usage credits.
+
+My previous Claudia spent considerable time recreating my original approved Rainbow game screens as real playable 3D Android environments.
+
+Six specialist workstreams were already working in parallel across five playable screens.
+
+MY NUMBER-ONE PRIORITY IS TO PRESERVE EVERY SUCCESSFUL IMPROVEMENT AND CONTINUE FROM EXACTLY WHERE THE PREVIOUS CLAUDE ACCOUNT STOPPED.
+
+I want my actual game to match my ORIGINAL APPROVED SCREENS as closely as technically possible, including the scenery, backgrounds, architecture, lighting, water, colors, character design, materials, camera perspectives, coins, and overall visual quality.
+
+I do not want scenery that is merely inspired by my approved pictures.
+
+DO NOT START A NEW GAME. DO NOT REBUILD FINISHED WORK. DO NOT REDESIGN MY APPROVED SCREENS.
+
+Restore as much as technically possible automatically. Only ask me to take action when secure credentials, account permissions, or important approvals genuinely require it.
+
+---
+
+1. MY EXACT GITHUB REPOSITORY AND LATEST LEAD BRANCH
+
+Repository:
+
+https://github.com/josiahscalia5-dev/rainbow-
+
+CURRENT LEAD DEVELOPMENT BRANCH:
+
+"ccr-c0235034-ks6sx3"
+
+Last independently verified lead checkpoint:
+
+"afab6c673cdab146f32304e75aae0a6f6eff781d"
+
+This was an autosave checkpoint and may no longer be the latest commit.
+
+IMPORTANT: FIND THE NEWEST REMOTE COMMIT BEFORE RESTORING ANYTHING.
+
+Previous lead branches:
+
+"ccr-5495e9c4-g0apvl"
+
+"ccr-d4240b15-rl1i72"
+
+"ccr-9c4a8ad6-xovgsx"
+
+These contain valuable earlier work and recovery checkpoints.
+
+First actions:
+
+1. Connect to my existing Rainbow GitHub repository.
+2. Fetch all remote branches.
+3. Identify the newest commit on the lead branch.
+4. Fetch all six specialist branches.
+5. Check Git LFS and recover the actual large-file contents.
+6. Preserve older branches as recovery points.
+7. Check for newer automatic saves and completed milestones.
+8. Do not automatically merge, reset, force-push, overwrite, or delete anything.
+9. Record the precise restoration point.
+10. Continue on a new isolated working branch if necessary.
+
+The previous Claude account has already run out of usage credits. Do not depend on that account being available to perform another save.
+
+If additional changes were never committed or pushed, identify what cannot be recovered instead of claiming everything transferred perfectly.
+
+2. RESTORE ALL SIX SPECIALIST WORKSTREAMS
+
+My previous Claudia had SIX separate cloud development sessions.
+
+Each specialist worked on its own GitHub branch and isolated environment.
+
+These are their exact latest known branches.
+
+SCREEN 04 — FIVE ARROWS SPECIALIST
+
+"claude/rainbow-s04-match-c3"
+
+Last independently verified checkpoint:
+
+"30678ee67d0c4206287485439c32432e2f98ee33"
+
+Continue improving Screen 04's approved gold tunnel, water, foam, coins, textures, lighting, and moving-camera appearance.
+
+SCREEN 05 — FLOW INTO THE CURRENT SPECIALIST
+
+"claude/rainbow-s05-match-c3"
+
+Last independently verified checkpoint:
+
+"8f3a5c7676e949016003d672b2d845d4d7df61c1"
+
+Continue Screen 05's accurate scenery reconstruction and remaining texture, wall, water, and ring refinements.
+
+SCREEN 06 — RINSE ARCH SPECIALIST
+
+"claude/rainbow-s06-match-c3"
+
+Last independently verified checkpoint:
+
+"ec57bb09a669d25b0e7012a5100cfc62ac325e10"
+
+Continue the existing camera matching, 3D geometry reconstruction, texture projection, and approved-environment comparison.
+
+SCREEN 07 — WASHER TUBE SPECIALIST
+
+"claude/rainbow-s07-match-c3"
+
+Last independently verified checkpoint:
+
+"2f6e77477a1a04859e75bf5d704c978842d16049"
+
+Continue the approved washer-tube reconstruction.
+
+The previous specialist had completed its first milestone and reported that its saved branch matched GitHub.
+
+Recover its completed milestone before beginning the next one.
+
+SCREEN 08 — BENNY SPECIALIST
+
+"claude/rainbow-s08-benny08-bake-c3"
+
+Last independently verified checkpoint:
+
+"277826cd958f3dd192502cacc4e8178942ae315b"
+
+Continue improving Benny's fur, knitted beanie, pom-pom, gold star, colors, proportions, and water splash.
+
+SCREEN 08 — CAMERA SPECIALIST
+
+"claude/rainbow-s08-camclear-c3"
+
+Last independently verified checkpoint:
+
+"d6c402bf7ce1f0d0f565419e5580a57f14a69757"
+
+Continue correcting camera obstructions, movement, transitions, and scenery distortion.
+
+ALL THESE COMMITS ARE RECOVERY REFERENCES. THEY ARE NOT GUARANTEED TO BE THE LATEST.
+
+Check every branch's current remote tip before restarting its workstream.
+
+3. RESTART PARALLEL DEVELOPMENT SAFELY
+
+I WANT ALL FIVE PLAYABLE SCREENS DEVELOPED SIMULTANEOUSLY WHEN ACCOUNT CAPACITY PERMITS.
+
+There should be six separate workstreams:
+
+- Screen 04 environment.
+- Screen 05 environment.
+- Screen 06 environment.
+- Screen 07 environment.
+- Screen 08 Benny.
+- Screen 08 camera and gameplay.
+
+Lead Claudia coordinates the work.
+
+Use separate Claude Code cloud sessions or supported isolated worktrees.
+
+Experimental agent teams are not required if separate cloud sessions are available.
+
+Before launching replacements, check whether any earlier sessions remain running or are still writing to GitHub.
+
+Do not allow two Claude accounts to write simultaneously to the same branch.
+
+If necessary, create continuation branches ending in "-c4", starting from each latest verified "-c3" checkpoint.
+
+Preserve the existing "-c3" branches unchanged.
+
+Do not create duplicate agents for work that is already active.
+
+IMPORTANT ABOUT USAGE:
+
+My previous Claude accounts ran out of credits quickly while running six parallel sessions.
+
+Prioritize Screen 08 and run the maximum safe number of agents supported by the new account's usage allowance.
+
+Have each agent complete one meaningful milestone, commit and push its work, report to Lead Claudia, and stop until assigned the next milestone.
+
+Do not exhaust account usage merely to keep all six agents active.
+
+4. RESTORE ALL TEN SPECIALIST-AGENT DEFINITIONS
+
+My previous Claudia verified that all ten project specialist-agent definitions were saved.
+
+Restore their original instructions, skills, configurations, and tools.
+
+They include specialists for:
+
+- Approved reference matching.
+- Benny's character design.
+- Cartoon-girl character design.
+- Washing-machine environment modeling.
+- Water effects.
+- Foam, bubbles and particles.
+- Camera and transition engineering.
+- Gameplay and animation.
+- Visual quality assurance.
+- Android building and performance.
+
+Read the original definitions in ".claude/agents/".
+
+Do not replace them with generic agents unnecessarily.
+
+Distinguish saved agent definitions from agents that are actually running.
+
+Restore compatible project-level plugins and MCP settings where supported, and report any account-specific connections that require authorization.
+
+5. RESTORE ALL 13 ORIGINAL APPROVED REFERENCE IMAGES
+
+My previous account reported that all 13 protected reference images were unchanged.
+
+This includes:
+
+- Eleven numbered approved screen images.
+- The official cartoon-girl reference.
+- The isolated approved Screen 05 water reference.
+
+Run the existing checksum verification:
+
+"sha256sum -c scripts/reference.sha256"
+
+Preserve all originals byte-for-byte.
+
+These are the definitive visual references for the game.
+
+DO NOT ALTER, REPLACE, OR REDESIGN THE APPROVED ORIGINALS.
+
+Every playable environment must match its own approved artwork as closely as technically possible.
+
+6. RESTORE THE COMPLETE PROJECT AND LARGE FILES
+
+Recover:
+
+- All existing game source code.
+- All Three.js and Blender assets.
+- Real 3D models and environments.
+- Texture maps and projected scenery.
+- Water and foam materials.
+- Approved reference images.
+- Camera calibration files.
+- Lighting configurations.
+- Benny's character models and textures.
+- World Labs Marble assets.
+- fal.ai image-editing results.
+- Image-Blaster files.
+- Android APK builds.
+- Gameplay recordings.
+- All previous QA comparisons.
+- Screenshots and motion tests.
+- Development scripts and specialist notes.
+
+My previous Claudia reported approximately 50 distinct Git LFS assets across the earlier branches.
+
+Verify the newest LFS inventory, download the required binary assets, and perform integrity checks.
+
+Do not mistake Git LFS pointer files for downloaded assets.
+
+7. READ ALL SAVED HANDOFF AND SPECIALIST INSTRUCTIONS
+
+Before making significant changes, read:
+
+"CLAUDE.md"
+
+"docs/PARALLEL_PROGRESS.md"
+
+"docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md"
+
+"docs/FLOW_VIDEO.md"
+
+"qa/match/08/NOTES.md"
+
+"qa/imageblaster/08/NOTES.md"
+
+"docs/briefs/2026-11-17-r3/"
+
+Read the common rules and all six specialist briefs in that directory.
+
+Also inspect each workstream's newest QA notes, STATUS files, comparison metrics, shared-code change lists, and milestone records.
+
+Some older handoff documents describe earlier branches and earlier versions of the game.
+
+Use the newest verified instructions and actual saved source code.
+
+Do not revert to an earlier game version just because an old handoff document mentions it.
+
+8. RESTORE WORLD LABS MARBLE
+
+I already have an existing World Labs Marble account.
+
+The last confirmed credit balance was:
+
+5,420 credits.
+
+I want to reuse the SAME World Labs account and all the assets already generated.
+
+Restore:
+
+- Marble API settings.
+- Existing world IDs and generation records.
+- Downloaded Gaussian splats.
+- Meshes and collider files.
+- 360-degree panoramas.
+- Texture and material references.
+- Image-Blaster workflows.
+- Previous prompts and model settings.
+- Camera-fitting and comparison results.
+- Credit usage records.
+
+The existing Screen 08 Marble world was previously verified as accessible through my original account.
+
+Two older Screen 05 pilot-world records returned "not found" through the API, but their downloaded files were saved in Git LFS.
+
+Preserve those files.
+
+API KEY SECURITY
+
+If this new Claude account already has my verified existing World Labs key available through an authorized secure environment, reuse it.
+
+Otherwise, ask me to reconnect my SAME account using a secure credential form.
+
+Never request that I paste API keys directly into chat.
+
+Never print, log, or commit API keys to GitHub.
+
+Use a free, non-billable connection check where possible.
+
+Do not purchase credits, create new accounts, or run new paid Marble generations without my explicit authorization.
+
+Remember: earlier automatic Marble reconstructions did not accurately reproduce my approved scenery. Continue using the more successful fitted-geometry and original-artwork projection method unless there is a specific reason another tool would improve the result.
+
+9. RESTORE MY FAL.AI ACCOUNT
+
+I previously purchased $10 worth of credits on my existing fal.ai account.
+
+Some credits were used for Screen 08 and Screen 04 image editing.
+
+Restore:
+
+- The existing fal.ai connection.
+- The saved "FAL_KEY" configuration convention.
+- Image-Blaster.
+- Previously edited environment-only artwork.
+- Saved image prompts and model settings.
+- Completed fal.ai request records.
+- All cleaned image plates and comparisons.
+
+The ONE authorized Screen 04 fal.ai edit has already been completed in a previous development round.
+
+DO NOT PAY TO REPEAT IT.
+
+Reuse the saved result.
+
+If the API key is unavailable on the new account, request secure reconnection to my existing fal.ai account.
+
+Do not purchase more credits or enable automatic top-ups.
+
+10. RESTORE ALL DEVELOPMENT TOOLS
+
+Restore and verify the existing software stack:
+
+- Blender.
+- Three.js/WebGL.
+- Image-Blaster.
+- Node.js.
+- Bun.
+- TypeScript.
+- Vite.
+- Playwright.
+- Android SDK and APK build tools.
+- Java.
+- ffmpeg.
+- ImageMagick.
+- Python visual-comparison libraries.
+- Texture-projection scripts.
+- Camera-fitting tools.
+- GitHub and Git LFS.
+- Compatible MCP servers and project plugins.
+
+Use the existing installation and verification scripts.
+
+The previous project had a working Blender 5.3, Android SDK 34, and Playwright environment.
+
+Do not reinstall working tools unnecessarily.
+
+Verify the code compiles and the existing gameplay tests pass.
+
+11. SCREEN 08 — HIGHEST PRIORITY
+
+SCREEN 08 — FINAL SPIN CHAMBER
+
+The earlier reconstruction reached approximately 97.4% scenery similarity within the project's fixed-camera color-tolerance measurement.
+
+The successful reconstruction uses approved artwork projected onto fitted real 3D geometry.
+
+Preserve the approved washer chamber, gold rings, cyan-and-magenta water, foam, bubbles, towel, platform, water spouts, door, lighting, and camera framing.
+
+THE RECONSTRUCTION METHOD IS APPROVED. THE FINISHED SCREEN IS NOT YET APPROVED BY ME.
+
+BENNY SPECIALIST
+
+Continue from the newest saved Benny round.
+
+The latest specialist was improving:
+
+- Fur softness and texture.
+- Fur outline.
+- Knitted hat contrast.
+- Ribbed cuff.
+- Yarn pom-pom.
+- Gold star.
+- Color and lighting accuracy.
+- Approved splash shape and position.
+
+The specialist found that the approved painting has stronger highlights on the crown, cuff, and pom-pom.
+
+It was testing a crisper knitted appearance.
+
+Preserve the successful texture work and keep whichever tested version best matches my approved Benny.
+
+Do not improve a numerical score at the expense of the visible character quality.
+
+Benny must remain a real animated character while swimming and steering.
+
+CAMERA SPECIALIST
+
+Continue the existing Screen 08 camera and gameplay-obstruction fixes.
+
+The previous specialist was investigating the camera's orientation near the drain lip.
+
+It found that using the water's changing "up" direction could flip the view.
+
+Preserve and evaluate its latest camera corrections, using a stable world-up orientation where appropriate.
+
+Test forward movement, steering, and the transition from Screen 07 into Screen 08.
+
+Do not disturb the successful scenery reconstruction.
+
+12. SCREEN 04 — THROUGH THE FIVE ARROWS
+
+Previous reported scenery similarity reached approximately 98.1% within the project's approved-camera color-tolerance test.
+
+The specialist has been improving:
+
+- Gold tunnel geometry and textures.
+- Pink-and-blue water while moving.
+- Repeated texture seams.
+- Far gold rings.
+- Water splash around Benny.
+- Coins positioned on the water.
+- Original approved camera composition.
+
+The latest specialist was restoring a splash from the original approved artwork and adjusting collectible heights so coins remain visually aligned while riding.
+
+Preserve its newest successful work.
+
+Do not change protected views or break gameplay.
+
+Test the scenery while Benny moves forward and steers.
+
+13. SCREEN 05 — FLOW INTO THE CURRENT
+
+The earlier specialist reported:
+
+Whole-frame match: approximately 89.2%.
+
+Scenery match: approximately 93.3%.
+
+Water match: approximately 96.5%.
+
+Preserve the improved water around Benny.
+
+The original problem with 100 coins instead of 91 was reportedly corrected.
+
+Verify the latest coin layout and preserve the intended 91 coins and total reward behavior.
+
+The newest specialist was adjusting the outline of the lower-left gold frame to match the approved image.
+
+Remaining work includes:
+
+- The teal water patch.
+- Right wall geometry and texture.
+- Gold-ring outlines.
+- Moving-water appearance.
+- Accurate coins and foam.
+- Consistent camera and scenery.
+
+Do not undo completed improvements.
+
+14. SCREEN 06 — CREST THE RINSE ARCH
+
+Continue from:
+
+"claude/rainbow-s06-match-c3"
+
+The Screen 06 specialist was reconstructing its approved environment using the successful Screen 08 method.
+
+Recover all existing camera fitting, proxy geometry, river tracing, texture projection, and comparison work.
+
+Continue matching the original approved Screen 06 scenery.
+
+Make sure Benny, water, architecture, lighting, and collectible positions stay accurate when the camera moves.
+
+15. SCREEN 07 — DIVE THE WASHER TUBE
+
+Continue from:
+
+"claude/rainbow-s07-match-c3"
+
+The specialist had completed its first milestone and reported that its GitHub branch was clean and fully saved.
+
+Its next milestone involves improving:
+
+- Gold rings.
+- Pink-and-blue water.
+- Foam and bubbles.
+- Correct coin locations.
+- Doubled or distorted geometry.
+- Mirrored water while moving.
+- The transition into Screen 08.
+
+A Screen 07 Android test build was previously created.
+
+Restore and reuse it where appropriate.
+
+Preserve the original approved camera framing and real 3D gameplay.
+
+Do not mark Screen 07 approved until I personally approve the result.
+
+16. GOOGLE FLOW CINEMATIC PLAN
+
+VERY IMPORTANT — DO NOT CONFUSE MY CINEMATIC SCREENS WITH MY PLAYABLE GAMEPLAY SCREENS.
+
+My intended final production structure is:
+
+SCREENS 01–03: GOOGLE FLOW OPENING CINEMATICS.
+
+The cartoon girl unknowingly places Benny, hidden in a purple towel, into the washing machine. The magical adventure begins.
+
+SCREENS 04–08: REAL PLAYABLE 3D ANDROID GAMEPLAY.
+
+Benny swims through the washing-machine environments, collects coins, and avoids obstacles.
+
+SCREENS 09–11: GOOGLE FLOW ENDING CINEMATICS.
+
+Benny returns to the towel before the girl notices he was missing.
+
+She eventually picks up the towel, unaware of his adventure.
+
+The final videos will be created separately using Google Flow.
+
+Some existing game code currently treats additional sections as live 3D gameplay.
+
+Do not delete or destructively rewrite that code.
+
+Prepare the final video-to-game transition at Screen 04 and the game-to-video transition after Screen 08 behind a test switch until the Google Flow videos are supplied.
+
+Preserve the existing fallback scenes.
+
+Do not use Marble credits to generate the cartoon-girl cinematic environments.
+
+17. PRESERVE GAMEPLAY AND ANDROID COMPATIBILITY
+
+The intended normal game behavior includes:
+
+- 91 collectible coins.
+- A total reward amount of 2,240.
+- Swimming.
+- Left/right steering.
+- Camera movement.
+- Collisions.
+- Existing controls.
+- Hearts and HUD.
+- Android portrait gameplay.
+
+Previous gameplay tests passed 8/8.
+
+Run the same tests after integrating changes.
+
+Keep the default game unchanged unless an improvement has been reviewed and safely integrated.
+
+Check the 07→08 drop, camera clipping, transitions, and collectible behavior.
+
+Produce Android APK builds after validated milestones.
+
+Do not claim that a game has been tested on a real Android phone unless it actually has.
+
+18. RESTORE AUTOMATIC GITHUB BACKUPS
+
+My previous Claudia used a five-minute GitHub autosave system.
+
+Restore it wherever supported.
+
+Verify that each agent saves to its OWN branch.
+
+Require every agent to:
+
+1. Save meaningful completed work at safe milestones.
+2. Preserve unfinished work before stopping.
+3. Commit and push changes to GitHub.
+4. Verify that the remote commit matches the local commit.
+5. Preserve large-file assets in Git LFS.
+6. Write clear handoff notes for the next session.
+7. Report any uncommitted or unpushed changes.
+
+Do not assume old cloud containers are still accessible.
+
+Do not claim autosave continued during periods when an environment was closed.
+
+19. PROTECT ALL BRANCHES AND SHARED GAME SYSTEMS
+
+Keep new development isolated.
+
+Protect all original approved images and reference materials.
+
+Only designated specialists may modify shared Benny character files.
+
+Changes to camera systems, HUD, coins, gameplay or shared course code must be carefully coordinated.
+
+Use existing test switches and document shared modifications.
+
+Do not automatically merge or cherry-pick unfinished work.
+
+Never overwrite a successful visual reconstruction with a weaker version.
+
+Require Lead Claudia's verification and my approval before integrating finished screen work.
+
+20. REPORT PROGRESS CLEARLY
+
+Maintain:
+
+"docs/PARALLEL_PROGRESS.md"
+
+After restoration, give me a clear report showing:
+
+- The active lead GitHub branch.
+- The newest verified lead commit.
+- All six specialist b
+And here's the rest of my prompt. I just sent you, but it didn't. I think it was too long. But this is the rest of the prompt.CLAUDIA — CONTINUATION OF MY RAINBOW RESTORATION PROMPT (SECTIONS 20–21)
+
+20. REPORT PROGRESS CLEARLY
+
+Maintain and regularly update:
+
+"docs/PARALLEL_PROGRESS.md"
+
+After restoring my project, provide one complete, accurate report covering the lead branch and ALL SIX PARALLEL SPECIALIST WORKSTREAMS.
+
+A. GITHUB AND BACKUP VERIFICATION
+
+Report:
+
+1. The exact GitHub repository.
+2. The current lead GitHub branch.
+3. The newest verified lead commit SHA.
+4. All six specialist branch names and their newest verified commits.
+5. Which branches contain additional work not yet integrated.
+6. Which specialists are currently running.
+7. Which specialists are paused, stopped, or awaiting instructions.
+8. Whether every agent is saving to its own isolated branch.
+9. Whether all five-minute autosave systems are functioning.
+10. Whether GitHub's remote commits match the agents' local commits.
+11. Whether any uncommitted or unpushed work remains.
+12. Whether all required Git LFS objects have been downloaded and verified.
+13. Whether any work from my previous Claude account could not be recovered.
+
+Do not claim everything is safely backed up unless the necessary verification checks have passed.
+
+B. ALL SIX SPECIALIST BRANCHES
+
+My latest known development branches are:
+
+LEAD CLAUDIA
+
+"ccr-c0235034-ks6sx3"
+
+SCREEN 04 — FIVE ARROWS
+
+"claude/rainbow-s04-match-c3"
+
+SCREEN 05 — FLOW INTO THE CURRENT
+
+"claude/rainbow-s05-match-c3"
+
+SCREEN 06 — RINSE ARCH
+
+"claude/rainbow-s06-match-c3"
+
+SCREEN 07 — WASHER TUBE
+
+"claude/rainbow-s07-match-c3"
+
+SCREEN 08 — BENNY SPECIALIST
+
+"claude/rainbow-s08-benny08-bake-c3"
+
+SCREEN 08 — CAMERA SPECIALIST
+
+"claude/rainbow-s08-camclear-c3"
+
+Verify the newest available work on EVERY branch before resuming development.
+
+If you create new continuation branches, record the old branch, its latest commit, the new branch, and the exact starting commit.
+
+Never overwrite the original saved branches.
+
+C. RESTORED FILES, AGENTS, TOOLS, AND ACCOUNTS
+
+Confirm:
+
+1. All 13 protected approved reference images are present and unchanged.
+2. All ten original specialist-agent definitions are restored.
+3. All required 3D assets, Blender files, textures, and game environments are accessible.
+4. All saved World Labs Marble splats, meshes, panoramas, generation records, and related files are preserved.
+5. My existing World Labs Marble account is connected, or secure reconnection is requested if necessary.
+6. My existing fal.ai account is connected, or secure reconnection is requested if necessary.
+7. Previously completed paid generations are reused rather than repeated unnecessarily.
+8. All required Android development tools are operational.
+9. The game's code compiles successfully.
+10. The latest Android APKs and gameplay recordings are preserved.
+
+Never print API keys, credentials, or other secrets in chat or store them in GitHub.
+
+D. SCREEN-BY-SCREEN DEVELOPMENT REPORT
+
+For EVERY playable screen from 04 through 08, report:
+
+- The original approved reference being used.
+- The assigned specialist.
+- Its working GitHub branch.
+- The newest saved checkpoint.
+- What has already been completed.
+- Current scenery accuracy.
+- Current whole-screen accuracy, if measured.
+- Remaining visual differences.
+- Camera and moving-gameplay problems.
+- Gameplay test results.
+- Android build status.
+- The next specific improvements.
+- Whether I have personally approved the screen.
+
+Distinguish fixed-camera pixel measurements from actual moving-camera visual quality.
+
+DO NOT MARK ANY SCREEN APPROVED UNTIL I PERSONALLY APPROVE IT.
+
+E. SHOW MY APPROVED SCREENS SEPARATELY
+
+Whenever a specialist completes an important milestone, show me:
+
+PREVIEW 1 — ORIGINAL APPROVED SCREEN
+
+The exact, unchanged approved artwork.
+
+PREVIEW 2 — BEFORE
+
+The game rendering before the specialist's newest improvements.
+
+PREVIEW 3 — NEW
+
+The newly improved real 3D gameplay rendering.
+
+Show these as THREE SEPARATE, LARGE, FULL-SIZE PORTRAIT IMAGES.
+
+Do not combine them into a small collage.
+
+Also provide separate moving-camera previews showing Benny swimming, moving forward, steering left, and steering right where relevant.
+
+Check for:
+
+- Texture stretching.
+- Mirrored artwork.
+- Wrong camera angles.
+- Missing scenery.
+- Incorrect water movement.
+- Wrong colors or lighting.
+- Camera clipping.
+- Geometry obstructing the view.
+- Benny's appearance.
+- Coin positioning.
+- Incorrect transitions between screens.
+
+Be transparent about any remaining differences.
+
+A high numerical similarity score does not automatically mean the entire playable environment is visually finished.
+
+F. KEEP MY GOOGLE FLOW VIDEO PLAN
+
+Remember:
+
+SCREENS 01–03: GOOGLE FLOW OPENING CINEMATICS.
+
+SCREENS 04–08: REAL PLAYABLE 3D ANDROID GAMEPLAY.
+
+SCREENS 09–11: GOOGLE FLOW ENDING CINEMATICS.
+
+Preserve the original approved scenes and their intended roles.
+
+Do not waste development credits rebuilding the cartoon-girl opening or ending as playable game environments.
+
+Prepare safe transitions into and out of the playable game without deleting existing fallback scenes.
+
+I will provide the final Google Flow videos separately.
+
+G. KEEP ME INFORMED ABOUT USAGE LIMITS
+
+My previous Claude accounts ran out of credits while multiple specialists were working.
+
+If this Claude account approaches its usage limit:
+
+1. Have every active specialist reach a safe stopping point where possible.
+2. Commit and push completed and unfinished progress.
+3. Verify the latest GitHub commits.
+4. Update the specialist progress report.
+5. Save any needed recovery instructions.
+6. Prioritize Screen 08.
+7. Pause lower-priority workstreams if necessary.
+8. Preserve the ability to restore every specialist in another Claude account.
+
+Do not claim that cloud sessions will continue working when their account has no available usage.
+
+Do not promise work after a session has stopped unless it is supported by an actual scheduled or running workflow.
+
+---
+
+21. FINAL INSTRUCTIONS — MY MOST IMPORTANT REQUIREMENTS
+
+My previous Claude account ran out of usage credits.
+
+I want to continue developing THE EXACT SAME RAINBOW ANDROID GAME, without starting over.
+
+My number-one priority is reproducing my original approved game screens as closely as technically possible.
+
+I want every playable screen to have the correct:
+
+- Scenery and backgrounds.
+- Architecture and environmental layout.
+- Lighting and reflections.
+- Colors and materials.
+- Water formations, foam, and bubbles.
+- Gold rings and washing-machine structures.
+- Benny's fur, hat, pom-pom, and overall appearance.
+- Camera positions and perspectives.
+- Coins and gameplay HUD.
+- Real 3D movement and steering.
+
+MY DEVELOPMENT PRIORITIES
+
+1. Restore my existing Rainbow project.
+2. Preserve every successful improvement from the previous account.
+3. Restore the newest verified lead branch.
+4. Restore all SIX specialist workstreams.
+5. Restore all TEN specialist-agent definitions.
+6. Preserve all 13 protected approved reference images.
+7. Restore all 3D assets, environments, development tools, and configurations.
+8. Securely reconnect World Labs Marble and fal.ai if necessary.
+9. Continue Screen 08 as my highest priority.
+10. Continue Screen 08 Benny's visual improvements.
+11. Continue the Screen 08 camera-obstruction and transition fixes.
+12. Continue Screens 04, 05, 06, and 07 in parallel where usage capacity permits.
+13. Preserve the Google Flow cinematic plan.
+14. Maintain the intended gameplay, 91 coins, and total reward behavior.
+15. Save all meaningful progress to GitHub.
+16. Show me separate full-size approved-versus-new screen comparisons.
+17. Obtain my personal approval before marking any screen complete.
+18. Make sure the work can be restored again if I need to switch Claude accounts in the future.
+
+NON-NEGOTIABLE RULES
+
+DO NOT START MY RAINBOW GAME OVER.
+
+DO NOT REDESIGN MY ORIGINAL APPROVED ARTWORK.
+
+DO NOT OVERWRITE OR DELETE SUCCESSFUL RECONSTRUCTIONS.
+
+DO NOT REPEAT COMPLETED PAID GENERATIONS UNNECESSARILY.
+
+DO NOT PURCHASE ADDITIONAL CREDITS WITHOUT MY AUTHORIZATION.
+
+DO NOT MERGE UNFINISHED BRANCHES WITHOUT MY APPROVAL.
+
+DO NOT ABANDON SCREEN 08.
+
+DO NOT LEAVE SCREENS 04, 05, 06, OR 07 UNFINISHED.
+
+DO NOT CHANGE THE GOOGLE FLOW CINEMATIC PLAN WITHOUT MY APPROVAL.
+
+DO NOT MARK A SCREEN APPROVED UNTIL I SAY IT IS APPROVED.
+
+EXACT RESTORATION STARTING POINT
+
+Repository:
+
+https://github.com/josiahscalia5-dev/rainbow-
+
+Lead branch:
+
+"ccr-c0235034-ks6sx3"
+
+Restore all six "-c3" specialist branches listed in Section 20.
+
+Find their NEWEST saved GitHub commits.
+
+Recover the most recent successful work from each branch.
+
+Create safe continuation branches if necessary.
+
+Restore the agents, assets, tools, and existing account connections.
+
+Verify the game compiles and its gameplay tests pass.
+
+Then continue development using the maximum safe parallel-agent capacity.
+
+MY ULTIMATE GOAL IS TO COMPLETE ALL FIVE PLAYABLE RAINBOW SCREENS WITH THE HIGHEST TECHNICALLY ACHIEVABLE VISUAL ACCURACY, MATCHING MY ORIGINAL APPROVED ARTWORK WHILE REMAINING A REAL PLAYABLE 3D ANDROID GAME.
+
+PLEASE CONTINUE EXACTLY WHERE MY PREVIOUS CLAUDIA LEFT OFF — NOT FROM THE BEGINNING.
+
+END OF COMPLETE RAINBOW TRANSFER PROMPT
+

@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11165,
-   "sha256": "e9fe45b386b9f48817e697156db7070f7c836e32bd3b236cb81136c0c9ab1387"
+   "sha256": "e83dd06d0fc0cebc2d121467105c60b643c2f1a7e15458d223608d9f2145db9a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -718,8 +718,8 @@
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
-   "bytes": 16270,
-   "sha256": "183dbaf513e62910f0a6d4d45df812cf392a9cb023efe9d8667a41f8afdb8715"
+   "bytes": 18855,
+   "sha256": "1a144a916f33f41701f2cd97bab158c0f0b5f57f2bc0b2037e029ccd6f994462"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -1530,6 +1530,11 @@
    "path": "qa/match/08/coins08px/3_NEW_match08_coins08px_cointrail_2x.png",
    "bytes": 1075029,
    "sha256": "9dce4d68feb41e3417e0a04f766571d0a29f04ab738992461c0c95798cae345c"
+  },
+  {
+   "path": "qa/match/08/coins08px/NOTES.md",
+   "bytes": 3913,
+   "sha256": "0901d023dc711d66d86af629f1aed591b74b614a70b4d1b8695b5440a525380d"
   },
   {
    "path": "qa/match/08/coins08px/gameplay_match08_coins08px.json",
