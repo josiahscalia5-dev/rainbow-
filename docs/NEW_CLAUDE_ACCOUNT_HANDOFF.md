@@ -1,12 +1,12 @@
 # RAINBOW — new Claude account handoff (written 2026-11-17 ~14:30 UTC, session 03b94f36)
 
 Repository **https://github.com/josiahscalia5-dev/rainbow-** · branch **`ccr-9c4a8ad6-xovgsx`** · backup tag
-**`backup-2026-11-17-screen08`** (the verified commit; the branch may carry newer autosaves of this session's transcript).
+**`backup/2026-11-17-screen08-transfer`** (checkpoint branch; GitHub tags are blocked from this session) (the verified commit; the branch may carry newer autosaves of this session's transcript).
 
 ## ▶ PASTE THIS INTO THE NEW CLAUDE ACCOUNT (one message)
 > RAINBOW — continue my EXISTING game. Do NOT restart, redesign or rebuild it; do NOT merge or cherry-pick branches
 > without asking me; never spend World Labs or fal.ai credits without naming the job + cost and getting my OK.
-> 1. Repository `josiahscalia5-dev/rainbow-`: check out branch `ccr-9c4a8ad6-xovgsx` (tag `backup-2026-11-17-screen08`
+> 1. Repository `josiahscalia5-dev/rainbow-`: check out branch `ccr-9c4a8ad6-xovgsx` (checkpoint branch `backup/2026-11-17-screen08-transfer`
 >    = last verified save) and work on your own session branch created from it.
 > 2. Follow `CLAUDE.md`. Run `bash scripts/claude-bootstrap.sh --skip-resume`, then `bash scripts/setup-image-blaster.sh`,
 >    then `sha256sum -c scripts/reference.sha256` (13 OK) and `python3 -I scripts/autosave-status.py`.

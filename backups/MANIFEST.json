@@ -564,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "0e28d1719e48f0a795f68a4cf850b52e926720891786733ea8d2b4db4f37ac81"
+   "sha256": "0d3881aecd53e66789f3d542021098c20b0760b804234da0c0208564c3035ffb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -598,8 +598,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 6789,
-   "sha256": "4ed415586def137ecf38a71642b2e6505fafa241d4b332e7ef42b1fb0eb8fc82"
+   "bytes": 6832,
+   "sha256": "11e20d8665dea77188af054c387459eee58ad60c012aa3f44d457a9526c4c369"
   },
   {
    "path": "backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip",
@@ -653,8 +653,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 11380,
-   "sha256": "5faaf05ebb30913a82ee8df68ca6e7e5b77b81711bb45df6682a44e4c0f60d08"
+   "bytes": 11475,
+   "sha256": "2d8ef195132991ea4c95a31117a9d3d525e4a26ad638e71f41000d6b0f294abf"
   },
   {
    "path": "docs/characters/benny.md",
