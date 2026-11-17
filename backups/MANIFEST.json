@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11165,
-   "sha256": "e83dd06d0fc0cebc2d121467105c60b643c2f1a7e15458d223608d9f2145db9a"
+   "sha256": "867663f99f411c6d0abc7528419d30fb83524fa64669ed7a3eb222ec54683679"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -760,6 +760,11 @@
    "path": "docs/briefs/2026-11-17-r3/COMMON_RULES.md",
    "bytes": 2733,
    "sha256": "d709a7696258e2840490ba079f035c478d89e8d754478cf4b88a03f16301c580"
+  },
+  {
+   "path": "docs/briefs/2026-11-17-r3/NEXT_MILESTONES.md",
+   "bytes": 3442,
+   "sha256": "1945dcc9afe08bb4eaa2e8b46a3d0a3dec582c193edb56c1c0dd685390851441"
   },
   {
    "path": "docs/briefs/2026-11-17-r3/S04.md",
