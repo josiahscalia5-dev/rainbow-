@@ -1,3 +1,46 @@
+# ▶▶▶ NEWEST — ACCOUNT 6 (round 6) STATE (2026-11-17 ~22:40 UTC, lead session `session_01VCMXoaUqBCxDq8BntT19BU`)
+
+**Lead branch now: `ccr-4bd35b15-7z45t0`** (started from the r5 lead `ccr-f983b317-2vt0zh` @ `cbc571356d261144c2ac3b4092de4fc4a9d5ffe6`,
+its newest commit; `ccr-067047f0-up5d1m` @ `7d1318ec` = r4 lead, its last commit is a transcript autosave only). User's
+round-6 order: `docs/briefs/2026-11-17-r6/USER_DECISIONS.md` (≥ 8.5/10 THROUGHOUT GAMEPLAY; 06 major priority, then 08).
+If account 6 runs out: `-c7` branches from each NEWEST `-c6` tip (or `-c5` tip where no `-c6` exists).
+
+## Branch map (round 6; nothing merged into production, no -c5 or older branch written)
+| Role | Branch | Started at | State |
+|---|---|---|---|
+| Lead | `ccr-4bd35b15-7z45t0` | `ccr-f983b317-2vt0zh` @ `cbc57135` | this session |
+| 06 (MAJOR PRIORITY) | `claude/rainbow-s06-match-c6` | `c088718bb9e3374583238f4ee93f25bdee600065` | session `session_01VCMXobyXNaU99Bgt9q6WBM`, brief `docs/briefs/2026-11-17-r6/S06.md` |
+| 08 scenery in motion r2 | `claude/rainbow-s08-scenery-c6` | `700f09e16ca0e44394a9926cd6a261541a645cad` | session `session_01VCMXobk8x9PXbYb8rpUaPP`, brief `S08_SCENERY.md` |
+| Combined preview (test only) | `claude/rainbow-preview-all-c6` | preview-c5 `965e4ef9` + lead fix `41ea6618` | 08 ALL-switch conflict fixed (29.5 → 87.7 %) |
+| 08 Benny | `claude/rainbow-s08-benny08-bake-c5` @ `ae7abe5b` | — | paused: r6 (`c6892676`) awaits the user's VISUAL verdict |
+| 08 camera | `claude/rainbow-s08-camclear-c5` @ `18687513` | — | paused (phone verdict) |
+| 07 / 05 / 04 | `-c5` @ `835a72db` / `ebaf6cac` / `d1e422fa` | — | paused; next tasks below |
+
+## Restore audit (account 6, 21:50–22:10 UTC)
+* 13/13 approved images byte-identical; 10/10 agent definitions, SHA-256 = `backups/AGENTS_STATUS.json`.
+* Git LFS: **75 distinct objects, 921 MB** across the 9 tips (lead, 7 workstreams, preview), all local, `git lfs fsck` OK on all 9.
+* Keys (free reads only): World Labs key = the user's **ORIGINAL Screen 08 account** (5,420 credits; world `32b5b2f4…` 200;
+  05 pilot worlds 404). fal.ai = the SAME paid account (request `01a1ea70` → COMPLETED). No paid job started.
+* MCP: GitHub + Playwright MCP + parallax-threejs (playwright / chrome-devtools / threejs-devtools) connected; context7 and
+  spector failed to connect (optional). World Labs Atlas connector tools are listed (optional, not used).
+* **Usage: this account shows `seven_day` / `allowed_warning` (resets ≈ 2026-11-23)** → only the two specialists above.
+
+## Round-6 audit result (`qa/lead_r6/2026-11-17/README.md`) — NO screen is 8.5/10 while riding yet
+Approved view / riding (lead's subjective rating): 04 8 / 4 · 05 8.5 / 6 · 06 7.5 / 3 · 07 7.5 / 3.5 · 08 8.5 / 7. Measured:
+whole frame at the approved view 81.8 / 89.4 / 79.1 / 80.1 / 84.1 %; colour-palette overlap while moving 67.9 / 79.3 /
+67.7 / 65.6 / 76.2 % (approved view 91–96 %, normal game 42–59 %). Common cause: matched look only valid near each locked
+viewpoint; later parts of 05 and 07 (incl. the 07→08 plunge) still show the old default worlds.
+
+## Next tasks after the two running milestones (user's order: 06 + 08 first, then 07, 05, 04)
+* 07 M3: extend the matched tube over the whole 07 stretch + the plunge (gold band fills the screen mid-plunge); apply the
+  `x07` plunge-top fade from preview-c6 `41ea6618` on the 07 branch; stretched near water when steering.
+* 05 M3: matched geometry beyond ~20 u (old 05 world from ~66 % of the stage), river sheet when steering, near coin size.
+* 04 M4: world-anchored gold ring / bulb wall material + swirl water + foam banks beyond ~6 u (now a blurred smear and a
+  flat floating ramp), blue arrows while travelling.
+* Preview: per-screen Benny (05 look only on 05), 04 top bar layout, 08 Benny wave phase (`water.surfaceHeight(s,…)`).
+
+---
+
 # ▶▶ NEWEST — ACCOUNT 5 (round 5) STATE (2026-11-17 ~20:35 UTC, lead session `session_013VHsJ9SbWPe9YXRvtUSngc`)
 
 Account 5 restored account 4's work without rebuilding or merging anything. **Lead branch now: `ccr-f983b317-2vt0zh`**

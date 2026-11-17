@@ -1,5 +1,16 @@
 # RAINBOW — parallel workstreams: lead progress report
 
+# ROUND 6 (account 6) — CURRENT (2026-11-17 ~22:40 UTC)
+Lead `session_01VCMXoaUqBCxDq8BntT19BU` on `ccr-4bd35b15-7z45t0` (from r5 lead `ccr-f983b317-2vt0zh` @ `cbc57135`). User order:
+`docs/briefs/2026-11-17-r6/USER_DECISIONS.md` — ≥ 8.5/10 throughout gameplay, 06 major priority, then 08; usage warning on
+this account → two specialists only, one milestone each.
+* Running: **06** `claude/rainbow-s06-match-c6` (`session_01VCMXobyXNaU99Bgt9q6WBM`, brief r6 `S06.md`) and **08 scenery r2**
+  `claude/rainbow-s08-scenery-c6` (`session_01VCMXobk8x9PXbYb8rpUaPP`, brief r6 `S08_SCENERY.md`).
+* Lead: moving-gameplay audit of 04–08 (`qa/lead_r6/2026-11-17/README.md`, tools `tools/lead_r6/`); preview Screen 08
+  ALL-switch conflict found (`match07` course x07 residual at the plunge top) and fixed on `claude/rainbow-preview-all-c6`
+  @ `41ea6618` (08 29.5 → 87.7 %, default 0 px, gameplay 2,240, continuity ok).
+* Paused (`-c5`): 08 Benny (verdict pending), 08 camera, 07, 05, 04 — next tasks in the handoff's ACCOUNT 6 section.
+
 # ROUND 5 (account 5) — CURRENT (2026-11-17 ~20:35 UTC)
 **Lead ("Lead Claudia"):** session `session_013VHsJ9SbWPe9YXRvtUSngc`, branch **`ccr-f983b317-2vt0zh`** (from
 `ccr-067047f0-up5d1m` @ `ffa54f9f`). Branch map, restore audit, key situation and the open coin/video question: TOP

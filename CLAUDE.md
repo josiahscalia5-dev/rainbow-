@@ -11,8 +11,10 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
    No summary in context, or an old checkout? Run `bash scripts/claude-bootstrap.sh --skip-resume` yourself; from a branch without it:
    `git fetch origin ccr-9c4a8ad6-xovgsx && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh --skip-resume`.
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
-2. Read the TOP section of **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** ("ACCOUNT 5 (round 5) STATE", 2026-11-17 ~20:35 UTC:
-   lead branch **`ccr-f983b317-2vt0zh`**, the `-c5` branch map with SHAs, restore audit, keys), then its "ACCOUNT 4 → NEXT
+2. Read the TOP section of **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** ("ACCOUNT 6 (round 6) STATE", 2026-11-17 ~22:40 UTC:
+   lead branch **`ccr-4bd35b15-7z45t0`**, the `-c6` branch map, moving-gameplay audit `qa/lead_r6/2026-11-17/README.md`,
+   user order `docs/briefs/2026-11-17-r6/USER_DECISIONS.md`), then "ACCOUNT 5 (round 5) STATE" (r5 lead
+   `ccr-f983b317-2vt0zh`, the `-c5` branch map with SHAs, restore audit, keys), then its "ACCOUNT 4 → NEXT
    ACCOUNT" section (every workstream's next task, how to restart them on new branches, key reconnection),
    `docs/PARALLEL_PROGRESS.md` (ROUND 5 + ROUND 4), `docs/briefs/2026-11-17-r5/` and `docs/briefs/2026-11-17-r4/`; the older
    parts of that handoff (Screen 08 method, keys, Image-Blaster, ~14:30 UTC) remain valid background. Then **`backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md`**, `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section only), `backups/AGENTS_STATUS.json`,
