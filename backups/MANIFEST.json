@@ -63,8 +63,8 @@
   },
   {
    "path": ".gitignore",
-   "bytes": 653,
-   "sha256": "53fed7146b3051bb134991448d2a4d6dabe46bc0aef7bcb7f7ac70327ad68480"
+   "bytes": 777,
+   "sha256": "4ea809676324c87a8b761193610c34db5a9ec3626478fdaafe5d4f14578fd930"
   },
   {
    "path": ".mcp.json.template",
@@ -608,8 +608,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 10182,
-   "sha256": "e747477af98bbfb6561a10621b9e2449f513454ed88ee0a5b6411add0ca7e696"
+   "bytes": 10436,
+   "sha256": "274854a8a938d98beaaef5653e424589fda27eadb54f4b5a57fa18a438707176"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1130,6 +1130,46 @@
    "path": "qa/gameplay_test.json",
    "bytes": 14632,
    "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/gameplay_video/scan/default/probe.json",
+   "bytes": 131649,
+   "sha256": "0f200435bfdd6f6b0ac17d70c2fae955a3f0b1db691dee917a8155858f4c4564"
+  },
+  {
+   "path": "qa/gameplay_video/scan/match08/probe.json",
+   "bytes": 103621,
+   "sha256": "e224e8e25ff8d527dfd90bfc646ff0f5e56e4fe3d88288ef2f8420864c8bbf1a"
+  },
+  {
+   "path": "qa/gameplay_video/timeline/apk_rainbow-debug-match08-2026-11-17c-benny.json",
+   "bytes": 48170,
+   "sha256": "a75097f36efe604c318bee010f49256de6af4acf5a2c6defaed0938462e7dc2f"
+  },
+  {
+   "path": "qa/gameplay_video/timeline/apk_rainbow-debug.json",
+   "bytes": 48085,
+   "sha256": "42e7c48ab8052ae3d4b369941c7665fe2a0d3b337c2eb6bbad639d3dcaea0521"
+  },
+  {
+   "path": "qa/gameplay_video/timeline/src_default.json",
+   "bytes": 48015,
+   "sha256": "2244508e04c37f5ceb9366b30289eb308dc12111f218574161ef952146101b42"
+  },
+  {
+   "path": "qa/gameplay_video/timeline/src_match08.json",
+   "bytes": 48042,
+   "sha256": "0cb204d111a06996fccd8003e25586032b4674ad49fdf51dae67b71b6eb8fbd6"
+  },
+  {
+   "path": "qa/gameplay_video/trace/0304_before.json",
+   "bytes": 9114,
+   "sha256": "4b397999b684113b1c321faa389b8c484ee94cce72cd8c941943c50f37490bfe"
+  },
+  {
+   "path": "qa/gameplay_video/trace/08_before.json",
+   "bytes": 21283,
+   "sha256": "8cec3b265be092b0d578afdf0d2a0ebad56c9b4a37dd203910d3e7e13c30dc30"
   },
   {
    "path": "qa/glb_validation.txt",
@@ -7943,13 +7983,18 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 38856,
-   "sha256": "c9090ddb593d86a7ba77ec9706d2329e0f239a2e18baa9db10c5d0372c2a6401"
+   "bytes": 39523,
+   "sha256": "b7dbe7f8eeea41801d087e40eafb97ea37f6c1f906cc5a3affc28d482893c247"
+  },
+  {
+   "path": "src/game/camClear.ts",
+   "bytes": 7086,
+   "sha256": "6345abd004ca0224c4e1ae49ac8a7ca4ed41ced6ac3002d61afaec5193b2fd1c"
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 11333,
-   "sha256": "c0012b277fd871049ee08d763c15b870523d0df73f96f0008965e449700bbee8"
+   "bytes": 14702,
+   "sha256": "d42679ebabfe2b024eb9692ec91dfa21387efd4cd7fc783ce39e9c96edb8b65c"
   },
   {
    "path": "src/game/match.ts",
@@ -8135,6 +8180,31 @@
    "path": "tools/blender/render_05_proof.py",
    "bytes": 4679,
    "sha256": "06e8869bc701026514d5a31e49197017fe2451bbf88029cbfa767fb17df1285f"
+  },
+  {
+   "path": "tools/camclear/camtrace.mjs",
+   "bytes": 3692,
+   "sha256": "6e32c2f93c1d19eef61ec5665087a4c17713025cb0ce2889a8c4ccdda1fd8226"
+  },
+  {
+   "path": "tools/camclear/probe.mjs",
+   "bytes": 17049,
+   "sha256": "396f4430c5a4e3dca92158b23ab1b71b23f5527a3d8124a3f71365474548b465"
+  },
+  {
+   "path": "tools/camclear/ringpos.mjs",
+   "bytes": 2789,
+   "sha256": "53164079618ae562524b99afa2e70dab53fc0a9e3dafcd278d2c0830f310e2da"
+  },
+  {
+   "path": "tools/camclear/sheet.py",
+   "bytes": 1960,
+   "sha256": "30ef777e815dffa3ec8a1c9266a671ef0c00fa706756633c6b0eb9f08ee2bffd"
+  },
+  {
+   "path": "tools/camclear/timeline.mjs",
+   "bytes": 4399,
+   "sha256": "c3cdab4b580beecbf8ce3a9b3fffe937bc52c76407e4d5d9ef81fa2a783594f1"
   },
   {
    "path": "tools/imageblaster/image-blaster-local.patch",
