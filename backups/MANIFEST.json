@@ -668,8 +668,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11556,
-   "sha256": "fce6dd66a0206ab2e5ee72cdd07ce9f40466de6f1125a915e9dba2c057fdc0db"
+   "bytes": 11557,
+   "sha256": "2781d952cd9c069867b5ccc5368b5d1affccc687be3f1ecd1ac75c48fc52b0a0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1153,8 +1153,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1241,
-   "sha256": "f8881ae20df4e113e10ba76e104fd212fbeb0201888e38af7fb9fb309c5b1001"
+   "bytes": 5170,
+   "sha256": "293e82e55508776792c89f6ad50fd59771806b44f92044b55b54cb9083b38124"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -2020,6 +2020,36 @@
    "path": "qa/match/08/benny08/r5/tests/gameplay_match08.json",
    "bytes": 14649,
    "sha256": "1a3588d22244753edc9a4e1a87c98e914d81e52597949de2b08894789d1bad6f"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/default/04.png",
+   "bytes": 1437094,
+   "sha256": "374d564285681a4a62032dbf0480388e8dc3eee825ef5b7b8c640d180c017454"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/default/05.png",
+   "bytes": 2096531,
+   "sha256": "45282751451dbc29289168d3538b366f975196e98bff1cb871061925ee4fd6b5"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/default/06.png",
+   "bytes": 1845233,
+   "sha256": "31ff2ef46f0919c321c5f4dd3a1fc7b04c238cb1e887b6fba5fe0a2226d3b67f"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/default/07.png",
+   "bytes": 2119728,
+   "sha256": "200765fcad0eeeaca9221f1540d60d3beecb0357408687036544796949cede28"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/default/08.png",
+   "bytes": 1702437,
+   "sha256": "9b92158c1856388f997bbc92eed6adce1bf9ab3e6594f7d79745db0a857e980b"
+  },
+  {
+   "path": "qa/match/08/benny08/r5b/new/04.png",
+   "bytes": 1442300,
+   "sha256": "5e6ec3c098c870063ed1942c71d291bd1e3fa0fa373720bf6ab835e80354e93e"
   },
   {
    "path": "qa/match/08/benny08/review_r5/1_APPROVED_08_approved_view.png",
@@ -8838,8 +8868,8 @@
   },
   {
    "path": "src/characters/benny/benny05.ts",
-   "bytes": 21875,
-   "sha256": "a02a67ede41254b96fe2bfa441d3b790029ec1a09231e4fe427cf0aae422b46b"
+   "bytes": 21958,
+   "sha256": "cee2a0274f09b9d4687bee60a58a009761c2b736e44935d59a7dc1adf1274ba4"
   },
   {
    "path": "src/characters/benny/build.ts",
@@ -8893,8 +8923,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 44329,
-   "sha256": "b12b9bdc9f1da78fe214aa4a7df334370aa8530c06de900ad11ff0357df1b850"
+   "bytes": 44563,
+   "sha256": "99108c11162740fd00990c57ba1bfc5f1a8f2f76206e8c45f8e74bd23d43bbb0"
   },
   {
    "path": "src/game/cameraRig.ts",

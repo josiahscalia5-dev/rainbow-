@@ -1482,3 +1482,111 @@ The taper preset still matches the earlier capture exactly. Now probing fuller, 
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/fu; mkdir -p $S; B=\"match08=1&b08hi=0&b08pom=0&b08full=1\"; for v in \"F1:b08tb=1.08\" \"F2:b08bw=1.06\" \"F3:b08bw=1.04&b08tb=1.06&b08ay=0.04&b08ak=1.1\" \"F4:b08bw=1.08&b08bh=1.04\"; do n=${v%%:*}; node scripts/capture.mjs 08 --out=$S/$n --q=\"$B&${v#*:}\" >/dev/null 2>&1; echo $n $(python3 -I qa/match/08/benny08/work/regions08.py $S/$n/08.png | grep benny); done; cp -r /tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/rv/r3b $S/r3b; python3 -I -c \"\nfrom PIL imp …[+335 chars]`
 
+### 🧑 User — 2026-11-17T19:11:21.167Z
+
+> ↩︎ result: F1 benny+splash <=20 61.7 % SSIM 0.533 mean 28.11
+> F2 benny+splash <=20 62.5 % SSIM 0.534 mean 27.73
+> F3 benny+splash <=20 60.7 % SSIM 0.520 mean 28.40
+> F4 benny+splash <=20 62.0 % SSIM 0.530 mean 27.99
+
+### 🤖 Claude — 2026-11-17T19:11:22.764Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/fu/cmpF.png"}`
+
+### 🧑 User — 2026-11-17T19:11:22.973Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T19:11:22.968Z
+
+[Image: original 2250x475, displayed at 2000x422. Multiply coordinates by 1.13 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T19:11:40.298Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"{ bw: 1, ay: 0.04, ax: 0, ak: 1.1, bh: 1, ly: 0, tt: 1.12, tb: 0.92 } : { bw: 1, ay: 0, ax: 0, ak: 1, bh: 1, ly: 0, tt: 1, tb: 1 };\",\n\"{ bw: 1, ay: 0.04, ax: 0, ak: 1.1, bh: 1, ly: 0, tt: 1.12, tb: 0.92, hk: 1 } : { bw: 1, ay: 0, ax: 0, ak: 1, bh: 1, ly: 0, tt: 1, tb: 1, hk: 1 };\",1)\ns=s.replace(\"tb: qn('b08tb', b08P.tb) } : null;\",\"tb: qn('b08tb', b08P.tb), hk: qn('b08hk', b08P.hk) } : null;\",1)\na=\"      const hk = m08On ? M08_BENNY.hat : 1;\"\nassert a in s\ns=s.replace(a,\"      const hk = m08On …[+913 chars]`
+
+### 🧑 User — 2026-11-17T19:12:38.197Z
+
+> ↩︎ result: OK
+> G1 benny+splash <=20 61.6 % SSIM 0.529 mean 28.92
+> G2 benny+splash <=20 62.2 % SSIM 0.537 mean 28.09
+> G3 benny+splash <=20 64.4 % SSIM 0.590 mean 27.97
+
+### 🤖 Claude — 2026-11-17T19:12:40.069Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/fu/cmpG.png"}`
+
+### 🧑 User — 2026-11-17T19:12:40.245Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T19:12:40.239Z
+
+[Image: original 2160x570, displayed at 2000x528. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T19:12:56.196Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"\"\"  //  `?b08full=1`  = fuller, rounder body (probe) — see NOTES for the kept default\"\"\",\"\"\"  //  `b08full` (DEFAULT under match08, user 19:00: \"rounder and fuller like the approved picture\"): body fur x1.04 wider,\n  //  beanie x0.94 so the body is wider than the brim, arms +0.03 up and x1.15 (stubby, high); `?b08full=0` = off\"\"\",1)\ns=s.replace(\"const B08FULL = !B08TAPER && qs.get('b08full') === '1';\",\"const B08FULL = !B08TAPER && qs.get('b08full') !== '0';\",1)\ns=s.replace(\": { bw: 1, ay: …[+1668 chars]`
+
+### 🧑 User — 2026-11-17T19:13:44.916Z
+
+> ↩︎ result: 3
+> OK
+> NEW vs G2 0 | r4 url vs r4 0 | r3b url vs r3b 0
+
+### 🤖 Claude — 2026-11-17T19:13:46.852Z
+
+All exact (0 px). Committing, then the softer-fur probe.
+
+### 🤖 Claude — 2026-11-17T19:13:52.311Z
+
+> 🔧 **Bash** `{"command": "git checkout qa/capture_log.json 2>/dev/null; git add src && git commit -qm \"Screen 08 Benny round 5b (user decisions 19:00): r3b is the base (b08hi/b08pom now opt-in =1), fuller rounder body default (b08full: fur x1.04, beanie x0.94, arms higher x1.15; b08full=0 = r3b 0 px), taper now opt-in b08shape=1; r4 = b08hi=1&b08pom=1&b08full=0 (0 px)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Kbt6BUy2s16F5FhJR2yJ6z\" && git push -q origin claude/rainbow-s08-benny08-bake-c4 2>&1|tail -1; python3 - <<'EOF'\np='src/characters …[+588 chars]`
+
+### 🧑 User — 2026-11-17T19:13:58.638Z
+
+> ↩︎ result: OK
+> 33:    uSoft: { value: number };
+> 34:    uSoftEdge: { value: number };
+> 59:    uSoft: { value: 0 },
+> 61:    uSoftEdge: { value: 0 },
+> 78:        varying vec2 vB05Uv; uniform float uSoftEdge;
+> 92:        // uSoftEdge (benny08 round 3, 0 = unchanged): shorter fur where the surface turns edge-on to the camera
+
+### 🤖 Claude — 2026-11-17T19:14:03.328Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/fu; for v in \"S1:b08su=0.9\" \"S2:b08su=1.0&b08se=1.6\"; do n=${v%%:*}; node scripts/capture.mjs 08 --out=$S/$n --q=\"match08=1&${v#*:}\" >/dev/null 2>&1; echo $n $(python3 -I qa/match/08/benny08/work/regions08.py $S/$n/08.png | grep benny); done; python3 -I qa/match/08/benny08/work/regions08.py $S/N/08.png | grep benny; python3 -I -c \"\nfrom PIL import Image\nw=Image.new('RGB',(1440,380))\nfor i,n in enumerate(['../sh/appr','N','S1','S2']):\n  im=Image.open('$S/'+n+'/08.png').convert('RGB').crop …[+172 chars]`
+
+### 🧑 User — 2026-11-17T19:14:36.551Z
+
+> ↩︎ result: S1 benny+splash <=20 62.2 % SSIM 0.537 mean 28.09
+> S2 benny+splash <=20 62.2 % SSIM 0.537 mean 28.11
+>   benny+splash  <=20  62.2 %  SSIM 0.537  mean  28.09
+
+### 🤖 Claude — 2026-11-17T19:14:40.656Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/fu; python3 -I -c \"\nfrom PIL import Image; import numpy as np\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nfor n in ['S1','S2']: print(n,(np.abs(L('$S/N/08.png')-L('$S/'+n+'/08.png')).max(2)>0).sum())\"; sed -n 86,110p src/characters/benny/fur.ts | grep -n \"uSoft\" ", "description": "Check whether softness probe changed pixels"}`
+
+### 🧑 User — 2026-11-17T19:14:41.170Z
+
+> ↩︎ result: S1 32200
+> S2 33077
+> 7:        // uSoftEdge (benny08 round 3, 0 = unchanged): shorter fur where the surface turns edge-on to the camera
+> 9:        if (uSoftEdge > 0.0) {
+> 12:          vLenMask *= mix(1.0, smoothstep(0.0, 0.55, abs(dot(vn, vp))), uSoftEdge);
+
+### 🤖 Claude — 2026-11-17T19:14:43.052Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/25fbdcde-09fd-5e26-a26e-a6fcde151fae/scratchpad/fu/cmpS.png"}`
+
+### 🧑 User — 2026-11-17T19:14:43.227Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T19:14:43.222Z
+
+[Image: original 2160x570, displayed at 2000x528. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T19:14:54.523Z
+
+> 🔧 **Bash** `{"command": "git checkout src/characters/benny/benny05.ts && npx tsc --noEmit -p . && echo TSC OK; R=qa/match/08/benny08/r5b; mkdir -p $R/tests; node scripts/capture.mjs 08 04 05 06 07 --out=$R/default >/dev/null 2>&1; node scripts/capture.mjs 04 05 06 07 08 --out=$R/new --q=\"match08=1\" >/dev/null 2>&1; node scripts/capture.mjs 04 05 06 07 --out=$R/r3b --q=\"match08=1&b08full=0\" >/dev/null 2>&1; python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nR='qa/match/08/benny08/r5b'\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nm=np.abs(L(f'{R}/default/08.png')-L('q …[+544 chars]`
+
