@@ -1150,3 +1150,286 @@ No "missing baked map" warnings, so all 8 maps loaded. Now the first measurement
 > 878 0:0.00,0.00 g(np.int64(0), np.int64(177), np.int64(247)) a(np.int64(0), np.int64(169), np.int64(251)) - | 0:0.00,0.00 g(np.int64(0), np.int64(197), np.int64(248)) a(np.int64(0), np.int64(181), np.int64(252)) - | 0:0.00,0.00 g(np.int64(0), np.int64(175), np.int64(244)) a(np.int64(1), np.int64(177), np.int64(252)) - | 0:0.00,0.00 g(np.int64(0), np.int64(195), np.int64(248)) a(np.int64(0), np.int64(178), np.int64(250)) - | 0:0.00,0.00 g(np.int64(0), np.int64(227), np.int64(247)) a(np.int64(5), np.int64(191), np.int64(250)) -
 > 886 0:0.00,0.00 g(np.int64(0), np.int64(198), np.int64(248)) a(np.int64(4), np.int64(204), np.int64(255)) - | 0:0.00,0.00 g(np.int64(0), …[+6630 chars]
 
+### 🤖 Claude — 2026-11-17T01:27:14.231Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cuffedge.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom geom import load_uv\nfrom parts import approved_parts\nP,a,m=approved_parts()\nuv=load_uv(sys.argv[1]); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\nA=P['cuff']; G=ids==3\nprint(' x  | approved cuff top-bot | game cuff top-bot | d_top d_bot')\ntops=[]\nfor x in rang …[+784 chars]`
+
+### 🧑 User — 2026-11-17T01:27:14.933Z
+
+> ↩︎ result: x  | approved cuff top-bot | game cuff top-bot | d_top d_bot
+>  285 | 949-996 | 958-1006 | -9 -10
+>  300 | 936-1005 | 972-1016 | -36 -11
+>  315 | 957-1013 | 976-1020 | -19 -7
+>  330 | 963-1017 | 979-1024 | -16 -7
+>  345 | 969-1021 | 981-1027 | -12 -6
+>  360 | 974-1025 | 983-1028 | -9 -3
+>  375 | 976-1027 | 984-1030 | -8 -3
+>  390 | 978-1029 | 984-1029 | -6 +0
+>  405 | 978-1030 | 984-1031 | -6 -1
+>  420 | 981-1030 | 984-1031 | -3 -1
+>  435 | 980-1031 | 983-1030 | -3 +1
+>  450 | 979-1030 | 983-1029 | -4 +1
+>  465 | 978-1028 | 981-1027 | -3 +1
+>  480 | 976-1027 | 980-1026 | -4 +1
+>  495 | 972-1025 | 981-1024 | -9 +1
+>  510 | 982-1021 | 977-1021 | +5 +0
+>  525 | 978-1017 | 979-1017 | -1 +0
+>  540 | 985-1014 | 966-1011 | +19 +3
+>  555 | 940-1007 | 947-1003 | -7 +4
+> 570 -
+> top approved-game offset slope px/px 0.0897 (deg 5.13 ) at centre -6.5
+> bottom approved-game offset slope px/px 0.0463 (deg 2.65 ) at centre -1.8
+
+### 🤖 Claude — 2026-11-17T01:28:06.069Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "  /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body */\n  shiftX: -0.028,\n  /** extra backward tilt of the beanie (rad, about X; − = top toward his back) */\n  tilt: 0,", "new_string": "  /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body\n   *  (r8: +0.015 back toward his left, compensating the roll's sideways swing of the cuff about the head centre) */\n  shiftX: -0.0 …[+351 chars]`
+
+### 🧑 User — 2026-11-17T01:28:06.111Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:28:07.571Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "  /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale */\n  pomDX: -0.057,", "new_string": "  /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale (r8: pomDX −0.057 → −0.034 against the roll) */\n  pomDX: -0.034,"}`
+
+### 🧑 User — 2026-11-17T01:28:07.608Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:28:08.971Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "  /** star: extra offset in hat-local units after following the cuff top */\n  starDY: 0.069,", "new_string": "  /** star: extra offset in hat-local units after following the cuff top (r8: 0.069 → 0.062 with the thicker cuff + roll) */\n  starDY: 0.062,"}`
+
+### 🧑 User — 2026-11-17T01:28:09.023Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:28:10.425Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "  /** folded cuff band height */\n  cuffH: 0.226,", "new_string": "  /** folded cuff band height (r8: 0.226 → 0.25, approved cuff ≈ 51 px thick vs 46–48 at the locked frame) */\n  cuffH: 0.25,"}`
+
+### 🧑 User — 2026-11-17T01:28:10.472Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:28:11.773Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "  /** crown dome height (GLB 0.53) */\n  crownH: 0.58,", "new_string": "  /** crown dome height (GLB 0.53; r8: 0.58 → 0.556 so the thicker cuff leaves crown top and pom where they were) */\n  crownH: 0.556,"}`
+
+### 🧑 User — 2026-11-17T01:28:11.818Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:28:12.835Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "  hat.rotation.x += HAT05.tilt;", "new_string": "  hat.rotation.x += HAT05.tilt;\n  hat.rotation.z += HAT05.roll;"}`
+
+### 🧑 User — 2026-11-17T01:28:12.866Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:28:15.398Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?", "description": "Type-check after geometry r8 edits"}`
+
+### 🧑 User — 2026-11-17T01:28:17.407Z
+
+> ↩︎ result: tsc_rc=0
+
+### 🤖 Claude — 2026-11-17T01:28:20.358Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1500 node $B/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$B/r8 $B/probe/shot0.shot.js $B/probe/uv.js $B/probe/calD.shot.js $B/probe/calE.shot.js $B/probe/calA.shot.js $B/probe/calC.shot.js $B/probe/restore.shot.js > $B/r8.log 2>&1; echo rc=$? >> $B/r8.log; cat $B/r8.log", "description": "Probe geometry r8 with calibration renders", "timeout": 1500000}`
+
+### 🧑 User — 2026-11-17T01:28:44.798Z
+
+> ↩︎ result: loaded 2.597
+> shot0.shot.js null
+> uv.js {"saveAs":"uv.f32"}
+> calD.shot.js "calD"
+> calE.shot.js "calE"
+> calA.shot.js "calA"
+> calC.shot.js "calC"
+> restore.shot.js "restored"
+> done 23.856
+> rc=0
+
+### 🤖 Claude — 2026-11-17T01:28:47.924Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; for r in b3 r8; do echo \"== $r\"; python3 $W/geom.py $W/$r/uv.f32 | sed -n '2,14p'; done; python3 /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/cuffedge.py $W/r8/uv.f32 | tail -3", "description": "Compare part IoU and boxes b3 vs r8"}`
+
+### 🧑 User — 2026-11-17T01:28:50.404Z
+
+> ↩︎ result: == b3
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 775-1198 (384x424) c(422.0,1006.0) 92837px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 355-500, 775-907 (146x133) c(426.1,840.5) 12760px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 292-553, 870-983 (262x114) c(409.8,933.3) 19628px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 277-568, 946-1031 (292x86) c(421.6,999.6) 13305px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 481-553, 916-983 (73x68) c(517.3,952.4) 2529px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 999-1198 (384x200) c(421.0,1090.2) 44615px
+> pom IoU 0.883
+> crown IoU 0.817
+> cuff IoU 0.781
+> star IoU 0.802
+> body IoU 0.86
+> all IoU 0.921
+> GAME centre -760-780 P781-896 C897-983 U984-1031 B1032-1183 -1184-1199
+> == r8
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 776-1198 (384x423) c(422.1,1005.8) 93163px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 358-504, 776-906 (147x131) c(428.7,840.8) 12708px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 293-554, 868-979 (262x112) c(412.2,930.4) 18822px
+> cuff   | 277-573, 936- …[+621 chars]
+
+### 🤖 Claude — 2026-11-17T01:29:03.310Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\na=\"  /** star: extra offset in hat-local units after following the cuff top (r8: 0.069 → 0.062 with the thicker cuff + roll) */\\n  starDY: 0.062,\\n  starDX: 0.0,\"\nb=\"  /** star: extra offset in hat-local units after following the cuff top (r8: 0.069 → 0.062 with the thicker cuff + roll;\\n   *  r9: measured r8 star 3 px image-right and 1.7 px low of the approved → starDX +0.012 (his left), starDY 0.069) */\\n  starDY: 0.069,\\n  starDX: 0.012,\"\nassert s.count(a)==1; s=s.replac …[+672 chars]`
+
+### 🧑 User — 2026-11-17T01:29:30.354Z
+
+> ↩︎ result: tsc_rc=0
+> loaded 2.62
+> shot0.shot.js null
+> uv.js {"saveAs":"uv.f32"}
+> calD.shot.js "calD"
+> calE.shot.js "calE"
+> calA.shot.js "calA"
+> calC.shot.js "calC"
+> restore.shot.js "restored"
+> done 23.579
+> rc=0
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 776-1198 (384x423) c(422.1,1005.8) 93158px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 358-504, 776-906 (147x131) c(428.7,840.8) 12708px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 293-554, 868-979 (262x112) c(411.9,930.4) 18727px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 278-569, 944-1031 (292x88) c(420.8,997.7) 14685px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 482-554, 916-984 (73x69) c(517.2,952.5) 2533px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 998-1198 (384x201) c(419.5,1090.4) 44505px
+> pom IoU 0.888
+> crown IoU 0.859
+> cuff IoU 0.864
+> star IoU 0.768
+> body IoU 0.863
+> all IoU 0.923
+> GAME centre -760-779 P780-896 C897-979 U980-1031 B1032-1183 -1184-1199
+
+### 🤖 Claude — 2026-11-17T01:29:44.617Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"star.scale.set\\|starScale:\" src/characters/benny/benny05.ts", "description": "Locate star transform lines"}`
+
+### 🧑 User — 2026-11-17T01:29:44.641Z
+
+> ↩︎ result: 62:  starScale: [0.96, 0.89] as [number, number],
+> 208:  star.scale.set(HAT05.starScale[0], HAT05.starScale[1], 1);
+
+### 🤖 Claude — 2026-11-17T01:29:46.766Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/characters/benny/benny05.ts", "old_string": "  star.scale.set(HAT05.starScale[0], HAT05.starScale[1], 1);", "new_string": "  star.scale.set(HAT05.starScale[0], HAT05.starScale[1], 1);\n  // the roll would also turn the star 2.6° about its face: the approved star keeps its upright pose\n  star.rotateZ(-HAT05.roll);"}`
+
+### 🧑 User — 2026-11-17T01:29:46.795Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/characters/benny/benny05.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T01:29:48.471Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; timeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; W=qa/pilot05/full_reference_match/benny/work; timeout 900 python3 $W/bake.py $W/r9 $W/r9/tex --normals > $W/r9/bake.log 2>&1; echo bake_rc=$?; python3 -I -c \"\nimport json; d=json.load(open('$W/r9/tex/bake_report.json'))\nfor k,v in d.items(): print(k,v)\"", "description": "Type-check and bake maps from r9 calibration"}`
+
+### 🧑 User — 2026-11-17T01:29:56.261Z
+
+> ↩︎ result: tsc_rc=0
+> bake_rc=0
+> star_albedo_linear [0.321, 0.4, 0.049]
+> star_px 2145
+> body {'px': 34916, 'seen_texels': 24181, 'rejected_texels': 5009, 'scale': 1.0, 'median_albedo': [0.426, 0.15, 0.289], 'strip_u': [0.631, 0.862]}
+> crown {'px': 15622, 'seen_texels': 25759, 'rejected_texels': 667, 'scale': 1.0, 'median_albedo': [0.221, 0.188, 0.24], 'ring_fit_rows': [-0.22, 155.74, -1971.96], 'ring_h_rows': {'u0': -35.8, 'centre': -0.2, 'u1': -4.5}, 'ring_est_cols': 47, 'strip_u': [0.385, 0.587]}
+> brim {'px': 12545, 'seen_texels': 19984, 'rejected_texels': 109, 'scale': 1.0, 'median_albedo': [0.063, 0.028, 0.242], 'strip_u': [0.375, 0.632]}
+> pom {'px': 10824, 'seen_texels': 10486, 'rejected_texels': 1078, 'scale': 1.0, 'median_albedo': [0.108, 0.042, 0.322], 'strip_u': [0.631, 0.887]}
+> armL {'px': 1260, 'seen_texels': 1702, 'rejected_texels': 85, 'scale': 1.0, 'median_albedo': [0.398, 0.133, 0.28]}
+> armR {'px': 1174, 'seen_texels': 1612, 'rejected_texels': 106, 'scale': 1.0, 'median_albedo': [0.43, 0.15, 0.315]}
+
+### 🤖 Claude — 2026-11-17T01:30:07.135Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/nrmE.py <<'EOF'\nimport sys\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nfrom bake import fit_es, LUM\nfrom geom import load_uv\nW='qa/pilot05/full_reference_match/benny/work/'\nuv=load_uv(W+'b3/uv.f32'); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\nE1,S1,n1=fit_es([W+'b1',W+'b2']); E3,S3,n3=fit_es([W+'b3'])\nfor pid,nm in ((2,'crown'),(3,'brim') …[+419 chars]`
+
+### 🧑 User — 2026-11-17T01:30:12.713Z
+
+> ↩︎ result: crown E(baked normals)/E(GLB normals): median 1.003 p10/p90 [0.844 1.198]
+> brim E(baked normals)/E(GLB normals): median 1.03 p10/p90 [0.642 1.386]
+> body E(baked normals)/E(GLB normals): median 1.0 p10/p90 [0.998 1.002]
+
+### 🤖 Claude — 2026-11-17T01:30:15.484Z
+
+Normal maps move per-pixel E by ±15 % (crown) to ±36 % (cuff), so the re-calibration with the final normals is required. Installing the r9 maps (incl. new normals), then one calibration probe.
+
+### 🤖 Claude — 2026-11-17T01:30:20.157Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; for f in body crown crown_n brim brim_n pom armL armR; do cp $W/r9/tex/$f.png assets/textures/benny05/$f.png; done; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\na=\"export const STAR05 = { color: [0.317, 0.39, 0.048] as [number, number, number] };\"\nb=\"export const STAR05 = { color: [0.321, 0.4, 0.049] as [number, number, number] };\"\nassert s.count(a)==1; open(p,'w').write(s.replace(a,b))\nEOF\ntimeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; STACK='proj05=1&projwall05=1&projr …[+543 chars]`
+
+### 🧑 User — 2026-11-17T01:30:58.056Z
+
+> ↩︎ result: tsc_rc=0
+> loaded 4.06
+> shot0.shot.js null
+> uv.js {"saveAs":"uv.f32"}
+> calD.shot.js "calD"
+> calE.shot.js "calE"
+> calA.shot.js "calA"
+> calC.shot.js "calC"
+> restore.shot.js "restored"
+> done 32.969
+> rc=0
+> qa/pilot05/full_reference_match/benny/work/r9/uv.f32 qa/pilot05/full_reference_match/benny/work/r9b/uv.f32 differ: char 1652689, line 2991
+> pom IoU 0.888
+> crown IoU 0.855
+> cuff IoU 0.861
+> star IoU 0.728
+> body IoU 0.863
+> all IoU 0.923
+
+### 🤖 Claude — 2026-11-17T01:31:10.518Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\na=\"  // the roll would also turn the star 2.6° about its face: the approved star keeps its upright pose\\n  star.rotateZ(-HAT05.roll);\"\nb=\"  // the roll would also turn the star 2.6° about its face: the approved star keeps its upright pose (the star's local +Z\\n  // faces back toward the camera, opposite to the hat's forward axis, hence +roll; measured: −roll gave star IoU 0.728)\\n  star.rotateZ(HAT05.roll);\"\nassert s.count(a)==1; open(p,'w').write(s.replace(a,b))\nEOF\ntimeou …[+630 chars]`
+
+### 🧑 User — 2026-11-17T01:31:46.806Z
+
+> ↩︎ result: tsc_rc=0
+> restore.shot.js "restored"
+> done 32.085
+> rc=0
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 776-1198 (384x423) c(422.1,1005.8) 93159px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 358-504, 776-906 (147x131) c(428.7,840.8) 12708px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 293-554, 868-979 (262x112) c(412.0,930.4) 18747px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 278-569, 944-1031 (292x88) c(420.8,997.7) 14677px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 481-553, 916-983 (73x68) c(517.3,952.5) 2522px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 998-1198 (384x201) c(419.5,1090.4) 44505px
+> pom IoU 0.888
+> crown IoU 0.861
+> cuff IoU 0.867
+> star IoU 0.803
+> body IoU 0.863
+> all IoU 0.923
+
+### 🤖 Claude — 2026-11-17T01:31:52.181Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; timeout 900 python3 $W/bake.py $W/r9c $W/r9c/tex > $W/r9c/bake.log 2>&1; echo bake_rc=$?; python3 -I -c \"\nimport json; d=json.load(open('$W/r9c/tex/bake_report.json'))\nfor k,v in d.items(): print(k,v)\"; for f in body crown brim pom armL armR; do cp $W/r9c/tex/$f.png assets/textures/benny05/$f.png; done; md5sum assets/textures/benny05/*_n.png $W/r9/tex/*_n.png", "description": "Final bake from r9c and install albedo maps"}`
+
+### 🧑 User — 2026-11-17T01:31:56.556Z
+
+> ↩︎ result: bake_rc=0
+> star_albedo_linear [0.319, 0.39, 0.048]
+> star_px 2205
+> body {'px': 34916, 'seen_texels': 24181, 'rejected_texels': 5009, 'scale': 1.0, 'median_albedo': [0.426, 0.15, 0.289], 'strip_u': [0.631, 0.862]}
+> crown {'px': 15648, 'seen_texels': 25744, 'rejected_texels': 725, 'scale': 1.0, 'median_albedo': [0.221, 0.187, 0.243], 'ring_fit_rows': [-0.38, 144.7, -1970.7], 'ring_h_rows': {'u0': -35.4, 'centre': -0.4, 'u1': -6.0}, 'ring_est_cols': 48, 'strip_u': [0.383, 0.587]}
+> brim {'px': 12578, 'seen_texels': 20027, 'rejected_texels': 120, 'scale': 1.0, 'median_albedo': [0.064, 0.028, 0.243], 'strip_u': [0.375, 0.633]}
+> pom {'px': 10824, 'seen_texels': 10486, 'rejected_texels': 1078, 'scale': 1.0, 'median_albedo': [0.108, 0.042, 0.322], 'strip_u': [0.631, 0.887]}
+> armL {'px': 1260, 'seen_texels': 1702, 'rejected_texels': 85, 'scale': 1.0, 'median_albedo': [0.398, 0.133, 0.28]}
+> armR {'px': 1174, 'seen_texels': 1612, 'rejected_texels': 106, 'scale': 1.0, 'median_albedo': [0.43, 0.15, 0.315]}
+> 3578a7fa46bfaac523e090f6af090aa0  assets/textures/benny05/brim_n.png
+> 7c529200a4fe70ed80408fbaddeea095  assets/textures/benny05/crown_n.png
+> 3578a7fa46bfaac523e090f6af090aa0  qa/pilot05/full_reference_ma …[+128 chars]
+
+### 🤖 Claude — 2026-11-17T01:31:58.413Z
+
+Normals are the r9 ones the calibration saw (hashes match). Updating STAR05 to the final solve, then the first REAL game capture with `capture.mjs`.
+
+### 🤖 Claude — 2026-11-17T01:32:02.765Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/benny05.ts'\ns=open(p).read()\na=\"export const STAR05 = { color: [0.321, 0.4, 0.049] as [number, number, number] };\"\nb=\"export const STAR05 = { color: [0.319, 0.39, 0.048] as [number, number, number] };\"\nassert s.count(a)==1; open(p,'w').write(s.replace(a,b))\nEOF\ntimeout 300 npx tsc --noEmit -p . ; echo tsc_rc=$?; SP=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad; cp qa/capture_log.json $SP/capture_log.bak; B=qa/pilot05/full_reference_match/benny; STACK='proj05=1&projwall0 …[+374 chars]`
+

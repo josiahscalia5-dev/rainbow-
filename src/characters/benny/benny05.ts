@@ -36,29 +36,34 @@ const CLUMP05: Record<string, number> = { fur_body: 0.55, fur_pom: 0.6 };
 export const HAT05 = {
   /** whole beanie lowered along the body's up axis */
   drop: 0.028,
-  /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body */
-  shiftX: -0.028,
+  /** whole beanie shifted toward his right (−X): the approved beanie sits ≈5 px further image-right on the body
+   *  (r8: +0.015 back toward his left, compensating the roll's sideways swing of the cuff about the head centre) */
+  shiftX: -0.013,
   /** extra backward tilt of the beanie (rad, about X; − = top toward his back) */
   tilt: 0,
+  /** r8: roll of the beanie about its own forward axis (rad, + = his LEFT / image-left side up). Approved cuff bottom edge
+   *  rises 2.65° toward the image-left relative to the game's (left 7–11 px higher, right 1–4 px lower) */
+  roll: 0.046,
   /** crown dome shoulder taper (GLB build 0.18: r ∝ (1 − taper·t)); the approved dome is fuller near the top */
   crownTaper: 0.0,
-  /** folded cuff band height */
-  cuffH: 0.226,
-  /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale */
-  pomDX: -0.057,
+  /** folded cuff band height (r8: 0.226 → 0.25, approved cuff ≈ 51 px thick vs 46–48 at the locked frame) */
+  cuffH: 0.25,
+  /** pom-pom core: extra offset (x = toward his LEFT, + y up) and scale (r8: pomDX −0.057 → −0.034 against the roll) */
+  pomDX: -0.034,
   pomDY: -0.016,
   /** toward his back (−Z ≈ toward the rear chase camera): the approved pom-pom overhangs the crown's back slope */
   pomDZ: -0.16,
   pomScale: 0.97,
-  /** star: extra offset in hat-local units after following the cuff top */
+  /** star: extra offset in hat-local units after following the cuff top (r8: 0.069 → 0.062 with the thicker cuff + roll;
+   *  r9: measured r8 star 3 px image-right and 1.7 px low of the approved → starDX +0.012 (his left), starDY 0.069) */
   starDY: 0.069,
-  starDX: 0.0,
+  starDX: 0.012,
   /** star face scale (its own x, y) */
   starScale: [0.96, 0.89] as [number, number],
   /** cuff outer radius factor (approved cuff ≈ 297 px wide vs 291) */
   brimW: 1.0,
-  /** crown dome height (GLB 0.53) */
-  crownH: 0.58,
+  /** crown dome height (GLB 0.53; r8: 0.58 → 0.556 so the thicker cuff leaves crown top and pom where they were) */
+  crownH: 0.556,
 };
 
 /** swim clip: factor on the body's side roll (z) */
@@ -140,7 +145,7 @@ export const MAPS05: Record<string, { map: string; scale: number; normal?: strin
 };
 /** star: base colour (linear) solved from the approved star pixels through the 05 light + post chain (bake_report
  *  star_albedo_linear; the GLB's orange emissive stays and is part of the solve) → lemon yellow on screen */
-export const STAR05 = { color: [0.317, 0.39, 0.048] as [number, number, number] };
+export const STAR05 = { color: [0.319, 0.39, 0.048] as [number, number, number] };
 
 let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
 /** load every baked map once (missing files → null: that part keeps its GLB look) */
@@ -190,6 +195,7 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   hat.position.y -= HAT05.drop;
   hat.position.x += HAT05.shiftX;
   hat.rotation.x += HAT05.tilt;
+  hat.rotation.z += HAT05.roll;
   const g = hatGeometries(HAT05.cuffH, HAT05.crownTaper, HAT05.crownH);
   const brim = get('hat_brim') as THREE.Mesh;
   const crown = get('hat_crown') as THREE.Mesh;
@@ -200,6 +206,9 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
   star.position.y += dCuff + HAT05.starDY;
   star.position.x += HAT05.starDX;
   star.scale.set(HAT05.starScale[0], HAT05.starScale[1], 1);
+  // the roll would also turn the star 2.6° about its face: the approved star keeps its upright pose (the star's local +Z
+  // faces back toward the camera, opposite to the hat's forward axis, hence +roll; measured: −roll gave star IoU 0.728)
+  star.rotateZ(HAT05.roll);
   const pom = get('pom')!;
   pom.position.y += dCuff + (HAT05.crownH - D.crownH) + HAT05.pomDY;
   pom.position.x += HAT05.pomDX;

@@ -95,6 +95,22 @@ idx = np.asarray(Image.open(f"{MK}/region_index.png"))
 rid = {k: v["id"] for k, v in json.load(open(f"{MK}/regions.json"))["regions"].items()}
 src_wall = (idx == rid["purple_walls"]) | (idx == rid["distant_tunnel_and_glow"])
 src_ring = (idx == rid["gold_rings_and_front_frame"]) | (idx == rid["distant_tunnel_and_glow"])
+if "regionmask" not in args:
+    # run #3 (2026-11-17): the region masks are colour classes — the approved rings' white-pink marquee highlights and
+    # reflections inside the band are "purple walls" there, so the ring texels under them were FILLED (highlights lost).
+    # Inside the approved ring bands (ring_model.json edges about O, +-2 px) the approved pixel IS ring: rings take every
+    # tunnel-class pixel there, walls take the gold slivers there (ring edge misregistration, stays next to the ring).
+    rm = json.load(open("qa/pilot05/proj/tunnel/model/ring_model.json"))
+    Ox, Oy = rm["origin"]
+    yy_, xx_ = np.mgrid[0:H, 0:W]
+    rr_ = np.hypot(xx_ - Ox, Oy - yy_); tt_ = np.arctan2(Oy - yy_, xx_ - Ox)
+    def ev(c): return c[0] + c[1] * np.cos(tt_) + c[2] * np.sin(tt_) + c[3] * np.cos(2 * tt_) + c[4] * np.sin(2 * tt_)
+    env = np.zeros((H, W), bool)
+    for n, rgs in rm["rings"].items():
+        env |= (rr_ >= ev(rgs["in"]) - 2) & (rr_ <= ev(rgs["out"]) + 2)
+    tun = (idx == rid["purple_walls"]) | (idx == rid["gold_rings_and_front_frame"]) | (idx == rid["distant_tunnel_and_glow"]) | (idx == rid["side_fittings"])
+    src_ring = src_ring | (tun & env)
+    src_wall = src_wall | ((idx == rid["gold_rings_and_front_frame"]) & env)
 src_ring[1100:] = False                                           # the bottom gold frame is the camera-held near frame
 report = {}
 

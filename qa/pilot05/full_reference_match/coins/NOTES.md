@@ -43,6 +43,23 @@ UPDATE ~01:05 UTC (run stopped for the account transfer): no coin change since t
 `coins05=1` has still NOT been taken. `src/gameplay/coins.ts` typechecks (`npx tsc --noEmit` clean). Step 1 below is next.
 (The autosave at 00:28 already contains coins.ts, coin05_face.png and the hud05 sprites.)
 
+## RUN #3 (session 01Q46SCH, 2026-11-17 ~01:20 UTC) — progress
+1. DONE — first real probe with `STACK&hud05=1&coins05=1 --vis` (/tmp/claude-0/hc05/r3/p1): coins 1–6 drawn at the
+   approved centres; coins 7–15 NOT visible. Cause (raycast through each coin centre): the far end of the 05 tube is a
+   forced-perspective relief (`environment.ts` `tube05_far_river` / `tube05_far_wall` / `tube05_end_glow`, virtual depth
+   59 → 430 squeezed into ~1 u) at 58.4–59.2 u from the camera; coins 7–15 were solved on the river at 60.4–64.2 u = behind it.
+2. DONE — look measured on silhouettes (new tool `coins/measure_coins.py`: face + edge band, box centre = projected
+   cylinder centre). approved | game v1: coin 1 box 426–522 × 686–771 | 425–521 × 683–768 (3 px high); face / edge on
+   the centre column 74 / 12 px | 79 / 7 px; coins 2–4 faces 6–9 px too tall, edges 2–4 px too thin; coins 5 / 6 drawn
+   27 / 19 px wide vs approved 30 / 21. The face art was UPSIDE DOWN (the "$" stubs and the bevel light at the bottom).
+3. DONE — fixes in `src/gameplay/coins.ts` (all under `coins05`): face texture rotated by π; `C05LOOK` thick 0.13 → 0.18,
+   measured coins lean back 0.9 rad (was C05.tilt 0.8); new targets `coins/targets_v2.json` (silhouette centres, 3 more
+   tiny far coins 16–18 found left of coin 15 at the vanishing point); solver extended (`hud/probe05.mjs`: a coin hidden
+   behind the relief is pulled forward along its own camera ray to just in front of the first non-coin surface over its
+   footprint, scale re-solved, depth order kept, round trip 0 px); `C05M` now 18 rows [ds, lat, scale, h?]: coins 1–6 on
+   the river (h 1.2, ds 6.2–45.6), coins 7–18 at ds 51.1–54.0, h 1.73–3.38 (an arc rising into the light in front of the
+   relief), near size capped by the 3-D gap. `npx tsc --noEmit` clean. Real capture of v2: in progress.
+
 ## Remaining, step by step
 1. Probe/capture: `node qa/pilot05/full_reference_match/hud/probe05.mjs --out=DIR new='<STACK>&coins05=1'` → check
    `coinScreen` vs the table, the face orientation ($ upright), coin aspect / edge thickness vs approved (face 96 × 72.5,

@@ -22,7 +22,14 @@ const COINS05 = on05('coins05');
 /** measured on the approved coins 1-4 (silhouettes, qa/pilot05/full_reference_match/coins/measure_coins.py): face height /
  *  width 0.76 -> 0.66 and edge band / width 0.11-0.13 => thickness ~0.18 u per 1-u coin and ~0.1 rad more lean-back than
  *  C05.tilt (game v1: faces 6-9 px too tall, edges 2-5 px too thin) */
-const C05LOOK = { thick: 0.18, tilt: 0.9 };
+const C05LOOK = {
+  thick: 0.18, tilt: 0.9,
+  /** measured coins face the camera squarely in the approved picture: wobble amplitude (rad) of the C05M coins (was 0.18) */
+  wobble: 0.06,
+  /** approved far coins turn yellower / lighter toward the light (core G 207 → 227 from coin 6 on, near coins unchanged):
+   *  display colour mixed toward haze.rgb by up to haze.a, from `from` u to `from + len` u camera distance */
+  haze: { rgb: [250, 235, 70], a: 0.6, from: 50, len: 5 },
+};
 let face05: THREE.Texture | null = null;
 if (COINS05) {
   proj05Pending.push(new Promise<void>((res) => {
@@ -33,16 +40,26 @@ if (COINS05) {
     face05.anisotropy = 4;
   }));
 }
-const post05 = { uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) } };
+const post05 = {
+  uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
+  uC05Haze: { value: new THREE.Vector4(...C05LOOK.haze.rgb.map((v) => v / 255), C05LOOK.haze.a) },
+  uC05HazeR: { value: new THREE.Vector2(C05LOOK.haze.from, C05LOOK.haze.len) },
+};
 const rt05 = new THREE.Vector2();
-/** unlit material whose map holds DISPLAY colours: the fragment shows pjInverse(map) (the post chain then restores it) */
+/** unlit material whose map holds DISPLAY colours: the fragment shows pjInverse(map) (the post chain then restores it);
+ *  far coins are mixed toward the measured haze colour by camera distance (C05LOOK.haze) */
 function coin05Material(map: THREE.Texture): THREE.MeshBasicMaterial {
   const mat = new THREE.MeshBasicMaterial({ map, fog: false });
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, post05);
+    shader.vertexShader = shader.vertexShader
+      .replace('void main() {', 'varying float vC05Dist;\nvoid main() {')
+      .replace('#include <project_vertex>', '#include <project_vertex>\nvC05Dist = length(mvPosition.xyz);');
     shader.fragmentShader = shader.fragmentShader
-      .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes;\n${PROJ05_INVERSE}\nvoid main() {`)
-      .replace('#include <dithering_fragment>', `#include <dithering_fragment>\ngl_FragColor = vec4(pjInverse(diffuseColor.rgb), 1.0); // coins05`);
+      .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes; uniform vec4 uC05Haze; uniform vec2 uC05HazeR; varying float vC05Dist;\n${PROJ05_INVERSE}\nvoid main() {`)
+      .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+vec3 c05 = mix(diffuseColor.rgb, uC05Haze.rgb, uC05Haze.a * clamp((vC05Dist - uC05HazeR.x) / uC05HazeR.y, 0.0, 1.0));
+gl_FragColor = vec4(pjInverse(c05), 1.0); // coins05`);
   };
   mat.customProgramCacheKey = () => 'coin05';
   mat.onBeforeRender = (renderer) => {
@@ -53,15 +70,24 @@ function coin05Material(map: THREE.Texture): THREE.MeshBasicMaterial {
   };
   return mat;
 }
-/** approved coin edge band (display colours, measured below the face of approved coin 1: face side → back) + ridges */
+/**
+ * approved coin edge band (display colours). Rows = approved coin 1's band rows (face side → back), measured along the
+ * face ellipse x 440–509 (qa/pilot05/full_reference_match/coins/NOTES.md, run #3); columns run round the coin from its
+ * front-bottom (u = 0, the cap turn puts θ = 0 at the bottom): the approved band is ~45 % brighter toward the left / right
+ * ends than at the front (luminance ~145 vs ~91), so each column is scaled by (1 + 0.55 |sin θ|^1.3) / 1.15 (1.15 = the
+ * mean of that factor over the measured columns). 64 milled ridges with a ZERO-MEAN light / dark pair (v1's ridges added
+ * (+4, +6.5, +9.5) on average: the band rendered 5–17 levels too green / blue).
+ */
 function edge05Texture(): THREE.Texture {
-  const band = [[231, 164, 29], [215, 139, 35], [195, 118, 43], [175, 103, 48], [165, 99, 53], [161, 99, 54], [157, 98, 53], [155, 97, 52], [153, 97, 52], [147, 96, 53], [135, 96, 60]];
+  const band = [[232, 163, 23], [218, 138, 30], [196, 116, 37], [174, 100, 41], [164, 96, 46], [160, 96, 47], [157, 95, 46], [154, 94, 45], [153, 94, 45], [148, 92, 45], [139, 92, 52]];
   return canvasTexture(256, band.length, (c, w) => {
     band.forEach(([r, g, b], y) => {
       for (let x = 0; x < w; x++) {
-        const k = x % 4; // 64 milled ridges round the coin: a light (water-lit) ridge, a dark groove
-        const d = k === 0 ? [30, 38, 48] : k === 2 ? [-14, -12, -10] : [0, 0, 0];
-        c.fillStyle = `rgb(${Math.min(255, Math.max(0, r + d[0]))},${Math.min(255, Math.max(0, g + d[1]))},${Math.min(255, Math.max(0, b + d[2]))})`;
+        const f = (1 + 0.55 * Math.pow(Math.abs(Math.sin(((x + 0.5) / w) * Math.PI * 2)), 1.3)) / 1.15;
+        const k = x % 4; // a light (water-lit) ridge, a dark groove
+        const d = k === 0 ? 16 : k === 2 ? -16 : 0;
+        const ch = (v: number) => Math.min(255, Math.max(0, Math.round(v * f + d)));
+        c.fillStyle = `rgb(${ch(r)},${ch(g)},${ch(b)})`;
         c.fillRect(x, y, 1, 1);
       }
     });
@@ -76,6 +102,9 @@ export interface CoinDef {
   /** coins05 only: [scale at the 05 checkpoint, distance ahead of Benny at the checkpoint] — the coin shows `scale` from
    *  15 u closer on (see C05M) */
   far?: [number, number];
+  /** coins05 only: unit forward direction the coin faces away from (instead of the local course tangent), with world-up
+   *  as its up (no bank roll): the measured 05 coins face down the straight 05 tube axis, i.e. squarely at the camera */
+  axis?: THREE.Vector3;
 }
 
 /**
@@ -93,23 +122,30 @@ export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9,
  * solved back onto the course with the live render camera (qa/pilot05/full_reference_match/hud/probe05.mjs --solve:
  * course point (s, lat) at the coins' height whose coin centre — same bob as below, clock 12 — projects onto the
  * approved centre; scale = approved width / projected width of a 1-u coin). Rows: [ds = s − 05_crest, lat, scale].
- * approved (x, y, w): 1 (473.5, 725, 96) 2 (548.5, 658.5, 70) 3 (481.5, 612, 56) 4 (431, 575, 43) 5 (465.5, 545, 28)
- * 6 (495.5, 532.5, 20) 7 (518, 524, 17) 8 (532, 516.5, 12.5) 9 (537, 509, 10) 10 (534, 502, 8) 11 (526, 497, 7)
- * 12 (516, 492, 6) 13 (507.5, 489, 5) 14 (498, 487, 5) 15 (490.5, 485.5, 4) — the far line winds up into the light.
- * The game's straight 05 tube is shorter than the painted one, so coins 8–15 sit where the course starts to climb
- * (ds 56–60) and the approved sizes need scales < 1 there; those coins grow to C05M_NEAR (capped so neighbours do not
- * overlap) as Benny closes in, so they are small only while far away. The pre-checkpoint trail and every other screen's
- * coins are unchanged (their bob phase is kept: CoinDef.phase).
+ * v2 (2026-11-17, targets qa/pilot05/full_reference_match/coins/targets_v2.json): approved coin SILHOUETTE centres
+ * (face + milled edge; a cylinder's silhouette is centrally symmetric, so its box centre is the projected coin centre)
+ * 1 (474, 728.5, 97) 2 (548.5, 660.5, 70) 3 (481.5, 612.5, 56) 4 (431.5, 575, 44) 5 (465.5, 546, 30) 6 (495, 532, 21)
+ * 7 (518.5, 523, 17.5) 8 (532, 516, 13.5) 9 (537, 509, 10) 10 (534, 502.5, 8.5) 11 (526, 497, 8) 12 (515.5, 493, 6.5)
+ * 13 (506, 490, 5.5) 14 (498, 487.5, 5) 15 (490.5, 486.5, 5) 16 (482.5, 485.5, 4.5) 17 (475.5, 484, 4) 18 (469.5, 482.5, 3.5)
+ * — the far line winds up into the light. The far end of the 05 tube is a forced-perspective relief (environment.ts
+ * `tube05_far*`: virtual depth 59 → 430 squeezed into ~1 u, ~58.4 u from the checkpoint camera), so coins 7–18 solved on
+ * the river (ds 55–60) were HIDDEN behind it (probe05.mjs --vis). They are pulled forward along their own camera ray to
+ * just in front of the relief (same screen centre, scale re-solved; 4th column = coin height, default C05.h): a short
+ * arc of small coins rising into the light at the end of the tube, kept at those heights (consecutive coins are only
+ * 0.3–0.4 u apart in (ds, lat), the height keeps them apart). Coins grow to C05M_NEAR (capped by the 3-D gap to their
+ * neighbours) as Benny closes in. The pre-checkpoint trail and every other screen's coins are unchanged (their bob phase
+ * is kept: CoinDef.phase). Rows: [ds, lat, scale, h?].
  */
-export const C05M: [number, number, number][] = [
-  [6.356, -0.311, 0.976], [10.95, 0.161, 0.95], [16.614, -0.144, 1.001], [26.225, -0.665, 1.085], [43.262, -1.754, 1.085],
-  [48.928, -1.967, 0.832], [55.075, 0.919, 0.788], [56.475, 1.629, 0.591], [57.469, 1.947, 0.479], [58.306, 1.9, 0.387],
-  [58.889, 1.599, 0.341], [59.411, 1.195, 0.294], [59.653, 0.806, 0.245], [59.695, 0.325, 0.245], [59.687, -0.063, 0.195],
+export const C05M: [number, number, number, number?][] = [
+  [6.177, -0.275, 0.963], [10.752, 0.146, 0.926], [16.528, -0.151, 0.98], [26.221, -0.653, 1.084], [43.068, -1.63, 1.196],
+  [45.624, -1.994, 0.881], [51.129, 0.094, 0.761, 1.733], [51.125, 0.723, 0.588, 1.93], [51.272, 1.027, 0.436, 2.14], [51.561, 1.02, 0.372, 2.398],
+  [51.901, 0.8, 0.351, 2.691], [52.265, 0.458, 0.286, 2.935], [52.608, 0.132, 0.243, 3.077], [52.927, -0.144, 0.222, 3.128], [53.214, -0.421, 0.223, 3.104],
+  [53.491, -0.738, 0.201, 3.136], [53.763, -1.025, 0.179, 3.251], [54.034, -1.279, 0.157, 3.375],
 ];
-/** near size of the measured coins (C05.scale = the default 05 coin size), capped by the gap to the next coin */
+/** near size of the measured coins (C05.scale = the default 05 coin size), capped by the 3-D gap to the next coin */
 const C05M_NEAR = (k: number): number => {
-  const [ds, lat] = C05M[k];
-  const nb = [C05M[k - 1], C05M[k + 1]].filter(Boolean).map(([d2, l2]) => Math.hypot(d2 - ds, l2 - lat));
+  const [ds, lat, , h = C05.h] = C05M[k];
+  const nb = [C05M[k - 1], C05M[k + 1]].filter(Boolean).map(([d2, l2, , h2 = C05.h]) => Math.hypot(d2 - ds, l2 - lat, h2 - h));
   return Math.max(C05M[k][2], Math.min(C05.scale, 0.85 * Math.min(...nb)));
 };
 
@@ -153,9 +189,12 @@ export function coinLayout(course: Course): CoinDef[] {
   const first = out.findIndex((d) => d.stage === '05' && d.s > sCp);
   const kept = out.filter((d) => !(d.stage === '05' && d.s > sCp));
   const a5 = st('05');
-  const meas: CoinDef[] = C05M.map(([ds, lat, scale], k) => ({
-    s: sCp + ds, lat, h: C05.h, stage: sCp + ds < a5.s1 ? '05' : '06', scale: C05M_NEAR(k), tilt: C05.tilt, phase: first + k,
-    far: [scale, ds],
+  // the straight 05 tube axis (the stream meanders inside it; its offset vanishes at both ends)
+  const ax = course.straightAxes.find((q) => q.s0 <= sCp && sCp <= q.s1);
+  const axis = ax ? ax.b.clone().sub(ax.a).normalize() : undefined;
+  const meas: CoinDef[] = C05M.map(([ds, lat, scale, h = C05.h], k) => ({
+    s: sCp + ds, lat, h, stage: sCp + ds < a5.s1 ? '05' : '06', scale: C05M_NEAR(k), tilt: C05LOOK.tilt, phase: first + k,
+    far: [scale, ds], axis,
   }));
   kept.splice(first, 0, ...meas);
   return kept;
@@ -223,7 +262,9 @@ export function createCoins(course: Course): CoinSystem {
   if (COINS05 && face05) {
     const f05 = face05 as THREE.Texture;
     f05.center.set(0.5, 0.5);
-    f05.rotation = faceTex.rotation; // same cap orientation as the default art
+    // the default art's cap turn left this upright texture upside down on screen (v1 capture: the "$" stubs and the bevel
+    // light at the bottom): half a turn more puts the approved coin upright
+    f05.rotation = faceTex.rotation + Math.PI;
     const face5 = coin05Material(f05);
     mats = [coin05Material(edge05Texture()), face5, face5];
   }
@@ -239,6 +280,7 @@ export function createCoins(course: Course): CoinSystem {
   const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
   const back = new THREE.Vector3();
+  const up05 = new THREE.Vector3(), right05 = new THREE.Vector3();
 
   let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
   const place = (time: number) => {
@@ -255,12 +297,20 @@ export function createCoins(course: Course): CoinSystem {
       } else {
         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + ph));
       }
-      back.copy(f.tan).negate();
-      const right = new THREE.Vector3().crossVectors(f.up, back).normalize();
-      basis.makeBasis(right, f.up, back);
+      if (d.axis) {
+        // coins05 measured coins: face down the 05 tube axis, upright (world up), as in the approved picture
+        back.copy(d.axis).negate();
+        up05.set(0, 1, 0).addScaledVector(back, -back.y).normalize();
+        right05.crossVectors(up05, back).normalize();
+        basis.makeBasis(right05, up05, back);
+      } else {
+        back.copy(f.tan).negate();
+        const right = new THREE.Vector3().crossVectors(f.up, back).normalize();
+        basis.makeBasis(right, f.up, back);
+      }
       q.setFromRotationMatrix(basis);
       // tilted coins (05) only wobble a little so the face stays toward the camera
-      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + ph * 0.7));
+      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.axis ? C05LOOK.wobble : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + ph * 0.7));
       q.multiply(spin);
       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
       let base = d.scale ?? 1;
