@@ -664,7 +664,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11042,
-   "sha256": "0d0e75ab015af7d8cc8195ce676215491727f4b7258f7768ce3b0801ed253dd5"
+   "sha256": "9963b695d0611ad9d3d4f5c6b60604edd421cb1bc5fae468dc4124fcc104977e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1622,6 +1622,11 @@
    "sha256": "135aac29d07746aef764606e635ffe2b471775adf0f58daad222a7823e0bcac7"
   },
   {
+   "path": "qa/match/07/m3/07_NEW_match07_r3.png",
+   "bytes": 2408044,
+   "sha256": "ca3c77a97d228ba901f1a5c444ee28efb40c920b3ffb5b22568630164c934a15"
+  },
+  {
    "path": "qa/match/07/m3/continuity_default.json",
    "bytes": 2696,
    "sha256": "49576a5bbfdcd8a1ef2dbec617f0267b266790152519a7ee0b7a7c15a7bb62e7"
@@ -1630,6 +1635,11 @@
    "path": "qa/match/07/m3/continuity_match07.json",
    "bytes": 2708,
    "sha256": "34ce26ccf8e999012c5e1d49c7eb4189f8eefaa096158e16eee0aedeb5647932"
+  },
+  {
+   "path": "qa/match/07/m3/proofs_0px_r3.json",
+   "bytes": 737,
+   "sha256": "49d68afa1e388695d9a7c170e68eecc61a6009dd8eef7b3580c57d8f4d362c87"
   },
   {
    "path": "qa/match/07/metrics_BEFORE_NEW.json",

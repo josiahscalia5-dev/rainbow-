@@ -784,3 +784,86 @@ Only the autosave's own backup files; committing them through the project autosa
 
 The autosave committed and pushed the backup files (`7033ab38`, remote matches). The one remaining change, `qa/capture_log.json`, is a temporary file the running proof captures are writing. The proof script restores it when it finishes, so there's nothing to commit there. I'm waiting for the captures to complete.
 
+### 🧑 User — 2026-11-17T17:32:49.298Z
+
+<task-notification>
+<task-id>b67gz1txp</task-id>
+<tool-use-id>toolu_01CNBrdFBcvi5xS96uwd2cCE</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/tasks/b67gz1txp.output</output-file>
+<status>completed</status>
+<summary>Background command "Re-run proof captures" completed (exit code 0)</summary>
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T17:32:56.317Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad; P=$S/proofs; tail -2 $S/proofs.log; git status --short; python3 -c \"\nimport numpy as np, json\nfrom PIL import Image\nP='$P'\nL=lambda p: np.asarray(Image.open(p).convert('RGBA'),int)\nr={}\nfor i in ['06','07','08']: r['default_'+i]=int((np.abs(L(f'{P}/old_def/{i}.png')-L(f'{P}/new_def/{i}.png')).max(-1)>0).sum())\nr['match08_08']=int((np.abs(L(f'{P}/old_m08/08.png')-L(f'{P}/new_m08/08.png')).max(-1)>0).sum())\na=L(f'{P}/new_05/05.png');b=L('qa/pilot05/wave9/baseline/05.png'); r['05_ringa26_nea …[+650 chars]`
+
+### 🧑 User — 2026-11-17T17:32:57.764Z
+
+> ↩︎ result: + echo PROOFS_DONE
+> PROOFS_DONE
+> {'default_06': 0, 'default_07': 0, 'default_08': 0, 'match08_08': 2280, '05_ringa26_nearfloor0_vs_wave9_baseline': 0, 'match07_07_vs_r2_NEW': 0}
+
+### 🤖 Claude — 2026-11-17T17:33:00.415Z
+
+Everything is 0 px except `?match08=1` on Screen 08: 2,280 px differ. In round 2 this was 0, so I'm checking where the difference is and what causes it.
+
+### 🤖 Claude — 2026-11-17T17:33:03.116Z
+
+> 🔧 **Bash** `{"command": "git diff --stat 3c7fca99 HEAD -- src assets public index.html vite.config.* | tail -5; S=/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad/proofs; python3 -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('$S/old_m08/08.png').convert('RGB'),int);b=np.asarray(Image.open('$S/new_m08/08.png').convert('RGB'),int)\nd=np.abs(a-b).max(-1); ys,xs=np.nonzero(d); print('bbox',xs.min(),ys.min(),xs.max(),ys.max(),'max',d.max(),'mean',d[d>0].mean())\n\"", "description": "Inspect match08 diff location and code changes"}`
+
+### 🧑 User — 2026-11-17T17:33:03.555Z
+
+> ↩︎ result: src/game/match.ts                            |   4 +-
+>  src/gameplay/coins.ts                        |  19 ++-
+>  src/world/course.ts                          |  20 ++-
+>  src/world/match07.ts                         | 220 +++++++++++++++++++++++++
+>  17 files changed, 849 insertions(+), 5 deletions(-)
+> bbox 98 108 765 131 max 1 mean 1.0
+
+### 🤖 Claude — 2026-11-17T17:33:09.683Z
+
+> 🔧 **Bash** `{"command": "git diff --stat 3c7fca99 HEAD -- src assets public index.html | head -17; S=/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad/proofs; node scripts/capture.mjs 08 --q=match08=1 --out=$S/new_m08b >/dev/null 2>&1; (cd $S/../wt3c7 && node scripts/capture.mjs 08 --q=match08=1 --out=$S/old_m08b >/dev/null 2>&1); git checkout -- qa/capture_log.json; python3 -c \"\nimport numpy as np\nfrom PIL import Image\nL=lambda p: np.asarray(Image.open(p).convert('RGB'),int)\nS='$S'\nfor x,y in [('old_m08','old_m08b'),('new_m08','new_m08b'),('old_m08b','new_m08b'),('ol …[+213 chars]`
+
+### 🧑 User — 2026-11-17T17:33:40.980Z
+
+> ↩︎ result: assets/textures/match07/cam07_locked.json    |  78 +++++++++
+>  assets/textures/match07/coins07.json         | 154 ++++++++++++++++++
+>  assets/textures/match07/patch_gold.png       | Bin 0 -> 5699 bytes
+>  assets/textures/match07/patch_wall.png       | Bin 0 -> 32500 bytes
+>  assets/textures/match07/plate07_fillmask.png | Bin 0 -> 8280 bytes
+>  assets/textures/match07/plate07_hybrid.png   | Bin 0 -> 2540369 bytes
+>  assets/textures/match07/proj07.json          | 233 +++++++++++++++++++++++++++
+>  assets/textures/match07/river07.json         |  58 +++++++
+>  assets/textures/match07/tile_river.png       | Bin 0 -> 620015 bytes
+>  assets/textures/match07/tile_wall.png        | Bin 0 -> 878381 bytes
+>  assets/textures/match07/tiles07.json         |  24 +++
+>  src/game/Game.ts                             |  27 ++++
+>  src/game/cameraRig.ts                        |  17 ++
+>  src/game/match.ts                            |   4 +-
+>  src/gameplay/coins.ts                        |  19 ++-
+>  src/world/course.ts                          |  20 ++-
+>  src/world/match07.ts                         | 220 +++++++++++++++++++++++++
+> old_m08 old_m08b 0 0
+> new_m08 new_m08b 2280 1
+> old_m08b new_m08b 0 0
+> old_m08 new_m08b 0 0
+
+### 🤖 Claude — 2026-11-17T17:33:47.243Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nf='qa/match/07/m3/proofs_0px_r3.json'; d=json.load(open(f))\nd['differing_px']['match08_08']=0\nd['match08_note']='first current-tree capture differed by 2,280 px of at most 1 level, only in the title-banner text (y 108-131); it also differed by the same 2,280 px from a repeat capture of the SAME current tree, i.e. text anti-aliasing noise. Repeat: old 3c7fca9 vs current = 0 px (old vs old repeat 0 px).'\njson.dump(d,open(f,'w'),indent=1); print(d)\nEOF\ncp /tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad/proofs/new_ …[+135 chars]`
+
+### 🧑 User — 2026-11-17T17:33:47.328Z
+
+> ↩︎ result: {'note': 'round 3 re-run: pixels differing (any channel); default/match08 vs pre-change commit 3c7fca9 (worktree captures), 05 vs protected baseline, match07 vs the round-2 NEW picture', 'started_from': 'e34e02582e2730d944a20ff661b0cb4aed95330e', 'differing_px': {'default_06': 0, 'default_07': 0, 'default_08': 0, 'match08_08': 0, '05_ringa26_nearfloor0_vs_wave9_baseline': 0, 'match07_07_vs_r2_NEW': 0}, 'match08_note': 'first current-tree capture differed by 2,280 px of at most 1 level, only in the title-banner text (y 108-131); it also differed by the same 2,280 px from a repeat capture of the SAME current tree, i.e. text anti-aliasing noise. Repeat: old 3c7fca9 vs current = 0 px (old vs old repeat 0 px).'}
+> ?? qa/match/07/m3/07_NEW_match07_r3.png
+> ?? qa/match/07/m3/proofs_0px_r3.json
+
+### 🤖 Claude — 2026-11-17T17:33:49.245Z
+
+The `match07=1` capture is pixel-identical to the round-2 NEW picture. Committing, then running the gameplay tests (one at a time).
+
+### 🤖 Claude — 2026-11-17T17:33:51.846Z
+
+> 🔧 **Bash** `{"command": "git add qa/match/07/m3 && git commit -q -m \"Screen 07 r3: 0 px proofs re-verified (default 06/07/08, match08 08, protected 05), match07 capture identical to r2 NEW\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCJx6kKaxMCCbLLqta3\" && git push -q origin claude/rainbow-s07-match-c3; git ls-remote origin refs/heads/claude/rainbow-s07-match-c3 | cut -c1-12; git rev-parse --short=12 HEAD; head -20 scripts/gameplay-test.mjs | grep -n \"out\\|q=\" ", "description": "Commit proofs, push, verify; check gameplay test option …[+3 chars]`
+
