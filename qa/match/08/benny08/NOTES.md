@@ -23,6 +23,30 @@ y 840–1245; scenery = y ≥ 190 outside that box; share of pixels within 20 le
    Tested and REJECTED (measured worse): body fur grown higher under the cuff (bald threshold +0.03…+0.15: no change);
    arm puffs 1.25× / 1.5× (64.8 / 64.5 %), raised +0.12 / +0.24 (64.8 / 64.1 %), 1.15× raised + wider (64.0 %).
 
+## Round 6 (account 5, lead Claudia; captures + pictures `review_r6/`) — soft fur clumps + pom yarn tufts
+**URLs:** **NEW (r6) `?match08=1`** · BEFORE r5b `?match08=1&b08clump=0&b08yarn=0` · r3b `?match08=1&b08full=0` · r4
+`?match08=1&b08hi=1&b08pom=1&b08full=0` · r2 `?match08=1&b08r3=0` — all four earlier URLs verified 0 px against their round-5 captures.
+* KEPT `b08clump` (fur.ts uTuft branch, body only): a NEW clump model instead of thin radial strands — big jittered cells,
+  each a rounded dome whose outer shells shrink toward the clump core and are combed DOWN over the body, so neighbouring
+  clumps overlap like the painting's layered fur; gentle shading (slightly darker gaps, lighter clump bodies), a fine strand
+  texture inside each clump without cut-outs. Settings: size 0.3, comb 0.3, shading 0.15, dome 1.0, fine 0.1, no tip lift.
+  Visibly softer, downward-flowing and no longer a spiky starburst; round r5b silhouette kept (wider than the brim, round in the splash).
+  Probes: smaller/denser clumps (0.33 + shading 0.35) too busy and contrasty; bigger (0.22 / 0.16) ragged, feathery and paler;
+  clumps on the arm puffs (`b08carm=1`) ragged → arms keep the r5b fur.
+* KEPT `b08yarn` (same branch on the pom-pom, comb straight out): pointed yarn tufts (size 0.4, point 1.4), darker gaps,
+  light-violet tips (0.25) — separate shaded tufts like the painting instead of a fine fuzzy ball. Probes: bigger tufts
+  (0.55 / point 2) coarser; rounder ends + brighter tips (0.45 / 1.0 / 0.55) similar, slightly less tufty.
+* Numbers (honest — LOWER, visual choice): Benny+splash ≤20 62.2 → 60.0 % (SSIM 0.537 → 0.527); scenery 97.3 % unchanged;
+  whole 85.0 → 84.7 %. Parts: pom mean diff 57.1 → 60.6 (≤20 19 → 14 %), body mean 21.0 → 24.4 — the new clumps do not line
+  up texel-for-texel with the painted ones; crown / cuff / star unchanged.
+* NOT fixed: the pale light streaks on the upper-left body beside the left arm (the painting is lighter there too —
+  median 243/120/217 vs ours 248/105/211 — but softer; ours stays streaky) and jagged pixels on the outline / arm edges
+  (shell cut-outs without anti-aliasing). Pom tufts still lilac-tipped where the painting has deeper violet with white sparkle dots.
+* Moving (`review_r6/*_move_*`: checkpoint, forward 3 / 6 / 10 u, steering left / right): fur, beanie, pom-pom and splash stay on Benny.
+* Proofs: tsc clean; default build 0 px vs the start commit `fb72cc50` (same container); scenery 97.3 %; gameplay 8/8 +
+  91 coins (1,330 → 2,240), errors [] with and without match08 (`review_r6/tests/`); 04–07 with match08 NEW vs r5b: all
+  changes > 20 levels inside Benny (pom + body), elsewhere only faint ≤20-level glow speckle from his fur.
+
 ## Round 5b — USER DECISIONS 19:00 UTC (via lead): r3b is the base; rounder FULLER body; soft fur; moving look first
 **Current URLs (after 5b):** r2 `?match08=1&b08r3=0` · r3b (BEFORE) `?match08=1&b08full=0` · r4 `?match08=1&b08hi=1&b08pom=1&b08full=0`
 · r5 taper `?match08=1&b08hi=1&b08pom=1&b08shape=1` · **NEW (5b) `?match08=1`**. All verified 0 px against their earlier captures.

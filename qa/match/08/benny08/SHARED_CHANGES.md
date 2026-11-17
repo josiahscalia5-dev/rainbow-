@@ -13,6 +13,8 @@
 | `src/game/Game.ts` | round 5 (d) body shape: second position buffer on the `fur_body` geometry (tapered: ×1.12 at the top under the brim → ×0.92 at the bottom), swapped in only while Screen 08 is shown; arm joints +0.04 up, ×1.1 (QA tuning params `b08tt/tb/bw/bh/ly/ay/ax/ak`) | `match08=1` on Screen 08 (restored when leaving 08; 04–07 0 px vs round 4) | `b08shape=0` (also off with `b08r3=0`) |
 | `src/game/Game.ts` | round 5b: `b08full` preset (DEFAULT under match08): body fur ×1.04, beanie ×0.94 (`b08hk`), arms +0.03 / ×1.15; taper now opt-in `b08shape=1` | `match08=1` on Screen 08 | `b08full=0` |
 | `src/characters/benny/benny05.ts` (owned) | round 5b: round-4 body `uHi` and pom colour now OPT-IN (r3b is the base) | 08 maps on | `b08hi=1`, `b08pom=1` to turn on |
+| `src/characters/benny/fur.ts` (owned) | round 6: uniforms `uTuft`, `uTuft2` — soft layered fur CLUMP branch (GLSL only inside `#ifdef BENNY05`, x = 0 → the old strand branch, unchanged) | benny05 look on | — |
+| `src/characters/benny/benny05.ts` (owned) | round 6: `b08clump` (body fur clumps) + `b08yarn` (pom yarn tufts), DEFAULT only on the r5b path (match08, `b08full` on, taper off) → r3b / r4 / r2 / taper URLs unchanged; QA tuning `b08cs/cc/csh/cp/cf/ct`, `b08carm=1`, `b08ys/yp/ysh/yt/yf` | 08 maps on | `b08clump=0`, `b08yarn=0` |
 | `assets/textures/benny08/*` (owned) | baked maps + `body_r3.png` | as above | — |
 
 Not touched: `src/world/match08.ts`, `assets/textures/match08/*`, `cameraRig.ts`, `match.ts`, `camClear.ts`, HUD, coins, course.
