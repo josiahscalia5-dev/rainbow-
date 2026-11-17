@@ -203,18 +203,13 @@ export async function buildMatch08(): Promise<Match08> {
   const fixLane = flag05('m08lane'), fixArch = !fixLane && flag05('m08arch'), fixBw = flag05('m08bw') || fixLane || fixArch;
   // `&m08arch=1` (scenery round r6): inlet pipe, gold arch and entrance wall pushed AWAY from the approved viewpoint
   // along the projector's own rays (×ARCH_K = 2.6), so the approved view stays the same picture while the camera, which
-  // passed only ~0.4 u inside the fitted arch ring when steering, gets ~2 u of room. A point whose ray meets the floor
-  // before ×ARCH_K stops on the floor (no gold or wall copied flat onto the floor; points already below it stay put).
+  // passed only ~0.4 u inside the fitted arch ring when steering, gets ~2 u of room. Uniform ×ARCH_K keeps the ring a
+  // ring (a floor cap bent it toward the camera). The lowest band at the water stays where it was fitted (the arch's
+  // bottom sill covers Benny's underside exactly as painted), ramping to ×ARCH_K by 0.9 u above the floor; pushed parts
+  // that end below the floor are hidden by it (the floor then shows their painted pixels: gold feet near the arch).
   const ARCH_K = Number(new URLSearchParams(location.search).get('m08archk') ?? '') || 2.6;
   const VP = proj.position.clone();
-  const pushK = (v: THREE.Vector3) => {
-    const dy = v.y - VP.y;
-    if (v.y <= L.floorY) return 1;
-    const k = dy >= 0 ? ARCH_K : Math.min(ARCH_K, Math.max(1, ((L.floorY + 0.01 - VP.y) / dy)));
-    // the lowest band at the water stays where it was fitted (the arch's bottom rim covers Benny's underside exactly as
-    // painted); the push ramps in above it — far below the camera, so it never blocks the view
-    return 1 + (k - 1) * THREE.MathUtils.smoothstep(v.y, L.floorY + 0.4, L.floorY + 1.6);
-  };
+  const pushK = (v: THREE.Vector3) => (v.y <= L.floorY ? 1 : 1 + (ARCH_K - 1) * THREE.MathUtils.smoothstep(v.y, L.floorY + 0.1, L.floorY + 0.9));
   const pushV = (v: THREE.Vector3) => { const k = pushK(v); return v.sub(VP).multiplyScalar(k).add(VP); };
   const pushGeo = (g: THREE.BufferGeometry) => {
     if (!fixArch) return g;
