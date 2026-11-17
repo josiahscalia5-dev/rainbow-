@@ -13,7 +13,7 @@ import coins08 from '../../assets/textures/match08/coins08.json';
 export const COIN_VALUE = 10;
 
 /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
-export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number }
+export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
 
 /**
  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
@@ -65,8 +65,12 @@ export function coinLayout(course: Course): CoinDef[] {
       for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - c.x) ** 2 + (p.z - c.z) ** 2; if (d < bd) { bd = d; best = s; } }
       const f = course.sample(best);
       const lat = (c.x - f.pos.x) * f.right.x + (c.z - f.pos.z) * f.right.z;
-      add(course.stageAtS(best).id, best, lat, c.h, { scale: c.scale });
+      add(course.stageAtS(best).id, best, lat, c.h, { scale: c.scale, faceTo: coins08.faceTo as [number, number, number] });
     }
+    // keep the run's coin total (the picture's 9 replace the 17 of 08 + 09): the other 8 go into the inlet just before the
+    // 08 view — collected on the way in, never in the approved view
+    const sIn = st('08').s0;
+    for (let i = 0; i < 8; i++) { const s = sIn - 4 + i * 0.8; add(course.stageAtS(s).id, s, 0.35 * Math.sin(i * 1.3)); }
   }
   // 10 — straight line into the towel tunnel
   { const a = st('10'); for (let i = 0; i < 5; i++) add('10', a.s0 + 1.5 + i * 2.0, -0.15); }
@@ -158,11 +162,14 @@ export function createCoins(course: Course): CoinSystem {
         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
       }
       back.copy(f.tan).negate();
-      const right = new THREE.Vector3().crossVectors(f.up, back).normalize();
-      basis.makeBasis(right, f.up, back);
+      // `?match08=1` picture coins: the face turns toward the approved view's camera (upright, faced like the painted coins)
+      if (d.faceTo) back.set(d.faceTo[0] - p.x, 0, d.faceTo[2] - p.z).normalize();
+      const upV = d.faceTo ? new THREE.Vector3(0, 1, 0) : f.up;
+      const right = new THREE.Vector3().crossVectors(upV, back).normalize();
+      basis.makeBasis(right, upV, back);
       q.setFromRotationMatrix(basis);
-      // tilted coins (05) only wobble a little so the face stays toward the camera
-      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+      // tilted coins (05) only wobble a little so the face stays toward the camera; picture coins (08) barely
+      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
       q.multiply(spin);
       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
       m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));

@@ -5728,3 +5728,203 @@ The game already has the hand-off built in. It crossfades from your opening vide
 
 Next I'll fix the arch's inner sides for smooth movement, unless you'd rather I start Phase 2 (the clean pictures for 04–07) now.
 
+### 🧑 User — 2026-11-17T13:51:33.372Z
+
+CLAUDIA — FINISH SCREEN 08 BEFORE PHASE 2
+
+I approve the progress and the new 3D visual reconstruction method.
+
+Please finish Screen 08 before moving to Screens 04–07.
+
+1. Fix the inner surfaces of the gold arch so the scenery remains beautiful when the camera moves through it. Use matching 3D materials and artwork, without visible purple gaps or stretching.
+
+2. Improve Benny to match my ORIGINAL APPROVED SCREEN, including his round fluffy body, striped beanie, proportions, and surrounding water splash.
+
+3. Correct the coin sizes, spacing, and appearance. Keep the coins collectible while making the approved camera view match my picture.
+
+4. I noticed the full run now collects 82 coins instead of 91. Please preserve the original gameplay coin total and reward behavior unless I approve changing it. Find a way to maintain the approved Screen 08 appearance without losing collectibles elsewhere in the game.
+
+5. If you reuse Benny's improvements from another branch, back up both branches and transfer only the necessary changes. Do not overwrite the successful Screen 08 reconstruction.
+
+6. Test the camera moving forward and steering left and right. Make sure the scenery still looks like real 3D.
+
+7. Test the result on an Android phone and show me separate full-size previews of the original approved Screen 08, the improved game screen, and moving-camera views.
+
+8. Preserve all original approved images, keep the normal game unchanged, and back up the improvements to GitHub.
+
+Once Screen 08 looks sufficiently close and performs correctly, continue with Screens 04–07 using this successful method.
+
+My highest priority remains reproducing ALL my approved screens as closely as technically possible.
+
+### 🤖 Claude — 2026-11-17T13:52:19.885Z
+
+Finishing Screen 08 before Phase 2. I'll go in this order:
+1. Coins: keep the total and the appearance
+2. The arch's inner surfaces
+3. Benny's look
+4. Moving-camera tests, the Android build, and previews
+
+First, how coins spin and tilt, and where the 8 missing coins can go without showing in your approved view:
+
+### 🤖 Claude — 2026-11-17T13:52:21.942Z
+
+> 🔧 **Bash** `{"command": "sed -n \"$(grep -n 'const spin = new' src/gameplay/coins.ts | cut -d: -f1),+40p\" src/gameplay/coins.ts | grep -n -E \"spin|tilt|scale|setFromAxisAngle|time|face|lookAt|makeBasis\" | cut -c1-170 | head -20; grep -n -E \"C05 = |tilt:|noSpin|spin:\" src/gameplay/coins.ts | head -5 | cut -c1-170", "description": "Read coin spin/tilt handling"}`
+
+### 🧑 User — 2026-11-17T13:52:22.071Z
+
+> ↩︎ result: 1:  const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
+> 2:  const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
+> 5:  const place = (time: number) => {
+> 8:      let scale = 1;
+> 11:        const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
+> 13:        scale = 1 + k * 0.8;
+> 16:        p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
+> 20:      basis.makeBasis(right, f.up, back);
+> 22:      // tilted coins (05) only wobble a little so the face stays toward the camera
+> 23:      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+> 24:      q.multiply(spin);
+> 25:      if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
+> 26:      m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+> 37:    update(time, _dt, s, lat) {
+> 15:/** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> 25:export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+> 30:  const extra = { scale: C05. …[+24 chars]
+
+### 🤖 Claude — 2026-11-17T13:52:49.969Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='assets/textures/match08/coins08.json'; d=json.load(open(p))\ncam=json.load(open('assets/textures/match08/cam08_locked.json'))['cam']; d['faceTo']=cam; json.dump(d,open(p,'w'),indent=1)\np='src/gameplay/coins.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]; s=s.replace(old,new)\nrep(\"export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number }\",\n    \"export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt? …[+1044 chars]`
+
+### 🧑 User — 2026-11-17T13:52:50.099Z
+
+> ↩︎ result: layout ok
+>       basis.makeBasis(right, f.up, back);
+>       q.setFromRotationMatrix(basis);
+>       // tilted coins (05) only wobble a little so the face stays toward the camera
+>       spin.setFromAxisAngle(axis.set(0, 1, 0), (d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+>       q.multiply(spin);
+>       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
+>   const place = (time: number) => {
+>     defs.forEach((d, i) => {
+>       const f = course.sample(d.s);
+>       let scale = 1;
+>       if (collected[i]) {
+>         if (popT[i] < 0) { sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+>         const k = THREE.MathUtils.clamp((time - popT[i]) / 0.35, 0, 1);
+>         if (k >= 1) { popT[i] = -1; sc.setScalar(0); m.compose(p.set(0, -9999, 0), q.identity(), sc); mesh.setMatrixAt(i, m); return; }
+>         scale = 1 + k * 0.8;
+>         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + k * 1.6);
+>       } else {
+>         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
+>       }
+>       back.copy(f.tan).negate();
+>       const right = new THREE.Vector3().crossVectors( …[+104 chars]
+
+### 🤖 Claude — 2026-11-17T13:52:57.667Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\nold=\"\"\"      back.copy(f.tan).negate();\n      const right = new THREE.Vector3().crossVectors(f.up, back).normalize();\n      basis.makeBasis(right, f.up, back);\n      q.setFromRotationMatrix(basis);\n      // tilted coins (05) only wobble a little so the face stays toward the camera\n      spin.setFromAxisAngle(axis.set(0, 1, 0), (d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));\"\"\"\nnew=\"\"\"      back.copy(f.tan).negate();\n      // `?match08=1` picture coins: the face turns toward the approved vi …[+796 chars]`
+
+### 🧑 User — 2026-11-17T13:53:02.076Z
+
+> ↩︎ result: facing ok
+> tsc clean
+
+### 🤖 Claude — 2026-11-17T13:53:33.043Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nA=Image.open('references/08_final_spin_chamber.png').convert('RGB')\nP=Image.open('assets/textures/match08/plate08_hybrid.png').convert('RGB').resize((864,1536),Image.LANCZOS)\nP.crop((250,30,610,150)).resize((512,171),Image.LANCZOS).save('assets/textures/match08/patch_wall.png')\nA.crop((330,193,530,246)).resize((512,136),Image.LANCZOS).save('assets/textures/match08/patch_gold.png')\nA.crop((400,488,560,530)).resize((384,101),Image.LANCZOS).save('assets/textures/match08/patch_towel.png')\nprint('patches written')\nEOF\npython3 -I -c \" …[+416 chars]`
+
+### 🧑 User — 2026-11-17T13:53:33.785Z
+
+> ↩︎ result: patches written
+
+### 🤖 Claude — 2026-11-17T13:53:36.561Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08/patches.png"}`
+
+### 🧑 User — 2026-11-17T13:53:36.591Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T13:53:39.407Z
+
+The three patches look right: purple slotted metal, polished gold band, purple terry towel. Updating the projection shader and materials:
+
+### 🤖 Claude — 2026-11-17T13:53:40.120Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/match08.ts", "offset": 34, "limit": 105}`
+
+### 🧑 User — 2026-11-17T13:53:40.144Z
+
+> ↩︎ result: 34	
+> 35	const VERT = /* glsl */ `
+> 36	uniform mat4 uProjVP;
+> 37	varying vec4 vProj;
+> 38	void main() {
+> 39	  vec4 wp = modelMatrix * vec4(position, 1.0);
+> 40	  vProj = uProjVP * wp;
+> 41	  gl_Position = projectionMatrix * viewMatrix * wp;
+> 42	}`;
+> 43	
+> 44	const FRAG = /* glsl */ `
+> 45	uniform sampler2D uPlate;
+> 46	uniform sampler2D uDepth;
+> 47	uniform float uUseDepth;
+> 48	uniform vec2 uNearFar;
+> 49	uniform vec3 uFallback;
+> 50	uniform vec4 uPjPost;
+> 51	uniform vec2 uPjRes;
+> 52	varying vec4 vProj;
+> 53	${PROJ05_INVERSE}
+> 54	float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
+> 55	void main() {
+> 56	  vec3 t = uFallback;
+> 57	  if (vProj.w > 0.0) {
+> 58	    vec3 ndc = vProj.xyz / vProj.w;
+> 59	    vec2 uv = ndc.xy * 0.5 + 0.5;
+> 60	    if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) {
+> 61	      float vis = 1.0;
+> 62	      if (uUseDepth > 0.5) {
+> 63	        float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
+> 64	        vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+> 65	      }
+> 66	      t = mix(uFallback, texture2D(uPlate, uv).rgb, vis);
+> 67	    }
+> 68	  }
+> 69	  gl_FragColor = vec4(pjInverse(t), 1.0);
+> 7 …[+4641 chars]
+
+### 🤖 Claude — 2026-11-17T13:53:57.685Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/match08.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]; s=s.replace(old,new)\nrep('''const VERT = /* glsl */ `\nuniform mat4 uProjVP;\nvarying vec4 vProj;\nvoid main() {\n  vec4 wp = modelMatrix * vec4(position, 1.0);\n  vProj = uProjVP * wp;\n  gl_Position = projectionMatrix * viewMatrix * wp;\n}`;''','''const VERT = /* glsl */ `\nuniform mat4 uProjVP;\nvarying vec4 vProj;\nvarying vec3 vW;\nvarying vec3 vN;\nvoid main() {\n  vec4 wp = modelMatrix * vec4(position, 1.0);\n  vProj = uProjVP * wp;\n  vW …[+3790 chars]`
+
+### 🧑 User — 2026-11-17T13:54:01.464Z
+
+> ↩︎ result: shader updated
+> 143:  add(pipe, M.wall, 'pipe');
+> 150:  add(archG, M.gold, 'arch');
+> 154:  add(new THREE.ShapeGeometry(bw, 64).translate(0, 0, L.backwall.z), M.wall, 'backwall');
+> 159:  add(ch, M.wall, 'chamber');
+> 160:  add(new THREE.CircleGeometry(C.r, 96).translate(C.cx, C.cy, C.zDoor), M.wall, 'doorwall');
+> 164:  add(fl, M.floor, 'floor');
+> 168:  const topM = add(top, M.plat, 'platform_top');
+> 172:  add(new THREE.CylinderGeometry(P.r, P.r, rimH, 96, 1, true).translate(P.cx, P.topY - rimH / 2, P.cz), M.gold, 'platform_rim');
+> 174:  add(new THREE.CylinderGeometry(P.r * 0.85, P.r * 0.85, skH, 96, 1, true).translate(P.cx, P.rimBottomY - skH / 2, P.cz), M.plat, 'platf
+> 177:  add(new THREE.BoxGeometry(T.w, T.h, T.d, 4, 4, 4).translate(T.cx, T.y0 + T.h / 2, T.cz), M.towel, 'towel');
+> 183:      const o = add(g, M.gold, `spout_${k}_${nm}`);
+> tsc clean
+
+### 🤖 Claude — 2026-11-17T13:54:08.027Z
+
+Compiles. Adding the remaining items to the task list, then testing the locked view and the moving camera together:
+
+### 🤖 Claude — 2026-11-17T13:54:09.825Z
+
+> 🔧 **TaskCreate** `{"subject": "Finish Screen 08: arch inner faces, coins, Benny, Android, previews", "description": "Arch/unseen surfaces with artwork patches + stretch guard; coins facing the camera + run total kept at 91; Benny proportions/beanie/splash toward the approved picture; forward/steer tests; Android build + device-size check; APPROVED | NEW | motion previews; commit.", "activeForm": "Finishing Screen 08"}`
+
+### 🧑 User — 2026-11-17T13:54:09.843Z
+
+> ↩︎ result: Task #5 created successfully: Finish Screen 08: arch inner faces, coins, Benny, Android, previews
+
+### 🤖 Claude — 2026-11-17T13:54:13.831Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/new5 --q=match08=1 2>&1 | tail -1 | cut -c1-60; cp $M/capture_log.bak qa/capture_log.json; timeout 900 node tools/match08/motion08.mjs $M/motion5 2>&1 | tail -2; python3 -I -c \"\nfrom PIL import Image\nnames=['f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_steer']\nims=[Image.open('$M/new5/08.png').convert('RGB').resize((288,512))]+[Image.open('$M/moti …[+301 chars]`
+

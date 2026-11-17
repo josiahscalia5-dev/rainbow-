@@ -35,9 +35,13 @@ export interface Match08 {
 const VERT = /* glsl */ `
 uniform mat4 uProjVP;
 varying vec4 vProj;
+varying vec3 vW;
+varying vec3 vN;
 void main() {
   vec4 wp = modelMatrix * vec4(position, 1.0);
   vProj = uProjVP * wp;
+  vW = wp.xyz;
+  vN = normalize(mat3(modelMatrix) * normal);
   gl_Position = projectionMatrix * viewMatrix * wp;
 }`;
 
@@ -47,13 +51,30 @@ uniform sampler2D uDepth;
 uniform float uUseDepth;
 uniform vec2 uNearFar;
 uniform vec3 uFallback;
+uniform sampler2D uPatch;   // material patch cut from the approved artwork (wall slots / gold band / towel)
+uniform float uPatchK;      // patch repeats per world unit
+uniform vec3 uProjPos;      // projector (approved view) position
 uniform vec4 uPjPost;
 uniform vec2 uPjRes;
 varying vec4 vProj;
+varying vec3 vW;
+varying vec3 vN;
 ${PROJ05_INVERSE}
+// triplanar, mirrored-repeat sampling of the patch: surfaces the approved picture never showed (or showed edge-on)
+vec3 patchColor() {
+  vec3 n = abs(normalize(vN)); n /= max(n.x + n.y + n.z, 1e-4);
+  vec3 p = vW * uPatchK;
+  return texture2D(uPatch, p.zy).rgb * n.x + texture2D(uPatch, p.xz).rgb * n.y + texture2D(uPatch, p.xy).rgb * n.z;
+}
 float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
 void main() {
-  vec3 t = uFallback;
+  vec3 pc = patchColor();
+  vec3 t = pc;
+  // stretch guard: the projection is used where the current view sees the surface no more face-on than the approved
+  // view did (ratio of the two incidence cosines); in the approved view itself the ratio is 1 -> pure projection
+  vec3 nn = normalize(vN);
+  float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
+  float keep = 1.0 - smoothstep(2.5, 6.0, cc / max(cp, 1e-3));
   if (vProj.w > 0.0) {
     vec3 ndc = vProj.xyz / vProj.w;
     vec2 uv = ndc.xy * 0.5 + 0.5;
@@ -63,7 +84,7 @@ void main() {
         float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
       }
-      t = mix(uFallback, texture2D(uPlate, uv).rgb, vis);
+      t = mix(pc, texture2D(uPlate, uv).rgb, vis * keep);
     }
   }
   gl_FragColor = vec4(pjInverse(t), 1.0);
@@ -95,13 +116,20 @@ export async function buildMatch08(): Promise<Match08> {
     uProjVP: { value: projVP },
     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
     uPjRes: { value: new THREE.Vector2(W, H) },
+    uProjPos: { value: proj.position.clone() },
   };
-  const mat = (fallback: string) => new THREE.ShaderMaterial({
+  // material patches cut from the approved artwork (tools: qa/match/08/NOTES.md), mirrored so the tiling has no seams
+  const loadPatch = async (name: string) => {
+    const t = await new THREE.TextureLoader().loadAsync(new URL(`../../assets/textures/match08/patch_${name}.png`, import.meta.url).href);
+    t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping; t.anisotropy = 4; return t;
+  };
+  const [pWall, pGold, pTowel] = await Promise.all([loadPatch('wall'), loadPatch('gold'), loadPatch('towel')]);
+  const mat = (fallback: string, patch: THREE.Texture, k: number) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
-    uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) } },
+    uniforms: { ...shared, uFallback: { value: new THREE.Color(fallback) }, uPatch: { value: patch }, uPatchK: { value: k } },
   });
-  // fallbacks (display colours sampled from the clean artwork): wall purple, floor violet, gold, platform, towel
-  const M = { wall: mat('#c25bd0'), floor: mat('#9c55c8'), gold: mat('#e8a24a'), plat: mat('#b78ad6'), towel: mat('#6c3bc4') };
+  // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
+  const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), floor: mat('#9c55c8', pWall, 1 / 2.4), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
 
   const group = new THREE.Group();
   group.name = 'match08_projection';

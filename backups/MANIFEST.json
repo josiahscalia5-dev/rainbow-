@@ -398,8 +398,23 @@
   },
   {
    "path": "assets/textures/match08/coins08.json",
-   "bytes": 2031,
-   "sha256": "0ca6c2595bae74b023c47a16a15676cf5b617e5b32a055307eec0ebe4becdacb"
+   "bytes": 2081,
+   "sha256": "0f23d340766b73de553ec06b626022171d86fb2704483384853fcad063d18461"
+  },
+  {
+   "path": "assets/textures/match08/patch_gold.png",
+   "bytes": 59480,
+   "sha256": "5a0c22726592a5162a6f6147a896bab9a10b9bb8f5c3739360181d0527698bfe"
+  },
+  {
+   "path": "assets/textures/match08/patch_towel.png",
+   "bytes": 68185,
+   "sha256": "b24d4445946a29ae11f35aecd1ed069984cf374ec3c46b5f8edd16ce85de27ca"
+  },
+  {
+   "path": "assets/textures/match08/patch_wall.png",
+   "bytes": 109109,
+   "sha256": "a6bdfd70372352a4ba1e0388b6771162bc85b521fc69e3c66f9118c1328a51af"
   },
   {
    "path": "assets/textures/match08/plate08_clean.png",
@@ -539,7 +554,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "7a760c61a1f2b0f8d06f390f53631ccdde924a6fbc7889ebc41f69e7c3c837f9"
+   "sha256": "ca7f47d4dd51029b5909e2b66031ee3797c4b7014408ae1911492356e5d73485"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -7788,8 +7803,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 10603,
-   "sha256": "3a95ef305940417ca04f8a5ea64bc2a77c76a9333d4e5a2fb2682044037af9bf"
+   "bytes": 11352,
+   "sha256": "62cb2d9af3443c3620a4e7cf5b5d35f6bddc5fe4fd4c5ef1aa7c48524188af55"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -7913,8 +7928,8 @@
   },
   {
    "path": "src/world/match08.ts",
-   "bytes": 9582,
-   "sha256": "fd1e4f92b46ed41d30696d1dca798f2f2c0124f806c2bf0b9cb322fc6fe6e9d3"
+   "bytes": 11453,
+   "sha256": "a5ee78f2516f24e92db8912f3966f06fb118a3e1245a09a48759b84d2ce6774d"
   },
   {
    "path": "src/world/materials.ts",
