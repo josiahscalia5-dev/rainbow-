@@ -6354,3 +6354,119 @@ GitHub matches local (`2f6aac7`), but one file is still uncommitted (a backgroun
 
 > 🔧 **Bash** `{"command": "git status --porcelain; sleep 3; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:checkpoint --message \"Screen 08 finished round (notes)\" 2>&1 | grep -E '\"result\"|\"commit\"|skipping'; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; git status --porcelain | wc -l; git log --oneline -1 -- builds/rainbow-debug-match08-2026-11-17.apk; git show HEAD:qa/match/08/NOTES.md | grep -c \"FINISH ROUND\"; git lfs ls-files | grep -c match08", "description": "Finish the save and confirm files are committ …[+23 chars]`
 
+### 🧑 User — 2026-11-17T14:11:01.988Z
+
+> ↩︎ result: M qa/match/08/NOTES.md
+>   "result": "committed+pushed",
+>   "commit": "aa8cf443c35a5e21261a2b0bf5cae2039cde7b06",
+> local  aa8cf443c35a5e21261a2b0bf5cae2039cde7b06
+> remote aa8cf443c35a5e21261a2b0bf5cae2039cde7b06
+> 0
+> 2f6aac7 autosave: Rainbow 2026-11-17 14:10 UTC
+> 1
+> 1
+
+### 🤖 Claude — 2026-11-17T14:11:05.611Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/references/08_final_spin_chamber.png"], "caption": "1 — APPROVED Screen 08 (your original, unchanged)", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T14:11:06.198Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/references/08_final_spin_chamber.png → file_uuid: 659feda8-8767-4427-9908-d1da28531822
+
+### 🤖 Claude — 2026-11-17T14:11:07.214Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/08_NEW_match08.png"], "caption": "2 — IMPROVED game Screen 08 (real 3D, ?match08=1): scenery 97.4 % within 20 colour levels of your picture; Benny with smaller white-striped beanie and your painted splash; coins on your painted spots", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T14:11:08.000Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/08_NEW_match08.png → file_uuid: 57cddd1b-c99c-4461-a8d4-48c7175dc8ec
+
+### 🤖 Claude — 2026-11-17T14:11:08.359Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/08_NEW_match08_android1080x1920.png"], "caption": "3 — The same improved Screen 08 rendered at Android phone resolution (1080×1920)", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T14:11:09.163Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/08_NEW_match08_android1080x1920.png → file_uuid: ba2cce1a-8478-4e5f-a3ce-ffd3f39282d3
+
+### 🤖 Claude — 2026-11-17T14:11:09.461Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/motion/f06_forward6u.png"], "caption": "4 — Moving camera: 6 units forward along the ride (real game simulation)", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T14:11:10.186Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/motion/f06_forward6u.png → file_uuid: bec5854d-29db-4261-83fc-84e2d10b9dfb
+
+### 🤖 Claude — 2026-11-17T14:11:10.511Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/motion/s_left_steer.png"], "caption": "5 — Moving camera: steering left (real game simulation)", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T14:11:11.197Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/motion/s_left_steer.png → file_uuid: 5f48844b-5a15-4d4f-9cb2-a3a67ce71ce4
+
+### 🤖 Claude — 2026-11-17T14:11:11.511Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/08/motion/s_right_steer.png"], "caption": "6 — Moving camera: steering right (real game simulation)", "display": "render", "status": "normal"}`
+
+### 🤖 Claude — 2026-11-17T14:11:11.868Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T14:11:11.891Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🧑 User — 2026-11-17T14:11:12.474Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/08/motion/s_right_steer.png → file_uuid: c9b24ae7-7ec4-4736-a95a-45d351577695
+
+### 🤖 Claude — 2026-11-17T14:11:27.557Z
+
+Screen 08 is finished as far as I can take it from this cloud session. Above are six separate previews: your original, the improved screen, the same at phone size (1080×1920), and three moving-camera views (6 units forward, steering left, steering right). The one thing I couldn't do is run it on a real phone; the APK is ready for you to install.
+
+**1. The gold arch when moving:** fixed. Where the camera sees a surface your picture never showed, it now gets tiles cut from your artwork: purple slotted metal, the gold band, towel fabric. The flat purple patches are gone. One mild leftover: a slightly darker purple band at the lower-left edge when the camera is 3–6 units forward.
+
+**2. Benny:** closer, not yet exact.
+- **Improved:** a smaller beanie in your proportions, white-and-purple knit stripes, his round body raised out of the water, and your painted white splash ring around him. The splash is cut from your original picture and rides with him.
+- **Still different:** his body reads a bit wider than painted and sits about 30 px to the right; his fur and face are the game model's.
+- **Score:** the Benny-and-splash area went from 61 % to 64.5 % similar.
+- **Other branch:** I didn't take anything from your other branch (`ccr-b0757dec-dj6l1o`). Its Benny artwork was made for Screen 05's view, and that branch is untouched.
+
+**3. Coins:** your nine painted coins now face the camera at their painted size and stay collectible. If one would be out of reach, it moves along its own line of sight, so it stays on your painted spot.
+
+**4. Coin total:** preserved. The game again has **91 coins (2,240 total)**, exactly like the normal game. The 8 coins your picture doesn't show sit at the chamber entrance, where Benny collects them on the way in.
+
+**5–6. Moving camera:** riding forward and steering left and right keep real 3D depth: the door grows, the spouts and platform shift, and Benny stays in the river.
+
+**7. Android:**
+- **Built:** `builds/rainbow-debug-match08-2026-11-17.apk` (21 MB) has Screen 08's new look built in.
+- **Not run on a phone:** this cloud session has no phone or emulator.
+- **To test:** install it on your phone and play to Screen 08.
+
+**8. Safety:**
+- your 13 approved images are unchanged
+- the normal game is unchanged, pixel for pixel
+- gameplay passes 8/8 with and without the switch
+- everything is backed up on GitHub (commit `aa8cf44`)
+
+**How close Screen 08 is now** (within 20 colour levels of your approved screen):
+
+| | Current game | Now |
+|---|---|---|
+| Scenery | 3.3 % | **97.4 %** |
+| Upper chamber | 2.1 % | **98.9 %** |
+| River and walls | 4.4 % | **99.2 %** |
+| Middle area with coins | 3.0 % | **91.0 %** |
+| Benny and splash | 2.9 % | **64.5 %** |
+| Whole screen | 4.0 % | **83.0 %** |
+
+**Next:** Phase 2 (Screens 04–07) uses the same method, starting with one fal.ai clean picture each, shown to you full-size. Tell me whether Screen 08 is close enough to move on, or whether Benny's body should be refined first. And if you install the APK, let me know how it runs on your phone.
+
