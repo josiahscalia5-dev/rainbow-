@@ -2790,3 +2790,27 @@ The changes are spread over a large box (x 287–795, y 189–852), but are tiny
 > ?? tools/env05/ring_fit.py
 > ?? tools/env05/ring_validate.py
 
+### 🤖 Claude — 2026-11-17T00:18:14.660Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/NOTES.md", "content": "# Coordinator — far river / riding water (session 018Sg3AU, 2026-11-17 ~00:10–00:45 UTC, branch `ccr-694bda6a-x58ntq`)\n\nContinues the previous coordinator's unfinished step (\"removing a flat blank patch that appears mid-river when Benny\nrides forward\", `tools/proj05/bake.py`, 23:41 UTC, never baked). Both new parts are water-only, Screen 05 only, behind\ntheir own switches and ON with `?match05=1`. The STACK URL of COORDINATION.md is unchanged (specialists' A/B unaffected).\n\n## Finding  …[+3782 chars]`
+
+### 🧑 User — 2026-11-17T00:18:14.836Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/coordinator/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:18:17.563Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/pilot05/full_reference_match/COORDINATION.md <<'EOF'\n* **00:45 UTC — coordinator water parts added to `?match05=1`** (not to STACK, so every specialist's STACK vs STACK+switch\n  A/B is unchanged): `projvp05` (variance-preserving E ↔ tile hand-over while riding; locked frame 0 px changed) and\n  `projgap05` (E with mirror-filled wave-back-slope gaps, `assets/textures/water05/far2/`; locked frame: 10,036 water px,\n  all closer to approved). Notes + numbers: `coordinator/NOTES.md`. Screen 04's far window onto the 05 river changes by\n  832 px (boundary view), 06 unchange …[+96 chars]`
+
+### 🧑 User — 2026-11-17T00:18:17.605Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T00:18:33.262Z
+
+Notes are written. Now an immediate verified save of this work to GitHub:
+
+### 🤖 Claude — 2026-11-17T00:18:35.364Z
+
+> 🔧 **Bash** `{"command": "timeout 600 python3 scripts/rainbow-autosave.py --reason manual:far-river-vp-gap --quiet; python3 -I scripts/autosave-status.py | head -1; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/ccr-694bda6a-x58ntq | cut -f1)\"; git show --stat HEAD | grep -E 'waterRibbon|bake.py|far2|coordinator/NOTES' | head", "description": "Run verified autosave and confirm remote SHA", "timeout": 700000}`
+

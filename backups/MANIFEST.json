@@ -539,7 +539,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "5c55984fcb237b230d8ea4becaf00e75166cc2115dabe839973e1a66fffa8ab1"
+   "sha256": "e8a36462abe9c39a2134b9a32e8b5ce9b43fd93740486ba520ccd4708e8111f7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1308,8 +1308,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/COORDINATION.md",
-   "bytes": 9983,
-   "sha256": "a9c648fe7487b6c32d48e52ce56a73b62ebe93133d5ac0a3ba1313293446480f"
+   "bytes": 10523,
+   "sha256": "249d0d733c80132bb92e5187686361020fbb633f2a2cbac7155417afd6ac1d68"
   },
   {
    "path": "qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md",
@@ -1455,6 +1455,11 @@
    "path": "qa/pilot05/full_reference_match/coins/coin_bake.py",
    "bytes": 2000,
    "sha256": "5ea20a6cb8b029ae709e177bb716812af03a929a5159d8748a93826b89dfc752"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/NOTES.md",
+   "bytes": 4297,
+   "sha256": "e244f3efd7c236fe01e0c6006e4307095eaea934d89a65efe7b20099895d0d6b"
   },
   {
    "path": "qa/pilot05/full_reference_match/coordinator/gameplay_vp_gap.json",
@@ -8243,8 +8248,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 9754,
-   "sha256": "ccfa96bb76f993750010813b788e999e441111aa70238b2ccf1d4b12705d3c7a"
+   "bytes": 12885,
+   "sha256": "00c5242f8d1dcfacc79548dbcc30ad8a75f56e98d4e7a25122eaebf03aa92611"
   },
   {
    "path": "src/gameplay/input.ts",

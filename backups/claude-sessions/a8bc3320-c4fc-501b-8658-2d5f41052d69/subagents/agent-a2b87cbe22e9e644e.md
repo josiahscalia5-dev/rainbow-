@@ -1169,3 +1169,38 @@ I'll read the brief first.
 > 200: * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
 > 209: * on every Screen-05 reference-match part (proj05 water + env05 tunnel / rings / fittings +  …[+238 chars]
 
+### 🤖 Claude — 2026-11-17T00:18:08.476Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 80,100p src/vfx/waterRibbon.ts", "description": "Read note about far block occlusion"}`
+
+### 🧑 User — 2026-11-17T00:18:08.513Z
+
+> ↩︎ result: /**
+>  * W10 (?water05=1 only, else exactly 0): extra lateral shift (ribbon units) of the 05 core + band pair near the exit
+>  * bend just before the far-block seam. The route jogs ≈1.7 u right there (s 174–181), which drew the visible cyan
+>  * core 478 → 547 px across only 18 screen rows (y 587 → 569) — the right-hand "blob" at the vanishing point. The
+>  * approved river keeps climbing smoothly up-right there, so the VISIBLE core (route + core swing + band S) is held at
+>  * T(s) relative to the tunnel line (−0.67 u at s 172 → −0.3 u at the seam), then hands back to the normal layout by
+>  * s 189 (hidden behind the far block at the checkpoint; 06 unchanged). Coins (gameplay/coins.ts) are NOT moved: the
+>  * s 173.6 coin stays on the cyan core, the s 181.6 one lies over the far block.
+>  */
+> export function coreShiftW10(course: Course, s: number): number {
+>   if (!WATER05) return 0;
+>   const w = smooth(171, 175, s) * (1 - smooth(182, 189, s));
+>   if (w <= 0) return 0;
+>   const rx = Math.max(0.5, course.sample(s).right.x);
+>   const visible = course.offset05(s) + (coreLateral(course, s) + sbend05(s)) * rx;
+>   const target = -0.67 + 0.37 * smooth(172, 180, s);
+>   return (w * (target - visible)) / rx;
+> }
+> 
+> / …[+2 chars]
+
+### 🤖 Claude — 2026-11-17T00:18:31.711Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/gameplay/coins.ts'\ns=open(p).read()\n\n# 1. imports\ns=s.replace(\"\"\"import { coreLateral } from '../vfx/waterRibbon';\n\"\"\",\"\"\"import { coreLateral, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';\n\"\"\")\n\n# 2. CoinDef: phase + far-scale fields\ns=s.replace(\"\"\"export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number }\n\"\"\",\"\"\"export interface CoinDef {\n  s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number;\n  /** c …[+3854 chars]`
+
+### 🧑 User — 2026-11-17T00:18:31.796Z
+
+> ↩︎ result: 92:  if (!COINS05) return out;
+

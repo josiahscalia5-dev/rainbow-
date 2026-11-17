@@ -7,12 +7,19 @@
 import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
 import { canvasTexture } from '../world/materials';
-import { coreLateral } from '../vfx/waterRibbon';
+import { coreLateral, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
 
 export const COIN_VALUE = 10;
 
 /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
-export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number }
+export interface CoinDef {
+  s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number;
+  /** coins05 only: bob / wobble phase (default: the coin's index, as before) */
+  phase?: number;
+  /** coins05 only: [scale at the 05 checkpoint, distance ahead of Benny at the checkpoint] — the coin shows `scale` from
+   *  15 u closer on (see C05M) */
+  far?: [number, number];
+}
 
 /**
  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
@@ -22,6 +29,32 @@ export interface CoinDef { s: number; lat: number; h: number; stage: StageId; sc
  * Before the 05 checkpoint the trail keeps a plain C05.gap0 spacing (gameplay only, never in frame).
  */
 export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+
+/**
+ * `?coins05=1` (or `?match05=1`), Screen 05 full reference match (qa/pilot05/full_reference_match/coins/NOTES.md):
+ * the visible coins at the locked 05 checkpoint, MEASURED on the approved picture (centre x, y and face width w, px) and
+ * solved back onto the course with the live render camera (qa/pilot05/full_reference_match/hud/probe05.mjs --solve:
+ * course point (s, lat) at the coins' height whose coin centre — same bob as below, clock 12 — projects onto the
+ * approved centre; scale = approved width / projected width of a 1-u coin). Rows: [ds = s − 05_crest, lat, scale].
+ * approved (x, y, w): 1 (473.5, 725, 96) 2 (548.5, 658.5, 70) 3 (481.5, 612, 56) 4 (431, 575, 43) 5 (465.5, 545, 28)
+ * 6 (495.5, 532.5, 20) 7 (518, 524, 17) 8 (532, 516.5, 12.5) 9 (537, 509, 10) 10 (534, 502, 8) 11 (526, 497, 7)
+ * 12 (516, 492, 6) 13 (507.5, 489, 5) 14 (498, 487, 5) 15 (490.5, 485.5, 4) — the far line winds up into the light.
+ * The game's straight 05 tube is shorter than the painted one, so coins 8–15 sit where the course starts to climb
+ * (ds 56–60) and the approved sizes need scales < 1 there; those coins grow to C05M_NEAR (capped so neighbours do not
+ * overlap) as Benny closes in, so they are small only while far away. The pre-checkpoint trail and every other screen's
+ * coins are unchanged (their bob phase is kept: CoinDef.phase).
+ */
+export const C05M: [number, number, number][] = [
+  [6.356, -0.311, 0.976], [10.95, 0.161, 0.95], [16.614, -0.144, 1.001], [26.225, -0.665, 1.085], [43.262, -1.754, 1.085],
+  [48.928, -1.967, 0.832], [55.075, 0.919, 0.788], [56.475, 1.629, 0.591], [57.469, 1.947, 0.479], [58.306, 1.9, 0.387],
+  [58.889, 1.599, 0.341], [59.411, 1.195, 0.294], [59.653, 0.806, 0.245], [59.695, 0.325, 0.245], [59.687, -0.063, 0.195],
+];
+/** near size of the measured coins (C05.scale = the default 05 coin size), capped by the gap to the next coin */
+const C05M_NEAR = (k: number): number => {
+  const [ds, lat] = C05M[k];
+  const nb = [C05M[k - 1], C05M[k + 1]].filter(Boolean).map(([d2, l2]) => Math.hypot(d2 - ds, l2 - lat));
+  return Math.max(C05M[k][2], Math.min(C05.scale, 0.85 * Math.min(...nb)));
+};
 
 function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h?: number, extra?: Partial<CoinDef>) => void) {
   const a = course.stage('05');
@@ -56,7 +89,19 @@ export function coinLayout(course: Course): CoinDef[] {
   { const a = st('09'); for (let i = 0; i < 9; i++) add('09', a.s0 + 1.5 + i * 1.7, -1.7 + i * 0.12); }
   // 10 — straight line into the towel tunnel
   { const a = st('10'); for (let i = 0; i < 5; i++) add('10', a.s0 + 1.5 + i * 2.0, -0.15); }
-  return out;
+  if (!COINS05) return out;
+  // coins05: keep every coin's bob phase, swap the 05 coins after the checkpoint for the measured arrangement (C05M)
+  out.forEach((d, i) => { d.phase = i; });
+  const sCp = course.marks['05_crest'];
+  const first = out.findIndex((d) => d.stage === '05' && d.s > sCp);
+  const kept = out.filter((d) => !(d.stage === '05' && d.s > sCp));
+  const a5 = st('05');
+  const meas: CoinDef[] = C05M.map(([ds, lat, scale], k) => ({
+    s: sCp + ds, lat, h: C05.h, stage: sCp + ds < a5.s1 ? '05' : '06', scale: C05M_NEAR(k), tilt: C05.tilt, phase: first + k,
+    far: [scale, ds],
+  }));
+  kept.splice(first, 0, ...meas);
+  return kept;
 }
 
 export interface CoinSystem {

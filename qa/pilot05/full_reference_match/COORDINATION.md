@@ -113,3 +113,8 @@ Its specialists are INTERRUPTED; this session is the coordinator now. Everything
 * Coordinator far-river state: `far1/` (E, F, LUT) baked 23:34 with `bake.py … far`. The "unseen texels released" block
   in `bake.py` (blank mid-river patch while riding, added 23:41) has NOT been baked yet — the coordinator does that next
   (needs a fresh probe: `node scripts/proj05-probe.mjs --raw=DIR`).
+* **00:45 UTC — coordinator water parts added to `?match05=1`** (not to STACK, so every specialist's STACK vs STACK+switch
+  A/B is unchanged): `projvp05` (variance-preserving E ↔ tile hand-over while riding; locked frame 0 px changed) and
+  `projgap05` (E with mirror-filled wave-back-slope gaps, `assets/textures/water05/far2/`; locked frame: 10,036 water px,
+  all closer to approved). Notes + numbers: `coordinator/NOTES.md`. Screen 04's far window onto the 05 river changes by
+  832 px (boundary view), 06 unchanged, gameplay 8/8.

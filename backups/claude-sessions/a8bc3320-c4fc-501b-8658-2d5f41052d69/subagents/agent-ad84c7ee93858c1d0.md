@@ -740,3 +740,24 @@ Deliver in `qa/pilot05/full_reference_match/env/` as the brief says. Your final 
 > 247-    uBcHalo: { value: lin3(0.9439, 0.6846, 0.2725) }, // (255,205,90) yellow halo around each spot
 > 248-    uBcGroove: { value: lin3(0.5618, 0.1695, 0.1159) }, // (214,79,44) orange-red gr …[+5080 chars]
 
+### 🤖 Claude — 2026-11-17T00:18:25.616Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,60p scripts/proj05-lid-raycast.mjs; ls qa/pilot05/proj/tunnel/lid; head -30 tools/proj05/lid_blender.py", "description": "Inspect lid raycast pipeline"}`
+
+### 🧑 User — 2026-11-17T00:18:25.664Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Screen 05 paddles (`?projlid05=1`), Blender pipeline step B: lift every vertex of the approved paddle outlines
+> // (qa/pilot05/proj/tunnel/lid/mesh2d.json, tools/proj05/lid_mesh2d.py) onto the REAL 05 wall: a ray from the real locked
+> // 05 camera through the vertex pixel, first hit on the real 05 wall mesh (rings, lids, water and Benny ignored); beyond the
+> // real wall's end, the forced-perspective far wall.
+> // Writes raycast.json: camera (position, matrixWorld, projection, fov, aspect) + per paddle per vertex the wall point,
+> // the wall normal (toward the camera) and the ray direction. Read-only: nothing in the game changes.
+> //   node scripts/proj05-lid-raycast.mjs [--dir=qa/pilot05/proj/tunnel/lid]
+> import { readFileSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const opt = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> const DIR = typeof opt.dir === 'string' ? opt.dir : 'qa/pilot05/proj/tunnel/lid';
+> const mesh2d = JSON.parse(readFileSync(`${DIR}/mesh2d.json`, 'utf8') …[+4501 chars]
+
