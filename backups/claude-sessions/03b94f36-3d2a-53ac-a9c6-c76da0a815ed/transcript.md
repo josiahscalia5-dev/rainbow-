@@ -1454,3 +1454,26 @@ One unexpected result: `ccr-b0757dec-dj6l1o` moved from `a8c03f0` to `65f3a89` d
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md'; s=open(p).read()\nold=\"| **B** | **`ccr-b0757dec-dj6l1o`** (`a8c03f06cf3cc2f3aeeff8c03af3f7d7f481c38d`, 2026-11-17 03:36 UTC) |\"\nnew=(\"| **B** | **`ccr-b0757dec-dj6l1o`** (`a8c03f06cf3cc2f3aeeff8c03af3f7d7f481c38d` at 03:36 UTC; **still being extended**: session \"\n     \"`01VCMXob` on the old account autosaved `65f3a89` at 11:48 UTC — full-game `?match05=1` video \"\n     \"`builds/rainbow-full-game-match05-2026-11-17.mp4|.md` + `tools/video/record_full.mjs`, `capture_dist.mjs`. Always re-check …[+1542 chars]`
 
+### 🧑 User — 2026-11-17T11:51:17.833Z
+
+> ↩︎ result: ok
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "a0fc20f81cee44ae24df667c4a6911d9f9d9aa2d",
+>    2821346..a0fc20f  a0fc20f81cee44ae24df667c4a6911d9f9d9aa2d -> ccr-61131b9d-uj0oqb
+
+### 🤖 Claude — 2026-11-17T11:51:23.251Z
+
+> 🔧 **Bash** `{"command": "H=$(git rev-parse HEAD); echo \"local HEAD          $H\"; echo \"remote ccr-9c4a8ad6 $(git ls-remote origin refs/heads/ccr-9c4a8ad6-xovgsx | cut -f1)\"; echo \"remote ccr-61131b9d $(git ls-remote origin refs/heads/ccr-61131b9d-uj0oqb | cut -f1)\"; echo \"uncommitted $(git status --porcelain | wc -l), untracked $(git ls-files --others --exclude-standard | wc -l)\"; echo \"refs $(sha256sum -c scripts/reference.sha256 2>/dev/null | grep -c ': OK')/13; agents $(ls .claude/agents/*.md | wc -l); LFS stubs $(git lfs ls-files | awk '$2==\"-\"' | wc -l); LFS missing on GitHub $(timeout 200 …[+626 chars]`
+
+### 🧑 User — 2026-11-17T11:51:32.932Z
+
+> ↩︎ result: local HEAD          a0fc20f81cee44ae24df667c4a6911d9f9d9aa2d
+> remote ccr-9c4a8ad6 a0fc20f81cee44ae24df667c4a6911d9f9d9aa2d
+> remote ccr-61131b9d a0fc20f81cee44ae24df667c4a6911d9f9d9aa2d
+> uncommitted 0, untracked 0
+> refs 13/13; agents 10; LFS stubs 0; LFS missing on GitHub 0
+> key pieces: tree 0, commits 0
+> json ok
+> AUTOSAVE OK | branch ccr-9c4a8ad6-xovgsx | scheduler daemon | last verified backup 2026-11-17T11:51:07+00:00 (0.4 min ago) | local a0fc20f remote a0fc20f (match) | uncommitted 0
+
