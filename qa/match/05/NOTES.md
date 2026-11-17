@@ -121,3 +121,22 @@ test decides. Pictures: `r3_teal/03_NEW_tgtfill05_3.png`, `r3_teal/riding_BEFORE
 (forward 3 / 6 u, steering L / R 0.5 / 0.8 s), `r3_teal/side_by_side_steer_L_050_M1_left_NEW_right.png` (crop only).
 Proofs: default 05 == `current_default_05.png` 0 px; `match05=1` == `02_BEFORE_match05.png` 0 px;
 `match05=1&tgtvis05=1` == `03_NEW_match05_tgtvis05.png` 0 px; tsc clean.
+
+## 2.3 Right wall chunk — `?tgtwall05=1` (needs `tgtfill05=3`)
+Cause (`tools/match05/pixel_probe.mjs`): at x 748–863 y 771–904 the front surface is the near **water ribbon** (d 12–17),
+not the wall (d 21–25); the approved picture shows the purple wall with dark slots there, the bake had no data for
+ribbon texels outside the approved water footprint → stretched pink water ("lighter, no slots": signed +15/+18/+16).
+Hiding the ribbon is no option (another water layer lies under it). Fix: `tools/proj05/bake.py` opt-in env
+`BAKE05_EXTRA_REGIONS=purple_walls` (unset = byte-identical, verified) — E also carries the approved pixels where the
+near ribbon covers wall in the locked view (7,920 texels; 6,663 in the right chunk, the rest small left pieces). E height
+and its LUT change with it → `assets/textures/match05/tgtwall05/proj05_E.png` + `proj05_lut.json` (F unchanged).
+
+| locked view | BEFORE (tgtfill05=3) | NEW (+tgtwall05) |
+|---|---|---|
+| whole mean / ≤20 / SSIM | 8.16 / 89.08 % / 0.875 | **7.93 / 89.44 % / 0.879** |
+| purple walls mean / ≤20 | 6.42 / 92.2 % | **5.27 / 94.2 %** |
+| water | 3.55 / 96.5 % | 3.55 / 96.5 % |
+| bubbles mean / ≤20 | 3.09 / 97.4 % | 5.02 / 93.4 % (the big transparent 3D bubble now shows the dark wall through it, the approved bubble is brighter) |
+Variant walls + bubbles (paint the approved bubble on the ribbon too): bubbles 5.35 / 92.4 %, rejected.
+Riding / steering (`r3_wall/riding_NEW/`, crops `r3_wall/crop_riding_top_BEFORE_bottom_NEW.png`): the wall slots stay
+readable where the smear was, no sliding artefacts seen. Open: the bubble looks dimmer than approved.
