@@ -398,6 +398,7 @@ uniform vec4 uPjFlow;      // distance (s units), rate (1/s), phase at t = 0, on
 uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
 uniform vec2 uPjRes;       // render target size (vignette inverse)
 uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
+uniform vec4 uPjNear;      // ?projnear05=1: on, unused, near-layer texels (w, h) — the tile sampler holds the sharp tile T2
 vec4 pjLut(float s) {
   float x = clamp((s - uPjLutS.x) / (uPjLutS.y - uPjLutS.x), 0.0, 1.0) * (uPjLutS.z - 1.0);
   float i = floor(x);
@@ -408,7 +409,7 @@ vec4 pjLut(float s) {
   return r;
 }
 // display-space target at (u, s): exact layer where it is sharp enough, else near / tile layout + detail
-vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
+vec3 pjTarget(float u, float s, float mE, float mN, out float wE, out float wN) {
   vec4 L = pjLut(s);
   vec2 eUV = vec2(0.5 + (u - L.y) / (2.0 * L.z), L.x);
   vec4 e = texture2D(uPjE, eUV);
@@ -417,6 +418,9 @@ vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {
   vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));
   vec4 n = texture2D(uPjN, nUV);
   wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no seam
+  // ?projnear05=1: where the near layer (24 texels / unit) would be magnified, the sharp near tile takes over —
+  // the same rule the exact layer already follows, so the locked view (nothing magnified) keeps the approved picture
+  if (uPjNear.x > 0.5) wN *= smoothstep(0.3, 0.55, mN);
   vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
   vec3 lay = mix(t, n.rgb, wN);
   return mix(lay, e.rgb, wE);
@@ -433,6 +437,8 @@ vec2 pjFlowDir(float u, float s) {
   float ny = (s - uPjNS.x) / (uPjNS.y - uPjNS.x);
   vec3 fn = texture2D(uPjWN, vec2(u * 0.5 + 0.5, ny)).rgb;
   vec3 ft = texture2D(uPjWT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
+  // the sharp near tile repeats MIRRORED along s: in every other period its streaks slant the other way
+  if (uPjNear.x > 0.5 && mod(floor((s - uPjTS.x) / uPjTS.y), 2.0) > 0.5) ft.r = 1.0 - ft.r;
   float wn = fn.b * smoothstep(0.0, 0.08, ny) * (1.0 - smoothstep(0.92, 1.0, ny));
   vec2 f = mix(ft.rg, fn.rg, wn);
   return vec2((f.r - 0.5) / uPjFlow2.y, f.g);
@@ -1379,6 +1385,10 @@ void main() {
       // smallest singular value of the texel-per-pixel Jacobian (robust to the shear of the per-row u range)
       vec2 ja = dFdx(tp), jb = dFdy(tp);
       float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);
+      // ?projnear05=1: the same measure for the near layer (its texels per screen pixel)
+      vec2 tpN = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x)) * uPjNear.zw;
+      vec2 na = dFdx(tpN), nb = dFdy(tpN);
+      float mN = abs(na.x * nb.y - na.y * nb.x) / max(max(length(na), length(nb)), 1e-5);
       // two-phase flow toward the camera: layer A peaks with zero offset at phase 0.5 (the frozen QA clock)
       float ph = fract(uTime * uPjFlow.y + uPjFlow.z);
       float D = uPjFlow.x * uPjFlow.w;
@@ -1396,18 +1406,22 @@ void main() {
       }
       float wA = 1.0 - abs(2.0 * ph - 1.0);
       float wEA, wEB, wNA, wNB;
-      vec3 tA = pjTarget(uA, sA, mE, wEA, wNA);
-      vec3 tB = pjTarget(uB, sB, mE, wEB, wNB);
+      vec3 tA = pjTarget(uA, sA, mE, mN, wEA, wNA);
+      vec3 tB = pjTarget(uB, sB, mE, mN, wEB, wNB);
       vec3 tgt = mix(tB, tA, wA);
       float wEx = mix(wEB, wEA, wA);
       float wNx = mix(wNB, wNA, wA);
       float det = mix(pjDetail(uB, sB), pjDetail(uA, sA), wA);
-      tgt = clamp(tgt + det * uPjDS.z * (1.0 - wEx), 0.0, 1.0);
+      float detW = 1.0 - wEx;
+      if (uPjNear.x > 0.5) detW *= wNx;            // the sharp tile carries its own streaks: no repeating detail on it
+      tgt = clamp(tgt + det * uPjDS.z * detW, 0.0, 1.0);
       if (uPjFlow2.x > 0.5 && uPjFlow2.w < 0.999) {
         // keep a share of the approved picture exactly where it is painted (the layout never dissolves)
         float wE0, wN0;
-        vec3 t0 = pjTarget(u, s, mE, wE0, wN0);
-        t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * (1.0 - wE0), 0.0, 1.0);
+        vec3 t0 = pjTarget(u, s, mE, mN, wE0, wN0);
+        float detW0 = 1.0 - wE0;
+        if (uPjNear.x > 0.5) detW0 *= wN0;
+        t0 = clamp(t0 + pjDetail(u, s) * uPjDS.z * detW0, 0.0, 1.0);
         tgt = mix(t0, tgt, uPjFlow2.w);
       }
       if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));
@@ -1643,6 +1657,11 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
   const FLOW2 = qs.get('projflow05') === '2';
   u.uPjFlow = { value: new THREE.Vector4(qn('projflowd05', 1.6), rate, 0.5 - ((12 * rate) % 1), qs.get('projflow05') === '0' ? 0 : 1) };
   u.uPjWN = { value: empty }; u.uPjWT = { value: empty };
+  // `&projnear05=1` (2026-11-17, tools/proj05/near_bake.py): the sharp near tile proj05_T2 (≈ 220 texels per unit, the
+  // approved crisp band just ahead of Benny, mirrored along s) replaces the soft tile in the same sampler, and takes over
+  // wherever the near layer would be magnified — the riding view no longer melts into a pastel blur.
+  const NEAR = qs.get('projnear05') === '1';
+  u.uPjNear = { value: new THREE.Vector4(0, 0, 512, 960) };
   u.uPjFlow2 = { value: new THREE.Vector4(0, 2, 4.8, THREE.MathUtils.clamp(qn('projflowmix05', 0.5), 0, 1)) };
   u.uPjPost = { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) };
   u.uPjRes = { value: new THREE.Vector2(864, 1536) };
@@ -1681,11 +1700,26 @@ function attachProj05(u: Record<string, THREE.IUniform>) {
     (u.uPjTS.value as THREE.Vector2).set(lut.T.a, lut.T.L);
     const ds = u.uPjDS.value as THREE.Vector4;
     ds.x = lut.D.u1 - lut.D.u0; ds.y = lut.D.s1 - lut.D.s0;
+    (u.uPjNear.value as THREE.Vector4).set(0, 0, N.image.width, N.image.height);
+  }).then(() => {
+    if (!NEAR) return undefined;
+    return Promise.all([
+      load(new URL('../../assets/textures/water05/proj05_T2.png', import.meta.url).href, true, false),
+      fetch(new URL('../../assets/textures/water05/proj05_near.json', import.meta.url).href).then((r) => r.json()),
+    ]).then(([T2, meta]) => {
+      T2.wrapT = THREE.MirroredRepeatWrapping;      // mirrored along s: seamless, the ribbons meander through the joins
+      T2.needsUpdate = true;
+      u.uPjT.value = T2;
+      (u.uPjTS.value as THREE.Vector2).set(meta.s0, meta.period);
+      (u.uPjNear.value as THREE.Vector4).x = 1;
+    });
   }).then(() => {
     if (!FLOW2) return undefined;
     return Promise.all([
       load(new URL('../../assets/textures/water05/proj05_WN.png', import.meta.url).href, false, false),
-      tile(new URL('../../assets/textures/water05/proj05_WT.png', import.meta.url).href),
+      NEAR
+        ? load(new URL('../../assets/textures/water05/proj05_WT2.png', import.meta.url).href, false, false).then((t) => { t.wrapT = THREE.MirroredRepeatWrapping; return t; })
+        : tile(new URL('../../assets/textures/water05/proj05_WT.png', import.meta.url).href),
       fetch(new URL('../../assets/textures/water05/proj05_flow.json', import.meta.url).href).then((r) => r.json()),
     ]).then(([WN, WT, meta]) => {
       u.uPjWN.value = WN; u.uPjWT.value = WT;

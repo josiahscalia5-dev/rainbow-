@@ -8,17 +8,18 @@ What: proj05_T2.png — a periodic tile (mirrored repeat along s, period P) buil
 200 texels per world unit both ways, from the crisp band of the approved river just in front of Benny (s S0..S0+P: the
 cyan core with its glossy streaks and the start of the pink ribbons). Columns the locked view only sees further away
 (the river's sides, where the pink ribbons run) take their rows from the nearest stretch of river where they ARE
-visible (a smooth per-column shift along s: the ribbons keep their real colours and streaks); what the approved picture
-never shows near the camera is folded from the nearest visible column. Bubbles and foam blobs (they would repeat) are
-inpainted. The game uses it only where the near layer would be magnified (the approached river), so the locked view
-stays the approved picture.
+visible (a smooth per-column shift along s: the ribbons keep their real colours and streaks); the right bank, which the
+locked eye never sees close by, is the mirror of the left bank (as the old tile layer did); anything else is folded from
+the nearest visible column. Bubbles (they would repeat with the tile) are found as circles in E and filled ALONG s from
+the water above and below them (the streaks run along s). The foam banks along the edges stay. The game uses the tile
+only where the near layer would be magnified (the approached river), so the locked view stays the approved picture.
 Also writes proj05_WT2.png (flow direction of the tile for `&projflow05=2`, same encoding as flow_bake.py) and
 proj05_near.json.
-usage: python3 -I tools/proj05/near_bake.py <assets/textures/water05> [s0=131.4] [period=5.0] [--debug=DIR]"""
+usage: python3 -I tools/proj05/near_bake.py <assets/textures/water05> [s0=132.2] [period=4.2] [--out=DIR] [--debug=DIR]"""
 import json, os, sys
 import numpy as np, cv2
 from PIL import Image
-from scipy.ndimage import map_coordinates, gaussian_filter1d, binary_opening, binary_dilation
+from scipy.ndimage import map_coordinates, gaussian_filter1d, binary_dilation, binary_opening
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import flow_bake  # noqa: E402
@@ -26,8 +27,9 @@ import flow_bake  # noqa: E402
 pos = [a for a in sys.argv[1:] if not a.startswith("--")]
 dbg = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--debug=")), None)
 A = pos[0]
-S0 = float(pos[1]) if len(pos) > 1 else 131.4
-P = float(pos[2]) if len(pos) > 2 else 5.0
+OUT = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--out=")), A)   # where the tile is written
+S0 = float(pos[1]) if len(pos) > 1 else 132.2          # beyond the ripple arcs; both pink ribbons run straight here
+P = float(pos[2]) if len(pos) > 2 else 4.2              # to the right ribbon's turning point: the mirrored tile meanders smoothly
 TW, TH = 2048, 1024                       # u -1..1 (9.6 world units) x s S0..S0+P
 MARGIN = 0.02                             # stay this far inside the visible u-range (its edges are soft)
 SHIFT_MAX = 7.0                           # a column may borrow rows up to this far along the river
@@ -44,46 +46,81 @@ hi = lambda s: np.interp(s, sl, C + Wd) - MARGIN
 u = -1 + (np.arange(TW) + 0.5) / TW * 2
 s = S0 + (np.arange(TH) + 0.5) / TH * P
 
-# per column: how far along the river until this u is inside the visible range (smooth, capped)
+# bubbles: circles in E's own (≈ screen) space, where they are still round
+g8 = cv2.GaussianBlur(cv2.cvtColor(E[..., :3].astype(np.uint8), cv2.COLOR_RGB2GRAY), (0, 0), 1.5)
+circ = cv2.HoughCircles(g8, cv2.HOUGH_GRADIENT_ALT, dp=1.5, minDist=8, param1=200, param2=0.80, minRadius=5, maxRadius=70)
+bubE = np.zeros((NE, WE), np.uint8)
+for (cx, cy, r) in ([] if circ is None else circ[0]):
+    cv2.circle(bubE, (int(round(cx)), int(round(cy))), int(round(r * 1.35 + 3)), 1, -1)
+Ef = np.concatenate([E, bubE[..., None].astype(np.float32) * 255], -1)
+
+# per column: the first s (from S0, up to SHIFT_MAX along) at which this u is inside the visible range
 sg = np.linspace(S0, S0 + SHIFT_MAX, 701)
 vis = (u[None, :] >= lo(sg)[:, None]) & (u[None, :] <= hi(sg)[:, None])
-first = np.where(vis.any(0), vis.argmax(0), len(sg) - 1)
-shift = sg[first] - S0
-shift = gaussian_filter1d(shift, 24, mode="nearest")            # smooth shear across u (no steps between columns)
-
+avail = vis.any(0)
+first = np.where(avail, sg[vis.argmax(0)], S0 + SHIFT_MAX) - S0
 U, S = np.meshgrid(u, s)
-Ssrc = S + shift[None, :]
-# still outside the visible range (sides the locked eye never saw close by): fold back from the visible edge
-a, b = lo(Ssrc), hi(Ssrc)
-t = (U - a) / np.maximum(b - a, 1e-3)
-t = 1.0 - np.abs(1.0 - np.mod(t, 2.0))                         # triangle fold into [0, 1]
-Usrc = a + t * (b - a)
-folded = (U < a) | (U > b)
 
-x = (0.5 + (Usrc - np.interp(Ssrc, sl, C)) / (2 * np.interp(Ssrc, sl, Wd))) * WE - 0.5
-y = np.interp(Ssrc, sl, V) * NE - 0.5
-img = np.stack([map_coordinates(E[..., k], [y, x], order=1, mode="nearest") for k in range(4)], -1)
+
+def sample(usrc_col, shift_col):
+    """approved pixels of E for tile texels: column source u, shifted along s; folded back where still not visible"""
+    shift_col = gaussian_filter1d(shift_col, 24, mode="nearest")           # smooth shear across u (no steps)
+    Ssrc = S + shift_col[None, :]
+    Uc = np.broadcast_to(usrc_col[None, :], S.shape)
+    a, b = lo(Ssrc), hi(Ssrc)
+    t = (Uc - a) / np.maximum(b - a, 1e-3)
+    t = 1.0 - np.abs(1.0 - np.mod(t, 2.0))                                 # triangle fold into [0, 1]
+    Usrc = a + t * (b - a)
+    x = (0.5 + (Usrc - np.interp(Ssrc, sl, C)) / (2 * np.interp(Ssrc, sl, Wd))) * WE - 0.5
+    y = np.interp(Ssrc, sl, V) * NE - 0.5
+    out = np.stack([map_coordinates(Ef[..., k], [y, x], order=1, mode="nearest") for k in range(5)], -1)
+    return out, (Uc < a) | (Uc > b)
+
+
+direct, fold_d = sample(u, first)
+# the right bank (and any other column the locked eye only sees far away): mirror of the opposite bank
+mi = np.arange(TW)[::-1]                                                   # column of -u
+mirror, fold_m = sample(-u, first[mi])
+w_d = gaussian_filter1d(avail.astype(np.float32), 20, mode="nearest")      # 1 where u itself is seen near by
+w_m = (1.0 - w_d) * gaussian_filter1d(avail[mi].astype(np.float32), 20, mode="nearest")
+w_f = np.clip(1.0 - w_d - w_m, 0, 1)                                       # neither: folded direct
+wsum = w_d + w_m + w_f
+img = (direct * (w_d + w_f)[None, :, None] + mirror * w_m[None, :, None]) / wsum[None, :, None]
+folded = (fold_d & (w_d + w_f > 0.5)[None, :]) | (fold_m & (w_m > 0.5)[None, :])
 rgb = img[..., :3]
 
-# bubbles / foam blobs (bright, unsaturated, larger than a glint) would repeat with the tile: inpaint them
-mn, mx = rgb.min(-1), rgb.max(-1)
-whitish = (mn > 150) & (mx - mn < 80)
-blob = binary_opening(whitish, iterations=6)
-blob = binary_dilation(blob, iterations=5) | (img[..., 3] < 100)
-rgb8 = np.clip(rgb + 0.5, 0, 255).astype(np.uint8)
-rgb8 = cv2.inpaint(rgb8, blob.astype(np.uint8), 7, cv2.INPAINT_TELEA)
-
-Image.fromarray(rgb8).save(os.path.join(A, "proj05_T2.png"), optimize=True)
+# fill bubbles (and the rare texel E itself marks invalid) ALONG s: linear between the water above and below
+hole = (img[..., 4] > 64) | (img[..., 3] < 100)
+# foam islands INSIDE the river (they would repeat too; the foam banks along the edges stay): bright unsaturated blobs
+mn_, mx_ = rgb.min(-1), rgb.max(-1)
+isle = binary_opening((mn_ > 150) & (mx_ - mn_ < 80), iterations=4) & (np.abs(U) < 0.55)
+hole |= binary_dilation(isle, iterations=8)
+rgb_f = rgb.copy()
+rows = np.arange(TH)
+for xcol in np.nonzero(hole.any(0))[0]:
+    h = hole[:, xcol]
+    ok = ~h
+    if ok.sum() < 2:
+        continue
+    for k in range(3):
+        rgb_f[h, xcol, k] = np.interp(rows[h], rows[ok], rgb[ok, xcol, k])
+soft = np.stack([gaussian_filter1d(rgb_f[..., k], 2.0, axis=1, mode="nearest") for k in range(3)], -1)
+rgb_f = np.where(binary_dilation(hole, iterations=2)[..., None], soft, rgb_f)
+rgb8 = np.clip(rgb_f + 0.5, 0, 255).astype(np.uint8)
+blob = hole
+os.makedirs(OUT, exist_ok=True)
+Image.fromarray(rgb8).save(os.path.join(OUT, "proj05_T2.png"), optimize=True)
 
 # flow direction of the tile (same encoding as proj05_WT.png); the tile repeats mirrored, so its own flow map does too
 m, mask, cov, _ = flow_bake.flow_of(rgb8.astype(np.float32), np.ones((TH, TW), np.float32), P, wrap=False)
-flow_bake.save(A, "proj05_WT2.png", m, mask, cov, 128)
+flow_bake.save(OUT, "proj05_WT2.png", m, mask, cov, 128)
 meta = dict(s0=S0, period=P, width=TW, height=TH, wrap="mirrored along s, clamp across u",
             texels_per_world_unit=dict(across=round(TW / (2 * flow_bake.HW), 1), along=round(TH / P, 1)),
-            share_shifted=round(float((shift[None, :] > 0.05).mean()), 3), share_folded=round(float(folded.mean()), 3),
-            share_inpainted=round(float(blob.mean()), 3),
-            note="approved pixels of proj05_E only: per-column shift along s to the nearest visible stretch, then fold")
-with open(os.path.join(A, "proj05_near.json"), "w") as f:
+            share_columns_shifted=round(float((first > 0.05).mean()), 3), share_columns_mirrored=round(float((w_m > 0.5).mean()), 3),
+            share_folded=round(float(folded.mean()), 3), share_bubbles_filled=round(float(blob.mean()), 3),
+            bubbles_found_in_E=0 if circ is None else int(len(circ[0])),
+            note="approved pixels of proj05_E only: per-column shift along s to the nearest visible stretch; right bank = mirrored left bank; fold; bubbles filled along s")
+with open(os.path.join(OUT, "proj05_near.json"), "w") as f:
     json.dump(meta, f, indent=1)
 print(json.dumps(meta))
 if dbg:

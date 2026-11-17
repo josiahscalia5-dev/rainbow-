@@ -1,15 +1,17 @@
 {
- "s0": 131.4,
- "period": 5.0,
+ "s0": 132.2,
+ "period": 4.2,
  "width": 2048,
  "height": 1024,
  "wrap": "mirrored along s, clamp across u",
  "texels_per_world_unit": {
   "across": 213.3,
-  "along": 204.8
+  "along": 243.8
  },
- "share_shifted": 0.63,
- "share_folded": 0.21,
- "share_inpainted": 0.208,
- "note": "approved pixels of proj05_E only: per-column shift along s to the nearest visible stretch, then fold"
+ "share_columns_shifted": 0.561,
+ "share_columns_mirrored": 0.202,
+ "share_folded": 0.038,
+ "share_bubbles_filled": 0.156,
+ "bubbles_found_in_E": 15,
+ "note": "approved pixels of proj05_E only: per-column shift along s to the nearest visible stretch; right bank = mirrored left bank; fold; bubbles filled along s"
 }

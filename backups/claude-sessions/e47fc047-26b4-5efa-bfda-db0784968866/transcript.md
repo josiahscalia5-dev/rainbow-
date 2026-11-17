@@ -4120,3 +4120,254 @@ Refactor confirmed (all three outputs byte-identical). Now the near tile:
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T10:09:19.961Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/proj/target/ ; grep -rln \"bubble\" --include=*.json qa/pilot05 2>/dev/null | head -8; ls qa/pilot05 | head -40", "description": "Look for existing approved bubble annotations"}`
+
+### 🧑 User — 2026-11-17T10:09:20.027Z
+
+> ↩︎ result: art_registered.png
+> coin_mask.png
+> correction.npz
+> fill_mask.png
+> report.json
+> target_05.png
+> water_mask.png
+> qa/pilot05/wave3/foam/it01/05_now_waterqa.json
+> qa/pilot05/wave3/foam/it02/05_now_waterqa.json
+> qa/pilot05/wave4/foam/it01_iso_noCrown/probe.json
+> 05_before_81e639e.png
+> 05_partial_f2a86ab.png
+> 05_ref_before_partial.png
+> COORDINATION.md
+> COORDINATION_WAVE3.md
+> COORDINATION_WAVE4.md
+> COORDINATION_WAVE5.md
+> COORDINATION_WAVE6.md
+> COORDINATION_WAVE7.md
+> COORDINATION_WAVE8.md
+> COORDINATION_WAVE9.md
+> COORDINATION_WAVE9B.md
+> REQUESTS.md
+> benny
+> camera
+> current_default_05.png
+> environment
+> foam
+> full_reference_match
+> marble_feas
+> proj
+> water
+> wave10
+> wave11
+> wave12
+> wave3
+> wave3_baseline
+> wave4
+> wave5
+> wave6
+> wave7
+> wave8
+> wave9
+> wave9b
+
+### 🤖 Claude — 2026-11-17T10:09:43.740Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2\nfrom PIL import Image\nE=np.asarray(Image.open('assets/textures/water05/proj05_E.png').convert('RGBA'))\nrgb=E[...,:3].copy()\ng=cv2.cvtColor(rgb,cv2.COLOR_RGB2GRAY)\ng=cv2.GaussianBlur(g,(0,0),1.5)\nres={}\nfor p2 in (0.80,0.86):\n    c=cv2.HoughCircles(g,cv2.HOUGH_GRADIENT_ALT,dp=1.5,minDist=8,param1=200,param2=p2,minRadius=5,maxRadius=70)\n    res[p2]=[] if c is None else c[0]\n    print('param2',p2,'circles',len(res[p2]))\nov=rgb.copy()\nfor (x,y, …[+431 chars]`
+
+### 🧑 User — 2026-11-17T10:09:44.546Z
+
+> ↩︎ result: param2 0.8 circles 15
+> param2 0.86 circles 7
+
+### 🤖 Claude — 2026-11-17T10:09:45.039Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/near/E_bubbles.png"}`
+
+### 🧑 User — 2026-11-17T10:09:45.074Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:10:30.456Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/near_bake.py'; s=open(p).read()\n# 1) header text\ns=s.replace(\"\"\"visible (a smooth per-column shift along s: the ribbons keep their real colours and streaks); what the approved picture\nnever shows near the camera is folded from the nearest visible column. Bubbles and foam blobs (they would repeat) are\ninpainted. The game uses it only where the near layer would be magnified (the approached river), so the locked view\nstays the approved picture.\"\"\",\"\"\"visible (a smooth per-column shift along s: the ribbons keep their real colours and …[+5784 chars]`
+
+### 🧑 User — 2026-11-17T10:10:38.205Z
+
+> ↩︎ result: {"s0": 132.4, "period": 5.0, "width": 2048, "height": 1024, "wrap": "mirrored along s, clamp across u", "texels_per_world_unit": {"across": 213.3, "along": 204.8}, "share_columns_shifted": 0.549, "share_columns_mirrored": 0.202, "share_folded": 0.041, "share_bubbles_filled": 0.087, "bubbles_found_in_E": 15, "note": "approved pixels of proj05_E only: per-column shift along s to the nearest visible stretch; right bank = mirrored left bank; fold; bubbles filled along s"}
+
+### 🤖 Claude — 2026-11-17T10:10:40.439Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/near/T2_three_periods.png"}`
+
+### 🧑 User — 2026-11-17T10:10:40.485Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:11:09.395Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/near_bake.py'; s=open(p).read()\ns=s.replace('''dbg = next((a.split(\"=\", 1)[1] for a in sys.argv[1:] if a.startswith(\"--debug=\")), None)\nA = pos[0]''','''dbg = next((a.split(\"=\", 1)[1] for a in sys.argv[1:] if a.startswith(\"--debug=\")), None)\nA = pos[0]\nOUT = next((a.split(\"=\", 1)[1] for a in sys.argv[1:] if a.startswith(\"--out=\")), A)   # where the tile is written''')\ns=s.replace('Image.fromarray(rgb8).save(os.path.join(A, \"proj05_T2.png\"), optimize=True)','os.makedirs(OUT, exist_ok=True)\\nImage.fromarray(rgb8).save(os.path …[+1668 chars]`
+
+### 🧑 User — 2026-11-17T10:11:16.429Z
+
+> ↩︎ result: s  132.2  left ribbon u -0.752 slope +0.006   right ribbon u +0.502 slope -0.018   |both| 0.024
+> s  132.6  left ribbon u -0.756 slope -0.004   right ribbon u +0.492 slope -0.031   |both| 0.035
+> s  133.0  left ribbon u -0.745 slope +0.039   right ribbon u +0.481 slope -0.036   |both| 0.076
+> s  133.4  left ribbon u -0.734 slope +0.011   right ribbon u +0.469 slope -0.029   |both| 0.040
+> s  133.8  left ribbon u -0.728 slope +0.018   right ribbon u +0.454 slope -0.038   |both| 0.057
+> s  134.2  left ribbon u -0.720 slope +0.013   right ribbon u +0.438 slope -0.046   |both| 0.059
+> s  134.6  left ribbon u -0.718 slope +0.010   right ribbon u +0.417 slope -0.058   |both| 0.069
+> s  135.0  left ribbon u -0.704 slope +0.022   right ribbon u +0.419 slope -0.047   |both| 0.069
+> s  135.4  left ribbon u -0.700 slope +0.013   right ribbon u +0.375 slope -0.126   |both| 0.138
+> s  135.8  left ribbon u -0.690 slope +0.034   right ribbon u +0.334 slope -0.056   |both| 0.090
+> s  136.2  left ribbon u -0.676 slope +0.028   right ribbon u +0.314 slope -0.044   |both| 0.071
+> s  136.6  left ribbon u -0.665 slope +0.017   right ribbon u +0.324 slope +0.089   |both| 0.106
+> s  137.0  left ribbon u -0.657 slope +0.033   ri …[+1007 chars]
+
+### 🤖 Claude — 2026-11-17T10:11:46.976Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/proj05/near_bake.py'; s=open(p).read()\nold='''hole = (img[..., 4] > 64) | (img[..., 3] < 100)'''\nnew='''hole = (img[..., 4] > 64) | (img[..., 3] < 100)\n# foam islands INSIDE the river (they would repeat too; the foam banks along the edges stay): bright unsaturated blobs\nmn_, mx_ = rgb.min(-1), rgb.max(-1)\nisle = binary_opening((mn_ > 150) & (mx_ - mn_ < 80), iterations=4) & (np.abs(U) < 0.55)\nhole |= binary_dilation(isle, iterations=8)'''\nassert old in s; s=s.replace(old,new)\ns=s.replace(\"from scipy.ndimage import map_coordinates, gaussian_f …[+1115 chars]`
+
+### 🧑 User — 2026-11-17T10:11:55.146Z
+
+> ↩︎ result: {"s0": 132.2, "period": 4.2, "width": 2048, "height": 1024, "wrap": "mirrored along s, clamp across u", "texels_per_world_unit": {"across": 213.3, "along": 243.8}, "share_columns_shifted": 0.561, "share_columns_mirrored": 0.202, "share_folded": 0.038, "share_bubbles_filled": 0.156, "bubbles_found_in_E": 15, "note": "approved pixels of proj05_E only: per-column shift along s to the nearest visible stretch; right bank = mirrored left bank; fold; bubbles filled along s"}
+
+### 🤖 Claude — 2026-11-17T10:11:57.324Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/near/T2_three_periods.png"}`
+
+### 🧑 User — 2026-11-17T10:11:57.354Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T10:12:22.400Z
+
+> 🔧 **Bash** `{"command": "sed -n 1660,1700p src/vfx/waterRibbon.ts", "description": "Read how the proj05 texture promise is consumed"}`
+
+### 🧑 User — 2026-11-17T10:12:22.448Z
+
+> ↩︎ result: t.wrapT = repeat ? THREE.RepeatWrapping : THREE.ClampToEdgeWrapping;
+>         if (mip) t.anisotropy = 4;
+>         t.needsUpdate = true;
+>         res(t);
+>       }, undefined, rej));
+>   const tile = (url: string) => load(url, false, false).then((t) => { t.wrapT = THREE.RepeatWrapping; return t; });
+>   const ready = Promise.all([
+>     load(urls.E, false, false), load(urls.N, false, false), tile(urls.T), load(urls.D, true, true),
+>     fetch(urls.lut).then((r) => r.json()),
+>   ]).then(([E, N, T, D, lut]) => {
+>     u.uPjE.value = E; u.uPjN.value = N; u.uPjT.value = T; u.uPjD.value = D;
+>     const n = lut.E.n as number;
+>     const data = new Float32Array(n * 4);
+>     for (let i = 0; i < n; i++) { data[i * 4] = lut.E.V[i]; data[i * 4 + 1] = lut.E.c[i]; data[i * 4 + 2] = lut.E.w[i]; data[i * 4 + 3] = 1; }
+>     const L = new THREE.DataTexture(data, n, 1, THREE.RGBAFormat, THREE.FloatType);
+>     L.minFilter = L.magFilter = THREE.NearestFilter;
+>     L.needsUpdate = true;
+>     u.uPjLut.value = L;
+>     (u.uPjLutS.value as THREE.Vector4).set(lut.E.s0, lut.E.s1, n, 0);
+>     (u.uPjESize.value as THREE.Vector2).set(lut.E.width, lut.E.height);
+>     (u.uPjNS.value as THREE.Vector2).set(lut.N.s0, lut.N.s1);
+>     (u.uPjTS.v …[+1094 chars]
+
+### 🤖 Claude — 2026-11-17T10:12:24.257Z
+
+> 🔧 **Bash** `{"command": "sed -n 1700,1715p src/vfx/waterRibbon.ts; grep -n \"proj05Pending.push\\|ready)\" src/vfx/waterRibbon.ts | head", "description": "Confirm the ready promise is awaited by the game"}`
+
+### 🧑 User — 2026-11-17T10:12:24.304Z
+
+> ↩︎ result: (u.uPjRes.value as THREE.Vector2).copy(size);
+>     (u.uPjPost.value as THREE.Vector4).x = renderer.toneMappingExposure;
+>   };
+>   return { ready, onBeforeRender };
+> }
+> 1595:  proj05Pending.push(new Promise<void>((res) => {
+> 1603:  proj05Pending.push(fetch(new URL('../../assets/textures/water05/proj05_lut.json', import.meta.url).href).then((r) => r.json()).then((l) => { u.uPjFZ.value = l.F.zmax; }).catch(() => {}));
+
+### 🤖 Claude — 2026-11-17T10:12:26.735Z
+
+> 🔧 **Bash** `{"command": "grep -n \"attachProj05(\\|proj\\.ready\\|proj?.ready\\|\\.ready\" src/vfx/waterRibbon.ts | head; grep -rn \"proj05Pending\" src/vfx/index.ts | head -3", "description": "Trace where the water ready promise is awaited"}`
+
+### 🧑 User — 2026-11-17T10:12:26.782Z
+
+> ↩︎ result: 1563:  const proj = PROJ05 ? attachProj05(uniforms as Record<string, THREE.IUniform>) : undefined;
+> 1585:    ready: proj?.ready,
+> 1617:function attachProj05(u: Record<string, THREE.IUniform>) {
+> 17:import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
+> 169:    ...(ribbon.ready || proj05Pending.length ? { ready: Promise.all([ribbon.ready, ...proj05Pending]).then(() => undefined) } : {}),
+
+### 🤖 Claude — 2026-11-17T10:12:31.301Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)\nvec4 pjLut(float s) {", "new_string": "uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)\nuniform vec4 uPjNear;      // ?projnear05=1: on, unused, near-layer texels (w, h) — the tile sampler holds the sharp tile T2\nvec4 pjLut(float s) {"}`
+
+### 🧑 User — 2026-11-17T10:12:32.349Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T10:12:37.103Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "vec3 pjTarget(float u, float s, float mE, out float wE, out float wN) {\n  vec4 L = pjLut(s);\n  vec2 eUV = vec2(0.5 + (u - L.y) / (2.0 * L.z), L.x);\n  vec4 e = texture2D(uPjE, eUV);\n  float inE = L.w * step(0.0, eUV.x) * step(eUV.x, 1.0);\n  wE = e.a * inE * smoothstep(0.3, 0.55, mE);\n  vec2 nUV = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x));\n  vec4 n = texture2D(uPjN, nUV);\n  wN = n.a * smoothstep(0.0, 0.08, nUV.y) * (1.0 - smoothstep(0.92, 1.0, nUV.y));   // soft ends (≈3 u), no …[+833 chars]`
+
+### 🧑 User — 2026-11-17T10:12:37.185Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T10:12:40.101Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "  vec3 fn = texture2D(uPjWN, vec2(u * 0.5 + 0.5, ny)).rgb;\n  vec3 ft = texture2D(uPjWT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;", "new_string": "  vec3 fn = texture2D(uPjWN, vec2(u * 0.5 + 0.5, ny)).rgb;\n  vec3 ft = texture2D(uPjWT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;\n  // the sharp near tile repeats MIRRORED along s: in every other period its streaks slant the other way\n  if (uPjNear.x > 0.5 && mod(floor((s - uPjTS.x) / uPjTS.y), 2.0) > 0.5) ft.r = 1.0 - ft.r;"}`
+
+### 🧑 User — 2026-11-17T10:12:40.172Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T10:12:40.803Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 1378, "limit": 50}`
+
+### 🧑 User — 2026-11-17T10:12:40.816Z
+
+> ↩︎ result: 1378	  #ifdef PROJ05
+> 1379	  {
+> 1380	    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+> 1381	    if (pjK > 0.001) {
+> 1382	      // exact-layer magnification: texels per screen pixel along the least dense direction
+> 1383	      vec4 Lm = pjLut(s);
+> 1384	      vec2 tp = vec2(0.5 + (u - Lm.y) / (2.0 * Lm.z), Lm.x) * uPjESize;
+> 1385	      // smallest singular value of the texel-per-pixel Jacobian (robust to the shear of the per-row u range)
+> 1386	      vec2 ja = dFdx(tp), jb = dFdy(tp);
+> 1387	      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);
+> 1388	      // two-phase flow toward the camera: layer A peaks with zero offset at phase 0.5 (the frozen QA clock)
+> 1389	      float ph = fract(uTime * uPjFlow.y + uPjFlow.z);
+> 1390	      float D = uPjFlow.x * uPjFlow.w;
+> 1391	      float sA = s + D * (ph - 0.5);
+> 1392	      float sB = s + D * (fract(ph + 0.5) - 0.5);
+> 1393	      float uA = u, uB = u;
+> 1394	      if (uPjFlow2.x > 0.5) {
+> 1395	        // ?projflow05=2: slide along the approved streaks (the S-curves), not straight down the river — the pink
+> 1396	        // ribbons stay where they are painted, only what l …[+1762 chars]
+
+### 🤖 Claude — 2026-11-17T10:12:58.051Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/vfx/waterRibbon.ts'; s=open(p).read()\nold='''      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);\n      // two-phase flow toward the camera'''\nnew='''      float mE = abs(ja.x * jb.y - ja.y * jb.x) / max(max(length(ja), length(jb)), 1e-5);\n      // ?projnear05=1: the same measure for the near layer (its texels per screen pixel)\n      vec2 tpN = vec2(u * 0.5 + 0.5, (s - uPjNS.x) / (uPjNS.y - uPjNS.x)) * uPjNear.zw;\n      vec2 na = dFdx(tpN), nb = dFdy(tpN);\n      float mN = abs(na.x * nb.y - na.y * nb.x) / max …[+4205 chars]`
+
+### 🧑 User — 2026-11-17T10:13:02.141Z
+
+> ↩︎ result: ok
+> TSC_DONE
+
+### 🤖 Claude — 2026-11-17T10:13:10.063Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && ls $S/w0/still 2>/dev/null | head -3; ls $S/w4/still 2>/dev/null | wc -l; ls $S/def/05.png $S/b2/05.png 2>&1", "description": "Check earlier reference captures still exist"}`
+
+### 🧑 User — 2026-11-17T10:13:10.368Z
+
+> ↩︎ result: 0000.png
+> 0001.png
+> 0002.png
+> 12
+> /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/b2/05.png
+> /tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad/def/05.png
+
+### 🤖 Claude — 2026-11-17T10:13:15.979Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e47fc047-26b4-5efa-bfda-db0784968866/scratchpad && B='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1' && rm -rf $S/v0 $S/v4 && node scripts/proj05-move.mjs --q=\"$B\" --out=$S/v0 --still=1.82 --fps=6.6 2>&1 | grep -ci \"error\"; node scripts/proj05-move.mjs --q=\"$B&projflow05=2\" --out=$S/v4 --still=1.82 --fps=6.6 2>&1 | grep -ci \"error\"; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\ndef cmp(a,b):\n    A=np.asarray(Image.open(a).convert('RGB')).astype(int); B=np.asarray(Image.open(b).convert('RGB')).astype(int)\ …[+435 chars]`
+
