@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13447,
-   "sha256": "84ab069e6f6b93002c3444e4cdd9f12ace54e261ab22690961bbd7b81b6f6ccf"
+   "sha256": "17372ade6d3e50bf762c513e0979f6ec79cfeba8a224d8033d65f609273511d1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1818,18 +1818,18 @@
   },
   {
    "path": "qa/match/08/scenery/NOTES.md",
-   "bytes": 6077,
-   "sha256": "6a9b8acca32ff83b1d3763c10ed02e568e13301ffbcc18a91e1990dcbe5335ff"
+   "bytes": 7243,
+   "sha256": "a9ce8b86c34eaf2b81a1a6a3f95645336a728d183d5e550df46fe1372defbb1d"
   },
   {
    "path": "qa/match/08/scenery/SHARED_CHANGES.md",
-   "bytes": 1460,
-   "sha256": "83335b910ab6db42945006909f42eacc1ceb7565e7e7a17299eb420026c8db6c"
+   "bytes": 1754,
+   "sha256": "e7febfcbb7fb95d27f9312075b299036a1e0a6d3b0fd2ce02183d45ef68b0506"
   },
   {
    "path": "qa/match/08/scenery/STATUS.md",
-   "bytes": 3394,
-   "sha256": "ad5037f06f058fdcf3ae88f5e75578f3d99aa11e987794b9e85dca78b26dfd69"
+   "bytes": 4203,
+   "sha256": "b65e5e6f1db5a9676fa238813ebf605dd012c954db06cd21dd001b9921c197de"
   },
   {
    "path": "qa/match/08/scenery/dbg_ids/f00_checkpoint.png",
@@ -2985,6 +2985,31 @@
    "path": "qa/match/08/scenery/r7/proof/def_new/08.png",
    "bytes": 1702437,
    "sha256": "9b92158c1856388f997bbc92eed6adce1bf9ab3e6594f7d79745db0a857e980b"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_new/09.png",
+   "bytes": 1787606,
+   "sha256": "167d5b8ebfc645d74aa27947540f513f7a1036eb8fce97c8b87f5e6f7046d9c4"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_new/10.png",
+   "bytes": 1706461,
+   "sha256": "01ba7790ee6401d2de76b6eafd66fc6b2db340d696dc6b3f2121277dbc4a4d6f"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_new/11.png",
+   "bytes": 1800317,
+   "sha256": "ae1d3309a368aafc558df205c6eac8c3e2c796d515f4bd289effe5f0843ac868"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/01.png",
+   "bytes": 1476465,
+   "sha256": "836512d0517a5028ac34b24f5ce629ec7c3998b7ebe18f1797654e2e203349b4"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/02.png",
+   "bytes": 1775052,
+   "sha256": "a8b0e41ab44d8fc4640e1954f1196ccd2dc2b988026d4e172e7b4a1a7ba428a0"
   },
   {
    "path": "qa/match/08/scenery/r7/proof/gameplay.json",

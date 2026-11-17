@@ -57,3 +57,15 @@ angles) — intended for a world-anchored wall fill.
 4. **04–07 under `match08`**: cause 1 (fixed, `course.ts`, guarded): total-length-dependent sample spacing. Remaining (other
    owners): Benny differs on every screen under match08 (benny05 port + match08 Benny path); 07 coins; a few 04 bubbles.
 5. Proofs: see STATUS.md. APK blocked by a Maven 404 (STATUS.md).
+
+## Round 7 results (account 7, branch claude/rainbow-s08-scenery-c7) — details + numbers in STATUS.md
+* Kept: `m08seam` (×1.6: fill slots now the size of the painted chamber-wall slots), `m08sill` (whole arch pushed along
+  projector rays: no torn gold/blue slabs at the frame bottom at forward 3 u), `m08towel` (towel frustum along projector
+  rays: no door-window slab on the towel when steering hard). `m08swim` and `m08seam` = 0 px at the approved view.
+* Method reminder: anything that must stay identical at the approved view can be moved/reshaped ALONG PROJECTOR RAYS
+  (VP + k·(p − VP)); surfaces that the projector sees edge-on carry no foreign pixels. Debug with `&m08dbg=1`
+  (colour order = order of `add()` calls in match08.ts: pipe red, arch green, backwall blue, chamber yellow, doorwall
+  cyan, floor magenta, …).
+* Do NOT revert a source file in the working tree to capture "old" frames (the 5-min autosave can commit it — that is
+  how round-5 code was lost). Use a scratch copy (src/assets/scripts + symlinked node_modules) instead.
+* Honest moving rating ≈ 7/10 (hard steering ≈ 6/10). Next: near-camera water while steering hard.

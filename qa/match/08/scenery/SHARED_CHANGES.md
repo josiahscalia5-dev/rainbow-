@@ -14,3 +14,7 @@
 * `src/world/course.ts`: the round-5 08-only spacing guard (`buildRoute(no08)`) RESTORED (lost by autosave 48af969b).
 * `src/world/match08.ts`: m08fill RESTORED; new switches `m08arch` (+`m08archk`), `m08swim` (+`m08swimw`), `m08seam` (+`m08seamk`, untested).
 * `tools/lead_r6/motion_audit.mjs` copied from the lead branch (unchanged).
+
+# Round 7 (branch claude/rainbow-s08-scenery-c7)
+* `src/world/match08.ts` only: new switches `m08sill` (uniform arch push) and `m08towel` (towel frustum along the
+  projector rays); `m08seam` now judged and kept (default ×1.6). No shared file touched (no course / Benny / camera / 06 edits).
