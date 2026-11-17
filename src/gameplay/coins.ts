@@ -59,13 +59,29 @@ export function coinLayout(course: Course): CoinDef[] {
   // `?match08=1` (qa/match/08/NOTES.md): the approved picture's nine coins where the picture shows them
   // (assets/textures/match08/coins08.json, from the locked 08 camera), instead of the 08 + 09 rows above
   if (m08) {
-    const s0 = st('08').s0, s1 = st('10').s0;
-    for (const c of coins08.coins) {
+    const s0 = st('08').s0, s1 = st('11').s0;
+    const cam = coins08.faceTo as [number, number, number];
+    const toRiver = (x: number, z: number) => {
       let best = s0, bd = Infinity;
-      for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - c.x) ** 2 + (p.z - c.z) ** 2; if (d < bd) { bd = d; best = s; } }
+      for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < bd) { bd = d; best = s; } }
       const f = course.sample(best);
-      const lat = (c.x - f.pos.x) * f.right.x + (c.z - f.pos.z) * f.right.z;
-      add(course.stageAtS(best).id, best, lat, c.h, { scale: c.scale, faceTo: coins08.faceTo as [number, number, number] });
+      return { s: best, lat: (x - f.pos.x) * f.right.x + (z - f.pos.z) * f.right.z, y: f.pos.y };
+    };
+    for (const c of coins08.coins) {
+      let r = toRiver(c.x, c.z), h = c.h, scale = c.scale;
+      // keep every picture coin collectible: if it lies beyond pickup reach (|lateral| > 1.1), slide it along its own view
+      // ray from the approved camera (same pixel in the approved view) to the nearest depth within reach, above the water;
+      // its size scales with the depth so it still covers the painted coin
+      if (Math.abs(r.lat) > 1.1) {
+        const P = [c.x, r.y + c.h, c.z], D = [P[0] - cam[0], P[1] - cam[1], P[2] - cam[2]];
+        let pick: { k: number; r: typeof r; h: number } | null = null;
+        for (let k = 0.2; k <= 1.8; k += 0.01) {
+          const q = [cam[0] + D[0] * k, cam[1] + D[1] * k, cam[2] + D[2] * k], rq = toRiver(q[0], q[2]), hq = q[1] - rq.y;
+          if (Math.abs(rq.lat) <= 1.0 && hq >= 0.3 && (!pick || Math.abs(k - 1) < Math.abs(pick.k - 1))) pick = { k, r: rq, h: hq };
+        }
+        if (pick) { r = pick.r; h = pick.h; scale = c.scale * pick.k; }
+      }
+      add(course.stageAtS(r.s).id, r.s, r.lat, h, { scale, faceTo: cam });
     }
     // keep the run's coin total (the picture's 9 replace the 17 of 08 + 09): the other 8 go into the inlet just before the
     // 08 view — collected on the way in, never in the approved view

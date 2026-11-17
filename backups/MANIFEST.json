@@ -398,8 +398,8 @@
   },
   {
    "path": "assets/textures/match08/coins08.json",
-   "bytes": 2081,
-   "sha256": "0f23d340766b73de553ec06b626022171d86fb2704483384853fcad063d18461"
+   "bytes": 2202,
+   "sha256": "f25b8b1bf3c323922c25dd48615f906e2d5d71971cf8cfac3a6b630cf51f54d9"
   },
   {
    "path": "assets/textures/match08/patch_gold.png",
@@ -564,7 +564,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 9703,
-   "sha256": "f0ac9339784d20cba593600080f64e7411430ef9456a6b94452dd2e8cba7ca8b"
+   "sha256": "501320d5fbf897095ac09699a6070ac3c00f297a17356031a57618e4f88f6521"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1313,8 +1313,8 @@
   },
   {
    "path": "qa/match/08/gameplay_test_match08.json",
-   "bytes": 14656,
-   "sha256": "cb18f47327d515cb7134108224cfe7cd43341c0ddedc6703503456c2fcdd5671"
+   "bytes": 14651,
+   "sha256": "8c25927d1f78ef990a7c51f1423667e2886e05f39a90e3c62d834406b9ac31af"
   },
   {
    "path": "qa/match/08/motion/f00_checkpoint.png",
@@ -7813,8 +7813,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 11352,
-   "sha256": "62cb2d9af3443c3620a4e7cf5b5d35f6bddc5fe4fd4c5ef1aa7c48524188af55"
+   "bytes": 12410,
+   "sha256": "91ab94d34de57ddc2fb7762996e7315d3bab854be6ab4ef0ea146b98c45cb457"
   },
   {
    "path": "src/gameplay/input.ts",

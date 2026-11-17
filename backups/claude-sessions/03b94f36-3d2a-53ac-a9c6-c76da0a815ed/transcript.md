@@ -6082,3 +6082,93 @@ Compiles. Capturing and comparing Benny close up against your picture:
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T14:00:05.093Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && cp qa/capture_log.json $M/capture_log.bak; timeout 600 node scripts/capture.mjs 08 --out=$M/default7 2>&1 | tail -1 | cut -c1-20; cp $M/capture_log.bak qa/capture_log.json; python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nfrom scipy.ndimage import gaussian_filter\na=np.asarray(Image.open('qa/match/audit/08_BEFORE_default.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$M/default7/08.png').convert('RGB')).astype(int)\nprint('default identical: …[+1832 chars]`
+
+### 🧑 User — 2026-11-17T14:01:29.492Z
+
+> ↩︎ result: 08 → /tmp/claude-0
+> default identical: 0 px differ
+> previous (a85ccf9)   scenery 96.8% SSIM 0.947 | Benny+splash area 61.0% SSIM 0.547 | whole 82.0% SSIM 0.796
+> now                  scenery 97.4% SSIM 0.959 | Benny+splash area 64.2% SSIM 0.619 | whole 83.0% SSIM 0.815
+> gameplay match08: 8 / 8 | coins 1330 -> 2230 | errors []
+> 8
+
+### 🤖 Claude — 2026-11-17T14:01:56.445Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, math, numpy as np\ncam=json.load(open('assets/textures/match08/cam08_locked.json')); MW=np.array(cam['mw'],float).reshape(4,4).T; C=MW[:3,3]; R=MW[:3,:3]\nW,H=864,1536; t=math.tan(math.radians(cam['fov'])/2); asp=W/H; f=(H/2)/t\ndef ray(u,v):\n    x,y=u/W*2-1,1-v/H*2; d=[REDACTED-EMAIL]([x*t*asp,y*t,-1.0]); return d/np.linalg.norm(d)\nrv=json.load(open('assets/textures/match08/river08.json')); rz=np.array(rv['z']); rx=np.array(rv['x']); o=np.argsort(rz); rz,rx=rz[o],rx[o]\nriverX=lambda z: float(np.interp(z, rz, rx))\nWATER=-113.11\nd=json.load(o …[+1352 chars]`
+
+### 🧑 User — 2026-11-17T14:02:05.522Z
+
+> ↩︎ result: coin [335, 862] lat -0.82 ok
+> coin [400, 786] lat 0.65 ok
+> coin [467, 737] lat 1.36 -> -0.00 at z -313.0 h -2.06
+> coin [497, 686] lat 0.13 ok
+> coin [428, 662] lat -1.78 -> -0.01 at z -319.0 h -0.28
+> coin [383, 633] lat -2.79 -> -1.04 at z -323.0 h 0.48
+> coin [420, 616] lat -1.51 -> -0.01 at z -320.5 h 1.23
+> coin [454, 608] lat -0.19 ok
+> coin [479, 601] lat 0.93 ok
+> gameplay match08: 8 / 8 | coins 1330 -> 2230 | errors []
+
+### 🤖 Claude — 2026-11-17T14:02:20.773Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && git show HEAD:assets/textures/match08/coins08.json > $M/coins08_prev.json 2>/dev/null; python3 -I -c \"\nimport json;d=json.load(open('$M/coins08_prev.json'));print(len(d['coins']),'coins, faceTo' in d, [round(c['h'],2) for c in d['coins']])\"; cp $M/coins08_prev.json assets/textures/match08/coins08.json; python3 -I -c \"\nimport json;cam=json.load(open('assets/textures/match08/cam08_locked.json'))['cam'];d=json.load(open('assets/textures/match08/coins08.json'));d['fa …[+998 chars]`
+
+### 🧑 User — 2026-11-17T14:02:32.081Z
+
+> ↩︎ result: 9 False [0.4, 0.44, 0.46, 0.52, 0.53, 1.17, 1.58, 1.76, 1.93]
+> [[69,396.13,-0.59],[70,399.98,0.25],[71,404.48,0.98],[72,412.13,0.34],[73,418.48,-1.51],[74,418.48,-2.6],[75,418.48,-1.48],[76,418.48,-0.38],[77,418.48,0.52],[78,385.43,0],[79,386.23,0.34],[80,387.03,0.18],[81,387.83,-0.24],[82,388.63,-0.31],[83,389.43,0.08],[84,390.23,0.35],[85,391.03,0.11],[86,419.98,-0.15],[87,421.98,-0.15],[88,423.98,-0.15]]
+
+### 🤖 Claude — 2026-11-17T14:02:43.809Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && python3 -I - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\nold=\"    const s0 = st('08').s0, s1 = st('10').s0;\\n\"\nassert s.count(old)==1; s=s.replace(old,\"    const s0 = st('08').s0, s1 = st('11').s0;\\n\"); open(p,'w').write(s); print('range fixed')\nEOF\ntimeout 200 npx tsc --noEmit && echo tsc clean; timeout 400 node $M/coinlat.mjs 2>&1 | tail -1; timeout 900 node scripts/gameplay-test.mjs --q=match08=1 >/dev/null 2>&1; python3 -I -c \"\nimport json;d=j …[+417 chars]`
+
+### 🧑 User — 2026-11-17T14:03:07.351Z
+
+> ↩︎ result: range fixed
+> tsc clean
+> [[69,396.13,-0.59],[70,399.98,0.25],[71,404.48,0.98],[72,412.13,0.34],[73,418.63,-1.51],[74,421.13,-2.57],[75,422.48,-1.37],[76,423.78,-0.15],[78,385.43,0],[79,386.23,0.34],[80,387.03,0.18],[81,387.83,-0.24],[82,388.63,-0.31],[83,389.43,0.08],[84,390.23,0.35],[85,391.03,0.11],[86,419.98,-0.15],[87,421.98,-0.15],[88,423.98,-0.15]]
+> gameplay match08: 8 / 8 | coins 1330 -> 2230 | errors []
+
+### 🤖 Claude — 2026-11-17T14:03:25.251Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport json, math, numpy as np\ncam=json.load(open('assets/textures/match08/cam08_locked.json')); MW=np.array(cam['mw'],float).reshape(4,4).T; C=MW[:3,3]; R=MW[:3,:3]\nW,H=864,1536; t=math.tan(math.radians(cam['fov'])/2); asp=W/H; f=(H/2)/t\ndef ray(u,v):\n    x,y=u/W*2-1,1-v/H*2; d=[REDACTED-EMAIL]([x*t*asp,y*t,-1.0]); return d/np.linalg.norm(d)\nd=json.load(open('assets/textures/match08/coins08.json'))\nfor c in d['coins']:\n    if c['px'][:2]= …[+1237 chars]`
+
+### 🧑 User — 2026-11-17T14:03:44.835Z
+
+> ↩︎ result: moved: x 8.45 z -323.0 h 0.48 scale 1.37
+> [[69,396.13,-0.59],[70,399.98,0.25],[71,404.48,0.98],[72,412.13,0.34],[73,418.63,-1.51],[75,422.48,-1.37],[76,423.78,-0.15],[78,385.43,0],[79,386.23,0.34],[80,387.03,0.18],[81,387.83,-0.24],[82,388.63
+> gameplay match08: 8 / 8 | coins 1330 -> 2220 | errors []
+> default run coins: 2240
+
+### 🤖 Claude — 2026-11-17T14:04:08.048Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\nold=\"\"\"    for (const c of coins08.coins) {\n      let best = s0, bd = Infinity;\n      for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - c.x) ** 2 + (p.z - c.z) ** 2; if (d < bd) { bd = d; best = s; } }\n      const f = course.sample(best);\n      const lat = (c.x - f.pos.x) * f.right.x + (c.z - f.pos.z) * f.right.z;\n      add(course.stageAtS(best).id, best, lat, c.h, { scale: c.scale, faceTo: coins08.faceTo as [number, number, number] });\n    }\"\"\"\nnew=\"\"\"    const …[+2383 chars]`
+
+### 🧑 User — 2026-11-17T14:04:31.881Z
+
+> ↩︎ result: reach fix in coins.ts
+> tsc clean
+> [[69,396.13,-0.59],[70,399.98,0.25],[71,404.48,0.98],[72,412.13,0.34],[73,411.13,-0.99],[76,423.78,-0.15],[78,385.43,0],[79,386.23,0.34],[80
+> gameplay match08: 8 / 8 | coins 1330 -> 2220 | errors []
+
+### 🤖 Claude — 2026-11-17T14:04:38.014Z
+
+Still 89. Listing every coin past the checkpoint with no upper limit, to see exactly where the missing ones ended up:
+
+### 🤖 Claude — 2026-11-17T14:04:42.324Z
+
+> 🔧 **Bash** `{"command": "M=/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/m08; cd /home/user/rainbow- && sed -i 's/filter((c) => c\\[1\\] > 380 \\&\\& c\\[1\\] < 425)/filter((c) => c[1] > 380)/' $M/coinlat.mjs && sed -i \"s#console.log(JSON.stringify(await page.evaluate(() => window.__rainbow.coinDefs()#console.log('len', await page.evaluate(() => window.__rainbow.coinDefs().length), 'end', await page.evaluate(() => window.__rainbow.state().s)); console.log(JSON.stringify(await page.evaluate(() => window.__rainbow.coinDefs()#\" $M/coinlat.mjs && timeout 400 node $M/coinl …[+190 chars]`
+
+### 🧑 User — 2026-11-17T14:04:53.199Z
+
+> ↩︎ result: len 91 end 0
+> [[69,396.13,-0.59],[70,399.98,0.25],[71,404.48,0.98],[72,412.13,0.34],[73,411.13,-0.99],[74,432.33,-2.78],[75,425.48,-0.97],[76,423.78,-0.15],[77,425.13,0.85],[78,385.43,0],[79,386.23,0.34],[80,387.03,0.18],[81,387.83,-0.24],[82,388.63,-0.31],[83,389.43,0.08],[84,390.23,0.35],[85,391.03,0.11],[86,419.98,-0.15],[87,421.98,-0.15],[88,423.98,-0.15],[89,425.98,-0.15],[90,427.98,-0.15]]
+> 64:    const s1 = api.step(1, dt);
+> 66:    const ds = s1.s - st.s;
+> 67:    if (ds <= 0 && s1.mode === 'ride') nonMonotonic++;
+> 68:    const jump = Math.hypot(s1.cam[0] - camPrev.v[0], s1.cam[1] - camPrev.v[1], s1.cam[2] - camPrev.v[2]);
+> 70:    camPrev.v = s1.cam;
+

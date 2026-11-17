@@ -1,5 +1,5 @@
 {
- "note": "Screen 08 approved picture coins placed from the locked ?match08=1 camera: near coins stand on the water (bottom edge on y -113.11), the 4 far ones (beyond the platform front in 3D) are pinned at the river end z -311..-315.5 with height from the picture (tools/match08, 2026-11-17)",
+ "note": "Screen 08 approved picture coins placed from the locked ?match08=1 camera: near coins stand on the water (bottom edge on y -113.11), the 4 far ones (beyond the platform front in 3D) are pinned at the river end z -311..-315.5 with height from the picture (tools/match08, 2026-11-17) The (383,633) coin is pinned at z -323 on its own view ray so it lies within pickup reach of the river (lateral < 1.25).",
  "coins": [
   {
    "px": [
@@ -67,11 +67,11 @@
     633,
     18
    ],
-   "x": 9.547415929461323,
-   "z": -311.0,
-   "h": 1.1693978953916826,
-   "scale": 1.0254655649898718,
-   "dist": 36.408774392952004
+   "x": 8.453156033983579,
+   "z": -323.0,
+   "h": 0.48174057149428506,
+   "scale": 1.3654041756540984,
+   "dist": 48.47816863267923
   },
   {
    "px": [
