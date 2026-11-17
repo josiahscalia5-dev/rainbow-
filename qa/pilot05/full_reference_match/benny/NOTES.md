@@ -1,7 +1,38 @@
 # Benny (benny05) — Screen 05 full reference match · benny-character-artist
 
-STATUS: IN PROGRESS (checkpoint written 2026-11-17 on coordinator request). Switch: `benny05` (`?benny05=1` or `?match05=1`).
-All source files touched are syntactically valid (`npx tsc --noEmit -p .` → rc 0 after every edit).
+STATUS: DONE for this run (RESUMED RUN #3, session 01Q46SCH, 2026-11-17 ~02:00 UTC) — fur colour, knitted beanie, pom-pom,
+gold star and the character-texture bake are finished, measured in REAL captures and checked in motion / on 03, 04, 06.
+Switch: `benny05` (`?benny05=1` or `?match05=1`). `npx tsc --noEmit -p .` rc 0 after every edit. Final summary: section 0.
+
+## 0. FINAL RESULT (all numbers from REAL `scripts/capture.mjs 05` captures, `tools/match05/metrics.py`, same masks)
+BEFORE = `before.png` (STACK; re-captured 02:00 UTC: still 0 px different) · NEW = `new.png` (STACK + `benny05=1`,
+= `cap/new_f5/05.png`; metrics `NEW_REGION_METRICS.json`, `NEW_FULL_FRAME_METRICS.json`).
+| | mean abs ΔRGB | ≤10 | ≤20 | SSIM (lum) |
+|---|---:|---:|---:|---:|
+| Benny + hat region (93,061 px) BEFORE → NEW | **49.71 → 19.24** | 6.6 % → 58.7 % | **23.5 % → 73.0 %** | 0.087 → 0.655 |
+| whole frame (1,327,104 px) BEFORE → NEW | **34.10 → 31.79** | 42.6 % → 46.6 % | **51.57 % → 55.17 %** | 0.509 → 0.550 |
+| low tier (`quality=low`, Android default) region | 50.63 → 22.22 | | 22.6 % → 67.5 % | 0.085 → 0.589 |
+Per part (approved part masks, `work/parts.py`), mean / ≤20, approved median | NEW median:
+| part | px | BEFORE | NEW | approved median | NEW median | BEFORE median |
+|---|---:|---|---|---|---|---|
+| body fur (+ arms) | 44,566 | 40.9 / 25 % | **20.9 / 71 %** | 242,79,181 | 240,79,180 | 255,72,178 |
+| crown (stripes) | 18,362 | 65.2 / 24 % | **17.2 / 76 %** | 223,168,241 | 215,167,235 | 132,93,238 |
+| pom-pom | 12,764 | 56.8 / 15 % | **20.7 / 68 %** | 124,20,233 | 116,24,229 | 129,15,255 |
+| ribbed cuff | 14,689 | 47.3 / 26 % | **14.4 / 81 %** | 112,16,235 | 113,18,229 | 92,0,236 |
+| gold star | 2,683 | 69.8 / 10 % | **24.5 / 73 %** | 252,217,32 | 250,215,46 | 255,191,63 |
+Approved fine detail now present (interior high-pass luminance correlation approved vs game): BEFORE ≈ 0.00 for every part →
+NEW crown 0.80, pom 0.70, cuff 0.66, body 0.58, star 0.20 (amplitude 75–89 % of the approved's).
+Bounding boxes NEW (approved | NEW): all 234–608 × 775–1188 | 230–613 × 776–1198 · pom 355–499 × 778–899 c(428.1,843.0) |
+358–504 × 776–906 c(428.7,840.8) · cuff 277–573 × 936–1031 | 278–569 × 944–1031 · star 481–553 × 916–984 c(518.7,952.1) |
+481–553 × 916–983 c(517.3,952.5) · body bottom 1188 | 1198. Part IoU (UV pass): pom 0.888, crown 0.861, cuff 0.867,
+star 0.803, body 0.863, all 0.923 (BEFORE geometry: all 0.893).
+Proofs: default build `capture.mjs 05` == `qa/pilot05/current_default_05.png` **0 px** (checked twice, last after the final
+code); STACK == `before.png` 0 px; gameplay `gameplay.json` **8/8 pass** with STACK + benny05 (pause, travel, no camera cut,
+no teleport, plunge, 91 real coin pickups, victory), no errors; motion `steer/` (d 0/8/17, steer ±1 at 0.25/0.5/0.8;
+`move_00` == `new.png` 0 px); identity: `cap/off_0406|on_0406` (04, 06), `cap/off_03|on_03` (03, face to camera),
+`views/turntable_{off,on}.png` + `views/cmp_{off,on}.png` (360° + 03-ride / front / side / dizzy, real runtime + benny.glb,
+lab page). Outside Benny, 04 changes ≤ 3 levels and 06 ≤ 10 levels (bloom spill of the changed Benny only).
+`qa/capture_log.json` was snapshotted before and restored after every capture (no git used).
 
 ## 1. Measured (BEFORE = STACK capture `benny/before.png` = `stack_2340/05_match05.png`, byte-identical)
 Region `benny_and_hat` (93,061 px, approved mask): mean |ΔRGB| **49.71**, ≤20 levels **23.5 %**, SSIM 0.087, signed (−0.7, −14.6, +8.5).
@@ -107,26 +138,60 @@ vertical stockinette columns + deep ribbed cuff.
   bake's seen texels only, λ 0.8): step 1 (`work/f1`, capture `cap/new_f1`) 22.80 → 21.28 / 69.7 %; step 2 (`work/f2`,
   capture `cap/new_f2`) → **20.37 / 71.2 % / SSIM 0.631**, whole frame **31.87 / 55.04 %**. INSTALLED = f2 albedo + r9 normals.
   Pre-refine maps: `work/f1/in/`. Stopped at 2 steps (diminishing, avoid over-fitting the locked frame).
-* Next: star map (planar UVs on a benny05 copy of the star geometry, bake from approved incl. orange rim), then fur / pom
-  look check, steering frames, 04/06, default identity, gameplay.
+* Star map (`work/s1`: probe with the star's planar UVs; non-star UV pass identical to r9c): star 37.0 → 24.5, region
+  20.37 → 19.95 / 72.1 % (`cap/new_s1`). Refine step 3 incl. star (`work/f3`, `cap/new_f3`): → 19.35 / 73.0 %.
+* Anisotropy 16 (`cap/new_an16`): 2,573 px changed, numbers identical → reverted to 4.
+* Crown fills for never-seen rows (`bake.py --topfill`, composited onto the refined map only where the bake saw nothing,
+  seen texels + 2 px kept): purple knit cap under the pom (`work/f4`, `cap/new_f4`: 792 px changed, 19.35 → 19.24), then
+  white knit continued down to the cuff, star-hole inpaint by knit period (9 texels), padded un-shift (no clamping streaks)
+  (`work/f5`, `cap/new_f5` = FINAL `new.png`: 19.24 / 73.0 %, unchanged at the locked frame; fixes the far side in 360 views).
+* Fur gravity test g1 (0.08): rejected (see 4b). Low tier, 03 / 04 / 06 identity, gameplay 8/8, steering frames, default
+  0 px: see section 0.
 
-## 4. Remaining, step by step
-1. (Geometry is done for now at r6 values, see section 2.) Run the bake session from the CURRENT geometry:
-   `node qa/pilot05/full_reference_match/benny/work/bennyprobe.mjs --q='<STACK>&benny05=1' --out=qa/pilot05/full_reference_match/benny/work/b1 work/probe/uv.js work/probe/calA.shot.js work/probe/calB.shot.js work/probe/restore.shot.js`
-   (step paths with the full `qa/pilot05/full_reference_match/benny/` prefix), then
-   `python3 qa/pilot05/full_reference_match/benny/work/bake.py qa/pilot05/full_reference_match/benny/work/b1 qa/pilot05/full_reference_match/benny/work/b1/tex --normals`.
-   Inspect the textures (`*_seen.png`, the tiling seams, white/purple stripe fidelity) and `bake_report.json`.
-2. Copy the maps to NEW files `assets/textures/benny05/{body,crown,crown_n,brim,brim_n,pom,armL,armR}.png`; put each
-   `scale` from bake_report into `MAPS05`, and `star_albedo_linear` into `STAR05` (clamp to ≤1, or lower the star emissive
-   and re-calibrate). Optional: give the feet a map with the body's mean albedo (identity on front views).
-3. Re-run the bake session (the calibration now sees the final normal maps) and re-bake once, then copy again.
-4. Fur look: tune `FUR05` / `CLUMP05` (finer, denser, softer silhouette) with one or two probe shots. Check low tier too.
-5. Real captures: `node scripts/capture.mjs 05 --q='<STACK>&benny05=1' --out=qa/pilot05/full_reference_match/benny/cap/new`
-   → copy to `benny/new.png`; `python3 -I tools/match05/metrics.py benny/new.png benny/cap/new/`; `work/parts.py` per part;
-   default capture (`node scripts/capture.mjs 05 --out=<scratch>`) must equal `qa/pilot05/current_default_05.png`
-   (0 px), then `git checkout -q qa/capture_log.json`. Keep only changes that lower the region error / raise whole frame.
-6. 04 and 06 with benny05 on (identity check), steering frames (`scripts/proj05-move.mjs … --d=0,8,17 --steer=-1,1`),
-   gameplay test → `benny/gameplay.json`; finish this file (per-mismatch table, before → after).
+## 4. Per mismatch (approved | game BEFORE | cause | change | measured)
+| mismatch | approved | BEFORE | cause | change made (all behind benny05) | result |
+|---|---|---|---|---|---|
+| fur colour | cotton-candy pink 242,79,181, lighter on top | hot neon 255,72,178, R clipped, flat | material (GLB root/tip colours through the 05 light + post chain) | baked albedo `body/armL/armR.png` solved from the approved pixels (inverse post chain + per-pixel least-squares calibration), 3 back-projection steps | body 40.9 → 20.9, ≤20 25 → 71 % |
+| beanie stripes | white 251,228,245 / purple 118,19,232 knit, 23/34/25 px bands, stripes sag at his back and rise to the image-left | cream-pink / violet flat stripes, nearly straight rings | texture + geometry | baked `crown.png` (approved stripe course kept where seen, rectified ring fill elsewhere, purple cap + white knit continued over never-seen rows), knit normal map `crown_n.png` from relative luminance; roll 0.046 | crown 65.2 → 17.2, ≤20 24 → 76 % |
+| ribbed cuff | 112,16,235, deep vertical ribs, rolled (left side higher), ≈51 px | 92,0,236 smooth, 46–48 px, level | texture + geometry | baked `brim.png` + `brim_n.png`; `roll` 0.046, cuffH 0.226 → 0.25 (crownH 0.58 → 0.556 keeps crown top / pom) | cuff 47.3 → 14.4, ≤20 26 → 81 %; edge slope residual 2.65° → 0.36° |
+| pom-pom | lighter violet yarn 124,20,233 | darker / more saturated 129,15,255, spikier | texture | baked `pom.png` | pom 56.8 → 20.7, ≤20 15 → 68 % |
+| gold star | lemon 252,217,32, bevelled, orange rim | orange 255,191,63, flat | material (orange emissive + GLB colour) | star geometry copy with planar UVs + baked `star.png` (face, bevel highlights, rim); emissive kept (part of the solve); position / counter-roll | star 69.8 → 24.5, ≤20 10 → 73 % |
+| hat placement | see boxes above | pom 13 px left (swim roll), cuff low / thick | animation phase + geometry | ROLL05 0.3 swim-roll damping, HAT05 offsets (r1–r9c) | part IoU all 0.893 → 0.923 |
+
+## 4b. What still differs (and why)
+* Silhouette fringe: 1,992 px inside the approved body outline show water (sparse shell-fur tips; the approved edge is solid,
+  soft fur) at ≈102 error = 11 % of the remaining region error; the game body bottom is 10 px lower (1198 vs 1188) and the
+  lower sides 7–11 px narrower. Tested fur gravity 0.16 → 0.08: bottom 1198 → 1194 but holes 1,992 → 2,072, IoU 0.9229 →
+  0.9220 → REJECTED (kept 0.16). The rest is body shape / ride pose (not changed: identity + gameplay placement).
+* Image-right arm nub sits 12–15 px higher than the approved (swim-clip paddling phase at the frozen frame) — pose, not look; left as is.
+* Fine fur / pom fibres: the approved detail is now on the model (correlation 0.58–0.80) but at 75–89 % amplitude (texture
+  filtering + shell parallax); fibre-for-fibre identity with a painted image is not reachable with real 3D fur.
+* Crown's far-left flank (≈30 px strip): warm light there; neighbouring pixels need very different albedo → whites ≈15–35
+  blue levels short (cream). Anisotropy 16 tested: 2,573 px changed, numbers identical → kept 4.
+* Off-05 views (studio light, `views/`): the solved fur albedo is a dustier pink than the GLB's neon in NEUTRAL light (it matches
+  under the tunnels' pink light: 03 / 04 / 06 captures stay clearly pink); the beanie's front shows a wider lower white band
+  than its back (the measured stripe tilt continues as a level ring round the unseen arc). Stripes / knit / ribbing / star /
+  face / paw pads all consistent; no zig-zag, no seams in steering frames.
+* Star: rim / stitched outline only approximated (star IoU 0.803); its emissive keeps an orange cast in the albedo solve.
+
+## 4c. Files (this run)
+* `src/characters/benny/benny05.ts`: HAT05 `roll` + r8/r9 values, star counter-roll, star planar-UV geometry copy
+  (`starUVs`), optional `STAR05.map` ('star.png', flat solved colour when missing), STAR05 colour solved, calib handles the
+  star map; FUR05 unchanged (gravity test documented); anisotropy note.
+* NEW `assets/textures/benny05/{body,crown,crown_n,brim,brim_n,pom,armL,armR,star}.png` (1.6 MB, sRGB albedo + 2 normal maps).
+* Unchanged: `assets/models/benny.glb`, `runtime.ts`, `fur.ts` (their benny05 hooks are from the earlier run), every other file.
+* Tools (`benny/work/`): `bake.py` (least-squares calibration, colour-family clean-up, rings / mirror fills, `--topfill`, star
+  part), `refine.py` (back-projection from a real capture), `labviews.mjs` (360 / identity sheets), probe runs b2, b3, r8, r9,
+  r9b, r9c, s1, g1; refine inputs/outputs f1–f5. Rebuild the installed set: bake `work/r9c` (+ `--normals` from `work/r9`) →
+  refine ×3 (`f1`, `f2`, `f3`, see 3b) → star from `work/s1` → crown fills `work/f5/crown.png`.
+
+## 4d. Next (only if a later run continues)
+1. Fur silhouette: denser outer shells (strand radius / coverage uniform in the `#ifdef BENNY05` path) instead of gravity;
+   each fur change needs probe (uv + calD/E/A/C) → bake → refine ×2–3.
+2. Optional neutral-light fur lift for non-05 screens only if the user wants the GLB neon pink back there (would need a
+   per-screen tint, i.e. a coordinator decision).
 
 ## 5. REQUESTS
-* none yet.
+* Coordinator: `benny05` is ready for `?match05=1` integration (new maps load only with the switch; default untouched).
+* Coordinator: please treat the arm-nub pose (12–15 px) and Benny's body-bottom / splash overlap as wake / pose items, not
+  look items (wave 2 `splash05m` sits over the same pixels).

@@ -2698,3 +2698,170 @@ Default build 0 px different, and the STACK baseline still equals `before.png` (
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T01:58:04.775Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; B=qa/pilot05/full_reference_match/benny; python3 $W/parts.py $B/new.png | grep -v \"^part\" | awk '{print $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12}'; python3 $W/geom.py $W/s1/uv.f32 | sed -n '2,14p'; python3 -I tools/match05/metrics.py $B/before.png $SP/tmpb_ 2>/dev/null | grep -E \"benny\" ; python3 /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/hf.py $B/new.png | sed -n 2,6p; du -sh assets/textures/benny05; ls -la assets/textures/benny05", "description": "Collect final per-part …[+31 chars]`
+
+### 🧑 User — 2026-11-17T01:58:09.192Z
+
+> ↩︎ result: pom 12764 20.7 0.68 0.148 [124 20 233] [116 24 229] bbox
+> crown 18362 17.2 0.76 0.177 [223 168 241] [215 167 235] bbox
+> cuff 14689 14.4 0.81 0.118 [112 16 235] [113 18 229] bbox
+> star 2683 24.5 0.73 0.037 [252 217 32] [250 215 46] bbox
+> body 44566 20.9 0.71 0.520 [242 79 181] [240 79 180] bbox
+> ALL 93061 19.24 0.73        
+> all    | 234-608, 775-1188 (375x414) c(423.4,1003.3) 93061px | 230-613, 776-1198 (384x423) c(422.1,1005.8) 93159px
+> pom    | 355-499, 778-899 (145x122) c(428.1,843.0) 12764px | 358-504, 776-906 (147x131) c(428.7,840.8) 12708px
+> crown  | 277-574, 801-994 (298x194) c(415.5,928.5) 18362px | 293-554, 868-979 (262x112) c(412.0,930.4) 18747px
+> cuff   | 277-573, 936-1031 (297x96) c(420.5,995.0) 14689px | 278-569, 944-1031 (292x88) c(420.8,997.7) 14677px
+> star   | 481-553, 916-984 (73x69) c(518.7,952.1) 2683px   | 481-553, 916-983 (73x68) c(517.3,952.5) 2522px
+> body   | 234-608, 775-1188 (375x414) c(420.5,1085.8) 44566px | 230-613, 998-1198 (384x201) c(419.5,1090.4) 44505px
+> pom IoU 0.888
+> crown IoU 0.861
+> cuff IoU 0.867
+> star IoU 0.803
+> body IoU 0.863
+> all IoU 0.923
+> GAME centre -760-779 P780-896 C897-979 U980-1031 B1032-1183 -1184-1199
+> benny_and_hat                px   93061  mean  49. …[+934 chars]
+
+### 🤖 Claude — 2026-11-17T01:58:13.142Z
+
+That last command wrote two stray metrics files to `/` (an unset shell variable); removing them.
+
+### 🤖 Claude — 2026-11-17T01:58:14.097Z
+
+> 🔧 **Bash** `{"command": "ls -la /tmpb_* 2>/dev/null && rm -f /tmpb_REGION_METRICS.json /tmpb_FULL_FRAME_METRICS.json; ls /tmpb_* 2>/dev/null; echo cleaned", "description": "Remove stray metrics files written to root"}`
+
+### 🧑 User — 2026-11-17T01:58:19.217Z
+
+> ↩︎ result: -rw-r--r-- 1 root root  411 Nov 17 01:58 /tmpb_FULL_FRAME_METRICS.json
+> -rw-r--r-- 1 root root 2516 Nov 17 01:58 /tmpb_REGION_METRICS.json
+> cleaned
+
+### 🤖 Claude — 2026-11-17T01:58:20.592Z
+
+Now the final NOTES.md (status, per-mismatch table, before → after, files, what still differs, REQUESTS), replacing the obsolete "Remaining" plan.
+
+### 🤖 Claude — 2026-11-17T01:58:21.398Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md", "offset": 1, "limit": 8}`
+
+### 🧑 User — 2026-11-17T01:58:21.433Z
+
+> ↩︎ result: 1	# Benny (benny05) — Screen 05 full reference match · benny-character-artist
+> 2	
+> 3	STATUS: IN PROGRESS (checkpoint written 2026-11-17 on coordinator request). Switch: `benny05` (`?benny05=1` or `?match05=1`).
+> 4	All source files touched are syntactically valid (`npx tsc --noEmit -p .` → rc 0 after every edit).
+> 5	
+> 6	## 1. Measured (BEFORE = STACK capture `benny/before.png` = `stack_2340/05_match05.png`, byte-identical)
+> 7	Region `benny_and_hat` (93,061 px, approved mask): mean |ΔRGB| **49.71**, ≤20 levels **23.5 %**, SSIM 0.087, signed (−0.7, −14.6, +8.5).
+> 8	Whole frame: mean 34.1, ≤20 51.57 %, SSIM 0.509.
+
+### 🤖 Claude — 2026-11-17T01:59:04.780Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/benny/NOTES.md'\ns=open(p).read()\na=\"\"\"STATUS: IN PROGRESS (checkpoint written 2026-11-17 on coordinator request). Switch: `benny05` (`?benny05=1` or `?match05=1`).\nAll source files touched are syntactically valid (`npx tsc --noEmit -p .` → rc 0 after every edit).\"\"\"\nb=\"\"\"STATUS: DONE for this run (RESUMED RUN #3, session 01Q46SCH, 2026-11-17 ~02:00 UTC) — fur colour, knitted beanie, pom-pom,\ngold star and the character-texture bake are finished, measured in REAL captures and checked in moti …[+8950 chars]`
+
+### 🧑 User — 2026-11-17T01:59:04.846Z
+
+> ↩︎ result: 7:## 0. FINAL RESULT (all numbers from REAL `scripts/capture.mjs 05` captures, `tools/match05/metrics.py`, same masks)
+> 37:## 1. Measured (BEFORE = STACK capture `benny/before.png` = `stack_2340/05_match05.png`, byte-identical)
+> 71:## 2. Changed files (all behind `on05('benny05')`; default build: no code path runs, shaders compile identically)
+> 94:## 3. In progress (stopped for the account transfer, nothing half-written)
+> 108:## 3b. RESUMED RUN #3 (session 01Q46SCH, 2026-11-17 ~01:20 UTC) — progress log
+> 144:## 4. Per mismatch (approved | game BEFORE | cause | change | measured)
+> 154:## 4b. What still differs (and why)
+> 170:## 4c. Files (this run)
+> 181:## 4d. Next (only if a later run continues)
+> 187:## 5. REQUESTS
+
+### 🤖 Claude — 2026-11-17T01:59:07.477Z
+
+Appending the later steps to the progress log (3b) so the record is complete.
+
+### 🤖 Claude — 2026-11-17T01:59:13.073Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md", "old_string": "* Next: star map (planar UVs on a benny05 copy of the star geometry, bake from approved incl. orange rim), then fur / pom\n  look check, steering frames, 04/06, default identity, gameplay.", "new_string": "* Star map (`work/s1`: probe with the star's planar UVs; non-star UV pass identical to r9c): star 37.0 → 24.5, region\n  20.37 → 19.95 / 72.1 % (`cap/new_s1`). Refine step 3 incl. star (`work/f3`, `cap/new_f3`): → 19.35 / 73.0 %.\n* Anisotropy 16 (`cap/new_an16`): 2,573 px …[+689 chars]`
+
+### 🧑 User — 2026-11-17T01:59:13.115Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/NOTES.md has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+
+### 🤖 Claude — 2026-11-17T01:59:36.918Z
+
+I've finished Benny's fur colour, the knitted beanie, the pom-pom, the gold star and the texture bake. Everything is behind `on05('benny05')`, and the numbers below come from real `scripts/capture.mjs 05` captures measured with `tools/match05/metrics.py`.
+
+**Benny + hat region (93,061 px), before = STACK, after = STACK + `benny05=1`**
+
+| | before | after |
+|---|---:|---:|
+| mean \|ΔRGB\| | 49.71 | **19.24** |
+| within 20 levels | 23.5 % | **73.0 %** |
+| within 10 levels | 6.6 % | 58.7 % |
+| SSIM | 0.087 | 0.655 |
+| whole frame mean / within 20 | 34.10 / 51.57 % | **31.79 / 55.17 %** |
+| low tier (Android default), region mean / within 20 | 50.63 / 22.6 % | 22.22 / 67.5 % |
+
+**Per part (mean / within 20 levels)**
+
+| part | before | after |
+|---|---|---|
+| body fur | 40.9 / 25 % | **20.9 / 71 %** |
+| crown stripes | 65.2 / 24 % | **17.2 / 76 %** |
+| cuff | 47.3 / 26 % | **14.4 / 81 %** |
+| pom | 56.8 / 15 % | **20.7 / 68 %** |
+| star | 69.8 / 10 % | **24.5 / 73 %** |
+
+The approved picture's own knit and fur detail is now on the model. Its correlation with the game went from about 0 to 0.58–0.80 (star 0.20), at 75–89 % of the approved's strength.
+
+**Bounding boxes (approved | after)**
+
+| part | approved | after |
+|---|---|---|
+| all | 234–608 × 775–1188 | 230–613 × 776–1198 |
+| pom | 355–499 × 778–899, centre (428.1, 843.0) | 358–504 × 776–906, centre (428.7, 840.8) |
+| cuff | 277–573 × 936–1031 | 278–569 × 944–1031 |
+| star | 481–553 × 916–984 | 481–553 × 916–983 |
+
+Overlap with the approved outline (IoU): all 0.923 (0.893 before my geometry work), pom 0.888, crown 0.861, cuff 0.867, star 0.803, body 0.863.
+
+**What I did**
+- **Calibration fix:** the old two-render light calibration was wrong because crown, cuff and star clip at 255. I fitted it per pixel over five renders instead; the prediction error dropped from 6–16 % to 0.4–0.7 %.
+- **Hat roll:** the approved cuff is rolled (left side higher by 2.65°), which no earlier geometry pass had tried. I added a 0.046 rad roll and a cuff 0.024 thicker, with the crown shortened by the same amount so its top and the pom stay put.
+- **Texture bake:** colours, knit and ribbing come from the approved pixels. Three correction passes from real captures then sharpened them.
+- **Beanie stripes off-camera:** where the 05 camera doesn't see the hat, the stripes continue as level rings, with a purple cap under the pom and white knit down to the cuff, so nothing zig-zags when he turns.
+- **Star:** it gets its own map, so the approved face shading and rim show.
+
+**Checks**
+- The default build captures 0 px different from `qa/pilot05/current_default_05.png`, checked again after the last code change.
+- The STACK capture is still identical to `before.png`, so the before numbers are current.
+- Gameplay test with the switch on: 8/8 pass, no errors.
+- In the steering frames the stripes, cuff, star and pom stay correct through strong rolls, with no seams.
+- Screens 03, 04 and 06 with the switch on show the same character: pink fur, violet eyes, blush, paw pads, knitted star hat. Outside Benny those screens change by at most 3 levels (04) and 10 levels (06), which is glow from Benny himself.
+- 360° and identity sheets are in `benny/views/`.
+
+**What still differs**
+- **Fur edge:** 1,992 px of the approved body outline show water in the game, about 11 % of the remaining error. The game's bottom also sits 10 px lower. I tried lowering fur gravity: the bottom came up 4 px but the gaps got worse, so I rejected it.
+- **Right arm:** about 12–15 px higher than approved. That is the paddling animation's position in the frozen frame, which I left alone.
+- **Crown far-left flank:** a strip about 30 px wide is slightly cream instead of white.
+- **Fur colour under neutral studio light** (not seen in game): a dustier pink than the original neon. On screens 03, 04 and 06 it reads clearly pink.
+- **Front of the beanie:** the lower white band looks wider than at the back. This comes from carrying the measured stripe tilt round the far side.
+
+**Files changed:** `src/characters/benny/benny05.ts`, and new maps `assets/textures/benny05/{body,crown,crown_n,brim,brim_n,pom,armL,armR,star}.png` (1.6 MB). `assets/models/benny.glb`, `runtime.ts` and `fur.ts` are untouched this run. I used no git commands: I saved `qa/capture_log.json` before each capture and put it back afterwards.
+
+**Requests**
+- `benny05` is ready to integrate into `?match05=1`.
+- Please treat the arm position and the body bottom over the splash as wake/pose items rather than look items; wave 2's `splash05m` covers the same pixels.
+- Please record this specialist as done in `backups/AGENTS_STATUS.json`; that file is yours, so I didn't edit it.
+
+Everything is in `/home/user/rainbow-/qa/pilot05/full_reference_match/benny/`:
+- `NOTES.md`
+- `before.png`
+- `new.png`
+- `NEW_REGION_METRICS.json`
+- `NEW_FULL_FRAME_METRICS.json`
+- `gameplay.json`
+- `steer/`
+- `views/`
+- `cap/`
+

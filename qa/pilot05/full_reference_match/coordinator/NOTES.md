@@ -36,3 +36,17 @@ is small because the locked picture already showed the approved water there; the
 * Zone contrast stays below the approved 17.7 (10.9–13.4 in most bands): E is magnified when the camera comes closer
   than the locked eye, and T2 (the crisp tile) is a repeating crop. Not solved here.
 * Gaps > 100 rows (10 gaps, 1,787 texels) still show the tile.
+
+## 2026-11-17 ~02:10 UTC — `projedge05` (session 01Q46SCH): dotted black line on top of the left foam bank
+* Cause (diagnosed with the new `tools/match05/pixel_probe.mjs`: raycast through pixels + hide-by-name renders): the foam
+  strip `proj05_apron` (`src/vfx/proj05Apron.ts`) samples `assets/textures/water05/proj05_A.png`, whose transparent texels are
+  BLACK (163,933 texels rgb 0.1) and whose 1,182 low-alpha texels are near black (rgb 3.5); opaque edge texels average 49 vs 183
+  inside. Bilinear filtering + the strip's stochastic alpha dither keep some dark fragments → dotted black line (x 180–330,
+  y 545–560), also in STACK.
+* Fix (switch `projedge05`, on with `match05`; STACK unchanged): `tools/proj05/pad_alpha.py` → `proj05_A_pad.png` (RGB of every
+  non-opaque texel = nearest opaque texel, alpha unchanged); the apron loads it under the switch.
+* Measured STACK → STACK + projedge05: 962 px changed; max-channel error on them 56.5 → 39.2 (460 closer, 383 further, by eye:
+  black dots → foam-coloured dots); foam banks 8.43 → 8.32; walls 53.82 → 53.80; whole frame 34.10 → 34.09. Zoom:
+  `coordinator/edge05/zoom_approved_stack_projedge05.png` (approved | STACK | STACK + projedge05).
+* Sent to washer-environment-modeler (resumed): the flat wall chunk at x 165–200 y 553–592 (env05 wall under the apron) and the
+  far-wall chunk + far-river cyan wedge at x 325–400 y 528–590.

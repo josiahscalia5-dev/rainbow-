@@ -2778,3 +2778,123 @@ Next I'll write a small probe: load the game at the locked Screen 05 frame and c
 > 103:      t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter;
 > 105:      uniforms.uPjA.value = t;
 
+### 🤖 Claude — 2026-11-17T01:58:14.338Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/proj05/pad_alpha.py", "content": "\"\"\"Edge padding for a straight-alpha projection texture (coordinator tool, Screen 05 full reference match).\n\nThe baked foam-strip texture assets/textures/water05/proj05_A.png stores transparent texels as BLACK (rgb 0) and its\nlow-alpha edge texels nearly black. Bilinear filtering then mixes black into the edge colours, and the strip's stochastic\nalpha dither keeps a few of those dark fragments: a dotted black line along the top of the left foam bank in the locked\n05 frame (x 180-330, y 545-560). This tool keeps  …[+824 chars]`
+
+### 🧑 User — 2026-11-17T01:58:14.370Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/proj05/pad_alpha.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:58:14.975Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/proj05Apron.ts", "offset": 80, "limit": 33}`
+
+### 🧑 User — 2026-11-17T01:58:14.995Z
+
+> ↩︎ result: 80	  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+> 81	  geo.setAttribute('aPj', new THREE.Float32BufferAttribute(pj, 2));
+> 82	  geo.setIndex(idx);
+> 83	  geo.computeBoundingSphere();
+> 84	  const uniforms: Record<string, THREE.IUniform> = {
+> 85	    uPjA: { value: null }, uPjAS: { value: new THREE.Vector4(PJ_A_S0, PJ_A_S1, 1, 1) },
+> 86	    uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes: { value: new THREE.Vector2(864, 1536) },
+> 87	  };
+> 88	  const mat = new THREE.ShaderMaterial({ uniforms, vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false });
+> 89	  mat.polygonOffset = true; mat.polygonOffsetFactor = -1; mat.polygonOffsetUnits = -2;
+> 90	  const mesh = new THREE.Mesh(geo, mat);
+> 91	  mesh.name = 'proj05_apron';
+> 92	  mesh.frustumCulled = false;
+> 93	  const size = new THREE.Vector2();
+> 94	  mesh.onBeforeRender = (renderer) => {
+> 95	    const rt = renderer.getRenderTarget();
+> 96	    if (rt) size.set(rt.width, rt.height); else renderer.getDrawingBufferSize(size);
+> 97	    (uniforms.uPjRes.value as THREE.Vector2).copy(size);
+> 98	    (uniforms.uPjPost.value as THREE.Vector4).x = renderer.toneMappingExposure;
+> 99	  };
+> 100	  // texture ( …[+663 chars]
+
+### 🤖 Claude — 2026-11-17T01:58:21.981Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/proj05/pad_alpha.py assets/textures/water05/proj05_A.png assets/textures/water05/proj05_A_pad.png && python3 -I - <<'EOF'\np='src/vfx/proj05Apron.ts'; t=open(p).read()\nold=\"import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending } from './waterRibbon';\"\nnew=(\"import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending, on05 } from './waterRibbon';\\n\\n\"\n\"/** `?projedge05=1` (on with `?match05=1`, coordinator 2026-11-17): edge-padded copy of proj05_A.png (tools/proj05/pad_alpha.py:\\n\"\n\" *  transparent / low-alpha texels take the colour of the nearest opaque texel, alp …[+939 chars]`
+
+### 🧑 User — 2026-11-17T01:58:24.901Z
+
+> ↩︎ result: padded 167661 texels (alpha kept) -> assets/textures/water05/proj05_A_pad.png
+> patched
+> 12:import * as THREE from 'three';
+> 13:import type { Course, StageId } from '../world/course';
+> 14:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 15:import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> 213:export const on05 = (key: string): boolean => q05(key) || MATCH05;
+> TSC_OK
+> [This command modified 1 file you've previously read: src/vfx/proj05Apron.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T01:58:29.065Z
+
+The switch is in and type-checks clean. Next I'll compare the comparison stack with and without `projedge05`. That isolates this one change from Benny's ongoing edits.
+
+### 🤖 Claude — 2026-11-17T01:58:36.172Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/edge; mkdir -p $S; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'\nnode scripts/capture.mjs 05 --q=\"$STACK&projedge05=1\" --out=$S/new 2>&1 | tail -1 | cut -c1-30; git checkout -q qa/capture_log.json\npython3 -I tools/match05/metrics.py qa/pilot05/full_reference_match/stack_2340/05_match05.png $S/before_ 2>&1 | grep -E \"FULL|foam|water|purple\" | sed -E 's/ssim.*//'\necho \"-- with projedge05:\"; python3 -I tools/match05/metrics.py $S/ne …[+888 chars]`
+
+### 🧑 User — 2026-11-17T01:58:50.933Z
+
+> ↩︎ result: 05 → /tmp/claude-0/-home-use
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 34.1, 'within_10': 0.4286, 'within_20': 0.5157, '
+> purple_walls                 px  312706  mean  53.82  <=10 0.103  <=20 0.211  
+> water                        px  480736  mean   9.40  <=10 0.849  <=20 0.883  
+> foam_banks                   px   28862  mean   8.43  <=10 0.897  <=20 0.927  
+> -- with projedge05:
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 34.09, 'within_10': 0.4286, 'within_20': 0.5157, '
+> purple_walls                 px  312706  mean  53.80  <=10 0.103  <=20 0.211  
+> water                        px  480736  mean   9.40  <=10 0.849  <=20 0.883  
+> foam_banks                   px   28862  mean   8.32  <=10 0.897  <=20 0.928  
+> changed px 962
+> on changed px: max-channel error before 56.5 -> after 39.2; closer 460, further 383
+> near-black px in foam window (x140-400,y530-640): approved 86 before 352 after 331
+
+### 🤖 Claude — 2026-11-17T01:58:58.852Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/edge; python3 -I -c \"\nfrom PIL import Image\nbox=(160,530,360,600)\nims=[Image.open(p).convert('RGB').crop(box) for p in ['references/05_flow_into_the_current.png','qa/pilot05/full_reference_match/stack_2340/05_match05.png','$S/new/05.png']]\nW,H=ims[0].size;o=Image.new('RGB',(W,H*3+8),'white')\nfor i,im in enumerate(ims): o.paste(im,(0,i*(H+4)))\no.resize((W*4,(H*3+8)*4),Image.NEAREST).save('$S/zoom.png')\"", "description": "Zoom crop approved/before/after of the seam"}`
+
+### 🧑 User — 2026-11-17T01:58:59.134Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:58:59.902Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/edge/zoom.png"}`
+
+### 🧑 User — 2026-11-17T01:58:59.929Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:59:16.149Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-17T01:59:16.159Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-17T01:59:27.738Z
+
+> 🔧 **SendMessage** `{"to": "a9780416a29e85217", "summary": "env05 follow-up: left/right bank chunks", "message": "Follow-up from the coordinator: please fix three small but clearly visible defects at the left far bend of the river in the `?match05=1` frame. Keep everything else as you left it.\n\nEvidence: `qa/pilot05/full_reference_match/coordinator/checkpoints/cp2_match05_now.png`, compared with the approved picture. I identified the objects with my new probe `node tools/match05/pixel_probe.mjs --q='match05=1' --px=X,Y [--hide=<name>] [--shot=out.png]`, which raycasts through a pixel and can hide an object by n …[+2181 chars]`
+
+### 🧑 User — 2026-11-17T01:59:27.821Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent a978041","resumedAgentId":"a9780416a29e85217","pin":{"id":"a9780416a29e85217","name":"a9780416a29e85217","ref":"c0eb55"}}
+
+### 🤖 Claude — 2026-11-17T01:59:36.839Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/edge; D=qa/pilot05/full_reference_match/coordinator; mkdir -p $D/edge05; cp $S/new/05.png $D/edge05/stack_projedge05.png; cp $S/zoom.png $D/edge05/zoom_approved_stack_projedge05.png; cat >> $D/NOTES.md <<'EOF'\n\n## 2026-11-17 ~02:10 UTC — `projedge05` (session 01Q46SCH): dotted black line on top of the left foam bank\n* Cause (diagnosed with the new `tools/match05/pixel_probe.mjs`: raycast through pixels + hide-by-name renders): the foam\n  strip `proj05_apron` (`src/vfx/proj05Apron.ts`) samples ` …[+1192 chars]`
+
+### 🧑 User — 2026-11-17T01:59:36.900Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T01:59:40.378Z
+
+> 🔧 **Bash** `{"command": "flock -w 180 backups/.autosave.lock true; python3 scripts/rainbow-autosave.py --reason manual:projedge05 2>&1 | grep -E '\"commit\"|\"pushed_verified\"|\"error\"|skipping'; echo \"uncommitted: $(git status --short | wc -l)\"; echo \"LOCAL  $(git rev-parse HEAD)\"; echo \"REMOTE $(git ls-remote origin refs/heads/claude/rainbow-account-transfer-npxahd | cut -f1)\"", "description": "Save the fix and verify push", "timeout": 300000}`
+
