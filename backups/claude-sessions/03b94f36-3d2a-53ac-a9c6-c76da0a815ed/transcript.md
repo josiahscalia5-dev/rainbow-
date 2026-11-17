@@ -3729,3 +3729,54 @@ Recording results in the notes and the credit ledger, then saving to GitHub:
 
 > 🔧 **Bash** `{"command": "cat >> qa/imageblaster/08/NOTES.md <<'EOF'\n\n## Step 1b — splash-crest cleanup (user Option B, 2026-11-17 12:51 UTC) — ONE more paid fal edit\n* Input = the reviewed plate aligned to exact 9:16 (`2-…-plate-aligned`). fal `nano-banana-2/edit` request\n  `01a1e98f-f07f-7e42-ab22-c7e268dc85a3`, 32 s, 2K. Raw output `3-08-plate-nosplash_fal_edit2_raw.png` (again\n  1536×2752, again ≈0.8 % zoom, and the WHOLE picture re-rendered: mean change 6.6 levels outside the crest).\n* So only the crest area was taken from edit 2 (aligned by 1,573 SIFT inliers, 0.54 px): change > 25 levels insid …[+3972 chars]`
 
+### 🧑 User — 2026-11-17T13:07:42.660Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "49954f310af7ab632589fc736f41402f32042483",
+> 0
+> local  49954f310af7ab632589fc736f41402f32042483
+> remote 49954f310af7ab632589fc736f41402f32042483
+> 5
+> LFS missing on GitHub: 0
+> 13
+> key pieces: 0
+
+### 🤖 Claude — 2026-11-17T13:07:47.143Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/imageblaster/08/world/renders/marble08_start_view_spark_500k.png"], "caption": "Marble 3D world for Screen 08, rendered from its starting camera (real Gaussian splats, 864×1536). Compare with your approved Screen 08: the chamber became a long tunnel and the door/towel/platform are far away.", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T13:07:47.965Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/imageblaster/08/world/renders/marble08_start_view_spark_500k.png → file_uuid: a556b5b9-dd51-4ebb-8d15-6287807849f2
+
+### 🤖 Claude — 2026-11-17T13:08:03.182Z
+
+Both steps for Screen 08 are done. The clean environment-only picture came out very close to your approved screen. The Marble 3D world did not: it doesn't match your approved layout.
+
+**1. Clean environment-only Screen 08 (the updated preview above)**
+- **The splash crest is gone.** I took only the crest area from the new fal.ai edit. That edit had re-rendered the whole picture again (6.6 levels of drift), so I didn't keep the rest of it.
+- **Everything else is byte-identical** to the version you reviewed, checked pixel by pixel. That covers the towel, door, platform, spouts, rings, wall slots, foam, bubbles and lighting.
+- **Exact 9:16 framing,** lined up perfectly with your approved frame (no shift, no zoom).
+- **Scenery:** 92.4 % within 20 colour levels of your approved screen.
+
+**2. Marble 3D world for Screen 08**
+- **Cost:** 1,580 credits, as quoted; 5,420 remain. All files are saved: four splat qualities, the collider mesh, the 360° panorama.
+- **Layout:** Marble turned your chamber into a **long, deep tunnel**. The door, towel and platform sit tiny at the far end, the river becomes a long narrow stream, and the four spout fixtures aren't in view. Around and behind the camera it also invented extra washer doors, more fixtures, extra gold rings and a second towel on a stool.
+- **Matching score:** **6.4 %** of pixels within 20 levels of your approved screen (the clean picture was 92 %), structural similarity 0.24. I also searched the whole panorama for a view that matches your layout; the best was weak (0.38), and it pointed sideways.
+- **Moving the 3D camera forward:** that doesn't recover your layout either. The picture smears, and then the camera ends up inside the water.
+- **What does match:** the colours and materials (purple slotted metal, gold, cyan-pink water, foam).
+
+This is the same result as your earlier Screen 05 Marble test. Marble reinvents the depth of a scene, so it can't reach your 95–100 % goal for the gameplay view. What it's useful for: a colour and material reference, a distant backdrop, and a rough room mesh for scale.
+
+**My recommendation for your other playable screens (04, 05, 06, 07)**
+- **Do** make clean environment-only pictures with fal.ai, the same way as Screen 08: one edit each, plus a cleanup edit if needed. The clean pictures are the best result of this test. They give your exact scenery without Benny, the HUD or coins, which is exactly what's needed to paint your approved look onto the game's own 3D scenery. That painting method is what took Screen 05 to 86.9 %.
+- **Don't** spend Marble credits on them. They'd most likely come out like Screen 08.
+
+**Your choices**
+1. **Approve fal.ai clean pictures for 04, 05, 06 and 07?** That's 4 edits, plus a cleanup edit where needed. I'll show each one full-size before moving on.
+2. **Start using the Screen 08 clean picture in the game?** I'd paint it onto the game's real Screen 08 scenery behind a test switch, leaving the normal game unchanged, then show you approved / before / new full-size.
+
+Your fal.ai dashboard shows the exact charge for the two Screen 08 edits; fal.ai doesn't report it to me.
+
