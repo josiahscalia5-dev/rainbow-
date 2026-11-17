@@ -603,8 +603,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4239,
-   "sha256": "8e66d40c6bc0b9607dc0af3ca79fa3dcdba8d03a7c025c0ce3c1c0018a513ae7"
+   "bytes": 4278,
+   "sha256": "099dee8d2f569c27a3a19af68e9a494eaa0da8484c63015ab721e5377c193ee3"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11641,
-   "sha256": "264347e68a4af8ff950114da3a2c2d55c8817bba8053e7721e4665b42b9a0ebf"
+   "bytes": 11650,
+   "sha256": "02ecae3e13de0f4bb3103f4c33a9415bdabc2fe091021be6a3107ee3a5ecb7ed"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1213,23 +1213,23 @@
   },
   {
    "path": "qa/flowplan/A_after_fade_04.png",
-   "bytes": 431120,
-   "sha256": "0ff75fb4e798191638730d9b37467c2935584e7fc66041ac008d72213a8db896"
+   "bytes": 279293,
+   "sha256": "9fc5682eea2cef87d746f6a0573ae9227a3855b3c2336ec1a5e82ca7a88334f1"
   },
   {
    "path": "qa/flowplan/A_during_video.png",
-   "bytes": 237740,
-   "sha256": "390e34591c9922a1f20eaaa820e67bd508bae1dd85efdef1c78766679b265302"
+   "bytes": 4894,
+   "sha256": "58505778fb21eaf33eabf442b1762cbd2993956ccfd38c9d187bf72b0239062e"
   },
   {
    "path": "qa/flowplan/B_after_ending_video_11.png",
-   "bytes": 429818,
-   "sha256": "00d0d11d939dc5ac7c26067760ae6ffa88e76d31a80931f0cf36797c9a292d50"
+   "bytes": 428499,
+   "sha256": "7866487762acabe13c9118806e452d9fd3c436e66ba6920c88cd2b63817abbd4"
   },
   {
    "path": "qa/flowplan/flowplan_test.json",
-   "bytes": 2743,
-   "sha256": "026bb2e9440bc6297e29379846b750aa6ac2cc46d9e6940259814e513c9e8e41"
+   "bytes": 2741,
+   "sha256": "c5816e5a10533a40906a425051f4df37a2e9999cc2fafa869a5677bc969a3c5b"
   },
   {
    "path": "qa/gameplay_test.json",

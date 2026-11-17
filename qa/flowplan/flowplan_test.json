@@ -1,5 +1,5 @@
 {
-  "when": "2026-11-17T18:03:04.845Z",
+  "when": "2026-11-17T18:25:11.681Z",
   "clip": "node_modules/.rainbow-test/flow_test.webm",
   "errors": [],
   "A": {
@@ -7,38 +7,38 @@
     "during": {
       "mode": "ride",
       "stage": "04",
-      "s": 70.413,
+      "s": 77.413,
       "lat": 0,
       "coins": 1420,
       "hearts": 5,
       "paused": true,
-      "bennyY": -19.221,
+      "bennyY": -21.872,
       "bennyVisible": true,
       "cam": [
-        6.51,
-        -10.07,
-        -16.68
+        0.72,
+        -14.48,
+        -15.82
       ]
     },
     "after": {
       "mode": "ride",
       "stage": "04",
-      "s": 72.821,
+      "s": 79.783,
       "lat": 0,
       "coins": 1420,
       "hearts": 5,
       "paused": false,
-      "bennyY": -19.934,
+      "bennyY": -22.856,
       "bennyVisible": true,
       "cam": [
-        6.3,
-        -10.58,
-        -16.08
+        1.22,
+        -14.43,
+        -18
       ]
     },
     "movesOn": true,
     "info": {
-      "s04": 70.41308465825975,
+      "s04": 77.41308465825975,
       "s09": 404.7896481881434,
       "total": 91,
       "before04": 9,
@@ -48,7 +48,7 @@
   },
   "B": {
     "info": {
-      "s04": 70.41308465825975,
+      "s04": 77.41308465825975,
       "s09": 404.7896481881434,
       "total": 91,
       "before04": 9,
@@ -71,11 +71,11 @@
       ]
     },
     "handOver": {
-      "steps": 80,
+      "steps": 81,
       "state": {
         "mode": "outro",
         "stage": "11",
-        "s": 404.817,
+        "s": 404.911,
         "lat": 0,
         "coins": 2230,
         "hearts": 5,
@@ -83,9 +83,9 @@
         "bennyY": -113.255,
         "bennyVisible": true,
         "cam": [
-          11.48,
+          11.46,
           -109.91,
-          -287.44
+          -287.53
         ]
       }
     },
@@ -94,12 +94,12 @@
     "final": {
       "mode": "end",
       "stage": "11",
-      "s": 404.817,
+      "s": 404.911,
       "lat": 0,
       "coins": 2230,
       "hearts": 5,
       "paused": false,
-      "bennyY": -109.564,
+      "bennyY": -109.565,
       "bennyVisible": false,
       "cam": [
         11.2,
