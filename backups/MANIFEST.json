@@ -492,6 +492,11 @@
    "sha256": "4b02ce9760eaea9a873705dbb34420415c7bf197d4dfb4b17a06365f6a656368"
   },
   {
+   "path": "assets/textures/match04/tile_chev3.png",
+   "bytes": 531018,
+   "sha256": "ebb7cac1b32b4041d56f4adb0c3c5b8ab774f164a4e78bd685c578ea732160e7"
+  },
+  {
    "path": "assets/textures/match04/tile_ring.png",
    "bytes": 190440,
    "sha256": "b5d6c614565c7cf45cfad67ea3b24e11fc395ed46dd674b8e2d845ca57af4ec5"
@@ -502,14 +507,19 @@
    "sha256": "19d3900039f032b8ef29bcf3c3aa51e87ca2997034e3e786650941413a3b463b"
   },
   {
+   "path": "assets/textures/match04/tile_river3.png",
+   "bytes": 626561,
+   "sha256": "903e253fbf993901156005cdac25b80635ed3ffdac801ef15d27c8f0a68f6215"
+  },
+  {
    "path": "assets/textures/match04/tile_tunnel.png",
    "bytes": 290642,
    "sha256": "d0938e1060be37385b9b53cd5d5a34bb489445b170e586a03cdb568df60343c6"
   },
   {
    "path": "assets/textures/match04/tiles04.json",
-   "bytes": 529,
-   "sha256": "f6abf835ebc637032f1a59e99ac2247d1e08108fa4182a631ec65eb93cfe0856"
+   "bytes": 802,
+   "sha256": "6d660aa2147a6b1d086bcbd16536fb56739526ee817b5222f294ad8ea1ef4f77"
   },
   {
    "path": "assets/textures/match08/cam08_locked.json",
@@ -673,8 +683,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3864,
-   "sha256": "961ecf151958ab6ecbc90281de076d8ab559931b673089d0c102f7ddc9c282a5"
+   "bytes": 3883,
+   "sha256": "320df551dde09f79650a942eeb2826c1a75a215e135ed9fb75ea50edc8e73658"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -683,8 +693,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 11043,
-   "sha256": "20e189f18e731af6c8fc472c5622f26a28f14bd4f70b5230f357c2d0a1b1d28c"
+   "bytes": 11052,
+   "sha256": "9a9f23988cf148a3f6ffe99ab96a383cb8aa57d22bc7bae96cd19ae888dc9002"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1443,8 +1453,8 @@
   },
   {
    "path": "qa/match/04/NOTES.md",
-   "bytes": 11567,
-   "sha256": "e65b807a58d7ff7f47a5d3bbc4203e594c855dac94554f133d34c15d6b9dc190"
+   "bytes": 12690,
+   "sha256": "9bf797eb57b8cfef7d09cf00be70b3ce472fd05349a599d3bdd4d50acca19bc8"
   },
   {
    "path": "qa/match/04/SHARED_CHANGES.md",
@@ -1478,6 +1488,11 @@
   },
   {
    "path": "qa/match/04/gameplay_test_match04_m2.json",
+   "bytes": 14657,
+   "sha256": "110efa09172868567b1c5d88583957c00693ceaaca73a5b2b8ce906c7b49cfdd"
+  },
+  {
+   "path": "qa/match/04/gameplay_test_match04_m3.json",
    "bytes": 14657,
    "sha256": "110efa09172868567b1c5d88583957c00693ceaaca73a5b2b8ce906c7b49cfdd"
   },
@@ -8443,8 +8458,8 @@
   },
   {
    "path": "src/world/match04.ts",
-   "bytes": 13419,
-   "sha256": "5b2ec390e3168090669c7228d99995d19d2a1e45b30a633cb5042e128d4b769c"
+   "bytes": 15042,
+   "sha256": "ac9620113237933472e25380b376d8513cb87c9a606d39747577896d998e8d04"
   },
   {
    "path": "src/world/match08.ts",
@@ -8620,6 +8635,11 @@
    "path": "tools/match04/make_plate04.py",
    "bytes": 3100,
    "sha256": "f0fc864fe04dc2385e4cf5b217f8b229a6b24876641ea848777486c294f593a1"
+  },
+  {
+   "path": "tools/match04/make_river04_m3.py",
+   "bytes": 4507,
+   "sha256": "e1fa2f580e58e39103a5b68624ec9df0d0a180f7c40da04c25f5947c5b81c6b5"
   },
   {
    "path": "tools/match04/make_tiles04.py",

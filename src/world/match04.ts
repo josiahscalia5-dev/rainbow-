@@ -64,6 +64,9 @@ uniform vec4 uTileA;          // mode 1: cx, cy, mouth z, ring period | mode 2: 
 uniform float uLipS;
 uniform sampler2D uFill;      // plate04_fillmask: where the plate is a provisional fill (HUD, title, Benny, coins)
 uniform float uMoved;         // 0 in the approved view, 1 once the camera has moved away from it
+uniform float uR3;            // milestone 3 river (&river04=0 = milestone 2): swirl tile from the painted water around Benny
+uniform sampler2D uRiv3;      //   tile_river3.png (pink ribbons, cyan streams, foam banks)
+uniform vec4 uRiv3A;          //   lateral half-width, along start, along length, mouth distance down the slide
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -85,6 +88,17 @@ vec3 tileColor(vec3 pc) {
     vec2 uv = vec2(psi / 6.2831853 + 0.5, (ax - 7.1) / uTileA.w + uLipS);
     return textureGrad(uTile, uv, vec2(dFdx(uv.x), dFdx(uv.y)) * vec2(step(abs(dFdx(uv.x)), 0.5), 1.0),
                        vec2(dFdy(uv.x), dFdy(uv.y)) * vec2(step(abs(dFdy(uv.x)), 0.5), 1.0)).rgb;
+  }
+  if (uMode > 1.5 && uR3 > 0.5) {
+    float along = -vL.z;
+    // inside the tunnel the visible water is narrower: draw the painted banks a little closer to the walls
+    float k = mix(1.0, 1.3, smoothstep(uRiv3A.w - 1.0, uRiv3A.w + 3.0, along));
+    vec2 uv3 = vec2(vL.x * k / (2.0 * uRiv3A.x) + 0.5, (along - uRiv3A.y) / uRiv3A.z);
+    vec3 sw = texture2D(uRiv3, uv3).rgb;
+    vec4 ch = texture2D(uTile, vec2(vL.x / (2.0 * uTileA.x) + 0.5, (along - uTileA.y) / uTileA.z));  // tile_chev3: arrow + alpha
+    vec3 col = mix(sw, ch.rgb, ch.a);
+    float inRiver = 1.0 - smoothstep(0.9 * uRiv3A.x, uRiv3A.x, abs(vL.x * k));
+    return mix(pc, col, inRiver);
   }
   if (uMode > 1.5) {
     float along = -vL.z;                                    // down the slide from Benny's water point
@@ -124,6 +138,9 @@ const TILE04 = new URLSearchParams(location.search).get('tile04') !== '0'; // mi
 // `&fal04=1`: the ONE fal clean plate (request 01a1ea70, qa/match/04/fal/) inside the fill mask instead of the provisional
 // fill (tools/match04/fal_plate04.py -> plate04_hybrid_fal.png); then the fill needs no hand-over to the river tile
 const FAL04 = new URLSearchParams(location.search).get('fal04') !== '0'; // milestone 3: on by default under match04; &fal04=0 = milestone 2
+// milestone 3 (qa/match/04/NOTES.md): river design from the painted water around Benny + the chevron arrows on top;
+// `&river04=0` = milestone-2 river tile
+const RIVER04 = TILE04 && new URLSearchParams(location.search).get('river04') !== '0';
 const tex = (f: string) => new URL(`../../assets/textures/match04/${f}`, import.meta.url).href;
 
 const _cp = new THREE.Vector3();
@@ -169,13 +186,17 @@ export async function buildMatch04(): Promise<Match04> {
     t.colorSpace = THREE.NoColorSpace; t.flipY = false; t.wrapS = t.wrapT = THREE.RepeatWrapping;
     t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8; t.needsUpdate = true; return t;
   };
-  const [tRing, tRiver] = await Promise.all([loadTile('ring'), loadTile('river')]);
+  const [tRing, tRiver] = await Promise.all([loadTile('ring'), loadTile(RIVER04 ? 'chev3' : 'river')]);
+  const tRiv3 = RIVER04 ? await loadTile('river3') : tRiver;
   const tiles = await fetch(tex('tiles04.json')).then((r) => r.json());
+  const r3 = tiles.river3 ?? { lateral: [-4, 4], alongFromBenny: [0, 1] };
+  const riv3A = new THREE.Vector4(r3.lateral[1], r3.alongFromBenny[0], r3.alongFromBenny[1] - r3.alongFromBenny[0], 0);
   const mat = (patch: THREE.Texture, k: number, mode = 0, tile: THREE.Texture | null = null, tileA = new THREE.Vector4()) => new THREE.ShaderMaterial({
     vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
     extensions: { derivatives: true } as never,
     uniforms: { ...shared, uPatch: { value: patch }, uPatchK: { value: k }, uMode: { value: TILE04 ? mode : 0 },
-      uTile: { value: tile ?? patch }, uTileA: { value: tileA }, uLipS: { value: tiles.ring?.lipS ?? 0 } },
+      uTile: { value: tile ?? patch }, uTileA: { value: tileA }, uLipS: { value: tiles.ring?.lipS ?? 0 },
+      uR3: { value: RIVER04 ? 1 : 0 }, uRiv3: { value: tRiv3 }, uRiv3A: { value: riv3A } },
   });
 
   // slide-local frame: x = world X, y = slide up U, z = -D (forward = -z); origin = Benny's water point on the path line
@@ -189,6 +210,7 @@ export async function buildMatch04(): Promise<Match04> {
   const T = L.tube;
   const cx = T.ax - L.water[0], cy = T.h, z0 = -T.mouthS, len = 48;
   const rv = tiles.river;
+  riv3A.w = T.mouthS;
   const M = {
     gold: mat(pGold, 1 / 1.6),
     tunnel: mat(pGold, 1 / 1.6, 1, tRing, new THREE.Vector4(cx, cy, z0, tiles.ring?.period_u ?? 6.5)),

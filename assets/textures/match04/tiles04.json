@@ -44,5 +44,21 @@
   "period_u": 6.5,
   "lipAxial_u": 7.1,
   "lipS": 0.155
+ },
+ "river3": {
+  "lateral": [
+   -4.0,
+   4.0
+  ],
+  "alongFromBenny": [
+   1.7572621035058433,
+   6.409015025041738
+  ],
+  "size": [
+   640,
+   516
+  ],
+  "filledFraction": 0.16,
+  "source": "plate04_hybrid_fal.png (approved pixels + fal clean plate under Benny/coins)"
  }
 }
