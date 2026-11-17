@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13447,
-   "sha256": "17372ade6d3e50bf762c513e0979f6ec79cfeba8a224d8033d65f609273511d1"
+   "sha256": "0457f714ee5a8e491846d78e7628d51042091e0c4fb55423ef8ccc1ac104a21b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2947,6 +2947,16 @@
    "sha256": "06c6a79615dc3e149e5ab82251b51b30891b97f1f19d3a8fb81347c6363d8b48"
   },
   {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/03.png",
+   "bytes": 1108258,
+   "sha256": "7a8548ac9fe4cf993c6063945ef61b5520b181154b05b6a41c5c7f25aedfc181"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/copy_new/08.png",
+   "bytes": 1699264,
+   "sha256": "259e22c0dcd62a681af061c827efc3ca850c31ef9ea46f109f1630b729e5cfc4"
+  },
+  {
    "path": "qa/match/08/scenery/r7/proof/def_new/01.png",
    "bytes": 1476205,
    "sha256": "99d64faa19e812c5856dfaf652193619f4d21769a1c2e7c1bba0e0fda0a63591"
@@ -3002,6 +3012,21 @@
    "sha256": "ae1d3309a368aafc558df205c6eac8c3e2c796d515f4bd289effe5f0843ac868"
   },
   {
+   "path": "qa/match/08/scenery/r7/proof/def_new2/03.png",
+   "bytes": 1109146,
+   "sha256": "4350a0dc50bcbea76bd3f661972517c3bd07d772dc99973a57278c944352abea"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_new2/08.png",
+   "bytes": 1702437,
+   "sha256": "9b92158c1856388f997bbc92eed6adce1bf9ab3e6594f7d79745db0a857e980b"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_new2/11.png",
+   "bytes": 1800640,
+   "sha256": "18216d213b0150b3d77ef6885a63506d7a55cd6edc5ee15be834e4a3160750bb"
+  },
+  {
    "path": "qa/match/08/scenery/r7/proof/def_old/01.png",
    "bytes": 1476465,
    "sha256": "836512d0517a5028ac34b24f5ce629ec7c3998b7ebe18f1797654e2e203349b4"
@@ -3012,9 +3037,94 @@
    "sha256": "a8b0e41ab44d8fc4640e1954f1196ccd2dc2b988026d4e172e7b4a1a7ba428a0"
   },
   {
+   "path": "qa/match/08/scenery/r7/proof/def_old/03.png",
+   "bytes": 1108258,
+   "sha256": "7a8548ac9fe4cf993c6063945ef61b5520b181154b05b6a41c5c7f25aedfc181"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/04.png",
+   "bytes": 1435791,
+   "sha256": "ae440e9013e173bd85969b75451e036cf9e5024695a85197903171a67e063bcc"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/05.png",
+   "bytes": 2092710,
+   "sha256": "6c8e096a7f55fcce7d5b7dade588e8705203ec769ca40744717de683f3826ccb"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/06.png",
+   "bytes": 1844972,
+   "sha256": "2f1cc894879fed9d0153daf1c49ba236fb8e505f40d92af06b2ad51b1f306ff1"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/07.png",
+   "bytes": 2115935,
+   "sha256": "3aa759b301820c301ddd38d561f6c44d986ea473b59085f424347e1838b654e5"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/08.png",
+   "bytes": 1699264,
+   "sha256": "259e22c0dcd62a681af061c827efc3ca850c31ef9ea46f109f1630b729e5cfc4"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/09.png",
+   "bytes": 1784429,
+   "sha256": "e8fb758f5bda1087008326df0d7be1c2fe178f08e135fe3030840872ea9eb391"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/10.png",
+   "bytes": 1705373,
+   "sha256": "23bea3bada53b590105542a6391f498891fc6356e2e3d7aa70ea24654eed4ef8"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/def_old/11.png",
+   "bytes": 1798715,
+   "sha256": "81ee9d1153d76e470358dee1e5c47e43a6c168084c5159455cab9d6dbc4076bf"
+  },
+  {
    "path": "qa/match/08/scenery/r7/proof/gameplay.json",
    "bytes": 14737,
    "sha256": "cf1d05bca910ea4622aa36b57ed8548515eaa69755f532946bbacf4fc6271138"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/leak_new/04.png",
+   "bytes": 1444973,
+   "sha256": "6752a02516e24a04edb1c58dbdafab278202fd401e1dc8088165baae3b45ee73"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/leak_new/05.png",
+   "bytes": 2140502,
+   "sha256": "262bd9f9b63ef7ddb7fd8f73dbbc56fdf1b10184b43cf073a7a9fc86b7be22e7"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/leak_new/06.png",
+   "bytes": 1962687,
+   "sha256": "6436c4875ad6245e97c6d72671e2c0d0e9e9cb179d5b424ec495d5d83b6722a3"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/leak_new/07.png",
+   "bytes": 2176284,
+   "sha256": "4e65f37464b4cd3797928aaad4eb4cb3a7dd87e1f807fdf9841bbdd76451ed8f"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/leak_r6/04.png",
+   "bytes": 1444973,
+   "sha256": "6752a02516e24a04edb1c58dbdafab278202fd401e1dc8088165baae3b45ee73"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/leak_r6/05.png",
+   "bytes": 2140502,
+   "sha256": "262bd9f9b63ef7ddb7fd8f73dbbc56fdf1b10184b43cf073a7a9fc86b7be22e7"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/leak_r6/06.png",
+   "bytes": 1962687,
+   "sha256": "6436c4875ad6245e97c6d72671e2c0d0e9e9cb179d5b424ec495d5d83b6722a3"
+  },
+  {
+   "path": "qa/match/08/scenery/r7/proof/leak_r6/07.png",
+   "bytes": 2176284,
+   "sha256": "4e65f37464b4cd3797928aaad4eb4cb3a7dd87e1f807fdf9841bbdd76451ed8f"
   },
   {
    "path": "qa/match/08/scenery/r7/proof/noswim/08.png",
