@@ -2875,3 +2875,79 @@ The Screen 08 camera specialist has finished its round, and I've started Screen 
 
 Everything is saved, nothing is merged, and no paid jobs have run. My 19:42 UTC check-in will confirm Screen 07 is working and start the next session when a slot frees.
 
+### 🧑 User — 2026-11-17T19:18:26.683Z
+
+Can u send me apk file to see preview of my mobile app
+
+### 🤖 Claude — 2026-11-17T19:18:41.268Z
+
+I'll pull the most relevant ready-made APKs out of GitHub storage. First, a check of what each one contains and how big it is.
+
+### 🤖 Claude — 2026-11-17T19:18:44.831Z
+
+> 🔧 **Bash** `{"command": "git fetch origin -q; for spec in \"ccr-067047f0-up5d1m:builds/rainbow-debug.apk\" \"ccr-067047f0-up5d1m:builds/rainbow-debug-match08-2026-11-17c-benny.apk\" \"claude/rainbow-s08-benny08-bake-c4:builds/rainbow-debug-08benny-2026-11-17-r3b.apk\" \"claude/rainbow-s08-benny08-bake-c4:builds/rainbow-debug-08benny-2026-11-17-r4.apk\" \"claude/rainbow-s08-camclear-c4:builds/rainbow-debug-08camclear-2026-11-17-r4.apk\"; do b=${spec%%:*}; f=${spec#*:}; sz=$(git show origin/$b:$f | grep -o 'size [0-9]*' | awk '{printf \"%.0f MB\", $2/1048576}'); d=$(git log -1 --format=%cd --date=format:'%m …[+222 chars]`
+
+### 🧑 User — 2026-11-17T19:18:51.754Z
+
+> ↩︎ result: builds/rainbow-debug.apk | 7 MB | committed 11-15 18:00
+> builds/rainbow-debug-match08-2026-11-17c-benny.apk | 22 MB | committed 11-17 15:13
+> builds/rainbow-debug-08benny-2026-11-17-r3b.apk | 23 MB | committed 11-17 17:52
+> builds/rainbow-debug-08benny-2026-11-17-r4.apk | 23 MB | committed 11-17 18:10
+> builds/rainbow-debug-08camclear-2026-11-17-r4.apk | 22 MB | committed 11-17 19:13
+> src/game/match.ts:7: * VITE_RAINBOW_Q05 (flag05).
+
+### 🤖 Claude — 2026-11-17T19:18:55.923Z
+
+Two APKs are the best preview right now. I'm extracting them from GitHub storage and checking each file is complete before sending.
+
+### 🤖 Claude — 2026-11-17T19:19:02.227Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk && mkdir -p $O && for spec in \"claude/rainbow-s08-benny08-bake-c4:builds/rainbow-debug-08benny-2026-11-17-r3b.apk:Rainbow-Screen08-Benny-r3b.apk\" \"claude/rainbow-s08-camclear-c4:builds/rainbow-debug-08camclear-2026-11-17-r4.apk:Rainbow-Screen08-newest-camera.apk\"; do IFS=: read b f n <<< \"$spec\"; oid=$(git show origin/$b:$f | grep -o 'sha256:[0-9a-f]*' | cut -d: -f2); git show origin/$b:$f | git lfs smudge > $O/$n 2>/dev/null; got=$(sha256sum $O/$n | cut -c1-64); [ \"$got\" = \"$oid\" ] & …[+693 chars]`
+
+### 🧑 User — 2026-11-17T19:19:07.454Z
+
+> ↩︎ result: zip ok, entries 556 | has classes.dex True | signed True | testzip None
+> Rainbow-Screen08-Benny-r3b.apk 24M CHECKSUM_OK
+> zip ok, entries 548 | has classes.dex True | signed True | testzip None
+> Rainbow-Screen08-newest-camera.apk 22M CHECKSUM_OK
+> manifest-present
+> Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=43691 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|172.31.*|192.168.*|100.64.0.0/10|*.svc.cluster.local|*.svc.cluster.local -Djdk.http.auth.tunneling.disabledSchemes= -Djdk.http.auth.proxying.disabledSchemes=
+> Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+
+### 🤖 Claude — 2026-11-17T19:19:09.070Z
+
+Both APKs are complete: the checksums match GitHub, the files are intact, and both carry the standard Android debug signature. Sending them now.
+
+### 🤖 Claude — 2026-11-17T19:19:12.074Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen08-newest-camera.apk", "/tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen08-Benny-r3b.apk"], "caption": "Two Rainbow test builds (debug, not yet tested on a real phone). 1) Newest camera fixes (Screen 08 matched scenery). 2) Benny round 3b, your preferred Benny. Install one at a time: same app name, so the second replaces the first.", "status": "normal", "display": "attach"}`
+
+### 🧑 User — 2026-11-17T19:19:15.288Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen08-newest-camera.apk → file_uuid: d35b5e1f-f45f-4be7-b652-94d6f71794d3
+>   /tmp/claude-0/-home-user-rainbow-/2f744d8b-027e-57ab-ba4a-c73b6ea01960/scratchpad/apk/Rainbow-Screen08-Benny-r3b.apk → file_uuid: 4602cbd5-c311-4f2f-a709-197d9fd41528
+
+### 🤖 Claude — 2026-11-17T19:19:27.432Z
+
+I've sent you two Android test APKs, each about 22–24 MB. Neither has been tested on a real phone yet, so please tell me how it runs.
+
+**What's in them:**
+
+| File | What you'll see |
+|---|---|
+| `Rainbow-Screen08-newest-camera.apk` (saved 19:13 today) | The whole game, with Screen 08 rebuilt to match your approved picture and the newest camera fixes: a steadier view on the drop into 04, and missed coins no longer filling the screen. |
+| `Rainbow-Screen08-Benny-r3b.apk` | The whole game, with Screen 08 rebuilt to match your picture and **Benny round 3b**, your preferred version. |
+
+**To install on Android:**
+1. Open the file on your phone.
+2. If asked, allow "Install unknown apps" for your browser or file app. This is normal for test builds that don't come from the Play Store.
+3. Both builds have the same app name, so installing the second one replaces the first. Try them one at a time.
+
+**What these previews don't show yet:**
+- **Only Screen 08 is rebuilt to match your picture.** Screens 04–07 look like the regular game in these builds; each of those screens has its own test APK, which I can send if you want.
+- **Nothing is combined yet.** Your approved coin positions, the newer fuller-body Benny (still in progress) and these camera fixes each live on a separate branch. Putting them into one app means combining unfinished work, and I only do that with your OK.
+- **The opening and ending are the game's built-in 3D scenes.** Your Google Flow videos aren't added yet.
+
+If you'd like, I can build one **preview-only APK** that combines Screen 08's matched scenery, your approved coins, Benny round 3b and the camera fixes. It would be built in a temporary copy, so no branch on GitHub changes. Just say yes.
+
