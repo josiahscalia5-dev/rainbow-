@@ -1183,3 +1183,199 @@ Wiring the masks and new floor tile into `match06.ts` (with `&m06v=2` keeping th
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T17:43:30.750Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/match06/make_masks06.py'; t=open(p).read()\nold_start=t.index(\"G = np.zeros((H, W), np.uint8)\"); old_end=t.index(\"G = cv2.GaussianBlur\")\nnew='''# G = everything that is NOT the painted river: outline of the painted water (near river + its crest loop + the thin far\n# stream into the tunnel) minus the tunnel wall seen inside the loop\nwater = [(0, 1536), (864, 1536), (864, 1010), (812, 975), (770, 910), (730, 850), (690, 795), (650, 760), (610, 735),\n         (700, 725), (712, 705), (650, 650), (580, 600), (520, 560), (470, 530), (400, 500), (30 …[+1677 chars]`
+
+### 🧑 User — 2026-11-17T17:43:31.214Z
+
+> ↩︎ result: fill px 168567 no-water px 566698
+
+### 🤖 Claude — 2026-11-17T17:43:32.004Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/mchk.png"}`
+
+### 🧑 User — 2026-11-17T17:43:32.029Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:43:38.178Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad; rm -rf $SP/m3 $SP/c3; timeout 900 node tools/match06/motion06.mjs $SP/m3 >/dev/null 2>&1; timeout 600 node scripts/capture.mjs 06 --q=match06=1 --out=$SP/c3 >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -I tools/match06/measure06.py references/06_crest_the_rinse_arch.png R2cap=qa/match/06/06_NEW_match06.png R3cap=$SP/c3/06.png; python3 -I -c \"\nfrom PIL import Image\nP='$SP/m3/'\nn=['f03_forward3u','f06_forward6u','f10_forward10u','s_left_steer','s_right_steer']\no=Image.new(' …[+245 chars]`
+
+### 🧑 User — 2026-11-17T17:44:18.049Z
+
+> ↩︎ result: R2cap      whole  79.1% ssim 0.785 | scenery  98.8% ssim 0.987 | upper  97.8% ssim 0.976 | middle  98.4% ssim 0.983 | lower  99.8% ssim 0.998 | benny+splash  55.2% ssim 0.525
+> R3cap      whole  79.1% ssim 0.785 | scenery  98.8% ssim 0.987 | upper  97.8% ssim 0.976 | middle  98.4% ssim 0.983 | lower  99.8% ssim 0.998 | benny+splash  55.2% ssim 0.525
+
+### 🤖 Claude — 2026-11-17T17:44:20.233Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/motion3.png"}`
+
+### 🧑 User — 2026-11-17T17:44:20.268Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:44:28.502Z
+
+Fixed view unchanged (98.8 %) and the tunnel copies and white smear are gone while riding. Softening the hard edge left around Benny's fill area.
+
+### 🤖 Claude — 2026-11-17T17:44:33.404Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/match06/make_masks06.py'; t=open(p).read()\na=\"R = cv2.dilate(R, np.ones((15, 15), np.uint8))\"\nassert a in t\nt=t.replace(a,\"R = cv2.dilate(R, np.ones((15, 15), np.uint8))\\nR = np.maximum(R, cv2.GaussianBlur(cv2.dilate(R, np.ones((41, 41), np.uint8)), (0, 0), 14))   # soft edge (no visible block border)\")\nopen(p,'w').write(t)\nEOF\npython3 -I tools/match06/make_masks06.py assets/textures/match06 qa/match/06 && SP=/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad && rm -rf $SP/m3 && timeout 900 node tools/match06 …[+421 chars]`
+
+### 🧑 User — 2026-11-17T17:45:03.770Z
+
+> ↩︎ result: fill px 214439 no-water px 566698
+
+### 🤖 Claude — 2026-11-17T17:45:05.656Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/motion3.png"}`
+
+### 🧑 User — 2026-11-17T17:45:05.688Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:45:12.871Z
+
+Moving frames are now clean at every distance (no smears, no mirrored copies, nothing between the view and Benny). Saving this checkpoint.
+
+### 🤖 Claude — 2026-11-17T17:45:19.779Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad && git mv qa/match/06/motion qa/match/06/motion_r2 && mkdir -p qa/match/06/motion && cp $SP/m3/* qa/match/06/motion/ && cp $SP/motion3.png /dev/null && python3 -I -c \"\nfrom PIL import Image\nfor d in ['qa/match/06/motion','qa/match/06/motion_r2']:\n  n=['f00_checkpoint','f03_forward3u','f06_forward6u','f10_forward10u','f15_forward15u','f20_forward20u','f30_forward30u','s_left_steer','s_right_steer']\n  o=Image.new('RGB',(5*288,2*512))\n  for i,k in enumerate(n): o.paste(Image.open(f'{d}/{k}.png' …[+853 chars]`
+
+### 🧑 User — 2026-11-17T17:45:28.909Z
+
+> ↩︎ result: b4e34fd64c99188eef9280971f5395d729794651	refs/heads/claude/rainbow-s06-match-c3
+> b4e34fd64c99188eef9280971f5395d729794651
+
+### 🤖 Claude — 2026-11-17T17:45:31.854Z
+
+Next: preparing (not running) the fal clean-plate request. Checking Screen 04's record for the format.
+
+### 🤖 Claude — 2026-11-17T17:45:33.458Z
+
+> 🔧 **Bash** `{"command": "git ls-tree --name-only origin/claude/rainbow-s04-match-c2 qa/match/04/fal/ 2>/dev/null; git show origin/claude/rainbow-s04-match-c2:qa/match/04/FAL_PLATE_REQUEST.md 2>/dev/null | head -60 || true; ls qa/match/08 | grep -i fal; ls qa/imageblaster/08 2>/dev/null | head", "description": "Find Screen 04 fal request format"}`
+
+### 🧑 User — 2026-11-17T17:45:33.499Z
+
+> ↩︎ result: qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png
+> qa/match/04/fal/fal_edit1_plate_request.json
+> # Screen 04 — fal clean-plate request — RUN ONCE 2026-11-17 16:56 UTC (request 01a1ea70-42d8-7943-b035-7bb5f129d872; result + record in `fal/`, see NOTES.md milestone 2 §5). No further fal call is authorised.
+> 
+> Purpose: replace the PROVISIONAL local fill (OpenCV inpainting + mirrored artwork texture, 23.4 % of the frame:
+> HUD bar, title banner, Benny, the five coins) in `assets/textures/match04/plate04_hybrid.png` with a clean
+> environment-only plate, exactly as Screen 08 did (`qa/imageblaster/08/`). The final texture stays a HYBRID: the user's
+> original pixels everywhere they show scenery + the fal plate only inside `assets/textures/match04/plate04_fillmask.png`.
+> 
+> * Model: `fal-ai/nano-banana-2/edit`, 1 image, 2K, aspect 9:16 (as 08; cost: one edit, cents — confirm the price first).
+> * Input: `references/04_through_the_five_arrows.png` (sha256 in `scripts/reference.sha256`, never modified; staged as a copy).
+> * Prompt (exact):
+>   > remove the following from the image: the game HUD bar at the top (heart counter, coin counter and pause button), the
+>   > purple title banner reading 04 …[+1543 chars]
+
+### 🤖 Claude — 2026-11-17T17:45:46.091Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/FAL_PLATE_REQUEST.md", "content": "# Screen 06 — fal clean-plate request — PREPARED ONLY, NOT RUN (2026-11-17, round 3)\n\n**Status: NOT run. No fal / World Labs / Meshy / Rodin job may run without the user's explicit OK through the lead**\n(round-3 rules: the Screen 04 authorisation covered exactly one edit, already used). Nothing in this file has been sent.\n\nPurpose: replace the PROVISIONAL local fill (OpenCV Telea inpainting + mirrored artwork texture, `make_plate06.py`;\n23.9 % of the frame: HUD bar, title banner, Benny above his ripples, th …[+2849 chars]`
+
+### 🧑 User — 2026-11-17T17:45:46.120Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/FAL_PLATE_REQUEST.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T17:45:52.398Z
+
+> 🔧 **Bash** `{"command": "git diff 752d6d8..HEAD -- src/game/match.ts src/game/cameraRig.ts src/world/course.ts src/game/Game.ts | grep \"^[+-]\" | grep -v \"^+++\\|^---\" | cut -c1-200", "description": "Review shared-file edits for SHARED_CHANGES"}`
+
+### 🧑 User — 2026-11-17T17:45:52.430Z
+
+> ↩︎ result: +import { buildMatch06 } from '../world/match06';
+> +  // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
+> +  const m06 = MATCH['06'] ? await buildMatch06(course) : null;
+> +  if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
+> +  let m06On = false;
+> +  let m06Applied = false;
+> +    if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
+> +    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+> +    if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+> +      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On; }
+> +      m06Applied = m06On;
+> +    }
+> +    // `?match06=1`: no bloom on Screen 06 under the switch (the artwork carries its own glow)
+> +    if (m06) {
+> +      if (!glow05 && !m08) bloom.strength = bloomS0;
+> +      if (m06On) bloom.strength = 0;
+> +      renderer.getDrawingBufferSize(dbs);
+> +      m06.sync(renderer, dbs.x, dbs.y);
+> +    }
+> +  /** `?match06=1` only (src/game/match.ts): over the 06 stage the camera sits at Benny's water point + this world offs …[+3893 chars]
+
+### 🤖 Claude — 2026-11-17T17:45:55.450Z
+
+Writing final captures and re-running the gameplay test with the round-3 code.
+
+### 🤖 Claude — 2026-11-17T17:46:02.811Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad && rm -rf $SP/fin && timeout 900 node scripts/capture.mjs 06 --q=match06=1 --out=$SP/fin/new >/dev/null 2>&1; timeout 900 node scripts/capture.mjs 05 06 07 08 --out=$SP/fin/def >/dev/null 2>&1; timeout 900 node scripts/capture.mjs 06 --q=match06=1 --size=1080x1920 --out=$SP/fin/and >/dev/null 2>&1; git checkout -q -- qa/capture_log.json; python3 -I -c \"\nimport numpy as np;from PIL import Image\nP='$SP'\nfor s in ['05','06','07','08']:\n  a=np.asarray(Image.open(f'{P}/fin/def/{s}.png').convert('R …[+1123 chars]`
+
+### 🧑 User — 2026-11-17T17:47:12.535Z
+
+> ↩︎ result: default 05 px diff vs step-1 HEAD capture (full frame): 0
+> default 06 px diff vs step-1 HEAD capture (full frame): 27
+> default 07 px diff vs step-1 HEAD capture (full frame): 0
+> default 08 px diff vs step-1 HEAD capture (full frame): 0
+> NEW    FULL |d|  16.2 <=20 0.791 SSIM 0.785 | BELOWHUD |d|  11.8 <=20 0.856 | LAYOUT |d|   9.0 <=20 0.862 | mean RGB approved [152.8, 131.3, 204.3] game [154.3, 125.1, 204.8]
+> BEFORE     whole   5.0% ssim 0.177 | scenery   4.1% ssim 0.196 | upper   1.4% ssim 0.132 | middle   4.5% ssim 0.146 | lower   6.5% ssim 0.276 | benny+splash   4.0% ssim 0.121
+> NEW        whole  79.1% ssim 0.785 | scenery  98.8% ssim 0.987 | upper  97.8% ssim 0.976 | middle  98.4% ssim 0.983 | lower  99.8% ssim 0.998 | benny+splash  55.2% ssim 0.525
+> match06 gameplay 8 / 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+>  M qa/capture_log_1080x1920.json
+>  M qa/match/06/06_NEW_match06.png
+> ?? qa/match/06/06_NEW_match06_android1080x1920.png
+> ?? qa/match/06/FAL_PLATE_REQUEST.md
+
+### 🤖 Claude — 2026-11-17T17:47:15.932Z
+
+Default 06 shows 27 px different from my earlier capture, although no default code changed. Checking whether that's capture noise.
+
+### 🤖 Claude — 2026-11-17T17:47:21.585Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad && python3 -I -c \"\nimport numpy as np;from PIL import Image\nP='$SP'\na=np.asarray(Image.open(f'{P}/fin/def/06.png').convert('RGB'),int);b=np.asarray(Image.open(f'{P}/proof/rainbow--def/06.png').convert('RGB'),int);c=np.asarray(Image.open('qa/match/audit/06_BEFORE_default.png').convert('RGB'),int)\nd=np.abs(a-b).max(-1);ys,xs=np.nonzero(d);print('fin vs step1',ys.min(),ys.max(),xs.min(),xs.max(),d.max())\nprint('fin vs audit',int((np.abs(a-c).max(-1)>0).sum()))\n\"; for i in 1 2; do timeout 600  …[+545 chars]`
+
+### 🧑 User — 2026-11-17T17:47:45.542Z
+
+> ↩︎ result: fin vs step1 21 104 77 786 6
+> fin vs audit 27
+> rep1-rep2 0 rep1-fin 27 rep1-step1 0
+
+### 🤖 Claude — 2026-11-17T17:47:50.375Z
+
+HUD-bar-only noise (rows 21–104, max 6 levels); a repeat capture is 0 px full frame. Starting the APK build in the background while I write the notes.
+
+### 🤖 Claude — 2026-11-17T17:47:51.174Z
+
+> 🔧 **Bash** `{"command": "grep -n \"android:debug\" package.json; grep -n \"builds\\|apk\" .gitattributes | head -3; ls builds | tail -3", "description": "Check APK build script and LFS tracking"}`
+
+### 🧑 User — 2026-11-17T17:47:51.206Z
+
+> ↩︎ result: 18:    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+> 1:# Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> 15:*.apk   filter=lfs diff=lfs merge=lfs -text
+> rainbow-debug-match08-2026-11-17c-benny.apk
+> rainbow-debug-w12-water.apk
+> rainbow-debug.apk
+
+### 🤖 Claude — 2026-11-17T17:47:54.774Z
+
+> 🔧 **Bash** `{"command": "VITE_RAINBOW_Q05=\"match06=1\" npm run android:debug > /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/apk.log 2>&1; echo EXIT $?; tail -3 /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/scratchpad/apk.log", "description": "Build debug APK with match06 switch", "timeout": 2400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T17:47:54.799Z
+
+> ↩︎ result: Command running in background with ID: bccrn1zw6. Output is being written to: /tmp/claude-0/-home-user-rainbow-/cc8a798a-3685-5cf2-8705-b58a076797c9/tasks/bccrn1zw6.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T17:48:20.824Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/NOTES.md", "content": "# Screen 06 · CREST THE RINSE ARCH — `?match06=1` (Screen 08 method) — milestone 1\n\nStatus: **in development — under review by the user. Nothing here is approved; only the user approves.**\nDefault build unchanged; everything runs only with `?match06=1` (or `matchall`). Line A only.\n\n## What `?match06=1` does\n1. **Approved view camera** locked at the game FOV 62° (`tools/match06/solve_cam06.py`, `fit_river06.py` →\n   `assets/textures/match06/cam06_locked.json`; one `MATCH_CAM['06']` line + a switch-guarded block in `ca …[+6260 chars]`
+
+### 🧑 User — 2026-11-17T17:48:20.871Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/NOTES.md (file state is current in your context — no need to Read it back)
+
