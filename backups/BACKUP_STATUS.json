@@ -1,18 +1,18 @@
 {
   "last_run": {
-    "time": "2026-11-17T00:02:30+00:00",
-    "reason": "daemon",
+    "time": "2026-11-17T00:04:03+00:00",
+    "reason": "manual:recovery-checkpoint",
     "result": "committed+pushed",
-    "files_staged": 24,
+    "files_staged": 21,
     "pushed_verified": true,
     "branch": "ccr-694bda6a-x58ntq",
-    "commit": "9c072f75b0e2623008dd57a0e49f0b6f8e6877cc",
-    "duration_s": 9
+    "commit": "1b1c94b1f9b8585ab9e2c33be3d90968bad0bc4e",
+    "duration_s": 11
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-694bda6a-x58ntq",
-  "last_verified_remote_sha": "9c072f75b0e2623008dd57a0e49f0b6f8e6877cc",
-  "last_successful_backup_utc": "2026-11-17T00:02:30+00:00",
+  "last_verified_remote_sha": "1b1c94b1f9b8585ab9e2c33be3d90968bad0bc4e",
+  "last_successful_backup_utc": "2026-11-17T00:04:03+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=2473); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-17T00:05:00+00:00"

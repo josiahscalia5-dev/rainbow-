@@ -2044,3 +2044,356 @@ While the tests run, I'll check the Playwright MCP server itself, not just the l
 
 > 🔧 **Bash** `{"command": "R=qa/pilot05/full_reference_match/recovery_s018 && cp references/05_flow_into_the_current.png \"$R/IMAGE1_ORIGINAL_APPROVED_05.png\" && cp $R/match05/05.png \"$R/IMAGE2_RECOVERED_experimental_match05_before_changes.png\" && cp $R/default/05.png \"$R/IMAGE2b_RECOVERED_protected_default_05.png\" && cmp references/05_flow_into_the_current.png \"$R/IMAGE1_ORIGINAL_APPROVED_05.png\" && sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK$' && timeout 600 python3 scripts/rainbow-autosave.py --reason manual:recovery-checkpoint --quiet; python3 -I scripts/autosave-status.py | head - …[+312 chars]`
 
+### 🧑 User — 2026-11-17T00:04:16.665Z
+
+> ↩︎ result: 13
+> AUTOSAVE OK | branch ccr-694bda6a-x58ntq | scheduler daemon | last verified backup 2026-11-17T00:04:03+00:00 (0.2 min ago) | local 1b1c94b remote 1b1c94b (match) | uncommitted 0
+> LOCAL  1b1c94b1f9b8585ab9e2c33be3d90968bad0bc4e
+> REMOTE 1b1c94b1f9b8585ab9e2c33be3d90968bad0bc4e
+> SOURCE b81cc34ae55d616e8d1cd931e51e491d67dc2b34
+
+### 🤖 Claude — 2026-11-17T00:04:19.256Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T00:04:19.269Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-17T00:04:19.704Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T00:04:19.715Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-17T00:04:21.651Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/pilot05/full_reference_match/recovery_s018/IMAGE1_ORIGINAL_APPROVED_05.png", "/home/user/rainbow-/qa/pilot05/full_reference_match/recovery_s018/IMAGE2_RECOVERED_experimental_match05_before_changes.png"], "caption": "Image 1: your original approved Screen 05, unchanged (byte copy). Image 2: the recovered playable game with ?match05=1 before any changes this session, a real 864 × 1536 Three.js capture at the locked camera.", "status": "normal"}`
+
+### 🧑 User — 2026-11-17T00:04:22.333Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/recovery_s018/IMAGE1_ORIGINAL_APPROVED_05.png → file_uuid: c48266c5-d245-4440-b735-d9f89134aa55
+>   /home/user/rainbow-/qa/pilot05/full_reference_match/recovery_s018/IMAGE2_RECOVERED_experimental_match05_before_changes.png → file_uuid: 786d49fe-9757-4b16-ab79-1b2d0d67a427
+
+### 🤖 Claude — 2026-11-17T00:04:42.285Z
+
+## Recovery report: done and verified, now continuing Screen 05
+
+| Item | Verified result |
+|---|---|
+| **Source branch** | `claude/approved-screen-implementation-g3loqu` @ **`b81cc34ae55d616e8d1cd931e51e491d67dc2b34`**. `git ls-remote` shows no newer commit, and it is untouched on GitHub. |
+| **Working branch** | `ccr-694bda6a-x58ntq`, created directly from `b81cc34`. Now at **`1b1c94b1f9b8585ab9e2c33be3d90968bad0bc4e`**; GitHub returns the same SHA. |
+| **Not merged on purpose** | `ccr-8c4acadc-iybw0n` has one extra commit, but it holds only autosave logs. The 3 `codex/*` experiment branches were left alone. The source branch and `ccr-8c4acadc` are now protected from the autosave. |
+| **Blender** | **5.3.0** installed by your setup script and actually run headless. `bpy` loads. Renders work in Workbench, EEVEE and Cycles. All 7 `.blend` files open. `benny.glb` (27 meshes), `rainbow_girl.glb` (165 meshes) and `lids05.glb` (6 paddles) import. The paddle GLB round trip is geometry-identical to the `.blend` and to the game's file. Report: `qa/tools_check/blender_transfer_s018/REPORT.md`. |
+| **Blender MCP** | **Not connected, and it can't work here.** `mcp-for-blender` needs Blender's desktop window to start its socket server, and this cloud container has no display or GPU. The command-line Blender above is the working integration. Nothing for you to do unless you want it on a desktop machine. |
+| **GitHub** | GitHub MCP is signed in as `josiahscalia5-dev`; private repo reads work. Clone, fetch and push work, with the push verified by SHA. |
+| **Playwright** | The MCP server is connected and was tested directly: WebGL2 in Chromium 153 (SwiftShader). The real game renders. Capture scripts, gameplay test and movement test all ran. |
+| **Other tools** | Node 22, npm (99 packages), TypeScript 5.9.3, Vite 5.4.21, Three.js 0.170, Capacitor 6.2.3 (Android), Android SDK 34 with build-tools 34, Java 21, Git, Git LFS (34/34 binaries real and confirmed on GitHub), Python with NumPy, Pillow, OpenCV and SciPy, ffmpeg and ImageMagick. I didn't build an APK; that's the Android specialist's step at the end. |
+| **Needs your action (optional)** | **Marble API key**: returns 401, because keys don't transfer between accounts. It's only needed for new World Labs work, so I'm not asking for it. **World Labs Atlas** and **context7**: need sign-in through claude.ai connector settings. No credits were spent. |
+| **Specialists** | **10/10** definitions present, SHA-256 unchanged. The three launched at 23:38 (environment, Benny, HUD/coins) were cut off after about 4 minutes, still measuring; none had changed game files. |
+| **Autosave** | Daemon runs every 5 minutes on the new branch. An immediate commit and push was verified (remote = local). The 13 approved references are byte-identical. The SessionStart hook re-arms the autosave and reinstalls Blender in every new session. |
+| **Screen 05** | Default capture is pixel-identical to the saved default. The protected BEFORE is pixel-identical too. `?match05=1` matches the explicit 8-switch stack exactly. Gameplay passes 8/8 with both the default and `?match05=1`; continuity passes; movement and steering frames captured. **Whole screen: 51.6% of pixels within 20 levels, mean error 34.1.** That is not a 95% visual match. |
+| **Unfinished work found** | The far-river fix (`far1/` textures) is baked. The follow-up that removes the blank mid-river patch while riding is written in `bake.py` but was never baked. That's my next step. |
+
+One honest caveat: the SessionStart hook in future sessions will still auto-merge newer `ccr-*`/`claude/*` branches; that's how the project was set up. For this session I used `--skip-resume`.
+
+Now continuing. I'll relaunch the three interrupted specialists in the background with their original briefs, then do the far-river re-bake myself.
+
+### 🤖 Claude — 2026-11-17T00:04:44.488Z
+
+> 🔧 **Bash** `{"command": "tail -25 /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/brief_benny-character-artist.txt; echo =========; tail -22 /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/brief_animation-and-gameplay-engineer.txt", "description": "Read rest of Benny and HUD briefs"}`
+
+### 🧑 User — 2026-11-17T00:04:44.541Z
+
+> ↩︎ result: You are the benny-character-artist for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work). You are executing the user's FINAL MASTER EXECUTION ORDER for Screen 05 ("05 · FLOW INTO THE CURRENT"): make the real playable 3D Screen 05 match the approved image `references/05_flow_into_the_current.png` (864 × 1536) as exactly as technically possible. This is an implementation order: do the work, measure, keep only what is closer. You cannot ask the user anything.
+> 
+> READ FIRST (they are your rules):
+> 1. `qa/pilot05/full_reference_match/COORDINATION.md` — ALL of it, including the "RESUMED 23:40" section at the end (stack URL, render slots, file ownership, how to capture and measure).
+> 2. `qa/pilot05/full_reference_match/ORDER_USER_VERBATIM.md` — your part: PART 9 (Benny: body, purple-and-white beanie, gold star, camera-facing appearance, placement), plus parts 2, 14 and phase D of part 15.
+> 3. `qa/pilot05/full_reference_match/benny/bennyseg.py` (the interrupted start of your own work: a segmentation helper) and the mask `qa/pilot05/full_reference_match/masks/benny_and_hat.png`.
+> 
+> YOUR SWITCH: `benny05` (read with `import { on05 } from '../../vfx/waterRibbon'` …[+9836 chars]
+
+### 🤖 Claude — 2026-11-17T00:04:50.451Z
+
+I'll update the roster to show this session's relaunch, then start the three specialists in the background. Each gets its original brief verbatim plus a resume header.
+
+### 🤖 Claude — 2026-11-17T00:04:56.605Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nnow='2026-11-17 ~00:08 UTC'\nd['updated_utc']=now\nd['updated_by_session']='session_018Sg3AUAHEh1rEALJbwfawQ (branch ccr-694bda6a-x58ntq, created from b81cc34)'\nfor r in d['running_now']:\n    r['launched']=now+' (RELAUNCHED by session 018Sg3AU after the account transfer; the 23:45 run was interrupted while measuring, no game file changed)'\nd['assignments_now']['_note']=(\"State at \"+now+\". Account transfer session 018Sg3AU relaunched washer-environment-modeler (env05), benny-character-artist …[+1025 chars]`
+
+### 🧑 User — 2026-11-17T00:04:56.789Z
+
+> ↩︎ result: @@ ok 10/10 specialist definitions present; all SHA-256 unchanged; running: washer-environment-modeler (recorded running
+
+### 🤖 Claude — 2026-11-17T00:05:04.907Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && for a in washer-environment-modeler benny-character-artist animation-and-gameplay-engineer; do case $a in washer*) f=env;; benny*) f=benny;; *) f=\"hud/ and coins/\";; esac; { cat <<EOF\nRESUMED RUN (account transfer, 2026-11-17 ~00:08 UTC, session 018Sg3AU, working branch ccr-694bda6a-x58ntq created from b81cc34): your previous run of EXACTLY the brief below was interrupted after about 4 minutes while you were still measuring; its scratchpad is lost and no game file had been changed by you. Re …[+955 chars]`
+
+### 🧑 User — 2026-11-17T00:05:04.982Z
+
+> ↩︎ result: 7498 relaunch_washer-environment-modeler.txt
+> 6571 relaunch_benny-character-artist.txt
+> 6801 relaunch_animation-and-gameplay-engineer.txt
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T00:05:08.405Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/relaunch_washer-environment-modeler.txt", "limit": 6}`
+
+### 🧑 User — 2026-11-17T00:05:08.433Z
+
+> ↩︎ result: 1	RESUMED RUN (account transfer, 2026-11-17 ~00:08 UTC, session 018Sg3AU, working branch ccr-694bda6a-x58ntq created from b81cc34): your previous run of EXACTLY the brief below was interrupted after about 4 minutes while you were still measuring; its scratchpad is lost and no game file had been changed by you. Read COORDINATION.md including BOTH "RESUMED" sections at the end (the newest one, 2026-11-17, records the recovery proof). If qa/pilot05/full_reference_match/env NOTES.md already exists, continue from it and do not redo finished steps; otherwise start at your first step. The recovered stack capture (pixel-identical to stack_2340/05_match05.png and to ?match05=1) is also at qa/pilot05/full_reference_match/recovery_s018/stack/05.png. The coordinator (main session) is re-baking the far-river water textures (assets/textures/water05/far1/, its own files) at the same time and also uses render slots: captures can wait for a slot, that is normal. Keep temporary files in your own folder under qa/pilot05/full_reference_match/ or under /tmp/claude-0/ (not in the repository root).
+> 2	
+> 3	----- ORIGINAL BRIEF (unchanged) -----
+> 4	You are the washer-environment-modeler for the existing RAINB …[+494 chars]
+
+### 🤖 Claude — 2026-11-17T00:05:14.777Z
+
+I'll store the relaunch briefs in the repo (`full_reference_match/briefs/`) so they're backed up and reusable by any future session, and fix the path wording.
+
+### 🤖 Claude — 2026-11-17T00:05:17.759Z
+
+> 🔧 **Bash** `{"command": "B=qa/pilot05/full_reference_match/briefs && mkdir -p $B && S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && for a in washer-environment-modeler benny-character-artist animation-and-gameplay-engineer; do sed -e 's#full_reference_match/env NOTES.md#full_reference_match/env/NOTES.md#; s#full_reference_match/benny NOTES.md#full_reference_match/benny/NOTES.md#; s#full_reference_match/hud/ and coins/ NOTES.md#full_reference_match/hud/NOTES.md or coins/NOTES.md#' $S/relaunch_$a.txt > $B/$a.md; grep -o 'full_reference_match/[a-z]*/NOTES.md[^ ]*' $B/$a …[+87 chars]`
+
+### 🧑 User — 2026-11-17T00:05:17.825Z
+
+> ↩︎ result: full_reference_match/env/NOTES.md
+> full_reference_match/benny/NOTES.md
+> full_reference_match/hud/NOTES.md
+> animation-and-gameplay-engineer.md
+> benny-character-artist.md
+> washer-environment-modeler.md
+
+### 🤖 Claude — 2026-11-17T00:05:24.564Z
+
+> 🔧 **Agent** `{"subagent_type": "washer-environment-modeler", "description": "Screen 05 tunnel and rings match (resumed)", "prompt": "You are the washer-environment-modeler for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work).\n\nYour complete brief is in the file `qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md`. Read that file FIRST, in full, and follow it exactly: it is the user's Screen 05 full-reference-match assignment for you (switch `env05`; tunnel rings, purple walls, side fittings, far tunnel; order parts 3, 4, 5, 6, 12, 14, phases B and C …[+880 chars]`
+
+### 🧑 User — 2026-11-17T00:05:24.598Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ad84c7ee93858c1d0 (internal ID - do not mention to user. Use SendMessage with to: 'ad84c7ee93858c1d0', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/ad84c7ee93858c1d0.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T00:05:29.416Z
+
+> 🔧 **Agent** `{"subagent_type": "benny-character-artist", "description": "Screen 05 Benny and hat match (resumed)", "prompt": "You are the benny-character-artist for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work).\n\nYour complete brief is in the file `qa/pilot05/full_reference_match/briefs/benny-character-artist.md`. Read that file FIRST, in full, and follow it exactly: it is the user's Screen 05 full-reference-match assignment for you (switch `benny05`; Benny's fur, knit beanie, pom-pom, gold star, proportions, placement; order part 9, parts 2 and 14, phase D), with …[+1180 chars]`
+
+### 🧑 User — 2026-11-17T00:05:29.445Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ad34d9e07f4d9f7fc (internal ID - do not mention to user. Use SendMessage with to: 'ad34d9e07f4d9f7fc', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/ad34d9e07f4d9f7fc.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T00:05:34.368Z
+
+> 🔧 **Agent** `{"subagent_type": "animation-and-gameplay-engineer", "description": "Screen 05 HUD and coins match (resumed)", "prompt": "You are the animation-and-gameplay-engineer for the existing RAINBOW game in /home/user/rainbow- (never restart it, never delete work).\n\nYour complete brief is in the file `qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md`. Read that file FIRST, in full, and follow it exactly: it is the user's Screen 05 full-reference-match assignment for you (switches `hud05` and `coins05`; top HUD + level banner, gold dollar coins look and locked-checkpoint layo …[+1235 chars]`
+
+### 🧑 User — 2026-11-17T00:05:34.392Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a2b87cbe22e9e644e (internal ID - do not mention to user. Use SendMessage with to: 'a2b87cbe22e9e644e', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/tasks/a2b87cbe22e9e644e.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-17T00:05:36.938Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "completed"}`
+
+### 🧑 User — 2026-11-17T00:05:36.948Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-17T00:05:38.626Z
+
+> 🔧 **TaskCreate** `{"subject": "Coordinator: bake far-river unseen-patch fix (far1)", "description": "Fresh probe -> verify re-bake reproduces repo textures -> bake.py far -> compare locked frame (must not worsen) + ride frames 8/17 (blank patch gone) -> install into assets/textures/water05/far1.", "activeForm": "Baking far-river unseen-patch fix"}`
+
+### 🧑 User — 2026-11-17T00:05:38.644Z
+
+> ↩︎ result: Task #7 created successfully: Coordinator: bake far-river unseen-patch fix (far1)
+
+### 🤖 Claude — 2026-11-17T00:05:39.680Z
+
+> 🔧 **Bash** `{"command": "grep -n \"raw\\|uv_river\\|opt.q\\|--q\" scripts/proj05-probe.mjs | head -20; ls qa/pilot05/proj/target/ | head -20", "description": "Check probe options and bake target folder"}`
+
+### 🧑 User — 2026-11-17T00:05:39.720Z
+
+> ↩︎ result: 3://   node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe] [--raw=DIR for the float maps]
+> 6://   uv_river.f32     864×1536×4 float32 (top row first): per pixel the river surface the camera sees when ONLY the
+> 7://                    river (+ the far tunnel wall as occluder) is drawn — ribbon: (u, s, 1 + skirt, 1);
+> 11://   uv_foam.f32      only the game's 3D foam (berm / rafts / rim / flank) drawn as id 4 over the scene depth
+> 21:const RAW = typeof opt.raw === 'string' ? opt.raw : OUT;   // the three 21 MB float maps (keep them out of git: --raw=scratch dir)
+> 22:const Q = typeof opt.q === 'string' ? opt.q : '';
+> 89:    /** two draws into one target: (1) occluders depth-only (their own vertex shaders, colour writes off), (2) writers
+> 173:  writeFileSync(`${RAW}/uv_river.f32`, await fetch('A'));
+> art_registered.png
+> coin_mask.png
+> correction.npz
+> fill_mask.png
+> report.json
+> target_05.png
+> water_mask.png
+
+### 🤖 Claude — 2026-11-17T00:05:43.657Z
+
+Before probing, I need the exact switches the original bake's probe used, otherwise a re-bake won't reproduce your textures. Searching earlier sessions:
+
+### 🤖 Claude — 2026-11-17T00:05:44.967Z
+
+> 🔧 **Bash** `{"command": "grep -ho 'node scripts/proj05-probe.mjs[^\"\\\\]*' backups/claude-sessions/*/transcript.sanitized.jsonl | sort | uniq -c | sort -rn | head -10; grep -n \"probe\" qa/pilot05/proj/NOTES.md | head -12", "description": "Find probe commands used for the existing bake"}`
+
+### 🧑 User — 2026-11-17T00:05:45.046Z
+
+> ↩︎ result: 12 node scripts/proj05-probe.mjs --out=DIR --raw=DIR                    # live river coordinates at the locked eye
+>      10 node scripts/proj05-probe.mjs [--q='switches'] [--out=qa/pilot05/proj/probe] [--raw=DIR for the float maps]
+>       2 node scripts/proj05-probe.mjs --raw=DIR`).
+>       2 node scripts/proj05-probe.mjs --q=proj05=1 --out=$SP/probe2 --raw=$SP/probe2 2>&1 | tail -1 | cut -c1-200 && python3 -c 
+>       2 node scripts/proj05-probe.mjs --q=proj05=1 --out=$SP/probe2 --raw=$SP/probe2 2>&1 | grep -c 
+>       2 node scripts/proj05-probe.mjs --q='proj05=1' --out=$S/probe --raw=$S/probe 2>&1 | tail -5; ls -la $S/probe
+>       2 node scripts/proj05-probe.mjs --out=$SP/probe --raw=$SP/probe 2>&1 | tail -5; ls -la $SP/probe
+>       2 node scripts/proj05-probe.mjs (live camera + river mesh via the QA hook window.__rainbow.qa3d(); outputs qa/pilot05/proj/probe/)
+> 10:from the locked 05 camera, using the live game's per-pixel river coordinates (`scripts/proj05-probe.mjs`). The
+> 125:node scripts/proj05-probe.mjs --out=DIR --raw=DIR                    # live river coordinates at the locked eye
+
+### 🤖 Claude — 2026-11-17T00:05:52.174Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && mkdir -p $S/probe && node scripts/proj05-probe.mjs --q='proj05=1' --out=$S/probe --raw=$S/probe 2>&1 | tail -3 | cut -c1-250; git checkout -q -- qa/capture_log.json 2>/dev/null; git status --short qa/pilot05/proj | head; ls -la $S/probe", "description": "Run fresh river probe at the locked 05 eye", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T00:06:16.139Z
+
+> ↩︎ result: probe → /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/probe {"w":864,"h":1536,"uTime":12,"ribbonRows":240,"farVerts":2783,"farMorph":0,"foam":["foam_berm","Mesh","foam_flank","foam_rafts","foam_rim05"],"state":{"
+> total 63476
+> drwxr-xr-x 2 root root     4096 Nov 17 00:06 .
+> drwx------ 3 root root     4096 Nov 17 00:05 ..
+> -rw-r--r-- 1 root root     1208 Nov 17 00:06 camera.json
+> -rw-r--r-- 1 root root  1285808 Nov 17 00:06 river05_mesh.json
+> -rw-r--r-- 1 root root 21233664 Nov 17 00:06 uv_foam.f32
+> -rw-r--r-- 1 root root 21233664 Nov 17 00:06 uv_river.f32
+> -rw-r--r-- 1 root root 21233664 Nov 17 00:06 uv_scene.f32
+
+### 🤖 Claude — 2026-11-17T00:06:24.463Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && mkdir -p $S/bake_ref $S/bake_far && python3 -I tools/proj05/bake.py $S/probe qa/pilot05/proj/target $S/bake_ref 2>&1 | tail -2 | cut -c1-300 && python3 -I tools/proj05/bake.py $S/probe qa/pilot05/proj/target $S/bake_far far 2>&1 | tail -3 | cut -c1-300 && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nS=\"$S\"\nfor n in ['proj05_E.png','proj05_F.png','proj05_N.png','proj05_T.png','proj05_A.png','proj05_D.png']:\n    a=np.asarray(Image.open('assets/textures/water05/'+n)).astype(in …[+687 chars]`
+
+### 🧑 User — 2026-11-17T00:06:46.334Z
+
+> ↩︎ result: {"A_px": 18413, "E": [1024, 1458], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.8844943576388888, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> {"E_unseen_texels": 0, "E_texels": 1494016}
+> {"A_px": 18413, "E": [1024, 1459], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.8858117985349554, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> proj05_E.png repo vs re-bake differing texels 0
+> proj05_F.png repo vs re-bake differing texels 0
+> proj05_N.png repo vs re-bake differing texels 0
+> proj05_T.png repo vs re-bake differing texels 0
+> proj05_A.png repo vs re-bake differing texels 0
+> proj05_D.png repo vs re-bake differing texels 0
+> far1/proj05_E.png committed vs new far bake: differing texels 0 alpha-only diff texels 0 shape (1459, 1024, 4)
+> far1/proj05_F.png committed vs new far bake: differing texels 0 alpha-only diff texels 0 shape (512, 512, 4)
+
+### 🤖 Claude — 2026-11-17T00:06:57.833Z
+
+> 🔧 **Bash** `{"command": "R=qa/pilot05/full_reference_match/recovery_s018/move_match05 && S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('$R/move_10.png').convert('RGB').crop((0,380,864,1100)); b=Image.open('$R/move_20.png').convert('RGB').crop((0,380,864,1100))\nW=Image.new('RGB',(864*2+12,720),(255,255,255)); W.paste(a,(0,0)); W.paste(b,(876,0)); W.resize((W.width//2*2//2*1, W.height//2*2//2*1)).save('$S/ride_1020.png')\"; cat $R/move_log.json | head -c 600", "description": "Crop ride frames 10 and 20 for inspec …[+6 chars]`
+
+### 🧑 User — 2026-11-17T00:06:58.196Z
+
+> ↩︎ result: {
+>  "q": "match05=1",
+>  "frames": [
+>   {
+>    "file": "qa/pilot05/full_reference_match/recovery_s018/move_match05/move_00.png",
+>    "d": 0,
+>    "s": 132.438,
+>    "cam": [
+>     1.92,
+>     -37.94,
+>     -68.28
+>    ],
+>    "lat": 0
+>   },
+>   {
+>    "file": "qa/pilot05/full_reference_match/recovery_s018/move_match05/move_05.png",
+>    "d": 5,
+>    "s": 137.572,
+>    "cam": [
+>     1.97,
+>     -38.1,
+>     -71.98
+>    ],
+>    "lat": 0
+>   },
+>   {
+>    "file": "qa/pilot05/full_reference_match/recovery_s018/move_match05/move_10.png",
+>    "d": 10,
+>    "s": 142.522,
+>    "cam": [
+>     2.02,
+>     -38.3,
+>     -76.84
+>    ],
+>    "lat": 0
+>   },
+>   {
+>    "file
+
+### 🤖 Claude — 2026-11-17T00:07:01.122Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/ride_1020.png"}`
+
+### 🧑 User — 2026-11-17T00:07:01.154Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:07:07.708Z
+
+> 🔧 **Bash** `{"command": "grep -n \"projdbg05\\|uPjDbg\\|DBG\" src/vfx/waterRibbon.ts | head -20", "description": "Find debug mode in water shader"}`
+
+### 🧑 User — 2026-11-17T00:07:07.785Z
+
+> ↩︎ result: 415:uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
+> 1478:      if (uPjDbg > 0.5) tgt = mix(mix(vec3(0.9, 0.15, 0.1), vec3(0.15, 0.35, 0.95), wNx), vec3(0.15, 0.85, 0.2), wEx) * (0.55 + 0.45 * dot(tgt, vec3(0.33)));
+> 1714:  u.uPjDbg = { value: qs.get('projdbg05') === '1' ? 1 : 0 };
+
+### 🤖 Claude — 2026-11-17T00:07:10.621Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "offset": 1380, "limit": 110}`
+
+### 🧑 User — 2026-11-17T00:07:10.647Z
+
+> ↩︎ result: 1380	    float du = lat - uBenny.y;
+> 1381	    float dv = s - uBenny.x;
+> 1382	    float rb = uBennyR;
+> 1383	    float d = length(vec2(du, dv));
+> 1384	    if (d < rb * 8.0) {
+> 1385	      float k = uBenny.z;
+> 1386	      float rr = max(0.0, d - rb * 0.92);
+> 1387	      float rings = smoothstep(0.75, 1.0, 0.5 + 0.5 * sin(d * 5.0 - uTime * 9.0)) * exp(-rr * 0.55) * smoothstep(rb, rb * 1.3, d);
+> 1388	      // 05 (wave 7): no rings and no V lines — in the magnified near field they drew "∩" pool-ripple
+> 1389	      // arcs; the diagonal pink wake sweeps + fanning speed streaks carry the wake there instead
+> 1390	      rings *= 1.0 - sw;
+> 1391	      float bk = max(-dv, 0.0);
+> 1392	      float wakeV = exp(-abs(abs(du) - bk * 0.42 - rb * 0.95) * 6.0) * exp(-bk * 0.18) * step(dv, 0.0) * (1.0 - sw);
+> 1393	      col += uCyanBright * 0.18 * (1.0 - smoothstep(0.0, rb * 0.3, rr)) * k;
+> 1394	      col += mix(uCyanBright, vec3(1.3), 0.4) * (rings * 0.22 + wakeV * 0.35) * k * (1.0 - pinkM * 0.5);
+> 1395	    }
+> 1396	  }
+> 1397	
+> 1398	  // 04: exactly five glowing chevrons pointing downhill (direction of travel)
+> 1399	  if (uChevron.z > 0.5) {
+> 1400	    float x = u * vHalfW;
+> 1401	    for (int k = 0; k < 5; k++) {
+> 1402	      floa …[+5608 chars]
+
+### 🤖 Claude — 2026-11-17T00:07:18.327Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && mkdir -p $S/ride_dbg && node scripts/proj05-move.mjs --q='match05=1&projdbg05=1' --out=$S/ride_dbg --d=10,20 2>&1 | tail -1 | cut -c1-80; R=qa/pilot05/full_reference_match/recovery_s018/move_match05; python3 -I -c \"\nfrom PIL import Image\nims=[Image.open(p).convert('RGB').crop((0,380,864,1100)).resize((432,360)) for p in ('$R/move_10.png','$S/ride_dbg/move_10.png','$R/move_20.png','$S/ride_dbg/move_20.png')]\nW=Image.new('RGB',(864+8,728),(255,255,255))\nfor i,im in enumerate(ims): W.paste(im, …[+128 chars]`
+

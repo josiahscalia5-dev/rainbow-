@@ -503,8 +503,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 14349,
-   "sha256": "456553a86ccf16e33b45a93460d82a6e7ee0c52b15f02cc102c5f1caa99b7d0d"
+   "bytes": 14903,
+   "sha256": "4fd4ea7d3ece1b008fe058f3edffab6a6403b633a78884e215f653cb01ade047"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -524,7 +524,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "3c369abc0fefd3323d2b077f7b5ac6799af71d12da7ed7efe2608ea22622377b"
+   "sha256": "5cb3a58c12e14c6f2ee8947916cb87bf78572f628cbcfa70aa17c70760dfa8f5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1345,6 +1345,61 @@
    "path": "qa/pilot05/full_reference_match/benny/cap/hide/05.png",
    "bytes": 2180494,
    "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/game_hat_x3.png",
+   "bytes": 814507,
+   "sha256": "9ac529ed9d7571dc1ee5979959a12d64f8bb9c9f9cc8292a0fadc6b59a52766e"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/mask_crop.png",
+   "bytes": 184145,
+   "sha256": "a58defaf3710524a5ead4e38b4d78a3eedd1a01c1619fc6aaf66302269d690a6"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/ref_hat_x3.png",
+   "bytes": 1041838,
+   "sha256": "4bb186c523a4c4c71dfa70aa9606f7413eea1624803dd5f8d7ba7c1feb9e03cd"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/side_before.png",
+   "bytes": 2354294,
+   "sha256": "4c2204e82085273b3a49eb8c7a8353a5213a12a3c9b7a3263418bcc4b4f9b43d"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/briefs/animation-and-gameplay-engineer.md",
+   "bytes": 6807,
+   "sha256": "1f711f37984df9b3660c97347539ce8e645356f447b99f077f33c4d7e7d42416"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/briefs/benny-character-artist.md",
+   "bytes": 6571,
+   "sha256": "7f6d9460890e255ad4387073f4b11d0e0821766041ec25eb533a3035d2f4dcf0"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md",
+   "bytes": 7498,
+   "sha256": "8ceed70c0f6db4243646078c8480ba34e7d3f25a0590564887a2e4fd3a378596"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/before_FULL_FRAME_METRICS.json",
+   "bytes": 421,
+   "sha256": "a59bb28bb451b3256bc78ad7a1b30aaa222d345202074c21b3de57cd6f556b33"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/before_REGION_METRICS.json",
+   "bytes": 2526,
+   "sha256": "d9f70f39731246687d15509575f79288a1951935a8a478911664c9a9d0c87baf"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/side.png",
+   "bytes": 1316616,
+   "sha256": "38c18f5ae67a2f007fc2d29a0d3abec6441a156fc49a576119d99128a99cdbc8"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/env/work/side_top.png",
+   "bytes": 2227283,
+   "sha256": "fb2628dbcb08bb540a1b86a4a338444b014522f6a969ef0e7af3bc1f7e1a4db6"
   },
   {
    "path": "qa/pilot05/full_reference_match/masks/benny_and_hat.png",
