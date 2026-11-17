@@ -584,7 +584,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "19cc446c434a8a42aa18851b678721fc07d1a6d5db2f7e70fcaf44441f42b209"
+   "sha256": "ae09d964a95ed1ef30cce7d45376a5c4dc1bffe5d47aaf540a71d51cbebcf6ab"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1415,6 +1415,11 @@
    "path": "qa/pilot05/full_reference_match/benny/cap/hide/05.png",
    "bytes": 2180494,
    "sha256": "02d41bc4d739bdd3229e8de605b289ce1b74b8873865e23618d736aecff66b5a"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/benny/work/bake.py",
+   "bytes": 7595,
+   "sha256": "c2230ad3d3e563a60cdc0ad93478c7c688f39ce411b0fac1b86bfa987eb1a3b4"
   },
   {
    "path": "qa/pilot05/full_reference_match/benny/work/bands.py",
@@ -8458,8 +8463,8 @@
   },
   {
    "path": "src/characters/benny/benny05.ts",
-   "bytes": 15517,
-   "sha256": "d9879a628f1c47297ec62c538ec7f4e36e605b858be358bf1d397da6bc87a208"
+   "bytes": 15516,
+   "sha256": "59700eec0f89198a1821c24147593b16fcdbf9a8780014482b1812a7895ef04c"
   },
   {
    "path": "src/characters/benny/build.ts",
@@ -8558,8 +8563,8 @@
   },
   {
    "path": "src/ui/hud.ts",
-   "bytes": 18022,
-   "sha256": "05c764c5f954c8dbc60d8c56a23207873d8bf5363d9c266836f7cd2e3da117e8"
+   "bytes": 17864,
+   "sha256": "5804b5dcda0eb27f5c5971a6605837113464797f368ffc3733b3d606738e754d"
   },
   {
    "path": "src/vfx/bubbles.ts",
@@ -8638,8 +8643,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 64851,
-   "sha256": "14f8e3834378269a12429cb242ddac81af55cbe58df887752a03a684eae8b06d"
+   "bytes": 64873,
+   "sha256": "ca1ebecda01e1b5693dff84a2c0257d8c8bec70897509a49ea9393066cb25819"
   },
   {
    "path": "src/world/far05.ts",

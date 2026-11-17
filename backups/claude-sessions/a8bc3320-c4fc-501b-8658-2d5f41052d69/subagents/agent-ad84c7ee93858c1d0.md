@@ -1018,3 +1018,19 @@ Ring A improved 53.6 → 6.6 px, B 27.4 → 14.4, C 10.6 → 7.6. Let me refine 
 > ↩︎ result: B extra (side, up, axial) relative to this probe: [-0.953 -0.226 -0.16 ] edge err 27.3 -> 9.9 px
 > A extra (side, up, axial) relative to this probe: [-0.702  0.295 -0.199] edge err 44.3 -> 12.1 px
 
+### 🤖 Claude — 2026-11-17T00:28:05.696Z
+
+Refining knots (A up 0.30, B side −0.95 / up −0.23, B depth 38.35), then probe → bake → capture in one run.
+
+### 🤖 Claude — 2026-11-17T00:28:14.753Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\na=\"\"\"    dB: 38.5,                                     // ring B: tunnel coordinate − sCam05 (was 40)\"\"\"\nb=\"\"\"    dB: 38.35,                                    // ring B: tunnel coordinate − sCam05 (was 40)\"\"\"\nassert a in s; s=s.replace(a,b)\na=\"\"\"    side: [[3, 0], [17, -0.715], [23, -0.715], [35, -1.006], [42, -1.006], [54, -0.6]] as [number, number][],\n    up: [[6, 0], [17, 0.42], [23, 0.42], [30, 0]] as [number, number][],\"\"\"\nb=\"\"\"    side: [[3, 0], [17, -0.715], …[+1471 chars]`
+
+### 🧑 User — 2026-11-17T00:28:17.660Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:28:22.309Z
+
+> 🔧 **Bash** `{"command": "time /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/cycle.sh e2 2>&1 | tail -20", "description": "Run probe-bake-capture cycle e2", "timeout": 900000}`
+

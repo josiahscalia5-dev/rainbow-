@@ -30,7 +30,7 @@ const ICON05 = {
 const H05 = {
   bar: { x0: 33, y0: 13, x1: 825, y1: 100, border: 2, shadow: true },
   num: { size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 },
-  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 700, track: 0.0, skew: -4, italic: true, dy: 1, stroke: 0 },
+  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 700, track: 0.0, skew: -4, italic: true, dy: 0, stroke: 0 },
 };
 /** absolute position inside the bar's padding box, from approved frame px */
 const bx = (x: number) => U(x - H05.bar.x0 - H05.bar.border);

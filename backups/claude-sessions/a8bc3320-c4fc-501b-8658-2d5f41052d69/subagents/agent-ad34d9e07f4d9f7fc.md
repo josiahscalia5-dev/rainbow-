@@ -1742,3 +1742,13 @@ Checkpoint written. Continuing with geometry iteration 3.
 > 1005 APP 281-562 w282  GAME 277-558 w282
 > 1020 APP 263-580 w318  GAME 250-603 w354
 
+### 🤖 Claude — 2026-11-17T00:28:18.019Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i 's/^  brimW: 1.02,/  brimW: 1.0,/' src/characters/benny/benny05.ts && grep -n \"brimW:\" src/characters/benny/benny05.ts; cat > qa/pilot05/full_reference_match/benny/work/bake.py <<'EOF'\n\"\"\"benny05 bake: approved Screen-05 pixels -> albedo maps in each Benny part's own UV space.\nusage: python3 bake.py <run_dir with uv.f32, calA.png (k=0.2), calB.png (k=0.6)> <out_dir> [--normals]\nPer pixel: L = inverse post chain (display -> linear scene radiance; exact port of PROJ05_INVERSE, bloom is off on 05),\nE = (L_B - L_A)/(kB - kA), S = L_A - kA*E  (ra …[+7445 chars]`
+
+### 🧑 User — 2026-11-17T00:28:18.101Z
+
+> ↩︎ result: 59:  brimW: 1.0,
+> written
+> [This command modified 1 file you've previously read: src/characters/benny/benny05.ts. Call Read before editing.]
+

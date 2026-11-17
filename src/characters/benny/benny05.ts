@@ -56,7 +56,7 @@ export const HAT05 = {
   /** star face scale (its own x, y) */
   starScale: [0.96, 0.89] as [number, number],
   /** cuff outer radius factor (approved cuff ≈ 297 px wide vs 291) */
-  brimW: 1.02,
+  brimW: 1.0,
   /** crown dome height (GLB 0.53) */
   crownH: 0.58,
 };

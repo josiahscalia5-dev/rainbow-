@@ -1570,3 +1570,15 @@ Writing checkpoint notes now; tsc passed with no errors, so the touched sources 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/ui/hud.ts'\ns=open(p).read()\ns=s.replace(\"\"\"const HUD05 = on05('hud05');\n\"\"\",\"\"\"const HUD05 = on05('hud05');\n// hud05 only: the lighter Baloo 2 weight (same font package as the 700 / 800 above; no new package)\nif (HUD05) void import('@fontsource/baloo-2/600.css');\n\"\"\")\ns=s.replace(\"background: linear-gradient(180deg, #fff6d8 0%, #ffe9b0 45%, #f6cf8c 100%); -webkit-background-clip: text; background-clip: text; color: transparent;\\n  filter: drop-shadow(0 ${U(1.2)} 0 rgba(90,10,70,0.85)); }\",\n \"background: line …[+1289 chars]`
 
+### 🧑 User — 2026-11-17T00:28:08.788Z
+
+> ↩︎ result: 35:  banner: { cx: 433, y0: 113, h: 68, minW: 626, size: 44, weight: 700, track: 0.0, skew: -4, italic: true, dy: 1, stroke: 0 },
+> 70:  ${H05.banner.stroke ? `-webkit-text-stroke: ${U(H05.banner.stroke)} rgba(105,25,85,0.9);` : ''} filter: drop-shadow(0 ${U(1.2)} 0 rgba(90,10,70,0.85)); }
+> 127:const HEART = `<svg class="icon" viewBox="0 0 64 64"><defs><radialGradient id="hg" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ffd0e4"/><stop offset="0.45" stop-color="#ff5f9e"/><stop offset="1" stop-color="#e01e6a"/></radialGradient></defs><path d="M32 57 C10 41 4 30 4 20 C4 11 11 5 19 5 C25 5 29 8 32 13 C35 8 39 5 45 5 C53 5 60 11 60 20 C60 30 54 41 32 57Z" fill="url(#hg)" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><ellipse cx="20" cy="17" rx="7" ry="4.5" fill="#fff" opacity=".75" transform="rotate(-25 20 17)"/></svg>`;
+> g700: HUD 24.88 bar 18.22 banner 35.21 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [150, 133, 735, 172] g0 [[150, 133, 174, 159, 342], [175, 133, 199, 159, 300]]
+> g600: HUD 26.02 bar 18.22 banner 38.10 | 55 [[165, 36, 187, 68, 454]] cnt [[498, 36, 513, 67, 300]] [498, 35, 617, 73] ban [154, 133, 735, 172] g0 [[154, 13 …[+450 chars]
+
+### 🤖 Claude — 2026-11-17T00:28:17.397Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/ui/hud.ts'\ns=open(p).read()\ns=s.replace(\"\"\"// hud05 only: the lighter Baloo 2 weight (same font package as the 700 / 800 above; no new package)\nif (HUD05) void import('@fontsource/baloo-2/600.css');\n\"\"\",\"\")\nopen(p,'w').write(s)\nEOF\nN=\"{ size: 53, weight: 700, track: 0.0, hX: 162, cX: 497.5, top: 26.5 }\"; b(){ echo \"{ cx: 433, y0: 113, h: 68, minW: 626, size: $1, weight: 700, track: $2, skew: $3, italic: true, dy: $4, stroke: 0 }\"; }\npython3 /tmp/claude-0/hc05/sweep.py \"a|$N|$(b 44 0.0 -4 1)\" \"b|$N|$(b 43 0.4  …[+199 chars]`
+
