@@ -895,3 +895,53 @@ Pictures follow the project's normal convention (plain git, no LFS rule for PNG)
 
 > 🔧 **Bash** `{"command": "VITE_RAINBOW_Q05=\"match08=1&camclear=1\" npm run android:debug > /tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/apk.log 2>&1; tail -3 /tmp/claude-0/-home-user-rainbow-/b82e7343-2c0a-5df7-94d5-04ceaff94d74/scratchpad/apk.log; ls -la android/app/build/outputs/apk/debug/", "description": "Build debug APK with the switches", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T18:01:46.952Z
+
+> ↩︎ result: BUILD SUCCESSFUL in 2m 19s
+> 82 actionable tasks: 82 executed
+> total 22360
+> drwxr-xr-x 2 root root     4096 Nov 17 18:01 .
+> drwxr-xr-x 3 root root     4096 Nov 17 18:01 ..
+> -rw-r--r-- 1 root root 22882999 Nov 17 18:01 app-debug.apk
+> -rw-r--r-- 1 root root      372 Nov 17 18:01 output-metadata.json
+
+### 🤖 Claude — 2026-11-17T18:01:50.679Z
+
+> 🔧 **Bash** `{"command": "cp android/app/build/outputs/apk/debug/app-debug.apk builds/rainbow-debug-08camclear-2026-11-17-r3.apk && unzip -p builds/rainbow-debug-08camclear-2026-11-17-r3.apk 'assets/public/assets/*.js' 2>/dev/null | grep -o 'match08=1&camclear=1' | head -1; git check-attr filter builds/rainbow-debug-08camclear-2026-11-17-r3.apk; sha256sum builds/rainbow-debug-08camclear-2026-11-17-r3.apk", "description": "Copy APK and confirm switch baked in"}`
+
+### 🧑 User — 2026-11-17T18:01:50.922Z
+
+> ↩︎ result: match08=1&camclear=1
+> builds/rainbow-debug-08camclear-2026-11-17-r3.apk: filter: lfs
+> fa4ae363f2e181fa11dd8efa57a03aa5444b7dee14443c342f63127533130a47  builds/rainbow-debug-08camclear-2026-11-17-r3.apk
+
+### 🤖 Claude — 2026-11-17T18:01:52.322Z
+
+Now writing STATUS.md, SHARED_CHANGES.md and the NOTES update.
+
+### 🤖 Claude — 2026-11-17T18:01:53.717Z
+
+> 🔧 **Bash** `{"command": "ls qa/gameplay_video/SHARED_CHANGES.md 2>/dev/null; git diff 5965a01 --stat -- src/game/Game.ts src/game/cameraRig.ts 2>/dev/null | tail -3; git log --oneline -1 5965a01 2>/dev/null", "description": "Check base for shared changes list"}`
+
+### 🧑 User — 2026-11-17T18:01:53.787Z
+
+> ↩︎ result: src/game/Game.ts      | 12 +++++++-
+>  src/game/cameraRig.ts | 80 +++++++++++++++++++++++++++++++++++++++++++++++++--
+>  2 files changed, 89 insertions(+), 3 deletions(-)
+> 5965a01b autosave: Rainbow 2026-11-17 15:28 UTC
+
+### 🤖 Claude — 2026-11-17T18:02:20.969Z
+
+> 🔧 **Bash** `{"command": "cat > qa/gameplay_video/SHARED_CHANGES.md <<'EOF'\n# Shared-code changes of the camera specialist (`?camclear=1`) — for the lead's integration check\n\nBase before camclear: commit `5965a01`. Everything below runs ONLY when `camclear=1` (or `matchall=1`) is in the URL /\n`VITE_RAINBOW_Q05`; without it nothing is created or changed (default build 0 px, `match08=1` 0 px).\n\n| File | Change | Guard |\n|---|---|---|\n| `src/game/camClear.ts` (new, owned) | see-through dither for rings / lids / gold lips / 03 funnel / foam banks only between the view and Benny or right at the lens | ` …[+5754 chars]`
+
+### 🧑 User — 2026-11-17T18:02:26.119Z
+
+> ↩︎ result: Uploading LFS objects: 100% (1/1), 23 MB | 0 B/s, done.
+> 0f12867b206eb3dbbc39a725daf9a737d54eaf92
+> 0f12867b206eb3dbbc39a725daf9a737d54eaf92	refs/heads/claude/rainbow-s08-camclear-c3
+> fa4ae363f2 * builds/rainbow-debug-08camclear-2026-11-17-r3.apk
+
+### 🤖 Claude — 2026-11-17T18:02:30.420Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:milestone 2>&1 | tail -2; python3 -I scripts/autosave-status.py | head -1; git ls-remote origin refs/heads/claude/rainbow-s08-camclear-c2 | cut -c1-8; git rev-parse HEAD; git ls-remote origin refs/heads/claude/rainbow-s08-camclear-c3 | cut -f1", "description": "Final autosave and verification", "timeout": 300000}`
+

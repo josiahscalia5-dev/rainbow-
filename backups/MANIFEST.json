@@ -609,7 +609,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11089,
-   "sha256": "14437c3ef23adb06e0c2300f0e475bc63510e98296b6496e5edaafefe2b98109"
+   "sha256": "f4bec3bf0666fe1d0db7c2aaa02c852fddb315aa8b835e8807f4088d7e3ea787"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -660,6 +660,11 @@
    "path": "backups/source-package/Rainbow_GitHub_Autosave_5_Minute_Claude_Prompt.md",
    "bytes": 11339,
    "sha256": "61a87dbca60197b2bdffff404675db19b2bdce88635693f738d4883c023fed3a"
+  },
+  {
+   "path": "builds/rainbow-debug-08camclear-2026-11-17-r3.apk",
+   "bytes": 22882999,
+   "sha256": "fa4ae363f2e181fa11dd8efa57a03aa5444b7dee14443c342f63127533130a47"
   },
   {
    "path": "builds/rainbow-debug-T2-default.apk",
@@ -1133,8 +1138,18 @@
   },
   {
    "path": "qa/gameplay_video/NOTES.md",
-   "bytes": 2911,
-   "sha256": "b980e5588918a72726e1353c82905007c15925f49eb2d9c91f5f00212bb81176"
+   "bytes": 3903,
+   "sha256": "a5b8e913fd0692bbdfd46d636fcec6019b412b2b326fc0929e128e8bdcb20840"
+  },
+  {
+   "path": "qa/gameplay_video/SHARED_CHANGES.md",
+   "bytes": 1376,
+   "sha256": "7c3bc3346c986dab10ed70dec82c75849b885f6a1fca3e68d505e36105a4a5c7"
+  },
+  {
+   "path": "qa/gameplay_video/STATUS.md",
+   "bytes": 3247,
+   "sha256": "4691ba80ead0324c5be81fe3291eb016ba4b99ecff99512c99b20df186000939"
   },
   {
    "path": "qa/gameplay_video/compare_r3/v04.0s_03_1_video.png",
