@@ -3378,3 +3378,178 @@ While that runs, a quick look at the two Screen 08 specialists' progress on GitH
 
 > 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; until grep -q ALLDONE $R/cap/done.txt 2>/dev/null; do sleep 20; done; grep '^{' $R/clips/log.txt", "description": "Block until all clips are recorded", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-17T20:51:31.743Z
+
+> ↩︎ result: Command did not complete within its 600s timeout and was moved to the background (ID: byjgc8y7n). Output is being written to: /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/tasks/byjgc8y7n.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. No output had been read from it when it was moved. A program that buffers its output, or a pipe into one such as tail, can keep the output file empty until the command finishes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-17T20:52:26.502Z
+
+> 🔧 **Bash** `{"command": "wc -l src/ui/hud.ts; grep -n \"export\\|function\\|font\\|scale\\|style\\|clamp\\|vw\\|vh\\|px\" src/ui/hud.ts | head -40; echo ===; git show origin/claude/rainbow-s05-match-c4:src/ui/hud.ts | wc -l; git diff --stat origin/ccr-067047f0-up5d1m origin/claude/rainbow-s05-match-c4 -- src/ui/ assets/textures/hud05/", "description": "Inspect current HUD and Screen 05 HUD match size"}`
+
+### 🧑 User — 2026-11-17T20:52:26.596Z
+
+> ↩︎ result: 138 src/ui/hud.ts
+> 5:import '@fontsource/baloo-2/700.css';
+> 6:import '@fontsource/baloo-2/800.css';
+> 11::root { --u: min(1vh, calc(100vw / 56.25)); }
+> 12:#hud { position: fixed; inset: 0; pointer-events: none; font-family: 'Baloo 2', system-ui, sans-serif; z-index: 10;
+> 25:#hud .num { font-weight: 700; font-size: calc(var(--u) * 2.75); letter-spacing: calc(var(--u)*0.05); text-shadow: 0 calc(var(--u)*0.15) 0 rgba(60,0,100,0.5); }
+> 26:#hud .plus { font-weight: 800; font-size: calc(var(--u) * 3.4); line-height: 1; margin-left: calc(var(--u)*0.6); }
+> 36:#hud .banner span { font-weight: 800; font-style: italic; font-size: calc(var(--u) * 2.45); letter-spacing: calc(var(--u)*0.06);
+> 45:#hud .victory .pill span { font-weight: 800; font-size: calc(var(--u) * 3.35); line-height: 1.02; color: #ffe9a6; letter-spacing: calc(var(--u)*0.05);
+> 51:#hud .victory .laurel.r { right: calc(var(--u)*1.0); transform: scaleX(-1); }
+> 53:@keyframes rbPop { from { transform: translateX(-50%) scale(0.2); opacity: 0; } to { transform: translateX(-50%) scale(1); opacity: 1; } }
+> 55:  font-weight: 800; font-size: calc(var(--u)*2.2); color: #fff; padding: calc(var(--u)*0.6) calc(var(--u)*2.4); border-radius: calc(var(--u)* …[+1655 chars]
+
+### 🤖 Claude — 2026-11-17T20:52:34.697Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; tail -5 $R/cap/done.txt; for d in $R/clips/*/; do echo \"$(basename $d): $(ls $d | grep -c jpg)/151\"; done | tr '\\n' ' '; echo; grep '^{' $R/clips/log.txt | cut -c1-160; date -u +%H:%M", "description": "Check recording progress"}`
+
+### 🧑 User — 2026-11-17T20:52:34.810Z
+
+> ↩︎ result: clip 04 done
+> clip 01 done
+> clip 05 done
+> clip 06 done
+> clip 02 done
+> 01: 151/151 02: 151/151 03: 46/151 04: 151/151 05: 151/151 06: 151/151 07: 105/151 
+> {"id":"04","frames":151,"stages":["04","05"],"sec":216.8,"errors":[]}
+> {"id":"01","frames":151,"stages":["01","02"],"sec":326.651,"errors":[]}
+> {"id":"05","frames":151,"stages":["05"],"sec":370.401,"errors":[]}
+> {"id":"06","frames":151,"stages":["06","07"],"sec":163.871,"errors":[]}
+> {"id":"02","frames":151,"stages":["02","03"],"sec":319.353,"errors":[]}
+> 20:52
+
+### 🤖 Claude — 2026-11-17T20:52:38.137Z
+
+Six of eleven clips are done, with no errors. Let me spot-check one finished clip frame to make sure the recording looks right (Screen 06, mid-steer):
+
+### 🤖 Claude — 2026-11-17T20:52:40.925Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('$R/clips/06/f%04d.jpg'%i).resize((270,480)) for i in (0,70,140)]\ns=Image.new('RGB',(830,480),(20,8,40))\nfor k,im in enumerate(ims): s.paste(im,(k*280,0))\ns.save('$R/inspect/clip06_check.jpg',quality=85)\"; echo ok", "description": "Make a small check sheet of clip frames"}`
+
+### 🧑 User — 2026-11-17T20:52:41.096Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T20:52:43.897Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/inspect/clip06_check.jpg"}`
+
+### 🧑 User — 2026-11-17T20:52:43.936Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:53:09.263Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/tools/assemble_tour.py", "old_string": "    b = work / f\"{sid}_now.mp4\"\n    run([\"ffmpeg\", \"-y\", \"-hide_banner\", \"-loglevel\", \"error\", \"-framerate\", \"30\", \"-i\", str(clips / sid / \"f%04d.jpg\"), \"-vf\",", "new_string": "    b = work / f\"{sid}_now.mp4\"\n    # keep only the frames that are still on THIS screen (a ride can reach the next screen, which on a single-screen\n    # branch shows that screen's old default look and would be misleading)\n    import j …[+380 chars]`
+
+### 🧑 User — 2026-11-17T20:53:09.317Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/tools/assemble_tour.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T20:53:11.045Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; for s in 01 02 04 05 06; do python3 -I -c \"\nimport json;r=json.load(open('$R/clips/$s/rec.json'));k=1\nfor f in r['frames']:\n  if f['stage']!='$s': break\n  k=f['i']+1\nprint('$s keeps',k,'frames =',round(k/30,1),'s; first frame stage',r['start']['stage'],r['start']['mode'])\"; done", "description": "Check how many frames each clip keeps"}`
+
+### 🧑 User — 2026-11-17T20:53:11.212Z
+
+> ↩︎ result: 01 keeps 25 frames = 0.8 s; first frame stage 01 intro
+> 02 keeps 147 frames = 4.9 s; first frame stage 02 intro
+> 04 keeps 81 frames = 2.7 s; first frame stage 04 ride
+> 05 keeps 151 frames = 5.0 s; first frame stage 05 ride
+> 06 keeps 120 frames = 4.0 s; first frame stage 06 ride
+
+### 🤖 Claude — 2026-11-17T20:53:19.999Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/tools/assemble_tour.py", "old_string": "    keep = 1\n    for f in rec[\"frames\"]:\n        if f[\"stage\"] != sid:\n            break\n        keep = f[\"i\"] + 1", "new_string": "    keep = len(rec[\"frames\"]) + 1\n    if sid in (\"04\", \"05\", \"06\", \"07\", \"08\"):\n        keep = 1\n        for f in rec[\"frames\"]:\n            if f[\"stage\"] != sid:\n                break\n            keep = f[\"i\"] + 1"}`
+
+### 🧑 User — 2026-11-17T20:53:20.032Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/tools/assemble_tour.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T20:53:22.657Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; python3 -I - <<EOF\nfrom PIL import Image\nimport glob\nrefs={p.split('/')[-1][:2]:p for p in glob.glob('references/[01][0-9]_*.png')}\nrows=[]\nfor k in ['04','05','06','07','08']:\n    im=Image.open(refs[k]).convert('RGB'); rows.append(im.crop((0,0,864,int(0.13*1536))))\ns=Image.new('RGB',(864,sum(r.height+6 for r in rows)),(0,0,0)); y=0\nfor r in rows: s.paste(r,(0,y)); y+=r.height+6\ns.save('$R/inspect/hud_approved.png')\nEOF\necho ok", "description": "Stack approved HUD strips of 04-08 for in …[+10 chars]`
+
+### 🧑 User — 2026-11-17T20:53:23.076Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-17T20:53:25.599Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/inspect/hud_approved.png"}`
+
+### 🧑 User — 2026-11-17T20:53:25.652Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T20:53:34.412Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; for d in $R/clips/*/; do echo -n \"$(basename $d): $(ls $d | grep -c jpg)  \"; done; echo; tail -3 $R/cap/done.txt; date -u +%H:%M", "description": "Check recording progress"}`
+
+### 🧑 User — 2026-11-17T20:53:34.553Z
+
+> ↩︎ result: 01: 151  02: 151  03: 83  04: 151  05: 151  06: 151  07: 143  
+> clip 05 done
+> clip 06 done
+> clip 02 done
+> 20:53
+
+### 🤖 Claude — 2026-11-17T20:53:44.041Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/ui/hud.ts"}`
+
+### 🧑 User — 2026-11-17T20:53:44.056Z
+
+> ↩︎ result: 1	/**
+> 2	 * DOM HUD overlay (never painted into the 3D world). Sizes use a 9:16 frame unit `--u`
+> 3	 * (1u = 1% of the portrait frame height) so the layout matches the 864×1536 references.
+> 4	 */
+> 5	import '@fontsource/baloo-2/700.css';
+> 6	import '@fontsource/baloo-2/800.css';
+> 7	import type { StageId } from '../world/course';
+> 8	import { STAGE_TITLES } from '../world/course';
+> 9	
+> 10	const CSS = `
+> 11	:root { --u: min(1vh, calc(100vw / 56.25)); }
+> 12	#hud { position: fixed; inset: 0; pointer-events: none; font-family: 'Baloo 2', system-ui, sans-serif; z-index: 10;
+> 13	  display: flex; justify-content: center; }
+> 14	#hud .frame { position: relative; width: calc(var(--u) * 56.25); height: 100%; }
+> 15	#hud .bar { position: absolute; top: calc(var(--u) * 1.15 + env(safe-area-inset-top)); left: calc(var(--u) * 2.3); right: calc(var(--u) * 2.3);
+> 16	  height: calc(var(--u) * 5.5); border-radius: calc(var(--u) * 2.8);
+> 17	  background: linear-gradient(180deg, rgba(150,60,200,0.72), rgba(92,22,150,0.78));
+> 18	  border: calc(var(--u) * 0.22) solid rgba(255,220,255,0.55);
+> 19	  box-shadow: inset 0 calc(var(--u)*0.35) calc(var(--u)*0.6) rgba(255,255,255,0.35), 0 calc(var(--u)*0.3) calc(var(--u)*1.2) rgba(60,0 …[+11038 chars]
+
+### 🤖 Claude — 2026-11-17T20:53:44.800Z
+
+> 🔧 **Bash** `{"command": "git diff origin/ccr-067047f0-up5d1m origin/claude/rainbow-s05-match-c4 -- src/ui/hud.ts | head -150; git show origin/claude/rainbow-s05-match-c4:assets/textures/hud05/hud05_icons.json", "description": "Read Screen 05 HUD match diff for reference"}`
+
+### 🧑 User — 2026-11-17T20:53:44.956Z
+
+> ↩︎ result: diff --git a/src/ui/hud.ts b/src/ui/hud.ts
+> index 9ebac9e7..02c9e5a8 100644
+> --- a/src/ui/hud.ts
+> +++ b/src/ui/hud.ts
+> @@ -6,6 +6,85 @@ import '@fontsource/baloo-2/700.css';
+>  import '@fontsource/baloo-2/800.css';
+>  import type { StageId } from '../world/course';
+>  import { STAGE_TITLES } from '../world/course';
+> +import { on05 } from '../vfx/waterRibbon';
+> +
+> +/**
+> + * `?hud05=1` (or `?match05=1`), Screen 05 full reference match (qa/pilot05/full_reference_match/hud/NOTES.md): the top
+> + * bar and the level banner re-laid to the approved picture's measured pixels (864 x 1536 frame; 1 px = 1/15.36 u):
+> + * bar x 33-825 / y 13-100 (opaque flat purple ~ (88, 2, 127), light rim), heart-section capsule x 33-331, dividers at
+> + * x 344 and 707 (y 27-86), banner x 120-746 / y 113-181. The four static icons (heart, plus, coin, pause button) are
+> + * sprites cut from the approved picture (qa/pilot05/full_reference_match/hud/icon_bake.py → assets/textures/hud05/);
+> + * the hearts value, the coin counter and the level title stay live DOM text (the counter is never hard-coded).
+> + * A global HUD change: with the switch on, every ride screen shows this layout (default build unchanged).
+> + */
+> +const HUD05 = on05( …[+8375 chars]
+
+### 🤖 Claude — 2026-11-17T20:54:00.659Z
+
+> 🔧 **Bash** `{"command": "R=/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad; until [ $(ls $R/clips/08 2>/dev/null | grep -c jpg) -ge 151 ] && [ $(ls $R/clips/09 2>/dev/null | grep -c jpg) -ge 151 ]; do sleep 15; done; for d in $R/clips/*/; do echo -n \"$(basename $d): $(ls $d | grep -c jpg)  \"; done; echo; date -u +%H:%M", "description": "Wait until clips 08 and 09 are recorded", "timeout": 1800000}`
+
