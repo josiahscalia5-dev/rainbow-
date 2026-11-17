@@ -654,7 +654,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 12157,
-   "sha256": "db49b6e7495a27d037390e6a94480800990941e66f054db3a2ba8755331e5913"
+   "sha256": "044e8ac1aecdf5048013cd1899c09e69dd20bc70c9add9d9fb4905f290c2edf4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -710,6 +710,16 @@
    "path": "builds/rainbow-debug-T2-default.apk",
    "bytes": 7664976,
    "sha256": "7f89d6ba94642ea7bab42c889ea3586bb0c4b1cbef0cd0818fbd3567213d2969"
+  },
+  {
+   "path": "builds/rainbow-debug-match05-2026-11-17.apk",
+   "bytes": 25034941,
+   "sha256": "ca139ac35dfd40321916138dd6e6b59e1ef5408da6d42acf41b0975c07bb8b1b"
+  },
+  {
+   "path": "builds/rainbow-debug-match05-2026-11-17.md",
+   "bytes": 1187,
+   "sha256": "22963f519d2c4f8ed38b2836f25da4289c3f2b016bcfd6ea9c4345080928d160"
   },
   {
    "path": "builds/rainbow-debug-w12-water.apk",
