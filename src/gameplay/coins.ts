@@ -9,6 +9,7 @@ import type { Course, StageId } from '../world/course';
 import { canvasTexture } from '../world/materials';
 import { coreLateral, flag05 } from '../vfx/waterRibbon';
 import coins08 from '../../assets/textures/match08/coins08.json';
+import coins07 from '../../assets/textures/match07/coins07.json';
 
 export const COIN_VALUE = 10;
 
@@ -50,7 +51,21 @@ export function coinLayout(course: Course): CoinDef[] {
   // 06 — up and over the crest (left of centre like the ref)
   { const a = st('06'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 4 + i * ((a.s1 - a.s0 - 6) / n); add('06', s, -1.3 + 0.7 * Math.sin(i * 0.4)); } }
   // 07 — winding trail, continuing down the plunge
-  { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
+  // `?match07=1` (qa/match/07/NOTES.md): the approved picture's eight coins where the picture shows them (world positions from
+  // the locked 07 camera, assets/textures/match07/coins07.json) replace the first eight trail coins from 12 u before the 07
+  // checkpoint on (the run's coin total is unchanged); off: the trail as before
+  const m07 = flag05('match07') || flag05('matchall');
+  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
+  if (m07) {
+    const a = st('07');
+    for (const c of coins07.coins) {
+      const P = new THREE.Vector3(...(c.pos as [number, number, number]));
+      let sb = a.s0, bd = Infinity;
+      for (let s = a.s0 + 10; s <= a.s0 + 75; s += 0.02) { const f = course.sample(s); const d = Math.abs(P.clone().sub(f.pos).dot(f.tan)); if (d < bd) { bd = d; sb = s; } }
+      const f = course.sample(sb), r = P.clone().sub(f.pos);
+      add('07', sb, r.dot(f.right), r.dot(f.up), { scale: c.scale, faceTo: coins07.faceTo as [number, number, number] });
+    }
+  }
   // 08 — S toward the platform
   const m08 = flag05('match08') || flag05('matchall');
   if (!m08) { const a = st('08'); for (let i = 0; i < 8; i++) add('08', a.s0 + 3 + i * 1.9, -0.6 + 0.9 * Math.sin(i * 0.8)); }
@@ -89,7 +104,7 @@ export function coinLayout(course: Course): CoinDef[] {
     for (let i = 0; i < 8; i++) { const s = sIn - 4 + i * 0.8; add(course.stageAtS(s).id, s, 0.35 * Math.sin(i * 1.3)); }
   }
   // `?match08=1`: river order (the coins above were appended out of order)
-  if (m08) out.sort((a, b) => a.s - b.s);
+  if (m08 || m07) out.sort((a, b) => a.s - b.s);
   // 10 — straight line into the towel tunnel
   { const a = st('10'); for (let i = 0; i < 5; i++) add('10', a.s0 + 1.5 + i * 2.0, -0.15); }
   return out;

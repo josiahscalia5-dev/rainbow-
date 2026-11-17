@@ -437,6 +437,61 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/match07/cam07_locked.json",
+   "bytes": 1127,
+   "sha256": "b63350616673bd309162135053a63bd1f74f0625f09c9608af9a0dd64506a4de"
+  },
+  {
+   "path": "assets/textures/match07/coins07.json",
+   "bytes": 2681,
+   "sha256": "507c83171e5a809744f1377f05bcd80507771f6e178310ff0c394635f68adc22"
+  },
+  {
+   "path": "assets/textures/match07/patch_gold.png",
+   "bytes": 5699,
+   "sha256": "5a41edec9b45af0e0a3cbe2577d76c8deb011068487433b9190c4b9f30b71352"
+  },
+  {
+   "path": "assets/textures/match07/patch_wall.png",
+   "bytes": 32500,
+   "sha256": "76f7e31efc45636a2fd6bc6ec56d6095794d64840e7202ca4fdbadfeae9cbc7b"
+  },
+  {
+   "path": "assets/textures/match07/plate07_fillmask.png",
+   "bytes": 8280,
+   "sha256": "5477d982b01fb4649e785f755fc1e72f2dfaa7472274cc4d8f3b12aa1bf43ab6"
+  },
+  {
+   "path": "assets/textures/match07/plate07_hybrid.png",
+   "bytes": 2540369,
+   "sha256": "81a25186e3473ac4d6851d0ee1cd46e98784700629985d4b6356cd4b124cff14"
+  },
+  {
+   "path": "assets/textures/match07/proj07.json",
+   "bytes": 3114,
+   "sha256": "f5f3d0c8e471d5be152b8794f6b76880cd3f24ffef3dd8a10c411d80d9d30875"
+  },
+  {
+   "path": "assets/textures/match07/river07.json",
+   "bytes": 875,
+   "sha256": "fcae75881ec71e9d9e0488ddb730f6fffef5b4910cbd93d7ecb724b7f737886f"
+  },
+  {
+   "path": "assets/textures/match07/tile_river.png",
+   "bytes": 620340,
+   "sha256": "3bc048150885e44a8d5323ebf3b50d881d839324a3481ea7c9d9bbff6bc11d3b"
+  },
+  {
+   "path": "assets/textures/match07/tile_wall.png",
+   "bytes": 882484,
+   "sha256": "5ce1f521f4ff1717603098135371d521a2b578b3bf0f2973bd220b21083ca550"
+  },
+  {
+   "path": "assets/textures/match07/tiles07.json",
+   "bytes": 290,
+   "sha256": "c2b5cf97c4e5f544745ce530c34a30f3d41fb994f13298f981bf9bad6c91204c"
+  },
+  {
    "path": "assets/textures/match08/cam08_locked.json",
    "bytes": 684,
    "sha256": "f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237"
@@ -609,7 +664,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10591,
-   "sha256": "6e4a1c886ffe43c73979627b49bd01787b4f74be248d20c1c011ee4153ce028d"
+   "sha256": "ead302fbfae9d0928bda0551a40232646194bb97ed89e68645b94841bc364b4b"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1375,6 +1430,11 @@
    "path": "qa/match/07/m1/probe_default.json",
    "bytes": 208571,
    "sha256": "8bacbb6079a425e532a902a59eefd2453915388870e36587c1ce8e4e9247ed69"
+  },
+  {
+   "path": "qa/match/07/m1/proj07.json",
+   "bytes": 3114,
+   "sha256": "f5f3d0c8e471d5be152b8794f6b76880cd3f24ffef3dd8a10c411d80d9d30875"
   },
   {
    "path": "qa/match/07/rings/approved.json",
@@ -7983,8 +8043,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 12528,
-   "sha256": "c5bb03eaf037cf9696a528a32371fdf005def642044ce5dbc0ddab50d5657233"
+   "bytes": 13639,
+   "sha256": "af676c6f4a9816ed263fcc2a0e7e7a03b256245c2b6ceab641ddb6a2f0e2fa07"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -8088,8 +8148,8 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 30798,
-   "sha256": "42c17a6b293c4be17a78fec9d5dea064d3575c600a7da34a0e06014eb0380620"
+   "bytes": 31905,
+   "sha256": "86799776cfa6fc38a7b9dbc46744b6e1bdc04f26cf9e76c3e4302c588bd86d4f"
   },
   {
    "path": "src/world/environment.ts",
@@ -8262,9 +8322,24 @@
    "sha256": "902848a038d0ba52a275a37d4bee3b8685257a1b5b97128272aa6ad474445c5c"
   },
   {
+   "path": "tools/match07/fit_proxies07.py",
+   "bytes": 4464,
+   "sha256": "9f3e921762f7993159c46a5417e3c44f227c52951272f921fc679e5f38562446"
+  },
+  {
+   "path": "tools/match07/make_plate07.py",
+   "bytes": 5693,
+   "sha256": "37a449d8693134561dfbdb6399084ec82c1ba6798c2e805912e894286909be98"
+  },
+  {
    "path": "tools/match07/probe07.mjs",
    "bytes": 2444,
    "sha256": "aa2606e7e11105eec9ce925e248c85904545299c5a9ebed72331cd6493d1d35e"
+  },
+  {
+   "path": "tools/match07/river_coins07.py",
+   "bytes": 3344,
+   "sha256": "0792d60dac6ccba01b1a091883e981363db153a649b945253e8dc1c50f970d73"
   },
   {
    "path": "tools/match07/solve_cam07.py",

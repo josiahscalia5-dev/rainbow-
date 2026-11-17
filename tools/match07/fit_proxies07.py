@@ -49,6 +49,7 @@ for u, v, wpx in PADDLES:
     for k in np.arange(0.5, 120, 0.005):
         P = C + k * r; q = P - base; rad = math.hypot(q @ X - ax, q @ U - h)
         if rad >= rin: best = (k, P); break
+    if best is None: print("paddle miss", u, v); continue
     k, P = best; q = P - base
     ang = math.atan2(q @ U - h, q @ X - ax)
     pads.append({"px": [u, v, wpx], "pos": P.tolist(), "dist": float(k), "along": float(q @ D), "angleDeg": math.degrees(ang), "w": float(wpx * k / F * 0.5 * 2)})
