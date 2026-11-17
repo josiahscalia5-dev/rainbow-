@@ -33,6 +33,11 @@ export interface CamParams {
    *  and looks along the fixed world direction dir04 (the approved picture's view down the gold tunnel); absent = no change */
   off04?: [number, number, number];
   dir04?: [number, number, number];
+  /** `?match06=1` only (src/game/match.ts): over the 06 stage the camera sits at Benny's water point + this world offset
+   *  and looks along the fixed world direction dir06 (the approved picture's view over the crest into the tunnel);
+   *  absent = no change */
+  off06?: [number, number, number];
+  dir06?: [number, number, number];
 }
 
 export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
@@ -79,6 +84,8 @@ export class RideCamera {
   private init = false;
   /** optional straight tunnel axis + the s-range where the camera aligns to it */
   axis: { path: TubePath; s0: number; s1: number } | null = null;
+  /** `?match06=1`: off06 / dir06 in the river's level frame at the 06 checkpoint (computed once) */
+  private m06: { s0: number; o: number[]; d: number[] } | null = null;
 
   constructor(private course: Course) {}
 
@@ -139,6 +146,34 @@ export class RideCamera {
         outPos.lerp(benny.clone().add(new THREE.Vector3(...p8.off08)), w8);
         outTarget.lerp(new THREE.Vector3(...p8.aim08), w8);
         outUp.lerp(new THREE.Vector3(0, 1, 0), w8).normalize();
+      }
+    }
+    // `?match06=1`: the approved Screen 06 view — at the 06 checkpoint (06 start + 10) the camera is exactly Benny +
+    // off06 (world), looking along dir06, level. Both are stored in the river's LEVEL frame there (smoothed heading, world
+    // up, no bank) and carried rigidly along the river with Benny, so over the crest and down the far side the camera stays
+    // the same height above the water behind him and looks along the slope (a fixed world offset ends up under the water
+    // on the down-slope); half of Benny's steering offset. Blended in around the 06 start and out before 07 (absent = no change)
+    const p6 = STAGE_CAM['06'];
+    if (p6 && p6.off06 && p6.dir06) {
+      const st6 = this.course.stage('06');
+      const w6 = THREE.MathUtils.smoothstep(s, st6.s0 - 3, st6.s0 + 1.5) * (1 - THREE.MathUtils.smoothstep(s, st6.s1 - 10, st6.s1 - 1));
+      if (w6 > 0) {
+        const lvl = (x: number) => {
+          const T = this.course.sample(x - 3).tan.clone().add(this.course.sample(x).tan).add(this.course.sample(x + 3).tan).normalize();
+          const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+          return { T, U, R: new THREE.Vector3().crossVectors(T, U).normalize() };
+        };
+        if (!this.m06 || this.m06.s0 !== st6.s0) {
+          const sB = st6.s0 + 10, F = lvl(sB), o = new THREE.Vector3(...p6.off06), d = new THREE.Vector3(...p6.dir06).normalize();
+          this.m06 = { s0: st6.s0, o: [o.dot(F.R), o.dot(F.U), o.dot(F.T)], d: [d.dot(F.R), d.dot(F.U), d.dot(F.T)] };
+        }
+        const F = lvl(s), M = this.m06;
+        const cp6 = f.pos.clone().addScaledVector(f.right, lat * 0.5)
+          .addScaledVector(F.R, M.o[0]).addScaledVector(F.U, M.o[1]).addScaledVector(F.T, M.o[2]);
+        const d6 = F.R.clone().multiplyScalar(M.d[0]).addScaledVector(F.U, M.d[1]).addScaledVector(F.T, M.d[2]);
+        outPos.lerp(cp6, w6);
+        outTarget.lerp(cp6.addScaledVector(d6, 10), w6);
+        outUp.lerp(new THREE.Vector3(0, 1, 0), w6).normalize();
       }
     }
     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the

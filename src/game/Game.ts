@@ -26,6 +26,7 @@ import { flag05 } from '../vfx/waterRibbon';
 import { MATCH } from './match';
 import { buildMatch08 } from '../world/match08';
 import { buildMatch04 } from '../world/match04';
+import { buildMatch06 } from '../world/match06';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -121,6 +122,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let m04On = false;
   let m04Applied = false;
   let m08Applied = false;
+  // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
+  const m06 = MATCH['06'] ? await buildMatch06(course) : null;
+  if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
+  let m06On = false;
+  let m06Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
   if (hidden.has('water')) water.group.visible = false;
@@ -173,6 +179,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     }
     if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
     if (m04) { m04On = st.stage === '04'; m04.group.visible = m04On; if (m04On) { env.zones.basin.visible = false; env.zones.tubes.visible = false; } }
+    if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
     const inDrum = i <= 1;
     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
   };
@@ -579,6 +586,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m04On; }
       m04Applied = m04On;
     }
+    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+    if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On; }
+      m06Applied = m06On;
+    }
     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
     if (m08 && b08 && b08Rest) {
       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
@@ -636,6 +648,13 @@ export async function startGame(canvas: HTMLCanvasElement) {
       if (m04On) bloom.strength = 0;
       renderer.getDrawingBufferSize(dbs);
       m04.sync(renderer, dbs.x, dbs.y, camera);
+    }
+    // `?match06=1`: no bloom on Screen 06 under the switch (the artwork carries its own glow)
+    if (m06) {
+      if (!glow05 && !m08 && !(m04 && m04On)) bloom.strength = bloomS0; // preview: never undo 04's 'no bloom'
+      if (m06On) bloom.strength = 0;
+      renderer.getDrawingBufferSize(dbs);
+      m06.sync(renderer, dbs.x, dbs.y);
     }
     renderer.info.reset();
     composer.render();
