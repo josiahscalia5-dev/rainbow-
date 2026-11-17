@@ -1505,3 +1505,103 @@ The new switches are off unless their URL flag is set, so committing the work in
 
 The new test switches are committed and pushed. An autosave landed at the same moment, and GitHub now matches my local copy at `f91dddba`. Both switches are off unless their URL flag is set, so the milestone 1 result is unchanged. I'm waiting for the test renders to finish.
 
+### 🧑 User — 2026-11-17T18:05:16.552Z
+
+<task-notification>
+<task-id>bap0kwepf</task-id>
+<tool-use-id>toolu_01VshbrSFxptJoKjmLGyYYWd</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/tasks/bap0kwepf.output</output-file>
+<status>completed</status>
+<summary>Background command "Render motion frames and captures for both switches, measure" completed (exit code 0)</summary>
+</task-notification>
+
+### 🤖 Claude — 2026-11-17T18:05:21.030Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/tasks/bap0kwepf.output; pkill -f \"until grep -q\" ; cd /home/user/rainbow- && S=/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad && python3 -c \"\nfrom PIL import Image\nnames=['f03_forward3u','f06_forward6u','f10_forward10u','f20_forward20u','s_left_steer','s_right_steer']\nw=220;h=int(1536*w/864);out=Image.new('RGB',(w*6,h*3))\nfor r,d in enumerate(['qa/match/07/m1/motion','qa/match/07/m2/motion_fill','qa/match/07/m2/motion_ang']):\n  for k,n in enumerate(names): out.past …[+170 chars]`
+
+### 🧑 User — 2026-11-17T18:05:22.877Z
+
+> ↩︎ result: motion_fill=0
+> cap_fill=0
+> motion_ang=0
+> cap_ang=0
+> fill {'FULL': (0.8006, 0.7989), 'BELOWHUD': (0.8672, 0.8653), 'SCENERY': (0.9554, 0.9543), 'upper_tunnel_rings_paddles_y200_560': (0.9996, 0.9996), 'middle_river_coins_far_rings_y560_900': (0.9035, 0.9019), 'lower_water_foam_y900_1536_noBenny': (0.9564, 0.9549), 'BENNY': (0.1661, 0.1582)}
+> ang {'FULL': (0.8006, 0.8006), 'BELOWHUD': (0.8672, 0.8672), 'SCENERY': (0.9554, 0.9554), 'upper_tunnel_rings_paddles_y200_560': (0.9996, 0.9996), 'middle_river_coins_far_rings_y560_900': (0.9035, 0.9035), 'lower_water_foam_y900_1536_noBenny': (0.9564, 0.9564), 'BENNY': (0.1661, 0.1661)}
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-17T18:05:24.663Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad/m2a.png"}`
+
+### 🧑 User — 2026-11-17T18:05:24.904Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:05:31.294Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad && python3 -c \"\nfrom PIL import Image\nout=Image.new('RGB',(1000,500))\nfor k,d in enumerate(['qa/match/07/m1/motion','qa/match/07/m2/motion_ang']):\n  out.paste(Image.open(f'{d}/f20_forward20u.png').convert('RGB').crop((0,150,500,650)),(k*500,0))\nout.save('$S/ang20.png')\"", "description": "Crop 20 u upper-left, M1 vs m07ang"}`
+
+### 🧑 User — 2026-11-17T18:05:31.698Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T18:05:33.439Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad/ang20.png"}`
+
+### 🧑 User — 2026-11-17T18:05:33.473Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:05:58.065Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\nrep=[\n(\"varying vec4 vProj;\\nvarying vec3 vW;\\nvarying vec3 vN;\\nvarying vec3 vL;\\n${PROJ05_INVERSE}\",\"uniform float uGoldLit;   // M2 '?m07gold=1': paddle blocks shaded as solid polished gold where the picture does not cover them\\nuniform vec3 uKey;        // world direction toward the key light (the bright end of the tube, a little from above)\\nvarying vec4 vProj;\\nvarying vec3 vW;\\nvarying vec3 vN;\\nvarying vec3 vL;\\n${PROJ05_INVERSE}\"),\n(\"\"\"  return texture2D(uTile, p.zy).rgb * n.x + texture2D(uT …[+1204 chars]`
+
+### 🧑 User — 2026-11-17T18:06:01.042Z
+
+> ↩︎ result: TSC_CLEAN
+
+### 🤖 Claude — 2026-11-17T18:06:05.260Z
+
+Correcting the comment: the light actually comes from the viewer's side and above, so the faces the camera sees are lit. Then I'll render all three switches together.
+
+### 🤖 Claude — 2026-11-17T18:06:09.068Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s#world direction toward the key light (the bright end of the tube, a little from above)#world direction toward the key light (from the viewer's side and above, so the faces the camera sees are lit)#\" src/world/match07.ts && Q=\"match07=1&m07fill=1&m07ang=1&m07gold=1\" && node tools/match07/motion07.mjs qa/match/07/m2/motion_fag \"$Q\" > /dev/null 2>&1; echo $?; S=/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad; python3 -c \"\nfrom PIL import Image\nout=Image.new('RGB',(1500,500))\nfor k,d in enumerate(['qa/match/07/m1/motion','qa/match/ …[+260 chars]`
+
+### 🧑 User — 2026-11-17T18:07:21.021Z
+
+> ↩︎ result: 0
+> [This command modified 1 file you've previously read: src/world/match07.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T18:07:23.177Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad/gold20.png"}`
+
+### 🧑 User — 2026-11-17T18:07:23.223Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T18:07:32.622Z
+
+> 🔧 **Bash** `{"command": "sed -n 15,60p tools/match07/motion07.mjs", "description": "Read motion07 stepping logic"}`
+
+### 🧑 User — 2026-11-17T18:07:32.674Z
+
+> ↩︎ result: await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   // [name, checkpoint, forward distance (u), steer]
+>   const shots = [['f00_checkpoint', '07', 0, null], ['f03_forward3u', '07', 3, null], ['f06_forward6u', '07', 6, null], ['f10_forward10u', '07', 10, null],
+>                  ['f20_forward20u', '07', 20, null], ['s_left_steer', '07', 6, -1], ['s_right_steer', '07', 6, 1],
+>                  ['d0_before_drop_8u', '07a_plunge_top', -7, null], ['d1_drop_start', '07a_plunge_top', 0, null], ['d2_drop_4u', '07a_plunge_top', 4, null], ['d3_drop_mid', '07b_plunge_mid', 0, null]];
+>   for (const [name, cp, dist, steer] of shots) {
+>     const st = await page.evaluate(async ([cp, dist, steer]) => {
+>       const r = window.__rainbow; let k = 0;
+>       if (dist < 0) { r.goto('07'); const target = r.course.marks['07_plunge_top'] - 1 + dist; while (r.state().s < target && k < 4000) { r.step(1); k++; } }
+>       else { r.goto(cp); const s0 = r.state().s; r.setSteer(steer); while (r.state().s < s0 + dist && k < 2000) { r.step(1); k++; } r.setSteer(null); }
+>       r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationF …[+510 chars]
+
+### 🤖 Claude — 2026-11-17T18:07:42.609Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/92c6cd21-b7ee-5503-96c2-784fb2eeb394/scratchpad && cat > $S/pick20.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5281);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\nconst page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });\nawait page.goto(`${vite.url}/?qa=1&dpr=1&match07=1`);\nawait page.waitForFunction(() => window.__rainbow?.ready === true, null …[+1776 chars]`
+

@@ -66,6 +66,8 @@ uniform vec2 uPjRes;
 uniform sampler2D uFill;   // M2 '?m07fill=1': provisional-fill mask of the plate (1 = filled, not original pixels)
 uniform float uFillTile;  // 1 = on the water, filled plate pixels give way to the river tile
 uniform vec2 uAng;        // M2 '?m07ang=1': view-vs-projector angle cosines (full plate above x, tile below y); x < 0 = off
+uniform float uGoldLit;   // M2 '?m07gold=1': paddle blocks shaded as solid polished gold where the picture does not cover them
+uniform vec3 uKey;        // world direction toward the key light (from the viewer's side and above, so the faces the camera sees are lit)
 varying vec4 vProj;
 varying vec3 vW;
 varying vec3 vN;
@@ -87,7 +89,16 @@ vec3 tileColor() {
   }
   vec3 n = abs(normalize(vN)); n /= max(n.x + n.y + n.z, 1e-4);
   vec3 p = vL * uPatchK;
-  return texture2D(uTile, p.zy).rgb * n.x + texture2D(uTile, p.xz).rgb * n.y + texture2D(uTile, p.xy).rgb * n.z;
+  vec3 g = texture2D(uTile, p.zy).rgb * n.x + texture2D(uTile, p.xz).rgb * n.y + texture2D(uTile, p.xy).rgb * n.z;
+  if (uGoldLit > 0.5) {
+    vec3 nw = normalize(vN); vec3 vv = normalize(cameraPosition - vW);
+    if (dot(nw, vv) < 0.0) nw = -nw;
+    float dif = 0.42 + 0.7 * max(dot(nw, uKey), 0.0);
+    float spec = pow(max(dot(reflect(-uKey, nw), vv), 0.0), 18.0);
+    float rim = pow(1.0 - max(dot(nw, vv), 0.0), 3.0);
+    g = g * dif + vec3(1.0, 0.86, 0.55) * (0.55 * spec + 0.35 * rim);
+  }
+  return g;
 }
 float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
 void main() {
@@ -138,6 +149,7 @@ export async function buildMatch07(): Promise<Match07> {
   // MILESTONE 2 test switches (one factor each, qa/match/07/m2/NOTES.md); off = the MILESTONE 1 result unchanged
   const fixFill = flag05('m07fill');
   const fixAng = flag05('m07ang');
+  const fixGold = flag05('m07gold');
 
   // the projector = the locked game camera the picture was matched to
   const [W, H] = L.camera.size;
@@ -171,6 +183,8 @@ export async function buildMatch07(): Promise<Match07> {
     uPjPost: { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) },
     uPjRes: { value: new THREE.Vector2(W, H) },
     uFill: { value: fillMask },
+    uGoldLit: { value: fixGold ? 1 : 0 },
+    uKey: { value: new THREE.Vector3(...L.D).multiplyScalar(-1).addScaledVector(new THREE.Vector3(...L.U), 0.8).normalize() },
     uFillTile: { value: fixFill ? 1 : 0 },
     uAng: { value: fixAng ? new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(6)), Math.cos(THREE.MathUtils.degToRad(14))) : new THREE.Vector2(-1, -1) },
     uProjPos: { value: proj.position.clone() },
