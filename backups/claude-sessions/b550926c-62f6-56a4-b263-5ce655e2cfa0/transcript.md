@@ -952,3 +952,126 @@ Specialist session created (`session_01KS3bZvdzt2da5S21x21PqW`). I'll check late
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && npx tsc --noEmit && echo TSC_OK && SP=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad && B=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25\" && timeout 600 node tools/lead_r6/motion_audit.mjs 06 qa/match/06/r7/NEW_tun \"$B&m06tun=1\" 2>&1 | grep -c \"^06 \" && cd qa/match/06/r7/NEW_tun && montage -label '%t' a00_approved_view.png f03_forward3u.png f06_forward6u.png f10_forward10u.png f20_forward20u.png t33_through_screen.png t66_through_screen.png t95_through_screen.png s_left_steer.png s_right_hard.png -tile 5x2 -geometry …[+150 chars]`
 
+### 🧑 User — 2026-11-17T23:34:18.747Z
+
+> ↩︎ result: TSC_OK
+> 12
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:34:20.684Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/s06_sheet_tun.jpg"}`
+
+### 🧑 User — 2026-11-17T23:34:20.824Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T23:34:53.277Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/world/match06.ts", "old_string": "  if (tunCap) { cap.position.copy(tunCap.pos); cap.lookAt(cap.position.clone().sub(tunCap.dir)); }", "new_string": "  // m06tun: the cap shows the painted glowing vanishing point (the wall/water mask would swap it for a flat tile colour)\n  if (tunCap) { cap.position.copy(tunCap.pos); cap.lookAt(cap.position.clone().sub(tunCap.dir)); (cap.material as THREE.ShaderMaterial).uniforms.uUseMask.value = 0; }"}`
+
+### 🧑 User — 2026-11-17T23:34:53.321Z
+
+> ↩︎ result: The file /home/user/wt-s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T23:34:57.831Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && npx tsc --noEmit && echo TSC_OK && SP=/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad && B=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1\" && for R in 11 14; do timeout 600 node tools/lead_r6/motion_audit.mjs 06 qa/match/06/r7/NEW_tun_r$R \"$B&m06tunr=$R\" 2>&1 | grep -c \"^06 \"; done; cd qa/match/06/r7 && montage -label '%d %t' NEW_tun_r11/f06_forward6u.png NEW_tun_r11/f20_forward20u.png NEW_tun_r11/t66_through_screen.png NEW_tun_r11/t95_through_screen.png NEW_tun_r11/s_right_hard.png NEW_tun_r14/f06_forward6u …[+301 chars]`
+
+### 🧑 User — 2026-11-17T23:36:23.022Z
+
+> ↩︎ result: TSC_OK
+> 12
+> 12
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:36:24.927Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/s06_sheet_r11_r14.jpg"}`
+
+### 🧑 User — 2026-11-17T23:36:25.082Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T23:36:50.983Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && cat > /tmp/claude-0/-home-user-rainbow-/b550926c-62f6-56a4-b263-5ce655e2cfa0/scratchpad/probedisc.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { chromium } = loadPlaywright(); const vite = await startVite(5293); const browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 432, height: 768 } });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&match06=1& …[+1050 chars]`
+
+### 🧑 User — 2026-11-17T23:36:58.508Z
+
+> ↩︎ result: {
+>  "0.3,0.18": [
+>   {
+>    "d": 36.84,
+>    "obj": "Mesh<zone_tubes<washer_world<Scene",
+>    "p": [
+>     0.55,
+>     -37.78,
+>     -188.28
+>    ]
+>   },
+>   {
+>    "d": 318.68,
+>    "obj": "m06_end<match06_projection<Scene",
+>    "p": [
+>     -4.1,
+>     -63.66,
+>     -468.89
+>    ]
+>   }
+>  ],
+>  "0.31,0.17": [
+>   {
+>    "d": 37.03,
+>    "obj": "Mesh<zone_tubes<washer_world<Scene",
+>    "p": [
+>     0.8,
+>     -37.41,
+>     -188.49
+>    ]
+>   },
+>   {
+>    "d": 318.69,
+>    "obj": "m06_end<match06_projection<Scene",
+>    "p": [
+>     -1.94,
+>     -60.4,
+>     -469.2
+>    ]
+>   }
+>  ],
+>  "0.5,0.3": [
+>   {
+>    "d": 81.47,
+>    "obj": "m06_floor<match06_projection<Scene",
+>    "p": [
+>     9.84,
+>     -52.49,
+>     -230.56
+>    ]
+>   },
+>   {
+>    "d": 84.78,
+>    "obj": "Mesh<zone_tubes<washer_world<Scene",
+>    "p": [
+>     10.19,
+>     -53.22,
+>     -233.76
+>    ]
+>   },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T23:38:00.994Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt-s06/src/world/match06.ts", "old_string": "    tunCap = { pos: O.clone().addScaledVector(ax, a1), dir: ax.clone(), r: Rt };\n  } else add(grid(RAD, (_s, j, fr) => {", "new_string": "    tunCap = { pos: O.clone().addScaledVector(ax, a1), dir: ax.clone(), r: Rt };\n    // the river floor's straight 260 u extension ran into the painted vanishing point (it hid the glowing end from the\n    // projector -> flat disc); in the straight tunnel the river ends 20 u after the 06 stage\n    while (sList.length && sList[sList.length - 1] > sE + 20) sList.po …[+47 chars]`
+
+### 🧑 User — 2026-11-17T23:38:01.021Z
+
+> ↩︎ result: The file /home/user/wt-s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T23:38:04.349Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt-s06 && sed -i 's/const Rt = Number(qs?.get(.m06tunr.)) || 11;/const Rt = Number(qs?.get(\"m06tunr\")) || 14;/; s/rings turned into twisted diagonal bands. Here: a straight cylinder (radius `&m06tunr=`, default 11)/rings turned into twisted diagonal bands. Here: a straight cylinder (radius `\\&m06tunr=`, default 14)/' src/world/match06.ts && grep -n \"m06tunr\" src/world/match06.ts && npx tsc --noEmit && echo TSC_OK && B=\"match06=1&m06geo=1&m06flow=1\" && N=\"$B&m06cam=1&m06la=25&m06tun=1\" && (timeout 600 node tools/lead_r6/motion_audit.mjs 06 qa/match/06/r7/AFTE …[+238 chars]`
+
