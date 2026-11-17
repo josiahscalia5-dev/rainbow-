@@ -740,3 +740,212 @@ Now step A: per-bubble measurement. Let me build a measurement tool and crops.
 > /** `?projedge05=1` (on with `?match05=1`, coordinator 2026-11-17): edge-padded copy of proj05_A.png (tools/proj05/pad_alpha.py:
 >  *  transparent  …[+4916 chars]
 
+### 🤖 Claude — 2026-11-17T02:36:32.092Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 140,232p src/vfx/waterRibbon.ts", "description": "Read switch helpers in waterRibbon"}`
+
+### 🧑 User — 2026-11-17T02:36:32.140Z
+
+> ↩︎ result: * colours sampled from the approved image and solved through the post chain), flow-aligned brushed streaks with
+>  * aqua / white-pink cores, deep-blue outer water, glossy near swells; the far river block (far05.ts / materials.ts)
+>  * and the 05 splash follow the same switch. Off (default): every shader and geometry is byte-for-byte the previous
+>  * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+>  * Guarded read: false in vite-node / workers (no `location`).
+>  */
+> /**
+>  * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+>  * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+>  */
+> const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> const q05 = (key: string): boolean => {
+>   try {
+>     if (typeof location !== 'undefined' && new URLSearchParams(location.search).get(key) === '1') return true;
+>   } catch {
+>     /* no location (vite-node / workers) */
+>   }
+>   return BUILD_Q05 !== '' && new URLSearchParams(BUILD_Q05).get(key) === '1';
+> };
+> /** the same switch reader for other modules (Game.ts: `?g …[+5600 chars]
+
+### 🤖 Claude — 2026-11-17T02:38:16.298Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nM='qa/pilot05/full_reference_match/masks'\nap=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(float)\ncp=np.asarray(Image.open('qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png').convert('RGB')).astype(float)\nwm=np.asarray(Image.open(f'{M}/wake_splash.png').convert('L'))>127\ndef sat(im): mx=im.max(-1); mn=im.min(-1); return (mx-mn …[+978 chars]`
+
+### 🧑 User — 2026-11-17T02:38:16.908Z
+
+> ↩︎ result: app white        px  16270 mean  46.01 <=20 0.322 share_err 0.216
+> app not white    px  67221 mean  40.38 <=20 0.405 share_err 0.784
+> game white       px  23500 mean  60.08 <=20 0.222 share_err 0.408
+> both white       px   7519 mean  17.30 <=20 0.656 share_err 0.038
+> app white only   px   8751 mean  70.68 <=20 0.035 share_err 0.179
+> game white only  px  15981 mean  80.21 <=20 0.018 share_err 0.370
+> neither          px  51240 mean  27.96 <=20 0.525 share_err 0.414
+> 1000 app white px 687 x (np.int64(237), np.int64(605))  game white px 208 x (np.int64(236), np.int64(626))  mean err 54.3
+> 1020 app white px 838 x (np.int64(223), np.int64(641))  game white px 73 x (np.int64(239), np.int64(628))  mean err 40.8
+> 1040 app white px 224 x (np.int64(228), np.int64(646))  game white px 23 x (np.int64(642), np.int64(646))  mean err 24.8
+> 1060 app white px 74 x (np.int64(234), np.int64(609))  game white px 51 x (np.int64(205), np.int64(640))  mean err 30.2
+> 1080 app white px 191 x (np.int64(178), np.int64(636))  game white px 497 x (np.int64(187), np.int64(675))  mean err 32.9
+> 1100 app white px 1069 x (np.int64(179), np.int64(635))  game white px 1966 x (np.int64(168), np.int64(689))  mean err 42.2
+> 1120 app …[+1100 chars]
+
+### 🤖 Claude — 2026-11-17T02:38:21.707Z
+
+I need the game's background without the splash. Let me check render slots and run a capture with the 05 splash and spray hidden.
+
+### 🤖 Claude — 2026-11-17T02:38:23.418Z
+
+> 🔧 **Bash** `{"command": "ls -la /tmp/rainbow-render-slot-* 2>/dev/null; for d in /tmp/rainbow-render-slot-*; do [ -f $d/pid ] && ps -o pid,etime,args -p $(cat $d/pid) | tail -1; done; nproc; uptime; grep -n \"T_LOCK\\|frozen\\|freeze\\|qaTime\\|time = 12\\|t = 12\" /home/user/rainbow-/src/game/Game.ts | head -20", "description": "Check render slot usage and frozen QA time"}`
+
+### 🧑 User — 2026-11-17T02:38:23.457Z
+
+> ↩︎ result: 4
+>  02:38:23 up 21 min,  0 user,  load average: 0.29, 0.69, 0.50
+> 119:    frozen: null as number | null, // QA: freeze shader time
+> 504:    if (st.frozen === null) st.clock += dt;
+> 511:    const time = st.frozen ?? st.clock;
+> 578:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 582:    st.frozen = time;
+> 602:        // settle camera springs without moving Benny: run with speed frozen
+> 623:    unfreeze() { st.frozen = null; input.override = null; },
+> 624:    /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+> 625:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+
+### 🤖 Claude — 2026-11-17T02:38:24.778Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 480,640p src/game/Game.ts", "description": "Read Game.ts loop and checkpoint code"}`
+
+### 🧑 User — 2026-11-17T02:38:24.808Z
+
+> ↩︎ result: st.paused = true;
+>     void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
+>   };
+>   playIntroVideo();
+>   const togglePause = () => {
+>     if (st.mode !== 'ride') return;
+>     st.paused = !st.paused;
+>     hud.showPaused(st.paused);
+>   };
+>   const resetToIntro = () => {
+>     st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+>     coins.resetUntil(-1);
+>     hud.setCoins(st.coins); hud.setHearts(5); hud.setVisible(false); hud.showVictory(false); hud.showPaused(false);
+>     st.stage = '01'; updateZones();
+>     env.towel.setTent(0);
+>     env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
+>     env.doorC.rotation.y = 0;
+>     benny.root.visible = true;
+>     playIntroVideo();
+>   };
+> 
+>   const stepSim = (dt: number) => {
+>     if (st.paused) return;
+>     st.t += dt;
+>     if (st.frozen === null) st.clock += dt;
+>     if (st.mode === 'intro') introUpdate(dt);
+>     else if (st.mode === 'ride') rideUpdate(dt);
+>     else if (st.mode === 'outro' || st.mode === 'end') {
+>       outroUpdate(dt);
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water …[+6347 chars]
+
+### 🤖 Claude — 2026-11-17T02:38:32.918Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"qa3d\\|drawList\" src/game/Game.ts | head; grep -n \"wake(\\|water.wake\\|splash(\" src/game/Game.ts | head", "description": "Find QA 3D hooks and wake call in Game.ts"}`
+
+### 🧑 User — 2026-11-17T02:38:32.957Z
+
+> ↩︎ result: 679:    drawList() {
+> 696:    qa3d() { return { scene, camera, renderer, composer }; },
+> 177:  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+> 354:      water.splash(benny.root.position, course.sample(st.s).up, 1);
+> 381:    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
+
+### 🤖 Claude — 2026-11-17T02:38:48.003Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/splash05/probe.mjs", "content": "#!/usr/bin/env node\n// foam-bubbles-particles (Screen 05, `splash05m` / `bub05`): read-only probe of the LOCKED 05 frame.\n// Loads the game like scripts/capture.mjs, goes to checkpoint 05 and writes JSON with\n//   * the live camera (matrixWorld, projection, fov, aspect),\n//   * the 05 splash placement (rider_splash05: position, quaternion = Benny's water frame, uR, uStrength),\n//   * for every approved bubble centre (masks/bubbles_approved.json) the visible hits along its view ray\n//     (bubbles / splash / spray / …[+3817 chars]`
+
+### 🧑 User — 2026-11-17T02:38:48.073Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/splash05/probe.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T02:38:49.452Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 676,700p src/game/Game.ts", "description": "Read drawList implementation"}`
+
+### 🧑 User — 2026-11-17T02:38:49.480Z
+
+> ↩︎ result: return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+>     },
+>     /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+>     drawList() {
+>       const hits = new Map<string, number>();
+>       const hooked: [THREE.Object3D, THREE.Object3D['onAfterRender']][] = [];
+>       scene.traverse((o) => {
+>         if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoints && !(o as THREE.Line).isLine && !(o as THREE.Sprite).isSprite) return;
+>         const prev = o.onAfterRender;
+>         const key = (o.parent?.name ? o.parent.name + '/' : '') + (o.name || o.type);
+>         hooked.push([o, prev]);
+>         o.onAfterRender = (...a: Parameters<THREE.Object3D['onAfterRender']>) => { hits.set(key, (hits.get(key) ?? 0) + 1); prev.apply(o, a); };
+>       });
+>       render();
+>       for (const [o, prev] of hooked) o.onAfterRender = prev;
+>       return [...hits.entries()].sort((a, b) => b[1] - a[1]);
+>     },
+>     togglePause,
+>     /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
+>      *  per-pixel river UV / footprint renders. No …[+382 chars]
+
+### 🤖 Claude — 2026-11-17T02:38:52.564Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; time node tools/splash05/probe.mjs --q='match05=1' --out=$S/probe.json --bg=$S/bg_nosplash.png 2>&1 | tail -5", "description": "Run locked-frame probe and splash-free background capture", "timeout": 900000}`
+
+### 🧑 User — 2026-11-17T02:39:08.604Z
+
+> ↩︎ result: probe → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/probe.json {"position":[1.5287427304490002,-41.78790299499228,-74.70948481938812],"quaternion":[-0.020844583123843203,-0.0018372769229370036,0.012556715745543016,0.9997021839816033],"matrixWorld":[0.9996779066063881,0.025182546851994437,0.0031499804946373603,0,-0.02502935776582772,0.9988156644881576,-0.041722890874318574,0,-0.004196938515119129,0.04163061021804991,0.9991242555358033,0,1.5287427304490002,-41.78790299499228,-74.70948481938812,1],"visible":true,"uR":0.6536532455807745,"uStrength":0.9835767967317393}
+> bg → /tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/bg_nosplash.png
+> 
+> real	0m16.006s
+> user	0m1.921s
+> sys	0m0.448s
+
+### 🤖 Claude — 2026-11-17T02:39:09.859Z
+
+Fast captures (16 s). Let me view the splash-free background next to the approved.
+
+### 🤖 Claude — 2026-11-17T02:39:15.613Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; S=/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a; python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nS='$S'\nap=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nbg=Image.open(S+'/bg_nosplash.png').convert('RGB')\ncp=np.asarray(Image.open('qa/pilot05/full_reference_match/coordinator/checkpoints/cp3_match05_benny_tunnel_done.png').convert('RGB')).astype(int)\nb=np.asarray(bg).astype(int)\ndd=np.abs(cp-b).sum(-1)>0\nys,xs=np.nonzero(dd); print('changed px',dd.sum(),'bbox',xs.min(),xs.max(),ys. …[+561 chars]`
+
+### 🧑 User — 2026-11-17T02:39:16.150Z
+
+> ↩︎ result: changed px 32631 bbox 52 719 1066 1355
+> 62 0.5625 [1.920288434729371, -37.94339912418104, -68.28062556286872] {'mode': 'ride', 'stage': '05', 's': 132.438, 'lat': 0, 'coins': 1420, 'hearts': 5, 'paused': False, 'bennyY': -41.348, 'bennyVisible': True, 'cam': [1.92, -37.94, -68.28]}
+> 51 707 28 21.4121 washer_world > proj05_apron False
+> 93 612 23 24.3556 washer_world > proj05_apron False
+> 180 572 18 30.7394 washer_world > proj05_apron False
+> 265 538 11 40.0657 washer_world > proj05_apron False
+> 181 673 17 22.7065 water_system > foam_banks > foam_berm False
+> 83 911 31 11.4654 water_system > water_ribbon False
+> 135 988 15 9.77 water_system > water_ribbon False
+> 94 1250 32 6.7726 water_system > water_ribbon False
+> 148 1165 11 7.4104 water_system > water_ribbon False
+> 185 1099 8 8.0621 water_system > water_ribbon False
+> 795 861 30 12.6477 water_system > water_ribbon False
+> 734 575 14 38.3296 washer_world > zone_tubes > Mesh False
+> 655 561 12 54.7941 washer_world > zone_tubes > tube05_far_wall False
+> 797 618 13 32.4321 washer_world > proj05_apron False
+> 823 700 19 21.5466 water_system > water_ribbon False
+> 694 831 12 13.747 water_system > water_ribbon False
+> 723 1052 16 8.475 water_system > water_ribbon Fa …[+697 chars]
+
+### 🤖 Claude — 2026-11-17T02:39:17.991Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/397e2a3e-24a0-5df2-af7d-76452155f10c/scratchpad/a/wake_bg.png"}`
+
+### 🧑 User — 2026-11-17T02:39:18.041Z
+
+> ↩︎ result: [image]
+
