@@ -2158,3 +2158,28 @@ Quick first look at the fix on the worst moments (07 plunge, 06, 03/04), BEFORE 
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad; timeout 900 node tools/camclear/probe.mjs --q=match08=1\\&camclear=1 --times=14.5,17.5,18,28,31.5,32,40,41,42,43.5 --size=270x532 --out=$SP/t_new 2>&1 | tail -12 | cut -c1-200; python3 -I tools/camclear/sheet.py $SP/t_new/probe.json $SP/t_new_sheet.png --cols=10", "description": "Rerun camclear test frames and sheet", "timeout": 960000}`
 
+### 🧑 User — 2026-11-17T15:52:48.105Z
+
+> ↩︎ result: {"t":14.5,"mode":"ride","stage":"03","s":45.495,"near2":0,"near05":0,"bennyHidden":0.297,"inside":0}
+> {"t":17.5,"mode":"ride","stage":"04","s":74.014,"near2":0,"near05":0,"bennyHidden":0.795,"inside":0}
+> {"t":18,"mode":"ride","stage":"04","s":80.977,"near2":0.0111,"near05":0,"top":{"obj":"foam_berm < foam_banks < water_system","share":0.0111},"bennyHidden":0.113,"inside":0}
+> {"t":28,"mode":"ride","stage":"06","s":198.303,"near2":0,"near05":0,"bennyHidden":0.033,"inside":0}
+> {"t":31.5,"mode":"ride","stage":"06","s":236.803,"near2":0.1199,"near05":0,"top":{"obj":"Mesh(MeshStandardMaterial#ffc890,1552v) < zone_tubes < washer_world","share":0.1199},"bennyHidden":0.041,"insid
+> {"t":32,"mode":"ride","stage":"06","s":242.304,"near2":0,"near05":0,"bennyHidden":0.377,"inside":0}
+> {"t":40,"mode":"ride","stage":"07","s":337.874,"near2":0,"near05":0,"bennyHidden":0.03,"inside":0}
+> {"t":41,"mode":"ride","stage":"07","s":349.874,"near2":0,"near05":0,"bennyHidden":0.039,"inside":0}
+> {"t":42,"mode":"ride","stage":"07","s":361.874,"near2":0,"near05":0,"bennyHidden":0.032,"inside":0}
+> {"t":43.5,"mode":"ride","stage":"07","s":379.874,"near2":0.0908,"near05":0,"top":{"obj":"Mesh(MeshStandardMaterial#ffc890,155 …[+195 chars]
+
+### 🤖 Claude — 2026-11-17T15:52:49.841Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/t_new_sheet.png"}`
+
+### 🧑 User — 2026-11-17T15:52:50.014Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T15:52:50.010Z
+
+[Image: original 2700x566, displayed at 2000x419. Multiply coordinates by 1.35 to map to original image.]
+

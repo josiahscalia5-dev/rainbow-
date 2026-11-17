@@ -1938,3 +1938,114 @@ Fix the key path (report nests classes).
 > star    112.5   0.8% ssim 0.131 r 0.037 a 1.927      | 114.9   0.8% ssim 0.138 r 0.047 a 1.98       | 114.9   0.8% ssim 0.138 r 0.047 a 1.98      
 > body     36.0  34.5% ssim 0.143 r 0.066 a 1.084      |  22.6  68.2% ssim 0.589 r 0.49 a 0.956       |  21.2   …[+1879 chars]
 
+### 🤖 Claude — 2026-11-17T15:52:19.490Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/mkreport.py", "content": "import json, sys, hashlib, glob, os\nS = sys.argv[1]\nout = 'assets/textures/benny08/bake_report.json'\nrep = {\n    'what': 'Benny maps re-baked from the APPROVED Screen 08 picture (references/08_final_spin_chamber.png) at the locked 08 frame '\n            '(?match08=1, scripts/capture.mjs 08 view), used under ?match08=1&bake08=1 (qa/match/08/benny08/NOTES.md)',\n    'probe': 'qa/match/08/benny08/work/probe08.mjs --q=match08=1 shot0 info uv calD calE calA calC calB resto …[+1867 chars]`
+
+### 🧑 User — 2026-11-17T15:52:19.510Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/mkreport.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:52:22.246Z
+
+> 🔧 **Bash** `{"command": "python3 -I /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad/mkreport.py /tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && sha256sum assets/textures/benny05/{pom,star,crown_n,brim_n}.png | cut -c1-16", "description": "Write bake report for benny08 maps"}`
+
+### 🧑 User — 2026-11-17T15:52:22.299Z
+
+> ↩︎ result: {
+>  "armL.png": "feb92165693dbd0301e5b3ec5941cce7b74d6819af0e665f49315d7e50855e64",
+>  "armR.png": "30fab1fb5566fdf290c0dd1e80a669d7b4378b61fc43d214ccc74624ea43dd85",
+>  "body.png": "b3a85dee202b712f85ec6eb57c94f6970140e98282ee2d4b80cc3a7c329cbbe0",
+>  "brim.png": "4f4d7a0d0f418e21c4ec4d995537a1316deef321f7428939cf35db943c94a406",
+>  "brim_n.png": "316550a43fb5f03b8be21beb7fdf20fee44eb5fa0741e6fa7522b3fa65a75af2",
+>  "crown.png": "7ae0bcdcb8265f6a013f38896fb80d29428cf374b1ced4e613168dcd10c85974",
+>  "crown_n.png": "e91874b81cf1ad64227011b24cca8c4b29ef644f2805056bbb1894160ef84a38",
+>  "pom.png": "38c806472caf72506ded6fb1b3ed6f8e3394a6acdb55e6673f0c2283aa0b8f3a",
+>  "star.png": "932bbbd451e36b7129938b581cef4f8060730cefd4e7ed47c08df32909193cce"
+> }
+> 38c806472caf7250
+> 932bbbd451e36b71
+> e91874b81cf1ad64
+> 316550a43fb5f03b
+
+### 🤖 Claude — 2026-11-17T15:52:25.410Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files | grep -c \"benny05\" ; cat .gitattributes | head -20; git status --short", "description": "Check LFS rules and working tree status"}`
+
+### 🧑 User — 2026-11-17T15:52:25.560Z
+
+> ↩︎ result: 0
+> # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+>  M qa/capture_log.json
+>  M src/characters/benny/benny05.ts
+> ?? assets/textures/benny08/
+> ?? qa/match/08/benny08/
+
+### 🤖 Claude — 2026-11-17T15:52:28.625Z
+
+> 🔧 **Bash** `{"command": "git checkout -- qa/capture_log.json && git add src/characters/benny/benny05.ts assets/textures/benny08 qa/match/08/benny08 && git status --short", "description": "Stage bake milestone files"}`
+
+### 🧑 User — 2026-11-17T15:52:28.741Z
+
+> ↩︎ result: A  assets/textures/benny08/armL.png
+> A  assets/textures/benny08/armR.png
+> A  assets/textures/benny08/bake_report.json
+> A  assets/textures/benny08/body.png
+> A  assets/textures/benny08/brim.png
+> A  assets/textures/benny08/brim_n.png
+> A  assets/textures/benny08/crown.png
+> A  assets/textures/benny08/crown_n.png
+> A  assets/textures/benny08/pom.png
+> A  assets/textures/benny08/star.png
+> A  qa/match/08/benny08/work/bake08.py
+> A  qa/match/08/benny08/work/bennyseg08.py
+> A  qa/match/08/benny08/work/classgain08.py
+> A  qa/match/08/benny08/work/compare08.py
+> A  qa/match/08/benny08/work/geom08.py
+> A  qa/match/08/benny08/work/parts08.py
+> A  qa/match/08/benny08/work/probe/calA.shot.js
+> A  qa/match/08/benny08/work/probe/calB.shot.js
+> A  qa/match/08/benny08/work/probe/calC.shot.js
+> A  qa/match/08/benny08/work/probe/calD.shot.js
+> A  qa/match/08/benny08/work/probe/calE.shot.js
+> A  qa/match/08/benny08/work/probe/info.js
+> A  qa/match/08/benny08/work/probe/restore.shot.js
+> A  qa/match/08/benny08/work/probe/shot0.shot.js
+> A  qa/match/08/benny08/work/probe/uv.js
+> A  qa/match/08/benny08/work/probe08.mjs
+> A  qa/match/08/benny08/work/refine08.py
+> A  qa/match/08/benny08/work/reg08.py
+> A  qa/match/08/benny08/work/regions08.py
+> M  src/charac …[+21 chars]
+
+### 🤖 Claude — 2026-11-17T15:52:34.520Z
+
+> 🔧 **Bash** `{"command": "git commit -q -m \"Screen 08 Benny: maps re-baked from the approved 08 picture behind ?bake08=1 (bake milestone)\n\nTooling port (no merge) of line B's benny05 bake pipeline into qa/match/08/benny08/work/,\nadapted to the 08 picture, the locked match08 frame and calibration renders through the live\npost chain. Body/arms: per-pixel bake + 2 refine steps; crown/cuff: per-class colour gains on\nthe benny05 maps (a per-pixel beanie bake broke the stripes: the game beanie sits lower/right);\npom/star/normals: benny05 copies. Default build and ?match08=1 without bake08 unchanged.\n\nCo …[+370 chars]`
+
+### 🧑 User — 2026-11-17T15:52:37.910Z
+
+> ↩︎ result: remote:      https://github.com/josiahscalia5-dev/rainbow-/pull/new/claude/rainbow-s08-benny08-bake        
+> remote: 
+> 8cb3e72ce36480ef496db360a4715e02fdb203ed
+> 8cb3e72ce36480ef496db360a4715e02fdb203ed	refs/heads/claude/rainbow-s08-benny08-bake
+
+### 🤖 Claude — 2026-11-17T15:52:43.421Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/13775958-4c5b-597f-923a-989db4e1c92f/scratchpad && node scripts/capture.mjs 03 04 05 06 07 --q='match08=1' --out=$S/os_cur 2>&1 | grep -c \"→\" && node scripts/capture.mjs 03 04 05 06 07 --q='match08=1&bake08=1' --out=$S/os_new 2>&1 | grep -c \"→\"; git checkout -- qa/capture_log.json", "description": "Capture screens 03-07 with CURRENT and NEW maps", "timeout": 900000}`
+
