@@ -841,3 +841,331 @@ I'll read the brief first.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T00:13:22.621Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/pilot05/full_reference_match/hud; python3 - <<'EOF'\np='probe05.mjs'\ns=open(p).read()\ns=s.replace(\"for (let s = sCp + 1; s < sCp + T.sMax; s += 0.25) for (let lat = -4.2; lat <= 4.2; lat += 0.2) {\",\n \"for (let s = sCp + (t.dsMin ?? 1); s < sCp + (t.dsMax ?? T.sMax); s += 0.05) for (let lat = -(t.latMax ?? 3.6); lat <= (t.latMax ?? 3.6); lat += 0.1) {\")\ns=s.replace(\"s -= (d * ex - b * ey) / det; lat -= (-cc * ex + a * ey) / det;\",\n \"s -= (d * ex - b * ey) / det; lat -= (-cc * ex + a * ey) / det;\\n            s = Math.min(sCp + (t.dsMax ?? T.sM …[+1215 chars]`
+
+### 🧑 User — 2026-11-17T00:13:22.675Z
+
+> ↩︎ result: 63:          for (let s = sCp + (t.dsMin ?? 1); s < sCp + (t.dsMax ?? T.sMax); s += 0.05) for (let lat = -(t.latMax ?? 3.6); lat <= (t.latMax ?? 3.6); lat += 0.1) {
+> 75:            s = Math.min(sCp + (t.dsMax ?? T.sMax), Math.max(sCp + (t.dsMin ?? 1), s)); lat = Math.max(-(t.latMax ?? 3.6), Math.min(t.latMax ?? 3.6, lat));
+> ok
+
+### 🤖 Claude — 2026-11-17T00:13:34.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; time node qa/pilot05/full_reference_match/hud/probe05.mjs --out=/tmp/claude-0/hc05/p1 --solve=/tmp/claude-0/hc05/targets_v1.json stack=\"$STACK\" 2>&1 | tail -3; python3 -c \"\nimport json; j=json.load(open('/tmp/claude-0/hc05/p1/stack.json'))\nfor s in j['solve']: print({k:s[k] for k in ['x','y','w','index','ds','lat','d_at_scale1','scale','dist']}, 'proj', s['x'], s['y'])\n\"", "description": "Run constrained coin position solve", "timeout": 400000}`
+
+### 🧑 User — 2026-11-17T00:13:51.292Z
+
+> ↩︎ result: stack → /tmp/claude-0/hc05/p1/stack.png coins 1,420 errors 0
+> 
+> real	0m16.304s
+> user	0m2.242s
+> sys	0m0.432s
+> {'x': 473.5, 'y': 725, 'w': 96, 'index': 20, 'ds': 6.356, 'lat': -0.311, 'd_at_scale1': 98.36, 'scale': 0.976, 'dist': 13.01} proj 473.5 725
+> {'x': 548.5, 'y': 658.5, 'w': 70, 'index': 21, 'ds': 10.95, 'lat': 0.161, 'd_at_scale1': 73.65, 'scale': 0.95, 'dist': 17.49} proj 548.5 658.5
+> {'x': 481.5, 'y': 612, 'w': 56, 'index': 22, 'ds': 16.614, 'lat': -0.144, 'd_at_scale1': 55.92, 'scale': 1.001, 'dist': 23.04} proj 481.5 612
+> {'x': 431, 'y': 575, 'w': 43, 'index': 23, 'ds': 26.225, 'lat': -0.665, 'd_at_scale1': 39.65, 'scale': 1.085, 'dist': 32.61} proj 431 575
+> {'x': 465.5, 'y': 545, 'w': 28, 'index': 24, 'ds': 43.262, 'lat': -1.754, 'd_at_scale1': 25.82, 'scale': 1.085, 'dist': 50.27} proj 465.5 545
+> {'x': 495.5, 'y': 532.5, 'w': 20, 'index': 25, 'ds': 48.928, 'lat': -1.967, 'd_at_scale1': 24.03, 'scale': 0.832, 'dist': 54.14} proj 495.5 532.5
+> {'x': 518, 'y': 524, 'w': 17, 'index': 26, 'ds': 55.075, 'lat': 0.919, 'd_at_scale1': 21.57, 'scale': 0.788, 'dist': 60.44} proj 518 524
+> {'x': 532, 'y': 516.5, 'w': 12.5, 'index': 27, 'ds': 56.475, 'lat': 1.629, 'd_at_scale1': 21.17, 'scale': 0 …[+998 chars]
+
+### 🤖 Claude — 2026-11-17T00:14:04.151Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"\\.stage\\b\" src/gameplay/coins.ts src/game/Game.ts | grep -i \"def\\|coin\" | head; grep -rn \"coinLayout\\|C05\\b\\|C05\\.\" src scripts --include=*.ts --include=*.mjs | grep -v \"^src/gameplay/coins.ts\" | head", "description": "Check usage of coin stage labels and C05 constants"}`
+
+### 🧑 User — 2026-11-17T00:14:04.209Z
+
+> ↩︎ result: src/gameplay/coins.ts:27:  const a = course.stage('05');
+> src/gameplay/coins.ts:42:  const st = (id: StageId) => course.stage(id);
+> src/game/Game.ts:610:    st.coins = course.stage(refId).refCoins || START_COINS;
+> src/game/Game.ts:630:      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+> src/game/Game.ts:634:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+
+### 🤖 Claude — 2026-11-17T00:14:07.389Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n -i \"coin\" scripts/continuity-test.ts | head -20", "description": "Check continuity test for coin checks"}`
+
+### 🧑 User — 2026-11-17T00:14:07.439Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:14:20.257Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(int)\nst=np.asarray(Image.open(\"/tmp/claude-0/hc05/p1/stack.png\").convert(\"RGB\")).astype(int)\nprint(\"approved x=474\"); \nfor y in range(680,775,2): print(y, ap[y,474], ap[y,445], \"| game x=488\", st[y+13,488])\nprint(\"approved y=725 row\");\nfor x in range(420,530,3): print(x, ap[725,x])\nEOF", "description": "Pixel profiles through approved nearest coin"}`
+
+### 🧑 User — 2026-11-17T00:14:20.641Z
+
+> ↩︎ result: approved x=474
+> 680 [191 235 248] [ 51 231 255] | game x=488 [ 81 175 207]
+> 682 [231 243 255] [ 80 235 255] | game x=488 [255 158  48]
+> 684 [255 255 239] [ 88 230 250] | game x=488 [255 161  49]
+> 686 [240 243 154] [ 90 226 252] | game x=488 [255 164  49]
+> 688 [247 233 108] [112 226 253] | game x=488 [255 169  51]
+> 690 [238 156  21] [151 228 238] | game x=488 [255 223 119]
+> 692 [245 205  94] [244 255 215] | game x=488 [255 172  48]
+> 694 [255 244 218] [242 237 119] | game x=488 [255 108  19]
+> 696 [255 254 227] [255 251 190] | game x=488 [255 214  74]
+> 698 [252 223 189] [255 237 114] | game x=488 [255 221 102]
+> 700 [255 255 241] [242 145  32] | game x=488 [255 222 107]
+> 702 [250 254 203] [225 112   0] | game x=488 [255 230 153]
+> 704 [254 253 173] [255 183  10] | game x=488 [255 224 119]
+> 706 [237 154  52] [255 214  10] | game x=488 [255 225 122]
+> 708 [207  70   0] [252 211   0] | game x=488 [255 226 128]
+> 710 [233  80   0] [246 209   0] | game x=488 [255 227 134]
+> 712 [230 126   3] [244 196   0] | game x=488 [255 227 138]
+> 714 [245 224 143] [255 195   3] | game x=488 [255 227 142]
+> 716 [251 243 118] [255 197   0] | game x=488 [255 227 145]
+> 718 [255 250 106] [248 200   0] | game x=488 [255 228 148]
+> 720 [ …[+2331 chars]
+
+### 🤖 Claude — 2026-11-17T00:14:44.605Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"toneMappingExposure\\|exposure\" src --include=*.ts | grep -v \"^src/vfx/waterRibbon.ts.*uPjPost\" | head -20; grep -n \"export function canvasTexture\" -A 12 src/world/materials.ts", "description": "Check exposure settings and canvasTexture helper"}`
+
+### 🧑 User — 2026-11-17T00:14:44.677Z
+
+> ↩︎ result: src/world/materials.ts:207: *  (exposure 0.86), sRGB output and the grade pass (sat 1.36 / con 1.15), they land on the display colour
+> src/vfx/proj05Apron.ts:98:    (uniforms.uPjPost.value as THREE.Vector4).x = renderer.toneMappingExposure;
+> src/vfx/waterRibbon.ts:102: * whose peak channel passes ≈0.76·exposure, so these were solved by inverting Neutral at the game's
+> src/vfx/waterRibbon.ts:103: * exposure 0.86 (src/render/env.ts). Flat values after tone mapping: cyanDeep #0065D6, cyan #1D89F0,
+> src/vfx/waterRibbon.ts:120: * (exposure 0.86 → Neutral → sRGB → grade.ts saturation 1.36 / contrast 1.15; bloom ignored) so the
+> src/vfx/waterRibbon.ts:203: * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure, vignette, fog) so the screen shows the
+> src/vfx/waterRibbon.ts:335:// undo grade (vignette, contrast, saturation) -> sRGB -> Neutral tone map -> exposure: the linear colour that the
+> src/vfx/waterRibbon.ts:641:// ---- W10 (?water05=1): approved-image palette, shader-linear values solved through exposure 0.86 → Neutral →
+> src/vfx/proj05Tunnel.ts:12: * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure) so the screen shows the approved
+> src/vf …[+990 chars]
+
+### 🤖 Claude — 2026-11-17T00:14:48.907Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"PROJ05_INVERSE\\|onBeforeCompile\\|pjInverse\\|uPjRes\\|shared\\.\" src/vfx/proj05Tunnel.ts | head -30; sed -n 170,190p src/vfx/proj05Tunnel.ts", "description": "See how tunnel projection uses the inverse"}`
+
+### 🧑 User — 2026-11-17T00:14:48.965Z
+
+> ↩︎ result: 17:import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';
+> 76:  mat.onBeforeCompile = (shader) => {
+> 79:      .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes;
+> 80:${PROJ05_INVERSE}
+> 83:gl_FragColor = vec4(pjInverse(texture2D(map, vMapUv).rgb), 1.0);   // ?projlid05=1: the approved paddle pixels`);
+> 109:  uPjRes: { value: new THREE.Vector2(864, 1536) },
+> 146:      shared.uPtWall.value = t;
+> 147:      shared.uPtWallSize.value.set(meta.wall.w, meta.wall.h);
+> 150:        if (r) shared.uPtRows.value[PT_ROW[k]].set(r.y0, r.h);
+> 156:      shared.uPtRing.value = t;
+> 157:      shared.uPtRingSize.value.set(t.image.width, t.image.height);
+> 167:      shared.uPtFrame.value = t;
+> 168:      shared.uPtFrameRows.value.set(meta.h, meta.rows.left.h, meta.rows.left.y0, meta.rows.right.y0);
+> 169:      shared.uPtFrameLip.value = meta.rows.lip.y0;
+> 181:  shared.uPjRes.value.copy(size);
+> 182:  shared.uPjPost.value.x = renderer.toneMappingExposure;
+> 197:  const prev = mat.onBeforeCompile;
+> 198:  mat.onBeforeCompile = (shader, r) => {
+> 204:uniform vec4 uPjPost; uniform vec2 uPjRes;
+> 205:${PROJ05_INVERSE}
+> 219:  gl_FragColor = uPtDbg > 0.5 ? vec4(puv, 7.0, 77.0) : vec4(pjInverse(pc), 1.0);
+> 236 …[+1412 chars]
+
+### 🤖 Claude — 2026-11-17T00:14:57.867Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"loadAsync\\|TextureLoader\\|import.meta\\|assets/textures\" src/vfx/proj05Tunnel.ts | head -10; ls assets/textures/tunnel05 | head; grep -n \"publicDir\\|assets\" vite.config.* 2>/dev/null | head", "description": "Check texture loading pattern and asset serving"}`
+
+### 🧑 User — 2026-11-17T00:14:57.917Z
+
+> ↩︎ result: 4: * textures (tools/proj05/tunnel_rings.py + tunnel_bake.py → assets/textures/tunnel05/), so the design is anchored to the
+> 52: * assets/textures/tunnel05/lid05.png inside the GLB), shown through the post-chain inverse like the walls. The default
+> 57:  ? new GLTFLoader().loadAsync(new URL('../../assets/models/lids05.glb', import.meta.url).href).then((gltf) => {
+> 126:  const loader = new THREE.TextureLoader();
+> 143:      load(new URL('../../assets/textures/tunnel05/wall05.png', import.meta.url).href),
+> 144:      fetch(new URL('../../assets/textures/tunnel05/tunnel05.json', import.meta.url).href).then((r) => r.json()),
+> 155:    jobs.push(load(new URL('../../assets/textures/tunnel05/ring05.png', import.meta.url).href).then((t) => {
+> 162:      load(new URL('../../assets/textures/tunnel05/frame05.png', import.meta.url).href),
+> 163:      fetch(new URL('../../assets/textures/tunnel05/frame05.json', import.meta.url).href).then((r) => r.json()),
+> frame05.json
+> frame05.png
+> lid05.png
+> ring05.png
+> tunnel05.json
+> wall05.png
+> 6:  assetsInclude: ['**/*.glb'],
+> 11:    assetsInlineLimit: 0,
+
+### 🤖 Claude — 2026-11-17T00:15:02.190Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 60,135p src/vfx/proj05Tunnel.ts", "description": "Read tunnel texture loader setup"}`
+
+### 🧑 User — 2026-11-17T00:15:02.225Z
+
+> ↩︎ result: if (!m.isMesh) return;
+>       const map = (m.material as THREE.MeshStandardMaterial).map;
+>       if (!map) return;
+>       map.colorSpace = THREE.NoColorSpace;          // the texels ARE display values: the shader undoes the post chain
+>       map.needsUpdate = true;
+>       m.material = lidProjMaterial(map);
+>       m.frustumCulled = false;
+>     });
+>     lids05Scene = gltf.scene;
+>     lids05Scene.name = 'tube05_lids_blender';
+>   }).catch((e) => { console.error('[rainbow] projlid05: lids05.glb failed', e); })
+>   : null;
+> if (lids05Ready) proj05Pending.push(lids05Ready);
+> 
+> function lidProjMaterial(map: THREE.Texture): THREE.MeshBasicMaterial {
+>   const mat = new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide, fog: false });
+>   mat.onBeforeCompile = (shader) => {
+>     Object.assign(shader.uniforms, shared);
+>     shader.fragmentShader = shader.fragmentShader
+>       .replace('void main() {', `uniform vec4 uPjPost; uniform vec2 uPjRes;
+> ${PROJ05_INVERSE}
+> void main() {`)
+>       .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+> gl_FragColor = vec4(pjInverse(texture2D(map, vMapUv).rgb), 1.0);   // ?projlid05=1: the approved paddle pixels`);
+>   };
+>   mat.customProgramCacheKey = () => 'p …[+2113 chars]
+
+### 🤖 Claude — 2026-11-17T00:15:26.400Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nfrom scipy import ndimage as ndi\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(int)\nR,G,B=ap[...,0],ap[...,1],ap[...,2]\ngold=(R>170)&(G>60)&(B<150)&(R-B>90)\nfor (cx,cy,w) in [(473.5,725,96),(548.5,658.5,70),(481.5,612,56),(431,575,43),(465.5,545,28)]:\n    x0,x1=int(cx-w*0.75),int(cx+w*0.75); y0,y1=int(cy-w*0.7),int(cy+w*0.7)\n    m=np.zeros_like(gold); m[y0:y1,x0:x1]=gold[y0:y1,x0:x1]\n    m=ndi.binary_fill_holes(ndi.binary_closing(m,iter …[+550 chars]`
+
+### 🧑 User — 2026-11-17T00:15:27.375Z
+
+> ↩︎ result: coin (473.5,725) bbox x 426-522 y 686-766 ellipse c=(473.8,725.6) axes 76.8x96.7 ang 89.7 area 5918
+> coin (548.5,658.5) bbox x 514-583 y 632-686 ellipse c=(548.7,658.6) axes 52.5x70.7 ang 91.8 area 2987
+> coin (481.5,612) bbox x 454-509 y 591-634 ellipse c=(482.1,610.9) axes 40.9x56.1 ang 93.2 area 1858
+> coin (431,575) bbox x 410-452 y 558-592 ellipse c=(431.1,574.4) axes 31.9x42.7 ang 94.0 area 1121
+> coin (465.5,545) bbox x 452-479 y 535-556 ellipse c=(465.6,545.4) axes 21.1x28.0 ang 90.8 area 496
+
+### 🤖 Claude — 2026-11-17T00:15:51.852Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nap=np.asarray(Image.open(\"references/05_flow_into_the_current.png\").convert(\"RGB\")).astype(float)\ncx,cy,a,b=474.0,723.25,48.5,36.25\nrows=[]\nfor k in range(0,13):\n    row=[]\n    for x in range(436,513):\n        yb=cy+b*np.sqrt(max(0,1-((x-cx)/a)**2))\n        y=yb+0.5+k\n        y0=int(np.floor(y)); f=y-y0\n        row.append(ap[y0,x]*(1-f)+ap[y0+1,x]*f)\n    rows.append(np.array(row))\nrows=np.array(rows)\nfor k in range(13): print(k, rows[k].mean(0).astype(int), \"std\", rows[k].std(0) …[+350 chars]`
+
+### 🧑 User — 2026-11-17T00:15:52.078Z
+
+> ↩︎ result: 0 [231 164  29] std [15 20 27]
+> 1 [215 139  35] std [15 13 28]
+> 2 [195 118  43] std [14 13 32]
+> 3 [175 103  48] std [11 17 38]
+> 4 [165  99  53] std [12 19 40]
+> 5 [161  99  54] std [13 20 40]
+> 6 [157  98  53] std [14 21 41]
+> 7 [155  97  52] std [14 22 41]
+> 8 [153  97  52] std [13 22 42]
+> 9 [147  96  53] std [13 22 43]
+> 10 [135  96  60] std [18 21 42]
+> 11 [109  93  73] std [27 19 39]
+> 12 [64 82 87] std [25 15 32]
+> lum along band: 139 142 142 139 140 136 121 123 144 152 139 132 124 128 128 108 108 127 117 102 100 95 99 94 103 92 99 98 88 87 88 84 85 84 77 80 93 108 105 102 87 89 92 92 90 88 92 100 99 95 92 91 100 100 106 101 88 92 97 90 92 97 101 102 110 114 115 123 125 104 114 122 115 127 143 147 143
+
+### 🤖 Claude — 2026-11-17T00:15:55.153Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/hc05/band.png"}`
+
+### 🧑 User — 2026-11-17T00:15:55.191Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:16:22.118Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/coins/coin_bake.py", "content": "\"\"\"Screen 05 coins (coins05): bake the coin FACE texture from the approved picture's nearest coin.\nThe approved coin 1 (references/05_flow_into_the_current.png, face ellipse centre (474.0, 723.25), semi-axes 48.5 x 36.25\npx, measured: left/right face edge x 426 / 522, top 687, face/edge-band boundary 759.5 on the centre column) is\nun-foreshortened from its screen ellipse to a disc and written as a 256 x 256 upright texture (texel = DISPLAY colour;\nsrc/gameplay/coins.ts shows it through th …[+1700 chars]`
+
+### 🧑 User — 2026-11-17T00:16:22.358Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/pilot05/full_reference_match/coins/coin_bake.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T00:16:34.219Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='qa/pilot05/full_reference_match/coins/coin_bake.py'\ns=open(p).read()\ns=s.replace(\"\"\"out = np.stack([ndi.map_coordinates(ap[..., c], [ys - 0.5 + 0.5, xs - 0.5 + 0.5], order=3, mode=\"nearest\") for c in range(3)], -1)\n# map_coordinates samples pixel centres at integer coords: pixel (row, col) centre = (row, col); the screen point\n# (xs, ys) in pixel-edge coordinates is centre-based already (fit used pixel indices), so no half-pixel shift\n\"\"\",\"\"\"# CX, CY, A, B are in pixel-index coordinates (pixel centre = integer index), a …[+459 chars]`
+
+### 🧑 User — 2026-11-17T00:16:35.194Z
+
+> ↩︎ result: wrote assets/textures/coins05/coin05_face.png (256, 256, 3) mean face colour [247.5 206.1  45.2]
+
+### 🤖 Claude — 2026-11-17T00:16:37.876Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/hc05/face_view.png"}`
+
+### 🧑 User — 2026-11-17T00:16:37.895Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:17:17.973Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -rn \"proj05Pending\" src | grep -v \"push(\" ; grep -n \"createCoins\\|ready\\b\\|ready:\" src/game/Game.ts | head; grep -n \"proj05Pending\" -B3 -A8 src/vfx/index.ts | head -40", "description": "Check where pending texture promises are awaited"}`
+
+### 🧑 User — 2026-11-17T00:17:18.022Z
+
+> ↩︎ result: src/vfx/index.ts:17:import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
+> src/vfx/index.ts:169:    ...(ribbon.ready || proj05Pending.length ? { ready: Promise.all([ribbon.ready, ...proj05Pending]).then(() => undefined) } : {}),
+> src/vfx/proj05Apron.ts:14:import { EDGE_LIFT, PROJ05_INVERSE, proj05Pending } from './waterRibbon';
+> src/vfx/waterRibbon.ts:231:export const proj05Pending: Promise<unknown>[] = [];
+> src/vfx/proj05Tunnel.ts:17:import { PROJ05_INVERSE, on05, proj05Pending } from './waterRibbon';
+> 22:import { createCoins, COIN_VALUE } from '../gameplay/coins';
+> 102:  const coins = createCoins(course);
+> 528:  // `?proj05=1` / `?match05=1` (`post05`): on Screen 05 the reference-baked surfaces already carry the approved picture's
+> 619:    ready: true,
+> 14- */
+> 15-import * as THREE from 'three';
+> 16-import { type Course, WORLD, funnelY } from '../world/course';
+> 17:import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
+> 18-import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
+> 19-import { createDrumWater } from './drumWater';
+> 20-import { createFinalWave } from './finalWave';
+> 21-import { createPuddles } from './puddles';
+> 22-imp …[+933 chars]
+
+### 🤖 Claude — 2026-11-17T00:17:34.736Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"onBeforeRender\" node_modules/three/src/materials/Material.js node_modules/three/src/renderers/WebGLRenderer.js | head; sed -n 95,110p src/game/Game.ts; grep -n \"vfx.ready\\|\\.ready\" src/game/Game.ts src/main.ts | head", "description": "Check Material.onBeforeRender and ready gating"}`
+
+### 🧑 User — 2026-11-17T00:17:34.780Z
+
+> ↩︎ result: node_modules/three/src/materials/Material.js:116:	// onBeforeRender and onBeforeCompile only supported in WebGLRenderer
+> node_modules/three/src/materials/Material.js:118:	onBeforeRender( /* renderer, scene, camera, geometry, object, group */ ) {}
+> node_modules/three/src/renderers/WebGLRenderer.js:1163:			if ( scene.isScene === true ) scene.onBeforeRender( _this, scene, camera, _currentRenderTarget );
+> node_modules/three/src/renderers/WebGLRenderer.js:1608:			object.onBeforeRender( _this, scene, camera, geometry, material, group );
+> node_modules/three/src/renderers/WebGLRenderer.js:1613:			material.onBeforeRender( _this, scene, camera, geometry, object, group );
+>   const env = buildEnvironment(course);
+>   scene.add(env.group);
+>   const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+>   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+>   if (hidden.has('water')) water.group.visible = false;
+>   if (hidden.has('coins')) coins.group …[+132 chars]
+
+### 🤖 Claude — 2026-11-17T00:17:38.111Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"loadWater\" -A 12 src/game/*.ts src/vfx/*.ts | grep -n \"ready\" | head", "description": "Confirm water loader awaits ready promise"}`
+
+### 🧑 User — 2026-11-17T00:17:38.151Z
+
+> ↩︎ result: 40:src/game/modules.ts-35-      const ready = (w as { ready?: Promise<void> }).ready;
+> 41:src/game/modules.ts-36-      if (ready) await ready;
+
+### 🤖 Claude — 2026-11-17T00:18:02.388Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 1,30p src/vfx/waterRibbon.ts | head -5; grep -n \"^import\" src/vfx/waterRibbon.ts | head; grep -n \"coins\\|gameplay\" src/vfx/waterRibbon.ts | head", "description": "Check waterRibbon imports for circular dependency"}`
+
+### 🧑 User — 2026-11-17T00:18:02.431Z
+
+> ↩︎ result: /**
+>  * Spline water ribbon — the traversable stream Benny rides from the Drum A drain to the towel.
+>  *
+>  * Geometry: rows every `ds` along the master course, columns across `widthAt(s)`; a slightly
+>  * concave trough with raised frothy edges plus a short skirt under each edge (thickness).
+> 12:import * as THREE from 'three';
+> 13:import type { Course, StageId } from '../world/course';
+> 14:import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
+> 15:import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
+> 35: *          coreLateral) so the coins on the route stay on the cyan core. 1 elsewhere (04/06/07 unchanged).
+> 69: * gameplay/coins.ts may place the 05 coins at this lateral to put them exactly on the core centre.
+> 87: * s 189 (hidden behind the far block at the checkpoint; 06 unchanged). Coins (gameplay/coins.ts) are NOT moved: the
+> 173: *               (channel05 below). Visual only: course.ts, widthAt(), steering, coins and collisions are untouched.
+> 200: * isolated original artwork only where the approved water is hidden by Benny / coins / the bottom ring):
+> 209: * on every Screen-05 reference-match part (proj05 water + env05 tunnel / rings / fittings +  …[+238 chars]
+

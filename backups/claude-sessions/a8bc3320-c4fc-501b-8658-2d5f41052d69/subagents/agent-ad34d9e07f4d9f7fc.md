@@ -1119,3 +1119,213 @@ I'll start by reading the brief in full.
 > 475 GAME o860-869 U870-884 W885-903 U904-934 Y935-940 o941-944 W945-962 U963-1018 P1019-1044
 > 500 APP  o860-867 W868-908 U909-934 Y936-939 Y942-954 o955-959 Y960-982 U985- …[+573 chars]
 
+### 🤖 Claude — 2026-11-17T00:13:49.434Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat src/render/grade.ts | head -80; grep -n \"uPjPost\\|uPjRes\" src/vfx/waterRibbon.ts | head -10; node -e \"console.log(require('three/package.json').version)\"", "description": "Read grade pass and inverse uniforms"}`
+
+### 🧑 User — 2026-11-17T00:13:49.532Z
+
+> ↩︎ result: Exit code 1
+> /** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> import * as THREE from 'three';
+> import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+> 
+> export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+>   return new ShaderPass({
+>     uniforms: {
+>       tDiffuse: { value: null },
+>       uSat: { value: opts.saturation ?? 1.36 },
+>       uCon: { value: opts.contrast ?? 1.15 },
+>       uVig: { value: opts.vignette ?? 0.18 },
+>     },
+>     vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+>     fragmentShader: /* glsl */ `
+>       uniform sampler2D tDiffuse; uniform float uSat; uniform float uCon; uniform float uVig; varying vec2 vUv;
+>       void main(){
+>         vec4 c = texture2D(tDiffuse, vUv);
+>         float l = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
+>         vec3 col = mix(vec3(l), c.rgb, uSat);
+>         col = (col - 0.5) * uCon + 0.5;
+>         vec2 d = vUv - 0.5; d.x *= 0.75;
+>         col *= 1.0 - uVig * smoothstep(0.25, 0.75, length(d));
+>         gl_FragColor = vec4(clamp(col, 0. …[+1755 chars]
+
+### 🤖 Claude — 2026-11-17T00:13:56.699Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep '\"version\"' node_modules/three/package.json; grep -n \"attribute vec2 uv\" node_modules/three/src/renderers/webgl/WebGLProgram.js | head; grep -n \"toneMapping\\|outputColorSpace\\|bloom\\|Bloom\" src/game/Game.ts src/render/env.ts | head -20", "description": "Check three version, uv attribute declaration, post chain setup"}`
+
+### 🧑 User — 2026-11-17T00:13:56.770Z
+
+> ↩︎ result: "version": "0.170.0",
+> 685:			'attribute vec2 uv;',
+> 689:			'	attribute vec2 uv1;',
+> 695:			'	attribute vec2 uv2;',
+> 701:			'	attribute vec2 uv3;',
+> src/game/Game.ts:14:import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+> src/game/Game.ts:62:  // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
+> src/game/Game.ts:63:  // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear
+> src/game/Game.ts:69:  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', glow05 ? 1.0 : 0.2), qn('bloomR', glow05 ? 0.4 : 0.35), qn('bloomT', glow05 ? 2.6 : 0.94));
+> src/game/Game.ts:74:  if (tone05 === 'none') renderer.toneMapping = THREE.NoToneMapping;
+> src/game/Game.ts:75:  else if (tone05 !== null && tone05 !== '' && isFinite(+tone05) && +tone05 > 0) renderer.toneMappingExposure = +tone05;
+> src/game/Game.ts:76:  const useBloom = qs.get('bloom') !== '0';
+> src/game/Game.ts:77:  if (useBloom) composer.addPass(bloom);
+> src/game/Game.ts:86:    bloom.resolution.set(w / 2, h / 2);
+> src/game/Game.ts:523:  // glow05: the strong highlight bloom belon …[+933 chars]
+
+### 🤖 Claude — 2026-11-17T00:13:59.909Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 520,550p src/game/Game.ts; sed -n 50,70p src/render/env.ts", "description": "Read bloom-at-05 logic and renderer setup"}`
+
+### 🧑 User — 2026-11-17T00:13:59.963Z
+
+> ↩︎ result: let running = !qaMode;
+>   let dirty = true;
+>   renderer.info.autoReset = false;
+>   // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the
+>   // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins
+>   const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
+>   const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
+>   const st05 = course.stage('05');
+>   // `?proj05=1` / `?match05=1` (`post05`): on Screen 05 the reference-baked surfaces already carry the approved picture's
+>   // own glow, and the bloom pass only adds a pink veil over the pure cyan (measured: +10 red on the water) — so the bloom
+>   // fades out over the last 6 u of 04 and back in over the first 6 u of 06. Off (default): nothing here runs.
+>   const post05 = on05('post05') || on05('proj05');
+>   const render = () => {
+>     if (post05 && !glow05) {
+>       const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+>       bloom.strength = bloomBase.s * (1 - w);
+>       bloom.enabled = bloom.strength > 0.002;
+>     }
+>     if (glow05) {
+>       const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+>  …[+708 chars]
+
+### 🤖 Claude — 2026-11-17T00:14:53.300Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nimport json,struct\nb=open('assets/models/benny.glb','rb').read()\nl=struct.unpack('<I',b[12:16])[0]; j=json.loads(b[20:20+l])\nfor m in j['meshes']:\n  for p in m['primitives']:\n    print(m['name'], list(p['attributes'].keys()), 'mat', j['materials'][p['material']].get('name'), {k:v for k,v in j['materials'][p['material']].items() if k!='name'})\nprint([ (n.get('name'), n.get('extras')) for n in j['nodes'] if n.get('extras')])\nprint(len(j.get('images',[])), [ (i.get('mimeType'), j['bufferViews'][i['bufferView']]['byteLength']) for i in j.g …[+87 chars]`
+
+### 🧑 User — 2026-11-17T00:14:53.382Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "<string>", line 7, in <module>
+>     print(m['name'], list(p['attributes'].keys()), 'mat', j['materials'][p['material']].get('name'), {k:v for k,v in j['materials'][p['material']].items() if k!='name'})
+>           ~^^^^^^^^
+> KeyError: 'name'
+
+### 🤖 Claude — 2026-11-17T00:14:57.848Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nimport json,struct\nb=open('assets/models/benny.glb','rb').read()\nl=struct.unpack('<I',b[12:16])[0]; j=json.loads(b[20:20+l])\nfor n in j['nodes']:\n  if 'mesh' in n:\n    m=j['meshes'][n['mesh']]\n    for p in m['primitives']:\n      mat=j['materials'][p['material']]\n      print(n.get('name'), list(p['attributes'].keys()), {k:v for k,v in mat.items() if k not in ('name',)}, n.get('extras',''))\nprint(len(j.get('images',[])), [ (i.get('mimeType'), j['bufferViews'][i['bufferView']]['byteLength']) for i in j.get('images',[])])\n\" 2>&1 | cut  …[+71 chars]`
+
+### 🧑 User — 2026-11-17T00:14:57.945Z
+
+> ↩︎ result: fur_body ['POSITION', 'NORMAL', 'TEXCOORD_0'] {'pbrMetallicRoughness': {'baseColorFactor': [0.8069522576650873, 0.08865558627723595, 0.3139887133649649, 1], 'metallicFactor': 0, 'roughnessFactor': 0.92}} {'fur': {'gravity': 0.1, 'length': 0.12, 'density': 64, 'shells': 20, 'root': '#e6468c', 'tip': '#fd80b4', 'bald': [0, 0.9992001066609779, -0.03998933418663416, 0.41428571428571437], 'short': [0, 
+> eyeL_happy ['POSITION', 'NORMAL', 'TEXCOORD_0'] {'pbrMetallicRoughness': {'metallicFactor': 0, 'roughnessFactor': 0.12, 'baseColorTexture': {'index': 0, 'texCoord': 0}}} 
+> eyeL_dizzy ['POSITION', 'NORMAL', 'TEXCOORD_0'] {'pbrMetallicRoughness': {'metallicFactor': 0, 'roughnessFactor': 0.12, 'baseColorTexture': {'index': 1, 'texCoord': 0}}} 
+> lash_L_0.5 ['POSITION', 'NORMAL', 'TEXCOORD_0'] {'pbrMetallicRoughness': {'baseColorFactor': [0.01764195448412081, 0.005181516700061659, 0.036889450395083165, 1], 'metallicFactor': 0, 'roughnessFactor': 0.5}} 
+> lash_L_0.85 ['POSITION', 'NORMAL', 'TEXCOORD_0'] {'pbrMetallicRoughness': {'baseColorFactor': [0.01764195448412081, 0.005181516700061659, 0.036889450395083165, 1], 'metallicFactor': 0, 'roughnessFactor': 0.5}} 
+> eyeR_happy ['POSITION', 'NORMAL', 'T …[+5510 chars]
+
+### 🤖 Claude — 2026-11-17T00:16:03.104Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 675,700p node_modules/three/src/renderers/webgl/WebGLProgram.js; grep -n \"vMapUv\\|MAP_UV\" node_modules/three/src/renderers/shaders/ShaderChunk/uv_pars_vertex.glsl.js | head", "description": "Check three uv attribute and map uv varyings"}`
+
+### 🧑 User — 2026-11-17T00:16:03.146Z
+
+> ↩︎ result: '#endif',
+> 
+> 			'#ifdef USE_INSTANCING_MORPH',
+> 
+> 			'	uniform sampler2D morphTexture;',
+> 
+> 			'#endif',
+> 
+> 			'attribute vec3 position;',
+> 			'attribute vec3 normal;',
+> 			'attribute vec2 uv;',
+> 
+> 			'#ifdef USE_UV1',
+> 
+> 			'	attribute vec2 uv1;',
+> 
+> 			'#endif',
+> 
+> 			'#ifdef USE_UV2',
+> 
+> 			'	attribute vec2 uv2;',
+> 
+> 			'#endif',
+> 
+> 			'#ifdef USE_UV3',
+> 
+> 10:	varying vec2 vMapUv;
+
+### 🤖 Claude — 2026-11-17T00:16:32.105Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -c \"\nfrom PIL import Image\nbox=(300,1040,500,1190)\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop(box)\nb=Image.open('qa/pilot05/full_reference_match/benny/before.png').convert('RGB').crop(box)\no=Image.new('RGB',(a.width*2+4,a.height),'black'); o.paste(a,(0,0)); o.paste(b,(a.width+4,0))\no.resize((o.width*3,o.height*3),Image.NEAREST).save('qa/pilot05/full_reference_match/benny/work/fur_x3.png')\"", "description": "Zoom crop approved vs game fur"}`
+
+### 🧑 User — 2026-11-17T00:16:32.328Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T00:16:32.609Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/fur_x3.png"}`
+
+### 🧑 User — 2026-11-17T00:16:32.634Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:17:14.476Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -n 548,600p src/game/Game.ts", "description": "Read Game frame loop and goto settle"}`
+
+### 🧑 User — 2026-11-17T00:17:14.506Z
+
+> ↩︎ result: const now = performance.now();
+>     const dt = Math.min(0.05, (now - last) / 1000);
+>     last = now;
+>     fps += (1 / Math.max(dt, 1e-3) - fps) * 0.05;
+>     if (running) stepSim(dt);
+>     // QA mode renders on demand only (software WebGL is slow; frames are deterministic)
+>     if (!qaMode || running || dirty) { render(); dirty = false; }
+>     requestAnimationFrame(frame);
+>   };
+>   requestAnimationFrame(frame);
+> 
+>   // ---------------------------------------------------------------- QA API
+>   const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+>     '01': { mode: 'intro', t: T.cp01 },
+>     '02': { mode: 'intro', t: T.cp02 },
+>     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+>     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+>     '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+>     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+>     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+>     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+>     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+>     '10 …[+1312 chars]
+
+### 🤖 Claude — 2026-11-17T00:17:46.828Z
+
+Now I have a clear picture. Let me make the fur shader changes (behind defines so the default build compiles to the same program output).
+
+### 🤖 Claude — 2026-11-17T00:17:59.232Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/characters/benny/fur.ts'\ns=open(p).read()\norig=s\ns=s.replace(\"\"\"        uniform vec3 uShortDir; uniform vec3 uShort; uniform float uTime; uniform vec3 uWind;\n        varying float vLayer; varying vec3 vBase; varying float vLenMask;`,\"\"\",\"\"\"        uniform vec3 uShortDir; uniform vec3 uShort; uniform float uTime; uniform vec3 uWind;\n        varying float vLayer; varying vec3 vBase; varying float vLenMask;\n        #ifdef BENNY05\n        varying vec2 vB05Uv;\n        #endif`,\"\"\")\ns=s.replace(\"\"\"        vLenMask  …[+3360 chars]`
+
+### 🧑 User — 2026-11-17T00:17:59.294Z
+
+> ↩︎ result: 32:    uClump: { value: number };
+> 51:    /** `?benny05=1` only (material.defines.BENNY05, benny05.ts): strand clumping toward tuft centres */
+> 52:    uClump: { value: 0.42 },
+> 64:        #ifdef BENNY05
+> 77:        #ifdef BENNY05
+> 93:        #ifdef BENNY05
+> 95:        uniform float uClump;
+> 108:          #ifdef BENNY05
+> 109:          q = mix(q, cc, vLayer * uClump);
+> 131:          #ifdef BENNY05
+> 151:        #if defined(BENNY_UV) && defined(BENNY05)
+> 159:    `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY_UV !== undefined ? '-uv' : ''}`;
+

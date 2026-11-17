@@ -60,7 +60,7 @@ try {
           t.index = base + k;
           const h = (t.h ?? T.h) + 0.08 * Math.sin(12 * 3 + t.index);
           let best = null;
-          for (let s = sCp + 1; s < sCp + T.sMax; s += 0.25) for (let lat = -4.2; lat <= 4.2; lat += 0.2) {
+          for (let s = sCp + (t.dsMin ?? 1); s < sCp + (t.dsMax ?? T.sMax); s += 0.05) for (let lat = -(t.latMax ?? 3.6); lat <= (t.latMax ?? 3.6); lat += 0.1) {
             const [x, y, z] = proj(P(s, lat, h)); if (z > 1 || z < -1) continue;
             const e = (x - t.x) ** 2 + (y - t.y) ** 2; if (!best || e < best.e) best = { e, s, lat };
           }
@@ -72,6 +72,7 @@ try {
             const a = (xs - x) / ds, b = (xl - x) / dl, cc = (ys - y) / ds, d = (yl - y) / dl; const det = a * d - b * cc;
             if (Math.abs(det) < 1e-9) break;
             s -= (d * ex - b * ey) / det; lat -= (-cc * ex + a * ey) / det;
+            s = Math.min(sCp + (t.dsMax ?? T.sMax), Math.max(sCp + (t.dsMin ?? 1), s)); lat = Math.max(-(t.latMax ?? 3.6), Math.min(t.latMax ?? 3.6, lat));
           }
           const p = P(s, lat, h); const [x, y] = proj(p); const d1 = dia(p);
           out.push({ ...t, s: +s.toFixed(3), ds: +(s - sCp).toFixed(3), lat: +lat.toFixed(3), x: +x.toFixed(1), y: +y.toFixed(1), d_at_scale1: +d1.toFixed(2), scale: +(t.w / d1).toFixed(3), dist: +p.distanceTo(camera.position).toFixed(2) });

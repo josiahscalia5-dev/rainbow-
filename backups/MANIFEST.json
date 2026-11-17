@@ -387,6 +387,11 @@
    "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
   },
   {
+   "path": "assets/textures/coins05/coin05_face.png",
+   "bytes": 74119,
+   "sha256": "2f03d8fd31e3d6949aeaa614efdabf434990d0f8e3c2d054ef7d4c21c461d385"
+  },
+  {
    "path": "assets/textures/marble05_env_1024.jpg",
    "bytes": 51147,
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
@@ -435,6 +440,16 @@
    "path": "assets/textures/water05/far1/proj05_lut.json",
    "bytes": 27412,
    "sha256": "27f50d69a751202535fd98a7433bad21e7481449e453b442fba59696f6bf9c8b"
+  },
+  {
+   "path": "assets/textures/water05/far2/README.md",
+   "bytes": 612,
+   "sha256": "8b839141414b0153d23389b5da257220b52cbd8642331c290e44e59f6c7912c7"
+  },
+  {
+   "path": "assets/textures/water05/far2/proj05_E.png",
+   "bytes": 2036259,
+   "sha256": "b67fa4c79578e461c14a0b7276b0252dc4b80022bbf43c89061f0d45d6c11d8b"
   },
   {
    "path": "assets/textures/water05/proj05_A.png",
@@ -524,7 +539,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10682,
-   "sha256": "a94fb35b244100688e860978d50c34aa14c1f4b6777bcf3103217e1a4a08614c"
+   "sha256": "5c55984fcb237b230d8ea4becaf00e75166cc2115dabe839973e1a66fffa8ab1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1357,6 +1372,11 @@
    "sha256": "870397b9be24f6d5f63c7c5962a5cdb57651b54ea5868ee648c775e8d9326b16"
   },
   {
+   "path": "qa/pilot05/full_reference_match/benny/work/fur_x3.png",
+   "bytes": 158558,
+   "sha256": "de709035ab6e37d38c333fb1257483f006916ff4489d5bd02c8f7eebeea5a34a"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/benny/work/game_hat_x3.png",
    "bytes": 814507,
    "sha256": "9ac529ed9d7571dc1ee5979959a12d64f8bb9c9f9cc8292a0fadc6b59a52766e"
@@ -1430,6 +1450,116 @@
    "path": "qa/pilot05/full_reference_match/briefs/washer-environment-modeler.md",
    "bytes": 7498,
    "sha256": "8ceed70c0f6db4243646078c8480ba34e7d3f25a0590564887a2e4fd3a378596"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coins/coin_bake.py",
+   "bytes": 2000,
+   "sha256": "5ea20a6cb8b029ae709e177bb716812af03a929a5159d8748a93826b89dfc752"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gameplay_vp_gap.json",
+   "bytes": 14768,
+   "sha256": "9e6ade3db5abbedb5ba682b7a3bb26509dbfadfede323598cf0c0604a95e0def"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/locked/05.png",
+   "bytes": 2179834,
+   "sha256": "8fc91c4b688122bef831ae283a5aade20db06ba976c6cfa159662e5df2b5bead"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/locked/FULL_FRAME_METRICS.json",
+   "bytes": 426,
+   "sha256": "2163eda076003952e1e13292ede8180f09b5986eb8644ad2c00e2f72f63c401b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/locked/REGION_METRICS.json",
+   "bytes": 2532,
+   "sha256": "a5b588f11b92deb2432adf92cfa2869d6d3df753550f60f527afdf55a115eb15"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/locked/log.txt",
+   "bytes": 244,
+   "sha256": "fc69249ad220ba74a21a6d0409232663b386c4c1d9e6c51e19e3051bc015b528"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride/log.txt",
+   "bytes": 416,
+   "sha256": "a68eca772b44e17576b678f52e012457d8656da2e4301fe128c90063ec9cef15"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride/move_05.png",
+   "bytes": 1963297,
+   "sha256": "ae0488b0adf732a0e770b3222e619c4df759c0c5079918b921eb7e34a1457527"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride/move_10.png",
+   "bytes": 1976045,
+   "sha256": "a7d715387714745e8f937a06dc9ddd78ec63f50fd03402ce77776f03de6df258"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride/move_20.png",
+   "bytes": 1953302,
+   "sha256": "278d25d1f486dcf92535de7de6b357fe2fa61b6f02bd006984c3cce40d2d3c0e"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride/move_log.json",
+   "bytes": 692,
+   "sha256": "b2570a23815b0a32c595a6fe2506955632d29561f200932d458f46316a896a22"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride_dbg/log.txt",
+   "bytes": 287,
+   "sha256": "cf786480ab874a57f575641fb32e381e9343e088ded0b09ea5a0f406d7702a65"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride_dbg/move_10.png",
+   "bytes": 1648477,
+   "sha256": "a1071b55031e25204934ebe76dcbbd2fffbae9c154abfc32285a2e8f764dc555"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride_dbg/move_20.png",
+   "bytes": 1585254,
+   "sha256": "7faed32c5626c233e4eb08c6a7a3c4adca40cb86ced3ae7d4c94074fa81a88df"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride_dbg/move_log.json",
+   "bytes": 532,
+   "sha256": "f9e1b31a9136ea32c1275e3791cca95493e016688ab650023440b1780fbbe51b"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/gap05/ride_metrics.json",
+   "bytes": 306,
+   "sha256": "5f5009d433e6af0804bac878393b18fb1de78dc78e41cc11d6597a0364306939"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/joins/a/04.png",
+   "bytes": 1020438,
+   "sha256": "2888e5122720122b7ca0b9c64679ab424570135b5ec2b06aefcdff5293cdddb1"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/joins/a/06.png",
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/joins/a/log.txt",
+   "bytes": 478,
+   "sha256": "0ac852c8db4d40cf07d44b4cc78582d57dfc878e55ea115c9ddedf00e2ef49ea"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/joins/b/04.png",
+   "bytes": 1020609,
+   "sha256": "3b50aae25126eeba4abec0dca0b4d43f58ed24609a121982989d07e5e8516925"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/joins/b/06.png",
+   "bytes": 1504496,
+   "sha256": "8cf18f9c7ea5df260f3c2aa885d7bdfd74a854876d46a504d31ff26246192638"
+  },
+  {
+   "path": "qa/pilot05/full_reference_match/coordinator/joins/b/log.txt",
+   "bytes": 478,
+   "sha256": "a81ce7d378c803940dec23f94c574f4479a96e08b91927423cb521094ca4d964"
   },
   {
    "path": "qa/pilot05/full_reference_match/coordinator/vp05/locked_def/05.png",
@@ -1507,6 +1637,11 @@
    "sha256": "5870d27fb54975fd81b5435ced3fb15664edb895f374021726f21e2033350a57"
   },
   {
+   "path": "qa/pilot05/full_reference_match/env/work/ring_fit.json",
+   "bytes": 3398,
+   "sha256": "0e00abac06a570cc5c8b3c96c5e4b5095591456df07138bb4370a6c1a98fe90e"
+  },
+  {
    "path": "qa/pilot05/full_reference_match/env/work/rings_before.json",
    "bytes": 3334,
    "sha256": "f42a550e2e9358c793edcf12879714644afdb20cf5c4fa8a1fb8d71f4f229839"
@@ -1533,8 +1668,8 @@
   },
   {
    "path": "qa/pilot05/full_reference_match/hud/probe05.mjs",
-   "bytes": 6520,
-   "sha256": "b27ad873f6fbfaf6307ae3a63c35eb4402d95277cc8d68136db5ae72170b71db"
+   "bytes": 6730,
+   "sha256": "58046ae1787530ab2168ca91432f013e0e49de079cbb890dbb27c723fbef7913"
   },
   {
    "path": "qa/pilot05/full_reference_match/masks/benny_and_hat.png",
@@ -8048,8 +8183,8 @@
   },
   {
    "path": "src/characters/benny/fur.ts",
-   "bytes": 6194,
-   "sha256": "8fd897055b834224cb3dcf3ec4d9406041835130bfdd9ed3718f41157ffc161e"
+   "bytes": 7423,
+   "sha256": "057cd9d702260f0e1751279fee3c1eeee50164970a4ecfc5774147d3e57c8a57"
   },
   {
    "path": "src/characters/benny/runtime.ts",
@@ -8203,8 +8338,8 @@
   },
   {
    "path": "src/vfx/waterRibbon.ts",
-   "bytes": 106219,
-   "sha256": "e79d3575cd01dad06b4cf8dcc6691f3accea7d7dbb1571dcffe72710fc89ad3c"
+   "bytes": 106827,
+   "sha256": "f0a2e315145d21e925ed311eee7b130abaa8129f97882a1bb270372e12858f6c"
   },
   {
    "path": "src/vfx/whirlpool.ts",
@@ -8282,9 +8417,19 @@
    "sha256": "e46a38b660ddf5adcd0c53b46bfd8009b4a041a879bec7babc98fc3e3e3357d6"
   },
   {
+   "path": "tools/env05/ring_fit.py",
+   "bytes": 6522,
+   "sha256": "7220193851a311102fb7bb1b00cd9c7b83167c1934d6bdccc0eaa29cd1886a1f"
+  },
+  {
    "path": "tools/env05/ring_table.py",
    "bytes": 3338,
    "sha256": "06edcc5e164aa3efa2824ec5e691f8066fd4b1ca67badab945f26383f17dd42f"
+  },
+  {
+   "path": "tools/env05/ring_validate.py",
+   "bytes": 1452,
+   "sha256": "f95d676c2cdc172c4eb6973b966b63990594925749ec8e25f046b19eaa192aaf"
   },
   {
    "path": "tools/env05/ringproj.py",
@@ -8378,8 +8523,8 @@
   },
   {
    "path": "tools/proj05/bake.py",
-   "bytes": 17685,
-   "sha256": "2da7de1f8bcdba167ad4104ada8e52d17bfaaad6c26572ba1d6b65a08ee09aa3"
+   "bytes": 20228,
+   "sha256": "76b5c8ff1bad74c0bebc62b9b9c270f4db87484095cceec404570a476e6de744"
   },
   {
    "path": "tools/proj05/flow_bake.py",

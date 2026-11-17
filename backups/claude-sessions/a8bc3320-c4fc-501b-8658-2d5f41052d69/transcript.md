@@ -2588,3 +2588,205 @@ Now the uniform itself, set in `attachProj05` next to the riding-water uniforms:
 > gap  48-100   rows:     183 gaps,    10979 texels
 > gap 100-10000 rows:      10 gaps,     1787 texels
 
+### 🤖 Claude — 2026-11-17T00:13:01.673Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/proj05/bake.py", "offset": 138, "limit": 30}`
+
+### 🧑 User — 2026-11-17T00:13:01.689Z
+
+> ↩︎ result: 138	
+> 139	xE, yE = e_coords(su, ss)
+> 140	accE, _ = splat(xE, yE, np.where(scoin[:, None], 0, sc), WE, NE)
+> 141	holeE, _ = splat(xE, yE, scoin[:, None].astype(float), WE, NE)
+> 142	wtE, _ = splat(xE, yE, (~scoin)[:, None].astype(float), WE, NE)
+> 143	E, validE = finish(accE, wtE[..., 0], holeE[..., 0], max_gap=int(NE * 0.35))
+> 144	alphaE = gaussian_filter(binary_erosion(validE, iterations=1).astype(float), 0.8)
+> 145	if FARFIX:
+> 146	    # water the locked eye never saw (behind wave crests, long interpolated runs along s): the straight interpolation
+> 147	    # shows as a flat blank patch as soon as Benny rides forward. Those texels are released (alpha 0) so the tile
+> 148	    # layers — the approved design, repeating — show there instead. Runs of <= UNSEEN_MIN rows stay (sub-texel gaps).
+> 149	    UNSEEN_MIN = 8
+> 150	    fl = finish.filled.copy()
+> 151	    run = np.zeros(fl.shape, np.int32)
+> 152	    for y in range(fl.shape[0]):                       # run length ending at y (down each column)
+> 153	        run[y] = np.where(fl[y], (run[y - 1] if y else 0) + 1, 0)
+> 154	    for y in range(fl.shape[0] - 2, -1, -1):           # spread the full run length back up the run
+> 155	        run[y] = np.where(fl[y] & fl …[+726 chars]
+
+### 🤖 Claude — 2026-11-17T00:13:02.724Z
+
+> 🔧 **Bash** `{"command": "grep -n \"imsave\\|save(\\|proj05_E\\|json.dump\\|def e_coords\\|WE, NE\\|^WE\\|NE =\" tools/proj05/bake.py | head -20", "description": "Find where E is saved in bake.py"}`
+
+### 🧑 User — 2026-11-17T00:13:02.762Z
+
+> ↩︎ result: 7:  proj05_E.png   EXACT layer: the approved water at ~screen resolution; rows follow s with the locked view's own
+> 14:  proj05_lut.json  s -> (V, centre u, half range u) for proj05_E + all layer extents
+> 84:NE = int(min(2048, np.ceil(cum[-1])))
+> 86:WE = 1024
+> 87:def e_coords(u, s):
+> 140:accE, _ = splat(xE, yE, np.where(scoin[:, None], 0, sc), WE, NE)
+> 141:holeE, _ = splat(xE, yE, scoin[:, None].astype(float), WE, NE)
+> 142:wtE, _ = splat(xE, yE, (~scoin)[:, None].astype(float), WE, NE)
+> 158:    print(json.dumps(dict(E_unseen_texels=int(unseen.sum()), E_texels=int(unseen.size))))
+> 271:def save(img, a, name):
+> 273:    Image.fromarray((rgba * 255 + 0.5).astype(np.uint8)).save(os.path.join(out, name), optimize=True)
+> 274:save(F_, alphaF, "proj05_F.png"); save(A_, alphaA, "proj05_A.png"); save(E, alphaE, "proj05_E.png"); save(N_, alphaN, "proj05_N.png"); save(T_, None, "proj05_T.png")
+> 275:Image.fromarray((D * 255 + 0.5).astype(np.uint8)).save(os.path.join(out, "proj05_D.png"), optimize=True)
+> 288:json.dump(lut, open(os.path.join(out, "proj05_lut.json"), "w"))
+> 289:rep = dict(A_px=int(apm.sum()), E=[WE, NE], N=[WN, NN], T=[WN, NT], D=[int(Wd - p), int(Hd - p)], E_valid=float(validE.mean()), N_valid=f …[+47 chars]
+
+### 🤖 Claude — 2026-11-17T00:13:16.058Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/proj05/bake.py", "old_string": "    print(json.dumps(dict(E_unseen_texels=int(unseen.sum()), E_texels=int(unseen.size))))\n\nif FARFIX:      # N / T / D: water-only samples, as before", "new_string": "    print(json.dumps(dict(E_unseen_texels=int(unseen.sum()), E_texels=int(unseen.size))))\n    # measured 2026-11-17 (session 018Sg3AU): this finds 0 texels — E only interpolates COIN holes, and the scene has\n    # none, so nothing in E is an interpolated run. The blank / torn stripes while riding are the opposite case: gaps\n    # t …[+2401 chars]`
+
+### 🧑 User — 2026-11-17T00:13:16.236Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/proj05/bake.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T00:13:21.059Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && mkdir -p $S/bake_gap && time python3 -I tools/proj05/bake.py $S/probe qa/pilot05/proj/target $S/bake_gap far gapfill 2>&1 | tail -3 | cut -c1-300 && python3 -I - <<EOF\nimport numpy as np, filecmp\nfrom PIL import Image\nS=\"$S\"\na=np.asarray(Image.open('assets/textures/water05/far1/proj05_E.png')).astype(int); b=np.asarray(Image.open(S+'/bake_gap/proj05_E.png')).astype(int)\nva=a[...,3]>=250\nprint('E texels changed', (np.abs(a-b).max(-1)>0).sum(), '| changed among fully-valid far1 texels (rgb …[+411 chars]`
+
+### 🧑 User — 2026-11-17T00:13:33.577Z
+
+> ↩︎ result: {"E_unseen_texels": 0, "E_texels": 1494016}
+> {"E_gapfilled_texels": 72607, "E_texels": 1494016}
+> {"A_px": 18413, "E": [1024, 1459], "N": [512, 960], "T": [512, 336], "D": [512, 512], "E_valid": 0.9344103409869774, "N_valid": 0.7803609212239583, "samples": 772178, "coin_pixels": 0, "sE": [129.71197937011718, 180.97108032226564]}
+> 
+> real	0m11.878s
+> user	0m12.094s
+> sys	0m0.448s
+> E texels changed 136783 | changed among fully-valid far1 texels (rgb): 0
+> alpha>127: far1 0.8623 gapfill 0.9292
+> proj05_F.png identical to far1: True
+> proj05_lut.json identical to far1: True
+
+### 🤖 Claude — 2026-11-17T00:13:43.550Z
+
+> 🔧 **Bash** `{"command": "mkdir -p assets/textures/water05/far2 && cp /tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/bake_gap/proj05_E.png assets/textures/water05/far2/proj05_E.png && cat > assets/textures/water05/far2/README.md <<'EOF'\n# far2 — exact layer E with mirror-filled gaps (`?projgap05=1`, on with `?match05=1`)\n\n`proj05_E.png` = `python3 -I tools/proj05/bake.py <probe> qa/pilot05/proj/target <out> far gapfill` (2026-11-17, session\n018Sg3AU; probe: `node scripts/proj05-probe.mjs --q='proj05=1' --raw=<dir>`). Same as `../far1/proj05_E.png` except the\n72,607 t …[+445 chars]`
+
+### 🧑 User — 2026-11-17T00:13:43.613Z
+
+> ↩︎ result: 1709:    E: PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,
+
+### 🤖 Claude — 2026-11-17T00:13:47.617Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "    E: PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,", "new_string": "    E: PROJGAP05 ? new URL('../../assets/textures/water05/far2/proj05_E.png', import.meta.url).href\n      : PROJFAR05 ? new URL('../../assets/textures/water05/far1/proj05_E.png', import.meta.url).href : new URL('../../assets/textures/water05/proj05_E.png', import.meta.url).href,"}`
+
+### 🧑 User — 2026-11-17T00:13:47.800Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T00:13:50.510Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/src/vfx/waterRibbon.ts", "old_string": "export const PROJFAR05: boolean = PROJ05 && on05('projfar05');", "new_string": "export const PROJFAR05: boolean = PROJ05 && on05('projfar05');\n/**\n * `?proj05=1&projfar05=1&projgap05=1` (2026-11-17, session 018Sg3AU; on with `?match05=1`): the exact layer E from\n * assets/textures/water05/far2/ — far1's E with the gaps the locked eye never saw (wave back slopes) mirror-filled from\n * the approved texture (tools/proj05/bake.py … far gapfill). Riding no longer shows the coarse old tile through th …[+151 chars]`
+
+### 🧑 User — 2026-11-17T00:13:50.680Z
+
+> ↩︎ result: The file /home/user/rainbow-/src/vfx/waterRibbon.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T00:13:53.863Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | tail -3; echo \"tsc rc=$?\"; O=qa/pilot05/full_reference_match/coordinator/gap05 && mkdir -p $O/locked $O/ride $O/ride_dbg && STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' && \\\nnode scripts/capture.mjs 05 --out=$O/locked --q=\"$STACK&projvp05=1&projgap05=1\" > $O/locked/log.txt 2>&1; echo locked rc=$?; git checkout -q -- qa/capture_log.json; \\\nnode scripts/proj05-move.mjs --q=\"$STACK&projvp05=1&projgap05=1\" --out=$O/ride --d=5,10,20 > $O/ride/log.txt 2>&1; echo ride rc=$?; \\\nnode scripts/p …[+232 chars]`
+
+### 🧑 User — 2026-11-17T00:15:06.068Z
+
+> ↩︎ result: tsc rc=0
+> locked rc=0
+> ride rc=0
+> dbg rc=0
+
+### 🤖 Claude — 2026-11-17T00:15:12.496Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/full_reference_match/coordinator/gap05 && R=qa/pilot05/full_reference_match/recovery_s018 && python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\na=L('$O/locked/05.png'); b=L('$R/stack/05.png'); ref=L('references/05_flow_into_the_current.png')\nch=np.abs(a-b).max(-1)>0\nprint('locked: px changed vs STACK', ch.sum())\nif ch.any():\n    eb=np.abs(b-ref).mean(-1); ea=np.abs(a-ref).mean(-1)\n    print('  on the changed px: mean |dRGB| to approved  STACK %.2f -> new %.2f ; within 20: %.3f -> %.3f'  …[+358 chars]`
+
+### 🧑 User — 2026-11-17T00:15:14.318Z
+
+> ↩︎ result: locked: px changed vs STACK 10036
+>   on the changed px: mean |dRGB| to approved  STACK 35.05 -> new 27.20 ; within 20: 0.263 -> 0.478
+>   bbox 0 536 863 905
+> FULL {'px': 1327104, 'share_of_frame': 1.0, 'mean_abs': 34.04, 'within_10': 0.4304, 'within_20': 0.517, 'ssim_lum': 0.5107, 'mean_signed_rgb': [2.8, -0.7, -0.6]}
+> water                        px  480736  mean   9.20  <=10 0.854  <=20 0.886  ssim 0.897  signed [4.6, -3.5, -4.5]
+> foam_banks                   px   28862  mean   8.30  <=10 0.901  <=20 0.930  ssim 0.901  signed [-0.1, -6.3, -8.8]
+
+### 🤖 Claude — 2026-11-17T00:15:28.524Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/full_reference_match/coordinator/gap05 && S=/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad && B=qa/pilot05/full_reference_match/recovery_s018/move_match05 && python3 -I - <<EOF\nimport numpy as np, json\nfrom PIL import Image\nfrom scipy.ndimage import uniform_filter\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(float)\ndef lstd(img, k=9):\n    y=img@[0.299,0.587,0.114]; m=uniform_filter(y,k); return np.sqrt(np.maximum(uniform_filter(y*y,k)-m*m,0))\nout={}\nfor d in ('10','20'):\n    db0=L('$S/ride_dbg/move_%s.png'%d); …[+1361 chars]`
+
+### 🧑 User — 2026-11-17T00:15:30.326Z
+
+> ↩︎ result: d=10 {'E_zone_px': 91743, 'tile_stripe_px_before': 3063, 'tile_stripe_px_after': 62, 'lstd_zone_before': 11.8, 'lstd_zone_after': 11.1}
+> d=20 {'E_zone_px': 26533, 'tile_stripe_px_before': 1205, 'tile_stripe_px_after': 36, 'lstd_zone_before': 13.2, 'lstd_zone_after': 11.3}
+
+### 🤖 Claude — 2026-11-17T00:15:33.592Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/gap_d10.png"}`
+
+### 🧑 User — 2026-11-17T00:15:33.636Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:15:53.494Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/full_reference_match/coordinator/joins && mkdir -p $O/a $O/b && STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1' && \\\nnode scripts/capture.mjs 04 06 --out=$O/a --q=\"$STACK\" > $O/a/log.txt 2>&1; echo a rc=$?; \\\nnode scripts/capture.mjs 04 06 --out=$O/b --q=\"$STACK&projvp05=1&projgap05=1\" > $O/b/log.txt 2>&1; echo b rc=$?; git checkout -q -- qa/capture_log.json; \\\npython3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nL=lambda p: np.asarray(Image.open(p).convert('RGB')).astype(int)\nfor s in ('0 …[+511 chars]`
+
+### 🧑 User — 2026-11-17T00:17:03.826Z
+
+> ↩︎ result: a rc=0
+> b rc=0
+> 04 px differ with vp+gap: 832
+> 06 px differ with vp+gap: 0
+> gameplay rc=0
+> continuity rc=0
+
+### 🤖 Claude — 2026-11-17T00:17:20.511Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/full_reference_match/coordinator/joins && python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$O/a/04.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$O/b/04.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(-1); ys,xs=np.nonzero(d>0)\nprint('bbox x %d-%d y %d-%d, max diff %d, mean diff on changed %.1f' % (xs.min(),xs.max(),ys.min(),ys.max(), d.max(), d[d>0].mean()))\nx0,y0,x1,y1=max(xs.min()-60,0),max(ys.min()-60,0),min(xs.max()+60,a.shape[1]),min(ys.max()+60,a.shape[0])\nz=4; ca=Image.fromarray(a[y0:y1,x0:x1].astype …[+488 chars]`
+
+### 🧑 User — 2026-11-17T00:17:21.533Z
+
+> ↩︎ result: bbox x 287-795 y 189-852, max diff 117, mean diff on changed 3.9
+> (7556, 3132)
+
+### 🤖 Claude — 2026-11-17T00:17:26.968Z
+
+The changes are spread over a large box (x 287–795, y 189–852), but are tiny on average (mean 3.9 levels, max 117). Let me see the pattern on the 04 frame.
+
+### 🤖 Claude — 2026-11-17T00:17:30.668Z
+
+> 🔧 **Bash** `{"command": "O=qa/pilot05/full_reference_match/coordinator/joins && python3 -I - <<EOF\nfrom PIL import Image\nimport numpy as np\nfrom scipy.ndimage import binary_dilation\na=np.asarray(Image.open('$O/a/04.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$O/b/04.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(-1)\nm=binary_dilation(d>0,iterations=3)\nv=a.copy(); v[m]=[0,255,0]\nprint('changed by >10 levels:', (d>10).sum(), ' >30:', (d>30).sum())\nImage.fromarray(v.astype(np.uint8)).crop((150,120,864,960)).resize((357,420)).save('/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc- …[+107 chars]`
+
+### 🧑 User — 2026-11-17T00:17:31.361Z
+
+> ↩︎ result: changed by >10 levels: 59  >30: 34
+
+### 🤖 Claude — 2026-11-17T00:17:34.454Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a8bc3320-c4fc-501b-8658-2d5f41052d69/scratchpad/join04s.png"}`
+
+### 🧑 User — 2026-11-17T00:17:34.473Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T00:17:49.995Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\nd=json.load(open('qa/pilot05/full_reference_match/coordinator/gameplay_vp_gap.json'))\nc=d['checks']; print('ALL PASS' if all(v.get('pass') for v in c.values() if isinstance(v,dict)) else 'FAIL', len([1 for v in c.values() if isinstance(v,dict) and v.get('pass')]),'/',len([1 for v in c.values() if isinstance(v,dict)]), 'errors', d.get('errors'), 'coins', c['realCoinPickups'].get('collected'), 'drop', c['plunge'].get('verticalDrop'))\"; python3 -c \"import json; d=json.load(open('qa/continuity_report.json')); print('continuity ok', d['ok'])\"; git status …[+143 chars]`
+
+### 🧑 User — 2026-11-17T00:17:50.114Z
+
+> ↩︎ result: ALL PASS 8 / 8 errors [] coins 91 drop 61.41
+> continuity ok True
+>  M qa/pilot05/full_reference_match/hud/probe05.mjs
+>  M src/vfx/waterRibbon.ts
+>  M tools/proj05/bake.py
+> ?? assets/textures/coins05/
+> ?? assets/textures/water05/far2/
+> ?? qa/pilot05/full_reference_match/benny/work/fur_x3.png
+> ?? qa/pilot05/full_reference_match/coins/
+> ?? qa/pilot05/full_reference_match/coordinator/gameplay_vp_gap.json
+> ?? qa/pilot05/full_reference_match/coordinator/gap05/
+> ?? qa/pilot05/full_reference_match/coordinator/joins/
+> ?? qa/pilot05/full_reference_match/env/work/ring_fit.json
+> ?? tools/env05/ring_fit.py
+> ?? tools/env05/ring_validate.py
+

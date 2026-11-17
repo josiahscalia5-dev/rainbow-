@@ -156,6 +156,45 @@ if FARFIX:
     unseen = binary_erosion(run > UNSEEN_MIN, iterations=2)
     alphaE = alphaE * (1.0 - np.clip(gaussian_filter(unseen.astype(float), 1.0) * 1.6, 0, 1))
     print(json.dumps(dict(E_unseen_texels=int(unseen.sum()), E_texels=int(unseen.size))))
+    # measured 2026-11-17 (session 018Sg3AU): this finds 0 texels — E only interpolates COIN holes, and the scene has
+    # none, so nothing in E is an interpolated run. The blank / torn stripes while riding are the opposite case: gaps
+    # the locked eye never saw (wave back slopes) are EMPTY (alpha 0) and the coarse old tile shows through them.
+    # That is what "gapfill" below repairs.
+
+# optional extra argument "gapfill" (`&projgap05=1`, 2026-11-17, session 018Sg3AU): MIRROR-FILL of E's interior gaps.
+# Rows the locked eye never saw (behind wave crests: 3-48 rows typical, 28.5 rows per unit s) stay empty in E, so
+# while riding the coarse old tile shows through them as dark torn stripes across the river. Each gap of <= GAP_MAX
+# rows (per column, along s) is filled with the APPROVED texture reflected from both of its edges (above: rows y0,
+# y0-1, ...; below: rows y1, y1+1, ...), blended variance-preservingly so the middle keeps the water's contrast — real
+# streak detail, continuous at both edges, never a flat interpolated patch. Longer gaps stay to the tile. Texels the
+# locked eye saw are untouched (only their soft alpha edge next to a filled gap becomes solid).
+GAPFILL = "gapfill" in sys.argv[4:]
+if GAPFILL:
+    GAP_MAX = 100
+    Eg = E.copy(); vg = validE.copy(); n_fill = 0
+    for x in range(validE.shape[1]):
+        idx = np.nonzero(validE[:, x])[0]
+        if len(idx) < 2:
+            continue
+        for y0, y1 in zip(idx[:-1], idx[1:]):
+            g = int(y1 - y0 - 1)
+            if g < 1 or g > GAP_MAX:
+                continue
+            k = np.arange(1, g + 1)
+            sa = y0 - (k - 1); sb = y1 + (g - k)
+            sa = np.where((sa >= 0) & validE[np.clip(sa, 0, None), x], sa, y0)
+            sb = np.where((sb < validE.shape[0]) & validE[np.clip(sb, None, validE.shape[0] - 1), x], sb, y1)
+            A = E[sa, x]; B = E[sb, x]
+            t = (k / (g + 1.0))[:, None]
+            mu = 0.5 * (A.mean(0) + B.mean(0))
+            Eg[y0 + k, x] = np.clip(mu + ((1 - t) * (A - mu) + t * (B - mu)) / np.sqrt((1 - t) ** 2 + t ** 2), 0, 1)
+            vg[y0 + k, x] = True; n_fill += g
+    gf = vg & ~validE                                   # soften across u only inside the filled texels
+    sm = np.stack([gaussian_filter(Eg[..., i], (0.5, 1.2)) for i in range(3)], -1)
+    Eg[gf] = sm[gf]
+    E, validE = Eg, vg
+    alphaE = gaussian_filter(binary_erosion(validE, iterations=1).astype(float), 0.8)
+    print(json.dumps(dict(E_gapfilled_texels=int(n_fill), E_texels=int(validE.size))))
 
 if FARFIX:      # N / T / D: water-only samples, as before
     use = use_all

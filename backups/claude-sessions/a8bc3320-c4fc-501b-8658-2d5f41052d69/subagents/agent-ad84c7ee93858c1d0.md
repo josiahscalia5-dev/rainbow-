@@ -668,3 +668,75 @@ Deliver in `qa/pilot05/full_reference_match/env/` as the brief says. Your final 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-17T00:13:37.851Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/tools/env05/ring_validate.py <<'EOF'\n\"\"\"check tools/env05/ringproj.py against the probe id buffer (same camera, same ring instances)\"\"\"\nimport json, math, sys, os\nimport numpy as np\nsys.path.insert(0, os.path.dirname(__file__))\nfrom ringproj import *\ntj = json.load(open(sys.argv[1])); a = np.fromfile(sys.argv[2], np.float32).reshape(H, W, 4)\ntag = np.where(a[..., 3] >= 10, np.round(a[..., 3]).astype(int), 0)\ncls = np.where(tag > 0, np.round(a[..., 2]).astype(int), 0)\ncam = Cam(tj)\nbn = tj[\"tunnel\"][\"band05near\"]; bf = tj[\"tunnel\"][\" …[+1288 chars]`
+
+### 🧑 User — 2026-11-17T00:13:38.549Z
+
+> ↩︎ result: real 0 behind camera
+> real 1 rays 23 d_in 0.74 d_out -145.89 centre [  2.    -39.823 -80.197]
+> real 2 rays 374 d_in 0.55 d_out 1.5 centre [  2.    -40.187 -88.151]
+> real 3 rays 516 d_in 0.38 d_out 0.71 centre [   2.     -39.229 -108.144]
+> far 0 rays 507 d_in 0.29 d_out 0.76
+> far 1 rays 496 d_in 0.38 d_out 0.48
+> far 2 rays 564 d_in 0.36 d_out 0.34
+> far 3 rays 588 d_in 0.35 d_out 0.4
+> far 4 rays 634 d_in 0.37 d_out 0.42
+
+### 🤖 Claude — 2026-11-17T00:14:13.554Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/tools/env05/ring_fit.py <<'EOF'\n\"\"\"Screen 05 env05 step B — where must each 05 ring sit (3D, real geometry, locked camera) to project onto the approved\nring? Least squares on the band edges along rays about O (approved: ring_model.json; game: tools/env05/ringproj.py).\nReal rings A, B: axial distance t from the game's ring B, lateral dx (frame right), vertical dy (frame up) of the ring\ncentre relative to the straight axis through ring B's centre, band crown height h (fraction of R). Far rings C..G: virtual\ndepth Dv of the forced-perspective block,  …[+5378 chars]`
+
+### 🧑 User — 2026-11-17T00:14:16.611Z
+
+> ↩︎ result: game ring B depth from eye 39.88, rR 7.580, far rRing 7.580
+> A game [-19.936   0.     -1.79    0.13 ] -> [-19.909  -0.715  -1.369   0.09 ] edge err 52.2 -> 1.7 px 185 47
+> B game [0.   0.   0.   0.13] -> [-1.49  -1.006 -0.111  0.12 ] edge err 26.0 -> 4.1 px 479 387
+> C game Dv 59.0 -> [64.021 -0.623  0.502  0.107] edge err 12.5 -> 1.5 px 511 506
+> D game Dv 97.0 -> [104.704  -0.598   0.505   0.106] edge err 5.5 -> 0.9 px 473 471
+> E game Dv 161.0 -> [ 1.65458e+02 -3.06000e-01  1.16500e+00  1.26000e-01] edge err 4.4 -> 0.4 px 494 487
+> F game Dv 222.0 -> [ 2.35222e+02 -4.47000e-01  1.72000e+00  1.37000e-01] edge err 4.9 -> 0.3 px 494 484
+> G game Dv 322.0 -> [ 3.32145e+02 -6.48000e-01  2.35800e+00  1.60000e-01] edge err 5.7 -> 0.3 px 452 501
+> 
+> real	0m2.967s
+> user	0m2.472s
+> sys	0m0.578s
+
+### 🤖 Claude — 2026-11-17T00:15:03.054Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat >> tools/env05/ring_fit.py <<'EOF'\n\n# ---- constrained variants: no lateral offsets (rings stay concentric with the unmoved walls / far block)\nif \"--nolat\" in sys.argv:\n    print(\"--- no lateral offset (dx = 0, far ox = oy = 0)\")\n    res_nolat = {}\n    pA = out[\"A\"][\"fit\"]\n    for name, kind, x0, lo, hi in (\n        (\"A\", \"real\", [x0A[0], 0.0, x0A[2], 0.1], [-30, -1e-4, -4, 0.06], [-10, 1e-4, 3, 0.25]),\n        (\"B\", \"real\", [0.0, 0.0, 0.0, 0.13], [-12, -1e-4, -3, 0.06], [12, 1e-4, 3, 0.25]),\n    ):\n        p, e0, e1, nin, nou …[+891 chars]`
+
+### 🧑 User — 2026-11-17T00:15:08.160Z
+
+> ↩︎ result: G game Dv 322.0 -> [ 3.32145e+02 -6.48000e-01  2.35800e+00  1.60000e-01] edge err 5.7 -> 0.3 px 452 501
+> --- no lateral offset (dx = 0, far ox = oy = 0)
+> A [-21.24   -0.     -1.347   0.071] edge err 46.1 -> 24.2
+> B [ 2.99  -0.     0.517  0.109] edge err 26.0 -> 24.1
+> C [61.613 -0.     0.     0.107] edge err 12.5 -> 10.9
+> D [99.788 -0.     0.     0.102] edge err 5.5 -> 5.3
+> E [ 1.53176e+02 -0.00000e+00  0.00000e+00  1.19000e-01] edge err 4.4 -> 3.9
+> F [ 2.10129e+02 -0.00000e+00  0.00000e+00  1.30000e-01] edge err 4.9 -> 4.5
+> G [ 2.87729e+02 -0.00000e+00  0.00000e+00  1.17000e-01] edge err 5.7 -> 4.8
+
+### 🤖 Claude — 2026-11-17T00:17:43.212Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"export function withBandShading\" -A 80 src/world/materials.ts | head -120", "description": "Read withBandShading implementation"}`
+
+### 🧑 User — 2026-11-17T00:17:43.248Z
+
+> ↩︎ result: 235:export function withBandShading<T extends THREE.MeshStandardMaterial>(mat: T, b: BandShade, key: string): T {
+> 236-  const w = (b.width + b.groove + b.lipWidth) / 2;
+> 237-  const uniforms = {
+> 238-    uBandG: { value: new THREE.Vector4(w - b.width / 2, b.width / 2, -w + b.lipWidth / 2, b.lipWidth / 2) },
+> 239-    // ref ring #1: spot pitch ≈85 px at r 273 (≈20/turn), white core ≈12 px inside a yellow halo
+> 240-    uBandS: { value: new THREE.Vector4(...(b.spots ?? [20, 0.055, 1.6]), 0) },
+> 241-    uBandF: { value: new THREE.Vector2(...(b.fade ?? [44, 110])) },
+> 242-    uBcDark: { value: lin3(0.2934, 0.0886, 0.1533) }, // (150,35,85)
+> 243-    uBcRose: { value: lin3(0.5899, 0.2114, 0.2222) }, // (215,95,100)
+> 244-    uBcOrange: { value: lin3(0.7352, 0.2871, 0.1269) }, // (240,120,40)
+> 245-    uBcCrown: { value: lin3(0.6246, 0.22, 0.199) }, // (222,98,88) rose-gold body between the spots (ref (215–230,90–100,80–95))
+> 246-    uBcPeak: { value: lin3(0.9077, 0.602, 0.3465) }, // (252,190,120) highlight line
+> 247-    uBcHalo: { value: lin3(0.9439, 0.6846, 0.2725) }, // (255,205,90) yellow halo around each spot
+> 248-    uBcGroove: { value: lin3(0.5618, 0.1695, 0.1159) }, // (214,79,44) orange-red gr …[+5080 chars]
+
