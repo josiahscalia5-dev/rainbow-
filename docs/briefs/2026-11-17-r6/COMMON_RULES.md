@@ -41,6 +41,13 @@ moving frames (all 12 audit shots). Numbers: scenery-only, Benny+effects, whole 
 your own **honest 1–10 visual rating for the approved view AND for the moving ride** and say which defects remain. A
 pixel score is not a quality guarantee.
 
+## Autosave safety (found 2026-11-17 22:05 by the 08 specialist)
+The 5-minute autosave commits whatever is in your working tree. On -c5 at 20:52 it committed a temporary OLD copy of
+`match08.ts` / `course.ts` (most likely checked out to render a BEFORE picture) and the `m08fill` code + the 08-only course
+guard vanished from the branch tip (restored on -c6 from `471d2e57` / `8987a305`). Make every BEFORE capture from a
+SEPARATE `git worktree add <dir> <sha>`; never check out or stash older files in your main checkout; before the final push
+confirm `git diff <start SHA> HEAD --stat -- src` shows every intended change.
+
 ## Pace (usage) — unchanged
 At most TWO specialist sessions at once. Work lean: one heavy render at a time, no subagents, no exploratory rewrites.
 Commit + push at every verified sub-step. Finish ONE milestone, push, verify `git ls-remote` == HEAD, send the lead ONE

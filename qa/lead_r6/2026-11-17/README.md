@@ -12,6 +12,11 @@ their branches; 08 on `claude/rainbow-s08-scenery-c5` @ `700f09e1` with the kept
 | 07 | `match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1` (M2) |
 | 08 | `match08=1&coins08px=1&m08bw=1&m08fill=1` (scenery r1; Benny r5b) |
 
+**CAVEAT 08:** at `700f09e1` (and at the r5 "final" `60e7ffe8`) the `m08fill` code and the 08-only course guard were
+missing — a 20:52 autosave on `-c5` had committed older copies of `match08.ts` / `course.ts`; the 08 specialist restored
+them on `claude/rainbow-s08-scenery-c6` (`c43783a7`, `8e555fdb`). So the lead's 08 frames show the round-1 set WITHOUT
+`m08fill` (switch was a no-op).
+
 ## Files
 * `approved_view_exact/<nn>_NOW_newest_version.png` — frozen approved-view capture (`scripts/capture.mjs`), full size.
   `<nn>_normal_game_no_switches.jpg` — the normal game (unchanged default build) at the same checkpoint.
