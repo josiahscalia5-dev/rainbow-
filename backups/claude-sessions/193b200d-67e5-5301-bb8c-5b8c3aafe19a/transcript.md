@@ -1159,3 +1159,113 @@ Recapture is 0 px (the 1-level flicker was in the HUD title text row, run-to-run
 
 > 🔧 **Bash** `{"command": "W=qa/match/08/benny08/r3 && node tools/match08/motion08.mjs $W/motion 'match08=1' 2>&1 | tail -2 && for s in 04 05 06 07; do :; done && node scripts/capture.mjs 04 05 06 07 --out=$W/other_screens --q='match08=1' 2>&1 | tail -4 | cut -c1-50 && node scripts/capture.mjs 04 05 06 07 --out=$W/other_default 2>&1 | tail -4 | cut -c1-50; ls $W/motion", "description": "Motion frames on 08 and other screens with switch", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T17:40:47.167Z
+
+> ↩︎ result: s_left_steer s 397.89 lat -1.85 08
+> s_right_steer s 397.90 lat 1.85 08
+> 04 → qa/match/08/benny08/r3/other_screens/04.png
+> 05 → qa/match/08/benny08/r3/other_screens/05.png
+> 06 → qa/match/08/benny08/r3/other_screens/06.png
+> 07 → qa/match/08/benny08/r3/other_screens/07.png
+> 04 → qa/match/08/benny08/r3/other_default/04.png
+> 05 → qa/match/08/benny08/r3/other_default/05.png
+> 06 → qa/match/08/benny08/r3/other_default/06.png
+> 07 → qa/match/08/benny08/r3/other_default/07.png
+> f00_checkpoint.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f15_forward15u.png
+> motion.json
+> s_left_steer.png
+> s_right_steer.png
+
+### 🤖 Claude — 2026-11-17T17:40:52.797Z
+
+> 🔧 **Bash** `{"command": "W=qa/match/08/benny08/r3 && python3 -I - <<'EOF'\nimport numpy as np; from PIL import Image; from scipy import ndimage as ndi\nW='qa/match/08/benny08/r3'\nfor s in ['04','05','06','07']:\n    a=np.asarray(Image.open(f'{W}/other_default/{s}.png').convert('RGB'),int); b=np.asarray(Image.open(f'{W}/other_screens/{s}.png').convert('RGB'),int)\n    ch=np.abs(a-b).max(-1)>8; lab,n=ndi.label(ndi.binary_dilation(ch,iterations=3)); \n    sizes=ndi.sum(ch,lab,range(1,n+1)) if n else [0]; k=int(np.argmax(sizes))+1\n    ys,xs=np.nonzero(lab==k)\n    print(s,'changed %.1f %%'%(100*ch.mean()),' …[+543 chars]`
+
+### 🧑 User — 2026-11-17T17:40:54.974Z
+
+> ↩︎ result: 04 changed 4.3 % largest blob box x 343 801 y 588 948 share in largest 60 %
+> 05 changed 8.3 % largest blob box x 226 617 y 761 1208 share in largest 98 %
+> 06 changed 15.0 % largest blob box x 108 631 y 912 1535 share in largest 98 %
+> 07 changed 11.2 % largest blob box x 74 530 y 1026 1530 share in largest 82 %
+
+### 🤖 Claude — 2026-11-17T17:40:56.115Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/08/benny08/r3/motion/montage_r3.png"}`
+
+### 🧑 User — 2026-11-17T17:40:56.474Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T17:40:56.467Z
+
+[Image: original 2016x512, displayed at 2000x508. Multiply coordinates by 1.01 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T17:41:05.395Z
+
+> 🔧 **Bash** `{"command": "W=qa/match/08/benny08/r3 && cp references/08_final_spin_chamber.png $W/APPROVED_08.png && cp $W/prev/08.png $W/BEFORE_prebake_08.png && cp $W/new/08.png $W/CURRENT_08.png && cp $W/new3/08.png $W/NEW_08.png && python3 -I - <<'EOF'\nfrom PIL import Image\nW='qa/match/08/benny08/r3'\nfor n in ['APPROVED','BEFORE_prebake','CURRENT','NEW']:\n    Image.open(f'{W}/{n}_08.png').convert('RGB').crop((220,820,650,1260)).resize((860,880),Image.LANCZOS).save(f'{W}/closeup_{n}.png')\nEOF\nnode scripts/gameplay-test.mjs --q=match08=1 --out=$W/tests/gameplay_match08_r3.json 2>&1 | tail -1; python …[+291 chars]`
+
+### 🧑 User — 2026-11-17T17:41:15.410Z
+
+> ↩︎ result: }
+> 8 8 91 2240
+
+### 🤖 Claude — 2026-11-17T17:41:18.212Z
+
+Gameplay with the new code: 8/8, 91 coins / 2,240. Writing NOTES, STATUS and SHARED_CHANGES now.
+
+### 🤖 Claude — 2026-11-17T17:41:37.709Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/08/benny08/NOTES.md", "content": "# Screen 08 Benny — bake + refits (benny-character-artist), rounds 1–3, 2026-11-17\n\nAll of this runs ONLY under `?match08=1` (also `?matchall=1`, `?benny08=1`; `?benny05=1&bake08=1`). Default build: 0 px.\nRegion numbers: `work/regions08.py` (approved `references/08_final_spin_chamber.png`; Benny + splash = box x 220–650,\ny 840–1245; scenery = y ≥ 190 outside that box; share of pixels within 20 levels, luminance SSIM).\n\n## What each step does\n1. **Bake (round 1, commits `8cb3e72`, `6392658`)** — Benny's maps re …[+4192 chars]`
+
+### 🧑 User — 2026-11-17T17:41:37.752Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/08/benny08/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T17:41:42.107Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/08/benny08/SHARED_CHANGES.md", "content": "# Shared-code changes by the Screen 08 Benny specialist (all switch-guarded; default build 0 px)\n\n| File | Change | Runs only under | Off switch |\n|---|---|---|---|\n| `src/characters/benny/benny05.ts` (owned) | `bake08`: 08 maps from `assets/textures/benny08/` | benny05 look on (`match08`/`matchall`/`benny08`, or `benny05=1&bake08=1`) | `bake08=0` |\n| `src/characters/benny/benny05.ts` (owned) | round 3: `B08R3` → `body_r3.png`; fur uniforms on `mesh.userData.furU` (no render effect) | same | `b08r3=0` | …[+433 chars]`
+
+### 🧑 User — 2026-11-17T17:41:42.140Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/08/benny08/SHARED_CHANGES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T17:41:47.610Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/08/benny08/STATUS.md", "content": "# STATUS — Screen 08 Benny (round 3)\n\n* **Assigned screen:** 08 · Final Spin Chamber (`?match08=1`)\n* **Assigned specialist:** benny-character-artist (Screen 08 Benny specialist)\n* **Working branch:** `claude/rainbow-s08-benny08-bake-c3` — started from `a4c6a5cc8cd5d435614a4bc8f8424540f944dfc7` (`-c2` head)\n* **Running-session status:** milestone done, waiting for the lead\n* **Latest verified commit:** see the lead message / `git log` (pushed, remote == HEAD verified)\n* **Completed improvements:** verificatio …[+812 chars]`
+
+### 🧑 User — 2026-11-17T17:41:47.636Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/08/benny08/STATUS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T17:41:50.414Z
+
+> 🔧 **Bash** `{"command": "git add qa/match/08/benny08 && git commit -qm \"Screen 08 Benny round 3: NOTES, STATUS, SHARED_CHANGES; APPROVED/BEFORE/CURRENT/NEW pictures + closeups, motion on 08, screens 04-07 check, gameplay 8/8 + 91/2,240\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Q46SCJxXZNaUL12aCQ6mX4\" && git push -q origin HEAD 2>&1|tail -1; git ls-remote origin refs/heads/claude/rainbow-s08-benny08-bake-c3 | cut -c1-12; git rev-parse --short=12 HEAD", "description": "Commit and push docs and pictures"}`
+
+### 🧑 User — 2026-11-17T17:41:58.496Z
+
+> ↩︎ result: 5efe680ad772
+> 5efe680ad772
+
+### 🤖 Claude — 2026-11-17T17:41:59.575Z
+
+Docs pushed (`5efe680`). Building the debug APK with the 08 switch now.
+
+### 🤖 Claude — 2026-11-17T17:42:02.168Z
+
+> 🔧 **Bash** `{"command": "VITE_RAINBOW_Q05=\"match08=1\" npm run android:debug > /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/apk.log 2>&1; echo exit $?; tail -3 /tmp/claude-0/-home-user-rainbow-/193b200d-67e5-5301-bb8c-5b8c3aafe19a/scratchpad/apk.log; find android -name \"*debug*.apk\" -newer src/characters/benny/benny05.ts | head", "description": "Build debug APK with match08 switch", "timeout": 600000}`
+
+### 🧑 User — 2026-11-17T17:43:30.074Z
+
+> ↩︎ result: exit 0
+> 
+> BUILD SUCCESSFUL in 1m 20s
+> 82 actionable tasks: 82 executed
+> android/app/build/outputs/apk/debug/app-debug.apk
+
+### 🤖 Claude — 2026-11-17T17:43:35.099Z
+
+> 🔧 **Bash** `{"command": "A=builds/rainbow-debug-08benny-2026-11-17-r3.apk && cp android/app/build/outputs/apk/debug/app-debug.apk $A && git check-attr filter -- $A && ls -la $A && sed -i 's/\\* \\*\\*Test results:\\*\\*/* **Android:** `builds\\/rainbow-debug-08benny-2026-11-17-r3.apk` (`VITE_RAINBOW_Q05=\"match08=1\"`, Git LFS) — NOT phone-tested (no device in the cloud)\\n* **Test results:**/' qa/match/08/benny08/STATUS.md && git add $A qa/match/08/benny08/STATUS.md && git commit -qm \"Screen 08 Benny round 3: debug APK with match08=1 (not phone-tested)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthrop …[+344 chars]`
+
