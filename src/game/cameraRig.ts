@@ -203,7 +203,7 @@ export class RideCamera {
    * `?camclear=1` only — 03 → 04 drain drop: the view trails 10–13 u above and beside Benny while he falls down the drain
    * chute, so the chute's own falling water passes between the view and Benny for ~0.6 s (60–100 % of him hidden, a
    * frame-filling striped sheet; the user's recording at 7 s). Over that stretch only, the smoothed view rides ON the
-   * stream 3.5 u behind Benny, 1.4 u above the water (the water he rides can then never come between), aim unchanged; it
+   * stream 3 u behind Benny, above the water (the water he rides can then hardly come between), aimed at him; it
    * blends in and back out over a few metres of the ride. Off: unchanged.
    * Round 4: the blend-in is spread over 6 u (was 2.5 u: a one-frame 18° jolt as the view swung over), the view rides
    * 3.4 u above the water (was 1.6: the curling chute water then filled the lower screen) aimed at Benny himself (was
