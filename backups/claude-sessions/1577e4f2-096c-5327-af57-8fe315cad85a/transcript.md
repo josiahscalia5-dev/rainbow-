@@ -1997,3 +1997,185 @@ Notifications are queued for this session (more may arrive before you read them)
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04; for w in base new; do (cd $S/$w && node scripts/capture.mjs 04 05 06 07 08 --out=$S/cap_$w/def > $S/cap_$w.log 2>&1 && node scripts/capture.mjs 08 --q=match08=1 --out=$S/cap_$w/m08 >> $S/cap_$w.log 2>&1; echo \"$w exit $?\"); done; ls $S/cap_base/def $S/cap_new/def $S/cap_base/m08 $S/cap_new/m08", "description": "Capture default and match08 screens before and after", "timeout": 600000}`
 
+### 🧑 User — 2026-11-17T17:03:19.154Z
+
+> ↩︎ result: base exit 0
+> new exit 0
+> /tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04/cap_base/def:
+> 04.png
+> 05.png
+> 06.png
+> 07.png
+> 08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04/cap_base/m08:
+> 08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04/cap_new/def:
+> 04.png
+> 05.png
+> 06.png
+> 07.png
+> 08.png
+> 
+> /tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04/cap_new/m08:
+> 08.png
+
+### 🤖 Claude — 2026-11-17T17:03:23.329Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04; python3 -I - \"$S\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nS=sys.argv[1]\nfor sub in [\"def/04\",\"def/05\",\"def/06\",\"def/07\",\"def/08\",\"m08/08\"]:\n    a=np.asarray(Image.open(f\"{S}/cap_base/{sub}.png\").convert(\"RGB\")).astype(int)\n    b=np.asarray(Image.open(f\"{S}/cap_new/{sub}.png\").convert(\"RGB\")).astype(int)\n    d=np.abs(a-b).max(axis=2)>0\n    n=int(d.sum())\n    box=\"\"\n    if n:\n        ys,xs=np.nonzero(d); box=f\" box x{xs.min()}-{xs.max()} y{ys.min …[+199 chars]`
+
+### 🧑 User — 2026-11-17T17:03:24.753Z
+
+> ↩︎ result: def/04  size 864x1536  differing px: 0
+> def/05  size 864x1536  differing px: 0
+> def/06  size 864x1536  differing px: 11935 box x151-713 y31-165 maxdiff 9
+> def/07  size 864x1536  differing px: 0
+> def/08  size 864x1536  differing px: 0
+> m08/08  size 864x1536  differing px: 0
+
+### 🤖 Claude — 2026-11-17T17:03:33.010Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04; cd $S/base && node scripts/capture.mjs 06 --out=$S/cap_base2 >/dev/null 2>&1; cd $S/new && node scripts/capture.mjs 06 --out=$S/cap_new2 >/dev/null 2>&1; python3 -I - \"$S\" <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nS=sys.argv[1]\nL=lambda p: np.asarray(Image.open(p).convert(\"RGB\")).astype(int)\npairs={\"base vs base(rerun)\":(f\"{S}/cap_base/def/06.png\",f\"{S}/cap_base2/06.png\"),\n       \"new vs new(rerun)\":(f\"{S}/cap_new/def/06.png\",f\"{S}/cap_new2/06.png\"),\n       \ …[+437 chars]`
+
+### 🧑 User — 2026-11-17T17:04:01.389Z
+
+> ↩︎ result: base vs base(rerun)          11935 box x151-713 y31-165 max 9
+> new vs new(rerun)            11935 box x151-713 y31-165 max 9
+> base(rerun) vs new(rerun)    11935 box x151-713 y31-165 max 9
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-17T17:04:14.637Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04; N=$S/new/qa/match/04; ls -la $N/*.png | awk '{print $5, $9}' | sed \"s|$N/||\" | head -30; python3 -I - \"$N\" \"$S\" <<'EOF'\nimport sys\nfrom PIL import Image\nN,S=sys.argv[1],sys.argv[2]\nnames=[\"04_APPROVED.png\",\"04_NEW_match04_864x1536.png\",\"04_NEW_m2_864x1536.png\",\"04_NEW_m2_fal04_864x1536.png\"]\nims=[Image.open(f\"{N}/{n}\").convert(\"RGB\").resize((432,768)) for n in names]\nsheet=Image.new(\"RGB\",(432*4+30,768),\"white\")\nfor i,im in enumerate(ims): sheet.paste(im,(i*442,0)) …[+584 chars]`
+
+### 🧑 User — 2026-11-17T17:04:15.921Z
+
+> ↩︎ result: 3121669 04_APPROVED.png
+> 1446020 04_BEFORE_current_game.png
+> 1006508 04_BEFORE_current_game_864x1536.png
+> 2068892 04_NEW_m2_864x1536.png
+> 2063482 04_NEW_m2_fal04_864x1536.png
+> 2862493 04_NEW_match04.png
+> 2068900 04_NEW_match04_864x1536.png
+> (1080, 1920)
+
+### 🤖 Claude — 2026-11-17T17:04:17.424Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04/check_static.png"}`
+
+### 🧑 User — 2026-11-17T17:04:17.533Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T17:04:18.034Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04/check_motion.png"}`
+
+### 🧑 User — 2026-11-17T17:04:18.162Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-17T17:04:18.158Z
+
+[Image: original 2632x512, displayed at 2000x389. Multiply coordinates by 1.32 to map to original image.]
+
+### 🤖 Claude — 2026-11-17T17:04:37.768Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad; N=$S/v04/new/qa/match/04; D=$S/show04; mkdir -p $D && cp $N/04_APPROVED.png \"$D/1_APPROVED_screen04.png\" && cp $N/04_NEW_match04_864x1536.png \"$D/2_BEFORE_screen04_milestone1.png\" && cp $N/04_NEW_m2_fal04_864x1536.png \"$D/3_NEW_screen04_milestone2.png\" && cp $N/motion_m2/BEFORE_milestone1/f20_forward20u.png \"$D/4_BEFORE_moving_20u_screen04.png\" && cp $N/motion_m2/NEW_fal04/f20_forward20u.png \"$D/5_NEW_moving_20u_screen04.png\" && python3 -I -c \"\nfrom PIL import Image; import glob\nfor f …[+148 chars]`
+
+### 🧑 User — 2026-11-17T17:04:37.952Z
+
+> ↩︎ result: 1_APPROVED_screen04.png (1080, 1920)
+> 2_BEFORE_screen04_milestone1.png (864, 1536)
+> 3_NEW_screen04_milestone2.png (864, 1536)
+> 4_BEFORE_moving_20u_screen04.png (864, 1536)
+> 5_NEW_moving_20u_screen04.png (864, 1536)
+
+### 🤖 Claude — 2026-11-17T17:04:43.139Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/1_APPROVED_screen04.png", "/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/2_BEFORE_screen04_milestone1.png", "/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/3_NEW_screen04_milestone2.png", "/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/4_BEFORE_moving_20u_screen04.png", "/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/5_NEW_movin …[+393 chars]`
+
+### 🧑 User — 2026-11-17T17:04:44.282Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/1_APPROVED_screen04.png → file_uuid: af62d045-1729-4e6f-9f5d-650302b5454d
+>   /tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/2_BEFORE_screen04_milestone1.png → file_uuid: 8a559527-258a-4dde-a441-cfb3b856536a
+>   /tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/3_NEW_screen04_milestone2.png → file_uuid: 76bf0ac1-5f23-40fb-ba67-e1b2bfbf7ab5
+>   /tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/4_BEFORE_moving_20u_screen04.png → file_uuid: f40a840d-f007-46d7-9e7b-b279a9c4ebce
+>   /tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/show04/5_NEW_moving_20u_screen04.png → file_uuid: c39eb53c-b77f-4ada-a85b-da2c7146936b
+
+### 🤖 Claude — 2026-11-17T17:04:57.238Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_01VCMXoZnQahSncyyVnBsDQS", "priority": "next", "message": "LEAD → S04: milestone 2 verified by the lead, thank you. Lead checks (own worktrees, e0bad9c vs 0ae0799): default 04/05/07/08 and ?match08=1 08 = 0 px; default 06 differs only in the title-banner strip (11,935 px, max 9) and the unchanged base build differs from ITSELF by the same pixels → capture noise, not your change. Exactly one fal call confirmed (01a1ea70, completed). Pictures shown to the user.\n\nMILESTONE 3 (same rules, commit + push at every safe checkpoint, no paid jobs, stop after):\n1. Make the fal  …[+1282 chars]`
+
+### 🧑 User — 2026-11-17T17:04:57.581Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-17T17:04:58.907Z
+
+Now I'll update the progress report with Screen 04's verified milestone 2 and its new task, then remove the scratch worktrees.
+
+### 🤖 Claude — 2026-11-17T17:04:59.607Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/PARALLEL_PROGRESS.md", "offset": 33, "limit": 6}`
+
+### 🧑 User — 2026-11-17T17:04:59.624Z
+
+> ↩︎ result: 33	| 08 integration | lead | `ccr-5495e9c4-g0apvl` | running (this session) | see `git log` | restore verified; keys reconnected; round 2 launched | scenery 97.4 %, whole 83.4 % (method approved, screen NOT approved) | waits for the two 08 specialists | bootstrap OK; tsc + continuity OK | integrate 08 specialists after review, APK, full-size previews | NOT approved |
+> 34	| 04 Five Arrows | screen-04 workstream — session `session_01VCMXoZnQahSncyyVnBsDQS` | `claude/rainbow-s04-match-c2` (from `claude/rainbow-s04-match` @ `e0bad9c`) | see below | `8c1732b` milestone 1 (+ autosaves to `e0bad9c`) | milestone 1: camera solve, fitted proxies, original pixels projected, picture's 5 coins (91 / 2,240 kept); ring-structured tunnel tiles written (not wired) | scenery 5.1 → **97.6 %** within 20 (SSIM 0.967); whole 6.4 → 79.9 %; Benny area 16.5 % | smeared gold tunnel at 10–20 u; mirrored water under Benny; provisional fill (23.4 %) until the fal plate | milestone 1: gameplay 8/8, default 0 px | MILESTONE 2 (tiles, water, motion, the one fal plate when "FAL READY") | NOT approved |
+> 35	| 05 Flow Into the Current | screen-05 workstream (line B) — session `session_01VCMXoYy3mTRHhDGP8mZcTw` | `clau …[+1372 chars]
+
+### 🤖 Claude — 2026-11-17T17:05:06.907Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/PARALLEL_PROGRESS.md", "old_string": "| see below | `8c1732b` milestone 1 (+ autosaves to `e0bad9c`) | milestone 1: camera solve, fitted proxies, original pixels projected, picture's 5 coins (91 / 2,240 kept); ring-structured tunnel tiles written (not wired) | scenery 5.1 → **97.6 %** within 20 (SSIM 0.967); whole 6.4 → 79.9 %; Benny area 16.5 % | smeared gold tunnel at 10–20 u; mirrored water under Benny; provisional fill (23.4 %) until the fal plate | milestone 1: gameplay 8/8, default 0 px | MILESTONE 2 (tiles, water, motion, the …[+1326 chars]`
+
+### 🧑 User — 2026-11-17T17:05:06.977Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/PARALLEL_PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-17T17:05:11.104Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1577e4f2-096c-5327-af57-8fe315cad85a/scratchpad/v04 && git worktree remove --force $S/base && git worktree remove --force $S/new && git worktree prune && sed -i 's/^Updated: 2026-11-17 ~16:48 UTC\\./Updated: 2026-11-17 ~17:06 UTC./' docs/PARALLEL_PROGRESS.md && git add docs/PARALLEL_PROGRESS.md && git commit -q -m \"Lead: Screen 04 milestone 2 verified (scenery 98.1 %, one fal edit 01a1ea70), milestone 3 assigned\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VCMXob2ipUeLE1o7yXNSsZ\"  …[+302 chars]`
+
+### 🧑 User — 2026-11-17T17:05:16.986Z
+
+> ↩︎ result: local 9c1f142 remote 9c1f142
+> /home/user/rainbow-  9c1f142 [ccr-5495e9c4-g0apvl]
+> [This command modified 1 file you've previously read: docs/PARALLEL_PROGRESS.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-17T17:05:25.277Z
+
+Screen 04 finished its second round of work, and the five full‑size pictures are in your app. It is not approved — that stays your call.
+
+The pictures, in order:
+1. Your approved picture.
+2. **Before**, at your approved view (first round).
+3. **New**, at your approved view (with the one fal edit).
+4. **Before**, while riding deep into the tunnel.
+5. **New**, while riding deep into the tunnel.
+
+**What improved:**
+- **Deep in the tunnel:** it used to smear into streaky orange and show mirrored copies of the water. It now shows real gold rings repeating into the distance.
+- **Under Benny while riding:** the mirrored patterns are gone. You now see your painted cyan river with its glowing chevron arrows.
+- **At your approved view:** the scenery was already 97.6 % within 20 colour levels and is now **98.1 %**. The whole frame went from 79.9 % to **81.3 %**.
+
+**The one paid fal edit:** it ran exactly once, with no retry. The clean background it produced is used only where Benny, the coins and the title had to be removed. Your original pixels are kept everywhere else.
+
+**Checked myself:** I captured the game from the old and new versions and compared every pixel:
+- The default game is unchanged on screens 04–08.
+- Your Screen 08 reconstruction is unchanged.
+- The game still has 91 coins worth 2,240, and the gameplay test passes 8/8.
+
+A new Android test build was made, but it hasn't been tried on a phone.
+
+**Still not like your picture while riding:**
+- The river turns almost plain cyan and loses the pink swirls and foamy banks along its edges.
+- The farthest rings go soft and glowy.
+- The white splash around Benny is missing.
+- Coins seen from the side float above the water.
+- Benny's own look belongs to the Screen 08 Benny specialist.
+
+Screen 04 is now working on exactly those river, ring, splash and coin issues, with no paid work. The progress report is updated (`docs/PARALLEL_PROGRESS.md`). The other five sessions are still working, and I'll show you each screen's pictures the same way when it reports.
+
