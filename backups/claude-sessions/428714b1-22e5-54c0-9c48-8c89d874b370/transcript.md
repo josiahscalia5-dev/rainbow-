@@ -444,3 +444,243 @@ Camera solved (Benny box and tunnel vanishing point within 0.1 px of the approve
 > }
 > }
 
+### 🤖 Claude — 2026-11-17T15:46:23.390Z
+
+Tunnel fitted (radius 3.6 u, mouth 6.8 u ahead of Benny). Now building the texture plate: original pixels with a provisional local fill where Benny, HUD, title and coins sit.
+
+### 🤖 Claude — 2026-11-17T15:46:36.343Z
+
+> 🔧 **Bash** `{"command": "mkdir -p assets/textures/match04 qa/match/04 && cat > tools/match04/make_plate04.py <<'EOF'\n\"\"\"Screen 04 (?match04=1): texture plate = the user's ORIGINAL approved pixels; PROVISIONAL local fill (OpenCV\ninpainting, Telea) only where the HUD bar, title banner, Benny and the five coins are (the game draws those itself).\nA fal nano-banana-2/edit clean plate is prepared (qa/match/04/FAL_PLATE_REQUEST.md) but NOT run.\nAlso cuts the material patches for unseen surfaces (tunnel rings, water, room wall) from the artwork.\nusage: python3 -I tools/match04/make_plate04.py <approved.pn …[+2365 chars]`
+
+### 🧑 User — 2026-11-17T15:46:38.676Z
+
+> ↩︎ result: filled share 0.22973029996141975
+
+### 🤖 Claude — 2026-11-17T15:46:40.411Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/plate_small.png"}`
+
+### 🧑 User — 2026-11-17T15:46:40.439Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:46:56.803Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad && cp $S/cam04.json assets/textures/match04/cam04_locked.json && cp $S/proj04.json assets/textures/match04/proj04.json && grep -n \"PROJ05_INVERSE\" src/vfx/waterRibbon.ts | head -3 && grep -n \"export function flag05\" -A8 src/vfx/waterRibbon.ts", "description": "Store camera/layout and check helpers"}`
+
+### 🧑 User — 2026-11-17T15:46:56.902Z
+
+> ↩︎ result: 319:export const PROJ05_INVERSE = /* glsl */ `
+> 475:${PROJ05_INVERSE}#endif
+> 1661:  const pars = 'uniform sampler2D uPjF; uniform float uPjFZ; uniform vec4 uPjPost; uniform vec2 uPjRes;\n' + PROJ05_INVERSE;
+
+### 🤖 Claude — 2026-11-17T15:46:58.112Z
+
+Now the Screen 04 module (own file), modelled on match08.
+
+### 🤖 Claude — 2026-11-17T15:47:27.532Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/match04.ts", "content": "/**\n * `?match04=1` — Screen 04 approved-picture test (2026-11-17, qa/match/04/NOTES.md), the Screen 08 method.\n * REAL 3D proxy geometry of \"Through the Five Arrows\", solved from the user's approved Screen 04 and the locked game\n * camera (tools/match04/solve_cam04.py → cam04_locked.json, tools/match04/fit_proxies04.py → proj04.json):\n * the gold-ring tunnel (a cylinder along the straight 32° slide), the big gold mouth ring, the room wall around it\n * (porthole, towels, control panel, foam) and the water plane at Ben …[+8397 chars]`
+
+### 🧑 User — 2026-11-17T15:47:27.565Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/match04.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T15:47:29.869Z
+
+Now the minimal shared hooks (camera, Game), all gated on `match04`.
+
+### 🤖 Claude — 2026-11-17T15:47:42.367Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='src/game/match.ts'; s=open(p).read()\ns=s.replace(\"\"\"export const MATCH_CAM: Partial<Record<MatchId, Partial<CamParams>>> = {\n\"\"\",\"\"\"export const MATCH_CAM: Partial<Record<MatchId, Partial<CamParams>>> = {\n  // 04 (2026-11-17, qa/match/04/NOTES.md): solved offline (tools/match04/solve_cam04.py) so Benny's box lands on the\n  // approved picture (195,965-590,1400) and the tunnel's vanishing point on (490,690); camera = Benny's water point + off04\n  '04': { fov: 62, roll: 0, off04: [0.4015, 6.2009, 3.5184], dir04: [-0.04342, -0.58119, -0. …[+3514 chars]`
+
+### 🧑 User — 2026-11-17T15:47:45.393Z
+
+> ↩︎ result: src/game/Game.ts      | 19 +++++++++++++++++++
+>  src/game/cameraRig.ts | 17 +++++++++++++++++
+>  src/game/match.ts     |  3 +++
+>  3 files changed, 39 insertions(+)
+> TSC OK
+
+### 🤖 Claude — 2026-11-17T15:47:54.860Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad && cp qa/capture_log.json $S/capture_log.bak; mkdir -p $S/new1 && node scripts/capture.mjs 04 --q=match04=1 --out=$S/new1 2>&1 | tail -2; cp $S/capture_log.bak qa/capture_log.json; python3 -I tools/qa/screen_match.py references/04_through_the_five_arrows.png $S/new1/04.png --label=NEW1; python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB');b=Image.open('$S/new1/04.png').convert('RGB')\nim=Image.new('RGB',(864,768));im.paste(a.resize((432,768) …[+150 chars]`
+
+### 🧑 User — 2026-11-17T15:48:10.491Z
+
+> ↩︎ result: 04 → /tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/new1/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":46,"tris":170368,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> NEW1   FULL |d|  18.2 <=20 0.771 SSIM 0.781 | BELOWHUD |d|  13.7 <=20 0.846 | LAYOUT |d|  10.8 <=20 0.847 | mean RGB approved [179.3, 132.6, 168.6] game [186.5, 130.1, 167.2]
+
+### 🤖 Claude — 2026-11-17T15:48:12.354Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/cmp1.png"}`
+
+### 🧑 User — 2026-11-17T15:48:12.391Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:48:23.671Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,120p src/gameplay/coins.ts; sed -n 170,200p src/gameplay/coins.ts; cat assets/textures/match08/coins08.json | head -30", "description": "Read coins.ts and coins08 data"}`
+
+### 🧑 User — 2026-11-17T15:48:23.726Z
+
+> ↩︎ result: /**
+>  * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+>  * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+>  * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+>  * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+>  */
+> import * as THREE from 'three';
+> import type { Course, StageId } from '../world/course';
+> import { canvasTexture } from '../world/materials';
+> import { coreLateral, flag05 } from '../vfx/waterRibbon';
+> import coins08 from '../../assets/textures/match08/coins08.json';
+> 
+> export const COIN_VALUE = 10;
+> 
+> /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+> 
+> /**
+>  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+>  * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+>  * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.ga …[+8817 chars]
+
+### 🤖 Claude — 2026-11-17T15:48:45.761Z
+
+> 🔧 **Bash** `{"command": "grep -n \"pickR\\|< 1\\.\\|dist\\|reach\" src/gameplay/coins.ts | head; cat > tools/match04/coins04.py <<'EOF'\n\"\"\"Screen 04 (?match04=1): the approved picture's five coins as real pickups at the painted spots.\nEach painted coin (centre px, diameter px) is a ray from the locked camera; the coin (1 u diameter x scale) sits where\nits painted size and its bottom edge on the water agree (bottom on the slide's water plane), expressed as course\ns / lateral / height (coins.ts). usage: python3 -I tools/match04/coins04.py <proj04.json> <s of the cam04 water point> <out coins04.json>\ …[+1819 chars]`
+
+### 🧑 User — 2026-11-17T15:48:46.002Z
+
+> ↩︎ result: 2: * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+> 21: * grows with distance, so the gaps here grow too (C05.gap0 + k·C05.gapGrow). Coins lean back by C05.tilt
+> 72:      // keep every picture coin collectible: if it lies beyond pickup reach (|lateral| > 1.1), slide it along its own view
+> 73:      // ray from the approved camera (same pixel in the approved view) to the nearest depth within reach, above the water;
+> 211:        if (Math.abs(ds) < 1.0 && Math.abs(d.lat - lat) < 1.25) {
+> {'px': [175, 970, 112], 's': 83.409, 'lat': -2.573, 'h': 0.566, 'scale': 1.134, 'dist': 12.94}
+> {'px': [262, 872, 82], 's': 89.783, 'lat': -2.857, 'h': 0.613, 'scale': 1.227, 'dist': 19.13}
+> {'px': [330, 792, 58], 's': 102.941, 'lat': -3.499, 'h': 0.729, 'scale': 1.459, 'dist': 32.15}
+> {'px': [378, 742, 40], 's': 128.724, 'lat': -4.557, 'h': 0.905, 'scale': 1.81, 'dist': 57.85}
+> {'px': [423, 712, 26], 's': 151.012, 'lat': -3.714, 'h': 1.903, 'scale': 1.627, 'dist': 79.99}
+
+### 🤖 Claude — 2026-11-17T15:48:57.466Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/match04/coins04.py'; s=open(p).read()\ns=s.replace(\"\"\"    e, k, P, sc, h = best\n\"\"\",\"\"\"    e, k, P, sc, h = best\n    # painted perspective puts the coins on the bank beyond the tunnel wall: as in match08, slide each coin along its own\n    # view ray (same pixel in the approved view) to the nearest depth within pickup reach (|lateral| <= 1.2, >= 0.3 above\n    # the water, inside stage 04); its size scales with the depth so it still covers the painted coin\n    if abs((P - base) @ X) > 1.2:\n        pick = None\n        for f in np.arange(0.1 …[+523 chars]`
+
+### 🧑 User — 2026-11-17T15:48:57.782Z
+
+> ↩︎ result: {'px': [175, 970, 112], 's': 77.791, 'lat': -1.199, 'h': 1.861, 'scale': 0.615, 'dist': 7.013}
+> {'px': [262, 872, 82], 's': 80.351, 'lat': -1.195, 'h': 2.02, 'scale': 0.606, 'dist': 9.45}
+> {'px': [330, 792, 58], 's': 84.307, 'lat': -1.199, 'h': 2.291, 'scale': 0.604, 'dist': 13.31}
+> {'px': [378, 742, 40], 's': 89.914, 'lat': -1.198, 'h': 2.582, 'scale': 0.59, 'dist': 18.859}
+> {'px': [423, 712, 26], 's': 102.452, 'lat': -1.196, 'h': 2.809, 'scale': 0.638, 'dist': 31.356}
+
+### 🤖 Claude — 2026-11-17T15:49:03.661Z
+
+> 🔧 **Bash** `{"command": "grep -n \"lat = \\|clamp(st.lat\\|maxLat\\|width \\* 0\\.\\|halfW\" src/game/Game.ts | head", "description": "Find Benny lateral limits"}`
+
+### 🧑 User — 2026-11-17T15:49:03.700Z
+
+> ↩︎ result: 346:    st.lat = 0;
+> 362:    const halfW = course.widthAt(st.s) / 2;
+> 363:    const safe = halfW - 0.75;
+> 365:    st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -halfW + 0.55, halfW - 0.55);
+> 374:      st.vlat = -Math.sign(st.lat) * 9;
+> 381:        st.lat = 0;
+> 511:    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+> 650:      st.lat = cp.lat ?? 0;
+> 659:        for (let i = 0; i < 40; i++) { stepSim(1 / 60); st.s = s0; st.lat = cp.lat ?? 0; }
+
+### 🤖 Claude — 2026-11-17T15:49:08.656Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/if abs((P - base) @ X) > 1.2:/if abs((P - base) @ X) > 1.6 or s_cp + (P - base) @ D < s_cp + 1.0:/; s/if abs(lat) <= 1.2 and hq >= 0.3 + 0.5 \\* sc \\* f and sq < 112/if abs(lat) <= 1.6 and hq >= 0.3 + 0.5 * sc * f and s_cp + 1.0 <= sq < 112/; s/(|lateral| <= 1.2, >= 0.3 above/(|lateral| <= 1.6 = inside the river, >= 0.3 above/; s/the water, inside stage 04)/the water, >= 1 u ahead of the checkpoint, inside stage 04)/' tools/match04/coins04.py && python3 -I tools/match04/coins04.py assets/textures/match04/proj04.json 77.41308465825975 assets/textures/match04/coins04.json …[+72 chars]`
+
+### 🧑 User — 2026-11-17T15:49:08.917Z
+
+> ↩︎ result: {'px': [175, 970, 112], 's': 79.41, 'lat': -1.595, 'h': 1.488, 'scale': 0.764, 'dist': 8.722}
+> {'px': [262, 872, 82], 's': 82.625, 'lat': -1.596, 'h': 1.681, 'scale': 0.756, 'dist': 11.784}
+> {'px': [330, 792, 58], 's': 87.551, 'lat': -1.599, 'h': 2.019, 'scale': 0.753, 'dist': 16.589}
+> {'px': [378, 742, 40], 's': 94.521, 'lat': -1.597, 'h': 2.383, 'scale': 0.735, 'dist': 23.487}
+> {'px': [423, 712, 26], 's': 110.119, 'lat': -1.594, 'h': 2.666, 'scale': 0.794, 'dist': 39.035}
+
+### 🤖 Claude — 2026-11-17T15:49:25.170Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\ns=s.replace(\"\"\"import coins08 from '../../assets/textures/match08/coins08.json';\"\"\",\"\"\"import coins08 from '../../assets/textures/match08/coins08.json';\nimport coins04 from '../../assets/textures/match04/coins04.json';\"\"\")\ns=s.replace(\"\"\"  // 04 — along the left edge of the slide\n  { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }\"\"\",\"\"\"  // 04 — along the left edge of the slide\n  const m04 = flag05('match04') || flag05('matchall');\n  if (!m04) { const  …[+1595 chars]`
+
+### 🧑 User — 2026-11-17T15:49:28.025Z
+
+> ↩︎ result: TSC OK
+
+### 🤖 Claude — 2026-11-17T15:49:30.542Z
+
+Status: added the picture's five coins as real pickups and closed the tunnel end; re-capturing now.
+
+### 🤖 Claude — 2026-11-17T15:49:33.897Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad && mkdir -p $S/new2 && node scripts/capture.mjs 04 --q=match04=1 --out=$S/new2 2>&1 | tail -1; cp $S/capture_log.bak qa/capture_log.json; python3 -I tools/qa/screen_match.py references/04_through_the_five_arrows.png $S/new2/04.png --label=NEW2; python3 -c \"\nfrom PIL import Image\na=Image.open('references/04_through_the_five_arrows.png').convert('RGB');b=Image.open('$S/new2/04.png').convert('RGB')\nim=Image.new('RGB',(864,768));im.paste(a.resize((432,768)),(0,0));im.paste(b.resize((432,768)),(432, …[+96 chars]`
+
+### 🧑 User — 2026-11-17T15:49:49.656Z
+
+> ↩︎ result: 04 → /tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/new2/04.png {"stage":"04","s":77.413,"y":-21.896,"calls":47,"tris":170432,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> NEW2   FULL |d|  13.6 <=20 0.805 SSIM 0.805 | BELOWHUD |d|   8.3 <=20 0.885 | LAYOUT |d|   5.5 <=20 0.901 | mean RGB approved [179.3, 132.6, 168.6] game [181.3, 132.0, 170.0]
+
+### 🤖 Claude — 2026-11-17T15:49:51.558Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/cmp2.png"}`
+
+### 🧑 User — 2026-11-17T15:49:51.597Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T15:49:55.659Z
+
+Now at 80.5 % whole frame / 88.5 % below the HUD. Next: scenery-only metrics and the moving-camera check.
+
+### 🤖 Claude — 2026-11-17T15:49:56.373Z
+
+> 🔧 **Bash** `{"command": "cat tools/match08/motion08.mjs; ls qa/match/08/ | head -40", "description": "Read 08 motion test script"}`
+
+### 🧑 User — 2026-11-17T15:49:56.404Z
+
+> ↩︎ result: // Screen 08 moving-camera test (read-only): from the 08 checkpoint ride forward / steer with the real game sim and
+> // screenshot what the live camera sees. usage: node motion08.mjs <outDir> [q]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const OUT = process.argv[2]; const Q = process.argv[3] ?? 'match08=1';
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5266);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   const shots = [['f00_checkpoint', 0, null], ['f03_forward3u', 19, null], ['f06_forward6u', 38, null], ['f10_forward10u', 63, null],
+>                  ['f15_forward15u', 95, null], ['s_left_steer', 40, -1], ['s_right_steer', 40, 1]];
+>   for (const [name, n, st …[+1044 chars]
+
+### 🤖 Claude — 2026-11-17T15:50:08.108Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match04/motion04.mjs <<'EOF'\n// Screen 04 moving-camera test (read-only): from the 04 checkpoint ride forward / steer with the real game sim and\n// screenshot what the live camera sees. usage: node tools/match04/motion04.mjs <outDir> [q]\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';\nconst OUT = process.argv[2]; const Q = process.argv[3] ?? 'match04=1';\nmkdirSync(OUT, { recursive: true });\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5268);\nconst br …[+2183 chars]`
+
+### 🧑 User — 2026-11-17T15:50:45.684Z
+
+> ↩︎ result: f00_checkpoint s 77.876 lat 0 04 coins 1330
+> f03_forward3u s 80.773 lat 0 04 coins 1330
+> f06_forward6u s 83.595 lat 0 04 coins 1330
+> f10_forward10u s 87.522 lat 0 04 coins 1330
+> f20_forward20u s 97.691 lat 0 04 coins 1330
+> s_left_steer s 83.812 lat -1.65 04 coins 1350
+> s_right_steer s 83.693 lat 1.65 04 coins 1330
+
+### 🤖 Claude — 2026-11-17T15:50:47.678Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/428714b1-22e5-54c0-9c48-8c89d874b370/scratchpad/motion_strip.png"}`
+
+### 🧑 User — 2026-11-17T15:50:47.723Z
+
+> ↩︎ result: [image]
+

@@ -9,6 +9,7 @@ import type { Course, StageId } from '../world/course';
 import { canvasTexture } from '../world/materials';
 import { coreLateral, flag05 } from '../vfx/waterRibbon';
 import coins08 from '../../assets/textures/match08/coins08.json';
+import coins04 from '../../assets/textures/match04/coins04.json';
 
 export const COIN_VALUE = 10;
 
@@ -44,7 +45,22 @@ export function coinLayout(course: Course): CoinDef[] {
   // 03 — spiral trail ahead of Benny toward the drain
   { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
   // 04 — along the left edge of the slide
-  { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }
+  const m04 = flag05('match04') || flag05('matchall');
+  if (!m04) { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }
+  // `?match04=1` (qa/match/04/NOTES.md): the approved picture's five coins where the picture shows them (world positions
+  // from the locked 04 camera, assets/textures/match04/coins04.json) + the other 3 of the 04 row on the slide entry before
+  // the 04 view (the run's coin total is unchanged)
+  if (m04) {
+    const a = st('04');
+    for (let i = 0; i < 3; i++) add('04', a.s0 + 2 + i * 1.5, -0.3 + 0.3 * i);
+    for (const c of coins04.coins) {
+      const P = new THREE.Vector3(...(c.pos as [number, number, number]));
+      let sb = c.s, bd = Infinity;
+      for (let s = c.s - 3; s <= c.s + 3; s += 0.02) { const d = Math.abs(P.clone().sub(course.sample(s).pos).dot(course.sample(s).tan)); if (d < bd) { bd = d; sb = s; } }
+      const f = course.sample(sb), r = P.clone().sub(f.pos);
+      add('04', sb, r.dot(f.right), r.dot(f.up), { scale: c.scale, faceTo: coins04.faceTo as [number, number, number] });
+    }
+  }
   // 05 — on the winding cyan core (see C05)
   coins05(course, add);
   // 06 — up and over the crest (left of centre like the ref)
@@ -180,7 +196,7 @@ export function createCoins(course: Course): CoinSystem {
         p.copy(f.pos).addScaledVector(f.right, d.lat).addScaledVector(f.up, d.h + 0.08 * Math.sin(time * 3 + i));
       }
       back.copy(f.tan).negate();
-      // `?match08=1` picture coins: the face turns toward the approved view's camera (upright, faced like the painted coins)
+      // `?match08=1` / `?match04=1` picture coins: the face turns toward the approved view's camera (upright, faced like the painted coins)
       if (d.faceTo) back.set(d.faceTo[0] - p.x, 0, d.faceTo[2] - p.z).normalize();
       const upV = d.faceTo ? new THREE.Vector3(0, 1, 0) : f.up;
       const right = new THREE.Vector3().crossVectors(upV, back).normalize();

@@ -437,6 +437,51 @@
    "sha256": "ffaf6ccddf27e7867cd44458c9e7547e7a0221c601953950eeecbe44507c3416"
   },
   {
+   "path": "assets/textures/match04/cam04_locked.json",
+   "bytes": 939,
+   "sha256": "b9e9fbeab6310935fbf0c1a78811179692a3db3166dc11f21dbfcdec8e01418c"
+  },
+  {
+   "path": "assets/textures/match04/coins04.json",
+   "bytes": 1652,
+   "sha256": "f53f39ebafad9ebf3c55feb1bafbc4fee52cb5b406cfddd03b2e5b0a0b62338d"
+  },
+  {
+   "path": "assets/textures/match04/patch_gold.png",
+   "bytes": 27696,
+   "sha256": "dd9045288de18b863963d65378dec2bfd9548a175fdf8b5a768a10e6def29642"
+  },
+  {
+   "path": "assets/textures/match04/patch_wall.png",
+   "bytes": 29276,
+   "sha256": "fc3070bdaa8e7b14cf4d28bc8880069925d6e2f9837d6f22d2ee8489e4bb5caf"
+  },
+  {
+   "path": "assets/textures/match04/patch_water.png",
+   "bytes": 25973,
+   "sha256": "c1a9606db5cf76eac0f4a97639a83840a55c7e55167d67ca1a753eff2acf660e"
+  },
+  {
+   "path": "assets/textures/match04/plate04.json",
+   "bytes": 214,
+   "sha256": "dee4b15744b1263801f253e4b49da30f4a17f044bbeebf9a0fd5d44bb8259374"
+  },
+  {
+   "path": "assets/textures/match04/plate04_fillmask.png",
+   "bytes": 8533,
+   "sha256": "d07665869479f0fe685f7643432537b009c7dab1bc5d784c21de60f5a779068e"
+  },
+  {
+   "path": "assets/textures/match04/plate04_hybrid.png",
+   "bytes": 2133573,
+   "sha256": "1936158038bc3f0c9d6f65c0f250e503f7b80e205b4fb96f1271cfe4d578314a"
+  },
+  {
+   "path": "assets/textures/match04/proj04.json",
+   "bytes": 1723,
+   "sha256": "4b02ce9760eaea9a873705dbb34420415c7bf197d4dfb4b17a06365f6a656368"
+  },
+  {
    "path": "assets/textures/match08/cam08_locked.json",
    "bytes": 684,
    "sha256": "f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237"
@@ -609,7 +654,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 10150,
-   "sha256": "69c904f00ffa28b2467e0ccf1ca288f7c23eb4889ea88a8e8e64f17d8e3b6d1f"
+   "sha256": "850c7f7b9db772ec5a4db9543efdbbceef6ab5ccc0cb1270b5c90f4b5bc003d7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1315,6 +1360,46 @@
    "path": "qa/imageblaster/08/world/renders/pano_straight_ahead_views.png",
    "bytes": 1101770,
    "sha256": "c2b30f78e3b7fb046f54a42e28295d093a2e1f6e8850e10dfaf229839075611b"
+  },
+  {
+   "path": "qa/match/04/motion/f00_checkpoint.png",
+   "bytes": 1960788,
+   "sha256": "ea80e6f0e7f817ca1792f26c4f7cfa50646ec4f5e90ded51a78582b2976dbb77"
+  },
+  {
+   "path": "qa/match/04/motion/f03_forward3u.png",
+   "bytes": 1789973,
+   "sha256": "72a1a910ea8afca7075583b7e8f59e5111aa7856ca834fbc9060fe7196451b68"
+  },
+  {
+   "path": "qa/match/04/motion/f06_forward6u.png",
+   "bytes": 1626309,
+   "sha256": "fa8efbae2b482a8157c5cfe0af3929ee779dc056e0d1b1d68c281699936263f1"
+  },
+  {
+   "path": "qa/match/04/motion/f10_forward10u.png",
+   "bytes": 1323029,
+   "sha256": "d382e1096de552f41e0f49f1fb7f27af2a99eda10d5e0f563a5c75284818f18f"
+  },
+  {
+   "path": "qa/match/04/motion/f20_forward20u.png",
+   "bytes": 1116924,
+   "sha256": "ed80fb66ba8a2085f0a8596c129922db3b420047515832c55ea8cd23d59ebd3c"
+  },
+  {
+   "path": "qa/match/04/motion/motion.json",
+   "bytes": 987,
+   "sha256": "af73a4f9613f2b885a03ee16b92e664c9418ef36b248c62680c1e1f90b6896e3"
+  },
+  {
+   "path": "qa/match/04/motion/s_left_steer.png",
+   "bytes": 1597845,
+   "sha256": "2deb12a98a25b2d324547f11f85b6f9827ced30165414e95fc0405979aefd030"
+  },
+  {
+   "path": "qa/match/04/motion/s_right_steer.png",
+   "bytes": 1656845,
+   "sha256": "e6cae09beb1c2b4a46c2e0b475b3b8d5c674e9e13b4c1d64298f044eda48644e"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -7943,18 +8028,18 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 38856,
-   "sha256": "c9090ddb593d86a7ba77ec9706d2329e0f239a2e18baa9db10c5d0372c2a6401"
+   "bytes": 39947,
+   "sha256": "e49dc3304046ee3119d2a3843e882308609509db750afc57bc149d63d15f1117"
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 11333,
-   "sha256": "c0012b277fd871049ee08d763c15b870523d0df73f96f0008965e449700bbee8"
+   "bytes": 12380,
+   "sha256": "a1d5fcab1c22b9adc98837715b65233bb562026c518962a5dfe59a1b174e4b87"
   },
   {
    "path": "src/game/match.ts",
-   "bytes": 2322,
-   "sha256": "640cd7e53ac698d88d03e0fc985502e44bdb5e64461f506666ebde0d7d0971dc"
+   "bytes": 2667,
+   "sha256": "61321c3760d7614fc12078b340b40b2e60470e6030f400364da6eaecb7380400"
   },
   {
    "path": "src/game/modules.ts",
@@ -7963,8 +8048,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 12528,
-   "sha256": "c5bb03eaf037cf9696a528a32371fdf005def642044ce5dbc0ddab50d5657233"
+   "bytes": 13601,
+   "sha256": "94fd918f9577f073cea22f16d7d16d21cb20f58ab1f533653fe47f154dd4fa39"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -8085,6 +8170,11 @@
    "path": "src/world/laundryRoom.ts",
    "bytes": 8308,
    "sha256": "7c3a4cb22741c58f3c589239d07ffcf9097d6c4b8e59c99a72d7d8f689cc7679"
+  },
+  {
+   "path": "src/world/match04.ts",
+   "bytes": 8895,
+   "sha256": "8c83ccb085e3c49cc89a9b507f77b9def545161ce6ae16148d74b930ac56e50b"
   },
   {
    "path": "src/world/match08.ts",
@@ -8242,9 +8332,24 @@
    "sha256": "7d0a20d564d10cdc70fd5f80678f9e20579adac03d902a388b0a3dd265f1e78c"
   },
   {
+   "path": "tools/match04/coins04.py",
+   "bytes": 2852,
+   "sha256": "12d7a919210293092cdfd290b146f528583a66ef0dbd28d3da7c780fb3c4cff6"
+  },
+  {
    "path": "tools/match04/fit_proxies04.py",
    "bytes": 3864,
    "sha256": "e0cad149f655d250bcb51f945f751d0b7c98de1275e82dda52ea2c85e5014e38"
+  },
+  {
+   "path": "tools/match04/make_plate04.py",
+   "bytes": 2392,
+   "sha256": "b5cb0db886412cdef0bac730b81e560d5c93be8049fe45dd9ed0eee8ee3b5ffd"
+  },
+  {
+   "path": "tools/match04/motion04.mjs",
+   "bytes": 2123,
+   "sha256": "e54cf53200ac984977c717df4bcfb860075075c7af5960d7e84f59966f04c106"
   },
   {
    "path": "tools/match04/probe04.mjs",

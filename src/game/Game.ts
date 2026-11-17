@@ -25,6 +25,7 @@ import { RideCamera } from './cameraRig';
 import { flag05 } from '../vfx/waterRibbon';
 import { MATCH } from './match';
 import { buildMatch08 } from '../world/match08';
+import { buildMatch04 } from '../world/match04';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -113,6 +114,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
   const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
+  // `?match04=1`: the approved Screen 04 scenery on fitted 3D geometry (src/world/match04.ts); off: nothing is built
+  const m04 = MATCH['04'] ? await buildMatch04() : null;
+  if (m04) { m04.group.visible = false; scene.add(m04.group); m04.bakeDepth(renderer); }
+  let m04On = false;
+  let m04Applied = false;
   let m08Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
@@ -165,6 +171,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);
     }
     if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
+    if (m04) { m04On = st.stage === '04'; m04.group.visible = m04On; if (m04On) { env.zones.basin.visible = false; env.zones.tubes.visible = false; } }
     const inDrum = i <= 1;
     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
   };
@@ -530,6 +537,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
       m08Applied = m08On;
     }
+    // `?match04=1` on Screen 04: the projected scenery carries the approved river, arrows, foam and bubbles
+    if (m04 && (m04On || m04Applied) && !(m08 && m08On)) {
+      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m04On; }
+      m04Applied = m04On;
+    }
     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
     if (m08 && b08 && b08Rest) {
       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
@@ -576,6 +588,13 @@ export async function startGame(canvas: HTMLCanvasElement) {
       if (m08On) bloom.strength = 0;
       renderer.getDrawingBufferSize(dbs);
       m08.sync(renderer, dbs.x, dbs.y);
+    }
+    // `?match04=1`: no bloom on Screen 04 under the switch (the artwork carries its own glow)
+    if (m04) {
+      if (!glow05 && !m08) bloom.strength = bloomS0;
+      if (m04On) bloom.strength = 0;
+      renderer.getDrawingBufferSize(dbs);
+      m04.sync(renderer, dbs.x, dbs.y);
     }
     renderer.info.reset();
     composer.render();
