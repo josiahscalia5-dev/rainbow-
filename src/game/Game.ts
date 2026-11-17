@@ -125,12 +125,15 @@ export async function startGame(canvas: HTMLCanvasElement) {
     sm.needsUpdate = true;
   }
   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
-  // benny08 round 5 (d) body shape (qa/match/08/benny08/NOTES.md): body fur tapered — as wide as the brim right under it,
-  // slimmer toward the water — and the stubby arms seated higher, like the approved picture (visual choice: the strict
-  // Benny+splash number drops 65.4 -> 62.0 %). `?b08shape=0` = round 4; also off with `b08r3=0`. Tuning (QA only):
-  // b08tt/b08tb taper top/bottom, b08bw/b08bh body fur width/height, b08ly fur lift, b08ay/b08ax/b08ak arm raise/inward/size.
-  const B08SHAPE = !!b08 && B08R2 && qs.get('b08r3') !== '0' && qs.get('b08shape') !== '0';
-  const b08Shape = B08SHAPE ? { bw: qn('b08bw', 1), ay: qn('b08ay', 0.04), ax: qn('b08ax', 0), ak: qn('b08ak', 1.1), bh: qn('b08bh', 1), ly: qn('b08ly', 0), tt: qn('b08tt', 1.12), tb: qn('b08tb', 0.92) } : null;
+  // benny08 round 5 body shape (qa/match/08/benny08/NOTES.md), two presets on the same machinery:
+  //  `?b08shape=1` = the 18:55 taper (body fur x1.12 at the top -> x0.92 at the bottom, arms raised; user: wrong way, OFF by default)
+  //  `?b08full=1`  = fuller, rounder body (probe) — see NOTES for the kept default
+  // Tuning (QA only): b08tt/b08tb taper top/bottom, b08bw/b08bh body fur width/height, b08ly fur lift, b08ay/b08ax/b08ak arms.
+  const B08TAPER = qs.get('b08shape') === '1';
+  const B08FULL = !B08TAPER && qs.get('b08full') === '1';
+  const B08SHAPE = !!b08 && B08R2 && qs.get('b08r3') !== '0' && (B08TAPER || B08FULL);
+  const b08P = B08TAPER ? { bw: 1, ay: 0.04, ax: 0, ak: 1.1, bh: 1, ly: 0, tt: 1.12, tb: 0.92 } : { bw: 1, ay: 0, ax: 0, ak: 1, bh: 1, ly: 0, tt: 1, tb: 1 };
+  const b08Shape = B08SHAPE ? { bw: qn('b08bw', b08P.bw), ay: qn('b08ay', b08P.ay), ax: qn('b08ax', b08P.ax), ak: qn('b08ak', b08P.ak), bh: qn('b08bh', b08P.bh), ly: qn('b08ly', b08P.ly), tt: qn('b08tt', b08P.tt), tb: qn('b08tb', b08P.tb) } : null;
   // the body fur mesh only (beanie, face and arms are separate children of the body joint and stay put)
   const b08FurO = b08Shape ? benny.root.getObjectByName('fur_body') : undefined;
   const b08Fur = b08FurO ? { o: b08FurO, p: b08FurO.position.clone(), s: b08FurO.scale.clone() } : null;
