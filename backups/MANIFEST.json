@@ -678,8 +678,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 5451,
-   "sha256": "de4693673c30d15ca26e47671c8a875d8830f701cec232505db5fe40d51a5241"
+   "bytes": 6275,
+   "sha256": "a3c5eafb1e196a1192ca29d9cf5e07405fcdd3673219e7007c7c181b24c53eae"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -689,7 +689,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 13056,
-   "sha256": "15ee7e63ce372abf2fbaec52bbe35aa01ad31ae340653f5bf98202b6abd9608a"
+   "sha256": "3fd5e53a71f39b04950f2e80bbad33f12b7bd06708aec9dbd21f4a7c07a49bee"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1153,8 +1153,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 1239,
-   "sha256": "ad792a4ce102dcd69bda96963919e66b7c97c8977f363be391fa5db2f311b809"
+   "bytes": 11721,
+   "sha256": "b669d6edf900ed8169561886415f12be13a186e8e43a4315f21c59a7b841a78b"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -11208,8 +11208,8 @@
   },
   {
    "path": "src/gameplay/coins.ts",
-   "bytes": 23077,
-   "sha256": "7e2e77a45927899418cb56fa3dd88bef342347173338938a9576a50982db3c8e"
+   "bytes": 23068,
+   "sha256": "2ed398f532c26bba9c385a0487e57891b3bb56cedee1e5b716564cdd46ac2212"
   },
   {
    "path": "src/gameplay/input.ts",
@@ -11505,6 +11505,11 @@
    "path": "tools/match05/coin_audit.mjs",
    "bytes": 1720,
    "sha256": "7e0000df40ab50a8b117989d53223b253f4f8a7336f00f83914f45738b901b6e"
+  },
+  {
+   "path": "tools/match05/coin_cp_count.mjs",
+   "bytes": 1231,
+   "sha256": "6bf4ef0f409104a1759d61f0abc7bc4c96f0d1bd35b5a187b89a9a4c5e42c70a"
   },
   {
    "path": "tools/match05/make_target_vis.py",

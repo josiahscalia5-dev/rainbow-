@@ -21,12 +21,12 @@ const COINS05 = on05('coins05');
  *     previous one but 0.25–0.5 u further sideways: not reachable even by the gameplay test's coin-seeking steering) are
  *     left out — the only change in the locked 05 view;
  *  2. the remaining 9 extra coins are taken out where NO locked screen view shows them: coins behind their own screen's
- *     checkpoint camera (already collected there), 05 trail before the 05 checkpoint (3), 06 before its checkpoint (3),
- *     07 the earliest 3 before its checkpoint (C05TOT_CP mirrors Game.ts CHECKPOINTS).
+ *     checkpoint camera (already collected there): 03 (1), 06 (3), 07 (4), 10 (1) (C05TOT_CP mirrors Game.ts CHECKPOINTS).
+ *     (Not the 05 trail before the 05 checkpoint: the locked 04 view shows those 3 coins far down its slide.)
  * Reward per coin, pickup rule and every other coin are unchanged.
  */
 const C05TOT_DROP_MEAS = [16, 17];
-const C05TOT_CP: [StageId, number, number][] = [['06', 10, 3], ['07', 26, 3]]; // [stage, checkpoint offset from s0, coins]
+const C05TOT_CP: [StageId, number, number][] = [['03', 7.5, 1], ['06', 10, 3], ['07', 26, 4], ['10', 3, 1]]; // [stage, checkpoint offset from s0, coins]
 const COINS05TOT = COINS05 && (() => {
   try { if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('coins05tot') === '0') return false; } catch { /* no location */ }
   return on05('coins05tot');
@@ -220,7 +220,6 @@ export function coinLayout(course: Course): CoinDef[] {
     let extra = kept.length - dropMeas.size - out.length;
     const pick: CoinDef[] = [];
     const take = (list: CoinDef[], n: number) => { for (const d of list.slice(0, Math.min(n, extra))) { pick.push(d); extra--; } };
-    take(kept.filter((d) => d.stage === '05' && d.s <= sCp), 3);
     for (const [id, off, n] of C05TOT_CP) { const a = st(id); take(kept.filter((d) => d.stage === id && d.s < a.s0 + off + 0.5), n); }
     if (extra === 0) { const drop = new Set([...dropMeas, ...pick]); return kept.filter((d) => !drop.has(d)); }
   }

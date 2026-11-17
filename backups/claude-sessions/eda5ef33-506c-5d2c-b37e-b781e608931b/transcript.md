@@ -210,3 +210,119 @@ Your files: `qa/match/05/`, `tools/match05/`, `assets/textures/match05/` (and th
 >     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
 >     '07c_plunge_bottom': { mode: 'ride', s: course.m …[+997 chars]
 
+### 🤖 Claude — 2026-11-17T16:47:17.503Z
+
+> 🔧 **Bash** `{"command": "cat > tools/match05/coin_cp_count.mjs <<'EOF'\n#!/usr/bin/env node\n// Screen 05 agent — how many coins of each stage lie behind each ride checkpoint (hidden as \"already collected\" in that\n// locked view).  node tools/match05/coin_cp_count.mjs --q='match05=1&coins05tot=0'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';\nconst optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(5234);\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry …[+1125 chars]`
+
+### 🧑 User — 2026-11-17T16:47:35.269Z
+
+> ↩︎ result: {
+>  "10": {
+>   "s": 423.02,
+>   "total": 102,
+>   "own": 0,
+>   "ownBehind": 0,
+>   "ownBehindS": []
+>  },
+>  "03": {
+>   "s": 48.49,
+>   "total": 102,
+>   "own": 0,
+>   "ownBehind": 0,
+>   "ownBehindS": []
+>  },
+>  "04": {
+>   "s": 77.41,
+>   "total": 102,
+>   "own": 0,
+>   "ownBehind": 0,
+>   "ownBehindS": []
+>  },
+>  "05": {
+>   "s": 132.44,
+>   "total": 102,
+>   "own": 0,
+>   "ownBehind": 0,
+>   "ownBehindS": []
+>  },
+>  "06": {
+>   "s": 198.92,
+>   "total": 102,
+>   "own": 0,
+>   "ownBehind": 0,
+>   "ownBehindS": []
+>  },
+>  "07": {
+>   "s": 273.06,
+>   "total": 102,
+>   "own": 0,
+>   "ownBehind": 0,
+>   "ownBehindS": []
+>  },
+>  "08": {
+>   "s": 391.22,
+>   "total": 102,
+>   "own": 0,
+>   "ownBehind": 0,
+>   "ownBehindS": []
+>  },
+>  "09": {
+>   "s": 407.29,
+>   "total": 102,
+>   "own": 0,
+>   "ownBehind": 0,
+>   "ownBehindS": []
+>  }
+> }
+
+### 🤖 Claude — 2026-11-17T16:47:37.071Z
+
+> 🔧 **Bash** `{"command": "grep -n \"coinDefs\" -A 3 src/game/Game.ts | head", "description": "Check coinDefs API shape"}`
+
+### 🧑 User — 2026-11-17T16:47:37.108Z
+
+> ↩︎ result: 637:    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> 638-    /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+> 639-    coinScreen() {
+> 640-      const mesh = coins.group.children[0] as THREE.InstancedMesh;
+
+### 🤖 Claude — 2026-11-17T16:47:42.128Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='tools/match05/coin_cp_count.mjs'\nt=open(p).read()\nt=t[:t.index(\"  const out = {};\")]+\"\"\"  const out = {};\n  for (const id of ['03', '04', '05', '06', '07', '08', '09', '10']) {\n    await page.evaluate((id) => window.__rainbow.goto(id), id);\n    out[id] = await page.evaluate(() => +window.__rainbow.state().s.toFixed(2));\n  }\n  out.coins = await page.evaluate(() => window.__rainbow.coinDefs().map((d) => +d.s.toFixed(1)));\n  console.log(JSON.stringify(out));\n} finally { await browser.close(); await vite.close?.(); process.exit(0); }\n\"\ …[+209 chars]`
+
+### 🧑 User — 2026-11-17T16:47:59.379Z
+
+> ↩︎ result: {"10":423.02,"03":48.49,"04":77.41,"05":132.44,"06":198.92,"07":273.06,"08":391.22,"09":407.29,"coins":[47,49.7,52.4,55.1,57.8,60.5,63.2,65.9,68.6,79.4,83,86.6,90.2,93.8,97.4,101,104.6,124.2,127.8,131.4,138.6,143.2,149,158.7,175.5,178.1,183.6,183.6,183.7,184,184.3,184.7,185,185.4,185.7,185.9,186.2,186.5,192.9,195.8,198.7,201.6,204.5,207.4,210.3,213.2,216.1,219,221.9,224.8,227.7,230.6,233.5,236.4,239.3,242.2,253.1,258.6,264.1,269.6,275.1,280.6,286.1,291.6,297.1,302.6,308.1,313.6,319.1,324.6,330.2,335.7,341.2,346.7,352.2,357.7,363.2,368.7,374.2,379.7,392.2,394.1,396,397.9,399.8,401.7,403.6,405.5,406.3,408,409.7,411.4,413.1,414.8,416.5,418.2,419.9,421.5,423.5,425.5,427.5,429.5]}
+
+### 🤖 Claude — 2026-11-17T16:48:16.384Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/gameplay/coins.ts'\nt=open(p).read()\nold=\"\"\" *  2. the remaining 9 extra coins are taken out where NO locked screen view shows them: coins behind their own screen's\n *     checkpoint camera (already collected there), 05 trail before the 05 checkpoint (3), 06 before its checkpoint (3),\n *     07 the earliest 3 before its checkpoint (C05TOT_CP mirrors Game.ts CHECKPOINTS).\n * Reward per coin, pickup rule and every other coin are unchanged.\n */\nconst C05TOT_DROP_MEAS = [16, 17];\nconst C05TOT_CP: [StageId, number, number][] = [['06', 10, 3], ['07',  …[+1047 chars]`
+
+### 🧑 User — 2026-11-17T16:48:19.326Z
+
+> ↩︎ result: 24: *     checkpoint camera (already collected there): 03 (1), 06 (3), 07 (4), 10 (1) (C05TOT_CP mirrors Game.ts CHECKPOINTS).
+> 29:const C05TOT_CP: [StageId, number, number][] = [['03', 7.5, 1], ['06', 10, 3], ['07', 26, 4], ['10', 3, 1]]; // [stage, checkpoint offset from s0, coins]
+> 223:    for (const [id, off, n] of C05TOT_CP) { const a = st(id); take(kept.filter((d) => d.stage === id && d.s < a.s0 + off + 0.5), n); }
+> TSC OK
+
+### 🤖 Claude — 2026-11-17T16:48:20.970Z
+
+The coin fix now drops coins only from behind each screen's checkpoint camera: 03, 06, 07 and 10. Next I'll compare every screen with the fix on and off.
+
+### 🤖 Claude — 2026-11-17T16:48:21.820Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p scripts/capture.mjs | grep -E \"argv|--|q=\" | head -15", "description": "Check capture script options"}`
+
+### 🧑 User — 2026-11-17T16:48:21.854Z
+
+> ↩︎ result: //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+
+### 🤖 Claude — 2026-11-17T16:48:25.171Z
+
+> 🔧 **Bash** `{"command": "grep -n \"opt\\.\\(q\\|query\\)\" scripts/capture.mjs | head -3; S=/tmp/claude-0/-home-user-rainbow-/eda5ef33-506c-5d2c-b37e-b781e608931b/scratchpad; mkdir -p $S/on $S/off; (timeout 900 node scripts/capture.mjs --q='match05=1' --out=$S/on 01 02 03 04 05 06 07 08 09 10 11 && timeout 900 node scripts/capture.mjs --q='match05=1&coins05tot=0' --out=$S/off 01 02 03 04 05 06 07 08 09 10 11) 2>&1 | tail -4", "description": "Capture all screens with and without coin total fix", "timeout": 1850000}`
+
