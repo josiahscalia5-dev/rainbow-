@@ -144,15 +144,17 @@ export async function buildMatch07(): Promise<Match07> {
     t.wrapS = t.wrapT = wrap; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8;
     return t;
   };
-  const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-    load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load('tile_wall.png', THREE.RepeatWrapping),
-    load('tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
-    load('plate07_fillmask.png', THREE.ClampToEdgeWrapping),
-  ]);
   // MILESTONE 2 test switches (one factor each, qa/match/07/m2/NOTES.md); off = the MILESTONE 1 result unchanged
   const fixFill = flag05('m07fill');
   const fixAng = flag05('m07ang');
   const fixGold = flag05('m07gold');
+  const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)
+  const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
+    load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load(fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),
+    load('tile_river.png', THREE.RepeatWrapping), load('patch_gold.png', THREE.MirroredRepeatWrapping),
+    // m07fill (round 4): feathered inside the filled area so the river tile fades in without a hard-edged patch
+    load(fixFill ? 'plate07_fillmask_soft.png' : 'plate07_fillmask.png', THREE.ClampToEdgeWrapping),
+  ]);
 
   // the projector = the locked game camera the picture was matched to
   const [W, H] = L.camera.size;

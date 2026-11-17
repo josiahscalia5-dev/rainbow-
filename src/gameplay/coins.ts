@@ -38,6 +38,9 @@ function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h
   for (const s of ss) add('05', s, C05.latK * coreLateral(course, s), C05.h, extra);
 }
 
+/** `?m07coins=1`: lateral offsets of the two far trail coins continuing the painted coin line (tools/match07/coinprobe07.mjs) */
+const M07_FAR_LAT = [0.42, 1.82];
+
 export function coinLayout(course: Course): CoinDef[] {
   const out: CoinDef[] = [];
   const add = (stage: StageId, s: number, lat: number, h = 0.9, extra: Partial<CoinDef> = {}) => out.push({ s, lat, h, stage, ...extra });
@@ -55,7 +58,10 @@ export function coinLayout(course: Course): CoinDef[] {
   // the locked 07 camera, assets/textures/match07/coins07.json) replace the first eight trail coins from 12 u before the 07
   // checkpoint on (the run's coin total is unchanged); off: the trail as before
   const m07 = flag05('match07') || flag05('matchall');
-  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
+  // `?match07=1&m07coins=1` (qa/match/07/m2/NOTES.md, position only): the two trail coins right behind the painted far coins
+  // (which otherwise pile up on the painted cluster) continue the painted line to the right of it, at the painted coins' size for that distance (0.45)
+  const m07c = m07 && flag05('m07coins'); let m07k = 0;
+  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } const far = m07c && skip === 0 && s >= a.s0 + 30 && m07k < 2; if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
   if (m07) {
     const a = st('07');
     for (const c of coins07.coins) {
