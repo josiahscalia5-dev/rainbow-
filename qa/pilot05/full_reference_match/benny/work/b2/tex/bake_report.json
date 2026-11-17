@@ -1,0 +1,68 @@
+{
+ "star_albedo_linear": [
+  0.317,
+  0.39,
+  0.048
+ ],
+ "star_px": 2195,
+ "body": {
+  "px": 35266,
+  "seen_texels": 29620,
+  "scale": 1.0,
+  "median_albedo": [
+   0.43,
+   0.167,
+   0.309
+  ]
+ },
+ "crown": {
+  "px": 15586,
+  "seen_texels": 26056,
+  "scale": 1.0,
+  "median_albedo": [
+   0.215,
+   0.18,
+   0.236
+  ]
+ },
+ "brim": {
+  "px": 11355,
+  "seen_texels": 18152,
+  "scale": 1.0,
+  "median_albedo": [
+   0.058,
+   0.025,
+   0.231
+  ]
+ },
+ "pom": {
+  "px": 11086,
+  "seen_texels": 11857,
+  "scale": 1.0,
+  "median_albedo": [
+   0.107,
+   0.044,
+   0.32
+  ]
+ },
+ "armL": {
+  "px": 1336,
+  "seen_texels": 1869,
+  "scale": 1.0,
+  "median_albedo": [
+   0.402,
+   0.14,
+   0.287
+  ]
+ },
+ "armR": {
+  "px": 1299,
+  "seen_texels": 1892,
+  "scale": 1.0,
+  "median_albedo": [
+   0.445,
+   0.163,
+   0.322
+  ]
+ }
+}

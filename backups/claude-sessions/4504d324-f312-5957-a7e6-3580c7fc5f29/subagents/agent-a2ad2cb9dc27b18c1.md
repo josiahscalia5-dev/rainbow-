@@ -448,3 +448,221 @@ Linearity is off by 6–16 % (relative) — too much to bake from a 2-point fit 
 > 30:    for (let i = 0; i < slots; i++) {
 > 31:      const dir = `/tmp/rainbow-render-slot-${i}`;
 
+### 🤖 Claude — 2026-11-17T01:18:02.607Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; B=qa/pilot05/full_reference_match/benny/work; STACK='proj05=1&projwall05=1&projring05=1&projframe05=1&projlid05=1&projflow05=2&projnear05=1&projfar05=1'; timeout 1500 node $B/bennyprobe.mjs --q=\"$STACK&benny05=1\" --out=$B/b2 $B/probe/shot0.shot.js $B/probe/calD.shot.js $B/probe/calE.shot.js $B/probe/restore.shot.js > $B/b2.log 2>&1; echo rc=$? >> $B/b2.log", "description": "Run probe session for low-k calibration renders", "run_in_background": true}`
+
+### 🧑 User — 2026-11-17T01:18:02.642Z
+
+> ↩︎ result: Command running in background with ID: bv4243dj5. Output is being written to: /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/tasks/bv4243dj5.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-17T01:18:09.373Z
+
+While that waits for a render slot, let me look at the approved hat close-up next to the current game one.
+
+### 🤖 Claude — 2026-11-17T01:18:09.960Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/ref_hat_x3.png"}`
+
+### 🧑 User — 2026-11-17T01:18:09.996Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:18:12.394Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((214,760,634,1210))\nb=Image.open('qa/pilot05/full_reference_match/benny/work/b1/shot0.png').convert('RGB').crop((214,760,634,1210))\no=Image.new('RGB',(840,450)); o.paste(a,(0,0)); o.paste(b,(420,0)); o.save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/side_b1.png')\n\"", "description": "Make approved vs current game side-by-side crop"}`
+
+### 🧑 User — 2026-11-17T01:18:12.608Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-17T01:18:14.374Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/side_b1.png"}`
+
+### 🧑 User — 2026-11-17T01:18:14.396Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-17T01:18:58.991Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "\"\"\"benny05 bake: approved Screen-05 pixels -> albedo maps in each Benny part's own UV space.\nusage: python3 bake.py <run_dir with uv.f32, calA.png (k=0.2), calB.png (k=0.6)> <out_dir> [--normals]\nPer pixel: L = inverse post chain (display -> linear scene radiance; exact port of PROJ05_INVERSE, bloom is off on 05),\nE = (L_B - L_A)/(kB - kA), S = L_A - kA*E  (radiance = albedo*E + S), target albedo = (L_approved - S)/E.", "new_string": "\"\"\"benny05 bake: approved S …[+737 chars]`
+
+### 🧑 User — 2026-11-17T01:18:59.045Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:19:00.391Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "KA, KB = 0.2, 0.6\nEXPO", "new_string": "KA, KB = 0.2, 0.6\nCAL_K = {'calD': 0.05, 'calE': 0.1, 'calA': 0.2, 'calC': 0.4, 'calB': 0.6}\nEXPO"}`
+
+### 🧑 User — 2026-11-17T01:19:00.424Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:19:07.658Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py", "old_string": "def main():\n    run, out = sys.argv[1], sys.argv[2]\n    os.makedirs(out, exist_ok=True)\n    P, a8, m = approved_parts()\n    ap = a8 / 255.0\n    uvf = load_uv(f'{run}/uv.f32')\n    ids = np.rint(uvf[..., 2]).astype(int); ids[np.abs(uvf[..., 2] - ids) > 0.01] = 0\n    La, Lb, Lt = inv_chain(img(f'{run}/calA.png')), inv_chain(img(f'{run}/calB.png')), inv_chain(ap)\n    E = (Lb - La) / (KB - KA); S = La - KA * E\n    valid = (E * LUM).sum(-1) > 0.03", "new_string": "def …[+1284 chars]`
+
+### 🧑 User — 2026-11-17T01:19:07.692Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work/bake.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-17T01:19:08.909Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/pilot05/full_reference_match/benny/work; cat b2.log; md5sum b2/*.png b1/shot0.png", "description": "Check probe log and determinism vs b1"}`
+
+### 🧑 User — 2026-11-17T01:19:08.960Z
+
+> ↩︎ result: console: [benny05] missing baked map brim_n.png
+> console: [benny05] missing baked map body.png
+> console: [benny05] missing baked map brim.png
+> console: [benny05] missing baked map crown_n.png
+> console: [benny05] missing baked map armL.png
+> console: [benny05] missing baked map pom.png
+> console: [benny05] missing baked map armR.png
+> console: [benny05] missing baked map crown.png
+> loaded 3.156
+> shot0.shot.js null
+> calD.shot.js "calD"
+> calE.shot.js "calE"
+> restore.shot.js "restored"
+> done 19.276
+> rc=0
+> 295c80e5e6d087918b612617116158f9  b2/calD.png
+> 5a436e675cb6742db408af64aa23892a  b2/calE.png
+> bb7e3209df6023d47fa3fb821eefef49  b2/restore.png
+> bb7e3209df6023d47fa3fb821eefef49  b2/shot0.png
+> bb7e3209df6023d47fa3fb821eefef49  b1/shot0.png
+
+### 🤖 Claude — 2026-11-17T01:19:10.567Z
+
+Frame is byte-identical to b1 (deterministic), so b1 + b2 form one calibration set. Now a validation of the new fit: fit on the low-k renders and predict the k=0.4 render where it is unclipped.
+
+### 🤖 Claude — 2026-11-17T01:19:18.014Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; cat > /tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/lincheck3.py <<'EOF'\nimport sys,os\nsys.path.insert(0,'qa/pilot05/full_reference_match/benny/work'); sys.path.insert(0,'qa/pilot05/full_reference_match/benny')\nimport numpy as np\nimport bake\nfrom bake import inv_chain, img, LUM, fit_es\nfrom geom import load_uv\nR='qa/pilot05/full_reference_match/benny/work/'\nruns=[R+'b1',R+'b2']\nuv=load_uv(R+'b1/uv.f32'); ids=np.rint(uv[...,2]).astype(int); ids[np.abs(uv[...,2]-ids)>0.01]=0\nbake.CAL_K={'calD':0.05,'calE':0.1,'cal …[+906 chars]`
+
+### 🧑 User — 2026-11-17T01:19:23.751Z
+
+> ↩︎ result: body pred C rel err 0.0038 n px 35457 / 40651  full-fit n>=2 frac 0.998 E lum med 1.195 S lum med 0.025 S rgb med [0.035 0.022 0.03 ]
+> crown pred C rel err 0.0035 n px 468 / 19628  full-fit n>=2 frac 1.0 E lum med 2.75 S lum med 0.049 S rgb med [0.056 0.047 0.049]
+> brim pred C rel err 0.0036 n px 5647 / 13305  full-fit n>=2 frac 1.0 E lum med 1.767 S lum med 0.028 S rgb med [0.038 0.025 0.032]
+> pom pred C rel err 0.0038 n px 9527 / 12760  full-fit n>=2 frac 1.0 E lum med 1.325 S lum med 0.03 S rgb med [0.039 0.028 0.032]
+> star pred C rel err 0.0066 n px 119 / 2529  full-fit n>=2 frac 0.985 E lum med 1.834 S lum med 0.135 S rgb med [0.239 0.116 0.022]
+> armL pred C rel err 0.0038 n px 1398 / 1864  full-fit n>=2 frac 1.0 E lum med 1.42 S lum med 0.033 S rgb med [0.04  0.031 0.033]
+> armR pred C rel err 0.0038 n px 1522 / 2092  full-fit n>=2 frac 1.0 E lum med 1.351 S lum med 0.03 S rgb med [0.038 0.028 0.034]
+
+### 🤖 Claude — 2026-11-17T01:19:25.454Z
+
+Held-out prediction error dropped from 6–16 % to 0.35–0.66 %, and the crown's spurious S (0.38) is really 0.05; its true E is 2.75. Now the actual bake.
+
+### 🤖 Claude — 2026-11-17T01:19:26.616Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; time timeout 900 python3 $W/bake.py $W/b1,$W/b2 $W/b2/tex --normals 2>&1 | tail -60; ls -la $W/b2/tex", "description": "Run the albedo bake from calibration set b1+b2"}`
+
+### 🧑 User — 2026-11-17T01:19:31.088Z
+
+> ↩︎ result: "px": 35266,
+>   "seen_texels": 29620,
+>   "scale": 1.0,
+>   "median_albedo": [
+>    0.43,
+>    0.167,
+>    0.309
+>   ]
+>  },
+>  "crown": {
+>   "px": 15586,
+>   "seen_texels": 26056,
+>   "scale": 1.0,
+>   "median_albedo": [
+>    0.215,
+>    0.18,
+>    0.236
+>   ]
+>  },
+>  "brim": {
+>   "px": 11355,
+>   "seen_texels": 18152,
+>   "scale": 1.0,
+>   "median_albedo": [
+>    0.058,
+>    0.025,
+>    0.231
+>   ]
+>  },
+>  "pom": {
+>   "px": 11086,
+>   "seen_texels": 11857,
+>   "scale": 1.0,
+>   "median_albedo": [
+>    0.107,
+>    0.044,
+>    0.32
+>   ]
+>  },
+>  "armL": {
+>   "px": 1336,
+>   "seen_texels": 1869,
+>   "scale": 1.0,
+>   "median_albedo": [
+>    0.402,
+>    0.14,
+>    0.287
+>   ]
+>  },
+>  "armR": {
+>   "px": 1299,
+>   "seen_texels": 1892,
+>   "scale": 1.0,
+>   "median_albedo": [
+>    0.445,
+>    0.163,
+>    0.322
+>   ]
+>  }
+> }
+> 
+> real	0m4.415s
+> user	0m4.878s
+> sys	0m0.208s
+> total 1308
+> drwxr-xr-x 2 root root   4096 Nov 17 01:19 .
+> drwxr-xr-x 3 root root   4096 Nov 17 01:19 ..
+> -rw-r--r-- 1 root root  22510 Nov 17 01:19 armL.png
+> -rw-r--r-- 1 root root   1443 Nov 17 01:19 armL_seen.png
+> -rw-r--r-- 1 root root  21964 Nov 17 01:19 armR.png
+> -rw-r--r-- 1 root root   1429 Nov 17 01:19 armR_seen.png
+> -rw-r--r-- 1 root root    810 Nov 17 01:19 bake_report.json
+> -rw-r--r-- 1 root root 324209 Nov 17 01:19 body.png
+> -r …[+490 chars]
+
+### 🤖 Claude — 2026-11-17T01:19:35.055Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; W=qa/pilot05/full_reference_match/benny/work; head -12 $W/b2/tex/bake_report.json; python3 -I -c \"\nfrom PIL import Image\nd='$W/b2/tex/'\nims=[Image.open(d+f).convert('RGB') for f in ['crown.png','brim.png','body.png','pom.png']]\nW=1024; H=sum(i.height for i in ims)+30\no=Image.new('RGB',(W,H),(40,40,40)); y=0\nfor i in ims:\n  o.paste(i.resize((W,int(i.height*W/i.width))) if i.width!=W else i,(0,y)); y+=int(i.height*W/i.width)+10\no.save('/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/tex_b2.png')\n\"", "description":  …[+54 chars]`
+
+### 🧑 User — 2026-11-17T01:19:35.280Z
+
+> ↩︎ result: {
+>  "star_albedo_linear": [
+>   0.317,
+>   0.39,
+>   0.048
+>  ],
+>  "star_px": 2195,
+>  "body": {
+>   "px": 35266,
+>   "seen_texels": 29620,
+>   "scale": 1.0,
+>   "median_albedo": [
+
+### 🤖 Claude — 2026-11-17T01:19:36.565Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/4504d324-f312-5957-a7e6-3580c7fc5f29/scratchpad/tex_b2.png"}`
+
+### 🧑 User — 2026-11-17T01:19:36.594Z
+
+> ↩︎ result: [image]
+

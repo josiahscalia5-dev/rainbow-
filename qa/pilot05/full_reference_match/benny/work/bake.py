@@ -1,7 +1,11 @@
 """benny05 bake: approved Screen-05 pixels -> albedo maps in each Benny part's own UV space.
-usage: python3 bake.py <run_dir with uv.f32, calA.png (k=0.2), calB.png (k=0.6)> <out_dir> [--normals]
+usage: python3 bake.py <run_dir>[,<run_dir2>...] <out_dir> [--normals]
+  run dirs hold uv.f32 (first dir that has it) and calibration renders cal{D,E,A,C,B}.png (constant albedo k =
+  0.05, 0.1, 0.2, 0.4, 0.6 on every baked part), all from the same deterministic locked frame.
 Per pixel: L = inverse post chain (display -> linear scene radiance; exact port of PROJ05_INVERSE, bloom is off on 05),
-E = (L_B - L_A)/(kB - kA), S = L_A - kA*E  (radiance = albedo*E + S), target albedo = (L_approved - S)/E.
+radiance = albedo*E + S fitted per pixel and channel by least squares over the calibration renders in which the pixel
+is NOT clipped (display 3..246 in every channel: one clipped channel corrupts the joint inverse of the others),
+target albedo = (L_approved - S)/E.
 Strict part correspondence: a texel of part P only takes approved pixels that the approved part masks call P (eroded 1 px)
 and where the game shows P (UV pass id). Ratio of sums per texel, bilinear splat, push-pull hole fill, unseen texels by
 mirror tiling of the well-seen central strip (knit / fur keeps its structure all around)."""
@@ -14,6 +18,7 @@ from parts import approved_parts
 from geom import load_uv
 
 KA, KB = 0.2, 0.6
+CAL_K = {'calD': 0.05, 'calE': 0.1, 'calA': 0.2, 'calC': 0.4, 'calB': 0.6}
 EXPO, SAT, CON, VIG = 0.86, 1.36, 1.15, 0.18
 LUM = np.array([0.2126, 0.7152, 0.0722])
 
@@ -71,16 +76,35 @@ def push_pull(num, den):
     out = w * val + (1 - w) * up_n
     return out, np.ones_like(den)
 
+def fit_es(runs):
+    """least-squares E, S per pixel and channel over the unclipped calibration renders; returns E, S, n_used"""
+    sk = sk2 = n = 0.0
+    sl = skl = 0.0
+    for k_name, k in CAL_K.items():
+        p = next((f'{r}/{k_name}.png' for r in runs if os.path.exists(f'{r}/{k_name}.png')), None)
+        if p is None:
+            continue
+        d = img(p)
+        ok = ((d.max(-1) <= 246 / 255) & (d.min(-1) >= 3 / 255)).astype(np.float64)[..., None]
+        L = inv_chain(d)
+        sk = sk + ok * k; sk2 = sk2 + ok * k * k; n = n + ok
+        sl = sl + ok * L; skl = skl + ok * k * L
+    den = n * sk2 - sk * sk
+    good = (n >= 2) & (den > 1e-8)
+    E = np.where(good, (n * skl - sk * sl) / np.where(good, den, 1), 0)
+    S = np.where(good, (sl - E * sk) / np.maximum(n, 1), 0)
+    return E, S, n[..., 0]
+
 def main():
-    run, out = sys.argv[1], sys.argv[2]
+    runs, out = sys.argv[1].split(','), sys.argv[2]
     os.makedirs(out, exist_ok=True)
     P, a8, m = approved_parts()
     ap = a8 / 255.0
-    uvf = load_uv(f'{run}/uv.f32')
+    uvf = load_uv(next(f'{r}/uv.f32' for r in runs if os.path.exists(f'{r}/uv.f32')))
     ids = np.rint(uvf[..., 2]).astype(int); ids[np.abs(uvf[..., 2] - ids) > 0.01] = 0
-    La, Lb, Lt = inv_chain(img(f'{run}/calA.png')), inv_chain(img(f'{run}/calB.png')), inv_chain(ap)
-    E = (Lb - La) / (KB - KA); S = La - KA * E
-    valid = (E * LUM).sum(-1) > 0.03
+    Lt = inv_chain(ap)
+    E, S, ncal = fit_es(runs)
+    valid = ((E * LUM).sum(-1) > 0.03) & (ncal >= 2)
     target = (Lt - S) / np.maximum(E, 1e-4)
     report = {}
     from bennyseg import rgb2hsv, colour_classes

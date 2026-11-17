@@ -470,3 +470,5 @@ Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/8567f56ef76fa3ef
 | 2026-11-17T01:13:09+00:00 | bootstrap:full | committed+pushed | `60ed5ff244a0` | `claude/rainbow-account-transfer-npxahd` | 4 | True |  |
 | 2026-11-17T01:15:40+00:00 | daemon | committed-local-only | `ac0a80fccf1d` | `claude/rainbow-account-transfer-npxahd` | 10 | False | push failed after retries: Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/3e9521aa1c38691cb6b2089d8d3a1afd7d1bef5e98f3cd5e7c5c52e85e3aad19/verify": Forbidden
 error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-' |
+| 2026-11-17T01:18:00+00:00 | manual:recovery-verified | committed-local-only | `333cfe3fad85` | `claude/rainbow-account-transfer-npxahd` | 16 | False | push failed after retries: Post "https://lfs.github.com/josiahscalia5-dev/rainbow-/objects/3e9521aa1c38691cb6b2089d8d3a1afd7d1bef5e98f3cd5e7c5c52e85e3aad19/verify": Forbidden
+error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow-' |
